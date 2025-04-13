@@ -11,7 +11,8 @@ import {RouterView} from 'vue-router'
 </script>
 
 
-<style scoped lang="scss">
+<style  lang="scss">
+//scoped
 @use '@/assets/styles/reset.scss';
 @use '@/assets/styles/common.scss';
 
