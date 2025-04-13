@@ -1,0 +1,32 @@
+{
+  "pluginName": "wordBook",
+  "description": "wordBook",
+  "version": "1.0.12",
+  "main": "index.html",
+  "preload": "preload/services.js",
+  "logo": "logo.png",
+  "development": {
+    "main": "http://localhost:5173"
+  },
+  "features": [
+    {
+      "code": "review",
+      "explain": "这是插件应用的第一个功能",
+      "cmds": [
+        "review"
+      ]
+    },
+    {
+      "code": "add",
+      "explain": "添加单词",
+      "cmds": [
+        {
+          "type": "over",
+          "label": "加入单词簿"
+        }
+      ]
+    }
+  ],
+  "$schema": "../node_modules/utools-api-types/resource/utools.schema.json"
+}
+
