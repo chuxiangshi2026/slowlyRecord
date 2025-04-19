@@ -36,6 +36,11 @@
 
 <script setup lang="ts">
 import {Bell} from '@element-plus/icons-vue'
+import {useWordsStore} from "@/stores/words.ts";
+import {storeToRefs} from "pinia";
+
+const wordsStore = useWordsStore();
+const {words} = storeToRefs(wordsStore)
 
 </script>
 

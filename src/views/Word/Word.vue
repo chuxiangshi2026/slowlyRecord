@@ -1,10 +1,14 @@
 <template>
 
-  <el-button type="primary" @click="clearWord">清空单词</el-button>
-  <el-button type="primary" @click="initWord">初始化单词</el-button>
+<!--  <el-button type="primary" @click="clearWord">清空单词</el-button>-->
+<!--  <el-button type="primary" @click="initWord">初始化单词</el-button>-->
 
-  <el-input v-model="word" placeholder="请输入单词"></el-input>
-  <el-button type="primary" @click="addWord(word)">添加单词</el-button>
+  <el-row>
+    <el-col>
+      <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>
+      <el-input :span="6" v-model="word" placeholder="请输入单词" ></el-input>
+    </el-col>
+  </el-row>
 
 
   <div class="words-cards-wrapper">
@@ -20,7 +24,7 @@
 <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
   <div class="home_footer">
-    <div><span>单词总数: 2228</span><span>待复习: 1109</span><span>已记完: 1119</span></div>
+    <div><span>单词总数: {{words.length}}</span><span>待复习: {{ rememberCount }}</span><span>已记完: {{forgetCount}}</span></div>
     <div><i class="iconfont icon-setting"></i><i class="iconfont icon-import"></i><i
         class="iconfont icon-export "></i><a href="#/home/list" style="margin-left: 16px;"><i
         class="iconfont icon-list active"></i></a><a href="#/home/typing" style="margin-left: 16px;"><i
@@ -36,7 +40,7 @@ import { ElMessage} from "element-plus";
 import {isEmpty, truncate} from "lodash";
 import {testData} from "@/testData";
 import CryptoJS from "crypto-js";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import type {Word, YdParams} from "@/types/words";
 
 import {useWordsStore} from "@/stores/words.ts";
@@ -53,9 +57,14 @@ const word = ref('');
 const wordsStore = useWordsStore();
 const {words} = storeToRefs(wordsStore)
 
+// 一个计算属性 ref
+const rememberCount = computed(() => {
+  return words.value.filter((word: Word) => word.isReview).length
+})
 
-
-
+const forgetCount = computed(() => {
+  return words.value.length-rememberCount.value
+})
 
 
 
@@ -167,6 +176,14 @@ const deleteWord = (index: number) => {
 </script>
 
 <style scoped lang="scss">
+
+
+.input-above-button {
+  position: absolute;
+  top: 0px; /* 调整输入框与按钮的垂直距离 */
+  right: 84%;   /* 将输入框放置在按钮的右侧 */
+  width: 200px; /* 根据需要调整输入框的宽度 */
+}
 
 
 .home_footer {

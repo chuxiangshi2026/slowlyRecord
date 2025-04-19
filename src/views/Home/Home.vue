@@ -3,24 +3,24 @@
     <div class="common-layout">
 
       <el-container>
-        <el-header>
-          <!--          Header-->
+<!--        <el-header>
+          &lt;!&ndash;          Header&ndash;&gt;
           <HomeHeader/>
-        </el-header>
+        </el-header>-->
         <el-container>
-          <el-aside width="56px">
-            <!--            Aside-->
-            <HomeAside/>
-          </el-aside>
+<!--          <el-aside width="56px">-->
+<!--            &lt;!&ndash;            Aside&ndash;&gt;-->
+<!--            <HomeAside/>-->
+<!--          </el-aside>-->
           <el-main>
             <!--            Main-->
-            <HomeBreadcrumb/>
+<!--            <HomeBreadcrumb/>-->
             <HomeMain/>
           </el-main>
         </el-container>
-        <el-footer>Footer
-<!--          <HomeFooter/>-->
-        </el-footer>
+<!--        <el-footer>Footer-->
+<!--&lt;!&ndash;          <HomeFooter/>&ndash;&gt;-->
+<!--        </el-footer>-->
       </el-container>
     </div>
     <!--    <router-view>-->
