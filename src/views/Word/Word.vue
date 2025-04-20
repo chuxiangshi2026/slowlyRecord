@@ -37,24 +37,18 @@
 <script setup lang="ts">
 
 
-import {AppInfo} from "@/config";
 import {ElMessage} from "element-plus";
 import {isEmpty, truncate} from "lodash";
 import {testData} from "@/testData";
-import CryptoJS from "crypto-js";
 import {computed, onMounted, ref} from "vue";
 import type {Word, YdParams} from "@/types/words";
 
 import {useWordsStore} from "@/stores/words.ts";
 import {storeToRefs} from "pinia";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
-import {v4 as uuidv4} from 'uuid';
 
 const word = ref('');
 
-// onMounted(()=>{
-//   initWord()
-// })
 
 
 const wordsStore = useWordsStore();
@@ -70,8 +64,6 @@ const forgetCount = computed(() => {
 })
 
 
-
-
 const clearWord = () => {
   wordsStore.clearWords()
   ElMessage.success('清除成功');
@@ -82,23 +74,59 @@ const initWord = () => {
   ElMessage.success('初始化成功');
 }
 
-import {getInitWord,  getParam} from "@/utils/StrUtil.ts";
+import {getInitWord, getParam} from "@/utils/StrUtil.ts";
 
-const addWord = (word: string) => {
+const addWord = (wordText: string) => {
 
- const params: YdParams =  getParam(word)
+
+  let findWord = words.value.find((item: Word) => {
+    if (item.text === wordText) {
+      return item
+    }
+  });
+
+  if (findWord) {
+      console.log('单词已存在');
+    // 如果有这个单词
+    if (findWord.explainedInChinese) {
+      console.log('翻译已存在');
+      ElMessage.success('单词已存在');
+      return
+    }
+
+    const params: YdParams = getParam(wordText)
+    wordsStore.translation(params).then(res => {
+      let resData = res.data;
+      if (resData.errorCode === '0' && !isEmpty(res)) {
+        findWord.explainedInChinese = res.data.translation[0]
+        findWord.isReview = true
+        findWord.pronunciation = resData.tSpeakUrl
+        findWord.phonetic = ''
+        wordsStore.updateWord(findWord)
+        ElMessage.success('添加成功');
+        return
+      }
+    })
+
+    ElMessage.error('添加失败');
+    return;
+  }
+
+
+  const params: YdParams = getParam(wordText)
 
 
   console.log(JSON.stringify(params) + '-------')
   wordsStore.translation(params).then(res => {
-    // store.dispatch('words/translation', params).then(res => {
+    // 先判断有没有这个单词，有的话看下这个单词有没有翻译，有的话不做处理，没有更新这个单词
+
     let resData = res.data;
     console.log(JSON.stringify(resData));
     if (resData.errorCode === '0' && !isEmpty(res)) {
 
       // let oldWords = store.state.words.words;
       let oldWords = words.value
-      let newWords=getInitWord(resData.query, resData.translation[0], resData.tSpeakUrl,'','')
+      let newWords = getInitWord(resData.query, resData.translation[0], resData.tSpeakUrl, '', '')
 
       const data = oldWords ? [...oldWords, newWords] : [newWords]
 
