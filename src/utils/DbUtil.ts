@@ -6,13 +6,13 @@ import {DB_KEY} from "@/constants";
 function listDbWords(): Word[] {
 
     let allDocs = window.utools.db.allDocs(DB_KEY);
-    console.log(allDocs, '所有单词');
+    // console.log(allDocs, '所有单词');
     return allDocs
 }
 
 
 function addDbWord(word: Word): void {
-    console.log(word, '添加单个单词到数据库');
+    // console.log(word, '添加单个单词到数据库');
     // 清理或克隆对象
     const cleanedWord = JSON.parse(JSON.stringify(word));
     //
@@ -31,7 +31,7 @@ function addDbWord(word: Word): void {
 async function updateDbWordList(docs: Word[]): Promise<DbResult[]> {
     // 清理或克隆对象
     const cleanedDocs = docs.map(doc => JSON.parse(JSON.stringify(doc)));
-    console.log(docs, '批量添加的单词');
+    // console.log(docs, '批量添加的单词');
     // 检查cleanedDocs是否为空
     /*  if (cleanedDocs.length === 0) {
           console.log('没有需要更新的文档');
@@ -48,7 +48,7 @@ async function updateDbWordList(docs: Word[]): Promise<DbResult[]> {
         return [];
     }*/
     results.forEach((ret: DbResult) => {
-        console.log(ret, '更新结果');
+        // console.log(ret, '更新结果');
         // 更新文档版本
         if (ret.ok) {
             // docs.find(x => x._id === ret.id)?._rev = ret.rev;

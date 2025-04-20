@@ -134,7 +134,7 @@ onMounted(() => {
   function updateReview() {
     // 获取本地的数据，如果是空或和数据库的大小不一致，比较数据，留最新的
     let dbWords = listDbWords();
-    console.log(dbWords, 'dbWords')
+    // console.log(dbWords, 'dbWords')
     if (!words||words.value.length !=dbWords.length) {
       words.value = dbWords
       console.log('同步数据库数据到本地')

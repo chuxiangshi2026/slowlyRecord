@@ -74,10 +74,10 @@ const remember = () => {
   let reviewTime = wordModel.value.reviewTime;
   // 开始复习时间 (上次复习时间 + 当前等级对应的默认复习间隔)
   let level = wordModel.value.level;
-
-  if (!reviewTime || !(reviewTime instanceof Date)) {
+  // todo 这里序列化不是时间类型
+  /*if (!reviewTime || !(reviewTime instanceof Date)) {
     console.log(typeof reviewTime + 'fddddddddd');
-  }
+  }*/
 
   const startReviewTime = reviewTime.getTime() + DEFAULT_INTERVALS[level] * 60 * 1000;
 

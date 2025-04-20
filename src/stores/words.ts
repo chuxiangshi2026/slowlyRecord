@@ -30,7 +30,7 @@ export const useWordsStore =
                     // addWord(words)
 
                     // const cleanedDocs = payload.map(doc => JSON.parse(JSON.stringify(doc)));
-                    console.log(payload, '更新单词');
+                    // console.log(payload, '更新单词');
                     updateDbWordList(payload)
 
                 },

@@ -118,7 +118,7 @@ const addWord = async (wordText: string) => {
         // 先判断有没有这个单词，有的话看下这个单词有没有翻译，有的话不做处理，没有更新这个单词
 
         let resData = res.data;
-        console.log(JSON.stringify(resData));
+        // console.log(JSON.stringify(resData));
         if (resData.errorCode === '0' && !isEmpty(res)) {
 
             // let oldWords = store.state.words.words;
@@ -127,7 +127,7 @@ const addWord = async (wordText: string) => {
 
             const data = oldWords ? [newWords, ...oldWords] : [newWords]
 
-            console.log(data, '更新单词成功');
+            // console.log(data, '更新单词成功');
             wordsStore.updateWords(data)
 
             // ElMessage.success('成功');
