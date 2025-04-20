@@ -4,4 +4,24 @@
 //     30 * 24 * 60, 3 * 30 * 24 * 60, 6 * 30 * 24 * 60, 12 * 30 * 24 * 60];
 
 // 测试用，时间比较短
+import {AppInfo} from "@/config.ts";
+import {truncate} from "lodash";
+import CryptoJS from "crypto-js";
+
 export const DEFAULT_INTERVALS = [0.1,0.2, 0.3, 0.5,1];
+
+
+// 应用ID
+const APP_KEY = AppInfo.appkey;
+// 应用密钥
+const KEY = AppInfo.key;//注意：暴露appSecret，有被盗用造成损失的风险
+
+
+
+// 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
+const FROM = 'en';
+const TO = 'zh-CHS';
+
+
+
+export {APP_KEY, KEY,   FROM, TO};
