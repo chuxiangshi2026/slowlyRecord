@@ -36,7 +36,10 @@ npm run build
 ### 待添加功能列表
 - 数据库持久化  ok
 - 显示音标
+  - https://mobile.youdao.com/dict?le=eng&q=red
+  - <span class="phonetic">[red]</span>  这里能找到
 - 播放声音
+  - https://dict.youdao.com/dictvoice?audio=look&type=1 这个地址可能不需要用key
 - 修改单词翻译
 - 导入，导出 
 
