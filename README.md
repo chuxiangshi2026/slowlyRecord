@@ -33,15 +33,18 @@ npm run build
 ```
 
 
-### 待添加功能列表
+### 功能列表
+#### 当前版本功能
 - 数据库持久化  ok
+- 导入，导出  2025年4月23日 ok
+- 播放声音 2025年4月21日ok
+  - https://dict.youdao.com/dictvoice?audio=look&type=1 这个地址可能不需要用key
+#### 下个版本功能
+- 修改单词翻译（减少调用接口的次数）
+- 播放声音 （是否能下载到本地，减少调用接口的次数）
 - 显示音标
   - https://mobile.youdao.com/dict?le=eng&q=red
   - <span class="phonetic">[red]</span>  这里能找到
-- 播放声音
-  - https://dict.youdao.com/dictvoice?audio=look&type=1 这个地址可能不需要用key
-- 修改单词翻译
-- 导入，导出 
 
 
 ### 项目简单说明
