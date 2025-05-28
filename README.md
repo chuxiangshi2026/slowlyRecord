@@ -35,16 +35,20 @@ npm run build
 
 ### 功能列表
 #### 当前版本功能
-- 数据库持久化  ok
-- 导入，导出  2025年4月23日 ok
-- 播放声音 2025年4月21日ok
+-[x] 数据库持久化  ok
+-[x] 导入，导出  2025年4月23日 ok
+-[x] 播放声音 2025年4月21日ok
   - https://dict.youdao.com/dictvoice?audio=look&type=1 这个地址可能不需要用key
+- 20250528
+-[x] 打包后无法正确调用接口
 #### 下个版本功能
 - 修改单词翻译（减少调用接口的次数）
 - 播放声音 （是否能下载到本地，减少调用接口的次数）
 - 显示音标
   - https://mobile.youdao.com/dict?le=eng&q=red
   - <span class="phonetic">[red]</span>  这里能找到
+- 加入本地翻译功能
+-[] 打包后图标无法正确显示
 
 
 ### 项目简单说明
