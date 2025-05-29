@@ -7,7 +7,9 @@ import {ElMessage} from "element-plus";
 // import {truncate} from "lodash";
 
 // 定义baseUrl
-const baseURL = '/api';
+// const baseURL = import.meta.env.MODE === 'development' ? '/api' : 'https://openapi.youdao.com/api'
+
+const baseURL = 'https://openapi.youdao.com/api';
 // 创建实例
 const instance = axios.create({
     // 基础url
@@ -20,7 +22,8 @@ instance.interceptors.request.use(function (config) {
     if (config.headers) {
         // config.headers.authorization = (store.state as StateAll).users.token;
     }
-    // 在发送请求之前做些什么
+    config.headers={'Access-Control-Allow-Origin':'https://openapi.youdao.com/api'}
+
     return config;
 }, function (error) {
 // 对请求错误做些什么

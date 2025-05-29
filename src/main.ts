@@ -7,12 +7,12 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 
 import App from './App.vue'
 import router from './router'
 
-import { createPinia } from 'pinia'
+import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 const app = createApp(App)
@@ -27,4 +27,6 @@ app.use(pinia)
 app.use(ElementPlus, {locale: zhCn})
 app.use(router)
 
-app.mount('#app')
+    // createApp(App).mount( ... ) // Vue
+    // createRoot( ... ).render(App) // React
+    app.mount('#app')

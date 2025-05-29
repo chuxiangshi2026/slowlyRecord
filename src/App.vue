@@ -162,7 +162,7 @@ onMounted(() => {
 </script>
 
 
-<style lang="scss">
+<style  lang="scss">
 //scoped
 @use '@/assets/styles/reset.scss';
 @use '@/assets/styles/common.scss';
@@ -171,7 +171,7 @@ onMounted(() => {
 @use '@/assets/styles/index.scss';
 @use '@/assets/styles/letter.scss';
 @use '@/assets/styles/list-item.scss';
-@import '@/assets/icons/iconfont.css';
-@import '@/assets/styles/iconfont1.scss';
+@use '@/assets/icons/iconfont.css';
+@use '@/assets/styles/iconfont1.scss';
 
 </style>
