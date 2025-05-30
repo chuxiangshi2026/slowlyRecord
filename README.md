@@ -48,7 +48,8 @@ npm run build
   - https://mobile.youdao.com/dict?le=eng&q=red
   - <span class="phonetic">[red]</span>  这里能找到
 - 加入本地翻译功能
--[] 打包后图标无法正确显示
+-[x] 打包后图标无法正确显示 
+-[ ] 导入成功后,打开列表面板,不然操作不太统一
 
 
 ### 项目简单说明
