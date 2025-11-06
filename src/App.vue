@@ -8,13 +8,12 @@ import {RouterView} from 'vue-router'
 
 import {onMounted} from 'vue';
 import {useWordsStore} from "@/stores/words.ts";
-import {storeToRefs} from "pinia";
+// import {storeToRefs} from "pinia";
 import {DEFAULT_INTERVALS} from "@/constants";
-import {addWord} from "@/utils/StrUtil.ts";
-import {listDbWords} from "@/utils/DbUtil.ts";
+import {addWord} from "@/utils/str-util.ts";
 
 const wordsStore = useWordsStore();
-const {words} = storeToRefs(wordsStore)
+// const {words} = storeToRefs(wordsStore)
 
 
 onMounted(() => {
@@ -22,25 +21,13 @@ onMounted(() => {
   // 首页刷新时触发   自动更新需要复习的单词
   updateReview();
 
+  // 进入插件
 
   window.utools.onPluginEnter(async (action: PluginEnterAction) => {
 
 
-    // 进行计算，哪些是需要  记的改成true
-    // 进入插件时触发
-    // 把所有的单词时间计算一下，修改一下是否显示
-    /*   for (const item of words.value) {
-         console.log(JSON.stringify(item) + '0000000000');
-         item.isReview = true
-       }*/
-    /*words.value.forEach((item) => {
-      // 如果  当前时间>  上次复习时间+数组[等级]
-      /!*if (Date.now() > item.learnDate.getTime() + DEFAULT_INTERVALS[item.level]) {
-        item.isReview = true
-      }*!/
-      item.isReview = true
-      // item.
-    })*/
+    // 进入插件时触发 ,
+    wordsStore.upReview()
 
     /*  // app版本
       const currentVerson = window.services.getAppVerson()
@@ -88,8 +75,8 @@ onMounted(() => {
         resolve(setting)
       })
     }*/
-
   /*utools.onPluginEnter((action) => {
+  //用户进入插件应用
     console.log(JSON.stringify(action))
     route.value = action.code
     enterAction.value = action
@@ -132,17 +119,15 @@ onMounted(() => {
 
   //更新需要复习的单词
   function updateReview() {
+
     // 获取本地的数据，如果是空或和数据库的大小不一致，比较数据，留最新的
-    // let dbWords = listDbWords();
-    // console.log(dbWords, 'dbWords')
-    // if (!words||words.value.length !=dbWords.length) {
-    //   words.value = dbWords
-    //   console.log('同步数据库数据到本地')
-    // }
+    let dbWords = wordsStore.listWords();
+    console.log(dbWords, 'dbWords')
+
 
 
     // console.log(words.value, typeof words.value[0].learnDate, '9999999')
-    for (const item of words.value) {
+    for (const item of dbWords) {
       // item.isReview = true
       // console.log(item)
       item.learnDate = new Date(item.learnDate);
@@ -150,6 +135,7 @@ onMounted(() => {
       let learnDate = item.learnDate.getTime() + DEFAULT_INTERVALS[item.level] * 60 * 1000;
       let now = Date.now();
       // console.log(now, learnDate, '00000111111', item.isReview)
+      // 当前时间大于复习时间 ,
       if (!item.isReview && now > learnDate) {
         item.isReview = true
         wordsStore.updateWord(item)

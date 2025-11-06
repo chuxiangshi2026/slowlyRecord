@@ -5,7 +5,7 @@ import type {Word, YdParams} from "@/types/words";
 import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
-import {storeToRefs} from "pinia";
+// import {storeToRefs} from "pinia";
 
 import {getActivePinia} from 'pinia';
 
@@ -34,7 +34,7 @@ const getParam = (query: string) => {
         signType: "v3",
         // 当前UTC时间戳(秒)
         curtime: curtime,
-        ext:'mp3'
+        ext: 'mp3'
         // 用户上传的术语表
         // vocabId: vocabId,
     }
@@ -52,7 +52,7 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
         "ctime": new Date(),
         "learnDate": new Date(),
         "level": 0,
-        "_id": DB_KEY+uuidv4(), // 假设_id为必填项
+        "_id": DB_KEY + uuidv4(), // 假设_id为必填项
         "image": image, // 假设image为必填项
         "phonetic": phonetic, // 假设phonetic为必填项
 
@@ -74,19 +74,15 @@ const addWord = async (wordText: string) => {
     }
 
     const wordsStore = useWordsStore(pinia); // 传入 Pinia 实例
-    const {words} = storeToRefs(wordsStore)
+    // const {words} = storeToRefs(wordsStore)
 
-    let findWord = words.value.find((item: Word) => {
-        if (item.text === wordText) {
-            return item
-        }
-    });
 
+    let findWord = wordsStore.findWord(wordText)
     if (findWord) {
         console.log('单词已存在');
         // 如果有这个单词
         if (findWord.explains) {
-            console.log('翻译已存在');
+            console.log('单词已存在');
             ElMessage.success('单词已存在');
             return
         }
@@ -119,17 +115,18 @@ const addWord = async (wordText: string) => {
         // 先判断有没有这个单词，有的话看下这个单词有没有翻译，有的话不做处理，没有更新这个单词
 
         let resData = res.data;
-        console.log(JSON.stringify(resData),'翻译后的返回结果');
+        console.log(JSON.stringify(resData), '翻译后的返回结果');
         if (resData.errorCode === '0' && !isEmpty(res)) {
-
-            // let oldWords = store.state.words.words;
-            let oldWords = words.value
+            //解构写法
+            // const { words } = storeToRefs(wordsStore)
+            // words.value
+            let oldWords = wordsStore.words
             let newWords = getInitWord(resData.query, resData.translation[0], resData.speakUrl, '', '')
 
             const data = oldWords ? [newWords, ...oldWords] : [newWords]
 
             // console.log(data, '更新单词成功');
-            wordsStore.updateWords(data)
+            wordsStore.addAndUpdateWords(data)
 
             // ElMessage.success('成功');
             // router.push('/')

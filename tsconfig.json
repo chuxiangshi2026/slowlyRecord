@@ -3,7 +3,15 @@
     "types": [
       "utools-api-types",
       "element-plus/global"
-    ]
+    ],
+    "baseUrl": ".",
+    // 这里设置基础路径为项目根目录
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+      // 这里设置@符号代表src目录
+    }
   },
   "includes": [
     // 如果使用ts或者框架，请添加需要类型提示的文件范围

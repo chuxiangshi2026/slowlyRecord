@@ -92,11 +92,17 @@ function removeDbWordById(id: string): void {
  * @since 2025/11/5
  */
 function cleanDbWord() {
-    const words = listDbWords();
-
-    words.forEach((word: Word) => {
-        removeDbWordById(word._id);
-    })
+    const result =  utools.db.remove(DB_KEY);
+    if (result.ok) {
+        console.log("删除成功");
+    } else if (result.error) {
+        // 删除失败，打印错误原因
+        console.log(result.message);
+    }
+    // const words = listDbWords();
+    // words.forEach((word: Word) => {
+    //     removeDbWordById(word._id);
+    // })
 }
 
 /**

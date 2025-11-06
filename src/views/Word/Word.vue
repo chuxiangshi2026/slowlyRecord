@@ -12,11 +12,11 @@
 
 
   <div class="words-cards-wrapper">
-    <my-list-item v-if="words.length>0" v-for="(item,index) in words"
+    <my-list-item v-if="wordsStore.count>0" v-for="(item,index) in wordsStore.words"
                   :key="index"
                   :word="item"
                   :style="item.isReview ? '': 'display:none' "
-                  v-model="words[index]"
+                  v-model="wordsStore.words[index]"
                   @delete="deleteWord(index)"
     >
     </my-list-item>
@@ -24,16 +24,16 @@
   <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
   <div class="home_footer">
-    <div><span>单词总数: {{ words.length }}</span><span>待复习: {{
-        rememberCount
-      }}</span><span>已记完: {{ forgetCount }}</span></div>
+    <div><span>单词总数: {{ wordsStore.count }}</span><span>待复习: {{
+        wordsStore.rememberCount
+      }}</span><span>已记完: {{ wordsStore.forgetCount }}</span></div>
     <div>
       <!--      <i class="iconfont icon-setting"></i>-->
       <i class="iconfont icon-import" @click="importWords"></i>
       <i class="iconfont icon-export" @click="exportWords"></i>
-      <a href="#/home/list" style="margin-left: 16px;">
-        <!--        <i class="iconfont icon-list active"></i>-->
-      </a>
+      <!--      <a href="#/home/list" style="margin-left: 16px;">-->
+      <!--        &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;-->
+      <!--      </a>-->
       <!--      <a href="#/home/typing" style="margin-left: 16px;">-->
       <!--        <i class="iconfont icon-card "></i>-->
       <!--      </a>-->
@@ -46,56 +46,51 @@
 
 import {ElMessage} from "element-plus";
 import {testData} from "@/testData";
-import {computed, onMounted, ref} from "vue";
-import type {Word, YdParams} from "@/types/words";
+import {computed} from "vue";
+import type {Word} from "@/types/words";
 
 import {useWordsStore} from "@/stores/words.ts";
 import {storeToRefs} from "pinia";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import {v4 as uuidv4} from "uuid";
+import {DB_KEY} from "@/constants";
 
-const word = ref('');
+// const word = ref('');
 
 
 const wordsStore = useWordsStore();
-const {words} = storeToRefs(wordsStore)
+// wordsStore.findWord('')
 
-// 一个计算属性 ref
-const rememberCount = computed(() => {
-  return words.value.filter((word: Word) => word.isReview).length
-})
-
-const forgetCount = computed(() => {
-  return words.value.length - rememberCount.value
-})
-
-
+// const {words} = storeToRefs(wordsStore)
+/**
+ * 清空单词库
+ * @since 2025/11/5
+ */
 const clearWord = () => {
-  wordsStore.clearWords()
-  cleanDbWord()
+  wordsStore.removeWords()
   ElMessage.success('清除成功');
 }
+/**
+ * 初始化单词库
+ * @since 2025/11/5
+ */
 const initWord = () => {
   clearWord()
-  wordsStore.updateWords(testData)
+  wordsStore.addAndUpdateWords(testData)
   ElMessage.success('初始化成功');
 }
 
-import {addWord} from "@/utils/StrUtil.ts";
-import {cleanDbWord, removeDbWordById} from "@/utils/DbUtil.ts";
-import {DB_KEY} from "@/constants";
 
 
 const deleteWord = (index: number) => {
-  words.value.splice(index, 1)
-  removeDbWordById(words.value[index]._id)
+  wordsStore.deleteWord(index)
 }
 
 /**
  * 导出单词到json文件
  */
 const exportWords = () => {
-  if (words.value.length === 0) {
+  if (wordsStore.count === 0) {
     ElMessage.warning('没有单词可导出');
     return;
   }
@@ -109,7 +104,8 @@ const exportWords = () => {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });*/
 
   // 过滤为指定属性
-  const filteredWords = words.value.map(word => ({
+
+  const filteredWords = wordsStore.words.map(word => ({
     text: word.text,
     explains: word.explains,
     explainedHidden: word.explainedHidden,
@@ -185,13 +181,17 @@ const importWords = () => {
 
           // 去重：基于word.text属性
           const uniqueWords = validatedWords.filter((importedWord) => {
-            return !words.value.some((existingWord) => existingWord.text === importedWord.text);
+            return !wordsStore.words.some((existingWord) => existingWord.text === importedWord.text);
           });
 
           if (uniqueWords.length > 0) {
             // 将去重后的单词列表添加到存储
-            wordsStore.updateWords([...words.value, ...uniqueWords]);
-            ElMessage.success('导入成功');
+            wordsStore.addAndUpdateWords(uniqueWords).then(() => {
+              ElMessage.success('导入成功');
+            }, error => {
+              ElMessage.success('导入失败');
+            });
+
           } else {
             ElMessage.warning('没有新单词可导入或文件内容为空');
           }
@@ -222,7 +222,7 @@ const imporTextWords = () => {
         const content = e.target?.result as string;
         const wordList = parseFileContent(content); // 解析文件内容
         if (wordList.length > 0) {
-          wordsStore.updateWords([...words.value, ...wordList]); // 添加到存储
+          wordsStore.addAndUpdateWords(wordList); // 添加到存储
           ElMessage.success('导入成功');
         } else {
           ElMessage.warning('文件内容为空或格式不正确');
@@ -262,6 +262,19 @@ const parseFileContent = (content: string): Word[] => {
 };
 
 
+// /**
+//  * 计算属性,统计已记住的单词数
+//  */
+// const rememberCount = computed(() => {
+//   return words.value.filter((word: Word) => word.isReview).length
+// })
+// /**
+//  *计算属性,统计忘记的单词数
+//  */
+// const forgetCount = computed(() => {
+//   return words.value.length - rememberCount.value
+// })
+
 </script>
 
 <style scoped lang="scss">
@@ -269,7 +282,7 @@ const parseFileContent = (content: string): Word[] => {
 
 .input-above-button {
   position: absolute;
-  top: 0px; /* 调整输入框与按钮的垂直距离 */
+  top: 0; /* 调整输入框与按钮的垂直距离 */
   right: 84%; /* 将输入框放置在按钮的右侧 */
   width: 200px; /* 根据需要调整输入框的宽度 */
 }
