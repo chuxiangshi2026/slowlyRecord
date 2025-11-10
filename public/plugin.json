@@ -11,13 +11,13 @@
   "features": [
     {
       "code": "review",
-      "explain": "这是插件应用的第一个功能",
+      "explain": "进入单词列表",
       "cmds": [
         "review"
       ]
     },
     {
-      "code": "add",
+      "code": "over",
       "explain": "添加单词",
       "cmds": [
         {

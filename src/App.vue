@@ -51,16 +51,18 @@ onMounted(() => {
     // await initUtoolSetting()
 
 
-    if (action.code === 'add') {
+    if (action.code === 'over') {
       // 把单词翻译了，添加到 列表中
       // console.log('==================', action)
 
-      await   handlePluginAddWord(action)
+      await handlePluginAddWord(action)
     }
 
-    // if (action.code === 'review') {
-    //   handlePluginReview()
-    // }
+    if (action.code === 'review') {
+      handlePluginReview()
+    }
+
+
   })
   /*  const initUtoolSetting = () => {
       return new Promise((resolve) => {
@@ -102,53 +104,69 @@ onMounted(() => {
 
 
   // 退出插件时触发
-  /*  window.utools.onPluginOut((isKill) => {
-      route.value = ''
-    })*/
+  //   window.utools.onPluginOut((isKill) => {
+  //     route.value = ''
+  //   })
 
 
-  async function handlePluginAddWord(action: PluginEnterAction) {
-    // const needclose = !!utoolsSettingRef.current?.closeAfterAddWord
-    // 隐藏主窗口
-    // if (needclose) window.utools.hideMainWindow()
-
-
-    // console.log('addWord====================', action.payload)
-    await addWord(action.payload)
-  }
-
-  //更新需要复习的单词
-  function updateReview() {
-
-    // 获取本地的数据，如果是空或和数据库的大小不一致，比较数据，留最新的
-    let dbWords = wordsStore.listWords();
-    console.log(dbWords, 'dbWords')
-
-
-
-    // console.log(words.value, typeof words.value[0].learnDate, '9999999')
-    for (const item of dbWords) {
-      // item.isReview = true
-      // console.log(item)
-      item.learnDate = new Date(item.learnDate);
-      item.ctime = new Date(item.ctime);
-      let learnDate = item.learnDate.getTime() + DEFAULT_INTERVALS[item.level] * 60 * 1000;
-      let now = Date.now();
-      // console.log(now, learnDate, '00000111111', item.isReview)
-      // 当前时间大于复习时间 ,
-      if (!item.isReview && now > learnDate) {
-        item.isReview = true
-        wordsStore.updateWord(item)
-      }
-    }
-  }
 });
 
+
+/**
+ * 处理复习单词的插件入口
+ */
+function handlePluginReview() {
+  // 显示主窗口
+  window.utools.showMainWindow()
+
+  // 可以添加其他复习相关的逻辑
+  // 例如：切换到复习页面、加载复习数据等
+}
+
+/**
+ * 隐藏主界面,并添加单词
+ */
+async function handlePluginAddWord(action: PluginEnterAction) {
+  // const needclose = !!utoolsSettingRef.current?.closeAfterAddWord
+  // 隐藏主窗口
+  // if (needclose) window.utools.hideMainWindow()
+
+
+  // console.log('addWord====================', action.payload)
+  await addWord(action.payload)
+}
+
+/**
+ * 更新需要复习的单词
+ */
+function updateReview() {
+
+  // 获取本地的数据，如果是空或和数据库的大小不一致，比较数据，留最新的
+  let dbWords = wordsStore.listWords();
+  console.log(dbWords, 'dbWords')
+
+
+  // console.log(words.value, typeof words.value[0].learnDate, '9999999')
+  for (const item of dbWords) {
+    // item.isReview = true
+    // console.log(item)
+    item.learnDate = new Date(item.learnDate);
+    item.ctime = new Date(item.ctime);
+    let learnDate = item.learnDate.getTime() + DEFAULT_INTERVALS[item.level] * 60 * 1000;
+    let now = Date.now();
+    // console.log(now, learnDate, '00000111111', item.isReview)
+    // 当前时间大于复习时间 ,
+    if (!item.isReview && now > learnDate) {
+      item.isReview = true
+      wordsStore.updateWord(item)
+    }
+  }
+}
 
 </script>
 
 
-<style  lang="scss">
+<style lang="scss">
 //scoped
 @use '@/assets/styles/reset.scss';
 @use '@/assets/styles/common.scss';
