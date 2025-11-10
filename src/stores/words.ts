@@ -165,7 +165,6 @@ export const useWordsStore =
                 findWord,
                 updateWord: addAndUpdateWord,
                 addAndUpdateWords,
-                clearWords,
                 translation,
                 removeWords,
                 deleteWord,
