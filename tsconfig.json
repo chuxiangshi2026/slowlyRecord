@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+    "strict": true,
     "types": [
       "utools-api-types",
-      "element-plus/global"
+      "element-plus/global",
+      "pinia"
     ],
     "baseUrl": ".",
     // 这里设置基础路径为项目根目录
