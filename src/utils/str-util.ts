@@ -5,9 +5,7 @@ import type {Word, YdParams} from "@/types/words";
 import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
-// import {storeToRefs} from "pinia";
 
-import {getActivePinia} from 'pinia';
 
 
 const getParam = (query: string) => {
@@ -63,18 +61,10 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
     return newWords;
 }
 
-// const wordsStore = useWordsStore();
-// const {words} = storeToRefs(wordsStore)
 const addWord = async (wordText: string) => {
 
 
-    const pinia = getActivePinia(); // 获取活动的 Pinia 实例
-    if (!pinia) {
-        throw new Error('Pinia 未初始化，请确保在 Vue 应用中正确注册 Pinia。');
-    }
-
-    const wordsStore = useWordsStore(pinia); // 传入 Pinia 实例
-    // const {words} = storeToRefs(wordsStore)
+    const wordsStore = useWordsStore(); // 传入 Pinia 实例
 
 
     let findWord = wordsStore.findWord(wordText)
