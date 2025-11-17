@@ -108,6 +108,12 @@
       &.icon-level-10 {
         color: #e75500;
       }
+      &.icon-level-11 {
+        color: #dc0b6a;
+      }
+      &.icon-level-12 {
+        color: #f60505;
+      }
     }
   }
   .time {
@@ -133,7 +139,7 @@
   }
   .iconHover {
     &:hover {
-      font-weight: 700; 
+      font-weight: 700;
     }
   }
   .translation {

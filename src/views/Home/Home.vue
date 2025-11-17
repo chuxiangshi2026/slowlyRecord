@@ -49,8 +49,7 @@ import HomeBreadcrumb from "@/views/Home/components/HomeBreadcrumb.vue";
 
 .el-main{
   background: #f0f2f5;
-  display: flex
-;
+  display: flex;
   flex-direction: column;
 }
 </style>
