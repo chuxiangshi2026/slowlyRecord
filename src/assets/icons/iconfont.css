@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 2767679 */
-  src: url('iconfont.woff2?t=1638419280349') format('woff2'),
-       url('iconfont.woff?t=1638419280349') format('woff'),
-       url('iconfont.ttf?t=1638419280349') format('truetype');
+    font-family: "iconfont"; /* Project id 4819179 */
+    src: url('iconfont.woff2?t=1763362451646') format('woff2'),
+    url('iconfont.woff?t=1763362451646') format('woff'),
+    url('iconfont.ttf?t=1763362451646') format('truetype');
 }
 
 .iconfont {
@@ -39,6 +39,14 @@
 
 .icon-level-10:before {
   content: "\e623";
+}
+
+.icon-level-11:before {
+    content: "\e63c";
+}
+
+.icon-level-12:before {
+    content: "\e63d";
 }
 
 .icon-level-2:before {
@@ -123,5 +131,9 @@
 
 .icon-delete:before {
   content: "\e60e";
+}
+
+.icon-lock:before {
+    content: "\e676";
 }
 
