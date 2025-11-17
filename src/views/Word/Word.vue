@@ -11,16 +11,19 @@
   <!--  </el-row>-->
 
 
-  <div class="words-cards-wrapper">
-    <MyListItem v-if="wordsStore.count>0" v-for="(item,index) in wordsStore.words"
-                :key="index"
-                :word="item"
-                :style="item.isReview ? '': 'display:none' "
-                v-model="wordsStore.words[index]"
-                @delete="deleteWord(index)"
-    >
-    </MyListItem>
+  <div v-if="wordsStore.count > 0">
+    <div class="words-cards-wrapper">
+      <MyListItem v-for="(item,index) in wordsStore.words"
+                  :key="index"
+                  :word="item"
+                  :style="item.isReview ? '': 'display:none' "
+                  v-model="wordsStore.words[index]"
+                  @delete="deleteWord(index)"
+      >
+      </MyListItem>
+    </div>
   </div>
+  <div v-else>暂无数据,请在主界面输入框添加单词</div>
   <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
   <div class="home_footer">
