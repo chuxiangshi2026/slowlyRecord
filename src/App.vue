@@ -158,7 +158,7 @@ function updateReview() {
     // 当前时间大于复习时间 ,
     if (!item.isReview && now > learnDate) {
       item.isReview = true
-      wordsStore.updateWord(item)
+      wordsStore.addAndUpdateWord(item)
     }
   }
 }
@@ -176,6 +176,6 @@ function updateReview() {
 @use '@/assets/styles/letter.scss';
 @use '@/assets/styles/list-item.scss';
 @use '@/assets/icons/iconfont.css';
-@use '@/assets/styles/iconfont1.scss';
+//@use '@/assets/styles/iconfont1.scss';
 
 </style>
