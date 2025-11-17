@@ -48,15 +48,7 @@ const emit = defineEmits(['translation', 'remember', 'forget', 'delete'])
 
 import {ref} from "vue";
 import {DEFAULT_INTERVALS} from "@/constants";
-// import {useWordsStore} from "@/stores/words.ts";
-// import {storeToRefs} from "pinia";
 
-
-// const explainedHidden = ref(true);
-
-
-// const wordsStore = useWordsStore();
-// const {words} = storeToRefs(wordsStore)
 
 // 翻译
 const translation = () => {

@@ -13,11 +13,11 @@
 
   <div class="words-cards-wrapper">
     <MyListItem v-if="wordsStore.count>0" v-for="(item,index) in wordsStore.words"
-                  :key="index"
-                  :word="item"
-                  :style="item.isReview ? '': 'display:none' "
-                  v-model="wordsStore.words[index]"
-                  @delete="deleteWord(index)"
+                :key="index"
+                :word="item"
+                :style="item.isReview ? '': 'display:none' "
+                v-model="wordsStore.words[index]"
+                @delete="deleteWord(index)"
     >
     </MyListItem>
   </div>
@@ -27,11 +27,13 @@
     <div>
       <span>单词总数: {{ wordsStore.count }}</span>
       <span>待复习: {{ wordsStore.forgetCount }}</span>
-      <span>已复习: {{ wordsStore.reviewCount}}</span>
+      <span>已复习: {{ wordsStore.reviewCount }}</span>
       <span>已记完: {{ wordsStore.rememberCount }}</span>
     </div>
     <div>
       <!--      <i class="iconfont icon-setting"></i>-->
+      <i class="iconfont icon-visible" @click="visibleExplained"></i>
+      <i class="iconfont icon-invisible" @click="invisibleExplained"></i>
       <i class="iconfont icon-import" @click="importWords"></i>
       <i class="iconfont icon-export" @click="exportWords"></i>
       <!--      <a href="#/home/list" style="margin-left: 16px;">-->
@@ -55,7 +57,6 @@ import {useWordsStore} from "@/stores/words.ts";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import {v4 as uuidv4} from "uuid";
 import {DB_KEY} from "@/constants";
-
 
 
 const wordsStore = useWordsStore();
@@ -173,7 +174,7 @@ const importWords = () => {
                 isReview: word.isReview || true, // 补全isReview属性
                 ctime: word.ctime || new Date(), // 补全ctime属性
                 learnDate: word.learnDate || new Date(), // 补全learnDate属性
-                level: word.level || 0, // 补全level属性
+                level: word.level || 1, // 补全level属性
                 remember: word.remember || false, // 补全remember属性
               }));
 
@@ -260,9 +261,18 @@ const parseFileContent = (content: string): Word[] => {
       }));
 };
 
-
-
-
+/**
+ * 显示全部解释
+ */
+const visibleExplained = () => {
+  wordsStore.words.forEach(x => x.explainedHidden = false)
+}
+/**
+ * 隐藏全部解释
+ */
+const invisibleExplained = () => {
+  wordsStore.words.forEach(x => x.explainedHidden = true)
+}
 </script>
 
 <style scoped lang="scss">

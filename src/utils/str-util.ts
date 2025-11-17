@@ -7,7 +7,6 @@ import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
 
 
-
 const getParam = (query: string) => {
 
     const salt = (new Date).getTime();
@@ -51,7 +50,7 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
         "isReview": true,
         "ctime": new Date(),
         "learnDate": new Date(),
-        "level": 0,
+        "level": 1,
         "_id": DB_KEY + uuidv4(), // 假设_id为必填项
         "image": image, // 假设image为必填项
         "phonetic": phonetic, // 假设phonetic为必填项
@@ -93,6 +92,8 @@ const addWord = async (wordText: string) => {
                 // todo 音标添加
                 findWord.phonetic = ''
                 findWord.remember = false
+                findWord.level = 1
+
                 wordsStore.addAndUpdateWord(findWord)
                 console.log('添加单个单词成功');
                 // ElMessage.success('添加成功');

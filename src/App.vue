@@ -176,6 +176,6 @@ function updateReview() {
 @use '@/assets/styles/letter.scss';
 @use '@/assets/styles/list-item.scss';
 @use '@/assets/icons/iconfont.css';
-//@use '@/assets/styles/iconfont1.scss';
+@use '@/assets/styles/iconfont1.scss';
 
 </style>
