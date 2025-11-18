@@ -15,6 +15,10 @@ export const useWordsStore =
         () => {
             const words = ref<Word[]>([])
 
+            const lastAddedWordText = ref('')    // 新增：记录最新添加的单词
+
+
+
             // 总单词数
             const count = computed(() => {
                 return words.value.length;
@@ -40,6 +44,13 @@ export const useWordsStore =
             const rememberCount = computed(() => {
                 return words.value.filter((word: Word) => word.remember).length
             })
+
+            // actions 用普通函数
+            function setLastAddedWordText(text: string) {
+                console.log('更新定位单词',text)
+                lastAddedWordText.value = text
+            }
+
 
 
             /**
@@ -166,10 +177,12 @@ export const useWordsStore =
 
             return {
                 words,
+                lastAddedWordText,
                 count,
                 rememberCount,
                 reviewCount,
                 forgetCount,
+                setLastAddedWordText,
                 findWord,
                 addAndUpdateWord,
                 addAndUpdateWords,
@@ -180,6 +193,9 @@ export const useWordsStore =
                 upReview
             }
         }, {
-            persist: true,
+            persist: {
+                key: 'words-store',
+                storage: localStorage,
+            },
         }
     )

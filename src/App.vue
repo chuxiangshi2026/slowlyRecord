@@ -131,9 +131,10 @@ async function handlePluginAddWord(action: PluginEnterAction) {
   // 隐藏主窗口
   // if (needclose) window.utools.hideMainWindow()
 
-
   // console.log('addWord====================', action.payload)
+  // 传入 scrollToWordByText 作为回调函数
   await addWord(action.payload)
+
 }
 
 /**

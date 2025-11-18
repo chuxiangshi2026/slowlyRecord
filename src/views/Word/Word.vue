@@ -12,13 +12,14 @@
 
 
   <div v-if="wordsStore.count > 0">
-    <div class="words-cards-wrapper">
+    <div class="words-cards-wrapper" ref="scrollContainer">
       <MyListItem v-for="(item,index) in wordsStore.words"
                   :key="index"
                   :word="item"
                   :style="item.isReview ? '': 'display:none' "
                   v-model="wordsStore.words[index]"
                   @delete="deleteWord(index)"
+                  :ref="(el) => setItemRef(el, index)"
       >
       </MyListItem>
     </div>
@@ -35,6 +36,9 @@
     </div>
     <div>
       <!--      <i class="iconfont icon-setting"></i>-->
+<!--      <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
+      <i class="iconfont icon-top" @click="scrollToTop"></i>
+      <i class="iconfont icon-down" @click="scrollToBottom"></i>
       <i class="iconfont icon-visible" @click="visibleExplained"></i>
       <i class="iconfont icon-invisible" @click="invisibleExplained"></i>
       <i class="iconfont icon-import" @click="importWords"></i>
@@ -60,9 +64,104 @@ import {useWordsStore} from "@/stores/words.ts";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import {v4 as uuidv4} from "uuid";
 import {DB_KEY} from "@/constants";
+import {nextTick, ref, watch} from "vue";
 
 
 const wordsStore = useWordsStore();
+
+
+/*
+  单词滚动模块
+ */
+const scrollContainer = ref<HTMLElement | null>(null)
+const itemRefs = ref<HTMLElement[]>([])
+
+// 设置单项引用
+const setItemRef = (el: any, index: number) => {
+
+  // el 是组件实例，我们需要获取它的 $el 属性
+  if (el && el.$el) {
+    itemRefs.value[index] = el.$el;
+  }
+ /* if (el) {
+    itemRefs.value[index] = el
+  }*/
+}
+
+// 滚动到指定索引的单词
+const scrollToWord = (index: number) => {
+  nextTick(() => {
+    if (itemRefs.value[index] && scrollContainer.value) {
+      const container = scrollContainer.value
+      const targetElement = itemRefs.value[index]
+
+      // 计算相对位置
+      const containerRect = container.getBoundingClientRect()
+      const targetRect = targetElement.getBoundingClientRect()
+
+      // 滚动到目标元素位置
+      container.scrollTop = container.scrollTop + targetRect.top - containerRect.top - 100
+
+
+      // 延迟清空状态，确保滚动执行完成
+      setTimeout(() => {
+        wordsStore.setLastAddedWordText('')
+      }, 100)
+    }
+  })
+}
+
+
+// 滚动到顶部
+const scrollToTop = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = 0
+  } else {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+  }
+}
+
+// 滚动到底部
+const scrollToBottom = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight
+  } else {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    })
+  }
+}
+
+/**
+ * 滚动到指定单词处
+ */
+const scrollToWordByText = (wordText: string) => {
+  console.log("---------", wordText, wordsStore.lastAddedWordText)
+  const index = wordsStore.words.findIndex(word => word.text === wordText)
+  if (index !== -1) {
+    scrollToWord(index)
+  }
+}
+
+
+// 当新数据更新时 自动滚动到单词处
+// 监听 Store 中的 lastAddedWordText 状态
+watch(() => wordsStore.lastAddedWordText, (wordText) => {
+  console.log("Watch triggered with wordText:", wordText);
+  if (wordText) {
+    nextTick(() => {  // 等待 DOM 更新
+      console.log("Scrolling to word:", wordText);
+      scrollToWordByText(wordText)  // 调用组件内的滚动方法
+      // 清空状态，避免重复触发
+      // 延迟清空状态，确保滚动执行完成
+      setTimeout(() => {
+        wordsStore.setLastAddedWordText('')
+      }, 100)
+    })
+  }
+}, { immediate: true })
+
 
 /**
  * 清空单词库
@@ -82,7 +181,9 @@ const initWord = () => {
   ElMessage.success('初始化成功');
 }
 
-
+/**
+ * 删除单词
+ */
 const deleteWord = (index: number) => {
   wordsStore.deleteWord(index)
 }
@@ -189,6 +290,7 @@ const importWords = () => {
           if (uniqueWords.length > 0) {
             // 将去重后的单词列表添加到存储
             wordsStore.addAndUpdateWords(uniqueWords).then(() => {
+              scrollToBottom()
               ElMessage.success('导入成功');
             }, error => {
               ElMessage.success('导入失败');
@@ -316,6 +418,9 @@ const invisibleExplained = () => {
   flex-wrap: wrap;
   padding: 16px;
   background-color: #f8f8f8;
+
+  max-height: calc(100vh - 100px); // 减去顶部和其他元素的高度
+  overflow-y: auto; // 启用纵向滚动
 }
 
 

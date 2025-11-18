@@ -71,17 +71,21 @@ const addWord = async (wordText: string) => {
 
     const wordsStore = useWordsStore(); // 传入 Pinia 实例
 
+    console.info('没修改之前的定位单词',wordsStore.lastAddedWordText)
 
     let findWord = wordsStore.findWord(wordText)
     if (findWord) {
+        wordsStore.setLastAddedWordText(wordText)
         console.log('单词已存在');
-        // 如果有这个单词
+        // 如果有这个单词  并有 释义
         if (findWord.explains) {
             console.log('单词已存在');
+            // scrollToWordByText(wordText)
+
             ElMessage.success('单词已存在');
             return
         }
-
+        //  有这个单词,但是没有 释义
         const params: YdParams = getParam(wordText)
         wordsStore.translation(params).then(res => {
             let resData = res.data;
@@ -95,7 +99,7 @@ const addWord = async (wordText: string) => {
                 findWord.level = 1
 
                 wordsStore.addAndUpdateWord(findWord)
-                console.log('添加单个单词成功');
+                console.log('更新单词成功');
                 // ElMessage.success('添加成功');
                 return
             }
@@ -127,6 +131,7 @@ const addWord = async (wordText: string) => {
             // console.log(data, '更新单词成功');
             wordsStore.addAndUpdateWords(data)
 
+            wordsStore.setLastAddedWordText(wordText)
             // ElMessage.success('成功');
             // router.push('/')
         } else {
