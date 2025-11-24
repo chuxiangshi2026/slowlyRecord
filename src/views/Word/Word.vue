@@ -37,20 +37,28 @@
     <div>
       <!--      <i class="iconfont icon-setting"></i>-->
       <!--      <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
-      <i class="iconfont icon-top" @click="scrollToTop"></i>
-      <i class="iconfont icon-down" @click="scrollToBottom"></i>
-      <i class="iconfont icon-visible" @click="visibleExplained"></i>
-      <i class="iconfont icon-invisible" @click="invisibleExplained"></i>
-<!--      <i class="iconfont icon-import" @click="importWords"></i>
-      <i class="iconfont icon-export" @click="exportWords"></i>-->
+      <el-tooltip class="box-item" effect="dark" content="置顶" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-top" @click="scrollToTop"></i>
+      </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="置底" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-down" @click="scrollToBottom"></i>
+      </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="显示释义" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-visible" @click="visibleExplained"></i>
+      </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="隐藏释义" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-invisible" @click="invisibleExplained"></i>
+      </el-tooltip>
+      <!--      <i class="iconfont icon-import" @click="importWords"></i>
+            <i class="iconfont icon-export" @click="exportWords"></i>-->
 
       <!-- 导入下拉菜单 -->
       <el-dropdown @command="handleImportCommand">
         <i class="iconfont icon-import"></i>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="importJson">导入JSON</el-dropdown-item>
-            <el-dropdown-item command="importText">导入TXT/CSV</el-dropdown-item>
+            <el-dropdown-item command="importJson">JSON导入</el-dropdown-item>
+            <el-dropdown-item command="importText">TXT/CSV导入</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -184,7 +192,6 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
     })
   }
 }, {immediate: true})
-
 
 
 /**

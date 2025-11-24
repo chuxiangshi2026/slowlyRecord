@@ -1,7 +1,7 @@
 <template>
 
-<!--ref="root"-->
-  <div class="list-item"   ref="itemRef">
+  <!--ref="root"-->
+  <div class="list-item" ref="itemRef">
     <p class="word">
       {{ word.text }}
       <span class="phonetic">{{ word.phonetic }}</span>
@@ -11,18 +11,29 @@
     </div>
     <div class="operate">
       <div>
-        <i class="iconfont icon-player iconHover" @click="play">
-        </i>
+        <el-tooltip class="box-item" effect="dark" content="播放" placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-player iconHover" @click="play"/>
+        </el-tooltip>
         <!-- 添加audio标签  -->
-        <audio ref="audioPlayer" :src="word.pronunciation" hidden></audio>
 
-        <i class="iconfont icon-translate iconHover" @click="translation()"></i>
+        <audio ref="audioPlayer" :src="word.pronunciation" hidden></audio>
+        <el-tooltip class="box-item" effect="dark" content="释义" placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-translate iconHover" @click="translation()"/>
+        </el-tooltip>
       </div>
       <div>
-        <i class="iconfont icon-check iconHover" @click="remember"></i>
-        <i class="iconfont icon-close iconHover" @click="forget"></i>
-        <i class="iconfont icon-lock iconHover" @click="remembered"></i>
-        <i class="iconfont icon-delete iconHover" @click="deleteWord"></i>
+        <el-tooltip class="box-item" effect="dark" content="记住" placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-check iconHover" @click="remember"></i>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-close iconHover" @click="forget"></i>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="dark" content="永久记住" placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-lock iconHover" @click="remembered"></i>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="dark" content="删除" placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-delete iconHover" @click="deleteWord"></i>
+        </el-tooltip>
       </div>
     </div>
     <div>
@@ -38,6 +49,7 @@
 
 <script setup lang="ts">
 import type {Word} from "@/types/words";
+
 const itemRef = ref<HTMLElement | null>(null);
 
 
@@ -57,6 +69,7 @@ import {ref} from "vue";
 import {DEFAULT_INTERVALS} from "@/constants";
 import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
+
 const wordsStore = useWordsStore();
 
 // 翻译
@@ -163,7 +176,6 @@ const remember = () => {
   const endLearnDate = learnDate.getTime() + DEFAULT_INTERVALS[Math.min(level + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000;
 
 
-
   if (wordModel.value.level >= 12) {
     wordModel.value.remember = true;
   }
@@ -178,11 +190,10 @@ const remember = () => {
   wordModel.value.explainedHidden = true;
 
 
-
   // 发送事件通知父组件
   // emit('remember', props.word);
 
-  console.log('缓存单词数据' , JSON.stringify(props.word));
+  console.log('缓存单词数据', JSON.stringify(props.word));
 
   // 判断是否满足条件
   if (now > startLearnDate && now < endLearnDate) {

@@ -162,3 +162,9 @@
     color: #409eff;
   }
 }
+
+.small-tooltip {
+  font-size: 8px !important; /* 字体大小 */
+  padding: 1px 4px !important; /* 缩小背景 */
+  background-color: #333333;
+}
