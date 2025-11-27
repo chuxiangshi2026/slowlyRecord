@@ -23,13 +23,13 @@
       </div>
       <div>
         <el-tooltip class="box-item" effect="dark" content="记住" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-check iconHover" @click="remember"></i>
+          <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions==2 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-close iconHover" @click="forget"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="永久记住" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-lock iconHover" @click="remembered"></i>
+          <i class="iconfont icon-lock iconHover" @click="remembered" :class="{ disabled: disableActions==2 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="删除" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-delete iconHover" @click="deleteWord"></i>
@@ -59,7 +59,8 @@ defineExpose({
 
 // 接收word传参，并传递给子组件
 const props = defineProps<{
-  word: Word
+  word: Word,
+  disableActions?: number
 }>()
 const wordModel = defineModel<Word>({required: true})
 const emit = defineEmits(['translation', 'remember', 'forget', 'delete'])
@@ -67,7 +68,7 @@ const emit = defineEmits(['translation', 'remember', 'forget', 'delete'])
 
 import {ref} from "vue";
 import {DEFAULT_INTERVALS} from "@/constants";
-import {useUsersStore} from "@/stores/users.ts";
+// import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave} from "@/utils/audio-util.ts";
 
@@ -135,7 +136,6 @@ const downloadAndStoreAudio = async (url: string, wordId: string) => {
     // localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
 
 
-
     // 创建一个音频上下文用于处理音频
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
 
@@ -168,7 +168,6 @@ const downloadAndStoreAudio = async (url: string, wordId: string) => {
     const wavArrayBuffer = await wavBlob.arrayBuffer();
     const uint8Array = new Uint8Array(wavArrayBuffer);
     localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
-
 
 
     // 同时存储到单词对象的 pronunciation 字段（base64编码）
@@ -265,6 +264,9 @@ const play = async () => {
  */
 const remember = () => {
 
+  // 如果disableActions为true，则不执行操作
+  if (props.disableActions) return;
+
   //如果 当前时间大于  上次复习时间+当前等级*默认复习间隔 且小于上次复习时间+（当前等级+3）*默认复习间隔  等级+1
   // 当前时间
   const now = new Date().getTime();
@@ -321,6 +323,8 @@ const remember = () => {
  */
 const remembered = () => {
 
+  if (props.disableActions) return;
+
   // 更新复习时间
   wordModel.value.learnDate = new Date();
 
@@ -338,14 +342,23 @@ const remembered = () => {
 
 // 忘记
 const forget = () => {
+  console.log("忘记方法",wordModel.value)
   // emit('forget', 'childValue');
-  if (wordModel.value && wordModel.value.level > 0) {
+
+  if (wordModel.value?.level >= 12) {
+    console.log("12级单词忘记了")
+    wordModel.value.level = 1;
+    wordModel.value.remember = false;
+    wordModel.value.isReview = true;
+    wordModel.value.learnDate = new Date();
+  }else if (wordModel.value?.level && wordModel.value.level > 1) {
+    console.log("降级")
     wordModel.value.level--;
   }
   if (wordModel.value.level < 12) {
     wordModel.value.remember = false;
   }
-  wordModel.value.level === 0 ? wordModel.value.explainedHidden = false : wordModel.value.explainedHidden = true;
+  wordModel.value.level === 1 ? wordModel.value.explainedHidden = false : wordModel.value.explainedHidden = true;
 
   wordsStore.addAndUpdateWord(wordModel.value)
 }
@@ -358,5 +371,11 @@ const deleteWord = () => {
 </script>
 
 <style scoped lang="scss">
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  color: gray;
+}
 
 </style>
