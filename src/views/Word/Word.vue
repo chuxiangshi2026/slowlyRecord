@@ -17,13 +17,16 @@
       <RecycleScroller
           class="scroller"
           :items="showFilteredWords"
-          :item-size="150"
-          :item-secondary-size="380"
-          :grid-items="2"
+          :item-secondary-size="370"
           key-field="text"
           v-slot="{ item, index }"
+          :dynamic-size="true"
+          :min-item-size="165"
+          :max-item-size="175"
+          :grid-items="2"
+          :item-size="165"
       >
-        <!--        <div class="card-wrapper">-->
+        <!--      <div class="grid-item">-->
         <MyListItem
             :word="item"
             :disable-actions="listMode"
@@ -31,7 +34,7 @@
             @delete="deleteWord(getIndexInOriginalList(item))"
         >
         </MyListItem>
-        <!--        </div>-->
+        <!--      </div>-->
       </RecycleScroller>
 
       <!--      <MyListItem v-for="(item,index) in wordsStore.words"
@@ -656,19 +659,23 @@ const invisibleExplained = () => {
   padding: 16px;
   background-color: #f8f8f8;
   border-radius: 8px;
-  ////overflow-y: auto;
+  //overflow-y: auto;
   overflow: hidden;
 
   .scroller {
     width: 100% !important;
     height: 100% !important;
     grid-template-columns: repeat(2, 1fr); /* 两列布局 */
-    gap: 0; /* 卡片间距 */
+    //gap: 16px; /* 卡片间距 */
     //align-content: start; /* 顶部对齐 */
     padding: 0;
     margin: 0;
   }
 
+  //.grid-item {
+  //  break-inside: avoid;
+  //  padding: 0 8px 16px 8px;
+  //}
   //max-height: calc(100vh - 100px); // 减去顶部和其他元素的高度
   //overflow-y: auto; // 启用纵向滚动
 }

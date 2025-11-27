@@ -39,7 +39,14 @@
     </div>
     <div>
       <div class="translation" :hidden="word.explainedHidden">
-        <div class="translate-editable" contenteditable="true">{{ word.explains }}</div>
+<!--             @keydown.ctrl.enter="saveExplanation"-->
+        <div class="translate-editable" contenteditable="true"
+             @blur="saveExplanation"
+            @keydown="handleKeydown"
+             ref="explanationRef"
+        >{{ word.explains }}</div>
+<!--        <div class="edit-tip"></div>-->
+<!--&lt;!&ndash;        按 Ctrl+Enter 保存编辑&ndash;&gt;-->
       </div>
       <div class="sentence_wrapper achieve"></div>
     </div>
@@ -74,6 +81,36 @@ import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave} from "@/utils/audio-util.ts";
 
 const wordsStore = useWordsStore();
+
+/*
+   编辑释义+快捷键保存
+ */
+const explanationRef = ref<HTMLElement | null>(null);
+// 处理键盘事件
+const handleKeydown = (event: KeyboardEvent) => {
+  // 检查是否按下了 Ctrl+Enter
+  if (event.ctrlKey && event.key === 'Enter') {
+    saveExplanation(event);
+    // 保存后失去焦点
+    if (explanationRef.value) {
+      explanationRef.value.blur();
+    }
+    // 阻止默认行为
+    event.preventDefault();
+  }
+};
+// 保存释义
+const saveExplanation = (event: Event) => {
+  const target = event.target as HTMLElement;
+  const newExplanation = target.innerText.trim();
+
+  // 只有当内容发生变化时才更新
+  if (newExplanation !== wordModel.value.explains) {
+    wordModel.value.explains = newExplanation;
+    wordsStore.addAndUpdateWord(wordModel.value);
+  }
+}
+
 
 // 翻译
 const translation = () => {

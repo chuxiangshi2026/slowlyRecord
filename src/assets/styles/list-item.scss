@@ -9,7 +9,8 @@
 
   //width: 45%;
   width: 90%;
-  height: 100px;
+  min-height: 110px;
+  max-height: 130px;
   padding: 16px;
   margin-bottom: 16px;
   .translate-editable {
@@ -148,6 +149,10 @@
   .translation {
     position: relative;
     padding-right: 10px;
+    height: auto;
+    //min-height: 100px;
+
+
     .iconfont {
       position: absolute;
       bottom: 0;
