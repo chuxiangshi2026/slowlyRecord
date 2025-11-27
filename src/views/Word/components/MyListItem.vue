@@ -23,16 +23,17 @@
       </div>
       <div>
         <el-tooltip class="box-item" effect="dark" content="记住" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions==2 }"></i>
+          <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-close iconHover" @click="forget"></i>
+          <i class="iconfont icon-close iconHover" @click="forget" :class="{ disabled: disableActions==1||disableActions==3}"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="永久记住" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-lock iconHover" @click="remembered" :class="{ disabled: disableActions==2 }"></i>
+          <i class="iconfont icon-lock iconHover" @click="remembered" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="删除" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-delete iconHover" @click="deleteWord"></i>
+        <el-tooltip class="box-item" effect="dark" content="删除"
+                    placement="top" popper-class="small-tooltip">
+          <i class="iconfont icon-delete iconHover" @click="deleteWord" :class="{ disabled: disableActions==1 }"></i>
         </el-tooltip>
       </div>
     </div>
@@ -60,7 +61,7 @@ defineExpose({
 // 接收word传参，并传递给子组件
 const props = defineProps<{
   word: Word,
-  disableActions?: number
+  disableActions?: number  //0 待复习  1已复习  2 永久记住 3 全部
 }>()
 const wordModel = defineModel<Word>({required: true})
 const emit = defineEmits(['translation', 'remember', 'forget', 'delete'])
@@ -342,7 +343,7 @@ const remembered = () => {
 
 // 忘记
 const forget = () => {
-  console.log("忘记方法",wordModel.value)
+  console.log("忘记方法", wordModel.value)
   // emit('forget', 'childValue');
 
   if (wordModel.value?.level >= 12) {
@@ -351,7 +352,7 @@ const forget = () => {
     wordModel.value.remember = false;
     wordModel.value.isReview = true;
     wordModel.value.learnDate = new Date();
-  }else if (wordModel.value?.level && wordModel.value.level > 1) {
+  } else if (wordModel.value?.level && wordModel.value.level > 1) {
     console.log("降级")
     wordModel.value.level--;
   }

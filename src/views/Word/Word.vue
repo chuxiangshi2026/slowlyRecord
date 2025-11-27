@@ -16,22 +16,22 @@
       <!--      虚拟滚动,只加载真实dom-->
       <RecycleScroller
           class="scroller"
-          :items="filteredWords"
+          :items="showFilteredWords"
           :item-size="150"
           :item-secondary-size="380"
           :grid-items="2"
           key-field="text"
           v-slot="{ item, index }"
       >
-<!--        <div class="card-wrapper">-->
-          <MyListItem
-              :word="item"
-              :disable-actions="showOnlyRemembered"
-              v-model="wordsStore.words[getIndexInOriginalList(item)]"
-              @delete="deleteWord(getIndexInOriginalList(item))"
-          >
-          </MyListItem>
-<!--        </div>-->
+        <!--        <div class="card-wrapper">-->
+        <MyListItem
+            :word="item"
+            :disable-actions="listMode"
+            v-model="wordsStore.words[getIndexInOriginalList(item)]"
+            @delete="deleteWord(getIndexInOriginalList(item))"
+        >
+        </MyListItem>
+        <!--        </div>-->
       </RecycleScroller>
 
       <!--      <MyListItem v-for="(item,index) in wordsStore.words"
@@ -51,13 +51,10 @@
 
   <div class="home_footer">
     <div>
-      <span>单词总数: {{ wordsStore.count }}</span>
-      <span>待复习: {{ wordsStore.forgetCount }}</span>
-      <span>已复习: {{ wordsStore.reviewCount }}</span>
-      <!--      <span>已记完: {{ wordsStore.rememberCount }}</span>-->
-      <span :class="{ 'remembered-highlight': showOnlyRemembered==2 }" @click="toggleShowOnlyRemembered">
-        已记完: {{ wordsStore.rememberCount }}
-      </span>
+      <span :class="{ 'remembered-highlight': listMode==0 }" @click="showOnlyForget"> 待复习: {{ wordsStore.forgetCount }} </span>
+      <span :class="{ 'remembered-highlight': listMode==1 }" @click="showOnlyReview"> 已复习: {{ wordsStore.reviewCount }} </span>
+      <span :class="{ 'remembered-highlight': listMode==2 }" @click="showOnlyRemembered"> 已记完: {{ wordsStore.rememberCount }} </span>
+      <span :class="{ 'remembered-highlight': listMode==3 }" @click="showAll"> 单词总数: {{ wordsStore.count }} </span>
     </div>
     <div>
       <!--      <i class="iconfont icon-setting"></i>-->
@@ -78,7 +75,7 @@
             <i class="iconfont icon-export" @click="exportWords"></i>-->
 
       <!-- 导入下拉菜单 -->
-      <el-dropdown @command="handleImportCommand" :disabled="showOnlyRemembered==2">
+      <el-dropdown @command="handleImportCommand" :disabled="listMode==1||listMode==2">
         <i class="iconfont icon-import"></i>
         <template #dropdown>
           <el-dropdown-menu>
@@ -117,11 +114,8 @@ import type {Word} from "@/types/words";
 
 import {useWordsStore} from "@/stores/words.ts";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
-import {v4 as uuidv4} from "uuid";
-import {DB_KEY} from "@/constants";
 import {computed, nextTick, ref, watch} from "vue";
-import {addWord, getParam} from "@/utils/str-util.ts";
-import {formatDateTime} from "@/utils/date-util.ts";
+import {getParam} from "@/utils/str-util.ts";
 import {
   filterWordsForJsonExport,
   filterWordsForTextExport,
@@ -139,30 +133,44 @@ const wordsStore = useWordsStore();
 /**
  * 显示添加单词
  */
-const  showWords=  computed(() => {
+const showWords = computed(() => {
   // 如果 待复习单词为0  且 状态为0 为true
-  console.log('列表状态', showOnlyRemembered.value==0);
-  return  wordsStore.forgetCount <= 0 && showOnlyRemembered.value==0
+  console.log('列表状态', listMode.value == 0);
+  return wordsStore.forgetCount <= 0 && listMode.value == 0
 })
 
 
 // 控制是否只显示已记住的单词 0 待复习(正在显示)  1 已复习(暂时不需要复习的) 2 已记住
-const showOnlyRemembered = ref(0);
+const listMode = ref(0);
+
+
+const showOnlyForget = () => {
+  listMode.value = 0;
+}
+
+const showOnlyReview = () => {
+  listMode.value = listMode.value === 0 ? 1 : 0;
+}
 
 // 切换只显示已记住的单词
-const toggleShowOnlyRemembered = () => {
-  showOnlyRemembered.value = showOnlyRemembered.value === 0 ? 2 : 0;
+const showOnlyRemembered = () => {
+  listMode.value = listMode.value === 0 ? 2 : 0;
+}
+const showAll = () => {
+  listMode.value = listMode.value === 0 ? 3 : 0;
 }
 
 
 // 计算过滤后的单词列表
-const filteredWords = computed(() => {
+const showFilteredWords = computed(() => {
   // console.log('过滤后的词',wordsStore.words)
-  if (showOnlyRemembered.value==2) {
+  if (listMode.value == 2) {
     return wordsStore.words.filter(item => item.remember)
-  } else if(showOnlyRemembered.value==1){
+  } else if (listMode.value == 1) {
     return wordsStore.words.filter(item => !item.isReview)
-  }else {
+  } else if (listMode.value == 3) {
+    return wordsStore.words
+  } else {
     return wordsStore.words.filter(item => item.isReview)
   }
 })
@@ -327,9 +335,9 @@ const exportWords = () => {
     ElMessage.warning('没有单词可导出');
     return;
   }
-
+  // wordsStore.words
   // 过滤为指定属性
-  const filteredWords = filterWordsForJsonExport(wordsStore.words);
+  const filteredWords = filterWordsForJsonExport(showFilteredWords.value);
 
 
   // 将单词列表转换为JSON字符串
@@ -549,7 +557,7 @@ const exportTextWords = () => {
   // 过滤为指定属性
   // 将单词列表转换为字符串 (单词,释义 格式)
   // , ${word.pronunciation} 发音地址,先不对外导出了,key泄露了
-  const content = filterWordsForTextExport(wordsStore.words);
+  const content = filterWordsForTextExport(showFilteredWords.value);
 
 
   // 创建Blob对象
@@ -633,7 +641,7 @@ const invisibleExplained = () => {
 
 
 .words-cards-wrapper {
-  width: 96%;      /* 父容器占满 */
+  width: 96%; /* 父容器占满 */
   height: calc(100vh - 80px);
   //display: flex;
   //justify-content: space-around;
@@ -647,8 +655,8 @@ const invisibleExplained = () => {
   overflow: hidden;
 
   .scroller {
-    width: 100%!important;
-    height: 100%!important;
+    width: 100% !important;
+    height: 100% !important;
     grid-template-columns: repeat(2, 1fr); /* 两列布局 */
     gap: 0; /* 卡片间距 */
     //align-content: start; /* 顶部对齐 */
@@ -665,7 +673,6 @@ const invisibleExplained = () => {
   //width: 100%;
   //height: 150px; !* 与 item-size 保持一致 *!
 }*/
-
 
 
 </style>
