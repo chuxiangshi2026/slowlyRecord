@@ -10,8 +10,9 @@
 
 <style scoped lang="scss">
 .home-main {
-  margin-top: 20px;
+  margin-top: 2px;
   background: #fff;
+  border-radius: 8px;
   flex-grow: 1;
   position: relative;
 }
