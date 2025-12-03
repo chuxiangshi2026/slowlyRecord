@@ -210,7 +210,41 @@ const setItemRef = (el: any, index: number) => {
 // 滚动到指定索引的单词
 const scrollToWord = (index: number) => {
   nextTick(() => {
-    if (itemRefs.value[index] && scrollContainer.value) {
+    // 使用虚拟滚动时，直接计算滚动位置
+    const scroller = document.querySelector('.scroller')
+    if (scroller) {
+      // 计算目标项的位置（考虑网格布局）
+      const itemsPerRow = 2 // 从模板中的 :grid-items="2" 得知
+      const rowIndex = Math.floor(index / itemsPerRow)
+      const itemHeight = 165 // 从模板中的 :item-size="165" 得知
+
+      // 滚动到目标行的位置，留出一些顶部空间便于查看
+      scroller.scrollTop = Math.max(0, rowIndex * itemHeight - 50)
+
+      // 延迟清空状态，确保滚动执行完成
+      setTimeout(() => {
+        wordsStore.setLastAddedWordText('')
+      }, 100)
+    } else if (itemRefs.value[index] && scrollContainer.value) {
+      // 回退到原来的方法
+      const container = scrollContainer.value
+      const targetElement = itemRefs.value[index]
+
+      // 计算相对位置
+      const containerRect = container.getBoundingClientRect()
+      const targetRect = targetElement.getBoundingClientRect()
+
+      // 滚动到目标元素位置
+      container.scrollTop = container.scrollTop + targetRect.top - containerRect.top - 100
+
+      // 延迟清空状态，确保滚动执行完成
+      setTimeout(() => {
+        wordsStore.setLastAddedWordText('')
+      }, 100)
+    }
+
+
+/*    if (itemRefs.value[index] && scrollContainer.value) {
       const container = scrollContainer.value
       const targetElement = itemRefs.value[index]
 
@@ -227,29 +261,50 @@ const scrollToWord = (index: number) => {
         wordsStore.setLastAddedWordText('')
       }, 100)
     }
+      */
   })
 }
 
 
 // 滚动到顶部
 const scrollToTop = () => {
-  if (scrollContainer.value) {
+  const scroller = document.querySelector('.scroller');
+  if (scroller) {
+    scroller.scrollTop = 0;
+  } else if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = 0;
+  } else {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+/*  if (scrollContainer.value) {
     scrollContainer.value.scrollTop = 0
   } else {
     window.scrollTo({top: 0, behavior: 'smooth'})
-  }
+  }*/
 }
 
 // 滚动到底部
 const scrollToBottom = () => {
-  if (scrollContainer.value) {
+  const scroller = document.querySelector('.scroller');
+  if (scroller) {
+    scroller.scrollTop = scroller.scrollHeight;
+  } else if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+  } else {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+
+  /*if (scrollContainer.value) {
     scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight
   } else {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'smooth'
     })
-  }
+  }*/
 }
 
 /**
