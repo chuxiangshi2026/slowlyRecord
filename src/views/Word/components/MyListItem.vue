@@ -26,7 +26,8 @@
           <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-close iconHover" @click="forget" :class="{ disabled: disableActions==1||disableActions==3}"></i>
+          <i class="iconfont icon-close iconHover" @click="forget"
+             :class="{ disabled: disableActions==1||disableActions==3}"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="永久记住" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-lock iconHover" @click="remembered" :class="{ disabled: disableActions!=0 }"></i>
@@ -38,15 +39,16 @@
       </div>
     </div>
     <div>
-      <div class="translation" :hidden="word.explainedHidden">
-<!--             @keydown.ctrl.enter="saveExplanation"-->
+      <div class="translation" :hidden="(showExplained===-1?word.explainedHidden:showExplained) == 0">
+        <!--             @keydown.ctrl.enter="saveExplanation"-->
         <div class="translate-editable" contenteditable="true"
              @blur="saveExplanation"
-            @keydown="handleKeydown"
+             @keydown="handleKeydown"
              ref="explanationRef"
-        >{{ word.explains }}</div>
-<!--        <div class="edit-tip"></div>-->
-<!--&lt;!&ndash;        按 Ctrl+Enter 保存编辑&ndash;&gt;-->
+        >{{ word.explains }}
+        </div>
+        <!--        <div class="edit-tip"></div>-->
+        <!--&lt;!&ndash;        按 Ctrl+Enter 保存编辑&ndash;&gt;-->
       </div>
       <div class="sentence_wrapper achieve"></div>
     </div>
@@ -69,6 +71,7 @@ defineExpose({
 const props = defineProps<{
   word: Word,
   disableActions?: number  //0 待复习  1已复习  2 永久记住 3 全部
+  showExplained?: number  //-1 显示原逻辑， 1显示全部 0 隐藏全部
 }>()
 const wordModel = defineModel<Word>({required: true})
 const emit = defineEmits(['translation', 'remember', 'forget', 'delete'])

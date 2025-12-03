@@ -30,6 +30,7 @@
         <MyListItem
             :word="item"
             :disable-actions="listMode"
+            :showExplained="showExplained"
             v-model="wordsStore.words[getIndexInOriginalList(item)]"
             @delete="deleteWord(getIndexInOriginalList(item))"
         >
@@ -586,17 +587,22 @@ const exportTextWords = () => {
 }
 
 
+
+// 是否直接显示或隐藏全部释义（-1 原状态，1显示全部，0 隐藏全部）
+const showExplained = ref(-1)
 /**
  * 显示全部解释
  */
 const visibleExplained = () => {
-  wordsStore.words.forEach(x => x.explainedHidden = false)
+  showExplained.value = showExplained.value != 1 ? 1 : -1
+  // wordsStore.words.forEach(x => x.explainedHidden = false)
 }
 /**
  * 隐藏全部解释
  */
 const invisibleExplained = () => {
-  wordsStore.words.forEach(x => x.explainedHidden = true)
+  showExplained.value = showExplained.value != 0 ? 0 : -1
+  // wordsStore.words.forEach(x => x.explainedHidden = true)
 }
 </script>
 
