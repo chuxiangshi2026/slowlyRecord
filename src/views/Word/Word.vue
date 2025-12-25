@@ -51,6 +51,10 @@
     </div>
   </div>
 
+  <div>
+    <!-- 抽屉组件化   -->
+    <DetailDrawer  v-model="drawerVisible"  :title="title" :detail-id="currentId" />
+  </div>
   <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
   <div class="home_footer">
@@ -66,8 +70,8 @@
       <span :class="{ 'remembered-highlight': listMode==3 }" @click="showAll"> 单词总数: {{ wordsStore.count }} </span>
     </div>
     <div>
-      <!--      <i class="iconfont icon-setting"></i>-->
-      <!--      <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
+            <i class="iconfont icon-setting" @click="drawerVisible = true"></i>
+<!--            <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
       <el-tooltip class="box-item" effect="dark" content="置顶" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-top" @click="scrollToTop"></i>
       </el-tooltip>
@@ -122,9 +126,10 @@ import {testData} from "@/testData";
 import type {Word} from "@/types/words";
 
 import {useWordsStore} from "@/stores/words.ts";
+import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import {computed, nextTick, ref, watch} from "vue";
-import {getParam} from "@/utils/str-util.ts";
+// import {getParam} from "@/utils/str-util.ts";
 import {
   filterWordsForJsonExport,
   filterWordsForTextExport,
@@ -134,17 +139,27 @@ import {
 
 import {RecycleScroller} from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import {log} from "@/utils/logger.ts";
+import {addWord} from "@/utils/str-util.ts";
 
 // const word = ref('')
 
 const wordsStore = useWordsStore();
+
+const drawerVisible = ref(false)
+const title = ref('设置')
+const currentId = ref(null)
+/*const handleView = (id) => {
+  currentId.value = id
+  drawerVisible.value = true
+}*/
 
 /**
  * 显示添加单词
  */
 const showWords = computed(() => {
   // 如果 待复习单词为0  且 状态为0 为true
-  console.log('列表状态', listMode.value == 0);
+  log.i('列表状态', listMode.value == 0);
   return wordsStore.forgetCount <= 0 && listMode.value == 0
 })
 
@@ -504,17 +519,17 @@ const translateWordsSequentially = async (words: any[]): Promise<any[]> => {
 
   for (const word of words) {
     try {
-      const params = getParam(word.text);
-      const res = await wordsStore.translation(params);
 
-      if (res.data.errorCode === '0' && res.data.translation) {
-        translatedWords.push({
-          text: word.text,
-          explains: res.data.translation[0],
-          pronunciation: res.data.speakUrl || '',
-          phonetic: res.data.basic?.phonetic || ''
-        });
-      }
+      wordsStore.translateWithPlatform(word.text).then(res=>{
+        if (res.success) {
+          translatedWords.push({
+            text: word.text,
+            explains: res.explains || word.text,
+            pronunciation: res.pronunciation || '',
+            phonetic: res.phonetic || ''
+          });
+        }
+      })
 
       // 添加延迟避免API频率限制
       await new Promise(resolve => setTimeout(resolve, 1000));
