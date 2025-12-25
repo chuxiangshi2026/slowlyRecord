@@ -1,4 +1,3 @@
-
 // 将 AudioBuffer 转换为 WAV 格式的函数
 export const bufferToWave = (buffer: AudioBuffer, sampleRate: number): Blob => {
     const length = buffer.length;
@@ -40,5 +39,76 @@ export const bufferToWave = (buffer: AudioBuffer, sampleRate: number): Blob => {
         }
     }
 
-    return new Blob([view], { type: 'audio/wav' });
+    return new Blob([view], {type: 'audio/wav'});
+};
+
+/**
+ * 下载音频文件返回本地地址
+ */
+export const downloadAndStoreAudio = async (url: string, wordId: string): Promise<{
+    dataUrl: string,
+    objectUrl: string
+} | null> => {
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+
+        // 存储到 localStorage (注意：localStorage 有大小限制)
+        // const arrayBuffer = await blob.arrayBuffer();
+        // const uint8Array = new Uint8Array(arrayBuffer);
+        // localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
+
+
+        // 创建一个音频上下文用于处理音频
+        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+
+        // 读取音频数据
+        const arrayBuffer = await blob.arrayBuffer();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+        // 降低音频质量以减小文件大小
+        // 降低采样率到 22050Hz (标准是 44100Hz)
+        const targetSampleRate = 22050;
+        const offlineContext = new OfflineAudioContext(
+            audioBuffer.numberOfChannels,
+            (audioBuffer.duration * targetSampleRate) | 0,
+            targetSampleRate
+        );
+
+        // 创建源节点
+        const source = offlineContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(offlineContext.destination);
+        source.start();
+
+        // 渲染降低采样率的音频
+        const renderedBuffer = await offlineContext.startRendering();
+
+        // 转换为 WAV 格式的 Blob
+        const wavBlob = bufferToWave(renderedBuffer, targetSampleRate);
+
+        // 存储到 localStorage (注意：localStorage 有大小限制)
+        const wavArrayBuffer = await wavBlob.arrayBuffer();
+        const uint8Array = new Uint8Array(wavArrayBuffer);
+        localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
+
+
+        // 同时存储到单词对象的 pronunciation 字段（base64编码）
+        const reader = new FileReader();
+        /*reader.onload = () => {
+            wordModel.value.pronunciation = reader.result as string;
+            // 更新数据库中的单词
+            wordsStore.addAndUpdateWord(wordModel.value);
+        };*/
+
+        reader.readAsDataURL(blob);
+        // 创建本地 URL
+        return {
+            dataUrl: reader.result as string,
+            objectUrl: URL.createObjectURL(blob)
+        };
+    } catch (error) {
+        console.error('Failed to download and store audio:', error);
+        return null;
+    }
 };
