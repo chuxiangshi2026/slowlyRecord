@@ -81,7 +81,7 @@ import {ref} from "vue";
 import {DEFAULT_INTERVALS} from "@/constants";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
-import {bufferToWave} from "@/utils/audio-util.ts";
+import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
 
 const wordsStore = useWordsStore();
 
@@ -166,7 +166,7 @@ const getLocalAudioUrl = (wordId: string): string | null => {
 };
 
 // 下载并存储音频文件
-const downloadAndStoreAudio = async (url: string, wordId: string) => {
+/*const downloadAndStoreAudio = async (url: string, wordId: string) => {
   try {
     const response = await fetch(url);
     const blob = await response.blob();
@@ -224,7 +224,7 @@ const downloadAndStoreAudio = async (url: string, wordId: string) => {
   } catch (error) {
     console.error('Failed to download and store audio:', error);
   }
-};
+};*/
 
 
 // 播放语音
@@ -256,10 +256,18 @@ const play = async () => {
     // 先尝试从本地获取音频 URL
     localAudioUrl.value = getLocalAudioUrl(wordId);
 
+
     // 如果本地没有，则下载并存储
     const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(props.word.text)}&type=1`;
     if (!localAudioUrl.value) {
-      await downloadAndStoreAudio(url, wordId);
+      downloadAndStoreAudio(url, wordId).then(result => {
+        if (result) {
+          localAudioUrl.value = result.objectUrl;
+          wordModel.value.pronunciation = result.dataUrl;
+          // 更新数据库中的单词
+          wordsStore.addAndUpdateWord(wordModel.value);
+        }
+      });
     }
 
     // 播放音频

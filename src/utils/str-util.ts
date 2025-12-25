@@ -1,42 +1,12 @@
-import {APP_KEY, DB_KEY, FROM, KEY, TO} from "@/constants";
-import {isEmpty, truncate} from "lodash";
-import CryptoJS from "crypto-js";
-import type {Word, YdParams} from "@/types/words";
+import {DB_KEY} from "@/constants";
+// import {isEmpty, truncate} from "lodash";
+// import CryptoJS from "crypto-js";
+import type {Word} from "@/types/words";
 import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
+import {log} from "@/utils/logger.ts";
 
-
-const getParam = (query: string) => {
-
-    const salt = (new Date).getTime();
-    const curtime = Math.round(new Date().getTime() / 1000);
-    const str1 = APP_KEY + truncate(query) + salt + curtime + KEY;
-    const sign = CryptoJS.SHA256(str1).toString(CryptoJS.enc.Hex);
-
-    const params: YdParams = {
-        //待翻译文本
-        q: query,
-        // 应用ID	True	可在应用管理 查看
-        appKey: APP_KEY,
-        // 随机字符串，可使用UUID进行生产	True
-        salt: salt,
-        // 源语言
-        from: FROM,
-        // 目标语言
-        to: TO,
-        // 签名	True	sha256(应用ID+input+salt+curtime+应用密钥)
-        sign: sign,
-        // 签名类型
-        signType: "v3",
-        // 当前UTC时间戳(秒)
-        curtime: curtime,
-        ext: 'mp3'
-        // 用户上传的术语表
-        // vocabId: vocabId,
-    }
-    return params;
-}
 
 /**
  * 初始化单词状态
@@ -68,10 +38,11 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
  */
 const addWord = async (wordText: string) => {
 
+    console.log('新加单词', wordText);
 
     const wordsStore = useWordsStore(); // 传入 Pinia 实例
 
-    console.info('没修改之前的定位单词', wordsStore.lastAddedWordText)
+    log.i('没修改之前的定位单词', wordsStore.lastAddedWordText)
 
     let findWord = wordsStore.findWord(wordText)
     if (findWord) {
@@ -85,22 +56,22 @@ const addWord = async (wordText: string) => {
             ElMessage.success('单词已存在');
             return
         }
+        console.log('当前翻译引擎',wordsStore.currentTranslationPlatform)
         //  有这个单词,但是没有 释义
-        const params: YdParams = getParam(wordText)
-        wordsStore.translation(params).then(res => {
-            let resData = res.data;
-            if (resData.errorCode === '0' && !isEmpty(res)) {
-                findWord.explains = res.data.translation[0]
+        wordsStore.translateWithPlatform(wordText).then(res => {
+            console.log('返回结果',res)
+            if (res.success) {
+                findWord.explains = res.explains || wordText
                 findWord.isReview = true
-                findWord.pronunciation = ''
+                findWord.pronunciation = res.pronunciation
                 // todo 音标添加
-                findWord.phonetic = ''
+                findWord.phonetic = res.phonetic
                 findWord.remember = false
                 findWord.level = 1
 
                 wordsStore.addAndUpdateWord(findWord)
-                console.log('更新单词成功');
-                // ElMessage.success('添加成功');
+                console.log('更新单词成功',res);
+                ElMessage.success('更新成功');
                 return
             }
         })
@@ -110,18 +81,14 @@ const addWord = async (wordText: string) => {
     }
 
 
-    const params: YdParams = getParam(wordText)
 
+    wordsStore.translateWithPlatform(wordText).then(res => {
+        console.log('返回结果',res)
 
-    console.log(JSON.stringify(params) + '-------')
-    wordsStore.translation(params).then(res => {
-        // 先判断有没有这个单词，有的话看下这个单词有没有翻译，有的话不做处理，没有更新这个单词
-
-        let resData = res.data;
-        console.log('翻译后的返回结果', JSON.stringify(resData));
-        if (resData.errorCode === '0' && !isEmpty(res)) {
+        if (res.success) {
             let oldWords = wordsStore.words
-            let newWords = getInitWord(resData.query, resData.translation[0], resData.speakUrl, '', '')
+            let newWords = getInitWord(wordText, res.explains || wordText, res.pronunciation ||'', '', res.phonetic || '')
+            console.log('翻译后的初始化结果',newWords)
 
             const data = oldWords ? [newWords, ...oldWords] : [newWords]
 
@@ -137,5 +104,4 @@ const addWord = async (wordText: string) => {
         }
     })
 }
-
-export {getParam, getInitWord, addWord}
+export { getInitWord, addWord}
