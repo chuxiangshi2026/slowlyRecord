@@ -1,13 +1,17 @@
 import {computed, ref} from "vue";
-import type {Word, YdParams} from "@/types/words";
+import type {TranslationPlatform, TranslationResult, Word, YdParams} from "@/types/words";
 import {defineStore} from "pinia";
 // import {parse, stringify} from 'zipson'
 // import { serializer } from '@/utils/jsonSerializeUtil';
 import http from "@/utils/http.ts";
 import {log} from "@/utils/logger.ts"
 import type {AxiosResponse} from 'axios'
+import CryptoJS from "crypto-js";
 import {addAndUpdateDbWord, cleanDbWord, listDbWords, removeDbWordById, updateDbWordList} from "@/utils/db-util.ts";
-import {DEFAULT_INTERVALS} from "@/constants";
+import {APP_KEY, DEFAULT_INTERVALS, FROM, KEY, TO} from "@/constants";
+import {truncate} from "lodash";
+import {AppInfo} from "@/config.ts";
+// import {downloadAndStoreAudio} from "@/utils/audio-util.ts";
 
 
 export const useWordsStore =
@@ -15,7 +19,9 @@ export const useWordsStore =
         () => {
             const words = ref<Word[]>([])
 
-            const lastAddedWordText = ref('')    // 新增：记录最新添加的单词
+            const lastAddedWordText = ref('')    //记录最新添加的单词
+
+            const currentTranslationPlatform = ref<TranslationPlatform>('youdao'); // 默认使用有道翻译
 
 
             // 总单词数
@@ -52,6 +58,13 @@ export const useWordsStore =
 
 
             /**
+             * 设置当前翻译平台
+             */
+            function setTranslationPlatform(platform: TranslationPlatform) {
+                currentTranslationPlatform.value = platform;
+            }
+
+            /**
              * 更新状态
              */
             function setWords(payload: Word[]) {
@@ -82,7 +95,7 @@ export const useWordsStore =
                     !words.value.some(existingWord => existingWord.text === newWord.text)
                 );
                 words.value.push(...uniquePayload);
-                console.log(payload, '批量添加去重后的单词', uniquePayload);
+                log.i(payload, '批量添加去重后的单词', uniquePayload);
             }
 
             /**
@@ -152,6 +165,52 @@ export const useWordsStore =
             }
 
 
+
+            /**
+             * 生成有道翻译签名参数
+             */
+            function generateYoudaoParams(query: string): YdParams {
+                const salt = (new Date).getTime();
+                const curtime = Math.round(new Date().getTime() / 1000);
+                const str1 = AppInfo.youdao.appkey + truncate(query) + salt + curtime + AppInfo.youdao.key;
+                const sign = CryptoJS.SHA256(str1).toString(CryptoJS.enc.Hex);
+
+                return {
+                    q: query,
+                    appKey: AppInfo.youdao.appkey,
+                    salt: salt,
+                    from: FROM,
+                    to: TO,
+                    sign: sign,
+                    signType: "v3",
+                    curtime: curtime,
+                    ext: 'mp3'
+                };
+            }
+
+            /**
+             * 生成百度翻译签名参数
+             */
+            function generateBaiduParams(query: string): any {
+                const appId = AppInfo.baidu.appkey; // 需要在配置中添加百度翻译的appId和密钥
+                const secretKey = AppInfo.baidu.key;
+                const salt = ''+(new Date).getTime();
+                const signStr = appId + query + salt + secretKey;
+                const sign = CryptoJS.MD5(signStr).toString();
+                // console.log("计算出的sign:", sign);
+                // console.log("salt:", salt);
+                // console.log("appId:", appId);
+                // console.log("secretKey:", secretKey);
+                return {
+                    q: query,
+                    from: FROM,
+                    to: "zh",
+                    appid: appId,
+                    salt: salt,
+                    sign: sign
+                };
+            }
+
             /**
              * 更新 单个单词
              * @param word
@@ -173,6 +232,120 @@ export const useWordsStore =
                 // 更新 数据库 这里要判断 数据库中是否有这个单词
             }
 
+
+            /**
+             * 调用不同平台的翻译接口
+             */
+            async function translateWithPlatform(query: string): Promise<TranslationResult> {
+                try {
+                    switch (currentTranslationPlatform.value) {
+                        case 'youdao':
+                            console.log('调用有道')
+                            const youdaoParams = generateYoudaoParams(query);
+                            console.log('参数')
+                            const youdaoResponse = await http.get('/', {...youdaoParams});
+                            console.log('请求结果')
+                            return handleYoudaoResponse(youdaoResponse.data);
+
+                        case 'baidu':
+                            const baiduParams = generateBaiduParams(query);
+                            // 必须对q进行URL编码
+                            baiduParams.q = encodeURIComponent(baiduParams.q);
+                            const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams});
+                            return handleBaiduResponse(baiduResponse.data);
+
+                        case 'google':
+                            // Google翻译API通常需要服务端实现，这里提供基本结构
+                            const googleParams = {
+                                q: query,
+                                source: FROM,
+                                target: TO,
+                                format: 'text'
+                            };
+                            // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
+                            const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', {...googleParams});
+                            return handleGoogleResponse(googleResponse.data);
+
+
+                        default:
+                            return {
+                                success: false,
+                                errorMsg: 'Unsupported translation platform'
+                            };
+                    }
+                } catch (error) {
+                    console.error('Translation error:', error);
+                    return {
+                        success: false,
+                        errorMsg: 'Translation failed: ' + (error as Error).message
+                    };
+                }
+            }
+
+            /**
+             * 处理有道翻译返回结果
+             */
+            function handleYoudaoResponse(data: any): TranslationResult {
+                if (data.errorCode === '0') {
+                    const explains = data.translation?.[0] || '';
+
+                    // 音频，应该在这处理掉，直接存成文件
+
+                    // await downloadAndStoreAudio(url, wordId);
+
+                    const phonetic = data.basic?.phonetic || '';
+                    const pronunciation = data.speakUrl || '';
+
+                    return {
+                        success: true,
+                        explains,
+                        phonetic,
+                        pronunciation
+                    };
+                } else {
+                    return {
+                        success: false,
+                        errorMsg: `Youdao API error: ${data.errorCode}`
+                    };
+                }
+            }
+
+            /**
+             * 处理百度翻译返回结果
+             */
+            function handleBaiduResponse(data: any): TranslationResult {
+                if (data.error_code === undefined || data.error_code === '52000') {
+                    const explains = data.trans_result?.[0]?.dst || '';
+                    return {
+                        success: true,
+                        explains
+                    };
+                } else {
+                    return {
+                        success: false,
+                        errorMsg: `Baidu API error: ${data.error_code}`
+                    };
+                }
+            }
+
+            /**
+             * 处理谷歌翻译返回结果
+             */
+            function handleGoogleResponse(data: any): TranslationResult {
+                if (data.data) {
+                    const explains = data.data.translations?.[0]?.translatedText || '';
+                    return {
+                        success: true,
+                        explains
+                    };
+                } else {
+                    return {
+                        success: false,
+                        errorMsg: 'Google API error'
+                    };
+                }
+            }
+
             /**
              * 调用翻译接口
              */
@@ -183,15 +356,17 @@ export const useWordsStore =
             return {
                 words,
                 lastAddedWordText,
+                currentTranslationPlatform,
                 count,
                 rememberCount,
                 reviewCount,
                 forgetCount,
                 setLastAddedWordText,
+                setTranslationPlatform,
                 findWord,
                 addAndUpdateWord,
                 addAndUpdateWords,
-                translation,
+                translateWithPlatform,
                 removeWords,
                 deleteWord,
                 listWords,

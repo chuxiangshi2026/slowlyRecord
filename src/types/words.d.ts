@@ -58,3 +58,46 @@ interface YdParams {
     // 用户上传的术语表
     // vocabId: vocabId,
 }
+
+
+/**
+ * 百度翻译请求参数结构
+ */
+interface BdParams {
+    q: string,
+    from: string,
+    to: string,
+    appid: string,
+    salt: number,
+    sign: string,
+}
+
+
+
+/**
+ * 谷歌翻译请求参数结构
+ */
+interface GgParams {
+    q: string,
+    source: string,
+    target: string,
+    format: string,
+}
+
+/**
+ * 翻译平台枚举
+ */
+export type TranslationPlatform = 'youdao' | 'baidu' | 'ali'  | 'google';
+
+
+
+/**
+ * 翻译结果结构
+ */
+export interface TranslationResult {
+    success: boolean;
+    explains?: string;
+    phonetic?: string;
+    pronunciation?: string;
+    errorMsg?: string;
+}
