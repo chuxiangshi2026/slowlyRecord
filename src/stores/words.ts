@@ -165,7 +165,6 @@ export const useWordsStore =
             }
 
 
-
             /**
              * 生成有道翻译签名参数
              */
@@ -194,7 +193,7 @@ export const useWordsStore =
             function generateBaiduParams(query: string): any {
                 const appId = AppInfo.baidu.appkey; // 需要在配置中添加百度翻译的appId和密钥
                 const secretKey = AppInfo.baidu.key;
-                const salt = ''+(new Date).getTime();
+                const salt = '' + (new Date).getTime();
                 const signStr = appId + query + salt + secretKey;
                 const sign = CryptoJS.MD5(signStr).toString();
                 // console.log("计算出的sign:", sign);
@@ -209,6 +208,95 @@ export const useWordsStore =
                     salt: salt,
                     sign: sign
                 };
+            }
+
+            // 生成阿里翻译参数
+            async function generateAliParams(query: string) {
+                const timestamp = new Date().toISOString().replace(/\.\d+Z/, 'Z');
+
+                const params: Record<string, string> = {
+                    Format: 'JSON',
+                    Version: '2018-10-12',
+                    AccessKeyId: AppInfo.ali.appkey,
+                    SignatureMethod: 'HMAC-SHA1',
+                    Timestamp: timestamp,
+                    SignatureVersion: '1.0',
+                    SignatureNonce: Math.random().toString(36).slice(2, 15),
+                    Action: 'TranslateGeneral',
+                    SourceLanguage: String(FROM || 'auto'),
+                    TargetLanguage: String(TO),
+                    SourceText: String(query),
+                    FormatType: 'text',
+                    Scene: 'general',
+                };
+
+                // ────── 调试日志：打印待签名字符串 ──────
+                const sortedKeys = Object.keys(params).sort();
+                const canonicalQueryString = sortedKeys
+                    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                    .join('&');
+
+                const stringToSign = `GET&${encodeURIComponent('/')}&${encodeURIComponent(canonicalQueryString)}`;
+
+                console.log('【待签名字符串(StringToSign)】');
+                console.log(stringToSign); // 复制这个值
+
+                // ────── 生成签名 ──────
+                const encoder = new TextEncoder();
+                const key = await crypto.subtle.importKey(
+                    'raw',
+                    encoder.encode(AppInfo.ali.key + '&'),
+                    { name: 'HMAC', hash: 'SHA-1' },
+                    false,
+                    ['sign']
+                );
+                const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(stringToSign));
+                const base64Signature = btoa(String.fromCharCode(...new Uint8Array(signature)));
+
+                console.log('【生成的签名】');
+                console.log(base64Signature); // 对比这个值
+
+                params.Signature = base64Signature;
+                return params;
+            }
+
+            /**
+             * 构建阿里云API签名
+             */
+            function buildSignature(params: any, accessKeySecret: string): string {
+                // 参数排序
+                const sortedKeys = Object.keys(params).sort();
+
+                // 构建规范化的请求字符串
+                let canonicalizedQueryString = '';
+                for (const key of sortedKeys) {
+                    if (key !== 'Signature') { // 排除Signature参数
+                        canonicalizedQueryString += `&${percentEncode(key)}=${percentEncode(params[key])}`;
+                    }
+                }
+
+                // 移除第一个&
+                canonicalizedQueryString = canonicalizedQueryString.substring(1);
+
+                // 构建待签名字符串
+                const stringToSign = `GET&${percentEncode('/')}&${percentEncode(canonicalizedQueryString)}`;
+
+                // 使用HMAC-SHA1算法计算签名
+                const signature = CryptoJS.HmacSHA1(stringToSign, `${accessKeySecret}&`);
+                return CryptoJS.enc.Base64.stringify(signature);
+            }
+
+            /**
+             * URL编码函数
+             */
+            function percentEncode(str: string): string {
+                // 遵循RFC3986编码规则
+                return encodeURIComponent(str)
+                    .replace(/\!/g, '%21')
+                    .replace(/\*/g, '%2A')
+                    .replace(/\'/g, '%27')
+                    .replace(/\(/g, '%28')
+                    .replace(/\)/g, '%29');
             }
 
             /**
@@ -237,13 +325,17 @@ export const useWordsStore =
              * 调用不同平台的翻译接口
              */
             async function translateWithPlatform(query: string): Promise<TranslationResult> {
+                console.log('待翻译参数', query)
                 try {
                     switch (currentTranslationPlatform.value) {
                         case 'youdao':
                             console.log('调用有道')
                             const youdaoParams = generateYoudaoParams(query);
-                            console.log('参数')
-                            const youdaoResponse = await http.get('/', {...youdaoParams});
+                            const youdaoResponse = await http.get('/', {...youdaoParams}, {
+                                headers: {
+                                    'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'
+                                }
+                            });
                             console.log('请求结果')
                             return handleYoudaoResponse(youdaoResponse.data);
 
@@ -251,8 +343,42 @@ export const useWordsStore =
                             const baiduParams = generateBaiduParams(query);
                             // 必须对q进行URL编码
                             baiduParams.q = encodeURIComponent(baiduParams.q);
-                            const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams});
+                            const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams}, {
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                }
+                            });
                             return handleBaiduResponse(baiduResponse.data);
+
+                        case 'ali':
+                            console.log('调用阿里翻译');
+
+                            const aliParams = await generateAliParams(query);
+
+                            // 1. 修正URL（去掉末尾空格）
+                            // 2. 手动构造查询字符串
+                            const queryString = Object.entries(aliParams)
+                                .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+                                .join('&');
+
+                            const fullUrl = `https://mt.aliyuncs.com/?${queryString}`;
+
+                            // 3. 使用fetch或XMLHttpRequest发送请求
+                            const aliResponse = await fetch(fullUrl, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                }
+                            });
+
+                            const data = await aliResponse.json();
+                            /*console.log('调用阿里翻译');
+
+                            const aliParams = await generateAliParams(query);
+                            // 阿里翻译使用GET请求，参数在URL中
+                            const aliResponse = await http.get('https://mt.aliyuncs.com/', {...aliParams});
+                            console.log('阿里翻译请求结果', aliParams);*/
+                            return handleAliResponse(data);
 
                         case 'google':
                             // Google翻译API通常需要服务端实现，这里提供基本结构
@@ -324,6 +450,23 @@ export const useWordsStore =
                     return {
                         success: false,
                         errorMsg: `Baidu API error: ${data.error_code}`
+                    };
+                }
+            }
+
+            // 处理阿里翻译响应
+            function handleAliResponse(data: any): TranslationResult {
+                console.log("ali返回结果", data)
+                if (data.Code === '200' && data.Data) {
+                    const explains = data.Data.Translated;
+                    return {
+                        success: true,
+                        explains
+                    };
+                } else {
+                    return {
+                        success: false,
+                        errorMsg: `Ali API error: ${data.Message || 'Unknown error'}`
                     };
                 }
             }

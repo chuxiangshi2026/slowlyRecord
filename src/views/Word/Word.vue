@@ -3,12 +3,12 @@
   <!--  <el-button type="primary" @click="clearWord">清空单词</el-button>-->
   <!--  <el-button type="primary" @click="initWord">初始化单词</el-button>-->
 
-  <!--    <el-row>
+      <el-row>
         <el-col>
           <el-input :span="6" v-model="word" placeholder="请输入单词"></el-input>
           <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>
         </el-col>
-      </el-row>-->
+      </el-row>
 
   <div v-if="showWords">暂无数据,请在主界面输入框添加单词</div>
   <div v-else>
@@ -142,7 +142,7 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import {log} from "@/utils/logger.ts";
 import {addWord} from "@/utils/str-util.ts";
 
-// const word = ref('')
+const word = ref('')
 
 const wordsStore = useWordsStore();
 

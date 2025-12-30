@@ -169,8 +169,12 @@ const cardShortcuts = [
 
 let wordsStore = useWordsStore();
 
-const tranApi = ref<TranslationPlatform>('youdao')
+const tranApi = ref<TranslationPlatform>('ali')
 const options = [
+  {
+    value: 'ali',
+    label: '阿里',
+  },
   {
     value: 'youdao',
     label: '有道',
@@ -179,19 +183,15 @@ const options = [
     value: 'baidu',
     label: '百度',
   },
-  {
-    value: 'google',
-    label: '谷歌',
-  },
-  {
-    value: '阿里',
-    label: 'ali',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
 ]
+/*{
+  value: 'google',
+      label: '谷歌',
+},
+{
+  value: 'Option5',
+      label: 'Option5',
+},*/
 const updateTranApi = () => {
   wordsStore.setTranslationPlatform(tranApi.value)
 }

@@ -21,8 +21,10 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
     if (config.headers) {
         // config.headers.authorization = (store.state as StateAll).users.token;
+        config.headers = {...config.headers}
+    } else {
+        config.headers = {'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'}
     }
-    config.headers={'Access-Control-Allow-Origin':'https://openapi.youdao.com/api'}
 
     return config;
 }, function (error) {
