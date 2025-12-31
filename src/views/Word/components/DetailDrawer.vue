@@ -40,8 +40,9 @@
     <div>
       <div class="setting-item">
         <div class="content">翻译引擎</div>
-<!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" v-model="tranApi" @change="updateTranApi" placeholder="选择"    style="width:100px">
+        <!--        ;justify-content: space-between;  size="large"-->
+        <el-select class="shorcut-desc" v-model="tranApi" @change="updateTranApi" placeholder="选择"
+                   style="width:100px">
           <el-option
               v-for="item in options"
               :key="item.value"
@@ -83,16 +84,16 @@
         <span class="shorcut-desc">{{ item.shortcut }}</span>
       </div>
 
-<!--      <h5 style="text-align:center;">卡片模式</h5>
-      <div class="titles">
-        <span class="title">功能说明</span>
-        <span class="title">快捷键</span>
-      </div>
-      <div v-for="(item,index) in cardShortcuts"
-           :key="index" class="titles">
-        <span class="shorcut-desc">{{ item.desc }}</span>
-        <span class="shorcut-desc">{{ item.shortcut }}</span>
-      </div>-->
+      <!--      <h5 style="text-align:center;">卡片模式</h5>
+            <div class="titles">
+              <span class="title">功能说明</span>
+              <span class="title">快捷键</span>
+            </div>
+            <div v-for="(item,index) in cardShortcuts"
+                 :key="index" class="titles">
+              <span class="shorcut-desc">{{ item.desc }}</span>
+              <span class="shorcut-desc">{{ item.shortcut }}</span>
+            </div>-->
     </div>
 
     <el-divider/>
@@ -169,15 +170,14 @@ const cardShortcuts = [
 
 let wordsStore = useWordsStore();
 
-const tranApi = ref<TranslationPlatform>('ali')
+const tranApi = ref<TranslationPlatform>('youdao')
 const options = [
-  {
-    value: 'ali',
-    label: '阿里',
-  },
   {
     value: 'youdao',
     label: '有道',
+  }, {
+    value: 'ali',
+    label: '阿里',
   },
   {
     value: 'baidu',
@@ -195,9 +195,6 @@ const options = [
 const updateTranApi = () => {
   wordsStore.setTranslationPlatform(tranApi.value)
 }
-
-
-
 
 
 const emit = defineEmits(['update:modelValue', 'save'])

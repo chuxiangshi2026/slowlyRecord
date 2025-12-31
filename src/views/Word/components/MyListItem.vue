@@ -1,7 +1,7 @@
 <template>
 
   <!--ref="root"-->
-  <div class="list-item" ref="itemRef">
+  <div class="list-item" ref="itemRef"  tabindex="0" @keydown="handleKeyDown" @click="onClick" :class="{ 'first-item': isFocus }">
     <p class="word">
       {{ word.text }}
       <span class="phonetic">{{ word.phonetic }}</span>
@@ -22,7 +22,7 @@
         </el-tooltip>
       </div>
       <div>
-        <el-tooltip class="box-item" effect="dark" content="记住" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="记住" placement="" popper-class="small-tooltip">
           <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
@@ -68,23 +68,41 @@ defineExpose({
 });
 
 // 接收word传参，并传递给子组件
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   word: Word,
   disableActions?: number  //0 待复习  1已复习  2 永久记住 3 全部
   showExplained?: number  //-1 显示原逻辑， 1显示全部 0 隐藏全部
-}>()
+  isFirst?: boolean  // 是否是第一个元素
+}>(), {
+  disableActions: 0,
+  showExplained: -1,
+  isFirst: false
+});
 const wordModel = defineModel<Word>({required: true})
 const emit = defineEmits(['translation', 'remember', 'forget', 'delete'])
 
 
-import {ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
 import {DEFAULT_INTERVALS} from "@/constants";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
 
 const wordsStore = useWordsStore();
-
+// 是否处于焦点状态
+const isFocus = ref(false);
+onMounted(async () => {
+  // 如果是第一个元素，则自动获取焦点
+  if (props.isFirst) {
+    await nextTick(); // 确保DOM渲染完成
+    setTimeout(() => {
+      if (itemRef.value) {
+        itemRef.value.focus();
+        isFocus.value = true;
+      }
+    }, 100); // 延迟确保DOM完全渲染
+  }
+});
 /*
    编辑释义+快捷键保存
  */
@@ -102,6 +120,51 @@ const handleKeydown = (event: KeyboardEvent) => {
     event.preventDefault();
   }
 };
+
+
+
+// 新增键盘事件处理
+const handleKeyDown = (event: KeyboardEvent) => {
+  console.log("快捷键")
+  // 检查是否按下 Shift+R (记住)
+  if (event.shiftKey && event.key.toLowerCase() === 'r') {
+    console.log("shift+r快捷键被按下")
+    event.preventDefault();
+    remember();
+  }
+  // 检查是否按下 Shift+F (忘记)
+  else if (event.shiftKey && event.key.toLowerCase() === 'f') {
+    console.log("shift+f快捷键被按下")
+    event.preventDefault();
+    forget();
+  }
+  // 检查是否按下 Shift+P (发音)
+  else if (event.shiftKey && event.key.toLowerCase() === 'p') {
+    console.log("shift+p快捷键被按下")
+    event.preventDefault();
+    play();
+  }
+  // 检查是否按下 Shift+T (翻译)
+  else if (event.shiftKey && event.key.toLowerCase() === 't') {
+    console.log("shift+t快捷键被按下")
+    event.preventDefault();
+    translation();
+  }
+};
+
+// 点击事件处理 - 获取焦点
+const onClick = () => {
+  if (itemRef.value) {
+    itemRef.value.focus();
+  }
+};
+// 获得焦点时的处理
+const onFocus = () => {
+  console.log("组件获得焦点");
+};
+
+
+
 // 保存释义
 const saveExplanation = (event: Event) => {
   const target = event.target as HTMLElement;
@@ -425,6 +488,12 @@ const deleteWord = () => {
   opacity: 0.5;
   pointer-events: none;
   color: gray;
+}
+
+/* 为获得焦点的元素添加视觉反馈 */
+.list-item:focus {
+  outline: 1px solid #409eff; /* Element Plus 主色调 */
+  border-radius: 2px;
 }
 
 </style>

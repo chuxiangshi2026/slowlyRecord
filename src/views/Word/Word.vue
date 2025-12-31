@@ -352,6 +352,33 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 }, {immediate: true})
 
 
+// 监听列表模式和单词数据变化，自动聚焦到第一个元素
+watch([() => listMode.value, () => showFilteredWords.value], async () => {
+  await nextTick(); // 等待DOM更新
+  // 等待虚拟滚动器渲染完成
+  setTimeout(() => {
+    if (showFilteredWords.value.length > 0) {
+      // 尝试聚焦到第一个元素
+      focusFirstItem();
+    }
+  }, 100);
+}, {immediate: true});
+
+
+// 聚焦到第一个元素
+const focusFirstItem = async () => {
+  await nextTick(); // 确保DOM已更新
+  // 延迟一段时间以确保虚拟滚动器已渲染元素
+  setTimeout(() => {
+    const firstElement = document.querySelector('.list-item');
+    if (firstElement) {
+      (firstElement as HTMLElement).focus();
+      console.log('已聚焦到第一个单词项');
+    }
+  }, 200);
+};
+
+
 /**
  * 处理导入命令
  */
