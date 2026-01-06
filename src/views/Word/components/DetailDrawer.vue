@@ -82,7 +82,15 @@
         </div>
         <el-divider/>-->
 
+    <h4 class="header">全局快捷键</h4>
+    <div class="titles">
+      <div class="setting-item">
+        <div class="content">打开全局快捷键设置页面</div>
+        <el-button type="info" @click="huacikuaijiejian">划词快捷键</el-button>
+      </div>
+    </div>
 
+    <el-divider/>
     <!--     快捷键模块 -->
     <h4 class="header">快捷键</h4>
     <div class="content">
@@ -184,6 +192,14 @@ onMounted(() => {
 const onCloseAfterAddSwitchChange = () => {
   wordsStore.setClosePlugin(exitThePlugin.value)
 }
+
+const huacikuaijiejian = () => {
+  utools.redirectHotKeySetting("划词添加1",true)
+}
+
+
+
+
 
 
 let wordsStore = useWordsStore();
@@ -323,7 +339,7 @@ const cardShortcuts = [
 }
 
 .el-switch {
-  --el-switch-on-color: #c1bbbb;
+  --el-switch-on-color: #919399;
   --el-switch-off-color: rgba(113, 109, 109, 0.29);
 }
 </style>
