@@ -32,15 +32,15 @@ interface Window {
 }
 
 
-interface UtoolsAction {
+/*interface UtoolsAction {
     code: 'add_vocabulary' | 'kill' | string
     type: string
     payload: any
     optional: { type: string; payload: any }[]
-}
-interface PluginEnterAction {
+}*/
+/*interface PluginEnterAction {
     code: string
     type: string
     payload: any
-}
+}*/
 

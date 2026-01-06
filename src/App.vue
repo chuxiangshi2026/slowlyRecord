@@ -12,14 +12,13 @@ import {useWordsStore} from "@/stores/words.ts";
 import {DEFAULT_INTERVALS} from "@/constants";
 import {addWord} from "@/utils/str-util.ts";
 import {ElMessage} from "element-plus";
-
 const wordsStore = useWordsStore();
 
 
 
 
-window.utools.onPluginEnter(async (action: PluginEnterAction) => {
-
+utools.onPluginEnter(async (action) => {
+  // { code, type, payload, option, from }
 
   /*  // app版本
     const currentVerson = window.services.getAppVerson()
@@ -47,26 +46,25 @@ window.utools.onPluginEnter(async (action: PluginEnterAction) => {
     // 把单词翻译了，添加到 列表中
     // console.log('==================', action)
 
-    await handlePluginAddWord(action)
+    await handlePluginAddWord(action.payload)
   }
 
-  if (action.code === 'huaci' && action.type == 'text') {
+
+  if (action.code === 'huaci' && action.from ==='hotkey'){
+    // action.type =='over'
+    console.log('我是快捷键进来的')
+
+    const selectedText = await navigator.clipboard.readText();
+
+    checkAddWork(selectedText)
+
+  }
+
+  if (action.code === 'huaci' && action.from == 'main') {
 
 
     getSelectedTextFromSystem().then(text => {
-
-          // 5. 判断逻辑（根据你的场景调整阈值）
-          const textError = (
-              text.length <= 0 ||
-              text.endsWith('\n') ||          // 以换行符结尾（整行复制的典型特征）
-              text.length > 25                // 长度超过合理选中范围
-          );
-          if (textError) {
-            ElMessage.error('请先用光标选中单词');
-          } else {
-            addWord(text)
-            // ElMessage.success(text);
-          }
+          checkAddWork(text);
         }
     );
 
@@ -117,6 +115,24 @@ async function getSelectedTextFromSystem(): Promise<string> {
   return selectedText;
 }
 
+/**
+ * 校验剪切板中的单词
+ * @param text
+ */
+function checkAddWork(text: string) {
+  // 5. 判断逻辑（根据你的场景调整阈值）
+  const textError = (
+      text.length <= 0 ||
+      text.endsWith('\n') ||          // 以换行符结尾（整行复制的典型特征）
+      text.length > 25                // 长度超过合理选中范围
+  );
+  if (textError) {
+    ElMessage.error('请先用光标选中单词');
+  } else {
+    addWord(text)
+    // ElMessage.success(text);
+  }
+}
 
 onMounted(() => {
 
@@ -192,14 +208,14 @@ function handlePluginReview() {
 /**
  * 隐藏主界面,并添加单词
  */
-async function handlePluginAddWord(action: PluginEnterAction) {
+async function handlePluginAddWord(payload: string) {
   // const needclose = !!utoolsSettingRef.current?.closeAfterAddWord
   // 隐藏主窗口
   // if (needclose) window.utools.hideMainWindow()
 
   // console.log('addWord====================', action.payload)
   // 传入 scrollToWordByText 作为回调函数
-  await addWord(action.payload)
+  await addWord(payload)
 
 //   退出插件
 
