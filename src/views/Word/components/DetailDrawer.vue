@@ -2,7 +2,7 @@
   <el-drawer
       v-model="visible"
       :title="title"
-      size="300px"
+      size="400px"
       destroy-on-close
   >
 
@@ -91,6 +91,13 @@
     </div>
 
     <el-divider/>
+
+
+
+
+
+
+
     <!--     快捷键模块 -->
     <h4 class="header">快捷键</h4>
     <div class="content">
@@ -118,6 +125,33 @@
     </div>
 
     <el-divider/>
+
+
+    <!--     密钥设置模块 -->
+    <h4 class="header">密钥</h4>
+    <div class="content">
+      <h5 style="text-align:center;">个人密钥</h5>
+      <div class="titles">
+        <span class="title">AppId</span>
+        <span class="title">SecretKey</span>
+      </div>
+      <div v-for="(item,index) in apiKeys"
+           :key="index" class="titles">
+        <span class="shorcut-desc">
+          {{ index }} AppKey
+          <el-input v-model="item.appkey" style="width: 115px" placeholder="没有请留空" type="password"/>
+        </span>
+        <span class="shorcut-desc">
+          {{ index }} SecretKey
+          <el-input v-model="item.key" style="width: 190px" placeholder="没有请留空" type="password"/>
+        </span>
+      </div>
+    </div>
+
+    <el-divider/>
+
+
+
     <h4 class="header">其他</h4>
     <div class="content">
       <!--      <div class="view-version-btn" @click="updateshowNotification(true)">查看版本说明</div>-->
@@ -150,9 +184,10 @@
   </el-drawer>
 </template>
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, reactive, ref, watch} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
 import type {TranslationPlatform} from "@/types/words";
+import {AppInfo} from "@/config.ts";
 // import BasicInfoForm from './BasicInfoForm.vue'
 // import AdvancedConfig from './AdvancedConfig.vue'
 // import LogTable from './LogTable.vue'
@@ -165,6 +200,48 @@ const props = defineProps({
     default: '设置'
   }
 })
+
+// 创建响应式API密钥数据，优先使用用户设置的值
+const apiKeys = reactive({
+  youdao: {
+    // || AppInfo.youdao.appkey
+    appkey: localStorage.getItem('api_key_youdao_appkey') ||'',
+    // || AppInfo.youdao.key
+    key: localStorage.getItem('api_key_youdao_key') ||''
+  },
+  ali: {
+    // || AppInfo.ali.appkey
+    appkey: localStorage.getItem('api_key_ali_appkey') ||'',
+    // || AppInfo.ali.key
+    key: localStorage.getItem('api_key_ali_key') ||''
+  },
+  baidu: {
+    // || AppInfo.baidu.appkey
+    appkey: localStorage.getItem('api_key_baidu_appkey') ||'',
+    // || AppInfo.baidu.key
+    key: localStorage.getItem('api_key_baidu_key') ||''
+  }
+})
+
+// 监听API密钥变化并保存
+watch(() => apiKeys.ali, () => {
+  saveApiKeys('ali')
+}, { deep: true })
+
+watch(() => apiKeys.youdao, () => {
+  saveApiKeys('youdao')
+}, { deep: true })
+
+watch(() => apiKeys.baidu, () => {
+  saveApiKeys('baidu')
+}, { deep: true })
+
+const saveApiKeys = (provider: TranslationPlatform) => {
+  // 保存API密钥到本地存储
+  wordsStore.setApiKey(provider, apiKeys[provider].appkey, apiKeys[provider].key)
+  console.log(`${provider} API密钥已保存`, apiKeys[provider])
+}
+
 // 退出插件
 const exitThePlugin = ref(false)
 

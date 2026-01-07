@@ -85,9 +85,9 @@ interface GgParams {
 }
 
 /**
- * 翻译平台枚举
+ * 翻译平台枚举 | 'google'
  */
-export type TranslationPlatform = 'youdao' | 'baidu' | 'ali'  | 'google';
+export type TranslationPlatform = 'youdao' | 'baidu' | 'ali'  ;
 
 
 

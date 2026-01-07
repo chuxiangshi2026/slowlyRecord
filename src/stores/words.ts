@@ -15,7 +15,27 @@ import {AppInfo} from "@/config.ts";
 // 导入翻译服务
 import { translateWithPlatform as externalTranslateWithPlatform } from "@/utils/translation-api";
 
-
+// 添加 API 密钥相关的响应式变量
+const userApiKeys = ref({
+    ali: {
+        // || AppInfo.ali.appkey
+        appkey: (localStorage.getItem('api_key_ali_appkey') || '').trim() ,
+        // || AppInfo.ali.key
+        key: (localStorage.getItem('api_key_ali_key') || '').trim()
+    },
+    youdao: {
+        // || AppInfo.youdao.appkey
+        appkey: (localStorage.getItem('api_key_youdao_appkey') || '').trim() ,
+        // || AppInfo.youdao.key
+        key: (localStorage.getItem('api_key_youdao_key') || '').trim()
+    },
+    baidu: {
+        // || AppInfo.baidu.appkey
+        appkey: (localStorage.getItem('api_key_baidu_appkey') || '').trim() ,
+        // || AppInfo.baidu.key
+        key: (localStorage.getItem('api_key_baidu_key') || '').trim()
+    }
+})
 
 export const useWordsStore =
     defineStore('words',
@@ -80,6 +100,24 @@ export const useWordsStore =
 
             function setShortcutEnabled(enabled: boolean) {
                 shortcutEnabled.value = enabled;
+            }
+
+            /**
+             * 设置API密钥
+             */
+            function setApiKey(provider: TranslationPlatform, appkey: string, key: string) {
+                userApiKeys.value[provider].appkey = appkey;
+                userApiKeys.value[provider].key = key;
+                // 保存到本地存储
+                localStorage.setItem(`api_key_${provider}_appkey`, appkey);
+                localStorage.setItem(`api_key_${provider}_key`, key);
+            }
+
+            /**
+             * 获取API密钥
+             */
+            function getApiKey(provider: TranslationPlatform) {
+                return userApiKeys.value[provider];
             }
 
             /**
@@ -224,10 +262,13 @@ export const useWordsStore =
                 reviewCount,
                 forgetCount,
                 shortcutEnabled,
+                userApiKeys, // 导出用户API密钥
                 setLastAddedWordText,
                 setClosePlugin,
                 setTranslationPlatform,
                 setShortcutEnabled,
+                setApiKey, // 导出设置API密钥方法
+                getApiKey, // 导出获取API密钥方法
                 findWord,
                 addAndUpdateWord,
                 addAndUpdateWords,
