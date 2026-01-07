@@ -6,19 +6,37 @@ import CryptoJS from "crypto-js";
 import { truncate } from "lodash";
 import { FROM, TO } from "@/constants";
 import { AppInfo } from "@/config.ts";
+import {useWordsStore} from "@/stores/words.ts";
+
+
+/**
+ * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
+ */
+function getApiKey(provider: TranslationPlatform) {
+    const wordsStore = useWordsStore();
+    const userKeys = wordsStore.getApiKey(provider);
+    // 如果用户设置了密钥（非空且非纯空格），则使用用户设置的；否则使用默认配置
+    const trimmedAppKey = userKeys.appkey?.trim();
+    const trimmedKey = userKeys.key?.trim();
+    return {
+        appkey: (trimmedAppKey && trimmedAppKey.length > 0) ? trimmedAppKey : AppInfo[provider].appkey,
+        key: (trimmedKey && trimmedKey.length > 0) ? trimmedKey : AppInfo[provider].key
+    };
+}
 
 /**
  * 生成有道翻译签名参数
  */
 function generateYoudaoParams(query: string): YdParams {
+    const { appkey, key } = getApiKey('youdao');
     const salt = (new Date).getTime();
     const curtime = Math.round(new Date().getTime() / 1000);
-    const str1 = AppInfo.youdao.appkey + truncate(query) + salt + curtime + AppInfo.youdao.key;
+    const str1 = appkey + truncate(query) + salt + curtime + key;
     const sign = CryptoJS.SHA256(str1).toString(CryptoJS.enc.Hex);
 
     return {
         q: query,
-        appKey: AppInfo.youdao.appkey,
+        appKey: appkey,
         salt: salt,
         from: FROM,
         to: TO,
@@ -33,8 +51,8 @@ function generateYoudaoParams(query: string): YdParams {
  * 生成百度翻译签名参数
  */
 function generateBaiduParams(query: string): any {
-    const appId = AppInfo.baidu.appkey;
-    const secretKey = AppInfo.baidu.key;
+    const { appkey, key: secretKey } = getApiKey('baidu');
+    const appId = appkey;
     const salt = '' + (new Date).getTime();
     const signStr = appId + query + salt + secretKey;
     const sign = CryptoJS.MD5(signStr).toString();
@@ -52,12 +70,13 @@ function generateBaiduParams(query: string): any {
  * 生成阿里翻译参数
  */
 async function generateAliParams(query: string) {
+    const { appkey, key: accessKeySecret } = getApiKey('ali');
     const timestamp = new Date().toISOString().replace(/\.\d+Z/, 'Z');
 
     const params: Record<string, string> = {
         Format: 'JSON',
         Version: '2018-10-12',
-        AccessKeyId: AppInfo.ali.appkey,
+        AccessKeyId: appkey,
         SignatureMethod: 'HMAC-SHA1',
         Timestamp: timestamp,
         SignatureVersion: '1.0',
@@ -85,7 +104,7 @@ async function generateAliParams(query: string) {
     const encoder = new TextEncoder();
     const key = await crypto.subtle.importKey(
         'raw',
-        encoder.encode(AppInfo.ali.key + '&'),
+        encoder.encode(accessKeySecret + '&'),
         { name: 'HMAC', hash: 'SHA-1' },
         false,
         ['sign']
@@ -192,7 +211,7 @@ export async function translateWithPlatform(query: string, platform: Translation
                 const data = await aliResponse.json();
                 return handleAliResponse(data);
 
-            case 'google':
+ /*           case 'google':
                 // Google翻译API通常需要服务端实现，这里提供基本结构
                 const googleParams = {
                     q: query,
@@ -202,7 +221,7 @@ export async function translateWithPlatform(query: string, platform: Translation
                 };
                 // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
                 const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', { ...googleParams });
-                return handleGoogleResponse(googleResponse.data);
+                return handleGoogleResponse(googleResponse.data);*/
 
             default:
                 return {
