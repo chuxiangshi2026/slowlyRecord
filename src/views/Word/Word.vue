@@ -3,12 +3,12 @@
   <!--  <el-button type="primary" @click="clearWord">清空单词</el-button>-->
   <!--  <el-button type="primary" @click="initWord">初始化单词</el-button>-->
 
-      <el-row>
-        <el-col>
-          <el-input :span="6" v-model="word" placeholder="请输入单词"></el-input>
-          <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>
-        </el-col>
-      </el-row>
+  <!--      <el-row>
+          <el-col>
+            <el-input :span="6" v-model="word" placeholder="请输入单词"></el-input>
+            <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>
+          </el-col>
+        </el-row>-->
 
   <div v-if="showWords">暂无数据,请在主界面输入框添加单词</div>
   <div v-else>
@@ -17,14 +17,15 @@
       <RecycleScroller
           class="scroller"
           :items="showFilteredWords"
-          :item-secondary-size="370"
+          :item-size="165"
           key-field="text"
-          v-slot="{ item, index }"
-          :dynamic-size="true"
+
           :min-item-size="165"
+          :item-secondary-size="370"
+          v-slot="{ item }"
+          :dynamic-size="true"
           :max-item-size="175"
           :grid-items="2"
-          :item-size="165"
       >
         <!--      <div class="grid-item">-->
         <MyListItem
@@ -53,7 +54,7 @@
 
   <div>
     <!-- 抽屉组件化   -->
-    <DetailDrawer  v-model="drawerVisible"  :title="title" :detail-id="currentId" />
+    <DetailDrawer v-model="drawerVisible" :title="title" :detail-id="currentId"/>
   </div>
   <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
@@ -71,9 +72,9 @@
     </div>
     <div>
       <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
-            <i class="iconfont icon-setting"  @click="drawerVisible = true"></i>
+        <i class="iconfont icon-setting" @click="drawerVisible = true"></i>
       </el-tooltip>
-<!--            <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
+      <!--            <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
       <el-tooltip class="box-item" effect="dark" content="置顶" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-top" @click="scrollToTop"></i>
       </el-tooltip>
@@ -131,7 +132,6 @@ import {useWordsStore} from "@/stores/words.ts";
 import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import {computed, nextTick, ref, watch} from "vue";
-// import {getParam} from "@/utils/str-util.ts";
 import {
   filterWordsForJsonExport,
   filterWordsForTextExport,
@@ -139,18 +139,15 @@ import {
   validateImportedWords
 } from "@/utils/word-util.ts";
 
-import {RecycleScroller} from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import {log} from "@/utils/logger.ts";
-import {addWord} from "@/utils/str-util.ts";
-
-const word = ref('')
+import { RecycleScroller } from 'vue-virtual-scroller'
+// const word = ref('')
 
 const wordsStore = useWordsStore();
 
 const drawerVisible = ref(false)
 const title = ref('设置')
-const currentId = ref(null)
+const currentId = ref<string | number | undefined>(undefined)
 /*const handleView = (id) => {
   currentId.value = id
   drawerVisible.value = true
@@ -261,24 +258,24 @@ const scrollToWord = (index: number) => {
     }
 
 
-/*    if (itemRefs.value[index] && scrollContainer.value) {
-      const container = scrollContainer.value
-      const targetElement = itemRefs.value[index]
+    /*    if (itemRefs.value[index] && scrollContainer.value) {
+          const container = scrollContainer.value
+          const targetElement = itemRefs.value[index]
 
-      // 计算相对位置
-      const containerRect = container.getBoundingClientRect()
-      const targetRect = targetElement.getBoundingClientRect()
+          // 计算相对位置
+          const containerRect = container.getBoundingClientRect()
+          const targetRect = targetElement.getBoundingClientRect()
 
-      // 滚动到目标元素位置
-      container.scrollTop = container.scrollTop + targetRect.top - containerRect.top - 100
+          // 滚动到目标元素位置
+          container.scrollTop = container.scrollTop + targetRect.top - containerRect.top - 100
 
 
-      // 延迟清空状态，确保滚动执行完成
-      setTimeout(() => {
-        wordsStore.setLastAddedWordText('')
-      }, 100)
-    }
-      */
+          // 延迟清空状态，确保滚动执行完成
+          setTimeout(() => {
+            wordsStore.setLastAddedWordText('')
+          }, 100)
+        }
+          */
   })
 }
 
@@ -293,11 +290,11 @@ const scrollToTop = () => {
   } else {
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
-/*  if (scrollContainer.value) {
-    scrollContainer.value.scrollTop = 0
-  } else {
-    window.scrollTo({top: 0, behavior: 'smooth'})
-  }*/
+  /*  if (scrollContainer.value) {
+      scrollContainer.value.scrollTop = 0
+    } else {
+      window.scrollTo({top: 0, behavior: 'smooth'})
+    }*/
 }
 
 // 滚动到底部
@@ -390,7 +387,7 @@ const focusFirstItem = async () => {
     const firstElement = document.querySelector('.list-item');
     if (firstElement) {
       (firstElement as HTMLElement).focus();
-      console.log('已聚焦到第一个单词项');
+      // console.log('已聚焦到第一个单词项');
     }
   }, 200);
 };
@@ -564,7 +561,7 @@ const translateWordsSequentially = async (words: any[]): Promise<any[]> => {
   for (const word of words) {
     try {
 
-      wordsStore.translateWithPlatform(word.text).then(res=>{
+      wordsStore.translateWithPlatform(word.text).then(res => {
         if (res.success) {
           translatedWords.push({
             text: word.text,
@@ -699,7 +696,6 @@ const exportTextWords = () => {
 
   ElMessage.success('导出成功');
 }
-
 
 
 // 是否直接显示或隐藏全部释义（-1 原状态，1显示全部，0 隐藏全部）

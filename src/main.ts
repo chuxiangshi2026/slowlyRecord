@@ -14,6 +14,8 @@ import router from './router'
 
 import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import VueVirtualScroller from 'vue-virtual-scroller'
 
 const app = createApp(App)
 
@@ -26,6 +28,7 @@ pinia.use(piniaPluginPersistedstate);
 app.use(pinia)
 app.use(ElementPlus, {locale: zhCn})
 app.use(router)
+app.use(VueVirtualScroller)
 
     // createApp(App).mount( ... ) // Vue
     // createRoot( ... ).render(App) // React

@@ -4,7 +4,7 @@
     "types": [
       "utools-api-types",
       "element-plus/global",
-      "pinia"
+      "pinia",
     ],
     "baseUrl": ".",
     // 这里设置基础路径为项目根目录
@@ -21,7 +21,8 @@
     "src/**/*.ts",
     "src/**/*.vue",
     "src/*.vue",
-    "preload.js"
+    "preload.js",
+    "src/**/*.d.ts",
   ],
   "files": [],
   "references": [
