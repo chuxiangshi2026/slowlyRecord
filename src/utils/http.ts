@@ -20,10 +20,10 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
     if (config.headers) {
-        // config.headers.authorization = (store.state as StateAll).users.token;
-        config.headers = {...config.headers}
+        // 使用类型断言解决类型不匹配问题
+        config.headers = {...config.headers} as any;
     } else {
-        config.headers = {'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'}
+        config.headers = {'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'} as any;
     }
 
     return config;
