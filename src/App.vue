@@ -12,70 +12,157 @@ import {useWordsStore} from "@/stores/words.ts";
 import {DEFAULT_INTERVALS} from "@/constants";
 import {addWord} from "@/utils/str-util.ts";
 import {ElMessage} from "element-plus";
+import {ocrTranslate} from "@/utils/pic-translate.ts";
+// import path from "node:path";
+
 const wordsStore = useWordsStore();
 
+// import {fileToBase64, ocrTranslate, translateImage} from '@/utils/pic-translate.ts'
 
-
+const preview = ref<string>('')
 
 utools.onPluginEnter(async (action) => {
-  // { code, type, payload, option, from }
+      // { code, type, payload, option, from }
 
-  /*  // app版本
-    const currentVerson = window.services.getAppVerson()
-    // 数据库版本
-    const previousVerson = window.services.wordModel.getAppVersionFromDb()
-    // 有返回false   null返回ture
-    let b = !previousVerson?.version;
-    if (
-        //   ?.  链式调用，空返回 undef
-        b ||
-        currentVerson !== previousVerson?.version
-    ) {
-      // 没有版本或版本不一致   指定为最新版本
-      window.services.wordModel.setAppVerson(currentVerson)
-      // 显示更新通知
-      // dispatch(updateshowNotification(true))
-      console.log('新版，更新version', currentVerson)
-    }*/
-
-
-  // await initUtoolSetting()
-
-  console.log("action对象", JSON.stringify(action))
-  if (action.code === 'over') {
-    // 把单词翻译了，添加到 列表中
-    // console.log('==================', action)
-
-    await handlePluginAddWord(action.payload)
-  }
+      /*  // app版本
+        const currentVerson = window.services.getAppVerson()
+        // 数据库版本
+        const previousVerson = window.services.wordModel.getAppVersionFromDb()
+        // 有返回false   null返回ture
+        let b = !previousVerson?.version;
+        if (
+            //   ?.  链式调用，空返回 undef
+            b ||
+            currentVerson !== previousVerson?.version
+        ) {
+          // 没有版本或版本不一致   指定为最新版本
+          window.services.wordModel.setAppVerson(currentVerson)
+          // 显示更新通知
+          // dispatch(updateshowNotification(true))
+          console.log('新版，更新version', currentVerson)
+        }*/
 
 
-  if (action.code === 'huaci' && action.from ==='hotkey'){
-    // action.type =='over'
-    console.log('我是快捷键进来的')
+      // await initUtoolSetting()
 
-    const selectedText = await navigator.clipboard.readText();
-
-    checkAddWork(selectedText)
-
-  }
-
-  if (action.code === 'huaci' && action.from == 'main') {
+      console.log("action对象", JSON.stringify(action))
+  /*if (action.code === 'snap') {
+    console.log('进来了')
+    window.services.snap()
+    console.log('走了--')
+  }*/
 
 
-    getSelectedTextFromSystem().then(text => {
-          checkAddWork(text);
+      if (action.code === 'over') {
+
+        // 把单词翻译了，添加到 列表中
+        // console.log('==================', action)
+
+        await handlePluginAddWord(action.payload);
+
+      }
+
+
+      if (action.code === 'huaci' && action.from === 'hotkey') {
+        // action.type =='over'
+        // console.log('我是快捷键进来的')
+
+        const selectedText = await navigator.clipboard.readText();
+
+        checkAddWork(selectedText)
+
+      }
+
+      if (action.code === 'huaci' && action.from == 'main') {
+
+
+        // const text = await window.services.getSelectedTextFromSystem();
+        //       checkAddWork(text);
+
+        getSelectedTextFromSystem().then(text => {
+              checkAddWork(text);
+            }
+        );
+
+      }
+
+      if (action.code === 'jietu' && action.from == 'main') {
+
+        console.log('满足截图条件')
+
+        // try {
+        const imgPath = await window.services.capture()
+        // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+
+        const response = await fetch(imgPath);
+        const blob = await response.blob();
+        const file = new File([blob], 'screenshot.png', {type: blob.type});
+
+        try {
+          // const { blob } = await translateImage(file, 'en', 'zh')
+          // const base64 = await fileToBase64(file);
+          const appKey = 'REDACTED_YOUDAO_APPKEY'; // 替换为你的appKey
+          const appSecret = 'REDACTED_YOUDAO_SECRET'; // 替换为你的appSecret
+          // const result = await translateImage(base64, 'en', 'zh-CHS', appKey, appSecret);
+          // 'en', 'zh-CHS'
+          const result = await ocrTranslate(file, appKey, appSecret, 'en', 'zh-CHS');
+          console.log(result)
+          if (result.errorCode !== '0') {
+            console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
+            // console.log(`翻译失败，错误码: ${result.errorCode}`);
+          }
+          const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
+
+          console.log('msg' + msg)
+          ElMessage.success(''+msg)
+
+          // preview.value = URL.createObjectURL(blob)
+        } catch (err: any) {
+          alert(err.message || '翻译失败')
         }
-    );
+      }
+      // }
 
+
+      if (action.code === 'review') {
+        handlePluginReview()
+        open()
+      }
+
+
+    })
+
+
+/*const translate = async () => {
+  if (!selectedImage.value) return;
+
+  isLoading.value = true;
+  error.value = '';
+  translationResult.value = null;
+
+  try {
+    // 1. 将图片转换为Base64
+    const base64 = await fileToBase64(selectedImage.value);
+
+    // 2. 调用翻译函数
+    // 注意：此处仅为前端演示，appSecret 暴露有风险！
+    const appKey = '你的应用ID'; // 替换为你的appKey
+    const appSecret = '你的应用密钥'; // 替换为你的appSecret
+
+    const result = await translateImage(base64, fromLang.value, toLang.value, appKey, appSecret);
+    translationResult.value = result;
+
+    // 3. 检查错误码（0表示成功）
+    if (result.errorCode !== '0') {
+      error.value = `翻译失败，错误码: ${result.errorCode}`;
+    }
+  } catch (err: any) {
+    console.error('翻译失败:', err);
+    error.value = err.message || '翻译过程出现异常';
+  } finally {
+    isLoading.value = false;
   }
-
-  if (action.code === 'review') {
-    handlePluginReview()
-  }
-
-
-})
+};*/
 
 
 // ==================== 核心：静默获取选中文本 ====================
@@ -114,6 +201,7 @@ async function getSelectedTextFromSystem(): Promise<string> {
 
   return selectedText;
 }
+
 
 /**
  * 校验剪切板中的单词
@@ -221,7 +309,7 @@ async function handlePluginAddWord(payload: string) {
 
   // 检查快捷键是否启用
   if (wordsStore.pluginStatus) {
-     utools.hideMainWindow();
+    utools.hideMainWindow();
   }
 }
 
@@ -233,10 +321,13 @@ function updateReview() {
   // 获取本地的数据，如果是空或和数据库的大小不一致，比较数据，留最新的
   let dbWords = wordsStore.listWords();
   console.log(dbWords, 'dbWords')
+  // 过滤掉word为空字符串的单词
+  dbWords = dbWords.filter((item: any) => item.word && item.word.trim() !== '');
 
 
   // console.log(words.value, typeof words.value[0].learnDate, '9999999')
   for (const item of dbWords) {
+
     // item.isReview = true
     // console.log(item)
     item.learnDate = new Date(item.learnDate);

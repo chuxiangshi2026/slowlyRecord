@@ -1,9 +1,10 @@
 <template>
 
   <!--ref="root"-->
-  <div class="list-item" :class="{ 'shortcut-enabled': wordsStore.shortcutEnabled, 'first-item': isFocus }" ref="itemRef" :data-word="word.text"  tabindex="0" @keydown="handleKeyDown" @click="onClick">
+  <div class="list-item" :class="{ 'shortcut-enabled': wordsStore.shortcutEnabled, 'first-item': isFocus }"
+       ref="itemRef" :data-word="word.text" tabindex="0" @keydown="handleKeyDown" @click="onClick">
 
-    <p class="word" >
+    <p class="word">
       {{ word.text }}
       <span class="phonetic">{{ word.phonetic }}</span>
     </p>
@@ -41,7 +42,7 @@
     </div>
     <div>
 <!--      hiddenExplain===word.text?word.explainedHidden: -->
-      <div class="translation" :hidden="(showExplained===-1?word.explainedHidden:showExplained) == 0">
+      <div class="translation" :hidden="(showExplained===-1?!word.explainedHidden:showExplained) == 0">
         <!--             @keydown.ctrl.enter="saveExplanation"-->
         <div class="translate-editable" contenteditable="true"
              @blur="saveExplanation"
@@ -75,11 +76,11 @@ const props = withDefaults(defineProps<{
   disableActions?: number  //0 待复习  1已复习  2 永久记住 3 全部
   showExplained?: number  //-1 显示原逻辑， 1显示全部 0 隐藏全部
   isFirst?: boolean  // 是否是第一个元素
-  hiddenExplain?: string
+  // hiddenExplain?: string
 }>(), {
   disableActions: 0,
   showExplained: -1,
-  hiddenExplain: ''
+  // hiddenExplain: ''
 });
 const wordModel = defineModel<Word>({required: true})
 
@@ -90,7 +91,7 @@ import {DEFAULT_INTERVALS} from "@/constants";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
-import {nextTick, onMounted, ref, toRef} from "vue";
+import {computed, nextTick, onMounted, ref, toRef} from "vue";
 
 const wordsStore = useWordsStore();
 // 是否处于焦点状态
@@ -181,7 +182,6 @@ const onClick = () => {
 const onFocus = () => {
   console.log("组件获得焦点");
 };
-
 
 
 // 保存释义

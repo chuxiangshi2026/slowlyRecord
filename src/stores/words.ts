@@ -51,6 +51,8 @@ export const useWordsStore =
             const pluginStatus = ref(false);
             // 默认关闭快捷键
             const shortcutEnabled = ref(false);
+
+            const hiddenExplain = ref('');
             // 当前操作释义的单词
             // const hiddenExplain = ref('');
 
@@ -261,7 +263,7 @@ export const useWordsStore =
                 lastAddedWordText,
                 currentTranslationPlatform,
                 lastFocusWordText,
-                // hiddenExplain,
+                hiddenExplain,
                 count,
                 pluginStatus,
                 rememberCount,
