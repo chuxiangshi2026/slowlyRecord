@@ -3,14 +3,14 @@
   <!--  <el-button type="primary" @click="clearWord">清空单词</el-button>-->
   <!--  <el-button type="primary" @click="initWord">初始化单词</el-button>-->
 
-<!--  <el-row>
-    <el-col>
-      <el-input :span="6" v-model="word" placeholder="请输入单词"></el-input>
-      &lt;!&ndash;            <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>&ndash;&gt;
-      <el-button :span="2" type="primary" @click="scrollToWordByText(word)">滚动到单词</el-button>
+  <!--  <el-row>
+      <el-col>
+        <el-input :span="6" v-model="word" placeholder="请输入单词"></el-input>
+                    <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>
+        <el-button :span="2" type="primary" @click="scrollToWordByText(word)">滚动到单词</el-button>
 
-    </el-col>
-  </el-row>-->
+      </el-col>
+    </el-row>-->
 
   <div v-if="showWords">暂无数据,请在主界面输入框添加单词</div>
   <div v-else>
@@ -37,7 +37,7 @@
             @delete="deleteWord(getIndexInOriginalList(item))"
             :showExplained="showExplained"
         >
-          <!--          :hiddenExplain="hiddenExplain"-->
+          <!--            :hiddenExplain="hiddenExplain"-->
           <!--            ref="visibleExplained"-->
           <!--            ref="invisibleExplained"-->
         </MyListItem>
@@ -146,7 +146,7 @@ import {
 
 import {log} from "@/utils/logger.ts";
 import {RecycleScroller} from 'vue-virtual-scroller'
-// import {addWord} from "@/utils/str-util.ts";
+import {addWord} from "@/utils/str-util.ts";
 
 const word = ref('')
 
@@ -329,7 +329,7 @@ const scrollToWordByText = (wordText: string) => {
       if (index !== -1) {
         scrollToWord(index)
       }
-    }, 120)
+    }, 500)
     console.log('未找到此单词，无法定位')
   }
 }
@@ -344,19 +344,29 @@ watch([() => listMode.value, () => showFilteredWords.value], async () => {
   console.log('自动聚焦到元素');
   await nextTick(); // 等待DOM更新
   // 等待虚拟滚动器渲染完成
-  if (showFilteredWords.value.length > 0) {
-    // 尝试聚焦到第一个元素
-    // 聚焦到指定元素
-    console.log('聚焦单词', wordsStore.lastFocusWordText)
-    if (wordsStore.lastFocusWordText.length > 0) {
-      focusElement('[data-word="' + wordsStore.lastFocusWordText + '"]')
-    } else {
-      focusElement('.list-item');
+  setTimeout(() => {
+    if (showFilteredWords.value.length > 0) {
+      // 尝试聚焦到第一个元素
+      // 聚焦到指定元素
+      console.log('聚焦单词', wordsStore.lastFocusWordText)
+      if (wordsStore.lastFocusWordText.length > 0) {
+        focusElement('[data-word="' + wordsStore.lastFocusWordText + '"]')
+      } else {
+        focusElement('.list-item');
+      }
     }
-  }
-  // setTimeout(() => {
-  // }, 50);
+  }, 500);
 }, {immediate: true});
+
+
+// 监听抽屉可见性变化，当抽屉关闭且快捷键启用时聚焦到第一个卡片
+watch(drawerVisible, (newValue, oldValue) => {
+  // 只有当抽屉从开启变为关闭，且快捷键是启用的，才聚焦
+  if (!newValue && oldValue && wordsStore.shortcutEnabled) {
+    // 使用nextTick确保DOM更新完成
+    focusElement('.list-item');
+  }
+});
 
 
 // 聚焦到指定元素
@@ -380,7 +390,7 @@ const focusElement = async (selector: string) => {
       (element as HTMLElement).focus();
       wordsStore.lastFocusWordText = ''
     }
-  }, 200);
+  }, 500);
 };
 
 /**
@@ -697,8 +707,8 @@ const showExplained = ref(-1)
  */
 const visibleExplained = () => {
   showExplained.value = showExplained.value != 1 ? 1 : -1
-  // wordsStore.hiddenExplain = ''
   // wordsStore.words.forEach(x => x.explainedHidden = false)
+  // wordsStore.hiddenExplain=''
   // hiddenExplain.value=''
 }
 /**
@@ -707,6 +717,7 @@ const visibleExplained = () => {
 const invisibleExplained = () => {
   // wordsStore.hiddenExplain = ''
   showExplained.value = showExplained.value != 0 ? 0 : -1
+  // wordsStore.hiddenExplain=''
   // hiddenExplain.value=''
   // wordsStore.words.forEach(x => x.explainedHidden = true)
 }

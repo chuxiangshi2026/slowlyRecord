@@ -200,6 +200,10 @@ const props = defineProps({
     default: '设置'
   }
 })
+// 定义emit事件
+const emit = defineEmits(['update:modelValue', 'save'])
+
+
 
 // 创建响应式API密钥数据，优先使用用户设置的值
 const apiKeys = reactive({
@@ -308,7 +312,6 @@ const updateTranApi = () => {
 }
 
 
-const emit = defineEmits(['update:modelValue', 'save'])
 
 const visible = computed({
   get: () => props.modelValue,
