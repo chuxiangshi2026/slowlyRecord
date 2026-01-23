@@ -159,7 +159,12 @@ function fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader()
         reader.readAsDataURL(file)
-        reader.onload = () => resolve((reader.result as string)+''.split(',')[1])
+        reader.onload = () => {
+            // 修复：移除 data:image/png;base64, 前缀，只保留Base64编码部分
+            const base64WithPrefix = reader.result as string;
+            const base64 = base64WithPrefix.split(',')[1];  // 只取逗号后的Base64部分
+            resolve(base64)
+        }
         reader.onerror = err => reject(err)
     })
 }
@@ -187,6 +192,11 @@ export async function ocrTranslate(
     to = 'zh-CHS'
 ): Promise<OcrResult> {
     const img = await fileToBase64(file)
+    console.log("base64",img.length)
+    // 验证base64数据是否有效（检查是否包含字母数字+/=字符）
+    const isValidBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(img);
+    console.log("base64格式是否有效:", isValidBase64);
+
     const salt = CryptoJS.lib.WordArray.random(16).toString()
     const curtime = Math.round(Date.now() / 1000).toString()
 

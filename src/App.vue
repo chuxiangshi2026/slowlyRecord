@@ -46,7 +46,7 @@ utools.onPluginEnter(async (action) => {
       // await initUtoolSetting()
 
       console.log("action对象", JSON.stringify(action))
-  /*if (action.code === 'snap') {
+/*  if (action.code === 'snap') {
     console.log('进来了')
     window.services.snap()
     console.log('走了--')
@@ -96,8 +96,9 @@ utools.onPluginEnter(async (action) => {
 
         const response = await fetch(imgPath);
         const blob = await response.blob();
-        const file = new File([blob], 'screenshot.png', {type: blob.type});
+        const file = new File([blob], 'utools_snap.png', {type: blob.type});
 
+        console.log('文件对象',file.name, file.type, file.size)
         try {
           // const { blob } = await translateImage(file, 'en', 'zh')
           // const base64 = await fileToBase64(file);
@@ -113,8 +114,22 @@ utools.onPluginEnter(async (action) => {
           }
           const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
 
+          if (msg.length === 0) {
+            console.log('警告：OCR返回结果为空数组');
+            // 检查resRegions是否存在但为空
+            if (!result.resRegions) {
+              console.log('resRegions字段不存在');
+            } else {
+              console.log(`resRegions长度: ${result.resRegions.length}`);
+              console.log('resRegions内容:', result.resRegions);
+            }
+          }
           console.log('msg' + msg)
-          ElMessage.success(''+msg)
+          if (msg.length > 0) {
+            ElMessage.success(''+msg)
+          } else {
+            ElMessage.warning('OCR识别结果为空，请检查图片内容');
+          }
 
           // preview.value = URL.createObjectURL(blob)
         } catch (err: any) {
