@@ -54,7 +54,7 @@
           <button @click="selectAllWords" class="select-btn">全选</button>
           <button @click="invertSelection" class="invert-btn">反选</button>
           <button @click="clearSelection" class="clear-btn">清空</button>
-          <button @click="removeChineseWords" class="remove-chinese-btn">去除中文</button>
+          <button @click="removeChineseWords" class="remove-chinese-btn">筛除中文</button>
           <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加到单词列表</button>
           <button @click="closePanel" class="cancel-btn">关闭</button>
         </div>
