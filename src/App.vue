@@ -126,7 +126,7 @@ utools.onPluginEnter(async (action) => {
     );
   }
 
-  if (action.code === 'jietu' && action.from == 'main') {
+  if (action.code === 'jietu') {
 
     console.log('满足截图条件')
 

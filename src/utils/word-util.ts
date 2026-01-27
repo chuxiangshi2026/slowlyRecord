@@ -211,5 +211,6 @@ export const batchTranslateAndAddWords = async (
             // 添加短暂延迟，避免API调用过于频繁
             await new Promise(resolve => setTimeout(resolve, 100));
         }
+        wordsStore.setLastAddedWordText(<string>uniqueWords.at(-1))
     }
 };
