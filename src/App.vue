@@ -8,7 +8,7 @@
       @select="handleSelectOCRItem"
       @select-all="handleSelectAllItems"
   />
-  
+
   <!-- 引入文本选择器组件 -->
   <TextSelector
       :visible="showTextPanel"
@@ -131,8 +131,8 @@ utools.onPluginEnter(async (action) => {
     console.log('满足截图条件')
 
     // try {
-    // const imgPath = await window.services.capture()
-    const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+    const imgPath = await window.services.capture()
+    // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
     const response = await fetch(imgPath);
     const blob = await response.blob();

@@ -13,7 +13,10 @@
       "code": "review",
       "explain": "进入单词列表",
       "cmds": [
-        "review"
+        "review",
+        "manji",
+        "慢记",
+        "mj"
       ]
     },
     {
