@@ -40,6 +40,18 @@
       ]
     },
     {
+      "code": "huaduan",
+      "explain": "划段添加",
+      "cmds": [
+        {
+          "type": "over",
+          "label": "划段添加",
+          "minLength": 1
+        },
+        "划段添加"
+      ]
+    },
+    {
       "code": "jietu",
       "explain": "截图添加",
       "cmds": [

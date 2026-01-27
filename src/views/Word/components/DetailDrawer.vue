@@ -82,20 +82,17 @@
         </div>
         <el-divider/>-->
 
-    <h4 class="header">全局快捷键</h4>
+    <h4 class="header">设置全局快捷键</h4>
     <div class="titles">
       <div class="setting-item">
-        <div class="content">打开全局快捷键设置页面</div>
-        <el-button type="info" @click="huacikuaijiejian">划词快捷键</el-button>
+        <!--        <div class="content">打开全局快捷键</div>-->
+        <el-button type="info" @click="kuaijiejian(1)">划词快捷键</el-button>
+        <el-button type="info" @click="kuaijiejian(2)">划段快捷键</el-button>
+        <el-button type="info" @click="kuaijiejian(3)">截图快捷键</el-button>
       </div>
     </div>
 
     <el-divider/>
-
-
-
-
-
 
 
     <!--     快捷键模块 -->
@@ -151,7 +148,6 @@
     <el-divider/>
 
 
-
     <h4 class="header">其他</h4>
     <div class="content">
       <!--      <div class="view-version-btn" @click="updateshowNotification(true)">查看版本说明</div>-->
@@ -204,41 +200,40 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'save'])
 
 
-
 // 创建响应式API密钥数据，优先使用用户设置的值
 const apiKeys = reactive({
   youdao: {
     // || AppInfo.youdao.appkey
-    appkey: localStorage.getItem('api_key_youdao_appkey') ||'',
+    appkey: localStorage.getItem('api_key_youdao_appkey') || '',
     // || AppInfo.youdao.key
-    key: localStorage.getItem('api_key_youdao_key') ||''
+    key: localStorage.getItem('api_key_youdao_key') || ''
   },
   ali: {
     // || AppInfo.ali.appkey
-    appkey: localStorage.getItem('api_key_ali_appkey') ||'',
+    appkey: localStorage.getItem('api_key_ali_appkey') || '',
     // || AppInfo.ali.key
-    key: localStorage.getItem('api_key_ali_key') ||''
+    key: localStorage.getItem('api_key_ali_key') || ''
   },
   baidu: {
     // || AppInfo.baidu.appkey
-    appkey: localStorage.getItem('api_key_baidu_appkey') ||'',
+    appkey: localStorage.getItem('api_key_baidu_appkey') || '',
     // || AppInfo.baidu.key
-    key: localStorage.getItem('api_key_baidu_key') ||''
+    key: localStorage.getItem('api_key_baidu_key') || ''
   }
 })
 
 // 监听API密钥变化并保存
 watch(() => apiKeys.ali, () => {
   saveApiKeys('ali')
-}, { deep: true })
+}, {deep: true})
 
 watch(() => apiKeys.youdao, () => {
   saveApiKeys('youdao')
-}, { deep: true })
+}, {deep: true})
 
 watch(() => apiKeys.baidu, () => {
   saveApiKeys('baidu')
-}, { deep: true })
+}, {deep: true})
 
 const saveApiKeys = (provider: TranslationPlatform) => {
   // 保存API密钥到本地存储
@@ -274,13 +269,17 @@ const onCloseAfterAddSwitchChange = () => {
   wordsStore.setClosePlugin(exitThePlugin.value)
 }
 
-const huacikuaijiejian = () => {
-  utools.redirectHotKeySetting("划词添加1",true)
+const kuaijiejian = (type:number) => {
+  if (type == 1) {
+    utools.redirectHotKeySetting("划词添加", true);
+  }
+  if (type ==2) {
+    utools.redirectHotKeySetting("划段添加", true)
+  }
+  if (type ==3) {
+    utools.redirectHotKeySetting("截图添加", true)
+  }
 }
-
-
-
-
 
 
 let wordsStore = useWordsStore();
@@ -310,7 +309,6 @@ const options = [
 const updateTranApi = () => {
   wordsStore.setTranslationPlatform(tranApi.value)
 }
-
 
 
 const visible = computed({

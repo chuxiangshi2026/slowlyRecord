@@ -8,6 +8,14 @@
       @select="handleSelectOCRItem"
       @select-all="handleSelectAllItems"
   />
+  
+  <!-- 引入文本选择器组件 -->
+  <TextSelector
+      :visible="showTextPanel"
+      :text-content="textContent"
+      @close="closeTextPanel"
+      @select="handleSelectTextItems"
+  />
 </template>
 
 
@@ -24,6 +32,7 @@ import {ocrTranslate} from "@/utils/pic-translate.ts";
 // import path from "node:path";
 import picData from '../picdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
+import TextSelector from '@/views/Word/components/TextSelector.vue';
 import {AppInfo} from "@/config.ts";
 
 const wordsStore = useWordsStore();
@@ -36,127 +45,142 @@ const preview = ref<string>('')
 const showOCRPanel = ref<boolean>(false);
 const ocrResults = ref<any[]>([]);
 
+// 添加文本选择相关的响应式变量
+const showTextPanel = ref<boolean>(false);
+const textContent = ref<string>('');
 
 utools.onPluginEnter(async (action) => {
-      // { code, type, payload, option, from }
+  // { code, type, payload, option, from }
 
-      /*  // app版本
-        const currentVerson = window.services.getAppVerson()
-        // 数据库版本
-        const previousVerson = window.services.wordModel.getAppVersionFromDb()
-        // 有返回false   null返回ture
-        let b = !previousVerson?.version;
-        if (
-            //   ?.  链式调用，空返回 undef
-            b ||
-            currentVerson !== previousVerson?.version
-        ) {
-          // 没有版本或版本不一致   指定为最新版本
-          window.services.wordModel.setAppVerson(currentVerson)
-          // 显示更新通知
-          // dispatch(updateshowNotification(true))
-          console.log('新版，更新version', currentVerson)
-        }*/
-
-
-      // await initUtoolSetting()
-
-      console.log("action对象", JSON.stringify(action))
-/*  if (action.code === 'snap') {
-    console.log('进来了')
-    window.services.snap()
-    console.log('走了--')
-  }*/
+  /*  // app版本
+    const currentVerson = window.services.getAppVerson()
+    // 数据库版本
+    const previousVerson = window.services.wordModel.getAppVersionFromDb()
+    // 有返回false   null返回ture
+    let b = !previousVerson?.version;
+    if (
+        //   ?.  链式调用，空返回 undef
+        b ||
+        currentVerson !== previousVerson?.version
+    ) {
+      // 没有版本或版本不一致   指定为最新版本
+      window.services.wordModel.setAppVerson(currentVerson)
+      // 显示更新通知
+      // dispatch(updateshowNotification(true))
+      console.log('新版，更新version', currentVerson)
+    }*/
 
 
-      if (action.code === 'over') {
+  // await initUtoolSetting()
 
-        // 把单词翻译了，添加到 列表中
-        // console.log('==================', action)
-
-        await handlePluginAddWord(action.payload);
-
-      }
-
-
-      if (action.code === 'huaci' && action.from === 'hotkey') {
-        // action.type =='over'
-        // console.log('我是快捷键进来的')
-
-        const selectedText = await navigator.clipboard.readText();
-
-        checkShearBoardAddWork(selectedText)
-
-      }
-
-      if (action.code === 'huaci' && action.from == 'main') {
+  console.log("action对象", JSON.stringify(action))
+  /*  if (action.code === 'snap') {
+      console.log('进来了')
+      window.services.snap()
+      console.log('走了--')
+    }*/
 
 
-        // const text = await window.services.getSelectedTextFromSystem();
-        //       checkShearBoardAddWork(text);
+  if (action.code === 'over') {
 
-        getSelectedTextFromSystem().then(text => {
-              checkShearBoardAddWork(text);
-            }
-        );
+    // 把单词翻译了，添加到 列表中
+    // console.log('==================', action)
 
-      }
+    await handlePluginAddWord(action.payload);
 
-      if (action.code === 'jietu' && action.from == 'main') {
-
-        console.log('满足截图条件')
-
-        // try {
-        // const imgPath = await window.services.capture()
-        const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
-
-        const response = await fetch(imgPath);
-        const blob = await response.blob();
-        const file = new File([blob], 'utools_snap.png', {type: blob.type});
-
-        console.log('文件对象',file.name, file.type, file.size)
-        utools.showMainWindow()
-        try {
-          // 'en', 'zh-CHS'
-          const result = await ocrTranslate(file, AppInfo['youdao'].appkey, AppInfo['youdao'].key, 'en', 'zh-CHS');
-
-          // const result = picData;
-          console.log(result)
-          if (result.errorCode !== '0') {
-            console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
-            // console.log(`翻译失败，错误码: ${result.errorCode}`);
-          }
-          const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
-// 处理OCR返回的坐标和翻译结果
-          if (result.resRegions && Array.isArray(result.resRegions)) {
-            // 显示可选择的单词和翻译结果
-            displayOCRResults(result.resRegions);
-          } else {
-            ElMessage.warning('OCR识别结果为空，请检查图片内容');
-          }
+  }
 
 
-          console.log('msg' + msg)
-            // ElMessage.success(''+msg)
-          if (msg.length <= 0) {
-            ElMessage.warning('OCR识别结果为空，请检查图片内容');
-          }
+  if (action.code === 'huaci' && action.from === 'hotkey') {
+    // action.type =='over'
+    // console.log('我是快捷键进来的')
+    const selectedText = await navigator.clipboard.readText();
+    // 显示文本选择面板
+    displayTextSelection(selectedText);
+  }
 
-          // preview.value = URL.createObjectURL(blob)
-        } catch (err: any) {
-          alert(err.message || '翻译失败')
+  if (action.code === 'huaci' && action.from == 'main') {
+    // const text = await window.services.getSelectedTextFromSystem();
+    //       checkShearBoardAddWork(text);
+
+    getSelectedTextFromSystem().then(text => {
+          checkShearBoardAddWork(text);
         }
+    );
+  }
+
+  if (action.code === 'huaduan' && action.from === 'hotkey') {
+    // action.type =='over'
+    // console.log('我是快捷键进来的')
+    const selectedText = await navigator.clipboard.readText();
+    // 显示文本选择面板
+    displayTextSelection(selectedText);
+  }
+
+  if (action.code === 'huaduan' && action.from == 'main') {
+
+    getSelectedTextFromSystem().then(text => {
+      // 显示文本选择面板
+      displayTextSelection(text);
+        }
+    );
+  }
+
+  if (action.code === 'jietu' && action.from == 'main') {
+
+    console.log('满足截图条件')
+
+    // try {
+    // const imgPath = await window.services.capture()
+    const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+
+    const response = await fetch(imgPath);
+    const blob = await response.blob();
+    const file = new File([blob], 'utools_snap.png', {type: blob.type});
+
+    console.log('文件对象', file.name, file.type, file.size)
+    utools.showMainWindow()
+    try {
+      // 'en', 'zh-CHS'
+      const result = await ocrTranslate(file, AppInfo['youdao'].appkey, AppInfo['youdao'].key, 'en', 'zh-CHS');
+
+      // const result = picData;
+      console.log(result)
+      if (result.errorCode !== '0') {
+        console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
+        // console.log(`翻译失败，错误码: ${result.errorCode}`);
       }
-      // }
-
-
-      if (action.code === 'review') {
-        handlePluginReview()
-        open()
+      const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
+// 处理OCR返回的坐标和翻译结果
+      if (result.resRegions && Array.isArray(result.resRegions)) {
+        // 显示可选择的单词和翻译结果
+        displayOCRResults(result.resRegions);
+      } else {
+        ElMessage.warning('OCR识别结果为空，请检查图片内容');
       }
 
 
-    })
+      console.log('msg' + msg)
+      // ElMessage.success(''+msg)
+      if (msg.length <= 0) {
+        ElMessage.warning('OCR识别结果为空，请检查图片内容');
+      }
+
+      // preview.value = URL.createObjectURL(blob)
+    } catch (err: any) {
+      alert(err.message || '翻译失败')
+    }
+  }
+  // }
+
+
+  if (action.code === 'review') {
+    handlePluginReview()
+    open()
+  }
+
+
+})
 
 
 /*const translate = async () => {
@@ -230,7 +254,7 @@ function handleSelectOCRItem(region: any) {
   }
 
   if (word) {
-    console.log('待添加的选中单词'+`[${word}]`)
+    console.log('待添加的选中单词' + `[${word}]`)
     batchAddWords([`${word}`.trim()]);
     // ElMessage.success(`已保存: ${word} - ${translation}`);
   } else {
@@ -326,18 +350,47 @@ async function getSelectedTextFromSystem(): Promise<string> {
  * @param text
  */
 function checkShearBoardAddWork(text: string) {
-  // 5. 判断逻辑（根据你的场景调整阈值）
-  const textError = (
-      text.length <= 0 ||
-      text.endsWith('\n') ||          // 以换行符结尾（整行复制的典型特征）
-      text.length > 25                // 长度超过合理选中范围
-  );
-  if (textError) {
-    ElMessage.error('请先用光标选中单词');
-  } else {
-    batchAddWords([text])
-    // ElMessage.success(text);
+  // 去除首尾空格并替换多个连续空格为单个空格
+  let processedText = text.trim().replace(/\s{2,}/g, ' ');
+
+  // 检查是否为空字符串或仅包含空格
+  if (!processedText || processedText.length > 50 || !/^[a-zA-Z\-'\s]+$/.test(processedText)) {
+    ElMessage.error('请选中单个有效单词或短语');
+    return;
   }
+  // 验证处理后的文本是否符合要求（非空且不超过限制）
+  addWord(processedText);
+}
+
+/**
+ * 显示文本选择面板供用户选择和保存单词
+ */
+function displayTextSelection(text: string) {
+  // 存储文本内容
+  textContent.value = text;
+
+  // 显示选择面板
+  showTextPanel.value = true;
+}
+
+/**
+ * 选择特定的文本项
+ */
+function handleSelectTextItems(words: string[]) {
+  if (words && words.length > 0) {
+    console.log('待添加的选中单词', words);
+    batchAddWords(words);
+  } else {
+    ElMessage.warning('单词内容为空');
+  }
+}
+
+/**
+ * 关闭文本选择面板
+ */
+function closeTextPanel() {
+  showTextPanel.value = false;
+  textContent.value = '';
 }
 
 onMounted(() => {
