@@ -36,7 +36,6 @@ const showOCRPanel = ref<boolean>(false);
 const ocrResults = ref<any[]>([]);
 
 
-
 utools.onPluginEnter(async (action) => {
       // { code, type, payload, option, from }
 
@@ -225,9 +224,15 @@ function createClickableRegion(word: string, translation: string, coords: any) {
  * 选择特定的OCR识别项
  */
 function handleSelectOCRItem(region: any) {
-  const word = region.context || '';
-  const translation = region.tranContent || '';
-
+  let word = region.context || '';
+  let translation = region.tranContent || '';
+  
+  // 如果是新OCRSelector组件传递的单词对象
+  if (region.originalText && region.translatedText) {
+    word = region.originalText;
+    translation = region.translatedText;
+  }
+  
   if (word && translation) {
     addWord(`${word} ${translation}`);
     ElMessage.success(`已保存: ${word} - ${translation}`);
@@ -392,7 +397,7 @@ onMounted(() => {
   // 退出插件时触发
   //   window.utools.onPluginOut((isKill) => {
   //     route.value = ''
-  //   })
+  //   }
 
 
 });
