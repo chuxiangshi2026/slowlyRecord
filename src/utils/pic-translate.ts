@@ -169,6 +169,9 @@ function fileToBase64(file: File): Promise<string> {
     })
 }
 
+
+
+
 export interface OcrResult {
     errorCode: string
     resRegions?: Array<{

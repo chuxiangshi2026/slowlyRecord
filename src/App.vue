@@ -1,5 +1,13 @@
 <template>
   <RouterView/>
+  <!-- 引入OCR选择器组件 -->
+  <OCRSelector
+      :visible="showOCRPanel"
+      :ocr-results="ocrResults"
+      @close="closeOCRPanel"
+      @select="handleSelectOCRItem"
+      @select-all="handleSelectAllItems"
+  />
 </template>
 
 
@@ -14,12 +22,20 @@ import {addWord} from "@/utils/str-util.ts";
 import {ElMessage} from "element-plus";
 import {ocrTranslate} from "@/utils/pic-translate.ts";
 // import path from "node:path";
+import picData from '../picdata.json';
+import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 
 const wordsStore = useWordsStore();
 
 // import {fileToBase64, ocrTranslate, translateImage} from '@/utils/pic-translate.ts'
 
 const preview = ref<string>('')
+
+// 添加OCR结果相关的响应式变量
+const showOCRPanel = ref<boolean>(false);
+const ocrResults = ref<any[]>([]);
+
+
 
 utools.onPluginEnter(async (action) => {
       // { code, type, payload, option, from }
@@ -69,7 +85,7 @@ utools.onPluginEnter(async (action) => {
 
         const selectedText = await navigator.clipboard.readText();
 
-        checkAddWork(selectedText)
+        checkShearBoardAddWork(selectedText)
 
       }
 
@@ -77,10 +93,10 @@ utools.onPluginEnter(async (action) => {
 
 
         // const text = await window.services.getSelectedTextFromSystem();
-        //       checkAddWork(text);
+        //       checkShearBoardAddWork(text);
 
         getSelectedTextFromSystem().then(text => {
-              checkAddWork(text);
+              checkShearBoardAddWork(text);
             }
         );
 
@@ -91,8 +107,8 @@ utools.onPluginEnter(async (action) => {
         console.log('满足截图条件')
 
         // try {
-        const imgPath = await window.services.capture()
-        // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+        // const imgPath = await window.services.capture()
+        const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
         const response = await fetch(imgPath);
         const blob = await response.blob();
@@ -106,24 +122,24 @@ utools.onPluginEnter(async (action) => {
           const appSecret = 'REDACTED_YOUDAO_SECRET'; // 替换为你的appSecret
           // const result = await translateImage(base64, 'en', 'zh-CHS', appKey, appSecret);
           // 'en', 'zh-CHS'
-          const result = await ocrTranslate(file, appKey, appSecret, 'en', 'zh-CHS');
+          // const result = await ocrTranslate(file, appKey, appSecret, 'en', 'zh-CHS');
+
+          const result = picData;
           console.log(result)
           if (result.errorCode !== '0') {
             console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
             // console.log(`翻译失败，错误码: ${result.errorCode}`);
           }
           const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
-
-          if (msg.length === 0) {
-            console.log('警告：OCR返回结果为空数组');
-            // 检查resRegions是否存在但为空
-            if (!result.resRegions) {
-              console.log('resRegions字段不存在');
-            } else {
-              console.log(`resRegions长度: ${result.resRegions.length}`);
-              console.log('resRegions内容:', result.resRegions);
-            }
+// 处理OCR返回的坐标和翻译结果
+          if (result.resRegions && Array.isArray(result.resRegions)) {
+            // 显示可选择的单词和翻译结果
+            displayOCRResults(result.resRegions);
+          } else {
+            ElMessage.warning('OCR识别结果为空，请检查图片内容');
           }
+
+
           console.log('msg' + msg)
           if (msg.length > 0) {
             ElMessage.success(''+msg)
@@ -179,6 +195,91 @@ utools.onPluginEnter(async (action) => {
   }
 };*/
 
+/**
+ * 显示OCR识别结果供用户选择和保存
+ */
+function displayOCRResults(resRegions: any[]) {
+  // 存储OCR结果
+  ocrResults.value = resRegions;
+
+  // 显示选择面板
+  showOCRPanel.value = true;
+}
+
+/**
+ * 在指定坐标创建可点击区域
+ */
+function createClickableRegion(word: string, translation: string, coords: any) {
+  // 如果有坐标信息，可以高亮显示这些区域
+  // 这里我们简单地记录坐标信息
+  console.log(`坐标:`, coords, `单词: ${word}`, `翻译: ${translation}`);
+
+  // 提供选择选项
+  if (confirm(`识别到单词: "${word}", 翻译: "${translation}"\n是否保存?`)) {
+    addWord(`${word} ${translation}`);
+    ElMessage.success(`已保存: ${word} - ${translation}`);
+  }
+}
+
+/**
+ * 选择特定的OCR识别项
+ */
+function handleSelectOCRItem(region: any) {
+  const word = region.context || '';
+  const translation = region.tranContent || '';
+
+  if (word && translation) {
+    addWord(`${word} ${translation}`);
+    ElMessage.success(`已保存: ${word} - ${translation}`);
+  } else {
+    ElMessage.warning('单词或翻译内容为空');
+  }
+}
+
+/**
+ * 选择所有OCR识别项
+ */
+function handleSelectAllItems(items: any[]) {
+  items.forEach(region => {
+    const word = region.context || '';
+    const translation = region.tranContent || '';
+
+    if (word && translation) {
+      addWord(`${word} ${translation}`);
+    }
+  });
+
+  if (items.length > 0) {
+    ElMessage.success(`已保存全部 ${items.length} 个单词`);
+  }
+}
+
+/**
+ * 关闭OCR面板
+ */
+function closeOCRPanel() {
+  showOCRPanel.value = false;
+  ocrResults.value = [];
+}
+
+/**
+ * 校验剪切板中的单词
+ * @param text
+ */
+function checkAddWork(text: string) {
+  // 5. 判断逻辑（根据你的场景调整阈值）
+  const textError = (
+      text.length <= 0 ||
+      text.endsWith('\n') ||          // 以换行符结尾（整行复制的典型特征）
+      text.length > 25                // 长度超过合理选中范围
+  );
+  if (textError) {
+    ElMessage.error('请先用光标选中单词');
+  } else {
+    addWord(text)
+    // ElMessage.success(text);
+  }
+}
 
 // ==================== 核心：静默获取选中文本 ====================
 async function getSelectedTextFromSystem(): Promise<string> {
@@ -222,7 +323,7 @@ async function getSelectedTextFromSystem(): Promise<string> {
  * 校验剪切板中的单词
  * @param text
  */
-function checkAddWork(text: string) {
+function checkShearBoardAddWork(text: string) {
   // 5. 判断逻辑（根据你的场景调整阈值）
   const textError = (
       text.length <= 0 ||

@@ -1,0 +1,235 @@
+{
+  "orientation": "Up",
+  "RequestId": "bc1a759a-fb6f-453b-aba2-80fdb62ee470",
+  "image_size": [
+    634,
+    734
+  ],
+  "lanFrom": "en",
+  "textAngle": "0.0",
+  "errorCode": "0",
+  "AIGC": {
+    "Label": "1",
+    "ContentProducer": "001191110108785503985K00000",
+    "ProduceID": "9111010878_1769135183258_497c4a5b",
+    "ContentPropagator": "001191110108785503985K00000",
+    "PropagateID": "9111010878_1769135183258_eed44469",
+    "ReservedCode1": {
+      "SecurityData": {
+        "Type": "TC260PG",
+        "Version": 1,
+        "Bindings": [
+          {
+            "params": null,
+            "AlgID": "1.2.156.10197.1.401",
+            "Type": "Hash",
+            "Value": "7f8366cbefffd9ab08a29005eb8c092b6d7b0dc6f29afc118d520de9e61a68b7",
+            "ID": 1,
+            "CntSel": "DFT"
+          }
+        ],
+        "PubSD": [
+          {
+            "Type": "DS",
+            "AlgID": "1.2.156.10197.1.501",
+            "ID": 1,
+            "TBSData": {
+              "Type": "Bnd",
+              "ID": 1
+            },
+            "Signature": "66ca777cbd0cdf32adce8e10cdfedc48f7795125e04c5af2191c1cdec0016eb3987cf68ee81caaf8b1d96a1cc4ac7a9b888aa5668b610e3a8ee5d33330d37752"
+          },
+          {
+            "Type": "PubKey",
+            "AlgID": "1.2.156.10197.1.501",
+            "KeyValue": "043215711283c6bd1e4cb1ecd648d1c39517706b556404093c9ec7f9dc2242dfd17f2c22f862a497b62d26066f8cea5077d5aea08a9f72581f9ccc4957647a5a59"
+          }
+        ]
+      }
+    },
+    "ReservedCode2": {
+      "SecurityData": {
+        "Type": "TC260PG",
+        "Version": 1,
+        "Bindings": [
+          {
+            "params": null,
+            "AlgID": "1.2.156.10197.1.401",
+            "Type": "Hash",
+            "Value": "7f8366cbefffd9ab08a29005eb8c092b6d7b0dc6f29afc118d520de9e61a68b7",
+            "ID": 1,
+            "CntSel": "DFT"
+          }
+        ],
+        "PubSD": [
+          {
+            "Type": "DS",
+            "AlgID": "1.2.156.10197.1.501",
+            "ID": 1,
+            "TBSData": {
+              "Type": "Bnd",
+              "ID": 1
+            },
+            "Signature": "66ca777cbd0cdf32adce8e10cdfedc48f7795125e04c5af2191c1cdec0016eb3987cf68ee81caaf8b1d96a1cc4ac7a9b888aa5668b610e3a8ee5d33330d37752"
+          },
+          {
+            "Type": "PubKey",
+            "AlgID": "1.2.156.10197.1.501",
+            "KeyValue": "043215711283c6bd1e4cb1ecd648d1c39517706b556404093c9ec7f9dc2242dfd17f2c22f862a497b62d26066f8cea5077d5aea08a9f72581f9ccc4957647a5a59"
+          }
+        ]
+      }
+    }
+  },
+  "lanTo": "zh-CHS",
+  "exif": "Up",
+  "resRegions": [
+    {
+      "boundingBox": "18,11,321,21",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 52,
+      "context": "if (action.code === 'over') {",
+      "tranContent": "如果行动。Code === 'over') {",
+      "dir": "h",
+      "lang": "en",
+      "colors": [
+        "default"
+      ]
+    },
+    {
+      "boundingBox": "18,233,12,21",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 15,
+      "context": "}",
+      "tranContent": "｝",
+      "dir": "v",
+      "lang": "unknown",
+      "colors": [
+        "default"
+      ]
+    },
+    {
+      "boundingBox": "17,328,641,56",
+      "color": "default",
+      "linesCount": 2,
+      "lineheight": 27,
+      "context": "if (action.code === 'huaci' && action.from === 'hotkey') faction.type =='over'",
+      "tranContent": "如果行动。Code === ‘huaci‘ && action.from === ’热键’)派系。类型= = '在'",
+      "dir": "h",
+      "lang": "en",
+      "colors": [
+        "default"
+      ],
+      "text_align": "left"
+    },
+    {
+      "boundingBox": "70,392,311,23",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 27,
+      "context": "console.log('我是快捷键进来的')",
+      "tranContent": "console.log('我是快捷键进来的')",
+      "dir": "h",
+      "lang": "zh-CHS",
+      "colors": [
+        "default"
+      ],
+      "text_align": "left"
+    },
+    {
+      "boundingBox": "18,585,12,21",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 8,
+      "context": "}",
+      "tranContent": "}",
+      "dir": "v",
+      "lang": "unknown",
+      "colors": [
+        "default"
+      ]
+    },
+    {
+      "boundingBox": "72,76,247,21",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 26,
+      "context": "把单词翻译了，添加到 列表中",
+      "tranContent": "把单词翻译了，添加到 列表中",
+      "dir": "h",
+      "lang": "zh-CHS",
+      "colors": [
+        "default"
+      ]
+    },
+    {
+      "boundingBox": "72,107,141,21",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 26,
+      "context": "console.log('",
+      "tranContent": "console.log ('",
+      "dir": "h",
+      "lang": "unknown",
+      "colors": [
+        "default"
+      ],
+      "text_align": "left"
+    },
+    {
+      "boundingBox": "412,105,112,23",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 26,
+      "context": "', action)",
+      "tranContent": "”,动作)",
+      "dir": "h",
+      "lang": "en",
+      "colors": [
+        "default"
+      ],
+      "text_align": "left"
+    },
+    {
+      "boundingBox": "39,170,462,24",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 26,
+      "context": "await handlePluginAddWord(action.payload);",
+      "tranContent": "await handlePluginAddWord (action.payload);",
+      "dir": "h",
+      "lang": "de",
+      "colors": [
+        "default"
+      ]
+    },
+    {
+      "boundingBox": "39,456,638,24",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 26,
+      "context": "const selectedText = await navigator.clipboard.readText();",
+      "tranContent": "const selectedText = await navigator.clipboard.readText()；",
+      "dir": "h",
+      "lang": "en",
+      "colors": [
+        "default"
+      ]
+    },
+    {
+      "boundingBox": "39,521,285,21",
+      "color": "default",
+      "linesCount": 1,
+      "lineheight": 26,
+      "context": "checkAddWork(selectedText)",
+      "tranContent": "checkAddWork（selectedText）",
+      "dir": "h",
+      "lang": "en",
+      "colors": [
+        "default"
+      ]
+    }
+  ]
+}
