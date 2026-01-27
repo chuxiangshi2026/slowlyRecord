@@ -141,7 +141,8 @@ import {
   filterWordsForJsonExport,
   filterWordsForTextExport,
   parseFileContent,
-  validateImportedWords
+  validateImportedWords,
+  batchTranslateAndAddWords
 } from "@/utils/word-util.ts";
 
 import {log} from "@/utils/logger.ts";
@@ -492,6 +493,7 @@ const importWords = () => {
   fileInput.type = 'file';
   fileInput.accept = '.json'; // 限制文件类型为JSON
   fileInput.onchange = (event) => {
+    utools.showMainWindow();
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -517,19 +519,12 @@ const importWords = () => {
             if (wordsNeedingTranslation.length > 0) {
               ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
 
-              // 逐个翻译需要翻译的单词
-              translateWordsSequentially(wordsNeedingTranslation).then(translatedWords => {
-                // 合并翻译后的单词和已有释义的单词
-                const wordsWithTranslations = uniqueWords.map(word => {
-                  const translated = translatedWords.find(tw => tw.text === word.text);
-                  return translated ? {...word, ...translated} : word;
-                });
-
-                // 将单词列表添加到存储
-                wordsStore.addAndUpdateWords(wordsWithTranslations).then(() => {
-                  scrollToBottom()
-                  ElMessage.success(`成功导入${uniqueWords.length}个单词`);
-                });
+              // 使用公共的批量翻译和添加方法
+              const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
+              batchTranslateAndAddWords(wordsToTranslate, (processedCount, totalCount) => {
+                if (totalCount > 0) {
+                  ElMessage.info(`正在翻译: ${processedCount}/${totalCount}`);
+                }
               });
             } else {
               // 所有单词都有释义，直接导入
@@ -539,11 +534,11 @@ const importWords = () => {
               });
             }
           } else {
-            ElMessage.warning('没有新单词可导入或文件内容为空');
+            ElMessage.warning('没有新单词需要导入');
           }
         } catch (error) {
           console.error(error);
-          ElMessage.error('文件解析失败，请检查文件格式');
+          ElMessage.error('导入失败，请检查文件格式');
         }
       };
       reader.readAsText(file); // 读取文件内容
@@ -552,36 +547,6 @@ const importWords = () => {
   fileInput.click(); // 触发文件选择
 };
 
-/**
- * 逐个翻译单词（避免API频率限制）
- */
-const translateWordsSequentially = async (words: any[]): Promise<any[]> => {
-  const translatedWords: any[] = [];
-
-  for (const word of words) {
-    try {
-
-      wordsStore.translateWithPlatform(word.text).then(res => {
-        if (res.success) {
-          translatedWords.push({
-            text: word.text,
-            explains: res.explains || word.text,
-            pronunciation: res.pronunciation || '',
-            phonetic: res.phonetic || ''
-          });
-        }
-      })
-
-      // 添加延迟避免API频率限制
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    } catch (error) {
-      console.error(`翻译单词 "${word.text}" 失败:`, error);
-      // 即使某个单词翻译失败，也继续翻译下一个
-    }
-  }
-
-  return translatedWords;
-};
 
 /**
  * 通过txt批量导入单词
@@ -596,6 +561,7 @@ const importTextWords = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
+        utools.showMainWindow();
         try {
           const content = e.target?.result as string;
           const wordList = parseFileContent(content); // 解析文件内容
@@ -618,7 +584,7 @@ const importTextWords = () => {
             });
 
             if (uniqueWords.length === 0) {
-              ElMessage.warning('没有新单词可导入（可能已存在）');
+              ElMessage.warning('没有新单词需要导入');
               return;
             }
 
@@ -628,19 +594,12 @@ const importTextWords = () => {
             if (wordsNeedingTranslation.length > 0) {
               ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
 
-              // 逐个翻译需要翻译的单词
-              const translatedWords = await translateWordsSequentially(wordsNeedingTranslation);
-
-              // 合并翻译后的单词和已有释义的单词
-              const wordsWithTranslations = uniqueWords.map(word => {
-                const translated = translatedWords.find(tw => tw.text === word.text);
-                return translated ? {...word, ...translated} : word;
-              });
-
-              // 将单词列表添加到存储
-              wordsStore.addAndUpdateWords(wordsWithTranslations).then(() => {
-                scrollToBottom();
-                ElMessage.success(`成功导入${uniqueWords.length}个单词`);
+              // 使用公共的批量翻译和添加方法
+              const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
+              batchTranslateAndAddWords(wordsToTranslate, (processedCount, totalCount) => {
+                if (totalCount > 0) {
+                  ElMessage.info(`正在翻译: ${processedCount}/${totalCount}`);
+                }
               });
             } else {
               // 所有单词都有释义和发音，直接导入

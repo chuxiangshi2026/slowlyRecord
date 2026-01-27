@@ -194,10 +194,12 @@ export const batchTranslateAndAddWords = async (
                     await wordsStore.addAndUpdateWords([newWord]);
                 } else {
                     console.error(`翻译失败: ${wordText}`);
+                    ElMessage.error(`翻译失败: ${wordText}`);
                 }
             }
         } catch (error) {
             console.error(`处理单词失败 ${wordText}:`, error);
+            ElMessage.error(`处理单词失败 ${wordText}`);
         } finally {
             processedCount++;
 
@@ -210,6 +212,4 @@ export const batchTranslateAndAddWords = async (
             await new Promise(resolve => setTimeout(resolve, 100));
         }
     }
-
-    // ElMessage.success(`成功添加 ${processedCount} 个单词`);
 };
