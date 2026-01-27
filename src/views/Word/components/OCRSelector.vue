@@ -38,7 +38,7 @@
       </div>
       <div class="ocr-panel-footer">
         <div class="selected-words-summary">
-          已选择 {{ selectedWords.length }} 个单词: 
+          已选择 {{ selectedWords.length }} 个单词:
           <span class="selected-words-display">
             <span
               v-for="(word, index) in selectedWords"
@@ -105,11 +105,11 @@ const isSelected = (regionId: string | number, word: string) => {
 const toggleWordSelection = (region: any, word: string, regionIndex: number) => {
   const regionId = region.id || regionIndex;
   const key = regionId.toString();
-  
+
   if (!selectedWordsMap.value[key]) {
     selectedWordsMap.value[key] = [];
   }
-  
+
   const index = selectedWordsMap.value[key].indexOf(word);
   if (index > -1) {
     // 取消选中
@@ -166,23 +166,23 @@ const selectAllWords = () => {
 // 反选（选中变未选中，未选中变选中）
 const invertSelection = () => {
   const newSelection: {[key: string]: string[]} = {};
-  
+
   props.ocrResults.forEach((region, index) => {
     const regionId = region.id || index;
     const key = regionId.toString();
     const allWordsInRegion = getWordsFromText(region.context);
     const currentlySelected = selectedWordsMap.value[key] || [];
-    
+
     // 对于每个单词，如果之前选中则取消选中，如果之前未选中则选中
-    const invertedSelection = allWordsInRegion.filter(word => 
+    const invertedSelection = allWordsInRegion.filter(word =>
       !currentlySelected.includes(word)
     );
-    
+
     if (invertedSelection.length > 0) {
       newSelection[key] = invertedSelection;
     }
   });
-  
+
   selectedWordsMap.value = newSelection;
 };
 
@@ -195,19 +195,19 @@ const clearSelection = () => {
 const removeChineseWords = () => {
   // 由于getWordsFromText已经过滤掉了中文词，这里只需确保只保留英文词的选中状态
   const newSelection: {[key: string]: string[]} = {};
-  
+
   for (const [regionKey, words] of Object.entries(selectedWordsMap.value)) {
     // 过滤掉中文词，只保留英文词
     const englishOnlyWords = words.filter(word => {
       // 检查单词是否只包含英文字母
       return /^[a-zA-Z]+$/.test(word);
     });
-    
+
     if (englishOnlyWords.length > 0) {
       newSelection[regionKey] = englishOnlyWords;
     }
   }
-  
+
   selectedWordsMap.value = newSelection;
   ElMessage.info('中文词已去除');
 };
@@ -218,7 +218,7 @@ const addSelectedWords = () => {
     ElMessage.warning('请先选择要添加的单词');
     return;
   }
-  
+
   // 为每个选中的单词创建一个项目并发出选择事件
   selectedWords.value.forEach(word => {
     // 查找对应的翻译内容
@@ -229,18 +229,18 @@ const addSelectedWords = () => {
         break;
       }
     }
-    
+
     const wordItem = {
       context: word,
       tranContent: translation,
       originalText: word,
       translatedText: translation
     };
-    
+
     emit('select', wordItem);
   });
-  
-  ElMessage.success(`已添加 ${selectedWords.value.length} 个单词到列表`);
+
+  ElMessage.success(`新添加 ${selectedWords.value.length} 个单词到列表`);
   closePanel();
 };
 
