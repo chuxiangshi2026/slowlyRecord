@@ -24,6 +24,7 @@ import {ocrTranslate} from "@/utils/pic-translate.ts";
 // import path from "node:path";
 import picData from '../picdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
+import {AppInfo} from "@/config.ts";
 
 const wordsStore = useWordsStore();
 
@@ -114,16 +115,12 @@ utools.onPluginEnter(async (action) => {
         const file = new File([blob], 'utools_snap.png', {type: blob.type});
 
         console.log('文件对象',file.name, file.type, file.size)
+        utools.showMainWindow()
         try {
-          // const { blob } = await translateImage(file, 'en', 'zh')
-          // const base64 = await fileToBase64(file);
-          const appKey = 'REDACTED_YOUDAO_APPKEY'; // 替换为你的appKey
-          const appSecret = 'REDACTED_YOUDAO_SECRET'; // 替换为你的appSecret
-          // const result = await translateImage(base64, 'en', 'zh-CHS', appKey, appSecret);
           // 'en', 'zh-CHS'
-          // const result = await ocrTranslate(file, appKey, appSecret, 'en', 'zh-CHS');
+          const result = await ocrTranslate(file, AppInfo['youdao'].appkey, AppInfo['youdao'].key, 'en', 'zh-CHS');
 
-          const result = picData;
+          // const result = picData;
           console.log(result)
           if (result.errorCode !== '0') {
             console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
@@ -140,9 +137,8 @@ utools.onPluginEnter(async (action) => {
 
 
           console.log('msg' + msg)
-          if (msg.length > 0) {
-            ElMessage.success(''+msg)
-          } else {
+            // ElMessage.success(''+msg)
+          if (msg.length <= 0) {
             ElMessage.warning('OCR识别结果为空，请检查图片内容');
           }
 
@@ -208,7 +204,7 @@ function displayOCRResults(resRegions: any[]) {
 /**
  * 在指定坐标创建可点击区域
  */
-function createClickableRegion(word: string, translation: string, coords: any) {
+/*function createClickableRegion(word: string, translation: string, coords: any) {
   // 如果有坐标信息，可以高亮显示这些区域
   // 这里我们简单地记录坐标信息
   console.log(`坐标:`, coords, `单词: ${word}`, `翻译: ${translation}`);
@@ -218,24 +214,25 @@ function createClickableRegion(word: string, translation: string, coords: any) {
     addWord(`${word} ${translation}`);
     ElMessage.success(`已保存: ${word} - ${translation}`);
   }
-}
+}*/
 
 /**
  * 选择特定的OCR识别项
  */
 function handleSelectOCRItem(region: any) {
   let word = region.context || '';
-  let translation = region.tranContent || '';
-  
+  // let translation = region.tranContent || '';
+
   // 如果是新OCRSelector组件传递的单词对象
   if (region.originalText && region.translatedText) {
     word = region.originalText;
-    translation = region.translatedText;
+    // translation = region.translatedText;
   }
-  
-  if (word && translation) {
-    addWord(`${word} ${translation}`);
-    ElMessage.success(`已保存: ${word} - ${translation}`);
+
+  if (word) {
+    console.log('待添加的选中单词'+`[${word}]`)
+    addWord(`${word}`.trim());
+    // ElMessage.success(`已保存: ${word} - ${translation}`);
   } else {
     ElMessage.warning('单词或翻译内容为空');
   }

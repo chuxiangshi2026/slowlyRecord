@@ -94,7 +94,7 @@ function captureWin() {
             });
 
             ps.on('error', err => reject(err));
-        }, 5000);
+        }, 500);
     })
 }
 
