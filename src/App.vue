@@ -156,10 +156,10 @@ utools.onPluginEnter(async (action) => {
         }
       }
 
-      // const result = await ocrTranslateMultiPlatform(file, currentPlatform);
+      const result = await ocrTranslateMultiPlatform(file, currentPlatform);
 
       // const result = picData;
-      const result = baidupicData;
+      // const result = baidupicData;
       console.log('apprest:', result)
       if (result.errorCode !== '0') {
         console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)

@@ -145,16 +145,16 @@ async function ocrTranslateBaidu(
     const url = 'https://fanyi-api.baidu.com/api/trans/sdk/picture';
 
     /* 1. 读文件并计算图片 md5 */
-    const buffer  = await file.arrayBuffer();
-    const imgBytes= new Uint8Array(buffer);
-    const imgMd5  = await md5Bytes(imgBytes);
+    const buffer = await file.arrayBuffer();
+    const imgBytes = new Uint8Array(buffer);
+    const imgMd5 = await md5Bytes(imgBytes);
 
     /* 2. 业务参数 */
     const salt = Date.now().toString();
     const cuid = 'APICUID';
-    const mac  = 'mac';
+    const mac = 'mac';
     const from = 'en';
-    const to   = 'zh';
+    const to = 'zh';
 
     /* 3. 签名 */
     const sign = await md5String(
@@ -197,10 +197,10 @@ async function md5Bytes(bytes: Uint8Array): Promise<string> {
     const words: number[] = [];
     for (let i = 0; i < bytes.length; i += 4) {
         words.push(
-            ((bytes[i]   ?? 0) << 24) |
-            ((bytes[i+1] ?? 0) << 16) |
-            ((bytes[i+2] ?? 0) <<  8) |
-            ((bytes[i+3] ?? 0))
+            ((bytes[i] ?? 0) << 24) |
+            ((bytes[i + 1] ?? 0) << 16) |
+            ((bytes[i + 2] ?? 0) << 8) |
+            ((bytes[i + 3] ?? 0))
         );
     }
     const wa = CryptoJS.lib.WordArray.create(words, bytes.length);
@@ -211,180 +211,102 @@ async function md5String(str: string): Promise<string> {
     return CryptoJS.MD5(str).toString();
 }
 
+
+
 // 阿里图片翻译实现
-/** 主函数：阿里云图片翻译（普通版） */
 export async function ocrTranslateAli(
     file: File,
     accessKeyId: string,
     accessKeySecret: string,
     targetLang = 'zh'
 ): Promise<OcrResult> {
-    try {
-        const imgBase64 = await fileToBase64(file);
+    const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve((reader.result as string).split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 
-        console.log('ak', accessKeyId, 'sk', accessKeySecret);
-        if (!accessKeyId || !accessKeySecret) {
-            alert('请先配置 AccessKeyId 和 AccessKeySecret');
-        }
+    const params: Record<string, string> = {
+        AccessKeyId: accessKeyId,
+        Action: 'TranslateImage',
+        Ext: JSON.stringify({ needEditorData: true }),
+        Field: 'general',
+        Format: 'JSON',
+        ImageBase64: base64,
+        SignatureMethod: 'HMAC-SHA1',
+        SignatureNonce: Math.random().toString(36).slice(2),
+        SignatureVersion: '1.0',
+        SourceLanguage: 'auto',
+        TargetLanguage: targetLang,
+        Timestamp: new Date().toISOString(),
+        Version: '2018-10-12'
+    };
 
-        /* ========== 1. 构造公共参数 ========== */
-        const timestamp = new Date().toISOString().replace(/\.\d{3}Z/, 'Z'); // 毫秒置 0
-        const nonce = Math.random().toString(36).substring(2, 15);
-        const params: Record<string, string> = {
-            Format: 'JSON',
-            Version: '2018-10-12',
-            AccessKeyId: accessKeyId,
-            SignatureMethod: 'HMAC-SHA1',
-            Timestamp: timestamp,
-            SignatureVersion: '1.0',
-            SignatureNonce: nonce,
-            Action: 'TranslateImage',
-            SourceLanguage: 'auto',
-            TargetLanguage: targetLang,
-            Image: imgBase64,
-            FormatType: 'image',
-            TaskType: 'Image',
-            Scene: 'general',   // ←新增
-            RegionId: 'cn-hangzhou'   // ←新增
-        };
+    const canonicalQueryString = Object.keys(params)
+        .sort()
+        .map(key => `${rfc3986(key)}=${rfc3986(params[key])}`)
+        .join('&');
 
-        /* ========== 2. 计算签名 ========== */
-        const sortedKeys = Object.keys(params).sort();
-        const canonical = sortedKeys
-            .filter(k => k !== 'Signature')
-            .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
-            .join('&');
-        const stringToSign = `POST&${encodeURIComponent('/')}&${encodeURIComponent(canonical)}`;
-        const signature = CryptoJS.HmacSHA1(stringToSign, accessKeySecret + '&').toString(CryptoJS.enc.Base64);
-        params.Signature = signature;
+    const stringToSign = `POST&${rfc3986('/')}&${rfc3986(canonicalQueryString)}`;
 
-        /* ========== 3. 通过本地代理发送POST请求（避免跨域和大请求头问题） ========== */
-        const response = await axios.post('/api/ali', {}, {
-            params: params,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            timeout: 25000
-        });
+    console.log("str",stringToSign)
+    // ✅ 核心修正：Secret 后必须加 &
+    const key = accessKeySecret + "&";
+    const signature = CryptoJS.HmacSHA1(
+        CryptoJS.enc.Utf8.parse(stringToSign),
+        CryptoJS.enc.Utf8.parse(key)
+    ).toString(CryptoJS.enc.Base64);
 
-        console.log('success', response.data);
-        console.log("resp:", response);
+    const body = `${canonicalQueryString}&Signature=${rfc3986(signature)}`;
 
-        /* ========== 4. 解析结果 ========== */
-        const d = response.data;
-        if (d?.Code === '200' && d.Data) {
-            return {
-                errorCode: '0',
-                resRegions: [{
-                    context: d.Data.SourceText || '',
-                    tranContent: d.Data.Translated || '',
-                    boundingBox: '0,0,100,50'
-                }]
-            };
-        }
-        return { errorCode: d.Code || '500', resRegions: [] };
-    } catch (e) {
-        console.error('[AliOcr] error:', e);
-        const code = (e as AxiosError)?.response?.status || 500;
-        return {errorCode: String(code), resRegions: []};
-    }
+    const res = await fetch('https://mt.cn-hangzhou.aliyuncs.com/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+            'User-Agent': 'uTools-Plugin/1.0'
+        },
+        body
+    });
+
+    const json = await res.json();
+    console.log('原始响应:', JSON.stringify(json, null, 2)); // ← 加这行
+    return {
+        errorCode: json.Code ?? 'UnknownError',
+        resRegions: json.Data?.translateImageResults?.map((it: any) => ({
+            boundingBox: it.bbox ?? '',
+            context: it.content ?? '',
+            tranContent: it.transContent ?? ''
+        })) ?? []
+    };
 }
 
-// 为前端优化的百度OCR翻译实现（使用CORS代理）
-export async function ocrTranslateBaiduWithProxy(
-    file: File,
-    apiKey: string,
-    secretKey: string,
-    corsProxyUrl?: string
-): Promise<OcrResult> {
-    try {
-        const img = await fileToBase64(file);
-
-        // 如果提供了CORS代理URL，使用代理调用
-        let apiUrl = `https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic`;
-        if (corsProxyUrl) {
-            apiUrl = `${corsProxyUrl}?url=${encodeURIComponent(apiUrl)}`;
-        }
-
-        // 首先获取访问令牌
-        const tokenUrl = `https://aip.baidubce.com/oauth/2.0/token`;
-        const tokenParams = new URLSearchParams({
-            grant_type: 'client_credentials',
-            client_id: apiKey,
-            client_secret: secretKey
-        });
-
-        // 使用代理获取token（如果提供）
-        let tokenApiUrl = tokenUrl;
-        if (corsProxyUrl) {
-            tokenApiUrl = `${corsProxyUrl}?url=${encodeURIComponent(tokenUrl)}`;
-        }
-
-        const tokenResponse = await axios.post(
-            tokenApiUrl,
-            tokenParams,
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }
-        );
-
-        const accessToken = tokenResponse.data.access_token;
-        if (!accessToken) {
-            throw new Error('Failed to get access token from Baidu');
-        }
-
-        // 使用token调用OCR API
-        const ocrParams = new URLSearchParams({
-            image: img,
-            language_type: 'ENG'
-        });
-
-        const ocrResponse = await axios.post(
-            `${apiUrl}?access_token=${accessToken}`,
-            ocrParams,
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }
-        );
-
-        const ocrData = ocrResponse.data;
-        if (ocrData.words_result && ocrData.words_result.length > 0) {
-            const results = [];
-
-            // 对每个识别的文本进行翻译
-            for (const wordResult of ocrData.words_result) {
-                const text = wordResult.words;
-
-                // 使用翻译API进行翻译
-                const translationResult = await translateWithPlatform(text, 'baidu');
-
-                results.push({
-                    context: text,
-                    tranContent: translationResult.success ? translationResult.explains : text,
-                    boundingBox: wordResult.location ?
-                        `${wordResult.location.left},${wordResult.location.top},${wordResult.location.width},${wordResult.location.height}` : ''
-                });
-            }
-
-            return {
-                errorCode: '0',
-                resRegions: results
-            };
-        } else {
-            return {
-                errorCode: ocrData.error_code || '52001',
-                resRegions: []
-            };
-        }
-    } catch (error) {
-        console.error('百度OCR识别失败:', error);
-        return {
-            errorCode: '52001',
-            resRegions: []
-        };
-    }
+function rfc3986(str: string): string {
+    return encodeURIComponent(str)
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A');
 }
+
+function alisign(sk:string, str:string) {
+    return CryptoJS.HmacSHA1(str, sk).toString(CryptoJS.enc.Base64)
+}
+
+/* ---------- 工具：长宽比 < 10:1 ---------- */
+async function checkImageRatio(file: File): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = () => {
+            const { width, height } = img
+            const ratio = Math.max(width, height) / Math.min(width, height)
+            if (ratio >= 10) reject(new Error('长宽比必须小于 10:1'))
+            else resolve()
+        }
+        img.onerror = () => reject(new Error('图片解析失败'))
+        img.src = URL.createObjectURL(file)
+    })
+}
+
+

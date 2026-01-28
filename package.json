@@ -11,6 +11,8 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@alicloud/alimt20181012": "^1.4.2",
+    "@alicloud/openapi-client": "^0.4.15",
     "axios": "^1.13.4",
     "cors": "^2.8.6",
     "crypto-js": "^4.2.0",
