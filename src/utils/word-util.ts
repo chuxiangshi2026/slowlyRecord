@@ -189,6 +189,7 @@ export const batchTranslateAndAddWords = async (
                 // 如果单词不存在，调用翻译API
                 const res = await wordsStore.translateWithPlatform(wordText);
 
+                console.log('百度返回结果', res);
                 if (res.success) {
                     // 创建新单词对象
                     const newWord: Word = {
@@ -224,8 +225,16 @@ export const batchTranslateAndAddWords = async (
                 onProgress(processedCount, totalCount);
             }
 
-            // 添加短暂延迟，避免API调用过于频繁
-            await new Promise(resolve => setTimeout(resolve, 300));
+            // 添加延迟，避免API调用过于频繁
+            // 使用更长的随机延迟以减少API限流风险，特别是针对百度API
+            let delay;
+            // 根据当前翻译平台调整延迟时间
+            if (wordsStore.currentTranslationPlatform === 'baidu') {
+                delay = 600 + Math.floor(Math.random() * 1000); // 百度API需要更长延迟：2000-3000ms
+            } else {
+                delay = 450 + Math.floor(Math.random() * 200); // 其他API：450-650ms
+            }
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
         wordsStore.setLastAddedWordText(<string>uniqueWords.at(-1))
     }

@@ -133,8 +133,8 @@ utools.onPluginEnter(async (action) => {
     console.log('满足截图条件')
 
     // try {
-    const imgPath = await window.services.capture()
-    // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+    // const imgPath = await window.services.capture()
+    const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
     const response = await fetch(imgPath);
     const blob = await response.blob();
@@ -156,14 +156,13 @@ utools.onPluginEnter(async (action) => {
         }
       }
 
-      const result = await ocrTranslateMultiPlatform(file, currentPlatform);
+      // const result = await ocrTranslateMultiPlatform(file, currentPlatform);
 
       // const result = picData;
-      // const result = baidupicData;
-      console.log('apprest:',result)
+      const result = baidupicData;
+      console.log('apprest:', result)
       if (result.errorCode !== '0') {
         console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
-        // console.log(`翻译失败，错误码: ${result.errorCode}`);
       }
       const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
 // 处理OCR返回的坐标和翻译结果
@@ -174,9 +173,7 @@ utools.onPluginEnter(async (action) => {
         ElMessage.warning('OCR识别结果为空，请检查图片内容');
       }
 
-
-      console.log('msg' + msg)
-      // ElMessage.success(''+msg)
+      // console.log('msg' + msg)
       if (msg.length <= 0) {
         ElMessage.warning('OCR识别结果为空，请检查图片内容');
       }
@@ -396,7 +393,7 @@ function displayTextSelection(text: string) {
 /**
  * 选择特定的文本项
  */
-function handleSelectTextItems(words: string[]) {
+function handleSelectTextItems(words: string[], platform?: string) {
   if (words && words.length > 0) {
     console.log('待添加的选中单词', words);
     batchAddWords(words);

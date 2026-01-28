@@ -205,8 +205,8 @@ export async function translateWithPlatform(query: string, platform: Translation
                     }
                 });
 
-                const data = await aliResponse.json();
-                return handleAliResponse(data);
+                const aliData = await aliResponse.json();
+                return handleAliResponse(aliData);
 
  /*           case 'google':
                 // Google翻译API通常需要服务端实现，这里提供基本结构
