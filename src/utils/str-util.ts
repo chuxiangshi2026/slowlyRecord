@@ -72,11 +72,11 @@ const addWord = async (wordText: string) => {
                 ElMessage.error(`每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
                 return;
             }
-            
+
             // 增加使用计数
             incrementUsageCounter('translation');
         }
-        
+
         //  有这个单词,但是没有 释义
         wordsStore.translateWithPlatform(wordText).then(res => {
             // console.log('返回结果', res)
@@ -116,11 +116,11 @@ const addWord = async (wordText: string) => {
             ElMessage.error(`每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，今日还剩 ${Math.max(0, remainingCount)} 次，请设置自定义API密钥以继续使用`);
             return;
         }
-        
+
         // 增加使用计数
         incrementUsageCounter('translation');
     }
-    
+
     wordsStore.translateWithPlatform(wordText).then(res => {
         console.log('返回翻译api结果', res)
 
@@ -152,7 +152,6 @@ const addWord = async (wordText: string) => {
 const batchAddWords = async (wordTexts: string[]) => {
   console.log('批量添加单词', wordTexts);
 
-  // const wordsStore = useWordsStore();
 
   // 过滤掉空单词
   const filteredWords = wordTexts.filter(word => word.trim().length > 0);

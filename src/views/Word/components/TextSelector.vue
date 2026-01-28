@@ -64,6 +64,7 @@ interface Props {
 interface Emits {
   (e: 'close'): void;
   (e: 'select', items: string[]): void;
+  (e: 'select', items: string[], platform: string): void;
 }
 
 const props = defineProps<Props>();
@@ -82,7 +83,7 @@ const extractWords = (text: string) => {
   // 转换为小写以避免重复，同时保持原形式
   const uniqueWords: string[] = [];
   const seen = new Set<string>();
-  
+
   matches.forEach(word => {
     const lowerWord = word.toLowerCase();
     if (!seen.has(lowerWord)) {
@@ -90,7 +91,7 @@ const extractWords = (text: string) => {
       uniqueWords.push(word); // 保存原始大小写的单词
     }
   });
-  
+
   wordsList.value = uniqueWords;
   return uniqueWords;
 };
@@ -106,7 +107,7 @@ watch(() => props.textContent, (newText) => {
 const toggleWordSelection = (word: string) => {
   const lowerWord = word.toLowerCase();
   const index = selectedWords.value.findIndex(w => w.toLowerCase() === lowerWord);
-  
+
   if (index > -1) {
     // 取消选中
     selectedWords.value.splice(index, 1);
@@ -131,7 +132,7 @@ const selectAllWords = () => {
 
 // 反选（选中变未选中，未选中变选中）
 const invertSelection = () => {
-  const newSelection = wordsList.value.filter(word => 
+  const newSelection = wordsList.value.filter(word =>
     !selectedWords.value.some(selected => selected.toLowerCase() === word.toLowerCase())
   );
   selectedWords.value = newSelection;
