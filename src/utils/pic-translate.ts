@@ -1,7 +1,7 @@
 import axios, {type AxiosError} from 'axios'
 import CryptoJS from 'crypto-js'
 import {translateWithPlatform} from './translation-api';
-import {isOverDailyLimit, incrementUsageCounter, hasCustomApiKey, getCurrentUsageCount} from './usage-counter';
+import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from './usage-counter';
 import {useWordsStore} from "@/stores/words.ts";
 import {USAGE_LIMITS} from "@/constants";
 import type {TranslationPlatform} from "@/types/words";
@@ -101,9 +101,6 @@ export async function ocrTranslateMultiPlatform(
         console.log(`OCR使用次数: ${newCount}/${USAGE_LIMITS.OCR_DAILY_LIMIT}`);
     }
 
-    const wordsStore = useWordsStore();
-
-    // const { appkey, key } = wordsStore.getApiKey(platform);
     const {appkey, key} = getApiKey(platform);
     console.log('appkey+key', appkey, key)
 
@@ -114,8 +111,6 @@ export async function ocrTranslateMultiPlatform(
         // 百度OCR API的调用逻辑
         return await ocrTranslateBaidu(file, appkey, key);
     } else if (platform === 'ali') {
-
-
         // 阿里OCR API的调用逻辑
         return await ocrTranslateAli(file, appkey, key);
     }
@@ -142,55 +137,78 @@ function getApiKey(provider: TranslationPlatform) {
 }
 
 // 百度OCR翻译实现
-async function ocrTranslateBaidu(file: File, apiKey: string, secretKey: string): Promise<OcrResult> {
-    try {
-        // 获取图片的base64编码
-        const img = await fileToBase64(file);
+async function ocrTranslateBaidu(
+    file: File,
+    apiKey: string,
+    secretKey: string
+): Promise<OcrResult> {
+    const url = 'https://fanyi-api.baidu.com/api/trans/sdk/picture';
 
-        // 尝试通过后端代理调用百度OCR
-        const response = await axios.post('/api/baidu-ocr', {
-            image: img,
-            apiKey: apiKey,
-            secretKey: secretKey
-        });
+    /* 1. 读文件并计算图片 md5 */
+    const buffer  = await file.arrayBuffer();
+    const imgBytes= new Uint8Array(buffer);
+    const imgMd5  = await md5Bytes(imgBytes);
 
-        const ocrData = response.data;
+    /* 2. 业务参数 */
+    const salt = Date.now().toString();
+    const cuid = 'APICUID';
+    const mac  = 'mac';
+    const from = 'en';
+    const to   = 'zh';
 
-        if (ocrData.words_result && ocrData.words_result.length > 0) {
-            const results = [];
+    /* 3. 签名 */
+    const sign = await md5String(
+        `${apiKey}${imgMd5}${salt}${cuid}${mac}${secretKey}`
+    );
 
-            // 对每个识别的文本进行翻译
-            for (const wordResult of ocrData.words_result) {
-                const text = wordResult.words;
+    /* 4. 查询串 */
+    const qs = new URLSearchParams({
+        from, to, appid: apiKey, salt, sign, cuid, mac, version: '3',
+    });
 
-                // 使用翻译API进行翻译
-                const translationResult = await translateWithPlatform(text, 'baidu');
+    /* 5. multipart/form-data */
+    const form = new FormData();
+    form.append('image', new Blob([imgBytes]), file.name);
 
-                results.push({
-                    context: text,
-                    tranContent: translationResult.success ? translationResult.explains : text,
-                    boundingBox: wordResult.location ?
-                        `${wordResult.location.left},${wordResult.location.top},${wordResult.location.width},${wordResult.location.height}` : ''
-                });
-            }
+    /* 6. 用 axios 发 POST */
+    const resp = await axios.post(`${url}?${qs.toString()}`, form, {
+        // headers: form.getHeaders?.() || { 'Content-Type': 'multipart/form-data' },
+        timeout: 15000,
+        responseType: 'json',
+    });
+    /* 7. 解析结果 */
+    const data = resp.data;
+    // console.log(JSON.stringify(data, null, 2));
+    // if (data.error_code) return { errorCode: data.error_code };
 
-            return {
-                errorCode: '0',
-                resRegions: results
-            };
-        } else {
-            return {
-                errorCode: ocrData.error_code || '52001',
-                resRegions: []
-            };
-        }
-    } catch (error) {
-        console.error('百度OCR识别失败:', error);
-        return {
-            errorCode: '52001',
-            resRegions: []
-        };
+    return {
+        errorCode: '0',
+        resRegions: data.data.content.map((it: any) => ({
+            boundingBox: it.rect,          // "27 9 152 18"
+            context: it.src,               // 原文
+            tranContent: it.dst,           // 译文
+        })),
+    };
+}
+
+/* =============== 工具函数 =============== */
+async function md5Bytes(bytes: Uint8Array): Promise<string> {
+    // Uint8Array → WordArray
+    const words: number[] = [];
+    for (let i = 0; i < bytes.length; i += 4) {
+        words.push(
+            ((bytes[i]   ?? 0) << 24) |
+            ((bytes[i+1] ?? 0) << 16) |
+            ((bytes[i+2] ?? 0) <<  8) |
+            ((bytes[i+3] ?? 0))
+        );
     }
+    const wa = CryptoJS.lib.WordArray.create(words, bytes.length);
+    return CryptoJS.MD5(wa).toString();
+}
+
+async function md5String(str: string): Promise<string> {
+    return CryptoJS.MD5(str).toString();
 }
 
 // 阿里图片翻译实现

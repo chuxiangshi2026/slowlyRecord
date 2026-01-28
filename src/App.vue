@@ -32,6 +32,7 @@ import {ocrTranslate, ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts"
 import {isOverDailyLimit, incrementUsageCounter, hasCustomApiKey, getCurrentUsageCount} from "@/utils/usage-counter.ts";
 // import path from "node:path";
 import picData from '../picdata.json';
+import baidupicData from '../baidupicdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
 import {AppInfo} from "@/config.ts";
@@ -155,18 +156,11 @@ utools.onPluginEnter(async (action) => {
         }
       }
 
-      let result;
-      if (currentPlatform === 'youdao') {
-        // 使用原有有道OCR翻译
-        const {appkey, key} = wordsStore.getApiKey('youdao');
-        result = await ocrTranslate(file, appkey, key, 'en', 'zh-CHS');
-      } else {
-        // 使用多平台OCR翻译
-        result = await ocrTranslateMultiPlatform(file, currentPlatform);
-      }
+      const result = await ocrTranslateMultiPlatform(file, currentPlatform);
 
       // const result = picData;
-      console.log(result)
+      // const result = baidupicData;
+      console.log('apprest:',result)
       if (result.errorCode !== '0') {
         console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
         // console.log(`翻译失败，错误码: ${result.errorCode}`);

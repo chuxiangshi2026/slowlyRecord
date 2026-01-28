@@ -1,0 +1,10 @@
+{
+  "errorCode": "0",
+  "resRegions": [
+    {
+      "boundingBox": "0 9 603 52",
+      "context": "console.log('文件对象', file.name, file.type, file.size) utools.showMainWindow()",
+      "tranContent": "console.log（'文件对语言'，file.name，file.type，file.size）utools.showMainWindow（）"
+    }
+  ]
+}

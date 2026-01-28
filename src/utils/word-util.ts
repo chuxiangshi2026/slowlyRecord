@@ -172,7 +172,7 @@ export const batchTranslateAndAddWords = async (
                     ElMessage.error(`每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
                     break; // 停止处理更多单词
                 }
-                
+
                 // 增加使用计数
                 incrementUsageCounter('translation');
             }
@@ -225,7 +225,7 @@ export const batchTranslateAndAddWords = async (
             }
 
             // 添加短暂延迟，避免API调用过于频繁
-            await new Promise(resolve => setTimeout(resolve, 100));
+            await new Promise(resolve => setTimeout(resolve, 300));
         }
         wordsStore.setLastAddedWordText(<string>uniqueWords.at(-1))
     }
