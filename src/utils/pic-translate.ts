@@ -261,17 +261,16 @@ export async function ocrTranslateAli(
 
     const body = `${canonicalQueryString}&Signature=${rfc3986(signature)}`;
 
-    // const res = await fetch('https://mt.cn-hangzhou.aliyuncs.com/', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-    //         'User-Agent': 'uTools-Plugin/1.0'
-    //     },
-    //     body
-    // });
+    const res = await fetch('https://mt.cn-hangzhou.aliyuncs.com/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+            'User-Agent': 'uTools-Plugin/1.0'
+        },
+        body
+    });
 
-    // const json = await res.json();
-    const json = picaliData;
+    const json = await res.json();
     // console.log('原始响应:', JSON.stringify(json, null, 2)); // ← 加这行
     // 检查返回的数据结构并相应处理
     if (json.Code === '200' && json.Data) {

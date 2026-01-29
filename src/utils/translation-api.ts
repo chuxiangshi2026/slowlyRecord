@@ -1,15 +1,13 @@
-import type { TranslationPlatform, TranslationResult, YdParams } from "@/types/words";
+import type {TranslationPlatform, TranslationResult, YdParams} from "@/types/words";
 import http from "@/utils/http.ts";
-import { log } from "@/utils/logger.ts";
-import type { AxiosResponse } from 'axios';
+import type {AxiosResponse} from 'axios';
 import CryptoJS from "crypto-js";
-import { truncate } from "lodash";
-import { FROM, TO } from "@/constants";
-import { AppInfo } from "@/config.ts";
+import {truncate} from "lodash";
+import {FROM, TO, USAGE_LIMITS} from "@/constants";
+import {AppInfo} from "@/config.ts";
 import {useWordsStore} from "@/stores/words.ts";
-import { isOverDailyLimit, incrementUsageCounter, hasCustomApiKey, getCurrentUsageCount } from './usage-counter';
-import { ElMessage } from 'element-plus';
-import { USAGE_LIMITS } from "@/constants";
+import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from './usage-counter';
+import {batchTranslateAndAddWords} from "@/utils/str-util.ts";
 
 /**
  * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
@@ -319,6 +317,7 @@ function handleGoogleResponse(data: any): TranslationResult {
 export async function translation(payload: YdParams): Promise<AxiosResponse> {
     return await http.get('/', { ...payload })
 }
+
 
 export default {
     translateWithPlatform,

@@ -33,6 +33,7 @@ import {isOverDailyLimit, incrementUsageCounter, hasCustomApiKey, getCurrentUsag
 // import path from "node:path";
 import picData from '../picdata.json';
 import baidupicData from '../baidupicdata.json';
+import picaliData from '../picalidata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
 import {AppInfo} from "@/config.ts";
@@ -133,8 +134,8 @@ utools.onPluginEnter(async (action) => {
     console.log('满足截图条件')
 
     // try {
-    // const imgPath = await window.services.capture()
-    const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+    const imgPath = await window.services.capture()
+    // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
     const response = await fetch(imgPath);
     const blob = await response.blob();
@@ -157,9 +158,12 @@ utools.onPluginEnter(async (action) => {
       }
 
       const result = await ocrTranslateMultiPlatform(file, currentPlatform);
+      // const result = {
+      //   youdao: picData,
+      //   baidu: baidupicData,
+      //   ali: picaliData,
+      // }[currentPlatform];
 
-      // const result = picData;
-      // const result = baidupicData;
       console.log('apprest:', result)
       if (result.errorCode !== '0') {
         console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
@@ -285,10 +289,12 @@ function handleSelectOCRItem(region: any) {
 function handleSelectAllItems(items: any[]) {
   items.forEach(region => {
     const word = region.context || '';
-    const translation = region.tranContent || '';
+    // const translation = region.tranContent || '';
 
-    if (word && translation) {
-      addWord(`${word} ${translation}`);
+    if (word) {
+      addWord(`${word}`).then(err => {
+        ElMessage.warning(err.message)
+      });
     }
   });
 
@@ -319,8 +325,9 @@ function checkAddWork(text: string) {
   if (textError) {
     ElMessage.error('请先用光标选中单词');
   } else {
-    addWord(text)
-    // ElMessage.success(text);
+    addWord(text).then(err => {
+      ElMessage.warning(err.message)
+    });
   }
 }
 
@@ -363,7 +370,7 @@ async function getSelectedTextFromSystem(): Promise<string> {
 
 
 /**
- * 校验剪切板中的单词
+ * 校验剪切板中的单词并添加
  * @param text
  */
 function checkShearBoardAddWork(text: string) {
@@ -376,7 +383,10 @@ function checkShearBoardAddWork(text: string) {
     return;
   }
   // 验证处理后的文本是否符合要求（非空且不超过限制）
-  addWord(processedText);
+  addWord(processedText).then(err => {
+    ElMessage.warning(err.message)
+  });
+  ;
 }
 
 /**
