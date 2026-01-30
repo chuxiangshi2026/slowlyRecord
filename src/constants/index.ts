@@ -81,6 +81,11 @@ const DEFAULT_CONFIG = {
         ali: { key: '', appkey:'',endpoint: 'https://mt.aliyuncs.com/' },
         deepl: { key: '', appkey:'',endpoint: '' },
         openai: { key: '', appkey:'',endpoint: 'https://api.openai.com' },
+        utoolsai: { key: '', appkey:'',endpoint: '' },
+        ollama: { key: 'llama3', appkey:'http://localhost:11434',endpoint: 'http://localhost:11434' },
+        deepseek: { key: 'deepseek-chat', appkey:'',endpoint: 'https://api.deepseek.com' },
+        qwen: { key: 'qwen-max', appkey:'',endpoint: 'https://dashscope.aliyuncs.com' },
+        kimi: { key: 'moonshot-v1-8k', appkey:'',endpoint: 'https://api.moonshot.cn' },
         deeplx: { key: '', appkey:'',endpoint: 'http://localhost:1188' }
     },
     targetLang: 'zh'

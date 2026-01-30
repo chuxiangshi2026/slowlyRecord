@@ -34,6 +34,26 @@ const userApiKeys = ref({
         appkey: (localStorage.getItem('api_key_baidu_appkey') || '').trim() ,
         // || AppInfo.baidu.key
         key: (localStorage.getItem('api_key_baidu_key') || '').trim()
+    },
+    utoolsai: {
+        appkey: (localStorage.getItem('api_key_utoolsai_appkey') || '').trim(),
+        key: (localStorage.getItem('api_key_utoolsai_key') || '').trim()
+    },
+    ollama: {
+        appkey: (localStorage.getItem('api_key_ollama_appkey') || '').trim(),
+        key: (localStorage.getItem('api_key_ollama_key') || '').trim()
+    },
+    deepseek: {
+        appkey: (localStorage.getItem('api_key_deepseek_appkey') || '').trim(),
+        key: (localStorage.getItem('api_key_deepseek_key') || '').trim()
+    },
+    qwen: {
+        appkey: (localStorage.getItem('api_key_qwen_appkey') || '').trim(),
+        key: (localStorage.getItem('api_key_qwen_key') || '').trim()
+    },
+    kimi: {
+        appkey: (localStorage.getItem('api_key_kimi_appkey') || '').trim(),
+        key: (localStorage.getItem('api_key_kimi_key') || '').trim()
     }
 })
 

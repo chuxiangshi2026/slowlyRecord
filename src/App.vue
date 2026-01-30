@@ -89,7 +89,7 @@ utools.onPluginEnter(async (action) => {
     // 把单词翻译了，添加到 列表中
     // console.log('==================', action)
 
-    await handlePluginAddWord(action.payload);
+    await addWord(action.payload);
 
   }
 

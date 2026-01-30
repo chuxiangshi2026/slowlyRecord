@@ -330,7 +330,7 @@ const scrollToWordByText = (wordText: string) => {
         scrollToWord(index)
       }
     }, 500)
-    console.log('未找到此单词，无法定位')
+    log.i('未找到此单词，无法定位')
   }
 }
 
@@ -685,7 +685,7 @@ const invisibleExplained = () => {
 // 监听 Store 中的 lastAddedWordText 状态
 watch(() => wordsStore.lastAddedWordText, (wordText) => {
   if (wordText) {
-    console.log("数据更新，滚动到此单词处:", wordText);
+    log.i("数据更新，滚动到此单词处:", wordText);
     nextTick(() => {  // 等待 DOM 更新
       // 添加延时确保虚拟滚动器已渲染完成
       setTimeout(() => {
@@ -698,7 +698,7 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
       }, 50) // 添加50ms延时，确保虚拟滚动器渲染完成
     })
   }
-  console.log("清空滚动更新单词", wordText);
+  log.i("清空滚动更新单词", wordText);
 }, {immediate: true})
 </script>
 

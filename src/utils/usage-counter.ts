@@ -118,7 +118,9 @@ export function getCurrentUsageCount(feature: string): number {
  * @param platform 平台名称
  * @returns 用户是否设置了自定义密钥
  */
-export function hasCustomApiKey(platform: 'youdao' | 'baidu' | 'ali'): boolean {
+import type {TranslationPlatform} from '@/types/words';
+
+export function hasCustomApiKey(platform: TranslationPlatform): boolean {
   const wordsStore = useWordsStore();
   const userKeys = wordsStore.getApiKey(platform);
 

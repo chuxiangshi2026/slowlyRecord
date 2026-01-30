@@ -153,33 +153,33 @@
       <h5 style="text-align:center;">申请密钥</h5>
       <p class="limit-info">
         由于截图翻译调用成本较高，且个人时间有限（应该有更好的图片翻译方法），优先功能完善，在没有配置自己密钥时，暂时限制直接使用次数每日10次(后期看情况调整)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
-<!--      <div class="view-version-btn">-->
+      <!--      <div class="view-version-btn">-->
 
-        <div class="titles">
-          <div class="setting-item">
-            <div class="content">申请有道密钥</div>
-            <a href="#" @click.prevent="openUrl('https://ai.youdao.com/console/#/service-singleton/text-translation')"
-               class="external-link">跳转有道</a>
-          </div>
-        </div>
-        <div class="titles">
-          <div class="setting-item">
-            <div class="content">申请阿里密钥</div>
-            <a href="#" @click.prevent="openUrl('https://mt.console.aliyun.com/service')"
-               class="external-link">跳转阿里</a>
-          </div>
-        </div>
-        <div class="titles">
-          <div class="setting-item">
-            <div class="content">申请百度密钥</div>
-            <a href="#" @click.prevent="openUrl('https://fanyi-api.baidu.com/choose')"
-               class="external-link">跳转百度</a>
-          </div>
+      <div class="titles">
+        <div class="setting-item">
+          <div class="content">申请有道密钥</div>
+          <a href="#" @click.prevent="openUrl('https://ai.youdao.com/console/#/service-singleton/text-translation')"
+             class="external-link">跳转有道</a>
         </div>
       </div>
+      <div class="titles">
+        <div class="setting-item">
+          <div class="content">申请阿里密钥</div>
+          <a href="#" @click.prevent="openUrl('https://mt.console.aliyun.com/service')"
+             class="external-link">跳转阿里</a>
+        </div>
+      </div>
+      <div class="titles">
+        <div class="setting-item">
+          <div class="content">申请百度密钥</div>
+          <a href="#" @click.prevent="openUrl('https://fanyi-api.baidu.com/choose')"
+             class="external-link">跳转百度</a>
+        </div>
+      </div>
+    </div>
 
-      <!--      <div class="view-version-btn" @click="updateshowNotification(true)">查看版本说明</div>-->
-<!--    </div>-->
+    <!--      <div class="view-version-btn" @click="updateshowNotification(true)">查看版本说明</div>-->
+    <!--    </div>-->
 
     <!--    </Drawer>-->
 
@@ -247,8 +247,28 @@ const apiKeys = reactive({
     appkey: localStorage.getItem('api_key_baidu_appkey') || '',
     // || AppInfo.baidu.key
     key: localStorage.getItem('api_key_baidu_key') || ''
+  },
+  utoolsai: {
+    appkey: localStorage.getItem('api_key_utoolsai_appkey') || '',
+    key: localStorage.getItem('api_key_utoolsai_key') || ''
+  },
+  ollama: {
+    appkey: localStorage.getItem('api_key_ollama_appkey') || '',
+    key: localStorage.getItem('api_key_ollama_key') || ''
+  },
+  deepseek: {
+    appkey: localStorage.getItem('api_key_deepseek_appkey') || '',
+    key: localStorage.getItem('api_key_deepseek_key') || ''
+  },
+  qwen: {
+    appkey: localStorage.getItem('api_key_qwen_appkey') || '',
+    key: localStorage.getItem('api_key_qwen_key') || ''
+  },
+  kimi: {
+    appkey: localStorage.getItem('api_key_kimi_appkey') || '',
+    key: localStorage.getItem('api_key_kimi_key') || ''
   }
-})
+} as Record<TranslationPlatform, { appkey: string; key: string }>)
 
 // 监听API密钥变化并保存
 watch(() => apiKeys.ali, () => {
@@ -261,6 +281,26 @@ watch(() => apiKeys.youdao, () => {
 
 watch(() => apiKeys.baidu, () => {
   saveApiKeys('baidu')
+}, {deep: true})
+
+watch(() => apiKeys.utoolsai, () => {
+  saveApiKeys('utoolsai')
+}, {deep: true})
+
+watch(() => apiKeys.ollama, () => {
+  saveApiKeys('ollama')
+}, {deep: true})
+
+watch(() => apiKeys.deepseek, () => {
+  saveApiKeys('deepseek')
+}, {deep: true})
+
+watch(() => apiKeys.qwen, () => {
+  saveApiKeys('qwen')
+}, {deep: true})
+
+watch(() => apiKeys.kimi, () => {
+  saveApiKeys('kimi')
 }, {deep: true})
 
 const saveApiKeys = (provider: TranslationPlatform) => {
@@ -330,6 +370,22 @@ const options = [
     value: 'baidu',
     label: '百度',
   },
+  {
+    value: 'utoolsai',
+    label: 'utoolsAI',
+  }, {
+    value: 'ollama',
+    label: 'ollama',
+  }, {
+    value: 'deepseek',
+    label: 'deepseek',
+  }, {
+    value: 'qwen',
+    label: '千问',
+  }, {
+    value: 'kimi',
+    label: 'kimi',
+  }
 ]
 /*{
   value: 'google',

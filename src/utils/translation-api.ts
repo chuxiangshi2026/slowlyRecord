@@ -8,6 +8,7 @@ import {AppInfo} from "@/config.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from './usage-counter';
 import {batchTranslateAndAddWords} from "@/utils/str-util.ts";
+import {log} from "@/utils/logger.ts";
 
 /**
  * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
@@ -139,7 +140,7 @@ function percentEncode(str: string): string {
  * 调用不同平台的翻译接口
  */
 export async function translateWithPlatform(query: string, platform: TranslationPlatform = 'youdao'): Promise<TranslationResult> {
-    console.log('待翻译参数', query)
+    log.i('待翻译参数', query)
     try {
         // 检查是否超出了每日使用限制
         if (!hasCustomApiKey(platform)) {
@@ -157,7 +158,7 @@ export async function translateWithPlatform(query: string, platform: Translation
 
             // 增加使用计数
             const newCount = incrementUsageCounter(featureType);
-            console.log(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
+            log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
         }
 
         switch (platform) {
@@ -184,7 +185,7 @@ export async function translateWithPlatform(query: string, platform: Translation
                 return handleBaiduResponse(baiduResponse.data);
 
             case 'ali':
-                console.log('调用阿里翻译');
+                log.i('调用阿里翻译');
 
                 const aliParams = generateAliParamsSync(query);
 
@@ -205,7 +206,13 @@ export async function translateWithPlatform(query: string, platform: Translation
 
                 const aliData = await aliResponse.json();
                 return handleAliResponse(aliData);
-
+            case 'utoolsai':
+                let utoolAiData = callUtoolsAi(query);
+                console.log('utool',utoolAiData)
+                return utoolAiData;
+            case 'deepseek':
+                console.log('调用DeepSeek')
+                return callDeepSeek(query);
  /*           case 'google':
                 // Google翻译API通常需要服务端实现，这里提供基本结构
                 const googleParams = {
@@ -307,6 +314,294 @@ function handleGoogleResponse(data: any): TranslationResult {
         return {
             success: false,
             errorMsg: 'Google API error'
+        };
+    }
+}
+
+/**
+ * 调用uTools AI引擎
+ */
+async function callUtoolsAi(query: string): Promise<TranslationResult> {
+    try {
+        // 从utools获取AI服务，如果存在的话
+        if (window.utools && window.utools.ai) {
+            // 尝试使用uTools内置的AI功能
+            // 由于uTools AI API的具体实现可能有所不同，我们使用更通用的方法
+            const aiOption = {
+                messages: [
+                    {
+                        role: "system",
+                        content:
+                            "你是一个中英文翻译专家，翻译结果要符合中英文语言习惯",
+                    },
+                    {
+                    role: 'user',
+                    content: `请将以下文本翻译为中文：${query}`
+                }]
+            };
+
+            // 尝试调用AI服务，使用类型断言避免编译错误
+            const result: any = await (window.utools.ai as any).chat(aiOption);
+
+            if (result && typeof result === 'object' && 'content' in result) {
+                return {
+                    success: true,
+                    explains: result.content as string
+                };
+            } else if (typeof result === 'string') {
+                return {
+                    success: true,
+                    explains: result
+                };
+            } else {
+                return {
+                    success: false,
+                    errorMsg: 'Unexpected response format from uTools AI'
+                };
+            }
+        } else {
+            // 如果没有可用的uTools AI服务，返回错误信息
+            return {
+                success: false,
+                errorMsg: 'uTools AI service not available'
+            };
+        }
+    } catch (error) {
+        console.error('uTools AI error:', error);
+        return {
+            success: false,
+            errorMsg: 'uTools AI service error: ' + (error as Error).message
+        };
+    }
+}
+
+/**
+ * 调用Ollama本地模型
+ */
+async function callOllama(query: string): Promise<TranslationResult> {
+    try {
+        const { appkey: baseUrl, key: modelName } = getApiKey('ollama');
+
+        // 默认Ollama地址
+        const ollamaUrl = baseUrl || 'http://localhost:11434';
+        const model = modelName || 'llama3';
+
+        const response = await fetch(`${ollamaUrl}/api/generate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: model,
+                prompt: `请将以下文本翻译为中文：${query}`,
+                stream: false
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ollama request failed: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return {
+            success: true,
+            explains: data.response || data.output || 'No response from Ollama'
+        };
+    } catch (error) {
+        console.error('Ollama error:', error);
+        return {
+            success: false,
+            errorMsg: 'Ollama service error: ' + (error as Error).message
+        };
+    }
+}
+
+/**
+ * 调用DeepSeek模型
+ */
+async function callDeepSeek(query: string): Promise<TranslationResult> {
+    try {
+        const { appkey: apiKey, key: modelName } = getApiKey('deepseek');
+
+        console.log('apikey',apiKey, modelName)
+        if (!apiKey) {
+            return {
+                success: false,
+                errorMsg: 'DeepSeek API key is required'
+            };
+        }
+
+        const model = modelName || 'deepseek-chat';
+
+        const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: model,
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a helpful translator. Please translate the following text to Chinese.'
+                    },
+                    {
+                        role: 'user',
+                        content: query
+                    }
+                ],
+                stream: false
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(`DeepSeek request failed: ${response.status} - ${JSON.stringify(errorData)}`);
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+
+        if (!content) {
+            throw new Error('Invalid response from DeepSeek');
+        }
+
+        return {
+            success: true,
+            explains: content
+        };
+    } catch (error) {
+        console.error('DeepSeek error:', error);
+        return {
+            success: false,
+            errorMsg: 'DeepSeek service error: ' + (error as Error).message
+        };
+    }
+}
+
+/**
+ * 调用通义千问模型
+ */
+async function callQwen(query: string): Promise<TranslationResult> {
+    try {
+        const { appkey: apiKey, key: modelName } = getApiKey('qwen');
+
+        if (!apiKey) {
+            return {
+                success: false,
+                errorMsg: 'Qwen API key is required'
+            };
+        }
+
+        const model = modelName || 'qwen-max';
+
+        const response = await fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: model,
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a helpful translator. Please translate the following text to Chinese.'
+                    },
+                    {
+                        role: 'user',
+                        content: query
+                    }
+                ]
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(`Qwen request failed: ${response.status} - ${JSON.stringify(errorData)}`);
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+
+        if (!content) {
+            throw new Error('Invalid response from Qwen');
+        }
+
+        return {
+            success: true,
+            explains: content
+        };
+    } catch (error) {
+        console.error('Qwen error:', error);
+        return {
+            success: false,
+            errorMsg: 'Qwen service error: ' + (error as Error).message
+        };
+    }
+}
+
+/**
+ * 调用Kimi模型
+ */
+async function callKimi(query: string): Promise<TranslationResult> {
+    try {
+        const { appkey: apiKey, key: modelName } = getApiKey('kimi');
+
+        if (!apiKey) {
+            return {
+                success: false,
+                errorMsg: 'Kimi API key is required'
+            };
+        }
+
+        const model = modelName || 'moonshot-v1-8k';
+
+        // Kimi由月之暗面开发，但目前API可能需要特定接入方式
+        // 这里使用Moonshot API作为示例（Kimi的提供商）
+        const response = await fetch('https://api.moonshot.cn/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: model,
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a helpful translator. Please translate the following text to Chinese.'
+                    },
+                    {
+                        role: 'user',
+                        content: query
+                    }
+                ]
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(`Kimi/Moonshot request failed: ${response.status} - ${JSON.stringify(errorData)}`);
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+
+        if (!content) {
+            throw new Error('Invalid response from Kimi');
+        }
+
+        return {
+            success: true,
+            explains: content
+        };
+    } catch (error) {
+        console.error('Kimi error:', error);
+        return {
+            success: false,
+            errorMsg: 'Kimi service error: ' + (error as Error).message
         };
     }
 }

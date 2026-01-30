@@ -6,6 +6,7 @@ import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
 import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from "./usage-counter.ts";
+import {log} from "@/utils/logger.ts";
 
 /**
  * 初始化单词状态
@@ -37,7 +38,7 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
  */
 const addWord = async (wordText: string): Promise<{success: boolean, message: string,text:string}> => {
 
-    console.log('新加单词', wordText);
+    log.i('新加单词', wordText);
 
     const wordsStore = useWordsStore(); // 传入 Pinia 实例
 
@@ -121,7 +122,7 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
 
     try {
         const res = await wordsStore.translateWithPlatform(wordText);
-        console.log('返回翻译api结果', res)
+        log.i('返回翻译api结果', res)
 
         if (res.success) {
             let oldWords = wordsStore.words
