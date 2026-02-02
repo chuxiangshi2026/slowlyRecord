@@ -14,6 +14,7 @@ import {getTranslationApiKey} from "@/utils/get-api-key.ts";
 /**
  * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
  */
+
 /*function getApiKey(provider: TranslationPlatform) {
     const wordsStore = useWordsStore();
     const userKeys = wordsStore.getApiKey(provider);
@@ -30,7 +31,7 @@ import {getTranslationApiKey} from "@/utils/get-api-key.ts";
  * 生成有道翻译签名参数
  */
 function generateYoudaoParams(query: string): YdParams {
-    const { appkey, key } = getTranslationApiKey('youdao');
+    const {appkey, key} = getTranslationApiKey('youdao');
     const salt = (new Date).getTime();
     const curtime = Math.round(new Date().getTime() / 1000);
     const str1 = appkey + truncate(query) + salt + curtime + key;
@@ -53,7 +54,7 @@ function generateYoudaoParams(query: string): YdParams {
  * 生成百度翻译签名参数
  */
 function generateBaiduParams(query: string): any {
-    const { appkey, key: secretKey } = getTranslationApiKey('baidu');
+    const {appkey, key: secretKey} = getTranslationApiKey('baidu');
     const appId = appkey;
     const salt = '' + (new Date).getTime();
     const signStr = appId + query + salt + secretKey;
@@ -72,7 +73,7 @@ function generateBaiduParams(query: string): any {
  * 生成阿里翻译参数
  */
 function generateAliParamsSync(query: string): any {
-    const { appkey, key: accessKeySecret } = getTranslationApiKey('ali');
+    const {appkey, key: accessKeySecret} = getTranslationApiKey('ali');
     const timestamp = new Date().toISOString().replace(/\.\d+Z/, 'Z');
 
     const params: Record<string, string> = {
@@ -166,7 +167,7 @@ export async function translateWithPlatform(query: string, platform: Translation
             case 'youdao':
                 console.log('调用有道')
                 const youdaoParams = generateYoudaoParams(query);
-                const youdaoResponse = await http.get('/', { ...youdaoParams }, {
+                const youdaoResponse = await http.get('/', {...youdaoParams}, {
                     headers: {
                         'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'
                     }
@@ -178,7 +179,7 @@ export async function translateWithPlatform(query: string, platform: Translation
                 const baiduParams = generateBaiduParams(query);
                 // 必须对q进行URL编码
                 baiduParams.q = encodeURIComponent(baiduParams.q);
-                const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', { ...baiduParams }, {
+                const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams}, {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
@@ -209,22 +210,22 @@ export async function translateWithPlatform(query: string, platform: Translation
                 return handleAliResponse(aliData);
             case 'utoolsai':
                 let utoolAiData = callUtoolsAi(query);
-                console.log('utool',utoolAiData)
+                console.log('utool', utoolAiData)
                 return utoolAiData;
             case 'deepseek':
                 console.log('调用DeepSeek')
                 return callDeepSeek(query);
- /*           case 'google':
-                // Google翻译API通常需要服务端实现，这里提供基本结构
-                const googleParams = {
-                    q: query,
-                    source: FROM,
-                    target: TO,
-                    format: 'text'
-                };
-                // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
-                const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', { ...googleParams });
-                return handleGoogleResponse(googleResponse.data);*/
+            /*           case 'google':
+                           // Google翻译API通常需要服务端实现，这里提供基本结构
+                           const googleParams = {
+                               q: query,
+                               source: FROM,
+                               target: TO,
+                               format: 'text'
+                           };
+                           // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
+                           const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', { ...googleParams });
+                           return handleGoogleResponse(googleResponse.data);*/
 
             default:
                 return {
@@ -324,54 +325,42 @@ function handleGoogleResponse(data: any): TranslationResult {
  */
 async function callUtoolsAi(query: string): Promise<TranslationResult> {
     try {
-        // 从utools获取AI服务，如果存在的话
-        if (window.utools && window.utools.ai) {
-            // 尝试使用uTools内置的AI功能
-            // 由于uTools AI API的具体实现可能有所不同，我们使用更通用的方法
-            const aiOption = {
-                messages: [
-                    {
-                        role: "system",
-                        content:
-                            "你是一个中英文翻译专家，翻译结果要符合中英文语言习惯",
-                    },
-                    {
-                    role: 'user',
-                    content: `请将以下文本翻译为中文：${query}`
-                }]
+
+        const messages = [
+            {
+                role: "system" as const,
+                content:
+                    "你是一个中英文翻译专家，翻译结果要符合中英文语言习惯"
+            },
+            {
+                role: 'user' as const,
+                content: `请将以下文本翻译为中文：${query}`,
+            }]
+
+        // 尝试调用AI服务，使用类型断言避免编译错误
+        const result: any = await window.utools.ai({messages});
+
+        if (result && typeof result === 'object' && 'content' in result) {
+            return {
+                success: true,
+                explains: result.content as string
             };
-
-            // 尝试调用AI服务，使用类型断言避免编译错误
-            const result: any = await (window.utools.ai as any).chat(aiOption);
-
-            if (result && typeof result === 'object' && 'content' in result) {
-                return {
-                    success: true,
-                    explains: result.content as string
-                };
-            } else if (typeof result === 'string') {
-                return {
-                    success: true,
-                    explains: result
-                };
-            } else {
-                return {
-                    success: false,
-                    errorMsg: 'Unexpected response format from uTools AI'
-                };
-            }
+        } else if (typeof result === 'string') {
+            return {
+                success: true,
+                explains: result
+            };
         } else {
-            // 如果没有可用的uTools AI服务，返回错误信息
             return {
                 success: false,
-                errorMsg: 'uTools AI service not available'
+                errorMsg: 'uTools AI 失败'
             };
         }
     } catch (error) {
         console.error('uTools AI error:', error);
         return {
             success: false,
-            errorMsg: 'uTools AI service error: ' + (error as Error).message
+            errorMsg: 'uTools AI 服务错误: ' + (error as Error).message
         };
     }
 }
@@ -381,7 +370,7 @@ async function callUtoolsAi(query: string): Promise<TranslationResult> {
  */
 async function callOllama(query: string): Promise<TranslationResult> {
     try {
-        const { appkey: baseUrl, key: modelName } = getTranslationApiKey('ollama');
+        const {appkey: baseUrl, key: modelName} = getTranslationApiKey('ollama');
 
         // 默认Ollama地址
         const ollamaUrl = baseUrl || 'http://localhost:11434';
@@ -422,9 +411,9 @@ async function callOllama(query: string): Promise<TranslationResult> {
  */
 async function callDeepSeek(query: string): Promise<TranslationResult> {
     try {
-        const { appkey: apiKey, key: modelName } = getTranslationApiKey('deepseek');
+        const {appkey: apiKey, key: modelName} = getTranslationApiKey('deepseek');
 
-        console.log('apikey',apiKey, modelName)
+        console.log('apikey', apiKey, modelName)
         if (!apiKey) {
             return {
                 success: false,
@@ -457,7 +446,7 @@ async function callDeepSeek(query: string): Promise<TranslationResult> {
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            const errorData = await response.json().catch(() => ({error: 'Unknown error'}));
             throw new Error(`DeepSeek request failed: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
@@ -486,7 +475,7 @@ async function callDeepSeek(query: string): Promise<TranslationResult> {
  */
 async function callQwen(query: string): Promise<TranslationResult> {
     try {
-        const { appkey: apiKey, key: modelName } = getTranslationApiKey('qwen');
+        const {appkey: apiKey, key: modelName} = getTranslationApiKey('qwen');
 
         if (!apiKey) {
             return {
@@ -519,7 +508,7 @@ async function callQwen(query: string): Promise<TranslationResult> {
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            const errorData = await response.json().catch(() => ({error: 'Unknown error'}));
             throw new Error(`Qwen request failed: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
@@ -548,7 +537,7 @@ async function callQwen(query: string): Promise<TranslationResult> {
  */
 async function callKimi(query: string): Promise<TranslationResult> {
     try {
-        const { appkey: apiKey, key: modelName } = getTranslationApiKey('kimi');
+        const {appkey: apiKey, key: modelName} = getTranslationApiKey('kimi');
 
         if (!apiKey) {
             return {
@@ -583,7 +572,7 @@ async function callKimi(query: string): Promise<TranslationResult> {
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            const errorData = await response.json().catch(() => ({error: 'Unknown error'}));
             throw new Error(`Kimi/Moonshot request failed: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
@@ -611,7 +600,7 @@ async function callKimi(query: string): Promise<TranslationResult> {
  * 调用翻译接口
  */
 export async function translation(payload: YdParams): Promise<AxiosResponse> {
-    return await http.get('/', { ...payload })
+    return await http.get('/', {...payload})
 }
 
 
