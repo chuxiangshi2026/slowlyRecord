@@ -207,25 +207,14 @@
         由于截图翻译调用成本较高，且个人时间有限（应该有更好的图片翻译方法），优先功能完善，在没有配置自己密钥时，暂时限制直接使用次数每日10次(后期看情况调整)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
       <!--      <div class="view-version-btn">-->
 
-      <div class="titles">
+      <div v-for="platform in TRANSLATION_PLATFORM_LINKS" 
+           :key="platform.key" 
+           class="titles">
         <div class="setting-item">
-          <div class="content">申请有道密钥</div>
-          <a href="#" @click.prevent="openUrl('https://ai.youdao.com/console/#/service-singleton/text-translation')"
-             class="external-link">跳转有道</a>
-        </div>
-      </div>
-      <div class="titles">
-        <div class="setting-item">
-          <div class="content">申请阿里密钥</div>
-          <a href="#" @click.prevent="openUrl('https://mt.console.aliyun.com/service')"
-             class="external-link">跳转阿里</a>
-        </div>
-      </div>
-      <div class="titles">
-        <div class="setting-item">
-          <div class="content">申请百度密钥</div>
-          <a href="#" @click.prevent="openUrl('https://fanyi-api.baidu.com/choose')"
-             class="external-link">跳转百度</a>
+          <div class="content">{{ platform.content }}</div>
+          <a href="#" 
+             @click.prevent="openUrl(platform.url)"
+             class="external-link">跳转{{ platform.name }}</a>
         </div>
       </div>
     </div>
@@ -263,7 +252,7 @@
 import {computed, onMounted, reactive, ref, watch} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
-import {AppInfo} from "@/config.ts";
+import {AppInfo, TRANSLATION_PLATFORM_LINKS} from "@/config.ts";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
 import {log} from "@/utils/logger.ts";
 // import BasicInfoForm from './BasicInfoForm.vue'
