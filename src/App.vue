@@ -34,6 +34,7 @@ import {isOverDailyLimit, incrementUsageCounter, hasCustomApiKey, getCurrentUsag
 import picData from '../picdata.json';
 import baidupicData from '../baidupicdata.json';
 import picaliData from '../picalidata.json';
+import picTencentData from '../picTencentdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
 import {AppInfo} from "@/config.ts";
@@ -184,8 +185,8 @@ utools.onPluginEnter(async (action) => {
     console.log('满足截图条件')
 
     // try {
-    // const imgPath = await window.services.capture()
-    const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+    const imgPath = await window.services.capture()
+    // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
     const response = await fetch(imgPath);
     const blob = await response.blob();
@@ -208,13 +209,13 @@ utools.onPluginEnter(async (action) => {
         }
       }
       // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
-      // const result = await ocrTranslateMultiPlatform(file);
-      const result = {
+      const result = await ocrTranslateMultiPlatform(file);
+      /*const result = {
         youdao: picData,
         baidu: baidupicData,
         ali: picaliData,
-        tencent: picaliData,
-      }[currentPlatform];
+        tencent: picTencentData,
+      }[currentPlatform];*/
 
       console.log('apprest:', result)
       if (result.errorCode !== '0') {

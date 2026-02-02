@@ -1,0 +1,35 @@
+{
+  "errorCode": "0",
+  "resRegions": [
+    {
+      "boundingBox": "39,31,340,27",
+      "context": "console.log('apprest:', result)",
+      "tranContent": "console.log（' appprest：'，结果）"
+    },
+    {
+      "boundingBox": "39,63,343,23",
+      "context": "if (result.errorCode !== '0') {",
+      "tranContent": "if（结果.errorCode！== ' 0 '）{"
+    },
+    {
+      "boundingBox": "62,94,859,25",
+      "context": "console.log(errorCode=${result.errorCode} EiZ: ${USON.stringify(result)})",
+      "tranContent": "console.log（errorCode=${结果.errorCode} EiZ：${USON.stringify（结果）}）"
+    },
+    {
+      "boundingBox": "51,126,21,13",
+      "context": "l",
+      "tranContent": "L"
+    },
+    {
+      "boundingBox": "39,159,909,24",
+      "context": "const msg = result.resRegions?.map( callbackfn: r=> r.tranContent Il r.context) II[J",
+      "tranContent": "const msg =结果.resRegions？。map（callbackfn：r=> r.tranContent Il r.context）II[J"
+    },
+    {
+      "boundingBox": "8,193,245,20",
+      "context": "AcRi1:8",
+      "tranContent": "AcRi 1：8"
+    }
+  ]
+}

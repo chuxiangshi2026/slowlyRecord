@@ -118,6 +118,9 @@ export async function ocrTranslateMultiPlatform(
     } else if (platform === 'ali') {
         // 阿里OCR API的调用逻辑
         return await ocrTranslateAli(file, appkey, key);
+    } else if (platform === 'tencent') {
+        // 腾讯OCR API的调用逻辑
+        return await ocrTranslateTencent(file, appkey, key);
     }
     // 如果是支持图像识别的平台，则先OCR识别文本，然后通过模型翻译
     /*else if (['qwen', 'gemini', 'kimi'].includes(platform)) {
@@ -381,6 +384,136 @@ function alisign(sk:string, str:string) {
     return CryptoJS.HmacSHA1(str, sk).toString(CryptoJS.enc.Base64)
 }
 
+// 腾讯图片翻译实现
+async function ocrTranslateTencent(
+    file: File,
+    secretId: string,
+    secretKey: string
+): Promise<OcrResult> {
+    const service = 'tmt';
+    const host = 'tmt.tencentcloudapi.com';
+    const region = 'ap-beijing';
+    const action = 'ImageTranslate';
+    const version = '2018-03-21';
+    const timestamp = Math.floor(Date.now() / 1000);
+    const date = new Date(timestamp * 1000).toISOString().slice(0, 10);
+
+    // 将文件转换为base64
+    const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve((reader.result as string).split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+
+    // 请求参数
+    const payload = JSON.stringify({
+        SessionUuid: Date.now().toString(),
+        Scene: 'doc',
+        Data: base64,
+        Source: 'auto',
+        Target: 'zh',
+        ProjectId: 0
+    });
+
+    // ========== 步骤 1: 拼接规范请求串 (CanonicalRequest) ==========
+    const httpRequestMethod = 'POST';
+    const canonicalUri = '/';
+    const canonicalQueryString = '';
+    const canonicalHeaders = `content-type:application/json; charset=utf-8\nhost:${host}\nx-tc-action:${action.toLowerCase()}\n`;
+    const signedHeaders = 'content-type;host;x-tc-action';
+    const hashedRequestPayload = sha256(payload);
+
+    const canonicalRequest = [
+        httpRequestMethod,
+        canonicalUri,
+        canonicalQueryString,
+        canonicalHeaders,
+        signedHeaders,
+        hashedRequestPayload
+    ].join('\n');
+
+    // ========== 步骤 2: 拼接待签名字符串 (StringToSign) ==========
+    const algorithm = 'TC3-HMAC-SHA256';
+    const credentialScope = `${date}/${service}/tc3_request`;
+    const hashedCanonicalRequest = sha256(canonicalRequest);
+
+    const stringToSign = [
+        algorithm,
+        timestamp.toString(),
+        credentialScope,
+        hashedCanonicalRequest
+    ].join('\n');
+
+    // ========== 步骤 3: 计算签名 ==========
+    const secretDate = hmacSha256(`TC3${secretKey}`, date);
+    const secretService = hmacSha256(secretDate, service);
+    const secretSigning = hmacSha256(secretService, 'tc3_request');
+    const signature = hmacSha256Hex(secretSigning, stringToSign);
+
+    // ========== 步骤 4: 拼接 Authorization ==========
+    const authorization = `${algorithm} Credential=${secretId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+
+    // 发送请求
+    const headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Host': host,
+        'X-TC-Action': action,
+        'X-TC-Version': version,
+        'X-TC-Region': region,
+        'X-TC-Timestamp': timestamp.toString(),
+        'Authorization': authorization
+    };
+
+    const response = await fetch(`https://${host}`, {
+        method: 'POST',
+        headers: headers,
+        body: payload
+    });
+
+    const data = await response.json();
+
+    // 处理响应
+    if (data.Response && data.Response.ImageRecord) {
+        const imageRecord = data.Response.ImageRecord;
+        const resRegions = imageRecord.Value?.map((item: any) => ({
+            boundingBox: `${item.X || 0},${item.Y || 0},${item.W || 0},${item.H || 0}`,
+            context: item.SourceText || '',
+            tranContent: item.TargetText || ''
+        })) || [];
+
+        return {
+            errorCode: '0',
+            resRegions: resRegions
+        };
+    } else if (data.Response && data.Response.Error) {
+        return {
+            errorCode: data.Response.Error.Code,
+            resRegions: []
+        };
+    }
+
+    return {
+        errorCode: '500',
+        resRegions: []
+    };
+}
+
+// SHA256 哈希函数 (返回小写十六进制字符串)
+function sha256(message: string): string {
+    return CryptoJS.SHA256(message).toString(CryptoJS.enc.Hex);
+}
+
+// HMAC-SHA256 函数 (返回WordArray)
+function hmacSha256(key: string | CryptoJS.lib.WordArray, message: string): CryptoJS.lib.WordArray {
+    return CryptoJS.HmacSHA256(message, key);
+}
+
+// HMAC-SHA256 函数 (返回小写十六进制字符串)
+function hmacSha256Hex(key: CryptoJS.lib.WordArray, message: string): string {
+    return CryptoJS.HmacSHA256(message, key).toString(CryptoJS.enc.Hex);
+}
+
 /* ---------- 工具：长宽比 < 10:1 ---------- */
 async function checkImageRatio(file: File): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -441,6 +574,17 @@ async function extractTextFromImage(file: File, platform?: TranslationPlatform):
         }
     } catch (error) {
         console.warn('阿里OCR提取失败:', error);
+    }
+
+    // 尝试腾讯OCR
+    try {
+        const { appkey: tencentKey, key: tencentSecret } = getOcrApiKey('tencent');
+        const tencentResult = await ocrTranslateTencent(file, tencentKey, tencentSecret);
+        if (tencentResult.errorCode === '0' && tencentResult.resRegions && tencentResult.resRegions.length > 0) {
+            return tencentResult.resRegions.map(region => region.context).join(' ');
+        }
+    } catch (error) {
+        console.warn('腾讯OCR提取失败:', error);
     }
 
     // 如果所有OCR服务都失败，返回空字符串

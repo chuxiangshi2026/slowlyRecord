@@ -56,7 +56,7 @@
       <div class="setting-item">
         <div class="content">ocr图片识别引擎</div>
         <!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" v-model="ocrApi" @change="updateTranApi" placeholder="选择"
+        <el-select class="shorcut-desc" v-model="ocrApi" @change="updateOrcTranApi" placeholder="选择"
                    style="width:100px">
           <el-option
               v-for="item in ocrOptions"
@@ -456,6 +456,10 @@ const options = [...ocrOptions,
 },*/
 const updateTranApi = () => {
   wordsStore.setTranslationPlatform(tranApi.value)
+}
+
+const updateOrcTranApi = () => {
+  wordsStore.setOcrPlatform(ocrApi.value)
 }
 
 
