@@ -105,10 +105,9 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             return {success: false,text:wordText, message: "翻译失败:"+error};
         }
     }
-
     // 检查是否超出了每日使用限制
     const currentPlatform = wordsStore.currentTranslationPlatform || 'youdao';
-    if (!hasCustomApiKey(currentPlatform)) {
+    /*if (!hasCustomApiKey(currentPlatform)) {
         if (isOverDailyLimit('translation')) {
             const usedCount = getCurrentUsageCount('translation');
             const remainingCount = USAGE_LIMITS.TRANSLATION_DAILY_LIMIT - usedCount;
@@ -118,8 +117,9 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
 
         // 增加使用计数
         incrementUsageCounter('translation');
-    }
+    }*/
     console.log('准备翻译')
+
     try {
         const res = await wordsStore.translateWithPlatform(wordText);
         log.i('返回翻译api结果', res)

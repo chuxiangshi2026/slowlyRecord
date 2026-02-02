@@ -131,7 +131,7 @@ export function hasCustomApiKey(platform: TranslationPlatform): boolean {
 
   // 检查是否为默认配置（避免用户恰好设置了相同值的情况，这里我们假设默认值不太可能被用户重复设置）
   // 更准确的方式是比较是否与默认配置相同
-  const defaultAppKey = 'REDACTED_YOUDAO_APPKEY'; // 有道默认值
+  /*const defaultAppKey = 'REDACTED_YOUDAO_APPKEY'; // 有道默认值
   const defaultKey = 'REDACTED_YOUDAO_SECRET'; // 有道默认值
 
   // 对于不同平台检查不同的默认值
@@ -143,7 +143,7 @@ export function hasCustomApiKey(platform: TranslationPlatform): boolean {
   } else if (platform === 'ali') {
     // 检查是否为阿里默认值
     return !(userKeys.appkey === 'REDACTED_ALI_APPKEY' && userKeys.key === 'REDACTED_ALI_SECRET');
-  }
+  }*/
 
   return true;
 }
