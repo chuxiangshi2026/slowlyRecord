@@ -67,6 +67,7 @@ utools.onPluginEnter(async (action) => {
     if (setDb.keys) {
       // 为每个翻译平台提供默认空值
       const defaultKeys = {
+        tencent: { appkey: '', key: '' },
         ali: { appkey: '', key: '' },
         youdao: { appkey: '', key: '' },
         baidu: { appkey: '', key: '' },

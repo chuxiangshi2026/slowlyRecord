@@ -145,6 +145,8 @@ export async function translateWithPlatform(query: string, platform: Translation
     log.i('待翻译参数', query)
     try {
         // 检查是否超出了每日使用限制
+       /*
+        todo
         if (!hasCustomApiKey(platform)) {
             // 如果没有自定义API密钥，检查是否超过每日限制
             // 普通翻译和批量翻译一起计数
@@ -161,7 +163,7 @@ export async function translateWithPlatform(query: string, platform: Translation
             // 增加使用计数
             const newCount = incrementUsageCounter(featureType);
             log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
-        }
+        }*/
 
         switch (platform) {
             case 'youdao':
@@ -689,56 +691,124 @@ async function callTencent(query: string): Promise<TranslationResult> {
             };
         }
 
-        // 腾讯翻译API参数
-        const params = {
+        const service = 'tmt';
+        const host = 'tmt.tencentcloudapi.com';
+        const region = 'ap-beijing';
+        const action = 'TextTranslate';
+        const version = '2018-03-21';
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        // 获取UTC日期 (YYYY-MM-DD)
+        const date = new Date(timestamp * 1000).toISOString().slice(0, 10);
+
+        // 请求参数
+        const payload = JSON.stringify({
             SourceText: query,
             Source: 'auto',
             Target: 'zh',
             ProjectId: 0
-        };
-
-        // 构造请求签名（简化版，实际需要按腾讯云规范生成签名）
-        const timestamp = Math.floor(Date.now() / 1000);
-        const nonce = Math.floor(Math.random() * 10000);
-
-        // 这里使用简化的请求方式，实际项目中需要按照腾讯云API规范实现签名
-        const response = await fetch('https://tmt.tencentcloudapi.com', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `TC3-HMAC-SHA256 Credential=${secretId}, SignedHeaders=content-type;host, Signature=TODO`
-            },
-            body: JSON.stringify({
-                Action: 'TextTranslate',
-                Version: '2018-03-21',
-                Region: 'ap-beijing',
-                ...params
-            })
         });
 
-        log.i('腾讯翻译响应:', response);
-        if (!response.ok) {
-            throw new Error(`腾讯翻译请求失败: ${response.status} ${response.statusText}`);
-        }
+        // ========== 步骤 1: 拼接规范请求串 (CanonicalRequest) ==========
+        const httpRequestMethod = 'POST';
+        const canonicalUri = '/';
+        const canonicalQueryString = '';
+        const canonicalHeaders = `content-type:application/json; charset=utf-8\nhost:${host}\nx-tc-action:${action.toLowerCase()}\n`;
+        const signedHeaders = 'content-type;host;x-tc-action';
+        const hashedRequestPayload = await sha256(payload);
+
+        const canonicalRequest = [
+            httpRequestMethod,
+            canonicalUri,
+            canonicalQueryString,
+            canonicalHeaders,
+            signedHeaders,
+            hashedRequestPayload
+        ].join('\n');
+
+        // ========== 步骤 2: 拼接待签名字符串 (StringToSign) ==========
+        const algorithm = 'TC3-HMAC-SHA256';
+        const credentialScope = `${date}/${service}/tc3_request`;
+        const hashedCanonicalRequest = await sha256(canonicalRequest);
+
+        const stringToSign = [
+            algorithm,
+            timestamp.toString(),
+            credentialScope,
+            hashedCanonicalRequest
+        ].join('\n');
+
+        // ========== 步骤 3: 计算签名 ==========
+        // 派生签名密钥
+        const secretDate = await hmacSha256(`TC3${secretKey}`, date);
+        const secretService = await hmacSha256(secretDate, service);
+        const secretSigning = await hmacSha256(secretService, 'tc3_request');
+        const signature = await hmacSha256Hex(secretSigning, stringToSign);
+
+        // ========== 步骤 4: 拼接 Authorization ==========
+        const authorization = `${algorithm} Credential=${secretId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+
+        // 发送请求
+        const headers = {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Host': host,
+            'X-TC-Action': action,
+            'X-TC-Version': version,
+            'X-TC-Region': region,
+            'X-TC-Timestamp': timestamp.toString(),
+            'Authorization': authorization
+        };
+
+        const response = await fetch(`https://${host}`, {
+            method: 'POST',
+            headers: headers,
+            body: payload
+        });
 
         const data = await response.json();
-
-        if (data.Response && data.Response.TargetText) {
-            return {
-                success: true,
-                explains: data.Response.TargetText
-            };
-        } else {
-            throw new Error('腾讯翻译API返回格式错误: ' + JSON.stringify(data));
-        }
+        return handleTencentResponse(data);
     } catch (error) {
-        console.error('腾讯翻译错误:', error);
+        console.error('Tencent translation error:', error);
         return {
             success: false,
-            errorMsg: '腾讯翻译服务错误: ' + (error as Error).message
+            errorMsg: '腾讯翻译API错误: ' + (error as Error).message
         };
     }
 }
+
+// SHA256 哈希函数 (返回小写十六进制字符串)
+async function sha256(message: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// HMAC-SHA256 函数 (返回二进制)
+async function hmacSha256(key: string | ArrayBuffer, message: string): Promise<ArrayBuffer> {
+    const encoder = new TextEncoder();
+    const keyData = typeof key === 'string' ? encoder.encode(key) : key;
+    const messageData = encoder.encode(message);
+
+    const cryptoKey = await crypto.subtle.importKey(
+        'raw',
+        keyData,
+        {name: 'HMAC', hash: 'SHA-256'},
+        false,
+        ['sign']
+    );
+
+    return await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+}
+
+// HMAC-SHA256 函数 (返回小写十六进制字符串)
+async function hmacSha256Hex(key: ArrayBuffer, message: string): Promise<string> {
+    const result = await hmacSha256(key, message);
+    const hashArray = Array.from(new Uint8Array(result));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 
 export default {
     translateWithPlatform,
