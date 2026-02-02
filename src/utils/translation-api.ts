@@ -215,6 +215,12 @@ export async function translateWithPlatform(query: string, platform: Translation
             case 'deepseek':
                 console.log('调用DeepSeek')
                 return callDeepSeek(query);
+            case 'qwen':
+                console.log('调用通义千问')
+                return callQwen(query);
+            case 'kimi':
+                console.log('调用Kimi')
+                return callKimi(query);
             /*           case 'google':
                            // Google翻译API通常需要服务端实现，这里提供基本结构
                            const googleParams = {
@@ -506,7 +512,7 @@ async function callQwen(query: string): Promise<TranslationResult> {
                 ]
             })
         });
-
+        log.i('Qwen response:', response);
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({error: 'Unknown error'}));
             throw new Error(`Qwen request failed: ${response.status} - ${JSON.stringify(errorData)}`);
@@ -546,7 +552,7 @@ async function callKimi(query: string): Promise<TranslationResult> {
             };
         }
 
-        const model = modelName || 'moonshot-v1-8k';
+        const model = modelName || 'kimi-k2-turbo-preview';
 
         // Kimi由月之暗面开发，但目前API可能需要特定接入方式
         // 这里使用Moonshot API作为示例（Kimi的提供商）
@@ -571,8 +577,18 @@ async function callKimi(query: string): Promise<TranslationResult> {
             })
         });
 
+        log.i('Kimi/Moonshot response:', response);
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({error: 'Unknown error'}));
+            const errorData = await response.json().catch(() => ({error: {message: 'Unknown error'}}));
+            
+            // 处理账户余额不足的情况
+            if (response.status === 429 && errorData.error?.type === 'exceeded_current_quota_error') {
+                return {
+                    success: false,
+                    errorMsg: 'Kimi API账户余额不足，请充值后重试或联系服务商'
+                };
+            }
+            
             throw new Error(`Kimi/Moonshot request failed: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
@@ -589,9 +605,19 @@ async function callKimi(query: string): Promise<TranslationResult> {
         };
     } catch (error) {
         console.error('Kimi error:', error);
+        const errorMessage = (error as Error).message;
+        
+        // 处理余额不足的特殊情况
+        if (errorMessage.includes('insufficient balance')) {
+            return {
+                success: false,
+                errorMsg: 'Kimi API账户余额不足，请充值后重试'
+            };
+        }
+        
         return {
             success: false,
-            errorMsg: 'Kimi service error: ' + (error as Error).message
+            errorMsg: 'Kimi service error: ' + errorMessage
         };
     }
 }
