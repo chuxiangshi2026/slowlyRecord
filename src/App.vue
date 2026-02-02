@@ -138,7 +138,7 @@ utools.onPluginEnter(async (action) => {
     // 把单词翻译了，添加到 列表中
     // console.log('==================', action)
 
-    await addWord(action.payload);
+    await addWord(action.payload).then(error => {ElMessage.warning(error.message)});
 
   }
 
@@ -183,8 +183,8 @@ utools.onPluginEnter(async (action) => {
     console.log('满足截图条件')
 
     // try {
-    const imgPath = await window.services.capture()
-    // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
+    // const imgPath = await window.services.capture()
+    const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
     const response = await fetch(imgPath);
     const blob = await response.blob();
@@ -194,7 +194,8 @@ utools.onPluginEnter(async (action) => {
     utools.showMainWindow()
     try {
       // 获取当前选择的翻译平台
-      const currentPlatform = wordsStore.currentTranslationPlatform || 'youdao';
+      // const currentPlatform = wordsStore.currentTranslationPlatform || 'youdao';
+      const currentPlatform = wordsStore.currentOcrPlatform || 'youdao';
 
       // 检查是否超出了每日使用限制（如果没有自定义API密钥）
       if (!hasCustomApiKey(currentPlatform)) {
@@ -205,13 +206,13 @@ utools.onPluginEnter(async (action) => {
           return;
         }
       }
-
-      const result = await ocrTranslateMultiPlatform(file);
-      // const result = {
-      //   youdao: picData,
-      //   baidu: baidupicData,
-      //   ali: picaliData,
-      // }[currentPlatform];
+      // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
+      // const result = await ocrTranslateMultiPlatform(file);
+      const result = {
+        youdao: picData,
+        baidu: baidupicData,
+        ali: picaliData,
+      }[currentPlatform];
 
       console.log('apprest:', result)
       if (result.errorCode !== '0') {

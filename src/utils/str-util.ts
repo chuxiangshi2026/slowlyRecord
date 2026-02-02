@@ -99,10 +99,10 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             }
         } catch (error) {
             console.error('翻译失败:', error);
-            ElMessage.error('翻译失败');
+            // ElMessage.error('翻译失败');
             // 失败时清空定位单词
             wordsStore.setLastAddedWordText('');
-            return {success: false,text:wordText, message: "翻译失败"};
+            return {success: false,text:wordText, message: "翻译失败:"+error};
         }
     }
 

@@ -150,20 +150,24 @@
       </div>
       <!--      apiKeys-->
       <div v-for="(item,index) in wordsStore.userApiKeys"
-           :key="index" class="titles">
+           :key="index" class="titles" v-show="index !== 'utoolsai'">
         <span class="shorcut-desc">
           {{ index }} AppKey
           <!--          type="password"-->
           <el-input v-model="item.appkey"
                     @update:model-value="(val: string) => updateKey(index, 'appkey', val)"
-                    style="width: 115px" placeholder="没有请留空"/>
+                    style="width: 115px"
+                    :placeholder="['ollama','deepseek', 'qwen', 'kimi'].includes(index)?'使用必需填写':'没有请留空'"
+          />
         </span>
         <span class="shorcut-desc">
           {{ index }} SecretKey
           <!--          type="password"-->
           <el-input v-model="item.key"
+                    :disabled="['ollama','deepseek', 'qwen', 'kimi'].includes(index)"
                     @update:model-value="(val: string) => updateKey(index, 'key', val)"
-                    style="width: 190px" placeholder="没有请留空"/>
+                    style="width: 190px"
+                    :placeholder="['ollama','deepseek', 'qwen', 'kimi'].includes(index)?'无需填写':'没有请留空'"/>
         </span>
       </div>
 
@@ -181,14 +185,14 @@
           <!--          type="password"-->
           <el-input v-model="item.appkey"
                     @update:model-value="(val: string) => updateOcrKey(index, 'appkey', val)"
-                    style="width: 115px" placeholder="没有请留空"/>
+                    style="width: 115px" placeholder="请填入id"/>
         </span>
         <span class="shorcut-desc">
           {{ index }} SecretKey
           <!--          type="password"-->
           <el-input v-model="item.key"
                     @update:model-value="(val: string) => updateOcrKey(index, 'key', val)"
-                    style="width: 190px" placeholder="没有请留空"/>
+                    style="width: 190px" placeholder="请填入密钥"/>
         </span>
       </div>
     </div>
@@ -585,5 +589,18 @@ const cardShortcuts = [
   &:hover {
     background-color: #e0e0e0;
   }
+}
+
+/* 禁用输入框样式 */
+:deep(.el-input.is-disabled .el-input__wrapper) {
+  background-color: #f5f7fa;
+  border-color: #e4e7ed;
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+
+:deep(.el-input.is-disabled .el-input__inner) {
+  color: #c0c4cc;
+  cursor: not-allowed;
 }
 </style>

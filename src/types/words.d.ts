@@ -66,7 +66,7 @@ interface YdParams {
 export type OcrPlatform = 'youdao' | 'baidu' | 'ali';
 
 
-export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'ollama' | 'deepseek' | 'qwen' | 'kimi';
+export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'ollama';
 
 /**
  * 翻译结果结构
