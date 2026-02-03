@@ -185,37 +185,37 @@ utools.onPluginEnter(async (action) => {
     console.log('满足截图条件')
 
     // try {
-    const imgPath = await window.services.capture()
+    // const imgPath = await window.services.capture()
     // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
 
-    const response = await fetch(imgPath);
-    const blob = await response.blob();
-    const file = new File([blob], 'utools_snap.png', {type: blob.type});
+    // const response = await fetch(imgPath);
+    // const blob = await response.blob();
+    // const file = new File([blob], 'utools_snap.png', {type: blob.type});
 
-    console.log('文件对象', file.name, file.type, file.size)
-    utools.showMainWindow()
+    // console.log('文件对象', file.name, file.type, file.size)
+    // utools.showMainWindow()
     try {
       // 获取当前选择的翻译平台
       // const currentPlatform = wordsStore.currentTranslationPlatform || 'youdao';
-      const currentPlatform = wordsStore.currentOcrPlatform || 'youdao';
-
-      // 检查是否超出了每日使用限制（如果没有自定义API密钥）
-      if (!hasCustomApiKey(currentPlatform)) {
-        // 截图翻译使用独立的计数
-        if (isOverDailyLimit('ocr')) {
-          const usedCount = getCurrentUsageCount('ocr');
-          ElMessage.error(`每日免费截图翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.OCR_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
-          return;
-        }
-      }
+      // const currentPlatform = wordsStore.currentOcrPlatform || 'youdao';
+      //
+      // // 检查是否超出了每日使用限制（如果没有自定义API密钥）
+      // if (!hasCustomApiKey(currentPlatform)) {
+      //   // 截图翻译使用独立的计数
+      //   if (isOverDailyLimit('ocr')) {
+      //     const usedCount = getCurrentUsageCount('ocr');
+      //     ElMessage.error(`每日免费截图翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.OCR_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
+      //     return;
+      //   }
+      // }
       // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
-      const result = await ocrTranslateMultiPlatform(file);
-      /*const result = {
-        youdao: picData,
-        baidu: baidupicData,
-        ali: picaliData,
-        tencent: picTencentData,
-      }[currentPlatform];*/
+      const result = await ocrTranslateMultiPlatform();
+      // const result = {
+      //   youdao: picData,
+      //   baidu: baidupicData,
+      //   ali: picaliData,
+      //   tencent: picTencentData,
+      // }[currentPlatform];
 
       console.log('apprest:', result)
       if (result.errorCode !== '0') {

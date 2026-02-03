@@ -49,13 +49,13 @@ export interface OcrResult {
 
 /** 有道图片翻译：传入 File 对象，返回 Promise<OcrResult> */
 export async function ocrTranslate(
-    file: File,
+    img: string,
     appKey: string,
     secret: string,
     from = 'auto',
     to = 'zh-CHS'
 ): Promise<OcrResult> {
-    const img = await fileToBase64(file)
+    // const img = await fileToBase64(file)
     console.log("base64", img.length)
     // 验证base64数据是否有效（检查是否包含字母数字+/=字符）
     const isValidBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(img);
@@ -83,9 +83,8 @@ export async function ocrTranslate(
 }
 
 // 新增：多平台OCR翻译函数
-export async function ocrTranslateMultiPlatform(
-    file: File,
-): Promise<OcrResult> {
+export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
+
 
     const wordsStore = useWordsStore();
     const platform = wordsStore.currentTranslationPlatform || 'youdao';
@@ -109,103 +108,45 @@ export async function ocrTranslateMultiPlatform(
     const {appkey, key} = getOcrApiKey(ocrPlatform);
     // console.log('appkey+key', appkey, key)
 
-    // 如果是使用有道平台，继续使用原有的OCR翻译
-    if (platform === 'youdao') {
-        return ocrTranslate(file, appkey, key, 'en', 'zh-CHS');
-    } else if (platform === 'baidu') {
-        // 百度OCR API的调用逻辑
-        return await ocrTranslateBaidu(file, appkey, key);
-    } else if (platform === 'ali') {
-        // 阿里OCR API的调用逻辑
-        return await ocrTranslateAli(file, appkey, key);
-    } else if (platform === 'tencent') {
-        // 腾讯OCR API的调用逻辑
-        return await ocrTranslateTencent(file, appkey, key);
-    }
-    // 如果是支持图像识别的平台，则先OCR识别文本，然后通过模型翻译
-    /*else if (['qwen', 'gemini', 'kimi'].includes(platform)) {
-        // 先使用通用OCR识别图片中的文本，优先使用支持视觉的模型
-        const extractedText = await extractTextFromImage(file, platform);
+    // 将 utools.screenCapture 包装为 Promise
+    return new Promise((resolve, reject) => {
+        utools.screenCapture(async (image) => {
+            console.log('截图回调：', image)
 
-        if (!extractedText.trim()) {
-            return {
-                errorCode: '500',
-                resRegions: []
-            };
-        }
+            try {
+                // 去除 data:image/png;base64, 前缀
+                const base64 = image.includes(',') ? image.split(',')[1] : image;
 
-        // 使用指定的平台进行翻译
-        // const translatedText = await translateWithPlatformForOCR(extractedText, platform);
-
-        // if (!translatedText.success || !translatedText.explains) {
-        //     return {
-        //         errorCode: '500',
-        //         resRegions: []
-        //     };
-        // }
-
-        // 返回模拟的OCR结果，包含原文和翻译
-        return {
-            errorCode: '0',
-            resRegions: [{
-                boundingBox: "0,0,100,20", // 模拟边界框
-                context: extractedText,      // 原文
-                tranContent: translatedText.explains // 翻译结果
-            }]
-        };
-    }*/
-    // 如果是仅支持文本翻译的大模型平台（如deepseek、ollama），则使用传统OCR服务提取文本，然后用这些模型翻译
-    //     如果 不是bat 不支持直接ocr翻译，需要把文本 识别后再翻译
-
-    // else if (['ollama', 'deepseek'].includes(platform)) {
-    //     // 使用传统OCR服务提取文本
-    //     const extractedText = await extractTextFromImage(file, platform);
-    //
-    //     if (!extractedText.trim()) {
-    //         return {
-    //             errorCode: '500',
-    //             resRegions: []
-    //         };
-    //     }
-    //
-    //     // 使用指定的大模型平台进行翻译
-    //     const translatedText = await translateWithLargeModel(extractedText, platform);
-    //
-    //     if (!translatedText.success || !translatedText.explains) {
-    //         return {
-    //             errorCode: '500',
-    //             resRegions: []
-    //         };
-    //     }
-    //
-    //     // 返回模拟的OCR结果，包含原文和翻译
-    //     return {
-    //         errorCode: '0',
-    //         resRegions: [{
-    //             boundingBox: "0,0,100,20", // 模拟边界框
-    //             context: extractedText,      // 原文
-    //             tranContent: translatedText.explains // 翻译结果
-    //         }]
-    //     };
-    // }
-
-    return {
-        errorCode: '500',
-        resRegions: []
-    };
+                let result: OcrResult;
+                if (ocrPlatform === 'youdao') {
+                    result = await ocrTranslate(base64, appkey, key, 'en', 'zh-CHS');
+                } else if (ocrPlatform === 'baidu') {
+                    result = await ocrTranslateBaidu(base64, appkey, key);
+                } else if (ocrPlatform === 'ali') {
+                    result = await ocrTranslateAli(base64, appkey, key);
+                } else if (ocrPlatform === 'tencent') {
+                    result = await ocrTranslateTencent(base64, appkey, key);
+                } else {
+                    result = { errorCode: '500', resRegions: [] };
+                }
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    });
 }
 
 // 百度OCR翻译实现
 async function ocrTranslateBaidu(
-    file: File,
+    base64: string,
     apiKey: string,
     secretKey: string
 ): Promise<OcrResult> {
     const url = 'https://fanyi-api.baidu.com/api/trans/sdk/picture';
 
-    /* 1. 读文件并计算图片 md5 */
-    const buffer = await file.arrayBuffer();
-    const imgBytes = new Uint8Array(buffer);
+    /* 1. base64 转 Uint8Array 并计算 md5 */
+    const imgBytes = base64ToUint8Array(base64);
     const imgMd5 = await md5Bytes(imgBytes);
 
     /* 2. 业务参数 */
@@ -227,7 +168,7 @@ async function ocrTranslateBaidu(
 
     /* 5. multipart/form-data */
     const form = new FormData();
-    form.append('image', new Blob([imgBytes]), file.name);
+    form.append('image', new Blob([imgBytes]), 'image.png');
 
     /* 6. 用 axios 发 POST */
     const resp = await axios.post(`${url}?${qs.toString()}`, form, {
@@ -248,6 +189,16 @@ async function ocrTranslateBaidu(
             tranContent: it.dst,           // 译文
         })),
     };
+}
+
+/* base64 转 Uint8Array */
+function base64ToUint8Array(base64: string): Uint8Array {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
 }
 
 /* =============== 工具函数 =============== */
@@ -271,25 +222,24 @@ async function md5String(str: string): Promise<string> {
 }
 
 
-
 // 阿里图片翻译实现
 export async function ocrTranslateAli(
-    file: File,
+    base64: string,
     accessKeyId: string,
     accessKeySecret: string,
     targetLang = 'zh'
 ): Promise<OcrResult> {
-    const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve((reader.result as string).split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
+    // const base64 = await new Promise<string>((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.onload = () => resolve((reader.result as string).split(',')[1]);
+    //     reader.onerror = reject;
+    //     reader.readAsDataURL(file);
+    // });
 
     const params: Record<string, string> = {
         AccessKeyId: accessKeyId,
         Action: 'TranslateImage',
-        Ext: JSON.stringify({ needEditorData: true }),
+        Ext: JSON.stringify({needEditorData: true}),
         Field: 'general',
         Format: 'JSON',
         ImageBase64: base64,
@@ -309,7 +259,7 @@ export async function ocrTranslateAli(
 
     const stringToSign = `POST&${rfc3986('/')}&${rfc3986(canonicalQueryString)}`;
 
-    console.log("str",stringToSign)
+    console.log("str", stringToSign)
     // ✅ 核心修正：Secret 后必须加 &
     const key = accessKeySecret + "&";
     const signature = CryptoJS.HmacSHA1(
@@ -380,13 +330,13 @@ function rfc3986(str: string): string {
         .replace(/\*/g, '%2A');
 }
 
-function alisign(sk:string, str:string) {
+function alisign(sk: string, str: string) {
     return CryptoJS.HmacSHA1(str, sk).toString(CryptoJS.enc.Base64)
 }
 
 // 腾讯图片翻译实现
 async function ocrTranslateTencent(
-    file: File,
+    base64: string,
     secretId: string,
     secretKey: string
 ): Promise<OcrResult> {
@@ -399,12 +349,12 @@ async function ocrTranslateTencent(
     const date = new Date(timestamp * 1000).toISOString().slice(0, 10);
 
     // 将文件转换为base64
-    const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve((reader.result as string).split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
+    // const base64 = await new Promise<string>((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.onload = () => resolve((reader.result as string).split(',')[1]);
+    //     reader.onerror = reject;
+    //     reader.readAsDataURL(file);
+    // });
 
     // 请求参数
     const payload = JSON.stringify({
@@ -519,7 +469,7 @@ async function checkImageRatio(file: File): Promise<void> {
     return new Promise((resolve, reject) => {
         const img = new Image()
         img.onload = () => {
-            const { width, height } = img
+            const {width, height} = img
             const ratio = Math.max(width, height) / Math.min(width, height)
             if (ratio >= 10) reject(new Error('长宽比必须小于 10:1'))
             else resolve()
@@ -545,7 +495,8 @@ async function extractTextFromImage(file: File, platform?: TranslationPlatform):
 
     // 如果有道OCR失败，尝试百度OCR
     try {
-        const baiduResult = await ocrTranslateBaidu(file, AppInfo.baidu.appkey, AppInfo.baidu.key);
+        const base64 = await fileToBase64(file);
+        const baiduResult = await ocrTranslateBaidu(base64, AppInfo.baidu.appkey, AppInfo.baidu.key);
         if (baiduResult.errorCode === '0' && baiduResult.resRegions && baiduResult.resRegions.length > 0) {
             return baiduResult.resRegions.map(region => region.context).join(' ');
         }
@@ -555,7 +506,8 @@ async function extractTextFromImage(file: File, platform?: TranslationPlatform):
 
     // 尝试使用有道OCR提取文本
     try {
-        const youdaoResult = await ocrTranslate(file, AppInfo.youdao.appkey, AppInfo.youdao.key, 'auto', 'zh-CHS');
+        const base64 = await fileToBase64(file);
+        const youdaoResult = await ocrTranslate(base64, AppInfo.youdao.appkey, AppInfo.youdao.key, 'auto', 'zh-CHS');
         if (youdaoResult.errorCode === '0' && youdaoResult.resRegions && youdaoResult.resRegions.length > 0) {
             // 提取所有识别到的文本
             return youdaoResult.resRegions.map(region => region.context).join(' ');
@@ -565,10 +517,10 @@ async function extractTextFromImage(file: File, platform?: TranslationPlatform):
     }
 
 
-
     // 如果百度OCR也失败，尝试阿里OCR
     try {
-        const aliResult = await ocrTranslateAli(file, AppInfo.ali.appkey, AppInfo.ali.key);
+        const base64 = await fileToBase64(file);
+        const aliResult = await ocrTranslateAli(base64, AppInfo.ali.appkey, AppInfo.ali.key);
         if (aliResult.errorCode === '0' && aliResult.resRegions && aliResult.resRegions.length > 0) {
             return aliResult.resRegions.map(region => region.context).join(' ');
         }
@@ -578,8 +530,9 @@ async function extractTextFromImage(file: File, platform?: TranslationPlatform):
 
     // 尝试腾讯OCR
     try {
-        const { appkey: tencentKey, key: tencentSecret } = getOcrApiKey('tencent');
-        const tencentResult = await ocrTranslateTencent(file, tencentKey, tencentSecret);
+        const base64 = await fileToBase64(file);
+        const {appkey: tencentKey, key: tencentSecret} = getOcrApiKey('tencent');
+        const tencentResult = await ocrTranslateTencent(base64, tencentKey, tencentSecret);
         if (tencentResult.errorCode === '0' && tencentResult.resRegions && tencentResult.resRegions.length > 0) {
             return tencentResult.resRegions.map(region => region.context).join(' ');
         }
@@ -614,7 +567,7 @@ async function extractTextUsingVisionModel(file: File, platform: TranslationPlat
  */
 async function extractTextUsingQwenVision(base64Image: string): Promise<string> {
     try {
-        const { appkey: apiKey, key: model } = getTranslationApiKey('qwen');
+        const {appkey: apiKey, key: model} = getTranslationApiKey('qwen');
 
         if (!apiKey) {
             throw new Error('Qwen API key is required');
@@ -668,6 +621,7 @@ async function extractTextUsingQwenVision(base64Image: string): Promise<string> 
 /**
  * 使用Google Gemini视觉模型提取文本
  */
+
 /*async function extractTextUsingGeminiVision(base64Image: string): Promise<string> {
     try {
         const { appkey: apiKey, key: model } = getTranslationApiKey('gemini');
@@ -717,7 +671,7 @@ async function extractTextUsingQwenVision(base64Image: string): Promise<string> 
  */
 async function extractTextUsingKimiVision(base64Image: string): Promise<string> {
     try {
-        const { appkey: apiKey, key: model } = getTranslationApiKey('kimi');
+        const {appkey: apiKey, key: model} = getTranslationApiKey('kimi');
 
         if (!apiKey) {
             throw new Error('Kimi API key is required');
