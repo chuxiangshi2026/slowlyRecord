@@ -94,7 +94,6 @@ npm run build
 #### 下个版本功能
 - 待添加功能
   6. [] 加入本地(无网)翻译功能
-  5. [] 增加翻译引擎（微软，腾讯,deep,despseek,谷歌）
   7. [] 更新插件使用说明 ,与截图
   8. [] 添加或导出单词到第三方软件，如通过key 有道单词本
   9. []  另一个语音模式
@@ -105,6 +104,7 @@ npm run build
   16. [] 复习进度 快 中 慢
   17. [] 一段文本添加
   18. [] 自定义导出格式，筛选单词
+  19. [] 单元测试
   16. 软注
 - bug
   - 一级
@@ -116,7 +116,22 @@ npm run build
   - 二级
       -[ ] 导入成功后,打开列表面板,不然操作不太统一
 - 当前版本更新的内容
+- 导出配置文件
+- [x] 添加配置文件同步
+  5. [] 增加翻译引擎（微软，腾讯,deep,despseek,谷歌）
+     - ocr单独分类
+        - 如果是 bat支持不需要处理
+          - 不是 识别文字后，文本+单词 单独翻译
+     - pinan问题
+       - 用户密钥需要保存进数据库，又不能把自己的密钥存入数据库（从配置文件中读取）
+       - orc与文本是两个不同的密钥
+       - 获取密钥应该单独放一个工具类
+     
   - 修复导入后页面自动退出问题
+  - 加入utai
+  - 加入腾讯识别
+  - 失败或成功都有一个黄色提示
+  - 分辨率问题看一下
     
     2. [x] 可以直接选择翻译结果
        8. 如果已存在直接弹
@@ -155,8 +170,15 @@ npm run build
 - 有道key
   - https://ai.youdao.com/console/#/service-singleton/text-translation
   - 创建应用选择文本翻译
-
-
+- 千问模型
+  - https://bailian.console.aliyun.com/cn-beijing/?tab=model#/efm/model_experience_center/text
+- kimi
+  - https://platform.moonshot.cn/console/account
+- ollama
+  - https://ollama.com/download
+  - # 在终端1：启动服务（保持运行）`ollama serve` # 在终端2：测试模型 `ollama run qwen2.5:0.5b "你好"`
+- deeskeep
+  - https://platform.deepseek.com/usage
 
 - 输入
   - mj: 单词
