@@ -145,8 +145,6 @@ export async function translateWithPlatform(query: string, platform: Translation
     log.i('待翻译参数', query)
     try {
         // 检查是否超出了每日使用限制
-       /*
-        todo
         if (!hasCustomApiKey(platform)) {
             // 如果没有自定义API密钥，检查是否超过每日限制
             // 普通翻译和批量翻译一起计数
@@ -163,7 +161,7 @@ export async function translateWithPlatform(query: string, platform: Translation
             // 增加使用计数
             const newCount = incrementUsageCounter(featureType);
             log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
-        }*/
+        }
 
         switch (platform) {
             case 'youdao':

@@ -29,7 +29,6 @@ import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
 import {addWord, batchAddWords} from "@/utils/str-util.ts";
 import {ElMessage} from "element-plus";
 import {ocrTranslate, ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
-import {isOverDailyLimit, incrementUsageCounter, hasCustomApiKey, getCurrentUsageCount} from "@/utils/usage-counter.ts";
 // import path from "node:path";
 import picData from '../picdata.json';
 import baidupicData from '../baidupicdata.json';

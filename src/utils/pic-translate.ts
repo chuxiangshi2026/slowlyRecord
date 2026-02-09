@@ -107,15 +107,18 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
     // 检查是否超出了每日使用限制
     if (!hasCustomApiKey(ocrPlatform)) {
         // 如果没有自定义API密钥，检查是否超过每日限制
-        // OCR翻译使用独立的计数
-        if (isOverDailyLimit('ocr')) {
-            const usedCount = getCurrentUsageCount('ocr');
-            throw new Error(`每日免费截图翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.OCR_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
+        // 腾讯 OCR 使用独立的计数器，其他 OCR 使用通用计数器
+        const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
+        const dailyLimit = ocrPlatform === 'tencent' ? USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT : USAGE_LIMITS.OCR_DAILY_LIMIT;
+
+        if (isOverDailyLimit(counterKey)) {
+            const usedCount = getCurrentUsageCount(counterKey);
+            throw new Error(`每日免费${ocrPlatform === 'tencent' ? '腾讯' : ''}截图翻译次数已达上限 (${usedCount}/${dailyLimit} 次)，请设置自定义API密钥以继续使用`);
         }
 
         // 增加使用计数
-        const newCount = incrementUsageCounter('ocr');
-        console.log(`OCR使用次数: ${newCount}/${USAGE_LIMITS.OCR_DAILY_LIMIT}`);
+        const newCount = incrementUsageCounter(counterKey);
+        console.log(`${ocrPlatform === 'tencent' ? '腾讯' : ''}OCR使用次数: ${newCount}/${dailyLimit}`);
     }
 
     // const {appkey, key} = getTranslationApiKey(platform);

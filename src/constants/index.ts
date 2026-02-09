@@ -103,7 +103,9 @@ const USAGE_LIMITS = {
     // 普通翻译和批量翻译共用的每日限制次数
     TRANSLATION_DAILY_LIMIT: 3000,
     // OCR翻译（截图翻译）的每日限制次数
-    OCR_DAILY_LIMIT: 10
+    OCR_DAILY_LIMIT: 1,
+    // 腾讯 OCR 的每日限制次数（单独统计）
+    TENCENT_OCR_DAILY_LIMIT: 2
 };
 
 /**

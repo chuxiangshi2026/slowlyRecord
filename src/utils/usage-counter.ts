@@ -37,7 +37,14 @@ export function isOverDailyLimit(feature: string): boolean {
 
         // 是今天，检查是否超过限制
         // 根据功能类型确定限制值
-        const limit = feature === 'ocr' ? USAGE_LIMITS.OCR_DAILY_LIMIT : USAGE_LIMITS.TRANSLATION_DAILY_LIMIT;
+        let limit: number;
+        if (feature === 'ocr') {
+            limit = USAGE_LIMITS.OCR_DAILY_LIMIT;
+        } else if (feature === 'tencent_ocr') {
+            limit = USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT;
+        } else {
+            limit = USAGE_LIMITS.TRANSLATION_DAILY_LIMIT;
+        }
         return count >= limit;
     } catch (error) {
         console.error('解析使用计数数据失败:', error);

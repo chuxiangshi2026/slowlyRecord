@@ -1,11 +1,10 @@
-import {DB_KEY, USAGE_LIMITS} from "@/constants";
+import {DB_KEY} from "@/constants";
 // import {isEmpty, truncate} from "lodash";
 // import CryptoJS from "crypto-js";
 import type {Word} from "@/types/words";
 import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
-import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from "./usage-counter.ts";
 import {log} from "@/utils/logger.ts";
 
 /**
@@ -62,19 +61,6 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             // ElMessage.success('单词已存在');
             return {success: false, message: '单词已存在',text:wordText};
         }
-        // 检查是否超出了每日使用限制
-        const currentPlatform = wordsStore.currentTranslationPlatform || 'tencent';
-        if (!hasCustomApiKey(currentPlatform)) {
-            if (isOverDailyLimit('translation')) {
-                const usedCount = getCurrentUsageCount('translation');
-                // ElMessage.error(`每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
-                return {success: false,text:wordText, message: `每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`};
-            }
-
-            // 增加使用计数
-            incrementUsageCounter('translation');
-        }
-
         //  有这个单词,但是没有 释义
         try {
             const res = await wordsStore.translateWithPlatform(wordText);
@@ -104,19 +90,6 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             wordsStore.setLastAddedWordText('');
             return {success: false,text:wordText, message: "翻译失败:"+error};
         }
-    }
-    // 检查是否超出了每日使用限制
-    const currentPlatform = wordsStore.currentTranslationPlatform || 'tencent';
-    if (!hasCustomApiKey(currentPlatform)) {
-        if (isOverDailyLimit('translation')) {
-            const usedCount = getCurrentUsageCount('translation');
-            const remainingCount = USAGE_LIMITS.TRANSLATION_DAILY_LIMIT - usedCount;
-            // ElMessage.error(`每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，今日还剩 ${Math.max(0, remainingCount)} 次，请设置自定义API密钥以继续使用`);
-            return {success: false,text:wordText, message: `每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，今日还剩 ${Math.max(0, remainingCount)} 次，请设置自定义API密钥以继续使用`};
-        }
-
-        // 增加使用计数
-        incrementUsageCounter('translation');
     }
     console.log('准备翻译')
 
