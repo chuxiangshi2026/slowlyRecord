@@ -141,7 +141,11 @@ utools.onPluginEnter(async (action) => {
     // 把单词翻译了，添加到 列表中
     // console.log('==================', action)
 
-    await addWord(action.payload).then(error => {ElMessage.warning(error.message)});
+    await addWord(action.payload).then(result => {
+      if (!result.success) {
+        ElMessage.warning(result.message);
+      }
+    });
 
   }
 
