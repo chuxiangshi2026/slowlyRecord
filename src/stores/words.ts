@@ -81,12 +81,14 @@ export const useWordsStore =
                 deepseek: {appkey: '', key: ''},
                 qwen: {appkey: '', key: ''},
                 kimi: {appkey: '', key: ''},
+                local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref({
                 tencent: {appkey: '', key: ''},
                 ali: {appkey: '', key: ''},
                 youdao: {appkey: '', key: ''},
                 baidu: {appkey: '', key: ''},
+                local: {appkey: '', key: ''},
             })
             // 添加单词后自动退出插件
             const pluginStatus = ref(false);
@@ -434,6 +436,7 @@ export const useWordsStore =
                 addAndUpdateWord,
                 addAndUpdateWords,
                 translateWithPlatform: async (query: string) => {
+                    console.log('store翻译调用, 当前平台:', currentTranslationPlatform.value, '查询词:', query)
                     return await externalTranslateWithPlatform(query, currentTranslationPlatform.value);
                 },
                 removeWords,

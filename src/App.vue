@@ -77,7 +77,8 @@ utools.onPluginEnter(async (action) => {
         ollama: { appkey: '', key: '' },
         deepseek: { appkey: '', key: '' },
         qwen: { appkey: '', key: '' },
-        kimi: { appkey: '', key: '' }
+        kimi: { appkey: '', key: '' },
+        local: { appkey: '', key: '' }
       };
 
       // 合并用户设置的密钥和默认值
@@ -92,7 +93,9 @@ utools.onPluginEnter(async (action) => {
       const defaultOcrKeys = {
         ali: { appkey: '', key: '' },
         youdao: { appkey: '', key: '' },
-        baidu: { appkey: '', key: '' }
+        baidu: { appkey: '', key: '' },
+        tencent: { appkey: '', key: '' },
+        local: { appkey: '', key: '' }
       };
 
       // 合并用户设置的OCR密钥和默认值
@@ -225,19 +228,32 @@ utools.onPluginEnter(async (action) => {
       console.log('apprest:', result)
       if (result.errorCode !== '0') {
         console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
+
+        // 本地OCR错误处理
+        if (result.errorCode === 'LOCAL_OCR_NO_TEXT') {
+          ElMessage.warning('本地OCR未能识别到文字，请尝试使用云端OCR');
+          return;
+        }
+        if (result.errorCode === 'LOCAL_OCR_FAILED') {
+          ElMessage.error('本地OCR识别失败，请尝试使用云端OCR');
+          return;
+        }
       }
+
       const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
-// 处理OCR返回的坐标和翻译结果
-      if (result.resRegions && Array.isArray(result.resRegions)) {
+      // 处理OCR返回的坐标和翻译结果
+      if (result.resRegions && Array.isArray(result.resRegions) && result.resRegions.length > 0) {
         // 显示可选择的单词和翻译结果
         displayOCRResults(result.resRegions);
       } else {
         ElMessage.warning('OCR识别结果为空，请检查图片内容');
+        return;
       }
 
       // console.log('msg' + msg)
       if (msg.length <= 0) {
         ElMessage.warning('OCR识别结果为空，请检查图片内容');
+        return;
       }
 
       // preview.value = URL.createObjectURL(blob)

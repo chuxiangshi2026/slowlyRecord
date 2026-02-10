@@ -10,6 +10,7 @@ import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDail
 import {batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {log} from "@/utils/logger.ts";
 import {getTranslationApiKey} from "@/utils/get-api-key.ts";
+import {translateWithLocalDictionary} from "./local-dictionary";
 
 /**
  * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
@@ -144,23 +145,26 @@ function percentEncode(str: string): string {
 export async function translateWithPlatform(query: string, platform: TranslationPlatform = 'tencent'): Promise<TranslationResult> {
     log.i('待翻译参数', query)
     try {
-        // 检查是否超出了每日使用限制
-        if (!hasCustomApiKey(platform)) {
-            // 如果没有自定义API密钥，检查是否超过每日限制
-            // 普通翻译和批量翻译一起计数
-            const featureType = 'translation'; // 普通翻译与批量翻译共用计数
+        // 本地翻译不使用限制检查
+        if (platform !== 'local') {
+            // 检查是否超出了每日使用限制
+            if (!hasCustomApiKey(platform)) {
+                // 如果没有自定义API密钥，检查是否超过每日限制
+                // 普通翻译和批量翻译一起计数
+                const featureType = 'translation'; // 普通翻译与批量翻译共用计数
 
-            if (isOverDailyLimit(featureType)) {
-                const usedCount = getCurrentUsageCount(featureType);
-                return {
-                    success: false,
-                    errorMsg: `每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`
-                };
+                if (isOverDailyLimit(featureType)) {
+                    const usedCount = getCurrentUsageCount(featureType);
+                    return {
+                        success: false,
+                        errorMsg: `每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`
+                    };
+                }
+
+                // 增加使用计数
+                const newCount = incrementUsageCounter(featureType);
+                log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
             }
-
-            // 增加使用计数
-            const newCount = incrementUsageCounter(featureType);
-            log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
         }
 
         switch (platform) {
@@ -227,6 +231,11 @@ export async function translateWithPlatform(query: string, platform: Translation
             case 'tencent':
                 console.log('调用腾讯翻译')
                 return callTencent(query);
+            case 'local':
+                console.log('调用本地词典翻译, 查询词:', query)
+                const localResult = translateWithLocalDictionary(query);
+                console.log('本地翻译结果:', localResult)
+                return localResult;
             /*           case 'google':
                            // Google翻译API通常需要服务端实现，这里提供基本结构
                            const googleParams = {

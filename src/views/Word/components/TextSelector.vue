@@ -5,22 +5,26 @@
         <h3>选择要保存的单词</h3>
         <button @click="closePanel" class="close-btn">×</button>
       </div>
-      <div class="text-content-area">
-        <div class="text-original">
-          <strong>原文:</strong>
-        </div>
-        <div class="text-content">{{ textContent }}</div>
-      </div>
-      <div class="word-selection-area">
-        <div class="word-list">
-          <span
-            v-for="(word, wordIndex) in wordsList"
-            :key="wordIndex"
-            :class="['word-item', { selected: selectedWords.includes(word.toLowerCase()) }]"
-            @click="toggleWordSelection(word)"
-          >
-            {{ word }}
-          </span>
+      <div class="text-items-container">
+        <div class="text-item">
+          <div class="text-original">
+            <strong>原文:</strong> {{ textContent }}
+          </div>
+          <div class="text-translation" v-if="translatedText">
+            <strong>翻译:</strong> {{ translatedText }}
+          </div>
+          <div class="word-selection-area">
+            <div class="word-list">
+              <span
+                v-for="(word, wordIndex) in wordsList"
+                :key="wordIndex"
+                :class="['word-item', { selected: selectedWords.includes(word.toLowerCase()) }]"
+                @click="toggleWordSelection(word)"
+              >
+                {{ word }}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="text-selector-footer">
@@ -54,6 +58,7 @@
 import { ref, defineProps, defineEmits, computed, watch } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
+import { translateWithLocalDictionary } from '@/utils/local-dictionary';
 
 // 定义props和emits
 interface Props {
@@ -76,6 +81,9 @@ const wordsList = ref<string[]>([]);
 // 存储选中的单词
 const selectedWords = ref<string[]>([]);
 
+// 翻译后的文本
+const translatedText = ref<string>('');
+
 // 从文本中提取单词（只保留英文单词）
 const extractWords = (text: string) => {
   // 使用正则表达式匹配单词，只保留英文单词
@@ -96,11 +104,22 @@ const extractWords = (text: string) => {
   return uniqueWords;
 };
 
-// 监听文本内容变化，提取单词
+// 监听文本内容变化，提取单词并翻译
 watch(() => props.textContent, (newText) => {
   extractWords(newText);
   // 清空之前的选中状态
   selectedWords.value = [];
+  // 本地翻译文本
+  if (newText.trim()) {
+    const result = translateWithLocalDictionary(newText.trim());
+    if (result.success && result.explains) {
+      translatedText.value = result.explains;
+    } else {
+      translatedText.value = result.errorMsg || '翻译失败';
+    }
+  } else {
+    translatedText.value = '';
+  }
 }, { immediate: true });
 
 // 切换单词选中状态
@@ -230,30 +249,30 @@ const closePanel = () => {
   justify-content: center;
 }
 
-.text-content-area {
+.text-items-container {
   padding: 16px;
-  border-bottom: 1px solid #eee;
-}
-
-.text-original {
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-.text-content {
-  padding: 10px;
-  background-color: #fafafa;
-  border-radius: 4px;
-  min-height: 60px;
-  max-height: 150px;
   overflow-y: auto;
-  line-height: 1.5;
+  max-height: 50vh;
+  flex: 1;
+}
+
+.text-item {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background-color: #fafafa;
+}
+
+.text-original,
+.text-translation {
+  margin-bottom: 8px;
 }
 
 .word-selection-area {
-  padding: 16px;
-  overflow-y: auto;
-  flex: 1;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
 }
 
 .word-list {

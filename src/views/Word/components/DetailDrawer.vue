@@ -40,14 +40,13 @@
       <div class="setting-item">
         <div class="content">翻译引擎</div>
         <!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" v-model="wordsStore.currentTranslationPlatform" @change="wordsStore.setTranslationPlatform" placeholder="选择"
-                   style="width:100px">
+        <el-select class="shorcut-desc" :model-value="wordsStore.currentTranslationPlatform" @update:model-value="(val) => wordsStore.setTranslationPlatform(val as TranslationPlatform)" placeholder="选择"
+                   style="width:150px">
           <el-option
               v-for="item in options"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-
           />
         </el-select>
       </div>
@@ -424,6 +423,9 @@ const ocrOptions = [
   }, {
     value: 'ali',
     label: '阿里',
+  }, {
+    value: 'local',
+    label: '本地(离线)',
   }]
 const options = [...ocrOptions,
   {
@@ -441,6 +443,9 @@ const options = [...ocrOptions,
   }, {
     value: 'kimi',
     label: 'kimi',
+  }, {
+    value: 'local',
+    label: '本地词典(离线)',
   }
 ]
 /*{

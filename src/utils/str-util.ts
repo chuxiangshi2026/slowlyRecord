@@ -110,8 +110,9 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             return {success: true,text:wordText, message: ''};
             // router.push('/')
         } else {
-            // ElMessage.error('失败');
-            return {success: false,text:wordText, message: "翻译失败"};
+            // 使用翻译返回的错误信息，本地词典会有友好提示如"词库暂未收录..."
+            const errorMsg = (res as any).errorMsg || '翻译失败';
+            return {success: false,text:wordText, message: errorMsg};
         }
     } catch (error) {
         console.error('翻译失败:', error);

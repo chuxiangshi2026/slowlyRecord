@@ -143,6 +143,9 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
                     result = await ocrTranslateAli(base64, appkey, key);
                 } else if (ocrPlatform === 'tencent') {
                     result = await ocrTranslateTencent(base64, appkey, key);
+                } else if (ocrPlatform === 'local') {
+                    // 本地OCR：使用 Tesseract.js
+                    result = await ocrTranslateLocal(base64);
                 } else {
                     result = { errorCode: '500', resRegions: [] };
                 }
@@ -768,4 +771,66 @@ async function translateWithLargeModel(text: string, platform: TranslationPlatfo
 
     // 使用大模型平台进行翻译
     return await translateWithPlatform(text, platform);
+}
+
+/**
+ * 本地OCR识别 - 使用 Tesseract.js
+ * 轻量级离线OCR，在浏览器端运行
+ */
+async function ocrTranslateLocal(base64: string): Promise<OcrResult> {
+    try {
+        // 动态导入 tesseract.js（减少初始加载时间）
+        const Tesseract = await import('tesseract.js');
+
+        // 将 base64 转换为 data URL
+        const imageUrl = `data:image/png;base64,${base64}`;
+
+        // 使用 Tesseract 进行识别
+        // 使用轻量级的英语训练数据（eng），如果需要中文可以改为 'chi_sim'
+        const result = await Tesseract.recognize(
+            imageUrl,
+            'eng',
+            {
+                logger: (m: any) => {
+                    // 可以在这里显示进度
+                    if (m.status === 'recognizing text') {
+                        console.log(`OCR 进度: ${(m.progress * 100).toFixed(1)}%`);
+                    }
+                }
+            }
+        );
+
+        const text = result.data.text?.trim();
+
+        if (text) {
+            // 调用本地翻译
+            const {translateWithLocalDictionary} = await import('./local-dictionary');
+            const translationResult = translateWithLocalDictionary(text);
+            const translatedText = translationResult.success
+                ? (translationResult.explains || '')
+                : `[翻译失败: ${translationResult.errorMsg || '未知错误'}]`;
+
+            // 将识别结果作为一个整体返回
+            // 注意：Tesseract.js 的段落检测不够精确，我们返回整体文本
+            return {
+                errorCode: '0',
+                resRegions: [{
+                    boundingBox: '0,0,0,0',
+                    context: text,
+                    tranContent: translatedText
+                }]
+            };
+        } else {
+            return {
+                errorCode: 'LOCAL_OCR_NO_TEXT',
+                resRegions: []
+            };
+        }
+    } catch (error) {
+        console.error('本地OCR识别失败:', error);
+        return {
+            errorCode: 'LOCAL_OCR_FAILED',
+            resRegions: []
+        };
+    }
 }

@@ -61,6 +61,70 @@
     <!-- 抽屉组件化   -->
     <DetailDrawer v-model="drawerVisible" :title="title" :detail-id="currentId"/>
   </div>
+
+  <!-- 截图翻译结果预览对话框 -->
+  <el-dialog
+      v-model="ocrDialogVisible"
+      title="截图识别结果"
+      width="500px"
+      :close-on-click-modal="false"
+  >
+    <div v-if="ocrLoading" class="ocr-loading">
+      <el-icon class="is-loading"><Loading /></el-icon>
+      <span>正在识别...</span>
+    </div>
+    <div v-else-if="ocrError" class="ocr-error">
+      <el-icon><Warning /></el-icon>
+      <span>{{ ocrError }}</span>
+    </div>
+    <div v-else class="ocr-content">
+      <!-- 识别到的原文 -->
+      <div class="ocr-section" v-if="ocrOriginalText">
+        <div class="section-title">识别内容：</div>
+        <div class="ocr-text">{{ ocrOriginalText }}</div>
+      </div>
+
+      <!-- 提取的单词列表 -->
+      <div class="ocr-section" v-if="ocrWords.length > 0">
+        <div class="section-title">
+          提取的单词 ({{ ocrSelectedWords.length }}/{{ ocrWords.length }}):
+          <el-checkbox v-model="selectAllWords" @change="handleSelectAll">全选</el-checkbox>
+        </div>
+        <div class="word-list">
+          <el-checkbox-group v-model="ocrSelectedWords">
+            <el-checkbox
+                v-for="word in ocrWords"
+                :key="word"
+                :label="word"
+                :value="word"
+                border
+                size="small"
+            >
+              {{ word }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </div>
+      </div>
+
+      <div v-else-if="!ocrError" class="ocr-empty">
+        <el-icon><InfoFilled /></el-icon>
+        <span>未识别到有效的英文单词</span>
+      </div>
+    </div>
+
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="ocrDialogVisible = false">取消</el-button>
+        <el-button
+            type="primary"
+            @click="confirmAddOcrWords"
+            :disabled="ocrSelectedWords.length === 0 || ocrLoading"
+        >
+          添加选中单词 ({{ ocrSelectedWords.length }})
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
   <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
   <div class="home_footer">
@@ -92,8 +156,11 @@
       <el-tooltip class="box-item" effect="dark" content="隐藏释义" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-invisible" @click="invisibleExplained"></i>
       </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="截图识别" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-translate" @click="startScreenCapture" style="font-weight: bold;"></i>
+      </el-tooltip>
       <!--      <i class="iconfont icon-import" @click="importWords"></i>
-            <i class="iconfont icon-export" @click="exportWords"></i>-->
+            <i class="iconfont icon-export" @click="exportWords"></i-->
 
       <!-- 导入下拉菜单 -->
       <el-dropdown @command="handleImportCommand" :disabled="listMode==1||listMode==2">
@@ -147,6 +214,8 @@ import {
 import {log} from "@/utils/logger.ts";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
+import {ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
+import {Loading, Warning, InfoFilled} from '@element-plus/icons-vue';
 
 const word = ref('')
 
@@ -155,6 +224,15 @@ const wordsStore = useWordsStore();
 const drawerVisible = ref(false)
 const title = ref('设置')
 const currentId = ref<string | number | undefined>(undefined)
+
+// 截图翻译相关状态
+const ocrDialogVisible = ref(false)
+const ocrLoading = ref(false)
+const ocrError = ref('')
+const ocrOriginalText = ref('')
+const ocrWords = ref<string[]>([])
+const ocrSelectedWords = ref<string[]>([])
+const selectAllWords = ref(false)
 /*const handleView = (id) => {
   currentId.value = id
   drawerVisible.value = true
@@ -680,6 +758,127 @@ const invisibleExplained = () => {
   // wordsStore.words.forEach(x => x.explainedHidden = true)
 }
 
+/**
+ * 截图翻译 - 快速识别图片中的文字并添加
+ */
+const startScreenCapture = async () => {
+  try {
+    // 重置状态
+    ocrLoading.value = true
+    ocrError.value = ''
+    ocrOriginalText.value = ''
+    ocrWords.value = []
+    ocrSelectedWords.value = []
+    selectAllWords.value = false
+    ocrDialogVisible.value = true
+
+    // 调用截图翻译
+    const result = await ocrTranslateMultiPlatform();
+
+    console.log('截图翻译结果:', result);
+
+    ocrLoading.value = false
+
+    if (result.errorCode !== '0') {
+      ocrError.value = '识别失败，请检查OCR配置或重试'
+      return;
+    }
+
+    if (!result.resRegions || result.resRegions.length === 0) {
+      ocrError.value = '未能识别到文字，请重试'
+      return;
+    }
+
+    // 提取所有识别到的文本
+    const allTexts: string[] = [];
+    const allWords: string[] = [];
+
+    result.resRegions.forEach((region: any) => {
+      const text = region.context || '';
+      if (text.trim()) {
+        allTexts.push(text.trim());
+      }
+      // 使用正则提取英文单词
+      const words = text.match(/[a-zA-Z]+/g) || [];
+      words.forEach((word: string) => {
+        if (word.length >= 2 && word.length <= 20) { // 过滤合理长度的单词
+          allWords.push(word.toLowerCase());
+        }
+      });
+    });
+
+    // 去重并保持顺序
+    const uniqueWords = [...new Set(allWords)];
+
+    ocrOriginalText.value = allTexts.join('\n');
+    ocrWords.value = uniqueWords;
+
+    // 默认全选
+    if (uniqueWords.length > 0) {
+      ocrSelectedWords.value = [...uniqueWords];
+      selectAllWords.value = true;
+    }
+
+  } catch (error: any) {
+    console.error('截图翻译失败:', error);
+    ocrLoading.value = false;
+    if (error.message && error.message.includes('每日免费')) {
+      ocrError.value = error.message;
+    } else {
+      ocrError.value = '截图翻译失败: ' + (error.message || '未知错误');
+    }
+  }
+}
+
+/**
+ * 处理全选/取消全选
+ */
+const handleSelectAll = (val: boolean) => {
+  if (val) {
+    ocrSelectedWords.value = [...ocrWords.value];
+  } else {
+    ocrSelectedWords.value = [];
+  }
+}
+
+/**
+ * 确认添加选中的单词
+ */
+const confirmAddOcrWords = async () => {
+  if (ocrSelectedWords.value.length === 0) {
+    ElMessage.warning('请至少选择一个单词');
+    return;
+  }
+
+  ocrDialogVisible.value = false;
+
+  // 批量添加单词
+  let addedCount = 0;
+  let existCount = 0;
+  let failCount = 0;
+
+  for (const word of ocrSelectedWords.value) {
+    const result = await addWord(word);
+    if (result.success) {
+      addedCount++;
+    } else if (result.message && result.message.includes('已存在')) {
+      existCount++;
+    } else {
+      failCount++;
+    }
+  }
+
+  // 显示添加结果
+  if (addedCount > 0) {
+    ElMessage.success(`成功添加 ${addedCount} 个单词`);
+  }
+  if (existCount > 0) {
+    ElMessage.info(`${existCount} 个单词已存在`);
+  }
+  if (failCount > 0) {
+    ElMessage.warning(`${failCount} 个单词添加失败`);
+  }
+}
 
 // 当新数据更新时 自动滚动到单词处  放到最后
 // 监听 Store 中的 lastAddedWordText 状态
@@ -788,5 +987,86 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   //height: 150px; !* 与 item-size 保持一致 *!
 }*/
 
+// 截图翻译对话框样式
+.ocr-loading,
+.ocr-error,
+.ocr-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 14px;
+
+  .el-icon {
+    font-size: 20px;
+  }
+}
+
+.ocr-error {
+  color: #f56c6c;
+}
+
+.ocr-empty {
+  color: #909399;
+}
+
+.ocr-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ocr-section {
+  margin-bottom: 16px;
+
+  .section-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .el-checkbox {
+      font-weight: normal;
+    }
+  }
+
+  .ocr-text {
+    background-color: #f5f7fa;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #606266;
+    max-height: 120px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .word-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .el-checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .el-checkbox {
+      margin: 0;
+    }
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
 </style>
