@@ -7,6 +7,9 @@
         <button @click="closePanel" class="close-btn">×</button>
       </div>
       <div class="ocr-items-container">
+        <div v-if="!ocrResults || ocrResults.length === 0" class="ocr-empty">
+          <p>未获取到识别结果</p>
+        </div>
         <div
           v-for="(region, index) in ocrResults"
           :key="index"
@@ -64,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, computed } from 'vue';
+import { ref, defineProps, defineEmits, computed, watch, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
 
@@ -83,14 +86,33 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
+// 组件挂载时输出调试信息
+onMounted(() => {
+  console.log('[OCRSelector] 组件已挂载');
+});
+
+// 监听 visible 变化
+watch(() => props.visible, (newVal) => {
+  console.log('[OCRSelector] visible 变化:', newVal);
+});
+
+// 监听 ocrResults 变化
+watch(() => props.ocrResults, (newVal) => {
+  console.log('[OCRSelector] ocrResults 变化:', newVal?.length || 0, '个结果');
+}, { deep: true });
+
 // 存储选中的单词
 const selectedWordsMap = ref<{[key: string]: string[]}>({});
 
-// 获取文本中的单词列表（只保留英文）
+// 获取文本中的单词列表（支持带连字符的单词和纯英文单词）
 const getWordsFromText = (text: string) => {
-  // 使用正则表达式匹配单词，只保留英文单词，完全排除中文和其他非字母字符
-  const words = text.match(/[a-zA-Z]+/g) || [];
-  return words.filter(word => word.trim() !== '');
+  // 使用正则表达式匹配：
+  // 1. 带连字符的英文单词（如 state-of-the-art）
+  // 2. 纯英文字母单词
+  // 3. 允许包含数字的单词（如 IPv6）
+  const words = text.match(/[a-zA-Z]+(?:[-'][a-zA-Z]+)*|[a-zA-Z0-9]+/g) || [];
+  // 过滤掉纯数字，只保留至少包含一个字母的单词
+  return words.filter(word => word.trim() !== '' && /[a-zA-Z]/.test(word));
 };
 
 // 检查单词是否已被选中
@@ -461,5 +483,12 @@ const closePanel = () => {
 .cancel-btn {
   background-color: #909399;
   color: white;
+}
+
+.ocr-empty {
+  padding: 40px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
 }
 </style>

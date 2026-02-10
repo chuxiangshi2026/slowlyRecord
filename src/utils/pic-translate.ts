@@ -95,17 +95,17 @@ export async function ocrTranslate(
 
 // 新增：多平台OCR翻译函数
 export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
-
+    console.log('[OCR] 开始多平台OCR翻译流程');
 
     const wordsStore = useWordsStore();
     const ocrPlatform = wordsStore.currentOcrPlatform || 'tencent';
 
     // 添加调试日志
-    console.log('当前OCR平台:', ocrPlatform);
-    console.log('Store中的currentOcrPlatform:', wordsStore.currentOcrPlatform);
+    console.log('[OCR] 当前OCR平台:', ocrPlatform);
+    console.log('[OCR] Store中的currentOcrPlatform:', wordsStore.currentOcrPlatform);
 
-    // 检查是否超出了每日使用限制
-    if (!hasCustomApiKey(ocrPlatform)) {
+    // 检查是否超出了每日使用限制（本地OCR不记次数）
+    if (ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform)) {
         // 如果没有自定义API密钥，检查是否超过每日限制
         // 腾讯 OCR 使用独立的计数器，其他 OCR 使用通用计数器
         const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
@@ -123,16 +123,23 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 
     // const {appkey, key} = getTranslationApiKey(platform);
     const {appkey, key} = getOcrApiKey(ocrPlatform);
-    // console.log('appkey+key', appkey, key)
+    console.log('[OCR] API密钥状态:', { appkey: appkey ? '已设置' : '未设置', key: key ? '已设置' : '未设置' });
 
     // 将 utools.screenCapture 包装为 Promise
     return new Promise((resolve, reject) => {
+        console.log('[OCR] 调用utools.screenCapture...');
         utools.screenCapture(async (image) => {
-            console.log('截图回调：', image)
+            console.log('[OCR] 截图回调触发，图片数据长度:', image ? image.length : 0);
+            if (!image) {
+                console.error('[OCR] 截图取消或失败');
+                reject(new Error('截图取消或失败'));
+                return;
+            }
 
             try {
                 // 去除 data:image/png;base64, 前缀
                 const base64 = image.includes(',') ? image.split(',')[1] : image;
+                console.log('[OCR] 开始调用平台:', ocrPlatform);
 
                 let result: OcrResult;
                 if (ocrPlatform === 'youdao') {
@@ -149,6 +156,7 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
                 } else {
                     result = { errorCode: '500', resRegions: [] };
                 }
+                console.log('[OCR] 平台返回结果:', { errorCode: result.errorCode, resRegionsCount: result.resRegions?.length || 0 });
                 resolve(result);
             } catch (error) {
                 reject(error);
@@ -799,9 +807,10 @@ async function ocrTranslateLocal(base64: string): Promise<OcrResult> {
             imageUrl,
             'eng',
             {
-                // 如需离线，取消下面注释并配置本地路径：
-                langPath: '/tessdata',  // 指向 public/tessdata/ 目录
-                // cacheMethod: 'none',    // 不使用浏览器缓存，直接读取本地文件
+                // 默认使用 CDN 下载语言模型，无需本地配置
+                // 如需离线使用，请将语言模型放入 public/tessdata/ 目录并取消下面注释：
+                // langPath: window.location.origin + '/tessdata',
+                // cacheMethod: 'none',
                 logger: (m: any) => {
                     // 可以在这里显示进度
                     if (m.status === 'recognizing text') {

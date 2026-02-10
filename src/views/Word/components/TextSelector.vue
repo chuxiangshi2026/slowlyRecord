@@ -8,7 +8,7 @@
       <div class="text-items-container">
         <div class="text-item">
           <div class="text-original">
-            <strong>原文:</strong> {{ textContent }}
+            <strong>原文:</strong> {{ textContent || '（未获取到文本）' }}
           </div>
           <div class="text-translation" v-if="translatedText">
             <strong>翻译:</strong> {{ translatedText }}
@@ -58,7 +58,7 @@
 import { ref, defineProps, defineEmits, computed, watch } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
-import { translateWithLocalDictionary } from '@/utils/local-dictionary';
+import { translateWithLocalDictionaryAsync } from '@/utils/local-dictionary';
 
 // 定义props和emits
 interface Props {
@@ -84,17 +84,21 @@ const selectedWords = ref<string[]>([]);
 // 翻译后的文本
 const translatedText = ref<string>('');
 
-// 从文本中提取单词（只保留英文单词）
+// 从文本中提取单词（支持带连字符的单词和纯英文单词）
 const extractWords = (text: string) => {
-  // 使用正则表达式匹配单词，只保留英文单词
-  const matches = text.match(/[a-zA-Z]+/g) || [];
+  // 使用正则表达式匹配：
+  // 1. 带连字符的英文单词（如 state-of-the-art）
+  // 2. 纯英文字母单词
+  // 3. 允许包含数字的单词（如 IPv6）
+  const matches = text.match(/[a-zA-Z]+(?:[-'][a-zA-Z]+)*|[a-zA-Z0-9]+/g) || [];
   // 转换为小写以避免重复，同时保持原形式
   const uniqueWords: string[] = [];
   const seen = new Set<string>();
 
   matches.forEach(word => {
     const lowerWord = word.toLowerCase();
-    if (!seen.has(lowerWord)) {
+    // 过滤掉纯数字，只保留至少包含一个字母的单词
+    if (!seen.has(lowerWord) && /[a-zA-Z]/.test(word)) {
       seen.add(lowerWord);
       uniqueWords.push(word); // 保存原始大小写的单词
     }
@@ -105,17 +109,25 @@ const extractWords = (text: string) => {
 };
 
 // 监听文本内容变化，提取单词并翻译
-watch(() => props.textContent, (newText) => {
+watch(() => props.textContent, async (newText) => {
+  console.log('[TextSelector] 收到文本:', newText);
   extractWords(newText);
   // 清空之前的选中状态
   selectedWords.value = [];
-  // 本地翻译文本
-  if (newText.trim()) {
-    const result = translateWithLocalDictionary(newText.trim());
-    if (result.success && result.explains) {
-      translatedText.value = result.explains;
-    } else {
-      translatedText.value = result.errorMsg || '翻译失败';
+  // 本地翻译文本（使用异步版本确保词典已加载）
+  if (newText && newText.trim()) {
+    translatedText.value = '翻译中...';
+    try {
+      const result = await translateWithLocalDictionaryAsync(newText.trim());
+      console.log('[TextSelector] 翻译结果:', result);
+      if (result.success && result.explains) {
+        translatedText.value = result.explains;
+      } else {
+        translatedText.value = result.errorMsg || '翻译失败';
+      }
+    } catch (error) {
+      console.error('[TextSelector] 翻译失败:', error);
+      translatedText.value = '翻译出错，请稍后重试';
     }
   } else {
     translatedText.value = '';

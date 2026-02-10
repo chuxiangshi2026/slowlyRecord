@@ -762,6 +762,7 @@ const invisibleExplained = () => {
  * 截图翻译 - 快速识别图片中的文字并添加
  */
 const startScreenCapture = async () => {
+  console.log('[截图添加] 开始截图识别流程');
   try {
     // 重置状态
     ocrLoading.value = true
@@ -775,7 +776,7 @@ const startScreenCapture = async () => {
     // 调用截图翻译
     const result = await ocrTranslateMultiPlatform();
 
-    console.log('截图翻译结果:', result);
+    console.log('[截图添加] OCR识别结果:', result);
 
     ocrLoading.value = false
 
@@ -798,10 +799,11 @@ const startScreenCapture = async () => {
       if (text.trim()) {
         allTexts.push(text.trim());
       }
-      // 使用正则提取英文单词
-      const words = text.match(/[a-zA-Z]+/g) || [];
+      // 使用正则提取英文单词（支持带连字符的单词和数字）
+      const words = text.match(/[a-zA-Z]+(?:[-'][a-zA-Z]+)*|[a-zA-Z0-9]+/g) || [];
       words.forEach((word: string) => {
-        if (word.length >= 2 && word.length <= 20) { // 过滤合理长度的单词
+        // 过滤合理长度的单词，且必须包含至少一个字母
+        if (word.length >= 2 && word.length <= 25 && /[a-zA-Z]/.test(word)) {
           allWords.push(word.toLowerCase());
         }
       });

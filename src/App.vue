@@ -172,37 +172,33 @@ utools.onPluginEnter(async (action) => {
   }
 
   if (action.code === 'huaduan' && action.from === 'hotkey') {
-    // action.type =='over'
-    // console.log('我是快捷键进来的')
+    console.log('[划段添加] 通过快捷键触发');
+    // 给系统一点时间来完成复制操作
+    await new Promise(r => setTimeout(r, 200));
     const selectedText = await navigator.clipboard.readText();
+    console.log('[划段添加] 快捷键方式获取文本:', selectedText);
     // 显示文本选择面板
     displayTextSelection(selectedText);
   }
 
   if (action.code === 'huaduan' && action.from == 'main') {
-
+    console.log('[划段添加] 通过主界面触发');
     getSelectedTextFromSystem().then(text => {
+          console.log('[划段添加] 获取到文本:', text);
           // 显示文本选择面板
           displayTextSelection(text);
-        }
-    );
+        }).catch(error => {
+          console.error('[划段添加] 获取文本失败:', error);
+          ElMessage.error('获取选中文本失败，请重试');
+        });
   }
 
   if (action.code === 'jietu') {
+    console.log('[截图添加] 插件入口被触发');
 
-    console.log('满足截图条件')
-
-    // try {
-    // const imgPath = await window.services.capture()
-    // const imgPath = 'C:\\Users\\skj\\AppData\\Local\\Temp\\utools_snap.png'
-
-    // const response = await fetch(imgPath);
-    // const blob = await response.blob();
-    // const file = new File([blob], 'utools_snap.png', {type: blob.type});
-
-    // console.log('文件对象', file.name, file.type, file.size)
-    // utools.showMainWindow()
     try {
+      // 确保主窗口显示
+      utools.showMainWindow();
       // 获取当前选择的翻译平台
       // const currentPlatform = wordsStore.currentTranslationPlatform || 'youdao';
       // const currentPlatform = wordsStore.currentOcrPlatform || 'youdao';
@@ -225,9 +221,11 @@ utools.onPluginEnter(async (action) => {
       //   tencent: picTencentData,
       // }[currentPlatform];
 
-      console.log('apprest:', result)
+      console.log('[截图添加] OCR结果:', result);
+
+      // 处理错误情况
       if (result.errorCode !== '0') {
-        console.log(`errorCode=${result.errorCode} 原始返回：${JSON.stringify(result)}`)
+        console.error(`[截图添加] 识别失败，errorCode=${result.errorCode}，原始返回：${JSON.stringify(result)}`);
 
         // 本地OCR错误处理
         if (result.errorCode === 'LOCAL_OCR_NO_TEXT') {
@@ -238,20 +236,21 @@ utools.onPluginEnter(async (action) => {
           ElMessage.error('本地OCR识别失败，请尝试使用云端OCR');
           return;
         }
+
+        // 其他错误，也尝试显示结果（可能部分成功）
+        if (!result.resRegions || result.resRegions.length === 0) {
+          ElMessage.error(`OCR识别失败: ${result.errorCode}`);
+          return;
+        }
       }
 
-      const msg = result.resRegions?.map(r => r.tranContent || r.context) || []
-      // 处理OCR返回的坐标和翻译结果
+      // 处理成功或部分成功的情况
       if (result.resRegions && Array.isArray(result.resRegions) && result.resRegions.length > 0) {
+        console.log('[截图添加] 显示OCR结果，共', result.resRegions.length, '个区域');
         // 显示可选择的单词和翻译结果
         displayOCRResults(result.resRegions);
       } else {
-        ElMessage.warning('OCR识别结果为空，请检查图片内容');
-        return;
-      }
-
-      // console.log('msg' + msg)
-      if (msg.length <= 0) {
+        console.warn('[截图添加] OCR识别结果为空');
         ElMessage.warning('OCR识别结果为空，请检查图片内容');
         return;
       }
@@ -313,11 +312,18 @@ utools.onPluginEnter(async (action) => {
  * 显示OCR识别结果供用户选择和保存
  */
 function displayOCRResults(resRegions: any[]) {
+  console.log('[截图添加] displayOCRResults 被调用，结果数:', resRegions?.length || 0);
+
+  // 确保主窗口显示
+  utools.showMainWindow();
+
   // 存储OCR结果
   ocrResults.value = resRegions;
+  console.log('[截图添加] ocrResults 已设置:', ocrResults.value);
 
   // 显示选择面板
   showOCRPanel.value = true;
+  console.log('[截图添加] showOCRPanel 已设置为 true:', showOCRPanel.value);
 }
 
 /**
@@ -407,37 +413,33 @@ function checkAddWork(text: string) {
 
 // ==================== 核心：静默获取选中文本 ====================
 async function getSelectedTextFromSystem(): Promise<string> {
-
-
+  // 清空剪贴板，避免读到旧内容
   utools.copyText('')
 
   utools.hideMainWindow();
 
-  await new Promise(r => setTimeout(r, 50)); // 等待焦点恢复
+  // 增加延迟，确保焦点恢复到原窗口
+  await new Promise(r => setTimeout(r, 300));
 
   // 获取当前平台
   const isMac = utools.isMacOS();
 
-// 根据平台选择修饰键
+  // 根据平台选择修饰键
   const modifier = isMac ? "command" : "ctrl";
   utools.simulateKeyboardTap("c", modifier);
 
+  // 增加延迟，等待系统完成复制操作
+  await new Promise(resolve => setTimeout(resolve, 300));
+
   utools.showMainWindow();
 
-  // console.log('ok',ok)
-  // 3. 等待系统完成复制（100ms 足够）
-  // 2. 使用可靠的延迟方式（推荐 200-300ms）
-  await new Promise(resolve => setTimeout(resolve, 50));
+  // 再次延迟，确保剪贴板数据已更新
+  await new Promise(resolve => setTimeout(resolve, 200));
 
-  // 4. 读取剪贴板
+  // 读取剪贴板
   const selectedText = await navigator.clipboard.readText();
-  // console.log('新内容', selectedText);
 
-
-  // 5. 恢复原始剪贴板内容
-  // if (originalClipboard) {
-  //  await  navigator.clipboard.writeText(originalClipboard);
-  // }
+  console.log('[划段添加] 获取到的文本:', selectedText);
 
   return selectedText;
 }
@@ -467,11 +469,13 @@ function checkShearBoardAddWork(text: string) {
  * 显示文本选择面板供用户选择和保存单词
  */
 function displayTextSelection(text: string) {
+  console.log('[划段添加] 准备显示面板，文本内容:', text);
   // 存储文本内容
   textContent.value = text;
 
   // 显示选择面板
   showTextPanel.value = true;
+  console.log('[划段添加] 面板已显示');
 }
 
 /**
