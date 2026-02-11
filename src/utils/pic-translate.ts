@@ -152,7 +152,8 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
                     result = await ocrTranslateTencent(base64, appkey, key);
                 } else if (ocrPlatform === 'local') {
                     // 本地OCR：使用 Tesseract.js
-                    result = await ocrTranslateLocal(base64);
+                    const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
+                    result = await ocrTranslateLocal(base64, translatePlatform);
                 } else {
                     result = { errorCode: '500', resRegions: [] };
                 }
@@ -786,8 +787,10 @@ async function translateWithLargeModel(text: string, platform: TranslationPlatfo
  * 轻量级离线OCR，在浏览器端运行
  *
  * 注意：默认从 CDN 下载语言模型，如需完全离线，请配置 langPath 指向本地文件
+ * @param base64 图片base64
+ * @param translatePlatform 翻译平台，如果为'local'则使用本地词典，否则使用指定翻译平台
  */
-async function ocrTranslateLocal(base64: string): Promise<OcrResult> {
+async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
     try {
         // 动态导入 tesseract.js（减少初始加载时间）
         const Tesseract = await import('tesseract.js');
@@ -823,14 +826,31 @@ async function ocrTranslateLocal(base64: string): Promise<OcrResult> {
         const text = result.data.text?.trim();
 
         if (text) {
-            // 调用本地翻译（使用异步版本确保词典已加载）
-            const {translateWithLocalDictionaryAsync} = await import('./local-dictionary');
             console.log('[本地OCR] 识别文本:', text);
-            const translationResult = await translateWithLocalDictionaryAsync(text);
-            console.log('[本地OCR] 翻译结果:', translationResult);
-            const translatedText = translationResult.success
-                ? (translationResult.explains || '')
-                : text; // 翻译失败时显示原文
+            console.log('[本地OCR] 翻译平台:', translatePlatform);
+
+            let translatedText: string;
+
+            if (translatePlatform === 'local') {
+                // 使用本地词典翻译
+                const {translateWithLocalDictionaryAsync} = await import('./local-dictionary');
+                const translationResult = await translateWithLocalDictionaryAsync(text);
+                console.log('[本地OCR] 本地翻译结果:', translationResult);
+                translatedText = translationResult.success
+                    ? (translationResult.explains || '')
+                    : text; // 翻译失败时显示原文
+            } else {
+                // 使用指定的翻译平台进行翻译
+                try {
+                    const {translateWithPlatform} = await import('./translation-api');
+                    const translationResult = await translateWithPlatform(text, translatePlatform);
+                    translatedText = translationResult.explains || text;
+                    console.log('[本地OCR] 平台翻译结果:', translatedText);
+                } catch (error) {
+                    console.error('[本地OCR] 平台翻译失败，使用原文:', error);
+                    translatedText = text;
+                }
+            }
 
             // 将识别结果作为一个整体返回
             // 注意：Tesseract.js 的段落检测不够精确，我们返回整体文本

@@ -40,7 +40,9 @@
       <div class="setting-item">
         <div class="content">翻译引擎</div>
         <!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" :model-value="wordsStore.currentTranslationPlatform" @update:model-value="(val: TranslationPlatform) => wordsStore.setTranslationPlatform(val)" placeholder="选择"
+        <el-select class="shorcut-desc" :model-value="wordsStore.currentTranslationPlatform"
+                   @update:model-value="(val: TranslationPlatform) => wordsStore.setTranslationPlatform(val)"
+                   placeholder="选择"
                    style="width:150px">
           <el-option
               v-for="item in options"
@@ -55,7 +57,8 @@
       <div class="setting-item">
         <div class="content">ocr图片识别引擎</div>
         <!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" v-model="wordsStore.currentOcrPlatform" @change="wordsStore.setOcrPlatform" placeholder="选择"
+        <el-select class="shorcut-desc" v-model="wordsStore.currentOcrPlatform" @change="wordsStore.setOcrPlatform"
+                   placeholder="选择"
                    style="width:100px">
           <el-option
               v-for="item in ocrOptions"
@@ -203,7 +206,7 @@
     <div class="content">
       <h5 style="text-align:center;">申请密钥</h5>
       <p class="limit-info">
-        由于截图翻译调用成本较高，且个人时间有限（应该有更好的图片翻译方法），优先功能完善，在没有配置自己密钥时，暂时限制直接使用次数每日10次(后期看情况调整)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
+        由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日10次(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
       <!--      <div class="view-version-btn">-->
 
       <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
@@ -428,11 +431,12 @@ const ocrOptions = [
     value: 'ali',
     label: '阿里',
   }]
-const options = [...ocrOptions,
+const options = [
   {
     value: 'utoolsai',
     label: 'utoolsAI',
-  }, {
+  },
+  ...ocrOptions, {
     value: 'ollama',
     label: 'ollama',
   }, {

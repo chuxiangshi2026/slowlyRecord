@@ -59,6 +59,7 @@ import { ref, defineProps, defineEmits, computed, watch } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
 import { translateWithLocalDictionaryAsync } from '@/utils/local-dictionary';
+import type { TranslationPlatform } from '@/types/words';
 
 // 定义props和emits
 interface Props {
@@ -114,16 +115,33 @@ watch(() => props.textContent, async (newText) => {
   extractWords(newText);
   // 清空之前的选中状态
   selectedWords.value = [];
-  // 本地翻译文本（使用异步版本确保词典已加载）
+  // 根据当前翻译平台选择翻译方式
   if (newText && newText.trim()) {
     translatedText.value = '翻译中...';
     try {
-      const result = await translateWithLocalDictionaryAsync(newText.trim());
-      console.log('[TextSelector] 翻译结果:', result);
-      if (result.success && result.explains) {
-        translatedText.value = result.explains;
+      const wordsStore = useWordsStore();
+      const currentPlatform = wordsStore.currentTranslationPlatform || 'local';
+      console.log('[TextSelector] 当前翻译平台:', currentPlatform);
+
+      if (currentPlatform === 'local') {
+        // 使用本地词典翻译
+        const result = await translateWithLocalDictionaryAsync(newText.trim());
+        console.log('[TextSelector] 本地翻译结果:', result);
+        if (result.success && result.explains) {
+          translatedText.value = result.explains;
+        } else {
+          translatedText.value = result.errorMsg || '翻译失败';
+        }
       } else {
-        translatedText.value = result.errorMsg || '翻译失败';
+        // 使用指定的翻译平台进行翻译
+        const { translateWithPlatform } = await import('@/utils/translation-api');
+        const result = await translateWithPlatform(newText.trim(), currentPlatform as TranslationPlatform);
+        console.log('[TextSelector] 平台翻译结果:', result);
+        if (result.success && result.explains) {
+          translatedText.value = result.explains;
+        } else {
+          translatedText.value = result.errorMsg || '翻译失败';
+        }
       }
     } catch (error) {
       console.error('[TextSelector] 翻译失败:', error);

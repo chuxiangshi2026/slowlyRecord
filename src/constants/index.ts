@@ -101,11 +101,11 @@ const DEFAULT_CONFIG = {
 // 使用限制配置
 const USAGE_LIMITS = {
     // 普通翻译和批量翻译共用的每日限制次数
-    TRANSLATION_DAILY_LIMIT: 3000,
+    TRANSLATION_DAILY_LIMIT: 500,
     // OCR翻译（截图翻译）的每日限制次数
-    OCR_DAILY_LIMIT: 1,
+    OCR_DAILY_LIMIT: 5,
     // 腾讯 OCR 的每日限制次数（单独统计）
-    TENCENT_OCR_DAILY_LIMIT: 2
+    TENCENT_OCR_DAILY_LIMIT: 10
 };
 
 /**
