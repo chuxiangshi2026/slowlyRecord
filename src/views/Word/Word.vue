@@ -735,7 +735,7 @@ const exportTextWords = () => {
 
 
 // 是否直接显示或隐藏全部释义（-1 原状态，1显示全部，0 隐藏全部）
-const showExplained = ref(-1)
+const showExplained = ref(1)
 // 单独控制当前的卡片释义
 // const hiddenExplain = ref('')
 /**

@@ -563,5 +563,728 @@
     "explains": [
       "n. 论文；散文"
     ]
+  },
+  "efficiency": {
+    "word": "efficiency",
+    "phonetic": "/ɪˈfɪʃnsi/",
+    "explains": [
+      "n. 效率，效能"
+    ]
+  },
+  "eighteen": {
+    "word": "eighteen",
+    "phonetic": "/ˌeɪˈtiːn/",
+    "explains": [
+      "num. 十八"
+    ]
+  },
+  "eighth": {
+    "word": "eighth",
+    "phonetic": "/eɪtθ/",
+    "explains": [
+      "num. 第八",
+      "n. 八分之一"
+    ]
+  },
+  "eighty": {
+    "word": "eighty",
+    "phonetic": "/ˈeɪti/",
+    "explains": [
+      "num. 八十"
+    ]
+  },
+  "electrical": {
+    "word": "electrical",
+    "phonetic": "/ɪˈlektrɪkl/",
+    "explains": [
+      "adj. 电的，与电有关的"
+    ]
+  },
+  "electricity": {
+    "word": "electricity",
+    "phonetic": "/ɪˌlekˈtrɪsəti/",
+    "explains": [
+      "n. 电，电流"
+    ]
+  },
+  "eleven": {
+    "word": "eleven",
+    "phonetic": "/ɪˈlevn/",
+    "explains": [
+      "num. 十一"
+    ]
+  },
+  "emit": {
+    "word": "emit",
+    "phonetic": "/iˈmɪt/",
+    "explains": [
+      "v. 发出，发射；散发"
+    ]
+  },
+  "emotion": {
+    "word": "emotion",
+    "phonetic": "/ɪˈmoʊʃn/",
+    "explains": [
+      "n. 情感，情绪"
+    ]
+  },
+  "emotional": {
+    "word": "emotional",
+    "phonetic": "/ɪˈmoʊʃənl/",
+    "explains": [
+      "adj. 情感的，情绪的；易动感情的"
+    ]
+  },
+  "emperor": {
+    "word": "emperor",
+    "phonetic": "/ˈempərər/",
+    "explains": [
+      "n. 皇帝"
+    ]
+  },
+  "empire": {
+    "word": "empire",
+    "phonetic": "/ˈempaɪər/",
+    "explains": [
+      "n. 帝国"
+    ]
+  },
+  "empty": {
+    "word": "empty",
+    "phonetic": "/ˈempti/",
+    "explains": [
+      "adj. 空的；空虚的",
+      "v. 倒空，腾出"
+    ]
+  },
+  "enemy": {
+    "word": "enemy",
+    "phonetic": "/ˈenəmi/",
+    "explains": [
+      "n. 敌人，仇敌；敌军"
+    ]
+  },
+  "enhance": {
+    "word": "enhance",
+    "phonetic": "/ɪnˈhæns/",
+    "explains": [
+      "v. 提高，增强；改进"
+    ]
+  },
+  "enlarge": {
+    "word": "enlarge",
+    "phonetic": "/ɪnˈlɑːrdʒ/",
+    "explains": [
+      "v. 扩大，扩展；放大"
+    ]
+  },
+  "enormous": {
+    "word": "enormous",
+    "phonetic": "/ɪˈnɔːrməs/",
+    "explains": [
+      "adj. 巨大的，庞大的"
+    ]
+  },
+  "enterprise": {
+    "word": "enterprise",
+    "phonetic": "/ˈentərpraɪz/",
+    "explains": [
+      "n. 企业，事业；进取心"
+    ]
+  },
+  "entertainment": {
+    "word": "entertainment",
+    "phonetic": "/ˌentərˈteɪnmənt/",
+    "explains": [
+      "n. 娱乐，消遣"
+    ]
+  },
+  "envelope": {
+    "word": "envelope",
+    "phonetic": "/ˈenvəloʊp/",
+    "explains": [
+      "n. 信封"
+    ]
+  },
+  "environmental": {
+    "word": "environmental",
+    "phonetic": "/ɪnˌvaɪrənˈmentl/",
+    "explains": [
+      "adj. 环境的，有关环境的"
+    ]
+  },
+  "envy": {
+    "word": "envy",
+    "phonetic": "/ˈenvi/",
+    "explains": [
+      "n. 妒忌，羡慕",
+      "v. 妒忌，羡慕"
+    ]
+  },
+  "episode": {
+    "word": "episode",
+    "phonetic": "/ˈepɪsoʊd/",
+    "explains": [
+      "n. 插曲，片段；（电视连续剧）一集"
+    ]
+  },
+  "equivalent": {
+    "word": "equivalent",
+    "phonetic": "/ɪˈkwɪvələnt/",
+    "explains": [
+      "adj. 等价的，相等的",
+      "n. 等价物，相等物"
+    ]
+  },
+  "essential": {
+    "word": "essential",
+    "phonetic": "/ɪˈsenʃl/",
+    "explains": [
+      "adj. 基本的，本质的；极其重要的",
+      "n. 要素，必需品"
+    ]
+  },
+  "establish": {
+    "word": "establish",
+    "phonetic": "/ɪˈstæblɪʃ/",
+    "explains": [
+      "v. 建立，设立；确认"
+    ]
+  },
+  "establishment": {
+    "word": "establishment",
+    "phonetic": "/ɪˈstæblɪʃmənt/",
+    "explains": [
+      "n. 建立，设立；机构，企业"
+    ]
+  },
+  "estate": {
+    "word": "estate",
+    "phonetic": "/ɪˈsteɪt/",
+    "explains": [
+      "n. 房地产，财产；庄园"
+    ]
+  },
+  "estimate": {
+    "word": "estimate",
+    "phonetic": "/ˈestɪmeɪt/",
+    "explains": [
+      "v. 估计，估量",
+      "n. 估计，估价"
+    ]
+  },
+  "evaluate": {
+    "word": "evaluate",
+    "phonetic": "/ɪˈvæljueɪt/",
+    "explains": [
+      "v. 评估，评价；估值"
+    ]
+  },
+  "even": {
+    "word": "even",
+    "phonetic": "/ˈiːvn/",
+    "explains": [
+      "adv. 甚至，即使；甚至更",
+      "adj. 平坦的；偶数的；均匀的"
+    ]
+  },
+  "evening": {
+    "word": "evening",
+    "phonetic": "/ˈiːvnɪŋ/",
+    "explains": [
+      "n. 晚上，傍晚"
+    ]
+  },
+  "event": {
+    "word": "event",
+    "phonetic": "/ɪˈvent/",
+    "explains": [
+      "n. 事件，大事；比赛项目"
+    ]
+  },
+  "eventually": {
+    "word": "eventually",
+    "phonetic": "/ɪˈventʃuəli/",
+    "explains": [
+      "adv. 最终，终于"
+    ]
+  },
+  "ever": {
+    "word": "ever",
+    "phonetic": "/ˈevər/",
+    "explains": [
+      "adv. 在任何时候；曾经；究竟"
+    ]
+  },
+  "every": {
+    "word": "every",
+    "phonetic": "/ˈevri/",
+    "explains": [
+      "adj. 每一个的，所有的"
+    ]
+  },
+  "everybody": {
+    "word": "everybody",
+    "phonetic": "/ˈevribɑːdi/",
+    "explains": [
+      "pron. 每个人，人人"
+    ]
+  },
+  "everyday": {
+    "word": "everyday",
+    "phonetic": "/ˈevrideɪ/",
+    "explains": [
+      "adj. 每天的，日常的"
+    ]
+  },
+  "everyone": {
+    "word": "everyone",
+    "phonetic": "/ˈevriwʌn/",
+    "explains": [
+      "pron. 每个人，人人"
+    ]
+  },
+  "everything": {
+    "word": "everything",
+    "phonetic": "/ˈevriθɪŋ/",
+    "explains": [
+      "pron. 每件事，一切；最重要的东西"
+    ]
+  },
+  "everywhere": {
+    "word": "everywhere",
+    "phonetic": "/ˈevriwer/",
+    "explains": [
+      "adv. 到处，无论哪里"
+    ]
+  },
+  "evidence": {
+    "word": "evidence",
+    "phonetic": "/ˈevɪdəns/",
+    "explains": [
+      "n. 证据，证明；迹象"
+    ]
+  },
+  "evident": {
+    "word": "evident",
+    "phonetic": "/ˈevɪdənt/",
+    "explains": [
+      "adj. 明显的，明白的"
+    ]
+  },
+  "evil": {
+    "word": "evil",
+    "phonetic": "/ˈiːvl/",
+    "explains": [
+      "adj. 邪恶的，有害的",
+      "n. 邪恶，罪恶"
+    ]
+  },
+  "exact": {
+    "word": "exact",
+    "phonetic": "/ɪɡˈzækt/",
+    "explains": [
+      "adj. 准确的，确切的",
+      "v. 强求，勒索"
+    ]
+  },
+  "exam": {
+    "word": "exam",
+    "phonetic": "/ɪɡˈzæm/",
+    "explains": [
+      "n. 考试；检查"
+    ]
+  },
+  "examination": {
+    "word": "examination",
+    "phonetic": "/ɪɡˌzæmɪˈneɪʃn/",
+    "explains": [
+      "n. 考试；检查，调查"
+    ]
+  },
+  "examine": {
+    "word": "examine",
+    "phonetic": "/ɪɡˈzæmɪn/",
+    "explains": [
+      "v. 检查，调查；考试"
+    ]
+  },
+  "example": {
+    "word": "example",
+    "phonetic": "/ɪɡˈzæmpl/",
+    "explains": [
+      "n. 例子，实例；榜样"
+    ]
+  },
+  "excellent": {
+    "word": "excellent",
+    "phonetic": "/ˈeksələnt/",
+    "explains": [
+      "adj. 极好的，优秀的"
+    ]
+  },
+  "except": {
+    "word": "except",
+    "phonetic": "/ɪkˈsept/",
+    "explains": [
+      "prep. 除……之外",
+      "conj. 除了，只是"
+    ]
+  },
+  "exception": {
+    "word": "exception",
+    "phonetic": "/ɪkˈsepʃn/",
+    "explains": [
+      "n. 例外，除外"
+    ]
+  },
+  "exchange": {
+    "word": "exchange",
+    "phonetic": "/ɪksˈtʃeɪndʒ/",
+    "explains": [
+      "v. 交换，互换；兑换",
+      "n. 交换；交易所"
+    ]
+  },
+  "excite": {
+    "word": "excite",
+    "phonetic": "/ɪkˈsaɪt/",
+    "explains": [
+      "v. 使兴奋，使激动；引起"
+    ]
+  },
+  "excited": {
+    "word": "excited",
+    "phonetic": "/ɪkˈsaɪtɪd/",
+    "explains": [
+      "adj. 兴奋的，激动的"
+    ]
+  },
+  "excitement": {
+    "word": "excitement",
+    "phonetic": "/ɪkˈsaɪtmənt/",
+    "explains": [
+      "n. 兴奋，激动；令人兴奋的事物"
+    ]
+  },
+  "exciting": {
+    "word": "exciting",
+    "phonetic": "/ɪkˈsaɪtɪŋ/",
+    "explains": [
+      "adj. 令人兴奋的，刺激的"
+    ]
+  },
+  "exclude": {
+    "word": "exclude",
+    "phonetic": "/ɪkˈskluːd/",
+    "explains": [
+      "v. 排除，不包括；驱逐"
+    ]
+  },
+  "exclusive": {
+    "word": "exclusive",
+    "phonetic": "/ɪkˈskluːsɪv/",
+    "explains": [
+      "adj. 独有的，排他的；奢华的",
+      "n. 独家新闻"
+    ]
+  },
+  "excuse": {
+    "word": "excuse",
+    "phonetic": "/ɪkˈskjuːs/",
+    "explains": [
+      "v. 原谅；为……辩解",
+      "n. 借口，理由"
+    ]
+  },
+  "execute": {
+    "word": "execute",
+    "phonetic": "/ˈeksɪkjuːt/",
+    "explains": [
+      "v. 处决；执行，实施"
+    ]
+  },
+  "executive": {
+    "word": "executive",
+    "phonetic": "/ɪɡˈzekjətɪv/",
+    "explains": [
+      "adj. 执行的，行政的",
+      "n. 行政主管；高管"
+    ]
+  },
+  "exercise": {
+    "word": "exercise",
+    "phonetic": "/ˈeksərsaɪz/",
+    "explains": [
+      "n. 运动，锻炼；练习",
+      "v. 锻炼；运用"
+    ]
+  },
+  "exert": {
+    "word": "exert",
+    "phonetic": "/ɪɡˈzɜːrt/",
+    "explains": [
+      "v. 运用，施加；努力"
+    ]
+  },
+  "exhaust": {
+    "word": "exhaust",
+    "phonetic": "/ɪɡˈzɔːst/",
+    "explains": [
+      "v. 使精疲力尽；耗尽",
+      "n. 排气装置；废气"
+    ]
+  },
+  "exhibit": {
+    "word": "exhibit",
+    "phonetic": "/ɪɡˈzɪbɪt/",
+    "explains": [
+      "v. 展示，陈列；展览",
+      "n. 展品"
+    ]
+  },
+  "exhibition": {
+    "word": "exhibition",
+    "phonetic": "/ˌeksɪˈbɪʃn/",
+    "explains": [
+      "n. 展览，展出；表现"
+    ]
+  },
+  "exist": {
+    "word": "exist",
+    "phonetic": "/ɪɡˈzɪst/",
+    "explains": [
+      "v. 存在；生存，生活"
+    ]
+  },
+  "existence": {
+    "word": "existence",
+    "phonetic": "/ɪɡˈzɪstəns/",
+    "explains": [
+      "n. 存在；生存，生活"
+    ]
+  },
+  "exit": {
+    "word": "exit",
+    "phonetic": "/ˈeɡzɪt/",
+    "explains": [
+      "n. 出口，通道；退出",
+      "v. 退出，离开"
+    ]
+  },
+  "expand": {
+    "word": "expand",
+    "phonetic": "/ɪkˈspænd/",
+    "explains": [
+      "v. 扩大，扩张；膨胀"
+    ]
+  },
+  "expansion": {
+    "word": "expansion",
+    "phonetic": "/ɪkˈspænʃn/",
+    "explains": [
+      "n. 扩大，扩张；膨胀"
+    ]
+  },
+  "expect": {
+    "word": "expect",
+    "phonetic": "/ɪkˈspekt/",
+    "explains": [
+      "v. 预期，期待；指望"
+    ]
+  },
+  "expectation": {
+    "word": "expectation",
+    "phonetic": "/ˌekspekˈteɪʃn/",
+    "explains": [
+      "n. 期待，预期；指望"
+    ]
+  },
+  "expense": {
+    "word": "expense",
+    "phonetic": "/ɪkˈspens/",
+    "explains": [
+      "n. 费用，代价；开支"
+    ]
+  },
+  "expensive": {
+    "word": "expensive",
+    "phonetic": "/ɪkˈspensɪv/",
+    "explains": [
+      "adj. 昂贵的，花钱多的"
+    ]
+  },
+  "experience": {
+    "word": "experience",
+    "phonetic": "/ɪkˈspɪriəns/",
+    "explains": [
+      "n. 经验，经历",
+      "v. 体验，经历"
+    ]
+  },
+  "experiment": {
+    "word": "experiment",
+    "phonetic": "/ɪkˈsperɪment/",
+    "explains": [
+      "n. 实验，试验",
+      "v. 进行实验"
+    ]
+  },
+  "expert": {
+    "word": "expert",
+    "phonetic": "/ˈekspɜːrt/",
+    "explains": [
+      "n. 专家，行家",
+      "adj. 专家的，内行的"
+    ]
+  },
+  "explain": {
+    "word": "explain",
+    "phonetic": "/ɪkˈspleɪn/",
+    "explains": [
+      "v. 解释，说明"
+    ]
+  },
+  "explanation": {
+    "word": "explanation",
+    "phonetic": "/ˌekspləˈneɪʃn/",
+    "explains": [
+      "n. 解释，说明"
+    ]
+  },
+  "explore": {
+    "word": "explore",
+    "phonetic": "/ɪkˈsplɔːr/",
+    "explains": [
+      "v. 探索，探测；探究"
+    ]
+  },
+  "explosion": {
+    "word": "explosion",
+    "phonetic": "/ɪkˈsploʊʒn/",
+    "explains": [
+      "n. 爆炸，爆发；激增"
+    ]
+  },
+  "explosive": {
+    "word": "explosive",
+    "phonetic": "/ɪkˈspləʊsɪv/",
+    "explains": [
+      "adj. 爆炸的；爆发的",
+      "n. 炸药"
+    ]
+  },
+  "export": {
+    "word": "export",
+    "phonetic": "/ɪkˈspɔːrt/",
+    "explains": [
+      "v. 出口，输出",
+      "n. 出口产品"
+    ]
+  },
+  "expose": {
+    "word": "expose",
+    "phonetic": "/ɪkˈspoʊz/",
+    "explains": [
+      "v. 揭露，暴露；使曝光"
+    ]
+  },
+  "express": {
+    "word": "express",
+    "phonetic": "/ɪkˈspres/",
+    "explains": [
+      "v. 表达，表示",
+      "adj. 明确的；快速的",
+      "n. 快车；快递"
+    ]
+  },
+  "expression": {
+    "word": "expression",
+    "phonetic": "/ɪkˈspreʃn/",
+    "explains": [
+      "n. 表达，表示；表情；措辞"
+    ]
+  },
+  "extend": {
+    "word": "extend",
+    "phonetic": "/ɪkˈstend/",
+    "explains": [
+      "v. 延伸，扩展；给予"
+    ]
+  },
+  "extension": {
+    "word": "extension",
+    "phonetic": "/ɪkˈstenʃn/",
+    "explains": [
+      "n. 延伸，扩展；延长部分；电话分机"
+    ]
+  },
+  "extensive": {
+    "word": "extensive",
+    "phonetic": "/ɪkˈstensɪv/",
+    "explains": [
+      "adj. 广阔的，大量的；广泛的"
+    ]
+  },
+  "extent": {
+    "word": "extent",
+    "phonetic": "/ɪkˈstent/",
+    "explains": [
+      "n. 程度，范围；大小"
+    ]
+  },
+  "exterior": {
+    "word": "exterior",
+    "phonetic": "/ɪkˈstɪriər/",
+    "explains": [
+      "adj. 外部的，外表的",
+      "n. 外部，外表"
+    ]
+  },
+  "external": {
+    "word": "external",
+    "phonetic": "/ɪkˈstɜːrnl/",
+    "explains": [
+      "adj. 外部的，对外的",
+      "n. 外部，外貌"
+    ]
+  },
+  "extra": {
+    "word": "extra",
+    "phonetic": "/ˈekstrə/",
+    "explains": [
+      "adj. 额外的，附加的",
+      "adv. 特别地，非常",
+      "n. 额外的事物"
+    ]
+  },
+  "extraordinary": {
+    "word": "extraordinary",
+    "phonetic": "/ɪkˈstrɔːrdəneri/",
+    "explains": [
+      "adj. 非凡的，特别的；离奇的"
+    ]
+  },
+  "extreme": {
+    "word": "extreme",
+    "phonetic": "/ɪkˈstriːm/",
+    "explains": [
+      "adj. 极度的，极端的",
+      "n. 极端，极度"
+    ]
+  },
+  "extremely": {
+    "word": "extremely",
+    "phonetic": "/ɪkˈstriːmli/",
+    "explains": [
+      "adv. 极其，非常"
+    ]
+  },
+  "eye": {
+    "word": "eye",
+    "phonetic": "/aɪ/",
+    "explains": [
+      "n. 眼睛；视力；眼光"
+    ]
   }
 }
