@@ -792,45 +792,270 @@ async function translateWithLargeModel(text: string, platform: TranslationPlatfo
  * @param base64 图片base64
  * @param translatePlatform 翻译平台，如果为'local'则使用本地词典，否则使用指定翻译平台
  */
-async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
+/**
+ * 检测是否在 uTools 环境中
+ */
+function isUTools(): boolean {
+    return typeof utools !== 'undefined' && !!utools.getPath;
+}
+
+/**
+ * 写入日志到文件（用于打包后调试）
+ */
+function logToFile(message: string) {
     try {
-        // 动态导入 tesseract.js（减少初始加载时间）
-        const Tesseract = await import('tesseract.js');
+        if (isUTools()) {
+            const fs = (window as any).require('fs');
+            const path = (window as any).require('path');
+            const logPath = path.join(utools.getPath('temp'), 'slowlyrecord-ocr.log');
+            const timestamp = new Date().toISOString();
+            fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
+        }
+    } catch (e) {
+        // 忽略日志写入错误
+    }
+}
+
+/**
+ * 显示调试信息（控制台 + 日志文件）
+ */
+function debugLog(...args: any[]) {
+    const message = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+    console.log(...args);
+    logToFile(message);
+}
+
+/**
+ * 获取 uTools 插件目录
+ */
+function getPluginDir(): string {
+    // 从当前路径提取插件目录
+    // 路径格式: file:///C:/Users/.../plugins/xxx.asar/index.html
+    const href = window.location.href;
+    const match = href.match(/file:\/\/\/(.*?)\/index\.html/);
+    if (match) {
+        return '/' + match[1];
+    }
+    return '';
+}
+
+/**
+ * 读取本地文件为 ArrayBuffer
+ * 解决 uTools 插件环境中 file 协议访问问题
+ */
+async function readLocalFile(filePath: string): Promise<ArrayBuffer> {
+    const pluginDir = getPluginDir();
+    debugLog('[本地OCR] 插件目录:', pluginDir);
+
+    // 在 uTools 环境中，尝试使用 preload 中暴露的 Node.js API
+    if (isUTools()) {
+        try {
+            // @ts-ignore - preload 脚本中暴露的 services
+            const { fs, path } = window.services || {};
+            if (fs && path) {
+                const fullPath = path.join(pluginDir, filePath.replace(/^\.\//, ''));
+                debugLog('[本地OCR] 尝试 services.fs 读取:', fullPath);
+                if (fs.existsSync(fullPath)) {
+                    const data = fs.readFileSync(fullPath);
+                    debugLog('[本地OCR] services.fs 读取成功:', fullPath, '大小:', data.length);
+                    if (Buffer.isBuffer(data)) {
+                        return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+                    }
+                    return data;
+                }
+            }
+        } catch (e: any) {
+            debugLog('[本地OCR] services.fs 读取失败:', e?.message);
+        }
+    }
+
+    // 回退到 fetch 方式
+    debugLog('[本地OCR] 使用 fetch 加载:', filePath);
+    const response = await fetch(filePath);
+    if (!response.ok) {
+        throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
+    }
+    return response.arrayBuffer();
+}
+
+/**
+ * 将 ArrayBuffer 转为 base64 字符串
+ */
+function arrayBufferToBase64(data: ArrayBuffer): string {
+    const bytes = new Uint8Array(data);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
+
+/**
+ * 创建 Data URL
+ */
+function createDataUrl(data: ArrayBuffer, type: string): string {
+    return `data:${type};base64,${arrayBufferToBase64(data)}`;
+}
+
+/**
+ * 创建内联 Worker 脚本
+ * 将 worker、core 和语言数据合并，避免外部请求
+ */
+function createInlineWorkerScript(workerCode: string, coreCode: string, langDataBase64: string): string {
+    const script = `
+// 内联的 tesseract-core 代码 - 直接执行，不通过 importScripts
+${coreCode}
+
+// 注入语言数据
+(function() {
+    // 等待 TesseractCore 加载完成
+    const checkAndInject = function() {
+        if (typeof TesseractCore !== 'undefined' && TesseractCore.FS) {
+            try {
+                // 创建 tessdata 目录
+                try { TesseractCore.FS.mkdir('/tessdata'); } catch(e) {}
+                // 写入语言数据
+                const langData = Uint8Array.from(atob('${langDataBase64}'), c => c.charCodeAt(0));
+                TesseractCore.FS.writeFile('/tessdata/eng.traineddata', langData);
+                console.log('[Worker] 语言数据注入成功');
+            } catch (e) {
+                console.error('[Worker] 语言数据注入失败:', e);
+            }
+        } else {
+            // 稍后重试
+            setTimeout(checkAndInject, 10);
+        }
+    };
+    checkAndInject();
+})();
+
+// worker 代码
+${workerCode}
+`;
+    return createDataUrl(new TextEncoder().encode(script), 'application/javascript');
+}
+
+
+
+async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
+    let worker: any = null;
+
+    try {
+        // 动态导入 tesseract.js
+        const { createWorker } = await import('tesseract.js');
 
         // 将 base64 转换为 data URL
         const imageUrl = `data:image/png;base64,${base64}`;
 
-        // 使用 Tesseract 进行识别
-        // 使用轻量级的英语训练数据（eng），如果需要中文可以改为 'chi_sim'
-        //
-        // 离线配置说明：
-        // 1. 下载语言模型：https://github.com/naptha/tessdata/tree/gh-pages/4.0.0_best
-        // 2. 将 .traineddata 文件放入 public/tessdata/ 目录
-        // 3. 添加配置：{ langPath: '/tessdata', cacheMethod: 'none' }
-        //
-        const result = await Tesseract.recognize(
-            imageUrl,
-            'eng',
-            {
-                // 默认使用 CDN 下载语言模型，无需本地配置
-                // 如需离线使用，请将语言模型放入 public/tessdata/ 目录并取消下面注释：
-                // langPath: window.location.origin + '/tessdata',
-                // cacheMethod: 'none',
-                logger: (m: any) => {
-                    // 可以在这里显示进度
-                    if (m.status === 'recognizing text') {
-                        console.log(`OCR 进度: ${(m.progress * 100).toFixed(1)}%`);
-                    }
-                }
+        debugLog('[本地OCR] 是否在 uTools 环境:', isUTools());
+        debugLog('[本地OCR] 当前路径:', window.location.href);
+
+        // 预加载所有资源文件
+        debugLog('[本地OCR] 开始预加载资源文件...');
+        let workerData: ArrayBuffer, coreData: ArrayBuffer, langData: ArrayBuffer;
+        try {
+            [workerData, coreData, langData] = await Promise.all([
+                readLocalFile('./worker.min.js'),
+                readLocalFile('./tesseract-core-simd-lstm.wasm.js'),
+                readLocalFile('./tessdata/eng.traineddata')
+            ]);
+            debugLog('[本地OCR] 文件大小 - worker:', workerData.byteLength, 'core:', coreData.byteLength, 'lang:', langData.byteLength);
+        } catch (fileError: any) {
+            debugLog('[本地OCR] 读取文件失败:', fileError);
+            return {
+                errorCode: 'LOCAL_OCR_FILE_READ_FAILED',
+                errorMessage: '读取 OCR 资源文件失败: ' + (fileError?.message || '未知错误'),
+                resRegions: []
+            };
+        }
+
+        // 将文件内容转为字符串
+        const workerCode = new TextDecoder().decode(workerData);
+        const coreCode = new TextDecoder().decode(coreData);
+
+        // 将语言数据转为 base64
+        const langDataBase64 = arrayBufferToBase64(langData);
+
+        // 创建内联 Worker 脚本（合并 worker、core 和语言数据）
+        const workerUrl = createInlineWorkerScript(workerCode, coreCode, langDataBase64);
+
+        debugLog('[本地OCR] 所有资源加载完成，内联 Worker（含语言数据）创建成功');
+
+        // 创建 worker 配置
+        // workerPath 指向内联脚本，corePath 留空（已内联）
+        const workerConfig: any = {
+            workerPath: workerUrl,
+            corePath: '',  // core 已内联在 worker 中
+            logger: (m: any) => {
+                debugLog('[本地OCR] Worker 日志:', m);
+            },
+            errorHandler: (err: any) => {
+                debugLog('[本地OCR] Worker 错误:', err);
             }
-        );
+        };
+
+        debugLog('[本地OCR] 创建 Worker...');
+
+        // 创建 worker（不指定语言，稍后手动加载）
+        // @ts-ignore - Tesseract.js 允许不传语言
+        try {
+            worker = await createWorker(undefined, 1, workerConfig);
+        } catch (workerError: any) {
+            debugLog('[本地OCR] 创建 Worker 失败:', workerError);
+            debugLog('[本地OCR] 错误堆栈:', workerError?.stack);
+
+            return {
+                errorCode: 'LOCAL_OCR_INIT_FAILED',
+                errorMessage: '本地 OCR 引擎启动失败: ' + (workerError?.message || '未知错误'),
+                resRegions: []
+            };
+        }
+
+        debugLog('[本地OCR] Worker 创建成功（语言数据已内联）');
+
+        // 等待语言数据注入完成
+        debugLog('[本地OCR] 等待初始化...');
+        try {
+            // 等待一小段时间让语言数据注入完成
+            await new Promise(resolve => setTimeout(resolve, 100));
+            // 初始化语言（语言数据已经在 Worker FS 中）
+            await worker.initialize('eng');
+            debugLog('[本地OCR] 语言初始化成功');
+        } catch (initError: any) {
+            debugLog('[本地OCR] 初始化语言失败:', initError);
+            await worker.terminate();
+            return {
+                errorCode: 'LOCAL_OCR_INIT_LANG_FAILED',
+                errorMessage: '初始化语言失败: ' + (initError?.message || '未知错误'),
+                resRegions: []
+            };
+        }
+
+        debugLog('[本地OCR] 开始识别...');
+        let result: any;
+        try {
+            result = await worker.recognize(imageUrl);
+        } catch (recognizeError: any) {
+            debugLog('[本地OCR] 识别失败:', recognizeError);
+            await worker.terminate();
+            return {
+                errorCode: 'LOCAL_OCR_RECOGNIZE_FAILED',
+                errorMessage: `识别失败: ${recognizeError?.message || '未知错误'}`,
+                resRegions: []
+            };
+        }
+
+        debugLog('[本地OCR] 识别完成:', result.data.text);
+
+        // 清理资源
+        await worker.terminate();
 
         const text = result.data.text?.trim();
         ElMessage.success({ message: '识别结果: ' + text, duration: 10000 })
 
         if (text) {
-            console.log('[本地OCR] 识别文本:', text);
-            console.log('[本地OCR] 翻译平台:', translatePlatform);
+            debugLog('[本地OCR] 识别文本:', text);
+            debugLog('[本地OCR] 翻译平台:', translatePlatform);
 
             let translatedText: string;
 
@@ -838,7 +1063,7 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
                 // 使用本地词典翻译
                 const {translateWithLocalDictionaryAsync} = await import('./local-dictionary');
                 const translationResult = await translateWithLocalDictionaryAsync(text);
-                console.log('[本地OCR] 本地翻译结果:', translationResult);
+                debugLog('[本地OCR] 本地翻译结果:', translationResult);
                 translatedText = translationResult.success
                     ? (translationResult.explains || '')
                     : text; // 翻译失败时显示原文

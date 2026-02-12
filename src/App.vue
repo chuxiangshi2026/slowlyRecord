@@ -16,6 +16,14 @@
       @close="closeTextPanel"
       @select="handleSelectTextItems"
   />
+
+  <!-- 调试面板 -->
+  <DebugPanel
+      :visible="showDebugPanel"
+      @open="showDebugPanel = true"
+      @close="showDebugPanel = false"
+      ref="debugPanelRef"
+  />
 </template>
 
 
@@ -36,6 +44,7 @@ import picaliData from '../testdata/picalidata.json';
 import picTencentData from '../testdata/picTencentdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
+import DebugPanel from '@/components/DebugPanel.vue';
 import {AppInfo} from "@/config.ts";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
@@ -53,6 +62,10 @@ const ocrResults = ref<any[]>([]);
 // 添加文本选择相关的响应式变量
 const showTextPanel = ref<boolean>(false);
 const textContent = ref<string>('');
+
+// 添加调试面板相关的响应式变量
+const showDebugPanel = ref<boolean>(false);
+const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
 
 utools.onPluginEnter(async (action) => {
   // 先同步 设置
