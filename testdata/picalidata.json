@@ -1,0 +1,25 @@
+{
+  "errorCode": "200",
+  "resRegions": [
+    {
+      "boundingBox": "31,0,36,21",
+      "context": "if",
+      "tranContent": "如果"
+    },
+    {
+      "boundingBox": "120,127,429,213",
+      "context": "expLains： res.explains 11 wordText， expLainedHidden： false， pronunciation： res.pronunciation isReview： true， ctime： new Date()， LearnDate： new Date()， Level： 1.",
+      "tranContent": "解释: res。解释11个单词文本,解释隐藏: 假,发音: res。发音是review: true,ctime: 新日期 (),LearnDate: 新日期 (),级别: 1。"
+    },
+    {
+      "boundingBox": "122,351,254,52",
+      "context": "Lid： DB_KEY + + uuidv4()， image：",
+      "tranContent": "盖子: DB_KEY + + uuidv4(),图像:"
+    },
+    {
+      "boundingBox": "121,411,320,56",
+      "context": "phonetic： res.phonetic remember： false",
+      "tranContent": "语音: res。语音记住: false"
+    }
+  ]
+}
