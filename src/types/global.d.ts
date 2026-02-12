@@ -29,7 +29,7 @@ interface Window {
             // updateWordTranslate: (word:string, explain: string[]) => void
 
         }
-        capture: () => Promise<string>
+
     }
 }
 

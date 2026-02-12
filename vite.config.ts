@@ -53,7 +53,7 @@ export default defineConfig({
             }
         }
     },
-    assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf'],
+    assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf', '**/*.traineddata'],
     define: {
         __LOG_LEVEL__: 1,              // 2=WARN， 0=DEBUG， 4=SILENT
     },

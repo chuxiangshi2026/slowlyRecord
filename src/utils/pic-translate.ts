@@ -7,6 +7,7 @@ import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {AppInfo} from "@/config.ts";
 import {getOcrApiKey, getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {log} from "@/utils/logger.ts";
+import {ElMessage} from "element-plus";
 
 const API = 'https://openapi.youdao.com/ocrtransapi'
 
@@ -40,6 +41,7 @@ function fileToBase64(file: File): Promise<string> {
 
 export interface OcrResult {
     errorCode: string
+    errorMessage?: string
     resRegions?: Array<{
         boundingBox: string
         context: string
@@ -824,6 +826,7 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
         );
 
         const text = result.data.text?.trim();
+        ElMessage.success({ message: '识别结果: ' + text, duration: 10000 })
 
         if (text) {
             console.log('[本地OCR] 识别文本:', text);
@@ -868,10 +871,15 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
                 resRegions: []
             };
         }
-    } catch (error) {
-        console.error('本地OCR识别失败:', error);
+    } catch (error: any) {
+        console.error('[本地OCR] 识别失败:', error);
+        const errorMessage = error?.message || String(error) || '未知错误';
+
+        ElMessage.error({ message: '[本地OCR] 识别失败: ' + errorMessage, duration: 20000 });
+
         return {
             errorCode: 'LOCAL_OCR_FAILED',
+            errorMessage: `本地OCR失败: ${errorMessage}`,
             resRegions: []
         };
     }
