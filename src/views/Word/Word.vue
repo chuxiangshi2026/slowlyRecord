@@ -570,7 +570,7 @@ const importWords = () => {
   fileInput.type = 'file';
   fileInput.accept = '.json'; // 限制文件类型为JSON
   fileInput.onchange = (event) => {
-    utools.showMainWindow();
+    window.utools?.showMainWindow();
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -638,7 +638,7 @@ const importTextWords = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        utools.showMainWindow();
+        window.utools?.showMainWindow();
         try {
           const content = e.target?.result as string;
           const wordList = parseFileContent(content); // 解析文件内容
@@ -764,21 +764,25 @@ const invisibleExplained = () => {
 const startScreenCapture = async () => {
   console.log('[截图添加] 开始截图识别流程');
   try {
+    // 先隐藏弹窗（如果之前打开过），确保截图时界面干净
+    ocrDialogVisible.value = false
+
+    // 隐藏主窗口，确保截图时不会截到插件界面
+    window.utools?.hideMainWindow();
+
+    // 调用截图翻译
+    const result = await ocrTranslateMultiPlatform();
+
+    // 截图完成后，显示弹窗并更新状态
     // 重置状态
-    ocrLoading.value = true
+    ocrLoading.value = false
     ocrError.value = ''
     ocrOriginalText.value = ''
     ocrWords.value = []
     ocrSelectedWords.value = []
     selectAllWords.value = false
-    ocrDialogVisible.value = true
-
-    // 调用截图翻译
-    const result = await ocrTranslateMultiPlatform();
 
     console.log('[截图添加] OCR识别结果:', result);
-
-    ocrLoading.value = false
 
     if (result.errorCode !== '0') {
       // 显示具体的错误信息（如果有）
@@ -787,11 +791,13 @@ const startScreenCapture = async () => {
       } else {
         ocrError.value = '识别失败，请检查OCR配置或重试';
       }
+      ocrDialogVisible.value = true
       return;
     }
 
     if (!result.resRegions || result.resRegions.length === 0) {
       ocrError.value = '未能识别到文字，请重试'
+      ocrDialogVisible.value = true
       return;
     }
 
@@ -826,6 +832,9 @@ const startScreenCapture = async () => {
       selectAllWords.value = true;
     }
 
+    // 显示弹窗
+    ocrDialogVisible.value = true
+
   } catch (error: any) {
     console.error('截图翻译失败:', error);
     ocrLoading.value = false;
@@ -834,6 +843,7 @@ const startScreenCapture = async () => {
     } else {
       ocrError.value = '截图翻译失败: ' + (error.message || '未知错误');
     }
+    ocrDialogVisible.value = true
   }
 }
 

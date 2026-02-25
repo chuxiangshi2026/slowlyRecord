@@ -45,7 +45,7 @@ import picTencentData from '../testdata/picTencentdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
 import DebugPanel from '@/components/DebugPanel.vue';
-import {AppInfo} from "@/config.ts";
+// import {AppInfo} from "@/config.ts";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 
@@ -53,7 +53,7 @@ const wordsStore = useWordsStore();
 
 // import {fileToBase64, ocrTranslate, translateImage} from '@/utils/pic-translate.ts'
 
-const preview = ref<string>('')
+// const preview = ref<string>('')
 
 // 添加OCR结果相关的响应式变量
 const showOCRPanel = ref<boolean>(false);
@@ -171,7 +171,7 @@ utools.onPluginEnter(async (action) => {
     // console.log('我是快捷键进来的')
     const selectedText = await navigator.clipboard.readText();
     // 显示文本选择面板
-    displayTextSelection(selectedText);
+    await displayTextSelection(selectedText);
   }
 
   if (action.code === 'huaci' && action.from == 'main') {
@@ -191,15 +191,15 @@ utools.onPluginEnter(async (action) => {
     const selectedText = await navigator.clipboard.readText();
     console.log('[划段添加] 快捷键方式获取文本:', selectedText);
     // 显示文本选择面板
-    displayTextSelection(selectedText);
+    await displayTextSelection(selectedText);
   }
 
   if (action.code === 'huaduan' && action.from == 'main') {
     console.log('[划段添加] 通过主界面触发');
-    getSelectedTextFromSystem().then(text => {
+    getSelectedTextFromSystem().then(async (text) => {
           console.log('[划段添加] 获取到文本:', text);
           // 显示文本选择面板
-          displayTextSelection(text);
+          await displayTextSelection(text);
         }).catch(error => {
           console.error('[划段添加] 获取文本失败:', error);
           ElMessage.error('获取选中文本失败，请重试');
@@ -209,9 +209,8 @@ utools.onPluginEnter(async (action) => {
   if (action.code === 'jietu') {
     try {
       // 先隐藏主窗口，确保截图时看不到界面
-      utools.hideMainWindow();
+
       // 等待一下确保窗口已隐藏
-      await new Promise(r => setTimeout(r, 100));
 
       // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
       const result = await ocrTranslateMultiPlatform();
@@ -228,7 +227,6 @@ utools.onPluginEnter(async (action) => {
         }
         if (result.errorCode === 'LOCAL_OCR_FAILED') {
           console.error('[截图添加] 本地OCR失败详情:', result.errorMessage);
-          // ElMessage.error(`本地OCR识别失败: ${result.errorMessage || '请尝试使用云端OCR'}`);
           return;
         }
 
@@ -274,7 +272,41 @@ utools.onPluginEnter(async (action) => {
 
 
 })
+/**
+ * 显示调试信息（控制台 + 日志文件 + DebugPanel）
+ */
+function debugLog(...args: any[]) {
+  const message = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+  console.log(...args);
+  logToFile(message);
+  // 同时输出到 DebugPanel
+  if (debugPanelRef.value) {
+    debugPanelRef.value.addLog(message);
+  }
+}
 
+/**
+ * 写入日志到文件（用于打包后调试）
+ */
+function logToFile(message: string) {
+  try {
+    if (isUTools()) {
+      const fs = (window as any).require('fs');
+      const path = (window as any).require('path');
+      const logPath = path.join(utools.getPath('temp'), 'slowlyrecord-ocr.log');
+      const timestamp = new Date().toISOString();
+      fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
+    }
+  } catch (e) {
+    // 忽略日志写入错误
+  }
+}
+/**
+ * 检测是否在 uTools 环境中
+ */
+function isUTools(): boolean {
+  return typeof utools !== 'undefined' && !!utools.getPath;
+}
 
 /*const translate = async () => {
   if (!selectedImage.value) return;
@@ -310,11 +342,11 @@ utools.onPluginEnter(async (action) => {
 /**
  * 显示OCR识别结果供用户选择和保存
  */
-function displayOCRResults(resRegions: any[]) {
+async function displayOCRResults(resRegions: any[]) {
   console.log('[截图添加] displayOCRResults 被调用，结果数:', resRegions?.length || 0);
 
   // 识别成功，显示主窗口让用户查看结果
-  utools.showMainWindow();
+  window.utools?.showMainWindow();
   console.log('[截图添加] 主窗口已显示');
 
   // 存储OCR结果
@@ -468,7 +500,7 @@ function checkShearBoardAddWork(text: string) {
 /**
  * 显示文本选择面板供用户选择和保存单词
  */
-function displayTextSelection(text: string) {
+async function displayTextSelection(text: string) {
   console.log('[划段添加] 准备显示面板，文本内容:', text);
   // 存储文本内容
   textContent.value = text;
@@ -606,7 +638,7 @@ async function handlePluginAddWord(payload: string) {
 
   // 检查快捷键是否启用
   if (wordsStore.pluginStatus) {
-    utools.hideMainWindow();
+    window.utools?.hideMainWindow();
   }
 }
 

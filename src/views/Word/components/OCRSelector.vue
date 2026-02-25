@@ -1,73 +1,75 @@
 <!-- 创建新的OCR选择器组件文件 -->
 <template>
-  <div v-if="visible" class="ocr-panel-overlay">
-    <div class="ocr-panel-content">
-      <div class="ocr-panel-header">
-        <h3>选择要保存的单词</h3>
-        <button @click="closePanel" class="close-btn">×</button>
-      </div>
-      <div class="ocr-items-container">
-        <div v-if="!ocrResults || ocrResults.length === 0" class="ocr-empty">
-          <p>未获取到识别结果</p>
+  <Teleport to="body">
+    <div v-if="visible" class="ocr-panel-overlay">
+      <div class="ocr-panel-content">
+        <div class="ocr-panel-header">
+          <h3>选择要保存的单词</h3>
+          <button @click="closePanel" class="close-btn">×</button>
         </div>
-        <div
-          v-for="(region, index) in ocrResults"
-          :key="index"
-          class="ocr-item"
-        >
-          <div class="ocr-original">
-            <strong>原文:</strong> {{ region.context }}
+        <div class="ocr-items-container">
+          <div v-if="!ocrResults || ocrResults.length === 0" class="ocr-empty">
+            <p>未获取到识别结果</p>
           </div>
-          <div class="ocr-translation">
-            <strong>翻译:</strong> {{ region.tranContent }}
-          </div>
-          <div class="ocr-coords" v-if="region.rect || region.coords">
-            <small>位置: {{ formatCoords(region.rect || region.coords) }}</small>
-          </div>
-          <!-- 新增单词选择区域 -->
-          <div class="word-selection-area">
-            <div class="word-list">
-              <span
-                v-for="(word, wordIndex) in getWordsFromText(region.context)"
-                :key="wordIndex"
-                :class="['word-item', { selected: isSelected(region.id || index, word) }]"
-                @click="toggleWordSelection(region, word, index)"
-              >
-                {{ word }}
-              </span>
+          <div
+            v-for="(region, index) in ocrResults"
+            :key="index"
+            class="ocr-item"
+          >
+            <div class="ocr-original">
+              <strong>原文:</strong> {{ region.context }}
+            </div>
+            <div class="ocr-translation">
+              <strong>翻译:</strong> {{ region.tranContent }}
+            </div>
+            <div class="ocr-coords" v-if="region.rect || region.coords">
+              <small>位置: {{ formatCoords(region.rect || region.coords) }}</small>
+            </div>
+            <!-- 新增单词选择区域 -->
+            <div class="word-selection-area">
+              <div class="word-list">
+                <span
+                  v-for="(word, wordIndex) in getWordsFromText(region.context)"
+                  :key="wordIndex"
+                  :class="['word-item', { selected: isSelected(region.id || index, word) }]"
+                  @click="toggleWordSelection(region, word, index)"
+                >
+                  {{ word }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="ocr-panel-footer">
-        <div class="selected-words-summary">
-          已选择 {{ selectedWords.length }} 个单词:
-          <span class="selected-words-display">
-            <span
-              v-for="(word, index) in selectedWords"
-              :key="index"
-              :class="['selected-word-item', { selected: true }]"
-              @click="removeSelectedWord(word)"
-            >
-              {{ word }}
+        <div class="ocr-panel-footer">
+          <div class="selected-words-summary">
+            已选择 {{ selectedWords.length }} 个单词:
+            <span class="selected-words-display">
+              <span
+                v-for="(word, index) in selectedWords"
+                :key="index"
+                :class="['selected-word-item', { selected: true }]"
+                @click="removeSelectedWord(word)"
+              >
+                {{ word }}
+              </span>
             </span>
-          </span>
-        </div>
-        <div class="footer-buttons">
-          <button @click="selectAllWords" class="select-btn">全选</button>
-          <button @click="invertSelection" class="invert-btn">反选</button>
-          <button @click="clearSelection" class="clear-btn">清空</button>
-          <button @click="removeChineseWords" class="remove-chinese-btn">筛除中文</button>
-          <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加到单词列表</button>
-          <button @click="closePanel" class="cancel-btn">关闭</button>
+          </div>
+          <div class="footer-buttons">
+            <button @click="selectAllWords" class="select-btn">全选</button>
+            <button @click="invertSelection" class="invert-btn">反选</button>
+            <button @click="clearSelection" class="clear-btn">清空</button>
+            <button @click="removeChineseWords" class="remove-chinese-btn">筛除中文</button>
+            <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加到单词列表</button>
+            <button @click="closePanel" class="cancel-btn">关闭</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, Teleport } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
 
@@ -296,25 +298,33 @@ const closePanel = () => {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 99999 !important;
   display: flex;
-  justify-center: center;
+  justify-content: center;
   align-items: center;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .ocr-panel-content {
-  background: white;
+  background-color: #ffffff !important;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   width: 90%;
   max-width: 800px;
   max-height: 80vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
+  margin: auto;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .ocr-panel-header {

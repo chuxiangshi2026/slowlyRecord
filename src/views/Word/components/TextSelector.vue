@@ -1,61 +1,63 @@
 <template>
-  <div v-if="visible" class="text-selector-overlay">
-    <div class="text-selector-content">
-      <div class="text-selector-header">
-        <h3>选择要保存的单词</h3>
-        <button @click="closePanel" class="close-btn">×</button>
-      </div>
-      <div class="text-items-container">
-        <div class="text-item">
-          <div class="text-original">
-            <strong>原文:</strong> {{ textContent || '（未获取到文本）' }}
-          </div>
-          <div class="text-translation" v-if="translatedText">
-            <strong>翻译:</strong> {{ translatedText }}
-          </div>
-          <div class="word-selection-area">
-            <div class="word-list">
-              <span
-                v-for="(word, wordIndex) in wordsList"
-                :key="wordIndex"
-                :class="['word-item', { selected: selectedWords.includes(word.toLowerCase()) }]"
-                @click="toggleWordSelection(word)"
-              >
-                {{ word }}
-              </span>
+  <Teleport to="body">
+    <div v-if="visible" class="text-selector-overlay">
+      <div class="text-selector-content">
+        <div class="text-selector-header">
+          <h3>选择要保存的单词</h3>
+          <button @click="closePanel" class="close-btn">×</button>
+        </div>
+        <div class="text-items-container">
+          <div class="text-item">
+            <div class="text-original">
+              <strong>原文:</strong> {{ textContent || '（未获取到文本）' }}
+            </div>
+            <div class="text-translation" v-if="translatedText">
+              <strong>翻译:</strong> {{ translatedText }}
+            </div>
+            <div class="word-selection-area">
+              <div class="word-list">
+                <span
+                  v-for="(word, wordIndex) in wordsList"
+                  :key="wordIndex"
+                  :class="['word-item', { selected: selectedWords.includes(word.toLowerCase()) }]"
+                  @click="toggleWordSelection(word)"
+                >
+                  {{ word }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="text-selector-footer">
-        <div class="selected-words-summary">
-          已选择 {{ selectedWords.length }} 个单词:
-          <span class="selected-words-display">
-            <span
-              v-for="(word, index) in selectedWords"
-              :key="index"
-              :class="['selected-word-item', { selected: true }]"
-              @click="removeSelectedWord(word)"
-            >
-              {{ word }}
+        <div class="text-selector-footer">
+          <div class="selected-words-summary">
+            已选择 {{ selectedWords.length }} 个单词:
+            <span class="selected-words-display">
+              <span
+                v-for="(word, index) in selectedWords"
+                :key="index"
+                :class="['selected-word-item', { selected: true }]"
+                @click="removeSelectedWord(word)"
+              >
+                {{ word }}
+              </span>
             </span>
-          </span>
-        </div>
-        <div class="footer-buttons">
-          <button @click="selectAllWords" class="select-btn">全选</button>
-          <button @click="invertSelection" class="invert-btn">反选</button>
-          <button @click="clearSelection" class="clear-btn">清空</button>
-          <button @click="removeNonEnglishWords" class="remove-non-english-btn">筛选英文</button>
-          <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加到单词列表</button>
-          <button @click="closePanel" class="cancel-btn">关闭</button>
+          </div>
+          <div class="footer-buttons">
+            <button @click="selectAllWords" class="select-btn">全选</button>
+            <button @click="invertSelection" class="invert-btn">反选</button>
+            <button @click="clearSelection" class="clear-btn">清空</button>
+            <button @click="removeNonEnglishWords" class="remove-non-english-btn">筛选英文</button>
+            <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加到单词列表</button>
+            <button @click="closePanel" class="cancel-btn">关闭</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, computed, watch } from 'vue';
+import { ref, computed, watch, Teleport } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
 import { translateWithLocalDictionaryAsync } from '@/utils/local-dictionary';
@@ -109,9 +111,9 @@ const extractWords = (text: string) => {
   return uniqueWords;
 };
 
-// 监听文本内容变化，提取单词并翻译
-watch(() => props.textContent, async (newText) => {
-  console.log('[TextSelector] 收到文本:', newText);
+// 处理文本内容的函数
+const processTextContent = async (newText: string) => {
+  console.log('[TextSelector] 处理文本:', newText);
   extractWords(newText);
   // 清空之前的选中状态
   selectedWords.value = [];
@@ -150,7 +152,22 @@ watch(() => props.textContent, async (newText) => {
   } else {
     translatedText.value = '';
   }
+};
+
+// 监听文本内容变化
+watch(() => props.textContent, async (newText) => {
+  if (props.visible) {
+    await processTextContent(newText);
+  }
 }, { immediate: true });
+
+// 监听 visible 变化，当弹窗显示时处理文本
+watch(() => props.visible, async (newVisible) => {
+  if (newVisible) {
+    console.log('[TextSelector] 弹窗显示，处理文本');
+    await processTextContent(props.textContent);
+  }
+});
 
 // 切换单词选中状态
 const toggleWordSelection = (word: string) => {
@@ -232,25 +249,31 @@ const closePanel = () => {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 99999 !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .text-selector-content {
-  background: white;
+  background-color: #ffffff !important;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   width: 90%;
   max-width: 800px;
   max-height: 80vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .text-selector-header {

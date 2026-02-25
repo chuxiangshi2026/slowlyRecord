@@ -101,9 +101,6 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
     const wordsStore = useWordsStore();
     const ocrPlatform = wordsStore.currentOcrPlatform || 'tencent';
 
-    // 添加调试日志
-    // console.log('[OCR] 当前OCR平台:', ocrPlatform);
-    console.log('[OCR] Store中的currentOcrPlatform:', wordsStore.currentOcrPlatform);
 
     // 检查是否超出了每日使用限制（本地OCR不记次数）
     if (ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform)) {
@@ -125,20 +122,19 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
     // const {appkey, key} = getTranslationApiKey(platform);
     const {appkey, key} = getOcrApiKey(ocrPlatform);
     // console.log('[OCR] API密钥状态:', { appkey: appkey ? '已设置' : '未设置', key: key ? '已设置' : '未设置' });
-
+    utools.hideMainWindow();
     // 将 utools.screenCapture 包装为 Promise
     return new Promise((resolve, reject) => {
         // console.log('[OCR] 调用utools.screenCapture...');
         utools.screenCapture(async (image) => {
-            console.log('[OCR] 截图回调触发，图片数据长度:', image ? image.length : 0);
+            // console.log('[OCR] 截图回调触发，图片数据长度:', image ? image.length : 0);
             if (!image) {
-                // 用户取消截图，显示窗口让用户可以继续操作
-                console.error('[OCR] 截图取消或失败');
-                utools.showMainWindow();
-                reject(new Error('截图取消或失败'));
+                // 用户取消截图，由 App.vue 控制窗口显示
+                // console.log('[OCR] 用户取消截图');
+                reject(new Error('截图取消'));
                 return;
             }
-            // 截图成功，让App.vue控制窗口显示
+            // 截图成功，由 App.vue 控制窗口显示
 
             try {
                 // 去除 data:image/png;base64, 前缀
@@ -159,7 +155,7 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
                     const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
                     result = await ocrTranslateLocal(base64, translatePlatform);
                 } else {
-                    result = { errorCode: '500', resRegions: [] };
+                    result = {errorCode: '500', resRegions: []};
                 }
                 // console.log('[OCR] 平台返回结果:', { errorCode: result.errorCode, resRegionsCount: result.resRegions?.length || 0 });
                 resolve(result);
@@ -954,7 +950,7 @@ async function getOrCreateWorker(): Promise<any> {
  * 内部创建 Worker 的方法
  */
 async function createWorkerInternal(): Promise<any> {
-    const { createWorker } = await import('tesseract.js');
+    const {createWorker} = await import('tesseract.js');
 
     debugLog('[本地OCR] 创建 Worker，尝试读取缓存...');
 
@@ -1085,7 +1081,7 @@ async function readLocalFile(filePath: string): Promise<ArrayBuffer> {
     if (isUTools()) {
         try {
             // @ts-ignore - preload 脚本中暴露的 services
-            const { fs, path } = window.services || {};
+            const {fs, path} = window.services || {};
             if (fs && path) {
                 const fullPath = path.join(pluginDir, filePath.replace(/^\.\//, ''));
                 debugLog('[本地OCR] 尝试 services.fs 读取:', fullPath);
@@ -1170,10 +1166,9 @@ ${workerCode}
 }
 
 
-
 async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
     let worker: any = null;
-    const startTime = Date.now();
+    // const startTime = Date.now();
 
     try {
         // 将 base64 转换为 data URL
@@ -1181,16 +1176,16 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
 
         // 获取缓存的 Worker（首次会创建）
         worker = await getOrCreateWorker();
-        const workerReadyTime = Date.now();
-        debugLog(`[本地OCR] Worker 准备耗时: ${workerReadyTime - startTime}ms`);
+        // const workerReadyTime = Date.now();
+        // debugLog(`[本地OCR] Worker 准备耗时: ${workerReadyTime - startTime}ms`);
 
-        debugLog('[本地OCR] 开始识别...');
-        const recognizeStartTime = Date.now();
+        // debugLog('[本地OCR] 开始识别...');
+        // const recognizeStartTime = Date.now();
         let result: any;
         try {
             result = await worker.recognize(imageUrl);
         } catch (recognizeError: any) {
-            debugLog('[本地OCR] 识别失败:', recognizeError);
+            // debugLog('[本地OCR] 识别失败:', recognizeError);
             // 识别失败时重置 Worker，下次会重新创建
             cachedWorker = null;
             return {
@@ -1200,10 +1195,10 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
             };
         }
 
-        const recognizeEndTime = Date.now();
+        /*const recognizeEndTime = Date.now();
         debugLog(`[本地OCR] 识别耗时: ${recognizeEndTime - recognizeStartTime}ms`);
         debugLog(`[本地OCR] 总耗时: ${recognizeEndTime - startTime}ms`);
-        debugLog('[本地OCR] 识别完成:', result.data.text);
+        debugLog('[本地OCR] 识别完成:', result.data.text);*/
 
         // 不再 terminate，保留 Worker 供下次使用
 
