@@ -6,6 +6,7 @@ import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
 import {log} from "@/utils/logger.ts";
+import {queryLocalDictionaryAsync} from "@/utils/local-dictionary";
 
 /**
  * 初始化单词状态
@@ -69,8 +70,16 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
                 findWord.explains = res.explains || wordText
                 findWord.isReview = true
                 findWord.pronunciation = res.pronunciation
-                // todo 音标添加
-                findWord.phonetic = res.phonetic
+                // 如果翻译API没有返回音标，尝试从本地词典获取
+                if (!res.phonetic || res.phonetic.trim() === '') {
+                    const localEntry = await queryLocalDictionaryAsync(wordText);
+                    if (localEntry?.phonetic) {
+                        findWord.phonetic = localEntry.phonetic;
+                        console.log('[本地词库] 更新音标:', wordText, localEntry.phonetic);
+                    }
+                } else {
+                    findWord.phonetic = res.phonetic;
+                }
                 findWord.remember = false
                 findWord.level = 1
 
@@ -99,7 +108,16 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
 
         if (res.success) {
             let oldWords = wordsStore.words
-            let newWords = getInitWord(wordText, res.explains || wordText, res.pronunciation || '', '', res.phonetic || '')
+            // 如果翻译API没有返回音标，尝试从本地词典获取
+            let phonetic = res.phonetic || '';
+            if (!phonetic || phonetic.trim() === '') {
+                const localEntry = await queryLocalDictionaryAsync(wordText);
+                if (localEntry?.phonetic) {
+                    phonetic = localEntry.phonetic;
+                    console.log('[本地词库] 新单词音标:', wordText, phonetic);
+                }
+            }
+            let newWords = getInitWord(wordText, res.explains || wordText, res.pronunciation || '', '', phonetic)
             console.log('翻译后的初始化结果', newWords)
 
             const data = oldWords ? [newWords, ...oldWords] : [newWords]
