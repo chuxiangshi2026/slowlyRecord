@@ -92,6 +92,7 @@ import {DEFAULT_INTERVALS} from "@/constants";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
 import {computed, nextTick, onMounted, ref, toRef} from "vue";
+import {ElMessage} from "element-plus";
 
 const wordsStore = useWordsStore();
 // 是否处于焦点状态

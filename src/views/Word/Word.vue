@@ -773,6 +773,7 @@ const startScreenCapture = async () => {
     // 调用截图翻译
     const result = await ocrTranslateMultiPlatform();
 
+    window.utools?.showMainWindow();
     // 截图完成后，显示弹窗并更新状态
     // 重置状态
     ocrLoading.value = false
