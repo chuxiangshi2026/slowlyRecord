@@ -303,8 +303,30 @@ export interface LocalTranslationResult {
   success: boolean;
   explains?: string;
   phonetic?: string;
+  pronunciation?: string; // 发音URL
   errorMsg?: string;
   isLocal: true; // 标记这是本地翻译结果
+}
+
+// 发音URL缓存（与translation-api.ts独立，避免循环依赖）
+const pronunciationCache = new Map<string, string>();
+
+/**
+ * 获取单词发音URL（本地词典版本）
+ * 使用有道TTS（稳定可靠）
+ */
+function getPronunciationUrlForLocal(word: string): string {
+  const cacheKey = word.toLowerCase().trim();
+
+  // 检查缓存
+  if (pronunciationCache.has(cacheKey)) {
+    return pronunciationCache.get(cacheKey)!;
+  }
+
+  // 使用有道TTS URL（稳定，CORS友好）
+  const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
+  pronunciationCache.set(cacheKey, youdaoTtsUrl);
+  return youdaoTtsUrl;
 }
 
 /**
@@ -877,9 +899,12 @@ export async function translateWithLocalDictionaryAsync(text: string): Promise<L
   // 1. 首先检查是否是常用短语/句子（直接映射）
   const phraseTranslation = phrases[trimmedText];
   if (phraseTranslation) {
+    // 如果是单个单词的短语，添加发音
+    const pronunciation = !trimmedText.includes(' ') ? getPronunciationUrlForLocal(trimmedText) : undefined;
     return {
       success: true,
       explains: phraseTranslation,
+      pronunciation,
       isLocal: true
     };
   }
@@ -892,6 +917,7 @@ export async function translateWithLocalDictionaryAsync(text: string): Promise<L
         success: true,
         explains: entry.explains.join('；'),
         phonetic: entry.phonetic,
+        pronunciation: getPronunciationUrlForLocal(trimmedText),
         isLocal: true
       };
     }
@@ -905,6 +931,7 @@ export async function translateWithLocalDictionaryAsync(text: string): Promise<L
           success: true,
           explains: baseEntry.explains.join('；'),
           phonetic: baseEntry.phonetic,
+          pronunciation: getPronunciationUrlForLocal(trimmedText),
           isLocal: true
         };
       }
@@ -952,9 +979,12 @@ export function translateWithLocalDictionary(text: string): LocalTranslationResu
   // 1. 首先检查是否是常用短语/句子（直接映射）
   const phraseTranslation = phrases[trimmedText];
   if (phraseTranslation) {
+    // 如果是单个单词的短语，添加发音
+    const pronunciation = !trimmedText.includes(' ') ? getPronunciationUrlForLocal(trimmedText) : undefined;
     return {
       success: true,
       explains: phraseTranslation,
+      pronunciation,
       isLocal: true
     };
   }
@@ -967,6 +997,7 @@ export function translateWithLocalDictionary(text: string): LocalTranslationResu
         success: true,
         explains: entry.explains.join('；'),
         phonetic: entry.phonetic,
+        pronunciation: getPronunciationUrlForLocal(trimmedText),
         isLocal: true
       };
     }
@@ -980,6 +1011,7 @@ export function translateWithLocalDictionary(text: string): LocalTranslationResu
           success: true,
           explains: baseEntry.explains.join('；'),
           phonetic: baseEntry.phonetic,
+          pronunciation: getPronunciationUrlForLocal(trimmedText),
           isLocal: true
         };
       }

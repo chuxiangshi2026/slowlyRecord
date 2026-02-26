@@ -213,39 +213,43 @@ const translation = () => {
 const audioPlayer = ref<HTMLAudioElement | null>(null);
 const localAudioUrl = ref<string | null>(null);
 
-// 获取本地存储的音频 Blob URL
+// 获取本地存储的音频 URL（只返回 Data URL，不返回 http URL）
 const getLocalAudioUrl = (wordId: string): string | null => {
-// 检查 pronunciation 是否包含URL（旧数据）
-  if (props.word.pronunciation && props.word.pronunciation.startsWith('http')) {
-    // 这是旧的URL数据，需要转换为文件数据
-    return null; // 让系统重新下载并缓存
-  }
-
-  // 首先检查单词对象中的 pronunciation 字段是否包含缓存数据
+  // 首先检查单词对象中的 pronunciation 字段是否包含 Data URL（已缓存的音频）
   if (props.word.pronunciation && props.word.pronunciation.startsWith('data:audio')) {
-    try {
-      // 如果 pronunciation 包含数据，则认为是 base64 编码的音频数据
-      const byteString = atob(props.word.pronunciation.split(',')[1]);
-      const mimeString = props.word.pronunciation.split(',')[0].split(':')[1].split(';')[0];
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      const blob = new Blob([ab], {type: mimeString});
-      return URL.createObjectURL(blob);
-    } catch (e) {
-      console.error('Failed to parse cached audio data from word object:', e);
-    }
+    // 直接使用 Data URL
+    return props.word.pronunciation;
   }
 
+  // 如果 pronunciation 是 http URL，说明未缓存，返回 null 让调用方下载
+  // 注意：如果存储的是百度 URL，也会返回 null，使用有道重新下载
+  if (props.word.pronunciation && props.word.pronunciation.startsWith('http')) {
+    // 检测并清理旧的百度 URL
+    if (props.word.pronunciation.includes('fanyi.baidu.com')) {
+      console.log('检测到旧的百度发音URL，将使用有道重新下载');
+    }
+    return null;
+  }
 
-  // 回退到 localStorage
+  // 回退到 localStorage，转换为 Data URL
   const stored = localStorage.getItem(`audio_${wordId}`);
   if (stored) {
     try {
-      const blob = new Blob([new Uint8Array(JSON.parse(stored))], {type: 'audio/mpeg'});
-      return URL.createObjectURL(blob);
+      const uint8Array = new Uint8Array(JSON.parse(stored));
+      // 检测音频类型（根据前几个字节）
+      let mimeType = 'audio/mpeg'; // 默认 MP3
+      if (uint8Array[0] === 0x52 && uint8Array[1] === 0x49 && uint8Array[2] === 0x46) {
+        mimeType = 'audio/wav'; // RIFF 头表示 WAV
+      }
+      // 转换为 Base64
+      let binary = '';
+      const bytes = new Uint8Array(uint8Array);
+      const len = bytes.byteLength;
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      const base64 = btoa(binary);
+      return `data:${mimeType};base64,${base64}`;
     } catch (e) {
       console.error('Failed to parse stored audio data:', e);
     }
@@ -339,58 +343,122 @@ const play = async () => {
   }
 
   isPlaying = true;
-  const wordId = props.word.text; // 假设 word 对象有 id 属性
+  const wordId = props.word.text;
   try {
     // 先尝试从本地获取音频 URL
     localAudioUrl.value = getLocalAudioUrl(wordId);
+    console.log('本地音频URL:', localAudioUrl.value ? '已缓存' : '未缓存');
 
+    // 播放音频：优先使用本地 Data URL
+    let audioSrc = localAudioUrl.value;
 
-    // 如果本地没有，则下载并存储
-    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(props.word.text)}&type=1`;
-    if (!localAudioUrl.value) {
-      downloadAndStoreAudio(url, wordId).then(result => {
-        if (result) {
-          localAudioUrl.value = result.objectUrl;
-          wordModel.value.pronunciation = result.dataUrl;
-          // 更新数据库中的单词
-          wordsStore.addAndUpdateWord(wordModel.value);
+    // 如果没有本地缓存，按优先级下载音频
+    if (!audioSrc) {
+      console.log('没有本地缓存，开始下载音频...');
+
+      // 优先级1: 尝试 Edge TTS (音质最好)
+      try {
+        console.log('尝试 Edge TTS...');
+        const {speakWithEdgeTTS} = await import('@/utils/translation-api.ts');
+        const edgeSuccess = await speakWithEdgeTTS(props.word.text);
+        if (edgeSuccess) {
+          console.log('Edge TTS 播放成功');
+          isPlaying = false;
+          return;
         }
-      });
+      } catch (error) {
+        console.log('Edge TTS 失败:', error);
+      }
+
+      // 优先级2: 有道在线 TTS
+      console.log('Edge TTS 不可用，尝试有道 TTS...');
+      const youdaoUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(props.word.text)}&type=1`;
+      const youdaoResult = await downloadAndStoreAudio(youdaoUrl, wordId, false);
+
+      if (youdaoResult) {
+        audioSrc = youdaoResult.dataUrl;
+        localAudioUrl.value = youdaoResult.dataUrl;
+        wordModel.value.pronunciation = youdaoResult.dataUrl;
+        wordsStore.addAndUpdateWord(wordModel.value);
+        console.log('有道 TTS 下载成功，使用 Data URL 播放');
+      } else {
+        // 优先级3: Web Speech API (离线备用)
+        console.warn('有道 TTS 也失败，尝试 Web Speech API...');
+        const {speakWithWebSpeech} = await import('@/utils/translation-api.ts');
+        const success = speakWithWebSpeech(props.word.text);
+        if (success) {
+          console.log('Web Speech API 播放成功');
+          isPlaying = false;
+          return;
+        }
+        // 所有方案都失败
+        ElMessage.error('发音播放失败，请检查网络连接');
+        isPlaying = false;
+        return;
+      }
     }
 
-    // 播放音频
-    const audioSrc = localAudioUrl.value || url;
-    if (audioPlayer.value && audioSrc) {
-      audioPlayer.value.src = audioSrc;
+    console.log('播放音频源:', audioSrc.substring(0, 50) + '...');
 
+    if (audioPlayer.value && audioSrc) {
+      // 重置音频元素
+      audioPlayer.value.pause();
+      audioPlayer.value.currentTime = 0;
+      audioPlayer.value.src = audioSrc;
 
       // 监听播放完成事件
       const onEnded = () => {
+        console.log('音频播放完成');
         isPlaying = false;
         audioPlayer.value!.removeEventListener('ended', onEnded);
       };
 
       // 监听播放错误事件
-      const onError = () => {
+      const onError = (e: Event) => {
+        console.error('音频播放错误:', e);
         isPlaying = false;
+        audioPlayer.value!.removeEventListener('ended', onEnded);
         audioPlayer.value!.removeEventListener('error', onError);
       };
 
       audioPlayer.value.addEventListener('ended', onEnded);
       audioPlayer.value.addEventListener('error', onError);
 
-      // 等待音频加载完成后再播放
-      await new Promise((resolve) => {
-        audioPlayer.value!.oncanplay = resolve;
+      // 等待音频加载完成后再播放（带超时）
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error('音频加载超时'));
+        }, 5000);
+
+        audioPlayer.value!.oncanplay = () => {
+          clearTimeout(timeout);
+          resolve(undefined);
+        };
+
+        audioPlayer.value!.onerror = () => {
+          clearTimeout(timeout);
+          reject(new Error('音频加载失败'));
+        };
       });
 
       await audioPlayer.value.play();
+      console.log('开始播放');
     } else {
       console.warn('音频源无效，无法播放');
       isPlaying = false;
     }
   } catch (error) {
     console.error('播放失败:', error);
+    // 最后尝试 Web Speech API
+    try {
+      const {speakWithWebSpeech} = await import('@/utils/translation-api.ts');
+      const success = speakWithWebSpeech(props.word.text);
+      if (success) {
+        console.log('Web Speech API 降级播放成功');
+      }
+    } catch (e) {
+      console.error('Web Speech API 也失败:', e);
+    }
     isPlaying = false;
   }
 };

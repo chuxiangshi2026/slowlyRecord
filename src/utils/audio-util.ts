@@ -44,27 +44,101 @@ export const bufferToWave = (buffer: AudioBuffer, sampleRate: number): Blob => {
 
 /**
  * 下载音频文件返回本地地址
+ * @param url 音频URL
+ * @param wordId 单词ID
+ * @param skipProcessing 是否跳过音频处理（直接存储原始数据，适用于百度等）
+ * @param maxRetries 最大重试次数
  */
-export const downloadAndStoreAudio = async (url: string, wordId: string): Promise<{
+export const downloadAndStoreAudio = async (url: string, wordId: string, skipProcessing: boolean = false, maxRetries: number = 2): Promise<{
+    dataUrl: string,
+    objectUrl: string
+} | null> => {
+    // 重试逻辑
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        if (attempt > 0) {
+            console.log(`第${attempt + 1}次重试下载音频...`);
+            // 添加延迟避免过于频繁的请求
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        }
+        
+        const result = await downloadAudioAttempt(url, wordId, skipProcessing);
+        if (result) {
+            return result;
+        }
+    }
+    
+    console.error(`音频下载失败，已重试${maxRetries + 1}次`);
+    return null;
+};
+
+/**
+ * 单次音频下载尝试
+ */
+const downloadAudioAttempt = async (url: string, wordId: string, skipProcessing: boolean = false): Promise<{
     dataUrl: string,
     objectUrl: string
 } | null> => {
     try {
+        console.log('开始下载音频:', url.substring(0, 100));
+
         const response = await fetch(url);
+        
+        // 检查响应状态
+        if (!response.ok) {
+            console.error('下载失败:', response.status, response.statusText);
+            return null;
+        }
+        
+        // 检查响应内容类型
+        const contentType = response.headers.get('content-type') || '';
+        console.log('响应内容类型:', contentType);
+        
+        // 如果返回的是HTML，说明请求被拦截了
+        if (contentType.includes('text/html')) {
+            console.error('请求被拦截，返回了HTML页面而非音频');
+            return null;
+        }
+        
         const blob = await response.blob();
+        console.log('音频下载成功, 大小:', blob.size, '类型:', blob.type);
 
-        // 存储到 localStorage (注意：localStorage 有大小限制)
-        // const arrayBuffer = await blob.arrayBuffer();
-        // const uint8Array = new Uint8Array(arrayBuffer);
-        // localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
+        // 更严格的空文件检查
+        if (blob.size === 0 || !blob.type.startsWith('audio/')) {
+            console.error('音频文件无效: 大小为0或类型不正确');
+            return null;
+        }
 
+        const arrayBuffer = await blob.arrayBuffer();
 
+        // 如果需要跳过处理，直接存储原始数据
+        if (skipProcessing) {
+            console.log('跳过处理, 直接存储原始音频');
+            // 直接存储原始MP3数据到 localStorage
+            const uint8Array = new Uint8Array(arrayBuffer);
+            localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
+
+            // 创建 Data URL
+            const reader = new FileReader();
+            const dataUrlPromise = new Promise<string>((resolve) => {
+                reader.onload = () => resolve(reader.result as string);
+            });
+            reader.readAsDataURL(blob);
+            const dataUrl = await dataUrlPromise;
+            console.log('Data URL 生成成功:', dataUrl.substring(0, 50));
+
+            // 创建本地 URL
+            return {
+                dataUrl: dataUrl,
+                objectUrl: URL.createObjectURL(blob)
+            };
+        }
+
+        // 其他音频（如有道）进行解码处理
         // 创建一个音频上下文用于处理音频
         const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
 
-        // 读取音频数据
-        const arrayBuffer = await blob.arrayBuffer();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        // 解码音频数据
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer.slice(0));
 
         // 降低音频质量以减小文件大小
         // 降低采样率到 22050Hz (标准是 44100Hz)
@@ -92,20 +166,18 @@ export const downloadAndStoreAudio = async (url: string, wordId: string): Promis
         const uint8Array = new Uint8Array(wavArrayBuffer);
         localStorage.setItem(`audio_${wordId}`, JSON.stringify(Array.from(uint8Array)));
 
-
         // 同时存储到单词对象的 pronunciation 字段（base64编码）
         const reader = new FileReader();
-        /*reader.onload = () => {
-            wordModel.value.pronunciation = reader.result as string;
-            // 更新数据库中的单词
-            wordsStore.addAndUpdateWord(wordModel.value);
-        };*/
+        const dataUrlPromise = new Promise<string>((resolve) => {
+            reader.onload = () => resolve(reader.result as string);
+        });
+        reader.readAsDataURL(wavBlob);
+        const dataUrl = await dataUrlPromise;
 
-        reader.readAsDataURL(blob);
         // 创建本地 URL
         return {
-            dataUrl: reader.result as string,
-            objectUrl: URL.createObjectURL(blob)
+            dataUrl: dataUrl,
+            objectUrl: URL.createObjectURL(wavBlob)
         };
     } catch (error) {
         console.error('Failed to download and store audio:', error);

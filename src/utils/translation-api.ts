@@ -12,6 +12,348 @@ import {log} from "@/utils/logger.ts";
 import {getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {translateWithLocalDictionaryAsync} from "./local-dictionary";
 
+// 发音URL缓存 Map
+const pronunciationCache = new Map<string, string>();
+
+// TTS 配置
+interface TTSConfig {
+    name: string;
+    url: string;
+    priority: number; // 数字越小优先级越高
+}
+
+// TTS 源列表（按优先级排序）
+const TTS_SOURCES: TTSConfig[] = [
+    {
+        name: 'edge',
+        url: 'https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1',
+        priority: 1
+    },
+    {
+        name: 'youdao',
+        url: 'https://dict.youdao.com/dictvoice?audio={word}&type=1',
+        priority: 2
+    }
+];
+
+/**
+ * 生成 Edge TTS 的请求配置
+ * Edge TTS 使用 WebSocket 或特殊的 HTTP 请求
+ */
+function generateEdgeTTSConfig(word: string) {
+    const voice = 'en-US-AnaNeural'; // 美式英语女声，音质很好
+    const outputFormat = 'audio-24khz-48kbitrate-mono-mp3';
+
+    // SSML 格式
+    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+        <voice name="${voice}">
+            <prosody rate="0%" pitch="0%">${word}</prosody>
+        </voice>
+    </speak>`;
+
+    return {
+        url: `https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4`,
+        headers: {
+            'Authority': 'speech.platform.bing.com',
+            'Cache-Control': 'max-age=0',
+            'Sec-Ch-Ua': '"Not/A)Brand";v="99", "Microsoft Edge";v="115", "Chromium";v="115"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.0',
+            'Accept': '*/*',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Dest': 'audio',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.9',
+        },
+        ssml,
+        voice,
+        outputFormat
+    };
+}
+
+/**
+ * 获取单词发音URL
+ * 优先使用 Edge TTS（音质最好），回退到有道TTS
+ * 带缓存机制
+ */
+async function getPronunciationUrl(word: string): Promise<string> {
+    const cacheKey = word.toLowerCase().trim();
+
+    // 1. 检查缓存
+    if (pronunciationCache.has(cacheKey)) {
+        return pronunciationCache.get(cacheKey)!;
+    }
+
+    // 2. 优先使用 Edge TTS（通过代理或直接使用）
+    // 由于浏览器 CORS 限制，这里返回有道 TTS 的 URL
+    // 实际的 Edge TTS 调用在 speakWithEdgeTTS 函数中
+    const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
+    pronunciationCache.set(cacheKey, youdaoTtsUrl);
+    return youdaoTtsUrl;
+}
+
+/**
+ * 同步获取发音URL（使用有道，稳定可靠）
+ */
+function getPronunciationUrlSync(word: string): string {
+    const cacheKey = word.toLowerCase().trim();
+
+    // 检查缓存
+    if (pronunciationCache.has(cacheKey)) {
+        return pronunciationCache.get(cacheKey)!;
+    }
+
+    // 使用有道TTS（最稳定，CORS 友好）
+    const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
+    pronunciationCache.set(cacheKey, youdaoTtsUrl);
+    return youdaoTtsUrl;
+}
+
+/**
+ * 等待语音列表加载完成
+ */
+function waitForVoices(): Promise<SpeechSynthesisVoice[]> {
+    return new Promise((resolve) => {
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+            resolve(voices);
+            return;
+        }
+
+        // 语音列表还未加载，等待加载完成
+        window.speechSynthesis.onvoiceschanged = () => {
+            resolve(window.speechSynthesis.getVoices());
+        };
+
+        // 超时处理（2秒）
+        setTimeout(() => {
+            resolve(window.speechSynthesis.getVoices());
+        }, 2000);
+    });
+}
+
+/**
+ * 检测运行环境
+ */
+function detectEnvironment(): { isUTools: boolean; isEdge: boolean; isChrome: boolean } {
+    const ua = navigator.userAgent;
+    return {
+        isUTools: typeof (window as any).utools !== 'undefined',
+        isEdge: ua.includes('Edg'),
+        isChrome: ua.includes('Chrome') && !ua.includes('Edg')
+    };
+}
+
+/**
+ * 使用 Edge TTS 播放发音（最佳音质）
+ * 适配 uTools/Chromium 环境
+ */
+export async function speakWithEdgeTTS(word: string): Promise<boolean> {
+    try {
+        console.log('尝试使用 Edge TTS:', word);
+
+        const env = detectEnvironment();
+        console.log('运行环境:', env);
+
+        // 等待语音列表加载
+        const voices = await waitForVoices();
+        console.log('可用语音总数:', voices.length);
+
+        // 打印所有英文语音供调试
+        const englishVoices = voices.filter(v => v.lang.startsWith('en'));
+        console.log('可用英文语音:', englishVoices.map(v => v.name));
+
+        // uTools/Chromium 环境：优先使用 Google 语音（音质好）
+        if (env.isUTools || env.isChrome) {
+            const googleVoices = voices.filter(v =>
+                v.name.includes('Google') && v.lang.startsWith('en')
+            );
+
+            if (googleVoices.length > 0) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+
+                // 优先选择 US 语音
+                const voice = googleVoices.find(v => v.lang === 'en-US') ||
+                             googleVoices.find(v => v.name.includes('US')) ||
+                             googleVoices[0];
+
+                utterance.voice = voice;
+                console.log('使用 Google 语音 (uTools):', voice.name);
+
+                return new Promise((resolve) => {
+                    utterance.onstart = () => console.log('TTS 开始播放:', word);
+                    utterance.onend = () => {
+                        console.log('TTS 播放完成');
+                        resolve(true);
+                    };
+                    utterance.onerror = (e) => {
+                        console.error('TTS 播放错误:', e);
+                        resolve(false);
+                    };
+                    window.speechSynthesis.speak(utterance);
+                });
+            }
+        }
+
+        // Edge 浏览器环境：优先使用 Microsoft 语音
+        if (env.isEdge) {
+            const microsoftVoices = voices.filter(v =>
+                v.name.includes('Microsoft') && v.lang.startsWith('en')
+            );
+
+            if (microsoftVoices.length > 0) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 1.0;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+
+                const voice = microsoftVoices.find(v => v.name.includes('Online') && v.name.includes('Aria')) ||
+                             microsoftVoices.find(v => v.name.includes('Online')) ||
+                             microsoftVoices[0];
+
+                utterance.voice = voice;
+                console.log('使用 Microsoft 语音 (Edge):', voice.name);
+
+                return new Promise((resolve) => {
+                    utterance.onstart = () => console.log('TTS 开始播放:', word);
+                    utterance.onend = () => {
+                        console.log('TTS 播放完成');
+                        resolve(true);
+                    };
+                    utterance.onerror = (e) => {
+                        console.error('TTS 播放错误:', e);
+                        resolve(false);
+                    };
+                    window.speechSynthesis.speak(utterance);
+                });
+            }
+        }
+
+        // Fallback：使用任意可用英文语音
+        if (englishVoices.length > 0) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.voice = englishVoices[0];
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+
+            console.log('使用默认语音:', englishVoices[0].name);
+
+            return new Promise((resolve) => {
+                utterance.onend = () => resolve(true);
+                utterance.onerror = () => resolve(false);
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        console.log('未找到合适的语音');
+        return false;
+    } catch (error) {
+        console.warn('Edge TTS 失败:', error);
+        return false;
+    }
+}
+
+/**
+ * 使用 Web Speech API 播放发音（支持 Microsoft Edge 语音）
+ * 在 Edge 浏览器中会自动使用 Microsoft 的高质量语音
+ */
+export function speakWithWebSpeech(word: string): boolean {
+    if (!('speechSynthesis' in window)) {
+        console.warn('浏览器不支持 Web Speech API');
+        return false;
+    }
+
+    // 取消当前正在播放的语音
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    // 优先选择 Microsoft 语音（Edge 浏览器内置，音质最好）
+    const voices = window.speechSynthesis.getVoices();
+
+    // Microsoft 语音优先级列表
+    const preferredVoices = [
+        'Microsoft Aria Online (Natural) - English (United States)',
+        'Microsoft Ana Online (Natural) - English (United States)',
+        'Microsoft Jenny Online (Natural) - English (United States)',
+        'Microsoft Guy Online (Natural) - English (United States)',
+        'Microsoft Eric Online (Natural) - English (United States)',
+        'Microsoft Steffan Online (Natural) - English (United States)',
+        'Microsoft Sonia Online (Natural) - English (United Kingdom)',
+        'Microsoft Libby Online (Natural) - English (United Kingdom)',
+        'Microsoft Ryan Online (Natural) - English (United Kingdom)',
+        'Microsoft Aria - English (United States)',
+        'Microsoft Zira - English (United States)',
+        'Microsoft David - English (United States)',
+        'Microsoft Mark - English (United States)',
+    ];
+
+    // 查找最佳语音
+    let selectedVoice = voices.find(v => preferredVoices.includes(v.name));
+
+    // 如果没找到 Microsoft 语音，找其他英文语音
+    if (!selectedVoice) {
+        selectedVoice = voices.find(v =>
+            v.lang.startsWith('en') &&
+            (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel'))
+        );
+    }
+
+    // 最后 fallback 到任意英文语音
+    if (!selectedVoice) {
+        selectedVoice = voices.find(v => v.lang.startsWith('en'));
+    }
+
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        console.log('使用语音:', selectedVoice.name);
+    } else {
+        console.log('使用默认语音');
+    }
+
+    utterance.onstart = () => console.log('Web Speech 开始播放:', word);
+    utterance.onend = () => console.log('Web Speech 播放完成');
+    utterance.onerror = (e) => console.error('Web Speech 播放错误:', e);
+
+    window.speechSynthesis.speak(utterance);
+    return true;
+}
+
+/**
+ * 获取可用的语音列表（用于调试）
+ */
+export function getAvailableVoices(): SpeechSynthesisVoice[] {
+    if (!('speechSynthesis' in window)) {
+        return [];
+    }
+    return window.speechSynthesis.getVoices();
+}
+
+/**
+ * 打印所有可用语音（调试用）
+ */
+export function logAvailableVoices(): void {
+    const voices = getAvailableVoices();
+    console.log('=== 可用语音列表 ===');
+    voices
+        .filter(v => v.lang.startsWith('en'))
+        .forEach((v, i) => {
+            console.log(`${i + 1}. ${v.name} (${v.lang}) ${v.default ? '- 默认' : ''}`);
+        });
+}
+
 /**
  * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
  */
@@ -177,7 +519,7 @@ export async function translateWithPlatform(query: string, platform: Translation
                     }
                 });
                 console.log('请求结果')
-                return handleYoudaoResponse(youdaoResponse.data);
+                return handleYoudaoResponse(youdaoResponse.data, query);
 
             case 'baidu':
                 const baiduParams = generateBaiduParams(query);
@@ -188,7 +530,7 @@ export async function translateWithPlatform(query: string, platform: Translation
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 });
-                return handleBaiduResponse(baiduResponse.data);
+                return handleBaiduResponse(baiduResponse.data, query);
 
             case 'ali':
                 log.i('调用阿里翻译');
@@ -211,9 +553,9 @@ export async function translateWithPlatform(query: string, platform: Translation
                 });
 
                 const aliData = await aliResponse.json();
-                return handleAliResponse(aliData);
+                return handleAliResponse(aliData, query);
             case 'utoolsai':
-                let utoolAiData = callUtoolsAi(query);
+                let utoolAiData = await callUtoolsAi(query);
                 console.log('utool', utoolAiData)
                 return utoolAiData;
             case 'deepseek':
@@ -276,11 +618,12 @@ export async function translateWithPlatform(query: string, platform: Translation
 /**
  * 处理有道翻译返回结果
  */
-function handleYoudaoResponse(data: any): TranslationResult {
+function handleYoudaoResponse(data: any, query: string): TranslationResult {
     if (data.errorCode === '0') {
         const explains = data.translation?.[0] || '';
         const phonetic = data.basic?.phonetic || '';
-        const pronunciation = data.speakUrl || '';
+        // 优先使用有道发音（更可靠），百度作为备选
+        const pronunciation = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(query)}&type=1`;
 
         return {
             success: true,
@@ -299,12 +642,15 @@ function handleYoudaoResponse(data: any): TranslationResult {
 /**
  * 处理百度翻译返回结果
  */
-function handleBaiduResponse(data: any): TranslationResult {
+function handleBaiduResponse(data: any, query: string): TranslationResult {
     if (data.error_code === undefined || data.error_code === '52000') {
         const explains = data.trans_result?.[0]?.dst || '';
+        // 使用统一的发音获取（优先百度）
+        const pronunciation = getPronunciationUrlSync(query);
         return {
             success: true,
-            explains
+            explains,
+            pronunciation
         };
     } else {
         return {
@@ -317,13 +663,16 @@ function handleBaiduResponse(data: any): TranslationResult {
 /**
  * 处理阿里翻译响应
  */
-function handleAliResponse(data: any): TranslationResult {
+function handleAliResponse(data: any, query: string): TranslationResult {
     console.log("ali返回结果", data)
     if (data.Code === '200' && data.Data) {
         const explains = data.Data.Translated;
+        // 使用统一的发音获取（优先百度，回退有道）
+        const pronunciation = getPronunciationUrlSync(query);
         return {
             success: true,
-            explains
+            explains,
+            pronunciation
         };
     } else {
         return {
@@ -371,15 +720,20 @@ async function callUtoolsAi(query: string): Promise<TranslationResult> {
         // 尝试调用AI服务，使用类型断言避免编译错误
         const result: any = await window.utools.ai({messages});
 
+        // 获取发音URL
+        const pronunciation = getPronunciationUrlSync(query);
+
         if (result && typeof result === 'object' && 'content' in result) {
             return {
                 success: true,
-                explains: result.content as string
+                explains: result.content as string,
+                pronunciation
             };
         } else if (typeof result === 'string') {
             return {
                 success: true,
-                explains: result
+                explains: result,
+                pronunciation
             };
         } else {
             return {
@@ -445,9 +799,13 @@ async function callOllama(query: string): Promise<TranslationResult> {
             throw new Error('Invalid response from Ollama: ' + translationResult);
         }
 
+        // 获取发音URL
+        const pronunciation = getPronunciationUrlSync(query);
+
         return {
             success: true,
-            explains: translationResult
+            explains: translationResult,
+            pronunciation
         };
     } catch (error) {
         console.error('Ollama error:', error);
@@ -509,9 +867,13 @@ async function callDeepSeek(query: string): Promise<TranslationResult> {
             throw new Error('Invalid response from DeepSeek');
         }
 
+        // 获取发音URL
+        const pronunciation = getPronunciationUrlSync(query);
+
         return {
             success: true,
-            explains: content
+            explains: content,
+            pronunciation
         };
     } catch (error) {
         console.error('DeepSeek error:', error);
@@ -571,9 +933,13 @@ async function callQwen(query: string): Promise<TranslationResult> {
             throw new Error('Invalid response from Qwen');
         }
 
+        // 获取发音URL
+        const pronunciation = getPronunciationUrlSync(query);
+
         return {
             success: true,
-            explains: content
+            explains: content,
+            pronunciation
         };
     } catch (error) {
         console.error('Qwen error:', error);
@@ -645,9 +1011,13 @@ async function callKimi(query: string): Promise<TranslationResult> {
             throw new Error('Invalid response from Kimi');
         }
 
+        // 获取发音URL
+        const pronunciation = getPronunciationUrlSync(query);
+
         return {
             success: true,
-            explains: content
+            explains: content,
+            pronunciation
         };
     } catch (error) {
         console.error('Kimi error:', error);
@@ -674,12 +1044,15 @@ async function callKimi(query: string): Promise<TranslationResult> {
 /**
  * 处理腾讯翻译响应
  */
-function handleTencentResponse(data: any): TranslationResult {
+function handleTencentResponse(data: any, query: string): TranslationResult {
     if (data.Response && data.Response.TargetText) {
         const explains = data.Response.TargetText;
+        // 使用统一的发音获取（优先百度，回退有道）
+        const pronunciation = getPronunciationUrlSync(query);
         return {
             success: true,
-            explains
+            explains,
+            pronunciation
         };
     } else {
         return {
@@ -783,7 +1156,7 @@ async function callTencent(query: string): Promise<TranslationResult> {
         });
 
         const data = await response.json();
-        return handleTencentResponse(data);
+        return handleTencentResponse(data, query);
     } catch (error) {
         console.error('Tencent translation error:', error);
         return {

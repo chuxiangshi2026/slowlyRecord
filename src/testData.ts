@@ -14,7 +14,7 @@ export const testData: Word[] = [{
     "explainedHidden": false,
     "level": 0,
     "image": 'https://www.baidu.com/img/flexible/logo/pc/result.png',
-    "pronunciation": 'https://fanyi.baidu.com/gettts?lan=en&text=abandon&spd=3&source=web',
+    "pronunciation": 'https://dict.youdao.com/dictvoice?audio=abandon&type=1',
     "phonetic": '[əˈbændən]',
     "remember": false
 }, {
@@ -29,7 +29,7 @@ export const testData: Word[] = [{
     "explainedHidden": false,
     "level": 0,
     "image": 'https://www.baidu.com/img/flexible/logo/pc/result.png',
-    "pronunciation": 'https://fanyi.baidu.com/gettts?lan=en&text=abandon&spd=3&source=web',
+    "pronunciation": 'https://dict.youdao.com/dictvoice?audio=abandon&type=1',
     "phonetic": '[əˈbændən]',
     "remember": false
 }]
