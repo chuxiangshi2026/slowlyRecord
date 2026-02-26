@@ -152,7 +152,7 @@
       </div>
       <!--      apiKeys-->
       <div v-for="(item,index) in wordsStore.userApiKeys"
-           :key="index" class="titles" v-show="index !== 'utoolsai'">
+           :key="index" class="titles" v-show="index !== 'utoolsai' && index !== 'local'">
         <span class="shorcut-desc">
           {{ index }} AppKey
           <!--          type="password"-->
