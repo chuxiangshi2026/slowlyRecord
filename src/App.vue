@@ -532,18 +532,18 @@ onMounted(() => {
   }
 
   // 添加调试面板快捷键 Ctrl+Shift+D
-  const handleKeyDown = (e: KeyboardEvent) => {
+/*  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.ctrlKey && e.shiftKey && e.key === 'D') {
       showDebugPanel.value = !showDebugPanel.value;
       e.preventDefault();
     }
   };
-  window.addEventListener('keydown', handleKeyDown);
+  window.addEventListener('keydown', handleKeyDown);*/
 
   // 清理函数
-  onUnmounted(() => {
-    window.removeEventListener('keydown', handleKeyDown);
-  });
+  // onUnmounted(() => {
+  //   window.removeEventListener('keydown', handleKeyDown);
+  // });
 
   // window.addEventListener('selected-text', handleSelectedText as EventListener);
 
