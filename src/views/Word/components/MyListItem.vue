@@ -6,7 +6,7 @@
 
     <p class="word">
       {{ word.text }}
-      <span class="phonetic">{{ word.phonetic }}</span>
+      <span class="phonetic">{{ displayPhonetic }}</span>
     </p>
     <div class="level">
       <i :class="`iconfont icon-level-${word.level}`"></i>
@@ -100,6 +100,16 @@ import {ElMessage} from "element-plus";
 const wordsStore = useWordsStore();
 // 是否处于焦点状态
 const isFocus = ref(false);
+
+// 显示音标（过滤掉URL，防止发音链接显示为音标）
+const displayPhonetic = computed(() => {
+  const phonetic = props.word.phonetic || '';
+  // 如果音标字段包含URL（http/https），则不显示
+  if (phonetic.match(/^https?:\/\//i)) {
+    return '';
+  }
+  return phonetic;
+});
 onMounted(async () => {
   // 如果是第一个元素，则自动获取焦点
   if (props.isFirst) {

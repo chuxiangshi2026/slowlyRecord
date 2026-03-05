@@ -71,15 +71,19 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
                 findWord.isReview = true
                 findWord.pronunciation = res.pronunciation
                 // 如果翻译API没有返回音标，尝试从本地词典获取
-                if (!res.phonetic || res.phonetic.trim() === '') {
+                let phonetic = res.phonetic || '';
+                // 防止音标字段包含URL
+                if (phonetic.match(/^https?:\/\//i)) {
+                    phonetic = '';
+                }
+                if (!phonetic || phonetic.trim() === '') {
                     const localEntry = await queryLocalDictionaryAsync(wordText);
                     if (localEntry?.phonetic) {
-                        findWord.phonetic = localEntry.phonetic;
-                        console.log('[本地词库] 更新音标:', wordText, localEntry.phonetic);
+                        phonetic = localEntry.phonetic;
+                        console.log('[本地词库] 更新音标:', wordText, phonetic);
                     }
-                } else {
-                    findWord.phonetic = res.phonetic;
                 }
+                findWord.phonetic = phonetic;
                 findWord.remember = false
                 findWord.level = 1
 
@@ -110,6 +114,10 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             let oldWords = wordsStore.words
             // 如果翻译API没有返回音标，尝试从本地词典获取
             let phonetic = res.phonetic || '';
+            // 防止音标字段包含URL
+            if (phonetic.match(/^https?:\/\//i)) {
+                phonetic = '';
+            }
             if (!phonetic || phonetic.trim() === '') {
                 const localEntry = await queryLocalDictionaryAsync(wordText);
                 if (localEntry?.phonetic) {

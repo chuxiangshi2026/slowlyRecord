@@ -183,9 +183,14 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <!--      <a href="#/home/list" style="margin-left: 16px;">-->
-      <!--        &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;-->
-      <!--      </a>-->
+
+      <el-tooltip class="box-item" effect="dark" content="听写练习" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-list" @click="goToDictation" style="font-weight: bold;"></i>
+      </el-tooltip>
+<!--      </el-tooltip>
+            <a href="#/home/list" style="margin-left: 16px;">
+              &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;
+            </a>-->
       <!--      <a href="#/home/typing" style="margin-left: 16px;">-->
       <!--        <i class="iconfont icon-card "></i>-->
       <!--      </a>-->
@@ -215,11 +220,12 @@ import {log} from "@/utils/logger.ts";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
-import {Loading, Warning, InfoFilled} from '@element-plus/icons-vue';
+import {Loading, Warning, InfoFilled, VideoPlay, CircleCheck, CircleClose, Trophy} from '@element-plus/icons-vue';
+import {useRouter} from 'vue-router';
 
 const word = ref('')
-
 const wordsStore = useWordsStore();
+const router = useRouter();
 
 const drawerVisible = ref(false)
 const title = ref('设置')
@@ -905,6 +911,17 @@ const confirmAddOcrWords = async () => {
     ElMessage.warning(`${failCount} 个单词添加失败`);
   }
 }
+
+// ========== 听写练习功能 ==========
+
+/**
+ * 跳转到听写练习页面
+ */
+function goToDictation() {
+  router.push('/dictation')
+}
+
+
 
 // 当新数据更新时 自动滚动到单词处  放到最后
 // 监听 Store 中的 lastAddedWordText 状态
