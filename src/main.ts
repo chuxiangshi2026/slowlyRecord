@@ -16,6 +16,7 @@ import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
+import { initBaiduStats, trackRouterPageView } from '@/utils/baidu-stats'
 
 const app = createApp(App)
 
@@ -29,6 +30,19 @@ app.use(pinia)
 app.use(ElementPlus, {locale: zhCn})
 app.use(router)
 app.use(VueVirtualScroller)
+
+// 初始化百度统计
+// console.log('=== 开始初始化百度统计 ===');
+initBaiduStats().then(() => {
+  console.log('=== 百度统计初始化完成 ===');
+}).catch((err) => {
+  console.error('=== 百度统计初始化失败 ===', err);
+});
+
+// 路由切换时追踪页面浏览
+router.afterEach((to) => {
+    trackRouterPageView(to.fullPath);
+});
 
     // createApp(App).mount( ... ) // Vue
     // createRoot( ... ).render(App) // React

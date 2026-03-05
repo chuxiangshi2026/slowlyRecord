@@ -345,17 +345,17 @@ export const useWordsStore =
                     if (typeof learnDate === 'string') {
                         learnDate = new Date(learnDate);
                     }
-                    
+
                     // 确保 level 有效
                     const level = Number(item.level) || 1;
                     const interval = DEFAULT_INTERVALS[level] || DEFAULT_INTERVALS[1];
-                    
+
                     const reviewTime = learnDate.getTime() + interval * 60 * 1000;
                     const now = Date.now();
                     const shouldReview = now > reviewTime;
-                    
-                    log.i(`单词 ${item.text}: level=${level}, interval=${interval}分钟, shouldReview=${shouldReview}, isReview=${item.isReview}`);
-                    
+
+                    // log.i(`单词 ${item.text}: level=${level}, interval=${interval}分钟, shouldReview=${shouldReview}, isReview=${item.isReview}`);
+
                     // 到了复习时间，设为待复习
                     if (shouldReview && !item.isReview) {
                         item.isReview = true;
