@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>专注模式</title>
+  <style>
+    /* Iconfont 字体 */
+    @font-face {
+      font-family: "iconfont";
+      src: url('../src/assets/icons/iconfont.woff2?t=1763429391127') format('woff2'),
+           url('../src/assets/icons/iconfont.woff?t=1763429391127') format('woff'),
+           url('../src/assets/icons/iconfont.ttf?t=1763429391127') format('truetype');
+    }
+
+    .iconfont {
+      font-family: "iconfont" !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-lock:before { content: "\e676"; }
+    .icon-top:before { content: "\e681"; }
+    .icon-card:before { content: "\e61a"; }
+    .icon-close:before { content: "\e616"; }
+    .icon-left:before { content: "\e612"; }
+    .icon-right:before { content: "\e613"; }
+    .icon-visible:before { content: "\e7ec"; }
+    .icon-invisible:before { content: "\e64e"; }
+    .icon-player:before { content: "\e60b"; }
+    .icon-check:before { content: "\e861"; }
+    .icon-delete:before { content: "\e60e"; }
+  </style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fff;
+    }
+
+    .focus-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      position: relative;
+      /* 允许拖拽移动窗口 */
+      -webkit-app-region: drag;
+    }
+
+    /* 按钮区域不响应拖拽，允许点击 */
+    .actions, .btn-close, .counter {
+      -webkit-app-region: no-drag;
+    }
+
+    .word {
+      font-size: 20px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 2px;
+      text-align: center;
+      user-select: none;
+    }
+
+    .explains {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 6px;
+      max-width: 95%;
+      line-height: 1.3;
+      user-select: none;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .actions .iconfont {
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      padding: 2px;
+      transition: opacity 0.15s;
+    }
+
+    .actions .iconfont:hover:not(.disabled) {
+      opacity: 0.6;
+    }
+
+    .actions .iconfont.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    .actions .icon-delete {
+      color: #999;
+    }
+
+    .actions .icon-check {
+      color: #000;
+      font-weight: bold;
+    }
+
+    .btn-close {
+      position: absolute;
+      top: 2px;
+      right: 6px;
+      font-size: 12px;
+      color: #999;
+      cursor: pointer;
+      padding: 2px;
+    }
+
+    .btn-close:hover {
+      color: #333;
+    }
+
+    .counter {
+      position: absolute;
+      bottom: 2px;
+      right: 6px;
+      font-size: 10px;
+      color: #ccc;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="focus-container" id="app">
+    <div class="word" id="word">加载中...</div>
+    <div class="explains" id="explains"></div>
+
+    <div class="actions">
+      <i class="iconfont icon-left" id="btn-prev" title="上一个"></i>
+      <i class="iconfont icon-visible" id="btn-toggle" title="显示/隐藏释义"></i>
+      <i class="iconfont icon-player" id="btn-play" title="播放发音"></i>
+      <i class="iconfont icon-delete" id="btn-forgot" title="忘记"></i>
+      <i class="iconfont icon-check" id="btn-remember" title="记得"></i>
+      <i class="iconfont icon-right" id="btn-next" title="下一个"></i>
+    </div>
+
+    <i class="iconfont icon-close btn-close" id="btn-close" title="关闭"></i>
+    <div class="counter" id="counter">0/0</div>
+  </div>
+
+  <script>
+    // 状态
+    let words = [];
+    let currentIndex = 0;
+    let showExplains = false;
+
+    // DOM 元素
+    const elWord = document.getElementById('word');
+    const elExplains = document.getElementById('explains');
+    const elCounter = document.getElementById('counter');
+    const elBtnPrev = document.getElementById('btn-prev');
+    const elBtnNext = document.getElementById('btn-next');
+    const elBtnToggle = document.getElementById('btn-toggle');
+
+    // 数据库 key
+    const DB_KEY = 'words-list';
+
+    // 加载数据
+    async function loadWords() {
+      try {
+        if (typeof utools !== 'undefined') {
+          let allDocs = [];
+          try {
+            allDocs = utools.db.allDocs(DB_KEY);
+          } catch (e) {
+            allDocs = utools.db.allDocs();
+          }
+          words = allDocs.filter(w => w.isReview === true);
+        }
+
+        if (words.length === 0) {
+          elWord.textContent = '暂无待复习单词';
+          elCounter.textContent = '0/0';
+          return;
+        }
+
+        updateDisplay();
+      } catch (e) {
+        console.error('加载失败:', e);
+        elWord.textContent = '加载失败';
+      }
+    }
+
+    // 更新显示
+    function updateDisplay() {
+      const word = words[currentIndex];
+      if (!word) return;
+
+      elWord.textContent = word.text || '无';
+      elCounter.textContent = `${currentIndex + 1}/${words.length}`;
+
+      if (showExplains && word.explains) {
+        elExplains.textContent = Array.isArray(word.explains)
+          ? word.explains.join('; ')
+          : word.explains;
+        elExplains.style.display = 'block';
+        elBtnToggle.className = 'iconfont icon-invisible';
+      } else {
+        elExplains.style.display = 'none';
+        elBtnToggle.className = 'iconfont icon-visible';
+      }
+
+      elBtnPrev.classList.toggle('disabled', currentIndex <= 0);
+      elBtnNext.classList.toggle('disabled', currentIndex >= words.length - 1);
+    }
+
+    // 播放发音
+    async function playAudio() {
+      const word = words[currentIndex];
+      if (!word) return;
+      try {
+        const audio = new Audio();
+        audio.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word.text)}&type=1`;
+        await audio.play();
+      } catch (e) {
+        console.error('播放失败:', e);
+      }
+    }
+
+    // 标记记得
+    function markRemembered() {
+      const word = words[currentIndex];
+      if (!word) return;
+
+      word.level = Math.min(7, (word.level || 1) + 1);
+      word.isReview = word.level < 7;
+      if (word.level >= 7) word.remember = true;
+      word.learnDate = new Date();
+
+      if (typeof utools !== 'undefined') utools.db.put(word);
+
+      if (!word.isReview) {
+        words.splice(currentIndex, 1);
+        if (currentIndex >= words.length) currentIndex = Math.max(0, words.length - 1);
+      }
+
+      updateDisplay();
+
+      if (currentIndex < words.length - 1) {
+        setTimeout(() => { currentIndex++; updateDisplay(); }, 200);
+      }
+    }
+
+    // 标记忘记
+    function markForgot() {
+      const word = words[currentIndex];
+      if (!word) return;
+
+      word.level = Math.max(1, (word.level || 1) - 1);
+      word.isReview = true;
+
+      if (typeof utools !== 'undefined') utools.db.put(word);
+      updateDisplay();
+
+      if (currentIndex < words.length - 1) {
+        setTimeout(() => { currentIndex++; updateDisplay(); }, 200);
+      }
+    }
+
+    // 事件监听
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      if (currentIndex > 0) { currentIndex--; showExplains = false; updateDisplay(); }
+    });
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; updateDisplay(); }
+    });
+
+    document.getElementById('btn-toggle').addEventListener('click', () => { showExplains = !showExplains; updateDisplay(); });
+    document.getElementById('btn-play').addEventListener('click', playAudio);
+    document.getElementById('btn-remember').addEventListener('click', markRemembered);
+    document.getElementById('btn-forgot').addEventListener('click', markForgot);
+    document.getElementById('btn-close').addEventListener('click', () => window.close());
+
+    // 键盘快捷键
+    document.addEventListener('keydown', (e) => {
+      if (e.shiftKey && e.key === 'R') { e.preventDefault(); markRemembered(); }
+      else if (e.shiftKey && e.key === 'F') { e.preventDefault(); markForgot(); }
+      else if (e.shiftKey && e.key === 'P') { e.preventDefault(); playAudio(); }
+      else if (e.shiftKey && e.key === 'T') { e.preventDefault(); showExplains = !showExplains; updateDisplay(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentIndex > 0) { currentIndex--; showExplains = false; updateDisplay(); } }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; updateDisplay(); } }
+      else if (e.key === 'Escape') { e.preventDefault(); window.close(); }
+    });
+
+    // 初始化
+    loadWords();
+  </script>
+</body>
+</html>
