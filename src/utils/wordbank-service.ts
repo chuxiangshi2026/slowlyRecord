@@ -6,7 +6,7 @@
 import type { Word } from '@/types/words';
 
 // 词库类型定义
-export type WordBankType = 
+export type WordBankType =
   | 'cet4'      // 英语四级
   | 'cet6'      // 英语六级
   | 'kaogong'   // 考公英语
@@ -67,16 +67,16 @@ function getFromCache(type: WordBankType): Word[] | null {
     const cacheKey = CACHE_KEY_PREFIX + type;
     const cached = localStorage.getItem(cacheKey);
     if (!cached) return null;
-    
+
     const data: CacheData = JSON.parse(cached);
     const now = Date.now();
-    
+
     // 检查是否过期
     if (now - data.timestamp > CACHE_EXPIRY) {
       localStorage.removeItem(cacheKey);
       return null;
     }
-    
+
     return data.words;
   } catch {
     return null;
@@ -122,7 +122,7 @@ export async function fetchWordBank(
   try {
     const url = WORDBANK_URLS[type];
     console.log(`[WordBank] 获取在线词库: ${type} from ${url}`);
-    
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -136,14 +136,14 @@ export async function fetchWordBank(
 
     const data = await response.json();
     const words = normalizeWords(data.words || data);
-    
+
     // 保存到缓存
     saveToCache(type, words);
-    
+
     return words;
   } catch (error) {
     console.warn(`[WordBank] 在线获取失败: ${type}`, error);
-    
+
     // 如果在线获取失败，使用内置备用词库
     return getFallbackWords(type);
   }
@@ -157,13 +157,13 @@ function normalizeWords(data: any[]): Word[] {
     _id: `wordbank_${Date.now()}_${index}`,
     text: item.word || item.text || '',
     phonetic: item.phonetic || item.phoneticSymbol || '',
-    explains: Array.isArray(item.explains) 
-      ? item.explains.join('; ') 
+    explains: Array.isArray(item.explains)
+      ? item.explains.join('; ')
       : (item.translation || item.meaning || item.explains || ''),
     isReview: false,
     ctime: new Date(),
     learnDate: new Date(),
-    level: 1,
+    level: 1 as Word['level'],
     explainedHidden: false,
     remember: false,
   })).filter(w => w.text && /^[a-zA-Z]+$/.test(w.text));
@@ -306,7 +306,7 @@ function getFallbackWords(type: WordBankType): Word[] {
 
   // 为其他词库复制基础数据并添加一些特定词汇
   const baseWords = fallbackData.cet4;
-  
+
   // 六级添加更多学术词汇
   fallbackData.cet6 = [
     ...baseWords,
