@@ -68,10 +68,13 @@
     },
     {
       "code": "jycs",
-      "explain": "记忆力测试",
+      "explain": "记忆测试",
       "cmds": [
-        "jycs",
-        "记忆力测试",
+        {
+          "type": "over",
+          "label": "记忆测试",
+          "minLength": 1
+        },
         "记忆测试"
       ]
     },
@@ -79,8 +82,12 @@
       "code": "numMemory",
       "explain": "数字记忆",
       "cmds": [
-        "数字记忆",
-        "szjy"
+        {
+          "type": "over",
+          "label": "数字记忆",
+          "minLength": 1
+        },
+        "数字记忆"
       ]
     }
   ],
