@@ -94,9 +94,12 @@
       "code": "translate",
       "explain": "快速翻译",
       "cmds": [
-        "fy",
-        "翻译",
-        "fanyi"
+        {
+          "type": "fy",
+          "label": "翻译",
+          "minLength": 1
+        },
+        "翻译"
       ]
     }
   ],
