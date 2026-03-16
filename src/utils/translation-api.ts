@@ -836,6 +836,22 @@ async function callDeepSeek(query: string): Promise<TranslationResult> {
 
         const model = modelName || 'deepseek-chat';
 
+        const systemPrompt = `你是一个专业的中英文翻译助手。请将用户输入的英文单词或短语翻译成中文，并以JSON格式返回以下信息：
+{
+  "translation": "中文翻译",
+  "phonetic": "音标（如有）",
+  "examples": [
+    {"english": "英文例句1", "chinese": "中文翻译1"},
+    {"english": "英文例句2", "chinese": "中文翻译2"}
+  ],
+  "synonyms": ["近义词1", "近义词2"],
+  "antonyms": ["反义词1", "反义词2"]
+}
+注意：
+1. 如果是单个单词，请提供音标、2-3个例句、近义词和反义词
+2. 如果是短语或句子，只需提供translation和examples
+3. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
+
         const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -847,7 +863,7 @@ async function callDeepSeek(query: string): Promise<TranslationResult> {
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a helpful translator. Please translate the following text to Chinese.'
+                        content: systemPrompt
                     },
                     {
                         role: 'user',
@@ -872,6 +888,25 @@ async function callDeepSeek(query: string): Promise<TranslationResult> {
 
         // 获取发音URL
         const pronunciation = getPronunciationUrlSync(query);
+
+        // 尝试解析JSON响应
+        try {
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                return {
+                    success: true,
+                    explains: parsed.translation || content.trim(),
+                    phonetic: parsed.phonetic || '',
+                    pronunciation,
+                    examples: parsed.examples || [],
+                    synonyms: parsed.synonyms || [],
+                    antonyms: parsed.antonyms || []
+                };
+            }
+        } catch (e) {
+            console.log('DeepSeek 返回非JSON格式，使用纯文本');
+        }
 
         return {
             success: true,
@@ -903,6 +938,22 @@ async function callQwen(query: string): Promise<TranslationResult> {
 
         const model = modelName || 'qwen-max';
 
+        const systemPrompt = `你是一个专业的中英文翻译助手。请将用户输入的英文单词或短语翻译成中文，并以JSON格式返回以下信息：
+{
+  "translation": "中文翻译",
+  "phonetic": "音标（如有）",
+  "examples": [
+    {"english": "英文例句1", "chinese": "中文翻译1"},
+    {"english": "英文例句2", "chinese": "中文翻译2"}
+  ],
+  "synonyms": ["近义词1", "近义词2"],
+  "antonyms": ["反义词1", "反义词2"]
+}
+注意：
+1. 如果是单个单词，请提供音标、2-3个例句、近义词和反义词
+2. 如果是短语或句子，只需提供translation和examples
+3. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
+
         const response = await fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -914,7 +965,7 @@ async function callQwen(query: string): Promise<TranslationResult> {
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a helpful translator. Please translate the following text to Chinese.'
+                        content: systemPrompt
                     },
                     {
                         role: 'user',
@@ -938,6 +989,25 @@ async function callQwen(query: string): Promise<TranslationResult> {
 
         // 获取发音URL
         const pronunciation = getPronunciationUrlSync(query);
+
+        // 尝试解析JSON响应
+        try {
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                return {
+                    success: true,
+                    explains: parsed.translation || content.trim(),
+                    phonetic: parsed.phonetic || '',
+                    pronunciation,
+                    examples: parsed.examples || [],
+                    synonyms: parsed.synonyms || [],
+                    antonyms: parsed.antonyms || []
+                };
+            }
+        } catch (e) {
+            console.log('Qwen 返回非JSON格式，使用纯文本');
+        }
 
         return {
             success: true,
@@ -969,6 +1039,22 @@ async function callKimi(query: string): Promise<TranslationResult> {
 
         const model = modelName || 'kimi-k2-turbo-preview';
 
+        const systemPrompt = `你是一个专业的中英文翻译助手。请将用户输入的英文单词或短语翻译成中文，并以JSON格式返回以下信息：
+{
+  "translation": "中文翻译",
+  "phonetic": "音标（如有）",
+  "examples": [
+    {"english": "英文例句1", "chinese": "中文翻译1"},
+    {"english": "英文例句2", "chinese": "中文翻译2"}
+  ],
+  "synonyms": ["近义词1", "近义词2"],
+  "antonyms": ["反义词1", "反义词2"]
+}
+注意：
+1. 如果是单个单词，请提供音标、2-3个例句、近义词和反义词
+2. 如果是短语或句子，只需提供translation和examples
+3. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
+
         // Kimi由月之暗面开发，但目前API可能需要特定接入方式
         // 这里使用Moonshot API作为示例（Kimi的提供商）
         const response = await fetch('https://api.moonshot.cn/v1/chat/completions', {
@@ -982,7 +1068,7 @@ async function callKimi(query: string): Promise<TranslationResult> {
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a helpful translator. Please translate the following text to Chinese.'
+                        content: systemPrompt
                     },
                     {
                         role: 'user',
@@ -1016,6 +1102,25 @@ async function callKimi(query: string): Promise<TranslationResult> {
 
         // 获取发音URL
         const pronunciation = getPronunciationUrlSync(query);
+
+        // 尝试解析JSON响应
+        try {
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                return {
+                    success: true,
+                    explains: parsed.translation || content.trim(),
+                    phonetic: parsed.phonetic || '',
+                    pronunciation,
+                    examples: parsed.examples || [],
+                    synonyms: parsed.synonyms || [],
+                    antonyms: parsed.antonyms || []
+                };
+            }
+        } catch (e) {
+            console.log('Kimi 返回非JSON格式，使用纯文本');
+        }
 
         return {
             success: true,
@@ -1057,6 +1162,22 @@ async function callGlm(query: string): Promise<TranslationResult> {
 
         const model = modelName || 'glm-4-flash';
 
+        const systemPrompt = `你是一个专业的中英文翻译助手。请将用户输入的英文单词或短语翻译成中文，并以JSON格式返回以下信息：
+{
+  "translation": "中文翻译",
+  "phonetic": "音标（如有）",
+  "examples": [
+    {"english": "英文例句1", "chinese": "中文翻译1"},
+    {"english": "英文例句2", "chinese": "中文翻译2"}
+  ],
+  "synonyms": ["近义词1", "近义词2"],
+  "antonyms": ["反义词1", "反义词2"]
+}
+注意：
+1. 如果是单个单词，请提供音标、2-3个例句、近义词和反义词
+2. 如果是短语或句子，只需提供translation和examples
+3. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
+
         const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
             method: 'POST',
             headers: {
@@ -1068,7 +1189,7 @@ async function callGlm(query: string): Promise<TranslationResult> {
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a helpful translator. Please translate the following text to Chinese. Only return the translation result, without any explanation.'
+                        content: systemPrompt
                     },
                     {
                         role: 'user',
@@ -1093,6 +1214,25 @@ async function callGlm(query: string): Promise<TranslationResult> {
 
         // 获取发音URL
         const pronunciation = getPronunciationUrlSync(query);
+
+        // 尝试解析JSON响应
+        try {
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                return {
+                    success: true,
+                    explains: parsed.translation || content.trim(),
+                    phonetic: parsed.phonetic || '',
+                    pronunciation,
+                    examples: parsed.examples || [],
+                    synonyms: parsed.synonyms || [],
+                    antonyms: parsed.antonyms || []
+                };
+            }
+        } catch (e) {
+            console.log('GLM 返回非JSON格式，使用纯文本');
+        }
 
         return {
             success: true,

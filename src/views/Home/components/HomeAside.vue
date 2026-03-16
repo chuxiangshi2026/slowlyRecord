@@ -17,7 +17,7 @@ import type {RouteRecordName} from "vue-router";
 import {useRouter,useRoute} from "vue-router";
 // import {useStore} from "@/store";
 import {ref} from "vue";
-import { DocumentAdd, Calendar, FirstAidKit } from '@element-plus/icons-vue';
+import { DocumentAdd, Calendar, FirstAidKit, Document } from '@element-plus/icons-vue';
 
 // const  store = useStore()
 const route = useRoute()
@@ -39,7 +39,8 @@ const menus = _.cloneDeep(router.options.routes)
 const iconMap: Record<string, any> = {
   'document-add': DocumentAdd,
   'calendar': Calendar,
-  'FirstAidKit': FirstAidKit
+  'FirstAidKit': FirstAidKit,
+  'document-copy': Document
 };
 
 function getIconComponent(iconName?: string) {

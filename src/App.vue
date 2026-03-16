@@ -287,16 +287,19 @@ utools.onPluginEnter(async (action) => {
 
   if (action.code === 'review') {
     handlePluginReview()
-    open()
   }
 
   if (action.code === 'jycs') {
     handlePluginMemoryTest()
-    open()
   }
 
   if (action.code === 'numMemory') {
     handlePluginNumMemory()
+  }
+
+  // 快速翻译 - 通过 fy/翻译/fanyi 关键字进入
+  if (action.code === 'translate') {
+    handlePluginTranslate()
   }
 
 
@@ -649,6 +652,16 @@ function handlePluginNumMemory() {
   window.utools.showMainWindow()
   // 跳转到数字记忆页面
   router.push('/number-memory')
+}
+
+/**
+ * 处理快速翻译的插件入口
+ */
+function handlePluginTranslate() {
+  // 显示主窗口
+  window.utools.showMainWindow()
+  // 跳转到快速翻译页面
+  router.push('/translate')
 }
 
 /**

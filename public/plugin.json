@@ -89,6 +89,15 @@
         },
         "数字记忆"
       ]
+    },
+    {
+      "code": "translate",
+      "explain": "快速翻译",
+      "cmds": [
+        "fy",
+        "翻译",
+        "fanyi"
+      ]
     }
   ],
   "permissions": {

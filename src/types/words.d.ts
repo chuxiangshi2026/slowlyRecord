@@ -70,6 +70,14 @@ export type MemoryFirmnessTpye = '正常' | '较强' | '极强';
 export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local';
 
 /**
+ * 例句
+ */
+export interface ExampleSentence {
+    english: string;
+    chinese: string;
+}
+
+/**
  * 翻译结果结构
  */
 export interface TranslationResult {
@@ -78,4 +86,8 @@ export interface TranslationResult {
     phonetic?: string;
     pronunciation?: string;
     errorMsg?: string;
+    // 扩展字段
+    examples?: ExampleSentence[];
+    synonyms?: string[];
+    antonyms?: string[];
 }

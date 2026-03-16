@@ -8,6 +8,7 @@ const NumberMemory = () => import('@/views/NumberMemory/NumberMemory.vue');
 const NumberMemoryTraining = () => import('@/views/NumberMemory/NumberMemoryTraining.vue');
 const MemoryTest = () => import('@/views/MemoryTest/MemoryTest.vue');
 const Dictation = () => import('@/views/Dictation/Dictation.vue');
+const QuickTranslate = () => import('@/views/Translate/QuickTranslate.vue');
 // const Exception = () => import('@/views/Exception/Exception.vue');
 // const Apply = () => import('@/views/Apply/Apply.vue');
 // const Check = () => import('@/views/Check/Check.vue');
@@ -96,6 +97,16 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '听写练习',
+        },
+      },
+      {
+        path: 'translate',
+        name: 'translate',
+        component: QuickTranslate,
+        meta: {
+          menu: true,
+          title: '快速翻译',
+          icon: 'document-copy',
         },
       },
      /* {
