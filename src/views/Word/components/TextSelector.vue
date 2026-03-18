@@ -323,7 +323,7 @@ const copyTranslation = async () => {
 }
 
 .text-selector-content {
-  background-color: #ffffff !important;
+  background-color: var(--utools-bg-card) !important;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   width: 90%;
@@ -338,10 +338,16 @@ const copyTranslation = async () => {
 
 .text-selector-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--utools-border-divider);
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.text-selector-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--utools-text-primary);
 }
 
 .header-buttons {
@@ -352,7 +358,7 @@ const copyTranslation = async () => {
 
 .header-copy-btn {
   padding: 6px 12px;
-  background-color: #67c23a;
+  background-color: var(--utools-success);
   color: white;
   border: none;
   border-radius: 4px;
@@ -362,16 +368,12 @@ const copyTranslation = async () => {
 }
 
 .header-copy-btn:hover {
-  background-color: #85ce61;
+  background-color: var(--utools-success);
+  opacity: 0.8;
 }
 
 .header-copy-btn:active {
-  background-color: #5daf34;
-}
-
-.text-selector-header h3 {
-  margin: 0;
-  font-size: 18px;
+  opacity: 0.6;
 }
 
 .close-btn {
@@ -385,6 +387,11 @@ const copyTranslation = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--utools-text-secondary);
+}
+
+.close-btn:hover {
+  color: var(--utools-text-primary);
 }
 
 .text-items-container {
@@ -396,21 +403,22 @@ const copyTranslation = async () => {
 
 .text-item {
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--utools-border-primary);
   border-radius: 6px;
   margin-bottom: 12px;
-  background-color: #fafafa;
+  background-color: var(--utools-bg-tertiary);
 }
 
 .text-original,
 .text-translation {
   margin-bottom: 8px;
+  color: var(--utools-text-primary);
 }
 
 .word-selection-area {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--utools-border-divider);
 }
 
 .word-list {
@@ -421,39 +429,41 @@ const copyTranslation = async () => {
 
 .word-item {
   padding: 4px 8px;
-  background-color: #e0e0e0;
+  background-color: var(--utools-bg-secondary);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
   font-size: 14px;
+  color: var(--utools-text-primary);
 }
 
 .word-item:hover {
-  background-color: #d0d0d0;
+  background-color: var(--utools-bg-hover);
 }
 
 .word-item.selected {
-  background-color: #409eff;
+  background-color: var(--utools-primary);
   color: white;
 }
 
 .selected-words-summary {
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #f5f5f5;
+  background-color: var(--utools-bg-tertiary);
   border-radius: 4px;
   font-size: 14px;
+  color: var(--utools-text-primary);
 }
 
 .selected-words-display {
   font-weight: bold;
-  color: #409eff;
+  color: var(--utools-primary);
 }
 
 .selected-word-item {
   padding: 2px 6px;
-  background-color: #e0e0e0;
+  background-color: var(--utools-bg-secondary);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -461,15 +471,16 @@ const copyTranslation = async () => {
   font-size: 14px;
   display: inline-block;
   margin: 0 2px;
+  color: var(--utools-text-primary);
 }
 
 .selected-word-item:hover {
-  background-color: #d0d0d0;
+  background-color: var(--utools-bg-hover);
   transform: scale(1.05);
 }
 
 .selected-word-item.selected {
-  background-color: #409eff;
+  background-color: var(--utools-primary);
   color: white;
 }
 
@@ -478,7 +489,7 @@ const copyTranslation = async () => {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
-  padding: 15px 20px 20px; /* 添加底部内边距，增加与下边框的距离 */
+  padding: 15px 20px 20px;
 }
 
 .select-btn, .invert-btn, .clear-btn, .remove-non-english-btn, .add-btn, .cancel-btn {
@@ -489,37 +500,37 @@ const copyTranslation = async () => {
 }
 
 .select-btn {
-  background-color: #67c23a;
+  background-color: var(--utools-success);
   color: white;
 }
 
 .invert-btn {
-  background-color: #409eff;
+  background-color: var(--utools-primary);
   color: white;
 }
 
 .clear-btn {
-  background-color: #e6a23c;
+  background-color: var(--utools-warning);
   color: white;
 }
 
 .remove-non-english-btn {
-  background-color: #f56c6c;
+  background-color: var(--utools-danger);
   color: white;
 }
 
 .add-btn {
-  background-color: #909399;
+  background-color: var(--utools-info);
   color: white;
 }
 
 .add-btn:disabled {
-  background-color: #c0c4cc;
+  background-color: var(--utools-text-disabled);
   cursor: not-allowed;
 }
 
 .cancel-btn {
-  background-color: #909399;
+  background-color: var(--utools-text-tertiary);
   color: white;
 }
 </style>

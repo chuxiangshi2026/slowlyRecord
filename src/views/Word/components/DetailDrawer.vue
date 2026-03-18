@@ -742,20 +742,20 @@ const handleFileImport = (event: Event) => {
 <style scoped lang="scss">
 .el-drawer {
   .rc-switch-checked {
-    border: 1px solid #5994fc;
-    background-color: #5994fc;
+    border: 1px solid var(--utools-primary);
+    background-color: var(--utools-primary);
   }
 
   //&-content
   &__body {
-    background-color: #f8f8f8;
+    background-color: var(--utools-bg-secondary);
     padding-bottom: 20px;
     box-sizing: border-box;
 
     .view-version-btn {
-      background-color: #7c7e7e;; /* Green */
+      background-color: var(--utools-text-tertiary);
       border: none;
-      color: white;
+      color: var(--utools-text-inverse);
       padding: 4px 8px;
       box-sizing: border-box;
       text-align: center;
@@ -764,17 +764,18 @@ const handleFileImport = (event: Event) => {
       font-size: 12px;
       margin: 4px 2px;
       cursor: pointer;
-      -webkit-transition-duration: 0.4s; /* Safari */
+      -webkit-transition-duration: 0.4s;
       transition-duration: 0.4s;
       border-radius: 4px;
 
       &:hover {
-        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: var(--utools-shadow-md);
       }
     }
 
     .header {
       padding: 0 10px;
+      color: var(--utools-text-primary);
     }
 
     .setting-item {
@@ -784,28 +785,29 @@ const handleFileImport = (event: Event) => {
 
     .content {
       padding: 0 20px;
-      color: #999;
+      color: var(--utools-text-secondary);
       font-size: 12px;
 
       .titles {
         display: flex;
         justify-content: space-between;
         font-weight: bold;
-        color: #666;
+        color: var(--utools-text-primary);
       }
 
       .shorcut-desc {
         margin-top: 10px;
         font-size: 12px;
         font-weight: 400;
+        color: var(--utools-text-secondary);
       }
     }
   }
 }
 
 .el-switch {
-  --el-switch-on-color: #919399;
-  --el-switch-off-color: rgba(113, 109, 109, 0.29);
+  --el-switch-on-color: var(--utools-primary);
+  --el-switch-off-color: var(--utools-text-tertiary);
 }
 
 .external-link {
@@ -813,12 +815,13 @@ const handleFileImport = (event: Event) => {
   padding: 6px 12px;
   border-radius: 4px;
   text-decoration: none;
-  color: #595757;
-  background-color: #f5f5f5;
+  color: var(--utools-text-secondary);
+  background-color: var(--utools-bg-tertiary);
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: var(--utools-bg-hover);
+    color: var(--utools-primary);
   }
 }
 
@@ -831,9 +834,16 @@ const handleFileImport = (event: Event) => {
 
 .config-hint {
   text-align: center;
-  color: #999;
+  color: var(--utools-text-tertiary);
   font-size: 12px;
   margin: 8px 0 0 0;
+}
+
+.limit-info {
+  color: var(--utools-text-secondary);
+  font-size: 12px;
+  padding: 0 20px;
+  line-height: 1.5;
 }
 
 /* 专注模式选项样式 */
@@ -847,7 +857,7 @@ const handleFileImport = (event: Event) => {
 
   .focus-mode-desc {
     font-size: 12px;
-    color: #999;
+    color: var(--utools-text-tertiary);
     margin: 8px 0 0 0;
     line-height: 1.5;
   }
@@ -855,14 +865,22 @@ const handleFileImport = (event: Event) => {
 
 /* 禁用输入框样式 */
 :deep(.el-input.is-disabled .el-input__wrapper) {
-  background-color: #f5f7fa;
-  border-color: #e4e7ed;
-  color: #c0c4cc;
+  background-color: var(--utools-bg-tertiary);
+  border-color: var(--utools-border-primary);
+  color: var(--utools-text-disabled);
   cursor: not-allowed;
 }
 
 :deep(.el-input.is-disabled .el-input__inner) {
-  color: #c0c4cc;
+  color: var(--utools-text-disabled);
   cursor: not-allowed;
+}
+
+:deep(.el-input__wrapper) {
+  background-color: var(--utools-bg-input);
+}
+
+:deep(.el-input__inner) {
+  color: var(--utools-text-primary);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  sign
+  <div class="sign-page">
   <el-descriptions border direction="vertical" column="9">
     <el-descriptions-item label="月份">{{ month }}月</el-descriptions-item>
     <el-descriptions-item v-for="(value, key) in DetailKey" :key="key" :label="value">
@@ -25,6 +25,7 @@
       </el-space>
     </template>
   </el-calendar>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -72,11 +73,55 @@ const detailState = reactive({
 </script>
 
 <style scoped lang="scss">
+.sign-page {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: var(--utools-bg-secondary);
+}
+
 .el-descriptions {
   margin: 10px;
+  background-color: var(--utools-bg-card);
 }
 
 .el-select {
   width: 80px;
+}
+
+:deep(.el-calendar) {
+  background-color: var(--utools-bg-card);
+  
+  .el-calendar__header {
+    background-color: var(--utools-bg-card);
+    border-bottom-color: var(--utools-border-divider);
+  }
+  
+  .el-calendar__body {
+    background-color: var(--utools-bg-card);
+  }
+  
+  .el-calendar-table {
+    th {
+      color: var(--utools-text-secondary);
+    }
+    
+    td {
+      border-color: var(--utools-border-divider);
+    }
+    
+    .el-calendar-day {
+      color: var(--utools-text-primary);
+      
+      &:hover {
+        background-color: var(--utools-bg-hover);
+      }
+    }
+    
+    .is-selected {
+      .el-calendar-day {
+        background-color: var(--utools-primary-light);
+      }
+    }
+  }
 }
 </style>

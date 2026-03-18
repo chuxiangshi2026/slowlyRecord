@@ -1,0 +1,405 @@
+// uTools 暗黑主题适配 - CSS 变量定义
+// 参考 uTools 官方主题颜色
+
+:root {
+  // ===== 亮色主题 (默认) =====
+  
+  // 背景色
+  --utools-bg-primary: #ffffff;
+  --utools-bg-secondary: #f5f5f5;
+  --utools-bg-tertiary: #fafafa;
+  --utools-bg-hover: #f0f0f0;
+  --utools-bg-active: #e6e6e6;
+  --utools-bg-card: #ffffff;
+  --utools-bg-input: #ffffff;
+  --utools-bg-overlay: rgba(0, 0, 0, 0.45);
+  
+  // 文字颜色
+  --utools-text-primary: #262626;
+  --utools-text-secondary: #595959;
+  --utools-text-tertiary: #8c8c8c;
+  --utools-text-placeholder: #bfbfbf;
+  --utools-text-disabled: #d9d9d9;
+  --utools-text-inverse: #ffffff;
+  
+  // 边框颜色
+  --utools-border-primary: #d9d9d9;
+  --utools-border-secondary: #f0f0f0;
+  --utools-border-divider: #e8e8e8;
+  
+  // 主色调 (Element Plus 蓝色)
+  --utools-primary: #409eff;
+  --utools-primary-hover: #66b1ff;
+  --utools-primary-active: #3a8ee6;
+  --utools-primary-light: #ecf5ff;
+  
+  // 功能色
+  --utools-success: #67c23a;
+  --utools-warning: #e6a23c;
+  --utools-danger: #f56c6c;
+  --utools-info: #909399;
+  
+  // 阴影
+  --utools-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --utools-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --utools-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  // 滚动条
+  --utools-scrollbar-thumb: #c1c1c1;
+  --utools-scrollbar-track: #f1f1f1;
+  
+  // Element Plus 特定变量覆盖
+  --el-bg-color: #ffffff;
+  --el-bg-color-page: #f2f3f5;
+  --el-bg-color-overlay: #ffffff;
+  --el-text-color-primary: #303133;
+  --el-text-color-regular: #606266;
+  --el-text-color-secondary: #909399;
+  --el-text-color-placeholder: #a8abb2;
+  --el-text-color-disabled: #c0c4cc;
+  --el-border-color: #dcdfe6;
+  --el-border-color-light: #e4e7ed;
+  --el-border-color-lighter: #ebeef5;
+  --el-border-color-extra-light: #f2f6fc;
+  --el-fill-color: #f0f2f5;
+  --el-fill-color-light: #f5f7fa;
+  --el-fill-color-lighter: #fafafa;
+  --el-fill-color-extra-light: #fafcff;
+  --el-fill-color-dark: #ebedf0;
+  --el-fill-color-darker: #e6e8eb;
+  --el-fill-color-blank: #ffffff;
+}
+
+// ===== 暗黑主题 =====
+html.utools-dark,
+.utools-dark {
+  // 背景色
+  --utools-bg-primary: #1e1e1e;
+  --utools-bg-secondary: #252526;
+  --utools-bg-tertiary: #2d2d30;
+  --utools-bg-hover: #2a2d2e;
+  --utools-bg-active: #37373d;
+  --utools-bg-card: #252526;
+  --utools-bg-input: #3c3c3c;
+  --utools-bg-overlay: rgba(0, 0, 0, 0.65);
+  
+  // 文字颜色
+  --utools-text-primary: #e0e0e0;
+  --utools-text-secondary: #b0b0b0;
+  --utools-text-tertiary: #808080;
+  --utools-text-placeholder: #606060;
+  --utools-text-disabled: #505050;
+  --utools-text-inverse: #1e1e1e;
+  
+  // 边框颜色
+  --utools-border-primary: #3e3e42;
+  --utools-border-secondary: #333337;
+  --utools-border-divider: #3e3e42;
+  
+  // 主色调 (调整为适合暗黑的蓝色)
+  --utools-primary: #5b8cff;
+  --utools-primary-hover: #7ca4ff;
+  --utools-primary-active: #4a7de4;
+  --utools-primary-light: #2a3f5f;
+  
+  // 功能色 (调整为适合暗黑的色调)
+  --utools-success: #81c784;
+  --utools-warning: #ffb74d;
+  --utools-danger: #e57373;
+  --utools-info: #90a4ae;
+  
+  // 阴影 (暗黑模式下更弱的阴影)
+  --utools-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --utools-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --utools-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  
+  // 滚动条
+  --utools-scrollbar-thumb: #4a4a4a;
+  --utools-scrollbar-track: #2d2d30;
+  
+  // Element Plus 暗黑主题变量
+  --el-bg-color: #1e1e1e;
+  --el-bg-color-page: #141414;
+  --el-bg-color-overlay: #262727;
+  --el-text-color-primary: #e0e0e0;
+  --el-text-color-regular: #cfd3dc;
+  --el-text-color-secondary: #a3a6ad;
+  --el-text-color-placeholder: #8d9095;
+  --el-text-color-disabled: #6c6e72;
+  --el-border-color: #4c4d4f;
+  --el-border-color-light: #414243;
+  --el-border-color-lighter: #363637;
+  --el-border-color-extra-light: #2b2b2c;
+  --el-fill-color: #262727;
+  --el-fill-color-light: #2a2b2b;
+  --el-fill-color-lighter: #2d2d2f;
+  --el-fill-color-extra-light: #2e2e30;
+  --el-fill-color-dark: #2c2c2e;
+  --el-fill-color-darker: #2d2d2f;
+  --el-fill-color-blank: transparent;
+}
+
+// ===== 全局样式适配 =====
+
+// 基础背景色
+body {
+  background-color: var(--utools-bg-primary);
+  color: var(--utools-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// 页面背景
+#app {
+  background-color: var(--utools-bg-primary);
+  min-height: 100vh;
+}
+
+// 卡片样式
+.card-page,
+.list-item {
+  background-color: var(--utools-bg-card);
+  border-color: var(--utools-border-primary);
+  color: var(--utools-text-primary);
+}
+
+.list-item {
+  border: 1px solid var(--utools-border-primary);
+  box-shadow: var(--utools-shadow-sm);
+  
+  &:hover {
+    box-shadow: var(--utools-shadow-md);
+  }
+  
+  .word {
+    color: var(--utools-text-primary);
+    
+    .phonetic {
+      color: var(--utools-text-tertiary);
+    }
+  }
+  
+  .time {
+    color: var(--utools-text-secondary);
+  }
+  
+  .level {
+    color: var(--utools-text-tertiary);
+  }
+  
+  .operate {
+    color: var(--utools-primary);
+    
+    i.icon-delete,
+    i.icon-close {
+      color: var(--utools-danger);
+    }
+  }
+  
+  em {
+    color: var(--utools-danger);
+  }
+}
+
+// 设置面板
+.setting {
+  background: var(--utools-bg-card);
+  box-shadow: var(--utools-shadow-md);
+  color: var(--utools-text-primary);
+  
+  .iconfont {
+    color: var(--utools-text-secondary);
+    
+    &:hover {
+      color: var(--utools-primary);
+    }
+  }
+  
+  .showTranslate {
+    color: var(--utools-primary);
+  }
+}
+
+// 主内容区
+.el-main {
+  background: var(--utools-bg-secondary);
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--utools-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--utools-scrollbar-thumb);
+  border-radius: 4px;
+  
+  &:hover {
+    background: var(--utools-text-tertiary);
+  }
+}
+
+// 输入框和表单
+.el-input__wrapper,
+.el-textarea__inner {
+  background-color: var(--utools-bg-input);
+  border-color: var(--utools-border-primary);
+  
+  &:hover,
+  &:focus {
+    border-color: var(--utools-primary);
+  }
+}
+
+// 按钮样式增强
+.el-button {
+  &--default {
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-primary);
+    color: var(--utools-text-primary);
+    
+    &:hover {
+      background-color: var(--utools-bg-hover);
+      border-color: var(--utools-primary);
+      color: var(--utools-primary);
+    }
+  }
+}
+
+// 对话框和抽屉
+.el-dialog,
+.el-drawer {
+  background-color: var(--utools-bg-card);
+  
+  .el-dialog__title,
+  .el-drawer__header {
+    color: var(--utools-text-primary);
+  }
+}
+
+// 下拉菜单
+.el-dropdown-menu,
+.el-select-dropdown {
+  background-color: var(--utools-bg-card);
+  border-color: var(--utools-border-primary);
+}
+
+.el-dropdown-menu__item,
+.el-select-dropdown__item {
+  color: var(--utools-text-primary);
+  
+  &:hover,
+  &.selected {
+    background-color: var(--utools-bg-hover);
+  }
+}
+
+// 消息提示
+.el-message {
+  background-color: var(--utools-bg-card);
+  border-color: var(--utools-border-primary);
+  
+  &--success {
+    background-color: rgba(103, 194, 58, 0.1);
+    border-color: var(--utools-success);
+  }
+  
+  &--warning {
+    background-color: rgba(230, 162, 60, 0.1);
+    border-color: var(--utools-warning);
+  }
+  
+  &--error {
+    background-color: rgba(245, 108, 108, 0.1);
+    border-color: var(--utools-danger);
+  }
+}
+
+// 工具提示
+.small-tooltip {
+  background-color: var(--utools-bg-tertiary);
+  color: var(--utools-text-primary);
+}
+
+// 加载状态
+.el-loading-mask {
+  background-color: var(--utools-bg-overlay);
+}
+
+// 分割线
+.el-divider {
+  background-color: var(--utools-border-divider);
+}
+
+// 标签
+.el-tag {
+  &--info {
+    background-color: var(--utools-fill-color-light);
+    border-color: var(--utools-border-primary);
+    color: var(--utools-text-secondary);
+  }
+}
+
+// 表格
+.el-table {
+  background-color: var(--utools-bg-card);
+  color: var(--utools-text-primary);
+  
+  th,
+  td {
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-divider);
+  }
+  
+  tr:hover > td {
+    background-color: var(--utools-bg-hover);
+  }
+}
+
+// 分页
+.el-pagination {
+  button,
+  .el-pager li {
+    background-color: var(--utools-bg-card);
+    color: var(--utools-text-primary);
+    
+    &:hover {
+      color: var(--utools-primary);
+    }
+    
+    &.active {
+      background-color: var(--utools-primary);
+      color: var(--utools-text-inverse);
+    }
+  }
+}
+
+// 树形组件
+.el-tree {
+  background-color: transparent;
+  color: var(--utools-text-primary);
+  
+  .el-tree-node__content:hover {
+    background-color: var(--utools-bg-hover);
+  }
+}
+
+// 菜单
+.el-menu {
+  background-color: var(--utools-bg-secondary);
+  border-color: var(--utools-border-primary);
+  
+  .el-menu-item {
+    color: var(--utools-text-primary);
+    
+    &:hover,
+    &.is-active {
+      background-color: var(--utools-bg-hover);
+      color: var(--utools-primary);
+    }
+  }
+}

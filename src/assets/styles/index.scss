@@ -3,29 +3,34 @@
   width: 100vw;
   height: 80vh;
   overflow-y: hidden;
-  //   background: #FAF9FF;
-  // background-color: rgb(229, 231, 235);
+  background-color: var(--utools-bg-primary);
 }
+
 .setting {
   position: absolute;
   top: 20px;
   right: 30px;
-  background: #fff;
+  background: var(--utools-bg-card);
   width: 400px;
   height: 60px;
-  box-shadow: 2px 2px 5px #ddd;
-  color: #333;
+  box-shadow: var(--utools-shadow-sm);
+  color: var(--utools-text-primary);
   display: flex;
   justify-content: space-around;
   align-items: center;
   z-index: 2;
-  // font-size: 30px;
+
   .iconfont {
-    color: #666;
+    color: var(--utools-text-secondary);
     font-size: 24px;
     cursor: pointer;
+
+    &:hover {
+      color: var(--utools-primary);
+    }
   }
+
   .showTranslate {
-    color: #409EFF;
+    color: var(--utools-primary);
   }
 }

@@ -439,6 +439,13 @@ onUnmounted(() => {
   padding: 20px;
   max-width: 1000px;
   margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--utools-bg-secondary);
+
+  :deep(.el-card) {
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-primary);
+  }
 
   .card-header {
     display: flex;
@@ -448,6 +455,7 @@ onUnmounted(() => {
     .title {
       font-size: 18px;
       font-weight: bold;
+      color: var(--utools-text-primary);
     }
   }
 
@@ -457,7 +465,7 @@ onUnmounted(() => {
 
     h3 {
       margin-bottom: 30px;
-      color: #303133;
+      color: var(--utools-text-primary);
     }
 
     .mode-card {
@@ -465,10 +473,11 @@ onUnmounted(() => {
       transition: all 0.3s;
       text-align: center;
       padding: 20px;
+      background-color: var(--utools-bg-card);
 
       &:hover:not(.disabled) {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--utools-shadow-md);
       }
 
       &.disabled {
@@ -483,11 +492,11 @@ onUnmounted(() => {
 
       h4 {
         margin-bottom: 10px;
-        color: #409eff;
+        color: var(--utools-primary);
       }
 
       p {
-        color: #606266;
+        color: var(--utools-text-secondary);
         margin-bottom: 10px;
       }
     }
@@ -506,7 +515,7 @@ onUnmounted(() => {
 
       .progress-text {
         font-weight: bold;
-        color: #409eff;
+        color: var(--utools-primary);
         min-width: 60px;
         text-align: right;
       }
@@ -516,11 +525,11 @@ onUnmounted(() => {
       text-align: center;
       margin-bottom: 20px;
       font-size: 18px;
-      color: #606266;
+      color: var(--utools-text-secondary);
 
       .el-icon {
         margin-right: 5px;
-        color: #409eff;
+        color: var(--utools-primary);
       }
     }
 
@@ -529,7 +538,7 @@ onUnmounted(() => {
         display: block;
         text-align: center;
         font-size: 16px;
-        color: #606266;
+        color: var(--utools-text-secondary);
         margin-bottom: 20px;
       }
 
@@ -540,7 +549,7 @@ onUnmounted(() => {
         .number-display {
           font-size: 72px;
           font-weight: bold;
-          color: #409eff;
+          color: var(--utools-primary);
           margin-top: 20px;
         }
       }
@@ -553,7 +562,7 @@ onUnmounted(() => {
           width: 150px;
           height: 150px;
           object-fit: contain;
-          border: 3px solid #e4e7ed;
+          border: 3px solid var(--utools-border-primary);
           border-radius: 12px;
           margin-top: 20px;
         }
@@ -575,6 +584,7 @@ onUnmounted(() => {
         &.image-options {
           .option-item {
             height: 150px;
+            background-color: var(--utools-bg-card);
             
             img {
               max-width: 100%;
@@ -596,37 +606,39 @@ onUnmounted(() => {
             .number-text {
               font-size: 48px;
               font-weight: bold;
+              color: var(--utools-text-primary);
             }
           }
         }
 
         .option-item {
-          border: 3px solid #e4e7ed;
+          border: 3px solid var(--utools-border-primary);
           border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
           transition: all 0.3s;
+          background-color: var(--utools-bg-card);
 
           &:hover:not(.selected):not(.correct):not(.wrong) {
-            border-color: #409eff;
+            border-color: var(--utools-primary);
             transform: scale(1.02);
           }
 
           &.selected {
-            border-color: #409eff;
-            background-color: #ecf5ff;
+            border-color: var(--utools-primary);
+            background-color: var(--utools-primary-light);
           }
 
           &.correct {
-            border-color: #67c23a;
-            background-color: #f0f9eb;
+            border-color: var(--utools-success);
+            background-color: rgba(103, 194, 58, 0.1);
           }
 
           &.wrong {
-            border-color: #f56c6c;
-            background-color: #fef0f0;
+            border-color: var(--utools-danger);
+            background-color: rgba(245, 108, 108, 0.1);
           }
         }
       }
@@ -649,18 +661,18 @@ onUnmounted(() => {
       .stat-item {
         text-align: center;
         padding: 20px;
-        background-color: #f5f7fa;
+        background-color: var(--utools-bg-tertiary);
         border-radius: 8px;
 
         .stat-value {
           font-size: 32px;
           font-weight: bold;
-          color: #409eff;
+          color: var(--utools-primary);
           margin-bottom: 8px;
         }
 
         .stat-label {
-          color: #606266;
+          color: var(--utools-text-secondary);
         }
       }
     }
@@ -679,9 +691,10 @@ onUnmounted(() => {
     .table-number {
       font-size: 24px;
       font-weight: bold;
+      color: var(--utools-text-primary);
       
       &.wrong {
-        color: #f56c6c;
+        color: var(--utools-danger);
         text-decoration: line-through;
       }
     }

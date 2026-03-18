@@ -120,6 +120,7 @@ if (typeof window !== 'undefined') {
   z-index: 9999;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--utools-border-primary, #333);
 }
 
 .debug-header {
@@ -130,6 +131,7 @@ if (typeof window !== 'undefined') {
   justify-content: space-between;
   align-items: center;
   user-select: none;
+  color: #fff;
 }
 
 .debug-actions {

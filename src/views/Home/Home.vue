@@ -42,13 +42,15 @@ import HomeBreadcrumb from "@/views/Home/components/HomeBreadcrumb.vue";
 <style scoped lang="scss">
 .el-header {
   box-shadow: 0 8px 24px -2px rgba(0, 0, 0, .05);
+  background-color: var(--utools-bg-primary);
 }
 .el-aside {
   box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05);
+  background-color: var(--utools-bg-primary);
 }
 
 .el-main{
-  background: #f0f2f5;
+  background: var(--utools-bg-secondary);
   border-radius: 8px;
   display: flex;
   flex-direction: column;

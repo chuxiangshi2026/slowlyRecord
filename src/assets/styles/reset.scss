@@ -27,6 +27,8 @@ body {
     font-size  : 14px;
     font-style : normal;
     font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+    background-color: var(--utools-bg-primary);
+    color: var(--utools-text-primary);
 }
 /*字体太小用户体检不好，让small恢复12px*/
 small {

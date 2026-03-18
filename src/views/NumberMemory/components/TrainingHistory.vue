@@ -141,6 +141,9 @@ async function clearHistory() {
   padding: 10px;
 
   .history-card {
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-primary);
+
     .record-header {
       display: flex;
       justify-content: space-between;
@@ -152,15 +155,15 @@ async function clearHistory() {
         font-weight: bold;
 
         &.excellent {
-          color: #67c23a;
+          color: var(--utools-success);
         }
 
         &.good {
-          color: #e6a23c;
+          color: var(--utools-warning);
         }
 
         &.poor {
-          color: #f56c6c;
+          color: var(--utools-danger);
         }
       }
     }
@@ -171,16 +174,17 @@ async function clearHistory() {
 
       .stat {
         .label {
-          color: #909399;
+          color: var(--utools-text-tertiary);
           font-size: 12px;
         }
 
         .value {
           margin-left: 5px;
           font-weight: bold;
+          color: var(--utools-text-primary);
 
           &.correct {
-            color: #67c23a;
+            color: var(--utools-success);
           }
         }
       }

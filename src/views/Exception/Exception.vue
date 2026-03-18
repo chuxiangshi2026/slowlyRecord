@@ -1,6 +1,6 @@
 <template>
-  <div>
-exce
+  <div class="exception-page">
+    exception
   </div>
 </template>
 
@@ -9,5 +9,9 @@ exce
 </script>
 
 <style scoped lang="scss">
-
+.exception-page {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: var(--utools-bg-secondary);
+}
 </style>

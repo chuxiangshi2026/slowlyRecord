@@ -1,7 +1,6 @@
 <template>
-  <div>
-apply
-
+  <div class="apply-page">
+    apply
   </div>
 </template>
 
@@ -10,5 +9,9 @@ apply
 </script>
 
 <style scoped lang="scss">
-
+.apply-page {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: var(--utools-bg-secondary);
+}
 </style>

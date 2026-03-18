@@ -105,12 +105,12 @@ function finish() {
     }
 
     h3 {
-      color: #409eff;
+      color: var(--utools-primary);
       margin-bottom: 15px;
     }
 
     p {
-      color: #606266;
+      color: var(--utools-text-secondary);
       margin-bottom: 10px;
       line-height: 1.6;
     }
@@ -123,15 +123,15 @@ function finish() {
 
       li {
         margin-bottom: 10px;
-        color: #606266;
+        color: var(--utools-text-secondary);
       }
     }
 
     .tip {
-      background-color: #f0f9eb;
+      background-color: var(--utools-primary-light);
       padding: 10px 15px;
       border-radius: 8px;
-      color: #67c23a;
+      color: var(--utools-success);
       margin-top: 20px;
     }
 
@@ -160,7 +160,7 @@ function finish() {
 
         span {
           font-size: 14px;
-          color: #909399;
+          color: var(--utools-text-tertiary);
           margin-top: 5px;
         }
       }

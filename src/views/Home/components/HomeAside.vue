@@ -55,10 +55,28 @@ function getIconComponent(iconName?: string) {
   height: calc(100vh - 60px);
   border: none;
   padding-top: 30px;
+  background-color: var(--utools-bg-primary);
+  
+  .el-menu-item {
+    color: var(--utools-text-primary);
+    
+    &:hover {
+      background-color: var(--utools-bg-hover);
+    }
+    
+    .el-icon {
+      color: var(--utools-text-secondary);
+    }
+  }
 }
 
 .el-menu-item.is-active {
-  background: #e6f7ff;
-  border-right: 3px solid #1890ff;
+  background: var(--utools-primary-light);
+  border-right: 3px solid var(--utools-primary);
+  color: var(--utools-primary);
+  
+  .el-icon {
+    color: var(--utools-primary);
+  }
 }
 </style>

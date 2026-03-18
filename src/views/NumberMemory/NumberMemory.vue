@@ -451,9 +451,13 @@ onMounted(() => {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--utools-bg-secondary);
 
   .main-card {
     margin-bottom: 20px;
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-primary);
   }
 
   .card-header {
@@ -464,6 +468,7 @@ onMounted(() => {
     .title {
       font-size: 18px;
       font-weight: bold;
+      color: var(--utools-text-primary);
     }
 
     .header-actions {
@@ -482,7 +487,7 @@ onMounted(() => {
     display: block;
     font-weight: bold;
     margin-bottom: 15px;
-    color: #606266;
+    color: var(--utools-text-secondary);
 
     .el-tag {
       margin-left: 10px;
@@ -522,7 +527,7 @@ onMounted(() => {
         flex-shrink: 0;
 
         &.has-image {
-          border-color: #67c23a;
+          border-color: var(--utools-success);
           border-width: 2px;
         }
 
@@ -531,8 +536,8 @@ onMounted(() => {
           top: -5px;
           right: -5px;
           font-size: 12px;
-          color: #67c23a;
-          background: white;
+          color: var(--utools-success);
+          background: var(--utools-bg-card);
           border-radius: 50%;
         }
       }
@@ -547,7 +552,7 @@ onMounted(() => {
         width: 120px;
         height: 120px;
         object-fit: contain;
-        border: 2px solid #dcdfe6;
+        border: 2px solid var(--utools-border-primary);
         border-radius: 8px;
         margin-bottom: 10px;
       }
@@ -574,7 +579,7 @@ onMounted(() => {
 
     h4 {
       margin-bottom: 15px;
-      color: #409eff;
+      color: var(--utools-primary);
     }
 
     .preset-grid {
@@ -583,21 +588,22 @@ onMounted(() => {
       gap: 15px;
 
       .preset-item {
-        border: 2px solid #e4e7ed;
+        border: 2px solid var(--utools-border-primary);
         border-radius: 8px;
         padding: 15px;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s;
+        background-color: var(--utools-bg-card);
 
         &:hover {
-          border-color: #409eff;
+          border-color: var(--utools-primary);
           transform: translateY(-2px);
         }
 
         &.selected {
-          border-color: #67c23a;
-          background-color: #f0f9ff;
+          border-color: var(--utools-success);
+          background-color: var(--utools-primary-light);
         }
 
         .emoji-display {
@@ -609,11 +615,12 @@ onMounted(() => {
           font-weight: bold;
           font-size: 14px;
           margin-bottom: 4px;
+          color: var(--utools-text-primary);
         }
 
         .preset-desc {
           font-size: 12px;
-          color: #909399;
+          color: var(--utools-text-tertiary);
         }
       }
     }
@@ -622,7 +629,7 @@ onMounted(() => {
   .upload-section {
     h4 {
       margin-bottom: 15px;
-      color: #409eff;
+      color: var(--utools-primary);
     }
 
     .upload-wrapper {
@@ -634,7 +641,7 @@ onMounted(() => {
           width: 150px;
           height: 150px;
           object-fit: contain;
-          border: 2px solid #dcdfe6;
+          border: 2px solid var(--utools-border-primary);
           border-radius: 8px;
           margin-bottom: 10px;
           display: block;
@@ -646,6 +653,9 @@ onMounted(() => {
   }
 
   .list-card {
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-primary);
+
     .table-image {
       width: 50px;
       height: 50px;

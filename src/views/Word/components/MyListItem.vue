@@ -619,24 +619,30 @@ const deleteWord = () => {
 .disabled {
   opacity: 0.5;
   pointer-events: none;
-  color: gray;
+  color: var(--utools-text-disabled);
 }
 
 /* 为获得焦点的元素添加视觉反馈 */
 .list-item:focus {
-  outline: 1px solid #409eff; /* Element Plus 主色调 */
+  outline: 1px solid var(--utools-primary);
   border-radius: 2px;
 }
 
 /* 只有在快捷键启用时才显示聚焦效果 */
 .list-item.shortcut-enabled:focus {
-  outline: 1px solid #409eff; /* Element Plus 主色调 */
+  outline: 1px solid var(--utools-primary);
   border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--utools-primary-light);
 }
 
 /* 快捷键关闭时不显示聚焦效果 */
 .list-item:not(.shortcut-enabled):focus {
   outline: none;
+}
+
+/* 第一个元素的样式 */
+.list-item.first-item {
+  border-color: var(--utools-primary);
 }
 
 </style>

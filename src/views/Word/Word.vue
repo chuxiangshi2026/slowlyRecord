@@ -251,12 +251,20 @@ const openFocusMode = () => {
     return;
   }
 
+  // 获取当前主题
+  const isDark = document.body.classList.contains('utools-dark') || 
+                 document.documentElement.classList.contains('utools-dark') ||
+                 document.documentElement.classList.contains('dark');
+  console.log('创建专注窗口，当前主题:', isDark ? '暗黑' : '亮色');
+
   // 创建独立窗口
   try {
     // @ts-ignore
     if (typeof utools !== 'undefined' && utools.createBrowserWindow) {
+      // 通过 URL 参数传递主题
+      const themeParam = isDark ? 'dark' : 'light';
       // @ts-ignore
-      focusWindow = utools.createBrowserWindow('focus.html', {
+      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}`, {
         width: 320,
         height: 100,
         minWidth: 200,
@@ -269,7 +277,7 @@ const openFocusMode = () => {
         resizable: true,
         modal: false,
       }, () => {
-        console.log('专注模式窗口已创建，默认置顶');
+        console.log('专注模式窗口已创建，主题:', themeParam);
       });
 
       // 窗口关闭时清理引用
@@ -1055,9 +1063,9 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 
 .input-above-button {
   position: absolute;
-  top: 0; /* 调整输入框与按钮的垂直距离 */
-  right: 84%; /* 将输入框放置在按钮的右侧 */
-  width: 200px; /* 根据需要调整输入框的宽度 */
+  top: 0;
+  right: 84%;
+  width: 200px;
 }
 
 
@@ -1068,21 +1076,21 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: white;
+  background-color: var(--utools-bg-card);
   border-radius: 4px;
   height: 45px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--utools-border-divider);
   padding: 0 16px;
   box-sizing: border-box;
-
+  color: var(--utools-text-primary);
 
   .remembered-highlight {
-    color: red;
+    color: var(--utools-danger);
     cursor: pointer;
   }
 
   .focus-mode-active {
-    color: #409eff;
+    color: var(--utools-primary);
     font-weight: bold;
   }
 
@@ -1091,55 +1099,27 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
     pointer-events: none;
 
     i {
-      color: gray;
+      color: var(--utools-text-disabled);
     }
   }
 }
 
-
-/*.el-card {
-  width: 100vw;
-  height: 80vh;
-}*/
-
-
 .words-cards-wrapper {
-  width: 96%; /* 父容器占满 */
+  width: 96%;
   height: calc(100vh - 80px);
-  //display: flex;
-  //justify-content: space-around;
-  //flex-wrap: wrap;
-
-  //padding: 16px;
   padding: 16px;
-  background-color: #f8f8f8;
+  background-color: var(--utools-bg-secondary);
   border-radius: 8px;
-  //overflow-y: auto;
   overflow: hidden;
 
   .scroller {
     width: 100% !important;
     height: 100% !important;
-    grid-template-columns: repeat(2, 1fr); /* 两列布局 */
-    //gap: 16px; /* 卡片间距 */
-    //align-content: start; /* 顶部对齐 */
+    grid-template-columns: repeat(2, 1fr);
     padding: 0;
     margin: 0;
   }
-
-  //.grid-item {
-  //  break-inside: avoid;
-  //  padding: 0 8px 16px 8px;
-  //}
-  //max-height: calc(100vh - 100px); // 减去顶部和其他元素的高度
-  //overflow-y: auto; // 启用纵向滚动
 }
-
-/*.card-wrapper {
-  margin: 0 8px;
-  //width: 100%;
-  //height: 150px; !* 与 item-size 保持一致 *!
-}*/
 
 // 截图翻译对话框样式
 .ocr-loading,
@@ -1150,7 +1130,7 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   justify-content: center;
   gap: 8px;
   padding: 40px 20px;
-  color: #666;
+  color: var(--utools-text-secondary);
   font-size: 14px;
 
   .el-icon {
@@ -1159,11 +1139,11 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 }
 
 .ocr-error {
-  color: #f56c6c;
+  color: var(--utools-danger);
 }
 
 .ocr-empty {
-  color: #909399;
+  color: var(--utools-text-tertiary);
 }
 
 .ocr-content {
@@ -1177,7 +1157,7 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   .section-title {
     font-weight: bold;
     margin-bottom: 8px;
-    color: #333;
+    color: var(--utools-text-primary);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1188,12 +1168,12 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   }
 
   .ocr-text {
-    background-color: #f5f7fa;
+    background-color: var(--utools-bg-tertiary);
     padding: 12px;
     border-radius: 4px;
     font-size: 14px;
     line-height: 1.6;
-    color: #606266;
+    color: var(--utools-text-secondary);
     max-height: 120px;
     overflow-y: auto;
     white-space: pre-wrap;

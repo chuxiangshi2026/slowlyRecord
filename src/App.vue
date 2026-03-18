@@ -700,6 +700,9 @@ function updateReview() {
 @use '@/assets/styles/reset.scss';
 //@use '@/assets/styles/common.scss';
 
+// 主题样式 - 必须最先引入以定义 CSS 变量
+@use '@/assets/styles/theme.scss';
+
 @use '@/assets/styles/card-item.scss';
 @use '@/assets/styles/index.scss';
 @use '@/assets/styles/letter.scss';

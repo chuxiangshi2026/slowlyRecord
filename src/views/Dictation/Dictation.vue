@@ -553,7 +553,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .dictation-page {
   min-height: 100vh;
-  background: #fafafa;
+  background: var(--utools-bg-secondary);
   display: flex;
   flex-direction: column;
 }
@@ -564,8 +564,8 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  background: #fff;
-  border-bottom: 1px solid #e8e8e8;
+  background: var(--utools-bg-card);
+  border-bottom: 1px solid var(--utools-border-divider);
 
   .header-left {
     display: flex;
@@ -575,14 +575,14 @@ onMounted(() => {
     .title {
       font-size: 18px;
       font-weight: 500;
-      color: #262626;
+      color: var(--utools-text-primary);
     }
   }
 
   .header-right {
     .progress {
       font-size: 14px;
-      color: #8c8c8c;
+      color: var(--utools-text-secondary);
     }
   }
 }
@@ -596,17 +596,17 @@ onMounted(() => {
   padding: 24px;
 
   .setup-card {
-    background: #fff;
+    background: var(--utools-bg-card);
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--utools-shadow-sm);
     max-width: 600px;
     width: 100%;
 
     h3 {
       margin: 0 0 32px;
       font-size: 24px;
-      color: #262626;
+      color: var(--utools-text-primary);
       text-align: center;
     }
 
@@ -617,14 +617,14 @@ onMounted(() => {
         display: block;
         margin-bottom: 12px;
         font-size: 14px;
-        color: #595959;
+        color: var(--utools-text-secondary);
       }
 
       .wordbank-info {
         margin-top: 8px;
         
         .cached-badge {
-          color: #67C23A;
+          color: var(--utools-success);
           margin-left: 4px;
         }
       }
@@ -665,23 +665,23 @@ onMounted(() => {
         display: inline-block;
         width: 60px;
         font-size: 14px;
-        color: #8c8c8c;
+        color: var(--utools-text-tertiary);
         text-align: right;
         margin-right: 16px;
       }
 
       .hint-content {
         font-size: 18px;
-        color: #262626;
+        color: var(--utools-text-primary);
       }
 
       &.phonetic-hint .hint-content {
-        color: #1890ff;
+        color: var(--utools-primary);
         font-family: 'Times New Roman', serif;
       }
 
       &.meaning-hint .hint-content {
-        color: #595959;
+        color: var(--utools-text-secondary);
       }
     }
   }
@@ -705,20 +705,20 @@ onMounted(() => {
         .input-slot {
           width: 56px;
           height: 56px;
-          border: 2px solid #d9d9d9;
+          border: 2px solid var(--utools-border-primary);
           border-radius: 4px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 28px;
           font-weight: 500;
-          color: #262626;
-          background: #fff;
+          color: var(--utools-text-primary);
+          background: var(--utools-bg-card);
           transition: all 0.2s;
 
           &.filled {
-            border-color: #1890ff;
-            background: #f0f7ff;
+            border-color: var(--utools-primary);
+            background: var(--utools-primary-light);
           }
         }
       }
@@ -744,7 +744,7 @@ onMounted(() => {
         .letter-slot {
           width: 56px;
           height: 56px;
-          border: 2px solid #d9d9d9;
+          border: 2px solid var(--utools-border-primary);
           border-radius: 4px;
           display: flex;
           align-items: center;
@@ -754,19 +754,19 @@ onMounted(() => {
           transition: all 0.2s;
 
           &.fixed {
-            background: #f5f5f5;
-            border-color: #d9d9d9;
-            color: #8c8c8c;
+            background: var(--utools-bg-tertiary);
+            border-color: var(--utools-border-primary);
+            color: var(--utools-text-tertiary);
           }
 
           &.empty {
-            background: #fff;
-            border-color: #1890ff;
+            background: var(--utools-bg-card);
+            border-color: var(--utools-primary);
             border-style: dashed;
           }
 
           &.filled {
-            background: #f0f7ff;
+            background: var(--utools-primary-light);
           }
 
           .letter-input {
@@ -777,7 +777,7 @@ onMounted(() => {
             text-align: center;
             font-size: 28px;
             font-weight: 500;
-            color: #262626;
+            color: var(--utools-text-primary);
             text-transform: lowercase;
             outline: none;
           }
@@ -808,10 +808,10 @@ onMounted(() => {
   padding: 24px;
 
   .complete-card {
-    background: #fff;
+    background: var(--utools-bg-card);
     padding: 48px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--utools-shadow-sm);
     text-align: center;
     max-width: 500px;
     width: 100%;
@@ -823,7 +823,7 @@ onMounted(() => {
     h2 {
       margin: 0 0 32px;
       font-size: 28px;
-      color: #262626;
+      color: var(--utools-text-primary);
     }
 
     .stats {
@@ -839,21 +839,21 @@ onMounted(() => {
           display: block;
           font-size: 32px;
           font-weight: 600;
-          color: #262626;
+          color: var(--utools-text-primary);
           margin-bottom: 4px;
 
           &.success {
-            color: #52c41a;
+            color: var(--utools-success);
           }
 
           &.error {
-            color: #ff4d4f;
+            color: var(--utools-danger);
           }
         }
 
         .stat-label {
           font-size: 14px;
-          color: #8c8c8c;
+          color: var(--utools-text-tertiary);
         }
       }
     }
@@ -861,12 +861,12 @@ onMounted(() => {
     .wrong-words {
       margin-bottom: 32px;
       padding-top: 24px;
-      border-top: 1px solid #e8e8e8;
+      border-top: 1px solid var(--utools-border-divider);
 
       h4 {
         margin: 0 0 16px;
         font-size: 14px;
-        color: #595959;
+        color: var(--utools-text-secondary);
       }
 
       .word-tags {
@@ -877,11 +877,11 @@ onMounted(() => {
 
         .word-tag {
           padding: 6px 12px;
-          background: #fff2f0;
-          border: 1px solid #ffccc7;
+          background: rgba(245, 108, 108, 0.1);
+          border: 1px solid var(--utools-danger);
           border-radius: 4px;
           font-size: 14px;
-          color: #ff4d4f;
+          color: var(--utools-danger);
         }
       }
     }
