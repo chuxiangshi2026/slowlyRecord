@@ -114,11 +114,11 @@ app.use(router)
 app.use(VueVirtualScroller)
 
 // 初始化百度统计
-// console.log('=== 开始初始化百度统计 ===');
+console.log('[App] 准备初始化百度统计...');
 initBaiduStats().then(() => {
-  console.log('=== 百度统计初始化完成 ===');
+  console.log('[App] 百度统计初始化流程完成');
 }).catch((err) => {
-  console.error('=== 百度统计初始化失败 ===', err);
+  console.error('[App] 百度统计初始化失败:', err);
 });
 
 // 路由切换时追踪页面浏览
