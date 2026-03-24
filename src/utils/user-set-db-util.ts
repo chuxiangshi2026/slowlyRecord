@@ -7,11 +7,14 @@ import cloneDeep from 'lodash.clonedeep';
  * 获取数据库全部的单词
  * @returns 返回数据库中所有单词的数组
  */
-function getSetDb(): UserSetType {
+function getSetDb(silent = false): UserSetType {
     let allDocs = window.utools.db.allDocs(DB_KEY_USER_SET);
-    log.i('获取数据库设置', allDocs);
+    if (!silent) {
+        log.i('获取数据库设置', allDocs);
+    }
     return allDocs[0] as UserSetType;
 }
+
 
 /**
  * 将单个单词添加或更新到数据库中

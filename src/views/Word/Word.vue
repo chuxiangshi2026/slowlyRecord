@@ -225,6 +225,8 @@ import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-uti
 import {ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
 import {Loading, Warning, InfoFilled, VideoPlay, CircleCheck, CircleClose, Trophy} from '@element-plus/icons-vue';
 import {useRouter} from 'vue-router';
+import {getSetDb} from '@/utils/user-set-db-util.ts';
+
 
 const word = ref('')
 const wordsStore = useWordsStore();
@@ -236,49 +238,275 @@ const currentId = ref<string | number | undefined>(undefined)
 
 // 专注模式窗口实例
 let focusWindow: any = null;
+let focusModeSyncTimer: any = null;
+let lastSyncedAlwaysOnTop: boolean | null = null;
 
-// 处理置顶请求的函数
-const handleAlwaysOnTopRequest = (value: boolean) => {
-  console.log('父窗口处理置顶请求:', value);
-  if (!focusWindow) {
-    console.log('focusWindow 不可用，置顶设置失败');
+// 处理子窗口状态保存
+let focusWindowState = {
+  currentIndex: 0,
+  showExplains: false,
+  opacity: 1.0
+};
+
+
+const applyFocusWindowAlwaysOnTop = (targetWindow: any, alwaysOnTop: boolean, source: string) => {
+  if (!targetWindow || typeof targetWindow.setAlwaysOnTop !== 'function') {
+    return false;
+  }
+
+  try {
+    targetWindow.setAlwaysOnTop(alwaysOnTop);
+    if (alwaysOnTop && typeof targetWindow.moveTop === 'function') {
+      targetWindow.moveTop();
+    }
+    const appliedState = typeof targetWindow.isAlwaysOnTop === 'function'
+      ? targetWindow.isAlwaysOnTop()
+      : alwaysOnTop;
+    console.log(`[${source}] 专注窗口置顶状态已应用:`, alwaysOnTop, '当前实际状态:', appliedState);
+    return appliedState === alwaysOnTop;
+  } catch (e) {
+    console.error(`[${source}] 应用置顶状态失败:`, e);
+    return false;
+  }
+};
+
+
+const clearFocusModeSync = () => {
+  if (focusModeSyncTimer) {
+    clearInterval(focusModeSyncTimer);
+    focusModeSyncTimer = null;
+  }
+};
+
+const handleSetAlwaysOnTop = (state: any) => {
+  const newAlwaysOnTop = state?.alwaysOnTop ?? true;
+  lastSyncedAlwaysOnTop = newAlwaysOnTop;
+  console.log('[handleSetAlwaysOnTop] 开始处理，目标状态:', newAlwaysOnTop, '当前窗口:', focusWindow);
+
+
+  if (state) {
+    focusWindowState = {
+      currentIndex: state.currentIndex || 0,
+      showExplains: state.showExplains || false,
+      opacity: state.opacity || 1.0
+    };
+  }
+
+  if (wordsStore.focusMode) {
+    wordsStore.focusMode.alwaysOnTop = newAlwaysOnTop;
+  }
+
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    console.log('[handleSetAlwaysOnTop] 当前窗口不可用，回退为重建窗口');
+    handleRecreateWindow(state);
     return;
   }
 
-  if (typeof focusWindow.setAlwaysOnTop === 'function') {
-    try {
-      // 根据 uTools 文档，使用 screen-saver 级别确保置顶稳定
-      const level = value ? 'screen-saver' : 'normal';
-      focusWindow.setAlwaysOnTop(value, level);
-      console.log('setAlwaysOnTop 成功:', value, level);
-    } catch (e) {
-      console.error('setAlwaysOnTop 失败:', e);
-      // 尝试简化调用方式
-      try {
-        focusWindow.setAlwaysOnTop(value);
-        console.log('setAlwaysOnTop (简化) 成功:', value);
-      } catch (e2) {
-        console.error('setAlwaysOnTop (简化) 也失败:', e2);
+  if (typeof focusWindow.show === 'function') {
+    focusWindow.show();
+  }
+  if (typeof focusWindow.focus === 'function') {
+    focusWindow.focus();
+  }
+
+  const applied = applyFocusWindowAlwaysOnTop(focusWindow, newAlwaysOnTop, 'handleSetAlwaysOnTop');
+  if (!newAlwaysOnTop) {
+    return;
+  }
+
+  if (!applied) {
+    console.log('[handleSetAlwaysOnTop] 首次直接置顶未生效，等待重试校验');
+  }
+
+  [80, 220].forEach((delay) => {
+    setTimeout(() => {
+      if (!focusWindow || focusWindow.isDestroyed?.()) {
+        return;
       }
+      const retryResult = applyFocusWindowAlwaysOnTop(focusWindow, true, `handleSetAlwaysOnTop:retry:${delay}`);
+      if (!retryResult && delay === 220) {
+        console.log('[handleSetAlwaysOnTop] 最终校验仍未置顶，回退为重建窗口');
+        handleRecreateWindow(state);
+      }
+    }, delay);
+  });
+};
+
+
+
+// 处理重新创建窗口请求（用于切换置顶状态）
+const handleRecreateWindow = (state: any) => {
+
+
+  console.log('[handleRecreateWindow] 开始处理，当前 focusWindow:', focusWindow, '状态:', state);
+  
+  // 保存状态
+  if (state) {
+    focusWindowState = {
+      currentIndex: state.currentIndex || 0,
+      showExplains: state.showExplains || false,
+      opacity: state.opacity || 1.0
+    };
+  }
+  
+  const newAlwaysOnTop = state?.alwaysOnTop ?? true;
+  lastSyncedAlwaysOnTop = newAlwaysOnTop;
+  // 更新 store 状态以保证同一次启动内重新打开时不会闪烁
+  if (wordsStore.focusMode) {
+
+    wordsStore.focusMode.alwaysOnTop = newAlwaysOnTop;
+  }
+  console.log('[handleRecreateWindow] 新的置顶状态:', newAlwaysOnTop);
+  
+  // 关闭旧窗口
+  if (focusWindow) {
+    console.log('[handleRecreateWindow] 准备关闭旧窗口');
+    try {
+      // 检查窗口是否已销毁
+      const isDestroyed = focusWindow.isDestroyed?.();
+      console.log('[handleRecreateWindow] 窗口是否已销毁:', isDestroyed);
+      
+      if (!isDestroyed) {
+        console.log('[handleRecreateWindow] 调用 close()');
+        focusWindow.close();
+        console.log('[handleRecreateWindow] close() 已调用');
+      }
+    } catch (e) {
+      console.error('[handleRecreateWindow] 关闭旧窗口失败:', e);
     }
   } else {
-    console.log('focusWindow.setAlwaysOnTop 不是函数');
+    console.log('[handleRecreateWindow] focusWindow 为空，无需关闭');
   }
+  
+  // 强制清空引用
+  focusWindow = null;
+  console.log('[handleRecreateWindow] focusWindow 已置为 null');
+  
+  // 清理贴边相关
+  clearEdgeStickResources();
+  isEdgeHidden = false;
+  savedBounds = null;
+
+  
+  // 获取当前主题
+  const isDark = document.body.classList.contains('utools-dark') || 
+                 document.documentElement.classList.contains('utools-dark') ||
+                 document.documentElement.classList.contains('dark');
+  const themeParam = isDark ? 'dark' : 'light';
+  
+  // 延迟创建新窗口，确保旧窗口已关闭
+  setTimeout(() => {
+    console.log('[handleRecreateWindow] 延迟后创建新窗口');
+    try {
+      // @ts-ignore
+      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}`, {
+        width: 320,
+        height: 100,
+        minWidth: 200,
+        minHeight: 80,
+        maxWidth: 400,
+        maxHeight: 150,
+        alwaysOnTop: newAlwaysOnTop,
+        frame: false,
+        transparent: true,
+        backgroundColor: '#00000000',
+        resizable: true,
+        modal: false,
+        closable: true,
+      }, () => {
+        console.log('[handleRecreateWindow] 新专注窗口已创建，置顶状态:', newAlwaysOnTop);
+        applyFocusWindowAlwaysOnTop(focusWindow, newAlwaysOnTop, 'handleRecreateWindow');
+        if (focusWindow && typeof focusWindow.show === 'function') {
+          focusWindow.show();
+        }
+      });
+
+
+      // 窗口关闭时清理
+      const recreatedWindow = focusWindow;
+      recreatedWindow?.on?.('closed', () => {
+        console.log('[handleRecreateWindow] 窗口 closed 事件');
+        if (focusWindow === recreatedWindow) {
+          focusWindow = null;
+          clearFocusModeSync();
+          clearEdgeStickResources();
+          isEdgeHidden = false;
+          savedBounds = null;
+        }
+      });
+
+      startFocusModeSync(newAlwaysOnTop);
+
+
+      // 延迟启动贴边检测
+      setTimeout(() => {
+        setupEdgeStick();
+      }, 500);
+
+      
+      // 重新设置消息监听
+      setupMessageListener();
+      
+    } catch (e) {
+      console.error('[handleRecreateWindow] 重新创建窗口失败:', e);
+    }
+  }, 200); // 延迟 200ms 确保旧窗口关闭
 };
 
 // 贴边隐藏相关
 let edgeStickTimer: any = null;
+let edgeStickCleanup: (() => void) | null = null;
 let isEdgeHidden = false;
 let savedBounds: any = null;
+
+const clearEdgeStickResources = () => {
+  if (edgeStickTimer) {
+    clearInterval(edgeStickTimer);
+    edgeStickTimer = null;
+  }
+  if (edgeStickCleanup) {
+    edgeStickCleanup();
+    edgeStickCleanup = null;
+  }
+};
+
+const startFocusModeSync = (initialAlwaysOnTop: boolean) => {
+  clearFocusModeSync();
+  lastSyncedAlwaysOnTop = initialAlwaysOnTop;
+
+  focusModeSyncTimer = setInterval(() => {
+    if (!focusWindow || focusWindow.isDestroyed?.()) {
+      clearFocusModeSync();
+      return;
+    }
+
+    try {
+      const focusMode = getSetDb(true)?.focusMode;
+
+      const latestAlwaysOnTop = focusMode?.alwaysOnTop;
+      if (typeof latestAlwaysOnTop !== 'boolean' || latestAlwaysOnTop === lastSyncedAlwaysOnTop) {
+        return;
+      }
+
+      console.log('[focusModeSync] 检测到 DB 置顶状态变化:', lastSyncedAlwaysOnTop, '=>', latestAlwaysOnTop);
+      handleSetAlwaysOnTop({
+        currentIndex: focusWindowState.currentIndex,
+        showExplains: focusWindowState.showExplains,
+        opacity: focusWindowState.opacity,
+        alwaysOnTop: latestAlwaysOnTop,
+      });
+    } catch (e) {
+      console.error('[focusModeSync] 同步专注模式设置失败:', e);
+    }
+  }, 300);
+};
 
 // 监听窗口移动，检测是否到屏幕边缘
 const setupEdgeStick = () => {
   if (!focusWindow) return;
 
-  // 清理旧的定时器
-  if (edgeStickTimer) {
-    clearInterval(edgeStickTimer);
-  }
+  clearEdgeStickResources();
+
 
   edgeStickTimer = setInterval(() => {
     if (!focusWindow || focusWindow.isDestroyed?.()) {
@@ -336,10 +564,9 @@ const setupEdgeStick = () => {
   };
 
   window.addEventListener('mousemove', onMouseMove);
-  // 将清理函数存储以便窗口关闭时调用
-  // @ts-ignore
-  edgeStickTimer._cleanup = () => window.removeEventListener('mousemove', onMouseMove);
+  edgeStickCleanup = () => window.removeEventListener('mousemove', onMouseMove);
 };
+
 
 // 从贴边恢复
 const restoreFromEdge = () => {
@@ -377,14 +604,11 @@ const handleOpenWordList = () => {
   }
 
   // 清理贴边相关
+  clearFocusModeSync();
+  clearEdgeStickResources();
   isEdgeHidden = false;
   savedBounds = null;
-  if (edgeStickTimer) {
-    clearInterval(edgeStickTimer);
-    // @ts-ignore
-    if (edgeStickTimer._cleanup) edgeStickTimer._cleanup();
-    edgeStickTimer = null;
-  }
+
 
   // 显示主窗口并刷新
   if (typeof utools !== 'undefined' && utools.showMainWindow) {
@@ -399,28 +623,62 @@ const handleOpenWordList = () => {
 
 // 处理子窗口消息的通用函数
 const handleChildMessage = (message: any) => {
-  console.log('父窗口收到子窗口消息:', message);
-  if (!message) return;
+  console.log('[handleChildMessage] 收到消息:', message);
+  if (!message) {
+    console.log('[handleChildMessage] 消息为空，忽略');
+    return;
+  }
 
-  if (message.channel === 'setAlwaysOnTop' && typeof message.payload === 'boolean') {
-    handleAlwaysOnTopRequest(message.payload);
-  } else if (message.channel === 'openWordList') {
+  const channel = typeof message === 'string' ? message : message.channel;
+  const payload = typeof message === 'string'
+    ? undefined
+    : (message.payload ?? message.args?.[0] ?? message.params?.[0] ?? message.data);
+
+  console.log('[handleChildMessage] 消息通道:', channel, 'payload:', payload);
+
+  if (channel === 'openWordList') {
+    console.log('[handleChildMessage] 处理 openWordList');
     handleOpenWordList();
-  } else if (message.channel === 'restoreFromEdge') {
+  } else if (channel === 'restoreFromEdge') {
+    console.log('[handleChildMessage] 处理 restoreFromEdge');
     restoreFromEdge();
+  } else if (channel === 'setAlwaysOnTop') {
+    console.log('[handleChildMessage] 处理 setAlwaysOnTop，payload:', payload);
+    handleSetAlwaysOnTop(payload);
+  } else if (channel === 'recreateWindow') {
+    console.log('[handleChildMessage] 处理 recreateWindow，payload:', payload);
+    handleRecreateWindow(payload);
+  } else {
+    console.log('[handleChildMessage] 未知通道:', channel);
   }
 };
 
-// 全局设置 uTools 消息监听（只设置一次）
+let messageListenerReady = false;
+
+// 全局设置 uTools 消息监听
 // @ts-ignore
-if (typeof utools !== 'undefined' && utools.onMessage) {
+function setupMessageListener() {
+  if (messageListenerReady) {
+    return;
+  }
+
   // @ts-ignore
-  utools.onMessage((message: any) => {
-    console.log('【全局】父窗口 utools.onMessage 收到:', message);
-    handleChildMessage(message);
-  });
-  console.log('【全局】父窗口 utools.onMessage 监听已设置');
+  if (typeof utools !== 'undefined' && utools.onMessage) {
+    // @ts-ignore
+    utools.onMessage((message: any) => {
+      console.log('【全局】父窗口 utools.onMessage 收到:', message);
+      handleChildMessage(message);
+    });
+    messageListenerReady = true;
+    console.log('【全局】父窗口 utools.onMessage 监听已设置');
+  } else {
+    console.log('【全局】utools.onMessage 不可用');
+  }
 }
+
+
+// 立即设置监听
+setupMessageListener();
 
 // 打开专注模式 - 创建独立子窗口
 const openFocusMode = () => {
@@ -442,21 +700,27 @@ const openFocusMode = () => {
                  document.documentElement.classList.contains('dark');
   console.log('创建专注窗口，当前主题:', isDark ? '暗黑' : '亮色');
 
+  // 从 store 获取用户设置
+  const initAlwaysOnTop = wordsStore.focusMode?.alwaysOnTop ?? true;
+  console.log('[openFocusMode] 初始置顶状态:', initAlwaysOnTop);
+
   // 创建独立窗口
+  console.log('[openFocusMode] 开始创建窗口');
   try {
     // @ts-ignore
     if (typeof utools !== 'undefined' && utools.createBrowserWindow) {
-      // 通过 URL 参数传递主题
+      // 通过 URL 参数传递主题和设置
       const themeParam = isDark ? 'dark' : 'light';
+      console.log('[openFocusMode] 调用 createBrowserWindow');
       // @ts-ignore
-      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}`, {
+      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}`, {
         width: 320,
         height: 100,
         minWidth: 200,
         minHeight: 80,
         maxWidth: 400,
         maxHeight: 150,
-        alwaysOnTop: true,
+        alwaysOnTop: initAlwaysOnTop,
         frame: false,
         transparent: true,
         // 透明背景色，确保正确接收透明效果
@@ -466,46 +730,39 @@ const openFocusMode = () => {
         // 允许关闭窗口
         closable: true,
       }, () => {
-        console.log('专注模式窗口已创建，主题:', themeParam);
-        // 在 callback 中设置置顶，确保窗口已准备好
-        if (focusWindow && typeof focusWindow.setAlwaysOnTop === 'function') {
-          try {
-            // 使用 screen-saver 级别确保置顶稳定
-            focusWindow.setAlwaysOnTop(true, 'screen-saver');
-            console.log('专注窗口置顶设置成功');
-          } catch (e) {
-            console.error('设置置顶失败:', e);
-            // 降级方案
-            try {
-              focusWindow.setAlwaysOnTop(true);
-            } catch (e2) {
-              console.error('降级置顶也失败:', e2);
-            }
-          }
-        }
+        console.log('[openFocusMode] 窗口创建回调执行，focusWindow:', focusWindow, '主题:', themeParam);
+        applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
         // 显示窗口
         if (focusWindow && typeof focusWindow.show === 'function') {
           focusWindow.show();
         }
       });
 
+
       // 窗口关闭时清理引用
-      focusWindow.on?.('closed', () => {
-        focusWindow = null;
-        isEdgeHidden = false;
-        savedBounds = null;
-        if (edgeStickTimer) {
-          clearInterval(edgeStickTimer);
-          // @ts-ignore
-          if (edgeStickTimer._cleanup) edgeStickTimer._cleanup();
-          edgeStickTimer = null;
+      const createdFocusWindow = focusWindow;
+      createdFocusWindow?.on?.('closed', () => {
+        if (focusWindow === createdFocusWindow) {
+          focusWindow = null;
+          clearFocusModeSync();
+          clearEdgeStickResources();
+          isEdgeHidden = false;
+          savedBounds = null;
         }
       });
+
+      startFocusModeSync(initAlwaysOnTop);
+
 
       // 设置贴边隐藏检测（延迟一点确保窗口稳定）
       setTimeout(() => {
         setupEdgeStick();
       }, 500);
+
+      
+      // 重新设置消息监听（确保能收到子窗口消息）
+      setupMessageListener();
+      
     } else {
       // 回退：使用路由方式
       router.push('/focus');

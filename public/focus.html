@@ -459,22 +459,38 @@
     const btnTop = document.getElementById('btn-top');
     btnTop.classList.add('active');
 
-    // 设置置顶状态 - 通过 utools.sendToParent 让父窗口操作 BrowserWindow
+    // 设置置顶状态 - 优先通知父窗口直接更新当前 BrowserWindow，兼容旧消息格式
     function setWindowAlwaysOnTop(value) {
+      console.log('[专注模式] setWindowAlwaysOnTop 被调用:', value);
       if (typeof utools !== 'undefined' && utools.sendToParent) {
-        console.log('[专注模式] 发送置顶设置:', value);
-        // 根据 uTools 文档，使用 sendToParent 发送消息到父窗口
-        utools.sendToParent('setAlwaysOnTop', value);
+        console.log('[专注模式] 准备发送 setAlwaysOnTop 消息');
+        const messageData = {
+          alwaysOnTop: value,
+          currentIndex: currentIndex,
+          showExplains: showExplains,
+          opacity: currentOpacity
+        };
+        console.log('[专注模式] 发送数据:', messageData);
+        utools.sendToParent({ channel: 'setAlwaysOnTop', payload: messageData });
+        try {
+          utools.sendToParent('setAlwaysOnTop', messageData);
+        } catch (e) {}
+        console.log('[专注模式] 消息已发送');
+      } else {
+        console.error('[专注模式] utools.sendToParent 不可用');
       }
     }
+
+
 
     btnTop.addEventListener('click', () => {
       isAlwaysOnTop = !isAlwaysOnTop;
       btnTop.classList.toggle('active', isAlwaysOnTop);
       btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
-      setWindowAlwaysOnTop(isAlwaysOnTop);
       saveFocusModeSetting('alwaysOnTop', isAlwaysOnTop);
+      setWindowAlwaysOnTop(isAlwaysOnTop);
     });
+
 
     // 返回列表按钮 - 只发消息，让父窗口关闭自己并显示主窗口
     document.getElementById('btn-list').addEventListener('click', () => {
@@ -493,7 +509,10 @@
         }
 
         // 发送消息给父窗口，请求打开列表并关闭专注窗口
-        utools.sendToParent('openWordList');
+        utools.sendToParent({ channel: 'openWordList' });
+        try {
+          utools.sendToParent('openWordList');
+        } catch(e) {}
 
         // 延迟关闭窗口，确保消息已发送
         setTimeout(() => {
@@ -594,16 +613,25 @@
     }
 
     // ========== 保存/读取设置 ==========
+    function getUserSetDoc() {
+      if (typeof utools === 'undefined' || !utools.db) {
+        return null;
+      }
+
+      const docs = utools.db.allDocs('user-set');
+      return docs.find(doc => doc && doc._id && doc._id.startsWith('user-set')) || null;
+    }
+
     function saveFocusModeSetting(key, value) {
       try {
-        if (typeof utools !== 'undefined' && utools.db) {
-          const docs = utools.db.allDocs();
-          const userSetDoc = docs.find(doc => doc._id && doc._id.startsWith('user-set-'));
-          if (userSetDoc) {
-            if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
-            userSetDoc.focusMode[key] = value;
-            utools.db.put(userSetDoc);
-          }
+        const userSetDoc = getUserSetDoc();
+        if (userSetDoc) {
+          if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
+          userSetDoc.focusMode[key] = value;
+          const result = utools.db.put(userSetDoc);
+          console.log('[专注模式] 保存设置结果:', key, value, result);
+        } else {
+          console.warn('[专注模式] 未找到 user-set 配置文档，保存失败');
         }
       } catch (e) {
         console.error('保存设置失败:', e);
@@ -612,34 +640,29 @@
 
     function loadFocusModeSettings() {
       try {
-        if (typeof utools !== 'undefined' && utools.db) {
-          const docs = utools.db.allDocs();
-          const userSetDoc = docs.find(doc => doc._id && doc._id.startsWith('user-set-'));
+        const userSetDoc = getUserSetDoc();
 
-          if (userSetDoc && userSetDoc.focusMode) {
-            const fm = userSetDoc.focusMode;
+        if (userSetDoc && userSetDoc.focusMode) {
+          const fm = userSetDoc.focusMode;
 
-            // 应用透明度
-            if (fm.opacity !== undefined) {
-              applyOpacity(fm.opacity);
-            }
-
-            // 应用置顶设置
-            if (fm.alwaysOnTop !== undefined) {
-              isAlwaysOnTop = fm.alwaysOnTop;
-              btnTop.classList.toggle('active', isAlwaysOnTop);
-              btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
-              setWindowAlwaysOnTop(isAlwaysOnTop);
-            }
-
-            return fm;
+          // 应用透明度
+          if (fm.opacity !== undefined) {
+            applyOpacity(fm.opacity);
           }
+
+          // 置顶状态以父窗口创建时传入的 URL 参数为准，仅更新按钮显示，避免启动时把新状态回写成旧值
+          btnTop.classList.toggle('active', isAlwaysOnTop);
+
+          btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+
+          return fm;
         }
       } catch (e) {
         console.error('读取专注模式设置失败:', e);
       }
       return null;
     }
+
 
     // ========== 键盘快捷键 ==========
     document.addEventListener('keydown', (e) => {
@@ -692,9 +715,45 @@
     const isDark = detectTheme();
     applyTheme(isDark);
 
+    // 从 URL 参数获取状态
+    function getStateFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const index = parseInt(urlParams.get('index') || '0');
+      const showExplainsParam = urlParams.get('showExplains') === 'true';
+      const opacity = parseFloat(urlParams.get('opacity') || '1.0');
+      // alwaysOnTop 默认为 true，除非显式指定为 'false'
+      const alwaysOnTopParam = urlParams.get('alwaysOnTop');
+      const alwaysOnTop = alwaysOnTopParam === 'false' ? false : true;
+
+      return {
+        currentIndex: isNaN(index) ? 0 : index,
+        showExplains: showExplainsParam,
+        opacity: isNaN(opacity) ? 1.0 : opacity,
+        alwaysOnTop: alwaysOnTop
+      };
+    }
+
     // 初始化
+    const initialState = getStateFromUrl();
+    console.log('从 URL 恢复状态:', initialState);
+
+    // 应用恢复的状态
+    currentIndex = initialState.currentIndex;
+    showExplains = initialState.showExplains;
+    currentOpacity = initialState.opacity;
+    isAlwaysOnTop = initialState.alwaysOnTop;
+
+    // 更新置顶按钮状态
+    btnTop.classList.toggle('active', isAlwaysOnTop);
+    btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+
     loadWords();
     loadFocusModeSettings();
+
+    // 如果 URL 中有透明度参数，应用它
+    if (initialState.opacity !== undefined && initialState.opacity !== 1.0) {
+      applyOpacity(initialState.opacity);
+    }
   </script>
 </body>
 </html>
