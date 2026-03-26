@@ -21,8 +21,10 @@ import type {UserSetType, FocusModeSettings} from "@/types/user-set";
 // 默认专注模式设置
 const defaultFocusMode: FocusModeSettings = {
     alwaysOnTop: true,
-    opacity: 1.0 // 默认不透明
+    opacity: 1.0, // 默认不透明
+    edgeStickEnabled: true,
 };
+
 
 // 添加 API 密钥相关的响应式变量
 // const userApiKeys = ref({
@@ -334,17 +336,19 @@ export const useWordsStore =
              *获取全部单词
              */
             function listWords(): Word[] {
-                let dbWords = listDbWords();
+                const dbWords = listDbWords();
                 // console.log('读取的数据库', dbWords)
                 if (!words || words.value.length != dbWords.length) {
                     console.log('数据库与缓存数据不一致')
                 }
 
+                words.value = [];
                 pushWords(dbWords)
                 // 加载单词后重新计算待复习状态
                 upReview()
                 return words.value
             }
+
 
             /**
              * 批量添加单词

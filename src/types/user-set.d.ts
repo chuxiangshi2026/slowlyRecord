@@ -25,12 +25,24 @@ export type OcrKeyType = Record<OcrPlatform, {
 }>;
 
 /**
+ * 专注模式待处理动作
+ */
+export interface FocusModePendingAction {
+    type: 'openWordList';
+    at: number;
+}
+
+/**
  * 专注模式设置（存储窗口相关配置）
  */
 export interface FocusModeSettings {
     alwaysOnTop: boolean;
     opacity: number; // 窗口透明度 0.3-1.0
+    edgeStickEnabled: boolean; // 是否启用贴边隐藏
+    pendingAction?: FocusModePendingAction;
 }
+
+
 
 /**
  * 用户设置类型

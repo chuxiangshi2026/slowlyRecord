@@ -211,7 +211,7 @@ import type {Word} from "@/types/words";
 import {useWordsStore} from "@/stores/words.ts";
 import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
-import {computed, nextTick, ref, watch} from "vue";
+import {computed, nextTick, onUnmounted, ref, watch} from "vue";
 import {
   filterWordsForJsonExport,
   filterWordsForTextExport,
@@ -227,6 +227,14 @@ import {Loading, Warning, InfoFilled, VideoPlay, CircleCheck, CircleClose, Troph
 import {useRouter} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 
+const FOCUS_MODE_ACTION_STORAGE_KEY = 'slowly-record-focus-mode-action';
+const FOCUS_MODE_DB_ACTION_TTL = 15000;
+const EDGE_RESTORE_OFFSET = 12;
+const EDGE_RESTORE_COOLDOWN = 800;
+const EDGE_STICK_THRESHOLD = 25;
+const EDGE_VISIBLE_SIZE = 36;
+const EDGE_DRAG_OUT_THRESHOLD = 24;
+
 
 const word = ref('')
 const wordsStore = useWordsStore();
@@ -240,13 +248,17 @@ const currentId = ref<string | number | undefined>(undefined)
 let focusWindow: any = null;
 let focusModeSyncTimer: any = null;
 let lastSyncedAlwaysOnTop: boolean | null = null;
+let lastSyncedEdgeStickEnabled: boolean | null = null;
+let lastHandledFocusModeActionAt = 0;
 
 // 处理子窗口状态保存
 let focusWindowState = {
   currentIndex: 0,
   showExplains: false,
-  opacity: 1.0
+  opacity: 1.0,
+  edgeStickEnabled: true,
 };
+
 
 
 const applyFocusWindowAlwaysOnTop = (targetWindow: any, alwaysOnTop: boolean, source: string) => {
@@ -278,23 +290,70 @@ const clearFocusModeSync = () => {
   }
 };
 
-const handleSetAlwaysOnTop = (state: any) => {
-  const newAlwaysOnTop = state?.alwaysOnTop ?? true;
-  lastSyncedAlwaysOnTop = newAlwaysOnTop;
-  console.log('[handleSetAlwaysOnTop] 开始处理，目标状态:', newAlwaysOnTop, '当前窗口:', focusWindow);
+const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
+  try {
+    const userSetDoc = getSetDb(true);
+    if (!userSetDoc) {
+      return;
+    }
 
+    const nextFocusMode = {
+      ...(userSetDoc.focusMode || {}),
+      ...(wordsStore.focusMode || {}),
+    };
+
+    updater(nextFocusMode);
+
+    if (nextFocusMode.pendingAction == null) {
+      delete nextFocusMode.pendingAction;
+    }
+
+    userSetDoc.focusMode = nextFocusMode;
+    window.utools?.db?.put?.(userSetDoc);
+  } catch (e) {
+    console.error('[focusModeDoc] 更新专注模式文档失败:', e);
+  }
+};
+
+const saveFocusModePendingAction = (type: string, payload?: any, at = Date.now()) => {
+  updateFocusModeDoc((focusMode) => {
+    focusMode.pendingAction = {
+      type,
+      payload,
+      at,
+    };
+  });
+};
+
+
+const clearFocusModePendingAction = () => {
+  updateFocusModeDoc((focusMode) => {
+    delete focusMode.pendingAction;
+  });
+};
+
+const handleSetAlwaysOnTop = (state: any) => {
+
+  const newAlwaysOnTop = state?.alwaysOnTop ?? true;
+  const newEdgeStickEnabled = state?.edgeStickEnabled ?? wordsStore.focusMode?.edgeStickEnabled ?? true;
+  lastSyncedAlwaysOnTop = newAlwaysOnTop;
+  lastSyncedEdgeStickEnabled = newEdgeStickEnabled;
+  console.log('[handleSetAlwaysOnTop] 开始处理，目标状态:', newAlwaysOnTop, '当前窗口:', focusWindow);
 
   if (state) {
     focusWindowState = {
       currentIndex: state.currentIndex || 0,
       showExplains: state.showExplains || false,
-      opacity: state.opacity || 1.0
+      opacity: state.opacity || 1.0,
+      edgeStickEnabled: newEdgeStickEnabled,
     };
   }
 
   if (wordsStore.focusMode) {
     wordsStore.focusMode.alwaysOnTop = newAlwaysOnTop;
+    wordsStore.focusMode.edgeStickEnabled = newEdgeStickEnabled;
   }
+
 
   if (!focusWindow || focusWindow.isDestroyed?.()) {
     console.log('[handleSetAlwaysOnTop] 当前窗口不可用，回退为重建窗口');
@@ -341,22 +400,26 @@ const handleRecreateWindow = (state: any) => {
   console.log('[handleRecreateWindow] 开始处理，当前 focusWindow:', focusWindow, '状态:', state);
   
   // 保存状态
+  const newEdgeStickEnabled = state?.edgeStickEnabled ?? wordsStore.focusMode?.edgeStickEnabled ?? true;
   if (state) {
     focusWindowState = {
       currentIndex: state.currentIndex || 0,
       showExplains: state.showExplains || false,
-      opacity: state.opacity || 1.0
+      opacity: state.opacity || 1.0,
+      edgeStickEnabled: newEdgeStickEnabled,
     };
   }
   
   const newAlwaysOnTop = state?.alwaysOnTop ?? true;
   lastSyncedAlwaysOnTop = newAlwaysOnTop;
+  lastSyncedEdgeStickEnabled = newEdgeStickEnabled;
   // 更新 store 状态以保证同一次启动内重新打开时不会闪烁
   if (wordsStore.focusMode) {
-
     wordsStore.focusMode.alwaysOnTop = newAlwaysOnTop;
+    wordsStore.focusMode.edgeStickEnabled = newEdgeStickEnabled;
   }
-  console.log('[handleRecreateWindow] 新的置顶状态:', newAlwaysOnTop);
+  console.log('[handleRecreateWindow] 新的置顶状态:', newAlwaysOnTop, '贴边隐藏:', newEdgeStickEnabled);
+
   
   // 关闭旧窗口
   if (focusWindow) {
@@ -381,13 +444,17 @@ const handleRecreateWindow = (state: any) => {
   // 强制清空引用
   focusWindow = null;
   console.log('[handleRecreateWindow] focusWindow 已置为 null');
-  
+
   // 清理贴边相关
   clearEdgeStickResources();
   isEdgeHidden = false;
   savedBounds = null;
+  edgeHiddenSide = null;
+  edgeRestoreSuspendedUntil = 0;
+  isExpandedFromEdge = false;
 
-  
+
+
   // 获取当前主题
   const isDark = document.body.classList.contains('utools-dark') || 
                  document.documentElement.classList.contains('utools-dark') ||
@@ -399,7 +466,8 @@ const handleRecreateWindow = (state: any) => {
     console.log('[handleRecreateWindow] 延迟后创建新窗口');
     try {
       // @ts-ignore
-      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}`, {
+      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}`, {
+
         width: 320,
         height: 100,
         minWidth: 200,
@@ -432,18 +500,19 @@ const handleRecreateWindow = (state: any) => {
           clearEdgeStickResources();
           isEdgeHidden = false;
           savedBounds = null;
+          edgeHiddenSide = null;
+          edgeRestoreSuspendedUntil = 0;
+          isExpandedFromEdge = false;
         }
       });
 
-      startFocusModeSync(newAlwaysOnTop);
-
+      startFocusModeSync(newAlwaysOnTop, newEdgeStickEnabled);
 
       // 延迟启动贴边检测
       setTimeout(() => {
         setupEdgeStick();
       }, 500);
 
-      
       // 重新设置消息监听
       setupMessageListener();
       
@@ -458,6 +527,78 @@ let edgeStickTimer: any = null;
 let edgeStickCleanup: (() => void) | null = null;
 let isEdgeHidden = false;
 let savedBounds: any = null;
+let edgeHiddenSide: 'left' | 'right' | null = null;
+let edgeRestoreSuspendedUntil = 0;
+let isExpandedFromEdge = false;
+let edgeExpandCollapseTimer: any = null;
+
+const clearEdgeExpandCollapseTimer = () => {
+  if (edgeExpandCollapseTimer) {
+    clearTimeout(edgeExpandCollapseTimer);
+    edgeExpandCollapseTimer = null;
+  }
+};
+
+const getFocusWindowScreenBounds = (referenceBounds?: any) => {
+  const windowScreen: any = focusWindow?.screen || {};
+  const browserScreen: any = typeof screen !== 'undefined' ? screen : {};
+
+  const left = Number(windowScreen.workAreaX ?? windowScreen.x ?? windowScreen.left ?? browserScreen.availLeft ?? 0) || 0;
+  const top = Number(windowScreen.workAreaY ?? windowScreen.y ?? windowScreen.top ?? browserScreen.availTop ?? 0) || 0;
+  const width = Number(windowScreen.workAreaWidth ?? windowScreen.availWidth ?? windowScreen.width ?? browserScreen.availWidth ?? browserScreen.width ?? referenceBounds?.width ?? 0) || 0;
+  const height = Number(windowScreen.workAreaHeight ?? windowScreen.availHeight ?? windowScreen.height ?? browserScreen.availHeight ?? browserScreen.height ?? referenceBounds?.height ?? 0) || 0;
+  const right = left + Math.max(0, width);
+  const bottom = top + Math.max(0, height);
+
+  return {
+    left,
+    top,
+    width: Math.max(0, width),
+    height: Math.max(0, height),
+    right,
+    bottom,
+  };
+};
+
+const getHiddenEdgeX = (side: 'left' | 'right', width: number, screenBounds = getFocusWindowScreenBounds()) => {
+  return side === 'left'
+    ? screenBounds.left - width + EDGE_VISIBLE_SIZE
+    : screenBounds.right - EDGE_VISIBLE_SIZE;
+};
+
+const getExpandedEdgeBounds = (
+  bounds: any,
+  side: 'left' | 'right',
+  screenBounds = getFocusWindowScreenBounds(bounds),
+) => {
+  const minX = screenBounds.left;
+  const maxX = Math.max(minX, screenBounds.right - bounds.width);
+  const minY = screenBounds.top;
+  const maxY = Math.max(minY, screenBounds.bottom - bounds.height);
+  const nextBounds = { ...bounds };
+
+  nextBounds.x = side === 'left'
+    ? Math.min(maxX, Math.max(minX + EDGE_RESTORE_OFFSET, bounds.x))
+    : Math.max(minX, Math.min(maxX - EDGE_RESTORE_OFFSET, bounds.x));
+  nextBounds.y = Math.max(minY, Math.min(maxY, bounds.y));
+
+  return nextBounds;
+};
+
+
+
+
+
+const resetEdgeHiddenState = (source = 'unknown') => {
+  if (isEdgeHidden || isExpandedFromEdge || savedBounds || edgeHiddenSide) {
+    console.log(`[resetEdgeHiddenState] 重置贴边状态，来源: ${source}`);
+  }
+  isEdgeHidden = false;
+  savedBounds = null;
+  edgeHiddenSide = null;
+  isExpandedFromEdge = false;
+  notifyChildEdgeState(false);
+};
 
 const clearEdgeStickResources = () => {
   if (edgeStickTimer) {
@@ -468,45 +609,155 @@ const clearEdgeStickResources = () => {
     edgeStickCleanup();
     edgeStickCleanup = null;
   }
+  clearEdgeExpandCollapseTimer();
+}
+
+// 通知子窗口贴边状态变化
+function notifyChildEdgeState(isStuck: boolean, side?: 'left' | 'right', expanded = false) {
+  if (!focusWindow) return;
+  try {
+    if (focusWindow.webContents && focusWindow.webContents.executeJavaScript) {
+      const sideValue = JSON.stringify(side || '');
+      focusWindow.webContents.executeJavaScript(`
+        if (typeof updateEdgeStuckState === 'function') {
+          updateEdgeStuckState(${isStuck}, ${sideValue}, ${expanded});
+        }
+      `).catch(() => {});
+    }
+  } catch (e) {
+    console.error('通知子窗口贴边状态失败:', e);
+  }
+}
+
+const finalizeExpandedFromEdge = (bounds: any, source = 'dragOut') => {
+  if (!bounds) {
+    return false;
+  }
+
+  console.log('[finalizeExpandedFromEdge] 贴边预览已被拖出，转为正常显示:', source, bounds);
+  resetEdgeHiddenState(`finalize:${source}`);
+  edgeRestoreSuspendedUntil = Date.now() + EDGE_RESTORE_COOLDOWN;
+  return true;
 };
 
-const startFocusModeSync = (initialAlwaysOnTop: boolean) => {
-  clearFocusModeSync();
-  lastSyncedAlwaysOnTop = initialAlwaysOnTop;
+function restoreFromEdge(source = 'unknown') {
+  console.log(`[restoreFromEdge] 收到恢复请求，来源: ${source}，当前状态:`, { isEdgeHidden, edgeHiddenSide, hasSavedBounds: !!savedBounds, isExpandedFromEdge });
 
-  focusModeSyncTimer = setInterval(() => {
-    if (!focusWindow || focusWindow.isDestroyed?.()) {
-      clearFocusModeSync();
-      return;
-    }
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    console.log('[restoreFromEdge] 窗口不存在');
+    return false;
+  }
 
-    try {
-      const focusMode = getSetDb(true)?.focusMode;
+  clearEdgeExpandCollapseTimer();
 
-      const latestAlwaysOnTop = focusMode?.alwaysOnTop;
-      if (typeof latestAlwaysOnTop !== 'boolean' || latestAlwaysOnTop === lastSyncedAlwaysOnTop) {
-        return;
-      }
+  if (!isEdgeHidden || !savedBounds || !edgeHiddenSide) {
+    console.log('[restoreFromEdge] 当前不在贴边隐藏状态，直接重置本地状态');
+    resetEdgeHiddenState(`restore:no-op:${source}`);
+    edgeRestoreSuspendedUntil = Date.now() + EDGE_RESTORE_COOLDOWN;
+    return false;
+  }
 
-      console.log('[focusModeSync] 检测到 DB 置顶状态变化:', lastSyncedAlwaysOnTop, '=>', latestAlwaysOnTop);
-      handleSetAlwaysOnTop({
-        currentIndex: focusWindowState.currentIndex,
-        showExplains: focusWindowState.showExplains,
-        opacity: focusWindowState.opacity,
-        alwaysOnTop: latestAlwaysOnTop,
-      });
-    } catch (e) {
-      console.error('[focusModeSync] 同步专注模式设置失败:', e);
-    }
-  }, 300);
-};
+  try {
+    const screenBounds = getFocusWindowScreenBounds(savedBounds);
+    const nextBounds = getExpandedEdgeBounds(savedBounds, edgeHiddenSide, screenBounds);
 
-// 监听窗口移动，检测是否到屏幕边缘
+    console.log('[restoreFromEdge] 恢复窗口位置:', nextBounds);
+    focusWindow.setBounds(nextBounds);
+
+    resetEdgeHiddenState(`restore:${source}`);
+    edgeRestoreSuspendedUntil = Date.now() + EDGE_RESTORE_COOLDOWN;
+    console.log(`[${source}] 已从贴边隐藏恢复窗口`);
+    return true;
+  } catch (e) {
+    console.error('恢复窗口失败:', e);
+    return false;
+  }
+}
+
+function expandFromEdge(source = 'hover') {
+  console.log(`[expandFromEdge] 请求展开，来源: ${source}`);
+
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    console.log('[expandFromEdge] 窗口不存在');
+    return false;
+  }
+
+  if (!isEdgeHidden || !savedBounds || !edgeHiddenSide) {
+    console.log('[expandFromEdge] 窗口未贴边，无需展开');
+    return false;
+  }
+
+  try {
+    const screenBounds = getFocusWindowScreenBounds(savedBounds);
+    const expandedBounds = getExpandedEdgeBounds(savedBounds, edgeHiddenSide, screenBounds);
+
+    focusWindow.setBounds(expandedBounds);
+
+    isExpandedFromEdge = true;
+    notifyChildEdgeState(true, edgeHiddenSide, true);
+    console.log('[expandFromEdge] 窗口已展开到:', expandedBounds);
+
+    return true;
+  } catch (e) {
+    console.error('[expandFromEdge] 展开失败:', e);
+    return false;
+  }
+}
+
+function collapseToEdge(source = 'mouseleave') {
+  console.log(`[collapseToEdge] 请求恢复贴边，来源: ${source}`);
+
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    console.log('[collapseToEdge] 窗口不存在');
+    return false;
+  }
+
+  if (!isEdgeHidden || !savedBounds || !edgeHiddenSide) {
+    console.log('[collapseToEdge] 当前不在贴边状态');
+    return false;
+  }
+
+  if (!isExpandedFromEdge) {
+    console.log('[collapseToEdge] 窗口已处于贴边隐藏状态');
+    return true;
+  }
+
+  try {
+    const screenBounds = getFocusWindowScreenBounds(savedBounds);
+    const collapseX = getHiddenEdgeX(edgeHiddenSide, savedBounds.width, screenBounds);
+
+
+    focusWindow.setBounds({
+      x: collapseX,
+      y: savedBounds.y,
+      width: savedBounds.width,
+      height: savedBounds.height,
+    });
+
+    isExpandedFromEdge = false;
+    notifyChildEdgeState(true, edgeHiddenSide, false);
+    console.log('[collapseToEdge] 窗口已恢复贴边隐藏');
+    return true;
+  } catch (e) {
+    console.error('[collapseToEdge] 恢复贴边失败:', e);
+    return false;
+  }
+}
+
 const setupEdgeStick = () => {
   if (!focusWindow) return;
 
   clearEdgeStickResources();
 
+  const edgeStickEnabled = wordsStore.focusMode?.edgeStickEnabled ?? true;
+  if (!edgeStickEnabled) {
+    if (isEdgeHidden) {
+      restoreFromEdge('setupEdgeStick:disabled');
+    }
+    return;
+  }
+
+  let lastBounds: any = null;
 
   edgeStickTimer = setInterval(() => {
     if (!focusWindow || focusWindow.isDestroyed?.()) {
@@ -516,74 +767,193 @@ const setupEdgeStick = () => {
 
     try {
       const bounds = focusWindow.getBounds?.();
-      if (!bounds || isEdgeHidden) return;
+      if (!bounds) return;
 
-      const screenBounds = {
-        width: focusWindow.screen?.width || screen.width,
-        height: focusWindow.screen?.height || screen.height
-      };
-
-      const threshold = 2;
-      const stickWidth = 6;
-
-      // 检测左边缘
-      if (bounds.x <= threshold) {
-        isEdgeHidden = true;
-        savedBounds = { ...bounds };
-        focusWindow.setBounds({ x: -bounds.width + stickWidth, y: bounds.y, width: bounds.width, height: bounds.height });
+      if (Date.now() < edgeRestoreSuspendedUntil && !isEdgeHidden) {
+        lastBounds = { ...bounds };
         return;
       }
 
-      // 检测右边缘
-      if (bounds.x + bounds.width >= screenBounds.width - threshold) {
-        isEdgeHidden = true;
-        savedBounds = { ...bounds };
-        focusWindow.setBounds({ x: screenBounds.width - stickWidth, y: bounds.y, width: bounds.width, height: bounds.height });
+      const screenBounds = getFocusWindowScreenBounds(bounds);
+
+      if (isEdgeHidden && savedBounds && edgeHiddenSide) {
+        if (isExpandedFromEdge) {
+          const expandedBounds = getExpandedEdgeBounds(savedBounds, edgeHiddenSide, screenBounds);
+          const draggedOut = Math.abs(bounds.x - expandedBounds.x) > EDGE_DRAG_OUT_THRESHOLD
+            || Math.abs(bounds.y - expandedBounds.y) > EDGE_DRAG_OUT_THRESHOLD;
+
+
+
+
+
+          if (draggedOut) {
+            finalizeExpandedFromEdge(bounds, 'expandedDragOut');
+          }
+          return;
+        }
+
+        const hiddenX = getHiddenEdgeX(edgeHiddenSide, savedBounds.width, screenBounds);
+
+        const hiddenStillValid = Math.abs(bounds.x - hiddenX) <= EDGE_VISIBLE_SIZE;
+
+        if (!hiddenStillValid) {
+          console.log('[setupEdgeStick] 隐藏窗口位置发生变化，退出贴边状态');
+          resetEdgeHiddenState('hiddenPositionChanged');
+          edgeRestoreSuspendedUntil = Date.now() + EDGE_RESTORE_COOLDOWN;
+        }
         return;
+      }
+
+      if (lastBounds) {
+        const moved = Math.abs(lastBounds.x - bounds.x) > 1 || Math.abs(lastBounds.y - bounds.y) > 1;
+        if (moved) {
+          lastBounds = { ...bounds };
+          return;
+        }
+      }
+      lastBounds = { ...bounds };
+
+      if (bounds.x <= screenBounds.left + EDGE_STICK_THRESHOLD) {
+        console.log('[setupEdgeStick] 检测到左边缘贴边:', bounds.x, '屏幕左边界:', screenBounds.left, '屏幕信息:', screenBounds);
+
+        isEdgeHidden = true;
+        isExpandedFromEdge = false;
+        edgeHiddenSide = 'left';
+        savedBounds = { ...bounds };
+        focusWindow.setBounds({
+          x: getHiddenEdgeX('left', bounds.width, screenBounds),
+          y: bounds.y,
+          width: bounds.width,
+          height: bounds.height,
+        });
+
+        notifyChildEdgeState(true, 'left', false);
+        console.log('[setupEdgeStick] 窗口已贴边隐藏到左侧');
+        return;
+      }
+
+      if (bounds.x + bounds.width >= screenBounds.right - EDGE_STICK_THRESHOLD) {
+        console.log('[setupEdgeStick] 检测到右边缘贴边:', bounds.x + bounds.width, '屏幕右边界:', screenBounds.right, '屏幕信息:', screenBounds);
+
+        isEdgeHidden = true;
+        isExpandedFromEdge = false;
+        edgeHiddenSide = 'right';
+        savedBounds = { ...bounds };
+        focusWindow.setBounds({
+          x: getHiddenEdgeX('right', bounds.width, screenBounds),
+          y: bounds.y,
+          width: bounds.width,
+          height: bounds.height,
+        });
+
+        notifyChildEdgeState(true, 'right', false);
+        console.log('[setupEdgeStick] 窗口已贴边隐藏到右侧');
       }
     } catch (e) {
-      // ignore
+      console.error('[setupEdgeStick] 错误:', e);
     }
-  }, 500);
+  }, 150);
+};
 
-  // 监听全局鼠标移动，检测是否靠近贴边位置来恢复
-  const onMouseMove = (e: MouseEvent) => {
-    if (!isEdgeHidden || !savedBounds) return;
-    const restoreThreshold = 8;
+function applyEdgeStickEnabled(enabled: boolean, source: string) {
+  lastSyncedEdgeStickEnabled = enabled;
+  console.log(`[${source}] 更新贴边隐藏状态:`, enabled);
 
-    // 左边缘恢复
-    if (savedBounds.x <= restoreThreshold && e.screenX <= restoreThreshold) {
-      restoreFromEdge();
-      return;
-    }
-    // 右边缘恢复
-    if (savedBounds.x + savedBounds.width >= (screen.width - restoreThreshold) && e.screenX >= screen.width - restoreThreshold) {
-      restoreFromEdge();
-      return;
-    }
+  if (wordsStore.focusMode) {
+    wordsStore.focusMode.edgeStickEnabled = enabled;
+  }
+
+  focusWindowState = {
+    ...focusWindowState,
+    edgeStickEnabled: enabled,
   };
 
-  window.addEventListener('mousemove', onMouseMove);
-  edgeStickCleanup = () => window.removeEventListener('mousemove', onMouseMove);
-};
-
-
-// 从贴边恢复
-const restoreFromEdge = () => {
-  if (!focusWindow || !isEdgeHidden || !savedBounds) return;
-
-  try {
-    focusWindow.setBounds(savedBounds);
-    isEdgeHidden = false;
-    savedBounds = null;
-  } catch (e) {
-    console.error('恢复窗口失败:', e);
+  if (!enabled) {
+    if (isEdgeHidden) {
+      restoreFromEdge('applyEdgeStickEnabled:disable');
+    }
+    clearEdgeStickResources();
+    resetEdgeHiddenState('applyEdgeStickEnabled:disable');
+    edgeRestoreSuspendedUntil = 0;
+    return;
   }
+
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    return;
+  }
+
+  setTimeout(() => {
+    if (!focusWindow || focusWindow.isDestroyed?.()) {
+      return;
+    }
+    setupEdgeStick();
+  }, 80);
+}
+
+
+const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled: boolean) => {
+  clearFocusModeSync();
+  lastSyncedAlwaysOnTop = initialAlwaysOnTop;
+  lastSyncedEdgeStickEnabled = initialEdgeStickEnabled;
+
+  focusModeSyncTimer = setInterval(() => {
+    if (!focusWindow || focusWindow.isDestroyed?.()) {
+      clearFocusModeSync();
+      return;
+    }
+
+    try {
+      const focusMode = getSetDb(true)?.focusMode;
+      const pendingAction = focusMode?.pendingAction;
+      const pendingActionAt = Number(pendingAction?.at || 0);
+
+      if (
+        pendingAction &&
+        pendingActionAt > lastHandledFocusModeActionAt &&
+        Date.now() - pendingActionAt <= FOCUS_MODE_DB_ACTION_TTL
+      ) {
+        lastHandledFocusModeActionAt = pendingActionAt;
+        if (processFocusModePendingAction(pendingAction, 'db')) {
+          return;
+        }
+      }
+
+
+      const latestAlwaysOnTop = typeof focusMode?.alwaysOnTop === 'boolean'
+        ? focusMode.alwaysOnTop
+        : initialAlwaysOnTop;
+      const latestEdgeStickEnabled = typeof focusMode?.edgeStickEnabled === 'boolean'
+        ? focusMode.edgeStickEnabled
+        : initialEdgeStickEnabled;
+
+      if (latestAlwaysOnTop !== lastSyncedAlwaysOnTop) {
+        console.log('[focusModeSync] 检测到 DB 置顶状态变化:', lastSyncedAlwaysOnTop, '=>', latestAlwaysOnTop);
+        handleSetAlwaysOnTop({
+          currentIndex: focusWindowState.currentIndex,
+          showExplains: focusWindowState.showExplains,
+          opacity: focusWindowState.opacity,
+          edgeStickEnabled: latestEdgeStickEnabled,
+          alwaysOnTop: latestAlwaysOnTop,
+        });
+        return;
+      }
+
+      if (latestEdgeStickEnabled !== lastSyncedEdgeStickEnabled) {
+        console.log('[focusModeSync] 检测到 DB 贴边隐藏状态变化:', lastSyncedEdgeStickEnabled, '=>', latestEdgeStickEnabled);
+        applyEdgeStickEnabled(latestEdgeStickEnabled, 'focusModeSync');
+      }
+    } catch (e) {
+      console.error('[focusModeSync] 同步专注模式设置失败:', e);
+    }
+
+  }, 300);
 };
+
 
 // 处理打开单词列表请求
 const handleOpenWordList = () => {
   console.log('父窗口处理打开列表请求');
+  clearFocusModePendingAction();
 
   // 刷新单词列表数据 - 从数据库重新加载
   try {
@@ -608,18 +978,106 @@ const handleOpenWordList = () => {
   clearEdgeStickResources();
   isEdgeHidden = false;
   savedBounds = null;
+  edgeHiddenSide = null;
+  edgeRestoreSuspendedUntil = 0;
+  isExpandedFromEdge = false;
 
+  listMode.value = 0;
+  router.replace('/word').catch(() => {});
+  if (window.location.hash !== '#/word') {
+    window.location.hash = '#/word';
+  }
 
   // 显示主窗口并刷新
   if (typeof utools !== 'undefined' && utools.showMainWindow) {
     utools.showMainWindow();
-    // 强制刷新列表显示
-    setTimeout(() => {
-      // 重新计算显示列表
-      listMode.value = listMode.value;
-    }, 100);
+  }
+
+  setTimeout(() => {
+    listMode.value = 0;
+    wordsStore.listWords();
+    if (typeof utools !== 'undefined' && utools.showMainWindow) {
+      utools.showMainWindow();
+    }
+  }, 120);
+};
+
+
+const processFocusModePendingAction = (action: any, source = 'unknown') => {
+  if (!action || typeof action !== 'object') {
+    return false;
+  }
+
+  const type = typeof action.type === 'string'
+    ? action.type
+    : (typeof action.channel === 'string' ? action.channel : '');
+  const payload = action.payload ?? action.args?.[0] ?? action.params?.[0] ?? action.data;
+
+  if (!type) {
+    return false;
+  }
+
+  console.log('[focusModeAction] 处理动作:', type, '来源:', source, 'payload:', payload);
+
+  if (source === 'db') {
+    clearFocusModePendingAction();
+  }
+
+  if (type === 'openWordList') {
+    handleOpenWordList();
+    return true;
+  }
+
+  handleChildMessage({ channel: type, payload });
+  return true;
+};
+
+const handleFocusModeStorageAction = (rawValue: string | null) => {
+  if (!rawValue) {
+    return;
+  }
+
+  try {
+    const action = JSON.parse(rawValue);
+    if (!action || typeof action !== 'object') {
+      return;
+    }
+
+    const actionAt = Number(action.at || 0);
+    if (actionAt && actionAt <= lastHandledFocusModeActionAt) {
+      return;
+    }
+    lastHandledFocusModeActionAt = actionAt || Date.now();
+
+    processFocusModePendingAction(action, 'storage');
+  } catch (e) {
+    console.error('[focusModeStorage] 处理本地动作失败:', e);
   }
 };
+
+
+const handleFocusModeStorageEvent = (event: StorageEvent) => {
+  if (event.key !== FOCUS_MODE_ACTION_STORAGE_KEY) {
+    return;
+  }
+  handleFocusModeStorageAction(event.newValue);
+};
+
+window.addEventListener('storage', handleFocusModeStorageEvent);
+onUnmounted(() => {
+  window.removeEventListener('storage', handleFocusModeStorageEvent);
+  clearFocusModeSync();
+  clearEdgeStickResources();
+  isEdgeHidden = false;
+  savedBounds = null;
+  edgeHiddenSide = null;
+  edgeRestoreSuspendedUntil = 0;
+  isExpandedFromEdge = false;
+});
+
+
+
+
 
 // 处理子窗口消息的通用函数
 const handleChildMessage = (message: any) => {
@@ -640,11 +1098,24 @@ const handleChildMessage = (message: any) => {
     console.log('[handleChildMessage] 处理 openWordList');
     handleOpenWordList();
   } else if (channel === 'restoreFromEdge') {
-    console.log('[handleChildMessage] 处理 restoreFromEdge');
-    restoreFromEdge();
+    console.log('[handleChildMessage] 处理 restoreFromEdge, payload:', payload);
+    restoreFromEdge(payload?.reason || 'childRequest');
+  } else if (channel === 'expandFromEdge') {
+    console.log('[handleChildMessage] 处理 expandFromEdge');
+    clearTimeout(edgeExpandCollapseTimer);
+    expandFromEdge(payload?.reason || 'hover');
+  } else if (channel === 'collapseToEdge') {
+    console.log('[handleChildMessage] 处理 collapseToEdge');
+    clearTimeout(edgeExpandCollapseTimer);
+    edgeExpandCollapseTimer = setTimeout(() => {
+      collapseToEdge(payload?.reason || 'mouseleave');
+    }, 100);
   } else if (channel === 'setAlwaysOnTop') {
     console.log('[handleChildMessage] 处理 setAlwaysOnTop，payload:', payload);
     handleSetAlwaysOnTop(payload);
+  } else if (channel === 'setEdgeStickEnabled') {
+    console.log('[handleChildMessage] 处理 setEdgeStickEnabled，payload:', payload);
+    applyEdgeStickEnabled(payload?.edgeStickEnabled ?? true, 'handleChildMessage');
   } else if (channel === 'recreateWindow') {
     console.log('[handleChildMessage] 处理 recreateWindow，payload:', payload);
     handleRecreateWindow(payload);
@@ -652,6 +1123,7 @@ const handleChildMessage = (message: any) => {
     console.log('[handleChildMessage] 未知通道:', channel);
   }
 };
+
 
 let messageListenerReady = false;
 
@@ -701,8 +1173,22 @@ const openFocusMode = () => {
   console.log('创建专注窗口，当前主题:', isDark ? '暗黑' : '亮色');
 
   // 从 store 获取用户设置
+  clearFocusModePendingAction();
+  isEdgeHidden = false;
+  savedBounds = null;
+  edgeHiddenSide = null;
+  edgeRestoreSuspendedUntil = 0;
+
   const initAlwaysOnTop = wordsStore.focusMode?.alwaysOnTop ?? true;
-  console.log('[openFocusMode] 初始置顶状态:', initAlwaysOnTop);
+  const initEdgeStickEnabled = wordsStore.focusMode?.edgeStickEnabled ?? true;
+  focusWindowState = {
+
+    ...focusWindowState,
+    edgeStickEnabled: initEdgeStickEnabled,
+  };
+  console.log('[openFocusMode] 初始置顶状态:', initAlwaysOnTop, '贴边隐藏:', initEdgeStickEnabled);
+
+
 
   // 创建独立窗口
   console.log('[openFocusMode] 开始创建窗口');
@@ -713,7 +1199,8 @@ const openFocusMode = () => {
       const themeParam = isDark ? 'dark' : 'light';
       console.log('[openFocusMode] 调用 createBrowserWindow');
       // @ts-ignore
-      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}`, {
+      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}`, {
+
         width: 320,
         height: 100,
         minWidth: 200,
@@ -748,18 +1235,19 @@ const openFocusMode = () => {
           clearEdgeStickResources();
           isEdgeHidden = false;
           savedBounds = null;
+          edgeHiddenSide = null;
+          edgeRestoreSuspendedUntil = 0;
+          isExpandedFromEdge = false;
         }
       });
 
-      startFocusModeSync(initAlwaysOnTop);
-
+      startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
 
       // 设置贴边隐藏检测（延迟一点确保窗口稳定）
       setTimeout(() => {
         setupEdgeStick();
       }, 500);
 
-      
       // 重新设置消息监听（确保能收到子窗口消息）
       setupMessageListener();
       

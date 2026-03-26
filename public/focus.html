@@ -175,7 +175,7 @@
       color: var(--primary-color);
     }
 
-    .btn-list {
+    .btn-edge {
       position: absolute;
       top: 2px;
       right: 46px;
@@ -186,9 +186,111 @@
       -webkit-app-region: no-drag;
     }
 
+    .btn-edge:hover {
+      color: var(--primary-color);
+    }
+
+    .btn-edge.active {
+      color: var(--primary-color);
+    }
+
+    .btn-list {
+      position: absolute;
+      top: 2px;
+      right: 66px;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      padding: 2px;
+      transition: color 0.3s ease;
+      -webkit-app-region: no-drag;
+    }
+
     .btn-list:hover {
       color: var(--primary-color);
     }
+
+    /* 贴边悬浮球样式 */
+    .edge-bubble {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%) scale(0.94);
+      width: 28px;
+      height: 28px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--primary-color), #7aa8ff);
+      border-radius: 50%;
+      box-shadow: 0 8px 20px rgba(64, 158, 255, 0.32);
+      z-index: 100;
+      -webkit-app-region: no-drag;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .dark-theme .edge-bubble,
+    html.utools-dark .edge-bubble,
+    body.utools-dark .edge-bubble {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .edge-bubble:hover {
+      transform: translateY(-50%) scale(1);
+      box-shadow: 0 10px 24px rgba(64, 158, 255, 0.38);
+    }
+
+    .edge-bubble.left {
+      right: 4px;
+    }
+
+    .edge-bubble.right {
+      left: 4px;
+    }
+
+
+    .edge-bubble.visible {
+      display: flex;
+    }
+
+    .edge-bubble svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      pointer-events: none;
+    }
+
+    /* 贴边隐藏时隐藏主要内容，仅保留悬浮球 */
+    .focus-container.edge-hidden {
+      background: transparent !important;
+    }
+
+    .focus-container.edge-hidden .word,
+    .focus-container.edge-hidden .explains,
+    .focus-container.edge-hidden .actions,
+    .focus-container.edge-hidden .btn-close,
+    .focus-container.edge-hidden .btn-top,
+    .focus-container.edge-hidden .btn-edge,
+    .focus-container.edge-hidden .btn-list,
+    .focus-container.edge-hidden .opacity-bar,
+    .focus-container.edge-hidden .counter {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .focus-container.edge-preview .word,
+    .focus-container.edge-preview .explains,
+    .focus-container.edge-preview .actions,
+    .focus-container.edge-preview .btn-close,
+    .focus-container.edge-preview .btn-top,
+    .focus-container.edge-preview .btn-edge,
+    .focus-container.edge-preview .btn-list,
+    .focus-container.edge-preview .opacity-bar,
+    .focus-container.edge-preview .counter {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
 
     .counter {
       position: absolute;
@@ -306,16 +408,30 @@
     <span class="icon btn-top" id="btn-top" title="取消置顶">
       <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
     </span>
+    <!-- 贴边隐藏 -->
+    <span class="icon btn-edge" id="btn-edge" title="关闭贴边隐藏">
+      <svg viewBox="0 0 24 24"><path d="M5 5h2v14H5V5zm4 1h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1 2v8h8V8h-8z"/></svg>
+    </span>
     <!-- 返回列表 -->
     <span class="icon btn-list" id="btn-list" title="返回列表">
       <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
     </span>
+
     <!-- 透明度滑条 -->
     <div class="opacity-bar">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3-8c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>
       <input type="range" class="opacity-slider" id="opacity-slider" min="30" max="100" value="100">
     </div>
     <div class="counter" id="counter">0/0</div>
+
+    <!-- 贴边悬浮球 -->
+    <div class="edge-bubble left" id="edge-bubble-left" title="悬浮展开">
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </div>
+    <div class="edge-bubble right" id="edge-bubble-right" title="悬浮展开">
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </div>
+
   </div>
 
   <script>
@@ -323,6 +439,7 @@
     let words = [];
     let currentIndex = 0;
     let showExplains = false;
+    const FOCUS_MODE_ACTION_STORAGE_KEY = 'slowly-record-focus-mode-action';
 
     // DOM 元素
     const elWord = document.getElementById('word');
@@ -331,6 +448,8 @@
     const elBtnPrev = document.getElementById('btn-prev');
     const elBtnNext = document.getElementById('btn-next');
     const elBtnToggle = document.getElementById('btn-toggle');
+    const btnEdge = document.getElementById('btn-edge');
+
 
     // 数据库 key
     const DB_KEY = 'words-list';
@@ -454,72 +573,156 @@
     document.getElementById('btn-forgot').addEventListener('click', markForgot);
     document.getElementById('btn-close').addEventListener('click', () => window.close());
 
-    // 置顶按钮
+    // 置顶/贴边隐藏按钮
     let isAlwaysOnTop = true;
+    let isEdgeStickEnabled = true;
+    let lastRestoreRequestAt = 0;
+
     const btnTop = document.getElementById('btn-top');
     btnTop.classList.add('active');
+    btnEdge.classList.add('active');
+
+    function getFocusWindowState() {
+      return {
+        currentIndex: currentIndex,
+        showExplains: showExplains,
+        opacity: currentOpacity,
+        edgeStickEnabled: isEdgeStickEnabled,
+      };
+    }
+
+    function updateTopButton() {
+      btnTop.classList.toggle('active', isAlwaysOnTop);
+      btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+    }
+
+    function updateEdgeStickButton() {
+      btnEdge.classList.toggle('active', isEdgeStickEnabled);
+      btnEdge.title = isEdgeStickEnabled ? '关闭贴边隐藏' : '开启贴边隐藏';
+    }
+
+    function postFocusModeAction(channel, payload, options = {}) {
+      const { persistPendingAction = false, persistStorageAction = true } = options;
+      const actionAt = Date.now();
+      const action = { type: channel, payload, at: actionAt };
+
+      if (persistPendingAction) {
+        saveFocusModePendingAction(channel, payload, actionAt);
+      }
+
+      if (persistStorageAction) {
+        try {
+          localStorage.setItem(FOCUS_MODE_ACTION_STORAGE_KEY, JSON.stringify(action));
+        } catch (e) {
+          console.error('[专注模式] 写入本地动作失败:', channel, e);
+        }
+      }
+
+      if (typeof utools !== 'undefined' && utools.sendToParent) {
+        utools.sendToParent({ channel, payload });
+        try {
+          utools.sendToParent(channel, payload);
+        } catch (e) {}
+      } else {
+        console.warn('[专注模式] utools.sendToParent 不可用，已使用本地动作兜底:', channel, payload);
+      }
+
+      return actionAt;
+    }
 
     // 设置置顶状态 - 优先通知父窗口直接更新当前 BrowserWindow，兼容旧消息格式
     function setWindowAlwaysOnTop(value) {
       console.log('[专注模式] setWindowAlwaysOnTop 被调用:', value);
-      if (typeof utools !== 'undefined' && utools.sendToParent) {
-        console.log('[专注模式] 准备发送 setAlwaysOnTop 消息');
-        const messageData = {
-          alwaysOnTop: value,
-          currentIndex: currentIndex,
-          showExplains: showExplains,
-          opacity: currentOpacity
-        };
-        console.log('[专注模式] 发送数据:', messageData);
-        utools.sendToParent({ channel: 'setAlwaysOnTop', payload: messageData });
-        try {
-          utools.sendToParent('setAlwaysOnTop', messageData);
-        } catch (e) {}
-        console.log('[专注模式] 消息已发送');
-      } else {
-        console.error('[专注模式] utools.sendToParent 不可用');
+      const messageData = {
+        ...getFocusWindowState(),
+        alwaysOnTop: value,
+      };
+      console.log('[专注模式] 发送数据:', messageData);
+      postFocusModeAction('setAlwaysOnTop', messageData);
+      console.log('[专注模式] 消息已发送');
+    }
+
+
+    function setEdgeStickEnabled(value, options = {}) {
+      const { persist = true, notifyParent = true, showTip = true } = options;
+      isEdgeStickEnabled = value;
+      updateEdgeStickButton();
+
+      if (persist) {
+        saveFocusModeSetting('edgeStickEnabled', value);
       }
+
+      if (notifyParent) {
+        const messageData = {
+          ...getFocusWindowState(),
+          edgeStickEnabled: value,
+          alwaysOnTop: isAlwaysOnTop,
+        };
+        postFocusModeAction('setEdgeStickEnabled', messageData);
+      }
+
+
+      if (showTip) {
+        showToast(value ? '已开启贴边隐藏' : '已关闭贴边隐藏');
+      }
+    }
+
+    function requestRestoreFromEdge(reason = 'hover') {
+      const now = Date.now();
+      if (now - lastRestoreRequestAt < 200) {
+        return;
+      }
+      lastRestoreRequestAt = now;
+
+      console.log('[专注模式] 请求恢复窗口，原因:', reason);
+      postFocusModeAction('restoreFromEdge', { reason }, { persistPendingAction: true });
     }
 
 
 
     btnTop.addEventListener('click', () => {
       isAlwaysOnTop = !isAlwaysOnTop;
-      btnTop.classList.toggle('active', isAlwaysOnTop);
-      btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+      updateTopButton();
       saveFocusModeSetting('alwaysOnTop', isAlwaysOnTop);
       setWindowAlwaysOnTop(isAlwaysOnTop);
     });
 
-
-    // 返回列表按钮 - 只发消息，让父窗口关闭自己并显示主窗口
-    document.getElementById('btn-list').addEventListener('click', () => {
-      if (typeof utools !== 'undefined' && utools.sendToParent) {
-        // 先保存当前数据状态，确保主窗口能获取最新数据
-        try {
-          // 触发数据库同步，确保数据已保存
-          if (words.length > 0 && currentIndex < words.length) {
-            const currentWord = words[currentIndex];
-            if (currentWord && currentWord._id) {
-              utools.db.put(currentWord);
-            }
-          }
-        } catch (e) {
-          console.error('保存当前单词状态失败:', e);
-        }
-
-        // 发送消息给父窗口，请求打开列表并关闭专注窗口
-        utools.sendToParent({ channel: 'openWordList' });
-        try {
-          utools.sendToParent('openWordList');
-        } catch(e) {}
-
-        // 延迟关闭窗口，确保消息已发送
-        setTimeout(() => {
-          window.close();
-        }, 100);
-      }
+    btnEdge.addEventListener('click', () => {
+      setEdgeStickEnabled(!isEdgeStickEnabled);
     });
+
+
+
+    // 返回列表按钮 - 优先通知父窗口，同时直接唤起主窗口作为兜底
+    document.getElementById('btn-list').addEventListener('click', () => {
+      // 先保存当前数据状态，确保主窗口能获取最新数据
+      try {
+        if (words.length > 0 && currentIndex < words.length) {
+          const currentWord = words[currentIndex];
+          if (currentWord && currentWord._id) {
+            utools.db.put(currentWord);
+          }
+        }
+      } catch (e) {
+        console.error('保存当前单词状态失败:', e);
+      }
+
+      postFocusModeAction('openWordList', undefined, { persistPendingAction: true });
+
+
+      try {
+        if (typeof utools !== 'undefined' && utools.showMainWindow) {
+          utools.showMainWindow();
+        }
+      } catch (e) {
+        console.error('[专注模式] 显示主窗口失败:', e);
+      }
+
+      setTimeout(() => {
+        window.close();
+      }, 100);
+    });
+
 
     // ========== 透明度设置 ==========
     let currentOpacity = 1.0;
@@ -582,18 +785,128 @@
     }, { passive: false });
 
     // ========== 贴边隐藏 ==========
-    // 贴边检测和恢复由父窗口（Word.vue）处理
-    // 子窗口仅通过 onMessage 接收状态通知
-    // @ts-ignore
-    if (typeof utools !== 'undefined' && utools.onMessage) {
-      // @ts-ignore
-      utools.onMessage((message) => {
-        if (!message) return;
-        if (message.channel === 'edgeStick') {
-          showToast('已贴边隐藏');
+    const appContainer = document.getElementById('app');
+    const edgeBubbleLeft = document.getElementById('edge-bubble-left');
+    const edgeBubbleRight = document.getElementById('edge-bubble-right');
+
+    let isEdgeStuck = false;
+    let edgeSide = null;
+    let isEdgePreview = false;
+    let edgePreviewOpenedAt = 0;
+    let hoverExpandTimer = null;
+    let hoverCollapseTimer = null;
+
+
+    function clearEdgeHoverTimers() {
+      clearTimeout(hoverExpandTimer);
+      clearTimeout(hoverCollapseTimer);
+      hoverExpandTimer = null;
+      hoverCollapseTimer = null;
+    }
+
+    function requestExpandFromEdge(reason = 'hover') {
+      if (!isEdgeStuck) {
+        return;
+      }
+
+      postFocusModeAction('expandFromEdge', { reason }, { persistPendingAction: true });
+    }
+
+    function requestCollapseToEdge(reason = 'mouseleave') {
+      if (!isEdgeStuck || !isEdgePreview) {
+        return;
+      }
+
+      postFocusModeAction('collapseToEdge', { reason }, { persistPendingAction: true });
+    }
+
+
+    function scheduleCollapseToEdge(delay = 180) {
+      if (!isEdgePreview) {
+        return;
+      }
+
+      const previewVisibleFor = Date.now() - edgePreviewOpenedAt;
+      const minPreviewDuration = 220;
+      const actualDelay = Math.max(delay, minPreviewDuration - previewVisibleFor, 0);
+
+      clearTimeout(hoverCollapseTimer);
+      hoverCollapseTimer = setTimeout(() => {
+        requestCollapseToEdge('mouseleave');
+      }, actualDelay);
+    }
+
+
+    // 更新贴边状态（供父窗口调用）
+    window.updateEdgeStuckState = function(stuck, side, expanded = false) {
+      console.log('[专注模式] 更新贴边状态:', stuck, side, expanded);
+      isEdgeStuck = stuck;
+      edgeSide = side || null;
+      isEdgePreview = !!expanded;
+      edgePreviewOpenedAt = stuck && expanded ? Date.now() : 0;
+      clearEdgeHoverTimers();
+
+
+      if (appContainer) {
+        appContainer.classList.toggle('edge-hidden', stuck && !expanded);
+        appContainer.classList.toggle('edge-preview', stuck && expanded);
+      }
+
+      if (edgeBubbleLeft) {
+        edgeBubbleLeft.classList.toggle('visible', stuck && side === 'left' && !expanded);
+      }
+      if (edgeBubbleRight) {
+        edgeBubbleRight.classList.toggle('visible', stuck && side === 'right' && !expanded);
+      }
+
+      if (!stuck) {
+        isEdgePreview = false;
+      }
+    };
+
+    function bindEdgeBubble(bubble, side) {
+      if (!bubble) return;
+
+      bubble.addEventListener('mouseenter', () => {
+        clearTimeout(hoverCollapseTimer);
+        hoverExpandTimer = setTimeout(() => {
+          requestExpandFromEdge(`bubble-hover-${side}`);
+        }, 60);
+      });
+
+      bubble.addEventListener('mouseleave', () => {
+        clearTimeout(hoverExpandTimer);
+      });
+
+
+      bubble.addEventListener('click', (e) => {
+        e.stopPropagation();
+        requestRestoreFromEdge(`bubble-click-${side}`);
+      });
+    }
+
+    bindEdgeBubble(edgeBubbleLeft, 'left');
+    bindEdgeBubble(edgeBubbleRight, 'right');
+
+    if (appContainer) {
+      appContainer.addEventListener('mouseenter', () => {
+        if (isEdgePreview) {
+          clearTimeout(hoverCollapseTimer);
+        }
+      });
+
+      appContainer.addEventListener('mouseleave', () => {
+        if (isEdgePreview) {
+          scheduleCollapseToEdge(220);
         }
       });
     }
+
+
+
+
+
+
 
     // ========== Toast 提示 ==========
     function showToast(message) {
@@ -638,6 +951,27 @@
       }
     }
 
+    function saveFocusModePendingAction(type, payload, at = Date.now()) {
+      try {
+        const userSetDoc = getUserSetDoc();
+        if (!userSetDoc) {
+          return;
+        }
+
+        if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
+        userSetDoc.focusMode.pendingAction = {
+          type,
+          payload,
+          at,
+        };
+        utools.db.put(userSetDoc);
+      } catch (e) {
+        console.error('[专注模式] 保存待处理动作失败:', e);
+      }
+    }
+
+
+
     function loadFocusModeSettings() {
       try {
         const userSetDoc = getUserSetDoc();
@@ -650,18 +984,29 @@
             applyOpacity(fm.opacity);
           }
 
-          // 置顶状态以父窗口创建时传入的 URL 参数为准，仅更新按钮显示，避免启动时把新状态回写成旧值
-          btnTop.classList.toggle('active', isAlwaysOnTop);
+          if (typeof fm.edgeStickEnabled === 'boolean') {
+            setEdgeStickEnabled(fm.edgeStickEnabled, {
+              persist: false,
+              notifyParent: false,
+              showTip: false,
+            });
+          } else {
+            updateEdgeStickButton();
+          }
 
-          btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+          // 置顶状态以父窗口创建时传入的 URL 参数为准，仅更新按钮显示，避免启动时把新状态回写成旧值
+          updateTopButton();
 
           return fm;
         }
       } catch (e) {
         console.error('读取专注模式设置失败:', e);
       }
+      updateTopButton();
+      updateEdgeStickButton();
       return null;
     }
+
 
 
     // ========== 键盘快捷键 ==========
@@ -724,12 +1069,15 @@
       // alwaysOnTop 默认为 true，除非显式指定为 'false'
       const alwaysOnTopParam = urlParams.get('alwaysOnTop');
       const alwaysOnTop = alwaysOnTopParam === 'false' ? false : true;
+      const edgeStickEnabledParam = urlParams.get('edgeStickEnabled');
+      const edgeStickEnabled = edgeStickEnabledParam === 'false' ? false : true;
 
       return {
         currentIndex: isNaN(index) ? 0 : index,
         showExplains: showExplainsParam,
         opacity: isNaN(opacity) ? 1.0 : opacity,
-        alwaysOnTop: alwaysOnTop
+        alwaysOnTop: alwaysOnTop,
+        edgeStickEnabled: edgeStickEnabled,
       };
     }
 
@@ -742,13 +1090,14 @@
     showExplains = initialState.showExplains;
     currentOpacity = initialState.opacity;
     isAlwaysOnTop = initialState.alwaysOnTop;
+    isEdgeStickEnabled = initialState.edgeStickEnabled;
 
-    // 更新置顶按钮状态
-    btnTop.classList.toggle('active', isAlwaysOnTop);
-    btnTop.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+    updateTopButton();
+    updateEdgeStickButton();
 
     loadWords();
     loadFocusModeSettings();
+
 
     // 如果 URL 中有透明度参数，应用它
     if (initialState.opacity !== undefined && initialState.opacity !== 1.0) {
