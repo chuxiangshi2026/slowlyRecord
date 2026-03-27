@@ -14,7 +14,8 @@ export type WordBankType =
   | 'ielts'     // 雅思
   | 'toefl'     // 托福
   | 'gre'       // GRE
-  | 'gmat';     // GMAT
+  | 'gmat'      // GMAT
+  | 'zsb';      // 专升本
 
 // 词库信息配置
 export interface WordBankInfo {
@@ -36,12 +37,14 @@ const WORDBANK_URLS: Record<WordBankType, string> = {
   toefl: 'https://cdn.jsdelivr.net/gh/openlanguage/wordbanks@main/toefl.json',
   gre: 'https://cdn.jsdelivr.net/gh/openlanguage/wordbanks@main/gre.json',
   gmat: 'https://cdn.jsdelivr.net/gh/openlanguage/wordbanks@main/gmat.json',
+  zsb: 'https://cdn.jsdelivr.net/gh/openlanguage/wordbanks@main/cet4.json', // 专升本使用四级词汇作为基础
 };
 
 // 词库信息列表
 export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'cet4', name: '四级词汇', description: '大学英语四级核心词汇', wordCount: 4500 },
   { id: 'cet6', name: '六级词汇', description: '大学英语六级核心词汇', wordCount: 5500 },
+  { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 4000 },
   { id: 'kaogong', name: '考公词汇', description: '公务员考试英语词汇', wordCount: 3000 },
   { id: 'kaoyan', name: '考研词汇', description: '研究生入学考试核心词汇', wordCount: 5500 },
   { id: 'ielts', name: '雅思词汇', description: '雅思考试核心词汇', wordCount: 8000 },
@@ -296,6 +299,7 @@ function getFallbackWords(type: WordBankType): Word[] {
     ],
     // 其他词库的备用数据简化处理，使用cet4数据作为基础
     cet6: [],
+    zsb: [],
     kaogong: [],
     kaoyan: [],
     ielts: [],
@@ -325,6 +329,16 @@ function getFallbackWords(type: WordBankType): Word[] {
     { word: 'abrupt', phonetic: '/əˈbrʌpt/', explains: 'adj. 突然的；唐突的' },
     { word: 'absence', phonetic: '/ˈæbsəns/', explains: 'n. 缺席；缺乏' },
     { word: 'absolute', phonetic: '/ˈæbsəluːt/', explains: 'adj. 绝对的；完全的' },
+  ];
+
+  // 专升本词汇（介于四级和六级之间）
+  fallbackData.zsb = [
+    ...baseWords,
+    { word: 'abnormal', phonetic: '/æbˈnɔːml/', explains: 'adj. 反常的；不规则的' },
+    { word: 'abolish', phonetic: '/əˈbɒlɪʃ/', explains: 'v. 废除；废止' },
+    { word: 'abrupt', phonetic: '/əˈbrʌpt/', explains: 'adj. 突然的；唐突的' },
+    { word: 'absolute', phonetic: '/ˈæbsəluːt/', explains: 'adj. 绝对的；完全的' },
+    { word: 'absorb', phonetic: '/əbˈzɔːb/', explains: 'v. 吸收；吸引' },
   ];
 
   // 其他词库使用基础数据

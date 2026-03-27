@@ -10,7 +10,7 @@
         <span class="title">听写练习</span>
       </div>
       <div class="header-right">
-        <span class="progress" v-if="dictationMode === 'review'">
+        <span class="progress" v-if="dictationMode === 'review' || dictationMode === 'wrong-words-practice'">
           {{ currentIndex + 1 }} / {{ wordList.length }}
         </span>
       </div>
@@ -27,6 +27,7 @@
             <el-radio-button label="current">当前词库</el-radio-button>
             <el-radio-button label="cet4">四级词汇</el-radio-button>
             <el-radio-button label="cet6">六级词汇</el-radio-button>
+            <el-radio-button label="zsb">专升本词汇</el-radio-button>
             <el-radio-button label="kaoyan">考研词汇</el-radio-button>
             <el-radio-button label="kaogong">考公词汇</el-radio-button>
             <el-radio-button label="ielts">雅思词汇</el-radio-button>
@@ -34,12 +35,36 @@
             <el-radio-button label="gre">GRE词汇</el-radio-button>
             <el-radio-button label="import">导入词库</el-radio-button>
           </el-radio-group>
-          <div v-if="wordBank !== 'current' && wordBank !== 'import'" class="wordbank-info">
+          <div v-if="wordBank !== 'current' && wordBank !== 'import' && wordBank !== 'wrong-words'" class="wordbank-info">
             <el-tag size="small" type="info">
               {{ getWordBankInfo(wordBank)?.description }}
               (约{{ getWordBankInfo(wordBank)?.wordCount }}词)
               <span v-if="isWordBankCached(wordBank as WordBankType)" class="cached-badge">已缓存</span>
             </el-tag>
+          </div>
+          <!-- 显示该词库是否有保存的进度 -->
+          <div v-if="wordBank !== 'current' && wordBank !== 'import' && wordBank !== 'wrong-words' && hasProgressForBank(wordBank)" class="wordbank-progress-info">
+            <el-tag size="small" type="warning">
+              <el-icon><Timer /></el-icon>
+              有保存的进度
+            </el-tag>
+          </div>
+        </div>
+
+        <!-- 错题练习入口 -->
+        <div class="setup-item" v-if="banksWithWrongWords.length > 0">
+          <label>错题练习</label>
+          <div class="wrong-words-banks">
+            <el-button
+              v-for="bank in banksWithWrongWords"
+              :key="bank"
+              type="danger"
+              size="small"
+              @click="startWrongWordsPractice(bank)"
+            >
+              <el-icon><CircleClose /></el-icon>
+              {{ getWordBankName(bank) }} 错题
+            </el-button>
           </div>
         </div>
 
@@ -71,6 +96,9 @@
         </div>
 
         <div class="setup-actions">
+          <el-button v-if="hasSavedProgress" type="warning" size="large" @click="resumeProgress" class="resume-btn">
+            继续上次进度
+          </el-button>
           <el-button type="primary" size="large" @click="startDictation" class="start-btn">
             开始听写
           </el-button>
@@ -79,7 +107,7 @@
     </div>
 
     <!-- 听写界面 -->
-    <div v-else-if="dictationMode === 'review'" class="review-panel">
+    <div v-else-if="dictationMode === 'review' || dictationMode === 'wrong-words-practice'" class="review-panel">
       <div class="word-display" v-if="currentWord">
         <!-- 提示区域 -->
         <div class="hints-area">
@@ -144,6 +172,21 @@
           </div>
         </div>
 
+        <!-- 错误提示 -->
+        <div v-if="canShowHint" class="hint-area">
+          <el-alert
+            v-if="hintType === 'full'"
+            :title="`正确答案: ${currentWord?.text}`"
+            type="info"
+            :closable="false"
+            show-icon
+            class="hint-alert"
+          />
+          <el-button v-else type="warning" size="small" @click="showLetterHint">
+            显示提示 (已错{{ getCurrentErrorCount }}次)
+          </el-button>
+        </div>
+
         <!-- 控制按钮 -->
         <div class="control-area">
           <el-button circle size="small" @click="prevWord" :disabled="currentIndex === 0">
@@ -154,6 +197,9 @@
           </el-button>
           <el-button circle size="small" @click="skipWord">
             <el-icon><Right /></el-icon>
+          </el-button>
+          <el-button circle size="small" type="warning" @click="showHintDialog" title="显示提示">
+            <el-icon><QuestionFilled /></el-icon>
           </el-button>
         </div>
       </div>
@@ -197,7 +243,18 @@
 
         <div class="complete-actions">
           <el-button size="large" @click="goBack">返回</el-button>
-          <el-button type="primary" size="large" @click="restart">再来一次</el-button>
+          <el-button type="warning" size="large" @click="continueNextGroup" v-if="!isWrongWordsMode">
+            <el-icon><ArrowRight /></el-icon>
+            继续下一组
+          </el-button>
+          <el-button type="danger" size="large" @click="practiceWrongWords" v-if="sessionWrongWords.length > 0 && !isWrongWordsMode">
+            <el-icon><CircleClose /></el-icon>
+            练习错题
+          </el-button>
+          <el-button type="primary" size="large" @click="restart">
+            <el-icon><RefreshRight /></el-icon>
+            重新开始
+          </el-button>
         </div>
       </div>
     </div>
@@ -205,10 +262,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from 'vue';
+import { ref, computed, nextTick, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { ElMessage, ElLoading } from 'element-plus';
-import { ArrowLeft, VideoPlay, CircleCheck, Right } from '@element-plus/icons-vue';
+import { ElMessage, ElLoading, ElMessageBox } from 'element-plus';
+import { ArrowLeft, VideoPlay, CircleCheck, Right, ArrowRight, RefreshRight, Timer, CircleClose, QuestionFilled } from '@element-plus/icons-vue';
 import { useWordsStore } from '@/stores/words';
 import type { Word } from '@/types/words';
 import { 
@@ -217,20 +274,30 @@ import {
   type WordBankType,
   isWordBankCached 
 } from '@/utils/wordbank-service';
+import {
+  getDictationProgress,
+  saveDictationProgress,
+  removeDictationProgress,
+  hasDictationProgress,
+  getWrongWordsRecord,
+  saveWrongWords,
+  getWrongWordsBanks
+} from '@/utils/dictation-db';
 
 const router = useRouter();
 const wordsStore = useWordsStore();
 
+// ========== 常量 ==========
+const MAX_ERRORS_BEFORE_HINT = 3; // 错误3次后显示提示
+
 // ========== 状态 ==========
-type DictationMode = 'setup' | 'review' | 'complete';
+type DictationMode = 'setup' | 'review' | 'complete' | 'wrong-words-practice';
 const dictationMode = ref<DictationMode>('setup');
 
-const wordBank = ref<'current' | WordBankType | 'import'>('current');
+const wordBank = ref<'current' | WordBankType | 'import' | 'wrong-words'>('current');
 const wordCount = ref(20);
 const displayMode = ref<'blank' | 'partial'>('partial');
 const options = ref<string[]>(['autoPlay', 'showPhonetic', 'showMeaning']);
-const isLoading = ref(false);
-const loadingText = ref('');
 
 const wordList = ref<Word[]>([]);
 const currentIndex = ref(0);
@@ -239,10 +306,25 @@ const rawInput = ref('');
 const isShaking = ref(false);
 const stats = ref({ correct: 0, wrong: 0 });
 const wrongWords = ref<Word[]>([]);
+const sessionWrongWords = ref<Word[]>([]); // 本次练习的错题
+
+// 错误次数和提示状态
+const errorCountMap = ref<Record<number, number>>({}); // 每个单词的错误次数
+const showHint = ref(false); // 是否显示提示
+const hintType = ref<'none' | 'letter' | 'full'>('none'); // 提示类型
 
 const partialSlots = ref<{ fixed: boolean; letter: string; value?: string }[]>([]);
 const slotRefs = ref<Record<number, HTMLInputElement>>({});
 const hiddenInput = ref<HTMLInputElement>();
+
+// 是否有保存的进度
+const hasSavedProgress = ref(false);
+
+// 有错题的词库列表
+const banksWithWrongWords = ref<string[]>([]);
+
+// 当前是否为错题练习模式
+const isWrongWordsMode = computed(() => wordBank.value === 'wrong-words');
 
 // ========== 计算属性 ==========
 const currentWord = computed(() => wordList.value[currentIndex.value] || null);
@@ -252,9 +334,100 @@ const accuracy = computed(() => {
   return Math.round((stats.value.correct / wordList.value.length) * 100);
 });
 
+// 当前单词的错误次数
+const getCurrentErrorCount = computed(() => {
+  return errorCountMap.value[currentIndex.value] || 0;
+});
+
+// 是否可以显示提示（错误次数达到阈值）
+const canShowHint = computed(() => {
+  const count = errorCountMap.value[currentIndex.value] || 0;
+  return count >= MAX_ERRORS_BEFORE_HINT;
+});
+
 // ========== 方法 ==========
-function goBack() {
-  router.push('/word');
+async function goBack() {
+  // 离开前保存进度
+  await saveProgress();
+  // 返回上一页
+  router.back();
+}
+
+// ========== 进度保存与恢复 ==========
+async function saveProgress() {
+  if ((dictationMode.value !== 'review' && dictationMode.value !== 'wrong-words-practice') || wordList.value.length === 0) {
+    return;
+  }
+
+  // 只保存普通词库的进度，不保存错题练习的进度
+  if (wordBank.value !== 'wrong-words') {
+    await saveDictationProgress({
+      wordList: wordList.value,
+      currentIndex: currentIndex.value,
+      stats: stats.value,
+      wrongWords: wrongWords.value,
+      errorCountMap: errorCountMap.value,
+      wordBank: wordBank.value,
+      wordCount: wordCount.value,
+      displayMode: displayMode.value,
+      options: options.value
+    });
+  }
+}
+
+function loadSavedProgress(): boolean {
+  if (wordBank.value === 'wrong-words' || wordBank.value === 'import') return false;
+  return hasDictationProgress(wordBank.value);
+}
+
+function hasProgressForBank(bank: string): boolean {
+  if (bank === 'current' || bank === 'import' || bank === 'wrong-words') return false;
+  return hasDictationProgress(bank);
+}
+
+async function resumeProgress() {
+  try {
+    const progress = getDictationProgress(wordBank.value);
+    if (!progress) {
+      ElMessage.warning('没有保存的进度');
+      return;
+    }
+
+    wordList.value = progress.wordList;
+    currentIndex.value = progress.currentIndex;
+    stats.value = progress.stats;
+    wrongWords.value = progress.wrongWords;
+    errorCountMap.value = progress.errorCountMap || {};
+    wordBank.value = progress.wordBank as any;
+    wordCount.value = progress.wordCount;
+    displayMode.value = progress.displayMode;
+    options.value = progress.options;
+
+    dictationMode.value = 'review';
+    hintType.value = 'none';
+    showHint.value = false;
+
+    prepareWord();
+    ElMessage.success(`已恢复进度：第 ${currentIndex.value + 1} / ${wordList.value.length} 词`);
+  } catch {
+    ElMessage.error('恢复进度失败');
+    removeDictationProgress(wordBank.value);
+  }
+}
+
+function clearProgress() {
+  if (wordBank.value !== 'wrong-words' && wordBank.value !== 'import') {
+    removeDictationProgress(wordBank.value);
+  }
+  hasSavedProgress.value = false;
+}
+
+function getWordBankName(bankId: string): string {
+  if (bankId === 'current') return '当前词库';
+  if (bankId === 'import') return '导入词库';
+  if (bankId === 'wrong-words') return '错题';
+  const info = getWordBankInfo(bankId);
+  return info?.name || bankId;
 }
 
 function getSimplePhonetic(text: string): string {
@@ -282,6 +455,7 @@ async function startDictation() {
 
     case 'cet4':
     case 'cet6':
+    case 'zsb':
     case 'kaoyan':
     case 'kaogong':
     case 'ielts':
@@ -334,7 +508,15 @@ async function startDictation() {
   currentIndex.value = 0;
   stats.value = { correct: 0, wrong: 0 };
   wrongWords.value = [];
+  errorCountMap.value = {};
+  hintType.value = 'none';
+  showHint.value = false;
   dictationMode.value = 'review';
+
+  // 清除旧进度，开始新进度
+  clearProgress();
+  saveProgress();
+
   prepareWord();
 }
 
@@ -372,7 +554,14 @@ async function importWordBank() {
         currentIndex.value = 0;
         stats.value = { correct: 0, wrong: 0 };
         wrongWords.value = [];
+        errorCountMap.value = {};
+        hintType.value = 'none';
+        showHint.value = false;
         dictationMode.value = 'review';
+
+        clearProgress();
+        saveProgress();
+
         prepareWord();
         ElMessage.success(`导入 ${words.length} 个单词`);
       } catch {
@@ -389,6 +578,8 @@ function prepareWord() {
   rawInput.value = '';
   isShaking.value = false;
   partialSlots.value = [];
+  hintType.value = 'none';
+  showHint.value = false;
 
   const word = currentWord.value;
   if (!word) return;
@@ -503,15 +694,36 @@ function checkAnswer() {
 
   if (isCorrect) {
     stats.value.correct++;
+    // 清除该单词的错误记录
+    delete errorCountMap.value[currentIndex.value];
+    saveProgress();
     nextWord();
   } else {
     stats.value.wrong++;
     wrongWords.value.push(word);
+
+    // 记录到本次错题（用于错题练习）
+    if (!sessionWrongWords.value.find(w => w.text === word.text)) {
+      sessionWrongWords.value.push(word);
+    }
+
+    // 记录错误次数
+    errorCountMap.value[currentIndex.value] = (errorCountMap.value[currentIndex.value] || 0) + 1;
+
+    // 保存进度
+    saveProgress();
+
     // 晃动提示
     isShaking.value = true;
     setTimeout(() => {
       isShaking.value = false;
     }, 500);
+
+    // 如果错误次数达到阈值，自动显示完整提示
+    if (errorCountMap.value[currentIndex.value] >= MAX_ERRORS_BEFORE_HINT + 2) {
+      hintType.value = 'full';
+      showHint.value = true;
+    }
   }
 }
 
@@ -519,23 +731,69 @@ function prevWord() {
   if (currentIndex.value > 0) {
     currentIndex.value--;
     prepareWord();
+    saveProgress();
   }
 }
 
-function skipWord() {
+async function skipWord() {
   if (currentWord.value) {
     wrongWords.value.push(currentWord.value);
+    // 记录到本次错题
+    if (!sessionWrongWords.value.find(w => w.text === currentWord.value!.text)) {
+      sessionWrongWords.value.push(currentWord.value);
+    }
     stats.value.wrong++;
+    errorCountMap.value[currentIndex.value] = (errorCountMap.value[currentIndex.value] || 0) + 1;
   }
-  nextWord();
+  await saveProgress();
+  await nextWord();
 }
 
-function nextWord() {
+async function nextWord() {
   if (currentIndex.value < wordList.value.length - 1) {
     currentIndex.value++;
     prepareWord();
+    saveProgress();
   } else {
     dictationMode.value = 'complete';
+    // 保存本次的错题到数据库（排除错题练习模式和导入模式）
+    if (sessionWrongWords.value.length > 0 && wordBank.value !== 'wrong-words' && wordBank.value !== 'import') {
+      // 使用实际的词库名称保存错题，'current' 转换为实际的词库标识
+      const actualBank = wordBank.value === 'current' ? 'current' : wordBank.value;
+      await saveWrongWords(actualBank, sessionWrongWords.value);
+      // 刷新错题词库列表
+      banksWithWrongWords.value = getWrongWordsBanks();
+    }
+    clearProgress(); // 完成后清除进度
+  }
+}
+
+// ========== 提示功能 ==========
+function showLetterHint() {
+  if (!currentWord.value) return;
+
+  hintType.value = 'full';
+  showHint.value = true;
+
+  // 显示更多字母提示
+  if (displayMode.value === 'partial') {
+    // 找出一个未填的空位填入正确字母
+    const emptySlots = partialSlots.value
+      .map((s, i) => ({ slot: s, index: i }))
+      .filter(({ slot }) => !slot.fixed && !slot.value);
+
+    if (emptySlots.length > 0) {
+      const randomSlot = emptySlots[Math.floor(Math.random() * emptySlots.length)];
+      partialSlots.value[randomSlot.index].value = randomSlot.slot.letter;
+
+      // 检查是否全部填满
+      const allFilled = partialSlots.value.every(s => s.fixed || s.value);
+      if (allFilled) {
+        hintType.value = 'full';
+      }
+    } else {
+      hintType.value = 'full';
+    }
   }
 }
 
@@ -543,10 +801,140 @@ function restart() {
   dictationMode.value = 'setup';
   wordList.value = [];
   currentIndex.value = 0;
+  errorCountMap.value = {};
+  hintType.value = 'none';
+  showHint.value = false;
+  sessionWrongWords.value = [];
+  wordBank.value = 'current';
+  clearProgress();
+  banksWithWrongWords.value = getWrongWordsBanks();
+}
+
+// ========== 新功能：继续下一组 ==========
+async function continueNextGroup() {
+  // 保存本次的错题到数据库（排除错题练习模式和导入模式）
+  if (sessionWrongWords.value.length > 0 && wordBank.value !== 'wrong-words' && wordBank.value !== 'import') {
+    const actualBank = wordBank.value === 'current' ? 'current' : wordBank.value;
+    await saveWrongWords(actualBank, sessionWrongWords.value);
+    // 刷新错题词库列表
+    banksWithWrongWords.value = getWrongWordsBanks();
+  }
+
+  // 清除当前进度
+  clearProgress();
+
+  // 重新开始一组新的单词
+  sessionWrongWords.value = [];
+  stats.value = { correct: 0, wrong: 0 };
+  wrongWords.value = [];
+  errorCountMap.value = {};
+  hintType.value = 'none';
+  showHint.value = false;
+
+  // 重新加载单词列表
+  if (wordBank.value === 'import') {
+    // 导入的词库需要重新选择文件
+    ElMessage.info('请重新选择要导入的词库文件');
+    dictationMode.value = 'setup';
+  } else if (wordBank.value !== 'current') {
+    // 系统词库直接开始新的一组
+    await startDictation();
+  } else {
+    // 当前词库
+    const words = [...wordsStore.words]
+      .filter(w => w.text && w.text.match(/^[a-zA-Z]+$/))
+      .sort(() => Math.random() - 0.5)
+      .slice(0, wordCount.value);
+
+    if (words.length === 0) {
+      ElMessage.warning('当前词库为空');
+      dictationMode.value = 'setup';
+      return;
+    }
+
+    wordList.value = words;
+    currentIndex.value = 0;
+    dictationMode.value = 'review';
+    prepareWord();
+    ElMessage.success('开始新的一组单词');
+  }
+}
+
+// ========== 新功能：错题练习 ==========
+async function startWrongWordsPractice(bank: string) {
+  const record = getWrongWordsRecord(bank);
+  if (!record || record.wrongWords.length === 0) {
+    ElMessage.warning('该词库暂无错题记录');
+    return;
+  }
+
+  // 设置错题练习模式
+  wordBank.value = 'wrong-words';
+  wordList.value = [...record.wrongWords].sort(() => Math.random() - 0.5);
+  currentIndex.value = 0;
+  stats.value = { correct: 0, wrong: 0 };
+  sessionWrongWords.value = [];
+  wrongWords.value = [];
+  errorCountMap.value = {};
+  hintType.value = 'none';
+  showHint.value = false;
+
+  dictationMode.value = 'wrong-words-practice';
+  prepareWord();
+  ElMessage.success(`开始练习 ${getWordBankName(bank)} 的 ${wordList.value.length} 个错题`);
+}
+
+async function practiceWrongWords() {
+  // 练习本次的错题
+  if (sessionWrongWords.value.length === 0) {
+    ElMessage.warning('本次练习暂无错题');
+    return;
+  }
+
+  wordList.value = [...sessionWrongWords.value].sort(() => Math.random() - 0.5);
+  currentIndex.value = 0;
+  stats.value = { correct: 0, wrong: 0 };
+  // 保留本次的错题用于下一轮，但要清空当前记录
+  sessionWrongWords.value = [];
+  wrongWords.value = [];
+  errorCountMap.value = {};
+  hintType.value = 'none';
+  showHint.value = false;
+
+  dictationMode.value = 'wrong-words-practice';
+  prepareWord();
+  ElMessage.success(`开始练习 ${wordList.value.length} 个错题`);
+}
+
+// ========== 新功能：显示提示对话框 ==========
+function showHintDialog() {
+  if (!currentWord.value) return;
+
+  ElMessageBox.confirm(
+    `查看正确答案：${currentWord.value.text}`,
+    '提示',
+    {
+      confirmButtonText: '显示答案',
+      cancelButtonText: '取消',
+      type: 'info',
+    }
+  ).then(() => {
+    showLetterHint();
+  }).catch(() => {
+    // 取消
+  });
 }
 
 onMounted(() => {
-  // 页面加载时自动开始（如果有参数）
+  // 检查当前词库是否有保存的进度
+  hasSavedProgress.value = loadSavedProgress();
+  // 加载有错题的词库列表
+  banksWithWrongWords.value = getWrongWordsBanks();
+});
+
+// 监听词库变化，更新进度状态
+watch(() => wordBank.value, () => {
+  hasSavedProgress.value = loadSavedProgress();
 });
 </script>
 
@@ -622,19 +1010,34 @@ onMounted(() => {
 
       .wordbank-info {
         margin-top: 8px;
-        
+
         .cached-badge {
           color: var(--utools-success);
           margin-left: 4px;
         }
+      }
+
+      .wordbank-progress-info {
+        margin-top: 8px;
+      }
+
+      .wrong-words-banks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
       }
     }
 
     .setup-actions {
       margin-top: 32px;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
 
-      .start-btn {
+      .start-btn,
+      .resume-btn {
         min-width: 160px;
       }
     }
@@ -790,6 +1193,15 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     gap: 12px;
+  }
+
+  .hint-area {
+    margin-bottom: 24px;
+
+    .hint-alert {
+      max-width: 400px;
+      margin: 0 auto;
+    }
   }
 }
 
