@@ -145,16 +145,16 @@
         <span class="shorcut-desc">{{ item.shortcut }}</span>
       </div>
 
-      <!--      <h5 style="text-align:center;">卡片模式</h5>
-            <div class="titles">
-              <span class="title">功能说明</span>
-              <span class="title">快捷键</span>
-            </div>
-            <div v-for="(item,index) in cardShortcuts"
-                 :key="index" class="titles">
-              <span class="shorcut-desc">{{ item.desc }}</span>
-              <span class="shorcut-desc">{{ item.shortcut }}</span>
-            </div>-->
+      <h5 style="text-align:center; margin-top: 20px;">听写模式</h5>
+      <div class="titles">
+        <span class="title">功能说明</span>
+        <span class="title">快捷键</span>
+      </div>
+      <div v-for="(item,index) in dictationShortcuts"
+           :key="index" class="titles">
+        <span class="shorcut-desc">{{ item.desc }}</span>
+        <span class="shorcut-desc">{{ item.shortcut }}</span>
+      </div>
     </div>
 
     <el-divider/>
@@ -545,6 +545,14 @@ const cardShortcuts = [
   {desc: '单词发音', shortcut: 'Shift + P'},
   {desc: '模式切换', shortcut: 'Shift + M'},
   {desc: '开启/关闭翻译', shortcut: 'Shift + T'},
+]
+
+const dictationShortcuts = [
+  {desc: '显示提示', shortcut: 'Shift + H'},
+  {desc: '上一个单词', shortcut: 'Shift + ←'},
+  {desc: '跳过/下一个单词', shortcut: 'Shift + →'},
+  {desc: '播放发音', shortcut: 'Space'},
+  {desc: '跳过单词', shortcut: 'Enter'},
 ]
 
 // 配置文件导入导出

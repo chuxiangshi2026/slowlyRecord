@@ -107,7 +107,7 @@
     </div>
 
     <!-- 听写界面 -->
-    <div v-else-if="dictationMode === 'review' || dictationMode === 'wrong-words-practice'" class="review-panel">
+    <div v-else-if="dictationMode === 'review' || dictationMode === 'wrong-words-practice'" class="review-panel" ref="reviewPanelRef" @keydown="handleDictationKeydown" tabindex="0">
       <div class="word-display" v-if="currentWord">
         <!-- 提示区域 -->
         <div class="hints-area">
@@ -155,6 +155,7 @@
                   fixed: slot.fixed,
                   empty: !slot.fixed,
                   filled: !slot.fixed && slot.value,
+                  flashing: flashingSlotIndex === index || (flashingSlotIndex === -2 && !slot.fixed),
                 }"
               >
                 <span v-if="slot.fixed">{{ slot.letter }}</span>
@@ -312,6 +313,8 @@ const sessionWrongWords = ref<Word[]>([]); // 本次练习的错题
 const errorCountMap = ref<Record<number, number>>({}); // 每个单词的错误次数
 const showHint = ref(false); // 是否显示提示
 const hintType = ref<'none' | 'letter' | 'full'>('none'); // 提示类型
+const flashingSlotIndex = ref<number>(-1); // 正在闪烁的输入框索引
+const reviewPanelRef = ref<HTMLDivElement>(); // 听写面板引用
 
 const partialSlots = ref<{ fixed: boolean; letter: string; value?: string }[]>([]);
 const slotRefs = ref<Record<number, HTMLInputElement>>({});
@@ -603,12 +606,16 @@ function prepareWord() {
     }));
 
     nextTick(() => {
-      const firstEmpty = partialSlots.value.findIndex(s => !s.fixed);
-      if (firstEmpty >= 0) slotRefs.value[firstEmpty]?.focus();
+      setTimeout(() => {
+        const firstEmpty = partialSlots.value.findIndex(s => !s.fixed);
+        if (firstEmpty >= 0) slotRefs.value[firstEmpty]?.focus();
+      }, 100);
     });
   } else {
     nextTick(() => {
-      hiddenInput.value?.focus();
+      setTimeout(() => {
+        hiddenInput.value?.focus();
+      }, 100);
     });
   }
 
@@ -906,23 +913,148 @@ async function practiceWrongWords() {
   ElMessage.success(`开始练习 ${wordList.value.length} 个错题`);
 }
 
-// ========== 新功能：显示提示对话框 ==========
+// ========== 新功能：显示提示 ==========
+// 临时保存原始值，用于闪烁后恢复
+const tempSlotValues = ref<{ index: number; originalValue: string }[]>([]);
+const isShowingHint = ref(false);
+
+// 部分提示模式：显示所有空缺填入正确内容后闪烁
+function showPartialHint() {
+  if (!currentWord.value || isShowingHint.value) return;
+
+  // 保存当前状态
+  tempSlotValues.value = [];
+  const emptySlots: number[] = [];
+
+  partialSlots.value.forEach((slot, index) => {
+    if (!slot.fixed) {
+      tempSlotValues.value.push({ index, originalValue: slot.value || '' });
+      if (!slot.value) {
+        emptySlots.push(index);
+      }
+    }
+  });
+
+  if (emptySlots.length === 0) return;
+
+  isShowingHint.value = true;
+
+  // 填入正确答案
+  emptySlots.forEach(index => {
+    partialSlots.value[index].value = partialSlots.value[index].letter;
+  });
+
+  // 设置所有空缺的闪烁状态
+  flashingSlotIndex.value = -2; // 特殊值表示全部闪烁
+
+  // 闪烁3次后恢复空缺
+  setTimeout(() => {
+    flashingSlotIndex.value = -1;
+    // 恢复原始值（清空填入的提示）
+    tempSlotValues.value.forEach(({ index, originalValue }) => {
+      partialSlots.value[index].value = originalValue;
+    });
+    isShowingHint.value = false;
+    // 聚焦到第一个空缺输入框
+    nextTick(() => {
+      const firstEmpty = partialSlots.value.findIndex(s => !s.fixed && !s.value);
+      if (firstEmpty >= 0) slotRefs.value[firstEmpty]?.focus();
+    });
+  }, 900); // 3次闪烁，每次300ms
+}
+
+// 全盲模式下的输入框闪烁
+function showBlankHint() {
+  if (!currentWord.value || isShowingHint.value) return;
+
+  // 保存当前输入
+  const originalInput = [...userInput.value];
+  const emptyIndices: number[] = [];
+
+  userInput.value.forEach((char, index) => {
+    if (!char) {
+      emptyIndices.push(index);
+    }
+  });
+
+  if (emptyIndices.length === 0) return;
+
+  isShowingHint.value = true;
+
+  // 填入正确答案
+  const word = currentWord.value.text;
+  emptyIndices.forEach(index => {
+    userInput.value[index] = word[index];
+  });
+
+  // 获取对应的输入框元素并添加闪烁
+  const inputSlots = document.querySelectorAll('.blank-mode .input-slot');
+  inputSlots.forEach(slot => slot.classList.add('flashing'));
+
+  // 闪烁3次后恢复
+  setTimeout(() => {
+    inputSlots.forEach(slot => slot.classList.remove('flashing'));
+    // 恢复原始值
+    userInput.value = [...originalInput];
+    isShowingHint.value = false;
+    // 聚焦到隐藏输入框
+    nextTick(() => {
+      hiddenInput.value?.focus();
+    });
+  }, 900);
+}
+
 function showHintDialog() {
   if (!currentWord.value) return;
 
-  ElMessageBox.confirm(
-    `查看正确答案：${currentWord.value.text}`,
-    '提示',
-    {
-      confirmButtonText: '显示答案',
-      cancelButtonText: '取消',
-      type: 'info',
-    }
-  ).then(() => {
-    showLetterHint();
-  }).catch(() => {
-    // 取消
-  });
+  if (displayMode.value === 'partial') {
+    showPartialHint();
+  } else {
+    showBlankHint();
+  }
+}
+
+// 键盘快捷键监听
+function handleDictationKeydown(e: KeyboardEvent) {
+  // 检查快捷键是否启用
+  if (!wordsStore.shortcutEnabled) {
+    return;
+  }
+
+  // Shift+H 显示提示
+  if (e.shiftKey && e.key.toLowerCase() === 'h') {
+    e.preventDefault();
+    showHintDialog();
+    return;
+  }
+
+  // Shift+左箭头 - 上一个单词
+  if (e.shiftKey && e.key === 'ArrowLeft') {
+    e.preventDefault();
+    prevWord();
+    return;
+  }
+
+  // Shift+右箭头 - 下一个单词
+  if (e.shiftKey && e.key === 'ArrowRight') {
+    e.preventDefault();
+    nextWord();
+    return;
+  }
+
+  // 空格键 - 播放发音
+  if (e.key === ' ') {
+    e.preventDefault();
+    replayWord();
+    return;
+  }
+
+  // Enter - 跳过单词
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    skipWord();
+    return;
+  }
 }
 
 onMounted(() => {
@@ -1209,6 +1341,26 @@ watch(() => wordBank.value, () => {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
   20%, 40%, 60%, 80% { transform: translateX(8px); }
+}
+
+// 闪烁动画
+@keyframes flash {
+  0%, 100% { 
+    background-color: var(--utools-warning);
+    box-shadow: 0 0 0 0 var(--utools-warning);
+  }
+  50% { 
+    background-color: var(--utools-warning-light);
+    box-shadow: 0 0 10px 2px var(--utools-warning);
+  }
+}
+
+.letter-slot.flashing {
+  animation: flash 0.3s ease-in-out 3;
+}
+
+.input-slot.flashing {
+  animation: flash 0.3s ease-in-out 3;
 }
 
 // 完成面板
