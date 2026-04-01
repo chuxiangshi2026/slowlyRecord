@@ -3433,5 +3433,490 @@
     "word": "wire",
     "phonetic": "/ˈwaɪər/",
     "explains": "n. 电线；金属丝"
+  },
+  {
+    "word": "wisdom",
+    "phonetic": "/ˈwɪzdəm/",
+    "explains": "n. 智慧"
+  },
+  {
+    "word": "wise",
+    "phonetic": "/waɪz/",
+    "explains": "adj. 明智的；聪明的"
+  },
+  {
+    "word": "wish",
+    "phonetic": "/wɪʃ/",
+    "explains": "v. 希望；祝愿；n. 愿望"
+  },
+  {
+    "word": "wit",
+    "phonetic": "/wɪt/",
+    "explains": "n. 智力；机智"
+  },
+  {
+    "word": "witch",
+    "phonetic": "/wɪtʃ/",
+    "explains": "n. 女巫"
+  },
+  {
+    "word": "with",
+    "phonetic": "/wɪð/",
+    "explains": "prep. 和...一起；用"
+  },
+  {
+    "word": "withdraw",
+    "phonetic": "/wɪðˈdrɔː/",
+    "explains": "v. 撤回；取款；撤退"
+  },
+  {
+    "word": "wither",
+    "phonetic": "/ˈwɪðər/",
+    "explains": "v. 枯萎；凋谢"
+  },
+  {
+    "word": "within",
+    "phonetic": "/wɪˈðɪn/",
+    "explains": "prep. 在...之内；adv. 在内部"
+  },
+  {
+    "word": "without",
+    "phonetic": "/wɪˈðaʊt/",
+    "explains": "prep. 没有；如果没有"
+  },
+  {
+    "word": "withstand",
+    "phonetic": "/wɪðˈstænd/",
+    "explains": "v. 抵抗；经受住"
+  },
+  {
+    "word": "witness",
+    "phonetic": "/ˈwɪtnəs/",
+    "explains": "n. 目击者；证人；v. 目击"
+  },
+  {
+    "word": "witty",
+    "phonetic": "/ˈwɪti/",
+    "explains": "adj. 机智的；诙谐的"
+  },
+  {
+    "word": "wolf",
+    "phonetic": "/wʊlf/",
+    "explains": "n. 狼"
+  },
+  {
+    "word": "woman",
+    "phonetic": "/ˈwʊmən/",
+    "explains": "n. 女人；妇女"
+  },
+  {
+    "word": "wonder",
+    "phonetic": "/ˈwʌndər/",
+    "explains": "v. 想知道；惊讶；n. 奇迹"
+  },
+  {
+    "word": "wood",
+    "phonetic": "/wʊd/",
+    "explains": "n. 木头；森林"
+  },
+  {
+    "word": "wooden",
+    "phonetic": "/ˈwʊdn/",
+    "explains": "adj. 木制的；呆板的"
+  },
+  {
+    "word": "wool",
+    "phonetic": "/wʊl/",
+    "explains": "n. 羊毛；毛线"
+  },
+  {
+    "word": "word",
+    "phonetic": "/wɜːrd/",
+    "explains": "n. 单词；话语"
+  },
+  {
+    "word": "work",
+    "phonetic": "/wɜːrk/",
+    "explains": "v. 工作；n. 工作；作品"
+  },
+  {
+    "word": "worker",
+    "phonetic": "/ˈwɜːrkər/",
+    "explains": "n. 工人；劳动者"
+  },
+  {
+    "word": "workforce",
+    "phonetic": "/ˈwɜːrkfɔːrs/",
+    "explains": "n. 劳动力"
+  },
+  {
+    "word": "workman",
+    "phonetic": "/ˈwɜːrkmən/",
+    "explains": "n. 工人；工匠"
+  },
+  {
+    "word": "workshop",
+    "phonetic": "/ˈwɜːrkʃɒp/",
+    "explains": "n. 车间；研讨会"
+  },
+  {
+    "word": "world",
+    "phonetic": "/wɜːrld/",
+    "explains": "n. 世界；地球"
+  },
+  {
+    "word": "worm",
+    "phonetic": "/wɜːrm/",
+    "explains": "n. 蠕虫；蚯蚓"
+  },
+  {
+    "word": "worry",
+    "phonetic": "/ˈwʌri/",
+    "explains": "v. 担心；烦恼；n. 担心"
+  },
+  {
+    "word": "worse",
+    "phonetic": "/wɜːrs/",
+    "explains": "adj. 更坏的；adv. 更糟"
+  },
+  {
+    "word": "worship",
+    "phonetic": "/ˈwɜːrʃɪp/",
+    "explains": "v. 崇拜；n. 崇拜"
+  },
+  {
+    "word": "worst",
+    "phonetic": "/wɜːrst/",
+    "explains": "adj. 最坏的；adv. 最坏"
+  },
+  {
+    "word": "worth",
+    "phonetic": "/wɜːrθ/",
+    "explains": "adj. 值得...的；n. 价值"
+  },
+  {
+    "word": "worthless",
+    "phonetic": "/ˈwɜːrθləs/",
+    "explains": "adj. 无价值的；无用的"
+  },
+  {
+    "word": "worthwhile",
+    "phonetic": "/ˈwɜːrθwaɪl/",
+    "explains": "adj. 值得的"
+  },
+  {
+    "word": "worthy",
+    "phonetic": "/ˈwɜːrði/",
+    "explains": "adj. 值得的；有价值的"
+  },
+  {
+    "word": "wrap",
+    "phonetic": "/ræp/",
+    "explains": "v. 包裹；n. 外套"
+  },
+  {
+    "word": "wreath",
+    "phonetic": "/riːθ/",
+    "explains": "n. 花环；花圈"
+  },
+  {
+    "word": "wreck",
+    "phonetic": "/rek/",
+    "explains": "n. 残骸；v. 破坏"
+  },
+  {
+    "word": "wrench",
+    "phonetic": "/rentʃ/",
+    "explains": "n. 扳手；v. 猛扭"
+  },
+  {
+    "word": "wretched",
+    "phonetic": "/ˈretʃɪd/",
+    "explains": "adj. 可怜的；恶劣的"
+  },
+  {
+    "word": "wrinkle",
+    "phonetic": "/ˈrɪŋkl/",
+    "explains": "n. 皱纹；v. 起皱"
+  },
+  {
+    "word": "wrist",
+    "phonetic": "/rɪst/",
+    "explains": "n. 手腕"
+  },
+  {
+    "word": "write",
+    "phonetic": "/raɪt/",
+    "explains": "v. 写；书写"
+  },
+  {
+    "word": "writer",
+    "phonetic": "/ˈraɪtər/",
+    "explains": "n. 作家"
+  },
+  {
+    "word": "writing",
+    "phonetic": "/ˈraɪtɪŋ/",
+    "explains": "n. 写作；著作"
+  },
+  {
+    "word": "wrong",
+    "phonetic": "/rɒŋ/",
+    "explains": "adj. 错误的；adv. 错误地"
+  },
+  {
+    "word": "yard",
+    "phonetic": "/jɑːrd/",
+    "explains": "n. 院子；码"
+  },
+  {
+    "word": "yawn",
+    "phonetic": "/jɔːn/",
+    "explains": "v. 打哈欠；n. 哈欠"
+  },
+  {
+    "word": "yeah",
+    "phonetic": "/jeə/",
+    "explains": "adv. 是的"
+  },
+  {
+    "word": "year",
+    "phonetic": "/jɪər/",
+    "explains": "n. 年"
+  },
+  {
+    "word": "yearly",
+    "phonetic": "/ˈjɪərli/",
+    "explains": "adj. 每年的；adv. 每年"
+  },
+  {
+    "word": "yearn",
+    "phonetic": "/jɜːrn/",
+    "explains": "v. 渴望；向往"
+  },
+  {
+    "word": "yell",
+    "phonetic": "/jel/",
+    "explains": "v. 大喊；n. 喊叫"
+  },
+  {
+    "word": "yellow",
+    "phonetic": "/ˈjeləʊ/",
+    "explains": "adj. 黄色的；n. 黄色"
+  },
+  {
+    "word": "yes",
+    "phonetic": "/jes/",
+    "explains": "adv. 是"
+  },
+  {
+    "word": "yesterday",
+    "phonetic": "/ˈjestədeɪ/",
+    "explains": "n. 昨天；adv. 昨天"
+  },
+  {
+    "word": "yet",
+    "phonetic": "/jet/",
+    "explains": "adv. 还；然而"
+  },
+  {
+    "word": "yield",
+    "phonetic": "/jiːld/",
+    "explains": "v. 生产；屈服；n. 产量"
+  },
+  {
+    "word": "yoke",
+    "phonetic": "/jəʊk/",
+    "explains": "n. 枷锁；v. 结合"
+  },
+  {
+    "word": "yolk",
+    "phonetic": "/jəʊk/",
+    "explains": "n. 蛋黄"
+  },
+  {
+    "word": "you",
+    "phonetic": "/juː/",
+    "explains": "pron. 你；你们"
+  },
+  {
+    "word": "young",
+    "phonetic": "/jʌŋ/",
+    "explains": "adj. 年轻的"
+  },
+  {
+    "word": "youngster",
+    "phonetic": "/ˈjʌŋstər/",
+    "explains": "n. 年轻人；少年"
+  },
+  {
+    "word": "your",
+    "phonetic": "/jɔːr/",
+    "explains": "pron. 你的；你们的"
+  },
+  {
+    "word": "yours",
+    "phonetic": "/jɔːrz/",
+    "explains": "pron. 你的（东西）"
+  },
+  {
+    "word": "yourself",
+    "phonetic": "/jɔːˈself/",
+    "explains": "pron. 你自己"
+  },
+  {
+    "word": "yourselves",
+    "phonetic": "/jɔːˈselvz/",
+    "explains": "pron. 你们自己"
+  },
+  {
+    "word": "youth",
+    "phonetic": "/juːθ/",
+    "explains": "n. 青春；青年"
+  },
+  {
+    "word": "zebra",
+    "phonetic": "/ˈzebrə/",
+    "explains": "n. 斑马"
+  },
+  {
+    "word": "zero",
+    "phonetic": "/ˈzɪərəʊ/",
+    "explains": "n. 零"
+  },
+  {
+    "word": "zone",
+    "phonetic": "/zəʊn/",
+    "explains": "n. 区域；地带"
+  },
+  {
+    "word": "zoo",
+    "phonetic": "/zuː/",
+    "explains": "n. 动物园"
+  },
+  {
+    "word": "zoom",
+    "phonetic": "/zuːm/",
+    "explains": "v. 快速移动；n. 嗡嗡声"
+  },
+  {
+    "word": "abdomen",
+    "phonetic": "/ˈæbdəmən/",
+    "explains": "n. 腹部"
+  },
+  {
+    "word": "abide",
+    "phonetic": "/əˈbaɪd/",
+    "explains": "v. 遵守；忍受"
+  },
+  {
+    "word": "abolish",
+    "phonetic": "/əˈbɒlɪʃ/",
+    "explains": "v. 废除；废止"
+  },
+  {
+    "word": "abound",
+    "phonetic": "/əˈbaʊnd/",
+    "explains": "v. 大量存在"
+  },
+  {
+    "word": "abridge",
+    "phonetic": "/əˈbrɪdʒ/",
+    "explains": "v. 删节；缩减"
+  },
+  {
+    "word": "abroad",
+    "phonetic": "/əˈbrɔːd/",
+    "explains": "adv. 在国外"
+  },
+  {
+    "word": "abrupt",
+    "phonetic": "/əˈbrʌpt/",
+    "explains": "adj. 突然的；唐突的"
+  },
+  {
+    "word": "absence",
+    "phonetic": "/ˈæbsəns/",
+    "explains": "n. 缺席；缺乏"
+  },
+  {
+    "word": "absolute",
+    "phonetic": "/ˈæbsəluːt/",
+    "explains": "adj. 绝对的；完全的"
+  },
+  {
+    "word": "absorb",
+    "phonetic": "/əbˈzɔːb/",
+    "explains": "v. 吸收；吸引"
+  },
+  {
+    "word": "abstract",
+    "phonetic": "/ˈæbstrækt/",
+    "explains": "adj. 抽象的；n. 摘要"
+  },
+  {
+    "word": "abundant",
+    "phonetic": "/əˈbʌndənt/",
+    "explains": "adj. 丰富的；充裕的"
+  },
+  {
+    "word": "abuse",
+    "phonetic": "/əˈbjuːz/",
+    "explains": "v. 滥用；虐待"
+  },
+  {
+    "word": "academic",
+    "phonetic": "/ˌækəˈdemɪk/",
+    "explains": "adj. 学术的；理论的"
+  },
+  {
+    "word": "academy",
+    "phonetic": "/əˈkædəmi/",
+    "explains": "n. 学院；学会"
+  },
+  {
+    "word": "accelerate",
+    "phonetic": "/əkˈseləreɪt/",
+    "explains": "v. 加速；促进"
+  },
+  {
+    "word": "accent",
+    "phonetic": "/ˈæksent/",
+    "explains": "n. 口音；重音"
+  },
+  {
+    "word": "accept",
+    "phonetic": "/əkˈsept/",
+    "explains": "v. 接受；认可"
+  },
+  {
+    "word": "acceptable",
+    "phonetic": "/əkˈseptəbl/",
+    "explains": "adj. 可接受的"
+  },
+  {
+    "word": "access",
+    "phonetic": "/ˈækses/",
+    "explains": "n. 进入；使用权"
+  },
+  {
+    "word": "accessory",
+    "phonetic": "/əkˈsesəri/",
+    "explains": "n. 附件；从犯"
+  },
+  {
+    "word": "accident",
+    "phonetic": "/ˈæksɪdənt/",
+    "explains": "n. 事故；意外"
+  },
+  {
+    "word": "accommodate",
+    "phonetic": "/əˈkɒmədeɪt/",
+    "explains": "v. 容纳；适应"
+  },
+  {
+    "word": "accomplish",
+    "phonetic": "/əˈkʌmplɪʃ/",
+    "explains": "v. 完成；实现"
   }
 ]
