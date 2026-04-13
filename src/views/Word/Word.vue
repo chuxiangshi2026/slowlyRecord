@@ -57,7 +57,7 @@
   </div>
 
   <div>
-  <!-- 抽屉组件化   -->
+    <!-- 抽屉组件化   -->
     <DetailDrawer v-model="drawerVisible" :title="title" :detail-id="currentId"/>
   </div>
 
@@ -69,11 +69,15 @@
       :close-on-click-modal="false"
   >
     <div v-if="ocrLoading" class="ocr-loading">
-      <el-icon class="is-loading"><Loading /></el-icon>
+      <el-icon class="is-loading">
+        <Loading/>
+      </el-icon>
       <span>正在识别...</span>
     </div>
     <div v-else-if="ocrError" class="ocr-error">
-      <el-icon><Warning /></el-icon>
+      <el-icon>
+        <Warning/>
+      </el-icon>
       <span>{{ ocrError }}</span>
     </div>
     <div v-else class="ocr-content">
@@ -106,7 +110,9 @@
       </div>
 
       <div v-else-if="!ocrError" class="ocr-empty">
-        <el-icon><InfoFilled /></el-icon>
+        <el-icon>
+          <InfoFilled/>
+        </el-icon>
         <span>未识别到有效的英文单词</span>
       </div>
     </div>
@@ -183,15 +189,20 @@
                 size="small"
                 @click="confirmDeleteWordBank(bank)"
             >
-              <el-icon><Delete /></el-icon>
+              <el-icon>
+                <Delete/>
+              </el-icon>
             </el-button>
           </div>
         </div>
       </div>
-      <el-divider />
+      <el-divider/>
       <div class="wordbank-actions-footer">
         <el-button type="primary" @click="showCreateWordBankDialog">
-          <el-icon><Plus /></el-icon> 新建词库
+          <el-icon>
+            <Plus/>
+          </el-icon>
+          新建词库
         </el-button>
       </div>
     </div>
@@ -221,7 +232,8 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item v-if="newWordBankForm.initType === 'import'" label="选择词库">
-          <el-select v-model="newWordBankForm.importBank" placeholder="请选择要导入的词库" style="width: 100%" popper-class="wordbank-import-dropdown">
+          <el-select v-model="newWordBankForm.importBank" placeholder="请选择要导入的词库" style="width: 100%"
+                     popper-class="wordbank-import-dropdown">
             <el-option
                 v-for="bank in wordBankOptions"
                 :key="bank.value"
@@ -251,7 +263,7 @@
         <i class="iconfont icon-library"></i>
         {{ wordsStore.currentWordBank?.name || '我的词库' }}
       </span>
-      <el-divider direction="vertical" />
+      <el-divider direction="vertical"/>
       <span :class="{ 'remembered-highlight': listMode==0 }" @click="showOnlyForget"> 待复习: {{
           wordsStore.forgetCount
         }} </span>
@@ -262,10 +274,8 @@
             @click="showOnlyRemembered"> 已记完: {{ wordsStore.rememberCount }} </span>
       <span :class="{ 'remembered-highlight': listMode==3 }" @click="showAll"> 单词总数: {{ wordsStore.count }} </span>
     </div>
-<div>
-      <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-setting" @click="drawerVisible = true"></i>
-      </el-tooltip>
+    <div>
+
       <!--            <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
       <el-tooltip class="box-item" effect="dark" content="置顶" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-top" @click="scrollToTop"></i>
@@ -273,9 +283,7 @@
       <el-tooltip class="box-item" effect="dark" content="置底" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-down" @click="scrollToBottom"></i>
       </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-card" @click="openFocusMode"></i>
-      </el-tooltip>
+
       <el-tooltip class="box-item" effect="dark" content="显示释义" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-visible" @click="visibleExplained"></i>
       </el-tooltip>
@@ -285,6 +293,7 @@
       <el-tooltip class="box-item" effect="dark" content="截图识别" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-translate" @click="startScreenCapture" style="font-weight: bold;"></i>
       </el-tooltip>
+
       <!--      <i class="iconfont icon-import" @click="importWords"></i>
             <i class="iconfont icon-export" @click="exportWords"></i-->
 
@@ -314,10 +323,18 @@
       <el-tooltip class="box-item" effect="dark" content="听写练习" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-list" @click="goToDictation" style="font-weight: bold;"></i>
       </el-tooltip>
-<!--      </el-tooltip>
-            <a href="#/home/list" style="margin-left: 16px;">
-              &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;
-            </a>-->
+      <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-card" @click="openFocusMode"></i>
+      </el-tooltip>
+
+
+      <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
+        <i class="iconfont icon-setting" @click="drawerVisible = true"></i>
+      </el-tooltip>
+      <!--      </el-tooltip>
+                  <a href="#/home/list" style="margin-left: 16px;">
+                    &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;
+                  </a>-->
       <!--      <a href="#/home/typing" style="margin-left: 16px;">-->
       <!--        <i class="iconfont icon-card "></i>-->
       <!--      </a>-->
@@ -347,7 +364,17 @@ import {log} from "@/utils/logger.ts";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
-import {Loading, Warning, InfoFilled, VideoPlay, CircleCheck, CircleClose, Trophy, Delete, Plus} from '@element-plus/icons-vue';
+import {
+  Loading,
+  Warning,
+  InfoFilled,
+  VideoPlay,
+  CircleCheck,
+  CircleClose,
+  Trophy,
+  Delete,
+  Plus
+} from '@element-plus/icons-vue';
 import {useRouter} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {
@@ -380,19 +407,19 @@ const router = useRouter();
 
 // 切换词库选项
 const wordBankOptions = [
-  { label: '四级词汇', value: 'cet4' },
-  { label: '六级词汇', value: 'cet6' },
-  { label: '商务英语', value: 'bec' },
-  { label: 'GMAT词汇', value: 'gmat' },
-  { label: 'GRE词汇', value: 'gre' },
-  { label: '雅思词汇', value: 'ielts' },
-  { label: '考公词汇', value: 'kaogong' },
-  { label: '考研词汇', value: 'kaoyan' },
-  { label: '专业四级', value: 'level4' },
-  { label: '专业八级', value: 'level8' },
-  { label: 'SAT词汇', value: 'sat' },
-  { label: '托福词汇', value: 'toefl' },
-  { label: '专升本词汇', value: 'zsb' },
+  {label: '四级词汇', value: 'cet4'},
+  {label: '六级词汇', value: 'cet6'},
+  {label: '商务英语', value: 'bec'},
+  {label: 'GMAT词汇', value: 'gmat'},
+  {label: 'GRE词汇', value: 'gre'},
+  {label: '雅思词汇', value: 'ielts'},
+  {label: '考公词汇', value: 'kaogong'},
+  {label: '考研词汇', value: 'kaoyan'},
+  {label: '专业四级', value: 'level4'},
+  {label: '专业八级', value: 'level8'},
+  {label: 'SAT词汇', value: 'sat'},
+  {label: '托福词汇', value: 'toefl'},
+  {label: '专升本词汇', value: 'zsb'},
 ];
 
 const drawerVisible = ref(false)
@@ -441,13 +468,13 @@ const confirmDeleteWordBank = (bank: WordBank) => {
   }
   if (bank.words.length > 0) {
     ElMessageBox.confirm(
-      `词库 "${bank.name}" 包含 ${bank.words.length} 个单词，确定要删除吗？`,
-      '删除确认',
-      {
-        confirmButtonText: '删除',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
+        `词库 "${bank.name}" 包含 ${bank.words.length} 个单词，确定要删除吗？`,
+        '删除确认',
+        {
+          confirmButtonText: '删除',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
     ).then(() => {
       doDeleteWordBank(bank.id)
     }).catch(() => {
@@ -555,7 +582,6 @@ let focusWindowState = {
 };
 
 
-
 const applyFocusWindowAlwaysOnTop = (targetWindow: any, alwaysOnTop: boolean, source: string) => {
   if (!targetWindow || typeof targetWindow.setAlwaysOnTop !== 'function') {
     return false;
@@ -567,8 +593,8 @@ const applyFocusWindowAlwaysOnTop = (targetWindow: any, alwaysOnTop: boolean, so
       targetWindow.moveTop();
     }
     const appliedState = typeof targetWindow.isAlwaysOnTop === 'function'
-      ? targetWindow.isAlwaysOnTop()
-      : alwaysOnTop;
+        ? targetWindow.isAlwaysOnTop()
+        : alwaysOnTop;
     console.log(`[${source}] 专注窗口置顶状态已应用:`, alwaysOnTop, '当前实际状态:', appliedState);
     return appliedState === alwaysOnTop;
   } catch (e) {
@@ -714,7 +740,6 @@ const handleSetAlwaysOnTop = (state: any) => {
 };
 
 
-
 // 处理重新创建窗口请求（用于切换置顶状态）
 const handleRecreateWindow = (state: any) => {
 
@@ -776,11 +801,10 @@ const handleRecreateWindow = (state: any) => {
   isExpandedFromEdge = false;
 
 
-
   // 获取当前主题
   const isDark = document.body.classList.contains('utools-dark') ||
-                 document.documentElement.classList.contains('utools-dark') ||
-                 document.documentElement.classList.contains('dark');
+      document.documentElement.classList.contains('utools-dark') ||
+      document.documentElement.classList.contains('dark');
   const themeParam = isDark ? 'dark' : 'light';
 
   // 延迟创建新窗口，确保旧窗口已关闭
@@ -886,31 +910,28 @@ const getFocusWindowScreenBounds = (referenceBounds?: any) => {
 
 const getHiddenEdgeX = (side: 'left' | 'right', width: number, screenBounds = getFocusWindowScreenBounds()) => {
   return side === 'left'
-    ? screenBounds.left - width + EDGE_VISIBLE_SIZE
-    : screenBounds.right - EDGE_VISIBLE_SIZE;
+      ? screenBounds.left - width + EDGE_VISIBLE_SIZE
+      : screenBounds.right - EDGE_VISIBLE_SIZE;
 };
 
 const getExpandedEdgeBounds = (
-  bounds: any,
-  side: 'left' | 'right',
-  screenBounds = getFocusWindowScreenBounds(bounds),
+    bounds: any,
+    side: 'left' | 'right',
+    screenBounds = getFocusWindowScreenBounds(bounds),
 ) => {
   const minX = screenBounds.left;
   const maxX = Math.max(minX, screenBounds.right - bounds.width);
   const minY = screenBounds.top;
   const maxY = Math.max(minY, screenBounds.bottom - bounds.height);
-  const nextBounds = { ...bounds };
+  const nextBounds = {...bounds};
 
   nextBounds.x = side === 'left'
-    ? Math.min(maxX, Math.max(minX + EDGE_RESTORE_OFFSET, bounds.x))
-    : Math.max(minX, Math.min(maxX - EDGE_RESTORE_OFFSET, bounds.x));
+      ? Math.min(maxX, Math.max(minX + EDGE_RESTORE_OFFSET, bounds.x))
+      : Math.max(minX, Math.min(maxX - EDGE_RESTORE_OFFSET, bounds.x));
   nextBounds.y = Math.max(minY, Math.min(maxY, bounds.y));
 
   return nextBounds;
 };
-
-
-
 
 
 const resetEdgeHiddenState = (source = 'unknown') => {
@@ -946,7 +967,8 @@ function notifyChildEdgeState(isStuck: boolean, side?: 'left' | 'right', expande
         if (typeof updateEdgeStuckState === 'function') {
           updateEdgeStuckState(${isStuck}, ${sideValue}, ${expanded});
         }
-      `).catch(() => {});
+      `).catch(() => {
+      });
     }
   } catch (e) {
     console.error('通知子窗口贴边状态失败:', e);
@@ -965,7 +987,12 @@ const finalizeExpandedFromEdge = (bounds: any, source = 'dragOut') => {
 };
 
 function restoreFromEdge(source = 'unknown') {
-  console.log(`[restoreFromEdge] 收到恢复请求，来源: ${source}，当前状态:`, { isEdgeHidden, edgeHiddenSide, hasSavedBounds: !!savedBounds, isExpandedFromEdge });
+  console.log(`[restoreFromEdge] 收到恢复请求，来源: ${source}，当前状态:`, {
+    isEdgeHidden,
+    edgeHiddenSide,
+    hasSavedBounds: !!savedBounds,
+    isExpandedFromEdge
+  });
 
   if (!focusWindow || focusWindow.isDestroyed?.()) {
     console.log('[restoreFromEdge] 窗口不存在');
@@ -1094,7 +1121,7 @@ const setupEdgeStick = () => {
       if (!bounds) return;
 
       if (Date.now() < edgeRestoreSuspendedUntil && !isEdgeHidden) {
-        lastBounds = { ...bounds };
+        lastBounds = {...bounds};
         return;
       }
 
@@ -1104,10 +1131,7 @@ const setupEdgeStick = () => {
         if (isExpandedFromEdge) {
           const expandedBounds = getExpandedEdgeBounds(savedBounds, edgeHiddenSide, screenBounds);
           const draggedOut = Math.abs(bounds.x - expandedBounds.x) > EDGE_DRAG_OUT_THRESHOLD
-            || Math.abs(bounds.y - expandedBounds.y) > EDGE_DRAG_OUT_THRESHOLD;
-
-
-
+              || Math.abs(bounds.y - expandedBounds.y) > EDGE_DRAG_OUT_THRESHOLD;
 
 
           if (draggedOut) {
@@ -1131,11 +1155,11 @@ const setupEdgeStick = () => {
       if (lastBounds) {
         const moved = Math.abs(lastBounds.x - bounds.x) > 1 || Math.abs(lastBounds.y - bounds.y) > 1;
         if (moved) {
-          lastBounds = { ...bounds };
+          lastBounds = {...bounds};
           return;
         }
       }
-      lastBounds = { ...bounds };
+      lastBounds = {...bounds};
 
       if (bounds.x <= screenBounds.left + EDGE_STICK_THRESHOLD) {
         console.log('[setupEdgeStick] 检测到左边缘贴边:', bounds.x, '屏幕左边界:', screenBounds.left, '屏幕信息:', screenBounds);
@@ -1143,7 +1167,7 @@ const setupEdgeStick = () => {
         isEdgeHidden = true;
         isExpandedFromEdge = false;
         edgeHiddenSide = 'left';
-        savedBounds = { ...bounds };
+        savedBounds = {...bounds};
         focusWindow.setBounds({
           x: getHiddenEdgeX('left', bounds.width, screenBounds),
           y: bounds.y,
@@ -1162,7 +1186,7 @@ const setupEdgeStick = () => {
         isEdgeHidden = true;
         isExpandedFromEdge = false;
         edgeHiddenSide = 'right';
-        savedBounds = { ...bounds };
+        savedBounds = {...bounds};
         focusWindow.setBounds({
           x: getHiddenEdgeX('right', bounds.width, screenBounds),
           y: bounds.y,
@@ -1233,11 +1257,11 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
     try {
       const focusMode = getSetDb(true)?.focusMode;
       const latestAlwaysOnTop = typeof focusMode?.alwaysOnTop === 'boolean'
-        ? focusMode.alwaysOnTop
-        : initialAlwaysOnTop;
+          ? focusMode.alwaysOnTop
+          : initialAlwaysOnTop;
       const latestEdgeStickEnabled = typeof focusMode?.edgeStickEnabled === 'boolean'
-        ? focusMode.edgeStickEnabled
-        : initialEdgeStickEnabled;
+          ? focusMode.edgeStickEnabled
+          : initialEdgeStickEnabled;
 
       if (latestAlwaysOnTop !== lastSyncedAlwaysOnTop) {
         console.log('[focusModeSync] 检测到 DB 置顶状态变化:', lastSyncedAlwaysOnTop, '=>', latestAlwaysOnTop);
@@ -1296,7 +1320,8 @@ const handleOpenWordList = async () => {
   isExpandedFromEdge = false;
 
   listMode.value = 0;
-  router.replace('/word').catch(() => {});
+  router.replace('/word').catch(() => {
+  });
   if (window.location.hash !== '#/word') {
     window.location.hash = '#/word';
   }
@@ -1322,8 +1347,8 @@ const processFocusModePendingAction = (action: any, source = 'unknown') => {
   }
 
   const type = typeof action.type === 'string'
-    ? action.type
-    : (typeof action.channel === 'string' ? action.channel : '');
+      ? action.type
+      : (typeof action.channel === 'string' ? action.channel : '');
   const payload = action.payload ?? action.args?.[0] ?? action.params?.[0] ?? action.data;
 
   if (!type) {
@@ -1341,7 +1366,7 @@ const processFocusModePendingAction = (action: any, source = 'unknown') => {
     return true;
   }
 
-  handleChildMessage({ channel: type, payload });
+  handleChildMessage({channel: type, payload});
   return true;
 };
 
@@ -1389,9 +1414,6 @@ onUnmounted(() => {
 });
 
 
-
-
-
 // 处理子窗口消息的通用函数
 const handleChildMessage = (message: any) => {
   console.log('[handleChildMessage] 收到消息:', message);
@@ -1402,8 +1424,8 @@ const handleChildMessage = (message: any) => {
 
   const channel = typeof message === 'string' ? message : message.channel;
   const payload = typeof message === 'string'
-    ? undefined
-    : (message.payload ?? message.args?.[0] ?? message.params?.[0] ?? message.data);
+      ? undefined
+      : (message.payload ?? message.args?.[0] ?? message.params?.[0] ?? message.data);
 
   console.log('[handleChildMessage] 消息通道:', channel, 'payload:', payload);
 
@@ -1481,8 +1503,8 @@ const openFocusMode = () => {
 
   // 获取当前主题
   const isDark = document.body.classList.contains('utools-dark') ||
-                 document.documentElement.classList.contains('utools-dark') ||
-                 document.documentElement.classList.contains('dark');
+      document.documentElement.classList.contains('utools-dark') ||
+      document.documentElement.classList.contains('dark');
   console.log('创建专注窗口，当前主题:', isDark ? '暗黑' : '亮色');
 
   // 从 store 获取用户设置
@@ -1500,7 +1522,6 @@ const openFocusMode = () => {
     edgeStickEnabled: initEdgeStickEnabled,
   };
   console.log('[openFocusMode] 初始置顶状态:', initAlwaysOnTop, '贴边隐藏:', initEdgeStickEnabled);
-
 
 
   // 创建独立窗口
@@ -2130,7 +2151,7 @@ const importFromWordBank = async (bankType: WordBankType) => {
   });
 
   try {
-    const words = await fetchWordBank(bankType, { priority: 'local', useCache: true });
+    const words = await fetchWordBank(bankType, {priority: 'local', useCache: true});
     loading.close();
 
     if (words.length === 0) {
@@ -2390,7 +2411,6 @@ const confirmAddOcrWords = async () => {
 function goToDictation() {
   router.push('/dictation')
 }
-
 
 
 // 当新数据更新时 自动滚动到单词处  放到最后
