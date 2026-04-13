@@ -1,5 +1,5 @@
 .list-item {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid var(--utools-border-primary);
   background-color: var(--utools-bg-card);
   overflow: hidden;
@@ -7,11 +7,11 @@
   transition: 0.3s;
   position: relative;
 
-  width: 90%;
-  min-height: 110px;
-  max-height: 130px;
-  padding: 16px;
-  margin: 1px 1px 16px 1px;
+  width: 92%;
+  min-height: 145px;
+  max-height: 175px;
+  padding: 12px;
+  margin: 0 0 6px 0;
 
   .translate-editable {
     color: var(--utools-text-primary);
@@ -39,28 +39,28 @@
   .word {
     display: flex;
     align-items: center;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: bold;
     padding: 0;
     margin: 0;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     color: var(--utools-text-primary);
 
     .phonetic {
       color: var(--utools-text-tertiary);
       margin-left: 16px;
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 
   .level {
     color: var(--utools-text-tertiary);
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 10px;
+    right: 10px;
 
     .iconfont {
-      font-size: 18px;
+      font-size: 32px;
 
       &.icon-level-1 {
         color: #adb5bd;
@@ -109,19 +109,30 @@
 
   .operate {
     cursor: pointer;
-    font-size: 18px;
     color: var(--utools-primary);
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
 
     i {
+      font-size: 22px;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s;
+
       & + i {
-        margin-left: 16px;
+        margin-left: 12px;
       }
 
       &.icon-delete,
       &.icon-close {
         color: var(--utools-danger);
+      }
+
+      &:hover {
+        background-color: var(--utools-bg-hover);
+        transform: scale(1.1);
       }
     }
   }

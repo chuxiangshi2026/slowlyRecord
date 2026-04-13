@@ -60,6 +60,7 @@ function getIconComponent(iconName?: string) {
   
   .el-menu-item {
     color: var(--utools-text-primary);
+    height: 56px;
     
     &:hover {
       background-color: var(--utools-bg-hover);
@@ -67,6 +68,8 @@ function getIconComponent(iconName?: string) {
     
     .el-icon {
       color: var(--utools-text-secondary);
+      font-size: 22px;
+      margin-right: 12px;
     }
   }
 }

@@ -21,14 +21,14 @@
           :key="wordsStore.currentWordBankId"
           class="scroller"
           :items="showFilteredWords"
-          :item-size="165"
+          :item-size="185"
           key-field="_id"
 
-          :min-item-size="165"
-          :item-secondary-size="370"
+          :min-item-size="185"
+          :item-secondary-size="390"
           v-slot="{ item, index }"
           :dynamic-size="true"
-          :max-item-size="175"
+          :max-item-size="195"
           :grid-items="2"
       >
         <!--      <div class="grid-item">-->
@@ -534,7 +534,7 @@ const confirmCreateWordBank = async () => {
 
   createWordBankVisible.value = false
   loadCustomWordBanks()
-  
+
   // 切换到新创建的词库
   switchToWordBank(newBank.id)
 }
@@ -720,7 +720,7 @@ const handleRecreateWindow = (state: any) => {
 
 
   console.log('[handleRecreateWindow] 开始处理，当前 focusWindow:', focusWindow, '状态:', state);
-  
+
   // 保存状态
   const newEdgeStickEnabled = state?.edgeStickEnabled ?? wordsStore.focusMode?.edgeStickEnabled ?? true;
   if (state) {
@@ -731,7 +731,7 @@ const handleRecreateWindow = (state: any) => {
       edgeStickEnabled: newEdgeStickEnabled,
     };
   }
-  
+
   const newAlwaysOnTop = state?.alwaysOnTop ?? true;
   lastSyncedAlwaysOnTop = newAlwaysOnTop;
   lastSyncedEdgeStickEnabled = newEdgeStickEnabled;
@@ -742,7 +742,7 @@ const handleRecreateWindow = (state: any) => {
   }
   console.log('[handleRecreateWindow] 新的置顶状态:', newAlwaysOnTop, '贴边隐藏:', newEdgeStickEnabled);
 
-  
+
   // 关闭旧窗口
   if (focusWindow) {
     console.log('[handleRecreateWindow] 准备关闭旧窗口');
@@ -750,7 +750,7 @@ const handleRecreateWindow = (state: any) => {
       // 检查窗口是否已销毁
       const isDestroyed = focusWindow.isDestroyed?.();
       console.log('[handleRecreateWindow] 窗口是否已销毁:', isDestroyed);
-      
+
       if (!isDestroyed) {
         console.log('[handleRecreateWindow] 调用 close()');
         focusWindow.close();
@@ -762,7 +762,7 @@ const handleRecreateWindow = (state: any) => {
   } else {
     console.log('[handleRecreateWindow] focusWindow 为空，无需关闭');
   }
-  
+
   // 强制清空引用
   focusWindow = null;
   console.log('[handleRecreateWindow] focusWindow 已置为 null');
@@ -778,11 +778,11 @@ const handleRecreateWindow = (state: any) => {
 
 
   // 获取当前主题
-  const isDark = document.body.classList.contains('utools-dark') || 
+  const isDark = document.body.classList.contains('utools-dark') ||
                  document.documentElement.classList.contains('utools-dark') ||
                  document.documentElement.classList.contains('dark');
   const themeParam = isDark ? 'dark' : 'light';
-  
+
   // 延迟创建新窗口，确保旧窗口已关闭
   setTimeout(() => {
     console.log('[handleRecreateWindow] 延迟后创建新窗口');
@@ -839,7 +839,7 @@ const handleRecreateWindow = (state: any) => {
 
       // 重新设置消息监听
       setupMessageListener();
-      
+
     } catch (e) {
       console.error('[handleRecreateWindow] 重新创建窗口失败:', e);
     }
@@ -1480,7 +1480,7 @@ const openFocusMode = () => {
   }
 
   // 获取当前主题
-  const isDark = document.body.classList.contains('utools-dark') || 
+  const isDark = document.body.classList.contains('utools-dark') ||
                  document.documentElement.classList.contains('utools-dark') ||
                  document.documentElement.classList.contains('dark');
   console.log('创建专注窗口，当前主题:', isDark ? '暗黑' : '亮色');
@@ -1565,7 +1565,7 @@ const openFocusMode = () => {
 
       // 重新设置消息监听（确保能收到子窗口消息）
       setupMessageListener();
-      
+
     } else {
       // 回退：使用路由方式
       router.push('/focus');
@@ -2137,31 +2137,31 @@ const importFromWordBank = async (bankType: WordBankType) => {
       ElMessage.warning('词库加载失败，请检查词库文件是否存在');
       return;
     }
-    
+
     // 去重：基于word.text属性
     const uniqueWords = words.filter((importedWord) => {
       return !wordsStore.words.some((existingWord) => existingWord.text === importedWord.text);
     });
-    
+
     if (uniqueWords.length === 0) {
       ElMessage.warning('没有新单词需要导入');
       return;
     }
-    
+
     // 检查是否有需要翻译的单词（没有释义的）
     const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains);
     const wordsWithExplains = uniqueWords.filter(word => !!word.explains);
-    
+
     if (wordsNeedingTranslation.length > 0) {
       ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
-      
+
       // 先添加已有释义的单词
       if (wordsWithExplains.length > 0) {
         wordsStore.addAndUpdateWords(wordsWithExplains).then(() => {
           scrollToBottom();
         });
       }
-      
+
       // 使用公共的批量翻译和添加方法
       const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
       batchTranslateAndAddWords(wordsToTranslate, (processedCount, totalCount) => {
@@ -2442,17 +2442,50 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 .home_footer {
   position: fixed;
   bottom: 0;
-  width: 98%;
+  left: 0;
+  right: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: var(--utools-bg-card);
-  border-radius: 4px;
-  height: 45px;
+  border-radius: 0;
+  height: 55px;
   border-top: 1px solid var(--utools-border-divider);
-  padding: 0 16px;
+  padding: 0 12px;
   box-sizing: border-box;
   color: var(--utools-text-primary);
+
+  /* 左侧区域 */
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* 右侧图标区域 */
+  > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .iconfont {
+    font-size: 20px;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+
+    &:hover {
+      background-color: var(--utools-bg-hover);
+      transform: scale(1.1);
+    }
+  }
 
   .remembered-highlight {
     color: var(--utools-danger);
@@ -2557,11 +2590,11 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 }
 
 .words-cards-wrapper {
-  width: 96%;
-  height: calc(100vh - 80px);
-  padding: 16px;
+  width: 100%;
+  height: calc(100vh - 70px);
+  padding: 4px;
   background-color: var(--utools-bg-secondary);
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
 
   .scroller {
@@ -2571,6 +2604,22 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
     padding: 0;
     margin: 0;
   }
+
+  .vue-recycle-scroller__item-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* 隐藏滚动条 */
+.scroller::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scroller {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 // 词库选择对话框样式

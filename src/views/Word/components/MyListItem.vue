@@ -21,7 +21,7 @@
       <i :class="`iconfont icon-level-${word.level}`"></i>
     </div>
     <div class="operate">
-      <div>
+      <div class="operate-group">
         <el-tooltip class="box-item" effect="dark" content="播放" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-player iconHover" @click="play"/>
         </el-tooltip>
@@ -32,7 +32,7 @@
           <i class="iconfont icon-translate iconHover" @click="translation()"/>
         </el-tooltip>
       </div>
-      <div>
+      <div class="operate-group">
         <el-tooltip class="box-item" effect="dark" content="记住" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
@@ -654,6 +654,13 @@ const deleteWord = () => {
   opacity: 0.5;
   pointer-events: none;
   color: var(--utools-text-disabled);
+}
+
+/* 操作按钮组样式 */
+.operate-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* 词根词缀样式 */
