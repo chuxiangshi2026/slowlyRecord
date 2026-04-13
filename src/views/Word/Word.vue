@@ -382,12 +382,17 @@ const router = useRouter();
 const wordBankOptions = [
   { label: '四级词汇', value: 'cet4' },
   { label: '六级词汇', value: 'cet6' },
-  { label: '专升本词汇', value: 'zsb' },
-  { label: '考研词汇', value: 'kaoyan' },
-  { label: '考公词汇', value: 'kaogong' },
-  { label: '雅思词汇', value: 'ielts' },
-  { label: '托福词汇', value: 'toefl' },
+  { label: '商务英语', value: 'bec' },
+  { label: 'GMAT词汇', value: 'gmat' },
   { label: 'GRE词汇', value: 'gre' },
+  { label: '雅思词汇', value: 'ielts' },
+  { label: '考公词汇', value: 'kaogong' },
+  { label: '考研词汇', value: 'kaoyan' },
+  { label: '专业四级', value: 'level4' },
+  { label: '专业八级', value: 'level8' },
+  { label: 'SAT词汇', value: 'sat' },
+  { label: '托福词汇', value: 'toefl' },
+  { label: '专升本词汇', value: 'zsb' },
 ];
 
 const drawerVisible = ref(false)
@@ -407,8 +412,8 @@ const newWordBankForm = ref({
 })
 
 // 加载自定义词库列表
-const loadCustomWordBanks = () => {
-  customWordBanks.value = getAllWordBanks()
+const loadCustomWordBanks = async () => {
+  customWordBanks.value = await getAllWordBanks()
 }
 
 // 打开词库管理器
@@ -462,7 +467,7 @@ const doDeleteWordBank = async (bankId: string) => {
     // 如果删除的是当前词库，切换到默认词库并刷新
     if (wordsStore.currentWordBankId === bankId) {
       // 获取新的当前词库ID（已切换到默认词库）
-      const newCurrentId = getCurrentWordBankId()
+      const newCurrentId = await getCurrentWordBankId()
       wordsStore.currentWordBankId = newCurrentId
       await wordsStore.listWords()
     }
@@ -511,10 +516,12 @@ const confirmCreateWordBank = async () => {
       const result = await importFromBuiltinWordBank(newBank.id, newWordBankForm.value.importBank)
       loading.close()
 
-      if (result.success) {
+      if (result.success && result.count > 0) {
         ElMessage.success(`成功创建词库 "${name}"，导入 ${result.count} 个单词`)
+      } else if (result.success && result.count === 0) {
+        ElMessage.warning(`词库 "${name}" 创建成功，但没有新单词可导入（可能已存在）`)
       } else {
-        ElMessage.warning(`词库 "${name}" 创建成功，但导入失败`)
+        ElMessage.error(`词库 "${name}" 创建成功，但导入失败: ${result.error || '未知错误'}`)
       }
     } catch (error) {
       loading.close()
@@ -1984,9 +1991,17 @@ const importWords = () => {
           if (uniqueWords.length > 0) {
             // 检查是否有需要翻译的单词（没有释义的）
             const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains);
+            const wordsWithExplains = uniqueWords.filter(word => !!word.explains);
 
             if (wordsNeedingTranslation.length > 0) {
               ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
+
+              // 先添加已有释义的单词
+              if (wordsWithExplains.length > 0) {
+                wordsStore.addAndUpdateWords(wordsWithExplains).then(() => {
+                  scrollToBottom();
+                });
+              }
 
               // 使用公共的批量翻译和添加方法
               const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
@@ -2059,9 +2074,17 @@ const importTextWords = () => {
 
             // 检查是否有需要翻译的单词（没有释义或发音的）
             const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains || !word.pronunciation);
+            const wordsWithExplains = uniqueWords.filter(word => !!word.explains && !!word.pronunciation);
 
             if (wordsNeedingTranslation.length > 0) {
               ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
+
+              // 先添加已有释义的单词
+              if (wordsWithExplains.length > 0) {
+                wordsStore.addAndUpdateWords(wordsWithExplains).then(() => {
+                  scrollToBottom();
+                });
+              }
 
               // 使用公共的批量翻译和添加方法
               const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
@@ -2099,19 +2122,19 @@ const importTextWords = () => {
 const importFromWordBank = async (bankType: WordBankType) => {
   const info = WORDBANK_LIST.find(wb => wb.id === bankType);
   const bankName = info?.name || bankType;
-  
+
   const loading = ElLoading.service({
     lock: true,
     text: `正在加载${bankName}...`,
     background: 'rgba(0, 0, 0, 0.7)',
   });
-  
+
   try {
-    const words = await fetchWordBank(bankType, { priority: 'online', useCache: true });
+    const words = await fetchWordBank(bankType, { priority: 'local', useCache: true });
     loading.close();
-    
+
     if (words.length === 0) {
-      ElMessage.warning('词库加载失败，请检查网络连接');
+      ElMessage.warning('词库加载失败，请检查词库文件是否存在');
       return;
     }
     
@@ -2127,9 +2150,17 @@ const importFromWordBank = async (bankType: WordBankType) => {
     
     // 检查是否有需要翻译的单词（没有释义的）
     const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains);
+    const wordsWithExplains = uniqueWords.filter(word => !!word.explains);
     
     if (wordsNeedingTranslation.length > 0) {
       ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
+      
+      // 先添加已有释义的单词
+      if (wordsWithExplains.length > 0) {
+        wordsStore.addAndUpdateWords(wordsWithExplains).then(() => {
+          scrollToBottom();
+        });
+      }
       
       // 使用公共的批量翻译和添加方法
       const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);

@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="dictation-page">
     <!-- 顶部设置栏 -->
     <div class="dictation-header">
@@ -20,22 +20,26 @@
     <div v-if="dictationMode === 'setup'" class="setup-panel">
       <div class="setup-card">
         <h3>听写设置</h3>
-        
+
         <div class="setup-item">
           <label>选择词库</label>
           <el-radio-group v-model="wordBank" size="large">
             <el-radio-button label="current">当前词库</el-radio-button>
             <el-radio-button label="cet4">四级词汇</el-radio-button>
             <el-radio-button label="cet6">六级词汇</el-radio-button>
-            <el-radio-button label="zsb">专升本词汇</el-radio-button>
-            <el-radio-button label="kaoyan">考研词汇</el-radio-button>
-            <el-radio-button label="kaogong">考公词汇</el-radio-button>
-            <el-radio-button label="ielts">雅思词汇</el-radio-button>
-            <el-radio-button label="toefl">托福词汇</el-radio-button>
+            <el-radio-button label="bec">商务英语</el-radio-button>
+            <el-radio-button label="gmat">GMAT词汇</el-radio-button>
             <el-radio-button label="gre">GRE词汇</el-radio-button>
-            <el-radio-button label="import">导入词库</el-radio-button>
+            <el-radio-button label="ielts">雅思词汇</el-radio-button>
+            <el-radio-button label="kaogong">考公词汇</el-radio-button>
+            <el-radio-button label="kaoyan">考研词汇</el-radio-button>
+            <el-radio-button label="level4">专业四级</el-radio-button>
+            <el-radio-button label="level8">专业八级</el-radio-button>
+            <el-radio-button label="sat">SAT词汇</el-radio-button>
+            <el-radio-button label="toefl">托福词汇</el-radio-button>
+            <el-radio-button label="zsb">专升本词汇</el-radio-button>
           </el-radio-group>
-          <div v-if="wordBank !== 'current' && wordBank !== 'import' && wordBank !== 'wrong-words'" class="wordbank-info">
+          <div v-if="wordBank !== 'current' && wordBank !== 'wrong-words'" class="wordbank-info">
             <el-tag size="small" type="info">
               {{ getWordBankInfo(wordBank)?.description }}
               (约{{ getWordBankInfo(wordBank)?.wordCount }}词)
@@ -43,7 +47,7 @@
             </el-tag>
           </div>
           <!-- 显示该词库是否有保存的进度 -->
-          <div v-if="wordBank !== 'current' && wordBank !== 'import' && wordBank !== 'wrong-words' && hasProgressForBank(wordBank)" class="wordbank-progress-info">
+          <div v-if="wordBank !== 'current' && wordBank !== 'wrong-words' && hasProgressForBank(wordBank)" class="wordbank-progress-info">
             <el-tag size="small" type="warning">
               <el-icon><Timer /></el-icon>
               有保存的进度
@@ -68,7 +72,7 @@
           </div>
         </div>
 
-        <div class="setup-item" v-if="wordBank !== 'import'">
+        <div class="setup-item">
           <label>单词数量</label>
           <el-radio-group v-model="wordCount" size="large">
             <el-radio-button :label="10">10个</el-radio-button>
@@ -213,7 +217,7 @@
           <el-icon :size="64" color="#67C23A"><CircleCheck /></el-icon>
         </div>
         <h2>听写完成</h2>
-        
+
         <div class="stats">
           <div class="stat-item">
             <span class="stat-value">{{ wordList.length }}</span>
@@ -269,12 +273,13 @@ import { ElMessage, ElLoading, ElMessageBox } from 'element-plus';
 import { ArrowLeft, VideoPlay, CircleCheck, Right, ArrowRight, RefreshRight, Timer, CircleClose, QuestionFilled } from '@element-plus/icons-vue';
 import { useWordsStore } from '@/stores/words';
 import type { Word } from '@/types/words';
-import { 
-  fetchWordBank, 
-  WORDBANK_LIST, 
+import {
+  fetchWordBank,
+  WORDBANK_LIST,
   type WordBankType,
-  isWordBankCached 
+  isWordBankCached
 } from '@/utils/wordbank-service';
+import { getWordBank, getCurrentWordBankId } from '@/utils/wordbank-manager';
 import {
   getDictationProgress,
   saveDictationProgress,
@@ -379,12 +384,12 @@ async function saveProgress() {
 }
 
 function loadSavedProgress(): boolean {
-  if (wordBank.value === 'wrong-words' || wordBank.value === 'import') return false;
+  if (wordBank.value === 'wrong-words') return false;
   return hasDictationProgress(wordBank.value);
 }
 
 function hasProgressForBank(bank: string): boolean {
-  if (bank === 'current' || bank === 'import' || bank === 'wrong-words') return false;
+  if (bank === 'current' || bank === 'wrong-words') return false;
   return hasDictationProgress(bank);
 }
 
@@ -419,7 +424,7 @@ async function resumeProgress() {
 }
 
 function clearProgress() {
-  if (wordBank.value !== 'wrong-words' && wordBank.value !== 'import') {
+  if (wordBank.value !== 'wrong-words') {
     removeDictationProgress(wordBank.value);
   }
   hasSavedProgress.value = false;
@@ -427,7 +432,6 @@ function clearProgress() {
 
 function getWordBankName(bankId: string): string {
   if (bankId === 'current') return '当前词库';
-  if (bankId === 'import') return '导入词库';
   if (bankId === 'wrong-words') return '错题';
   const info = getWordBankInfo(bankId);
   return info?.name || bankId;
@@ -445,49 +449,57 @@ async function startDictation() {
   let words: Word[] = [];
 
   switch (wordBank.value) {
-    case 'current':
-      if (wordsStore.words.length === 0) {
+    case 'current': {
+      // 获取当前选择的词库
+      const currentBankId = await getCurrentWordBankId();
+      const bank = await getWordBank(currentBankId);
+      if (!bank || bank.words.length === 0) {
         ElMessage.warning('当前词库为空');
         return;
       }
-      words = [...wordsStore.words]
+      words = [...bank.words]
         .filter(w => w.text && w.text.match(/^[a-zA-Z]+$/))
         .sort(() => Math.random() - 0.5)
         .slice(0, wordCount.value);
       break;
+    }
 
     case 'cet4':
     case 'cet6':
-    case 'zsb':
-    case 'kaoyan':
-    case 'kaogong':
-    case 'ielts':
-    case 'toefl':
-    case 'gre':
+    case 'bec':
     case 'gmat':
+    case 'gre':
+    case 'ielts':
+    case 'kaogong':
+    case 'kaoyan':
+    case 'level4':
+    case 'level8':
+    case 'sat':
+    case 'toefl':
+    case 'zsb':
       const bankType = wordBank.value as WordBankType;
       const info = getWordBankInfo(bankType);
-      
+
       // 显示加载状态
       const loading = ElLoading.service({
         lock: true,
         text: `正在加载${info?.name || bankType}...`,
         background: 'rgba(0, 0, 0, 0.7)',
       });
-      
+
       try {
-        const bankWords = await fetchWordBank(bankType, true);
+        const bankWords = await fetchWordBank(bankType, { useCache: true });
         loading.close();
-        
+
         if (bankWords.length === 0) {
-          ElMessage.warning('词库加载失败，请检查网络连接');
+          ElMessage.warning('词库加载失败，请检查词库文件');
           return;
         }
-        
+
         words = bankWords
           .sort(() => Math.random() - 0.5)
           .slice(0, wordCount.value);
-        
+
         ElMessage.success(`已加载 ${info?.name}，共 ${bankWords.length} 词`);
       } catch (error) {
         loading.close();
@@ -496,10 +508,6 @@ async function startDictation() {
         return;
       }
       break;
-
-    case 'import':
-      await importWordBank();
-      return;
   }
 
   if (words.length === 0) {
@@ -521,59 +529,6 @@ async function startDictation() {
   saveProgress();
 
   prepareWord();
-}
-
-async function importWordBank() {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = '.json,.txt';
-  input.onchange = async (e) => {
-    const file = (e.target as HTMLInputElement).files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      try {
-        const content = ev.target?.result as string;
-        let words: Word[] = [];
-
-        if (file.name.endsWith('.json')) {
-          const data = JSON.parse(content);
-          words = Array.isArray(data) ? data : data.words || [];
-        } else {
-          words = content.split('\n')
-            .map(l => l.trim())
-            .filter(l => l)
-            .map(text => ({ text } as Word));
-        }
-
-        words = words.filter(w => w.text?.match(/^[a-zA-Z]+$/));
-        if (words.length === 0) {
-          ElMessage.warning('没有有效的单词');
-          return;
-        }
-
-        wordList.value = words.sort(() => Math.random() - 0.5);
-        currentIndex.value = 0;
-        stats.value = { correct: 0, wrong: 0 };
-        wrongWords.value = [];
-        errorCountMap.value = {};
-        hintType.value = 'none';
-        showHint.value = false;
-        dictationMode.value = 'review';
-
-        clearProgress();
-        saveProgress();
-
-        prepareWord();
-        ElMessage.success(`导入 ${words.length} 个单词`);
-      } catch {
-        ElMessage.error('导入失败');
-      }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
 }
 
 function prepareWord() {
@@ -1347,11 +1302,11 @@ watch(() => wordBank.value, () => {
 
 // 闪烁动画
 @keyframes flash {
-  0%, 100% { 
+  0%, 100% {
     background-color: var(--utools-warning);
     box-shadow: 0 0 0 0 var(--utools-warning);
   }
-  50% { 
+  50% {
     background-color: var(--utools-warning-light);
     box-shadow: 0 0 10px 2px var(--utools-warning);
   }

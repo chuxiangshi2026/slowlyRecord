@@ -149,7 +149,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
         }
 
         const result = await db.promises.put(doc);
-        return result.ok;
+        return result.ok ?? false;
       } catch (e) {
         console.error('保存文本记忆文档失败:', e);
         return false;

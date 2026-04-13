@@ -82,11 +82,15 @@ export const useWordsStore =
             const words = ref<Word[]>([])
 
             // 当前词库ID
-            const currentWordBankId = ref<string>(getCurrentWordBankId())
+            const currentWordBankId = ref<string>('')
             // 当前词库信息
-            const currentWordBank = computed<WordBank | null>(() => {
-                return getWordBank(currentWordBankId.value)
-            })
+            const currentWordBank = ref<WordBank | null>(null)
+            
+            // 初始化词库信息
+            async function initWordBankInfo() {
+                currentWordBankId.value = await getCurrentWordBankId()
+                currentWordBank.value = await getWordBank(currentWordBankId.value)
+            }
 
             const lastAddedWordText = ref('')    //记录最新添加的单词
             const lastFocusWordText = ref('')    //需光标定位单词
@@ -362,10 +366,11 @@ export const useWordsStore =
              * 切换当前词库
              */
             async function switchWordBank(bankId: string): Promise<boolean> {
-                const bank = getWordBank(bankId)
+                const bank = await getWordBank(bankId)
                 if (!bank) return false
                 
                 currentWordBankId.value = bankId
+                currentWordBank.value = bank
                 setCurrentWordBankId(bankId)
                 
                 // 重新加载新词库的单词
@@ -380,8 +385,14 @@ export const useWordsStore =
              *获取全部单词
              */
             async function listWords(): Promise<Word[]> {
+                // 确保词库信息已初始化
+                if (!currentWordBankId.value) {
+                    await initWordBankInfo()
+                }
+                
                 // 从当前词库获取单词
-                const bank = getWordBank(currentWordBankId.value)
+                const bank = await getWordBank(currentWordBankId.value)
+                currentWordBank.value = bank
                 
                 if (bank) {
                     // 如果是默认词库且为空，尝试从旧数据库迁移数据
@@ -498,13 +509,14 @@ export const useWordsStore =
                 }
                 
                 // 从当前词库删除
-                const bank = getWordBank(currentWordBankId.value)
+                const bank = await getWordBank(currentWordBankId.value)
                 if (bank) {
                     const bankIndex = bank.words.findIndex(w => w.text === word.text)
                     if (bankIndex !== -1) {
                         bank.words.splice(bankIndex, 1)
                         await saveWordBank(bank)
                     }
+                    currentWordBank.value = bank
                 }
                 
                 // 先保存要删除的单词ID（兼容旧数据库）
@@ -524,13 +536,14 @@ export const useWordsStore =
             async function addAndUpdateWords(payload: Word[]): Promise<boolean> {
                 try {
                     // 保存到当前词库
-                    const bank = getWordBank(currentWordBankId.value)
+                    const bank = await getWordBank(currentWordBankId.value)
                     if (bank) {
                         // 去重合并
                         const existingTexts = new Set(bank.words.map(w => w.text.toLowerCase()))
                         const newWords = payload.filter(w => !existingTexts.has(w.text.toLowerCase()))
                         bank.words.push(...newWords)
                         await saveWordBank(bank)
+                        currentWordBank.value = bank
                     }
                     
                     // 同时兼容旧数据库
@@ -559,7 +572,7 @@ export const useWordsStore =
                 }
                 
                 // 保存到当前词库
-                const bank = getWordBank(currentWordBankId.value)
+                const bank = await getWordBank(currentWordBankId.value)
                 if (bank) {
                     const wordIndex = bank.words.findIndex(w => w.text === word.text)
                     if (wordIndex !== -1) {
@@ -568,6 +581,7 @@ export const useWordsStore =
                         bank.words.push(word)
                     }
                     await saveWordBank(bank)
+                    currentWordBank.value = bank
                 }
                 
                 // 同时兼容旧数据库
@@ -621,6 +635,7 @@ export const useWordsStore =
                 findWord,
                 addAndUpdateWord,
                 addAndUpdateWords,
+                initWordBankInfo,
                 translateWithPlatform: async (query: string) => {
                     console.log('store翻译调用, 当前平台:', currentTranslationPlatform.value, '查询词:', query)
                     return await externalTranslateWithPlatform(query, currentTranslationPlatform.value);
