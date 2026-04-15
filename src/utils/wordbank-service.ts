@@ -42,7 +42,7 @@ export interface LoadStrategy {
 }
 
 // 默认加载策略：仅使用本地词库
-const DEFAULT_STRATEGY: LoadStrategy = {
+export const DEFAULT_STRATEGY: LoadStrategy = {
   priority: 'local',
   useCache: true,
   timeout: 5000,
@@ -329,12 +329,17 @@ function getFallbackWords(type: WordBankType): Word[] {
 export function clearWordBankCache(type?: WordBankType): void {
   if (type) {
     localStorage.removeItem(CACHE_KEY_PREFIX + type);
-  } else {
-    // 清除所有词库缓存
-    Object.keys(localStorage)
-      .filter(key => key.startsWith(CACHE_KEY_PREFIX))
-      .forEach(key => localStorage.removeItem(key));
+    return;
   }
+  // 清除所有词库缓存
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(CACHE_KEY_PREFIX)) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach(key => localStorage.removeItem(key));
 }
 
 /**

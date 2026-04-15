@@ -15,8 +15,6 @@ describe('serializer', () => {
       const result = serializer.serialize(data)
       const parsed = JSON.parse(result)
       expect(parsed.name).toBe('test')
-      // JSON.stringify 会先调用 Date.toJSON()，将 Date 转为 ISO 字符串
-      // 此时 replacer 收到的 val 已经是字符串，不再是 Date 实例
       expect(parsed.createdAt).toBe('2024-01-15T08:30:00.000Z')
     })
 
@@ -93,7 +91,6 @@ describe('serializer', () => {
     it('应该正确序列化包含 undefined 值的对象', () => {
       const data = { name: 'test', value: undefined }
       const result = serializer.serialize(data)
-      // JSON.stringify 默认跳过 undefined 值
       expect(result).toBe('{"name":"test"}')
     })
 
@@ -156,7 +153,6 @@ describe('serializer', () => {
     it('应该正确处理 __value__ 为空字符串的 Date 标记', () => {
       const json = '{"date":{"__type__":"Date","__value__":""}}'
       const result = serializer.parse(json) as { date: unknown }
-      // 空 __value__ 为 falsy，不满足 val?.__value__ 条件，不会被还原为 Date
       expect(result.date).not.toBeInstanceOf(Date)
       expect(result.date).toEqual({ __type__: 'Date', __value__: '' })
     })
@@ -195,14 +191,11 @@ describe('serializer', () => {
 
       expect(parsed.name).toBe(original.name)
       expect(parsed.count).toBe(original.count)
-      // 因为 serialize 中 Date 会被 toJSON() 转为 ISO 字符串，
-      // parse 中没有 Date 标记，所以 parsed.createdAt 是字符串
       expect(typeof parsed.createdAt).toBe('string')
       expect(parsed.createdAt).toBe('2024-01-15T08:30:00.000Z')
     })
 
     it('手动构建的 Date 标记可以被正确解析', () => {
-      // 只有手动写入 {__type__: 'Date', __value__: '...'} 的数据才能被 parse 还原
       const data = {
         name: '测试',
         createdAt: { __type__: 'Date', __value__: '2024-01-15T08:30:00.000Z' },
