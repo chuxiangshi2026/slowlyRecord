@@ -650,6 +650,20 @@ export const useWordsStore =
             persist: {
                 key: 'words-store',
                 storage: localStorage,
+                paths: [
+                    'currentWordBankId',
+                    'lastAddedWordText',
+                    'currentTranslationPlatform',
+                    'currentOcrPlatform',
+                    'memoryFirmness',
+                    'pluginStatus',
+                    'shortcutEnabled',
+                    'focusMode',
+                    'userApiKeys',
+                    'userOcrApiKeys',
+                    'lastVisitedPage',
+                    'hiddenExplain'
+                ] // 不持久化 words 数组，因为单词数据存储在词库中
             },
         }
     )

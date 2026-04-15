@@ -627,6 +627,10 @@ const forget = () => {
   } else if (wordModel.value?.level && wordModel.value.level > 1) {
     console.log("降级")
     wordModel.value.level--;
+  } else {
+    // level 为 1 时，显示提示
+    ElMessage.info('单词等级已为 1，无法继续降级');
+    return;
   }
   if (wordModel.value.level < 12) {
     wordModel.value.remember = false;
