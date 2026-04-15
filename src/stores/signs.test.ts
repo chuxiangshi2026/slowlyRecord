@@ -81,25 +81,25 @@ describe('useSignsStore', () => {
   describe('getTime', () => {
     it('应该调用 http.get 并传递参数', async () => {
       const store = useSignsStore()
-      const mockResponse = { serverTime: '2024-01-15 09:30:00', timestamp: 1705312200000 }
-      vi.mocked(http.get).mockResolvedValue(mockResponse)
+      const mockData = { serverTime: '2024-01-15 09:30:00', timestamp: 1705312200000 }
+      vi.mocked(http.get).mockResolvedValue({ data: mockData } as any)
       
       const payload = { userId: 'user-1' }
       const result = await store.getTime(payload)
       
       expect(http.get).toHaveBeenCalledWith('/signs/time', payload)
-      expect(result).toEqual(mockResponse)
+      expect(result).toEqual(mockData)
     })
 
     it('应该处理空参数', async () => {
       const store = useSignsStore()
-      const mockResponse = { serverTime: '2024-01-15 09:30:00' }
-      vi.mocked(http.get).mockResolvedValue(mockResponse)
+      const mockData = { serverTime: '2024-01-15 09:30:00' }
+      vi.mocked(http.get).mockResolvedValue({ data: mockData } as any)
       
       const result = await store.getTime({})
       
       expect(http.get).toHaveBeenCalledWith('/signs/time', {})
-      expect(result).toEqual(mockResponse)
+      expect(result).toEqual(mockData)
     })
 
     it('应该处理请求失败', async () => {
@@ -120,9 +120,9 @@ describe('useSignsStore', () => {
   describe('综合场景', () => {
     it('应该支持完整的签到流程', async () => {
       const store = useSignsStore()
-      const serverTimeResponse = { serverTime: '2024-01-15 09:00:00' }
+      const serverTimeData = { serverTime: '2024-01-15 09:00:00' }
       
-      vi.mocked(http.get).mockResolvedValue(serverTimeResponse)
+      vi.mocked(http.get).mockResolvedValue({ data: serverTimeData } as any)
       
       // 获取服务器时间
       const timeResult = await store.getTime({ userId: 'user-1' })

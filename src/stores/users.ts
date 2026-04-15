@@ -63,11 +63,12 @@ export const useUsersStore =
 
         // 异步提交状态，动作
         async function  login(payload: Infos){
-
-            return await http.post('/users/login',payload)
+            const res = await http.post('/users/login',payload)
+            return res.data
         }
         async function  getInfos() {
-            return await http.get('/users/infos')
+            const res = await http.get('/users/infos')
+            return res.data
         }
 
 

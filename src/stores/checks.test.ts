@@ -20,13 +20,13 @@ describe('useChecksStore', () => {
   describe('login', () => {
     it('应该调用 http.post 并返回结果', async () => {
       const store = useChecksStore()
-      const mockResponse = { success: true, token: 'auth-token' }
-      vi.mocked(http.post).mockResolvedValue(mockResponse)
+      const mockData = { success: true, token: 'auth-token' }
+      vi.mocked(http.post).mockResolvedValue({ data: mockData } as any)
       
       const result = await store.login()
       
       expect(http.post).toHaveBeenCalledWith('/users/login')
-      expect(result).toEqual(mockResponse)
+      expect(result).toEqual(mockData)
     })
 
     it('应该处理登录失败', async () => {
@@ -53,12 +53,12 @@ describe('useChecksStore', () => {
 
     it('应该处理返回的用户数据', async () => {
       const store = useChecksStore()
-      const mockResponse = { 
+      const mockData = { 
         success: true, 
         token: 'auth-token',
         user: { id: '1', name: '张三' }
       }
-      vi.mocked(http.post).mockResolvedValue(mockResponse)
+      vi.mocked(http.post).mockResolvedValue({ data: mockData } as any)
       
       const result = await store.login()
       

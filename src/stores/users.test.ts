@@ -109,14 +109,14 @@ describe('useUsersStore', () => {
   describe('login', () => {
     it('应该调用 http.post 并传递参数', async () => {
       const store = useUsersStore()
-      const mockResponse = { token: 'abc123', user: { name: '张三' } }
-      vi.mocked(http.post).mockResolvedValue(mockResponse)
+      const mockData = { token: 'abc123', user: { name: '张三' } }
+      vi.mocked(http.post).mockResolvedValue({ data: mockData } as any)
       
       const payload = { username: 'test', password: '123456' }
       const result = await store.login(payload)
       
       expect(http.post).toHaveBeenCalledWith('/users/login', payload)
-      expect(result).toEqual(mockResponse)
+      expect(result).toEqual(mockData)
     })
 
     it('应该处理登录失败', async () => {
@@ -132,13 +132,13 @@ describe('useUsersStore', () => {
   describe('getInfos', () => {
     it('应该调用 http.get', async () => {
       const store = useUsersStore()
-      const mockResponse = { name: '张三', email: 'zhangsan@example.com' }
-      vi.mocked(http.get).mockResolvedValue(mockResponse)
+      const mockData = { name: '张三', email: 'zhangsan@example.com' }
+      vi.mocked(http.get).mockResolvedValue({ data: mockData } as any)
       
       const result = await store.getInfos()
       
       expect(http.get).toHaveBeenCalledWith('/users/infos')
-      expect(result).toEqual(mockResponse)
+      expect(result).toEqual(mockData)
     })
 
     it('应该处理获取信息失败', async () => {
@@ -152,11 +152,11 @@ describe('useUsersStore', () => {
   describe('状态持久化场景', () => {
     it('应该支持完整的登录流程', async () => {
       const store = useUsersStore()
-      const loginResponse = { token: 'auth-token-123', userId: 'user-1' }
+      const loginData = { token: 'auth-token-123', userId: 'user-1' }
       const userInfo = { name: '张三', email: 'zhangsan@test.com' }
       
-      vi.mocked(http.post).mockResolvedValue(loginResponse)
-      vi.mocked(http.get).mockResolvedValue(userInfo)
+      vi.mocked(http.post).mockResolvedValue({ data: loginData } as any)
+      vi.mocked(http.get).mockResolvedValue({ data: userInfo } as any)
       
       // 登录
       const loginResult = await store.login({ username: 'zhangsan', password: '123456' })

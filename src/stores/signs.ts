@@ -34,7 +34,8 @@ export const useSignsStore =
 
 
         async function getTime(payload:Infos) {
-            return await http.get('/signs/time', payload);
+            const res = await http.get('/signs/time', payload);
+            return res.data
         }
 
         return {infos,updateInfos,getTime}

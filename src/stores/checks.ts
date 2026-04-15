@@ -7,7 +7,8 @@ export const useChecksStore =
     defineStore('checks', () => {
 
         async function login() {
-            return await http.post('/users/login')
+            const res = await http.post('/users/login')
+            return res.data
         }
 
         return {login}
