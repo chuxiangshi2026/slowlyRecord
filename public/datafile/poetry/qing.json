@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "dynasty": "qing",
+    "name": "清",
+    "period": "1644-1912",
+    "description": "清代诗词，集大成与转型期",
+    "count": 5,
+    "version": "1.0",
+    "lastUpdated": "2024-01-15"
+  },
+  "poems": [
+    {
+      "id": "qing_001",
+      "title": "己亥杂诗·其五",
+      "author": "龚自珍",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "浩荡离愁白日斜，吟鞭东指即天涯。\n落红不是无情物，化作春泥更护花。",
+      "contentType": "poetry",
+      "tags": ["爱国", "名篇", "初中必背", "龚自珍"],
+      "source": "《龚自珍全集》",
+      "location": "镇江/江苏",
+      "wordCount": 56
+    },
+    {
+      "id": "qing_002",
+      "title": "长相思·山一程",
+      "author": "纳兰性德",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "山一程，水一程，\n身向榆关那畔行，夜深千帐灯。\n\n风一更，雪一更，\n聒碎乡心梦不成，故园无此声。",
+      "contentType": "poetry",
+      "tags": ["清词", "边塞", "思乡", "小学必背", "纳兰性德"],
+      "source": "《纳兰词》",
+      "location": "山海关/辽宁",
+      "wordCount": 72
+    },
+    {
+      "id": "qing_003",
+      "title": "论诗五首·其二",
+      "author": "赵翼",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "李杜诗篇万口传，至今已觉不新鲜。\n江山代有才人出，各领风骚数百年。",
+      "contentType": "poetry",
+      "tags": ["评论", "名篇", "哲理", "初中必背", "赵翼"],
+      "source": "《瓯北集》",
+      "location": "常州/江苏",
+      "wordCount": 56
+    },
+    {
+      "id": "qing_004",
+      "title": "竹石",
+      "author": "郑燮",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "咬定青山不放松，立根原在破岩中。\n千磨万击还坚劲，任尔东西南北风。",
+      "contentType": "poetry",
+      "tags": ["咏物", "题画", "名篇", "小学必背", "郑板桥"],
+      "source": "《郑板桥集》",
+      "location": "扬州/江苏",
+      "wordCount": 56
+    },
+    {
+      "id": "qing_005",
+      "title": "村居",
+      "author": "高鼎",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "草长莺飞二月天，拂堤杨柳醉春烟。\n儿童散学归来早，忙趁东风放纸鸢。",
+      "contentType": "poetry",
+      "tags": ["田园", "春天", "名篇", "小学必背"],
+      "source": "《拙吾诗稿》",
+      "location": "杭州/浙江",
+      "wordCount": 56
+    }
+  ]
+}

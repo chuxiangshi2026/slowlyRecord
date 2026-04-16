@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "dynasty": "ming",
+    "name": "明",
+    "period": "1368-1644",
+    "description": "明代诗词，复古与创新并存",
+    "count": 4,
+    "version": "1.0",
+    "lastUpdated": "2024-01-15"
+  },
+  "poems": [
+    {
+      "id": "ming_001",
+      "title": "石灰吟",
+      "author": "于谦",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "千锤万凿出深山，烈火焚烧若等闲。\n粉骨碎身浑不怕，要留清白在人间。",
+      "contentType": "poetry",
+      "tags": ["咏物", "言志", "名篇", "小学必背", "于谦"],
+      "source": "《于忠肃集》",
+      "location": "北京/石灰窑",
+      "wordCount": 56
+    },
+    {
+      "id": "ming_002",
+      "title": "临江仙·滚滚长江东逝水",
+      "author": "杨慎",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "滚滚长江东逝水，浪花淘尽英雄。\n是非成败转头空。\n青山依旧在，几度夕阳红。\n\n白发渔樵江渚上，惯看秋月春风。\n一壶浊酒喜相逢。\n古今多少事，都付笑谈中。",
+      "contentType": "poetry",
+      "tags": ["明词", "怀古", "名篇", "三国演义", "杨慎"],
+      "source": "《升庵集》",
+      "location": "云南/永昌",
+      "wordCount": 108
+    },
+    {
+      "id": "ming_003",
+      "title": "明日歌",
+      "author": "钱福",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "明日复明日，明日何其多。\n我生待明日，万事成蹉跎。\n世人若被明日累，春去秋来老将至。\n朝看水东流，暮看日西坠。\n百年明日能几何？请君听我明日歌。",
+      "contentType": "poetry",
+      "tags": ["劝学", "惜时", "名篇", "钱鹤滩"],
+      "source": "《鹤滩集》",
+      "location": "松江/上海",
+      "wordCount": 100
+    },
+    {
+      "id": "ming_004",
+      "title": "桃花庵歌",
+      "author": "唐寅",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "桃花坞里桃花庵，桃花庵下桃花仙。\n桃花仙人种桃树，又摘桃花换酒钱。\n酒醒只在花前坐，酒醉还来花下眠。\n半醒半醉日复日，花落花开年复年。\n但愿老死花酒间，不愿鞠躬车马前。\n车尘马足富者趣，酒盏花枝贫者缘。\n若将富贵比贫贱，一在平地一在天。\n若将贫贱比车马，他得驱驰我得闲。\n别人笑我太疯癫，我笑他人看不穿。\n不见五陵豪杰墓，无花无酒锄作田。",
+      "contentType": "poetry",
+      "tags": ["桃花", "隐逸", "名篇", "唐伯虎"],
+      "source": "《六如居士集》",
+      "location": "苏州/桃花坞",
+      "wordCount": 252
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "dynasty": "yuan",
+    "name": "元",
+    "period": "1271-1368",
+    "description": "元曲、元杂剧，通俗文学的高峰",
+    "count": 4,
+    "version": "1.0",
+    "lastUpdated": "2024-01-15"
+  },
+  "poems": [
+    {
+      "id": "yuan_001",
+      "title": "天净沙·秋思",
+      "author": "马致远",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "枯藤老树昏鸦，\n小桥流水人家，\n古道西风瘦马。\n夕阳西下，\n断肠人在天涯。",
+      "contentType": "poetry",
+      "tags": ["元曲", "小令", "秋思之祖", "初中必背", "马致远"],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 56
+    },
+    {
+      "id": "yuan_002",
+      "title": "山坡羊·潼关怀古",
+      "author": "张养浩",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "峰峦如聚，波涛如怒，\n山河表里潼关路。\n望西都，意踌躇。\n伤心秦汉经行处，宫阙万间都做了土。\n兴，百姓苦；亡，百姓苦。",
+      "contentType": "poetry",
+      "tags": ["元曲", "怀古", "名篇", "初中必背", "张养浩"],
+      "source": "《全元散曲》",
+      "location": "潼关/陕西",
+      "wordCount": 98
+    },
+    {
+      "id": "yuan_003",
+      "title": "窦娥冤（节选）",
+      "author": "关汉卿",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "【滚绣球】有日月朝暮悬，有鬼神掌着生死权。\n天地也！只合把清浊分辨，可怎生糊突了盗跖、颜渊？\n为善的受贫穷更命短，造恶的享富贵又寿延。\n天地也！做得个怕硬欺软，却原来也这般顺水推船！\n地也，你不分好歹何为地？\n天也，你错勘贤愚枉做天！\n哎，只落得两泪涟涟。",
+      "contentType": "poetry",
+      "tags": ["元杂剧", "悲剧", "名篇", "关汉卿"],
+      "source": "《关汉卿集》",
+      "location": "大都/北京",
+      "wordCount": 168
+    },
+    {
+      "id": "yuan_004",
+      "title": "寿阳曲·远浦帆归",
+      "author": "马致远",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "夕阳下，酒旆闲，\n两三航未曾着岸。\n落花水香茅舍晚，\n断桥头卖鱼人散。",
+      "contentType": "poetry",
+      "tags": ["元曲", "小令", "写景", "马致远"],
+      "source": "《全元散曲》",
+      "location": "江南",
+      "wordCount": 56
+    }
+  ]
+}

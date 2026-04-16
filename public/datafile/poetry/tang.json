@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "dynasty": "tang",
+    "name": "唐诗",
+    "period": "618-907",
+    "description": "中国诗歌发展的黄金时代，名家辈出，作品丰富",
+    "count": 10,
+    "version": "1.0",
+    "lastUpdated": "2024-01-15"
+  },
+  "poems": [
+    {
+      "id": "tang_001",
+      "title": "静夜思",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "床前明月光，疑是地上霜。\n举头望明月，低头思故乡。",
+      "contentType": "poetry",
+      "tags": ["五言绝句", "思乡", "启蒙", "小学必背"],
+      "source": "《李太白集》",
+      "location": "扬州",
+      "wordCount": 20
+    },
+    {
+      "id": "tang_002",
+      "title": "将进酒",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "君不见黄河之水天上来，奔流到海不复回。\n君不见高堂明镜悲白发，朝如青丝暮成雪。\n人生得意须尽欢，莫使金樽空对月。\n天生我材必有用，千金散尽还复来。\n烹羊宰牛且为乐，会须一饮三百杯。\n\n岑夫子，丹丘生，将进酒，杯莫停。\n与君歌一曲，请君为我倾耳听。\n钟鼓馔玉不足贵，但愿长醉不复醒。\n古来圣贤皆寂寞，惟有饮者留其名。\n陈王昔时宴平乐，斗酒十千恣欢谑。\n主人何为言少钱，径须沽取对君酌。\n五花马，千金裘，\n呼儿将出换美酒，与尔同销万古愁。",
+      "contentType": "poetry",
+      "tags": ["乐府", "豪放", "名篇", "高中必背", "酒"],
+      "source": "《李太白集》",
+      "location": "梁园/开封",
+      "wordCount": 330
+    },
+    {
+      "id": "tang_003",
+      "title": "春望",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "国破山河在，城春草木深。\n感时花溅泪，恨别鸟惊心。\n烽火连三月，家书抵万金。\n白头搔更短，浑欲不胜簪。",
+      "contentType": "poetry",
+      "tags": ["五言律诗", "爱国", "沉郁", "初中必背"],
+      "source": "《杜工部集》",
+      "location": "长安",
+      "wordCount": 80
+    },
+    {
+      "id": "tang_004",
+      "title": "登高",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "风急天高猿啸哀，渚清沙白鸟飞回。\n无边落木萧萧下，不尽长江滚滚来。\n万里悲秋常作客，百年多病独登台。\n艰难苦恨繁霜鬓，潦倒新停浊酒杯。",
+      "contentType": "poetry",
+      "tags": ["七言律诗", "沉郁", "名篇", "高中必背", "秋"],
+      "source": "《杜工部集》",
+      "location": "夔州/白帝城",
+      "wordCount": 112
+    },
+    {
+      "id": "tang_005",
+      "title": "赋得古原草送别",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "离离原上草，一岁一枯荣。\n野火烧不尽，春风吹又生。\n远芳侵古道，晴翠接荒城。\n又送王孙去，萋萋满别情。",
+      "contentType": "poetry",
+      "tags": ["五言律诗", "送别", "哲理", "小学必背"],
+      "source": "《白氏长庆集》",
+      "location": "长安/渭城",
+      "wordCount": 80
+    },
+    {
+      "id": "tang_006",
+      "title": "登鹳雀楼",
+      "author": "王之涣",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "白日依山尽，黄河入海流。\n欲穷千里目，更上一层楼。",
+      "contentType": "poetry",
+      "tags": ["五言绝句", "哲理", "励志", "小学必背"],
+      "source": "《全唐诗》",
+      "location": "鹳雀楼/山西永济",
+      "wordCount": 20
+    },
+    {
+      "id": "tang_007",
+      "title": "出塞",
+      "author": "王昌龄",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "秦时明月汉时关，万里长征人未还。\n但使龙城飞将在，不教胡马度阴山。",
+      "contentType": "poetry",
+      "tags": ["七言绝句", "边塞", "爱国", "小学必背"],
+      "source": "《全唐诗》",
+      "location": "边塞/阴山",
+      "wordCount": 28
+    },
+    {
+      "id": "tang_008",
+      "title": "送元二使安西",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "渭城朝雨浥轻尘，客舍青青柳色新。\n劝君更尽一杯酒，西出阳关无故人。",
+      "contentType": "poetry",
+      "tags": ["七言绝句", "送别", "名篇", "小学必背"],
+      "source": "《王右丞集》",
+      "location": "渭城/咸阳",
+      "wordCount": 28
+    },
+    {
+      "id": "tang_009",
+      "title": "江雪",
+      "author": "柳宗元",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "千山鸟飞绝，万径人踪灭。\n孤舟蓑笠翁，独钓寒江雪。",
+      "contentType": "poetry",
+      "tags": ["五言绝句", "山水", "孤独", "小学必背", "冬"],
+      "source": "《柳河东集》",
+      "location": "永州/愚溪",
+      "wordCount": 20
+    },
+    {
+      "id": "tang_010",
+      "title": "春晓",
+      "author": "孟浩然",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "春眠不觉晓，处处闻啼鸟。\n夜来风雨声，花落知多少。",
+      "contentType": "poetry",
+      "tags": ["五言绝句", "田园", "春天", "小学必背"],
+      "source": "《孟浩然集》",
+      "location": "鹿门山/襄阳",
+      "wordCount": 20
+    }
+  ]
+}

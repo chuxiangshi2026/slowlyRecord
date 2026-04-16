@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "dynasty": "weijin",
+    "name": "魏晋南北朝",
+    "period": "220-589",
+    "description": "建安文学、正始文学、陶渊明、南北朝民歌",
+    "count": 5,
+    "version": "1.0",
+    "lastUpdated": "2024-01-15"
+  },
+  "poems": [
+    {
+      "id": "wj_001",
+      "title": "归园田居·其一",
+      "author": "陶渊明",
+      "dynasty": "魏晋",
+      "dynastyCode": "weijin",
+      "content": "少无适俗韵，性本爱丘山。\n误落尘网中，一去三十年。\n羁鸟恋旧林，池鱼思故渊。\n开荒南野际，守拙归园田。\n方宅十余亩，草屋八九间。\n榆柳荫后檐，桃李罗堂前。\n暧暧远人村，依依墟里烟。\n狗吠深巷中，鸡鸣桑树颠。\n户庭无尘杂，虚室有余闲。\n久在樊笼里，复得返自然。",
+      "contentType": "poetry",
+      "tags": ["田园", "隐逸", "名篇", "高中必背", "陶渊明"],
+      "source": "《陶渊明集》",
+      "location": "浔阳柴桑/江西九江",
+      "wordCount": 200
+    },
+    {
+      "id": "wj_002",
+      "title": "饮酒·其五",
+      "author": "陶渊明",
+      "dynasty": "魏晋",
+      "dynastyCode": "weijin",
+      "content": "结庐在人境，而无车马喧。\n问君何能尔？心远地自偏。\n采菊东篱下，悠然见南山。\n山气日夕佳，飞鸟相与还。\n此中有真意，欲辨已忘言。",
+      "contentType": "poetry",
+      "tags": ["田园", "哲理", "名篇", "初中必背", "陶渊明"],
+      "source": "《陶渊明集》",
+      "location": "南山/庐山",
+      "wordCount": 100
+    },
+    {
+      "id": "wj_003",
+      "title": "敕勒歌",
+      "author": "佚名",
+      "dynasty": "南北朝",
+      "dynastyCode": "weijin",
+      "content": "敕勒川，阴山下。\n天似穹庐，笼盖四野。\n天苍苍，野茫茫，\n风吹草低见牛羊。",
+      "contentType": "poetry",
+      "tags": ["北朝民歌", "草原", "豪放", "小学必背"],
+      "source": "《乐府诗集》",
+      "location": "敕勒川/内蒙古",
+      "wordCount": 56
+    },
+    {
+      "id": "wj_004",
+      "title": "短歌行（周西伯昌）",
+      "author": "阮籍",
+      "dynasty": "魏晋",
+      "dynastyCode": "weijin",
+      "content": "周西伯昌，怀此圣德。\n三分天下，而有其二。\n修奉贡献，臣节不隆。\n崇侯谗之，是以拘系。\n后见赦原，赐之斧钺，\n得使征伐，为仲尼所称。\n达及德行，犹奉事殷，\n论叙其美。齐桓之功，\n为霸之首，九合诸侯，\n一匡天下。一匡天下，\n不以兵车。正而不谲，\n其德传称。",
+      "contentType": "poetry",
+      "tags": ["咏史", "隐逸", "阮籍", "正始文学"],
+      "source": "《阮步兵集》",
+      "location": "洛阳",
+      "wordCount": 168
+    },
+    {
+      "id": "wj_005",
+      "title": "七步诗",
+      "author": "曹植",
+      "dynasty": "魏晋",
+      "dynastyCode": "weijin",
+      "content": "煮豆持作羹，漉菽以为汁。\n萁在釜下燃，豆在釜中泣。\n本自同根生，相煎何太急？",
+      "contentType": "poetry",
+      "tags": ["寓言", "兄弟", "名篇", "曹植"],
+      "source": "《世说新语》",
+      "location": "邺城/河北临漳",
+      "wordCount": 56
+    }
+  ]
+}
