@@ -3,9 +3,8 @@
  * 展示如何使用 poetry-service 进行各种操作
  */
 
+import type { PoetryDynasty, PoetryItem } from './poetry-service';
 import poetryService, {
-  PoetryDynasty,
-  PoetryItem,
   fetchPoetryByDynasty,
   fetchAllPoetry,
   searchPoetry,

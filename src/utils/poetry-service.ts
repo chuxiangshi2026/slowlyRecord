@@ -34,6 +34,11 @@ export interface PoetryItem {
   source?: string;
   location?: string;        // 创作地点（城市/景点/村名等）
   wordCount: number;
+  isClassic?: boolean;      // 是否经典必背
+  difficulty?: 'easy' | 'medium' | 'hard';  // 难度等级
+  annotation?: string;      // 注释
+  translation?: string;     // 译文
+  appreciation?: string;    // 赏析
 }
 
 // 朝代信息
@@ -274,14 +279,15 @@ export async function searchPoetry(
     contentType?: ContentType;
     tags?: string[];
     location?: string;
+    isClassic?: boolean;
   } = {}
 ): Promise<PoetryItem[]> {
-  const { dynasty, contentType, tags, location } = options;
+  const { dynasty, contentType, tags, location, isClassic } = options;
 
   // 如果指定了朝代，只搜索该朝代
   if (dynasty) {
     const poems = await fetchPoetryByDynasty(dynasty);
-    return filterPoems(poems, keyword, { contentType, tags, location });
+    return filterPoems(poems, keyword, { contentType, tags, location, isClassic });
   }
 
   // 搜索所有朝代（并行）
@@ -289,7 +295,7 @@ export async function searchPoetry(
   const results: PoetryItem[] = [];
 
   for (const poems of Object.values(allPoems)) {
-    results.push(...filterPoems(poems, keyword, { contentType, tags, location }));
+    results.push(...filterPoems(poems, keyword, { contentType, tags, location, isClassic }));
   }
 
   return results;
@@ -305,9 +311,10 @@ function filterPoems(
     contentType?: ContentType;
     tags?: string[];
     location?: string;
+    isClassic?: boolean;
   } = {}
 ): PoetryItem[] {
-  const { contentType, tags, location } = options;
+  const { contentType, tags, location, isClassic } = options;
 
   return poems.filter(poem => {
     // 关键词匹配
@@ -332,6 +339,11 @@ function filterPoems(
 
     // 地点筛选
     if (location && poem.location && !poem.location.includes(location)) {
+      return false;
+    }
+
+    // 经典筛选
+    if (isClassic && !poem.isClassic && !poem.tags.some(t => t.includes('必背') || t.includes('名篇'))) {
       return false;
     }
 
