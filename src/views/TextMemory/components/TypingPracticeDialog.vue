@@ -42,21 +42,28 @@
 
       <!-- 原文显示区域 -->
       <div class="original-text-container">
-        <div class="section-title">原文</div>
+        <div class="section-title">
+          原文
+          <el-tag size="small" type="info" style="margin-left: 8px">第 {{ currentLine + 1 }} 行 / 共 {{ lineStartIndices.length }} 行</el-tag>
+        </div>
         <div ref="originalTextRef" class="original-text">
-          <span
-            v-for="(char, index) in displayText"
-            :key="index"
-            :class="[
-              'char',
-              {
-                'current': index === currentIndex,
-                'correct': typedStatus[index] === 'correct',
-                'incorrect': typedStatus[index] === 'incorrect',
-                'pending': index > currentIndex
-              }
-            ]"
-          >{{ char }}</span>
+          <template v-for="(lineStart, lineIdx) in lineStartIndices" :key="lineIdx">
+            <div class="text-line" :class="{ 'current-line': lineIdx === currentLine }">
+              <span
+                v-for="(char, charIdx) in getLineText(lineIdx)"
+                :key="`${lineIdx}-${charIdx}`"
+                :class="[
+                  'char',
+                  {
+                    'current': getGlobalIndex(lineIdx, charIdx) === currentIndex,
+                    'correct': typedStatus[getGlobalIndex(lineIdx, charIdx)] === 'correct',
+                    'incorrect': typedStatus[getGlobalIndex(lineIdx, charIdx)] === 'incorrect',
+                    'pending': getGlobalIndex(lineIdx, charIdx) > currentIndex
+                  }
+                ]"
+              >{{ char }}</span>
+            </div>
+          </template>
         </div>
       </div>
 
@@ -66,16 +73,40 @@
           跟打输入
           <el-tag v-if="isFinished" type="success" size="small" style="margin-left: 8px">已完成</el-tag>
         </div>
-        <el-input
-          ref="inputRef"
-          v-model="userInput"
-          type="textarea"
-          :rows="6"
-          :disabled="isFinished"
-          placeholder="请在此处输入上方文本..."
-          @input="handleInput"
-          @keydown="handleKeydown"
-        />
+        <div class="typing-input-container">
+          <!-- 隐藏的 textarea 用于接收输入 -->
+          <textarea
+            ref="inputRef"
+            v-model="userInput"
+            class="hidden-input"
+            :disabled="isFinished"
+            @keydown="handleKeydown"
+            @beforeinput="handleBeforeInput"
+            @input="handleTextareaInput"
+            @compositionstart="isComposing = true"
+            @compositionend="handleCompositionEnd"
+          ></textarea>
+          <!-- 显示的 div 用于展示输入 -->
+          <div class="typing-display" @click="focusInput">
+            <template v-for="(lineStart, lineIdx) in lineStartIndices" :key="lineIdx">
+              <div class="input-line" :class="{ 'current-line': lineIdx === currentLine }">
+                <span
+                  v-for="(char, charIdx) in getInputLineText(lineIdx)"
+                  :key="`${lineIdx}-${charIdx}`"
+                  :class="[
+                    'input-char',
+                    {
+                      'correct': typedStatus[getGlobalIndex(lineIdx, charIdx)] === 'correct',
+                      'incorrect': typedStatus[getGlobalIndex(lineIdx, charIdx)] === 'incorrect',
+                      'cursor': getGlobalIndex(lineIdx, charIdx) === currentIndex
+                    }
+                  ]"
+                >{{ char }}</span>
+                <span v-if="lineIdx === currentLine && !isFinished" class="cursor-blink">|</span>
+              </div>
+            </template>
+          </div>
+        </div>
       </div>
 
       <!-- 控制按钮 -->
@@ -146,6 +177,14 @@ const elapsedTime = ref(0);
 const timer = ref<number | null>(null);
 const wpm = ref(0);
 
+// 行级锁定相关
+const lineStartIndices = ref<number[]>([0]); // 每行的起始字符索引
+const currentLine = ref(0); // 当前行号
+const LINE_LENGTH = 32; // 每行固定字数（根据显示区域宽度调整）
+
+// 中文输入法相关
+const isComposing = ref(false); // 是否正在输入法输入中
+
 // Refs
 const inputRef = ref<HTMLInputElement | null>(null);
 const originalTextRef = ref<HTMLElement | null>(null);
@@ -155,6 +194,16 @@ const displayText = computed(() => {
   if (!props.article) return '';
   return props.article.content.slice(0, MAX_TEXT_LENGTH);
 });
+
+// 计算每行的起始位置
+function calculateLineBreaks() {
+  const text = displayText.value;
+  const breaks: number[] = [0];
+  for (let i = LINE_LENGTH; i < text.length; i += LINE_LENGTH) {
+    breaks.push(i);
+  }
+  lineStartIndices.value = breaks;
+}
 
 // 进度百分比
 const progress = computed(() => {
@@ -229,13 +278,37 @@ function restoreProgress(savedProgress: any) {
   wpm.value = savedProgress.wpm || 0;
   isFinished.value = false;
   isPaused.value = false;
+  calculateLineBreaks();
+  currentLine.value = getLineIndex(currentIndex.value);
+}
+
+// 获取指定行的文本
+function getLineText(lineIdx: number): string {
+  const start = lineStartIndices.value[lineIdx];
+  const end = lineStartIndices.value[lineIdx + 1] || displayText.value.length;
+  return displayText.value.slice(start, end);
+}
+
+// 获取输入行文本
+function getInputLineText(lineIdx: number): string {
+  const start = lineStartIndices.value[lineIdx];
+  const end = lineStartIndices.value[lineIdx + 1] || displayText.value.length;
+  const input = userInput.value.replace(/\n/g, '');
+  return input.slice(start, end);
+}
+
+// 获取全局字符索引
+function getGlobalIndex(lineIdx: number, charIdx: number): number {
+  return lineStartIndices.value[lineIdx] + charIdx;
 }
 
 // 对话框打开后的处理
 function handleOpened() {
   nextTick(() => {
-    inputRef.value?.focus();
     initTypedStatus();
+    setTimeout(() => {
+      inputRef.value?.focus();
+    }, 100);
   });
 }
 
@@ -247,15 +320,40 @@ function handleClosed() {
 // 初始化打字状态
 function initTypedStatus() {
   typedStatus.value = new Array(displayText.value.length).fill('pending');
+  calculateLineBreaks();
+  currentLine.value = 0;
 }
 
-// 处理输入
-function handleInput() {
-  if (!startTime.value && !isPaused.value && !isFinished.value) {
+// 获取指定索引所在的行号
+function getLineIndex(charIndex: number): number {
+  for (let i = lineStartIndices.value.length - 1; i >= 0; i--) {
+    if (charIndex >= lineStartIndices.value[i]) {
+      return i;
+    }
+  }
+  return 0;
+}
+
+// 聚焦到输入框
+function focusInput() {
+  inputRef.value?.focus();
+}
+
+// 处理 textarea 输入
+function handleTextareaInput() {
+  if (isPaused.value || isFinished.value) return;
+  if (isComposing.value) return; // 输入法输入中不处理
+  
+  if (!startTime.value) {
     startTimer();
   }
 
-  const input = userInput.value;
+  processInput();
+}
+
+// 处理输入内容
+function processInput() {
+  const input = userInput.value.replace(/\n/g, '');
   const original = displayText.value;
 
   // 更新每个字符的状态
@@ -269,6 +367,9 @@ function handleInput() {
 
   // 更新当前索引
   currentIndex.value = input.length;
+
+  // 更新当前行
+  currentLine.value = getLineIndex(currentIndex.value);
 
   // 计算 WPM
   if (startTime.value) {
@@ -287,24 +388,136 @@ function handleInput() {
   }
 }
 
-// 处理键盘事件
-function handleKeydown(e: KeyboardEvent) {
-  // 阻止默认的退格行为，我们自己处理
-  if (e.key === 'Backspace' && currentIndex.value <= 0) {
+// 处理单个字符输入（从键盘事件触发）
+function handleInput(char: string) {
+  if (isPaused.value || isFinished.value) return;
+  
+  if (!startTime.value) {
+    startTimer();
+  }
+
+  // 添加字符到输入
+  userInput.value += char;
+  processInput();
+}
+
+// 处理 beforeinput 事件，用于阻止回车输入
+function handleBeforeInput(e: InputEvent) {
+  // 阻止回车键输入换行符
+  if (e.data === '\n' || e.inputType === 'insertLineBreak') {
     e.preventDefault();
+    handleEnterKey();
+    return;
   }
 }
 
-// 滚动到当前字符
-function scrollToCurrentChar() {
-  nextTick(() => {
-    const container = originalTextRef.value;
-    if (!container) return;
+// 处理回车键逻辑
+function handleEnterKey() {
+  if (isPaused.value || isFinished.value) return;
+  
+  const currentLineIndex = getLineIndex(currentIndex.value);
+  
+  // 获取当前行的起始和结束位置
+  const lineStart = lineStartIndices.value[currentLineIndex];
+  const nextLineStart = lineStartIndices.value[currentLineIndex + 1];
+  const lineEnd = nextLineStart !== undefined ? nextLineStart : displayText.value.length;
+  
+  // 计算当前行已输入的字符数
+  const input = userInput.value.replace(/\n/g, '');
+  const currentLineInputLength = input.length - lineStart;
+  const currentLineLength = lineEnd - lineStart;
+  
+  // 只有当当前行打完了，才允许换行
+  if (currentLineInputLength >= currentLineLength && nextLineStart !== undefined) {
+    // 完成当前行，进入下一行
+    userInput.value += '\n'; // 添加换行符到输入
+    currentLine.value = currentLineIndex + 1;
+    
+    // 滚动到下一行
+    nextTick(() => {
+      scrollToCurrentChar();
+    });
+  } else if (currentIndex.value >= displayText.value.length) {
+    // 最后一行且已打完，完成练习
+    handleFinish();
+  }
+}
 
-    const currentChar = container.querySelector('.char.current') as HTMLElement;
-    if (currentChar) {
-      currentChar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+// 处理键盘事件
+function handleKeydown(e: KeyboardEvent) {
+  // 输入法输入中不处理
+  if (isComposing.value) return;
+  
+  // 阻止回退到上一行
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    const newIndex = currentIndex.value - 1;
+    const currentLineIndex = getLineIndex(currentIndex.value);
+    const prevLineIndex = getLineIndex(newIndex);
+    
+    // 如果回退会到上一行，或者已经在开头，阻止回退
+    if (prevLineIndex < currentLine.value || currentIndex.value <= 0) {
+      return;
     }
+    
+    // 删除最后一个字符
+    userInput.value = userInput.value.slice(0, -1);
+    
+    // 重新计算状态
+    processInput();
+    return;
+  }
+  
+  // 回车键在 beforeinput 中处理，这里只需要阻止默认行为
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    return;
+  }
+}
+
+// 处理中文输入法输入完成
+function handleCompositionEnd(e: CompositionEvent) {
+  isComposing.value = false;
+  // 中文输入完成后，直接处理当前的输入值
+  nextTick(() => {
+    processInput();
+  });
+}
+
+// 滚动到当前行
+function scrollToCurrentChar() {
+  // 使用 requestAnimationFrame 确保 DOM 已更新
+  requestAnimationFrame(() => {
+    nextTick(() => {
+      const container = originalTextRef.value;
+      if (!container) return;
+
+      // 优先滚动到当前行
+      const currentLineEl = container.querySelector('.text-line.current-line') as HTMLElement;
+      if (currentLineEl) {
+        // 使用容器滚动而不是 scrollIntoView
+        const containerRect = container.getBoundingClientRect();
+        const lineRect = currentLineEl.getBoundingClientRect();
+        const lineTop = lineRect.top - containerRect.top + container.scrollTop;
+        const containerHeight = containerRect.height;
+        const lineHeight = lineRect.height;
+        
+        // 计算目标滚动位置，将当前行居中显示
+        const targetScrollTop = lineTop - containerHeight / 2 + lineHeight / 2;
+        
+        container.scrollTo({
+          top: targetScrollTop,
+          behavior: 'smooth'
+        });
+        return;
+      }
+
+      // 如果没有当前行，滚动到当前字符
+      const currentChar = container.querySelector('.char.current') as HTMLElement;
+      if (currentChar) {
+        currentChar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
   });
 }
 
@@ -374,7 +587,8 @@ async function savePracticeRecord() {
     currentIndex: currentIndex.value,
     elapsedTime: elapsedTime.value,
     wpm: wpm.value,
-    isFinished: isFinished.value
+    isFinished: isFinished.value,
+    currentLine: currentLine.value
   };
   await textStore.saveLearningProgress(props.article._id, 'typing', progress);
 }
@@ -409,6 +623,7 @@ function resetPractice() {
   startTime.value = null;
   elapsedTime.value = 0;
   wpm.value = 0;
+  currentLine.value = 0;
   stopTimer();
   initTypedStatus();
 }
@@ -487,10 +702,34 @@ function handleClose() {
     font-size: 18px;
     line-height: 2;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-    white-space: pre-wrap;
-    word-break: break-all;
-    max-height: 200px;
+    max-height: 144px;
     overflow-y: auto;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--utools-border-color);
+      border-radius: 3px;
+    }
+
+    .text-line {
+      display: block;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      height: 36px;
+
+      &.current-line {
+        background: rgba(64, 158, 255, 0.1);
+        border-left: 3px solid var(--utools-primary);
+        padding-left: 8px;
+      }
+    }
 
     .char {
       padding: 2px 1px;
@@ -531,10 +770,81 @@ function handleClose() {
 }
 
 .input-area {
-  :deep(.el-textarea__inner) {
+  .typing-input-container {
+    position: relative;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: 18px;
+    line-height: 2;
+    background: var(--utools-bg-primary);
+    border: 1px solid var(--utools-border-color);
+    border-radius: 8px;
+    min-height: 144px;
+    max-height: 144px;
+    overflow: hidden;
+
+    &:focus-within {
+      border-color: var(--utools-primary);
+    }
+
+    .hidden-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      z-index: 1;
+      cursor: text;
+      resize: none;
+      border: none;
+      outline: none;
+      padding: 16px;
+      font-size: 18px;
+      line-height: 2;
+    }
+
+    .typing-display {
+      position: relative;
+      z-index: 0;
+      padding: 16px;
+      min-height: 144px;
+      max-height: 144px;
+      overflow-y: auto;
+      pointer-events: none;
+      scroll-behavior: smooth;
+
+      .input-line {
+        display: block;
+        padding: 2px 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+        min-height: 36px;
+
+        &.current-line {
+          background: rgba(64, 158, 255, 0.05);
+        }
+      }
+
+      .input-char {
+        padding: 2px 1px;
+        border-radius: 2px;
+        transition: all 0.1s;
+
+        &.correct {
+          color: var(--utools-success);
+        }
+
+        &.incorrect {
+          color: var(--utools-danger);
+          text-decoration: underline;
+        }
+      }
+
+      .cursor-blink {
+        animation: blink 1s infinite;
+        color: var(--utools-primary);
+      }
+    }
   }
 }
 

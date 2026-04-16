@@ -58,9 +58,6 @@
               <!-- 语义填空模式：显示选项 -->
               <template v-if="segment.options && segment.options.length > 0">
                 <div class="semantic-blank">
-                  <div class="blank-type-tag" :class="segment.questionType">
-                    {{ segment.questionType === 'synonym' ? '近义词' : '反义词' }}
-                  </div>
                   <div class="options-container">
                     <el-button
                       v-for="(option, optIndex) in segment.options"
@@ -147,10 +144,8 @@
           :closable="false"
         >
           <template v-if="exerciseMode === 'semantic'">
-            <p>1. 根据上下文语境，选择正确的近义词或反义词</p>
-            <p>2. <span class="tag-demo synonym">近义词</span> 标签表示需选择意思相近的词</p>
-            <p>3. <span class="tag-demo antonym">反义词</span> 标签表示需选择意思相反的词</p>
-            <p>4. 点击选项后会自动检查答案</p>
+            <p>1. 根据上下文语境，选择正确的词语</p>
+            <p>2. 点击选项后会自动检查答案</p>
           </template>
           <template v-else>
             <p>1. 在输入框中填入缺失的文字</p>

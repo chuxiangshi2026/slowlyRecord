@@ -106,7 +106,14 @@
 
       <!-- 结果展示 -->
       <div v-if="showResult" class="result-area">
-        <h3>测试完成！</h3>
+        <div class="result-header">
+          <el-icon :size="48" :color="getLevelColor(testConclusion?.level)"><Trophy /></el-icon>
+          <h3>测试完成！</h3>
+          <el-tag :type="getLevelTagType(testConclusion?.level)" size="large" class="level-tag">
+            {{ testConclusion?.levelText || '测试中' }}
+          </el-tag>
+        </div>
+
         <div class="stats">
           <div class="stat-item">
             <span class="label">模式：</span>
@@ -125,7 +132,59 @@
             <span>第 {{ maxStage }} 轮</span>
           </div>
         </div>
-        <el-button type="primary" @click="resetTest">再测一次</el-button>
+
+        <!-- 测试结论 -->
+        <div v-if="testConclusion" class="conclusion-section">
+          <div class="conclusion-card">
+            <h4><el-icon><User /></el-icon> 测试结论</h4>
+            <p class="conclusion-summary">{{ testConclusion.summary }}</p>
+            <ul class="conclusion-details">
+              <li v-for="(detail, index) in testConclusion.details" :key="index">
+                <el-icon><Check /></el-icon>
+                {{ detail }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- 训练建议 -->
+          <div class="training-card">
+            <h4>
+              <el-icon><Reading /></el-icon>
+              推荐训练方法：{{ testConclusion.recommendedTraining.method }}
+            </h4>
+            <p class="training-desc">{{ testConclusion.recommendedTraining.description }}</p>
+
+            <div class="training-info">
+              <el-tag :type="getDifficultyTag(testConclusion.recommendedTraining.difficulty)">
+                难度：{{ getDifficultyText(testConclusion.recommendedTraining.difficulty) }}
+              </el-tag>
+              <el-tag type="info">
+                <el-icon><Clock /></el-icon>
+                {{ testConclusion.recommendedTraining.frequency }}
+              </el-tag>
+            </div>
+
+            <div class="training-steps">
+              <h5>训练步骤：</h5>
+              <ol>
+                <li v-for="(step, index) in testConclusion.recommendedTraining.steps" :key="index">
+                  {{ step }}
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <el-button type="primary" size="large" @click="resetTest">
+            <el-icon><RefreshRight /></el-icon>
+            再测一次
+          </el-button>
+          <el-button size="large" @click="goToTraining">
+            <el-icon><TrendCharts /></el-icon>
+            开始训练
+          </el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -134,13 +193,26 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useWordsStore } from '@/stores/words';
+import { useMemoryStore, type TestConclusion } from '@/stores/memory';
 import VocabularyTest from './VocabularyTest.vue';
+import {
+  Trophy,
+  User,
+  Check,
+  Reading,
+  Clock,
+  RefreshRight,
+  TrendCharts
+} from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 
 // 测试模式
 type TestMode = 'number' | 'word' | 'pattern' | 'vocabulary';
 type Difficulty = 'easy' | 'medium' | 'hard';
 
 const wordsStore = useWordsStore();
+const memoryStore = useMemoryStore();
+const router = useRouter();
 
 const currentMode = ref<TestMode>('number');
 const difficulty = ref<Difficulty>('easy');
@@ -177,6 +249,9 @@ const correctCells = ref<number[]>([]);
 
 // 用户输入
 const userInput = ref('');
+
+// 测试结论
+const testConclusion = ref<TestConclusion | null>(null);
 
 const modeText = computed(() => {
   const map: Record<TestMode, string> = {
@@ -368,9 +443,93 @@ function submitPattern() {
 function endTest() {
   isTesting.value = false;
   showResult.value = true;
+
+  // 生成测试结论
+  if (currentMode.value !== 'vocabulary') {
+    testConclusion.value = memoryStore.generateConclusion(
+      currentMode.value as 'number' | 'word' | 'pattern',
+      maxStage.value,
+      difficulty.value
+    );
+
+    // 保存测试记录
+    memoryStore.addHistory({
+      mode: currentMode.value as 'number' | 'word' | 'pattern',
+      modeText: modeText.value,
+      success: maxStage.value >= (difficulty.value === 'easy' ? 3 : difficulty.value === 'medium' ? 5 : 7),
+      result: `最高第 ${maxStage.value} 轮`,
+      time: new Date().toLocaleString('zh-CN')
+    });
+
+    // 更新统计数据
+    if (currentMode.value === 'number') {
+      memoryStore.updateNumberStats(false, maxStage.value);
+    } else if (currentMode.value === 'word') {
+      const wordCount = (difficulty.value === 'easy' ? 3 : difficulty.value === 'medium' ? 5 : 7) + Math.floor((maxStage.value - 1) / 2);
+      memoryStore.updateWordStats(Math.min(12, wordCount), maxStage.value > 1 ? Math.min(12, wordCount) : 0);
+    } else if (currentMode.value === 'pattern') {
+      memoryStore.updatePatternStats(false);
+    }
+  }
+
   if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
+  }
+}
+
+// 获取等级颜色
+function getLevelColor(level?: string): string {
+  const colors: Record<string, string> = {
+    excellent: '#67C23A',
+    good: '#409EFF',
+    average: '#E6A23C',
+    needs_improvement: '#F56C6C'
+  };
+  return colors[level || 'average'];
+}
+
+// 获取等级标签类型
+function getLevelTagType(level?: string): 'success' | 'warning' | 'danger' | 'info' {
+  const types: Record<string, 'success' | 'warning' | 'danger' | 'info'> = {
+    excellent: 'success',
+    good: 'info',
+    average: 'warning',
+    needs_improvement: 'danger'
+  };
+  return types[level || 'average'];
+}
+
+// 获取难度标签
+function getDifficultyTag(difficulty: string): 'success' | 'warning' | 'danger' {
+  const tags: Record<string, 'success' | 'warning' | 'danger'> = {
+    easy: 'success',
+    medium: 'warning',
+    hard: 'danger'
+  };
+  return tags[difficulty] || 'info';
+}
+
+// 获取难度文本
+function getDifficultyText(difficulty: string): string {
+  const texts: Record<string, string> = {
+    easy: '简单',
+    medium: '中等',
+    hard: '困难'
+  };
+  return texts[difficulty] || difficulty;
+}
+
+// 前往训练页面
+function goToTraining() {
+  const routes: Record<string, string> = {
+    number: '/number-memory',
+    word: '/text-memory',
+    pattern: '/memory'
+  };
+  const route = routes[currentMode.value];
+  if (route) {
+    router.push(route);
   }
 }
 
@@ -379,6 +538,7 @@ function resetTest() {
   showResult.value = false;
   currentStage.value = 1;
   maxStage.value = 0;
+  testConclusion.value = null;
   if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
@@ -567,5 +727,180 @@ onUnmounted(() => {
 .stat-item .label {
   color: var(--utools-text-secondary);
   margin-right: 10px;
+}
+
+/* 结果头部 */
+.result-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.result-header h3 {
+  margin: 0;
+  color: var(--utools-text-primary);
+}
+
+.level-tag {
+  font-size: 16px;
+  padding: 8px 20px;
+}
+
+/* 结论区域 */
+.conclusion-section {
+  margin: 30px 0;
+  text-align: left;
+}
+
+.conclusion-card {
+  background: var(--utools-bg-card);
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: var(--utools-shadow-sm);
+}
+
+.conclusion-card h4 {
+  color: var(--utools-text-primary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.conclusion-card h4 .el-icon {
+  color: var(--utools-primary);
+}
+
+.conclusion-summary {
+  color: var(--utools-text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: var(--utools-bg-secondary);
+  border-radius: 8px;
+  border-left: 4px solid var(--utools-primary);
+}
+
+.conclusion-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conclusion-details li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--utools-text-secondary);
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--utools-border-divider);
+}
+
+.conclusion-details li:last-child {
+  border-bottom: none;
+}
+
+.conclusion-details .el-icon {
+  color: #67C23A;
+  font-size: 16px;
+}
+
+/* 训练卡片 */
+.training-card {
+  background: linear-gradient(135deg, var(--utools-bg-card) 0%, var(--utools-bg-secondary) 100%);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--utools-shadow-sm);
+  border: 1px solid var(--utools-border-primary);
+}
+
+.training-card h4 {
+  color: var(--utools-text-primary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.training-card h4 .el-icon {
+  color: var(--utools-primary);
+}
+
+.training-desc {
+  color: var(--utools-text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.training-info {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.training-info .el-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.training-steps {
+  background: var(--utools-bg-card);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.training-steps h5 {
+  color: var(--utools-text-primary);
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.training-steps ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--utools-text-secondary);
+}
+
+.training-steps li {
+  padding: 6px 0;
+  line-height: 1.5;
+}
+
+/* 结果操作按钮 */
+.result-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.result-actions .el-button {
+  padding: 12px 30px;
+  font-size: 15px;
+}
+
+.result-actions .el-icon {
+  margin-right: 6px;
+}
+
+@media (max-width: 768px) {
+  .training-info {
+    flex-direction: column;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .result-actions .el-button {
+    width: 100%;
+  }
 }
 </style>
