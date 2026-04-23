@@ -1,57 +1,53 @@
 <template>
   <div class="shortcut-training-page">
-    <el-card class="training-card">
-      <template #header>
-        <div class="training-header">
-          <el-button @click="goBack">
-            <el-icon><ArrowLeft /></el-icon>
-            返回
-          </el-button>
-          <span class="training-title">
-            {{ isKeyPressMode ? '🎯 按键训练' : '🧩 功能选择' }}
-            - {{ store.currentCategory }}
-          </span>
-          <div class="training-stats">
-            <el-tag type="success">✓ {{ store.correctCount }}</el-tag>
-            <el-tag type="danger">✗ {{ store.wrongCount }}</el-tag>
-            <el-tag type="info">
-              {{ store.currentQuestionIndex + 1 }} / {{ store.questions.length }}
-            </el-tag>
-          </div>
-        </div>
-      </template>
-
-      <!-- 进度条 -->
-      <el-progress
-        :percentage="store.progress"
-        :stroke-width="8"
-        :show-text="false"
-        class="training-progress"
-      />
-
-      <!-- 准备开始 -->
-      <div v-if="store.trainingPhase === 'ready'" class="phase-ready">
-        <el-result icon="info" title="准备开始">
-          <template #sub-title>
-            <p>共 {{ store.questions.length }} 道题目</p>
-            <p v-if="isKeyPressMode">
-              看到功能描述后，在键盘上按下对应的快捷键
-            </p>
-            <p v-else>
-              看到快捷键后，选择正确的功能描述
-            </p>
-          </template>
-          <template #extra>
-            <el-button type="primary" size="large" @click="startTraining">
-              开始训练
-            </el-button>
-          </template>
-        </el-result>
+    <div class="training-header">
+      <el-button @click="goBack">
+        <el-icon><ArrowLeft /></el-icon>
+        返回
+      </el-button>
+      <span class="training-title">
+        {{ isKeyPressMode ? '🎯 按键训练' : '🧩 功能选择' }}
+        - {{ store.currentCategory }}
+      </span>
+      <div class="training-stats">
+        <el-tag type="success">✓ {{ store.correctCount }}</el-tag>
+        <el-tag type="danger">✗ {{ store.wrongCount }}</el-tag>
+        <el-tag type="info">
+          {{ store.currentQuestionIndex + 1 }} / {{ store.questions.length }}
+        </el-tag>
+        <template v-if="isKeyPressMode && store.trainingPhase !== 'ready' && !store.isTrainingComplete">
+          <el-tag
+            v-for="key in displayPressedKeys"
+            :key="key"
+            size="small"
+            :type="store.trainingPhase === 'correct' ? 'success' : store.trainingPhase === 'wrong' ? 'danger' : 'info'"
+          >
+            {{ key }}
+          </el-tag>
+          <el-tag v-if="displayPressedKeys.length === 0" type="info" size="small" effect="plain">等待按键</el-tag>
+          <el-tag v-else-if="store.trainingPhase === 'correct'" type="success" size="small">正确</el-tag>
+          <el-tag v-else-if="store.trainingPhase === 'wrong'" type="danger" size="small">{{ wrongMessage }}</el-tag>
+          <el-switch
+            v-model="showKeyboardHint"
+            inline-prompt
+            active-text="显"
+            inactive-text="隐"
+            style="margin-left: 4px;"
+          />
+        </template>
       </div>
+    </div>
 
+    <el-progress
+      :percentage="store.progress"
+      :stroke-width="6"
+      :show-text="false"
+      class="training-progress"
+    />
+
+    <div class="training-body">
       <!-- 题目区域 -->
-      <div v-else-if="!store.isTrainingComplete" class="question-area">
-        <!-- 功能描述区域 -->
+      <div v-if="!store.isTrainingComplete" class="question-area">
         <div class="function-display">
           <div class="function-name">{{ currentQuestion?.functionName }}</div>
           <div class="function-desc">{{ currentQuestion?.description }}</div>
@@ -60,64 +56,9 @@
         <!-- 按键训练模式 -->
         <template v-if="isKeyPressMode">
           <div class="keypress-area">
-            <div class="setting-bar">
-              <el-switch
-                v-model="showKeyboardHint"
-                active-text="显示按键提示"
-                inactive-text="隐藏按键提示"
-              />
-            </div>
-
-            <div class="prompt-area">
-              <el-alert
-                v-if="store.trainingPhase === 'showing'"
-                title="请按下对应的快捷键"
-                type="info"
-                :closable="false"
-                center
-                show-icon
-              />
-              <el-alert
-                v-else-if="store.trainingPhase === 'correct'"
-                title="回答正确！"
-                type="success"
-                :closable="false"
-                center
-                show-icon
-              />
-              <el-alert
-                v-else-if="store.trainingPhase === 'wrong'"
-                :title="wrongMessage"
-                type="error"
-                :closable="false"
-                center
-                show-icon
-              />
-            </div>
-
-            <div class="pressed-keys-display">
-              <div class="keys-label">当前按键：</div>
-              <div class="keys-box">
-                <el-tag
-                  v-for="key in displayPressedKeys"
-                  :key="key"
-                  size="large"
-                  :type="store.trainingPhase === 'correct' ? 'success' : store.trainingPhase === 'wrong' ? 'danger' : 'info'"
-                  class="pressed-key-tag"
-                >
-                  {{ key }}
-                </el-tag>
-                <span v-if="displayPressedKeys.length === 0" class="keys-placeholder">
-                  等待按键...
-                </span>
-              </div>
-            </div>
-
-            <!-- 键盘可视化 -->
             <KeyboardVisual
-              v-if="showKeyboardHint"
               :pressed-keys="store.pressedKeys"
-              :target-keys="store.trainingPhase === 'showing' ? currentQuestion?.keys : []"
+              :target-keys="showKeyboardHint && store.trainingPhase === 'showing' ? currentQuestion?.keys : []"
             />
           </div>
         </template>
@@ -125,7 +66,6 @@
         <!-- 功能选择模式 -->
         <template v-else>
           <div class="quiz-area">
-            <!-- 显示快捷键 -->
             <div class="shortcut-display">
               <div
                 v-for="(key, index) in currentQuestion?.keys"
@@ -163,7 +103,6 @@
               />
             </div>
 
-            <!-- 选项 -->
             <div class="options-grid">
               <el-button
                 v-for="option in quizOptions"
@@ -215,7 +154,7 @@
           </template>
         </el-result>
       </div>
-    </el-card>
+    </div>
   </div>
 </template>
 
@@ -292,6 +231,7 @@ function restartTraining() {
   } else {
     store.initFunctionSelectTraining(store.currentCategory);
   }
+  startTraining();
 }
 
 function goBack() {
@@ -321,22 +261,25 @@ function handleKeyDown(event: KeyboardEvent) {
   }
 
   // 检查是否匹配
-  const isCorrect = store.checkKeyPress();
-  if (isCorrect) {
-    // 正确：延迟 600ms 自动进入下一题
-    if (autoNextTimer) clearTimeout(autoNextTimer);
-    autoNextTimer = setTimeout(() => {
-      nextQuestion();
-    }, 600);
-  } else {
-    // 错误：显示错误提示，延迟 1200ms 后重新监听
-    const correct = currentQuestion.value;
-    wrongMessage.value = `正确答案是：${correct?.keys.join(' + ')}`;
-    if (autoNextTimer) clearTimeout(autoNextTimer);
-    autoNextTimer = setTimeout(() => {
-      store.clearPressedKeys();
-      store.trainingPhase = 'showing';
-    }, 1200);
+  // 只有在按下非修饰键时才进行匹配判断，避免按组合键过程中（只按了修饰键）就触发错误
+  if (!['Control', 'Alt', 'Shift', 'Meta'].includes(key)) {
+    const isCorrect = store.checkKeyPress();
+    if (isCorrect) {
+      // 正确：延迟 600ms 自动进入下一题
+      if (autoNextTimer) clearTimeout(autoNextTimer);
+      autoNextTimer = setTimeout(() => {
+        nextQuestion();
+      }, 600);
+    } else {
+      // 错误：显示错误提示，延迟 1200ms 后重新监听
+      const correct = currentQuestion.value;
+      wrongMessage.value = `答案：${correct?.keys.join('+')}`;
+      if (autoNextTimer) clearTimeout(autoNextTimer);
+      autoNextTimer = setTimeout(() => {
+        store.clearPressedKeys();
+        store.trainingPhase = 'showing';
+      }, 1200);
+    }
   }
 }
 
@@ -377,6 +320,9 @@ onMounted(() => {
     store.initFunctionSelectTraining(store.currentCategory);
   }
 
+  // 直接进入第一题，不再显示准备页面
+  startTraining();
+
   window.addEventListener('keydown', handleKeyDown, true);
   window.addEventListener('keyup', handleKeyUp, true);
 });
@@ -390,23 +336,20 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .shortcut-training-page {
-  padding: 20px;
   width: 100%;
   box-sizing: border-box;
   min-height: 100vh;
   background-color: var(--utools-bg-secondary);
-
-  .training-card {
-    background-color: var(--utools-bg-card);
-    border-color: var(--utools-border-primary);
-    max-width: 960px;
-    margin: 0 auto;
-  }
+  display: flex;
+  flex-direction: column;
 
   .training-header {
     display: flex;
     align-items: center;
     gap: 16px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--utools-border-primary);
+    background-color: var(--utools-bg-card);
 
     .training-title {
       font-size: 16px;
@@ -417,135 +360,134 @@ onUnmounted(() => {
 
     .training-stats {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
     }
   }
 
   .training-progress {
-    margin-bottom: 20px;
+    margin: 0;
+    :deep(.el-progress-bar__outer) {
+      border-radius: 0;
+    }
+    :deep(.el-progress-bar__inner) {
+      border-radius: 0;
+    }
   }
 
-  .phase-ready {
-    padding: 40px 0;
+  .training-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px;
+    overflow: auto;
   }
 
   .question-area {
-    .setting-bar {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 
     .function-display {
       text-align: center;
-      margin-bottom: 24px;
-      padding: 24px;
+      margin-bottom: 16px;
+      padding: 16px;
       background: var(--utools-bg-secondary);
       border-radius: 12px;
 
       .function-name {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: bold;
         color: var(--utools-text-primary);
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
 
       .function-desc {
-        font-size: 15px;
-        color: var(--utools-text-secondary);
-      }
-    }
-
-    .prompt-area {
-      margin-bottom: 20px;
-    }
-
-    .pressed-keys-display {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      min-height: 48px;
-
-      .keys-label {
         font-size: 14px;
         color: var(--utools-text-secondary);
       }
-
-      .keys-box {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-
-        .pressed-key-tag {
-          font-size: 16px;
-          font-weight: bold;
-          padding: 8px 16px;
-        }
-
-        .keys-placeholder {
-          color: var(--utools-text-tertiary);
-          font-size: 14px;
-        }
-      }
     }
 
-    .shortcut-display {
+    .keypress-area {
+      flex: 1;
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin-bottom: 24px;
-
-      .shortcut-key {
-        min-width: 64px;
-        height: 64px;
-        border: 2px solid var(--utools-primary);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        font-weight: bold;
-        color: var(--utools-primary);
-        background: var(--utools-bg-secondary);
-      }
+      min-height: 0;
     }
 
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
+    .quiz-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
 
-      .option-btn {
-        height: auto;
-        padding: 16px;
-        text-align: left;
+      .shortcut-display {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 24px;
 
-        .option-content {
-          .option-name {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 6px;
-          }
+        .shortcut-key {
+          min-width: 64px;
+          height: 64px;
+          border: 2px solid var(--utools-primary);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          font-weight: bold;
+          color: var(--utools-primary);
+          background: var(--utools-bg-secondary);
+        }
+      }
 
-          .option-desc {
-            font-size: 13px;
-            opacity: 0.85;
-            line-height: 1.4;
+      .prompt-area {
+        margin-bottom: 20px;
+      }
+
+      .options-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+
+        .option-btn {
+          height: auto;
+          padding: 16px;
+          text-align: left;
+
+          .option-content {
+            .option-name {
+              font-size: 16px;
+              font-weight: bold;
+              margin-bottom: 6px;
+            }
+
+            .option-desc {
+              font-size: 13px;
+              opacity: 0.85;
+              line-height: 1.4;
+            }
           }
         }
       }
-    }
 
-    .action-area {
-      text-align: center;
-      margin-top: 24px;
+      .action-area {
+        text-align: center;
+        margin-top: auto;
+        padding-bottom: 16px;
+      }
     }
   }
 
   .training-complete {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 40px 0;
 
     .result-stats {

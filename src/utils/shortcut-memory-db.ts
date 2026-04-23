@@ -1,7 +1,8 @@
 import type {
   ShortcutTrainingRecord,
   ShortcutLearningProgress,
-  ShortcutItem
+  ShortcutItem,
+  CustomCategoryDoc
 } from "@/types/shortcut-memory";
 import { log } from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
@@ -11,6 +12,7 @@ const DB_KEY_PREFIX = DB_KEY_SHORTCUT_MEMORY;
 const RECORD_KEY_PREFIX = DB_KEY_PREFIX + 'record_';
 const PROGRESS_KEY_PREFIX = DB_KEY_PREFIX + 'progress_';
 const CUSTOM_KEY_PREFIX = DB_KEY_PREFIX + 'custom_';
+const CUSTOM_CATEGORY_PREFIX = DB_KEY_PREFIX + 'category_';
 
 /**
  * 获取所有训练记录
@@ -169,6 +171,106 @@ export function removeCustomShortcut(id: string): DbReturn {
   } else if (result.error) {
     log.e('删除自定义快捷键失败', result.message);
   }
+  return result;
+}
+
+/**
+ * 获取所有自定义分类
+ */
+export function getAllCustomCategories(): CustomCategoryDoc[] {
+  const allDocs = window.utools.db.allDocs(CUSTOM_CATEGORY_PREFIX);
+  return allDocs
+    .filter((doc: any) => doc.type === 'shortcut_custom_category')
+    .map((doc: any) => ({
+      _id: doc._id,
+      _rev: doc._rev,
+      type: doc.type,
+      name: doc.name,
+      description: doc.description,
+      icon: doc.icon
+    })) as CustomCategoryDoc[];
+}
+
+/**
+ * 保存自定义分类
+ */
+export async function saveCustomCategory(
+  category: Omit<CustomCategoryDoc, '_id'> & { _id?: string }
+): Promise<DbReturn> {
+  log.i('保存自定义分类', category.name);
+
+  const doc = {
+    _id: category._id || (CUSTOM_CATEGORY_PREFIX + Date.now()),
+    type: 'shortcut_custom_category',
+    name: category.name,
+    description: category.description,
+    icon: category.icon,
+    updatedAt: Date.now()
+  };
+
+  const cleanedData = cloneDeep(doc);
+  const result = await window.utools.db.promises.put(cleanedData);
+
+  if (result.ok) {
+    log.d('保存自定义分类成功');
+  } else if (result.error) {
+    log.e('保存自定义分类失败', result.message);
+  }
+
+  return result;
+}
+
+/**
+ * 删除自定义分类及其下的所有快捷键
+ */
+export function removeCustomCategory(name: string): DbReturn {
+  log.i('删除自定义分类', name);
+
+  const allCats = getAllCustomCategories();
+  const cat = allCats.find(c => c.name === name);
+  if (!cat) {
+    return { ok: true, id: '', rev: '' };
+  }
+
+  const result = window.utools.db.remove(cat._id);
+  if (result.ok) {
+    log.d('删除自定义分类成功');
+  } else if (result.error) {
+    log.e('删除自定义分类失败', result.message);
+    return result;
+  }
+
+  // 删除该分类下的所有快捷键
+  const allShortcuts = getAllCustomShortcuts();
+  allShortcuts.filter(s => s.category === name).forEach(s => {
+    removeCustomShortcut(s.id);
+  });
+
+  return result;
+}
+
+/**
+ * 更新自定义快捷键
+ */
+export async function updateCustomShortcut(item: ShortcutItem): Promise<DbReturn> {
+  log.i('更新自定义快捷键', item.id);
+
+  const doc = {
+    _id: CUSTOM_KEY_PREFIX + item.id,
+    type: 'shortcut_custom_item',
+    ...item,
+    updatedAt: Date.now()
+  };
+
+  const cleanedData = cloneDeep(doc);
+  const result = await window.utools.db.promises.put(cleanedData);
+
+  if (result.ok) {
+    log.d('更新自定义快捷键成功');
+  } else if (result.error) {
+    log.e('更新自定义快捷键失败', result.message);
+  }
+
   return result;
 }
 

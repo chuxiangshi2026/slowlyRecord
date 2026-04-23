@@ -123,34 +123,78 @@
       </div>
     </div>
 
-    <!-- 方向键 -->
-    <div class="arrow-keys">
-      <div class="arrow-row">
-        <div
-          class="key arrow-key"
-          :class="{ active: isKeyActive('up'), target: isTargetKey('up') }"
-        >
-          ↑
+    <!-- 右侧区域：编辑键 + 方向键 -->
+    <div class="right-section">
+      <div class="edit-keys">
+        <div class="edit-row">
+          <div
+            class="key edit-key"
+            :class="{ active: isKeyActive('ins'), target: isTargetKey('ins') }"
+          >
+            Ins
+          </div>
+          <div
+            class="key edit-key"
+            :class="{ active: isKeyActive('home'), target: isTargetKey('home') }"
+          >
+            Home
+          </div>
+          <div
+            class="key edit-key"
+            :class="{ active: isKeyActive('pageup'), target: isTargetKey('pageup') }"
+          >
+            PgUp
+          </div>
+        </div>
+        <div class="edit-row">
+          <div
+            class="key edit-key"
+            :class="{ active: isKeyActive('del'), target: isTargetKey('del') }"
+          >
+            Del
+          </div>
+          <div
+            class="key edit-key"
+            :class="{ active: isKeyActive('end'), target: isTargetKey('end') }"
+          >
+            End
+          </div>
+          <div
+            class="key edit-key"
+            :class="{ active: isKeyActive('pagedown'), target: isTargetKey('pagedown') }"
+          >
+            PgDn
+          </div>
         </div>
       </div>
-      <div class="arrow-row">
-        <div
-          class="key arrow-key"
-          :class="{ active: isKeyActive('left'), target: isTargetKey('left') }"
-        >
-          ←
+      <div class="arrow-keys">
+        <div class="arrow-row">
+          <div
+            class="key arrow-key"
+            :class="{ active: isKeyActive('up'), target: isTargetKey('up') }"
+          >
+            ↑
+          </div>
         </div>
-        <div
-          class="key arrow-key"
-          :class="{ active: isKeyActive('down'), target: isTargetKey('down') }"
-        >
-          ↓
-        </div>
-        <div
-          class="key arrow-key"
-          :class="{ active: isKeyActive('right'), target: isTargetKey('right') }"
-        >
-          →
+        <div class="arrow-row">
+          <div
+            class="key arrow-key"
+            :class="{ active: isKeyActive('left'), target: isTargetKey('left') }"
+          >
+            ←
+          </div>
+          <div
+            class="key arrow-key"
+            :class="{ active: isKeyActive('down'), target: isTargetKey('down') }"
+          >
+            ↓
+          </div>
+          <div
+            class="key arrow-key"
+            :class="{ active: isKeyActive('right'), target: isTargetKey('right') }"
+          >
+            →
+          </div>
         </div>
       </div>
     </div>
@@ -193,10 +237,10 @@ function isTargetKey(key: string): boolean {
 <style scoped lang="scss">
 .keyboard-visual {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  padding: 12px;
   background: var(--utools-bg-secondary);
   border-radius: 12px;
 }
@@ -204,24 +248,24 @@ function isTargetKey(key: string): boolean {
 .keyboard-layout {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .keyboard-row {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   justify-content: center;
 }
 
 .key {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: 2px solid var(--utools-border-primary);
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--utools-text-primary);
   background: var(--utools-bg-card);
@@ -254,84 +298,112 @@ function isTargetKey(key: string): boolean {
 }
 
 .function-key {
-  width: 38px;
-  height: 32px;
-  font-size: 10px;
+  width: 34px;
+  height: 28px;
+  font-size: 9px;
 }
 
 .special-key {
-  font-size: 10px;
-  width: 48px;
+  font-size: 9px;
+  width: 42px;
 }
 
 .wide-key {
-  width: 64px;
+  width: 56px;
 }
 
 .extra-wide-key {
-  width: 90px;
+  width: 78px;
 }
 
 .space-key {
-  width: 220px;
+  width: 190px;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+.edit-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.edit-row {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.edit-key {
+  font-size: 9px;
 }
 
 .arrow-keys {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: auto;
+  gap: 3px;
 }
 
 .arrow-row {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   justify-content: center;
 }
 
 .arrow-key {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .keyboard-visual {
     flex-direction: column;
     align-items: center;
   }
 
   .key {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     font-size: 10px;
   }
 
   .function-key {
-    width: 30px;
-    height: 28px;
-    font-size: 9px;
+    width: 28px;
+    height: 26px;
+    font-size: 8px;
   }
 
   .special-key {
-    width: 40px;
-    font-size: 9px;
+    width: 38px;
+    font-size: 8px;
   }
 
   .wide-key {
-    width: 52px;
+    width: 48px;
   }
 
   .extra-wide-key {
-    width: 72px;
+    width: 66px;
   }
 
   .space-key {
-    width: 160px;
+    width: 150px;
+  }
+
+  .edit-key {
+    width: 28px;
+    height: 26px;
+    font-size: 7px;
   }
 
   .arrow-key {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
   }
 }
 </style>

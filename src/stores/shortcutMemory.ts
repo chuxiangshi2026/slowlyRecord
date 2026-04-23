@@ -16,7 +16,8 @@ import {
   matchShortcut,
   normalizeKey,
   loadAllShortcuts,
-  loadShortcutCategories
+  loadShortcutCategories,
+  isCustomCategory
 } from "@/utils/shortcut-memory-data";
 import {
   getAllTrainingRecords,
@@ -25,7 +26,10 @@ import {
   saveLearningProgress,
   clearLearningProgress,
   saveCustomShortcut,
-  removeCustomShortcut
+  removeCustomShortcut,
+  saveCustomCategory,
+  removeCustomCategory,
+  updateCustomShortcut
 } from "@/utils/shortcut-memory-db";
 import { log } from "@/utils/logger";
 
@@ -360,6 +364,118 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     return result;
   }
 
+  /**
+   * 添加自定义分类
+   */
+  async function addCustomCategory(
+    name: string,
+    description: string,
+    icon: string,
+    sourceItems?: ShortcutItem[]
+  ) {
+    const result = await saveCustomCategory({ name, description, icon });
+    if (!result.ok) return result;
+
+    // 如果有源数据，复制为自定义快捷键
+    if (sourceItems && sourceItems.length > 0) {
+      for (const item of sourceItems) {
+        const newItem: ShortcutItem = {
+          ...item,
+          id: 'custom-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+          category: name
+        };
+        await saveCustomShortcut(newItem);
+      }
+    }
+
+    await loadAllShortcuts();
+    categories.value = getCategories();
+    return result;
+  }
+
+  /**
+   * 重命名自定义分类
+   */
+  async function renameCustomCategory(oldName: string, newName: string) {
+    // 获取旧分类
+    const { getAllCustomCategories } = await import('@/utils/shortcut-memory-db');
+    const allCats = getAllCustomCategories();
+    const oldCat = allCats.find(c => c.name === oldName);
+    if (!oldCat) return { ok: false, error: true, message: '分类不存在', id: '', rev: '' };
+
+    // 保存新分类（旧分类保留 _id 改名）
+    const result = await saveCustomCategory({
+      _id: oldCat._id,
+      name: newName,
+      description: oldCat.description,
+      icon: oldCat.icon
+    });
+    if (!result.ok) return result;
+
+    // 更新该分类下所有快捷键的 category
+    const shortcuts = getShortcutsByCategory(oldName);
+    for (const item of shortcuts) {
+      if (item.id.startsWith('custom-')) {
+        await updateCustomShortcut({ ...item, category: newName });
+      }
+    }
+
+    await loadAllShortcuts();
+    if (currentCategory.value === oldName) {
+      currentCategory.value = newName;
+    }
+    categories.value = getCategories();
+    selectCategory(currentCategory.value || newName);
+    return result;
+  }
+
+  /**
+   * 删除自定义分类
+   */
+  async function deleteCustomCategory(name: string) {
+    const result = removeCustomCategory(name);
+    if (result.ok) {
+      await loadAllShortcuts();
+      if (currentCategory.value === name) {
+        currentCategory.value = '';
+        currentShortcuts.value = [];
+      }
+      categories.value = getCategories();
+    }
+    return result;
+  }
+
+  /**
+   * 更新自定义分类（描述、图标）
+   */
+  async function updateCustomCategory(
+    _id: string,
+    name: string,
+    description: string,
+    icon: string
+  ) {
+    const result = await saveCustomCategory({ _id, name, description, icon });
+    if (result.ok) {
+      await loadAllShortcuts();
+      categories.value = getCategories();
+    }
+    return result;
+  }
+
+  /**
+   * 更新自定义快捷键
+   */
+  async function updateCustomShortcutItem(item: ShortcutItem) {
+    const result = await updateCustomShortcut(item);
+    if (result.ok) {
+      await loadAllShortcuts();
+      if (currentCategory.value) {
+        selectCategory(currentCategory.value);
+      }
+    }
+    return result;
+  }
+
   // 初始化
   loadCategories();
 
@@ -406,6 +522,12 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     clearCategoryProgress,
     getTrainingHistory,
     addCustomShortcut,
-    deleteCustomShortcut
+    deleteCustomShortcut,
+    addCustomCategory,
+    renameCustomCategory,
+    deleteCustomCategory,
+    updateCustomCategory,
+    updateCustomShortcutItem,
+    isCustomCategory
   };
 });

@@ -49,5 +49,15 @@ export interface ShortcutLearningProgress {
   updatedAt: number;
 }
 
+// 自定义分类文档
+export interface CustomCategoryDoc {
+  _id: string;
+  _rev?: string;
+  type: 'shortcut_custom_category';
+  name: string;
+  description: string;
+  icon: string;
+}
+
 // 训练状态
 export type TrainingPhase = 'ready' | 'showing' | 'listening' | 'correct' | 'wrong' | 'timeout';

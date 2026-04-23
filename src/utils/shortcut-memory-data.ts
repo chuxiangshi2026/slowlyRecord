@@ -1,5 +1,5 @@
-import type { ShortcutItem, ShortcutCategory } from "@/types/shortcut-memory";
-import { getAllCustomShortcuts } from "@/utils/shortcut-memory-db";
+import type { ShortcutItem, ShortcutCategory, CustomCategoryDoc } from "@/types/shortcut-memory";
+import { getAllCustomShortcuts, getAllCustomCategories } from "@/utils/shortcut-memory-db";
 
 /**
  * 内置预设快捷键数据（作为 fallback）
@@ -120,6 +120,7 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
 // 运行时缓存，优先从 JSON 文件加载
 let _cachedShortcuts: ShortcutItem[] | null = null;
 let _cachedCategories: ShortcutCategory[] | null = null;
+let _cachedCustomCategories: CustomCategoryDoc[] | null = null;
 let _jsonLoaded = false;
 
 interface ShortcutIndexItem {
@@ -177,6 +178,12 @@ export async function loadAllShortcuts(): Promise<ShortcutItem[]> {
 
   _cachedShortcuts = allShortcuts;
   _jsonLoaded = true;
+
+  // 加载自定义分类
+  _cachedCustomCategories = getAllCustomCategories();
+  // 刷新分类缓存
+  _cachedCategories = buildCategories();
+
   return allShortcuts;
 }
 
@@ -217,11 +224,46 @@ export function getAllShortcuts(): ShortcutItem[] {
 }
 
 /**
+ * 构建分类列表（内置 + 自定义）
+ */
+function buildCategories(): ShortcutCategory[] {
+  // 内置分类
+  const builtinMap = new Map<string, ShortcutCategory>();
+  const categoryCountMap = new Map<string, number>();
+  PRESET_SHORTCUTS.forEach(item => {
+    categoryCountMap.set(item.category, (categoryCountMap.get(item.category) || 0) + 1);
+  });
+  categoryCountMap.forEach((count, name) => {
+    builtinMap.set(name, {
+      name,
+      count,
+      description: getCategoryDescription(name),
+      icon: getCategoryIcon(name)
+    });
+  });
+
+  // 合并自定义分类
+  if (_cachedCustomCategories && _cachedCustomCategories.length > 0) {
+    _cachedCustomCategories.forEach(cat => {
+      const count = getShortcutsByCategory(cat.name).length;
+      builtinMap.set(cat.name, {
+        name: cat.name,
+        description: cat.description,
+        icon: cat.icon,
+        count
+      });
+    });
+  }
+
+  return Array.from(builtinMap.values());
+}
+
+/**
  * 获取所有分类（基于当前缓存的数据）
  */
 export function getCategories(): ShortcutCategory[] {
   if (_cachedCategories) return _cachedCategories;
-  return getCategoriesFromPreset();
+  return buildCategories();
 }
 
 function getCategoriesFromPreset(): ShortcutCategory[] {
@@ -233,7 +275,8 @@ function getCategoriesFromPreset(): ShortcutCategory[] {
   return Array.from(categoryMap.entries()).map(([name, count]) => ({
     name,
     count,
-    description: getCategoryDescription(name)
+    description: getCategoryDescription(name),
+    icon: getCategoryIcon(name)
   }));
 }
 
@@ -249,6 +292,35 @@ function getCategoryDescription(name: string): string {
     'Photoshop': 'Adobe Photoshop 图像处理快捷键'
   };
   return descMap[name] || `${name} 快捷键`;
+}
+
+/**
+ * 获取内置分类图标
+ */
+function getCategoryIcon(name: string): string {
+  const iconMap: Record<string, string> = {
+    'Windows': '🪟',
+    'VS Code': '📝',
+    'Chrome': '🌐',
+    'IntelliJ IDEA': '☕',
+    'Photoshop': '🎨'
+  };
+  return iconMap[name] || '⌨️';
+}
+
+/**
+ * 判断是否为内置分类
+ */
+export function isBuiltinCategory(name: string): boolean {
+  const builtinNames = new Set(PRESET_SHORTCUTS.map(s => s.category));
+  return builtinNames.has(name);
+}
+
+/**
+ * 判断是否为自定义分类
+ */
+export function isCustomCategory(name: string): boolean {
+  return _cachedCustomCategories ? _cachedCustomCategories.some(c => c.name === name) : false;
 }
 
 /**
@@ -342,10 +414,33 @@ export function normalizeKey(key: string): string {
     'space': 'space',
     ' ': 'space',
     'spacebar': 'space',
+    // Shift 符号映射为基础符号（组合键中 Shift 会影响 event.key）
+    '{': '[',
+    '}': ']',
+    '|': '\\',
+    ':': ';',
+    '"': "'",
+    '<': ',',
+    '>': '.',
+    '?': '/',
+    '~': '`',
+    '!': '1',
+    '@': '2',
+    '#': '3',
+    '$': '4',
+    '%': '5',
+    '^': '6',
+    '&': '7',
+    '*': '8',
+    '(': '9',
+    ')': '0',
+    '_': '-',
+    '+': '=',
   };
 
   const lower = key.toLowerCase().trim();
-  return keyMap[lower] || lower;
+  // 先对原始 key（trim 前）做映射查找，避免空格被 trim 成空字符串
+  return keyMap[key.toLowerCase()] || keyMap[lower] || lower;
 }
 
 /**

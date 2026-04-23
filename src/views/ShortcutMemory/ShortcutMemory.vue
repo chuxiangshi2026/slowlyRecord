@@ -5,6 +5,9 @@
         <div class="card-header">
           <span class="title">⌨️ 快捷键记忆训练</span>
           <div class="header-actions">
+            <el-button @click="openCategoryDialog()">
+              ➕ 新增分类
+            </el-button>
             <el-button @click="showHistory = true">
               📊 训练历史
             </el-button>
@@ -22,6 +25,28 @@
             class="category-card"
             @click="selectCategory(category.name)"
           >
+            <div
+              v-if="store.isCustomCategory(category.name)"
+              class="category-actions"
+              @click.stop
+            >
+              <el-button
+                type="primary"
+                size="small"
+                text
+                @click="openCategoryDialog(category.name)"
+              >
+                编辑
+              </el-button>
+              <el-button
+                type="danger"
+                size="small"
+                text
+                @click="deleteCategory(category.name)"
+              >
+                删除
+              </el-button>
+            </div>
             <div class="category-icon">{{ getCategoryIcon(category.name) }}</div>
             <div class="category-name">{{ category.name }}</div>
             <div class="category-desc">{{ category.description }}</div>
@@ -106,7 +131,7 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="160" align="center">
+          <el-table-column label="操作" width="200" align="center">
             <template #default="{ row }">
               <el-button
                 type="primary"
@@ -114,6 +139,14 @@
                 @click="openMemoryCard(row)"
               >
                 记忆
+              </el-button>
+              <el-button
+                v-if="store.isCustomCategory(row.category) || isCustomItem(row.id)"
+                type="warning"
+                size="small"
+                @click="openEditShortcutDialog(row)"
+              >
+                编辑
               </el-button>
               <el-button
                 v-if="isCustomItem(row.id)"
@@ -223,6 +256,134 @@
       </template>
     </el-dialog>
 
+    <!-- 编辑快捷键弹窗 -->
+    <el-dialog
+      v-model="showEditShortcutDialog"
+      title="编辑快捷键"
+      width="480px"
+      align-center
+    >
+      <el-form
+        ref="editShortcutFormRef"
+        :model="editShortcutForm"
+        :rules="editShortcutRules"
+        label-width="90px"
+      >
+        <el-form-item label="功能名称" prop="functionName">
+          <el-input v-model="editShortcutForm.functionName" />
+        </el-form-item>
+        <el-form-item label="功能描述" prop="description">
+          <el-input
+            v-model="editShortcutForm.description"
+            type="textarea"
+            :rows="2"
+          />
+        </el-form-item>
+        <el-form-item label="快捷键" prop="keysText">
+          <el-input v-model="editShortcutForm.keysText" />
+          <div class="form-tip">用 + 分隔各个按键，如：Ctrl + Shift + N</div>
+        </el-form-item>
+        <el-form-item label="平台" prop="platform">
+          <el-radio-group v-model="editShortcutForm.platform">
+            <el-radio-button label="common">通用</el-radio-button>
+            <el-radio-button label="win">Windows</el-radio-button>
+            <el-radio-button label="mac">Mac</el-radio-button>
+            <el-radio-button label="linux">Linux</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="showEditShortcutDialog = false">取消</el-button>
+        <el-button type="primary" @click="submitEditShortcut">确定</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- 分类管理弹窗 -->
+    <el-dialog
+      v-model="showCategoryDialog"
+      :title="isEditCategory ? '编辑分类' : '新增分类'"
+      width="520px"
+      align-center
+    >
+      <el-form
+        ref="categoryFormRef"
+        :model="categoryForm"
+        :rules="categoryRules"
+        label-width="100px"
+      >
+        <el-form-item label="分类名称" prop="name">
+          <el-input
+            v-model="categoryForm.name"
+            placeholder="如：MyApp 快捷键"
+          />
+        </el-form-item>
+        <el-form-item label="分类描述" prop="description">
+          <el-input
+            v-model="categoryForm.description"
+            type="textarea"
+            :rows="2"
+            placeholder="描述该分类的用途"
+          />
+        </el-form-item>
+        <el-form-item label="图标" prop="icon">
+          <el-input v-model="categoryForm.icon" placeholder="如：⌨️、📝、🎨" />
+        </el-form-item>
+
+        <template v-if="!isEditCategory">
+          <el-form-item label="数据来源">
+            <el-radio-group v-model="categoryForm.sourceType">
+              <el-radio-button label="empty">空白分类</el-radio-button>
+              <el-radio-button label="copy">复制现有</el-radio-button>
+              <el-radio-button label="import">导入 JSON</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item
+            v-if="categoryForm.sourceType === 'copy'"
+            label="选择分类"
+          >
+            <el-select v-model="copyFromCategory" placeholder="选择要复制的分类">
+              <el-option
+                v-for="cat in store.categories"
+                :key="cat.name"
+                :label="cat.name"
+                :value="cat.name"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            v-if="categoryForm.sourceType === 'import'"
+            label="JSON 数据"
+          >
+            <el-input
+              v-model="importJsonText"
+              type="textarea"
+              :rows="6"
+              placeholder="粘贴 JSON 数据"
+            />
+            <div class="form-tip json-tip">
+              <div>格式示例：</div>
+              <pre>
+[
+  {
+    "functionName": "复制",
+    "description": "复制选中的内容",
+    "keys": ["Ctrl", "C"],
+    "platform": "common"
+  }
+]</pre>
+              <div>platform 可选：common / win / mac / linux</div>
+            </div>
+          </el-form-item>
+        </template>
+      </el-form>
+      <template #footer>
+        <el-button @click="showCategoryDialog = false">取消</el-button>
+        <el-button type="primary" @click="submitCategory">确定</el-button>
+      </template>
+    </el-dialog>
+
     <!-- 训练历史弹窗 -->
     <el-dialog
       v-model="showHistory"
@@ -269,6 +430,8 @@ import { ArrowLeft } from '@element-plus/icons-vue';
 import type { ShortcutItem } from '@/types/shortcut-memory';
 import type { FormInstance, FormRules } from 'element-plus';
 import KeyboardVisual from './components/KeyboardVisual.vue';
+import { getShortcutsByCategory } from '@/utils/shortcut-memory-data';
+import { getAllCustomCategories } from '@/utils/shortcut-memory-db';
 
 const router = useRouter();
 const store = useShortcutMemoryStore();
@@ -294,6 +457,41 @@ const addRules: FormRules = {
   description: [{ required: true, message: '请输入功能描述', trigger: 'blur' }],
   keysText: [{ required: true, message: '请输入快捷键', trigger: 'blur' }]
 };
+
+// 编辑快捷键
+const showEditShortcutDialog = ref(false);
+const editShortcutFormRef = ref<FormInstance>();
+const editShortcutForm = ref({
+  id: '',
+  category: '',
+  functionName: '',
+  description: '',
+  keysText: '',
+  platform: 'common' as 'common' | 'win' | 'mac' | 'linux'
+});
+const editShortcutRules: FormRules = {
+  functionName: [{ required: true, message: '请输入功能名称', trigger: 'blur' }],
+  description: [{ required: true, message: '请输入功能描述', trigger: 'blur' }],
+  keysText: [{ required: true, message: '请输入快捷键', trigger: 'blur' }]
+};
+
+// 分类管理
+const showCategoryDialog = ref(false);
+const isEditCategory = ref(false);
+const categoryFormRef = ref<FormInstance>();
+const categoryForm = ref({
+  name: '',
+  description: '',
+  icon: '⌨️',
+  sourceType: 'empty' as 'empty' | 'copy' | 'import'
+});
+const categoryRules: FormRules = {
+  name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
+};
+const copyFromCategory = ref('');
+const importJsonText = ref('');
+const editingCategoryId = ref('');
+const editingCategoryOldName = ref('');
 
 const trainingHistory = computed(() => {
   return store.getTrainingHistory();
@@ -428,6 +626,176 @@ function formatDate(timestamp: number): string {
   return new Date(timestamp).toLocaleString('zh-CN');
 }
 
+// 编辑快捷键
+function openEditShortcutDialog(row: ShortcutItem) {
+  editShortcutForm.value = {
+    id: row.id,
+    category: row.category,
+    functionName: row.functionName,
+    description: row.description,
+    keysText: row.keys.join(' + '),
+    platform: row.platform || 'common'
+  };
+  showEditShortcutDialog.value = true;
+}
+
+async function submitEditShortcut() {
+  if (!editShortcutFormRef.value) return;
+  await editShortcutFormRef.value.validate(async (valid) => {
+    if (!valid) return;
+
+    const keys = editShortcutForm.value.keysText.split('+').map(k => k.trim()).filter(Boolean);
+    if (keys.length === 0) {
+      ElMessage.warning('快捷键格式不正确');
+      return;
+    }
+
+    const item: ShortcutItem = {
+      id: editShortcutForm.value.id,
+      category: editShortcutForm.value.category,
+      functionName: editShortcutForm.value.functionName,
+      description: editShortcutForm.value.description,
+      keys,
+      platform: editShortcutForm.value.platform
+    };
+
+    const result = await store.updateCustomShortcutItem(item);
+    if (result.ok) {
+      ElMessage.success('更新成功');
+      showEditShortcutDialog.value = false;
+    } else {
+      ElMessage.error('更新失败');
+    }
+  });
+}
+
+// 分类管理
+function openCategoryDialog(editName?: string) {
+  if (editName) {
+    isEditCategory.value = true;
+    const cat = store.categories.find(c => c.name === editName);
+    const customCats = getAllCustomCategories();
+    const customCat = customCats.find(c => c.name === editName);
+    categoryForm.value = {
+      name: editName,
+      description: cat?.description || '',
+      icon: getCategoryIcon(editName),
+      sourceType: 'empty'
+    };
+    editingCategoryId.value = customCat?._id || '';
+    editingCategoryOldName.value = editName;
+  } else {
+    isEditCategory.value = false;
+    categoryForm.value = {
+      name: '',
+      description: '',
+      icon: '⌨️',
+      sourceType: 'empty'
+    };
+    copyFromCategory.value = '';
+    importJsonText.value = '';
+    editingCategoryId.value = '';
+    editingCategoryOldName.value = '';
+  }
+  showCategoryDialog.value = true;
+}
+
+async function submitCategory() {
+  if (!categoryFormRef.value) return;
+  await categoryFormRef.value.validate(async (valid) => {
+    if (!valid) return;
+
+    if (isEditCategory.value) {
+      // 如果名称变了，先重命名
+      if (categoryForm.value.name !== editingCategoryOldName.value) {
+        const renameResult = await store.renameCustomCategory(
+          editingCategoryOldName.value,
+          categoryForm.value.name
+        );
+        if (!renameResult.ok) {
+          ElMessage.error('重命名失败');
+          return;
+        }
+      }
+      // 更新描述和图标
+      const result = await store.updateCustomCategory(
+        editingCategoryId.value,
+        categoryForm.value.name,
+        categoryForm.value.description,
+        categoryForm.value.icon
+      );
+      if (result.ok) {
+        ElMessage.success('修改成功');
+        showCategoryDialog.value = false;
+      } else {
+        ElMessage.error('修改失败');
+      }
+      return;
+    }
+
+    // 新增分类
+    let sourceItems: ShortcutItem[] | undefined;
+
+    if (categoryForm.value.sourceType === 'copy' && copyFromCategory.value) {
+      const items = getShortcutsByCategory(copyFromCategory.value);
+      sourceItems = items.map(item => ({
+        ...item,
+        id: 'custom-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6)
+      }));
+    } else if (categoryForm.value.sourceType === 'import' && importJsonText.value.trim()) {
+      try {
+        const parsed = JSON.parse(importJsonText.value.trim());
+        if (!Array.isArray(parsed)) {
+          throw new Error('数据必须是数组');
+        }
+        sourceItems = parsed.map((item: any, index: number) => ({
+          id: 'custom-' + Date.now() + '-' + index,
+          category: categoryForm.value.name,
+          functionName: item.functionName || '',
+          description: item.description || '',
+          keys: Array.isArray(item.keys) ? item.keys : [],
+          platform: item.platform || 'common'
+        }));
+      } catch (e: any) {
+        ElMessage.error('JSON 格式错误：' + e.message);
+        return;
+      }
+    }
+
+    const result = await store.addCustomCategory(
+      categoryForm.value.name,
+      categoryForm.value.description,
+      categoryForm.value.icon,
+      sourceItems
+    );
+
+    if (result.ok) {
+      ElMessage.success('新增分类成功');
+      showCategoryDialog.value = false;
+    } else {
+      ElMessage.error('新增分类失败');
+    }
+  });
+}
+
+async function deleteCategory(name: string) {
+  try {
+    await ElMessageBox.confirm(
+      `确定要删除分类「${name}」吗？该分类下的所有快捷键也将被删除。`,
+      '确认删除',
+      { type: 'warning' }
+    );
+    const result = await store.deleteCustomCategory(name);
+    if (result.ok) {
+      ElMessage.success('删除成功');
+    } else {
+      ElMessage.error('删除失败');
+    }
+  } catch {
+    // 用户取消
+  }
+}
+
 onMounted(async () => {
   await store.loadCategories();
 });
@@ -483,11 +851,20 @@ onMounted(async () => {
     cursor: pointer;
     transition: all 0.3s;
     background: var(--utools-bg-card);
+    position: relative;
 
     &:hover {
       border-color: var(--utools-primary);
       transform: translateY(-4px);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-actions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      gap: 4px;
     }
 
     .category-icon {
@@ -605,6 +982,18 @@ onMounted(async () => {
   font-size: 12px;
   color: var(--utools-text-tertiary);
   margin-top: 4px;
+}
+
+.json-tip {
+  pre {
+    background: var(--utools-bg-secondary);
+    padding: 8px;
+    border-radius: 4px;
+    margin: 4px 0;
+    font-size: 11px;
+    line-height: 1.4;
+    overflow-x: auto;
+  }
 }
 
 .history-item {
