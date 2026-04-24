@@ -18,5 +18,10 @@
   { "id": "chrome-17", "category": "Chrome", "functionName": "缩小", "description": "缩小页面内容", "keys": ["Ctrl", "-"], "platform": "common" },
   { "id": "chrome-18", "category": "Chrome", "functionName": "恢复缩放", "description": "将页面缩放恢复为默认", "keys": ["Ctrl", "0"], "platform": "common" },
   { "id": "chrome-19", "category": "Chrome", "functionName": "另存为", "description": "保存当前网页到本地", "keys": ["Ctrl", "S"], "platform": "common" },
-  { "id": "chrome-20", "category": "Chrome", "functionName": "打印", "description": "打印当前网页", "keys": ["Ctrl", "P"], "platform": "common" }
+  { "id": "chrome-20", "category": "Chrome", "functionName": "打印", "description": "打印当前网页", "keys": ["Ctrl", "P"], "platform": "common" },
+  { "id": "chrome-21", "category": "Chrome", "functionName": "查看源码", "description": "查看页面源代码", "keys": ["Ctrl", "U"], "platform": "common" },
+  { "id": "chrome-22", "category": "Chrome", "functionName": "开发者控制台", "description": "打开开发者工具控制台", "keys": ["Ctrl", "Shift", "J"], "platform": "common" },
+  { "id": "chrome-23", "category": "Chrome", "functionName": "切换第1个标签", "description": "切换到第1个标签页", "keys": ["Ctrl", "1"], "platform": "common" },
+  { "id": "chrome-24", "category": "Chrome", "functionName": "切换到最后标签", "description": "切换到最后一个标签页", "keys": ["Ctrl", "9"], "platform": "common" },
+  { "id": "chrome-25", "category": "Chrome", "functionName": "清除浏览数据", "description": "打开清除浏览数据对话框", "keys": ["Ctrl", "Shift", "Delete"], "platform": "common" }
 ]

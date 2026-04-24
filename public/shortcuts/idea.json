@@ -18,5 +18,10 @@
   { "id": "idea-17", "category": "IntelliJ IDEA", "functionName": "单步跳过", "description": "执行当前行并进入下一行", "keys": ["F8"], "platform": "common" },
   { "id": "idea-18", "category": "IntelliJ IDEA", "functionName": "单步进入", "description": "进入当前行调用的方法内部", "keys": ["F7"], "platform": "common" },
   { "id": "idea-19", "category": "IntelliJ IDEA", "functionName": "注释代码", "description": "注释或取消注释当前行或选中代码", "keys": ["Ctrl", "/"], "platform": "common" },
-  { "id": "idea-20", "category": "IntelliJ IDEA", "functionName": "最近文件", "description": "显示最近打开的文件列表", "keys": ["Ctrl", "E"], "platform": "common" }
+  { "id": "idea-20", "category": "IntelliJ IDEA", "functionName": "最近文件", "description": "显示最近打开的文件列表", "keys": ["Ctrl", "E"], "platform": "common" },
+  { "id": "idea-21", "category": "IntelliJ IDEA", "functionName": "扩展选择", "description": "扩大当前选中的代码范围", "keys": ["Ctrl", "W"], "platform": "common" },
+  { "id": "idea-22", "category": "IntelliJ IDEA", "functionName": "缩小选择", "description": "缩小当前选中的代码范围", "keys": ["Ctrl", "Shift", "W"], "platform": "common" },
+  { "id": "idea-23", "category": "IntelliJ IDEA", "functionName": "查找动作", "description": "通过名称查找并执行动作", "keys": ["Ctrl", "Shift", "A"], "platform": "common" },
+  { "id": "idea-24", "category": "IntelliJ IDEA", "functionName": "跳转声明", "description": "跳转到符号的声明处", "keys": ["Ctrl", "B"], "platform": "common" },
+  { "id": "idea-25", "category": "IntelliJ IDEA", "functionName": "复制路径", "description": "复制当前文件的完整路径", "keys": ["Ctrl", "Shift", "C"], "platform": "common" }
 ]

@@ -53,6 +53,59 @@
           <div class="function-desc">{{ currentQuestion?.description }}</div>
         </div>
 
+        <!-- 系统键提示 -->
+        <el-alert
+          v-if="isKeyPressMode && (hasSystemKeyShortcuts || hasSystemEscShortcutInCategory || hasSystemDeleteShortcutInCategory)"
+          type="warning"
+          :closable="false"
+          show-icon
+          class="system-key-hint"
+        >
+          <template #title>
+            <span>提示：当前分类包含系统键（Win/Ctrl+Shift+Esc/Ctrl+Shift+Delete），请按 ` 键（Tab上方）代替 Win 键，按 Ctrl+Shift+` 代替 Esc/Delete</span>
+          </template>
+        </el-alert>
+
+        <!-- 当前题目包含系统键的说明 -->
+        <el-card
+          v-if="isKeyPressMode && (hasWinKeyInCurrentQuestion || hasSystemEscShortcut || hasSystemDeleteShortcut)"
+          class="win-key-notice"
+          shadow="hover"
+        >
+          <div class="notice-content">
+            <el-icon size="24" color="#E6A23C"><Warning /></el-icon>
+            <div class="notice-text">
+              <div class="notice-title">系统键替代提示</div>
+              <div class="notice-desc">
+                <template v-if="hasWinKeyInCurrentQuestion">
+                  本题包含 <el-tag size="small">Win</el-tag> 键，由于浏览器安全限制无法拦截系统键。<br>
+                  请使用 <el-tag size="small" type="success">`</el-tag> 键（Tab上方）代替 <el-tag size="small" type="warning">Win</el-tag> 键进行练习。<br>
+                </template>
+                <template v-if="hasSystemEscShortcut">
+                  Ctrl+Shift+Esc 是系统级快捷键，无法拦截。<br>
+                  请使用 <el-tag size="small" type="success">Ctrl+Shift+`</el-tag> 代替。<br>
+                </template>
+                <template v-if="hasSystemDeleteShortcut">
+                  Ctrl+Shift+Delete 是系统级快捷键，无法拦截。<br>
+                  请使用 <el-tag size="small" type="success">Ctrl+Shift+`</el-tag> 代替 Delete。<br>
+                </template>
+                正确按键：<el-tag
+                  v-for="(key, index) in currentQuestion?.keys"
+                  :key="index"
+                  size="small"
+                  type="primary"
+                  class="target-key-tag"
+                >{{ key }}</el-tag>
+              </div>
+            </div>
+          </div>
+          <div class="notice-actions">
+            <el-button type="primary" @click="handleWinKeySkip">
+              下一个
+            </el-button>
+          </div>
+        </el-card>
+
         <!-- 按键训练模式 -->
         <template v-if="isKeyPressMode">
           <div class="keypress-area">
@@ -164,7 +217,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useShortcutMemoryStore } from '@/stores/shortcutMemory';
 import { ElMessage } from 'element-plus';
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Warning } from '@element-plus/icons-vue';
 import type { ShortcutItem } from '@/types/shortcut-memory';
 import KeyboardVisual from './components/KeyboardVisual.vue';
 
@@ -186,6 +239,48 @@ const displayPressedKeys = computed(() => {
 
 const isKeyPractice = computed(() => {
   return store.currentCategory === '键位练习' || store.currentCategory === '数字小键盘练习';
+});
+
+// 判断当前分类是否包含系统键（Win/Meta 键）
+const hasSystemKeyShortcuts = computed(() => {
+  return store.questions.some(q => q.keys.some(k => k.toLowerCase() === 'win' || k.toLowerCase() === 'meta'));
+});
+
+// 判断当前分类是否包含 Ctrl+Shift+Esc 系统快捷键
+const hasSystemEscShortcutInCategory = computed(() => {
+  return store.questions.some(q => {
+    const keys = q.keys.map(k => k.toLowerCase());
+    return keys.includes('esc') && keys.includes('ctrl') && keys.includes('shift');
+  });
+});
+
+// 判断当前题目是否包含 Win 键
+const hasWinKeyInCurrentQuestion = computed(() => {
+  return currentQuestion.value?.keys.some(k => k.toLowerCase() === 'win' || k.toLowerCase() === 'meta') ?? false;
+});
+
+// 判断当前题目是否包含 Esc 键（Ctrl+Shift+Esc 是系统快捷键）
+const hasSystemEscShortcut = computed(() => {
+  const keys = currentQuestion.value?.keys ?? [];
+  return keys.some(k => k.toLowerCase() === 'esc') && 
+         keys.some(k => k.toLowerCase() === 'ctrl') && 
+         keys.some(k => k.toLowerCase() === 'shift');
+});
+
+// 判断当前题目是否包含 Delete 键（Ctrl+Shift+Delete 是系统快捷键）
+const hasSystemDeleteShortcut = computed(() => {
+  const keys = currentQuestion.value?.keys ?? [];
+  return keys.some(k => k.toLowerCase() === 'delete' || k.toLowerCase() === 'del') && 
+         keys.some(k => k.toLowerCase() === 'ctrl') && 
+         keys.some(k => k.toLowerCase() === 'shift');
+});
+
+// 判断当前分类是否包含 Ctrl+Shift+Delete 系统快捷键
+const hasSystemDeleteShortcutInCategory = computed(() => {
+  return store.questions.some(q => {
+    const keys = q.keys.map(k => k.toLowerCase());
+    return (keys.includes('delete') || keys.includes('del')) && keys.includes('ctrl') && keys.includes('shift');
+  });
 });
 
 const displayTitle = computed(() => {
@@ -258,29 +353,69 @@ function goBack() {
   router.push('/shortcut-memory');
 }
 
+// 跳过 Win 键题目（标记为正确并进入下一题）
+function handleWinKeySkip() {
+  // 模拟正确答案
+  store.correctCount++;
+  store.trainingPhase = 'correct';
+  setTimeout(() => {
+    nextQuestion();
+  }, 300);
+}
+
+// 检测并提示系统键
+function showSystemKeyWarning(key: string) {
+  ElMessage.warning(`检测到${key}键被按下。系统键无法拦截，建议在设置中禁用或换用其他组合键`);
+}
+
 // 键盘事件处理
 function handleKeyDown(event: KeyboardEvent) {
   if (!isKeyPressMode.value || store.trainingPhase !== 'showing') return;
   if (store.isTrainingComplete) return;
 
+  // 检测 Windows/Meta 键（系统级，无法阻止）
+  if (event.metaKey || event.key === 'Meta') {
+    showSystemKeyWarning('Windows/Command');
+  }
+  // 检测其他系统键
+  if (event.key === 'Alt' && event.location === 1) {
+    // 左侧 Alt 键，某些系统快捷键会使用
+    // 允许继续，但记录
+  }
+
   event.preventDefault();
   event.stopPropagation();
 
-  // 键位练习和数字小键盘练习：简化处理，只关心单个按键
-  if (isKeyPractice.value) {
-    if (store.currentCategory === '数字小键盘练习') {
-      // 数字小键盘练习：使用 event.code 判断
-      const code = event.code.toLowerCase();
-      store.addPressedKey(code);
-    } else {
-      // 键位练习：使用 event.key，避免组合键干扰
-      const key = event.key;
-      if (key === 'Control') store.addPressedKey('ctrl');
-      else if (key === 'Alt') store.addPressedKey('alt');
-      else if (key === 'Shift') store.addPressedKey('shift');
-      else if (key === 'Meta') store.addPressedKey('win');
-      else store.addPressedKey(key);
-    }
+    // 键位练习和数字小键盘练习：简化处理，只关心单个按键
+    if (isKeyPractice.value) {
+      if (store.currentCategory === '数字小键盘练习') {
+        // 数字小键盘练习：使用 event.code 判断
+        const code = event.code.toLowerCase();
+        store.addPressedKey(code);
+      } else {
+        // 键位练习：使用 event.key，避免组合键干扰
+        const key = event.key;
+        if (key === 'Control') store.addPressedKey('ctrl');
+        else if (key === 'Alt') store.addPressedKey('alt');
+        else if (key === 'Shift') store.addPressedKey('shift');
+        else if (key === 'Meta') store.addPressedKey('win');
+        // ` 键映射（Fn/F1 键大多数浏览器无法捕获，使用 ` 作为替代）：
+        // 1. 如果是 Ctrl+Shift+`，映射为 Esc 或 Delete（替代 Ctrl+Shift+Esc/Delete）
+        // 2. 否则映射为 win（替代 Win 键）
+        else if (key === '`' || key === '~' || key === 'Backquote') {
+          if (event.ctrlKey && event.shiftKey) {
+            // 检测当前题目需要什么键
+            if (currentQuestion.value?.keys.some(k => k.toLowerCase() === 'delete' || k.toLowerCase() === 'del')) {
+              store.addPressedKey('delete');
+            } else {
+              store.addPressedKey('esc');
+            }
+          } else {
+            store.addPressedKey('win');
+          }
+        }
+        else store.addPressedKey(key.toLowerCase());
+      }
 
     const isCorrect = store.checkKeyPress();
     if (isCorrect) {
@@ -300,13 +435,45 @@ function handleKeyDown(event: KeyboardEvent) {
     return;
   }
 
+  const key = event.key;
+
   // 处理修饰键
   if (event.ctrlKey) store.addPressedKey('ctrl');
   if (event.altKey) store.addPressedKey('alt');
   if (event.shiftKey) store.addPressedKey('shift');
   if (event.metaKey) store.addPressedKey('win');
-
-  const key = event.key;
+  // ` 键映射（Fn/F1 键大多数浏览器无法捕获，使用 ` 作为替代）：
+  // 1. 如果是 Ctrl+Shift+`，映射为 Esc 或 Delete（替代 Ctrl+Shift+Esc/Delete）
+  // 2. 否则映射为 win（替代 Win 键）
+  if (key === '`' || key === '~' || key === 'Backquote') {
+    if (event.ctrlKey && event.shiftKey) {
+      // 检测当前题目需要什么键
+      if (currentQuestion.value?.keys.some(k => k.toLowerCase() === 'delete' || k.toLowerCase() === 'del')) {
+        store.addPressedKey('delete');
+      } else {
+        store.addPressedKey('esc');
+      }
+    } else {
+      store.addPressedKey('win');
+    }
+    // ` 键处理完后执行检查（替代原来的 return）
+    const isCorrect = store.checkKeyPress();
+    if (isCorrect) {
+      if (autoNextTimer) clearTimeout(autoNextTimer);
+      autoNextTimer = setTimeout(() => {
+        nextQuestion();
+      }, 600);
+    } else {
+      const correct = currentQuestion.value;
+      wrongMessage.value = `答案：${correct?.keys.join('+')}`;
+      if (autoNextTimer) clearTimeout(autoNextTimer);
+      autoNextTimer = setTimeout(() => {
+        store.clearPressedKeys();
+        store.trainingPhase = 'showing';
+      }, 1200);
+    }
+    return;
+  }
   // 处理普通按键（避免重复添加修饰键）
   if (!event.ctrlKey && !event.altKey && !event.shiftKey && !event.metaKey) {
     store.addPressedKey(key);
@@ -357,6 +524,12 @@ function handleKeyUp(event: KeyboardEvent) {
     else if (key === 'Alt') store.removePressedKey('alt');
     else if (key === 'Shift') store.removePressedKey('shift');
     else if (key === 'Meta') store.removePressedKey('win');
+    // ` 键清除时也要清除映射的 win、esc 和 delete
+    else if (key === '`' || key === '~' || key === 'Backquote') {
+      store.removePressedKey('win');
+      store.removePressedKey('esc');
+      store.removePressedKey('delete');
+    }
     else store.removePressedKey(key);
   }, 200);
 }
@@ -452,6 +625,54 @@ onUnmounted(() => {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    .system-key-hint {
+      margin-bottom: 12px;
+      :deep(.el-alert__title) {
+        font-size: 12px;
+      }
+    }
+
+    .win-key-notice {
+      margin-bottom: 16px;
+      background: #fdf6ec;
+      border-color: #f5dab1;
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+
+      .notice-content {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        .notice-text {
+          flex: 1;
+
+          .notice-title {
+            font-weight: bold;
+            color: #e6a23c;
+            margin-bottom: 8px;
+          }
+
+          .notice-desc {
+            font-size: 13px;
+            color: #606266;
+            line-height: 1.8;
+
+            .target-key-tag {
+              margin: 0 2px;
+            }
+          }
+        }
+      }
+
+      .notice-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
 
     .function-display {
       text-align: center;

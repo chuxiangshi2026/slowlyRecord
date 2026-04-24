@@ -23,5 +23,10 @@
   { "id": "ps-22", "category": "Photoshop", "functionName": "放大画布", "description": "放大显示画布", "keys": ["Ctrl", "+"], "platform": "common" },
   { "id": "ps-23", "category": "Photoshop", "functionName": "缩小画布", "description": "缩小显示画布", "keys": ["Ctrl", "-"], "platform": "common" },
   { "id": "ps-24", "category": "Photoshop", "functionName": "实际像素", "description": "以100%比例显示图像", "keys": ["Ctrl", "1"], "platform": "common" },
-  { "id": "ps-25", "category": "Photoshop", "functionName": "抓手工具", "description": "临时切换到抓手工具移动画布", "keys": ["Space"], "platform": "common" }
+  { "id": "ps-25", "category": "Photoshop", "functionName": "抓手工具", "description": "临时切换到抓手工具移动画布", "keys": ["Space"], "platform": "common" },
+  { "id": "ps-26", "category": "Photoshop", "functionName": "移动工具", "description": "切换到移动工具", "keys": ["V"], "platform": "common" },
+  { "id": "ps-27", "category": "Photoshop", "functionName": "选框工具", "description": "切换到矩形选框工具", "keys": ["M"], "platform": "common" },
+  { "id": "ps-28", "category": "Photoshop", "functionName": "画笔工具", "description": "切换到画笔工具", "keys": ["B"], "platform": "common" },
+  { "id": "ps-29", "category": "Photoshop", "functionName": "橡皮擦工具", "description": "切换到橡皮擦工具", "keys": ["E"], "platform": "common" },
+  { "id": "ps-30", "category": "Photoshop", "functionName": "撤销多步", "description": "连续撤销多步操作", "keys": ["Ctrl", "Alt", "Z"], "platform": "common" }
 ]

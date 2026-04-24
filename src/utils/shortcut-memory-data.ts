@@ -84,7 +84,12 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'win-17', category: 'Windows', functionName: '任务管理器', description: '打开任务管理器', keys: ['Ctrl', 'Shift', 'Esc'], platform: 'win' },
   { id: 'win-18', category: 'Windows', functionName: '刷新', description: '刷新当前页面或窗口', keys: ['F5'], platform: 'win' },
   { id: 'win-19', category: 'Windows', functionName: '重命名', description: '重命名选中的文件或文件夹', keys: ['F2'], platform: 'win' },
-  { id: 'win-20', category: 'Windows', functionName: '撤销关闭标签', description: '在浏览器中恢复刚关闭的标签页', keys: ['Ctrl', 'Shift', 'T'], platform: 'win' },
+  { id: 'win-20', category: 'Windows', functionName: '新建文件夹', description: '新建文件夹', keys: ['Ctrl', 'Shift', 'N'], platform: 'win' },
+  { id: 'win-21', category: 'Windows', functionName: '运行', description: '打开运行对话框', keys: ['Win', 'R'], platform: 'win' },
+  { id: 'win-22', category: 'Windows', functionName: '设置', description: '打开Windows设置', keys: ['Win', 'I'], platform: 'win' },
+  { id: 'win-23', category: 'Windows', functionName: '搜索', description: '打开Windows搜索', keys: ['Win', 'S'], platform: 'win' },
+  { id: 'win-24', category: 'Windows', functionName: '多任务视图', description: '打开多任务视图', keys: ['Win', 'Tab'], platform: 'win' },
+  { id: 'win-25', category: 'Windows', functionName: '撤销关闭标签', description: '在浏览器中恢复刚关闭的标签页', keys: ['Ctrl', 'Shift', 'T'], platform: 'win' },
 
   { id: 'vscode-1', category: 'VS Code', functionName: '命令面板', description: '打开命令面板，快速执行命令', keys: ['Ctrl', 'Shift', 'P'], platform: 'common' },
   { id: 'vscode-2', category: 'VS Code', functionName: '快速打开文件', description: '通过文件名快速打开文件', keys: ['Ctrl', 'P'], platform: 'common' },
@@ -106,6 +111,11 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'vscode-18', category: 'VS Code', functionName: '转到文件', description: '快速导航到文件中的符号', keys: ['Ctrl', 'Shift', 'O'], platform: 'common' },
   { id: 'vscode-19', category: 'VS Code', functionName: '显示问题', description: '打开问题面板查看错误和警告', keys: ['Ctrl', 'Shift', 'M'], platform: 'common' },
   { id: 'vscode-20', category: 'VS Code', functionName: 'Emmet展开', description: '展开 Emmet 缩写', keys: ['Tab'], platform: 'common' },
+  { id: 'vscode-21', category: 'VS Code', functionName: '查找替换', description: '在当前文件中查找并替换', keys: ['Ctrl', 'H'], platform: 'common' },
+  { id: 'vscode-22', category: 'VS Code', functionName: '撤销', description: '撤销上一步操作', keys: ['Ctrl', 'Z'], platform: 'common' },
+  { id: 'vscode-23', category: 'VS Code', functionName: '重做', description: '重做被撤销的操作', keys: ['Ctrl', 'Shift', 'Z'], platform: 'common' },
+  { id: 'vscode-24', category: 'VS Code', functionName: '保存全部', description: '保存所有打开的文件', keys: ['Ctrl', 'K', 'S'], platform: 'common' },
+  { id: 'vscode-25', category: 'VS Code', functionName: 'Zen模式', description: '进入禅模式全屏编辑', keys: ['Ctrl', 'K', 'Z'], platform: 'common' },
 
   { id: 'chrome-1', category: 'Chrome', functionName: '新标签页', description: '打开一个新的浏览器标签页', keys: ['Ctrl', 'T'], platform: 'common' },
   { id: 'chrome-2', category: 'Chrome', functionName: '关闭标签页', description: '关闭当前标签页', keys: ['Ctrl', 'W'], platform: 'common' },
@@ -127,6 +137,11 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'chrome-18', category: 'Chrome', functionName: '恢复缩放', description: '将页面缩放恢复为默认', keys: ['Ctrl', '0'], platform: 'common' },
   { id: 'chrome-19', category: 'Chrome', functionName: '另存为', description: '保存当前网页到本地', keys: ['Ctrl', 'S'], platform: 'common' },
   { id: 'chrome-20', category: 'Chrome', functionName: '打印', description: '打印当前网页', keys: ['Ctrl', 'P'], platform: 'common' },
+  { id: 'chrome-21', category: 'Chrome', functionName: '查看源码', description: '查看页面源代码', keys: ['Ctrl', 'U'], platform: 'common' },
+  { id: 'chrome-22', category: 'Chrome', functionName: '开发者控制台', description: '打开开发者工具控制台', keys: ['Ctrl', 'Shift', 'J'], platform: 'common' },
+  { id: 'chrome-23', category: 'Chrome', functionName: '切换第1个标签', description: '切换到第1个标签页', keys: ['Ctrl', '1'], platform: 'common' },
+  { id: 'chrome-24', category: 'Chrome', functionName: '切换到最后标签', description: '切换到最后一个标签页', keys: ['Ctrl', '9'], platform: 'common' },
+  { id: 'chrome-25', category: 'Chrome', functionName: '清除浏览数据', description: '打开清除浏览数据对话框', keys: ['Ctrl', 'Shift', 'Delete'], platform: 'common' },
 
   { id: 'idea-1', category: 'IntelliJ IDEA', functionName: '查找类', description: '通过类名查找并打开类文件', keys: ['Ctrl', 'N'], platform: 'common' },
   { id: 'idea-2', category: 'IntelliJ IDEA', functionName: '查找文件', description: '通过文件名查找任意文件', keys: ['Ctrl', 'Shift', 'N'], platform: 'common' },
@@ -148,6 +163,11 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'idea-18', category: 'IntelliJ IDEA', functionName: '单步进入', description: '进入当前行调用的方法内部', keys: ['F7'], platform: 'common' },
   { id: 'idea-19', category: 'IntelliJ IDEA', functionName: '注释代码', description: '注释或取消注释当前行或选中代码', keys: ['Ctrl', '/'], platform: 'common' },
   { id: 'idea-20', category: 'IntelliJ IDEA', functionName: '最近文件', description: '显示最近打开的文件列表', keys: ['Ctrl', 'E'], platform: 'common' },
+  { id: 'idea-21', category: 'IntelliJ IDEA', functionName: '扩展选择', description: '扩大当前选中的代码范围', keys: ['Ctrl', 'W'], platform: 'common' },
+  { id: 'idea-22', category: 'IntelliJ IDEA', functionName: '缩小选择', description: '缩小当前选中的代码范围', keys: ['Ctrl', 'Shift', 'W'], platform: 'common' },
+  { id: 'idea-23', category: 'IntelliJ IDEA', functionName: '查找动作', description: '通过名称查找并执行动作', keys: ['Ctrl', 'Shift', 'A'], platform: 'common' },
+  { id: 'idea-24', category: 'IntelliJ IDEA', functionName: '跳转声明', description: '跳转到符号的声明处', keys: ['Ctrl', 'B'], platform: 'common' },
+  { id: 'idea-25', category: 'IntelliJ IDEA', functionName: '复制路径', description: '复制当前文件的完整路径', keys: ['Ctrl', 'Shift', 'C'], platform: 'common' },
 
   // Photoshop 快捷键
   { id: 'ps-1', category: 'Photoshop', functionName: '新建', description: '创建新的图像文档', keys: ['Ctrl', 'N'], platform: 'common' },
@@ -175,6 +195,11 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'ps-23', category: 'Photoshop', functionName: '缩小画布', description: '缩小显示画布', keys: ['Ctrl', '-'], platform: 'common' },
   { id: 'ps-24', category: 'Photoshop', functionName: '实际像素', description: '以100%比例显示图像', keys: ['Ctrl', '1'], platform: 'common' },
   { id: 'ps-25', category: 'Photoshop', functionName: '抓手工具', description: '临时切换到抓手工具移动画布', keys: ['Space'], platform: 'common' },
+  { id: 'ps-26', category: 'Photoshop', functionName: '移动工具', description: '切换到移动工具', keys: ['V'], platform: 'common' },
+  { id: 'ps-27', category: 'Photoshop', functionName: '选框工具', description: '切换到矩形选框工具', keys: ['M'], platform: 'common' },
+  { id: 'ps-28', category: 'Photoshop', functionName: '画笔工具', description: '切换到画笔工具', keys: ['B'], platform: 'common' },
+  { id: 'ps-29', category: 'Photoshop', functionName: '橡皮擦工具', description: '切换到橡皮擦工具', keys: ['E'], platform: 'common' },
+  { id: 'ps-30', category: 'Photoshop', functionName: '撤销多步', description: '连续撤销多步操作', keys: ['Ctrl', 'Alt', 'Z'], platform: 'common' },
 
   // 键位练习数据（从默认键列表动态生成）
   ...generatePracticeItems('键位练习', DEFAULT_KEYBOARD_PRACTICE_KEYS, 'kp'),
