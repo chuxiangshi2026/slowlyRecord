@@ -1,5 +1,21 @@
-import type { ShortcutItem, ShortcutCategory, CustomCategoryDoc } from "@/types/shortcut-memory";
+import type { ShortcutItem, ShortcutCategory, CustomCategoryDoc, CategoryConfigMap } from "@/types/shortcut-memory";
 import { getAllCustomShortcuts, getAllCustomCategories, getHiddenCategories } from "@/utils/shortcut-memory-db";
+
+/**
+ * 分类配置映射（描述和图标）
+ */
+export const CATEGORY_CONFIG: CategoryConfigMap = {
+  'Windows': { description: 'Windows 操作系统常用快捷键', icon: '🪟' },
+  'VS Code': { description: 'Visual Studio Code 编辑器快捷键', icon: '📝' },
+  'Chrome': { description: 'Chrome 浏览器快捷键', icon: '🌐' },
+  'IntelliJ IDEA': { description: 'IntelliJ IDEA 开发工具快捷键', icon: '☕' },
+  'Photoshop': { description: 'Adobe Photoshop 图像处理快捷键', icon: '🎨' },
+  'Vim': { description: 'Vim 文本编辑器常用快捷键', icon: '🧙' },
+  'Illustrator': { description: 'Adobe Illustrator 矢量设计快捷键', icon: '✒️' },
+  'CAD': { description: 'AutoCAD 工程制图常用快捷键', icon: '📐' },
+  '键位练习': { description: '随机练习键盘上的任意按键', icon: '⌨️' },
+  '数字小键盘练习': { description: '专门练习数字小键盘区域按键', icon: '🔢' }
+};
 
 /**
  * 键位显示名称映射
@@ -414,7 +430,7 @@ export function getAllShortcuts(): ShortcutItem[] {
 function buildCategories(): ShortcutCategory[] {
   // 获取隐藏的示例分类
   const hiddenCategories = getHiddenCategories();
-  
+
   // 内置分类
   const builtinMap = new Map<string, ShortcutCategory>();
   const categoryCountMap = new Map<string, number>();
@@ -475,38 +491,14 @@ function getCategoriesFromPreset(): ShortcutCategory[] {
  * 获取分类描述
  */
 function getCategoryDescription(name: string): string {
-  const descMap: Record<string, string> = {
-    'Windows': 'Windows 操作系统常用快捷键',
-    'VS Code': 'Visual Studio Code 编辑器快捷键',
-    'Chrome': 'Chrome 浏览器快捷键',
-    'IntelliJ IDEA': 'IntelliJ IDEA 开发工具快捷键',
-    'Photoshop': 'Adobe Photoshop 图像处理快捷键',
-    'Vim': 'Vim 文本编辑器常用快捷键',
-    'Illustrator': 'Adobe Illustrator 矢量设计快捷键',
-    'CAD': 'AutoCAD 工程制图常用快捷键',
-    '键位练习': '随机练习键盘上的任意按键',
-    '数字小键盘练习': '专门练习数字小键盘区域按键'
-  };
-  return descMap[name] || `${name} 快捷键`;
+  return CATEGORY_CONFIG[name]?.description || `${name} 快捷键`;
 }
 
 /**
  * 获取内置分类图标
  */
 function getCategoryIcon(name: string): string {
-  const iconMap: Record<string, string> = {
-    'Windows': '🪟',
-    'VS Code': '📝',
-    'Chrome': '🌐',
-    'IntelliJ IDEA': '☕',
-    'Photoshop': '🎨',
-    'Vim': '🧙',
-    'Illustrator': '✒️',
-    'CAD': '📐',
-    '键位练习': '⌨️',
-    '数字小键盘练习': '🔢'
-  };
-  return iconMap[name] || '⌨️';
+  return CATEGORY_CONFIG[name]?.icon || '⌨️';
 }
 
 /**

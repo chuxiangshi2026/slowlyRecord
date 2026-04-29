@@ -115,3 +115,10 @@ export interface NumberMemoryPrompt {
   enabled: boolean;         // 是否启用
   createdAt: number;
 }
+
+// 未完成的训练进度信息
+export interface UnfinishedProgressInfo {
+  mode: string;
+  current: number;
+  total: number;
+}

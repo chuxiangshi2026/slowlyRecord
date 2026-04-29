@@ -61,3 +61,12 @@ export interface CustomCategoryDoc {
 
 // 训练状态
 export type TrainingPhase = 'ready' | 'showing' | 'listening' | 'correct' | 'wrong' | 'timeout';
+
+// 分类配置
+export interface CategoryConfig {
+  description: string;
+  icon: string;
+}
+
+// 分类配置映射
+export type CategoryConfigMap = Record<string, CategoryConfig>;

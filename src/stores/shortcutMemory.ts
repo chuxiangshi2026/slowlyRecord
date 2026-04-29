@@ -111,11 +111,12 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   const DEFAULT_NUMPAD_PRACTICE_COUNT = 10;
 
   /**
-   * 初始化正向训练（按键训练）
+   * 训练初始化核心逻辑
    * @param category 分类名称
    * @param count 题目数量，0表示全部
+   * @returns 选中的快捷键列表
    */
-  function initKeyPressTraining(category: string, count: number = 0) {
+  function initTrainingCore(category: string, count: number = 0): ShortcutItem[] {
     const shortcuts = getShortcutsByCategory(category);
 
     // 键位练习和数字小键盘练习：默认随机抽取子集
@@ -138,6 +139,16 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     trainingStartTime.value = Date.now();
     questionStartTime.value = 0;
 
+    return selected;
+  }
+
+  /**
+   * 初始化正向训练（按键训练）
+   * @param category 分类名称
+   * @param count 题目数量，0表示全部
+   */
+  function initKeyPressTraining(category: string, count: number = 0) {
+    const selected = initTrainingCore(category, count);
     log.i('初始化按键训练', category, selected.length);
   }
 
@@ -147,27 +158,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
    * @param count 题目数量，0表示全部
    */
   function initFunctionSelectTraining(category: string, count: number = 0) {
-    const shortcuts = getShortcutsByCategory(category);
-
-    // 键位练习和数字小键盘练习：默认随机抽取子集
-    let effectiveCount = count;
-    if (effectiveCount === 0 && (category === '键位练习' || category === '数字小键盘练习')) {
-      effectiveCount = category === '键位练习' ? DEFAULT_KEY_PRACTICE_COUNT : DEFAULT_NUMPAD_PRACTICE_COUNT;
-    }
-
-    const selected = effectiveCount > 0 && effectiveCount < shortcuts.length
-      ? shuffleArray(shortcuts).slice(0, effectiveCount)
-      : shuffleArray(shortcuts);
-
-    questions.value = selected;
-    currentQuestionIndex.value = 0;
-    correctCount.value = 0;
-    wrongCount.value = 0;
-    trainingDetails.value = [];
-    trainingPhase.value = 'ready';
-    trainingStartTime.value = Date.now();
-    questionStartTime.value = 0;
-
+    const selected = initTrainingCore(category, count);
     log.i('初始化功能选择训练', category, selected.length);
   }
 

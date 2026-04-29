@@ -30,7 +30,7 @@
       <!-- 未完成的训练进度 -->
       <el-alert
         v-if="unfinishedProgress"
-        :title="`未完成的训练：${unfinishedProgress.mode === 'numberToImage' ? '数字→图片' : '图片→数字'}（第 ${unfinishedProgress.current}/${unfinishedProgress.total} 题）`"
+        :title="unfinishedProgressTitle"
         type="warning"
         :closable="false"
         show-icon
@@ -73,10 +73,10 @@
                   size="large"
                   circle
                   @click="selectNumber(num)"
-                  :class="{ 'has-image': store.hasAssociation(num) }"
+                  :class="{ 'has-image': associationMap.get(num) }"
                 >
                   {{ formatNumberDisplay(num) }}
-                  <el-icon v-if="store.hasAssociation(num)" class="check-icon"><Check /></el-icon>
+                  <el-icon v-if="associationMap.get(num)" class="check-icon"><Check /></el-icon>
                 </el-button>
               </div>
             </div>
@@ -121,8 +121,8 @@
           <h4>🎯 推荐图片（{{ keyword }}）</h4>
           <div class="preset-grid">
             <div
-              v-for="(item, index) in recommendations"
-              :key="index"
+              v-for="item in recommendations"
+              :key="item.name"
               class="preset-item"
               @click="selectPresetImage(item)"
               :class="{ selected: selectedImage === item.url }"
@@ -252,6 +252,21 @@ const numberRange = ref<'single' | 'zero-padded' | 'double' | 'all'>('single');
 const unfinishedProgress = ref<{ mode: string; current: number; total: number } | null>(null);
 
 // Computed
+const unfinishedProgressTitle = computed(() => {
+  if (!unfinishedProgress.value) return '';
+  const modeText = unfinishedProgress.value.mode === 'numberToImage' ? '数字→图片' : '图片→数字';
+  return `未完成的训练：${modeText}（第 ${unfinishedProgress.value.current}/${unfinishedProgress.value.total} 题）`;
+});
+
+// 性能优化：缓存数字关联状态
+const associationMap = computed(() => {
+  const map = new Map<string, boolean>();
+  displayNumbers.value.forEach(num => {
+    map.set(num, store.hasAssociation(num));
+  });
+  return map;
+});
+
 const currentAssociation = computed(() => {
   if (selectedNumber.value === null) return null;
   return store.getAssociation(selectedNumber.value);

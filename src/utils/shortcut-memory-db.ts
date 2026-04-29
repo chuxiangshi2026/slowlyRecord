@@ -15,14 +15,30 @@ const CUSTOM_KEY_PREFIX = DB_KEY_PREFIX + 'custom_';
 const CUSTOM_CATEGORY_PREFIX = DB_KEY_PREFIX + 'category_';
 const HIDDEN_CATEGORY_KEY = DB_KEY_PREFIX + 'hidden_categories';
 
+// uTools DB 环境检查
+function getDb(): NonNullable<Window['utools']>['db'] {
+  if (typeof window !== 'undefined' && window.utools?.db) {
+    return window.utools.db;
+  }
+  throw new Error('uTools DB 不可用');
+}
+
+// 基础 CouchDB 文档类型
+interface BaseCouchDoc {
+  _id: string;
+  _rev?: string;
+  type: string;
+  createdAt?: number;
+}
+
 /**
  * 获取所有训练记录
  */
 export function getAllTrainingRecords(): ShortcutTrainingRecord[] {
-  const allDocs = window.utools.db.allDocs(RECORD_KEY_PREFIX);
+  const allDocs = getDb().allDocs(RECORD_KEY_PREFIX) as BaseCouchDoc[];
   return allDocs
-    .filter((doc: any) => doc.type === 'shortcut_training_record')
-    .sort((a: any, b: any) => b.createdAt - a.createdAt) as ShortcutTrainingRecord[];
+    .filter((doc): doc is ShortcutTrainingRecord => doc.type === 'shortcut_training_record')
+    .sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
 }
 
 /**
@@ -39,7 +55,7 @@ export async function saveTrainingRecord(
   };
 
   const cleanedData = cloneDeep(resultDoc);
-  const dbResult = await window.utools.db.promises.put(cleanedData);
+  const dbResult = await getDb().promises.put(cleanedData);
 
   if (dbResult.ok) {
     log.d('保存快捷键训练记录成功');
@@ -54,11 +70,11 @@ export async function saveTrainingRecord(
  * 获取学习进度
  */
 export function getLearningProgress(category: string): ShortcutLearningProgress | null {
-  const allDocs = window.utools.db.allDocs(PROGRESS_KEY_PREFIX);
+  const allDocs = getDb().allDocs(PROGRESS_KEY_PREFIX) as BaseCouchDoc[];
   const progress = allDocs.find(
-    (doc: any) => doc.type === 'shortcut_learning_progress' && doc.category === category
+    (doc): doc is ShortcutLearningProgress => doc.type === 'shortcut_learning_progress' && (doc as ShortcutLearningProgress).category === category
   );
-  return progress as ShortcutLearningProgress || null;
+  return progress || null;
 }
 
 /**
@@ -93,7 +109,7 @@ export async function saveLearningProgress(
   }
 
   const cleanedData = cloneDeep(progress);
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('保存快捷键学习进度成功');
@@ -114,7 +130,7 @@ export async function clearLearningProgress(category: string): Promise<DbReturn>
     return { ok: true, id: '', rev: '' };
   }
 
-  const result = window.utools.db.remove(existing._id);
+  const result = getDb().remove(existing._id);
   log.i('清除快捷键学习进度', category, result.ok);
   return result;
 }
@@ -123,17 +139,17 @@ export async function clearLearningProgress(category: string): Promise<DbReturn>
  * 获取所有自定义快捷键
  */
 export function getAllCustomShortcuts(): ShortcutItem[] {
-  const allDocs = window.utools.db.allDocs(CUSTOM_KEY_PREFIX);
+  const allDocs = getDb().allDocs(CUSTOM_KEY_PREFIX) as BaseCouchDoc[];
   return allDocs
-    .filter((doc: any) => doc.type === 'shortcut_custom_item')
-    .map((doc: any) => ({
+    .filter((doc): doc is ShortcutItem & BaseCouchDoc => doc.type === 'shortcut_custom_item')
+    .map((doc) => ({
       id: doc.id,
       category: doc.category,
       functionName: doc.functionName,
       description: doc.description,
       keys: doc.keys,
       platform: doc.platform || 'common'
-    })) as ShortcutItem[];
+    }));
 }
 
 /**
@@ -150,7 +166,7 @@ export async function saveCustomShortcut(item: ShortcutItem): Promise<DbReturn> 
   };
 
   const cleanedData = cloneDeep(doc);
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('保存自定义快捷键成功');
@@ -166,7 +182,7 @@ export async function saveCustomShortcut(item: ShortcutItem): Promise<DbReturn> 
  */
 export function removeCustomShortcut(id: string): DbReturn {
   log.i('删除自定义快捷键', id);
-  const result = window.utools.db.remove(CUSTOM_KEY_PREFIX + id);
+  const result = getDb().remove(CUSTOM_KEY_PREFIX + id);
   if (result.ok) {
     log.d('删除自定义快捷键成功');
   } else if (result.error) {
@@ -179,24 +195,24 @@ export function removeCustomShortcut(id: string): DbReturn {
  * 获取所有自定义分类
  */
 export function getAllCustomCategories(): CustomCategoryDoc[] {
-  const allDocs = window.utools.db.allDocs(CUSTOM_CATEGORY_PREFIX);
+  const allDocs = getDb().allDocs(CUSTOM_CATEGORY_PREFIX) as BaseCouchDoc[];
   return allDocs
-    .filter((doc: any) => doc.type === 'shortcut_custom_category')
-    .map((doc: any) => ({
+    .filter((doc): doc is CustomCategoryDoc => doc.type === 'shortcut_custom_category')
+    .map((doc) => ({
       _id: doc._id,
       _rev: doc._rev,
       type: doc.type,
       name: doc.name,
       description: doc.description,
       icon: doc.icon
-    })) as CustomCategoryDoc[];
+    }));
 }
 
 /**
  * 保存自定义分类
  */
 export async function saveCustomCategory(
-  category: Omit<CustomCategoryDoc, '_id'> & { _id?: string }
+  category: Omit<CustomCategoryDoc, '_id' | 'type'> & { _id?: string; type?: string }
 ): Promise<DbReturn> {
   log.i('保存自定义分类', category.name);
 
@@ -210,7 +226,7 @@ export async function saveCustomCategory(
   };
 
   const cleanedData = cloneDeep(doc);
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('保存自定义分类成功');
@@ -233,7 +249,7 @@ export function removeCustomCategory(name: string): DbReturn {
     return { ok: true, id: '', rev: '' };
   }
 
-  const result = window.utools.db.remove(cat._id);
+  const result = getDb().remove(cat._id);
   if (result.ok) {
     log.d('删除自定义分类成功');
   } else if (result.error) {
@@ -264,7 +280,7 @@ export async function updateCustomShortcut(item: ShortcutItem): Promise<DbReturn
   };
 
   const cleanedData = cloneDeep(doc);
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('更新自定义快捷键成功');
@@ -279,9 +295,9 @@ export async function updateCustomShortcut(item: ShortcutItem): Promise<DbReturn
  * 清空所有快捷键记忆数据
  */
 export function clearAllShortcutMemoryData(): void {
-  const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
-  allDocs.forEach((doc: any) => {
-    window.utools.db.remove(doc._id);
+  const allDocs = getDb().allDocs(DB_KEY_PREFIX) as BaseCouchDoc[];
+  allDocs.forEach((doc) => {
+    getDb().remove(doc._id);
   });
   log.i('已清空所有快捷键记忆数据');
 }
@@ -290,7 +306,7 @@ export function clearAllShortcutMemoryData(): void {
  * 获取隐藏的示例分类列表
  */
 export function getHiddenCategories(): string[] {
-  const doc = window.utools.db.get(HIDDEN_CATEGORY_KEY);
+  const doc = getDb().get(HIDDEN_CATEGORY_KEY);
   return doc?.categories || [];
 }
 
@@ -301,7 +317,7 @@ export function hideCategory(name: string): void {
   const hidden = getHiddenCategories();
   if (!hidden.includes(name)) {
     hidden.push(name);
-    window.utools.db.put({
+    getDb().put({
       _id: HIDDEN_CATEGORY_KEY,
       categories: hidden,
       updatedAt: Date.now()
@@ -318,9 +334,9 @@ export function unhideCategory(name: string): void {
   const index = hidden.indexOf(name);
   if (index > -1) {
     hidden.splice(index, 1);
-    const doc = window.utools.db.get(HIDDEN_CATEGORY_KEY);
+    const doc = getDb().get(HIDDEN_CATEGORY_KEY);
     if (doc) {
-      window.utools.db.put({
+      getDb().put({
         _id: HIDDEN_CATEGORY_KEY,
         _rev: doc._rev,
         categories: hidden,

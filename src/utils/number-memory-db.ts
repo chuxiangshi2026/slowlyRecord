@@ -8,13 +8,29 @@ const TRAINING_KEY = DB_KEY_PREFIX + 'training';
 const RESULT_KEY_PREFIX = DB_KEY_PREFIX + 'result_';
 const PROGRESS_KEY = DB_KEY_PREFIX + 'progress';
 
+// uTools DB 环境检查
+function getDb(): NonNullable<Window['utools']>['db'] {
+  if (typeof window !== 'undefined' && window.utools?.db) {
+    return window.utools.db;
+  }
+  throw new Error('uTools DB 不可用');
+}
+
+// 基础 CouchDB 文档类型
+interface BaseCouchDoc {
+  _id: string;
+  _rev?: string;
+  type: string;
+  createdAt?: number;
+}
+
 /**
  * 获取用户的数字记忆训练数据
  * @returns 数字记忆训练记录
  */
 export function getNumberMemoryTraining(): NumberMemoryTraining | null {
-  const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
-  const training = allDocs.find((doc: any) => doc.type === 'number_memory_training');
+  const allDocs = getDb().allDocs(DB_KEY_PREFIX) as BaseCouchDoc[];
+  const training = allDocs.find((doc) => doc.type === 'number_memory_training');
   return training as NumberMemoryTraining || null;
 }
 
@@ -74,7 +90,7 @@ export async function saveAssociation(association: NumberImageAssociation): Prom
     cleanedData._rev = training._rev;
   }
 
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('保存数字图片关联成功');
@@ -107,7 +123,7 @@ export async function removeAssociation(number: string): Promise<DbReturn> {
     cleanedData._rev = training._rev;
   }
 
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('删除数字图片关联成功');
@@ -133,7 +149,7 @@ export async function saveTrainingResult(result: Omit<TrainingResult, '_id'>): P
   };
 
   const cleanedData = cloneDeep(resultDoc);
-  const dbResult = await window.utools.db.promises.put(cleanedData);
+  const dbResult = await getDb().promises.put(cleanedData);
 
   if (dbResult.ok) {
     log.d('保存训练结果成功');
@@ -150,15 +166,15 @@ export async function saveTrainingResult(result: Omit<TrainingResult, '_id'>): P
  * 清理旧的训练结果，只保留最近 N 条
  */
 function cleanupOldTrainingResults(keepCount: number): void {
-  const allDocs = window.utools.db.allDocs(RESULT_KEY_PREFIX);
+  const allDocs = getDb().allDocs(RESULT_KEY_PREFIX) as BaseCouchDoc[];
   const results = allDocs
-    .filter((doc: any) => doc.type === 'number_memory_result')
-    .sort((a: any, b: any) => b.createdAt - a.createdAt);
+    .filter((doc): doc is TrainingResult => doc.type === 'number_memory_result')
+    .sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
 
   if (results.length > keepCount) {
     const toDelete = results.slice(keepCount);
-    toDelete.forEach((doc: any) => {
-      window.utools.db.remove(doc._id);
+    toDelete.forEach((doc) => {
+      getDb().remove(doc._id);
     });
     log.i(`清理了 ${toDelete.length} 条旧训练结果，保留最近 ${keepCount} 条`);
   }
@@ -169,20 +185,20 @@ function cleanupOldTrainingResults(keepCount: number): void {
  * @returns 训练结果列表
  */
 export function getAllTrainingResults(): TrainingResult[] {
-  const allDocs = window.utools.db.allDocs(RESULT_KEY_PREFIX);
+  const allDocs = getDb().allDocs(RESULT_KEY_PREFIX) as BaseCouchDoc[];
   return allDocs
-    .filter((doc: any) => doc.type === 'number_memory_result')
-    .sort((a: any, b: any) => b.createdAt - a.createdAt) as TrainingResult[];
+    .filter((doc): doc is TrainingResult => doc.type === 'number_memory_result')
+    .sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
 }
 
 /**
  * 清空所有训练结果
  */
 export function clearAllTrainingResults(): void {
-  const allDocs = window.utools.db.allDocs(RESULT_KEY_PREFIX);
-  allDocs.forEach((doc: any) => {
+  const allDocs = getDb().allDocs(RESULT_KEY_PREFIX) as BaseCouchDoc[];
+  allDocs.forEach((doc) => {
     if (doc.type === 'number_memory_result') {
-      window.utools.db.remove(doc._id);
+      getDb().remove(doc._id);
     }
   });
   log.i('已清空所有训练结果');
@@ -197,7 +213,7 @@ export async function saveTrainingProgress(progress: TrainingProgress): Promise<
   log.i('保存训练进度', progress);
 
   const cleanedData = cloneDeep(progress);
-  const result = await window.utools.db.promises.put(cleanedData);
+  const result = await getDb().promises.put(cleanedData);
 
   if (result.ok) {
     log.d('保存训练进度成功');
@@ -213,7 +229,7 @@ export async function saveTrainingProgress(progress: TrainingProgress): Promise<
  * @returns 训练进度或 null
  */
 export function getTrainingProgress(): TrainingProgress | null {
-  const doc = window.utools.db.get(PROGRESS_KEY);
+  const doc = getDb().get(PROGRESS_KEY);
   return doc as TrainingProgress || null;
 }
 
@@ -221,9 +237,9 @@ export function getTrainingProgress(): TrainingProgress | null {
  * 清除训练进度
  */
 export function clearTrainingProgress(): void {
-  const doc = window.utools.db.get(PROGRESS_KEY);
+  const doc = getDb().get(PROGRESS_KEY);
   if (doc) {
-    window.utools.db.remove(doc._id);
+    getDb().remove(doc._id);
     log.i('已清除训练进度');
   }
 }
@@ -232,9 +248,9 @@ export function clearTrainingProgress(): void {
  * 清空所有数字记忆数据
  */
 export function clearAllNumberMemoryData(): void {
-  const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
-  allDocs.forEach((doc: any) => {
-    window.utools.db.remove(doc._id);
+  const allDocs = getDb().allDocs(DB_KEY_PREFIX) as BaseCouchDoc[];
+  allDocs.forEach((doc) => {
+    getDb().remove(doc._id);
   });
   log.i('已清空所有数字记忆数据');
 }

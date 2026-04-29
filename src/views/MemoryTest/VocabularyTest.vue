@@ -275,6 +275,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useVocabularyTestStore, WORD_BANK_LEVELS, type WordBankLevel, type ReadingLevel } from '@/stores/vocabularyTest';
 import { getWordBankInfo, type WordBankType } from '@/utils/wordbank-service';
+import { log } from '@/utils/logger';
 import {
   Collection,
   DocumentChecked,
@@ -392,7 +393,7 @@ async function loadWordBank(levelId: string): Promise<WordItem[]> {
     wordBankCache.value[levelId] = wordItems;
     return wordItems;
   } catch (error) {
-    console.error(`加载词库 ${levelId} 失败:`, error);
+    log.e(`加载词库 ${levelId} 失败`, error);
     return [];
   }
 }

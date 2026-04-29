@@ -87,16 +87,12 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import type { TrainingResult } from "@/types/number-memory";
+import type { TrainingResult, UnfinishedProgressInfo } from "@/types/number-memory";
 
 const props = defineProps<{
   modelValue: boolean;
   history: TrainingResult[];
-  progress?: {
-    mode: string;
-    current: number;
-    total: number;
-  } | null;
+  progress?: UnfinishedProgressInfo | null;
 }>();
 
 const emit = defineEmits<{
