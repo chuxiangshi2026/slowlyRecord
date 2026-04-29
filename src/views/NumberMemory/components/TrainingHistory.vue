@@ -1,14 +1,45 @@
 <template>
   <el-dialog
     v-model="visible"
-    title="📊 训练历史"
+    title="📊 训练状态"
     width="700px"
     :close-on-click-modal="false"
   >
-    <div v-if="history.length === 0" class="empty-history">
+    <!-- 未完成的训练进度 -->
+    <div v-if="progress" class="progress-section">
+      <h4 class="section-title">📝 未完成的训练</h4>
+      <el-card class="history-card" size="small">
+        <div class="record-header">
+          <el-tag :type="progress.mode === 'numberToImage' ? 'primary' : 'success'">
+            {{ progress.mode === 'numberToImage' ? '数字→图片' : '图片→数字' }}
+          </el-tag>
+          <span class="progress-text">
+            第 {{ progress.current }}/{{ progress.total }} 题
+          </span>
+        </div>
+        <div class="record-stats">
+          <div class="stat">
+            <span class="label">状态:</span>
+            <span class="value warning">进行中</span>
+          </div>
+        </div>
+        <div class="progress-actions">
+          <el-button type="primary" size="small" @click="onContinue">
+            继续训练
+          </el-button>
+          <el-button size="small" @click="onAbandon">
+            放弃进度
+          </el-button>
+        </div>
+      </el-card>
+    </div>
+
+    <!-- 已完成的训练历史 -->
+    <h4 v-if="history.length > 0" class="section-title">📋 已完成记录</h4>
+    <div v-if="history.length === 0 && !progress" class="empty-history">
       <el-empty description="暂无训练记录" :image-size="120" />
     </div>
-    <div v-else class="history-content">
+    <div v-else-if="history.length > 0" class="history-content">
       <el-timeline>
         <el-timeline-item
           v-for="(record, index) in history"
@@ -61,11 +92,18 @@ import type { TrainingResult } from "@/types/number-memory";
 const props = defineProps<{
   modelValue: boolean;
   history: TrainingResult[];
+  progress?: {
+    mode: string;
+    current: number;
+    total: number;
+  } | null;
 }>();
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
   (e: "clear"): void;
+  (e: "continue"): void;
+  (e: "abandon"): void;
 }>();
 
 const visible = ref(props.modelValue);
@@ -77,6 +115,24 @@ watch(() => props.modelValue, (val) => {
 watch(visible, (val) => {
   emit("update:modelValue", val);
 });
+
+function onContinue() {
+  visible.value = false;
+  emit("continue");
+}
+
+async function onAbandon() {
+  try {
+    await ElMessageBox.confirm("确定要放弃当前的训练进度吗？", "确认放弃", {
+      type: "warning"
+    });
+    visible.value = false;
+    emit("abandon");
+    ElMessage.success("已放弃训练进度");
+  } catch {
+    // 用户取消
+  }
+}
 
 function formatDate(timestamp: number): string {
   const date = new Date(timestamp);
@@ -135,57 +191,82 @@ async function clearHistory() {
   padding: 40px 0;
 }
 
+.section-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--utools-text-secondary);
+}
+
+.progress-section {
+  margin-bottom: 20px;
+}
+
+.progress-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.progress-text {
+  font-weight: bold;
+  color: var(--utools-text-primary);
+}
+
 .history-content {
   max-height: 500px;
   overflow-y: auto;
   padding: 10px;
+}
 
-  .history-card {
-    background-color: var(--utools-bg-card);
-    border-color: var(--utools-border-primary);
+.history-card {
+  background-color: var(--utools-bg-card);
+  border-color: var(--utools-border-primary);
 
-    .record-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
+  .record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 
-      .accuracy {
-        font-size: 20px;
+    .accuracy {
+      font-size: 20px;
+      font-weight: bold;
+
+      &.excellent {
+        color: var(--utools-success);
+      }
+
+      &.good {
+        color: var(--utools-warning);
+      }
+
+      &.poor {
+        color: var(--utools-danger);
+      }
+    }
+  }
+
+  .record-stats {
+    display: flex;
+    gap: 20px;
+
+    .stat {
+      .label {
+        color: var(--utools-text-tertiary);
+        font-size: 12px;
+      }
+
+      .value {
+        margin-left: 5px;
         font-weight: bold;
+        color: var(--utools-text-primary);
 
-        &.excellent {
+        &.correct {
           color: var(--utools-success);
         }
 
-        &.good {
+        &.warning {
           color: var(--utools-warning);
-        }
-
-        &.poor {
-          color: var(--utools-danger);
-        }
-      }
-    }
-
-    .record-stats {
-      display: flex;
-      gap: 20px;
-
-      .stat {
-        .label {
-          color: var(--utools-text-tertiary);
-          font-size: 12px;
-        }
-
-        .value {
-          margin-left: 5px;
-          font-weight: bold;
-          color: var(--utools-text-primary);
-
-          &.correct {
-            color: var(--utools-success);
-          }
         }
       }
     }

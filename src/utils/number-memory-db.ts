@@ -1,4 +1,4 @@
-import type {NumberImageAssociation, NumberMemoryTraining, TrainingResult} from "@/types/number-memory";
+import type {NumberImageAssociation, NumberMemoryTraining, TrainingResult, TrainingProgress} from "@/types/number-memory";
 import {log} from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import {DB_KEY_NUMBER_MEMORY} from "@/constants";
@@ -6,6 +6,7 @@ import {DB_KEY_NUMBER_MEMORY} from "@/constants";
 const DB_KEY_PREFIX = DB_KEY_NUMBER_MEMORY;
 const TRAINING_KEY = DB_KEY_PREFIX + 'training';
 const RESULT_KEY_PREFIX = DB_KEY_PREFIX + 'result_';
+const PROGRESS_KEY = DB_KEY_PREFIX + 'progress';
 
 /**
  * 获取用户的数字记忆训练数据
@@ -43,10 +44,10 @@ export function getAssociationByNumber(number: string): NumberImageAssociation |
  */
 export async function saveAssociation(association: NumberImageAssociation): Promise<DbReturn> {
   log.i('保存数字图片关联', association);
-  
+
   let training = getNumberMemoryTraining();
   const now = Date.now();
-  
+
   if (!training) {
     // 创建新的训练记录
     training = {
@@ -66,17 +67,22 @@ export async function saveAssociation(association: NumberImageAssociation): Prom
     }
     training.updatedAt = now;
   }
-  
+
+  // 必须带上 _rev 才能正确更新已有文档
   const cleanedData = cloneDeep(training);
+  if (training._rev) {
+    cleanedData._rev = training._rev;
+  }
+
   const result = await window.utools.db.promises.put(cleanedData);
-  
+
   if (result.ok) {
     log.d('保存数字图片关联成功');
     training._rev = result.rev;
   } else if (result.error) {
     log.e('保存数字图片关联失败', result.message);
   }
-  
+
   return result;
 }
 
@@ -87,51 +93,75 @@ export async function saveAssociation(association: NumberImageAssociation): Prom
  */
 export async function removeAssociation(number: string): Promise<DbReturn> {
   log.i('删除数字图片关联', number);
-  
+
   const training = getNumberMemoryTraining();
   if (!training) {
     return {ok: true, id: '', rev: ''};
   }
-  
+
   training.associations = training.associations.filter(a => a.number !== number);
   training.updatedAt = Date.now();
-  
+
   const cleanedData = cloneDeep(training);
+  if (training._rev) {
+    cleanedData._rev = training._rev;
+  }
+
   const result = await window.utools.db.promises.put(cleanedData);
-  
+
   if (result.ok) {
     log.d('删除数字图片关联成功');
     training._rev = result.rev;
   } else if (result.error) {
     log.e('删除数字图片关联失败', result.message);
   }
-  
+
   return result;
 }
 
 /**
- * 保存训练结果
+ * 保存训练结果（只保留最近三条）
  * @param result 训练结果
  * @returns 保存结果
  */
 export async function saveTrainingResult(result: Omit<TrainingResult, '_id'>): Promise<DbReturn> {
   log.i('保存训练结果', result);
-  
+
   const resultDoc: TrainingResult = {
     ...result,
     _id: RESULT_KEY_PREFIX + Date.now()
   };
-  
+
   const cleanedData = cloneDeep(resultDoc);
   const dbResult = await window.utools.db.promises.put(cleanedData);
-  
+
   if (dbResult.ok) {
     log.d('保存训练结果成功');
+    // 清理旧记录，只保留最近 3 条
+    cleanupOldTrainingResults(3);
   } else if (dbResult.error) {
     log.e('保存训练结果失败', dbResult.message);
   }
-  
+
   return dbResult;
+}
+
+/**
+ * 清理旧的训练结果，只保留最近 N 条
+ */
+function cleanupOldTrainingResults(keepCount: number): void {
+  const allDocs = window.utools.db.allDocs(RESULT_KEY_PREFIX);
+  const results = allDocs
+    .filter((doc: any) => doc.type === 'number_memory_result')
+    .sort((a: any, b: any) => b.createdAt - a.createdAt);
+
+  if (results.length > keepCount) {
+    const toDelete = results.slice(keepCount);
+    toDelete.forEach((doc: any) => {
+      window.utools.db.remove(doc._id);
+    });
+    log.i(`清理了 ${toDelete.length} 条旧训练结果，保留最近 ${keepCount} 条`);
+  }
 }
 
 /**
@@ -143,6 +173,59 @@ export function getAllTrainingResults(): TrainingResult[] {
   return allDocs
     .filter((doc: any) => doc.type === 'number_memory_result')
     .sort((a: any, b: any) => b.createdAt - a.createdAt) as TrainingResult[];
+}
+
+/**
+ * 清空所有训练结果
+ */
+export function clearAllTrainingResults(): void {
+  const allDocs = window.utools.db.allDocs(RESULT_KEY_PREFIX);
+  allDocs.forEach((doc: any) => {
+    if (doc.type === 'number_memory_result') {
+      window.utools.db.remove(doc._id);
+    }
+  });
+  log.i('已清空所有训练结果');
+}
+
+/**
+ * 保存训练进度（断点续练）
+ * @param progress 训练进度
+ * @returns 保存结果
+ */
+export async function saveTrainingProgress(progress: TrainingProgress): Promise<DbReturn> {
+  log.i('保存训练进度', progress);
+
+  const cleanedData = cloneDeep(progress);
+  const result = await window.utools.db.promises.put(cleanedData);
+
+  if (result.ok) {
+    log.d('保存训练进度成功');
+  } else if (result.error) {
+    log.e('保存训练进度失败', result.message);
+  }
+
+  return result;
+}
+
+/**
+ * 获取训练进度
+ * @returns 训练进度或 null
+ */
+export function getTrainingProgress(): TrainingProgress | null {
+  const doc = window.utools.db.get(PROGRESS_KEY);
+  return doc as TrainingProgress || null;
+}
+
+/**
+ * 清除训练进度
+ */
+export function clearTrainingProgress(): void {
+  const doc = window.utools.db.get(PROGRESS_KEY);
+  if (doc) {
+    window.utools.db.remove(doc._id);
+    log.i('已清除训练进度');
+  }
 }
 
 /**

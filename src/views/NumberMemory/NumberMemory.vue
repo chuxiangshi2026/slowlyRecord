@@ -27,6 +27,25 @@
         </div>
       </template>
 
+      <!-- 未完成的训练进度 -->
+      <el-alert
+        v-if="unfinishedProgress"
+        :title="`未完成的训练：${unfinishedProgress.mode === 'numberToImage' ? '数字→图片' : '图片→数字'}（第 ${unfinishedProgress.current}/${unfinishedProgress.total} 题）`"
+        type="warning"
+        :closable="false"
+        show-icon
+        class="progress-alert"
+      >
+        <template #default>
+          <el-button type="primary" size="small" @click="continueTraining">
+            继续训练
+          </el-button>
+          <el-button size="small" @click="abandonProgress">
+            放弃进度
+          </el-button>
+        </template>
+      </el-alert>
+
       <!-- 范围选择 -->
       <div class="range-selector">
         <el-radio-group v-model="numberRange" size="large">
@@ -154,11 +173,14 @@
       />
     </el-card>
 
-    <!-- 训练历史弹窗 -->
+    <!-- 训练状态弹窗 -->
     <TrainingHistory
       v-model="showHistory"
       :history="trainingHistory"
+      :progress="unfinishedProgress"
       @clear="clearTrainingHistory"
+      @continue="continueTraining"
+      @abandon="abandonProgress"
     />
 
     <!-- 新手引导 -->
@@ -213,6 +235,7 @@ import type { UploadFile } from "element-plus";
 import TrainingHistory from "./components/TrainingHistory.vue";
 import QuickStartGuide from "./components/QuickStartGuide.vue";
 import type { TrainingResult } from "@/types/number-memory";
+import { clearAllTrainingResults, getTrainingProgress, clearTrainingProgress } from "@/utils/number-memory-db";
 
 const router = useRouter();
 const store = useNumberMemoryStore();
@@ -226,6 +249,7 @@ const showHistory = ref(false);
 const showGuide = ref(false);
 const trainingHistory = ref<TrainingResult[]>([]);
 const numberRange = ref<'single' | 'zero-padded' | 'double' | 'all'>('single');
+const unfinishedProgress = ref<{ mode: string; current: number; total: number } | null>(null);
 
 // Computed
 const currentAssociation = computed(() => {
@@ -359,18 +383,39 @@ function goToTraining() {
   router.push("/number-memory/training");
 }
 
+function continueTraining() {
+  router.push("/number-memory/training");
+}
+
+function abandonProgress() {
+  clearTrainingProgress();
+  unfinishedProgress.value = null;
+  ElMessage.info("已放弃训练进度");
+}
+
 function goToEntries() {
   router.push("/number-memory/entries");
 }
 
-// 加载训练历史
+// 加载训练历史和未完成的进度
 function loadTrainingHistory() {
   trainingHistory.value = store.getTrainingHistory();
+
+  const progress = getTrainingProgress();
+  if (progress && progress.questions.length > 0) {
+    unfinishedProgress.value = {
+      mode: progress.mode,
+      current: progress.currentQuestionIndex + 1,
+      total: progress.questions.length
+    };
+  } else {
+    unfinishedProgress.value = null;
+  }
 }
 
 // 清空训练历史
 async function clearTrainingHistory() {
-  // 这里可以实现清空历史的逻辑，目前只是重新加载
+  clearAllTrainingResults();
   trainingHistory.value = [];
   showHistory.value = false;
   ElMessage.success("训练历史已清空");
@@ -662,6 +707,14 @@ onMounted(() => {
           margin-right: auto;
         }
       }
+    }
+  }
+
+  .progress-alert {
+    margin-bottom: 15px;
+
+    .el-button {
+      margin-left: 10px;
     }
   }
 

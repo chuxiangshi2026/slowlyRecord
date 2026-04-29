@@ -38,6 +38,33 @@ export interface TrainingResult {
   createdAt: number;
 }
 
+// 训练进度（断点续练）
+export interface TrainingProgress {
+  _id: string;
+  _rev?: string;
+  type: 'number_memory_progress';
+  mode: 'numberToImage' | 'imageToNumber';
+  questions: {
+    question: string;
+    correctAnswer: string;
+    options: string[];
+  }[];
+  currentQuestionIndex: number;
+  answerResults: {
+    question: string;
+    selectedImage: string | null;
+    selectedNumber: string | null;
+    correct: boolean;
+    responseTime: number;
+  }[];
+  elapsedTime: number;
+  hasAnswered: boolean;
+  selectedAnswer: string | null;
+  isCorrect: boolean;
+  createdAt: number;
+  updatedAt: number;
+}
+
 // 预设图片映射
 export interface PresetImageMap {
   [key: number]: {

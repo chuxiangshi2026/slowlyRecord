@@ -224,8 +224,14 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useNumberMemoryStore } from "@/stores/numberMemory";
 import { useWordsStore } from "@/stores/words";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { Timer } from "@element-plus/icons-vue";
+import {
+  saveTrainingProgress,
+  getTrainingProgress,
+  clearTrainingProgress
+} from "@/utils/number-memory-db";
+import type { TrainingProgress } from "@/types/number-memory";
 
 /**
  * 判断是否为base64格式的图片
@@ -400,20 +406,31 @@ async function finishTraining() {
   stopTimer();
   isFinished.value = true;
 
+  // 训练完成，清除进度
+  clearTrainingProgress();
+
   // 保存训练结果
   const details = answerResults.value.map((r, i) => ({
-    number: questions.value[i].question,
+    number: currentMode.value === 'numberToImage'
+      ? questions.value[i].question
+      : questions.value[i].correctAnswer,
     correct: r.correct,
     responseTime: r.responseTime
   }));
 
-  await store.saveResult(
+  const result = await store.saveResult(
     currentMode.value!,
     questions.value.length,
     correctCount.value,
     elapsedTime.value,
     details
   );
+
+  if (result.ok) {
+    ElMessage.success("训练结果已保存");
+  } else {
+    ElMessage.error("训练结果保存失败");
+  }
 }
 
 function restartTraining() {
@@ -422,19 +439,83 @@ function restartTraining() {
   }
 }
 
-function goBack() {
+async function goBack() {
+  await saveCurrentProgress();
   router.push("/number-memory");
 }
 
+// 保存当前训练进度
+async function saveCurrentProgress() {
+  if (!currentMode.value || isFinished.value || questions.value.length === 0) return;
+
+  const progress: TrainingProgress = {
+    _id: 'number_memory_progress',
+    type: 'number_memory_progress',
+    mode: currentMode.value,
+    questions: questions.value,
+    currentQuestionIndex: currentQuestionIndex.value,
+    answerResults: answerResults.value,
+    elapsedTime: elapsedTime.value,
+    hasAnswered: hasAnswered.value,
+    selectedAnswer: selectedAnswer.value,
+    isCorrect: isCorrect.value,
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+
+  await saveTrainingProgress(progress);
+}
+
+// 恢复训练进度
+async function restoreProgress() {
+  const progress = getTrainingProgress();
+  if (!progress) return false;
+
+  currentMode.value = progress.mode;
+  questions.value = progress.questions;
+  currentQuestionIndex.value = progress.currentQuestionIndex;
+  answerResults.value = progress.answerResults;
+  elapsedTime.value = progress.elapsedTime;
+  hasAnswered.value = progress.hasAnswered;
+  selectedAnswer.value = progress.selectedAnswer;
+  isCorrect.value = progress.isCorrect;
+  isFinished.value = false;
+  questionStartTime = Date.now();
+
+  startTimer();
+  return true;
+}
+
 // Lifecycle
-onMounted(() => {
+onMounted(async () => {
   store.loadAssociations();
   // 记录最后访问的页面
   wordsStore.setLastVisitedPage('/number-memory/training');
+
+  // 检查是否有未完成的训练进度
+  const progress = getTrainingProgress();
+  if (progress && progress.questions.length > 0) {
+    try {
+      await ElMessageBox.confirm(
+        `检测到未完成的训练（${progress.mode === 'numberToImage' ? '数字→图片' : '图片→数字'}，第 ${progress.currentQuestionIndex + 1}/${progress.questions.length} 题），是否继续？`,
+        '继续训练',
+        {
+          confirmButtonText: '继续',
+          cancelButtonText: '重新开始',
+          type: 'info'
+        }
+      );
+      await restoreProgress();
+    } catch {
+      // 用户选择重新开始，清除进度
+      clearTrainingProgress();
+    }
+  }
 });
 
 onUnmounted(() => {
   stopTimer();
+  saveCurrentProgress();
 });
 </script>
 
