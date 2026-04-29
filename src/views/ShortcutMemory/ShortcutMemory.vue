@@ -82,7 +82,7 @@
         </div>
 
         <el-table
-          :data="store.currentCategoryShortcuts"
+          :data="store.currentShortcuts"
           style="width: 100%"
           stripe
           class="shortcut-table"

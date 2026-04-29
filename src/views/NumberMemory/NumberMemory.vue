@@ -229,6 +229,7 @@ import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useNumberMemoryStore } from "@/stores/numberMemory";
 import { useWordsStore } from "@/stores/words";
+import { log } from "@/utils/logger";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Check, Delete, Upload } from "@element-plus/icons-vue";
 import type { UploadFile } from "element-plus";
@@ -342,10 +343,20 @@ async function selectPresetImage(item: { name: string; url: string; description:
 
 function handleImageChange(file: UploadFile) {
   if (!file.raw) return;
-  
+
+  // 检查文件大小（500KB 限制，避免 uTools DB 单条记录超限）
+  if (file.raw.size > 500 * 1024) {
+    ElMessage.warning('图片过大，建议压缩后上传');
+    return;
+  }
+
   const reader = new FileReader();
   reader.onload = (e) => {
     uploadedImage.value = e.target?.result as string;
+  };
+  reader.onerror = () => {
+    ElMessage.error('图片读取失败');
+    log.e('FileReader 读取图片失败');
   };
   reader.readAsDataURL(file.raw);
 }

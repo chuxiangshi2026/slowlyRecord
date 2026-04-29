@@ -16,7 +16,6 @@ import {
   matchShortcut,
   normalizeKey,
   loadAllShortcuts,
-  loadShortcutCategories,
   isCustomCategory
 } from "@/utils/shortcut-memory-data";
 import {
@@ -54,8 +53,6 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   const trainingDetails = ref<{ itemId: string; correct: boolean; responseTime: number }[]>([]);
 
   // Getters
-  const currentCategoryShortcuts = computed(() => currentShortcuts.value);
-  
   const currentShortcutCount = computed(() => currentShortcuts.value.length);
 
   const progress = computed(() => {
@@ -201,40 +198,9 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   }
 
   /**
-   * 检查当前按下的按键是否匹配正确答案
+   * 记录答题结果并更新状态
    */
-  function checkKeyPress(): boolean {
-    const question = currentQuestion.value;
-    if (!question) return false;
-
-    const isMatch = matchShortcut(pressedKeys.value, question.keys);
-    const responseTime = Date.now() - questionStartTime.value;
-
-    if (isMatch) {
-      trainingPhase.value = 'correct';
-      correctCount.value++;
-    } else {
-      trainingPhase.value = 'wrong';
-      wrongCount.value++;
-    }
-
-    trainingDetails.value.push({
-      itemId: question.id,
-      correct: isMatch,
-      responseTime
-    });
-
-    return isMatch;
-  }
-
-  /**
-   * 检查功能选择答案
-   */
-  function checkFunctionSelect(selectedId: string): boolean {
-    const question = currentQuestion.value;
-    if (!question) return false;
-
-    const isCorrect = question.id === selectedId;
+  function recordAnswer(isCorrect: boolean, itemId: string): void {
     const responseTime = Date.now() - questionStartTime.value;
 
     if (isCorrect) {
@@ -246,11 +212,33 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     }
 
     trainingDetails.value.push({
-      itemId: question.id,
+      itemId,
       correct: isCorrect,
       responseTime
     });
+  }
 
+  /**
+   * 检查当前按下的按键是否匹配正确答案
+   */
+  function checkKeyPress(): boolean {
+    const question = currentQuestion.value;
+    if (!question) return false;
+
+    const isMatch = matchShortcut(pressedKeys.value, question.keys);
+    recordAnswer(isMatch, question.id);
+    return isMatch;
+  }
+
+  /**
+   * 检查功能选择答案
+   */
+  function checkFunctionSelect(selectedId: string): boolean {
+    const question = currentQuestion.value;
+    if (!question) return false;
+
+    const isCorrect = question.id === selectedId;
+    recordAnswer(isCorrect, question.id);
     return isCorrect;
   }
 
@@ -345,19 +333,27 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   }
 
   /**
+   * 操作成功后刷新数据
+   * @param clearIfCategory 如果当前分类等于此值，则清空当前分类
+   */
+  async function refreshAfterMutation(clearIfCategory?: string) {
+    await loadAllShortcuts(true);
+    if (clearIfCategory && currentCategory.value === clearIfCategory) {
+      currentCategory.value = '';
+      currentShortcuts.value = [];
+    } else if (currentCategory.value) {
+      selectCategory(currentCategory.value);
+    }
+    categories.value = getCategories();
+  }
+
+  /**
    * 保存自定义快捷键
    */
   async function addCustomShortcut(item: ShortcutItem) {
     const result = await saveCustomShortcut(item);
     if (result.ok) {
-      // 重新加载数据
-      await loadAllShortcuts(true);
-      // 如果当前正在查看该分类，刷新列表
-      if (currentCategory.value) {
-        selectCategory(currentCategory.value);
-      }
-      // 刷新分类
-      categories.value = getCategories();
+      await refreshAfterMutation();
     }
     return result;
   }
@@ -368,13 +364,18 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   async function deleteCustomShortcut(id: string) {
     const result = removeCustomShortcut(id);
     if (result.ok) {
-      await loadAllShortcuts(true);
-      if (currentCategory.value) {
-        selectCategory(currentCategory.value);
-      }
-      categories.value = getCategories();
+      await refreshAfterMutation();
     }
     return result;
+  }
+
+  // 使用更可靠的 ID 生成方式（计数器确保连续调用唯一性）
+  let idCounter = 0;
+  function generateUniqueId(): string {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).slice(2, 9);
+    const counter = (idCounter++).toString(36);
+    return `custom-${timestamp}-${random}-${counter}`;
   }
 
   /**
@@ -391,18 +392,28 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
 
     // 如果有源数据，复制为自定义快捷键
     if (sourceItems && sourceItems.length > 0) {
+      let successCount = 0;
+      let failCount = 0;
+
       for (const item of sourceItems) {
         const newItem: ShortcutItem = {
           ...item,
-          id: 'custom-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+          id: generateUniqueId(),
           category: name
         };
-        await saveCustomShortcut(newItem);
+        const saveResult = await saveCustomShortcut(newItem);
+        if (saveResult.ok) {
+          successCount++;
+        } else {
+          failCount++;
+          log.w(`保存快捷键失败: ${newItem.id}`, saveResult.message);
+        }
       }
+
+      log.i(`批量导入: 成功 ${successCount}/${sourceItems.length}` + (failCount > 0 ? `, 失败 ${failCount}` : ''));
     }
 
-    await loadAllShortcuts(true);
-    categories.value = getCategories();
+    await refreshAfterMutation();
     return result;
   }
 
@@ -448,12 +459,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   async function deleteCustomCategory(name: string) {
     const result = removeCustomCategory(name);
     if (result.ok) {
-      await loadAllShortcuts(true);
-      if (currentCategory.value === name) {
-        currentCategory.value = '';
-        currentShortcuts.value = [];
-      }
-      categories.value = getCategories();
+      await refreshAfterMutation(name);
     }
     return result;
   }
@@ -469,8 +475,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   ) {
     const result = await saveCustomCategory({ _id, name, description, icon });
     if (result.ok) {
-      await loadAllShortcuts(true);
-      categories.value = getCategories();
+      await refreshAfterMutation();
     }
     return result;
   }
@@ -481,10 +486,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   async function updateCustomShortcutItem(item: ShortcutItem) {
     const result = await updateCustomShortcut(item);
     if (result.ok) {
-      await loadAllShortcuts(true);
-      if (currentCategory.value) {
-        selectCategory(currentCategory.value);
-      }
+      await refreshAfterMutation();
     }
     return result;
   }
@@ -495,32 +497,17 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   async function removeCategory(name: string) {
     const isCustom = isCustomCategory(name);
     if (isCustom) {
-      // 自定义分类直接删除
-      const result = removeCustomCategory(name);
-      if (result.ok) {
-        await loadAllShortcuts(true);
-        if (currentCategory.value === name) {
-          currentCategory.value = '';
-          currentShortcuts.value = [];
-        }
-        categories.value = getCategories();
-      }
-      return result;
-    } else {
-      // 示例分类隐藏
-      hideCategory(name);
-      await loadAllShortcuts(true);
-      if (currentCategory.value === name) {
-        currentCategory.value = '';
-        currentShortcuts.value = [];
-      }
-      categories.value = getCategories();
-      return { ok: true, error: false, message: '', id: '', rev: '' };
+      return await deleteCustomCategory(name);
     }
+
+    // 示例分类隐藏
+    hideCategory(name);
+    await refreshAfterMutation(name);
+    return { ok: true, error: false, message: '', id: '', rev: '' };
   }
 
   // 初始化
-  loadCategories();
+  loadCategories().catch((err) => log.e('初始化加载快捷键分类失败', err));
 
   return {
     // State
@@ -536,14 +523,13 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     wrongCount,
     trainingStartTime,
     trainingDetails,
-    
+
     // Getters
-    currentCategoryShortcuts,
     currentShortcutCount,
     progress,
     currentQuestion,
     isTrainingComplete,
-    
+
     // Actions
     loadCategories,
     selectCategory,

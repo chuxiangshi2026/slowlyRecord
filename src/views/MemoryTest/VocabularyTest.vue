@@ -292,6 +292,12 @@ import {
 } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 
+interface WordBankItem {
+  word: string;
+  phonetic?: string;
+  explains: string;
+}
+
 interface WordItem {
   word: string;
   phonetic: string;
@@ -315,6 +321,7 @@ const testConfig = ref({
 // 测试状态
 const isTesting = ref(false);
 const showResult = ref(false);
+const isLoading = ref(false);
 const currentRound = ref(1);
 const currentWordIndex = ref(0);
 const testWords = ref<WordItem[]>([]);
@@ -384,7 +391,7 @@ async function loadWordBank(levelId: string): Promise<WordItem[]> {
   try {
     const response = await fetch(`/wordbanks/${levelId}.json`);
     const words = await response.json();
-    const wordItems: WordItem[] = words.map((w: any) => ({
+    const wordItems: WordItem[] = words.map((w: WordBankItem) => ({
       word: w.word,
       phonetic: w.phonetic || '',
       explains: w.explains,
@@ -449,20 +456,29 @@ async function generateOptions(correctWord: WordItem) {
 
 // 开始测试
 async function startTest() {
-  isTesting.value = true;
-  showResult.value = false;
-  currentRound.value = 1;
-  currentWordIndex.value = 0;
-  results.value = {};
-  testResult.value = null;
-  
-  await generateTestWords();
-  
-  if (testWords.value.length > 0) {
-    await generateOptions(currentWord.value);
-  } else {
-    ElMessage.error('词库加载失败，请重试');
+  isLoading.value = true;
+  try {
+    isTesting.value = true;
+    showResult.value = false;
+    currentRound.value = 1;
+    currentWordIndex.value = 0;
+    results.value = {};
+    testResult.value = null;
+
+    await generateTestWords();
+
+    if (testWords.value.length > 0) {
+      await generateOptions(currentWord.value);
+    } else {
+      ElMessage.error('词库加载失败，请重试');
+      isTesting.value = false;
+    }
+  } catch (error) {
+    log.e('开始测试失败', error);
+    ElMessage.error('测试启动失败，请重试');
     isTesting.value = false;
+  } finally {
+    isLoading.value = false;
   }
 }
 

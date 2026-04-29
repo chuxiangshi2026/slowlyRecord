@@ -173,10 +173,25 @@ function cleanupOldTrainingResults(keepCount: number): void {
 
   if (results.length > keepCount) {
     const toDelete = results.slice(keepCount);
+    let successCount = 0;
+    let failCount = 0;
+
     toDelete.forEach((doc) => {
-      getDb().remove(doc._id);
+      try {
+        const result = getDb().remove(doc._id);
+        if (result.ok) {
+          successCount++;
+        } else {
+          failCount++;
+          log.w(`删除训练结果失败: ${doc._id}`, result.message);
+        }
+      } catch (error) {
+        failCount++;
+        log.e(`删除训练结果异常: ${doc._id}`, error);
+      }
     });
-    log.i(`清理了 ${toDelete.length} 条旧训练结果，保留最近 ${keepCount} 条`);
+
+    log.i(`清理训练结果: 成功 ${successCount} 条, 失败 ${failCount} 条, 保留最近 ${keepCount} 条`);
   }
 }
 
@@ -196,12 +211,22 @@ export function getAllTrainingResults(): TrainingResult[] {
  */
 export function clearAllTrainingResults(): void {
   const allDocs = getDb().allDocs(RESULT_KEY_PREFIX) as BaseCouchDoc[];
+  let failCount = 0;
   allDocs.forEach((doc) => {
     if (doc.type === 'number_memory_result') {
-      getDb().remove(doc._id);
+      try {
+        const result = getDb().remove(doc._id);
+        if (!result.ok) {
+          failCount++;
+          log.w(`删除训练结果失败: ${doc._id}`, result.message);
+        }
+      } catch (error) {
+        failCount++;
+        log.e(`删除训练结果异常: ${doc._id}`, error);
+      }
     }
   });
-  log.i('已清空所有训练结果');
+  log.i('已清空所有训练结果' + (failCount > 0 ? `, ${failCount} 条失败` : ''));
 }
 
 /**
@@ -229,18 +254,34 @@ export async function saveTrainingProgress(progress: TrainingProgress): Promise<
  * @returns 训练进度或 null
  */
 export function getTrainingProgress(): TrainingProgress | null {
-  const doc = getDb().get(PROGRESS_KEY);
-  return doc as TrainingProgress || null;
+  try {
+    const doc = getDb().get(PROGRESS_KEY);
+    if (!doc || typeof doc !== 'object' || doc.type !== 'number_memory_progress') {
+      return null;
+    }
+    return doc as TrainingProgress;
+  } catch (error) {
+    log.e('获取训练进度失败', error);
+    return null;
+  }
 }
 
 /**
  * 清除训练进度
  */
 export function clearTrainingProgress(): void {
-  const doc = getDb().get(PROGRESS_KEY);
-  if (doc) {
-    getDb().remove(doc._id);
-    log.i('已清除训练进度');
+  try {
+    const doc = getDb().get(PROGRESS_KEY);
+    if (doc?._id) {
+      const result = getDb().remove(doc._id);
+      if (result.ok) {
+        log.i('已清除训练进度');
+      } else {
+        log.w('清除训练进度失败', result.message);
+      }
+    }
+  } catch (error) {
+    log.e('清除训练进度异常', error);
   }
 }
 
@@ -249,8 +290,18 @@ export function clearTrainingProgress(): void {
  */
 export function clearAllNumberMemoryData(): void {
   const allDocs = getDb().allDocs(DB_KEY_PREFIX) as BaseCouchDoc[];
+  let failCount = 0;
   allDocs.forEach((doc) => {
-    getDb().remove(doc._id);
+    try {
+      const result = getDb().remove(doc._id);
+      if (!result.ok) {
+        failCount++;
+        log.w(`删除数据失败: ${doc._id}`, result.message);
+      }
+    } catch (error) {
+      failCount++;
+      log.e(`删除数据异常: ${doc._id}`, error);
+    }
   });
-  log.i('已清空所有数字记忆数据');
+  log.i('已清空所有数字记忆数据' + (failCount > 0 ? `, ${failCount} 条失败` : ''));
 }

@@ -214,6 +214,15 @@ export function getAllCustomCategories(): CustomCategoryDoc[] {
 export async function saveCustomCategory(
   category: Omit<CustomCategoryDoc, '_id' | 'type'> & { _id?: string; type?: string }
 ): Promise<DbReturn> {
+  // 输入验证
+  if (!category.name?.trim()) {
+    return { ok: false, error: true, message: '分类名称不能为空', id: '', rev: '' };
+  }
+
+  if (category.name.length > 50) {
+    return { ok: false, error: true, message: '分类名称不能超过50个字符', id: '', rev: '' };
+  }
+
   log.i('保存自定义分类', category.name);
 
   const doc = {
@@ -314,15 +323,26 @@ export function getHiddenCategories(): string[] {
  * 隐藏示例分类
  */
 export function hideCategory(name: string): void {
-  const hidden = getHiddenCategories();
-  if (!hidden.includes(name)) {
-    hidden.push(name);
-    getDb().put({
-      _id: HIDDEN_CATEGORY_KEY,
-      categories: hidden,
-      updatedAt: Date.now()
-    });
-    log.i('隐藏分类', name);
+  try {
+    const hidden = getHiddenCategories();
+    if (!hidden.includes(name)) {
+      hidden.push(name);
+      const existing = getDb().get(HIDDEN_CATEGORY_KEY);
+      const result = getDb().put({
+        _id: HIDDEN_CATEGORY_KEY,
+        _rev: existing?._rev,
+        categories: hidden,
+        updatedAt: Date.now()
+      });
+
+      if (result.ok) {
+        log.i('隐藏分类', name);
+      } else {
+        log.e('隐藏分类失败', result.message);
+      }
+    }
+  } catch (error) {
+    log.e('隐藏分类异常', error);
   }
 }
 
