@@ -103,7 +103,8 @@
       ],
       "source": "《白氏长庆集》",
       "location": "长安/渭城",
-      "wordCount": 80
+      "wordCount": 80,
+      "year": 787
     },
     {
       "id": "tang_006",
@@ -121,7 +122,8 @@
       ],
       "source": "《全唐诗》",
       "location": "鹳雀楼/山西永济",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 700
     },
     {
       "id": "tang_007",
@@ -139,7 +141,8 @@
       ],
       "source": "《全唐诗》",
       "location": "边塞/阴山",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 740
     },
     {
       "id": "tang_008",
@@ -157,7 +160,8 @@
       ],
       "source": "《王右丞集》",
       "location": "渭城/咸阳",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 740
     },
     {
       "id": "tang_009",
@@ -176,7 +180,8 @@
       ],
       "source": "《柳河东集》",
       "location": "永州/愚溪",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 805
     },
     {
       "id": "tang_010",
@@ -194,7 +199,8 @@
       ],
       "source": "《孟浩然集》",
       "location": "鹿门山/襄阳",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 710
     },
     {
       "id": "tang_011",
@@ -212,7 +218,8 @@
       ],
       "source": "《杜工部集》",
       "location": "泰山/兖州",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 735
     },
     {
       "id": "tang_012",
@@ -249,7 +256,8 @@
       ],
       "source": "《白氏长庆集》",
       "location": "江州/九江",
-      "wordCount": 630
+      "wordCount": 630,
+      "year": 816
     },
     {
       "id": "tang_014",
@@ -267,7 +275,8 @@
       ],
       "source": "《全唐诗》",
       "location": "黄鹤楼/武汉",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 730
     },
     {
       "id": "tang_015",
@@ -285,7 +294,8 @@
       ],
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 740
     },
     {
       "id": "tang_016",
@@ -302,7 +312,8 @@
       ],
       "source": "《李义山诗集》",
       "location": "长安",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 840
     },
     {
       "id": "tang_017",
@@ -320,7 +331,8 @@
       ],
       "source": "《樊川文集》",
       "location": "秦淮河/南京",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 835
     },
     {
       "id": "tang_018",
@@ -356,7 +368,8 @@
       ],
       "source": "《刘梦得文集》",
       "location": "扬州",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 826
     },
     {
       "id": "tang_020",
@@ -374,7 +387,8 @@
       ],
       "source": "《陈伯玉集》",
       "location": "幽州台/北京",
-      "wordCount": 22
+      "wordCount": 22,
+      "year": 697
     },
     {
       "id": "tang_021",
@@ -392,7 +406,8 @@
       ],
       "source": "《王右丞集》",
       "location": "河西走廊/居延",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 737
     },
     {
       "id": "tang_022",
@@ -410,7 +425,8 @@
       ],
       "source": "《李义山诗集》",
       "location": "长安",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 858
     },
     {
       "id": "tang_023",
@@ -428,7 +444,8 @@
       ],
       "source": "《白氏长庆集》",
       "location": "钱塘湖/杭州",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 823
     },
     {
       "id": "tang_024",
@@ -446,7 +463,8 @@
       ],
       "source": "《王子安集》",
       "location": "长安",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 668
     },
     {
       "id": "tang_025",
@@ -463,7 +481,8 @@
       ],
       "source": "《杜工部集》",
       "location": "成都/草堂",
-      "wordCount": 170
+      "wordCount": 170,
+      "year": 761
     },
     {
       "id": "tang_026",
@@ -481,7 +500,8 @@
       ],
       "source": "《昌黎先生集》",
       "location": "长安",
-      "wordCount": 456
+      "wordCount": 456,
+      "year": 802
     },
     {
       "id": "tang_027",
@@ -499,7 +519,8 @@
       ],
       "source": "《樊川文集》",
       "location": "长安",
-      "wordCount": 513
+      "wordCount": 513,
+      "year": 825
     },
     {
       "id": "tang_028",
@@ -517,7 +538,8 @@
       ],
       "source": "《刘梦得文集》",
       "location": "和州/安徽",
-      "wordCount": 81
+      "wordCount": 81,
+      "year": 824
     },
     {
       "id": "tang_029",
@@ -535,7 +557,8 @@
       ],
       "source": "《柳河东集》",
       "location": "永州/湖南",
-      "wordCount": 193
+      "wordCount": 193,
+      "year": 805
     },
     {
       "id": "tang_030",
@@ -553,7 +576,8 @@
       ],
       "source": "《昌黎先生集》",
       "location": "长安",
-      "wordCount": 153
+      "wordCount": 153,
+      "year": 795
     },
     {
       "id": "tang_031",
@@ -571,7 +595,8 @@
       ],
       "source": "《岑嘉州集》",
       "location": "轮台/新疆",
-      "wordCount": 126
+      "wordCount": 126,
+      "year": 754
     },
     {
       "id": "tang_032",
@@ -645,7 +670,8 @@
       ],
       "source": "《孟东野集》",
       "location": "溧阳/江苏",
-      "wordCount": 30
+      "wordCount": 30,
+      "year": 796
     },
     {
       "id": "tang_036",
@@ -663,7 +689,8 @@
       ],
       "source": "《白氏长庆集》",
       "location": "长安",
-      "wordCount": 135
+      "wordCount": 135,
+      "year": 806
     },
     {
       "id": "tang_037",
@@ -680,7 +707,8 @@
       ],
       "source": "《樊川文集》",
       "location": "黄州/赤壁",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 842
     },
     {
       "id": "tang_038",
@@ -698,7 +726,8 @@
       ],
       "source": "《樊川文集》",
       "location": "江南",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 835
     },
     {
       "id": "tang_039",
@@ -715,7 +744,8 @@
       ],
       "source": "《李义山诗集》",
       "location": "巴蜀/四川",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 850
     },
     {
       "id": "tang_040",
@@ -733,7 +763,8 @@
       ],
       "source": "《李长吉歌诗》",
       "location": "雁门关/山西",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 807
     },
     {
       "id": "tang_041",
@@ -770,7 +801,8 @@
       ],
       "source": "《全唐诗》",
       "location": "苏州/寒山寺",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 756
     },
     {
       "id": "tang_043",
@@ -787,7 +819,8 @@
       ],
       "source": "《全唐诗》",
       "location": "越州/浙江绍兴",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 744
     },
     {
       "id": "tang_044",
@@ -805,7 +838,8 @@
       ],
       "source": "《全唐诗》",
       "location": "长安",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 735
     },
     {
       "id": "tang_045",
@@ -823,7 +857,8 @@
       ],
       "source": "《全唐诗》",
       "location": "凉州/甘肃",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 710
     },
     {
       "id": "tang_046",
@@ -841,7 +876,8 @@
       ],
       "source": "《韦苏州集》",
       "location": "滁州/安徽",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 783
     },
     {
       "id": "tang_047",
@@ -859,7 +895,8 @@
       ],
       "source": "《杜工部集》",
       "location": "石壕村/河南",
-      "wordCount": 120
+      "wordCount": 120,
+      "year": 759
     },
     {
       "id": "tang_048",
@@ -896,7 +933,8 @@
       ],
       "source": "《全唐诗》",
       "location": "扬州/江都",
-      "wordCount": 252
+      "wordCount": 252,
+      "year": 650
     },
     {
       "id": "tang_050",
@@ -914,7 +952,8 @@
       ],
       "source": "《高常侍集》",
       "location": "睢阳/河南商丘",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 747
     }
   ]
 }
