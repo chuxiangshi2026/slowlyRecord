@@ -7,6 +7,7 @@ import type {
 import { log } from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import { DB_KEY_SHORTCUT_MEMORY } from "@/constants";
+import {getDbAdapter} from "@/adapters/db";
 
 const DB_KEY_PREFIX = DB_KEY_SHORTCUT_MEMORY;
 const RECORD_KEY_PREFIX = DB_KEY_PREFIX + 'record_';
@@ -15,12 +16,9 @@ const CUSTOM_KEY_PREFIX = DB_KEY_PREFIX + 'custom_';
 const CUSTOM_CATEGORY_PREFIX = DB_KEY_PREFIX + 'category_';
 const HIDDEN_CATEGORY_KEY = DB_KEY_PREFIX + 'hidden_categories';
 
-// uTools DB 环境检查
-function getDb(): NonNullable<Window['utools']>['db'] {
-  if (typeof window !== 'undefined' && window.utools?.db) {
-    return window.utools.db;
-  }
-  throw new Error('uTools DB 不可用');
+// 获取数据库适配器
+function getDb() {
+  return getDbAdapter();
 }
 
 // 基础 CouchDB 文档类型

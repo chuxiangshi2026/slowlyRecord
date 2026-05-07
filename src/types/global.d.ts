@@ -33,5 +33,11 @@ interface Window {
     }
 }
 
+/**
+ * 平台标识（由 Vite define 注入）
+ * 可选值: 'utools' | 'electron' | 'web' | 'mp-weixin' | 'app-android' | 'app-ios'
+ */
+declare const __PLATFORM__: string
+
 
 

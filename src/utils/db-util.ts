@@ -2,13 +2,15 @@ import type {Word} from "@/types/words";
 
 import {DB_KEY} from "@/constants";
 import {log} from "@/utils/logger"
+import {getDbAdapter} from "@/adapters/db"
 import cloneDeep from 'lodash.clonedeep';
 /**
  * 获取数据库全部的单词
  * @returns 返回数据库中所有单词的数组
  */
 function listDbWords(): Word[] {
-    let allDocs = window.utools.db.allDocs(DB_KEY);
+    const db = getDbAdapter();
+    let allDocs = db.allDocs(DB_KEY);
     log.i('数据库中所有单词', allDocs);
     return allDocs as Word[]
 }
@@ -23,7 +25,8 @@ async function addAndUpdateDbWord(word: Word):Promise<DbReturn> {
     // 转成字符串保存数据库,替换JSON.parse(JSON.stringify(word));
     const cleanedWord = cloneDeep(word)
     // console.log('查看去重后的序列化数据',word)
-    let result = await window.utools.db.promises.put(cleanedWord);
+    const db = getDbAdapter();
+    let result = await db.promises.put(cleanedWord);
 
     if (result.ok) {
         log.d("添加单个单词到数据库成功")
@@ -50,7 +53,8 @@ async function updateDbWordList(docs: Word[]): Promise<DbReturn[]> {
         return [];
     }
     // 批量更新数据库
-    const results = window.utools.db.bulkDocs(cleanedDocs);
+    const db = getDbAdapter();
+    const results = db.bulkDocs(cleanedDocs);
 
 
     results.forEach((ret: DbReturn) => {
@@ -72,7 +76,8 @@ async function updateDbWordList(docs: Word[]): Promise<DbReturn[]> {
  * @param id
  */
 function removeDbWordById(id: string): void {
-    const result = window.utools.db.remove(id);
+    const db = getDbAdapter();
+    const result = db.remove(id);
     if (result.ok) {
         console.log("删除成功");
     } else if (result.error) {
@@ -86,7 +91,8 @@ function removeDbWordById(id: string): void {
  * @since 2025/11/5
  */
 function cleanDbWord() {
-    const result =  utools.db.remove(DB_KEY);
+    const db = getDbAdapter();
+    const result = db.remove(DB_KEY);
     if (result.ok) {
         console.log("删除成功");
     } else if (result.error) {
@@ -100,14 +106,11 @@ function cleanDbWord() {
  * @since 2025/11/5
  */
 function getDbWordById(id: string): Word {
-    const word = window.utools.db.get(id)
+    const db = getDbAdapter();
+    const word = db.get(id)
     console.log(word, '根据id获取单词');
     return word as Word;
 }
-
-/*function showNotification(text: string): void {
-    window.utools.showNotification(text);
-}*/
 
 // 多端同步时触发
 // utools.onDbPull((docs) => {

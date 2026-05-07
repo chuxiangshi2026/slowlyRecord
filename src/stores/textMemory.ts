@@ -11,6 +11,7 @@ import type {
 } from '@/types/text-memory';
 import cloneDeep from 'lodash.clonedeep';
 import { parseLocation } from '@/utils/poetry-location';
+import {getDbAdapter} from '@/adapters/db';
 
 // 存储键名
 const TEXTMEMORY_DOC_ID = 'slowlyrecord-textmemory-data';
@@ -33,15 +34,6 @@ interface LearningProgress {
   exerciseType: 'fillBlanks' | 'choice' | 'typing';
   progress: any;
   lastAccessTime: number;
-}
-
-// 获取 uTools db 实例
-function getDb() {
-  if (typeof window === 'undefined' || !window.utools?.db) {
-    console.warn('uTools db 不可用');
-    return null;
-  }
-  return window.utools.db;
 }
 
 // 生成唯一ID
@@ -157,8 +149,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
      */
     async getTextMemoryDoc(): Promise<TextMemoryDoc | null> {
       try {
-        const db = getDb();
-        if (!db) return null;
+        const db = getDbAdapter();
         const doc = await db.promises.get(TEXTMEMORY_DOC_ID) as TextMemoryDoc | null;
         return doc;
       } catch (e) {
@@ -172,11 +163,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
      */
     async saveTextMemoryDoc(data: Partial<TextMemoryDoc>): Promise<boolean> {
       try {
-        const db = getDb();
-        if (!db) {
-          console.warn('数据库不可用，数据将保存在内存中');
-          return false;
-        }
+        const db = getDbAdapter();
 
         const existingDoc = await this.getTextMemoryDoc();
         const doc: TextMemoryDoc = {

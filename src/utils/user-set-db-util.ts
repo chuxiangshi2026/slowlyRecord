@@ -2,13 +2,15 @@
 import { DB_KEY_USER_SET} from "@/constants";
 import {log} from "@/utils/logger"
 import type { UserSetType } from "@/types/user-set";
+import {getDbAdapter} from "@/adapters/db"
 import cloneDeep from 'lodash.clonedeep';
 /**
  * 获取数据库全部的单词
  * @returns 返回数据库中所有单词的数组
  */
 function getSetDb(silent = false): UserSetType | null {
-    let allDocs = window.utools.db.allDocs(DB_KEY_USER_SET);
+    const db = getDbAdapter();
+    let allDocs = db.allDocs(DB_KEY_USER_SET);
     if (!silent) {
         log.i('获取数据库设置', allDocs);
     }
@@ -29,7 +31,8 @@ async function addAndUpdateSetDb(userSet: UserSetType | null):Promise<DbReturn> 
     // 转成字符串保存数据库,替换JSON.parse(JSON.stringify(word));
     const cleanedWord = cloneDeep(userSet)
     // console.log('查看去重后的序列化数据',word)
-    let result = await window.utools.db.promises.put(cleanedWord);
+    const db = getDbAdapter();
+    let result = await db.promises.put(cleanedWord);
 
     if (result.ok) {
         log.d("添加设置到数据库成功")
@@ -49,7 +52,8 @@ async function addAndUpdateSetDb(userSet: UserSetType | null):Promise<DbReturn> 
  * @param id
  */
 function removeSetDb(id: string): void {
-    const result = window.utools.db.remove(id);
+    const db = getDbAdapter();
+    const result = db.remove(id);
     if (result.ok) {
         console.log("删除成功");
     } else if (result.error) {
@@ -57,8 +61,6 @@ function removeSetDb(id: string): void {
         log.e(result.message);
     }
 }
-
-
 
 
 

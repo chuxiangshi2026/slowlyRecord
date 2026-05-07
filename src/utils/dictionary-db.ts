@@ -1,7 +1,8 @@
 /**
- * 外部词典数据库工具 - 使用 uTools db 存储大词库
+ * 外部词典数据库工具 - 使用适配器数据库存储大词库
  */
 import type {DictionaryEntry} from './local-dictionary';
+import {getDbAdapter, getDbStorage} from '@/adapters/db';
 
 const DICTIONARY_KEY = 'external_dictionary';
 const DICTIONARY_VERSION_KEY = 'dictionary_version';
@@ -15,7 +16,7 @@ interface DictionaryDoc {
 }
 
 /**
- * 保存词典到 uTools 数据库
+ * 保存词典到数据库
  * @param words 词典数据
  * @param version 版本号
  */
@@ -24,6 +25,7 @@ export async function saveDictionaryToDB(
   version: string = '1.0'
 ): Promise<boolean> {
   try {
+    const db = getDbAdapter();
     const doc: DictionaryDoc = {
       _id: DICTIONARY_KEY,
       version,
@@ -32,16 +34,17 @@ export async function saveDictionaryToDB(
     };
 
     // 检查是否已存在
-    const existing = window.utools.db.get(DICTIONARY_KEY);
+    const existing = db.get(DICTIONARY_KEY);
     if (existing) {
       doc._rev = existing._rev;
     }
 
-    const result = await window.utools.db.promises.put(doc);
+    const result = await db.promises.put(doc);
     
     if (result.ok) {
       // 保存版本信息
-      window.utools.dbStorage.setItem(DICTIONARY_VERSION_KEY, version);
+      const storage = getDbStorage();
+      storage.setItem(DICTIONARY_VERSION_KEY, version);
       console.log(`[词典DB] 保存成功，共 ${doc.total} 词`);
       return true;
     }
@@ -53,11 +56,12 @@ export async function saveDictionaryToDB(
 }
 
 /**
- * 从 uTools 数据库加载词典
+ * 从数据库加载词典
  */
 export function loadDictionaryFromDB(): Record<string, DictionaryEntry> | null {
   try {
-    const doc = window.utools.db.get(DICTIONARY_KEY) as DictionaryDoc | null;
+    const db = getDbAdapter();
+    const doc = db.get(DICTIONARY_KEY) as DictionaryDoc | null;
     if (doc && doc.words) {
       console.log(`[词典DB] 加载成功，共 ${doc.total} 词`);
       return doc.words;
@@ -73,7 +77,8 @@ export function loadDictionaryFromDB(): Record<string, DictionaryEntry> | null {
  * 检查词典是否已安装
  */
 export function hasDictionaryInDB(): boolean {
-  const doc = window.utools.db.get(DICTIONARY_KEY);
+  const db = getDbAdapter();
+  const doc = db.get(DICTIONARY_KEY);
   return doc !== null;
 }
 
@@ -81,7 +86,8 @@ export function hasDictionaryInDB(): boolean {
  * 获取词典版本
  */
 export function getDictionaryVersion(): string | null {
-  return window.utools.dbStorage.getItem(DICTIONARY_VERSION_KEY);
+  const storage = getDbStorage();
+  return storage.getItem(DICTIONARY_VERSION_KEY);
 }
 
 /**
@@ -89,9 +95,11 @@ export function getDictionaryVersion(): string | null {
  */
 export async function removeDictionaryFromDB(): Promise<boolean> {
   try {
-    const result = window.utools.db.remove(DICTIONARY_KEY);
+    const db = getDbAdapter();
+    const result = db.remove(DICTIONARY_KEY);
     if (result.ok) {
-      window.utools.dbStorage.removeItem(DICTIONARY_VERSION_KEY);
+      const storage = getDbStorage();
+      storage.removeItem(DICTIONARY_VERSION_KEY);
       console.log('[词典DB] 删除成功');
       return true;
     }
@@ -122,7 +130,7 @@ export function getExternalDictionaryCount(): number {
 }
 
 /**
- * 从 JSON 文件导入词典到 uTools DB
+ * 从 JSON 文件导入词典到数据库
  * @param filePath JSON 文件路径（相对于 public 目录）
  * @returns 是否导入成功
  */
@@ -144,7 +152,7 @@ export async function importDictionaryFromJSON(filePath: string): Promise<boolea
     const wordCount = Object.keys(data.words).length;
     console.log(`[词典DB] 读取到 ${wordCount} 个单词`);
     
-    // 保存到 uTools 数据库
+    // 保存到数据库
     const success = await saveDictionaryToDB(data.words, data.version || '1.0');
     
     if (success) {
@@ -176,7 +184,7 @@ export async function importDictionaryFromFile(file: File): Promise<boolean> {
     const wordCount = Object.keys(data.words).length;
     console.log(`[词典DB] 文件包含 ${wordCount} 个单词`);
     
-    // 保存到 uTools 数据库
+    // 保存到数据库
     const success = await saveDictionaryToDB(data.words, data.version || '1.0');
     
     if (success) {

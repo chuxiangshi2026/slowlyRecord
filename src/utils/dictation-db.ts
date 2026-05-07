@@ -2,6 +2,7 @@ import type {Word} from "@/types/words";
 import {log} from "@/utils/logger";
 import cloneDeep from 'lodash.clonedeep';
 import {DB_KEY_DICTATION} from "@/constants";
+import {getDbAdapter} from "@/adapters/db";
 import type { WordBankType } from "./wordbank-service";
 
 const DB_KEY_PREFIX = DB_KEY_DICTATION;
@@ -52,7 +53,8 @@ function getProgressKey(wordBank: string): string {
  */
 export function getDictationProgress(wordBank?: string): DictationProgress | null {
   try {
-    const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
+    const db = getDbAdapter();
+    const allDocs = db.allDocs(DB_KEY_PREFIX);
 
     // 如果指定了词库，查找对应进度
     if (wordBank) {
@@ -121,7 +123,8 @@ export async function saveDictationProgress(
     log.i('保存听写进度', progressDoc);
 
     const cleanedData = cloneDeep(progressDoc);
-    const result = await window.utools.db.promises.put(cleanedData);
+    const db = getDbAdapter();
+    const result = await db.promises.put(cleanedData);
 
     if (result.ok) {
       log.d('保存听写进度成功');
@@ -143,12 +146,13 @@ export async function saveDictationProgress(
  */
 export function removeDictationProgress(idOrWordBank?: string): void {
   try {
+    const db = getDbAdapter();
     if (!idOrWordBank) {
       // 删除所有听写进度
-      const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
+      const allDocs = db.allDocs(DB_KEY_PREFIX);
       allDocs.forEach((doc: any) => {
         if (doc.type === 'dictation_progress') {
-          window.utools.db.remove(doc._id);
+          db.remove(doc._id);
         }
       });
       log.d('清除所有听写进度');
@@ -158,7 +162,7 @@ export function removeDictationProgress(idOrWordBank?: string): void {
     // 如果是词库名称，查找对应进度
     const progress = getDictationProgress(idOrWordBank);
     if (progress) {
-      window.utools.db.remove(progress._id);
+      db.remove(progress._id);
       log.d(`删除词库 ${idOrWordBank} 的听写进度`);
     }
   } catch (error) {
@@ -182,7 +186,8 @@ function getWrongWordsKey(wordBank: string): string {
  */
 export function getWrongWordsRecord(wordBank: string): WrongWordsRecord | null {
   try {
-    const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
+    const db = getDbAdapter();
+    const allDocs = db.allDocs(DB_KEY_PREFIX);
     const record = allDocs.find((doc: any) =>
       doc.type === 'wrong_words_record' && doc.wordBank === wordBank
     );
@@ -222,7 +227,8 @@ export async function saveWrongWords(wordBank: string, wrongWords: Word[]): Prom
     log.i('保存错题记录', record);
 
     const cleanedData = cloneDeep(record);
-    const result = await window.utools.db.promises.put(cleanedData);
+    const db = getDbAdapter();
+    const result = await db.promises.put(cleanedData);
 
     if (result.ok) {
       log.d('保存错题记录成功');
@@ -245,7 +251,8 @@ export function clearWrongWords(wordBank: string): void {
   try {
     const record = getWrongWordsRecord(wordBank);
     if (record) {
-      window.utools.db.remove(record._id);
+      const db = getDbAdapter();
+      db.remove(record._id);
       log.d(`清空词库 ${wordBank} 的错题记录`);
     }
   } catch (error) {
@@ -259,7 +266,8 @@ export function clearWrongWords(wordBank: string): void {
  */
 export function getWrongWordsBanks(): string[] {
   try {
-    const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
+    const db = getDbAdapter();
+    const allDocs = db.allDocs(DB_KEY_PREFIX);
     return allDocs
       .filter((doc: any) => doc.type === 'wrong_words_record' && doc.wrongWords?.length > 0)
       .map((doc: any) => doc.wordBank);
@@ -274,13 +282,14 @@ export function getWrongWordsBanks(): string[] {
  */
 export function cleanExpiredProgress(): void {
   try {
-    const allDocs = window.utools.db.allDocs(DB_KEY_PREFIX);
+    const db = getDbAdapter();
+    const allDocs = db.allDocs(DB_KEY_PREFIX);
     const oneWeek = 7 * 24 * 60 * 60 * 1000;
     const now = Date.now();
 
     allDocs.forEach((doc: any) => {
       if (doc.type === 'dictation_progress' && now - doc.updatedAt > oneWeek) {
-        window.utools.db.remove(doc._id);
+        db.remove(doc._id);
         log.i('清除过期听写进度', doc._id);
       }
     });

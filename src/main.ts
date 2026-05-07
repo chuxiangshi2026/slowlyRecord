@@ -19,6 +19,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import { initBaiduStats, trackRouterPageView } from '@/utils/baidu-stats'
+import {getDbAdapterAsync} from '@/adapters/db'
 
 const app = createApp(App)
 
@@ -124,6 +125,13 @@ initBaiduStats().then(() => {
 // 路由切换时追踪页面浏览
 router.afterEach((to) => {
     trackRouterPageView(to.fullPath);
+});
+
+// 初始化数据库适配器（异步，不阻塞渲染）
+getDbAdapterAsync().then(() => {
+  console.log('[App] 数据库适配器初始化完成');
+}).catch((err) => {
+  console.error('[App] 数据库适配器初始化失败:', err);
 });
 
     // createApp(App).mount( ... ) // Vue

@@ -1,11 +1,12 @@
 /**
  * 词库管理工具
- * 使用 utools 本地数据库存储多词库数据
+ * 使用适配器数据库存储多词库数据
  * 采用分文档+分片存储策略避免 1MB 限制
  */
 import type { Word } from '@/types/words';
 import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
+import {getDbAdapter} from '@/adapters/db';
 
 // 词库数据结构
 export interface WordBank {
@@ -57,11 +58,12 @@ function getWordBankChunkId(bankId: string, chunkIndex: number): string {
 }
 
 /**
- * 从 utools 数据库获取词库元数据文档
+ * 从数据库获取词库元数据文档
  */
 function getWordBankMetaDoc(): WordBankMetaDoc | null {
   try {
-    const doc = window.utools.db.get(WORDBANK_META_ID) as WordBankMetaDoc | null;
+    const db = getDbAdapter();
+    const doc = db.get(WORDBANK_META_ID) as WordBankMetaDoc | null;
     return doc;
   } catch (e) {
     console.error('获取词库元数据失败:', e);
@@ -70,10 +72,11 @@ function getWordBankMetaDoc(): WordBankMetaDoc | null {
 }
 
 /**
- * 保存词库元数据文档到 utools 数据库
+ * 保存词库元数据文档到数据库
  */
 async function saveWordBankMetaDoc(banks: Omit<WordBank, 'words'>[]): Promise<boolean> {
   try {
+    const db = getDbAdapter();
     const existingDoc = getWordBankMetaDoc();
     const doc: WordBankMetaDoc = {
       _id: WORDBANK_META_ID,
@@ -86,7 +89,7 @@ async function saveWordBankMetaDoc(banks: Omit<WordBank, 'words'>[]): Promise<bo
       doc._rev = existingDoc._rev;
     }
     
-    const result = await window.utools.db.promises.put(doc);
+    const result = await db.promises.put(doc);
     
     if (result.ok) {
       return true;
@@ -106,10 +109,11 @@ async function saveWordBankMetaDoc(banks: Omit<WordBank, 'words'>[]): Promise<bo
 function getWordBankChunkDocs(bankId: string): WordBankChunkDoc[] {
   const chunks: WordBankChunkDoc[] = [];
   try {
+    const db = getDbAdapter();
     // 尝试读取所有分片
     for (let i = 0; i < 100; i++) { // 最多100个分片
       const docId = getWordBankChunkId(bankId, i);
-      const doc = window.utools.db.get(docId) as WordBankChunkDoc | null;
+      const doc = db.get(docId) as WordBankChunkDoc | null;
       if (doc && doc.type === 'wordbank-chunk') {
         chunks.push(doc);
       } else {
@@ -127,6 +131,7 @@ function getWordBankChunkDocs(bankId: string): WordBankChunkDoc[] {
  */
 async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boolean> {
   try {
+    const db = getDbAdapter();
     // 先删除旧的分片
     await deleteWordBankDataDoc(bankId);
     
@@ -144,7 +149,7 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
         words: [],
         updatedAt: Date.now()
       };
-      const result = await window.utools.db.promises.put(doc);
+      const result = await db.promises.put(doc);
       if (!result.ok) {
         console.error(`保存词库空分片失败 (${bankId}):`, result.message);
         return false;
@@ -168,7 +173,7 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
         updatedAt: Date.now()
       };
       
-      const result = await window.utools.db.promises.put(doc);
+      const result = await db.promises.put(doc);
       if (!result.ok) {
         console.error(`保存词库分片失败 (${bankId}, chunk ${i}):`, result.message);
         return false;
@@ -205,13 +210,14 @@ function getWordBankWords(bankId: string): Word[] {
  */
 async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
   try {
+    const db = getDbAdapter();
     // 删除所有分片
     for (let i = 0; i < 100; i++) {
       const docId = getWordBankChunkId(bankId, i);
-      const existingDoc = window.utools.db.get(docId) as WordBankChunkDoc | null;
+      const existingDoc = db.get(docId) as WordBankChunkDoc | null;
       
       if (existingDoc?._rev) {
-        await window.utools.db.promises.remove({ _id: docId, _rev: existingDoc._rev });
+        await db.promises.remove({ _id: docId, _rev: existingDoc._rev });
       } else {
         // 如果没有找到这个分片，可能已经没有更多分片了
         if (i === 0) {
@@ -233,6 +239,7 @@ async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
  */
 async function migrateOldDataIfNeeded(): Promise<boolean> {
   try {
+    const db = getDbAdapter();
     // 检查是否已有新版数据
     const metaDoc = getWordBankMetaDoc();
     if (metaDoc?.banks && metaDoc.banks.length > 0) {
@@ -240,7 +247,7 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
     }
     
     // 检查是否有旧版数据
-    const oldDoc = window.utools.db.get(OLD_WORDBANK_DOC_ID) as any;
+    const oldDoc = db.get(OLD_WORDBANK_DOC_ID) as any;
     if (oldDoc?.data && Array.isArray(oldDoc.data) && oldDoc.data.length > 0) {
       console.log('[WordBankManager] 发现旧版数据，开始迁移...');
       

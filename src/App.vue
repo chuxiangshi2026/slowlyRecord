@@ -48,6 +48,7 @@ import DebugPanel from '@/components/DebugPanel.vue';
 // import {AppInfo} from "@/config.ts";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
+import {isUtools as checkIsUtools} from "@/adapters/platform";
 
 const wordsStore = useWordsStore();
 const router = useRouter();
@@ -357,7 +358,7 @@ function logToFile(message: string) {
  * 检测是否在 uTools 环境中
  */
 function isUTools(): boolean {
-  return typeof utools !== 'undefined' && !!utools.getPath;
+  return checkIsUtools();
 }
 
 
