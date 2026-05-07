@@ -2,6 +2,7 @@
   <el-dialog
       :model-value="modelValue"
       @update:model-value="$emit('update:modelValue', $event)"
+      @opened="handleDialogOpened"
       title="导入文本"
       width="780px"
       destroy-on-close
@@ -762,6 +763,46 @@
       <el-button type="primary" @click="handleSaveAIConfig">保存</el-button>
     </template>
   </el-dialog>
+
+  <!-- 地点作品列表弹窗 -->
+  <el-dialog
+      v-model="showLocationDialog"
+      :title="locationDialogTitle"
+      width="480px"
+      destroy-on-close
+  >
+    <div style="max-height: 400px; overflow-y: auto;">
+      <div
+          v-for="poem in locationDialogPoems"
+          :key="poem.id"
+          style="padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e4e7ed; cursor: pointer;"
+          :style="{ background: selectedPoetries.some(p => p.id === poem.id) ? '#f0f9eb' : '#fff', borderColor: selectedPoetries.some(p => p.id === poem.id) ? '#b3e19d' : '#e4e7ed' }"
+          @click="togglePoetryInDialog(poem)"
+      >
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <el-checkbox
+              :model-value="selectedPoetries.some(p => p.id === poem.id)"
+              @click.stop
+              @update:model-value="togglePoetryInDialog(poem)"
+          />
+          <div style="flex: 1;">
+            <div style="font-size: 14px; font-weight: bold; color: #303133;">{{ poem.title }}</div>
+            <div style="font-size: 12px; color: #606266; margin-top: 2px;">
+              {{ poem.author }} · {{ poem.dynasty }}
+              <span v-if="poem.year" style="color: #e6a23c; margin-left: 6px;">{{ formatYear(poem.year) }}</span>
+            </div>
+            <div style="font-size: 12px; color: #909399; margin-top: 4px; line-height: 1.5;">
+              {{ poem.content.split(/\n/).filter(l => l.trim()).slice(0, 2).join(' / ') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template #footer>
+      <el-button @click="showLocationDialog = false">关闭</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -875,6 +916,34 @@ let inlineRouteLayer: L.LayerGroup | null = null;
 const mapDynasty = ref('');
 const mapAuthor = ref<string[]>([]);
 const showAuthorRoute = ref(false);
+
+// 地点作品弹窗
+const showLocationDialog = ref(false);
+const locationDialogTitle = ref('');
+const locationDialogPoems = ref<PoetryItem[]>([]);
+
+function openLocationDialog(poems: PoetryItem[]) {
+  if (!poems.length) return;
+  locationDialogTitle.value = poems[0].location || '未知地点';
+  locationDialogPoems.value = poems;
+  showLocationDialog.value = true;
+}
+
+function togglePoetryInDialog(poem: PoetryItem) {
+  const index = selectedPoetries.value.findIndex(p => p.id === poem.id);
+  if (index > -1) {
+    selectedPoetries.value.splice(index, 1);
+  } else {
+    selectedPoetries.value.push(poem);
+  }
+  if (activeTab.value === 'poetryMap') {
+    if (mapAuthor.value.length) {
+      renderAuthorMarkers(mapAuthor.value);
+    } else {
+      renderInlineMarkers();
+    }
+  }
+}
 
 const availableAuthors = computed(() => {
   const set = new Set<string>();
@@ -1013,12 +1082,24 @@ function getDynastyName(code: PoetryDynasty): string {
 
 function initInlineMap() {
   if (!inlineMapContainer.value) return;
+  const container = inlineMapContainer.value;
+  // tab 切换动画或 Dialog 打开动画期间容器尺寸可能为 0，延迟重试
+  if (container.offsetWidth === 0 || container.offsetHeight === 0) {
+    setTimeout(initInlineMap, 300);
+    return;
+  }
   if (inlineMap) {
     inlineMap.remove();
     inlineMap = null;
   }
+  // 强制清理容器，防止 destroy-on-close 后 Leaflet 状态残留
+  container.innerHTML = '';
+  delete (container as any)._leaflet_id;
+  // 移除 leaflet 可能添加的类名
+  container.classList.remove('leaflet-container', 'leaflet-touch', 'leaflet-fade-anim', 'leaflet-grab', 'leaflet-dragging');
+  container.removeAttribute('tabindex');
 
-  inlineMap = L.map(inlineMapContainer.value, {
+  inlineMap = L.map(container, {
     center: [35.0, 105.0],
     zoom: 4,
     zoomControl: false,
@@ -1045,7 +1126,7 @@ function initInlineMap() {
     // 部分环境下首次渲染尺寸为 0，延迟再校正一次
     setTimeout(() => {
       inlineMap?.invalidateSize();
-    }, 200);
+    }, 300);
   });
 }
 
@@ -1066,41 +1147,67 @@ function renderInlineMarkers() {
   const poems = getMapDisplayPoems();
   if (!poems.length) return;
 
-  const added = new Set<string>();
-
+  // 按坐标分组
+  const locationMap = new Map<string, PoetryItem[]>();
   poems.forEach(poem => {
     const coord = parseLocation(poem.location);
     if (!coord) return;
     const key = `${coord.lng},${coord.lat}`;
-    if (added.has(key)) return;
-    added.add(key);
+    const list = locationMap.get(key) || [];
+    list.push(poem);
+    locationMap.set(key, list);
+  });
 
-    const isSelected = selectedPoetries.value.some(p => p.id === poem.id);
+  locationMap.forEach((list) => {
+    const coord = parseLocation(list[0].location);
+    if (!coord) return;
+
+    const hasMultiple = list.length > 1;
+    const isSelected = list.some(p => selectedPoetries.value.some(s => s.id === p.id));
+    const allSelected = list.every(p => selectedPoetries.value.some(s => s.id === p.id));
+
     const marker = L.circleMarker([coord.lat, coord.lng], {
-      radius: 6,
-      fillColor: isSelected ? '#67c23a' : '#409eff',
+      radius: hasMultiple ? 9 : 6,
+      fillColor: allSelected ? '#67c23a' : (isSelected ? '#95d475' : (hasMultiple ? '#f56c6c' : '#409eff')),
       color: '#fff',
-      weight: 1.5,
+      weight: hasMultiple ? 2.5 : 1.5,
       opacity: 1,
       fillOpacity: 0.9,
     }).addTo(inlineMarkerLayer);
 
-    const lines = poem.content.split(/\n/).filter(l => l.trim());
-    const preview = lines.slice(0, 2).join('<br>');
-    const yearStr = formatYear(poem.year);
-    const yearHtml = yearStr ? `<div style="font-size:11px;color:#e6a23c;margin-bottom:2px">创作时间：${yearStr}</div>` : '';
-    marker.bindTooltip(
-      `<div style="font-size:13px;font-weight:bold">${poem.title}</div>
-       <div style="font-size:12px;color:#666;margin-bottom:2px">${poem.author} · ${poem.dynasty}</div>
-       ${yearHtml}
-       <div style="font-size:12px;line-height:1.5">${preview}</div>
-       <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
-      { direction: 'top', offset: [0, -6] }
-    );
+    if (hasMultiple) {
+      const authors = [...new Set(list.map(p => p.author))].join('、');
+      const selectedCount = list.filter(p => selectedPoetries.value.some(s => s.id === p.id)).length;
+      marker.bindTooltip(
+        `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
+         <div style="font-size:12px;color:#666">共 ${list.length} 首作品 · 已选 ${selectedCount} 首</div>
+         <div style="font-size:11px;color:#999;margin-top:2px">${authors}</div>
+         <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
+        { direction: 'top', offset: [0, -6] }
+      );
+    } else {
+      const poem = list[0];
+      const lines = poem.content.split(/\n/).filter(l => l.trim());
+      const preview = lines.slice(0, 2).join('<br>');
+      const yearStr = formatYear(poem.year);
+      const yearHtml = yearStr ? `<div style="font-size:11px;color:#e6a23c;margin-bottom:2px">创作时间：${yearStr}</div>` : '';
+      marker.bindTooltip(
+        `<div style="font-size:13px;font-weight:bold">${poem.title}</div>
+         <div style="font-size:12px;color:#666;margin-bottom:2px">${poem.author} · ${poem.dynasty}</div>
+         ${yearHtml}
+         <div style="font-size:12px;line-height:1.5">${preview}</div>
+         <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
+        { direction: 'top', offset: [0, -6] }
+      );
+    }
 
     marker.on('click', () => {
-      selectPoetry(poem);
-      renderInlineMarkers();
+      if (list.length === 1) {
+        selectPoetry(list[0]);
+        renderInlineMarkers();
+      } else {
+        openLocationDialog(list);
+      }
     });
   });
 }
@@ -1183,6 +1290,8 @@ function addRouteArrows(coords: L.LatLngExpression[], layer: L.LayerGroup, color
   }
 }
 
+const AUTHOR_COLORS = ['#e6a23c', '#409eff', '#67c23a', '#f56c6c', '#9b59b6', '#e74c3c', '#1abc9c', '#3498db'];
+
 function renderAuthorMarkers(authors: string[]) {
   if (!inlineMap || !inlineRouteLayer) return;
   inlineRouteLayer.clearLayers();
@@ -1195,72 +1304,129 @@ function renderAuthorMarkers(authors: string[]) {
   }
   if (!authorPoems.length) return;
 
-  const coords: L.LatLngExpression[] = [];
-  const seen = new Set<string>();
+  // 按作者分组，各自分配颜色
+  const authorColorMap = new Map<string, string>();
+  authors.forEach((a, i) => authorColorMap.set(a, AUTHOR_COLORS[i % AUTHOR_COLORS.length]));
 
-  const sorted = [...authorPoems].sort((a, b) => {
-    const ya = extractSortYear(a.year);
-    const yb = extractSortYear(b.year);
-    if (ya !== yb) return ya - yb;
-    return a.title.localeCompare(b.title, 'zh');
+  const grouped = new Map<string, PoetryItem[]>();
+  authorPoems.forEach(p => {
+    const list = grouped.get(p.author) || [];
+    list.push(p);
+    grouped.set(p.author, list);
   });
 
-  sorted.forEach((poem, idx) => {
-    const coord = parseLocation(poem.location);
-    if (!coord) return;
-    const key = `${coord.lng},${coord.lat}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    coords.push([coord.lat, coord.lng]);
+  let globalIdx = 0;
+  const allCoords: L.LatLngExpression[] = [];
 
-    const isSelected = selectedPoetries.value.some(p => p.id === poem.id);
-    const bgColor = isSelected ? '#67c23a' : '#e6a23c';
-    const num = idx + 1;
-    const icon = L.divIcon({
-      className: 'author-route-marker',
-      html: `<div style="
-        width:20px;height:20px;border-radius:50%;
-        background:${bgColor};color:#fff;
-        display:flex;align-items:center;justify-content:center;
-        font-size:12px;font-weight:bold;border:2px solid #fff;
-        box-shadow:0 1px 4px rgba(0,0,0,0.3);
-        cursor:pointer;
-      ">${num}</div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10],
+  grouped.forEach((poems, author) => {
+    const color = authorColorMap.get(author) || '#e6a23c';
+    const coords: L.LatLngExpression[] = [];
+
+    // 按坐标再分组
+    const locationMap = new Map<string, PoetryItem[]>();
+    poems.forEach(p => {
+      const coord = parseLocation(p.location);
+      if (!coord) return;
+      const key = `${coord.lng},${coord.lat}`;
+      const list = locationMap.get(key) || [];
+      list.push(p);
+      locationMap.set(key, list);
     });
 
-    const preview = getPoemPreview(poem);
-    const yearStr = formatYear(poem.year);
-    const yearHtml = yearStr ? `<div style="font-size:11px;color:#e6a23c;margin-bottom:2px">创作时间：${yearStr}</div>` : '';
-    const marker = L.marker([coord.lat, coord.lng], { icon })
-      .bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${poem.title}</div>
-         <div style="font-size:12px;color:#666;margin-bottom:2px">${poem.author} · ${poem.dynasty}</div>
-         ${yearHtml}
-         <div style="font-size:12px;line-height:1.5">${preview}</div>
-         <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
-        { direction: 'top' }
-      )
-      .addTo(inlineRouteLayer);
-
-    marker.on('click', () => {
-      selectPoetry(poem);
-      renderAuthorMarkers(authors);
+    const sortedLocations = Array.from(locationMap.entries()).sort((a, b) => {
+      const ya = extractSortYear(a[1][0].year);
+      const yb = extractSortYear(b[1][0].year);
+      if (ya !== yb) return ya - yb;
+      return a[1][0].title.localeCompare(b[1][0].title, 'zh');
     });
+
+    sortedLocations.forEach(([, list]) => {
+      const coord = parseLocation(list[0].location);
+      if (!coord) return;
+      coords.push([coord.lat, coord.lng]);
+      allCoords.push([coord.lat, coord.lng]);
+      globalIdx++;
+
+      const hasMultiple = list.length > 1;
+      const isSelected = list.some(p => selectedPoetries.value.some(s => s.id === p.id));
+      const allSelected = list.every(p => selectedPoetries.value.some(s => s.id === p.id));
+      const bgColor = allSelected ? '#67c23a' : (isSelected ? '#95d475' : color);
+      const num = globalIdx;
+
+      const iconHtml = hasMultiple
+        ? `<div style="
+            width:22px;height:22px;border-radius:50%;
+            background:${bgColor};color:#fff;
+            display:flex;align-items:center;justify-content:center;
+            font-size:11px;font-weight:bold;border:2px solid #fff;
+            box-shadow:0 1px 4px rgba(0,0,0,0.3);
+            cursor:pointer;
+          ">${num}+</div>`
+        : `<div style="
+            width:20px;height:20px;border-radius:50%;
+            background:${bgColor};color:#fff;
+            display:flex;align-items:center;justify-content:center;
+            font-size:12px;font-weight:bold;border:2px solid #fff;
+            box-shadow:0 1px 4px rgba(0,0,0,0.3);
+            cursor:pointer;
+          ">${num}</div>`;
+
+      const icon = L.divIcon({
+        className: 'author-route-marker',
+        html: iconHtml,
+        iconSize: hasMultiple ? [22, 22] : [20, 20],
+        iconAnchor: hasMultiple ? [11, 11] : [10, 10],
+      });
+
+      if (hasMultiple) {
+        const selectedCount = list.filter(p => selectedPoetries.value.some(s => s.id === p.id)).length;
+        const marker = L.marker([coord.lat, coord.lng], { icon })
+          .bindTooltip(
+            `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
+             <div style="font-size:12px;color:#666">${author} · 共 ${list.length} 首 · 已选 ${selectedCount} 首</div>
+             <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
+            { direction: 'top' }
+          )
+          .addTo(inlineRouteLayer);
+
+        marker.on('click', () => {
+          openLocationDialog(list);
+        });
+      } else {
+        const poem = list[0];
+        const preview = getPoemPreview(poem);
+        const yearStr = formatYear(poem.year);
+        const yearHtml = yearStr ? `<div style="font-size:11px;color:#e6a23c;margin-bottom:2px">创作时间：${yearStr}</div>` : '';
+        const marker = L.marker([coord.lat, coord.lng], { icon })
+          .bindTooltip(
+            `<div style="font-size:13px;font-weight:bold">${poem.title}</div>
+             <div style="font-size:12px;color:#666;margin-bottom:2px">${poem.author} · ${poem.dynasty}</div>
+             ${yearHtml}
+             <div style="font-size:12px;line-height:1.5">${preview}</div>
+             <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
+            { direction: 'top' }
+          )
+          .addTo(inlineRouteLayer);
+
+        marker.on('click', () => {
+          selectPoetry(poem);
+          renderAuthorMarkers(authors);
+        });
+      }
+    });
+
+    if (showAuthorRoute.value && coords.length > 1) {
+      L.polyline(coords, {
+        color: color,
+        weight: 4,
+        dashArray: '6, 6',
+        opacity: 0.9,
+      }).addTo(inlineRouteLayer);
+      addRouteArrows(coords, inlineRouteLayer, color);
+    }
   });
 
-  if (showAuthorRoute.value && coords.length > 1) {
-    L.polyline(coords, {
-      color: '#e6a23c',
-      weight: 4,
-      dashArray: '6, 6',
-      opacity: 0.9,
-    }).addTo(inlineRouteLayer);
-    addRouteArrows(coords, inlineRouteLayer, '#e6a23c');
-  }
-
-  if (coords.length && inlineMap) {
+  if (allCoords.length && inlineMap) {
     const group = L.featureGroup(inlineRouteLayer.getLayers());
     inlineMap.fitBounds(group.getBounds().pad(0.15));
   }
@@ -1711,6 +1877,20 @@ function handleClose() {
   resetForm();
 }
 
+function handleDialogOpened() {
+  if (activeTab.value === 'poetryMap') {
+    if (!hasLoadedLibrary.value) {
+      fetchAllPoetry().then(all => {
+        allLibraryPoems.value = Object.values(all).flat();
+        hasLoadedLibrary.value = true;
+        initInlineMap();
+      });
+    } else {
+      initInlineMap();
+    }
+  }
+}
+
 watch(mapDynasty, () => {
   const valid = availableAuthors.value;
   const removed = mapAuthor.value.filter(a => !valid.includes(a));
@@ -1740,9 +1920,12 @@ watch(activeTab, (tab) => {
         fetchAllPoetry().then(all => {
           allLibraryPoems.value = Object.values(all).flat();
           hasLoadedLibrary.value = true;
-          initInlineMap();
+          // Dialog 打开动画完成后再初始化，避免尺寸计算错误
+          if (modelValue.value) {
+            initInlineMap();
+          }
         });
-      } else {
+      } else if (modelValue.value) {
         if (!inlineMap) initInlineMap();
         else {
           inlineMap.invalidateSize();
@@ -1770,6 +1953,9 @@ onUnmounted(() => {
     inlineMap.remove();
     inlineMap = null;
   }
+  inlineMarkerLayer = null;
+  inlineTerritoryLayer = null;
+  inlineRouteLayer = null;
 });
 </script>
 
