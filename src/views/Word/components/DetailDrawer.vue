@@ -295,6 +295,7 @@ import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {AppInfo, TRANSLATION_PLATFORM_LINKS} from "@/config.ts";
 import {getSetDb, addAndUpdateSetDb} from "@/utils/user-set-db-util.ts";
 import {log} from "@/utils/logger.ts";
+import {isUtools} from "@/adapters/platform";
 import { Download, Upload } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // import BasicInfoForm from './BasicInfoForm.vue'
@@ -409,7 +410,11 @@ const updateOcrKey = (index: OcrPlatform, field: 'appkey' | 'key', val: string) 
 
 
 const openUrl = (url: string) => {
-  utools.shellOpenExternal(url);
+  if (isUtools()) {
+    (window as any).utools?.shellOpenExternal?.(url);
+  } else {
+    window.open(url, '_blank');
+  }
 }
 
 
@@ -440,14 +445,16 @@ const onCloseAfterAddSwitchChange = () => {
 
 
 const kuaijiejian = (type: number) => {
+  const utoolsApi = (window as any).utools;
+  if (!isUtools() || !utoolsApi?.redirectHotKeySetting) return;
   if (type == 1) {
-    utools.redirectHotKeySetting("划词添加", true);
+    utoolsApi.redirectHotKeySetting("划词添加", true);
   }
   if (type == 2) {
-    utools.redirectHotKeySetting("划段添加", true)
+    utoolsApi.redirectHotKeySetting("划段添加", true)
   }
   if (type == 3) {
-    utools.redirectHotKeySetting("截图添加", true)
+    utoolsApi.redirectHotKeySetting("截图添加", true)
   }
 }
 

@@ -720,7 +720,11 @@ async function callUtoolsAi(query: string, from: string = 'auto', to: string = '
             }]
 
         // 尝试调用AI服务，使用类型断言避免编译错误
-        const result: any = await window.utools.ai({messages});
+        const utoolsApi = (window as any).utools;
+        if (!utoolsApi?.ai) {
+            return { success: false, errorMsg: 'uTools AI 不可用' };
+        }
+        const result: any = await utoolsApi.ai({messages});
 
         // 获取发音URL
         const pronunciation = getPronunciationUrlSync(query);

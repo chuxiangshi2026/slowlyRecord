@@ -377,6 +377,8 @@ import {
 } from '@element-plus/icons-vue';
 import {useRouter} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
+import {getDbAdapter} from '@/adapters/db';
+import {isUtools} from '@/adapters/platform';
 import {
   fetchWordBank,
   WORDBANK_LIST,
@@ -644,7 +646,7 @@ const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
     }
 
     userSetDoc.focusMode = nextFocusMode;
-    window.utools?.db?.put?.(userSetDoc);
+    getDbAdapter().put(userSetDoc);
   } catch (e) {
     console.error('[focusModeDoc] 更新专注模式文档失败:', e);
   }
@@ -826,7 +828,7 @@ const handleRecreateWindow = (state: any) => {
     console.log('[handleRecreateWindow] 延迟后创建新窗口');
     try {
       // @ts-ignore
-      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}`, {
+      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}`, {
 
         width: 320,
         height: 100,
@@ -1341,15 +1343,15 @@ const handleOpenWordList = async () => {
   }
 
   // 显示主窗口并刷新
-  if (typeof utools !== 'undefined' && utools.showMainWindow) {
-    utools.showMainWindow();
+  if (isUtools() && (window as any).utools?.showMainWindow) {
+    (window as any).utools.showMainWindow();
   }
 
   setTimeout(async () => {
     listMode.value = 0;
     await wordsStore.listWords();
-    if (typeof utools !== 'undefined' && utools.showMainWindow) {
-      utools.showMainWindow();
+    if (isUtools() && (window as any).utools?.showMainWindow) {
+      (window as any).utools.showMainWindow();
     }
   }, 120);
 };
@@ -1484,9 +1486,9 @@ function setupMessageListener() {
   }
 
   // @ts-ignore
-  if (typeof utools !== 'undefined' && utools.onMessage) {
+  if (isUtools() && (window as any).utools?.onMessage) {
     // @ts-ignore
-    utools.onMessage((message: any) => {
+    (window as any).utools.onMessage((message: any) => {
       console.log('【全局】父窗口 utools.onMessage 收到:', message);
       handleChildMessage(message);
     });
@@ -1542,12 +1544,12 @@ const openFocusMode = () => {
   console.log('[openFocusMode] 开始创建窗口');
   try {
     // @ts-ignore
-    if (typeof utools !== 'undefined' && utools.createBrowserWindow) {
+    if (isUtools() && (window as any).utools?.createBrowserWindow) {
       // 通过 URL 参数传递主题和设置
       const themeParam = isDark ? 'dark' : 'light';
       console.log('[openFocusMode] 调用 createBrowserWindow');
       // @ts-ignore
-      focusWindow = utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}`, {
+      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}`, {
 
         width: 320,
         height: 100,
@@ -2004,7 +2006,7 @@ const importWords = () => {
   fileInput.type = 'file';
   fileInput.accept = '.json'; // 限制文件类型为JSON
   fileInput.onchange = (event) => {
-    window.utools?.showMainWindow();
+    if (isUtools()) (window as any).utools?.showMainWindow?.();
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -2287,12 +2289,12 @@ const startScreenCapture = async () => {
     ocrDialogVisible.value = false
 
     // 隐藏主窗口，确保截图时不会截到插件界面
-    window.utools?.hideMainWindow();
+    if (isUtools()) (window as any).utools?.hideMainWindow?.();
 
     // 调用截图翻译
     const result = await ocrTranslateMultiPlatform();
 
-    window.utools?.showMainWindow();
+    if (isUtools()) (window as any).utools?.showMainWindow?.();
     // 截图完成后，显示弹窗并更新状态
     // 重置状态
     ocrLoading.value = false

@@ -273,7 +273,7 @@ utools.onPluginEnter(async (action) => {
     } catch (err: any) {
       console.error('[截图添加] 捕获到错误:', err);
       // 发生错误或取消时，显示主窗口让用户可以继续操作
-      utools.showMainWindow();
+      if (isUTools()) (window as any).utools?.showMainWindow?.();
       // 检查是否是使用次数超限的错误
       if (err.message && err.message.includes('每日免费')) {
         ElMessage.error(err.message);
@@ -343,11 +343,14 @@ function debugLog(...args: any[]) {
 function logToFile(message: string) {
   try {
     if (isUTools()) {
-      const fs = (window as any).require('fs');
-      const path = (window as any).require('path');
-      const logPath = path.join(utools.getPath('temp'), 'slowlyrecord-ocr.log');
-      const timestamp = new Date().toISOString();
-      fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
+      const utoolsApi = (window as any).utools;
+      const fs = (window as any).require?.('fs');
+      const path = (window as any).require?.('path');
+      if (fs && path && utoolsApi?.getPath) {
+        const logPath = path.join(utoolsApi.getPath('temp'), 'slowlyrecord-ocr.log');
+        const timestamp = new Date().toISOString();
+        fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
+      }
     }
   } catch (e) {
     // 忽略日志写入错误
@@ -370,7 +373,7 @@ async function displayOCRResults(resRegions: any[]) {
   console.log('[截图添加] displayOCRResults 被调用，结果数:', resRegions?.length || 0);
 
   // 识别成功，显示主窗口让用户查看结果
-  window.utools?.showMainWindow();
+  if (isUTools()) (window as any).utools?.showMainWindow?.();
   console.log('[截图添加] 主窗口已显示');
 
   // 存储OCR结果
@@ -461,34 +464,32 @@ function checkAddWork(text: string) {
 // ==================== 核心：静默获取选中文本 ====================
 async function getSelectedTextFromSystem(): Promise<string> {
   // 清空剪贴板，避免读到旧内容
-  utools.copyText('')
+  const utoolsApi = (window as any).utools;
+  if (!utoolsApi) return '';
+  utoolsApi.copyText?.('')
 
-  let b = utools.hideMainWindow();
+  let b = utoolsApi.hideMainWindow?.();
   if (!b) {
-    if (utools.getWindowType() === "detach") {
-      // utools.showNotification("使用此功能，请先关闭自动分离");
-      // ElMessage.warning('使用此功能，请先关闭自动分离');
+    if (utoolsApi.getWindowType?.() === "detach") {
       return '使用此功能，请先关闭自动分离';
     }
-    // utools.sendToParent('close')
-    // debugLog('关闭窗口...')
   }
   debugLog('开始静默获取选中文本...')
   // 增加延迟，确保焦点恢复到原窗口
   await new Promise(r => setTimeout(r, 300));
 
   // 获取当前平台
-  const isMac = utools.isMacOS();
+  const isMac = utoolsApi.isMacOS?.();
 
   // 根据平台选择修饰键
   const modifier = isMac ? "command" : "ctrl";
-  utools.simulateKeyboardTap("c", modifier);
+  utoolsApi.simulateKeyboardTap?.("c", modifier);
   debugLog('发送快捷键...')
 
   // 增加延迟，等待系统完成复制操作
   await new Promise(resolve => setTimeout(resolve, 300));
 
-  utools.showMainWindow();
+  utoolsApi.showMainWindow?.();
 
   debugLog('显示主界面...')
   // 再次延迟，确保剪贴板数据已更新
@@ -654,7 +655,7 @@ const router = useRouter();
  */
 function handlePluginReview() {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
 
   // 清空最后访问的页面，强制进入单词列表
   wordsStore.setLastVisitedPage('')
@@ -668,7 +669,7 @@ function handlePluginReview() {
  */
 function handlePluginMemoryTest() {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
 
   // 跳转到记忆力测试页面
   router.push('/memory')
@@ -679,7 +680,7 @@ function handlePluginMemoryTest() {
  */
 function handlePluginNumMemory() {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
   // 跳转到数字记忆页面
   router.push('/number-memory')
 }
@@ -689,7 +690,7 @@ function handlePluginNumMemory() {
  */
 function handlePluginDefaultEnter() {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
 
   // 检查是否有保存的最后访问页面
   const lastPage = wordsStore.lastVisitedPage
@@ -709,7 +710,7 @@ function handlePluginDefaultEnter() {
  */
 function handlePluginTranslate(action: any) {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
   // 跳转到快速翻译页面，如果有payload则传递文本参数
   if (action.payload) {
     router.push({
@@ -726,7 +727,7 @@ function handlePluginTranslate(action: any) {
  */
 function handlePluginTextMemory() {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
   // 跳转到文本记忆页面
   router.push('/text-memory')
 }
@@ -736,7 +737,7 @@ function handlePluginTextMemory() {
  */
 function handlePluginShortcutMemory() {
   // 显示主窗口
-  window.utools.showMainWindow()
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
   // 跳转到快捷键记忆页面
   router.push('/shortcut-memory')
 }
@@ -757,7 +758,7 @@ async function handlePluginAddWord(payload: string) {
 
   // 检查快捷键是否启用
   if (wordsStore.pluginStatus) {
-    window.utools?.hideMainWindow();
+    if (isUTools()) (window as any).utools?.hideMainWindow?.();
   }
 }
 

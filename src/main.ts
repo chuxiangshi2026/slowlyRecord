@@ -44,10 +44,10 @@ function applyUToolsTheme(isDark: boolean) {
  */
 function initUToolsTheme() {
   // 检查是否在 uTools 环境中
-  // @ts-ignore
-  if (typeof utools !== 'undefined' && utools.onThemeChange) {
+  const utoolsApi = (window as any).utools;
+  if (utoolsApi && utoolsApi.onThemeChange) {
     // 获取当前主题
-    const nativeTheme = utools.getNativeId ? utools.getNativeId() : null;
+    const nativeTheme = utoolsApi.getNativeId ? utoolsApi.getNativeId() : null;
     
     // 应用初始主题 (uTools 会自动添加 utools-dark 类到 body)
     // 我们通过监听 body 的 class 变化来同步主题
@@ -80,8 +80,7 @@ function initUToolsTheme() {
     
     // 同时注册 uTools 主题变化回调（作为备用）
     try {
-      // @ts-ignore
-      utools.onThemeChange((type: 'light' | 'dark' | 'auto') => {
+      utoolsApi.onThemeChange((type: 'light' | 'dark' | 'auto') => {
         const isDarkMode = type === 'dark' || 
           (type === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         applyUToolsTheme(isDarkMode);

@@ -8,6 +8,8 @@ import {AppInfo} from "@/config.ts";
 import {getOcrApiKey, getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {log} from "@/utils/logger.ts";
 import {ElMessage} from "element-plus";
+import {isUtools as checkIsUtools} from "@/adapters/platform";
+import {getDbStorage} from "@/adapters/db";
 
 const API = 'https://openapi.youdao.com/ocrtransapi'
 
@@ -122,15 +124,18 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
     // const {appkey, key} = getTranslationApiKey(platform);
     const {appkey, key} = getOcrApiKey(ocrPlatform);
     // console.log('[OCR] API密钥状态:', { appkey: appkey ? '已设置' : '未设置', key: key ? '已设置' : '未设置' });
-    let b = utools.hideMainWindow();
-    if (!b) {
+    let b = checkIsUtools() ? (window as any).utools?.hideMainWindow?.() : false;
+    if (!b && checkIsUtools()) {
         // window.close()
-        utools.sendToParent('close')
+        (window as any).utools?.sendToParent?.('close')
     }
     // 将 utools.screenCapture 包装为 Promise
     return new Promise((resolve, reject) => {
-        // console.log('[OCR] 调用utools.screenCapture...');
-        utools.screenCapture(async (image) => {
+        if (!checkIsUtools() || !(window as any).utools?.screenCapture) {
+            reject(new Error('截图功能仅在 uTools 环境中可用'));
+            return;
+        }
+        (window as any).utools.screenCapture(async (image: string) => {
             // console.log('[OCR] 截图回调触发，图片数据长度:', image ? image.length : 0);
             if (!image) {
                 // 用户取消截图，由 App.vue 控制窗口显示
@@ -798,7 +803,7 @@ async function translateWithLargeModel(text: string, platform: TranslationPlatfo
  * 检测是否在 uTools 环境中
  */
 function isUTools(): boolean {
-    return typeof utools !== 'undefined' && !!utools.getPath;
+    return checkIsUtools();
 }
 
 // Worker 缓存 - 避免重复创建
@@ -834,7 +839,8 @@ function openCacheDB(): Promise<IDBDatabase> {
  */
 function hasUToolsCache(): boolean {
     try {
-        const timestamp = utools.dbStorage.getItem('ocr_worker_cache_time');
+        const storage = getDbStorage();
+        const timestamp = storage.getItem('ocr_worker_cache_time');
         if (timestamp && Date.now() - timestamp < 24 * 60 * 60 * 1000) {
             return true;
         }
@@ -849,7 +855,8 @@ function hasUToolsCache(): boolean {
  */
 function setUToolsCacheMarker(): void {
     try {
-        utools.dbStorage.setItem('ocr_worker_cache_time', Date.now());
+        const storage = getDbStorage();
+        storage.setItem('ocr_worker_cache_time', Date.now());
     } catch (e) {
         // 忽略错误
     }
@@ -1039,11 +1046,14 @@ function scheduleWorkerCleanup() {
 function logToFile(message: string) {
     try {
         if (isUTools()) {
-            const fs = (window as any).require('fs');
-            const path = (window as any).require('path');
-            const logPath = path.join(utools.getPath('temp'), 'slowlyrecord-ocr.log');
-            const timestamp = new Date().toISOString();
-            fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
+            const utoolsApi = (window as any).utools;
+            const fs = (window as any).require?.('fs');
+            const path = (window as any).require?.('path');
+            if (fs && path && utoolsApi?.getPath) {
+                const logPath = path.join(utoolsApi.getPath('temp'), 'slowlyrecord-ocr.log');
+                const timestamp = new Date().toISOString();
+                fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
+            }
         }
     } catch (e) {
         // 忽略日志写入错误
@@ -1087,7 +1097,8 @@ async function readLocalFile(filePath: string): Promise<ArrayBuffer> {
     if (isUTools()) {
         try {
             // @ts-ignore - preload 脚本中暴露的 services
-            const {fs, path} = window.services || {};
+            const {fs, path} = (window as any).services || {};
+            const utoolsApi = (window as any).utools;
             if (fs && path) {
                 const fullPath = path.join(pluginDir, filePath.replace(/^\.\//, ''));
                 debugLog('[本地OCR] 尝试 services.fs 读取:', fullPath);
