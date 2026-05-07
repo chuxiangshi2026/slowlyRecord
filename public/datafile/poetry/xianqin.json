@@ -26,7 +26,8 @@
       ],
       "source": "《诗经·周南》",
       "location": "黄河流域/中原",
-      "wordCount": 160
+      "wordCount": 160,
+      "year": -600
     },
     {
       "id": "xq_002",
@@ -45,7 +46,8 @@
       ],
       "source": "《诗经·秦风》",
       "location": "秦地/陕西",
-      "wordCount": 144
+      "wordCount": 144,
+      "year": -600
     },
     {
       "id": "xq_003",
@@ -63,7 +65,8 @@
       ],
       "source": "《楚辞》",
       "location": "郢都/湖北江陵",
-      "wordCount": 280
+      "wordCount": 280,
+      "year": -278
     },
     {
       "id": "xq_004",
@@ -81,7 +84,8 @@
       ],
       "source": "《楚辞·九歌》",
       "location": "楚地/巫山",
-      "wordCount": 192
+      "wordCount": 192,
+      "year": -278
     },
     {
       "id": "xq_005",
@@ -99,7 +103,8 @@
       ],
       "source": "《诗经·卫风》",
       "location": "卫国/河南淇县",
-      "wordCount": 96
+      "wordCount": 96,
+      "year": -600
     },
     {
       "id": "xq_006",
@@ -118,7 +123,8 @@
       ],
       "source": "《诗经·邶风》",
       "location": "邶地/河南汤阴",
-      "wordCount": 32
+      "wordCount": 32,
+      "year": -600
     },
     {
       "id": "xq_007",
@@ -137,7 +143,8 @@
       ],
       "source": "《诗经·郑风》",
       "location": "郑国/河南新郑",
-      "wordCount": 48
+      "wordCount": 48,
+      "year": -600
     },
     {
       "id": "xq_008",
@@ -155,7 +162,8 @@
       ],
       "source": "《诗经·王风》",
       "location": "洛邑/河南洛阳",
-      "wordCount": 117
+      "wordCount": 117,
+      "year": -600
     },
     {
       "id": "xq_009",
@@ -174,7 +182,8 @@
       ],
       "source": "《论语》",
       "location": "鲁国/山东曲阜",
-      "wordCount": 208
+      "wordCount": 208,
+      "year": -475
     },
     {
       "id": "xq_010",
@@ -192,7 +201,8 @@
       ],
       "source": "《左传》",
       "location": "长勺/山东莱芜",
-      "wordCount": 222
+      "wordCount": 222,
+      "year": -684
     },
     {
       "id": "xq_011",
@@ -211,7 +221,8 @@
       ],
       "source": "《孟子·告子上》",
       "location": "邹国/山东邹城",
-      "wordCount": 302
+      "wordCount": 302,
+      "year": -289
     },
     {
       "id": "xq_012",
@@ -230,7 +241,8 @@
       ],
       "source": "《楚辞·九歌》",
       "location": "楚国",
-      "wordCount": 180
+      "wordCount": 180,
+      "year": -278
     }
   ]
 }

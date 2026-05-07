@@ -26,7 +26,8 @@
       ],
       "source": "《于忠肃集》",
       "location": "北京/石灰窑",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1440
     },
     {
       "id": "ming_002",
@@ -45,7 +46,8 @@
       ],
       "source": "《升庵集》",
       "location": "云南/永昌",
-      "wordCount": 108
+      "wordCount": 108,
+      "year": 1524
     },
     {
       "id": "ming_003",
@@ -63,7 +65,8 @@
       ],
       "source": "《鹤滩集》",
       "location": "松江/上海",
-      "wordCount": 100
+      "wordCount": 100,
+      "year": 1500
     },
     {
       "id": "ming_004",
@@ -81,7 +84,8 @@
       ],
       "source": "《六如居士集》",
       "location": "苏州/桃花坞",
-      "wordCount": 252
+      "wordCount": 252,
+      "year": 1500
     },
     {
       "id": "ming_005",
@@ -99,7 +103,8 @@
       ],
       "source": "《宋学士文集》",
       "location": "东阳/金华",
-      "wordCount": 583
+      "wordCount": 583,
+      "year": 1370
     },
     {
       "id": "ming_006",
@@ -117,7 +122,8 @@
       ],
       "source": "《震川先生集》",
       "location": "昆山/苏州",
-      "wordCount": 631
+      "wordCount": 631,
+      "year": 1540
     },
     {
       "id": "ming_007",
@@ -135,7 +141,8 @@
       ],
       "source": "《王西楼乐府》",
       "location": "高邮/扬州",
-      "wordCount": 75
+      "wordCount": 75,
+      "year": 1520
     },
     {
       "id": "ming_008",
@@ -153,7 +160,8 @@
       ],
       "source": "《虞初新志》",
       "location": "嘉善/嘉兴",
-      "wordCount": 433
+      "wordCount": 433,
+      "year": 1620
     },
     {
       "id": "ming_009",
@@ -171,7 +179,8 @@
       ],
       "source": "《夏完淳集》",
       "location": "松江/上海",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 1647
     },
     {
       "id": "ming_010",
@@ -189,7 +198,8 @@
       ],
       "source": "《王文成公全书》",
       "location": "贵州/龙场",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 1506
     },
     {
       "id": "ming_011",
@@ -207,7 +217,8 @@
       ],
       "source": "《陶庵梦忆》",
       "location": "杭州/西湖",
-      "wordCount": 159
+      "wordCount": 159,
+      "year": 1640
     },
     {
       "id": "ming_012",
@@ -226,7 +237,8 @@
       ],
       "source": "《诚意伯刘文成公文集》",
       "location": "杭州",
-      "wordCount": 295
+      "wordCount": 295,
+      "year": 1370
     }
   ]
 }

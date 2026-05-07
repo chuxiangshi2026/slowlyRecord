@@ -26,7 +26,8 @@
       ],
       "source": "《陶渊明集》",
       "location": "浔阳柴桑/江西九江",
-      "wordCount": 200
+      "wordCount": 200,
+      "year": 405
     },
     {
       "id": "wj_002",
@@ -45,7 +46,8 @@
       ],
       "source": "《陶渊明集》",
       "location": "南山/庐山",
-      "wordCount": 100
+      "wordCount": 100,
+      "year": 417
     },
     {
       "id": "wj_003",
@@ -63,7 +65,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "敕勒川/内蒙古",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 550
     },
     {
       "id": "wj_004",
@@ -81,7 +84,8 @@
       ],
       "source": "《阮步兵集》",
       "location": "洛阳",
-      "wordCount": 168
+      "wordCount": 168,
+      "year": 240
     },
     {
       "id": "wj_005",
@@ -99,7 +103,8 @@
       ],
       "source": "《世说新语》",
       "location": "邺城/河北临漳",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 223
     },
     {
       "id": "wj_006",
@@ -117,7 +122,8 @@
       ],
       "source": "《曹操集》",
       "location": "碣石山/河北昌黎",
-      "wordCount": 88
+      "wordCount": 88,
+      "year": 207
     },
     {
       "id": "wj_007",
@@ -136,7 +142,8 @@
       ],
       "source": "《曹操集》",
       "location": "邺城/河北临漳",
-      "wordCount": 256
+      "wordCount": 256,
+      "year": 208
     },
     {
       "id": "wj_008",
@@ -154,7 +161,8 @@
       ],
       "source": "《曹操集》",
       "location": "邺城/河北临漳",
-      "wordCount": 88
+      "wordCount": 88,
+      "year": 207
     },
     {
       "id": "wj_009",
@@ -173,7 +181,8 @@
       ],
       "source": "《陶渊明集》",
       "location": "武陵/湖南常德",
-      "wordCount": 320
+      "wordCount": 320,
+      "year": 421
     },
     {
       "id": "wj_010",
@@ -192,7 +201,8 @@
       ],
       "source": "《晋书·王羲之传》",
       "location": "会稽山阴/浙江绍兴",
-      "wordCount": 324
+      "wordCount": 324,
+      "year": 353
     },
     {
       "id": "wj_011",
@@ -211,7 +221,8 @@
       ],
       "source": "《艺文类聚》",
       "location": "富春江/浙江",
-      "wordCount": 144
+      "wordCount": 144,
+      "year": 520
     },
     {
       "id": "wj_012",
@@ -230,7 +241,8 @@
       ],
       "source": "《水经注》",
       "location": "长江三峡",
-      "wordCount": 155
+      "wordCount": 155,
+      "year": 520
     },
     {
       "id": "wj_013",
@@ -248,7 +260,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "黄河流域/北方",
-      "wordCount": 328
+      "wordCount": 328,
+      "year": 500
     },
     {
       "id": "wj_014",
@@ -266,7 +279,8 @@
       ],
       "source": "《世说新语·言语》",
       "location": "建康/南京",
-      "wordCount": 71
+      "wordCount": 71,
+      "year": 420
     },
     {
       "id": "wj_015",
@@ -285,7 +299,8 @@
       ],
       "source": "《世说新语·方正》",
       "location": "颍川/河南",
-      "wordCount": 108
+      "wordCount": 108,
+      "year": 420
     }
   ]
 }

@@ -26,7 +26,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "邺城/河北临漳",
-      "wordCount": 256
+      "wordCount": 256,
+      "year": 208
     },
     {
       "id": "han_002",
@@ -45,7 +46,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "碣石山/河北昌黎",
-      "wordCount": 108
+      "wordCount": 108,
+      "year": 207
     },
     {
       "id": "han_003",
@@ -64,7 +66,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "北方边塞",
-      "wordCount": 620
+      "wordCount": 620,
+      "year": 500
     },
     {
       "id": "han_004",
@@ -82,7 +85,8 @@
       ],
       "source": "《文选》",
       "location": "洛阳",
-      "wordCount": 128
+      "wordCount": 128,
+      "year": 150
     },
     {
       "id": "han_005",
@@ -100,7 +104,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "长安",
-      "wordCount": 100
+      "wordCount": 100,
+      "year": 80
     },
     {
       "id": "han_006",
@@ -119,7 +124,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "汉代中原",
-      "wordCount": 160
+      "wordCount": 160,
+      "year": 80
     },
     {
       "id": "han_007",
@@ -138,7 +144,8 @@
       ],
       "source": "《文选》",
       "location": "银河/神话",
-      "wordCount": 100
+      "wordCount": 100,
+      "year": 150
     },
     {
       "id": "han_008",
@@ -156,7 +163,8 @@
       ],
       "source": "《文选》",
       "location": "江南/异乡",
-      "wordCount": 80
+      "wordCount": 80,
+      "year": 150
     },
     {
       "id": "han_009",
@@ -175,7 +183,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "邺城/河北临漳",
-      "wordCount": 112
+      "wordCount": 112,
+      "year": 207
     },
     {
       "id": "han_010",
@@ -193,7 +202,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "江南",
-      "wordCount": 49
+      "wordCount": 49,
+      "year": 80
     },
     {
       "id": "han_011",
@@ -212,7 +222,8 @@
       ],
       "source": "《玉台新咏》",
       "location": "庐江/安徽",
-      "wordCount": 1785
+      "wordCount": 1785,
+      "year": 200
     },
     {
       "id": "han_012",
@@ -232,7 +243,8 @@
       ],
       "source": "《三国志》",
       "location": "汉中/陕西",
-      "wordCount": 741
+      "wordCount": 741,
+      "year": 227
     },
     {
       "id": "han_013",
@@ -251,7 +263,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "长安",
-      "wordCount": 35
+      "wordCount": 35,
+      "year": 80
     },
     {
       "id": "han_014",
@@ -269,7 +282,8 @@
       ],
       "source": "《文选》",
       "location": "洛阳",
-      "wordCount": 80
+      "wordCount": 80,
+      "year": 150
     },
     {
       "id": "han_015",
@@ -287,7 +301,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "长城边塞",
-      "wordCount": 120
+      "wordCount": 120,
+      "year": 80
     },
     {
       "id": "han_016",
@@ -306,7 +321,8 @@
       ],
       "source": "《新书》",
       "location": "长安/洛阳",
-      "wordCount": 1022
+      "wordCount": 1022,
+      "year": -200
     },
     {
       "id": "han_017",
@@ -325,7 +341,8 @@
       ],
       "source": "《汉书》",
       "location": "长安",
-      "wordCount": 320
+      "wordCount": 320,
+      "year": -99
     },
     {
       "id": "han_018",
@@ -344,7 +361,8 @@
       ],
       "source": "《史记·项羽本纪》",
       "location": "鸿门/新丰",
-      "wordCount": 1580
+      "wordCount": 1580,
+      "year": -99
     },
     {
       "id": "han_019",
@@ -363,7 +381,8 @@
       ],
       "source": "《曹子建集》",
       "location": "邺城/河北临漳",
-      "wordCount": 140
+      "wordCount": 140,
+      "year": 223
     },
     {
       "id": "han_020",
@@ -382,7 +401,8 @@
       ],
       "source": "《魏书》",
       "location": "邺城/河北临漳",
-      "wordCount": 105
+      "wordCount": 105,
+      "year": 207
     },
     {
       "id": "han_021",
@@ -401,7 +421,8 @@
       ],
       "source": "《汉书·李广苏建传》",
       "location": "北海/贝加尔湖",
-      "wordCount": 198
+      "wordCount": 198,
+      "year": 80
     }
   ]
 }

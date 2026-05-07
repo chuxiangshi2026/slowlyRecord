@@ -25,7 +25,8 @@
       ],
       "source": "《龚自珍全集》",
       "location": "镇江/江苏",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1839
     },
     {
       "id": "qing_002",
@@ -44,7 +45,8 @@
       ],
       "source": "《纳兰词》",
       "location": "山海关/辽宁",
-      "wordCount": 72
+      "wordCount": 72,
+      "year": 1680
     },
     {
       "id": "qing_003",
@@ -63,7 +65,8 @@
       ],
       "source": "《瓯北集》",
       "location": "常州/江苏",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1780
     },
     {
       "id": "qing_004",
@@ -82,7 +85,8 @@
       ],
       "source": "《郑板桥集》",
       "location": "扬州/江苏",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1750
     },
     {
       "id": "qing_005",
@@ -100,7 +104,8 @@
       ],
       "source": "《拙吾诗稿》",
       "location": "杭州/浙江",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1860
     },
     {
       "id": "qing_006",
@@ -118,7 +123,8 @@
       ],
       "source": "《阅微草堂笔记》",
       "location": "沧州/河北",
-      "wordCount": 285
+      "wordCount": 285,
+      "year": 1750
     },
     {
       "id": "qing_007",
@@ -137,7 +143,8 @@
       ],
       "source": "《惜抱轩诗文集》",
       "location": "泰山/山东泰安",
-      "wordCount": 457
+      "wordCount": 457,
+      "year": 1775
     },
     {
       "id": "qing_008",
@@ -155,7 +162,8 @@
       ],
       "source": "《龚自珍全集》",
       "location": "江南",
-      "wordCount": 301
+      "wordCount": 301,
+      "year": 1839
     },
     {
       "id": "qing_009",
@@ -173,7 +181,8 @@
       ],
       "source": "《秋瑾集》",
       "location": "北京/绍兴",
-      "wordCount": 158
+      "wordCount": 158,
+      "year": 1900
     },
     {
       "id": "qing_010",
@@ -191,7 +200,8 @@
       ],
       "source": "《龚自珍全集》",
       "location": "镇江/江苏",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1839
     },
     {
       "id": "qing_011",
@@ -209,7 +219,8 @@
       ],
       "source": "《谭嗣同全集》",
       "location": "潼关/陕西",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1880
     },
     {
       "id": "qing_012",
@@ -227,7 +238,8 @@
       ],
       "source": "《谭嗣同全集》",
       "location": "北京/菜市口",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1898
     },
     {
       "id": "qing_013",
@@ -245,7 +257,8 @@
       ],
       "source": "《小仓山房诗文集》",
       "location": "江宁/南京",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 1780
     },
     {
       "id": "qing_014",
@@ -263,7 +276,8 @@
       ],
       "source": "《小仓山房诗文集》",
       "location": "江宁/南京",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 1780
     },
     {
       "id": "qing_015",
@@ -281,7 +295,8 @@
       ],
       "source": "《纳兰词》",
       "location": "北京",
-      "wordCount": 84
+      "wordCount": 84,
+      "year": 1680
     }
   ]
 }

@@ -26,7 +26,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "扬州/瓜洲",
-      "wordCount": 504
+      "wordCount": 504,
+      "year": 600
     },
     {
       "id": "sui_002",
@@ -43,7 +44,8 @@
       ],
       "source": "《隋书》",
       "location": "长安/灞桥",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 580
     },
     {
       "id": "sui_003",
@@ -62,7 +64,8 @@
       ],
       "source": "《隋书·文学传》",
       "location": "江都",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 600
     },
     {
       "id": "sui_004",
@@ -80,7 +83,8 @@
       ],
       "source": "《全隋诗》",
       "location": "长安",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 580
     },
     {
       "id": "sui_005",
@@ -98,7 +102,8 @@
       ],
       "source": "《乐府诗集》",
       "location": "江都",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 600
     },
     {
       "id": "sui_006",
@@ -116,7 +121,8 @@
       ],
       "source": "《全隋诗》",
       "location": "洛阳",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 600
     },
     {
       "id": "sui_007",
@@ -134,7 +140,8 @@
       ],
       "source": "《全隋诗》",
       "location": "扬州",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 600
     },
     {
       "id": "sui_008",
@@ -152,7 +159,8 @@
       ],
       "source": "《全隋诗》",
       "location": "长安",
-      "wordCount": 40
+      "wordCount": 40,
+      "year": 580
     },
     {
       "id": "sui_009",
@@ -170,7 +178,8 @@
       ],
       "source": "《全隋诗》",
       "location": "长安",
-      "wordCount": 84
+      "wordCount": 84,
+      "year": 580
     }
   ]
 }

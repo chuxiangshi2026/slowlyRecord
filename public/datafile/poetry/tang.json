@@ -25,7 +25,8 @@
       ],
       "source": "《李太白集》",
       "location": "扬州",
-      "wordCount": 20
+      "wordCount": 20,
+      "year": 726
     },
     {
       "id": "tang_002",
@@ -44,7 +45,8 @@
       ],
       "source": "《李太白集》",
       "location": "梁园/开封",
-      "wordCount": 330
+      "wordCount": 330,
+      "year": 752
     },
     {
       "id": "tang_003",
@@ -62,7 +64,8 @@
       ],
       "source": "《杜工部集》",
       "location": "长安",
-      "wordCount": 80
+      "wordCount": 80,
+      "year": 757
     },
     {
       "id": "tang_004",
@@ -81,7 +84,8 @@
       ],
       "source": "《杜工部集》",
       "location": "夔州/白帝城",
-      "wordCount": 112
+      "wordCount": 112,
+      "year": 767
     },
     {
       "id": "tang_005",
@@ -226,7 +230,8 @@
       ],
       "source": "《李太白集》",
       "location": "长安/蜀地",
-      "wordCount": 345
+      "wordCount": 345,
+      "year": 742
     },
     {
       "id": "tang_013",
@@ -332,7 +337,8 @@
       ],
       "source": "《李太白集》",
       "location": "长安",
-      "wordCount": 82
+      "wordCount": 82,
+      "year": 744
     },
     {
       "id": "tang_019",
@@ -583,7 +589,8 @@
       ],
       "source": "《李太白集》",
       "location": "白帝城/重庆",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 759
     },
     {
       "id": "tang_033",
@@ -600,7 +607,8 @@
       ],
       "source": "《李太白集》",
       "location": "天门山/安徽",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 725
     },
     {
       "id": "tang_034",
@@ -618,7 +626,8 @@
       ],
       "source": "《李太白集》",
       "location": "扬州",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 753
     },
     {
       "id": "tang_035",
@@ -742,7 +751,8 @@
       ],
       "source": "《李太白集》",
       "location": "越中/浙江",
-      "wordCount": 284
+      "wordCount": 284,
+      "year": 746
     },
     {
       "id": "tang_042",
@@ -867,6 +877,7 @@
       ],
       "source": "《李太白集》",
       "location": "庐山/江西",
+      "year": 726,
       "wordCount": 28
     },
     {

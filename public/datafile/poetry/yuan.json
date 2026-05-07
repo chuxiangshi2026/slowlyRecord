@@ -26,7 +26,8 @@
       ],
       "source": "《全元散曲》",
       "location": "大都/北京",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1290
     },
     {
       "id": "yuan_002",
@@ -45,7 +46,8 @@
       ],
       "source": "《全元散曲》",
       "location": "潼关/陕西",
-      "wordCount": 98
+      "wordCount": 98,
+      "year": 1329
     },
     {
       "id": "yuan_003",
@@ -64,7 +66,8 @@
       ],
       "source": "《关汉卿集》",
       "location": "大都/北京",
-      "wordCount": 168
+      "wordCount": 168,
+      "year": 1290
     },
     {
       "id": "yuan_004",
@@ -82,7 +85,8 @@
       ],
       "source": "《全元散曲》",
       "location": "江南",
-      "wordCount": 56
+      "wordCount": 56,
+      "year": 1290
     },
     {
       "id": "yuan_005",
@@ -101,7 +105,8 @@
       ],
       "source": "《西厢记》",
       "location": "蒲州/普救寺",
-      "wordCount": 28
+      "wordCount": 28,
+      "year": 1300
     },
     {
       "id": "yuan_006",
@@ -119,7 +124,8 @@
       ],
       "source": "《全元散曲》",
       "location": "骊山/西安",
-      "wordCount": 85
+      "wordCount": 85,
+      "year": 1329
     },
     {
       "id": "yuan_007",
@@ -138,7 +144,8 @@
       ],
       "source": "《全元散曲》",
       "location": "江南/金陵",
-      "wordCount": 52
+      "wordCount": 52,
+      "year": 1260
     },
     {
       "id": "yuan_008",
@@ -156,7 +163,8 @@
       ],
       "source": "《全元散曲》",
       "location": "大都/北京",
-      "wordCount": 57
+      "wordCount": 57,
+      "year": 1290
     },
     {
       "id": "yuan_009",
@@ -175,7 +183,8 @@
       ],
       "source": "《全元散曲》",
       "location": "洛阳/中原",
-      "wordCount": 24
+      "wordCount": 24,
+      "year": 1290
     },
     {
       "id": "yuan_010",
@@ -194,7 +203,8 @@
       ],
       "source": "《全元散曲》",
       "location": "潇湘/湖南",
-      "wordCount": 89
+      "wordCount": 89,
+      "year": 1290
     }
   ]
 }
