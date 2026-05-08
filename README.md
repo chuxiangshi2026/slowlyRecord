@@ -1,8 +1,8 @@
-# 慢记单词本 - 使用说明书
+# 慢记单词本 - 全平台版
 
 ## 软件简介
 
-**慢记单词本**是一款基于**艾宾浩斯遗忘曲线**开发的智能单词记忆辅助工具，以 uTools 插件形式运行。它通过科学的记忆算法，帮助用户在最佳时间点复习单词，达到长期记忆的效果。
+**慢记单词本**是一款基于**艾宾浩斯遗忘曲线**开发的智能单词记忆辅助工具。支持 uTools 插件、Electron 桌面应用、Web 浏览器、微信小程序、Android/iOS App 五大平台。
 
 ### 核心特点
 
@@ -14,6 +14,7 @@
 - **丰富词库**：内置 CET-4/6、考研、托福、雅思、GRE、GMAT 等权威词库
 - **多元记忆**：支持单词、数字、文本、快捷键等多种记忆训练
 - **数据安全**：本地数据库存储，支持导入导出
+- **全平台覆盖**：uTools / Electron / Web / 微信小程序 / Android / iOS
 
 ---
 
@@ -38,14 +39,55 @@
 
 ---
 
+## 平台支持
+
+| 平台 | 技术方案 | 状态 | 构建命令 |
+|------|---------|------|----------|
+| uTools 插件 | Vue3 + Vite | ✅ 可用 | `npm run build` |
+| Electron 桌面版 | Electron + Vue3 | ✅ 可用 | `npm run build:electron` |
+| Web 版 | Vue3 + Vite | ✅ 可用 | `npm run build:web` |
+| 微信小程序 | UniApp + Vue3 | ✅ 可用 | `npm run build:mp-weixin` |
+| Android App | UniApp + Vue3 | ✅ 可用 | `npm run build:app-android` |
+| iOS App | UniApp + Vue3 | ✅ 可用 | `npm run build:app-ios` |
+
 ## 安装与启动
 
 ### 环境要求
 
-- **uTools** 软件（Windows / macOS / Linux）
-- 网络连接（首次配置翻译引擎时需要）
+- **Node.js** >= 18
+- **uTools** 软件（Windows / macOS / Linux）- 用于 uTools 插件版本
 
-### 安装步骤
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 各平台构建
+
+```bash
+# uTools 插件
+npm run build
+
+# Electron 桌面版
+npm run build:electron
+npm run pack:electron
+
+# Web 版
+npm run build:web
+
+# 微信小程序
+cd mobile && npm install
+npm run build:mp-weixin
+
+# Android App
+npm run build:app-android
+
+# iOS App
+npm run build:app-ios
+```
+
+### uTools 插件安装
 
 1. 下载并安装 [uTools](https://u.tools/)
 2. 在 uTools 插件市场搜索"慢记单词本"

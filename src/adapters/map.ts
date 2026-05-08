@@ -1,9 +1,11 @@
 /**
  * 地图适配器接口
- * 
+ *
  * 桌面端/App 端使用 Leaflet 实现
  * 小程序端使用腾讯地图 <map> 组件实现
  */
+
+import { getPlatform } from './platform'
 
 export interface MapOptions {
   center?: [number, number]  // [lat, lng]
@@ -69,4 +71,31 @@ export interface MapAdapter {
    * 销毁地图
    */
   destroy(): void
+}
+
+let _mapAdapter: MapAdapter | null = null
+
+export function getMapAdapter(): MapAdapter {
+  if (_mapAdapter) return _mapAdapter
+
+  const platform = getPlatform()
+  switch (platform) {
+    case 'utools':
+    case 'electron':
+    case 'web': {
+      const { MapAdapterLeaflet } = require('./impl/map-leaflet')
+      _mapAdapter = new MapAdapterLeaflet()
+      break
+    }
+    default: {
+      const { MapAdapterLeaflet } = require('./impl/map-leaflet')
+      _mapAdapter = new MapAdapterLeaflet()
+      break
+    }
+  }
+  return _mapAdapter
+}
+
+export function setMapAdapter(adapter: MapAdapter): void {
+  _mapAdapter = adapter
 }

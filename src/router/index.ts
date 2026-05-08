@@ -1,5 +1,11 @@
 import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { isElectron, isUtools, isWeb, isMiniProgram, isApp } from '@/adapters/platform'
+
+// 平台检测（构建时静态替换，运行时动态过滤）
+const isDesktopEnv = isElectron() || isUtools() || isWeb()
+const isMobileEnv = isMiniProgram() || isApp()
+
 // const Login = () => import('@/views/Login/Login.vue');
 const Home = () => import('@/views/Home/Home.vue');
 const Sign = () => import('@/views/Sign/Sign.vue');
@@ -132,25 +138,27 @@ const routes: Array<RouteRecordRaw> = [
           icon: 'collection',
         },
       },
-      {
-        path: 'shortcut-memory',
-        name: 'shortcutMemory',
-        component: ShortcutMemory,
-        meta: {
-          menu: true,
-          title: '快捷键记忆',
-          icon: 'Cpu',
+      ...(isDesktopEnv ? [
+        {
+          path: 'shortcut-memory',
+          name: 'shortcutMemory',
+          component: ShortcutMemory,
+          meta: {
+            menu: true,
+            title: '快捷键记忆',
+            icon: 'Cpu',
+          },
         },
-      },
-      {
-        path: 'shortcut-memory/training',
-        name: 'shortcutMemoryTraining',
-        component: ShortcutMemoryTraining,
-        meta: {
-          menu: false,
-          title: '快捷键训练',
+        {
+          path: 'shortcut-memory/training',
+          name: 'shortcutMemoryTraining',
+          component: ShortcutMemoryTraining,
+          meta: {
+            menu: false,
+            title: '快捷键训练',
+          },
         },
-      },
+      ] : []),
      /* {
         path: 'exception',
         name: 'exception',

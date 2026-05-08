@@ -1,0 +1,106 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "慢记"
+      }
+    },
+    {
+      "path": "pages/words/words",
+      "style": {
+        "navigationBarTitleText": "单词列表"
+      }
+    },
+    {
+      "path": "pages/review/review",
+      "style": {
+        "navigationBarTitleText": "单词复习"
+      }
+    },
+    {
+      "path": "pages/dictation/dictation",
+      "style": {
+        "navigationBarTitleText": "听写练习"
+      }
+    },
+    {
+      "path": "pages/translate/translate",
+      "style": {
+        "navigationBarTitleText": "快速翻译"
+      }
+    },
+    {
+      "path": "pages/profile/profile",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/signin/signin",
+      "style": {
+        "navigationBarTitleText": "每日打卡"
+      }
+    },
+    {
+      "path": "pages/wrong-words/wrong-words",
+      "style": {
+        "navigationBarTitleText": "错题复习"
+      }
+    },
+    {
+      "path": "pages/wordbank/wordbank",
+      "style": {
+        "navigationBarTitleText": "词库管理"
+      }
+    },
+    {
+      "path": "pages/number-memory/number-memory",
+      "style": {
+        "navigationBarTitleText": "数字记忆"
+      }
+    },
+    {
+      "path": "pages/text-memory/text-memory",
+      "style": {
+        "navigationBarTitleText": "诗词记忆"
+      }
+    },
+    {
+      "path": "pages/memory-test/memory-test",
+      "style": {
+        "navigationBarTitleText": "记忆测试"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "慢记",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#409EFF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/words/words",
+        "text": "单词"
+      },
+      {
+        "pagePath": "pages/review/review",
+        "text": "复习"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  }
+}

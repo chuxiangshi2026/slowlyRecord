@@ -41,9 +41,10 @@
           v-model="inputText"
           type="textarea"
           :rows="3"
-          placeholder="输入要翻译的文本，按 Enter 快速翻译"
+          placeholder="输入要翻译的文本，按 Enter 快速翻译；支持粘贴图片进行 OCR 翻译"
           class="translate-input"
           @keyup.enter="handleTranslate"
+          @paste="handlePaste"
         />
         <div class="input-actions">
           <el-select v-model="selectedPlatform" size="small" class="platform-select">
@@ -377,6 +378,50 @@ function copyResult() {
 function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
+}
+
+// 处理粘贴事件（Web 端粘贴图片 OCR）
+async function handlePaste(event: ClipboardEvent) {
+  const items = event.clipboardData?.items
+  if (!items) return
+
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      event.preventDefault()
+      const blob = item.getAsFile()
+      if (!blob) continue
+
+      try {
+        const base64 = await blobToBase64(blob)
+        // 使用 capture 适配器的 OCR 功能
+        const { getCaptureAdapter } = await import('@/adapters/capture')
+        const adapter = getCaptureAdapter()
+        const ocrResults = await adapter.ocr(base64)
+        if (ocrResults.length > 0) {
+          inputText.value = ocrResults.map(r => r.text).join('\n')
+          handleTranslate()
+          ElMessage.success('图片识别成功')
+        } else {
+          ElMessage.warning('未识别到文字')
+        }
+      } catch (e: any) {
+        ElMessage.error('图片识别失败: ' + e.message)
+      }
+      break
+    }
+  }
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result as string
+      resolve(result.split(',')[1])
+    }
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
 }
 
 // 添加到历史记录

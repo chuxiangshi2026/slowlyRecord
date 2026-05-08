@@ -1,10 +1,12 @@
 /**
  * 截图/选图适配器接口
- * 
+ *
  * 桌面端：uTools screenCapture / Electron desktopCapturer
  * 移动端 App：相机/相册选图
  * 小程序：wx.chooseImage
  */
+
+import { getPlatform } from './platform'
 
 export interface CaptureResult {
   /** 图片 Base64 数据 */
@@ -46,4 +48,41 @@ export interface CaptureAdapter {
    * @returns 识别结果
    */
   ocr(imageData: string): Promise<OCRResult[]>
+}
+
+let _captureAdapter: CaptureAdapter | null = null
+
+export function getCaptureAdapter(): CaptureAdapter {
+  if (_captureAdapter) return _captureAdapter
+
+  const platform = getPlatform()
+  switch (platform) {
+    case 'utools': {
+      const { CaptureAdapterUtools } = require('./impl/capture-utools')
+      _captureAdapter = new CaptureAdapterUtools()
+      break
+    }
+    case 'electron': {
+      const { CaptureAdapterElectron } = require('./impl/capture-electron')
+      _captureAdapter = new CaptureAdapterElectron()
+      break
+    }
+    case 'mp-weixin':
+    case 'app-android':
+    case 'app-ios': {
+      const { CaptureAdapterMiniProgram } = require('./impl/capture-miniprogram')
+      _captureAdapter = new CaptureAdapterMiniProgram()
+      break
+    }
+    default: {
+      const { CaptureAdapterWeb } = require('./impl/capture-web')
+      _captureAdapter = new CaptureAdapterWeb()
+      break
+    }
+  }
+  return _captureAdapter
+}
+
+export function setCaptureAdapter(adapter: CaptureAdapter): void {
+  _captureAdapter = adapter
 }
