@@ -1173,7 +1173,7 @@ function renderInlineMarkers() {
       weight: hasMultiple ? 2.5 : 1.5,
       opacity: 1,
       fillOpacity: 0.9,
-    }).addTo(inlineMarkerLayer);
+    }).addTo(inlineMarkerLayer!);
 
     if (hasMultiple) {
       const authors = [...new Set(list.map(p => p.author))].join('、');
@@ -1387,7 +1387,7 @@ function renderAuthorMarkers(authors: string[]) {
              <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
             { direction: 'top' }
           )
-          .addTo(inlineRouteLayer);
+          .addTo(inlineRouteLayer!);
 
         marker.on('click', () => {
           openLocationDialog(list);
@@ -1406,7 +1406,7 @@ function renderAuthorMarkers(authors: string[]) {
              <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
             { direction: 'top' }
           )
-          .addTo(inlineRouteLayer);
+          .addTo(inlineRouteLayer!);
 
         marker.on('click', () => {
           selectPoetry(poem);
@@ -1421,8 +1421,8 @@ function renderAuthorMarkers(authors: string[]) {
         weight: 4,
         dashArray: '6, 6',
         opacity: 0.9,
-      }).addTo(inlineRouteLayer);
-      addRouteArrows(coords, inlineRouteLayer, color);
+      }).addTo(inlineRouteLayer!);
+      addRouteArrows(coords, inlineRouteLayer!, color);
     }
   });
 
@@ -1921,11 +1921,11 @@ watch(activeTab, (tab) => {
           allLibraryPoems.value = Object.values(all).flat();
           hasLoadedLibrary.value = true;
           // Dialog 打开动画完成后再初始化，避免尺寸计算错误
-          if (modelValue.value) {
+          if (props.modelValue) {
             initInlineMap();
           }
         });
-      } else if (modelValue.value) {
+      } else if (props.modelValue) {
         if (!inlineMap) initInlineMap();
         else {
           inlineMap.invalidateSize();

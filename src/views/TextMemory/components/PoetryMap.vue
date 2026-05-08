@@ -442,7 +442,7 @@ function handleAuthorChange() {
       showPoetryDetail(article);
     });
 
-    routeLayer.addLayer(marker);
+    routeLayer!.addLayer(marker);
   });
 
   // 调整视野

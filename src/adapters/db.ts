@@ -252,11 +252,12 @@ export function getDbStorage(): DbStorageAdapter {
   }
 
   // 微信小程序环境
-  if (typeof wx !== 'undefined' && (wx as any).setStorageSync) {
+  const wxGlobal = typeof window !== 'undefined' ? (window as any).wx : undefined
+  if (wxGlobal && wxGlobal.setStorageSync) {
     _dbStorage = {
-      setItem: (key: string, value: any) => (wx as any).setStorageSync(key, value),
-      getItem: (key: string) => (wx as any).getStorageSync(key) || null,
-      removeItem: (key: string) => (wx as any).removeStorageSync(key),
+      setItem: (key: string, value: any) => wxGlobal.setStorageSync(key, value),
+      getItem: (key: string) => wxGlobal.getStorageSync(key) || null,
+      removeItem: (key: string) => wxGlobal.removeStorageSync(key),
     }
     return _dbStorage
   }

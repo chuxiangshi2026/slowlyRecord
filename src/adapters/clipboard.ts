@@ -1,7 +1,7 @@
 /**
  * 剪贴板适配器
  */
-import { getPlatform, Platform } from './platform'
+import { getPlatform, type Platform } from './platform'
 
 export interface ClipboardAdapter {
   /** 复制文本到剪贴板 */

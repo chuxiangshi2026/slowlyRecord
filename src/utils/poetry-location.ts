@@ -45,7 +45,6 @@ const LOCATION_COORD_MAP: Record<string, LocationCoord> = {
   '合肥': { lng: 117.3, lat: 31.9, name: '合肥', aliases: ['庐州'] },
   '蚌埠': { lng: 117.4, lat: 32.9, name: '蚌埠' },
   '徐州': { lng: 117.2, lat: 34.3, name: '徐州', aliases: ['彭城'] },
-  '扬州': { lng: 119.4, lat: 32.4, name: '扬州' },
 
   // 巴蜀
   '成都': { lng: 104.1, lat: 30.7, name: '成都', aliases: ['锦官城', '益州', '蜀郡'] },

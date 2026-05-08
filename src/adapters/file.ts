@@ -164,7 +164,7 @@ export function getFileAdapter(): FileAdapter {
     default:
       _fileAdapter = new WebFileAdapter()
   }
-  return _fileAdapter
+  return _fileAdapter!
 }
 
 export function setFileAdapter(adapter: FileAdapter): void {
