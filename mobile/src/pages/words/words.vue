@@ -37,16 +37,54 @@
     <view v-if="showAdd" class="popup-overlay" @click="closeAddDialog">
       <view class="popup-content" @click.stop>
         <view class="popup-title">添加单词</view>
-        <input 
-          class="popup-input" 
-          v-model="newWord.word"
-          placeholder="输入单词"
-        />
+        
+        <!-- 输入单词 -->
+        <view class="input-row">
+          <input 
+            class="popup-input" 
+            v-model="newWord.word"
+            placeholder="输入单词（如：apple）"
+            @blur="autoTranslate"
+            @confirm="autoTranslate"
+          />
+          <button class="btn-translate" :loading="translating" @click="autoTranslate">
+            {{ translating ? '翻译中' : '翻译' }}
+          </button>
+        </view>
+        
+        <!-- 释义 -->
         <input 
           class="popup-input" 
           v-model="newWord.meaning"
-          placeholder="输入释义"
+          placeholder="释义（自动填充或手动输入）"
         />
+        
+        <!-- 音标（可选） -->
+        <input 
+          class="popup-input" 
+          v-model="newWord.phonetic"
+          placeholder="音标（可选）"
+        />
+        
+        <!-- 例句（可选） -->
+        <input 
+          class="popup-input" 
+          v-model="newWord.example"
+          placeholder="例句（可选）"
+        />
+
+        <!-- 快捷操作 -->
+        <view class="quick-actions">
+          <button class="btn-quick" @click="pasteFromClipboard">
+            <text class="quick-icon">📋</text>
+            <text>粘贴</text>
+          </button>
+          <button class="btn-quick" @click="captureScreen">
+            <text class="quick-icon">📷</text>
+            <text>截屏识别</text>
+          </button>
+        </view>
+
         <view class="popup-actions">
           <button class="btn-cancel" @click="closeAddDialog">取消</button>
           <button class="btn-confirm" @click="addWord">确定</button>
@@ -59,11 +97,18 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { translateText } from '@/utils/translation-api'
 
 const wordsStore = useMobileWords()
 const searchText = ref('')
 const showAdd = ref(false)
-const newWord = ref({ word: '', meaning: '' })
+const translating = ref(false)
+const newWord = ref({ 
+  word: '', 
+  meaning: '',
+  phonetic: '',
+  example: ''
+})
 
 const filteredWords = computed(() => {
   if (!searchText.value) return wordsStore.words
@@ -83,7 +128,7 @@ const handleSearch = () => {
 }
 
 const showAddDialog = () => {
-  newWord.value = { word: '', meaning: '' }
+  newWord.value = { word: '', meaning: '', phonetic: '', example: '' }
   showAdd.value = true
 }
 
@@ -91,15 +136,138 @@ const closeAddDialog = () => {
   showAdd.value = false
 }
 
+// 自动翻译
+const autoTranslate = async () => {
+  if (!newWord.value.word.trim() || translating.value) return
+  
+  // 如果已有释义，不覆盖
+  if (newWord.value.meaning.trim()) return
+  
+  translating.value = true
+  try {
+    const result = await translateText(newWord.value.word.trim(), 'auto', 'zh')
+    if (result.translatedText && result.translatedText !== newWord.value.word) {
+      newWord.value.meaning = result.translatedText
+    }
+  } catch (e) {
+    console.error('翻译失败:', e)
+    // 静默失败，用户可手动输入
+  } finally {
+    translating.value = false
+  }
+}
+
+// 从剪贴板粘贴
+const pasteFromClipboard = async () => {
+  try {
+    // #ifdef H5
+    const text = await navigator.clipboard.readText()
+    if (text) {
+      newWord.value.word = text.trim()
+      autoTranslate()
+    }
+    // #endif
+    
+    // #ifdef MP-WEIXIN || APP-PLUS
+    uni.getClipboardData({
+      success: (res) => {
+        if (res.data) {
+          newWord.value.word = res.data.trim()
+          autoTranslate()
+        }
+      },
+      fail: () => {
+        uni.showToast({ title: '剪贴板为空', icon: 'none' })
+      }
+    })
+    // #endif
+  } catch (e) {
+    uni.showToast({ title: '粘贴失败', icon: 'none' })
+  }
+}
+
+// 截屏识别（OCR）
+const captureScreen = () => {
+  // #ifdef APP-PLUS
+  // App 端使用原生截屏
+  const pages = getCurrentPages()
+  const page = pages[pages.length - 1]
+  const webview = page.$getAppWebview()
+  const bitmap = new plus.nativeObj.Bitmap('screenshot')
+  webview.draw(bitmap, () => {
+    const base64 = bitmap.toBase64Data()
+    bitmap.clear()
+    // 调用 OCR 服务
+    uni.showToast({ title: '识别中...', icon: 'loading' })
+    // 这里可以接入 OCR API
+    setTimeout(() => {
+      uni.showToast({ title: '请手动输入', icon: 'none' })
+    }, 1000)
+  }, (err: any) => {
+    uni.showToast({ title: '截屏失败', icon: 'none' })
+  })
+  // #endif
+
+  // #ifdef MP-WEIXIN
+  // 小程序端：选择图片然后 OCR
+  uni.chooseImage({
+    count: 1,
+    sourceType: ['album', 'camera'],
+    success: (res) => {
+      const tempFilePath = res.tempFilePaths[0]
+      uni.showLoading({ title: '识别中...' })
+      // 使用微信 OCR 或第三方 OCR
+      // 简化：提示用户手动输入
+      setTimeout(() => {
+        uni.hideLoading()
+        uni.showModal({
+          title: '提示',
+          content: 'OCR 功能需要接入第三方服务，请手动输入单词',
+          showCancel: false
+        })
+      }, 500)
+    },
+    fail: () => {
+      uni.showToast({ title: '选择图片失败', icon: 'none' })
+    }
+  })
+  // #endif
+
+  // #ifdef H5
+  // H5 端：选择图片
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = 'image/*'
+  input.onchange = () => {
+    const file = input.files?.[0]
+    if (file) {
+      uni.showLoading({ title: '识别中...' })
+      // H5 端可用 Tesseract.js 等
+      setTimeout(() => {
+        uni.hideLoading()
+        uni.showModal({
+          title: '提示',
+          content: 'H5 端 OCR 需要额外配置，请手动输入单词',
+          showCancel: false
+        })
+      }, 500)
+    }
+  }
+  input.click()
+  // #endif
+}
+
 const addWord = async () => {
   if (!newWord.value.word || !newWord.value.meaning) {
-    uni.showToast({ title: '请填写完整信息', icon: 'none' })
+    uni.showToast({ title: '请填写单词和释义', icon: 'none' })
     return
   }
   
   await wordsStore.addWord({
-    word: newWord.value.word,
-    meaning: newWord.value.meaning,
+    word: newWord.value.word.trim(),
+    meaning: newWord.value.meaning.trim(),
+    phonetic: newWord.value.phonetic.trim() || undefined,
+    example: newWord.value.example.trim() || undefined,
     addTime: Date.now(),
     reviewCount: 0,
     nextReviewTime: Date.now() + 24 * 60 * 60 * 1000
@@ -112,7 +280,7 @@ const addWord = async () => {
 const showWordDetail = (word: any) => {
   uni.showModal({
     title: word.word,
-    content: word.meaning,
+    content: `${word.meaning}\n${word.phonetic ? '[' + word.phonetic + ']' : ''}\n${word.example || ''}`,
     showCancel: true,
     confirmText: '删除',
     cancelText: '关闭',
@@ -256,7 +424,9 @@ const formatDate = (timestamp: number): string => {
   background: #fff;
   border-radius: 16rpx;
   padding: 40rpx;
-  width: 560rpx;
+  width: 600rpx;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .popup-title {
@@ -266,13 +436,55 @@ const formatDate = (timestamp: number): string => {
   margin-bottom: 30rpx;
 }
 
+.input-row {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
 .popup-input {
+  flex: 1;
   height: 80rpx;
   background: #f5f5f5;
   border-radius: 8rpx;
   padding: 0 20rpx;
-  margin-bottom: 20rpx;
   font-size: 28rpx;
+}
+
+.btn-translate {
+  width: 120rpx;
+  height: 80rpx;
+  background: #4caf50;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  border: none;
+  padding: 0;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 16rpx;
+  margin: 20rpx 0;
+}
+
+.btn-quick {
+  flex: 1;
+  height: 100rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  color: #666;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
+}
+
+.quick-icon {
+  font-size: 36rpx;
 }
 
 .popup-actions {
