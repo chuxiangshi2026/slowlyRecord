@@ -16,8 +16,12 @@ export default defineConfig({
     }
   },
   resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
-    },
+    alias: [
+      { find: /^@\/adapters$/, replacement: resolve(__dirname, 'mobile/src/adapters/index') },
+      { find: /^@\/stores$/, replacement: resolve(__dirname, 'mobile/src/stores') },
+      { find: /^@\/utils$/, replacement: resolve(__dirname, 'mobile/src/stores/useUtils') },
+      { find: /^@\//, replacement: resolve(__dirname, 'mobile/src/') + '/' },
+      { find: /^@shared\//, replacement: resolve(__dirname, 'src/') + '/' },
+    ],
   },
 })

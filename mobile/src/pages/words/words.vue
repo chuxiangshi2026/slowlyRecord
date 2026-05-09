@@ -10,6 +10,21 @@
       <button class="add-btn" @click="showAddDialog">+</button>
     </view>
 
+    <!-- 统计栏 -->
+    <view class="stats-bar">
+      <view class="stat-item">
+        <text class="stat-num">{{ wordsStore.words.length }}</text>
+        <text class="stat-label">总单词</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{ wordsStore.reviewWords.length }}</text>
+        <text class="stat-label">待复习</text>
+      </view>
+      <view class="stat-item" @click="goToReview">
+        <text class="stat-action">去复习 →</text>
+      </view>
+    </view>
+
     <view class="word-list">
       <view 
         v-for="word in filteredWords" 
@@ -30,7 +45,8 @@
 
     <view v-if="filteredWords.length === 0" class="empty-state">
       <text class="empty-text">暂无单词</text>
-      <text class="empty-hint">点击右上角 + 添加单词</text>
+      <text class="empty-hint">点击右上角 + 添加单词，或去词库导入</text>
+      <button class="btn-goto-bank" @click="goToWordBank">📚 去词库导入</button>
     </view>
 
     <!-- 添加单词弹窗 -->
@@ -97,7 +113,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
-import { translateText } from '@/utils/translation-api'
+import { translateText } from '@/stores/useUtils'
 
 const wordsStore = useMobileWords()
 const searchText = ref('')
@@ -125,6 +141,14 @@ onMounted(() => {
 
 const handleSearch = () => {
   // 搜索逻辑已在 computed 中处理
+}
+
+const goToReview = () => {
+  uni.switchTab({ url: '/pages/review/review' })
+}
+
+const goToWordBank = () => {
+  uni.navigateTo({ url: '/pages/wordbank/wordbank' })
 }
 
 const showAddDialog = () => {
@@ -335,6 +359,56 @@ const formatDate = (timestamp: number): string => {
   border: none;
   padding: 0;
   line-height: 72rpx;
+}
+
+.stats-bar {
+  display: flex;
+  background: #fff;
+  padding: 24rpx 0;
+  margin-bottom: 16rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  border-right: 1rpx solid #eee;
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-num {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1976d2;
+  display: block;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+  display: block;
+}
+
+.stat-action {
+  font-size: 28rpx;
+  color: #4caf50;
+  font-weight: bold;
+  line-height: 80rpx;
+}
+
+.btn-goto-bank {
+  margin-top: 30rpx;
+  background: #667eea;
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  border: none;
+  padding: 0 40rpx;
+  height: 80rpx;
+  line-height: 80rpx;
 }
 
 .word-list {

@@ -38,12 +38,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useMobileWords } from '@/stores/useMobileWords'
 import {
   WORDBANK_LIST,
   type WordBankInfo,
+  type Word,
   downloadWordBank,
   isWordBankCached
-} from '@/utils/wordbank-service'
+} from '@/stores/useUtils'
 
 const wordbanks = ref<WordBankInfo[]>([])
 const downloading = ref('')
@@ -56,29 +58,54 @@ onMounted(() => {
   }))
 })
 
+const wordsStore = useMobileWords()
+
 const handleAction = async (bank: WordBankInfo) => {
   if (downloading.value) return
 
   downloading.value = bank.id
   try {
-    // #ifdef H5 || APP-PLUS
-    await downloadWordBank(bank.id)
+    const words = await downloadWordBank(bank.id)
     bank.cached = true
-    uni.showToast({ title: `${bank.name} 下载成功`, icon: 'success' })
-    // #endif
-
-    // #ifdef MP-WEIXIN
-    uni.showModal({
-      title: '提示',
-      content: '小程序端词库需部署到服务器后使用',
-      showCancel: false
+    // 下载成功后询问导入数量
+    uni.showActionSheet({
+      itemList: ['导入10个', '导入50个', '导入100个', '全部导入', '仅缓存不导入'],
+      success: async (res) => {
+        const counts = [10, 50, 100, words.length, 0]
+        const count = counts[res.tapIndex]
+        if (count > 0) {
+          await importWordsFromBank(words, count, bank.name)
+        }
+      }
     })
-    // #endif
-  } catch (e) {
-    uni.showToast({ title: '下载失败', icon: 'none' })
+  } catch (e: any) {
+    const msg = e?.message || String(e) || '下载失败'
+    uni.showModal({ title: '下载失败', content: msg, showCancel: false })
   } finally {
     downloading.value = ''
   }
+}
+
+async function importWordsFromBank(words: Word[], count: number, bankName: string) {
+  const toImport = words.slice(0, count)
+  let success = 0
+  for (const w of toImport) {
+    try {
+      await wordsStore.addWord({
+        word: w.word,
+        meaning: w.meaning,
+        phonetic: w.phonetic,
+        example: w.example,
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now()
+      })
+      success++
+    } catch {
+      // 单个失败继续
+    }
+  }
+  uni.showToast({ title: `已导入 ${success} 个单词`, icon: 'success' })
 }
 </script>
 

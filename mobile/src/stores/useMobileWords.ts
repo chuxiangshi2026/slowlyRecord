@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getDbAdapter } from '../adapters/db'
+import { getDbAdapter } from '@/adapters/index'
 
 // 默认复习间隔（单位：分钟）与桌面端保持一致
 const DEFAULT_INTERVALS = [
@@ -19,7 +19,7 @@ export interface MobileWord {
   addTime: number
   reviewCount: number
   nextReviewTime: number
-  needsReview: boolean
+  needsReview?: boolean
   remembered?: boolean
   level?: number
   lastReviewTime?: number
@@ -33,7 +33,11 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
   const reviewWords = computed(() => {
     const now = Date.now()
-    return words.value.filter(w => w.nextReviewTime <= now && !w.remembered)
+    return words.value.filter(w => {
+      if (w.remembered) return false
+      // 新单词（nextReviewTime 未设置或已过）或手动标记需要复习
+      return (w.nextReviewTime === undefined || w.nextReviewTime <= now) || w.needsReview === true
+    })
   })
 
   const wordCount = computed(() => words.value.length)
@@ -49,10 +53,11 @@ export const useMobileWords = defineStore('mobileWords', () => {
     try {
       const db = getDbAdapter()
       const allDocs = db.allDocs(DB_KEY)
-      words.value = allDocs.map((item: any) => ({
+      const loaded = allDocs.map((item: any) => ({
         ...item.data,
         id: item._id
       })) || []
+      words.value = loaded
     } catch (e) {
       console.error('加载单词失败:', e)
       words.value = []
@@ -72,10 +77,13 @@ export const useMobileWords = defineStore('mobileWords', () => {
     }
 
     const db = getDbAdapter()
-    await db.put({
+    const result = db.put({
       _id: id,
       data: newWord
     })
+    if (!result.ok) {
+      throw new Error(result.message || '保存单词失败')
+    }
 
     words.value.push(newWord)
     return newWord
@@ -110,7 +118,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
       reviewCount: (word.reviewCount || 0) + 1,
       lastReviewTime: Date.now(),
       nextReviewTime: Date.now() + intervalMinutes * 60 * 1000,
-      needsReview: false
+      needsReview: false,
+      remembered: true
     })
   }
 

@@ -46,9 +46,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { translateText } from '@/utils/translation-api'
-import { getCaptureAdapter } from '@/adapters/capture'
-import { queryOfflineDict } from '@/utils/offline-dict'
+import { translateText, queryOfflineDict } from '@/stores/useUtils'
+import { getCaptureAdapter } from '@/adapters/index'
 
 const inputText = ref('')
 const result = ref<any>(null)
@@ -61,7 +60,16 @@ const translate = async () => {
   isTranslating.value = true
   try {
     const res = await translateText(inputText.value, 'auto', 'zh')
-    result.value = res
+    result.value = {
+      translation: res.explains,
+      from: 'en',
+      to: 'zh',
+      phonetic: res.phonetic,
+      offline: res.platform === 'local'
+    }
+    if (res.errorMsg) {
+      uni.showToast({ title: res.errorMsg, icon: 'none' })
+    }
   } catch (e) {
     // 网络失败时尝试离线词典
     const offline = queryOfflineDict(inputText.value.trim())

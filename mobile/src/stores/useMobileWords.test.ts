@@ -4,8 +4,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import { useMobileWords } from './useMobileWords'
-import { setDbAdapter, resetDbAdapter } from '../adapters/db'
-import type { DbAdapter } from '../adapters/db'
+import { setDbAdapter, resetDbAdapter } from '@/adapters/index'
+import type { DbAdapter } from '@/adapters/index'
 
 // Mock uni API
 ;(global as any).uni = {

@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { MiniProgramDbAdapter } from './db-miniprogram'
+import { MiniProgramDbAdapter } from '@/adapters/index'
 
 // 模拟 @shared/adapters/db 的类型
 interface DbDoc<T = any> { _id: string; _rev?: string; data: T }

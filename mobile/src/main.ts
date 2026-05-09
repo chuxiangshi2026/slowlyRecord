@@ -2,7 +2,7 @@ import { createSSRApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
-import { registerMobileAdapters } from './adapters/register'
+import { registerMobileAdapters } from './adapters/index'
 
 export function createApp() {
   const app = createSSRApp(App)

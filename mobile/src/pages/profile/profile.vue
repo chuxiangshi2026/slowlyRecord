@@ -29,6 +29,13 @@
         <text class="menu-text">数据同步</text>
         <text class="menu-arrow">›</text>
       </view>
+      <!-- 翻译设置 -->
+      <view class="menu-item" @click="showTranslationSetting">
+        <text class="menu-icon">T</text>
+        <text class="menu-text">翻译引擎</text>
+        <text class="menu-value">{{ currentTranslationPlatform }}</text>
+        <text class="menu-arrow">›</text>
+      </view>
       <!-- 导出 -->
       <view class="menu-item" @click="exportData">
         <text class="menu-icon">E</text>
@@ -93,9 +100,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
-import { pushToServer, pullFromServer } from '@/utils/sync-service'
+import { pushToServer, pullFromServer, drawQrCode, getTranslationPlatform, setTranslationPlatform } from '@/stores/useUtils'
+// #ifdef H5
+import QRCode from 'qrcode'
+// #endif
 
 const wordsStore = useMobileWords()
 
@@ -104,6 +114,29 @@ const showPullInput = ref(false)
 const syncCode = ref('')
 const inputSyncCode = ref('')
 const qrCanvas = ref<HTMLCanvasElement | null>(null)
+
+// 翻译引擎显示名
+const platformNames: Record<string, string> = {
+  youdao: '有道翻译',
+  baidu: '百度翻译',
+  local: '仅离线词典'
+}
+
+const currentTranslationPlatform = computed(() => {
+  return platformNames[getTranslationPlatform()] || '有道翻译'
+})
+
+// 翻译引擎设置
+const showTranslationSetting = () => {
+  uni.showActionSheet({
+    itemList: ['有道翻译', '百度翻译', '仅离线词典'],
+    success: (res) => {
+      const platforms: ('youdao' | 'baidu' | 'local')[] = ['youdao', 'baidu', 'local']
+      setTranslationPlatform(platforms[res.tapIndex])
+      uni.showToast({ title: `已切换为${platformNames[platforms[res.tapIndex]]}`, icon: 'none' })
+    }
+  })
+}
 
 // 同步操作菜单
 const showSyncActionSheet = () => {
@@ -196,13 +229,24 @@ const scanAndPull = () => {
   // #endif
 }
 
-// 绘制二维码（小程序用 canvas）
+// 绘制二维码
 const drawQRCode = (text: string) => {
-  // #ifdef MP-WEIXIN
-  const qr = require('qrcode')
-  qr.toCanvas(qrCanvas.value, text, { width: 180, margin: 2 }, (err: any) => {
-    if (err) console.error('二维码生成失败', err)
-  })
+  // #ifdef MP-WEIXIN || APP-PLUS
+  try {
+    drawQrCode('syncQrCanvas', text, null, { size: 180, margin: 2 })
+  } catch (e) {
+    console.error('二维码生成失败', e)
+  }
+  // #endif
+
+  // #ifdef H5
+  try {
+    QRCode.toCanvas(qrCanvas.value, text, { width: 180, margin: 2 }, (err: any) => {
+      if (err) console.error('二维码生成失败', err)
+    })
+  } catch (e) {
+    console.error('二维码生成失败', e)
+  }
   // #endif
 }
 
@@ -381,6 +425,12 @@ const showAbout = () => {
   flex: 1;
   font-size: 30rpx;
   color: #333;
+}
+
+.menu-value {
+  font-size: 26rpx;
+  color: #999;
+  margin-right: 10rpx;
 }
 
 .menu-arrow {

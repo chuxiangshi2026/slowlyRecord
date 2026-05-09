@@ -6,6 +6,9 @@
       <button v-if="wordsStore.words.length > 0" class="btn-start-review" @click="startReview">
         开始复习
       </button>
+      <button v-if="wordsStore.words.length === 0" class="btn-start-review" @click="goToWords">
+        去添加单词
+      </button>
     </view>
 
     <view v-else class="review-area">
@@ -24,59 +27,79 @@
         <text class="hint-right">右划 记住</text>
       </view>
 
-      <!-- 卡片 -->
+      <!-- 卡片（微信小程序用 catchtouch 阻止页面滚动） -->
       <view
         class="card-wrapper"
-        @touchstart="handleTouchStart"
-        @touchmove="handleTouchMove"
-        @touchend="handleTouchEnd"
-        @longpress="handleLongPress"
+        @catchtouchstart="handleTouchStart"
+        @catchtouchmove="handleTouchMove"
+        @catchtouchend="handleTouchEnd"
+        @catchlongpress="handleLongPress"
       >
+        <!-- 正面 -->
         <view
-          class="review-card"
-          :class="{ flipped: isFlipped }"
+          v-if="!isFlipped"
+          class="review-card card-front"
+          :class="{ swiping: isSwiping }"
           :style="cardStyle"
+          @tap="onCardTap"
         >
-          <!-- 正面 -->
-          <view class="card-front" @click="flipCard">
-            <view class="word-section">
-              <text class="word-text">{{ currentWord.word }}</text>
-              <text class="phonetic" v-if="currentWord.phonetic">{{ currentWord.phonetic }}</text>
-              <text class="flip-hint">点击翻转 / 长按删除</text>
-            </view>
-
-            <view class="quick-actions">
-              <button class="btn-play" @click.stop="playWord">发音</button>
-            </view>
+          <view class="word-section">
+            <text class="word-text">{{ currentWord.word }}</text>
+            <text class="phonetic" v-if="currentWord.phonetic">{{ currentWord.phonetic }}</text>
+            <text class="flip-hint">点击翻转 / 长按删除</text>
           </view>
+          <view class="quick-actions">
+            <button class="btn-play" @tap.stop="playWord">🔊 发音</button>
+          </view>
+          <!-- 划动视觉反馈 -->
+          <view v-if="swipeDirection === 'left'" class="swipe-overlay left">
+            <text class="swipe-icon">❌</text>
+            <text class="swipe-text">忘记</text>
+          </view>
+          <view v-if="swipeDirection === 'right'" class="swipe-overlay right">
+            <text class="swipe-icon">✅</text>
+            <text class="swipe-text">记住</text>
+          </view>
+          <view v-if="swipeDirection === 'down'" class="swipe-overlay down">
+            <text class="swipe-icon">⭐</text>
+            <text class="swipe-text">永久记住</text>
+          </view>
+        </view>
 
-          <!-- 背面 -->
-          <view class="card-back">
-            <view class="word-section">
-              <text class="word-text">{{ currentWord.word }}</text>
-              <text class="word-meaning">{{ currentWord.meaning }}</text>
-              <text v-if="currentWord.example" class="word-example">{{ currentWord.example }}</text>
+        <!-- 背面 -->
+        <view
+          v-else
+          class="review-card card-back"
+          :class="{ swiping: isSwiping }"
+          :style="cardStyle"
+          @tap="onCardTap"
+        >
+          <view class="word-section">
+            <text class="word-text">{{ currentWord.word }}</text>
+            <text class="word-meaning">{{ displayMeaning }}</text>
+            <text v-if="currentWord.example" class="word-example">{{ currentWord.example }}</text>
+            <text v-if="offlineDictMeaning && offlineDictMeaning !== currentWord.meaning" class="offline-meaning">
+              📚 离线释义：{{ offlineDictMeaning }}
+            </text>
+          </view>
+          <view class="gesture-guide">
+            <view class="guide-item left">
+              <text class="guide-arrow">←</text>
+              <text class="guide-label">忘记</text>
             </view>
-
-            <view class="gesture-guide">
-              <view class="guide-item left">
-                <text class="guide-arrow">←</text>
-                <text class="guide-label">忘记</text>
-              </view>
-              <view class="guide-item down">
-                <text class="guide-arrow">↓</text>
-                <text class="guide-label">永久记住</text>
-              </view>
-              <view class="guide-item right">
-                <text class="guide-arrow">→</text>
-                <text class="guide-label">记住</text>
-              </view>
+            <view class="guide-item down">
+              <text class="guide-arrow">↓</text>
+              <text class="guide-label">永久记住</text>
+            </view>
+            <view class="guide-item right">
+              <text class="guide-arrow">→</text>
+              <text class="guide-label">记住</text>
             </view>
           </view>
         </view>
       </view>
 
-      <!-- 操作按钮（备用） -->
+      <!-- 操作按钮 -->
       <view class="action-buttons">
         <button class="btn-forget" @click="handleForget">
           <text class="btn-label">忘记</text>
@@ -131,7 +154,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
-import { getTtsAdapter } from '@/adapters/tts'
+import { getTtsAdapter } from '@/adapters/index'
+import { queryOfflineDict } from '@/stores/useUtils'
 
 const wordsStore = useMobileWords()
 const currentIndex = ref(0)
@@ -144,12 +168,13 @@ const forgetCount = ref(0)
 // 手势状态
 const touchStartX = ref(0)
 const touchStartY = ref(0)
-const touchEndX = ref(0)
-const touchEndY = ref(0)
+const touchStartTime = ref(0)
 const cardOffsetX = ref(0)
 const cardOffsetY = ref(0)
 const cardRotate = ref(0)
 const isAnimating = ref(false)
+const isSwiping = ref(false)
+const swipeDirection = ref<'left' | 'right' | 'down' | ''>('')
 
 const reviewWords = computed(() => wordsStore.reviewWords)
 
@@ -168,6 +193,19 @@ const emptyTitle = computed(() => {
 
 const emptyHint = computed(() => {
   return wordsStore.words.length === 0 ? '先去添加一些单词吧' : '所有单词都还没到复习时间'
+})
+
+// 离线词典释义（优先显示）
+const offlineDictMeaning = computed(() => {
+  if (!currentWord.value) return ''
+  const dict = queryOfflineDict(currentWord.value.word)
+  return dict || ''
+})
+
+// 显示的释义：优先离线词典，其次用户保存的释义
+const displayMeaning = computed(() => {
+  if (!currentWord.value) return ''
+  return offlineDictMeaning.value || currentWord.value.meaning || '暂无释义'
 })
 
 // 卡片样式（手势位移）
@@ -191,16 +229,18 @@ onMounted(() => {
 
 const startReview = () => {
   if (wordsStore.words.length > 0 && reviewWords.value.length === 0) {
-    wordsStore.words.forEach(w => {
+    const all = wordsStore.words
+    for (let i = 0; i < all.length; i++) {
+      const w = all[i]
       if (!w.needsReview) {
-        w.needsReview = true
+        wordsStore.updateWord(w.id, { needsReview: true })
       }
-    })
+    }
   }
 }
 
-const flipCard = () => {
-  isFlipped.value = true
+const goToWords = () => {
+  uni.switchTab({ url: '/pages/words/words' })
 }
 
 const playWord = () => {
@@ -214,51 +254,89 @@ const playWord = () => {
   }
 }
 
-// ==================== 手势处理 ====================
+// ==================== 手势处理（微信小程序兼容）====================
 
 const handleTouchStart = (e: any) => {
   if (isAnimating.value) return
-  touchStartX.value = e.touches[0].clientX
-  touchStartY.value = e.touches[0].clientY
+  const t = e.touches[0]
+  touchStartX.value = t.clientX
+  touchStartY.value = t.clientY
+  touchStartTime.value = Date.now()
+  isSwiping.value = false
+  swipeDirection.value = ''
 }
 
 const handleTouchMove = (e: any) => {
   if (isAnimating.value) return
-  const deltaX = e.touches[0].clientX - touchStartX.value
-  const deltaY = e.touches[0].clientY - touchStartY.value
+  const t = e.touches[0]
+  const deltaX = t.clientX - touchStartX.value
+  const deltaY = t.touches[0].clientY - touchStartY.value
+  const absX = Math.abs(deltaX)
+  const absY = Math.abs(deltaY)
 
-  cardOffsetX.value = deltaX
-  cardOffsetY.value = deltaY
-  cardRotate.value = deltaX * 0.05
+  // 超过阈值才开始响应
+  if (absX > 10 || absY > 10) {
+    isSwiping.value = true
+  }
+
+  // 限制位移范围
+  cardOffsetX.value = deltaX * 0.6
+  cardOffsetY.value = deltaY > 0 ? deltaY * 0.6 : deltaY * 0.3
+  cardRotate.value = deltaX * 0.03
+
+  // 实时显示划动方向
+  if (absX > absY && absX > 40) {
+    swipeDirection.value = deltaX > 0 ? 'right' : 'left'
+  } else if (absY > absX && absY > 40 && deltaY > 0) {
+    swipeDirection.value = 'down'
+  } else {
+    swipeDirection.value = ''
+  }
 }
 
 const handleTouchEnd = (e: any) => {
   if (isAnimating.value) return
-  touchEndX.value = e.changedTouches[0].clientX
-  touchEndY.value = e.changedTouches[0].clientY
-
-  const deltaX = touchEndX.value - touchStartX.value
-  const deltaY = touchEndY.value - touchStartY.value
+  const t = e.changedTouches[0]
+  const deltaX = t.clientX - touchStartX.value
+  const deltaY = t.clientY - touchStartY.value
   const absX = Math.abs(deltaX)
   const absY = Math.abs(deltaY)
+  const duration = Date.now() - touchStartTime.value
+
+  // 快速点击（短位移+短时间）= 翻转卡片
+  if (absX < 30 && absY < 30 && duration < 300) {
+    isSwiping.value = false
+    swipeDirection.value = ''
+    resetCard()
+    flipCard()
+    return
+  }
 
   // 判断手势方向
   if (absX > absY && absX > 80) {
-    // 水平滑动
     if (deltaX > 0) {
-      // 右划 - 记住
       animateCard('right', () => handleRemember())
     } else {
-      // 左划 - 忘记
       animateCard('left', () => handleForget())
     }
   } else if (absY > absX && absY > 80 && deltaY > 0) {
-    // 下划 - 永久记住
     animateCard('down', () => handleRememberForever())
   } else {
-    // 未触发，回弹
     resetCard()
   }
+  isSwiping.value = false
+  swipeDirection.value = ''
+}
+
+const onCardTap = () => {
+  // tap 事件在划动时不应触发
+  if (!isSwiping.value && !isAnimating.value) {
+    flipCard()
+  }
+}
+
+const flipCard = () => {
+  isFlipped.value = !isFlipped.value
 }
 
 // 长按删除
@@ -273,9 +351,8 @@ const confirmDelete = () => {
     wordsStore.deleteWord(currentWord.value.id)
     showDeleteConfirm.value = false
     uni.showToast({ title: '已删除', icon: 'success' })
-    // 检查是否还有单词
     if (currentIndex.value >= reviewWords.value.length) {
-      currentIndex.value = 0
+      currentIndex.value = Math.max(0, reviewWords.value.length - 1)
       isFlipped.value = false
     }
   }
@@ -296,7 +373,6 @@ const animateCard = (direction: 'left' | 'right' | 'down', callback: () => void)
 
   setTimeout(() => {
     callback()
-    // 重置卡片位置（无动画）
     cardOffsetX.value = 0
     cardOffsetY.value = 0
     cardRotate.value = 0
@@ -330,12 +406,11 @@ const handleForget = () => {
 
 const handleRememberForever = () => {
   if (currentWord.value) {
-    // 永久记住：设置一个很大的复习间隔（约100年）
     wordsStore.updateWord(currentWord.value.id, {
       remembered: true,
       needsReview: false,
       nextReviewTime: Date.now() + 100 * 365 * 24 * 60 * 60 * 1000,
-      level: 14 // 最高级别
+      level: 14
     })
     rememberCount.value++
     nextWord()
@@ -478,26 +553,60 @@ const finishReview = () => {
   min-height: 700rpx;
   display: flex;
   flex-direction: column;
-  transition: transform 0.6s;
-  backface-visibility: hidden;
+  transition: transform 0.3s, opacity 0.3s;
 }
 
 .card-back {
+  background: #fff;
+}
+
+/* 划动视觉反馈 */
+.swipe-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  transform: rotateY(180deg);
-  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24rpx;
+  pointer-events: none;
 }
 
-.review-card.flipped .card-front {
-  transform: rotateY(180deg);
+.swipe-overlay.left {
+  background: rgba(255, 82, 82, 0.15);
 }
 
-.review-card.flipped .card-back {
-  transform: rotateY(0deg);
+.swipe-overlay.right {
+  background: rgba(76, 175, 80, 0.15);
+}
+
+.swipe-overlay.down {
+  background: rgba(105, 240, 174, 0.15);
+}
+
+.swipe-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.swipe-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 离线词典释义 */
+.offline-meaning {
+  font-size: 28rpx;
+  color: #4caf50;
+  margin-top: 20rpx;
+  padding: 16rpx;
+  background: #e8f5e9;
+  border-radius: 12rpx;
+  line-height: 1.5;
 }
 
 .word-section {
