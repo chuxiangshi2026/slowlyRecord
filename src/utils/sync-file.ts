@@ -46,7 +46,7 @@ export async function exportToBinary(data: SyncData): Promise<Uint8Array> {
   // 动态导入 pako（可能不存在，需要降级处理）
   let compressed: Uint8Array
   try {
-    const pako = await import('pako')
+    const pako = await import('pako') as any
     compressed = pako.deflate(jsonBytes)
   } catch {
     // pako 不可用，直接存原始 JSON（仍带魔数标识）
@@ -84,7 +84,7 @@ export async function importFromBinary(buffer: ArrayBuffer): Promise<SyncData> {
 
   let jsonBytes: Uint8Array
   try {
-    const pako = await import('pako')
+    const pako = await import('pako') as any
     jsonBytes = pako.inflate(payload)
   } catch {
     // pako 不可用或数据未压缩，尝试直接解码

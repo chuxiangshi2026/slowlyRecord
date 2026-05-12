@@ -18,6 +18,7 @@
       <!--      虚拟滚动,只加载真实dom-->
       <!--      使用 currentWordBankId 作为 key，切换词库时强制重新渲染 -->
       <RecycleScroller
+          ref="scrollerRef"
           :key="wordsStore.currentWordBankId"
           class="scroller"
           :items="showFilteredWords"
@@ -1692,7 +1693,16 @@ const getIndexInOriginalList = (item: Word) => {
   单词滚动模块
  */
 const scrollContainer = ref<HTMLElement | null>(null)
+const scrollerRef = ref<any>(null)
 const itemRefs = ref<HTMLElement[]>([])
+
+// 监听过滤列表变化，强制 RecycleScroller 刷新布局
+// 解决 dynamic-size 模式下项目减少时出现空白占位的问题
+watch(() => showFilteredWords.value.length, () => {
+  nextTick(() => {
+    scrollerRef.value?.updateVisibleItems?.()
+  })
+})
 
 // 设置单项引用
 const setItemRef = (el: any, index: number) => {

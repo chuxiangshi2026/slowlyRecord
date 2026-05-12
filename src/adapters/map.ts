@@ -93,6 +93,9 @@ export function getMapAdapter(): MapAdapter {
       break
     }
   }
+  if (!_mapAdapter) {
+    throw new Error('Failed to initialize map adapter')
+  }
   return _mapAdapter
 }
 

@@ -80,6 +80,9 @@ export function getCaptureAdapter(): CaptureAdapter {
       break
     }
   }
+  if (!_captureAdapter) {
+    throw new Error('Failed to initialize capture adapter')
+  }
   return _captureAdapter
 }
 

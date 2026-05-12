@@ -7,6 +7,9 @@
 import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { getAllWordBanks, saveWordBank, getCurrentWordBankId, setCurrentWordBankId, createWordBank, type WordBank } from '@/utils/wordbank-manager'
+import type { Word } from '@/types/words'
+import type { MemoryFirmnessTpye } from '@/types/words'
+import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from '@/types/number-memory'
 import { getDbAdapter } from '@/adapters/db'
 import { getPlatform } from '@/adapters/platform'
 import { getSetDb, addAndUpdateSetDb } from '@/utils/user-set-db-util'
@@ -116,11 +119,11 @@ async function collectNumberMemory(): Promise<SyncNumberMemory | null> {
     if (!trainingDoc && entries.length === 0) return null
 
     return {
-      entries: entries || [],
-      notes: notes || [],
-      prompts: prompts || [],
-      associations: trainingDoc?.associations || [],
-      trainingResults: trainingResults || [],
+      entries: (entries || []) as NumberMemoryEntry[],
+      notes: (notes || []) as NumberMemoryNote[],
+      prompts: (prompts || []) as NumberMemoryPrompt[],
+      associations: (trainingDoc?.associations || []) as NumberImageAssociation[],
+      trainingResults: (trainingResults || []) as TrainingResult[],
     }
   } catch {
     return null
@@ -352,7 +355,7 @@ async function restoreUserSettings(settings: SyncUserSettings) {
   // 合并设置（只合并非空值）
   if (settings.translationPlatform) userSet.translationPlatform = settings.translationPlatform
   if (settings.ocrPlatform) userSet.ocrPlatform = settings.ocrPlatform
-  if (settings.memoryFirmness) userSet.memoryFirmness = settings.memoryFirmness
+  if (settings.memoryFirmness) userSet.memoryFirmness = settings.memoryFirmness as MemoryFirmnessTpye
   userSet.pluginStatus = settings.pluginStatus
   userSet.shortcutEnabled = settings.shortcutEnabled
 

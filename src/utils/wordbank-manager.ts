@@ -134,10 +134,23 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
     const db = getDbAdapter();
     // 先删除旧的分片
     await deleteWordBankDataDoc(bankId);
-    
+
+    // 清理单词文本中的空白字符，防止脏数据入库
+    const cleanedWords = words.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }));
+    // 按 text 去重：保留列表中后出现的（通常更新），防止历史脏数据重复入库
+    const seen = new Set<string>();
+    const uniqueWords: Word[] = [];
+    for (let i = cleanedWords.length - 1; i >= 0; i--) {
+      const w = cleanedWords[i];
+      const key = w.text.toLowerCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueWords.unshift(w);
+      }
+    }
     // 将单词分成多个块
-    const totalChunks = Math.ceil(words.length / MAX_WORDS_PER_CHUNK);
-    
+    const totalChunks = Math.ceil(uniqueWords.length / MAX_WORDS_PER_CHUNK);
+
     if (totalChunks === 0) {
       // 空词库，创建一个空分片
       const doc: WordBankChunkDoc = {
@@ -149,20 +162,27 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
         words: [],
         updatedAt: Date.now()
       };
-      const result = await db.promises.put(doc);
+      let result = await db.promises.put(doc);
+      if (!result.ok && result.message?.includes('conflict')) {
+        const existing = db.get(doc._id);
+        if (existing?._rev) {
+          doc._rev = existing._rev;
+          result = await db.promises.put(doc);
+        }
+      }
       if (!result.ok) {
         console.error(`保存词库空分片失败 (${bankId}):`, result.message);
         return false;
       }
       return true;
     }
-    
+
     // 保存每个分片
     for (let i = 0; i < totalChunks; i++) {
       const start = i * MAX_WORDS_PER_CHUNK;
       const end = start + MAX_WORDS_PER_CHUNK;
-      const chunkWords = words.slice(start, end);
-      
+      const chunkWords = uniqueWords.slice(start, end);
+
       const doc: WordBankChunkDoc = {
         _id: getWordBankChunkId(bankId, i),
         type: 'wordbank-chunk',
@@ -172,15 +192,22 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
         words: cloneDeep(chunkWords),
         updatedAt: Date.now()
       };
-      
-      const result = await db.promises.put(doc);
+
+      let result = await db.promises.put(doc);
+      if (!result.ok && result.message?.includes('conflict')) {
+        const existing = db.get(doc._id);
+        if (existing?._rev) {
+          doc._rev = existing._rev;
+          result = await db.promises.put(doc);
+        }
+      }
       if (!result.ok) {
         console.error(`保存词库分片失败 (${bankId}, chunk ${i}):`, result.message);
         return false;
       }
     }
-    
-    console.log(`[WordBankManager] 成功保存词库 ${bankId}，共 ${totalChunks} 个分片，${words.length} 个单词`);
+
+    console.log(`[WordBankManager] 成功保存词库 ${bankId}，共 ${totalChunks} 个分片，${cleanedWords.length} 个单词`);
     return true;
   } catch (e) {
     console.error(`保存词库数据异常 (${bankId}):`, e);
@@ -196,13 +223,32 @@ function getWordBankWords(bankId: string): Word[] {
   if (chunks.length === 0) {
     return [];
   }
-  
+
   // 合并所有分片的单词
   const allWords: Word[] = [];
   for (const chunk of chunks.sort((a, b) => a.chunkIndex - b.chunkIndex)) {
     allWords.push(...chunk.words);
   }
-  return allWords;
+  // 清理单词文本中的空白字符，修复历史脏数据
+  const cleanedWords = allWords.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }));
+
+  // 按 text 去重：历史脏数据可能导致同一单词保存了多份（不同 _id）
+  // 保留 _rev 版本号更高的记录（更新更频繁/数据更新）
+  const wordMap = new Map<string, Word>();
+  for (const word of cleanedWords) {
+    const existing = wordMap.get(word.text);
+    if (!existing) {
+      wordMap.set(word.text, word);
+      continue;
+    }
+    const existingRev = parseInt(String(existing._rev).split('-')[0] || '0', 10);
+    const currentRev = parseInt(String(word._rev).split('-')[0] || '0', 10);
+    if (currentRev > existingRev) {
+      wordMap.set(word.text, word);
+    }
+  }
+
+  return Array.from(wordMap.values());
 }
 
 /**
@@ -266,7 +312,8 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
       
       // 分别保存每个词库的单词数据（使用分片存储）
       for (const bank of banks) {
-        await saveWordBankDataDoc(bank.id, bank.words);
+        const cleanedWords = bank.words.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }));
+        await saveWordBankDataDoc(bank.id, cleanedWords);
       }
       
       console.log('[WordBankManager] 数据迁移完成');

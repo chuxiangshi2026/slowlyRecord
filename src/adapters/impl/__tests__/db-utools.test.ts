@@ -35,6 +35,7 @@ function mockUtoolsDb() {
       })
     }),
     promises: {
+      get: vi.fn(async (id: string) => store.get(id) || null),
       put: vi.fn(async (doc: DbDoc) => {
         const existing = store.get(doc._id)
         const rev = `rev-${++revCounter}`
@@ -162,6 +163,22 @@ describe('DbAdapterUtools', () => {
     })
   })
 
+  describe('promises.get', () => {
+    it('should return document by id asynchronously', async () => {
+      const doc: DbDoc = { _id: 'ptest-1', name: 'hello' }
+      await adapter.promises.put(doc)
+
+      const result = await adapter.promises.get('ptest-1')
+      expect(result).not.toBeNull()
+      expect(result?._id).toBe('ptest-1')
+    })
+
+    it('should return null for non-existent id', async () => {
+      const result = await adapter.promises.get('non-existent')
+      expect(result).toBeNull()
+    })
+  })
+
   describe('promises.bulkDocs', () => {
     it('should create multiple documents', async () => {
       const docs: DbDoc[] = [
@@ -172,6 +189,37 @@ describe('DbAdapterUtools', () => {
       const results = await adapter.promises.bulkDocs(docs)
       expect(results).toHaveLength(2)
       results.forEach(r => expect(r.ok).toBe(true))
+    })
+  })
+
+  describe('持久化闭环（模拟应用重启）', () => {
+    it('新适配器实例应该能读取到旧实例保存的数据', async () => {
+      const doc: DbDoc = { _id: 'persist-1', text: 'hello' }
+      const putResult = await adapter.promises.put(doc)
+      expect(putResult.ok).toBe(true)
+
+      // 模拟应用重启：创建新的适配器实例，复用同一个 utools db
+      const newAdapter = new DbAdapterUtools()
+
+      // 同步读取
+      const syncResult = newAdapter.get('persist-1')
+      expect(syncResult).not.toBeNull()
+      expect(syncResult?.text).toBe('hello')
+
+      // 异步读取
+      const asyncResult = await newAdapter.promises.get('persist-1')
+      expect(asyncResult).not.toBeNull()
+      expect(asyncResult?.text).toBe('hello')
+    })
+
+    it('更新文档后新实例应读取到最新数据', async () => {
+      await adapter.promises.put({ _id: 'persist-2', version: 1 })
+      await adapter.promises.put({ _id: 'persist-2', version: 2 })
+
+      const newAdapter = new DbAdapterUtools()
+      const result = newAdapter.get('persist-2')
+      expect(result).not.toBeNull()
+      expect((result as any).version).toBe(2)
     })
   })
 })

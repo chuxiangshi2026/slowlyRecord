@@ -12,8 +12,10 @@ import {queryLocalDictionaryAsync} from "@/utils/local-dictionary";
  * 初始化单词状态
  */
 const getInitWord = (text: string, explains: string, pronunciation: string, image: string = '', phonetic: string = '') => {
+    // 清理单词文本中的空白字符，防止脏数据入库
+    const cleanedText = text.replace(/\s+/g, '');
     let newWords: Word = {
-        "text": text,
+        "text": cleanedText,
         "explains": explains,
         "explainedHidden": false,
         "pronunciation": pronunciation,
@@ -38,12 +40,15 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
  */
 const addWord = async (wordText: string): Promise<{success: boolean, message: string,text:string}> => {
 
+    // 清理单词文本中的空白字符，防止脏数据入库
+    wordText = wordText.replace(/\s+/g, '');
+
     log.i('新加单词', wordText);
 
     const wordsStore = useWordsStore(); // 传入 Pinia 实例
 
     // 设置要定位的单词
-    if (wordText.trim().length <= 0) {
+    if (wordText.length <= 0) {
         // ElMessage.warning("不能添加空单词")
         return {success: false, message: "不能添加空单词",text:wordText}
     }
@@ -168,8 +173,8 @@ const batchTranslateAndAddWords = async (
 
     const wordsStore = useWordsStore();
 
-    // 过滤重复单词，保持唯一性
-    const uniqueWords = [...new Set(words.map(w => w.trim()))].filter(w => w.length > 0);
+    // 过滤重复单词，保持唯一性（清理所有空白字符）
+    const uniqueWords = [...new Set(words.map(w => w.replace(/\s+/g, '')))].filter(w => w.length > 0);
 
     if (uniqueWords.length === 0) {
         ElMessage.warning("没有可添加单词");

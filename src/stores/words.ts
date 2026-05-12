@@ -425,7 +425,15 @@ export const useWordsStore =
              */
             function pushWords(payload: Word[]) {
                 log.i("批量去重添加单词", payload)
-                const uniquePayload = payload.filter(newWord =>
+                // 清理单词文本中的空白字符
+                const cleanedPayload = payload.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }))
+                // 先对 payload 自身按 text 去重，防止同一批数据重复
+                const payloadMap = new Map<string, Word>();
+                for (const w of cleanedPayload) {
+                    payloadMap.set(w.text, w);
+                }
+                const dedupedPayload = Array.from(payloadMap.values());
+                const uniquePayload = dedupedPayload.filter(newWord =>
                     !words.value.some(existingWord => existingWord.text === newWord.text)
                 );
                 words.value.push(...uniquePayload);
@@ -485,7 +493,8 @@ export const useWordsStore =
              *查找单词
              */
             function findWord(wordText: string): Word | undefined {
-                const word = words.value.find(item => item.text === wordText);
+                const cleanedText = wordText.replace(/\s+/g, '');
+                const word = words.value.find(item => item.text === cleanedText);
                 if (word) {
                     log.i('找到了单词');
                 }
@@ -519,7 +528,9 @@ export const useWordsStore =
 
                 // 从当前词库删除 - 直接使用 currentWordBank.value 避免重新加载导致数据不一致
                 if (currentWordBank.value && currentWordBank.value.id === currentWordBankId.value) {
-                    const bankIndex = currentWordBank.value.words.findIndex(w => w.text === word.text)
+                    // 同时清理词库中的历史脏数据，防止 _id 匹配但 text 不一致
+                    currentWordBank.value.words.forEach(w => { w.text = w.text.replace(/\s+/g, '') })
+                    const bankIndex = currentWordBank.value.words.findIndex(w => w._id === word._id)
                     if (bankIndex !== -1) {
                         currentWordBank.value.words.splice(bankIndex, 1)
                         await saveWordBank(currentWordBank.value)
@@ -528,7 +539,9 @@ export const useWordsStore =
                     // 如果 currentWordBank.value 不匹配，重新加载
                     const bank = await getWordBank(currentWordBankId.value)
                     if (bank) {
-                        const bankIndex = bank.words.findIndex(w => w.text === word.text)
+                        // 同时清理词库中的历史脏数据
+                        bank.words.forEach(w => { w.text = w.text.replace(/\s+/g, '') })
+                        const bankIndex = bank.words.findIndex(w => w._id === word._id)
                         if (bankIndex !== -1) {
                             bank.words.splice(bankIndex, 1)
                             await saveWordBank(bank)
@@ -553,20 +566,24 @@ export const useWordsStore =
              */
             async function addAndUpdateWords(payload: Word[]): Promise<boolean> {
                 try {
+                    // 清理单词文本中的空白字符
+                    const cleanedPayload = payload.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }))
                     // 保存到当前词库
                     const bank = await getWordBank(currentWordBankId.value)
                     if (bank) {
+                        // 清理词库中的历史脏数据，防止去重不匹配
+                        bank.words.forEach(w => { w.text = w.text.replace(/\s+/g, '') })
                         // 去重合并
                         const existingTexts = new Set(bank.words.map(w => w.text.toLowerCase()))
-                        const newWords = payload.filter(w => !existingTexts.has(w.text.toLowerCase()))
+                        const newWords = cleanedPayload.filter(w => !existingTexts.has(w.text.toLowerCase()))
                         bank.words.push(...newWords)
                         await saveWordBank(bank)
                         currentWordBank.value = bank
                     }
 
                     // 同时兼容旧数据库
-                    await updateDbWordList(payload);
-                    pushWords(payload);
+                    await updateDbWordList(cleanedPayload);
+                    pushWords(cleanedPayload);
                     log.i('批量更新成功');
                     return true;
                 } catch (error) {
@@ -582,40 +599,49 @@ export const useWordsStore =
              */
             async function addAndUpdateWord(word: Word): Promise<void> {
                 console.log("更新词库单个词", word)
-                const index = words.value.findIndex(w => w.text === word.text);
+                // 清理单词文本中的空白字符
+                const cleanedWord = { ...word, text: word.text.replace(/\s+/g, '') }
+                // 使用 _id 查找索引，避免脏数据中的换行符导致 text 不匹配
+                const index = words.value.findIndex(w => w._id === cleanedWord._id);
                 if (index !== -1) {
-                    Object.assign(words.value[index], word); // 修改指定元素
+                    // 使用 splice 替换而非 Object.assign，确保 Vue 响应式系统和 RecycleScroller 正确追踪数组变更
+                    // Object.assign 只修改对象属性，不触发数组变更检测，导致 RecycleScroller 在列表项减少时出现空白占位
+                    words.value.splice(index, 1, cleanedWord);
                 } else {
-                    pushWords([word])
+                    pushWords([cleanedWord])
                 }
-                
+
                 // 保存到当前词库 - 直接使用 currentWordBank.value 避免重新加载导致数据不一致
                 if (currentWordBank.value && currentWordBank.value.id === currentWordBankId.value) {
-                    const wordIndex = currentWordBank.value.words.findIndex(w => w.text === word.text)
+                    // 同时清理词库中的历史脏数据
+                    currentWordBank.value.words.forEach(w => { w.text = w.text.replace(/\s+/g, '') })
+                    const wordIndex = currentWordBank.value.words.findIndex(w => w._id === cleanedWord._id)
                     if (wordIndex !== -1) {
-                        Object.assign(currentWordBank.value.words[wordIndex], word)
+                        Object.assign(currentWordBank.value.words[wordIndex], cleanedWord)
                     } else {
-                        currentWordBank.value.words.push(word)
+                        currentWordBank.value.words.push(cleanedWord)
                     }
                     await saveWordBank(currentWordBank.value)
                 } else {
                     // 如果 currentWordBank.value 不匹配，重新加载
                     const bank = await getWordBank(currentWordBankId.value)
                     if (bank) {
-                        const wordIndex = bank.words.findIndex(w => w.text === word.text)
+                        // 同时清理词库中的历史脏数据
+                        bank.words.forEach(w => { w.text = w.text.replace(/\s+/g, '') })
+                        const wordIndex = bank.words.findIndex(w => w._id === cleanedWord._id)
                         if (wordIndex !== -1) {
-                            Object.assign(bank.words[wordIndex], word)
+                            Object.assign(bank.words[wordIndex], cleanedWord)
                         } else {
-                            bank.words.push(word)
+                            bank.words.push(cleanedWord)
                         }
                         await saveWordBank(bank)
                         currentWordBank.value = bank
                     }
                 }
-                
+
                 // 同时兼容旧数据库
-                addAndUpdateDbWord(word).then(() => {
-                    console.log("添加单个词到数据库", word)
+                addAndUpdateDbWord(cleanedWord).then(() => {
+                    console.log("添加单个词到数据库", cleanedWord)
                 })
             }
 

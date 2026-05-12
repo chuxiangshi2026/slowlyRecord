@@ -2,7 +2,7 @@
 
   <!--ref="root"-->
   <div class="list-item" :class="{ 'shortcut-enabled': wordsStore.shortcutEnabled, 'first-item': isFocus }"
-       ref="itemRef" :data-word="word.text" tabindex="0" @keydown="handleKeyDown" @click="onClick">
+       ref="itemRef" :data-word="cleanWordText" tabindex="0" @keydown="handleKeyDown" @click="onClick">
 
     <p class="word">
       <!-- 彩色词根词缀显示 -->
@@ -123,9 +123,12 @@ const displayPhonetic = computed(() => {
   return phonetic;
 });
 
+// 清理单词文本中的空白字符（换行、回车、空格等），防止脏数据影响显示和解析
+const cleanWordText = computed(() => props.word.text.replace(/\s+/g, ''));
+
 // 解析单词成分（词根、前缀、后缀等）
 const wordComponents = computed<WordComponent[]>(() => {
-  return analyzeWord(props.word.text);
+  return analyzeWord(cleanWordText.value);
 });
 
 // 词根词缀详细提示文本
@@ -225,10 +228,18 @@ const saveExplanation = (event: Event) => {
   const target = event.target as HTMLElement;
   const newExplanation = target.innerText.trim();
 
+  // 通过 _id 直接定位 wordsStore.words 中的真实对象
+  const realWord = wordsStore.words.find(w => w._id === props.word._id);
+  if (!realWord) return;
+
   // 只有当内容发生变化时才更新
-  if (newExplanation !== wordModel.value.explains) {
-    wordModel.value.explains = newExplanation;
-    wordsStore.addAndUpdateWord(wordModel.value);
+  if (newExplanation !== realWord.explains) {
+    realWord.explains = newExplanation;
+    // 同步回 wordModel
+    if (wordModel.value && wordModel.value._id === realWord._id) {
+      Object.assign(wordModel.value, realWord);
+    }
+    wordsStore.addAndUpdateWord(realWord);
   }
 }
 
@@ -240,7 +251,7 @@ const hiddenExplain = ref('');
 // const hiddenExplain = ;
 // 翻译
 const translation = () => {
-  hiddenExplain.value = wordModel.value.text
+  hiddenExplain.value = cleanWordText.value
   wordModel.value.explainedHidden = !wordModel.value.explainedHidden;
 }
 
@@ -379,7 +390,7 @@ const play = async () => {
   }
 
   isPlaying = true;
-  const wordId = props.word.text;
+  const wordId = cleanWordText.value;
   try {
     // 先尝试从本地获取音频 URL
     localAudioUrl.value = getLocalAudioUrl(wordId);
@@ -508,14 +519,21 @@ const remember = () => {
   // 如果disableActions为true，则不执行操作
   if (props.disableActions) return;
 
+  // 通过 _id 直接定位 wordsStore.words 中的真实对象，避免 RecycleScroller 复用导致 wordModel 指向错误引用
+  const targetWord = wordsStore.words.find(w => w._id === props.word._id);
+  if (!targetWord) {
+    console.error('remember: 在 wordsStore.words 中找不到单词', props.word._id, props.word.text);
+    return;
+  }
+
   // 保存当前单词文本和索引，以便列表刷新后聚焦到下一个
-  wordsStore.lastFocusWordText = props.word.text;
+  wordsStore.lastFocusWordText = cleanWordText.value;
   wordsStore.lastFocusWordIndex = props.wordIndex;
 
   //如果 当前时间大于  上次复习时间+当前等级*默认复习间隔 且小于上次复习时间+（当前等级+3）*默认复习间隔  等级+1
   // 当前时间
   const now = new Date().getTime();
-  let learnDate = wordModel.value.learnDate;
+  let learnDate = targetWord.learnDate;
 
   // 确保 learnDate 是 Date 对象
   if (typeof learnDate === 'string') {
@@ -524,41 +542,32 @@ const remember = () => {
     learnDate = new Date(); // 如果不是有效的日期，使用当前时间
   }
   // 开始复习时间 (上次复习时间 + 当前等级对应的默认复习间隔)
-  let level = wordModel.value.level;
-  // todo 这里序列化不是时间类型
-  /*if (!learnDate || !(learnDate instanceof Date)) {
-    console.log(typeof learnDate + 'fddddddddd');
-  }*/
+  let level = targetWord.level;
 
   const startLearnDate = learnDate.getTime() + DEFAULT_INTERVALS[level] * 60 * 1000;
 
   // 结束复习时间 (上次复习时间 + (当前等级 + 3) 对应的默认复习间隔)
   const endLearnDate = learnDate.getTime() + DEFAULT_INTERVALS[Math.min(level + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000;
 
+  // 创建新对象而非直接修改原对象，确保 Vue 响应式系统能正确检测到变更
+  // 直接修改 targetWord 后传入 addAndUpdateWord，Object.assign(obj, obj) 是空操作，不会触发响应式更新
+  const updatedWord: Word = {
+    ...targetWord,
+    learnDate: new Date(),
+    isReview: false,
+    explainedHidden: true,
+  };
 
-  if (wordModel.value.level >= 12) {
-    wordModel.value.remember = true;
+  if (targetWord.level >= 12) {
+    updatedWord.remember = true;
   }
 
-
-  //更新复习时间  ,todo 如果一直复习,可能一直无法升级,如果只有升级后更新 可能一开始就无法更新,
-  wordModel.value.learnDate = new Date();
-
-  // 是否复习，改为false
-  wordModel.value.isReview = false;
-
-  wordModel.value.explainedHidden = true;
-
-
-  // 发送事件通知父组件
-  // emit('remember', props.word);
-
-  console.log('缓存单词数据', JSON.stringify(props.word));
+  console.log('缓存单词数据', JSON.stringify(updatedWord));
 
   // 判断是否满足条件
   const canLevelUp = now > startLearnDate && now < endLearnDate;
   console.log(`升级检查: 当前时间=${new Date(now).toLocaleString()}, 开始时间=${new Date(startLearnDate).toLocaleString()}, 结束时间=${new Date(endLearnDate).toLocaleString()}, 可升级=${canLevelUp}`);
-  
+
   if (canLevelUp) {
     // 根据记忆牢固度决定升级速度
     const firmness = wordsStore.memoryFirmness;
@@ -569,9 +578,9 @@ const remember = () => {
       levelIncrement = 3; // 极强：+3级
     }
     // 升级等级，但不超过12级
-    const currentLevel = Number(wordModel.value.level) || 1;
-    wordModel.value.level = Math.min(currentLevel + levelIncrement, 12) as Word['level'];
-    console.log(`[升级成功] 记忆牢固度: ${firmness}, 提升: +${levelIncrement}级, 当前等级: ${wordModel.value.level}`);
+    const currentLevel = Number(targetWord.level) || 1;
+    updatedWord.level = Math.min(currentLevel + levelIncrement, 12) as Word['level'];
+    console.log(`[升级成功] 记忆牢固度: ${firmness}, 提升: +${levelIncrement}级, 当前等级: ${updatedWord.level}`);
   } else {
     // 否则等级不变，仅更新复习时间
     if (now <= startLearnDate) {
@@ -580,7 +589,13 @@ const remember = () => {
       console.log("[未升级] 复习太晚，已错过升级时间窗口");
     }
   }
-  wordsStore.addAndUpdateWord(wordModel.value)
+
+  // 同步回 wordModel，保持 v-model 一致
+  if (wordModel.value && wordModel.value._id === updatedWord._id) {
+    Object.assign(wordModel.value, updatedWord);
+  }
+
+  wordsStore.addAndUpdateWord(updatedWord)
 }
 
 /**
@@ -590,54 +605,78 @@ const remembered = () => {
 
   if (props.disableActions) return;
 
+  // 通过 _id 直接定位 wordsStore.words 中的真实对象
+  const targetWord = wordsStore.words.find(w => w._id === props.word._id);
+  if (!targetWord) {
+    console.error('remembered: 在 wordsStore.words 中找不到单词', props.word._id, props.word.text);
+    return;
+  }
+
   // 保存当前单词文本和索引，以便列表刷新后聚焦到下一个
-  wordsStore.lastFocusWordText = props.word.text;
+  wordsStore.lastFocusWordText = cleanWordText.value;
   wordsStore.lastFocusWordIndex = props.wordIndex;
 
-  // 更新复习时间
-  wordModel.value.learnDate = new Date();
+  // 创建新对象而非直接修改原对象，确保 Vue 响应式系统能正确检测到变更
+  const updatedWord: Word = {
+    ...targetWord,
+    learnDate: new Date(),
+    level: 12 as Word['level'],
+    isReview: false,
+    explainedHidden: true,
+    remember: true,
+  };
 
-  wordModel.value.level = 12
-  // 是否复习，改为false
-  wordModel.value.isReview = false;
+  // 同步回 wordModel
+  if (wordModel.value && wordModel.value._id === updatedWord._id) {
+    Object.assign(wordModel.value, updatedWord);
+  }
 
-  wordModel.value.explainedHidden = true;
-
-  wordModel.value.remember = true;
-
-
-  wordsStore.addAndUpdateWord(wordModel.value)
+  wordsStore.addAndUpdateWord(updatedWord)
 }
 
 // 忘记
 const forget = () => {
-  console.log("忘记方法", wordModel.value)
-  // emit('forget', 'childValue');
+  // 通过 _id 直接定位 wordsStore.words 中的真实对象
+  const targetWord = wordsStore.words.find(w => w._id === props.word._id);
+  if (!targetWord) {
+    console.error('forget: 在 wordsStore.words 中找不到单词', props.word._id, props.word.text);
+    return;
+  }
+
+  console.log("忘记方法", targetWord)
 
   // 保存当前单词文本和索引，以便列表刷新后聚焦到下一个
-  wordsStore.lastFocusWordText = props.word.text;
+  wordsStore.lastFocusWordText = cleanWordText.value;
   wordsStore.lastFocusWordIndex = props.wordIndex;
 
-  if (wordModel.value?.level >= 12) {
+  // 创建新对象而非直接修改原对象，确保 Vue 响应式系统能正确检测到变更
+  const updatedWord: Word = { ...targetWord };
+
+  if (targetWord?.level >= 12) {
     console.log("12级单词忘记了")
-    wordModel.value.level = 1;
-    wordModel.value.remember = false;
-    wordModel.value.isReview = true;
-    wordModel.value.learnDate = new Date();
-  } else if (wordModel.value?.level && wordModel.value.level > 1) {
+    updatedWord.level = 1 as Word['level'];
+    updatedWord.remember = false;
+    updatedWord.isReview = true;
+    updatedWord.learnDate = new Date();
+  } else if (targetWord?.level && targetWord.level > 1) {
     console.log("降级")
-    wordModel.value.level--;
+    updatedWord.level = (targetWord.level - 1) as Word['level'];
   } else {
     // level 为 1 时，显示提示
     ElMessage.info('单词等级已为 1，无法继续降级');
     return;
   }
-  if (wordModel.value.level < 12) {
-    wordModel.value.remember = false;
+  if (updatedWord.level < 12) {
+    updatedWord.remember = false;
   }
-  wordModel.value.level === 1 ? wordModel.value.explainedHidden = false : wordModel.value.explainedHidden = true;
+  updatedWord.explainedHidden = updatedWord.level !== 1;
 
-  wordsStore.addAndUpdateWord(wordModel.value)
+  // 同步回 wordModel
+  if (wordModel.value && wordModel.value._id === updatedWord._id) {
+    Object.assign(wordModel.value, updatedWord);
+  }
+
+  wordsStore.addAndUpdateWord(updatedWord)
 }
 // 删除单词
 const deleteWord = () => {

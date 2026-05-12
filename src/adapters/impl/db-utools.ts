@@ -32,7 +32,7 @@ export class DbAdapterUtools implements DbAdapter {
 
   promises = {
     get: async <T extends {} = Record<string, any>>(id: string): Promise<DbDoc<T> | null> => {
-      return _u().db.get(id) as DbDoc<T> | null
+      return _u().db.promises.get(id) as Promise<DbDoc<T> | null>
     },
 
     put: async (doc: DbDoc): Promise<DbReturn> => {

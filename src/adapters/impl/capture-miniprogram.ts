@@ -5,6 +5,8 @@
  */
 import type { CaptureAdapter, CaptureResult, OCRResult } from '../capture'
 
+declare const uni: any
+
 export class CaptureAdapterMiniProgram implements CaptureAdapter {
   async capture(): Promise<CaptureResult> {
     return new Promise((resolve, reject) => {

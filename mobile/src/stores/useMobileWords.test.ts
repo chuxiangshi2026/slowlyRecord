@@ -19,18 +19,40 @@ import type { DbAdapter } from '@/adapters/index'
 
 function createMockDbAdapter(): DbAdapter {
   const store = new Map<string, any>()
+  let revCounter = 0
+
+  function getDoc(id: string) {
+    return store.get(id) || null
+  }
+
+  function putDoc(doc: any) {
+    const existing = store.get(doc._id)
+    // 模拟 PouchDB 冲突检测：更新已有文档必须提供正确的 _rev
+    if (existing && doc._rev !== existing._rev) {
+      return { id: doc._id, ok: false, error: true, message: 'conflict' }
+    }
+    const rev = `rev-${++revCounter}`
+    store.set(doc._id, { ...doc, _rev: rev })
+    return { id: doc._id, ok: true, rev }
+  }
+
+  function removeDoc(doc: any) {
+    const id = typeof doc === 'string' ? doc : doc._id
+    const existing = store.get(id)
+    if (!existing) {
+      return { id, ok: false, error: true, message: 'doc not found' }
+    }
+    if (doc._rev && doc._rev !== existing._rev) {
+      return { id, ok: false, error: true, message: 'conflict' }
+    }
+    store.delete(id)
+    return { id, ok: true }
+  }
 
   return {
-    get: vi.fn((id: string) => store.get(id) || null),
-    put: vi.fn((doc: any) => {
-      store.set(doc._id, doc)
-      return { id: doc._id, ok: true, rev: '1' }
-    }),
-    remove: vi.fn((doc: any) => {
-      const id = typeof doc === 'string' ? doc : doc._id
-      store.delete(id)
-      return { id, ok: true }
-    }),
+    get: vi.fn((id: string) => getDoc(id)),
+    put: vi.fn((doc: any) => putDoc(doc)),
+    remove: vi.fn((doc: any) => removeDoc(doc)),
     allDocs: vi.fn((prefix?: string) => {
       const docs = Array.from(store.values())
       if (prefix) {
@@ -39,27 +61,14 @@ function createMockDbAdapter(): DbAdapter {
       return docs
     }),
     bulkDocs: vi.fn((docs: any[]) => {
-      return docs.map(doc => {
-        store.set(doc._id, doc)
-        return { id: doc._id, ok: true }
-      })
+      return docs.map(doc => putDoc(doc))
     }),
     promises: {
-      get: vi.fn(async (id: string) => store.get(id) || null),
-      put: vi.fn(async (doc: any) => {
-        store.set(doc._id, doc)
-        return { id: doc._id, ok: true, rev: '1' }
-      }),
-      remove: vi.fn(async (doc: any) => {
-        const id = typeof doc === 'string' ? doc : doc._id
-        store.delete(id)
-        return { id, ok: true }
-      }),
+      get: vi.fn(async (id: string) => getDoc(id)),
+      put: vi.fn(async (doc: any) => putDoc(doc)),
+      remove: vi.fn(async (doc: any) => removeDoc(doc)),
       bulkDocs: vi.fn(async (docs: any[]) => {
-        return docs.map(doc => {
-          store.set(doc._id, doc)
-          return { id: doc._id, ok: true }
-        })
+        return docs.map(doc => putDoc(doc))
       }),
     },
   }
@@ -242,6 +251,80 @@ describe('useMobileWords Store', () => {
       await store.clearAllWords()
 
       expect(store.words.length).toBe(0)
+    })
+  })
+
+  describe('_rev 冲突与持久化闭环', () => {
+    it('更新已有单词应该携带 _rev 避免冲突', async () => {
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'test',
+        meaning: '测试',
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now(),
+      })
+
+      // 更新单词不应抛出冲突错误
+      await expect(store.updateWord(word.id, { meaning: '已更新' })).resolves.not.toThrow()
+
+      const updated = store.words.find(w => w.id === word.id)
+      expect(updated?.meaning).toBe('已更新')
+    })
+
+    it('删除单词时应使用正确的 _rev', async () => {
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'test',
+        meaning: '测试',
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now(),
+      })
+
+      await store.deleteWord(word.id)
+
+      expect(store.words.length).toBe(0)
+      expect(mockDb.promises.remove).toHaveBeenCalledWith(expect.objectContaining({ _rev: expect.any(String) }))
+    })
+
+    it('模拟重启后重新加载应读到最新数据', async () => {
+      const store = useMobileWords()
+
+      await store.addWord({
+        word: 'persistent',
+        meaning: '持久化',
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now(),
+      })
+
+      // 模拟应用重启：重置 Store 状态，重新加载
+      store.words = []
+      await store.loadWords()
+
+      expect(store.words.length).toBe(1)
+      expect(store.words[0].word).toBe('persistent')
+    })
+
+    it('markAsForgotten 更新时应携带 _rev 避免冲突', async () => {
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'test',
+        meaning: '测试',
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now(),
+      })
+
+      await expect(store.markAsForgotten(word.id)).resolves.not.toThrow()
+
+      const updated = store.words.find(w => w.id === word.id)
+      expect(updated?.remembered).toBe(false)
+      expect(updated?.needsReview).toBe(true)
     })
   })
 })

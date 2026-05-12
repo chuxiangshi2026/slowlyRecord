@@ -91,7 +91,13 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
   async function deleteWord(id: string) {
     const db = getDbAdapter()
-    await db.remove({ _id: id, _rev: '1' })
+    const existing = db.get(id)
+    if (existing?._rev) {
+      const result = await db.promises.remove({ _id: id, _rev: existing._rev })
+      if (!result.ok) {
+        throw new Error(result.message || '删除单词失败')
+      }
+    }
     words.value = words.value.filter(w => w.id !== id)
   }
 
@@ -101,10 +107,15 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
     const updated = { ...words.value[index], ...updates }
     const db = getDbAdapter()
-    await db.put({
+    const existing = db.get(id)
+    const result = await db.promises.put({
       _id: id,
+      _rev: existing?._rev,
       data: updated
     })
+    if (!result.ok) {
+      throw new Error(result.message || '更新单词失败')
+    }
     words.value[index] = updated
   }
 
@@ -141,10 +152,15 @@ export const useMobileWords = defineStore('mobileWords', () => {
     word.nextReviewTime = Date.now() + 10 * 60 * 1000 // 10分钟后再次复习
 
     const db = getDbAdapter()
-    await db.put({
+    const existing = db.get(id)
+    const result = await db.promises.put({
       _id: id,
+      _rev: existing?._rev,
       data: word
     })
+    if (!result.ok) {
+      throw new Error(result.message || '更新单词失败')
+    }
   }
 
   function exportWords() {
@@ -155,10 +171,15 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const db = getDbAdapter()
     for (const word of data) {
       const id = word.id || `${DB_KEY}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      await db.promises.put({
+      const existing = db.get(id)
+      const result = await db.promises.put({
         _id: id,
+        _rev: existing?._rev,
         data: { ...word, id }
       })
+      if (!result.ok) {
+        throw new Error(result.message || '导入单词失败')
+      }
     }
     await loadWords()
   }
@@ -166,7 +187,10 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function clearAllWords() {
     const db = getDbAdapter()
     for (const word of words.value) {
-      await db.remove({ _id: word.id, _rev: '1' })
+      const existing = db.get(word.id)
+      if (existing?._rev) {
+        await db.promises.remove({ _id: word.id, _rev: existing._rev })
+      }
     }
     words.value = []
   }

@@ -451,7 +451,9 @@ export function analyzeWord(word: string): WordComponent[] {
     return [{ text: word, type: 'whole' }];
   }
 
-  const lowerWord = word.toLowerCase();
+  // 清理单词中的空白字符（换行、回车、空格等），防止脏数据影响解析和显示
+  const cleanedWord = word.replace(/\s+/g, '');
+  const lowerWord = cleanedWord.toLowerCase();
   const components: WordComponent[] = [];
 
   let remaining = lowerWord;
@@ -463,7 +465,7 @@ export function analyzeWord(word: string): WordComponent[] {
     const prefix = prefixData.text;
     if (remaining.startsWith(prefix) && remaining.length > prefix.length + 1) {
       components.push({
-        text: word.slice(originalIndex, originalIndex + prefix.length),
+        text: cleanedWord.slice(originalIndex, originalIndex + prefix.length),
         type: 'prefix',
         data: prefixData
       });
@@ -504,14 +506,14 @@ export function analyzeWord(word: string): WordComponent[] {
         // 词根前的子单词
         if (rootIndex > 0) {
           components.push({
-            text: word.slice(originalIndex, originalIndex + rootIndex),
+            text: cleanedWord.slice(originalIndex, originalIndex + rootIndex),
             type: 'subword'
           });
         }
 
         // 词根本身
         components.push({
-          text: word.slice(originalIndex + rootIndex, originalIndex + rootIndex + root.length),
+          text: cleanedWord.slice(originalIndex + rootIndex, originalIndex + rootIndex + root.length),
           type: 'root',
           data: rootData
         });
@@ -519,7 +521,7 @@ export function analyzeWord(word: string): WordComponent[] {
         // 词根后的子单词
         if (rootIndex + root.length < middlePart.length) {
           components.push({
-            text: word.slice(originalIndex + rootIndex + root.length, originalIndex + suffixStartInRemaining),
+            text: cleanedWord.slice(originalIndex + rootIndex + root.length, originalIndex + suffixStartInRemaining),
             type: 'subword'
           });
         }
@@ -532,7 +534,7 @@ export function analyzeWord(word: string): WordComponent[] {
     // 如果没有找到词根，整个中间部分作为子单词
     if (!rootFound) {
       components.push({
-        text: word.slice(originalIndex, originalIndex + suffixStartInRemaining),
+        text: cleanedWord.slice(originalIndex, originalIndex + suffixStartInRemaining),
         type: 'subword'
       });
     }
@@ -541,7 +543,7 @@ export function analyzeWord(word: string): WordComponent[] {
   // 4. 添加后缀
   if (suffixText && suffixData) {
     components.push({
-      text: word.slice(originalIndex + suffixStartInRemaining),
+      text: cleanedWord.slice(originalIndex + suffixStartInRemaining),
       type: 'suffix',
       data: suffixData
     });
@@ -549,7 +551,7 @@ export function analyzeWord(word: string): WordComponent[] {
 
   // 如果没有任何成分被识别，返回整个单词
   if (components.length === 0) {
-    return [{ text: word, type: 'whole' }];
+    return [{ text: cleanedWord, type: 'whole' }];
   }
 
   return components;

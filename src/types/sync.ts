@@ -5,6 +5,10 @@
  * 服务器同步是临时的，不保留用户身份信息，仅用随机 code 标识。
  */
 
+import type { Word } from './words'
+import type { TextArticle, TextNote, TextPrompt } from './text-memory'
+import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from './number-memory'
+
 /** 同步数据版本号，用于兼容性检查 */
 export const SYNC_VERSION = 1
 
