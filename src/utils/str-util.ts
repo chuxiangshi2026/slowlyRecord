@@ -53,7 +53,6 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
         return {success: false, message: "不能添加空单词",text:wordText}
     }
     wordsStore.lastFocusWordText=wordText
-    wordsStore.setLastAddedWordText(wordText);
     let findWord = wordsStore.findWord(wordText)
     if (findWord) {
         console.log('待添加单词已存在');
@@ -63,7 +62,9 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
 
             findWord.isReview=true
             findWord.explainedHidden=false
-            wordsStore.addAndUpdateWord(findWord)
+            await wordsStore.addAndUpdateWord(findWord)
+            // 数据更新完成后设置定位，确保watcher触发时数据已就绪
+            wordsStore.setLastAddedWordText(wordText);
             // ElMessage.success('单词已存在');
             return {success: false, message: '单词已存在',text:wordText};
         }
@@ -94,6 +95,8 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
 
                 await wordsStore.addAndUpdateWord(findWord)
                 console.log('更新单词释义成功', res);
+                // 数据更新完成后设置定位，确保watcher触发时数据已就绪
+                wordsStore.setLastAddedWordText(wordText);
                 ElMessage.success('更新成功');
                 return {success: true,text:wordText, message: '更新成功'};
             } else {
@@ -138,6 +141,8 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             // console.log(data, '更新单词成功');
             await wordsStore.addAndUpdateWords(data)
 
+            // 数据更新完成后设置定位，确保watcher触发时数据已就绪
+            wordsStore.setLastAddedWordText(wordText);
             return {success: true,text:wordText, message: ''};
             // router.push('/')
         } else {
@@ -180,7 +185,6 @@ const batchTranslateAndAddWords = async (
         ElMessage.warning("没有可添加单词");
         return;
     }
-    wordsStore.setLastAddedWordText(<string>uniqueWords.at(-1))
     wordsStore.lastFocusWordText = <string>uniqueWords.at(-1)
 
     // 过滤掉已存在且有翻译的单词

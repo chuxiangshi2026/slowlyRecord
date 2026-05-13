@@ -1725,40 +1725,49 @@ const scrollToWord = (index: number) => {
   }
 
   nextTick(() => {
-    // 使用虚拟滚动时，直接计算滚动位置
-    const scroller = document.querySelector('.scroller')
+    // 优先使用 RecycleScroller 的原生 scrollToItem 方法，更准确且与虚拟滚动内部状态同步
+    if (scrollerRef.value?.scrollToItem) {
+      scrollerRef.value.scrollToItem(index);
+      setTimeout(() => {
+        wordsStore.setLastAddedWordText('');
+      }, 100);
+      return;
+    }
+
+    // 回退到手动计算滚动位置
+    const scroller = document.querySelector('.scroller');
     if (scroller) {
       // 计算目标项的位置（考虑网格布局）
-      const itemsPerRow = 2 // 从模板中的 :grid-items="2" 得知
-      const rowIndex = Math.floor(index / itemsPerRow)
-      const itemHeight = 165 // 从模板中的 :item-size="165" 得知
+      const itemsPerRow = 2; // 从模板中的 :grid-items="2" 得知
+      const rowIndex = Math.floor(index / itemsPerRow);
+      const itemHeight = 185; // 与模板中的 :item-size="185" 保持一致
 
       // 滚动到目标行的位置，留出一些顶部空间便于查看
-      scroller.scrollTop = Math.max(0, rowIndex * itemHeight - 50)
+      scroller.scrollTop = Math.max(0, rowIndex * itemHeight - 50);
 
       // 延迟清空状态，确保滚动执行完成
       setTimeout(() => {
-        wordsStore.setLastAddedWordText('')
-      }, 100)
+        wordsStore.setLastAddedWordText('');
+      }, 100);
     } else if (itemRefs.value[index] && scrollContainer.value) {
       // 回退到原来的方法
-      const container = scrollContainer.value
-      const targetElement = itemRefs.value[index]
+      const container = scrollContainer.value;
+      const targetElement = itemRefs.value[index];
 
       // 计算相对位置
-      const containerRect = container.getBoundingClientRect()
-      const targetRect = targetElement.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = targetElement.getBoundingClientRect();
 
       // 滚动到目标元素位置
-      container.scrollTop = container.scrollTop + targetRect.top - containerRect.top - 100
+      container.scrollTop = container.scrollTop + targetRect.top - containerRect.top - 100;
 
       // 延迟清空状态，确保滚动执行完成
       setTimeout(() => {
-        wordsStore.setLastAddedWordText('')
-      }, 100)
+        wordsStore.setLastAddedWordText('');
+      }, 100);
     }
-  })
-}
+  });
+};
 
 
 // 滚动到顶部
@@ -1808,17 +1817,35 @@ const scrollToBottom = () => {
 const scrollToWordByText = (wordText: string) => {
   console.log("---------", wordText, wordsStore.lastAddedWordText)
   // const index = wordsStore.words.findIndex(word => word.text === wordText)
-  const index = showFilteredWords.value.findIndex(word => word.text === wordText)
+  let index = showFilteredWords.value.findIndex(word => word.text === wordText)
   if (index !== -1) {
     scrollToWord(index)
   } else {
-    setTimeout(() => {
-      const index = showFilteredWords.value.findIndex(word => word.text === wordText)
-      if (index !== -1) {
-        scrollToWord(index)
-      }
-    }, 500)
-    log.i('未找到此单词，无法定位')
+    // 在当前过滤视图中未找到，检查是否存在于完整列表中
+    const fullIndex = wordsStore.words.findIndex(word => word.text === wordText)
+    if (fullIndex !== -1) {
+      // 单词存在但被当前 listMode 过滤了，切换到"全部"模式使其可见
+      console.log('单词存在但被过滤，切换到全部模式:', wordText, '当前模式:', listMode.value)
+      listMode.value = 3
+      // 等待视图更新后再滚动（RecycleScroller 需要更长时间完成渲染）
+      nextTick(() => {
+        setTimeout(() => {
+          const newIndex = showFilteredWords.value.findIndex(word => word.text === wordText)
+          if (newIndex !== -1) {
+            scrollToWord(newIndex)
+          }
+        }, 200)
+      })
+    } else {
+      // 完全未找到，延迟重试（等待异步数据更新）
+      setTimeout(() => {
+        const retryIndex = showFilteredWords.value.findIndex(word => word.text === wordText)
+        if (retryIndex !== -1) {
+          scrollToWord(retryIndex)
+        }
+      }, 500)
+      log.i('未找到此单词，无法定位')
+    }
   }
 }
 
@@ -2452,7 +2479,7 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   if (wordText) {
     log.i("数据更新，滚动到此单词处:", wordText);
     nextTick(() => {  // 等待 DOM 更新
-      // 添加延时确保虚拟滚动器已渲染完成
+      // 添加延时确保虚拟滚动器已渲染完成（dynamic-size 模式下需要更长时间）
       setTimeout(() => {
         scrollToWordByText(wordText)  // 调用组件内的滚动方法
         // 清空状态，避免重复触发
@@ -2460,7 +2487,7 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
         setTimeout(() => {
           wordsStore.setLastAddedWordText('')
         }, 100)
-      }, 50) // 添加50ms延时，确保虚拟滚动器渲染完成
+      }, 150) // 添加150ms延时，确保 RecycleScroller 完成内部布局计算
     })
   }
   log.i("清空滚动更新单词", wordText);

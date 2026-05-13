@@ -707,7 +707,7 @@ export const useWordsStore =
                 storage: localStorage,
                 pick: [
                     'currentWordBankId',
-                    'lastAddedWordText',
+                    // 'lastAddedWordText', // 不持久化：避免重新进入页面时触发旧滚动定位
                     'currentTranslationPlatform',
                     'currentOcrPlatform',
                     'memoryFirmness',

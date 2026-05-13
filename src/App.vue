@@ -174,6 +174,9 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
     // 把单词翻译了，添加到 列表中
     // console.log('==================', action)
 
+    // 先显示主窗口，确保用户能看到添加结果
+    if (isUTools()) (window as any).utools?.showMainWindow?.()
+
     const result = await addWord(action.payload);
     if (!result.success) {
       ElMessage.warning(result.message);
