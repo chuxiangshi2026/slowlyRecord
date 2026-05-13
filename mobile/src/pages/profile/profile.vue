@@ -154,7 +154,7 @@ const showSyncActionSheet = () => {
 const handlePush = async () => {
   uni.showLoading({ title: '推送中...' })
   try {
-    const result = await pushToServer(wordsStore.words)
+    const result = await pushToServer(wordsStore.exportAllWords())
     uni.hideLoading()
     if (result.success && result.code) {
       syncCode.value = result.code
@@ -301,16 +301,29 @@ const importData = () => {
 }
 
 const clearData = () => {
-  uni.showModal({
-    title: '确认清空',
-    content: '此操作将删除所有单词数据，不可恢复！',
-    confirmColor: '#ff5252',
+  const bankName = wordsStore.getBankById(wordsStore.currentBankId)?.name || '当前词库'
+  uni.showActionSheet({
+    itemList: [`清空「${bankName}」`, '清空所有词库'],
     success: (res) => {
-      if (res.confirm) {
-        wordsStore.clearAllWords()
-        uni.showToast({ title: '已清空', icon: 'success' })
-      }
-    },
+      const confirmText = res.tapIndex === 0 ? `清空「${bankName}」中的所有单词？` : '清空所有词库中的所有单词？不可恢复！'
+      uni.showModal({
+        title: '确认清空',
+        content: confirmText,
+        confirmColor: '#ff5252',
+        success: async (confirmRes) => {
+          if (confirmRes.confirm) {
+            if (res.tapIndex === 0) {
+              await wordsStore.clearBankWords(wordsStore.currentBankId)
+            } else {
+              for (const bank of wordsStore.bankList) {
+                await wordsStore.clearBankWords(bank.id)
+              }
+            }
+            uni.showToast({ title: '已清空', icon: 'success' })
+          }
+        },
+      })
+    }
   })
 }
 

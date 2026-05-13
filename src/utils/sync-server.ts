@@ -181,65 +181,96 @@ class JsonBlobAdapter implements SyncServerAdapter {
   private baseUrl = DEFAULT_SERVER_BASE
 
   async uploadRaw(encryptedPayload: string): Promise<string> {
-    const response = await fetch(this.baseUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // 服务器看到的只是无法解读的密文 + 元信息
-      body: JSON.stringify({ e: encryptedPayload }),
-    })
+    const maxRetries = 5
 
-    if (!response.ok) {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      const response = await fetch(this.baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // 服务器看到的只是无法解读的密文 + 元信息
+        body: JSON.stringify({ e: encryptedPayload }),
+      })
+
+      if (response.ok) {
+        const location = response.headers.get('Location') || response.headers.get('location')
+        if (!location) {
+          throw new Error('服务器未返回数据标识')
+        }
+
+        const blobId = location.split('/').pop() || location
+        log.i('加密数据已上传, blobId:', blobId)
+        return blobId
+      }
+
+      // 429 限流：自动指数退避重试
+      if (response.status === 429 && attempt < maxRetries - 1) {
+        const retryAfter = response.headers.get('Retry-After')
+        const delayMs = retryAfter
+          ? parseInt(retryAfter, 10) * 1000
+          : 3000 + attempt * 3000 // 3s, 6s, 9s, 12s
+        log.w(`服务器限流(429), ${delayMs}ms 后第 ${attempt + 2} 次尝试...`)
+        await new Promise(resolve => setTimeout(resolve, delayMs))
+        continue
+      }
+
       throw new Error(`上传失败: ${response.status} ${response.statusText}`)
     }
 
-    const location = response.headers.get('Location') || response.headers.get('location')
-    if (!location) {
-      throw new Error('服务器未返回数据标识')
-    }
-
-    const blobId = location.split('/').pop() || location
-    log.i('加密数据已上传, blobId:', blobId)
-    return blobId
+    throw new Error('上传失败: 服务器限流，请 1~2 分钟后重试')
   }
 
   async downloadRaw(blobId: string): Promise<string | null> {
-    try {
-      const response = await fetch(`${this.baseUrl}/${blobId}`, {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' },
-      })
+    const maxRetries = 5
 
-      if (!response.ok) {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const response = await fetch(`${this.baseUrl}/${blobId}`, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+        })
+
+        if (response.ok) {
+          const json = await response.json()
+          if (json && json.e) {
+            log.i('加密数据已下载')
+            return json.e as string
+          }
+          log.e('服务器返回数据格式异常')
+          return null
+        }
+
         if (response.status === 404) {
           log.w('同步数据不存在或已过期')
           return null
         }
-        throw new Error(`下载失败: ${response.status} ${response.statusText}`)
-      }
 
-      const json = await response.json()
-      // 从 { e: "..." } 中提取密文
-      if (json && json.e) {
-        log.i('加密数据已下载')
-        return json.e as string
+        // 429 限流：自动指数退避重试
+        if (response.status === 429 && attempt < maxRetries - 1) {
+          const retryAfter = response.headers.get('Retry-After')
+          const delayMs = retryAfter
+            ? parseInt(retryAfter, 10) * 1000
+            : 3000 + attempt * 3000
+          log.w(`下载限流(429), ${delayMs}ms 后第 ${attempt + 2} 次尝试...`)
+          await new Promise(resolve => setTimeout(resolve, delayMs))
+          continue
+        }
+
+        throw new Error(`下载失败: ${response.status} ${response.statusText}`)
+      } catch (e) {
+        // 网络层异常（非 HTTP 错误）不重试，直接失败
+        log.e('下载加密数据失败', e)
+        return null
       }
-      log.e('服务器返回数据格式异常')
-      return null
-    } catch (e) {
-      log.e('下载加密数据失败', e)
-      return null
     }
+
+    log.e('下载失败: 服务器限流，请 1~2 分钟后重试')
+    return null
   }
 
   async ping(): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}/ping-test`, {
-        method: 'GET',
-      })
-      return response.status === 404 || response.ok
-    } catch {
-      return false
-    }
+    // jsonblob.com 对探测请求会返回 ERR_ABORTED/404，反而在控制台制造噪音。
+    // 直接视为可用，真实可用性由上传/下载时自然验证。
+    return true
   }
 }
 

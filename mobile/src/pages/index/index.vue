@@ -22,6 +22,10 @@
         <text class="stat-num">{{ todayLearned }}</text>
         <text class="stat-label">今日学习</text>
       </view>
+      <view class="stat-card bank-card" @click="goToWordbank">
+        <text class="stat-num bank-name">{{ currentBankName }}</text>
+        <text class="stat-label">当前词库 ›</text>
+      </view>
     </view>
 
     <view class="quick-actions">
@@ -73,13 +77,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
 
 const wordCount = ref(0)
 const reviewCount = ref(0)
 const streakDays = ref(7)
 const todayLearned = ref(12)
+
+const currentBankName = computed(() => {
+  const bank = wordsStore.getBankById(wordsStore.currentBankId)
+  return bank?.name || '我的词库'
+})
 
 const wordsStore = useMobileWords()
 
@@ -168,6 +177,15 @@ const goToMemoryTest = () => {
   grid-template-columns: repeat(2, 1fr);
   gap: 20rpx;
   margin: 30rpx 0;
+}
+
+.bank-card {
+  grid-column: span 2;
+}
+
+.bank-name {
+  font-size: 36rpx !important;
+  color: #667eea !important;
 }
 
 .stat-card {

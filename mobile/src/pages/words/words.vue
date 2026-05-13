@@ -1,5 +1,10 @@
 <template>
   <view class="words-container">
+    <view class="bank-selector" @click="goToWordBank" v-if="currentBankName">
+      <text class="bank-label">当前词库：</text>
+      <text class="bank-name-text">{{ currentBankName }}</text>
+      <text class="bank-arrow">›</text>
+    </view>
     <view class="search-bar">
       <input 
         class="search-input" 
@@ -124,6 +129,11 @@ const newWord = ref({
   meaning: '',
   phonetic: '',
   example: ''
+})
+
+const currentBankName = computed(() => {
+  const bank = wordsStore.getBankById(wordsStore.currentBankId)
+  return bank?.name || ''
 })
 
 const filteredWords = computed(() => {
@@ -328,6 +338,31 @@ const formatDate = (timestamp: number): string => {
 .words-container {
   min-height: 100vh;
   background: #f5f5f5;
+}
+
+.bank-selector {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+}
+
+.bank-label {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.bank-name-text {
+  font-size: 28rpx;
+  color: #667eea;
+  font-weight: bold;
+  margin: 0 8rpx;
+}
+
+.bank-arrow {
+  font-size: 28rpx;
+  color: #ccc;
 }
 
 .search-bar {
