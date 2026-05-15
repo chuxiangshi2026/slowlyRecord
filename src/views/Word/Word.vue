@@ -342,10 +342,9 @@
         <i class="iconfont icon-card" @click="openFocusMode"></i>
       </el-tooltip>
 
-<!--
       <el-tooltip class="box-item" effect="dark" content="多端同步" placement="top" popper-class="small-tooltip">
         <el-icon :size="18" style="cursor: pointer;" @click="syncDialogVisible = true"><Connection /></el-icon>
-      </el-tooltip>-->
+      </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-setting" @click="drawerVisible = true"></i>
       </el-tooltip>

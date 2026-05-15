@@ -6,7 +6,7 @@
  */
 import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
-import { getAllWordBanks, saveWordBank, getCurrentWordBankId, setCurrentWordBankId, createWordBank, type WordBank } from '@/utils/wordbank-manager'
+import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
 import type { MemoryFirmnessTpye } from '@/types/words'
 import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from '@/types/number-memory'
@@ -16,7 +16,6 @@ import { getPlatform } from '@/adapters/platform'
 import { getSetDb, addAndUpdateSetDb } from '@/utils/user-set-db-util'
 import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_LETTER_MEMORY } from '@/constants'
 import { log } from '@/utils/logger'
-import cloneDeep from 'lodash.clonedeep'
 
 // ==================== 数据收集 ====================
 
@@ -37,8 +36,20 @@ export async function collectSyncData(): Promise<SyncData> {
     isDefault: bank.isDefault,
   }))
 
-  // 2. 当前词库 ID
-  const currentWordBankId = await getCurrentWordBankId()
+  // 2. 当前词库 ID（复用已加载的 banks，避免再次调用 getAllWordBanks）
+  let currentWordBankId = ''
+  try {
+    const storedId = localStorage.getItem('slowly-record-current-wordbank')
+    if (storedId && allBanks.find(b => b.id === storedId)) {
+      currentWordBankId = storedId
+    } else {
+      const defaultBank = allBanks.find(b => b.isDefault)
+      currentWordBankId = defaultBank?.id || allBanks[0]?.id || ''
+    }
+  } catch {
+    const defaultBank = allBanks.find(b => b.isDefault)
+    currentWordBankId = defaultBank?.id || allBanks[0]?.id || ''
+  }
 
   // 3. 用户设置
   const userSetDoc = getSetDb()
@@ -325,11 +336,11 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
           break
       }
     } else {
-      // 新词库，直接创建
+      // 新词库，直接创建（浅拷贝单词即可，数据来自反序列化不存在共享引用）
       const newBank: WordBank = {
         id: bank.id,
         name: bank.name,
-        words: cloneDeep(bank.words),
+        words: [...bank.words],
         createdAt: bank.createdAt,
         updatedAt: bank.updatedAt,
         isDefault: bank.isDefault,
@@ -357,15 +368,15 @@ function mergeWordsIntoExisting(existingBank: WordBank, incomingWords: Word[], m
     const key = word.text.toLowerCase()
     const existing = existingMap.get(key)
     if (!existing) {
-      // 本地没有，添加
-      existingBank.words.push(cloneDeep(word))
+      // 本地没有，添加（浅拷贝避免引用共享）
+      existingBank.words.push({ ...word })
       existingMap.set(key, word)
     } else if (mode === 'merge') {
       // 都有，以 learnDate 更新的为准
       const existingDate = existing.learnDate ? new Date(existing.learnDate).getTime() : 0
       const incomingDate = word.learnDate ? new Date(word.learnDate).getTime() : 0
       if (incomingDate > existingDate) {
-        Object.assign(existing, cloneDeep(word))
+        Object.assign(existing, { ...word })
       }
     }
   }
@@ -461,75 +472,28 @@ async function restoreNumberMemoryData(data: SyncNumberMemory) {
     await db.promises.put(doc)
   }
 
-  // 还原条目
-  if (data.entries?.length) {
-    let successCount = 0
-    let failCount = 0
-    for (const entry of data.entries) {
-      try {
-        await db.promises.put(cloneDeep(entry))
-        successCount++
-      } catch (e) {
-        failCount++
-        log.w('还原数字记忆条目失败:', entry._id, e)
-      }
-    }
-    if (failCount > 0) {
-      log.w(`数字记忆条目还原完成: ${successCount} 成功, ${failCount} 失败`)
-    }
-  }
+  // 批量收集所有需要写入的条目
+  const bulkItems: any[] = []
+  if (data.entries?.length) bulkItems.push(...data.entries)
+  if (data.notes?.length) bulkItems.push(...data.notes)
+  if (data.prompts?.length) bulkItems.push(...data.prompts)
+  if (data.trainingResults?.length) bulkItems.push(...data.trainingResults)
 
-  // 还原笔记
-  if (data.notes?.length) {
-    let successCount = 0
-    let failCount = 0
-    for (const note of data.notes) {
+  // 分批 bulkDocs（每批 200 条）
+  if (bulkItems.length > 0) {
+    const BATCH_SIZE = 200
+    for (let i = 0; i < bulkItems.length; i += BATCH_SIZE) {
+      const batch = bulkItems.slice(i, i + BATCH_SIZE)
       try {
-        await db.promises.put(cloneDeep(note))
-        successCount++
+        await db.promises.bulkDocs(batch)
       } catch (e) {
-        failCount++
-        log.w('还原数字记忆笔记失败:', note._id, e)
+        // bulkDocs 失败时逐条降级写入
+        for (const item of batch) {
+          try {
+            await db.promises.put(item)
+          } catch { /* skip */ }
+        }
       }
-    }
-    if (failCount > 0) {
-      log.w(`数字记忆笔记还原完成: ${successCount} 成功, ${failCount} 失败`)
-    }
-  }
-
-  // 还原提示词
-  if (data.prompts?.length) {
-    let successCount = 0
-    let failCount = 0
-    for (const prompt of data.prompts) {
-      try {
-        await db.promises.put(cloneDeep(prompt))
-        successCount++
-      } catch (e) {
-        failCount++
-        log.w('还原数字记忆提示词失败:', prompt._id, e)
-      }
-    }
-    if (failCount > 0) {
-      log.w(`数字记忆提示词还原完成: ${successCount} 成功, ${failCount} 失败`)
-    }
-  }
-
-  // 还原训练结果
-  if (data.trainingResults?.length) {
-    let successCount = 0
-    let failCount = 0
-    for (const result of data.trainingResults) {
-      try {
-        await db.promises.put(cloneDeep(result))
-        successCount++
-      } catch (e) {
-        failCount++
-        log.w('还原数字记忆训练结果失败:', result._id, e)
-      }
-    }
-    if (failCount > 0) {
-      log.w(`数字记忆训练结果还原完成: ${successCount} 成功, ${failCount} 失败`)
     }
   }
 
@@ -541,30 +505,26 @@ async function restoreNumberMemoryData(data: SyncNumberMemory) {
 async function restoreShortcutMemoryData(data: SyncShortcutMemory) {
   const db = getDbAdapter()
 
-  // 还原自定义分类
-  if (data.customCategories?.length) {
-    for (const cat of data.customCategories) {
-      try {
-        await db.promises.put(cloneDeep(cat))
-      } catch { /* skip */ }
-    }
-  }
-
-  // 还原训练记录
-  if (data.trainingRecords?.length) {
-    for (const record of data.trainingRecords) {
-      try {
-        await db.promises.put(cloneDeep(record))
-      } catch { /* skip */ }
-    }
-  }
-
-  // 还原学习进度
+  // 批量收集所有需要写入的条目
+  const bulkItems: any[] = []
+  if (data.customCategories?.length) bulkItems.push(...data.customCategories)
+  if (data.trainingRecords?.length) bulkItems.push(...data.trainingRecords)
   if (data.learningProgress?.length) {
-    for (const progress of (Array.isArray(data.learningProgress) ? data.learningProgress : [data.learningProgress])) {
+    const items = Array.isArray(data.learningProgress) ? data.learningProgress : [data.learningProgress]
+    bulkItems.push(...items)
+  }
+
+  if (bulkItems.length > 0) {
+    const BATCH_SIZE = 200
+    for (let i = 0; i < bulkItems.length; i += BATCH_SIZE) {
+      const batch = bulkItems.slice(i, i + BATCH_SIZE)
       try {
-        await db.promises.put(cloneDeep(progress))
-      } catch { /* skip */ }
+        await db.promises.bulkDocs(batch)
+      } catch {
+        for (const item of batch) {
+          try { await db.promises.put(item) } catch { /* skip */ }
+        }
+      }
     }
   }
 
@@ -577,35 +537,39 @@ async function restoreLetterMemoryData(data: SyncLetterMemory) {
 
   // 还原训练文档（包含 associations）
   if (data.associations?.length) {
-    // 查找或创建训练文档
     const existingTraining = db.allDocs(prefix).find((d: any) => d.type === 'letter_memory_training') as any
     if (existingTraining) {
-      // 合并 associations
       const existingMap = new Map((existingTraining.associations || []).map((a: any) => [a.letter, a]))
       for (const assoc of data.associations) {
         existingMap.set(assoc.letter, assoc)
       }
       existingTraining.associations = Array.from(existingMap.values())
       existingTraining.updatedAt = Date.now()
-      await db.promises.put(cloneDeep(existingTraining))
+      await db.promises.put(existingTraining)
     } else {
       const now = Date.now()
-      await db.promises.put(cloneDeep({
+      await db.promises.put({
         _id: prefix + 'training_' + now,
         type: 'letter_memory_training',
         associations: data.associations,
         createdAt: now,
         updatedAt: now,
-      }))
+      })
     }
   }
 
-  // 还原训练结果
+  // 批量还原训练结果
   if (data.trainingResults?.length) {
-    for (const result of data.trainingResults) {
+    const BATCH_SIZE = 200
+    for (let i = 0; i < data.trainingResults.length; i += BATCH_SIZE) {
+      const batch = data.trainingResults.slice(i, i + BATCH_SIZE)
       try {
-        await db.promises.put(cloneDeep(result))
-      } catch { /* skip */ }
+        await db.promises.bulkDocs(batch)
+      } catch {
+        for (const result of batch) {
+          try { await db.promises.put(result) } catch { /* skip */ }
+        }
+      }
     }
   }
 

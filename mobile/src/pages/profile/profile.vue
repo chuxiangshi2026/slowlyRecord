@@ -251,7 +251,13 @@ const handlePush = async () => {
 
 // 按词库分组导入同步数据
 async function importBanks(banks: any[]) {
-  let total = 0
+  // 计算总词数（跨所有词库）
+  let totalWords = 0
+  for (const bank of banks) {
+    if (bank.words?.length) totalWords += bank.words.length
+  }
+
+  let doneWords = 0
   for (const bank of banks) {
     const bankName = bank.name || '未命名词库'
     // 查找是否已有同名词库
@@ -261,14 +267,19 @@ async function importBanks(banks: any[]) {
     }
     if (bank.words && bank.words.length > 0) {
       try {
-        await wordsStore.importWords(bank.words, targetBank.id)
-        total += bank.words.length
+        await wordsStore.importWords(bank.words, targetBank.id, (done) => {
+          uni.showLoading({ title: `导入中 ${doneWords + done}/${totalWords}` })
+        })
+        doneWords += bank.words.length
       } catch (e) {
         console.error(`导入词库 ${bankName} 失败:`, e)
       }
     }
   }
-  return total
+
+  // 全部写入存储后，从存储重新加载到内存（只触发一次响应式更新）
+  await wordsStore.reloadWords()
+  return doneWords
 }
 
 // 拉取
@@ -280,9 +291,10 @@ const handlePull = async () => {
   uni.showLoading({ title: '拉取中...' })
   try {
     const result = await pullFromServer(inputSyncCode.value.trim())
-    uni.hideLoading()
     if (result.success && result.banks) {
+      uni.showLoading({ title: '导入中...' })
       const total = await importBanks(result.banks)
+      uni.hideLoading()
       uni.showModal({
         title: '拉取成功',
         content: `共 ${total} 个单词已同步`,
@@ -290,6 +302,7 @@ const handlePull = async () => {
       })
       closePullInput()
     } else {
+      uni.hideLoading()
       uni.showToast({ title: result.error || '拉取失败', icon: 'none' })
     }
   } catch (e) {
@@ -307,15 +320,17 @@ const scanAndPull = () => {
         uni.showLoading({ title: '拉取中...' })
         try {
           const result = await pullFromServer(res.result)
-          uni.hideLoading()
           if (result.success && result.banks) {
+            uni.showLoading({ title: '导入中...' })
             const total = await importBanks(result.banks)
+            uni.hideLoading()
             uni.showModal({
               title: '拉取成功',
               content: `共 ${total} 个单词已同步`,
               showCancel: false,
             })
           } else {
+            uni.hideLoading()
             uni.showToast({ title: result.error || '拉取失败', icon: 'none' })
           }
         } catch (e) {

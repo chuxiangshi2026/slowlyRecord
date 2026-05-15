@@ -30,6 +30,7 @@ export interface DbAdapter {
     put(doc: DbDoc): Promise<DbReturn>
     remove(doc: string | DbDoc): Promise<DbReturn>
     bulkDocs(docs: DbDoc[]): Promise<DbReturn[]>
+    asyncBulkDocs(docs: DbDoc[]): Promise<DbReturn[]>
   }
 }
 
@@ -78,6 +79,9 @@ export class MiniProgramDbAdapter implements DbAdapter {
     },
     bulkDocs: (docs: DbDoc[]): Promise<DbReturn[]> => {
       return Promise.resolve(this.bulkDocs(docs))
+    },
+    asyncBulkDocs: (docs: DbDoc[]): Promise<DbReturn[]> => {
+      return this.asyncBulkDocs(docs)
     },
   }
 
@@ -201,6 +205,74 @@ export class MiniProgramDbAdapter implements DbAdapter {
 
   bulkDocs(docs: DbDoc[]): DbReturn[] {
     return docs.map(doc => this.put(doc))
+  }
+
+  /** 异步批量写入，使用 uni.setStorage 避免阻塞主线程 */
+  async asyncBulkDocs(docs: DbDoc[]): Promise<DbReturn[]> {
+    const CONCURRENCY = 5
+    const results: DbReturn[] = []
+    for (let i = 0; i < docs.length; i += CONCURRENCY) {
+      const chunk = docs.slice(i, i + CONCURRENCY)
+      const chunkResults = await Promise.all(chunk.map(doc => this.asyncPut(doc)))
+      results.push(...chunkResults)
+    }
+    return results
+  }
+
+  /** 异步写入单条文档 */
+  private async asyncPut(doc: DbDoc): Promise<DbReturn> {
+    const key = this.getKey(doc._id)
+
+    // 先尝试直接写入（大部分单词数据很小，不需要分块）
+    try {
+      return await new Promise<DbReturn>((resolve, reject) => {
+        uni.setStorage({
+          key,
+          data: doc,
+          success: () => resolve({ id: doc._id, rev: doc._rev || '1', ok: true }),
+          fail: (e: any) => {
+            // 判断是否因数据过大需要分块
+            const dataStr = JSON.stringify(doc)
+            if (dataStr.length > CHUNK_SIZE) {
+              this.asyncPutWithChunks(doc, key, dataStr).then(resolve, resolve)
+            } else {
+              reject(e)
+            }
+          },
+        })
+      })
+    } catch (e) {
+      return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
+    }
+  }
+
+  /** 大数据分块异步写入 */
+  private async asyncPutWithChunks(doc: DbDoc, key: string, dataStr: string): Promise<DbReturn> {
+    const chunks: string[] = []
+    for (let i = 0; i < dataStr.length; i += CHUNK_SIZE) {
+      chunks.push(dataStr.slice(i, i + CHUNK_SIZE))
+    }
+
+    const chunkInfo = {
+      _id: doc._id,
+      _rev: doc._rev || '1',
+      _chunks: chunks.length,
+      _chunkKeys: chunks.map((_: string, index: number) => `${key}__chunk__${index}`)
+    }
+
+    try {
+      await new Promise<void>((resolve, reject) => {
+        uni.setStorage({ key, data: chunkInfo, success: resolve, fail: reject })
+      })
+      for (let index = 0; index < chunks.length; index++) {
+        await new Promise<void>((resolve, reject) => {
+          uni.setStorage({ key: `${key}__chunk__${index}`, data: chunks[index], success: resolve, fail: reject })
+        })
+      }
+      return { id: doc._id, rev: chunkInfo._rev, ok: true }
+    } catch (e) {
+      return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
+    }
   }
 }
 

@@ -19,6 +19,8 @@ import type { SyncData, SyncServerResult, SyncStatus } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { exportToJson, importFromJson } from '@/utils/sync-file'
 import { log } from '@/utils/logger'
+import { getAllWordBanks } from '@/utils/wordbank-manager'
+import pako from 'pako'
 
 /** 默认同步服务器地址（jsonblob.com 是免费的临时 JSON 存储） */
 const DEFAULT_SERVER_BASE = 'https://jsonblob.com/api/jsonBlob'
@@ -390,7 +392,25 @@ const EMPTY_RESTORE_RESULT: RestoreResult = {
 }
 
 /**
- * 上传当前设备数据到服务器（自动加密）
+ * 压缩 JSON 字符串，返回 base64url 编码的 pako 压缩数据
+ */
+async function compressToJsonPayload(json: string): Promise<string> {
+  const jsonBytes = new TextEncoder().encode(json)
+  const compressed = pako.deflate(jsonBytes)
+  return toBase64Url(compressed.buffer)
+}
+
+/**
+ * 解压缩 base64url 编码的 pako 数据，返回 JSON 字符串
+ */
+async function decompressFromJsonPayload(payload: string): Promise<string> {
+  const compressed = new Uint8Array(fromBase64Url(payload))
+  const jsonBytes = pako.inflate(compressed)
+  return new TextDecoder().decode(jsonBytes)
+}
+
+/**
+ * 上传当前设备数据到服务器（自动加密+压缩）
  * @returns 同步码（blobId.key），用于在另一台设备下载
  */
 export async function uploadToServer(): Promise<SyncServerResult> {
@@ -398,18 +418,21 @@ export async function uploadToServer(): Promise<SyncServerResult> {
     const data = await collectSyncData()
     const json = exportToJson(data)
 
-    // 1. 生成随机 AES 密钥和 IV
+    // 1. 压缩 JSON
+    const compressedPayload = await compressToJsonPayload(json)
+
+    // 2. 生成随机 AES 密钥和 IV
     const aesKey = await generateAesKey()
     const iv = randomBytes(12) // GCM 推荐 12 字节
 
-    // 2. 加密数据
-    const encrypted = await encrypt(json, aesKey, iv)
+    // 3. 加密数据
+    const encrypted = await encrypt(compressedPayload, aesKey, iv)
 
-    // 3. 上传密文
+    // 4. 上传密文
     const adapter = getSyncServerAdapter()
     const blobId = await adapter.uploadRaw(encrypted)
 
-    // 4. 导出密钥，构建同步码
+    // 5. 导出密钥，构建同步码
     const keyBase64 = await exportKey(aesKey)
     const syncCode = buildSyncCode(blobId, keyBase64)
 
@@ -422,7 +445,7 @@ export async function uploadToServer(): Promise<SyncServerResult> {
 }
 
 /**
- * 从服务器下载数据并还原（自动解密）
+ * 从服务器下载数据并还原（自动解密+解压）
  * @param syncCode 同步码（blobId.key 格式）
  */
 export async function downloadFromServer(syncCode: string, options?: Partial<RestoreOptions>): Promise<RestoreResult> {
@@ -446,14 +469,17 @@ export async function downloadFromServer(syncCode: string, options?: Partial<Res
     const aesKey = await importKey(keyBase64)
 
     // 4. 解密数据
-    let json: string
+    let compressedPayload: string
     try {
-      json = await decrypt(encrypted, aesKey)
+      compressedPayload = await decrypt(encrypted, aesKey)
     } catch {
       return { ...EMPTY_RESTORE_RESULT, errors: ['解密失败，同步码可能不正确或数据已被篡改'] }
     }
 
-    // 5. 解析并还原
+    // 5. 解压缩
+    const json = await decompressFromJsonPayload(compressedPayload)
+
+    // 6. 解析并还原
     const data = importFromJson(json)
     const restoreOpts = { ...DEFAULT_RESTORE_OPTIONS, ...options }
     return restoreSyncData(data, restoreOpts)
@@ -486,25 +512,26 @@ function randomString32(): string {
   return result
 }
 
-/** 将字节数组转为字符串（分块避免栈溢出） */
-function bytesToString(bytes: number[]): string {
+/** 将 Uint8Array 转为 base64（分块避免栈溢出） */
+function uint8ArrayToBase64(bytes: Uint8Array): string {
+  const CHUNK = 0x8000
   const chunks: string[] = []
-  const chunkSize = 65536
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    const slice = bytes.slice(i, i + chunkSize)
-    chunks.push(String.fromCharCode.apply(null, slice as any))
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    const slice = bytes.subarray(i, Math.min(i + CHUNK, bytes.length))
+    chunks.push(String.fromCharCode.apply(null, Array.from(slice)))
   }
-  return chunks.join('')
+  return btoa(chunks.join(''))
 }
 
-/** 与小程序端完全一致的 XOR 加密 */
-function xorEncrypt(plaintext: string, key: string): string {
-  const textEncoder = new TextEncoder()
-  const textBytes = Array.from(textEncoder.encode(plaintext))
-  const keyBytes = Array.from(new TextEncoder().encode(key))
-  const encrypted = textBytes.map((b, i) => b ^ keyBytes[i % keyBytes.length])
-  const encryptedStr = bytesToString(encrypted)
-  return btoa(encodeURIComponent(encryptedStr))
+/** XOR 加密/解密 Uint8Array（对称操作） */
+function xorCrypt(data: Uint8Array, key: string): Uint8Array {
+  const keyBytes = new TextEncoder().encode(key)
+  const keyLen = keyBytes.length
+  const result = new Uint8Array(data.length)
+  for (let i = 0; i < data.length; i++) {
+    result[i] = data[i] ^ keyBytes[i % keyLen]
+  }
+  return result
 }
 
 interface MobileCompatWord {
@@ -580,16 +607,25 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
 
 /**
  * 以移动端兼容格式上传（推送到小程序）
- * 使用与小程序完全相同的 XOR 加密和数据格式，小程序可直接用现有拉取功能接收
+ * 流程：JSON → pako 压缩 → XOR 加密 → base64 → 上传
  */
 export async function uploadToServerMobileCompat(): Promise<SyncServerResult> {
   try {
     const data = await collectMobileCompatData()
     const json = JSON.stringify(data)
+
+    // 1. pako 压缩
+    const jsonBytes = new TextEncoder().encode(json)
+    const compressed = pako.deflate(jsonBytes)
+
+    // 2. XOR 加密
     const key = randomString32()
-    const encrypted = xorEncrypt(json, key)
+    const encrypted = xorCrypt(compressed, key)
+
+    // 3. base64 编码 + 上传
+    const encryptedBase64 = uint8ArrayToBase64(encrypted)
     const adapter = getSyncServerAdapter()
-    const blobId = await adapter.uploadRaw(encrypted)
+    const blobId = await adapter.uploadRaw(encryptedBase64)
     const syncCode = `${blobId}.${key}`
     log.i('移动端兼容推送完成, 同步码长度:', syncCode.length)
     return { success: true, code: syncCode }

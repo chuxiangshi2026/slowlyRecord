@@ -378,6 +378,7 @@ export function getOfflineDictSize(): number {
 // ==================== 同步服务 ====================
 
 import { JSEncrypt } from 'jsencrypt'
+import pako from 'pako'
 
 // 动态服务器地址配置
 const STORAGE_KEY_SERVER_URL = 'slowly_sync_server_url'
@@ -434,37 +435,36 @@ function generateAesKey(): string {
   return randomString(32)
 }
 
-function bytesToString(bytes: number[]): string {
+/** 将 Uint8Array 转为 base64（分块避免栈溢出） */
+function uint8ArrayToBase64(bytes: Uint8Array): string {
+  const CHUNK = 0x8000
   const chunks: string[] = []
-  const chunkSize = 65536
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    const slice = bytes.slice(i, i + chunkSize)
-    chunks.push(String.fromCharCode.apply(null, slice as any))
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    const slice = bytes.subarray(i, Math.min(i + CHUNK, bytes.length))
+    chunks.push(String.fromCharCode.apply(null, Array.from(slice)))
   }
-  return chunks.join('')
+  return btoa(chunks.join(''))
 }
 
-function aesEncrypt(plaintext: string, key: string): string {
-  // 统一转为 UTF-8 字节数组处理，避免中文乱码
-  const textEncoder = new TextEncoder()
-  const textBytes = Array.from(textEncoder.encode(plaintext))
-  const keyBytes = Array.from(new TextEncoder().encode(key))
-  const encrypted = textBytes.map((b, i) => b ^ keyBytes[i % keyBytes.length])
-  // 分块处理避免 Maximum call stack size exceeded
-  const encryptedStr = bytesToString(encrypted)
-  return btoa(encodeURIComponent(encryptedStr))
+/** 将 base64 转为 Uint8Array */
+function base64ToUint8Array(base64: string): Uint8Array {
+  const binary = atob(base64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i)
+  }
+  return bytes
 }
 
-function aesDecrypt(ciphertext: string, key: string): string {
-  try {
-    const encryptedStr = decodeURIComponent(atob(ciphertext))
-    const encryptedBytes = Array.from(encryptedStr).map(c => c.charCodeAt(0))
-    const keyBytes = Array.from(new TextEncoder().encode(key))
-    const decrypted = encryptedBytes.map((b, i) => b ^ keyBytes[i % keyBytes.length])
-    return new TextDecoder().decode(new Uint8Array(decrypted))
-  } catch (e) {
-    throw new Error('解密失败，同步码可能不正确')
+/** XOR 加密/解密 Uint8Array（对称操作） */
+function xorCrypt(data: Uint8Array, key: string): Uint8Array {
+  const keyBytes = new TextEncoder().encode(key)
+  const keyLen = keyBytes.length
+  const result = new Uint8Array(data.length)
+  for (let i = 0; i < data.length; i++) {
+    result[i] = data[i] ^ keyBytes[i % keyLen]
   }
+  return result
 }
 
 function buildSyncCode(blobId: string, aesKey: string): string {
@@ -590,13 +590,26 @@ function collectSyncData(banks: MobileSyncBank[]): MobileSyncData {
   }
 }
 
+/**
+ * 推送数据到服务器
+ * 流程：JSON → pako 压缩 → XOR 加密 → base64 → 上传
+ */
 export async function pushToServer(banks: MobileSyncBank[]): Promise<SyncResult> {
   try {
     const data = collectSyncData(banks)
     const json = JSON.stringify(data)
+
+    // 1. pako 压缩
+    const jsonBytes = new TextEncoder().encode(json)
+    const compressed = pako.deflate(jsonBytes)
+
+    // 2. XOR 加密
     const aesKey = generateAesKey()
-    const encrypted = aesEncrypt(json, aesKey)
-    const blobId = await uploadRaw(encrypted)
+    const encrypted = xorCrypt(compressed, aesKey)
+
+    // 3. base64 编码 + 上传
+    const encryptedBase64 = uint8ArrayToBase64(encrypted)
+    const blobId = await uploadRaw(encryptedBase64)
     const syncCode = buildSyncCode(blobId, aesKey)
     return { success: true, code: syncCode }
   } catch (e) {
@@ -604,6 +617,10 @@ export async function pushToServer(banks: MobileSyncBank[]): Promise<SyncResult>
   }
 }
 
+/**
+ * 从服务器拉取数据
+ * 流程：下载 → base64 解码 → XOR 解密 → pako 解压 → JSON
+ */
 export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
   try {
     const parsed = parseSyncCode(syncCode.trim())
@@ -615,14 +632,22 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
     if (!encrypted) {
       return { success: false, error: '同步码无效或数据已过期' }
     }
-    let json: string
+
+    // 1. base64 解码 → XOR 解密
+    const encryptedBytes = base64ToUint8Array(encrypted)
+    const compressed = xorCrypt(encryptedBytes, aesKey)
+
+    // 2. pako 解压
+    const jsonBytes = pako.inflate(compressed)
+    const json = new TextDecoder().decode(jsonBytes)
+
+    // 3. 解析 JSON
     try {
-      json = aesDecrypt(encrypted, aesKey)
+      const data: MobileSyncData = JSON.parse(json)
+      return { success: true, banks: data.banks }
     } catch {
-      return { success: false, error: '解密失败，同步码可能不正确' }
+      return { success: false, error: '数据解析失败' }
     }
-    const data: MobileSyncData = JSON.parse(json)
-    return { success: true, banks: data.banks }
   } catch (e) {
     return { success: false, error: String(e) }
   }

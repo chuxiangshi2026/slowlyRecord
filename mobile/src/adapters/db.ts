@@ -31,6 +31,7 @@ export interface DbAdapter {
     put(doc: DbDoc): Promise<DbReturn>
     remove(doc: string | DbDoc): Promise<DbReturn>
     bulkDocs(docs: DbDoc[]): Promise<DbReturn[]>
+    asyncBulkDocs(docs: DbDoc[]): Promise<DbReturn[]>
   }
 }
 

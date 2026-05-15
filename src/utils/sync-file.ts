@@ -9,6 +9,7 @@ import type { SyncData, SyncFormat } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { log } from '@/utils/logger'
+import pako from 'pako'
 
 // 二进制文件魔数（用于识别文件格式）
 const BINARY_MAGIC = new Uint8Array([0x53, 0x52, 0x53, 0x59]) // 'SRSY' = SlowlyRecord SYnc
@@ -43,15 +44,8 @@ export async function exportToBinary(data: SyncData): Promise<Uint8Array> {
   const jsonStr = JSON.stringify(data)
   const jsonBytes = new TextEncoder().encode(jsonStr)
 
-  // 动态导入 pako（可能不存在，需要降级处理）
-  let compressed: Uint8Array
-  try {
-    const pako = await import('pako') as any
-    compressed = pako.deflate(jsonBytes)
-  } catch {
-    // pako 不可用，直接存原始 JSON（仍带魔数标识）
-    compressed = jsonBytes
-  }
+  // pako 压缩
+  const compressed = pako.deflate(jsonBytes)
 
   // 拼接: magic + version + compressed data
   const result = new Uint8Array(4 + 1 + compressed.length)
@@ -82,14 +76,7 @@ export async function importFromBinary(buffer: ArrayBuffer): Promise<SyncData> {
   const version = bytes[4]
   const payload = bytes.slice(5)
 
-  let jsonBytes: Uint8Array
-  try {
-    const pako = await import('pako') as any
-    jsonBytes = pako.inflate(payload)
-  } catch {
-    // pako 不可用或数据未压缩，尝试直接解码
-    jsonBytes = payload
-  }
+  const jsonBytes = pako.inflate(payload)
 
   const jsonStr = new TextDecoder().decode(jsonBytes)
   const data = JSON.parse(jsonStr) as SyncData

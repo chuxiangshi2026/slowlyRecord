@@ -11,8 +11,9 @@ import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { downloadSyncFile, pickAndImportSyncFile, importFromFile, getSyncDataSummary } from '@/utils/sync-file'
 import { uploadToServer, downloadFromServer, checkServerAvailable, setSyncServerUrl, resetSyncServer, uploadToServerMobileCompat } from '@/utils/sync-server'
 import { log } from '@/utils/logger'
+import { getDbStorage } from '@/adapters/db'
 
-// localStorage keys
+// 持久化键
 const LS_SERVER_URL = 'sync_server_url'
 
 export const useSyncStore = defineStore('sync', () => {
@@ -48,8 +49,9 @@ export const useSyncStore = defineStore('sync', () => {
   /** 是否正在操作 */
   const isBusy = computed(() => status.value === 'uploading' || status.value === 'downloading')
 
-  /** 自定义服务器地址（持久化） */
-  const savedServerUrl = ref(localStorage.getItem(LS_SERVER_URL) || '')
+  /** 自定义服务器地址（持久化，使用 dbStorage 替代 localStorage 以兼容 uTools） */
+  const _storage = getDbStorage()
+  const savedServerUrl = ref((_storage.getItem(LS_SERVER_URL) as string) || '')
 
   // ==================== 文件操作 ====================
 
@@ -280,12 +282,12 @@ export const useSyncStore = defineStore('sync', () => {
     if (url.trim()) {
       setSyncServerUrl(url.trim())
       savedServerUrl.value = url.trim()
-      localStorage.setItem(LS_SERVER_URL, url.trim())
+      _storage.setItem(LS_SERVER_URL, url.trim())
       resultMessage.value = `已切换到自定义服务器: ${url.trim()}`
     } else {
       resetSyncServer()
       savedServerUrl.value = ''
-      localStorage.removeItem(LS_SERVER_URL)
+      _storage.removeItem(LS_SERVER_URL)
       resultMessage.value = '已切换到默认服务器'
     }
     serverAvailable.value = null

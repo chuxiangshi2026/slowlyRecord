@@ -44,6 +44,9 @@ const WORDBANK_META_ID = 'slowly-record-wordbank-meta-v2';
 const WORDBANK_CHUNK_PREFIX = 'slowly-record-wordbank-chunk-v2:';
 const CURRENT_WORDBANK_KEY = 'slowly-record-current-wordbank';
 
+// 迁移检查缓存标志：一旦检查过就不再重复检查
+let _migrationChecked = false;
+
 // 旧版存储键名（用于数据迁移）
 const OLD_WORDBANK_DOC_ID = 'wordbank_data';
 
@@ -284,11 +287,14 @@ async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
  * 检查并迁移旧版数据
  */
 async function migrateOldDataIfNeeded(): Promise<boolean> {
+  // 已检查过则跳过
+  if (_migrationChecked) return false;
   try {
     const db = getDbAdapter();
     // 检查是否已有新版数据
     const metaDoc = getWordBankMetaDoc();
     if (metaDoc?.banks && metaDoc.banks.length > 0) {
+      _migrationChecked = true;
       return false; // 已有新版数据，不需要迁移
     }
     
@@ -317,9 +323,11 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
       }
       
       console.log('[WordBankManager] 数据迁移完成');
+      _migrationChecked = true;
       return true;
     }
     
+    _migrationChecked = true;
     return false;
   } catch (e) {
     console.error('[WordBankManager] 数据迁移失败:', e);

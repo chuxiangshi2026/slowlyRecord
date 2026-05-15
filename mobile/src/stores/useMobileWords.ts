@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getDbAdapter } from '@/adapters/index'
+import { getDbAdapter, type DbDoc } from '@/adapters/index'
 
 // 默认复习间隔（单位：分钟）与桌面端保持一致
 const DEFAULT_INTERVALS = [
@@ -88,6 +88,16 @@ export const useMobileWords = defineStore('mobileWords', () => {
     }
   }
 
+  /** 强制从存储重新加载所有单词到内存 */
+  async function reloadWords() {
+    _loadingPromise = _doLoadWords()
+    try {
+      await _loadingPromise
+    } finally {
+      _loadingPromise = null
+    }
+  }
+
   async function _doLoadWords() {
     isLoading.value = true
     try {
@@ -100,9 +110,9 @@ export const useMobileWords = defineStore('mobileWords', () => {
         ...item.data,
         id: item._id
       })) || []
+      // 让出主线程，确保 loading 状态能渲染
+      await new Promise<void>(r => setTimeout(r, 0))
       allWords.value = loaded
-      // 数据迁移：没有 bankId 的旧数据归入默认词库
-      _migrateOldWords()
     } catch (e) {
       allWords.value = []
     } finally {
@@ -363,25 +373,31 @@ export const useMobileWords = defineStore('mobileWords', () => {
     return allWords.value
   }
 
-  async function importWords(data: MobileWord[], targetBankId?: string) {
+  async function importWords(data: MobileWord[], targetBankId?: string, onProgress?: (done: number, total: number) => void) {
     const bankId = targetBankId || currentBankId.value
     const db = getDbAdapter()
-    const importedWords: MobileWord[] = []
+
+    // 构建文档（跳过逐条 db.get——同步导入场景无需 _rev）
+    const docs: DbDoc[] = []
+
     for (const word of data) {
       const id = word.id || `${DB_KEY}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      const existing = db.get(id)
-      const result = await db.promises.put({
+      docs.push({
         _id: id,
-        _rev: existing?._rev,
         data: { ...word, id, bankId }
       })
-      if (!result.ok) {
-        throw new Error(result.message || '导入单词失败')
-      }
-      importedWords.push({ ...word, id, bankId })
     }
-    allWords.value.push(...importedWords)
-    await loadWords()
+
+    // 异步批量写入存储，每批之间让出主线程
+    const BATCH_SIZE = 50
+    const total = docs.length
+    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+      const batch = docs.slice(i, i + BATCH_SIZE)
+      await db.promises.asyncBulkDocs(batch)
+      onProgress?.(Math.min(i + BATCH_SIZE, total), total)
+      await new Promise<void>(r => setTimeout(r, 20))
+    }
+    // 注意：不在此更新 allWords，由调用方统一刷新
   }
 
   async function clearAllWords() {
@@ -442,6 +458,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     currentBankId,
     // 方法
     loadWords,
+    reloadWords,
     addWord,
     deleteWord,
     updateWord,
