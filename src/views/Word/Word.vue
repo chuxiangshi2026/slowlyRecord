@@ -1691,7 +1691,8 @@ const currentFilter = shallowRef<FilterState>({
   minLength: 0,
   maxLength: 0,
   pattern: '',
-  affix: '',
+  affixType: '',
+  affixText: '',
   phonetic: '',
   sortBy: '',
   sortAsc: true
@@ -1710,7 +1711,8 @@ const onFilterReset = () => {
     minLength: 0,
     maxLength: 0,
     pattern: '',
-    affix: '',
+    affixType: '',
+    affixText: '',
     phonetic: '',
     sortBy: '',
     sortAsc: true
@@ -1737,14 +1739,32 @@ const patternToRegex = (pattern: string): RegExp | null => {
   }
 }
 
-/** 检查单词是否包含指定词根/词缀 */
-const matchesAffix = (wordText: string, affix: string): boolean => {
-  if (!affix.trim()) return true
-  const lower = affix.toLowerCase().trim()
+/** 检查单词是否包含指定词根/词缀
+ * 逻辑：
+ * - 仅选类型无文本：筛选含该类型成分的单词（前缀→有前缀的词，后缀→有后缀的词，词根→有词根的词）
+ * - 仅输入文本无类型：在整个词的所有成分中搜索匹配
+ * - 类型+文本：在对应类型的成分中搜索匹配
+ * - 都无：不过滤
+ */
+const matchesAffix = (wordText: string, affixType: string, affixText: string): boolean => {
+  const hasType = !!affixType
+  const hasText = !!affixText.trim()
+  if (!hasType && !hasText) return true
+  const lower = affixText.toLowerCase().trim()
   const components = analyzeWord(wordText)
-  return components.some(c =>
-    c.type !== 'whole' && c.text.toLowerCase().includes(lower)
-  )
+
+  if (hasType && !hasText) {
+    // 仅选类型：筛选包含该类型成分的单词
+    return components.some(c => c.type === affixType)
+  }
+
+  if (!hasType && hasText) {
+    // 仅输入文本：在整个词的所有成分中搜索
+    return components.some(c => c.text.toLowerCase().includes(lower))
+  }
+
+  // 类型+文本：在对应类型的成分中搜索
+  return components.some(c => c.type === affixType && c.text.toLowerCase().includes(lower))
 }
 
 // 计算过滤后的单词列表
@@ -1779,8 +1799,8 @@ const showFilteredWords = computed(() => {
   }
 
   // 筛选：词根词缀
-  if (f.affix.trim()) {
-    list = list.filter(item => matchesAffix(item.text, f.affix))
+  if (f.affixType || f.affixText.trim()) {
+    list = list.filter(item => matchesAffix(item.text, f.affixType, f.affixText))
   }
 
   // 筛选：音标

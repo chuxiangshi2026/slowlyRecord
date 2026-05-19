@@ -56,20 +56,28 @@
         <el-popover
           :visible="popoverKey === 'affix'"
           placement="bottom-start"
-          :width="180"
+          :width="240"
           :show-arrow="false"
           :offset="2"
         >
           <template #reference>
-            <span :class="['ftag', { on: filterState.affix }]" @click="openPopover('affix')">
-              词根词缀<template v-if="filterState.affix">: {{ filterState.affix }}</template>
+            <span :class="['ftag', { on: isAffixActive }]" @click="openPopover('affix')">
+              词根词缀<template v-if="isAffixActive">: {{ affixLabel }}</template>
             </span>
           </template>
           <div class="popover-body">
+            <div class="affix-type-row">
+              <span
+                v-for="opt in affixTypeOptions"
+                :key="opt.value"
+                :class="['affix-type-chip', { on: filterState.affixType === opt.value }]"
+                @click="selectAffixType(opt.value)"
+              >{{ opt.label }}</span>
+            </div>
             <input
-              v-model="filterState.affix"
+              v-model="filterState.affixText"
               class="pop-input full"
-              placeholder="如 pre, un, tion"
+              placeholder="输入词缀，如 pre, un, tion"
               @input="emitChange"
               @keyup.enter="closePopover"
             />
@@ -129,7 +137,8 @@ export interface FilterState {
   minLength: number  // 0 = 不限
   maxLength: number  // 0 = 不限
   pattern: string
-  affix: string
+  affixType: string  // '' | 'prefix' | 'suffix' | 'root' | 'all'
+  affixText: string
   phonetic: string
   sortBy: string
   sortAsc: boolean
@@ -152,7 +161,8 @@ const filterState = reactive<FilterState>({
   minLength: 0,
   maxLength: 0,
   pattern: '',
-  affix: '',
+  affixType: '',
+  affixText: '',
   phonetic: '',
   sortBy: '',
   sortAsc: true
@@ -173,9 +183,30 @@ const lengthLabel = computed(() => {
   return ''
 })
 
+const affixTypeOptions = [
+  { value: '', label: '全部' },
+  { value: 'prefix', label: '前缀' },
+  { value: 'suffix', label: '后缀' },
+  { value: 'root', label: '词根' }
+]
+
+const isAffixActive = computed(() => !!filterState.affixText || !!filterState.affixType)
+const affixLabel = computed(() => {
+  const typeLabel = affixTypeOptions.find(o => o.value === filterState.affixType)?.label || ''
+  const parts: string[] = []
+  if (filterState.affixType && filterState.affixType !== '') parts.push(typeLabel)
+  if (filterState.affixText) parts.push(filterState.affixText)
+  return parts.join(' ') || ''
+})
+
+const selectAffixType = (value: string) => {
+  filterState.affixType = filterState.affixType === value ? '' : value
+  emitChange()
+}
+
 const hasAnyFilter = computed(() =>
   filterState.minLength > 0 || filterState.maxLength > 0 ||
-  !!filterState.pattern || !!filterState.affix || !!filterState.phonetic || !!filterState.sortBy
+  !!filterState.pattern || !!filterState.affixText || !!filterState.affixType || !!filterState.phonetic || !!filterState.sortBy
 )
 
 const openPopover = (key: string) => {
@@ -204,7 +235,8 @@ const resetAll = () => {
   filterState.minLength = 0
   filterState.maxLength = 0
   filterState.pattern = ''
-  filterState.affix = ''
+  filterState.affixType = ''
+  filterState.affixText = ''
   filterState.phonetic = ''
   filterState.sortBy = ''
   filterState.sortAsc = true
@@ -218,7 +250,8 @@ watch(
     filterState.minLength,
     filterState.maxLength,
     filterState.pattern,
-    filterState.affix,
+    filterState.affixType,
+    filterState.affixText,
     filterState.phonetic
   ],
   () => { emitChange() }
@@ -384,6 +417,39 @@ defineExpose({ filterState })
 // ---- Popover 内容 ----
 .popover-body {
   padding: 6px 8px;
+}
+
+.affix-type-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.affix-type-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid var(--utools-border-divider);
+  background: var(--utools-bg-tertiary);
+  color: var(--utools-text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: var(--utools-primary);
+    color: var(--utools-primary);
+  }
+
+  &.on {
+    background: var(--utools-primary);
+    color: #fff;
+    border-color: var(--utools-primary);
+  }
 }
 
 .pop-row {
