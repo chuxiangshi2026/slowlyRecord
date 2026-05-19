@@ -202,11 +202,21 @@
             v-for="(item, index) in history" 
             :key="index"
             class="history-item"
-            @click="loadFromHistory(item)"
           >
-            <span class="history-source">{{ truncateText(item.source, 20) }}</span>
-            <el-icon><ArrowRight /></el-icon>
-            <span class="history-target">{{ truncateText(item.target, 20) }}</span>
+            <div class="history-text" @click="loadFromHistory(item)">
+              <span class="history-source">{{ truncateText(item.source, 20) }}</span>
+              <el-icon><ArrowRight /></el-icon>
+              <span class="history-target">{{ truncateText(item.target, 20) }}</span>
+            </div>
+            <el-button
+              link
+              size="small"
+              class="history-add-btn"
+              :title="isWordInList(item.source) ? '已在单词列表中' : '添加到单词列表'"
+              @click.stop="addHistoryWord(item)"
+            >
+              <el-icon><Plus /></el-icon>
+            </el-button>
           </div>
         </div>
       </div>
@@ -231,9 +241,11 @@ import {
   InfoFilled,
   View,
   Refresh,
-  Picture
+  Picture,
+  Plus
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
+import { addWord } from '@/utils/str-util';
 import { useWordsStore } from '@/stores/words';
 import type { TranslationPlatform, TranslationResult, ExampleSentence, LanguageOption } from '@/types/words';
 
@@ -472,6 +484,28 @@ function loadHistory() {
     } catch (e) {
       console.error('加载历史记录失败:', e);
     }
+  }
+}
+
+// 检查单词是否已在列表中
+function isWordInList(text: string): boolean {
+  const cleaned = text.replace(/\s+/g, '');
+  return !!wordsStore.findWord(cleaned);
+}
+
+// 从历史记录添加到单词列表
+async function addHistoryWord(item: {source: string, target: string, platform: TranslationPlatform, from: string, to: string}) {
+  const wordText = item.source.replace(/\s+/g, '');
+  if (!wordText) return;
+  try {
+    const res = await addWord(wordText);
+    if (res.success) {
+      ElMessage.success(res.message || '已添加到单词列表');
+    } else {
+      ElMessage.info(res.message || '该单词已在列表中');
+    }
+  } catch (e: any) {
+    ElMessage.error('添加失败: ' + e.message);
   }
 }
 
@@ -945,12 +979,20 @@ function handleImageError() {
     padding: 10px 12px;
     background: var(--utools-bg-tertiary);
     border-radius: 6px;
-    cursor: pointer;
     transition: all 0.2s;
     font-size: 14px;
     
     &:hover {
       background: var(--utools-primary-light);
+    }
+
+    .history-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
     }
     
     .el-icon {
@@ -972,6 +1014,16 @@ function handleImageError() {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .history-add-btn {
+      flex-shrink: 0;
+      color: var(--utools-text-tertiary);
+      padding: 4px;
+
+      &:hover {
+        color: var(--utools-primary);
+      }
     }
   }
 }
