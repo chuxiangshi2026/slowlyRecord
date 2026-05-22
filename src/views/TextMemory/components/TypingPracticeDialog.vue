@@ -189,10 +189,10 @@ const isComposing = ref(false); // 是否正在输入法输入中
 const inputRef = ref<HTMLInputElement | null>(null);
 const originalTextRef = ref<HTMLElement | null>(null);
 
-// 处理后的文本（限制长度）
+// 处理后的文本（限制长度，去除换行符以保证跟打对比一致）
 const displayText = computed(() => {
   if (!props.article) return '';
-  return props.article.content.slice(0, MAX_TEXT_LENGTH);
+  return props.article.content.slice(0, MAX_TEXT_LENGTH).replace(/\n/g, '');
 });
 
 // 计算每行的起始位置

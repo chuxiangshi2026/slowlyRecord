@@ -3,7 +3,10 @@
     <el-card class="main-card">
       <template #header>
         <div class="card-header">
-          <span class="title">🔤 字母映射表</span>
+          <div class="header-left">
+            <el-button @click="goBack" :icon="ArrowLeft" circle size="small" title="返回单词列表" />
+            <span class="title">🔤 字母映射表</span>
+          </div>
           <div class="header-actions">
             <el-tag v-if="store.hasAssociations" type="success">
               已映射 {{ store.associationCount }} 个
@@ -186,7 +189,7 @@
       <el-table :data="filteredAssociations" style="width: 100%">
         <el-table-column prop="letter" label="字母/组合" width="120" align="center">
           <template #default="{ row }">
-            <el-tag size="large" :type="row.letter.length > 1 ? 'warning' : ''">
+            <el-tag size="large" :type="row.letter.length > 1 ? 'warning' : undefined">
               {{ row.letter.toUpperCase() }}
             </el-tag>
           </template>
@@ -204,7 +207,7 @@
         </el-table-column>
         <el-table-column prop="source" label="来源" width="100">
           <template #default="{ row }">
-            <el-tag :type="row.source === 'preset' ? 'success' : row.source === 'emoji' ? '' : 'warning'">
+            <el-tag :type="row.source === 'preset' ? 'success' : row.source === 'emoji' ? undefined : 'warning'">
               {{ row.source === 'preset' ? '预设' : row.source === 'emoji' ? 'Emoji' : '上传' }}
             </el-tag>
           </template>
@@ -236,10 +239,11 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useLetterMemoryStore } from "@/stores/letterMemory";
 import { useWordsStore } from "@/stores/words";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Check, Delete, Upload } from "@element-plus/icons-vue";
+import { Check, Delete, Upload, ArrowLeft } from "@element-plus/icons-vue";
 import type { UploadFile } from "element-plus";
 import { getAlphabetLetters, getComboLetters } from "@/utils/letter-memory-preset";
 import { compressImage } from "@/utils/image-compress";
@@ -248,6 +252,7 @@ import { log } from "@/utils/logger";
 
 const store = useLetterMemoryStore();
 const wordsStore = useWordsStore();
+const router = useRouter();
 
 // State
 const selectedLetter = ref<string | null>(null);
@@ -321,6 +326,10 @@ const filteredEmojiList = computed(() => {
 });
 
 // Methods
+function goBack() {
+  router.push('/word');
+}
+
 function selectLetter(letter: string) {
   selectedLetter.value = letter;
   uploadedImage.value = "";
@@ -520,6 +529,12 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
     .title {
       font-size: 18px;

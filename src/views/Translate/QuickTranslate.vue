@@ -217,6 +217,15 @@
             >
               <el-icon><Plus /></el-icon>
             </el-button>
+            <el-button
+              link
+              size="small"
+              class="history-delete-btn"
+              title="删除此记录"
+              @click.stop="deleteHistoryItem(index)"
+            >
+              <el-icon><Close /></el-icon>
+            </el-button>
           </div>
         </div>
       </div>
@@ -242,7 +251,8 @@ import {
   View,
   Refresh,
   Picture,
-  Plus
+  Plus,
+  Close
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
 import { addWord } from '@/utils/str-util';
@@ -468,6 +478,12 @@ function loadFromHistory(item: {source: string, target: string, platform: Transl
 function clearHistory() {
   history.value = [];
   localStorage.removeItem('quick_translate_history');
+}
+
+// 删除单条历史记录
+function deleteHistoryItem(index: number) {
+  history.value.splice(index, 1);
+  saveHistory();
 }
 
 // 保存历史记录到本地存储
@@ -1023,6 +1039,16 @@ function handleImageError() {
 
       &:hover {
         color: var(--utools-primary);
+      }
+    }
+
+    .history-delete-btn {
+      flex-shrink: 0;
+      color: var(--utools-text-tertiary);
+      padding: 4px;
+
+      &:hover {
+        color: var(--utools-danger);
       }
     }
   }
