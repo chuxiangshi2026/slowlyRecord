@@ -22,31 +22,23 @@ vi.mock('pako', () => ({
   },
 }))
 
-// Mock jsencrypt (不在 dependencies 中，但 useUtils.ts 引用了)
-vi.mock('jsencrypt', () => ({
-  JSEncrypt: vi.fn().mockImplementation(() => ({
-    setPublicKey: vi.fn(),
-    encrypt: vi.fn(() => 'encrypted-data'),
-    setPrivateKey: vi.fn(),
-    decrypt: vi.fn(() => 'decrypted-data'),
-  })),
-}))
+// jsencrypt 已从 useUtils.ts 移除，不再需要 mock
 
 // Mock 全部词库动态 import (useUtils.ts 在 #ifndef MP-WEIXIN 中有动态 import)
 // vitest 会将 vi.mock 提升到文件顶部，拦截模块解析（必须单独写出，不能用循环/变量）
-vi.mock('@/wordbanks/cet4.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/cet6.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/bec.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/gre.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/gmat.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/ielts.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/kaogong.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/kaoyan.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/level4.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/level8.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/sat.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/toefl.ts', () => ({ default: [] }))
-vi.mock('@/wordbanks/zsb.ts', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/cet4', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/cet6', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/bec', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-c/wordbanks/gre', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-a/wordbanks/gmat', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/ielts', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/kaogong', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-a/wordbanks/kaoyan', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-c/wordbanks/level4', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-level8/wordbanks/level8', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-c/wordbanks/sat', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/toefl', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/zsb', () => ({ default: [] }))
 
 // Mock uni API (运行时设置，非 vi.mock)
 const mockStorage = new Map<string, any>()

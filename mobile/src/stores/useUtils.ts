@@ -377,8 +377,8 @@ export function getOfflineDictSize(): number {
 
 // ==================== 同步服务 ====================
 
-import { JSEncrypt } from 'jsencrypt'
-import pako from 'pako'
+// jsencrypt 未实际使用，已移除（同步使用 XOR 加密）
+// pako 改为动态导入以减小主包体积
 
 // 动态服务器地址配置
 const STORAGE_KEY_SERVER_URL = 'slowly_sync_server_url'
@@ -697,6 +697,7 @@ export async function pushToServer(banks: MobileSyncBank[]): Promise<SyncResult>
 
     // 1. pako 压缩
     const jsonBytes = utf8ToBytes(json)
+    const pako = (await import('pako')).default
     const compressed = pako.deflate(jsonBytes)
 
     // 2. XOR 加密
@@ -734,6 +735,7 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
     const compressed = xorCrypt(encryptedBytes, aesKey)
 
     // 2. pako 解压
+    const pako = (await import('pako')).default
     const jsonBytes = pako.inflate(compressed)
     const json = bytesToUtf8(jsonBytes)
 
@@ -779,6 +781,8 @@ export interface Word {
   meaning: string
   phonetic?: string
   example?: string
+  /** 原始释义（词库数据使用，如 "explains"） */
+  explains?: string
 }
 
 export interface LoadStrategy {
@@ -868,19 +872,19 @@ export async function loadWordBank(
     // #endif
     // #ifndef MP-WEIXIN
     const importLoaders: Record<string, () => Promise<any>> = {
-      cet4: () => import('@/wordbanks/cet4.ts'),
-      cet6: () => import('@/wordbanks/cet6.ts'),
-      bec: () => import('@/wordbanks/bec.ts'),
-      gre: () => import('@/wordbanks/gre.ts'),
-      gmat: () => import('@/wordbanks/gmat.ts'),
-      ielts: () => import('@/wordbanks/ielts.ts'),
-      kaogong: () => import('@/wordbanks/kaogong.ts'),
-      kaoyan: () => import('@/wordbanks/kaoyan.ts'),
-      level4: () => import('@/wordbanks/level4.ts'),
-      level8: () => import('@/wordbanks/level8.ts'),
-      sat: () => import('@/wordbanks/sat.ts'),
-      toefl: () => import('@/wordbanks/toefl.ts'),
-      zsb: () => import('@/wordbanks/zsb.ts'),
+      cet4: () => import('@/subPackages/wordbank-b/wordbanks/cet4'),
+      cet6: () => import('@/subPackages/wordbank-b/wordbanks/cet6'),
+      bec: () => import('@/subPackages/wordbank-b/wordbanks/bec'),
+      gre: () => import('@/subPackages/wordbank-c/wordbanks/gre'),
+      gmat: () => import('@/subPackages/wordbank-a/wordbanks/gmat'),
+      ielts: () => import('@/subPackages/wordbank-b/wordbanks/ielts'),
+      kaogong: () => import('@/subPackages/wordbank-b/wordbanks/kaogong'),
+      kaoyan: () => import('@/subPackages/wordbank-a/wordbanks/kaoyan'),
+      level4: () => import('@/subPackages/wordbank-c/wordbanks/level4'),
+      level8: () => import('@/subPackages/wordbank-level8/wordbanks/level8'),
+      sat: () => import('@/subPackages/wordbank-c/wordbanks/sat'),
+      toefl: () => import('@/subPackages/wordbank-b/wordbanks/toefl'),
+      zsb: () => import('@/subPackages/wordbank-b/wordbanks/zsb'),
     }
     const impLoader = importLoaders[type]
     if (!impLoader) throw new Error(`未知词库类型: ${type}`)

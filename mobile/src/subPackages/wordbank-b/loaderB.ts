@@ -1,18 +1,15 @@
 import type { Word, WordBankType } from '@/stores/useUtils'
 import toefl from './wordbanks/toefl'
-import gre from './wordbanks/gre'
-import sat from './wordbanks/sat'
-import level4 from './wordbanks/level4'
 import bec from './wordbanks/bec'
 import cet4 from './wordbanks/cet4'
-import ielts from './wordbanks/ielts'
 import cet6 from './wordbanks/cet6'
+import ielts from './wordbanks/ielts'
 import kaogong from './wordbanks/kaogong'
 import zsb from './wordbanks/zsb'
 
-const data: Partial<Record<WordBankType, any[]>> = {
-  toefl, gre, sat, level4, bec, cet4, ielts, cet6, kaogong, zsb,
-}
+const data: Partial<Record<WordBankType, any[]>> = { toefl, bec, cet4, cet6, ielts, kaogong, zsb }
+
+export const WORDBANK_B_IDS: WordBankType[] = ['toefl', 'bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb']
 
 export function loadWordBankB(type: WordBankType): Word[] {
   const rawData = data[type]
@@ -24,5 +21,3 @@ export function loadWordBankB(type: WordBankType): Word[] {
     example: w.example,
   }))
 }
-
-export const WORDBANK_B_IDS: WordBankType[] = ['toefl', 'gre', 'sat', 'level4', 'bec', 'cet4', 'ielts', 'cet6', 'kaogong', 'zsb']

@@ -114,35 +114,35 @@ const goToReview = () => {
 }
 
 const goToDictation = () => {
-  uni.navigateTo({ url: '/pages/dictation/dictation' })
+  uni.navigateTo({ url: '/subPackages/pages-tools/dictation/dictation' })
 }
 
 const goToTranslate = () => {
-  uni.navigateTo({ url: '/pages/translate/translate' })
+  uni.navigateTo({ url: '/subPackages/pages-tools/translate/translate' })
 }
 
 const goToSignin = () => {
-  uni.navigateTo({ url: '/pages/signin/signin' })
+  uni.navigateTo({ url: '/subPackages/pages-data/signin/signin' })
 }
 
 const goToWrongWords = () => {
-  uni.navigateTo({ url: '/pages/wrong-words/wrong-words' })
+  uni.navigateTo({ url: '/subPackages/pages-data/wrong-words/wrong-words' })
 }
 
 const goToWordbank = () => {
-  uni.navigateTo({ url: '/pages/wordbank/wordbank' })
+  uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
 }
 
 const goToNumberMemory = () => {
-  uni.navigateTo({ url: '/pages/number-memory/number-memory' })
+  uni.navigateTo({ url: '/subPackages/pages-memory/number-memory/number-memory' })
 }
 
 const goToTextMemory = () => {
-  uni.navigateTo({ url: '/pages/text-memory/text-memory' })
+  uni.navigateTo({ url: '/subPackages/pages-memory/text-memory/text-memory' })
 }
 
 const goToMemoryTest = () => {
-  uni.navigateTo({ url: '/pages/memory-test/memory-test' })
+  uni.navigateTo({ url: '/subPackages/pages-memory/memory-test/memory-test' })
 }
 </script>
 

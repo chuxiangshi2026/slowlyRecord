@@ -19,24 +19,100 @@
       }
     },
     {
-      "path": "pages/dictation/dictation",
-      "style": {
-        "navigationBarTitleText": "听写练习"
-      }
-    },
-    {
-      "path": "pages/translate/translate",
-      "style": {
-        "navigationBarTitleText": "快速翻译"
-      }
-    },
-    {
       "path": "pages/profile/profile",
       "style": {
         "navigationBarTitleText": "我的"
       }
     }
   ],
+  "subPackages": [
+    {
+      "root": "subPackages/pages-tools",
+      "pages": [
+        {
+          "path": "dictation/dictation",
+          "style": {
+            "navigationBarTitleText": "听写练习"
+          }
+        },
+        {
+          "path": "translate/translate",
+          "style": {
+            "navigationBarTitleText": "快速翻译"
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/pages-memory",
+      "pages": [
+        {
+          "path": "number-memory/number-memory",
+          "style": {
+            "navigationBarTitleText": "数字记忆"
+          }
+        },
+        {
+          "path": "text-memory/text-memory",
+          "style": {
+            "navigationBarTitleText": "诗词记忆"
+          }
+        },
+        {
+          "path": "memory-test/memory-test",
+          "style": {
+            "navigationBarTitleText": "记忆测试"
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/pages-data",
+      "pages": [
+        {
+          "path": "signin/signin",
+          "style": {
+            "navigationBarTitleText": "每日打卡"
+          }
+        },
+        {
+          "path": "wrong-words/wrong-words",
+          "style": {
+            "navigationBarTitleText": "错题复习"
+          }
+        },
+        {
+          "path": "wordbank/wordbank",
+          "style": {
+            "navigationBarTitleText": "词库管理"
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/wordbank-a",
+      "pages": [
+        {
+          "path": "wordbankA",
+          "style": {
+            "navigationBarTitleText": "进阶词库"
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/wordbank-b",
+      "pages": [
+        {
+          "path": "wordbankB",
+          "style": {
+            "navigationBarTitleText": "基础词库"
+          }
+        }
+      ]
+    }
+  ],
+  "lazyCodeLoading": "requiredComponents",
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "慢记",

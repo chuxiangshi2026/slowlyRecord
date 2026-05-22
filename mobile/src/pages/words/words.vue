@@ -158,7 +158,7 @@ const goToReview = () => {
 }
 
 const goToWordBank = () => {
-  uni.navigateTo({ url: '/pages/wordbank/wordbank' })
+  uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
 }
 
 const showAddDialog = () => {

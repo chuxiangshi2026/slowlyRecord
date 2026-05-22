@@ -1,7 +1,7 @@
 <template>
   <view class="wordbank-container">
     <view class="header">
-      <text class="title">进阶词库</text>
+      <text class="title">考研/GMAT词库</text>
     </view>
     <!-- 目标词库选择 -->
     <view class="target-section">
@@ -37,8 +37,12 @@ import { useMobileWords } from '@/stores/useMobileWords'
 import { WORDBANK_LIST, type WordBankInfo, type Word, isWordBankCached, saveWordBankCache } from '@/stores/useUtils'
 import { loadWordBankA, WORDBANK_A_IDS } from './loaderA'
 
+interface LocalBankInfo extends WordBankInfo {
+  cached: boolean
+}
+
 const wordsStore = useMobileWords()
-const wordbanks = ref<WordBankInfo[]>([])
+const wordbanks = ref<LocalBankInfo[]>([])
 const downloading = ref('')
 const targetBankId = ref('')
 
@@ -62,7 +66,7 @@ function onTargetBankChange(e: any) {
   if (bank) targetBankId.value = bank.id
 }
 
-const handleAction = async (bank: WordBankInfo) => {
+const handleAction = async (bank: LocalBankInfo) => {
   if (downloading.value) return
   downloading.value = bank.id
   try {

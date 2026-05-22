@@ -11,8 +11,9 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "useCompilerPlugins": ["sass"],
+    "minifyWXML": true,
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},

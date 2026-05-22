@@ -1,7 +1,7 @@
 <template>
   <view class="wordbank-container">
     <view class="header">
-      <text class="title">基础词库</text>
+      <text class="title">进阶词库 II</text>
     </view>
     <!-- 目标词库选择 -->
     <view class="target-section">
@@ -35,7 +35,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { WORDBANK_LIST, type WordBankInfo, type Word, isWordBankCached, saveWordBankCache } from '@/stores/useUtils'
-import { loadWordBankB, WORDBANK_B_IDS } from './loaderB'
+import { loadWordBankC, WORDBANK_C_IDS } from './loaderC'
 
 interface LocalBankInfo extends WordBankInfo {
   cached: boolean
@@ -50,7 +50,7 @@ onMounted(async () => {
   await wordsStore.loadWords()
   targetBankId.value = wordsStore.currentBankId
   wordbanks.value = WORDBANK_LIST
-    .filter(bank => (WORDBANK_B_IDS as string[]).includes(bank.id))
+    .filter(bank => (WORDBANK_C_IDS as string[]).includes(bank.id))
     .map(bank => ({ ...bank, cached: isWordBankCached(bank.id) }))
 })
 
@@ -70,7 +70,7 @@ const handleAction = async (bank: LocalBankInfo) => {
   if (downloading.value) return
   downloading.value = bank.id
   try {
-    const words = loadWordBankB(bank.id as any)
+    const words = loadWordBankC(bank.id as any)
     saveWordBankCache(bank.id, words)
     bank.cached = true
     uni.showActionSheet({

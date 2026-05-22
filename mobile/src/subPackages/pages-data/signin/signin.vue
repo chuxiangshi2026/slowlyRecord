@@ -120,7 +120,7 @@ const calendarDays = computed(() => {
   const todayStr = `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}`
   for (let i = 1; i <= lastDay.getDate(); i++) {
     const dateStr = `${todayStr}-${String(i).padStart(2, '0')}`
-    const isToday = dateStr === todayStr.value
+    const isToday = dateStr === todayStr
     days.push({
       date: i,
       isCurrentMonth: true,

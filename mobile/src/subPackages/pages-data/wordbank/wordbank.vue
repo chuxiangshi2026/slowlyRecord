@@ -42,17 +42,31 @@
       <text class="section-title">导入内置词库</text>
     </view>
     <view class="builtin-section">
-      <view class="section-item" @click="goTo('basic')">
+      <view class="section-item" @click="goTo('/subPackages/wordbank-b/wordbankB')">
         <view class="section-info">
           <text class="section-name">基础词库</text>
-          <text class="section-desc">四六级、专四专八、雅思、托福等</text>
+          <text class="section-desc">四六级、商务英语、雅思、托福等</text>
         </view>
         <text class="arrow">›</text>
       </view>
-      <view class="section-item" @click="goTo('advanced')">
+      <view class="section-item" @click="goTo('/subPackages/wordbank-a/wordbankA')">
         <view class="section-info">
-          <text class="section-name">进阶词库</text>
-          <text class="section-desc">专八、考研、GMAT等</text>
+          <text class="section-name">考研/GMAT词库</text>
+          <text class="section-desc">考研、GMAT等</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+      <view class="section-item" @click="goTo('/subPackages/wordbank-c/wordbankC')">
+        <view class="section-info">
+          <text class="section-name">进阶词库 II</text>
+          <text class="section-desc">GRE、SAT、专四等</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+      <view class="section-item" @click="goTo('/subPackages/wordbank-level8/wordbankLevel8')">
+        <view class="section-info">
+          <text class="section-name">专业八级词库</text>
+          <text class="section-desc">英语专业八级核心词汇</text>
         </view>
         <text class="arrow">›</text>
       </view>
@@ -165,10 +179,7 @@ function onDeleteBank(bank: WordBankMeta) {
   })
 }
 
-const goTo = (type: 'basic' | 'advanced') => {
-  const url = type === 'basic'
-    ? '/subPackages/wordbank-b/wordbankB'
-    : '/subPackages/wordbank-a/wordbankA'
+const goTo = (url: string) => {
   uni.navigateTo({ url })
 }
 </script>
