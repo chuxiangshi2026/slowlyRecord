@@ -730,7 +730,7 @@ const confirmCreateWordBank = async () => {
 
 // ========== 方法 ==========
 function openFocusMode() {
-  router.push('/word?openFocus=1');
+  router.push('/word?openFocus=1&focusMode=dictation');
 }
 
 // ========== 导入导出功能 ==========

@@ -133,6 +133,38 @@
       75% { transform: translateX(3px); }
     }
 
+    /* 听写模式输入框 */
+    .dictation-input {
+      width: 160px;
+      border: none;
+      border-bottom: 2px solid var(--border-color);
+      background: transparent;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: center;
+      outline: none;
+      padding: 2px 4px;
+      caret-color: var(--primary-color);
+      transition: border-color 0.3s ease, color 0.3s ease;
+      -webkit-app-region: no-drag;
+    }
+
+    .dictation-input:focus {
+      border-bottom-color: var(--primary-color);
+    }
+
+    .dictation-input.correct {
+      color: var(--success-color);
+      border-bottom-color: var(--success-color);
+    }
+
+    .dictation-input.wrong {
+      color: var(--danger-color);
+      border-bottom-color: var(--danger-color);
+      animation: spell-shake 0.3s ease;
+    }
+
     .explains {
       font-size: 11px;
       color: var(--text-secondary);
@@ -222,7 +254,7 @@
     .btn-list {
       position: absolute;
       top: 2px;
-      right: 66px;
+      right: 86px;
       color: var(--text-tertiary);
       cursor: pointer;
       padding: 2px;
@@ -237,7 +269,7 @@
     .btn-spell {
       position: absolute;
       top: 2px;
-      right: 86px;
+      right: 106px;
       color: var(--text-tertiary);
       cursor: pointer;
       padding: 2px;
@@ -252,21 +284,6 @@
     .btn-spell.active {
       color: var(--primary-color);
       animation: spell-pulse 1.2s ease-in-out infinite;
-    }
-
-    .btn-dictation {
-      position: absolute;
-      top: 2px;
-      right: 106px;
-      color: var(--text-tertiary);
-      cursor: pointer;
-      padding: 2px;
-      transition: color 0.3s ease;
-      -webkit-app-region: no-drag;
-    }
-
-    .btn-dictation:hover {
-      color: var(--primary-color);
     }
 
     @keyframes spell-pulse {
@@ -331,6 +348,7 @@
     }
 
     .focus-container.edge-hidden .word,
+    .focus-container.edge-hidden .dictation-input,
     .focus-container.edge-hidden .explains,
     .focus-container.edge-hidden .actions,
     .focus-container.edge-hidden .btn-close,
@@ -338,7 +356,6 @@
     .focus-container.edge-hidden .btn-edge,
     .focus-container.edge-hidden .btn-list,
     .focus-container.edge-hidden .btn-spell,
-    .focus-container.edge-hidden .btn-dictation,
     .focus-container.edge-hidden .opacity-bar,
     .focus-container.edge-hidden .counter,
     .focus-container.edge-hidden .spell-hint {
@@ -347,6 +364,7 @@
     }
 
     .focus-container.edge-preview .word,
+    .focus-container.edge-preview .dictation-input,
     .focus-container.edge-preview .explains,
     .focus-container.edge-preview .actions,
     .focus-container.edge-preview .btn-close,
@@ -354,7 +372,6 @@
     .focus-container.edge-preview .btn-edge,
     .focus-container.edge-preview .btn-list,
     .focus-container.edge-preview .btn-spell,
-    .focus-container.edge-preview .btn-dictation,
     .focus-container.edge-preview .opacity-bar,
     .focus-container.edge-preview .counter,
     .focus-container.edge-preview .spell-hint {
@@ -452,6 +469,7 @@
 <body>
   <div class="focus-container" id="app">
     <div class="word" id="word">加载中...</div>
+    <input class="dictation-input" id="dictation-input" type="text" placeholder="输入单词..." style="display:none" autocomplete="off" spellcheck="false">
     <div class="spell-hint" id="spell-hint" style="display:none">输入字母拼写单词</div>
     <div class="explains" id="explains"></div>
 
@@ -494,13 +512,9 @@
     <span class="icon btn-edge" id="btn-edge" title="关闭贴边隐藏">
       <svg viewBox="0 0 24 24"><path d="M5 5h2v14H5V5zm4 1h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1 2v8h8V8h-8z"/></svg>
     </span>
-    <!-- 听写练习 -->
-    <span class="icon btn-dictation" id="btn-dictation" title="听写练习">
-      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-    </span>
     <!-- 拼写模式 -->
     <span class="icon btn-spell" id="btn-spell" title="拼写模式">
-      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v2h8v-2h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H4V4h16v12zM6 7h2v2H6V7zm0 4h2v2H6v-2zm3-4h9v.5H9V7zm0 3.5h9v.5H9v-.5zm0 4h9v.5H9v-.5z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
     </span>
 
     <!-- 返回列表 -->
@@ -596,6 +610,7 @@
     const elBtnToggle = document.getElementById('btn-toggle');
     const btnEdge = document.getElementById('btn-edge');
     const btnSpell = document.getElementById('btn-spell');
+    const elDictationInput = document.getElementById('dictation-input');
 
 
     // 数据库 key
@@ -652,18 +667,27 @@
 
       var wordText = word.text || '无';
 
+      // 听写模式
+      if (dictationMode && !dictationChecking) {
+        elWord.style.display = 'none';
+        elDictationInput.style.display = 'block';
+        elDictationInput.value = '';
+        elDictationInput.className = 'dictation-input';
+        elDictationInput.placeholder = Array(wordText.length).fill('_').join(' ');
+        elDictationInput.focus();
+        document.getElementById('spell-hint').style.display = 'none';
+      }
       // 拼写模式：逐字母高亮渲染
-      if (spellMode) {
+      else if (spellMode) {
+        elWord.style.display = 'block';
+        elDictationInput.style.display = 'none';
         var html = '';
         for (var i = 0; i < wordText.length; i++) {
           if (i < spellIndex) {
-            // 已正确键入
             html += '<span class="spell-typed">' + wordText[i] + '</span>';
           } else if (i === spellIndex) {
-            // 当前待输入
             html += '<span class="spell-current">' + wordText[i] + '</span>';
           } else {
-            // 尚未输入
             html += '<span class="spell-pending">' + wordText[i] + '</span>';
           }
         }
@@ -671,6 +695,8 @@
         elWord.classList.add('spelling');
         document.getElementById('spell-hint').style.display = 'block';
       } else {
+        elWord.style.display = 'block';
+        elDictationInput.style.display = 'none';
         elWord.textContent = wordText;
         elWord.classList.remove('spelling');
         document.getElementById('spell-hint').style.display = 'none';
@@ -886,23 +912,106 @@
       }
     }
 
-    // 拼写切换按钮
+    // 模式切换按钮：标准模式下切换拼写模式，听写模式下退出听写
     btnSpell.addEventListener('click', function() {
-      if (spellMode) {
+      if (words.length === 0) return;
+      if (dictationMode) {
+        // 退出听写模式，回到标准模式
+        exitDictationMode();
+      } else if (spellMode) {
+        // 退出拼写模式
         exitSpellMode();
       } else {
-        if (words.length === 0) return;
+        // 标准模式：进入拼写模式
         enterSpellMode();
       }
     });
 
+    // ========== 听写模式 ==========
+
+    function enterDictationMode() {
+      dictationMode = true;
+      dictationChecking = false;
+      btnSpell.classList.add('active');
+      btnSpell.title = '听写中... (Esc退出)';
+      updateDisplay();
+    }
+
+    function exitDictationMode() {
+      dictationMode = false;
+      dictationChecking = false;
+      btnSpell.classList.remove('active');
+      btnSpell.title = '拼写模式';
+      elDictationInput.style.display = 'none';
+      elDictationInput.value = '';
+      elDictationInput.className = 'dictation-input';
+      updateDisplay();
+    }
+
+    // 听写输入检查
+    elDictationInput.addEventListener('keydown', function(e) {
+      if (!dictationMode || dictationChecking) return;
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        checkDictationAnswer();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        exitDictationMode();
+      }
+    });
+
+    function checkDictationAnswer() {
+      var word = words[currentIndex];
+      if (!word) return;
+      var wordText = (word.text || '').replace(/\s+/g, '').toLowerCase();
+      var typed = (elDictationInput.value || '').replace(/\s+/g, '').toLowerCase();
+
+      if (typed === wordText) {
+        // 正确
+        elDictationInput.className = 'dictation-input correct';
+        dictationChecking = true;
+        setTimeout(function() {
+          dictationChecking = false;
+          markRemembered();
+        }, 300);
+      } else {
+        // 错误
+        elDictationInput.className = 'dictation-input wrong';
+        dictationChecking = true;
+        // 短暂显示正确答案
+        elWord.style.display = 'block';
+        elWord.textContent = word.text;
+        elWord.style.color = 'var(--danger-color)';
+        setTimeout(function() {
+          elWord.style.color = '';
+          dictationChecking = false;
+          // 降级
+          var w = words[currentIndex];
+          if (w) {
+            w.level = Math.max(1, (w.level || 1) - 1);
+            w.isReview = true;
+            if (typeof utools !== 'undefined') utools.db.put(w);
+            if (currentBankId) updateWordInBank(currentBankId, w);
+            postWordChanged(w);
+            if (!shouldKeepInList(w)) {
+              words.splice(currentIndex, 1);
+              if (currentIndex >= words.length) currentIndex = Math.max(0, words.length - 1);
+            }
+          }
+          elDictationInput.value = '';
+          elDictationInput.className = 'dictation-input';
+          updateDisplay();
+        }, 800);
+      }
+    }
+
     // 事件监听
     document.getElementById('btn-prev').addEventListener('click', () => {
-      if (currentIndex > 0) { currentIndex--; showExplains = false; spellIndex = 0; updateDisplay(); }
+      if (currentIndex > 0) { currentIndex--; showExplains = false; spellIndex = 0; dictationChecking = false; updateDisplay(); }
     });
 
     document.getElementById('btn-next').addEventListener('click', () => {
-      if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; spellIndex = 0; updateDisplay(); }
+      if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; spellIndex = 0; dictationChecking = false; updateDisplay(); }
     });
 
     document.getElementById('btn-toggle').addEventListener('click', () => { showExplains = !showExplains; updateDisplay(); });
@@ -910,21 +1019,6 @@
     document.getElementById('btn-remember').addEventListener('click', markRemembered);
     document.getElementById('btn-forgot').addEventListener('click', markForgot);
     document.getElementById('btn-close').addEventListener('click', () => window.close());
-
-    // 听写练习按钮
-    document.getElementById('btn-dictation').addEventListener('click', () => {
-      postFocusModeAction('openDictation', undefined, { persistPendingAction: true });
-      try {
-        if (typeof utools !== 'undefined' && utools.showMainWindow) {
-          utools.showMainWindow();
-        }
-      } catch (e) {
-        console.error('[专注模式] 显示主窗口失败:', e);
-      }
-      setTimeout(() => {
-        window.close();
-      }, 100);
-    });
 
     // 置顶/贴边隐藏按钮
     let isAlwaysOnTop = true;
@@ -1044,9 +1138,7 @@
       setEdgeStickEnabled(!isEdgeStickEnabled);
     });
 
-
-
-    // 返回列表按钮 - 优先通知父窗口，同时直接唤起主窗口作为兜底
+    // 返回列表按钮 - 根据来源返回对应的界面
     document.getElementById('btn-list').addEventListener('click', () => {
       // 先保存当前数据状态到词库和旧数据库，确保主窗口能获取最新数据
       try {
@@ -1064,7 +1156,9 @@
         console.error('保存当前单词状态失败:', e);
       }
 
-      postFocusModeAction('openWordList', undefined, { persistPendingAction: true });
+      // 根据来源返回对应的界面：听写练习或单词列表
+      var returnAction = (initialState.mode === 'dictation') ? 'openDictation' : 'openWordList';
+      postFocusModeAction(returnAction, undefined, { persistPendingAction: true });
 
 
       try {
@@ -1368,6 +1462,19 @@
 
     // ========== 键盘快捷键 ==========
     document.addEventListener('keydown', (e) => {
+      // 听写模式：输入框自行处理，仅拦截全局快捷键
+      if (dictationMode && !dictationChecking) {
+        // 让输入框处理大多数按键
+        if (e.target === elDictationInput) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            exitDictationMode();
+          }
+          // 其他按键由输入框处理
+          return;
+        }
+      }
+
       // 拼写模式：拦截字母按键进行拼写
       if (spellMode) {
         // Esc 退出拼写模式
@@ -1476,6 +1583,9 @@
       const autoSpeakParam = urlParams.get('autoSpeak');
       const autoSpeak = autoSpeakParam === '1' ? true : (autoSpeakParam === '0' ? false : false);
 
+      // 模式参数（dictation=听写模式）
+      const mode = urlParams.get('mode') || '';
+
       return {
         currentIndex: isNaN(index) ? 0 : index,
         showExplains: showExplainsParam,
@@ -1490,6 +1600,7 @@
         sortBy: sortBy,
         sortAsc: sortAsc,
         autoSpeak: autoSpeak,
+        mode: mode,
       };
     }
 
@@ -1509,6 +1620,10 @@
     let spellMode = false;
     let spellIndex = 0;  // 当前已正确键入的字母数
     let spellErrorTimer = null;  // 错误闪烁动画计时器
+
+    // 听写模式
+    let dictationMode = false;
+    let dictationChecking = false;  // 正在检查答案（短暂显示结果）
 
     // 通配符模式转正则
     function patternToRegex(pattern) {
@@ -1607,6 +1722,16 @@
     autoSpeakEnabled = initialState.autoSpeak;
     console.log('[专注模式] 当前词库ID:', currentBankId || '(未设置，将使用旧数据库)');
     console.log('[专注模式] 筛选参数: listMode=' + currentListMode + ', pattern=' + currentPattern + ', minLen=' + currentMinLen + ', maxLen=' + currentMaxLen + ', sortBy=' + currentSortBy + ', autoSpeak=' + autoSpeakEnabled);
+
+    // 如果从听写模式进入，自动开启听写模式
+    if (initialState.mode === 'dictation') {
+      // 延迟启动，确保单词已加载
+      setTimeout(function() {
+        if (words.length > 0) {
+          enterDictationMode();
+        }
+      }, 200);
+    }
 
     updateTopButton();
     updateEdgeStickButton();

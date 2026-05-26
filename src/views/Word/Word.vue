@@ -433,13 +433,14 @@ const router = useRouter();
 const route = useRoute();
 
 // 如果 URL 携带 openFocus=1 参数（从听写等其他页面跳转过来），自动打开专注模式
+const focusModeParam = ref(route.query.focusMode as string || '');
 if (route.query.openFocus === '1') {
   // 延迟确保单词列表加载完毕
   nextTick(() => {
     setTimeout(() => {
-      openFocusMode();
+      openFocusMode(focusModeParam.value);
       // 清理 query 参数，防止重复触发
-      router.replace({ query: { ...route.query, openFocus: undefined } });
+      router.replace({ query: { ...route.query, openFocus: undefined, focusMode: undefined } });
     }, 300);
   });
 }
@@ -624,6 +625,7 @@ const confirmCreateWordBank = async () => {
 // 专注模式窗口实例
 let focusWindow: any = null;
 let focusModeSyncTimer: any = null;
+let currentFocusMode = '';  // 当前专注模式（'dictation'=听写，''=标准）
 let lastSyncedAlwaysOnTop: boolean | null = null;
 let lastSyncedEdgeStickEnabled: boolean | null = null;
 let lastHandledFocusModeActionAt = 0;
@@ -873,7 +875,8 @@ const handleRecreateWindow = (state: any) => {
       const filterMaxLen = currentFilter.value.maxLength > 0 ? currentFilter.value.maxLength : '';
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
-      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}`, {
+      const recreateModeParam = currentFocusMode ? `&mode=${currentFocusMode}` : '';
+      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}${recreateModeParam}`, {
 
         width: 320,
         height: 100,
@@ -1428,8 +1431,15 @@ const handleWordChanged = async (payload: any) => {
 /**
  * 处理从专注模式跳转到听写练习的请求
  */
-const handleOpenDictation = () => {
+const handleOpenDictation = async () => {
   console.log('专注模式请求跳转到听写练习');
+
+  // 刷新单词列表数据
+  try {
+    await wordsStore.listWords();
+  } catch (e) {
+    console.error('刷新单词列表失败:', e);
+  }
 
   // 关闭专注窗口
   if (focusWindow && !focusWindow.isDestroyed?.()) {
@@ -1607,7 +1617,8 @@ function setupMessageListener() {
 setupMessageListener();
 
 // 打开专注模式 - 创建独立子窗口
-const openFocusMode = () => {
+const openFocusMode = (mode = '') => {
+  currentFocusMode = mode;
   // 如果没有待复习单词，提示用户
   if (wordsStore.forgetCount === 0) {
     ElMessage.info('暂无待复习单词');
@@ -1659,7 +1670,8 @@ const openFocusMode = () => {
       const filterMaxLen = currentFilter.value.maxLength > 0 ? currentFilter.value.maxLength : '';
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
-      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}`, {
+      const modeParam = mode ? `&mode=${mode}` : '';
+      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}${modeParam}`, {
 
         width: 320,
         height: 100,
