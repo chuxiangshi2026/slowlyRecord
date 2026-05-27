@@ -15,7 +15,7 @@ export interface WordBank {
   words: Word[];        // 单词列表
   createdAt: number;    // 创建时间
   updatedAt: number;    // 更新时间
-  isDefault?: boolean;  // 是否为默认词库（基础词库）
+  isDefault?: boolean;  // 是否为默认词库
 }
 
 // 词库元数据文档结构（存储词库列表，不包含单词）
@@ -307,7 +307,7 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
       const banks: WordBank[] = oldDoc.data;
       const metaBanks = banks.map(b => ({
         id: b.id,
-        name: b.name === '我的词库' ? '基础词库' : b.name,
+        name: b.name === '我的词库' ? '默认词库' : (b.name === '基础词库' ? '默认词库' : b.name),
         createdAt: b.createdAt,
         updatedAt: b.updatedAt,
         isDefault: b.isDefault
@@ -345,11 +345,11 @@ export async function getAllWordBanks(): Promise<WordBank[]> {
   const metaDoc = getWordBankMetaDoc();
   
   if (metaDoc?.banks && Array.isArray(metaDoc.banks) && metaDoc.banks.length > 0) {
-    // 迁移：将"我的词库"重命名为"基础词库"
+    // 迁移：将"我的词库"或"基础词库"重命名为"默认词库"
     let needSave = false;
     for (const bank of metaDoc.banks) {
-      if (bank.name === '我的词库') {
-        bank.name = '基础词库';
+      if (bank.name === '我的词库' || bank.name === '基础词库') {
+        bank.name = '默认词库';
         needSave = true;
       }
     }
@@ -409,12 +409,12 @@ export function setCurrentWordBankId(id: string): void {
 }
 
 /**
- * 创建默认词库（基础词库）
+ * 创建默认词库
  */
 export function createDefaultWordBank(): WordBank {
   return {
     id: 'default',
-    name: '基础词库',
+    name: '默认词库',
     words: [],
     createdAt: Date.now(),
     updatedAt: Date.now(),

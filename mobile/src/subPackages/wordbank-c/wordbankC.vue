@@ -57,7 +57,7 @@ onMounted(async () => {
 const bankNames = computed(() => wordsStore.bankList.map(b => b.name))
 const targetBankName = computed(() => {
   const bank = wordsStore.getBankById(targetBankId.value)
-  return bank?.name || '我的词库'
+  return bank?.name || '默认词库'
 })
 
 function onTargetBankChange(e: any) {

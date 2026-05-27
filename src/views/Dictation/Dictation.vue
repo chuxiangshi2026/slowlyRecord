@@ -313,7 +313,7 @@ const MAX_ERRORS_BEFORE_HINT = 3;
 const selectedBankId = ref('');
 
 // 当前词库名称
-const currentBankName = computed(() => wordsStore.currentWordBank?.name || '基础词库');
+const currentBankName = computed(() => wordsStore.currentWordBank?.name || '默认词库');
 
 // ========== 设置抽屉 ==========
 const drawerVisible = ref(false);

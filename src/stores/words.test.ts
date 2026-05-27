@@ -21,7 +21,7 @@ vi.mock('@/utils/wordbank-manager.ts', () => ({
   saveWordBank: vi.fn(),
   createDefaultWordBank: vi.fn(() => ({
     id: 'default',
-    name: '基础词库',
+    name: '默认词库',
     words: [],
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -94,7 +94,7 @@ function createWord(overrides: Partial<Word> = {}): Word {
 function createWordBank(overrides: Partial<WordBank> = {}): WordBank {
   return {
     id: 'default',
-    name: '基础词库',
+    name: '默认词库',
     words: [],
     createdAt: Date.now(),
     updatedAt: Date.now(),

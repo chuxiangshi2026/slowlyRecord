@@ -1,7 +1,7 @@
 <template>
   <view class="wordbank-container">
     <view class="header">
-      <text class="title">基础词库</text>
+      <text class="title">默认词库</text>
     </view>
     <!-- 目标词库选择 -->
     <view class="target-section">
@@ -57,7 +57,7 @@ onMounted(async () => {
 const bankNames = computed(() => wordsStore.bankList.map(b => b.name))
 const targetBankName = computed(() => {
   const bank = wordsStore.getBankById(targetBankId.value)
-  return bank?.name || '我的词库'
+  return bank?.name || '默认词库'
 })
 
 function onTargetBankChange(e: any) {

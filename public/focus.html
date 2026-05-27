@@ -137,7 +137,6 @@
     .dictation-input {
       width: 160px;
       border: none;
-      border-bottom: 2px solid var(--border-color);
       background: transparent;
       font-size: 18px;
       font-weight: 600;
@@ -286,6 +285,11 @@
       animation: spell-pulse 1.2s ease-in-out infinite;
     }
 
+    .btn-spell.dictation-active {
+      color: var(--success-color);
+      animation: none;
+    }
+
     @keyframes spell-pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
@@ -358,6 +362,7 @@
     .focus-container.edge-hidden .btn-spell,
     .focus-container.edge-hidden .opacity-bar,
     .focus-container.edge-hidden .counter,
+    .focus-container.edge-hidden .mode-label,
     .focus-container.edge-hidden .spell-hint {
       opacity: 0;
       pointer-events: none;
@@ -374,6 +379,7 @@
     .focus-container.edge-preview .btn-spell,
     .focus-container.edge-preview .opacity-bar,
     .focus-container.edge-preview .counter,
+    .focus-container.edge-preview .mode-label,
     .focus-container.edge-preview .spell-hint {
       opacity: 1;
       pointer-events: auto;
@@ -387,6 +393,19 @@
       font-size: 10px;
       color: var(--text-quaternary);
       transition: color 0.3s ease;
+    }
+
+    .mode-label {
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      font-size: 10px;
+      color: var(--text-quaternary);
+      transition: color 0.3s ease;
+    }
+
+    .mode-label.active {
+      color: var(--primary-color);
     }
 
     /* 拼写模式提示 */
@@ -470,7 +489,7 @@
   <div class="focus-container" id="app">
     <div class="word" id="word">加载中...</div>
     <input class="dictation-input" id="dictation-input" type="text" placeholder="输入单词..." style="display:none" autocomplete="off" spellcheck="false">
-    <div class="spell-hint" id="spell-hint" style="display:none">输入字母拼写单词</div>
+    <div class="spell-hint" id="spell-hint" style="display:none">键盘输入字母拼写</div>
     <div class="explains" id="explains"></div>
 
     <div class="actions">
@@ -512,9 +531,9 @@
     <span class="icon btn-edge" id="btn-edge" title="关闭贴边隐藏">
       <svg viewBox="0 0 24 24"><path d="M5 5h2v14H5V5zm4 1h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1 2v8h8V8h-8z"/></svg>
     </span>
-    <!-- 拼写模式 -->
-    <span class="icon btn-spell" id="btn-spell" title="拼写模式">
-      <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+    <!-- 模式切换 -->
+    <span class="icon btn-spell" id="btn-spell" title="模式切换">
+      <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
     </span>
 
     <!-- 返回列表 -->
@@ -527,6 +546,7 @@
       <input type="range" class="opacity-slider" id="opacity-slider" min="30" max="100" value="100">
     </div>
     <div class="counter" id="counter">0/0</div>
+    <div class="mode-label" id="mode-label">标准</div>
 
     <!-- 贴边悬浮球 -->
     <div class="edge-bubble left" id="edge-bubble-left" title="悬浮展开">
@@ -693,7 +713,7 @@
         }
         elWord.innerHTML = html;
         elWord.classList.add('spelling');
-        document.getElementById('spell-hint').style.display = 'block';
+        document.getElementById('spell-hint').style.display = 'none';
       } else {
         elWord.style.display = 'block';
         elDictationInput.style.display = 'none';
@@ -703,6 +723,19 @@
       }
 
       elCounter.textContent = (currentIndex + 1) + '/' + words.length;
+
+      // 更新模式标签
+      var elModeLabel = document.getElementById('mode-label');
+      if (dictationMode) {
+        elModeLabel.textContent = '听写';
+        elModeLabel.classList.add('active');
+      } else if (spellMode) {
+        elModeLabel.textContent = '拼写';
+        elModeLabel.classList.add('active');
+      } else {
+        elModeLabel.textContent = '标准';
+        elModeLabel.classList.remove('active');
+      }
 
       if (showExplains && word.explains) {
         elExplains.textContent = Array.isArray(word.explains)
@@ -720,8 +753,8 @@
       elBtnPrev.classList.toggle('disabled', currentIndex <= 0);
       elBtnNext.classList.toggle('disabled', currentIndex >= words.length - 1);
 
-      // 自动发音：切换到新单词时自动播放（避免同一单词重复播放）
-      if (autoSpeakEnabled && wordText !== lastAutoSpeakWord) {
+      // 自动发音：听写模式始终自动播放，其他模式按设置
+      if (wordText !== lastAutoSpeakWord && (dictationMode || autoSpeakEnabled)) {
         lastAutoSpeakWord = wordText;
         playAudio();
       }
@@ -846,7 +879,7 @@
       spellMode = true;
       spellIndex = 0;
       btnSpell.classList.add('active');
-      btnSpell.title = '拼写中... (Esc退出)';
+      btnSpell.title = '拼写模式 (点击切换听写)';
       updateDisplay();
     }
 
@@ -855,8 +888,8 @@
       spellMode = false;
       spellIndex = 0;
       clearTimeout(spellErrorTimer);
-      btnSpell.classList.remove('active');
-      btnSpell.title = '拼写模式';
+      btnSpell.classList.remove('active', 'dictation-active');
+      btnSpell.title = '模式切换';
       elWord.classList.remove('spelling', 'spell-error');
       document.getElementById('spell-hint').style.display = 'none';
     }
@@ -912,17 +945,18 @@
       }
     }
 
-    // 模式切换按钮：标准模式下切换拼写模式，听写模式下退出听写
+    // 模式切换按钮：标准→拼写→听写→标准 三模式循环
     btnSpell.addEventListener('click', function() {
       if (words.length === 0) return;
       if (dictationMode) {
-        // 退出听写模式，回到标准模式
+        // 听写→标准
         exitDictationMode();
       } else if (spellMode) {
-        // 退出拼写模式
-        exitSpellMode();
+        // 拼写→听写
+        exitSpellModeQuiet();
+        enterDictationMode();
       } else {
-        // 标准模式：进入拼写模式
+        // 标准→拼写
         enterSpellMode();
       }
     });
@@ -932,16 +966,23 @@
     function enterDictationMode() {
       dictationMode = true;
       dictationChecking = false;
-      btnSpell.classList.add('active');
-      btnSpell.title = '听写中... (Esc退出)';
+      showExplains = true;
+      btnSpell.classList.add('active', 'dictation-active');
+      btnSpell.title = '听写模式 (点击切回标准)';
       updateDisplay();
+      // 自动播放发音
+      var word = words[currentIndex];
+      if (word && word.text) {
+        playAudio();
+      }
     }
 
     function exitDictationMode() {
       dictationMode = false;
       dictationChecking = false;
-      btnSpell.classList.remove('active');
-      btnSpell.title = '拼写模式';
+      showExplains = false;
+      btnSpell.classList.remove('active', 'dictation-active');
+      btnSpell.title = '模式切换';
       elDictationInput.style.display = 'none';
       elDictationInput.value = '';
       elDictationInput.className = 'dictation-input';
@@ -951,12 +992,22 @@
     // 听写输入检查
     elDictationInput.addEventListener('keydown', function(e) {
       if (!dictationMode || dictationChecking) return;
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        checkDictationAnswer();
-      } else if (e.key === 'Escape') {
+      if (e.key === 'Escape') {
         e.preventDefault();
         exitDictationMode();
+      }
+    });
+
+    // 实时检查：输入长度达到单词长度时自动判定
+    elDictationInput.addEventListener('input', function() {
+      if (!dictationMode || dictationChecking) return;
+      var word = words[currentIndex];
+      if (!word) return;
+      var wordText = (word.text || '').replace(/\s+/g, '');
+      var typed = (elDictationInput.value || '').replace(/\s+/g, '');
+      // 输入长度达到单词长度时自动判定
+      if (typed.length >= wordText.length) {
+        checkDictationAnswer();
       }
     });
 
@@ -1001,6 +1052,9 @@
           elDictationInput.value = '';
           elDictationInput.className = 'dictation-input';
           updateDisplay();
+          // 错误后自动再次发音并聚焦输入框
+          playAudio();
+          elDictationInput.focus();
         }, 800);
       }
     }
@@ -1156,8 +1210,8 @@
         console.error('保存当前单词状态失败:', e);
       }
 
-      // 根据来源返回对应的界面：听写练习或单词列表
-      var returnAction = (initialState.mode === 'dictation') ? 'openDictation' : 'openWordList';
+      // 根据当前模式返回对应的界面：听写模式→听写练习，其他→单词列表
+      var returnAction = dictationMode ? 'openDictation' : 'openWordList';
       postFocusModeAction(returnAction, undefined, { persistPendingAction: true });
 
 

@@ -16,9 +16,9 @@
       </picker>
     </view>
 
-    <!-- 我的词库列表 -->
+    <!-- 词库列表 -->
     <view class="section-header">
-      <text class="section-title">我的词库</text>
+      <text class="section-title">词库</text>
       <text class="section-add" @click="showCreateDialog">+ 新建</text>
     </view>
     <view class="bank-list">
@@ -44,7 +44,7 @@
     <view class="builtin-section">
       <view class="section-item" @click="goTo('/subPackages/wordbank-b/wordbankB')">
         <view class="section-info">
-          <text class="section-name">基础词库</text>
+          <text class="section-name">默认词库</text>
           <text class="section-desc">四六级、商务英语、雅思、托福等</text>
         </view>
         <text class="arrow">›</text>
@@ -100,7 +100,7 @@ onMounted(async () => {
 
 const currentBankName = computed(() => {
   const bank = wordsStore.getBankById(wordsStore.currentBankId)
-  return bank?.name || '我的词库'
+  return bank?.name || '默认词库'
 })
 
 const bankNames = computed(() => wordsStore.bankList.map(b => b.name))

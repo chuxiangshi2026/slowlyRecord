@@ -106,7 +106,7 @@
         {
           "path": "wordbankB",
           "style": {
-            "navigationBarTitleText": "基础词库"
+            "navigationBarTitleText": "默认词库"
           }
         }
       ]

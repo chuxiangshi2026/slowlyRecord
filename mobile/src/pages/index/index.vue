@@ -87,7 +87,7 @@ const todayLearned = ref(12)
 
 const currentBankName = computed(() => {
   const bank = wordsStore.getBankById(wordsStore.currentBankId)
-  return bank?.name || '我的词库'
+  return bank?.name || '默认词库'
 })
 
 const wordsStore = useMobileWords()

@@ -184,7 +184,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
       } else {
         bankList.value = [{
           id: DEFAULT_BANK_ID,
-          name: '我的词库',
+          name: '默认词库',
           createdAt: Date.now(),
           updatedAt: Date.now(),
           isDefault: true
@@ -194,7 +194,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     } catch {
       bankList.value = [{
         id: DEFAULT_BANK_ID,
-        name: '我的词库',
+        name: '默认词库',
         createdAt: Date.now(),
         updatedAt: Date.now(),
         isDefault: true
@@ -210,6 +210,15 @@ export const useMobileWords = defineStore('mobileWords', () => {
     } catch {
       currentBankId.value = DEFAULT_BANK_ID
     }
+    // 迁移：将"我的词库"或"基础词库"重命名为"默认词库"
+    let needSave = false
+    for (const bank of bankList.value) {
+      if (bank.name === '我的词库' || bank.name === '基础词库') {
+        bank.name = '默认词库'
+        needSave = true
+      }
+    }
+    if (needSave) _saveBankList()
   }
 
   function _saveBankList() {

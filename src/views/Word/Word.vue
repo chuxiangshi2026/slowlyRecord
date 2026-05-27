@@ -270,7 +270,7 @@
       <!-- 当前词库名称显示 -->
       <span class="current-bank-name" @click="openWordBankManager">
         <i class="iconfont icon-library"></i>
-        {{ wordsStore.currentWordBank?.name || '基础词库' }}
+        {{ wordsStore.currentWordBank?.name || '默认词库' }}
       </span>
       <el-divider direction="vertical"/>
       <span :class="{ 'remembered-highlight': listMode==0 }" @click="showOnlyForget"> 待复习: {{
