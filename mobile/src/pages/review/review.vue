@@ -3,10 +3,13 @@
     <view v-if="!currentWord" class="empty-state">
       <text class="empty-text">{{ emptyTitle }}</text>
       <text class="empty-hint">{{ emptyHint }}</text>
-      <button v-if="wordsStore.words.length > 0" class="btn-start-review" @click="startReview">
+      <button v-if="wordsStore.customReviewWords !== null" class="btn-start-review" @click="goToWords">
+        返回搜索单词
+      </button>
+      <button v-else-if="wordsStore.words.length > 0" class="btn-start-review" @click="startReview">
         开始复习
       </button>
-      <button v-if="wordsStore.words.length === 0" class="btn-start-review" @click="goToWords">
+      <button v-else class="btn-start-review" @click="goToWords">
         去添加单词
       </button>
     </view>
@@ -192,10 +195,12 @@ const progressPercent = computed(() => {
 })
 
 const emptyTitle = computed(() => {
+  if (wordsStore.customReviewWords !== null) return '筛选结果为空'
   return wordsStore.words.length === 0 ? '暂无单词' : '暂无待复习单词'
 })
 
 const emptyHint = computed(() => {
+  if (wordsStore.customReviewWords !== null) return '当前筛选条件下没有单词，请返回调整筛选'
   return wordsStore.words.length === 0 ? '先去添加一些单词吧' : '所有单词都还没到复习时间'
 })
 
@@ -457,6 +462,8 @@ const finishReview = () => {
   currentIndex.value = 0
   rememberCount.value = 0
   forgetCount.value = 0
+  // 清除自定义复习列表，下次进入时恢复默认
+  wordsStore.setCustomReviewWords(null)
   uni.showToast({ title: '复习完成', icon: 'success' })
 }
 </script>

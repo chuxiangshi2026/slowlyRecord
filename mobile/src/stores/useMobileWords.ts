@@ -102,8 +102,12 @@ export const useMobileWords = defineStore('mobileWords', () => {
     return allWords.value.filter(w => w.bankId === currentBankId.value || (!w.bankId && currentBankId.value === DEFAULT_BANK_ID))
   })
 
+  // 自定义复习列表（从搜索单词页筛选后"去复习"时设置）
+  const customReviewWords = shallowRef<MobileWord[] | null>(null)
+
   // 当前词库的待复习单词
   const reviewWords = computed(() => {
+    if (customReviewWords.value !== null) return customReviewWords.value
     const now = Date.now()
     return words.value.filter(w => {
       if (w.remembered) return false
@@ -488,12 +492,18 @@ export const useMobileWords = defineStore('mobileWords', () => {
     await updateWord(wordId, { bankId: targetBankId })
   }
 
+  /** 设置自定义复习列表（搜索单词页面筛选后调用） */
+  function setCustomReviewWords(words: MobileWord[] | null) {
+    customReviewWords.value = words
+  }
+
   return {
     // 状态
     words,
     allWords,
     isLoading,
     reviewWords,
+    customReviewWords,
     wordCount,
     totalCount,
     todayAdded,
@@ -527,6 +537,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     setBankSource,
     getBankMappings,
     getImportProgress,
-    setImportProgress
+    setImportProgress,
+    setCustomReviewWords
   }
 })
