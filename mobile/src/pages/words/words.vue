@@ -17,7 +17,7 @@
         <view class="filter-toggle" :class="{ active: showFilterPanel }" @click="showFilterPanel = !showFilterPanel">
           <text class="filter-icon">◬</text>
         </view>
-        <button class="add-btn" @click="showAddDialog">+</button>
+        <view class="add-btn" @click="showAddDialog"><text class="add-btn-text">+</text></view>
       </view>
     </view>
 
@@ -113,61 +113,23 @@
       <button class="btn-goto-bank" @click="goToWordBank">📚 去词库导入</button>
     </view>
 
-    <!-- 添加单词弹窗 -->
-    <view v-if="showAdd" class="popup-overlay" @click="closeAddDialog">
-      <view class="popup-content" @click.stop>
-        <view class="popup-title">添加单词</view>
-        
-        <!-- 输入单词 -->
-        <view class="input-row">
-          <input 
-            class="popup-input" 
-            v-model="newWord.word"
-            placeholder="输入单词（如：apple）"
-            @blur="autoTranslate"
-            @confirm="autoTranslate"
-          />
-          <button class="btn-translate" :loading="translating" @click="autoTranslate">
-            {{ translating ? '翻译中' : '翻译' }}
-          </button>
+    <!-- 单词详情弹窗 -->
+    <view v-if="showDetail" class="popup-overlay" @click="closeDetail" @touchmove.stop.prevent="() => {}">
+      <view class="detail-content" @click.stop @touchmove.stop>
+        <view class="detail-word">{{ detailWord.word }}</view>
+        <view v-if="detailWord.phonetic" class="detail-phonetic">[{{ detailWord.phonetic }}]</view>
+        <view class="detail-meaning">{{ detailWord.meaning }}</view>
+        <view v-if="detailWord.example" class="detail-example">
+          <text class="detail-example-label">例句</text>
+          <text class="detail-example-text">{{ detailWord.example }}</text>
         </view>
-        
-        <!-- 释义 -->
-        <input 
-          class="popup-input" 
-          v-model="newWord.meaning"
-          placeholder="释义（自动填充或手动输入）"
-        />
-        
-        <!-- 音标（可选） -->
-        <input 
-          class="popup-input" 
-          v-model="newWord.phonetic"
-          placeholder="音标（可选）"
-        />
-        
-        <!-- 例句（可选） -->
-        <input 
-          class="popup-input" 
-          v-model="newWord.example"
-          placeholder="例句（可选）"
-        />
-
-        <!-- 快捷操作 -->
-        <view class="quick-actions">
-          <button class="btn-quick" @click="pasteFromClipboard">
-            <text class="quick-icon">📋</text>
-            <text>粘贴</text>
-          </button>
-          <button class="btn-quick" @click="captureScreen">
-            <text class="quick-icon">📷</text>
-            <text>截屏识别</text>
-          </button>
+        <view class="detail-meta">
+          <text class="detail-meta-item">Lv{{ detailWord.level || 1 }}</text>
+          <text class="detail-meta-item">复习 {{ detailWord.reviewCount || 0 }} 次</text>
         </view>
-
-        <view class="popup-actions">
-          <button class="btn-cancel" @click="closeAddDialog">取消</button>
-          <button class="btn-confirm" @click="addWord">确定</button>
+        <view class="detail-actions">
+          <button class="btn-cancel" @click="closeDetail">关闭</button>
+          <button class="btn-delete" @click="deleteCurrentWord">删除</button>
         </view>
       </view>
     </view>
@@ -177,17 +139,12 @@
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
-import { translateText } from '@/stores/useUtils'
 
 const wordsStore = useMobileWords()
-const showAdd = ref(false)
-const translating = ref(false)
-const newWord = ref({ 
-  word: '', 
-  meaning: '',
-  phonetic: '',
-  example: ''
-})
+
+// ========== 单词详情弹窗 ==========
+const showDetail = ref(false)
+const detailWord = ref<any>({})
 
 // ========== 列表模式（与桌面端一致）==========
 // 0=待复习 1=已复习 2=已记完 3=全部
@@ -339,132 +296,65 @@ const goToWordBank = () => {
 }
 
 const showAddDialog = () => {
-  newWord.value = { word: '', meaning: '', phonetic: '', example: '' }
-  showAdd.value = true
+  uni.navigateTo({ url: '/subPackages/pages-tools/add-word/add-word' }).catch((err) => {
+    console.error('跳转添加单词页面失败:', err)
+    uni.showToast({ title: '页面跳转失败，请重新编译小程序', icon: 'none' })
+  })
 }
 
-const closeAddDialog = () => {
-  showAdd.value = false
-}
-
-// 自动翻译
-const autoTranslate = async () => {
-  if (!newWord.value.word.trim() || translating.value) return
-  if (newWord.value.meaning.trim()) return
-  translating.value = true
-  try {
-    const result = await translateText(newWord.value.word.trim(), 'auto', 'zh')
-    if (result.translatedText && result.translatedText !== newWord.value.word) {
-      newWord.value.meaning = result.translatedText
-    }
-  } catch (e) {
-    console.error('翻译失败:', e)
-  } finally {
-    translating.value = false
-  }
-}
-
-// 从剪贴板粘贴
-const pasteFromClipboard = async () => {
-  try {
-    // #ifdef H5
-    const text = await navigator.clipboard.readText()
-    if (text) {
-      newWord.value.word = text.trim()
-      autoTranslate()
-    }
-    // #endif
-    // #ifdef MP-WEIXIN || APP-PLUS
-    uni.getClipboardData({
-      success: (res) => {
-        if (res.data) {
-          newWord.value.word = res.data.trim()
-          autoTranslate()
+// 备用：简单输入弹窗
+const showSimpleAddDialog = () => {
+  uni.showModal({
+    title: '添加单词',
+    editable: true,
+    placeholderText: '输入单词（如：apple）',
+    success: async (res) => {
+      if (res.confirm && res.content) {
+        const word = res.content.trim()
+        if (!word) return
+        // 自动翻译
+        uni.showLoading({ title: '翻译中' })
+        try {
+          const { translateText } = await import('@/stores/useUtils')
+          const result = await translateText(word, 'auto', 'zh')
+          const meaning = result.translatedText || '暂无释义'
+          await wordsStore.addWord({
+            word,
+            meaning,
+            phonetic: result.phonetic || undefined,
+            example: result.examples?.[0] ? result.examples[0].english + ' — ' + result.examples[0].chinese : undefined,
+            addTime: Date.now(),
+            reviewCount: 0,
+            nextReviewTime: Date.now() + 24 * 60 * 60 * 1000
+          })
+          uni.showToast({ title: '添加成功', icon: 'success' })
+        } catch (e) {
+          uni.showToast({ title: '添加失败', icon: 'none' })
+        } finally {
+          uni.hideLoading()
         }
-      },
-      fail: () => {
-        uni.showToast({ title: '剪贴板为空', icon: 'none' })
       }
-    })
-    // #endif
-  } catch (e) {
-    uni.showToast({ title: '粘贴失败', icon: 'none' })
-  }
-}
-
-// 截屏识别（OCR）
-const captureScreen = () => {
-  // #ifdef APP-PLUS
-  const pages = getCurrentPages()
-  const page = pages[pages.length - 1]
-  const webview = page.$getAppWebview()
-  const bitmap = new plus.nativeObj.Bitmap('screenshot')
-  webview.draw(bitmap, () => {
-    bitmap.clear()
-    uni.showToast({ title: '请手动输入', icon: 'none' })
-  }, () => {
-    uni.showToast({ title: '截屏失败', icon: 'none' })
-  })
-  // #endif
-  // #ifdef MP-WEIXIN
-  uni.chooseImage({
-    count: 1,
-    sourceType: ['album', 'camera'],
-    success: () => {
-      uni.showModal({
-        title: '提示',
-        content: 'OCR 功能需要接入第三方服务，请手动输入单词',
-        showCancel: false
-      })
-    },
-    fail: () => {
-      uni.showToast({ title: '选择图片失败', icon: 'none' })
     }
   })
-  // #endif
-  // #ifdef H5
-  const input = document.createElement('input')
-  input.type = 'file'
-  input.accept = 'image/*'
-  input.onchange = () => {
-    uni.showModal({
-      title: '提示',
-      content: 'H5 端 OCR 需要额外配置，请手动输入单词',
-      showCancel: false
-    })
-  }
-  input.click()
-  // #endif
-}
-
-const addWord = async () => {
-  if (!newWord.value.word || !newWord.value.meaning) {
-    uni.showToast({ title: '请填写单词和释义', icon: 'none' })
-    return
-  }
-  await wordsStore.addWord({
-    word: newWord.value.word.trim(),
-    meaning: newWord.value.meaning.trim(),
-    phonetic: newWord.value.phonetic.trim() || undefined,
-    example: newWord.value.example.trim() || undefined,
-    addTime: Date.now(),
-    reviewCount: 0,
-    nextReviewTime: Date.now() + 24 * 60 * 60 * 1000
-  })
-  uni.showToast({ title: '添加成功', icon: 'success' })
-  closeAddDialog()
 }
 
 const showWordDetail = (word: any) => {
+  detailWord.value = { ...word }
+  showDetail.value = true
+}
+
+const closeDetail = () => {
+  showDetail.value = false
+}
+
+const deleteCurrentWord = () => {
   uni.showModal({
-    title: word.word,
-    content: `${word.meaning}\n${word.phonetic ? '[' + word.phonetic + ']' : ''}\n${word.example || ''}`,
-    showCancel: true,
-    confirmText: '删除',
-    cancelText: '关闭',
+    title: '确认删除',
+    content: `确定删除单词「${detailWord.value.word}」吗？`,
     success: (res) => {
       if (res.confirm) {
-        wordsStore.deleteWord(word.id)
+        wordsStore.deleteWord(detailWord.value.id)
+        closeDetail()
         uni.showToast({ title: '已删除', icon: 'success' })
       }
     }
@@ -566,8 +456,12 @@ const formatDate = (timestamp: number): string => {
   align-items: center;
   justify-content: center;
   font-size: 40rpx;
-  border: none;
-  padding: 0;
+  line-height: 72rpx;
+}
+
+.add-btn-text {
+  color: #fff;
+  font-size: 40rpx;
   line-height: 72rpx;
 }
 
@@ -827,97 +721,92 @@ const formatDate = (timestamp: number): string => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
-.popup-content {
+/* 单词详情弹窗 */
+.detail-content {
   background: #fff;
   border-radius: 16rpx;
   padding: 40rpx;
-  width: 600rpx;
+  width: 620rpx;
   max-height: 80vh;
   overflow-y: auto;
 }
 
-.popup-title {
-  font-size: 36rpx;
+.detail-word {
+  font-size: 44rpx;
   font-weight: bold;
+  color: #333;
   text-align: center;
-  margin-bottom: 30rpx;
+  margin-bottom: 8rpx;
 }
 
-.input-row {
-  display: flex;
-  gap: 16rpx;
+.detail-phonetic {
+  font-size: 28rpx;
+  color: #888;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.detail-meaning {
+  font-size: 30rpx;
+  color: #333;
+  line-height: 1.6;
+  padding: 20rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  word-break: break-all;
+}
+
+.detail-example {
+  padding: 20rpx;
+  background: #e3f2fd;
+  border-radius: 12rpx;
   margin-bottom: 20rpx;
 }
 
-.popup-input {
-  flex: 1;
-  height: 80rpx;
-  background: #f5f5f5;
-  border-radius: 8rpx;
-  padding: 0 20rpx;
-  font-size: 28rpx;
-}
-
-.btn-translate {
-  width: 120rpx;
-  height: 80rpx;
-  background: #4caf50;
-  color: #fff;
-  border-radius: 8rpx;
-  font-size: 26rpx;
-  border: none;
-  padding: 0;
-}
-
-.quick-actions {
-  display: flex;
-  gap: 16rpx;
-  margin: 20rpx 0;
-}
-
-.btn-quick {
-  flex: 1;
-  height: 100rpx;
-  background: #f5f5f5;
-  border-radius: 12rpx;
+.detail-example-label {
   font-size: 24rpx;
-  color: #666;
-  border: none;
+  color: #1976d2;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.detail-example-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+  word-break: break-all;
+  display: block;
+}
+
+.detail-meta {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 4rpx;
+  gap: 30rpx;
+  margin-bottom: 24rpx;
 }
 
-.quick-icon {
-  font-size: 36rpx;
+.detail-meta-item {
+  font-size: 24rpx;
+  color: #999;
 }
 
-.popup-actions {
+.detail-actions {
   display: flex;
   gap: 20rpx;
-  margin-top: 20rpx;
 }
 
-.btn-cancel, .btn-confirm {
+.btn-delete {
   flex: 1;
   height: 80rpx;
   border-radius: 8rpx;
   font-size: 28rpx;
   border: none;
-}
-
-.btn-cancel {
-  background: #f5f5f5;
-  color: #666;
-}
-
-.btn-confirm {
-  background: #1976d2;
+  background: #ff5252;
   color: #fff;
 }
 </style>

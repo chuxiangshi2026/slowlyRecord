@@ -40,6 +40,12 @@
           "style": {
             "navigationBarTitleText": "快速翻译"
           }
+        },
+        {
+          "path": "add-word/add-word",
+          "style": {
+            "navigationBarTitleText": "添加单词"
+          }
         }
       ]
     },

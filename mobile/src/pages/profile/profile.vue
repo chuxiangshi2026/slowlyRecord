@@ -95,7 +95,7 @@
 
         <!-- 引擎切换 -->
         <view class="section-label">选择引擎</view>
-        <picker :range="Object.keys(platformNames)" :range-key="'value'" @change="(e: any) => { const keys = Object.keys(platformNames); settingsPlatform = keys[e.detail.value] as TranslationPlatform; onTranslationPlatformSelect(settingsPlatform) }">
+        <picker :range="platformOptions" range-key="label" @change="(e: any) => { settingsPlatform = platformOptions[e.detail.value].value as TranslationPlatform; onTranslationPlatformSelect(settingsPlatform) }">
           <view class="bank-picker">
             <text class="bank-picker-text">{{ platformNames[settingsPlatform] }}</text>
             <text class="bank-picker-arrow">▼</text>
@@ -110,8 +110,8 @@
               {{ getPlatformLink(settingsPlatform)!.content }} →
             </text>
           </view>
-          <input class="dialog-input" v-model="apiKeyInput.appkey" :placeholder="isAiPlatform ? 'API Key (Bearer Token)' : 'AppKey / SecretId'" />
-          <input class="dialog-input" v-model="apiKeyInput.key" :placeholder="isAiPlatform ? '模型名称 (默认自动)' : 'SecretKey / Key'" />
+          <input class="dialog-input" v-model="apiKeyInput.appkey" :password="isAiPlatform ? false : true" :placeholder="isAiPlatform ? 'API Key (Bearer Token)，留空使用默认' : 'AppKey / SecretId，留空使用默认'" />
+          <input class="dialog-input" v-model="apiKeyInput.key" :password="isAiPlatform ? false : true" :placeholder="isAiPlatform ? '模型名称 (默认自动)' : 'SecretKey / Key，留空使用默认'" />
         </view>
 
         <!-- 操作按钮 -->
@@ -144,7 +144,7 @@
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
-import { pushToServer, pullFromServer, drawQrCode, getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, setTranslationApiKey, TRANSLATION_PLATFORM_LINKS, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '@/stores/useUtils'
+import { pushToServer, pullFromServer, drawQrCode, getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '@/stores/useUtils'
 import type { TranslationPlatform } from '@/stores/useUtils'
 // #ifdef H5
 import QRCode from 'qrcode'
@@ -172,7 +172,10 @@ const platformNames: Record<string, string> = {
   local: '仅离线词典',
 }
 
+const platformOptions = Object.entries(platformNames).map(([value, label]) => ({ value, label }))
+
 const currentTranslationPlatform = computed(() => {
+  translationRefreshTick.value // 强制依赖
   return platformNames[getTranslationPlatform()] || '智谱 GLM'
 })
 
@@ -180,6 +183,7 @@ const currentTranslationPlatform = computed(() => {
 const showTranslationSettingsModal = ref(false)
 const apiKeyInput = ref({ appkey: '', key: '' })
 const settingsPlatform = ref<TranslationPlatform>('glm')
+const translationRefreshTick = ref(0)
 
 // 同步服务器显示（依赖 tick 强制刷新）
 const serverRefreshTick = ref(0)
@@ -251,22 +255,34 @@ const showServerSetting = () => {
 // 翻译引擎设置
 const showTranslationSetting = () => {
   settingsPlatform.value = getTranslationPlatform()
-  const keys = getTranslationApiKey(settingsPlatform.value)
-  apiKeyInput.value = { appkey: keys.appkey, key: keys.key }
+  if (hasCustomTranslationApiKey(settingsPlatform.value)) {
+    const keys = getTranslationApiKey(settingsPlatform.value)
+    apiKeyInput.value = { appkey: keys.appkey, key: keys.key }
+  } else {
+    apiKeyInput.value = { appkey: '', key: '' }
+  }
   showTranslationSettingsModal.value = true
 }
 
 const onTranslationPlatformSelect = (platform: TranslationPlatform) => {
-  const keys = getTranslationApiKey(platform)
-  apiKeyInput.value = { appkey: keys.appkey, key: keys.key }
+  if (hasCustomTranslationApiKey(platform)) {
+    const keys = getTranslationApiKey(platform)
+    apiKeyInput.value = { appkey: keys.appkey, key: keys.key }
+  } else {
+    apiKeyInput.value = { appkey: '', key: '' }
+  }
 }
 
 const confirmTranslationPlatform = () => {
   setTranslationPlatform(settingsPlatform.value)
-  // 如果当前选中的平台有自定义密钥，保存
   if (apiKeyInput.value.appkey.trim() || apiKeyInput.value.key.trim()) {
+    // 用户填写了自定义密钥，保存
     setTranslationApiKey(settingsPlatform.value, apiKeyInput.value.appkey.trim(), apiKeyInput.value.key.trim())
+  } else {
+    // 用户未填写，清除自定义密钥以回退到默认
+    setTranslationApiKey(settingsPlatform.value, '', '')
   }
+  translationRefreshTick.value++
   showTranslationSettingsModal.value = false
   uni.showToast({ title: `已切换为${platformNames[settingsPlatform.value]}`, icon: 'none' })
 }

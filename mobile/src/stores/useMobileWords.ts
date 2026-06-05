@@ -1,4 +1,4 @@
-import { ref, computed, shallowRef, triggerRef } from 'vue'
+import { ref, computed, shallowRef } from 'vue'
 import { defineStore } from 'pinia'
 import { getDbAdapter, type DbDoc } from '@/adapters/index'
 import { WORDBANK_LIST } from './useUtils'
@@ -86,8 +86,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const bankWords = allWords.value.filter(w =>
       w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID)
     )
-    const db = getDbAdapter()
     try {
+      const db = getDbAdapter()
       await db.promises.asyncPut({
         _id: `bank_${bankId}_words`,
         data: bankWords
@@ -306,7 +306,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
       .filter(b => b.sourceType === 'builtin' && b.sourceId)
       .map(b => ({
         sourceId: b.sourceId!,
-        sourceName: wordbankInfoMap.get(b.sourceId!) || b.sourceId!,
+        sourceName: wordbankInfoMap.get(b.sourceId! as any) || b.sourceId!,
         bankId: b.id,
         bankName: b.name,
         wordCount: getBankWordCount(b.id)
@@ -346,7 +346,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
   // ========== 单词 CRUD ==========
 
   async function addWord(word: Omit<MobileWord, 'id'>) {
-    const id = `${DB_KEY}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    const id = `${DB_KEY}_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`
     const newWord: MobileWord = {
       ...word,
       id,
@@ -356,8 +356,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
       lastReviewTime: word.lastReviewTime ?? 0
     }
 
-    allWords.value.push(newWord)
-    triggerRef(allWords)
+    allWords.value = [...allWords.value, newWord]
     markBankDirty(newWord.bankId || DEFAULT_BANK_ID)
 
     const bank = bankList.value.find(b => b.id === newWord.bankId)
@@ -381,8 +380,9 @@ export const useMobileWords = defineStore('mobileWords', () => {
     if (index === -1) return
 
     const updated = { ...allWords.value[index], ...updates }
-    allWords.value[index] = updated
-    triggerRef(allWords)
+    const newArr = [...allWords.value]
+    newArr[index] = updated
+    allWords.value = newArr
     markBankDirty(updated.bankId || DEFAULT_BANK_ID)
   }
 
@@ -412,11 +412,11 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const word = allWords.value.find(w => w.id === id)
     if (!word) return
 
-    word.remembered = false
-    word.needsReview = true
-    word.level = 1
-    word.nextReviewTime = Date.now() + 10 * 60 * 1000
-    triggerRef(allWords)
+    allWords.value = allWords.value.map(w =>
+      w.id === id
+        ? { ...w, remembered: false, needsReview: true, level: 1, nextReviewTime: Date.now() + 10 * 60 * 1000 }
+        : w
+    )
     markBankDirty(word.bankId || DEFAULT_BANK_ID)
   }
 
