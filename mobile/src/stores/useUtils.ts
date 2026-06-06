@@ -103,52 +103,95 @@ export function hasCustomTranslationApiKey(provider: TranslationPlatform): boole
   return !!(uk?.appkey?.trim())
 }
 
-// ---- MD5 辅助函数（纯JS实现，用于国内API签名）----
+// ---- MD5 辅助函数（纯JS实现，RFC 1321 标准，用于国内API签名）----
+// 之前的实现有严重 bug（除空字符串外结果全错），导致百度/有道翻译签名失败
 function md5(input: string): string {
-  const K = [0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,
-    0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,0x6b901122,0xfd987193,0xa679438e,0x49b40821,
-    0xf61e2562,0xc040b340,0x265e5a51,0xe9b6c7aa,0xd62f105d,0x02441453,0xd8a1e681,0xe7d3fbc8,
-    0x21e1cde6,0xc33707d6,0xf4d50d87,0x455a14ed,0xa9e3e905,0xfcefa3f8,0x676f02d9,0x8d2a4c8a,
-    0xfffa3942,0x8771f681,0x6d9d6122,0xfde5380c,0xa4beea44,0x4bdecfa9,0xf6bb4b60,0xbebfbc70,
-    0x289b7ec6,0xeaa127fa,0xd4ef3085,0x04881d05,0xd9d4d039,0xe6db99e5,0x1fa27cf8,0xc4ac5665,
-    0xf4292244,0x432aff97,0xab9423a7,0xfc93a039,0x655b59c3,0x8f0ccc92,0xffeff47d,0x85845dd1,
-    0x6fa87e4f,0xfe2ce6e0,0xa3014314,0x4e0811a1,0xf7537e82,0xbd3af235,0x2ad7d2bb,0xeb86d391]
-  const S = [7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,
-    4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21]
-  const hex = '0123456789abcdef'
-  const bytes: number[] = []
-  for (let i = 0; i < input.length; i++) {
-    const c = input.charCodeAt(i)
-    if (c < 0x80) bytes.push(c)
-    else if (c < 0x800) bytes.push(0xc0|(c>>6),0x80|(c&0x3f))
-    else if (c < 0xd800 || c > 0xdbff) bytes.push(0xe0|(c>>12),0x80|((c>>6)&0x3f),0x80|(c&0x3f))
-    else { const c2=input.charCodeAt(++i); const cp=((c&0x3ff)<<10)|(c2&0x3ff); bytes.push(0xf0|(cp>>18),0x80|((cp>>12)&0x3f),0x80|((cp>>6)&0x3f),0x80|(cp&0x3f)) }
+  function safeAdd(x: number, y: number): number {
+    const lsw = (x & 0xFFFF) + (y & 0xFFFF)
+    const msw = (x >> 16) + (y >> 16) + (lsw >> 16)
+    return (msw << 16) | (lsw & 0xFFFF)
   }
-  const origLen = bytes.length * 8
-  bytes.push(0x80)
-  while ((bytes.length % 64) !== 56) bytes.push(0)
-  for (let i = 0; i < 8; i++) bytes.push((origLen >>> (i * 8)) & 0xff)
-  let a=0x67452301,b=0xefcdab89,c=0x98badcfe,d=0x10325476
-  for (let i=0;i<bytes.length;i+=64) {
-    const w:number[]=[]
-    for (let j=0;j<64;j+=4) w.push(bytes[i+j]|(bytes[i+j+1]<<8)|(bytes[i+j+2]<<16)|(bytes[i+j+3]<<24))
-    let A=a,B=b,C=c,D=d
-    for (let j=0;j<64;j++) {
-      let f:number,g:number
-      if (j<16){f=(B&C)|(~B&D);g=j}
-      else if (j<32){f=(D&B)|(~D&C);g=(5*j+1)%16}
-      else if (j<48){f=B^C^D;g=(3*j+5)%16}
-      else {f=C^(B|~D);g=(7*j)%16}
-      const x=((A+f+K[j]+w[g])|0)
-      const tmp=D
-      D=C;C=B;B=(B+((x<<S[j])|(x>>>(32-S[j]))))|0;A=tmp
+  function bitRotateLeft(num: number, cnt: number): number {
+    return (num << cnt) | (num >>> (32 - cnt))
+  }
+  function md5cmn(q: number, a: number, b: number, x: number, s: number, t: number): number {
+    return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b)
+  }
+  function md5ff(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
+    return md5cmn((b & c) | (~b & d), a, b, x, s, t)
+  }
+  function md5gg(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
+    return md5cmn((b & d) | (c & ~d), a, b, x, s, t)
+  }
+  function md5hh(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
+    return md5cmn(b ^ c ^ d, a, b, x, s, t)
+  }
+  function md5ii(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
+    return md5cmn(c ^ (b | ~d), a, b, x, s, t)
+  }
+  function binlMD5(x: number[], len: number): number[] {
+    x[len >> 5] |= 0x80 << (len % 32)
+    x[(((len + 64) >>> 9) << 4) + 14] = len
+    let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878
+    for (let i = 0; i < x.length; i += 16) {
+      const oa = a, ob = b, oc = c, od = d
+      a=md5ff(a,b,c,d,x[i],7,-680876936);d=md5ff(d,a,b,c,x[i+1],12,-389564586)
+      c=md5ff(c,d,a,b,x[i+2],17,606105819);b=md5ff(b,c,d,a,x[i+3],22,-1044525330)
+      a=md5ff(a,b,c,d,x[i+4],7,-176418897);d=md5ff(d,a,b,c,x[i+5],12,1200080426)
+      c=md5ff(c,d,a,b,x[i+6],17,-1473231341);b=md5ff(b,c,d,a,x[i+7],22,-45705983)
+      a=md5ff(a,b,c,d,x[i+8],7,1770035416);d=md5ff(d,a,b,c,x[i+9],12,-1958414417)
+      c=md5ff(c,d,a,b,x[i+10],17,-42063);b=md5ff(b,c,d,a,x[i+11],22,-1990404162)
+      a=md5ff(a,b,c,d,x[i+12],7,1804603682);d=md5ff(d,a,b,c,x[i+13],12,-40341101)
+      c=md5ff(c,d,a,b,x[i+14],17,-1502002290);b=md5ff(b,c,d,a,x[i+15],22,1236535329)
+      a=md5gg(a,b,c,d,x[i+1],5,-165796510);d=md5gg(d,a,b,c,x[i+6],9,-1069501632)
+      c=md5gg(c,d,a,b,x[i+11],14,643717713);b=md5gg(b,c,d,a,x[i],20,-373897302)
+      a=md5gg(a,b,c,d,x[i+5],5,-701558691);d=md5gg(d,a,b,c,x[i+10],9,38016083)
+      c=md5gg(c,d,a,b,x[i+15],14,-660478335);b=md5gg(b,c,d,a,x[i+4],20,-405537848)
+      a=md5gg(a,b,c,d,x[i+9],5,568446438);d=md5gg(d,a,b,c,x[i+14],9,-1019803690)
+      c=md5gg(c,d,a,b,x[i+3],14,-187363961);b=md5gg(b,c,d,a,x[i+8],20,1163531501)
+      a=md5gg(a,b,c,d,x[i+13],5,-1444681467);d=md5gg(d,a,b,c,x[i+2],9,-51403784)
+      c=md5gg(c,d,a,b,x[i+7],14,1735328473);b=md5gg(b,c,d,a,x[i+12],20,-1926607734)
+      a=md5hh(a,b,c,d,x[i+5],4,-378558);d=md5hh(d,a,b,c,x[i+8],11,-2022574463)
+      c=md5hh(c,d,a,b,x[i+11],16,1839030562);b=md5hh(b,c,d,a,x[i+14],23,-35309556)
+      a=md5hh(a,b,c,d,x[i+1],4,-1530992060);d=md5hh(d,a,b,c,x[i+4],11,1272893353)
+      c=md5hh(c,d,a,b,x[i+7],16,-155497632);b=md5hh(b,c,d,a,x[i+10],23,-1094730640)
+      a=md5hh(a,b,c,d,x[i+13],4,681279174);d=md5hh(d,a,b,c,x[i],11,-358537222)
+      c=md5hh(c,d,a,b,x[i+3],16,-722521979);b=md5hh(b,c,d,a,x[i+6],23,76029189)
+      a=md5hh(a,b,c,d,x[i+9],4,-640364487);d=md5hh(d,a,b,c,x[i+12],11,-421815835)
+      c=md5hh(c,d,a,b,x[i+15],16,530742520);b=md5hh(b,c,d,a,x[i+2],23,-995338651)
+      a=md5ii(a,b,c,d,x[i],6,-198630844);d=md5ii(d,a,b,c,x[i+7],10,1126891415)
+      c=md5ii(c,d,a,b,x[i+14],15,-1416354905);b=md5ii(b,c,d,a,x[i+5],21,-57434055)
+      a=md5ii(a,b,c,d,x[i+12],6,1700485571);d=md5ii(d,a,b,c,x[i+3],10,-1894986606)
+      c=md5ii(c,d,a,b,x[i+10],15,-1051523);b=md5ii(b,c,d,a,x[i+1],21,-2054922799)
+      a=md5ii(a,b,c,d,x[i+8],6,1873313359);d=md5ii(d,a,b,c,x[i+15],10,-30611744)
+      c=md5ii(c,d,a,b,x[i+6],15,-1560198380);b=md5ii(b,c,d,a,x[i+13],21,1309151649)
+      a=md5ii(a,b,c,d,x[i+4],6,-145523070);d=md5ii(d,a,b,c,x[i+11],10,-1120210379)
+      c=md5ii(c,d,a,b,x[i+2],15,718787259);b=md5ii(b,c,d,a,x[i+9],21,-343485551)
+      a=safeAdd(a,oa);b=safeAdd(b,ob);c=safeAdd(c,oc);d=safeAdd(d,od)
     }
-    a=(a+A)|0;b=(b+B)|0;c=(c+C)|0;d=(d+D)|0
+    return [a, b, c, d]
   }
-  let hash=''
-  for (const n of [a,b,c,d]) for (let i=0;i<4;i++) { const v=(n>>>(i*8))&0xff; hash+=hex[v>>>4]+hex[v&0xf] }
-  return hash
+  function str2binl(str: string): number[] {
+    const bin: number[] = []
+    const mask = (1 << 8) - 1
+    for (let i = 0; i < str.length * 8; i += 8) {
+      bin[i >> 5] |= (str.charCodeAt(i / 8) & mask) << (i % 32)
+    }
+    return bin
+  }
+  function binl2hex(binarray: number[]): string {
+    const hexTab = '0123456789abcdef'
+    let str = ''
+    for (let i = 0; i < binarray.length * 4; i++) {
+      str += hexTab.charAt((binarray[i >> 2] >> ((i % 4) * 8 + 4)) & 0xF) +
+             hexTab.charAt((binarray[i >> 2] >> ((i % 4) * 8)) & 0xF)
+    }
+    return str
+  }
+  const utf8 = unescape(encodeURIComponent(input))
+  return binl2hex(binlMD5(str2binl(utf8), utf8.length * 8))
 }
+// （旧 MD5 实现的残留代码已删除 — 那个实现除空字符串外结果全错）
 
 /**
  * 翻译文本（主入口）
@@ -198,7 +241,7 @@ export async function translateText(
       success: false,
       explains: text,
       translatedText: text,
-      errorMsg: '翻译服务暂不可用，显示原文',
+      errorMsg: '翻译服务异常: ' + String((e as Error).message || e),
       platform: 'fallback'
     }
   }
@@ -213,6 +256,9 @@ async function translateWithYoudao(
   to: string = 'zh'
 ): Promise<TranslationResult> {
   const { appkey: appKey, key: appSecret } = getTranslationApiKey('youdao')
+  if (!appKey || !appSecret) {
+    return { success: false, explains: text, translatedText: text, errorMsg: '有道翻译：请先配置API密钥', platform: 'youdao' }
+  }
   const salt = '' + Date.now()
   const sign = md5(appKey + text + salt + appSecret)
   return new Promise((resolve) => {
@@ -225,10 +271,10 @@ async function translateWithYoudao(
         if (data.errorCode === '0') {
           resolve({ success: true, explains: data.translation?.[0] || text, translatedText: data.translation?.[0] || text, phonetic: data.basic?.phonetic || '', pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'youdao' })
         } else {
-          resolve({ success: false, explains: text, translatedText: text, errorMsg: `有道翻译错误: ${data.errorCode}`, platform: 'youdao' })
+          resolve({ success: false, explains: text, translatedText: text, errorMsg: `有道翻译错误[${data.errorCode}]: ${data.errorCode === '202' ? '密钥无效或已过期' : '请检查密钥配置'}`, platform: 'youdao' })
         }
       },
-      fail: () => resolve({ success: false, explains: text, translatedText: text, errorMsg: '有道翻译请求失败', platform: 'youdao' })
+      fail: (err) => resolve({ success: false, explains: text, translatedText: text, errorMsg: '有道翻译请求失败: ' + (err.errMsg || '请检查网络连接或小程序域名白名单'), platform: 'youdao' })
     })
   })
 }
@@ -240,6 +286,9 @@ async function translateWithBaidu(
   to: string = 'zh'
 ): Promise<TranslationResult> {
   const { appkey: appid, key: secretKey } = getTranslationApiKey('baidu')
+  if (!appid || !secretKey) {
+    return { success: false, explains: text, translatedText: text, errorMsg: '百度翻译：请先配置API密钥', platform: 'baidu' }
+  }
   const salt = '' + Date.now()
   const sign = md5(appid + text + salt + secretKey)
   return new Promise((resolve) => {
@@ -252,10 +301,16 @@ async function translateWithBaidu(
         if (!data.error_code || data.error_code === '52000') {
           resolve({ success: true, explains: data.trans_result?.[0]?.dst || text, translatedText: data.trans_result?.[0]?.dst || text, pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'baidu' })
         } else {
-          resolve({ success: false, explains: text, translatedText: text, errorMsg: `百度翻译错误: ${data.error_code}`, platform: 'baidu' })
+          const errMap: Record<string, string> = {
+            '54000': '参数错误', '54001': '签名错误（请检查密钥）', '54003': '访问频率受限',
+            '54004': '余额不足', '54005': '长query请求频繁', '58000': '客户端IP非法',
+            '58001': '语言不支持', '58002': '服务已关闭', '90107': '认证未通过'
+          }
+          const errMsg = errMap[data.error_code] || data.error_msg || '未知错误'
+          resolve({ success: false, explains: text, translatedText: text, errorMsg: `百度翻译错误[${data.error_code}]: ${errMsg}`, platform: 'baidu' })
         }
       },
-      fail: () => resolve({ success: false, explains: text, translatedText: text, errorMsg: '百度翻译请求失败', platform: 'baidu' })
+      fail: (err) => resolve({ success: false, explains: text, translatedText: text, errorMsg: '百度翻译请求失败: ' + (err.errMsg || '请检查网络连接或小程序域名白名单'), platform: 'baidu' })
     })
   })
 }
@@ -267,6 +322,9 @@ async function translateWithAli(
   to: string = 'zh'
 ): Promise<TranslationResult> {
   const { appkey, key: secretKey } = getTranslationApiKey('ali')
+  if (!appkey || !secretKey) {
+    return { success: false, explains: text, translatedText: text, errorMsg: '阿里翻译：请先配置API密钥', platform: 'ali' }
+  }
   try {
     const timestamp = new Date().toISOString().replace(/\.\d+Z/, 'Z')
     const params: Record<string, string> = {
@@ -288,10 +346,16 @@ async function translateWithAli(
           if (data.Code === '200' && data.Data) {
             resolve({ success: true, explains: data.Data.Translated, translatedText: data.Data.Translated, pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'ali' })
           } else {
-            resolve({ success: false, explains: text, translatedText: text, errorMsg: `阿里翻译错误: ${data.Message || '未知错误'}`, platform: 'ali' })
+            const errMsgMap: Record<string, string> = {
+              'InvalidAccessKeyId.NotFound': 'AccessKey不存在', 'SignatureDoesNotMatch': '签名不匹配（请检查密钥）',
+              'InvalidAction': '无效的Action', 'MissingParameter': '缺少必要参数', 'Throttling': '请求频率超限',
+              'ServiceUnavailable': '服务暂不可用',
+            }
+            const errMsg = errMsgMap[data.Code] || data.Message || '未知错误'
+            resolve({ success: false, explains: text, translatedText: text, errorMsg: `阿里翻译错误[${data.Code}]: ${errMsg}`, platform: 'ali' })
           }
         },
-        fail: () => resolve({ success: false, explains: text, translatedText: text, errorMsg: '阿里翻译请求失败', platform: 'ali' })
+        fail: (err) => resolve({ success: false, explains: text, translatedText: text, errorMsg: '阿里翻译请求失败: ' + (err.errMsg || '请检查网络连接或小程序域名白名单'), platform: 'ali' })
       })
     })
   } catch (e) {
@@ -316,36 +380,34 @@ function hmacSha1Signature(params: Record<string, string>, accessKeySecret: stri
 
 /** 纯JS HMAC-SHA1 实现，返回 base64 */
 function hmacSha1Base64(message: string, key: string): string {
-  const keyBytes = utf8ToBytes_HMAC(key)
+  const rawKeyBytes = utf8ToBytes_HMAC(key)
   const msgBytes = utf8ToBytes_HMAC(message)
   const blockSize = 64
-  let iKey = new Uint8Array(blockSize), oKey = new Uint8Array(blockSize)
+  // HMAC 标准：若 key > blockSize，先 hash 缩短 key，再 XOR
+  const keyBytes = rawKeyBytes.length > blockSize ? sha1Raw(rawKeyBytes) : rawKeyBytes
+  const iKey = new Uint8Array(blockSize), oKey = new Uint8Array(blockSize)
   for (let i = 0; i < blockSize; i++) {
     iKey[i] = (keyBytes[i] || 0) ^ 0x36
     oKey[i] = (keyBytes[i] || 0) ^ 0x5c
   }
-  if (keyBytes.length > blockSize) {
-    iKey = sha1Raw(new Uint8Array([...iKey.slice(0, blockSize)]))
-    oKey = sha1Raw(new Uint8Array([...oKey.slice(0, blockSize)]))
-  }
-  const inner = sha1Raw(new Uint8Array([...iKey.slice(0, blockSize), ...msgBytes]))
-  const result = sha1Raw(new Uint8Array([...oKey.slice(0, blockSize), ...inner]))
+  const inner = sha1Raw(new Uint8Array([...iKey, ...msgBytes]))
+  const result = sha1Raw(new Uint8Array([...oKey, ...inner]))
   return uint8ToBase64(result)
 }
 
-/** 纯JS SHA-1 */
+/** 纯JS SHA-1（使用 number[] 避免 Uint8Array 没有 push 方法的问题） */
 function sha1Raw(data: Uint8Array): Uint8Array {
-  const bytes = new Uint8Array(data)
+  const bytes: number[] = []
+  for (let i = 0; i < data.length; i++) bytes.push(data[i])
   const ml = bytes.length * 8
   bytes.push(0x80)
   while ((bytes.length % 64) !== 56) bytes.push(0)
-  const mlh = new Uint8Array(8)
-  for (let i = 0; i < 8; i++) mlh[7 - i] = (ml >>> (i * 8)) & 0xff
-  for (let i = 0; i < 8; i++) bytes.push(mlh[i])
+  // 64-bit big-endian length
+  for (let i = 7; i >= 0; i--) bytes.push((i < 4) ? 0 : ((ml >>> ((7 - i) * 8)) & 0xff))
   let h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476, h4 = 0xC3D2E1F0
   for (let i = 0; i < bytes.length; i += 64) {
     const w = new Uint32Array(80)
-    for (let j = 0; j < 16; j++) w[j] = (bytes[i + j * 4] << 24) | (bytes[i + j * 4 + 1] << 16) | (bytes[i + j * 4 + 2] << 8) | bytes[i + j * 4 + 3]
+    for (let j = 0; j < 16; j++) w[j] = ((bytes[i + j * 4] << 24) | (bytes[i + j * 4 + 1] << 16) | (bytes[i + j * 4 + 2] << 8) | bytes[i + j * 4 + 3]) >>> 0
     for (let j = 16; j < 80; j++) { w[j] = rotl32(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1) }
     let a = h0, b = h1, c = h2, d = h3, e = h4
     for (let j = 0; j < 80; j++) {
@@ -383,6 +445,10 @@ async function translateWithTencent(
   from: string = 'auto',
   to: string = 'zh'
 ): Promise<TranslationResult> {
+  const { appkey: secretId, key: secretKey } = getTranslationApiKey('tencent')
+  if (!secretId || !secretKey) {
+    return { success: false, explains: text, translatedText: text, errorMsg: '腾讯翻译：请先配置API密钥（SecretId和SecretKey）', platform: 'tencent' }
+  }
   try {
     const data = await tencentCloudRequest(
       'tmt',
@@ -396,10 +462,19 @@ async function translateWithTencent(
     if (data.Response && data.Response.TargetText) {
       return { success: true, explains: data.Response.TargetText, translatedText: data.Response.TargetText, pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'tencent' }
     } else {
-      return { success: false, explains: text, translatedText: text, errorMsg: `腾讯翻译错误: ${data.Response?.Error?.Message || '未知错误'}`, platform: 'tencent' }
+      const errCode = data.Response?.Error?.Code || ''
+      const errMsg = data.Response?.Error?.Message || '未知错误'
+      const hintMap: Record<string, string> = {
+        'AuthFailure.SignatureFailure': '签名错误（请检查密钥）', 'AuthFailure.SecretIdNotFound': 'SecretId不存在',
+        'AuthFailure.SignatureExpire': '签名已过期（请检查系统时间）', 'ResourceInsufficient': '资源不足（免费额度已用完）',
+        'LimitExceeded': '请求频率超限',
+      }
+      const hint = hintMap[errCode] || ''
+      return { success: false, explains: text, translatedText: text, errorMsg: `腾讯翻译错误${errCode ? '[' + errCode + ']' : ''}: ${hint ? hint + ' - ' : ''}${errMsg}`, platform: 'tencent' }
     }
   } catch (e) {
-    return { success: false, explains: text, translatedText: text, errorMsg: '腾讯翻译错误: ' + String(e), platform: 'tencent' }
+    const msg = String((e as Error).message || e)
+    return { success: false, explains: text, translatedText: text, errorMsg: '腾讯翻译错误: ' + msg, platform: 'tencent' }
   }
 }
 
@@ -607,11 +682,16 @@ function tencentCloudRequest(
         'X-TC-Timestamp': String(timestamp),
         'Authorization': authorization
       },
-      // 直接传 JSON 字符串，确保请求体与签名的 payload 完全一致
-      // （传对象时 uni.request 可能对 base64 等长字符串序列化结果不同）
-      data: payload,
+      // 传对象而非 JSON 字符串，避免 uni.request 对字符串二次序列化
+      // 签名基于 JSON.stringify(bodyObj) 计算，uni.request 会用相同方式序列化对象
+      data: bodyObj,
+      dataType: 'json',
       success: (res) => {
         const data = res.data as any
+        if (data.Response?.Error) {
+          reject(new Error(`腾讯云API错误[${data.Response.Error.Code}]: ${data.Response.Error.Message}`))
+          return
+        }
         resolve(data)
       },
       fail: (err) => {
