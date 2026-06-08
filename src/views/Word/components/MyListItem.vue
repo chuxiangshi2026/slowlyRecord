@@ -33,14 +33,14 @@
         </el-tooltip>
       </div>
       <div class="operate-group">
-        <el-tooltip class="box-item" effect="dark" content="记住" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="认识" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-close iconHover" @click="forget"
              :class="{ disabled: disableActions==1||disableActions==3}"></i>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="永久记住" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="已记完" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-lock iconHover" @click="remembered" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="删除"
@@ -83,7 +83,7 @@ defineExpose({
 // 接收word传参，并传递给子组件
 const props = withDefaults(defineProps<{
   word: Word,
-  disableActions?: number  //0 待复习  1已复习  2 永久记住 3 全部
+  disableActions?: number  //0 待复习  1已复习  2 已记完 3 全部
   showExplained?: number  //-1 显示原逻辑， 1显示全部 0 隐藏全部
   isFirst?: boolean  // 是否是第一个元素
   wordIndex?: number  // 在过滤后列表中的索引
@@ -517,7 +517,7 @@ const play = async () => {
 
 
 /**
- * 记住
+ * 认识
  */
 const remember = () => {
 
@@ -604,7 +604,7 @@ const remember = () => {
 }
 
 /**
- * 永久记住,不再复习
+ * 已记完,不再复习
  */
 const remembered = () => {
 
