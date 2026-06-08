@@ -26,8 +26,8 @@
       <!-- 手势提示 -->
       <view class="gesture-hints">
         <text class="hint-left">左划 忘记</text>
-        <text class="hint-down">下划 永久记住</text>
-        <text class="hint-right">右划 记住</text>
+        <text class="hint-down">下划 已记完</text>
+        <text class="hint-right">右划 认识</text>
       </view>
 
       <!-- 卡片（微信小程序用 catchtouch 阻止页面滚动） -->
@@ -59,11 +59,11 @@
           </view>
           <view v-if="swipeDirection === 'right'" class="swipe-overlay right">
             <text class="swipe-icon">✅</text>
-            <text class="swipe-text">记住</text>
+            <text class="swipe-text">认识</text>
           </view>
           <view v-if="swipeDirection === 'down'" class="swipe-overlay down">
             <text class="swipe-icon">⭐</text>
-            <text class="swipe-text">永久记住</text>
+            <text class="swipe-text">已记完</text>
           </view>
         </view>
 
@@ -94,11 +94,11 @@
             </view>
             <view class="guide-item down">
               <text class="guide-arrow">↓</text>
-              <text class="guide-label">永久记住</text>
+              <text class="guide-label">已记完</text>
             </view>
             <view class="guide-item right">
               <text class="guide-arrow">→</text>
-              <text class="guide-label">记住</text>
+              <text class="guide-label">认识</text>
             </view>
           </view>
         </view>
@@ -110,10 +110,10 @@
           <text class="btn-label">忘记</text>
         </button>
         <button class="btn-remember-forever" @click="handleRememberForever">
-          <text class="btn-label">永久记住</text>
+          <text class="btn-label">已记完</text>
         </button>
         <button class="btn-remember" @click="handleRemember">
-          <text class="btn-label">记住</text>
+          <text class="btn-label">认识</text>
         </button>
       </view>
     </view>
@@ -130,7 +130,7 @@
           </view>
           <view class="stat">
             <text class="stat-value success">{{ rememberCount }}</text>
-            <text class="stat-label">记住</text>
+            <text class="stat-label">认识</text>
           </view>
           <view class="stat">
             <text class="stat-value error">{{ forgetCount }}</text>
@@ -649,6 +649,7 @@ const finishReview = () => {
   align-items: center;
   justify-content: center;
   text-align: center;
+  pointer-events: none; /* 让触摸事件穿透到卡片，确保划动手势在任意位置都能响应 */
 }
 
 .word-text {
@@ -688,6 +689,7 @@ const finishReview = () => {
   display: flex;
   justify-content: center;
   margin-top: 40rpx;
+  pointer-events: none; /* 父容器穿透 */
 }
 
 .btn-play {
@@ -697,6 +699,7 @@ const finishReview = () => {
   padding: 16rpx 40rpx;
   font-size: 28rpx;
   border: none;
+  pointer-events: auto; /* 发音按钮仍需可点击 */
 }
 
 /* 背面手势引导 */
@@ -706,6 +709,7 @@ const finishReview = () => {
   margin-top: 40rpx;
   padding-top: 40rpx;
   border-top: 1rpx solid #eee;
+  pointer-events: none; /* 让触摸事件穿透到卡片 */
 }
 
 .guide-item {
