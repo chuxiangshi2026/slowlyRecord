@@ -18,6 +18,7 @@ interface Window {
         onGlobalShortcut: (callback: (action: string) => void) => void
         setWindowOpacity: (opacity: number) => Promise<void>
         getWindowOpacity: () => Promise<number>
+        getCursorScreenPoint?: () => Promise<{ x: number; y: number } | null>
     }
     services: {
         constanst: {

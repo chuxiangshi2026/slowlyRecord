@@ -23,6 +23,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // 窗口透明度
   getWindowOpacity: () => ipcRenderer.invoke('getWindowOpacity'),
   setWindowOpacity: (opacity) => ipcRenderer.invoke('setWindowOpacity', opacity),
+  getCursorScreenPoint: () => ipcRenderer.invoke('getCursorScreenPoint'),
 
   // 全局快捷键监听
   onGlobalShortcut: (callback) => {

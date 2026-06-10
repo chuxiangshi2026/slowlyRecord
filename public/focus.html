@@ -311,10 +311,29 @@
       color: var(--primary-color);
     }
 
+    .btn-lock {
+      position: absolute;
+      top: 2px;
+      right: 66px;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      padding: 2px;
+      transition: color 0.3s ease;
+      -webkit-app-region: no-drag;
+    }
+
+    .btn-lock:hover {
+      color: var(--primary-color);
+    }
+
+    .btn-lock.active {
+      color: var(--success-color);
+    }
+
     .btn-list {
       position: absolute;
       top: 2px;
-      right: 86px;
+      right: 106px;
       color: var(--text-tertiary);
       cursor: pointer;
       padding: 2px;
@@ -329,7 +348,7 @@
     .btn-spell {
       position: absolute;
       top: 2px;
-      right: 106px;
+      right: 126px;
       color: var(--text-tertiary);
       cursor: pointer;
       padding: 2px;
@@ -420,6 +439,7 @@
     .focus-container.edge-hidden .btn-close,
     .focus-container.edge-hidden .btn-top,
     .focus-container.edge-hidden .btn-edge,
+    .focus-container.edge-hidden .btn-lock,
     .focus-container.edge-hidden .btn-list,
     .focus-container.edge-hidden .btn-spell,
     .focus-container.edge-hidden .opacity-bar,
@@ -438,6 +458,7 @@
     .focus-container.edge-preview .btn-close,
     .focus-container.edge-preview .btn-top,
     .focus-container.edge-preview .btn-edge,
+    .focus-container.edge-preview .btn-lock,
     .focus-container.edge-preview .btn-list,
     .focus-container.edge-preview .btn-spell,
     .focus-container.edge-preview .opacity-bar,
@@ -446,6 +467,45 @@
     .focus-container.edge-preview .spell-hint {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    /* 锁定状态：顶部标题/按钮区保留交互，内容区由父窗口切换鼠标穿透 */
+    .focus-container.locked {
+      -webkit-app-region: drag;
+    }
+
+    .focus-container.locked .actions {
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .focus-container.locked .opacity-bar,
+    .focus-container.locked .dictation-input,
+    .focus-container.locked .dictation-slots {
+      pointer-events: none;
+      opacity: 0.25;
+    }
+
+    .focus-container.locked .btn-close,
+    .focus-container.locked .btn-top,
+    .focus-container.locked .btn-edge,
+    .focus-container.locked .btn-list,
+    .focus-container.locked .btn-spell,
+    .focus-container.locked .btn-lock {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .focus-container.locked .btn-lock {
+      color: var(--primary-color);
+    }
+
+    .focus-container.locked .word,
+    .focus-container.locked .explains,
+    .focus-container.locked .counter,
+    .focus-container.locked .mode-label,
+    .focus-container.locked .spell-hint {
+      opacity: 1;
     }
 
 
@@ -595,6 +655,10 @@
     <span class="icon btn-edge" id="btn-edge" title="关闭贴边隐藏">
       <svg viewBox="0 0 24 24"><path d="M5 5h2v14H5V5zm4 1h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1 2v8h8V8h-8z"/></svg>
     </span>
+    <!-- 锁定 -->
+    <span class="icon btn-lock" id="btn-lock" title="锁定（鼠标穿透）">
+      <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+    </span>
     <!-- 模式切换 -->
     <span class="icon btn-spell" id="btn-spell" title="模式切换">
       <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
@@ -611,6 +675,7 @@
     </div>
     <div class="counter" id="counter">0/0</div>
     <div class="mode-label" id="mode-label">标准</div>
+
 
     <!-- 贴边悬浮球 -->
     <div class="edge-bubble left" id="edge-bubble-left" title="悬浮展开">
@@ -1391,6 +1456,50 @@
       setEdgeStickEnabled(!isEdgeStickEnabled);
     });
 
+    // ========== 锁定功能（部分穿透：顶部按钮区不穿透，内容区穿透） ==========
+    let isLocked = false;
+    const btnLock = document.getElementById('btn-lock');
+    var lastFocusRequestTime = 0;
+    window._lastMousePos = { x: 0, y: 0 };
+
+    var LOCK_SVG = '<svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>';
+    var UNLOCK_SVG = '<svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>';
+
+    function setLocked(value) {
+      isLocked = value;
+      btnLock.innerHTML = value ? UNLOCK_SVG : LOCK_SVG;
+      btnLock.title = value ? '解锁（取消鼠标穿透）' : '锁定（鼠标穿透）';
+      document.getElementById('app').classList.toggle('locked', value);
+
+      if (value) {
+        if (!window._lockBlurHandler) {
+          window._lockBlurHandler = function() {
+            var now = Date.now();
+            if (now - lastFocusRequestTime > 1000) {
+              lastFocusRequestTime = now;
+              postFocusModeAction('focusLockWindow', {}, { persistPendingAction: false, persistStorageAction: false });
+            }
+          };
+          window.addEventListener('blur', window._lockBlurHandler);
+        }
+      } else if (window._lockBlurHandler) {
+        window.removeEventListener('blur', window._lockBlurHandler);
+        window._lockBlurHandler = null;
+      }
+
+      postFocusModeAction('setLocked', { locked: value }, { persistPendingAction: true });
+      saveFocusModeSetting('locked', value);
+      showToast(value ? '已锁定，顶部按钮可点击' : '已解锁');
+    }
+
+    btnLock.addEventListener('click', function() {
+      setLocked(!isLocked);
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      window._lastMousePos = { x: e.clientX, y: e.clientY };
+    });
+
     // 返回列表按钮 - 根据来源返回对应的界面
     document.getElementById('btn-list').addEventListener('click', () => {
       // 先保存当前数据状态到词库和旧数据库，确保主窗口能获取最新数据
@@ -1698,6 +1807,11 @@
             updateEdgeStickButton();
           }
 
+          // 锁定状态
+          if (fm.locked) {
+            setLocked(true);
+          }
+
           // 置顶状态以父窗口创建时传入的 URL 参数为准，仅更新按钮显示，避免启动时把新状态回写成旧值
           updateTopButton();
 
@@ -1719,6 +1833,12 @@
       if (dictationMode && !dictationChecking) {
         // 让输入框处理大多数按键
         if (e.target === elDictationInput) {
+          // Ctrl+L 锁定/解锁始终响应
+          if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) {
+            e.preventDefault();
+            setLocked(!isLocked);
+            return;
+          }
           if (e.key === 'Escape') {
             e.preventDefault();
             exitDictationMode();
@@ -1730,6 +1850,12 @@
 
       // 拼写模式：拦截字母按键进行拼写
       if (spellMode) {
+        // Ctrl+L 锁定/解锁始终响应
+        if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) {
+          e.preventDefault();
+          setLocked(!isLocked);
+          return;
+        }
         // Esc 退出拼写模式
         if (e.key === 'Escape') {
           e.preventDefault();
@@ -1769,6 +1895,7 @@
       else if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentIndex > 0) { currentIndex--; updateDisplay(); } }
       else if (e.key === 'ArrowRight') { e.preventDefault(); if (currentIndex < words.length - 1) { currentIndex++; updateDisplay(); } }
       else if (e.key === 'Escape') { e.preventDefault(); window.close(); }
+      else if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); setLocked(!isLocked); }
     });
 
     // ========== 主题 ==========
