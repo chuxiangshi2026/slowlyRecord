@@ -21,6 +21,14 @@
           </template>
         </el-alert>
 
+        <div class="sync-miniprogram-card">
+          <div class="sync-miniprogram-info">
+            <h4>微信小程序</h4>
+            <p>使用微信扫码可在小程序继续学习，通过服务器同步码拉取或推送数据。</p>
+          </div>
+          <img class="sync-miniprogram-code" src="/static/小程序码.png" alt="慢记单词本微信小程序码" />
+        </div>
+
         <!-- 服务器状态 -->
         <div class="sync-server-status">
           <span>服务器状态：</span>
@@ -366,6 +374,43 @@ async function handleConfirmRestore() {
 
 .sync-alert {
   margin-bottom: 16px;
+}
+
+.sync-miniprogram-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--el-border-color-lighter);
+  border-radius: 8px;
+  background: var(--el-fill-color-extra-light);
+}
+
+.sync-miniprogram-info {
+  min-width: 0;
+
+  h4 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--el-text-color-primary);
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--el-text-color-secondary);
+  }
+}
+
+.sync-miniprogram-code {
+  width: 92px;
+  height: 92px;
+  flex: none;
+  border-radius: 6px;
+  background: #fff;
 }
 
 .sync-server-status {
