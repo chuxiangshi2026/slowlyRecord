@@ -630,7 +630,11 @@ let focusModeSyncTimer: any = null;
 let currentFocusMode = '';  // 当前专注模式（'dictation'=听写，''=标准）
 let lastSyncedAlwaysOnTop: boolean | null = null;
 let lastSyncedEdgeStickEnabled: boolean | null = null;
+let lastSyncedLocked: boolean | null = null;
 let lastHandledFocusModeActionAt = 0;
+let ignoreMousePollTimer: any = null;
+let lastPolledIgnoreMouse: boolean | null = null;
+let warnedMissingIgnoreMouseApi = false;
 
 // 处理子窗口状态保存
 let focusWindowState = {
@@ -668,6 +672,118 @@ const clearFocusModeSync = () => {
     clearInterval(focusModeSyncTimer);
     focusModeSyncTimer = null;
   }
+  stopIgnoreMousePoll();
+};
+
+const getCursorPointCandidates = async () => {
+  try {
+    if (isUtools() && (window as any).utools?.getCursorScreenPoint) {
+      const point = (window as any).utools.getCursorScreenPoint();
+      const candidates = [point];
+      if ((window as any).utools.screenToDipPoint) {
+        const dipPoint = (window as any).utools.screenToDipPoint(point);
+        candidates.push(dipPoint);
+      }
+      return candidates;
+    }
+    if (window.electronAPI?.getCursorScreenPoint) {
+      const point = await window.electronAPI.getCursorScreenPoint();
+      return point ? [point] : [];
+    }
+  } catch (e) {
+    console.error('[focusLock] 获取鼠标屏幕坐标失败:', e);
+  }
+  return [];
+};
+
+const setFocusWindowMouseIgnore = (shouldIgnore: boolean) => {
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    return;
+  }
+
+  if (typeof focusWindow.setIgnoreMouseEvents !== 'function') {
+    if (!warnedMissingIgnoreMouseApi) {
+      console.warn('[focusLock] focusWindow 未暴露 setIgnoreMouseEvents API，无法穿透');
+      warnedMissingIgnoreMouseApi = true;
+    }
+    return;
+  }
+
+  if (shouldIgnore === lastPolledIgnoreMouse) {
+    return;
+  }
+
+  console.log('[focusLock] 切换鼠标穿透:', shouldIgnore ? '穿透' : '禁止穿透');
+  if (shouldIgnore) {
+    focusWindow.setIgnoreMouseEvents(true, { forward: true });
+  } else {
+    focusWindow.setIgnoreMouseEvents(false);
+    if (typeof focusWindow.focus === 'function') {
+      focusWindow.focus();
+    }
+  }
+  lastPolledIgnoreMouse = shouldIgnore;
+};
+
+const startIgnoreMousePoll = () => {
+  if (ignoreMousePollTimer) {
+    clearTimeout(ignoreMousePollTimer);
+    ignoreMousePollTimer = null;
+  }
+  lastPolledIgnoreMouse = null;
+  setFocusWindowMouseIgnore(true);
+
+  const poll = async () => {
+    if (!focusWindow || focusWindow.isDestroyed?.() || !lastSyncedLocked) {
+      ignoreMousePollTimer = null;
+      return;
+    }
+    try {
+      const bounds = focusWindow.getBounds?.();
+      const cursorCandidates = await getCursorPointCandidates();
+      if (!focusWindow || focusWindow.isDestroyed?.()) {
+        ignoreMousePollTimer = null;
+        return;
+      }
+
+      if (bounds && cursorCandidates.length > 0) {
+        const matchedCursor = cursorCandidates.find((cursor) => {
+          const localX = cursor.x - bounds.x;
+          const localY = cursor.y - bounds.y;
+          return localX >= 0 && localX <= bounds.width && localY >= 0 && localY <= bounds.height;
+        });
+
+        if (matchedCursor) {
+          const localY = matchedCursor.y - bounds.y;
+          // 锁定时默认穿透，仅明确位于顶部标题/按钮区时取消穿透。
+          setFocusWindowMouseIgnore(localY > 24);
+        } else {
+          // 坐标系不匹配时，不要误关穿透。
+          setFocusWindowMouseIgnore(true);
+        }
+      } else {
+        // 无法获取全局鼠标坐标时，保持内容区可穿透。
+        setFocusWindowMouseIgnore(true);
+      }
+    } catch (e) {
+      // ignore
+    }
+    if (focusWindow && !focusWindow.isDestroyed?.() && lastSyncedLocked) {
+      ignoreMousePollTimer = setTimeout(poll, 50);
+    } else {
+      ignoreMousePollTimer = null;
+    }
+  };
+  poll();
+};
+
+const stopIgnoreMousePoll = () => {
+  if (ignoreMousePollTimer) {
+    clearTimeout(ignoreMousePollTimer);
+    ignoreMousePollTimer = null;
+  }
+  setFocusWindowMouseIgnore(false);
+  lastPolledIgnoreMouse = null;
 };
 
 const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
@@ -678,8 +794,8 @@ const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
     }
 
     const nextFocusMode = {
-      ...(userSetDoc.focusMode || {}),
       ...(wordsStore.focusMode || {}),
+      ...(userSetDoc.focusMode || {}),
     };
 
     updater(nextFocusMode);
@@ -1311,9 +1427,7 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
   lastSyncedEdgeStickEnabled = initialEdgeStickEnabled;
 
   focusModeSyncTimer = setInterval(() => {
-    if (consumeLatestFocusModePendingAction('db')) {
-      return;
-    }
+    consumeLatestFocusModePendingAction('db');
 
     if (!focusWindow || focusWindow.isDestroyed?.()) {
       clearFocusModeSync();
@@ -1344,6 +1458,44 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
       if (latestEdgeStickEnabled !== lastSyncedEdgeStickEnabled) {
         console.log('[focusModeSync] 检测到 DB 贴边隐藏状态变化:', lastSyncedEdgeStickEnabled, '=>', latestEdgeStickEnabled);
         applyEdgeStickEnabled(latestEdgeStickEnabled, 'focusModeSync');
+      }
+
+      // 检测锁定状态变化（来自 focus.html 的持久化动作）
+      const latestLocked = typeof focusMode?.locked === 'boolean' ? focusMode.locked : false;
+      if (latestLocked !== lastSyncedLocked) {
+        console.log('[focusModeSync] 检测到 DB 锁定状态变化:', lastSyncedLocked, '=>', latestLocked);
+        lastSyncedLocked = latestLocked;
+        if (wordsStore.focusMode) {
+          wordsStore.focusMode.locked = latestLocked;
+        }
+        if (focusWindow && !focusWindow.isDestroyed?.()) {
+          try {
+            if (latestLocked) {
+              if (typeof focusWindow.focus === 'function') {
+                focusWindow.focus();
+              }
+              startIgnoreMousePoll();
+            } else {
+              stopIgnoreMousePoll();
+            }
+          } catch (e) {
+            console.error('[focusModeSync] 设置鼠标穿透失败:', e);
+          }
+        }
+      }
+
+      if (latestLocked && !ignoreMousePollTimer) {
+        lastSyncedLocked = true;
+        startIgnoreMousePoll();
+      }
+
+      // 锁定状态下周期性帮子窗口保持焦点，确保快捷键可用
+      if (lastSyncedLocked && focusWindow && !focusWindow.isDestroyed?.()) {
+        try {
+          if (typeof focusWindow.isFocused === 'function' && !focusWindow.isFocused()) {
+            focusWindow.focus();
+          }
+        } catch (e) {}
       }
     } catch (e) {
       console.error('[focusModeSync] 同步专注模式设置失败:', e);
@@ -1540,9 +1692,41 @@ const handleFocusModeStorageEvent = (event: StorageEvent) => {
   handleFocusModeStorageAction(event.newValue);
 };
 
+const unlockFocusWindowFromParent = () => {
+  lastSyncedLocked = false;
+  updateFocusModeDoc((focusMode) => {
+    focusMode.locked = false;
+  });
+  stopIgnoreMousePoll();
+
+  if (focusWindow && !focusWindow.isDestroyed?.()) {
+    try {
+      focusWindow.webContents?.executeJavaScript?.(`
+        if (typeof setLocked === 'function') {
+          setLocked(false);
+        }
+      `);
+      if (typeof focusWindow.focus === 'function') {
+        focusWindow.focus();
+      }
+    } catch (e) {
+      console.error('[focusLock] 父窗口解锁失败:', e);
+    }
+  }
+};
+
+const handleFocusModeUnlockShortcut = (event: KeyboardEvent) => {
+  if (event.ctrlKey && (event.key === 'l' || event.key === 'L') && lastSyncedLocked) {
+    event.preventDefault();
+    unlockFocusWindowFromParent();
+  }
+};
+
 window.addEventListener('storage', handleFocusModeStorageEvent);
+window.addEventListener('keydown', handleFocusModeUnlockShortcut);
 onUnmounted(() => {
   window.removeEventListener('storage', handleFocusModeStorageEvent);
+  window.removeEventListener('keydown', handleFocusModeUnlockShortcut);
   clearFocusModeSync();
   clearEdgeStickResources();
   isEdgeHidden = false;
@@ -1599,6 +1783,39 @@ const handleChildMessage = (message: any) => {
   } else if (channel === 'openDictation') {
     console.log('[handleChildMessage] 处理 openDictation');
     handleOpenDictation();
+  } else if (channel === 'setLocked') {
+    console.log('[handleChildMessage] 处理 setLocked，payload:', payload);
+    const locked = payload?.locked === true;
+    if (focusWindow && !focusWindow.isDestroyed?.()) {
+      try {
+        lastSyncedLocked = locked;
+        if (locked) {
+          setFocusWindowMouseIgnore(true);
+          startIgnoreMousePoll();
+        } else {
+          stopIgnoreMousePoll();
+        }
+        return;
+      } catch (e) {
+        console.error('[handleChildMessage] 设置鼠标穿透失败:', e);
+      }
+    }
+  } else if (channel === 'setFocusMouseIgnore') {
+    console.log('[handleChildMessage] 处理 setFocusMouseIgnore，payload:', payload);
+    if (lastSyncedLocked || payload?.ignore === false) {
+      setFocusWindowMouseIgnore(payload?.ignore === true);
+    }
+  } else if (channel === 'focusLockWindow') {
+    console.log('[handleChildMessage] 处理 focusLockWindow');
+    if (focusWindow && !focusWindow.isDestroyed?.()) {
+      try {
+        if (typeof focusWindow.focus === 'function') {
+          focusWindow.focus();
+        }
+      } catch (e) {
+        console.error('[handleChildMessage] 聚焦专注窗口失败:', e);
+      }
+    }
   } else {
     console.log('[handleChildMessage] 未知通道:', channel);
   }

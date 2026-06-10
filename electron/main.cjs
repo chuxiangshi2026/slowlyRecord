@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog, clipboard, Tray, Menu, globalShortcut } from 'electron'
+import { app, BrowserWindow, ipcMain, dialog, clipboard, Tray, Menu, globalShortcut, screen } from 'electron'
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
@@ -240,6 +240,17 @@ ipcMain.handle('getWindowOpacity', () => {
   return opacity
 })
 
+// 获取鼠标屏幕坐标
+ipcMain.handle('getCursorScreenPoint', () => {
+  try {
+    const pt = screen.getCursorScreenPoint()
+    return { x: pt.x, y: pt.y }
+  } catch (e) {
+    console.error('[Electron] 获取鼠标坐标失败:', e)
+    return null
+  }
+})
+
 // 窗口透明度：设置
 ipcMain.handle('setWindowOpacity', (_event, opacity) => {
   console.log('[Electron] setWindowOpacity 收到请求:', opacity)
@@ -251,4 +262,18 @@ ipcMain.handle('setWindowOpacity', (_event, opacity) => {
   }
   console.warn('[Electron] setWindowOpacity: mainWindow 不存在')
   return 1.0
+})
+
+// 专注模式窗口鼠标穿透设置
+ipcMain.on('set-focus-ignore-mouse', (_event, locked) => {
+  console.log('[Electron] set-focus-ignore-mouse:', locked)
+  try {
+    const win = BrowserWindow.fromWebContents(_event.sender)
+    if (win && typeof win.setIgnoreMouseEvents === 'function') {
+      win.setIgnoreMouseEvents(locked, { forward: true })
+      console.log('[Electron] 鼠标穿透已设置:', locked)
+    }
+  } catch (e) {
+    console.error('[Electron] 设置鼠标穿透失败:', e)
+  }
 })
