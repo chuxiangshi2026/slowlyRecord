@@ -28,7 +28,7 @@ export type OcrKeyType = Record<OcrPlatform, {
  * 专注模式待处理动作
  */
 export interface FocusModePendingAction {
-    type: 'openWordList' | 'openDictation' | 'setAlwaysOnTop' | 'setEdgeStickEnabled' | 'restoreFromEdge' | 'expandFromEdge' | 'collapseToEdge' | 'setLocked' | 'setFocusMouseIgnore' | 'focusLockWindow' | 'wordChanged' | string;
+    type: 'openWordList' | 'openDictation' | 'setAlwaysOnTop' | 'setEdgeStickEnabled' | 'restoreFromEdge' | 'expandFromEdge' | 'collapseToEdge' | 'setLocked' | 'focusLockWindow' | 'wordChanged' | string;
     payload?: any;
     at: number;
 }

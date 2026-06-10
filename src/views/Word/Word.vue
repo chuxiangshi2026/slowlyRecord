@@ -405,6 +405,7 @@ import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {getDbAdapter} from '@/adapters/db';
 import {isUtools} from '@/adapters/platform';
+import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow} from '@/utils/focus-lock';
 import {
   fetchWordBank,
   WORDBANK_LIST,
@@ -746,25 +747,9 @@ const startIgnoreMousePoll = () => {
         return;
       }
 
-      if (bounds && cursorCandidates.length > 0) {
-        const matchedCursor = cursorCandidates.find((cursor) => {
-          const localX = cursor.x - bounds.x;
-          const localY = cursor.y - bounds.y;
-          return localX >= 0 && localX <= bounds.width && localY >= 0 && localY <= bounds.height;
-        });
-
-        if (matchedCursor) {
-          const localY = matchedCursor.y - bounds.y;
-          // 锁定时默认穿透，仅明确位于顶部标题/按钮区时取消穿透。
-          setFocusWindowMouseIgnore(localY > 24);
-        } else {
-          // 坐标系不匹配时，不要误关穿透。
-          setFocusWindowMouseIgnore(true);
-        }
-      } else {
-        // 无法获取全局鼠标坐标时，保持内容区可穿透。
-        setFocusWindowMouseIgnore(true);
-      }
+      setFocusWindowMouseIgnore(
+        shouldIgnoreMouseInLockedFocusWindow(bounds, cursorCandidates),
+      );
     } catch (e) {
       // ignore
     }
@@ -793,10 +778,7 @@ const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
       return;
     }
 
-    const nextFocusMode = {
-      ...(wordsStore.focusMode || {}),
-      ...(userSetDoc.focusMode || {}),
-    };
+    const nextFocusMode = mergeFocusModeSettings(wordsStore.focusMode, userSetDoc.focusMode);
 
     updater(nextFocusMode);
 
@@ -1799,11 +1781,6 @@ const handleChildMessage = (message: any) => {
       } catch (e) {
         console.error('[handleChildMessage] 设置鼠标穿透失败:', e);
       }
-    }
-  } else if (channel === 'setFocusMouseIgnore') {
-    console.log('[handleChildMessage] 处理 setFocusMouseIgnore，payload:', payload);
-    if (lastSyncedLocked || payload?.ignore === false) {
-      setFocusWindowMouseIgnore(payload?.ignore === true);
     }
   } else if (channel === 'focusLockWindow') {
     console.log('[handleChildMessage] 处理 focusLockWindow');
