@@ -37,8 +37,9 @@ describe('wordbank-service', () => {
 
   describe('常量定义', () => {
     it('应该包含所有词库类型', () => {
-      const expectedTypes = ['cet4', 'cet6', 'bec', 'gmat', 'gre', 'ielts', 
-        'kaogong', 'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'zsb', 'roots']
+      const expectedTypes = ['cet4', 'cet6', 'bec', 'gmat', 'gre', 'ielts',
+        'kaogong', 'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'zsb', 'roots',
+        'phrasal-verbs', 'collocations', 'idioms']
       
       expect(WORDBANK_LIST).toHaveLength(expectedTypes.length)
       
