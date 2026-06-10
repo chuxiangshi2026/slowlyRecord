@@ -332,10 +332,15 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
     handlePluginShortcutMemory()
   }
 
+  // 专注模式 - 通过 专注模式/focus 关键字进入
+  if (action.code === 'focusMode') {
+    handlePluginFocusMode()
+  }
+
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
   const addWordActions = ['over', 'huaci', 'huaduan', 'jietu', 'paste', 'selection']
-  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', ...addWordActions].includes(action.code)) {
+  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
   // 文本记忆 - 通过 文本记忆/诗词记忆 关键字进入
@@ -798,6 +803,19 @@ function handlePluginShortcutMemory() {
   if (isUTools()) (window as any).utools?.showMainWindow?.()
   // 跳转到快捷键记忆页面
   router.push('/shortcut-memory')
+}
+
+/**
+ * 处理专注模式的插件入口
+ */
+function handlePluginFocusMode() {
+  // 先进入单词页，Word.vue 会根据 query 自动打开专注窗口
+  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  wordsStore.setLastVisitedPage('')
+  router.push({
+    path: '/word',
+    query: { openFocus: '1' }
+  })
 }
 
 /**

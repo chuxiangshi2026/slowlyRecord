@@ -437,7 +437,9 @@ const route = useRoute();
 
 // 如果 URL 携带 openFocus=1 参数（从听写等其他页面跳转过来），自动打开专注模式
 const focusModeParam = ref(route.query.focusMode as string || '');
-if (route.query.openFocus === '1') {
+const openFocusFromQuery = () => {
+  if (route.query.openFocus !== '1') return;
+  focusModeParam.value = route.query.focusMode as string || '';
   // 延迟确保单词列表加载完毕
   nextTick(() => {
     setTimeout(() => {
@@ -446,7 +448,9 @@ if (route.query.openFocus === '1') {
       router.replace({ query: { ...route.query, openFocus: undefined, focusMode: undefined } });
     }, 300);
   });
-}
+};
+openFocusFromQuery();
+watch(() => route.query.openFocus, openFocusFromQuery);
 
 // 切换词库选项
 const wordBankOptions = [
