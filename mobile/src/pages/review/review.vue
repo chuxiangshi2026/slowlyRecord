@@ -44,6 +44,9 @@
           @longpress.stop="handleLongPress"
           @tap="onCardTap"
         >
+          <view class="card-top-bar">
+            <view class="level-badge">Lv{{ currentWord.level || 1 }}</view>
+          </view>
           <view class="word-section">
             <text class="word-text">{{ currentWord.word }}</text>
             <text class="phonetic" v-if="currentWord.phonetic">{{ currentWord.phonetic }}</text>
@@ -579,6 +582,23 @@ const finishReview = () => {
   box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.3);
   transform-style: preserve-3d;
   backface-visibility: hidden;
+}
+
+/* 卡片顶部栏（等级徽章） */
+.card-top-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10rpx;
+}
+
+.level-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: bold;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  display: inline-block;
 }
 
 .card-front, .card-back {
