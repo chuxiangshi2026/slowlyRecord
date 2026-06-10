@@ -301,6 +301,45 @@ describe('saveWordBank', () => {
     const loaded = await getWordBank('existing')
     expect(loaded!.name).toBe('新名称')
   })
+
+  // === 词组保存测试 ===
+  it('保存词组时应保留空格', async () => {
+    const phrase = makeWord({ _id: 'p1', text: 'take off' })
+    const bank = makeBank({ id: 'phrase-bank', words: [phrase] })
+    const success = await saveWordBank(bank)
+    expect(success).toBe(true)
+
+    const loaded = await getWordBank('phrase-bank')
+    expect(loaded).not.toBeNull()
+    expect(loaded!.words[0].text).toBe('take off')
+  })
+
+  it('保存词组时应折叠多余空格', async () => {
+    const phrase = makeWord({ _id: 'p1', text: 'look   forward   to' })
+    const bank = makeBank({ id: 'phrase-bank-2', words: [phrase] })
+    const success = await saveWordBank(bank)
+    expect(success).toBe(true)
+
+    const loaded = await getWordBank('phrase-bank-2')
+    expect(loaded).not.toBeNull()
+    expect(loaded!.words[0].text).toBe('look forward to')
+  })
+
+  it('词组与单字词不应互相去重', async () => {
+    const word = makeWord({ _id: 'w1', text: 'takeoff' })
+    const phrase = makeWord({ _id: 'w2', text: 'take off' })
+    const bank = makeBank({ id: 'dedup-bank', words: [word, phrase] })
+    const success = await saveWordBank(bank)
+    expect(success).toBe(true)
+
+    const loaded = await getWordBank('dedup-bank')
+    expect(loaded).not.toBeNull()
+    // 两个都应该存在
+    expect(loaded!.words.length).toBe(2)
+    const texts = loaded!.words.map(w => w.text)
+    expect(texts).toContain('takeoff')
+    expect(texts).toContain('take off')
+  })
 })
 
 // ==================== getWordBank ====================

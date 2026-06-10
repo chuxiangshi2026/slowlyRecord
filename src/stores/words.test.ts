@@ -282,6 +282,70 @@ describe('useWordsStore', () => {
       expect(mockBank.words.length).toBe(2)
     })
 
+    // === 词组批量添加测试 ===
+    it('批量添加词组时应保留空格', async () => {
+      const store = useWordsStore()
+      store.currentWordBankId = 'default'
+
+      const mockBank = createWordBank({ words: [] })
+      vi.mocked(getWordBank).mockResolvedValue(mockBank)
+      vi.mocked(saveWordBank).mockResolvedValue(true)
+
+      const words: Word[] = [
+        createWord({ _id: '1', text: 'take off', itemType: 'phrase' }),
+        createWord({ _id: '2', text: 'look forward to', itemType: 'phrase' })
+      ]
+
+      const result = await store.addAndUpdateWords(words)
+
+      expect(result).toBe(true)
+      expect(store.words.length).toBe(2)
+      expect(store.words[0].text).toBe('take off')
+      expect(store.words[1].text).toBe('look forward to')
+    })
+
+    it('批量添加词组时词组与单词不应互相去重', async () => {
+      const store = useWordsStore()
+      store.currentWordBankId = 'default'
+
+      const existingWord = createWord({ _id: '1', text: 'takeoff' })
+      const mockBank = createWordBank({ words: [existingWord] })
+      vi.mocked(getWordBank).mockResolvedValue(mockBank)
+      vi.mocked(saveWordBank).mockResolvedValue(true)
+
+      // "take off" 不应与 "takeoff" 视为重复
+      const words: Word[] = [
+        createWord({ _id: '2', text: 'take off', itemType: 'phrase' })
+      ]
+
+      const result = await store.addAndUpdateWords(words)
+
+      expect(result).toBe(true)
+      expect(mockBank.words.length).toBe(2)
+    })
+
+    it('批量添加词组时多余空格应折叠后去重', async () => {
+      const store = useWordsStore()
+      store.currentWordBankId = 'default'
+
+      const mockBank = createWordBank({ words: [] })
+      vi.mocked(getWordBank).mockResolvedValue(mockBank)
+      vi.mocked(saveWordBank).mockResolvedValue(true)
+
+      // "take  off" 和 "take off" 规范化后相同，应视为重复
+      const words: Word[] = [
+        createWord({ _id: '1', text: 'take  off', itemType: 'phrase' }),
+        createWord({ _id: '2', text: 'take off', itemType: 'phrase' })
+      ]
+
+      const result = await store.addAndUpdateWords(words)
+
+      expect(result).toBe(true)
+      // store.words 经过 pushWords 内去重后应只有 1 个
+      expect(store.words.length).toBe(1)
+      expect(store.words[0].text).toBe('take off')
+    })
+
     it('批量添加失败时应该返回 false', async () => {
       const store = useWordsStore()
       store.currentWordBankId = 'default'
@@ -428,6 +492,45 @@ describe('useWordsStore', () => {
       const found = store.findWord('nonexistent')
 
       expect(found).toBeUndefined()
+    })
+
+    // === 词组 find 测试 ===
+    it('应该能找到存在的词组', () => {
+      const store = useWordsStore()
+      store.words = [createWord({ text: 'take off', itemType: 'phrase' })]
+
+      const found = store.findWord('take off')
+
+      expect(found).toBeDefined()
+      expect(found?.text).toBe('take off')
+    })
+
+    it('查找词组时应折叠多余空格匹配', () => {
+      const store = useWordsStore()
+      store.words = [createWord({ text: 'take off', itemType: 'phrase' })]
+
+      // 传入多余空格，应能折叠后匹配
+      const found = store.findWord('take  off')
+
+      expect(found).toBeDefined()
+      expect(found?.text).toBe('take off')
+    })
+
+    it('查找词组时不应与单字词混淆', () => {
+      const store = useWordsStore()
+      store.words = [
+        createWord({ text: 'takeoff' }),
+        createWord({ text: 'take off', itemType: 'phrase' })
+      ]
+
+      const foundWord = store.findWord('takeoff')
+      expect(foundWord).toBeDefined()
+      expect(foundWord?.text).toBe('takeoff')
+
+      const foundPhrase = store.findWord('take off')
+      expect(foundPhrase).toBeDefined()
+      expect(foundPhrase?.text).toBe('take off')
+      expect(foundPhrase?.itemType).toBe('phrase')
     })
   })
 

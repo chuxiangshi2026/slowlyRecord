@@ -5,6 +5,7 @@
 
 import type { Word } from '@/types/words';
 import { PREFIXES_DATA, SUFFIXES_DATA, ROOTS_DATA } from './affix-data';
+import {inferItemType} from '@/utils/text-utils';
 
 // 词库类型定义
 export type WordBankType =
@@ -21,7 +22,10 @@ export type WordBankType =
   | 'level8'    // 专业八级
   | 'zsb'       // 专升本
   | 'sat'       // SAT
-  | 'roots';    // 词根词缀
+  | 'roots'     // 词根词缀
+  | 'phrasal-verbs'  // 短语动词
+  | 'collocations'   // 固定搭配
+  | 'idioms';        // 习语
 
 // 词库信息配置
 export interface WordBankInfo {
@@ -66,6 +70,9 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'toefl', name: '托福词汇', description: '托福考试核心词汇', wordCount: 0 },
   { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 0 },
   { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 452 },
+  { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 0 },
+  { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配', wordCount: 0 },
+  { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 0 },
 ];
 
 // 缓存管理
@@ -271,6 +278,7 @@ function normalizeWords(data: any[]): Word[] {
     explains: Array.isArray(item.explains)
       ? item.explains.join('; ')
       : (item.translation || item.meaning || item.explains || ''),
+    itemType: item.itemType || inferItemType(item.word || item.text || ''),
     isReview: true,  // 新导入的词默认为待复习状态
     ctime: new Date(),
     learnDate: new Date(),

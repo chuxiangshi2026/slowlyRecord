@@ -7,15 +7,18 @@ import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
 import {log} from "@/utils/logger.ts";
 import {queryLocalDictionaryAsync} from "@/utils/local-dictionary";
+import {normalizeItemText, inferItemType} from "@/utils/text-utils";
 
 /**
  * 初始化单词状态
  */
 const getInitWord = (text: string, explains: string, pronunciation: string, image: string = '', phonetic: string = '') => {
-    // 清理单词文本中的空白字符，防止脏数据入库
-    const cleanedText = text.replace(/\s+/g, '');
+    // 规范化文本：保留词组中的空格，只折叠多余空白
+    const cleanedText = normalizeItemText(text);
+    const itemType = inferItemType(cleanedText);
     let newWords: Word = {
         "text": cleanedText,
+        "itemType": itemType,
         "explains": explains,
         "explainedHidden": false,
         "pronunciation": pronunciation,
@@ -40,8 +43,8 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
  */
 const addWord = async (wordText: string): Promise<{success: boolean, message: string,text:string}> => {
 
-    // 清理单词文本中的空白字符，防止脏数据入库
-    wordText = wordText.replace(/\s+/g, '');
+    // 规范化文本：保留词组空格，只折叠多余空白
+    wordText = normalizeItemText(wordText);
 
     log.i('新加单词', wordText);
 
@@ -178,8 +181,8 @@ const batchTranslateAndAddWords = async (
 
     const wordsStore = useWordsStore();
 
-    // 过滤重复单词，保持唯一性（清理所有空白字符）
-    const uniqueWords = [...new Set(words.map(w => w.replace(/\s+/g, '')))].filter(w => w.length > 0);
+    // 过滤重复单词，保持唯一性（规范化文本，保留词组空格）
+    const uniqueWords = [...new Set(words.map(w => normalizeItemText(w)))].filter(w => w.length > 0);
 
     if (uniqueWords.length === 0) {
         ElMessage.warning("没有可添加单词");

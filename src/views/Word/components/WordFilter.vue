@@ -106,6 +106,31 @@
             />
           </div>
         </el-popover>
+
+        <!-- 类型筛选 -->
+        <el-popover
+          :visible="popoverKey === 'type'"
+          placement="bottom-start"
+          :width="140"
+          :show-arrow="false"
+          :offset="2"
+        >
+          <template #reference>
+            <span :class="['ftag', { on: filterState.itemType !== 'all' }]" @click="openPopover('type')">
+              类型<template v-if="filterState.itemType !== 'all'">: {{ filterState.itemType === 'phrase' ? '词组' : '单词' }}</template>
+            </span>
+          </template>
+          <div class="popover-body">
+            <div class="affix-type-row">
+              <span
+                v-for="opt in typeOptions"
+                :key="opt.value"
+                :class="['affix-type-chip', { on: filterState.itemType === opt.value }]"
+                @click="selectType(opt.value)"
+              >{{ opt.label }}</span>
+            </div>
+          </div>
+        </el-popover>
       </div>
 
       <!-- 分隔 -->
@@ -140,6 +165,7 @@ export interface FilterState {
   affixType: string  // '' | 'prefix' | 'suffix' | 'root' | 'all'
   affixText: string
   phonetic: string
+  itemType: 'all' | 'word' | 'phrase'
   sortBy: string
   sortAsc: boolean
 }
@@ -164,6 +190,7 @@ const filterState = reactive<FilterState>({
   affixType: '',
   affixText: '',
   phonetic: '',
+  itemType: 'all',
   sortBy: '',
   sortAsc: true
 })
@@ -190,6 +217,12 @@ const affixTypeOptions = [
   { value: 'root', label: '词根' }
 ]
 
+const typeOptions = [
+  { value: 'all', label: '全部' },
+  { value: 'word', label: '单词' },
+  { value: 'phrase', label: '词组' }
+]
+
 const isAffixActive = computed(() => !!filterState.affixText || !!filterState.affixType)
 const affixLabel = computed(() => {
   const typeLabel = affixTypeOptions.find(o => o.value === filterState.affixType)?.label || ''
@@ -204,9 +237,15 @@ const selectAffixType = (value: string) => {
   emitChange()
 }
 
+const selectType = (value: 'all' | 'word' | 'phrase') => {
+  filterState.itemType = filterState.itemType === value ? 'all' : value
+  emitChange()
+}
+
 const hasAnyFilter = computed(() =>
   filterState.minLength > 0 || filterState.maxLength > 0 ||
-  !!filterState.pattern || !!filterState.affixText || !!filterState.affixType || !!filterState.phonetic || !!filterState.sortBy
+  !!filterState.pattern || !!filterState.affixText || !!filterState.affixType || !!filterState.phonetic ||
+  filterState.itemType !== 'all' || !!filterState.sortBy
 )
 
 const openPopover = (key: string) => {
@@ -238,6 +277,7 @@ const resetAll = () => {
   filterState.affixType = ''
   filterState.affixText = ''
   filterState.phonetic = ''
+  filterState.itemType = 'all'
   filterState.sortBy = ''
   filterState.sortAsc = true
   popoverKey.value = ''

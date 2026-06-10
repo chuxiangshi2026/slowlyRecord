@@ -8,7 +8,8 @@ export interface Word extends DbDoc {
     isReview: boolean,
     // 单词|文本
     text: string,
-    // 是否是单词   isWord : boolean
+    // 条目类型: word=单词, phrase=词组, collocation=固定搭配（可选，向后兼容）
+    itemType?: 'word' | 'phrase' | 'collocation',
     // 创建时间 创建生成
     ctime: Date
     // 上次复习时间 第一次创建生成

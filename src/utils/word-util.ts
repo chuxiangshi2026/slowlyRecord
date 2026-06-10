@@ -2,6 +2,34 @@ import type {Word} from "@/types/words";
 import {DB_KEY} from "@/constants";
 import {v4 as uuidv4} from "uuid";
 import {formatDateTime} from "@/utils/date-util";
+import {normalizeItemText, inferItemType} from "@/utils/text-utils";
+
+/**
+ * 解析CSV行（引用感知，支持含逗号和引号的字段）
+ */
+function parseCSVLine(line: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+        current += '"'; // 转义的引号 ""
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (ch === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
 
 /**
  * 解析文件内容为单词列表
@@ -14,8 +42,8 @@ export const parseFileContent = (content: string): Word[] => {
         .map(line => line.trim()) // 去除空格
         .filter(line => line.length > 0) // 过滤空行
         .map(line => {
-            // 处理CSV格式，如果包含逗号则分割
-            const parts = line.includes(',') ? line.split(',') : [line];
+            // 处理CSV格式，使用引用感知解析（支持含逗号的词组和释义）
+            const parts = line.includes(',') ? parseCSVLine(line) : [line];
 
             // 解析创建时间和学习时间
             let ctime: Date | string = new Date();
@@ -58,8 +86,10 @@ export const parseFileContent = (content: string): Word[] => {
             }
 
 
+            const text = normalizeItemText(parts[0] || '');
             return {
-                text: parts[0].trim(), // 第一列作为单词
+                text: text,
+                itemType: inferItemType(text),
                 explains: parts[1] ? parts[1].trim() : '', // 第二列作为释义（如果有）
                 explainedHidden: parts[2] ? parts[2].trim() === 'true' : false,
                 isReview: parts[3] ? parts[3].trim() === 'true' : true,
@@ -83,6 +113,7 @@ export const parseFileContent = (content: string): Word[] => {
 export const filterWordsForJsonExport = (words: Word[]): any[] => {
     return words.map(word => ({
         text: word.text,
+        itemType: word.itemType,
         explains: word.explains,
         explainedHidden: word.explainedHidden,
         isReview: word.isReview,
@@ -92,6 +123,16 @@ export const filterWordsForJsonExport = (words: Word[]): any[] => {
     }));
 };
 
+/**
+ * 转义CSV字段（含逗号/引号/换行时加引号）
+ */
+function escapeCSV(value: string): string {
+    if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+        return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+}
+
 
 /**
  * 过滤单词属性用于文本导出
@@ -100,7 +141,7 @@ export const filterWordsForJsonExport = (words: Word[]): any[] => {
  */
 export const filterWordsForTextExport = (words: Word[]): string => {
     return words.map(word =>
-        `${word.text}, ${word.explains},${word.explainedHidden},${word.isReview}, ${formatDateTime(word.ctime)},${formatDateTime(word.learnDate)}, ${word.level}`
+        `${escapeCSV(word.text)}, ${escapeCSV(word.explains)},${word.explainedHidden},${word.isReview}, ${formatDateTime(word.ctime)},${formatDateTime(word.learnDate)}, ${word.level}`
     ).join('\n');
 };
 
@@ -129,6 +170,7 @@ export const validateImportedWords = (words: any[]): any[] => {
             learnDate: word.learnDate ? new Date(word.learnDate) : new Date(), // 确保是Date对象
             level: (word.level >= 0 && word.level <= 12 ? word.level : 1) as 0|1|2|3|4|5|6|7|8|9|10|11|12, // 补全level属性
             remember: word.remember ?? false, // 补全remember属性
+            itemType: word.itemType || inferItemType(word.text), // 保留或推断itemType
             explains: word.explains || '', // 确保有explains属性
             pronunciation: word.pronunciation || '' // 确保有发音属性
         }));

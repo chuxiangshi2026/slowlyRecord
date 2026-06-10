@@ -3,7 +3,6 @@ import {log} from "@/utils/logger";
 import cloneDeep from 'lodash.clonedeep';
 import {DB_KEY_DICTATION} from "@/constants";
 import {getDbAdapter} from "@/adapters/db";
-import type { WordBankType } from "./wordbank-service";
 
 const DB_KEY_PREFIX = DB_KEY_DICTATION;
 
@@ -17,25 +16,11 @@ export interface DictationProgress {
   wordList: Word[];
   currentIndex: number;
   stats: { correct: number; wrong: number };
-  wrongWords: Word[];
   errorCountMap: Record<number, number>;
   wordBank: string;
   wordCount: number;
   displayMode: 'blank' | 'partial';
   options: string[];
-  updatedAt: number;
-}
-
-/**
- * 错题记录接口
- */
-export interface WrongWordsRecord {
-  _id: string;
-  _rev?: string;
-  type: 'wrong_words_record';
-  wordBank: string;
-  wrongWords: Word[];
-  totalCount: number;
   updatedAt: number;
 }
 
@@ -167,113 +152,6 @@ export function removeDictationProgress(idOrWordBank?: string): void {
     }
   } catch (error) {
     log.e('删除听写进度失败', error);
-  }
-}
-
-// ==================== 错题记录功能 ====================
-
-/**
- * 获取错题记录键名
- */
-function getWrongWordsKey(wordBank: string): string {
-  return `${DB_KEY_PREFIX}wrong_${wordBank}`;
-}
-
-/**
- * 获取错题记录
- * @param wordBank 词库类型
- * @returns 错题记录或null
- */
-export function getWrongWordsRecord(wordBank: string): WrongWordsRecord | null {
-  try {
-    const db = getDbAdapter();
-    const allDocs = db.allDocs(DB_KEY_PREFIX);
-    const record = allDocs.find((doc: any) =>
-      doc.type === 'wrong_words_record' && doc.wordBank === wordBank
-    );
-    return record as WrongWordsRecord || null;
-  } catch (error) {
-    log.e('获取错题记录失败', error);
-    return null;
-  }
-}
-
-/**
- * 保存错题记录
- * @param wordBank 词库类型
- * @param wrongWords 错题列表
- */
-export async function saveWrongWords(wordBank: string, wrongWords: Word[]): Promise<DbReturn> {
-  try {
-    const existing = getWrongWordsRecord(wordBank);
-
-    // 合并错题，去重
-    const mergedWords = existing
-      ? [...existing.wrongWords, ...wrongWords].filter((word, index, self) =>
-          index === self.findIndex(w => w.text === word.text)
-        )
-      : wrongWords;
-
-    const record: WrongWordsRecord = {
-      _id: existing?._id || getWrongWordsKey(wordBank),
-      _rev: existing?._rev,
-      type: 'wrong_words_record',
-      wordBank,
-      wrongWords: mergedWords,
-      totalCount: mergedWords.length,
-      updatedAt: Date.now()
-    };
-
-    log.i('保存错题记录', record);
-
-    const cleanedData = cloneDeep(record);
-    const db = getDbAdapter();
-    const result = await db.promises.put(cleanedData);
-
-    if (result.ok) {
-      log.d('保存错题记录成功');
-    } else if (result.error) {
-      log.e('保存错题记录失败', result.message);
-    }
-
-    return result;
-  } catch (error) {
-    log.e('保存错题记录异常', error);
-    return {ok: false, id: '', rev: '', error: true, message: String(error)};
-  }
-}
-
-/**
- * 清空指定词库的错题
- * @param wordBank 词库类型
- */
-export function clearWrongWords(wordBank: string): void {
-  try {
-    const record = getWrongWordsRecord(wordBank);
-    if (record) {
-      const db = getDbAdapter();
-      db.remove(record._id);
-      log.d(`清空词库 ${wordBank} 的错题记录`);
-    }
-  } catch (error) {
-    log.e('清空错题记录失败', error);
-  }
-}
-
-/**
- * 获取所有有错题的词库列表
- * @returns 词库名称列表
- */
-export function getWrongWordsBanks(): string[] {
-  try {
-    const db = getDbAdapter();
-    const allDocs = db.allDocs(DB_KEY_PREFIX);
-    return allDocs
-      .filter((doc: any) => doc.type === 'wrong_words_record' && doc.wrongWords?.length > 0)
-      .map((doc: any) => doc.wordBank);
-  } catch (error) {
-    log.e('获取错题词库列表失败', error);
-    return [];
   }
 }
 

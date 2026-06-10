@@ -385,6 +385,7 @@ import {
 
 import {log} from "@/utils/logger.ts";
 import {analyzeWord} from "@/utils/word-analysis.ts";
+import {isPhrase, getWordCount} from "@/utils/text-utils";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
@@ -1804,6 +1805,7 @@ const currentFilter = shallowRef<FilterState>({
   affixType: '',
   affixText: '',
   phonetic: '',
+  itemType: 'all',
   sortBy: '',
   sortAsc: true
 })
@@ -1824,6 +1826,7 @@ const onFilterReset = () => {
     affixType: '',
     affixText: '',
     phonetic: '',
+    itemType: 'all',
     sortBy: '',
     sortAsc: true
   }
@@ -1892,25 +1895,36 @@ const showFilteredWords = computed(() => {
 
   const f = currentFilter.value
 
-  // 筛选：单词长度
+  // 筛选：类型（单词/词组）
+  if (f.itemType !== 'all') {
+    list = list.filter(item => {
+      if (f.itemType === 'phrase') return isPhrase(item)
+      return !isPhrase(item)
+    })
+  }
+
+  // 筛选：单词长度（词组按单词数计算）
   if (f.minLength > 0 || f.maxLength > 0) {
     list = list.filter(item => {
-      const len = item.text.replace(/\s+/g, '').length
+      const len = isPhrase(item) ? getWordCount(item.text) : item.text.length
       if (f.minLength > 0 && len < f.minLength) return false
       if (f.maxLength > 0 && len > f.maxLength) return false
       return true
     })
   }
 
-  // 筛选：字母组合通配符
+  // 筛选：字母组合通配符（词组保留空格）
   const patternRegex = patternToRegex(f.pattern)
   if (patternRegex) {
-    list = list.filter(item => patternRegex.test(item.text.replace(/\s+/g, '')))
+    list = list.filter(item => {
+      const searchText = isPhrase(item) ? item.text : item.text.replace(/\s+/g, '')
+      return patternRegex.test(searchText)
+    })
   }
 
-  // 筛选：词根词缀
+  // 筛选：词根词缀（跳过词组）
   if (f.affixType || f.affixText.trim()) {
-    list = list.filter(item => matchesAffix(item.text, f.affixType, f.affixText))
+    list = list.filter(item => isPhrase(item) ? false : matchesAffix(item.text, f.affixType, f.affixText))
   }
 
   // 筛选：音标
@@ -1927,7 +1941,9 @@ const showFilteredWords = computed(() => {
         case 'alpha':
           return dir * a.text.localeCompare(b.text, 'en')
         case 'length':
-          return dir * (a.text.length - b.text.length)
+          const lenA = isPhrase(a) ? getWordCount(a.text) : a.text.length
+          const lenB = isPhrase(b) ? getWordCount(b.text) : b.text.length
+          return dir * (lenA - lenB)
         case 'time':
           return dir * (new Date(a.ctime).getTime() - new Date(b.ctime).getTime())
         case 'level':

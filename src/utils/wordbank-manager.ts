@@ -7,6 +7,7 @@ import type { Word } from '@/types/words';
 import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 import {getDbAdapter} from '@/adapters/db';
+import {normalizeItemText} from '@/utils/text-utils';
 
 // 词库数据结构
 export interface WordBank {
@@ -138,8 +139,8 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
     // 先删除旧的分片
     await deleteWordBankDataDoc(bankId);
 
-    // 清理单词文本中的空白字符，防止脏数据入库
-    const cleanedWords = words.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }));
+    // 规范化文本，保留词组空格
+    const cleanedWords = words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
     // 按 text 去重：保留列表中后出现的（通常更新），防止历史脏数据重复入库
     const seen = new Set<string>();
     const uniqueWords: Word[] = [];
@@ -232,8 +233,8 @@ function getWordBankWords(bankId: string): Word[] {
   for (const chunk of chunks.sort((a, b) => a.chunkIndex - b.chunkIndex)) {
     allWords.push(...chunk.words);
   }
-  // 清理单词文本中的空白字符，修复历史脏数据
-  const cleanedWords = allWords.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }));
+  // 规范化文本，保留词组空格
+  const cleanedWords = allWords.map(w => ({ ...w, text: normalizeItemText(w.text) }));
 
   // 按 text 去重：历史脏数据可能导致同一单词保存了多份（不同 _id）
   // 保留 _rev 版本号更高的记录（更新更频繁/数据更新）
@@ -318,7 +319,7 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
       
       // 分别保存每个词库的单词数据（使用分片存储）
       for (const bank of banks) {
-        const cleanedWords = bank.words.map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }));
+        const cleanedWords = bank.words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
         await saveWordBankDataDoc(bank.id, cleanedWords);
       }
       

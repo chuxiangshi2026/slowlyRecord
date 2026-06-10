@@ -1260,11 +1260,11 @@
 
     // 事件监听
     document.getElementById('btn-prev').addEventListener('click', () => {
-      if (currentIndex > 0) { currentIndex--; showExplains = false; spellIndex = 0; dictationChecking = false; updateDisplay(); }
+      if (currentIndex > 0) { currentIndex--; spellIndex = 0; dictationChecking = false; updateDisplay(); }
     });
 
     document.getElementById('btn-next').addEventListener('click', () => {
-      if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; spellIndex = 0; dictationChecking = false; updateDisplay(); }
+      if (currentIndex < words.length - 1) { currentIndex++; spellIndex = 0; dictationChecking = false; updateDisplay(); }
     });
 
     document.getElementById('btn-toggle').addEventListener('click', () => { showExplains = !showExplains; updateDisplay(); });
@@ -1739,12 +1739,12 @@
         // 左右箭头：切换单词并重置拼写进度（保持拼写模式）
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
-          if (currentIndex > 0) { currentIndex--; showExplains = false; spellIndex = 0; updateDisplay(); }
+          if (currentIndex > 0) { currentIndex--; spellIndex = 0; updateDisplay(); }
           return;
         }
         if (e.key === 'ArrowRight') {
           e.preventDefault();
-          if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; spellIndex = 0; updateDisplay(); }
+          if (currentIndex < words.length - 1) { currentIndex++; spellIndex = 0; updateDisplay(); }
           return;
         }
         // 只处理单字母按键（a-z, A-Z）
@@ -1766,8 +1766,8 @@
       else if (e.shiftKey && e.key === 'F') { e.preventDefault(); markForgot(); }
       else if (e.shiftKey && e.key === 'P') { e.preventDefault(); playAudio(); }
       else if (e.shiftKey && e.key === 'T') { e.preventDefault(); showExplains = !showExplains; updateDisplay(); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentIndex > 0) { currentIndex--; showExplains = false; updateDisplay(); } }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); if (currentIndex < words.length - 1) { currentIndex++; showExplains = false; updateDisplay(); } }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentIndex > 0) { currentIndex--; updateDisplay(); } }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); if (currentIndex < words.length - 1) { currentIndex++; updateDisplay(); } }
       else if (e.key === 'Escape') { e.preventDefault(); window.close(); }
     });
 

@@ -140,6 +140,41 @@ describe('parseFileContent', () => {
     expect(result[0].level).toBe(12)
   })
 
+  // === 词组 CSV 解析测试 ===
+  it('解析词组 CSV 时应保留空格', () => {
+    const content = 'take off,起飞；脱下'
+    const result = parseFileContent(content)
+
+    expect(result[0].text).toBe('take off')
+    expect(result[0].itemType).toBe('phrase')
+  })
+
+  it('解析包含引号的 CSV 时应正确处理', () => {
+    const content = '"look, look",仔细看;看起来'
+    const result = parseFileContent(content)
+
+    expect(result[0].text).toBe('look, look')
+    expect(result[0].explains).toBe('仔细看;看起来')
+  })
+
+  it('解析包含转义引号的 CSV 时应正确处理', () => {
+    // 含引号的字段需要用外层引号包裹，内部引号用 "" 转义
+    const content = '"say ""hello""","说""你好"""'
+    const result = parseFileContent(content)
+
+    expect(result[0].text).toBe('say "hello"')
+    expect(result[0].explains).toBe('说"你好"')
+  })
+
+  it('解析多字段 CSV 时应正确处理逗号', () => {
+    const content = '"take care of",照顾;保重,true,true,2024-01-15 10:30:00,2024-01-15 10:30:00,2'
+    const result = parseFileContent(content)
+
+    expect(result[0].text).toBe('take care of')
+    expect(result[0].explains).toBe('照顾;保重')
+    expect(result[0].level).toBe(2)
+  })
+
   it('应该为每行去除首尾空格', () => {
     const content = '  hello  \n  world  '
     const result = parseFileContent(content)
@@ -274,6 +309,17 @@ describe('filterWordsForJsonExport', () => {
     expect(result[0]).not.toHaveProperty('pronunciation')
   })
 
+  it('JSON 导出应包含 itemType 字段', () => {
+    const words: Word[] = [
+      createWord({ text: 'take off', itemType: 'phrase' }),
+      createWord({ text: 'hello', itemType: 'word' })
+    ]
+    const result = filterWordsForJsonExport(words)
+
+    expect(result[0].itemType).toBe('phrase')
+    expect(result[1].itemType).toBe('word')
+  })
+
   it('应该将 Date 对象转换为格式化的时间字符串', () => {
     const words: Word[] = [
       createWord({
@@ -347,6 +393,25 @@ describe('filterWordsForTextExport', () => {
     expect(line).toContain('true')
     expect(line).toContain('false')
     expect(line).toContain('5')
+  })
+
+  // === 词组导出测试 ===
+  it('文本导出含逗号的词组时应加引号转义', () => {
+    const words: Word[] = [
+      createWord({ text: 'look, look', explains: '仔细看' })
+    ]
+    const result = filterWordsForTextExport(words)
+
+    expect(result).toContain('"look, look"')
+  })
+
+  it('文本导出含引号的词组时应转义引号', () => {
+    const words: Word[] = [
+      createWord({ text: 'say "hello"', explains: '说你好' })
+    ]
+    const result = filterWordsForTextExport(words)
+
+    expect(result).toContain('"say ""hello"""')
   })
 })
 
@@ -544,5 +609,27 @@ describe('validateImportedWords', () => {
     const result = validateImportedWords(words)
 
     expect(result[0].pronunciation).toBe('')
+  })
+
+  // === 词组 validate 测试 ===
+  it('导入词组时应保留 itemType', () => {
+    const words = [{ text: 'take off', itemType: 'phrase' }]
+    const result = validateImportedWords(words)
+
+    expect(result[0].itemType).toBe('phrase')
+  })
+
+  it('导入含空格的文本但无 itemType 时应自动推断为 phrase', () => {
+    const words = [{ text: 'look forward to' }]
+    const result = validateImportedWords(words)
+
+    expect(result[0].itemType).toBe('phrase')
+  })
+
+  it('导入单词时应默认 itemType 为 word', () => {
+    const words = [{ text: 'hello' }]
+    const result = validateImportedWords(words)
+
+    expect(result[0].itemType).toBe('word')
   })
 })

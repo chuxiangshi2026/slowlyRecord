@@ -105,6 +105,27 @@ describe('str-util', () => {
       expect(result.learnDate.getTime()).toBeGreaterThanOrEqual(before.getTime())
       expect(result.learnDate.getTime()).toBeLessThanOrEqual(after.getTime())
     })
+
+    // === 词组测试 ===
+    it('创建词组时应保留空格并自动推断 itemType 为 phrase', () => {
+      const result = getInitWord('take off', '起飞；脱下', '')
+
+      expect(result.text).toBe('take off')
+      expect(result.itemType).toBe('phrase')
+    })
+
+    it('创建词组时应折叠多余空格', () => {
+      const result = getInitWord('look   forward   to', '期待', '')
+
+      expect(result.text).toBe('look forward to')
+      expect(result.itemType).toBe('phrase')
+    })
+
+    it('创建单个单词时 itemType 应为 word', () => {
+      const result = getInitWord('hello', '你好', '')
+
+      expect(result.itemType).toBe('word')
+    })
   })
 
   describe('addWord', () => {
@@ -295,6 +316,25 @@ describe('str-util', () => {
       await batchTranslateAndAddWords(['word1', 'word2'], onProgress)
 
       expect(onProgress).toHaveBeenCalled()
+    })
+
+    // === 词组批量测试 ===
+    it('批量添加词组时应保留空格', async () => {
+      mockFindWord.mockReturnValue(null)
+
+      await batchTranslateAndAddWords(['take off', 'look forward to'])
+
+      expect(mockTranslateWithPlatform).toHaveBeenCalledWith('take off')
+      expect(mockTranslateWithPlatform).toHaveBeenCalledWith('look forward to')
+    })
+
+    it('批量添加词组时应折叠多余空格后去重', async () => {
+      mockFindWord.mockReturnValue(null)
+
+      await batchTranslateAndAddWords(['take  off', 'take off', 'take off'])
+
+      // 虽然写的时候有多余空格，但 normalizeItemText 后前两者相同，只应处理一次（第三个重复）
+      expect(mockTranslateWithPlatform).toHaveBeenCalledTimes(1)
     })
   })
 
