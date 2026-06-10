@@ -137,10 +137,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, onMounted } from 'vue'
+import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
 
 const wordsStore = useMobileWords()
+
+// ========== 筛选状态持久化 ==========
+const FILTER_STORAGE_KEY = 'slowly-record-words-filter'
+
+interface SavedFilterState {
+  listMode: number
+  minLength: number
+  maxLength: number
+  pattern: string
+  phonetic: string
+  sortBy: string
+  sortAsc: boolean
+  showFilterPanel: boolean
+}
+
+function loadFilterState(): SavedFilterState | null {
+  try {
+    const data = uni.getStorageSync(FILTER_STORAGE_KEY)
+    if (data && typeof data === 'object') return data as SavedFilterState
+  } catch {}
+  return null
+}
+
+function saveFilterState() {
+  try {
+    uni.setStorageSync(FILTER_STORAGE_KEY, {
+      listMode: listMode.value,
+      minLength: filterState.minLength,
+      maxLength: filterState.maxLength,
+      pattern: filterState.pattern,
+      phonetic: filterState.phonetic,
+      sortBy: filterState.sortBy,
+      sortAsc: filterState.sortAsc,
+      showFilterPanel: showFilterPanel.value,
+    })
+  } catch {}
+}
 
 // ========== 单词详情弹窗 ==========
 const showDetail = ref(false)
@@ -148,7 +185,8 @@ const detailWord = ref<any>({})
 
 // ========== 列表模式（与桌面端一致）==========
 // 0=待复习 1=已复习 2=已记完 3=全部
-const listMode = ref(0)
+const savedFilter = loadFilterState()
+const listMode = ref(savedFilter?.listMode ?? 0)
 
 const currentBankName = computed(() => {
   const bank = wordsStore.getBankById(wordsStore.currentBankId)
@@ -157,15 +195,15 @@ const currentBankName = computed(() => {
 
 // ========== 筛选状态（与桌面端 WordFilter 对齐）==========
 const filterState = reactive({
-  minLength: 0,
-  maxLength: 0,
-  pattern: '',
-  phonetic: '',
-  sortBy: '',
-  sortAsc: true
+  minLength: savedFilter?.minLength ?? 0,
+  maxLength: savedFilter?.maxLength ?? 0,
+  pattern: savedFilter?.pattern ?? '',
+  phonetic: savedFilter?.phonetic ?? '',
+  sortBy: savedFilter?.sortBy ?? '',
+  sortAsc: savedFilter?.sortAsc ?? true
 })
 
-const showFilterPanel = ref(false)
+const showFilterPanel = ref(savedFilter?.showFilterPanel ?? false)
 
 // ========== 排序选项 ==========
 const sortOptions = [
@@ -205,6 +243,9 @@ const hasAnyFilter = computed(() =>
   !!filterState.pattern || !!filterState.phonetic || !!filterState.sortBy
 )
 
+// 筛选/排序/模式变化时自动持久化
+watch([listMode, filterState, showFilterPanel], saveFilterState, { deep: true })
+
 function resetFilter() {
   filterState.minLength = 0
   filterState.maxLength = 0
@@ -212,6 +253,7 @@ function resetFilter() {
   filterState.phonetic = ''
   filterState.sortBy = ''
   filterState.sortAsc = true
+  showFilterPanel.value = false
 }
 
 // ========== 核心：筛选+排序 computed ==========
