@@ -28,6 +28,14 @@
     "explains": "一箭之遥；很近的距离"
   },
   {
+    "word": "a tough nut to crack",
+    "explains": "难以对付的人或事"
+  },
+  {
+    "word": "actions speak louder than words",
+    "explains": "行动胜于空谈"
+  },
+  {
     "word": "add insult to injury",
     "explains": "雪上加霜；更糟的是"
   },
@@ -84,6 +92,10 @@
     "explains": "两全其美"
   },
   {
+    "word": "birds of a feather flock together",
+    "explains": "物以类聚，人以群分"
+  },
+  {
     "word": "bite off more than you can chew",
     "explains": "贪多嚼不烂；自不量力"
   },
@@ -104,12 +116,20 @@
     "explains": "破釜沉舟；断绝后路"
   },
   {
+    "word": "burn the candle at both ends",
+    "explains": "过度消耗精力；起早贪黑"
+  },
+  {
     "word": "burn the midnight oil",
     "explains": "挑灯夜读；开夜车"
   },
   {
     "word": "by heart",
     "explains": "背诵；牢记"
+  },
+  {
+    "word": "by the skin of your teeth",
+    "explains": "侥幸；差一点就没"
   },
   {
     "word": "call it a day",
@@ -268,6 +288,10 @@
     "explains": "非常嫉妒；眼红"
   },
   {
+    "word": "hit the books",
+    "explains": "用功读书；啃书"
+  },
+  {
     "word": "hit the hay",
     "explains": "睡觉；就寝"
   },
@@ -300,6 +324,10 @@
     "explains": "不要气馁；振作起来"
   },
   {
+    "word": "keep your fingers crossed",
+    "explains": "祈求好运；祝好运"
+  },
+  {
     "word": "kill two birds with one stone",
     "explains": "一石二鸟；一举两得"
   },
@@ -326,6 +354,10 @@
   {
     "word": "make a long story short",
     "explains": "长话短说；简而言之"
+  },
+  {
+    "word": "make ends meet",
+    "explains": "收支平衡；勉强糊口"
   },
   {
     "word": "miss the boat",
@@ -398,6 +430,10 @@
   {
     "word": "pull yourself together",
     "explains": "振作起来；冷静下来"
+  },
+  {
+    "word": "put all your eggs in one basket",
+    "explains": "孤注一掷"
   },
   {
     "word": "put yourself in someone's shoes",
@@ -530,5 +566,433 @@
   {
     "word": "you can't judge a book by its cover",
     "explains": "不要以貌取人"
+  },
+  {
+    "word": "a penny for your thoughts",
+    "explains": "你在想什么呢"
+  },
+  {
+    "word": "a picture is worth a thousand words",
+    "explains": "一图胜千言"
+  },
+  {
+    "word": "a sitting duck",
+    "explains": "易受攻击的目标"
+  },
+  {
+    "word": "all that glitters is not gold",
+    "explains": "闪光的未必都是金子"
+  },
+  {
+    "word": "as the crow flies",
+    "explains": "直线距离"
+  },
+  {
+    "word": "backseat driver",
+    "explains": "多管闲事的人；指手画脚的人"
+  },
+  {
+    "word": "bad apple",
+    "explains": "害群之马"
+  },
+  {
+    "word": "bend over backwards",
+    "explains": "竭尽全力；想方设法"
+  },
+  {
+    "word": "bite your tongue",
+    "explains": "忍住不说；保持沉默"
+  },
+  {
+    "word": "blow off steam",
+    "explains": "发泄情绪；释放压力"
+  },
+  {
+    "word": "breathe a sigh of relief",
+    "explains": "松了一口气"
+  },
+  {
+    "word": "bring home the bacon",
+    "explains": "养家糊口；赚钱"
+  },
+  {
+    "word": "bury the hatchet",
+    "explains": "言归于好；和解"
+  },
+  {
+    "word": "butter someone up",
+    "explains": "拍马屁；奉承某人"
+  },
+  {
+    "word": "can't see the forest for the trees",
+    "explains": "见木不见林；只关注细节忽略整体"
+  },
+  {
+    "word": "caught between a rock and a hard place",
+    "explains": "进退两难"
+  },
+  {
+    "word": "chase rainbows",
+    "explains": "追逐不切实际的东西"
+  },
+  {
+    "word": "chew the fat",
+    "explains": "闲聊；聊天"
+  },
+  {
+    "word": "come full circle",
+    "explains": "回到原点；循环"
+  },
+  {
+    "word": "cut the mustard",
+    "explains": "达到要求；符合标准"
+  },
+  {
+    "word": "day in and day out",
+    "explains": "日复一日"
+  },
+  {
+    "word": "do someone a good turn",
+    "explains": "帮某人一个忙"
+  },
+  {
+    "word": "eat your heart out",
+    "explains": "羡慕去吧；嫉妒吧"
+  },
+  {
+    "word": "empty nest",
+    "explains": "空巢（子女离家后的家庭）"
+  },
+  {
+    "word": "every dog has its day",
+    "explains": "凡人皆有得意日"
+  },
+  {
+    "word": "fall on deaf ears",
+    "explains": "被当作耳旁风；充耳不闻"
+  },
+  {
+    "word": "get your act together",
+    "explains": "振作起来；有条理地做事"
+  },
+  {
+    "word": "give the cold shoulder",
+    "explains": "冷落；不理睬"
+  },
+  {
+    "word": "go with the flow",
+    "explains": "顺其自然；随大流"
+  },
+  {
+    "word": "handwriting on the wall",
+    "explains": "不祥之兆；征兆"
+  },
+  {
+    "word": "have a sweet tooth",
+    "explains": "爱吃甜食"
+  },
+  {
+    "word": "have your hands full",
+    "explains": "忙得不可开交"
+  },
+  {
+    "word": "head over heels",
+    "explains": "完全地；深深地（爱上）"
+  },
+  {
+    "word": "hold your horses",
+    "explains": "慢点；别急"
+  },
+  {
+    "word": "in the long run",
+    "explains": "从长远来看"
+  },
+  {
+    "word": "in the nick of time",
+    "explains": "刚好及时"
+  },
+  {
+    "word": "ivory tower",
+    "explains": "象牙塔；脱离现实的小天地"
+  },
+  {
+    "word": "jack of all trades",
+    "explains": "万事通；多面手"
+  },
+  {
+    "word": "keep your head above water",
+    "explains": "勉强维持；不负债"
+  },
+  {
+    "word": "know the ropes",
+    "explains": "懂行；熟悉门道"
+  },
+  {
+    "word": "leave no stone unturned",
+    "explains": "千方百计；不遗余力"
+  },
+  {
+    "word": "let bygones be bygones",
+    "explains": "既往不咎；过去的就让它过去"
+  },
+  {
+    "word": "like father like son",
+    "explains": "有其父必有其子"
+  },
+  {
+    "word": "lion's share",
+    "explains": "最大的份额；绝大部分"
+  },
+  {
+    "word": "make a mountain out of a molehill",
+    "explains": "小题大做"
+  },
+  {
+    "word": "method to my madness",
+    "explains": "看似疯狂实则有理"
+  },
+  {
+    "word": "money doesn't grow on trees",
+    "explains": "钱不是大风刮来的"
+  },
+  {
+    "word": "new kid on the block",
+    "explains": "新来的人；新人"
+  },
+  {
+    "word": "nip it in the bud",
+    "explains": "防患于未然；扼杀在萌芽中"
+  },
+  {
+    "word": "once bitten twice shy",
+    "explains": "一朝被蛇咬，十年怕井绳"
+  },
+  {
+    "word": "out of the frying pan into the fire",
+    "explains": "跳出油锅又入火坑；每况愈下"
+  },
+  {
+    "word": "play devil's advocate",
+    "explains": "故意唱反调；从反面考虑"
+  },
+  {
+    "word": "practice what you preach",
+    "explains": "以身作则；言行一致"
+  },
+  {
+    "word": "put the cart before the horse",
+    "explains": "本末倒置"
+  },
+  {
+    "word": "rob Peter to pay Paul",
+    "explains": "拆东墙补西墙"
+  },
+  {
+    "word": "rock the boat",
+    "explains": "捣乱；打破平衡"
+  },
+  {
+    "word": "rub salt in the wound",
+    "explains": "雪上加霜；伤口上撒盐"
+  },
+  {
+    "word": "skeleton in the closet",
+    "explains": "不可告人的秘密"
+  },
+  {
+    "word": "smooth sailing",
+    "explains": "一帆风顺"
+  },
+  {
+    "word": "steal the show",
+    "explains": "抢风头；最引人注目"
+  },
+  {
+    "word": "take the bull by the horns",
+    "explains": "勇敢面对困难"
+  },
+  {
+    "word": "the grass is always greener on the other side",
+    "explains": "这山望着那山高"
+  },
+  {
+    "word": "the shoe is on the other foot",
+    "explains": "情况反转；角色互换"
+  },
+  {
+    "word": "the whole nine yards",
+    "explains": "全部；一应俱全"
+  },
+  {
+    "word": "there's no smoke without fire",
+    "explains": "无风不起浪"
+  },
+  {
+    "word": "throw in the towel",
+    "explains": "认输；放弃"
+  },
+  {
+    "word": "tie the knot",
+    "explains": "结婚；喜结连理"
+  },
+  {
+    "word": "tighten your belt",
+    "explains": "勒紧裤腰带；省吃俭用"
+  },
+  {
+    "word": "too many cooks spoil the broth",
+    "explains": "人多手杂；厨子多了烧坏汤"
+  },
+  {
+    "word": "two sides of the same coin",
+    "explains": "一个硬币的两面"
+  },
+  {
+    "word": "walk on eggshells",
+    "explains": "如履薄冰；小心翼翼"
+  },
+  {
+    "word": "weather the storm",
+    "explains": "渡过难关；经受住风暴"
+  },
+  {
+    "word": "what goes around comes around",
+    "explains": "善有善报，恶有恶报"
+  },
+  {
+    "word": "whole new ball game",
+    "explains": "全新的局面"
+  },
+  {
+    "word": "would not hurt a fly",
+    "explains": "心地善良；连苍蝇都不伤害"
+  },
+  {
+    "word": "you reap what you sow",
+    "explains": "种瓜得瓜，种豆得豆"
+  },
+  {
+    "word": "zero tolerance",
+    "explains": "零容忍"
+  },
+  {
+    "word": "make sense",
+    "explains": "有道理；讲得通；有意义"
+  },
+  {
+    "word": "make sure",
+    "explains": "确保；确认"
+  },
+  {
+    "word": "make a difference",
+    "explains": "有影响；起重要作用"
+  },
+  {
+    "word": "make a living",
+    "explains": "谋生；维持生计"
+  },
+  {
+    "word": "keep an eye on",
+    "explains": "留意；照看"
+  },
+  {
+    "word": "keep your word",
+    "explains": "遵守诺言"
+  },
+  {
+    "word": "stay in touch",
+    "explains": "保持联系"
+  },
+  {
+    "word": "hit the road",
+    "explains": "出发；上路"
+  },
+  {
+    "word": "lose face",
+    "explains": "丢脸；失面子"
+  },
+  {
+    "word": "practice makes perfect",
+    "explains": "熟能生巧"
+  },
+  {
+    "word": "first come first served",
+    "explains": "先到先得"
+  },
+  {
+    "word": "the sky is the limit",
+    "explains": "没有限制；一切皆有可能"
+  },
+  {
+    "word": "trial and error",
+    "explains": "试错法；反复试验"
+  },
+  {
+    "word": "word of mouth",
+    "explains": "口口相传；口碑"
+  },
+  {
+    "word": "by the book",
+    "explains": "按规定；按规矩"
+  },
+  {
+    "word": "double-edged sword",
+    "explains": "双刃剑"
+  },
+  {
+    "word": "get down to business",
+    "explains": "开始干正事；言归正传"
+  },
+  {
+    "word": "set in stone",
+    "explains": "一成不变；板上钉钉"
+  },
+  {
+    "word": "think outside the box",
+    "explains": "跳出框框思考"
+  },
+  {
+    "word": "turn over a new leaf",
+    "explains": "改过自新；重新开始"
+  },
+  {
+    "word": "break the bank",
+    "explains": "倾家荡产；太贵"
+  },
+  {
+    "word": "take your breath away",
+    "explains": "令人屏息；惊叹"
+  },
+  {
+    "word": "take a rain check",
+    "explains": "改天；改日再约"
+  },
+  {
+    "word": "the bottom line",
+    "explains": "关键是；底线；盈亏"
+  },
+  {
+    "word": "fair and square",
+    "explains": "公正地；光明正大地"
+  },
+  {
+    "word": "save the day",
+    "explains": "挽救局面；扭转乾坤"
+  },
+  {
+    "word": "on the go",
+    "explains": "忙个不停；活跃着"
+  },
+  {
+    "word": "out of the ordinary",
+    "explains": "不寻常的；非凡的"
+  },
+  {
+    "word": "par for the course",
+    "explains": "意料之中的事；不出所料"
+  },
+  {
+    "word": "rise and shine",
+    "explains": "起床了；快起来"
   }
 ]

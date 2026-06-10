@@ -25,6 +25,11 @@
     "explains": "v. 折断；中断；断绝"
   },
   {
+    "word": "break into",
+    "phonetic": "/breɪk ˈɪntuː/",
+    "explains": "v. 闯入；突然开始；打断"
+  },
+  {
     "word": "bring up",
     "phonetic": "/brɪŋ ʌp/",
     "explains": "v. 抚养；提出；呕吐"
@@ -38,6 +43,21 @@
     "word": "bring in",
     "phonetic": "/brɪŋ ɪn/",
     "explains": "v. 引进；获利；引入"
+  },
+  {
+    "word": "bring back",
+    "phonetic": "/brɪŋ bæk/",
+    "explains": "v. 带回；恢复；使回忆"
+  },
+  {
+    "word": "bring down",
+    "phonetic": "/brɪŋ daʊn/",
+    "explains": "v. 降低；打倒；使倒下"
+  },
+  {
+    "word": "bring forward",
+    "phonetic": "/brɪŋ ˈfɔːwəd/",
+    "explains": "v. 提出；提前"
   },
   {
     "word": "call off",
@@ -55,6 +75,16 @@
     "explains": "v. 打电话给；征召；想起"
   },
   {
+    "word": "call for",
+    "phonetic": "/kɔːl fɔːr/",
+    "explains": "v. 呼吁；需要；去接"
+  },
+  {
+    "word": "call in",
+    "phonetic": "/kɔːl ɪn/",
+    "explains": "v. 召来；来访；收回"
+  },
+  {
     "word": "carry out",
     "phonetic": "/ˈkæri aʊt/",
     "explains": "v. 执行；实施；完成"
@@ -63,6 +93,16 @@
     "word": "carry on",
     "phonetic": "/ˈkæri ɒn/",
     "explains": "v. 继续；进行"
+  },
+  {
+    "word": "carry forward",
+    "phonetic": "/ˈkæri ˈfɔːwəd/",
+    "explains": "v. 推进；结转"
+  },
+  {
+    "word": "carry through",
+    "phonetic": "/ˈkæri θruː/",
+    "explains": "v. 完成；使渡过难关"
   },
   {
     "word": "come across",
@@ -85,6 +125,71 @@
     "explains": "v. 出来；出版；结果是"
   },
   {
+    "word": "come up",
+    "phonetic": "/kʌm ʌp/",
+    "explains": "v. 出现；发生；走上前"
+  },
+  {
+    "word": "come about",
+    "phonetic": "/kʌm əˈbaʊt/",
+    "explains": "v. 发生；产生"
+  },
+  {
+    "word": "come along",
+    "phonetic": "/kʌm əˈlɒŋ/",
+    "explains": "v. 一起来；进展；出现"
+  },
+  {
+    "word": "come around",
+    "phonetic": "/kʌm əˈraʊnd/",
+    "explains": "v. 恢复；改变看法；来访"
+  },
+  {
+    "word": "come by",
+    "phonetic": "/kʌm baɪ/",
+    "explains": "v. 获得；顺道拜访"
+  },
+  {
+    "word": "come down",
+    "phonetic": "/kʌm daʊn/",
+    "explains": "v. 下降；降落；传承"
+  },
+  {
+    "word": "come down with",
+    "phonetic": "/kʌm daʊn wɪð/",
+    "explains": "v. 患（病）；染上"
+  },
+  {
+    "word": "come forward",
+    "phonetic": "/kʌm ˈfɔːwəd/",
+    "explains": "v. 主动站出来；自告奋勇"
+  },
+  {
+    "word": "come off",
+    "phonetic": "/kʌm ɒf/",
+    "explains": "v. 脱落；成功举行"
+  },
+  {
+    "word": "come on",
+    "phonetic": "/kʌm ɒn/",
+    "explains": "v. 快点；开始；进步"
+  },
+  {
+    "word": "come over",
+    "phonetic": "/kʌm ˈəʊvər/",
+    "explains": "v. 过来；被理解；感觉"
+  },
+  {
+    "word": "come through",
+    "phonetic": "/kʌm θruː/",
+    "explains": "v. 经历；成功度过"
+  },
+  {
+    "word": "come to",
+    "phonetic": "/kʌm tuː/",
+    "explains": "v. 苏醒；合计；达到"
+  },
+  {
     "word": "cut down",
     "phonetic": "/kʌt daʊn/",
     "explains": "v. 砍倒；削减；减少"
@@ -98,6 +203,21 @@
     "word": "cut up",
     "phonetic": "/kʌt ʌp/",
     "explains": "v. 切碎；割伤"
+  },
+  {
+    "word": "cut back",
+    "phonetic": "/kʌt bæk/",
+    "explains": "v. 削减；缩减"
+  },
+  {
+    "word": "cut in",
+    "phonetic": "/kʌt ɪn/",
+    "explains": "v. 插嘴；超车抢道"
+  },
+  {
+    "word": "cut out",
+    "phonetic": "/kʌt aʊt/",
+    "explains": "v. 剪下；删除；停止"
   },
   {
     "word": "deal with",
@@ -125,6 +245,11 @@
     "explains": "v. 填写；使膨胀"
   },
   {
+    "word": "fill up",
+    "phonetic": "/fɪl ʌp/",
+    "explains": "v. 填满；装满"
+  },
+  {
     "word": "find out",
     "phonetic": "/faɪnd aʊt/",
     "explains": "v. 发现；查明；揭发"
@@ -150,6 +275,81 @@
     "explains": "v. 通过；接通电话；完成"
   },
   {
+    "word": "get along with",
+    "phonetic": "/ɡet əˈlɒŋ wɪð/",
+    "explains": "v. 与…相处融洽"
+  },
+  {
+    "word": "get rid of",
+    "phonetic": "/ɡet rɪd ɒv/",
+    "explains": "v. 摆脱；丢弃；除去"
+  },
+  {
+    "word": "get in",
+    "phonetic": "/ɡet ɪn/",
+    "explains": "v. 进入；到达；被录取"
+  },
+  {
+    "word": "get off",
+    "phonetic": "/ɡet ɒf/",
+    "explains": "v. 下车；脱下；离开"
+  },
+  {
+    "word": "get across",
+    "phonetic": "/ɡet əˈkrɒs/",
+    "explains": "v. 传达；讲清楚；使理解"
+  },
+  {
+    "word": "get ahead",
+    "phonetic": "/ɡet əˈhed/",
+    "explains": "v. 领先；获得成功"
+  },
+  {
+    "word": "get around",
+    "phonetic": "/ɡet əˈraʊnd/",
+    "explains": "v. 到处走动；回避；传播"
+  },
+  {
+    "word": "get away",
+    "phonetic": "/ɡet əˈweɪ/",
+    "explains": "v. 离开；逃脱"
+  },
+  {
+    "word": "get away with",
+    "phonetic": "/ɡet əˈweɪ wɪð/",
+    "explains": "v. 侥幸成功；逃脱惩罚"
+  },
+  {
+    "word": "get back",
+    "phonetic": "/ɡet bæk/",
+    "explains": "v. 回来；恢复；报复"
+  },
+  {
+    "word": "get by",
+    "phonetic": "/ɡet baɪ/",
+    "explains": "v. 勉强过活；凑合"
+  },
+  {
+    "word": "get down",
+    "phonetic": "/ɡet daʊn/",
+    "explains": "v. 下来；使沮丧；记下"
+  },
+  {
+    "word": "get into",
+    "phonetic": "/ɡet ˈɪntuː/",
+    "explains": "v. 进入；陷入；对…感兴趣"
+  },
+  {
+    "word": "get out",
+    "phonetic": "/ɡet aʊt/",
+    "explains": "v. 出去；泄漏；出版"
+  },
+  {
+    "word": "get together",
+    "phonetic": "/ɡet təˈɡeðər/",
+    "explains": "v. 聚会；聚集；组织"
+  },
+  {
     "word": "give up",
     "phonetic": "/ɡɪv ʌp/",
     "explains": "v. 放弃；停止"
@@ -163,6 +363,16 @@
     "word": "give out",
     "phonetic": "/ɡɪv aʊt/",
     "explains": "v. 分发；发出；耗尽"
+  },
+  {
+    "word": "give away",
+    "phonetic": "/ɡɪv əˈweɪ/",
+    "explains": "v. 赠送；泄露；出卖"
+  },
+  {
+    "word": "give back",
+    "phonetic": "/ɡɪv bæk/",
+    "explains": "v. 归还；恢复"
   },
   {
     "word": "go on",
@@ -180,6 +390,61 @@
     "explains": "v. 复习；检查；越过"
   },
   {
+    "word": "go after",
+    "phonetic": "/ɡəʊ ˈɑːftər/",
+    "explains": "v. 追逐；追求"
+  },
+  {
+    "word": "go ahead",
+    "phonetic": "/ɡəʊ əˈhed/",
+    "explains": "v. 前进；继续；先走"
+  },
+  {
+    "word": "go by",
+    "phonetic": "/ɡəʊ baɪ/",
+    "explains": "v. 经过；过去；依据"
+  },
+  {
+    "word": "go out",
+    "phonetic": "/ɡəʊ aʊt/",
+    "explains": "v. 出去；外出；熄灭；过时"
+  },
+  {
+    "word": "go away",
+    "phonetic": "/ɡəʊ əˈweɪ/",
+    "explains": "v. 离开；消失"
+  },
+  {
+    "word": "go back",
+    "phonetic": "/ɡəʊ bæk/",
+    "explains": "v. 回去；追溯"
+  },
+  {
+    "word": "go down",
+    "phonetic": "/ɡəʊ daʊn/",
+    "explains": "v. 下降；沉没；被接受"
+  },
+  {
+    "word": "go for",
+    "phonetic": "/ɡəʊ fɔːr/",
+    "explains": "v. 去拿；选择；喜欢；攻击"
+  },
+  {
+    "word": "go off",
+    "phonetic": "/ɡəʊ ɒf/",
+    "explains": "v. 爆炸；响起；离开；变质"
+  },
+  {
+    "word": "go into",
+    "phonetic": "/ɡəʊ ˈɪntuː/",
+    "explains": "v. 进入；从事；调查"
+  },
+  {
+    "word": "go without",
+    "phonetic": "/ɡəʊ wɪˈðaʊt/",
+    "explains": "v. 没有…也行；忍受缺乏"
+  },
+  {
     "word": "grow up",
     "phonetic": "/ɡrəʊ ʌp/",
     "explains": "v. 长大；成长；逐渐形成"
@@ -188,6 +453,26 @@
     "word": "hold on",
     "phonetic": "/həʊld ɒn/",
     "explains": "v. 坚持；稍等；抓住"
+  },
+  {
+    "word": "hold up",
+    "phonetic": "/həʊld ʌp/",
+    "explains": "v. 举起；耽搁；抢劫"
+  },
+  {
+    "word": "hold back",
+    "phonetic": "/həʊld bæk/",
+    "explains": "v. 抑制；退缩；隐瞒"
+  },
+  {
+    "word": "hold out",
+    "phonetic": "/həʊld aʊt/",
+    "explains": "v. 坚持；伸出；维持"
+  },
+  {
+    "word": "hold against",
+    "phonetic": "/həʊld əˈɡenst/",
+    "explains": "v. 因…对某人有成见"
   },
   {
     "word": "keep up",
@@ -200,14 +485,54 @@
     "explains": "v. 继续；持续"
   },
   {
+    "word": "keep away from",
+    "phonetic": "/kiːp əˈweɪ frɒm/",
+    "explains": "v. 远离；避开"
+  },
+  {
+    "word": "keep down",
+    "phonetic": "/kiːp daʊn/",
+    "explains": "v. 控制；压制；压低"
+  },
+  {
+    "word": "keep off",
+    "phonetic": "/kiːp ɒf/",
+    "explains": "v. 避开；不接近"
+  },
+  {
     "word": "lay off",
     "phonetic": "/leɪ ɒf/",
     "explains": "v. 解雇；停止；休息"
   },
   {
+    "word": "lay down",
+    "phonetic": "/leɪ daʊn/",
+    "explains": "v. 放下；制定；规定"
+  },
+  {
     "word": "leave out",
     "phonetic": "/liːv aʊt/",
     "explains": "v. 遗漏；省略；不考虑"
+  },
+  {
+    "word": "leave behind",
+    "phonetic": "/liːv bɪˈhaɪnd/",
+    "explains": "v. 留下；遗忘；超过"
+  },
+  {
+    "word": "let down",
+    "phonetic": "/let daʊn/",
+    "explains": "v. 使失望；放下；放气"
+  },
+  {
+    "word": "let in",
+    "phonetic": "/let ɪn/",
+    "explains": "v. 让…进来；透入"
+  },
+  {
+    "word": "let off",
+    "phonetic": "/let ɒf/",
+    "explains": "v. 放掉；饶恕；放（炮/烟）"
   },
   {
     "word": "look after",
@@ -230,6 +555,31 @@
     "explains": "v. 查阅；向上看；好转"
   },
   {
+    "word": "look down on",
+    "phonetic": "/lʊk daʊn ɒn/",
+    "explains": "v. 轻视；瞧不起"
+  },
+  {
+    "word": "look out",
+    "phonetic": "/lʊk aʊt/",
+    "explains": "v. 小心；当心"
+  },
+  {
+    "word": "look for",
+    "phonetic": "/lʊk fɔːr/",
+    "explains": "v. 寻找；期待"
+  },
+  {
+    "word": "live on",
+    "phonetic": "/lɪv ɒn/",
+    "explains": "v. 靠…生活；继续存在"
+  },
+  {
+    "word": "live up to",
+    "phonetic": "/lɪv ʌp tuː/",
+    "explains": "v. 达到；符合（期望）"
+  },
+  {
     "word": "make up",
     "phonetic": "/meɪk ʌp/",
     "explains": "v. 编造；组成；化妆；弥补"
@@ -238,6 +588,11 @@
     "word": "make out",
     "phonetic": "/meɪk aʊt/",
     "explains": "v. 理解；辨认出；填写"
+  },
+  {
+    "word": "make up for",
+    "phonetic": "/meɪk ʌp fɔːr/",
+    "explains": "v. 弥补；补偿"
   },
   {
     "word": "pass out",
@@ -250,9 +605,19 @@
     "explains": "v. 去世；消失"
   },
   {
+    "word": "pass by",
+    "phonetic": "/pɑːs baɪ/",
+    "explains": "v. 经过；错过"
+  },
+  {
     "word": "pick up",
     "phonetic": "/pɪk ʌp/",
     "explains": "v. 捡起；接人；学会；改善"
+  },
+  {
+    "word": "pick out",
+    "phonetic": "/pɪk aʊt/",
+    "explains": "v. 挑选；辨认出"
   },
   {
     "word": "point out",
@@ -275,6 +640,41 @@
     "explains": "v. 忍受；容忍"
   },
   {
+    "word": "put forward",
+    "phonetic": "/pʊt ˈfɔːwəd/",
+    "explains": "v. 提出；提议；推荐"
+  },
+  {
+    "word": "put out",
+    "phonetic": "/pʊt aʊt/",
+    "explains": "v. 熄灭；出版；打扰"
+  },
+  {
+    "word": "put away",
+    "phonetic": "/pʊt əˈweɪ/",
+    "explains": "v. 放好；储存；吃掉"
+  },
+  {
+    "word": "put down",
+    "phonetic": "/pʊt daʊn/",
+    "explains": "v. 放下；记下；镇压"
+  },
+  {
+    "word": "put through",
+    "phonetic": "/pʊt θruː/",
+    "explains": "v. 接通电话；使经历"
+  },
+  {
+    "word": "put together",
+    "phonetic": "/pʊt təˈɡeðər/",
+    "explains": "v. 组装；整理；组织"
+  },
+  {
+    "word": "put up",
+    "phonetic": "/pʊt ʌp/",
+    "explains": "v. 张贴；建造；提高；提供住宿"
+  },
+  {
     "word": "run out of",
     "phonetic": "/rʌn aʊt ɒv/",
     "explains": "v. 用完；耗尽"
@@ -285,6 +685,46 @@
     "explains": "v. 偶然遇见；撞上"
   },
   {
+    "word": "run away",
+    "phonetic": "/rʌn əˈweɪ/",
+    "explains": "v. 逃跑；逃避"
+  },
+  {
+    "word": "run across",
+    "phonetic": "/rʌn əˈkrɒs/",
+    "explains": "v. 偶然遇到"
+  },
+  {
+    "word": "run after",
+    "phonetic": "/rʌn ˈɑːftər/",
+    "explains": "v. 追赶；追求"
+  },
+  {
+    "word": "run down",
+    "phonetic": "/rʌn daʊn/",
+    "explains": "v. 撞倒；贬低；逐渐减少"
+  },
+  {
+    "word": "run for",
+    "phonetic": "/rʌn fɔːr/",
+    "explains": "v. 竞选；赶快去"
+  },
+  {
+    "word": "run off",
+    "phonetic": "/rʌn ɒf/",
+    "explains": "v. 逃跑；复印；流掉"
+  },
+  {
+    "word": "run over",
+    "phonetic": "/rʌn ˈəʊvər/",
+    "explains": "v. 碾过；撞倒；快速复习"
+  },
+  {
+    "word": "run through",
+    "phonetic": "/rʌn θruː/",
+    "explains": "v. 快速浏览；排练；贯穿"
+  },
+  {
     "word": "set up",
     "phonetic": "/set ʌp/",
     "explains": "v. 建立；设置；安排"
@@ -293,6 +733,31 @@
     "word": "set off",
     "phonetic": "/set ɒf/",
     "explains": "v. 出发；引爆；引发"
+  },
+  {
+    "word": "set out",
+    "phonetic": "/set aʊt/",
+    "explains": "v. 出发；开始；陈列"
+  },
+  {
+    "word": "set aside",
+    "phonetic": "/set əˈsaɪd/",
+    "explains": "v. 留出；拨出；暂时不考虑"
+  },
+  {
+    "word": "set about",
+    "phonetic": "/set əˈbaʊt/",
+    "explains": "v. 开始做；着手"
+  },
+  {
+    "word": "set back",
+    "phonetic": "/set bæk/",
+    "explains": "v. 阻碍；使推迟；花费"
+  },
+  {
+    "word": "set in",
+    "phonetic": "/set ɪn/",
+    "explains": "v. 开始；到来（常指不好的事）"
   },
   {
     "word": "show up",
@@ -310,9 +775,24 @@
     "explains": "v. 闭嘴；关闭"
   },
   {
+    "word": "shut down",
+    "phonetic": "/ʃʌt daʊn/",
+    "explains": "v. 关闭；停工；倒闭"
+  },
+  {
     "word": "stand out",
     "phonetic": "/stænd aʊt/",
     "explains": "v. 突出；引人注目"
+  },
+  {
+    "word": "stand for",
+    "phonetic": "/stænd fɔːr/",
+    "explains": "v. 代表；支持；容忍"
+  },
+  {
+    "word": "stand by",
+    "phonetic": "/stænd baɪ/",
+    "explains": "v. 支持；袖手旁观；准备"
   },
   {
     "word": "take off",
@@ -340,6 +820,36 @@
     "explains": "v. 发生；举行"
   },
   {
+    "word": "take on",
+    "phonetic": "/teɪk ɒn/",
+    "explains": "v. 承担；呈现；雇佣"
+  },
+  {
+    "word": "take in",
+    "phonetic": "/teɪk ɪn/",
+    "explains": "v. 吸收；理解；欺骗"
+  },
+  {
+    "word": "take after",
+    "phonetic": "/teɪk ˈɑːftər/",
+    "explains": "v. 像（长辈）；仿效"
+  },
+  {
+    "word": "take back",
+    "phonetic": "/teɪk bæk/",
+    "explains": "v. 收回；退回；使回忆"
+  },
+  {
+    "word": "take down",
+    "phonetic": "/teɪk daʊn/",
+    "explains": "v. 记录；取下；拆除"
+  },
+  {
+    "word": "take up",
+    "phonetic": "/teɪk ʌp/",
+    "explains": "v. 开始从事；占据；拿起"
+  },
+  {
     "word": "turn on",
     "phonetic": "/tɜːn ɒn/",
     "explains": "v. 打开；开启；使感兴趣"
@@ -358,6 +868,46 @@
     "word": "turn down",
     "phonetic": "/tɜːn daʊn/",
     "explains": "v. 拒绝；调小音量"
+  },
+  {
+    "word": "turn around",
+    "phonetic": "/tɜːn əˈraʊnd/",
+    "explains": "v. 转身；扭转；好转"
+  },
+  {
+    "word": "turn away",
+    "phonetic": "/tɜːn əˈweɪ/",
+    "explains": "v. 转身；拒绝进入"
+  },
+  {
+    "word": "turn back",
+    "phonetic": "/tɜːn bæk/",
+    "explains": "v. 折回；返回；阻止"
+  },
+  {
+    "word": "turn in",
+    "phonetic": "/tɜːn ɪn/",
+    "explains": "v. 上交；交还；就寝"
+  },
+  {
+    "word": "turn into",
+    "phonetic": "/tɜːn ˈɪntuː/",
+    "explains": "v. 变成；转变为"
+  },
+  {
+    "word": "turn out",
+    "phonetic": "/tɜːn aʊt/",
+    "explains": "v. 结果是；生产；关掉"
+  },
+  {
+    "word": "turn over",
+    "phonetic": "/tɜːn ˈəʊvər/",
+    "explains": "v. 翻转；移交；仔细考虑"
+  },
+  {
+    "word": "turn to",
+    "phonetic": "/tɜːn tuː/",
+    "explains": "v. 转向；求助于"
   },
   {
     "word": "work out",
@@ -395,14 +945,24 @@
     "explains": "v. 落后；跟不上"
   },
   {
-    "word": "get along with",
-    "phonetic": "/ɡet əˈlɒŋ wɪð/",
-    "explains": "v. 与…相处融洽"
+    "word": "fall through",
+    "phonetic": "/fɔːl θruː/",
+    "explains": "v. 失败；落空；未能实现"
   },
   {
-    "word": "get rid of",
-    "phonetic": "/ɡet rɪd ɒv/",
-    "explains": "v. 摆脱；丢弃；除去"
+    "word": "fall back on",
+    "phonetic": "/fɔːl bæk ɒn/",
+    "explains": "v. 依靠；退而求其次"
+  },
+  {
+    "word": "fall out",
+    "phonetic": "/fɔːl aʊt/",
+    "explains": "v. 脱落；争吵"
+  },
+  {
+    "word": "fall off",
+    "phonetic": "/fɔːl ɒf/",
+    "explains": "v. 掉落；减少；下降"
   },
   {
     "word": "hand in",
@@ -435,16 +995,6 @@
     "explains": "v. 加入；参加"
   },
   {
-    "word": "live on",
-    "phonetic": "/lɪv ɒn/",
-    "explains": "v. 靠…生活；继续存在"
-  },
-  {
-    "word": "look down on",
-    "phonetic": "/lʊk daʊn ɒn/",
-    "explains": "v. 轻视；瞧不起"
-  },
-  {
     "word": "pay attention to",
     "phonetic": "/peɪ əˈtenʃn tuː/",
     "explains": "v. 注意；关注"
@@ -460,14 +1010,19 @@
     "explains": "v. 拔出；退出；驶出"
   },
   {
-    "word": "put forward",
-    "phonetic": "/pʊt ˈfɔːwəd/",
-    "explains": "v. 提出；提议；推荐"
+    "word": "pull through",
+    "phonetic": "/pʊl θruː/",
+    "explains": "v. 度过难关；康复"
   },
   {
-    "word": "put out",
-    "phonetic": "/pʊt aʊt/",
-    "explains": "v. 熄灭；出版；打扰"
+    "word": "pull up",
+    "phonetic": "/pʊl ʌp/",
+    "explains": "v. 停下；拉起；责备"
+  },
+  {
+    "word": "push forward",
+    "phonetic": "/pʊʃ ˈfɔːwəd/",
+    "explains": "v. 推进；继续前进"
   },
   {
     "word": "ring up",
@@ -565,69 +1120,14 @@
     "explains": "v. 放下；打瞌睡；减少"
   },
   {
-    "word": "fill up",
-    "phonetic": "/fɪl ʌp/",
-    "explains": "v. 填满；装满"
-  },
-  {
-    "word": "get in",
-    "phonetic": "/ɡet ɪn/",
-    "explains": "v. 进入；到达；被录取"
-  },
-  {
-    "word": "get off",
-    "phonetic": "/ɡet ɒf/",
-    "explains": "v. 下车；脱下；离开"
-  },
-  {
-    "word": "go after",
-    "phonetic": "/ɡəʊ ˈɑːftər/",
-    "explains": "v. 追逐；追求"
-  },
-  {
-    "word": "go ahead",
-    "phonetic": "/ɡəʊ əˈhed/",
-    "explains": "v. 前进；继续；先走"
-  },
-  {
-    "word": "go by",
-    "phonetic": "/ɡəʊ baɪ/",
-    "explains": "v. 经过；过去；依据"
-  },
-  {
-    "word": "keep away from",
-    "phonetic": "/kiːp əˈweɪ frɒm/",
-    "explains": "v. 远离；避开"
-  },
-  {
-    "word": "leave behind",
-    "phonetic": "/liːv bɪˈhaɪnd/",
-    "explains": "v. 留下；遗忘；超过"
-  },
-  {
-    "word": "let down",
-    "phonetic": "/let daʊn/",
-    "explains": "v. 使失望；放下；放气"
-  },
-  {
-    "word": "live up to",
-    "phonetic": "/lɪv ʌp tuː/",
-    "explains": "v. 达到；符合（期望）"
+    "word": "drop out",
+    "phonetic": "/drɒp aʊt/",
+    "explains": "v. 退出；退学"
   },
   {
     "word": "open up",
     "phonetic": "/ˈəʊpən ʌp/",
     "explains": "v. 打开；开放；坦诚"
-  },
-  {
-    "word": "pull through",
-    "phonetic": "/pʊl θruː/",
-    "explains": "v. 度过难关；康复"
-  },
-  {
-    "word": "put away",
-    "phonetic": "/pʊt əˈweɪ/",
-    "explains": "v. 放好；储存；吃掉"
   },
   {
     "word": "send out",
@@ -640,16 +1140,6 @@
     "explains": "v. 增加；提高；走上前"
   },
   {
-    "word": "take on",
-    "phonetic": "/teɪk ɒn/",
-    "explains": "v. 承担；呈现；雇佣"
-  },
-  {
-    "word": "take in",
-    "phonetic": "/teɪk ɪn/",
-    "explains": "v. 吸收；理解；欺骗"
-  },
-  {
     "word": "talk over",
     "phonetic": "/tɔːk ˈəʊvər/",
     "explains": "v. 讨论；商量"
@@ -658,6 +1148,11 @@
     "word": "think over",
     "phonetic": "/θɪŋk ˈəʊvər/",
     "explains": "v. 仔细考虑"
+  },
+  {
+    "word": "think through",
+    "phonetic": "/θɪŋk θruː/",
+    "explains": "v. 全面考虑；想透"
   },
   {
     "word": "tie up",
@@ -673,5 +1168,420 @@
     "word": "warm up",
     "phonetic": "/wɔːm ʌp/",
     "explains": "v. 热身；预热；变暖"
+  },
+  {
+    "word": "build up",
+    "phonetic": "/bɪld ʌp/",
+    "explains": "v. 积累；增强；建立"
+  },
+  {
+    "word": "clear up",
+    "phonetic": "/klɪər ʌp/",
+    "explains": "v. 清理；放晴；澄清"
+  },
+  {
+    "word": "close down",
+    "phonetic": "/kləʊz daʊn/",
+    "explains": "v. 关闭；停业"
+  },
+  {
+    "word": "come up against",
+    "phonetic": "/kʌm ʌp əˈɡenst/",
+    "explains": "v. 面对；遭遇"
+  },
+  {
+    "word": "crack down on",
+    "phonetic": "/kræk daʊn ɒn/",
+    "explains": "v. 打击；镇压"
+  },
+  {
+    "word": "do without",
+    "phonetic": "/duː wɪˈðaʊt/",
+    "explains": "v. 没有…也行；凑合"
+  },
+  {
+    "word": "draw up",
+    "phonetic": "/drɔː ʌp/",
+    "explains": "v. 起草；拟定；停下"
+  },
+  {
+    "word": "face up to",
+    "phonetic": "/feɪs ʌp tuː/",
+    "explains": "v. 勇敢面对"
+  },
+  {
+    "word": "get through to",
+    "phonetic": "/ɡet θruː tuː/",
+    "explains": "v. 打通电话；使理解"
+  },
+  {
+    "word": "give over",
+    "phonetic": "/ɡɪv ˈəʊvər/",
+    "explains": "v. 交给；停止；致力于"
+  },
+  {
+    "word": "go through with",
+    "phonetic": "/ɡəʊ θruː wɪð/",
+    "explains": "v. 完成；坚持到底"
+  },
+  {
+    "word": "kick off",
+    "phonetic": "/kɪk ɒf/",
+    "explains": "v. 开始；踢开"
+  },
+  {
+    "word": "knock out",
+    "phonetic": "/nɒk aʊt/",
+    "explains": "v. 击倒；淘汰；使震惊"
+  },
+  {
+    "word": "lead up to",
+    "phonetic": "/liːd ʌp tuː/",
+    "explains": "v. 导致；引向；铺垫"
+  },
+  {
+    "word": "line up",
+    "phonetic": "/laɪn ʌp/",
+    "explains": "v. 排队；安排；组织"
+  },
+  {
+    "word": "lock up",
+    "phonetic": "/lɒk ʌp/",
+    "explains": "v. 锁好；关起来"
+  },
+  {
+    "word": "mark down",
+    "phonetic": "/mɑːk daʊn/",
+    "explains": "v. 记下；减价"
+  },
+  {
+    "word": "measure up",
+    "phonetic": "/ˈmeʒər ʌp/",
+    "explains": "v. 达到标准；衡量"
+  },
+  {
+    "word": "mix up",
+    "phonetic": "/mɪks ʌp/",
+    "explains": "v. 混淆；弄乱"
+  },
+  {
+    "word": "narrow down",
+    "phonetic": "/ˈnærəʊ daʊn/",
+    "explains": "v. 缩小范围"
+  },
+  {
+    "word": "note down",
+    "phonetic": "/nəʊt daʊn/",
+    "explains": "v. 记下；记录"
+  },
+  {
+    "word": "own up",
+    "phonetic": "/əʊn ʌp/",
+    "explains": "v. 承认；坦白"
+  },
+  {
+    "word": "pack up",
+    "phonetic": "/pæk ʌp/",
+    "explains": "v. 打包；收拾；停止"
+  },
+  {
+    "word": "phase out",
+    "phonetic": "/feɪz aʊt/",
+    "explains": "v. 逐步淘汰；逐步停止"
+  },
+  {
+    "word": "play down",
+    "phonetic": "/pleɪ daʊn/",
+    "explains": "v. 淡化；贬低"
+  },
+  {
+    "word": "polish up",
+    "phonetic": "/ˈpɒlɪʃ ʌp/",
+    "explains": "v. 磨光；改进；润色"
+  },
+  {
+    "word": "print out",
+    "phonetic": "/prɪnt aʊt/",
+    "explains": "v. 打印出来"
+  },
+  {
+    "word": "round up",
+    "phonetic": "/raʊnd ʌp/",
+    "explains": "v. 聚拢；围捕；四舍五入"
+  },
+  {
+    "word": "rule out",
+    "phonetic": "/ruːl aʊt/",
+    "explains": "v. 排除；取消"
+  },
+  {
+    "word": "save up",
+    "phonetic": "/seɪv ʌp/",
+    "explains": "v. 储蓄；存钱"
+  },
+  {
+    "word": "sell out",
+    "phonetic": "/sel aʊt/",
+    "explains": "v. 售完；出卖"
+  },
+  {
+    "word": "sign up",
+    "phonetic": "/saɪn ʌp/",
+    "explains": "v. 报名；签约"
+  },
+  {
+    "word": "slip up",
+    "phonetic": "/slɪp ʌp/",
+    "explains": "v. 出错；疏忽"
+  },
+  {
+    "word": "sort out",
+    "phonetic": "/sɔːt aʊt/",
+    "explains": "v. 整理；解决；分类"
+  },
+  {
+    "word": "split up",
+    "phonetic": "/splɪt ʌp/",
+    "explains": "v. 分手；分开；分配"
+  },
+  {
+    "word": "stir up",
+    "phonetic": "/stɜːr ʌp/",
+    "explains": "v. 激起；煽动"
+  },
+  {
+    "word": "store up",
+    "phonetic": "/stɔːr ʌp/",
+    "explains": "v. 储存；积蓄"
+  },
+  {
+    "word": "sum up",
+    "phonetic": "/sʌm ʌp/",
+    "explains": "v. 总结；概括"
+  },
+  {
+    "word": "team up",
+    "phonetic": "/tiːm ʌp/",
+    "explains": "v. 合作；组队"
+  },
+  {
+    "word": "tear down",
+    "phonetic": "/teər daʊn/",
+    "explains": "v. 拆除；拆毁"
+  },
+  {
+    "word": "tidy up",
+    "phonetic": "/ˈtaɪdi ʌp/",
+    "explains": "v. 整理；收拾"
+  },
+  {
+    "word": "trade in",
+    "phonetic": "/treɪd ɪn/",
+    "explains": "v. 以旧换新；交易"
+  },
+  {
+    "word": "trust in",
+    "phonetic": "/trʌst ɪn/",
+    "explains": "v. 信任；信赖"
+  },
+  {
+    "word": "weigh up",
+    "phonetic": "/weɪ ʌp/",
+    "explains": "v. 权衡；估量"
+  },
+  {
+    "word": "wind up",
+    "phonetic": "/waɪnd ʌp/",
+    "explains": "v. 结束；上发条；最终"
+  },
+  {
+    "word": "write down",
+    "phonetic": "/raɪt daʊn/",
+    "explains": "v. 写下；记下"
+  },
+  {
+    "word": "write off",
+    "phonetic": "/raɪt ɒf/",
+    "explains": "v. 注销；报废；认为…失败"
+  },
+  {
+    "word": "ask for",
+    "phonetic": "/ɑːsk fɔːr/",
+    "explains": "v. 请求；要求；找（人）"
+  },
+  {
+    "word": "ask out",
+    "phonetic": "/ɑːsk aʊt/",
+    "explains": "v. 邀请外出；约…出去"
+  },
+  {
+    "word": "believe in",
+    "phonetic": "/bɪˈliːv ɪn/",
+    "explains": "v. 相信；信仰；信任"
+  },
+  {
+    "word": "care about",
+    "phonetic": "/keər əˈbaʊt/",
+    "explains": "v. 关心；在乎"
+  },
+  {
+    "word": "care for",
+    "phonetic": "/keər fɔːr/",
+    "explains": "v. 照顾；喜欢；想要"
+  },
+  {
+    "word": "do away with",
+    "phonetic": "/duː əˈweɪ wɪð/",
+    "explains": "v. 废除；消灭；摆脱"
+  },
+  {
+    "word": "eat out",
+    "phonetic": "/iːt aʊt/",
+    "explains": "v. 外出吃饭；下馆子"
+  },
+  {
+    "word": "hand over",
+    "phonetic": "/hænd ˈəʊvər/",
+    "explains": "v. 移交；交出"
+  },
+  {
+    "word": "help out",
+    "phonetic": "/help aʊt/",
+    "explains": "v. 帮忙；帮助解决"
+  },
+  {
+    "word": "knock down",
+    "phonetic": "/nɒk daʊn/",
+    "explains": "v. 撞倒；拆除；降价"
+  },
+  {
+    "word": "laugh at",
+    "phonetic": "/lɑːf æt/",
+    "explains": "v. 嘲笑；因…而发笑"
+  },
+  {
+    "word": "listen to",
+    "phonetic": "/ˈlɪsn tuː/",
+    "explains": "v. 听；倾听；听从"
+  },
+  {
+    "word": "look up to",
+    "phonetic": "/lʊk ʌp tuː/",
+    "explains": "v. 尊敬；敬仰"
+  },
+  {
+    "word": "move in",
+    "phonetic": "/muːv ɪn/",
+    "explains": "v. 搬进；搬来同住"
+  },
+  {
+    "word": "move out",
+    "phonetic": "/muːv aʊt/",
+    "explains": "v. 搬出；搬走"
+  },
+  {
+    "word": "move on",
+    "phonetic": "/muːv ɒn/",
+    "explains": "v. 继续前进；往前走"
+  },
+  {
+    "word": "pay for",
+    "phonetic": "/peɪ fɔːr/",
+    "explains": "v. 支付；为…付出代价"
+  },
+  {
+    "word": "point at",
+    "phonetic": "/pɔɪnt æt/",
+    "explains": "v. 指向；指着"
+  },
+  {
+    "word": "see off",
+    "phonetic": "/siː ɒf/",
+    "explains": "v. 送行；送别"
+  },
+  {
+    "word": "see through",
+    "phonetic": "/siː θruː/",
+    "explains": "v. 看穿；识破；坚持到底"
+  },
+  {
+    "word": "serve as",
+    "phonetic": "/sɜːv æz/",
+    "explains": "v. 充当；担任；起…作用"
+  },
+  {
+    "word": "sit down",
+    "phonetic": "/sɪt daʊn/",
+    "explains": "v. 坐下；坐下来"
+  },
+  {
+    "word": "stare at",
+    "phonetic": "/steər æt/",
+    "explains": "v. 盯着；凝视"
+  },
+  {
+    "word": "start over",
+    "phonetic": "/stɑːt ˈəʊvər/",
+    "explains": "v. 重新开始"
+  },
+  {
+    "word": "stop by",
+    "phonetic": "/stɒp baɪ/",
+    "explains": "v. 顺道拜访；顺便过访"
+  },
+  {
+    "word": "talk into",
+    "phonetic": "/tɔːk ˈɪntuː/",
+    "explains": "v. 说服…做…"
+  },
+  {
+    "word": "talk out of",
+    "phonetic": "/tɔːk aʊt ɒv/",
+    "explains": "v. 说服…不做…"
+  },
+  {
+    "word": "think about",
+    "phonetic": "/θɪŋk əˈbaʊt/",
+    "explains": "v. 考虑；思考"
+  },
+  {
+    "word": "think of",
+    "phonetic": "/θɪŋk ɒv/",
+    "explains": "v. 想到；想起；认为"
+  },
+  {
+    "word": "throw away",
+    "phonetic": "/θrəʊ əˈweɪ/",
+    "explains": "v. 扔掉；浪费（机会）"
+  },
+  {
+    "word": "throw out",
+    "phonetic": "/θrəʊ aʊt/",
+    "explains": "v. 扔掉；赶走；否决"
+  },
+  {
+    "word": "wait on",
+    "phonetic": "/weɪt ɒn/",
+    "explains": "v. 服侍；招待；等待"
+  },
+  {
+    "word": "walk away",
+    "phonetic": "/wɔːk əˈweɪ/",
+    "explains": "v. 走开；脱身"
+  },
+  {
+    "word": "walk out",
+    "phonetic": "/wɔːk aʊt/",
+    "explains": "v. 走出；罢工；退出"
+  },
+  {
+    "word": "work on",
+    "phonetic": "/wɜːk ɒn/",
+    "explains": "v. 从事；努力改善"
+  },
+  {
+    "word": "work at",
+    "phonetic": "/wɜːk æt/",
+    "explains": "v. 致力于；努力做"
   }
 ]
