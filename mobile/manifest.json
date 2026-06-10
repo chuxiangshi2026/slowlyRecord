@@ -39,9 +39,17 @@
       "urlCheck": false,
       "minified": true,
       "minifyWXML": true,
-      "minifyWXSS": true
+      "minifyWXSS": true,
+      "es6": false,
+      "postcss": false,
+      "ignoreDevUnusedExport": true,
+      "ignoreUploadUnusedExport": true,
+      "bigPackageSizeSupport": true
     },
-    "usingComponents": true
+    "usingComponents": true,
+    "optimization": {
+      "subPackages": true
+    }
   },
   "mp-alipay": {
     "usingComponents": true
