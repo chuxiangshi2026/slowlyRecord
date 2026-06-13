@@ -37,7 +37,7 @@ vi.mock('@/subPackages/wordbank-a/wordbanks/kaoyan', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-c/wordbanks/level4', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-level8/wordbanks/level8', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-c/wordbanks/sat', () => ({ default: [] }))
-vi.mock('@/subPackages/wordbank-b/wordbanks/toefl', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-d/wordbanks/toefl', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-b/wordbanks/zsb', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-b/wordbanks/nul', () => ({ default: [] }))
 

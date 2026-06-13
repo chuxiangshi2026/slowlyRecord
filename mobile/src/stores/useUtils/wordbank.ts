@@ -32,6 +32,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317 },
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277 },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
+  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568 },
 ]
 
 const CACHE_KEY_PREFIX = 'wordbank_cache_v2_'
@@ -40,6 +41,7 @@ const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
   if (type === 'collocations') return 'collocation'
   if (type === 'phrasal-verbs' || type === 'idioms') return 'phrase'
+  if (type === 'roots') return 'word'
   return inferMobileItemType(text)
 }
 
@@ -109,12 +111,13 @@ export async function loadWordBank(
       level4: () => import('@/subPackages/wordbank-c/wordbanks/level4'),
       level8: () => import('@/subPackages/wordbank-level8/wordbanks/level8'),
       sat: () => import('@/subPackages/wordbank-c/wordbanks/sat'),
-      toefl: () => import('@/subPackages/wordbank-b/wordbanks/toefl'),
+      toefl: () => import('@/subPackages/wordbank-d/wordbanks/toefl'),
       zsb: () => import('@/subPackages/wordbank-b/wordbanks/zsb'),
       nul: () => import('@/subPackages/wordbank-b/wordbanks/nul'),
       'phrasal-verbs': () => import('@/subPackages/wordbank-b/wordbanks/phrasal_verbs'),
       collocations: () => import('@/subPackages/wordbank-b/wordbanks/collocations'),
       idioms: () => import('@/subPackages/wordbank-b/wordbanks/idioms'),
+      roots: () => import('@/subPackages/wordbank-d/wordbanks/roots'),
     }
     const impLoader = importLoaders[type]
     if (!impLoader) throw new Error(`未知词库类型: ${type}`)

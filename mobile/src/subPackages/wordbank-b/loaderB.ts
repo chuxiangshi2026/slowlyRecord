@@ -1,6 +1,5 @@
 import type { MobileItemType, Word, WordBankType } from '@/stores/useUtils/types'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
-import toefl from './wordbanks/toefl'
 import bec from './wordbanks/bec'
 import cet4 from './wordbanks/cet4'
 import cet6 from './wordbanks/cet6'
@@ -13,7 +12,6 @@ import collocations from './wordbanks/collocations'
 import idioms from './wordbanks/idioms'
 
 const data: Partial<Record<WordBankType, any[]>> = {
-  toefl,
   bec,
   cet4,
   cet6,
@@ -26,7 +24,7 @@ const data: Partial<Record<WordBankType, any[]>> = {
   idioms,
 }
 
-export const WORDBANK_B_IDS: WordBankType[] = ['toefl', 'bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'nul', 'phrasal-verbs', 'collocations', 'idioms']
+export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'nul', 'phrasal-verbs', 'collocations', 'idioms']
 
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
   if (type === 'collocations') return 'collocation'

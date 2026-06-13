@@ -138,6 +138,17 @@
           }
         }
       ]
+    },
+    {
+      "root": "subPackages/wordbank-d",
+      "pages": [
+        {
+          "path": "wordbankD",
+          "style": {
+            "navigationBarTitleText": "进阶词库 III"
+          }
+        }
+      ]
     }
   ],
   "globalStyle": {

@@ -58,7 +58,7 @@
       <view class="section-item" @click="goTo('/subPackages/wordbank-b/wordbankB')">
         <view class="section-info">
           <text class="section-name">默认词库</text>
-          <text class="section-desc">四六级、商务英语、雅思、托福、新概念等</text>
+          <text class="section-desc">四六级、雅思、新概念、商务、考公、专升本、短语动词、固定搭配、习语等</text>
         </view>
         <text class="arrow">›</text>
       </view>
@@ -73,6 +73,13 @@
         <view class="section-info">
           <text class="section-name">进阶词库 II</text>
           <text class="section-desc">GRE、SAT、专四等</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+      <view class="section-item" @click="goTo('/subPackages/wordbank-d/wordbankD')">
+        <view class="section-info">
+          <text class="section-name">进阶词库 III</text>
+          <text class="section-desc">托福、词根词缀</text>
         </view>
         <text class="arrow">›</text>
       </view>

@@ -39,6 +39,7 @@ export type WordBankType =
   | 'phrasal-verbs'
   | 'collocations'
   | 'idioms'
+  | 'roots'
 
 export interface WordBankInfo {
   id: WordBankType
