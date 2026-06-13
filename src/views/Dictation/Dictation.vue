@@ -378,6 +378,7 @@ const currentFilter = shallowRef<FilterState>({
   affixType: '',
   affixText: '',
   phonetic: '',
+  itemType: 'all',
   sortBy: '',
   sortAsc: true
 });
@@ -404,6 +405,7 @@ const onFilterReset = () => {
     affixType: '',
     affixText: '',
     phonetic: '',
+    itemType: 'all',
     sortBy: '',
     sortAsc: true
   };
