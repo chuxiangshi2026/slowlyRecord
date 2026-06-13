@@ -237,8 +237,8 @@ const selectAffixType = (value: string) => {
   emitChange()
 }
 
-const selectType = (value: 'all' | 'word' | 'phrase') => {
-  filterState.itemType = filterState.itemType === value ? 'all' : value
+const selectType = (value: string) => {
+  filterState.itemType = (filterState.itemType === value ? 'all' : value) as FilterState['itemType']
   emitChange()
 }
 
