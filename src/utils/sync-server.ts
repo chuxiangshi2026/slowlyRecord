@@ -16,7 +16,9 @@
  */
 
 import type { SyncData, SyncServerResult, SyncStatus } from '@/types/sync'
+import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
+import { getSetDb } from '@/utils/user-set-db-util'
 import { exportToJson, importFromJson } from '@/utils/sync-file'
 import { log } from '@/utils/logger'
 import { getAllWordBanks } from '@/utils/wordbank-manager'
@@ -431,21 +433,21 @@ export async function downloadFromServer(syncCode: string, options?: Partial<Res
       return { ...EMPTY_RESTORE_RESULT, errors: ['同步码无效或数据已过期'] }
     }
 
-    // 3. 导入 AES 密钥
-    const aesKey = await importKey(keyBase64)
-
-    // 4. 解密数据
+    // 3. 导入 AES 密钥并解密数据；如果失败，尝试按移动端兼容格式解析
     let compressedPayload: string
     try {
+      const aesKey = await importKey(keyBase64)
       compressedPayload = await decrypt(encrypted, aesKey)
     } catch {
+      const mobileResult = await restoreMobileCompatFromEncrypted(encrypted, keyBase64, options)
+      if (mobileResult) return mobileResult
       return { ...EMPTY_RESTORE_RESULT, errors: ['解密失败，同步码可能不正确或数据已被篡改'] }
     }
 
-    // 5. 解压缩
+    // 4. 解压缩
     const json = await decompressFromJsonPayload(compressedPayload)
 
-    // 6. 解析并还原
+    // 5. 解析并还原
     const data = importFromJson(json)
     const restoreOpts = { ...DEFAULT_RESTORE_OPTIONS, ...options }
     return restoreSyncData(data, restoreOpts)
@@ -489,6 +491,15 @@ function uint8ArrayToBase64(bytes: Uint8Array): string {
   return btoa(chunks.join(''))
 }
 
+function base64ToUint8Array(base64: string): Uint8Array {
+  const binary = atob(base64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i)
+  }
+  return bytes
+}
+
 /** XOR 加密/解密 Uint8Array（对称操作） */
 function xorCrypt(data: Uint8Array, key: string): Uint8Array {
   const keyBytes = new TextEncoder().encode(key)
@@ -503,6 +514,7 @@ function xorCrypt(data: Uint8Array, key: string): Uint8Array {
 interface MobileCompatWord {
   word: string
   meaning: string
+  itemType?: 'word' | 'phrase' | 'sentence' | 'collocation'
   phonetic?: string
   example?: string
   addTime: number
@@ -520,12 +532,18 @@ interface MobileCompatBank {
   words: MobileCompatWord[]
 }
 
+interface MobileCompatUserSettings {
+  translationPlatform?: string
+  keys?: Record<string, { appkey: string; key: string }>
+}
+
 interface MobileCompatSyncData {
   version: number
   exportedAt: number
   platform: string
   /** 词库分组 */
   banks: MobileCompatBank[]
+  userSettings?: MobileCompatUserSettings
 }
 
 function convertDesktopWordToMobile(w: any): MobileCompatWord {
@@ -533,6 +551,7 @@ function convertDesktopWordToMobile(w: any): MobileCompatWord {
   return {
     word: w.text || '',
     meaning: w.explains || '',
+    itemType: w.itemType || (String(w.text || '').includes(' ') ? 'phrase' : 'word'),
     phonetic: w.phonetic || '',
     example: '',
     addTime: learnTime,
@@ -542,6 +561,23 @@ function convertDesktopWordToMobile(w: any): MobileCompatWord {
     remembered: !!w.remember,
     level: typeof w.level === 'number' ? w.level : 0,
     lastReviewTime: learnTime,
+  }
+}
+
+function collectMobileCompatUserSettings(): MobileCompatUserSettings | undefined {
+  const userSet = getSetDb()
+  if (!userSet) return undefined
+
+  const keys: Record<string, { appkey: string; key: string }> = { ...(userSet.keys || {}) }
+  Object.entries(userSet.ocrKeys || {}).forEach(([platform, value]) => {
+    if (!keys[platform]?.appkey?.trim() && value?.appkey?.trim()) {
+      keys[platform] = value
+    }
+  })
+
+  return {
+    translationPlatform: userSet.translationPlatform,
+    keys,
   }
 }
 
@@ -568,6 +604,70 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     exportedAt: Date.now(),
     platform: 'desktop',
     banks,
+    userSettings: collectMobileCompatUserSettings(),
+  }
+}
+
+function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncData {
+  const exportedAt = data.exportedAt || Date.now()
+  return {
+    version: SYNC_VERSION,
+    exportedAt,
+    platform: data.platform || 'mobile',
+    currentWordBankId: data.banks?.[0]?.id || '',
+    wordBanks: (data.banks || []).map((bank) => ({
+      id: bank.id,
+      name: bank.name,
+      createdAt: exportedAt,
+      updatedAt: exportedAt,
+      isDefault: bank.id === 'default',
+      words: (bank.words || []).map((word, index) => ({
+        _id: `mobile-${bank.id}-${index}-${exportedAt}`,
+        text: word.word || '',
+        explains: word.meaning || '',
+        itemType: word.itemType === 'sentence' ? 'phrase' : (word.itemType || (String(word.word || '').includes(' ') ? 'phrase' : 'word')),
+        phonetic: word.phonetic || '',
+        ctime: new Date(word.addTime || exportedAt),
+        learnDate: new Date(word.lastReviewTime || word.addTime || exportedAt),
+        isReview: !!word.needsReview,
+        remember: !!word.remembered,
+        level: typeof word.level === 'number' ? word.level : 1,
+      })) as any,
+    })),
+    userSettings: data.userSettings ? {
+      pluginStatus: false,
+      shortcutEnabled: false,
+      translationPlatform: data.userSettings.translationPlatform || 'glm',
+      ocrPlatform: 'local',
+      memoryFirmness: '正常',
+      keys: data.userSettings.keys || {},
+      ocrKeys: {},
+      focusMode: { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true },
+    } : null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  }
+}
+
+async function restoreMobileCompatFromEncrypted(
+  encryptedBase64: string,
+  key: string,
+  options?: Partial<RestoreOptions>,
+): Promise<RestoreResult | null> {
+  try {
+    const encryptedBytes = base64ToUint8Array(encryptedBase64)
+    const compressed = xorCrypt(encryptedBytes, key)
+    const jsonBytes = pako.inflate(compressed)
+    const json = new TextDecoder().decode(jsonBytes)
+    const mobileData: MobileCompatSyncData = JSON.parse(json)
+    if (!Array.isArray(mobileData.banks)) return null
+
+    const syncData = convertMobileCompatToSyncData(mobileData)
+    return restoreSyncData(syncData, { ...DEFAULT_RESTORE_OPTIONS, ...options })
+  } catch {
+    return null
   }
 }
 

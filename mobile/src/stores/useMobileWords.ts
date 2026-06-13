@@ -2,6 +2,7 @@ import { ref, computed, shallowRef } from 'vue'
 import { defineStore } from 'pinia'
 import { getDbAdapter, type DbDoc } from '@/adapters/index'
 import { WORDBANK_LIST } from './useUtils/wordbank'
+import type { MobileItemType } from './useUtils/types'
 
 // 默认复习间隔（单位：分钟）与桌面端保持一致
 const DEFAULT_INTERVALS = [
@@ -17,6 +18,7 @@ export interface MobileWord {
   meaning: string
   phonetic?: string
   example?: string
+  itemType?: MobileItemType
   addTime: number
   reviewCount: number
   nextReviewTime: number

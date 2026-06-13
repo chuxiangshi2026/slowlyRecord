@@ -1,13 +1,13 @@
 <template>
   <view class="add-word-container">
-    <!-- 输入单词 -->
+    <!-- 输入单词/词组/句子 -->
     <view class="form-group">
-      <text class="form-label">单词</text>
+      <text class="form-label">单词/词组/句子</text>
       <view class="input-row">
         <input 
           class="form-input" 
           v-model="newWord.word"
-          placeholder="输入单词（如：apple）"
+          placeholder="输入单词/词组/句子（如：take care）"
           @confirm="autoTranslate"
           focus
         />
@@ -62,6 +62,7 @@
 import { ref } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { translateText } from '../utils/translation'
+import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
 
 const wordsStore = useMobileWords()
 const translating = ref(false)
@@ -75,11 +76,12 @@ const newWord = ref({
 
 // 自动翻译
 const autoTranslate = async () => {
-  if (!newWord.value.word.trim() || translating.value) return
+  const wordText = normalizeMobileItemText(newWord.value.word)
+  if (!wordText || translating.value) return
   if (newWord.value.meaning.trim()) return
   translating.value = true
   try {
-    const result = await translateText(newWord.value.word.trim(), 'auto', 'zh')
+    const result = await translateText(wordText, 'auto', 'zh')
     if (result.success && result.translatedText && result.translatedText !== newWord.value.word) {
       newWord.value.meaning = result.translatedText
       if (result.phonetic && !newWord.value.phonetic.trim()) {
@@ -103,13 +105,15 @@ const autoTranslate = async () => {
 }
 
 const addWord = async () => {
-  if (!newWord.value.word || !newWord.value.meaning) {
-    uni.showToast({ title: '请填写单词和释义', icon: 'none' })
+  const wordText = normalizeMobileItemText(newWord.value.word)
+  if (!wordText || !newWord.value.meaning.trim()) {
+    uni.showToast({ title: '请填写单词/词组/句子和释义', icon: 'none' })
     return
   }
   try {
     await wordsStore.addWord({
-      word: newWord.value.word.trim(),
+      word: wordText,
+      itemType: inferMobileItemType(wordText),
       meaning: newWord.value.meaning.trim(),
       phonetic: newWord.value.phonetic.trim() || undefined,
       example: newWord.value.example.trim() || undefined,

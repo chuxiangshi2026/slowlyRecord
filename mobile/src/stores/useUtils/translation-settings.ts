@@ -74,3 +74,25 @@ export function hasCustomTranslationApiKey(provider: TranslationPlatform): boole
   const uk = userApiKeys[provider]
   return !!(uk?.appkey?.trim())
 }
+
+export function getAllTranslationApiKeys(): Record<string, { appkey: string; key: string }> {
+  return { ...userApiKeys }
+}
+
+export function applyTranslationSettings(settings?: {
+  translationPlatform?: TranslationPlatform
+  keys?: Record<string, { appkey: string; key: string }>
+}) {
+  if (!settings) return
+
+  if (settings.translationPlatform) {
+    setTranslationPlatform(settings.translationPlatform)
+  }
+
+  if (settings.keys && typeof settings.keys === 'object') {
+    Object.entries(settings.keys).forEach(([platform, value]) => {
+      if (!value || typeof value !== 'object') return
+      setTranslationApiKey(platform as TranslationPlatform, value.appkey || '', value.key || '')
+    })
+  }
+}

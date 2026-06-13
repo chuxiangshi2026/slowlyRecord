@@ -3,7 +3,8 @@
  * 被 useMobileWords（主包）和词库分包页面引用
  */
 
-import type { WordBankType, WordBankInfo, Word, LoadStrategy } from './types'
+import type { MobileItemType, WordBankType, WordBankInfo, Word, LoadStrategy } from './types'
+import { inferMobileItemType, normalizeMobileItemText } from './text'
 
 export type { WordBankType, WordBankInfo, Word, LoadStrategy }
 
@@ -28,10 +29,19 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'toefl', name: '托福词汇', description: '托福考试核心词汇', wordCount: 9213 },
   { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 297 },
   { id: 'nul', name: '新概念词汇', description: '新概念英语核心词汇', wordCount: 600 },
+  { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317 },
+  { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277 },
+  { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
 ]
 
 const CACHE_KEY_PREFIX = 'wordbank_cache_v2_'
 const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000
+
+function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
+  if (type === 'collocations') return 'collocation'
+  if (type === 'phrasal-verbs' || type === 'idioms') return 'phrase'
+  return inferMobileItemType(text)
+}
 
 interface CacheData {
   timestamp: number
@@ -102,17 +112,24 @@ export async function loadWordBank(
       toefl: () => import('@/subPackages/wordbank-b/wordbanks/toefl'),
       zsb: () => import('@/subPackages/wordbank-b/wordbanks/zsb'),
       nul: () => import('@/subPackages/wordbank-b/wordbanks/nul'),
+      'phrasal-verbs': () => import('@/subPackages/wordbank-b/wordbanks/phrasal_verbs'),
+      collocations: () => import('@/subPackages/wordbank-b/wordbanks/collocations'),
+      idioms: () => import('@/subPackages/wordbank-b/wordbanks/idioms'),
     }
     const impLoader = importLoaders[type]
     if (!impLoader) throw new Error(`未知词库类型: ${type}`)
     const h5Module = await impLoader()
     rawData = h5Module.default || h5Module
-    const words = (Array.isArray(rawData) ? rawData : []).map((w: any) => ({
-      word: w.word || '',
-      meaning: w.meaning || w.explains || '',
-      phonetic: w.phonetic,
-      example: w.example,
-    }))
+    const words = (Array.isArray(rawData) ? rawData : []).map((w: any) => {
+      const wordText = normalizeMobileItemText(w.word || '')
+      return {
+        word: wordText,
+        meaning: w.meaning || w.explains || '',
+        phonetic: w.phonetic,
+        example: w.example,
+        itemType: w.itemType || getBuiltinItemType(type, wordText),
+      }
+    })
     if (strategy.useCache) saveWordBankCache(type, words)
     return words
     // #endif

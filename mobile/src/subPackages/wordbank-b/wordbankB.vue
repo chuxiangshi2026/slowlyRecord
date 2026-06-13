@@ -113,6 +113,7 @@ async function importWords(words: Word[], startIndex: number, count: number, _ba
     meaning: w.meaning,
     phonetic: w.phonetic || undefined,
     example: w.example || undefined,
+    itemType: w.itemType,
     addTime: now,
     reviewCount: 0,
     nextReviewTime: now,

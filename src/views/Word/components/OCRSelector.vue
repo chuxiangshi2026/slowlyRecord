@@ -4,7 +4,7 @@
     <div v-if="visible" class="ocr-panel-overlay">
       <div class="ocr-panel-content">
         <div class="ocr-panel-header">
-          <h3>选择要保存的单词</h3>
+          <h3>选择要保存的单词/词组</h3>
           <div class="header-buttons">
             <button @click="copyAllOriginal" class="header-copy-btn" title="复制全部原文">复制全部原文</button>
             <button @click="copyAllTranslation" class="header-copy-btn" title="复制全部译文">复制全部译文</button>
@@ -41,9 +41,9 @@
             <div class="word-selection-area">
               <div class="word-list">
                 <span
-                  v-for="(word, wordIndex) in getWordsFromText(region.context)"
+                  v-for="(word, wordIndex) in getWordsForRegion(region, index)"
                   :key="wordIndex"
-                  :class="['word-item', { selected: isSelected(region.id || index, word) }]"
+                  :class="['word-item', { selected: isSelected(getRegionKey(region, index), word) }]"
                   @click="toggleWordSelection(region, word, index)"
                 >
                   {{ word }}
@@ -54,7 +54,7 @@
         </div>
         <div class="ocr-panel-footer">
           <div class="selected-words-summary">
-            已选择 {{ selectedWords.length }} 个单词:
+            已选择 {{ selectedWords.length }} 项:
             <span class="selected-words-display">
               <span
                 v-for="(word, index) in selectedWords"
@@ -84,6 +84,8 @@
 import { ref, computed, watch, onMounted, Teleport } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
+import { extractWordAndPhraseCandidates } from '@/utils/text-candidates';
+import { loadLocalPhraseSources } from '@/utils/phrase-sources';
 
 // 定义props和emits
 interface Props {
@@ -106,27 +108,40 @@ onMounted(() => {
 });
 
 // 监听 visible 变化
-watch(() => props.visible, (newVal) => {
+watch(() => props.visible, async (newVal) => {
   console.log('[OCRSelector] visible 变化:', newVal);
+  if (newVal) {
+    await refreshWordsByRegion();
+  }
 });
 
 // 监听 ocrResults 变化
-watch(() => props.ocrResults, (newVal) => {
+watch(() => props.ocrResults, async (newVal) => {
   console.log('[OCRSelector] ocrResults 变化:', newVal?.length || 0, '个结果');
+  if (props.visible) {
+    await refreshWordsByRegion();
+  }
 }, { deep: true });
 
 // 存储选中的单词
 const selectedWordsMap = ref<{[key: string]: string[]}>({});
+const wordsByRegion = ref<{[key: string]: string[]}>({});
 
-// 获取文本中的单词列表（支持带连字符的单词和纯英文单词）
-const getWordsFromText = (text: string) => {
-  // 使用正则表达式匹配：
-  // 1. 带连字符的英文单词（如 state-of-the-art）
-  // 2. 纯英文字母单词
-  // 3. 允许包含数字的单词（如 IPv6）
-  const words = text.match(/[a-zA-Z]+(?:[-'][a-zA-Z]+)*|[a-zA-Z0-9]+/g) || [];
-  // 过滤掉纯数字，只保留至少包含一个字母的单词
-  return words.filter(word => word.trim() !== '' && /[a-zA-Z]/.test(word));
+const getRegionKey = (region: any, index: number): string => (region.id || index).toString();
+
+const refreshWordsByRegion = async () => {
+  const phraseSources = await loadLocalPhraseSources();
+  const next: {[key: string]: string[]} = {};
+  props.ocrResults.forEach((region, index) => {
+    const key = getRegionKey(region, index);
+    const candidates = extractWordAndPhraseCandidates(region.context || '', phraseSources);
+    next[key] = candidates.map(item => item.text);
+  });
+  wordsByRegion.value = next;
+};
+
+const getWordsForRegion = (region: any, index: number) => {
+  return wordsByRegion.value[getRegionKey(region, index)] || [];
 };
 
 // 检查单词是否已被选中
@@ -140,8 +155,7 @@ const isSelected = (regionId: string | number, word: string) => {
 
 // 切换单词选中状态
 const toggleWordSelection = (region: any, word: string, regionIndex: number) => {
-  const regionId = region.id || regionIndex;
-  const key = regionId.toString();
+  const key = getRegionKey(region, regionIndex);
 
   if (!selectedWordsMap.value[key]) {
     selectedWordsMap.value[key] = [];
@@ -194,9 +208,8 @@ const selectedWords = computed(() => {
 const selectAllWords = () => {
   selectedWordsMap.value = {};
   props.ocrResults.forEach((region, index) => {
-    const regionId = region.id || index;
-    const key = regionId.toString();
-    selectedWordsMap.value[key] = getWordsFromText(region.context);
+    const key = getRegionKey(region, index);
+    selectedWordsMap.value[key] = getWordsForRegion(region, index);
   });
 };
 
@@ -205,9 +218,8 @@ const invertSelection = () => {
   const newSelection: {[key: string]: string[]} = {};
 
   props.ocrResults.forEach((region, index) => {
-    const regionId = region.id || index;
-    const key = regionId.toString();
-    const allWordsInRegion = getWordsFromText(region.context);
+    const key = getRegionKey(region, index);
+    const allWordsInRegion = getWordsForRegion(region, index);
     const currentlySelected = selectedWordsMap.value[key] || [];
 
     // 对于每个单词，如果之前选中则取消选中，如果之前未选中则选中
@@ -236,8 +248,8 @@ const removeChineseWords = () => {
   for (const [regionKey, words] of Object.entries(selectedWordsMap.value)) {
     // 过滤掉中文词，只保留英文词
     const englishOnlyWords = words.filter(word => {
-      // 检查单词是否只包含英文字母
-      return /^[a-zA-Z]+$/.test(word);
+      // 保留英文单词/词组（支持空格、连字符、撇号和数字），筛除中文
+      return /^[a-zA-Z0-9]+(?:[-'\s][a-zA-Z0-9]+)*$/.test(word);
     });
 
     if (englishOnlyWords.length > 0) {
@@ -281,7 +293,7 @@ const addSelectedWords = () => {
     emit('select', wordItem);
   });
 
-  ElMessage.success(`新添加 ${selectedWords.value.length} 个单词到列表`);
+  ElMessage.success(`新添加 ${selectedWords.value.length} 项到列表`);
   closePanel();
 };
 

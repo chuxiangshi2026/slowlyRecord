@@ -36,6 +36,9 @@ export type WordBankType =
   | 'zsb'
   | 'sat'
   | 'nul'
+  | 'phrasal-verbs'
+  | 'collocations'
+  | 'idioms'
 
 export interface WordBankInfo {
   id: WordBankType
@@ -45,12 +48,15 @@ export interface WordBankInfo {
   icon?: string
 }
 
+export type MobileItemType = 'word' | 'phrase' | 'sentence' | 'collocation'
+
 export interface Word {
   word: string
   meaning: string
   phonetic?: string
   example?: string
   explains?: string
+  itemType?: MobileItemType
 }
 
 export interface LoadStrategy {
@@ -71,11 +77,17 @@ export interface MobileSyncBank {
   words: any[]
 }
 
+export interface MobileUserSettings {
+  translationPlatform?: TranslationPlatform
+  keys?: Record<string, { appkey: string; key: string }>
+}
+
 export interface MobileSyncData {
   version: number
   exportedAt: number
   platform: string
   banks: MobileSyncBank[]
+  userSettings?: MobileUserSettings
 }
 
 export interface SyncResult {

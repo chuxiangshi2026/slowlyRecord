@@ -4,6 +4,7 @@
  */
 
 import type { MobileSyncBank, MobileSyncData, SyncResult, RestoreResult } from '@/stores/useUtils/types'
+import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
 
 export type { MobileSyncBank, MobileSyncData, SyncResult, RestoreResult }
 
@@ -178,7 +179,16 @@ export function checkServerAvailable(): Promise<boolean> {
 // ==================== 同步主入口 ====================
 
 function collectSyncData(banks: MobileSyncBank[]): MobileSyncData {
-  return { version: 1, exportedAt: Date.now(), platform: 'mobile', banks }
+  return {
+    version: 1,
+    exportedAt: Date.now(),
+    platform: 'mobile',
+    banks,
+    userSettings: {
+      translationPlatform: getTranslationPlatform(),
+      keys: getAllTranslationApiKeys(),
+    },
+  }
 }
 
 export async function pushToServer(banks: MobileSyncBank[]): Promise<SyncResult> {
@@ -213,6 +223,9 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
     const json = bytesToUtf8(jsonBytes)
     try {
       const data: MobileSyncData = JSON.parse(json)
+      if (data.userSettings) {
+        applyTranslationSettings(data.userSettings)
+      }
       return { success: true, banks: data.banks }
     } catch {
       return { success: false, error: '数据解析失败' }

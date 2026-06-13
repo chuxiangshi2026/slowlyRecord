@@ -3,7 +3,7 @@
     <div v-if="visible" class="text-selector-overlay">
       <div class="text-selector-content">
         <div class="text-selector-header">
-          <h3>选择要保存的单词</h3>
+          <h3>选择要保存的单词/词组</h3>
           <div class="header-buttons">
             <button @click="copyOriginal" class="header-copy-btn" title="复制原文">复制原文</button>
             <button @click="copyTranslation" class="header-copy-btn" title="复制译文">复制译文</button>
@@ -34,7 +34,7 @@
         </div>
         <div class="text-selector-footer">
           <div class="selected-words-summary">
-            已选择 {{ selectedWords.length }} 个单词:
+            已选择 {{ selectedWords.length }} 项:
             <span class="selected-words-display">
               <span
                 v-for="(word, index) in selectedWords"
@@ -66,6 +66,8 @@ import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
 import { translateWithLocalDictionaryAsync } from '@/utils/local-dictionary';
 import type { TranslationPlatform } from '@/types/words';
+import { extractWordAndPhraseCandidates } from '@/utils/text-candidates';
+import { loadLocalPhraseSources } from '@/utils/phrase-sources';
 
 // 定义props和emits
 interface Props {
@@ -91,34 +93,19 @@ const selectedWords = ref<string[]>([]);
 // 翻译后的文本
 const translatedText = ref<string>('');
 
-// 从文本中提取单词（支持带连字符的单词和纯英文单词）
-const extractWords = (text: string) => {
-  // 使用正则表达式匹配：
-  // 1. 带连字符的英文单词（如 state-of-the-art）
-  // 2. 纯英文字母单词
-  // 3. 允许包含数字的单词（如 IPv6）
-  const matches = text.match(/[a-zA-Z]+(?:[-'][a-zA-Z]+)*|[a-zA-Z0-9]+/g) || [];
-  // 转换为小写以避免重复，同时保持原形式
-  const uniqueWords: string[] = [];
-  const seen = new Set<string>();
-
-  matches.forEach(word => {
-    const lowerWord = word.toLowerCase();
-    // 过滤掉纯数字，只保留至少包含一个字母的单词
-    if (!seen.has(lowerWord) && /[a-zA-Z]/.test(word)) {
-      seen.add(lowerWord);
-      uniqueWords.push(word); // 保存原始大小写的单词
-    }
-  });
-
-  wordsList.value = uniqueWords;
-  return uniqueWords;
+// 从文本中提取候选项：优先匹配词组/固定搭配，剩余内容按单词处理
+const extractWords = async (text: string) => {
+  const phraseSources = await loadLocalPhraseSources();
+  const candidates = extractWordAndPhraseCandidates(text, phraseSources);
+  const items = candidates.map(item => item.text);
+  wordsList.value = items;
+  return items;
 };
 
 // 处理文本内容的函数
 const processTextContent = async (newText: string) => {
   console.log('[TextSelector] 处理文本:', newText);
-  extractWords(newText);
+  await extractWords(newText);
   // 清空之前的选中状态
   selectedWords.value = [];
   // 根据当前翻译平台选择翻译方式
@@ -216,8 +203,8 @@ const clearSelection = () => {
 // 移除非英文单词（保留选中的英文单词）
 const removeNonEnglishWords = () => {
   selectedWords.value = selectedWords.value.filter(word => {
-    // 检查单词是否只包含英文字母
-    return /^[a-zA-Z]+$/.test(word);
+    // 保留英文单词/词组（支持空格、连字符、撇号和数字）
+    return /^[a-zA-Z0-9]+(?:[-'\s][a-zA-Z0-9]+)*$/.test(word);
   });
   ElMessage.info('已筛选出英文单词');
 };
@@ -236,7 +223,7 @@ const addSelectedWords = () => {
   // 发出选择事件，传递选中的单词数组和当前平台
   emit('select', selectedWords.value, currentPlatform);
 
-  ElMessage.success(`已添加 ${selectedWords.value.length} 个单词到列表`);
+  ElMessage.success(`已添加 ${selectedWords.value.length} 项到列表`);
   closePanel();
 };
 

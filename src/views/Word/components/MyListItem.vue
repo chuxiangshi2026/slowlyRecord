@@ -5,8 +5,9 @@
        ref="itemRef" :data-word="cleanWordText" tabindex="0" @keydown="handleKeyDown" @click="onClick">
 
     <p class="word">
-      <!-- 彩色词根词缀显示 -->
-      <span class="word-components" :title="wordComponentsTooltip">
+      <!-- 彩色词根词缀显示，词组保留原始空格 -->
+      <span v-if="isPhraseWord" class="word-components" :title="word.text">{{ word.text }}</span>
+      <span v-else class="word-components" :title="wordComponentsTooltip">
         <span
             v-for="(comp, index) in wordComponents"
             :key="index"
@@ -72,6 +73,7 @@
 <script setup lang="ts">
 import type {Word} from "@/types/words";
 import { analyzeWord, getComponentClass, generateDetailedTooltip, type WordComponent } from "@/utils/word-analysis";
+import { isPhrase } from "@/utils/text-utils";
 
 const itemRef = ref<HTMLElement | null>(null);
 
@@ -123,11 +125,14 @@ const displayPhonetic = computed(() => {
   return phonetic;
 });
 
-// 清理单词文本中的空白字符（换行、回车、空格等），防止脏数据影响显示和解析
+const isPhraseWord = computed(() => isPhrase(props.word));
+
+// 清理单词文本中的空白字符（换行、回车、空格等），仅用于单词词根词缀解析
 const cleanWordText = computed(() => props.word.text.replace(/\s+/g, ''));
 
 // 解析单词成分（词根、前缀、后缀等）
 const wordComponents = computed<WordComponent[]>(() => {
+  if (isPhraseWord.value) return [];
   return analyzeWord(cleanWordText.value);
 });
 

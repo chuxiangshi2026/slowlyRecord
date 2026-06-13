@@ -351,6 +351,9 @@ const wordBankOptions = [
   {label: '托福词汇', value: 'toefl'},
   {label: '专升本词汇', value: 'zsb'},
   {label: '词根词缀', value: 'roots'},
+  {label: '短语动词', value: 'phrasal-verbs'},
+  {label: '固定搭配', value: 'collocations'},
+  {label: '习语', value: 'idioms'},
 ];
 
 // 是否有活跃筛选

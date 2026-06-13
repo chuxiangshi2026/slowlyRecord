@@ -1,0 +1,1111 @@
+import type { Word } from '@/stores/useUtils/wordbank'
+export default [
+  {
+    "word": "according to",
+    "explains": "根据；按照"
+  },
+  {
+    "word": "account for",
+    "explains": "解释；占（比例）"
+  },
+  {
+    "word": "add up",
+    "explains": "加起来；合情合理"
+  },
+  {
+    "word": "all of a sudden",
+    "explains": "突然地；出乎意料地"
+  },
+  {
+    "word": "apply for",
+    "explains": "申请"
+  },
+  {
+    "word": "as a matter of fact",
+    "explains": "事实上；实际上"
+  },
+  {
+    "word": "as a result",
+    "explains": "因此；结果"
+  },
+  {
+    "word": "as a result of",
+    "explains": "由于…的结果"
+  },
+  {
+    "word": "as far as",
+    "explains": "就…而言；直到"
+  },
+  {
+    "word": "as for",
+    "explains": "至于；关于"
+  },
+  {
+    "word": "as long as",
+    "explains": "只要；长达"
+  },
+  {
+    "word": "as soon as",
+    "explains": "一…就…"
+  },
+  {
+    "word": "as well",
+    "explains": "也；同样地"
+  },
+  {
+    "word": "as well as",
+    "explains": "和…一样；也"
+  },
+  {
+    "word": "at all",
+    "explains": "根本；完全（用于否定句）"
+  },
+  {
+    "word": "at first",
+    "explains": "起初；一开始"
+  },
+  {
+    "word": "at last",
+    "explains": "终于；最后"
+  },
+  {
+    "word": "at least",
+    "explains": "至少；起码"
+  },
+  {
+    "word": "at once",
+    "explains": "立刻；马上"
+  },
+  {
+    "word": "at the same time",
+    "explains": "同时；然而"
+  },
+  {
+    "word": "at times",
+    "explains": "有时；间或"
+  },
+  {
+    "word": "based on",
+    "explains": "基于；以…为基础"
+  },
+  {
+    "word": "be about to",
+    "explains": "即将；正要"
+  },
+  {
+    "word": "be aware of",
+    "explains": "意识到；知道"
+  },
+  {
+    "word": "be capable of",
+    "explains": "有能力做…"
+  },
+  {
+    "word": "be concerned about",
+    "explains": "关心；担心"
+  },
+  {
+    "word": "be crazy about",
+    "explains": "对…着迷；狂热"
+  },
+  {
+    "word": "be famous for",
+    "explains": "因…而著名"
+  },
+  {
+    "word": "be fond of",
+    "explains": "喜欢；爱好"
+  },
+  {
+    "word": "be good at",
+    "explains": "擅长"
+  },
+  {
+    "word": "be interested in",
+    "explains": "对…感兴趣"
+  },
+  {
+    "word": "be known as",
+    "explains": "被称为；作为…而闻名"
+  },
+  {
+    "word": "be known for",
+    "explains": "因…而闻名"
+  },
+  {
+    "word": "be located in",
+    "explains": "位于；坐落于"
+  },
+  {
+    "word": "be made of",
+    "explains": "由…制成（可见原材料）"
+  },
+  {
+    "word": "be made from",
+    "explains": "由…制成（不可见原材料）"
+  },
+  {
+    "word": "be proud of",
+    "explains": "以…为傲"
+  },
+  {
+    "word": "be related to",
+    "explains": "与…有关"
+  },
+  {
+    "word": "be responsible for",
+    "explains": "对…负责；是…的原因"
+  },
+  {
+    "word": "be similar to",
+    "explains": "与…相似"
+  },
+  {
+    "word": "be supposed to",
+    "explains": "应该；理应"
+  },
+  {
+    "word": "be tired of",
+    "explains": "厌倦；厌烦"
+  },
+  {
+    "word": "be used to",
+    "explains": "习惯于"
+  },
+  {
+    "word": "belong to",
+    "explains": "属于"
+  },
+  {
+    "word": "benefit from",
+    "explains": "从…中受益"
+  },
+  {
+    "word": "both and",
+    "explains": "两者都；既…又…"
+  },
+  {
+    "word": "by accident",
+    "explains": "偶然地；意外地"
+  },
+  {
+    "word": "by all means",
+    "explains": "当然可以；务必"
+  },
+  {
+    "word": "by means of",
+    "explains": "通过…方式；借助于"
+  },
+  {
+    "word": "by no means",
+    "explains": "绝不；决不"
+  },
+  {
+    "word": "by the way",
+    "explains": "顺便说一下"
+  },
+  {
+    "word": "can't help doing",
+    "explains": "忍不住做；情不自禁"
+  },
+  {
+    "word": "carry on",
+    "explains": "继续；坚持"
+  },
+  {
+    "word": "catch up",
+    "explains": "赶上；追上"
+  },
+  {
+    "word": "compare to",
+    "explains": "把…比作"
+  },
+  {
+    "word": "compare with",
+    "explains": "与…比较"
+  },
+  {
+    "word": "complain about",
+    "explains": "抱怨"
+  },
+  {
+    "word": "concentrate on",
+    "explains": "集中精力于"
+  },
+  {
+    "word": "connect with",
+    "explains": "与…连接；联系"
+  },
+  {
+    "word": "consist of",
+    "explains": "由…组成"
+  },
+  {
+    "word": "contribute to",
+    "explains": "为…做贡献；导致"
+  },
+  {
+    "word": "cope with",
+    "explains": "应对；处理"
+  },
+  {
+    "word": "deal with",
+    "explains": "处理；应对"
+  },
+  {
+    "word": "decide on",
+    "explains": "决定"
+  },
+  {
+    "word": "depend on",
+    "explains": "依赖；取决于"
+  },
+  {
+    "word": "devote to",
+    "explains": "致力于；奉献于"
+  },
+  {
+    "word": "distinguish from",
+    "explains": "区分；辨别"
+  },
+  {
+    "word": "divide into",
+    "explains": "把…分成"
+  },
+  {
+    "word": "due to",
+    "explains": "由于；因为"
+  },
+  {
+    "word": "each other",
+    "explains": "互相；彼此"
+  },
+  {
+    "word": "either or",
+    "explains": "要么…要么…"
+  },
+  {
+    "word": "engage in",
+    "explains": "从事于；参与"
+  },
+  {
+    "word": "even if",
+    "explains": "即使；虽然"
+  },
+  {
+    "word": "even though",
+    "explains": "即使；尽管"
+  },
+  {
+    "word": "ever since",
+    "explains": "自从；自…以来"
+  },
+  {
+    "word": "every now and then",
+    "explains": "偶尔；时常"
+  },
+  {
+    "word": "except for",
+    "explains": "除了…以外"
+  },
+  {
+    "word": "experiment with",
+    "explains": "用…做实验"
+  },
+  {
+    "word": "face to face",
+    "explains": "面对面"
+  },
+  {
+    "word": "fall in love with",
+    "explains": "爱上"
+  },
+  {
+    "word": "far from",
+    "explains": "远非；远离"
+  },
+  {
+    "word": "find it adj to do",
+    "explains": "发现做…是…的"
+  },
+  {
+    "word": "first of all",
+    "explains": "首先"
+  },
+  {
+    "word": "focus on",
+    "explains": "集中注意力于"
+  },
+  {
+    "word": "for ever",
+    "explains": "永远"
+  },
+  {
+    "word": "for example",
+    "explains": "例如"
+  },
+  {
+    "word": "for instance",
+    "explains": "例如；比如"
+  },
+  {
+    "word": "from time to time",
+    "explains": "有时；不时"
+  },
+  {
+    "word": "get used to",
+    "explains": "习惯于"
+  },
+  {
+    "word": "had better do",
+    "explains": "最好做…"
+  },
+  {
+    "word": "hand in hand",
+    "explains": "手拉手；密切关联地"
+  },
+  {
+    "word": "hardly when",
+    "explains": "刚…就…"
+  },
+  {
+    "word": "have access to",
+    "explains": "可以使用；有权使用"
+  },
+  {
+    "word": "have an effect on",
+    "explains": "对…有影响"
+  },
+  {
+    "word": "have difficulty doing",
+    "explains": "做…有困难"
+  },
+  {
+    "word": "have nothing to do with",
+    "explains": "与…无关"
+  },
+  {
+    "word": "have sth done",
+    "explains": "让某事被做"
+  },
+  {
+    "word": "have trouble doing",
+    "explains": "做…有困难"
+  },
+  {
+    "word": "how about doing",
+    "explains": "做…怎么样"
+  },
+  {
+    "word": "in a hurry",
+    "explains": "匆忙地"
+  },
+  {
+    "word": "in a word",
+    "explains": "总之；简言之"
+  },
+  {
+    "word": "in addition",
+    "explains": "此外"
+  },
+  {
+    "word": "in addition to",
+    "explains": "除…之外"
+  },
+  {
+    "word": "in advance",
+    "explains": "提前；预先"
+  },
+  {
+    "word": "in case",
+    "explains": "以防；万一"
+  },
+  {
+    "word": "in charge of",
+    "explains": "负责；掌管"
+  },
+  {
+    "word": "in common",
+    "explains": "共同点；共有"
+  },
+  {
+    "word": "in conclusion",
+    "explains": "总之；最后"
+  },
+  {
+    "word": "in consequence",
+    "explains": "因此；结果"
+  },
+  {
+    "word": "in contrast",
+    "explains": "相比之下"
+  },
+  {
+    "word": "in danger",
+    "explains": "处于危险中"
+  },
+  {
+    "word": "in detail",
+    "explains": "详细地"
+  },
+  {
+    "word": "in fact",
+    "explains": "事实上"
+  },
+  {
+    "word": "in favour of",
+    "explains": "支持；赞成"
+  },
+  {
+    "word": "in front of",
+    "explains": "在…前面"
+  },
+  {
+    "word": "in general",
+    "explains": "一般来说；总体上"
+  },
+  {
+    "word": "in honour of",
+    "explains": "为纪念；为庆祝"
+  },
+  {
+    "word": "in memory of",
+    "explains": "为纪念"
+  },
+  {
+    "word": "in need of",
+    "explains": "需要"
+  },
+  {
+    "word": "in order",
+    "explains": "整齐地；按顺序"
+  },
+  {
+    "word": "in order to",
+    "explains": "为了"
+  },
+  {
+    "word": "in other words",
+    "explains": "换句话说"
+  },
+  {
+    "word": "in particular",
+    "explains": "特别是；尤其"
+  },
+  {
+    "word": "in person",
+    "explains": "亲自；本人"
+  },
+  {
+    "word": "in public",
+    "explains": "公开地；当众"
+  },
+  {
+    "word": "in return",
+    "explains": "作为回报"
+  },
+  {
+    "word": "in short",
+    "explains": "简而言之"
+  },
+  {
+    "word": "in spite of",
+    "explains": "尽管；虽然"
+  },
+  {
+    "word": "in terms of",
+    "explains": "就…而言；在…方面"
+  },
+  {
+    "word": "in the end",
+    "explains": "最终；结果"
+  },
+  {
+    "word": "in the way",
+    "explains": "挡路；妨碍"
+  },
+  {
+    "word": "in time",
+    "explains": "及时；迟早"
+  },
+  {
+    "word": "in touch",
+    "explains": "联系；接触"
+  },
+  {
+    "word": "in vain",
+    "explains": "徒劳地；无效地"
+  },
+  {
+    "word": "insist on",
+    "explains": "坚持"
+  },
+  {
+    "word": "instead of",
+    "explains": "代替；而不是"
+  },
+  {
+    "word": "integrate into",
+    "explains": "融入；整合到"
+  },
+  {
+    "word": "interfere with",
+    "explains": "干扰；妨碍"
+  },
+  {
+    "word": "it is no use doing",
+    "explains": "做…是没用的"
+  },
+  {
+    "word": "it is said that",
+    "explains": "据说"
+  },
+  {
+    "word": "it is worth doing",
+    "explains": "值得做…"
+  },
+  {
+    "word": "it takes sb time to do",
+    "explains": "花某人时间做…"
+  },
+  {
+    "word": "just now",
+    "explains": "刚才；现在"
+  },
+  {
+    "word": "lead to",
+    "explains": "导致；通向"
+  },
+  {
+    "word": "less than",
+    "explains": "少于；不到"
+  },
+  {
+    "word": "make sb do",
+    "explains": "让某人做…"
+  },
+  {
+    "word": "more or less",
+    "explains": "或多或少；差不多"
+  },
+  {
+    "word": "neither nor",
+    "explains": "既不…也不…"
+  },
+  {
+    "word": "next to",
+    "explains": "紧挨着；仅次于"
+  },
+  {
+    "word": "no longer",
+    "explains": "不再"
+  },
+  {
+    "word": "no matter",
+    "explains": "无论；不管"
+  },
+  {
+    "word": "no sooner than",
+    "explains": "刚…就…"
+  },
+  {
+    "word": "no wonder",
+    "explains": "难怪；不足为奇"
+  },
+  {
+    "word": "not only but also",
+    "explains": "不仅…而且…"
+  },
+  {
+    "word": "not until",
+    "explains": "直到…才"
+  },
+  {
+    "word": "now that",
+    "explains": "既然；因为"
+  },
+  {
+    "word": "on account of",
+    "explains": "由于；因为"
+  },
+  {
+    "word": "on behalf of",
+    "explains": "代表"
+  },
+  {
+    "word": "on board",
+    "explains": "在船上/飞机上/火车上"
+  },
+  {
+    "word": "on business",
+    "explains": "出差"
+  },
+  {
+    "word": "on condition that",
+    "explains": "在…条件下"
+  },
+  {
+    "word": "on duty",
+    "explains": "值班；执勤"
+  },
+  {
+    "word": "on foot",
+    "explains": "步行"
+  },
+  {
+    "word": "on purpose",
+    "explains": "故意地"
+  },
+  {
+    "word": "on the contrary",
+    "explains": "相反地"
+  },
+  {
+    "word": "on the one hand",
+    "explains": "一方面"
+  },
+  {
+    "word": "on the other hand",
+    "explains": "另一方面"
+  },
+  {
+    "word": "on the whole",
+    "explains": "总的来说"
+  },
+  {
+    "word": "on time",
+    "explains": "准时"
+  },
+  {
+    "word": "once again",
+    "explains": "再一次"
+  },
+  {
+    "word": "once in a while",
+    "explains": "偶尔"
+  },
+  {
+    "word": "one another",
+    "explains": "互相（三者以上）"
+  },
+  {
+    "word": "or so",
+    "explains": "大约；左右"
+  },
+  {
+    "word": "other than",
+    "explains": "除了；不同于"
+  },
+  {
+    "word": "out of",
+    "explains": "从…中；出于；缺乏"
+  },
+  {
+    "word": "out of date",
+    "explains": "过时的"
+  },
+  {
+    "word": "out of order",
+    "explains": "出故障的；混乱的"
+  },
+  {
+    "word": "out of the question",
+    "explains": "不可能"
+  },
+  {
+    "word": "owing to",
+    "explains": "由于；因为"
+  },
+  {
+    "word": "part of",
+    "explains": "…的一部分"
+  },
+  {
+    "word": "participate in",
+    "explains": "参加；参与"
+  },
+  {
+    "word": "play a role in",
+    "explains": "在…中起作用"
+  },
+  {
+    "word": "prefer doing to doing",
+    "explains": "宁愿做…而不愿做…"
+  },
+  {
+    "word": "prefer to do rather than do",
+    "explains": "宁愿做…而不愿做…"
+  },
+  {
+    "word": "prepare for",
+    "explains": "为…做准备"
+  },
+  {
+    "word": "prevent from",
+    "explains": "阻止；防止"
+  },
+  {
+    "word": "prior to",
+    "explains": "在…之前"
+  },
+  {
+    "word": "protect from",
+    "explains": "保护…免受"
+  },
+  {
+    "word": "provide with",
+    "explains": "提供"
+  },
+  {
+    "word": "rather than",
+    "explains": "而不是"
+  },
+  {
+    "word": "react to",
+    "explains": "对…做出反应"
+  },
+  {
+    "word": "recover from",
+    "explains": "从…中恢复"
+  },
+  {
+    "word": "refer to",
+    "explains": "指的是；参考；查阅"
+  },
+  {
+    "word": "regardless of",
+    "explains": "不管；不顾"
+  },
+  {
+    "word": "rely on",
+    "explains": "依赖；依靠"
+  },
+  {
+    "word": "respond to",
+    "explains": "回应；响应"
+  },
+  {
+    "word": "result from",
+    "explains": "由…引起"
+  },
+  {
+    "word": "result in",
+    "explains": "导致；造成"
+  },
+  {
+    "word": "right away",
+    "explains": "立刻；马上"
+  },
+  {
+    "word": "search for",
+    "explains": "寻找"
+  },
+  {
+    "word": "separate from",
+    "explains": "与…分离"
+  },
+  {
+    "word": "so as to",
+    "explains": "为了；以便"
+  },
+  {
+    "word": "so far",
+    "explains": "到目前为止"
+  },
+  {
+    "word": "so that",
+    "explains": "以便；结果"
+  },
+  {
+    "word": "so that such that",
+    "explains": "如此…以致"
+  },
+  {
+    "word": "sooner or later",
+    "explains": "迟早"
+  },
+  {
+    "word": "specialize in",
+    "explains": "专攻；专门从事"
+  },
+  {
+    "word": "spend time doing",
+    "explains": "花时间做…"
+  },
+  {
+    "word": "spend time on",
+    "explains": "在…上花时间"
+  },
+  {
+    "word": "succeed in",
+    "explains": "在…方面成功"
+  },
+  {
+    "word": "suffer from",
+    "explains": "遭受；患（病）"
+  },
+  {
+    "word": "such as",
+    "explains": "例如；比如"
+  },
+  {
+    "word": "take advantage of",
+    "explains": "利用；占便宜"
+  },
+  {
+    "word": "take sth for granted",
+    "explains": "认为…理所当然"
+  },
+  {
+    "word": "thanks to",
+    "explains": "多亏；由于"
+  },
+  {
+    "word": "that is to say",
+    "explains": "也就是说"
+  },
+  {
+    "word": "the more the more",
+    "explains": "越…越…"
+  },
+  {
+    "word": "there is no doubt that",
+    "explains": "毫无疑问…"
+  },
+  {
+    "word": "there is no point in",
+    "explains": "做…没有意义"
+  },
+  {
+    "word": "to be honest",
+    "explains": "说实话"
+  },
+  {
+    "word": "to some extent",
+    "explains": "在某种程度上"
+  },
+  {
+    "word": "too to",
+    "explains": "太…而不能…"
+  },
+  {
+    "word": "turn into",
+    "explains": "变成；转变为"
+  },
+  {
+    "word": "up to",
+    "explains": "多达；直到；取决于"
+  },
+  {
+    "word": "used to do",
+    "explains": "过去常常做…"
+  },
+  {
+    "word": "vote against",
+    "explains": "投票反对"
+  },
+  {
+    "word": "vote for",
+    "explains": "投票赞成"
+  },
+  {
+    "word": "what about",
+    "explains": "…怎么样"
+  },
+  {
+    "word": "what do you think of",
+    "explains": "你认为…怎么样"
+  },
+  {
+    "word": "whether or not",
+    "explains": "是否"
+  },
+  {
+    "word": "why don't you",
+    "explains": "为什么不…"
+  },
+  {
+    "word": "with regard to",
+    "explains": "关于；至于"
+  },
+  {
+    "word": "with respect to",
+    "explains": "关于；就…而言"
+  },
+  {
+    "word": "worry about",
+    "explains": "担心"
+  },
+  {
+    "word": "would like to",
+    "explains": "想要；愿意"
+  },
+  {
+    "word": "would rather do than do",
+    "explains": "宁愿…而不愿…"
+  },
+  {
+    "word": "a piece of cake",
+    "explains": "小菜一碟；轻而易举的事"
+  },
+  {
+    "word": "a couple of",
+    "explains": "几个；两三个"
+  },
+  {
+    "word": "a great deal of",
+    "explains": "大量；许多"
+  },
+  {
+    "word": "a variety of",
+    "explains": "各种各样的"
+  },
+  {
+    "word": "plenty of",
+    "explains": "大量；充足的"
+  },
+  {
+    "word": "the majority of",
+    "explains": "大多数"
+  },
+  {
+    "word": "be able to",
+    "explains": "能够；有能力"
+  },
+  {
+    "word": "be likely to",
+    "explains": "很可能"
+  },
+  {
+    "word": "be willing to",
+    "explains": "愿意；乐意"
+  },
+  {
+    "word": "be familiar with",
+    "explains": "熟悉；通晓"
+  },
+  {
+    "word": "be fed up with",
+    "explains": "受够了；厌倦"
+  },
+  {
+    "word": "be full of",
+    "explains": "充满；装满"
+  },
+  {
+    "word": "be satisfied with",
+    "explains": "对…满意"
+  },
+  {
+    "word": "be strict with",
+    "explains": "对…严格"
+  },
+  {
+    "word": "be popular with",
+    "explains": "受…欢迎"
+  },
+  {
+    "word": "be bound to",
+    "explains": "一定；必然"
+  },
+  {
+    "word": "be faced with",
+    "explains": "面临；面对"
+  },
+  {
+    "word": "in any case",
+    "explains": "无论如何；总之"
+  },
+  {
+    "word": "in the long run",
+    "explains": "从长远来看"
+  },
+  {
+    "word": "in the meantime",
+    "explains": "在此期间；同时"
+  },
+  {
+    "word": "in practice",
+    "explains": "实际上；在实践中"
+  },
+  {
+    "word": "in response to",
+    "explains": "回应；响应"
+  },
+  {
+    "word": "at first sight",
+    "explains": "乍一看；一见（钟情）"
+  },
+  {
+    "word": "at present",
+    "explains": "目前；现在"
+  },
+  {
+    "word": "by chance",
+    "explains": "偶然；碰巧"
+  },
+  {
+    "word": "by mistake",
+    "explains": "错误地；无意中"
+  },
+  {
+    "word": "for good",
+    "explains": "永久地；一劳永逸地"
+  },
+  {
+    "word": "for the sake of",
+    "explains": "为了；为了…的利益"
+  },
+  {
+    "word": "for the time being",
+    "explains": "暂时；目前"
+  },
+  {
+    "word": "on average",
+    "explains": "平均；一般来说"
+  },
+  {
+    "word": "on the way",
+    "explains": "在路上；即将到来"
+  },
+  {
+    "word": "above all",
+    "explains": "首先；最重要的是"
+  },
+  {
+    "word": "after all",
+    "explains": "毕竟；终究"
+  },
+  {
+    "word": "apart from",
+    "explains": "除了；除…之外"
+  },
+  {
+    "word": "as usual",
+    "explains": "像往常一样"
+  },
+  {
+    "word": "back and forth",
+    "explains": "来回地；反复地"
+  },
+  {
+    "word": "from now on",
+    "explains": "从现在开始"
+  },
+  {
+    "word": "little by little",
+    "explains": "逐渐地；一点一点地"
+  },
+  {
+    "word": "nothing but",
+    "explains": "只不过；仅仅"
+  },
+  {
+    "word": "step by step",
+    "explains": "逐步地；循序渐进地"
+  },
+  {
+    "word": "ahead of",
+    "explains": "在…之前；提前"
+  }
+] as Word[]
