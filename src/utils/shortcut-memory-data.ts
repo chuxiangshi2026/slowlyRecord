@@ -9,6 +9,7 @@ export const CATEGORY_CONFIG: CategoryConfigMap = {
   'VS Code': { description: 'Visual Studio Code 编辑器快捷键', icon: '📝' },
   'Chrome': { description: 'Chrome 浏览器快捷键', icon: '🌐' },
   'IntelliJ IDEA': { description: 'IntelliJ IDEA 开发工具快捷键', icon: '☕' },
+  'Claude Code CLI': { description: 'Claude Code 命令行交互快捷键', icon: '🤖' },
   'Photoshop': { description: 'Adobe Photoshop 图像处理快捷键', icon: '🎨' },
   'Vim': { description: 'Vim 文本编辑器常用快捷键', icon: '🧙' },
   'Illustrator': { description: 'Adobe Illustrator 矢量设计快捷键', icon: '✒️' },
@@ -1020,10 +1021,16 @@ function buildCategories(): ShortcutCategory[] {
   // 获取隐藏的示例分类
   const hiddenCategories = getHiddenCategories();
 
-  // 内置分类
+  // 内置分类（优先用实际加载到的快捷键统计；尚未加载时退回 PRESET_SHORTCUTS）
   const builtinMap = new Map<string, ShortcutCategory>();
   const categoryCountMap = new Map<string, number>();
-  PRESET_SHORTCUTS.forEach(item => {
+  const sourceShortcuts = _cachedShortcuts && _cachedShortcuts.length > 0
+    ? _cachedShortcuts
+    : PRESET_SHORTCUTS;
+  const customNames = new Set((_cachedCustomCategories || []).map(c => c.name));
+  sourceShortcuts.forEach(item => {
+    // 自定义分类由后续步骤合并，这里只统计内置分类
+    if (customNames.has(item.category)) return;
     categoryCountMap.set(item.category, (categoryCountMap.get(item.category) || 0) + 1);
   });
   categoryCountMap.forEach((count, name) => {
