@@ -20,6 +20,7 @@ const LOCATION_COORD_MAP: Record<string, LocationCoord> = {
   '郑州': { lng: 113.6, lat: 34.8, name: '郑州' },
   '安阳': { lng: 114.4, lat: 36.1, name: '安阳', aliases: ['邺城', '相州'] },
   '邯郸': { lng: 114.5, lat: 36.6, name: '邯郸' },
+  '商丘': { lng: 115.7, lat: 34.4, name: '商丘', aliases: ['宋国', '宋都', '睢阳'] },
 
   // 关中/长安
   '长安': { lng: 108.9, lat: 34.3, name: '长安', aliases: ['西安', '镐京', '咸阳', '西京', '常安'] },

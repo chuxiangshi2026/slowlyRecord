@@ -577,16 +577,116 @@
         </div>
       </el-tab-pane>
 
+      <!-- 成语库 -->
+      <el-tab-pane label="成语库" name="idiom">
+        <el-form :model="idiomForm" label-width="60px" size="small">
+          <el-form-item label="分类">
+            <el-select v-model="idiomForm.category" placeholder="全部" clearable style="width: 100%">
+              <el-option
+                  v-for="cat in IDIOM_CATEGORIES"
+                  :key="cat.code"
+                  :label="cat.name"
+                  :value="cat.code"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="搜索">
+            <el-input
+                v-model="idiomForm.keyword"
+                placeholder="成语、释义或拼音..."
+                clearable
+                @keyup.enter="handleIdiomSearch"
+            >
+              <template #append>
+                <el-button @click="handleIdiomSearch">搜索</el-button>
+              </template>
+            </el-input>
+          </el-form-item>
+        </el-form>
+
+        <div v-if="idiomLoading" class="idiom-loading">
+          <el-skeleton :rows="5" animated />
+        </div>
+
+        <div v-else-if="idiomResults.length > 0" class="idiom-results">
+          <div class="idiom-toolbar">
+            <el-checkbox
+                :model-value="isAllIdiomsSelected"
+                :indeterminate="isIdiomsIndeterminate"
+                @change="handleSelectAllIdioms"
+                size="small"
+            >
+              全选
+            </el-checkbox>
+            <span class="idiom-selected-count" v-if="selectedIdioms.length > 0">
+              已选 {{ selectedIdioms.length }} 条
+            </span>
+          </div>
+          <el-scrollbar height="340px">
+            <el-card
+                v-for="item in idiomResults"
+                :key="item.id"
+                shadow="hover"
+                style="margin-bottom: 10px; cursor: pointer"
+                @click="selectIdiom(item)"
+                :class="{ 'selected': selectedIdioms.some(s => s.id === item.id) }"
+                size="small"
+            >
+              <template #header>
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <el-checkbox
+                        :model-value="selectedIdioms.some(s => s.id === item.id)"
+                        @click.stop
+                        @change="selectIdiom(item)"
+                    />
+                    <span style="font-weight: bold; font-size: 13px">{{ item.title }}</span>
+                    <span v-if="item.pinyin" style="font-size: 12px; color: #909399; margin-left: 4px">{{ item.pinyin }}</span>
+                  </div>
+                  <el-tag size="small" type="info">{{ item.category }}</el-tag>
+                </div>
+              </template>
+              <div style="font-size: 12px; line-height: 1.6; color: var(--utools-text-primary)">
+                <span style="color: #909399">【释义】</span>{{ item.meaning }}
+              </div>
+              <div v-if="item.source" style="font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary); margin-top: 4px">
+                <span style="color: #909399">【出处】</span>{{ item.source }}
+              </div>
+              <div v-if="item.example" style="font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary); margin-top: 4px">
+                <span style="color: #909399">【例句】</span>{{ item.example }}
+              </div>
+            </el-card>
+          </el-scrollbar>
+        </div>
+
+        <div v-else class="idiom-placeholder">
+          <el-empty description="请选择分类或输入关键词搜索"/>
+        </div>
+      </el-tab-pane>
+
       <!-- 地图 -->
       <el-tab-pane label="地图" name="poetryMap">
         <div class="poetry-map-tab">
           <div class="library-map-controls">
             <el-select
+                v-model="mapCategory"
+                placeholder="类型"
+                size="small"
+                style="width: 110px"
+                @change="handleMapCategoryChange"
+            >
+              <el-option label="全部" value=""/>
+              <el-option label="诗词" value="poetry"/>
+              <el-option label="成语" value="idiom"/>
+            </el-select>
+
+            <el-select
                 v-model="mapDynasty"
                 placeholder="选择朝代显示疆域"
                 clearable
                 size="small"
-                style="width: 160px"
+                style="width: 160px; margin-left: 8px"
+                :disabled="mapCategory === 'idiom'"
                 @change="handleMapDynastyChange"
             >
               <el-option label="先秦" value="xianqin"/>
@@ -611,6 +711,7 @@
                 collapse-tags-tooltip
                 size="small"
                 style="width: 180px; margin-left: 8px"
+                :disabled="mapCategory === 'idiom'"
                 @change="handleMapAuthorChange"
             >
               <el-option
@@ -639,10 +740,22 @@
             </el-button>
           </div>
 
+          <div class="library-map-legend">
+            <span class="map-legend-item">
+              <span class="map-legend-pin"></span>诗词
+            </span>
+            <span class="map-legend-item">
+              <span class="map-legend-circle"></span>成语
+            </span>
+          </div>
+
           <div ref="inlineMapContainer" class="standalone-map-container"></div>
 
-          <div v-if="selectedPoetries.length > 0" class="map-selected-bar">
-            <span>已选 <strong>{{ selectedPoetries.length }}</strong> 首诗词，可返回「诗词库」查看或在此继续点选</span>
+          <div v-if="selectedPoetries.length > 0 || selectedIdioms.length > 0" class="map-selected-bar">
+            <span v-if="selectedPoetries.length > 0">已选 <strong>{{ selectedPoetries.length }}</strong> 首诗词</span>
+            <span v-if="selectedPoetries.length > 0 && selectedIdioms.length > 0">，</span>
+            <span v-if="selectedIdioms.length > 0">已选 <strong>{{ selectedIdioms.length }}</strong> 条成语</span>
+            <span style="color: #909399; margin-left: 6px">可返回对应库继续查看或在此继续点选</span>
           </div>
         </div>
       </el-tab-pane>
@@ -803,6 +916,52 @@
       <el-button @click="showLocationDialog = false">关闭</el-button>
     </template>
   </el-dialog>
+
+  <!-- 地点成语列表弹窗 -->
+  <el-dialog
+      v-model="showIdiomLocationDialog"
+      :title="idiomLocationDialogTitle"
+      width="480px"
+      destroy-on-close
+  >
+    <div style="max-height: 400px; overflow-y: auto;">
+      <div
+          v-for="item in idiomLocationDialogIdioms"
+          :key="item.id"
+          style="padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e4e7ed; cursor: pointer;"
+          :style="{ background: selectedIdioms.some(s => s.id === item.id) ? '#fdf6ec' : '#fff', borderColor: selectedIdioms.some(s => s.id === item.id) ? '#f5dab1' : '#e4e7ed' }"
+          @click="toggleIdiomInDialog(item)"
+      >
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <el-checkbox
+              :model-value="selectedIdioms.some(s => s.id === item.id)"
+              @click.stop
+              @update:model-value="toggleIdiomInDialog(item)"
+          />
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 6px">
+              <span style="font-size: 14px; font-weight: bold; color: #303133;">{{ item.title }}</span>
+              <el-tag size="small" type="warning">成语</el-tag>
+              <el-tag size="small" type="info">{{ item.category }}</el-tag>
+            </div>
+            <div v-if="item.pinyin" style="font-size: 12px; color: #909399; margin-top: 2px;">
+              {{ item.pinyin }}
+            </div>
+            <div style="font-size: 12px; color: #606266; margin-top: 4px; line-height: 1.5;">
+              {{ item.meaning }}
+            </div>
+            <div v-if="item.source" style="font-size: 11px; color: #909399; margin-top: 4px;">
+              出处：{{ item.source }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template #footer>
+      <el-button @click="showIdiomLocationDialog = false">关闭</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -832,6 +991,12 @@ import {
   type AISearchConfig,
   type AISearchResult
 } from '@/utils/ai-search-api';
+import {
+  fetchAllIdioms,
+  filterIdioms,
+  IDIOM_CATEGORIES,
+  type IdiomItem
+} from '@/utils/idiom-service';
 
 interface Props {
   modelValue: boolean;
@@ -852,6 +1017,9 @@ const activeCollapse = ref(['plain']); // 默认展开普通文本格式说明
 const importButtonText = computed(() => {
   if ((activeTab.value === 'poetry' || activeTab.value === 'poetryMap') && selectedPoetries.value.length > 0) {
     return `导入 ${selectedPoetries.value.length} 首`;
+  }
+  if (activeTab.value === 'idiom' && selectedIdioms.value.length > 0) {
+    return `导入 ${selectedIdioms.value.length} 条成语`;
   }
   return '导入';
 });
@@ -906,6 +1074,26 @@ const isIndeterminate = computed(() => {
   return selectedPoetries.value.length > 0 && selectedPoetries.value.length < poetryResults.value.length;
 });
 
+// 成语库
+const idiomForm = ref({
+  category: '',
+  keyword: '',
+});
+const allIdioms = ref<IdiomItem[]>([]);
+const idiomResults = ref<IdiomItem[]>([]);
+const selectedIdioms = ref<IdiomItem[]>([]);
+const idiomLoading = ref(false);
+const hasLoadedIdioms = ref(false);
+
+const isAllIdiomsSelected = computed(() => {
+  return idiomResults.value.length > 0 && idiomResults.value.every(p => selectedIdioms.value.some(s => s.id === p.id));
+});
+
+const isIdiomsIndeterminate = computed(() => {
+  return selectedIdioms.value.length > 0 && idiomResults.value.some(p => selectedIdioms.value.some(s => s.id === p.id))
+      && !isAllIdiomsSelected.value;
+});
+
 // 内嵌地图
 const inlineMapContainer = ref<HTMLDivElement>();
 let inlineMap: L.Map | null = null;
@@ -915,12 +1103,18 @@ let inlineRouteLayer: L.LayerGroup | null = null;
 
 const mapDynasty = ref('');
 const mapAuthor = ref<string[]>([]);
+const mapCategory = ref<'' | 'poetry' | 'idiom'>('');
 const showAuthorRoute = ref(false);
 
 // 地点作品弹窗
 const showLocationDialog = ref(false);
 const locationDialogTitle = ref('');
 const locationDialogPoems = ref<PoetryItem[]>([]);
+
+// 地点成语弹窗
+const showIdiomLocationDialog = ref(false);
+const idiomLocationDialogTitle = ref('');
+const idiomLocationDialogIdioms = ref<IdiomItem[]>([]);
 
 function openLocationDialog(poems: PoetryItem[]) {
   if (!poems.length) return;
@@ -942,6 +1136,25 @@ function togglePoetryInDialog(poem: PoetryItem) {
     } else {
       renderInlineMarkers();
     }
+  }
+}
+
+function openIdiomLocationDialog(items: IdiomItem[]) {
+  if (!items.length) return;
+  idiomLocationDialogTitle.value = items[0].location || '未知地点';
+  idiomLocationDialogIdioms.value = items;
+  showIdiomLocationDialog.value = true;
+}
+
+function toggleIdiomInDialog(item: IdiomItem) {
+  const index = selectedIdioms.value.findIndex(s => s.id === item.id);
+  if (index > -1) {
+    selectedIdioms.value.splice(index, 1);
+  } else {
+    selectedIdioms.value.push(item);
+  }
+  if (activeTab.value === 'poetryMap') {
+    renderInlineMarkers();
   }
 }
 
@@ -1131,6 +1344,7 @@ function initInlineMap() {
 }
 
 function getMapDisplayPoems(): PoetryItem[] {
+  if (mapCategory.value === 'idiom') return [];
   let poems = allLibraryPoems.value.filter(p => p.location);
   if (mapAuthor.value.length) {
     poems = poems.filter(p => mapAuthor.value.includes(p.author));
@@ -1140,9 +1354,23 @@ function getMapDisplayPoems(): PoetryItem[] {
   return poems;
 }
 
+function getMapDisplayIdioms(): IdiomItem[] {
+  if (mapCategory.value === 'poetry') return [];
+  return allIdioms.value.filter(it => it.location);
+}
+
 function renderInlineMarkers() {
   if (!inlineMap || !inlineMarkerLayer) return;
   inlineMarkerLayer.clearLayers();
+
+  // 诗词标记
+  renderPoetryMarkers();
+  // 成语标记
+  renderIdiomMarkers();
+}
+
+function renderPoetryMarkers() {
+  if (!inlineMap || !inlineMarkerLayer) return;
 
   const poems = getMapDisplayPoems();
   if (!poems.length) return;
@@ -1207,6 +1435,81 @@ function renderInlineMarkers() {
         renderInlineMarkers();
       } else {
         openLocationDialog(list);
+      }
+    });
+  });
+}
+
+function renderIdiomMarkers() {
+  if (!inlineMap || !inlineMarkerLayer) return;
+  const idioms = getMapDisplayIdioms();
+  if (!idioms.length) return;
+
+  // 按坐标分组
+  const locationMap = new Map<string, IdiomItem[]>();
+  idioms.forEach(item => {
+    const coord = parseLocation(item.location);
+    if (!coord) return;
+    const key = `${coord.lng},${coord.lat}`;
+    const list = locationMap.get(key) || [];
+    list.push(item);
+    locationMap.set(key, list);
+  });
+
+  locationMap.forEach((list) => {
+    const coord = parseLocation(list[0].location);
+    if (!coord) return;
+
+    const hasMultiple = list.length > 1;
+    const isSelected = list.some(it => selectedIdioms.value.some(s => s.id === it.id));
+    const allSelected = list.every(it => selectedIdioms.value.some(s => s.id === it.id));
+
+    // 成语用方形标记区分诗词
+    const size = hasMultiple ? 18 : 14;
+    const fill = allSelected ? '#67c23a' : (isSelected ? '#95d475' : '#e6a23c');
+    const idiomIcon = L.divIcon({
+      className: 'idiom-inline-marker',
+      html: `<div style="
+        width:${size}px;height:${size}px;border-radius:50%;
+        background:${fill};border:2px solid #fff;
+        box-shadow:0 0 0 1.5px ${fill}, 0 1px 4px rgba(0,0,0,0.3);
+        display:flex;align-items:center;justify-content:center;
+        font-size:10px;font-weight:bold;color:#fff;
+      ">${hasMultiple ? list.length : ''}</div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+    });
+
+    const marker = L.marker([coord.lat, coord.lng], { icon: idiomIcon }).addTo(inlineMarkerLayer!);
+
+    if (hasMultiple) {
+      const selectedCount = list.filter(it => selectedIdioms.value.some(s => s.id === it.id)).length;
+      const titles = list.slice(0, 3).map(it => it.title).join('、') + (list.length > 3 ? '...' : '');
+      marker.bindTooltip(
+        `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
+         <div style="font-size:12px;color:#666">共 ${list.length} 条成语 · 已选 ${selectedCount} 条</div>
+         <div style="font-size:11px;color:#909399;margin-top:2px">${titles}</div>
+         <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
+        { direction: 'top', offset: [0, -6] }
+      );
+    } else {
+      const it = list[0];
+      marker.bindTooltip(
+        `<div style="font-size:13px;font-weight:bold">${it.title}</div>
+         <div style="font-size:11px;color:#e6a23c;margin-bottom:2px">成语 · ${it.category}</div>
+         <div style="font-size:12px;line-height:1.5;color:#666">${it.meaning}</div>
+         ${it.source ? `<div style="font-size:11px;color:#909399;margin-top:3px">出处：${it.source}</div>` : ''}
+         <div style="font-size:11px;color:#999;margin-top:2px">${it.location}</div>`,
+        { direction: 'top', offset: [0, -6] }
+      );
+    }
+
+    marker.on('click', () => {
+      if (list.length === 1) {
+        selectIdiom(list[0]);
+        renderInlineMarkers();
+      } else {
+        openIdiomLocationDialog(list);
       }
     });
   });
@@ -1449,8 +1752,41 @@ function handleMapAuthorChange(val: string[]) {
   if (inlineMarkerLayer) inlineMarkerLayer.clearLayers();
   if (val.length) {
     renderAuthorMarkers(val);
+    // 全部/成语模式下，作者路线之外仍显示成语标记
+    renderIdiomMarkers();
   } else {
     if (inlineRouteLayer) inlineRouteLayer.clearLayers();
+    renderInlineMarkers();
+  }
+}
+
+async function handleMapCategoryChange(val: string) {
+  // 切换到成语类时，禁用朝代/作者并清掉路线、疆域
+  if (val === 'idiom') {
+    mapAuthor.value = [];
+    mapDynasty.value = '';
+    if (inlineRouteLayer) inlineRouteLayer.clearLayers();
+    if (inlineTerritoryLayer) inlineTerritoryLayer.clearLayers();
+  }
+
+  // 确保成语库已加载
+  if (val !== 'poetry' && allIdioms.value.length === 0) {
+    try {
+      allIdioms.value = await fetchAllIdioms();
+      hasLoadedIdioms.value = true;
+    } catch (e) {
+      console.error('加载成语库失败', e);
+    }
+  }
+
+  if (!inlineMap) {
+    initInlineMap();
+    return;
+  }
+
+  if (mapAuthor.value.length) {
+    renderAuthorMarkers(mapAuthor.value);
+  } else {
     renderInlineMarkers();
   }
 }
@@ -1459,11 +1795,13 @@ function clearMapOverlays() {
   if (inlineTerritoryLayer) inlineTerritoryLayer.clearLayers();
   if (inlineRouteLayer) inlineRouteLayer.clearLayers();
   if (inlineMarkerLayer) inlineMarkerLayer.clearLayers();
+  mapCategory.value = '';
   mapDynasty.value = '';
   mapAuthor.value = [];
   showAuthorRoute.value = false;
   if (inlineMap) {
     inlineMap.setView([35.0, 105.0], 4);
+    renderInlineMarkers();
   }
 }
 
@@ -1491,6 +1829,60 @@ function handleSelectAll(val: boolean) {
   } else {
     const resultIds = new Set(poetryResults.value.map(p => p.id));
     selectedPoetries.value = selectedPoetries.value.filter(p => !resultIds.has(p.id));
+  }
+}
+
+// ==================== 成语库 ====================
+
+async function handleIdiomSearch() {
+  idiomLoading.value = true;
+  try {
+    if (!hasLoadedIdioms.value || allIdioms.value.length === 0) {
+      allIdioms.value = await fetchAllIdioms();
+      hasLoadedIdioms.value = true;
+    }
+
+    idiomResults.value = filterIdioms(allIdioms.value, idiomForm.value.keyword, {
+      category: idiomForm.value.category || undefined,
+    });
+
+    if (idiomForm.value.keyword || idiomForm.value.category) {
+      if (idiomResults.value.length > 0) {
+        ElMessage.success(`找到 ${idiomResults.value.length} 条成语`);
+      } else {
+        ElMessage.info('未找到匹配的成语');
+      }
+    }
+  } catch (error) {
+    console.error('成语搜索失败:', error);
+    ElMessage.error('搜索失败，请重试');
+  } finally {
+    idiomLoading.value = false;
+  }
+}
+
+function selectIdiom(item: IdiomItem) {
+  const index = selectedIdioms.value.findIndex(p => p.id === item.id);
+  if (index > -1) {
+    selectedIdioms.value.splice(index, 1);
+  } else {
+    selectedIdioms.value.push(item);
+  }
+}
+
+function handleSelectAllIdioms(val: boolean) {
+  if (val) {
+    const newSet = new Map<string, IdiomItem>();
+    selectedIdioms.value.forEach(p => newSet.set(p.id, p));
+    idiomResults.value.forEach(p => {
+      if (!newSet.has(p.id)) {
+        newSet.set(p.id, p);
+      }
+    });
+    selectedIdioms.value = Array.from(newSet.values());
+  } else {
+    const resultIds = new Set(idiomResults.value.map(p => p.id));
+    selectedIdioms.value = selectedIdioms.value.filter(p => !resultIds.has(p.id));
   }
 }
 
@@ -1795,10 +2187,34 @@ function handleImport() {
             author: poem.author,
             source: poem.source || poem.dynasty,
             dynasty: poem.dynasty,
-            location: poem.location
+            location: poem.location,
+            category: 'poetry'
           }));
         } else {
           ElMessage.warning('请至少选择一首诗词');
+          return;
+        }
+        break;
+
+      case 'idiom':
+        if (selectedIdioms.value.length > 0) {
+          articles = selectedIdioms.value.map(it => ({
+            title: it.title,
+            content: [
+              it.pinyin && `【拼音】${it.pinyin}`,
+              `【释义】${it.meaning}`,
+              it.source && `【出处】${it.source}`,
+              it.story && `【典故】${it.story}`,
+              it.example && `【例句】${it.example}`,
+            ].filter(Boolean).join('\n'),
+            tags: ['成语', it.category, ...it.tags].filter(Boolean),
+            author: '',
+            source: it.source || '成语库',
+            category: 'idiom',
+            location: it.location,
+          }));
+        } else {
+          ElMessage.warning('请至少选择一条成语');
           return;
         }
         break;
@@ -1855,6 +2271,9 @@ function resetForm() {
   poetryForm.value = {dynasty: '', keyword: '', tags: []};
   poetryResults.value = [];
   selectedPoetries.value = [];
+  idiomForm.value = {category: '', keyword: ''};
+  idiomResults.value = [];
+  selectedIdioms.value = [];
   examForm.value = {type: '', subject: '', keyword: '', tags: []};
   examResults.value = [];
   selectedExamItem.value = null;
@@ -1879,12 +2298,21 @@ function handleClose() {
 
 function handleDialogOpened() {
   if (activeTab.value === 'poetryMap') {
+    const tasks: Promise<any>[] = [];
     if (!hasLoadedLibrary.value) {
-      fetchAllPoetry().then(all => {
+      tasks.push(fetchAllPoetry().then(all => {
         allLibraryPoems.value = Object.values(all).flat();
         hasLoadedLibrary.value = true;
-        initInlineMap();
-      });
+      }));
+    }
+    if (!hasLoadedIdioms.value) {
+      tasks.push(fetchAllIdioms().then(items => {
+        allIdioms.value = items;
+        hasLoadedIdioms.value = true;
+      }));
+    }
+    if (tasks.length) {
+      Promise.all(tasks).then(() => initInlineMap());
     } else {
       initInlineMap();
     }
@@ -1914,16 +2342,30 @@ watch(activeTab, (tab) => {
         handlePoetrySearch();
       }
     });
+  } else if (tab === 'idiom') {
+    nextTick(() => {
+      if (!hasLoadedIdioms.value) {
+        handleIdiomSearch();
+      }
+    });
   } else if (tab === 'poetryMap') {
     nextTick(() => {
+      const tasks: Promise<any>[] = [];
       if (!hasLoadedLibrary.value) {
-        fetchAllPoetry().then(all => {
+        tasks.push(fetchAllPoetry().then(all => {
           allLibraryPoems.value = Object.values(all).flat();
           hasLoadedLibrary.value = true;
-          // Dialog 打开动画完成后再初始化，避免尺寸计算错误
-          if (props.modelValue) {
-            initInlineMap();
-          }
+        }));
+      }
+      if (!hasLoadedIdioms.value) {
+        tasks.push(fetchAllIdioms().then(items => {
+          allIdioms.value = items;
+          hasLoadedIdioms.value = true;
+        }));
+      }
+      if (tasks.length) {
+        Promise.all(tasks).then(() => {
+          if (props.modelValue) initInlineMap();
         });
       } else if (props.modelValue) {
         if (!inlineMap) initInlineMap();
@@ -2018,6 +2460,38 @@ onUnmounted(() => {
 
 .poetry-placeholder {
   margin-top: 20px;
+}
+
+.idiom-results {
+  margin-top: 16px;
+
+  .selected {
+    border: 2px solid var(--utools-primary);
+  }
+}
+
+.idiom-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.idiom-selected-count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--utools-primary);
+  font-weight: 500;
+}
+
+.idiom-placeholder {
+  margin-top: 20px;
+}
+
+.idiom-loading {
+  margin-top: 16px;
+  padding: 0 4px;
 }
 
 :deep(.el-radio__label) {
@@ -2178,6 +2652,44 @@ onUnmounted(() => {
   border: 1px solid var(--utools-border-light);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
+}
+
+.library-map-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: var(--utools-bg-secondary);
+  border-left: 1px solid var(--utools-border-light);
+  border-right: 1px solid var(--utools-border-light);
+  font-size: 12px;
+  color: var(--utools-text-secondary);
+
+  .map-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .map-legend-pin {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #409eff;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+    box-shadow: 0 0 0 1px #409eff;
+  }
+
+  .map-legend-circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #e6a23c;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+    box-shadow: 0 0 0 1.5px #e6a23c;
+  }
 }
 
 .standalone-map-container {

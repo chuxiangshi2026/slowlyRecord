@@ -32,6 +32,8 @@ export interface TextArticle {
   location?: string;
   // 朝代
   dynasty?: string;
+  // 文章类别（用于地图与列表区分诗词/成语等）
+  category?: 'poetry' | 'idiom' | 'article';
   // 地理坐标（解析后的）
   geo?: GeoLocation;
   // 创作年份（可选，用于时间线）

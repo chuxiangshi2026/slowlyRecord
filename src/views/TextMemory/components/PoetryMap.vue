@@ -4,11 +4,22 @@
     <div class="map-controls">
       <div class="control-group">
         <el-select
+          v-model="selectedCategory"
+          placeholder="类型"
+          size="small"
+          style="width: 110px"
+        >
+          <el-option label="全部" value="" />
+          <el-option label="诗词" value="poetry" />
+          <el-option label="成语" value="idiom" />
+        </el-select>
+
+        <el-select
           v-model="selectedDynasty"
           placeholder="选择朝代显示疆域"
           clearable
           size="small"
-          style="width: 160px"
+          style="width: 160px; margin-left: 8px"
           @change="handleDynastyChange"
         >
           <el-option
@@ -44,9 +55,18 @@
         </el-button>
       </div>
 
-      <div class="control-group">
-        <el-tag v-if="poetryCount > 0" size="small" type="info">
-          显示 {{ poetryCount }} 首诗词
+      <div class="control-group map-legend">
+        <span class="legend-item">
+          <span class="legend-pin"></span>诗词
+        </span>
+        <span class="legend-item">
+          <span class="legend-circle"></span>成语
+        </span>
+        <el-tag v-if="poetryCount > 0" size="small" type="info" style="margin-left: 8px">
+          诗词 {{ poetryCount }} 首
+        </el-tag>
+        <el-tag v-if="idiomCount > 0" size="small" type="warning" style="margin-left: 6px">
+          成语 {{ idiomCount }} 条
         </el-tag>
       </div>
     </div>
@@ -54,7 +74,7 @@
     <!-- 地图容器 -->
     <div ref="mapContainer" class="map-container"></div>
 
-    <!-- 诗词详情弹窗 -->
+    <!-- 详情弹窗 -->
     <el-dialog
       v-model="detailVisible"
       :title="selectedPoetry?.title"
@@ -63,8 +83,11 @@
     >
       <div v-if="selectedPoetry" class="poetry-detail">
         <div class="poetry-meta">
-          <el-tag size="small">{{ selectedPoetry.dynasty || '未知朝代' }}</el-tag>
-          <el-tag size="small" type="info" style="margin-left: 8px">{{ selectedPoetry.author || '佚名' }}</el-tag>
+          <el-tag v-if="isIdiomArticle(selectedPoetry)" size="small" type="warning">成语</el-tag>
+          <el-tag v-else size="small">{{ selectedPoetry.dynasty || '诗词' }}</el-tag>
+          <el-tag v-if="selectedPoetry.author" size="small" type="info" style="margin-left: 8px">
+            {{ selectedPoetry.author }}
+          </el-tag>
           <el-tag v-if="selectedPoetry.location" size="small" type="success" style="margin-left: 8px">
             <el-icon><Location /></el-icon> {{ selectedPoetry.location }}
           </el-tag>
@@ -111,22 +134,40 @@ let routeLayer: L.LayerGroup | null = null;
 let markerMap: Map<string, L.Marker> = new Map();
 
 // 状态
+const selectedCategory = ref<'' | 'poetry' | 'idiom'>('');
 const selectedDynasty = ref('');
 const selectedAuthor = ref('');
 const detailVisible = ref(false);
 const selectedPoetry = ref<TextArticle | null>(null);
 
+// 是否为成语
+function isIdiomArticle(article: TextArticle): boolean {
+  if (article.category === 'idiom') return true;
+  // 兼容旧数据（成语库导入时会带 "成语" 标签）
+  return Array.isArray(article.tags) && article.tags.includes('成语');
+}
+
+// 当前类型筛选下生效的文章列表（用于渲染标记）
+const filteredArticles = computed(() => {
+  if (!selectedCategory.value) return props.articles;
+  if (selectedCategory.value === 'idiom') {
+    return props.articles.filter(isIdiomArticle);
+  }
+  return props.articles.filter(a => !isIdiomArticle(a));
+});
+
 // 计算属性
-const poetryCount = computed(() => props.articles.filter(a => a.geo).length);
+const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a)).length);
+const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
 
 const dynastyOptions = computed(() => {
   return DYNASTY_LIST.map(d => ({ code: d.code, name: d.name }));
 });
 
-// 从当前有地理坐标的诗词中提取作者（过滤后实时更新）
+// 从当前有地理坐标的诗词中提取作者（过滤后实时更新；成语一般无作者，自动跳过）
 const availableAuthors = computed(() => {
   const set = new Set<string>();
-  props.articles.forEach(a => {
+  filteredArticles.value.forEach(a => {
     if (a.author && a.geo) {
       set.add(a.author);
     }
@@ -176,10 +217,10 @@ function renderMarkers() {
   markerLayer.clearLayers();
   markerMap.clear();
 
-  const articlesWithGeo = props.articles.filter(a => a.geo);
+  const articlesWithGeo = filteredArticles.value.filter(a => a.geo);
   if (articlesWithGeo.length === 0) return;
 
-  // 按坐标聚合，同一地点的诗词放在一起
+  // 按坐标聚合，同一地点的文章放在一起
   const clusterMap = new Map<string, TextArticle[]>();
   for (const article of articlesWithGeo) {
     if (!article.geo) continue;
@@ -194,11 +235,12 @@ function renderMarkers() {
     const first = group[0];
     if (!first.geo) continue;
 
-    // 自定义图标颜色
-    const color = getDynastyColor(first.dynasty);
+    // 成语用专属菱形图标，诗词用按朝代上色的水滴图标
+    const isIdiom = isIdiomArticle(first);
+    const color = isIdiom ? '#E6A23C' : getDynastyColor(first.dynasty);
     const customIcon = L.divIcon({
-      className: 'custom-marker',
-      html: `<div class="marker-pin" style="background:${color}">${group.length > 1 ? group.length : ''}</div>`,
+      className: isIdiom ? 'custom-marker idiom-marker' : 'custom-marker',
+      html: `<div class="${isIdiom ? 'marker-square' : 'marker-pin'}" style="background:${color}">${group.length > 1 ? group.length : ''}</div>`,
       iconSize: [30, 30],
       iconAnchor: [15, 30],
     });
@@ -213,13 +255,26 @@ function renderMarkers() {
     // 弹出内容
     const popupContent = group.map((article, idx) => {
       const title = article.title.length > 12 ? article.title.substring(0, 12) + '...' : article.title;
+      const isIdi = isIdiomArticle(article);
+      const tagHtml = isIdi
+        ? `<span style="background:#fdf6ec;color:#e6a23c;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">成语</span>`
+        : (article.dynasty
+            ? `<span style="background:#ecf5ff;color:#409eff;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
+            : '');
+      const subtitle = isIdi
+        ? (article.location || '')
+        : (article.author || '佚名');
       return `<div class="popup-item" data-id="${article._id}" style="cursor:pointer;padding:4px 0;border-bottom:${idx < group.length - 1 ? '1px solid #eee' : 'none'}">
-        <strong>${title}</strong>
-        <span style="color:#666;font-size:12px"> — ${article.author || '佚名'}</span>
+        ${tagHtml}<strong>${title}</strong>
+        ${subtitle ? `<div style="color:#666;font-size:12px;margin-top:2px"> ${subtitle}</div>` : ''}
       </div>`;
     }).join('');
 
-    marker.bindPopup(`<div class="poetry-popup">${popupContent}</div>`);
+    const headerHtml = first.geo.name
+      ? `<div style="font-size:12px;color:#909399;margin-bottom:6px;border-bottom:1px solid #f0f0f0;padding-bottom:4px">📍 ${first.geo.name}</div>`
+      : '';
+
+    marker.bindPopup(`<div class="poetry-popup">${headerHtml}${popupContent}</div>`);
     marker.on('popupopen', () => {
       // 绑定点击事件
       nextTick(() => {
@@ -393,7 +448,7 @@ function handleAuthorChange() {
 
   if (!selectedAuthor.value) return;
 
-  const authorArticles = props.articles
+  const authorArticles = filteredArticles.value
     .filter(a => a.author === selectedAuthor.value && a.geo)
     .sort((a, b) => (a.year || 0) - (b.year || 0));
 
@@ -453,6 +508,7 @@ function handleAuthorChange() {
 // ==================== 清除图层 ====================
 
 function clearAllOverlays() {
+  selectedCategory.value = '';
   selectedDynasty.value = '';
   selectedAuthor.value = '';
   territoryLayer?.clearLayers();
@@ -466,6 +522,17 @@ function clearAllOverlays() {
 watch(() => props.articles, () => {
   renderMarkers();
 }, { deep: true });
+
+// 切换类型筛选时，若已选作者已不在范围内则清空，并重渲路线
+watch(selectedCategory, () => {
+  if (selectedAuthor.value && !availableAuthors.value.includes(selectedAuthor.value)) {
+    selectedAuthor.value = '';
+    routeLayer?.clearLayers();
+  } else if (selectedAuthor.value) {
+    handleAuthorChange();
+  }
+  renderMarkers();
+});
 
 // 监听激活状态，处理容器尺寸变化
 watch(() => props.active, (isActive) => {
@@ -529,6 +596,37 @@ onUnmounted(() => {
   align-items: center;
 }
 
+.map-legend {
+  gap: 8px;
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--utools-text-secondary);
+  }
+
+  .legend-pin {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #409eff;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+  }
+
+  .legend-circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #e6a23c;
+    border-radius: 50%;
+    border: 1px solid #fef3e0;
+    box-shadow: 0 0 0 1px #e6a23c;
+  }
+}
+
 .map-container {
   flex: 1;
   min-height: 400px;
@@ -577,6 +675,28 @@ onUnmounted(() => {
     font-size: 12px;
     font-weight: bold;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 成语用圆形章戳样式与诗词水滴形区分 */
+  .marker-square {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e6a23c;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -14px 0 0 -14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid #fef3e0;
+    outline: 2px solid #e6a23c;
+    outline-offset: -1px;
   }
 }
 
