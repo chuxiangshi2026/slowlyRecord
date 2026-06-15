@@ -4,9 +4,9 @@
     "name": "元",
     "period": "1271-1368",
     "description": "元曲、元杂剧，通俗文学的高峰",
-    "count": 10,
+    "count": 20,
     "version": "1.0",
-    "lastUpdated": "2026-04-17"
+    "lastUpdated": "2026-06-15"
   },
   "poems": [
     {
@@ -205,6 +205,196 @@
       "location": "潇湘/湖南",
       "wordCount": 89,
       "year": 1290
+    },
+    {
+      "id": "yuan_011",
+      "title": "拨不断·叹世",
+      "author": "马致远",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "布衣中，问英雄。王图霸业成何用！禾黍高低六代宫，楸梧远近千官冢。一场恶梦。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "怀古",
+        "马致远"
+      ],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 36,
+      "year": 1290
+    },
+    {
+      "id": "yuan_012",
+      "title": "四块玉·叹世",
+      "author": "马致远",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "两鬓皤，中年过，图甚区区苦张罗。人间宠辱都参破。种春风二顷田，远红尘千丈波，倒大来闲快活。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "隐逸",
+        "马致远"
+      ],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 40,
+      "year": 1290
+    },
+    {
+      "id": "yuan_013",
+      "title": "一枝花·不伏老（节选）",
+      "author": "关汉卿",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "我是个蒸不烂、煮不熟、捶不匾、炒不爆响当当一粒铜豌豆。恁子弟每谁教你钻入他锄不断、斫不下、解不开、顿不脱慢腾腾千层锦套头。我玩的是梁园月，饮的是东京酒，赏的是洛阳花，攀的是章台柳。我也会围棋、会蹴鞠、会打围、会插科、会歌舞、会吹弹、会咽作、会吟诗、会双陆。你便是落了我牙、歪了我嘴、瘸了我腿、折了我手，天赐与我这几般儿歹症候，尚兀自不肯休。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "散套",
+        "豪放",
+        "名篇"
+      ],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 210,
+      "year": 1290
+    },
+    {
+      "id": "yuan_014",
+      "title": "大德歌·春",
+      "author": "关汉卿",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "子规啼，不如归，道是春归人未归。几日添憔悴，虚飘飘柳絮飞。一春鱼雁无消息，则见双燕斗衔泥。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "思妇",
+        "关汉卿"
+      ],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 40,
+      "year": 1290
+    },
+    {
+      "id": "yuan_015",
+      "title": "沉醉东风·渔夫",
+      "author": "白朴",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "黄芦岸白苹渡口，绿柳堤红蓼滩头。虽无刎颈交，却有忘机友，点秋江白鹭沙鸥。傲杀人间万户侯，不识字烟波钓叟。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "隐逸",
+        "名篇"
+      ],
+      "source": "《全元散曲》",
+      "location": "江南",
+      "wordCount": 46,
+      "year": 1260
+    },
+    {
+      "id": "yuan_016",
+      "title": "水仙子·寻梅",
+      "author": "乔吉",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "冬前冬后几村庄，溪北溪南两履霜，树头树底孤山上。冷风来何处香？忽相逢缟袂绡裳。酒醒寒惊梦，笛凄春断肠，淡月昏黄。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "咏梅",
+        "名篇"
+      ],
+      "source": "《全元散曲》",
+      "location": "孤山/杭州",
+      "wordCount": 54,
+      "year": 1320
+    },
+    {
+      "id": "yuan_017",
+      "title": "卖花声·怀古",
+      "author": "张可久",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "美人自刎乌江岸，战火曾烧赤壁山，将军空老玉门关。伤心秦汉，生民涂炭，读书人一声长叹。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "怀古",
+        "名篇"
+      ],
+      "source": "《全元散曲》",
+      "location": "江南",
+      "wordCount": 36,
+      "year": 1320
+    },
+    {
+      "id": "yuan_018",
+      "title": "水仙子·夜雨",
+      "author": "徐再思",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "一声梧叶一声秋，一点芭蕉一点愁，三更归梦三更后。落灯花，棋未收，叹新丰孤馆人留。枕上十年事，江南二老忧，都到心头。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "羁旅",
+        "名篇"
+      ],
+      "source": "《全元散曲》",
+      "location": "江南",
+      "wordCount": 48,
+      "year": 1330
+    },
+    {
+      "id": "yuan_019",
+      "title": "墨梅",
+      "author": "王冕",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "吾家洗砚池头树，朵朵花开淡墨痕。\n不要人夸好颜色，只留清气满乾坤。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏物",
+        "言志",
+        "小学必背"
+      ],
+      "source": "《竹斋集》",
+      "location": "诸暨/浙江",
+      "wordCount": 28,
+      "year": 1350
+    },
+    {
+      "id": "yuan_020",
+      "title": "水仙子·咏江南",
+      "author": "张养浩",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "一江烟水照晴岚，两岸人家接画檐，芰荷丛一段秋光淡。看沙鸥舞再三，卷香风十里珠帘。画船儿天边至，酒旗儿风外飐。爱杀江南！",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "写景",
+        "名篇"
+      ],
+      "source": "《全元散曲》",
+      "location": "江南",
+      "wordCount": 52,
+      "year": 1329
     }
   ]
 }

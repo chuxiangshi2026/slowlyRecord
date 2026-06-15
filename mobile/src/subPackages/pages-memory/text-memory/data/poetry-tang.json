@@ -4,9 +4,9 @@
     "name": "唐诗",
     "period": "618-907",
     "description": "中国诗歌发展的黄金时代，名家辈出，作品丰富",
-    "count": 50,
+    "count": 120,
     "version": "1.1",
-    "lastUpdated": "2026-04-17"
+    "lastUpdated": "2026-06-15"
   },
   "poems": [
     {
@@ -954,6 +954,1332 @@
       "location": "睢阳/河南商丘",
       "wordCount": 28,
       "year": 747
+    },
+    {
+      "id": "tang_051",
+      "title": "赠汪伦",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "李白乘舟将欲行，忽闻岸上踏歌声。\n桃花潭水深千尺，不及汪伦送我情。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "送别",
+        "友情",
+        "小学必背"
+      ],
+      "source": "《李太白集》",
+      "location": "泾县/桃花潭",
+      "wordCount": 28,
+      "year": 755
+    },
+    {
+      "id": "tang_052",
+      "title": "黄鹤楼送孟浩然之广陵",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "故人西辞黄鹤楼，烟花三月下扬州。\n孤帆远影碧空尽，唯见长江天际流。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "送别",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《李太白集》",
+      "location": "黄鹤楼/武汉",
+      "wordCount": 28,
+      "year": 730
+    },
+    {
+      "id": "tang_053",
+      "title": "独坐敬亭山",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "众鸟高飞尽，孤云独去闲。\n相看两不厌，只有敬亭山。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "山水",
+        "孤独",
+        "小学必背"
+      ],
+      "source": "《李太白集》",
+      "location": "敬亭山/安徽宣城",
+      "wordCount": 20,
+      "year": 753
+    },
+    {
+      "id": "tang_054",
+      "title": "渡荆门送别",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "渡远荆门外，来从楚国游。\n山随平野尽，江入大荒流。\n月下飞天镜，云生结海楼。\n仍怜故乡水，万里送行舟。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "送别",
+        "山水",
+        "初中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "荆门/湖北宜都",
+      "wordCount": 40,
+      "year": 724
+    },
+    {
+      "id": "tang_055",
+      "title": "月下独酌",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "花间一壶酒，独酌无相亲。\n举杯邀明月，对影成三人。\n月既不解饮，影徒随我身。\n暂伴月将影，行乐须及春。\n我歌月徘徊，我舞影零乱。\n醒时同交欢，醉后各分散。\n永结无情游，相期邈云汉。",
+      "contentType": "poetry",
+      "tags": [
+        "五言古诗",
+        "孤独",
+        "豪放",
+        "高中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "长安",
+      "wordCount": 96,
+      "year": 744
+    },
+    {
+      "id": "tang_056",
+      "title": "春夜洛城闻笛",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "谁家玉笛暗飞声，散入春风满洛城。\n此夜曲中闻折柳，何人不起故园情。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "思乡",
+        "初中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "洛阳/河南",
+      "wordCount": 28,
+      "year": 734
+    },
+    {
+      "id": "tang_057",
+      "title": "送友人",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "青山横北郭，白水绕东城。\n此地一为别，孤蓬万里征。\n浮云游子意，落日故人情。\n挥手自兹去，萧萧班马鸣。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "送别",
+        "名篇",
+        "初中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "安徽/宣城",
+      "wordCount": 40,
+      "year": 742
+    },
+    {
+      "id": "tang_058",
+      "title": "宣州谢朓楼饯别校书叔云",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "弃我去者，昨日之日不可留；\n乱我心者，今日之日多烦忧。\n长风万里送秋雁，对此可以酣高楼。\n蓬莱文章建安骨，中间小谢又清发。\n俱怀逸兴壮思飞，欲上青天览明月。\n抽刀断水水更流，举杯消愁愁更愁。\n人生在世不称意，明朝散发弄扁舟。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "豪放",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "宣州/安徽",
+      "wordCount": 112,
+      "year": 753
+    },
+    {
+      "id": "tang_059",
+      "title": "春夜喜雨",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "好雨知时节，当春乃发生。\n随风潜入夜，润物细无声。\n野径云俱黑，江船火独明。\n晓看红湿处，花重锦官城。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "写景",
+        "春天",
+        "小学必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "成都",
+      "wordCount": 40,
+      "year": 761
+    },
+    {
+      "id": "tang_060",
+      "title": "绝句",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "两个黄鹂鸣翠柳，一行白鹭上青天。\n窗含西岭千秋雪，门泊东吴万里船。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "春天",
+        "小学必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "成都/草堂",
+      "wordCount": 28,
+      "year": 764
+    },
+    {
+      "id": "tang_061",
+      "title": "江南逢李龟年",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "岐王宅里寻常见，崔九堂前几度闻。\n正是江南好风景，落花时节又逢君。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "感怀",
+        "初中必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "江南/长沙",
+      "wordCount": 28,
+      "year": 770
+    },
+    {
+      "id": "tang_062",
+      "title": "蜀相",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "丞相祠堂何处寻？锦官城外柏森森。\n映阶碧草自春色，隔叶黄鹂空好音。\n三顾频烦天下计，两朝开济老臣心。\n出师未捷身先死，长使英雄泪满襟。",
+      "contentType": "poetry",
+      "tags": [
+        "七言律诗",
+        "怀古",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "成都/武侯祠",
+      "wordCount": 56,
+      "year": 760
+    },
+    {
+      "id": "tang_063",
+      "title": "登岳阳楼",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "昔闻洞庭水，今上岳阳楼。\n吴楚东南坼，乾坤日夜浮。\n亲朋无一字，老病有孤舟。\n戎马关山北，凭轩涕泗流。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "写景",
+        "感怀",
+        "高中必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "岳阳楼/湖南",
+      "wordCount": 40,
+      "year": 768
+    },
+    {
+      "id": "tang_064",
+      "title": "闻官军收河南河北",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "剑外忽传收蓟北，初闻涕泪满衣裳。\n却看妻子愁何在，漫卷诗书喜欲狂。\n白日放歌须纵酒，青春作伴好还乡。\n即从巴峡穿巫峡，便下襄阳向洛阳。",
+      "contentType": "poetry",
+      "tags": [
+        "七言律诗",
+        "爱国",
+        "名篇",
+        "初中必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "梓州/四川三台",
+      "wordCount": 56,
+      "year": 763
+    },
+    {
+      "id": "tang_065",
+      "title": "月夜忆舍弟",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "戍鼓断人行，边秋一雁声。\n露从今夜白，月是故乡明。\n有弟皆分散，无家问死生。\n寄书长不达，况乃未休兵。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "思乡",
+        "战争",
+        "初中必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "秦州/甘肃天水",
+      "wordCount": 40,
+      "year": 759
+    },
+    {
+      "id": "tang_066",
+      "title": "鹿柴",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "空山不见人，但闻人语响。\n返景入深林，复照青苔上。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "山水",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《王右丞集》",
+      "location": "辋川/蓝田",
+      "wordCount": 20,
+      "year": 740
+    },
+    {
+      "id": "tang_067",
+      "title": "鸟鸣涧",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "人闲桂花落，夜静春山空。\n月出惊山鸟，时鸣春涧中。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "山水",
+        "春天",
+        "小学必背"
+      ],
+      "source": "《王右丞集》",
+      "location": "辋川/蓝田",
+      "wordCount": 20,
+      "year": 740
+    },
+    {
+      "id": "tang_068",
+      "title": "九月九日忆山东兄弟",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "独在异乡为异客，每逢佳节倍思亲。\n遥知兄弟登高处，遍插茱萸少一人。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "思乡",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《王右丞集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 718
+    },
+    {
+      "id": "tang_069",
+      "title": "相思",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "红豆生南国，春来发几枝。\n愿君多采撷，此物最相思。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "爱情",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《王右丞集》",
+      "location": "长安",
+      "wordCount": 20,
+      "year": 735
+    },
+    {
+      "id": "tang_070",
+      "title": "竹里馆",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "独坐幽篁里，弹琴复长啸。\n深林人不知，明月来相照。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "山水",
+        "闲适",
+        "小学必背"
+      ],
+      "source": "《王右丞集》",
+      "location": "辋川/蓝田",
+      "wordCount": 20,
+      "year": 740
+    },
+    {
+      "id": "tang_071",
+      "title": "忆江南",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "江南好，风景旧曾谙。\n日出江花红胜火，春来江水绿如蓝。\n能不忆江南？",
+      "contentType": "poetry",
+      "tags": [
+        "词",
+        "写景",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《白氏长庆集》",
+      "location": "洛阳",
+      "wordCount": 27,
+      "year": 838
+    },
+    {
+      "id": "tang_072",
+      "title": "大林寺桃花",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "人间四月芳菲尽，山寺桃花始盛开。\n长恨春归无觅处，不知转入此中来。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "哲理",
+        "小学必背"
+      ],
+      "source": "《白氏长庆集》",
+      "location": "庐山/大林寺",
+      "wordCount": 28,
+      "year": 817
+    },
+    {
+      "id": "tang_073",
+      "title": "观刈麦",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "田家少闲月，五月人倍忙。\n夜来南风起，小麦覆陇黄。\n妇姑荷箪食，童稚携壶浆。\n相随饷田去，丁壮在南冈。\n足蒸暑土气，背灼炎天光。\n力尽不知热，但惜夏日长。\n复有贫妇人，抱子在其旁。\n右手秉遗穗，左臂悬敝筐。\n听其相顾言，闻者为悲伤。\n家田输税尽，拾此充饥肠。\n今我何功德，曾不事农桑。\n吏禄三百石，岁晏有余粮。\n念此私自愧，尽日不能忘。",
+      "contentType": "poetry",
+      "tags": [
+        "五言古诗",
+        "讽喻",
+        "民生",
+        "初中必背"
+      ],
+      "source": "《白氏长庆集》",
+      "location": "周至/陕西",
+      "wordCount": 190,
+      "year": 806
+    },
+    {
+      "id": "tang_074",
+      "title": "长恨歌（节选）",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "汉皇重色思倾国，御宇多年求不得。\n杨家有女初长成，养在深闺人未识。\n天生丽质难自弃，一朝选在君王侧。\n回眸一笑百媚生，六宫粉黛无颜色。\n\n春寒赐浴华清池，温泉水滑洗凝脂。\n侍儿扶起娇无力，始是新承恩泽时。\n\n七月七日长生殿，夜半无人私语时。\n在天愿作比翼鸟，在地愿为连理枝。\n天长地久有时尽，此恨绵绵无绝期。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "叙事",
+        "爱情",
+        "高中必背"
+      ],
+      "source": "《白氏长庆集》",
+      "location": "长安/华清宫",
+      "wordCount": 170,
+      "year": 806
+    },
+    {
+      "id": "tang_075",
+      "title": "暮江吟",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "一道残阳铺水中，半江瑟瑟半江红。\n可怜九月初三夜，露似真珠月似弓。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《白氏长庆集》",
+      "location": "江州/九江",
+      "wordCount": 28,
+      "year": 822
+    },
+    {
+      "id": "tang_076",
+      "title": "嫦娥",
+      "author": "李商隐",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "云母屏风烛影深，长河渐落晓星沉。\n嫦娥应悔偷灵药，碧海青天夜夜心。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏物",
+        "神话",
+        "小学必背"
+      ],
+      "source": "《李义山诗集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 850
+    },
+    {
+      "id": "tang_077",
+      "title": "贾生",
+      "author": "李商隐",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "宣室求贤访逐臣，贾生才调更无伦。\n可怜夜半虚前席，不问苍生问鬼神。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏史",
+        "讽刺",
+        "初中必背"
+      ],
+      "source": "《李义山诗集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 848
+    },
+    {
+      "id": "tang_078",
+      "title": "登乐游原",
+      "author": "李商隐",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "向晚意不适，驱车登古原。\n夕阳无限好，只是近黄昏。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "感怀",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《李义山诗集》",
+      "location": "乐游原/西安",
+      "wordCount": 20,
+      "year": 855
+    },
+    {
+      "id": "tang_079",
+      "title": "山行",
+      "author": "杜牧",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "远上寒山石径斜，白云深处有人家。\n停车坐爱枫林晚，霜叶红于二月花。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "秋天",
+        "小学必背"
+      ],
+      "source": "《樊川文集》",
+      "location": "长安/终南山",
+      "wordCount": 28,
+      "year": 840
+    },
+    {
+      "id": "tang_080",
+      "title": "清明",
+      "author": "杜牧",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "清明时节雨纷纷，路上行人欲断魂。\n借问酒家何处有，牧童遥指杏花村。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "节日",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《樊川文集》",
+      "location": "池州/安徽",
+      "wordCount": 28,
+      "year": 845
+    },
+    {
+      "id": "tang_081",
+      "title": "秋夕",
+      "author": "杜牧",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "银烛秋光冷画屏，轻罗小扇扑流萤。\n天阶夜色凉如水，卧看牵牛织女星。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "宫怨",
+        "秋天",
+        "小学必背"
+      ],
+      "source": "《樊川文集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 840
+    },
+    {
+      "id": "tang_082",
+      "title": "芙蓉楼送辛渐",
+      "author": "王昌龄",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "寒雨连江夜入吴，平明送客楚山孤。\n洛阳亲友如相问，一片冰心在玉壶。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "送别",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "芙蓉楼/镇江",
+      "wordCount": 28,
+      "year": 740
+    },
+    {
+      "id": "tang_083",
+      "title": "从军行七首·其四",
+      "author": "王昌龄",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "青海长云暗雪山，孤城遥望玉门关。\n黄沙百战穿金甲，不破楼兰终不还。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "边塞",
+        "壮志",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "边塞/甘肃",
+      "wordCount": 28,
+      "year": 740
+    },
+    {
+      "id": "tang_084",
+      "title": "悯农（其二）",
+      "author": "李绅",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "锄禾日当午，汗滴禾下土。\n谁知盘中餐，粒粒皆辛苦。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "讽喻",
+        "民生",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "长安",
+      "wordCount": 20,
+      "year": 800
+    },
+    {
+      "id": "tang_085",
+      "title": "塞下曲",
+      "author": "卢纶",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "月黑雁飞高，单于夜遁逃。\n欲将轻骑逐，大雪满弓刀。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "边塞",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "边塞",
+      "wordCount": 20,
+      "year": 770
+    },
+    {
+      "id": "tang_086",
+      "title": "寻隐者不遇",
+      "author": "贾岛",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "松下问童子，言师采药去。\n只在此山中，云深不知处。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "问答",
+        "隐逸",
+        "小学必背"
+      ],
+      "source": "《长江集》",
+      "location": "长安/终南山",
+      "wordCount": 20,
+      "year": 810
+    },
+    {
+      "id": "tang_087",
+      "title": "望月怀远",
+      "author": "张九龄",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "海上生明月，天涯共此时。\n情人怨遥夜，竟夕起相思。\n灭烛怜光满，披衣觉露滋。\n不堪盈手赠，还寝梦佳期。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "思乡",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《曲江集》",
+      "location": "荆州",
+      "wordCount": 40,
+      "year": 735
+    },
+    {
+      "id": "tang_088",
+      "title": "秋词",
+      "author": "刘禹锡",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "自古逢秋悲寂寥，我言秋日胜春朝。\n晴空一鹤排云上，便引诗情到碧霄。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "哲理",
+        "豪迈",
+        "初中必背"
+      ],
+      "source": "《刘梦得文集》",
+      "location": "朗州/湖南常德",
+      "wordCount": 28,
+      "year": 805
+    },
+    {
+      "id": "tang_089",
+      "title": "乌衣巷",
+      "author": "刘禹锡",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "朱雀桥边野草花，乌衣巷口夕阳斜。\n旧时王谢堂前燕，飞入寻常百姓家。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "怀古",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《刘梦得文集》",
+      "location": "金陵/南京",
+      "wordCount": 28,
+      "year": 826
+    },
+    {
+      "id": "tang_090",
+      "title": "浪淘沙",
+      "author": "刘禹锡",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "九曲黄河万里沙，浪淘风簸自天涯。\n如今直上银河去，同到牵牛织女家。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "神话",
+        "小学必背"
+      ],
+      "source": "《刘梦得文集》",
+      "location": "夔州/重庆",
+      "wordCount": 28,
+      "year": 820
+    },
+    {
+      "id": "tang_091",
+      "title": "过故人庄",
+      "author": "孟浩然",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "故人具鸡黍，邀我至田家。\n绿树村边合，青山郭外斜。\n开轩面场圃，把酒话桑麻。\n待到重阳日，还来就菊花。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "田园",
+        "友情",
+        "小学必背"
+      ],
+      "source": "《孟浩然集》",
+      "location": "襄阳/湖北",
+      "wordCount": 40,
+      "year": 730
+    },
+    {
+      "id": "tang_092",
+      "title": "宿建德江",
+      "author": "孟浩然",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "移舟泊烟渚，日暮客愁新。\n野旷天低树，江清月近人。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "羁旅",
+        "写景",
+        "小学必背"
+      ],
+      "source": "《孟浩然集》",
+      "location": "建德江/浙江",
+      "wordCount": 20,
+      "year": 728
+    },
+    {
+      "id": "tang_093",
+      "title": "早春呈水部张十八员外",
+      "author": "韩愈",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "天街小雨润如酥，草色遥看近却无。\n最是一年春好处，绝胜烟柳满皇都。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "春天",
+        "初中必背"
+      ],
+      "source": "《昌黎先生集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 823
+    },
+    {
+      "id": "tang_094",
+      "title": "逢入京使",
+      "author": "岑参",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "故园东望路漫漫，双袖龙钟泪不干。\n马上相逢无纸笔，凭君传语报平安。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "边塞",
+        "思乡",
+        "初中必背"
+      ],
+      "source": "《岑嘉州集》",
+      "location": "西域/安西",
+      "wordCount": 28,
+      "year": 749
+    },
+    {
+      "id": "tang_095",
+      "title": "商山早行",
+      "author": "温庭筠",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "晨起动征铎，客行悲故乡。\n鸡声茅店月，人迹板桥霜。\n槲叶落山路，枳花明驿墙。\n因思杜陵梦，凫雁满回塘。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "羁旅",
+        "名篇",
+        "初中必背"
+      ],
+      "source": "《温庭筠全集》",
+      "location": "商山/陕西",
+      "wordCount": 40,
+      "year": 840
+    },
+    {
+      "id": "tang_096",
+      "title": "夜上受降城闻笛",
+      "author": "李益",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "回乐峰前沙似雪，受降城外月如霜。\n不知何处吹芦管，一夜征人尽望乡。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "边塞",
+        "思乡",
+        "初中必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "受降城/宁夏灵武",
+      "wordCount": 28,
+      "year": 780
+    },
+    {
+      "id": "tang_097",
+      "title": "十五夜望月",
+      "author": "王建",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "中庭地白树栖鸦，冷露无声湿桂花。\n今夜月明人尽望，不知秋思落谁家。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "中秋",
+        "思乡",
+        "小学必背"
+      ],
+      "source": "《王建诗集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 810
+    },
+    {
+      "id": "tang_098",
+      "title": "渔歌子",
+      "author": "张志和",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "西塞山前白鹭飞，桃花流水鳜鱼肥。\n青箬笠，绿蓑衣，斜风细雨不须归。",
+      "contentType": "poetry",
+      "tags": [
+        "词",
+        "山水",
+        "隐逸",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "西塞山/浙江湖州",
+      "wordCount": 27,
+      "year": 770
+    },
+    {
+      "id": "tang_099",
+      "title": "蝉",
+      "author": "虞世南",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "垂緌饮清露，流响出疏桐。\n居高声自远，非是藉秋风。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "咏物",
+        "哲理",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "长安",
+      "wordCount": 20,
+      "year": 630
+    },
+    {
+      "id": "tang_100",
+      "title": "逢雪宿芙蓉山主人",
+      "author": "刘长卿",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "日暮苍山远，天寒白屋贫。\n柴门闻犬吠，风雪夜归人。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "写景",
+        "羁旅",
+        "小学必背"
+      ],
+      "source": "《刘随州诗集》",
+      "location": "芙蓉山/湖南",
+      "wordCount": 20,
+      "year": 770
+    },
+    {
+      "id": "tang_101",
+      "title": "题破山寺后禅院",
+      "author": "常建",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "清晨入古寺，初日照高林。\n曲径通幽处，禅房花木深。\n山光悦鸟性，潭影空人心。\n万籁此都寂，但余钟磬音。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "山水",
+        "禅意",
+        "初中必背"
+      ],
+      "source": "《常建集》",
+      "location": "破山寺/江苏常熟",
+      "wordCount": 40,
+      "year": 745
+    },
+    {
+      "id": "tang_102",
+      "title": "蜂",
+      "author": "罗隐",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "不论平地与山尖，无限风光尽被占。\n采得百花成蜜后，为谁辛苦为谁甜？",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏物",
+        "哲理",
+        "小学必背"
+      ],
+      "source": "《罗隐集》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 870
+    },
+    {
+      "id": "tang_103",
+      "title": "金铜仙人辞汉歌（节选）",
+      "author": "李贺",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "茂陵刘郎秋风客，夜闻马嘶晓无迹。\n画栏桂树悬秋香，三十六宫土花碧。\n魏官牵车指千里，东关酸风射眸子。\n空将汉月出宫门，忆君清泪如铅水。\n衰兰送客咸阳道，天若有情天亦老。\n携盘独出月荒凉，渭城已远波声小。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "咏史",
+        "名句",
+        "高中必背"
+      ],
+      "source": "《李长吉歌诗》",
+      "location": "长安",
+      "wordCount": 132,
+      "year": 810
+    },
+    {
+      "id": "tang_104",
+      "title": "峨眉山月歌",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "峨眉山月半轮秋，影入平羌江水流。\n夜发清溪向三峡，思君不见下渝州。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "山水",
+        "思乡",
+        "初中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "峨眉山/四川",
+      "wordCount": 28,
+      "year": 724
+    },
+    {
+      "id": "tang_105",
+      "title": "金陵酒肆留别",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "风吹柳花满店香，吴姬压酒劝客尝。\n金陵子弟来相送，欲行不行各尽觞。\n请君试问东流水，别意与之谁短长。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "送别",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "金陵/南京",
+      "wordCount": 48,
+      "year": 739
+    },
+    {
+      "id": "tang_106",
+      "title": "旅夜书怀",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "细草微风岸，危樯独夜舟。\n星垂平野阔，月涌大江流。\n名岂文章著，官应老病休。\n飘飘何所似，天地一沙鸥。",
+      "contentType": "poetry",
+      "tags": [
+        "五言律诗",
+        "感怀",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "渝州/重庆",
+      "wordCount": 40,
+      "year": 765
+    },
+    {
+      "id": "tang_107",
+      "title": "赠花卿",
+      "author": "杜甫",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "锦城丝管日纷纷，半入江风半入云。\n此曲只应天上有，人间能得几回闻。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "音乐",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《杜工部集》",
+      "location": "成都",
+      "wordCount": 28,
+      "year": 761
+    },
+    {
+      "id": "tang_108",
+      "title": "画",
+      "author": "王维",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "远看山有色，近听水无声。\n春去花还在，人来鸟不惊。",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "题画",
+        "启蒙",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "长安",
+      "wordCount": 20,
+      "year": 740
+    },
+    {
+      "id": "tang_109",
+      "title": "凉州词",
+      "author": "王之涣",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "黄河远上白云间，一片孤城万仞山。\n羌笛何须怨杨柳，春风不度玉门关。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "边塞",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "凉州/甘肃",
+      "wordCount": 28,
+      "year": 720
+    },
+    {
+      "id": "tang_110",
+      "title": "滕王阁诗",
+      "author": "王勃",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "滕王高阁临江渚，佩玉鸣鸾罢歌舞。\n画栋朝飞南浦云，珠帘暮卷西山雨。\n闲云潭影日悠悠，物换星移几度秋。\n阁中帝子今何在？槛外长江空自流。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "怀古",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《王子安集》",
+      "location": "滕王阁/南昌",
+      "wordCount": 56,
+      "year": 676
+    },
+    {
+      "id": "tang_111",
+      "title": "问刘十九",
+      "author": "白居易",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "绿蚁新醅酒，红泥小火炉。\n晚来天欲雪，能饮一杯无？",
+      "contentType": "poetry",
+      "tags": [
+        "五言绝句",
+        "友情",
+        "闲适",
+        "小学必背"
+      ],
+      "source": "《白氏长庆集》",
+      "location": "江州/九江",
+      "wordCount": 20,
+      "year": 817
+    },
+    {
+      "id": "tang_112",
+      "title": "过华清宫",
+      "author": "杜牧",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "长安回望绣成堆，山顶千门次第开。\n一骑红尘妃子笑，无人知是荔枝来。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏史",
+        "讽刺",
+        "初中必背"
+      ],
+      "source": "《樊川文集》",
+      "location": "华清宫/临潼",
+      "wordCount": 28,
+      "year": 846
+    },
+    {
+      "id": "tang_113",
+      "title": "左迁至蓝关示侄孙湘",
+      "author": "韩愈",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "一封朝奏九重天，夕贬潮州路八千。\n欲为圣明除弊事，肯将衰朽惜残年！\n云横秦岭家何在？雪拥蓝关马不前。\n知汝远来应有意，好收吾骨瘴江边。",
+      "contentType": "poetry",
+      "tags": [
+        "七言律诗",
+        "感怀",
+        "贬谪",
+        "初中必背"
+      ],
+      "source": "《昌黎先生集》",
+      "location": "蓝关/陕西",
+      "wordCount": 56,
+      "year": 819
+    },
+    {
+      "id": "tang_114",
+      "title": "燕歌行（节选）",
+      "author": "高适",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "汉家烟尘在东北，汉将辞家破残贼。\n男儿本自重横行，天子非常赐颜色。\n\n战士军前半死生，美人帐下犹歌舞。\n大漠穷秋塞草腓，孤城落日斗兵稀。\n\n君不见沙场征战苦，至今犹忆李将军。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "边塞",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《高常侍集》",
+      "location": "蓟北/河北",
+      "wordCount": 130,
+      "year": 734
+    },
+    {
+      "id": "tang_115",
+      "title": "寒食",
+      "author": "韩翃",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "春城无处不飞花，寒食东风御柳斜。\n日暮汉宫传蜡烛，轻烟散入五侯家。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "节日",
+        "讽刺",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "长安",
+      "wordCount": 28,
+      "year": 760
+    },
+    {
+      "id": "tang_116",
+      "title": "行路难·其二",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "大道如青天，我独不得出。\n羞逐长安社中儿，赤鸡白雉赌梨栗。\n弹剑作歌奏苦声，曳裾王门不称情。\n淮阴市井笑韩信，汉朝公卿忌贾生。\n君不见昔时燕家重郭隗，拥篲折节无嫌猜。\n剧辛乐毅感恩分，输肝剖胆效英才。\n昭王白骨萦蔓草，谁人更扫黄金台？\n行路难，归去来！",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "感怀",
+        "豪放",
+        "高中必背"
+      ],
+      "source": "《李太白集》",
+      "location": "长安",
+      "wordCount": 120,
+      "year": 744
+    },
+    {
+      "id": "tang_117",
+      "title": "秋思",
+      "author": "张籍",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "洛阳城里见秋风，欲作家书意万重。\n复恐匆匆说不尽，行人临发又开封。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "思乡",
+        "名篇",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "洛阳",
+      "wordCount": 28,
+      "year": 810
+    },
+    {
+      "id": "tang_118",
+      "title": "滁州西涧",
+      "author": "韦应物",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "独怜幽草涧边生，上有黄鹂深树鸣。\n春潮带雨晚来急，野渡无人舟自横。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "山水",
+        "恬淡",
+        "初中必背"
+      ],
+      "source": "《韦苏州集》",
+      "location": "滁州/安徽",
+      "wordCount": 28,
+      "year": 783
+    },
+    {
+      "id": "tang_119",
+      "title": "凉州词",
+      "author": "王翰",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "葡萄美酒夜光杯，欲饮琵琶马上催。\n醉卧沙场君莫笑，古来征战几人回？",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "边塞",
+        "豪迈",
+        "小学必背"
+      ],
+      "source": "《全唐诗》",
+      "location": "凉州/甘肃",
+      "wordCount": 28,
+      "year": 710
+    },
+    {
+      "id": "tang_120",
+      "title": "望天门山",
+      "author": "李白",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "天门中断楚江开，碧水东流至此回。\n两岸青山相对出，孤帆一片日边来。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "山水",
+        "小学必背"
+      ],
+      "source": "《李太白集》",
+      "location": "天门山/安徽",
+      "wordCount": 28,
+      "year": 725
     }
   ]
 }

@@ -2,7 +2,7 @@
   "name": "中华诗词文章库",
   "version": "1.0",
   "description": "按朝代分类的经典诗词文章合集，包含创作地点信息",
-  "totalCount": 56,
+  "totalCount": 66,
   "lastUpdated": "2024-01-15",
   "dynasties": [
     {
@@ -82,7 +82,7 @@
       "name": "近现代",
       "period": "1912-至今",
       "file": "xiandai.json",
-      "count": 5,
+      "count": 15,
       "description": "现代诗歌、新诗"
     }
   ],

@@ -4,9 +4,9 @@
     "name": "宋词",
     "period": "960-1279",
     "description": "宋代文学的代表，词牌丰富，意境深远。收录中高考必背篇目及经典名篇",
-    "count": 53,
+    "count": 78,
     "version": "1.2",
-    "lastUpdated": "2026-04-17"
+    "lastUpdated": "2026-06-15"
   },
   "poems": [
     {
@@ -1068,6 +1068,506 @@
       "location": "汴京/开封",
       "wordCount": 322,
       "year": 1050
+    },
+    {
+      "id": "song_054",
+      "title": "浣溪沙·游蕲水清泉寺",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "山下兰芽短浸溪，松间沙路净无泥，萧萧暮雨子规啼。\n谁道人生无再少？门前流水尚能西！休将白发唱黄鸡。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "豪放派",
+        "哲理",
+        "初中必背",
+        "苏轼"
+      ],
+      "source": "《东坡乐府》",
+      "location": "蕲水/湖北浠水",
+      "wordCount": 76,
+      "year": 1082
+    },
+    {
+      "id": "song_055",
+      "title": "望江南·春未老",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "春未老，风细柳斜斜。试上超然台上看，半壕春水一城花。烟雨暗千家。\n\n寒食后，酒醒却咨嗟。休对故人思故国，且将新火试新茶。诗酒趁年华。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "豪放派",
+        "思乡",
+        "名篇",
+        "苏轼"
+      ],
+      "source": "《东坡乐府》",
+      "location": "密州/山东诸城",
+      "wordCount": 82,
+      "year": 1076
+    },
+    {
+      "id": "song_056",
+      "title": "丑奴儿·书博山道中壁",
+      "author": "辛弃疾",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "少年不识愁滋味，爱上层楼。爱上层楼，为赋新词强说愁。\n\n而今识尽愁滋味，欲说还休。欲说还休，却道天凉好个秋。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "豪放派",
+        "哲理",
+        "初中必背",
+        "辛弃疾"
+      ],
+      "source": "《稼轩长短句》",
+      "location": "博山/江西广丰",
+      "wordCount": 70,
+      "year": 1190
+    },
+    {
+      "id": "song_057",
+      "title": "清平乐·村居",
+      "author": "辛弃疾",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "茅檐低小，溪上青青草。醉里吴音相媚好，白发谁家翁媪？\n\n大儿锄豆溪东，中儿正织鸡笼。最喜小儿亡赖，溪头卧剥莲蓬。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "田园",
+        "生活",
+        "小学必背",
+        "辛弃疾"
+      ],
+      "source": "《稼轩长短句》",
+      "location": "江西/上饶",
+      "wordCount": 76,
+      "year": 1185
+    },
+    {
+      "id": "song_058",
+      "title": "西江月·夜行黄沙道中",
+      "author": "辛弃疾",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "明月别枝惊鹊，清风半夜鸣蝉。稻花香里说丰年，听取蛙声一片。\n\n七八个星天外，两三点雨山前。旧时茅店社林边，路转溪桥忽见。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "田园",
+        "写景",
+        "小学必背",
+        "辛弃疾"
+      ],
+      "source": "《稼轩长短句》",
+      "location": "黄沙岭/江西上饶",
+      "wordCount": 80,
+      "year": 1182
+    },
+    {
+      "id": "song_059",
+      "title": "夏日绝句",
+      "author": "李清照",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "生当作人杰，死亦为鬼雄。\n至今思项羽，不肯过江东。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "爱国",
+        "咏史",
+        "小学必背",
+        "李清照"
+      ],
+      "source": "《漱玉词》",
+      "location": "江宁/江苏南京",
+      "wordCount": 40,
+      "year": 1127
+    },
+    {
+      "id": "song_060",
+      "title": "秋夜将晓出篱门迎凉有感",
+      "author": "陆游",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "三万里河东入海，五千仞岳上摩天。\n遗民泪尽胡尘里，南望王师又一年。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "爱国",
+        "悲愤",
+        "小学必背",
+        "陆游"
+      ],
+      "source": "《剑南诗稿》",
+      "location": "山阴/浙江绍兴",
+      "wordCount": 56,
+      "year": 1192
+    },
+    {
+      "id": "song_061",
+      "title": "卜算子·咏梅",
+      "author": "陆游",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "驿外断桥边，寂寞开无主。已是黄昏独自愁，更著风和雨。\n\n无意苦争春，一任群芳妒。零落成泥碾作尘，只有香如故。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "咏物",
+        "爱国",
+        "初中必背",
+        "陆游"
+      ],
+      "source": "《剑南诗稿》",
+      "location": "山阴/浙江绍兴",
+      "wordCount": 78,
+      "year": 1190
+    },
+    {
+      "id": "song_062",
+      "title": "登飞来峰",
+      "author": "王安石",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "飞来山上千寻塔，闻说鸡鸣见日升。\n不畏浮云遮望眼，自缘身在最高层。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "哲理",
+        "壮志",
+        "初中必背",
+        "王安石"
+      ],
+      "source": "《临川先生文集》",
+      "location": "飞来峰/浙江绍兴",
+      "wordCount": 56,
+      "year": 1050
+    },
+    {
+      "id": "song_063",
+      "title": "梅花",
+      "author": "王安石",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "墙角数枝梅，凌寒独自开。\n遥知不是雪，为有暗香来。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "咏物",
+        "梅花",
+        "小学必背",
+        "王安石"
+      ],
+      "source": "《临川先生文集》",
+      "location": "江宁/江苏南京",
+      "wordCount": 40,
+      "year": 1060
+    },
+    {
+      "id": "song_064",
+      "title": "宿新市徐公店",
+      "author": "杨万里",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "篱落疏疏一径深，树头新绿未成阴。\n儿童急走追黄蝶，飞入菜花无处寻。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "田园",
+        "童趣",
+        "小学必背",
+        "杨万里"
+      ],
+      "source": "《诚斋集》",
+      "location": "新市/湖南攸县",
+      "wordCount": 56,
+      "year": 1160
+    },
+    {
+      "id": "song_065",
+      "title": "稚子弄冰",
+      "author": "杨万里",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "稚子金盆脱晓冰，彩丝穿取当银铮。\n敲成玉磬穿林响，忽作玻璃碎地声。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "童趣",
+        "冬天",
+        "小学必背",
+        "杨万里"
+      ],
+      "source": "《诚斋集》",
+      "location": "吉水/江西",
+      "wordCount": 56,
+      "year": 1160
+    },
+    {
+      "id": "song_066",
+      "title": "春日",
+      "author": "朱熹",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "胜日寻芳泗水滨，无边光景一时新。\n等闲识得东风面，万紫千红总是春。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "哲理",
+        "春天",
+        "小学必背",
+        "朱熹"
+      ],
+      "source": "《朱文公文集》",
+      "location": "泗水/山东曲阜",
+      "wordCount": 56,
+      "year": 1160
+    },
+    {
+      "id": "song_067",
+      "title": "生查子·元夕",
+      "author": "欧阳修",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "去年元夜时，花市灯如昼。\n月上柳梢头，人约黄昏后。\n\n今年元夜时，月与灯依旧。\n不见去年人，泪湿春衫袖。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "元宵",
+        "名篇",
+        "欧阳修"
+      ],
+      "source": "《欧阳文忠公文集》",
+      "location": "汴京/开封",
+      "wordCount": 70,
+      "year": 1040
+    },
+    {
+      "id": "song_068",
+      "title": "蝶恋花·庭院深深深几许",
+      "author": "欧阳修",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "庭院深深深几许，杨柳堆烟，帘幕无重数。玉勒雕鞍游冶处，楼高不见章台路。\n\n雨横风狂三月暮，门掩黄昏，无计留春住。泪眼问花花不语，乱红飞过秋千去。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "伤春",
+        "高中必背",
+        "欧阳修"
+      ],
+      "source": "《欧阳文忠公文集》",
+      "location": "汴京/开封",
+      "wordCount": 94,
+      "year": 1045
+    },
+    {
+      "id": "song_069",
+      "title": "望海潮·东南形胜",
+      "author": "柳永",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "东南形胜，三吴都会，钱塘自古繁华。烟柳画桥，风帘翠幕，参差十万人家。云树绕堤沙，怒涛卷霜雪，天堑无涯。市列珠玑，户盈罗绮，竞豪奢。\n\n重湖叠巘清嘉。有三秋桂子，十里荷花。羌管弄晴，菱歌泛夜，嬉嬉钓叟莲娃。千骑拥高牙。乘醉听箫鼓，吟赏烟霞。异日图将好景，归去凤池夸。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "写景",
+        "名篇",
+        "柳永"
+      ],
+      "source": "《乐章集》",
+      "location": "杭州/钱塘",
+      "wordCount": 214,
+      "year": 1005
+    },
+    {
+      "id": "song_070",
+      "title": "小重山·昨夜寒蛩不住鸣",
+      "author": "岳飞",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "昨夜寒蛩不住鸣。惊回千里梦，已三更。起来独自绕阶行。人悄悄，帘外月胧明。\n\n白首为功名。旧山松竹老，阻归程。欲将心事付瑶琴。知音少，弦断有谁听？",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "豪放",
+        "悲愤",
+        "名篇",
+        "岳飞"
+      ],
+      "source": "《岳武穆集》",
+      "location": "临安/杭州",
+      "wordCount": 102,
+      "year": 1138
+    },
+    {
+      "id": "song_071",
+      "title": "虞美人·听雨",
+      "author": "蒋捷",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "少年听雨歌楼上，红烛昏罗帐。壮年听雨客舟中，江阔云低、断雁叫西风。\n\n而今听雨僧庐下，鬓已星星也。悲欢离合总无情，一任阶前、点滴到天明。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "感慨",
+        "名篇",
+        "蒋捷"
+      ],
+      "source": "《竹山词》",
+      "location": "江南",
+      "wordCount": 82,
+      "year": 1280
+    },
+    {
+      "id": "song_072",
+      "title": "青玉案·凌波不过横塘路",
+      "author": "贺铸",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "凌波不过横塘路，但目送、芳尘去。锦瑟华年谁与度？月桥花院，琐窗朱户，只有春知处。\n\n飞云冉冉蘅皋暮，彩笔新题断肠句。试问闲愁都几许？一川烟草，满城风絮，梅子黄时雨。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "愁绪",
+        "高中必背",
+        "贺铸"
+      ],
+      "source": "《东山词》",
+      "location": "横塘/江苏苏州",
+      "wordCount": 110,
+      "year": 1100
+    },
+    {
+      "id": "song_073",
+      "title": "卜算子·我住长江头",
+      "author": "李之仪",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "我住长江头，君住长江尾。日日思君不见君，共饮长江水。\n\n此水几时休，此恨何时已。只愿君心似我心，定不负相思意。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "爱情",
+        "名篇",
+        "李之仪"
+      ],
+      "source": "《姑溪居士文集》",
+      "location": "长江/江南",
+      "wordCount": 68,
+      "year": 1100
+    },
+    {
+      "id": "song_074",
+      "title": "四时田园杂兴·其三十一",
+      "author": "范成大",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "昼出耘田夜绩麻，村庄儿女各当家。\n童孙未解供耕织，也傍桑阴学种瓜。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "田园",
+        "农事",
+        "小学必背",
+        "范成大"
+      ],
+      "source": "《石湖居士诗集》",
+      "location": "苏州/江苏",
+      "wordCount": 56,
+      "year": 1180
+    },
+    {
+      "id": "song_075",
+      "title": "临江仙·梦后楼台高锁",
+      "author": "晏几道",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "梦后楼台高锁，酒醒帘幕低垂。去年春恨却来时。落花人独立，微雨燕双飞。\n\n记得小蘋初见，两重心字罗衣。琵琶弦上说相思。当时明月在，曾照彩云归。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "相思",
+        "高中必背",
+        "晏几道"
+      ],
+      "source": "《小山词》",
+      "location": "汴京/开封",
+      "wordCount": 90,
+      "year": 1075
+    },
+    {
+      "id": "song_076",
+      "title": "苏幕遮·碧云天",
+      "author": "范仲淹",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "碧云天，黄叶地，秋色连波，波上寒烟翠。山映斜阳天接水，芳草无情，更在斜阳外。\n\n黯乡魂，追旅思，夜夜除非，好梦留人睡。明月楼高休独倚，酒入愁肠，化作相思泪。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "思乡",
+        "高中必背",
+        "范仲淹"
+      ],
+      "source": "《范文正公集》",
+      "location": "西北边塞",
+      "wordCount": 98,
+      "year": 1040
+    },
+    {
+      "id": "song_077",
+      "title": "客中初夏",
+      "author": "司马光",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "四月清和雨乍晴，南山当户转分明。\n更无柳絮因风起，惟有葵花向日倾。",
+      "contentType": "poetry",
+      "tags": [
+        "宋诗",
+        "写景",
+        "咏物",
+        "名篇",
+        "司马光"
+      ],
+      "source": "《司马文正公集》",
+      "location": "洛阳/河南",
+      "wordCount": 56,
+      "year": 1070
+    },
+    {
+      "id": "song_078",
+      "title": "蝶恋花·春景",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "花褪残红青杏小。燕子飞时，绿水人家绕。枝上柳绵吹又少，天涯何处无芳草！\n\n墙里秋千墙外道。墙外行人，墙里佳人笑。笑渐不闻声渐悄，多情却被无情恼。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "婉约派",
+        "惜春",
+        "高中必背",
+        "苏轼"
+      ],
+      "source": "《东坡乐府》",
+      "location": "惠州/广东",
+      "wordCount": 100,
+      "year": 1094
     }
   ]
 }

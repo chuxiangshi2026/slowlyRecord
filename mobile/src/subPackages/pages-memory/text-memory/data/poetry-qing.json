@@ -4,9 +4,9 @@
     "name": "清",
     "period": "1644-1912",
     "description": "清代诗词，集大成与转型期",
-    "count": 15,
+    "count": 25,
     "version": "1.0",
-    "lastUpdated": "2026-04-17"
+    "lastUpdated": "2026-06-15"
   },
   "poems": [
     {
@@ -297,6 +297,196 @@
       "location": "北京",
       "wordCount": 84,
       "year": 1680
+    },
+    {
+      "id": "qing_016",
+      "title": "木兰花令·拟古决绝词",
+      "author": "纳兰性德",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "人生若只如初见，何事秋风悲画扇。\n等闲变却故人心，却道故人心易变。\n\n骊山语罢清宵半，泪雨霖铃终不怨。\n何如薄幸锦衣郎，比翼连枝当日愿。",
+      "contentType": "poetry",
+      "tags": [
+        "清词",
+        "爱情",
+        "名句",
+        "名篇"
+      ],
+      "source": "《纳兰词》",
+      "location": "北京",
+      "wordCount": 72,
+      "year": 1675
+    },
+    {
+      "id": "qing_017",
+      "title": "蝶恋花",
+      "author": "纳兰性德",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "辛苦最怜天上月，一昔如环，昔昔都成玦。若似月轮终皎洁，不辞冰雪为卿热。\n\n无那尘缘容易绝，燕子依然，软踏帘钩说。唱罢秋坟愁未歇，春丛认取双栖蝶。",
+      "contentType": "poetry",
+      "tags": [
+        "清词",
+        "悼亡",
+        "爱情",
+        "名篇"
+      ],
+      "source": "《纳兰词》",
+      "location": "北京",
+      "wordCount": 80,
+      "year": 1680
+    },
+    {
+      "id": "qing_018",
+      "title": "潍县署中画竹呈年伯包大中丞括",
+      "author": "郑燮",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "衙斋卧听萧萧竹，疑是民间疾苦声。\n些小吾曹州县吏，一枝一叶总关情。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏物",
+        "民生",
+        "初中必背"
+      ],
+      "source": "《郑板桥集》",
+      "location": "潍县/山东潍坊",
+      "wordCount": 28,
+      "year": 1750
+    },
+    {
+      "id": "qing_019",
+      "title": "赴戍登程口占示家人",
+      "author": "林则徐",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "力微任重久神疲，再竭衰庸定不支。\n苟利国家生死以，岂因祸福避趋之。\n谪居正是君恩厚，养拙刚于戍卒宜。\n戏与山妻谈故事，试吟断送老头皮。",
+      "contentType": "poetry",
+      "tags": [
+        "七言律诗",
+        "爱国",
+        "名句",
+        "高中必背"
+      ],
+      "source": "《林则徐集》",
+      "location": "西安/伊犁",
+      "wordCount": 56,
+      "year": 1842
+    },
+    {
+      "id": "qing_020",
+      "title": "杂感",
+      "author": "黄景仁",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "仙佛茫茫两未成，只知独夜不平鸣。\n风尘荏苒音书绝，关塞萧条行路难。\n已忍伶俜十年事，心持半偈万缘空。\n十有九人堪白眼，百无一用是书生。",
+      "contentType": "poetry",
+      "tags": [
+        "七言律诗",
+        "感怀",
+        "名句",
+        "名篇"
+      ],
+      "source": "《两当轩集》",
+      "location": "北京",
+      "wordCount": 56,
+      "year": 1770
+    },
+    {
+      "id": "qing_021",
+      "title": "野步",
+      "author": "赵翼",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "峭寒催换木棉裘，倚杖郊原作近游。\n最是秋风管闲事，红他枫叶白人头。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "哲理",
+        "名篇"
+      ],
+      "source": "《瓯北集》",
+      "location": "常州/江苏",
+      "wordCount": 28,
+      "year": 1780
+    },
+    {
+      "id": "qing_022",
+      "title": "江上",
+      "author": "王士禛",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "吴头楚尾路如何？烟雨秋深暗白波。\n晚趁寒潮渡江去，满林黄叶雁声多。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "山水",
+        "写景",
+        "名篇"
+      ],
+      "source": "《渔洋山人精华录》",
+      "location": "江南",
+      "wordCount": 28,
+      "year": 1660
+    },
+    {
+      "id": "qing_023",
+      "title": "蝶恋花·阅尽天涯离别苦",
+      "author": "王国维",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "阅尽天涯离别苦，不道归来，零落花如许。花底相看无一语，绿窗春与天俱莫。\n\n待把相思灯下诉，一缕新欢，旧恨千千缕。最是人间留不住，朱颜辞镜花辞树。",
+      "contentType": "poetry",
+      "tags": [
+        "清词",
+        "感怀",
+        "名句",
+        "名篇"
+      ],
+      "source": "《人间词话》",
+      "location": "北京",
+      "wordCount": 80,
+      "year": 1905
+    },
+    {
+      "id": "qing_024",
+      "title": "湖上杂诗",
+      "author": "袁枚",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "葛岭花开二月天，游人来往说神仙。\n老夫心与游人异，不羡神仙羡少年。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "写景",
+        "感怀",
+        "名篇"
+      ],
+      "source": "《小仓山房诗文集》",
+      "location": "杭州/西湖",
+      "wordCount": 28,
+      "year": 1780
+    },
+    {
+      "id": "qing_025",
+      "title": "对酒",
+      "author": "秋瑾",
+      "dynasty": "清",
+      "dynastyCode": "qing",
+      "content": "不惜千金买宝刀，貂裘换酒也堪豪。\n一腔热血勤珍重，洒去犹能化碧涛。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "爱国",
+        "豪放",
+        "初中必背"
+      ],
+      "source": "《秋瑾集》",
+      "location": "北京",
+      "wordCount": 28,
+      "year": 1905
     }
   ]
 }
