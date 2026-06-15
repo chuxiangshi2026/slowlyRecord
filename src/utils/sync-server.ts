@@ -15,7 +15,7 @@
  * - 攻击者拿到 blobId 只能看到密文，拿到 key 没有 blobId 也下载不到密文
  */
 
-import type { SyncData, SyncServerResult, SyncStatus } from '@/types/sync'
+import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { getSetDb } from '@/utils/user-set-db-util'
@@ -544,6 +544,28 @@ interface MobileCompatSyncData {
   /** 词库分组 */
   banks: MobileCompatBank[]
   userSettings?: MobileCompatUserSettings
+  /** 文本记忆数据（与桌面端 SyncTextMemory 同 wire format） */
+  textMemory?: SyncTextMemory
+  /** 数字记忆数据（与桌面端 SyncNumberMemory 同 wire format；移动端可能省略 trainingResults） */
+  numberMemory?: SyncNumberMemory
+}
+
+/**
+ * 把移动端 association 适配到桌面端 NumberImageAssociation
+ *
+ * 移动端第一阶段使用 type='text' + description；桌面端的 imageUrl 字段同时
+ * 支持图片 (base64) 与 emoji/文字（参见 ImageAssociationDialog 的 isBase64Image 分支）。
+ * 因此当移动端 imageUrl 为空时，把 description 作为兜底填入 imageUrl，让桌面端
+ * 现有渲染逻辑把它当作文字桩展示。
+ */
+function adaptMobileAssociation(a: any): any {
+  if (!a) return a
+  const next: any = { ...a }
+  if (!next.imageUrl && next.description) {
+    next.imageUrl = next.description
+  }
+  if (!next.source) next.source = 'upload'
+  return next
 }
 
 function convertDesktopWordToMobile(w: any): MobileCompatWord {
@@ -599,12 +621,26 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     })
   }
 
+  // 复用桌面端的 collectSyncData 拿到文本/数字记忆片段（wire format 一致）
+  // 注意：collectSyncData 还会拉词库等其他数据，但读取本身廉价（已缓存）
+  let textMemory: SyncTextMemory | undefined
+  let numberMemory: SyncNumberMemory | undefined
+  try {
+    const fullData = await collectSyncData()
+    textMemory = fullData.textMemory || undefined
+    numberMemory = fullData.numberMemory || undefined
+  } catch (e) {
+    log.w('收集文本/数字记忆数据失败，将以空数据上传', e)
+  }
+
   return {
     version: 1,
     exportedAt: Date.now(),
     platform: 'desktop',
     banks,
     userSettings: collectMobileCompatUserSettings(),
+    textMemory,
+    numberMemory,
   }
 }
 
@@ -644,8 +680,15 @@ function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncData {
       ocrKeys: {},
       focusMode: { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true },
     } : null,
-    textMemory: null,
-    numberMemory: null,
+    textMemory: data.textMemory ?? null,
+    numberMemory: data.numberMemory
+      ? {
+          ...data.numberMemory,
+          associations: (data.numberMemory.associations || []).map(adaptMobileAssociation),
+          // 移动端可能不带这两个字段，给空数组兜底
+          trainingResults: data.numberMemory.trainingResults || [],
+        }
+      : null,
     shortcutMemory: null,
     letterMemory: null,
   }

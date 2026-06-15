@@ -65,9 +65,33 @@
           }
         },
         {
+          "path": "number-memory/peg-edit",
+          "style": {
+            "navigationBarTitleText": "编辑数字桩"
+          }
+        },
+        {
+          "path": "number-memory/entry-edit",
+          "style": {
+            "navigationBarTitleText": "数字条目"
+          }
+        },
+        {
           "path": "text-memory/text-memory",
           "style": {
-            "navigationBarTitleText": "诗词记忆"
+            "navigationBarTitleText": "文本记忆"
+          }
+        },
+        {
+          "path": "text-memory/edit",
+          "style": {
+            "navigationBarTitleText": "编辑文章"
+          }
+        },
+        {
+          "path": "text-memory/import",
+          "style": {
+            "navigationBarTitleText": "导入文本"
           }
         },
         {

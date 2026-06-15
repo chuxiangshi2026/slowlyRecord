@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "dynasty": "sui",
+    "name": "隋",
+    "period": "581-618",
+    "description": "隋代诗歌，承南北朝启唐朝",
+    "count": 9,
+    "version": "1.0",
+    "lastUpdated": "2026-04-17"
+  },
+  "poems": [
+    {
+      "id": "sui_001",
+      "title": "春江花月夜",
+      "author": "张若虚",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "春江潮水连海平，海上明月共潮生。\n滟滟随波千万里，何处春江无月明！\n江流宛转绕芳甸，月照花林皆似霰；\n空里流霜不觉飞，汀上白沙看不见。\n江天一色无纤尘，皎皎空中孤月轮。\n江畔何人初见月？江月何年初照人？\n人生代代无穷已，江月年年望相似。\n不知江月待何人，但见长江送流水。\n白云一片去悠悠，青枫浦上不胜愁。\n谁家今夜扁舟子？何处相思明月楼？\n可怜楼上月徘徊，应照离人妆镜台。\n玉户帘中卷不去，捣衣砧上拂还来。\n此时相望不相闻，愿逐月华流照君。\n鸿雁长飞光不度，鱼龙潜跃水成文。\n昨夜闲潭梦落花，可怜春半不还家。\n江水流春去欲尽，江潭落月复西斜。\n斜月沉沉藏海雾，碣石潇湘无限路。\n不知乘月几人归，落月摇情满江树。",
+      "contentType": "poetry",
+      "tags": [
+        "唐诗先驱",
+        "孤篇压全唐",
+        "哲理",
+        "高中必背",
+        "张若虚"
+      ],
+      "source": "《乐府诗集》",
+      "location": "扬州/瓜洲",
+      "wordCount": 504,
+      "year": 600
+    },
+    {
+      "id": "sui_002",
+      "title": "送别",
+      "author": "佚名",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "杨柳青青著地垂，杨花漫漫搅天飞。\n柳条折尽花飞尽，借问行人归不归？",
+      "contentType": "poetry",
+      "tags": [
+        "送别",
+        "民歌",
+        "杨柳"
+      ],
+      "source": "《隋书》",
+      "location": "长安/灞桥",
+      "wordCount": 56,
+      "year": 580
+    },
+    {
+      "id": "sui_003",
+      "title": "野望",
+      "author": "杨广",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "寒鸦飞数点，流水绕孤村。斜阳欲落处，一望黯消魂。",
+      "contentType": "poetry",
+      "tags": [
+        "写景",
+        "抒情",
+        "千古名句",
+        "杨广",
+        "意境"
+      ],
+      "source": "《隋书·文学传》",
+      "location": "江都",
+      "wordCount": 20,
+      "year": 600
+    },
+    {
+      "id": "sui_004",
+      "title": "人日思归",
+      "author": "薛道衡",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "入春才七日，离家已二年。人归落雁后，思发在花前。",
+      "contentType": "poetry",
+      "tags": [
+        "思乡",
+        "名句",
+        "薛道衡",
+        "五言绝句"
+      ],
+      "source": "《全隋诗》",
+      "location": "长安",
+      "wordCount": 20,
+      "year": 580
+    },
+    {
+      "id": "sui_005",
+      "title": "春江花月夜（其一）",
+      "author": "杨广",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "暮江平不动，春花满正开。流波将月去，潮水带星来。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "写景",
+        "春江花月夜之源",
+        "杨广"
+      ],
+      "source": "《乐府诗集》",
+      "location": "江都",
+      "wordCount": 20,
+      "year": 600
+    },
+    {
+      "id": "sui_006",
+      "title": "落叶",
+      "author": "孔德绍",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "早秋惊落叶，飘零似客心。翻飞未肯下，犹言惜故林。",
+      "contentType": "poetry",
+      "tags": [
+        "咏物",
+        "托物言志",
+        "孔德绍",
+        "隋代名诗"
+      ],
+      "source": "《全隋诗》",
+      "location": "洛阳",
+      "wordCount": 20,
+      "year": 600
+    },
+    {
+      "id": "sui_007",
+      "title": "泛龙舟",
+      "author": "杨广",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "舳舻千里泛归舟，言旋旧镇下扬州。借问扬州在何处，淮南江北海西头。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "大运河",
+        "隋炀帝",
+        "咏史"
+      ],
+      "source": "《全隋诗》",
+      "location": "扬州",
+      "wordCount": 28,
+      "year": 600
+    },
+    {
+      "id": "sui_008",
+      "title": "别宋常侍",
+      "author": "尹式",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "游人杜陵北，送客汉川东。无论去与住，俱是一飘蓬。秋鬓含霜白，衰颜倚酒红。别有相思处，啼鸟杂夜风。",
+      "contentType": "poetry",
+      "tags": [
+        "送别",
+        "五言律诗",
+        "律化",
+        "尹式"
+      ],
+      "source": "《全隋诗》",
+      "location": "长安",
+      "wordCount": 40,
+      "year": 580
+    },
+    {
+      "id": "sui_009",
+      "title": "山斋独坐赠薛内史",
+      "author": "杨素",
+      "dynasty": "隋",
+      "dynastyCode": "sui",
+      "content": "居山四望阻，风云竟朝夕。深溪横古树，空岩卧幽石。日出远岫明，鸟散空林寂。兰庭动幽气，竹室生虚白。落花入户飞，细草当阶积。桂酒徒盈樽，故人不在席。日暮山之幽，临风望羽客。",
+      "contentType": "poetry",
+      "tags": [
+        "山水",
+        "五言古诗",
+        "杨素",
+        "隐逸"
+      ],
+      "source": "《全隋诗》",
+      "location": "长安",
+      "wordCount": 84,
+      "year": 580
+    }
+  ]
+}

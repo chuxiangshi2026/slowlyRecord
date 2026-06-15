@@ -3,10 +3,24 @@
  * 包含 XOR 加密、pako 压缩、服务器通信
  */
 
-import type { MobileSyncBank, MobileSyncData, SyncResult, RestoreResult } from '@/stores/useUtils/types'
+import type {
+  MobileSyncBank,
+  MobileSyncData,
+  SyncResult,
+  RestoreResult,
+  MobileTextMemory,
+  MobileNumberMemory,
+} from '@/stores/useUtils/types'
 import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
 
-export type { MobileSyncBank, MobileSyncData, SyncResult, RestoreResult }
+export type {
+  MobileSyncBank,
+  MobileSyncData,
+  SyncResult,
+  RestoreResult,
+  MobileTextMemory,
+  MobileNumberMemory,
+}
 
 // ==================== 服务器配置 ====================
 
@@ -178,22 +192,41 @@ export function checkServerAvailable(): Promise<boolean> {
 
 // ==================== 同步主入口 ====================
 
-function collectSyncData(banks: MobileSyncBank[]): MobileSyncData {
+interface PushPayload {
+  banks: MobileSyncBank[]
+  textMemory?: MobileTextMemory
+  numberMemory?: MobileNumberMemory
+}
+
+function collectSyncData(payload: PushPayload): MobileSyncData {
   return {
     version: 1,
     exportedAt: Date.now(),
     platform: 'mobile',
-    banks,
+    banks: payload.banks,
     userSettings: {
       translationPlatform: getTranslationPlatform(),
       keys: getAllTranslationApiKeys(),
     },
+    textMemory: payload.textMemory,
+    numberMemory: payload.numberMemory,
   }
 }
 
-export async function pushToServer(banks: MobileSyncBank[]): Promise<SyncResult> {
+/**
+ * 推送到服务器
+ *
+ * 兼容旧调用：第一参数若为数组直接当作 banks（向前兼容）
+ */
+export async function pushToServer(
+  banksOrPayload: MobileSyncBank[] | PushPayload,
+  extra?: { textMemory?: MobileTextMemory; numberMemory?: MobileNumberMemory },
+): Promise<SyncResult> {
   try {
-    const data = collectSyncData(banks)
+    const payload: PushPayload = Array.isArray(banksOrPayload)
+      ? { banks: banksOrPayload, ...extra }
+      : banksOrPayload
+    const data = collectSyncData(payload)
     const json = JSON.stringify(data)
     const jsonBytes = utf8ToBytes(json)
     const pako = (await import('pako')).default
@@ -226,7 +259,12 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
       if (data.userSettings) {
         applyTranslationSettings(data.userSettings)
       }
-      return { success: true, banks: data.banks }
+      return {
+        success: true,
+        banks: data.banks,
+        textMemory: data.textMemory,
+        numberMemory: data.numberMemory,
+      }
     } catch {
       return { success: false, error: '数据解析失败' }
     }

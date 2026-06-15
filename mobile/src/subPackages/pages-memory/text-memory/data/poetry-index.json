@@ -1,0 +1,104 @@
+{
+  "name": "中华诗词文章库",
+  "version": "1.0",
+  "description": "按朝代分类的经典诗词文章合集，包含创作地点信息",
+  "totalCount": 56,
+  "lastUpdated": "2024-01-15",
+  "dynasties": [
+    {
+      "code": "xianqin",
+      "name": "先秦",
+      "period": "前1046-前221",
+      "file": "xianqin.json",
+      "count": 5,
+      "description": "诗经、楚辞、诸子百家"
+    },
+    {
+      "code": "han",
+      "name": "两汉",
+      "period": "前206-220",
+      "file": "han.json",
+      "count": 5,
+      "description": "汉赋、汉乐府、古诗十九首"
+    },
+    {
+      "code": "weijin",
+      "name": "魏晋南北朝",
+      "period": "220-589",
+      "file": "weijin.json",
+      "count": 5,
+      "description": "建安文学、陶渊明、南北朝民歌"
+    },
+    {
+      "code": "sui",
+      "name": "隋",
+      "period": "581-618",
+      "file": "sui.json",
+      "count": 2,
+      "description": "隋代诗歌"
+    },
+    {
+      "code": "tang",
+      "name": "唐",
+      "period": "618-907",
+      "file": "tang.json",
+      "count": 10,
+      "description": "唐诗"
+    },
+    {
+      "code": "song",
+      "name": "宋",
+      "period": "960-1279",
+      "file": "song.json",
+      "count": 8,
+      "description": "宋词、宋诗、古文"
+    },
+    {
+      "code": "yuan",
+      "name": "元",
+      "period": "1271-1368",
+      "file": "yuan.json",
+      "count": 4,
+      "description": "元曲、元杂剧"
+    },
+    {
+      "code": "ming",
+      "name": "明",
+      "period": "1368-1644",
+      "file": "ming.json",
+      "count": 4,
+      "description": "明代诗词"
+    },
+    {
+      "code": "qing",
+      "name": "清",
+      "period": "1644-1912",
+      "file": "qing.json",
+      "count": 5,
+      "description": "清代诗词"
+    },
+    {
+      "code": "xiandai",
+      "name": "近现代",
+      "period": "1912-至今",
+      "file": "xiandai.json",
+      "count": 5,
+      "description": "现代诗歌、新诗"
+    }
+  ],
+  "schema": {
+    "poetryItem": {
+      "id": "唯一标识",
+      "title": "标题",
+      "author": "作者",
+      "dynasty": "朝代名称",
+      "dynastyCode": "朝代代码",
+      "content": "正文内容",
+      "contentType": "内容类型：poetry/article/prose/fu/ci",
+      "tags": "标签数组",
+      "source": "出处",
+      "location": "创作地点（城市/景点/村名等）",
+      "wordCount": "字数"
+    }
+  }
+}

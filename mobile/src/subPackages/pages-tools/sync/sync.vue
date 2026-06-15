@@ -54,10 +54,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { useTextMemory } from '@/stores/useTextMemory'
+import { useNumberMemory } from '@/stores/useNumberMemory'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '../utils/sync'
 import { drawQrCode } from '../utils/qrcode'
 
 const wordsStore = useMobileWords()
+const textMemoryStore = useTextMemory()
+const numberMemoryStore = useNumberMemory()
 
 const showPushResult = ref(false)
 const showPullInput = ref(false)
@@ -81,7 +85,24 @@ const handlePush = async () => {
       name: bank.name,
       words: wordsStore.allWords.filter(w => w.bankId === bank.id || (!w.bankId && bank.id === 'default')),
     })).filter(b => b.words.length > 0)
-    const result = await pushToServer(banks)
+    // 收集文本/数字记忆（懒加载确保数据已读取）
+    textMemoryStore.load()
+    numberMemoryStore.load()
+    const textMemory = textMemoryStore.collect()
+    const numberMemory = numberMemoryStore.collect()
+    // 仅有数据时才带上字段，避免无意义负载
+    const hasTextMemory =
+      textMemory.articles.length || textMemory.notes.length || textMemory.prompts.length
+    const hasNumberMemory =
+      numberMemory.associations.length ||
+      numberMemory.entries.length ||
+      numberMemory.notes.length ||
+      numberMemory.prompts.length
+    const result = await pushToServer({
+      banks,
+      textMemory: hasTextMemory ? textMemory : undefined,
+      numberMemory: hasNumberMemory ? numberMemory : undefined,
+    })
     uni.hideLoading()
     if (result.success && result.code) {
       syncCode.value = result.code
@@ -107,13 +128,13 @@ const handlePull = async () => {
   uni.showLoading({ title: '拉取中...' })
   try {
     const result = await pullFromServer(inputSyncCode.value.trim())
-    if (result.success && result.banks) {
+    if (result.success) {
       uni.showLoading({ title: '导入中...' })
-      const total = await importBanks(result.banks)
+      const summary = await applyPullResult(result)
       uni.hideLoading()
       uni.showModal({
         title: '拉取成功',
-        content: `共 ${total} 个单词已同步`,
+        content: summary,
         showCancel: false,
       })
       showPullInput.value = false
@@ -136,13 +157,13 @@ const scanAndPull = () => {
         uni.showLoading({ title: '拉取中...' })
         try {
           const result = await pullFromServer(res.result)
-          if (result.success && result.banks) {
+          if (result.success) {
             uni.showLoading({ title: '导入中...' })
-            const total = await importBanks(result.banks)
+            const summary = await applyPullResult(result)
             uni.hideLoading()
             uni.showModal({
               title: '拉取成功',
-              content: `共 ${total} 个单词已同步`,
+              content: summary,
               showCancel: false,
             })
           } else {
@@ -164,6 +185,27 @@ const scanAndPull = () => {
   // #ifdef H5
   uni.showToast({ title: 'H5 不支持扫码，请手动输入', icon: 'none' })
   // #endif
+}
+
+/** 把 pullFromServer 结果分别写入各 store，返回中文摘要 */
+async function applyPullResult(result: any): Promise<string> {
+  const parts: string[] = []
+  if (Array.isArray(result.banks) && result.banks.length > 0) {
+    const total = await importBanks(result.banks)
+    parts.push(`${total} 个单词`)
+  }
+  if (result.textMemory) {
+    textMemoryStore.load()
+    const r = textMemoryStore.restore(result.textMemory, 'merge')
+    if (r.added > 0) parts.push(`${r.added} 篇文章`)
+  }
+  if (result.numberMemory) {
+    numberMemoryStore.load()
+    const r = numberMemoryStore.restore(result.numberMemory, 'merge')
+    if (r.addedAssoc > 0) parts.push(`${r.addedAssoc} 个数字桩`)
+    if (r.addedEntry > 0) parts.push(`${r.addedEntry} 个数字条目`)
+  }
+  return parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
 }
 
 // 按词库分组导入

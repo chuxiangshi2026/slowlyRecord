@@ -1,0 +1,210 @@
+{
+  "metadata": {
+    "dynasty": "yuan",
+    "name": "元",
+    "period": "1271-1368",
+    "description": "元曲、元杂剧，通俗文学的高峰",
+    "count": 10,
+    "version": "1.0",
+    "lastUpdated": "2026-04-17"
+  },
+  "poems": [
+    {
+      "id": "yuan_001",
+      "title": "天净沙·秋思",
+      "author": "马致远",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "枯藤老树昏鸦，\n小桥流水人家，\n古道西风瘦马。\n夕阳西下，\n断肠人在天涯。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "秋思之祖",
+        "初中必背",
+        "马致远"
+      ],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 56,
+      "year": 1290
+    },
+    {
+      "id": "yuan_002",
+      "title": "山坡羊·潼关怀古",
+      "author": "张养浩",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "峰峦如聚，波涛如怒，\n山河表里潼关路。\n望西都，意踌躇。\n伤心秦汉经行处，宫阙万间都做了土。\n兴，百姓苦；亡，百姓苦。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "怀古",
+        "名篇",
+        "初中必背",
+        "张养浩"
+      ],
+      "source": "《全元散曲》",
+      "location": "潼关/陕西",
+      "wordCount": 98,
+      "year": 1329
+    },
+    {
+      "id": "yuan_003",
+      "title": "窦娥冤（节选）",
+      "author": "关汉卿",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "【滚绣球】有日月朝暮悬，有鬼神掌着生死权。\n天地也！只合把清浊分辨，可怎生糊突了盗跖、颜渊？\n为善的受贫穷更命短，造恶的享富贵又寿延。\n天地也！做得个怕硬欺软，却原来也这般顺水推船！\n地也，你不分好歹何为地？\n天也，你错勘贤愚枉做天！\n哎，只落得两泪涟涟。",
+      "contentType": "poetry",
+      "tags": [
+        "元杂剧",
+        "悲剧",
+        "名篇",
+        "高中必背",
+        "关汉卿"
+      ],
+      "source": "《关汉卿集》",
+      "location": "大都/北京",
+      "wordCount": 168,
+      "year": 1290
+    },
+    {
+      "id": "yuan_004",
+      "title": "寿阳曲·远浦帆归",
+      "author": "马致远",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "夕阳下，酒旆闲，\n两三航未曾着岸。\n落花水香茅舍晚，\n断桥头卖鱼人散。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "写景",
+        "马致远"
+      ],
+      "source": "《全元散曲》",
+      "location": "江南",
+      "wordCount": 56,
+      "year": 1290
+    },
+    {
+      "id": "yuan_005",
+      "title": "长亭送别（节选）",
+      "author": "王实甫",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "【正宫·端正好】碧云天，黄花地，西风紧，北雁南飞。晓来谁染霜林醉？总是离人泪。",
+      "contentType": "poetry",
+      "tags": [
+        "元杂剧",
+        "西厢记",
+        "送别",
+        "高中必背",
+        "王实甫"
+      ],
+      "source": "《西厢记》",
+      "location": "蒲州/普救寺",
+      "wordCount": 28,
+      "year": 1300
+    },
+    {
+      "id": "yuan_006",
+      "title": "山坡羊·骊山怀古",
+      "author": "张养浩",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "骊山四顾，阿房一炬，当时奢侈今何处？只见草萧疏，水萦纡。至今遗恨迷烟树。列国周齐秦汉楚，赢，都变做了土；输，都变做了土。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "怀古",
+        "初中必背",
+        "张养浩"
+      ],
+      "source": "《全元散曲》",
+      "location": "骊山/西安",
+      "wordCount": 85,
+      "year": 1329
+    },
+    {
+      "id": "yuan_007",
+      "title": "天净沙·秋",
+      "author": "白朴",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "孤村落日残霞，轻烟老树寒鸦，一点飞鸿影下。青山绿水，白草红叶黄花。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "写景",
+        "初中必背",
+        "白朴"
+      ],
+      "source": "《全元散曲》",
+      "location": "江南/金陵",
+      "wordCount": 52,
+      "year": 1260
+    },
+    {
+      "id": "yuan_008",
+      "title": "四块玉·闲适",
+      "author": "关汉卿",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "旧酒投，新醅泼，老瓦盆边笑呵呵，共山僧野叟闲吟和。他出一对鸡，我出一个鹅，闲快活！",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "闲适",
+        "关汉卿"
+      ],
+      "source": "《全元散曲》",
+      "location": "大都/北京",
+      "wordCount": 57,
+      "year": 1290
+    },
+    {
+      "id": "yuan_009",
+      "title": "凭阑人·寄征衣",
+      "author": "姚燧",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "欲寄君衣君不还，不寄君衣君又寒。寄与不寄间，妾身千万难。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "闺怨",
+        "经典",
+        "姚燧"
+      ],
+      "source": "《全元散曲》",
+      "location": "洛阳/中原",
+      "wordCount": 24,
+      "year": 1290
+    },
+    {
+      "id": "yuan_010",
+      "title": "沉醉东风·秋景",
+      "author": "卢挚",
+      "dynasty": "元",
+      "dynastyCode": "yuan",
+      "content": "挂绝壁松枯倒倚，落残霞孤鹜齐飞。四围不尽山，一望无穷水。散西风满天秋意。夜静云帆月影低，载我在潇湘画里。",
+      "contentType": "poetry",
+      "tags": [
+        "元曲",
+        "小令",
+        "写景",
+        "经典",
+        "卢挚"
+      ],
+      "source": "《全元散曲》",
+      "location": "潇湘/湖南",
+      "wordCount": 89,
+      "year": 1290
+    }
+  ]
+}
