@@ -1,0 +1,3 @@
+[submodule "private-docs"]
+	path = private-docs
+	url = /home/skj/backups/slowlyRecord-private-docs.git
