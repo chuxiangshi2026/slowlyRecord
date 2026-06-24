@@ -420,7 +420,9 @@ describe('useSyncStore', () => {
 
       store.setCustomServer('https://custom.server.com')
 
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('sync_server_url', 'https://custom.server.com')
+      // 注意：getDbStorage 在 Web/Electron 环境会对 value 做 JSON.stringify，
+      // 所以 localStorage.setItem 实际收到的是带引号的 JSON 字符串
+      expect(localStorageMock.setItem).toHaveBeenCalledWith('sync_server_url', JSON.stringify('https://custom.server.com'))
       expect(store.savedServerUrl).toBe('https://custom.server.com')
       expect(store.resultMessage).toContain('已切换到自定义服务器')
     })

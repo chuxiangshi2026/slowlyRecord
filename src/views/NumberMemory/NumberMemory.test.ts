@@ -252,8 +252,10 @@ describe('NumberMemory 主页面', () => {
       setup()
 
       await waitFor(() => {
+        // 完整文本形如 "未完成的训练：数字→图片（第 3/5 题）"，整段在同一文本节点，
+        // 用正则匹配比 getByText('数字→图片') 更稳，后者要求文本独占一个节点
         expect(screen.getByText(/未完成的训练/)).toBeInTheDocument()
-        expect(screen.getByText('数字→图片')).toBeInTheDocument()
+        expect(screen.getByText(/数字→图片/)).toBeInTheDocument()
         expect(screen.getByText(/第 3\/5 题/)).toBeInTheDocument()
       })
     })

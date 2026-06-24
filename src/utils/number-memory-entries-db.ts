@@ -9,6 +9,17 @@ const NOTE_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'note_';
 const PROMPT_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'prompt_';
 
 /**
+ * 生成单调递增的 ID 后缀，避免同一毫秒内多次创建导致 _id 冲突
+ * 同毫秒内多次调用会拿到 ts、ts+1、ts+2 ...
+ */
+let _lastIdTimestamp = 0;
+function nextIdTimestamp(): number {
+  const now = Date.now();
+  _lastIdTimestamp = now > _lastIdTimestamp ? now : _lastIdTimestamp + 1;
+  return _lastIdTimestamp;
+}
+
+/**
  * 获取所有数字记忆条目
  */
 export function getAllEntries(): NumberMemoryEntry[] {
@@ -143,7 +154,7 @@ export async function saveNote(note: NumberMemoryNote): Promise<DbReturn> {
  * 创建笔记
  */
 export async function createNote(entryId: string, content: string): Promise<DbReturn & { doc?: NumberMemoryNote }> {
-  const now = Date.now();
+  const now = nextIdTimestamp();
   const note: NumberMemoryNote = {
     _id: NOTE_KEY_PREFIX + now,
     type: 'number_memory_note',
@@ -151,7 +162,7 @@ export async function createNote(entryId: string, content: string): Promise<DbRe
     content: content.trim(),
     createdAt: now
   };
-  
+
   const result = await saveNote(note);
   return { ...result, doc: result.ok ? note : undefined };
 }
@@ -211,13 +222,13 @@ export async function savePrompt(prompt: NumberMemoryPrompt): Promise<DbReturn> 
  * 创建提示词
  */
 export async function createPrompt(
-  entryId: string, 
-  title: string, 
-  content: string, 
+  entryId: string,
+  title: string,
+  content: string,
   order: number,
   enabled: boolean = true
 ): Promise<DbReturn & { doc?: NumberMemoryPrompt }> {
-  const now = Date.now();
+  const now = nextIdTimestamp();
   const prompt: NumberMemoryPrompt = {
     _id: PROMPT_KEY_PREFIX + now,
     type: 'number_memory_prompt',

@@ -33,6 +33,10 @@ describe('http', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks()
+    // 重置模块缓存，确保 http 模块每次都重新加载并触发 axios.create 的副作用
+    // 否则 vitest 模块缓存命中后，第二次起 axios.create() 不会再被调用，
+    // 「应使用正确的 baseURL 创建 axios 实例」断言会看到 0 次调用
+    vi.resetModules()
     axios = (await import('axios')).default
     http = (await import('./http')).default
   })

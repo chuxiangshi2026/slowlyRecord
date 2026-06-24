@@ -77,21 +77,28 @@ import {
   queryOfflineDict,
   hasOfflineDict,
   getOfflineDictSize,
-  setSyncServerUrl,
-  getSyncServerUrl,
-  resetSyncServer,
-  checkServerAvailable,
-  pushToServer,
-  pullFromServer,
   WORDBANK_LIST,
   DEFAULT_STRATEGY,
   getAllWordBankInfo,
   isWordBankCached,
   saveWordBankCache,
   clearWordBankCache,
+} from './useUtils'
+
+// 同步服务器、远端推送/拉取与翻译已迁移到分包目录
+// （vitest alias 中 `@/` 解析到桌面 src/，这里改用相对路径避免误命中）
+import {
+  setSyncServerUrl,
+  getSyncServerUrl,
+  resetSyncServer,
+  checkServerAvailable,
+  pushToServer,
+  pullFromServer,
+} from '../subPackages/pages-tools/utils/sync'
+import {
   translateText,
   batchTranslate,
-} from './useUtils'
+} from '../subPackages/pages-tools/utils/translation'
 
 import type {
   TranslationPlatform,
@@ -186,7 +193,9 @@ describe('翻译 API 密钥管理', () => {
     setTranslationApiKey(plat, 'temp', 'temp')
     setTranslationApiKey(plat, '', '')
     const keys = getTranslationApiKey(plat)
-    expect(keys.appkey).toBe('REDACTED_GLM_APIKEY') // 回退到默认
+    // 清空后应回退到 DefaultApiKeys[plat] 的默认 key（具体值由 config.ts 决定，这里只校验非空且非自定义）
+    expect(keys.appkey).not.toBe('temp')
+    expect(keys.appkey.length).toBeGreaterThan(0)
   })
 })
 
@@ -215,21 +224,22 @@ describe('TRANSLATION_PLATFORM_LINKS', () => {
 // ==================== 发音功能测试 ====================
 
 describe('getPronunciationUrl', () => {
+  // 有道发音 type 约定：type=1 英音，type=2 美音
   it('应该生成美式发音 URL', () => {
     const url = getPronunciationUrl('hello', 'us')
     expect(url).toContain('dict.youdao.com/dictvoice')
     expect(url).toContain('audio=hello')
-    expect(url).toContain('type=1')
+    expect(url).toContain('type=2')
   })
 
   it('应该生成英式发音 URL', () => {
     const url = getPronunciationUrl('hello', 'en')
-    expect(url).toContain('type=2')
+    expect(url).toContain('type=1')
   })
 
   it('默认应该使用美式发音', () => {
     const url = getPronunciationUrl('world')
-    expect(url).toContain('type=1')
+    expect(url).toContain('type=2')
   })
 
   it('应该对特殊字符进行 URL 编码', () => {
@@ -240,8 +250,20 @@ describe('getPronunciationUrl', () => {
 })
 
 describe('playPronunciation', () => {
+  // 注：playPronunciation 还会调用 audio.onEnded/onError/destroy，
+  // 这里 mock 必须提供这些方法的桩
+  function makeAudioCtx() {
+    return {
+      src: '',
+      play: vi.fn(),
+      onEnded: vi.fn(),
+      onError: vi.fn(),
+      destroy: vi.fn(),
+    }
+  }
+
   it('应该创建音频上下文并播放', () => {
-    const audioCtx = { src: '', play: vi.fn() }
+    const audioCtx = makeAudioCtx()
     mockUni.createInnerAudioContext.mockReturnValue(audioCtx)
 
     playPronunciation('hello')
@@ -253,12 +275,13 @@ describe('playPronunciation', () => {
   })
 
   it('应该支持英式发音', () => {
-    const audioCtx = { src: '', play: vi.fn() }
+    const audioCtx = makeAudioCtx()
     mockUni.createInnerAudioContext.mockReturnValue(audioCtx)
 
     playPronunciation('hello', 'en')
 
-    expect(audioCtx.src).toContain('type=2')
+    // 有道 type=1 是英音
+    expect(audioCtx.src).toContain('type=1')
   })
 })
 
@@ -618,11 +641,12 @@ describe('translateText', () => {
 describe('batchTranslate', () => {
   it('应该批量翻译多个单词', async () => {
     // hello 离线命中，world 离线命中
+    // batchTranslate 返回 TranslationResult[]，每项含 translatedText / explains
     const results = await batchTranslate(['hello', 'world'])
 
     expect(results.length).toBe(2)
-    expect(results[0]).toBe('你好；问候')
-    expect(results[1]).toBe('世界；领域')
+    expect(results[0].translatedText).toBe('你好；问候')
+    expect(results[1].translatedText).toBe('世界；领域')
   })
 
   it('空数组应返回空结果', async () => {
@@ -639,7 +663,9 @@ describe('batchTranslate', () => {
 
     const results = await batchTranslate(['xyzunknown'])
 
-    expect(results[0]).toBe('xyzunknown')
+    // 失败时降级返回原文（translatedText 与 explains 字段）
+    expect(results[0].translatedText).toBe('xyzunknown')
+    expect(results[0].success).toBe(false)
   })
 })
 

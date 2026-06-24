@@ -6,20 +6,29 @@ import {AppInfo, OcrKeyInfo} from "@/config.ts";
  * 获取当前使用的API密钥 - 优先使用用户设置的，否则使用默认配置
  */
 export function getTranslationApiKey(provider: TranslationPlatform) {
-    const wordsStore = useWordsStore();
-    const userKeys = wordsStore.getApiKey(provider);
-    // 如果用户设置了密钥（非空且非纯空格），则使用用户设置的；否则使用默认配置
-    const trimmedAppKey = userKeys.appkey?.trim();
-    const trimmedKey = userKeys.key?.trim();
-    
-    // 本地翻译不需要API密钥
+    // 本地翻译不需要API密钥，提前短路避免无谓的 store 访问
     if (provider === 'local') {
         return { appkey: '', key: '' };
     }
-    
+
+    const wordsStore = useWordsStore();
+    const userKeys = wordsStore.getApiKey(provider);
+
+    // 安全检查：当 store 返回 undefined/null（例如测试桩或新平台未配置）时降级到默认配置
+    if (!userKeys) {
+        return {
+            appkey: AppInfo[provider]?.appkey ?? '',
+            key: AppInfo[provider]?.key ?? '',
+        };
+    }
+
+    // 如果用户设置了密钥（非空且非纯空格），则使用用户设置的；否则使用默认配置
+    const trimmedAppKey = userKeys.appkey?.trim();
+    const trimmedKey = userKeys.key?.trim();
+
     return {
-        appkey: (trimmedAppKey && trimmedAppKey.length > 0) ? trimmedAppKey : AppInfo[provider].appkey,
-        key: (trimmedKey && trimmedKey.length > 0) ? trimmedKey : AppInfo[provider].key
+        appkey: (trimmedAppKey && trimmedAppKey.length > 0) ? trimmedAppKey : (AppInfo[provider]?.appkey ?? ''),
+        key: (trimmedKey && trimmedKey.length > 0) ? trimmedKey : (AppInfo[provider]?.key ?? '')
     };
 }
 

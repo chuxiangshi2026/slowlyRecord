@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vite
 import { setActivePinia, createPinia } from 'pinia'
 import { useTextMemoryStore } from './textMemory'
 import type { TextArticle, TextNote, TextPrompt } from '@/types/text-memory'
+import { setDbAdapter, resetDbAdapter } from '@/adapters/db'
 
 // Mock lodash.clonedeep
 vi.mock('lodash.clonedeep', () => ({
@@ -13,7 +14,7 @@ describe('useTextMemoryStore', () => {
 
   beforeEach(() => {
     setActivePinia(createPinia())
-    
+
     // Mock localStorage
     const localStorageMock: Record<string, string> = {}
     vi.stubGlobal('localStorage', {
@@ -22,19 +23,28 @@ describe('useTextMemoryStore', () => {
       removeItem: vi.fn((key: string) => { delete localStorageMock[key] })
     })
 
-    // Mock utools db
+    // 构造 mock DbAdapter，并通过 setDbAdapter 注入（getDbAdapter 已不再直接读 window.utools.db）
     mockDb = {
       promises: {
         get: vi.fn() as Mock,
-        put: vi.fn() as Mock
+        put: vi.fn() as Mock,
+        remove: vi.fn() as Mock,
+        allDocs: vi.fn() as Mock,
+        postAttachment: vi.fn() as Mock,
+        getAttachment: vi.fn() as Mock,
+        bulkDocs: vi.fn() as Mock,
       }
     }
+    setDbAdapter(mockDb)
+
+    // 保留 window.utools 桩，部分代码路径仍会探测它
     vi.stubGlobal('window', { utools: { db: mockDb } })
   })
 
   afterEach(() => {
     vi.unstubAllGlobals()
     vi.clearAllMocks()
+    resetDbAdapter()
   })
 
   describe('初始状态', () => {
@@ -139,6 +149,8 @@ describe('useTextMemoryStore', () => {
 
     it('getTextMemoryDoc 应该在数据库不可用时返回 null', async () => {
       const store = useTextMemoryStore()
+      // 模拟数据库未初始化：清掉适配器，并让 getDbAdapter() 抛错
+      resetDbAdapter()
       vi.stubGlobal('window', {}) // 移除 utools
 
       const result = await store.getTextMemoryDoc()
