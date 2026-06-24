@@ -206,89 +206,62 @@ const batchTranslateAndAddWords = async (
     let processedCount = 0;
 
     const errWords: string[] = [];
-    // 逐个处理单词，避免API调用过于频繁
-    for (const wordText of wordsToProcess) {
-        try {
-            let {success,text, message} = await addWord(wordText);
-            if (!success) {
-                errWords.push(text)
-            }
-           /* // 检查是否超出了每日使用限制
-            const currentPlatform = wordsStore.currentTranslationPlatform || 'youdao';
-            if (!hasCustomApiKey(currentPlatform)) {
-                // 如果没有自定义API密钥，检查是否超过每日限制
-                // 普通翻译和批量翻译一起计数
-                if (isOverDailyLimit('translation')) {
-                    const usedCount = getCurrentUsageCount('translation');
-                    ElMessage.error(`每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`);
-                    break; // 停止处理更多单词
+
+    // 并发控制：按平台分级，避免 API 限流
+    const CONCURRENCY_LIMITS: Record<string, number> = {
+        baidu: 1,        // 百度免费版 QPS=1，必须严格串行
+        youdao: 5,
+        ali: 10,
+        tencent: 10,
+        glm: 8,
+        deepseek: 8,
+        qwen: 8,
+        kimi: 8,
+        claude: 8,
+        openai: 10,
+        local: 100,      // 本地词典无限制
+        default: 5,
+    };
+    const currentPlatform = wordsStore.currentTranslationPlatform || 'default';
+    const maxConcurrency = CONCURRENCY_LIMITS[currentPlatform] ?? CONCURRENCY_LIMITS.default;
+
+    // 简易并发限制器（不引入额外依赖）
+    // 启动 `limit` 个 worker 链，每个链处理完一个就抓取下一个，直到队列耗尽
+    async function runConcurrent(
+        items: string[],
+        worker: (item: string) => Promise<void>,
+        limit: number
+    ): Promise<void> {
+        let idx = 0;
+        const next = async (): Promise<void> => {
+            while (idx < items.length) {
+                const i = idx++;
+                try {
+                    await worker(items[i]);
+                } catch (error) {
+                    console.error(`处理单词失败 ${items[i]}:`, error);
+                    errWords.push(items[i]);
                 }
-
-                // 增加使用计数
-                incrementUsageCounter('translation');
             }
-
-            // 检查单词是否已存在
-            const existingWord = wordsStore.findWord(wordText);
-
-            if (existingWord) {
-                // 如果单词已存在，更新其状态
-                existingWord.isReview = true;
-                existingWord.explainedHidden = false;
-                await wordsStore.addAndUpdateWord(existingWord);
-            } else {
-                // 如果单词不存在，调用翻译API
-                const res = await wordsStore.translateWithPlatform(wordText);
-
-                console.log('百度返回结果', res);
-                if (res.success) {
-                    // 创建新单词对象
-                    const newWord: Word = {
-                        text: wordText,
-                        explains: res.explains || wordText,
-                        explainedHidden: false,
-                        pronunciation: res.pronunciation || '',
-                        isReview: true,
-                        ctime: new Date(),
-                        learnDate: new Date(),
-                        level: 1,
-                        _id: DB_KEY + uuidv4(),
-                        image: '',
-                        phonetic: res.phonetic || '',
-                        remember: false
-                    };
-
-                    // 添加到存储
-                    await wordsStore.addAndUpdateWords([newWord]);
-                } else {
-                    console.error(`翻译失败: ${wordText}`);
-                    ElMessage.error(`翻译失败: ${wordText}`);
-                }
-            }*/
-        } catch (error) {
-            console.error(`处理单词失败 ${wordText}:`, error);
-            ElMessage.error(`处理单词失败 ${wordText}`);
-        } finally {
-            processedCount++;
-
-            // 调用进度回调
-            if (onProgress) {
-                onProgress(processedCount, totalCount);
-            }
-
-            // 添加延迟，避免API调用过于频繁
-            // 使用更长的随机延迟以减少API限流风险，特别是针对百度API
-            let delay;
-            // 根据当前翻译平台调整延迟时间
-            if (wordsStore.currentTranslationPlatform === 'baidu') {
-                delay = 600 + Math.floor(Math.random() * 1000); // 百度API需要更长延迟：2000-3000ms
-            } else {
-                delay = 450 + Math.floor(Math.random() * 200); // 其他API：450-650ms
-            }
-            await new Promise(resolve => setTimeout(resolve, delay));
-        }
-
+        };
+        const chain = Math.min(limit, items.length);
+        await Promise.all(Array.from({length: chain}, () => next()));
     }
+
+    await runConcurrent(wordsToProcess, async (wordText) => {
+        const {success, text} = await addWord(wordText);
+        if (!success) {
+            errWords.push(text);
+        }
+        processedCount++;
+        if (onProgress) {
+            onProgress(processedCount, totalCount);
+        }
+        // 仅百度平台保留延迟（QPS=1）；并发=1 时这等同于原来的串行+延迟
+        if (currentPlatform === 'baidu') {
+            await new Promise(resolve => setTimeout(resolve, 1000 + Math.floor(Math.random() * 500)));
+        }
+    }, maxConcurrency);
     // 总 数 重复数 已存在数 失败数
 
 };

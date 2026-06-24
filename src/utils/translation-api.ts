@@ -2,7 +2,6 @@ import type {TranslationPlatform, TranslationResult, YdParams} from "@/types/wor
 import http from "@/utils/http.ts";
 import type {AxiosResponse} from 'axios';
 import CryptoJS from "crypto-js";
-import {truncate} from "lodash";
 import {FROM, TO, USAGE_LIMITS} from "@/constants";
 import {AppInfo} from "@/config.ts";
 import {useWordsStore} from "@/stores/words.ts";
@@ -14,6 +13,51 @@ import {translateWithLocalDictionaryAsync} from "./local-dictionary";
 
 // 发音URL缓存 Map
 const pronunciationCache = new Map<string, string>();
+
+// 翻译结果内存缓存（按 platform+query 维度），TTL 7 天
+// 避免相同单词在批量添加 / 重复操作时反复打 API
+interface TranslationCacheEntry {
+    result: TranslationResult;
+    ts: number;
+}
+const translationCache = new Map<string, TranslationCacheEntry>();
+const TRANSLATION_CACHE_TTL = 7 * 24 * 3600 * 1000;
+// 上限保护，防止长时间运行后内存膨胀
+const TRANSLATION_CACHE_MAX = 5000;
+
+function translationCacheKey(query: string, platform: string, from: string, to: string): string {
+    return `${platform}|${from}|${to}|${query.toLowerCase().trim()}`;
+}
+
+function getCachedTranslation(query: string, platform: string, from: string, to: string): TranslationResult | null {
+    const key = translationCacheKey(query, platform, from, to);
+    const hit = translationCache.get(key);
+    if (!hit) return null;
+    if (Date.now() - hit.ts > TRANSLATION_CACHE_TTL) {
+        translationCache.delete(key);
+        return null;
+    }
+    return hit.result;
+}
+
+function setCachedTranslation(query: string, platform: string, from: string, to: string, result: TranslationResult): void {
+    // 仅缓存成功结果，失败/限流不进缓存以便下次重试
+    if (!result || !result.success) return;
+    // LRU 简化版：超上限时清理最旧 1/4
+    if (translationCache.size >= TRANSLATION_CACHE_MAX) {
+        const removeCount = Math.floor(TRANSLATION_CACHE_MAX / 4);
+        const it = translationCache.keys();
+        for (let i = 0; i < removeCount; i++) {
+            const k = it.next().value;
+            if (k === undefined) break;
+            translationCache.delete(k);
+        }
+    }
+    translationCache.set(translationCacheKey(query, platform, from, to), {
+        result,
+        ts: Date.now(),
+    });
+}
 
 // TTS 配置
 interface TTSConfig {
@@ -371,13 +415,31 @@ export function logAvailableVoices(): void {
 }*/
 
 /**
+ * 生成有道翻译签名所需的 input 字段
+ * 有道 v3 签名算法规则：
+ *   - 当 q 的字符长度 <= 20 时，input = q
+ *   - 当 q 的字符长度 > 20 时，input = q[0:10] + q.length + q[-10:]
+ *
+ * 注意：这里必须按 UTF-16 code unit 长度处理（与有道服务端一致），
+ * 不能直接用 lodash 的 truncate（lodash 是「截断+...」语义，与有道无关）。
+ *
+ * 历史 bug：之前误用 lodash.truncate，导致 q 长度 > 20 时签名永远算错，
+ * 服务端返回 errorCode=202（签名检验失败）。
+ */
+function youdaoSignInput(q: string): string {
+    if (!q) return '';
+    if (q.length <= 20) return q;
+    return q.substring(0, 10) + q.length + q.substring(q.length - 10);
+}
+
+/**
  * 生成有道翻译签名参数
  */
 function generateYoudaoParams(query: string, from: string = 'auto', to: string = 'zh'): YdParams {
     const {appkey, key} = getTranslationApiKey('youdao');
     const salt = (new Date).getTime();
     const curtime = Math.round(new Date().getTime() / 1000);
-    const str1 = appkey + truncate(query) + salt + curtime + key;
+    const str1 = appkey + youdaoSignInput(query) + salt + curtime + key;
     const sign = CryptoJS.SHA256(str1).toString(CryptoJS.enc.Hex);
 
     return {
@@ -491,6 +553,15 @@ export async function translateWithPlatform(
     to: string = 'zh'
 ): Promise<TranslationResult> {
     log.i('待翻译参数', query)
+
+    // 缓存优先：相同 (platform, from, to, query) 7 天内直接返回，避免重复打 API
+    // 注意：ollama / local 也走缓存，不影响正确性（命中即为之前同一引擎的成功结果）
+    const cached = getCachedTranslation(query, platform, from, to);
+    if (cached) {
+        log.i('翻译缓存命中', query, platform);
+        return cached;
+    }
+
     try {
         // 本地翻译不使用限制检查
         if (platform !== 'local') {
@@ -524,7 +595,11 @@ export async function translateWithPlatform(
                     }
                 });
                 console.log('请求结果')
-                return handleYoudaoResponse(youdaoResponse.data, query);
+                {
+                    const r = handleYoudaoResponse(youdaoResponse.data, query);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
 
             case 'baidu':
                 const baiduParams = generateBaiduParams(query, from, to);
@@ -534,7 +609,11 @@ export async function translateWithPlatform(
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 });
-                return handleBaiduResponse(baiduResponse.data, query);
+                {
+                    const r = handleBaiduResponse(baiduResponse.data, query);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
 
             case 'ali':
                 log.i('调用阿里翻译');
@@ -550,42 +629,74 @@ export async function translateWithPlatform(
                     }
                 });
                 const aliData = await aliResponse.json();
-                return handleAliResponse(aliData, query);
+                {
+                    const r = handleAliResponse(aliData, query);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'utoolsai':
                 let utoolAiData = await callUtoolsAi(query, from, to);
                 console.log('utool', utoolAiData)
+                setCachedTranslation(query, platform, from, to, utoolAiData);
                 return utoolAiData;
             case 'deepseek':
                 console.log('调用DeepSeek')
-                return callDeepSeek(query, from, to);
+                {
+                    const r = await callDeepSeek(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'qwen':
                 console.log('调用通义千问')
-                return callQwen(query, from, to);
+                {
+                    const r = await callQwen(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'kimi':
                 console.log('调用Kimi')
-                return callKimi(query, from, to);
+                {
+                    const r = await callKimi(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'glm':
                 console.log('调用智谱GLM')
-                return callGlm(query, from, to);
+                {
+                    const r = await callGlm(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'ollama':
                 console.log('调用Ollama')
-                return callOllama(query, from, to);
+                {
+                    const r = await callOllama(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'tencent':
                 console.log('调用腾讯翻译')
-                return callTencent(query, from, to);
+                {
+                    const r = await callTencent(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
             case 'local':
                 console.log('调用本地词典翻译, 查询词:', query)
                 const localResult = await translateWithLocalDictionaryAsync(query);
                 console.log('本地翻译结果:', localResult)
                 if (!localResult.success) {
                     console.log('本地词典未收录，直接显示原文:', query)
-                    return {
+                    const fallback: TranslationResult = {
                         success: true,
                         explains: query,
                         phonetic: '',
                         pronunciation: ''
                     };
+                    setCachedTranslation(query, platform, from, to, fallback);
+                    return fallback;
                 }
+                setCachedTranslation(query, platform, from, to, localResult);
                 return localResult;
             /*           case 'google':
                            // Google翻译API通常需要服务端实现，这里提供基本结构

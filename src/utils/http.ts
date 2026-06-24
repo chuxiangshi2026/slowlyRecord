@@ -14,8 +14,8 @@ const baseURL = 'https://openapi.youdao.com/api';
 const instance = axios.create({
     // 基础url
     baseURL: baseURL,
-    // 超时时间
-    timeout: 5000
+    // 超时时间（AI 引擎首响应可能 3-8s，普通翻译也偶有抖动，统一放宽到 30s）
+    timeout: 30000
 });
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
