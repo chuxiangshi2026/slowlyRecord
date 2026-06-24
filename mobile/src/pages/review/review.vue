@@ -6,7 +6,7 @@
       <button v-if="wordsStore.customReviewWords !== null" class="btn-start-review" @click="goToWords">
         返回搜索单词
       </button>
-      <button v-else-if="wordsStore.words.length > 0" class="btn-start-review" @click="startReview">
+      <button v-else-if="canStartReview" class="btn-start-review" @click="startReview">
         开始复习
       </button>
       <button v-else class="btn-start-review" @click="goToWords">
@@ -17,7 +17,7 @@
     <view v-else class="review-area">
       <!-- 进度 -->
       <view class="progress-bar-top">
-        <text class="progress-text">{{ currentIndex + 1 }} / {{ reviewWords.length }}</text>
+        <text class="progress-text">{{ currentIndex + 1 }} / {{ sessionWords.length }}</text>
         <view class="progress-track">
           <view class="progress-fill" :style="{ width: progressPercent + '%' }"></view>
         </view>
@@ -128,7 +128,7 @@
         <text class="complete-title">复习完成</text>
         <view class="complete-stats">
           <view class="stat">
-            <text class="stat-value">{{ reviewWords.length }}</text>
+            <text class="stat-value">{{ sessionWords.length }}</text>
             <text class="stat-label">复习单词</text>
           </view>
           <view class="stat">
@@ -160,8 +160,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useMobileWords } from '@/stores/useMobileWords'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 
@@ -172,6 +172,26 @@ const showComplete = ref(false)
 const showDeleteConfirm = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
+
+// 会话快照：本次复习的单词列表，进入页面时冻结
+// 用快照而不是 store.reviewWords，确保：
+// 1) 中途退出再回来能保留进度（结合 localStorage 持久化）
+// 2) 点"认识"后单词从 reviewWords 中消失时，不会导致跳卡
+const sessionWords = ref<MobileWord[]>([])
+const sessionBankId = ref<string>('')
+
+const SESSION_STORAGE_KEY = 'mobile_review_session'
+
+interface ReviewSession {
+  bankId: string
+  isCustom: boolean
+  wordIds: string[]
+  currentIndex: number
+  rememberCount: number
+  forgetCount: number
+  isFlipped: boolean
+  updatedAt: number
+}
 
 // 手势状态
 const touchStartX = ref(0)
@@ -188,13 +208,15 @@ const swipeDirection = ref<'left' | 'right' | 'down' | ''>('')
 
 const reviewWords = computed(() => wordsStore.reviewWords)
 
+const canStartReview = computed(() => reviewWords.value.length > 0 || wordsStore.words.length > 0)
+
 const currentWord = computed(() => {
-  return reviewWords.value[currentIndex.value]
+  return sessionWords.value[currentIndex.value]
 })
 
 const progressPercent = computed(() => {
-  if (reviewWords.value.length === 0) return 0
-  return Math.round(((currentIndex.value) / reviewWords.value.length) * 100)
+  if (sessionWords.value.length === 0) return 0
+  return Math.round(((currentIndex.value) / sessionWords.value.length) * 100)
 })
 
 const emptyTitle = computed(() => {
@@ -238,7 +260,120 @@ const cardStyle = computed(() => {
 
 onMounted(() => {
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享，无需重复调用
+  // 等数据准备好后尝试恢复未完成的复习会话；恢复不到则自动按当前待复习列表新建会话
+  const tryInit = () => {
+    if (wordsStore.isLoading) return false
+    if (wordsStore.allWords.length === 0 && wordsStore.customReviewWords === null) return false
+    // 带筛选进入时优先使用 customReviewWords，覆盖任何保存的常规会话
+    if (wordsStore.customReviewWords !== null) {
+      initSessionFromReviewWords()
+      return true
+    }
+    if (!restoreSession()) {
+      initSessionFromReviewWords()
+    }
+    return true
+  }
+  if (!tryInit()) {
+    const stop = watch(
+      () => [wordsStore.isLoading, wordsStore.allWords.length, wordsStore.customReviewWords] as const,
+      () => {
+        if (tryInit()) stop()
+      }
+    )
+  }
 })
+
+/** 用当前 store.reviewWords 初始化一个新的复习会话 */
+function initSessionFromReviewWords() {
+  const list = reviewWords.value
+  if (list.length === 0) {
+    sessionWords.value = []
+    sessionBankId.value = wordsStore.currentBankId
+    clearSession()
+    return
+  }
+  // 复制一份，避免引用 store 的响应式数组，单词被 store 移出 reviewWords 时不影响快照
+  sessionWords.value = [...list]
+  sessionBankId.value = wordsStore.currentBankId
+  currentIndex.value = 0
+  rememberCount.value = 0
+  forgetCount.value = 0
+  isFlipped.value = false
+  persistSession()
+}
+
+/** 从存储恢复上一次未完成的复习会话；返回是否恢复成功 */
+function restoreSession(): boolean {
+  let saved: ReviewSession | null = null
+  try {
+    const raw = uni.getStorageSync(SESSION_STORAGE_KEY)
+    if (raw && typeof raw === 'object') saved = raw as ReviewSession
+  } catch {
+    return false
+  }
+  if (!saved || !Array.isArray(saved.wordIds) || saved.wordIds.length === 0) return false
+
+  // 自定义复习列表（从筛选页面跳转）由 store 维护，不在这里恢复
+  if (saved.isCustom) return false
+  if (saved.bankId !== wordsStore.currentBankId) {
+    // 词库已切换，丢弃旧会话
+    clearSession()
+    return false
+  }
+
+  const idMap = new Map(wordsStore.allWords.map(w => [w.id, w]))
+  const restored: MobileWord[] = []
+  for (const id of saved.wordIds) {
+    const w = idMap.get(id)
+    if (w) restored.push(w)
+  }
+  if (restored.length === 0) {
+    clearSession()
+    return false
+  }
+
+  sessionWords.value = restored
+  sessionBankId.value = saved.bankId
+  // 防止恢复到一个越界 / 已被删的下标
+  currentIndex.value = Math.min(saved.currentIndex || 0, restored.length - 1)
+  rememberCount.value = saved.rememberCount || 0
+  forgetCount.value = saved.forgetCount || 0
+  isFlipped.value = !!saved.isFlipped
+  return true
+}
+
+/** 把当前会话快照写入存储（custom 筛选模式下不持久化，因为筛选列表本身不持久化） */
+function persistSession() {
+  if (wordsStore.customReviewWords !== null) return
+  if (sessionWords.value.length === 0) {
+    clearSession()
+    return
+  }
+  const session: ReviewSession = {
+    bankId: sessionBankId.value,
+    isCustom: false,
+    wordIds: sessionWords.value.map(w => w.id),
+    currentIndex: currentIndex.value,
+    rememberCount: rememberCount.value,
+    forgetCount: forgetCount.value,
+    isFlipped: isFlipped.value,
+    updatedAt: Date.now()
+  }
+  try {
+    uni.setStorageSync(SESSION_STORAGE_KEY, session)
+  } catch (e) {
+    console.error('保存复习进度失败:', e)
+  }
+}
+
+function clearSession() {
+  try {
+    uni.removeStorageSync(SESSION_STORAGE_KEY)
+  } catch {
+    // ignore
+  }
+}
 
 const startReview = () => {
   if (wordsStore.words.length > 0 && reviewWords.value.length === 0) {
@@ -250,6 +385,8 @@ const startReview = () => {
       }
     }
   }
+  // 把当前待复习单词冻结为本次会话
+  initSessionFromReviewWords()
 }
 
 const goToWords = () => {
@@ -375,13 +512,19 @@ const handleLongPress = () => {
 
 const confirmDelete = () => {
   if (currentWord.value) {
-    wordsStore.deleteWord(currentWord.value.id)
+    const deletedId = currentWord.value.id
+    wordsStore.deleteWord(deletedId)
     showDeleteConfirm.value = false
     uni.showToast({ title: '已删除', icon: 'success' })
-    if (currentIndex.value >= reviewWords.value.length) {
-      currentIndex.value = Math.max(0, reviewWords.value.length - 1)
-      isFlipped.value = false
+    // 同步从会话快照中移除
+    sessionWords.value = sessionWords.value.filter(w => w.id !== deletedId)
+    if (sessionWords.value.length === 0) {
+      showComplete.value = true
+    } else if (currentIndex.value >= sessionWords.value.length) {
+      currentIndex.value = sessionWords.value.length - 1
     }
+    isFlipped.value = false
+    persistSession()
   }
 }
 
@@ -453,10 +596,12 @@ const handleRememberForever = () => {
 
 const nextWord = () => {
   isFlipped.value = false
-  if (currentIndex.value < reviewWords.value.length - 1) {
+  if (currentIndex.value < sessionWords.value.length - 1) {
     currentIndex.value++
+    persistSession()
   } else {
     showComplete.value = true
+    clearSession()
   }
 }
 
@@ -465,6 +610,8 @@ const finishReview = () => {
   currentIndex.value = 0
   rememberCount.value = 0
   forgetCount.value = 0
+  sessionWords.value = []
+  clearSession()
   // 清除自定义复习列表，下次进入时恢复默认
   wordsStore.setCustomReviewWords(null)
   uni.showToast({ title: '复习完成', icon: 'success' })
