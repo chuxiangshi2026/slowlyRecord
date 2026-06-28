@@ -59,6 +59,76 @@ function randomString(length: number): string {
 
 function generateAesKey(): string { return randomString(32) }
 
+function hasWebCryptoSubtle(): boolean {
+  try {
+    const subtle = (globalThis as any)?.crypto?.subtle
+    return !!subtle && typeof subtle.encrypt === 'function' && typeof subtle.decrypt === 'function'
+  } catch { return false }
+}
+
+function getRandomBytes(length: number): Uint8Array {
+  try {
+    const c = (globalThis as any)?.crypto
+    if (c?.getRandomValues) {
+      const bytes = new Uint8Array(length)
+      c.getRandomValues(bytes)
+      return bytes
+    }
+  } catch { /* ignore */ }
+  const bytes = new Uint8Array(length)
+  for (let i = 0; i < length; i++) bytes[i] = Math.floor(Math.random() * 256)
+  return bytes
+}
+
+function bytesToBase64Url(bytes: Uint8Array): string {
+  return uint8ArrayToBase64(bytes).replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_')
+}
+
+function base64UrlToBytes(value: string): Uint8Array {
+  const normalized = value.replace(/-/g, '+').replace(/_/g, '/')
+  const padLen = (4 - (normalized.length % 4)) % 4
+  return base64ToUint8Array(normalized + '='.repeat(padLen))
+}
+
+async function importAesKeyFromBase64(keyBase64: string): Promise<CryptoKey> {
+  const raw = base64UrlToBytes(keyBase64)
+  return (globalThis as any).crypto.subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt'])
+}
+
+async function aesGcmEncrypt(plaintext: Uint8Array, keyBase64: string): Promise<string> {
+  const iv = getRandomBytes(12)
+  const cryptoKey = await importAesKeyFromBase64(keyBase64)
+  const ciphertext = await (globalThis as any).crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    cryptoKey,
+    plaintext,
+  )
+  const combined = new Uint8Array(iv.byteLength + ciphertext.byteLength)
+  combined.set(iv, 0)
+  combined.set(new Uint8Array(ciphertext), iv.byteLength)
+  return bytesToBase64Url(combined)
+}
+
+async function aesGcmDecrypt(payload: string, keyBase64: string): Promise<Uint8Array> {
+  const combined = base64UrlToBytes(payload)
+  const iv = combined.slice(0, 12)
+  const ciphertext = combined.slice(12)
+  const cryptoKey = await importAesKeyFromBase64(keyBase64)
+  const decrypted = await (globalThis as any).crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv },
+    cryptoKey,
+    ciphertext,
+  )
+  return new Uint8Array(decrypted)
+}
+
+function generateSyncKey(): string {
+  if (hasWebCryptoSubtle()) {
+    return bytesToBase64Url(getRandomBytes(32))
+  }
+  return randomString(32)
+}
+
 function utf8ToBytes(str: string): Uint8Array {
   try { if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(str) } catch { /* */ }
   const bytes: number[] = []
@@ -231,11 +301,20 @@ export async function pushToServer(
     const jsonBytes = utf8ToBytes(json)
     const pako = (await import('pako')).default
     const compressed = pako.deflate(jsonBytes)
-    const aesKey = generateAesKey()
-    const encrypted = xorCrypt(compressed, aesKey)
-    const encryptedBase64 = uint8ArrayToBase64(encrypted)
+    const syncKey = generateSyncKey()
+    let encryptedBase64: string
+    if (hasWebCryptoSubtle()) {
+      try {
+        encryptedBase64 = await aesGcmEncrypt(compressed, syncKey)
+      } catch (cryptoError) {
+        console.warn('[sync] AES-GCM 加密失败，回退到 XOR：', cryptoError)
+        encryptedBase64 = uint8ArrayToBase64(xorCrypt(compressed, syncKey))
+      }
+    } else {
+      encryptedBase64 = uint8ArrayToBase64(xorCrypt(compressed, syncKey))
+    }
     const blobId = await uploadRaw(encryptedBase64)
-    const syncCode = buildSyncCode(blobId, aesKey)
+    const syncCode = buildSyncCode(blobId, syncKey)
     return { success: true, code: syncCode }
   } catch (e) {
     return { success: false, error: String(e) }
@@ -249,8 +328,21 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
     const { blobId, aesKey } = parsed
     const encrypted = await downloadRaw(blobId)
     if (!encrypted) return { success: false, error: '同步码无效或数据已过期' }
-    const encryptedBytes = base64ToUint8Array(encrypted)
-    const compressed = xorCrypt(encryptedBytes, aesKey)
+    let compressed: Uint8Array | null = null
+    if (hasWebCryptoSubtle()) {
+      try {
+        compressed = await aesGcmDecrypt(encrypted, aesKey)
+      } catch (cryptoError) {
+        console.warn('[sync] AES-GCM 解密失败，尝试旧 XOR 同步码：', cryptoError)
+      }
+    }
+    if (!compressed) {
+      try {
+        compressed = xorCrypt(base64ToUint8Array(encrypted), aesKey)
+      } catch (e) {
+        return { success: false, error: '解密失败，同步码可能不正确或数据已被篡改' }
+      }
+    }
     const pako = (await import('pako')).default
     const jsonBytes = pako.inflate(compressed)
     const json = bytesToUtf8(jsonBytes)
