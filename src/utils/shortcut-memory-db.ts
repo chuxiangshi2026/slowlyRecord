@@ -16,6 +16,14 @@ const CUSTOM_KEY_PREFIX = DB_KEY_PREFIX + 'custom_';
 const CUSTOM_CATEGORY_PREFIX = DB_KEY_PREFIX + 'category_';
 const HIDDEN_CATEGORY_KEY = DB_KEY_PREFIX + 'hidden_categories';
 
+// 同毫秒内多次创建可能导致 _id 冲突，使用单调递增的时间戳避免覆盖
+let _lastIdTimestamp = 0;
+function nextIdTimestamp(): number {
+  const now = Date.now();
+  _lastIdTimestamp = now > _lastIdTimestamp ? now : _lastIdTimestamp + 1;
+  return _lastIdTimestamp;
+}
+
 // 获取数据库适配器
 function getDb() {
   return getDbAdapter();
@@ -49,7 +57,7 @@ export async function saveTrainingRecord(
 
   const resultDoc: ShortcutTrainingRecord = {
     ...record,
-    _id: RECORD_KEY_PREFIX + Date.now()
+    _id: RECORD_KEY_PREFIX + nextIdTimestamp()
   };
 
   const cleanedData = cloneDeep(resultDoc);

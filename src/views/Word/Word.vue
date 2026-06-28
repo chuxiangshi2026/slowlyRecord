@@ -677,7 +677,7 @@ const applyFocusWindowAlwaysOnTop = (targetWindow: any, alwaysOnTop: boolean, so
 
 const clearFocusModeSync = () => {
   if (focusModeSyncTimer) {
-    clearInterval(focusModeSyncTimer);
+    clearTimeout(focusModeSyncTimer);
     focusModeSyncTimer = null;
   }
   stopIgnoreMousePoll();
@@ -1410,12 +1410,15 @@ function applyEdgeStickEnabled(enabled: boolean, source: string) {
 }
 
 
+const FOCUS_MODE_SYNC_INTERVAL = 1500;
+const FOCUS_MODE_LOCKED_SYNC_INTERVAL = 800;
+
 const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled: boolean) => {
   clearFocusModeSync();
   lastSyncedAlwaysOnTop = initialAlwaysOnTop;
   lastSyncedEdgeStickEnabled = initialEdgeStickEnabled;
 
-  focusModeSyncTimer = setInterval(() => {
+  const tick = () => {
     consumeLatestFocusModePendingAction('db');
 
     if (!focusWindow || focusWindow.isDestroyed?.()) {
@@ -1441,6 +1444,7 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
           edgeStickEnabled: latestEdgeStickEnabled,
           alwaysOnTop: latestAlwaysOnTop,
         });
+        scheduleNextTick();
         return;
       }
 
@@ -1490,7 +1494,19 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
       console.error('[focusModeSync] 同步专注模式设置失败:', e);
     }
 
-  }, 300);
+    scheduleNextTick();
+  };
+
+  const scheduleNextTick = () => {
+    if (!focusWindow || focusWindow.isDestroyed?.()) {
+      clearFocusModeSync();
+      return;
+    }
+    const delay = lastSyncedLocked ? FOCUS_MODE_LOCKED_SYNC_INTERVAL : FOCUS_MODE_SYNC_INTERVAL;
+    focusModeSyncTimer = setTimeout(tick, delay);
+  };
+
+  scheduleNextTick();
 };
 
 
