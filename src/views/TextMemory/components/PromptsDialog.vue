@@ -382,25 +382,33 @@ const notepadContent = ref('');
 
 // 对比对话框
 const showCompare = ref(false);
+const LCS_COMPARE_MAX_CELLS = 1_000_000;
+
+const currentCompareSource = computed(() => ({
+  original: props.article?.content || '',
+  written: notepadContent.value || ''
+}));
+
+const compareResult = computed(() => {
+  const { original, written } = currentCompareSource.value;
+  return compareText(original, written);
+});
 
 // 对比统计
 const compareStats = computed(() => {
   if (!props.article) return { accuracy: 0, totalWords: 0, errorCount: 0, missingCount: 0 };
-  
-  const original = props.article.content || '';
-  const written = notepadContent.value || '';
-  
-  // 计算差异
-  const result = compareText(original, written);
-  
+
+  const original = currentCompareSource.value.original;
+  const result = compareResult.value;
+
   const totalWords = original.length;
   const errorCount = result.errors.length;
   const missingCount = result.missing.length;
-  
-  const accuracy = totalWords > 0 
-    ? Math.round(((totalWords - errorCount - missingCount) / totalWords) * 100) 
+
+  const accuracy = totalWords > 0
+    ? Math.round(((totalWords - errorCount - missingCount) / totalWords) * 100)
     : 0;
-  
+
   return {
     accuracy: Math.max(0, accuracy),
     totalWords,
@@ -412,11 +420,9 @@ const compareStats = computed(() => {
 // 对比后的HTML
 const comparedHtml = computed(() => {
   if (!props.article) return '';
-  
-  const original = props.article.content || '';
-  const written = notepadContent.value || '';
-  
-  return generateComparedHtml(original, written);
+
+  const { written } = currentCompareSource.value;
+  return generateComparedHtml(written, compareResult.value);
 });
 
 // 启用的提示词
@@ -695,6 +701,29 @@ interface CompareResult {
   extra: Array<{ char: string; position: number }>;
 }
 
+function compareTextLinear(original: string, written: string): CompareResult {
+  const errors: Array<{ char: string; position: number }> = [];
+  const missing: Array<{ position: number }> = [];
+  const extra: Array<{ char: string; position: number }> = [];
+  const commonLength = Math.min(original.length, written.length);
+
+  for (let i = 0; i < commonLength; i++) {
+    if (original[i] !== written[i]) {
+      errors.push({ char: written[i], position: i });
+    }
+  }
+
+  for (let i = written.length; i < original.length; i++) {
+    missing.push({ position: i });
+  }
+
+  for (let i = original.length; i < written.length; i++) {
+    extra.push({ char: written[i], position: i });
+  }
+
+  return { errors, missing, extra };
+}
+
 function compareText(original: string, written: string): CompareResult {
   const errors: Array<{ char: string; position: number }> = [];
   const missing: Array<{ position: number }> = [];
@@ -703,6 +732,9 @@ function compareText(original: string, written: string): CompareResult {
   // 使用动态规划计算LCS
   const m = original.length;
   const n = written.length;
+  if (m * n > LCS_COMPARE_MAX_CELLS) {
+    return compareTextLinear(original, written);
+  }
   const dp: number[][] = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
 
   // 填充DP表
@@ -768,10 +800,9 @@ function compareText(original: string, written: string): CompareResult {
 }
 
 // 生成对比HTML
-function generateComparedHtml(original: string, written: string): string {
+function generateComparedHtml(written: string, result: CompareResult): string {
   if (!written) return '<span class="empty-hint">未输入内容</span>';
 
-  const result = compareText(original, written);
   let html = '';
 
   const errorSet = new Set(result.errors.map(e => e.position));

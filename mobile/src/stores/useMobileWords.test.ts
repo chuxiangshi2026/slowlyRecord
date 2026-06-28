@@ -223,18 +223,35 @@ describe('useMobileWords Store', () => {
       expect(exported[0].word).toBe('hello')
     })
 
-    it('应该导入单词列表', async () => {
+    it('导入时应按规范化 word 去重', async () => {
       const store = useMobileWords()
 
       await store.importWords([
-        { id: 'mobile_words_import-1', word: 'imported', meaning: '导入的', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() },
+        { id: 'mobile_words_import-1', word: 'Apple', meaning: '苹果', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() },
       ])
 
-      // importWords 直接写入 DB，需 loadWords 后才能从内存观察到
-      await store.loadWords()
+      const result = await store.importWords([
+        { id: 'mobile_words_import-2', word: ' apple ', meaning: '苹果2', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() },
+      ])
 
-      expect(store.words.length).toBe(1)
-      expect(store.words[0].word).toBe('imported')
+      expect(result.imported).toHaveLength(0)
+      expect(result.skippedCount).toBe(1)
+      expect(store.words).toHaveLength(1)
+      expect(store.words[0].word).toBe('Apple')
+    })
+
+    it('同批次导入词组应折叠空格并去重', async () => {
+      const store = useMobileWords()
+
+      const result = await store.importWords([
+        { id: 'mobile_words_import-1', word: 'take   off', meaning: '起飞', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() },
+        { id: 'mobile_words_import-2', word: ' take off ', meaning: '脱下', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() },
+      ])
+
+      expect(result.imported).toHaveLength(1)
+      expect(result.skippedCount).toBe(1)
+      expect(store.words).toHaveLength(1)
+      expect(store.words[0].word).toBe('take off')
     })
   })
 
