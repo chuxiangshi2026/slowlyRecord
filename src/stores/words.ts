@@ -21,7 +21,7 @@ import {truncate} from "lodash";
 import {AppInfo} from "@/config.ts";
 // import {downloadAndStoreAudio} from "@/utils/audio-util.ts";
 // 导入翻译服务 abandon
-import {translateWithPlatform as externalTranslateWithPlatform} from "@/utils/translation-api";
+import {translateWithPlatform as externalTranslateWithPlatform, translateBatchWithPlatform as externalTranslateBatchWithPlatform} from "@/utils/translation-api";
 import {addAndUpdateSetDb, getSetDb} from "@/utils/user-set-db-util.ts";
 import {v4 as uuidv4} from "uuid";
 import type {UserSetType, FocusModeSettings} from "@/types/user-set";
@@ -487,7 +487,7 @@ export const useWordsStore =
                 // 重新加载新词库的单词
                 words.value = []
                 pushWords(bank.words)
-                upReview()
+                await upReview()
 
                 return true
             }
@@ -526,7 +526,7 @@ export const useWordsStore =
                 }
 
                 // 加载单词后重新计算待复习状态
-                upReview()
+                await upReview()
                 return words.value
             }
 
@@ -538,14 +538,15 @@ export const useWordsStore =
                 log.i("批量去重添加单词", payload)
                 // 规范化文本：保留词组空格，只折叠多余空白
                 const cleanedPayload = payload.map(w => ({ ...w, text: normalizeItemText(w.text) }))
-                // 先对 payload 自身按 text 去重，防止同一批数据重复
+                // 先对 payload 自身按规范化小写 key 去重，防止同一批数据大小写/空白差异重复
                 const payloadMap = new Map<string, Word>();
                 for (const w of cleanedPayload) {
-                    payloadMap.set(w.text, w);
+                    payloadMap.set(getItemKey(w.text), w);
                 }
                 const dedupedPayload = Array.from(payloadMap.values());
+                const existingKeys = new Set(words.value.map(existingWord => getItemKey(existingWord.text)));
                 const uniquePayload = dedupedPayload.filter(newWord =>
-                    !words.value.some(existingWord => existingWord.text === newWord.text)
+                    !existingKeys.has(getItemKey(newWord.text))
                 );
                 words.value.push(...uniquePayload);
                 log.i(payload, '批量添加去重后的单词', uniquePayload);
@@ -555,8 +556,10 @@ export const useWordsStore =
              * 重新计算需要复习的单词
              * 只有到了复习时间的单词才显示在待复习列表中
              */
-            function upReview() {
+            async function upReview() {
                 log.i('upReview 开始计算，单词总数:', words.value.length)
+
+                const changedWords: Word[] = [];
 
                 words.value.forEach((item) => {
                     // 确保 learnDate 和 ctime 是 Date 对象
@@ -581,22 +584,45 @@ export const useWordsStore =
                     // 如果 learnDate 和 ctime 相同或非常接近（5秒内），说明是新建单词，从未被复习过
                     const isNewWord = Math.abs(learnDate.getTime() - ctime.getTime()) < 5000;
 
-                    // log.i(`单词 ${item.text}: level=${level}, interval=${interval}分钟, shouldReview=${shouldReview}, isReview=${item.isReview}, isNewWord=${isNewWord}`);
-
                     // 到了复习时间，设为待复习
                     if (shouldReview && !item.isReview) {
                         item.isReview = true;
-                        addAndUpdateDbWord(item);
+                        changedWords.push(item);
                         log.i('单词设为待复习:', item.text);
                     }
                     // 还没到复习时间且不是新添加的，取消待复习
                     // 新添加的单词（isNewWord=true）不应该被自动取消待复习状态
                     else if (!shouldReview && item.isReview && !isNewWord && (now - learnDate.getTime() > 60000)) {
                         item.isReview = false;
-                        addAndUpdateDbWord(item);
+                        changedWords.push(item);
                         log.i('单词取消待复习（时间未到）:', item.text, '下次复习:', new Date(reviewTime).toLocaleString());
                     }
                 });
+
+                if (changedWords.length === 0) {
+                    return;
+                }
+
+                const changedMap = new Map(changedWords.map(w => [w._id, w]));
+
+                try {
+                    let bank = currentWordBank.value && currentWordBank.value.id === currentWordBankId.value
+                        ? currentWordBank.value
+                        : await getWordBank(currentWordBankId.value);
+
+                    if (bank) {
+                        bank.words = bank.words.map(w => {
+                            const changed = changedMap.get(w._id);
+                            return changed ? {...w, ...changed} : w;
+                        });
+                        await saveWordBank(bank);
+                        currentWordBank.value = bank;
+                    }
+                } catch (error) {
+                    log.e('保存复习状态到当前词库失败', error);
+                }
+
+                await Promise.allSettled(changedWords.map(word => addAndUpdateDbWord(word)));
             }
 
 
@@ -684,17 +710,38 @@ export const useWordsStore =
                     if (bank) {
                         // 规范化词库中的文本，防止去重不匹配
                         bank.words.forEach(w => { w.text = normalizeItemText(w.text) })
-                        // 去重合并
-                        const existingTexts = new Set(bank.words.map(w => w.text.toLowerCase()))
-                        const newWords = cleanedPayload.filter(w => !existingTexts.has(w.text.toLowerCase()))
-                        bank.words.push(...newWords)
+                        const indexById = new Map(bank.words.map((w, idx) => [w._id, idx]))
+                        const existingKeys = new Set(bank.words.map(w => getItemKey(w.text)))
+
+                        for (const word of cleanedPayload) {
+                            const existingIndex = indexById.get(word._id)
+                            if (existingIndex !== undefined) {
+                                bank.words.splice(existingIndex, 1, word)
+                            } else if (!existingKeys.has(getItemKey(word.text))) {
+                                bank.words.push(word)
+                                existingKeys.add(getItemKey(word.text))
+                            }
+                        }
                         await saveWordBank(bank)
                         currentWordBank.value = bank
                     }
 
+                    // 更新内存列表：已有 _id 直接替换，新词再追加
+                    const memoryNewWords: Word[] = []
+                    cleanedPayload.forEach(word => {
+                        const index = words.value.findIndex(w => w._id === word._id)
+                        if (index !== -1) {
+                            words.value.splice(index, 1, word)
+                        } else {
+                            memoryNewWords.push(word)
+                        }
+                    })
+                    if (memoryNewWords.length > 0) {
+                        pushWords(memoryNewWords)
+                    }
+
                     // 同时兼容旧数据库
                     await updateDbWordList(cleanedPayload);
-                    pushWords(cleanedPayload);
                     log.i('批量更新成功');
                     return true;
                 } catch (error) {
@@ -810,6 +857,10 @@ export const useWordsStore =
                 translateWithPlatform: async (query: string) => {
                     console.log('store翻译调用, 当前平台:', currentTranslationPlatform.value, '查询词:', query)
                     return await externalTranslateWithPlatform(query, currentTranslationPlatform.value);
+                },
+                translateBatchWithPlatform: async (queries: string[]) => {
+                    console.log('store批量翻译调用, 当前平台:', currentTranslationPlatform.value, '数量:', queries.length)
+                    return await externalTranslateBatchWithPlatform(queries, currentTranslationPlatform.value);
                 },
                 removeWords,
                 deleteWord,

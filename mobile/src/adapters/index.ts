@@ -97,12 +97,29 @@ export class MiniProgramDbAdapter implements DbAdapter {
     return `${this.prefix}${id}`
   }
 
+  private cleanupChunks(chunkKeys?: string[]): void {
+    if (!Array.isArray(chunkKeys)) return
+    for (const chunkKey of chunkKeys) {
+      try { uni.removeStorageSync(chunkKey) } catch { /* ignore */ }
+    }
+  }
+
+  private cleanupExistingChunks(key: string): void {
+    try {
+      const existing = uni.getStorageSync(key)
+      if (existing && existing._chunks && existing._chunkKeys) {
+        this.cleanupChunks(existing._chunkKeys)
+      }
+    } catch { /* ignore */ }
+  }
+
   private saveWithChunks<T>(doc: DbDoc<T>): DbReturn {
     const key = this.getKey(doc._id)
     const dataStr = JSON.stringify(doc)
 
     if (dataStr.length <= CHUNK_SIZE) {
       try {
+        this.cleanupExistingChunks(key)
         uni.setStorageSync(key, doc)
         return { id: doc._id, rev: doc._rev || '1', ok: true }
       } catch (e) {
@@ -123,12 +140,14 @@ export class MiniProgramDbAdapter implements DbAdapter {
     }
 
     try {
-      uni.setStorageSync(key, chunkInfo)
+      this.cleanupExistingChunks(key)
       chunks.forEach((chunk, index) => {
         uni.setStorageSync(`${key}__chunk__${index}`, chunk)
       })
+      uni.setStorageSync(key, chunkInfo)
       return { id: doc._id, rev: chunkInfo._rev, ok: true }
     } catch (e) {
+      this.cleanupChunks(chunkInfo._chunkKeys)
       return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
     }
   }
@@ -234,6 +253,7 @@ export class MiniProgramDbAdapter implements DbAdapter {
     }
 
     try {
+      this.cleanupExistingChunks(key)
       return await new Promise<DbReturn>((resolve, reject) => {
         uni.setStorage({
           key,
@@ -262,16 +282,18 @@ export class MiniProgramDbAdapter implements DbAdapter {
     }
 
     try {
-      await new Promise<void>((resolve, reject) => {
-        uni.setStorage({ key, data: chunkInfo, success: resolve, fail: reject })
-      })
+      this.cleanupExistingChunks(key)
       for (let index = 0; index < chunks.length; index++) {
         await new Promise<void>((resolve, reject) => {
           uni.setStorage({ key: `${key}__chunk__${index}`, data: chunks[index], success: resolve, fail: reject })
         })
       }
+      await new Promise<void>((resolve, reject) => {
+        uni.setStorage({ key, data: chunkInfo, success: resolve, fail: reject })
+      })
       return { id: doc._id, rev: chunkInfo._rev, ok: true }
     } catch (e) {
+      this.cleanupChunks(chunkInfo._chunkKeys)
       return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
     }
   }

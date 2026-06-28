@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
+import { useMobileWords } from './stores/useMobileWords'
 
 onLaunch(() => {
   console.log('App Launch')
@@ -30,6 +31,9 @@ onShow(() => {
 
 onHide(() => {
   console.log('App Hide')
+  useMobileWords().flushDirtyBanks().catch((err) => {
+    console.error('App Hide 持久化单词失败:', err)
+  })
 })
 </script>
 

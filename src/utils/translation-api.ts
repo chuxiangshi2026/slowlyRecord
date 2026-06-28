@@ -80,7 +80,9 @@ function trimTranslationCache(): void {
 }
 
 function translationCacheKey(query: string, platform: string, from: string, to: string): string {
-    return `${platform}|${from}|${to}|${query.toLowerCase().trim()}`;
+    const config = getTranslationApiKey(platform as TranslationPlatform);
+    const configKey = `${config.appkey || ''}:${config.key || ''}`;
+    return `${platform}|${from}|${to}|${configKey}|${query.toLowerCase().trim()}`;
 }
 
 function getCachedTranslation(query: string, platform: string, from: string, to: string): TranslationResult | null {

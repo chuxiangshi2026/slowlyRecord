@@ -52,6 +52,14 @@ function promisify<T>(request: IDBRequest<T>): Promise<T> {
   })
 }
 
+function promisifyTransaction(tx: IDBTransaction): Promise<void> {
+  return new Promise((resolve, reject) => {
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+    tx.onabort = () => reject(tx.error)
+  })
+}
+
 export class DbAdapterIndexedDB implements DbAdapter {
   private db: IDBDatabase | null = null
   private revCounter = 0
@@ -158,14 +166,23 @@ export class DbAdapterIndexedDB implements DbAdapter {
     await promisify(store.put(doc))
   }
 
+  private async _asyncBulkPut(docs: DbDoc[]): Promise<void> {
+    if (docs.length === 0) return
+    const db = await this.getDB()
+    const tx = db.transaction(STORE_NAME, 'readwrite')
+    const store = tx.objectStore(STORE_NAME)
+    docs.forEach(doc => store.put(doc))
+    await promisifyTransaction(tx)
+  }
+
   bulkDocs(docs: DbDoc[]): DbReturn[] {
     const rev = this.nextRev()
-    const results: DbReturn[] = docs.map(doc => {
-      const updatedDoc = { ...doc, _rev: rev }
-      this.syncCache.set(doc._id, updatedDoc)
-      this._asyncPut(updatedDoc).catch(console.error)
+    const updatedDocs = docs.map(doc => ({ ...doc, _rev: rev }))
+    const results: DbReturn[] = updatedDocs.map(doc => {
+      this.syncCache.set(doc._id, doc)
       return { id: doc._id, ok: true, rev }
     })
+    this._asyncBulkPut(updatedDocs).catch(console.error)
     return results
   }
 
@@ -212,18 +229,21 @@ export class DbAdapterIndexedDB implements DbAdapter {
     },
 
     bulkDocs: async (docs: DbDoc[]): Promise<DbReturn[]> => {
-      const db = await this.getDB()
-      const store = getStore(db, 'readwrite')
+      if (docs.length === 0) return []
       const rev = this.nextRev()
-      
-      const results: DbReturn[] = []
-      for (const doc of docs) {
-        const updatedDoc = { ...doc, _rev: rev }
-        await promisify(store.put(updatedDoc))
-        this.syncCache.set(doc._id, updatedDoc)
-        results.push({ id: doc._id, ok: true, rev })
-      }
-      
+      const updatedDocs = docs.map(doc => ({ ...doc, _rev: rev }))
+      const db = await this.getDB()
+      const tx = db.transaction(STORE_NAME, 'readwrite')
+      const store = tx.objectStore(STORE_NAME)
+
+      updatedDocs.forEach(doc => store.put(doc))
+      await promisifyTransaction(tx)
+
+      const results: DbReturn[] = updatedDocs.map(doc => {
+        this.syncCache.set(doc._id, doc)
+        return { id: doc._id, ok: true, rev }
+      })
+
       return results
     },
   }

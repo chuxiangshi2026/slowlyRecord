@@ -119,7 +119,7 @@ describe('db-util', () => {
 
       const { listDbWords } = await loadModule()
       const words = listDbWords()
-      expect(words[0].text).toBe('hello')
+      expect(words[0].text).toBe('he llo')
     })
   })
 
@@ -150,7 +150,7 @@ describe('db-util', () => {
       await addAndUpdateDbWord(makeWord({ text: '  ap ple  ' }))
 
       const word = mockDb.get('word_test_1')
-      expect(word!.text).toBe('apple')
+      expect(word!.text).toBe('ap ple')
     })
 
     it('put 失败时应返回错误', async () => {
@@ -192,7 +192,7 @@ describe('db-util', () => {
       await updateDbWordList([makeWord({ _id: 'words-list_x', text: '  zig zag  ' })])
 
       const words = listDbWords()
-      expect(words.find(w => w._id === 'words-list_x')!.text).toBe('zigzag')
+      expect(words.find(w => w._id === 'words-list_x')!.text).toBe('zig zag')
     })
   })
 

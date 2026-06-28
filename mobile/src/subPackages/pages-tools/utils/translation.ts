@@ -13,6 +13,86 @@ export { setTranslationPlatform, getTranslationPlatform, getTranslationApiKey, s
 
 import { getTranslationApiKey, currentPlatform } from '@/stores/useUtils/translation-settings'
 import { queryOfflineDict, queryPhoneticFromCache, getPronunciationUrl } from '@/stores/useUtils/offline-dict'
+import type { TranslationPlatform } from '@/stores/useUtils/types'
+
+interface TranslationCacheEntry {
+  result: TranslationResult
+  ts: number
+}
+const TRANSLATION_CACHE_STORAGE_KEY = 'slowly_translation_cache_v1'
+const TRANSLATION_CACHE_TTL = 7 * 24 * 3600 * 1000
+const TRANSLATION_CACHE_MAX = 3000
+const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama'])
+const AI_BATCH_SIZE = 20
+const translationCache = new Map<string, TranslationCacheEntry>()
+let translationCacheLoaded = false
+let translationCachePersistTimer: ReturnType<typeof setTimeout> | null = null
+
+function translationCacheKey(query: string, platform: TranslationPlatform, from: string, to: string): string {
+  const config = getTranslationApiKey(platform)
+  return `${platform}|${from}|${to}|${config.appkey || ''}:${config.key || ''}|${query.toLowerCase().trim()}`
+}
+
+function trimTranslationCache(): void {
+  const now = Date.now()
+  for (const [key, entry] of translationCache) {
+    if (!entry?.result?.success || now - entry.ts > TRANSLATION_CACHE_TTL) translationCache.delete(key)
+  }
+  while (translationCache.size > TRANSLATION_CACHE_MAX) {
+    const key = translationCache.keys().next().value
+    if (key === undefined) break
+    translationCache.delete(key)
+  }
+}
+
+function ensureTranslationCacheLoaded(): void {
+  if (translationCacheLoaded) return
+  translationCacheLoaded = true
+  try {
+    const stored = uni.getStorageSync(TRANSLATION_CACHE_STORAGE_KEY)
+    const entries = Array.isArray(stored) ? stored : []
+    const now = Date.now()
+    entries.forEach(([key, entry]: [string, TranslationCacheEntry]) => {
+      if (entry?.result?.success && typeof entry.ts === 'number' && now - entry.ts <= TRANSLATION_CACHE_TTL) {
+        translationCache.set(key, entry)
+      }
+    })
+    trimTranslationCache()
+  } catch { /* ignore */ }
+}
+
+function persistTranslationCache(): void {
+  try { uni.setStorageSync(TRANSLATION_CACHE_STORAGE_KEY, Array.from(translationCache.entries())) } catch { /* ignore */ }
+}
+
+function schedulePersistTranslationCache(): void {
+  if (translationCachePersistTimer) return
+  translationCachePersistTimer = setTimeout(() => {
+    translationCachePersistTimer = null
+    persistTranslationCache()
+  }, 1000)
+}
+
+function getCachedTranslation(query: string, platform: TranslationPlatform, from: string, to: string): TranslationResult | null {
+  ensureTranslationCacheLoaded()
+  const key = translationCacheKey(query, platform, from, to)
+  const hit = translationCache.get(key)
+  if (!hit) return null
+  if (Date.now() - hit.ts > TRANSLATION_CACHE_TTL) {
+    translationCache.delete(key)
+    schedulePersistTranslationCache()
+    return null
+  }
+  return hit.result
+}
+
+function setCachedTranslation(query: string, platform: TranslationPlatform, from: string, to: string, result: TranslationResult): void {
+  if (!result?.success) return
+  ensureTranslationCacheLoaded()
+  translationCache.set(translationCacheKey(query, platform, from, to), { result, ts: Date.now() })
+  trimTranslationCache()
+  schedulePersistTranslationCache()
+}
 
 // ==================== MD5 辅助函数 ====================
 
@@ -248,6 +328,16 @@ function arrayToHex(arr: Uint8Array): string {
   return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
+function sha256Hex(input: string): string {
+  return arrayToHex(sha256Pure(utf8ToBytes_HMAC(input)))
+}
+
+function youdaoSignInput(q: string): string {
+  if (!q) return ''
+  if (q.length <= 20) return q
+  return q.substring(0, 10) + q.length + q.substring(q.length - 10)
+}
+
 /** 腾讯云 TC3-HMAC-SHA256 签名请求（翻译和 OCR 共用） */
 export function tencentCloudRequest(
   service: string, host: string, action: string, version: string, region: string, bodyObj: Record<string, any>
@@ -286,17 +376,18 @@ async function translateWithYoudao(text: string, from: string = 'auto', to: stri
   const { appkey: appKey, key: appSecret } = getTranslationApiKey('youdao')
   if (!appKey || !appSecret) return { success: false, explains: text, translatedText: text, errorMsg: '有道翻译：请先配置API密钥', platform: 'youdao' }
   const salt = '' + Date.now()
-  const sign = md5(appKey + text + salt + appSecret)
+  const curtime = Math.round(Date.now() / 1000)
+  const sign = sha256Hex(appKey + youdaoSignInput(text) + salt + curtime + appSecret)
   return new Promise((resolve) => {
     uni.request({
       url: 'https://openapi.youdao.com/api', method: 'GET',
-      data: { q: text, appKey, salt, from: from === 'auto' ? 'auto' : from, to, sign },
+      data: { q: text, appKey, salt, from: from === 'auto' ? 'auto' : from, to, sign, signType: 'v3', curtime, ext: 'mp3' },
       success: (res) => {
         const data = res.data as any
         if (data.errorCode === '0') {
           resolve({ success: true, explains: data.translation?.[0] || text, translatedText: data.translation?.[0] || text, phonetic: data.basic?.phonetic || '', pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'youdao' })
         } else {
-          resolve({ success: false, explains: text, translatedText: text, errorMsg: `有道翻译错误[${data.errorCode}]: ${data.errorCode === '202' ? '密钥无效或已过期' : '请检查密钥配置'}`, platform: 'youdao' })
+          resolve({ success: false, explains: text, translatedText: text, errorMsg: `有道翻译错误[${data.errorCode}]: ${data.errorCode === '202' ? '签名检验失败，请检查密钥或系统时间' : '请检查密钥配置'}`, platform: 'youdao' })
         }
       },
       fail: (err) => resolve({ success: false, explains: text, translatedText: text, errorMsg: '有道翻译请求失败: ' + (err.errMsg || '请检查网络连接或小程序域名白名单'), platform: 'youdao' })
@@ -495,14 +586,123 @@ async function translateWithLocalDict(text: string, from: string = 'auto', to: s
   return { success: false, explains: text, translatedText: text, errorMsg: '离线词典中未找到该词', platform: 'local' }
 }
 
+interface BatchAiItem {
+  query?: string
+  word?: string
+  text?: string
+  translation?: string
+  meaning?: string
+  phonetic?: string
+  examples?: any[]
+}
+
+function buildBatchAiPrompt(words: string[], from: string, to: string): string {
+  return `请将以下${words.length}个文本从 ${from === 'auto' ? '自动识别语言' : from} 翻译为 ${to}。只返回 JSON 数组，不要 Markdown，不要额外说明。数组长度必须与输入数量一致，每项格式：{"query":"原文本","translation":"翻译结果","phonetic":"音标（没有则空字符串）","examples":[]}\n\n输入：\n${words.map((w, i) => `${i + 1}. ${w}`).join('\n')}`
+}
+
+function parseBatchAiContent(content: string): BatchAiItem[] {
+  const arrayMatch = content.match(/\[[\s\S]*\]/)
+  if (arrayMatch) {
+    const parsed = JSON.parse(arrayMatch[0])
+    if (Array.isArray(parsed)) return parsed
+  }
+  const objectMatch = content.match(/\{[\s\S]*\}/)
+  if (objectMatch) {
+    const parsed = JSON.parse(objectMatch[0])
+    if (Array.isArray(parsed?.items)) return parsed.items
+    if (Array.isArray(parsed?.results)) return parsed.results
+    if (Array.isArray(parsed?.data)) return parsed.data
+  }
+  throw new Error('AI 批量翻译返回不是有效 JSON 数组')
+}
+
+function normalizeBatchAiResults(words: string[], items: BatchAiItem[], platform: TranslationPlatform): TranslationResult[] {
+  return words.map((word, index) => {
+    const item = items[index] || items.find(x => (x.query || x.word || x.text || '').trim().toLowerCase() === word.trim().toLowerCase())
+    const translatedText = item?.translation || item?.meaning || ''
+    if (!translatedText) return { success: false, explains: word, translatedText: word, errorMsg: 'AI 批量翻译缺少对应结果', platform }
+    return { success: true, explains: translatedText, translatedText, phonetic: item?.phonetic, examples: item?.examples, pronunciation: getPronunciationUrl(word), platform }
+  })
+}
+
+function requestOpenAiCompatibleBatch(url: string, apiKey: string, model: string, words: string[], platform: TranslationPlatform, from: string, to: string): Promise<TranslationResult[]> {
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url,
+      method: 'POST',
+      header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+      data: {
+        model,
+        messages: [
+          { role: 'system', content: '你是专业翻译助手，必须只返回有效 JSON 数组。' },
+          { role: 'user', content: buildBatchAiPrompt(words, from, to) },
+        ],
+        temperature: 0.2,
+      },
+      success: (res) => {
+        try {
+          const content = (res.data as any)?.choices?.[0]?.message?.content || ''
+          resolve(normalizeBatchAiResults(words, parseBatchAiContent(content), platform))
+        } catch (e) { reject(e) }
+      },
+      fail: reject,
+    })
+  })
+}
+
+function requestOllamaBatch(words: string[], from: string, to: string): Promise<TranslationResult[]> {
+  const { appkey: host, key: model } = getTranslationApiKey('ollama')
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: `${host || 'http://localhost:11434'}/api/chat`,
+      method: 'POST',
+      header: { 'Content-Type': 'application/json' },
+      data: {
+        model: model || 'qwen2.5:3b',
+        messages: [
+          { role: 'system', content: '你是专业翻译助手，必须只返回有效 JSON 数组。' },
+          { role: 'user', content: buildBatchAiPrompt(words, from, to) },
+        ],
+        stream: false,
+      },
+      success: (res) => {
+        try {
+          const content = (res.data as any)?.message?.content || (res.data as any)?.response || ''
+          resolve(normalizeBatchAiResults(words, parseBatchAiContent(content), 'ollama'))
+        } catch (e) { reject(e) }
+      },
+      fail: reject,
+    })
+  })
+}
+
+async function translateBatchWithAi(words: string[], from: string, to: string): Promise<TranslationResult[]> {
+  if (currentPlatform === 'ollama') return requestOllamaBatch(words, from, to)
+  const { appkey, key } = getTranslationApiKey(currentPlatform)
+  if (!appkey) throw new Error(`请先配置${currentPlatform} API Key`)
+  if (currentPlatform === 'glm') return requestOpenAiCompatibleBatch('https://open.bigmodel.cn/api/paas/v4/chat/completions', appkey, key || 'glm-4-flash', words, 'glm', from, to)
+  if (currentPlatform === 'deepseek') return requestOpenAiCompatibleBatch('https://api.deepseek.com/v1/chat/completions', appkey, key || 'deepseek-chat', words, 'deepseek', from, to)
+  if (currentPlatform === 'qwen') return requestOpenAiCompatibleBatch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', appkey, key || 'qwen-max', words, 'qwen', from, to)
+  if (currentPlatform === 'kimi') return requestOpenAiCompatibleBatch('https://api.moonshot.cn/v1/chat/completions', appkey, key || 'kimi-k2-turbo-preview', words, 'kimi', from, to)
+  throw new Error(`Unsupported AI batch platform: ${currentPlatform}`)
+}
+
 // ==================== 翻译主入口 ====================
 
 export async function translateText(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
   const trimmed = text.trim().toLowerCase()
   if (!trimmed) return { success: false, explains: '', translatedText: '', errorMsg: '请输入要翻译的文本', platform: 'local' }
+
+  const cached = getCachedTranslation(text, currentPlatform, from, to)
+  if (cached) return cached
+
   if (!trimmed.includes(' ')) {
     const offline = queryOfflineDict(trimmed)
-    if (offline) return { success: true, explains: offline, translatedText: offline, phonetic: queryPhoneticFromCache(trimmed) || undefined, pronunciation: getPronunciationUrl(trimmed), platform: 'local' }
+    if (offline) {
+      const localResult = { success: true, explains: offline, translatedText: offline, phonetic: queryPhoneticFromCache(trimmed) || undefined, pronunciation: getPronunciationUrl(trimmed), platform: 'local' as const }
+      setCachedTranslation(text, currentPlatform, from, to, localResult)
+      return localResult
+    }
   }
   try {
     let result: TranslationResult
@@ -520,6 +720,7 @@ export async function translateText(text: string, from: string = 'auto', to: str
       default: result = await translateWithGlm(text, from, to); break
     }
     if (!result.phonetic && !trimmed.includes(' ')) result.phonetic = queryPhoneticFromCache(trimmed) || undefined
+    setCachedTranslation(text, currentPlatform, from, to, result)
     return result
   } catch (e) {
     return { success: false, explains: text, translatedText: text, errorMsg: '翻译服务异常: ' + String((e as Error).message || e), platform: 'fallback' }
@@ -527,11 +728,60 @@ export async function translateText(text: string, from: string = 'auto', to: str
 }
 
 export async function batchTranslate(words: string[], from: string = 'auto', to: string = 'zh'): Promise<TranslationResult[]> {
-  const results: TranslationResult[] = []
-  for (const word of words) {
-    const result = await translateText(word, from, to)
-    results.push(result)
-    if (results.length < words.length) await new Promise(r => setTimeout(r, 200))
+  const CONCURRENCY_LIMITS: Record<string, number> = {
+    baidu: 1,
+    youdao: 4,
+    ali: 5,
+    tencent: 5,
+    deepseek: 5,
+    qwen: 5,
+    kimi: 5,
+    glm: 5,
+    ollama: 5,
+    local: 50,
+    default: 3,
   }
+  const results: TranslationResult[] = new Array(words.length)
+  const misses: Array<{ word: string; index: number }> = []
+
+  words.forEach((word, index) => {
+    const cached = getCachedTranslation(word, currentPlatform, from, to)
+    if (cached) results[index] = cached
+    else misses.push({ word, index })
+  })
+
+  if (AI_BATCH_PLATFORMS.has(currentPlatform) && misses.length > 1) {
+    for (let i = 0; i < misses.length; i += AI_BATCH_SIZE) {
+      const chunk = misses.slice(i, i + AI_BATCH_SIZE)
+      try {
+        const batchResults = await translateBatchWithAi(chunk.map(x => x.word), from, to)
+        batchResults.forEach((result, idx) => {
+          const target = chunk[idx]
+          if (result?.success) {
+            setCachedTranslation(target.word, currentPlatform, from, to, result)
+            results[target.index] = result
+          }
+        })
+      } catch { /* fallback below */ }
+    }
+  }
+
+  const remaining = misses.filter(item => !results[item.index])
+  let index = 0
+  const limit = CONCURRENCY_LIMITS[currentPlatform] ?? CONCURRENCY_LIMITS.default
+  const worker = async () => {
+    while (index < remaining.length) {
+      const currentIndex = index++
+      const item = remaining[currentIndex]
+      results[item.index] = await translateText(item.word, from, to)
+      if (currentPlatform === 'baidu' && currentIndex < remaining.length - 1) {
+        await new Promise(r => setTimeout(r, 1000))
+      }
+    }
+  }
+
+  const workerCount = Math.min(limit, remaining.length)
+  await Promise.all(Array.from({ length: workerCount }, () => worker()))
   return results
 }
+

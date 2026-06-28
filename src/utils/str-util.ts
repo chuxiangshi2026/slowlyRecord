@@ -1,7 +1,7 @@
 import {DB_KEY} from "@/constants";
 // import {isEmpty, truncate} from "lodash";
 // import CryptoJS from "crypto-js";
-import type {Word} from "@/types/words";
+import type {Word, TranslationResult} from "@/types/words";
 import {v4 as uuidv4} from "uuid";
 import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";

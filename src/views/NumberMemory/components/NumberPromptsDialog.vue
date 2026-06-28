@@ -321,6 +321,15 @@ const compareStats = computed(() => {
   };
 });
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // 对比后的HTML
 const comparedHtml = computed(() => {
   if (!props.entry) return '';
@@ -330,13 +339,14 @@ const comparedHtml = computed(() => {
   
   let html = '';
   for (let i = 0; i < written.length; i++) {
-    const char = written[i];
-    const isCorrect = original[i] === char;
-    
+    const char = escapeHtml(written[i]);
+    const expected = escapeHtml(original[i] || '无');
+    const isCorrect = original[i] === written[i];
+
     if (isCorrect) {
       html += char;
     } else {
-      html += `<span class="char-error" title="应为 ${original[i] || '无'}">${char}</span>`;
+      html += `<span class="char-error" title="应为 ${expected}">${char}</span>`;
     }
   }
   

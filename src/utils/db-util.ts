@@ -4,6 +4,7 @@ import {DB_KEY} from "@/constants";
 import {log} from "@/utils/logger"
 import {getDbAdapter} from "@/adapters/db"
 import cloneDeep from 'lodash.clonedeep';
+import {normalizeItemText} from "@/utils/text-utils";
 /**
  * 获取数据库全部的单词
  * @returns 返回数据库中所有单词的数组
@@ -13,7 +14,7 @@ function listDbWords(): Word[] {
     let allDocs = db.allDocs(DB_KEY);
     log.i('数据库中所有单词', allDocs);
     // 清理单词文本中的空白字符，修复历史脏数据
-    return (allDocs as Word[]).map(w => ({ ...w, text: w.text.replace(/\s+/g, '') }))
+    return (allDocs as Word[]).map(w => ({ ...w, text: normalizeItemText(w.text) }))
 }
 
 /**
@@ -26,7 +27,7 @@ async function addAndUpdateDbWord(word: Word):Promise<DbReturn> {
     // 转成字符串保存数据库,替换JSON.parse(JSON.stringify(word));
     const cleanedWord = cloneDeep(word)
     // 清理单词文本中的空白字符，防止脏数据入库
-    cleanedWord.text = cleanedWord.text.replace(/\s+/g, '')
+    cleanedWord.text = normalizeItemText(cleanedWord.text)
     // console.log('查看去重后的序列化数据',word)
     const db = getDbAdapter();
 
@@ -59,7 +60,7 @@ async function updateDbWordList(docs: Word[]): Promise<DbReturn[]> {
     const cleanedDocs = docs.map(doc => {
         const cloned = cloneDeep(doc);
         // 清理单词文本中的空白字符，防止脏数据入库
-        cloned.text = cloned.text.replace(/\s+/g, '');
+        cloned.text = normalizeItemText(cloned.text);
         return cloned;
     });
     // 检查cleanedDocs是否为空

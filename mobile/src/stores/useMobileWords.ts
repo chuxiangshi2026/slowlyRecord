@@ -44,6 +44,14 @@ const BANKS_STORAGE_KEY = 'mobile_wordbanks'
 const CURRENT_BANK_KEY = 'mobile_current_bank'
 const IMPORT_PROGRESS_KEY = 'mobile_import_progress'
 
+function normalizeWordText(text: string): string {
+  return (text || '').trim().replace(/\s+/g, ' ')
+}
+
+function getWordKey(text: string): string {
+  return normalizeWordText(text).toLowerCase()
+}
+
 // 默认词库ID
 const DEFAULT_BANK_ID = 'default'
 
@@ -437,27 +445,45 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function importWords(data: MobileWord[], targetBankId?: string): Promise<{ imported: MobileWord[]; skippedCount: number }> {
     const bankId = targetBankId || currentBankId.value
 
-    const importedWords: MobileWord[] = []
+    const importedMap = new Map<string, MobileWord>()
+    let duplicateInImportCount = 0
     for (const word of data) {
+      const normalizedWord = normalizeWordText(word.word)
+      if (!normalizedWord) {
+        duplicateInImportCount++
+        continue
+      }
+      const key = getWordKey(normalizedWord)
       const id = word.id || `${DB_KEY}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      importedWords.push({ ...word, id, bankId })
+      const normalizedItem = { ...word, word: normalizedWord, id, bankId }
+      if (importedMap.has(key)) {
+        duplicateInImportCount++
+      }
+      importedMap.set(key, normalizedItem)
     }
+    const importedWords = Array.from(importedMap.values())
 
-    // 从内存中读取该词库已有单词，按 word 字段去重
+    // 从内存中读取该词库已有单词，按规范化后的 word 字段去重
     const existingWords = allWords.value.filter(w =>
       w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID)
     )
-    const existingWordSet = new Set(existingWords.map(w => w.word))
-    const newOnly = importedWords.filter(w => !existingWordSet.has(w.word))
-    const skippedCount = importedWords.length - newOnly.length
+    const existingWordSet = new Set(existingWords.map(w => getWordKey(w.word)))
+    const newOnly = importedWords.filter(w => !existingWordSet.has(getWordKey(w.word)))
+    const skippedCount = duplicateInImportCount + (importedWords.length - newOnly.length)
 
     if (newOnly.length > 0) {
       const mergedWords = [...existingWords, ...newOnly]
       const db = getDbAdapter()
-      await db.promises.asyncPut({
+      const result = await db.promises.asyncPut({
         _id: `bank_${bankId}_words`,
         data: mergedWords
       })
+      if (result.ok) {
+        allWords.value = [
+          ...allWords.value.filter(w => !(w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))),
+          ...mergedWords,
+        ]
+      }
     }
 
     return { imported: newOnly, skippedCount }

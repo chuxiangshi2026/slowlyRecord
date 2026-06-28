@@ -871,14 +871,14 @@ describe('useWordsStore', () => {
   })
 
   describe('upReview', () => {
-    it('应该将到了复习时间的单词设为待复习', () => {
+    it('应该将到了复习时间的单词设为待复习', async () => {
       const store = useWordsStore()
       // learnDate 是很久之前，level=1，间隔5分钟，肯定已过复习时间
       const pastDate = new Date(Date.now() - 100 * 60 * 1000)
       const word = createWord({ isReview: false, learnDate: pastDate, ctime: pastDate })
 
       store.words = [word]
-      store.upReview()
+      await store.upReview()
 
       expect(store.words[0].isReview).toBe(true)
       expect(addAndUpdateDbWord).toHaveBeenCalled()
