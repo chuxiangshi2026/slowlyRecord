@@ -10,6 +10,7 @@ import {batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {log} from "@/utils/logger.ts";
 import {getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {translateWithLocalDictionaryAsync} from "./local-dictionary";
+import {getDbStorage} from "@/adapters/db";
 
 // 发音URL缓存 Map
 const pronunciationCache = new Map<string, string>();
@@ -22,19 +23,74 @@ interface TranslationCacheEntry {
 }
 const translationCache = new Map<string, TranslationCacheEntry>();
 const TRANSLATION_CACHE_TTL = 7 * 24 * 3600 * 1000;
+const TRANSLATION_CACHE_STORAGE_KEY = 'slowlyrecord_translation_cache_v1';
+const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama'] as TranslationPlatform[]);
+const AI_BATCH_SIZE = 20;
+let translationCacheLoaded = false;
+let translationCachePersistTimer: ReturnType<typeof setTimeout> | null = null;
 // 上限保护，防止长时间运行后内存膨胀
 const TRANSLATION_CACHE_MAX = 5000;
+
+function ensureTranslationCacheLoaded(): void {
+    if (translationCacheLoaded) return;
+    translationCacheLoaded = true;
+    try {
+        const stored = getDbStorage().getItem(TRANSLATION_CACHE_STORAGE_KEY);
+        const entries = Array.isArray(stored) ? stored : [];
+        const now = Date.now();
+        entries.forEach(([key, entry]: [string, TranslationCacheEntry]) => {
+            if (entry?.result?.success && typeof entry.ts === 'number' && now - entry.ts <= TRANSLATION_CACHE_TTL) {
+                translationCache.set(key, entry);
+            }
+        });
+        trimTranslationCache();
+    } catch (e) {
+        log.w?.('加载翻译缓存失败', e);
+    }
+}
+
+function schedulePersistTranslationCache(): void {
+    if (translationCachePersistTimer) return;
+    translationCachePersistTimer = setTimeout(() => {
+        translationCachePersistTimer = null;
+        persistTranslationCache();
+    }, 1000);
+}
+
+function persistTranslationCache(): void {
+    try {
+        getDbStorage().setItem(TRANSLATION_CACHE_STORAGE_KEY, Array.from(translationCache.entries()));
+    } catch (e) {
+        log.w?.('保存翻译缓存失败', e);
+    }
+}
+
+function trimTranslationCache(): void {
+    const now = Date.now();
+    for (const [key, entry] of translationCache) {
+        if (!entry?.result?.success || now - entry.ts > TRANSLATION_CACHE_TTL) {
+            translationCache.delete(key);
+        }
+    }
+    while (translationCache.size > TRANSLATION_CACHE_MAX) {
+        const key = translationCache.keys().next().value;
+        if (key === undefined) break;
+        translationCache.delete(key);
+    }
+}
 
 function translationCacheKey(query: string, platform: string, from: string, to: string): string {
     return `${platform}|${from}|${to}|${query.toLowerCase().trim()}`;
 }
 
 function getCachedTranslation(query: string, platform: string, from: string, to: string): TranslationResult | null {
+    ensureTranslationCacheLoaded();
     const key = translationCacheKey(query, platform, from, to);
     const hit = translationCache.get(key);
     if (!hit) return null;
     if (Date.now() - hit.ts > TRANSLATION_CACHE_TTL) {
         translationCache.delete(key);
+        schedulePersistTranslationCache();
         return null;
     }
     return hit.result;
@@ -43,20 +99,14 @@ function getCachedTranslation(query: string, platform: string, from: string, to:
 function setCachedTranslation(query: string, platform: string, from: string, to: string, result: TranslationResult): void {
     // 仅缓存成功结果，失败/限流不进缓存以便下次重试
     if (!result || !result.success) return;
-    // LRU 简化版：超上限时清理最旧 1/4
-    if (translationCache.size >= TRANSLATION_CACHE_MAX) {
-        const removeCount = Math.floor(TRANSLATION_CACHE_MAX / 4);
-        const it = translationCache.keys();
-        for (let i = 0; i < removeCount; i++) {
-            const k = it.next().value;
-            if (k === undefined) break;
-            translationCache.delete(k);
-        }
-    }
+    ensureTranslationCacheLoaded();
+    trimTranslationCache();
     translationCache.set(translationCacheKey(query, platform, from, to), {
         result,
         ts: Date.now(),
     });
+    trimTranslationCache();
+    schedulePersistTranslationCache();
 }
 
 // TTS 配置
@@ -541,6 +591,189 @@ function percentEncode(str: string): string {
         .replace(/\'/g, '%27')
         .replace(/\(/g, '%28')
         .replace(/\)/g, '%29');
+}
+
+interface BatchAiItem {
+    query?: string;
+    word?: string;
+    text?: string;
+    translation?: string;
+    meaning?: string;
+    phonetic?: string;
+    examples?: any[];
+    synonyms?: string[];
+    antonyms?: string[];
+    memoryTip?: string;
+    memoryImage?: string;
+}
+
+function buildBatchAiPrompt(queries: string[], from: string, to: string): string {
+    return `请将以下${queries.length}个文本从 ${from === 'auto' ? '自动识别语言' : from} 翻译为 ${to}。
+只返回 JSON 数组，不要 Markdown，不要额外说明。数组长度必须与输入数量一致，每项格式：
+{"query":"原文本","translation":"翻译结果","phonetic":"音标（没有则空字符串）","examples":[]}
+
+输入：
+${queries.map((q, i) => `${i + 1}. ${q}`).join('\n')}`;
+}
+
+function parseBatchAiContent(content: string): BatchAiItem[] {
+    const arrayMatch = content.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+        const parsed = JSON.parse(arrayMatch[0]);
+        if (Array.isArray(parsed)) return parsed;
+    }
+    const objectMatch = content.match(/\{[\s\S]*\}/);
+    if (objectMatch) {
+        const parsed = JSON.parse(objectMatch[0]);
+        if (Array.isArray(parsed?.items)) return parsed.items;
+        if (Array.isArray(parsed?.results)) return parsed.results;
+        if (Array.isArray(parsed?.data)) return parsed.data;
+    }
+    throw new Error('AI 批量翻译返回不是有效 JSON 数组');
+}
+
+function normalizeBatchAiResults(queries: string[], items: BatchAiItem[], platform: TranslationPlatform): TranslationResult[] {
+    return queries.map((query, index) => {
+        const item = items[index] || items.find(x => (x.query || x.word || x.text || '').trim().toLowerCase() === query.trim().toLowerCase());
+        const explains = item?.translation || item?.meaning || '';
+        if (!explains) {
+            return { success: false, explains: query, errorMsg: 'AI 批量翻译缺少对应结果' };
+        }
+        return {
+            success: true,
+            explains,
+            phonetic: item?.phonetic || '',
+            pronunciation: getPronunciationUrlSync(query),
+            examples: item?.examples || [],
+            synonyms: item?.synonyms || [],
+            antonyms: item?.antonyms || [],
+            memoryTip: item?.memoryTip || '',
+            memoryImage: item?.memoryImage || '',
+        };
+    });
+}
+
+async function requestOpenAiCompatibleBatch(
+    url: string,
+    apiKey: string,
+    model: string,
+    queries: string[],
+    platform: TranslationPlatform,
+    from: string,
+    to: string,
+): Promise<TranslationResult[]> {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+            model,
+            messages: [
+                { role: 'system', content: '你是专业翻译助手，必须只返回有效 JSON 数组。' },
+                { role: 'user', content: buildBatchAiPrompt(queries, from, to) },
+            ],
+            temperature: 0.2,
+        }),
+    });
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`${platform} batch request failed: ${response.status} ${JSON.stringify(errorData)}`);
+    }
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content || '';
+    return normalizeBatchAiResults(queries, parseBatchAiContent(content), platform);
+}
+
+async function requestOllamaBatch(queries: string[], from: string, to: string): Promise<TranslationResult[]> {
+    const {appkey: baseUrl, key: modelName} = getTranslationApiKey('ollama');
+    const ollamaUrl = baseUrl || 'http://localhost:11434';
+    const model = modelName || 'qwen2.5:0.5b';
+    const response = await fetch(`${ollamaUrl}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            model,
+            messages: [
+                { role: 'system', content: '你是专业翻译助手，必须只返回有效 JSON 数组。' },
+                { role: 'user', content: buildBatchAiPrompt(queries, from, to) },
+            ],
+            stream: false,
+        }),
+    });
+    if (!response.ok) throw new Error(`Ollama batch request failed: ${response.status}`);
+    const data = await response.json();
+    const content = data.message?.content || data.response || '';
+    return normalizeBatchAiResults(queries, parseBatchAiContent(content), 'ollama');
+}
+
+async function translateBatchWithAi(queries: string[], platform: TranslationPlatform, from: string, to: string): Promise<TranslationResult[]> {
+    if (platform === 'ollama') return requestOllamaBatch(queries, from, to);
+
+    const {appkey: apiKey, key: modelName} = getTranslationApiKey(platform);
+    if (!apiKey) throw new Error(`请先配置${platform} API Key`);
+
+    if (platform === 'glm') {
+        return requestOpenAiCompatibleBatch('https://open.bigmodel.cn/api/paas/v4/chat/completions', apiKey, modelName || 'glm-4-flash', queries, platform, from, to);
+    }
+    if (platform === 'deepseek') {
+        return requestOpenAiCompatibleBatch('https://api.deepseek.com/v1/chat/completions', apiKey, modelName || 'deepseek-chat', queries, platform, from, to);
+    }
+    if (platform === 'qwen') {
+        return requestOpenAiCompatibleBatch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', apiKey, modelName || 'qwen-max', queries, platform, from, to);
+    }
+    if (platform === 'kimi') {
+        return requestOpenAiCompatibleBatch('https://api.moonshot.cn/v1/chat/completions', apiKey, modelName || 'kimi-k2-turbo-preview', queries, platform, from, to);
+    }
+    throw new Error(`Unsupported AI batch platform: ${platform}`);
+}
+
+/**
+ * 批量翻译入口：缓存优先，AI 平台合并请求，失败时回退逐词翻译。
+ */
+export async function translateBatchWithPlatform(
+    queries: string[],
+    platform: TranslationPlatform = 'tencent',
+    from: string = 'auto',
+    to: string = 'zh',
+): Promise<TranslationResult[]> {
+    const results: TranslationResult[] = new Array(queries.length);
+    const misses: Array<{ query: string; index: number }> = [];
+
+    queries.forEach((query, index) => {
+        const cached = getCachedTranslation(query, platform, from, to);
+        if (cached) {
+            results[index] = cached;
+        } else {
+            misses.push({ query, index });
+        }
+    });
+
+    for (let i = 0; i < misses.length; i += AI_BATCH_SIZE) {
+        const chunk = misses.slice(i, i + AI_BATCH_SIZE);
+        if (chunk.length > 1 && AI_BATCH_PLATFORMS.has(platform)) {
+            try {
+                const batchResults = await translateBatchWithAi(chunk.map(x => x.query), platform, from, to);
+                batchResults.forEach((result, idx) => {
+                    const target = chunk[idx];
+                    if (result?.success) {
+                        setCachedTranslation(target.query, platform, from, to, result);
+                        results[target.index] = result;
+                    }
+                });
+            } catch (error) {
+                log.w('AI 批量翻译失败，回退逐词翻译', error);
+            }
+        }
+
+        await Promise.all(chunk.map(async item => {
+            if (results[item.index]) return;
+            results[item.index] = await translateWithPlatform(item.query, platform, from, to);
+        }));
+    }
+
+    return results;
 }
 
 /**
