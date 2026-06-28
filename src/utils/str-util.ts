@@ -207,61 +207,75 @@ const batchTranslateAndAddWords = async (
 
     const errWords: string[] = [];
 
-    // 并发控制：按平台分级，避免 API 限流
-    const CONCURRENCY_LIMITS: Record<string, number> = {
-        baidu: 1,        // 百度免费版 QPS=1，必须严格串行
-        youdao: 5,
-        ali: 10,
-        tencent: 10,
-        glm: 8,
-        deepseek: 8,
-        qwen: 8,
-        kimi: 8,
-        claude: 8,
-        openai: 10,
-        local: 100,      // 本地词典无限制
-        default: 5,
-    };
-    const currentPlatform = wordsStore.currentTranslationPlatform || 'default';
-    const maxConcurrency = CONCURRENCY_LIMITS[currentPlatform] ?? CONCURRENCY_LIMITS.default;
-
-    // 简易并发限制器（不引入额外依赖）
-    // 启动 `limit` 个 worker 链，每个链处理完一个就抓取下一个，直到队列耗尽
-    async function runConcurrent(
-        items: string[],
-        worker: (item: string) => Promise<void>,
-        limit: number
-    ): Promise<void> {
-        let idx = 0;
-        const next = async (): Promise<void> => {
-            while (idx < items.length) {
-                const i = idx++;
-                try {
-                    await worker(items[i]);
-                } catch (error) {
-                    console.error(`处理单词失败 ${items[i]}:`, error);
-                    errWords.push(items[i]);
-                }
-            }
-        };
-        const chain = Math.min(limit, items.length);
-        await Promise.all(Array.from({length: chain}, () => next()));
+    interface BatchTranslateResult {
+        wordText: string;
+        success: boolean;
+        result?: TranslationResult;
+        message?: string;
     }
 
-    await runConcurrent(wordsToProcess, async (wordText) => {
-        const {success, text} = await addWord(wordText);
-        if (!success) {
-            errWords.push(text);
+    const translatedResults: BatchTranslateResult[] = [];
+
+    const batchResults: TranslationResult[] = typeof (wordsStore as any).translateBatchWithPlatform === 'function'
+        ? await (wordsStore as any).translateBatchWithPlatform(wordsToProcess)
+        : await Promise.all(wordsToProcess.map(wordText => wordsStore.translateWithPlatform(wordText)));
+    batchResults.forEach((res: TranslationResult, index: number) => {
+        const wordText = wordsToProcess[index];
+        if (!res.success) {
+            errWords.push(wordText);
         }
+        translatedResults.push({
+            wordText,
+            success: !!res.success,
+            result: res.success ? res : undefined,
+            message: (res as any).errorMsg,
+        });
         processedCount++;
         if (onProgress) {
             onProgress(processedCount, totalCount);
         }
-        // 仅百度平台保留延迟（QPS=1）；并发=1 时这等同于原来的串行+延迟
-        if (currentPlatform === 'baidu') {
-            await new Promise(resolve => setTimeout(resolve, 1000 + Math.floor(Math.random() * 500)));
+    });
+
+    const wordsToSave: Word[] = [];
+    for (const item of translatedResults) {
+        if (!item.success || !item.result) continue;
+        const existingWord = wordsStore.findWord(item.wordText);
+        let phonetic = item.result.phonetic || '';
+        if (phonetic.match(/^https?:\/\//i)) {
+            phonetic = '';
         }
-    }, maxConcurrency);
+        if (!phonetic || phonetic.trim() === '') {
+            const localEntry = await queryLocalDictionaryAsync(item.wordText);
+            if (localEntry?.phonetic) {
+                phonetic = localEntry.phonetic;
+            }
+        }
+
+        if (existingWord) {
+            wordsToSave.push({
+                ...existingWord,
+                explains: item.result.explains || item.wordText,
+                isReview: true,
+                pronunciation: item.result.pronunciation,
+                phonetic,
+                remember: false,
+                level: 1,
+            });
+        } else {
+            wordsToSave.push(getInitWord(
+                item.wordText,
+                item.result.explains || item.wordText,
+                item.result.pronunciation || '',
+                '',
+                phonetic,
+            ));
+        }
+    }
+
+    if (wordsToSave.length > 0) {
+        await wordsStore.addAndUpdateWords(wordsToSave);
+        wordsStore.setLastAddedWordText(wordsToSave[0].text);
+    }
     // 总 数 重复数 已存在数 失败数
 
 };
