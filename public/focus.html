@@ -98,15 +98,39 @@
       transition: background-color 0.3s ease;
     }
 
+    .focus-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: var(--focus-bg-image);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: var(--focus-bg-image-opacity);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .focus-container:not([data-has-bg="true"])::before,
+    .focus-container.edge-hidden::before {
+      opacity: 0;
+    }
+
+    .focus-container > * {
+      position: relative;
+      z-index: 1;
+    }
+
     /* 按钮区域不响应拖拽，允许点击 */
     .actions, .btn-close, .counter {
       -webkit-app-region: no-drag;
     }
 
     .word {
-      font-size: 20px;
+      font-size: var(--focus-word-font-size);
       font-weight: 600;
-      color: var(--text-primary);
+      color: var(--focus-font-color);
       margin-bottom: 2px;
       text-align: center;
       user-select: none;
@@ -159,9 +183,9 @@
       width: 160px;
       border: none;
       background: transparent;
-      font-size: 18px;
+      font-size: var(--focus-word-font-size);
       font-weight: 600;
-      color: var(--text-primary);
+      color: var(--focus-font-color);
       text-align: center;
       outline: none;
       padding: 2px 4px;
@@ -204,9 +228,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: calc(var(--focus-word-font-size) * 0.8);
       font-weight: 600;
-      color: var(--text-primary);
+      color: var(--focus-font-color);
       transition: border-color 0.15s, color 0.3s ease;
     }
 
@@ -247,13 +271,14 @@
     }
 
     .explains {
-      font-size: 11px;
-      color: var(--text-secondary);
+      font-size: var(--focus-explain-font-size);
+      color: var(--focus-font-color);
       text-align: center;
       margin-bottom: 6px;
       max-width: 95%;
       line-height: 1.3;
       user-select: none;
+      opacity: 0.86;
       transition: color 0.3s ease;
     }
 
@@ -391,12 +416,104 @@
       animation: none;
     }
 
-    @keyframes spell-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    .btn-style {
+      position: absolute;
+      top: 2px;
+      right: 146px;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      padding: 2px;
+      transition: color 0.3s ease;
+      -webkit-app-region: no-drag;
     }
 
-    /* 贴边悬浮球样式 */
+    .btn-style:hover,
+    .btn-style.active {
+      color: var(--primary-color);
+    }
+
+    .style-panel {
+      position: absolute;
+      top: 24px;
+      right: 8px;
+      width: 220px;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      color: var(--text-secondary);
+      font-size: 11px;
+      display: none;
+      z-index: 20;
+      -webkit-app-region: no-drag;
+    }
+
+    .dark-theme .style-panel,
+    html.utools-dark .style-panel,
+    body.utools-dark .style-panel {
+      background: rgba(30, 30, 30, 0.96);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .style-panel.visible {
+      display: block;
+    }
+
+    .style-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .style-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .style-row label {
+      width: 48px;
+      flex-shrink: 0;
+      color: var(--text-tertiary);
+    }
+
+    .style-row input[type="range"] {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .style-row input[type="color"] {
+      width: 30px;
+      height: 22px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .style-value {
+      width: 34px;
+      flex-shrink: 0;
+      text-align: right;
+      color: var(--text-quaternary);
+    }
+
+    .style-btn {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 11px;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .style-btn:hover {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+
     .edge-bubble {
       position: absolute;
       top: 50%;
@@ -464,6 +581,7 @@
     .focus-container.edge-hidden .btn-lock,
     .focus-container.edge-hidden .btn-list,
     .focus-container.edge-hidden .btn-spell,
+    .focus-container.edge-hidden .btn-style,
     .focus-container.edge-hidden .opacity-bar,
     .focus-container.edge-hidden .counter,
     .focus-container.edge-hidden .mode-label,
@@ -473,6 +591,7 @@
     }
 
     .focus-container.edge-preview .word,
+    .focus-container.edge-preview .phonetic,
     .focus-container.edge-preview .dictation-input,
     .focus-container.edge-preview .dictation-slots,
     .focus-container.edge-preview .explains,
@@ -483,6 +602,7 @@
     .focus-container.edge-preview .btn-lock,
     .focus-container.edge-preview .btn-list,
     .focus-container.edge-preview .btn-spell,
+    .focus-container.edge-preview .btn-style,
     .focus-container.edge-preview .opacity-bar,
     .focus-container.edge-preview .counter,
     .focus-container.edge-preview .mode-label,
@@ -513,8 +633,19 @@
     .focus-container.locked .btn-edge,
     .focus-container.locked .btn-list,
     .focus-container.locked .btn-spell,
+    .focus-container.locked .btn-style,
+    .focus-container.locked .style-panel,
     .focus-container.locked .btn-lock {
       pointer-events: auto;
+      opacity: 1;
+    }
+
+    .focus-container.locked .word,
+    .focus-container.locked .phonetic,
+    .focus-container.locked .explains,
+    .focus-container.locked .counter,
+    .focus-container.locked .mode-label,
+    .focus-container.locked .spell-hint {
       opacity: 1;
     }
 
@@ -522,12 +653,13 @@
       color: var(--primary-color);
     }
 
-    .focus-container.locked .word,
-    .focus-container.locked .explains,
-    .focus-container.locked .counter,
-    .focus-container.locked .mode-label,
-    .focus-container.locked .spell-hint {
+    .focus-container.edge-hidden .style-panel {
+      display: none;
+    }
+
+    .focus-container.edge-preview .style-panel.visible {
       opacity: 1;
+      pointer-events: auto;
     }
 
 
@@ -687,6 +819,39 @@
       <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
     </span>
 
+    <!-- 样式设置 -->
+    <span class="icon btn-style" id="btn-style" title="样式设置">
+      <svg viewBox="0 0 24 24"><path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 1.09 1.45 2.65 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z"/></svg>
+    </span>
+    <div class="style-panel" id="style-panel">
+      <div class="style-row">
+        <label>颜色</label>
+        <input type="color" id="style-font-color" value="#262626">
+        <button class="style-btn" id="style-reset-color" type="button">跟随</button>
+      </div>
+      <div class="style-row">
+        <label>单词</label>
+        <input type="range" id="style-font-size" min="14" max="40" value="20">
+        <span class="style-value" id="style-font-size-value">20px</span>
+      </div>
+      <div class="style-row">
+        <label>释义</label>
+        <input type="range" id="style-explain-font-size" min="9" max="24" value="11">
+        <span class="style-value" id="style-explain-font-size-value">11px</span>
+      </div>
+      <div class="style-row">
+        <label>背景</label>
+        <button class="style-btn" id="style-bg-select" type="button">选择</button>
+        <button class="style-btn" id="style-bg-clear" type="button">清除</button>
+        <input type="file" id="style-bg-file" accept="image/*" style="display:none">
+      </div>
+      <div class="style-row">
+        <label>透明</label>
+        <input type="range" id="style-bg-opacity" min="0" max="100" value="35">
+        <span class="style-value" id="style-bg-opacity-value">35%</span>
+      </div>
+    </div>
+
     <!-- 返回列表 -->
     <span class="icon btn-list" id="btn-list" title="返回列表">
       <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
@@ -716,6 +881,17 @@
     let currentIndex = 0;
     let showExplains = false;
     const FOCUS_MODE_ACTION_STORAGE_KEY = 'slowly-record-focus-mode-action';
+    const FOCUS_BG_MAX_SIZE = 2 * 1024 * 1024;
+    const DEFAULT_FOCUS_STYLE = {
+      fontColor: '',
+      fontSize: 20,
+      explainFontSize: 11,
+      backgroundImage: '',
+      backgroundImageOpacity: 0.35,
+    };
+    let currentStyleSettings = { ...DEFAULT_FOCUS_STYLE };
+    let lastStyleSignature = '';
+    let focusStylePollTimer = null;
 
     // 词库分片相关常量
     const WORDBANK_CHUNK_PREFIX = 'slowly-record-wordbank-chunk-v2:';
@@ -1786,19 +1962,207 @@
       return docs.find(doc => doc && doc._id && doc._id.startsWith('user-set')) || null;
     }
 
-    function saveFocusModeSetting(key, value) {
+    function clampNumber(value, min, max, fallback) {
+      var num = Number(value);
+      if (!Number.isFinite(num)) return fallback;
+      return Math.max(min, Math.min(max, num));
+    }
+
+    function escapeCssUrl(value) {
+      return String(value || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '');
+    }
+
+    function getThemeDefaultFontColor() {
+      var isDark = document.documentElement.classList.contains('dark-theme') ||
+                   document.body.classList.contains('dark-theme');
+      return isDark ? '#e0e0e0' : '#262626';
+    }
+
+    function syncStyleControls() {
+      var fontColorInput = document.getElementById('style-font-color');
+      var fontSizeInput = document.getElementById('style-font-size');
+      var explainFontSizeInput = document.getElementById('style-explain-font-size');
+      var bgOpacityInput = document.getElementById('style-bg-opacity');
+      var fontSizeValue = document.getElementById('style-font-size-value');
+      var explainFontSizeValue = document.getElementById('style-explain-font-size-value');
+      var bgOpacityValue = document.getElementById('style-bg-opacity-value');
+
+      if (fontColorInput) fontColorInput.value = currentStyleSettings.fontColor || getThemeDefaultFontColor();
+      if (fontSizeInput) fontSizeInput.value = String(currentStyleSettings.fontSize);
+      if (explainFontSizeInput) explainFontSizeInput.value = String(currentStyleSettings.explainFontSize);
+      if (bgOpacityInput) bgOpacityInput.value = String(Math.round(currentStyleSettings.backgroundImageOpacity * 100));
+      if (fontSizeValue) fontSizeValue.textContent = currentStyleSettings.fontSize + 'px';
+      if (explainFontSizeValue) explainFontSizeValue.textContent = currentStyleSettings.explainFontSize + 'px';
+      if (bgOpacityValue) bgOpacityValue.textContent = Math.round(currentStyleSettings.backgroundImageOpacity * 100) + '%';
+    }
+
+    function applyFocusStyleSettings(settings) {
+      var next = {
+        fontColor: typeof settings.fontColor === 'string' ? settings.fontColor : DEFAULT_FOCUS_STYLE.fontColor,
+        fontSize: clampNumber(settings.fontSize, 14, 40, DEFAULT_FOCUS_STYLE.fontSize),
+        explainFontSize: clampNumber(settings.explainFontSize, 9, 24, DEFAULT_FOCUS_STYLE.explainFontSize),
+        backgroundImage: typeof settings.backgroundImage === 'string' ? settings.backgroundImage : DEFAULT_FOCUS_STYLE.backgroundImage,
+        backgroundImageOpacity: clampNumber(settings.backgroundImageOpacity, 0, 1, DEFAULT_FOCUS_STYLE.backgroundImageOpacity),
+      };
+      currentStyleSettings = next;
+      lastStyleSignature = focusStyleSignature(next);
+
+      document.documentElement.style.setProperty('--focus-font-color', next.fontColor || 'var(--text-primary)');
+      document.documentElement.style.setProperty('--focus-word-font-size', next.fontSize + 'px');
+      document.documentElement.style.setProperty('--focus-explain-font-size', next.explainFontSize + 'px');
+      document.documentElement.style.setProperty('--focus-bg-image-opacity', String(next.backgroundImageOpacity));
+      document.documentElement.style.setProperty('--focus-bg-image', next.backgroundImage ? 'url("' + escapeCssUrl(next.backgroundImage) + '")' : 'none');
+
+      var appContainer = document.getElementById('app');
+      if (appContainer) {
+        appContainer.dataset.hasBg = next.backgroundImage ? 'true' : 'false';
+      }
+      syncStyleControls();
+    }
+
+    function focusStyleSignature(s) {
+      return [
+        s.fontColor || '',
+        s.fontSize,
+        s.explainFontSize,
+        s.backgroundImage ? '1' : '0',
+        s.backgroundImageOpacity,
+      ].join('|');
+    }
+
+    // 轮询 DB 样式字段，主窗口修改后实时应用（无需重开窗口）
+    function pollFocusStyleSettings() {
       try {
-        const userSetDoc = getUserSetDoc();
-        if (userSetDoc) {
+        var userSetDoc = getUserSetDoc();
+        if (!userSetDoc || !userSetDoc.focusMode) return;
+        var fm = userSetDoc.focusMode;
+        var sig = focusStyleSignature({
+          fontColor: fm.fontColor,
+          fontSize: fm.fontSize,
+          explainFontSize: fm.explainFontSize,
+          backgroundImage: fm.backgroundImage,
+          backgroundImageOpacity: fm.backgroundImageOpacity,
+        });
+        if (sig !== lastStyleSignature) {
+          applyFocusStyleSettings({ ...DEFAULT_FOCUS_STYLE, ...fm });
+        }
+      } catch (e) {
+        // 忽略轮询异常
+      }
+    }
+
+    function updateFocusStyleSetting(key, value) {
+      var next = { ...currentStyleSettings };
+      next[key] = value;
+      applyFocusStyleSettings(next);
+      saveFocusModeSetting(key, value);
+    }
+
+    function setupStylePanel() {
+      var btnStyle = document.getElementById('btn-style');
+      var panel = document.getElementById('style-panel');
+      var fontColorInput = document.getElementById('style-font-color');
+      var resetColorBtn = document.getElementById('style-reset-color');
+      var fontSizeInput = document.getElementById('style-font-size');
+      var explainFontSizeInput = document.getElementById('style-explain-font-size');
+      var bgSelectBtn = document.getElementById('style-bg-select');
+      var bgClearBtn = document.getElementById('style-bg-clear');
+      var bgFileInput = document.getElementById('style-bg-file');
+      var bgOpacityInput = document.getElementById('style-bg-opacity');
+
+      if (btnStyle && panel) {
+        btnStyle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          panel.classList.toggle('visible');
+          btnStyle.classList.toggle('active', panel.classList.contains('visible'));
+        });
+        panel.addEventListener('click', function(e) { e.stopPropagation(); });
+        document.addEventListener('click', function() {
+          panel.classList.remove('visible');
+          btnStyle.classList.remove('active');
+        });
+      }
+
+      if (fontColorInput) {
+        fontColorInput.addEventListener('input', function(e) {
+          updateFocusStyleSetting('fontColor', e.target.value || '');
+        });
+      }
+      if (resetColorBtn) {
+        resetColorBtn.addEventListener('click', function() {
+          updateFocusStyleSetting('fontColor', '');
+        });
+      }
+      if (fontSizeInput) {
+        fontSizeInput.addEventListener('input', function(e) {
+          updateFocusStyleSetting('fontSize', clampNumber(e.target.value, 14, 40, 20));
+        });
+      }
+      if (explainFontSizeInput) {
+        explainFontSizeInput.addEventListener('input', function(e) {
+          updateFocusStyleSetting('explainFontSize', clampNumber(e.target.value, 9, 24, 11));
+        });
+      }
+      if (bgOpacityInput) {
+        bgOpacityInput.addEventListener('input', function(e) {
+          updateFocusStyleSetting('backgroundImageOpacity', clampNumber(e.target.value, 0, 100, 35) / 100);
+        });
+      }
+      if (bgSelectBtn && bgFileInput) {
+        bgSelectBtn.addEventListener('click', function() { bgFileInput.click(); });
+        bgFileInput.addEventListener('change', function(e) {
+          var file = e.target.files && e.target.files[0];
+          if (!file) return;
+          if (file.size > FOCUS_BG_MAX_SIZE) {
+            showToast('图片不能超过 2MB');
+            e.target.value = '';
+            return;
+          }
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            var dataUrl = event.target && event.target.result;
+            if (typeof dataUrl === 'string') {
+              updateFocusStyleSetting('backgroundImage', dataUrl);
+              showToast('背景已更新');
+            }
+            e.target.value = '';
+          };
+          reader.onerror = function() {
+            showToast('读取图片失败');
+            e.target.value = '';
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+      if (bgClearBtn) {
+        bgClearBtn.addEventListener('click', function() {
+          updateFocusStyleSetting('backgroundImage', '');
+          showToast('已清除背景');
+        });
+      }
+
+      syncStyleControls();
+    }
+
+
+    function saveFocusModeSetting(key, value) {
+      for (var attempt = 0; attempt < 3; attempt++) {
+        try {
+          const userSetDoc = getUserSetDoc();
+          if (!userSetDoc) {
+            console.warn('[专注模式] 未找到 user-set 配置文档，保存失败');
+            return;
+          }
           if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
           userSetDoc.focusMode[key] = value;
           const result = utools.db.put(userSetDoc);
           console.log('[专注模式] 保存设置结果:', key, value, result);
-        } else {
-          console.warn('[专注模式] 未找到 user-set 配置文档，保存失败');
+          if (result && result.ok) return;
+          // _rev 冲突：重新读取最新文档后重试
+        } catch (e) {
+          console.error('保存设置失败:', e);
+          return;
         }
-      } catch (e) {
-        console.error('保存设置失败:', e);
       }
     }
 
@@ -1830,6 +2194,9 @@
         if (userSetDoc && userSetDoc.focusMode) {
           const fm = userSetDoc.focusMode;
 
+          // 应用样式设置
+          applyFocusStyleSettings({ ...DEFAULT_FOCUS_STYLE, ...fm });
+
           // 应用透明度
           if (fm.opacity !== undefined) {
             applyOpacity(fm.opacity);
@@ -1858,6 +2225,7 @@
       } catch (e) {
         console.error('读取专注模式设置失败:', e);
       }
+      applyFocusStyleSettings(DEFAULT_FOCUS_STYLE);
       updateTopButton();
       updateEdgeStickButton();
       return null;
@@ -1975,6 +2343,7 @@
 
     const isDark = detectTheme();
     applyTheme(isDark);
+    setupStylePanel();
 
     // 从 URL 参数获取状态
     function getStateFromUrl() {
@@ -2156,6 +2525,10 @@
 
     loadWords();
     loadFocusModeSettings();
+
+    // 启动样式轮询：主窗口修改样式后，已打开的专注窗口实时应用
+    if (focusStylePollTimer) clearInterval(focusStylePollTimer);
+    focusStylePollTimer = setInterval(pollFocusStyleSettings, 1500);
 
 
     // 如果 URL 中有透明度参数，应用它

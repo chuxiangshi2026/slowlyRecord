@@ -39,6 +39,11 @@ export interface SyncUserSettings {
     alwaysOnTop: boolean
     opacity: number
     edgeStickEnabled: boolean
+    fontColor?: string
+    fontSize?: number
+    explainFontSize?: number
+    backgroundImage?: string
+    backgroundImageOpacity?: number
   }
 }
 

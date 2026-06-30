@@ -40,6 +40,11 @@ export interface FocusModeSettings {
     alwaysOnTop: boolean;
     opacity: number; // 窗口透明度 0.3-1.0
     edgeStickEnabled: boolean; // 是否启用贴边隐藏
+    fontColor: string; // 字体颜色，空值表示跟随主题
+    fontSize: number; // 单词字号，单位 px
+    explainFontSize: number; // 释义字号，单位 px
+    backgroundImage: string; // 背景图片 data URL / URL，空值表示无背景
+    backgroundImageOpacity: number; // 背景图片透明度 0-1
     locked?: boolean; // 锁定后内容区鼠标穿透
     pendingAction?: FocusModePendingAction;
 }
