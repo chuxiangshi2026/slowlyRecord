@@ -44,6 +44,11 @@
       --primary-color: #409eff;
       --danger-color: #f56c6c;
       --success-color: #67c23a;
+      --focus-font-color: var(--text-primary);
+      --focus-word-font-size: 20px;
+      --focus-explain-font-size: 11px;
+      --focus-bg-image-opacity: 0.35;
+      --focus-bg-image: none;
     }
 
     /* 暗黑主题 */
@@ -106,6 +111,22 @@
       text-align: center;
       user-select: none;
       transition: color 0.3s ease;
+    }
+
+    /* 音标显示（位于单词下方，听写模式不显示以免剧透） */
+    .phonetic {
+      font-size: 12px;
+      color: var(--text-tertiary, var(--text-quaternary));
+      text-align: center;
+      user-select: text;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+      min-height: 14px;
+      line-height: 14px;
+    }
+
+    .phonetic:empty {
+      display: none;
     }
 
     /* 拼写模式：单词字母逐位高亮 */
@@ -432,6 +453,7 @@
     }
 
     .focus-container.edge-hidden .word,
+    .focus-container.edge-hidden .phonetic,
     .focus-container.edge-hidden .dictation-input,
     .focus-container.edge-hidden .dictation-slots,
     .focus-container.edge-hidden .explains,
@@ -611,6 +633,7 @@
 <body>
   <div class="focus-container" id="app">
     <div class="word" id="word">加载中...</div>
+    <div class="phonetic" id="phonetic"></div>
     <input class="dictation-input" id="dictation-input" type="text" placeholder="输入单词..." style="display:none" autocomplete="off" spellcheck="false">
     <div class="dictation-slots" id="dictation-slots"></div>
     <div class="spell-hint" id="spell-hint" style="display:none">键盘输入字母拼写</div>
@@ -752,6 +775,17 @@
 
     // DOM 元素
     const elWord = document.getElementById('word');
+    const elPhonetic = document.getElementById('phonetic');
+
+    // 校验 phonetic：过滤掉 URL（历史脏数据）和与原文等值的退化结果
+    function getValidPhonetic(word) {
+      if (!word) return '';
+      var ph = (word.phonetic || '').trim();
+      if (!ph) return '';
+      if (/^https?:\/\//i.test(ph)) return '';
+      if (word.text && ph.toLowerCase() === word.text.trim().toLowerCase()) return '';
+      return ph;
+    }
     const elExplains = document.getElementById('explains');
     const elCounter = document.getElementById('counter');
     const elBtnPrev = document.getElementById('btn-prev');
@@ -872,6 +906,7 @@
         elWord.style.display = 'block';
         elWord.textContent = '暂无待复习单词';
         elWord.classList.remove('spelling');
+        elPhonetic.textContent = '';
         elDictationInput.style.display = 'none';
         document.getElementById('dictation-slots').style.display = 'none';
         elExplains.style.display = 'none';
@@ -880,6 +915,9 @@
       }
 
       var wordText = word.text || '无';
+
+      // 音标：听写模式输入阶段不显示（避免剧透），其它模式（含校验后）按需展示
+      elPhonetic.textContent = (dictationMode && !dictationChecking) ? '' : getValidPhonetic(word);
 
       // 听写模式
       if (dictationMode && !dictationChecking) {

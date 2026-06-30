@@ -20,6 +20,10 @@ const TextMemory = () => import('@/views/TextMemory/TextMemory.vue');
 const ShortcutMemory = () => import('@/views/ShortcutMemory/ShortcutMemory.vue');
 const ShortcutMemoryTraining = () => import('@/views/ShortcutMemory/ShortcutMemoryTraining.vue');
 const LetterMemory = () => import('@/views/LetterMemory/LetterMemory.vue');
+const PhoneticMemory = () => import('@/views/PhoneticMemory/PhoneticMemory.vue');
+const PhoneticRecognition = () => import('@/views/PhoneticMemory/PhoneticRecognition.vue');
+const MinimalPairs = () => import('@/views/PhoneticMemory/MinimalPairs.vue');
+const PhonemeBreakdown = () => import('@/views/PhoneticMemory/PhonemeBreakdown.vue');
 // const Exception = () => import('@/views/Exception/Exception.vue');
 // const Apply = () => import('@/views/Apply/Apply.vue');
 // const Check = () => import('@/views/Check/Check.vue');
@@ -147,6 +151,43 @@ const routes: Array<RouteRecordRaw> = [
           menu: false,
           title: '字母映射',
           icon: 'Tickets',
+        },
+      },
+      {
+        path: 'phonetic-memory',
+        name: 'phoneticMemory',
+        component: PhoneticMemory,
+        meta: {
+          menu: false,
+          title: '音标学习',
+          icon: 'Microphone',
+        },
+      },
+      {
+        path: 'phonetic-memory/recognition',
+        name: 'phoneticRecognition',
+        component: PhoneticRecognition,
+        meta: {
+          menu: false,
+          title: '音标识别',
+        },
+      },
+      {
+        path: 'phonetic-memory/minimal-pairs',
+        name: 'phoneticMinimalPairs',
+        component: MinimalPairs,
+        meta: {
+          menu: false,
+          title: '最小对立对',
+        },
+      },
+      {
+        path: 'phonetic-memory/breakdown',
+        name: 'phoneticBreakdown',
+        component: PhonemeBreakdown,
+        meta: {
+          menu: false,
+          title: '音素拆解',
         },
       },
       ...(isDesktopEnv ? [
