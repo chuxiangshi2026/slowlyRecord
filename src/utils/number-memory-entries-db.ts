@@ -3,21 +3,11 @@ import { log } from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import { DB_KEY_NUMBER_MEMORY } from "@/constants";
 import {getDbAdapter} from "@/adapters/db";
+import { nextIdTimestamp } from "@/utils/id-util";
 
 const DB_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'entry_';
 const NOTE_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'note_';
 const PROMPT_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'prompt_';
-
-/**
- * 生成单调递增的 ID 后缀，避免同一毫秒内多次创建导致 _id 冲突
- * 同毫秒内多次调用会拿到 ts、ts+1、ts+2 ...
- */
-let _lastIdTimestamp = 0;
-function nextIdTimestamp(): number {
-  const now = Date.now();
-  _lastIdTimestamp = now > _lastIdTimestamp ? now : _lastIdTimestamp + 1;
-  return _lastIdTimestamp;
-}
 
 /**
  * 获取所有数字记忆条目

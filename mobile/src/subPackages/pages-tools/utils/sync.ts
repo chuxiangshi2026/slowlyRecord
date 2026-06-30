@@ -12,6 +12,7 @@ import type {
   MobileNumberMemory,
 } from '@/stores/useUtils/types'
 import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
+import { log } from '../../../utils/logger'
 
 export type {
   MobileSyncBank,
@@ -307,7 +308,7 @@ export async function pushToServer(
       try {
         encryptedBase64 = await aesGcmEncrypt(compressed, syncKey)
       } catch (cryptoError) {
-        console.warn('[sync] AES-GCM 加密失败，回退到 XOR：', cryptoError)
+        log.w('[sync] AES-GCM 加密失败，回退到 XOR：', cryptoError)
         encryptedBase64 = uint8ArrayToBase64(xorCrypt(compressed, syncKey))
       }
     } else {
@@ -333,7 +334,7 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
       try {
         compressed = await aesGcmDecrypt(encrypted, aesKey)
       } catch (cryptoError) {
-        console.warn('[sync] AES-GCM 解密失败，尝试旧 XOR 同步码：', cryptoError)
+        log.w('[sync] AES-GCM 解密失败，尝试旧 XOR 同步码：', cryptoError)
       }
     }
     if (!compressed) {

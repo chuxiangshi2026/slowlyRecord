@@ -7,9 +7,10 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import { useMobileWords } from './stores/useMobileWords'
+import { log } from './utils/logger'
 
 onLaunch(() => {
-  console.log('App Launch')
+  log.i('App Launch')
   // 监听系统主题变化
   // #ifdef APP-PLUS || H5
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -26,13 +27,13 @@ onLaunch(() => {
 })
 
 onShow(() => {
-  console.log('App Show')
+  log.i('App Show')
 })
 
 onHide(() => {
-  console.log('App Hide')
+  log.i('App Hide')
   useMobileWords().flushDirtyBanks().catch((err) => {
-    console.error('App Hide 持久化单词失败:', err)
+    log.e('App Hide 持久化单词失败:', err)
   })
 })
 </script>

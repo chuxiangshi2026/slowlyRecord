@@ -339,6 +339,9 @@
       <el-tooltip class="box-item" effect="dark" content="字母映射" placement="top" popper-class="small-tooltip">
         <el-icon :size="18" style="cursor: pointer;" @click="goToLetterMemory"><Tickets /></el-icon>
       </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="音标学习" placement="top" popper-class="small-tooltip">
+        <el-icon :size="18" style="cursor: pointer;" @click="goToPhoneticMemory"><Microphone /></el-icon>
+      </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-card" @click="() => openFocusMode()"></i>
       </el-tooltip>
@@ -365,7 +368,7 @@
 
 
 import {ElMessage, ElLoading, ElMessageBox} from "element-plus";
-import { Tickets } from '@element-plus/icons-vue';
+import { Tickets, Microphone } from '@element-plus/icons-vue';
 import {testData} from "@/testData";
 import type {Word} from "@/types/words";
 
@@ -1581,7 +1584,7 @@ const handleWordChanged = async (payload: any) => {
   await wordsStore.addAndUpdateWord(changedWord);
 
   // 重新计算待复习状态
-  wordsStore.upReview();
+  await wordsStore.upReview();
 
   console.log('[handleWordChanged] 单词状态已同步:', changedWord.text);
 };
@@ -2973,6 +2976,10 @@ function goToDictation() {
 
 function goToLetterMemory() {
   router.push('/letter-memory')
+}
+
+function goToPhoneticMemory() {
+  router.push('/phonetic-memory')
 }
 
 

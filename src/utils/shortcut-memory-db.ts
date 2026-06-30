@@ -8,6 +8,7 @@ import { log } from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import { DB_KEY_SHORTCUT_MEMORY } from "@/constants";
 import {getDbAdapter} from "@/adapters/db";
+import { nextIdTimestamp } from "@/utils/id-util";
 
 const DB_KEY_PREFIX = DB_KEY_SHORTCUT_MEMORY;
 const RECORD_KEY_PREFIX = DB_KEY_PREFIX + 'record_';
@@ -15,14 +16,6 @@ const PROGRESS_KEY_PREFIX = DB_KEY_PREFIX + 'progress_';
 const CUSTOM_KEY_PREFIX = DB_KEY_PREFIX + 'custom_';
 const CUSTOM_CATEGORY_PREFIX = DB_KEY_PREFIX + 'category_';
 const HIDDEN_CATEGORY_KEY = DB_KEY_PREFIX + 'hidden_categories';
-
-// 同毫秒内多次创建可能导致 _id 冲突，使用单调递增的时间戳避免覆盖
-let _lastIdTimestamp = 0;
-function nextIdTimestamp(): number {
-  const now = Date.now();
-  _lastIdTimestamp = now > _lastIdTimestamp ? now : _lastIdTimestamp + 1;
-  return _lastIdTimestamp;
-}
 
 // 获取数据库适配器
 function getDb() {

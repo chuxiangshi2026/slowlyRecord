@@ -21,7 +21,9 @@ interface TranslationCacheEntry {
 }
 const TRANSLATION_CACHE_STORAGE_KEY = 'slowly_translation_cache_v1'
 const TRANSLATION_CACHE_TTL = 7 * 24 * 3600 * 1000
+const TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS = 5000
 const TRANSLATION_CACHE_MAX = 3000
+const TRANSLATION_CACHE_PERSIST_MAX = 800
 const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama'])
 const AI_BATCH_SIZE = 20
 const translationCache = new Map<string, TranslationCacheEntry>()
@@ -62,7 +64,15 @@ function ensureTranslationCacheLoaded(): void {
 }
 
 function persistTranslationCache(): void {
-  try { uni.setStorageSync(TRANSLATION_CACHE_STORAGE_KEY, Array.from(translationCache.entries())) } catch { /* ignore */ }
+  try {
+    // 仅持久化最近最热的子集，避免每次写入数百 KB
+    const entries = Array.from(translationCache.entries())
+    if (entries.length > TRANSLATION_CACHE_PERSIST_MAX) {
+      entries.sort((a, b) => b[1].ts - a[1].ts)
+      entries.length = TRANSLATION_CACHE_PERSIST_MAX
+    }
+    uni.setStorageSync(TRANSLATION_CACHE_STORAGE_KEY, entries)
+  } catch { /* ignore */ }
 }
 
 function schedulePersistTranslationCache(): void {
@@ -70,7 +80,7 @@ function schedulePersistTranslationCache(): void {
   translationCachePersistTimer = setTimeout(() => {
     translationCachePersistTimer = null
     persistTranslationCache()
-  }, 1000)
+  }, TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS)
 }
 
 function getCachedTranslation(query: string, platform: TranslationPlatform, from: string, to: string): TranslationResult | null {

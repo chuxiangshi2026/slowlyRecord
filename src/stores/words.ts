@@ -33,6 +33,11 @@ const defaultFocusMode: FocusModeSettings = {
     alwaysOnTop: true,
     opacity: 1.0, // 默认不透明
     edgeStickEnabled: true,
+    fontColor: '',
+    fontSize: 20,
+    explainFontSize: 11,
+    backgroundImage: '',
+    backgroundImageOpacity: 0.35,
 };
 
 
@@ -855,11 +860,11 @@ export const useWordsStore =
                 addAndUpdateWords,
                 initWordBankInfo,
                 translateWithPlatform: async (query: string) => {
-                    console.log('store翻译调用, 当前平台:', currentTranslationPlatform.value, '查询词:', query)
+                    log.i('store翻译调用, 当前平台:', currentTranslationPlatform.value, '查询词:', query)
                     return await externalTranslateWithPlatform(query, currentTranslationPlatform.value);
                 },
                 translateBatchWithPlatform: async (queries: string[]) => {
-                    console.log('store批量翻译调用, 当前平台:', currentTranslationPlatform.value, '数量:', queries.length)
+                    log.i('store批量翻译调用, 当前平台:', currentTranslationPlatform.value, '数量:', queries.length)
                     return await externalTranslateBatchWithPlatform(queries, currentTranslationPlatform.value);
                 },
                 removeWords,

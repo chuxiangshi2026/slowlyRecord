@@ -24,12 +24,25 @@ interface TranslationCacheEntry {
 const translationCache = new Map<string, TranslationCacheEntry>();
 const TRANSLATION_CACHE_TTL = 7 * 24 * 3600 * 1000;
 const TRANSLATION_CACHE_STORAGE_KEY = 'slowlyrecord_translation_cache_v1';
+const TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS = 5000;
+// 内存缓存上限远高于持久化上限：命中率优先，持久化仅保留最近最热的一部分
+const TRANSLATION_CACHE_MAX = 5000;
+const TRANSLATION_CACHE_PERSIST_MAX = 1000;
 const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama'] as TranslationPlatform[]);
 const AI_BATCH_SIZE = 20;
+// 非 AI 平台的并发限制；批量回退路径必须保留，否则百度免费版 QPS=1 会被立即触发限流（54003）
+const NON_AI_CONCURRENCY: Record<string, number> = {
+    baidu: 1,
+    youdao: 5,
+    ali: 10,
+    tencent: 10,
+    local: 100,
+    default: 5,
+};
+// 百度免费版 QPS=1，单词之间额外加 1000ms 随机延迟
+const BAIDU_REQUEST_DELAY_MS = 1000;
 let translationCacheLoaded = false;
 let translationCachePersistTimer: ReturnType<typeof setTimeout> | null = null;
-// 上限保护，防止长时间运行后内存膨胀
-const TRANSLATION_CACHE_MAX = 5000;
 
 function ensureTranslationCacheLoaded(): void {
     if (translationCacheLoaded) return;
@@ -54,12 +67,18 @@ function schedulePersistTranslationCache(): void {
     translationCachePersistTimer = setTimeout(() => {
         translationCachePersistTimer = null;
         persistTranslationCache();
-    }, 1000);
+    }, TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS);
 }
 
 function persistTranslationCache(): void {
     try {
-        getDbStorage().setItem(TRANSLATION_CACHE_STORAGE_KEY, Array.from(translationCache.entries()));
+        // 持久化仅保留最近 TRANSLATION_CACHE_PERSIST_MAX 条，避免每次写入数 MB
+        const entries = Array.from(translationCache.entries());
+        if (entries.length > TRANSLATION_CACHE_PERSIST_MAX) {
+            entries.sort((a, b) => b[1].ts - a[1].ts);
+            entries.length = TRANSLATION_CACHE_PERSIST_MAX;
+        }
+        getDbStorage().setItem(TRANSLATION_CACHE_STORAGE_KEY, entries);
     } catch (e) {
         log.w?.('保存翻译缓存失败', e);
     }
@@ -769,10 +788,23 @@ export async function translateBatchWithPlatform(
             }
         }
 
-        await Promise.all(chunk.map(async item => {
-            if (results[item.index]) return;
-            results[item.index] = await translateWithPlatform(item.query, platform, from, to);
-        }));
+        // 逐词回退：按平台并发限制 + 百度强制延迟，避免触发限流
+        const pendingItems = chunk.filter(item => !results[item.index]);
+        const concurrency = NON_AI_CONCURRENCY[platform] ?? NON_AI_CONCURRENCY.default;
+        const isBaidu = platform === 'baidu';
+        let cursor = 0;
+        const runWorker = async () => {
+            while (cursor < pendingItems.length) {
+                const currentIdx = cursor++;
+                const item = pendingItems[currentIdx];
+                results[item.index] = await translateWithPlatform(item.query, platform, from, to);
+                if (isBaidu && cursor < pendingItems.length) {
+                    await new Promise(resolve => setTimeout(resolve, BAIDU_REQUEST_DELAY_MS + Math.floor(Math.random() * 500)));
+                }
+            }
+        };
+        const workerCount = Math.min(concurrency, pendingItems.length);
+        await Promise.all(Array.from({ length: workerCount }, () => runWorker()));
     }
 
     return results;

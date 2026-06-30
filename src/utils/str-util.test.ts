@@ -43,6 +43,7 @@ const mockFindWord = vi.fn()
 const mockAddAndUpdateWord = vi.fn()
 const mockAddAndUpdateWords = vi.fn()
 const mockTranslateWithPlatform = vi.fn()
+const mockTranslateBatchWithPlatform = vi.fn()
 const mockSetLastAddedWordText = vi.fn()
 
 vi.mock('@/stores/words', () => ({
@@ -51,6 +52,7 @@ vi.mock('@/stores/words', () => ({
     addAndUpdateWord: mockAddAndUpdateWord,
     addAndUpdateWords: mockAddAndUpdateWords,
     translateWithPlatform: mockTranslateWithPlatform,
+    translateBatchWithPlatform: mockTranslateBatchWithPlatform,
     setLastAddedWordText: mockSetLastAddedWordText,
     lastFocusWordText: '',
     words: []
@@ -70,6 +72,10 @@ describe('str-util', () => {
       pronunciation: 'pronunciation.mp3',
       phonetic: '/fəʊnetɪk/'
     })
+    // 批量入口默认实现：复用单词翻译 mock，保持顺序与输入一致
+    mockTranslateBatchWithPlatform.mockImplementation(async (queries: string[]) =>
+      Promise.all(queries.map(q => mockTranslateWithPlatform(q)))
+    )
   })
 
   describe('getInitWord', () => {

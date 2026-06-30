@@ -216,9 +216,7 @@ const batchTranslateAndAddWords = async (
 
     const translatedResults: BatchTranslateResult[] = [];
 
-    const batchResults: TranslationResult[] = typeof (wordsStore as any).translateBatchWithPlatform === 'function'
-        ? await (wordsStore as any).translateBatchWithPlatform(wordsToProcess)
-        : await Promise.all(wordsToProcess.map(wordText => wordsStore.translateWithPlatform(wordText)));
+    const batchResults: TranslationResult[] = await wordsStore.translateBatchWithPlatform(wordsToProcess);
     batchResults.forEach((res: TranslationResult, index: number) => {
         const wordText = wordsToProcess[index];
         if (!res.success) {

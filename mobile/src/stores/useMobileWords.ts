@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { getDbAdapter, type DbDoc } from '@/adapters/index'
 import { WORDBANK_LIST } from './useUtils/wordbank'
 import type { MobileItemType } from './useUtils/types'
+import { normalizeWordText, getWordKey } from '../utils/text-utils'
 
 // 默认复习间隔（单位：分钟）与桌面端保持一致
 const DEFAULT_INTERVALS = [
@@ -43,14 +44,6 @@ const DB_KEY = 'mobile_words'
 const BANKS_STORAGE_KEY = 'mobile_wordbanks'
 const CURRENT_BANK_KEY = 'mobile_current_bank'
 const IMPORT_PROGRESS_KEY = 'mobile_import_progress'
-
-function normalizeWordText(text: string): string {
-  return (text || '').trim().replace(/\s+/g, ' ')
-}
-
-function getWordKey(text: string): string {
-  return normalizeWordText(text).toLowerCase()
-}
 
 // 默认词库ID
 const DEFAULT_BANK_ID = 'default'
@@ -442,15 +435,16 @@ export const useMobileWords = defineStore('mobileWords', () => {
    * 批量导入单词：整个词库写为一条 storage 记录
    * 从内存合并已有单词后一次性写入，16k 词 → 1 条记录
    */
-  async function importWords(data: MobileWord[], targetBankId?: string): Promise<{ imported: MobileWord[]; skippedCount: number }> {
+  async function importWords(data: MobileWord[], targetBankId?: string): Promise<{ imported: MobileWord[]; skippedCount: number; invalidCount: number }> {
     const bankId = targetBankId || currentBankId.value
 
     const importedMap = new Map<string, MobileWord>()
     let duplicateInImportCount = 0
+    let invalidCount = 0
     for (const word of data) {
       const normalizedWord = normalizeWordText(word.word)
       if (!normalizedWord) {
-        duplicateInImportCount++
+        invalidCount++
         continue
       }
       const key = getWordKey(normalizedWord)
@@ -486,7 +480,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
       }
     }
 
-    return { imported: newOnly, skippedCount }
+    return { imported: newOnly, skippedCount, invalidCount }
   }
 
   /** 一次性追加单词到内存（shallowRef 赋值本身很快） */

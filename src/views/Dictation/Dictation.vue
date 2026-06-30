@@ -28,7 +28,7 @@
         <div class="hints-area">
           <div v-if="options.showPhonetic" class="hint phonetic-hint">
             <span class="hint-label">音标</span>
-            <span class="hint-content">{{ currentWord.phonetic || '/' + getSimplePhonetic(currentWord.text) + '/' }}</span>
+            <span class="hint-content">{{ displayPhonetic || '—' }}</span>
           </div>
           <div v-if="options.showMeaning" class="hint meaning-hint">
             <span class="hint-label">释义</span>
@@ -296,6 +296,7 @@ import type { Word } from '@/types/words';
 import { getCurrentWordBankId, getAllWordBanks, type WordBank, createWordBank as createNewWordBank, deleteWordBank as removeWordBank, importFromBuiltinWordBank } from '@/utils/wordbank-manager';
 import { filterWordsForJsonExport, filterWordsForTextExport, parseFileContent, validateImportedWords } from '@/utils/word-util';
 import { batchTranslateAndAddWords } from '@/utils/str-util';
+import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/phonetic-util';
 import { fetchWordBank, WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
 import DetailDrawer from '@/views/Word/components/DetailDrawer.vue';
@@ -547,6 +548,19 @@ const hiddenInput = ref<HTMLInputElement>();
 
 // ========== 计算属性 ==========
 const currentWord = computed(() => wordList.value[currentIndex.value] || null);
+
+// 音标显示：优先用 word.phonetic（有效时），其次同步查本地词库；异步补全由 watch 触发
+const displayPhonetic = computed(() => {
+  const w = currentWord.value;
+  if (!w) return '';
+  if (isValidPhonetic(w.phonetic, w.text)) return w.phonetic!;
+  return lookupPhoneticSync(w.text);
+});
+
+// 切换到新单词时，若音标为空则从本地词库懒补全并回写
+watch(currentWord, (word) => {
+  if (word) ensurePhonetic(word);
+});
 
 const getCurrentErrorCount = computed(() => {
   return errorCountMap.value[currentIndex.value] || 0;
@@ -986,6 +1000,7 @@ const importFromWordBank = async (bankType: WordBankType) => {
 };
 
 function getSimplePhonetic(text: string): string {
+  // 兼容旧引用，保留占位（实际显示走 displayPhonetic 计算属性）
   return text;
 }
 
@@ -1122,7 +1137,7 @@ async function checkAnswer() {
     word.learnDate = new Date();
 
     await wordsStore.addAndUpdateWord(word);
-    wordsStore.upReview();
+    await wordsStore.upReview();
 
     // 清除该单词的错误记录
     delete errorCountMap.value[currentIndex.value];
@@ -1134,7 +1149,7 @@ async function checkAnswer() {
     word.isReview = true;
 
     await wordsStore.addAndUpdateWord(word);
-    wordsStore.upReview();
+    await wordsStore.upReview();
 
     // 记录错误次数
     errorCountMap.value[currentIndex.value] = (errorCountMap.value[currentIndex.value] || 0) + 1;
@@ -1165,7 +1180,7 @@ async function handleForget() {
   word.isReview = true;
 
   await wordsStore.addAndUpdateWord(word);
-  wordsStore.upReview();
+  await wordsStore.upReview();
 
   ElMessage.info(`已忘记: ${word.text}`);
   refreshWordList();
