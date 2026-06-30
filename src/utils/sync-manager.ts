@@ -398,7 +398,7 @@ async function restoreUserSettings(settings: SyncUserSettings) {
       memoryFirmness: '正常',
       keys: {},
       ocrKeys: {},
-      focusMode: { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true },
+      focusMode: { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true, fontColor: '', fontSize: 20, explainFontSize: 11, backgroundImage: '', backgroundImageOpacity: 0.35 },
       mainWindowOpacity: 1.0,
       autoSpeak: false,
     }

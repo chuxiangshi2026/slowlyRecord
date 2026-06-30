@@ -134,7 +134,12 @@ describe('useWordsStore', () => {
       expect(store.focusMode).toEqual({
         alwaysOnTop: true,
         opacity: 1.0,
-        edgeStickEnabled: true
+        edgeStickEnabled: true,
+        fontColor: '',
+        fontSize: 20,
+        explainFontSize: 11,
+        backgroundImage: '',
+        backgroundImageOpacity: 0.35
       })
       expect(store.lastVisitedPage).toBe('')
       expect(store.hiddenExplain).toBe('')
@@ -652,7 +657,7 @@ describe('useWordsStore', () => {
   describe('setFocusMode', () => {
     it('应该部分更新专注模式设置并持久化', () => {
       const store = useWordsStore()
-      const mockUserSet = { focusMode: { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true } }
+      const mockUserSet = { focusMode: { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true, fontColor: '', fontSize: 20, explainFontSize: 11, backgroundImage: '', backgroundImageOpacity: 0.35 } }
       vi.mocked(getSetDb).mockReturnValue(mockUserSet as any)
 
       store.setFocusMode({ opacity: 0.5 })

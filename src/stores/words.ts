@@ -271,18 +271,31 @@ export const useWordsStore =
             /**
              * 设置专注模式
              */
-            function setFocusMode(settings: Partial<FocusModeSettings>) {
+            async function setFocusMode(settings: Partial<FocusModeSettings>) {
                 log.i('更新专注模式设置', settings);
-                focusMode.value = { ...focusMode.value, ...settings };
+                const nextFocusMode = { ...focusMode.value, ...settings };
+                focusMode.value = nextFocusMode;
 
-                let userSet = getSetDb();
-                if (userSet) {
-                    userSet.focusMode = focusMode.value;
-                } else {
-                    userSet = initUserSet();
-                    userSet.focusMode = focusMode.value;
+                // 不覆盖专注窗口写入的 pendingAction，避免跨窗口互相覆盖
+                const {pendingAction, ...settingsWithoutPending} = nextFocusMode as any;
+
+                // 重试写入，避免与专注窗口同时写 user-set 文档时 _rev 冲突导致静默丢失
+                for (let attempt = 0; attempt < 3; attempt++) {
+                    let userSet = getSetDb();
+                    if (!userSet) {
+                        userSet = initUserSet();
+                    }
+                    userSet.focusMode = {
+                        ...(userSet.focusMode || {}),
+                        ...settingsWithoutPending,
+                    };
+                    const result = await addAndUpdateSetDb(userSet);
+                    if (result?.ok) {
+                        return;
+                    }
+                    // 冲突：重新读取最新 _rev 后重试
                 }
-                addAndUpdateSetDb(userSet);
+                log.e('专注模式设置写入失败（多次冲突）');
             }
 
             /**

@@ -66,7 +66,7 @@ const mockSyncData: SyncData = {
     memoryFirmness: '正常',
     keys: {},
     ocrKeys: {},
-    focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true },
+    focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true, fontColor: '', fontSize: 20, explainFontSize: 11, backgroundImage: '', backgroundImageOpacity: 0.35 },
   },
   textMemory: null,
   numberMemory: null,

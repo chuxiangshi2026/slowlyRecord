@@ -131,7 +131,7 @@ describe('sync-manager', () => {
         memoryFirmness: '高',
         keys: { test: { appkey: 'key', key: 'secret' } },
         ocrKeys: {},
-        focusMode: { alwaysOnTop: true, opacity: 0.5, edgeStickEnabled: false },
+        focusMode: { alwaysOnTop: true, opacity: 0.5, edgeStickEnabled: false, fontColor: '', fontSize: 20, explainFontSize: 11, backgroundImage: '', backgroundImageOpacity: 0.35 },
       } as any)
 
       const { collectSyncData } = await loadModule()
@@ -208,7 +208,7 @@ describe('sync-manager', () => {
           memoryFirmness: '正常',
           keys: {},
           ocrKeys: {},
-          focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true },
+          focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true, fontColor: '', fontSize: 20, explainFontSize: 11, backgroundImage: '', backgroundImageOpacity: 0.35 },
         },
       }
 
@@ -246,7 +246,7 @@ describe('sync-manager', () => {
           memoryFirmness: '正常',
           keys: {},
           ocrKeys: {},
-          focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true },
+          focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true, fontColor: '', fontSize: 20, explainFontSize: 11, backgroundImage: '', backgroundImageOpacity: 0.35 },
         },
       }
 
