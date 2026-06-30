@@ -154,6 +154,42 @@
         导入选中（{{ selectedIdiomIds.size }} 条）
       </button>
     </view>
+
+    <!-- 地图 -->
+    <view v-if="activeTab === 'map'" class="tab-content map-content">
+      <!-- 地图区域（sheet 打开时缩到上半部） -->
+      <view class="map-area-wrap" :class="{ 'sheet-open': mapSheetVisible }">
+        <PoetryMapTab
+          :selected-poetry-ids="selectedPoetryIds"
+          :selected-idiom-ids="selectedIdiomIds"
+          @tap-marker="onMapMarkerTap"
+        />
+      </view>
+
+      <!-- 底部 sheet -->
+      <view v-if="mapSheetVisible" class="map-sheet-wrap">
+        <MapBottomSheet
+          v-model:visible="mapSheetVisible"
+          :payload="mapSheetPayload"
+          :selected-poetry-ids="selectedPoetryIds"
+          :selected-idiom-ids="selectedIdiomIds"
+          @toggle-poetry="onSheetTogglePoetry"
+          @toggle-idiom="onSheetToggleIdiom"
+          @toggle-all="onSheetToggleAll"
+        />
+      </view>
+
+      <!-- 底部导入按钮（地图 + sheet 共用） -->
+      <view class="map-import-bar">
+        <button
+          class="action-btn primary"
+          :disabled="selectedPoetryIds.size + selectedIdiomIds.size === 0"
+          @click="handleImportFromMap"
+        >
+          导入选中（{{ selectedPoetryIds.size + selectedIdiomIds.size }}）
+        </button>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -169,6 +205,9 @@ import {
   type MobilePoetryItem,
   type MobileIdiomItem,
 } from './library'
+import PoetryMapTab from './components/PoetryMapTab.vue'
+import MapBottomSheet from './components/MapBottomSheet.vue'
+import type { MarkerTapPayload } from './components/map-types'
 
 const store = useTextMemory()
 store.load()
@@ -177,8 +216,10 @@ const tabs = [
   { value: 'paste', label: '粘贴批量' },
   { value: 'poetry', label: '诗词库' },
   { value: 'idiom', label: '成语库' },
-]
-const activeTab = ref<'paste' | 'poetry' | 'idiom'>('paste')
+  { value: 'map', label: '地图' },
+] as const
+type TabValue = (typeof tabs)[number]['value']
+const activeTab = ref<TabValue>('paste')
 
 // ============ 粘贴批量 ============
 
@@ -440,6 +481,153 @@ function shortContent(content: string): string {
   const t = content.replace(/\n/g, ' ').trim()
   return t.length > 50 ? t.slice(0, 50) + '…' : t
 }
+
+// ============ 地图 tab ============
+
+/** 地图视图下单次最多选中数（防止小程序一次性导入卡顿） */
+const MAP_SELECT_LIMIT = 50
+
+const mapSheetVisible = ref(false)
+const mapSheetPayload = ref<MarkerTapPayload | null>(null)
+
+function onMapMarkerTap(payload: MarkerTapPayload) {
+  mapSheetPayload.value = payload
+  mapSheetVisible.value = true
+}
+
+/** 当前已选总数 */
+function totalSelected(): number {
+  return selectedPoetryIds.value.size + selectedIdiomIds.value.size
+}
+
+function warnLimitReached(): boolean {
+  if (totalSelected() >= MAP_SELECT_LIMIT) {
+    uni.showToast({
+      title: `最多选择 ${MAP_SELECT_LIMIT} 项`,
+      icon: 'none',
+    })
+    return true
+  }
+  return false
+}
+
+function onSheetTogglePoetry(item: MobilePoetryItem) {
+  const willSelect = !selectedPoetryIds.value.has(item.id)
+  if (willSelect && warnLimitReached()) return
+  // 顺便把 item 缓存到 poetryAll，确保导入时能取到对象
+  if (!poetryAll.value.some((p) => p.id === item.id)) {
+    poetryAll.value = [...poetryAll.value, item]
+  }
+  togglePoetry(item.id)
+}
+
+function onSheetToggleIdiom(item: MobileIdiomItem) {
+  const willSelect = !selectedIdiomIds.value.has(item.id)
+  if (willSelect && warnLimitReached()) return
+  if (!idiomAll.value.some((it) => it.id === item.id)) {
+    idiomAll.value = [...idiomAll.value, item]
+  }
+  toggleIdiom(item.id)
+}
+
+function onSheetToggleAll(
+  items: { poems: MobilePoetryItem[]; idioms: MobileIdiomItem[] },
+  selectAll: boolean,
+) {
+  const nextPoetry = new Set(selectedPoetryIds.value)
+  const nextIdiom = new Set(selectedIdiomIds.value)
+  let total = nextPoetry.size + nextIdiom.size
+  let truncated = false
+
+  // 同步缓存
+  for (const p of items.poems) {
+    if (!poetryAll.value.some((x) => x.id === p.id)) poetryAll.value.push(p)
+    if (selectAll) {
+      if (!nextPoetry.has(p.id)) {
+        if (total >= MAP_SELECT_LIMIT) {
+          truncated = true
+          continue
+        }
+        nextPoetry.add(p.id)
+        total++
+      }
+    } else {
+      nextPoetry.delete(p.id)
+    }
+  }
+  for (const it of items.idioms) {
+    if (!idiomAll.value.some((x) => x.id === it.id)) idiomAll.value.push(it)
+    if (selectAll) {
+      if (!nextIdiom.has(it.id)) {
+        if (total >= MAP_SELECT_LIMIT) {
+          truncated = true
+          continue
+        }
+        nextIdiom.add(it.id)
+        total++
+      }
+    } else {
+      nextIdiom.delete(it.id)
+    }
+  }
+  selectedPoetryIds.value = nextPoetry
+  selectedIdiomIds.value = nextIdiom
+  if (truncated) {
+    uni.showToast({
+      title: `已达上限 ${MAP_SELECT_LIMIT} 项，部分未加入`,
+      icon: 'none',
+    })
+  }
+}
+
+/**
+ * 地图视图的统一导入入口：
+ * 同时把选中的诗词和成语作为一批导入，复用现有的 normalize 逻辑
+ */
+function handleImportFromMap() {
+  const pickedPoetry = poetryAll.value.filter((p) => selectedPoetryIds.value.has(p.id))
+  const pickedIdiom = idiomAll.value.filter((it) => selectedIdiomIds.value.has(it.id))
+  const total = pickedPoetry.length + pickedIdiom.length
+  if (total === 0) return
+
+  const poetryArticles = pickedPoetry.map((p) => ({
+    title: p.title,
+    content: p.content,
+    author: p.author,
+    dynasty: p.dynasty,
+    location: p.location,
+    source: p.source || p.dynasty,
+    year: typeof p.year === 'number' ? p.year : undefined,
+    tags: p.tags,
+    category: 'poetry' as const,
+  }))
+  const idiomArticles = pickedIdiom.map((it) => ({
+    title: it.title,
+    content: [
+      it.pinyin && `【拼音】${it.pinyin}`,
+      `【释义】${it.meaning}`,
+      it.source && `【出处】${it.source}`,
+      it.story && `【典故】${it.story}`,
+      it.example && `【例句】${it.example}`,
+    ]
+      .filter(Boolean)
+      .join('\n'),
+    tags: ['成语', it.category, ...it.tags].filter(Boolean),
+    source: it.source || '成语库',
+    location: it.location,
+    category: 'idiom' as const,
+  }))
+
+  const created = store.addArticles([...poetryArticles, ...idiomArticles])
+  uni.showToast({ title: `已导入 ${created.length} 项`, icon: 'success' })
+
+  // 重置选中
+  selectedPoetryIds.value = new Set()
+  selectedIdiomIds.value = new Set()
+  mapSheetVisible.value = false
+
+  setTimeout(() => uni.navigateBack(), 600)
+}
 </script>
 
 <style scoped>
@@ -483,6 +671,46 @@ function shortContent(content: string): string {
   padding: 24rpx;
   display: flex;
   flex-direction: column;
+}
+
+/* 地图 tab 需要去掉 padding 给 map 全宽全高 */
+.map-content {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 地图区域：默认满高，sheet 展开时缩到上半部 */
+.map-area-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  transition: flex-basis 0.25s ease;
+}
+.map-area-wrap.sheet-open {
+  flex: 0 0 35%;
+  min-height: 35%;
+}
+
+/* sheet 容器：占据下半部，不浮在 map 上方（避免 native 组件层级冲突） */
+.map-sheet-wrap {
+  flex: 0 0 50%;
+  min-height: 50%;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* 底部导入栏 */
+.map-import-bar {
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1rpx solid #eee;
+}
+.map-import-bar .action-btn {
+  width: 100%;
+  margin: 0;
 }
 
 /* 粘贴 */
