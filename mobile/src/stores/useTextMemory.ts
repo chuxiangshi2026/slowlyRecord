@@ -6,6 +6,7 @@ import type {
   MobileTextPrompt,
   MobileTextMemory,
 } from './useUtils/types'
+import { parseLocation } from '../utils/poetry-location'
 
 /**
  * 文本记忆 store（移动端）
@@ -29,6 +30,21 @@ interface TextMemoryDoc {
 
 function generateId(): string {
   return `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`
+}
+
+/**
+ * 为文章补全 geo 字段（如果缺失且能解析出来）
+ * 不可变操作：返回新对象，原文章不变
+ */
+function enrichGeo(article: MobileTextArticle): MobileTextArticle {
+  if (article.geo) return article
+  let coord = parseLocation(article.location)
+  if (!coord && article.title) coord = parseLocation(article.title)
+  if (!coord) return article
+  return {
+    ...article,
+    geo: { lng: coord.lng, lat: coord.lat, name: coord.name },
+  }
 }
 
 function readDoc(): TextMemoryDoc {
@@ -99,9 +115,17 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     loading.value = true
     try {
       const doc = readDoc()
-      articles.value = doc.articles
+      // 加载时为缺少 geo 的旧数据补全（一次性迁移）
+      let needPersist = false
+      const enriched = doc.articles.map((a) => {
+        const next = enrichGeo(a)
+        if (next !== a) needPersist = true
+        return next
+      })
+      articles.value = enriched
       notes.value = doc.notes
       prompts.value = doc.prompts
+      if (needPersist) persist()
     } finally {
       loading.value = false
       initialized.value = true
@@ -121,7 +145,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
 
   function addArticle(input: Partial<MobileTextArticle> & { title: string; content: string }) {
     const now = Date.now()
-    const article: MobileTextArticle = {
+    const article: MobileTextArticle = enrichGeo({
       _id: `article_${generateId()}`,
       title: input.title,
       content: input.content,
@@ -135,7 +159,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
       ctime: now,
       utime: now,
       reviewCount: 0,
-    }
+    })
     articles.value.unshift(article)
     persist()
     return article
@@ -143,21 +167,23 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
 
   function addArticles(inputs: Array<Partial<MobileTextArticle> & { title: string; content: string }>) {
     const now = Date.now()
-    const created: MobileTextArticle[] = inputs.map((input, idx) => ({
-      _id: `article_${generateId()}_${idx}`,
-      title: input.title,
-      content: input.content,
-      author: input.author || '',
-      source: input.source || '',
-      location: input.location || '',
-      dynasty: input.dynasty || '',
-      category: input.category,
-      year: input.year,
-      tags: Array.isArray(input.tags) ? input.tags : [],
-      ctime: now,
-      utime: now,
-      reviewCount: 0,
-    }))
+    const created: MobileTextArticle[] = inputs.map((input, idx) =>
+      enrichGeo({
+        _id: `article_${generateId()}_${idx}`,
+        title: input.title,
+        content: input.content,
+        author: input.author || '',
+        source: input.source || '',
+        location: input.location || '',
+        dynasty: input.dynasty || '',
+        category: input.category,
+        year: input.year,
+        tags: Array.isArray(input.tags) ? input.tags : [],
+        ctime: now,
+        utime: now,
+        reviewCount: 0,
+      }),
+    )
     articles.value = [...created, ...articles.value]
     persist()
     return created
@@ -166,13 +192,21 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
   function updateArticle(id: string, patch: Partial<MobileTextArticle>) {
     const idx = articles.value.findIndex((a) => a._id === id)
     if (idx < 0) return false
-    articles.value[idx] = {
-      ...articles.value[idx],
+    const prev = articles.value[idx]
+    const merged: MobileTextArticle = {
+      ...prev,
       ...patch,
-      _id: articles.value[idx]._id,
-      ctime: articles.value[idx].ctime,
+      _id: prev._id,
+      ctime: prev.ctime,
       utime: Date.now(),
     }
+    // 如果 location 或 title 发生变化，丢弃旧 geo 重新解析
+    const locationChanged = patch.location !== undefined && patch.location !== prev.location
+    const titleChanged = patch.title !== undefined && patch.title !== prev.title
+    if (locationChanged || titleChanged) {
+      delete merged.geo
+    }
+    articles.value[idx] = enrichGeo(merged)
     persist()
     return true
   }
@@ -247,7 +281,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
   function restore(data: MobileTextMemory, mode: 'merge' | 'replace' = 'merge') {
     if (!data) return { added: 0, replaced: 0 }
     if (mode === 'replace') {
-      articles.value = data.articles || []
+      articles.value = (data.articles || []).map(enrichGeo)
       notes.value = data.notes || []
       prompts.value = data.prompts || []
       persist()
@@ -258,7 +292,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     const articleIds = new Set(articles.value.map((a) => a._id))
     for (const a of data.articles || []) {
       if (!articleIds.has(a._id)) {
-        articles.value.push(a)
+        articles.value.push(enrichGeo(a))
         articleIds.add(a._id)
         added++
       }
