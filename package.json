@@ -8,6 +8,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
+    "build:upx": "vite build && rm -rf /mnt/d/slowlyRecord-dist && cp -r dist /mnt/d/slowlyRecord-dist",
     "type-check": "vue-tsc --build",
     "test": "vitest",
     "test:run": "vitest run",
