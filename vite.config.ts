@@ -50,8 +50,24 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: './index.html'
-            }
-        }
+            },
+            output: {
+                manualChunks: {
+                    // ECharts/ZRender 体积大、变动少，独立成包避免与业务代码交织重复 transform
+                    echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'],
+                },
+            },
+        },
+        chunkSizeWarningLimit: 1500,
+    },
+    optimizeDeps: {
+        // 预构建 ECharts 各 barrel，build 时复用缓存可显著减少逐文件 transform
+        include: [
+            'echarts/core',
+            'echarts/charts',
+            'echarts/components',
+            'echarts/renderers',
+        ],
     },
     assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf', '**/*.traineddata'],
     define: {

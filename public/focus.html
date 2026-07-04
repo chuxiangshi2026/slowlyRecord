@@ -2041,6 +2041,9 @@
       if (appContainer) {
         appContainer.dataset.hasBg = next.backgroundImage ? 'true' : 'false';
       }
+      // 无背景图时禁用"图透明"滑条（仅调背景图层透明度，与左下角窗口透明度区分）
+      var bgOpacityInput = document.getElementById('style-bg-opacity');
+      if (bgOpacityInput) bgOpacityInput.disabled = !next.backgroundImage;
       syncStyleControls();
     }
 
