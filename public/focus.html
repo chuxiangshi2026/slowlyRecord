@@ -2674,15 +2674,14 @@
     function saveFocusModePendingAction(type, payload, at = Date.now()) {
       try {
         const userSetDoc = getUserSetDoc();
-        if (!userSetDoc) {
-          return;
-        }
+        if (!userSetDoc) return;
 
         if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
         userSetDoc.focusMode.pendingAction = {
           type,
           payload,
           at,
+          source: textMode ? 'text' : 'word',
         };
         utools.db.put(userSetDoc);
       } catch (e) {
