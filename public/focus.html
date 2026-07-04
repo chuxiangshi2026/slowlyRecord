@@ -288,6 +288,164 @@
       gap: 10px;
     }
 
+    /* ========== 文本专注滚动模式 ========== */
+    .text-focus {
+      flex: 1 1 auto;
+      align-self: stretch;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      padding: 2px 4px;
+      gap: 2px;
+      min-height: 0;
+      -webkit-app-region: drag;
+    }
+
+    .text-title {
+      font-size: calc(var(--focus-word-font-size) * 0.9);
+      font-weight: 600;
+      color: var(--focus-font-color);
+      text-align: center;
+      user-select: none;
+      line-height: 1.3;
+      opacity: var(--focus-content-opacity);
+      transition: color 0.3s ease, opacity 0.2s ease;
+    }
+
+    .text-meta {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      text-align: center;
+      user-select: none;
+      min-height: 12px;
+      line-height: 12px;
+      opacity: var(--focus-content-opacity);
+      transition: color 0.3s ease, opacity 0.2s ease;
+    }
+
+    .text-viewport {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+      -webkit-app-region: no-drag;
+      opacity: var(--focus-content-opacity);
+    }
+
+    .text-scroll-content {
+      font-size: var(--focus-text-font-size);
+      line-height: 1.8;
+      color: var(--focus-font-color);
+      white-space: pre-wrap;
+      word-break: break-word;
+      text-align: justify;
+      padding: 15% 4px 60% 4px;
+      transform: translateY(var(--text-scroll-offset));
+      will-change: transform;
+      transition: color 0.3s ease;
+      user-select: text;
+    }
+
+    .text-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 2px 0;
+      -webkit-app-region: no-drag;
+    }
+
+    .text-controls .icon {
+      color: var(--text-secondary);
+      opacity: calc(var(--focus-content-opacity, 1) * 0.85);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .text-controls .icon:hover {
+      color: #ffffff;
+      opacity: var(--focus-content-opacity, 1);
+    }
+
+    .text-speed-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      min-width: 26px;
+      text-align: center;
+      user-select: none;
+      line-height: 20px;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: calc(var(--focus-content-opacity, 1) * 0.85);
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .text-speed-label:hover {
+      color: #ffffff;
+      opacity: var(--focus-content-opacity, 1);
+    }
+
+    /* 单词模式下隐藏文本区块；文本模式下由 JS 控制 display */
+    .focus-container:not(.text-mode) .text-focus {
+      display: none;
+    }
+
+    .focus-container.text-mode .text-focus {
+      display: flex;
+    }
+
+    /* 文本模式：隐藏单词相关元素 */
+    .focus-container.text-mode .word,
+    .focus-container.text-mode .phonetic,
+    .focus-container.text-mode .dictation-input,
+    .focus-container.text-mode .dictation-slots,
+    .focus-container.text-mode .explains,
+    .focus-container.text-mode .actions,
+    .focus-container.text-mode .spell-hint,
+    .focus-container.text-mode .btn-spell,
+    .focus-container.text-mode .btn-edge,
+    .focus-container.text-mode .mode-label {
+      display: none !important;
+    }
+
+    /* 文本模式：隐藏标题区 */
+    .text-focus.hide-title .text-title,
+    .text-focus.hide-title .text-meta {
+      display: none;
+    }
+
+    /* 文本模式：隐藏左下角独立透明度条（改用同行内嵌版） */
+    .focus-container.text-mode > .opacity-bar {
+      display: none !important;
+    }
+
+    /* 文本模式：同行内嵌透明度条，跟随内容透明度 */
+    .text-controls .opacity-bar.text-opacity-bar {
+      position: static;
+      margin-left: auto;
+      opacity: var(--focus-content-opacity, 1) !important;
+    }
+
+    /* 贴边隐藏/预览时统一控制文本区块显隐 */
+    .focus-container.edge-hidden .text-focus {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .focus-container.edge-preview .text-focus {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* 锁定时文本正文区随窗口鼠标穿透（由 setIgnoreMouseEvents 控制） */
+    .focus-container.text-mode.locked .text-viewport {
+      pointer-events: none;
+    }
+
     .actions .icon {
       color: var(--text-secondary);
     }
@@ -513,6 +671,15 @@
       border-color: var(--primary-color);
     }
 
+    /* 无背景图时禁用"图透明"滑条，避免与左下角窗口透明度混淆 */
+    .style-row input[type="range"]#style-bg-opacity:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .style-row input[type="range"]#style-bg-opacity:disabled + .style-value {
+      opacity: 0.35;
+    }
+
 
     .edge-bubble {
       position: absolute;
@@ -640,6 +807,20 @@
       opacity: 1;
     }
 
+    /* 文本模式锁定后底部控件变灰变暗、不可点（与单词模式 .locked .actions 一致：
+       锁定后内容区穿透，仅顶部按钮可点） */
+    .focus-container.text-mode.locked .text-controls,
+    .focus-container.text-mode.locked .text-controls .icon,
+    .focus-container.text-mode.locked .text-controls .text-speed-label {
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .focus-container.text-mode.locked .opacity-bar {
+      pointer-events: none;
+      opacity: 0.25;
+    }
+
     .focus-container.locked .word,
     .focus-container.locked .phonetic,
     .focus-container.locked .explains,
@@ -719,6 +900,14 @@
       flex-shrink: 0;
     }
 
+    .opacity-label {
+      font-size: 10px;
+      color: var(--text-quaternary);
+      flex-shrink: 0;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+
     .opacity-slider {
       -webkit-appearance: none;
       appearance: none;
@@ -770,6 +959,44 @@
     <div class="dictation-slots" id="dictation-slots"></div>
     <div class="spell-hint" id="spell-hint" style="display:none">键盘输入字母拼写</div>
     <div class="explains" id="explains"></div>
+
+    <!-- 文本专注滚动模式 -->
+    <div class="text-focus" id="text-focus">
+      <div class="text-title" id="text-title"></div>
+      <div class="text-meta" id="text-meta"></div>
+      <div class="text-viewport" id="text-viewport">
+        <div class="text-scroll-content" id="text-scroll-content"></div>
+      </div>
+      <div class="text-controls">
+        <span class="icon" id="text-prev" title="上一篇">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </span>
+        <span class="icon" id="text-rewind" title="回退一点">
+          <svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+        </span>
+        <span class="icon" id="text-play" title="播放/暂停">
+          <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span class="icon" id="text-forward" title="快进一点">
+          <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+        </span>
+        <span class="icon" id="text-reset" title="重置">
+          <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        </span>
+        <span class="text-speed-label" id="text-speed-label" title="点击切换速度">1x</span>
+        <span class="icon" id="text-toggle-title" title="显示/隐藏标题">
+          <svg viewBox="0 0 24 24"><path d="M3 5h18v2H3V5zm0 4h18v2H3V9zm0 4h12v2H3v-2zm0 4h12v2H3v-2z"/></svg>
+        </span>
+        <span class="icon" id="text-next" title="下一篇">
+          <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+        </span>
+        <!-- 窗口透明度滑条（与按钮同行） -->
+        <div class="opacity-bar text-opacity-bar" title="窗口透明度">
+          <span class="opacity-label">窗</span>
+          <input type="range" class="opacity-slider" id="opacity-slider-text" min="30" max="100" value="100">
+        </div>
+      </div>
+    </div>
 
     <div class="actions">
       <!-- 上一个 -->
@@ -840,13 +1067,18 @@
         <span class="style-value" id="style-explain-font-size-value">11px</span>
       </div>
       <div class="style-row">
+        <label>文本</label>
+        <input type="range" id="style-text-font-size" min="12" max="32" value="16">
+        <span class="style-value" id="style-text-font-size-value">16px</span>
+      </div>
+      <div class="style-row">
         <label>背景</label>
         <button class="style-btn" id="style-bg-select" type="button">选择</button>
         <button class="style-btn" id="style-bg-clear" type="button">清除</button>
         <input type="file" id="style-bg-file" accept="image/*" style="display:none">
       </div>
       <div class="style-row">
-        <label>透明</label>
+        <label>图透明</label>
         <input type="range" id="style-bg-opacity" min="0" max="100" value="35">
         <span class="style-value" id="style-bg-opacity-value">35%</span>
       </div>
@@ -856,9 +1088,9 @@
     <span class="icon btn-list" id="btn-list" title="返回列表">
       <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
     </span>
-    <!-- 透明度滑条 -->
-    <div class="opacity-bar">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3-8c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>
+    <!-- 窗口透明度滑条 -->
+    <div class="opacity-bar" title="窗口透明度">
+      <span class="opacity-label">窗</span>
       <input type="range" class="opacity-slider" id="opacity-slider" min="30" max="100" value="100">
     </div>
     <div class="counter" id="counter">0/0</div>
@@ -886,12 +1118,11 @@
       fontColor: '',
       fontSize: 20,
       explainFontSize: 11,
+      textFontSize: 16,
       backgroundImage: '',
       backgroundImageOpacity: 0.35,
     };
     let currentStyleSettings = { ...DEFAULT_FOCUS_STYLE };
-    let lastStyleSignature = '';
-    let focusStylePollTimer = null;
 
     // 词库分片相关常量
     const WORDBANK_CHUNK_PREFIX = 'slowly-record-wordbank-chunk-v2:';
@@ -899,6 +1130,10 @@
 
     // 当前词库ID（从URL参数获取）
     let currentBankId = '';
+
+    // 文本专注模式：当前文章ID
+    let currentArticleId = '';
+    let textMode = false;
 
     function getWordBankChunkId(bankId, chunkIndex) {
       return WORDBANK_CHUNK_PREFIX + bankId + ':' + chunkIndex;
@@ -1041,7 +1276,8 @@
             try {
               allLoadedWords = utools.db.allDocs('words-list');
             } catch (e) {
-              allLoadedWords = utools.db.allDocs();
+              allLoadedWords = [];
+              console.warn('加载词库失败:', e);
             }
           }
 
@@ -1249,15 +1485,21 @@
     }
 
     // 标记认识
-    function markRemembered() {
+    function markRemembered(forever) {
       var word = words[currentIndex];
       if (!word) return;
 
-      word.level = Math.min(7, (word.level || 1) + 1);
-      // 答对后设为不需要复习（刚复习过），等 upReview 根据间隔时间重新计算
-      word.isReview = false;
-      if (word.level >= 7) word.remember = true;
-      word.learnDate = new Date();
+      if (forever) {
+        // 永久记住：直接标记为已掌握，不再进入复习
+        word.remember = true;
+        word.isReview = false;
+      } else {
+        word.level = Math.min(7, (word.level || 1) + 1);
+        // 答对后设为不需要复习（刚复习过），等 upReview 根据间隔时间重新计算
+        word.isReview = false;
+        if (word.level >= 7) word.remember = true;
+      }
+      word.learnDate = Date.now();
 
       // 保存到旧数据库（兼容）
       if (typeof utools !== 'undefined') utools.db.put(word);
@@ -1561,6 +1803,232 @@
       }
     }
 
+    // ========== 文本专注滚动模式 ==========
+    var TEXT_SPEED_LEVELS = [0.5, 1, 2, 4];
+    var textSpeedIndex = 1;          // 默认 1x
+    var textBaseSpeed = 24;          // 基准像素/秒
+    var textOffset = 0;              // 当前滚动偏移
+    var textPlaying = false;
+    var textRafId = null;
+    var textLastTs = 0;
+    var textMaxOffset = 0;
+
+    // 文章列表（用于上/下一篇切换）
+    var textArticles = [];
+    var textArticleIndex = -1;
+    var textTitleVisible = true;
+
+    var PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+    var PAUSE_SVG = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+    function enterTextMode() {
+      var app = document.getElementById('app');
+      if (app) app.classList.add('text-mode');
+      var btnSpell = document.getElementById('btn-spell');
+      if (btnSpell) btnSpell.style.display = 'none';
+
+      var btnPlay = document.getElementById('text-play');
+      var btnReset = document.getElementById('text-reset');
+      var btnSpeedLabel = document.getElementById('text-speed-label');
+      var btnPrev = document.getElementById('text-prev');
+      var btnNext = document.getElementById('text-next');
+      var btnRewind = document.getElementById('text-rewind');
+      var btnForward = document.getElementById('text-forward');
+      var btnToggleTitle = document.getElementById('text-toggle-title');
+      var viewport = document.getElementById('text-viewport');
+
+      if (btnPlay) btnPlay.addEventListener('click', function(e) { e.stopPropagation(); toggleTextPlay(); });
+      if (btnReset) btnReset.addEventListener('click', function(e) { e.stopPropagation(); resetTextScroll(); });
+      if (btnSpeedLabel) btnSpeedLabel.addEventListener('click', function(e) { e.stopPropagation(); cycleTextSpeed(); });
+      if (btnPrev) btnPrev.addEventListener('click', function(e) { e.stopPropagation(); switchTextArticle(-1); });
+      if (btnNext) btnNext.addEventListener('click', function(e) { e.stopPropagation(); switchTextArticle(1); });
+      if (btnRewind) btnRewind.addEventListener('click', function(e) { e.stopPropagation(); nudgeTextScroll(-1); });
+      if (btnForward) btnForward.addEventListener('click', function(e) { e.stopPropagation(); nudgeTextScroll(1); });
+      if (btnToggleTitle) btnToggleTitle.addEventListener('click', function(e) { e.stopPropagation(); toggleTextTitle(); });
+
+      let resizeRaf = null;
+      window.addEventListener('resize', function() {
+        if (resizeRaf) cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(recomputeTextScroll);
+      });
+      updateTextSpeedLabel();
+      updateTextNavButtons();
+    }
+
+    function loadTextArticle(articleId) {
+      var elContent = document.getElementById('text-scroll-content');
+
+      if (typeof utools === 'undefined' || !utools.db) {
+        if (elContent) elContent.textContent = '环境不支持';
+        return;
+      }
+
+      var doc = null;
+      try {
+        doc = utools.db.get('slowlyrecord-textmemory-data');
+      } catch (e) {
+        console.error('[文本专注] 读取文章失败:', e);
+      }
+
+      textArticles = (doc && Array.isArray(doc.articles)) ? doc.articles : [];
+      textArticleIndex = textArticles.findIndex(function(a) { return a._id === articleId; });
+      if (textArticleIndex === -1 && textArticles.length > 0) {
+        textArticleIndex = 0;
+      }
+      renderTextArticle();
+    }
+
+    function renderTextArticle() {
+      var elTitle = document.getElementById('text-title');
+      var elMeta = document.getElementById('text-meta');
+      var elContent = document.getElementById('text-scroll-content');
+      var article = textArticles[textArticleIndex];
+
+      if (!article) {
+        if (elTitle) elTitle.textContent = '未找到文章';
+        if (elMeta) elMeta.textContent = '';
+        if (elContent) elContent.textContent = '该文章可能已被删除';
+        updateTextNavButtons();
+        return;
+      }
+
+      if (elTitle) elTitle.textContent = article.title || '无标题';
+      var metaParts = [];
+      if (article.dynasty) metaParts.push(article.dynasty);
+      if (article.author) metaParts.push(article.author);
+      if (article.source) metaParts.push(article.source);
+      if (elMeta) elMeta.textContent = metaParts.join(' · ');
+      if (elContent) elContent.textContent = article.content || '';
+
+      updateTextNavButtons();
+
+      // 等待布局完成后初始化偏移（不自动播放，用户点播放按钮才开始）
+      requestAnimationFrame(function() {
+        recomputeTextScroll();
+        textOffset = 0;
+        applyTextOffset();
+        // 确保为暂停态并显示播放图标
+        pauseTextPlay();
+      });
+    }
+
+    function switchTextArticle(dir) {
+      var next = textArticleIndex + dir;
+      if (next < 0 || next >= textArticles.length) return;
+      textArticleIndex = next;
+      renderTextArticle();
+    }
+
+    function updateTextNavButtons() {
+      var btnPrev = document.getElementById('text-prev');
+      var btnNext = document.getElementById('text-next');
+      if (btnPrev) btnPrev.classList.toggle('disabled', textArticleIndex <= 0);
+      if (btnNext) btnNext.classList.toggle('disabled', textArticleIndex >= textArticles.length - 1);
+    }
+
+    function toggleTextTitle() {
+      textTitleVisible = !textTitleVisible;
+      var wrap = document.getElementById('text-focus');
+      if (wrap) wrap.classList.toggle('hide-title', !textTitleVisible);
+    }
+
+    function recomputeTextScroll() {
+      var viewport = document.getElementById('text-viewport');
+      var content = document.getElementById('text-scroll-content');
+      if (!viewport || !content) return;
+      var max = content.scrollHeight - viewport.clientHeight;
+      textMaxOffset = max > 0 ? max : 0;
+      if (textOffset > textMaxOffset) {
+        textOffset = textMaxOffset;
+        applyTextOffset();
+      }
+    }
+
+    function applyTextOffset() {
+      document.documentElement.style.setProperty('--text-scroll-offset', (-textOffset) + 'px');
+    }
+
+    function textTick(ts) {
+      if (!textPlaying) return;
+      if (!textLastTs) textLastTs = ts;
+      var delta = ts - textLastTs;
+      textLastTs = ts;
+      textOffset += textBaseSpeed * TEXT_SPEED_LEVELS[textSpeedIndex] * delta / 1000;
+      if (textOffset >= textMaxOffset) {
+        textOffset = textMaxOffset;
+        applyTextOffset();
+        pauseTextPlay();
+        showToast('已到底');
+        return;
+      }
+      applyTextOffset();
+      textRafId = requestAnimationFrame(textTick);
+    }
+
+    function startTextPlay() {
+      if (textPlaying) return;
+      // 已到底则从头开始
+      if (textMaxOffset > 0 && textOffset >= textMaxOffset) {
+        textOffset = 0;
+        applyTextOffset();
+      }
+      textPlaying = true;
+      textLastTs = 0;
+      updatePlayIcon();
+      textRafId = requestAnimationFrame(textTick);
+    }
+
+    function pauseTextPlay() {
+      textPlaying = false;
+      if (textRafId) {
+        cancelAnimationFrame(textRafId);
+        textRafId = null;
+      }
+      updatePlayIcon();
+    }
+
+    function toggleTextPlay() {
+      if (textPlaying) pauseTextPlay();
+      else startTextPlay();
+    }
+
+    function resetTextScroll() {
+      textOffset = 0;
+      applyTextOffset();
+    }
+
+    // 回退/快进一点（小幅滚动，单位为视口高度的一定比例）
+    var NUDGE_STEP_RATIO = 0.5;
+    function nudgeTextScroll(dir) {
+      var viewport = document.getElementById('text-viewport');
+      var step = (viewport ? viewport.clientHeight : 100) * NUDGE_STEP_RATIO;
+      textOffset = Math.max(0, Math.min(textMaxOffset, textOffset + dir * step));
+      applyTextOffset();
+    }
+
+    function changeTextSpeed(dir) {
+      textSpeedIndex = Math.max(0, Math.min(TEXT_SPEED_LEVELS.length - 1, textSpeedIndex + dir));
+      updateTextSpeedLabel();
+      showToast(TEXT_SPEED_LEVELS[textSpeedIndex] + 'x');
+    }
+
+    // 点击速度标签循环切换：0.5 → 1 → 2 → 4 → 0.5 ...
+    function cycleTextSpeed() {
+      textSpeedIndex = (textSpeedIndex + 1) % TEXT_SPEED_LEVELS.length;
+      updateTextSpeedLabel();
+      showToast(TEXT_SPEED_LEVELS[textSpeedIndex] + 'x');
+    }
+
+    function updateTextSpeedLabel() {
+      var label = document.getElementById('text-speed-label');
+      if (label) label.textContent = TEXT_SPEED_LEVELS[textSpeedIndex] + 'x';
+    }
+
+    function updatePlayIcon() {
+      var btn = document.getElementById('text-play');
+      if (btn) btn.innerHTML = textPlaying ? PAUSE_SVG : PLAY_SVG;
+    }
+
     // 事件监听
     document.getElementById('btn-prev').addEventListener('click', () => {
       if (currentIndex > 0) { currentIndex--; spellIndex = 0; dictationChecking = false; updateDisplay(); }
@@ -1607,7 +2075,8 @@
     function postFocusModeAction(channel, payload, options = {}) {
       const { persistPendingAction = false, persistStorageAction = true } = options;
       const actionAt = Date.now();
-      const action = { type: channel, payload, at: actionAt };
+      // 文本模式发出的动作标记 source，主窗口单词页据此忽略，避免误重建单词窗口
+      const action = { type: channel, payload, at: actionAt, source: textMode ? 'text' : 'word' };
 
       if (persistPendingAction) {
         saveFocusModePendingAction(channel, payload, actionAt);
@@ -1621,8 +2090,9 @@
         }
       }
 
+      // 三通道发送：sendToParent(主) + storage(备份) + DB pendingAction(poll 兜底)，
+      // 与单词专注模式一致，确保父窗口控制器可靠收到置顶/锁定动作。
       if (typeof utools !== 'undefined' && utools.sendToParent) {
-        utools.sendToParent({ channel, payload });
         try {
           utools.sendToParent(channel, payload);
         } catch (e) {}
@@ -1641,7 +2111,7 @@
         alwaysOnTop: value,
       };
       console.log('[专注模式] 发送数据:', messageData);
-      postFocusModeAction('setAlwaysOnTop', messageData);
+      postFocusModeAction('setAlwaysOnTop', messageData, { persistPendingAction: true });
       console.log('[专注模式] 消息已发送');
     }
 
@@ -1734,8 +2204,13 @@
       setLocked(!isLocked);
     });
 
+    let mouseRaf = null;
     document.addEventListener('mousemove', function(e) {
-      window._lastMousePos = { x: e.clientX, y: e.clientY };
+      if (mouseRaf) return;
+      mouseRaf = requestAnimationFrame(function() {
+        window._lastMousePos = { x: e.clientX, y: e.clientY };
+        mouseRaf = null;
+      });
     });
 
     // 返回列表按钮 - 根据来源返回对应的界面
@@ -1756,8 +2231,8 @@
         console.error('保存当前单词状态失败:', e);
       }
 
-      // 根据当前模式返回对应的界面：听写模式→听写练习，其他→单词列表
-      var returnAction = dictationMode ? 'openDictation' : 'openWordList';
+      // 根据当前模式返回对应的界面：文本模式→文本记忆，听写模式→听写练习，其他→单词列表
+      var returnAction = textMode ? 'openTextMemory' : (dictationMode ? 'openDictation' : 'openWordList');
       postFocusModeAction(returnAction, undefined, { persistPendingAction: true });
 
 
@@ -1777,7 +2252,8 @@
 
     // ========== 透明度设置 ==========
     let currentOpacity = 1.0;
-    const opacitySlider = document.getElementById('opacity-slider');
+    // 单词模式（左下角）与文本模式（同行内嵌）两个滑条，需保持同步
+    const opacitySliders = Array.from(document.querySelectorAll('.opacity-slider'));
 
     // 当前主题是否为暗黑模式
     const isDarkMode = document.documentElement.classList.contains('dark-theme');
@@ -1805,23 +2281,25 @@
         appContainer.style.background = `rgba(${bgR}, ${bgG}, ${bgB}, ${validOpacity})`;
       }
 
-      // 同步滑条
-      if (opacitySlider) {
-        opacitySlider.value = Math.round(validOpacity * 100);
-      }
+      // 文字内容随透明度淡出（文本模式下文字密集，需与背景同步淡出）
+      document.documentElement.style.setProperty('--focus-content-opacity', String(validOpacity));
+
+      // 同步所有滑条
+      const sliderValue = Math.round(validOpacity * 100);
+      opacitySliders.forEach((s) => { if (s.value != sliderValue) s.value = sliderValue; });
 
       console.log('透明度已应用:', validOpacity, '主题:', isDark ? 'dark' : 'light');
     }
 
-    // 滑条调节透明度
-    if (opacitySlider) {
-      opacitySlider.addEventListener('input', (e) => {
+    // 滑条调节透明度（任一滑条触发，自动同步另一个）
+    opacitySliders.forEach((slider) => {
+      slider.addEventListener('input', (e) => {
         const value = parseInt(e.target.value);
         const opacity = value / 100;
         applyOpacity(opacity);
         saveFocusModeSetting('opacity', opacity);
       });
-    }
+    });
 
     // 通过 Ctrl+滚轮调节透明度
     document.addEventListener('wheel', (e) => {
