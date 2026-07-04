@@ -1,4 +1,4 @@
-import type {MemoryFirmnessTpye} from "./words";
+import type {MemoryFirmnessType} from "./words";
 
 /*
 * 加入单词后退出插件
@@ -28,9 +28,11 @@ export type OcrKeyType = Record<OcrPlatform, {
  * 专注模式待处理动作
  */
 export interface FocusModePendingAction {
-    type: 'openWordList' | 'openDictation' | 'setAlwaysOnTop' | 'setEdgeStickEnabled' | 'restoreFromEdge' | 'expandFromEdge' | 'collapseToEdge' | 'setLocked' | 'focusLockWindow' | 'wordChanged' | string;
+    type: 'openWordList' | 'openDictation' | 'openTextMemory' | 'setAlwaysOnTop' | 'setEdgeStickEnabled' | 'restoreFromEdge' | 'expandFromEdge' | 'collapseToEdge' | 'setLocked' | 'focusLockWindow' | 'wordChanged' | string;
     payload?: any;
     at: number;
+    /** 动作来源：'word'=单词专注模式，'text'=文本专注模式，用于父窗口区分处理 */
+    source?: 'word' | 'text';
 }
 
 /**
@@ -59,7 +61,7 @@ export type UserSetType = DbDoc<{
     shortcutEnabled: boolean;
     translationPlatform: TranslationPlatform;
     ocrPlatform: OcrPlatform;
-    memoryFirmness: MemoryFirmnessTpye;
+    memoryFirmness: MemoryFirmnessType;
     keys: KeyType;
     ocrKeys: OcrKeyType;
     focusMode: FocusModeSettings;

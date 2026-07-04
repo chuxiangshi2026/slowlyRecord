@@ -47,6 +47,9 @@
       --focus-font-color: var(--text-primary);
       --focus-word-font-size: 20px;
       --focus-explain-font-size: 11px;
+      --focus-text-font-size: 16px;
+      --text-scroll-offset: 0px;
+      --focus-content-opacity: 1;  /* 文字内容随窗口透明度淡出 */
       --focus-bg-image-opacity: 0.35;
       --focus-bg-image: none;
     }
@@ -2303,6 +2306,12 @@
 
     // 通过 Ctrl+滚轮调节透明度
     document.addEventListener('wheel', (e) => {
+      // 文本模式：普通滚轮前进/后退（小幅滚动正文）
+      if (textMode && !e.ctrlKey) {
+        e.preventDefault();
+        nudgeTextScroll(e.deltaY > 0 ? 1 : -1);
+        return;
+      }
       if (e.ctrlKey) {
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.05 : 0.05;
@@ -2484,17 +2493,21 @@
       var fontColorInput = document.getElementById('style-font-color');
       var fontSizeInput = document.getElementById('style-font-size');
       var explainFontSizeInput = document.getElementById('style-explain-font-size');
+      var textFontSizeInput = document.getElementById('style-text-font-size');
       var bgOpacityInput = document.getElementById('style-bg-opacity');
       var fontSizeValue = document.getElementById('style-font-size-value');
       var explainFontSizeValue = document.getElementById('style-explain-font-size-value');
+      var textFontSizeValue = document.getElementById('style-text-font-size-value');
       var bgOpacityValue = document.getElementById('style-bg-opacity-value');
 
       if (fontColorInput) fontColorInput.value = currentStyleSettings.fontColor || getThemeDefaultFontColor();
       if (fontSizeInput) fontSizeInput.value = String(currentStyleSettings.fontSize);
       if (explainFontSizeInput) explainFontSizeInput.value = String(currentStyleSettings.explainFontSize);
+      if (textFontSizeInput) textFontSizeInput.value = String(currentStyleSettings.textFontSize);
       if (bgOpacityInput) bgOpacityInput.value = String(Math.round(currentStyleSettings.backgroundImageOpacity * 100));
       if (fontSizeValue) fontSizeValue.textContent = currentStyleSettings.fontSize + 'px';
       if (explainFontSizeValue) explainFontSizeValue.textContent = currentStyleSettings.explainFontSize + 'px';
+      if (textFontSizeValue) textFontSizeValue.textContent = currentStyleSettings.textFontSize + 'px';
       if (bgOpacityValue) bgOpacityValue.textContent = Math.round(currentStyleSettings.backgroundImageOpacity * 100) + '%';
     }
 
@@ -2503,15 +2516,16 @@
         fontColor: typeof settings.fontColor === 'string' ? settings.fontColor : DEFAULT_FOCUS_STYLE.fontColor,
         fontSize: clampNumber(settings.fontSize, 14, 40, DEFAULT_FOCUS_STYLE.fontSize),
         explainFontSize: clampNumber(settings.explainFontSize, 9, 24, DEFAULT_FOCUS_STYLE.explainFontSize),
+        textFontSize: clampNumber(settings.textFontSize, 12, 32, DEFAULT_FOCUS_STYLE.textFontSize),
         backgroundImage: typeof settings.backgroundImage === 'string' ? settings.backgroundImage : DEFAULT_FOCUS_STYLE.backgroundImage,
         backgroundImageOpacity: clampNumber(settings.backgroundImageOpacity, 0, 1, DEFAULT_FOCUS_STYLE.backgroundImageOpacity),
       };
       currentStyleSettings = next;
-      lastStyleSignature = focusStyleSignature(next);
 
       document.documentElement.style.setProperty('--focus-font-color', next.fontColor || 'var(--text-primary)');
       document.documentElement.style.setProperty('--focus-word-font-size', next.fontSize + 'px');
       document.documentElement.style.setProperty('--focus-explain-font-size', next.explainFontSize + 'px');
+      document.documentElement.style.setProperty('--focus-text-font-size', next.textFontSize + 'px');
       document.documentElement.style.setProperty('--focus-bg-image-opacity', String(next.backgroundImageOpacity));
       document.documentElement.style.setProperty('--focus-bg-image', next.backgroundImage ? 'url("' + escapeCssUrl(next.backgroundImage) + '")' : 'none');
 
@@ -2524,35 +2538,18 @@
       if (bgOpacityInput) bgOpacityInput.disabled = !next.backgroundImage;
       syncStyleControls();
     }
+    // 暴露给父窗口直接调用（与 updateEdgeStuckState 同机制）
+    window.applyFocusStyleSettings = applyFocusStyleSettings;
 
-    function focusStyleSignature(s) {
-      return [
-        s.fontColor || '',
-        s.fontSize,
-        s.explainFontSize,
-        s.backgroundImage ? '1' : '0',
-        s.backgroundImageOpacity,
-      ].join('|');
-    }
-
-    // 轮询 DB 样式字段，主窗口修改后实时应用（无需重开窗口）
-    function pollFocusStyleSettings() {
+    // 从 localStorage 读取样式（主窗口写入，同源共享），作为跨窗口兜底通道
+    function loadFocusStyleFromStorage() {
       try {
-        var userSetDoc = getUserSetDoc();
-        if (!userSetDoc || !userSetDoc.focusMode) return;
-        var fm = userSetDoc.focusMode;
-        var sig = focusStyleSignature({
-          fontColor: fm.fontColor,
-          fontSize: fm.fontSize,
-          explainFontSize: fm.explainFontSize,
-          backgroundImage: fm.backgroundImage,
-          backgroundImageOpacity: fm.backgroundImageOpacity,
-        });
-        if (sig !== lastStyleSignature) {
-          applyFocusStyleSettings({ ...DEFAULT_FOCUS_STYLE, ...fm });
+        var raw = localStorage.getItem('slowly-record-focus-style');
+        if (raw) {
+          applyFocusStyleSettings({ ...DEFAULT_FOCUS_STYLE, ...JSON.parse(raw) });
         }
       } catch (e) {
-        // 忽略轮询异常
+        // 忽略
       }
     }
 
@@ -2608,6 +2605,12 @@
           updateFocusStyleSetting('explainFontSize', clampNumber(e.target.value, 9, 24, 11));
         });
       }
+      var textFontSizeInput = document.getElementById('style-text-font-size');
+      if (textFontSizeInput) {
+        textFontSizeInput.addEventListener('input', function(e) {
+          updateFocusStyleSetting('textFontSize', clampNumber(e.target.value, 12, 32, 16));
+        });
+      }
       if (bgOpacityInput) {
         bgOpacityInput.addEventListener('input', function(e) {
           updateFocusStyleSetting('backgroundImageOpacity', clampNumber(e.target.value, 0, 100, 35) / 100);
@@ -2651,23 +2654,17 @@
 
 
     function saveFocusModeSetting(key, value) {
-      for (var attempt = 0; attempt < 3; attempt++) {
-        try {
-          const userSetDoc = getUserSetDoc();
-          if (!userSetDoc) {
-            console.warn('[专注模式] 未找到 user-set 配置文档，保存失败');
-            return;
-          }
-          if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
-          userSetDoc.focusMode[key] = value;
-          const result = utools.db.put(userSetDoc);
-          console.log('[专注模式] 保存设置结果:', key, value, result);
-          if (result && result.ok) return;
-          // _rev 冲突：重新读取最新文档后重试
-        } catch (e) {
-          console.error('保存设置失败:', e);
+      try {
+        const userSetDoc = getUserSetDoc();
+        if (!userSetDoc) {
+          console.warn('[专注模式] 未找到 user-set 配置文档，保存失败');
           return;
         }
+        if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
+        userSetDoc.focusMode[key] = value;
+        utools.db.put(userSetDoc);
+      } catch (e) {
+        console.error('保存设置失败:', e);
       }
     }
 
@@ -2739,6 +2736,21 @@
 
     // ========== 键盘快捷键 ==========
     document.addEventListener('keydown', (e) => {
+      // 文本专注滚动模式：独立快捷键，不触发单词逻辑
+      if (textMode) {
+        if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); setLocked(!isLocked); return; }
+        if (e.key === 'Escape') { e.preventDefault(); window.close(); return; }
+        if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); toggleTextPlay(); return; }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); nudgeTextScroll(-1); return; }
+        if (e.key === 'ArrowRight') { e.preventDefault(); nudgeTextScroll(1); return; }
+        if (e.key === 'ArrowUp') { e.preventDefault(); changeTextSpeed(-1); return; }
+        if (e.key === 'ArrowDown') { e.preventDefault(); changeTextSpeed(1); return; }
+        if (e.key === '[') { e.preventDefault(); switchTextArticle(-1); return; }
+        if (e.key === ']') { e.preventDefault(); switchTextArticle(1); return; }
+        if (e.key === 'h' || e.key === 'H') { e.preventDefault(); toggleTextTitle(); return; }
+        return;
+      }
+
       // 听写模式：输入框自行处理，仅拦截全局快捷键
       if (dictationMode && !dictationChecking) {
         // 让输入框处理大多数按键
@@ -2804,6 +2816,7 @@
       else if (e.shiftKey && e.key === 'T') { e.preventDefault(); showExplains = !showExplains; updateDisplay(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentIndex > 0) { currentIndex--; updateDisplay(); } }
       else if (e.key === 'ArrowRight') { e.preventDefault(); if (currentIndex < words.length - 1) { currentIndex++; updateDisplay(); } }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); markRemembered(true); }
       else if (e.key === 'Escape') { e.preventDefault(); window.close(); }
       else if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); setLocked(!isLocked); }
     });
@@ -2874,8 +2887,10 @@
       const autoSpeakParam = urlParams.get('autoSpeak');
       const autoSpeak = autoSpeakParam === '1' ? true : (autoSpeakParam === '0' ? false : false);
 
-      // 模式参数（dictation=听写模式）
+      // 模式参数（dictation=听写模式, text=文本专注滚动）
       const mode = urlParams.get('mode') || '';
+      // 文本模式文章ID
+      const articleId = urlParams.get('articleId') || '';
 
       return {
         currentIndex: isNaN(index) ? 0 : index,
@@ -2892,6 +2907,7 @@
         sortAsc: sortAsc,
         autoSpeak: autoSpeak,
         mode: mode,
+        articleId: articleId,
       };
     }
 
