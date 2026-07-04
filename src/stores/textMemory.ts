@@ -10,7 +10,7 @@ import type {
   BlankItem
 } from '@/types/text-memory';
 import cloneDeep from 'lodash.clonedeep';
-import { parseLocation } from '@/utils/poetry-location';
+import { parseTimelineLocation } from '@/utils/timeline-service';
 import {getDbAdapter} from '@/adapters/db';
 
 // 存储键名
@@ -38,7 +38,15 @@ interface LearningProgress {
 
 // 生成唯一ID
 function generateId(): string {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
+// 写入队列：串行化所有写操作，避免专注浮窗+主窗口并发时读-改-写竞态
+let writeQueue: Promise<any> = Promise.resolve();
+function enqueueWrite<T>(fn: () => Promise<T>): Promise<T> {
+  const run = writeQueue.then(fn, fn);
+  writeQueue = run.catch(() => {});
+  return run;
 }
 
 // 默认练习设置
@@ -214,7 +222,8 @@ export const useTextMemoryStore = defineStore('textMemory', {
      */
     enrichGeo(article: TextArticle): TextArticle {
       if (!article.geo && article.location) {
-        const coord = parseLocation(article.location);
+        // 历史地名扩展表（含中外近代）优先，内部已 fallback 到诗词古地名库
+        const coord = parseTimelineLocation(article.location);
         if (coord) {
           article.geo = { lng: coord.lng, lat: coord.lat, name: coord.name };
         }
@@ -226,6 +235,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
      * 添加文章
      */
     async addArticle(article: Omit<TextArticle, '_id' | '_rev' | 'ctime' | 'utime' | 'reviewCount'>) {
+      return enqueueWrite(async () => {
       try {
         const now = Date.now();
         let newArticle: TextArticle = {
@@ -252,12 +262,14 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('添加文章失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 更新文章
      */
     async updateArticle(article: TextArticle) {
+      return enqueueWrite(async () => {
       try {
         const updatedArticle = {
           ...article,
@@ -267,6 +279,13 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const doc = await this.getTextMemoryDoc();
         if (!doc?.articles) {
           return { success: false, error: '数据不存在' };
+        }
+
+        // location 变化时清除旧 geo 并重新解析地理坐标（enrichGeo 仅在无 geo 时解析）
+        const oldArticle = doc.articles.find((a: TextArticle) => a._id === article._id);
+        if (oldArticle && oldArticle.location !== article.location) {
+          delete (updatedArticle as any).geo;
+          this.enrichGeo(updatedArticle);
         }
 
         const articles = cloneDeep(doc.articles);
@@ -291,12 +310,14 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('更新文章失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 删除文章
      */
     async deleteArticle(articleId: string) {
+      return enqueueWrite(async () => {
       try {
         const doc = await this.getTextMemoryDoc();
         if (!doc) return { success: false, error: '数据不存在' };
@@ -333,6 +354,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('删除文章失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
@@ -386,6 +408,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
      * 添加笔记
      */
     async addNote(note: Omit<TextNote, '_id' | '_rev' | 'ctime'>) {
+      return enqueueWrite(async () => {
       try {
         const newNote: TextNote = {
           ...note,
@@ -407,14 +430,16 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('添加笔记失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 更新笔记
      */
     async updateNote(note: TextNote) {
+      return enqueueWrite(async () => {
       try {
-        note.utime = Date.now();
+        const updatedNote: TextNote = { ...note, utime: Date.now() };
 
         const doc = await this.getTextMemoryDoc();
         if (!doc?.notes) {
@@ -424,28 +449,30 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const notes = cloneDeep(doc.notes);
         const index = notes.findIndex((n: TextNote) => n._id === note._id);
         if (index !== -1) {
-          notes[index] = note;
+          notes[index] = updatedNote;
         }
 
         const success = await this.saveTextMemoryDoc({ notes });
         if (success) {
           const localIndex = this.currentNotes.findIndex(n => n._id === note._id);
           if (localIndex !== -1) {
-            this.currentNotes[localIndex] = note;
+            this.currentNotes[localIndex] = updatedNote;
           }
-          return { success: true, data: note };
+          return { success: true, data: updatedNote };
         }
         return { success: false, error: '更新失败' };
       } catch (error) {
         console.error('更新笔记失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 删除笔记
      */
     async deleteNote(noteId: string) {
+      return enqueueWrite(async () => {
       try {
         const doc = await this.getTextMemoryDoc();
         if (!doc?.notes) {
@@ -467,6 +494,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('删除笔记失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     // ============ 提示词操作 ============
@@ -494,6 +522,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
      * 添加提示词
      */
     async addPrompt(prompt: Omit<TextPrompt, '_id' | '_rev' | 'ctime'>) {
+      return enqueueWrite(async () => {
       try {
         const newPrompt: TextPrompt = {
           ...prompt,
@@ -516,12 +545,14 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('添加提示词失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 更新提示词
      */
     async updatePrompt(prompt: TextPrompt) {
+      return enqueueWrite(async () => {
       try {
         const doc = await this.getTextMemoryDoc();
         if (!doc?.prompts) {
@@ -547,12 +578,14 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('更新提示词失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 删除提示词
      */
     async deletePrompt(promptId: string) {
+      return enqueueWrite(async () => {
       try {
         const doc = await this.getTextMemoryDoc();
         if (!doc?.prompts) {
@@ -574,13 +607,15 @@ export const useTextMemoryStore = defineStore('textMemory', {
         console.error('删除提示词失败:', error);
         return { success: false, error: String(error) };
       }
+      });
     },
 
     /**
      * 更新提示词顺序
      */
     async reorderPrompts(prompts: TextPrompt[]) {
-      this.currentPrompts = prompts;
+      return enqueueWrite(async () => {
+      this.currentPrompts = [...prompts];
       // 批量更新顺序
       for (let i = 0; i < prompts.length; i++) {
         prompts[i].order = i;
@@ -594,6 +629,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
         allPrompts.push(...cloneDeep(prompts));
         await this.saveTextMemoryDoc({ prompts: allPrompts });
       }
+      });
     },
 
     // ============ 练习相关 ============

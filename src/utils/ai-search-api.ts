@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words';
 import { AppInfo } from '@/config';
+import type { LibraryTimelineEvent } from './timeline-service';
 
 /**
  * AI 搜索结果数据结构
@@ -36,6 +37,32 @@ const DEFAULT_CONFIG: AISearchConfig = {
   model: 'glm-4-flash'
 };
 
+/**
+ * 从 AI 返回内容中提取 JSON 对象
+ * 先剥离 markdown 代码围栏，再尝试直接 parse，失败则用正则提取
+ */
+function extractJson(content: string): any | null {
+  if (!content) return null;
+  // 剥离 markdown 代码围栏（```json / ``` 等标记行）
+  const stripped = content.replace(/```[a-zA-Z]*\n?/g, '').trim();
+  // 尝试直接 parse
+  try {
+    return JSON.parse(stripped);
+  } catch {
+    // 继续下面的正则提取
+  }
+  // 失败再用正则提取首个 {...} 块
+  const match = stripped.match(/\{[\s\S]*\}/);
+  if (match) {
+    try {
+      return JSON.parse(match[0]);
+    } catch {
+      // 忽略 parse 错误
+    }
+  }
+  return null;
+}
+
 // 提供商配置映射 - 使用单词列表中的 AI 设置
 const PROVIDER_CONFIGS: Record<string, { url: string; model: string; name: string }> = {
   deepseek: {
@@ -44,7 +71,7 @@ const PROVIDER_CONFIGS: Record<string, { url: string; model: string; name: strin
     name: 'DeepSeek'
   },
   qwen: {
-    url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
+    url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
     model: 'qwen-max',
     name: '通义千问'
   },
@@ -59,7 +86,7 @@ const PROVIDER_CONFIGS: Record<string, { url: string; model: string; name: strin
     name: '智谱GLM'
   },
   ollama: {
-    url: 'http://localhost:11434/api/generate',
+    url: 'http://localhost:11434/api/chat',
     model: 'qwen2.5:0.5b',
     name: 'Ollama'
   },
@@ -201,12 +228,10 @@ export async function searchPoetryWithAI(
     }
 
     // 解析 JSON
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
+    const data = extractJson(content);
+    if (!data) {
       throw new Error('无法解析 AI 返回内容');
     }
-
-    const data = JSON.parse(jsonMatch[0]);
     const poems = data.poems || data.data || [];
 
     return poems.map((poem: any, index: number) => ({
@@ -294,12 +319,10 @@ export async function searchArticleWithAI(
       throw new Error('AI 返回内容为空');
     }
 
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
+    const data = extractJson(content);
+    if (!data) {
       throw new Error('无法解析 AI 返回内容');
     }
-
-    const data = JSON.parse(jsonMatch[0]);
     const articles = data.articles || data.data || [];
 
     return articles.map((article: any, index: number) => ({
@@ -348,6 +371,109 @@ export async function smartSearchWithAI(
     return searchPoetryWithAI(keyword, dynasty, config);
   } else {
     return searchArticleWithAI(keyword, articleType, config);
+  }
+}
+
+/**
+ * 使用 AI 批量生成历史时间线事件
+ * @param topic 主题或年代范围，如"唐代大事""工业革命"
+ * @param options.count 期望生成条数
+ */
+export async function generateTimelineEventsWithAI(
+  topic: string,
+  options: { count?: number } = {},
+  config?: AISearchConfig
+): Promise<LibraryTimelineEvent[]> {
+  const aiConfig = config || getAISearchConfig();
+
+  if (!aiConfig.enabled || !aiConfig.apiKey) {
+    ElMessage.warning('请先配置 AI API Key');
+    return [];
+  }
+
+  const providerConfig = PROVIDER_CONFIGS[aiConfig.provider] || {
+    url: aiConfig.apiUrl,
+    model: aiConfig.model,
+  };
+
+  const count = Math.min(Math.max(options.count ?? 8, 1), 20);
+
+  const prompt = `请围绕主题"${topic}"，整理 ${count} 条历史时间线事件，涵盖中西方、近代，包括历史大事件、人物、年号、事件名、背景、发生地点、主要人物及人物关系。
+
+要求：
+1. 返回 ${count} 条相关事件，按年份升序
+2. 每条事件包含：title(事件名)、content(具体事件描述)、category(分类: politics|literature|science|thought|society，分别对应政治/文学/科学/思想/社会)、region(china|west，中国事件用china，外国事件用west)、year(公元年份，负数=公元前)、reign(年号，可空，仅中国朝代有)、era(时代标签，如"唐""文艺复兴""近代")、location(发生地点)、figures(主要人物数组，每项 {name,title,desc})、relations(人物关系数组，每项 {from,to,type,desc}，可空)、background(背景)、tags(标签数组)
+3. 只返回 JSON 格式，不要其他说明文字
+4. JSON 格式示例：
+{
+  "events": [
+    {
+      "title": "贞观之治开始",
+      "content": "唐太宗李世民即位，开启贞观之治……",
+      "category": "politics",
+      "region": "china",
+      "year": 627,
+      "reign": "贞观元年",
+      "era": "唐",
+      "location": "长安",
+      "figures": [{"name":"李世民","title":"唐太宗","desc":"唐朝第二位皇帝"}],
+      "relations": [{"from":"李世民","to":"魏征","type":"君臣","desc":"纳谏如流"}],
+      "background": "隋末战乱之后，百废待兴",
+      "tags": ["唐朝","贞观"]
+    }
+  ]
+}`;
+
+  try {
+    const response = await axios.post(
+      providerConfig.url,
+      {
+        model: providerConfig.model,
+        messages: [
+          { role: 'system', content: '你是一位历史学者，擅长按时间轴整理中外历史脉络、大事件、人物及人物关系。' },
+          { role: 'user', content: prompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 4000,
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${aiConfig.apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        timeout: 60000,
+      }
+    );
+
+    const content = response.data?.choices?.[0]?.message?.content;
+    if (!content) {
+      throw new Error('AI 返回内容为空');
+    }
+
+    const data = extractJson(content);
+    if (!data) {
+      throw new Error('无法解析 AI 返回内容');
+    }
+    const events = data.events || data.data || [];
+
+    return events.map((ev: any) => ({
+      title: ev.title || '未知事件',
+      content: ev.content || ev.body || '',
+      category: ev.category,
+      region: ev.region === 'china' ? 'china' : 'west',
+      year: typeof ev.year === 'number' ? ev.year : undefined,
+      reign: ev.reign,
+      era: ev.era,
+      location: ev.location,
+      figures: Array.isArray(ev.figures) ? ev.figures : [],
+      relations: Array.isArray(ev.relations) ? ev.relations : [],
+      background: ev.background,
+      tags: Array.isArray(ev.tags) ? ev.tags : [],
+    })) as LibraryTimelineEvent[];
+  } catch (error) {
+    console.error('AI 生成时间线事件失败:', error);
+    ElMessage.error('AI 生成失败，请检查 API Key 和网络连接');
+    return [];
   }
 }
 

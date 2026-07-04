@@ -664,6 +664,186 @@
         </div>
       </el-tab-pane>
 
+      <!-- 时间线 -->
+      <el-tab-pane label="时间线" name="timeline">
+        <el-radio-group v-model="timelineSubTab" size="small" style="margin-bottom: 16px">
+          <el-radio-button label="library">本地库</el-radio-button>
+          <el-radio-button label="manual">手动/批量</el-radio-button>
+          <el-radio-button label="ai">AI 生成</el-radio-button>
+        </el-radio-group>
+
+        <!-- 本地库 -->
+        <div v-if="timelineSubTab === 'library'">
+          <el-form :model="timelineForm" label-width="60px" size="small">
+            <el-form-item label="分类">
+              <el-select v-model="timelineForm.category" placeholder="全部" clearable style="width: 100%">
+                <el-option v-for="c in TIMELINE_CATEGORIES" :key="c.code" :label="c.label" :value="c.code" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="区域">
+              <el-select v-model="timelineForm.region" placeholder="全部" clearable style="width: 100%">
+                <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="朝代">
+              <el-select v-model="timelineForm.era" placeholder="全部" clearable filterable style="width: 100%">
+                <el-option v-for="e in availableTimelineEras" :key="e" :label="e" :value="e" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="年号">
+              <el-select v-model="timelineForm.reign" placeholder="全部" clearable filterable style="width: 100%">
+                <el-option v-for="r in availableTimelineReigns" :key="r" :label="r" :value="r" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="年份">
+              <div style="display: flex; align-items: center; gap: 6px; width: 100%">
+                <el-input v-model="timelineForm.yearFrom" type="number" placeholder="起始" style="flex: 1" />
+                <span style="color: #909399">—</span>
+                <el-input v-model="timelineForm.yearTo" type="number" placeholder="结束" style="flex: 1" />
+              </div>
+            </el-form-item>
+            <el-form-item label="搜索">
+              <el-input v-model="timelineForm.keyword" placeholder="事件名、人物、关键词..." clearable @keyup.enter="handleTimelineSearch">
+                <template #append><el-button @click="handleTimelineSearch">搜索</el-button></template>
+              </el-input>
+            </el-form-item>
+          </el-form>
+
+          <div v-if="timelineLoading" class="poetry-loading"><el-skeleton :rows="5" animated /></div>
+
+          <div v-else-if="timelineResults.length > 0" class="poetry-results">
+            <div class="poetry-toolbar">
+              <el-checkbox :model-value="isAllTimelineSelected" @change="handleSelectAllTimeline" size="small">全选</el-checkbox>
+              <span class="poetry-selected-count" v-if="selectedTimelineEvents.length > 0">已选 {{ selectedTimelineEvents.length }} 个</span>
+            </div>
+            <el-scrollbar height="340px">
+              <el-card
+                v-for="(ev, idx) in timelineResults"
+                :key="idx"
+                shadow="hover"
+                style="margin-bottom: 10px; cursor: pointer"
+                @click="selectTimelineEvent(ev)"
+                :class="{ selected: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) }"
+                size="small"
+              >
+                <template #header>
+                  <div style="display: flex; justify-content: space-between; align-items: center">
+                    <div style="display: flex; align-items: center; gap: 6px">
+                      <el-checkbox :model-value="selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year)" @click.stop @change="selectTimelineEvent(ev)" />
+                      <span style="font-weight: bold; font-size: 13px">{{ ev.title }}</span>
+                    </div>
+                    <div>
+                      <el-tag size="small" type="info" style="margin-right: 6px" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
+                      <el-tag size="small" v-if="ev.era">{{ ev.era }}</el-tag>
+                    </div>
+                  </div>
+                </template>
+                <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; margin-bottom: 6px; color: var(--utools-text-secondary)">
+                  {{ ev.content.substring(0, 80) }}{{ ev.content.length > 80 ? '...' : '' }}
+                </div>
+                <div v-if="ev.location" style="font-size: 11px; color: #909399">📍 {{ ev.location }}</div>
+              </el-card>
+            </el-scrollbar>
+          </div>
+
+          <div v-else class="poetry-placeholder"><el-empty description="请选择分类/区域或输入关键词搜索"/></div>
+        </div>
+
+        <!-- 手动/批量 -->
+        <div v-else-if="timelineSubTab === 'manual'">
+          <el-collapse style="margin-bottom: 12px">
+            <el-collapse-item title="📝 格式说明（点击展开）" name="fmt">
+              <div style="font-size: 12px; color: #606266; line-height: 1.7">
+                <p>人物格式：每行 <code>人名|头衔|简介</code>（头衔、简介可省）</p>
+                <p>关系格式：每行 <code>人物甲|人物乙|关系类型|说明</code>（说明可省）</p>
+                <p>批量导入：多事件用 <code>---</code> 分隔，每段可写「标题：/分类：/区域：/年份：/年号：/时代：/地点：/标签：/背景：/人物：/关系：」元数据，其余行作为正文。</p>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
+
+          <el-form :model="timelineManualForm" label-width="60px" size="small">
+            <el-form-item label="标题"><el-input v-model="timelineManualForm.title" placeholder="事件名称"/></el-form-item>
+            <el-form-item label="内容"><el-input v-model="timelineManualForm.content" type="textarea" :rows="4" placeholder="具体事件描述..."/></el-form-item>
+            <el-form-item label="分类">
+              <el-select v-model="timelineManualForm.category" style="width: 100%">
+                <el-option v-for="c in TIMELINE_CATEGORIES" :key="c.code" :label="c.label" :value="c.code" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="区域">
+              <el-select v-model="timelineManualForm.region" style="width: 100%">
+                <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="年份"><el-input v-model="timelineManualForm.year" type="number" placeholder="公元年份，负数=公元前"/></el-form-item>
+            <el-form-item label="年号"><el-input v-model="timelineManualForm.reign" placeholder="如 贞观元年（可空）"/></el-form-item>
+            <el-form-item label="时代"><el-input v-model="timelineManualForm.era" placeholder="如 唐 / 文艺复兴（可空）"/></el-form-item>
+            <el-form-item label="地点"><el-input v-model="timelineManualForm.location" placeholder="发生地点"/></el-form-item>
+            <el-form-item label="人物"><el-input v-model="timelineManualForm.figures" type="textarea" :rows="3" placeholder="每行：人名|头衔|简介"/></el-form-item>
+            <el-form-item label="关系"><el-input v-model="timelineManualForm.relations" type="textarea" :rows="3" placeholder="每行：甲|乙|关系|说明"/></el-form-item>
+            <el-form-item label="背景"><el-input v-model="timelineManualForm.background" type="textarea" :rows="2" placeholder="事件背景（可空）"/></el-form-item>
+            <el-form-item label="标签">
+              <el-select v-model="timelineManualForm.tags" multiple filterable allow-create placeholder="选择或输入标签" style="width: 100%">
+                <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag" />
+              </el-select>
+            </el-form-item>
+          </el-form>
+
+          <el-divider>批量导入</el-divider>
+          <el-input v-model="timelineBatchContent" type="textarea" :rows="6" placeholder="粘贴批量事件文本，用 --- 分隔..." />
+        </div>
+
+        <!-- AI 生成 -->
+        <div v-else>
+          <el-alert title="AI 批量生成历史事件" type="info" :closable="false" style="margin-bottom: 12px">
+            输入主题或年代范围（如「唐代大事」「工业革命」「一战」），AI 自动整理一批事件供挑选导入。可在下方选择 AI，未填 API Key 时使用「单词列表 → 设置」中的默认配置。
+          </el-alert>
+          <el-form :model="timelineAiForm" label-width="70px" size="small" style="margin-bottom: 12px">
+            <el-form-item label="AI 提供商">
+              <el-select v-model="timelineAiForm.provider" placeholder="使用默认 AI" clearable style="width: 100%">
+                <el-option v-for="p in AI_PROVIDER_OPTIONS" :key="p.value" :label="p.label" :value="p.value" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="API Key" v-if="timelineAiForm.provider">
+              <el-input v-model="timelineAiForm.apiKey" type="password" show-password placeholder="留空则使用单词列表设置中的 Key" />
+            </el-form-item>
+          </el-form>
+          <el-input v-model="timelineAiTopic" placeholder="输入主题，如 唐代大事 / 工业革命 / 法国大革命">
+            <template #append><el-button @click="handleTimelineAiGenerate" :loading="timelineAiLoading">生成</el-button></template>
+          </el-input>
+
+          <div v-if="timelineAiResults.length > 0" class="poetry-results" style="margin-top: 16px">
+            <div class="poetry-toolbar">
+              <span class="poetry-selected-count" v-if="selectedTimelineAi.length > 0">已选 {{ selectedTimelineAi.length }} 个</span>
+            </div>
+            <el-scrollbar height="320px">
+              <el-card
+                v-for="(ev, idx) in timelineAiResults"
+                :key="idx"
+                shadow="hover"
+                style="margin-bottom: 10px; cursor: pointer"
+                @click="selectTimelineAi(ev)"
+                :class="{ selected: selectedTimelineAi.some(s => s.title === ev.title && s.year === ev.year) }"
+                size="small"
+              >
+                <template #header>
+                  <div style="display: flex; justify-content: space-between; align-items: center">
+                    <div style="display: flex; align-items: center; gap: 6px">
+                      <el-checkbox :model-value="selectedTimelineAi.some(s => s.title === ev.title && s.year === ev.year)" @click.stop @change="selectTimelineAi(ev)" />
+                      <span style="font-weight: bold; font-size: 13px">{{ ev.title }}</span>
+                    </div>
+                    <el-tag size="small" type="info" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
+                  </div>
+                </template>
+                <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary)">
+                  {{ ev.content.substring(0, 80) }}{{ ev.content.length > 80 ? '...' : '' }}
+                </div>
+              </el-card>
+            </el-scrollbar>
+          </div>
+          <div v-else-if="!timelineAiLoading" class="poetry-placeholder"><el-empty description="输入主题后点击生成"/></div>
+        </div>
+      </el-tab-pane>
+
       <!-- 地图 -->
       <el-tab-pane label="地图" name="poetryMap">
         <div class="poetry-map-tab">
@@ -678,6 +858,7 @@
               <el-option label="全部" value=""/>
               <el-option label="诗词" value="poetry"/>
               <el-option label="成语" value="idiom"/>
+              <el-option label="时间线" value="timeline"/>
             </el-select>
 
             <el-select
@@ -686,7 +867,7 @@
                 clearable
                 size="small"
                 style="width: 160px; margin-left: 8px"
-                :disabled="mapCategory === 'idiom'"
+                :disabled="mapCategory === 'idiom' || mapCategory === 'timeline'"
                 @change="handleMapDynastyChange"
             >
               <el-option label="先秦" value="xianqin"/>
@@ -711,7 +892,7 @@
                 collapse-tags-tooltip
                 size="small"
                 style="width: 180px; margin-left: 8px"
-                :disabled="mapCategory === 'idiom'"
+                :disabled="mapCategory === 'idiom' || mapCategory === 'timeline'"
                 @change="handleMapAuthorChange"
             >
               <el-option
@@ -746,6 +927,9 @@
             </span>
             <span class="map-legend-item">
               <span class="map-legend-circle"></span>成语
+            </span>
+            <span class="map-legend-item">
+              <span class="map-legend-star"></span>时间线事件
             </span>
           </div>
 
@@ -962,6 +1146,46 @@
       <el-button @click="showIdiomLocationDialog = false">关闭</el-button>
     </template>
   </el-dialog>
+
+  <!-- 地点时间线事件列表弹窗 -->
+  <el-dialog
+      v-model="showTimelineLocationDialog"
+      :title="timelineLocationDialogTitle"
+      width="480px"
+      destroy-on-close
+  >
+    <div style="max-height: 400px; overflow-y: auto;">
+      <div
+          v-for="(ev, idx) in timelineLocationDialogEvents"
+          :key="idx"
+          style="padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e4e7ed; cursor: pointer;"
+          :style="{ background: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) ? '#fef0f0' : '#fff', borderColor: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) ? '#fbc4c4' : '#e4e7ed' }"
+          @click="toggleTimelineInDialog(ev)"
+      >
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <el-checkbox
+              :model-value="selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year)"
+              @click.stop
+              @update:model-value="toggleTimelineInDialog(ev)"
+          />
+          <div style="flex: 1;">
+            <div style="font-size: 14px; font-weight: bold; color: #303133;">{{ ev.title }}</div>
+            <div style="font-size: 12px; color: #e6a23c; margin-top: 2px;">
+              {{ ev.year != null ? (ev.year < 0 ? `公元前${Math.abs(ev.year)}年` : `公元${ev.year}年`) : '年代未知' }}
+              <span v-if="ev.era" style="color: #606266; margin-left: 6px;">{{ ev.era }}</span>
+            </div>
+            <div style="font-size: 12px; color: #909399; margin-top: 4px; line-height: 1.5;">
+              {{ (ev.content || '').split(/\n/).filter(l => l.trim()).slice(0, 2).join(' / ') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template #footer>
+      <el-button @click="showTimelineLocationDialog = false">关闭</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -997,6 +1221,21 @@ import {
   IDIOM_CATEGORIES,
   type IdiomItem
 } from '@/utils/idiom-service';
+import {
+  fetchAllTimelineEvents,
+  filterTimelineEvents,
+  mapLibraryEventToArticle,
+  parseTimelineLocation,
+  parseFigures,
+  parseRelations,
+  collectEras,
+  collectReigns,
+  TIMELINE_CATEGORIES,
+  TIMELINE_REGIONS,
+  type LibraryTimelineEvent
+} from '@/utils/timeline-service';
+import { generateTimelineEventsWithAI } from '@/utils/ai-search-api';
+import type { TimelineCategory, TimelineRegion } from '@/types/text-memory';
 
 interface Props {
   modelValue: boolean;
@@ -1012,6 +1251,7 @@ const emit = defineEmits<{
 const textStore = useTextMemoryStore();
 const activeTab = ref('manual');
 const importing = ref(false);
+const timelineSubTab = ref<'library' | 'manual' | 'ai'>('library');
 const activeCollapse = ref(['plain']); // 默认展开普通文本格式说明
 
 const importButtonText = computed(() => {
@@ -1020,6 +1260,10 @@ const importButtonText = computed(() => {
   }
   if (activeTab.value === 'idiom' && selectedIdioms.value.length > 0) {
     return `导入 ${selectedIdioms.value.length} 条成语`;
+  }
+  if (activeTab.value === 'timeline') {
+    const n = selectedTimelineEvents.value.length + selectedTimelineAi.value.length;
+    if (n > 0) return `导入 ${n} 个事件`;
   }
   return '导入';
 });
@@ -1094,16 +1338,244 @@ const isIdiomsIndeterminate = computed(() => {
       && !isAllIdiomsSelected.value;
 });
 
+// ==================== 时间线 ====================
+// 本地库
+const timelineForm = ref({
+  category: '' as TimelineCategory | '',
+  region: '' as TimelineRegion | '',
+  era: '',
+  reign: '',
+  yearFrom: '',
+  yearTo: '',
+  keyword: '',
+});
+const allTimelineEvents = ref<LibraryTimelineEvent[]>([]);
+const timelineResults = ref<LibraryTimelineEvent[]>([]);
+const selectedTimelineEvents = ref<LibraryTimelineEvent[]>([]);
+const timelineLoading = ref(false);
+const hasLoadedTimeline = ref(false);
+
+// 朝代/时代、年号/时期候选（库加载后计算）
+const availableTimelineEras = computed(() => collectEras(allTimelineEvents.value, timelineForm.value.region));
+const availableTimelineReigns = computed(() => collectReigns(allTimelineEvents.value, timelineForm.value.era));
+
+// 区域变化清空朝代/年号；朝代变化清空年号
+watch(() => timelineForm.value.region, () => {
+  timelineForm.value.era = '';
+  timelineForm.value.reign = '';
+});
+watch(() => timelineForm.value.era, () => {
+  timelineForm.value.reign = '';
+});
+
+// 手动/批量
+const timelineManualForm = ref({
+  title: '',
+  content: '',
+  category: 'politics' as TimelineCategory,
+  region: 'china' as TimelineRegion,
+  year: '' as number | '',
+  reign: '',
+  era: '',
+  location: '',
+  figures: '',   // 每行: 人名|头衔|简介
+  relations: '', // 每行: 甲|乙|关系|说明
+  background: '',
+  tags: [] as string[],
+});
+const timelineBatchContent = ref('');
+
+// AI 生成
+const timelineAiTopic = ref('');
+const timelineAiLoading = ref(false);
+const timelineAiResults = ref<LibraryTimelineEvent[]>([]);
+const selectedTimelineAi = ref<LibraryTimelineEvent[]>([]);
+const timelineAiForm = ref({
+  provider: '' as '' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'siliconflow' | 'openrouter' | 'custom',
+  apiKey: '',
+});
+
+// AI 提供商选项（label 与 ai-search-api 的 PROVIDER_CONFIGS 对齐）
+const AI_PROVIDER_OPTIONS = [
+  { label: '智谱 GLM（免费/有额度）', value: 'glm' },
+  { label: 'DeepSeek', value: 'deepseek' },
+  { label: '通义千问', value: 'qwen' },
+  { label: 'Kimi 月之暗面', value: 'kimi' },
+  { label: 'Ollama 本地模型', value: 'ollama' },
+  { label: 'SiliconFlow', value: 'siliconflow' },
+  { label: 'OpenRouter', value: 'openrouter' },
+  { label: '自定义', value: 'custom' },
+] as const;
+
+const isAllTimelineSelected = computed(() => {
+  return timelineResults.value.length > 0 && timelineResults.value.every(p => selectedTimelineEvents.value.some(s => s.title === p.title && s.year === p.year));
+});
+
+function selectTimelineEvent(ev: LibraryTimelineEvent) {
+  const idx = selectedTimelineEvents.value.findIndex(s => s.title === ev.title && s.year === ev.year);
+  if (idx > -1) {
+    selectedTimelineEvents.value.splice(idx, 1);
+  } else {
+    selectedTimelineEvents.value.push(ev);
+  }
+}
+
+function handleSelectAllTimeline(val: boolean) {
+  if (val) {
+    const set = new Map<string, LibraryTimelineEvent>();
+    selectedTimelineEvents.value.forEach(p => set.set(p.title + p.year, p));
+    timelineResults.value.forEach(p => { if (!set.has(p.title + p.year)) set.set(p.title + p.year, p); });
+    selectedTimelineEvents.value = Array.from(set.values());
+  } else {
+    const ids = new Set(timelineResults.value.map(p => p.title + p.year));
+    selectedTimelineEvents.value = selectedTimelineEvents.value.filter(p => !ids.has(p.title + p.year));
+  }
+}
+
+async function handleTimelineSearch() {
+  timelineLoading.value = true;
+  try {
+    if (!hasLoadedTimeline.value || allTimelineEvents.value.length === 0) {
+      allTimelineEvents.value = await fetchAllTimelineEvents();
+      hasLoadedTimeline.value = true;
+    }
+    timelineResults.value = filterTimelineEvents(allTimelineEvents.value, {
+      category: timelineForm.value.category || undefined,
+      region: timelineForm.value.region || undefined,
+      era: timelineForm.value.era || undefined,
+      reign: timelineForm.value.reign || undefined,
+      yearFrom: timelineForm.value.yearFrom || undefined,
+      yearTo: timelineForm.value.yearTo || undefined,
+      keyword: timelineForm.value.keyword,
+    });
+    const hasFilter = timelineForm.value.keyword || timelineForm.value.category || timelineForm.value.region
+      || timelineForm.value.era || timelineForm.value.reign || timelineForm.value.yearFrom || timelineForm.value.yearTo;
+    if (hasFilter) {
+      if (timelineResults.value.length > 0) {
+        ElMessage.success(`找到 ${timelineResults.value.length} 个事件`);
+      } else {
+        ElMessage.info('未找到匹配的事件');
+      }
+    }
+  } catch (e) {
+    console.error('时间线搜索失败', e);
+    ElMessage.error('搜索失败，请重试');
+  } finally {
+    timelineLoading.value = false;
+  }
+}
+
+// 把手动表单构造为事件
+function buildManualEvent(): LibraryTimelineEvent | null {
+  const f = timelineManualForm.value;
+  if (!f.title || !f.content) {
+    ElMessage.warning('请填写事件标题和内容');
+    return null;
+  }
+  return {
+    title: f.title,
+    content: f.content,
+    category: f.category,
+    region: f.region,
+    year: f.year === '' ? undefined : Number(f.year),
+    reign: f.reign || undefined,
+    era: f.era || undefined,
+    location: f.location || undefined,
+    figures: parseFigures(f.figures),
+    relations: parseRelations(f.relations),
+    background: f.background || undefined,
+    tags: f.tags,
+  };
+}
+
+// 解析批量文本（--- 分隔，每段含元数据 + 正文）
+function parseBatchTimeline(content: string): LibraryTimelineEvent[] {
+  const sections = content.split(/---+/).map(s => s.trim()).filter(Boolean);
+  const events: LibraryTimelineEvent[] = [];
+  const metaRe = (key: string) => new RegExp(`^${key}[：:]\\s*`);
+  for (const section of sections) {
+    const lines = section.split('\n');
+    const ev: any = { tags: [] };
+    const contentLines: string[] = [];
+    const figuresBuf: string[] = [];
+    const relationsBuf: string[] = [];
+    let inContent = false;
+    for (const line of lines) {
+      const t = line.trim();
+      if (!inContent && !t) continue;
+      if (!inContent && metaRe('标题').test(t)) ev.title = t.replace(metaRe('标题'), '');
+      else if (!inContent && metaRe('分类').test(t)) ev.category = t.replace(metaRe('分类'), '');
+      else if (!inContent && metaRe('区域').test(t)) ev.region = t.replace(metaRe('区域'), '');
+      else if (!inContent && metaRe('年份').test(t)) {
+        const y = t.replace(metaRe('年份'), '');
+        ev.year = y ? Number(y) : undefined;
+      }
+      else if (!inContent && metaRe('年号').test(t)) ev.reign = t.replace(metaRe('年号'), '');
+      else if (!inContent && metaRe('时代').test(t)) ev.era = t.replace(metaRe('时代'), '');
+      else if (!inContent && metaRe('地点').test(t)) ev.location = t.replace(metaRe('地点'), '');
+      else if (!inContent && metaRe('标签').test(t)) ev.tags = t.replace(metaRe('标签'), '').split(/[,，]/).map((s: string) => s.trim()).filter(Boolean);
+      else if (!inContent && metaRe('背景').test(t)) ev.background = t.replace(metaRe('背景'), '');
+      else if (!inContent && metaRe('人物').test(t)) figuresBuf.push(t.replace(metaRe('人物'), ''));
+      else if (!inContent && metaRe('关系').test(t)) relationsBuf.push(t.replace(metaRe('关系'), ''));
+      else { inContent = true; contentLines.push(line); }
+    }
+    ev.content = contentLines.join('\n').trim();
+    ev.figures = parseFigures(figuresBuf.join('\n'));
+    ev.relations = parseRelations(relationsBuf.join('\n'));
+    if (ev.title && ev.content) events.push(ev);
+  }
+  return events;
+}
+
+async function handleTimelineAiGenerate() {
+  if (!timelineAiTopic.value.trim()) {
+    ElMessage.warning('请输入主题，如"唐代大事""工业革命"');
+    return;
+  }
+  timelineAiLoading.value = true;
+  timelineAiResults.value = [];
+  selectedTimelineAi.value = [];
+  try {
+    // 选了具体 provider 时构造覆盖配置，否则用默认（getAISearchConfig）
+    let configOverride: AISearchConfig | undefined;
+    if (timelineAiForm.value.provider) {
+      const base = getAISearchConfig();
+      configOverride = {
+        ...base,
+        provider: timelineAiForm.value.provider,
+        apiKey: timelineAiForm.value.apiKey || base.apiKey,
+      };
+    }
+    const results = await generateTimelineEventsWithAI(timelineAiTopic.value, { count: 8 }, configOverride);
+    if (results.length > 0) {
+      timelineAiResults.value = results;
+      ElMessage.success(`AI 生成 ${results.length} 个事件`);
+    } else {
+      ElMessage.info('AI 未返回有效事件，请检查配置或换主题');
+    }
+  } finally {
+    timelineAiLoading.value = false;
+  }
+}
+
+function selectTimelineAi(ev: LibraryTimelineEvent) {
+  const idx = selectedTimelineAi.value.findIndex(s => s.title === ev.title && s.year === ev.year);
+  if (idx > -1) selectedTimelineAi.value.splice(idx, 1);
+  else selectedTimelineAi.value.push(ev);
+}
+
 // 内嵌地图
 const inlineMapContainer = ref<HTMLDivElement>();
 let inlineMap: L.Map | null = null;
 let inlineMarkerLayer: L.LayerGroup | null = null;
 let inlineTerritoryLayer: L.FeatureGroup | null = null;
 let inlineRouteLayer: L.LayerGroup | null = null;
+let initMapTimer: ReturnType<typeof setTimeout> | null = null;
+let initMapRetries = 0;
 
 const mapDynasty = ref('');
 const mapAuthor = ref<string[]>([]);
-const mapCategory = ref<'' | 'poetry' | 'idiom'>('');
+const mapCategory = ref<'' | 'poetry' | 'idiom' | 'timeline'>('');
 const showAuthorRoute = ref(false);
 
 // 地点作品弹窗
@@ -1144,6 +1616,25 @@ function openIdiomLocationDialog(items: IdiomItem[]) {
   idiomLocationDialogTitle.value = items[0].location || '未知地点';
   idiomLocationDialogIdioms.value = items;
   showIdiomLocationDialog.value = true;
+}
+
+// 地点时间线事件弹窗
+const showTimelineLocationDialog = ref(false);
+const timelineLocationDialogTitle = ref('');
+const timelineLocationDialogEvents = ref<LibraryTimelineEvent[]>([]);
+
+function openTimelineLocationDialog(events: LibraryTimelineEvent[]) {
+  if (!events.length) return;
+  timelineLocationDialogTitle.value = events[0].location || '未知地点';
+  timelineLocationDialogEvents.value = events;
+  showTimelineLocationDialog.value = true;
+}
+
+function toggleTimelineInDialog(ev: LibraryTimelineEvent) {
+  const idx = selectedTimelineEvents.value.findIndex(s => s.title === ev.title && s.year === ev.year);
+  if (idx > -1) selectedTimelineEvents.value.splice(idx, 1);
+  else selectedTimelineEvents.value.push(ev);
+  if (activeTab.value === 'poetryMap') renderInlineMarkers();
 }
 
 function toggleIdiomInDialog(item: IdiomItem) {
@@ -1298,9 +1789,18 @@ function initInlineMap() {
   const container = inlineMapContainer.value;
   // tab 切换动画或 Dialog 打开动画期间容器尺寸可能为 0，延迟重试
   if (container.offsetWidth === 0 || container.offsetHeight === 0) {
-    setTimeout(initInlineMap, 300);
+    if (initMapRetries >= 20) {
+      console.warn('[initInlineMap] 容器尺寸持续为 0，放弃初始化（已重试 20 次）');
+      initMapRetries = 0;
+      return;
+    }
+    initMapRetries++;
+    initMapTimer = setTimeout(initInlineMap, 300);
     return;
   }
+  // 容器已就绪，重置重试计数与定时器
+  initMapRetries = 0;
+  initMapTimer = null;
   if (inlineMap) {
     inlineMap.remove();
     inlineMap = null;
@@ -1344,7 +1844,7 @@ function initInlineMap() {
 }
 
 function getMapDisplayPoems(): PoetryItem[] {
-  if (mapCategory.value === 'idiom') return [];
+  if (mapCategory.value === 'idiom' || mapCategory.value === 'timeline') return [];
   let poems = allLibraryPoems.value.filter(p => p.location);
   if (mapAuthor.value.length) {
     poems = poems.filter(p => mapAuthor.value.includes(p.author));
@@ -1355,8 +1855,13 @@ function getMapDisplayPoems(): PoetryItem[] {
 }
 
 function getMapDisplayIdioms(): IdiomItem[] {
-  if (mapCategory.value === 'poetry') return [];
+  if (mapCategory.value === 'poetry' || mapCategory.value === 'timeline') return [];
   return allIdioms.value.filter(it => it.location);
+}
+
+function getMapDisplayTimeline(): LibraryTimelineEvent[] {
+  if (mapCategory.value !== 'timeline') return [];
+  return allTimelineEvents.value.filter(ev => ev.location);
 }
 
 function renderInlineMarkers() {
@@ -1367,6 +1872,86 @@ function renderInlineMarkers() {
   renderPoetryMarkers();
   // 成语标记
   renderIdiomMarkers();
+  // 时间线事件标记
+  renderTimelineMarkers();
+}
+
+// 时间线事件标记（星形，区别于诗词圆点/成语方形）
+function renderTimelineMarkers() {
+  if (!inlineMap || !inlineMarkerLayer) return;
+  const events = getMapDisplayTimeline();
+  if (!events.length) return;
+
+  // 按坐标分组
+  const locationMap = new Map<string, LibraryTimelineEvent[]>();
+  events.forEach(ev => {
+    const coord = parseTimelineLocation(ev.location);
+    if (!coord) return;
+    const key = `${coord.lng},${coord.lat}`;
+    const list = locationMap.get(key) || [];
+    list.push(ev);
+    locationMap.set(key, list);
+  });
+
+  locationMap.forEach((list) => {
+    const coord = parseTimelineLocation(list[0].location);
+    if (!coord) return;
+
+    const hasMultiple = list.length > 1;
+    const isSelected = list.some(ev => selectedTimelineEvents.value.some(s => s.title === ev.title && s.year === ev.year));
+    const allSelected = list.every(ev => selectedTimelineEvents.value.some(s => s.title === ev.title && s.year === ev.year));
+
+    const size = hasMultiple ? 20 : 16;
+    const fill = allSelected ? '#67c23a' : (isSelected ? '#95d475' : '#f56c6c');
+    const icon = L.divIcon({
+      className: 'timeline-inline-marker',
+      html: `<div style="
+        width:${size}px;height:${size}px;
+        background:${fill};border:2px solid #fff;
+        box-shadow:0 0 0 1.5px ${fill}, 0 1px 4px rgba(0,0,0,0.3);
+        display:flex;align-items:center;justify-content:center;
+        font-size:10px;font-weight:bold;color:#fff;
+        clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+      ">${hasMultiple ? list.length : ''}</div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+    });
+
+    const marker = L.marker([coord.lat, coord.lng], { icon }).addTo(inlineMarkerLayer!);
+
+    if (hasMultiple) {
+      const titles = list.slice(0, 3).map(ev => ev.title).join('、') + (list.length > 3 ? '...' : '');
+      const selectedCount = list.filter(ev => selectedTimelineEvents.value.some(s => s.title === ev.title && s.year === ev.year)).length;
+      marker.bindTooltip(
+        `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
+         <div style="font-size:12px;color:#666">共 ${list.length} 个事件 · 已选 ${selectedCount} 个</div>
+         <div style="font-size:11px;color:#909399;margin-top:2px">${titles}</div>
+         <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
+        { direction: 'top', offset: [0, -6] }
+      );
+    } else {
+      const ev = list[0];
+      const yearStr = ev.year != null ? (ev.year < 0 ? `公元前${Math.abs(ev.year)}年` : `公元${ev.year}年`) : '';
+      const figStr = ev.figures?.length ? ev.figures.map(f => f.name).join('、') : '';
+      marker.bindTooltip(
+        `<div style="font-size:13px;font-weight:bold">${ev.title}</div>
+         <div style="font-size:12px;color:#e6a23c;margin-bottom:2px">${yearStr}${ev.era ? ' · ' + ev.era : ''}</div>
+         <div style="font-size:12px;line-height:1.5;color:#666">${(ev.content || '').substring(0, 80)}${ev.content?.length > 80 ? '...' : ''}</div>
+         ${figStr ? `<div style="font-size:11px;color:#909399;margin-top:3px">👤 ${figStr}</div>` : ''}
+         <div style="font-size:11px;color:#999;margin-top:2px">${ev.location}</div>`,
+        { direction: 'top', offset: [0, -6] }
+      );
+    }
+
+    marker.on('click', () => {
+      if (list.length === 1) {
+        selectTimelineEvent(list[0]);
+        renderInlineMarkers();
+      } else {
+        openTimelineLocationDialog(list);
+      }
+    });
+  });
 }
 
 function renderPoetryMarkers() {
@@ -1761,21 +2346,31 @@ function handleMapAuthorChange(val: string[]) {
 }
 
 async function handleMapCategoryChange(val: string) {
-  // 切换到成语类时，禁用朝代/作者并清掉路线、疆域
-  if (val === 'idiom') {
+  // 切换到成语/时间线类时，禁用朝代/作者并清掉路线、疆域
+  if (val === 'idiom' || val === 'timeline') {
     mapAuthor.value = [];
     mapDynasty.value = '';
     if (inlineRouteLayer) inlineRouteLayer.clearLayers();
     if (inlineTerritoryLayer) inlineTerritoryLayer.clearLayers();
   }
 
-  // 确保成语库已加载
-  if (val !== 'poetry' && allIdioms.value.length === 0) {
+  // 确保成语库已加载（成语/全部模式需要）
+  if (val !== 'poetry' && val !== 'timeline' && allIdioms.value.length === 0) {
     try {
       allIdioms.value = await fetchAllIdioms();
       hasLoadedIdioms.value = true;
     } catch (e) {
       console.error('加载成语库失败', e);
+    }
+  }
+
+  // 确保时间线库已加载（时间线/全部模式需要）
+  if (val === 'timeline' && allTimelineEvents.value.length === 0) {
+    try {
+      allTimelineEvents.value = await fetchAllTimelineEvents();
+      hasLoadedTimeline.value = true;
+    } catch (e) {
+      console.error('加载时间线库失败', e);
     }
   }
 
@@ -2115,8 +2710,10 @@ function parseBatchContent(content: string): any[] {
 
 // 导入
 function handleImport() {
+  if (importing.value) return;
   importing.value = true;
 
+  let emitted = false;
   try {
     let articles: any[] = [];
 
@@ -2236,6 +2833,27 @@ function handleImport() {
         }
         break;
 
+      case 'timeline': {
+        const evs: LibraryTimelineEvent[] = [];
+        if (timelineSubTab.value === 'library') {
+          evs.push(...selectedTimelineEvents.value);
+        } else if (timelineSubTab.value === 'manual') {
+          const manual = buildManualEvent();
+          if (manual) evs.push(manual);
+          if (timelineBatchContent.value.trim()) {
+            evs.push(...parseBatchTimeline(timelineBatchContent.value));
+          }
+        } else if (timelineSubTab.value === 'ai') {
+          evs.push(...selectedTimelineAi.value);
+        }
+        if (evs.length === 0) {
+          ElMessage.warning('请选择或输入至少一个事件');
+          return;
+        }
+        articles = evs.map(mapLibraryEventToArticle);
+        break;
+      }
+
       case 'ai':
         if (selectedAIResult.value) {
           articles = [{
@@ -2253,9 +2871,12 @@ function handleImport() {
     }
 
     emit('import', articles);
+    emitted = true;
     resetForm();
   } finally {
-    importing.value = false;
+    if (!emitted) {
+      importing.value = false;
+    }
   }
 }
 
@@ -2287,6 +2908,20 @@ function resetForm() {
   aiResults.value = [];
   selectedAIResult.value = null;
   aiSearching.value = false;
+  // 时间线
+  timelineForm.value = {category: '', region: '', era: '', reign: '', yearFrom: '', yearTo: '', keyword: ''};
+  timelineResults.value = [];
+  selectedTimelineEvents.value = [];
+  timelineManualForm.value = {
+    title: '', content: '', category: 'politics', region: 'china', year: '',
+    reign: '', era: '', location: '', figures: '', relations: '', background: '', tags: [],
+  };
+  timelineBatchContent.value = '';
+  timelineAiTopic.value = '';
+  timelineAiResults.value = [];
+  selectedTimelineAi.value = [];
+  timelineAiForm.value = { provider: '', apiKey: '' };
+  timelineSubTab.value = 'library';
   activeTab.value = 'manual';
 }
 
@@ -2295,6 +2930,13 @@ function handleClose() {
   emit('update:modelValue', false);
   resetForm();
 }
+
+// 对话框关闭时重置导入状态（导入成功后保持 loading，由关闭触发重置）
+watch(() => props.modelValue, (val) => {
+  if (!val) {
+    importing.value = false;
+  }
+});
 
 function handleDialogOpened() {
   if (activeTab.value === 'poetryMap') {
@@ -2309,6 +2951,12 @@ function handleDialogOpened() {
       tasks.push(fetchAllIdioms().then(items => {
         allIdioms.value = items;
         hasLoadedIdioms.value = true;
+      }));
+    }
+    if (!hasLoadedTimeline.value) {
+      tasks.push(fetchAllTimelineEvents().then(items => {
+        allTimelineEvents.value = items;
+        hasLoadedTimeline.value = true;
       }));
     }
     if (tasks.length) {
@@ -2363,6 +3011,12 @@ watch(activeTab, (tab) => {
           hasLoadedIdioms.value = true;
         }));
       }
+      if (!hasLoadedTimeline.value) {
+        tasks.push(fetchAllTimelineEvents().then(items => {
+          allTimelineEvents.value = items;
+          hasLoadedTimeline.value = true;
+        }));
+      }
       if (tasks.length) {
         Promise.all(tasks).then(() => {
           if (props.modelValue) initInlineMap();
@@ -2391,6 +3045,11 @@ watch(showAuthorRoute, () => {
 });
 
 onUnmounted(() => {
+  if (initMapTimer) {
+    clearTimeout(initMapTimer);
+    initMapTimer = null;
+  }
+  initMapRetries = 0;
   if (inlineMap) {
     inlineMap.remove();
     inlineMap = null;
@@ -2689,6 +3348,16 @@ onUnmounted(() => {
     border-radius: 50%;
     border: 1.5px solid #fff;
     box-shadow: 0 0 0 1.5px #e6a23c;
+  }
+
+  .map-legend-star {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #f56c6c;
+    border: 1.5px solid #fff;
+    box-shadow: 0 0 0 1.5px #f56c6c;
+    clip-path: polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
   }
 }
 

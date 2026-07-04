@@ -48,6 +48,9 @@
       <el-tag type="warning" v-if="textStore.articlesWithGeo.length > 0">
         {{ textStore.articlesWithGeo.length }} 个地点
       </el-tag>
+      <el-tag type="danger" v-if="timelineEventCount > 0">
+        {{ timelineEventCount }} 个时间线事件
+      </el-tag>
       <div class="view-toggle">
         <el-radio-group v-model="currentView" size="small">
           <el-radio-button label="list">
@@ -55,6 +58,9 @@
           </el-radio-button>
           <el-radio-button label="map">
             <el-icon><MapLocation /></el-icon> 地图
+          </el-radio-button>
+          <el-radio-button label="timeline">
+            <el-icon><Clock /></el-icon> 时间线
           </el-radio-button>
         </el-radio-group>
       </div>
@@ -87,6 +93,9 @@
                   </el-dropdown-item>
                   <el-dropdown-item @click="handleFillBlanks(article)">
                     <el-icon><EditPen /></el-icon> 填空练习
+                  </el-dropdown-item>
+                  <el-dropdown-item v-if="isUtoolsEnv" @click="openTextFocusMode(article)">
+                    <el-icon><VideoPlay /></el-icon> 专注显示
                   </el-dropdown-item>
                   <el-dropdown-item v-if="article.geo" @click="handleLocateOnMap(article)">
                     <el-icon><MapLocation /></el-icon> 地图定位
@@ -199,11 +208,20 @@
         @focused="focusArticleId = ''"
       />
     </div>
+
+    <!-- 时间线视图 -->
+    <div v-show="currentView === 'timeline'" class="timeline-view-wrap">
+      <TimelineView
+        :articles="filteredArticles"
+        @select="handleArticleClick"
+        @locate="handleLocateArticle"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
@@ -211,7 +229,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import {
   Search, Plus, Upload, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
-  User, Clock, View, Pointer, List, MapLocation
+  User, Clock, View, Pointer, List, MapLocation, VideoPlay
 } from '@element-plus/icons-vue';
 import { isUtools } from '@/adapters/platform';
 import { log } from '@/utils/logger';
@@ -365,6 +383,16 @@ function formatDate(timestamp: number): string {
 function handleArticleClick(article: TextArticle) {
   // 可以展开详情或直接进行练习
   textStore.setCurrentArticle(article);
+}
+
+// 从时间线跳转到地图定位该事件
+function handleLocateArticle(article: TextArticle) {
+  if (!article.geo) {
+    ElMessage.warning('该事件无地理坐标，无法在地图定位');
+    return;
+  }
+  focusArticleId.value = article._id;
+  currentView.value = 'map';
 }
 
 // 编辑文章

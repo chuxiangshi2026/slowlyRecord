@@ -55,7 +55,43 @@
           />
         </el-select>
       </el-form-item>
-      
+
+      <el-collapse style="margin-bottom: 8px">
+        <el-collapse-item title="🕒 时间线信息（可选，填写后可在时间线视图展示）" name="timeline">
+          <el-form-item label="分类" label-width="80px">
+            <el-select v-model="formData.category" placeholder="选择分类" clearable style="width: 100%">
+              <el-option v-for="c in TIMELINE_CATEGORIES" :key="c.code" :label="c.label" :value="c.code" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="区域" label-width="80px">
+            <el-select v-model="formData.region" placeholder="选择区域" clearable style="width: 100%">
+              <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="年份" label-width="80px">
+            <el-input v-model="formData.year" type="number" placeholder="公元年份，负数=公元前" />
+          </el-form-item>
+          <el-form-item label="年号" label-width="80px">
+            <el-input v-model="formData.reign" placeholder="如 贞观元年" />
+          </el-form-item>
+          <el-form-item label="时代" label-width="80px">
+            <el-input v-model="formData.era" placeholder="如 唐 / 文艺复兴" />
+          </el-form-item>
+          <el-form-item label="地点" label-width="80px">
+            <el-input v-model="formData.location" placeholder="发生地点" />
+          </el-form-item>
+          <el-form-item label="背景" label-width="80px">
+            <el-input v-model="formData.background" type="textarea" :rows="2" placeholder="事件背景（可空）" />
+          </el-form-item>
+          <el-form-item label="人物" label-width="80px">
+            <el-input v-model="formData.figures" type="textarea" :rows="3" placeholder="每行：人名|头衔|简介" />
+          </el-form-item>
+          <el-form-item label="关系" label-width="80px">
+            <el-input v-model="formData.relations" type="textarea" :rows="3" placeholder="每行：甲|乙|关系|说明" />
+          </el-form-item>
+        </el-collapse-item>
+      </el-collapse>
+
       <el-form-item label="内容" prop="content">
         <el-input
           v-model="formData.content"
@@ -82,6 +118,7 @@ import { ref, computed, watch } from 'vue';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
 import type { FormInstance, FormRules } from 'element-plus';
+import { TIMELINE_CATEGORIES, TIMELINE_REGIONS, parseFigures, parseRelations } from '@/utils/timeline-service';
 
 interface Props {
   modelValue: boolean;
@@ -110,7 +147,17 @@ const formData = ref({
   author: '',
   source: '',
   tags: [] as string[],
-  content: ''
+  content: '',
+  // 时间线字段
+  category: '' as '' | 'politics' | 'literature' | 'science' | 'thought' | 'society',
+  region: '' as '' | 'china' | 'west' | 'modern',
+  year: '' as number | '',
+  reign: '',
+  era: '',
+  location: '',
+  background: '',
+  figures: '',    // 每行: 人名|头衔|简介
+  relations: '',  // 每行: 甲|乙|关系|说明
 });
 
 // 表单验证规则
@@ -133,7 +180,16 @@ watch(() => props.article, (newArticle) => {
       author: newArticle.author || '',
       source: newArticle.source || '',
       tags: [...newArticle.tags],
-      content: newArticle.content
+      content: newArticle.content,
+      category: (newArticle.category as any) || '',
+      region: newArticle.region || '',
+      year: newArticle.year ?? '',
+      reign: newArticle.reign || '',
+      era: newArticle.era || '',
+      location: newArticle.location || '',
+      background: newArticle.background || '',
+      figures: (newArticle.figures || []).map(f => [f.name, f.title, f.desc].filter(Boolean).join('|')).join('\n'),
+      relations: (newArticle.relations || []).map(r => [r.from, r.to, r.type, r.desc].filter(Boolean).join('|')).join('\n'),
     };
   } else {
     resetForm();
@@ -154,7 +210,16 @@ function resetForm() {
     author: '',
     source: '',
     tags: [],
-    content: ''
+    content: '',
+    category: '',
+    region: '',
+    year: '',
+    reign: '',
+    era: '',
+    location: '',
+    background: '',
+    figures: '',
+    relations: '',
   };
   formRef.value?.resetFields();
 }
@@ -166,12 +231,24 @@ function handleClose() {
 
 // 保存
 async function handleSave() {
-  const valid = await formRef.value?.validate();
+  const valid = await formRef.value?.validate().catch(() => false);
   if (!valid) return;
-  
+
   saving.value = true;
-  
+
   try {
+    const timelineFields = {
+      category: (formData.value.category || undefined) as any,
+      region: (formData.value.region || undefined) as any,
+      year: formData.value.year === '' ? undefined : Number(formData.value.year),
+      reign: formData.value.reign || undefined,
+      era: formData.value.era || undefined,
+      location: formData.value.location || undefined,
+      background: formData.value.background || undefined,
+      figures: parseFigures(formData.value.figures),
+      relations: parseRelations(formData.value.relations),
+    };
+
     if (isEdit.value && props.article) {
       // 编辑模式
       const updatedArticle: TextArticle = {
@@ -180,12 +257,20 @@ async function handleSave() {
         author: formData.value.author,
         source: formData.value.source,
         tags: formData.value.tags,
-        content: formData.value.content
+        content: formData.value.content,
+        ...timelineFields,
       };
       emit('save', updatedArticle);
     } else {
       // 新增模式
-      emit('save', { ...formData.value });
+      emit('save', {
+        title: formData.value.title,
+        author: formData.value.author,
+        source: formData.value.source,
+        tags: formData.value.tags,
+        content: formData.value.content,
+        ...timelineFields,
+      });
     }
   } finally {
     saving.value = false;

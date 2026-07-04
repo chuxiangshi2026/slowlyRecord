@@ -15,6 +15,60 @@ export interface GeoLocation {
 }
 
 /**
+ * 文章类别（含诗词/成语/普通文章 + 时间线分类）
+ */
+export type TextCategory =
+  | 'poetry'
+  | 'idiom'
+  | 'article'
+  | 'politics'
+  | 'literature'
+  | 'science'
+  | 'thought'
+  | 'society';
+
+/**
+ * 时间线事件分类（按领域维度，互斥）
+ * - politics 政治：战争、革命、变法、王朝、条约
+ * - literature 文学：诗词、戏剧、史学著作
+ * - science 科学：数学、物理、天文、工程、生物
+ * - thought 思想：哲学、宗教、学说
+ * - society 社会：经济、运动、民生
+ */
+export type TimelineCategory = 'politics' | 'literature' | 'science' | 'thought' | 'society';
+
+/**
+ * 时间线区域（纯地理维度，时间维度由 era 表达）
+ */
+export type TimelineRegion = 'china' | 'west';
+
+/**
+ * 时间线人物
+ */
+export interface TimelineFigure {
+  // 姓名
+  name: string;
+  // 身份/头衔（如"唐太宗""诗人"）
+  title?: string;
+  // 简介
+  desc?: string;
+}
+
+/**
+ * 人物关系（结构化，供关系图谱使用）
+ */
+export interface TimelineRelation {
+  // 人物甲
+  from: string;
+  // 人物乙
+  to: string;
+  // 关系类型：君臣/父子/师徒/敌对/盟友/同僚/夫妻...
+  type: string;
+  // 关系说明
+  desc?: string;
+}
+
+/**
  * 文本文章
  */
 export interface TextArticle {
@@ -32,12 +86,24 @@ export interface TextArticle {
   location?: string;
   // 朝代
   dynasty?: string;
-  // 文章类别（用于地图与列表区分诗词/成语等）
-  category?: 'poetry' | 'idiom' | 'article';
+  // 文章类别（用于地图与列表区分诗词/成语/时间线等）
+  category?: TextCategory;
   // 地理坐标（解析后的）
   geo?: GeoLocation;
-  // 创作年份（可选，用于时间线）
+  // 创作年份（可选，用于时间线；负数=公元前）
   year?: number;
+  // 年号（如"贞观元年""开元"），时间线用
+  reign?: string;
+  // 时代标签（如"唐""文艺复兴""一战"），时间线用
+  era?: string;
+  // 区域/时代（中/西/近代），时间线用
+  region?: TimelineRegion;
+  // 主要人物，时间线用
+  figures?: TimelineFigure[];
+  // 人物关系，时间线用
+  relations?: TimelineRelation[];
+  // 事件背景，时间线用
+  background?: string;
   // 分类标签
   tags: string[];
   // 创建时间

@@ -1,0 +1,5878 @@
+{
+  "version": 1,
+  "updatedAt": 0,
+  "description": "历史时间线本地库（精选示例）。每条事件字段：title/content/category(politics|literature|science|thought|society，对应政治/文学/科学/思想/社会)/region(china|west|modern)/year(公元，负数=公元前)/reign(年号)/era(时代)/location(地点，主地名需可被 parseTimelineLocation 解析)/figures(主要人物 {name,title,desc})/relations(人物关系 {from,to,type,desc})/background(背景)/tags(标签)。figures 与 relations 中人物名需对应，方可在关系图谱连线。",
+  "events": [
+    {
+      "title": "商鞅变法",
+      "content": "商鞅在秦孝公支持下推行变法：废井田、开阡陌、重农抑商、奖励军功、建立县制，使秦国迅速富强，为日后统一六国奠定基础。",
+      "category": "politics",
+      "region": "china",
+      "year": -356,
+      "era": "战国",
+      "location": "咸阳",
+      "figures": [
+        {
+          "name": "秦孝公",
+          "title": "秦国君主",
+          "desc": "任用商鞅变法"
+        },
+        {
+          "name": "商鞅",
+          "title": "左庶长",
+          "desc": "法家代表，变法主导者"
+        }
+      ],
+      "relations": [
+        {
+          "from": "秦孝公",
+          "to": "商鞅",
+          "type": "君臣",
+          "desc": "力挺变法"
+        }
+      ],
+      "background": "战国初期秦国偏弱，受中原诸侯轻视，秦孝公下求贤令图强。",
+      "tags": [
+        "战国",
+        "变法",
+        "秦国"
+      ]
+    },
+    {
+      "title": "秦始皇统一六国",
+      "content": "秦王嬴政先后灭韩、赵、魏、楚、燕、齐六国，建立中国历史上第一个中央集权王朝——秦朝，自称始皇帝，统一度量衡与文字。",
+      "category": "politics",
+      "region": "china",
+      "year": -221,
+      "era": "秦",
+      "location": "咸阳",
+      "figures": [
+        {
+          "name": "秦始皇",
+          "title": "始皇帝",
+          "desc": "中国首位皇帝"
+        },
+        {
+          "name": "李斯",
+          "title": "丞相",
+          "desc": "协助统一文字度量衡"
+        }
+      ],
+      "relations": [
+        {
+          "from": "秦始皇",
+          "to": "李斯",
+          "type": "君臣",
+          "desc": "委以丞相之任"
+        }
+      ],
+      "background": "商鞅变法后秦国国力日盛，远交近攻逐步吞并六国。",
+      "tags": [
+        "秦",
+        "统一",
+        "帝制"
+      ]
+    },
+    {
+      "title": "张骞通西域",
+      "content": "汉武帝派张骞出使大月氏，历经十三年艰辛返汉，开辟了沟通东西方的丝绸之路，促进中原与西域的交流。",
+      "category": "society",
+      "region": "china",
+      "year": -138,
+      "era": "西汉",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "汉武帝",
+          "title": "皇帝",
+          "desc": "开拓西域"
+        },
+        {
+          "name": "张骞",
+          "title": "郎中",
+          "desc": "凿空西域第一人"
+        }
+      ],
+      "relations": [
+        {
+          "from": "汉武帝",
+          "to": "张骞",
+          "type": "君臣",
+          "desc": "奉命出使"
+        }
+      ],
+      "background": "匈奴威胁北方，汉武帝欲联大月氏夹击匈奴。",
+      "tags": [
+        "汉",
+        "丝绸之路",
+        "西域"
+      ]
+    },
+    {
+      "title": "卫青霍去病击匈奴",
+      "content": "汉武帝命卫青、霍去病率军多次北击匈奴，收复河套、打通河西走廊，封狼居胥，基本解除匈奴对北方的威胁。",
+      "category": "politics",
+      "region": "china",
+      "year": -119,
+      "era": "西汉",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "汉武帝",
+          "title": "皇帝",
+          "desc": "主导对匈奴战争"
+        },
+        {
+          "name": "卫青",
+          "title": "大将军",
+          "desc": "七战七捷"
+        },
+        {
+          "name": "霍去病",
+          "title": "骠骑将军",
+          "desc": "封狼居胥"
+        }
+      ],
+      "relations": [
+        {
+          "from": "汉武帝",
+          "to": "卫青",
+          "type": "君臣",
+          "desc": "倚重大将军"
+        },
+        {
+          "from": "卫青",
+          "to": "霍去病",
+          "type": "舅甥",
+          "desc": "霍去病为卫青外甥"
+        }
+      ],
+      "background": "汉初和亲政策未能遏制匈奴南侵，国力充盈后转守为攻。",
+      "tags": [
+        "汉",
+        "匈奴",
+        "军事"
+      ]
+    },
+    {
+      "title": "赤壁之战",
+      "content": "孙权、刘备联军在赤壁以火攻大破曹操南下水军，奠定三国鼎立格局，是中国古代以少胜多的经典战役。",
+      "category": "politics",
+      "region": "china",
+      "year": 208,
+      "era": "东汉末",
+      "location": "武汉",
+      "figures": [
+        {
+          "name": "曹操",
+          "title": "丞相",
+          "desc": "挟天子以令诸侯"
+        },
+        {
+          "name": "孙权",
+          "title": "吴侯",
+          "desc": "据守江东"
+        },
+        {
+          "name": "刘备",
+          "title": "豫州牧",
+          "desc": "汉室宗亲"
+        },
+        {
+          "name": "周瑜",
+          "title": "大都督",
+          "desc": "指挥火攻"
+        },
+        {
+          "name": "诸葛亮",
+          "title": "军师",
+          "desc": "促成孙刘联盟"
+        }
+      ],
+      "relations": [
+        {
+          "from": "孙权",
+          "to": "周瑜",
+          "type": "君臣",
+          "desc": "委以兵权"
+        },
+        {
+          "from": "刘备",
+          "to": "诸葛亮",
+          "type": "君臣",
+          "desc": "三顾茅庐"
+        },
+        {
+          "from": "孙权",
+          "to": "刘备",
+          "type": "盟友",
+          "desc": "孙刘联盟"
+        },
+        {
+          "from": "曹操",
+          "to": "刘备",
+          "type": "敌对",
+          "desc": "争夺天下"
+        }
+      ],
+      "background": "曹操统一北方后挥师南下，意图一举吞并江南。",
+      "tags": [
+        "三国",
+        "战役",
+        "以少胜多"
+      ]
+    },
+    {
+      "title": "贞观之治",
+      "content": "唐太宗李世民即位，改元贞观，虚心纳谏、轻徭薄赋、任用贤臣，社会安定、国力强盛，为盛唐奠定基础。",
+      "category": "politics",
+      "region": "china",
+      "year": 627,
+      "reign": "贞观元年",
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "李世民",
+          "title": "唐太宗",
+          "desc": "开创贞观之治"
+        },
+        {
+          "name": "魏征",
+          "title": "谏议大夫",
+          "desc": "以直言进谏著称"
+        },
+        {
+          "name": "房玄龄",
+          "title": "尚书左仆射",
+          "desc": "贞观名相"
+        }
+      ],
+      "relations": [
+        {
+          "from": "李世民",
+          "to": "魏征",
+          "type": "君臣",
+          "desc": "纳谏如流"
+        },
+        {
+          "from": "李世民",
+          "to": "房玄龄",
+          "type": "君臣",
+          "desc": "委以相位"
+        }
+      ],
+      "background": "隋末战乱之后百废待兴，李世民即位后励精图治。",
+      "tags": [
+        "唐",
+        "贞观",
+        "治世"
+      ]
+    },
+    {
+      "title": "安史之乱",
+      "content": "安禄山、史思明发动叛乱，攻陷洛阳、长安，唐玄宗出逃，唐王朝由盛转衰，历时八年方告平定。",
+      "category": "politics",
+      "region": "china",
+      "year": 755,
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "李隆基",
+          "title": "唐玄宗",
+          "desc": "晚年耽于享乐"
+        },
+        {
+          "name": "安禄山",
+          "title": "节度使",
+          "desc": "叛乱首领"
+        },
+        {
+          "name": "郭子仪",
+          "title": "朔方节度使",
+          "desc": "平叛功臣"
+        }
+      ],
+      "relations": [
+        {
+          "from": "李隆基",
+          "to": "安禄山",
+          "type": "敌对",
+          "desc": "反目成仇"
+        },
+        {
+          "from": "李隆基",
+          "to": "郭子仪",
+          "type": "君臣",
+          "desc": "倚重平叛"
+        }
+      ],
+      "background": "开元盛世后府兵制崩坏，节度使权重，酿成藩镇之祸。",
+      "tags": [
+        "唐",
+        "叛乱",
+        "由盛转衰"
+      ]
+    },
+    {
+      "title": "王安石变法",
+      "content": "宋神宗支持王安石推行新法：青苗、募役、农田水利、保甲等，意在富国强兵，但因触动既得利益遭强烈反对。",
+      "category": "politics",
+      "region": "china",
+      "year": 1069,
+      "era": "北宋",
+      "location": "开封",
+      "figures": [
+        {
+          "name": "宋神宗",
+          "title": "皇帝",
+          "desc": "支持变法"
+        },
+        {
+          "name": "王安石",
+          "title": "参知政事",
+          "desc": "变法主导者"
+        },
+        {
+          "name": "司马光",
+          "title": "翰林学士",
+          "desc": "保守派领袖"
+        }
+      ],
+      "relations": [
+        {
+          "from": "宋神宗",
+          "to": "王安石",
+          "type": "君臣",
+          "desc": "力推新法"
+        },
+        {
+          "from": "王安石",
+          "to": "司马光",
+          "type": "政敌",
+          "desc": "新旧党争"
+        }
+      ],
+      "background": "北宋积贫积弱，财政与军备压力日增，亟待改革。",
+      "tags": [
+        "宋",
+        "变法",
+        "党争"
+      ]
+    },
+    {
+      "title": "郑和下西洋",
+      "content": "明成祖朱棣派郑和率庞大船队七下西洋，远航至东南亚、南亚、阿拉伯乃至东非，宣扬国威、开展朝贡贸易。",
+      "category": "society",
+      "region": "china",
+      "year": 1405,
+      "era": "明",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "朱棣",
+          "title": "明成祖",
+          "desc": "发起远航"
+        },
+        {
+          "name": "郑和",
+          "title": "太监总管",
+          "desc": "七下西洋统帅"
+        }
+      ],
+      "relations": [
+        {
+          "from": "朱棣",
+          "to": "郑和",
+          "type": "君臣",
+          "desc": "委以远航"
+        }
+      ],
+      "background": "明朝国力鼎盛，造船航海技术领先世界。",
+      "tags": [
+        "明",
+        "航海",
+        "朝贡"
+      ]
+    },
+    {
+      "title": "辛亥革命",
+      "content": "武昌起义爆发，各省纷纷响应独立，推翻清朝统治，建立中华民国，结束两千余年帝制。",
+      "category": "politics",
+      "region": "china",
+      "year": 1911,
+      "era": "近代",
+      "location": "武汉",
+      "figures": [
+        {
+          "name": "孙中山",
+          "title": "临时大总统",
+          "desc": "革命先行者"
+        },
+        {
+          "name": "黄兴",
+          "title": "革命军总司令",
+          "desc": "武昌起义指挥者"
+        }
+      ],
+      "relations": [
+        {
+          "from": "孙中山",
+          "to": "黄兴",
+          "type": "同僚",
+          "desc": "并称孙黄"
+        }
+      ],
+      "background": "清末列强入侵、朝廷腐败，革命思潮广泛传播。",
+      "tags": [
+        "近代",
+        "革命",
+        "民国"
+      ]
+    },
+    {
+      "title": "屈原作《离骚》",
+      "content": "屈原遭流放后作《离骚》，以瑰丽想象与忠贞之情抒发政治理想与身世之悲，是中国浪漫主义文学的源头。",
+      "category": "literature",
+      "region": "china",
+      "year": -296,
+      "era": "战国",
+      "location": "长沙",
+      "figures": [
+        {
+          "name": "屈原",
+          "title": "三闾大夫",
+          "desc": "楚辞创立者"
+        }
+      ],
+      "relations": [],
+      "background": "楚国政治腐败，屈原主张联齐抗秦被谗流放沅湘。",
+      "tags": [
+        "楚辞",
+        "诗歌",
+        "战国"
+      ]
+    },
+    {
+      "title": "李白作《静夜思》",
+      "content": "李白漫游途中客居扬州，秋夜思乡写下《静夜思》，成为千古传诵的思乡名篇。",
+      "category": "literature",
+      "region": "china",
+      "year": 727,
+      "era": "唐",
+      "location": "扬州",
+      "figures": [
+        {
+          "name": "李白",
+          "title": "诗仙",
+          "desc": "浪漫主义大诗人"
+        }
+      ],
+      "relations": [],
+      "background": "盛唐气象下文人漫游成风，李白仗剑去国辞亲远游。",
+      "tags": [
+        "唐诗",
+        "思乡",
+        "李白"
+      ]
+    },
+    {
+      "title": "杜甫作《春望》",
+      "content": "安史之乱中杜甫困居长安，目睹国破家亡，写下《春望》『国破山河在，城春草木深』，沉痛动魄。",
+      "category": "literature",
+      "region": "china",
+      "year": 757,
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "杜甫",
+          "title": "诗圣",
+          "desc": "现实主义大诗人"
+        }
+      ],
+      "relations": [],
+      "background": "安史之乱使盛唐骤衰，杜甫亲历战乱之苦。",
+      "tags": [
+        "唐诗",
+        "忧国",
+        "杜甫"
+      ]
+    },
+    {
+      "title": "苏轼作《念奴娇·赤壁怀古》",
+      "content": "苏轼贬谪黄州，游赤壁矶作《念奴娇·赤壁怀古》，借三国旧事抒壮志难酬之慨，为豪放词代表作。",
+      "category": "literature",
+      "region": "china",
+      "year": 1082,
+      "era": "北宋",
+      "location": "武汉",
+      "figures": [
+        {
+          "name": "苏轼",
+          "title": "东坡居士",
+          "desc": "豪放派词宗"
+        }
+      ],
+      "relations": [],
+      "background": "乌台诗案后苏轼被贬黄州，于赤壁矶下感怀三国。",
+      "tags": [
+        "宋词",
+        "豪放",
+        "苏轼"
+      ]
+    },
+    {
+      "title": "鸦片战争",
+      "content": "林则徐虎门销烟后，英国发动侵华战争，清军战败被迫签订《南京条约》，中国开始沦为半殖民地。",
+      "category": "politics",
+      "region": "china",
+      "year": 1840,
+      "era": "近代",
+      "location": "广州",
+      "figures": [
+        {
+          "name": "道光帝",
+          "title": "皇帝",
+          "desc": "动摇于禁战之间"
+        },
+        {
+          "name": "林则徐",
+          "title": "钦差大臣",
+          "desc": "虎门销烟"
+        }
+      ],
+      "relations": [
+        {
+          "from": "道光帝",
+          "to": "林则徐",
+          "type": "君臣",
+          "desc": "委以禁烟"
+        }
+      ],
+      "background": "英国向中国走私鸦片，白银外流，清廷决心禁烟。",
+      "tags": [
+        "近代",
+        "战争",
+        "半殖民地"
+      ]
+    },
+    {
+      "title": "五四运动",
+      "content": "巴黎和会外交失败，北京学生走上街头高呼『外争主权，内除国贼』，新文化运动推向高潮，促进马克思主义传播。",
+      "category": "society",
+      "region": "china",
+      "year": 1919,
+      "era": "近代",
+      "location": "北京",
+      "figures": [],
+      "relations": [],
+      "background": "新文化运动启蒙思想，一战后中国国际地位堪忧。",
+      "tags": [
+        "近代",
+        "学生运动",
+        "新文化"
+      ]
+    },
+    {
+      "title": "开国大典",
+      "content": "毛泽东在天安门城楼宣告中华人民共和国成立，中国人民从此站起来了，开启民族复兴新纪元。",
+      "category": "politics",
+      "region": "china",
+      "year": 1949,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "开国领袖"
+        }
+      ],
+      "relations": [],
+      "background": "解放战争胜利，新中国成立。",
+      "tags": [
+        "现代",
+        "建国",
+        "新中国"
+      ]
+    },
+    {
+      "title": "张衡发明地动仪",
+      "content": "东汉张衡发明候风地动仪，能测知地震方位，是世界最早的地震仪，早于欧洲一千余年。",
+      "category": "science",
+      "region": "china",
+      "year": 132,
+      "era": "东汉",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "张衡",
+          "title": "太史令",
+          "desc": "科学家、文学家"
+        }
+      ],
+      "relations": [],
+      "background": "东汉地震频发，朝廷急需测震之器。",
+      "tags": [
+        "东汉",
+        "科学",
+        "地震"
+      ]
+    },
+    {
+      "title": "祖冲之推算圆周率",
+      "content": "南朝祖冲之将圆周率精确到小数点后七位（3.1415926~3.1415927），领先世界近千年，并著有《大明历》。",
+      "category": "science",
+      "region": "china",
+      "year": 480,
+      "era": "南北朝",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "祖冲之",
+          "title": "长水校尉",
+          "desc": "数学家、天文学家"
+        }
+      ],
+      "relations": [],
+      "background": "南朝宋齐之际学术兴盛，历法算学大有发展。",
+      "tags": [
+        "南北朝",
+        "数学",
+        "圆周率"
+      ]
+    },
+    {
+      "title": "毕昇发明活字印刷术",
+      "content": "北宋毕昇以胶泥制字烧硬，发明活字印刷术，比德国古腾堡早约四百年，深刻推动人类文明传播。",
+      "category": "science",
+      "region": "china",
+      "year": 1040,
+      "era": "北宋",
+      "location": "开封",
+      "figures": [
+        {
+          "name": "毕昇",
+          "title": "工匠",
+          "desc": "活字印刷发明者"
+        }
+      ],
+      "relations": [],
+      "background": "雕版印刷费时费料，民间亟需更高效的印书之法。",
+      "tags": [
+        "北宋",
+        "发明",
+        "印刷"
+      ]
+    },
+    {
+      "title": "雅典梭伦改革",
+      "content": "梭伦在雅典推行废除债务奴隶、按财产分等级、设立公民大会等改革，奠定雅典民主政治基础。",
+      "category": "politics",
+      "region": "west",
+      "year": -594,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "梭伦",
+          "title": "执政官",
+          "desc": "雅典立法者"
+        }
+      ],
+      "relations": [],
+      "background": "雅典贵族专权，平民与贵族矛盾激化，亟需改革。",
+      "tags": [
+        "古希腊",
+        "民主",
+        "改革"
+      ]
+    },
+    {
+      "title": "苏格拉底之死",
+      "content": "苏格拉底因『不敬神』『腐蚀青年』被雅典法庭判处饮鸩而死，临终仍坚持哲人立场，成为西方哲学典范。",
+      "category": "thought",
+      "region": "west",
+      "year": -399,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "苏格拉底",
+          "title": "哲学家",
+          "desc": "西方哲学奠基人"
+        }
+      ],
+      "relations": [],
+      "background": "伯罗奔尼撒战争后雅典民主制动摇，苏格拉底成为政治牺牲品。",
+      "tags": [
+        "古希腊",
+        "哲学",
+        "审判"
+      ]
+    },
+    {
+      "title": "亚历山大东征",
+      "content": "亚历山大率马其顿军团东征，横跨小亚细亚、埃及、波斯直至印度河，建立横跨欧亚非的大帝国，促进希腊化文明传播。",
+      "category": "politics",
+      "region": "west",
+      "year": -334,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "亚历山大",
+          "title": "马其顿国王",
+          "desc": "征服者"
+        },
+        {
+          "name": "亚里士多德",
+          "title": "哲学家",
+          "desc": "亚历山大之师"
+        }
+      ],
+      "relations": [
+        {
+          "from": "亚里士多德",
+          "to": "亚历山大",
+          "type": "师徒",
+          "desc": "授以学问"
+        }
+      ],
+      "background": "马其顿崛起，亚历山大承父业誓征波斯。",
+      "tags": [
+        "古希腊",
+        "征服",
+        "希腊化"
+      ]
+    },
+    {
+      "title": "凯撒遇刺",
+      "content": "罗马独裁官尤利乌斯·凯撒于元老院被布鲁图斯等共和派刺杀，事件引发罗马内战，最终走向帝制。",
+      "category": "politics",
+      "region": "west",
+      "year": -44,
+      "era": "古罗马",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "凯撒",
+          "title": "独裁官",
+          "desc": "罗马军事政治强人"
+        },
+        {
+          "name": "布鲁图斯",
+          "title": "元老",
+          "desc": "刺杀主谋"
+        }
+      ],
+      "relations": [
+        {
+          "from": "布鲁图斯",
+          "to": "凯撒",
+          "type": "敌对",
+          "desc": "弑君"
+        }
+      ],
+      "background": "凯撒独裁引发共和派忧虑，密谋行刺。",
+      "tags": [
+        "古罗马",
+        "刺杀",
+        "帝制"
+      ]
+    },
+    {
+      "title": "美国独立宣言",
+      "content": "北美十三州代表签署《独立宣言》，宣告脱离英国统治，建立美利坚合众国，高举人人生而平等的旗帜。",
+      "category": "politics",
+      "region": "west",
+      "year": 1776,
+      "era": "近代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "华盛顿",
+          "title": "大陆军总司令",
+          "desc": "美国国父"
+        },
+        {
+          "name": "杰斐逊",
+          "title": "独立宣言起草人",
+          "desc": "第三任总统"
+        }
+      ],
+      "relations": [
+        {
+          "from": "华盛顿",
+          "to": "杰斐逊",
+          "type": "同僚",
+          "desc": "共建新国家"
+        }
+      ],
+      "background": "英国对殖民地课重税，北美独立运动高涨。",
+      "tags": [
+        "美国",
+        "独立",
+        "革命"
+      ]
+    },
+    {
+      "title": "法国大革命",
+      "content": "巴黎民众攻占巴士底狱，法国大革命爆发，废除封建特权、颁布《人权宣言》，震撼整个欧洲旧秩序。",
+      "category": "politics",
+      "region": "west",
+      "year": 1789,
+      "era": "近代",
+      "location": "巴黎",
+      "figures": [
+        {
+          "name": "罗伯斯庇尔",
+          "title": "雅各宾领袖",
+          "desc": "革命激进派"
+        },
+        {
+          "name": "路易十六",
+          "title": "法国国王",
+          "desc": "被推翻处死"
+        }
+      ],
+      "relations": [
+        {
+          "from": "罗伯斯庇尔",
+          "to": "路易十六",
+          "type": "敌对",
+          "desc": "革命推翻王权"
+        }
+      ],
+      "background": "法国财政破产、阶级矛盾激化，启蒙思想深入人心。",
+      "tags": [
+        "法国",
+        "革命",
+        "人权"
+      ]
+    },
+    {
+      "title": "拿破仑称帝",
+      "content": "拿破仑·波拿巴在巴黎圣母院加冕称帝，建立法兰西第一帝国，颁布《拿破仑法典》，随后横扫欧洲。",
+      "category": "politics",
+      "region": "west",
+      "year": 1804,
+      "era": "近代",
+      "location": "巴黎",
+      "figures": [
+        {
+          "name": "拿破仑",
+          "title": "法国皇帝",
+          "desc": "军事天才"
+        }
+      ],
+      "relations": [],
+      "background": "大革命后法国局势动荡，拿破仑凭军功崛起掌权。",
+      "tags": [
+        "法国",
+        "帝国",
+        "拿破仑"
+      ]
+    },
+    {
+      "title": "但丁完成《神曲》",
+      "content": "但丁·阿利吉耶里完成长诗《神曲》，以地狱、炼狱、天堂之旅构筑中世纪世界观，被誉为文艺复兴先声。",
+      "category": "literature",
+      "region": "west",
+      "year": 1320,
+      "era": "中世纪",
+      "location": "佛罗伦萨",
+      "figures": [
+        {
+          "name": "但丁",
+          "title": "诗人",
+          "desc": "意大利语文学之父"
+        }
+      ],
+      "relations": [],
+      "background": "中世纪晚期意大利城市商业繁荣，人文思想萌芽。",
+      "tags": [
+        "中世纪",
+        "诗歌",
+        "文艺复兴"
+      ]
+    },
+    {
+      "title": "莎士比亚《哈姆雷特》首演",
+      "content": "莎士比亚悲剧《哈姆雷特》在伦敦首演，探讨生存、复仇与人性，成为文艺复兴英国戏剧的巅峰之作。",
+      "category": "literature",
+      "region": "west",
+      "year": 1600,
+      "era": "文艺复兴",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "莎士比亚",
+          "title": "剧作家",
+          "desc": "英国文艺复兴巨匠"
+        }
+      ],
+      "relations": [],
+      "background": "伊丽莎白一世时代英国戏剧走向繁荣。",
+      "tags": [
+        "文艺复兴",
+        "戏剧",
+        "文学"
+      ]
+    },
+    {
+      "title": "欧几里得《几何原本》",
+      "content": "欧几里得在亚历山大编纂《几何原本》，以公理化体系系统整理古希腊几何学，奠定西方数学演绎基础。",
+      "category": "science",
+      "region": "west",
+      "year": -300,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "欧几里得",
+          "title": "数学家",
+          "desc": "几何之父"
+        }
+      ],
+      "relations": [],
+      "background": "希腊化时代亚历山大学派学术兴盛。",
+      "tags": [
+        "古希腊",
+        "数学",
+        "几何"
+      ]
+    },
+    {
+      "title": "伽利略望远镜观测",
+      "content": "伽利略自制望远镜观测天体，发现木星卫星、月球环形山、金星位相，为日心说提供关键证据。",
+      "category": "science",
+      "region": "west",
+      "year": 1609,
+      "era": "科学革命",
+      "location": "佛罗伦萨",
+      "figures": [
+        {
+          "name": "伽利略",
+          "title": "天文学家",
+          "desc": "近代科学之父"
+        }
+      ],
+      "relations": [],
+      "background": "荷兰人发明望远镜后，伽利略率先用于天文观测。",
+      "tags": [
+        "科学革命",
+        "天文",
+        "望远镜"
+      ]
+    },
+    {
+      "title": "牛顿出版《自然哲学的数学原理》",
+      "content": "牛顿发表《自然哲学的数学原理》，提出万有引力定律和三大运动定律，奠定经典力学体系，标志科学革命完成。",
+      "category": "science",
+      "region": "west",
+      "year": 1687,
+      "era": "科学革命",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "牛顿",
+          "title": "物理学家",
+          "desc": "经典力学奠基人"
+        }
+      ],
+      "relations": [],
+      "background": "伽利略、开普勒等前人工作为牛顿的综合奠定基础。",
+      "tags": [
+        "科学革命",
+        "力学",
+        "万有引力"
+      ]
+    },
+    {
+      "title": "哈雷预报彗星回归",
+      "content": "哈雷运用牛顿理论推算彗星轨道，预言 1758 年彗星回归（后得名哈雷彗星），验证了万有引力定律的预言力。",
+      "category": "science",
+      "region": "west",
+      "year": 1705,
+      "era": "科学革命",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "哈雷",
+          "title": "天文学家",
+          "desc": "第二任皇家天文学家"
+        },
+        {
+          "name": "牛顿",
+          "title": "物理学家",
+          "desc": "理论奠基者"
+        }
+      ],
+      "relations": [
+        {
+          "from": "哈雷",
+          "to": "牛顿",
+          "type": "同僚",
+          "desc": "应用其理论并资助出版"
+        }
+      ],
+      "background": "牛顿力学建立后，天体运动可被精确预言。",
+      "tags": [
+        "科学革命",
+        "天文",
+        "彗星"
+      ]
+    },
+    {
+      "title": "瓦特改良蒸汽机",
+      "content": "瓦特改良纽科门蒸汽机，大幅提高效率，蒸汽机成为工厂动力源，揭开工业革命序幕。",
+      "category": "science",
+      "region": "west",
+      "year": 1769,
+      "era": "工业革命",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "瓦特",
+          "title": "工程师",
+          "desc": "蒸汽机改良者"
+        }
+      ],
+      "relations": [],
+      "background": "英国工场手工业发达，亟需更强动力来源。",
+      "tags": [
+        "工业革命",
+        "蒸汽机",
+        "发明"
+      ]
+    },
+    {
+      "title": "达尔文《物种起源》",
+      "content": "达尔文出版《物种起源》，提出自然选择学说，颠覆物种不变观念，成为生物学史上里程碑。",
+      "category": "thought",
+      "region": "west",
+      "year": 1859,
+      "era": "近代",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "达尔文",
+          "title": "博物学家",
+          "desc": "进化论创立者"
+        }
+      ],
+      "relations": [],
+      "background": "环球考察积累大量生物地理证据，酝酿二十年方出版。",
+      "tags": [
+        "近代",
+        "生物",
+        "进化论"
+      ]
+    },
+    {
+      "title": "爱因斯坦提出广义相对论",
+      "content": "爱因斯坦发表广义相对论，将引力解释为时空弯曲，重塑人类宇宙观，后经日食观测证实。",
+      "category": "science",
+      "region": "west",
+      "year": 1915,
+      "era": "现代",
+      "location": "柏林",
+      "figures": [
+        {
+          "name": "爱因斯坦",
+          "title": "物理学家",
+          "desc": "相对论创立者"
+        }
+      ],
+      "relations": [],
+      "background": "狭义相对论之后，爱因斯坦致力于将引力纳入相对论框架。",
+      "tags": [
+        "现代",
+        "物理",
+        "相对论"
+      ]
+    },
+    {
+      "title": "第一次世界大战爆发",
+      "content": "萨拉热窝事件后，奥匈帝国对塞尔维亚宣战，欧洲列强卷入，第一次世界大战爆发，四年多后以同盟国战败告终。",
+      "category": "politics",
+      "region": "west",
+      "year": 1914,
+      "era": "近代",
+      "location": "柏林",
+      "figures": [],
+      "relations": [],
+      "background": "帝国主义列强矛盾激化，两大军事集团对峙。",
+      "tags": [
+        "近代",
+        "世界大战",
+        "战争"
+      ]
+    },
+    {
+      "title": "俄国十月革命",
+      "content": "列宁领导布尔什维克发动武装起义，推翻临时政府，建立世界上第一个社会主义国家，深刻改变世界格局。",
+      "category": "politics",
+      "region": "west",
+      "year": 1917,
+      "era": "近代",
+      "location": "莫斯科",
+      "figures": [
+        {
+          "name": "列宁",
+          "title": "人民委员会主席",
+          "desc": "革命领袖"
+        },
+        {
+          "name": "斯大林",
+          "title": "联共（布）总书记",
+          "desc": "列宁之后继任者"
+        }
+      ],
+      "relations": [
+        {
+          "from": "列宁",
+          "to": "斯大林",
+          "type": "同僚",
+          "desc": "共同领导革命"
+        }
+      ],
+      "background": "一战使俄国矛盾激化，二月革命后临时政府无力止战。",
+      "tags": [
+        "近代",
+        "革命",
+        "社会主义"
+      ]
+    },
+    {
+      "title": "孔子创立儒家",
+      "content": "孔子周游列国，整理六经，创立以仁与礼为核心的儒家学说，影响中国两千余年。晚年修订《春秋》《诗经》等经典。",
+      "category": "thought",
+      "region": "china",
+      "year": -551,
+      "era": "先秦",
+      "location": "曲阜",
+      "figures": [
+        {
+          "name": "孔子",
+          "title": "至圣先师",
+          "desc": "儒家创始人"
+        }
+      ],
+      "relations": [],
+      "background": "春秋礼崩乐坏，孔子欲恢复周礼。",
+      "tags": [
+        "先秦",
+        "儒家",
+        "哲学"
+      ]
+    },
+    {
+      "title": "老子著《道德经》",
+      "content": "老子著《道德经》五千言，以道法自然为核心，开创道家学派，为中国哲学奠定另一根基。",
+      "category": "thought",
+      "region": "china",
+      "year": -500,
+      "era": "先秦",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "老子",
+          "title": "道家始祖",
+          "desc": "《道德经》作者"
+        }
+      ],
+      "relations": [],
+      "background": "周王室衰微，老子辞官西行。",
+      "tags": [
+        "先秦",
+        "道家",
+        "哲学"
+      ]
+    },
+    {
+      "title": "柏拉图建立学园",
+      "content": "柏拉图在雅典城外创立学园，讲授哲学、数学、天文学，培养出亚里士多德等大批学者，学园持续运行近九百年。",
+      "category": "thought",
+      "region": "west",
+      "year": -387,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "柏拉图",
+          "title": "哲学家",
+          "desc": "理念论创立者"
+        },
+        {
+          "name": "亚里士多德",
+          "title": "哲学家",
+          "desc": "学园学生"
+        }
+      ],
+      "relations": [
+        {
+          "from": "柏拉图",
+          "to": "亚里士多德",
+          "type": "师徒",
+          "desc": "师从柏拉图二十年"
+        }
+      ],
+      "background": "苏格拉底之死后，柏拉图对民主政体失望。",
+      "tags": [
+        "古希腊",
+        "哲学",
+        "学园"
+      ]
+    },
+    {
+      "title": "耶稣传道",
+      "content": "耶稣在巴勒斯坦地区传讲天国福音，行神迹，收门徒，后遭罗马总督彼拉多钉十字架，基督教由此兴起。",
+      "category": "thought",
+      "region": "west",
+      "year": 30,
+      "era": "古罗马",
+      "location": "耶路撒冷",
+      "figures": [
+        {
+          "name": "耶稣",
+          "title": "基督",
+          "desc": "基督教创始人"
+        }
+      ],
+      "relations": [],
+      "background": "罗马帝国统治下犹太民族渴望救赎。",
+      "tags": [
+        "古罗马",
+        "宗教",
+        "基督教"
+      ]
+    },
+    {
+      "title": "伊斯兰教创立",
+      "content": "先知穆罕默德在麦加受启示，创立伊斯兰教，建立政教合一的穆斯林公社，后统一阿拉伯半岛。",
+      "category": "thought",
+      "region": "west",
+      "year": 622,
+      "era": "中世纪",
+      "location": "麦加",
+      "figures": [
+        {
+          "name": "穆罕默德",
+          "title": "先知",
+          "desc": "伊斯兰教创立者"
+        }
+      ],
+      "relations": [],
+      "background": "阿拉伯半岛部落割据，多神崇拜盛行。",
+      "tags": [
+        "中世纪",
+        "宗教",
+        "伊斯兰"
+      ]
+    },
+    {
+      "title": "启蒙运动",
+      "content": "伏尔泰、卢梭、孟德斯鸠等启蒙思想家高举理性与自由的旗帜，批判专制与教会，为法国大革命和美国独立提供思想武器。",
+      "category": "thought",
+      "region": "west",
+      "year": 1740,
+      "era": "启蒙运动",
+      "location": "巴黎",
+      "figures": [
+        {
+          "name": "伏尔泰",
+          "title": "哲学家",
+          "desc": "启蒙旗手"
+        },
+        {
+          "name": "卢梭",
+          "title": "思想家",
+          "desc": "社会契约论"
+        },
+        {
+          "name": "孟德斯鸠",
+          "title": "法学家",
+          "desc": "三权分立"
+        }
+      ],
+      "relations": [
+        {
+          "from": "伏尔泰",
+          "to": "卢梭",
+          "type": "论敌",
+          "desc": "思想路线分歧"
+        }
+      ],
+      "background": "封建专制与教会权威受质疑，自然科学取得突破。",
+      "tags": [
+        "启蒙运动",
+        "哲学",
+        "理性"
+      ]
+    },
+    {
+      "title": "马克思发表《共产党宣言》",
+      "content": "马克思与恩格斯发表《共产党宣言》\"全世界无产者，联合起来\"，系统阐述唯物史观和科学社会主义，影响世界政治格局。",
+      "category": "thought",
+      "region": "west",
+      "year": 1848,
+      "era": "近代",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "马克思",
+          "title": "思想家",
+          "desc": "马克思主义创始人"
+        },
+        {
+          "name": "恩格斯",
+          "title": "思想家",
+          "desc": "马克思主义合作者"
+        }
+      ],
+      "relations": [
+        {
+          "from": "马克思",
+          "to": "恩格斯",
+          "type": "盟友",
+          "desc": "终生合作"
+        }
+      ],
+      "background": "工业革命加深阶级对立，工人运动兴起。",
+      "tags": [
+        "近代",
+        "思想",
+        "社会主义"
+      ]
+    },
+    {
+      "title": "大禹治水",
+      "content": "大禹改堵为疏，十三年治水成功，划定九州，被舜禅让为部落联盟首领，开启夏朝。",
+      "category": "society",
+      "region": "china",
+      "year": -2000,
+      "era": "传说时代",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "大禹",
+          "title": "夏朝开创者",
+          "desc": "治水英雄"
+        }
+      ],
+      "relations": [],
+      "background": "上古洪水泛滥，鲧治水失败后被诛。",
+      "tags": [
+        "传说",
+        "治水",
+        "禅让"
+      ]
+    },
+    {
+      "title": "科举制创立",
+      "content": "隋炀帝始设进士科，以考试选拔官员，打破门阀垄断，科举制延续一千三百年，影响东亚文官制度。",
+      "category": "society",
+      "region": "china",
+      "year": 605,
+      "era": "隋",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "隋炀帝",
+          "title": "皇帝",
+          "desc": "创立进士科"
+        }
+      ],
+      "relations": [],
+      "background": "九品中正制腐败，寒门士子上升通道堵塞。",
+      "tags": [
+        "隋",
+        "科举",
+        "制度"
+      ]
+    },
+    {
+      "title": "三角贸易兴盛",
+      "content": "欧洲殖民者将非洲黑奴贩卖到美洲种植园，再将原材料运回欧洲，形成持续三百余年的罪恶三角贸易。",
+      "category": "society",
+      "region": "west",
+      "year": 1650,
+      "era": "近代",
+      "location": "伦敦",
+      "figures": [],
+      "relations": [],
+      "background": "美洲种植园经济急需大量劳动力。",
+      "tags": [
+        "近代",
+        "殖民",
+        "黑奴"
+      ]
+    },
+    {
+      "title": "洋务运动",
+      "content": "曾国藩、李鸿章等推行洋务运动，创办江南制造局、北洋水师等，以\"师夷长技以制夷\"为口号，开启中国近代化。",
+      "category": "society",
+      "region": "china",
+      "year": 1861,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "李鸿章",
+          "title": "直隶总督",
+          "desc": "洋务运动领袖"
+        },
+        {
+          "name": "曾国藩",
+          "title": "两江总督",
+          "desc": "洋务运动先驱"
+        }
+      ],
+      "relations": [
+        {
+          "from": "曾国藩",
+          "to": "李鸿章",
+          "type": "师徒",
+          "desc": "曾为幕僚"
+        }
+      ],
+      "background": "两次鸦片战争暴露清军落后。",
+      "tags": [
+        "近代",
+        "自强",
+        "工业化"
+      ]
+    },
+    {
+      "title": "联合国成立",
+      "content": "中、美、英、苏等五十国代表在旧金山签署《联合国宪章》，联合国正式成立，以维护世界和平与安全为宗旨。",
+      "category": "society",
+      "region": "west",
+      "year": 1945,
+      "era": "现代",
+      "location": "纽约",
+      "figures": [],
+      "relations": [],
+      "background": "二战惨痛教训催生国际和平机制。",
+      "tags": [
+        "现代",
+        "国际",
+        "和平"
+      ]
+    },
+    {
+      "title": "万隆会议",
+      "content": "亚非二十九国在印尼万隆举行首次亚非会议，提出和平共处十项原则，标志第三世界作为独立政治力量崛起。",
+      "category": "society",
+      "region": "china",
+      "year": 1955,
+      "era": "现代",
+      "location": "万隆",
+      "figures": [
+        {
+          "name": "周恩来",
+          "title": "总理",
+          "desc": "提出求同存异方针"
+        }
+      ],
+      "relations": [],
+      "background": "冷战对峙，亚非新兴国家寻求独立立场。",
+      "tags": [
+        "现代",
+        "外交",
+        "第三世界"
+      ]
+    },
+    {
+      "title": "荷马史诗形成",
+      "content": "古希腊盲诗人荷马整理创作《伊利亚特》和《奥德赛》，以特洛伊战争为背景，成为西方文学的源头。",
+      "category": "literature",
+      "region": "west",
+      "year": -750,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "荷马",
+          "title": "诗人",
+          "desc": "西方文学奠基人"
+        }
+      ],
+      "relations": [],
+      "background": "迈锡尼文明衰落后，希腊进入黑暗时代，口传文学盛行。",
+      "tags": [
+        "古希腊",
+        "史诗",
+        "荷马"
+      ]
+    },
+    {
+      "title": "司马迁著《史记》",
+      "content": "司马迁忍辱负重完成《史记》一百三十篇，上起黄帝下至汉武帝，是中国第一部纪传体通史，\"史家之绝唱，无韵之离骚\"。",
+      "category": "literature",
+      "region": "china",
+      "year": -91,
+      "era": "西汉",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "司马迁",
+          "title": "太史公",
+          "desc": "史学宗师"
+        }
+      ],
+      "relations": [],
+      "background": "李陵之祸使司马迁身受宫刑，发愤著书。",
+      "tags": [
+        "西汉",
+        "史学",
+        "传记"
+      ]
+    },
+    {
+      "title": "曹雪芹著《红楼梦》",
+      "content": "曹雪芹以自身家族经历为素材，创作《红楼梦》，以贾府兴衰写尽世态炎凉，是中国古典小说的巅峰。",
+      "category": "literature",
+      "region": "china",
+      "year": 1760,
+      "era": "清",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "曹雪芹",
+          "title": "文学家",
+          "desc": "《红楼梦》作者"
+        }
+      ],
+      "relations": [],
+      "background": "曹家从江南织造盛极而衰，曹雪芹晚年困顿中著书。",
+      "tags": [
+        "清",
+        "小说",
+        "古典"
+      ]
+    },
+    {
+      "title": "鲁迅发表《狂人日记》",
+      "content": "鲁迅在《新青年》发表《狂人日记》，是中国第一篇现代白话小说，以\"吃人\"意象猛烈批判封建礼教。",
+      "category": "literature",
+      "region": "china",
+      "year": 1918,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "鲁迅",
+          "title": "文学家",
+          "desc": "中国现代文学奠基人"
+        }
+      ],
+      "relations": [],
+      "background": "新文化运动提倡白话文，批判旧礼教。",
+      "tags": [
+        "近代",
+        "文学",
+        "白话"
+      ]
+    },
+    {
+      "title": "阿基米德发现浮力定律",
+      "content": "阿基米德在浴缸中发现浮力原理，提出阿基米德定律，并发明杠杆、螺旋提水器等机械。",
+      "category": "science",
+      "region": "west",
+      "year": -250,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "阿基米德",
+          "title": "数学家",
+          "desc": "古代最伟大科学家"
+        }
+      ],
+      "relations": [],
+      "background": "希腊化时代叙拉古学术繁荣。",
+      "tags": [
+        "古希腊",
+        "物理",
+        "浮力"
+      ]
+    },
+    {
+      "title": "哥白尼提出日心说",
+      "content": "哥白尼出版《天体运行论》，提出太阳而非地球是宇宙中心，颠覆地心说，开启科学革命。",
+      "category": "science",
+      "region": "west",
+      "year": 1543,
+      "era": "文艺复兴",
+      "location": "佛罗伦萨",
+      "figures": [
+        {
+          "name": "哥白尼",
+          "title": "天文学家",
+          "desc": "日心说创立者"
+        }
+      ],
+      "relations": [],
+      "background": "地心说与天文观测矛盾日益突出。",
+      "tags": [
+        "文艺复兴",
+        "天文",
+        "日心说"
+      ]
+    },
+    {
+      "title": "莱布尼茨创立微积分",
+      "content": "莱布尼茨独立于牛顿创立微积分学，发明简洁的微分符号，成为高等数学的基石。",
+      "category": "science",
+      "region": "west",
+      "year": 1684,
+      "era": "科学革命",
+      "location": "柏林",
+      "figures": [
+        {
+          "name": "莱布尼茨",
+          "title": "数学家",
+          "desc": "微积分创立者"
+        },
+        {
+          "name": "牛顿",
+          "title": "物理学家",
+          "desc": "也独立创立微积分"
+        }
+      ],
+      "relations": [
+        {
+          "from": "莱布尼茨",
+          "to": "牛顿",
+          "type": "论敌",
+          "desc": "微积分优先权之争"
+        }
+      ],
+      "background": "科学革命时代数学工具亟需突破。",
+      "tags": [
+        "科学革命",
+        "数学",
+        "微积分"
+      ]
+    },
+    {
+      "title": "法拉第发现电磁感应",
+      "content": "法拉第通过实验发现电磁感应现象，发明第一台发电机，为电气时代奠定物理基础。",
+      "category": "science",
+      "region": "west",
+      "year": 1831,
+      "era": "近代",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "法拉第",
+          "title": "物理学家",
+          "desc": "电磁学奠基人"
+        }
+      ],
+      "relations": [],
+      "background": "奥斯特发现电流磁效应后，电磁关系成为研究热点。",
+      "tags": [
+        "近代",
+        "物理",
+        "电磁"
+      ]
+    },
+    {
+      "title": "巴斯德创立微生物学",
+      "content": "巴斯德通过鹅颈瓶实验否定自然发生说，证明微生物致病，发明巴氏消毒法和狂犬病疫苗，奠定现代医学微生物学。",
+      "category": "science",
+      "region": "west",
+      "year": 1864,
+      "era": "近代",
+      "location": "巴黎",
+      "figures": [
+        {
+          "name": "巴斯德",
+          "title": "微生物学家",
+          "desc": "现代微生物学之父"
+        }
+      ],
+      "relations": [],
+      "background": "发酵和疾病的原因众说纷纭，自然发生说仍占主导。",
+      "tags": [
+        "近代",
+        "医学",
+        "微生物"
+      ]
+    },
+    {
+      "title": "居里夫人发现镭",
+      "content": "居里夫人从沥青铀矿中分离出镭元素，开创放射性研究，两获诺贝尔奖（物理与化学）。",
+      "category": "science",
+      "region": "west",
+      "year": 1898,
+      "era": "近代",
+      "location": "巴黎",
+      "figures": [
+        {
+          "name": "居里夫人",
+          "title": "物理学家",
+          "desc": "放射性研究先驱"
+        }
+      ],
+      "relations": [],
+      "background": "伦琴发现X射线，贝克勒尔发现铀的放射性。",
+      "tags": [
+        "近代",
+        "物理",
+        "放射性"
+      ]
+    },
+    {
+      "title": "人类首次登月",
+      "content": "阿波罗11号宇航员阿姆斯特朗踏上月球，\"这是我的一小步，人类的一大步\"，实现人类千年登月梦想。",
+      "category": "science",
+      "region": "west",
+      "year": 1969,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "阿姆斯特朗",
+          "title": "宇航员",
+          "desc": "登月第一人"
+        }
+      ],
+      "relations": [],
+      "background": "美苏太空竞赛，肯尼迪提出十年内登月目标。",
+      "tags": [
+        "现代",
+        "航天",
+        "登月"
+      ]
+    },
+    {
+      "title": "互联网诞生",
+      "content": "美国国防部阿帕网正式上线，采用分组交换技术，后发展为互联网，深刻改变人类通信、商业与生活方式。",
+      "category": "science",
+      "region": "west",
+      "year": 1969,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [],
+      "relations": [],
+      "background": "冷战需要分布式通信系统。",
+      "tags": [
+        "现代",
+        "计算机",
+        "互联网"
+      ]
+    },
+    {
+      "title": "武王伐纣",
+      "content": "周武王姬发在牧野之战中大败商纣王军队，商朝灭亡，西周建立，实行分封制与宗法制。",
+      "category": "politics",
+      "region": "china",
+      "year": -1046,
+      "era": "西周",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "周武王",
+          "title": "西周开国君主",
+          "desc": "伐纣灭商"
+        },
+        {
+          "name": "姜子牙",
+          "title": "太师",
+          "desc": "辅佐武王"
+        }
+      ],
+      "relations": [
+        {
+          "from": "周武王",
+          "to": "姜子牙",
+          "type": "君臣",
+          "desc": "尊为尚父"
+        }
+      ],
+      "background": "商纣暴政，周文王积德蓄力。",
+      "tags": [
+        "西周",
+        "战役",
+        "王朝"
+      ]
+    },
+    {
+      "title": "三家分晋",
+      "content": "韩、赵、魏三家大夫瓜分晋国，周威烈王被迫承认三家为诸侯，标志战国时代开始。",
+      "category": "politics",
+      "region": "china",
+      "year": -403,
+      "era": "战国",
+      "location": "洛阳",
+      "figures": [],
+      "relations": [],
+      "background": "晋国公室衰微，六卿内斗后仅余三家。",
+      "tags": [
+        "战国",
+        "分裂",
+        "格局"
+      ]
+    },
+    {
+      "title": "汉武帝推恩令",
+      "content": "汉武帝采纳主父偃建议颁布推恩令，使诸侯王封地分给众多子弟，从根本上削弱藩国，加强中央集权。",
+      "category": "politics",
+      "region": "china",
+      "year": -127,
+      "era": "西汉",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "汉武帝",
+          "title": "皇帝",
+          "desc": "雄才大略"
+        },
+        {
+          "name": "主父偃",
+          "title": "中大夫",
+          "desc": "提出推恩令"
+        }
+      ],
+      "relations": [
+        {
+          "from": "汉武帝",
+          "to": "主父偃",
+          "type": "君臣",
+          "desc": "采纳推恩策"
+        }
+      ],
+      "background": "七国之乱后诸侯仍拥有一定实力。",
+      "tags": [
+        "西汉",
+        "集权",
+        "削藩"
+      ]
+    },
+    {
+      "title": "王莽改制",
+      "content": "王莽篡汉建立新朝，推行托古改制：王田私属、五均六筦等，但政策混乱引发绿林赤眉起义，新朝迅速覆灭。",
+      "category": "politics",
+      "region": "china",
+      "year": 9,
+      "era": "新朝",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "王莽",
+          "title": "新朝皇帝",
+          "desc": "篡位改革者"
+        }
+      ],
+      "relations": [],
+      "background": "西汉末年土地兼并严重，社会矛盾尖锐。",
+      "tags": [
+        "新朝",
+        "改制",
+        "失败"
+      ]
+    },
+    {
+      "title": "隋朝统一",
+      "content": "隋文帝杨坚篡周灭陈，结束南北朝分裂局面，重新统一中国，开创科举、修大运河，为隋唐盛世奠基。",
+      "category": "politics",
+      "region": "china",
+      "year": 589,
+      "era": "隋",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "隋文帝",
+          "title": "皇帝",
+          "desc": "开皇之治"
+        },
+        {
+          "name": "隋炀帝",
+          "title": "皇帝",
+          "desc": "修运河创科举"
+        }
+      ],
+      "relations": [
+        {
+          "from": "隋文帝",
+          "to": "隋炀帝",
+          "type": "父子",
+          "desc": "杨广继位"
+        }
+      ],
+      "background": "南北朝对峙近两百年，北周统一北方后势不可挡。",
+      "tags": [
+        "隋",
+        "统一",
+        "盛世"
+      ]
+    },
+    {
+      "title": "开元盛世",
+      "content": "唐玄宗李隆基在位前期励精图治，任用姚崇、宋璟等贤相，政治清明、经济繁荣、文化昌盛，唐朝进入全盛时期。",
+      "category": "politics",
+      "region": "china",
+      "year": 712,
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "李隆基",
+          "title": "唐玄宗",
+          "desc": "开创开元盛世"
+        }
+      ],
+      "relations": [],
+      "background": "贞观之治后唐朝国力持续上升。",
+      "tags": [
+        "唐",
+        "盛世",
+        "玄宗"
+      ]
+    },
+    {
+      "title": "靖康之变",
+      "content": "金军攻破北宋都城开封，掳走徽钦二帝及宗室三千余人，北宋灭亡，赵构南渡建立南宋。",
+      "category": "politics",
+      "region": "china",
+      "year": 1127,
+      "era": "南宋",
+      "location": "开封",
+      "figures": [
+        {
+          "name": "宋徽宗",
+          "title": "皇帝",
+          "desc": "艺术天才治国无能"
+        },
+        {
+          "name": "宋钦宗",
+          "title": "皇帝",
+          "desc": "亡国之君"
+        },
+        {
+          "name": "赵构",
+          "title": "宋高宗",
+          "desc": "南渡建南宋"
+        }
+      ],
+      "relations": [
+        {
+          "from": "宋徽宗",
+          "to": "宋钦宗",
+          "type": "父子",
+          "desc": "禅位以避祸"
+        },
+        {
+          "from": "宋徽宗",
+          "to": "赵构",
+          "type": "父子",
+          "desc": "九子赵构南渡"
+        }
+      ],
+      "background": "金灭辽后大举南侵，北宋联金灭辽策略失当。",
+      "tags": [
+        "宋",
+        "靖康",
+        "灭亡"
+      ]
+    },
+    {
+      "title": "成吉思汗统一蒙古",
+      "content": "铁木真统一蒙古各部，被推举为成吉思汗，建立大蒙古国，创立千户制和怯薛军，开启蒙古帝国征服时代。",
+      "category": "politics",
+      "region": "china",
+      "year": 1206,
+      "era": "蒙古帝国",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "成吉思汗",
+          "title": "蒙古大汗",
+          "desc": "征服者"
+        }
+      ],
+      "relations": [],
+      "background": "蒙古各部长期混战，铁木真崛起。",
+      "tags": [
+        "元",
+        "蒙古",
+        "征服"
+      ]
+    },
+    {
+      "title": "元朝建立",
+      "content": "忽必烈改国号为大元，定都大都，灭亡南宋统一中国，实行行省制度，促进民族交流与中外贸易。",
+      "category": "politics",
+      "region": "china",
+      "year": 1271,
+      "era": "元",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "忽必烈",
+          "title": "元世祖",
+          "desc": "元朝建立者"
+        }
+      ],
+      "relations": [],
+      "background": "成吉思汗孙忽必烈继承汗位后南征。",
+      "tags": [
+        "元",
+        "统一",
+        "行省"
+      ]
+    },
+    {
+      "title": "郑成功收复台湾",
+      "content": "郑成功率二万五千将士渡海，击败荷兰殖民者，收复台湾，设立府县治理，开发东南海上贸易。",
+      "category": "politics",
+      "region": "china",
+      "year": 1662,
+      "era": "清初",
+      "location": "厦门",
+      "figures": [
+        {
+          "name": "郑成功",
+          "title": "延平郡王",
+          "desc": "收复台湾"
+        }
+      ],
+      "relations": [],
+      "background": "清军入关，郑成功以金厦为基地抗清。",
+      "tags": [
+        "明郑",
+        "台湾",
+        "反清"
+      ]
+    },
+    {
+      "title": "太平天国起义",
+      "content": "洪秀全在广西金田发动起义，建立太平天国，定都天京，推行《天朝田亩制度》，历时十四年席卷半壁江山。",
+      "category": "politics",
+      "region": "china",
+      "year": 1851,
+      "era": "近代",
+      "location": "金田",
+      "figures": [
+        {
+          "name": "洪秀全",
+          "title": "天王",
+          "desc": "太平天国领袖"
+        }
+      ],
+      "relations": [],
+      "background": "鸦片战争后清廷威信扫地，社会矛盾空前激化。",
+      "tags": [
+        "近代",
+        "起义",
+        "太平天国"
+      ]
+    },
+    {
+      "title": "戊戌变法",
+      "content": "光绪帝与康有为、梁启超等维新派推行百日维新：废八股、兴学堂、练新军等，遭慈禧太后发动政变镇压，六君子殉难。",
+      "category": "politics",
+      "region": "china",
+      "year": 1898,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "光绪帝",
+          "title": "皇帝",
+          "desc": "维新变法支持者"
+        },
+        {
+          "name": "康有为",
+          "title": "维新领袖",
+          "desc": "公车上书"
+        },
+        {
+          "name": "慈禧太后",
+          "title": "太后",
+          "desc": "发动政变"
+        }
+      ],
+      "relations": [
+        {
+          "from": "光绪帝",
+          "to": "康有为",
+          "type": "君臣",
+          "desc": "支持变法"
+        },
+        {
+          "from": "慈禧太后",
+          "to": "光绪帝",
+          "type": "敌对",
+          "desc": "软禁光绪"
+        }
+      ],
+      "background": "甲午战败后民族危机空前，维新思潮高涨。",
+      "tags": [
+        "近代",
+        "维新",
+        "变法"
+      ]
+    },
+    {
+      "title": "西罗马帝国灭亡",
+      "content": "日耳曼雇佣军首领奥多亚克废黜西罗马末代皇帝罗慕路斯·奥古斯都，西罗马帝国灭亡，西欧进入中世纪。",
+      "category": "politics",
+      "region": "west",
+      "year": 476,
+      "era": "中世纪",
+      "location": "罗马",
+      "figures": [],
+      "relations": [],
+      "background": "蛮族入侵、经济衰退、帝国内部分裂。",
+      "tags": [
+        "古罗马",
+        "中世纪",
+        "蛮族"
+      ]
+    },
+    {
+      "title": "查理曼称帝",
+      "content": "教皇利奥三世为法兰克国王查理曼加冕称帝，建立加洛林帝国，被视为欧洲之父，推动基督教文化复兴。",
+      "category": "politics",
+      "region": "west",
+      "year": 800,
+      "era": "中世纪",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "查理曼",
+          "title": "皇帝",
+          "desc": "欧洲之父"
+        }
+      ],
+      "relations": [],
+      "background": "法兰克王国统一西欧大部，与教皇结盟。",
+      "tags": [
+        "中世纪",
+        "帝国",
+        "基督教"
+      ]
+    },
+    {
+      "title": "《大宪章》签署",
+      "content": "英国贵族迫使国王约翰签署《大宪章》，限制王权、保障贵族特权与司法公正，被视为英国宪法的基础。",
+      "category": "politics",
+      "region": "west",
+      "year": 1215,
+      "era": "中世纪",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "约翰王",
+          "title": "国王",
+          "desc": "被迫签署"
+        }
+      ],
+      "relations": [],
+      "background": "约翰王对法战争失败后横征暴敛，贵族反叛。",
+      "tags": [
+        "中世纪",
+        "英国",
+        "宪政"
+      ]
+    },
+    {
+      "title": "三十年战争",
+      "content": "欧洲宗教矛盾引发全欧混战，从波希米亚起义到《威斯特伐利亚和约》，确立国家主权原则，终结中世纪神权政治。",
+      "category": "politics",
+      "region": "west",
+      "year": 1618,
+      "era": "近代",
+      "location": "柏林",
+      "figures": [],
+      "relations": [],
+      "background": "宗教改革后天主教与新教矛盾激化，神圣罗马帝国中央权威丧失。",
+      "tags": [
+        "近代",
+        "战争",
+        "和约"
+      ]
+    },
+    {
+      "title": "维也纳会议",
+      "content": "拿破仑战败后欧洲列强在维也纳召开会议，重新划分欧洲版图，建立维也纳体系，维护封建复辟秩序。",
+      "category": "politics",
+      "region": "west",
+      "year": 1815,
+      "era": "近代",
+      "location": "维也纳",
+      "figures": [
+        {
+          "name": "梅特涅",
+          "title": "奥地利首相",
+          "desc": "会议主持者"
+        }
+      ],
+      "relations": [],
+      "background": "拿破仑帝国覆灭，欧洲亟需新秩序。",
+      "tags": [
+        "近代",
+        "外交",
+        "秩序"
+      ]
+    },
+    {
+      "title": "日本明治维新",
+      "content": "日本明治天皇推行全面西化改革：废藩置县、殖产兴业、富国强兵、文明开化，使日本迅速成为近代强国。",
+      "category": "politics",
+      "region": "west",
+      "year": 1868,
+      "era": "近代",
+      "location": "东京",
+      "figures": [
+        {
+          "name": "明治天皇",
+          "title": "天皇",
+          "desc": "维新象征"
+        }
+      ],
+      "relations": [],
+      "background": "黑船来航迫使日本开国，幕府威信扫地。",
+      "tags": [
+        "近代",
+        "日本",
+        "维新"
+      ]
+    },
+    {
+      "title": "第二次世界大战",
+      "content": "德国入侵波兰，二战全面爆发。德意日轴心国与反法西斯同盟激战六年，最终以原子弹迫使日本投降告终，死伤数千万。",
+      "category": "politics",
+      "region": "west",
+      "year": 1939,
+      "era": "现代",
+      "location": "柏林",
+      "figures": [
+        {
+          "name": "希特勒",
+          "title": "纳粹领袖",
+          "desc": "发动战争"
+        },
+        {
+          "name": "罗斯福",
+          "title": "美国总统",
+          "desc": "反法西斯同盟领袖"
+        }
+      ],
+      "relations": [
+        {
+          "from": "希特勒",
+          "to": "罗斯福",
+          "type": "敌对",
+          "desc": "殊死对抗"
+        }
+      ],
+      "background": "凡尔赛体系埋下复仇种子，经济大萧条催生法西斯。",
+      "tags": [
+        "现代",
+        "世界大战",
+        "反法西斯"
+      ]
+    },
+    {
+      "title": "冷战开始",
+      "content": "丘吉尔发表铁幕演说，杜鲁门主义出台，美苏两大阵营进入长达四十余年的冷战，柏林封锁、朝鲜战争、古巴导弹危机接踵而至。",
+      "category": "politics",
+      "region": "west",
+      "year": 1947,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "杜鲁门",
+          "title": "美国总统",
+          "desc": "杜鲁门主义"
+        },
+        {
+          "name": "斯大林",
+          "title": "苏联领袖",
+          "desc": "冷战另一方"
+        }
+      ],
+      "relations": [
+        {
+          "from": "杜鲁门",
+          "to": "斯大林",
+          "type": "敌对",
+          "desc": "冷战对峙"
+        }
+      ],
+      "background": "二战结束，美苏意识形态和地缘利益不可调和。",
+      "tags": [
+        "现代",
+        "冷战",
+        "对峙"
+      ]
+    },
+    {
+      "title": "柏林墙倒塌",
+      "content": "东德宣布开放边境，柏林墙被推倒，两德走向统一，标志冷战的终结和欧洲格局的根本改变。",
+      "category": "politics",
+      "region": "west",
+      "year": 1989,
+      "era": "现代",
+      "location": "柏林",
+      "figures": [],
+      "relations": [],
+      "background": "戈尔巴乔夫改革使东欧剧变，匈牙利开放边境后东德人大量外逃。",
+      "tags": [
+        "现代",
+        "冷战",
+        "统一"
+      ]
+    },
+    {
+      "title": "虎门销烟",
+      "content": "林则徐在虎门海滩当众销毁英美鸦片237万余斤，向世界表明中国人民反抗外来侵略的坚定意志。",
+      "category": "society",
+      "region": "china",
+      "year": 1839,
+      "era": "近代",
+      "location": "广州",
+      "figures": [
+        {
+          "name": "林则徐",
+          "title": "钦差大臣",
+          "desc": "民族英雄"
+        }
+      ],
+      "relations": [],
+      "background": "英国向中国走私鸦片，白银大量外流，清廷禁烟派占上风。",
+      "tags": [
+        "近代",
+        "鸦片",
+        "禁烟"
+      ]
+    },
+    {
+      "title": "《南京条约》签订",
+      "content": "清政府在英军炮口下被迫签订中国近代第一个不平等条约《南京条约》：割让香港岛、赔款2100万银元、开放五口通商、协定关税。",
+      "category": "politics",
+      "region": "china",
+      "year": 1842,
+      "era": "近代",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "道光帝",
+          "title": "皇帝",
+          "desc": "战败求和"
+        }
+      ],
+      "relations": [],
+      "background": "鸦片战争清军战败，英军兵临南京城下。",
+      "tags": [
+        "近代",
+        "条约",
+        "半殖民地"
+      ]
+    },
+    {
+      "title": "火烧圆明园",
+      "content": "英法联军攻入北京，劫掠并火烧圆明园，大火三日不灭，这座\"万园之园\"化为废墟，是文明史上最恶劣的劫掠之一。",
+      "category": "politics",
+      "region": "china",
+      "year": 1860,
+      "era": "近代",
+      "location": "北京",
+      "figures": [],
+      "relations": [],
+      "background": "第二次鸦片战争，英法以\"亚罗号事件\"为借口扩大侵华。",
+      "tags": [
+        "近代",
+        "侵略",
+        "圆明园"
+      ]
+    },
+    {
+      "title": "甲午中日战争",
+      "content": "日本蓄意挑起甲午战争，北洋水师在黄海海战中重创，后在威海卫全军覆没。清政府战败签订《马关条约》。",
+      "category": "politics",
+      "region": "china",
+      "year": 1894,
+      "era": "近代",
+      "location": "威海",
+      "figures": [
+        {
+          "name": "李鸿章",
+          "title": "直隶总督",
+          "desc": "北洋水师创建者"
+        },
+        {
+          "name": "邓世昌",
+          "title": "管带",
+          "desc": "致远舰管带壮烈殉国"
+        }
+      ],
+      "relations": [
+        {
+          "from": "李鸿章",
+          "to": "邓世昌",
+          "type": "同僚",
+          "desc": "上下级关系"
+        }
+      ],
+      "background": "明治维新后日本走上对外扩张道路，蓄谋侵略朝鲜和中国。",
+      "tags": [
+        "近代",
+        "战争",
+        "甲午"
+      ]
+    },
+    {
+      "title": "《马关条约》签订",
+      "content": "李鸿章与日本签订《马关条约》：割让台湾及澎湖列岛、赔款2亿两白银、开放沙市重庆等通商口岸、允许日本在华设厂。",
+      "category": "politics",
+      "region": "china",
+      "year": 1895,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "李鸿章",
+          "title": "直隶总督",
+          "desc": "赴日谈判"
+        },
+        {
+          "name": "光绪帝",
+          "title": "皇帝",
+          "desc": "被迫批准"
+        }
+      ],
+      "relations": [
+        {
+          "from": "光绪帝",
+          "to": "李鸿章",
+          "type": "君臣",
+          "desc": "委以谈判之任"
+        }
+      ],
+      "background": "甲午战争清军惨败，北洋水师覆灭。",
+      "tags": [
+        "近代",
+        "条约",
+        "割地"
+      ]
+    },
+    {
+      "title": "公车上书",
+      "content": "康有为、梁启超等一千三百余名举人联名上书光绪帝，反对签订《马关条约》，提出拒和、迁都、变法主张，揭开维新变法序幕。",
+      "category": "politics",
+      "region": "china",
+      "year": 1895,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "康有为",
+          "title": "维新领袖",
+          "desc": "公车上书发起者"
+        },
+        {
+          "name": "梁启超",
+          "title": "维新领袖",
+          "desc": "《时务报》主笔"
+        }
+      ],
+      "relations": [
+        {
+          "from": "康有为",
+          "to": "梁启超",
+          "type": "师徒",
+          "desc": "亦师亦友"
+        }
+      ],
+      "background": "《马关条约》签订消息传来，举国激愤。",
+      "tags": [
+        "近代",
+        "维新",
+        "上书"
+      ]
+    },
+    {
+      "title": "义和团运动",
+      "content": "以\"扶清灭洋\"为口号的义和团运动在山东兴起，后席卷华北，最终被八国联军镇压，清政府被迫签订《辛丑条约》。",
+      "category": "society",
+      "region": "china",
+      "year": 1900,
+      "era": "近代",
+      "location": "北京",
+      "figures": [],
+      "relations": [],
+      "background": "列强侵略加深，外国教会势力扩张，民族矛盾空前激化。",
+      "tags": [
+        "近代",
+        "反帝",
+        "义和团"
+      ]
+    },
+    {
+      "title": "《辛丑条约》签订",
+      "content": "清政府与十一国签订《辛丑条约》：赔款4.5亿两白银、划定使馆界、拆毁大沽炮台、禁止反帝组织，中国完全沦为半殖民地半封建社会。",
+      "category": "politics",
+      "region": "china",
+      "year": 1901,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "慈禧太后",
+          "title": "太后",
+          "desc": "决策者"
+        }
+      ],
+      "relations": [],
+      "background": "八国联军攻陷北京，慈禧仓皇西逃。",
+      "tags": [
+        "近代",
+        "条约",
+        "丧权"
+      ]
+    },
+    {
+      "title": "中华民国成立",
+      "content": "孙中山在南京就任临时大总统，宣告中华民国成立，颁布《临时约法》，确立民主共和制度。",
+      "category": "politics",
+      "region": "china",
+      "year": 1912,
+      "era": "近代",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "孙中山",
+          "title": "临时大总统",
+          "desc": "民国之父"
+        },
+        {
+          "name": "袁世凯",
+          "title": "北洋军阀首领",
+          "desc": "逼迫清帝退位后窃取果实"
+        }
+      ],
+      "relations": [
+        {
+          "from": "孙中山",
+          "to": "袁世凯",
+          "type": "敌对",
+          "desc": "让位于袁"
+        }
+      ],
+      "background": "辛亥革命推翻清朝，各省代表选举孙中山为临时大总统。",
+      "tags": [
+        "近代",
+        "共和",
+        "民国"
+      ]
+    },
+    {
+      "title": "新文化运动",
+      "content": "陈独秀创办《新青年》，高举民主与科学两面旗帜，提倡白话文、反对文言文，猛烈批判封建礼教，促进思想解放。",
+      "category": "thought",
+      "region": "china",
+      "year": 1915,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "陈独秀",
+          "title": "教授",
+          "desc": "新文化运动旗手"
+        },
+        {
+          "name": "胡适",
+          "title": "学者",
+          "desc": "提倡白话文"
+        }
+      ],
+      "relations": [
+        {
+          "from": "陈独秀",
+          "to": "胡适",
+          "type": "同僚",
+          "desc": "共同倡导新文化"
+        }
+      ],
+      "background": "辛亥革命后民主观念传播，袁世凯却掀起尊孔复古逆流。",
+      "tags": [
+        "近代",
+        "思想",
+        "新文化"
+      ]
+    },
+    {
+      "title": "中共一大召开",
+      "content": "中国共产党第一次全国代表大会在上海法租界召开，后转移至嘉兴南湖游船，宣告中国共产党成立，选举陈独秀为中央局书记。",
+      "category": "politics",
+      "region": "china",
+      "year": 1921,
+      "era": "近代",
+      "location": "上海",
+      "figures": [
+        {
+          "name": "陈独秀",
+          "title": "中央局书记",
+          "desc": "中共主要创始人"
+        },
+        {
+          "name": "毛泽东",
+          "title": "代表",
+          "desc": "湖南代表"
+        }
+      ],
+      "relations": [
+        {
+          "from": "陈独秀",
+          "to": "毛泽东",
+          "type": "同僚",
+          "desc": "共同建党"
+        }
+      ],
+      "background": "马克思主义广泛传播，各地共产主义小组相继成立。",
+      "tags": [
+        "近代",
+        "建党",
+        "共产主义"
+      ]
+    },
+    {
+      "title": "南昌起义",
+      "content": "周恩来、贺龙、朱德等发动南昌起义，打响武装反抗国民党反动派第一枪，标志着人民军队的诞生。",
+      "category": "politics",
+      "region": "china",
+      "year": 1927,
+      "era": "近代",
+      "location": "南昌",
+      "figures": [
+        {
+          "name": "周恩来",
+          "title": "起义前委书记",
+          "desc": "南昌起义领导人"
+        }
+      ],
+      "relations": [],
+      "background": "国民党右派发动四一二反革命政变，大肆屠杀共产党人。",
+      "tags": [
+        "近代",
+        "起义",
+        "建军"
+      ]
+    },
+    {
+      "title": "红军长征",
+      "content": "中央红军从江西瑞金出发，血战湘江、四渡赤水、巧渡金沙江、强渡大渡河、翻越雪山草地，行程两万五千里，胜利到达陕北。",
+      "category": "politics",
+      "region": "china",
+      "year": 1934,
+      "era": "近代",
+      "location": "延安",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "长征途中确立领导地位"
+        }
+      ],
+      "relations": [],
+      "background": "第五次反\"围剿\"失败，红军被迫战略转移。",
+      "tags": [
+        "近代",
+        "长征",
+        "革命"
+      ]
+    },
+    {
+      "title": "遵义会议",
+      "content": "中共中央在遵义召开政治局扩大会议，纠正王明\"左\"倾错误，确立毛泽东的领导地位，挽救了党和红军。",
+      "category": "politics",
+      "region": "china",
+      "year": 1935,
+      "era": "近代",
+      "location": "遵义",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "确立领导地位"
+        }
+      ],
+      "relations": [],
+      "background": "长征初期损失惨重，全军上下要求改变领导。",
+      "tags": [
+        "近代",
+        "会议",
+        "转折"
+      ]
+    },
+    {
+      "title": "九一八事变",
+      "content": "日本关东军自行炸毁沈阳柳条湖附近南满铁路，诬陷中国军队，随即炮轰东北军北大营，侵占东三省。",
+      "category": "politics",
+      "region": "china",
+      "year": 1931,
+      "era": "近代",
+      "location": "沈阳",
+      "figures": [
+        {
+          "name": "张学良",
+          "title": "东北军少帅",
+          "desc": "执行不抵抗政策"
+        }
+      ],
+      "relations": [],
+      "background": "日本大陆政策既定方针，田中奏折提出\"惟欲征服中国，必先征服满蒙\"。",
+      "tags": [
+        "近代",
+        "日本",
+        "侵华"
+      ]
+    },
+    {
+      "title": "西安事变",
+      "content": "张学良、杨虎城在西安扣留蒋介石，逼蒋抗日。中共派周恩来调解，最终和平解决，促成抗日民族统一战线。",
+      "category": "politics",
+      "region": "china",
+      "year": 1936,
+      "era": "近代",
+      "location": "西安",
+      "figures": [
+        {
+          "name": "张学良",
+          "title": "东北军少帅",
+          "desc": "发动事变"
+        },
+        {
+          "name": "蒋介石",
+          "title": "委员长",
+          "desc": "被迫联共抗日"
+        },
+        {
+          "name": "周恩来",
+          "title": "中共代表",
+          "desc": "和平调解"
+        }
+      ],
+      "relations": [
+        {
+          "from": "张学良",
+          "to": "蒋介石",
+          "type": "敌对",
+          "desc": "兵谏"
+        },
+        {
+          "from": "周恩来",
+          "to": "蒋介石",
+          "type": "谈判",
+          "desc": "促成抗日统一战线"
+        }
+      ],
+      "background": "日军步步紧逼，民族危机深重，蒋介石仍坚持\"攘外必先安内\"。",
+      "tags": [
+        "近代",
+        "事变",
+        "抗日"
+      ]
+    },
+    {
+      "title": "七七事变",
+      "content": "日军在北平西南卢沟桥附近演习时谎称士兵失踪，炮轰宛平城，全面抗战爆发。",
+      "category": "politics",
+      "region": "china",
+      "year": 1937,
+      "era": "近代",
+      "location": "北京",
+      "figures": [],
+      "relations": [],
+      "background": "日本已侵占东北和华北大部分地区，加紧全面侵华准备。",
+      "tags": [
+        "近代",
+        "抗战",
+        "全面"
+      ]
+    },
+    {
+      "title": "南京大屠杀",
+      "content": "日军攻陷南京后进行了长达六周的大屠杀，中国军民约30万人被杀害，是二战中最惨绝人寰的暴行之一。",
+      "category": "politics",
+      "region": "china",
+      "year": 1937,
+      "era": "近代",
+      "location": "南京",
+      "figures": [],
+      "relations": [],
+      "background": "淞沪会战后日军向南京进犯，国民政府迁都重庆。",
+      "tags": [
+        "近代",
+        "暴行",
+        "大屠杀"
+      ]
+    },
+    {
+      "title": "百团大战",
+      "content": "八路军在彭德怀指挥下出动105个团，对华北日军交通线和据点发动大规模破袭战，重创日军气焰，鼓舞全国抗战信心。",
+      "category": "politics",
+      "region": "china",
+      "year": 1940,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "彭德怀",
+          "title": "八路军副总司令",
+          "desc": "百团大战指挥员"
+        }
+      ],
+      "relations": [],
+      "background": "抗战进入相持阶段，日军对根据地实施\"囚笼政策\"。",
+      "tags": [
+        "近代",
+        "抗战",
+        "八路军"
+      ]
+    },
+    {
+      "title": "日本投降",
+      "content": "日本天皇裕仁宣布无条件投降，中国抗日战争取得最终胜利，台湾光复，是近代以来中国抗击外敌入侵的第一次完全胜利。",
+      "category": "politics",
+      "region": "china",
+      "year": 1945,
+      "era": "近代",
+      "location": "南京",
+      "figures": [],
+      "relations": [],
+      "background": "美国在广岛长崎投下原子弹，苏联红军出兵东北。",
+      "tags": [
+        "近代",
+        "抗战",
+        "胜利"
+      ]
+    },
+    {
+      "title": "重庆谈判",
+      "content": "毛泽东应邀赴重庆与蒋介石进行和平谈判，双方签订《双十协定》，但国民党随后撕毁协定发动内战。",
+      "category": "politics",
+      "region": "china",
+      "year": 1945,
+      "era": "近代",
+      "location": "重庆",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "赴重庆谈判"
+        },
+        {
+          "name": "蒋介石",
+          "title": "委员长",
+          "desc": "表面和谈"
+        }
+      ],
+      "relations": [
+        {
+          "from": "毛泽东",
+          "to": "蒋介石",
+          "type": "敌对",
+          "desc": "谈判破裂"
+        }
+      ],
+      "background": "抗战胜利后全国人民渴望和平，国民党却积极准备内战。",
+      "tags": [
+        "近代",
+        "谈判",
+        "内战"
+      ]
+    },
+    {
+      "title": "三大战役",
+      "content": "中国人民解放军发动辽沈、淮海、平津三大战役，歼灭国民党军队主力154万余人，解放东北、华北和长江中下游以北广大地区。",
+      "category": "politics",
+      "region": "china",
+      "year": 1948,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "战略指挥"
+        },
+        {
+          "name": "林彪",
+          "title": "元帅",
+          "desc": "指挥辽沈战役"
+        }
+      ],
+      "relations": [
+        {
+          "from": "毛泽东",
+          "to": "林彪",
+          "type": "君臣",
+          "desc": "统帅与将领"
+        }
+      ],
+      "background": "解放战争进入战略决战阶段，敌我力量对比发生根本变化。",
+      "tags": [
+        "近代",
+        "解放",
+        "决战"
+      ]
+    },
+    {
+      "title": "抗美援朝",
+      "content": "中国人民志愿军跨过鸭绿江抗美援朝保家卫国，历经五次战役和上甘岭战役等，迫使美国在停战协定上签字。",
+      "category": "politics",
+      "region": "china",
+      "year": 1950,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "决策抗美援朝"
+        },
+        {
+          "name": "彭德怀",
+          "title": "志愿军司令员",
+          "desc": "指挥作战"
+        }
+      ],
+      "relations": [
+        {
+          "from": "毛泽东",
+          "to": "彭德怀",
+          "type": "君臣",
+          "desc": "委以统帅"
+        }
+      ],
+      "background": "朝鲜战争爆发，美军越过三八线逼近鸭绿江。",
+      "tags": [
+        "现代",
+        "战争",
+        "抗美援朝"
+      ]
+    },
+    {
+      "title": "三大改造完成",
+      "content": "中国基本完成对农业、手工业和资本主义工商业的社会主义改造，标志着社会主义制度在中国基本确立。",
+      "category": "politics",
+      "region": "china",
+      "year": 1956,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "决策者"
+        }
+      ],
+      "relations": [],
+      "background": "过渡时期总路线提出\"一化三改\"。",
+      "tags": [
+        "现代",
+        "社会主义",
+        "改造"
+      ]
+    },
+    {
+      "title": "文化大革命开始",
+      "content": "《五一六通知》通过，文化大革命全面发动。红卫兵大串联、批斗\"牛鬼蛇神\"，给党、国家和各族人民带来严重灾难。",
+      "category": "politics",
+      "region": "china",
+      "year": 1966,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "发动文革"
+        }
+      ],
+      "relations": [],
+      "background": "阶级斗争扩大化的错误理论发展到极端。",
+      "tags": [
+        "现代",
+        "文革",
+        "动乱"
+      ]
+    },
+    {
+      "title": "恢复联合国合法席位",
+      "content": "第26届联大以压倒多数通过决议，恢复中华人民共和国在联合国的一切合法权利，驱逐台湾国民党集团代表。",
+      "category": "society",
+      "region": "china",
+      "year": 1971,
+      "era": "现代",
+      "location": "纽约",
+      "figures": [
+        {
+          "name": "周恩来",
+          "title": "总理",
+          "desc": "外交决策"
+        }
+      ],
+      "relations": [],
+      "background": "新中国外交不断突破，第三世界国家大力支持。",
+      "tags": [
+        "现代",
+        "外交",
+        "联合国"
+      ]
+    },
+    {
+      "title": "尼克松访华",
+      "content": "美国总统尼克松访华，毛泽东会见，中美发表《上海公报》，结束两国长期隔绝状态，中美关系走向正常化。",
+      "category": "politics",
+      "region": "china",
+      "year": 1972,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "会见尼克松"
+        },
+        {
+          "name": "周恩来",
+          "title": "总理",
+          "desc": "主导谈判"
+        },
+        {
+          "name": "尼克松",
+          "title": "美国总统",
+          "desc": "破冰之旅"
+        }
+      ],
+      "relations": [
+        {
+          "from": "毛泽东",
+          "to": "尼克松",
+          "type": "外交",
+          "desc": "中美破冰"
+        }
+      ],
+      "background": "中苏关系恶化，美国深陷越战，双方有共同战略利益。",
+      "tags": [
+        "现代",
+        "外交",
+        "中美"
+      ]
+    },
+    {
+      "title": "十一届三中全会",
+      "content": "中共十一届三中全会召开，果断结束\"以阶级斗争为纲\"，将党和国家工作中心转移到经济建设上来，作出改革开放的历史性决策。",
+      "category": "politics",
+      "region": "china",
+      "year": 1978,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "改革开放总设计师"
+        }
+      ],
+      "relations": [],
+      "background": "文革结束两年后，\"两个凡是\"严重束缚思想。",
+      "tags": [
+        "现代",
+        "改革",
+        "开放"
+      ]
+    },
+    {
+      "title": "家庭联产承包责任制",
+      "content": "安徽小岗村18位农民按下红手印，实行包产到户。中央肯定后在全国推广，极大地解放了农村生产力。",
+      "category": "society",
+      "region": "china",
+      "year": 1978,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "支持包产到户"
+        }
+      ],
+      "relations": [],
+      "background": "人民公社体制束缚农民积极性，温饱问题突出。",
+      "tags": [
+        "现代",
+        "农村",
+        "改革"
+      ]
+    },
+    {
+      "title": "香港回归",
+      "content": "中英香港政权交接仪式在香港会展中心举行，香港回归祖国，实行\"一国两制\"、\"港人治港\"、高度自治。",
+      "category": "politics",
+      "region": "china",
+      "year": 1997,
+      "era": "现代",
+      "location": "香港",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "提出\"一国两制\"构想"
+        }
+      ],
+      "relations": [],
+      "background": "改革开放后中国综合国力提升，中英谈判达成联合声明。",
+      "tags": [
+        "现代",
+        "香港",
+        "一国两制"
+      ]
+    },
+    {
+      "title": "加入世贸组织",
+      "content": "中国正式加入世界贸易组织，成为第143个成员，标志着中国对外开放进入新阶段，深度融入全球经济体系。",
+      "category": "society",
+      "region": "china",
+      "year": 2001,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "江泽民",
+          "title": "主席",
+          "desc": "推动入世"
+        }
+      ],
+      "relations": [],
+      "background": "改革开放二十余年，中国经济实力显著增强。",
+      "tags": [
+        "现代",
+        "经济",
+        "全球化"
+      ]
+    },
+    {
+      "title": "神舟五号载人航天",
+      "content": "杨利伟搭乘神舟五号飞船成功进入太空并安全返回，中国成为世界上第三个独立掌握载人航天技术的国家。",
+      "category": "science",
+      "region": "china",
+      "year": 2003,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "杨利伟",
+          "title": "航天员",
+          "desc": "中国飞天第一人"
+        }
+      ],
+      "relations": [],
+      "background": "1992年启动载人航天工程，神舟系列飞船多次试验。",
+      "tags": [
+        "现代",
+        "航天",
+        "载人"
+      ]
+    },
+    {
+      "title": "英国资产阶级革命",
+      "content": "英国内战爆发，克伦威尔领导议会军击败王军，处死查理一世。后经光荣革命，确立君主立宪政体。",
+      "category": "politics",
+      "region": "west",
+      "year": 1640,
+      "era": "近代",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "克伦威尔",
+          "title": "护国公",
+          "desc": "议会军领袖"
+        }
+      ],
+      "relations": [],
+      "background": "斯图亚特王朝专制统治引发资产阶级和新贵族不满。",
+      "tags": [
+        "近代",
+        "英国",
+        "革命"
+      ]
+    },
+    {
+      "title": "光荣革命",
+      "content": "英国议会迎立威廉三世和玛丽二世为国王，通过《权利法案》，限制王权、确立议会主权，标志君主立宪制最终确立。",
+      "category": "politics",
+      "region": "west",
+      "year": 1688,
+      "era": "近代",
+      "location": "伦敦",
+      "figures": [],
+      "relations": [],
+      "background": "詹姆斯二世恢复天主教和专制统治引发各阶层反对。",
+      "tags": [
+        "近代",
+        "英国",
+        "宪政"
+      ]
+    },
+    {
+      "title": "美国独立战争爆发",
+      "content": "莱克星顿枪声打响美国独立战争第一枪，北美殖民地人民反抗英国殖民统治，争取民族独立。",
+      "category": "politics",
+      "region": "west",
+      "year": 1775,
+      "era": "近代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "华盛顿",
+          "title": "大陆军总司令",
+          "desc": "领导独立战争"
+        }
+      ],
+      "relations": [],
+      "background": "英国对北美殖民地横征暴敛，波士顿倾茶事件激化矛盾。",
+      "tags": [
+        "近代",
+        "美国",
+        "独立"
+      ]
+    },
+    {
+      "title": "俄国废除农奴制",
+      "content": "沙皇亚历山大二世签署废除农奴制法令，农奴获得人身自由和份地，为俄国资本主义发展提供劳动力。",
+      "category": "society",
+      "region": "west",
+      "year": 1861,
+      "era": "近代",
+      "location": "莫斯科",
+      "figures": [
+        {
+          "name": "亚历山大二世",
+          "title": "沙皇",
+          "desc": "改革者"
+        }
+      ],
+      "relations": [],
+      "background": "克里米亚战争惨败暴露俄国农奴制的落后。",
+      "tags": [
+        "近代",
+        "俄国",
+        "改革"
+      ]
+    },
+    {
+      "title": "美国南北战争",
+      "content": "林肯领导联邦政府平定南方叛乱，颁布《解放黑人奴隶宣言》，废除奴隶制，维护国家统一。",
+      "category": "politics",
+      "region": "west",
+      "year": 1861,
+      "era": "近代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "林肯",
+          "title": "美国总统",
+          "desc": "解放黑奴"
+        }
+      ],
+      "relations": [],
+      "background": "北方资本主义经济与南方种植园奴隶制矛盾不可调和。",
+      "tags": [
+        "近代",
+        "美国",
+        "奴隶制"
+      ]
+    },
+    {
+      "title": "第二次工业革命",
+      "content": "电力成为新能源，爱迪生发明白炽灯，贝尔发明电话，内燃机问世，汽车和飞机发明，人类进入电气时代。",
+      "category": "science",
+      "region": "west",
+      "year": 1870,
+      "era": "近代",
+      "location": "纽约",
+      "figures": [
+        {
+          "name": "爱迪生",
+          "title": "发明家",
+          "desc": "电灯等多项发明"
+        }
+      ],
+      "relations": [],
+      "background": "自然科学取得突破，电磁学理论为电气技术奠基。",
+      "tags": [
+        "近代",
+        "科技",
+        "电气时代"
+      ]
+    },
+    {
+      "title": "罗斯福新政",
+      "content": "罗斯福就任美国总统，推行新政：整顿银行、以工代赈、颁布《全国工业复兴法》等，以国家干预经济应对大萧条。",
+      "category": "politics",
+      "region": "west",
+      "year": 1933,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "罗斯福",
+          "title": "美国总统",
+          "desc": "新政推行者"
+        }
+      ],
+      "relations": [],
+      "background": "1929年经济大危机席卷全球，大量工厂倒闭、工人失业。",
+      "tags": [
+        "现代",
+        "经济",
+        "新政"
+      ]
+    },
+    {
+      "title": "斯大林模式确立",
+      "content": "苏联实施两个五年计划，优先发展重工业，实现工业化；推行农业集体化；建立高度集中的计划经济体制，即斯大林模式。",
+      "category": "politics",
+      "region": "west",
+      "year": 1928,
+      "era": "现代",
+      "location": "莫斯科",
+      "figures": [
+        {
+          "name": "斯大林",
+          "title": "苏联领导人",
+          "desc": "斯大林模式创立者"
+        }
+      ],
+      "relations": [],
+      "background": "列宁逝世后斯大林逐步掌权，苏联面临工业化压力。",
+      "tags": [
+        "现代",
+        "苏联",
+        "工业化"
+      ]
+    },
+    {
+      "title": "马歇尔计划",
+      "content": "美国提出欧洲复兴计划（马歇尔计划），向西欧提供130亿美元经济援助，稳定西欧经济，遏制苏联影响。",
+      "category": "politics",
+      "region": "west",
+      "year": 1947,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "杜鲁门",
+          "title": "美国总统",
+          "desc": "批准计划"
+        },
+        {
+          "name": "马歇尔",
+          "title": "国务卿",
+          "desc": "提出计划"
+        }
+      ],
+      "relations": [
+        {
+          "from": "杜鲁门",
+          "to": "马歇尔",
+          "type": "同僚",
+          "desc": "授意提出"
+        }
+      ],
+      "background": "战后欧洲经济凋敝，共产党势力在西欧崛起。",
+      "tags": [
+        "现代",
+        "冷战",
+        "经济"
+      ]
+    },
+    {
+      "title": "北约与华约对峙",
+      "content": "美、加及西欧十国签署《北大西洋公约》，北约成立。苏联与东欧七国签署《华沙条约》，华约成立。两大军事集团对峙格局形成。",
+      "category": "politics",
+      "region": "west",
+      "year": 1949,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [],
+      "relations": [],
+      "background": "冷战加剧，柏林封锁危机使西欧感到安全威胁。",
+      "tags": [
+        "现代",
+        "冷战",
+        "军事"
+      ]
+    },
+    {
+      "title": "欧洲联盟成立",
+      "content": "《马斯特里赫特条约》正式生效，欧共体演变为欧洲联盟，发行统一货币欧元，推动欧洲一体化进程。",
+      "category": "politics",
+      "region": "west",
+      "year": 1993,
+      "era": "现代",
+      "location": "巴黎",
+      "figures": [],
+      "relations": [],
+      "background": "二战后法德和解，欧洲联合从煤钢共同体起步逐步深化。",
+      "tags": [
+        "现代",
+        "欧洲",
+        "一体化"
+      ]
+    },
+    {
+      "title": "苏联解体",
+      "content": "《阿拉木图宣言》签署，11个苏联加盟共和国宣布独立，苏联正式解体，冷战结束，世界格局从两极走向多极化。",
+      "category": "politics",
+      "region": "west",
+      "year": 1991,
+      "era": "现代",
+      "location": "莫斯科",
+      "figures": [
+        {
+          "name": "戈尔巴乔夫",
+          "title": "苏联总统",
+          "desc": "改革者"
+        },
+        {
+          "name": "叶利钦",
+          "title": "俄罗斯总统",
+          "desc": "推动独立"
+        }
+      ],
+      "relations": [
+        {
+          "from": "戈尔巴乔夫",
+          "to": "叶利钦",
+          "type": "敌对",
+          "desc": "政治对手"
+        }
+      ],
+      "background": "戈尔巴乔夫改革失控，各加盟共和国民族分离主义高涨。",
+      "tags": [
+        "现代",
+        "冷战",
+        "解体"
+      ]
+    },
+    {
+      "title": "古巴导弹危机",
+      "content": "美国发现苏联在古巴部署中程导弹，肯尼迪宣布对古巴实施海上封锁，美苏核战争一触即发。最终苏联撤走导弹，危机解除。",
+      "category": "politics",
+      "region": "west",
+      "year": 1962,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "肯尼迪",
+          "title": "美国总统",
+          "desc": "强硬应对"
+        },
+        {
+          "name": "赫鲁晓夫",
+          "title": "苏联领导人",
+          "desc": "妥协让步"
+        }
+      ],
+      "relations": [
+        {
+          "from": "肯尼迪",
+          "to": "赫鲁晓夫",
+          "type": "敌对",
+          "desc": "正面交锋"
+        }
+      ],
+      "background": "美苏冷战加剧，核军备竞赛激烈。",
+      "tags": [
+        "现代",
+        "冷战",
+        "核危机"
+      ]
+    },
+    {
+      "title": "佛教创立",
+      "content": "释迦牟尼在印度菩提树下悟道成佛，创立佛教，主张众生平等、四谛八正道，后成为世界三大宗教之一。",
+      "category": "thought",
+      "region": "west",
+      "year": -525,
+      "era": "古印度",
+      "location": "菩提伽耶",
+      "figures": [
+        {
+          "name": "释迦牟尼",
+          "title": "佛陀",
+          "desc": "佛教创始人"
+        }
+      ],
+      "relations": [],
+      "background": "种姓制度森严，婆罗门教仪式繁琐。",
+      "tags": [
+        "古印度",
+        "宗教",
+        "佛教"
+      ]
+    },
+    {
+      "title": "马拉松战役",
+      "content": "雅典军队在马拉松平原以少胜多击败波斯大军，传令兵菲迪皮茨奔回雅典报捷后力竭而死，马拉松赛跑由此而来。",
+      "category": "politics",
+      "region": "west",
+      "year": -490,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [],
+      "relations": [],
+      "background": "波斯帝国大流士一世远征希腊。",
+      "tags": [
+        "古希腊",
+        "战争",
+        "波斯"
+      ]
+    },
+    {
+      "title": "温泉关战役",
+      "content": "斯巴达国王列奥尼达率三百勇士据守温泉关，英勇阻击数十万波斯大军，全部壮烈牺牲，成为西方尚武精神的象征。",
+      "category": "politics",
+      "region": "west",
+      "year": -480,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "列奥尼达",
+          "title": "斯巴达国王",
+          "desc": "温泉关烈士"
+        }
+      ],
+      "relations": [],
+      "background": "波斯帝国薛西斯一世亲征希腊。",
+      "tags": [
+        "古希腊",
+        "战争",
+        "英雄"
+      ]
+    },
+    {
+      "title": "罗马共和国建立",
+      "content": "罗马人驱逐最后一位国王，建立共和政体，设执政官、元老院和公民大会，实行权力制衡。",
+      "category": "politics",
+      "region": "west",
+      "year": -509,
+      "era": "古罗马",
+      "location": "罗马",
+      "figures": [],
+      "relations": [],
+      "background": "伊特鲁里亚王朝统治激起罗马贵族反抗。",
+      "tags": [
+        "古罗马",
+        "共和",
+        "政治"
+      ]
+    },
+    {
+      "title": "斯巴达克起义",
+      "content": "角斗士斯巴达克领导大规模奴隶起义，纵横意大利半岛，最终被克拉苏镇压，但沉重打击了罗马奴隶制。",
+      "category": "society",
+      "region": "west",
+      "year": -73,
+      "era": "古罗马",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "斯巴达克",
+          "title": "角斗士领袖",
+          "desc": "起义领导人"
+        }
+      ],
+      "relations": [],
+      "background": "罗马奴隶制高度发达，奴隶处境极其悲惨。",
+      "tags": [
+        "古罗马",
+        "起义",
+        "奴隶"
+      ]
+    },
+    {
+      "title": "奥斯曼帝国攻陷君士坦丁堡",
+      "content": "苏丹穆罕默德二世率奥斯曼大军攻陷君士坦丁堡，东罗马帝国灭亡，城市改名伊斯坦布尔。标志中世纪结束和文艺复兴加速。",
+      "category": "politics",
+      "region": "west",
+      "year": 1453,
+      "era": "中世纪",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "穆罕默德二世",
+          "title": "苏丹",
+          "desc": "征服者"
+        }
+      ],
+      "relations": [],
+      "background": "东罗马帝国已衰落，仅剩孤城一座。",
+      "tags": [
+        "中世纪",
+        "帝国",
+        "征服"
+      ]
+    },
+    {
+      "title": "麦哲伦环球航行",
+      "content": "麦哲伦船队从西班牙出发，绕过南美海峡（后称麦哲伦海峡），横渡太平洋抵达菲律宾，麦哲伦战死后船队继续西行返回西班牙，完成人类首次环球航行。",
+      "category": "science",
+      "region": "west",
+      "year": 1519,
+      "era": "大航海时代",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "麦哲伦",
+          "title": "航海家",
+          "desc": "环球航行领导者"
+        }
+      ],
+      "relations": [],
+      "background": "哥伦布发现新大陆后，欧洲各国竞相开辟新航路。",
+      "tags": [
+        "大航海",
+        "地理",
+        "航行"
+      ]
+    },
+    {
+      "title": "宗教改革",
+      "content": "马丁·路德在维滕贝格教堂大门贴出《九十五条论纲》，批判赎罪券，主张因信称义，《圣经》为最高权威，基督教新教由此诞生。",
+      "category": "thought",
+      "region": "west",
+      "year": 1517,
+      "era": "文艺复兴",
+      "location": "柏林",
+      "figures": [
+        {
+          "name": "马丁·路德",
+          "title": "神学家",
+          "desc": "宗教改革发起者"
+        }
+      ],
+      "relations": [],
+      "background": "天主教会腐败，出售赎罪券引发强烈不满。",
+      "tags": [
+        "文艺复兴",
+        "宗教",
+        "新教"
+      ]
+    },
+    {
+      "title": "美国颁布1787年宪法",
+      "content": "美国制宪会议通过1787年宪法，确立三权分立、联邦制、总统共和制，是世界上第一部成文宪法，影响深远。",
+      "category": "politics",
+      "region": "west",
+      "year": 1787,
+      "era": "近代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "华盛顿",
+          "title": "总统",
+          "desc": "主持制宪会议"
+        }
+      ],
+      "relations": [],
+      "background": "邦联条例下中央政府软弱无力，各州各自为政。",
+      "tags": [
+        "近代",
+        "美国",
+        "宪法"
+      ]
+    },
+    {
+      "title": "门罗宣言",
+      "content": "美国总统门罗发表国情咨文，提出\"美洲是美洲人的美洲\"，反对欧洲列强干预美洲事务，史称门罗主义。",
+      "category": "politics",
+      "region": "west",
+      "year": 1823,
+      "era": "近代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "门罗",
+          "title": "美国总统",
+          "desc": "提出门罗主义"
+        }
+      ],
+      "relations": [],
+      "background": "拉美独立运动胜利，欧洲\"神圣同盟\"企图干涉。",
+      "tags": [
+        "近代",
+        "美国",
+        "外交"
+      ]
+    },
+    {
+      "title": "巴黎公社",
+      "content": "巴黎工人起义推翻临时政府，建立世界上第一个无产阶级政权——巴黎公社，虽仅存72天被镇压，但为国际共产主义运动提供经验。",
+      "category": "politics",
+      "region": "west",
+      "year": 1871,
+      "era": "近代",
+      "location": "巴黎",
+      "figures": [],
+      "relations": [],
+      "background": "普法战争法国惨败，国民自卫军与临时政府矛盾激化。",
+      "tags": [
+        "近代",
+        "革命",
+        "无产阶级"
+      ]
+    },
+    {
+      "title": "东欧剧变",
+      "content": "波兰团结工会执政、匈牙利开放边界、捷克斯洛伐克天鹅绒革命、罗马尼亚齐奥塞斯库被推翻，东欧各国政权纷纷更迭。",
+      "category": "politics",
+      "region": "west",
+      "year": 1989,
+      "era": "现代",
+      "location": "柏林",
+      "figures": [
+        {
+          "name": "戈尔巴乔夫",
+          "title": "苏联总统",
+          "desc": "放弃干预东欧"
+        }
+      ],
+      "relations": [],
+      "background": "戈尔巴乔夫\"新思维\"改革放弃勃列日涅夫主义。",
+      "tags": [
+        "现代",
+        "东欧",
+        "剧变"
+      ]
+    },
+    {
+      "title": "海湾战争",
+      "content": "伊拉克入侵科威特后，美国领导多国部队发动\"沙漠风暴\"行动，以高科技武器迅速击败伊拉克军队，展示信息化战争新形态。",
+      "category": "politics",
+      "region": "west",
+      "year": 1991,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [],
+      "relations": [],
+      "background": "冷战结束后的国际格局重组，伊拉克试图控制石油资源。",
+      "tags": [
+        "现代",
+        "战争",
+        "中东"
+      ]
+    },
+    {
+      "title": "禹传启世袭制确立",
+      "content": "禹死后其子启继位，从此王位世袭制代替禅让制，\"公天下\"变为\"家天下\"，夏朝成为中国历史上第一个王朝。",
+      "category": "politics",
+      "region": "china",
+      "year": -2070,
+      "era": "传说时代",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "启",
+          "title": "夏王",
+          "desc": "世袭制开创者"
+        }
+      ],
+      "relations": [],
+      "background": "禹治水成功后威望极高，私有制逐步发展。",
+      "tags": [
+        "传说",
+        "世袭",
+        "王朝"
+      ]
+    },
+    {
+      "title": "春秋五霸争霸",
+      "content": "齐桓公首霸，晋文公、楚庄王、吴王阖闾、越王勾践相继称霸，诸侯争霸加速了分封制的瓦解和华夏族的融合。",
+      "category": "politics",
+      "region": "china",
+      "year": -650,
+      "era": "先秦",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "齐桓公",
+          "title": "春秋首霸",
+          "desc": "尊王攘夷"
+        }
+      ],
+      "relations": [],
+      "background": "周王室衰微，诸侯坐大，礼崩乐坏。",
+      "tags": [
+        "先秦",
+        "争霸",
+        "诸侯"
+      ]
+    },
+    {
+      "title": "秦始皇焚书坑儒",
+      "content": "秦始皇采纳李斯建议，焚烧《诗》《书》、百家语，坑杀诽谤朝政的儒生四百六十余人，以思想专制巩固统治。",
+      "category": "thought",
+      "region": "china",
+      "year": -213,
+      "era": "秦",
+      "location": "咸阳",
+      "figures": [
+        {
+          "name": "秦始皇",
+          "title": "始皇帝",
+          "desc": "推行思想专制"
+        },
+        {
+          "name": "李斯",
+          "title": "丞相",
+          "desc": "建议焚书"
+        }
+      ],
+      "relations": [
+        {
+          "from": "秦始皇",
+          "to": "李斯",
+          "type": "君臣",
+          "desc": "采纳焚书之策"
+        }
+      ],
+      "background": "天下初定，博士淳于越主张分封引发争论。",
+      "tags": [
+        "秦",
+        "思想",
+        "专制"
+      ]
+    },
+    {
+      "title": "北魏孝文帝改革",
+      "content": "北魏孝文帝推行汉化改革：迁都洛阳、改汉姓、穿汉服、说汉语、与汉族通婚，促进北方民族大融合。",
+      "category": "society",
+      "region": "china",
+      "year": 493,
+      "era": "南北朝",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "孝文帝",
+          "title": "北魏皇帝",
+          "desc": "汉化改革者"
+        }
+      ],
+      "relations": [],
+      "background": "北魏统一北方后，鲜卑统治面临如何治理汉地的挑战。",
+      "tags": [
+        "南北朝",
+        "改革",
+        "民族融合"
+      ]
+    },
+    {
+      "title": "大运河开通",
+      "content": "隋炀帝征发数百万民夫，以洛阳为中心，南至余杭、北达涿郡，开凿大运河全长两千多公里，沟通南北经济。",
+      "category": "society",
+      "region": "china",
+      "year": 605,
+      "era": "隋",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "隋炀帝",
+          "title": "皇帝",
+          "desc": "下令开凿"
+        }
+      ],
+      "relations": [],
+      "background": "经济重心南移，需加强南北联系。",
+      "tags": [
+        "隋",
+        "工程",
+        "运河"
+      ]
+    },
+    {
+      "title": "武则天称帝",
+      "content": "武则天废唐称帝，改国号为周，成为中国历史上唯一的女皇帝。在位期间发展科举、整顿吏治、抵御吐蕃，上承贞观下启开元。",
+      "category": "politics",
+      "region": "china",
+      "year": 690,
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "武则天",
+          "title": "则天大圣皇帝",
+          "desc": "唯一女皇"
+        }
+      ],
+      "relations": [],
+      "background": "唐高宗多病，武则天参与朝政逐渐掌握大权。",
+      "tags": [
+        "唐",
+        "女皇",
+        "科举"
+      ]
+    },
+    {
+      "title": "岳飞抗金",
+      "content": "岳飞率岳家军北伐，收复襄阳、郾城大捷，直抵朱仙镇。却被秦桧以\"莫须有\"罪名陷害，含冤风波亭。",
+      "category": "politics",
+      "region": "china",
+      "year": 1140,
+      "era": "南宋",
+      "location": "开封",
+      "figures": [
+        {
+          "name": "岳飞",
+          "title": "抗金名将",
+          "desc": "精忠报国"
+        },
+        {
+          "name": "秦桧",
+          "title": "宰相",
+          "desc": "主和派"
+        }
+      ],
+      "relations": [
+        {
+          "from": "岳飞",
+          "to": "秦桧",
+          "type": "敌对",
+          "desc": "陷害致死"
+        }
+      ],
+      "background": "金兵南侵，南宋偏安江南。",
+      "tags": [
+        "南宋",
+        "抗金",
+        "忠臣"
+      ]
+    },
+    {
+      "title": "李自成起义",
+      "content": "明末李自成率农民起义军攻入北京，崇祯帝自缢煤山，明朝灭亡。后清军入关，李自成兵败九宫山。",
+      "category": "politics",
+      "region": "china",
+      "year": 1644,
+      "era": "明末",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "李自成",
+          "title": "闯王",
+          "desc": "明末农民领袖"
+        }
+      ],
+      "relations": [],
+      "background": "明朝末年土地兼并严重，天灾不断，驿卒裁员引爆矛盾。",
+      "tags": [
+        "明末",
+        "起义",
+        "灭亡"
+      ]
+    },
+    {
+      "title": "雅克萨之战",
+      "content": "清军两次围攻沙俄盘踞的雅克萨城，最终签订《尼布楚条约》，划定中俄东部边界，维持了百余年的和平。",
+      "category": "politics",
+      "region": "china",
+      "year": 1685,
+      "era": "清",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "康熙帝",
+          "title": "皇帝",
+          "desc": "抗俄决策者"
+        }
+      ],
+      "relations": [],
+      "background": "沙俄不断向黑龙江流域扩张，建立据点。",
+      "tags": [
+        "清",
+        "边疆",
+        "条约"
+      ]
+    },
+    {
+      "title": "闭关锁国政策",
+      "content": "清政府实行严格的海禁政策，仅留广州一口通商，由十三行垄断对外贸易，隔断中国与世界科技文化交流。",
+      "category": "society",
+      "region": "china",
+      "year": 1757,
+      "era": "清",
+      "location": "广州",
+      "figures": [
+        {
+          "name": "乾隆帝",
+          "title": "皇帝",
+          "desc": "推行闭关"
+        }
+      ],
+      "relations": [],
+      "background": "清朝统治者自认为天朝上国，防范西方势力渗透。",
+      "tags": [
+        "清",
+        "海禁",
+        "封闭"
+      ]
+    },
+    {
+      "title": "郑和宝船舰队",
+      "content": "郑和率领的宝船舰队最大船只长约150米、宽约60米，是当时世界最先进的航海工具，九桅十二帆，载员上千。",
+      "category": "science",
+      "region": "china",
+      "year": 1405,
+      "era": "明",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "郑和",
+          "title": "太监总管",
+          "desc": "远洋统帅"
+        }
+      ],
+      "relations": [],
+      "background": "明朝造船技术全球领先，已有完善的航海技术体系。",
+      "tags": [
+        "明",
+        "航海",
+        "技术"
+      ]
+    },
+    {
+      "title": "八股取士制度化",
+      "content": "明朝科举考试规定以四书五经为内容，以八股文为格式，严重束缚士人思想，成为文化专制的工具。",
+      "category": "society",
+      "region": "china",
+      "year": 1487,
+      "era": "明",
+      "location": "北京",
+      "figures": [],
+      "relations": [],
+      "background": "朱元璋大兴文字狱，控制思想言论。",
+      "tags": [
+        "明",
+        "科举",
+        "八股"
+      ]
+    },
+    {
+      "title": "封狼居胥",
+      "content": "霍去病率精骑深入漠北，大败匈奴左贤王，在狼居胥山筑坛祭天，史称封狼居胥，成为中国古代武将的最高荣誉象征。",
+      "category": "politics",
+      "region": "china",
+      "year": -119,
+      "era": "西汉",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "霍去病",
+          "title": "骠骑将军",
+          "desc": "封狼居胥"
+        },
+        {
+          "name": "汉武帝",
+          "title": "皇帝",
+          "desc": "决策者"
+        }
+      ],
+      "relations": [
+        {
+          "from": "汉武帝",
+          "to": "霍去病",
+          "type": "君臣",
+          "desc": "委以重任"
+        }
+      ],
+      "background": "汉武帝决心彻底击溃匈奴主力。",
+      "tags": [
+        "西汉",
+        "匈奴",
+        "军事"
+      ]
+    },
+    {
+      "title": "火药发明",
+      "content": "中国炼丹家在炼制丹药时偶然发明火药，后经宋元明三代发展，应用于军事火器，经阿拉伯传入欧洲，改变世界战争形态。",
+      "category": "science",
+      "region": "china",
+      "year": 850,
+      "era": "唐",
+      "location": "开封",
+      "figures": [],
+      "relations": [],
+      "background": "唐代炼丹术高度发达，炼丹家在硫磺、硝石、木炭的实验中发现了火药的配方。",
+      "tags": [
+        "唐",
+        "发明",
+        "火药"
+      ]
+    },
+    {
+      "title": "长征",
+      "content": "中央红军从江西瑞金出发，血战湘江、四渡赤水、巧渡金沙江、强渡大渡河、翻越雪山草地，行程两万五千里，胜利到达陕北。",
+      "category": "politics",
+      "region": "china",
+      "year": 1934,
+      "era": "近代",
+      "location": "延安",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "长征中确立领导地位"
+        }
+      ],
+      "relations": [],
+      "background": "第五次反\"围剿\"失败，红军被迫战略转移。",
+      "tags": [
+        "近代",
+        "长征",
+        "革命"
+      ]
+    },
+    {
+      "title": "真理标准问题讨论",
+      "content": "《光明日报》发表《实践是检验真理的唯一标准》特约评论员文章，引发全国大讨论，冲破\"两个凡是\"禁锢，为十一届三中全会奠定思想基础。",
+      "category": "thought",
+      "region": "china",
+      "year": 1978,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "支持真理标准讨论"
+        }
+      ],
+      "relations": [],
+      "background": "\"两个凡是\"严重束缚思想，拨乱反正遇到障碍。",
+      "tags": [
+        "现代",
+        "思想",
+        "改革"
+      ]
+    },
+    {
+      "title": "南方谈话",
+      "content": "邓小平先后视察武昌、深圳、珠海、上海等地，发表南方谈话，强调发展才是硬道理，计划多一点还是市场多一点不是社会主义与资本主义的本质区别。",
+      "category": "thought",
+      "region": "china",
+      "year": 1992,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "改革开放总设计师"
+        }
+      ],
+      "relations": [],
+      "background": "苏东剧变后国内出现对改革开放的质疑和争论。",
+      "tags": [
+        "现代",
+        "改革",
+        "思想"
+      ]
+    },
+    {
+      "title": "西藏和平解放",
+      "content": "中央人民政府与西藏地方政府签订《十七条协议》，西藏和平解放，标志着祖国大陆领土的全部解放。",
+      "category": "politics",
+      "region": "china",
+      "year": 1951,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "决策者"
+        }
+      ],
+      "relations": [],
+      "background": "新中国成立后，帝国主义势力妄图把西藏分裂出去。",
+      "tags": [
+        "现代",
+        "西藏",
+        "统一"
+      ]
+    },
+    {
+      "title": "土地改革完成",
+      "content": "《中华人民共和国土地改革法》颁布，废除封建地主土地所有制，实行农民土地所有制，三亿多无地少地农民分得土地。",
+      "category": "society",
+      "region": "china",
+      "year": 1950,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "决策者"
+        }
+      ],
+      "relations": [],
+      "background": "新中国成立后封建土地制度严重束缚农村生产力。",
+      "tags": [
+        "现代",
+        "农村",
+        "土改"
+      ]
+    },
+    {
+      "title": "第一个五年计划",
+      "content": "新中国开始执行第一个五年计划，集中主要力量发展重工业，建成鞍钢、长春一汽、沈阳机床等重大项目，奠定工业化基础。",
+      "category": "society",
+      "region": "china",
+      "year": 1953,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "决策者"
+        }
+      ],
+      "relations": [],
+      "background": "国民经济恢复任务完成后，国家亟需工业化。",
+      "tags": [
+        "现代",
+        "工业",
+        "计划"
+      ]
+    },
+    {
+      "title": "《朝鲜停战协定》",
+      "content": "中朝代表团与联合国军代表在板门店签署《朝鲜停战协定》，抗美援朝战争结束，维护了朝鲜半岛的和平稳定。",
+      "category": "politics",
+      "region": "china",
+      "year": 1953,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "彭德怀",
+          "title": "志愿军司令员",
+          "desc": "中方谈判代表"
+        }
+      ],
+      "relations": [],
+      "background": "上甘岭战役等激战后双方在三八线形成对峙。",
+      "tags": [
+        "现代",
+        "朝鲜",
+        "停战"
+      ]
+    },
+    {
+      "title": "中美建交",
+      "content": "中美两国正式建立大使级外交关系，美国承认中华人民共和国政府是中国的唯一合法政府，两国关系进入新阶段。",
+      "category": "politics",
+      "region": "china",
+      "year": 1979,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "推动中美关系"
+        },
+        {
+          "name": "卡特",
+          "title": "美国总统",
+          "desc": "签署建交公报"
+        }
+      ],
+      "relations": [
+        {
+          "from": "邓小平",
+          "to": "卡特",
+          "type": "外交",
+          "desc": "建交"
+        }
+      ],
+      "background": "尼克松访华后中美关系逐步改善。",
+      "tags": [
+        "现代",
+        "外交",
+        "中美"
+      ]
+    },
+    {
+      "title": "上海合作组织成立",
+      "content": "中国、俄罗斯、哈萨克斯坦、吉尔吉斯斯坦、塔吉克斯坦、乌兹别克斯坦六国在上海宣布成立上海合作组织，开展反恐与安全合作。",
+      "category": "politics",
+      "region": "china",
+      "year": 2001,
+      "era": "现代",
+      "location": "上海",
+      "figures": [
+        {
+          "name": "江泽民",
+          "title": "主席",
+          "desc": "推动上合组织"
+        }
+      ],
+      "relations": [],
+      "background": "冷战结束后中亚地缘政治格局重组，恐怖主义威胁上升。",
+      "tags": [
+        "现代",
+        "外交",
+        "安全"
+      ]
+    },
+    {
+      "title": "一带一路倡议",
+      "content": "习近平提出共建\"丝绸之路经济带\"和\"21世纪海上丝绸之路\"重大倡议，推动沿线国家基础设施互联互通和经贸合作。",
+      "category": "society",
+      "region": "china",
+      "year": 2013,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "习近平",
+          "title": "主席",
+          "desc": "提出一带一路"
+        }
+      ],
+      "relations": [],
+      "background": "中国综合国力大幅提升，需要更深融入全球经济体系。",
+      "tags": [
+        "现代",
+        "外交",
+        "经济"
+      ]
+    },
+    {
+      "title": "文景之治",
+      "content": "汉文帝、汉景帝推行休养生息政策：轻徭薄赋、以德化民、废除肉刑，开创中国历史上第一个太平盛世。",
+      "category": "politics",
+      "region": "china",
+      "year": -167,
+      "era": "西汉",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "汉文帝",
+          "title": "皇帝",
+          "desc": "以德化民"
+        },
+        {
+          "name": "汉景帝",
+          "title": "皇帝",
+          "desc": "继续黄老之治"
+        }
+      ],
+      "relations": [
+        {
+          "from": "汉文帝",
+          "to": "汉景帝",
+          "type": "父子",
+          "desc": "继位"
+        }
+      ],
+      "background": "汉初社会经济凋敝，政府推崇黄老之学无为而治。",
+      "tags": [
+        "西汉",
+        "盛世",
+        "休养生息"
+      ]
+    },
+    {
+      "title": "黄巾起义",
+      "content": "张角以太平道为组织，发动黄巾大起义，以\"苍天已死，黄天当立\"为口号，沉重打击东汉统治，加速其灭亡。",
+      "category": "society",
+      "region": "china",
+      "year": 184,
+      "era": "东汉末",
+      "location": "洛阳",
+      "figures": [
+        {
+          "name": "张角",
+          "title": "太平道首领",
+          "desc": "黄巾起义领袖"
+        }
+      ],
+      "relations": [],
+      "background": "东汉末年外戚宦官交替专权，土地兼并严重，天灾频繁。",
+      "tags": [
+        "东汉",
+        "起义",
+        "道教"
+      ]
+    },
+    {
+      "title": "八王之乱",
+      "content": "西晋宗室诸王为争夺中央权力展开长达十六年的混战，严重削弱了西晋国力，直接导致五胡乱华和西晋灭亡。",
+      "category": "politics",
+      "region": "china",
+      "year": 291,
+      "era": "西晋",
+      "location": "洛阳",
+      "figures": [],
+      "relations": [],
+      "background": "司马炎大封同姓王且允许拥有军队，埋下祸根。",
+      "tags": [
+        "西晋",
+        "内乱",
+        "八王"
+      ]
+    },
+    {
+      "title": "泗水之战",
+      "content": "前秦苻坚率大军南征东晋，谢玄以八万北府兵在泗水大破前秦百万大军，苻坚败逃，北方重新分裂。",
+      "category": "politics",
+      "region": "china",
+      "year": 383,
+      "era": "东晋",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "谢玄",
+          "title": "建武将军",
+          "desc": "北府兵统帅"
+        }
+      ],
+      "relations": [],
+      "background": "前秦统一北方后苻坚急于统一全国，不顾群臣劝阻南征。",
+      "tags": [
+        "东晋",
+        "战役",
+        "以少胜多"
+      ]
+    },
+    {
+      "title": "玄奘取经",
+      "content": "玄奘从长安出发，孤身穿越西域，到达印度那烂陀寺学习佛法，带回佛经657部并主持翻译，著有《大唐西域记》。",
+      "category": "thought",
+      "region": "china",
+      "year": 629,
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "玄奘",
+          "title": "三藏法师",
+          "desc": "佛经翻译家"
+        }
+      ],
+      "relations": [],
+      "background": "佛教传入中国后各派教义纷歧，玄奘决心前往印度求取真经。",
+      "tags": [
+        "唐",
+        "佛教",
+        "翻译"
+      ]
+    },
+    {
+      "title": "牛李党争",
+      "content": "以牛僧孺为首的李党与以李德裕为首的牛党之间长达四十年的政治斗争，严重消耗唐朝国力，加剧了晚唐统治危机。",
+      "category": "politics",
+      "region": "china",
+      "year": 820,
+      "era": "唐",
+      "location": "长安",
+      "figures": [
+        {
+          "name": "李德裕",
+          "title": "宰相",
+          "desc": "李党领袖"
+        }
+      ],
+      "relations": [],
+      "background": "科举出身的庶族与门荫出身的世族之间矛盾激化。",
+      "tags": [
+        "唐",
+        "党争",
+        "衰落"
+      ]
+    },
+    {
+      "title": "陈桥兵变",
+      "content": "后周将领赵匡胤在陈桥驿被部下黄袍加身，回师开封取代后周建立宋朝，定都开封，史称北宋。",
+      "category": "politics",
+      "region": "china",
+      "year": 960,
+      "era": "北宋",
+      "location": "开封",
+      "figures": [
+        {
+          "name": "赵匡胤",
+          "title": "宋太祖",
+          "desc": "宋朝开国皇帝"
+        }
+      ],
+      "relations": [],
+      "background": "后周世宗柴荣英年早逝，幼主即位主少国疑。",
+      "tags": [
+        "北宋",
+        "兵变",
+        "开国"
+      ]
+    },
+    {
+      "title": "杯酒释兵权",
+      "content": "赵匡胤设宴召集禁军将领石守信等人饮酒，劝说他们交出兵权，以和平方式解除武将威胁，确立重文轻武国策。",
+      "category": "politics",
+      "region": "china",
+      "year": 961,
+      "era": "北宋",
+      "location": "开封",
+      "figures": [
+        {
+          "name": "赵匡胤",
+          "title": "宋太祖",
+          "desc": "解除武将兵权"
+        }
+      ],
+      "relations": [],
+      "background": "赵匡胤自身以兵变得位，深恐武将效仿。",
+      "tags": [
+        "北宋",
+        "集权",
+        "文治"
+      ]
+    },
+    {
+      "title": "海上丝绸之路鼎盛",
+      "content": "宋元时期海上贸易空前繁荣，泉州成为世界最大港口之一，瓷器、丝绸、茶叶大量出口，香料、珠宝源源不断输入。",
+      "category": "society",
+      "region": "china",
+      "year": 1100,
+      "era": "南宋",
+      "location": "广州",
+      "figures": [],
+      "relations": [],
+      "background": "经济重心南移完成，造船和航海技术高度发达。",
+      "tags": [
+        "宋",
+        "贸易",
+        "海外"
+      ]
+    },
+    {
+      "title": "指南针应用于航海",
+      "content": "北宋时指南针已普遍用于航海，后经阿拉伯传入欧洲，大大提高了远洋航海的安全性和准确性，推动了大航海时代。",
+      "category": "science",
+      "region": "china",
+      "year": 1086,
+      "era": "北宋",
+      "location": "开封",
+      "figures": [],
+      "relations": [],
+      "background": "宋代海外贸易兴盛，远洋航行亟需精确导航工具。",
+      "tags": [
+        "北宋",
+        "发明",
+        "航海"
+      ]
+    },
+    {
+      "title": "元末红巾军起义",
+      "content": "韩山童、刘福通以白莲教为纽带发动红巾军起义，提出\"莫道石人一只眼，此物一出天下反\"，推翻元朝统治。",
+      "category": "politics",
+      "region": "china",
+      "year": 1351,
+      "era": "元末",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "朱元璋",
+          "title": "明太祖",
+          "desc": "从起义军到开国皇帝"
+        }
+      ],
+      "relations": [],
+      "background": "元朝末年政治腐败、民族压迫深重、天灾不断。",
+      "tags": [
+        "元",
+        "起义",
+        "灭亡"
+      ]
+    },
+    {
+      "title": "土木堡之变",
+      "content": "明英宗朱祁镇在太监王振怂恿下亲征瓦剌，在土木堡被围，明军大败，英宗被俘，明朝由盛转衰。",
+      "category": "politics",
+      "region": "china",
+      "year": 1449,
+      "era": "明",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "朱祁镇",
+          "title": "明英宗",
+          "desc": "被俘皇帝"
+        },
+        {
+          "name": "于谦",
+          "title": "兵部尚书",
+          "desc": "北京保卫战"
+        }
+      ],
+      "relations": [
+        {
+          "from": "朱祁镇",
+          "to": "于谦",
+          "type": "君臣",
+          "desc": "危难时于谦力挽狂澜"
+        }
+      ],
+      "background": "瓦剌崛起，明朝边防松弛。",
+      "tags": [
+        "明",
+        "战役",
+        "转折"
+      ]
+    },
+    {
+      "title": "戚继光抗倭",
+      "content": "戚继光组建戚家军，在浙江、福建等地九战九捷，肃清倭寇，保障东南沿海安宁。",
+      "category": "politics",
+      "region": "china",
+      "year": 1560,
+      "era": "明",
+      "location": "广州",
+      "figures": [
+        {
+          "name": "戚继光",
+          "title": "抗倭名将",
+          "desc": "戚家军统帅"
+        }
+      ],
+      "relations": [],
+      "background": "明朝中期海防松弛，日本战国时期溃兵武士沦为倭寇。",
+      "tags": [
+        "明",
+        "抗倭",
+        "军事"
+      ]
+    },
+    {
+      "title": "张居正改革",
+      "content": "明万历首辅张居正推行改革：一条鞭法合并赋役、整顿吏治考成法、重用戚继光等将领，使明朝一度出现中兴气象。",
+      "category": "politics",
+      "region": "china",
+      "year": 1573,
+      "era": "明",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "张居正",
+          "title": "首辅",
+          "desc": "改革家"
+        }
+      ],
+      "relations": [],
+      "background": "明朝中期财政危机严重，行政效率低下。",
+      "tags": [
+        "明",
+        "改革",
+        "一条鞭法"
+      ]
+    },
+    {
+      "title": "康乾盛世",
+      "content": "康熙、雍正、乾隆三朝持续一百三十余年，中国疆域空前辽阔，人口突破三亿，经济总量居世界第一，但盛世之下已埋下衰败隐患。",
+      "category": "politics",
+      "region": "china",
+      "year": 1700,
+      "era": "清",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "康熙帝",
+          "title": "皇帝",
+          "desc": "平定三藩统一台湾"
+        },
+        {
+          "name": "雍正帝",
+          "title": "皇帝",
+          "desc": "整顿吏治"
+        },
+        {
+          "name": "乾隆帝",
+          "title": "皇帝",
+          "desc": "十全武功"
+        }
+      ],
+      "relations": [
+        {
+          "from": "康熙帝",
+          "to": "雍正帝",
+          "type": "父子",
+          "desc": "继位"
+        },
+        {
+          "from": "雍正帝",
+          "to": "乾隆帝",
+          "type": "父子",
+          "desc": "继位"
+        }
+      ],
+      "background": "明清鼎革后社会逐步稳定，经济恢复发展。",
+      "tags": [
+        "清",
+        "盛世",
+        "康雍乾"
+      ]
+    },
+    {
+      "title": "天京事变",
+      "content": "太平天国领导层内讧，杨秀清逼封万岁遭洪秀全密令诛杀，韦昌辉滥杀两万余人后又被处死，石达开率部出走，太平天国由盛转衰。",
+      "category": "politics",
+      "region": "china",
+      "year": 1856,
+      "era": "近代",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "洪秀全",
+          "title": "天王",
+          "desc": "太平天国领袖"
+        },
+        {
+          "name": "杨秀清",
+          "title": "东王",
+          "desc": "逼封万岁"
+        }
+      ],
+      "relations": [
+        {
+          "from": "洪秀全",
+          "to": "杨秀清",
+          "type": "敌对",
+          "desc": "内讧"
+        }
+      ],
+      "background": "太平天国定都天京后领导层日益腐化，权力斗争激化。",
+      "tags": [
+        "近代",
+        "内讧",
+        "太平天国"
+      ]
+    },
+    {
+      "title": "左宗棠收复新疆",
+      "content": "左宗棠抬棺西征，先后平定阿古柏侵占的新疆，迫使沙俄归还伊犁，成功收复新疆全境，建议设新疆省。",
+      "category": "politics",
+      "region": "china",
+      "year": 1875,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "左宗棠",
+          "title": "陕甘总督",
+          "desc": "收复新疆"
+        }
+      ],
+      "relations": [],
+      "background": "阿古柏在新疆称汗，沙俄趁机侵占伊犁。",
+      "tags": [
+        "近代",
+        "边疆",
+        "新疆"
+      ]
+    },
+    {
+      "title": "同盟会成立",
+      "content": "孙中山在东京联合兴中会、华兴会、光复会等革命团体，成立中国同盟会，提出\"驱除鞑虏、恢复中华、创立民国、平均地权\"纲领。",
+      "category": "politics",
+      "region": "west",
+      "year": 1905,
+      "era": "近代",
+      "location": "东京",
+      "figures": [
+        {
+          "name": "孙中山",
+          "title": "总理",
+          "desc": "同盟会创立者"
+        }
+      ],
+      "relations": [],
+      "background": "革命思潮广泛传播，各地革命团体纷纷成立但力量分散。",
+      "tags": [
+        "近代",
+        "革命",
+        "同盟会"
+      ]
+    },
+    {
+      "title": "黄花岗起义",
+      "content": "黄兴率革命党人起义攻打广州两广总督署，经一昼夜血战终因寡不敌众失败。七十二烈士葬于黄花岗，鼓舞了全国革命。",
+      "category": "politics",
+      "region": "china",
+      "year": 1911,
+      "era": "近代",
+      "location": "广州",
+      "figures": [
+        {
+          "name": "黄兴",
+          "title": "革命党领袖",
+          "desc": "广州起义指挥者"
+        }
+      ],
+      "relations": [],
+      "background": "同盟会多次起义失败，革命党人决意以死报国。",
+      "tags": [
+        "近代",
+        "起义",
+        "烈士"
+      ]
+    },
+    {
+      "title": "护国运动",
+      "content": "袁世凯称帝后，蔡锷在云南宣布独立，组织护国军讨袁。各省纷纷响应，袁世凯被迫取消帝制，忧惧而死。",
+      "category": "politics",
+      "region": "china",
+      "year": 1915,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "袁世凯",
+          "title": "洪宪皇帝",
+          "desc": "称帝失败"
+        },
+        {
+          "name": "蔡锷",
+          "title": "护国军总司令",
+          "desc": "讨袁"
+        }
+      ],
+      "relations": [
+        {
+          "from": "蔡锷",
+          "to": "袁世凯",
+          "type": "敌对",
+          "desc": "武装讨袁"
+        }
+      ],
+      "background": "袁世凯镇压二次革命后解散国会，一步步走向帝制。",
+      "tags": [
+        "近代",
+        "讨袁",
+        "共和"
+      ]
+    },
+    {
+      "title": "省港大罢工",
+      "content": "为支援五卅运动，香港和广州沙面工人举行大罢工，坚持十六个月之久，是世界工运史上持续时间最长的罢工。",
+      "category": "society",
+      "region": "china",
+      "year": 1925,
+      "era": "近代",
+      "location": "广州",
+      "figures": [],
+      "relations": [],
+      "background": "五卅惨案后全国反帝情绪高涨。",
+      "tags": [
+        "近代",
+        "工人",
+        "反帝"
+      ]
+    },
+    {
+      "title": "秋收起义",
+      "content": "毛泽东在湘赣边界领导秋收起义，后率部向井冈山进军，创建中国第一个农村革命根据地，开辟农村包围城市的道路。",
+      "category": "politics",
+      "region": "china",
+      "year": 1927,
+      "era": "近代",
+      "location": "长沙",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "前委书记",
+          "desc": "秋收起义领导人"
+        }
+      ],
+      "relations": [],
+      "background": "八七会议确立土地革命和武装反抗国民党的方针。",
+      "tags": [
+        "近代",
+        "起义",
+        "井冈山"
+      ]
+    },
+    {
+      "title": "井冈山会师",
+      "content": "朱德、陈毅率南昌起义余部到达井冈山与毛泽东领导的部队会师，成立中国工农红军第四军，朱德任军长、毛泽东任党代表。",
+      "category": "politics",
+      "region": "china",
+      "year": 1928,
+      "era": "近代",
+      "location": "长沙",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "党代表",
+          "desc": "井冈山根据地创建者"
+        },
+        {
+          "name": "朱德",
+          "title": "军长",
+          "desc": "红军总司令"
+        }
+      ],
+      "relations": [
+        {
+          "from": "毛泽东",
+          "to": "朱德",
+          "type": "同僚",
+          "desc": "朱毛红军"
+        }
+      ],
+      "background": "南昌起义、秋收起义等相继失败，革命走向农村。",
+      "tags": [
+        "近代",
+        "会师",
+        "建军"
+      ]
+    },
+    {
+      "title": "平型关大捷",
+      "content": "八路军115师在平型关伏击日军，歼灭日军板垣师团一部，是抗战以来中国军队取得的第一个重大胜利，粉碎了日军不可战胜的神话。",
+      "category": "politics",
+      "region": "china",
+      "year": 1937,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "林彪",
+          "title": "115师师长",
+          "desc": "指挥平型关战役"
+        }
+      ],
+      "relations": [],
+      "background": "抗战初期国民党正面战场节节败退。",
+      "tags": [
+        "近代",
+        "抗战",
+        "胜利"
+      ]
+    },
+    {
+      "title": "台儿庄战役",
+      "content": "李宗仁指挥第五战区国民党军在台儿庄与日军激战，歼敌一万余人，是抗战以来正面战场取得的最大胜利。",
+      "category": "politics",
+      "region": "china",
+      "year": 1938,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "李宗仁",
+          "title": "第五战区司令",
+          "desc": "台儿庄战役指挥"
+        }
+      ],
+      "relations": [],
+      "background": "日军占领南京后企图南北夹击打通津浦线。",
+      "tags": [
+        "近代",
+        "抗战",
+        "正面战场"
+      ]
+    },
+    {
+      "title": "延安整风运动",
+      "content": "中共在延安开展整风运动，反对主观主义、宗派主义和党八股，确立实事求是的思想路线，实现了全党的高度统一。",
+      "category": "thought",
+      "region": "china",
+      "year": 1942,
+      "era": "近代",
+      "location": "延安",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "整风运动领导者"
+        }
+      ],
+      "relations": [],
+      "background": "抗战进入相持阶段，党内存在思想不统一的问题。",
+      "tags": [
+        "近代",
+        "整风",
+        "思想"
+      ]
+    },
+    {
+      "title": "中共七大召开",
+      "content": "中共七大在延安召开，确立毛泽东思想为党的指导思想，选举以毛泽东为核心的中央领导集体，为抗战胜利和全国解放奠定基础。",
+      "category": "politics",
+      "region": "china",
+      "year": 1945,
+      "era": "近代",
+      "location": "延安",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "七大确立领导地位"
+        }
+      ],
+      "relations": [],
+      "background": "抗战胜利前夕，中共需要统一思想制定建国方针。",
+      "tags": [
+        "近代",
+        "会议",
+        "指导思想"
+      ]
+    },
+    {
+      "title": "辽沈战役",
+      "content": "林彪、罗荣桓指挥东北野战军发起辽沈战役，攻克锦州、围困长春、解放沈阳，歼灭国民党军47万余人，解放东北全境。",
+      "category": "politics",
+      "region": "china",
+      "year": 1948,
+      "era": "近代",
+      "location": "沈阳",
+      "figures": [
+        {
+          "name": "林彪",
+          "title": "东北野战军司令员",
+          "desc": "指挥辽沈战役"
+        }
+      ],
+      "relations": [],
+      "background": "解放战争进入战略决战阶段。",
+      "tags": [
+        "近代",
+        "解放",
+        "决战"
+      ]
+    },
+    {
+      "title": "淮海战役",
+      "content": "刘伯承、陈毅、邓小平、粟裕等指挥中原和华东野战军发起淮海战役，歼敌55万余人，解放长江中下游以北广大地区。",
+      "category": "politics",
+      "region": "china",
+      "year": 1948,
+      "era": "近代",
+      "location": "南京",
+      "figures": [
+        {
+          "name": "粟裕",
+          "title": "华东野战军代司令员",
+          "desc": "淮海战役主要指挥者"
+        }
+      ],
+      "relations": [],
+      "background": "辽沈战役胜利后解放军兵力首次超过国民党军。",
+      "tags": [
+        "近代",
+        "解放",
+        "决战"
+      ]
+    },
+    {
+      "title": "平津战役",
+      "content": "东北野战军与华北军区部队联合发起平津战役，攻克新保安、张家口，解放天津，促使傅作义接受改编，北平和平解放。",
+      "category": "politics",
+      "region": "china",
+      "year": 1948,
+      "era": "近代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "林彪",
+          "title": "东北野战军司令员",
+          "desc": "指挥平津战役"
+        }
+      ],
+      "relations": [],
+      "background": "辽沈战役胜利后东北野战军百万大军入关。",
+      "tags": [
+        "近代",
+        "解放",
+        "决战"
+      ]
+    },
+    {
+      "title": "中国人民志愿军入朝作战",
+      "content": "中国人民志愿军首批部队在彭德怀司令员率领下跨过鸭绿江，秘密进入朝鲜战场，随即发起第一次战役。",
+      "category": "politics",
+      "region": "china",
+      "year": 1950,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "毛泽东",
+          "title": "主席",
+          "desc": "决策出兵"
+        },
+        {
+          "name": "彭德怀",
+          "title": "志愿军司令员",
+          "desc": "率军入朝"
+        }
+      ],
+      "relations": [
+        {
+          "from": "毛泽东",
+          "to": "彭德怀",
+          "type": "君臣",
+          "desc": "委以统帅"
+        }
+      ],
+      "background": "朝鲜战争爆发后美军逼近鸭绿江，朝鲜请求中国出兵。",
+      "tags": [
+        "现代",
+        "抗美援朝",
+        "出兵"
+      ]
+    },
+    {
+      "title": "上甘岭战役",
+      "content": "在仅有3.7平方公里的上甘岭阵地上，志愿军与美军激战43天，反复争夺阵地59次，最终守住阵地，成为抗美援朝精神象征。",
+      "category": "politics",
+      "region": "china",
+      "year": 1952,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "彭德怀",
+          "title": "志愿军司令员",
+          "desc": "指挥上甘岭"
+        }
+      ],
+      "relations": [],
+      "background": "停战谈判陷入僵局，美军发动金化攻势。",
+      "tags": [
+        "现代",
+        "抗美援朝",
+        "战役"
+      ]
+    },
+    {
+      "title": "两弹一星",
+      "content": "中国成功爆炸第一颗原子弹（1964）、第一颗氢弹（1967），发射第一颗人造卫星\"东方红一号\"（1970），极大提升了国防实力和国际地位。",
+      "category": "science",
+      "region": "china",
+      "year": 1964,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "钱学森",
+          "title": "科学家",
+          "desc": "中国航天之父"
+        },
+        {
+          "name": "邓稼先",
+          "title": "科学家",
+          "desc": "两弹元勋"
+        }
+      ],
+      "relations": [],
+      "background": "新中国成立后面临核威胁，毛泽东决心发展核武器。",
+      "tags": [
+        "现代",
+        "国防",
+        "科技"
+      ]
+    },
+    {
+      "title": "文化大革命结束",
+      "content": "粉碎\"四人帮\"反革命集团，文化大革命十年内乱结束，党和国家进入新的历史发展时期。",
+      "category": "politics",
+      "region": "china",
+      "year": 1976,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "华国锋",
+          "title": "主席",
+          "desc": "粉碎四人帮"
+        }
+      ],
+      "relations": [],
+      "background": "毛泽东逝世后，\"四人帮\"加紧夺权活动。",
+      "tags": [
+        "现代",
+        "文革",
+        "结束"
+      ]
+    },
+    {
+      "title": "恢复高考",
+      "content": "国务院批准恢复高等学校招生考试制度，570万考生走进考场，27万人被录取，尊重知识尊重人才的风气重新确立。",
+      "category": "society",
+      "region": "china",
+      "year": 1977,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "决策恢复高考"
+        }
+      ],
+      "relations": [],
+      "background": "文革期间高考中断十年，人才断层严重。",
+      "tags": [
+        "现代",
+        "教育",
+        "人才"
+      ]
+    },
+    {
+      "title": "深圳特区设立",
+      "content": "全国人大常委会批准在深圳设置经济特区，实行特殊经济政策和灵活措施，成为改革开放的\"试验田\"和窗口。",
+      "category": "society",
+      "region": "china",
+      "year": 1980,
+      "era": "现代",
+      "location": "广州",
+      "figures": [
+        {
+          "name": "邓小平",
+          "title": "领导人",
+          "desc": "倡办特区"
+        }
+      ],
+      "relations": [],
+      "background": "十一届三中全会确定改革开放方针。",
+      "tags": [
+        "现代",
+        "改革",
+        "特区"
+      ]
+    },
+    {
+      "title": "澳门回归",
+      "content": "中葡澳门政权交接仪式在澳门举行，澳门回归祖国，实行\"一国两制\"，是中华民族实现完全统一的又一里程碑。",
+      "category": "politics",
+      "region": "china",
+      "year": 1999,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "江泽民",
+          "title": "主席",
+          "desc": "见证回归"
+        }
+      ],
+      "relations": [],
+      "background": "中葡两国通过友好谈判解决澳门问题。",
+      "tags": [
+        "现代",
+        "澳门",
+        "一国两制"
+      ]
+    },
+    {
+      "title": "北京奥运会",
+      "content": "第29届夏季奥林匹克运动会在北京举行，中国以51枚金牌居金牌榜首位，向世界展示开放自信的中国形象。",
+      "category": "society",
+      "region": "china",
+      "year": 2008,
+      "era": "现代",
+      "location": "北京",
+      "figures": [],
+      "relations": [],
+      "background": "改革开放三十年中国综合国力显著提升。",
+      "tags": [
+        "现代",
+        "体育",
+        "奥运"
+      ]
+    },
+    {
+      "title": "抗日战争胜利70周年阅兵",
+      "content": "中国在天安门广场举行纪念抗日战争暨世界反法西斯战争胜利70周年阅兵式，宣布裁军30万，展示维护和平的决心。",
+      "category": "politics",
+      "region": "china",
+      "year": 2015,
+      "era": "现代",
+      "location": "北京",
+      "figures": [
+        {
+          "name": "习近平",
+          "title": "主席",
+          "desc": "宣布裁军"
+        }
+      ],
+      "relations": [],
+      "background": "中国综合国力大幅提升，国际影响力日益增强。",
+      "tags": [
+        "现代",
+        "军事",
+        "阅兵"
+      ]
+    },
+    {
+      "title": "金字塔修建",
+      "content": "古埃及法老胡夫修建大金字塔，高约146米，由约230万块巨石砌成，是世界七大奇迹之一，体现了古埃及文明的辉煌。",
+      "category": "science",
+      "region": "west",
+      "year": -2560,
+      "era": "古埃及",
+      "location": "罗马",
+      "figures": [],
+      "relations": [],
+      "background": "古埃及进入金字塔时代，法老权势达到顶峰。",
+      "tags": [
+        "古埃及",
+        "建筑",
+        "奇迹"
+      ]
+    },
+    {
+      "title": "汉谟拉比法典颁布",
+      "content": "古巴比伦国王汉谟拉比颁布《汉谟拉比法典》，刻在黑色玄武岩石柱上，是世界上现存最早最完整的成文法典。",
+      "category": "politics",
+      "region": "west",
+      "year": -1750,
+      "era": "古巴比伦",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "汉谟拉比",
+          "title": "巴比伦国王",
+          "desc": "法典制定者"
+        }
+      ],
+      "relations": [],
+      "background": "两河流域城邦争霸，汉谟拉比统一两河流域。",
+      "tags": [
+        "古巴比伦",
+        "法律",
+        "法典"
+      ]
+    },
+    {
+      "title": "种姓制度确立",
+      "content": "雅利安人入侵印度后，为维护统治地位，将社会分为婆罗门、刹帝利、吠舍、首陀罗四大种姓，等级森严世代相袭。",
+      "category": "society",
+      "region": "west",
+      "year": -1000,
+      "era": "古印度",
+      "location": "罗马",
+      "figures": [],
+      "relations": [],
+      "background": "雅利安人征服印度后需要建立等级秩序巩固统治。",
+      "tags": [
+        "古印度",
+        "等级",
+        "制度"
+      ]
+    },
+    {
+      "title": "奥林匹克运动会起源",
+      "content": "第一届古代奥林匹克运动会在希腊奥林匹亚举行，每四年一届，期间各城邦停战，体现古希腊体育精神和城邦团结。",
+      "category": "society",
+      "region": "west",
+      "year": -776,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [],
+      "relations": [],
+      "background": "古希腊城邦林立，战争频繁，需要定期休战竞技。",
+      "tags": [
+        "古希腊",
+        "体育",
+        "奥运"
+      ]
+    },
+    {
+      "title": "希波战争结束",
+      "content": "希腊联军在普拉提亚战役中彻底击败波斯军队，希波战争以希腊胜利告终，雅典迎来伯里克利时代黄金时期。",
+      "category": "politics",
+      "region": "west",
+      "year": -479,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [],
+      "relations": [],
+      "background": "波斯帝国大举入侵希腊，希腊各城邦空前团结。",
+      "tags": [
+        "古希腊",
+        "战争",
+        "黄金时代"
+      ]
+    },
+    {
+      "title": "十二铜表法颁布",
+      "content": "罗马共和国颁布《十二铜表法》，刻在十二块铜表上公布于众，是罗马第一部成文法，限制了贵族对法律的随意解释。",
+      "category": "politics",
+      "region": "west",
+      "year": -449,
+      "era": "古罗马",
+      "location": "罗马",
+      "figures": [],
+      "relations": [],
+      "background": "贵族垄断法律解释权，平民不断斗争要求成文法。",
+      "tags": [
+        "古罗马",
+        "法律",
+        "平民"
+      ]
+    },
+    {
+      "title": "伯罗奔尼撒战争",
+      "content": "以雅典为首的提洛同盟与以斯巴达为首的伯罗奔尼撒同盟之间爆发长达二十七年的全希腊大战，最终斯巴达获胜，希腊由盛转衰。",
+      "category": "politics",
+      "region": "west",
+      "year": -431,
+      "era": "古希腊",
+      "location": "雅典",
+      "figures": [
+        {
+          "name": "伯里克利",
+          "title": "雅典执政官",
+          "desc": "黄金时代领袖"
+        }
+      ],
+      "relations": [],
+      "background": "雅典的扩张引起斯巴达的恐惧。",
+      "tags": [
+        "古希腊",
+        "战争",
+        "衰落"
+      ]
+    },
+    {
+      "title": "布匿战争",
+      "content": "罗马与迦太基进行了三次布匿战争，最终罗马彻底摧毁迦太基，成为地中海霸主。汉尼拔率军翻越阿尔卑斯山堪称军事奇迹。",
+      "category": "politics",
+      "region": "west",
+      "year": -264,
+      "era": "古罗马",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "汉尼拔",
+          "title": "迦太基统帅",
+          "desc": "翻越阿尔卑斯山"
+        }
+      ],
+      "relations": [],
+      "background": "罗马崛起与迦太基争夺西地中海霸权。",
+      "tags": [
+        "古罗马",
+        "战争",
+        "霸权"
+      ]
+    },
+    {
+      "title": "屋大维建立元首制",
+      "content": "屋大维击败安东尼和埃及艳后克里奥帕特拉，成为罗马最高统治者，被元老院授予\"奥古斯都\"称号，罗马共和国转变为罗马帝国。",
+      "category": "politics",
+      "region": "west",
+      "year": -27,
+      "era": "古罗马",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "屋大维",
+          "title": "奥古斯都",
+          "desc": "罗马帝国首位皇帝"
+        }
+      ],
+      "relations": [],
+      "background": "凯撒遇刺后罗马陷入新一轮内战。",
+      "tags": [
+        "古罗马",
+        "帝国",
+        "元首"
+      ]
+    },
+    {
+      "title": "十字军东征",
+      "content": "教皇乌尔班二世号召西欧封建主和骑士夺回耶路撒冷，十字军东征持续近两百年，共八次，客观上促进了东西方文化交流。",
+      "category": "politics",
+      "region": "west",
+      "year": 1096,
+      "era": "中世纪",
+      "location": "罗马",
+      "figures": [],
+      "relations": [],
+      "background": "塞尔柱突厥人占领耶路撒冷，威胁东罗马帝国。",
+      "tags": [
+        "中世纪",
+        "宗教",
+        "战争"
+      ]
+    },
+    {
+      "title": "黑死病大流行",
+      "content": "鼠疫从亚洲经商路传到欧洲，在短短数年内夺走约2500万欧洲人口（占当时欧洲总人口的三分之一），深刻改变了欧洲的社会经济结构。",
+      "category": "society",
+      "region": "west",
+      "year": 1347,
+      "era": "中世纪",
+      "location": "佛罗伦萨",
+      "figures": [],
+      "relations": [],
+      "background": "中世纪欧洲人口增长、贸易活跃，卫生条件极差。",
+      "tags": [
+        "中世纪",
+        "瘟疫",
+        "社会"
+      ]
+    },
+    {
+      "title": "文艺复兴运动",
+      "content": "文艺复兴运动从意大利开始，以人文主义为核心，提倡人性反对神性，追求现世幸福。达·芬奇、米开朗基罗、拉斐尔等大师涌现。",
+      "category": "literature",
+      "region": "west",
+      "year": 1350,
+      "era": "文艺复兴",
+      "location": "佛罗伦萨",
+      "figures": [
+        {
+          "name": "达·芬奇",
+          "title": "艺术家",
+          "desc": "文艺复兴三杰"
+        },
+        {
+          "name": "米开朗基罗",
+          "title": "雕塑家",
+          "desc": "大卫雕像"
+        }
+      ],
+      "relations": [
+        {
+          "from": "达·芬奇",
+          "to": "米开朗基罗",
+          "type": "同僚",
+          "desc": "文艺复兴巨匠"
+        }
+      ],
+      "background": "黑死病后欧洲社会结构变化，资本主义萌芽发展。",
+      "tags": [
+        "文艺复兴",
+        "艺术",
+        "人文"
+      ]
+    },
+    {
+      "title": "工业革命开始",
+      "content": "珍妮纺纱机发明，标志工业革命在英国开始。瓦特改良蒸汽机后，工厂制度取代手工工场，机器生产取代手工劳动。",
+      "category": "science",
+      "region": "west",
+      "year": 1765,
+      "era": "工业革命",
+      "location": "伦敦",
+      "figures": [
+        {
+          "name": "哈格里夫斯",
+          "title": "发明家",
+          "desc": "发明珍妮纺纱机"
+        }
+      ],
+      "relations": [],
+      "background": "英国资产阶级革命后资本主义快速发展，海外市场扩大。",
+      "tags": [
+        "工业革命",
+        "纺织",
+        "机器"
+      ]
+    },
+    {
+      "title": "明治维新",
+      "content": "日本明治天皇推行全面西化改革：废藩置县、殖产兴业、富国强兵、文明开化，使日本迅速成为近代强国。",
+      "category": "politics",
+      "region": "west",
+      "year": 1868,
+      "era": "近代",
+      "location": "东京",
+      "figures": [
+        {
+          "name": "明治天皇",
+          "title": "天皇",
+          "desc": "维新象征"
+        }
+      ],
+      "relations": [],
+      "background": "黑船来航迫使日本开国，幕府威信扫地。",
+      "tags": [
+        "近代",
+        "日本",
+        "维新"
+      ]
+    },
+    {
+      "title": "九国公约签订",
+      "content": "美、英、日、法、意、中、荷、比、葡九国在华盛顿签订《九国公约》，声称尊重中国主权独立和领土完整，实质是维持列强在华均势。",
+      "category": "politics",
+      "region": "west",
+      "year": 1922,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [],
+      "relations": [],
+      "background": "一战后列强在亚太地区矛盾激化，军备竞赛加剧。",
+      "tags": [
+        "现代",
+        "外交",
+        "条约"
+      ]
+    },
+    {
+      "title": "慕尼黑阴谋",
+      "content": "英、法、德、意四国在慕尼黑签订协定，将捷克斯洛伐克的苏台德地区割让给德国，实行绥靖政策，助长了希特勒的侵略野心。",
+      "category": "politics",
+      "region": "west",
+      "year": 1938,
+      "era": "现代",
+      "location": "柏林",
+      "figures": [
+        {
+          "name": "希特勒",
+          "title": "纳粹领袖",
+          "desc": "不费一兵扩张"
+        }
+      ],
+      "relations": [],
+      "background": "希特勒要求吞并苏台德地区，捷克斯洛伐克向英法求援。",
+      "tags": [
+        "现代",
+        "外交",
+        "绥靖"
+      ]
+    },
+    {
+      "title": "偷袭珍珠港",
+      "content": "日本海军联合舰队偷袭美国珍珠港海军基地，炸沉炸伤美军舰艇40余艘、飞机300余架，美国正式对日宣战，太平洋战争爆发。",
+      "category": "politics",
+      "region": "west",
+      "year": 1941,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "罗斯福",
+          "title": "美国总统",
+          "desc": "对日宣战"
+        }
+      ],
+      "relations": [],
+      "background": "日本南进战略与美国利益发生冲突，谈判破裂。",
+      "tags": [
+        "现代",
+        "二战",
+        "太平洋"
+      ]
+    },
+    {
+      "title": "诺曼底登陆",
+      "content": "盟军在法国诺曼底海滩实施大规模两栖登陆，投入约300万兵力，开辟欧洲第二战场，加速了纳粹德国的灭亡。",
+      "category": "politics",
+      "region": "west",
+      "year": 1944,
+      "era": "现代",
+      "location": "巴黎",
+      "figures": [
+        {
+          "name": "艾森豪威尔",
+          "title": "盟军总司令",
+          "desc": "指挥诺曼底登陆"
+        }
+      ],
+      "relations": [],
+      "background": "苏联在东线不断反攻，要求盟军开辟第二战场。",
+      "tags": [
+        "现代",
+        "二战",
+        "登陆"
+      ]
+    },
+    {
+      "title": "雅尔塔会议",
+      "content": "美、英、苏三国首脑罗斯福、丘吉尔、斯大林在雅尔塔举行会议，讨论战后世界安排和联合国成立事宜，奠定了雅尔塔体系。",
+      "category": "politics",
+      "region": "west",
+      "year": 1945,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "罗斯福",
+          "title": "美国总统",
+          "desc": "雅尔塔会议"
+        },
+        {
+          "name": "斯大林",
+          "title": "苏联领导人",
+          "desc": "雅尔塔会议"
+        },
+        {
+          "name": "丘吉尔",
+          "title": "英国首相",
+          "desc": "雅尔塔会议"
+        }
+      ],
+      "relations": [
+        {
+          "from": "罗斯福",
+          "to": "斯大林",
+          "type": "盟友",
+          "desc": "二战合作"
+        }
+      ],
+      "background": "二战接近尾声，反法西斯同盟需要规划战后秩序。",
+      "tags": [
+        "现代",
+        "会议",
+        "战后"
+      ]
+    },
+    {
+      "title": "不结盟运动兴起",
+      "content": "铁托、尼赫鲁、纳赛尔等发展中国家领袖发起不结盟运动，奉行独立自主、不与大国结盟的外交政策，成为国际舞台第三力量。",
+      "category": "politics",
+      "region": "west",
+      "year": 1961,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "铁托",
+          "title": "南斯拉夫总统",
+          "desc": "不结盟运动发起者"
+        }
+      ],
+      "relations": [],
+      "background": "冷战加剧，新兴独立国家不愿卷入美苏对抗。",
+      "tags": [
+        "现代",
+        "外交",
+        "第三世界"
+      ]
+    },
+    {
+      "title": "石油输出国组织成立",
+      "content": "伊朗、伊拉克、沙特、科威特、委内瑞拉五国在巴格达成立石油输出国组织（OPEC），协调石油政策，维护产油国利益。",
+      "category": "society",
+      "region": "west",
+      "year": 1960,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [],
+      "relations": [],
+      "background": "西方石油公司长期控制石油定价权，产油国收入微薄。",
+      "tags": [
+        "现代",
+        "经济",
+        "能源"
+      ]
+    },
+    {
+      "title": "信息时代到来",
+      "content": "英特尔公司推出第一颗微处理器4004，个人计算机革命拉开序幕。此后微软、苹果等公司推动计算机普及，人类进入信息时代。",
+      "category": "science",
+      "region": "west",
+      "year": 1971,
+      "era": "现代",
+      "location": "华盛顿",
+      "figures": [
+        {
+          "name": "比尔·盖茨",
+          "title": "微软创始人",
+          "desc": "推动PC普及"
+        }
+      ],
+      "relations": [],
+      "background": "晶体管和集成电路发明后，计算机小型化趋势加速。",
+      "tags": [
+        "现代",
+        "计算机",
+        "信息"
+      ]
+    },
+    {
+      "title": "焚书坑儒",
+      "content": "秦始皇采纳李斯建议，焚烧《诗》《书》、百家语，坑杀诽谤朝政的儒生四百六十余人，以思想专制巩固统治。",
+      "category": "thought",
+      "region": "china",
+      "year": -213,
+      "era": "秦",
+      "location": "咸阳",
+      "figures": [
+        {
+          "name": "秦始皇",
+          "title": "始皇帝",
+          "desc": "推行思想专制"
+        },
+        {
+          "name": "李斯",
+          "title": "丞相",
+          "desc": "建议焚书"
+        }
+      ],
+      "relations": [
+        {
+          "from": "秦始皇",
+          "to": "李斯",
+          "type": "君臣",
+          "desc": "采纳焚书之策"
+        }
+      ],
+      "background": "天下初定，博士淳于越主张分封引发争论。",
+      "tags": [
+        "秦",
+        "思想",
+        "专制"
+      ]
+    },
+    {
+      "title": "哥伦布抵达美洲",
+      "content": "哥伦布在西班牙资助下西航，抵达巴哈马群岛，误认为东印度群岛，从此开启欧洲对美洲的殖民与文明碰撞。",
+      "category": "society",
+      "region": "west",
+      "year": 1492,
+      "era": "大航海时代",
+      "location": "罗马",
+      "figures": [
+        {
+          "name": "哥伦布",
+          "title": "航海家",
+          "desc": "发现新大陆"
+        }
+      ],
+      "relations": [],
+      "background": "奥斯曼阻隔东西商路，欧洲寻求新航线。",
+      "tags": [
+        "大航海",
+        "发现",
+        "殖民"
+      ]
+    }
+  ]
+}
