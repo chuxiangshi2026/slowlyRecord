@@ -1008,6 +1008,8 @@ const handleRecreateWindow = (state: any) => {
         if (focusWindow && typeof focusWindow.show === 'function') {
           focusWindow.show();
         }
+        // 重建后推送专注样式（子窗口脚本就绪后）
+        setTimeout(pushFocusStyleToChild, 500);
       });
 
 
@@ -1149,6 +1151,31 @@ function notifyChildEdgeState(isStuck: boolean, side?: 'left' | 'right', expande
     console.error('通知子窗口贴边状态失败:', e);
   }
 }
+
+// 把专注样式直接推送给子窗口（与 updateEdgeStuckState 同机制，最可靠）
+// 注入自包含应用逻辑，不依赖子窗口预定义函数
+function pushFocusStyleToChild() {
+  if (!focusWindow || focusWindow.isDestroyed?.()) return;
+  if (!focusWindow.webContents?.executeJavaScript) return;
+
+  const fm = wordsStore.focusMode || {};
+  const payload = JSON.stringify({
+    fontColor: fm.fontColor || '',
+    fontSize: fm.fontSize,
+    explainFontSize: fm.explainFontSize,
+    backgroundImage: fm.backgroundImage || '',
+    backgroundImageOpacity: fm.backgroundImageOpacity,
+  });
+
+  focusWindow.webContents.executeJavaScript(
+    `if (typeof applyFocusStyleSettings === 'function') { applyFocusStyleSettings(${payload}); }`
+  ).catch(() => {});
+}
+
+// 专注样式变化时实时推送给已打开的专注窗口
+watch(() => wordsStore.focusMode, () => {
+  pushFocusStyleToChild();
+}, { deep: true });
 
 const finalizeExpandedFromEdge = (bounds: any, source = 'dragOut') => {
   if (!bounds) {
@@ -1646,6 +1673,12 @@ const processFocusModePendingAction = (action: any, source = 'unknown') => {
     return false;
   }
 
+  // 文本专注模式发出的动作（source='text'）由 text-focus-window 控制器处理，
+  // 单词页忽略，避免误把文本窗口动作当成单词窗口动作（如重建单词窗口）。
+  if (action.source === 'text') {
+    return false;
+  }
+
   const type = typeof action.type === 'string'
       ? action.type
       : (typeof action.channel === 'string' ? action.channel : '');
@@ -1763,10 +1796,13 @@ const handleChildMessage = (message: any) => {
     return;
   }
 
-  const channel = typeof message === 'string' ? message : message.channel;
+  const channel = typeof message === 'string' ? message : (message.channel || message.type);
   const payload = typeof message === 'string'
       ? undefined
       : (message.payload ?? message.args?.[0] ?? message.params?.[0] ?? message.data);
+  // 文本专注模式动作（source='text'）由 text-focus-window 控制器处理，单词页忽略
+  const src = typeof message === 'object' ? (message.source ?? payload?.source) : undefined;
+  if (src === 'text') return;
 
   console.log('[handleChildMessage] 消息通道:', channel, 'payload:', payload);
 
