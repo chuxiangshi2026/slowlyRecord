@@ -1,5 +1,5 @@
 import {computed, type Ref, ref} from "vue";
-import type {MemoryFirmnessTpye, OcrPlatform, TranslationPlatform, TranslationResult, Word} from "@/types/words";
+import type {MemoryFirmnessType, OcrPlatform, TranslationPlatform, TranslationResult, Word} from "@/types/words";
 import {defineStore} from "pinia";
 // import {parse, stringify} from 'zipson'
 // import { serializer } from '@/utils/jsonSerializeUtil';
@@ -95,8 +95,14 @@ export const useWordsStore =
 
             // 初始化词库信息
             async function initWordBankInfo() {
-                currentWordBankId.value = await getCurrentWordBankId()
-                currentWordBank.value = await getWordBank(currentWordBankId.value)
+                try {
+                    currentWordBankId.value = await getCurrentWordBankId()
+                    currentWordBank.value = await getWordBank(currentWordBankId.value)
+                } catch (e) {
+                    console.error('初始化词库信息失败,回退默认词库:', e)
+                    currentWordBankId.value = 'default'
+                    currentWordBank.value = null
+                }
             }
 
             const lastAddedWordText = ref('')    //记录最新添加的单词
@@ -105,7 +111,7 @@ export const useWordsStore =
 
             const currentTranslationPlatform = ref<TranslationPlatform>('glm'); // 默认使用glm翻译
             const currentOcrPlatform = ref<OcrPlatform>('local'); // 默认使用离线识图
-            const memoryFirmness = ref<MemoryFirmnessTpye>('正常');
+            const memoryFirmness = ref<MemoryFirmnessType>('正常');
             // 用户翻译api密钥
             const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref({
                 glm: {appkey: '', key: ''},
@@ -229,7 +235,7 @@ export const useWordsStore =
             /**
              * 设置记忆牢固度
              */
-            function setMemoryFirmness(firmness: MemoryFirmnessTpye) {
+            function setMemoryFirmness(firmness: MemoryFirmnessType) {
                 log.i('更新记忆牢固度', firmness)
                 memoryFirmness.value = firmness;
 
@@ -271,31 +277,23 @@ export const useWordsStore =
             /**
              * 设置专注模式
              */
-            async function setFocusMode(settings: Partial<FocusModeSettings>) {
+            function setFocusMode(settings: Partial<FocusModeSettings>) {
                 log.i('更新专注模式设置', settings);
-                const nextFocusMode = { ...focusMode.value, ...settings };
-                focusMode.value = nextFocusMode;
+                focusMode.value = { ...focusMode.value, ...settings };
 
-                // 不覆盖专注窗口写入的 pendingAction，避免跨窗口互相覆盖
-                const {pendingAction, ...settingsWithoutPending} = nextFocusMode as any;
-
-                // 重试写入，避免与专注窗口同时写 user-set 文档时 _rev 冲突导致静默丢失
-                for (let attempt = 0; attempt < 3; attempt++) {
-                    let userSet = getSetDb();
-                    if (!userSet) {
-                        userSet = initUserSet();
-                    }
-                    userSet.focusMode = {
-                        ...(userSet.focusMode || {}),
-                        ...settingsWithoutPending,
-                    };
-                    const result = await addAndUpdateSetDb(userSet);
-                    if (result?.ok) {
-                        return;
-                    }
-                    // 冲突：重新读取最新 _rev 后重试
+                // 同步到 localStorage，供专注窗口（同源）实时监听应用
+                try {
+                    localStorage.setItem('slowly-record-focus-style', JSON.stringify(focusMode.value));
+                } catch (e) {
+                    // 忽略 localStorage 写入异常
                 }
-                log.e('专注模式设置写入失败（多次冲突）');
+
+                let userSet = getSetDb();
+                if (!userSet) {
+                    userSet = initUserSet();
+                }
+                userSet.focusMode = { ...userSet.focusMode, ...focusMode.value };
+                addAndUpdateSetDb(userSet);
             }
 
             /**
@@ -581,18 +579,17 @@ export const useWordsStore =
 
                 words.value.forEach((item) => {
                     // 确保 learnDate 和 ctime 是 Date 对象
-                    let learnDate = item.learnDate;
-                    let ctime = item.ctime;
-                    if (typeof learnDate === 'string') {
-                        learnDate = new Date(learnDate);
-                    }
-                    if (typeof ctime === 'string') {
-                        ctime = new Date(ctime);
+                    let learnDate = item.learnDate instanceof Date ? item.learnDate : new Date(item.learnDate);
+                    let ctime = item.ctime instanceof Date ? item.ctime : new Date(item.ctime);
+                    // learnDate 非法时兜底，避免 getTime() 返回 NaN 导致单词永远不进入待复习
+                    if (isNaN(learnDate.getTime())) {
+                        learnDate = item.ctime ? new Date(item.ctime) : new Date();
+                        item.learnDate = learnDate;
                     }
 
-                    // 确保 level 有效
-                    const level = Number(item.level) || 1;
-                    const interval = DEFAULT_INTERVALS[level] || DEFAULT_INTERVALS[1];
+                    // 确保 level 有效，并钳制到 DEFAULT_INTERVALS 合法索引范围（1-13）
+                    const safeLevel = Math.max(1, Math.min(13, Number(item.level) || 1));
+                    const interval = DEFAULT_INTERVALS[safeLevel] || DEFAULT_INTERVALS[1];
 
                     const reviewTime = learnDate.getTime() + interval * 60 * 1000;
                     const now = Date.now();
@@ -695,7 +692,7 @@ export const useWordsStore =
                     const bank = await getWordBank(currentWordBankId.value)
                     if (bank) {
                         // 同时清理词库中的历史脏数据
-                        bank.words.forEach(w => { w.text = w.text.replace(/\s+/g, '') })
+                        bank.words.forEach(w => { w.text = normalizeItemText(w.text) })
                         const bankIndex = bank.words.findIndex(w => w._id === word._id)
                         if (bankIndex !== -1) {
                             bank.words.splice(bankIndex, 1)

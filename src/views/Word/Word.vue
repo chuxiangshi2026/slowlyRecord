@@ -1977,6 +1977,8 @@ const openFocusMode = (mode = '') => {
         if (focusWindow && typeof focusWindow.show === 'function') {
           focusWindow.show();
         }
+        // 子窗口脚本就绪后推送当前专注样式
+        setTimeout(pushFocusStyleToChild, 500);
       });
 
 
