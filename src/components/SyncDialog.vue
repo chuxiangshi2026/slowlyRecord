@@ -26,7 +26,7 @@
             <h4>微信小程序</h4>
             <p>使用微信扫码可在小程序继续学习，通过服务器同步码拉取或推送数据。</p>
           </div>
-          <img class="sync-miniprogram-code" src="/static/小程序码.png" alt="慢记单词本微信小程序码" />
+          <img class="sync-miniprogram-code" src="/static/minicode.png" alt="慢记单词本微信小程序码" />
         </div>
 
         <!-- 服务器状态 -->
