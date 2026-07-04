@@ -213,6 +213,14 @@ import {
   EditPen, QuestionFilled, Notebook, Memo,
   User, Clock, View, Pointer, List, MapLocation
 } from '@element-plus/icons-vue';
+import { isUtools } from '@/adapters/platform';
+import { log } from '@/utils/logger';
+import {
+  setupTextFocusListeners,
+  setTextFocusWindow,
+  setReturnToListHandler,
+  teardownTextFocusListeners
+} from '@/utils/text-focus-window';
 
 // 导入子组件
 import TextEditDialog from './components/TextEditDialog.vue';
@@ -223,16 +231,20 @@ import NotesDialog from './components/NotesDialog.vue';
 import PromptsDialog from './components/PromptsDialog.vue';
 import TypingPracticeDialog from './components/TypingPracticeDialog.vue';
 import PoetryMap from './components/PoetryMap.vue';
+import TimelineView from './components/TimelineView.vue';
 
 const router = useRouter();
 const textStore = useTextMemoryStore();
+
+// 是否为 uTools 环境（专注滚动浮窗仅在 uTools 可用）
+const isUtoolsEnv = isUtools();
 
 // 搜索和筛选
 const searchKeyword = ref('');
 const selectedTag = ref('');
 
-// 当前视图：list | map
-const currentView = ref<'list' | 'map'>('list');
+// 当前视图：list | map | timeline
+const currentView = ref<'list' | 'map' | 'timeline'>('list');
 
 // 对话框显示状态
 const showAddDialog = ref(false);
@@ -272,10 +284,76 @@ const filteredArticles = computed(() => {
   return result;
 });
 
+// 时间线事件数（category 属于时间线分类的条目）
+const TIMELINE_CATS = new Set(['politics', 'literature', 'science', 'thought', 'society']);
+const timelineEventCount = computed(() =>
+  textStore.articles.filter(a => a.category && TIMELINE_CATS.has(a.category)).length
+);
+
 // 初始化加载
 onMounted(async () => {
+  // 先注册监听（不依赖文章数据），确保打开浮窗时动作通道已就绪
+  setupTextFocusListeners();
+  setReturnToListHandler(() => router.push('/text-memory'));
   await textStore.loadArticles();
 });
+
+onBeforeUnmount(() => {
+  setReturnToListHandler(null);
+  teardownTextFocusListeners();
+});
+
+// 打开文本专注滚动浮窗（仅 uTools）
+function openTextFocusMode(article: TextArticle) {
+  if (!isUtoolsEnv || !(window as any).utools?.createBrowserWindow) {
+    ElMessage.warning('专注显示仅在 uTools 桌面端可用');
+    return;
+  }
+  const isDark = document.documentElement.classList.contains('dark');
+  const themeParam = isDark ? 'dark' : 'light';
+  const articleId = encodeURIComponent(article._id);
+  // 文本模式禁用贴边隐藏（窗口较大，贴边不实用且需复杂父窗口逻辑）
+  const url = `focus.html?mode=text&articleId=${articleId}&theme=${themeParam}&alwaysOnTop=true&edgeStickEnabled=false`;
+  try {
+    // createBrowserWindow 返回 BrowserWindow 实例（回调本身不传 win 参数）
+    const win = (window as any).utools.createBrowserWindow(
+      url,
+      {
+        width: 400,
+        height: 280,
+        minWidth: 280,
+        minHeight: 180,
+        maxWidth: 640,
+        maxHeight: 560,
+        alwaysOnTop: true,
+        frame: false,
+        transparent: true,
+        backgroundColor: '#00000000',
+        resizable: true,
+        modal: false,
+        closable: true,
+      },
+      () => {
+        // 窗口就绪回调
+        if (win && typeof win.show === 'function') win.show();
+      }
+    );
+    // 立即注入窗口引用，使控制器能处理置顶/锁定等动作（storage 事件来时已就绪）
+    log.d('[文本专注] createBrowserWindow 返回 win:', !!win, '类型:', typeof win, 'setAlwaysOnTop:', typeof win?.setAlwaysOnTop);
+    setTextFocusWindow(win);
+    // 窗口关闭后清理引用
+    if (win && typeof win.on === 'function') {
+      try {
+        win.on('closed', () => setTextFocusWindow(null));
+      } catch (e) {
+        // 某些环境不支持事件监听，忽略；控制器已用 isDestroyed 兜底
+      }
+    }
+  } catch (e) {
+    log.e('[文本专注] 打开浮窗失败:', e);
+    ElMessage.error('打开专注浮窗失败');
+  }
+}
 
 // 格式化日期
 function formatDate(timestamp: number): string {

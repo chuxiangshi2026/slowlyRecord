@@ -924,6 +924,21 @@
       return allWords;
     }
 
+    // 带重试的 put：_rev 冲突时重新获取最新 rev 再重试
+    function putWithRetry(doc, retries) {
+      retries = retries || 2;
+      var res = utools.db.put(doc);
+      if (res && res.ok) return res;
+      if (retries > 0) {
+        var fresh = utools.db.get(doc._id);
+        if (fresh) {
+          doc._rev = fresh._rev;
+          return putWithRetry(doc, retries - 1);
+        }
+      }
+      return res;
+    }
+
     // 更新词库中的单个单词
     function updateWordInBank(bankId, word) {
       if (typeof utools === 'undefined' || !utools.db) return false;
@@ -938,7 +953,7 @@
           if (wordIndex !== -1) {
             doc.words[wordIndex] = word;
             doc.updatedAt = Date.now();
-            utools.db.put(doc);
+            putWithRetry(doc);
             console.log('[专注模式] 词库分片已更新:', word.text, 'chunk:', i);
             return true;
           }
@@ -1174,6 +1189,9 @@
       }
     }
 
+    // 音频播放器单例（避免每次播放新建 Audio 对象，便于窗口关闭时清理）
+    let audioPlayer = null;
+
     // 播放发音
     async function playAudio() {
       var word = words[currentIndex];
@@ -1188,9 +1206,9 @@
           window.speechSynthesis.speak(utterance);
         } else {
           // 回退：使用有道TTS在线播放
-          var audio = new Audio();
-          audio.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=1';
-          await audio.play();
+          if (!audioPlayer) audioPlayer = new Audio();
+          audioPlayer.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=1';
+          await audioPlayer.play();
         }
       } catch (e) {
         console.error('播放失败:', e);
@@ -1353,6 +1371,7 @@
 
     // 处理拼写按键
     function handleSpellKey(key) {
+      if (spellChecking) return;  // 拼写完成延迟期间锁输入，避免错误处理为新单词首字母
       if (spellIndex >= words.length) return;
 
       var word = words[currentIndex];
@@ -1379,8 +1398,13 @@
         if (spellIndex >= wordText.length) {
           // 全部正确！标记为记住，继续下一词拼写
           spellIndex = 0;
+          spellChecking = true;
           setTimeout(function() {
-            markRemembered();
+            try {
+              markRemembered();
+            } finally {
+              spellChecking = false;
+            }
           }, 100);
         }
       } else {
@@ -2407,6 +2431,7 @@
     let spellMode = false;
     let spellIndex = 0;  // 当前已正确键入的字母数
     let spellErrorTimer = null;  // 错误闪烁动画计时器
+    let spellChecking = false;  // 拼写全对后等待 markRemembered 期间锁输入
 
     // 听写模式
     let dictationMode = false;
@@ -2507,11 +2532,13 @@
     currentSortBy = initialState.sortBy;
     currentSortAsc = initialState.sortAsc;
     autoSpeakEnabled = initialState.autoSpeak;
+    currentArticleId = initialState.articleId;
+    textMode = initialState.mode === 'text';
     console.log('[专注模式] 当前词库ID:', currentBankId || '(未设置，将使用旧数据库)');
     console.log('[专注模式] 筛选参数: listMode=' + currentListMode + ', pattern=' + currentPattern + ', minLen=' + currentMinLen + ', maxLen=' + currentMaxLen + ', sortBy=' + currentSortBy + ', autoSpeak=' + autoSpeakEnabled);
 
     // 如果从听写模式进入，自动开启听写模式
-    if (initialState.mode === 'dictation') {
+    if (!textMode && initialState.mode === 'dictation') {
       // 延迟启动，确保单词已加载
       setTimeout(function() {
         if (words.length > 0) {
@@ -2523,12 +2550,35 @@
     updateTopButton();
     updateEdgeStickButton();
 
-    loadWords();
+    if (textMode) {
+      // 文本专注滚动模式：不加载单词，进入文本模式并加载文章
+      enterTextMode();
+      loadTextArticle(currentArticleId);
+    } else {
+      loadWords();
+    }
     loadFocusModeSettings();
+    // 从 localStorage 应用样式（主窗口实时写入，同源共享）
+    loadFocusStyleFromStorage();
 
-    // 启动样式轮询：主窗口修改样式后，已打开的专注窗口实时应用
-    if (focusStylePollTimer) clearInterval(focusStylePollTimer);
-    focusStylePollTimer = setInterval(pollFocusStyleSettings, 1500);
+    // 监听 localStorage 跨窗口事件：主窗口改样式时即时应用
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'slowly-record-focus-style' && e.newValue) {
+        try {
+          applyFocusStyleSettings({ ...DEFAULT_FOCUS_STYLE, ...JSON.parse(e.newValue) });
+        } catch (err) {
+          console.warn('[专注模式] 解析 focus style 失败:', err);
+        }
+      }
+    });
+
+    // 窗口关闭时清理语音合成与音频，避免遗留播放
+    window.addEventListener('beforeunload', function() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      if (audioPlayer) {
+        try { audioPlayer.pause(); audioPlayer.src = ''; } catch (e) {}
+      }
+    });
 
 
     // 如果 URL 中有透明度参数，应用它

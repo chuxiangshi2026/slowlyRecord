@@ -447,8 +447,9 @@ const openFocusFromQuery = () => {
   nextTick(() => {
     setTimeout(() => {
       openFocusMode(focusModeParam.value);
-      // 清理 query 参数，防止重复触发
-      router.replace({ query: { ...route.query, openFocus: undefined, focusMode: undefined } });
+      // 清理 query 参数，防止重复触发（解构剔除，避免残留 undefined key）
+      const { openFocus, focusMode, ...rest } = route.query;
+      router.replace({ query: rest });
     }, 300);
   });
 };
@@ -1736,6 +1737,15 @@ onUnmounted(() => {
   window.removeEventListener('storage', handleFocusModeStorageEvent);
   window.removeEventListener('keydown', handleFocusModeUnlockShortcut);
   clearFocusModeSync();
+  // 关闭可能残留的专注窗口，避免路由切换后成为孤儿窗口
+  if (focusWindow && typeof focusWindow.isDestroyed === 'function' && !focusWindow.isDestroyed()) {
+    try {
+      focusWindow.close();
+    } catch (e) {
+      console.error('[focusMode] 关闭专注窗口失败:', e);
+    }
+  }
+  focusWindow = null;
   clearEdgeStickResources();
   isEdgeHidden = false;
   savedBounds = null;

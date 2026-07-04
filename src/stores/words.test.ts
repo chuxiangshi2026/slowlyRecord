@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
-import type { Word, TranslationPlatform, OcrPlatform, MemoryFirmnessTpye } from '@/types/words'
+import type { Word, TranslationPlatform, OcrPlatform, MemoryFirmnessType } from '@/types/words'
 
 // Mock localStorage
 global.localStorage = {
@@ -631,7 +631,7 @@ describe('useWordsStore', () => {
 
     it('应该支持所有记忆牢固度类型', () => {
       const store = useWordsStore()
-      const firmnessLevels: MemoryFirmnessTpye[] = ['正常', '较强', '极强']
+      const firmnessLevels: MemoryFirmnessType[] = ['正常', '较强', '极强']
 
       for (const f of firmnessLevels) {
         store.setMemoryFirmness(f)

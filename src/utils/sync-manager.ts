@@ -8,7 +8,7 @@ import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumb
 import { SYNC_VERSION } from '@/types/sync'
 import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
-import type { MemoryFirmnessTpye } from '@/types/words'
+import type { MemoryFirmnessType } from '@/types/words'
 import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from '@/types/number-memory'
 import type { LetterImageAssociation, LetterTrainingResult } from '@/types/letter-memory'
 import { getDbAdapter } from '@/adapters/db'
@@ -407,7 +407,7 @@ async function restoreUserSettings(settings: SyncUserSettings) {
   // 合并设置（只合并非空值）
   if (settings.translationPlatform) userSet.translationPlatform = settings.translationPlatform
   if (settings.ocrPlatform) userSet.ocrPlatform = settings.ocrPlatform
-  if (settings.memoryFirmness) userSet.memoryFirmness = settings.memoryFirmness as MemoryFirmnessTpye
+  if (settings.memoryFirmness) userSet.memoryFirmness = settings.memoryFirmness as MemoryFirmnessType
   userSet.pluginStatus = settings.pluginStatus
   userSet.shortcutEnabled = settings.shortcutEnabled
 
