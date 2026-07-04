@@ -57,7 +57,8 @@
       <div class="setting-item">
         <div class="content">ocr图片识别引擎</div>
         <!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" v-model="wordsStore.currentOcrPlatform" @change="wordsStore.setOcrPlatform"
+        <el-select class="shorcut-desc" :model-value="wordsStore.currentOcrPlatform"
+                   @update:model-value="(val: OcrPlatform) => wordsStore.setOcrPlatform(val)"
                    placeholder="选择"
                    style="width:100px">
           <el-option
@@ -76,8 +77,8 @@
     <div>
       <div class="setting-item">
         <div class="content">记忆牢固度</div>
-        <el-select class="shorcut-desc" v-model="wordsStore.memoryFirmness"
-                   @change="wordsStore.setMemoryFirmness"
+        <el-select class="shorcut-desc" :model-value="wordsStore.memoryFirmness"
+                   @update:model-value="wordsStore.setMemoryFirmness"
                    placeholder="选择"
                    style="width:100px">
           <el-option
@@ -94,12 +95,12 @@
       <div class="setting-item">
         <div class="content">选中单词自动发音</div>
         <el-switch class="shorcut-desc"
-                   v-model="wordsStore.autoSpeak"
+                   :model-value="wordsStore.autoSpeak"
                    inline-prompt
                    size="large"
                    active-text="开"
                    inactive-text="关"
-                   @change="onAutoSpeakChange"
+                   @update:model-value="wordsStore.setAutoSpeak"
         />
       </div>
     </div>
@@ -268,6 +269,17 @@
         <span class="title">快捷键</span>
       </div>
       <div v-for="(item,index) in dictationShortcuts"
+           :key="index" class="titles">
+        <span class="shorcut-desc">{{ item.desc }}</span>
+        <span class="shorcut-desc">{{ item.shortcut }}</span>
+      </div>
+
+      <h5 style="text-align:center; margin-top: 20px;">专注模式</h5>
+      <div class="titles">
+        <span class="title">功能说明</span>
+        <span class="title">快捷键</span>
+      </div>
+      <div v-for="(item,index) in focusShortcuts"
            :key="index" class="titles">
         <span class="shorcut-desc">{{ item.desc }}</span>
         <span class="shorcut-desc">{{ item.shortcut }}</span>
@@ -779,6 +791,18 @@ const dictationShortcuts = [
   {desc: '跳过/下一个单词', shortcut: 'Shift + →'},
   {desc: '播放发音', shortcut: 'Space'},
   {desc: '跳过单词', shortcut: 'Enter'},
+]
+
+const focusShortcuts = [
+  {desc: '认识（升级）', shortcut: 'Shift + R'},
+  {desc: '忘记（降级）', shortcut: 'Shift + F'},
+  {desc: '播放发音', shortcut: 'Shift + P'},
+  {desc: '显示/隐藏释义', shortcut: 'Shift + T'},
+  {desc: '永久记住', shortcut: '↓'},
+  {desc: '上一个单词', shortcut: '←'},
+  {desc: '下一个单词', shortcut: '→'},
+  {desc: '锁定/解锁', shortcut: 'Ctrl + L'},
+  {desc: '关闭专注窗口', shortcut: 'Esc'},
 ]
 
 // 配置文件导入导出
