@@ -8,6 +8,7 @@ vi.mock('@/utils/logger', () => ({
 vi.mock('@/utils/shortcut-memory-data', () => ({
   loadAllShortcuts: vi.fn(() => Promise.resolve()),
   getCategories: vi.fn(() => []),
+  getGroups: vi.fn(() => []),
   getShortcutsByCategory: vi.fn(() => []),
   getShortcutById: vi.fn(),
   shuffleArray: vi.fn(<T>(arr: T[]) => [...arr]),
@@ -24,6 +25,10 @@ vi.mock('@/utils/shortcut-memory-db', () => ({
   getLearningProgress: vi.fn(() => null),
   saveLearningProgress: vi.fn(() => Promise.resolve({ ok: true, id: 'test-id', rev: '1-rev' })),
   clearLearningProgress: vi.fn(() => Promise.resolve({ ok: true, id: '', rev: '' })),
+  getWrongItems: vi.fn(() => []),
+  addWrongItems: vi.fn(() => Promise.resolve({ ok: true, id: '', rev: '' })),
+  removeWrongItems: vi.fn(() => Promise.resolve({ ok: true, id: '', rev: '' })),
+  clearWrongItems: vi.fn(() => Promise.resolve({ ok: true, id: '', rev: '' })),
   saveCustomShortcut: vi.fn(() => Promise.resolve({ ok: true, id: 'test-id', rev: '1-rev' })),
   removeCustomShortcut: vi.fn(() => ({ ok: true, id: '', rev: '' })),
   saveCustomCategory: vi.fn(() => Promise.resolve({ ok: true, id: 'test-id', rev: '1-rev' })),
@@ -37,6 +42,7 @@ vi.mock('@/utils/shortcut-memory-db', () => ({
 import {
   loadAllShortcuts,
   getCategories,
+  getGroups,
   getShortcutsByCategory,
   getShortcutById,
   shuffleArray,
@@ -53,6 +59,10 @@ import {
   getLearningProgress,
   saveLearningProgress,
   clearLearningProgress,
+  getWrongItems,
+  addWrongItems,
+  removeWrongItems,
+  clearWrongItems,
   saveCustomShortcut,
   removeCustomShortcut,
   saveCustomCategory,
@@ -72,6 +82,10 @@ describe('useShortcutMemoryStore', () => {
     vi.mocked(getShortcutsByCategory).mockReturnValue([])
     vi.mocked(getAllTrainingRecords).mockReturnValue([])
     vi.mocked(getLearningProgress).mockReturnValue(null)
+    vi.mocked(getWrongItems).mockReturnValue([])
+    vi.mocked(addWrongItems).mockResolvedValue({ ok: true, id: '', rev: '' } as any)
+    vi.mocked(removeWrongItems).mockResolvedValue({ ok: true, id: '', rev: '' } as any)
+    vi.mocked(clearWrongItems).mockResolvedValue({ ok: true, id: '', rev: '' } as any)
     vi.mocked(shuffleArray).mockImplementation(<T>(arr: T[]) => [...arr])
     vi.mocked(formatKeys).mockImplementation((keys: string[]) => keys.join(' + '))
     vi.mocked(normalizeKey).mockImplementation((k: string) => k.toLowerCase())
@@ -85,6 +99,8 @@ describe('useShortcutMemoryStore', () => {
     it('应有正确的初始值', () => {
       const store = useShortcutMemoryStore()
       expect(store.categories).toEqual([])
+      expect(store.groups).toEqual([])
+      expect(store.currentGroup).toBe('')
       expect(store.currentCategory).toBe('')
       expect(store.currentShortcuts).toEqual([])
       expect(store.trainingPhase).toBe('ready')
@@ -97,15 +113,26 @@ describe('useShortcutMemoryStore', () => {
   })
 
   describe('分类加载与选择', () => {
-    it('loadCategories 应加载分类并停止 loading', async () => {
+    it('loadCategories 应加载分类与域并停止 loading', async () => {
       vi.mocked(getCategories).mockReturnValue([
-        { name: 'Windows', count: 10, description: 'Windows 快捷键', icon: '🪟' }
+        { name: 'Windows', count: 10, group: '系统', description: 'Windows 快捷键', icon: '🪟' }
+      ])
+      vi.mocked(getGroups).mockReturnValue([
+        { name: '系统', icon: '🪟', description: '操作系统', count: 10, categoryCount: 1 }
       ])
       const store = useShortcutMemoryStore()
       await store.loadCategories()
       expect(store.categories.length).toBe(1)
       expect(store.categories[0].name).toBe('Windows')
+      expect(store.groups.length).toBe(1)
+      expect(store.groups[0].name).toBe('系统')
       expect(store.isLoading).toBe(false)
+    })
+
+    it('selectGroup 应设置当前域', () => {
+      const store = useShortcutMemoryStore()
+      store.selectGroup('输入法')
+      expect(store.currentGroup).toBe('输入法')
     })
 
     it('selectCategory 应设置当前分类并加载快捷键', () => {
@@ -497,6 +524,74 @@ describe('useShortcutMemoryStore', () => {
       const store = useShortcutMemoryStore()
       const result = await store.removeCategory('Windows')
       expect(hideCategory).toHaveBeenCalledWith('Windows')
+      expect(result.ok).toBe(true)
+    })
+  })
+
+  describe('错题本', () => {
+    it('recordAnswer 答错应加入错题集', () => {
+      const store = useShortcutMemoryStore()
+      store.selectCategory('VS Code')
+      store.showCurrentQuestion()
+      store.recordAnswer(false, 'item-1')
+      expect(addWrongItems).toHaveBeenCalledWith('VS Code', ['item-1'])
+    })
+
+    it('recordAnswer 普通训练答对不移出错题集', () => {
+      vi.mocked(getShortcutsByCategory).mockReturnValue([
+        { id: '1', keys: ['A'], category: 'VS Code', functionName: 'f', description: 'd', platform: 'common' } as any
+      ])
+      const store = useShortcutMemoryStore()
+      store.selectCategory('VS Code')
+      store.initKeyPressTraining('VS Code')
+      store.showCurrentQuestion()
+      store.recordAnswer(true, 'item-1')
+      expect(removeWrongItems).not.toHaveBeenCalled()
+    })
+
+    it('recordAnswer 错题训练答对应移出错题集', () => {
+      vi.mocked(getWrongItems).mockReturnValue(['item-1', 'item-2'])
+      vi.mocked(getShortcutById).mockReturnValue({
+        id: 'item-1', keys: ['A'], category: 'VS Code', functionName: 'f', description: 'd', platform: 'common'
+      } as any)
+      const store = useShortcutMemoryStore()
+      store.selectCategory('VS Code')
+      store.initWrongItemsTraining('VS Code')
+      store.showCurrentQuestion()
+      store.recordAnswer(true, 'item-1')
+      expect(removeWrongItems).toHaveBeenCalledWith('VS Code', ['item-1'])
+    })
+
+    it('initWrongItemsTraining 应从错题集取题并标记模式', () => {
+      vi.mocked(getWrongItems).mockReturnValue(['i1', 'i2'])
+      vi.mocked(getShortcutById).mockImplementation((id) => ({
+        id, keys: ['A'], category: 'VS Code', functionName: 'f', description: 'd', platform: 'common'
+      } as any))
+      const store = useShortcutMemoryStore()
+      store.initWrongItemsTraining('VS Code')
+      expect(store.questions.length).toBe(2)
+      expect(store.isWrongItemsTraining).toBe(true)
+    })
+
+    it('initKeyPressTraining 应将 isWrongItemsTraining 置 false', () => {
+      vi.mocked(getShortcutsByCategory).mockReturnValue([
+        { id: '1', keys: ['A'], category: 'VS Code', functionName: 'f', description: 'd', platform: 'common' } as any
+      ])
+      const store = useShortcutMemoryStore()
+      store.initKeyPressTraining('VS Code')
+      expect(store.isWrongItemsTraining).toBe(false)
+    })
+
+    it('getWrongItemsCount 应返回错题数量', () => {
+      vi.mocked(getWrongItems).mockReturnValue(['a', 'b', 'c'])
+      const store = useShortcutMemoryStore()
+      expect(store.getWrongItemsCount('VS Code')).toBe(3)
+    })
+
+    it('clearWrongItemsAction 应清空错题', async () => {
+      const store = useShortcutMemoryStore()
+      const result = await store.clearWrongItemsAction('VS Code')
+      expect(clearWrongItems).toHaveBeenCalledWith('VS Code')
       expect(result.ok).toBe(true)
     })
   })

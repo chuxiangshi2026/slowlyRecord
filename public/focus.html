@@ -1239,9 +1239,11 @@
         if (!item) return;
         var learnDate = item.learnDate;
         var ctime = item.ctime;
-        if (typeof learnDate === 'string') learnDate = new Date(learnDate);
-        if (typeof ctime === 'string') ctime = new Date(ctime);
-        if (!learnDate || !ctime) return;
+        // 兼容 number/string/Date 类型，统一转换为 Date 对象（与 store.upReview 一致）
+        if (!(learnDate instanceof Date)) learnDate = new Date(learnDate);
+        if (!(ctime instanceof Date)) ctime = new Date(ctime);
+        // 非法日期兜底，避免 getTime() 返回 NaN 导致单词状态异常
+        if (isNaN(learnDate.getTime()) || isNaN(ctime.getTime())) return;
 
         var level = Number(item.level) || 1;
         var interval = REVIEW_INTERVALS[level] || REVIEW_INTERVALS[1];

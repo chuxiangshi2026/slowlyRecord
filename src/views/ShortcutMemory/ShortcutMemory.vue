@@ -15,12 +15,36 @@
         </div>
       </template>
 
-      <!-- 分类选择 -->
-      <div class="category-section" v-if="!selectedCategory">
-        <h3 class="section-title">选择快捷键分类</h3>
+      <!-- 域选择（一级） -->
+      <div class="category-section" v-if="!selectedGroup">
+        <h3 class="section-title">选择快捷键领域</h3>
         <div class="category-grid">
           <div
-            v-for="category in store.categories"
+            v-for="group in store.groups"
+            :key="group.name"
+            class="category-card group-card"
+            @click="selectGroup(group.name)"
+          >
+            <div class="category-icon">{{ group.icon }}</div>
+            <div class="category-name">{{ group.name }}</div>
+            <div class="category-desc">{{ group.description }}</div>
+            <div class="category-count">{{ group.categoryCount }} 个分类 · {{ group.count }} 个快捷键</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 分类选择（二级，域内） -->
+      <div class="category-section" v-else-if="!selectedCategory">
+        <div class="list-header">
+          <el-button @click="backToGroups">
+            <el-icon><ArrowLeft /></el-icon>
+            返回领域
+          </el-button>
+          <span class="list-title">{{ selectedGroup }} · 选择分类</span>
+        </div>
+        <div class="category-grid">
+          <div
+            v-for="category in categoriesInGroup"
             :key="category.name"
             class="category-card"
             @click="selectCategory(category.name)"
@@ -43,7 +67,7 @@
                 删除
               </el-button>
             </div>
-            <div class="category-icon">{{ getCategoryIcon(category.name) }}</div>
+            <div class="category-icon">{{ category.icon || getCategoryIcon(category.name) }}</div>
             <div class="category-name">{{ category.name }}</div>
             <div class="category-desc">{{ category.description }}</div>
             <div class="category-count">{{ category.count }} 个快捷键</div>
@@ -69,6 +93,9 @@
             <el-button type="danger" plain @click="clearProgress">
               重置进度
             </el-button>
+            <el-button type="warning" plain :disabled="wrongItemsCount === 0" @click="clearWrongItems">
+              🗑️ 清空错题
+            </el-button>
             <el-button @click="openAddDialog">
               ➕ 新增快捷键
             </el-button>
@@ -77,6 +104,9 @@
             </el-button>
             <el-button type="success" @click="startFunctionSelectTraining">
               🧩 功能选择
+            </el-button>
+            <el-button type="warning" :disabled="wrongItemsCount === 0" @click="startWrongItemsTraining">
+              ⚠️ 错题训练({{ wrongItemsCount }})
             </el-button>
           </div>
         </div>
@@ -94,6 +124,15 @@
             <el-radio-button label="all">全部</el-radio-button>
             <el-radio-button label="function">功能</el-radio-button>
             <el-radio-button label="key">按键</el-radio-button>
+          </el-radio-group>
+        </div>
+
+        <!-- 专项标签筛选（如五笔字根分区） -->
+        <div class="tag-filter-bar" v-if="tagsOfCategory.length > 0">
+          <span class="tag-filter-label">专项：</span>
+          <el-radio-group v-model="currentTag" size="small">
+            <el-radio-button label="">全部</el-radio-button>
+            <el-radio-button v-for="tag in tagsOfCategory" :key="tag" :label="tag">{{ tag }}</el-radio-button>
           </el-radio-group>
         </div>
 
@@ -447,7 +486,9 @@ import { getAllCustomCategories } from '@/utils/shortcut-memory-db';
 const router = useRouter();
 const store = useShortcutMemoryStore();
 
+const selectedGroup = ref('');
 const selectedCategory = ref('');
+const currentTag = ref('');
 const showMemoryCard = ref(false);
 const currentItem = ref<ShortcutItem | null>(null);
 const showHistory = ref(false);
@@ -458,8 +499,27 @@ const addFormRef = ref<FormInstance>();
 const searchKeyword = ref('');
 const searchType = ref<'all' | 'function' | 'key'>('all');
 
+// 当前域下的分类列表
+const categoriesInGroup = computed(() => {
+  if (!selectedGroup.value) return [];
+  return store.categories.filter(c => (c.group || '自定义') === selectedGroup.value);
+});
+
+// 当前分类下出现的专项标签（去重）
+const tagsOfCategory = computed(() => {
+  const set = new Set<string>();
+  for (const item of store.currentShortcuts) {
+    if (item.tags) item.tags.forEach(t => set.add(t));
+  }
+  return Array.from(set);
+});
+
 const filteredShortcuts = computed(() => {
-  const list = store.currentShortcuts;
+  let list = store.currentShortcuts;
+  // 专项标签过滤
+  if (currentTag.value) {
+    list = list.filter(item => item.tags?.includes(currentTag.value));
+  }
   const keyword = searchKeyword.value.trim().toLowerCase();
   if (!keyword) return list;
 
@@ -533,6 +593,14 @@ const trainingHistory = computed(() => {
 const masteredIds = computed(() => {
   if (!selectedCategory.value) return new Set<string>();
   return new Set(store.getMasteredIds(selectedCategory.value));
+});
+
+// 错题数量（清空后用 version 触发重算）
+const wrongItemsVersion = ref(0);
+const wrongItemsCount = computed(() => {
+  void wrongItemsVersion.value;
+  if (!selectedCategory.value) return 0;
+  return store.getWrongItemsCount(selectedCategory.value);
 });
 
 function getCategoryIcon(name: string): string {
@@ -613,7 +681,18 @@ async function deleteCustomItem(row: ShortcutItem) {
 
 function selectCategory(name: string) {
   selectedCategory.value = name;
+  currentTag.value = '';
   store.selectCategory(name);
+}
+
+function selectGroup(name: string) {
+  selectedGroup.value = name;
+  store.selectGroup(name);
+}
+
+function backToGroups() {
+  selectedGroup.value = '';
+  store.selectGroup('');
 }
 
 function isMastered(id: string): boolean {
@@ -652,6 +731,34 @@ async function clearProgress() {
     );
     await store.clearCategoryProgress(selectedCategory.value);
     ElMessage.success('进度已重置');
+  } catch {
+    // 用户取消
+  }
+}
+
+function startWrongItemsTraining() {
+  if (wrongItemsCount.value === 0) {
+    ElMessage.warning('暂无错题');
+    return;
+  }
+  store.selectCategory(selectedCategory.value);
+  router.push('/shortcut-memory/training?mode=wrongItems');
+}
+
+async function clearWrongItems() {
+  try {
+    await ElMessageBox.confirm(
+      `确定要清空「${selectedCategory.value}」的错题吗？`,
+      '确认清空',
+      { type: 'warning' }
+    );
+    const result = await store.clearWrongItemsAction(selectedCategory.value);
+    if (result.ok) {
+      ElMessage.success('错题已清空');
+      wrongItemsVersion.value++;
+    } else {
+      ElMessage.error('清空失败');
+    }
   } catch {
     // 用户取消
   }
@@ -996,6 +1103,20 @@ onMounted(async () => {
     .search-input {
       flex: 1;
       min-width: 200px;
+    }
+  }
+
+  .tag-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+
+    .tag-filter-label {
+      font-size: 13px;
+      color: var(--utools-text-secondary);
+      white-space: nowrap;
     }
   }
 

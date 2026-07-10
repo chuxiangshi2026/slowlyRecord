@@ -15,8 +15,8 @@ import { parseLocation } from '../utils/poetry-location'
  * - 与桌面端共用 wire format（字段名一致），通过 wx.Storage 单 key 存放
  * - 单 key 命名 `slowlyrecord-textmemory-data`，与桌面端 TEXTMEMORY_DOC_ID 对齐
  *
- * 第一阶段功能：列表/添加/编辑/删除文章 + 内置库导入 + 批量粘贴
- * 不实现：跟打/填空/选择题/地图/文件导入/AI 搜索
+ * 已实现：列表/添加/编辑/删除文章 + 内置库导入 + 批量粘贴 + 导入页地图 Tab(标点/作者生平路线)
+ * 不实现：跟打/填空/选择题/文件导入/AI 搜索
  */
 
 const STORAGE_KEY = 'slowlyrecord-textmemory-data'
@@ -220,7 +220,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     return articles.value.length !== before
   }
 
-  // ===== 笔记 / 提示词（最小实现，第一阶段不开放 UI 也保持数据完整） =====
+  // ===== 笔记 / 提示词（最小实现，暂不开放 UI 也保持数据完整） =====
 
   function addNote(articleId: string, content: string, selectedText?: string) {
     const note: MobileTextNote = {

@@ -303,6 +303,9 @@ const hasAltF4ShortcutInCategory = computed(() => {
 });
 
 const displayTitle = computed(() => {
+  if (store.isWrongItemsTraining) {
+    return '⚠️ 错题训练';
+  }
   if (isKeyPractice.value) {
     return isKeyPressMode.value ? '🔤 键位练习' : '🧩 功能选择';
   }
@@ -360,7 +363,9 @@ function selectOption(optionId: string) {
 }
 
 function restartTraining() {
-  if (isKeyPressMode.value) {
+  if (store.isWrongItemsTraining) {
+    store.initWrongItemsTraining(store.currentCategory);
+  } else if (isKeyPressMode.value) {
     store.initKeyPressTraining(store.currentCategory);
   } else {
     store.initFunctionSelectTraining(store.currentCategory);
@@ -576,6 +581,7 @@ watch(() => store.isTrainingComplete, (complete) => {
 
 onMounted(() => {
   const mode = route.query.mode as string;
+  const isWrongItems = mode === 'wrongItems';
   isKeyPressMode.value = mode !== 'functionSelect';
 
   if (!store.currentCategory) {
@@ -583,7 +589,14 @@ onMounted(() => {
     return;
   }
 
-  if (isKeyPressMode.value) {
+  if (isWrongItems) {
+    store.initWrongItemsTraining(store.currentCategory);
+    if (store.questions.length === 0) {
+      ElMessage.warning('暂无错题');
+      router.push('/shortcut-memory');
+      return;
+    }
+  } else if (isKeyPressMode.value) {
     store.initKeyPressTraining(store.currentCategory);
   } else {
     store.initFunctionSelectTraining(store.currentCategory);

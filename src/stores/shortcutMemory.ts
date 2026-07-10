@@ -3,11 +3,13 @@ import { defineStore } from "pinia";
 import type {
   ShortcutItem,
   ShortcutCategory,
+  ShortcutGroup,
   ShortcutTrainingRecord,
   TrainingPhase
 } from "@/types/shortcut-memory";
 import {
   getCategories,
+  getGroups,
   getShortcutsByCategory,
   getShortcutById,
   shuffleArray,
@@ -24,6 +26,10 @@ import {
   getLearningProgress,
   saveLearningProgress,
   clearLearningProgress,
+  getWrongItems,
+  addWrongItems,
+  removeWrongItems,
+  clearWrongItems,
   saveCustomShortcut,
   removeCustomShortcut,
   saveCustomCategory,
@@ -37,12 +43,15 @@ import { log } from "@/utils/logger";
 export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   // State
   const categories = ref<ShortcutCategory[]>([]);
+  const groups = ref<ShortcutGroup[]>([]);
+  const currentGroup = ref<string>('');
   const currentCategory = ref<string>('');
   const currentShortcuts = ref<ShortcutItem[]>([]);
   const isLoading = ref(false);
 
   // 训练状态
   const trainingPhase = ref<TrainingPhase>('ready');
+  const isWrongItemsTraining = ref(false);
   const currentQuestionIndex = ref(0);
   const questions = ref<ShortcutItem[]>([]);
   const pressedKeys = ref<Set<string>>(new Set());
@@ -78,6 +87,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     try {
       await loadAllShortcuts();
       categories.value = getCategories();
+      groups.value = getGroups();
       log.i('加载快捷键分类', categories.value.length);
     } finally {
       isLoading.value = false;
@@ -91,6 +101,13 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     currentCategory.value = category;
     currentShortcuts.value = getShortcutsByCategory(category);
     log.i('选择快捷键分类', category, currentShortcuts.value.length);
+  }
+
+  /**
+   * 选择域
+   */
+  function selectGroup(name: string) {
+    currentGroup.value = name;
   }
 
   /**
@@ -135,6 +152,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     trainingPhase.value = 'ready';
     trainingStartTime.value = Date.now();
     questionStartTime.value = 0;
+    isWrongItemsTraining.value = false;
 
     return selected;
   }
@@ -157,6 +175,34 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   function initFunctionSelectTraining(category: string, count: number = 0) {
     const selected = initTrainingCore(category, count);
     log.i('初始化功能选择训练', category, selected.length);
+  }
+
+  /**
+   * 初始化错题训练（题目来自该分类的错题集）
+   */
+  function initWrongItemsTraining(category: string) {
+    const wrongIds = getWrongItems(category);
+    const shortcuts = wrongIds
+      .map(id => getShortcutById(id))
+      .filter((s): s is ShortcutItem => !!s);
+    questions.value = shortcuts.length > 0 ? shuffleArray(shortcuts) : [];
+    currentQuestionIndex.value = 0;
+    correctCount.value = 0;
+    wrongCount.value = 0;
+    trainingDetails.value = [];
+    pressedKeys.value = new Set();
+    trainingPhase.value = 'ready';
+    trainingStartTime.value = Date.now();
+    questionStartTime.value = 0;
+    isWrongItemsTraining.value = true;
+    log.i('初始化错题训练', category, shortcuts.length);
+  }
+
+  /**
+   * 获取某分类的错题数量
+   */
+  function getWrongItemsCount(category: string): number {
+    return getWrongItems(category).length;
   }
 
   /**
@@ -206,9 +252,15 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     if (isCorrect) {
       trainingPhase.value = 'correct';
       correctCount.value++;
+      // 错题训练中答对：从错题集移除（掌握了）
+      if (isWrongItemsTraining.value) {
+        removeWrongItems(currentCategory.value, [itemId]);
+      }
     } else {
       trainingPhase.value = 'wrong';
       wrongCount.value++;
+      // 任何训练答错：加入错题集
+      addWrongItems(currentCategory.value, [itemId]);
     }
 
     trainingDetails.value.push({
@@ -326,6 +378,17 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   }
 
   /**
+   * 清空某分类的错题集
+   */
+  async function clearWrongItemsAction(category: string) {
+    const result = await clearWrongItems(category);
+    if (result.ok) {
+      log.i('已清空错题', category);
+    }
+    return result;
+  }
+
+  /**
    * 获取训练历史
    */
   function getTrainingHistory(): ShortcutTrainingRecord[] {
@@ -345,6 +408,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
       selectCategory(currentCategory.value);
     }
     categories.value = getCategories();
+    groups.value = getGroups();
   }
 
   /**
@@ -512,10 +576,13 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   return {
     // State
     categories,
+    groups,
+    currentGroup,
     currentCategory,
     currentShortcuts,
     isLoading,
     trainingPhase,
+    isWrongItemsTraining,
     currentQuestionIndex,
     questions,
     pressedKeys,
@@ -532,10 +599,12 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
 
     // Actions
     loadCategories,
+    selectGroup,
     selectCategory,
     getFormattedKeys,
     initKeyPressTraining,
     initFunctionSelectTraining,
+    initWrongItemsTraining,
     showCurrentQuestion,
     startListening,
     addPressedKey,
@@ -543,12 +612,15 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     clearPressedKeys,
     checkKeyPress,
     checkFunctionSelect,
+    recordAnswer,
     nextQuestion,
     generateQuizOptions,
     saveTrainingResult,
     getCategoryProgress,
     getMasteredIds,
     clearCategoryProgress,
+    clearWrongItemsAction,
+    getWrongItemsCount,
     getTrainingHistory,
     addCustomShortcut,
     deleteCustomShortcut,

@@ -1,33 +1,46 @@
-import type { ShortcutItem, ShortcutCategory, CustomCategoryDoc, CategoryConfigMap } from "@/types/shortcut-memory";
+import type { ShortcutItem, ShortcutCategory, ShortcutGroup, CustomCategoryDoc, CategoryConfigMap, GroupConfigMap } from "@/types/shortcut-memory";
 import { getAllCustomShortcuts, getAllCustomCategories, getHiddenCategories } from "@/utils/shortcut-memory-db";
 
 /**
  * 分类配置映射（描述和图标）
  */
 export const CATEGORY_CONFIG: CategoryConfigMap = {
-  'Windows': { description: 'Windows 操作系统常用快捷键', icon: '🪟' },
-  'VS Code': { description: 'Visual Studio Code 编辑器快捷键', icon: '📝' },
-  'Chrome': { description: 'Chrome 浏览器快捷键', icon: '🌐' },
-  'IntelliJ IDEA': { description: 'IntelliJ IDEA 开发工具快捷键', icon: '☕' },
-  'Claude Code CLI': { description: 'Claude Code 命令行交互快捷键', icon: '🤖' },
-  'Photoshop': { description: 'Adobe Photoshop 图像处理快捷键', icon: '🎨' },
-  'Vim': { description: 'Vim 文本编辑器常用快捷键', icon: '🧙' },
-  'Illustrator': { description: 'Adobe Illustrator 矢量设计快捷键', icon: '✒️' },
-  'CAD': { description: 'AutoCAD 工程制图常用快捷键', icon: '📐' },
-  'Obsidian': { description: 'Obsidian 笔记软件常用快捷键', icon: '📝' },
-  '思源笔记': { description: '思源笔记本地块级笔记快捷键', icon: '📔' },
-  'Word': { description: 'Microsoft Word 文档编辑快捷键', icon: '📘' },
-  'Excel': { description: 'Microsoft Excel 表格处理快捷键', icon: '📗' },
-  'PowerPoint': { description: 'Microsoft PowerPoint 演示文稿快捷键', icon: '📙' },
-  'Outlook': { description: 'Microsoft Outlook 邮件与日程快捷键', icon: '📧' },
-  '五笔86版': { description: '五笔输入法86版字根键位练习（逐个字根）', icon: '🖊️' },
-  '五笔98版': { description: '五笔输入法98版字根键位练习（逐个字根）', icon: '✒️' },
-  '双拼 · 小鹤': { description: '小鹤双拼声韵母键位练习', icon: '🕊️' },
-  '双拼 · 自然码': { description: '自然码双拼声韵母键位练习', icon: '🌿' },
-  '双拼 · 微软': { description: '微软双拼声韵母键位练习', icon: '🪟' },
-  '双拼 · 搜狗': { description: '搜狗双拼声韵母键位练习', icon: '🐾' },
-  '键位练习': { description: '随机练习键盘上的任意按键', icon: '⌨️' },
-  '数字小键盘练习': { description: '专门练习数字小键盘区域按键', icon: '🔢' }
+  'Windows': { description: 'Windows 操作系统常用快捷键', icon: '🪟', group: '系统' },
+  'VS Code': { description: 'Visual Studio Code 编辑器快捷键', icon: '📝', group: '开发' },
+  'Chrome': { description: 'Chrome 浏览器快捷键', icon: '🌐', group: '开发' },
+  'IntelliJ IDEA': { description: 'IntelliJ IDEA 开发工具快捷键', icon: '☕', group: '开发' },
+  'Claude Code CLI': { description: 'Claude Code 命令行交互快捷键', icon: '🤖', group: '开发' },
+  'Photoshop': { description: 'Adobe Photoshop 图像处理快捷键', icon: '🎨', group: '设计' },
+  'Vim': { description: 'Vim 文本编辑器常用快捷键', icon: '🧙', group: '开发' },
+  'Illustrator': { description: 'Adobe Illustrator 矢量设计快捷键', icon: '✒️', group: '设计' },
+  'CAD': { description: 'AutoCAD 工程制图常用快捷键', icon: '📐', group: '设计' },
+  'Obsidian': { description: 'Obsidian 笔记软件常用快捷键', icon: '📝', group: '办公' },
+  '思源笔记': { description: '思源笔记本地块级笔记快捷键', icon: '📔', group: '办公' },
+  'Word': { description: 'Microsoft Word 文档编辑快捷键', icon: '📘', group: '办公' },
+  'Excel': { description: 'Microsoft Excel 表格处理快捷键', icon: '📗', group: '办公' },
+  'PowerPoint': { description: 'Microsoft PowerPoint 演示文稿快捷键', icon: '📙', group: '办公' },
+  'Outlook': { description: 'Microsoft Outlook 邮件与日程快捷键', icon: '📧', group: '办公' },
+  '五笔86版': { description: '五笔输入法86版字根键位练习（逐个字根）', icon: '🖊️', group: '输入法' },
+  '五笔98版': { description: '五笔输入法98版字根键位练习（逐个字根）', icon: '✒️', group: '输入法' },
+  '双拼 · 小鹤': { description: '小鹤双拼声韵母键位练习', icon: '🕊️', group: '输入法' },
+  '双拼 · 自然码': { description: '自然码双拼声韵母键位练习', icon: '🌿', group: '输入法' },
+  '双拼 · 微软': { description: '微软双拼声韵母键位练习', icon: '🪟', group: '输入法' },
+  '双拼 · 搜狗': { description: '搜狗双拼声韵母键位练习', icon: '🐾', group: '输入法' },
+  '键位练习': { description: '随机练习键盘上的任意按键', icon: '⌨️', group: '系统' },
+  '数字小键盘练习': { description: '专门练习数字小键盘区域按键', icon: '🔢', group: '财务' }
+};
+
+/**
+ * 域（一级分组）配置：图标、描述、排序权重
+ */
+export const GROUP_CONFIG: GroupConfigMap = {
+  '系统': { icon: '🪟', description: '操作系统与基础键位', order: 1 },
+  '开发': { icon: '💻', description: '编辑器、IDE 与开发工具', order: 2 },
+  '办公': { icon: '📂', description: '文档、表格、笔记与邮件', order: 3 },
+  '设计': { icon: '🎨', description: '图像、矢量与工程制图', order: 4 },
+  '财务': { icon: '💰', description: '数字录入与财务软件', order: 5 },
+  '输入法': { icon: '⌨️', description: '五笔、双拼等输入法键位', order: 6 },
+  '自定义': { icon: '📝', description: '用户自定义分类', order: 99 }
 };
 
 /**
@@ -77,11 +90,13 @@ export const DEFAULT_NUMPAD_PRACTICE_KEYS = [
  * 根据默认键列表生成分类练习数据
  */
 function generatePracticeItems(category: string, keys: string[], prefix: string): ShortcutItem[] {
+  const group = CATEGORY_CONFIG[category]?.group;
   return keys.map((key, index) => {
     const display = KEY_DISPLAY_MAP[key] || key.toUpperCase();
     return {
       id: `${prefix}-${index}`,
       category,
+      group,
       functionName: `请按下 ${display} 键`,
       description: `认识并按下 ${display} 键`,
       keys: [key],
@@ -202,6 +217,32 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'idea-28', category: 'IntelliJ IDEA', functionName: '补全语句', description: '补全当前语句（自动加分号/括号）', keys: ['Ctrl', 'Shift', 'Enter'], platform: 'common' },
   { id: 'idea-29', category: 'IntelliJ IDEA', functionName: '下方新行', description: '从当前行任意位置在下方开始新行', keys: ['Shift', 'Enter'], platform: 'common' },
   { id: 'idea-30', category: 'IntelliJ IDEA', functionName: '最大化编辑器', description: '切换编辑器最大化（隐藏工具窗口）', keys: ['Ctrl', 'Shift', 'F12'], platform: 'common' },
+
+  // Claude Code CLI 快捷键
+  { id: 'claude-code-1', category: 'Claude Code CLI', functionName: '中断响应', description: '打断 Claude 当前正在生成的回复或工具调用', keys: ['Esc'], platform: 'common' },
+  { id: 'claude-code-2', category: 'Claude Code CLI', functionName: '退出会话', description: '退出 Claude Code 命令行（也可输入 /exit）', keys: ['Ctrl', 'C'], platform: 'common' },
+  { id: 'claude-code-3', category: 'Claude Code CLI', functionName: '退出 / EOF', description: '在空输入时退出会话', keys: ['Ctrl', 'D'], platform: 'common' },
+  { id: 'claude-code-4', category: 'Claude Code CLI', functionName: '清屏', description: '清除终端屏幕显示（不影响会话历史）', keys: ['Ctrl', 'L'], platform: 'common' },
+  { id: 'claude-code-5', category: 'Claude Code CLI', functionName: '编辑上一条消息', description: '双击 Esc 跳回并编辑上一条用户消息', keys: ['Esc', 'Esc'], platform: 'common' },
+  { id: 'claude-code-6', category: 'Claude Code CLI', functionName: '切换模式', description: '在默认 / 自动接受 / 计划模式之间循环切换', keys: ['Shift', 'Tab'], platform: 'common' },
+  { id: 'claude-code-7', category: 'Claude Code CLI', functionName: '切换详细输出', description: '切换详细模式，展开/折叠工具调用细节', keys: ['Ctrl', 'R'], platform: 'common' },
+  { id: 'claude-code-8', category: 'Claude Code CLI', functionName: '撤销编辑', description: '撤销输入框中的上一步编辑', keys: ['Ctrl', '_'], platform: 'common' },
+  { id: 'claude-code-9', category: 'Claude Code CLI', functionName: '上一条历史', description: '浏览输入历史中的上一条命令', keys: ['Up'], platform: 'common' },
+  { id: 'claude-code-10', category: 'Claude Code CLI', functionName: '下一条历史', description: '浏览输入历史中的下一条命令', keys: ['Down'], platform: 'common' },
+  { id: 'claude-code-11', category: 'Claude Code CLI', functionName: '多行换行', description: '在输入框内插入新行（可使用反斜杠+回车）', keys: ['Shift', 'Enter'], platform: 'common' },
+  { id: 'claude-code-12', category: 'Claude Code CLI', functionName: '提交消息', description: '提交当前输入的消息给 Claude', keys: ['Enter'], platform: 'common' },
+  { id: 'claude-code-13', category: 'Claude Code CLI', functionName: '自动补全', description: '补全文件路径、斜杠命令或 @ 引用', keys: ['Tab'], platform: 'common' },
+  { id: 'claude-code-14', category: 'Claude Code CLI', functionName: '斜杠命令', description: '触发斜杠命令菜单（如 /help、/clear、/model）', keys: ['/'], platform: 'common' },
+  { id: 'claude-code-15', category: 'Claude Code CLI', functionName: '引用文件', description: '通过 @ 引用项目中的文件路径', keys: ['@'], platform: 'common' },
+  { id: 'claude-code-16', category: 'Claude Code CLI', functionName: '运行 Bash', description: '以 ! 前缀直接运行 shell 命令', keys: ['!'], platform: 'common' },
+  { id: 'claude-code-17', category: 'Claude Code CLI', functionName: '添加到记忆', description: '以 # 前缀将内容追加到 CLAUDE.md 记忆', keys: ['#'], platform: 'common' },
+  { id: 'claude-code-18', category: 'Claude Code CLI', functionName: '粘贴图片', description: '在支持的终端中粘贴剪贴板里的图片', keys: ['Ctrl', 'V'], platform: 'common' },
+  { id: 'claude-code-19', category: 'Claude Code CLI', functionName: '光标移到行首', description: '将输入框光标移动到行首', keys: ['Ctrl', 'A'], platform: 'common' },
+  { id: 'claude-code-20', category: 'Claude Code CLI', functionName: '光标移到行尾', description: '将输入框光标移动到行尾', keys: ['Ctrl', 'E'], platform: 'common' },
+  { id: 'claude-code-21', category: 'Claude Code CLI', functionName: '删除到行首', description: '删除光标至行首之间的字符', keys: ['Ctrl', 'U'], platform: 'common' },
+  { id: 'claude-code-22', category: 'Claude Code CLI', functionName: '删除到行尾', description: '删除光标至行尾之间的字符', keys: ['Ctrl', 'K'], platform: 'common' },
+  { id: 'claude-code-23', category: 'Claude Code CLI', functionName: '向前删除单词', description: '删除光标前一个单词', keys: ['Ctrl', 'W'], platform: 'common' },
+  { id: 'claude-code-24', category: 'Claude Code CLI', functionName: '向后删除单词', description: '删除光标后一个单词', keys: ['Alt', 'D'], platform: 'common' },
 
   // Photoshop 快捷键
   { id: 'ps-1', category: 'Photoshop', functionName: '新建', description: '创建新的图像文档', keys: ['Ctrl', 'N'], platform: 'common' },
@@ -894,9 +935,35 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   ...generatePracticeItems('数字小键盘练习', DEFAULT_NUMPAD_PRACTICE_KEYS, 'np'),
 ];
 
+// 为 PRESET 中的五笔/双拼条目补 group 与 tags（保证兜底数据与 JSON 一致）
+(function enrichPreset() {
+  const zoneMap: Record<string, string> = {
+    G: '横区', F: '横区', D: '横区', S: '横区', A: '横区',
+    H: '竖区', J: '竖区', K: '竖区', L: '竖区', M: '竖区',
+    T: '撇区', R: '撇区', E: '撇区', W: '撇区', Q: '撇区',
+    Y: '捺区', U: '捺区', I: '捺区', O: '捺区', P: '捺区',
+    N: '折区', B: '折区', V: '折区', C: '折区', X: '折区'
+  };
+  const wubiCats = new Set(['五笔86版', '五笔98版']);
+  const shuangpinCats = new Set(['双拼 · 小鹤', '双拼 · 自然码', '双拼 · 微软', '双拼 · 搜狗']);
+  for (const item of PRESET_SHORTCUTS) {
+    if (wubiCats.has(item.category)) {
+      item.group = '输入法';
+      if (!item.tags || item.tags.length === 0) {
+        const k = (item.keys[0] || '').toUpperCase();
+        if (k === 'Z') item.tags = ['万能键'];
+        else if (zoneMap[k]) item.tags = [zoneMap[k]];
+      }
+    } else if (shuangpinCats.has(item.category)) {
+      item.group = '输入法';
+    }
+  }
+})();
+
 // 运行时缓存，优先从 JSON 文件加载
 let _cachedShortcuts: ShortcutItem[] | null = null;
 let _cachedCategories: ShortcutCategory[] | null = null;
+let _cachedGroups: ShortcutGroup[] | null = null;
 let _cachedCustomCategories: CustomCategoryDoc[] | null = null;
 let _jsonLoaded = false;
 
@@ -904,6 +971,7 @@ interface ShortcutIndexItem {
   name: string;
   file: string;
   icon: string;
+  group?: string;
   description: string;
 }
 
@@ -920,6 +988,7 @@ export async function loadAllShortcuts(force: boolean = false): Promise<Shortcut
     _jsonLoaded = false;
     _cachedShortcuts = null;
     _cachedCategories = null;
+    _cachedGroups = null;
     _cachedCustomCategories = null;
   }
 
@@ -934,6 +1003,12 @@ export async function loadAllShortcuts(force: boolean = false): Promise<Shortcut
           const res = await fetch(`/shortcuts/${item.file}`);
           if (!res.ok) continue;
           const data: ShortcutItem[] = await res.json();
+          // 从 index 注入 group（JSON 内 item 可能不带 group）
+          if (item.group) {
+            for (const s of data) {
+              if (!s.group) s.group = item.group;
+            }
+          }
           allShortcuts.push(...data);
         } catch (e) {
           console.warn(`加载快捷键文件失败: ${item.file}`, e);
@@ -967,13 +1042,19 @@ export async function loadAllShortcuts(force: boolean = false): Promise<Shortcut
     allShortcuts.push(...missingBuiltin);
   }
 
+  // 统一为缺少 group 的 item 补 group（兜底数据/动态分类/自定义分类）
+  for (const s of allShortcuts) {
+    if (!s.group) s.group = getCategoryGroup(s.category);
+  }
+
   _cachedShortcuts = allShortcuts;
   _jsonLoaded = true;
 
   // 加载自定义分类
   _cachedCustomCategories = getAllCustomCategories();
-  // 刷新分类缓存
+  // 刷新分类与域缓存
   _cachedCategories = buildCategories();
+  _cachedGroups = buildGroups();
 
   return allShortcuts;
 }
@@ -1039,6 +1120,7 @@ function buildCategories(): ShortcutCategory[] {
       builtinMap.set(name, {
         name,
         count,
+        group: getCategoryGroup(name),
         description: getCategoryDescription(name),
         icon: getCategoryIcon(name)
       });
@@ -1051,6 +1133,7 @@ function buildCategories(): ShortcutCategory[] {
       const count = getShortcutsByCategory(cat.name).length;
       builtinMap.set(cat.name, {
         name: cat.name,
+        group: '自定义',
         description: cat.description,
         icon: cat.icon,
         count
@@ -1095,6 +1178,56 @@ function getCategoryDescription(name: string): string {
  */
 function getCategoryIcon(name: string): string {
   return CATEGORY_CONFIG[name]?.icon || '⌨️';
+}
+
+/**
+ * 获取分类所属域（未配置的归「自定义」）
+ */
+function getCategoryGroup(name: string): string {
+  return CATEGORY_CONFIG[name]?.group || '自定义';
+}
+
+/**
+ * 获取域图标
+ */
+function getGroupIcon(name: string): string {
+  return GROUP_CONFIG[name]?.icon || '📁';
+}
+
+/**
+ * 构建域列表（聚合各分类的 count）
+ */
+function buildGroups(): ShortcutGroup[] {
+  const categories = getCategories();
+  const groupMap = new Map<string, { count: number; categoryCount: number }>();
+  for (const cat of categories) {
+    const g = cat.group || '自定义';
+    const entry = groupMap.get(g) || { count: 0, categoryCount: 0 };
+    entry.count += cat.count;
+    entry.categoryCount += 1;
+    groupMap.set(g, entry);
+  }
+  const groups: ShortcutGroup[] = [];
+  for (const [name, v] of groupMap) {
+    const cfg = GROUP_CONFIG[name];
+    groups.push({
+      name,
+      icon: cfg?.icon || getGroupIcon(name),
+      description: cfg?.description || `${name} 分类`,
+      count: v.count,
+      categoryCount: v.categoryCount
+    });
+  }
+  groups.sort((a, b) => (GROUP_CONFIG[a.name]?.order ?? 100) - (GROUP_CONFIG[b.name]?.order ?? 100));
+  return groups;
+}
+
+/**
+ * 获取所有域（基于当前缓存的数据）
+ */
+export function getGroups(): ShortcutGroup[] {
+  if (_cachedGroups) return _cachedGroups;
+  return buildGroups();
 }
 
 /**

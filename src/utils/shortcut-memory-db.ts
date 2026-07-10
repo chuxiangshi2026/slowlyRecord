@@ -1,6 +1,7 @@
 import type {
   ShortcutTrainingRecord,
   ShortcutLearningProgress,
+  ShortcutWrongItems,
   ShortcutItem,
   CustomCategoryDoc
 } from "@/types/shortcut-memory";
@@ -13,6 +14,7 @@ import { nextIdTimestamp } from "@/utils/id-util";
 const DB_KEY_PREFIX = DB_KEY_SHORTCUT_MEMORY;
 const RECORD_KEY_PREFIX = DB_KEY_PREFIX + 'record_';
 const PROGRESS_KEY_PREFIX = DB_KEY_PREFIX + 'progress_';
+const WRONG_KEY_PREFIX = DB_KEY_PREFIX + 'wrong_';
 const CUSTOM_KEY_PREFIX = DB_KEY_PREFIX + 'custom_';
 const CUSTOM_CATEGORY_PREFIX = DB_KEY_PREFIX + 'category_';
 const HIDDEN_CATEGORY_KEY = DB_KEY_PREFIX + 'hidden_categories';
@@ -131,6 +133,86 @@ export async function clearLearningProgress(category: string): Promise<DbReturn>
 
   const result = getDb().remove(existing._id);
   log.i('清除快捷键学习进度', category, result.ok);
+  return result;
+}
+
+/**
+ * 内部：获取某分类的错题文档
+ */
+function getWrongItemsDoc(category: string): ShortcutWrongItems | null {
+  const allDocs = getDb().allDocs(WRONG_KEY_PREFIX) as BaseCouchDoc[];
+  const doc = allDocs.find(
+    (doc): doc is ShortcutWrongItems => doc.type === 'shortcut_wrong_items' && (doc as ShortcutWrongItems).category === category
+  );
+  return doc || null;
+}
+
+/**
+ * 获取某分类的错题ID列表
+ */
+export function getWrongItems(category: string): string[] {
+  return getWrongItemsDoc(category)?.wrongItemIds || [];
+}
+
+/**
+ * 追加错题（去重）
+ */
+export async function addWrongItems(category: string, ids: string[]): Promise<DbReturn> {
+  if (ids.length === 0) return { ok: true, id: '', rev: '' };
+  const existing = getWrongItemsDoc(category);
+  const now = Date.now();
+  const wrongItemIds = [...new Set([...(existing?.wrongItemIds || []), ...ids])];
+  const doc: ShortcutWrongItems = {
+    _id: existing?._id || (WRONG_KEY_PREFIX + category + '_' + now),
+    _rev: existing?._rev,
+    type: 'shortcut_wrong_items',
+    category,
+    wrongItemIds,
+    createdAt: existing?.createdAt ?? now,
+    updatedAt: now
+  };
+  const result = await getDb().promises.put(cloneDeep(doc));
+  if (result.ok) {
+    log.d('追加错题', category, ids);
+  } else if (result.error) {
+    log.e('追加错题失败', result.message);
+  }
+  return result;
+}
+
+/**
+ * 移除错题（错题训练答对后）
+ */
+export async function removeWrongItems(category: string, ids: string[]): Promise<DbReturn> {
+  if (ids.length === 0) return { ok: true, id: '', rev: '' };
+  const existing = getWrongItemsDoc(category);
+  if (!existing) return { ok: true, id: '', rev: '' };
+  const removeSet = new Set(ids);
+  const wrongItemIds = existing.wrongItemIds.filter(id => !removeSet.has(id));
+  const doc: ShortcutWrongItems = {
+    ...existing,
+    wrongItemIds,
+    updatedAt: Date.now()
+  };
+  const result = await getDb().promises.put(cloneDeep(doc));
+  if (result.ok) {
+    log.d('移除错题', category, ids);
+  } else if (result.error) {
+    log.e('移除错题失败', result.message);
+  }
+  return result;
+}
+
+/**
+ * 清空某分类的错题
+ */
+export async function clearWrongItems(category: string): Promise<DbReturn> {
+  const existing = getWrongItemsDoc(category);
+  if (!existing) {
+    return { ok: true, id: '', rev: '' };
+  }
+  const result = getDb().remove(existing._id);
+  log.i('清空错题', category, result.ok);
   return result;
 }
 
