@@ -69,6 +69,14 @@
             inactive-text="隐"
             style="margin-left: 4px;"
           />
+          <el-switch
+            v-if="isInputMethodCategory"
+            v-model="showKeyHint"
+            inline-prompt
+            :active-text="keyHintLabel"
+            :inactive-text="keyHintLabel"
+            style="margin-left: 4px;"
+          />
         </template>
       </div>
     </div>
@@ -83,8 +91,19 @@
     <div class="training-body">
       <!-- 题目区域 -->
       <div v-if="!store.isTrainingComplete" class="question-area">
+        <div v-if="currentQuestionTags.length > 0" class="question-tags">
+          <el-tag
+            v-for="tag in currentQuestionTags"
+            :key="tag"
+            size="small"
+            type="warning"
+            effect="plain"
+          >{{ tag }}</el-tag>
+        </div>
+
         <div v-if="!isKeyPractice" class="function-display">
           <div class="function-name">{{ displayFunctionName }}</div>
+          <div v-if="currentKeyHint" class="pinyin-hint">{{ currentKeyHint }}</div>
           <div class="function-desc">{{ currentQuestion?.description }}</div>
         </div>
 
@@ -152,6 +171,9 @@
               :pressed-keys="store.pressedKeys"
               :target-keys="showKeyboardHint && store.trainingPhase === 'showing' ? currentQuestion?.keys : []"
               :mode="store.currentCategory === '数字小键盘练习' ? 'numpad' : 'default'"
+              :show-right-section="!isInputMethodCategory"
+              :key-labels="keyFinalsMap"
+              :compact="isInputMethodCategory"
             />
           </div>
         </template>
@@ -258,6 +280,7 @@ import { useShortcutMemoryStore } from '@/stores/shortcutMemory';
 import { ElMessage } from 'element-plus';
 import { ArrowLeft, ArrowRight, Warning } from '@element-plus/icons-vue';
 import type { ShortcutItem } from '@/types/shortcut-memory';
+import { extractShuangpinKeyHint, extractWubiKeyHint, extractPinyinHint, getShortcutsByCategory, CATEGORY_CONFIG, isZoneTag, getWubiKeyHints, getWubiRootHints } from '@/utils/shortcut-memory-data';
 import KeyboardVisual from './components/KeyboardVisual.vue';
 
 const router = useRouter();
@@ -268,9 +291,15 @@ const isKeyPressMode = ref(true);
 const quizOptions = ref<ShortcutItem[]>([]);
 const wrongMessage = ref('');
 const showKeyboardHint = ref(true);
+const showKeyHint = ref(true);
+// 训练专项标签筛选（来自查看页选定的 类型/分区），初始化与重新练习共用
+const tagFilter = ref<{ type?: string; zone?: string }>({});
 let autoNextTimer: ReturnType<typeof setTimeout> | null = null;
 
 const currentQuestion = computed(() => store.currentQuestion);
+
+// 当前题目的专项标签（类型 + 分区），训练中展示，与查看页分类一致
+const currentQuestionTags = computed(() => currentQuestion.value?.tags || []);
 
 const displayPressedKeys = computed(() => {
   return Array.from(store.pressedKeys);
@@ -278,6 +307,93 @@ const displayPressedKeys = computed(() => {
 
 const isKeyPractice = computed(() => {
   return store.currentCategory === '键位练习' || store.currentCategory === '数字小键盘练习';
+});
+
+// 当前分类是否为输入法键位练习（五笔 / 双拼等）
+const isInputMethodCategory = computed(() => {
+  return (CATEGORY_CONFIG[store.currentCategory]?.group || '自定义') === '输入法';
+});
+
+// 训练页类型标签中隐藏基础"词组"标签，与查看页筛选面板保持一致
+const TRAINING_TYPE_HIDDEN_TAGS = ['词组'];
+
+// 当前分类下可切换的专项标签（类型 + 分区），基于全部分类条目计算
+const trainingTypeTags = computed(() => {
+  const set = new Set<string>();
+  for (const item of getShortcutsByCategory(store.currentCategory)) {
+    if (item.tags) {
+      item.tags.forEach(t => {
+        if (!isZoneTag(t) && !TRAINING_TYPE_HIDDEN_TAGS.includes(t)) set.add(t);
+      });
+    }
+  }
+  return Array.from(set);
+});
+const trainingZoneTags = computed(() => {
+  const set = new Set<string>();
+  for (const item of getShortcutsByCategory(store.currentCategory)) {
+    if (item.tags) {
+      item.tags.forEach(t => { if (isZoneTag(t)) set.add(t); });
+    }
+  }
+  return Array.from(set);
+});
+
+function onTagFilterChange() {
+  if (autoNextTimer) {
+    clearTimeout(autoNextTimer);
+    autoNextTimer = null;
+  }
+  if (store.isWrongItemsTraining) {
+    store.initWrongItemsTraining(store.currentCategory);
+  } else if (isKeyPressMode.value) {
+    store.initKeyPressTraining(store.currentCategory, 0, tagFilter.value);
+  } else {
+    store.initFunctionSelectTraining(store.currentCategory, 0, tagFilter.value);
+  }
+  startTraining();
+}
+
+// 输入法键位练习：在键盘按键上显示辅助标签
+// - 双拼：显示韵母/声母
+// - 五笔：当前题目所在键显示当前字根，其余键显示该键第一个字根
+// 只取基础键位条目，避免常用字/词组等生成条目干扰
+// 使用全部分类条目补全，避免标签筛选后键盘标签丢失
+const keyFinalsMap = computed(() => {
+  if (!isInputMethodCategory.value) return undefined;
+  const isWubi = isWubiCategory.value;
+  const hints: Record<string, string> = {};
+
+  if (isWubi) {
+    const allHints = getWubiKeyHints(store.currentCategory);
+    const currentQuestionValue = currentQuestion.value;
+    if (currentQuestionValue) {
+      const rootHints = getWubiRootHints(currentQuestionValue, store.currentCategory);
+      currentQuestionValue.keys.forEach((k, i) => {
+        const key = k.toUpperCase();
+        hints[key] = rootHints[i] ?? allHints[key]?.[0] ?? '';
+      });
+    }
+    for (const [key, list] of Object.entries(allHints)) {
+      if (!hints[key]) hints[key] = list[0] ?? '';
+    }
+    return hints;
+  }
+
+  const collect = (items: ShortcutItem[]) => {
+    for (const item of items) {
+      const key = item.keys[0]?.toUpperCase();
+      if (!key || hints[key]) continue;
+      // 双拼基础键位：functionName 形如 "Q键"
+      const isShuangpinBase = /^[A-Z]键$/.test(item.functionName);
+      if (!isShuangpinBase) continue;
+      const hint = extractShuangpinKeyHint(key, item.description);
+      if (hint) hints[key] = hint;
+    }
+  };
+  collect(store.questions);
+  collect(getShortcutsByCategory(store.currentCategory));
+  return hints;
 });
 
 // 判断当前分类是否包含系统键（Win/Meta 键）
@@ -342,9 +458,9 @@ const displayTitle = computed(() => {
     return '⚠️ 错题训练';
   }
   if (isKeyPractice.value) {
-    return isKeyPressMode.value ? '🔤 键位练习' : '🧩 功能选择';
+    return isKeyPressMode.value ? '🔤 键位练习' : '🔄 反向训练';
   }
-  return isKeyPressMode.value ? '🎯 按键训练' : '🧩 功能选择';
+  return isKeyPressMode.value ? '🎯 按键训练' : '🔄 反向训练';
 });
 
 const displayFunctionName = computed(() => {
@@ -353,6 +469,23 @@ const displayFunctionName = computed(() => {
     return match ? match[1] : currentQuestion.value.functionName;
   }
   return currentQuestion.value?.functionName || '';
+});
+
+const isWubiCategory = computed(() => {
+  return store.currentCategory === '五笔86版' || store.currentCategory === '五笔98版';
+});
+
+const keyHintLabel = computed(() => {
+  return isWubiCategory.value ? '字根' : '拼音';
+});
+
+const currentKeyHint = computed(() => {
+  if (!showKeyHint.value || !currentQuestion.value) return '';
+  if (isWubiCategory.value) {
+    const hints = getWubiRootHints(currentQuestion.value, store.currentCategory);
+    return hints.join('\n');
+  }
+  return extractPinyinHint(currentQuestion.value.description);
 });
 
 const resultIcon = computed(() => {

@@ -11,6 +11,7 @@ export interface ShortcutItem {
   functionName: string;     // 功能名称（如 复制、粘贴）
   description: string;      // 功能描述
   keys: string[];           // 快捷键按键列表，如 ['Ctrl', 'C']
+  rootHints?: string[];     // 五笔条目按编码顺序的具体拆字字根提示
   platform?: 'win' | 'mac' | 'linux' | 'common'; // 平台
 }
 
