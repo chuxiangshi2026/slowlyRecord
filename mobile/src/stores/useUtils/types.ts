@@ -35,7 +35,7 @@ export type WordBankType =
   | 'level8'
   | 'zsb'
   | 'sat'
-  | 'nul'
+  | 'newConcept'
   | 'phrasal-verbs'
   | 'collocations'
   | 'idioms'

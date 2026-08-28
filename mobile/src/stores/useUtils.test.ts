@@ -39,7 +39,7 @@ vi.mock('@/subPackages/wordbank-level8/wordbanks/level8', () => ({ default: [] }
 vi.mock('@/subPackages/wordbank-c/wordbanks/sat', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-d/wordbanks/toefl', () => ({ default: [] }))
 vi.mock('@/subPackages/wordbank-b/wordbanks/zsb', () => ({ default: [] }))
-vi.mock('@/subPackages/wordbank-b/wordbanks/nul', () => ({ default: [] }))
+vi.mock('@/subPackages/wordbank-b/wordbanks/newConcept', () => ({ default: [] }))
 
 // Mock uni API (运行时设置，非 vi.mock)
 const mockStorage = new Map<string, any>()
@@ -399,7 +399,7 @@ describe('WORDBANK_LIST', () => {
     expect(ids).toContain('sat')
     expect(ids).toContain('kaogong')
     expect(ids).toContain('kaoyan')
-    expect(ids).toContain('nul')
+    expect(ids).toContain('newConcept')
   })
 
   it('每个词库应有 id、name、description、wordCount', () => {

@@ -6,7 +6,7 @@ import cet6 from './wordbanks/cet6'
 import ielts from './wordbanks/ielts'
 import kaogong from './wordbanks/kaogong'
 import zsb from './wordbanks/zsb'
-import nul from './wordbanks/nul'
+import newConcept from './wordbanks/newConcept'
 import phrasalVerbs from './wordbanks/phrasal_verbs'
 import collocations from './wordbanks/collocations'
 import idioms from './wordbanks/idioms'
@@ -18,13 +18,13 @@ const data: Partial<Record<WordBankType, any[]>> = {
   ielts,
   kaogong,
   zsb,
-  nul,
+  newConcept,
   'phrasal-verbs': phrasalVerbs,
   collocations,
   idioms,
 }
 
-export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'nul', 'phrasal-verbs', 'collocations', 'idioms']
+export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'newConcept', 'phrasal-verbs', 'collocations', 'idioms']
 
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
   if (type === 'collocations') return 'collocation'

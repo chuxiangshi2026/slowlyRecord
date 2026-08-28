@@ -28,7 +28,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'sat', name: 'SAT词汇', description: 'SAT考试核心词汇', wordCount: 4423 },
   { id: 'toefl', name: '托福词汇', description: '托福考试核心词汇', wordCount: 9213 },
   { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 297 },
-  { id: 'nul', name: '新概念词汇', description: '新概念英语核心词汇', wordCount: 600 },
+  { id: 'newConcept', name: '新概念词汇', description: '新概念英语核心词汇', wordCount: 600 },
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317 },
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277 },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
@@ -113,7 +113,7 @@ export async function loadWordBank(
       sat: () => import('@/subPackages/wordbank-c/wordbanks/sat'),
       toefl: () => import('@/subPackages/wordbank-d/wordbanks/toefl'),
       zsb: () => import('@/subPackages/wordbank-b/wordbanks/zsb'),
-      nul: () => import('@/subPackages/wordbank-b/wordbanks/nul'),
+      newConcept: () => import('@/subPackages/wordbank-b/wordbanks/newConcept'),
       'phrasal-verbs': () => import('@/subPackages/wordbank-b/wordbanks/phrasal_verbs'),
       collocations: () => import('@/subPackages/wordbank-b/wordbanks/collocations'),
       idioms: () => import('@/subPackages/wordbank-b/wordbanks/idioms'),
@@ -197,7 +197,7 @@ export async function importWordsFromBank(
 /** 从已缓存的词库中查询音标（供离线词典模块使用） */
 export function queryPhoneticFromWordBankCache(word: string): string | null {
   const normalized = word.toLowerCase().trim()
-  const types: WordBankType[] = ['cet4', 'cet6', 'bec', 'gmat', 'gre', 'ielts', 'kaogong', 'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'zsb', 'nul']
+  const types: WordBankType[] = ['cet4', 'cet6', 'bec', 'gmat', 'gre', 'ielts', 'kaogong', 'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'zsb', 'newConcept']
   for (const type of types) {
     try {
       const cacheStr = uni.getStorageSync(CACHE_KEY_PREFIX + type)
