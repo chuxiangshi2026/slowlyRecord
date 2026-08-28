@@ -9,6 +9,41 @@
         {{ displayTitle }}
         - {{ store.currentCategory }}
       </span>
+      <div
+        v-if="!store.isWrongItemsTraining && (trainingTypeTags.length > 0 || trainingZoneTags.length > 0)"
+        class="training-header-filters"
+      >
+        <el-select
+          v-if="trainingTypeTags.length > 0"
+          v-model="tagFilter.type"
+          placeholder="类型"
+          size="small"
+          clearable
+          @change="onTagFilterChange"
+        >
+          <el-option
+            v-for="tag in trainingTypeTags"
+            :key="tag"
+            :label="tag"
+            :value="tag"
+          />
+        </el-select>
+        <el-select
+          v-if="trainingZoneTags.length > 0"
+          v-model="tagFilter.zone"
+          placeholder="分区"
+          size="small"
+          clearable
+          @change="onTagFilterChange"
+        >
+          <el-option
+            v-for="tag in trainingZoneTags"
+            :key="tag"
+            :label="tag"
+            :value="tag"
+          />
+        </el-select>
+      </div>
       <div class="training-stats">
         <el-tag type="success">✓ {{ store.correctCount }}</el-tag>
         <el-tag type="danger">✗ {{ store.wrongCount }}</el-tag>
@@ -366,15 +401,21 @@ function restartTraining() {
   if (store.isWrongItemsTraining) {
     store.initWrongItemsTraining(store.currentCategory);
   } else if (isKeyPressMode.value) {
-    store.initKeyPressTraining(store.currentCategory);
+    store.initKeyPressTraining(store.currentCategory, 0, tagFilter.value);
   } else {
-    store.initFunctionSelectTraining(store.currentCategory);
+    store.initFunctionSelectTraining(store.currentCategory, 0, tagFilter.value);
   }
   startTraining();
 }
 
 function goBack() {
-  router.push('/shortcut-memory');
+  // 返回上一页时携带域/分类/标签，使查看页恢复到训练前的选择状态
+  const query: Record<string, string> = {};
+  if (store.currentGroup) query.group = store.currentGroup;
+  if (store.currentCategory) query.category = store.currentCategory;
+  if (tagFilter.value.type) query.type = tagFilter.value.type;
+  if (tagFilter.value.zone) query.zone = tagFilter.value.zone;
+  router.push({ path: '/shortcut-memory', query });
 }
 
 // 跳过 Win 键题目（标记为正确并进入下一题）
@@ -451,12 +492,12 @@ function handleKeyDown(event: KeyboardEvent) {
       }
 
     const isCorrect = store.checkKeyPress();
-    if (isCorrect) {
+    if (isCorrect === true) {
       if (autoNextTimer) clearTimeout(autoNextTimer);
       autoNextTimer = setTimeout(() => {
         nextQuestion();
       }, 600);
-    } else {
+    } else if (isCorrect === false) {
       const correct = currentQuestion.value;
       wrongMessage.value = `答案：${correct?.keys.join('+')}`;
       if (autoNextTimer) clearTimeout(autoNextTimer);
@@ -496,12 +537,12 @@ function handleKeyDown(event: KeyboardEvent) {
     }
     // ` 键处理完后执行检查（替代原来的 return）
     const isCorrect = store.checkKeyPress();
-    if (isCorrect) {
+    if (isCorrect === true) {
       if (autoNextTimer) clearTimeout(autoNextTimer);
       autoNextTimer = setTimeout(() => {
         nextQuestion();
       }, 600);
-    } else {
+    } else if (isCorrect === false) {
       const correct = currentQuestion.value;
       wrongMessage.value = `答案：${correct?.keys.join('+')}`;
       if (autoNextTimer) clearTimeout(autoNextTimer);
@@ -523,13 +564,13 @@ function handleKeyDown(event: KeyboardEvent) {
   // 只有在按下非修饰键时才进行匹配判断，避免按组合键过程中（只按了修饰键）就触发错误
   if (!['Control', 'Alt', 'Shift', 'Meta'].includes(key)) {
     const isCorrect = store.checkKeyPress();
-    if (isCorrect) {
+    if (isCorrect === true) {
       // 正确：延迟 600ms 自动进入下一题
       if (autoNextTimer) clearTimeout(autoNextTimer);
       autoNextTimer = setTimeout(() => {
         nextQuestion();
       }, 600);
-    } else {
+    } else if (isCorrect === false) {
       // 错误：显示错误提示，延迟 1200ms 后重新监听
       const correct = currentQuestion.value;
       wrongMessage.value = `答案：${correct?.keys.join('+')}`;
@@ -584,6 +625,11 @@ onMounted(() => {
   const isWrongItems = mode === 'wrongItems';
   isKeyPressMode.value = mode !== 'functionSelect';
 
+  // 读取查看页传入的专项标签筛选（类型/分区），训练题目据此分类
+  const typeTag = route.query.type as string | undefined;
+  const zoneTag = route.query.zone as string | undefined;
+  tagFilter.value = { type: typeTag || undefined, zone: zoneTag || undefined };
+
   if (!store.currentCategory) {
     router.push('/shortcut-memory');
     return;
@@ -597,9 +643,9 @@ onMounted(() => {
       return;
     }
   } else if (isKeyPressMode.value) {
-    store.initKeyPressTraining(store.currentCategory);
+    store.initKeyPressTraining(store.currentCategory, 0, tagFilter.value);
   } else {
-    store.initFunctionSelectTraining(store.currentCategory);
+    store.initFunctionSelectTraining(store.currentCategory, 0, tagFilter.value);
   }
 
   // 直接进入第一题，不再显示准备页面
@@ -638,6 +684,13 @@ onUnmounted(() => {
       font-weight: bold;
       color: var(--utools-text-primary);
       flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .training-stats {
@@ -718,6 +771,14 @@ onUnmounted(() => {
         display: flex;
         justify-content: flex-end;
       }
+    }
+
+    .question-tags {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
     }
 
     .function-display {

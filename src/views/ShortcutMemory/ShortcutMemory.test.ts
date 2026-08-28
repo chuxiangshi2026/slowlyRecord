@@ -24,6 +24,7 @@ const hoisted = vi.hoisted(() => ({
     currentShortcutCount: 0,
     selectGroup: vi.fn(),
     selectCategory: vi.fn(),
+    loadCategories: vi.fn(() => Promise.resolve()),
     addCustomShortcut: vi.fn(() => Promise.resolve({ ok: true, id: 'id', rev: 'rev' })),
     deleteCustomShortcut: vi.fn(() => Promise.resolve({ ok: true, id: '', rev: '' })),
     clearCategoryProgress: vi.fn(() => Promise.resolve({ ok: true, id: '', rev: '' })),
@@ -59,9 +60,13 @@ vi.mock('@/utils/logger', () => ({
   log: { i: vi.fn(), e: vi.fn(), w: vi.fn(), d: vi.fn() },
 }))
 
-vi.mock('@/utils/shortcut-memory-data', () => ({
-  getShortcutsByCategory: vi.fn(() => []),
-}))
+vi.mock('@/utils/shortcut-memory-data', async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    getShortcutsByCategory: vi.fn(() => []),
+  }
+})
 
 vi.mock('@/utils/shortcut-memory-db', () => ({
   getAllCustomCategories: vi.fn(() => []),

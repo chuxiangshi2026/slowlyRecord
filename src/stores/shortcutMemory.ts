@@ -7,11 +7,21 @@ import type {
   ShortcutTrainingRecord,
   TrainingPhase
 } from "@/types/shortcut-memory";
+
+/**
+ * 标签筛选条件（类型 + 分区），用于训练初始化时按专项标签过滤题目。
+ * 与 ShortcutMemory.vue 查看列表的筛选保持一致。
+ */
+export interface TagFilter {
+  type?: string;
+  zone?: string;
+}
 import {
   getCategories,
   getGroups,
   getShortcutsByCategory,
   getShortcutById,
+  filterByTags,
   shuffleArray,
   generateDistractors,
   formatKeys,
@@ -55,6 +65,8 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   const currentQuestionIndex = ref(0);
   const questions = ref<ShortcutItem[]>([]);
   const pressedKeys = ref<Set<string>>(new Set());
+  // 顺序输入序列（五笔/双拼常用字/词组/简码：逐键顺序输入，不去重，支持 BB 这类重复键）
+  const inputSequence = ref<string[]>([]);
   const correctCount = ref(0);
   const wrongCount = ref(0);
   const trainingStartTime = ref(0);
@@ -72,6 +84,13 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   const currentQuestion = computed(() => {
     if (questions.value.length === 0) return null;
     return questions.value[currentQuestionIndex.value];
+  });
+
+  // 顺序输入模式：目标按键全为单字母（五笔/双拼的常用字/词组/简码），需逐键顺序输入，
+  // 与组合键（Ctrl+C 同时按）的 Set 匹配逻辑区分；重复键（如二级简码 BB）也走此模式
+  const isSequentialInput = computed(() => {
+    const keys = currentQuestion.value?.keys;
+    return !!keys && keys.length > 0 && keys.every(k => /^[a-z]$/i.test(k));
   });
 
   const isTrainingComplete = computed(() => {
@@ -130,8 +149,12 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
    * @param count 题目数量，0表示全部
    * @returns 选中的快捷键列表
    */
-  function initTrainingCore(category: string, count: number = 0): ShortcutItem[] {
-    const shortcuts = getShortcutsByCategory(category);
+  function initTrainingCore(category: string, count: number = 0, tagFilter?: TagFilter): ShortcutItem[] {
+    let shortcuts = getShortcutsByCategory(category);
+    // 专项标签过滤（类型 + 分区），与查看列表的分类逻辑一致
+    if (tagFilter && (tagFilter.type || tagFilter.zone)) {
+      shortcuts = filterByTags(shortcuts, tagFilter.type, tagFilter.zone);
+    }
 
     // 键位练习和数字小键盘练习：默认随机抽取子集
     let effectiveCount = count;
@@ -149,6 +172,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     wrongCount.value = 0;
     trainingDetails.value = [];
     pressedKeys.value = new Set();
+    inputSequence.value = [];
     trainingPhase.value = 'ready';
     trainingStartTime.value = Date.now();
     questionStartTime.value = 0;
@@ -162,8 +186,8 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
    * @param category 分类名称
    * @param count 题目数量，0表示全部
    */
-  function initKeyPressTraining(category: string, count: number = 0) {
-    const selected = initTrainingCore(category, count);
+  function initKeyPressTraining(category: string, count: number = 0, tagFilter?: TagFilter) {
+    const selected = initTrainingCore(category, count, tagFilter);
     log.i('初始化按键训练', category, selected.length);
   }
 
@@ -172,8 +196,8 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
    * @param category 分类名称
    * @param count 题目数量，0表示全部
    */
-  function initFunctionSelectTraining(category: string, count: number = 0) {
-    const selected = initTrainingCore(category, count);
+  function initFunctionSelectTraining(category: string, count: number = 0, tagFilter?: TagFilter) {
+    const selected = initTrainingCore(category, count, tagFilter);
     log.i('初始化功能选择训练', category, selected.length);
   }
 
@@ -191,6 +215,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     wrongCount.value = 0;
     trainingDetails.value = [];
     pressedKeys.value = new Set();
+    inputSequence.value = [];
     trainingPhase.value = 'ready';
     trainingStartTime.value = Date.now();
     questionStartTime.value = 0;
@@ -212,6 +237,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
     trainingPhase.value = 'showing';
     questionStartTime.value = Date.now();
     pressedKeys.value = new Set();
+    inputSequence.value = [];
   }
 
   /**
@@ -220,13 +246,16 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   function startListening() {
     trainingPhase.value = 'listening';
     pressedKeys.value = new Set();
+    inputSequence.value = [];
   }
 
   /**
    * 添加按下的按键
    */
   function addPressedKey(key: string) {
-    pressedKeys.value.add(normalizeKey(key));
+    const nk = normalizeKey(key);
+    pressedKeys.value.add(nk);
+    inputSequence.value.push(nk);
   }
 
   /**
@@ -241,6 +270,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
    */
   function clearPressedKeys() {
     pressedKeys.value = new Set();
+    inputSequence.value = [];
   }
 
   /**
@@ -273,9 +303,18 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   /**
    * 检查当前按下的按键是否匹配正确答案
    */
-  function checkKeyPress(): boolean {
+  function checkKeyPress(): boolean | null {
     const question = currentQuestion.value;
     if (!question) return false;
+
+    // 顺序输入模式（五笔/双拼常用字/词组/简码）：逐键顺序比对，未输完返回 null 不判错
+    if (isSequentialInput.value) {
+      const target = question.keys.map(k => normalizeKey(k));
+      if (inputSequence.value.length < target.length) return null;
+      const isMatch = inputSequence.value.every((k, i) => k === target[i]);
+      recordAnswer(isMatch, question.id);
+      return isMatch;
+    }
 
     const isMatch = matchShortcut(pressedKeys.value, question.keys);
     recordAnswer(isMatch, question.id);
@@ -300,6 +339,7 @@ export const useShortcutMemoryStore = defineStore("shortcutMemory", () => {
   function nextQuestion() {
     currentQuestionIndex.value++;
     pressedKeys.value = new Set();
+    inputSequence.value = [];
     
     if (currentQuestionIndex.value < questions.value.length) {
       trainingPhase.value = 'showing';

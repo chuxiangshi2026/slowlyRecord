@@ -11,6 +11,17 @@ vi.mock('@/utils/shortcut-memory-data', () => ({
   getGroups: vi.fn(() => []),
   getShortcutsByCategory: vi.fn(() => []),
   getShortcutById: vi.fn(),
+  filterByTags: vi.fn(<T extends { tags?: string[] }>(items: T[], typeTag?: string, zoneTag?: string) => {
+    const ZONE = ['横区', '竖区', '撇区', '捺区', '折区']
+    let list = items
+    if (typeTag === '字根') {
+      list = list.filter(item => { const t = item.tags || []; return t.length > 0 && t.every(x => ZONE.includes(x)) })
+    } else if (typeTag) {
+      list = list.filter(item => item.tags?.includes(typeTag))
+    }
+    if (zoneTag) list = list.filter(item => item.tags?.includes(zoneTag))
+    return list
+  }),
   shuffleArray: vi.fn(<T>(arr: T[]) => [...arr]),
   generateDistractors: vi.fn(() => []),
   formatKeys: vi.fn((keys: string[]) => keys.join(' + ')),
@@ -252,6 +263,42 @@ describe('useShortcutMemoryStore', () => {
       store.initKeyPressTraining('T', 3)
       expect(store.questions.length).toBe(3)
     })
+
+    it('传入 tagFilter 应按标签过滤训练题目', () => {
+      const shortcuts = [
+        { id: '1', category: '五笔86版', functionName: 'G键·王', keys: ['G'], tags: ['横区'] },
+        { id: '2', category: '五笔86版', functionName: 'H键·目', keys: ['H'], tags: ['竖区'] },
+        { id: '3', category: '五笔86版', functionName: '的', keys: ['R'], tags: ['常用字'] },
+      ]
+      vi.mocked(getShortcutsByCategory).mockReturnValue(shortcuts as any)
+      const store = useShortcutMemoryStore()
+      store.initKeyPressTraining('五笔86版', 0, { type: '常用字' })
+      expect(store.questions.length).toBe(1)
+      expect(store.questions[0].id).toBe('3')
+    })
+
+    it('传入分区 tagFilter 应只保留该分区字根', () => {
+      const shortcuts = [
+        { id: '1', category: '五笔86版', functionName: 'G键·王', keys: ['G'], tags: ['横区'] },
+        { id: '2', category: '五笔86版', functionName: 'H键·目', keys: ['H'], tags: ['竖区'] },
+        { id: '3', category: '五笔86版', functionName: 'F键·土', keys: ['F'], tags: ['横区'] },
+      ]
+      vi.mocked(getShortcutsByCategory).mockReturnValue(shortcuts as any)
+      const store = useShortcutMemoryStore()
+      store.initKeyPressTraining('五笔86版', 0, { zone: '横区' })
+      expect(store.questions.length).toBe(2)
+    })
+
+    it('不传 tagFilter 时不过滤（全部题目）', () => {
+      const shortcuts = [
+        { id: '1', category: '五笔86版', functionName: 'G键·王', keys: ['G'], tags: ['横区'] },
+        { id: '2', category: '五笔86版', functionName: '的', keys: ['R'], tags: ['常用字'] },
+      ]
+      vi.mocked(getShortcutsByCategory).mockReturnValue(shortcuts as any)
+      const store = useShortcutMemoryStore()
+      store.initKeyPressTraining('五笔86版', 0)
+      expect(store.questions.length).toBe(2)
+    })
   })
 
   describe('训练流程', () => {
@@ -320,6 +367,48 @@ describe('useShortcutMemoryStore', () => {
       expect(result).toBe(false)
       expect(store.wrongCount).toBe(1)
       expect(store.trainingPhase).toBe('wrong')
+    })
+
+    describe('顺序输入模式（五笔/双拼常用字/词组/简码）', () => {
+      it('双拼"的"=DE：按 D 返回 pending 不判错，按 E 匹配', () => {
+        vi.mocked(getShortcutsByCategory).mockReturnValue([
+          { id: 'de', category: '双拼 · 小鹤', functionName: '的', description: 'de -> DE', keys: ['D', 'E'], platform: 'common' },
+        ])
+        const store = useShortcutMemoryStore()
+        store.initKeyPressTraining('双拼 · 小鹤', 0)
+        store.showCurrentQuestion()
+        store.addPressedKey('D')
+        expect(store.checkKeyPress()).toBeNull()  // pending：未输完不判错
+        expect(store.wrongCount).toBe(0)
+        store.addPressedKey('E')
+        expect(store.checkKeyPress()).toBe(true)  // DE 匹配
+        expect(store.correctCount).toBe(1)
+      })
+
+      it('五笔"子"=BB：重复键匹配（Set 去重会失败，序列成功）', () => {
+        vi.mocked(getShortcutsByCategory).mockReturnValue([
+          { id: 'zi', category: '五笔86版', functionName: '子', description: '二级简码 BB', keys: ['B', 'B'], platform: 'common' },
+        ])
+        const store = useShortcutMemoryStore()
+        store.initKeyPressTraining('五笔86版', 0)
+        store.showCurrentQuestion()
+        store.addPressedKey('B')
+        expect(store.checkKeyPress()).toBeNull()
+        store.addPressedKey('B')
+        expect(store.checkKeyPress()).toBe(true)  // BB 匹配
+      })
+
+      it('顺序敏感：ED 不匹配 DE', () => {
+        vi.mocked(getShortcutsByCategory).mockReturnValue([
+          { id: 'de', category: '双拼 · 小鹤', functionName: '的', description: 'de -> DE', keys: ['D', 'E'], platform: 'common' },
+        ])
+        const store = useShortcutMemoryStore()
+        store.initKeyPressTraining('双拼 · 小鹤', 0)
+        store.showCurrentQuestion()
+        store.addPressedKey('E')
+        store.addPressedKey('D')
+        expect(store.checkKeyPress()).toBe(false)  // ED != DE
+      })
     })
 
     it('checkFunctionSelect 正确时应记录正确', () => {
