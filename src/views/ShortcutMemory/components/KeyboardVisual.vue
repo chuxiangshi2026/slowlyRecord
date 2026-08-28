@@ -1,10 +1,10 @@
 <template>
-  <div class="keyboard-visual" :class="{ 'numpad-only': props.mode === 'numpad' }">
+  <div class="keyboard-visual" :class="{ 'numpad-only': props.mode === 'numpad', compact: props.compact }">
     <!-- 主键位区（键位练习 / 默认模式） -->
     <template v-if="props.mode !== 'numpad'">
       <div class="keyboard-layout">
         <!-- 功能键区 -->
-        <div class="keyboard-row function-row">
+        <div v-if="!props.compact" class="keyboard-row function-row">
           <div
             v-for="key in functionKeys"
             :key="key"
@@ -16,7 +16,7 @@
         </div>
 
         <!-- 数字键区 -->
-        <div class="keyboard-row">
+        <div v-if="!props.compact" class="keyboard-row number-row">
           <div
             v-for="key in numberRow"
             :key="key"
@@ -29,48 +29,53 @@
 
         <!-- QWERTY 第一行 -->
         <div class="keyboard-row">
-          <div class="key special-key">Tab</div>
+          <div v-if="!props.compact" class="key special-key">Tab</div>
           <div
-            v-for="key in qwertyRow1"
+            v-for="key in props.compact ? compactRow1 : qwertyRow1"
             :key="key"
             class="key"
-            :class="{ active: isKeyActive(key), target: isTargetKey(key) }"
+            :class="{ active: isKeyActive(key), target: isTargetKey(key), 'has-sub': !!keyLabels?.[key] }"
           >
-            {{ key }}
+            <span class="key-main">{{ key }}</span>
+            <span v-if="keyLabels?.[key]" class="key-sub">{{ keyLabels[key] }}</span>
           </div>
         </div>
 
         <!-- QWERTY 第二行 -->
         <div class="keyboard-row">
-          <div class="key special-key wide-key" :class="{ active: isKeyActive('capslock') }">Caps</div>
+          <div v-if="!props.compact" class="key special-key wide-key" :class="{ active: isKeyActive('capslock') }">Caps</div>
           <div
-            v-for="key in qwertyRow2"
+            v-for="key in props.compact ? compactRow2 : qwertyRow2"
             :key="key"
             class="key"
-            :class="{ active: isKeyActive(key), target: isTargetKey(key) }"
+            :class="{ active: isKeyActive(key), target: isTargetKey(key), 'has-sub': !!keyLabels?.[key] }"
           >
-            {{ key }}
+            <span class="key-main">{{ key }}</span>
+            <span v-if="keyLabels?.[key]" class="key-sub">{{ keyLabels[key] }}</span>
           </div>
-          <div class="key special-key wide-key" :class="{ active: isKeyActive('enter') }">Enter</div>
+          <div v-if="!props.compact" class="key special-key wide-key" :class="{ active: isKeyActive('enter') }">Enter</div>
         </div>
 
         <!-- QWERTY 第三行 -->
         <div class="keyboard-row">
           <div
+            v-if="!props.compact"
             class="key special-key extra-wide-key"
             :class="{ active: isKeyActive('shift'), target: isTargetKey('shift') }"
           >
             Shift
           </div>
           <div
-            v-for="key in qwertyRow3"
+            v-for="key in props.compact ? compactRow3 : qwertyRow3"
             :key="key"
             class="key"
-            :class="{ active: isKeyActive(key), target: isTargetKey(key) }"
+            :class="{ active: isKeyActive(key), target: isTargetKey(key), 'has-sub': !!keyLabels?.[key] }"
           >
-            {{ key }}
+            <span class="key-main">{{ key }}</span>
+            <span v-if="keyLabels?.[key]" class="key-sub">{{ keyLabels[key] }}</span>
           </div>
           <div
+            v-if="!props.compact"
             class="key special-key extra-wide-key"
             :class="{ active: isKeyActive('shift') }"
           >
@@ -78,8 +83,8 @@
           </div>
         </div>
 
-        <!-- 底行 -->
-        <div class="keyboard-row">
+        <!-- 底行：紧凑模式不显示空格和修饰键，进一步节省高度 -->
+        <div v-if="!props.compact" class="keyboard-row">
           <div
             class="key special-key"
             :class="{ active: isKeyActive('ctrl'), target: isTargetKey('ctrl') }"
@@ -125,8 +130,8 @@
         </div>
       </div>
 
-      <!-- 右侧区域：编辑键 + 方向键 -->
-      <div class="right-section">
+      <!-- 右侧区域：编辑键 + 方向键（输入法键位练习可隐藏） -->
+      <div v-if="props.showRightSection !== false" class="right-section">
         <div class="edit-keys">
           <div class="edit-row">
             <div
@@ -237,6 +242,9 @@ const props = defineProps<{
   pressedKeys: Set<string>;
   targetKeys?: string[];
   mode?: 'default' | 'numpad';
+  showRightSection?: boolean;
+  keyLabels?: Record<string, string>;
+  compact?: boolean;
 }>();
 
 const functionKeys = ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
@@ -244,6 +252,9 @@ const numberRow = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '
 const qwertyRow1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\'];
 const qwertyRow2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'"];
 const qwertyRow3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/'];
+const compactRow1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
+const compactRow2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+const compactRow3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
 
 const normalizedPressed = computed(() => {
   return new Set(Array.from(props.pressedKeys).map(k => normalizeKey(k)));
@@ -292,8 +303,10 @@ function isTargetKey(key: string): boolean {
   border: 2px solid var(--utools-border-primary);
   border-radius: 6px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
   font-size: 11px;
   font-weight: 600;
   color: var(--utools-text-primary);
@@ -323,6 +336,91 @@ function isTargetKey(key: string): boolean {
       border-color: var(--utools-success);
       box-shadow: 0 0 8px rgba(103, 194, 58, 0.5);
     }
+  }
+
+  &.has-sub {
+    line-height: 1.1;
+  }
+
+  .key-main {
+    font-size: 11px;
+  }
+
+  .key-sub {
+    font-size: 8px;
+    color: var(--utools-text-secondary);
+    max-width: 100%;
+    padding: 0 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.active .key-sub,
+  &.target .key-sub {
+    color: inherit;
+  }
+}
+
+// 紧凑模式：隐藏最上面两排，放大键位，韵母更突出
+.keyboard-visual.compact {
+  .keyboard-layout {
+    gap: 8px;
+  }
+
+  .keyboard-row {
+    gap: 6px;
+  }
+
+  .key {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+  }
+
+  .function-key {
+    width: 54px;
+    height: 44px;
+  }
+
+  .special-key {
+    width: 64px;
+    font-size: 11px;
+  }
+
+  .wide-key {
+    width: 84px;
+  }
+
+  .extra-wide-key {
+    width: 116px;
+  }
+
+  .space-key {
+    width: 160px;
+  }
+
+  .key-main {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--utools-text-primary);
+  }
+
+  .key-sub {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 0 4px;
+    text-align: center;
+    line-height: 1.15;
+    white-space: pre-line;
+    word-break: break-all;
+    overflow: hidden;
   }
 }
 

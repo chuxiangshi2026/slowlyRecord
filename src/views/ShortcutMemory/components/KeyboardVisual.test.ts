@@ -18,12 +18,18 @@ function renderKeyboard(props: {
   pressedKeys?: Set<string>
   targetKeys?: string[]
   mode?: 'default' | 'numpad'
+  showRightSection?: boolean
+  keyLabels?: Record<string, string>
+  compact?: boolean
 }) {
   return render(KeyboardVisual, {
     props: {
       pressedKeys: props.pressedKeys ?? new Set<string>(),
       targetKeys: props.targetKeys,
       mode: props.mode ?? 'default',
+      showRightSection: props.showRightSection,
+      keyLabels: props.keyLabels,
+      compact: props.compact,
     },
   })
 }
@@ -31,7 +37,11 @@ function renderKeyboard(props: {
 /** 找到文本为 keyText 的键元素（可能多个，返回第一个） */
 function findKey(container: HTMLElement, keyText: string): HTMLElement | null {
   const keys = Array.from(container.querySelectorAll<HTMLElement>('.key'))
-  return keys.find(k => k.textContent?.trim() === keyText) ?? null
+  return keys.find(k => {
+    const main = k.querySelector<HTMLElement>('.key-main')
+    if (main) return main.textContent?.trim() === keyText
+    return k.textContent?.trim() === keyText
+  }) ?? null
 }
 
 describe('KeyboardVisual 键盘可视化组件', () => {
@@ -104,6 +114,91 @@ describe('KeyboardVisual 键盘可视化组件', () => {
       const space = findKey(container, 'Space')
       expect(space).not.toBeNull()
       expect(space!.classList.contains('target')).toBe(false)
+    })
+  })
+
+  describe('键位辅助标签（keyLabels）', () => {
+    it('字母键显示韵母子标签', () => {
+      const { container } = renderKeyboard({ keyLabels: { Q: 'iu', W: 'ei' } })
+      const q = findKey(container, 'Q')
+      expect(q).not.toBeNull()
+      expect(q!.querySelector('.key-sub')?.textContent).toBe('iu')
+      const w = findKey(container, 'W')
+      expect(w!.querySelector('.key-sub')?.textContent).toBe('ei')
+    })
+
+    it('未配置辅助标签的键不渲染子标签', () => {
+      const { container } = renderKeyboard({ keyLabels: { Q: 'iu' } })
+      const a = findKey(container, 'A')
+      expect(a).not.toBeNull()
+      expect(a!.querySelector('.key-sub')).toBeNull()
+    })
+  })
+
+  describe('右侧编辑/方向键显隐（showRightSection）', () => {
+    it('默认显示右侧区域', () => {
+      const { container } = renderKeyboard({})
+      expect(container.querySelector('.right-section')).not.toBeNull()
+      expect(findKey(container, 'Ins')).not.toBeNull()
+    })
+
+    it('showRightSection=false 隐藏右侧区域', () => {
+      const { container } = renderKeyboard({ showRightSection: false })
+      expect(container.querySelector('.right-section')).toBeNull()
+      expect(findKey(container, 'Ins')).toBeNull()
+    })
+  })
+
+  describe('紧凑模式（compact）', () => {
+    it('compact=true 隐藏最上面两排', () => {
+      const { container } = renderKeyboard({ compact: true })
+      expect(findKey(container, 'Esc')).toBeNull()
+      expect(findKey(container, 'F1')).toBeNull()
+      expect(findKey(container, '1')).toBeNull()
+      expect(findKey(container, 'A')).not.toBeNull()
+    })
+
+    it('compact=true 只显示26个字母', () => {
+      const { container } = renderKeyboard({ compact: true })
+      expect(findKey(container, 'Tab')).toBeNull()
+      expect(findKey(container, 'Caps')).toBeNull()
+      expect(findKey(container, 'Enter')).toBeNull()
+      expect(findKey(container, 'Shift')).toBeNull()
+      expect(findKey(container, 'Ctrl')).toBeNull()
+      expect(findKey(container, 'Win')).toBeNull()
+      expect(findKey(container, 'Alt')).toBeNull()
+      expect(findKey(container, 'Space')).toBeNull()
+      expect(findKey(container, '[')).toBeNull()
+      expect(findKey(container, ';')).toBeNull()
+      expect(findKey(container, ',')).toBeNull()
+      for (const ch of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+        expect(findKey(container, ch)).not.toBeNull()
+      }
+    })
+
+    it('compact=true 放大键位', () => {
+      const { container } = renderKeyboard({ compact: true })
+      const a = findKey(container, 'A')
+      expect(a).not.toBeNull()
+      expect(container.querySelector('.keyboard-visual')?.classList.contains('compact')).toBe(true)
+    })
+
+    it('compact=true 且 keyLabels 时韵母更突出', () => {
+      const { container } = renderKeyboard({ compact: true, keyLabels: { Q: 'iu' } })
+      const q = findKey(container, 'Q')
+      expect(q).not.toBeNull()
+      const sub = q!.querySelector('.key-sub')
+      expect(sub).not.toBeNull()
+      expect(sub!.textContent).toBe('iu')
+    })
+
+    it('compact=true 时两个韵母直接换行，不显示斜杠', () => {
+      const { container } = renderKeyboard({ compact: true, keyLabels: { S: 'ong\niong' } })
+      const s = findKey(container, 'S')
+      expect(s).not.toBeNull()
+      const sub = s!.querySelector('.key-sub')
+      expect(sub).not.toBeNull()
+      expect(sub!.textContent).toBe('ong\niong')
     })
   })
 

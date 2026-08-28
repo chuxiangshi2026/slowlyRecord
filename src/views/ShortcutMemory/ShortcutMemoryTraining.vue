@@ -621,6 +621,9 @@ watch(() => store.isTrainingComplete, (complete) => {
 });
 
 onMounted(() => {
+  // 隐藏训练页外层滚动条，避免 body/html 滚动条出现；离开页面时恢复
+  document.body.classList.add('shortcut-training-no-scroll');
+
   const mode = route.query.mode as string;
   const isWrongItems = mode === 'wrongItems';
   isKeyPressMode.value = mode !== 'functionSelect';
@@ -659,6 +662,7 @@ onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown, true);
   window.removeEventListener('keyup', handleKeyUp, true);
   if (autoNextTimer) clearTimeout(autoNextTimer);
+  document.body.classList.remove('shortcut-training-no-scroll');
 });
 </script>
 
@@ -670,11 +674,17 @@ onUnmounted(() => {
   background-color: var(--utools-bg-secondary);
   display: flex;
   flex-direction: column;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .training-header {
     display: flex;
     align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
     padding: 12px 16px;
     border-bottom: 1px solid var(--utools-border-primary);
     background-color: var(--utools-bg-card);
@@ -712,12 +722,28 @@ onUnmounted(() => {
     }
   }
 
+  .training-header-filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+
+    .el-select {
+      width: 100px;
+    }
+  }
+
   .training-body {
     flex: 1;
     display: flex;
     flex-direction: column;
     padding: 12px 16px;
     overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .question-area {
@@ -798,6 +824,13 @@ onUnmounted(() => {
       .function-desc {
         font-size: 14px;
         color: var(--utools-text-secondary);
+      }
+
+      .pinyin-hint {
+        font-size: 18px;
+        color: var(--utools-primary);
+        font-weight: 500;
+        margin-bottom: 8px;
       }
 
       &.key-practice {
@@ -904,5 +937,16 @@ onUnmounted(() => {
       grid-template-columns: 1fr !important;
     }
   }
+}
+</style>
+
+<style>
+/* 训练页挂载时临时隐藏 body/html 滚动条，避免右侧滚动条出现 */
+.shortcut-training-no-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.shortcut-training-no-scroll::-webkit-scrollbar {
+  display: none;
 }
 </style>

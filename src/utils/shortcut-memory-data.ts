@@ -1616,6 +1616,101 @@ export function formatKeys(keys: string[]): string {
 }
 
 /**
+ * 从输入法键位描述中提取韵母/零声母内容
+ * 例如："韵母：iu" -> "iu"；"韵母：ue / ve" -> "ue\nve"
+ * 又如："声母：sh / 韵母：ui" -> "ui"；"零声母：e" -> "e"
+ * 自动过滤说明性汉字，只保留拼音字母。
+ */
+export function extractYunmu(description: string): string {
+  if (!description) return '';
+
+  // 只保留拼音字母（含 ü）
+  const keepLetters = (s: string) => s.replace(/[^a-zA-Zü]/g, '');
+
+  // 优先返回零声母
+  const zeroMatch = description.match(/零声母[：:]\s*([^\n]+)/);
+  if (zeroMatch) return keepLetters(zeroMatch[1]);
+
+  // 去掉声母段
+  const cleaned = description.replace(/声母[：:][^/]+/g, '').trim();
+
+  // 提取韵母值并拆分多值（支持 " / " 或 "/"）
+  const match = cleaned.match(/韵母[：:]\s*([^\n]+)/);
+  if (!match) return '';
+  return match[1]
+    .split(/\s*\/\s*/)
+    .map(s => keepLetters(s))
+    .filter(Boolean)
+    .join('\n');
+}
+
+/**
+ * 获取双拼键位在键盘上显示的辅助标签
+ * - U/I/V 代表特殊声母 sh/ch/zh，优先显示声母
+ * - 其他键显示韵母/零声母
+ */
+export function extractShuangpinKeyHint(key: string, description: string): string {
+  const upperKey = key.toUpperCase();
+  if (['U', 'I', 'V'].includes(upperKey)) {
+    const shengmuMatch = description.match(/声母[：:]\s*([a-zA-Z]+)/);
+    if (shengmuMatch) return shengmuMatch[1];
+  }
+  return extractYunmu(description);
+}
+
+/**
+ * 从五笔键位条目中提取字根提示
+ * functionName 形如 "G键 · 王"，description 形如 "【横区一键】字根：王"
+ */
+export function extractWubiKeyHint(functionName: string): string {
+  const match = functionName.match(/^[A-Z]键\s*[·•]\s*(.+)$/);
+  return match ? match[1].trim() : '';
+}
+
+/**
+ * 获取五笔分类下每个键位对应的全部字根（按数据中的练习/拆字顺序）
+ */
+export function getWubiKeyHints(category: string): Record<string, string[]> {
+  const items = getShortcutsByCategory(category);
+  const map: Record<string, string[]> = {};
+  for (const item of items) {
+    if (!/^[A-Z]键\s*[·•]\s*.+$/.test(item.functionName)) continue;
+    const key = item.keys[0]?.toUpperCase();
+    if (!key) continue;
+    const hint = extractWubiKeyHint(item.functionName);
+    if (!hint) continue;
+    if (!map[key]) map[key] = [];
+    map[key].push(hint);
+  }
+  return map;
+}
+
+/**
+ * 获取五笔条目的拆字字根提示（按编码顺序）。
+ * - 若条目已标注 rootHints，直接返回；
+ * - 若为基础键位条目，返回当前字根；
+ * - 否则按 keys 顺序，回退到每个键的第一个基础字根。
+ */
+export function getWubiRootHints(item: ShortcutItem, category: string): string[] {
+  if (item.rootHints && item.rootHints.length > 0) return item.rootHints;
+  const baseHint = extractWubiKeyHint(item.functionName);
+  if (baseHint) return [baseHint];
+  const keyHints = getWubiKeyHints(category);
+  return item.keys.map(k => keyHints[k.toUpperCase()]?.[0] ?? '').filter(Boolean);
+}
+
+/**
+ * 从输入法练习条目的 description 中提取拼音提示
+ * 例如："常用字，zhong -> vs" -> "zhong"；"词组，wo men -> womf" -> "wo men"
+ * 一级简码等无拼音映射时返回空字符串。
+ */
+export function extractPinyinHint(description: string): string {
+  if (!description) return '';
+  const match = description.match(/[，,]\s*([^->]+?)\s*->/);
+  return match ? match[1].trim() : '';
+}
+
+/**
  * 标准化按键名称，用于比较
  */
 export function normalizeKey(key: string): string {
