@@ -51,6 +51,21 @@ export interface FocusModeSettings {
     pendingAction?: FocusModePendingAction;
 }
 
+/**
+ * 输入法悬浮键盘设置
+ */
+export interface InputMethodHelperSettings {
+    alwaysOnTop?: boolean;   // 是否置顶
+    opacity?: number;        // 透明度 0.3-1.0
+    locked?: boolean;        // 锁定后键盘区鼠标穿透（默认 true）
+    pendingAction?: {
+        type: 'setAlwaysOnTop' | 'setLocked' | 'closeHelper' | string;
+        payload?: any;
+        at: number;
+        source?: 'input-method-helper';
+    };
+}
+
 
 
 /**
@@ -65,6 +80,8 @@ export type UserSetType = DbDoc<{
     keys: KeyType;
     ocrKeys: OcrKeyType;
     focusMode: FocusModeSettings;
+    /** 输入法悬浮键盘设置 */
+    inputMethodHelper?: InputMethodHelperSettings;
     /** 主窗口透明度 (0.3 - 1.0)，仅 Electron 有效 */
     mainWindowOpacity: number;
     /** 选中单词时自动发音 */

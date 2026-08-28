@@ -103,10 +103,13 @@
               🎯 按键训练
             </el-button>
             <el-button type="success" @click="startFunctionSelectTraining">
-              🧩 功能选择
+              🔄 反向训练
             </el-button>
             <el-button type="warning" :disabled="wrongItemsCount === 0" @click="startWrongItemsTraining">
               ⚠️ 错题训练({{ wrongItemsCount }})
+            </el-button>
+            <el-button v-if="helperScheme" type="info" @click="openInputMethodHelperWindow">
+              🔤 悬浮键盘
             </el-button>
           </div>
         </div>
@@ -127,12 +130,20 @@
           </el-radio-group>
         </div>
 
-        <!-- 专项标签筛选（如五笔字根分区） -->
-        <div class="tag-filter-bar" v-if="tagsOfCategory.length > 0">
-          <span class="tag-filter-label">专项：</span>
-          <el-radio-group v-model="currentTag" size="small">
+        <!-- 专项筛选：类型（如常用字/词组）+ 分区（横/竖/撇/捺/折）两维组合 -->
+        <div class="tag-filter-bar" v-if="typeTagsOfCategory.length > 0 || hasZoneTags">
+          <span class="tag-filter-label">类型：</span>
+          <el-radio-group v-model="currentTypeTag" size="small">
             <el-radio-button label="">全部</el-radio-button>
-            <el-radio-button v-for="tag in tagsOfCategory" :key="tag" :label="tag">{{ tag }}</el-radio-button>
+            <el-radio-button v-if="hasZoneTags" label="字根">字根</el-radio-button>
+            <el-radio-button v-for="tag in typeTagsOfCategory" :key="tag" :label="tag">{{ tag }}</el-radio-button>
+          </el-radio-group>
+        </div>
+        <div class="tag-filter-bar" v-if="hasZoneTags">
+          <span class="tag-filter-label">分区：</span>
+          <el-radio-group v-model="currentZoneTag" size="small">
+            <el-radio-button label="">全部</el-radio-button>
+            <el-radio-button v-for="tag in zoneTagsOfCategory" :key="tag" :label="tag">{{ tag }}</el-radio-button>
           </el-radio-group>
         </div>
 
@@ -450,7 +461,7 @@
             <div class="history-header">
               <span class="history-category">{{ record.category }}</span>
               <span class="history-mode">
-                {{ record.mode === 'keyPress' ? '按键训练' : '功能选择' }}
+                {{ record.mode === 'keyPress' ? '按键训练' : '反向训练' }}
               </span>
               <el-tag
                 :type="record.correctAnswers >= record.totalQuestions * 0.8 ? 'success' : 'warning'"
@@ -472,7 +483,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useShortcutMemoryStore } from '@/stores/shortcutMemory';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { ArrowLeft, Search } from '@element-plus/icons-vue';
@@ -480,15 +491,18 @@ import type { ShortcutItem } from '@/types/shortcut-memory';
 import type { FormInstance, FormRules } from 'element-plus';
 import KeyboardVisual from './components/KeyboardVisual.vue';
 import KeyCaptureInput from './components/KeyCaptureInput.vue';
-import { getShortcutsByCategory } from '@/utils/shortcut-memory-data';
+import { getShortcutsByCategory, filterByTags, isZoneTag } from '@/utils/shortcut-memory-data';
 import { getAllCustomCategories } from '@/utils/shortcut-memory-db';
+import { openInputMethodHelper } from '@/utils/input-method-helper-window';
 
 const router = useRouter();
+const route = useRoute();
 const store = useShortcutMemoryStore();
 
 const selectedGroup = ref('');
 const selectedCategory = ref('');
-const currentTag = ref('');
+const currentTypeTag = ref('');
+const currentZoneTag = ref('');
 const showMemoryCard = ref(false);
 const currentItem = ref<ShortcutItem | null>(null);
 const showHistory = ref(false);
@@ -505,21 +519,30 @@ const categoriesInGroup = computed(() => {
   return store.categories.filter(c => (c.group || '自定义') === selectedGroup.value);
 });
 
-// 当前分类下出现的专项标签（去重）
-const tagsOfCategory = computed(() => {
+// 当前分类下的标签拆为"类型"与"分区"两维（五笔分区：横/竖/撇/捺/折）
+// 类型筛选中隐藏基础"词组"标签，保留一级/二级词组等细化标签
+const TYPE_FILTER_HIDDEN_TAGS = ['词组'];
+const typeTagsOfCategory = computed(() => {
   const set = new Set<string>();
   for (const item of store.currentShortcuts) {
-    if (item.tags) item.tags.forEach(t => set.add(t));
+    if (item.tags) item.tags.forEach(t => {
+      if (!isZoneTag(t) && !TYPE_FILTER_HIDDEN_TAGS.includes(t)) set.add(t);
+    });
   }
   return Array.from(set);
 });
+const zoneTagsOfCategory = computed(() => {
+  const set = new Set<string>();
+  for (const item of store.currentShortcuts) {
+    if (item.tags) item.tags.forEach(t => { if (isZoneTag(t)) set.add(t); });
+  }
+  return Array.from(set);
+});
+const hasZoneTags = computed(() => zoneTagsOfCategory.value.length > 0);
 
 const filteredShortcuts = computed(() => {
-  let list = store.currentShortcuts;
-  // 专项标签过滤
-  if (currentTag.value) {
-    list = list.filter(item => item.tags?.includes(currentTag.value));
-  }
+  // 专项标签过滤（类型 + 分区），与训练初始化共用 filterByTags
+  let list = filterByTags(store.currentShortcuts, currentTypeTag.value || undefined, currentZoneTag.value || undefined);
   const keyword = searchKeyword.value.trim().toLowerCase();
   if (!keyword) return list;
 
@@ -603,6 +626,30 @@ const wrongItemsCount = computed(() => {
   return store.getWrongItemsCount(selectedCategory.value);
 });
 
+// 输入法悬浮键盘：分类名 -> scheme 映射（仅输入法分类显示按钮）
+const HELPER_SCHEME_MAP: Record<string, string> = {
+  '五笔86版': 'wubi86',
+  '五笔98版': 'wubi98',
+  '双拼 · 小鹤': 'shuangpin-xiaohe',
+  '双拼 · 自然码': 'shuangpin-ziranma',
+  '双拼 · 微软': 'shuangpin-weiruan',
+  '双拼 · 搜狗': 'shuangpin-sogou',
+};
+const helperScheme = computed(() => HELPER_SCHEME_MAP[selectedCategory.value] || '');
+
+async function openInputMethodHelperWindow() {
+  if (!helperScheme.value) return;
+  // 悬浮键盘只展示键位映射（声韵母/字根/键名字/万能键），训练用的常用字/词组/简码/生僻字/易错字不推送给它
+  const HELPER_HIDDEN_TAGS = ['常用字', '生僻字', '易错字', '词组', '成语', '一级简码', '二级简码'];
+  const helperItems = store.currentShortcuts.filter(
+    item => !(item.tags || []).some(t => HELPER_HIDDEN_TAGS.includes(t))
+  );
+  const ok = await openInputMethodHelper(helperScheme.value, selectedCategory.value, helperItems);
+  if (!ok) {
+    ElMessage.warning('悬浮键盘仅在 uTools 桌面端可用');
+  }
+}
+
 function getCategoryIcon(name: string): string {
   const icons: Record<string, string> = {
     'Windows': '🪟',
@@ -681,7 +728,8 @@ async function deleteCustomItem(row: ShortcutItem) {
 
 function selectCategory(name: string) {
   selectedCategory.value = name;
-  currentTag.value = '';
+  currentTypeTag.value = '';
+  currentZoneTag.value = '';
   store.selectCategory(name);
 }
 
@@ -704,13 +752,20 @@ function openMemoryCard(item: ShortcutItem) {
   showMemoryCard.value = true;
 }
 
+function buildTrainingQuery(mode: string) {
+  const query: Record<string, string> = { mode };
+  if (currentTypeTag.value) query.type = currentTypeTag.value;
+  if (currentZoneTag.value) query.zone = currentZoneTag.value;
+  return query;
+}
+
 function startKeyPressTraining() {
   if (store.currentShortcutCount === 0) {
     ElMessage.warning('当前分类没有快捷键');
     return;
   }
   store.selectCategory(selectedCategory.value);
-  router.push('/shortcut-memory/training?mode=keyPress');
+  router.push({ path: '/shortcut-memory/training', query: buildTrainingQuery('keyPress') });
 }
 
 function startFunctionSelectTraining() {
@@ -719,7 +774,7 @@ function startFunctionSelectTraining() {
     return;
   }
   store.selectCategory(selectedCategory.value);
-  router.push('/shortcut-memory/training?mode=functionSelect');
+  router.push({ path: '/shortcut-memory/training', query: buildTrainingQuery('functionSelect') });
 }
 
 async function clearProgress() {
@@ -973,6 +1028,19 @@ async function deleteCategory(name: string) {
 
 onMounted(async () => {
   await store.loadCategories();
+  // 从训练页返回时恢复域/分类/标签选择，避免回到领域选择首屏
+  const group = route.query.group as string | undefined;
+  const category = route.query.category as string | undefined;
+  if (group) {
+    selectedGroup.value = group;
+    store.selectGroup(group);
+  }
+  if (category) {
+    selectedCategory.value = category;
+    currentTypeTag.value = (route.query.type as string) || '';
+    currentZoneTag.value = (route.query.zone as string) || '';
+    store.selectCategory(category);
+  }
 });
 </script>
 
@@ -1090,6 +1158,8 @@ onMounted(async () => {
     .list-actions {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
   }
 

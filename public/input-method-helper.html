@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>输入法键盘提示</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: transparent;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, "Microsoft YaHei", sans-serif;
+    user-select: none;
+  }
+  :root { --key-bg-alpha: 1; --key-text-alpha: 1; }
+  #app {
+    -webkit-app-region: drag;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  /* 控制条：可拖拽，内部按钮 no-drag */
+  #control-bar {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 8px;
+    background: transparent;
+    border-bottom: none;
+    -webkit-app-region: drag;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+  /* 锁定时控制条常驻低透明可见：穿透切换有延迟时仍能看见按钮位置，避免“找不到点哪” */
+  #app.locked #control-bar { opacity: 0.25; }
+  #app.locked #control-bar:hover { opacity: 1; }
+  #control-bar .icon,
+  #control-bar input {
+    -webkit-app-region: no-drag;
+  }
+  .icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #666;
+    transition: opacity 0.15s, color 0.3s ease;
+  }
+  .icon svg { width: 100%; height: 100%; fill: currentColor; }
+  .icon:hover { opacity: 0.6; }
+  .icon.active { color: #333; background: rgba(0, 0, 0, 0.08); border-radius: 3px; }
+  .opacity-slider {
+    -webkit-appearance: none;
+    width: 70px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    outline: none;
+  }
+  .opacity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #888;
+    cursor: pointer;
+    border: none;
+  }
+  .color-picker {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+  }
+  .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+  .color-picker::-webkit-color-swatch { border: none; border-radius: 2px; }
+  #app.dark .color-picker { border-color: rgba(255, 255, 255, 0.3); }
+  /* 自定义文本颜色：覆盖五笔分区色，作用于字根/韵母主文字（重置后恢复分区色） */
+  #app.custom-text-color .kb-key .key-content { color: var(--key-text-color) !important; }
+  #scheme-name {
+    margin-left: auto;
+    font-size: 11px;
+    color: #888;
+    -webkit-app-region: drag;
+  }
+  /* 键盘区：可拖拽 */
+  #keyboard {
+    flex: 1;
+    -webkit-app-region: drag;
+    padding: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+  }
+  .kb-row { display: flex; gap: 5px; }
+  .kb-key {
+    width: clamp(30px, 9vw, 120px);
+    height: clamp(30px, 9vw, 120px);
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background: transparent;
+    position: relative;
+    padding: 2px;
+  }
+  .kb-key .key-label {
+    font-size: clamp(7px, 1.5vw, 14px);
+    color: #bbb;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-weight: 700;
+    opacity: var(--key-text-alpha, 1);
+  }
+  .kb-key .key-content {
+    font-size: clamp(8px, 1.8vw, 18px);
+    font-weight: 700;
+    color: #222;
+    text-align: center;
+    line-height: 1.2;
+    word-break: break-all;
+    white-space: pre-line;
+    opacity: var(--key-text-alpha, 1);
+  }
+  /* 五笔分区着色 */
+  .kb-key.zone-heng { background: transparent; border-color: #fa8c16; }
+  .kb-key.zone-heng .key-content { color: #d46b08; }
+  .kb-key.zone-shu  { background: transparent; border-color: #13c2c2; }
+  .kb-key.zone-shu  .key-content { color: #08979c; }
+  .kb-key.zone-pie  { background: transparent; border-color: #2f54eb; }
+  .kb-key.zone-pie  .key-content { color: #1d39c4; }
+  .kb-key.zone-na   { background: transparent; border-color: #f5222d; }
+  .kb-key.zone-na   .key-content { color: #cf1322; }
+  .kb-key.zone-zhe  { background: transparent; border-color: #722ed1; }
+  .kb-key.zone-zhe  .key-content { color: #531dab; }
+
+  /* 暗色主题 */
+  #app.dark {
+    background: transparent;
+  }
+  #app.dark #control-bar { background: rgba(255, 255, 255, 0.06); border-bottom-color: rgba(255, 255, 255, 0.1); }
+  #app.dark .icon { color: #aaa; }
+  #app.dark .icon:hover { opacity: 0.7; }
+  #app.dark .icon.active { color: #ddd; background: rgba(255, 255, 255, 0.12); }
+  #app.dark .opacity-slider { background: rgba(255, 255, 255, 0.2); }
+  #app.dark .opacity-slider::-webkit-slider-thumb { background: #aaa; }
+  #app.dark #scheme-name { color: #888; }
+  #app.dark .kb-key { background: transparent; border-color: #555; }
+  #app.dark .kb-key .key-label { color: #777; }
+  #app.dark .kb-key .key-content { color: #ddd; }
+  #app.dark .kb-key.zone-heng { background: transparent; border-color: #fa8c16; }
+  #app.dark .kb-key.zone-heng .key-content { color: #ffa940; }
+  #app.dark .kb-key.zone-shu  { background: transparent; border-color: #13c2c2; }
+  #app.dark .kb-key.zone-shu  .key-content { color: #36cfc9; }
+  #app.dark .kb-key.zone-pie  { background: transparent; border-color: #2f54eb; }
+  #app.dark .kb-key.zone-pie  .key-content { color: #85a5ff; }
+  #app.dark .kb-key.zone-na   { background: transparent; border-color: #f5222d; }
+  #app.dark .kb-key.zone-na   .key-content { color: #ff7875; }
+  #app.dark .kb-key.zone-zhe  { background: transparent; border-color: #722ed1; }
+  #app.dark .kb-key.zone-zhe  .key-content { color: #b37feb; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="control-bar">
+    <span class="icon btn-top" id="btn-top" title="置顶">
+      <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+    </span>
+    <span class="icon btn-lock" id="btn-lock" title="解锁（取消鼠标穿透）">
+      <svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
+    </span>
+    <input type="color" class="color-picker" id="text-color" value="#222222" title="文本颜色">
+    <span class="icon btn-reset-color" id="btn-reset-color" title="重置文本颜色">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+    </span>
+    <input type="range" class="opacity-slider" min="10" max="100" value="100" title="透明度">
+    <span id="scheme-name">输入法键盘</span>
+    <span class="icon btn-close" id="btn-close" title="关闭">
+      <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </span>
+  </div>
+  <div id="keyboard"><div class="kb-loading">等待键盘数据…</div></div>
+</div>
+<script>
+(function () {
+  var STORAGE_KEY = 'slowly-record-input-method-helper-action';
+  var isAlwaysOnTop = true;
+  var isLocked = true;            // 默认锁定（鼠标穿透，不挡手）
+  var currentOpacity = 1.0;
+  var userOpacity = 1.0; // 用户偏好透明度（锁定时降到 0.6，解锁恢复）
+  var textColor = ''; // 用户自定义文本颜色（空=跟随主题/分区色）
+  var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // user-set 的 _id 是 'user-set' 前缀（非精确 'user-set'），用 allDocs 查找
+  function getUserSetDoc() {
+    var docs = utools.db.allDocs('user-set');
+    return docs.find(function (doc) { return doc && doc._id && doc._id.indexOf('user-set') === 0; }) || null;
+  }
+  // 读写 user-set，自动处理 _rev 冲突重试（uTools db.put 冲突时返回 ok:false 不抛异常，会静默丢失）
+  function putUserSet(mutator) {
+    for (var i = 0; i < 4; i++) {
+      var doc = getUserSetDoc();
+      if (!doc) { console.warn('[输入法键盘] user-set 文档不存在'); return false; }
+      mutator(doc);
+      var res = utools.db.put(doc);
+      if (res && res.ok) return true;
+      console.warn('[输入法键盘] db.put 冲突，重试', i, res);
+    }
+    console.error('[输入法键盘] db.put 最终失败');
+    return false;
+  }
+
+  // ========== 通信：三通道（sendToParent + storage + DB pendingAction） ==========
+  function postAction(channel, payload, opts) {
+    opts = opts || {};
+    var action = { type: channel, payload: payload, at: Date.now(), source: 'input-method-helper' };
+
+    // DB pendingAction（父窗口轮询的唯一可靠通道）
+    if (opts.persistPendingAction) {
+      putUserSet(function (doc) {
+        if (!doc.inputMethodHelper) doc.inputMethodHelper = {};
+        doc.inputMethodHelper.pendingAction = action;
+      });
+    }
+
+    // storage（备份）
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(action)); } catch (e) {}
+
+    // sendToParent（主，uTools 父子可能无效，作冗余）
+    if (typeof utools !== 'undefined' && utools.sendToParent) {
+      try { utools.sendToParent(channel, payload); } catch (e) {}
+    }
+  }
+
+  // ========== 设置持久化（user-set.inputMethodHelper） ==========
+  function saveSetting(key, value) {
+    putUserSet(function (doc) {
+      if (!doc.inputMethodHelper) doc.inputMethodHelper = {};
+      doc.inputMethodHelper[key] = value;
+    });
+  }
+  function loadSettings() {
+    try {
+      var s = getUserSetDoc();
+      var h = (s && s.inputMethodHelper) || {};
+      if (typeof h.alwaysOnTop === 'boolean') isAlwaysOnTop = h.alwaysOnTop;
+      if (typeof h.locked === 'boolean') isLocked = h.locked;
+      if (typeof h.opacity === 'number') userOpacity = h.opacity;
+      if (typeof h.textColor === 'string' && h.textColor) textColor = h.textColor;
+    } catch (e) {}
+  }
+
+  // ========== 窗口控制 ==========
+  function applyOpacity(opacity, boost) {
+    currentOpacity = Math.max(0.1, Math.min(1.0, parseFloat(opacity) || 1.0));
+    // 按键背景全透明，透明度只调文字；boost 控制文字比背景亮多少（锁定 0 更暗，解锁 0.5 更亮）
+    var textAlpha = Math.min(1, currentOpacity + (boost === undefined ? 0.5 : boost));
+    document.documentElement.style.setProperty('--key-text-alpha', String(textAlpha));
+    document.querySelectorAll('.kb-key .key-content, .kb-key .key-label').forEach(function (el) {
+      el.style.opacity = String(textAlpha);
+    });
+    var slider = document.querySelector('.opacity-slider');
+    if (slider) slider.value = Math.round(currentOpacity * 100);
+  }
+
+  var LOCK_SVG = '<svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>';
+  var UNLOCK_SVG = '<svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>';
+  function updateTopButton() {
+    var btn = document.getElementById('btn-top');
+    btn.classList.toggle('active', isAlwaysOnTop);
+    btn.title = isAlwaysOnTop ? '取消置顶' : '置顶';
+  }
+  function updateLockButton() {
+    var btn = document.getElementById('btn-lock');
+    btn.innerHTML = isLocked ? UNLOCK_SVG : LOCK_SVG;
+    btn.title = isLocked ? '解锁（取消鼠标穿透）' : '锁定（鼠标穿透）';
+    document.getElementById('app').classList.toggle('locked', isLocked);
+  }
+  // 应用自定义文本颜色：设色后覆盖五笔分区色，传空则恢复默认（分区色/主题色）
+  function applyTextColor(color) {
+    var app = document.getElementById('app');
+    if (color) {
+      app.classList.add('custom-text-color');
+      document.documentElement.style.setProperty('--key-text-color', color);
+    } else {
+      app.classList.remove('custom-text-color');
+      document.documentElement.style.removeProperty('--key-text-color');
+    }
+    var picker = document.getElementById('text-color');
+    if (picker) picker.value = color || (isDark ? '#dddddd' : '#222222');
+  }
+
+  function setAlwaysOnTop(value) {
+    isAlwaysOnTop = value;
+    updateTopButton();
+    postAction('setAlwaysOnTop', { alwaysOnTop: value }, { persistPendingAction: true });
+    saveSetting('alwaysOnTop', value);
+  }
+  function setLocked(value) {
+    isLocked = value;
+    updateLockButton();
+    // 锁定时降到 60% 且文字不加亮（更暗），解锁恢复用户偏好透明度且文字加亮 0.5
+    applyOpacity(value ? 0.6 : userOpacity, value ? 0 : 0.5);
+    postAction('setLocked', { locked: value }, { persistPendingAction: true });
+    saveSetting('locked', value);
+  }
+  function closeWindow() {
+    postAction('closeHelper', {}, { persistPendingAction: true });
+    setTimeout(function () { window.close(); }, 50);
+  }
+
+  // ========== 键盘渲染 ==========
+  var ROWS = [
+    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+    ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+  ];
+  var ZONE_CLASS = {
+    '横区': 'zone-heng', '竖区': 'zone-shu', '撇区': 'zone-pie',
+    '捺区': 'zone-na', '折区': 'zone-zhe', '万能键': 'zone-zhe'
+  };
+
+  function extractRoot(item) {
+    // "G键 · 王" -> "王"
+    var m = item.functionName.match(/·\s*(.+)$/);
+    return m ? m[1].trim() : '';
+  }
+  function extractYunmu(item) {
+    var desc = item.description || '';
+    // 只处理带输入法键位映射描述的条目，防止训练用条目（常用字/词组/成语/生僻字/易错字）的 description 泄漏汉字到键盘上
+    if (!/(声母|韵母|零声母)[：:]/.test(desc)) return '';
+    // 零声母优先（E/A 键）：直接返回零声母的值
+    var zeroM = desc.match(/零声母[：:]\s*([^\s/]+)/);
+    if (zeroM) return zeroM[1];
+    // 去掉"声母：X"段，清理首尾残留的 / 和空格
+    var yunPart = desc.replace(/声母[：:][^/]+/g, '').replace(/^[\s\/]+|[\s\/]+$/g, '').trim();
+    var parts = yunPart.split(' / ');
+    var result = [];
+    parts.forEach(function (p) {
+      p = p.trim();
+      if (!p) return;
+      var m = p.match(/韵母[：:]\s*(.+)/);
+      if (m) result.push(m[1].trim());
+    });
+    return result.length ? result.join('\n') : '';
+  }
+
+  // 父窗口创建后通过 executeJavaScript 调用此函数传数据
+  window.initKeyboard = function (payload) {
+    var items = (payload && payload.items) || [];
+    document.getElementById('scheme-name').textContent = payload.schemeName || '输入法键盘';
+    var scheme = (payload && payload.scheme) || '';
+    var isWubi = /wubi/i.test(scheme);
+
+    // 按 keys[0] 分组
+    var keyMap = {};
+    items.forEach(function (it) {
+      var k = ((it.keys && it.keys[0]) || '').toUpperCase();
+      if (!k) return;
+      if (!keyMap[k]) keyMap[k] = [];
+      keyMap[k].push(it);
+    });
+
+    var kb = document.getElementById('keyboard');
+    kb.innerHTML = '';
+    ROWS.forEach(function (row) {
+      var rowEl = document.createElement('div');
+      rowEl.className = 'kb-row';
+      row.forEach(function (key) {
+        var keyEl = document.createElement('div');
+        keyEl.className = 'kb-key';
+
+        var label = document.createElement('span');
+        label.className = 'key-label';
+        label.textContent = key;
+        keyEl.appendChild(label);
+
+        var content = document.createElement('span');
+        content.className = 'key-content';
+        var itemsForKey = keyMap[key] || [];
+
+        if (isWubi) {
+          // 仅显示字根（tags 含分区的条目）
+          var roots = itemsForKey.filter(function (it) {
+            return it.tags && it.tags.some(function (t) { return ZONE_CLASS[t]; });
+          });
+          var zoneTag = roots[0] && roots[0].tags
+            ? roots[0].tags.find(function (t) { return ZONE_CLASS[t]; })
+            : '';
+          if (zoneTag) keyEl.classList.add(ZONE_CLASS[zoneTag]);
+          content.textContent = roots.map(extractRoot).filter(Boolean).join(' ');
+        } else {
+          // 双拼：显示该键的声/韵母
+          content.textContent = itemsForKey.map(extractYunmu).filter(Boolean).join('/');
+        }
+        keyEl.appendChild(content);
+        rowEl.appendChild(keyEl);
+      });
+      kb.appendChild(rowEl);
+    });
+    // 渲染后重新应用透明度，让新创建的文字节点跟随
+    applyOpacity(currentOpacity);
+  };
+
+  // ========== 初始化 ==========
+  if (isDark) document.getElementById('app').classList.add('dark');
+  loadSettings();
+  applyOpacity(isLocked ? 0.6 : userOpacity, isLocked ? 0 : 0.5);
+  applyTextColor(textColor);
+  updateTopButton();
+  updateLockButton();
+
+  document.getElementById('btn-top').addEventListener('click', function () { setAlwaysOnTop(!isAlwaysOnTop); });
+  document.getElementById('btn-lock').addEventListener('click', function () { setLocked(!isLocked); });
+  document.getElementById('btn-close').addEventListener('click', closeWindow);
+  document.getElementById('text-color').addEventListener('input', function (e) {
+    textColor = e.target.value;
+    applyTextColor(textColor);
+    saveSetting('textColor', textColor);
+  });
+  document.getElementById('btn-reset-color').addEventListener('click', function () {
+    textColor = '';
+    applyTextColor('');
+    saveSetting('textColor', '');
+  });
+  document.querySelector('.opacity-slider').addEventListener('input', function (e) {
+    userOpacity = parseInt(e.target.value, 10) / 100;
+    if (!isLocked) applyOpacity(userOpacity);
+    saveSetting('opacity', userOpacity);
+  });
+  // Ctrl+滚轮调透明度
+  document.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      var delta = e.deltaY > 0 ? -0.05 : 0.05;
+      userOpacity = Math.max(0.1, Math.min(1.0, userOpacity + delta));
+      if (!isLocked) applyOpacity(userOpacity);
+      saveSetting('opacity', userOpacity);
+    }
+  }, { passive: false });
+
+  // 初始通知父窗口状态（置顶 + 默认锁定），父窗口应用 setIgnoreMouseEvents 穿透
+  postAction('setAlwaysOnTop', { alwaysOnTop: isAlwaysOnTop }, { persistPendingAction: true });
+  postAction('setLocked', { locked: isLocked }, { persistPendingAction: true });
+})();
+</script>
+</body>
+</html>
