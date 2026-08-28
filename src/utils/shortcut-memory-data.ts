@@ -935,24 +935,26 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   ...generatePracticeItems('数字小键盘练习', DEFAULT_NUMPAD_PRACTICE_KEYS, 'np'),
 ];
 
+// 五笔键位 -> 分区（横/竖/撇/捺/折区）。模块级：enrichPreset 与 loadAllShortcuts 共用
+const WUBI_ZONE_MAP: Record<string, string> = {
+  G: '横区', F: '横区', D: '横区', S: '横区', A: '横区',
+  H: '竖区', J: '竖区', K: '竖区', L: '竖区', M: '竖区',
+  T: '撇区', R: '撇区', E: '撇区', W: '撇区', Q: '撇区',
+  Y: '捺区', U: '捺区', I: '捺区', O: '捺区', P: '捺区',
+  N: '折区', B: '折区', V: '折区', C: '折区', X: '折区'
+};
+const WUBI_CATEGORIES = new Set(['五笔86版', '五笔98版']);
+
 // 为 PRESET 中的五笔/双拼条目补 group 与 tags（保证兜底数据与 JSON 一致）
 (function enrichPreset() {
-  const zoneMap: Record<string, string> = {
-    G: '横区', F: '横区', D: '横区', S: '横区', A: '横区',
-    H: '竖区', J: '竖区', K: '竖区', L: '竖区', M: '竖区',
-    T: '撇区', R: '撇区', E: '撇区', W: '撇区', Q: '撇区',
-    Y: '捺区', U: '捺区', I: '捺区', O: '捺区', P: '捺区',
-    N: '折区', B: '折区', V: '折区', C: '折区', X: '折区'
-  };
-  const wubiCats = new Set(['五笔86版', '五笔98版']);
   const shuangpinCats = new Set(['双拼 · 小鹤', '双拼 · 自然码', '双拼 · 微软', '双拼 · 搜狗']);
   for (const item of PRESET_SHORTCUTS) {
-    if (wubiCats.has(item.category)) {
+    if (WUBI_CATEGORIES.has(item.category)) {
       item.group = '输入法';
       if (!item.tags || item.tags.length === 0) {
         const k = (item.keys[0] || '').toUpperCase();
         if (k === 'Z') item.tags = ['万能键'];
-        else if (zoneMap[k]) item.tags = [zoneMap[k]];
+        else if (WUBI_ZONE_MAP[k]) item.tags = [WUBI_ZONE_MAP[k]];
       }
     } else if (shuangpinCats.has(item.category)) {
       item.group = '输入法';
@@ -960,7 +962,259 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   }
 })();
 
+// ========== 双拼常用字/词组/一级简码（运行时按各方案声韵母映射生成编码） ==========
+// 通用字表（字 + 拼音），4 方案共用；编码由 pinyinToShuangpin 按各方案映射生成
+const SHUANGPIN_COMMON_CHARS: Array<[string, string]> = [
+  ['的', 'de'], ['是', 'shi'], ['我', 'wo'], ['在', 'zai'], ['中', 'zhong'], ['国', 'guo'],
+  ['人', 'ren'], ['们', 'men'], ['他', 'ta'], ['和', 'he'], ['有', 'you'], ['不', 'bu'],
+  ['会', 'hui'], ['可', 'ke'], ['以', 'yi'], ['上', 'shang'], ['个', 'ge'], ['来', 'lai'],
+  ['去', 'qu'], ['到', 'dao'], ['说', 'shuo'], ['也', 'ye'], ['里', 'li'], ['子', 'zi'],
+  ['时', 'shi'], ['地', 'di'], ['着', 'zhe'], ['了', 'le'], ['你', 'ni'], ['就', 'jiu'],
+  ['想', 'xiang'], ['起', 'qi'], ['过', 'guo'], ['发', 'fa'], ['成', 'cheng'], ['都', 'dou'],
+  ['这', 'zhe'], ['看', 'kan'], ['好', 'hao'], ['大', 'da'], ['学', 'xue'], ['生', 'sheng'],
+  ['工', 'gong'], ['作', 'zuo'], ['家', 'jia'], ['为', 'wei'], ['道', 'dao'], ['一', 'yi'],
+];
+// 生僻字练习表（字 + 拼音），避开 ü 类各方案映射不一致的读音
+export const SHUANGPIN_RARE_CHARS: [string, string][] = [
+  ['耄', 'mao'], ['耋', 'die'], ['饕', 'tao'], ['餮', 'tie'], ['觊', 'ji'],
+  ['鳏', 'guan'], ['寡', 'gua'], ['孀', 'shuang'], ['羸', 'lei'], ['霾', 'mai'],
+  ['鼹', 'yan'], ['忖', 'cun'], ['惴', 'zhui'], ['斡', 'wo'], ['蹙', 'cu'],
+  ['颦', 'pin'], ['谄', 'chan'], ['瞠', 'cheng'], ['辍', 'chuo'], ['踱', 'duo'],
+  ['恪', 'ke'], ['谙', 'an'], ['迸', 'beng'], ['憧', 'chong'], ['怆', 'chuang'],
+  ['玷', 'dian'], ['讹', 'e'], ['诽', 'fei'], ['缚', 'fu'], ['尴', 'gan'],
+  ['诟', 'gou'], ['刽', 'gui'], ['酣', 'han'], ['躏', 'lin'], ['藐', 'miao'],
+  ['馁', 'nei'], ['拗', 'niu'], ['抨', 'peng'], ['沏', 'qi'], ['擎', 'qing'],
+];
+// 易错字练习表（形近/常混淆单字 + 拼音）
+export const SHUANGPIN_CONFUSED_CHARS: [string, string][] = [
+  ['己', 'ji'], ['已', 'yi'], ['巳', 'si'], ['人', 'ren'], ['入', 'ru'],
+  ['八', 'ba'], ['未', 'wei'], ['末', 'mo'], ['土', 'tu'], ['士', 'shi'],
+  ['天', 'tian'], ['夫', 'fu'], ['牛', 'niu'], ['午', 'wu'], ['甲', 'jia'],
+  ['申', 'shen'], ['由', 'you'], ['田', 'tian'], ['日', 'ri'], ['曰', 'yue'],
+  ['目', 'mu'], ['自', 'zi'], ['丰', 'feng'], ['主', 'zhu'], ['干', 'gan'],
+  ['千', 'qian'], ['大', 'da'], ['太', 'tai'], ['犬', 'quan'], ['白', 'bai'],
+  ['百', 'bai'], ['力', 'li'], ['刀', 'dao'], ['刃', 'ren'], ['今', 'jin'],
+  ['令', 'ling'], ['免', 'mian'], ['兔', 'tu'], ['崇', 'chong'], ['祟', 'sui'],
+];
+// 词组（词 + 每字拼音）
+const SHUANGPIN_COMMON_WORDS: Array<[string, ...string[]]> = [
+  ['我们', 'wo', 'men'], ['中国', 'zhong', 'guo'], ['他们', 'ta', 'men'], ['什么', 'shen', 'me'],
+  ['时候', 'shi', 'hou'], ['因为', 'yin', 'wei'], ['所以', 'suo', 'yi'], ['可是', 'ke', 'shi'],
+  ['但是', 'dan', 'shi'], ['现在', 'xian', 'zai'], ['这里', 'zhe', 'li'], ['一个', 'yi', 'ge'],
+  ['可以', 'ke', 'yi'], ['这样', 'zhe', 'yang'], ['知道', 'zhi', 'dao'], ['学习', 'xue', 'xi'],
+  ['工作', 'gong', 'zuo'], ['学生', 'xue', 'sheng'], ['朋友', 'peng', 'you'], ['时间', 'shi', 'jian'],
+  ['国家', 'guo', 'jia'], ['自己', 'zi', 'ji'], ['还有', 'hai', 'you'], ['已经', 'yi', 'jing'],
+  ['起来', 'qi', 'lai'],
+];
+// 成语练习表（成语 + 每字拼音），避开 ü/er 等双拼映射易歧义的读音
+const SHUANGPIN_IDIOMS: Array<[string, ...string[]]> = [
+  ['一心一意', 'yi', 'xin', 'yi', 'yi'], ['十全十美', 'shi', 'quan', 'shi', 'mei'],
+  ['不可思议', 'bu', 'ke', 'si', 'yi'], ['不知不觉', 'bu', 'zhi', 'bu', 'jue'],
+  ['大吃一惊', 'da', 'chi', 'yi', 'jing'], ['千变万化', 'qian', 'bian', 'wan', 'hua'],
+  ['万众一心', 'wan', 'zhong', 'yi', 'xin'], ['千军万马', 'qian', 'jun', 'wan', 'ma'],
+  ['三心两意', 'san', 'xin', 'liang', 'yi'], ['四面八方', 'si', 'mian', 'ba', 'fang'],
+  ['五光十色', 'wu', 'guang', 'shi', 'se'], ['七上八下', 'qi', 'shang', 'ba', 'xia'],
+  ['九牛一毛', 'jiu', 'niu', 'yi', 'mao'], ['画蛇添足', 'hua', 'she', 'tian', 'zu'],
+  ['守株待兔', 'shou', 'zhu', 'dai', 'tu'], ['亡羊补牢', 'wang', 'yang', 'bu', 'lao'],
+  ['叶公好龙', 'ye', 'gong', 'hao', 'long'], ['自相矛盾', 'zi', 'xiang', 'mao', 'dun'],
+  ['井底之蛙', 'jing', 'di', 'zhi', 'wa'], ['刻舟求剑', 'ke', 'zhou', 'qiu', 'jian'],
+  ['狐假虎威', 'hu', 'jia', 'hu', 'wei'], ['胸有成竹', 'xiong', 'you', 'cheng', 'zhu'],
+  ['闻鸡起舞', 'wen', 'ji', 'qi', 'wu'], ['画龙点睛', 'hua', 'long', 'dian', 'jing'],
+  ['对牛弹琴', 'dui', 'niu', 'tan', 'qin'], ['老马识途', 'lao', 'ma', 'shi', 'tu'],
+  ['前功尽弃', 'qian', 'gong', 'jin', 'qi'], ['坚持不懈', 'jian', 'chi', 'bu', 'xie'],
+  ['一丝不苟', 'yi', 'si', 'bu', 'gou'], ['一马当先', 'yi', 'ma', 'dang', 'xian'],
+  ['一箭双雕', 'yi', 'jian', 'shuang', 'diao'], ['一鼓作气', 'yi', 'gu', 'zuo', 'qi'],
+  ['一鸣惊人', 'yi', 'ming', 'jing', 'ren'], ['一落千丈', 'yi', 'luo', 'qian', 'zhang'],
+  ['一帆风顺', 'yi', 'fan', 'feng', 'shun'], ['无影无踪', 'wu', 'ying', 'wu', 'zong'],
+  ['自由自在', 'zi', 'you', 'zi', 'zai'], ['自作自受', 'zi', 'zuo', 'zi', 'shou'],
+  ['人山人海', 'ren', 'shan', 'ren', 'hai'], ['天长地久', 'tian', 'chang', 'di', 'jiu'],
+];
+// 一级简码（单键高频字，非方案标准定义，需校对）
+const SHUANGPIN_LEVEL1: Record<string, string> = {
+  A: '啊', B: '不', C: '才', D: '的', E: '额', F: '发', G: '个', H: '好',
+  I: '出', J: '就', K: '看', L: '了', M: '吗', N: '你', O: '哦', P: '平',
+  Q: '去', R: '人', S: '是', T: '他', U: '上', V: '这', W: '我', X: '想',
+  Y: '有', Z: '在',
+};
+const SHUANGPIN_SCHEME_PREFIX: Record<string, string> = {
+  '双拼 · 小鹤': 'sp-xh',
+  '双拼 · 自然码': 'sp-zr',
+  '双拼 · 微软': 'sp-wr',
+  '双拼 · 搜狗': 'sp-sg',
+};
+const SHUANGPIN_CATEGORIES = Object.keys(SHUANGPIN_SCHEME_PREFIX);
+
+interface ShuangpinMap {
+  shengmu: Map<string, string>;
+  yunmu: Map<string, string>;
+  zeros: Map<string, string>;
+}
+// 从双拼键位条目（description 描述声韵母）解析 声母/韵母/零声母 -> 键 映射
+export function buildShuangpinMap(keyItems: ShortcutItem[]): ShuangpinMap {
+  const map: ShuangpinMap = { shengmu: new Map(), yunmu: new Map(), zeros: new Map() };
+  const add = (type: string, val: string, key: string) => {
+    const v = val.trim();
+    if (!v) return;
+    if (type === '声母') map.shengmu.set(v, key);
+    else if (type === '韵母') map.yunmu.set(v, key);
+    else if (type === '零声母') { map.zeros.set(v, key); map.yunmu.set(v, key); } // 单韵母 a/e/o 也作韵母
+  };
+  for (const item of keyItems) {
+    const key = (item.keys[0] || '').toUpperCase();
+    const segs = (item.description || '').split('/').map(s => s.trim());
+    let cur = '';
+    for (const seg of segs) {
+      const m = seg.match(/^(声母|韵母|零声母)[：:]\s*(.+)$/);
+      if (m) {
+        cur = m[1];
+        for (const v of m[2].split(/[\s,，]+/).filter(Boolean)) add(cur, v, key);
+      } else if (cur && seg) {
+        for (const v of seg.split(/[\s,，]+/).filter(Boolean)) add(cur, v, key);
+      }
+    }
+  }
+  // 默认声母（同字母键，JSON 未显式描述 b/p/m/...）
+  for (const sm of 'bpmfdtnlgkhjqxrzcsyw'.split('')) {
+    if (!map.shengmu.has(sm)) map.shengmu.set(sm, sm.toUpperCase());
+  }
+  return map;
+}
+// 拼音 -> 双拼编码（2 键）。零声母单韵母（啊/哦/鹅）跳过，多音字取常用音
+export function pinyinToShuangpin(pinyin: string, map: ShuangpinMap): string[] | null {
+  const py = pinyin.toLowerCase().replace(/[^a-z]/g, '');
+  if (!py) return null;
+  let shengmu = '', yunmu = '';
+  if (py.startsWith('zh')) { shengmu = 'zh'; yunmu = py.slice(2); }
+  else if (py.startsWith('ch')) { shengmu = 'ch'; yunmu = py.slice(2); }
+  else if (py.startsWith('sh')) { shengmu = 'sh'; yunmu = py.slice(2); }
+  else if ('bpmfdtnlgkhjqxrzcsyw'.includes(py[0])) { shengmu = py[0]; yunmu = py.slice(1); }
+  else { yunmu = py; }
+  if (shengmu) {
+    const smKey = map.shengmu.get(shengmu);
+    const ymKey = map.yunmu.get(yunmu);
+    if (!smKey || !ymKey) return null;
+    return [smKey, ymKey];
+  }
+  if (yunmu.length <= 1) return null; // 单韵母零声母跳过（各方案编码不一）
+  const zeroKey = map.zeros.get(yunmu[0]) || yunmu[0].toUpperCase();
+  const ymKey = map.yunmu.get(yunmu);
+  if (!ymKey) return null;
+  return [zeroKey, ymKey];
+}
+// 为一个双拼分类生成常用字/生僻字/易错字/词组/一级简码练习条目
+export function generateShuangpinPracticeItems(category: string, keyItems: ShortcutItem[]): ShortcutItem[] {
+  const map = buildShuangpinMap(keyItems);
+  const prefix = SHUANGPIN_SCHEME_PREFIX[category] || 'sp';
+  const result: ShortcutItem[] = [];
+  for (const [char, pinyin] of SHUANGPIN_COMMON_CHARS) {
+    const keys = pinyinToShuangpin(pinyin, map);
+    if (!keys) continue;
+    result.push({
+      id: `${prefix}-char-${char.charCodeAt(0)}-${keys.join('')}`,
+      category, functionName: char,
+      description: `常用字，${pinyin} -> ${keys.join('')}`,
+      keys, platform: 'common', tags: ['常用字'],
+    });
+  }
+  for (const [char, pinyin] of SHUANGPIN_RARE_CHARS) {
+    const keys = pinyinToShuangpin(pinyin, map);
+    if (!keys) continue;
+    result.push({
+      id: `${prefix}-rare-${char.charCodeAt(0)}-${keys.join('')}`,
+      category, functionName: char,
+      description: `生僻字，${pinyin} -> ${keys.join('')}`,
+      keys, platform: 'common', tags: ['生僻字'],
+    });
+  }
+  for (const [char, pinyin] of SHUANGPIN_CONFUSED_CHARS) {
+    const keys = pinyinToShuangpin(pinyin, map);
+    if (!keys) continue;
+    result.push({
+      id: `${prefix}-confused-${char.charCodeAt(0)}-${keys.join('')}`,
+      category, functionName: char,
+      description: `易错字，${pinyin} -> ${keys.join('')}`,
+      keys, platform: 'common', tags: ['易错字'],
+    });
+  }
+  for (const entry of SHUANGPIN_COMMON_WORDS) {
+    const word = entry[0];
+    const pinyins = entry.slice(1);
+    const allKeys: string[] = [];
+    let ok = true;
+    for (const py of pinyins) {
+      const ks = pinyinToShuangpin(py, map);
+      if (!ks) { ok = false; break; }
+      allKeys.push(...ks);
+    }
+    if (!ok) continue;
+    result.push({
+      id: `${prefix}-word-${word.split('').map(c => c.charCodeAt(0)).join('-')}`,
+      category, functionName: word,
+      description: `词组，${pinyins.join(' ')} -> ${allKeys.join('')}`,
+      keys: allKeys, platform: 'common', tags: ['词组'],
+    });
+  }
+  for (const [key, char] of Object.entries(SHUANGPIN_LEVEL1)) {
+    result.push({
+      id: `${prefix}-l1-${key}`,
+      category, functionName: char,
+      description: `一级简码，${key}键 + 空格`,
+      keys: [key], platform: 'common', tags: ['一级简码'],
+    });
+  }
+  for (const entry of SHUANGPIN_IDIOMS) {
+    const idiom = entry[0];
+    const pinyins = entry.slice(1) as string[];
+    const allKeys: string[] = [];
+    let ok = true;
+    for (const py of pinyins) {
+      const ks = pinyinToShuangpin(py, map);
+      if (!ks) { ok = false; break; }
+      allKeys.push(...ks);
+    }
+    if (!ok) continue;
+    result.push({
+      id: `${prefix}-idiom-${idiom.split('').map(c => c.charCodeAt(0)).join('-')}`,
+      category, functionName: idiom,
+      description: `成语，${pinyins.join(' ')} -> ${allKeys.join('')}`,
+      keys: allKeys, platform: 'common', tags: ['成语'],
+    });
+  }
+  return result;
+}
+
 // 运行时缓存，优先从 JSON 文件加载
+/**
+ * 为五笔/双拼条目补充难度等级 tag，使训练分类更细：
+ * - 五笔 1 键常用字（高频单键字）补「一级简码」，与已有「二级简码」区分
+ * - 词组按各分类内出现顺序拆为「一级词组」/「二级词组」（前一半更常见为一级）
+ * 保留原「常用字」「词组」tag，便于粗筛与细筛并存。
+ */
+function enrichLevelTags(items: ShortcutItem[]) {
+  // 五笔 1 键常用字 -> 一级简码
+  for (const s of items) {
+    if (WUBI_CATEGORIES.has(s.category)
+      && (s.tags || []).includes('常用字')
+      && s.keys.length === 1
+      && !(s.tags || []).includes('一级简码')) {
+      s.tags = [...(s.tags || []), '一级简码'];
+    }
+  }
+  // 词组拆 一级词组 / 二级词组（按各分类内出现顺序前一半为一级）
+  const cats = new Set([...WUBI_CATEGORIES, ...SHUANGPIN_CATEGORIES]);
+  for (const cat of cats) {
+    const wordItems = items.filter(s => s.category === cat && (s.tags || []).includes('词组'));
+    if (wordItems.length === 0) continue;
+    const half = Math.ceil(wordItems.length / 2);
+    wordItems.forEach((s, i) => {
+      const level = i < half ? '一级词组' : '二级词组';
+      const tags = (s.tags || []).filter(t => t !== '一级词组' && t !== '二级词组');
+      if (!tags.includes(level)) tags.push(level);
+      s.tags = tags;
+    });
+  }
+}
+
 let _cachedShortcuts: ShortcutItem[] | null = null;
 let _cachedCategories: ShortcutCategory[] | null = null;
 let _cachedGroups: ShortcutGroup[] | null = null;
@@ -1042,10 +1296,33 @@ export async function loadAllShortcuts(force: boolean = false): Promise<Shortcut
     allShortcuts.push(...missingBuiltin);
   }
 
+  // 为双拼分类生成常用字/词组/一级简码练习条目（按各方案声韵母映射，运行时生成）
+  for (const cat of SHUANGPIN_CATEGORIES) {
+    const keyItems = allShortcuts.filter(s => s.category === cat && /^[A-Za-z]键$/.test(s.functionName || ''));
+    if (keyItems.length === 0) continue;
+    allShortcuts.push(...generateShuangpinPracticeItems(cat, keyItems));
+  }
+
   // 统一为缺少 group 的 item 补 group（兜底数据/动态分类/自定义分类）
   for (const s of allShortcuts) {
     if (!s.group) s.group = getCategoryGroup(s.category);
   }
+
+  // 为五笔条目按编码首字母补充分区 tag：常用字/词组/成语等原本只有类型 tag，
+  // 补分区后才能在训练列表里"按类型 + 分区"组合筛选（如：常用字 + 撇区）
+  for (const s of allShortcuts) {
+    if (WUBI_CATEGORIES.has(s.category)) {
+      const k = (s.keys[0] || '').toUpperCase();
+      const zone = WUBI_ZONE_MAP[k];
+      if (zone && !(s.tags || []).includes(zone)) {
+        s.tags = [...(s.tags || []), zone];
+      }
+    }
+  }
+
+  // 难度等级细分：1键常用字补"一级简码"；词组按常见度拆"一级词组/二级词组"，
+  // 让训练可按更细的分类筛选（如：一级简码、二级简码、一级词组、二级词组）
+  enrichLevelTags(allShortcuts);
 
   _cachedShortcuts = allShortcuts;
   _jsonLoaded = true;
@@ -1259,6 +1536,46 @@ export function getShortcutsByCategory(category: string): ShortcutItem[] {
 export function getShortcutById(id: string): ShortcutItem | undefined {
   const data = getAllShortcuts();
   return data.find(item => item.id === id);
+}
+
+/**
+ * 五笔分区标签（横/竖/撇/捺/折区），与 WUBI_ZONE_MAP 取值一致。
+ * 用于把 tags 拆为「类型」与「分区」两维筛选。
+ */
+export const ZONE_TAGS = ['横区', '竖区', '撇区', '捺区', '折区'];
+
+/**
+ * 判断一个 tag 是否为分区标签
+ */
+export function isZoneTag(tag: string): boolean {
+  return ZONE_TAGS.includes(tag);
+}
+
+/**
+ * 标签筛选：按「类型」与「分区」两维 AND 组合过滤。
+ * - typeTag === '字根'：tags 非空且只含分区标签（即字根条目）
+ * - typeTag 为其它值：tags 含该类型标签
+ * - zoneTag：tags 含该分区标签
+ * 查看列表与训练初始化共用此逻辑，保证两处分类一致。
+ */
+export function filterByTags(
+  items: ShortcutItem[],
+  typeTag?: string,
+  zoneTag?: string
+): ShortcutItem[] {
+  let list = items;
+  if (typeTag === '字根') {
+    list = list.filter(item => {
+      const tags = item.tags || [];
+      return tags.length > 0 && tags.every(t => ZONE_TAGS.includes(t));
+    });
+  } else if (typeTag) {
+    list = list.filter(item => item.tags?.includes(typeTag));
+  }
+  if (zoneTag) {
+    list = list.filter(item => item.tags?.includes(zoneTag));
+  }
+  return list;
 }
 
 /**
