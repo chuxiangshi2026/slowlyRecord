@@ -407,7 +407,7 @@ import {
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {getDbAdapter} from '@/adapters/db';
-import {isUtools} from '@/adapters/platform';
+import {isUtools, isElectron} from '@/adapters/platform';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow} from '@/utils/focus-lock';
 import {
   fetchWordBank,
@@ -687,6 +687,69 @@ const clearFocusModeSync = () => {
   stopIgnoreMousePoll();
 };
 
+// ========== Electron 分支：子窗口代理 + ipc 通信 ==========
+function createElectronWindowProxy(winId: number, alwaysOnTop: boolean = true): any {
+  const api = (window as any).electronAPI;
+  const proxy: any = {
+    _winId: winId,
+    _destroyed: false,
+    _focused: false,
+    _alwaysOnTop: alwaysOnTop,
+    isDestroyed: () => proxy._destroyed,
+    isFocused: () => proxy._focused,
+    isAlwaysOnTop: () => proxy._alwaysOnTop,
+    setIgnoreMouseEvents: (ignore: boolean, opts?: any) => { api.focusWindowInvoke(winId, 'setIgnoreMouseEvents', [ignore, opts]); },
+    setAlwaysOnTop: (v: boolean) => { proxy._alwaysOnTop = v; api.focusWindowInvoke(winId, 'setAlwaysOnTop', [v]); },
+    setResizable: (v: boolean) => { api.focusWindowInvoke(winId, 'setResizable', [v]); },
+    setBounds: (bounds: any) => { api.focusWindowInvoke(winId, 'setBounds', [bounds]); },
+    moveTop: () => { api.focusWindowInvoke(winId, 'moveTop', []); },
+    focus: () => { api.focusWindowInvoke(winId, 'focus', []); },
+    show: () => { api.focusWindowInvoke(winId, 'show', []); },
+    close: () => { api.focusWindowInvoke(winId, 'close', []); },
+    getBounds: () => api.focusWindowInvoke(winId, 'getBounds', []),
+    webContents: {
+      executeJavaScript: (js: string) => api.focusWindowExecuteJS(winId, js),
+    },
+  };
+  return proxy;
+}
+
+// 收集单词分片 + user-set，供子窗口 utools shim 同步读取
+function collectFocusDocsForChild(bankId: string): Record<string, any> {
+  const docs: Record<string, any> = {};
+  try {
+    const adapter: any = getDbAdapter();
+    if (bankId) {
+      for (let i = 0; i < 100; i++) {
+        const docId = `slowly-record-wordbank-chunk-v2:${bankId}:${i}`;
+        const doc = adapter.get(docId);
+        if (doc) docs[docId] = doc; else break;
+      }
+    }
+    const userSetDocs = adapter.allDocs('user-set') as any[];
+    for (const d of userSetDocs) if (d && d._id) docs[d._id] = d;
+  } catch (e) {
+    console.error('[openFocusMode] 收集 docs 失败:', e);
+  }
+  return docs;
+}
+
+// 子窗口 db.put 转发 -> 父持久化（冲突时读最新 _rev 重试一次）
+async function handleFocusChildDbPut(doc: any) {
+  try {
+    const adapter: any = getDbAdapter();
+    let res = await adapter.put(doc);
+    if (res && res.ok) return;
+    const fresh = await adapter.get(doc._id);
+    if (fresh) {
+      doc._rev = fresh._rev;
+      await adapter.put(doc);
+    }
+  } catch (e) {
+    console.error('[focusMode] 父窗口持久化子窗口 db.put 失败:', e);
+  }
+}
+
 const getCursorPointCandidates = async () => {
   try {
     if (isUtools() && (window as any).utools?.getCursorScreenPoint) {
@@ -751,7 +814,7 @@ const startIgnoreMousePoll = () => {
       return;
     }
     try {
-      const bounds = focusWindow.getBounds?.();
+      const bounds = await focusWindow.getBounds?.();
       const cursorCandidates = await getCursorPointCandidates();
       if (!focusWindow || focusWindow.isDestroyed?.()) {
         ignoreMousePollTimer = null;
@@ -1312,14 +1375,14 @@ const setupEdgeStick = () => {
 
   let lastBounds: any = null;
 
-  edgeStickTimer = setInterval(() => {
+  edgeStickTimer = setInterval(async () => {
     if (!focusWindow || focusWindow.isDestroyed?.()) {
       clearInterval(edgeStickTimer);
       return;
     }
 
     try {
-      const bounds = focusWindow.getBounds?.();
+      const bounds = await focusWindow.getBounds?.();
       if (!bounds) return;
 
       if (Date.now() < edgeRestoreSuspendedUntil && !isEdgeHidden) {
@@ -1899,7 +1962,7 @@ function setupMessageListener() {
 setupMessageListener();
 
 // 打开专注模式 - 创建独立子窗口
-const openFocusMode = (mode = '') => {
+const openFocusMode = async (mode = '') => {
   currentFocusMode = mode;
   // 如果没有待复习单词，提示用户
   if (wordsStore.forgetCount === 0) {
@@ -1940,6 +2003,61 @@ const openFocusMode = (mode = '') => {
   console.log('[openFocusMode] 开始创建窗口');
   try {
     // @ts-ignore
+    if (isElectron() && (window as any).electronAPI?.createBrowserWindow) {
+      // Electron 分支：IPC 创建子窗口 + 代理 + preload-child utools shim，对齐 uTools 浮窗
+      const api = (window as any).electronAPI;
+      const themeParam = isDark ? 'dark' : 'light';
+      const currentBankId = encodeURIComponent(wordsStore.currentWordBankId || '');
+      const filterPattern = encodeURIComponent(currentFilter.value.pattern || '');
+      const filterMinLen = currentFilter.value.minLength > 0 ? currentFilter.value.minLength : '';
+      const filterMaxLen = currentFilter.value.maxLength > 0 ? currentFilter.value.maxLength : '';
+      const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
+      const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
+      const modeParam = mode ? `&mode=${mode}` : '';
+      const eUrl = `focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}${modeParam}`;
+      const winId = await api.createBrowserWindow(eUrl, {
+        width: 320, height: 100, minWidth: 200, minHeight: 80, maxWidth: 400, maxHeight: 150,
+        alwaysOnTop: initAlwaysOnTop, frame: false, transparent: true, backgroundColor: '#00000000',
+        resizable: true, modal: false, closable: true,
+      });
+      focusWindow = createElectronWindowProxy(winId, initAlwaysOnTop);
+      const createdFocusWindow = focusWindow;
+      api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
+        if (id !== winId) return;
+        if (event === 'closed') {
+          createdFocusWindow._destroyed = true;
+          if (focusWindow === createdFocusWindow) {
+            consumeLatestFocusModePendingAction('closed');
+            focusWindow = null;
+            clearFocusModeSync();
+            clearEdgeStickResources();
+            isEdgeHidden = false;
+            savedBounds = null;
+            edgeHiddenSide = null;
+            edgeRestoreSuspendedUntil = 0;
+            isExpandedFromEdge = false;
+          }
+        } else if (event === 'focus') {
+          createdFocusWindow._focused = true;
+        } else if (event === 'blur') {
+          createdFocusWindow._focused = false;
+        }
+      });
+      api.onChildDbPut((doc: any) => { handleFocusChildDbPut(doc); });
+      startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
+      setTimeout(() => { setupEdgeStick(); }, 500);
+      setupMessageListener();
+      // 推送单词分片 + user-set 快照给子窗口 utools shim，然后显示
+      setTimeout(async () => {
+        if (!focusWindow || focusWindow.isDestroyed?.()) return;
+        const docs = collectFocusDocsForChild(wordsStore.currentWordBankId || '');
+        await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+        applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
+        api.focusWindowInvoke(winId, 'show', []);
+        setTimeout(pushFocusStyleToChild, 500);
+      }, 500);
+      return;
+    }
     if (isUtools() && (window as any).utools?.createBrowserWindow) {
       // 通过 URL 参数传递主题和设置
       const themeParam = isDark ? 'dark' : 'light';
@@ -2010,13 +2128,12 @@ const openFocusMode = (mode = '') => {
       setupMessageListener();
 
     } else {
-      // 回退：使用路由方式
-      router.push('/focus');
+      // Web 端无法创建独立浮窗，提示仅桌面端可用
+      ElMessage.warning('专注模式仅在 uTools / Electron 桌面端可用');
     }
   } catch (e) {
     console.log('创建专注模式窗口失败:', e);
-    // 回退：使用路由方式
-    router.push('/focus');
+    ElMessage.error('打开专注模式失败');
   }
 }
 

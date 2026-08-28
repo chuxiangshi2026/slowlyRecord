@@ -264,16 +264,96 @@ ipcMain.handle('setWindowOpacity', (_event, opacity) => {
   return 1.0
 })
 
-// 专注模式窗口鼠标穿透设置
-ipcMain.on('set-focus-ignore-mouse', (_event, locked) => {
-  console.log('[Electron] set-focus-ignore-mouse:', locked)
+// ==================== 子窗口管理（专注模式 / 输入法键盘悬浮窗） ====================
+// 对齐 uTools 的 createBrowserWindow：父渲染进程通过 IPC 创建子 BrowserWindow 并操作，
+// 子窗口通过 preload-child 注入 utools shim，业务 HTML（focus.html / input-method-helper.html）无需改动。
+const childWindows = new Map() // winId -> BrowserWindow
+let childWinSeq = 0
+
+function resolveChildUrl(url) {
+  if (process.env.VITE_DEV_SERVER_URL) {
+    const base = process.env.VITE_DEV_SERVER_URL.replace(/\/$/, '')
+    return `${base}/${url}`
+  }
+  return path.join(__dirname, url)
+}
+
+ipcMain.handle('createBrowserWindow', async (_event, { url, options }) => {
+  const winId = ++childWinSeq
+  const win = new BrowserWindow({
+    ...options,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload-child.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false,
+    },
+  })
+  const forwardEvent = (event) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('focus-window-event', { winId, event })
+    }
+  }
+  win.on('closed', () => { childWindows.delete(winId); forwardEvent('closed') })
+  win.on('blur', () => forwardEvent('blur'))
+  win.on('focus', () => forwardEvent('focus'))
+  childWindows.set(winId, win)
+  win.loadURL(resolveChildUrl(url)).catch(e => console.error('[Electron] 加载子窗口失败:', url, e))
+  return winId
+})
+
+ipcMain.handle('focusWindowInvoke', async (_event, { winId, method, args }) => {
+  const win = childWindows.get(winId)
+  if (!win || win.isDestroyed()) {
+    if (method === 'isDestroyed') return true
+    return undefined
+  }
   try {
-    const win = BrowserWindow.fromWebContents(_event.sender)
-    if (win && typeof win.setIgnoreMouseEvents === 'function') {
-      win.setIgnoreMouseEvents(locked, { forward: true })
-      console.log('[Electron] 鼠标穿透已设置:', locked)
+    switch (method) {
+      case 'setIgnoreMouseEvents': win.setIgnoreMouseEvents(args[0], args[1] || {}); return true
+      case 'setAlwaysOnTop': win.setAlwaysOnTop(args[0]); return true
+      case 'setResizable': win.setResizable(args[0]); return true
+      case 'setBounds': win.setBounds(args[0]); return true
+      case 'moveTop': win.moveTop(); return true
+      case 'focus': win.focus(); return true
+      case 'show': win.show(); return true
+      case 'close': win.close(); return true
+      case 'getBounds': return win.getBounds()
+      case 'isAlwaysOnTop': return win.isAlwaysOnTop()
+      case 'isDestroyed': return win.isDestroyed()
     }
   } catch (e) {
-    console.error('[Electron] 设置鼠标穿透失败:', e)
+    console.error(`[Electron] focusWindowInvoke ${method} 失败:`, e)
   }
+  return undefined
+})
+
+ipcMain.handle('focusWindowExecuteJS', async (_event, { winId, js }) => {
+  const win = childWindows.get(winId)
+  if (!win || win.isDestroyed()) return undefined
+  try {
+    return await win.webContents.executeJavaScript(js)
+  } catch (e) {
+    console.error('[Electron] focusWindowExecuteJS 失败:', e)
+    return undefined
+  }
+})
+
+// 子窗口 -> 父窗口：sendToParent 动作转发
+ipcMain.on('focusChildAction', (_event, { channel, payload }) => {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send('focus-child-action', { channel, payload })
+  }
+})
+
+// 子窗口 -> 父窗口：db 写转发（utools shim 的 db.put 经此转发给父渲染进程持久化）
+ipcMain.on('childDbPut', (_event, doc) => {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send('child-db-put', doc)
+  }
+})
+
+// 子窗口 -> 主进程：显示主窗口
+ipcMain.on('showMainWindow', () => {
+  if (mainWindow) { mainWindow.show(); mainWindow.focus() }
 })

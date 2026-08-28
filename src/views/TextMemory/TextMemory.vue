@@ -94,7 +94,7 @@
                   <el-dropdown-item @click="handleFillBlanks(article)">
                     <el-icon><EditPen /></el-icon> 填空练习
                   </el-dropdown-item>
-                  <el-dropdown-item v-if="isUtoolsEnv" @click="openTextFocusMode(article)">
+                  <el-dropdown-item v-if="isUtoolsEnv || isElectronEnv" @click="openTextFocusMode(article)">
                     <el-icon><VideoPlay /></el-icon> 专注显示
                   </el-dropdown-item>
                   <el-dropdown-item v-if="article.geo" @click="handleLocateOnMap(article)">
@@ -231,13 +231,15 @@ import {
   EditPen, QuestionFilled, Notebook, Memo,
   User, Clock, View, Pointer, List, MapLocation, VideoPlay
 } from '@element-plus/icons-vue';
-import { isUtools } from '@/adapters/platform';
+import { isUtools, isElectron } from '@/adapters/platform';
 import { log } from '@/utils/logger';
 import {
   setupTextFocusListeners,
   setTextFocusWindow,
   setReturnToListHandler,
-  teardownTextFocusListeners
+  teardownTextFocusListeners,
+  createElectronWindowProxy,
+  collectTextFocusDocsForChild
 } from '@/utils/text-focus-window';
 
 // 导入子组件
@@ -256,6 +258,7 @@ const textStore = useTextMemoryStore();
 
 // 是否为 uTools 环境（专注滚动浮窗仅在 uTools 可用）
 const isUtoolsEnv = isUtools();
+const isElectronEnv = isElectron();
 
 // 搜索和筛选
 const searchKeyword = ref('');
@@ -321,9 +324,11 @@ onBeforeUnmount(() => {
   teardownTextFocusListeners();
 });
 
-// 打开文本专注滚动浮窗（仅 uTools）
-function openTextFocusMode(article: TextArticle) {
-  if (!isUtoolsEnv || !(window as any).utools?.createBrowserWindow) {
+// 打开文本专注滚动浮窗（uTools / Electron）
+async function openTextFocusMode(article: TextArticle) {
+  const isElectronAvailable = isElectronEnv && (window as any).electronAPI?.createBrowserWindow;
+  const isUtoolAvailable = isUtoolsEnv && (window as any).utools?.createBrowserWindow;
+  if (!isElectronAvailable && !isUtoolAvailable) {
     ElMessage.warning('专注显示仅在 uTools 桌面端可用');
     return;
   }
@@ -332,25 +337,29 @@ function openTextFocusMode(article: TextArticle) {
   const articleId = encodeURIComponent(article._id);
   // 文本模式禁用贴边隐藏（窗口较大，贴边不实用且需复杂父窗口逻辑）
   const url = `focus.html?mode=text&articleId=${articleId}&theme=${themeParam}&alwaysOnTop=true&edgeStickEnabled=false`;
+  const windowOpts = {
+    width: 400, height: 280, minWidth: 280, minHeight: 180, maxWidth: 640, maxHeight: 560,
+    alwaysOnTop: true, frame: false, transparent: true, backgroundColor: '#00000000',
+    resizable: true, modal: false, closable: true,
+  };
   try {
-    // createBrowserWindow 返回 BrowserWindow 实例（回调本身不传 win 参数）
+    if (isElectronAvailable) {
+      const api = (window as any).electronAPI;
+      const winId = await api.createBrowserWindow(url, windowOpts);
+      const win = createElectronWindowProxy(winId);
+      setTextFocusWindow(win);
+      // 推送文章 + user-set 快照给子窗口 utools shim，然后显示
+      setTimeout(async () => {
+        const docs = collectTextFocusDocsForChild();
+        await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+        api.focusWindowInvoke(winId, 'show', []);
+      }, 500);
+      return;
+    }
+    // uTools 分支：createBrowserWindow 返回 BrowserWindow 实例（回调本身不传 win 参数）
     const win = (window as any).utools.createBrowserWindow(
       url,
-      {
-        width: 400,
-        height: 280,
-        minWidth: 280,
-        minHeight: 180,
-        maxWidth: 640,
-        maxHeight: 560,
-        alwaysOnTop: true,
-        frame: false,
-        transparent: true,
-        backgroundColor: '#00000000',
-        resizable: true,
-        modal: false,
-        closable: true,
-      },
+      windowOpts,
       () => {
         // 窗口就绪回调
         if (win && typeof win.show === 'function') win.show();

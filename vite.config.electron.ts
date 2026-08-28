@@ -22,6 +22,13 @@ export default defineConfig({
           args.reload()
         },
       },
+      {
+        // 子窗口 preload（专注模式 / 输入法键盘悬浮窗，注入 utools shim）
+        entry: 'electron/preload-child.cjs',
+        onstart(args) {
+          args.reload()
+        },
+      },
     ]),
     renderer(),
   ],

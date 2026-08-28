@@ -13,7 +13,22 @@ import {
   GROUP_CONFIG,
   getCategories,
   getGroups,
+  getShortcutsByCategory,
+  loadAllShortcuts,
+  buildShuangpinMap,
+  pinyinToShuangpin,
+  generateShuangpinPracticeItems,
+  filterByTags,
+  isZoneTag,
+  ZONE_TAGS,
+  extractYunmu,
+  extractShuangpinKeyHint,
+  extractWubiKeyHint,
+  getWubiKeyHints,
+  getWubiRootHints,
+  extractPinyinHint,
 } from '@/utils/shortcut-memory-data'
+import type { ShortcutItem } from '@/types/shortcut-memory'
 
 describe('shortcut-memory-data 域分组与 tag', () => {
   describe('CATEGORY_CONFIG', () => {
@@ -88,6 +103,51 @@ describe('shortcut-memory-data 域分组与 tag', () => {
       for (const item of sp) {
         expect(item.group).toBe('输入法')
       }
+    })
+  })
+
+  describe('filterByTags / ZONE_TAGS', () => {
+    const items: ShortcutItem[] = [
+      { id: '1', category: '五笔86版', functionName: 'G键·王', description: '', keys: ['G'], tags: ['横区'] },
+      { id: '2', category: '五笔86版', functionName: 'H键·目', description: '', keys: ['H'], tags: ['竖区'] },
+      { id: '3', category: '五笔86版', functionName: '的', description: '', keys: ['R'], tags: ['常用字'] },
+      { id: '4', category: '五笔86版', functionName: '我们', description: '', keys: ['W', 'F'], tags: ['词组'] },
+    ]
+
+    it('ZONE_TAGS 含横/竖/撇/捺/折区', () => {
+      expect(ZONE_TAGS).toEqual(['横区', '竖区', '撇区', '捺区', '折区'])
+    })
+
+    it('isZoneTag 识别分区标签', () => {
+      expect(isZoneTag('横区')).toBe(true)
+      expect(isZoneTag('常用字')).toBe(false)
+    })
+
+    it('typeTag=字根 只保留仅含分区标签的条目', () => {
+      const r = filterByTags(items, '字根')
+      expect(r.map(i => i.id).sort()).toEqual(['1', '2'])
+    })
+
+    it('typeTag=常用字 保留含该类型标签的条目', () => {
+      const r = filterByTags(items, '常用字')
+      expect(r.map(i => i.id)).toEqual(['3'])
+    })
+
+    it('zoneTag=横区 保留含该分区标签的条目', () => {
+      const r = filterByTags(items, undefined, '横区')
+      expect(r.map(i => i.id)).toEqual(['1'])
+    })
+
+    it('typeTag + zoneTag AND 组合', () => {
+      const mixed: ShortcutItem[] = [
+        { id: 'a', category: 'x', functionName: '', description: '', keys: ['G'], tags: ['横区'] },
+        { id: 'b', category: 'x', functionName: '', description: '', keys: ['H'], tags: ['竖区'] },
+      ]
+      expect(filterByTags(mixed, '字根', '横区').map(i => i.id)).toEqual(['a'])
+    })
+
+    it('不传任何标签时返回全部', () => {
+      expect(filterByTags(items).length).toBe(items.length)
     })
   })
 

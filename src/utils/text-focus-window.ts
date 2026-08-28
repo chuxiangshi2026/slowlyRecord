@@ -37,11 +37,95 @@ let lastHandledAt = 0;
 export function setTextFocusWindow(win: any) {
   focusWindow = win;
   if (win) {
-    startDbPendingPoll();
+    if ((win as any)._winId !== undefined && (window as any).electronAPI) {
+      // Electron 代理：用 ipc 实时通信，替代 DB pendingAction 轮询
+      bindElectronListeners((win as any)._winId);
+    } else {
+      startDbPendingPoll();
+    }
   } else {
     lastSyncedLocked = false;
     stopIgnoreMousePoll();
     stopDbPendingPoll();
+    currentElectronWinId = null;
+  }
+}
+
+// ========== Electron 分支：子窗口代理 + ipc 通信 ==========
+export function createElectronWindowProxy(winId: number): any {
+  const api = (window as any).electronAPI;
+  const proxy: any = {
+    _winId: winId,
+    _destroyed: false,
+    isDestroyed: () => proxy._destroyed,
+    setIgnoreMouseEvents: (ignore: boolean, opts?: any) => { api.focusWindowInvoke(winId, 'setIgnoreMouseEvents', [ignore, opts]); },
+    setAlwaysOnTop: (v: boolean) => { api.focusWindowInvoke(winId, 'setAlwaysOnTop', [v]); },
+    setResizable: (v: boolean) => { api.focusWindowInvoke(winId, 'setResizable', [v]); },
+    moveTop: () => { api.focusWindowInvoke(winId, 'moveTop', []); },
+    focus: () => { api.focusWindowInvoke(winId, 'focus', []); },
+    show: () => { api.focusWindowInvoke(winId, 'show', []); },
+    close: () => { api.focusWindowInvoke(winId, 'close', []); },
+    getBounds: () => api.focusWindowInvoke(winId, 'getBounds', []),
+    isAlwaysOnTop: () => api.focusWindowInvoke(winId, 'isAlwaysOnTop', []),
+    webContents: {
+      executeJavaScript: (js: string) => api.focusWindowExecuteJS(winId, js),
+    },
+  };
+  return proxy;
+}
+
+// 收集文章 doc + user-set，供子窗口 utools shim 同步读取
+export function collectTextFocusDocsForChild(): Record<string, any> {
+  const docs: Record<string, any> = {};
+  try {
+    const adapter: any = getDbAdapter();
+    const articleDoc = adapter.get('slowlyrecord-textmemory-data');
+    if (articleDoc) docs['slowlyrecord-textmemory-data'] = articleDoc;
+    const userSetDocs = adapter.allDocs('user-set') as any[];
+    for (const d of userSetDocs) if (d && d._id) docs[d._id] = d;
+  } catch (e) {
+    console.error('[textFocus] 收集 docs 失败:', e);
+  }
+  return docs;
+}
+
+let electronListenersBound = false;
+let currentElectronWinId: number | null = null;
+function bindElectronListeners(winId: number) {
+  currentElectronWinId = winId;
+  if (electronListenersBound) return;
+  electronListenersBound = true;
+  const api = (window as any).electronAPI;
+  api.onFocusChildAction(({ channel, payload }: { channel: string; payload: any }) => {
+    dispatchAction({ type: channel, payload });
+  });
+  api.onChildDbPut((doc: any) => {
+    handleChildDbPut(doc);
+  });
+  api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
+    if (id !== currentElectronWinId) return;
+    if (event === 'closed') {
+      focusWindow = null;
+      lastSyncedLocked = false;
+      stopIgnoreMousePoll();
+      stopDbPendingPoll();
+      currentElectronWinId = null;
+    }
+  });
+}
+
+async function handleChildDbPut(doc: any) {
+  try {
+    const adapter: any = getDbAdapter();
+    let res = await adapter.put(doc);
+    if (res && res.ok) return;
+    const fresh = await adapter.get(doc._id);
+    if (fresh) {
+      doc._rev = fresh._rev;
+      await adapter.put(doc);
+    }
+  } catch (e) {
+    console.error('[textFocus] 父窗口持久化子窗口 db.put 失败:', e);
   }
 }
 
@@ -132,7 +216,7 @@ function startIgnoreMousePoll() {
       return;
     }
     try {
-      const bounds = focusWindow.getBounds?.();
+      const bounds = await focusWindow.getBounds?.();
       const cursorCandidates = await getCursorPointCandidates();
       if (!focusWindow || focusWindow.isDestroyed?.()) {
         ignoreMousePollTimer = null;

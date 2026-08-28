@@ -29,4 +29,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onGlobalShortcut: (callback) => {
     ipcRenderer.on('global-shortcut', (_event, action) => callback(action))
   },
+
+  // ===== 子窗口管理（专注模式 / 输入法键盘悬浮窗） =====
+  createBrowserWindow: (url, options) => ipcRenderer.invoke('createBrowserWindow', { url, options }),
+  focusWindowInvoke: (winId, method, args) => ipcRenderer.invoke('focusWindowInvoke', { winId, method, args }),
+  focusWindowExecuteJS: (winId, js) => ipcRenderer.invoke('focusWindowExecuteJS', { winId, js }),
+  onFocusChildAction: (callback) => {
+    ipcRenderer.on('focus-child-action', (_e, data) => callback(data))
+  },
+  onFocusWindowEvent: (callback) => {
+    ipcRenderer.on('focus-window-event', (_e, data) => callback(data))
+  },
+  onChildDbPut: (callback) => {
+    ipcRenderer.on('child-db-put', (_e, doc) => callback(doc))
+  },
 })
