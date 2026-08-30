@@ -1511,7 +1511,10 @@ function parseBatchTimeline(content: string): LibraryTimelineEvent[] {
         ev.year = y ? Number(y) : undefined;
       }
       else if (!inContent && metaRe('年号').test(t)) ev.reign = t.replace(metaRe('年号'), '');
-      else if (!inContent && metaRe('时代').test(t)) ev.era = t.replace(metaRe('时代'), '');
+      else if (!inContent && (metaRe('时代').test(t) || metaRe('朝代').test(t))) {
+        const keyRe = metaRe('时代').test(t) ? metaRe('时代') : metaRe('朝代');
+        ev.era = t.replace(keyRe, '');
+      }
       else if (!inContent && metaRe('地点').test(t)) ev.location = t.replace(metaRe('地点'), '');
       else if (!inContent && metaRe('标签').test(t)) ev.tags = t.replace(metaRe('标签'), '').split(/[,，]/).map((s: string) => s.trim()).filter(Boolean);
       else if (!inContent && metaRe('背景').test(t)) ev.background = t.replace(metaRe('背景'), '');
@@ -2994,6 +2997,17 @@ watch(activeTab, (tab) => {
     nextTick(() => {
       if (!hasLoadedIdioms.value) {
         handleIdiomSearch();
+      }
+    });
+  } else if (tab === 'timeline') {
+    nextTick(async () => {
+      if (!hasLoadedTimeline.value) {
+        try {
+          allTimelineEvents.value = await fetchAllTimelineEvents();
+          hasLoadedTimeline.value = true;
+        } catch (e) {
+          console.error('加载时间线库失败', e);
+        }
       }
     });
   } else if (tab === 'poetryMap') {

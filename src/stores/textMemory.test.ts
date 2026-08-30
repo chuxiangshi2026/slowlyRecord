@@ -166,16 +166,16 @@ describe('useTextMemoryStore', () => {
       const result = await store.saveTextMemoryDoc({ articles: [] })
 
       expect(mockDb.promises.put).toHaveBeenCalled()
-      expect(result).toBe(true)
+      expect(result.success).toBe(true)
     })
 
-    it('saveTextMemoryDoc 应该在数据库不可用时返回 false', async () => {
+    it('saveTextMemoryDoc 应该在数据库不可用时返回失败', async () => {
       const store = useTextMemoryStore()
       vi.stubGlobal('window', {})
 
       const result = await store.saveTextMemoryDoc({ articles: [] })
 
-      expect(result).toBe(false)
+      expect(result.success).toBe(false)
     })
   })
 

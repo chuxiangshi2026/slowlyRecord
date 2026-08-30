@@ -462,12 +462,16 @@ async function handleImportArticles(articles: Omit<TextArticle, '_id' | '_rev' |
   let successCount = 0;
   let failCount = 0;
 
+  let firstError = '';
   for (const article of articles) {
     const result = await textStore.addArticle(article);
     if (result.success) {
       successCount++;
     } else {
       failCount++;
+      if (!firstError && result.error) {
+        firstError = result.error;
+      }
     }
   }
 
@@ -475,7 +479,8 @@ async function handleImportArticles(articles: Omit<TextArticle, '_id' | '_rev' |
     ElMessage.success(`成功导入 ${successCount} 篇文章`);
   }
   if (failCount > 0) {
-    ElMessage.warning(`${failCount} 篇文章导入失败`);
+    const detail = firstError ? `：${firstError}` : '';
+    ElMessage.warning(`${failCount} 篇文章导入失败${detail}`);
   }
 
   showImportDialog.value = false;

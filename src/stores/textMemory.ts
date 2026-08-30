@@ -169,7 +169,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
     /**
      * 保存文本记忆文档
      */
-    async saveTextMemoryDoc(data: Partial<TextMemoryDoc>): Promise<boolean> {
+    async saveTextMemoryDoc(data: Partial<TextMemoryDoc>): Promise<{ success: boolean; error?: string }> {
       try {
         const db = getDbAdapter();
 
@@ -188,10 +188,15 @@ export const useTextMemoryStore = defineStore('textMemory', {
         }
 
         const result = await db.promises.put(doc);
-        return result.ok ?? false;
+        // 兼容不同适配器返回值：uTools 可能直接返回 { id, rev }（无 ok/error）
+        if (result.ok === true) return { success: true };
+        if (result.error === true) {
+          return { success: false, error: result.message || result.name || '保存失败' };
+        }
+        return { success: result.ok !== false };
       } catch (e) {
         console.error('保存文本记忆文档失败:', e);
-        return false;
+        return { success: false, error: String(e) };
       }
     },
 
@@ -238,13 +243,13 @@ export const useTextMemoryStore = defineStore('textMemory', {
       return enqueueWrite(async () => {
       try {
         const now = Date.now();
-        let newArticle: TextArticle = {
+        let newArticle: TextArticle = cloneDeep({
           ...article,
           _id: `article_${generateId()}`,
           ctime: now,
           utime: now,
           reviewCount: 0
-        };
+        });
         // 解析地理坐标
         newArticle = this.enrichGeo(newArticle);
 
@@ -252,12 +257,12 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const articles = doc?.articles ? cloneDeep(doc.articles) : [];
         articles.push(newArticle);
 
-        const success = await this.saveTextMemoryDoc({ articles });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ articles });
         if (success) {
           this.articles.push(newArticle);
           return { success: true, data: newArticle };
         }
-        return { success: false, error: '保存失败' };
+        return { success: false, error: saveError || '保存失败' };
       } catch (error) {
         console.error('添加文章失败:', error);
         return { success: false, error: String(error) };
@@ -271,10 +276,10 @@ export const useTextMemoryStore = defineStore('textMemory', {
     async updateArticle(article: TextArticle) {
       return enqueueWrite(async () => {
       try {
-        const updatedArticle = {
+        const updatedArticle = cloneDeep({
           ...article,
           utime: Date.now()
-        };
+        }) as TextArticle;
 
         const doc = await this.getTextMemoryDoc();
         if (!doc?.articles) {
@@ -294,7 +299,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           articles[index] = updatedArticle;
         }
 
-        const success = await this.saveTextMemoryDoc({ articles });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ articles });
         if (success) {
           const localIndex = this.articles.findIndex(a => a._id === updatedArticle._id);
           if (localIndex !== -1) {
@@ -305,7 +310,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           }
           return { success: true, data: updatedArticle };
         }
-        return { success: false, error: '更新失败' };
+        return { success: false, error: saveError || '更新失败' };
       } catch (error) {
         console.error('更新文章失败:', error);
         return { success: false, error: String(error) };
@@ -334,7 +339,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
         // 删除关联的提示词
         const prompts = doc.prompts.filter((p: TextPrompt) => p.articleId !== articleId);
 
-        const success = await this.saveTextMemoryDoc({ articles, notes, prompts });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ articles, notes, prompts });
         if (success) {
           this.articles = this.articles.filter(a => a._id !== articleId);
           
@@ -349,7 +354,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           
           return { success: true };
         }
-        return { success: false, error: '删除失败' };
+        return { success: false, error: saveError || '删除失败' };
       } catch (error) {
         console.error('删除文章失败:', error);
         return { success: false, error: String(error) };
@@ -420,12 +425,12 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const notes = doc?.notes ? cloneDeep(doc.notes) : [];
         notes.push(newNote);
 
-        const success = await this.saveTextMemoryDoc({ notes });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ notes });
         if (success) {
           this.currentNotes.unshift(newNote);
           return { success: true, data: newNote };
         }
-        return { success: false, error: '保存失败' };
+        return { success: false, error: saveError || '保存失败' };
       } catch (error) {
         console.error('添加笔记失败:', error);
         return { success: false, error: String(error) };
@@ -452,7 +457,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           notes[index] = updatedNote;
         }
 
-        const success = await this.saveTextMemoryDoc({ notes });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ notes });
         if (success) {
           const localIndex = this.currentNotes.findIndex(n => n._id === note._id);
           if (localIndex !== -1) {
@@ -460,7 +465,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           }
           return { success: true, data: updatedNote };
         }
-        return { success: false, error: '更新失败' };
+        return { success: false, error: saveError || '更新失败' };
       } catch (error) {
         console.error('更新笔记失败:', error);
         return { success: false, error: String(error) };
@@ -483,13 +488,13 @@ export const useTextMemoryStore = defineStore('textMemory', {
         if (!note) return { success: false, error: '笔记不存在' };
 
         const notes = doc.notes.filter((n: TextNote) => n._id !== noteId);
-        const success = await this.saveTextMemoryDoc({ notes });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ notes });
         
         if (success) {
           this.currentNotes = this.currentNotes.filter(n => n._id !== noteId);
           return { success: true };
         }
-        return { success: false, error: '删除失败' };
+        return { success: false, error: saveError || '删除失败' };
       } catch (error) {
         console.error('删除笔记失败:', error);
         return { success: false, error: String(error) };
@@ -534,13 +539,13 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const prompts = doc?.prompts ? cloneDeep(doc.prompts) : [];
         prompts.push(newPrompt);
 
-        const success = await this.saveTextMemoryDoc({ prompts });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ prompts });
         if (success) {
           this.currentPrompts.push(newPrompt);
           this.currentPrompts.sort((a, b) => a.order - b.order);
           return { success: true, data: newPrompt };
         }
-        return { success: false, error: '保存失败' };
+        return { success: false, error: saveError || '保存失败' };
       } catch (error) {
         console.error('添加提示词失败:', error);
         return { success: false, error: String(error) };
@@ -565,7 +570,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           prompts[index] = prompt;
         }
 
-        const success = await this.saveTextMemoryDoc({ prompts });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ prompts });
         if (success) {
           const localIndex = this.currentPrompts.findIndex(p => p._id === prompt._id);
           if (localIndex !== -1) {
@@ -573,7 +578,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           }
           return { success: true, data: prompt };
         }
-        return { success: false, error: '更新失败' };
+        return { success: false, error: saveError || '更新失败' };
       } catch (error) {
         console.error('更新提示词失败:', error);
         return { success: false, error: String(error) };
@@ -596,13 +601,13 @@ export const useTextMemoryStore = defineStore('textMemory', {
         if (!prompt) return { success: false, error: '提示词不存在' };
 
         const prompts = doc.prompts.filter((p: TextPrompt) => p._id !== promptId);
-        const success = await this.saveTextMemoryDoc({ prompts });
+        const { success, error: saveError } = await this.saveTextMemoryDoc({ prompts });
         
         if (success) {
           this.currentPrompts = this.currentPrompts.filter(p => p._id !== promptId);
           return { success: true };
         }
-        return { success: false, error: '删除失败' };
+        return { success: false, error: saveError || '删除失败' };
       } catch (error) {
         console.error('删除提示词失败:', error);
         return { success: false, error: String(error) };

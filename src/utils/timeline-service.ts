@@ -279,15 +279,21 @@ export function collectReigns(events: LibraryTimelineEvent[], era?: string): str
  * 将本地库事件映射为 TextArticle 的输入（透传给 store.addArticle）
  * 返回 Omit<TextArticle, '_id' | '_rev' | 'ctime' | 'utime' | 'reviewCount'>
  */
+const VALID_TIMELINE_CATEGORIES = new Set<TimelineCategory>(['politics', 'literature', 'science', 'thought', 'society']);
+
 export function mapLibraryEventToArticle(ev: LibraryTimelineEvent) {
+  const category = VALID_TIMELINE_CATEGORIES.has(ev.category as TimelineCategory)
+    ? ev.category
+    : 'politics';
   return {
     title: ev.title,
     content: ev.content,
-    category: ev.category,
+    category,
     region: ev.region,
     year: ev.year,
     reign: ev.reign,
     era: ev.era,
+    dynasty: ev.era,
     location: ev.location,
     figures: ev.figures,
     relations: ev.relations,
