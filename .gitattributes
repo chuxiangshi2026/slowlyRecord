@@ -1,2 +1,6 @@
 src/config.ts filter=git-crypt diff=git-crypt
 mobile/src/config.ts filter=git-crypt diff=git-crypt
+
+# AI 代理指导文档：公开仓库中仅存密文，持有 git-crypt 密钥的环境可解密读取
+AGENTS.md filter=git-crypt diff=git-crypt
+CLAUDE.md filter=git-crypt diff=git-crypt
