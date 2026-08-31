@@ -324,3 +324,48 @@ export function parseRelations(text: string): TimelineRelation[] {
     return { from: from || '', to: to || '', type: type || '', desc: rest.join('|') || undefined };
   }).filter(r => r.from && r.to);
 }
+
+/**
+ * 解析批量时间线事件文本（--- 分隔，每段含元数据 + 正文）
+ * 支持元数据键：标题、分类、区域、年份、年号、时代/朝代、地点、标签、背景、人物、关系
+ */
+export function parseBatchTimeline(content: string): LibraryTimelineEvent[] {
+  const sections = content.split(/---+/).map(s => s.trim()).filter(Boolean);
+  const events: LibraryTimelineEvent[] = [];
+  const metaRe = (key: string) => new RegExp(`^${key}[：:]\\s*`);
+  for (const section of sections) {
+    const lines = section.split('\n');
+    const ev: any = { tags: [] };
+    const contentLines: string[] = [];
+    const figuresBuf: string[] = [];
+    const relationsBuf: string[] = [];
+    let inContent = false;
+    for (const line of lines) {
+      const t = line.trim();
+      if (!inContent && !t) continue;
+      if (!inContent && metaRe('标题').test(t)) ev.title = t.replace(metaRe('标题'), '');
+      else if (!inContent && metaRe('分类').test(t)) ev.category = t.replace(metaRe('分类'), '');
+      else if (!inContent && metaRe('区域').test(t)) ev.region = t.replace(metaRe('区域'), '');
+      else if (!inContent && metaRe('年份').test(t)) {
+        const y = t.replace(metaRe('年份'), '');
+        ev.year = y ? Number(y) : undefined;
+      }
+      else if (!inContent && metaRe('年号').test(t)) ev.reign = t.replace(metaRe('年号'), '');
+      else if (!inContent && (metaRe('时代').test(t) || metaRe('朝代').test(t))) {
+        const keyRe = metaRe('时代').test(t) ? metaRe('时代') : metaRe('朝代');
+        ev.era = t.replace(keyRe, '');
+      }
+      else if (!inContent && metaRe('地点').test(t)) ev.location = t.replace(metaRe('地点'), '');
+      else if (!inContent && metaRe('标签').test(t)) ev.tags = t.replace(metaRe('标签'), '').split(/[,，]/).map((s: string) => s.trim()).filter(Boolean);
+      else if (!inContent && metaRe('背景').test(t)) ev.background = t.replace(metaRe('背景'), '');
+      else if (!inContent && metaRe('人物').test(t)) figuresBuf.push(t.replace(metaRe('人物'), ''));
+      else if (!inContent && metaRe('关系').test(t)) relationsBuf.push(t.replace(metaRe('关系'), ''));
+      else { inContent = true; contentLines.push(line); }
+    }
+    ev.content = contentLines.join('\n').trim();
+    ev.figures = parseFigures(figuresBuf.join('\n'));
+    ev.relations = parseRelations(relationsBuf.join('\n'));
+    if (ev.title && ev.content) events.push(ev);
+  }
+  return events;
+}

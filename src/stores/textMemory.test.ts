@@ -177,6 +177,27 @@ describe('useTextMemoryStore', () => {
 
       expect(result.success).toBe(false)
     })
+
+    it('saveTextMemoryDoc 应兼容 uTools 风格的 { id, rev } 返回值', async () => {
+      const store = useTextMemoryStore()
+      mockDb.promises.get.mockResolvedValue(null)
+      mockDb.promises.put.mockResolvedValue({ id: 'slowlyrecord-textmemory-data', rev: '1-xxx' })
+
+      const result = await store.saveTextMemoryDoc({ articles: [] })
+
+      expect(result.success).toBe(true)
+    })
+
+    it('saveTextMemoryDoc 应在 put 返回 error 时透传错误信息', async () => {
+      const store = useTextMemoryStore()
+      mockDb.promises.get.mockResolvedValue(null)
+      mockDb.promises.put.mockResolvedValue({ ok: false, error: true, message: 'doc too large' })
+
+      const result = await store.saveTextMemoryDoc({ articles: [] })
+
+      expect(result.success).toBe(false)
+      expect(result.error).toBe('doc too large')
+    })
   })
 
   describe('文章操作', () => {
@@ -225,6 +246,31 @@ describe('useTextMemoryStore', () => {
       expect(store.articles).toHaveLength(1)
     })
 
+    it('addArticle 应深拷贝含 Proxy 字段的文章以正常保存', async () => {
+      const store = useTextMemoryStore()
+      mockDb.promises.get.mockResolvedValue({ articles: [] })
+      mockDb.promises.put.mockResolvedValue({ ok: true })
+
+      const proxyState = new Proxy(
+        { figures: [{ name: '李世民', title: '唐太宗' }] },
+        {}
+      )
+      const result = await store.addArticle({
+        title: '带 Proxy 的文章',
+        content: '内容',
+        tags: ['时间线'],
+        figures: proxyState.figures,
+      } as any)
+
+      expect(result.success).toBe(true)
+      expect(mockDb.promises.put).toHaveBeenCalled()
+      const savedDoc = mockDb.promises.put.mock.calls[0][0]
+      const savedFigures = savedDoc.articles[0].figures
+      expect(savedFigures).toEqual([{ name: '李世民', title: '唐太宗' }])
+      // 深拷贝后不应再是 Proxy
+      expect(!!savedFigures).toBe(true)
+    })
+
     it('updateArticle 应该更新文章', async () => {
       const store = useTextMemoryStore()
       const existingArticle = { _id: '1', title: '旧标题', content: '内容' }
@@ -238,6 +284,29 @@ describe('useTextMemoryStore', () => {
       } as TextArticle)
 
       expect(result.success).toBe(true)
+    })
+
+    it('updateArticle 应深拷贝含 Proxy 字段的文章以正常保存', async () => {
+      const store = useTextMemoryStore()
+      const existingArticle = { _id: '1', title: '旧标题', content: '内容' }
+      mockDb.promises.get.mockResolvedValue({ articles: [existingArticle] })
+      mockDb.promises.put.mockResolvedValue({ ok: true })
+
+      const proxyArticle = new Proxy(
+        {
+          _id: '1',
+          title: '新标题',
+          content: '新内容',
+          figures: [{ name: '李世民', title: '唐太宗' }],
+        },
+        {}
+      ) as TextArticle
+
+      const result = await store.updateArticle(proxyArticle)
+
+      expect(result.success).toBe(true)
+      const savedDoc = mockDb.promises.put.mock.calls[0][0]
+      expect(savedDoc.articles[0].figures).toEqual([{ name: '李世民', title: '唐太宗' }])
     })
 
     it('deleteArticle 应该删除文章及关联数据', async () => {
