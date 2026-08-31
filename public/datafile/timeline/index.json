@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": 0,
+  "updatedAt": 1788226832384,
   "description": "历史时间线本地库（精选示例）。每条事件字段：title/content/category(politics|literature|science|thought|society，对应政治/文学/科学/思想/社会)/region(china|west|modern)/year(公元，负数=公元前)/reign(年号)/era(时代)/location(地点，主地名需可被 parseTimelineLocation 解析)/figures(主要人物 {name,title,desc})/relations(人物关系 {from,to,type,desc})/background(背景)/tags(标签)。figures 与 relations 中人物名需对应，方可在关系图谱连线。",
   "events": [
     {
@@ -5872,6 +5872,1147 @@
         "大航海",
         "发现",
         "殖民"
+      ]
+    },
+    {
+      "title": "平王东迁",
+      "content": "周平王将都城从镐京东迁至洛邑(今洛阳)，史称东周，西周结束，进入春秋时期。",
+      "category": "politics",
+      "region": "china",
+      "year": -770,
+      "era": "先秦",
+      "location": "洛阳",
+      "tags": [
+        "东周",
+        "迁都"
+      ]
+    },
+    {
+      "title": "管仲相齐",
+      "content": "齐桓公任用管仲为相，改革内政、发展经济，使齐国成为春秋时期第一个霸主。",
+      "category": "politics",
+      "region": "china",
+      "year": -685,
+      "era": "先秦",
+      "location": "临淄",
+      "tags": [
+        "春秋",
+        "管仲",
+        "齐桓公"
+      ],
+      "figures": [
+        {
+          "name": "齐桓公",
+          "title": "齐国君主"
+        },
+        {
+          "name": "管仲",
+          "title": "相国"
+        }
+      ],
+      "relations": [
+        {
+          "from": "齐桓公",
+          "to": "管仲",
+          "type": "君臣",
+          "desc": "任其为相"
+        }
+      ]
+    },
+    {
+      "title": "勾践灭吴",
+      "content": "越王勾践卧薪尝胆、发愤图强，最终灭掉吴国，成为春秋末期霸主。",
+      "category": "politics",
+      "region": "china",
+      "year": -473,
+      "era": "先秦",
+      "location": "会稽",
+      "tags": [
+        "春秋",
+        "勾践",
+        "复国"
+      ]
+    },
+    {
+      "title": "长平之战",
+      "content": "秦国在长平大败赵国，坑杀赵军四十余万，此战后六国再无力单独抗秦。",
+      "category": "politics",
+      "region": "china",
+      "year": -260,
+      "era": "战国",
+      "location": "长平",
+      "tags": [
+        "战国",
+        "秦赵",
+        "白起"
+      ],
+      "figures": [
+        {
+          "name": "白起",
+          "title": "秦国名将"
+        },
+        {
+          "name": "赵括",
+          "title": "赵国将领"
+        }
+      ]
+    },
+    {
+      "title": "屈原投江",
+      "content": "楚国诗人屈原因政治理想破灭、国都沦陷，于端午投汨罗江自尽，留下《离骚》等不朽诗篇。",
+      "category": "literature",
+      "region": "china",
+      "year": -278,
+      "era": "战国",
+      "location": "汨罗江",
+      "tags": [
+        "战国",
+        "屈原",
+        "楚辞"
+      ],
+      "figures": [
+        {
+          "name": "屈原",
+          "title": "楚国诗人",
+          "desc": "投汨罗江，作《离骚》"
+        }
+      ]
+    },
+    {
+      "title": "刘邦建立西汉",
+      "content": "楚汉相争刘邦击败项羽，在长安即皇帝位，建立西汉王朝。",
+      "category": "politics",
+      "region": "china",
+      "year": -202,
+      "era": "西汉",
+      "location": "长安",
+      "tags": [
+        "西汉",
+        "刘邦"
+      ],
+      "figures": [
+        {
+          "name": "刘邦",
+          "title": "汉高祖"
+        },
+        {
+          "name": "项羽",
+          "title": "西楚霸王"
+        }
+      ]
+    },
+    {
+      "title": "七国之乱",
+      "content": "西汉景帝时吴楚等七国以清君侧为名起兵叛乱，旋被周亚夫平定，中央集权得到巩固。",
+      "category": "politics",
+      "region": "china",
+      "year": -154,
+      "era": "西汉",
+      "location": "长安",
+      "tags": [
+        "西汉",
+        "景帝",
+        "削藩"
+      ],
+      "figures": [
+        {
+          "name": "汉景帝",
+          "title": "西汉皇帝"
+        },
+        {
+          "name": "周亚夫",
+          "title": "太尉"
+        }
+      ]
+    },
+    {
+      "title": "汉武帝即位",
+      "content": "汉武帝刘彻即位，在位期间加强皇权、开疆拓土，使西汉进入全盛。",
+      "category": "politics",
+      "region": "china",
+      "year": -141,
+      "era": "西汉",
+      "location": "长安",
+      "tags": [
+        "西汉",
+        "汉武帝",
+        "盛世"
+      ],
+      "figures": [
+        {
+          "name": "刘彻",
+          "title": "汉武帝"
+        }
+      ]
+    },
+    {
+      "title": "罢黜百家独尊儒术",
+      "content": "汉武帝接受董仲舒建议，罢黜百家、独尊儒术，儒家从此成为封建社会正统思想。",
+      "category": "thought",
+      "region": "china",
+      "year": -134,
+      "era": "西汉",
+      "location": "长安",
+      "tags": [
+        "西汉",
+        "儒学",
+        "董仲舒"
+      ],
+      "figures": [
+        {
+          "name": "董仲舒",
+          "title": "思想家"
+        }
+      ]
+    },
+    {
+      "title": "西域都护设立",
+      "content": "西汉在西域设都护府，标志着西域正式纳入中央政权管辖，丝绸之路畅通。",
+      "category": "politics",
+      "region": "china",
+      "year": -60,
+      "era": "西汉",
+      "location": "西域",
+      "tags": [
+        "西汉",
+        "西域",
+        "外交"
+      ]
+    },
+    {
+      "title": "光武中兴",
+      "content": "刘秀重建汉朝，定都洛阳，史称东汉，光武帝轻徭薄赋、整顿吏治。",
+      "category": "politics",
+      "region": "china",
+      "year": 25,
+      "era": "东汉",
+      "location": "洛阳",
+      "tags": [
+        "东汉",
+        "刘秀",
+        "中兴"
+      ],
+      "figures": [
+        {
+          "name": "刘秀",
+          "title": "光武帝"
+        }
+      ]
+    },
+    {
+      "title": "曹操迎汉献帝",
+      "content": "曹操将汉献帝迎到许昌，挟天子以令诸侯，为其统一北方奠定政治优势。",
+      "category": "politics",
+      "region": "china",
+      "year": 196,
+      "era": "东汉末",
+      "location": "许昌",
+      "tags": [
+        "三国",
+        "曹操",
+        "挟天子"
+      ],
+      "figures": [
+        {
+          "name": "曹操",
+          "title": "权臣"
+        }
+      ]
+    },
+    {
+      "title": "官渡之战",
+      "content": "曹操以少胜多大败袁绍，奠定统一北方的基础，是三国时期著名战役。",
+      "category": "politics",
+      "region": "china",
+      "year": 200,
+      "era": "东汉末",
+      "location": "官渡",
+      "tags": [
+        "东汉末",
+        "官渡",
+        "曹操"
+      ],
+      "figures": [
+        {
+          "name": "曹操",
+          "title": "魏武帝"
+        },
+        {
+          "name": "袁绍",
+          "title": "北方霸主"
+        }
+      ]
+    },
+    {
+      "title": "曹丕称帝建魏",
+      "content": "曹丕逼汉献帝禅位，建立魏国，东汉正式灭亡，三国时代开始。",
+      "category": "politics",
+      "region": "china",
+      "year": 220,
+      "era": "三国",
+      "location": "洛阳",
+      "tags": [
+        "三国",
+        "曹丕",
+        "曹魏"
+      ],
+      "figures": [
+        {
+          "name": "曹丕",
+          "title": "魏文帝"
+        }
+      ]
+    },
+    {
+      "title": "刘备称帝建蜀",
+      "content": "刘备在成都称帝，建立蜀汉，以延续汉室。",
+      "category": "politics",
+      "region": "china",
+      "year": 221,
+      "era": "三国",
+      "location": "成都",
+      "tags": [
+        "三国",
+        "刘备",
+        "蜀汉"
+      ],
+      "figures": [
+        {
+          "name": "刘备",
+          "title": "蜀汉昭烈帝"
+        }
+      ]
+    },
+    {
+      "title": "魏灭蜀",
+      "content": "曹魏邓艾、钟会伐蜀，蜀汉后主刘禅投降，蜀汉灭亡。",
+      "category": "politics",
+      "region": "china",
+      "year": 263,
+      "era": "三国",
+      "location": "成都",
+      "tags": [
+        "三国",
+        "灭蜀",
+        "邓艾"
+      ],
+      "figures": [
+        {
+          "name": "邓艾",
+          "title": "魏国名将"
+        }
+      ]
+    },
+    {
+      "title": "司马炎代魏建晋",
+      "content": "司马炎逼魏元帝禅位，建立西晋，三国时代结束。",
+      "category": "politics",
+      "region": "china",
+      "year": 266,
+      "era": "西晋",
+      "location": "洛阳",
+      "tags": [
+        "西晋",
+        "司马炎",
+        "统一"
+      ]
+    },
+    {
+      "title": "西晋灭吴",
+      "content": "西晋大举伐吴，吴主孙皓投降，西晋统一全国。",
+      "category": "politics",
+      "region": "china",
+      "year": 280,
+      "era": "西晋",
+      "location": "建业",
+      "tags": [
+        "西晋",
+        "灭吴",
+        "统一"
+      ]
+    },
+    {
+      "title": "西晋灭亡",
+      "content": "匈奴攻破洛阳、长安，西晋愍帝出降，西晋灭亡，北方进入十六国时期。",
+      "category": "politics",
+      "region": "china",
+      "year": 316,
+      "era": "西晋",
+      "location": "长安",
+      "tags": [
+        "西晋",
+        "永嘉之乱",
+        "五胡乱华"
+      ]
+    },
+    {
+      "title": "东晋建立",
+      "content": "司马睿在建康(今南京)称帝建立东晋，与北方十六国对峙。",
+      "category": "politics",
+      "region": "china",
+      "year": 317,
+      "era": "东晋",
+      "location": "建康",
+      "tags": [
+        "东晋",
+        "南京",
+        "司马睿"
+      ]
+    },
+    {
+      "title": "北魏统一北方",
+      "content": "北魏太武帝拓跋焘统一北方，与南方政权形成南北朝对峙局面。",
+      "category": "politics",
+      "region": "china",
+      "year": 439,
+      "era": "南北朝",
+      "location": "平城",
+      "tags": [
+        "南北朝",
+        "北魏",
+        "统一"
+      ]
+    },
+    {
+      "title": "北魏孝文帝迁都洛阳",
+      "content": "孝文帝为推行汉化改革，将都城从平城南迁洛阳，推动民族融合。",
+      "category": "politics",
+      "region": "china",
+      "year": 494,
+      "era": "南北朝",
+      "location": "洛阳",
+      "tags": [
+        "南北朝",
+        "孝文帝",
+        "汉化"
+      ],
+      "figures": [
+        {
+          "name": "拓跋宏",
+          "title": "北魏孝文帝"
+        }
+      ]
+    },
+    {
+      "title": "杨坚建立隋朝",
+      "content": "北周外戚杨坚代周建隋，定都大兴城(长安)，结束南北朝分裂局面。",
+      "category": "politics",
+      "region": "china",
+      "year": 581,
+      "era": "隋",
+      "location": "长安",
+      "tags": [
+        "隋",
+        "杨坚",
+        "统一"
+      ],
+      "figures": [
+        {
+          "name": "杨坚",
+          "title": "隋文帝"
+        }
+      ]
+    },
+    {
+      "title": "唐朝建立",
+      "content": "李渊在长安称帝建立唐朝，隋朝灭亡，唐初逐渐统一全国。",
+      "category": "politics",
+      "region": "china",
+      "year": 618,
+      "era": "唐",
+      "location": "长安",
+      "tags": [
+        "唐",
+        "李渊",
+        "开国"
+      ],
+      "figures": [
+        {
+          "name": "李渊",
+          "title": "唐高祖"
+        }
+      ]
+    },
+    {
+      "title": "玄武门之变",
+      "content": "李世民在玄武门发动政变，诛杀太子建成与齐王元吉，后即帝位为唐太宗。",
+      "category": "politics",
+      "region": "china",
+      "year": 626,
+      "era": "唐",
+      "location": "长安",
+      "tags": [
+        "唐",
+        "李世民",
+        "政变"
+      ],
+      "figures": [
+        {
+          "name": "李世民",
+          "title": "唐太宗"
+        }
+      ]
+    },
+    {
+      "title": "文成公主入藏",
+      "content": "唐太宗将文成公主嫁给吐蕃赞普松赞干布，唐蕃和亲，促进汉藏交流。",
+      "category": "society",
+      "region": "china",
+      "year": 641,
+      "era": "唐",
+      "location": "长安",
+      "tags": [
+        "唐",
+        "和亲",
+        "吐蕃"
+      ]
+    },
+    {
+      "title": "会昌灭佛",
+      "content": "唐武宗在位期间下令灭佛，拆毁寺院、勒令僧尼还俗，史称会昌灭佛。",
+      "category": "thought",
+      "region": "china",
+      "year": 845,
+      "era": "唐",
+      "location": "长安",
+      "tags": [
+        "唐",
+        "灭佛",
+        "武宗"
+      ]
+    },
+    {
+      "title": "唐朝灭亡",
+      "content": "朱温逼唐哀帝禅位，建立后梁，唐朝灭亡，进入五代十国时期。",
+      "category": "politics",
+      "region": "china",
+      "year": 907,
+      "era": "唐",
+      "location": "开封",
+      "tags": [
+        "唐末",
+        "朱温",
+        "五代"
+      ]
+    },
+    {
+      "title": "澶渊之盟",
+      "content": "北宋与辽订立澶渊之盟，双方约为兄弟之国，此后长期和平，岁币换取边境安定。",
+      "category": "politics",
+      "region": "china",
+      "year": 1005,
+      "era": "北宋",
+      "location": "澶州",
+      "tags": [
+        "北宋",
+        "辽",
+        "和议"
+      ]
+    },
+    {
+      "title": "元昊建立西夏",
+      "content": "党项首领元昊称帝建立西夏，与宋、辽形成鼎足之势。",
+      "category": "politics",
+      "region": "china",
+      "year": 1038,
+      "era": "北宋",
+      "location": "兴庆府",
+      "tags": [
+        "北宋",
+        "西夏",
+        "元昊"
+      ],
+      "figures": [
+        {
+          "name": "元昊",
+          "title": "西夏开国皇帝"
+        }
+      ]
+    },
+    {
+      "title": "完颜阿骨打建立金",
+      "content": "女真首领完颜阿骨打起兵反辽，建立金朝。",
+      "category": "politics",
+      "region": "china",
+      "year": 1115,
+      "era": "北宋",
+      "location": "会宁",
+      "tags": [
+        "北宋",
+        "金",
+        "女真"
+      ],
+      "figures": [
+        {
+          "name": "完颜阿骨打",
+          "title": "金太祖"
+        }
+      ]
+    },
+    {
+      "title": "金灭辽",
+      "content": "金与北宋联合发动灭辽战争，辽朝灭亡。",
+      "category": "politics",
+      "region": "china",
+      "year": 1125,
+      "era": "北宋",
+      "location": "燕京",
+      "tags": [
+        "北宋",
+        "金",
+        "灭辽"
+      ]
+    },
+    {
+      "title": "绍兴和议",
+      "content": "南宋与金签订绍兴和议，向金称臣纳贡，宋金以淮水—大散关为界。",
+      "category": "politics",
+      "region": "china",
+      "year": 1141,
+      "era": "南宋",
+      "location": "临安",
+      "tags": [
+        "南宋",
+        "金",
+        "和议"
+      ]
+    },
+    {
+      "title": "采石之战",
+      "content": "南宋虞允文在采石矶率军大败金兵，粉碎金主完颜亮南侵计划。",
+      "category": "politics",
+      "region": "china",
+      "year": 1161,
+      "era": "南宋",
+      "location": "采石",
+      "tags": [
+        "南宋",
+        "金",
+        "采石之战"
+      ],
+      "figures": [
+        {
+          "name": "虞允文",
+          "title": "南宋名臣"
+        }
+      ]
+    },
+    {
+      "title": "元灭南宋",
+      "content": "元军攻陷临安，陆秀夫背幼帝投海，南宋灭亡。",
+      "category": "politics",
+      "region": "china",
+      "year": 1279,
+      "era": "南宋",
+      "location": "崖山",
+      "tags": [
+        "南宋",
+        "元",
+        "灭亡"
+      ]
+    },
+    {
+      "title": "靖难之役",
+      "content": "燕王朱棣起兵对抗建文帝，攻入南京夺取帝位，史称靖难之役。",
+      "category": "politics",
+      "region": "china",
+      "year": 1402,
+      "era": "明",
+      "location": "南京",
+      "tags": [
+        "明",
+        "朱棣",
+        "靖难"
+      ],
+      "figures": [
+        {
+          "name": "朱棣",
+          "title": "明成祖"
+        }
+      ]
+    },
+    {
+      "title": "明成祖迁都北京",
+      "content": "明成祖朱棣将都城从南京迁至北京，营建紫禁城，巩固北方边防。",
+      "category": "politics",
+      "region": "china",
+      "year": 1421,
+      "era": "明",
+      "location": "北京",
+      "tags": [
+        "明",
+        "迁都",
+        "北京"
+      ],
+      "figures": [
+        {
+          "name": "朱棣",
+          "title": "明成祖"
+        }
+      ]
+    },
+    {
+      "title": "夺门之变",
+      "content": "明景帝病重，太上皇朱祁镇在石亨、徐有贞等人拥戴下复辟，史称夺门之变。",
+      "category": "politics",
+      "region": "china",
+      "year": 1457,
+      "era": "明",
+      "location": "北京",
+      "tags": [
+        "明",
+        "夺门之变",
+        "复辟"
+      ]
+    },
+    {
+      "title": "努尔哈赤建立后金",
+      "content": "女真首领努尔哈赤统一各部，建立后金，即清朝前身。",
+      "category": "politics",
+      "region": "china",
+      "year": 1616,
+      "era": "明末",
+      "location": "赫图阿拉",
+      "tags": [
+        "明末",
+        "后金",
+        "努尔哈赤"
+      ],
+      "figures": [
+        {
+          "name": "努尔哈赤",
+          "title": "清太祖"
+        }
+      ]
+    },
+    {
+      "title": "清军入关",
+      "content": "吴三桂引清兵入山海关击败李自成，清军入主中原。",
+      "category": "politics",
+      "region": "china",
+      "year": 1644,
+      "era": "清初",
+      "location": "北京",
+      "tags": [
+        "清初",
+        "入关",
+        "吴三桂"
+      ]
+    },
+    {
+      "title": "清统一台湾",
+      "content": "清军出兵攻占台湾，结束郑氏政权，台湾正式纳入清朝版图。",
+      "category": "politics",
+      "region": "china",
+      "year": 1683,
+      "era": "清",
+      "location": "台湾",
+      "tags": [
+        "清",
+        "台湾",
+        "统一"
+      ]
+    },
+    {
+      "title": "设军机处",
+      "content": "雍正帝设立军机处，作为最高决策机构，君主专制达到顶峰。",
+      "category": "politics",
+      "region": "china",
+      "year": 1729,
+      "era": "清",
+      "location": "北京",
+      "tags": [
+        "清",
+        "雍正",
+        "军机处"
+      ]
+    },
+    {
+      "title": "白莲教起义",
+      "content": "川楚白莲教大起义席卷五省，沉重打击清朝统治，成为清中衰的转折点。",
+      "category": "society",
+      "region": "china",
+      "year": 1796,
+      "era": "清",
+      "location": "湖北",
+      "tags": [
+        "清",
+        "白莲教",
+        "起义"
+      ]
+    },
+    {
+      "title": "古埃及统一",
+      "content": "传说中的美尼斯(那尔迈)统一上下埃及，建立古埃及第一王朝。",
+      "category": "politics",
+      "region": "west",
+      "year": -3100,
+      "era": "古埃及",
+      "location": "孟菲斯",
+      "tags": [
+        "古埃及",
+        "统一"
+      ]
+    },
+    {
+      "title": "克利斯提尼改革",
+      "content": "雅典克利斯提尼推行改革，确立民主制度，被誉为雅典民主之父。",
+      "category": "politics",
+      "region": "west",
+      "year": -508,
+      "era": "古希腊",
+      "location": "雅典",
+      "tags": [
+        "古希腊",
+        "民主",
+        "克利斯提尼"
+      ]
+    },
+    {
+      "title": "喀罗尼亚战役",
+      "content": "马其顿腓力二世在喀罗尼亚大败雅典、底比斯联军，确立马其顿对希腊的统治。",
+      "category": "politics",
+      "region": "west",
+      "year": -338,
+      "era": "古希腊",
+      "location": "喀罗尼亚",
+      "tags": [
+        "古希腊",
+        "马其顿",
+        "腓力"
+      ]
+    },
+    {
+      "title": "亚历山大即位",
+      "content": "马其顿国王腓力二世遇刺，其子亚历山大即位，后东征建立庞大帝国。",
+      "category": "politics",
+      "region": "west",
+      "year": -336,
+      "era": "古希腊",
+      "location": "佩拉",
+      "tags": [
+        "古希腊",
+        "亚历山大",
+        "马其顿"
+      ],
+      "figures": [
+        {
+          "name": "亚历山大",
+          "title": "马其顿国王"
+        }
+      ]
+    },
+    {
+      "title": "亚历山大帝国分裂",
+      "content": "亚历山大大帝病逝，庞大帝国被部下瓜分，希腊化时代开始。",
+      "category": "politics",
+      "region": "west",
+      "year": -323,
+      "era": "古希腊",
+      "location": "巴比伦",
+      "tags": [
+        "古希腊",
+        "希腊化",
+        "帝国分裂"
+      ],
+      "figures": [
+        {
+          "name": "亚历山大",
+          "title": "马其顿国王"
+        }
+      ]
+    },
+    {
+      "title": "罗马建城",
+      "content": "相传罗慕路斯于台伯河畔建立罗马城，开启罗马王政时代。",
+      "category": "politics",
+      "region": "west",
+      "year": -753,
+      "era": "古罗马",
+      "location": "罗马",
+      "tags": [
+        "古罗马",
+        "建城"
+      ]
+    },
+    {
+      "title": "迦太基灭亡",
+      "content": "罗马在第三次布匿战争中攻陷迦太基，将其彻底摧毁，获得地中海霸权。",
+      "category": "politics",
+      "region": "west",
+      "year": -146,
+      "era": "古罗马",
+      "location": "迦太基",
+      "tags": [
+        "古罗马",
+        "布匿战争",
+        "地中海"
+      ]
+    },
+    {
+      "title": "前三头同盟",
+      "content": "恺撒、庞培、克拉苏结成政治同盟，共同主导罗马政局。",
+      "category": "politics",
+      "region": "west",
+      "year": -60,
+      "era": "古罗马",
+      "location": "罗马",
+      "tags": [
+        "古罗马",
+        "恺撒",
+        "同盟"
+      ],
+      "figures": [
+        {
+          "name": "恺撒",
+          "title": "罗马统帅"
+        },
+        {
+          "name": "庞培",
+          "title": "罗马统帅"
+        }
+      ]
+    },
+    {
+      "title": "恺撒渡卢比孔河",
+      "content": "恺撒率军渡过卢比孔河，越过禁令进攻罗马，引发内战，为独裁铺路。",
+      "category": "politics",
+      "region": "west",
+      "year": -49,
+      "era": "古罗马",
+      "location": "罗马",
+      "tags": [
+        "古罗马",
+        "恺撒",
+        "内战"
+      ],
+      "figures": [
+        {
+          "name": "恺撒",
+          "title": "罗马统帅"
+        }
+      ]
+    },
+    {
+      "title": "亚克兴海战",
+      "content": "屋大维在亚克兴海战击败安东尼与克利奥帕特拉联军，成为罗马唯一掌权者。",
+      "category": "politics",
+      "region": "west",
+      "year": -31,
+      "era": "古罗马",
+      "location": "亚克兴",
+      "tags": [
+        "古罗马",
+        "屋大维",
+        "海战"
+      ],
+      "figures": [
+        {
+          "name": "屋大维",
+          "title": "罗马执政官"
+        }
+      ]
+    },
+    {
+      "title": "罗马帝国分裂",
+      "content": "狄奥多西一世去世，罗马帝国分裂为东西两部分，西罗马不久灭亡。",
+      "category": "politics",
+      "region": "west",
+      "year": 395,
+      "era": "中世纪",
+      "location": "罗马",
+      "tags": [
+        "古罗马",
+        "分裂",
+        "中世纪"
+      ]
+    },
+    {
+      "title": "图尔战役",
+      "content": "法兰克宫相查理·马特在图尔击败阿拉伯军队，阻止伊斯兰势力向西欧扩张。",
+      "category": "politics",
+      "region": "west",
+      "year": 732,
+      "era": "中世纪",
+      "location": "图尔",
+      "tags": [
+        "中世纪",
+        "法兰克",
+        "查理·马特"
+      ]
+    },
+    {
+      "title": "凡尔登条约",
+      "content": "查理曼的三个孙子在凡尔登签订条约，将帝国一分为三，奠定法、德、意三国雏形。",
+      "category": "politics",
+      "region": "west",
+      "year": 843,
+      "era": "中世纪",
+      "location": "凡尔登",
+      "tags": [
+        "中世纪",
+        "查理曼帝国",
+        "分裂"
+      ]
+    },
+    {
+      "title": "神圣罗马帝国建立",
+      "content": "奥托一世被教皇加冕为皇帝，神圣罗马帝国建立。",
+      "category": "politics",
+      "region": "west",
+      "year": 962,
+      "era": "中世纪",
+      "location": "罗马",
+      "tags": [
+        "中世纪",
+        "神圣罗马",
+        "奥托"
+      ]
+    },
+    {
+      "title": "诺曼征服",
+      "content": "诺曼底公爵威廉在黑斯廷斯之战击败英王哈罗德，征服英格兰，史称诺曼征服。",
+      "category": "politics",
+      "region": "west",
+      "year": 1066,
+      "era": "中世纪",
+      "location": "伦敦",
+      "tags": [
+        "中世纪",
+        "英国",
+        "诺曼"
+      ]
+    },
+    {
+      "title": "百年战争开始",
+      "content": "英法为争夺王位与领土爆发百年战争，双方战争与和谈交织。",
+      "category": "politics",
+      "region": "west",
+      "year": 1337,
+      "era": "中世纪",
+      "location": "巴黎",
+      "tags": [
+        "中世纪",
+        "英法",
+        "百年战争"
+      ]
+    },
+    {
+      "title": "英国内战爆发",
+      "content": "英国议会派与保王派因王权与议会之争爆发内战，最终议会取得胜利。",
+      "category": "politics",
+      "region": "west",
+      "year": 1642,
+      "era": "近代",
+      "location": "伦敦",
+      "tags": [
+        "近代",
+        "英国",
+        "内战"
+      ]
+    },
+    {
+      "title": "洛克出版《政府论》",
+      "content": "洛克发表《政府论》，提出分权与人民主权学说，对启蒙运动和后世政治制度影响深远。",
+      "category": "thought",
+      "region": "west",
+      "year": 1690,
+      "era": "近代",
+      "location": "伦敦",
+      "tags": [
+        "近代",
+        "洛克",
+        "启蒙"
+      ],
+      "figures": [
+        {
+          "name": "约翰·洛克",
+          "title": "哲学家"
+        }
+      ]
+    },
+    {
+      "title": "亚当·斯密出版《国富论》",
+      "content": "亚当·斯密发表《国富论》，系统阐述自由市场经济思想，奠定古典经济学基础。",
+      "category": "thought",
+      "region": "west",
+      "year": 1776,
+      "era": "近代",
+      "location": "伦敦",
+      "tags": [
+        "近代",
+        "经济学",
+        "亚当·斯密"
+      ],
+      "figures": [
+        {
+          "name": "亚当·斯密",
+          "title": "经济学家"
+        }
+      ]
+    },
+    {
+      "title": "狭义相对论提出",
+      "content": "爱因斯坦发表论文提出狭义相对论，颠覆牛顿的绝对时空观。",
+      "category": "science",
+      "region": "west",
+      "year": 1905,
+      "era": "现代",
+      "location": "伯尔尼",
+      "tags": [
+        "现代",
+        "相对论",
+        "爱因斯坦"
+      ],
+      "figures": [
+        {
+          "name": "阿尔伯特·爱因斯坦",
+          "title": "物理学家"
+        }
+      ]
+    },
+    {
+      "title": "发现青霉素",
+      "content": "弗莱明发现青霉菌能抑制细菌生长，人类由此进入抗生素时代。",
+      "category": "science",
+      "region": "west",
+      "year": 1928,
+      "era": "现代",
+      "location": "伦敦",
+      "tags": [
+        "现代",
+        "医学",
+        "弗莱明"
+      ],
+      "figures": [
+        {
+          "name": "亚历山大·弗莱明",
+          "title": "生物学家"
+        }
+      ]
+    },
+    {
+      "title": "DNA双螺旋结构发现",
+      "content": "沃森与克里克提出DNA双螺旋结构模型，揭开分子生物学序幕。",
+      "category": "science",
+      "region": "west",
+      "year": 1953,
+      "era": "现代",
+      "location": "剑桥",
+      "tags": [
+        "现代",
+        "生物学",
+        "DNA"
+      ],
+      "figures": [
+        {
+          "name": "沃森",
+          "title": "生物学家"
+        },
+        {
+          "name": "克里克",
+          "title": "生物学家"
+        }
       ]
     }
   ]
