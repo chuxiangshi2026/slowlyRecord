@@ -12,7 +12,7 @@ import {ALL_PHONEMES} from '@/utils/phoneme-data';
 import {getProgressDoc, saveProgressDoc} from '@/utils/phonetic-memory-db';
 import type {PhonemeProgress, MinimalPairProgress, PhoneticProgressDoc} from '@/types/phonetic-memory';
 
-/** level >= 7 视为已掌握,与单词 store 的约定一致 */
+/** level >= 7 视为已掌握（音标模块自己的阈值，与单词的 12 级 remember 标准无关） */
 const MASTERED_LEVEL = 7;
 /** level 0-12,对应 DEFAULT_INTERVALS 的下标 */
 const MAX_LEVEL = Math.min(12, DEFAULT_INTERVALS.length - 1);

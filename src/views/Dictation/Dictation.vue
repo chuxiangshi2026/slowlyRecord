@@ -299,6 +299,7 @@ import { batchTranslateAndAddWords } from '@/utils/str-util';
 import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/phonetic-util';
 import { fetchWordBank, WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
+import { DEFAULT_INTERVALS } from '@/constants';
 import DetailDrawer from '@/views/Word/components/DetailDrawer.vue';
 import WordFilter from '@/views/Word/components/WordFilter.vue';
 import type { FilterState } from '@/views/Word/components/WordFilter.vue';
@@ -1130,10 +1131,26 @@ async function checkAnswer() {
   const isCorrect = userAnswer === word.text.toLowerCase();
 
   if (isCorrect) {
-    // 正确：记一次记住（等级+1）
-    word.level = Math.min(7, (word.level || 1) + 1) as Word['level'];
-    word.isReview = word.level < 7;
-    if (word.level >= 7) word.remember = true;
+    // 正确：与主列表统一标准 —— 过了当前等级的复习间隔（且在时间窗口内）才升级，
+    // 按记忆牢固度提升 1~3 级，封顶 12 级，12 级视为已记住
+    const now = Date.now();
+    const level = Number(word.level) || 1;
+    const learnDate = word.learnDate ? new Date(word.learnDate).getTime() : 0;
+    const startLearnDate = learnDate + DEFAULT_INTERVALS[level] * 60 * 1000;
+    const endLearnDate = learnDate + DEFAULT_INTERVALS[Math.min(level + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000;
+
+    if (now > startLearnDate && now < endLearnDate) {
+      const firmness = wordsStore.memoryFirmness;
+      let levelIncrement = 1;
+      if (firmness === '较强') {
+        levelIncrement = 2;
+      } else if (firmness === '极强') {
+        levelIncrement = 3;
+      }
+      word.level = Math.min(12, level + levelIncrement) as Word['level'];
+      if (word.level >= 12) word.remember = true;
+    }
+    word.isReview = false;
     word.learnDate = new Date();
 
     await wordsStore.addAndUpdateWord(word);
@@ -1144,8 +1161,13 @@ async function checkAnswer() {
     refreshWordList();
     nextWord();
   } else {
-    // 错误：触发忘记（等级-1）
-    word.level = Math.max(1, (word.level || 1) - 1) as Word['level'];
+    // 错误：触发忘记（与主列表统一：12 级忘记直接重置回 1 级，其余降级）
+    if ((word.level || 1) >= 12) {
+      word.level = 1 as Word['level'];
+    } else {
+      word.level = Math.max(1, (word.level || 1) - 1) as Word['level'];
+    }
+    word.remember = false;
     word.isReview = true;
 
     await wordsStore.addAndUpdateWord(word);
@@ -1170,13 +1192,18 @@ async function checkAnswer() {
 }
 
 /**
- * 忘记按钮：直接降级当前单词
+ * 忘记按钮：直接降级当前单词（与答错处理一致）
  */
 async function handleForget() {
   const word = currentWord.value;
   if (!word) return;
 
-  word.level = Math.max(1, (word.level || 1) - 1) as Word['level'];
+  if ((word.level || 1) >= 12) {
+    word.level = 1 as Word['level'];
+  } else {
+    word.level = Math.max(1, (word.level || 1) - 1) as Word['level'];
+  }
+  word.remember = false;
   word.isReview = true;
 
   await wordsStore.addAndUpdateWord(word);
