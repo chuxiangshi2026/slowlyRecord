@@ -340,22 +340,12 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
   const addWordActions = ['over', 'huaci', 'huaduan', 'jietu', 'paste', 'selection']
-  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', 'knowledgeMemory', 'memoryPalace', ...addWordActions].includes(action.code)) {
+  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
   // 文本记忆 - 通过 文本记忆/诗词记忆 关键字进入
   if (action.code === 'textMemory') {
     handlePluginTextMemory()
-  }
-
-  // 知识记忆 - 通过 知识记忆/乘法表 等关键字进入
-  if (action.code === 'knowledgeMemory') {
-    handlePluginKnowledgeMemory()
-  }
-
-  // 记忆宫殿 - 通过 记忆宫殿 关键字进入
-  if (action.code === 'memoryPalace') {
-    handlePluginMemoryPalace()
   }
 
 
@@ -803,26 +793,6 @@ function handlePluginTextMemory() {
   if (isUTools()) (window as any).utools?.showMainWindow?.()
   // 跳转到文本记忆页面
   router.push('/text-memory')
-}
-
-/**
- * 处理知识记忆的插件入口（乘法表/元素周期表等知识包）
- */
-function handlePluginKnowledgeMemory() {
-  // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
-  // 跳转到知识记忆页面
-  router.push('/knowledge-memory')
-}
-
-/**
- * 处理记忆宫殿的插件入口
- */
-function handlePluginMemoryPalace() {
-  // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
-  // 跳转到记忆宫殿页面
-  router.push('/memory-palace')
 }
 
 /**
