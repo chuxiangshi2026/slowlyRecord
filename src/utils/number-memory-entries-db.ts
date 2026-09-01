@@ -1,9 +1,10 @@
-import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt } from "@/types/number-memory";
+import type { NumberMemoryEntry, NumberMemoryKind, NumberMemoryNote, NumberMemoryPrompt } from "@/types/number-memory";
 import { log } from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import { DB_KEY_NUMBER_MEMORY } from "@/constants";
 import {getDbAdapter} from "@/adapters/db";
 import { nextIdTimestamp } from "@/utils/id-util";
+import {DEFAULT_LEVEL} from "@/utils/number-memory-srs";
 
 const DB_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'entry_';
 const NOTE_KEY_PREFIX = DB_KEY_NUMBER_MEMORY + 'note_';
@@ -52,10 +53,12 @@ export async function saveEntry(entry: NumberMemoryEntry): Promise<DbReturn> {
  * 创建新条目
  */
 export async function createEntry(
-  title: string, 
-  numbers: string, 
-  tags: string[] = [], 
-  description?: string
+  title: string,
+  numbers: string,
+  tags: string[] = [],
+  description?: string,
+  kind?: NumberMemoryKind,
+  mnemonic?: string
 ): Promise<DbReturn & { doc?: NumberMemoryEntry }> {
   const now = Date.now();
   const entry: NumberMemoryEntry = {
@@ -63,11 +66,14 @@ export async function createEntry(
     type: 'number_memory_entry',
     title: title.trim(),
     numbers: numbers.trim(),
+    kind,
     tags,
     description: description?.trim(),
+    mnemonic: mnemonic?.trim(),
     createdAt: now,
     updatedAt: now,
-    reviewCount: 0
+    reviewCount: 0,
+    level: DEFAULT_LEVEL,
   };
   
   const result = await saveEntry(entry);

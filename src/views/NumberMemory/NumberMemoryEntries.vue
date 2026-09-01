@@ -73,13 +73,31 @@
         <!-- 标题行 -->
         <p class="entry-title-line">
           <span class="entry-title-text" :title="entry.title">{{ entry.title }}</span>
-          <span v-if="entry.reviewCount > 0" class="entry-review-count">
-            已复习 {{ entry.reviewCount }} 次
+          <span class="entry-badges">
+            <el-tag size="small" effect="light" class="kind-tag">{{ kindLabels[getEntryKind(entry)] }}</el-tag>
+            <el-tag
+              size="small"
+              :type="getEntryLevel(entry) >= 12 ? 'success' : 'info'"
+              class="level-tag"
+            >
+              L{{ getEntryLevel(entry) }}
+            </el-tag>
+            <span v-if="entry.reviewCount > 0" class="entry-review-count">
+              已复习 {{ entry.reviewCount }} 次
+            </span>
           </span>
         </p>
 
         <!-- 数字主内容 -->
-        <div class="entry-number-display" :title="entry.numbers">{{ entry.numbers }}</div>
+        <div class="entry-number-display" :title="entry.numbers">
+          {{ segmentNumber(entry.numbers, getEntryKind(entry)) }}
+        </div>
+
+        <!-- 助记提示 -->
+        <div v-if="entry.mnemonic" class="entry-mnemonic-line" :title="entry.mnemonic">
+          <el-icon><MagicStick /></el-icon>
+          {{ entry.mnemonic }}
+        </div>
 
         <!-- 标签行 -->
         <div class="entry-tags-line">
@@ -108,6 +126,9 @@
             </el-tooltip>
             <el-tooltip class="box-item" effect="dark" content="填空练习" placement="top" popper-class="small-tooltip">
               <el-icon class="iconHover" :size="20" @click="handleFillBlanks(entry)"><EditPen /></el-icon>
+            </el-tooltip>
+            <el-tooltip v-if="isEntryDue(entry)" class="box-item" effect="dark" content="到期复习" placement="top" popper-class="small-tooltip">
+              <el-icon class="iconHover review-due" :size="20" @click="handleFillBlanks(entry)"><AlarmClock /></el-icon>
             </el-tooltip>
             <el-tooltip class="box-item" effect="dark" content="笔记" placement="top" popper-class="small-tooltip">
               <i class="iconfont icon-notebook-1 iconHover" @click="handleNotes(entry)" />
@@ -188,6 +209,16 @@
             show-word-limit
           />
         </el-form-item>
+        <el-form-item label="类型">
+          <el-select v-model="entryForm.kind" placeholder="选择数字类型" style="width: 100%">
+            <el-option
+              v-for="(label, key) in kindLabels"
+              :key="key"
+              :label="label"
+              :value="key"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="数字" required>
           <el-input
             v-model="entryForm.numbers"
@@ -195,6 +226,26 @@
             maxlength="100"
             show-word-limit
           />
+          <div v-if="entryForm.numbers && !validationResult.valid" class="validation-tip">
+            <el-icon><Warning /></el-icon>
+            {{ validationResult.message }}
+          </div>
+        </el-form-item>
+        <el-form-item label="助记">
+          <el-input
+            v-model="entryForm.mnemonic"
+            type="textarea"
+            :rows="2"
+            placeholder="输入顺口溜/谐音助记（可选）"
+            maxlength="200"
+            show-word-limit
+          />
+          <div v-if="entryForm.kind === 'pi'" class="mnemonic-example-tip">
+            <el-button link type="primary" size="small" @click="fillMnemonicExample">
+              <el-icon><MagicStick /></el-icon>
+              填入示例谐音
+            </el-button>
+          </div>
         </el-form-item>
         <el-form-item label="标签">
           <el-select
@@ -218,7 +269,7 @@
           <el-input
             v-model="entryForm.description"
             type="textarea"
-            :rows="3"
+            :rows="2"
             placeholder="输入描述或备注（可选）"
             maxlength="200"
             show-word-limit
@@ -263,11 +314,19 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useNumberMemoryStore } from '@/stores/numberMemory';
-import type { NumberMemoryEntry } from '@/types/number-memory';
+import type { NumberMemoryEntry, NumberMemoryKind } from '@/types/number-memory';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {
-  Plus, Search, CircleClose, EditPen, Memo, Picture
+  Plus, Search, CircleClose, EditPen, Memo, Picture, Warning, MagicStick, AlarmClock
 } from '@element-plus/icons-vue';
+import {
+  KIND_LABELS,
+  segmentNumber,
+  validateNumber,
+  getEntryKind,
+} from '@/utils/number-memory-format';
+import {getEntryLevel, isDue} from '@/utils/number-memory-srs';
+import {getMnemonicExample} from '@/utils/number-mnemonic-data';
 
 // 导入子组件
 import ImageAssociationDialog from './components/ImageAssociationDialog.vue';
@@ -307,8 +366,18 @@ const currentEntry = ref<NumberMemoryEntry | null>(null);
 const entryForm = ref({
   title: '',
   numbers: '',
+  kind: 'custom' as NumberMemoryKind,
   tags: [] as string[],
-  description: ''
+  description: '',
+  mnemonic: ''
+});
+
+// 类型标签
+const kindLabels = KIND_LABELS;
+
+// 表单校验提示（仅提示，不阻断保存）
+const validationResult = computed(() => {
+  return validateNumber(entryForm.value.numbers, entryForm.value.kind);
 });
 
 // 导入文件输入
@@ -418,14 +487,22 @@ function goToTraining() {
 
 // 保存条目
 async function saveEntry() {
+  // 校验不通过时仅提示，不阻断保存
+  const validation = validateNumber(entryForm.value.numbers, entryForm.value.kind);
+  if (!validation.valid) {
+    ElMessage.warning(validation.message || '格式可能有误，仍允许保存');
+  }
+
   if (editingEntry.value) {
     // 更新
     const updated: NumberMemoryEntry = {
       ...editingEntry.value,
       title: entryForm.value.title.trim(),
       numbers: entryForm.value.numbers.trim(),
+      kind: entryForm.value.kind,
       tags: entryForm.value.tags,
-      description: entryForm.value.description?.trim()
+      description: entryForm.value.description?.trim(),
+      mnemonic: entryForm.value.mnemonic?.trim()
     };
     const result = await store.updateEntryItem(updated);
     if (result.ok) {
@@ -441,7 +518,9 @@ async function saveEntry() {
       entryForm.value.title.trim(),
       entryForm.value.numbers.trim(),
       entryForm.value.tags,
-      entryForm.value.description?.trim()
+      entryForm.value.description?.trim(),
+      entryForm.value.kind,
+      entryForm.value.mnemonic?.trim()
     );
     if (result.ok) {
       ElMessage.success('添加成功');
@@ -458,8 +537,10 @@ function resetForm() {
   entryForm.value = {
     title: '',
     numbers: '',
+    kind: 'custom',
     tags: [],
-    description: ''
+    description: '',
+    mnemonic: ''
   };
   editingEntry.value = null;
 }
@@ -470,10 +551,27 @@ function handleEdit(entry: NumberMemoryEntry) {
   entryForm.value = {
     title: entry.title,
     numbers: entry.numbers,
+    kind: getEntryKind(entry),
     tags: [...entry.tags],
-    description: entry.description || ''
+    description: entry.description || '',
+    mnemonic: entry.mnemonic || ''
   };
   showAddDialog.value = true;
+}
+
+// 填入谐音示例
+function fillMnemonicExample() {
+  const example = getMnemonicExample(entryForm.value.kind, entryForm.value.numbers);
+  if (example) {
+    entryForm.value.mnemonic = example;
+  } else {
+    ElMessage.info('暂无该类型的示例助记');
+  }
+}
+
+// 判断条目是否到期
+function isEntryDue(entry: NumberMemoryEntry): boolean {
+  return isDue(entry, Date.now());
 }
 
 // 删除条目
@@ -805,6 +903,18 @@ watch(showAddDialog, (val) => {
       white-space: nowrap;
     }
 
+    .entry-badges {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+
+      .kind-tag,
+      .level-tag {
+        font-size: 11px;
+      }
+    }
+
     .entry-review-count {
       font-size: 12px;
       font-weight: normal;
@@ -829,6 +939,18 @@ watch(showAddDialog, (val) => {
     flex-wrap: wrap;
     gap: 6px;
     margin-bottom: 8px;
+  }
+
+  .entry-mnemonic-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--utools-warning);
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .entry-meta-line {
@@ -879,7 +1001,29 @@ watch(showAddDialog, (val) => {
     .operate-group .iconHover + .iconHover {
       margin-left: 0;
     }
+
+    .review-due {
+      color: var(--utools-warning);
+
+      &:hover {
+        background-color: rgba(230, 162, 60, 0.12);
+      }
+    }
   }
+}
+
+// 表单校验提示
+.validation-tip {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--utools-warning);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mnemonic-example-tip {
+  margin-top: 4px;
 }
 
 // ---- 底部工具栏（复用 Word.vue 的 home_footer 结构） ----

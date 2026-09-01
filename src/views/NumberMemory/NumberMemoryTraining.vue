@@ -38,6 +38,17 @@
               <el-tag v-if="!canStartTraining" type="info">请先保存至少4个数字关联</el-tag>
             </el-card>
           </el-col>
+          <el-col :span="12">
+            <el-card
+              class="mode-card"
+              shadow="hover"
+              @click="startTraining('randomSequence')"
+            >
+              <div class="mode-icon">🎲</div>
+              <h4>随机序列</h4>
+              <p>限时记忆随机数字串，逐级加长</p>
+            </el-card>
+          </el-col>
         </el-row>
       </div>
 
@@ -112,10 +123,34 @@
               </div>
             </div>
           </template>
+
+          <!-- 随机序列模式 -->
+          <template v-else-if="currentMode === 'randomSequence'">
+            <div class="random-sequence-area">
+              <div v-if="randomSequenceShow" class="random-sequence-display">
+                {{ randomSequenceQuestion }}
+              </div>
+              <div v-else-if="!isFinished" class="random-sequence-input-area">
+                <div class="random-sequence-label">
+                  请输入刚才显示的数字（{{ randomSequenceLength }} 位）
+                </div>
+                <el-input
+                  v-model="randomSequenceInput"
+                  class="random-sequence-input"
+                  maxlength="100"
+                  placeholder="输入记忆中的数字"
+                  @keyup.enter="checkRandomSequence"
+                />
+                <div class="random-sequence-actions">
+                  <el-button type="primary" @click="checkRandomSequence">提交</el-button>
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
 
         <!-- 反馈区域 -->
-        <div v-if="hasAnswered" class="feedback-area">
+        <div v-if="hasAnswered && currentMode !== 'randomSequence'" class="feedback-area">
           <el-alert
             :title="isCorrect ? '🎉 回答正确！' : '😢 回答错误'"
             :type="isCorrect ? 'success' : 'error'"
@@ -144,14 +179,14 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <div class="stat-item">
-                <div class="stat-value">{{ correctCount }}</div>
-                <div class="stat-label">正确题数</div>
+                <div class="stat-value">{{ currentMode === 'randomSequence' ? randomSequenceScore : correctCount }}</div>
+                <div class="stat-label">{{ currentMode === 'randomSequence' ? '最高位数' : '正确题数' }}</div>
               </div>
             </el-col>
             <el-col :span="8">
               <div class="stat-item">
-                <div class="stat-value">{{ accuracy }}%</div>
-                <div class="stat-label">正确率</div>
+                <div class="stat-value">{{ currentMode === 'randomSequence' ? randomSequenceRound - 1 : accuracy }}%</div>
+                <div class="stat-label">{{ currentMode === 'randomSequence' ? '完成轮数' : '正确率' }}</div>
               </div>
             </el-col>
             <el-col :span="8">
@@ -164,9 +199,9 @@
         </div>
 
         <!-- 详细记录 -->
-        <el-divider />
-        <h4>答题详情</h4>
-        <el-table :data="answerDetails" style="width: 100%">
+        <el-divider v-if="currentMode !== 'randomSequence'" />
+        <h4 v-if="currentMode !== 'randomSequence'">答题详情</h4>
+        <el-table v-if="currentMode !== 'randomSequence'" :data="answerDetails" style="width: 100%">
           <el-table-column type="index" label="题号" width="60" align="center" />
           <el-table-column label="题目" align="center">
             <template #default="{ row }">
@@ -245,7 +280,7 @@ const store = useNumberMemoryStore();
 const wordsStore = useWordsStore();
 
 // State
-const currentMode = ref<"numberToImage" | "imageToNumber" | null>(null);
+const currentMode = ref<"numberToImage" | "imageToNumber" | "randomSequence" | null>(null);
 const questions = ref<any[]>([]);
 const currentQuestionIndex = ref(0);
 const selectedAnswer = ref<any>(null);
@@ -254,6 +289,17 @@ const isCorrect = ref(false);
 const isFinished = ref(false);
 const elapsedTime = ref(0);
 const answerResults = ref<{ question: string; selectedImage: string | null; selectedNumber: string | null; correct: boolean; responseTime: number }[]>([]);
+
+// 随机序列训练状态（纯会话，不写 DB）
+const randomSequenceLength = ref(5);
+const randomSequenceMin = 5;
+const randomSequenceMax = 100;
+const randomSequenceQuestion = ref("");
+const randomSequenceInput = ref("");
+const randomSequenceShow = ref(false);
+const randomSequenceScore = ref(0);
+const randomSequenceRound = ref(1);
+let randomSequenceTimer: number | null = null;
 
 // Timer
 let timer: number | null = null;
@@ -290,18 +336,31 @@ const accuracy = computed(() => {
 });
 
 const resultIcon = computed(() => {
+  if (currentMode.value === 'randomSequence') {
+    if (randomSequenceScore.value >= 20) return "success";
+    if (randomSequenceScore.value >= 10) return "warning";
+    return "error";
+  }
   if (accuracy.value >= 80) return "success";
   if (accuracy.value >= 60) return "warning";
   return "error";
 });
 
 const resultTitle = computed(() => {
+  if (currentMode.value === 'randomSequence') {
+    if (randomSequenceScore.value >= 20) return "记忆大师！";
+    if (randomSequenceScore.value >= 10) return "记忆力不错！";
+    return "继续练习！";
+  }
   if (accuracy.value >= 80) return "太棒了！";
   if (accuracy.value >= 60) return "还不错！";
   return "继续加油！";
 });
 
 const resultSubtitle = computed(() => {
+  if (currentMode.value === 'randomSequence') {
+    return `本次最高记忆到 ${randomSequenceScore.value} 位数字`;
+  }
   return `你答对了 ${correctCount.value}/${answerResults.value.length} 题，正确率 ${accuracy.value}%`;
 });
 
@@ -346,18 +405,24 @@ function formatTime(seconds: number): string {
   return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
 
-function startTraining(mode: "numberToImage" | "imageToNumber") {
-  if (!canStartTraining.value) {
+function startTraining(mode: "numberToImage" | "imageToNumber" | "randomSequence") {
+  if (mode !== "randomSequence" && !canStartTraining.value) {
     ElMessage.warning("请先保存至少4个数字-图片关联");
     return;
   }
 
   currentMode.value = mode;
-  
+
   if (mode === "numberToImage") {
     questions.value = store.generateNumberToImageQuiz(5);
-  } else {
+  } else if (mode === "imageToNumber") {
     questions.value = store.generateImageToNumberQuiz(5);
+  } else {
+    // 随机序列模式：重置状态并开始第一轮
+    resetRandomSequenceState();
+    startTimer();
+    startRandomSequenceRound();
+    return;
   }
 
   currentQuestionIndex.value = 0;
@@ -367,8 +432,90 @@ function startTraining(mode: "numberToImage" | "imageToNumber") {
   elapsedTime.value = 0;
   answerResults.value = [];
   questionStartTime = Date.now();
-  
+
   startTimer();
+}
+
+// 随机序列模式：重置状态
+function resetRandomSequenceState() {
+  randomSequenceLength.value = randomSequenceMin;
+  randomSequenceScore.value = 0;
+  randomSequenceRound.value = 1;
+  randomSequenceInput.value = "";
+  randomSequenceQuestion.value = "";
+  isFinished.value = false;
+  elapsedTime.value = 0;
+  answerResults.value = [];
+  stopRandomSequenceTimer();
+}
+
+// 随机序列模式：生成指定长度的随机数字串
+function generateRandomSequence(length: number): string {
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += Math.floor(Math.random() * 10).toString();
+  }
+  return result;
+}
+
+// 随机序列模式：开始一轮
+function startRandomSequenceRound() {
+  randomSequenceQuestion.value = generateRandomSequence(randomSequenceLength.value);
+  randomSequenceInput.value = "";
+  randomSequenceShow.value = true;
+  hasAnswered.value = false;
+
+  // 限时显示：每 5 位 1 秒，最低 2 秒
+  const displaySeconds = Math.max(2, Math.ceil(randomSequenceLength.value / 5));
+
+  stopRandomSequenceTimer();
+  randomSequenceTimer = window.setTimeout(() => {
+    randomSequenceShow.value = false;
+  }, displaySeconds * 1000);
+}
+
+// 随机序列模式：停止显示计时器
+function stopRandomSequenceTimer() {
+  if (randomSequenceTimer) {
+    clearTimeout(randomSequenceTimer);
+    randomSequenceTimer = null;
+  }
+}
+
+// 随机序列模式：检查输入
+function checkRandomSequence() {
+  if (hasAnswered.value || randomSequenceShow.value) return;
+
+  hasAnswered.value = true;
+  const input = randomSequenceInput.value.trim();
+  const correct = input === randomSequenceQuestion.value;
+  isCorrect.value = correct;
+
+  if (correct) {
+    randomSequenceScore.value = Math.max(randomSequenceScore.value, randomSequenceLength.value);
+    ElMessage.success(`正确！进入 ${randomSequenceLength.value + 1} 位挑战`);
+
+    if (randomSequenceLength.value < randomSequenceMax) {
+      randomSequenceLength.value++;
+      randomSequenceRound.value++;
+      setTimeout(() => {
+        startRandomSequenceRound();
+      }, 800);
+    } else {
+      finishRandomSequence();
+    }
+  } else {
+    ElMessage.error(`回答错误，正确答案是：${randomSequenceQuestion.value}`);
+    finishRandomSequence();
+  }
+}
+
+// 随机序列模式：结束
+function finishRandomSequence() {
+  stopRandomSequenceTimer();
+  stopTimer();
+  isFinished.value = true;
+  randomSequenceScore.value = Math.max(randomSequenceScore.value, randomSequenceLength.value - 1);
 }
 
 function selectAnswer(answer: any) {
@@ -405,6 +552,11 @@ function nextQuestion() {
 async function finishTraining() {
   stopTimer();
   isFinished.value = true;
+
+  // 随机序列模式不保存训练结果
+  if (currentMode.value === 'randomSequence') {
+    return;
+  }
 
   // 训练完成，清除进度
   clearTrainingProgress();
@@ -446,7 +598,8 @@ async function goBack() {
 
 // 保存当前训练进度
 async function saveCurrentProgress() {
-  if (!currentMode.value || isFinished.value || questions.value.length === 0) return;
+  if (!currentMode.value || isFinished.value || currentMode.value === 'randomSequence') return;
+  if (questions.value.length === 0) return;
 
   const progress: TrainingProgress = {
     _id: 'number_memory_progress',
@@ -492,9 +645,9 @@ onMounted(async () => {
   // 记录最后访问的页面
   wordsStore.setLastVisitedPage('/number-memory/training');
 
-  // 检查是否有未完成的训练进度
+  // 检查是否有未完成的训练进度（随机序列模式不恢复）
   const progress = getTrainingProgress();
-  if (progress && progress.questions.length > 0) {
+  if (progress && (progress.mode as string) !== 'randomSequence' && progress.questions.length > 0) {
     try {
       await ElMessageBox.confirm(
         `检测到未完成的训练（${progress.mode === 'numberToImage' ? '数字→图片' : '图片→数字'}，第 ${progress.currentQuestionIndex + 1}/${progress.questions.length} 题），是否继续？`,
@@ -515,6 +668,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   stopTimer();
+  stopRandomSequenceTimer();
   saveCurrentProgress();
 });
 </script>
@@ -787,6 +941,51 @@ onUnmounted(() => {
     .result-actions {
       margin-top: 30px;
       text-align: center;
+    }
+  }
+
+  // 随机序列模式样式
+  .random-sequence-area {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--utools-bg-secondary);
+    border-radius: 8px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .random-sequence-display {
+      font-size: 48px;
+      font-weight: bold;
+      color: var(--utools-primary);
+      font-family: monospace;
+      letter-spacing: 8px;
+      word-break: break-all;
+    }
+
+    .random-sequence-input-area {
+      width: 100%;
+      max-width: 500px;
+
+      .random-sequence-label {
+        font-size: 16px;
+        color: var(--utools-text-secondary);
+        margin-bottom: 20px;
+      }
+
+      .random-sequence-input {
+        margin-bottom: 20px;
+
+        :deep(.el-input__inner) {
+          height: 60px;
+          text-align: center;
+          font-size: 28px;
+          font-family: monospace;
+          letter-spacing: 4px;
+        }
+      }
     }
   }
 }

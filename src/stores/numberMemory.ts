@@ -1,11 +1,12 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import type { 
-  NumberImageAssociation, 
-  TrainingResult, 
-  NumberMemoryEntry, 
-  NumberMemoryNote, 
-  NumberMemoryPrompt 
+import type {
+  NumberImageAssociation,
+  TrainingResult,
+  NumberMemoryEntry,
+  NumberMemoryKind,
+  NumberMemoryNote,
+  NumberMemoryPrompt
 } from "@/types/number-memory";
 import {
   getAllAssociations,
@@ -37,6 +38,7 @@ import {
   deletePrompt,
   reorderPrompts
 } from "@/utils/number-memory-entries-db";
+import {DEFAULT_LEVEL, getEntryLevel, isDue, isRemembered, markCorrect, markWrong} from "@/utils/number-memory-srs";
 
 export const useNumberMemoryStore = defineStore("numberMemory", () => {
   // State
@@ -74,6 +76,15 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
       entry.tags.forEach(tag => tagSet.add(tag));
     });
     return Array.from(tagSet).sort();
+  });
+
+  const dueEntries = computed(() => {
+    const now = Date.now();
+    return entries.value.filter(entry => isDue(entry, now));
+  });
+
+  const rememberedCount = computed(() => {
+    return entries.value.filter(entry => isRemembered(entry)).length;
   });
 
   // Actions
@@ -253,12 +264,14 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
    * 添加条目
    */
   async function addEntry(
-    title: string, 
-    numbers: string, 
-    tags: string[] = [], 
-    description?: string
+    title: string,
+    numbers: string,
+    tags: string[] = [],
+    description?: string,
+    kind?: NumberMemoryKind,
+    mnemonic?: string
   ) {
-    const result = await createEntry(title, numbers, tags, description);
+    const result = await createEntry(title, numbers, tags, description, kind, mnemonic);
     if (result.ok && result.doc) {
       entries.value.unshift(result.doc);
     }
@@ -313,6 +326,49 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
     return { ok: false };
   }
   
+  /**
+   * 标记条目答对（已到期才升级）
+   */
+  async function markEntryCorrect(entryId: string) {
+    const entry = entries.value.find(e => e._id === entryId);
+    if (!entry) return {ok: false};
+    const updated = markCorrect(entry);
+    if (updated === entry) return {ok: true, entry};
+    const result = await updateEntry(updated);
+    if (result.ok) {
+      const index = entries.value.findIndex(e => e._id === entryId);
+      if (index >= 0) {
+        entries.value[index] = updated;
+      }
+    }
+    return {...result, entry: updated};
+  }
+
+  /**
+   * 标记条目答错（降级）
+   */
+  async function markEntryWrong(entryId: string) {
+    const entry = entries.value.find(e => e._id === entryId);
+    if (!entry) return {ok: false};
+    const updated = markWrong(entry);
+    const result = await updateEntry(updated);
+    if (result.ok) {
+      const index = entries.value.findIndex(e => e._id === entryId);
+      if (index >= 0) {
+        entries.value[index] = updated;
+      }
+    }
+    return {...result, entry: updated};
+  }
+
+  /**
+   * 获取条目当前等级
+   */
+  function getEntryLevelById(entryId: string): number {
+    const entry = entries.value.find(e => e._id === entryId);
+    return entry ? getEntryLevel(entry) : DEFAULT_LEVEL;
+  }
+
   /**
    * 加载条目的笔记
    */
@@ -444,12 +500,17 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
     entriesLoading,
     sortedEntries,
     allTags,
+    dueEntries,
+    rememberedCount,
     loadEntries,
     addEntry,
     updateEntryItem,
     deleteEntryItem,
     setCurrentEntry,
     updateReviewCount,
+    markEntryCorrect,
+    markEntryWrong,
+    getEntryLevelById,
     // 笔记相关
     loadNotes,
     addNote,

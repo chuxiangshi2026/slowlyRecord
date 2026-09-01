@@ -11,6 +11,7 @@ vi.mock('@/utils/logger', () => ({
 // Mock constants
 vi.mock('@/constants', () => ({
   DB_KEY_NUMBER_MEMORY: 'number_memory_',
+  DEFAULT_INTERVALS: [1, 5, 30, 360, 720, 1440, 2880, 5760, 10080, 21600, 43200, 129600, 259200, 518400],
 }))
 
 async function loadModule() {
@@ -124,9 +125,20 @@ describe('number-memory-entries-db', () => {
       expect(result.doc!.title).toBe('银行卡号')
       expect(result.doc!.tags).toEqual(['财务', '银行'])
       expect(result.doc!.reviewCount).toBe(0)
+      expect(result.doc!.level).toBe(1)
 
       const entries = getAllEntries()
       expect(entries).toHaveLength(1)
+    })
+
+    it('应保存 kind 和 mnemonic', async () => {
+      const { createEntry, getEntryById } = await loadModule()
+      const result = await createEntry('π', '3.14159', ['数学'], '', 'pi', '山巅一寺一壶酒')
+
+      expect(result.ok).toBe(true)
+      const entry = getEntryById(result.doc!._id)
+      expect(entry!.kind).toBe('pi')
+      expect(entry!.mnemonic).toBe('山巅一寺一壶酒')
     })
 
     it('标题和数字应去除首尾空格', async () => {
