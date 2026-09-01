@@ -24,6 +24,8 @@ const PhoneticMemory = () => import('@/views/PhoneticMemory/PhoneticMemory.vue')
 const PhoneticRecognition = () => import('@/views/PhoneticMemory/PhoneticRecognition.vue');
 const MinimalPairs = () => import('@/views/PhoneticMemory/MinimalPairs.vue');
 const PhonemeBreakdown = () => import('@/views/PhoneticMemory/PhonemeBreakdown.vue');
+const KnowledgeMemory = () => import('@/views/KnowledgeMemory/KnowledgeMemory.vue');
+const KnowledgeMemoryPack = () => import('@/views/KnowledgeMemory/KnowledgeMemoryPack.vue');
 // const Exception = () => import('@/views/Exception/Exception.vue');
 // const Apply = () => import('@/views/Apply/Apply.vue');
 // const Check = () => import('@/views/Check/Check.vue');
@@ -188,6 +190,25 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '音素拆解',
+        },
+      },
+      {
+        path: 'knowledge-memory',
+        name: 'knowledgeMemory',
+        component: KnowledgeMemory,
+        meta: {
+          menu: true,
+          title: '知识包',
+          icon: 'notebook',
+        },
+      },
+      {
+        path: 'knowledge-memory/:id',
+        name: 'knowledgeMemoryPack',
+        component: KnowledgeMemoryPack,
+        meta: {
+          menu: false,
+          title: '知识包练习',
         },
       },
       ...(isDesktopEnv ? [

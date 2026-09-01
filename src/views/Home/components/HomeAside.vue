@@ -17,7 +17,7 @@ import type {RouteRecordName} from "vue-router";
 import {useRouter,useRoute} from "vue-router";
 // import {useStore} from "@/store";
 import {ref} from "vue";
-import { DocumentAdd, Calendar, FirstAidKit, Document, Collection, Aim, Cpu, Tickets } from '@element-plus/icons-vue';
+import { DocumentAdd, Calendar, FirstAidKit, Document, Collection, Aim, Cpu, Tickets, Notebook } from '@element-plus/icons-vue';
 
 // const  store = useStore()
 const route = useRoute()
@@ -44,7 +44,8 @@ const iconMap: Record<string, any> = {
   'collection': Collection,
   'aim': Aim,
   'Cpu': Cpu,
-  'Tickets': Tickets
+  'Tickets': Tickets,
+  'notebook': Notebook,
 };
 
 function getIconComponent(iconName?: string) {
