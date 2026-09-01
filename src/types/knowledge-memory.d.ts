@@ -32,6 +32,9 @@ export interface KnowledgePack {
     items: KnowledgeItem[];
 }
 
+/** 知识包分类：math 融入数字记忆，text 融入文本记忆 */
+export type KnowledgePackCategory = 'math' | 'text';
+
 /** 知识包在列表中的轻量信息 */
 export interface KnowledgePackInfo {
     id: string;
@@ -40,6 +43,8 @@ export interface KnowledgePackInfo {
     itemCount: number;
     ordered: boolean;
     usableAsPeg: boolean;
+    /** 宿主分类：数学强相关为 math，文本/常识类为 text */
+    category: KnowledgePackCategory;
 }
 
 /** 单个条目的练习进度 */

@@ -242,6 +242,7 @@ import {
   TrendCharts,
 } from '@element-plus/icons-vue';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
+import { getKnowledgePackInfo } from '@/utils/knowledge-pack-service';
 import type {KnowledgeItem, KnowledgePracticeMode} from '@/types/knowledge-memory';
 import { exportTableAsImage } from '@/utils/table-image-export';
 import type {TableImageData} from '@/utils/table-image-export';
@@ -388,7 +389,9 @@ function generateCurrentOptions() {
 }
 
 function goBack() {
-  router.push('/knowledge-memory');
+  // 按知识包分类回到宿主模块：math → 数字记忆主页，其余 → 文本记忆的知识库视图
+  const category = getKnowledgePackInfo(packId.value)?.category;
+  router.push(category === 'math' ? '/number-memory' : '/text-memory?view=knowledge');
 }
 
 function isCorrectOption(opt: string): boolean {

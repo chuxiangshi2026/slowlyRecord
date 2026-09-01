@@ -186,6 +186,14 @@
     <!-- 新手引导 -->
     <QuickStartGuide v-model="showGuide" @finish="onGuideFinish" />
 
+    <!-- 数学类知识表（乘法表/元素周期表/公式等） -->
+    <el-card class="knowledge-card">
+      <template #header>
+        <span>📚 知识表</span>
+      </template>
+      <KnowledgePackPanel category="math" />
+    </el-card>
+
     <!-- 已保存的关联列表 -->
     <el-card class="list-card" v-if="store.hasAssociations">
       <template #header>
@@ -235,6 +243,7 @@ import { Check, Delete, Upload } from "@element-plus/icons-vue";
 import type { UploadFile } from "element-plus";
 import TrainingHistory from "./components/TrainingHistory.vue";
 import QuickStartGuide from "./components/QuickStartGuide.vue";
+import KnowledgePackPanel from "@/views/TextMemory/components/KnowledgePackPanel.vue";
 import type { TrainingResult } from "@/types/number-memory";
 import { clearAllTrainingResults, getTrainingProgress, clearTrainingProgress } from "@/utils/number-memory-db";
 
@@ -744,10 +753,24 @@ onMounted(() => {
     }
   }
 
-  .list-card {
+  .knowledge-card {
+    margin-bottom: 20px;
     background-color: var(--utools-bg-card);
     border-color: var(--utools-border-primary);
 
+    // 面板内卡片在 el-card 中拉通宽度
+    :deep(.knowledge-pack-panel) {
+      padding: 0;
+
+      .knowledge-pack-card {
+        width: 100%;
+      }
+    }
+  }
+
+  .list-card {
+    background-color: var(--utools-bg-card);
+    border-color: var(--utools-border-primary);
     .table-image {
       width: 50px;
       height: 50px;

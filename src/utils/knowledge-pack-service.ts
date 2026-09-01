@@ -3,7 +3,7 @@
  * 参考 wordbank-service.ts 结构，从 public/knowledgebanks/ 加载 JSON 并做 localStorage 缓存。
  */
 
-import type {KnowledgePack, KnowledgePackInfo} from '@/types/knowledge-memory';
+import type {KnowledgePack, KnowledgePackCategory, KnowledgePackInfo} from '@/types/knowledge-memory';
 
 // 本地知识包文件路径（适配 base: './' 配置）
 const LOCAL_KNOWLEDGEBANK_PATH = import.meta.env.BASE_URL + 'knowledgebanks/';
@@ -29,18 +29,19 @@ export const DEFAULT_STRATEGY: LoadStrategy = {
 };
 
 // 内置知识包元数据（与 public/knowledgebanks/*.json 对应）
+// category: math 类融入「数字记忆」主页，text 类融入「文本记忆」知识库视图
 export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
-    {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false},
-    {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false},
-    {id: 'elements', name: '元素周期表（前 36 号）', description: '元素符号、中文名、序数与拼音', itemCount: 36, ordered: false, usableAsPeg: false},
-    {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true},
-    {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true},
-    {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false},
-    {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false},
-    {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false},
-    {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false},
-    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 24, ordered: false, usableAsPeg: false},
-    {id: 'chemistry-formulas', name: '常用化学公式', description: '初中化学常见方程式与计算式', itemCount: 20, ordered: false, usableAsPeg: false},
+    {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'elements', name: '元素周期表（前 36 号）', description: '元素符号、中文名、序数与拼音', itemCount: 36, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text'},
+    {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text'},
+    {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false, category: 'text'},
+    {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
+    {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
+    {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false, category: 'text'},
+    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 24, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'chemistry-formulas', name: '常用化学公式', description: '初中化学常见方程式与计算式', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math'},
 ];
 
 interface CacheData {
@@ -302,10 +303,12 @@ export function getKnowledgePackInfo(id: string): KnowledgePackInfo | undefined 
 }
 
 /**
- * 列出所有内置知识包元数据
+ * 列出内置知识包元数据，可按 category 过滤（math → 数字记忆，text → 文本记忆）
  */
-export function listKnowledgePacks(): KnowledgePackInfo[] {
-    return KNOWLEDGE_PACK_LIST.map(p => ({...p}));
+export function listKnowledgePacks(category?: KnowledgePackCategory): KnowledgePackInfo[] {
+    return KNOWLEDGE_PACK_LIST
+        .filter(p => !category || p.category === category)
+        .map(p => ({...p}));
 }
 
 /**

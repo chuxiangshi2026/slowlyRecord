@@ -72,15 +72,13 @@
       </div>
     </div>
 
-    <!-- 底部工具栏 -->
-    <div class="home_footer">
-      <div>
-        <span class="footer-stat">共 {{ store.palaces.length }} 座宫殿</span>
-      </div>
-      <div>
+    <!-- 底部工具行（嵌入文本记忆页内，使用内联布局而非固定底栏，避免页中页） -->
+    <div class="palace-toolbar">
+      <span class="toolbar-stat">共 {{ store.palaces.length }} 座宫殿</span>
+      <div class="toolbar-actions">
         <el-dropdown @command="handleImportPack">
           <el-tooltip effect="dark" content="导入内置桩库" placement="top" popper-class="small-tooltip">
-            <el-icon :size="20" class="footer-icon"><Download /></el-icon>
+            <el-icon :size="20" class="toolbar-icon"><Download /></el-icon>
           </el-tooltip>
           <template #dropdown>
             <el-dropdown-menu>
@@ -95,7 +93,7 @@
           </template>
         </el-dropdown>
         <el-tooltip effect="dark" content="新建宫殿" placement="top" popper-class="small-tooltip">
-          <el-icon :size="20" class="footer-icon" @click="goEdit('')"><Plus /></el-icon>
+          <el-icon :size="20" class="toolbar-icon" @click="goEdit('')"><Plus /></el-icon>
         </el-tooltip>
       </div>
     </div>
@@ -237,9 +235,7 @@ async function handleDelete(palace: Palace) {
 <style scoped lang="scss">
 .memory-palace-page {
   width: 100%;
-  min-height: 100vh;
   background-color: var(--utools-bg-secondary);
-  padding-bottom: 55px;
   box-sizing: border-box;
 }
 
@@ -347,7 +343,7 @@ async function handleDelete(palace: Palace) {
 // ---- 列表区域 ----
 .palace-list-wrapper {
   width: 100%;
-  min-height: calc(100vh - 32px - 55px);
+  min-height: 200px;
   padding: 10px 0;
   display: flex;
   flex-direction: column;
@@ -429,32 +425,19 @@ async function handleDelete(palace: Palace) {
   }
 }
 
-// ---- 底部工具栏 ----
-.home_footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
+// ---- 底部工具行（内联，嵌入宿主页面使用） ----
+.palace-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: var(--utools-bg-card);
-  height: 55px;
+  height: 40px;
   border-top: 1px solid var(--utools-border-divider);
   padding: 0 12px;
   box-sizing: border-box;
   color: var(--utools-text-primary);
-  z-index: 20;
 
-  > div:first-child,
-  > div:last-child {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .footer-stat {
+  .toolbar-stat {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -462,7 +445,13 @@ async function handleDelete(palace: Palace) {
     color: var(--utools-text-secondary);
   }
 
-  .footer-icon {
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .toolbar-icon {
     font-size: 20px;
     cursor: pointer;
     padding: 6px;

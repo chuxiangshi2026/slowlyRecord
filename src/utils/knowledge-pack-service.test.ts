@@ -75,6 +75,24 @@ describe('knowledge-pack-service', () => {
       expect(getKnowledgePackInfo('not-exist')).toBeUndefined()
     })
 
+    it('每个内置知识包都带有 category 分类', () => {
+      expect(KNOWLEDGE_PACK_LIST.every(p => p.category === 'math' || p.category === 'text')).toBe(true)
+    })
+
+    it('listKnowledgePacks 按 category 过滤', () => {
+      const math = listKnowledgePacks('math')
+      expect(math.map(p => p.id).sort()).toEqual([
+        'chemistry-formulas',
+        'elements',
+        'math-formulas',
+        'multiplication-19x19',
+        'multiplication-9x9',
+      ])
+      const text = listKnowledgePacks('text')
+      expect(text).toHaveLength(6)
+      expect(text.every(p => p.category === 'text')).toBe(true)
+    })
+
     it('默认策略配置正确', () => {
       expect(DEFAULT_STRATEGY).toEqual({priority: 'local', useCache: true, timeout: 5000})
     })

@@ -24,9 +24,7 @@ const PhoneticMemory = () => import('@/views/PhoneticMemory/PhoneticMemory.vue')
 const PhoneticRecognition = () => import('@/views/PhoneticMemory/PhoneticRecognition.vue');
 const MinimalPairs = () => import('@/views/PhoneticMemory/MinimalPairs.vue');
 const PhonemeBreakdown = () => import('@/views/PhoneticMemory/PhonemeBreakdown.vue');
-const KnowledgeMemory = () => import('@/views/KnowledgeMemory/KnowledgeMemory.vue');
 const KnowledgeMemoryPack = () => import('@/views/KnowledgeMemory/KnowledgeMemoryPack.vue');
-const MemoryPalace = () => import('@/views/MemoryPalace/MemoryPalace.vue');
 const MemoryPalaceEdit = () => import('@/views/MemoryPalace/MemoryPalaceEdit.vue');
 const MemoryPalaceDetail = () => import('@/views/MemoryPalace/MemoryPalaceDetail.vue');
 const MemoryPalaceReview = () => import('@/views/MemoryPalace/MemoryPalaceReview.vue');
@@ -197,32 +195,12 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: 'knowledge-memory',
-        name: 'knowledgeMemory',
-        component: KnowledgeMemory,
-        meta: {
-          menu: true,
-          title: '知识包',
-          icon: 'notebook',
-        },
-      },
-      {
         path: 'knowledge-memory/:id',
         name: 'knowledgeMemoryPack',
         component: KnowledgeMemoryPack,
         meta: {
           menu: false,
           title: '知识包练习',
-        },
-      },
-      {
-        path: 'memory-palace',
-        name: 'memoryPalace',
-        component: MemoryPalace,
-        meta: {
-          menu: true,
-          title: '记忆宫殿',
-          icon: 'OfficeBuilding',
         },
       },
       {

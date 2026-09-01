@@ -92,6 +92,19 @@ vi.mock('@/stores/words', () => ({
   })),
 }))
 
+// 主页嵌入了知识表面板，这里 mock 掉知识包 store，避免引入 DB 适配层
+vi.mock('@/stores/knowledgeMemory', () => ({
+  useKnowledgeMemoryStore: vi.fn(() => ({
+    packList: [],
+    loading: false,
+    isPackLoaded: vi.fn(() => false),
+    getTotalCount: vi.fn(() => 0),
+    getMasteredCount: vi.fn(() => 0),
+    getDueCount: vi.fn(() => 0),
+    loadPack: vi.fn(() => Promise.resolve()),
+  })),
+}))
+
 // Mock localStorage
 const localStorageMock = {
   getItem: vi.fn(() => null),

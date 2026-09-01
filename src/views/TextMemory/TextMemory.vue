@@ -83,6 +83,16 @@
               <el-icon><Clock /></el-icon>
             </el-tooltip>
           </el-radio-button>
+          <el-radio-button label="palace">
+            <el-tooltip effect="dark" content="宫殿视图（记忆宫殿）" placement="top" popper-class="small-tooltip">
+              <el-icon><OfficeBuilding /></el-icon>
+            </el-tooltip>
+          </el-radio-button>
+          <el-radio-button label="knowledge">
+            <el-tooltip effect="dark" content="知识库视图（文本类知识包）" placement="top" popper-class="small-tooltip">
+              <el-icon><Notebook /></el-icon>
+            </el-tooltip>
+          </el-radio-button>
         </el-radio-group>
         <el-tooltip class="box-item" effect="dark" content="添加文本" placement="top" popper-class="small-tooltip">
           <el-button type="primary" size="small" @click="showAddDialog = true">
@@ -243,19 +253,29 @@
         @locate="handleLocateArticle"
       />
     </div>
+
+    <!-- 宫殿视图（嵌入记忆宫殿列表，含新建/导入桩库/删除） -->
+    <div v-if="currentView === 'palace'" class="palace-view">
+      <MemoryPalace />
+    </div>
+
+    <!-- 知识库视图（文本类知识包卡片） -->
+    <div v-if="currentView === 'knowledge'" class="knowledge-view">
+      <KnowledgePackPanel category="text" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {
   Search, Plus, Upload, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
-  User, Clock, View, Pointer, List, MapLocation, VideoPlay, CircleClose
+  User, Clock, View, Pointer, List, MapLocation, VideoPlay, CircleClose, OfficeBuilding
 } from '@element-plus/icons-vue';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { log } from '@/utils/logger';
@@ -278,7 +298,11 @@ import PromptsDialog from './components/PromptsDialog.vue';
 import TypingPracticeDialog from './components/TypingPracticeDialog.vue';
 import PoetryMap from './components/PoetryMap.vue';
 import TimelineView from './components/TimelineView.vue';
+import KnowledgePackPanel from './components/KnowledgePackPanel.vue';
+// 记忆宫殿列表作为子组件嵌入「宫殿」视图
+import MemoryPalace from '@/views/MemoryPalace/MemoryPalace.vue';
 
+const route = useRoute();
 const router = useRouter();
 const textStore = useTextMemoryStore();
 
@@ -301,8 +325,19 @@ const sortOptions = [
   { key: 'reviewCount' as SortField, label: '复习次数' }
 ];
 
-// 当前视图：list | map | timeline
-const currentView = ref<'list' | 'map' | 'timeline'>('list');
+// 当前视图：list | map | timeline | palace | knowledge
+type TextMemoryView = 'list' | 'map' | 'timeline' | 'palace' | 'knowledge';
+const currentView = ref<TextMemoryView>('list');
+
+// 支持通过 query 定位视图，如 /text-memory?view=palace、?view=knowledge
+const VALID_VIEWS: TextMemoryView[] = ['list', 'map', 'timeline', 'palace', 'knowledge'];
+function applyViewFromQuery() {
+  const qv = route.query.view;
+  const v = Array.isArray(qv) ? qv[0] : qv;
+  if (v && VALID_VIEWS.includes(v as TextMemoryView)) {
+    currentView.value = v as TextMemoryView;
+  }
+}
 
 // 对话框显示状态
 const showAddDialog = ref(false);
@@ -367,6 +402,7 @@ onMounted(async () => {
   setupTextFocusListeners();
   setReturnToListHandler(() => router.push('/text-memory'));
   document.addEventListener('click', onDocClick, true);
+  applyViewFromQuery();
   await textStore.loadArticles();
 });
 

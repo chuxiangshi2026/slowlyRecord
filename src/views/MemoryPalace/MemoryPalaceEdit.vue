@@ -220,7 +220,8 @@ async function retryCompressAndSave(): Promise<DbReturn> {
 }
 
 function goBack() {
-  router.push('/memory-palace');
+  // 宫殿列表已并入文本记忆的宫殿视图
+  router.push('/text-memory?view=palace');
 }
 </script>
 

@@ -135,3 +135,18 @@ Phase 1（UI 模板） → Phase 2（数字增强）
 ```
 
 Phase 5 可在 Phase 3 完成后与 Phase 4 并行。
+
+---
+
+## 结构调整记录（2026-09）
+
+独立的知识记忆模块与记忆宫殿模块已拆入宿主模块，不再保留独立列表入口：
+
+- **知识包分类**：`knowledge-pack-service.ts` 的包元数据新增 `category: 'math' | 'text'`。
+  - math（融入「数字记忆」主页"知识表"卡片区）：multiplication-9x9、multiplication-19x19、elements、math-formulas、chemistry-formulas
+  - text（融入「文本记忆」知识库视图）：solar-terms-24、zodiac-12、constellations-12、ethnic-groups-56、cuisines-8、provinces-capitals
+- **文本记忆**：视图切换从 3 个扩到 5 个（列表/地图/时间线/宫殿/知识库），支持 `/text-memory?view=palace`、`?view=knowledge` 定位。宫殿列表组件（`MemoryPalace.vue`）嵌入宫殿视图，固定底栏改为内联工具行；知识库视图为文本类知识包卡片（`TextMemory/components/KnowledgePackPanel.vue`）。
+- **数字记忆**：主页新增"知识表"卡片区，复用 `KnowledgePackPanel`（category='math'）。
+- **路由**：删除 `/knowledge-memory`（列表）与 `/memory-palace`（列表）路由；保留 `/knowledge-memory/:id`、`/memory-palace/edit/:id?`、`/memory-palace/:id`、`/memory-palace/:id/review`。
+- **返回路径映射**：知识包练习页按 category 回宿主（math → `/number-memory`，text → `/text-memory?view=knowledge`）；宫殿详情/编辑的返回 → `/text-memory?view=palace`。
+- 未新增 uTools 插件关键字入口（该方案已撤销）。
