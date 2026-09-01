@@ -26,6 +26,10 @@ const MinimalPairs = () => import('@/views/PhoneticMemory/MinimalPairs.vue');
 const PhonemeBreakdown = () => import('@/views/PhoneticMemory/PhonemeBreakdown.vue');
 const KnowledgeMemory = () => import('@/views/KnowledgeMemory/KnowledgeMemory.vue');
 const KnowledgeMemoryPack = () => import('@/views/KnowledgeMemory/KnowledgeMemoryPack.vue');
+const MemoryPalace = () => import('@/views/MemoryPalace/MemoryPalace.vue');
+const MemoryPalaceEdit = () => import('@/views/MemoryPalace/MemoryPalaceEdit.vue');
+const MemoryPalaceDetail = () => import('@/views/MemoryPalace/MemoryPalaceDetail.vue');
+const MemoryPalaceReview = () => import('@/views/MemoryPalace/MemoryPalaceReview.vue');
 // const Exception = () => import('@/views/Exception/Exception.vue');
 // const Apply = () => import('@/views/Apply/Apply.vue');
 // const Check = () => import('@/views/Check/Check.vue');
@@ -209,6 +213,43 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '知识包练习',
+        },
+      },
+      {
+        path: 'memory-palace',
+        name: 'memoryPalace',
+        component: MemoryPalace,
+        meta: {
+          menu: true,
+          title: '记忆宫殿',
+          icon: 'OfficeBuilding',
+        },
+      },
+      {
+        path: 'memory-palace/edit/:id?',
+        name: 'memoryPalaceEdit',
+        component: MemoryPalaceEdit,
+        meta: {
+          menu: false,
+          title: '编辑宫殿',
+        },
+      },
+      {
+        path: 'memory-palace/:id',
+        name: 'memoryPalaceDetail',
+        component: MemoryPalaceDetail,
+        meta: {
+          menu: false,
+          title: '宫殿详情',
+        },
+      },
+      {
+        path: 'memory-palace/:id/review',
+        name: 'memoryPalaceReview',
+        component: MemoryPalaceReview,
+        meta: {
+          menu: false,
+          title: '宫殿巡视',
         },
       },
       ...(isDesktopEnv ? [

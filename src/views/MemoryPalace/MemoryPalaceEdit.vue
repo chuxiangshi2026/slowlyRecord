@@ -1,0 +1,311 @@
+<template>
+  <div class="palace-edit-page">
+    <div class="edit-container">
+      <h2 class="edit-title">{{ isEdit ? '编辑宫殿' : '新建宫殿' }}</h2>
+
+      <el-form label-width="80px">
+        <el-form-item label="宫殿名称" required>
+          <el-input
+            v-model="formName"
+            placeholder="如：我的家、上班路线"
+            maxlength="30"
+            show-word-limit
+          />
+        </el-form-item>
+      </el-form>
+
+      <!-- 桩列表编辑 -->
+      <div class="loci-header">
+        <span>地点桩（{{ loci.length }} 个，按巡视顺序排列）</span>
+        <el-button size="small" type="primary" plain @click="addLocus">
+          <el-icon><Plus /></el-icon>
+          添加桩
+        </el-button>
+      </div>
+
+      <el-empty v-if="loci.length === 0" description="暂无地点桩，点击右上角添加" />
+
+      <div v-for="(locus, index) in loci" :key="index" class="locus-editor list-item">
+        <div class="locus-order-badge">{{ index + 1 }}</div>
+
+        <div class="locus-fields">
+          <div class="locus-row">
+            <el-input v-model="locus.name" placeholder="桩名称（如：大门）" maxlength="20" class="locus-name-input" />
+            <el-button size="small" @click="triggerImageInput(index)">
+              {{ locus.imageUrl ? '更换图片' : '上传图片' }}
+            </el-button>
+          </div>
+          <el-input
+            v-model="locus.description"
+            placeholder="桩描述（可选）"
+            maxlength="100"
+            class="locus-desc-input"
+          />
+          <div v-if="locus.imageUrl" class="locus-image-preview">
+            <img :src="locus.imageUrl" alt="桩图片" />
+            <el-button size="small" text type="danger" @click="locus.imageUrl = undefined">移除图片</el-button>
+          </div>
+        </div>
+
+        <div class="locus-actions">
+          <el-tooltip effect="dark" content="上移" placement="top">
+            <el-icon class="iconHover" :class="{ disabled: index === 0 }" @click="moveLocus(index, -1)"><Top /></el-icon>
+          </el-tooltip>
+          <el-tooltip effect="dark" content="下移" placement="top">
+            <el-icon class="iconHover" :class="{ disabled: index === loci.length - 1 }" @click="moveLocus(index, 1)"><Bottom /></el-icon>
+          </el-tooltip>
+          <el-tooltip effect="dark" content="删除" placement="top">
+            <el-icon class="iconHover" @click="removeLocus(index)"><Delete /></el-icon>
+          </el-tooltip>
+        </div>
+      </div>
+
+      <!-- 底部操作 -->
+      <div class="edit-actions">
+        <el-button @click="goBack">取消</el-button>
+        <el-button type="primary" :disabled="!canSave" :loading="saving" @click="save">
+          保存
+        </el-button>
+      </div>
+    </div>
+
+    <!-- 隐藏的图片文件输入 -->
+    <input
+      ref="imageInput"
+      type="file"
+      accept="image/*"
+      style="display: none"
+      @change="handleImageChange"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import {computed, onMounted, ref} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
+import {ElMessage} from 'element-plus';
+import {Bottom, Delete, Plus, Top} from '@element-plus/icons-vue';
+import {useMemoryPalaceStore} from '@/stores/memoryPalace';
+import {compressImage} from '@/utils/image-compress';
+import type {PalaceLocus} from '@/types/memory-palace';
+
+const route = useRoute();
+const router = useRouter();
+const store = useMemoryPalaceStore();
+
+// 编辑目标宫殿 id（空串表示新建）
+const palaceId = (route.params.id as string) || '';
+const isEdit = !!palaceId;
+
+const formName = ref('');
+const loci = ref<PalaceLocus[]>([]);
+const saving = ref(false);
+
+// 图片上传
+const imageInput = ref<HTMLInputElement | null>(null);
+const currentImageIndex = ref(-1);
+
+const canSave = computed(() => {
+  return formName.value.trim() && loci.value.some(l => l.name.trim());
+});
+
+onMounted(async () => {
+  if (!isEdit) return;
+  await store.loadPalaces();
+  const palace = store.palaces.find(p => p._id === palaceId);
+  if (!palace) {
+    ElMessage.error('宫殿不存在');
+    goBack();
+    return;
+  }
+  formName.value = palace.name;
+  // 深拷贝桩列表，避免直接改 store 数据
+  loci.value = palace.loci.map(l => ({...l}));
+});
+
+function addLocus() {
+  loci.value.push({order: loci.value.length + 1, name: '', description: ''});
+}
+
+function removeLocus(index: number) {
+  loci.value.splice(index, 1);
+}
+
+// 上移/下移调整顺序
+function moveLocus(index: number, delta: number) {
+  const target = index + delta;
+  if (target < 0 || target >= loci.value.length) return;
+  const temp = loci.value[index];
+  loci.value[index] = loci.value[target];
+  loci.value[target] = temp;
+}
+
+function triggerImageInput(index: number) {
+  currentImageIndex.value = index;
+  imageInput.value?.click();
+}
+
+// 选择图片后压缩为 dataURL
+async function handleImageChange(e: Event) {
+  const input = e.target as HTMLInputElement;
+  const file = input.files?.[0];
+  input.value = '';
+  if (!file || currentImageIndex.value < 0) return;
+
+  try {
+    const dataUrl = await compressImage(file, {maxWidth: 400, maxHeight: 400, maxSizeBytes: 150 * 1024});
+    loci.value[currentImageIndex.value].imageUrl = dataUrl;
+  } catch {
+    ElMessage.error('图片处理失败');
+  }
+}
+
+async function save() {
+  saving.value = true;
+  try {
+    if (isEdit) {
+      const palace = store.palaces.find(p => p._id === palaceId);
+      if (!palace) return;
+      const result = await store.updatePalace({...palace, name: formName.value, loci: loci.value});
+      if (result.ok) {
+        ElMessage.success('保存成功');
+        goBack();
+      } else {
+        ElMessage.error('保存失败');
+      }
+    } else {
+      const {result} = await store.createPalace(formName.value, loci.value);
+      if (result.ok) {
+        ElMessage.success('创建成功');
+        goBack();
+      } else {
+        ElMessage.error('创建失败');
+      }
+    }
+  } finally {
+    saving.value = false;
+  }
+}
+
+function goBack() {
+  router.push('/memory-palace');
+}
+</script>
+
+<style scoped lang="scss">
+.palace-edit-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--utools-bg-secondary);
+  box-sizing: border-box;
+  padding: 16px 0;
+}
+
+.edit-container {
+  width: 92%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.edit-title {
+  font-size: 18px;
+  color: var(--utools-text-primary);
+  margin: 0 0 16px 0;
+}
+
+.loci-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 10px 0;
+  font-size: 14px;
+  color: var(--utools-text-secondary);
+}
+
+.locus-editor {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-height: auto;
+  max-height: none;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+
+  .locus-order-badge {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--utools-primary);
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .locus-fields {
+    flex: 1;
+    min-width: 0;
+
+    .locus-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .locus-desc-input {
+      margin-bottom: 8px;
+    }
+
+    .locus-image-preview {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid var(--utools-border-divider);
+      }
+    }
+  }
+
+  .locus-actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .iconHover {
+      font-size: 18px;
+      padding: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--utools-text-secondary);
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: var(--utools-bg-hover);
+      }
+
+      &.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+</style>
