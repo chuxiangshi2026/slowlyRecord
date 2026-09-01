@@ -86,7 +86,8 @@ import {useRoute, useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import {Bottom, Delete, Plus, Top} from '@element-plus/icons-vue';
 import {useMemoryPalaceStore} from '@/stores/memoryPalace';
-import {compressImage} from '@/utils/image-compress';
+import {compressImage, compressImageFromDataURL} from '@/utils/image-compress';
+import type {DbReturn} from '@/adapters/db';
 import type {PalaceLocus} from '@/types/memory-palace';
 
 const route = useRoute();
@@ -163,27 +164,58 @@ async function handleImageChange(e: Event) {
 async function save() {
   saving.value = true;
   try {
-    if (isEdit) {
-      const palace = store.palaces.find(p => p._id === palaceId);
-      if (!palace) return;
-      const result = await store.updatePalace({...palace, name: formName.value, loci: loci.value});
-      if (result.ok) {
-        ElMessage.success('保存成功');
+    const result = await doSave(loci.value);
+    if (result.ok) {
+      ElMessage.success(isEdit ? '保存成功' : '创建成功');
+      goBack();
+    } else if (result.message === '图片过多，请减少桩图片或改用文字描述') {
+      // 超限后尝试进一步压缩图片再保存一次
+      const retryResult = await retryCompressAndSave();
+      if (retryResult.ok) {
+        ElMessage.success(isEdit ? '保存成功（已自动压缩图片）' : '创建成功（已自动压缩图片）');
         goBack();
       } else {
-        ElMessage.error('保存失败');
+        ElMessage.error(retryResult.message || '保存失败：图片仍过大，请减少桩图片或改用文字描述');
       }
     } else {
-      const {result} = await store.createPalace(formName.value, loci.value);
-      if (result.ok) {
-        ElMessage.success('创建成功');
-        goBack();
-      } else {
-        ElMessage.error('创建失败');
-      }
+      ElMessage.error(result.message || '保存失败');
     }
   } finally {
     saving.value = false;
+  }
+}
+
+/** 执行保存，loci 中的 imageUrl 可以是 dataURL */
+async function doSave(lociToSave: PalaceLocus[]): Promise<DbReturn> {
+  if (isEdit) {
+    const palace = store.palaces.find(p => p._id === palaceId);
+    if (!palace) {
+      return {ok: false, id: '', error: true, message: '宫殿不存在'};
+    }
+    return store.updatePalace({...palace, name: formName.value, loci: lociToSave, utime: Date.now()});
+  }
+  const {result} = await store.createPalace(formName.value, lociToSave);
+  return result;
+}
+
+/** 将所有图片进一步压缩到 200×200/60KB 后重试保存 */
+async function retryCompressAndSave(): Promise<DbReturn> {
+  try {
+    const recompressed = await Promise.all(
+      loci.value.map(async locus => {
+        if (!locus.imageUrl || !locus.imageUrl.startsWith('data:')) return locus;
+        const compressed = await compressImageFromDataURL(locus.imageUrl, {
+          maxWidth: 200,
+          maxHeight: 200,
+          maxSizeBytes: 60 * 1024,
+        });
+        return {...locus, imageUrl: compressed};
+      }),
+    );
+    loci.value = recompressed;
+    return doSave(recompressed);
+  } catch {
+    return {ok: false, id: '', error: true, message: '图片压缩失败'};
   }
 }
 

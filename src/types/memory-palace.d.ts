@@ -85,6 +85,18 @@ export interface PegListDoc {
   updatedAt: number;
 }
 
+/** 宫殿桩图片数据库文档（按宫殿分文档，避免主文档超限） */
+export interface PalaceImagesDoc {
+  _id: string;
+  _rev?: string;
+  type: 'memory_palace_images';
+  /** 所属宫殿 _id */
+  palaceId: string;
+  /** 桩顺序号 -> 图片 dataURL */
+  images: Record<string, string>;
+  updatedAt: number;
+}
+
 /** 切块方式 */
 export type ChunkMode = 'sentence' | 'paragraph';
 

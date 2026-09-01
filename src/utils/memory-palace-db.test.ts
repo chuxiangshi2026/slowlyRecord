@@ -1,6 +1,6 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {resetDbAdapter, setDbAdapter, type DbAdapter} from '@/adapters/db';
-import type {Palace, PegItem} from '@/types/memory-palace';
+import type {Palace, PalaceImagesDoc, PegItem} from '@/types/memory-palace';
 
 vi.mock('@/utils/logger', () => ({
   log: {i: vi.fn(), d: vi.fn(), e: vi.fn(), w: vi.fn()},
@@ -151,5 +151,74 @@ describe('memory-palace-db', () => {
     await savePegItem(makePeg('p1', 1));
     await removePegItem('p1', 'peg_p1_1');
     expect(getPegsByPalace('p1')).toHaveLength(0);
+  });
+
+  it('保存宫殿时桩图片单独存为分文档，主文档不再含 dataURL', async () => {
+    const {savePalace, getPalaceById, getImagesKey} = await import('./memory-palace-db');
+    const palace = makePalace('p1');
+    palace.loci[0].imageUrl = 'data:image/png;base64,img1';
+    palace.loci[1].imageUrl = 'data:image/png;base64,img2';
+    const result = await savePalace(palace);
+    expect(result.ok).toBe(true);
+
+    const storedPalace = mockDb.get<PalaceListDoc>('memory_palace_palaces')?.palaces[0];
+    expect(storedPalace?.loci[0].imageUrl).toBeUndefined();
+    expect(storedPalace?.loci[1].imageUrl).toBeUndefined();
+
+    const imagesDoc = mockDb.get<PalaceImagesDoc>(getImagesKey('p1'));
+    expect(imagesDoc?.images['1']).toBe('data:image/png;base64,img1');
+    expect(imagesDoc?.images['2']).toBe('data:image/png;base64,img2');
+
+    const readPalace = getPalaceById('p1');
+    expect(readPalace?.loci[0].imageUrl).toBe('data:image/png;base64,img1');
+    expect(readPalace?.loci[1].imageUrl).toBe('data:image/png;base64,img2');
+  });
+
+  it('读取旧宫殿时惰性迁移桩图片到分文档', async () => {
+    const {savePalace, getPalaceById, getImagesKey} = await import('./memory-palace-db');
+    const palace = makePalace('p1');
+    palace.loci[0].imageUrl = 'data:image/png;base64,oldimage';
+    await savePalace(palace);
+
+    // 模拟旧数据：直接把 dataURL 写回宫殿主文档，并清空图片文档
+    const palacesDoc = mockDb.get<PalaceListDoc>('memory_palace_palaces');
+    palacesDoc!.palaces[0].loci[0].imageUrl = 'data:image/png;base64,oldimage';
+    mockDb.put!(palacesDoc);
+    const imagesDoc = mockDb.get<PalaceImagesDoc>(getImagesKey('p1'));
+    mockDb.put!({...imagesDoc!, images: {}});
+
+    // 读取应触发迁移
+    const readPalace = getPalaceById('p1');
+    expect(readPalace?.loci[0].imageUrl).toBe('data:image/png;base64,oldimage');
+
+    const migratedImagesDoc = mockDb.get<PalaceImagesDoc>(getImagesKey('p1'));
+    expect(migratedImagesDoc?.images['1']).toBe('data:image/png;base64,oldimage');
+
+    const migratedPalace = mockDb.get<PalaceListDoc>('memory_palace_palaces')?.palaces[0];
+    expect(migratedPalace?.loci[0].imageUrl).toBeUndefined();
+  });
+
+  it('图片文档超过体积阈值时拒绝保存并返回提示', async () => {
+    const {savePalace} = await import('./memory-palace-db');
+    const palace = makePalace('p1');
+    // 构造约 900KB 的 dataURL，使图片文档超过 800KB 阈值
+    const bigDataUrl = 'data:image/png;base64,' + 'a'.repeat(900 * 1024);
+    palace.loci[0].imageUrl = bigDataUrl;
+    palace.loci[1].imageUrl = bigDataUrl;
+    const result = await savePalace(palace);
+    expect(result.ok).toBe(false);
+    expect(result.message).toContain('图片过多');
+  });
+
+  it('删除宫殿级联删除图片文档', async () => {
+    const {savePalace, removePalace, getImagesKey} = await import('./memory-palace-db');
+    const palace = makePalace('p1');
+    palace.loci[0].imageUrl = 'data:image/png;base64,img1';
+    await savePalace(palace);
+    expect(mockDb.get(getImagesKey('p1'))).not.toBeNull();
+
+    const result = await removePalace('p1');
+    expect(result.ok).toBe(true);
+    expect(mockDb.get(getImagesKey('p1'))).toBeNull();
   });
 });
