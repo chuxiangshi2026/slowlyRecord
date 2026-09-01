@@ -50,6 +50,10 @@ vi.mock('@/utils/logger', () => ({
 import {fetchKnowledgePack, listKnowledgePacks} from '@/utils/knowledge-pack-service'
 import {getProgressDoc, saveProgressDoc} from '@/utils/knowledge-memory-db'
 
+function normalizeForTest(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim()
+}
+
 describe('useKnowledgeMemoryStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -150,6 +154,14 @@ describe('useKnowledgeMemoryStore', () => {
       const item = store.getPack('test-pack')!.items[0]
       expect(store.judgeAnswer('test-pack', item, '  1  ', 'q2a')).toBe(true)
     })
+
+    it('应把全角数字/字母当作半角判定', async () => {
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('test-pack')
+      const item = store.getPack('test-pack')!.items[0]
+      expect(store.judgeAnswer('test-pack', item, '１', 'q2a')).toBe(true)
+      expect(store.judgeAnswer('test-pack', item, 'Ａ', 'a2q')).toBe(true)
+    })
   })
 
   describe('markItem', () => {
@@ -197,6 +209,28 @@ describe('useKnowledgeMemoryStore', () => {
       const item = store.getPack('test-pack')!.items[0]
       const choices = store.generateChoices('test-pack', item, 'a2q', 4)
       expect(choices).toContain(item.question)
+    })
+
+    it('归一化后相同的答案应去重', async () => {
+      const dedupPack: KnowledgePack = {
+        ...mockPack,
+        id: 'dedup-pack',
+        items: [
+          {id: 'item-1', question: 'Q1', answer: '12'},
+          {id: 'item-2', question: 'Q2', answer: '  12  '},
+          {id: 'item-3', question: 'Q3', answer: '34'},
+          {id: 'item-4', question: 'Q4', answer: '56'},
+        ],
+      }
+      ;(fetchKnowledgePack as any).mockResolvedValueOnce(dedupPack)
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('dedup-pack')
+      const item = store.getPack('dedup-pack')!.items[0]
+      const choices = store.generateChoices('dedup-pack', item, 'q2a', 4)
+      // 正确答案 + 2 个不重复干扰项 = 3 个，不会把两个 "12" 都加进来
+      expect(choices).toContain('12')
+      expect(new Set(choices.map(normalizeForTest)).size).toBe(choices.length)
+      expect(choices.length).toBe(3)
     })
   })
 

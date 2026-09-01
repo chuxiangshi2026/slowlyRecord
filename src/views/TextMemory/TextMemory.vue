@@ -360,13 +360,25 @@ onMounted(async () => {
   // 先注册监听（不依赖文章数据），确保打开浮窗时动作通道已就绪
   setupTextFocusListeners();
   setReturnToListHandler(() => router.push('/text-memory'));
+  document.addEventListener('click', onDocClick, true);
   await textStore.loadArticles();
 });
 
 onBeforeUnmount(() => {
   setReturnToListHandler(null);
   teardownTextFocusListeners();
+  document.removeEventListener('click', onDocClick, true);
 });
+
+// 点击外部关闭标签 popover
+const onDocClick = (e: MouseEvent) => {
+  if (tagPopoverVisible.value) {
+    const target = e.target as HTMLElement;
+    if (!target.closest('.el-popover') && !target.closest('.ftag')) {
+      tagPopoverVisible.value = false;
+    }
+  }
+};
 
 // 打开文本专注滚动浮窗（uTools / Electron）
 async function openTextFocusMode(article: TextArticle) {
@@ -692,7 +704,7 @@ function handleMapSelect(article: TextArticle) {
 
   &.on {
     background: var(--utools-primary);
-    color: #fff;
+    color: var(--utools-text-inverse);
     border-color: var(--utools-primary);
   }
 }
@@ -894,7 +906,7 @@ function handleMapSelect(article: TextArticle) {
 
   &.on {
     background: var(--utools-primary);
-    color: #fff;
+    color: var(--utools-text-inverse);
     border-color: var(--utools-primary);
   }
 }

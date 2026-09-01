@@ -13,6 +13,9 @@ const CACHE_KEY_PREFIX = 'slowlyrecord-knowledgebank-';
 const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7天
 const MIN_PACK_SIZE = 1; // 最小有效条目数
 
+// 并发加载同包去重：相同 id 的 in-flight Promise 共享
+const inFlight = new Map<string, Promise<KnowledgePack>>();
+
 export interface LoadStrategy {
     priority: 'local';      // 仅支持本地文件
     useCache: boolean;      // 是否使用缓存
@@ -148,29 +151,48 @@ export async function fetchKnowledgePack(
         }
     }
 
-    const pack = await loadLocalPack(id, config.timeout);
-    if (pack) {
-        if (config.useCache) {
-            saveToCache(id, pack);
-        }
-        return pack;
+    // 并发加载同包去重
+    if (inFlight.has(id)) {
+        return inFlight.get(id)!;
     }
 
-    // 若本地也失败，但有合法缓存（即使过期），仍尝试兜底使用
-    const staleCached = localStorage.getItem(buildCacheKey(id));
-    if (staleCached) {
+    const promise = (async (): Promise<KnowledgePack> => {
         try {
-            const data: CacheData = JSON.parse(staleCached);
-            if (data.pack && Array.isArray(data.pack.items) && data.pack.items.length >= MIN_PACK_SIZE) {
-                console.warn(`[KnowledgePack] 本地不可用，使用过期缓存: ${id}`);
-                return data.pack;
+            const pack = await loadLocalPack(id, config.timeout);
+            if (pack) {
+                if (config.useCache) {
+                    saveToCache(id, pack);
+                }
+                return pack;
             }
-        } catch {
-            // ignore
-        }
-    }
 
-    throw new Error(`[KnowledgePack] 无法加载知识包: ${id}`);
+            // 若本地也失败，但有合法缓存（即使过期），仍尝试兜底使用
+            const staleCached = localStorage.getItem(buildCacheKey(id));
+            if (staleCached) {
+                try {
+                    const data: CacheData = JSON.parse(staleCached);
+                    if (data.pack && Array.isArray(data.pack.items) && data.pack.items.length >= MIN_PACK_SIZE) {
+                        const validation = validateKnowledgePack(data.pack);
+                        if (!validation.valid) {
+                            console.warn(`[KnowledgePack] 过期缓存校验失败: ${id}`, validation.error);
+                            throw new Error(`[KnowledgePack] 无法加载知识包: ${id}`);
+                        }
+                        console.warn(`[KnowledgePack] 本地不可用，使用过期缓存: ${id}`);
+                        return data.pack;
+                    }
+                } catch {
+                    // ignore
+                }
+            }
+
+            throw new Error(`[KnowledgePack] 无法加载知识包: ${id}`);
+        } finally {
+            inFlight.delete(id);
+        }
+    })();
+
+    inFlight.set(id, promise);
+    return promise;
 }
 
 /**

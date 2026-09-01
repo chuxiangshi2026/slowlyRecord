@@ -368,7 +368,12 @@ export function exportTableAsImage(data: TableImageData, options: TableImageOpti
     const layout = computeTableLayout(data, measure, options);
     const canvas = renderTableToCanvas(data, layout, measure, options);
 
-    const url = canvas.toDataURL('image/png');
+    let url: string;
+    try {
+        url = canvas.toDataURL('image/png');
+    } catch (e) {
+        throw new Error('导出失败');
+    }
     const link = document.createElement('a');
     link.href = url;
     link.download = buildFilename(data.title, options.filename);

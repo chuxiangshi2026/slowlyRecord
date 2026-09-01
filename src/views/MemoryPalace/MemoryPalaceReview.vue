@@ -18,7 +18,7 @@
       <el-result
         icon="success"
         title="巡视完成"
-        :sub-title="`记住 ${stats.remembered} · 忘记 ${stats.forgotten}`"
+        :sub-title="`记住 ${stats.remembered} · 忘记 ${stats.forgotten} · 跳过 ${stats.skipped}`"
       >
         <template #extra>
           <el-button type="primary" @click="restart">再来一轮</el-button>
@@ -84,6 +84,7 @@
 import {computed, onMounted, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {ArrowLeft, ArrowRight} from '@element-plus/icons-vue';
+import {ElMessage} from 'element-plus';
 import {useMemoryPalaceStore} from '@/stores/memoryPalace';
 import {useTextMemoryStore} from '@/stores/textMemory';
 import {resolvePegContent} from '@/utils/memory-palace-util';
@@ -99,7 +100,11 @@ const palaceId = route.params.id as string;
 const currentIndex = ref(0);
 const answerVisible = ref(false);
 const finished = ref(false);
-const stats = ref({remembered: 0, forgotten: 0});
+const stats = ref({remembered: 0, forgotten: 0, skipped: 0});
+// 记录已评/已跳过的桩序号，防止返回重新自评时重复累加统计
+const rememberedOrders = ref<Set<number>>(new Set());
+const forgottenOrders = ref<Set<number>>(new Set());
+const skippedOrders = ref<Set<number>>(new Set());
 
 const palace = computed(() => store.currentPalace);
 
@@ -139,18 +144,45 @@ function showAnswer() {
 // 自评并进入下一桩
 async function assess(remembered: boolean) {
   const peg = currentPeg.value;
+  const order = currentLocus.value?.order;
   if (peg) {
-    await store.assessPeg(peg, remembered);
+    const result = await store.assessPeg(peg, remembered);
+    if (!result.ok) {
+      ElMessage.error('自评结果保存失败，请重试');
+      return;
+    }
+  }
+  // 按桩序号去重统计，返回上一桩重新自评不重复计数
+  if (order !== undefined) {
     if (remembered) {
-      stats.value.remembered++;
+      if (!rememberedOrders.value.has(order)) {
+        rememberedOrders.value.add(order);
+        stats.value.remembered++;
+      }
+      // 从跳过/忘记集合中移除，保证最终统计只计一次
+      if (skippedOrders.value.delete(order)) stats.value.skipped--;
+      if (forgottenOrders.value.delete(order)) stats.value.forgotten--;
     } else {
-      stats.value.forgotten++;
+      if (!forgottenOrders.value.has(order)) {
+        forgottenOrders.value.add(order);
+        stats.value.forgotten++;
+      }
+      if (skippedOrders.value.delete(order)) stats.value.skipped--;
+      if (rememberedOrders.value.delete(order)) stats.value.remembered--;
     }
   }
   next();
 }
 
 function next() {
+  // 跳过当前桩时计入跳过统计（已评过的桩不再重复计跳过）
+  const order = currentLocus.value?.order;
+  if (order !== undefined && !rememberedOrders.value.has(order) && !forgottenOrders.value.has(order)) {
+    if (!skippedOrders.value.has(order)) {
+      skippedOrders.value.add(order);
+      stats.value.skipped++;
+    }
+  }
   answerVisible.value = false;
   if (currentIndex.value >= total.value - 1) {
     finished.value = true;
@@ -170,7 +202,10 @@ function restart() {
   currentIndex.value = 0;
   answerVisible.value = false;
   finished.value = false;
-  stats.value = {remembered: 0, forgotten: 0};
+  stats.value = {remembered: 0, forgotten: 0, skipped: 0};
+  rememberedOrders.value.clear();
+  forgottenOrders.value.clear();
+  skippedOrders.value.clear();
 }
 
 function goBack() {

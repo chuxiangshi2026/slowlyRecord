@@ -61,7 +61,9 @@
             :stroke-width="20"
             :status="progressStatus"
           />
-          <span class="progress-text">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
+          <span class="progress-text">
+            {{ currentMode === 'randomSequence' ? `第 ${randomSequenceRound} 轮 · ${randomSequenceLength} 位` : `${currentQuestionIndex + 1} / ${questions.length}` }}
+          </span>
         </div>
 
         <!-- 计时器 -->
@@ -185,7 +187,7 @@
             </el-col>
             <el-col :span="8">
               <div class="stat-item">
-                <div class="stat-value">{{ currentMode === 'randomSequence' ? randomSequenceRound - 1 : accuracy }}%</div>
+                <div class="stat-value">{{ currentMode === 'randomSequence' ? randomSequenceRound - 1 : accuracy + '%' }}</div>
                 <div class="stat-label">{{ currentMode === 'randomSequence' ? '完成轮数' : '正确率' }}</div>
               </div>
             </el-col>
@@ -515,7 +517,10 @@ function finishRandomSequence() {
   stopRandomSequenceTimer();
   stopTimer();
   isFinished.value = true;
-  randomSequenceScore.value = Math.max(randomSequenceScore.value, randomSequenceLength.value - 1);
+  // 未通过任何轮时保持 0，避免首轮答错显示 "最高记忆到 4 位" 这类误导数字
+  if (randomSequenceScore.value > 0) {
+    randomSequenceScore.value = Math.max(randomSequenceScore.value, randomSequenceLength.value - 1);
+  }
 }
 
 function selectAnswer(answer: any) {

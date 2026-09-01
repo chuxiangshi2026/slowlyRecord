@@ -3,7 +3,7 @@
     <div v-if="title" class="plot-title">{{ title }}</div>
     <div ref="wrapRef" class="plot-wrap" @wheel.prevent="onWheel" @pointerleave="hover = null">
       <canvas ref="canvasRef" class="plot-canvas" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp" @pointercancel="onPointerUp" />
-      <div v-if="hover" class="plot-tip" :style="{left: hover.px + 12 + 'px', top: hover.py - 30 + 'px'}">
+      <div v-if="hover" class="plot-tip" :style="tipStyle">
         ({{ hover.dx.toFixed(2) }}, {{ hover.dy.toFixed(2) }})
       </div>
     </div>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted, onBeforeUnmount} from 'vue';
+import {ref, computed, watch, onMounted, onBeforeUnmount} from 'vue';
 import {calcViewRange, dataToPixel, isDiscontinuity, pixelToData, type ViewRange} from '@/utils/function-plot-util';
 
 /** 悬停信息：鼠标像素位置 + 数据横坐标 + 曲线上函数值 */
@@ -29,11 +29,29 @@ const props = withDefaults(defineProps<{
 const X_SPAN = 10; // 自动计算范围时的 x 采样半径
 const SAMPLE = 600; // 曲线采样点数
 const MIN_SPAN = 1e-6; // 缩放下限，防止范围塌缩
+const MAX_SPAN = 1e6; // 缩放上限，防止范围过大
+const TIP_WIDTH = 140; // 悬停浮层估算宽度
+const TIP_HEIGHT = 24; // 悬停浮层估算高度
 
 const wrapRef = ref<HTMLDivElement>();
 const canvasRef = ref<HTMLCanvasElement>();
 const hover = ref<HoverInfo | null>(null);
 const range = ref<ViewRange>({xMin: -X_SPAN, xMax: X_SPAN, yMin: -8, yMax: 8});
+
+// 悬停浮层位置：靠近右/上边缘时翻转到另一侧
+const tipStyle = computed(() => {
+  if (!hover.value || !wrapRef.value) return {};
+  const wrap = wrapRef.value;
+  let left = hover.value.px + 12;
+  let top = hover.value.py - TIP_HEIGHT - 8;
+  if (left + TIP_WIDTH > wrap.clientWidth) {
+    left = hover.value.px - TIP_WIDTH - 12;
+  }
+  if (top < 0) {
+    top = hover.value.py + 12;
+  }
+  return {left: `${left}px`, top: `${top}px`};
+});
 let dragging = false;
 let lastX = 0;
 let lastY = 0;
@@ -200,11 +218,15 @@ function onPointerUp() {
   dragging = false;
 }
 function onWheel(e: WheelEvent) {
+  if (e.deltaY === 0) return;
   const wrap = wrapRef.value;
   if (!wrap) return;
   const r = range.value;
   const factor = e.deltaY < 0 ? 0.8 : 1.25; // 向上滚动放大，向下缩小
-  if ((r.xMax - r.xMin) * factor < MIN_SPAN || (r.yMax - r.yMin) * factor < MIN_SPAN) return;
+  const xSpan = (r.xMax - r.xMin) * factor;
+  const ySpan = (r.yMax - r.yMin) * factor;
+  if (xSpan < MIN_SPAN || ySpan < MIN_SPAN) return;
+  if (xSpan > MAX_SPAN || ySpan > MAX_SPAN) return;
   // 以鼠标位置为缩放中心：保持焦点数据坐标映射到的像素位置不变
   const focus = pixelToData(e.offsetX, e.offsetY, r, {x: 0, y: 0, width: wrap.clientWidth, height: wrap.clientHeight});
   range.value = {

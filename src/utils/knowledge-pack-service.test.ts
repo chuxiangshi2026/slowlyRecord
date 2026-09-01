@@ -160,6 +160,21 @@ describe('knowledge-pack-service', () => {
       fetchMock.mockRejectedValueOnce(new Error('network error'))
       await expect(fetchKnowledgePack('elements')).rejects.toThrow('无法加载知识包')
     })
+
+    it('过期缓存损坏时应抛出错误而不是返回损坏数据', async () => {
+      fetchMock.mockResolvedValueOnce({ok: false, status: 404})
+      const stale = JSON.stringify({pack: {id: 'elements', name: 'x', items: 'bad'}, timestamp: 1})
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', stale)
+      await expect(fetchKnowledgePack('elements')).rejects.toThrow('无法加载知识包')
+    })
+
+    it('并发加载同包应只 fetch 一次', async () => {
+      const pack = makePack('elements', 36)
+      fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(pack)})
+      const [a, b] = await Promise.all([fetchKnowledgePack('elements'), fetchKnowledgePack('elements')])
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+      expect(a).toBe(b)
+    })
   })
 
   describe('validateKnowledgePack', () => {

@@ -115,6 +115,15 @@ describe('number-memory-format', () => {
             expect(validateNumber('2026090', 'date').valid).toBe(false)
         })
 
+        it('日期 10 位应被拦截', () => {
+            expect(validateNumber('2026090201', 'date').valid).toBe(false)
+        })
+
+        it('日期 12/14 位通过', () => {
+            expect(validateNumber('202609021530', 'date').valid).toBe(true)
+            expect(validateNumber('20260902153000', 'date').valid).toBe(true)
+        })
+
         it('自定义类型始终通过', () => {
             expect(validateNumber('anything', 'custom').valid).toBe(true)
         })

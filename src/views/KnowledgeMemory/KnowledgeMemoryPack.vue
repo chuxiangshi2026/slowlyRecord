@@ -505,7 +505,7 @@ async function handleSaveImage() {
     exportTableAsImage(data, {filename: pack.value.name});
     ElMessage.success('图片已保存');
   } catch {
-    ElMessage.error('图片生成失败');
+    ElMessage.error('导出失败');
   }
 }
 

@@ -254,16 +254,22 @@ function checkAllAnswers() {
     }
   });
 
+  const percentage = total > 0 ? (correct / total) * 100 : 0;
   if (correct === total) {
     ElMessage.success(`恭喜！全部正确！(${correct}/${total})`);
     if (props.entry) {
       store.markEntryCorrect(props.entry._id);
       updateReviewCount();
     }
+  } else if (percentage < 50) {
+    ElMessage.warning(`答对 ${correct}/${total} 题，正确率不足 50%，已降级`);
+    if (props.entry) {
+      store.markEntryWrong(props.entry._id);
+    }
   } else {
     ElMessage.warning(`答对 ${correct}/${total} 题，继续加油！`);
     if (props.entry) {
-      store.markEntryWrong(props.entry._id);
+      updateReviewCount();
     }
   }
 }
@@ -320,13 +326,8 @@ function loadProgress() {
 
 // 更新复习次数
 async function updateReviewCount() {
-  // 这里可以调用 store 的方法更新复习次数
-  // 暂时使用 localStorage 记录
   if (!props.entry) return;
-  
-  const key = `number_review_count_${props.entry._id}`;
-  const count = parseInt(localStorage.getItem(key) || '0') + 1;
-  localStorage.setItem(key, String(count));
+  await store.updateReviewCount(props.entry._id);
 }
 
 // 监听条目变化

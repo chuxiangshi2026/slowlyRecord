@@ -651,8 +651,10 @@ const handleImportFileChange = async (e: Event) => {
 
       const tags = Array.isArray(item.tags) ? item.tags.map(String).filter(Boolean) : [];
       const description = item.description ? String(item.description).trim() : undefined;
+      const kind = item.kind || 'custom';
+      const mnemonic = item.mnemonic ? String(item.mnemonic).trim() : undefined;
 
-      const result = await store.addEntry(title, numbers, tags, description);
+      const result = await store.addEntry(title, numbers, tags, description, kind, mnemonic);
       if (result.ok) {
         successCount++;
       }
@@ -772,7 +774,7 @@ watch(showAddDialog, (val) => {
 
   &.on {
     background: var(--utools-primary);
-    color: #fff;
+    color: var(--utools-text-inverse);
     border-color: var(--utools-primary);
   }
 }
@@ -856,7 +858,7 @@ watch(showAddDialog, (val) => {
 
   &.on {
     background: var(--utools-primary);
-    color: #fff;
+    color: var(--utools-text-inverse);
     border-color: var(--utools-primary);
   }
 }
@@ -1006,7 +1008,7 @@ watch(showAddDialog, (val) => {
       color: var(--utools-warning);
 
       &:hover {
-        background-color: rgba(230, 162, 60, 0.12);
+        background-color: color-mix(in srgb, var(--utools-warning) 12%, transparent);
       }
     }
   }

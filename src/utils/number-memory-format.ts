@@ -145,7 +145,8 @@ export function validateNumber(numbers: string, kind?: NumberMemoryKind): Valida
             return {valid: true};
         }
         case 'date': {
-            if (!/^\d{8}(\d{4})?(\d{2})?$/.test(numbers)) {
+            // 8 位日期，或 8+4 位、8+4+2 位（时分秒）；非捕获分组避免 10 位被误放行
+            if (!/^\d{8}(?:\d{4}(?:\d{2})?)?$/.test(numbers)) {
                 return {valid: false, message: '日期应为 8/12/14 位数字（YYYYMMDD...）'};
             }
             return {valid: true};
