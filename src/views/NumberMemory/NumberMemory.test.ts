@@ -80,9 +80,7 @@ vi.mock('@/utils/number-memory-entries-db', () => ({
 
 // Mock @element-plus/icons-vue
 vi.mock('@element-plus/icons-vue', () => ({
-  Check: { template: '<span>✓</span>' },
-  Delete: { template: '<span>✗</span>' },
-  Upload: { template: '<span>↑</span>' },
+  ArrowRight: { template: '<span>→</span>' },
 }))
 
 // Mock words store
@@ -123,9 +121,11 @@ function setup() {
     history: createMemoryHistory(),
     routes: [
       { path: '/', component: { template: '<div />' } },
+      { path: '/word', component: { template: '<div />' } },
       { path: '/number-memory', component: { template: '<div />' } },
       { path: '/number-memory/training', component: { template: '<div />' } },
       { path: '/number-memory/entries', component: { template: '<div />' } },
+      { path: '/number-memory/mapping', component: { template: '<div />' } },
     ],
   })
 
@@ -137,7 +137,7 @@ function setup() {
           template: '<div class="el-card-stub"><slot name="header" /><slot /></div>',
         },
         'el-tag': {
-          props: ['type'],
+          props: ['type', 'size'],
           template: '<span class="el-tag-stub" :class="type"><slot /></span>',
         },
         'el-button': {
@@ -148,43 +148,8 @@ function setup() {
           props: ['title', 'type', 'closable', 'showIcon', 'center'],
           template: '<div class="el-alert-stub" :class="type" role="alert"><slot />{{ title }}</div>',
         },
-        'el-radio-group': {
-          props: ['modelValue', 'size'],
-          template: '<div class="el-radio-group-stub" role="radiogroup"><slot /></div>',
-        },
-        'el-radio-button': {
-          props: ['label'],
-          template: '<label class="el-radio-button-stub" :data-label="label"><slot /></label>',
-        },
-        'el-row': {
-          props: ['gutter'],
-          template: '<div class="el-row-stub"><slot /></div>',
-        },
-        'el-col': {
-          props: ['span'],
-          template: '<div class="el-col-stub"><slot /></div>',
-        },
-        'el-empty': {
-          props: ['description', 'imageSize'],
-          template: '<div class="el-empty-stub">{{ description }}</div>',
-        },
-        'el-divider': {
-          template: '<hr class="el-divider-stub" />',
-        },
-        'el-upload': {
-          props: ['action', 'autoUpload', 'showFileList', 'accept'],
-          template: '<div class="el-upload-stub"><slot /></div>',
-        },
         'el-icon': {
           template: '<span class="el-icon-stub"><slot /></span>',
-        },
-        'el-table': {
-          props: ['data'],
-          template: '<div class="el-table-stub"><slot /></div>',
-        },
-        'el-table-column': {
-          props: ['prop', 'label', 'width', 'align'],
-          template: '<div class="el-table-column-stub"><slot name="default" :row="{}" /></div>',
         },
         TrainingHistory: {
           props: ['modelValue', 'history', 'progress'],
@@ -228,20 +193,35 @@ describe('NumberMemory 主页面', () => {
       expect(screen.getByText('🧠 数字记忆训练')).toBeInTheDocument()
     })
 
-    it('应显示主要操作按钮', () => {
+    it('应显示训练区的三种模式卡片', () => {
       setup()
-      expect(screen.getByRole('button', { name: /使用帮助/ })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /训练历史/ })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /一键导入预设/ })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /数字记忆/ })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /开始训练/ })).toBeInTheDocument()
+      expect(screen.getByText('数字 → 图片')).toBeInTheDocument()
+      expect(screen.getByText('图片 → 数字')).toBeInTheDocument()
+      expect(screen.getByText('随机序列')).toBeInTheDocument()
     })
 
-    it('没有关联数据时开始训练按钮应被禁用', async () => {
+    it('应显示管理区入口', () => {
       setup()
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /开始训练/ })).toBeDisabled()
-      })
+      expect(screen.getByText('数字记忆条目')).toBeInTheDocument()
+      expect(screen.getByText('数字-图片映射设置')).toBeInTheDocument()
+    })
+
+    it('应显示训练历史与知识表分区', () => {
+      setup()
+      expect(screen.getByText('📊 训练历史')).toBeInTheDocument()
+      expect(screen.getByText('📚 知识表')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /查看训练历史/ })).toBeInTheDocument()
+    })
+
+    it('应显示使用帮助按钮与返回入口', () => {
+      setup()
+      expect(screen.getByRole('button', { name: /使用帮助/ })).toBeInTheDocument()
+      expect(screen.getByText('返回')).toBeInTheDocument()
+    })
+
+    it('关联不足 4 个时模式卡片应给出提示', () => {
+      setup()
+      expect(screen.getAllByText('请先保存至少4个数字关联').length).toBe(2)
     })
   })
 
@@ -361,9 +341,9 @@ describe('NumberMemory 主页面', () => {
   })
 
   describe('训练历史弹窗', () => {
-    it('点击训练历史按钮应打开弹窗', async () => {
+    it('点击查看训练历史按钮应打开弹窗', async () => {
       const { user } = setup()
-      await user.click(screen.getByRole('button', { name: /训练历史/ }))
+      await user.click(screen.getByRole('button', { name: /查看训练历史/ }))
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument()
         expect(screen.getByText('📊 训练状态')).toBeInTheDocument()
@@ -372,35 +352,70 @@ describe('NumberMemory 主页面', () => {
   })
 
   describe('导航', () => {
-    it('点击数字记忆按钮应导航到条目页面', async () => {
+    it('点击数字记忆条目入口应导航到条目页面', async () => {
       const { user, router } = setup()
       const pushSpy = vi.spyOn(router, 'push')
 
-      await user.click(screen.getByRole('button', { name: /数字记忆/ }))
+      await user.click(screen.getByText('数字记忆条目'))
 
       expect(pushSpy).toHaveBeenCalledWith('/number-memory/entries')
     })
 
-    it('有关联数据时点击开始训练应导航到训练页面', async () => {
+    it('点击映射设置入口应导航到映射设置页面', async () => {
+      const { user, router } = setup()
+      const pushSpy = vi.spyOn(router, 'push')
+
+      await user.click(screen.getByText('数字-图片映射设置'))
+
+      expect(pushSpy).toHaveBeenCalledWith('/number-memory/mapping')
+    })
+
+    it('点击随机序列模式卡片应导航到训练页面', async () => {
+      const { user, router } = setup()
+      const pushSpy = vi.spyOn(router, 'push')
+
+      await user.click(screen.getByText('随机序列'))
+
+      expect(pushSpy).toHaveBeenCalledWith('/number-memory/training')
+    })
+
+    it('关联不足 4 个时点击数字→图片不应跳转', async () => {
+      const { user, router } = setup()
+      const pushSpy = vi.spyOn(router, 'push')
+
+      await user.click(screen.getByText('数字 → 图片'))
+
+      expect(pushSpy).not.toHaveBeenCalledWith('/number-memory/training')
+    })
+
+    it('关联充足时点击数字→图片应导航到训练页面', async () => {
       vi.mocked(getAllAssociations).mockReturnValue([
-        { number: '0', imageUrl: '🎯', source: 'preset', description: '零' },
+        { number: '0', imageUrl: '🎯', source: 'preset' },
+        { number: '1', imageUrl: '🍄', source: 'preset' },
+        { number: '2', imageUrl: '🦆', source: 'preset' },
+        { number: '3', imageUrl: '🎧', source: 'preset' },
       ])
 
       const { user, router } = setup()
       const pushSpy = vi.spyOn(router, 'push')
 
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /开始训练/ })).toBeEnabled()
-      })
-
-      await user.click(screen.getByRole('button', { name: /开始训练/ }))
+      await user.click(screen.getByText('数字 → 图片'))
 
       expect(pushSpy).toHaveBeenCalledWith('/number-memory/training')
     })
+
+    it('点击返回应导航到单词列表', async () => {
+      const { user, router } = setup()
+      const pushSpy = vi.spyOn(router, 'push')
+
+      await user.click(screen.getByText('返回'))
+
+      expect(pushSpy).toHaveBeenCalledWith('/word')
+    })
   })
 
-  describe('已保存关联列表', () => {
-    it('有关联数据时应显示已保存的数字-图片关联', async () => {
+  describe('管理区映射数量', () => {
+    it('应显示已配置的映射数量', async () => {
       vi.mocked(getAllAssociations).mockReturnValue([
         { number: '0', imageUrl: '🎯', source: 'preset', description: '零' },
         { number: '1', imageUrl: '🍄', source: 'upload', description: '一' },
@@ -409,14 +424,7 @@ describe('NumberMemory 主页面', () => {
       setup()
 
       await waitFor(() => {
-        expect(screen.getByText('📋 已保存的数字-图片关联')).toBeInTheDocument()
-      })
-    })
-
-    it('没有关联数据时不应显示关联列表', async () => {
-      setup()
-      await waitFor(() => {
-        expect(screen.queryByText('📋 已保存的数字-图片关联')).not.toBeInTheDocument()
+        expect(screen.getByText(/已配置 2 个映射/)).toBeInTheDocument()
       })
     })
   })
