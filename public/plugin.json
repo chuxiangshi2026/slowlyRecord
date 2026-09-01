@@ -121,6 +121,22 @@
       "cmds": [
         "专注"
       ]
+    },
+    {
+      "code": "knowledgeMemory",
+      "explain": "知识记忆（乘法表/元素周期表/24节气等）",
+      "cmds": [
+        "知识记忆",
+        "乘法表",
+        "元素周期表"
+      ]
+    },
+    {
+      "code": "memoryPalace",
+      "explain": "记忆宫殿",
+      "cmds": [
+        "记忆宫殿"
+      ]
     }
 
   ],
