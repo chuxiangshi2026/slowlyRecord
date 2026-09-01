@@ -5,6 +5,8 @@ import {
   fetchKnowledgePack,
   fetchKnowledgePackLegacy,
   getKnowledgePackInfo,
+  getPackVersion,
+  isCacheUsable,
   listKnowledgePacks,
   isKnowledgePackCached,
   clearKnowledgePackCache,
@@ -96,6 +98,38 @@ describe('knowledge-pack-service', () => {
     it('默认策略配置正确', () => {
       expect(DEFAULT_STRATEGY).toEqual({priority: 'local', useCache: true, timeout: 5000})
     })
+
+    it('math-formulas 数据版本为 2，其余包默认版本为 1', () => {
+      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(2)
+      expect(getPackVersion('math-formulas')).toBe(2)
+      expect(getPackVersion('elements')).toBe(1)
+      // 未知包兜底为 1
+      expect(getPackVersion('not-exist')).toBe(1)
+    })
+  })
+
+  describe('isCacheUsable 缓存版本校验', () => {
+    const pack = makePack('math-formulas', 24)
+
+    it('版本一致且未过期时可用', () => {
+      expect(isCacheUsable({pack, timestamp: Date.now(), version: 2}, 2)).toBe(true)
+    })
+
+    it('版本不一致时失效', () => {
+      expect(isCacheUsable({pack, timestamp: Date.now(), version: 1}, 2)).toBe(false)
+    })
+
+    it('老缓存无 version 字段时按版本 1 处理', () => {
+      expect(isCacheUsable({pack, timestamp: Date.now()}, 1)).toBe(true)
+      expect(isCacheUsable({pack, timestamp: Date.now()}, 2)).toBe(false)
+    })
+
+    it('过期或数据不合法时失效', () => {
+      const expired = Date.now() - 8 * 24 * 60 * 60 * 1000
+      expect(isCacheUsable({pack, timestamp: expired, version: 1}, 1)).toBe(false)
+      expect(isCacheUsable({pack: {items: []} as any, timestamp: Date.now(), version: 1}, 1)).toBe(false)
+      expect(isCacheUsable(null, 1)).toBe(false)
+    })
   })
 
   describe('缓存', () => {
@@ -157,6 +191,45 @@ describe('knowledge-pack-service', () => {
       const cached = localStorageMock.getItem('slowlyrecord-knowledgebank-elements')
       expect(cached).not.toBeNull()
       expect(JSON.parse(cached!).pack.items).toHaveLength(36)
+      // 缓存应记录当前数据版本
+      expect(JSON.parse(cached!).version).toBe(1)
+    })
+
+    it('缓存版本与包当前版本不一致时视为失效并重新加载', async () => {
+      // 模拟老版本缓存（math-formulas 升级到 version 2 之前的 version 1 缓存）
+      const oldPack = makePack('math-formulas', 20)
+      localStorageMock.setItem(
+        'slowlyrecord-knowledgebank-math-formulas',
+        JSON.stringify({pack: oldPack, timestamp: Date.now(), version: 1}),
+      )
+      const newPack = makePack('math-formulas', 24)
+      fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(newPack)})
+      const result = await fetchKnowledgePack('math-formulas')
+      expect(fetchMock).toHaveBeenCalled()
+      expect(result.items).toHaveLength(24)
+      // 新缓存写入 version 2
+      const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-math-formulas')!)
+      expect(cached.version).toBe(2)
+    })
+
+    it('无 version 字段的老缓存在包升级后同样失效', async () => {
+      const oldPack = makePack('math-formulas', 20)
+      localStorageMock.setItem(
+        'slowlyrecord-knowledgebank-math-formulas',
+        JSON.stringify({pack: oldPack, timestamp: Date.now()}),
+      )
+      const newPack = makePack('math-formulas', 24)
+      fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(newPack)})
+      const result = await fetchKnowledgePack('math-formulas')
+      expect(fetchMock).toHaveBeenCalled()
+      expect(result.items).toHaveLength(24)
+    })
+
+    it('版本不一致的过期缓存不做兜底', async () => {
+      fetchMock.mockResolvedValueOnce({ok: false, status: 404})
+      const stale = JSON.stringify({pack: makePack('math-formulas', 20), timestamp: 1, version: 1})
+      localStorageMock.setItem('slowlyrecord-knowledgebank-math-formulas', stale)
+      await expect(fetchKnowledgePack('math-formulas')).rejects.toThrow('无法加载知识包')
     })
 
     it('缓存过期后应重新加载', async () => {

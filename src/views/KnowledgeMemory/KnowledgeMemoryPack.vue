@@ -25,6 +25,95 @@
     </div>
 
     <template v-else>
+      <!-- 视图切换：预览（整表） / 练习 -->
+      <div class="view-switch">
+        <span :class="['view-chip', {on: viewMode === 'preview'}]" @click="viewMode = 'preview'">预览</span>
+        <span :class="['view-chip', {on: viewMode === 'practice'}]" @click="viewMode = 'practice'">练习</span>
+      </div>
+
+      <!-- 预览视图：整表展示 -->
+      <div v-if="viewMode === 'preview'" class="preview-area">
+        <div class="preview-actions">
+          <div class="left">
+            <!-- math-formulas：可绘制函数汇总入口 -->
+            <el-button v-if="plotItems.length" text :icon="TrendCharts" @click="plotListDialogVisible = true">
+              函数图像
+            </el-button>
+          </div>
+          <div class="right">
+            <el-button type="primary" :icon="VideoPlay" @click="viewMode = 'practice'">开始练习</el-button>
+          </div>
+        </div>
+
+        <!-- 乘法表：方正方阵（首行/首列为乘数表头，交叉格为积） -->
+        <div v-if="multiplicationGrid" class="mult-grid-wrap">
+          <table class="mult-grid">
+            <thead>
+              <tr>
+                <th class="corner">×</th>
+                <th v-for="n in multColNumbers" :key="n">{{ n }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(row, ri) in multiplicationGrid.cells" :key="ri">
+                <th>{{ multiplicationGrid.start + ri }}</th>
+                <td v-for="(cell, ci) in row" :key="ci">{{ cell?.answer ?? '' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 元素周期表：标准 18 列周期律排布 -->
+        <div v-else-if="periodicGrid" class="periodic-table">
+          <template v-for="(row, ri) in periodicGrid" :key="ri">
+            <div
+              v-for="(cell, ci) in row"
+              :key="ci"
+              :class="['element-cell', {empty: !cell}]"
+            >
+              <template v-if="cell">
+                <div class="num">{{ cell.atomicNumber }}</div>
+                <div class="symbol">{{ cell.symbol }}</div>
+                <div class="name">{{ cell.name }}</div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- 其余包：通用表格（题 + 答 + extras 附加列 + 函数图像入口） -->
+        <div v-else class="generic-table-wrap">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>题目</th>
+                <th>答案</th>
+                <th v-for="key in extraKeys" :key="key">{{ key }}</th>
+                <th v-if="hasAnyPlot" class="plot-col">图像</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in sortedItems" :key="item.id">
+                <td>{{ item.question }}</td>
+                <td>{{ item.answer }}</td>
+                <td v-for="key in extraKeys" :key="key">{{ item.extras?.[key] ?? '' }}</td>
+                <td v-if="hasAnyPlot" class="plot-col">
+                  <el-button
+                    v-if="getMathFormulaPlot(item.id)"
+                    text
+                    size="small"
+                    :icon="TrendCharts"
+                    title="查看函数图像"
+                    @click="openPlotFor(item)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 练习视图 -->
+      <template v-else>
       <!-- 进度统计 -->
       <div class="progress-row">
         <div class="progress-stat">
@@ -168,6 +257,7 @@
           </div>
         </template>
       </div>
+      </template>
     </template>
 
     <!-- 底部工具栏 -->
@@ -193,6 +283,21 @@
     <!-- 函数图像对话框（math-formulas 包可绘制条目） -->
     <el-dialog v-model="plotDialogVisible" title="函数图像" width="480px" append-to-body>
       <FunctionPlot v-if="plotFn" :fn="plotFn" :title="plotTitle" />
+    </el-dialog>
+
+    <!-- 函数图像汇总入口：列出本包全部可绘制函数，点击进入绘图 -->
+    <el-dialog v-model="plotListDialogVisible" title="函数图像" width="480px" append-to-body>
+      <div class="plot-list">
+        <div
+          v-for="item in plotItems"
+          :key="item.id"
+          class="plot-list-item"
+          @click="openPlotFor(item); plotListDialogVisible = false"
+        >
+          <span class="q">{{ item.question }}</span>
+          <span class="a">{{ item.answer }}</span>
+        </div>
+      </div>
     </el-dialog>
 
     <!-- 打印专用容器：屏幕隐藏，打印时仅输出此区域（完整表 / 填空自测表） -->
@@ -240,6 +345,7 @@ import {
   CircleClose,
   RefreshRight,
   TrendCharts,
+  VideoPlay,
 } from '@element-plus/icons-vue';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import { getKnowledgePackInfo } from '@/utils/knowledge-pack-service';
@@ -248,6 +354,7 @@ import { exportTableAsImage } from '@/utils/table-image-export';
 import type {TableImageData} from '@/utils/table-image-export';
 import FunctionPlot from './components/FunctionPlot.vue';
 import {getMathFormulaPlot} from './function-maps';
+import {buildMultiplicationGrid, buildPeriodicTable} from './preview-layout';
 
 /** 打印/存图的表格形态 */
 type TableForm = 'full' | 'blank';
@@ -271,6 +378,9 @@ const printMode = ref<TableForm>('full');
 /** 打印表格顶部的日期 */
 const printDate = ref('');
 
+/** 页面视图：preview = 整表预览（默认），practice = 练习 */
+const viewMode = ref<'preview' | 'practice'>('preview');
+
 /** 按顺序排列的条目（有序包按 order 排序，保证打印顺序正确） */
 const sortedItems = computed<KnowledgeItem[]>(() => {
   const p = pack.value;
@@ -280,6 +390,38 @@ const sortedItems = computed<KnowledgeItem[]>(() => {
   }
   return p.items;
 });
+
+/** 乘法表方阵（仅当条目完整构成 a×b 方阵时非 null） */
+const multiplicationGrid = computed(() => (pack.value ? buildMultiplicationGrid(pack.value.items) : null));
+/** 方阵列乘数（首行表头） */
+const multColNumbers = computed(() => {
+  const g = multiplicationGrid.value;
+  if (!g) return [];
+  return Array.from({length: g.end - g.start + 1}, (_, i) => g.start + i);
+});
+
+/** 元素周期表排布（仅 elements 包且序数齐全时非 null） */
+const periodicGrid = computed(() => {
+  if (packId.value !== 'elements' || !pack.value) return null;
+  return buildPeriodicTable(pack.value.items);
+});
+
+/** 通用表格的 extras 附加列（全包出现过的 extras 键，保持出现顺序） */
+const extraKeys = computed<string[]>(() => {
+  const keys: string[] = [];
+  for (const item of sortedItems.value) {
+    for (const key of Object.keys(item.extras ?? {})) {
+      if (!keys.includes(key)) keys.push(key);
+    }
+  }
+  return keys;
+});
+
+/** 本包中可绘制函数图像的条目（math-formulas，按包内顺序） */
+const plotItems = computed<KnowledgeItem[]>(() =>
+    pack.value ? pack.value.items.filter(i => getMathFormulaPlot(i.id) !== null) : [],
+);
+const hasAnyPlot = computed(() => plotItems.value.length > 0);
 
 const currentMode = ref<KnowledgePracticeMode>('q2a');
 const sessionItems = ref<KnowledgeItem[]>([]);
@@ -302,18 +444,26 @@ const previousItem = computed<KnowledgeItem | undefined>(() =>
 const plotDialogVisible = ref(false);
 const plotFn = ref<((x: number) => number) | null>(null);
 const plotTitle = ref('');
+/** 函数图像汇总列表对话框状态 */
+const plotListDialogVisible = ref(false);
 /** 当前条目可绘制的函数（仅 math-formulas 包且条目有映射），不可绘制时为 null */
 const currentPlot = computed(() =>
     packId.value === 'math-formulas' && currentItem.value ? getMathFormulaPlot(currentItem.value.id) : null,
 );
 
-/** 打开函数图像对话框 */
-function openPlot() {
-  const plot = currentPlot.value;
-  if (!plot || !currentItem.value) return;
+/** 打开指定条目的函数图像对话框 */
+function openPlotFor(item: KnowledgeItem) {
+  const plot = getMathFormulaPlot(item.id);
+  if (!plot) return;
   plotFn.value = plot.fn;
-  plotTitle.value = currentItem.value.question;
+  plotTitle.value = item.question;
   plotDialogVisible.value = true;
+}
+
+/** 打开当前练习条目的函数图像对话框 */
+function openPlot() {
+  if (!currentPlot.value || !currentItem.value) return;
+  openPlotFor(currentItem.value);
 }
 
 const availableModes = computed(() => {
@@ -652,6 +802,195 @@ async function handleResetProgress() {
 
 .practice-area {
   padding: 0 16px 20px;
+}
+
+/* 视图切换（预览 / 练习） */
+.view-switch {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px 4px;
+}
+
+.view-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 1px solid var(--utools-border-divider);
+  background: var(--utools-bg-card);
+  color: var(--utools-text-secondary);
+  font-size: 13px;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: var(--utools-primary);
+    color: var(--utools-primary);
+  }
+
+  &.on {
+    background: var(--utools-primary);
+    color: #fff;
+    border-color: var(--utools-primary);
+  }
+}
+
+/* 预览视图 */
+.preview-area {
+  padding: 8px 16px 20px;
+}
+
+.preview-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  .left, .right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/* 乘法方阵：方正格子，首行/首列为乘数表头 */
+.mult-grid-wrap {
+  overflow-x: auto;
+}
+
+.mult-grid {
+  border-collapse: collapse;
+  margin: 0 auto;
+
+  th, td {
+    border: 1px solid var(--utools-border-primary);
+    min-width: 38px;
+    height: 38px;
+    padding: 0 6px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  th {
+    background: var(--utools-bg-secondary);
+    color: var(--utools-text-secondary);
+    font-weight: 600;
+
+    &.corner {
+      color: var(--utools-text-tertiary);
+    }
+  }
+
+  td {
+    background: var(--utools-bg-card);
+    color: var(--utools-text-primary);
+  }
+}
+
+/* 元素周期表：18 列网格 */
+.periodic-table {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  gap: 4px;
+}
+
+.element-cell {
+  border: 1px solid var(--utools-border-primary);
+  border-radius: 6px;
+  background: var(--utools-bg-card);
+  text-align: center;
+  padding: 4px 2px;
+  min-width: 0;
+
+  &.empty {
+    visibility: hidden;
+  }
+
+  .num {
+    font-size: 10px;
+    color: var(--utools-text-tertiary);
+  }
+
+  .symbol {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--utools-primary);
+  }
+
+  .name {
+    font-size: 11px;
+    color: var(--utools-text-secondary);
+  }
+}
+
+/* 通用预览表格 */
+.generic-table-wrap {
+  overflow-x: auto;
+}
+
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  th, td {
+    border: 1px solid var(--utools-border-primary);
+    padding: 6px 10px;
+    text-align: center;
+  }
+
+  th {
+    background: var(--utools-bg-secondary);
+    color: var(--utools-text-secondary);
+    font-weight: 600;
+  }
+
+  td {
+    background: var(--utools-bg-card);
+    color: var(--utools-text-primary);
+  }
+
+  .plot-col {
+    width: 48px;
+  }
+}
+
+/* 函数图像汇总列表 */
+.plot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .plot-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--utools-border-primary);
+    border-radius: 8px;
+    background: var(--utools-bg-card);
+    cursor: pointer;
+    transition: all 0.15s;
+
+    &:hover {
+      border-color: var(--utools-primary);
+    }
+
+    .q {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--utools-text-primary);
+    }
+
+    .a {
+      font-size: 13px;
+      color: var(--utools-text-secondary);
+      word-break: break-all;
+    }
+  }
 }
 
 .flip-card,

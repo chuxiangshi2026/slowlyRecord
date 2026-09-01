@@ -59,6 +59,7 @@ vi.mock('@element-plus/icons-vue', () => ({
   CircleClose: { template: '<span>close</span>' },
   RefreshRight: { template: '<span>refresh</span>' },
   TrendCharts: { template: '<span>trend</span>' },
+  VideoPlay: { template: '<span>play</span>' },
 }))
 
 const ElDialogStub = {
@@ -74,7 +75,8 @@ const ElInputStub = {
     '<input :value="modelValue" :placeholder="placeholder" @input="$emit(\'update:modelValue\', $event.target.value)" />',
 }
 
-async function setup(packId: string, items: any[]) {
+async function setup(packId: string, items: any[], options: { enterPractice?: boolean } = {}) {
+  const { enterPractice = true } = options
   const pinia = createPinia()
   setActivePinia(pinia)
 
@@ -117,6 +119,12 @@ async function setup(packId: string, items: any[]) {
     },
   })
   await flushPromises()
+
+  // 默认进入预览视图；需要练习视图的用例切到「练习」
+  if (enterPractice) {
+    await fireEvent.click(screen.getByText('练习', { selector: '.view-chip' }))
+    await flushPromises()
+  }
 
   return { ...result, store, printSpy }
 }
@@ -224,5 +232,83 @@ describe('KnowledgeMemoryPack', () => {
         { filename: '测试知识包' },
       )
     })
+  })
+
+  it('默认进入预览视图：显示整表与「开始练习」，点击后切到练习视图', async () => {
+    await setup('test-pack', [
+      { id: 'i1', question: 'Q1', answer: 'A1' },
+    ], { enterPractice: false })
+
+    // 预览：通用表格含题目/答案，练习统计不显示
+    expect(screen.getByText('开始练习')).toBeInTheDocument()
+    expect(screen.getByText('Q1', { selector: '.preview-table td' })).toBeInTheDocument()
+    expect(screen.getByText('A1', { selector: '.preview-table td' })).toBeInTheDocument()
+    expect(screen.queryByText('已掌握')).not.toBeInTheDocument()
+
+    await fireEvent.click(screen.getByText('开始练习'))
+    await flushPromises()
+    expect(screen.getByText('已掌握')).toBeInTheDocument()
+  })
+
+  it('乘法表包预览渲染方正方阵（首行/首列乘数表头，交叉格为积）', async () => {
+    const items = []
+    for (let a = 1; a <= 2; a++) {
+      for (let b = 1; b <= 2; b++) {
+        items.push({ id: `m-${a}-${b}`, question: `${a}×${b}`, answer: String(a * b) })
+      }
+    }
+    const { container } = await setup('multiplication-9x9', items, { enterPractice: false })
+
+    const table = container.querySelector('.mult-grid')!
+    expect(table).toBeTruthy()
+    const headerCells = table.querySelectorAll('thead th')
+    expect(headerCells).toHaveLength(3) // 角标 + 乘数 1、2
+    expect(headerCells[1].textContent).toBe('1')
+    expect(headerCells[2].textContent).toBe('2')
+
+    const bodyRows = table.querySelectorAll('tbody tr')
+    expect(bodyRows).toHaveLength(2)
+    // 第二行行头为乘数 2，交叉格 2×2=4
+    expect(bodyRows[1].querySelector('th')!.textContent).toBe('2')
+    expect(bodyRows[1].querySelectorAll('td')[1].textContent).toBe('4')
+  })
+
+  it('元素周期表包预览按周期律排布（符号 + 中文名 + 序数）', async () => {
+    const items = [
+      { id: 'elements-H', question: 'H', answer: '氢', extras: { '序数': '1' } },
+      { id: 'elements-He', question: 'He', answer: '氦', extras: { '序数': '2' } },
+    ]
+    const { container } = await setup('elements', items, { enterPractice: false })
+
+    const cells = container.querySelectorAll('.periodic-table .element-cell:not(.empty)')
+    expect(cells).toHaveLength(2)
+    expect(cells[0].textContent).toContain('1')
+    expect(cells[0].textContent).toContain('H')
+    expect(cells[0].textContent).toContain('氢')
+    expect(cells[1].textContent).toContain('He')
+  })
+
+  it('math-formulas 预览：行内函数按钮与顶部汇总入口可见', async () => {
+    const { container } = await setup('math-formulas', [
+      { id: 'math-formulas-21', question: '一次函数', answer: 'y=2x+1' },
+      { id: 'math-formulas-99', question: '未映射', answer: '无' },
+    ], { enterPractice: false })
+
+    // 顶部汇总入口
+    expect(screen.getByText('函数图像')).toBeInTheDocument()
+    // 仅映射条目行内有函数按钮
+    expect(container.querySelectorAll('[title="查看函数图像"]')).toHaveLength(1)
+
+    // 点击汇总入口列出可绘制函数
+    await fireEvent.click(screen.getByText('函数图像'))
+    await flushPromises()
+    expect(screen.getByText('一次函数', { selector: '.plot-list-item .q' })).toBeInTheDocument()
+  })
+
+  it('无可绘制函数的包预览不显示函数图像入口', async () => {
+    await setup('test-pack', [
+      { id: 'i1', question: 'Q1', answer: 'A1' },
+    ], { enterPractice: false })
+    expect(screen.queryByText('函数图像')).not.toBeInTheDocument()
   })
 })

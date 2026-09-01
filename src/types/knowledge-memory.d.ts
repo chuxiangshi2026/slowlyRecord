@@ -45,6 +45,11 @@ export interface KnowledgePackInfo {
     usableAsPeg: boolean;
     /** 宿主分类：数学强相关为 math，文本/常识类为 text */
     category: KnowledgePackCategory;
+    /**
+     * 数据版本号（缺省视为 1）。包内容发生结构性变更时递增，
+     * localStorage 缓存中版本不一致的条目自动失效重新加载。
+     */
+    version?: number;
 }
 
 /** 单个条目的练习进度 */

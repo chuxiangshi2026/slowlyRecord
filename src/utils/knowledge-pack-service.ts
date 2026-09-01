@@ -40,13 +40,34 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false, category: 'text'},
-    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 24, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 24, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'chemistry-formulas', name: '常用化学公式', description: '初中化学常见方程式与计算式', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math'},
 ];
 
 interface CacheData {
     timestamp: number;
+    /** 写入缓存时的包数据版本（旧缓存无此字段，视为 1） */
+    version?: number;
     pack: KnowledgePack;
+}
+
+/**
+ * 获取包当前数据版本（元数据未显式声明时为 1）
+ */
+export function getPackVersion(id: string): number {
+    return getKnowledgePackInfo(id)?.version ?? 1;
+}
+
+/**
+ * 缓存是否可用：未过期、版本与当前包一致、数据结构合法。
+ * 版本不一致（如 math-formulas 新增函数条目后老缓存缺数据）视为失效。
+ */
+export function isCacheUsable(data: CacheData | null, expectedVersion: number, now: number = Date.now()): boolean {
+    if (!data) return false;
+    if (now - data.timestamp > CACHE_EXPIRY) return false;
+    if ((data.version ?? 1) !== expectedVersion) return false;
+    if (!data.pack || !Array.isArray(data.pack.items) || data.pack.items.length < MIN_PACK_SIZE) return false;
+    return true;
 }
 
 function buildCacheKey(id: string): string {
@@ -62,12 +83,7 @@ function getFromCache(id: string): KnowledgePack | null {
         if (!cached) return null;
 
         const data: CacheData = JSON.parse(cached);
-        const now = Date.now();
-        if (now - data.timestamp > CACHE_EXPIRY) {
-            localStorage.removeItem(buildCacheKey(id));
-            return null;
-        }
-        if (!data.pack || !Array.isArray(data.pack.items) || data.pack.items.length < MIN_PACK_SIZE) {
+        if (!isCacheUsable(data, getPackVersion(id))) {
             localStorage.removeItem(buildCacheKey(id));
             return null;
         }
@@ -85,6 +101,7 @@ function saveToCache(id: string, pack: KnowledgePack): void {
     try {
         const data: CacheData = {
             timestamp: Date.now(),
+            version: getPackVersion(id),
             pack,
         };
         localStorage.setItem(buildCacheKey(id), JSON.stringify(data));
@@ -167,12 +184,14 @@ export async function fetchKnowledgePack(
                 return pack;
             }
 
-            // 若本地也失败，但有合法缓存（即使过期），仍尝试兜底使用
+            // 若本地也失败，但有合法缓存（即使过期），仍尝试兜底使用；版本不一致的老缓存不兜底
             const staleCached = localStorage.getItem(buildCacheKey(id));
             if (staleCached) {
                 try {
                     const data: CacheData = JSON.parse(staleCached);
-                    if (data.pack && Array.isArray(data.pack.items) && data.pack.items.length >= MIN_PACK_SIZE) {
+                    if ((data.version ?? 1) !== getPackVersion(id)) {
+                        console.warn(`[KnowledgePack] 过期缓存版本不一致，放弃兜底: ${id}`);
+                    } else if (data.pack && Array.isArray(data.pack.items) && data.pack.items.length >= MIN_PACK_SIZE) {
                         const validation = validateKnowledgePack(data.pack);
                         if (!validation.valid) {
                             console.warn(`[KnowledgePack] 过期缓存校验失败: ${id}`, validation.error);
