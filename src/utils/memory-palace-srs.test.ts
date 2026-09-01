@@ -47,16 +47,27 @@ describe('memory-palace-srs', () => {
 
   it('到期自评记住后升级', () => {
     const now = Date.now();
-    const peg = makePeg(1, now - DEFAULT_INTERVALS[1] * 60 * 1000);
+    const peg = makePeg(1, now - DEFAULT_INTERVALS[1] * 60 * 1000 - 1);
     const updated = markRemembered(peg, now);
     expect(updated.level).toBe(2);
     expect(updated.learnDate).toBe(now);
   });
 
-  it('未到期自评记住不升级', () => {
+  it('未到期自评记住刷新 learnDate 但不升级', () => {
     const now = Date.now();
     const peg = makePeg(5, now);
-    expect(markRemembered(peg, now)).toBe(peg);
+    const updated = markRemembered(peg, now);
+    expect(updated.level).toBe(5);
+    expect(updated.learnDate).toBe(now);
+  });
+
+  it('到期但超过窗口时刷新 learnDate 但不升级', () => {
+    const now = Date.now();
+    const endWindowMs = DEFAULT_INTERVALS[4] * 60 * 1000 + 1;
+    const peg = makePeg(1, now - endWindowMs);
+    const updated = markRemembered(peg, now);
+    expect(updated.level).toBe(1);
+    expect(updated.learnDate).toBe(now);
   });
 
   it('满级后不再升级', () => {
@@ -77,8 +88,22 @@ describe('memory-palace-srs', () => {
     expect(updated.level).toBe(1);
   });
 
-  it('0 级忘记保持 0 级', () => {
+  it('0 级忘记按统一下限升为 1 级', () => {
     const updated = markForgotten(makePeg(0));
-    expect(updated.level).toBe(0);
+    expect(updated.level).toBe(1);
+  });
+
+  it('记忆牢固度 "较强" 时 +2 级', () => {
+    const now = Date.now();
+    const peg = makePeg(1, now - DEFAULT_INTERVALS[1] * 60 * 1000 - 1);
+    const updated = markRemembered(peg, now, '较强');
+    expect(updated.level).toBe(3);
+  });
+
+  it('记忆牢固度 "极强" 时 +3 级', () => {
+    const now = Date.now();
+    const peg = makePeg(1, now - DEFAULT_INTERVALS[1] * 60 * 1000 - 1);
+    const updated = markRemembered(peg, now, '极强');
+    expect(updated.level).toBe(4);
   });
 });

@@ -34,6 +34,31 @@ describe('chunkArticleContent', () => {
     expect(chunks).toEqual(['第一句!', '第二句?', '第三句']);
   });
 
+  it('按句切块支持英文句点', () => {
+    const chunks = chunkArticleContent('Hello world. This is a test.', 'sentence');
+    expect(chunks).toEqual(['Hello world.', 'This is a test.']);
+  });
+
+  it('小数点不被误切', () => {
+    const chunks = chunkArticleContent('The value is 3.14. Price 1.23 and 4.56.', 'sentence');
+    expect(chunks).toEqual(['The value is 3.14.', 'Price 1.23 and 4.56.']);
+  });
+
+  it('中英混排按句切块', () => {
+    const chunks = chunkArticleContent('Hello. 你好，世界。Nice to meet you.', 'sentence');
+    expect(chunks).toEqual(['Hello.', '你好，世界。', 'Nice to meet you.']);
+  });
+
+  it('连续英文句点按一个结尾处理', () => {
+    const chunks = chunkArticleContent('Wait... what? OK...', 'sentence');
+    expect(chunks).toEqual(['Wait...', 'what?', 'OK...']);
+  });
+
+  it('无结尾标点的末尾文本也成块', () => {
+    const chunks = chunkArticleContent('第一句。第二句没有标点', 'sentence');
+    expect(chunks).toEqual(['第一句。', '第二句没有标点']);
+  });
+
   it('按段切块', () => {
     const chunks = chunkArticleContent('第一段\n\n第二段\n第三段', 'paragraph');
     expect(chunks).toEqual(['第一段', '第二段', '第三段']);

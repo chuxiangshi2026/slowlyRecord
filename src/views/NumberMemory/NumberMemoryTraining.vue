@@ -99,7 +99,7 @@
           </template>
 
           <!-- 图片→数字模式 -->
-          <template v-else>
+          <template v-else-if="currentMode === 'imageToNumber'">
             <div class="question-image">
               <span class="label">这张图片代表什么数字？</span>
               <!-- 用户上传的base64图片 -->

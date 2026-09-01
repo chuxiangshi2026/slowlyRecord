@@ -8,7 +8,8 @@ import type {TextArticle} from '@/types/text-memory';
 import type {ChunkMode, PalaceLocus, PegItem, ResolvedPegContent} from '@/types/memory-palace';
 
 // 句末标点（中英文）
-const SENTENCE_ENDINGS = /[^。！？；!?\n]+[。！？；!?]*/g;
+// 支持英文句点 .，但小数点（前后都是数字）不切分；连续句点按一个结尾处理
+const SENTENCE_ENDINGS = /(?:\d+\.\d+|[^.。！？；!?\n])+[.。！？；!?]*/g;
 
 /**
  * 把文章内容切成块

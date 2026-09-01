@@ -79,6 +79,18 @@ describe('knowledge-memory-srs', () => {
       const intervalMs = (DEFAULT_INTERVALS[1] ?? 5) * 60 * 1000
       expect(isDue(makeProgress({level: 1, learnDate: now - intervalMs - 1}), now)).toBe(true)
     })
+
+    it('字符串 learnDate 能正确解析', () => {
+      const now = Date.now()
+      const progress = makeProgress({level: 1, learnDate: new Date(now - DEFAULT_INTERVALS[1] * 60 * 1000 - 1).toISOString()})
+      expect(isDue(progress, now)).toBe(true)
+    })
+
+    it('非法字符串 learnDate 视为刚学习', () => {
+      const now = Date.now()
+      const progress = makeProgress({level: 1, learnDate: 'invalid-date'})
+      expect(isDue(progress, now)).toBe(false)
+    })
   })
 
   describe('markCorrect', () => {
@@ -97,13 +109,35 @@ describe('knowledge-memory-srs', () => {
       expect(result.level).toBe(MAX_LEVEL)
     })
 
-    it('未到期时不升级', () => {
+    it('未到期时刷新 learnDate 并增加正确次数，但不升级', () => {
       const now = Date.now()
-      const progress = makeProgress({level: 5, learnDate: now})
+      const progress = makeProgress({level: 5, learnDate: now, correct: 2})
       const result = markCorrect(progress, now)
       expect(result.level).toBe(5)
       expect(result.learnDate).toBe(now)
-      expect(result.correct).toBe(progress.correct)
+      expect(result.correct).toBe(3)
+    })
+
+    it('到期但超过窗口时不升级，刷新 learnDate', () => {
+      const now = Date.now()
+      const endWindowMs = DEFAULT_INTERVALS[4] * 60 * 1000 + 1
+      const progress = makeProgress({level: 1, learnDate: now - endWindowMs})
+      const result = markCorrect(progress, now)
+      expect(result.level).toBe(1)
+      expect(result.learnDate).toBe(now)
+      expect(result.correct).toBe(1)
+    })
+
+    it('记忆牢固度 "较强" 时 +2 级', () => {
+      const progress = makeProgress({level: 1, learnDate: 0})
+      const result = markCorrect(progress, Date.now(), '较强')
+      expect(result.level).toBe(3)
+    })
+
+    it('记忆牢固度 "极强" 时 +3 级', () => {
+      const progress = makeProgress({level: 1, learnDate: 0})
+      const result = markCorrect(progress, Date.now(), '极强')
+      expect(result.level).toBe(4)
     })
   })
 
@@ -117,9 +151,9 @@ describe('knowledge-memory-srs', () => {
       expect(result.wrong).toBe(2)
     })
 
-    it('0 级答错保持 0 级', () => {
+    it('0 级答错按统一下限升为 1 级', () => {
       const result = markWrong(makeProgress({level: 0}), Date.now())
-      expect(result.level).toBe(0)
+      expect(result.level).toBe(1)
     })
 
     it('12 级答错重置为 1 级', () => {

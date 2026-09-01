@@ -24,6 +24,7 @@ import {
 } from '@/utils/memory-palace-db';
 import {assignChunksToLoci, buildPegId, chunkArticleContent, knowledgePackToLoci} from '@/utils/memory-palace-util';
 import {markForgotten, markRemembered} from '@/utils/memory-palace-srs';
+import {useWordsStore} from '@/stores/words';
 
 // 生成唯一 ID
 function generateId(): string {
@@ -232,10 +233,9 @@ export const useMemoryPalaceStore = defineStore('memoryPalace', () => {
    */
   async function assessPeg(peg: PegItem, remembered: boolean) {
     await ensureDb();
-    const updated = remembered ? markRemembered(peg) : markForgotten(peg);
-    if (updated === peg) {
-      return {ok: true, id: peg._id}; // 未到期不升级，无需写库
-    }
+    const wordsStore = useWordsStore();
+    const firmness = wordsStore.memoryFirmness ?? '正常';
+    const updated = remembered ? markRemembered(peg, Date.now(), firmness) : markForgotten(peg);
     const result = await savePegItem(updated);
     if (result.ok) {
       upsertLocalPeg(updated);

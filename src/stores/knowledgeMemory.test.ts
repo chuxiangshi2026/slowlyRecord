@@ -3,6 +3,10 @@ import {setActivePinia, createPinia} from 'pinia'
 import {useKnowledgeMemoryStore} from './knowledgeMemory'
 import type {KnowledgePack, KnowledgePackProgressDoc} from '@/types/knowledge-memory'
 
+vi.mock('@/stores/words', () => ({
+  useWordsStore: vi.fn(() => ({ memoryFirmness: '正常' }))
+}))
+
 const mockPack: KnowledgePack = {
   id: 'test-pack',
   name: '测试知识包',

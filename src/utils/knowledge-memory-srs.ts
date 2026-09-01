@@ -2,16 +2,27 @@
  * 通用知识包 SRS（间隔重复）工具
  *
  * 复用全局 DEFAULT_INTERVALS（分钟单位），level 0-12，答对且过复习间隔才升级，答错降级。
+ * 内部委托给共享 srs.ts，保持导出签名不变。
  */
 
 import {DEFAULT_INTERVALS} from '@/constants';
 import type {KnowledgeItemProgress} from '@/types/knowledge-memory';
+import type {MemoryFirmnessType} from '@/types/words';
+import {
+    canLevelUp as canLevelUpShared,
+    clampLevel as clampLevelShared,
+    computeLevelDown,
+    computeLevelUp,
+    isDue as isDueShared,
+    MASTERED_LEVEL,
+    MAX_LEVEL,
+} from '@/utils/srs';
 
 /** level 上限 */
-export const MAX_LEVEL = Math.min(12, DEFAULT_INTERVALS.length - 1);
+export {MAX_LEVEL};
 
 /** 掌握阈值 */
-export const MASTERED_LEVEL = 12;
+export {MASTERED_LEVEL};
 
 /** 新条目默认等级（旧数据无 level 时按 0 处理） */
 export const DEFAULT_LEVEL = 0;
@@ -20,9 +31,7 @@ export const DEFAULT_LEVEL = 0;
  * 将等级限制在 [0, MAX_LEVEL]
  */
 export function clampLevel(level: number): number {
-    if (level < 0) return 0;
-    if (level > MAX_LEVEL) return MAX_LEVEL;
-    return level;
+    return clampLevelShared(level, MAX_LEVEL);
 }
 
 /**
@@ -58,26 +67,32 @@ export function isRemembered(progress?: KnowledgeItemProgress): boolean {
  */
 export function isDue(progress: KnowledgeItemProgress | undefined, now: number): boolean {
     const level = getItemLevel(progress);
-    if (!progress || !progress.learnDate) return true;
-    const intervalMinutes = DEFAULT_INTERVALS[level] ?? DEFAULT_INTERVALS[DEFAULT_LEVEL];
-    const intervalMs = intervalMinutes * 60 * 1000;
-    return now - progress.learnDate >= intervalMs;
+    if (!progress) return true;
+    return isDueShared(progress.learnDate, level, now, DEFAULT_INTERVALS);
 }
 
 /**
  * 答对后更新进度
- * 只有到期才会升级；未到期时不做任何变更（仅更新 learnDate 会破坏 SRS，故保持原样）
+ * - 在升级窗口内：按记忆牢固度升 1~3 级，封顶 12
+ * - 未到期或到期但超窗：刷新 learnDate，不升级
  */
 export function markCorrect(
     progress: KnowledgeItemProgress,
     now: number = Date.now(),
+    firmness?: MemoryFirmnessType | string,
 ): KnowledgeItemProgress {
-    if (!isDue(progress, now)) {
-        return progress;
+    const level = getItemLevel(progress);
+    if (canLevelUpShared(progress.learnDate, level, now, DEFAULT_INTERVALS)) {
+        return {
+            ...progress,
+            level: computeLevelUp(level, firmness),
+            learnDate: now,
+            correct: progress.correct + 1,
+        };
     }
+    // 未到期或太晚：刷新 learnDate，保持等级
     return {
         ...progress,
-        level: clampLevel(getItemLevel(progress) + 1),
         learnDate: now,
         correct: progress.correct + 1,
     };
@@ -92,10 +107,9 @@ export function markWrong(
     now: number = Date.now(),
 ): KnowledgeItemProgress {
     const level = getItemLevel(progress);
-    const nextLevel = level >= MASTERED_LEVEL ? 1 : clampLevel(level - 1);
     return {
         ...progress,
-        level: nextLevel,
+        level: computeLevelDown(level),
         learnDate: now,
         wrong: progress.wrong + 1,
     };

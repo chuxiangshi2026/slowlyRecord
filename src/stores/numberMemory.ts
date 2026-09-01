@@ -39,6 +39,7 @@ import {
   reorderPrompts
 } from "@/utils/number-memory-entries-db";
 import {DEFAULT_LEVEL, getEntryLevel, isDue, isRemembered, markCorrect, markWrong} from "@/utils/number-memory-srs";
+import {useWordsStore} from "@/stores/words";
 
 export const useNumberMemoryStore = defineStore("numberMemory", () => {
   // State
@@ -327,13 +328,14 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
   }
   
   /**
-   * 标记条目答对（已到期才升级）
+   * 标记条目答对（窗口内升级；未到期或超窗也刷新 learnDate 并写库）
    */
   async function markEntryCorrect(entryId: string) {
     const entry = entries.value.find(e => e._id === entryId);
     if (!entry) return {ok: false};
-    const updated = markCorrect(entry);
-    if (updated === entry) return {ok: true, entry};
+    const wordsStore = useWordsStore();
+    const firmness = wordsStore.memoryFirmness ?? '正常';
+    const updated = markCorrect(entry, Date.now(), firmness);
     const result = await updateEntry(updated);
     if (result.ok) {
       const index = entries.value.findIndex(e => e._id === entryId);

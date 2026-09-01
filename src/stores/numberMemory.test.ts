@@ -3,6 +3,10 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useNumberMemoryStore } from './numberMemory'
 import type { NumberImageAssociation, NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt } from '@/types/number-memory'
 
+vi.mock('@/stores/words', () => ({
+  useWordsStore: vi.fn(() => ({ memoryFirmness: '正常' }))
+}))
+
 // Mock number-memory-db
 vi.mock('@/utils/number-memory-db', () => ({
   getAllAssociations: vi.fn(() => []),

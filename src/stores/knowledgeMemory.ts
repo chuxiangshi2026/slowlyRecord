@@ -24,6 +24,7 @@ import {
     markCorrect,
     markWrong,
 } from '@/utils/knowledge-memory-srs';
+import {useWordsStore} from '@/stores/words';
 import {log} from '@/utils/logger';
 
 function normalizeAnswer(value: string): string {
@@ -202,7 +203,9 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
 
         const doc = getProgress(packId);
         const prev = doc.items[itemId] || createDefaultProgress(itemId);
-        const next = isCorrect ? markCorrect(prev, now) : markWrong(prev, now);
+        const wordsStore = useWordsStore();
+        const firmness = wordsStore.memoryFirmness ?? '正常';
+        const next = isCorrect ? markCorrect(prev, now, firmness) : markWrong(prev, now);
 
         doc.items[itemId] = next;
         progress.value[packId] = {...doc};
