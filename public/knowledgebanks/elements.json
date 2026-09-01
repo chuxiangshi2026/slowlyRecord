@@ -1,0 +1,333 @@
+{
+  "id": "elements",
+  "name": "元素周期表（前 36 号）",
+  "description": "元素周期表前 36 号元素（氢到氪），符号与中文名",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "elements-H",
+      "question": "H",
+      "answer": "氢",
+      "extras": {
+        "序数": "1",
+        "拼音": "qīng"
+      }
+    },
+    {
+      "id": "elements-He",
+      "question": "He",
+      "answer": "氦",
+      "extras": {
+        "序数": "2",
+        "拼音": "hài"
+      }
+    },
+    {
+      "id": "elements-Li",
+      "question": "Li",
+      "answer": "锂",
+      "extras": {
+        "序数": "3",
+        "拼音": "lǐ"
+      }
+    },
+    {
+      "id": "elements-Be",
+      "question": "Be",
+      "answer": "铍",
+      "extras": {
+        "序数": "4",
+        "拼音": "pí"
+      }
+    },
+    {
+      "id": "elements-B",
+      "question": "B",
+      "answer": "硼",
+      "extras": {
+        "序数": "5",
+        "拼音": "péng"
+      }
+    },
+    {
+      "id": "elements-C",
+      "question": "C",
+      "answer": "碳",
+      "extras": {
+        "序数": "6",
+        "拼音": "tàn"
+      }
+    },
+    {
+      "id": "elements-N",
+      "question": "N",
+      "answer": "氮",
+      "extras": {
+        "序数": "7",
+        "拼音": "dàn"
+      }
+    },
+    {
+      "id": "elements-O",
+      "question": "O",
+      "answer": "氧",
+      "extras": {
+        "序数": "8",
+        "拼音": "yǎng"
+      }
+    },
+    {
+      "id": "elements-F",
+      "question": "F",
+      "answer": "氟",
+      "extras": {
+        "序数": "9",
+        "拼音": "fú"
+      }
+    },
+    {
+      "id": "elements-Ne",
+      "question": "Ne",
+      "answer": "氖",
+      "extras": {
+        "序数": "10",
+        "拼音": "nǎi"
+      }
+    },
+    {
+      "id": "elements-Na",
+      "question": "Na",
+      "answer": "钠",
+      "extras": {
+        "序数": "11",
+        "拼音": "nà"
+      }
+    },
+    {
+      "id": "elements-Mg",
+      "question": "Mg",
+      "answer": "镁",
+      "extras": {
+        "序数": "12",
+        "拼音": "měi"
+      }
+    },
+    {
+      "id": "elements-Al",
+      "question": "Al",
+      "answer": "铝",
+      "extras": {
+        "序数": "13",
+        "拼音": "lǚ"
+      }
+    },
+    {
+      "id": "elements-Si",
+      "question": "Si",
+      "answer": "硅",
+      "extras": {
+        "序数": "14",
+        "拼音": "guī"
+      }
+    },
+    {
+      "id": "elements-P",
+      "question": "P",
+      "answer": "磷",
+      "extras": {
+        "序数": "15",
+        "拼音": "lín"
+      }
+    },
+    {
+      "id": "elements-S",
+      "question": "S",
+      "answer": "硫",
+      "extras": {
+        "序数": "16",
+        "拼音": "liú"
+      }
+    },
+    {
+      "id": "elements-Cl",
+      "question": "Cl",
+      "answer": "氯",
+      "extras": {
+        "序数": "17",
+        "拼音": "lǜ"
+      }
+    },
+    {
+      "id": "elements-Ar",
+      "question": "Ar",
+      "answer": "氩",
+      "extras": {
+        "序数": "18",
+        "拼音": "yà"
+      }
+    },
+    {
+      "id": "elements-K",
+      "question": "K",
+      "answer": "钾",
+      "extras": {
+        "序数": "19",
+        "拼音": "jiǎ"
+      }
+    },
+    {
+      "id": "elements-Ca",
+      "question": "Ca",
+      "answer": "钙",
+      "extras": {
+        "序数": "20",
+        "拼音": "gài"
+      }
+    },
+    {
+      "id": "elements-Sc",
+      "question": "Sc",
+      "answer": "钪",
+      "extras": {
+        "序数": "21",
+        "拼音": "kàng"
+      }
+    },
+    {
+      "id": "elements-Ti",
+      "question": "Ti",
+      "answer": "钛",
+      "extras": {
+        "序数": "22",
+        "拼音": "tài"
+      }
+    },
+    {
+      "id": "elements-V",
+      "question": "V",
+      "answer": "钒",
+      "extras": {
+        "序数": "23",
+        "拼音": "fán"
+      }
+    },
+    {
+      "id": "elements-Cr",
+      "question": "Cr",
+      "answer": "铬",
+      "extras": {
+        "序数": "24",
+        "拼音": "gè"
+      }
+    },
+    {
+      "id": "elements-Mn",
+      "question": "Mn",
+      "answer": "锰",
+      "extras": {
+        "序数": "25",
+        "拼音": "měng"
+      }
+    },
+    {
+      "id": "elements-Fe",
+      "question": "Fe",
+      "answer": "铁",
+      "extras": {
+        "序数": "26",
+        "拼音": "tiě"
+      }
+    },
+    {
+      "id": "elements-Co",
+      "question": "Co",
+      "answer": "钴",
+      "extras": {
+        "序数": "27",
+        "拼音": "gǔ"
+      }
+    },
+    {
+      "id": "elements-Ni",
+      "question": "Ni",
+      "answer": "镍",
+      "extras": {
+        "序数": "28",
+        "拼音": "niè"
+      }
+    },
+    {
+      "id": "elements-Cu",
+      "question": "Cu",
+      "answer": "铜",
+      "extras": {
+        "序数": "29",
+        "拼音": "tóng"
+      }
+    },
+    {
+      "id": "elements-Zn",
+      "question": "Zn",
+      "answer": "锌",
+      "extras": {
+        "序数": "30",
+        "拼音": "xīn"
+      }
+    },
+    {
+      "id": "elements-Ga",
+      "question": "Ga",
+      "answer": "镓",
+      "extras": {
+        "序数": "31",
+        "拼音": "jiā"
+      }
+    },
+    {
+      "id": "elements-Ge",
+      "question": "Ge",
+      "answer": "锗",
+      "extras": {
+        "序数": "32",
+        "拼音": "zhě"
+      }
+    },
+    {
+      "id": "elements-As",
+      "question": "As",
+      "answer": "砷",
+      "extras": {
+        "序数": "33",
+        "拼音": "shēn"
+      }
+    },
+    {
+      "id": "elements-Se",
+      "question": "Se",
+      "answer": "硒",
+      "extras": {
+        "序数": "34",
+        "拼音": "xī"
+      }
+    },
+    {
+      "id": "elements-Br",
+      "question": "Br",
+      "answer": "溴",
+      "extras": {
+        "序数": "35",
+        "拼音": "xiù"
+      }
+    },
+    {
+      "id": "elements-Kr",
+      "question": "Kr",
+      "answer": "氪",
+      "extras": {
+        "序数": "36",
+        "拼音": "kè"
+      }
+    }
+  ]
+}
