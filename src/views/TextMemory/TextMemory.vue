@@ -69,13 +69,19 @@
       <div class="filter-actions">
         <el-radio-group v-model="currentView" size="small">
           <el-radio-button label="list">
-            <el-icon><List /></el-icon>
+            <el-tooltip effect="dark" content="列表视图" placement="top" popper-class="small-tooltip">
+              <el-icon><List /></el-icon>
+            </el-tooltip>
           </el-radio-button>
           <el-radio-button label="map">
-            <el-icon><MapLocation /></el-icon>
+            <el-tooltip effect="dark" content="地图视图" placement="top" popper-class="small-tooltip">
+              <el-icon><MapLocation /></el-icon>
+            </el-tooltip>
           </el-radio-button>
           <el-radio-button label="timeline">
-            <el-icon><Clock /></el-icon>
+            <el-tooltip effect="dark" content="时间线视图" placement="top" popper-class="small-tooltip">
+              <el-icon><Clock /></el-icon>
+            </el-tooltip>
           </el-radio-button>
         </el-radio-group>
         <el-tooltip class="box-item" effect="dark" content="添加文本" placement="top" popper-class="small-tooltip">
@@ -241,7 +247,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
@@ -462,7 +468,7 @@ function selectTag(tag: string) {
 
 // 搜索框回车（实时过滤已生效，仅作为交互入口）
 function emitSearchChange() {
-  // 无需额外处理
+  // 搜索框回车占位：筛选已实时响应，无需额外动作
 }
 
 // 点击文章卡片
@@ -614,6 +620,29 @@ function handleOpenWordSettings() {
 function handleMapSelect(article: TextArticle) {
   textStore.setCurrentArticle(article);
 }
+
+// 编辑对话框关闭后清理编辑中的文章引用，避免残留
+watch(showEditDialog, (val) => {
+  if (!val) {
+    editingArticle.value = undefined;
+  }
+});
+
+// 练习/笔记/提示词等对话框全部关闭后清理当前文章引用，避免残留
+watch(
+  [showFillBlanksDialog, showChoiceDialog, showNotesDialog, showPromptsDialog, showTypingDialog],
+  () => {
+    if (
+      !showFillBlanksDialog.value &&
+      !showChoiceDialog.value &&
+      !showNotesDialog.value &&
+      !showPromptsDialog.value &&
+      !showTypingDialog.value
+    ) {
+      currentExerciseArticle.value = null;
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">

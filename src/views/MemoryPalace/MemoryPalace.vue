@@ -223,7 +223,8 @@ async function handleDelete(palace: Palace) {
     const result = await store.deletePalace(palace._id);
     if (result.ok) {
       ElMessage.success('删除成功');
-      refreshMountedCounts();
+      // 清理被删宫殿的挂载数缓存，避免残留过期 key
+      delete mountedCounts.value[palace._id];
     } else {
       ElMessage.error('删除失败');
     }

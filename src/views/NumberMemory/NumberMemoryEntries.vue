@@ -127,7 +127,7 @@
             <el-tooltip class="box-item" effect="dark" content="填空练习" placement="top" popper-class="small-tooltip">
               <el-icon class="iconHover" :size="20" @click="handleFillBlanks(entry)"><EditPen /></el-icon>
             </el-tooltip>
-            <el-tooltip v-if="isEntryDue(entry)" class="box-item" effect="dark" content="到期复习" placement="top" popper-class="small-tooltip">
+            <el-tooltip v-if="dueEntryIds.has(entry._id)" class="box-item" effect="dark" content="到期复习" placement="top" popper-class="small-tooltip">
               <el-icon class="iconHover review-due" :size="20" @click="handleFillBlanks(entry)"><AlarmClock /></el-icon>
             </el-tooltip>
             <el-tooltip class="box-item" effect="dark" content="笔记" placement="top" popper-class="small-tooltip">
@@ -466,7 +466,7 @@ const toggleSort = (key: 'time' | 'title' | 'review') => {
 
 // 搜索框回车触发筛选（主要用于收起键盘等场景）
 const emitFilterChange = () => {
-  // 当前搜索为响应式，无需额外处理
+  // 搜索框回车占位：筛选已实时响应，无需额外动作
 };
 
 // 格式化日期
@@ -569,10 +569,17 @@ function fillMnemonicExample() {
   }
 }
 
-// 判断条目是否到期
-function isEntryDue(entry: NumberMemoryEntry): boolean {
-  return isDue(entry, Date.now());
-}
+// 到期条目的 id 集合：渲染前按当前条目列表预计算，避免对每条目重复判定
+const dueEntryIds = computed(() => {
+  const now = Date.now();
+  const ids = new Set<string>();
+  for (const entry of store.entries) {
+    if (isDue(entry, now)) {
+      ids.add(entry._id);
+    }
+  }
+  return ids;
+});
 
 // 删除条目
 async function handleDelete(entry: NumberMemoryEntry) {
@@ -675,6 +682,21 @@ watch(showAddDialog, (val) => {
     resetForm();
   }
 });
+
+// 各功能对话框关闭后清理当前条目引用，避免残留
+watch(
+  [showImageAssociationDialog, showFillBlanksDialog, showNotesDialog, showPromptsDialog],
+  () => {
+    if (
+      !showImageAssociationDialog.value &&
+      !showFillBlanksDialog.value &&
+      !showNotesDialog.value &&
+      !showPromptsDialog.value
+    ) {
+      currentEntry.value = null;
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">
