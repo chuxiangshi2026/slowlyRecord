@@ -146,6 +146,38 @@
       "id": "math-formulas-20",
       "question": "利润率",
       "answer": "利润率=利润÷成本×100%"
+    },
+    {
+      "id": "math-formulas-21",
+      "question": "一次函数",
+      "answer": "y=kx+b（k≠0），如 y=2x+1",
+      "extras": {
+        "说明": "图像是一条直线"
+      }
+    },
+    {
+      "id": "math-formulas-22",
+      "question": "二次函数",
+      "answer": "y=ax²+bx+c（a≠0），如 y=x²-2x-3",
+      "extras": {
+        "说明": "图像是抛物线，对称轴 x=-b/2a"
+      }
+    },
+    {
+      "id": "math-formulas-23",
+      "question": "反比例函数",
+      "answer": "y=k/x（k≠0），如 y=1/x",
+      "extras": {
+        "说明": "图像是双曲线，x=0 为渐近线"
+      }
+    },
+    {
+      "id": "math-formulas-24",
+      "question": "正弦函数",
+      "answer": "y=sin x",
+      "extras": {
+        "说明": "周期为 2π"
+      }
     }
   ]
 }

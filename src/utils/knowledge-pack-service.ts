@@ -36,7 +36,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false},
     {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false},
-    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 20, ordered: false, usableAsPeg: false},
+    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 24, ordered: false, usableAsPeg: false},
     {id: 'chemistry-formulas', name: '常用化学公式', description: '初中化学常见方程式与计算式', itemCount: 20, ordered: false, usableAsPeg: false},
 ];
 

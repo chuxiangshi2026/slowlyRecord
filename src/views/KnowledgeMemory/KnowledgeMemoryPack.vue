@@ -69,7 +69,10 @@
         <template v-else-if="currentItem">
           <!-- Q→A / A→Q 翻卡 -->
           <div v-if="currentMode === 'q2a' || currentMode === 'a2q'" class="flip-card">
-            <div class="prompt-label">{{ currentMode === 'q2a' ? '问题' : '答案' }}</div>
+            <div class="prompt-row">
+              <div class="prompt-label">{{ currentMode === 'q2a' ? '问题' : '答案' }}</div>
+              <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+            </div>
             <div class="prompt-main">{{ currentMode === 'q2a' ? currentItem.question : currentItem.answer }}</div>
 
             <div v-if="showAnswer" class="answer-section">
@@ -92,7 +95,10 @@
 
           <!-- 四选一 -->
           <div v-else-if="currentMode === 'choice'" class="choice-card">
-            <div class="prompt-label">问题</div>
+            <div class="prompt-row">
+              <div class="prompt-label">问题</div>
+              <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+            </div>
             <div class="prompt-main">{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
               <el-tag v-for="(value, key) in currentItem.extras" :key="key" size="small" type="info">{{ key }}: {{ value }}</el-tag>
@@ -110,9 +116,12 @@
 
           <!-- 顺序回忆 -->
           <div v-else-if="currentMode === 'ordered'" class="input-card">
-            <div class="prompt-label">
-              顺序回忆
-              <template v-if="currentItem.order"> · 第 {{ currentItem.order }} 项</template>
+            <div class="prompt-row">
+              <div class="prompt-label">
+                顺序回忆
+                <template v-if="currentItem.order"> · 第 {{ currentItem.order }} 项</template>
+              </div>
+              <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
             </div>
             <div v-if="previousItem" class="ordered-prompt">
               前一项是 <strong>{{ previousItem.question }}</strong>，下一项是？
@@ -134,7 +143,10 @@
 
           <!-- 输入模式 -->
           <div v-else-if="currentMode === 'input'" class="input-card">
-            <div class="prompt-label">问题</div>
+            <div class="prompt-row">
+              <div class="prompt-label">问题</div>
+              <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+            </div>
             <div class="prompt-main">{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
               <el-tag v-for="(value, key) in currentItem.extras" :key="key" size="small" type="info">{{ key }}: {{ value }}</el-tag>
@@ -177,6 +189,11 @@
         </el-tooltip>
       </div>
     </div>
+
+    <!-- 函数图像对话框（math-formulas 包可绘制条目） -->
+    <el-dialog v-model="plotDialogVisible" title="函数图像" width="480px" append-to-body>
+      <FunctionPlot v-if="plotFn" :fn="plotFn" :title="plotTitle" />
+    </el-dialog>
 
     <!-- 打印专用容器：屏幕隐藏，打印时仅输出此区域（完整表 / 填空自测表） -->
     <div v-if="pack" class="print-area" :class="printMode">
@@ -222,11 +239,14 @@ import {
   CircleCheck,
   CircleClose,
   RefreshRight,
+  TrendCharts,
 } from '@element-plus/icons-vue';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import type {KnowledgeItem, KnowledgePracticeMode} from '@/types/knowledge-memory';
 import { exportTableAsImage } from '@/utils/table-image-export';
 import type {TableImageData} from '@/utils/table-image-export';
+import FunctionPlot from './components/FunctionPlot.vue';
+import {getMathFormulaPlot} from './function-maps';
 
 /** 打印/存图的表格形态 */
 type TableForm = 'full' | 'blank';
@@ -276,6 +296,24 @@ const currentItem = computed<KnowledgeItem | undefined>(() => sessionItems.value
 const previousItem = computed<KnowledgeItem | undefined>(() =>
     currentItem.value ? store.getPreviousOrderedItem(packId.value, currentItem.value) : undefined,
 );
+
+/** 函数图像对话框状态 */
+const plotDialogVisible = ref(false);
+const plotFn = ref<((x: number) => number) | null>(null);
+const plotTitle = ref('');
+/** 当前条目可绘制的函数（仅 math-formulas 包且条目有映射），不可绘制时为 null */
+const currentPlot = computed(() =>
+    packId.value === 'math-formulas' && currentItem.value ? getMathFormulaPlot(currentItem.value.id) : null,
+);
+
+/** 打开函数图像对话框 */
+function openPlot() {
+  const plot = currentPlot.value;
+  if (!plot || !currentItem.value) return;
+  plotFn.value = plot.fn;
+  plotTitle.value = currentItem.value.question;
+  plotDialogVisible.value = true;
+}
 
 const availableModes = computed(() => {
   const base = [
@@ -621,6 +659,18 @@ async function handleResetProgress() {
   border-radius: 12px;
   padding: 24px 20px;
   text-align: center;
+}
+
+.prompt-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  .prompt-label {
+    margin-bottom: 0;
+  }
 }
 
 .prompt-label {
