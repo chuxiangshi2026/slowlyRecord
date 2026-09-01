@@ -10,11 +10,11 @@
         <span v-if="pack" class="subtitle">{{ pack.items.length }} 条 · 已掌握 {{ masteredCount }}</span>
       </div>
       <div class="right">
-        <el-tooltip effect="dark" content="打印完整表 / 填空自测表（后续实现）" placement="bottom">
-          <el-button text :icon="Printer" disabled>打印</el-button>
+        <el-tooltip effect="dark" content="打印完整表 / 填空自测表" placement="bottom">
+          <el-button text :icon="Printer" @click="handlePrint">打印</el-button>
         </el-tooltip>
-        <el-tooltip effect="dark" content="保存图片（后续实现）" placement="bottom">
-          <el-button text :icon="Picture" disabled>存图</el-button>
+        <el-tooltip effect="dark" content="保存为图片（完整表 / 填空自测表）" placement="bottom">
+          <el-button text :icon="Picture" @click="handleSaveImage">存图</el-button>
         </el-tooltip>
       </div>
     </div>
@@ -177,11 +177,41 @@
         </el-tooltip>
       </div>
     </div>
+
+    <!-- 打印专用容器：屏幕隐藏，打印时仅输出此区域（完整表 / 填空自测表） -->
+    <div v-if="pack" class="print-area" :class="printMode">
+      <div class="print-title">{{ pack.name }}</div>
+      <div class="print-date">{{ printDate }}</div>
+
+      <table class="print-table table-full">
+        <thead>
+          <tr><th>题目</th><th>答案</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in sortedItems" :key="item.id">
+            <td>{{ item.question }}</td>
+            <td>{{ item.answer }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="print-table table-blank">
+        <thead>
+          <tr><th>题目</th><th>答案</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in sortedItems" :key="item.id">
+            <td>{{ item.question }}</td>
+            <td><span class="blank-line"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {
@@ -195,6 +225,11 @@ import {
 } from '@element-plus/icons-vue';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import type {KnowledgeItem, KnowledgePracticeMode} from '@/types/knowledge-memory';
+import { exportTableAsImage } from '@/utils/table-image-export';
+import type {TableImageData} from '@/utils/table-image-export';
+
+/** 打印/存图的表格形态 */
+type TableForm = 'full' | 'blank';
 
 const route = useRoute();
 const router = useRouter();
@@ -209,6 +244,21 @@ const pack = computed(() => store.getPack(packId.value));
 const masteredCount = computed(() => store.getMasteredCount(packId.value));
 const dueCount = computed(() => store.getDueCount(packId.value));
 const totalCount = computed(() => store.getTotalCount(packId.value));
+
+/** 打印区域当前形态（完整表 / 填空自测表） */
+const printMode = ref<TableForm>('full');
+/** 打印表格顶部的日期 */
+const printDate = ref('');
+
+/** 按顺序排列的条目（有序包按 order 排序，保证打印顺序正确） */
+const sortedItems = computed<KnowledgeItem[]>(() => {
+  const p = pack.value;
+  if (!p) return [];
+  if (p.ordered) {
+    return [...p.items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  }
+  return p.items;
+});
 
 const currentMode = ref<KnowledgePracticeMode>('q2a');
 const sessionItems = ref<KnowledgeItem[]>([]);
@@ -361,6 +411,63 @@ function nextItem() {
   currentIndex.value++;
   if (currentMode.value === 'choice') {
     generateCurrentOptions();
+  }
+}
+
+/** 弹出「完整表 / 填空自测表」选择框，返回所选形态；用户关闭对话框返回 null */
+function askTableForm(title: string): Promise<TableForm | null> {
+  return ElMessageBox.confirm('「完整表」含答案；「填空自测表」答案留空，供孩子纸笔作答。', title, {
+    confirmButtonText: '完整表',
+    cancelButtonText: '填空自测表',
+    distinguishCancelAndClose: true,
+    type: 'info',
+  })
+    .then(() => 'full' as const)
+    .catch((action: string | 'cancel' | 'close') => (action === 'cancel' ? ('blank' as const) : null));
+}
+
+/** 构建表格数据：完整表含答案，填空表答案留空 */
+function buildTableData(form: TableForm): TableImageData | null {
+  const p = pack.value;
+  if (!p || p.items.length === 0) return null;
+  return {
+    title: p.name,
+    columns: [
+      {header: '题目', values: sortedItems.value.map(i => i.question)},
+      {header: '答案', values: sortedItems.value.map(i => (form === 'full' ? i.answer : ''))},
+    ],
+  };
+}
+
+/** 当前日期，如「2026年9月2日」 */
+function formatDate(d: Date = new Date()): string {
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+
+/** 打印：选择形态后渲染打印容器并调用系统打印 */
+async function handlePrint() {
+  if (!pack.value?.items.length) return;
+  const form = await askTableForm('打印知识包');
+  if (!form) return;
+  printMode.value = form;
+  printDate.value = formatDate();
+  // 等 DOM 应用完打印样式后再触发打印
+  await nextTick();
+  window.print();
+}
+
+/** 保存图片：选择形态后用 Canvas 绘制表格并下载 PNG */
+async function handleSaveImage() {
+  if (!pack.value?.items.length) return;
+  const form = await askTableForm('保存图片');
+  if (!form) return;
+  const data = buildTableData(form);
+  if (!data) return;
+  try {
+    exportTableAsImage(data, {filename: pack.value.name});
+    ElMessage.success('图片已保存');
+  } catch {
+    ElMessage.error('图片生成失败');
   }
 }
 
@@ -703,6 +810,90 @@ async function handleResetProgress() {
     &:hover {
       background-color: var(--utools-bg-hover);
       transform: scale(1.1);
+    }
+  }
+}
+</style>
+
+<!-- 打印样式（非 scoped，需覆盖全局布局）：
+     屏幕隐藏打印容器，打印时隐藏页面其余内容、仅输出表格区域 -->
+<style lang="scss">
+.print-area {
+  display: none;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .knowledge-pack-page {
+    background: #fff !important;
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* 只保留打印容器，其余（返回栏、统计、模式、练习区、底部栏）全部隐藏 */
+  .knowledge-pack-page > *:not(.print-area) {
+    display: none !important;
+  }
+
+  .print-area {
+    display: block;
+    color: #000;
+
+    .print-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .print-date {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .print-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      color: #000;
+
+      th, td {
+        border: 1px solid #000;
+        padding: 5px 10px;
+        text-align: center;
+      }
+
+      th {
+        background: #eee;
+        font-weight: 700;
+      }
+
+      .blank-line {
+        display: inline-block;
+        width: 64px;
+        height: 1.5px;
+        border-bottom: 1.5px solid #000;
+        vertical-align: middle;
+      }
+    }
+
+    /* 两种表格默认隐藏，只显示当前选中的形态对应的表格 */
+    .print-table.table-full,
+    .print-table.table-blank {
+      display: none;
+    }
+
+    &.full .table-full {
+      display: table;
+    }
+
+    &.blank .table-blank {
+      display: table;
     }
   }
 }
