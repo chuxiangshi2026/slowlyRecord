@@ -3,7 +3,7 @@
  *
  * 存储结构：
  * - `memory_palace_palaces`：单文档，palaces 数组存所有宫殿（**不含桩图片 dataURL**）
- * - `memory_palace_images_<palaceId>`：每个宫殿一个文档，单独存桩图片 dataURL
+ * - `memory_palace_images_<palaceId>`：每个宫殿一个文档，单独存桩图片与总图 dataURL
  * - `memory_palace_pegs_<palaceId>`：每个宫殿一个文档，items 存该宫殿的桩挂载
  *
  * 设计原因：uTools db 单文档上限约 1MB，桩图片集中存放易超限，故拆出图片文档。
@@ -24,6 +24,9 @@ const PEGS_KEY_PREFIX = DB_KEY_MEMORY_PALACE + 'pegs_';
 
 // 图片文档体积阈值（uTools 单文档上限约 1MB，留 200KB 余量）
 const MAX_IMAGES_DOC_BYTES = 800 * 1024;
+
+/** 宫殿总图在图片文档中的保留键（桩 order 均为数字，不会冲突） */
+export const OVERVIEW_IMAGE_KEY = '__overview__';
 
 function getDb() {
   return getDbAdapter();
@@ -96,6 +99,11 @@ export function extractImagesFromPalace(palace: Palace): {palace: Palace; images
     }
     delete locus.imageUrl;
   }
+  // 宫殿总图同样剥离到图片文档
+  if (isDataUrl(cleaned.overviewImage)) {
+    images[OVERVIEW_IMAGE_KEY] = cleaned.overviewImage!;
+  }
+  delete cleaned.overviewImage;
   return {palace: cleaned, images};
 }
 
@@ -172,6 +180,18 @@ export function attachImagesToPalace(palace: Palace): Palace {
     }
   }
 
+  // 宫殿总图：主文档残留的 dataURL 同样迁移到图片文档
+  if (isDataUrl(assembled.overviewImage)) {
+    images[OVERVIEW_IMAGE_KEY] = assembled.overviewImage!;
+    migrated = true;
+  }
+  const overviewImage = images[OVERVIEW_IMAGE_KEY];
+  if (overviewImage) {
+    assembled.overviewImage = overviewImage;
+  } else {
+    delete assembled.overviewImage;
+  }
+
   if (migrated) {
     const imagesResult = savePalaceImagesSync(palace._id, images);
     if (!imagesResult.ok) {
@@ -186,6 +206,9 @@ export function attachImagesToPalace(palace: Palace): Palace {
         if (isDataUrl(locus.imageUrl)) {
           delete locus.imageUrl;
         }
+      }
+      if (isDataUrl(cleaned.overviewImage)) {
+        delete cleaned.overviewImage;
       }
       doc.palaces[index] = cleaned;
       doc.updatedAt = Date.now();

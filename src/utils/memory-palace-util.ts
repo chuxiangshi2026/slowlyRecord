@@ -46,6 +46,8 @@ export function knowledgePackToLoci(pack: KnowledgePack): PalaceLocus[] {
       order: index + 1,
       name: entry.item.question,
       description: entry.item.answer,
+      // 备选桩名透传，供编辑页循环切换
+      alternates: entry.item.alternates?.length ? [...entry.item.alternates] : undefined,
     }));
 }
 

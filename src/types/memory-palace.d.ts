@@ -15,6 +15,8 @@ export interface PalaceLocus {
   imageUrl?: string;
   /** 桩描述 */
   description?: string;
+  /** 备选桩名（来自桩库导入，可循环切换） */
+  alternates?: string[];
 }
 
 /** 记忆宫殿 */
@@ -25,6 +27,8 @@ export interface Palace {
   name: string;
   /** 有序地点桩列表 */
   loci: PalaceLocus[];
+  /** 宫殿总图 dataURL（保存时剥离到图片文档） */
+  overviewImage?: string;
   /** 来源知识包 id（内置桩库导入时记录） */
   sourcePackId?: string;
   /** 创建时间 */

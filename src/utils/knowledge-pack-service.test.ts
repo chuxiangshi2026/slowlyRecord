@@ -55,8 +55,8 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 16 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(16)
+    it('应包含 18 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(18)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -96,7 +96,7 @@ describe('knowledge-pack-service', () => {
         'physics-formulas',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(10)
+      expect(text).toHaveLength(12)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'biology-experiments',
@@ -104,6 +104,8 @@ describe('knowledge-pack-service', () => {
         'cuisines-8',
         'ethnic-groups-56',
         'geography-concepts',
+        'home-route-12',
+        'number-pegs-12',
         'physics-experiments',
         'physics-laws',
         'provinces-capitals',
@@ -136,6 +138,35 @@ describe('knowledge-pack-service', () => {
         expect(pack.ordered).toBe(false)
         expect(pack.usableAsPeg).toBe(false)
       })
+    })
+
+    it('数字桩/家居路线桩两个新桩库数据合法且可作为宫殿桩库', () => {
+      const newPackIds = ['number-pegs-12', 'home-route-12']
+      newPackIds.forEach(id => {
+        const info = getKnowledgePackInfo(id)
+        expect(info).toBeDefined()
+        expect(info!.category).toBe('text')
+        expect(info!.ordered).toBe(true)
+        expect(info!.usableAsPeg).toBe(true)
+        const raw = readFileSync(
+          fileURLToPath(new URL('../../public/knowledgebanks/' + id + '.json', import.meta.url)),
+          'utf-8',
+        )
+        const pack = JSON.parse(raw)
+        expect(validateKnowledgePack(pack).valid).toBe(true)
+        expect(pack.items).toHaveLength(info!.itemCount)
+      })
+      // 数字桩 1-6 号位均提供备选桩
+      const numberPegs = JSON.parse(
+        readFileSync(
+          fileURLToPath(new URL('../../public/knowledgebanks/number-pegs-12.json', import.meta.url)),
+          'utf-8',
+        ),
+      )
+      for (let i = 0; i < 6; i++) {
+        expect(Array.isArray(numberPegs.items[i].alternates)).toBe(true)
+        expect(numberPegs.items[i].alternates.length).toBeGreaterThan(0)
+      }
     })
 
     it('默认策略配置正确', () => {
@@ -358,6 +389,28 @@ describe('knowledge-pack-service', () => {
       pack.items[1].id = pack.items[0].id
       const result = validateKnowledgePack(pack)
       expect(result.valid).toBe(false)
+    })
+
+    it('item 带字符串数组 alternates 应通过', () => {
+      const pack = makePack('x')
+      pack.items[0].alternates = ['备选A', '备选B']
+      const result = validateKnowledgePack(pack)
+      expect(result.valid).toBe(true)
+    })
+
+    it('item 不带 alternates 应通过', () => {
+      const result = validateKnowledgePack(makePack('x'))
+      expect(result.valid).toBe(true)
+    })
+
+    it('item 的 alternates 非字符串数组应失败', () => {
+      const pack = makePack('x')
+      pack.items[0].alternates = 'not-array' as any
+      expect(validateKnowledgePack(pack).valid).toBe(false)
+
+      const pack2 = makePack('x')
+      pack2.items[0].alternates = [1, 2] as any
+      expect(validateKnowledgePack(pack2).valid).toBe(false)
     })
   })
 

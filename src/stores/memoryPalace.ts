@@ -70,13 +70,14 @@ export const useMemoryPalaceStore = defineStore('memoryPalace', () => {
   /**
    * 新建宫殿
    */
-  async function createPalace(name: string, loci: PalaceLocus[], sourcePackId?: string) {
+  async function createPalace(name: string, loci: PalaceLocus[], sourcePackId?: string, overviewImage?: string) {
     await ensureDb();
     const now = Date.now();
     const palace: Palace = {
       _id: `palace_${generateId()}`,
       name: name.trim(),
       loci: normalizeLoci(loci),
+      overviewImage: overviewImage || undefined,
       sourcePackId,
       ctime: now,
       utime: now,
@@ -252,6 +253,7 @@ export const useMemoryPalaceStore = defineStore('memoryPalace', () => {
         name: l.name.trim(),
         imageUrl: l.imageUrl,
         description: l.description?.trim() || undefined,
+        alternates: l.alternates?.length ? [...l.alternates] : undefined,
       }));
   }
 

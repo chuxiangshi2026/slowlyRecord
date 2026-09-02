@@ -36,6 +36,8 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'elements', name: '元素周期表（前 36 号）', description: '元素符号、中文名、序数与拼音', itemCount: 36, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 2},
     {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
+    {id: 'number-pegs-12', name: '数字桩（1-12）', description: '经典数字形象桩，1-6 号位提供多个备选桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text'},
+    {id: 'home-route-12', name: '家居路线桩（12 桩）', description: '按进门后的巡视路线排列的家居地点桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text'},
     {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false, category: 'text'},
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
@@ -272,6 +274,12 @@ export function validateKnowledgePack(data: unknown): { valid: boolean; error?: 
         if (typeof it.answer !== 'string') {
             return {valid: false, error: `items[${i}] answer 不是字符串`};
         }
+        // 备选桩名为可选字段，存在时必须是字符串数组
+        if (it.alternates !== undefined) {
+            if (!Array.isArray(it.alternates) || it.alternates.some(a => typeof a !== 'string')) {
+                return {valid: false, error: `items[${i}] alternates 必须是字符串数组`};
+            }
+        }
         if (seenIds.has(it.id)) {
             return {valid: false, error: `items 中存在重复 id: ${it.id}`};
         }
@@ -297,6 +305,7 @@ function normalizePack(pack: KnowledgePack): KnowledgePack {
             question: item.question,
             answer: item.answer,
             extras: item.extras && typeof item.extras === 'object' ? item.extras : undefined,
+            alternates: Array.isArray(item.alternates) ? item.alternates : undefined,
             order: typeof item.order === 'number' ? item.order : undefined,
         })),
     };

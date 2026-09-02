@@ -105,6 +105,24 @@ describe('knowledgePackToLoci', () => {
     expect(loci.map(l => l.name)).toEqual(['甲', '乙']);
     expect(loci.map(l => l.order)).toEqual([1, 2]);
   });
+
+  it('透传 item.alternates 到桩的备选桩名', () => {
+    const pack: KnowledgePack = {
+      id: 'number-pegs-12',
+      name: '数字桩',
+      description: '',
+      ordered: true,
+      usableAsPeg: true,
+      items: [
+        {id: '1', question: '蜡烛', answer: '数字 1', alternates: ['铅笔', '大树'], order: 1},
+        {id: '2', question: '鸭子', answer: '数字 2', order: 2},
+      ],
+    };
+    const loci = knowledgePackToLoci(pack);
+    expect(loci[0].alternates).toEqual(['铅笔', '大树']);
+    // 无备选桩时不设置该字段
+    expect(loci[1].alternates).toBeUndefined();
+  });
 });
 
 describe('assignChunksToLoci', () => {

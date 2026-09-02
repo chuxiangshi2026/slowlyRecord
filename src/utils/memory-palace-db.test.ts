@@ -221,4 +221,45 @@ describe('memory-palace-db', () => {
     expect(result.ok).toBe(true);
     expect(mockDb.get(getImagesKey('p1'))).toBeNull();
   });
+
+  it('保存宫殿时总图剥离到图片文档，读取时回填', async () => {
+    const {savePalace, getPalaceById, getImagesKey, OVERVIEW_IMAGE_KEY} = await import('./memory-palace-db');
+    const palace = makePalace('p1');
+    palace.overviewImage = 'data:image/png;base64,overview';
+    const result = await savePalace(palace);
+    expect(result.ok).toBe(true);
+
+    // 主文档不再含总图 dataURL
+    const storedPalace = mockDb.get<PalaceListDoc>('memory_palace_palaces')?.palaces[0];
+    expect(storedPalace?.overviewImage).toBeUndefined();
+
+    // 总图存到图片文档的保留键上
+    const imagesDoc = mockDb.get<PalaceImagesDoc>(getImagesKey('p1'));
+    expect(imagesDoc?.images[OVERVIEW_IMAGE_KEY]).toBe('data:image/png;base64,overview');
+
+    // 读取时回填
+    const readPalace = getPalaceById('p1');
+    expect(readPalace?.overviewImage).toBe('data:image/png;base64,overview');
+  });
+
+  it('读取旧宫殿时惰性迁移内嵌总图到图片文档', async () => {
+    const {savePalace, getPalaceById, getImagesKey, OVERVIEW_IMAGE_KEY} = await import('./memory-palace-db');
+    await savePalace(makePalace('p1'));
+
+    // 模拟旧数据：总图 dataURL 直接内嵌在宫殿主文档，图片文档中没有
+    const palacesDoc = mockDb.get<PalaceListDoc>('memory_palace_palaces');
+    palacesDoc!.palaces[0].overviewImage = 'data:image/png;base64,oldoverview';
+    mockDb.put!(palacesDoc);
+
+    // 读取应触发迁移并回填
+    const readPalace = getPalaceById('p1');
+    expect(readPalace?.overviewImage).toBe('data:image/png;base64,oldoverview');
+
+    const migratedImagesDoc = mockDb.get<PalaceImagesDoc>(getImagesKey('p1'));
+    expect(migratedImagesDoc?.images[OVERVIEW_IMAGE_KEY]).toBe('data:image/png;base64,oldoverview');
+
+    // 主文档中的内嵌 dataURL 已被移除
+    const migratedPalace = mockDb.get<PalaceListDoc>('memory_palace_palaces')?.palaces[0];
+    expect(migratedPalace?.overviewImage).toBeUndefined();
+  });
 });

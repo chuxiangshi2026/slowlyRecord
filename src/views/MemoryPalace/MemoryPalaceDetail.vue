@@ -6,6 +6,17 @@
       <span class="palace-sub">{{ palace?.loci.length || 0 }} 桩 · 已挂载 {{ store.pegs.length }}</span>
     </div>
 
+    <!-- 宫殿总图 -->
+    <div v-if="palace?.overviewImage" class="overview-wrapper">
+      <el-image
+        :src="palace.overviewImage"
+        :preview-src-list="[palace.overviewImage]"
+        fit="contain"
+        preview-teleported
+        class="overview-image"
+      />
+    </div>
+
     <!-- 桩列表 -->
     <div class="loci-list-wrapper" v-loading="store.loading">
       <el-empty v-if="!palace" description="宫殿不存在或已被删除" />
@@ -338,6 +349,20 @@ function goReview() {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.overview-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 10px 12px 0;
+
+  .overview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 6px;
+    border: 1px solid var(--utools-border-divider);
+    cursor: zoom-in;
+  }
 }
 
 .locus-card {

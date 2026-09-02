@@ -12,6 +12,8 @@ export interface KnowledgeItem {
     answer: string;
     /** 额外展示字段（如元素序数/拼音） */
     extras?: Record<string, string>;
+    /** 备选桩名（usableAsPeg 包的可选字段，如数字桩的多个形象） */
+    alternates?: string[];
     /** 有序包中的顺序号（从 1 开始） */
     order?: number;
 }

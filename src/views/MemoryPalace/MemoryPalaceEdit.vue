@@ -14,6 +14,21 @@
         </el-form-item>
       </el-form>
 
+      <!-- 宫殿总图（可选）：整体一张大图，如户型图/路线图 -->
+      <div class="overview-section">
+        <div class="overview-header">
+          <span>宫殿总图（可选）</span>
+          <el-button size="small" @click="triggerOverviewInput">
+            {{ overviewImage ? '更换总图' : '上传总图' }}
+          </el-button>
+        </div>
+        <div v-if="overviewImage" class="overview-preview">
+          <img :src="overviewImage" alt="宫殿总图" />
+          <el-button size="small" text type="danger" @click="overviewImage = ''">移除总图</el-button>
+        </div>
+        <p v-else class="overview-tip">上传一张宫殿整体图（如户型图、路线图），辅助回忆桩的位置</p>
+      </div>
+
       <!-- 桩列表编辑 -->
       <div class="loci-header">
         <span>地点桩（{{ loci.length }} 个，按巡视顺序排列）</span>
@@ -31,6 +46,11 @@
         <div class="locus-fields">
           <div class="locus-row">
             <el-input v-model="locus.name" placeholder="桩名称（如：大门）" maxlength="20" class="locus-name-input" />
+            <el-tooltip v-if="locus.alternates?.length" effect="dark" content="换成备选桩" placement="top">
+              <el-button size="small" text @click="rotateAlternate(locus)">
+                <el-icon><Refresh /></el-icon>
+              </el-button>
+            </el-tooltip>
             <el-button size="small" @click="triggerImageInput(index)">
               {{ locus.imageUrl ? '更换图片' : '上传图片' }}
             </el-button>
@@ -77,6 +97,14 @@
       style="display: none"
       @change="handleImageChange"
     />
+    <!-- 隐藏的总图文件输入 -->
+    <input
+      ref="overviewInput"
+      type="file"
+      accept="image/*"
+      style="display: none"
+      @change="handleOverviewChange"
+    />
   </div>
 </template>
 
@@ -84,7 +112,7 @@
 import {computed, onMounted, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
-import {Bottom, Delete, Plus, Top} from '@element-plus/icons-vue';
+import {Bottom, Delete, Plus, Refresh, Top} from '@element-plus/icons-vue';
 import {useMemoryPalaceStore} from '@/stores/memoryPalace';
 import {compressImage, compressImageFromDataURL} from '@/utils/image-compress';
 import type {DbReturn} from '@/adapters/db';
@@ -100,10 +128,12 @@ const isEdit = !!palaceId;
 
 const formName = ref('');
 const loci = ref<PalaceLocus[]>([]);
+const overviewImage = ref('');
 const saving = ref(false);
 
 // 图片上传
 const imageInput = ref<HTMLInputElement | null>(null);
+const overviewInput = ref<HTMLInputElement | null>(null);
 const currentImageIndex = ref(-1);
 
 const canSave = computed(() => {
@@ -120,8 +150,9 @@ onMounted(async () => {
     return;
   }
   formName.value = palace.name;
+  overviewImage.value = palace.overviewImage || '';
   // 深拷贝桩列表，避免直接改 store 数据
-  loci.value = palace.loci.map(l => ({...l}));
+  loci.value = palace.loci.map(l => ({...l, alternates: l.alternates ? [...l.alternates] : undefined}));
 });
 
 function addLocus() {
@@ -144,6 +175,32 @@ function moveLocus(index: number, delta: number) {
 function triggerImageInput(index: number) {
   currentImageIndex.value = index;
   imageInput.value?.click();
+}
+
+// 总图上传：尺寸给大一些（总图需要看清整体布局）
+function triggerOverviewInput() {
+  overviewInput.value?.click();
+}
+
+async function handleOverviewChange(e: Event) {
+  const input = e.target as HTMLInputElement;
+  const file = input.files?.[0];
+  input.value = '';
+  if (!file) return;
+
+  try {
+    overviewImage.value = await compressImage(file, {maxWidth: 800, maxHeight: 800, maxSizeBytes: 300 * 1024});
+  } catch {
+    ElMessage.error('图片处理失败');
+  }
+}
+
+// 换成备选桩：当前名与备选列表循环轮换（新名取第一个备选，旧名追加到末尾）
+function rotateAlternate(locus: PalaceLocus) {
+  if (!locus.alternates?.length) return;
+  const [next, ...rest] = locus.alternates;
+  locus.alternates = [...rest, locus.name];
+  locus.name = next;
 }
 
 // 选择图片后压缩为 dataURL
@@ -192,13 +249,19 @@ async function doSave(lociToSave: PalaceLocus[]): Promise<DbReturn> {
     if (!palace) {
       return {ok: false, id: '', error: true, message: '宫殿不存在'};
     }
-    return store.updatePalace({...palace, name: formName.value, loci: lociToSave, utime: Date.now()});
+    return store.updatePalace({
+      ...palace,
+      name: formName.value,
+      loci: lociToSave,
+      overviewImage: overviewImage.value || undefined,
+      utime: Date.now(),
+    });
   }
-  const {result} = await store.createPalace(formName.value, lociToSave);
+  const {result} = await store.createPalace(formName.value, lociToSave, undefined, overviewImage.value);
   return result;
 }
 
-/** 将所有图片进一步压缩到 200×200/60KB 后重试保存 */
+/** 将所有图片进一步压缩后重试保存（桩图 200×200/60KB，总图 400×400/120KB） */
 async function retryCompressAndSave(): Promise<DbReturn> {
   try {
     const recompressed = await Promise.all(
@@ -213,6 +276,13 @@ async function retryCompressAndSave(): Promise<DbReturn> {
       }),
     );
     loci.value = recompressed;
+    if (overviewImage.value && overviewImage.value.startsWith('data:')) {
+      overviewImage.value = await compressImageFromDataURL(overviewImage.value, {
+        maxWidth: 400,
+        maxHeight: 400,
+        maxSizeBytes: 120 * 1024,
+      });
+    }
     return doSave(recompressed);
   } catch {
     return {ok: false, id: '', error: true, message: '图片压缩失败'};
@@ -244,6 +314,43 @@ function goBack() {
   font-size: 18px;
   color: var(--utools-text-primary);
   margin: 0 0 16px 0;
+}
+
+.overview-section {
+  margin-bottom: 8px;
+  padding: 12px;
+  background: var(--utools-bg-card);
+  border: 1px solid var(--utools-border-divider);
+  border-radius: 6px;
+
+  .overview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--utools-text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .overview-preview {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    img {
+      max-width: 100%;
+      max-height: 160px;
+      object-fit: contain;
+      border-radius: 4px;
+      border: 1px solid var(--utools-border-divider);
+    }
+  }
+
+  .overview-tip {
+    margin: 0;
+    font-size: 12px;
+    color: var(--utools-text-tertiary);
+  }
 }
 
 .loci-header {
