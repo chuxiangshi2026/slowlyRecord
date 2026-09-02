@@ -94,14 +94,9 @@
             </el-tooltip>
           </el-radio-button>
         </el-radio-group>
-        <el-tooltip class="box-item" effect="dark" content="添加文本" placement="top" popper-class="small-tooltip">
-          <el-button type="primary" size="small" @click="showAddDialog = true">
+        <el-tooltip class="box-item" effect="dark" content="添加 / 导入" placement="top" popper-class="small-tooltip">
+          <el-button type="primary" size="small" @click="openImportDialog('manual')">
             <el-icon><Plus /></el-icon>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="导入" placement="top" popper-class="small-tooltip">
-          <el-button size="small" @click="showImportDialog = true">
-            <el-icon><Upload /></el-icon>
           </el-button>
         </el-tooltip>
       </div>
@@ -184,21 +179,17 @@
       </div>
     </div>
 
-    <!-- 添加/编辑对话框 -->
-    <TextEditDialog
-      v-model="showAddDialog"
-      @save="handleSaveArticle"
-    />
-
+    <!-- 编辑对话框（添加已并入统一的「添加/导入」对话框） -->
     <TextEditDialog
       v-model="showEditDialog"
       :article="editingArticle"
       @save="handleUpdateArticle"
     />
 
-    <!-- 导入对话框 -->
+    <!-- 添加/导入对话框（统一入口，initialTab 定位到指定 tab） -->
     <TextImportDialog
       v-model="showImportDialog"
+      :initial-tab="importInitialTab"
       @import="handleImportArticles"
       @openWordSettings="handleOpenWordSettings"
     />
@@ -256,12 +247,12 @@
 
     <!-- 宫殿视图（嵌入记忆宫殿列表，含新建/导入桩库/删除） -->
     <div v-if="currentView === 'palace'" class="palace-view">
-      <MemoryPalace />
+      <MemoryPalace @open-peg-import="openImportDialog('pegPacks')" />
     </div>
 
     <!-- 知识库视图（文本类知识包卡片） -->
     <div v-if="currentView === 'knowledge'" class="knowledge-view">
-      <KnowledgePackPanel category="text" />
+      <KnowledgePackPanel category="text" use-external-import @open-import="openImportDialog('knowledge')" />
     </div>
   </div>
 </template>
@@ -273,7 +264,7 @@ import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {
-  Search, Plus, Upload, More, Edit, Delete,
+  Search, Plus, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
   User, Clock, View, Pointer, List, MapLocation, VideoPlay, CircleClose, OfficeBuilding
 } from '@element-plus/icons-vue';
@@ -340,9 +331,10 @@ function applyViewFromQuery() {
 }
 
 // 对话框显示状态
-const showAddDialog = ref(false);
 const showEditDialog = ref(false);
 const showImportDialog = ref(false);
+// 统一「添加/导入」对话框的初始 tab（manual/knowledge/pegPacks 等）
+const importInitialTab = ref('manual');
 const showFillBlanksDialog = ref(false);
 const showChoiceDialog = ref(false);
 const showNotesDialog = ref(false);
@@ -529,15 +521,10 @@ function handleEdit(article: TextArticle) {
   showEditDialog.value = true;
 }
 
-// 保存新文章
-async function handleSaveArticle(article: Omit<TextArticle, '_id' | '_rev' | 'ctime' | 'utime' | 'reviewCount'>) {
-  const result = await textStore.addArticle(article);
-  if (result.success) {
-    ElMessage.success('添加成功');
-    showAddDialog.value = false;
-  } else {
-    ElMessage.error(result.error || '添加失败');
-  }
+// 打开统一的「添加/导入」对话框并定位到指定 tab
+function openImportDialog(tab: string) {
+  importInitialTab.value = tab;
+  showImportDialog.value = true;
 }
 
 // 更新文章

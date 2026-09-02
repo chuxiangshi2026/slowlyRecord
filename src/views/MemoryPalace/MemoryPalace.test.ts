@@ -65,28 +65,6 @@ vi.mock('@element-plus/icons-vue', () => ({
   View: {template: '<span>view</span>'},
 }))
 
-// el-dropdown 在未注册 ElementPlus 时不会渲染 #dropdown 插槽。
-// 用 stub 模拟「点击触发展开 + 点击带 command 的项上抛 command 事件」的语义。
-const ElDropdownStub = {
-  emits: ['command'],
-  data: () => ({open: false}),
-  methods: {
-    onTriggerClick() {
-      this.open = !this.open
-    },
-    onMenuClick(e: Event) {
-      const target = e.target as HTMLElement
-      const el = target.closest?.('[command]')
-      if (el) this.$emit('command', el.getAttribute('command'))
-    },
-  },
-  template: `
-    <div class="el-dropdown-stub">
-      <span class="dd-trigger" @click="onTriggerClick"><slot /></span>
-      <div v-if="open" class="dd-menu" @click="onMenuClick"><slot name="dropdown" /></div>
-    </div>`,
-}
-
 async function setup() {
   const pinia = createPinia()
   setActivePinia(pinia)
@@ -143,9 +121,6 @@ async function setup() {
   return render(MemoryPalace, {
     global: {
       plugins: [pinia, router],
-      stubs: {
-        'el-dropdown': ElDropdownStub,
-      },
     },
   })
 }
@@ -183,19 +158,13 @@ describe('MemoryPalace', () => {
     expect(screen.getByText('上班路线')).toBeInTheDocument()
   })
 
-  it('内置桩库导入入口展示可导入包并触发导入', async () => {
-    await setup()
+  it('点击导入内置桩库入口时向父级抛出 openPegImport 事件', async () => {
+    const { emitted } = await setup()
 
-    // 点击下载图标展开内置桩库下拉
+    // 桩库导入统一由宿主页面的「添加/导入」对话框承担，组件只负责通知
     await fireEvent.click(screen.getByText('download'))
 
-    const packItem = screen.getByText('二十四节气（24 桩）')
-    expect(packItem).toBeInTheDocument()
-    expect(screen.getByText('十二生肖（12 桩）')).toBeInTheDocument()
-
-    await fireEvent.click(packItem)
-    await waitFor(() => {
-      expect(hoisted.store.importPackAsPalace).toHaveBeenCalledWith('pack-1')
-    })
+    expect(emitted().openPegImport).toBeTruthy()
+    expect(emitted().openPegImport).toHaveLength(1)
   })
 })

@@ -3,11 +3,19 @@
       :model-value="modelValue"
       @update:model-value="$emit('update:modelValue', $event)"
       @opened="handleDialogOpened"
-      title="导入文本"
+      title="添加 / 导入文本"
       width="780px"
       destroy-on-close
   >
     <el-tabs v-model="activeTab">
+      <!-- 手动添加（默认）：内嵌共享编辑表单，提交即添加一篇文章 -->
+      <el-tab-pane label="手动添加" name="manual">
+        <TextEditForm ref="manualFormRef" @submit="handleManualSubmit" />
+        <div class="manual-form-actions">
+          <el-button type="primary" @click="handleManualSave">添加</el-button>
+        </div>
+      </el-tab-pane>
+
       <!-- 批量导入 -->
       <el-tab-pane label="批量导入" name="batch">
         <el-alert
@@ -909,11 +917,65 @@
           </div>
         </div>
       </el-tab-pane>
+
+      <!-- 知识库：当前宿主分类（text）的内置知识包导入列表 -->
+      <el-tab-pane label="知识库" name="knowledge">
+        <div v-if="knowledgePacks.length === 0" class="import-empty">暂无可导入的知识库</div>
+        <div
+            v-for="p in knowledgePacks"
+            :key="p.id"
+            class="import-pack-row"
+        >
+          <div class="import-pack-info">
+            <div class="import-pack-name">
+              {{ p.name }}
+              <span class="import-pack-count">{{ p.itemCount }} 条</span>
+            </div>
+            <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
+          </div>
+          <el-button
+              size="small"
+              type="primary"
+              :disabled="isKnowledgeImported(p.id)"
+              :loading="knowledgeImportingId === p.id"
+              @click="handleImportKnowledge(p.id)"
+          >
+            {{ isKnowledgeImported(p.id) ? '已导入' : '导入' }}
+          </el-button>
+        </div>
+      </el-tab-pane>
+
+      <!-- 宫殿桩库：usableAsPeg 包导入为记忆宫殿 -->
+      <el-tab-pane label="宫殿桩库" name="pegPacks">
+        <div v-if="pegPacks.length === 0" class="import-empty">暂无可导入的桩库</div>
+        <div
+            v-for="p in pegPacks"
+            :key="p.id"
+            class="import-pack-row"
+        >
+          <div class="import-pack-info">
+            <div class="import-pack-name">
+              {{ p.name }}
+              <span class="import-pack-count">{{ p.itemCount }} 桩</span>
+            </div>
+            <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
+          </div>
+          <el-button
+              size="small"
+              type="primary"
+              :disabled="isPegImported(p.id)"
+              :loading="pegImportingId === p.id"
+              @click="handleImportPeg(p.id)"
+          >
+            {{ isPegImported(p.id) ? '已导入' : '导入' }}
+          </el-button>
+        </div>
+      </el-tab-pane>
     </el-tabs>
 
     <template #footer>
       <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="handleImport" :loading="importing">
+      <el-button v-if="showFooterImport" type="primary" @click="handleImport" :loading="importing">
         {{ importButtonText }}
       </el-button>
     </template>
@@ -1203,9 +1265,14 @@ import {
 } from '@/utils/timeline-service';
 import { generateTimelineEventsWithAI } from '@/utils/ai-search-api';
 import type { TimelineCategory, TimelineRegion } from '@/types/text-memory';
+import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
+import { useMemoryPalaceStore } from '@/stores/memoryPalace';
+import TextEditForm from './TextEditForm.vue';
 
 interface Props {
   modelValue: boolean;
+  // 打开时定位到的 tab（manual/knowledge/pegPacks/batch 等），默认手动添加
+  initialTab?: string;
 }
 
 const props = defineProps<Props>();
@@ -1216,8 +1283,10 @@ const emit = defineEmits<{
 }>();
 
 const textStore = useTextMemoryStore();
-// 手动添加文本由工具栏「添加文本」按钮（TextEditDialog）承担，导入对话框默认停在批量导入
-const activeTab = ref('batch');
+const knowledgeStore = useKnowledgeMemoryStore();
+const palaceStore = useMemoryPalaceStore();
+// 统一的「添加/导入」入口，默认停在手动添加 tab；打开时由 initialTab 定位
+const activeTab = ref(props.initialTab || 'manual');
 const importing = ref(false);
 const timelineSubTab = ref<'library' | 'manual' | 'ai'>('library');
 const activeCollapse = ref(['plain']); // 默认展开普通文本格式说明
@@ -1238,6 +1307,67 @@ const importButtonText = computed(() => {
 
 // 现有标签
 const existingTags = computed(() => textStore.allTags);
+
+// 底部「导入」按钮仅对批量/文件/诗词库等汇聚型 tab 有效；
+// 手动添加、知识库、宫殿桩库 tab 各自有提交/导入按钮
+const SELF_ACTION_TABS = ['manual', 'knowledge', 'pegPacks'];
+const showFooterImport = computed(() => !SELF_ACTION_TABS.includes(activeTab.value));
+
+// ==================== 手动添加 ====================
+const manualFormRef = ref<InstanceType<typeof TextEditForm>>();
+
+// 点击「添加」：触发内嵌表单校验与提交
+function handleManualSave() {
+  manualFormRef.value?.submit();
+}
+
+// 表单提交成功：作为单篇文章走统一 import 通道（父级添加并关闭对话框）
+function handleManualSubmit(article: any) {
+  emit('import', [article]);
+}
+
+// ==================== 知识库（text 分类内置包） ====================
+const knowledgePacks = computed(() => knowledgeStore.packList.filter(p => p.category === 'text'));
+const knowledgeImportingId = ref('');
+
+function isKnowledgeImported(packId: string): boolean {
+  return knowledgeStore.importedIds.includes(packId);
+}
+
+async function handleImportKnowledge(packId: string) {
+  knowledgeImportingId.value = packId;
+  try {
+    await knowledgeStore.importPack(packId);
+    ElMessage.success('导入成功');
+  } finally {
+    knowledgeImportingId.value = '';
+  }
+}
+
+// ==================== 宫殿桩库（usableAsPeg 包） ====================
+const pegPacks = computed(() => palaceStore.listPegPacks());
+const pegImportingId = ref('');
+
+// 已存在对应 sourcePackId 的宫殿则视为已导入
+function isPegImported(packId: string): boolean {
+  return palaceStore.palaces.some(p => p.sourcePackId === packId);
+}
+
+async function handleImportPeg(packId: string) {
+  pegImportingId.value = packId;
+  try {
+    const { result, palace } = await palaceStore.importPackAsPalace(packId);
+    if (result.ok) {
+      ElMessage.success(`已导入宫殿「${palace.name}」`);
+    } else {
+      ElMessage.error('导入失败');
+    }
+  } catch (error) {
+    ElMessage.error(error instanceof Error ? error.message : '导入失败');
+  } finally {
+    pegImportingId.value = '';
+  }
+}
 
 // 批量导入
 const batchContent = ref('');
@@ -2829,7 +2959,7 @@ function resetForm() {
   selectedTimelineAi.value = [];
   timelineAiForm.value = { provider: '', apiKey: '' };
   timelineSubTab.value = 'library';
-  activeTab.value = 'batch';
+  activeTab.value = props.initialTab || 'manual';
 }
 
 // 关闭对话框
@@ -2838,14 +2968,23 @@ function handleClose() {
   resetForm();
 }
 
-// 对话框关闭时重置导入状态（导入成功后保持 loading，由关闭触发重置）
+// 打开时定位到 initialTab；关闭时重置导入状态（导入成功后保持 loading，由关闭触发重置）
 watch(() => props.modelValue, (val) => {
-  if (!val) {
+  if (val) {
+    activeTab.value = props.initialTab || 'manual';
+  } else {
     importing.value = false;
   }
 });
 
 function handleDialogOpened() {
+  // initialTab 与上次 activeTab 相同时 watch 不触发，这里兜底加载
+  if (activeTab.value === 'knowledge') {
+    knowledgeStore.loadImportedIds().catch(() => undefined);
+  }
+  if (activeTab.value === 'pegPacks' && palaceStore.palaces.length === 0) {
+    palaceStore.loadPalaces().catch(() => undefined);
+  }
   if (activeTab.value === 'poetryMap') {
     const tasks: Promise<any>[] = [];
     if (!hasLoadedLibrary.value) {
@@ -2903,6 +3042,14 @@ watch(activeTab, (tab) => {
         handleIdiomSearch();
       }
     });
+  } else if (tab === 'knowledge') {
+    // 加载已导入清单以正确显示禁用态，失败静默
+    knowledgeStore.loadImportedIds().catch(() => undefined);
+  } else if (tab === 'pegPacks') {
+    // 宫殿列表未加载时兜底加载，用于「已导入」判断
+    if (palaceStore.palaces.length === 0) {
+      palaceStore.loadPalaces().catch(() => undefined);
+    }
   } else if (tab === 'timeline') {
     nextTick(async () => {
       if (!hasLoadedTimeline.value) {
@@ -3303,5 +3450,59 @@ onUnmounted(() => {
 .route-arrow {
   background: transparent !important;
   border: none !important;
+}
+
+// 手动添加表单底部操作区
+.manual-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+// 知识库 / 宫殿桩库导入行（仿 KnowledgePackPanel 导入对话框）
+.import-pack-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--utools-border-light);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .import-pack-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .import-pack-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--utools-text-primary);
+
+    .import-pack-count {
+      margin-left: 8px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--utools-text-tertiary);
+    }
+  }
+
+  .import-pack-desc {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--utools-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.import-empty {
+  padding: 24px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--utools-text-secondary);
 }
 </style>

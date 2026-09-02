@@ -52,7 +52,7 @@ function buildStore(importedIds: string[]) {
   })
 }
 
-async function setup(category: 'math' | 'text', importedIds: string[] = []) {
+async function setup(category: 'math' | 'text', importedIds: string[] = [], extraProps: Record<string, any> = {}) {
   const pinia = createPinia()
   setActivePinia(pinia)
 
@@ -70,7 +70,7 @@ async function setup(category: 'math' | 'text', importedIds: string[] = []) {
 
   return {
     ...render(KnowledgePackPanel, {
-      props: { category },
+      props: { category, ...extraProps },
       global: {
         plugins: [pinia, router, ElementPlus],
       },
@@ -159,5 +159,16 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     await waitFor(() => {
       expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
     })
+  })
+
+  it('useExternalImport 时点击导入抛出 openImport 事件且不渲染内置对话框', async () => {
+    const { emitted } = await setup('text', [], { useExternalImport: true })
+
+    await fireEvent.click(screen.getByRole('button', { name: '导入' }))
+
+    // 通知父级打开统一对话框，自身不弹出内置导入对话框
+    expect(emitted().openImport).toBeTruthy()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(mockStore.importPack).not.toHaveBeenCalled()
   })
 })

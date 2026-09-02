@@ -3,7 +3,7 @@
   <div class="knowledge-pack-panel" v-loading="store.loading">
     <!-- 顶部工具行：导入入口 -->
     <div class="panel-toolbar">
-      <el-button size="small" type="primary" plain @click="showImportDialog = true">导入</el-button>
+      <el-button size="small" type="primary" plain @click="handleOpenImport">导入</el-button>
     </div>
 
     <el-empty v-if="packs.length === 0" description="暂无知识库，点击右上角导入" />
@@ -49,8 +49,8 @@
       </div>
     </div>
 
-    <!-- 导入对话框：列出当前分类的全部内置包 -->
-    <el-dialog v-model="showImportDialog" title="导入知识库" width="520px" append-to-body>
+    <!-- 导入对话框：列出当前分类的全部内置包（useExternalImport 时由宿主统一对话框承担，此处不渲染） -->
+    <el-dialog v-if="!useExternalImport" v-model="showImportDialog" title="导入知识库" width="520px" append-to-body>
       <div v-if="allPacks.length === 0" class="import-empty">暂无可导入的知识库</div>
       <div
         v-for="p in allPacks"
@@ -86,12 +86,27 @@ import type { KnowledgePackCategory } from '@/types/knowledge-memory';
 
 const props = defineProps<{
   category: KnowledgePackCategory;
+  // true 时点击「导入」改为 emit('openImport') 通知父级打开统一对话框，不再使用内置导入对话框
+  useExternalImport?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (e: 'openImport'): void;
 }>();
 
 const router = useRouter();
 const store = useKnowledgeMemoryStore();
 
 const showImportDialog = ref(false);
+
+// 点击「导入」：外部模式通知父级，否则打开内置导入对话框
+function handleOpenImport() {
+  if (props.useExternalImport) {
+    emit('openImport');
+  } else {
+    showImportDialog.value = true;
+  }
+}
 
 // 已导入的包（面板只展示这些）
 const packs = computed(() =>

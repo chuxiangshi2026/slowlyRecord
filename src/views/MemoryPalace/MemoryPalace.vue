@@ -76,20 +76,9 @@
     <div class="palace-toolbar">
       <span class="toolbar-stat">共 {{ store.palaces.length }} 座宫殿</span>
       <div class="toolbar-actions">
-        <el-dropdown @command="handleImportPack">
-          <el-icon :size="20" class="toolbar-icon" title="导入内置桩库"><Download /></el-icon>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item
-                v-for="pack in pegPacks"
-                :key="pack.id"
-                :command="pack.id"
-              >
-                {{ pack.name }}（{{ pack.itemCount }} 桩）
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        <el-tooltip effect="dark" content="导入内置桩库" placement="top" popper-class="small-tooltip">
+          <el-icon :size="20" class="toolbar-icon" @click="emit('openPegImport')"><Download /></el-icon>
+        </el-tooltip>
         <el-tooltip effect="dark" content="新建宫殿" placement="top" popper-class="small-tooltip">
           <el-icon :size="20" class="toolbar-icon" @click="goEdit('')"><Plus /></el-icon>
         </el-tooltip>
@@ -109,6 +98,11 @@ import type {Palace} from '@/types/memory-palace';
 const router = useRouter();
 const store = useMemoryPalaceStore();
 
+// 作为嵌入组件：桩库导入入口统一由宿主页面的「添加/导入」对话框承担
+const emit = defineEmits<{
+  (e: 'openPegImport'): void;
+}>();
+
 const searchKeyword = ref('');
 const sortBy = ref<'time' | 'name' | 'loci'>('time');
 const sortAsc = ref(false);
@@ -120,9 +114,6 @@ const sortOptions = [
 
 // 各宫殿已挂载数量缓存
 const mountedCounts = ref<Record<string, number>>({});
-
-// 可导入的内置桩库
-const pegPacks = computed(() => store.listPegPacks());
 
 const filteredPalaces = computed(() => {
   let result = [...store.palaces];
@@ -191,21 +182,6 @@ function goReview(id: string) {
 
 function goEdit(id: string) {
   router.push(id ? `/memory-palace/edit/${id}` : '/memory-palace/edit');
-}
-
-// 导入内置桩库为宫殿
-async function handleImportPack(packId: string) {
-  try {
-    const {result, palace} = await store.importPackAsPalace(packId);
-    if (result.ok) {
-      ElMessage.success(`已导入宫殿「${palace.name}」`);
-      refreshMountedCounts();
-    } else {
-      ElMessage.error('导入失败');
-    }
-  } catch (error) {
-    ElMessage.error(error instanceof Error ? error.message : '导入失败');
-  }
 }
 
 // 删除宫殿
