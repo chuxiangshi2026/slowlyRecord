@@ -25,6 +25,8 @@ import {
     hasProgressDoc,
     getCustomItems,
     saveCustomItems,
+    removeCustomItem as dbRemoveCustomItem,
+    clearProgressDoc,
 } from '@/utils/knowledge-memory-db';
 import {getDbAdapterAsync} from '@/adapters/db';
 import {
@@ -64,6 +66,28 @@ function shuffleArray<T>(arr: T[]): T[] {
     return result;
 }
 
+/** 自建知识集包 id 前缀（与内置包 id 不会冲突） */
+export const CUSTOM_PACK_PREFIX = 'custom_';
+
+/** 未指定知识集名称时的默认分组名 */
+export const DEFAULT_CUSTOM_SET_NAME = '自建条目';
+
+/** 归一化知识集名称：空（含纯空白）归入默认分组 */
+export function normalizeSetName(setName?: string): string {
+    const trimmed = setName?.trim();
+    return trimmed || DEFAULT_CUSTOM_SET_NAME;
+}
+
+/** 由知识集名称生成自建包 id */
+export function customPackId(setName: string): string {
+    return CUSTOM_PACK_PREFIX + setName;
+}
+
+/** 判断包 id 是否为自建知识集 */
+export function isCustomPackId(packId: string): boolean {
+    return packId.startsWith(CUSTOM_PACK_PREFIX);
+}
+
 export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
     // ===== State =====
     const packs = ref<Record<string, KnowledgePack>>({});
@@ -79,6 +103,24 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
 
     // ===== Getters =====
     const packList = computed<KnowledgePackInfo[]>(() => listKnowledgePacks());
+
+    /** 自建知识集列表：按知识集名称（setName）分组，每组视为一个自建包（category 恒为 text） */
+    const customPackList = computed<KnowledgePackInfo[]>(() => {
+        const groups = new Map<string, number>();
+        for (const item of customItems.value) {
+            const name = normalizeSetName(item.setName);
+            groups.set(name, (groups.get(name) ?? 0) + 1);
+        }
+        return Array.from(groups, ([name, count]) => ({
+            id: customPackId(name),
+            name,
+            description: '手动添加的自建条目',
+            itemCount: count,
+            ordered: false,
+            usableAsPeg: false,
+            category: 'text' as const,
+        }));
+    });
 
     const loadedPackIds = computed(() => Array.from(loadedSet.value));
 
@@ -127,15 +169,47 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
 
     // ===== Actions =====
     /**
+     * 由自建条目合成知识包（custom_ 前缀包使用，不从内置 JSON 加载）
+     */
+    function buildCustomPack(setName: string): KnowledgePack {
+        const items = getCustomItems()
+            .filter(item => normalizeSetName(item.setName) === setName)
+            .map((item, idx) => ({
+                id: item.id,
+                question: item.question,
+                answer: item.answer,
+                order: idx + 1,
+            }));
+        return {
+            id: customPackId(setName),
+            name: setName,
+            description: '手动添加的自建条目',
+            ordered: false,
+            usableAsPeg: false,
+            items,
+        };
+    }
+
+    /**
      * 加载知识包内容 + 进度文档
+     * custom_ 前缀的自建知识集由 customItems 合成，进度文档逻辑与内置包一致
      */
     async function loadPack(packId: string): Promise<void> {
         loading.value = true;
         try {
-            const [pack, doc] = await Promise.all([
-                fetchKnowledgePack(packId),
-                Promise.resolve(getProgressDoc(packId)),
-            ]);
+            let pack: KnowledgePack;
+            let doc: KnowledgePackProgressDoc;
+            if (isCustomPackId(packId)) {
+                // 自建集：先从 DB 刷新条目，再合成包内容
+                await loadCustomItems();
+                pack = buildCustomPack(packId.slice(CUSTOM_PACK_PREFIX.length));
+                doc = getProgressDoc(packId);
+            } else {
+                [pack, doc] = await Promise.all([
+                    fetchKnowledgePack(packId),
+                    Promise.resolve(getProgressDoc(packId)),
+                ]);
+            }
             packs.value[packId] = pack;
             progress.value[packId] = doc;
             loadedSet.value.add(packId);
@@ -208,6 +282,16 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
     }
 
     /**
+     * 使某知识集对应的已加载 custom 包失效（下次进详情页时重新合成）
+     */
+    function invalidateCustomPack(setName?: string): void {
+        const packId = customPackId(normalizeSetName(setName));
+        delete packs.value[packId];
+        delete progress.value[packId];
+        loadedSet.value.delete(packId);
+    }
+
+    /**
      * 添加单条自建知识条目（文本记忆「添加/导入」对话框用）
      * 直接读 DB 追加，避免内存副本过期导致覆盖丢失
      */
@@ -229,7 +313,33 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         const next = [...getCustomItems(), item];
         await saveCustomItems(next);
         customItems.value = next;
+        invalidateCustomPack(input.setName);
         return item;
+    }
+
+    /**
+     * 删除单条自建知识条目，并使对应自建集缓存失效
+     */
+    async function removeCustomItem(itemId: string): Promise<void> {
+        await getDbAdapterAsync();
+        const removed = await dbRemoveCustomItem(itemId);
+        if (!removed) return;
+        customItems.value = getCustomItems();
+        invalidateCustomPack(removed.setName);
+    }
+
+    /**
+     * 删除整个自建知识集：逐条删除条目 + 删除进度文档（不可恢复）
+     */
+    async function removeCustomSet(setName: string): Promise<void> {
+        await getDbAdapterAsync();
+        const name = normalizeSetName(setName);
+        const targets = getCustomItems().filter(item => normalizeSetName(item.setName) === name);
+        for (const item of targets) {
+            await removeCustomItem(item.id);
+        }
+        invalidateCustomPack(name);
+        await clearProgressDoc(customPackId(name));
     }
 
     /**
@@ -393,6 +503,7 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         customItems,
         // getters
         packList,
+        customPackList,
         loadedPackIds,
         getPack,
         getProgress,
@@ -410,6 +521,8 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         removeImportedPack,
         loadCustomItems,
         addCustomItem,
+        removeCustomItem,
+        removeCustomSet,
         pickItemsForSession,
         getPreviousOrderedItem,
         judgeAnswer,

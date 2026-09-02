@@ -13,6 +13,10 @@ const PACK_LIST = [
   { id: 'pack-text', name: '二十四节气', description: '描述2', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text' },
 ]
 
+const CUSTOM_PACKS = [
+  { id: 'custom_古诗', name: '古诗', description: '手动添加的自建条目', itemCount: 2, ordered: false, usableAsPeg: false, category: 'text' },
+]
+
 // ElMessageBox.confirm 直接视为用户确认；ElMessage 静默
 vi.mock('element-plus', async (importOriginal) => {
   const actual = await importOriginal<typeof import('element-plus')>()
@@ -30,9 +34,10 @@ vi.mock('@/stores/knowledgeMemory', () => ({
   useKnowledgeMemoryStore: () => mockStore,
 }))
 
-function buildStore(importedIds: string[]) {
+function buildStore(importedIds: string[], customPackList: any[] = []) {
   return reactive({
     packList: [...PACK_LIST],
+    customPackList: [...customPackList],
     loading: false,
     importedIds: [...importedIds],
     isPackLoaded: vi.fn((id: string) => id === 'pack-math'),
@@ -41,6 +46,7 @@ function buildStore(importedIds: string[]) {
     getDueCount: vi.fn((id: string) => (id === 'pack-math' ? 5 : 0)),
     loadPack: vi.fn(() => Promise.resolve()),
     loadImportedIds: vi.fn(() => Promise.resolve()),
+    loadCustomItems: vi.fn(() => Promise.resolve()),
     importPack: vi.fn((id: string) => {
       if (!mockStore.importedIds.includes(id)) mockStore.importedIds.push(id)
       return Promise.resolve()
@@ -49,14 +55,15 @@ function buildStore(importedIds: string[]) {
       mockStore.importedIds = mockStore.importedIds.filter((x: string) => x !== id)
       return Promise.resolve()
     }),
+    removeCustomSet: vi.fn(() => Promise.resolve()),
   })
 }
 
-async function setup(category: 'math' | 'text', importedIds: string[] = [], extraProps: Record<string, any> = {}) {
+async function setup(category: 'math' | 'text', importedIds: string[] = [], extraProps: Record<string, any> = {}, customPackList: any[] = []) {
   const pinia = createPinia()
   setActivePinia(pinia)
 
-  mockStore = buildStore(importedIds)
+  mockStore = buildStore(importedIds, customPackList)
 
   const router = createRouter({
     history: createMemoryHistory(),
@@ -170,5 +177,46 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(emitted().openImport).toBeTruthy()
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(mockStore.importPack).not.toHaveBeenCalled()
+  })
+
+  it('text 分类展示自建知识集卡片（自建标签 + 条数）', async () => {
+    await setup('text', [], {}, CUSTOM_PACKS)
+    expect(screen.getByText('古诗')).toBeInTheDocument()
+    expect(screen.getByText('自建')).toBeInTheDocument()
+    expect(screen.getByText('2 条')).toBeInTheDocument()
+    // 有自建集时不显示空态
+    expect(screen.queryByText('暂无知识库，点击右上角导入')).not.toBeInTheDocument()
+  })
+
+  it('math 分类不展示自建知识集', async () => {
+    await setup('math', [], {}, CUSTOM_PACKS)
+    expect(screen.queryByText('古诗')).not.toBeInTheDocument()
+    expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+  })
+
+  it('点击自建集卡片跳转到对应练习页', async () => {
+    const { router } = await setup('text', [], {}, CUSTOM_PACKS)
+    const card = screen.getByText('古诗').closest('.knowledge-pack-card')
+    expect(card).toBeInTheDocument()
+    await fireEvent.click(card!)
+    await waitFor(() => {
+      expect(router.currentRoute.value.path).toBe('/knowledge-memory/custom_古诗')
+    })
+  })
+
+  it('点击删除经确认后删除整集（提示条目与进度不可恢复）', async () => {
+    await setup('text', [], {}, CUSTOM_PACKS)
+    await fireEvent.click(screen.getByRole('button', { name: '删除' }))
+
+    expect(ElMessageBox.confirm).toHaveBeenCalled()
+    // confirm mock 在用例间共享累积，取最后一次调用
+    const calls = (ElMessageBox.confirm as any).mock.calls
+    const [message] = calls[calls.length - 1]
+    expect(message).toContain('不可恢复')
+    expect(message).toContain('2 条自建条目')
+
+    await waitFor(() => {
+      expect(mockStore.removeCustomSet).toHaveBeenCalledWith('古诗')
+    })
   })
 })

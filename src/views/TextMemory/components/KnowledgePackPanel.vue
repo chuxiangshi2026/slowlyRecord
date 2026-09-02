@@ -6,10 +6,10 @@
       <el-button size="small" type="primary" plain @click="handleOpenImport">导入</el-button>
     </div>
 
-    <el-empty v-if="packs.length === 0" description="暂无知识库，点击右上角导入" />
+    <el-empty v-if="cards.length === 0" description="暂无知识库，点击右上角导入" />
 
     <div
-      v-for="pack in packs"
+      v-for="pack in cards"
       :key="pack.id"
       class="list-item knowledge-pack-card"
       @click="goPack(pack.id)"
@@ -22,9 +22,12 @@
       <p class="pack-desc" :title="pack.description">{{ pack.description }}</p>
 
       <div class="pack-tags">
-        <el-tag v-if="pack.ordered" size="small" type="warning">有序</el-tag>
-        <el-tag v-if="pack.usableAsPeg" size="small" type="success">可用作桩库</el-tag>
-        <el-tag v-if="!pack.ordered && !pack.usableAsPeg" size="small" type="info">无序</el-tag>
+        <el-tag v-if="pack.custom" size="small" type="warning">自建</el-tag>
+        <template v-else>
+          <el-tag v-if="pack.ordered" size="small" type="warning">有序</el-tag>
+          <el-tag v-if="pack.usableAsPeg" size="small" type="success">可用作桩库</el-tag>
+          <el-tag v-if="!pack.ordered && !pack.usableAsPeg" size="small" type="info">无序</el-tag>
+        </template>
       </div>
 
       <div class="pack-progress">
@@ -38,8 +41,17 @@
           已掌握 {{ getMastered(pack.id) }} / {{ getTotal(pack.id) }}
           <template v-if="getDue(pack.id) > 0">· 待复习 {{ getDue(pack.id) }}</template>
         </span>
-        <!-- 移除仅下架展示，进度保留 -->
+        <!-- 内置包「移除」仅下架展示（进度保留）；自建集「删除」会连条目和进度一起删除 -->
         <el-button
+          v-if="pack.custom"
+          class="pack-remove-btn"
+          size="small"
+          text
+          type="danger"
+          @click.stop="handleDeleteCustom(pack)"
+        >删除</el-button>
+        <el-button
+          v-else
           class="pack-remove-btn"
           size="small"
           text
@@ -82,7 +94,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
-import type { KnowledgePackCategory } from '@/types/knowledge-memory';
+import type { KnowledgePackCategory, KnowledgePackInfo } from '@/types/knowledge-memory';
 
 const props = defineProps<{
   category: KnowledgePackCategory;
@@ -113,6 +125,17 @@ const packs = computed(() =>
   store.packList.filter(p => p.category === props.category && store.importedIds.includes(p.id)),
 );
 
+// 自建知识集（仅文本记忆分类展示，与内置包同样的卡片样式，标签为「自建」）
+const customPacks = computed(() =>
+  props.category === 'text' ? store.customPackList : [],
+);
+
+// 面板卡片列表：已导入内置包 + 自建知识集
+const cards = computed(() => [
+  ...packs.value.map(p => ({ ...p, custom: false })),
+  ...customPacks.value.map(p => ({ ...p, custom: true })),
+]);
+
 // 当前分类下的全部内置包（导入对话框候选）
 const allPacks = computed(() => store.packList.filter(p => p.category === props.category));
 
@@ -121,7 +144,9 @@ function isImported(packId: string): boolean {
 }
 
 function getTotal(packId: string): number {
-  return store.isPackLoaded(packId) ? store.getTotalCount(packId) : (store.packList.find(p => p.id === packId)?.itemCount ?? 0);
+  if (store.isPackLoaded(packId)) return store.getTotalCount(packId);
+  const info = store.packList.find(p => p.id === packId) ?? store.customPackList.find((p: KnowledgePackInfo) => p.id === packId);
+  return info?.itemCount ?? 0;
 }
 
 function getMastered(packId: string): number {
@@ -168,15 +193,36 @@ async function handleRemove(packId: string, name: string) {
   ElMessage.success('已移除');
 }
 
-// 加载已导入清单（含老用户进度自动并入），再加载已导入包内容用于进度统计，失败静默忽略
+// 删除自建知识集：确认后删除该集全部条目及进度（不可恢复）
+async function handleDeleteCustom(pack: KnowledgePackInfo) {
+  try {
+    await ElMessageBox.confirm(
+      `删除「${pack.name}」将永久删除该集全部 ${pack.itemCount} 条自建条目及学习进度，且不可恢复。`,
+      '删除自建知识集',
+      {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    );
+  } catch {
+    // 用户取消
+    return;
+  }
+  await store.removeCustomSet(pack.name);
+  ElMessage.success('已删除');
+}
+
+// 加载已导入清单（含老用户进度自动并入）与自建条目，再加载各包内容用于进度统计，失败静默忽略
 onMounted(async () => {
   try {
     await store.loadImportedIds();
+    await store.loadCustomItems();
   } catch {
     // 清单加载失败时按空清单展示
     return;
   }
-  packs.value.forEach(p => {
+  cards.value.forEach(p => {
     if (!store.isPackLoaded(p.id)) {
       store.loadPack(p.id).catch(() => undefined);
     }

@@ -1,7 +1,7 @@
 import {describe, it, expect, beforeEach, vi} from 'vitest'
 import {setActivePinia, createPinia} from 'pinia'
 import {useKnowledgeMemoryStore} from './knowledgeMemory'
-import type {KnowledgePack, KnowledgePackProgressDoc} from '@/types/knowledge-memory'
+import type {KnowledgePack, KnowledgePackProgressDoc, KnowledgeCustomItem} from '@/types/knowledge-memory'
 
 vi.mock('@/stores/words', () => ({
   useWordsStore: vi.fn(() => ({ memoryFirmness: '正常' }))
@@ -34,6 +34,8 @@ let savedProgress: KnowledgePackProgressDoc | null = null
 // 已导入清单与"已有进度文档"的可控模拟数据
 let importedIdsData: string[] = []
 let progressExisting = new Set<string>()
+// 自建知识条目的可控模拟数据（单文档整体覆盖写模式）
+let customItemsData: KnowledgeCustomItem[] = []
 vi.mock('@/utils/knowledge-memory-db', () => ({
   getProgressDoc: vi.fn((packId: string) => ({
     _id: progressExisting.has(packId) ? `knowledge_memory_${packId}` : '',
@@ -53,6 +55,17 @@ vi.mock('@/utils/knowledge-memory-db', () => ({
     importedIdsData = importedIdsData.filter(x => x !== id)
   }),
   hasProgressDoc: vi.fn((packId: string) => progressExisting.has(packId)),
+  getCustomItems: vi.fn(() => [...customItemsData]),
+  saveCustomItems: vi.fn(async (items: KnowledgeCustomItem[]) => {
+    customItemsData = [...items]
+  }),
+  removeCustomItem: vi.fn(async (itemId: string) => {
+    const target = customItemsData.find(i => i.id === itemId)
+    if (!target) return undefined
+    customItemsData = customItemsData.filter(i => i.id !== itemId)
+    return target
+  }),
+  clearProgressDoc: vi.fn(async () => {}),
 }))
 
 vi.mock('@/adapters/db', () => ({
@@ -64,7 +77,7 @@ vi.mock('@/utils/logger', () => ({
 }))
 
 import {fetchKnowledgePack, listKnowledgePacks} from '@/utils/knowledge-pack-service'
-import {getProgressDoc, saveProgressDoc, addImportedId, removeImportedId} from '@/utils/knowledge-memory-db'
+import {getProgressDoc, saveProgressDoc, addImportedId, removeImportedId, clearProgressDoc} from '@/utils/knowledge-memory-db'
 
 function normalizeForTest(value: string): string {
   return value.toLowerCase().replace(/\s+/g, ' ').trim()
@@ -76,6 +89,7 @@ describe('useKnowledgeMemoryStore', () => {
     savedProgress = null
     importedIdsData = []
     progressExisting = new Set()
+    customItemsData = []
     vi.resetAllMocks()
   })
 
@@ -321,6 +335,98 @@ describe('useKnowledgeMemoryStore', () => {
       // 已加载的包与进度仍在内存中，进度文档未被删除
       expect(store.isPackLoaded('test-pack')).toBe(true)
       expect(store.getProgress('test-pack').packId).toBe('test-pack')
+    })
+  })
+
+  describe('自建知识集', () => {
+    it('customPackList 应按 setName 分组，空 setName 归入「自建条目」', () => {
+      const store = useKnowledgeMemoryStore()
+      store.customItems = [
+        {id: 'c1', setName: '古诗', question: 'Q1', answer: 'A1', ctime: 1},
+        {id: 'c2', setName: '古诗', question: 'Q2', answer: 'A2', ctime: 2},
+        {id: 'c3', question: 'Q3', answer: 'A3', ctime: 3},
+      ]
+      const list = store.customPackList
+      expect(list).toHaveLength(2)
+      expect(list.find(p => p.id === 'custom_古诗')).toMatchObject({
+        name: '古诗',
+        description: '手动添加的自建条目',
+        itemCount: 2,
+        ordered: false,
+        usableAsPeg: false,
+        category: 'text',
+      })
+      expect(list.find(p => p.id === 'custom_自建条目')?.itemCount).toBe(1)
+    })
+
+    it('loadPack 加载 custom_ 包时不走内置包服务，按组内条目合成', async () => {
+      customItemsData = [
+        {id: 'c1', setName: '古诗', question: '床前明月光', answer: '疑是地上霜', ctime: 1},
+        {id: 'c2', setName: '古诗', question: '春眠不觉晓', answer: '处处闻啼鸟', ctime: 2},
+        {id: 'c3', setName: '其他', question: 'Q', answer: 'A', ctime: 3},
+      ]
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('custom_古诗')
+      expect(fetchKnowledgePack).not.toHaveBeenCalled()
+      const pack = store.getPack('custom_古诗')!
+      expect(pack.name).toBe('古诗')
+      expect(pack.ordered).toBe(false)
+      expect(pack.items).toHaveLength(2)
+      expect(pack.items[0]).toMatchObject({id: 'c1', question: '床前明月光', answer: '疑是地上霜', order: 1})
+      expect(pack.items[1]).toMatchObject({id: 'c2', order: 2})
+      expect(store.isPackLoaded('custom_古诗')).toBe(true)
+      expect(getProgressDoc).toHaveBeenCalledWith('custom_古诗')
+      // loadPack 会同步刷新内存中的自建条目
+      expect(store.customItems).toHaveLength(3)
+    })
+
+    it('空 setName 的条目可通过默认分组包加载', async () => {
+      customItemsData = [{id: 'c1', question: 'Q', answer: 'A', ctime: 1}]
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('custom_自建条目')
+      expect(store.getPack('custom_自建条目')?.items).toHaveLength(1)
+    })
+
+    it('addCustomItem 追加条目并使对应自建集缓存失效', async () => {
+      customItemsData = [{id: 'c1', setName: '古诗', question: 'Q', answer: 'A', ctime: 1}]
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('custom_古诗')
+      expect(store.isPackLoaded('custom_古诗')).toBe(true)
+      await store.addCustomItem({setName: '古诗', question: 'Q2', answer: 'A2'})
+      expect(customItemsData).toHaveLength(2)
+      expect(store.customItems).toHaveLength(2)
+      expect(store.isPackLoaded('custom_古诗')).toBe(false)
+      expect(store.getPack('custom_古诗')).toBeUndefined()
+    })
+
+    it('removeCustomItem 删除条目并失效自建集缓存，不存在的条目为空操作', async () => {
+      customItemsData = [
+        {id: 'c1', setName: '古诗', question: 'Q1', answer: 'A1', ctime: 1},
+        {id: 'c2', setName: '古诗', question: 'Q2', answer: 'A2', ctime: 2},
+      ]
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('custom_古诗')
+      await store.removeCustomItem('c1')
+      expect(customItemsData.map(i => i.id)).toEqual(['c2'])
+      expect(store.customItems).toHaveLength(1)
+      expect(store.isPackLoaded('custom_古诗')).toBe(false)
+      await store.removeCustomItem('not-exist')
+      expect(customItemsData).toHaveLength(1)
+    })
+
+    it('removeCustomSet 删除整集条目与进度文档，不影响其他集', async () => {
+      customItemsData = [
+        {id: 'c1', setName: '古诗', question: 'Q1', answer: 'A1', ctime: 1},
+        {id: 'c2', setName: '古诗', question: 'Q2', answer: 'A2', ctime: 2},
+        {id: 'c3', setName: '其他', question: 'Q3', answer: 'A3', ctime: 3},
+      ]
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('custom_古诗')
+      await store.removeCustomSet('古诗')
+      expect(customItemsData.map(i => i.id)).toEqual(['c3'])
+      expect(clearProgressDoc).toHaveBeenCalledWith('custom_古诗')
+      expect(store.isPackLoaded('custom_古诗')).toBe(false)
+      expect(store.customPackList.map(p => p.id)).toEqual(['custom_其他'])
     })
   })
 })

@@ -164,6 +164,18 @@ export function getCustomItems(): KnowledgeCustomItem[] {
 }
 
 /**
+ * 删除单条自建知识条目（单文档覆盖写模式沿用 saveCustomItems）
+ * @returns 被删除的条目，不存在时返回 undefined
+ */
+export async function removeCustomItem(itemId: string): Promise<KnowledgeCustomItem | undefined> {
+    const items = getCustomItems();
+    const target = items.find(i => i.id === itemId);
+    if (!target) return undefined;
+    await saveCustomItems(items.filter(i => i.id !== itemId));
+    return target;
+}
+
+/**
  * 保存全部自建知识条目（单文档整体覆盖）
  * 与进度文档不同：写入失败时抛错，让调用方（添加条目流程）能感知并提示
  */
