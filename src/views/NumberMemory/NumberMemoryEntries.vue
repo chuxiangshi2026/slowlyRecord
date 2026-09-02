@@ -167,11 +167,9 @@
           <el-icon :size="20" class="footer-icon" @click="showAddDialog = true"><Plus /></el-icon>
         </el-tooltip>
 
-        <!-- 导入下拉菜单 -->
+        <!-- 导入下拉菜单（trigger 直接放图标，不要包 el-tooltip：dropdown 会注入 role="button" 导致 tooltip 校验告警） -->
         <el-dropdown @command="handleImportCommand">
-          <el-tooltip class="box-item" effect="dark" content="导入" placement="top" popper-class="small-tooltip">
-            <i class="iconfont icon-import footer-icon"></i>
-          </el-tooltip>
+          <i class="iconfont icon-import footer-icon" title="导入"></i>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="importJson">JSON 导入</el-dropdown-item>

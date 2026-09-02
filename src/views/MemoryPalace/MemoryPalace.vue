@@ -77,9 +77,7 @@
       <span class="toolbar-stat">共 {{ store.palaces.length }} 座宫殿</span>
       <div class="toolbar-actions">
         <el-dropdown @command="handleImportPack">
-          <el-tooltip effect="dark" content="导入内置桩库" placement="top" popper-class="small-tooltip">
-            <el-icon :size="20" class="toolbar-icon"><Download /></el-icon>
-          </el-tooltip>
+          <el-icon :size="20" class="toolbar-icon" title="导入内置桩库"><Download /></el-icon>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item
