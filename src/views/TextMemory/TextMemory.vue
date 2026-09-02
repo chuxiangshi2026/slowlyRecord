@@ -67,6 +67,12 @@
 
       <!-- 视图切换与添加导入 -->
       <div class="filter-actions">
+        <!-- 多选模式开关（仅列表视图可用） -->
+        <el-tooltip v-if="currentView === 'list'" effect="dark" content="多选（批量打印 / 存图）" placement="top" popper-class="small-tooltip">
+          <el-button size="small" :type="multiSelectMode ? 'primary' : 'default'" @click="toggleMultiSelectMode">
+            <el-icon><Finished /></el-icon>
+          </el-button>
+        </el-tooltip>
         <el-radio-group v-model="currentView" size="small">
           <el-radio-button label="list">
             <el-tooltip effect="dark" content="列表视图" placement="top" popper-class="small-tooltip">
@@ -102,6 +108,28 @@
       </div>
     </div>
 
+    <!-- 多选工具条（仅列表视图 + 多选模式显示） -->
+    <div v-if="multiSelectMode && currentView === 'list'" class="multi-select-bar">
+      <el-checkbox
+        :model-value="isAllFilteredSelected"
+        :indeterminate="isSelectionIndeterminate"
+        @change="toggleSelectAllFiltered"
+      >
+        全选（当前筛选）
+      </el-checkbox>
+      <span class="selected-count">已选 {{ selectedIds.size }} 篇</span>
+      <el-button size="small" :disabled="selectedIds.size === 0" @click="clearSelection">清空</el-button>
+      <div class="multi-select-actions">
+        <el-button size="small" type="primary" :disabled="selectedIds.size === 0" @click="handleBatchPrint">
+          <el-icon><Printer /></el-icon> 打印
+        </el-button>
+        <el-button size="small" type="primary" :disabled="selectedIds.size === 0" @click="handleBatchSaveImage">
+          <el-icon><Picture /></el-icon> 存图
+        </el-button>
+        <el-button size="small" @click="exitMultiSelectMode">退出多选</el-button>
+      </div>
+    </div>
+
     <!-- 文章列表 -->
     <div v-show="currentView === 'list'" class="articles-list" v-loading="textStore.loading">
       <el-empty v-if="filteredArticles.length === 0" description="暂无文章，点击添加按钮开始" />
@@ -109,9 +137,17 @@
       <div
         v-for="article in filteredArticles"
         :key="article._id"
-        class="list-item text-article-card"
-        @click="handleArticleClick(article)"
+        :class="['list-item', 'text-article-card', { 'select-mode': multiSelectMode, selected: multiSelectMode && selectedIds.has(article._id) }]"
+        @click="handleCardClick(article)"
       >
+        <!-- 多选勾选框（多选模式下点卡片任意位置均为选中/取消） -->
+        <el-checkbox
+          v-if="multiSelectMode"
+          class="select-checkbox"
+          :model-value="selectedIds.has(article._id)"
+          @change="toggleSelect(article)"
+          @click.stop
+        />
         <div class="article-main">
           <h3 class="article-title">{{ article.title }}</h3>
           <div class="article-content-preview">
@@ -142,7 +178,8 @@
           </div>
         </div>
 
-        <div class="article-actions" @click.stop>
+        <!-- 多选模式下隐藏行内操作，避免误触 -->
+        <div v-if="!multiSelectMode" class="article-actions" @click.stop>
           <el-tooltip class="box-item" effect="dark" content="跟打练习" placement="top" popper-class="small-tooltip">
             <el-icon class="action-icon" @click="handleTypingPractice(article)"><Pointer /></el-icon>
           </el-tooltip>
@@ -254,11 +291,24 @@
     <div v-if="currentView === 'knowledge'" class="knowledge-view">
       <KnowledgePackPanel category="text" use-external-import @open-import="openImportDialog('knowledge')" />
     </div>
+
+    <!-- 批量打印专用容器：屏幕隐藏，打印时仅输出此区域（选中文章逐篇排版） -->
+    <div v-if="printArticles.length > 0" class="article-print-area">
+      <div class="print-title">文本记忆</div>
+      <div class="print-date">{{ printDate }}</div>
+      <div v-for="article in printArticles" :key="article._id" class="print-article">
+        <h2 class="print-article-title">{{ article.title }}</h2>
+        <div v-if="articleMetaLine(article)" class="print-article-meta">{{ articleMetaLine(article) }}</div>
+        <p v-for="(para, pIdx) in splitParagraphs(article.content)" :key="pIdx" class="print-article-para">
+          {{ para }}
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
@@ -266,10 +316,13 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import {
   Search, Plus, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
-  User, Clock, View, Pointer, List, MapLocation, VideoPlay, CircleClose, OfficeBuilding
+  User, Clock, View, Pointer, List, MapLocation, VideoPlay, CircleClose, OfficeBuilding,
+  Finished, Printer, Picture
 } from '@element-plus/icons-vue';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { log } from '@/utils/logger';
+import { exportArticlesAsImage } from '@/utils/article-image-export';
+import type { ArticleImageItem } from '@/utils/article-image-export';
 import {
   setupTextFocusListeners,
   setTextFocusWindow,
@@ -345,6 +398,125 @@ const showTypingDialog = ref(false);
 const editingArticle = ref<TextArticle | undefined>(undefined);
 const currentExerciseArticle = ref<TextArticle | null>(null);
 const focusArticleId = ref<string>('');
+
+// 多选模式（列表视图批量打印 / 存图）
+const multiSelectMode = ref(false);
+// 已选文章 ID 集合
+const selectedIds = ref<Set<string>>(new Set());
+// 待打印的文章快照（打印时从选中项复制，避免打印期间选中态变化影响输出）
+const printArticles = ref<TextArticle[]>([]);
+// 打印区域顶部的日期
+const printDate = ref('');
+
+// 当前选中的文章（按当前筛选结果顺序排列）
+const selectedArticles = computed(() => filteredArticles.value.filter(a => selectedIds.value.has(a._id)));
+
+// 当前筛选结果是否已全部选中
+const isAllFilteredSelected = computed(
+  () => filteredArticles.value.length > 0 && filteredArticles.value.every(a => selectedIds.value.has(a._id))
+);
+// 部分选中（全选 checkbox 的半选态）
+const isSelectionIndeterminate = computed(
+  () => !isAllFilteredSelected.value && filteredArticles.value.some(a => selectedIds.value.has(a._id))
+);
+
+// 进入/退出多选模式
+function toggleMultiSelectMode() {
+  if (multiSelectMode.value) {
+    exitMultiSelectMode();
+  } else {
+    multiSelectMode.value = true;
+  }
+}
+
+function exitMultiSelectMode() {
+  multiSelectMode.value = false;
+  selectedIds.value = new Set();
+}
+
+// 选中/取消选中一篇文章
+function toggleSelect(article: TextArticle) {
+  const next = new Set(selectedIds.value);
+  if (next.has(article._id)) {
+    next.delete(article._id);
+  } else {
+    next.add(article._id);
+  }
+  selectedIds.value = next;
+}
+
+// 全选/取消全选（仅作用于当前筛选结果）
+function toggleSelectAllFiltered() {
+  if (isAllFilteredSelected.value) {
+    const next = new Set(selectedIds.value);
+    filteredArticles.value.forEach(a => next.delete(a._id));
+    selectedIds.value = next;
+  } else {
+    const next = new Set(selectedIds.value);
+    filteredArticles.value.forEach(a => next.add(a._id));
+    selectedIds.value = next;
+  }
+}
+
+// 清空选中
+function clearSelection() {
+  selectedIds.value = new Set();
+}
+
+// 卡片点击：多选模式下让位为选中/取消，否则走原有逻辑
+function handleCardClick(article: TextArticle) {
+  if (multiSelectMode.value) {
+    toggleSelect(article);
+    return;
+  }
+  handleArticleClick(article);
+}
+
+// 作者/朝代/来源拼接行（如「唐 · 李白」）
+function articleMetaLine(article: TextArticle): string {
+  return [article.dynasty, article.author, article.source].filter(Boolean).join(' · ');
+}
+
+// 正文分段（按换行拆分，去掉空段；空内容兜底为一个空行）
+function splitParagraphs(content: string): string[] {
+  const paras = (content || '').split(/\n+/).map(p => p.trim()).filter(Boolean);
+  return paras.length > 0 ? paras : [''];
+}
+
+// 当前日期，如「2026年9月3日」
+function formatPrintDate(d: Date = new Date()): string {
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+
+// 批量打印：渲染打印容器后调用系统打印
+async function handleBatchPrint() {
+  if (selectedArticles.value.length === 0) return;
+  printArticles.value = [...selectedArticles.value];
+  printDate.value = formatPrintDate();
+  // 等 DOM 应用完打印容器后再触发打印
+  await nextTick();
+  window.print();
+}
+
+// 批量存图：选中文章竖向拼接渲染为一张长 PNG 下载
+function handleBatchSaveImage() {
+  if (selectedArticles.value.length === 0) return;
+  const items: ArticleImageItem[] = selectedArticles.value.map(article => ({
+    title: article.title,
+    authorLine: articleMetaLine(article),
+    paragraphs: splitParagraphs(article.content)
+  }));
+  try {
+    exportArticlesAsImage(
+      { title: '文本记忆', date: formatPrintDate(), articles: items },
+      { filename: '文本记忆' }
+    );
+    ElMessage.success('图片已保存');
+  } catch (e) {
+    log.e('[文本记忆] 批量存图失败:', e);
+    ElMessage.error('导出失败');
+  }
+}
 
 // 过滤后的文章列表
 const filteredArticles = computed(() => {
@@ -666,6 +838,11 @@ watch(
     }
   }
 );
+
+// 离开列表视图时自动退出多选模式
+watch(currentView, (v) => {
+  if (v !== 'list' && multiSelectMode.value) exitMultiSelectMode();
+});
 </script>
 
 <style scoped lang="scss">
@@ -813,6 +990,46 @@ watch(
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+}
+
+// 多选工具条
+.multi-select-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 6px 12px;
+  background: var(--utools-bg-tertiary);
+  border-bottom: 1px solid var(--utools-border-divider);
+  font-size: 12px;
+
+  .selected-count {
+    color: var(--utools-text-secondary);
+  }
+
+  .multi-select-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+}
+
+// 多选模式下的卡片：左侧勾选框 + 选中高亮
+.text-article-card {
+  .select-checkbox {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &.select-mode {
+    cursor: default;
+  }
+
+  &.selected {
+    border-color: var(--utools-primary);
+    background: var(--utools-bg-hover);
+  }
 }
 
 .articles-list {
@@ -981,5 +1198,80 @@ watch(
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--utools-border-color);
+}
+</style>
+
+<!-- 打印样式（非 scoped，需覆盖全局布局）：
+     屏幕隐藏打印容器，打印时隐藏页面其余内容、仅输出选中文章区域。
+     类名用 .article-print-area，避免与知识包的 .print-area 全局样式冲突 -->
+<style lang="scss">
+.article-print-area {
+  display: none;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .text-memory-container {
+    background: #fff !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  /* 只保留打印容器，其余（筛选条、多选条、列表）全部隐藏 */
+  .text-memory-container > *:not(.article-print-area) {
+    display: none !important;
+  }
+
+  .article-print-area {
+    display: block;
+    color: #000;
+
+    .print-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .print-date {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    /* 每篇文章一个区块，尽量避免跨页截断 */
+    .print-article {
+      page-break-inside: avoid;
+      break-inside: avoid;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #ccc;
+
+      .print-article-title {
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        margin: 0 0 4px;
+      }
+
+      .print-article-meta {
+        font-size: 12px;
+        color: #777;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .print-article-para {
+        font-size: 14px;
+        line-height: 1.8;
+        margin: 0 0 8px;
+      }
+    }
+  }
 }
 </style>
