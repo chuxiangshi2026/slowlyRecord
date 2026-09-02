@@ -12,6 +12,7 @@ import type {
     KnowledgePackProgressDoc,
     KnowledgeItemProgress,
     KnowledgePracticeMode,
+    KnowledgeCustomItem,
 } from '@/types/knowledge-memory';
 import {fetchKnowledgePack, listKnowledgePacks} from '@/utils/knowledge-pack-service';
 import type {KnowledgePackInfo} from '@/types/knowledge-memory';
@@ -22,6 +23,8 @@ import {
     addImportedId,
     removeImportedId,
     hasProgressDoc,
+    getCustomItems,
+    saveCustomItems,
 } from '@/utils/knowledge-memory-db';
 import {getDbAdapterAsync} from '@/adapters/db';
 import {
@@ -71,6 +74,8 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
     const importedIds = ref<string[]>([]);
     /** 已导入清单是否已从 DB 加载 */
     const importedLoaded = ref(false);
+    /** 用户自建知识条目（手动/批量添加，按知识集分组） */
+    const customItems = ref<KnowledgeCustomItem[]>([]);
 
     // ===== Getters =====
     const packList = computed<KnowledgePackInfo[]>(() => listKnowledgePacks());
@@ -192,6 +197,39 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
     async function removeImportedPack(packId: string): Promise<void> {
         await removeImportedId(packId);
         importedIds.value = importedIds.value.filter(id => id !== packId);
+    }
+
+    /**
+     * 加载自建知识条目
+     */
+    async function loadCustomItems(): Promise<void> {
+        await getDbAdapterAsync();
+        customItems.value = getCustomItems();
+    }
+
+    /**
+     * 添加单条自建知识条目（文本记忆「添加/导入」对话框用）
+     * 直接读 DB 追加，避免内存副本过期导致覆盖丢失
+     */
+    async function addCustomItem(input: {
+        setName?: string;
+        question: string;
+        answer: string;
+        tags?: string[];
+    }): Promise<KnowledgeCustomItem> {
+        await getDbAdapterAsync();
+        const item: KnowledgeCustomItem = {
+            id: `custom_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+            setName: input.setName,
+            question: input.question,
+            answer: input.answer,
+            tags: input.tags,
+            ctime: Date.now(),
+        };
+        const next = [...getCustomItems(), item];
+        await saveCustomItems(next);
+        customItems.value = next;
+        return item;
     }
 
     /**
@@ -352,6 +390,7 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         loadedSet,
         importedIds,
         importedLoaded,
+        customItems,
         // getters
         packList,
         loadedPackIds,
@@ -369,6 +408,8 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         loadImportedIds,
         importPack,
         removeImportedPack,
+        loadCustomItems,
+        addCustomItem,
         pickItemsForSession,
         getPreviousOrderedItem,
         judgeAnswer,

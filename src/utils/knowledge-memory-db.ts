@@ -4,7 +4,7 @@
  * 每个知识包一条 CouchDB 文档，存储该包所有条目的 SRS 进度。
  */
 
-import type {KnowledgePackProgressDoc, KnowledgeItemProgress, KnowledgeImportedDoc} from '@/types/knowledge-memory';
+import type {KnowledgePackProgressDoc, KnowledgeItemProgress, KnowledgeImportedDoc, KnowledgeCustomItemsDoc, KnowledgeCustomItem} from '@/types/knowledge-memory';
 import {DB_KEY_KNOWLEDGE_MEMORY} from '@/constants';
 import {getDbAdapter} from '@/adapters/db';
 import {log} from '@/utils/logger';
@@ -147,4 +147,37 @@ export async function removeImportedId(packId: string): Promise<void> {
     const next = ids.filter(id => id !== packId);
     if (next.length === ids.length) return;
     await saveImportedIds(next);
+}
+
+/** 自建知识条目文档 ID */
+export const CUSTOM_ITEMS_DOC_ID = 'knowledge_custom_items';
+
+/**
+ * 读取全部自建知识条目（无文档时返回空数组）
+ */
+export function getCustomItems(): KnowledgeCustomItem[] {
+    const doc = getDbAdapter().get(CUSTOM_ITEMS_DOC_ID) as KnowledgeCustomItemsDoc | null;
+    if (doc && Array.isArray(doc.items)) {
+        return [...doc.items];
+    }
+    return [];
+}
+
+/**
+ * 保存全部自建知识条目（单文档整体覆盖）
+ * 与进度文档不同：写入失败时抛错，让调用方（添加条目流程）能感知并提示
+ */
+export async function saveCustomItems(items: KnowledgeCustomItem[]): Promise<void> {
+    try {
+        const existing = getDbAdapter().get(CUSTOM_ITEMS_DOC_ID) as KnowledgeCustomItemsDoc | null;
+        await getDbAdapter().promises.put({
+            _id: CUSTOM_ITEMS_DOC_ID,
+            _rev: existing?._rev,
+            type: 'knowledge_custom_items',
+            items,
+        });
+    } catch (e) {
+        log.w?.('自建知识条目持久化失败', e);
+        throw e;
+    }
 }

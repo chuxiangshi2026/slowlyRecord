@@ -223,10 +223,11 @@
       @save="handleUpdateArticle"
     />
 
-    <!-- 添加/导入对话框（统一入口，initialTab 定位到指定 tab） -->
+    <!-- 添加/导入对话框（统一入口，initialTab/initialLibTab 定位到指定 tab） -->
     <TextImportDialog
       v-model="showImportDialog"
       :initial-tab="importInitialTab"
+      :initial-lib-tab="importInitialLibTab"
       @import="handleImportArticles"
       @openWordSettings="handleOpenWordSettings"
     />
@@ -284,12 +285,12 @@
 
     <!-- 宫殿视图（嵌入记忆宫殿列表，含新建/导入桩库/删除） -->
     <div v-if="currentView === 'palace'" class="palace-view">
-      <MemoryPalace @open-peg-import="openImportDialog('pegPacks')" />
+      <MemoryPalace @open-peg-import="openImportDialog('library', 'pegPacks')" />
     </div>
 
     <!-- 知识库视图（文本类知识包卡片） -->
     <div v-if="currentView === 'knowledge'" class="knowledge-view">
-      <KnowledgePackPanel category="text" use-external-import @open-import="openImportDialog('knowledge')" />
+      <KnowledgePackPanel category="text" use-external-import @open-import="openImportDialog('library', 'knowledge')" />
     </div>
 
     <!-- 批量打印专用容器：屏幕隐藏，打印时仅输出此区域（选中文章逐篇排版） -->
@@ -386,8 +387,10 @@ function applyViewFromQuery() {
 // 对话框显示状态
 const showEditDialog = ref(false);
 const showImportDialog = ref(false);
-// 统一「添加/导入」对话框的初始 tab（manual/knowledge/pegPacks 等）
+// 统一「添加/导入」对话框的初始 tab（manual/batch/file/library）
 const importInitialTab = ref('manual');
+// initialTab 为 library 时定位到的内置库二级面板（poetry/idiom/timeline/knowledge/pegPacks）
+const importInitialLibTab = ref('');
 const showFillBlanksDialog = ref(false);
 const showChoiceDialog = ref(false);
 const showNotesDialog = ref(false);
@@ -693,9 +696,10 @@ function handleEdit(article: TextArticle) {
   showEditDialog.value = true;
 }
 
-// 打开统一的「添加/导入」对话框并定位到指定 tab
-function openImportDialog(tab: string) {
+// 打开统一的「添加/导入」对话框并定位到指定 tab（library 时用 libTab 定位二级面板）
+function openImportDialog(tab: string, libTab: string = '') {
   importInitialTab.value = tab;
+  importInitialLibTab.value = libTab;
   showImportDialog.value = true;
 }
 

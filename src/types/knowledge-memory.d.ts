@@ -81,6 +81,30 @@ export interface KnowledgePackProgressDoc {
     items: Record<string, KnowledgeItemProgress>;
 }
 
+/** 用户自建知识条目（手动/批量添加，按知识集分组） */
+export interface KnowledgeCustomItem {
+    /** 条目唯一标识 */
+    id: string;
+    /** 所属知识集名称（可选） */
+    setName?: string;
+    /** 名称/问题 */
+    question: string;
+    /** 答案/释义 */
+    answer: string;
+    /** 标签 */
+    tags?: string[];
+    /** 创建时间 */
+    ctime: number;
+}
+
+/** 自建知识条目文档（单文档存储全部自建条目） */
+export interface KnowledgeCustomItemsDoc {
+    _id: string;
+    _rev?: string;
+    type: 'knowledge_custom_items';
+    items: KnowledgeCustomItem[];
+}
+
 /** 已导入知识包清单文档（知识库默认空，导入的包才在面板展示） */
 export interface KnowledgeImportedDoc {
     _id: string;

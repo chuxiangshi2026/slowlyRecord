@@ -24,11 +24,6 @@ vi.mock('@/stores/textMemory', () => ({
   useTextMemoryStore: () => ({ allTags: [] }),
 }))
 
-// TextImportDialog 直接引用但当前未使用的 words store，避免其模块依赖链
-vi.mock('@/stores/words', () => ({
-  useWordsStore: () => ({}),
-}))
-
 vi.mock('@/stores/knowledgeMemory', () => ({
   useKnowledgeMemoryStore: () => mockKnowledgeStore,
 }))
@@ -45,10 +40,6 @@ vi.mock('@/utils/ai-search-api', () => ({
   testAIConnection: vi.fn(),
   generateTimelineEventsWithAI: vi.fn(),
 }))
-
-// 地图 tab 未激活时不会调用 L.*，桩掉即可
-vi.mock('leaflet', () => ({ default: {} }))
-vi.mock('leaflet/dist/leaflet.css', () => ({}))
 
 // ElMessage 静默
 vi.mock('element-plus', async (importOriginal) => {
@@ -74,7 +65,10 @@ async function setup(options: SetupOptions = {}) {
   mockKnowledgeStore = reactive({
     packList: [...TEXT_PACKS],
     importedIds: [...(options.knowledgeImportedIds ?? [])],
+    customItems: [],
     loadImportedIds: vi.fn(() => Promise.resolve()),
+    loadCustomItems: vi.fn(() => Promise.resolve()),
+    addCustomItem: vi.fn((input: any) => Promise.resolve({ id: 'custom_x', ...input, ctime: Date.now() })),
     importPack: vi.fn((id: string) => {
       if (!mockKnowledgeStore.importedIds.includes(id)) mockKnowledgeStore.importedIds.push(id)
       return Promise.resolve()
@@ -85,6 +79,7 @@ async function setup(options: SetupOptions = {}) {
     palaces: [...(options.palaces ?? [])],
     listPegPacks: () => [...PEG_PACKS],
     loadPalaces: vi.fn(() => Promise.resolve()),
+    updatePalace: vi.fn(() => Promise.resolve({ ok: true })),
     importPackAsPalace: vi.fn(() =>
       Promise.resolve({ result: { ok: true }, palace: { _id: 'palace-new', name: '二十四节气' } }),
     ),
@@ -103,32 +98,34 @@ function activeTabLabel(): string {
   return document.querySelector('.el-tabs__item.is-active')?.textContent?.trim() ?? ''
 }
 
+// 内置库二级面板中当前激活项的文案
+function activeLibTabLabel(): string {
+  const pane = document.getElementById('pane-library')
+  return pane?.querySelector('.el-radio-button.is-active')?.textContent?.trim() ?? ''
+}
+
 describe('TextImportDialog（统一添加/导入入口）', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
-  it('包含手动添加/知识库/宫殿桩库等并列 tab，默认定位手动添加', async () => {
+  it('包含手动添加/批量导入/文件导入/内置库四个 tab，默认定位手动添加', async () => {
     await setup()
 
     const tabTexts = Array.from(document.querySelectorAll('.el-tabs__item')).map(el => el.textContent?.trim())
-    for (const label of ['手动添加', '批量导入', '文件导入', '诗词库', '成语库', '时间线', '地图', '知识库', '宫殿桩库']) {
-      expect(tabTexts).toContain(label)
-    }
-    // 手动添加为第一个且默认激活
-    expect(tabTexts[0]).toBe('手动添加')
+    expect(tabTexts).toEqual(['手动添加', '批量导入', '文件导入', '内置库'])
     expect(activeTabLabel()).toBe('手动添加')
   })
 
-  it('initialTab=knowledge 时定位知识库 tab，已导入包显示禁用态', async () => {
-    await setup({ props: { initialTab: 'knowledge' }, knowledgeImportedIds: ['pack-text'] })
+  it('initialTab=library + initialLibTab=knowledge 定位内置库-知识库，已导入包显示禁用态', async () => {
+    await setup({ props: { initialTab: 'library', initialLibTab: 'knowledge' }, knowledgeImportedIds: ['pack-text'] })
 
     await waitFor(() => {
-      expect(activeTabLabel()).toBe('知识库')
+      expect(activeTabLabel()).toBe('内置库')
     }, { timeout: 3000 })
+    expect(activeLibTabLabel()).toBe('知识库')
 
-    const pane = document.getElementById('pane-knowledge') as HTMLElement
-    expect(pane).toBeTruthy()
+    const pane = document.getElementById('pane-library') as HTMLElement
     expect(within(pane).getByText('二十四节气')).toBeInTheDocument()
     expect(within(pane).getByText('唐诗精选')).toBeInTheDocument()
 
@@ -137,42 +134,55 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
     expect(importedBtn).toBeDisabled()
   })
 
-  it('initialTab=pegPacks 时定位宫殿桩库 tab，已有对应宫殿的显示已导入', async () => {
+  it('initialTab=library + initialLibTab=pegPacks 定位内置库-宫殿桩库，已有对应宫殿的显示已导入', async () => {
     await setup({
-      props: { initialTab: 'pegPacks' },
+      props: { initialTab: 'library', initialLibTab: 'pegPacks' },
       palaces: [{ _id: 'palace-1', name: '二十四节气', loci: [], sourcePackId: 'pack-text', ctime: 1, utime: 1 }],
     })
 
     await waitFor(() => {
-      expect(activeTabLabel()).toBe('宫殿桩库')
+      expect(activeTabLabel()).toBe('内置库')
     }, { timeout: 3000 })
+    expect(activeLibTabLabel()).toBe('宫殿桩库')
 
-    const pane = document.getElementById('pane-pegPacks') as HTMLElement
+    const pane = document.getElementById('pane-library') as HTMLElement
     expect(within(pane).getByText('二十四节气')).toBeInTheDocument()
     expect(within(pane).getByRole('button', { name: '已导入' })).toBeDisabled()
   })
 
-  it('知识库 tab 点击导入调用 knowledgeMemory store.importPack', async () => {
-    await setup({ props: { initialTab: 'knowledge' } })
+  it('兼容旧调用：initialTab=knowledge 直接定位内置库-知识库', async () => {
+    await setup({ props: { initialTab: 'knowledge' }, knowledgeImportedIds: ['pack-text'] })
 
-    const pane = document.getElementById('pane-knowledge') as HTMLElement
+    await waitFor(() => {
+      expect(activeTabLabel()).toBe('内置库')
+    }, { timeout: 3000 })
+    expect(activeLibTabLabel()).toBe('知识库')
+
+    const pane = document.getElementById('pane-library') as HTMLElement
+    expect(within(pane).getByText('二十四节气')).toBeInTheDocument()
+  })
+
+  it('内置库-知识库点击导入调用 knowledgeMemory store.importPack', async () => {
+    await setup({ props: { initialTab: 'library', initialLibTab: 'knowledge' } })
+
+    const pane = document.getElementById('pane-library') as HTMLElement
     const row = within(pane).getByText('二十四节气').closest('.import-pack-row') as HTMLElement
     await fireEvent.click(within(row).getByRole('button', { name: '导入' }))
 
     expect(mockKnowledgeStore.importPack).toHaveBeenCalledWith('pack-text')
   })
 
-  it('宫殿桩库 tab 点击导入调用 memoryPalace store.importPackAsPalace', async () => {
-    await setup({ props: { initialTab: 'pegPacks' } })
+  it('内置库-宫殿桩库点击导入调用 memoryPalace store.importPackAsPalace', async () => {
+    await setup({ props: { initialTab: 'library', initialLibTab: 'pegPacks' } })
 
-    const pane = document.getElementById('pane-pegPacks') as HTMLElement
+    const pane = document.getElementById('pane-library') as HTMLElement
     await fireEvent.click(within(pane).getByRole('button', { name: '导入' }))
     await waitFor(() => {
       expect(mockPalaceStore.importPackAsPalace).toHaveBeenCalledWith('pack-text')
     }, { timeout: 3000 })
   })
 
-  it('手动添加表单提交后 emit import 单篇文章', async () => {
+  it('手动添加（普通文本）表单提交后 emit import 单篇文章', async () => {
     const { emitted } = await setup()
 
     await fireEvent.update(screen.getByPlaceholderText('请输入标题，如《静夜思》'), '静夜思')
@@ -185,6 +195,76 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
       const articles = (events[0] as any[])[0]
       expect(articles).toHaveLength(1)
       expect(articles[0].title).toBe('静夜思')
+    }, { timeout: 3000 })
+  })
+
+  it('手动添加切换类型显示对应字段（诗词/时间线事件/宫殿桩）', async () => {
+    await setup()
+    const pane = document.getElementById('pane-manual') as HTMLElement
+
+    // 诗词：朝代/作者/年份/地点
+    await fireEvent.click(within(pane).getByText('诗词'))
+    await waitFor(() => {
+      expect(within(pane).getByText('朝代')).toBeInTheDocument()
+      expect(within(pane).getByText('正文')).toBeInTheDocument()
+    }, { timeout: 3000 })
+
+    // 时间线事件：事件名/年份/区域/描述
+    await fireEvent.click(within(pane).getByText('时间线事件'))
+    await waitFor(() => {
+      expect(within(pane).getByText('事件名')).toBeInTheDocument()
+      expect(within(pane).getByText('描述')).toBeInTheDocument()
+    }, { timeout: 3000 })
+
+    // 宫殿桩：所属宫殿/桩名/备选桩
+    await fireEvent.click(within(pane).getByText('宫殿桩'))
+    await waitFor(() => {
+      expect(within(pane).getByText('所属宫殿')).toBeInTheDocument()
+      expect(within(pane).getByText('桩名')).toBeInTheDocument()
+      expect(within(pane).getByText('备选桩')).toBeInTheDocument()
+    }, { timeout: 3000 })
+  })
+
+  it('手动添加-时间线事件保存后 emit import（走 mapLibraryEventToArticle 路径）', async () => {
+    const { emitted } = await setup()
+    const pane = document.getElementById('pane-manual') as HTMLElement
+
+    await fireEvent.click(within(pane).getByText('时间线事件'))
+    await waitFor(() => {
+      expect(within(pane).getByPlaceholderText('事件名称')).toBeInTheDocument()
+    }, { timeout: 3000 })
+
+    await fireEvent.update(within(pane).getByPlaceholderText('事件名称'), '贞观之治')
+    await fireEvent.update(within(pane).getByPlaceholderText('具体事件描述...'), '唐太宗即位后励精图治，开创盛世。')
+    await fireEvent.click(screen.getByRole('button', { name: '添加' }))
+
+    await waitFor(() => {
+      const events = emitted().import
+      expect(events).toBeTruthy()
+      const articles = (events[0] as any[])[0]
+      expect(articles).toHaveLength(1)
+      expect(articles[0].title).toBe('贞观之治')
+      expect(articles[0].category).toBe('politics')
+    }, { timeout: 3000 })
+  })
+
+  it('手动添加-知识条目保存到知识库 store.addCustomItem', async () => {
+    await setup()
+    const pane = document.getElementById('pane-manual') as HTMLElement
+
+    await fireEvent.click(within(pane).getByText('知识条目'))
+    await waitFor(() => {
+      expect(within(pane).getByPlaceholderText('如：水的化学式')).toBeInTheDocument()
+    }, { timeout: 3000 })
+
+    await fireEvent.update(within(pane).getByPlaceholderText('如：水的化学式'), '水的化学式')
+    await fireEvent.update(within(pane).getByPlaceholderText('请输入答案或释义...'), 'H₂O')
+    await fireEvent.click(screen.getByRole('button', { name: '添加' }))
+
+    await waitFor(() => {
+      expect(mockKnowledgeStore.addCustomItem).toHaveBeenCalledWith(
+        expect.objectContaining({ question: '水的化学式', answer: 'H₂O' }),
+      )
     }, { timeout: 3000 })
   })
 })
