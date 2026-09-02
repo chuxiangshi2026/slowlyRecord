@@ -45,6 +45,17 @@
           </div>
         </div>
 
+        <!-- 记忆口诀：有口诀的包在表格上方展示，供对照背诵 -->
+        <div v-if="mnemonics.length" class="mnemonics-block">
+          <div class="mnemonics-header">
+            <el-icon :size="14"><Memo /></el-icon>
+            <span>记忆口诀</span>
+          </div>
+          <div class="mnemonics-lines">
+            <p v-for="(line, idx) in mnemonics" :key="idx">{{ line }}</p>
+          </div>
+        </div>
+
         <!-- 乘法表：方正方阵（首行/首列为乘数表头，交叉格为积） -->
         <div v-if="multiplicationGrid" class="mult-grid-wrap">
           <table class="mult-grid">
@@ -346,6 +357,7 @@ import {
   RefreshRight,
   TrendCharts,
   VideoPlay,
+  Memo,
 } from '@element-plus/icons-vue';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import { getKnowledgePackInfo } from '@/utils/knowledge-pack-service';
@@ -369,6 +381,8 @@ const packId = computed<string>(() => {
 });
 
 const pack = computed(() => store.getPack(packId.value));
+/** 记忆口诀（包级可选，每个元素一句/一行；有口诀时预览视图在表格上方展示） */
+const mnemonics = computed<string[]>(() => pack.value?.mnemonics ?? []);
 const masteredCount = computed(() => store.getMasteredCount(packId.value));
 const dueCount = computed(() => store.getDueCount(packId.value));
 const totalCount = computed(() => store.getTotalCount(packId.value));
@@ -852,6 +866,48 @@ async function handleResetProgress() {
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+}
+
+/* 记忆口诀：包级可选助记文本，位于预览表格上方 */
+.mnemonics-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border: 1px dashed var(--utools-border-primary);
+  border-radius: 8px;
+  background: var(--utools-bg-card);
+
+  .mnemonics-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--utools-primary);
+    white-space: nowrap;
+  }
+
+  .mnemonics-lines {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 18px;
+
+    p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--utools-text-primary);
+      letter-spacing: 3px;
+      /* 仅在空格处断行，避免生肖歌等长句从字间折断 */
+      word-break: keep-all;
+    }
   }
 }
 

@@ -4,6 +4,9 @@
   "description": "十二生肖及其对应地支，顺序本身是考点",
   "ordered": true,
   "usableAsPeg": true,
+  "mnemonics": [
+    "子鼠丑牛寅虎卯兔 辰龙巳蛇午马未羊 申猴酉鸡戌狗亥猪"
+  ],
   "items": [
     {
       "id": "zodiac-12-1",

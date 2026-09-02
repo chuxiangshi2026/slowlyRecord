@@ -4,6 +4,12 @@
   "description": "二十四节气及其日期与物候，顺序本身是考点",
   "ordered": true,
   "usableAsPeg": true,
+  "mnemonics": [
+    "春雨惊春清谷天",
+    "夏满芒夏暑相连",
+    "秋处露秋寒霜降",
+    "冬雪雪冬小大寒"
+  ],
   "items": [
     {
       "id": "solar-terms-24-1",

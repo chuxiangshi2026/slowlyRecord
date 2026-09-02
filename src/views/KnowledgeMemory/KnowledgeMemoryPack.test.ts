@@ -60,6 +60,7 @@ vi.mock('@element-plus/icons-vue', () => ({
   RefreshRight: { template: '<span>refresh</span>' },
   TrendCharts: { template: '<span>trend</span>' },
   VideoPlay: { template: '<span>play</span>' },
+  Memo: { template: '<span>memo</span>' },
 }))
 
 const ElDialogStub = {
@@ -75,7 +76,7 @@ const ElInputStub = {
     '<input :value="modelValue" :placeholder="placeholder" @input="$emit(\'update:modelValue\', $event.target.value)" />',
 }
 
-async function setup(packId: string, items: any[], options: { enterPractice?: boolean } = {}) {
+async function setup(packId: string, items: any[], options: { enterPractice?: boolean; mnemonics?: string[] } = {}) {
   const { enterPractice = true } = options
   const pinia = createPinia()
   setActivePinia(pinia)
@@ -88,6 +89,7 @@ async function setup(packId: string, items: any[], options: { enterPractice?: bo
     ordered: false,
     usableAsPeg: false,
     items,
+    mnemonics: options.mnemonics,
   }
   store.$patch({
     packs: { [packId]: pack },
@@ -310,5 +312,26 @@ describe('KnowledgeMemoryPack', () => {
       { id: 'i1', question: 'Q1', answer: 'A1' },
     ], { enterPractice: false })
     expect(screen.queryByText('函数图像')).not.toBeInTheDocument()
+  })
+
+  it('有口诀的包在预览视图显示「记忆口诀」区块与逐句内容', async () => {
+    const mnemonics = ['春雨惊春清谷天', '夏满芒夏暑相连', '秋处露秋寒霜降', '冬雪雪冬小大寒']
+    await setup('solar-terms-24', [
+      { id: 'solar-terms-24-1', question: '立春', answer: '2月3日~5日', order: 1 },
+      { id: 'solar-terms-24-2', question: '雨水', answer: '2月18日~20日', order: 2 },
+    ], { enterPractice: false, mnemonics })
+
+    // 口诀区块标题与逐句内容均可见
+    expect(screen.getByText('记忆口诀')).toBeInTheDocument()
+    expect(screen.getByText('春雨惊春清谷天')).toBeInTheDocument()
+    expect(screen.getByText('夏满芒夏暑相连')).toBeInTheDocument()
+    expect(screen.getByText('冬雪雪冬小大寒')).toBeInTheDocument()
+  })
+
+  it('无口诀的包在预览视图不显示口诀区块', async () => {
+    await setup('test-pack', [
+      { id: 'i1', question: 'Q1', answer: 'A1' },
+    ], { enterPractice: false })
+    expect(screen.queryByText('记忆口诀')).not.toBeInTheDocument()
   })
 })

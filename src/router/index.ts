@@ -13,6 +13,7 @@ const Word = () => import('@/views/Word/Word.vue');
 const NumberMemory = () => import('@/views/NumberMemory/NumberMemory.vue');
 const NumberMemoryTraining = () => import('@/views/NumberMemory/NumberMemoryTraining.vue');
 const NumberMemoryEntries = () => import('@/views/NumberMemory/NumberMemoryEntries.vue');
+const NumberMemoryMapping = () => import('@/views/NumberMemory/NumberMemoryMapping.vue');
 const MemoryTest = () => import('@/views/MemoryTest/MemoryTest.vue');
 const Dictation = () => import('@/views/Dictation/Dictation.vue');
 const QuickTranslate = () => import('@/views/Translate/QuickTranslate.vue');
@@ -106,6 +107,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '数字记忆条目',
+        },
+      },
+      {
+        path: 'number-memory/mapping',
+        name: 'numberMemoryMapping',
+        component: NumberMemoryMapping,
+        meta: {
+          menu: false,
+          title: '数字映射设置',
         },
       },
       {

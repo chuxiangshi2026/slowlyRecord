@@ -4,6 +4,15 @@
   "description": "元素周期表前 36 号元素（氢到氪），符号与中文名",
   "ordered": false,
   "usableAsPeg": false,
+  "mnemonics": [
+    "氢氦锂铍硼",
+    "碳氮氧氟氖",
+    "钠镁铝硅磷",
+    "硫氯氩钾钙",
+    "钪钛钒铬锰",
+    "铁钴镍铜锌",
+    "镓锗砷硒溴氪"
+  ],
   "items": [
     {
       "id": "elements-H",

@@ -28,6 +28,8 @@ export interface KnowledgePack {
     ordered: boolean;
     /** 是否可作为记忆宫殿的桩库 */
     usableAsPeg: boolean;
+    /** 记忆口诀（可选，每个元素一句/一行，预览视图展示） */
+    mnemonics?: string[];
     /** 条目列表 */
     items: KnowledgeItem[];
 }

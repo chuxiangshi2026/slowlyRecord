@@ -33,9 +33,9 @@ export const DEFAULT_STRATEGY: LoadStrategy = {
 export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math'},
     {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math'},
-    {id: 'elements', name: '元素周期表（前 36 号）', description: '元素符号、中文名、序数与拼音', itemCount: 36, ordered: false, usableAsPeg: false, category: 'math'},
-    {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text'},
-    {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text'},
+    {id: 'elements', name: '元素周期表（前 36 号）', description: '元素符号、中文名、序数与拼音', itemCount: 36, ordered: false, usableAsPeg: false, category: 'math', version: 2},
+    {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 2},
+    {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
     {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false, category: 'text'},
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
@@ -286,6 +286,7 @@ function normalizePack(pack: KnowledgePack): KnowledgePack {
         description: pack.description || '',
         ordered: !!pack.ordered,
         usableAsPeg: !!pack.usableAsPeg,
+        mnemonics: Array.isArray(pack.mnemonics) ? pack.mnemonics : undefined,
         items: pack.items.map(item => ({
             id: item.id,
             question: item.question,

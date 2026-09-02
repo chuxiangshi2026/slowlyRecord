@@ -99,10 +99,18 @@ describe('knowledge-pack-service', () => {
       expect(DEFAULT_STRATEGY).toEqual({priority: 'local', useCache: true, timeout: 5000})
     })
 
-    it('math-formulas 数据版本为 2，其余包默认版本为 1', () => {
+    it('math-formulas / elements / solar-terms-24 / zodiac-12 数据版本为 2，其余包默认版本为 1', () => {
       expect(getKnowledgePackInfo('math-formulas')?.version).toBe(2)
+      expect(getKnowledgePackInfo('elements')?.version).toBe(2)
+      expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(2)
+      expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(2)
       expect(getPackVersion('math-formulas')).toBe(2)
-      expect(getPackVersion('elements')).toBe(1)
+      expect(getPackVersion('elements')).toBe(2)
+      expect(getPackVersion('solar-terms-24')).toBe(2)
+      expect(getPackVersion('zodiac-12')).toBe(2)
+      // 其余包（未加口诀等结构变更）仍为 1
+      expect(getPackVersion('multiplication-9x9')).toBe(1)
+      expect(getPackVersion('constellations-12')).toBe(1)
       // 未知包兜底为 1
       expect(getPackVersion('not-exist')).toBe(1)
     })
@@ -139,12 +147,12 @@ describe('knowledge-pack-service', () => {
 
     it('isKnowledgePackCached 有有效缓存时返回 true', () => {
       const pack = makePack('elements')
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now()}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 2}))
       expect(isKnowledgePackCached('elements')).toBe(true)
     })
 
     it('clearKnowledgePackCache 应清除指定缓存', () => {
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now()}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 2}))
       clearKnowledgePackCache('elements')
       expect(localStorageMock.getItem('slowlyrecord-knowledgebank-elements')).toBeNull()
     })
@@ -163,7 +171,7 @@ describe('knowledge-pack-service', () => {
   describe('fetchKnowledgePack', () => {
     it('应使用有效缓存', async () => {
       const pack = makePack('elements', 36)
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now()}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 2}))
       const result = await fetchKnowledgePack('elements')
       expect(result.id).toBe('elements')
       expect(fetchMock).not.toHaveBeenCalled()
@@ -191,8 +199,8 @@ describe('knowledge-pack-service', () => {
       const cached = localStorageMock.getItem('slowlyrecord-knowledgebank-elements')
       expect(cached).not.toBeNull()
       expect(JSON.parse(cached!).pack.items).toHaveLength(36)
-      // 缓存应记录当前数据版本
-      expect(JSON.parse(cached!).version).toBe(1)
+      // 缓存应记录当前数据版本（elements 已升级到 2）
+      expect(JSON.parse(cached!).version).toBe(2)
     })
 
     it('缓存版本与包当前版本不一致时视为失效并重新加载', async () => {
@@ -265,6 +273,17 @@ describe('knowledge-pack-service', () => {
       const [a, b] = await Promise.all([fetchKnowledgePack('elements'), fetchKnowledgePack('elements')])
       expect(fetchMock).toHaveBeenCalledTimes(1)
       expect(a).toBe(b)
+    })
+
+    it('加载后应保留包级 mnemonics 口诀字段', async () => {
+      const pack = makePack('elements', 36)
+      pack.mnemonics = ['氢氦锂铍硼', '碳氮氧氟氖', '钠镁铝硅磷']
+      fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(pack)})
+      const result = await fetchKnowledgePack('elements')
+      expect(result.mnemonics).toEqual(['氢氦锂铍硼', '碳氮氧氟氖', '钠镁铝硅磷'])
+      // 写入缓存的数据同样保留 mnemonics
+      const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-elements')!)
+      expect(cached.pack.mnemonics).toEqual(['氢氦锂铍硼', '碳氮氧氟氖', '钠镁铝硅磷'])
     })
   })
 
