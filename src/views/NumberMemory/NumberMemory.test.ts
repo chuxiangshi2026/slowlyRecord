@@ -95,11 +95,13 @@ vi.mock('@/stores/knowledgeMemory', () => ({
   useKnowledgeMemoryStore: vi.fn(() => ({
     packList: [],
     loading: false,
+    importedIds: [],
     isPackLoaded: vi.fn(() => false),
     getTotalCount: vi.fn(() => 0),
     getMasteredCount: vi.fn(() => 0),
     getDueCount: vi.fn(() => 0),
     loadPack: vi.fn(() => Promise.resolve()),
+    loadImportedIds: vi.fn(() => Promise.resolve()),
   })),
 }))
 

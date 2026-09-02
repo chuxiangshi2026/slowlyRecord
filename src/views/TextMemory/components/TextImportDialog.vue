@@ -8,40 +8,6 @@
       destroy-on-close
   >
     <el-tabs v-model="activeTab">
-      <!-- 手动输入 -->
-      <el-tab-pane label="手动输入" name="manual">
-        <el-form :model="manualForm" label-width="80px">
-          <el-form-item label="标题">
-            <el-input v-model="manualForm.title" placeholder="输入标题"/>
-          </el-form-item>
-          <el-form-item label="标签">
-            <el-select
-                v-model="manualForm.tags"
-                multiple
-                filterable
-                allow-create
-                placeholder="选择或输入标签"
-                style="width: 100%"
-            >
-              <el-option
-                  v-for="tag in existingTags"
-                  :key="tag"
-                  :label="tag"
-                  :value="tag"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="内容">
-            <el-input
-                v-model="manualForm.content"
-                type="textarea"
-                :rows="10"
-                placeholder="粘贴或输入文本内容..."
-            />
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-
       <!-- 批量导入 -->
       <el-tab-pane label="批量导入" name="batch">
         <el-alert
@@ -1250,7 +1216,8 @@ const emit = defineEmits<{
 }>();
 
 const textStore = useTextMemoryStore();
-const activeTab = ref('manual');
+// 手动添加文本由工具栏「添加文本」按钮（TextEditDialog）承担，导入对话框默认停在批量导入
+const activeTab = ref('batch');
 const importing = ref(false);
 const timelineSubTab = ref<'library' | 'manual' | 'ai'>('library');
 const activeCollapse = ref(['plain']); // 默认展开普通文本格式说明
@@ -1271,13 +1238,6 @@ const importButtonText = computed(() => {
 
 // 现有标签
 const existingTags = computed(() => textStore.allTags);
-
-// 手动输入表单
-const manualForm = ref({
-  title: '',
-  tags: [] as string[],
-  content: ''
-});
 
 // 批量导入
 const batchContent = ref('');
@@ -2680,20 +2640,6 @@ function handleImport() {
     let articles: any[] = [];
 
     switch (activeTab.value) {
-      case 'manual':
-        if (!manualForm.value.title || !manualForm.value.content) {
-          ElMessage.warning('请填写标题和内容');
-          return;
-        }
-        articles = [{
-          title: manualForm.value.title,
-          content: manualForm.value.content,
-          tags: manualForm.value.tags,
-          author: '',
-          source: ''
-        }];
-        break;
-
       case 'batch':
         if (!batchContent.value.trim()) {
           ElMessage.warning('请输入批量导入内容');
@@ -2844,7 +2790,6 @@ function handleImport() {
 
 // 重置表单
 function resetForm() {
-  manualForm.value = {title: '', tags: [], content: ''};
   batchContent.value = '';
   fileContent.value = '';
   fileForm.value = {title: '', tags: []};
@@ -2884,7 +2829,7 @@ function resetForm() {
   selectedTimelineAi.value = [];
   timelineAiForm.value = { provider: '', apiKey: '' };
   timelineSubTab.value = 'library';
-  activeTab.value = 'manual';
+  activeTab.value = 'batch';
 }
 
 // 关闭对话框

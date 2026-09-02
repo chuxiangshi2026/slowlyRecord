@@ -120,3 +120,53 @@ describe('knowledge-memory-db', () => {
     expect(Object.keys(doc.items)).toHaveLength(0)
   })
 })
+
+describe('knowledge-memory-db 已导入清单', () => {
+  let mockDb: DbAdapter
+
+  beforeEach(() => {
+    mockDb = createMockDb()
+    setDbAdapter(mockDb)
+  })
+
+  afterEach(() => {
+    resetDbAdapter()
+    vi.restoreAllMocks()
+  })
+
+  it('无清单文档时返回空数组', async () => {
+    const {getImportedIds} = await import('./knowledge-memory-db')
+    expect(getImportedIds()).toEqual([])
+  })
+
+  it('addImportedId 应新增且幂等', async () => {
+    const {getImportedIds, addImportedId} = await import('./knowledge-memory-db')
+    await addImportedId('pack-a')
+    await addImportedId('pack-b')
+    await addImportedId('pack-a')
+    expect(getImportedIds()).toEqual(['pack-a', 'pack-b'])
+  })
+
+  it('removeImportedId 应移除指定项，移除不存在的 id 无副作用', async () => {
+    const {getImportedIds, addImportedId, removeImportedId} = await import('./knowledge-memory-db')
+    await addImportedId('pack-a')
+    await addImportedId('pack-b')
+    await removeImportedId('pack-a')
+    expect(getImportedIds()).toEqual(['pack-b'])
+    await removeImportedId('pack-c')
+    expect(getImportedIds()).toEqual(['pack-b'])
+  })
+
+  it('hasProgressDoc 应反映进度文档是否真实存在', async () => {
+    const {hasProgressDoc, updateItemProgress} = await import('./knowledge-memory-db')
+    expect(hasProgressDoc('elements')).toBe(false)
+    await updateItemProgress('elements', 'item_1', {
+      itemId: 'item_1',
+      level: 1,
+      learnDate: 1000,
+      correct: 1,
+      wrong: 0,
+    })
+    expect(hasProgressDoc('elements')).toBe(true)
+  })
+})

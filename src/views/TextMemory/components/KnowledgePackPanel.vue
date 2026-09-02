@@ -1,7 +1,12 @@
 <template>
-  <!-- 知识包卡片面板：按 category 展示宿主模块对应的知识包（math → 数字记忆，text → 文本记忆） -->
+  <!-- 知识包卡片面板：只展示「已导入」的知识包（math → 数字记忆，text → 文本记忆），仿内置词库导入模式 -->
   <div class="knowledge-pack-panel" v-loading="store.loading">
-    <el-empty v-if="packs.length === 0" description="暂无知识包" />
+    <!-- 顶部工具行：导入入口 -->
+    <div class="panel-toolbar">
+      <el-button size="small" type="primary" plain @click="showImportDialog = true">导入</el-button>
+    </div>
+
+    <el-empty v-if="packs.length === 0" description="暂无知识库，点击右上角导入" />
 
     <div
       v-for="pack in packs"
@@ -33,14 +38,49 @@
           已掌握 {{ getMastered(pack.id) }} / {{ getTotal(pack.id) }}
           <template v-if="getDue(pack.id) > 0">· 待复习 {{ getDue(pack.id) }}</template>
         </span>
+        <!-- 移除仅下架展示，进度保留 -->
+        <el-button
+          class="pack-remove-btn"
+          size="small"
+          text
+          type="danger"
+          @click.stop="handleRemove(pack.id, pack.name)"
+        >移除</el-button>
       </div>
     </div>
+
+    <!-- 导入对话框：列出当前分类的全部内置包 -->
+    <el-dialog v-model="showImportDialog" title="导入知识库" width="520px" append-to-body>
+      <div v-if="allPacks.length === 0" class="import-empty">暂无可导入的知识库</div>
+      <div
+        v-for="p in allPacks"
+        :key="p.id"
+        class="import-pack-row"
+      >
+        <div class="import-pack-info">
+          <div class="import-pack-name">
+            {{ p.name }}
+            <span class="import-pack-count">{{ p.itemCount }} 条</span>
+          </div>
+          <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
+        </div>
+        <el-button
+          size="small"
+          type="primary"
+          :disabled="isImported(p.id)"
+          @click="handleImport(p.id)"
+        >
+          {{ isImported(p.id) ? '已导入' : '导入' }}
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import type { KnowledgePackCategory } from '@/types/knowledge-memory';
 
@@ -51,8 +91,19 @@ const props = defineProps<{
 const router = useRouter();
 const store = useKnowledgeMemoryStore();
 
-// 当前分类下的知识包
-const packs = computed(() => store.packList.filter(p => p.category === props.category));
+const showImportDialog = ref(false);
+
+// 已导入的包（面板只展示这些）
+const packs = computed(() =>
+  store.packList.filter(p => p.category === props.category && store.importedIds.includes(p.id)),
+);
+
+// 当前分类下的全部内置包（导入对话框候选）
+const allPacks = computed(() => store.packList.filter(p => p.category === props.category));
+
+function isImported(packId: string): boolean {
+  return store.importedIds.includes(packId);
+}
 
 function getTotal(packId: string): number {
   return store.isPackLoaded(packId) ? store.getTotalCount(packId) : (store.packList.find(p => p.id === packId)?.itemCount ?? 0);
@@ -76,8 +127,40 @@ function goPack(packId: string) {
   router.push(`/knowledge-memory/${packId}`);
 }
 
-// 加载本分类全部包（用于掌握进度统计），失败静默忽略
-onMounted(() => {
+// 导入知识包：加入清单并加载
+async function handleImport(packId: string) {
+  await store.importPack(packId);
+  ElMessage.success('导入成功');
+}
+
+// 移除知识包：确认后下架（进度文档保留）
+async function handleRemove(packId: string, name: string) {
+  try {
+    await ElMessageBox.confirm(
+      `移除「${name}」后将不再显示在列表中，学习进度会保留，重新导入后可继续。`,
+      '移除知识库',
+      {
+        confirmButtonText: '移除',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    );
+  } catch {
+    // 用户取消
+    return;
+  }
+  await store.removeImportedPack(packId);
+  ElMessage.success('已移除');
+}
+
+// 加载已导入清单（含老用户进度自动并入），再加载已导入包内容用于进度统计，失败静默忽略
+onMounted(async () => {
+  try {
+    await store.loadImportedIds();
+  } catch {
+    // 清单加载失败时按空清单展示
+    return;
+  }
   packs.value.forEach(p => {
     if (!store.isPackLoaded(p.id)) {
       store.loadPack(p.id).catch(() => undefined);
@@ -93,6 +176,13 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.panel-toolbar {
+  width: 92%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
 }
 
 // 卡片样式仿原知识包列表页
@@ -171,6 +261,58 @@ onMounted(() => {
       color: var(--utools-text-secondary);
       flex-shrink: 0;
     }
+
+    .pack-remove-btn {
+      flex-shrink: 0;
+      margin-left: auto;
+    }
   }
+}
+
+// 导入对话框行样式
+.import-pack-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--utools-border-light);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .import-pack-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .import-pack-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--utools-text-primary);
+
+    .import-pack-count {
+      margin-left: 8px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--utools-text-tertiary);
+    }
+  }
+
+  .import-pack-desc {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--utools-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.import-empty {
+  padding: 24px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--utools-text-secondary);
 }
 </style>

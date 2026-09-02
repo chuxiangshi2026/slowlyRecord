@@ -15,7 +15,15 @@ import type {
 } from '@/types/knowledge-memory';
 import {fetchKnowledgePack, listKnowledgePacks} from '@/utils/knowledge-pack-service';
 import type {KnowledgePackInfo} from '@/types/knowledge-memory';
-import {getProgressDoc, saveProgressDoc} from '@/utils/knowledge-memory-db';
+import {
+    getProgressDoc,
+    saveProgressDoc,
+    getImportedIds,
+    addImportedId,
+    removeImportedId,
+    hasProgressDoc,
+} from '@/utils/knowledge-memory-db';
+import {getDbAdapterAsync} from '@/adapters/db';
 import {
     createDefaultProgress,
     getItemLevel,
@@ -59,6 +67,10 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
     const progress = ref<Record<string, KnowledgePackProgressDoc>>({});
     const loading = ref(false);
     const loadedSet = ref<Set<string>>(new Set());
+    /** 已导入的知识包 id 列表（知识库默认空，仅展示已导入的包） */
+    const importedIds = ref<string[]>([]);
+    /** 已导入清单是否已从 DB 加载 */
+    const importedLoaded = ref(false);
 
     // ===== Getters =====
     const packList = computed<KnowledgePackInfo[]>(() => listKnowledgePacks());
@@ -134,6 +146,52 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
     async function reloadPack(packId: string): Promise<void> {
         loadedSet.value.delete(packId);
         await loadPack(packId);
+    }
+
+    /**
+     * 加载已导入知识包清单
+     * 兼容老用户：某包已存在进度文档但不在清单中时，自动并入清单
+     */
+    async function loadImportedIds(): Promise<void> {
+        // 非 uTools 环境需先初始化 DB 适配器
+        await getDbAdapterAsync();
+        const merged = new Set(getImportedIds());
+        for (const info of listKnowledgePacks()) {
+            if (!merged.has(info.id) && hasProgressDoc(info.id)) {
+                merged.add(info.id);
+                await addImportedId(info.id);
+            }
+        }
+        importedIds.value = Array.from(merged);
+        importedLoaded.value = true;
+    }
+
+    function isPackImported(packId: string): boolean {
+        return importedIds.value.includes(packId);
+    }
+
+    /**
+     * 导入知识包：加入清单并加载包内容
+     */
+    async function importPack(packId: string): Promise<void> {
+        if (importedIds.value.includes(packId)) return;
+        await addImportedId(packId);
+        importedIds.value = [...importedIds.value, packId];
+        if (!isPackLoaded(packId)) {
+            try {
+                await loadPack(packId);
+            } catch (e) {
+                log.w('导入后加载知识包失败', e);
+            }
+        }
+    }
+
+    /**
+     * 从清单下架知识包（仅移除展示，不删进度文档，重新导入后进度恢复）
+     */
+    async function removeImportedPack(packId: string): Promise<void> {
+        await removeImportedId(packId);
+        importedIds.value = importedIds.value.filter(id => id !== packId);
     }
 
     /**
@@ -292,6 +350,8 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         progress,
         loading,
         loadedSet,
+        importedIds,
+        importedLoaded,
         // getters
         packList,
         loadedPackIds,
@@ -299,12 +359,16 @@ export const useKnowledgeMemoryStore = defineStore('knowledgeMemory', () => {
         getProgress,
         getItemProgress,
         isPackLoaded,
+        isPackImported,
         getTotalCount,
         getMasteredCount,
         getDueCount,
         // actions
         loadPack,
         reloadPack,
+        loadImportedIds,
+        importPack,
+        removeImportedPack,
         pickItemsForSession,
         getPreviousOrderedItem,
         judgeAnswer,

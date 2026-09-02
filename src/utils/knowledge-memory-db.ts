@@ -4,11 +4,14 @@
  * 每个知识包一条 CouchDB 文档，存储该包所有条目的 SRS 进度。
  */
 
-import type {KnowledgePackProgressDoc, KnowledgeItemProgress} from '@/types/knowledge-memory';
+import type {KnowledgePackProgressDoc, KnowledgeItemProgress, KnowledgeImportedDoc} from '@/types/knowledge-memory';
 import {DB_KEY_KNOWLEDGE_MEMORY} from '@/constants';
 import {getDbAdapter} from '@/adapters/db';
 import {log} from '@/utils/logger';
 import {createDefaultProgress} from '@/utils/knowledge-memory-srs';
+
+/** 已导入知识包清单文档 ID */
+export const IMPORTED_LIST_DOC_ID = 'knowledge_memory_imported';
 
 function progressDocId(packId: string): string {
     return DB_KEY_KNOWLEDGE_MEMORY + packId;
@@ -88,4 +91,60 @@ export async function clearProgressDoc(packId: string): Promise<void> {
     } catch (e) {
         log.w?.('清空知识包进度失败', e);
     }
+}
+
+/**
+ * 判断某知识包是否已存在进度文档（用于兼容老用户：有进度即视为已导入）
+ */
+export function hasProgressDoc(packId: string): boolean {
+    const doc = getDbAdapter().get(progressDocId(packId));
+    return !!(doc && doc._rev);
+}
+
+/**
+ * 读取已导入知识包清单（无文档时返回空数组）
+ */
+export function getImportedIds(): string[] {
+    const doc = getDbAdapter().get(IMPORTED_LIST_DOC_ID) as KnowledgeImportedDoc | null;
+    if (doc && Array.isArray(doc.ids)) {
+        return [...doc.ids];
+    }
+    return [];
+}
+
+/**
+ * 保存已导入知识包清单
+ */
+async function saveImportedIds(ids: string[]): Promise<void> {
+    try {
+        const existing = getDbAdapter().get(IMPORTED_LIST_DOC_ID) as KnowledgeImportedDoc | null;
+        await getDbAdapter().promises.put({
+            _id: IMPORTED_LIST_DOC_ID,
+            _rev: existing?._rev,
+            type: 'knowledge_imported_list',
+            ids,
+        });
+    } catch (e) {
+        log.w?.('已导入知识包清单持久化失败', e);
+    }
+}
+
+/**
+ * 将知识包加入已导入清单（幂等）
+ */
+export async function addImportedId(packId: string): Promise<void> {
+    const ids = getImportedIds();
+    if (ids.includes(packId)) return;
+    ids.push(packId);
+    await saveImportedIds(ids);
+}
+
+/**
+ * 将知识包从已导入清单移除（仅下架，不删进度文档）
+ */
+export async function removeImportedId(packId: string): Promise<void> {
+    const ids = getImportedIds();
+    const next = ids.filter(id => id !== packId);
+    if (next.length === ids.length) return;
+    await saveImportedIds(next);
 }

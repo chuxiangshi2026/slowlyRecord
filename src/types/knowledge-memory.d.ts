@@ -79,6 +79,15 @@ export interface KnowledgePackProgressDoc {
     items: Record<string, KnowledgeItemProgress>;
 }
 
+/** 已导入知识包清单文档（知识库默认空，导入的包才在面板展示） */
+export interface KnowledgeImportedDoc {
+    _id: string;
+    _rev?: string;
+    type: 'knowledge_imported_list';
+    /** 已导入的知识包 id 列表 */
+    ids: string[];
+}
+
 /** 练习模式 */
 export type KnowledgePracticeMode =
     | 'q2a'        // 看问题想答案（翻卡）

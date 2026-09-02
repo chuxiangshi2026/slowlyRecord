@@ -31,9 +31,13 @@ vi.mock('@/utils/knowledge-pack-service', () => ({
 }))
 
 let savedProgress: KnowledgePackProgressDoc | null = null
+// 已导入清单与"已有进度文档"的可控模拟数据
+let importedIdsData: string[] = []
+let progressExisting = new Set<string>()
 vi.mock('@/utils/knowledge-memory-db', () => ({
   getProgressDoc: vi.fn((packId: string) => ({
-    _id: '',
+    _id: progressExisting.has(packId) ? `knowledge_memory_${packId}` : '',
+    _rev: progressExisting.has(packId) ? '1-rev' : undefined,
     type: 'knowledge_pack_progress' as const,
     packId,
     items: {},
@@ -41,6 +45,18 @@ vi.mock('@/utils/knowledge-memory-db', () => ({
   saveProgressDoc: vi.fn(async (doc: KnowledgePackProgressDoc) => {
     savedProgress = {...doc, _rev: '1-rev'}
   }),
+  getImportedIds: vi.fn(() => [...importedIdsData]),
+  addImportedId: vi.fn(async (id: string) => {
+    if (!importedIdsData.includes(id)) importedIdsData.push(id)
+  }),
+  removeImportedId: vi.fn(async (id: string) => {
+    importedIdsData = importedIdsData.filter(x => x !== id)
+  }),
+  hasProgressDoc: vi.fn((packId: string) => progressExisting.has(packId)),
+}))
+
+vi.mock('@/adapters/db', () => ({
+  getDbAdapterAsync: vi.fn(async () => ({})),
 }))
 
 vi.mock('@/utils/logger', () => ({
@@ -48,7 +64,7 @@ vi.mock('@/utils/logger', () => ({
 }))
 
 import {fetchKnowledgePack, listKnowledgePacks} from '@/utils/knowledge-pack-service'
-import {getProgressDoc, saveProgressDoc} from '@/utils/knowledge-memory-db'
+import {getProgressDoc, saveProgressDoc, addImportedId, removeImportedId} from '@/utils/knowledge-memory-db'
 
 function normalizeForTest(value: string): string {
   return value.toLowerCase().replace(/\s+/g, ' ').trim()
@@ -58,6 +74,8 @@ describe('useKnowledgeMemoryStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     savedProgress = null
+    importedIdsData = []
+    progressExisting = new Set()
     vi.resetAllMocks()
   })
 
@@ -248,6 +266,61 @@ describe('useKnowledgeMemoryStore', () => {
       await store.loadPack('test-pack')
       const current = store.getPack('test-pack')!.items[0]
       expect(store.getPreviousOrderedItem('test-pack', current)).toBeUndefined()
+    })
+  })
+
+  describe('已导入清单', () => {
+    it('loadImportedIds 应读取清单并标记已加载', async () => {
+      importedIdsData = ['test-pack']
+      const store = useKnowledgeMemoryStore()
+      expect(store.importedLoaded).toBe(false)
+      await store.loadImportedIds()
+      expect(store.importedIds).toEqual(['test-pack'])
+      expect(store.importedLoaded).toBe(true)
+      expect(store.isPackImported('test-pack')).toBe(true)
+      expect(store.isPackImported('other')).toBe(false)
+    })
+
+    it('已有进度文档的包应自动并入清单', async () => {
+      importedIdsData = []
+      progressExisting.add('test-pack')
+      const store = useKnowledgeMemoryStore()
+      await store.loadImportedIds()
+      expect(store.importedIds).toContain('test-pack')
+      expect(addImportedId).toHaveBeenCalledWith('test-pack')
+      expect(importedIdsData).toContain('test-pack')
+    })
+
+    it('无清单且无进度文档时清单为空', async () => {
+      const store = useKnowledgeMemoryStore()
+      await store.loadImportedIds()
+      expect(store.importedIds).toEqual([])
+      expect(addImportedId).not.toHaveBeenCalled()
+    })
+
+    it('importPack 应加入清单并加载包，重复导入幂等', async () => {
+      const store = useKnowledgeMemoryStore()
+      await store.importPack('test-pack')
+      expect(store.importedIds).toContain('test-pack')
+      expect(importedIdsData).toContain('test-pack')
+      expect(store.isPackLoaded('test-pack')).toBe(true)
+      await store.importPack('test-pack')
+      expect(store.importedIds.filter(id => id === 'test-pack')).toHaveLength(1)
+    })
+
+    it('removeImportedPack 应下架但保留进度文档', async () => {
+      importedIdsData = ['test-pack']
+      progressExisting.add('test-pack')
+      const store = useKnowledgeMemoryStore()
+      await store.loadImportedIds()
+      await store.loadPack('test-pack')
+      await store.removeImportedPack('test-pack')
+      expect(store.importedIds).toEqual([])
+      expect(removeImportedId).toHaveBeenCalledWith('test-pack')
+      expect(importedIdsData).toEqual([])
+      // 已加载的包与进度仍在内存中，进度文档未被删除
+      expect(store.isPackLoaded('test-pack')).toBe(true)
+      expect(store.getProgress('test-pack').packId).toBe('test-pack')
     })
   })
 })
