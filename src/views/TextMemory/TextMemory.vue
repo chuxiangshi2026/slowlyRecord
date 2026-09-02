@@ -689,12 +689,14 @@ watch(
 }
 
 // 顶部筛选排序条（仿 WordFilter.vue）
+// 高度自适应 + 允许换行：视图增加到 5 个后单行会超出限宽
 .filter-bar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 6px;
-  height: 36px;
-  padding: 0 10px;
+  min-height: 36px;
+  padding: 5px 10px;
   background: var(--utools-bg-card);
   border-bottom: 1px solid var(--utools-border-divider);
   position: relative;
