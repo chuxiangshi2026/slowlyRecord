@@ -168,15 +168,12 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     })
   })
 
-  it('useExternalImport 时点击导入抛出 openImport 事件且不渲染内置对话框', async () => {
-    const { emitted } = await setup('text', [], { useExternalImport: true })
+  it('useExternalImport 时不再渲染面板内导入按钮（入口由宿主页统一按钮承担）', async () => {
+    await setup('text', [], { useExternalImport: true })
 
-    await fireEvent.click(screen.getByRole('button', { name: '导入' }))
-
-    // 通知父级打开统一对话框，自身不弹出内置导入对话框
-    expect(emitted().openImport).toBeTruthy()
+    // 面板自身的导入按钮与内置导入对话框均不渲染，导入入口由宿主页面提供
+    expect(screen.queryByRole('button', { name: '导入' })).not.toBeInTheDocument()
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-    expect(mockStore.importPack).not.toHaveBeenCalled()
   })
 
   it('text 分类展示自建知识集卡片（自建标签 + 条数）', async () => {

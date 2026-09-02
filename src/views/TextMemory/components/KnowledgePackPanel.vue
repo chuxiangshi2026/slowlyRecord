@@ -1,8 +1,8 @@
 <template>
   <!-- 知识包卡片面板：只展示「已导入」的知识包（math → 数字记忆，text → 文本记忆），仿内置词库导入模式 -->
   <div class="knowledge-pack-panel" v-loading="store.loading">
-    <!-- 顶部工具行：导入入口 -->
-    <div class="panel-toolbar">
+    <!-- 顶部工具行：导入入口（useExternalImport 时由宿主页面的统一「添加/导入」按钮承担，不再重复渲染） -->
+    <div v-if="!useExternalImport" class="panel-toolbar">
       <el-button size="small" type="primary" plain @click="handleOpenImport">导入</el-button>
     </div>
 

@@ -12,6 +12,7 @@
           <el-option label="全部" value="" />
           <el-option label="诗词" value="poetry" />
           <el-option label="成语" value="idiom" />
+          <el-option label="时间线" value="timeline" />
         </el-select>
 
         <el-select
@@ -71,6 +72,9 @@
         <span class="legend-item">
           <span class="legend-circle"></span>成语
         </span>
+        <span class="legend-item">
+          <span class="legend-timeline"></span>时间线
+        </span>
         <span v-if="showLibraryItems" class="legend-item">
           <span class="legend-library"></span>可导入
         </span>
@@ -79,6 +83,9 @@
         </el-tag>
         <el-tag v-if="idiomCount > 0" size="small" type="warning" style="margin-left: 6px">
           成语 {{ idiomCount }} 条
+        </el-tag>
+        <el-tag v-if="timelineCount > 0" size="small" type="danger" style="margin-left: 6px">
+          时间线 {{ timelineCount }} 事件
         </el-tag>
       </div>
     </div>
@@ -96,6 +103,13 @@
       <div v-if="selectedPoetry" class="poetry-detail">
         <div class="poetry-meta">
           <el-tag v-if="isIdiomArticle(selectedPoetry)" size="small" type="warning">成语</el-tag>
+          <template v-else-if="isTimelineArticle(selectedPoetry)">
+            <el-tag size="small" type="danger">时间线</el-tag>
+            <el-tag size="small" type="info" style="margin-left: 8px">{{ formatYear(selectedPoetry.year) }}</el-tag>
+            <el-tag v-if="getTimelineCategoryMeta(selectedPoetry.category as any)" size="small" type="info" style="margin-left: 8px">
+              {{ getTimelineCategoryMeta(selectedPoetry.category as any)?.label }}
+            </el-tag>
+          </template>
           <el-tag v-else size="small">{{ selectedPoetry.dynasty || '诗词' }}</el-tag>
           <el-tag v-if="selectedPoetry.author" size="small" type="info" style="margin-left: 8px">
             {{ selectedPoetry.author }}
@@ -122,7 +136,7 @@ import { DYNASTY_LIST, fetchAllPoetry } from '@/utils/poetry-service';
 import type { PoetryItem } from '@/utils/poetry-service';
 import { fetchAllIdioms } from '@/utils/idiom-service';
 import type { IdiomItem } from '@/utils/idiom-service';
-import { fetchAllTimelineEvents } from '@/utils/timeline-service';
+import { fetchAllTimelineEvents, TIMELINE_CATEGORIES, getTimelineCategoryMeta } from '@/utils/timeline-service';
 import type { LibraryTimelineEvent } from '@/utils/timeline-service';
 import { getTerritoryByDynasty, getDynastyCodeByName } from '@/utils/dynasty-territory';
 import { useTextMemoryStore } from '@/stores/textMemory';
@@ -155,7 +169,7 @@ let libraryLayer: L.LayerGroup | null = null;
 let markerMap: Map<string, L.Marker> = new Map();
 
 // 状态
-const selectedCategory = ref<'' | 'poetry' | 'idiom'>('');
+const selectedCategory = ref<'' | 'poetry' | 'idiom' | 'timeline'>('');
 const selectedDynasty = ref('');
 const selectedAuthor = ref('');
 const detailVisible = ref(false);
@@ -180,18 +194,37 @@ function isIdiomArticle(article: TextArticle): boolean {
   return Array.isArray(article.tags) && article.tags.includes('成语');
 }
 
+// 时间线事件的合法分类集合（与 TimelineView 的识别口径一致）
+const TIMELINE_CATEGORY_SET = new Set<string>(TIMELINE_CATEGORIES.map(c => c.code));
+
+// 是否为时间线事件（category 命中时间线分类）
+function isTimelineArticle(article: TextArticle): boolean {
+  return !!article.category && TIMELINE_CATEGORY_SET.has(article.category);
+}
+
 // 当前类型筛选下生效的文章列表（用于渲染标记）
 const filteredArticles = computed(() => {
   if (!selectedCategory.value) return props.articles;
   if (selectedCategory.value === 'idiom') {
     return props.articles.filter(isIdiomArticle);
   }
-  return props.articles.filter(a => !isIdiomArticle(a));
+  if (selectedCategory.value === 'timeline') {
+    return props.articles.filter(isTimelineArticle);
+  }
+  // 诗词：排除成语与时间线事件
+  return props.articles.filter(a => !isIdiomArticle(a) && !isTimelineArticle(a));
 });
 
 // 计算属性
-const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a)).length);
+const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);
 const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
+const timelineCount = computed(() => props.articles.filter(a => a.geo && isTimelineArticle(a)).length);
+
+// 时间线事件年份展示（与 TimelineView 口径一致）
+function formatYear(year?: number): string {
+  if (year == null) return '年代未知';
+  return year < 0 ? `公元前${Math.abs(year)}年` : `公元${year}年`;
+}
 
 const dynastyOptions = computed(() => {
   return DYNASTY_LIST.map(d => ({ code: d.code, name: d.name }));
@@ -269,12 +302,20 @@ function renderMarkers() {
     const first = group[0];
     if (!first.geo) continue;
 
-    // 成语用专属菱形图标，诗词用按朝代上色的水滴图标
+    // 成语用圆形章戳、时间线事件用菱形、诗词用按朝代上色的水滴图标
     const isIdiom = isIdiomArticle(first);
-    const color = isIdiom ? '#E6A23C' : getDynastyColor(first.dynasty);
+    const isTimeline = !isIdiom && isTimelineArticle(first);
+    const color = isIdiom
+      ? '#E6A23C'
+      : (isTimeline ? (getTimelineCategoryMeta(first.category as any)?.color ?? '#9b59b6') : getDynastyColor(first.dynasty));
+    const shapeClass = isIdiom ? 'marker-square' : (isTimeline ? 'marker-diamond' : 'marker-pin');
+    // 菱形内数字反向旋转保持正显示
+    const countHtml = group.length > 1
+      ? (isTimeline ? `<span style="transform:rotate(-45deg)">${group.length}</span>` : `${group.length}`)
+      : '';
     const customIcon = L.divIcon({
-      className: isIdiom ? 'custom-marker idiom-marker' : 'custom-marker',
-      html: `<div class="${isIdiom ? 'marker-square' : 'marker-pin'}" style="background:${color}">${group.length > 1 ? group.length : ''}</div>`,
+      className: isIdiom ? 'custom-marker idiom-marker' : (isTimeline ? 'custom-marker timeline-marker' : 'custom-marker'),
+      html: `<div class="${shapeClass}" style="background:${color}">${countHtml}</div>`,
       iconSize: [30, 30],
       iconAnchor: [15, 30],
     });
@@ -290,14 +331,20 @@ function renderMarkers() {
     const popupContent = group.map((article, idx) => {
       const title = article.title.length > 12 ? article.title.substring(0, 12) + '...' : article.title;
       const isIdi = isIdiomArticle(article);
+      const isTl = !isIdi && isTimelineArticle(article);
+      const tlColor = isTl ? (getTimelineCategoryMeta(article.category as any)?.color ?? '#9b59b6') : '';
       const tagHtml = isIdi
         ? `<span style="background:#fdf6ec;color:#e6a23c;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">成语</span>`
-        : (article.dynasty
-            ? `<span style="background:#ecf5ff;color:#409eff;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
-            : '');
+        : isTl
+          ? `<span style="background:#f4f0f7;color:${tlColor};padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">时间线</span>`
+          : (article.dynasty
+              ? `<span style="background:#ecf5ff;color:#409eff;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
+              : '');
       const subtitle = isIdi
         ? (article.location || '')
-        : (article.author || '佚名');
+        : isTl
+          ? formatYear(article.year)
+          : (article.author || '佚名');
       return `<div class="popup-item" data-id="${article._id}" style="cursor:pointer;padding:4px 0;border-bottom:${idx < group.length - 1 ? '1px solid #eee' : 'none'}">
         ${tagHtml}<strong>${title}</strong>
         ${subtitle ? `<div style="color:#666;font-size:12px;margin-top:2px"> ${subtitle}</div>` : ''}
@@ -820,6 +867,15 @@ onUnmounted(() => {
     border: 1px solid #fff;
     box-shadow: 0 0 0 1px rgba(247, 186, 42, 0.6);
   }
+
+  .legend-timeline {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #9b59b6;
+    transform: rotate(45deg);
+    border-radius: 2px;
+  }
 }
 
 .map-container {
@@ -892,6 +948,27 @@ onUnmounted(() => {
     border: 2px solid #fef3e0;
     outline: 2px solid #e6a23c;
     outline-offset: -1px;
+  }
+
+  /* 时间线事件用菱形标记，颜色按事件分类（政治/文学/科学/思想/社会） */
+  .marker-diamond {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: #9b59b6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -12px 0 0 -12px;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid #f4f0f7;
   }
 }
 
