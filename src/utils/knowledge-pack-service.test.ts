@@ -1,4 +1,6 @@
 import {describe, it, expect, vi, beforeEach} from 'vitest'
+import {readFileSync} from 'node:fs'
+import {fileURLToPath} from 'node:url'
 import {
   KNOWLEDGE_PACK_LIST,
   DEFAULT_STRATEGY,
@@ -53,10 +55,12 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 11 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(11)
+    it('应包含 16 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(16)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
+      expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
+      expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'geography-concepts')).toBe(true)
     })
 
     it('listKnowledgePacks 应返回副本', () => {
@@ -89,10 +93,49 @@ describe('knowledge-pack-service', () => {
         'math-formulas',
         'multiplication-19x19',
         'multiplication-9x9',
+        'physics-formulas',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(6)
+      expect(text).toHaveLength(10)
       expect(text.every(p => p.category === 'text')).toBe(true)
+      expect(text.map(p => p.id).sort()).toEqual([
+        'biology-experiments',
+        'constellations-12',
+        'cuisines-8',
+        'ethnic-groups-56',
+        'geography-concepts',
+        'physics-experiments',
+        'physics-laws',
+        'provinces-capitals',
+        'solar-terms-24',
+        'zodiac-12',
+      ])
+    })
+
+    it('新 5 个知识包都能通过结构校验且条数与元数据一致', () => {
+      const newPackIds = [
+        'physics-formulas',
+        'physics-laws',
+        'physics-experiments',
+        'biology-experiments',
+        'geography-concepts',
+      ]
+      newPackIds.forEach(id => {
+        const info = getKnowledgePackInfo(id)
+        expect(info).toBeDefined()
+        // 新包均归入正确分类：物理公式归 math，其余归 text
+        expect(info!.category).toBe(id === 'physics-formulas' ? 'math' : 'text')
+        // 相对本文件定位 public/knowledgebanks（src/utils → 项目根目录 → public/knowledgebanks）
+        const raw = readFileSync(
+          fileURLToPath(new URL('../../public/knowledgebanks/' + id + '.json', import.meta.url)),
+          'utf-8',
+        )
+        const pack = JSON.parse(raw)
+        expect(validateKnowledgePack(pack).valid).toBe(true)
+        expect(pack.items).toHaveLength(info!.itemCount)
+        expect(pack.ordered).toBe(false)
+        expect(pack.usableAsPeg).toBe(false)
+      })
     })
 
     it('默认策略配置正确', () => {
