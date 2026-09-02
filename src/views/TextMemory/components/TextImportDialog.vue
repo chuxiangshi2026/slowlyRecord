@@ -500,7 +500,7 @@
                       <div style="display: flex; justify-content: space-between; align-items: center">
                         <span style="font-weight: bold">{{ result.title }}</span>
                         <div>
-                          <el-tag size="small" style="margin-right: 8px">{{ result.author }}</el-tag>
+                          <el-tag size="small" type="info" style="margin-right: 8px">{{ result.author }}</el-tag>
                           <el-tag size="small" type="success" v-if="result.source === 'ai'">AI</el-tag>
                         </div>
                       </div>
@@ -574,7 +574,7 @@
                       <div style="display: flex; justify-content: space-between; align-items: center">
                         <span style="font-weight: bold">{{ item.title }}</span>
                         <div>
-                          <el-tag size="small" style="margin-right: 4px" v-for="tag in item.tags.slice(0, 2)" :key="tag">{{ tag }}</el-tag>
+                          <el-tag size="small" type="info" style="margin-right: 4px" v-for="tag in item.tags.slice(0, 2)" :key="tag">{{ tag }}</el-tag>
                         </div>
                       </div>
                     </template>
@@ -678,7 +678,7 @@
                     </div>
                     <div>
                       <el-tag size="small" type="info" style="margin-right: 6px">{{ poem.dynasty }}</el-tag>
-                      <el-tag size="small">{{ poem.author }}</el-tag>
+                      <el-tag size="small" type="info">{{ poem.author }}</el-tag>
                     </div>
                   </div>
                 </template>
@@ -853,7 +853,7 @@
                       </div>
                       <div>
                         <el-tag size="small" type="info" style="margin-right: 6px" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
-                        <el-tag size="small" v-if="ev.era">{{ ev.era }}</el-tag>
+                        <el-tag size="small" type="info" v-if="ev.era">{{ ev.era }}</el-tag>
                       </div>
                     </div>
                   </template>
@@ -1161,13 +1161,13 @@ const palaceStore = useMemoryPalaceStore();
 type LibTab = 'poetry' | 'idiom' | 'timeline' | 'knowledge' | 'pegPacks';
 const LIB_SUB_TABS: LibTab[] = ['poetry', 'idiom', 'timeline', 'knowledge', 'pegPacks'];
 
-// 统一的「添加/导入」入口，默认停在手动添加 tab；打开时由 initialTab/initialLibTab 定位
-const activeTab = ref('manual');
+// 统一的「添加/导入」入口，默认停在内置库 tab；打开时由 initialTab/initialLibTab 定位
+const activeTab = ref('library');
 const libTab = ref<LibTab>('poetry');
 
 // 按 props 解析初始 tab 定位（打开对话框与重置表单时调用）
 function applyInitialTab() {
-  const t = props.initialTab || 'manual';
+  const t = props.initialTab || 'library';
   if ((LIB_SUB_TABS as string[]).includes(t)) {
     // 旧调用方式：initialTab 直接传内置库二级名
     activeTab.value = 'library';
@@ -2694,8 +2694,8 @@ watch(manualType, (type) => {
       display: inline-block;
       padding: 2px 8px;
       margin: 0 4px;
-      background: var(--utools-primary-light);
-      color: var(--utools-primary);
+      background: var(--utools-bg-active);
+      color: var(--utools-text-secondary);
       border-radius: 4px;
       font-size: 12px;
       font-family: monospace;

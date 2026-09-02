@@ -101,7 +101,7 @@
           </el-radio-button>
         </el-radio-group>
         <el-tooltip class="box-item" effect="dark" content="添加 / 导入" placement="top" popper-class="small-tooltip">
-          <el-button type="primary" size="small" @click="openImportDialog('manual')">
+          <el-button type="primary" size="small" @click="openImportDialog('library')">
             <el-icon><Plus /></el-icon>
           </el-button>
         </el-tooltip>
@@ -938,9 +938,9 @@ watch(currentView, (v) => {
   }
 
   &.on {
-    background: var(--utools-primary);
-    color: var(--utools-text-inverse);
-    border-color: var(--utools-primary);
+    background: var(--utools-bg-active);
+    color: var(--utools-text-primary);
+    border-color: var(--utools-text-tertiary);
   }
 }
 
@@ -1180,9 +1180,9 @@ watch(currentView, (v) => {
   }
 
   &.on {
-    background: var(--utools-primary);
-    color: var(--utools-text-inverse);
-    border-color: var(--utools-primary);
+    background: var(--utools-bg-active);
+    color: var(--utools-text-primary);
+    border-color: var(--utools-text-tertiary);
   }
 }
 

@@ -109,12 +109,12 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
     vi.clearAllMocks()
   })
 
-  it('包含手动添加/批量导入/文件导入/内置库四个 tab，默认定位手动添加', async () => {
+  it('包含手动添加/批量导入/文件导入/内置库四个 tab，默认定位内置库', async () => {
     await setup()
 
     const tabTexts = Array.from(document.querySelectorAll('.el-tabs__item')).map(el => el.textContent?.trim())
     expect(tabTexts).toEqual(['手动添加', '批量导入', '文件导入', '内置库'])
-    expect(activeTabLabel()).toBe('手动添加')
+    expect(activeTabLabel()).toBe('内置库')
   })
 
   it('initialTab=library + initialLibTab=knowledge 定位内置库-知识库，已导入包显示禁用态', async () => {
@@ -185,6 +185,8 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
   it('手动添加（普通文本）表单提交后 emit import 单篇文章', async () => {
     const { emitted } = await setup()
 
+    // 默认停在内置库 tab，先切到手动添加
+    await fireEvent.click(screen.getByRole('tab', { name: '手动添加' }))
     await fireEvent.update(screen.getByPlaceholderText('请输入标题，如《静夜思》'), '静夜思')
     await fireEvent.update(screen.getByPlaceholderText('请输入文本内容...'), '床前明月光，疑是地上霜。举头望明月，低头思故乡。')
     await fireEvent.click(screen.getByRole('button', { name: '添加' }))
@@ -200,6 +202,8 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
 
   it('手动添加切换类型显示对应字段（诗词/时间线事件/宫殿桩）', async () => {
     await setup()
+    // 默认停在内置库 tab，先切到手动添加
+    await fireEvent.click(screen.getByRole('tab', { name: '手动添加' }))
     const pane = document.getElementById('pane-manual') as HTMLElement
 
     // 诗词：朝代/作者/年份/地点
@@ -227,6 +231,8 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
 
   it('手动添加-时间线事件保存后 emit import（走 mapLibraryEventToArticle 路径）', async () => {
     const { emitted } = await setup()
+    // 默认停在内置库 tab，先切到手动添加
+    await fireEvent.click(screen.getByRole('tab', { name: '手动添加' }))
     const pane = document.getElementById('pane-manual') as HTMLElement
 
     await fireEvent.click(within(pane).getByText('时间线事件'))
@@ -250,6 +256,8 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
 
   it('手动添加-知识条目保存到知识库 store.addCustomItem', async () => {
     await setup()
+    // 默认停在内置库 tab，先切到手动添加
+    await fireEvent.click(screen.getByRole('tab', { name: '手动添加' }))
     const pane = document.getElementById('pane-manual') as HTMLElement
 
     await fireEvent.click(within(pane).getByText('知识条目'))

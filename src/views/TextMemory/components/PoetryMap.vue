@@ -338,7 +338,7 @@ function renderMarkers() {
         : isTl
           ? `<span style="background:#f4f0f7;color:${tlColor};padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">时间线</span>`
           : (article.dynasty
-              ? `<span style="background:#ecf5ff;color:#409eff;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
+              ? `<span style="background:#f0f0f0;color:#595959;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
               : '');
       const subtitle = isIdi
         ? (article.location || '')
