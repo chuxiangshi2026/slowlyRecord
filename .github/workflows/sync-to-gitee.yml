@@ -19,7 +19,6 @@ jobs:
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
         run: |
-          git remote add gitee https://gitee.com/dreamerjie/slowlyRecord.git
-          # 令牌走 Basic Auth 头,不进 URL,避免泄露到日志/remote 配置
-          git -c http.extraheader="AUTHORIZATION: basic $(printf 'dreamerjie:%s' "$GITEE_TOKEN" | base64)" \
-              push gitee --force --tags HEAD:master
+          # 令牌直接拼进 URL(secret 会被 Actions 自动打码,不进日志明文)
+          git remote add gitee "https://dreamerjie:${GITEE_TOKEN}@gitee.com/dreamerjie/slowlyRecord.git"
+          git push gitee --force --tags HEAD:master
