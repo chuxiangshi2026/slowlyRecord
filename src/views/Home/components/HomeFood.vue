@@ -69,7 +69,7 @@ const {words} = storeToRefs(wordsStore)
     }
 
     .icon-typescript {
-      color: blue;
+      color: #595959;
     }
   }
 

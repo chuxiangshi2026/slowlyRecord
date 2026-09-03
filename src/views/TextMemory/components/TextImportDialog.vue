@@ -1074,11 +1074,11 @@
               <strong>智谱 GLM-4-Flash</strong> - 免费使用，在单词列表设置中申请
             </li>
             <li>
-              <a href="https://siliconflow.cn/" target="_blank" style="color: #409eff">SiliconFlow</a>
+              <a href="https://siliconflow.cn/" target="_blank" style="color: var(--utools-text-secondary)">SiliconFlow</a>
               - 注册即送 2000 万 Tokens
             </li>
             <li>
-              <a href="https://platform.deepseek.com/" target="_blank" style="color: #409eff">DeepSeek</a>
+              <a href="https://platform.deepseek.com/" target="_blank" style="color: var(--utools-text-secondary)">DeepSeek</a>
               - 价格便宜，效果优秀
             </li>
           </ul>

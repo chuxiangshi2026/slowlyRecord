@@ -64,7 +64,7 @@ import {Bell} from '@element-plus/icons-vue'
     }
 
     .icon-typescript {
-      color: blue;
+      color: #595959;
     }
   }
 

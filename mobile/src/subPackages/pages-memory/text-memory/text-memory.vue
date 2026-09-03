@@ -377,8 +377,8 @@ function confirmDelete(article: MobileTextArticle) {
 }
 .meta-tag.dynasty,
 .meta-tag.poetry {
-  background: #ecf5ff;
-  color: #409eff;
+  background: #f0f0f0;
+  color: #595959;
 }
 .meta-text {
   font-size: 22rpx;

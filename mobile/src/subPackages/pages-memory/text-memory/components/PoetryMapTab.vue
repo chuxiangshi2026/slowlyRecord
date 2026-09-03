@@ -732,7 +732,7 @@ const emptyHint = computed(() => {
   box-shadow: 0 0 0 1rpx rgba(0, 0, 0, 0.1);
 }
 .legend-dot.poetry {
-  background: #409eff;
+  background: #595959;
 }
 .legend-dot.idiom {
   background: #e6a23c;

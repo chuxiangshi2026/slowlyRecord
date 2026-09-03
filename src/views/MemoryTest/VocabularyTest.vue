@@ -1038,8 +1038,8 @@ onMounted(() => {
 }
 
 .book-type.fiction {
-  background: #e6f7ff;
-  color: #1890ff;
+  background: #f0f0f0;
+  color: #595959;
 }
 
 .book-type.non-fiction {

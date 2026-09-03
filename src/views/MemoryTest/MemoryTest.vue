@@ -482,7 +482,7 @@ function endTest() {
 function getLevelColor(level?: string): string {
   const colors: Record<string, string> = {
     excellent: '#67C23A',
-    good: '#409EFF',
+    good: '#8C8C8C',
     average: '#E6A23C',
     needs_improvement: '#F56C6C'
   };

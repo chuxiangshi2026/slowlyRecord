@@ -396,7 +396,7 @@ function getDynastyColor(dynasty?: string): string {
     '清': '#800080', 'qing': '#800080',
     '近现代': '#C0C0C0', '现代': '#C0C0C0', 'xiandai': '#C0C0C0',
   };
-  return colorMap[dynasty || ''] || '#409EFF';
+  return colorMap[dynasty || ''] || '#8c8c8c';
 }
 
 // ==================== 可导入库内容图层 ====================
@@ -843,7 +843,7 @@ onUnmounted(() => {
     display: inline-block;
     width: 10px;
     height: 10px;
-    background: #409eff;
+    background: #595959;
     border-radius: 50% 50% 50% 0;
     transform: rotate(-45deg);
   }
@@ -913,7 +913,7 @@ onUnmounted(() => {
     width: 30px;
     height: 30px;
     border-radius: 50% 50% 50% 0;
-    background: #409eff;
+    background: #595959;
     position: absolute;
     transform: rotate(-45deg);
     left: 50%;
