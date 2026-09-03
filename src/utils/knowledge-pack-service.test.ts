@@ -178,7 +178,7 @@ describe('knowledge-pack-service', () => {
       expect(getKnowledgePackInfo('elements')?.version).toBe(2)
       expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(2)
       expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(2)
-      expect(getPackVersion('math-formulas')).toBe(2)
+      expect(getPackVersion('math-formulas')).toBe(3)
       expect(getPackVersion('elements')).toBe(2)
       expect(getPackVersion('solar-terms-24')).toBe(2)
       expect(getPackVersion('zodiac-12')).toBe(2)
