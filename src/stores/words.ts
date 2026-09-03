@@ -124,6 +124,8 @@ export const useWordsStore =
                 deepseek: {appkey: '', key: ''},
                 qwen: {appkey: '', key: ''},
                 kimi: {appkey: '', key: ''},
+                minimax: {appkey: '', key: ''},
+                hunyuan: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref({
@@ -131,6 +133,8 @@ export const useWordsStore =
                 ali: {appkey: '', key: ''},
                 youdao: {appkey: '', key: ''},
                 baidu: {appkey: '', key: ''},
+                deepseek: {appkey: '', key: ''},
+                glm: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             // 添加单词后自动退出插件

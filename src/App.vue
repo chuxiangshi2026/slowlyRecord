@@ -47,6 +47,7 @@ import TextSelector from '@/views/Word/components/TextSelector.vue';
 import DebugPanel from '@/components/DebugPanel.vue';
 // import {AppInfo} from "@/config.ts";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
+import {RETIRED_MODEL_NAMES} from "@/config.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 
@@ -124,15 +125,26 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
         deepseek: {appkey: '', key: ''},
         qwen: {appkey: '', key: ''},
         kimi: {appkey: '', key: ''},
+        minimax: {appkey: '', key: ''},
+        hunyuan: {appkey: '', key: ''},
         glm: {appkey: '', key: ''},
         local: {appkey: '', key: ''}
       };
 
       // 合并用户设置的密钥和默认值
-      wordsStore.userApiKeys = {
+      const mergedKeys = {
         ...defaultKeys,
         ...setDb.keys
       } as Record<TranslationPlatform, { appkey: string; key: string }>;
+
+      // 静默升级已下线的模型名（仅替换与旧默认完全一致的内容，用户自定义模型不受影响）
+      for (const entry of Object.values(mergedKeys)) {
+        if (entry && RETIRED_MODEL_NAMES[entry.key]) {
+          entry.key = RETIRED_MODEL_NAMES[entry.key];
+        }
+      }
+
+      wordsStore.userApiKeys = mergedKeys;
     }
 
     if (setDb.ocrKeys) {
@@ -142,6 +154,8 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
         youdao: {appkey: '', key: ''},
         baidu: {appkey: '', key: ''},
         tencent: {appkey: '', key: ''},
+        deepseek: {appkey: '', key: ''},
+        glm: {appkey: '', key: ''},
         local: {appkey: '', key: ''}
       };
 

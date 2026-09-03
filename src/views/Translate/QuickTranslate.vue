@@ -298,6 +298,7 @@ const platformOptions = [
   { label: 'DeepSeek', value: 'deepseek' },
   { label: '通义千问', value: 'qwen' },
   { label: 'Kimi', value: 'kimi' },
+  { label: 'MiniMax', value: 'minimax' },
   { label: '腾讯翻译', value: 'tencent' },
   { label: '有道翻译', value: 'youdao' },
   { label: '百度翻译', value: 'baidu' },

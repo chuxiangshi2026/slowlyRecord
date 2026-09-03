@@ -34,7 +34,7 @@ const DEFAULT_CONFIG: AISearchConfig = {
   provider: 'glm',
   apiKey: '',
   apiUrl: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
-  model: 'glm-4-flash'
+  model: 'glm-4.7-flash'
 };
 
 /**
@@ -67,7 +67,7 @@ function extractJson(content: string): any | null {
 const PROVIDER_CONFIGS: Record<string, { url: string; model: string; name: string }> = {
   deepseek: {
     url: 'https://api.deepseek.com/v1/chat/completions',
-    model: 'deepseek-chat',
+    model: 'deepseek-v4-flash',
     name: 'DeepSeek'
   },
   qwen: {
@@ -82,7 +82,7 @@ const PROVIDER_CONFIGS: Record<string, { url: string; model: string; name: strin
   },
   glm: {
     url: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
-    model: 'glm-4-flash',
+    model: 'glm-4.7-flash',
     name: '智谱GLM'
   },
   ollama: {

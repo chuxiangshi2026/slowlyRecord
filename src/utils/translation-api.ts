@@ -28,7 +28,7 @@ const TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS = 5000;
 // 内存缓存上限远高于持久化上限：命中率优先，持久化仅保留最近最热的一部分
 const TRANSLATION_CACHE_MAX = 5000;
 const TRANSLATION_CACHE_PERSIST_MAX = 1000;
-const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama'] as TranslationPlatform[]);
+const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan'] as TranslationPlatform[]);
 const AI_BATCH_SIZE = 20;
 // 非 AI 平台的并发限制；批量回退路径必须保留，否则百度免费版 QPS=1 会被立即触发限流（54003）
 const NON_AI_CONCURRENCY: Record<string, number> = {
@@ -736,16 +736,22 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
     if (!apiKey) throw new Error(`请先配置${platform} API Key`);
 
     if (platform === 'glm') {
-        return requestOpenAiCompatibleBatch('https://open.bigmodel.cn/api/paas/v4/chat/completions', apiKey, modelName || 'glm-4-flash', queries, platform, from, to);
+        return requestOpenAiCompatibleBatch('https://open.bigmodel.cn/api/paas/v4/chat/completions', apiKey, modelName || 'glm-4.7-flash', queries, platform, from, to);
     }
     if (platform === 'deepseek') {
-        return requestOpenAiCompatibleBatch('https://api.deepseek.com/v1/chat/completions', apiKey, modelName || 'deepseek-chat', queries, platform, from, to);
+        return requestOpenAiCompatibleBatch('https://api.deepseek.com/v1/chat/completions', apiKey, modelName || 'deepseek-v4-flash', queries, platform, from, to);
     }
     if (platform === 'qwen') {
         return requestOpenAiCompatibleBatch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', apiKey, modelName || 'qwen-max', queries, platform, from, to);
     }
     if (platform === 'kimi') {
-        return requestOpenAiCompatibleBatch('https://api.moonshot.cn/v1/chat/completions', apiKey, modelName || 'kimi-k2-turbo-preview', queries, platform, from, to);
+        return requestOpenAiCompatibleBatch('https://api.moonshot.cn/v1/chat/completions', apiKey, modelName || 'kimi-k2.6', queries, platform, from, to);
+    }
+    if (platform === 'minimax') {
+        return requestOpenAiCompatibleBatch('https://api.minimaxi.com/v1/chat/completions', apiKey, modelName || 'MiniMax-M2.7', queries, platform, from, to);
+    }
+    if (platform === 'hunyuan') {
+        return requestOpenAiCompatibleBatch('https://api.hunyuan.cloud.tencent.com/v1/chat/completions', apiKey, modelName || 'hunyuan-lite', queries, platform, from, to);
     }
     throw new Error(`Unsupported AI batch platform: ${platform}`);
 }
@@ -938,6 +944,21 @@ export async function translateWithPlatform(
                 console.log('调用Ollama')
                 {
                     const r = await callOllama(query, from, to);
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
+            case 'minimax':
+                console.log('调用MiniMax')
+                {
+                    // 复用 OpenAI 兼容批量通道处理单词翻译
+                    const r = (await translateBatchWithAi([query], platform, from, to))[0];
+                    setCachedTranslation(query, platform, from, to, r);
+                    return r;
+                }
+            case 'hunyuan':
+                console.log('调用腾讯混元')
+                {
+                    const r = (await translateBatchWithAi([query], platform, from, to))[0];
                     setCachedTranslation(query, platform, from, to, r);
                     return r;
                 }
@@ -1220,7 +1241,7 @@ async function callDeepSeek(query: string, from: string = 'auto', to: string = '
             };
         }
 
-        const model = modelName || 'deepseek-chat';
+        const model = modelName || 'deepseek-v4-flash';
 
         // 根据语言方向确定翻译方向和提示词
         const isToEnglish = to === 'en';
@@ -1514,7 +1535,7 @@ async function callKimi(query: string, from: string = 'auto', to: string = 'zh')
             };
         }
 
-        const model = modelName || 'kimi-k2-turbo-preview';
+        const model = modelName || 'kimi-k2.6';
 
         // 根据语言方向确定翻译方向和提示词
         const isToEnglish = to === 'en';
@@ -1681,7 +1702,7 @@ async function callGlm(query: string, from: string = 'auto', to: string = 'zh'):
             };
         }
 
-        const model = modelName || 'glm-4-flash';
+        const model = modelName || 'glm-4.7-flash';
 
         // 根据语言方向确定翻译方向和提示词
         const isToEnglish = to === 'en';

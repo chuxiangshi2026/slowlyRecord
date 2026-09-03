@@ -52,6 +52,9 @@
           />
         </el-select>
       </div>
+      <p v-if="wordsStore.currentTranslationPlatform === 'tencent'" class="deprecate-notice">
+        提示：腾讯机器翻译业务即将下线，本软件预计9月底移除支持，请尽快切换其他翻译引擎。
+      </p>
     </div>
     <div>
       <div class="setting-item">
@@ -299,24 +302,24 @@
       </div>
       <!--      apiKeys-->
       <div v-for="(item,index) in wordsStore.userApiKeys"
-           :key="index" class="titles" v-show="index !== 'utoolsai' && index !== 'local'">
+           :key="index" class="titles" v-show="index !== 'utoolsai' && index !== 'local' && index !== 'hunyuan'">
         <span class="shorcut-desc">
           {{ index }} AppKey
           <!--          type="password"-->
           <el-input v-model="item.appkey"
                     @update:model-value="(val: string) => updateKey(index, 'appkey', val)"
                     style="width: 153px"
-                    :placeholder="'ollama'===index?'http://localhost:11434）':['ollama','deepseek', 'qwen', 'kimi', 'glm'].includes(index)?'使用必需填写':'没有请留空'"
+                    :placeholder="'ollama'===index?'http://localhost:11434）':['ollama','deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan'].includes(index)?'使用必需填写':'没有请留空'"
           />
         </span>
         <span class="shorcut-desc">
           {{ index }} SecretKey
           <!--          type="password"-->
           <el-input v-model="item.key"
-                    :disabled="['deepseek', 'qwen', 'kimi', 'glm'].includes(index)"
+                    :disabled="['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan'].includes(index)"
                     @update:model-value="(val: string) => updateKey(index, 'key', val)"
                     style="width: 185px"
-                    :placeholder="'ollama'===index?'模型名如（qwen2.5:0.5b）':['ollama', 'deepseek', 'qwen', 'kimi', 'glm'].includes(index)?'无需填写':'没有请留空'"/>
+                    :placeholder="'ollama'===index?'模型名如（qwen2.5:0.5b）':['ollama', 'deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan'].includes(index)?'无需填写':'没有请留空'"/>
         </span>
       </div>
 
@@ -329,7 +332,7 @@
       <!--      apiKeys-->
       <div v-for="(item,index) in wordsStore.userOcrApiKeys"
            :key="index" class="titles"
-           v-show="index !== 'local'"
+           v-show="index !== 'local' && index !== 'deepseek' && index !== 'glm'"
       >
         <span class="shorcut-desc">
           {{ index }} AppKey
@@ -702,7 +705,7 @@ const ocrOptions = [
   },
   {
     value: 'tencent',
-    label: '腾讯',
+    label: '腾讯(即将下线)',
   }, {
     value: 'baidu',
     label: '百度',
@@ -713,13 +716,36 @@ const ocrOptions = [
   }, {
     value: 'ali',
     label: '阿里',
+  }, {
+    value: 'deepseek',
+    label: '深度求索(视觉)',
+  }, {
+    value: 'glm',
+    label: '智谱GLM(视觉)',
   }]
 const options = [
   {
     value: 'utoolsai',
     label: 'utoolsAI',
   },
-  ...ocrOptions, {
+  {
+    value: 'local',
+    label: '本地词典(离线)',
+  },
+  {
+    value: 'tencent',
+    label: '腾讯(即将下线)',
+  }, {
+    value: 'baidu',
+    label: '百度',
+  },
+  {
+    value: 'youdao',
+    label: '有道',
+  }, {
+    value: 'ali',
+    label: '阿里',
+  }, {
     value: 'ollama',
     label: 'ollama',
   }, {
@@ -734,6 +760,9 @@ const options = [
   }, {
     value: 'glm',
     label: '智谱GLM',
+  }, {
+    value: 'minimax',
+    label: 'MiniMax',
   }
 ]
 /*{
@@ -985,6 +1014,13 @@ const handleFileImport = (event: Event) => {
     .setting-item {
       display: flex;
       align-items: center;
+    }
+
+    .deprecate-notice {
+      margin: 6px 20px 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--el-color-warning);
     }
 
     .content {

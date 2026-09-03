@@ -163,6 +163,23 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
                     // 本地OCR：使用 Tesseract.js
                     const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
                     result = await ocrTranslateLocal(base64, translatePlatform);
+                } else if (ocrPlatform === 'deepseek' || ocrPlatform === 'glm') {
+                    // 视觉大模型OCR：用视觉模型提取文本，再经当前翻译引擎翻译
+                    const text = ocrPlatform === 'deepseek'
+                        ? await extractTextUsingOpenAiVision(base64, 'deepseek', 'https://api.deepseek.com/v1/chat/completions', 'deepseek-v4-flash')
+                        : await extractTextUsingOpenAiVision(base64, 'glm', 'https://open.bigmodel.cn/api/paas/v4/chat/completions', 'glm-4.7-flash');
+                    let tranContent = text;
+                    try {
+                        const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
+                        const translationResult = await translateWithLargeModel(text, translatePlatform);
+                        tranContent = translationResult.explains || text;
+                    } catch {
+                        // 翻译失败时显示原文
+                    }
+                    result = {
+                        errorCode: '0',
+                        resRegions: [{boundingBox: '0,0,0,0', context: text, tranContent}]
+                    };
                 } else {
                     result = {errorCode: '500', resRegions: []};
                 }
@@ -539,7 +556,7 @@ async function checkImageRatio(file: File): Promise<void> {
  */
 async function extractTextFromImage(file: File, platform?: TranslationPlatform): Promise<string> {
     // 如果指定了支持视觉识别的大模型，优先使用
-    if (platform && ['qwen', 'kimi'].includes(platform)) {
+    if (platform && ['qwen', 'kimi', 'deepseek', 'glm'].includes(platform)) {
         try {
             return await extractTextUsingVisionModel(file, platform);
         } catch (error) {
@@ -610,10 +627,69 @@ async function extractTextUsingVisionModel(file: File, platform: TranslationPlat
         return await extractTextUsingQwenVision(base64);
     } else if (platform === 'kimi') {
         return await extractTextUsingKimiVision(base64);
+    } else if (platform === 'deepseek') {
+        return await extractTextUsingOpenAiVision(base64, 'deepseek', 'https://api.deepseek.com/v1/chat/completions', 'deepseek-v4-flash');
+    } else if (platform === 'glm') {
+        return await extractTextUsingOpenAiVision(base64, 'glm', 'https://open.bigmodel.cn/api/paas/v4/chat/completions', 'glm-4.7-flash');
     }
     // 注意：gpt4v 需要额外的实现
 
     throw new Error(`不支持的视觉模型平台: ${platform}`);
+}
+
+/**
+ * 使用OpenAI兼容的视觉模型提取文本（deepseek / glm 等）
+ */
+async function extractTextUsingOpenAiVision(
+    base64Image: string,
+    platform: TranslationPlatform,
+    url: string,
+    defaultModel: string
+): Promise<string> {
+    const {appkey: apiKey, key: model} = getTranslationApiKey(platform);
+
+    if (!apiKey) {
+        throw new Error(`请先配置${platform}模型密钥`);
+    }
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: model || defaultModel,
+            messages: [
+                {
+                    role: 'system',
+                    content: '你是一个图像内容识别助手，请识别并提取图像中的所有文本内容。'
+                },
+                {
+                    role: 'user',
+                    content: [
+                        {
+                            type: 'text',
+                            text: '请识别并提取图片中的所有文本内容，只输出识别到的文本，不要有其他解释。'
+                        },
+                        {
+                            type: 'image_url',
+                            image_url: {
+                                url: `data:image/jpeg;base64,${base64Image}`
+                            }
+                        }
+                    ]
+                }
+            ]
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`${platform} vision request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || "";
 }
 
 /**

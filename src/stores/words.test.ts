@@ -593,7 +593,7 @@ describe('useWordsStore', () => {
 
     it('应该支持所有翻译平台', () => {
       const store = useWordsStore()
-      const platforms: TranslationPlatform[] = ['glm', 'tencent', 'youdao', 'baidu', 'ali', 'deepseek', 'qwen', 'kimi', 'ollama', 'local']
+      const platforms: TranslationPlatform[] = ['glm', 'tencent', 'youdao', 'baidu', 'ali', 'deepseek', 'qwen', 'kimi', 'ollama', 'local', 'minimax', 'hunyuan']
 
       for (const platform of platforms) {
         store.setTranslationPlatform(platform)

@@ -64,11 +64,11 @@ interface YdParams {
 /**
  * 翻译平台枚举 | 'google'
  */
-export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'local';
+export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 'glm' | 'local';
 export type MemoryFirmnessType = '正常' | '较强' | '极强';
 
 
-export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local';
+export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local' | 'minimax' | 'hunyuan';
 
 /**
  * 例句
