@@ -1,7 +1,7 @@
 {
   "id": "math-formulas",
   "name": "常用数学公式",
-  "description": "小学到高中入门常用数学公式与函数 31 条",
+  "description": "小学到高中入门常用数学公式与函数 33 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -233,6 +233,22 @@
       "answer": "∫ₐᵇf(x)dx，如 ∫₀¹x²dx=⅓",
       "extras": {
         "说明": "几何意义：曲线与 x 轴围成的有向面积"
+      }
+    },
+    {
+      "id": "math-formulas-32",
+      "question": "一元一次方程",
+      "answer": "ax+b=0 → x=-b/a（a≠0），如 3x-6=0 得 x=2",
+      "extras": {
+        "说明": "方程的解就是一次函数图像与 x 轴的交点"
+      }
+    },
+    {
+      "id": "math-formulas-33",
+      "question": "二元一次方程组",
+      "answer": "例：y=2x+1 与 y=-x+4 联立，解为 x=1, y=3",
+      "extras": {
+        "说明": "方程组的解就是两条直线的交点坐标"
       }
     }
   ]

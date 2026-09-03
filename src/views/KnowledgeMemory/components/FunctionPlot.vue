@@ -67,6 +67,14 @@
           <span>y 轴截距 {{ fmt(yIntercept) }}</span>
         </template>
       </div>
+      <div v-if="fn2" class="analysis-row">
+        <span class="tag tag-intersection">交点</span>
+        <span v-if="intersections.length === 0" class="muted">当前视野内两曲线无交点（方程组无解）</span>
+        <span v-for="(x, i) in intersections" :key="i" class="value">
+          ({{ fmt(x) }}, {{ fmt(fn(x)) }}){{ i < intersections.length - 1 ? '；' : '' }}
+        </span>
+        <span v-if="intersections.length" class="muted">← 方程组的解</span>
+      </div>
       <div v-for="(note, i) in notes" :key="i" class="analysis-row">
         <span class="tag tag-note">有趣值</span>
         <span>{{ note }}</span>
@@ -104,6 +112,8 @@ const props = withDefaults(defineProps<{
   xLabel?: string;
   /** 几何联动图形：按动点取值同步画出对应图形（圆：半径 r；正方形：边长 a） */
   geometry?: 'circle' | 'square';
+  /** 第二条曲线 y=g(x)（红色实线）：用于方程组联立，交点即解 */
+  fn2?: (x: number) => number;
 }>(), {notes: () => [], xLabel: 'x'});
 
 const X_SPAN = 10; // 自动计算范围时的 x 采样半径
@@ -127,6 +137,10 @@ const playing = ref(false);
 /** 视野内函数分析（随平移缩放实时重算） */
 const extrema = computed(() => findExtrema(props.fn, range.value.xMin, range.value.xMax));
 const zeros = computed(() => findZeros(props.fn, range.value.xMin, range.value.xMax));
+/** 两曲线交点横坐标：求 fn - fn2 的零点（方程组的解） */
+const intersections = computed(() =>
+  props.fn2 ? findZeros((x) => props.fn(x) - props.fn2!(x), range.value.xMin, range.value.xMax) : [],
+);
 const yIntercept = computed(() => props.fn(0));
 const probeY = computed(() => props.fn(probeX.value));
 /** 动点与 x 轴围成的有向面积 ∫₀ˣ f */
@@ -226,15 +240,15 @@ function drawGrid(ctx: CanvasRenderingContext2D, r: ViewRange, w: number, h: num
 }
 
 /** 绘制函数曲线（断点/非有限值处断开，不跨渐近线连线） */
-function drawCurve(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
-  ctx.strokeStyle = cssVar('--utools-primary', '#409eff');
+function drawCurve(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}, fn: (x: number) => number, color: string) {
+  ctx.strokeStyle = color;
   ctx.lineWidth = 2;
   ctx.beginPath();
   let started = false;
   let prevY: number | null = null;
   for (let i = 0; i <= SAMPLE; i++) {
     const dx = r.xMin + ((r.xMax - r.xMin) * i) / SAMPLE;
-    const dy = props.fn(dx);
+    const dy = fn(dx);
     if (!Number.isFinite(dy)) { started = false; prevY = null; continue; }
     if (prevY !== null && isDiscontinuity(prevY, dy)) started = false;
     const p = dataToPixel(dx, dy, r, rect);
@@ -245,6 +259,26 @@ function drawCurve(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number
   }
   ctx.stroke();
   ctx.lineWidth = 1;
+}
+
+/** 绘制两曲线交点标记（方程组的解） */
+function drawIntersections(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  ctx.fillStyle = cssVar('--el-color-danger', '#f56c6c');
+  ctx.strokeStyle = cssVar('--utools-bg-card', '#fff');
+  for (const x of intersections.value) {
+    const y = props.fn(x);
+    if (!Number.isFinite(y)) continue;
+    const p = dataToPixel(x, y, r, rect);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    // 交点坐标标签
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(`(${fmt(x)}, ${fmt(y)})`, p.x + 8, p.y - 6);
+  }
 }
 
 /** 绘制动点区域阴影：曲线与 x 轴之间 [0, probeX] 的填充区（随 x 输入变化） */
@@ -398,8 +432,10 @@ function draw() {
   ctx.fillRect(0, 0, w, h);
   drawGrid(ctx, r, w, h, rect);
   drawArea(ctx, r, rect);
-  drawCurve(ctx, r, rect);
+  drawCurve(ctx, r, rect, props.fn, cssVar('--utools-primary', '#409eff'));
+  if (props.fn2) drawCurve(ctx, r, rect, props.fn2, cssVar('--el-color-danger', '#f56c6c'));
   drawExtrema(ctx, r, rect);
+  drawIntersections(ctx, r, rect);
   drawTangent(ctx, r, rect);
   drawProbe(ctx, r, rect, h);
   drawGeometry();
