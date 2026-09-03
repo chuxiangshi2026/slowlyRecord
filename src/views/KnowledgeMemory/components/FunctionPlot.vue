@@ -1,16 +1,23 @@
 <template>
   <div class="function-plot">
     <div v-if="title" class="plot-title">{{ title }}</div>
-    <div ref="wrapRef" class="plot-wrap" @wheel.prevent="onWheel" @pointerleave="hover = null">
-      <canvas ref="canvasRef" class="plot-canvas" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp" @pointercancel="onPointerUp" />
-      <div v-if="hover" class="plot-tip" :style="tipStyle">
-        ({{ hover.dx.toFixed(2) }}, {{ hover.dy.toFixed(2) }})
+    <div class="plot-row">
+      <div ref="wrapRef" class="plot-wrap" @wheel.prevent="onWheel" @pointerleave="hover = null">
+        <canvas ref="canvasRef" class="plot-canvas" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp" @pointercancel="onPointerUp" />
+        <div v-if="hover" class="plot-tip" :style="tipStyle">
+          ({{ hover.dx.toFixed(2) }}, {{ hover.dy.toFixed(2) }})
+        </div>
+      </div>
+      <!-- 几何联动：图形随动点取值变化（如圆半径 r、正方形边长 a） -->
+      <div v-if="geometry" class="geo-wrap">
+        <canvas ref="geoCanvasRef" class="geo-canvas" />
+        <div class="geo-caption">几何联动</div>
       </div>
     </div>
 
-    <!-- 动点控制：输入 x / 拖动滑块 / 播放动画，观察曲线上点与区域的变化 -->
+    <!-- 动点控制：输入数值 / 拖动滑块 / 播放动画，观察曲线上点与区域的变化；点击曲线也可取点 -->
     <div class="probe-bar">
-      <span class="probe-label">x =</span>
+      <span class="probe-label">{{ xLabel }} =</span>
       <input
         v-model.number="probeX"
         type="number"
@@ -89,7 +96,11 @@ const props = withDefaults(defineProps<{
   initialRange?: ViewRange;
   /** 该公式的「有趣值」注解（顶点、周期、渐近线等），逐条展示 */
   notes?: string[];
-}>(), {notes: () => []});
+  /** 自变量标签（如 r、a），默认 "x" */
+  xLabel?: string;
+  /** 几何联动图形：按动点取值同步画出对应图形（圆：半径 r；正方形：边长 a） */
+  geometry?: 'circle' | 'square';
+}>(), {notes: () => [], xLabel: 'x'});
 
 const X_SPAN = 10; // 自动计算范围时的 x 采样半径
 const SAMPLE = 600; // 曲线采样点数
@@ -102,6 +113,7 @@ const PLAY_SECONDS = 8; // 动画扫过整个视野的时长（秒）
 
 const wrapRef = ref<HTMLDivElement>();
 const canvasRef = ref<HTMLCanvasElement>();
+const geoCanvasRef = ref<HTMLCanvasElement>();
 const hover = ref<HoverInfo | null>(null);
 const range = ref<ViewRange>({xMin: -X_SPAN, xMax: X_SPAN, yMin: -8, yMax: 8});
 /** 动点横坐标（输入框/滑块/动画驱动） */
@@ -139,6 +151,8 @@ const tipStyle = computed(() => {
 let dragging = false;
 let lastX = 0;
 let lastY = 0;
+let downX = 0; // 按下位置，用于区分单击取点与拖拽平移
+let downY = 0;
 let rafId = 0;
 let playRafId = 0;
 let lastPlayTime = 0;
@@ -283,6 +297,54 @@ function drawProbe(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number
   ctx.stroke();
 }
 
+/** 绘制几何联动图形：尺寸按动点取值等比缩放（圆半径 r / 正方形边长 a） */
+function drawGeometry() {
+  const canvas = geoCanvasRef.value;
+  if (!canvas || !props.geometry) return;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  if (w <= 0 || h <= 0) return;
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = cssVar('--utools-bg-card', '#fff');
+  ctx.fillRect(0, 0, w, h);
+
+  const v = probeX.value;
+  const vMax = Math.max(Math.abs(range.value.xMin), Math.abs(range.value.xMax)) || 1;
+  ctx.font = '12px sans-serif';
+  ctx.textAlign = 'center';
+  if (!Number.isFinite(v) || v <= 0) {
+    ctx.fillStyle = cssVar('--utools-text-tertiary', '#8c8c8c');
+    ctx.fillText(`${props.xLabel} 需为正数`, w / 2, h / 2);
+    return;
+  }
+  const primary = cssVar('--utools-primary', '#409eff');
+  const size = (v / vMax) * (Math.min(w, h) / 2 - 28); // 图形尺寸（半径/半边长，像素）
+  ctx.strokeStyle = primary;
+  ctx.lineWidth = 2;
+  ctx.globalAlpha = 0.12;
+  ctx.fillStyle = primary;
+  ctx.beginPath();
+  if (props.geometry === 'circle') {
+    ctx.arc(w / 2, h / 2, Math.max(size, 1), 0, Math.PI * 2);
+  } else {
+    ctx.rect(w / 2 - size, h / 2 - size, size * 2, size * 2);
+  }
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.stroke();
+  ctx.lineWidth = 1;
+  // 标注：自变量与函数值
+  ctx.fillStyle = cssVar('--utools-text-primary', '#262626');
+  ctx.fillText(`${props.xLabel} = ${fmt(v)}`, w / 2, h - 24);
+  ctx.fillStyle = primary;
+  ctx.fillText(`y = ${fmt(probeY.value)}`, w / 2, h - 8);
+}
+
 function draw() {
   const wrap = wrapRef.value;
   const canvas = canvasRef.value;
@@ -308,6 +370,7 @@ function draw() {
   drawCurve(ctx, r, rect);
   drawExtrema(ctx, r, rect);
   drawProbe(ctx, r, rect, h);
+  drawGeometry();
 
   // 悬停标记：十字虚线 + 曲线上的圆点
   if (hover.value) {
@@ -368,6 +431,8 @@ function onPointerDown(e: PointerEvent) {
   dragging = true;
   lastX = e.offsetX;
   lastY = e.offsetY;
+  downX = e.offsetX;
+  downY = e.offsetY;
   (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
 }
 function onPointerMove(e: PointerEvent) {
@@ -396,8 +461,16 @@ function onPointerMove(e: PointerEvent) {
     scheduleDraw();
   }
 }
-function onPointerUp() {
+function onPointerUp(e: PointerEvent) {
   dragging = false;
+  // 单击（位移 < 4px）：把动点设置到点击处的横坐标；拖拽则视为平移
+  if (Math.hypot(e.offsetX - downX, e.offsetY - downY) < 4) {
+    const wrap = wrapRef.value;
+    if (!wrap) return;
+    stopPlay();
+    const d = pixelToData(e.offsetX, e.offsetY, range.value, {x: 0, y: 0, width: wrap.clientWidth, height: wrap.clientHeight});
+    probeX.value = Number(d.x.toFixed(4));
+  }
 }
 function onWheel(e: WheelEvent) {
   if (e.deltaY === 0) return;
@@ -450,9 +523,16 @@ onBeforeUnmount(() => {
     margin-bottom: 8px;
   }
 
+  .plot-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+  }
+
   .plot-wrap {
     position: relative;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     height: 300px;
     border: 1px solid var(--utools-border-divider);
     border-radius: 8px;
@@ -479,6 +559,29 @@ onBeforeUnmount(() => {
     border: 1px solid var(--utools-border-primary);
     border-radius: 4px;
     white-space: nowrap;
+  }
+
+  // ---- 几何联动面板 ----
+  .geo-wrap {
+    flex-shrink: 0;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    .geo-canvas {
+      width: 180px;
+      height: 240px;
+      border: 1px solid var(--utools-border-divider);
+      border-radius: 8px;
+    }
+
+    .geo-caption {
+      font-size: 11px;
+      color: var(--utools-text-tertiary);
+    }
   }
 
   // ---- 动点控制条 ----

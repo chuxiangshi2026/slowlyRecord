@@ -19,6 +19,7 @@ function createCtxStub() {
     fillText: vi.fn(),
     setLineDash: vi.fn(),
     closePath: vi.fn(),
+    rect: vi.fn(),
   }
 }
 

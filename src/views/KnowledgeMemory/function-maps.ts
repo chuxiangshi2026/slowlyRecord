@@ -12,10 +12,69 @@ export interface PlotFunction {
     initialRange?: ViewRange;
     /** 「有趣值」注解：顶点、对称轴、周期、渐近线等，逐条展示在图像下方 */
     notes?: string[];
+    /** 自变量标签（如 r、a），显示在输入框与分析面板中，默认 "x" */
+    xLabel?: string;
+    /** 几何联动图形：按动点取值同步画出对应图形（圆：半径 r；正方形：边长 a） */
+    geometry?: 'circle' | 'square';
 }
 
 /** 公式 id → 函数实现 */
 export const MATH_FORMULA_PLOTS: Record<string, PlotFunction> = {
+    // 圆的面积 S=πr²（r≥0 的抛物线分支，右侧联动画出半径 r 的圆）
+    'math-formulas-1': {
+        fn: (r) => Math.PI * r * r,
+        initialRange: {xMin: 0, xMax: 5, yMin: -5, yMax: 80},
+        xLabel: 'r',
+        geometry: 'circle',
+        notes: [
+            '面积是半径的二次函数：半径翻倍，面积变 4 倍',
+            '圆方程 x²+y²=r² 整体不是函数（一个 x 对应两个 y），可拆成上、下两个半圆函数 y=±√(r²-x²)',
+            '右侧几何图随 r 联动：圆内阴影的面积就是曲线上动点的纵坐标 S',
+        ],
+    },
+    // 圆的周长 C=2πr（正比例函数，右侧联动画出半径 r 的圆）
+    'math-formulas-2': {
+        fn: (r) => 2 * Math.PI * r,
+        initialRange: {xMin: 0, xMax: 5, yMin: -2, yMax: 32},
+        xLabel: 'r',
+        geometry: 'circle',
+        notes: [
+            '周长是半径的正比例函数：半径翻倍，周长也翻倍，图像过原点',
+            '与圆面积的关系：S(r)=πr² 的变化率（导数）恰好就是 C(r)=2πr',
+        ],
+    },
+    // 正方形面积 S=a²（y=x² 抛物线的右半支，右侧联动画出边长 a 的正方形）
+    'math-formulas-4': {
+        fn: (a) => a * a,
+        initialRange: {xMin: 0, xMax: 5, yMin: -2, yMax: 26},
+        xLabel: 'a',
+        geometry: 'square',
+        notes: [
+            '与二次函数 y=x² 同一条抛物线，实际意义只取 a≥0 的右半支',
+            '边长翻倍，面积变 4 倍（平方关系）',
+        ],
+    },
+    // 正方体体积 V=a³（立方函数）
+    'math-formulas-9': {
+        fn: (a) => a * a * a,
+        initialRange: {xMin: 0, xMax: 4, yMin: -4, yMax: 64},
+        xLabel: 'a',
+        notes: [
+            '棱长翻倍，体积变 8 倍（立方关系），比面积增长快得多',
+            'y=x³ 是奇函数：图像关于原点对称，把 x 轴拖向负值可看到完整 S 形',
+        ],
+    },
+    // 勾股定理：固定斜边 c=5，一条直角边 b 随 a 变化 b=√(25-a²)，即四分之一圆
+    'math-formulas-13': {
+        fn: (a) => Math.sqrt(Math.max(0, 25 - a * a)),
+        initialRange: {xMin: 0, xMax: 6, yMin: -1, yMax: 6},
+        xLabel: 'a',
+        notes: [
+            '固定斜边 c=5：b=√(25-a²)，图像恰是半径为 5 的四分之一圆',
+            '3-4-5 直角三角形：a=3 时 b=4，动点拖到 x=3 可验证',
+            '这也说明圆 x²+y²=r² 拆成的半圆函数 y=√(r²-x²) 长什么样',
+        ],
+    },
     // 一次函数 y=2x+1（对应条目 一次函数）
     'math-formulas-21': {
         fn: (x) => 2 * x + 1,
@@ -53,7 +112,6 @@ export const MATH_FORMULA_PLOTS: Record<string, PlotFunction> = {
         ],
     },
 };
-
 /**
  * 根据知识包条目 id 查找可绘制函数。
  * @returns 可绘制函数描述；条目不可绘制时返回 null（调用方不显示按钮）
