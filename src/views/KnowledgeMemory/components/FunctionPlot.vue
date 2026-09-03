@@ -44,6 +44,10 @@
       <div v-if="Number.isFinite(probeY)" class="analysis-row">
         <span class="tag tag-point">动点</span>
         <span>({{ fmt(probeX) }}, {{ fmt(probeY) }})</span>
+        <template v-if="Number.isFinite(slope)">
+          <span class="sep">·</span>
+          <span>切线斜率（导数）≈ {{ fmt(slope) }}</span>
+        </template>
         <span class="sep">·</span>
         <span>曲线与 x 轴在 [0, {{ fmt(probeX) }}] 围成的有向面积 ≈ {{ fmt(area) }}</span>
       </div>
@@ -127,6 +131,15 @@ const yIntercept = computed(() => props.fn(0));
 const probeY = computed(() => props.fn(probeX.value));
 /** 动点与 x 轴围成的有向面积 ∫₀ˣ f */
 const area = computed(() => integrate(props.fn, 0, probeX.value));
+/** 动点处切线斜率（数值微分，中心差分），即导数 */
+const slope = computed(() => {
+  const r = range.value;
+  const h = (r.xMax - r.xMin) * 1e-4;
+  const y1 = props.fn(probeX.value + h);
+  const y0 = props.fn(probeX.value - h);
+  if (!Number.isFinite(y0) || !Number.isFinite(y1)) return NaN;
+  return (y1 - y0) / (2 * h);
+});
 const sliderStep = computed(() => (range.value.xMax - range.value.xMin) / 200 || 0.1);
 
 /** 数字显示：保留至多 4 位小数 */
@@ -297,6 +310,24 @@ function drawProbe(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number
   ctx.stroke();
 }
 
+/** 绘制动点处切线（红色虚线，斜率即导数） */
+function drawTangent(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  const k = slope.value;
+  if (!Number.isFinite(probeY.value) || !Number.isFinite(k)) return;
+  if (probeX.value < r.xMin || probeX.value > r.xMax) return;
+  // 切线方程 y = y₀ + k(x - x₀)，画满视野宽度，超出部分由画布裁剪
+  const tangent = (x: number) => probeY.value + k * (x - probeX.value);
+  const p1 = dataToPixel(r.xMin, tangent(r.xMin), r, rect);
+  const p2 = dataToPixel(r.xMax, tangent(r.xMax), r, rect);
+  ctx.strokeStyle = cssVar('--el-color-danger', '#f56c6c');
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+  ctx.lineTo(p2.x, p2.y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
 /** 绘制几何联动图形：尺寸按动点取值等比缩放（圆半径 r / 正方形边长 a） */
 function drawGeometry() {
   const canvas = geoCanvasRef.value;
@@ -369,6 +400,7 @@ function draw() {
   drawArea(ctx, r, rect);
   drawCurve(ctx, r, rect);
   drawExtrema(ctx, r, rect);
+  drawTangent(ctx, r, rect);
   drawProbe(ctx, r, rect, h);
   drawGeometry();
 

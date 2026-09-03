@@ -111,6 +111,77 @@ export const MATH_FORMULA_PLOTS: Record<string, PlotFunction> = {
             '单位圆上点的纵坐标：角度 x 与 y=sin x 一一对应',
         ],
     },
+    // 余弦函数 y=cos x（sin 向左平移 π/2）
+    'math-formulas-25': {
+        fn: Math.cos,
+        initialRange: {xMin: -2 * Math.PI, xMax: 2 * Math.PI, yMin: -1.5, yMax: 1.5},
+        notes: [
+            '与 sin x 同形，只是向左平移 π/2：cos x = sin(x+π/2)',
+            '偶函数：图像关于 y 轴对称，cos(-x)=cos x，x=0 处取最大值 1',
+            '单位圆上点的横坐标：与 sin（纵坐标）合起来正好描出一个圆',
+        ],
+    },
+    // 正切函数 y=tan x（渐近线 x=π/2+kπ）
+    'math-formulas-26': {
+        fn: Math.tan,
+        initialRange: {xMin: -Math.PI, xMax: Math.PI, yMin: -5, yMax: 5},
+        notes: [
+            '周期只有 π：每个区间 (-π/2+kπ, π/2+kπ) 上都重复同一段',
+            'x=±π/2 是渐近线：函数值趋向无穷，曲线自动断开',
+            'tan x = sin x / cos x：cos x=0 处正是渐近线位置',
+        ],
+    },
+    // 弧度制：角度 → 弧度换算 y=πx/180
+    'math-formulas-27': {
+        fn: (d) => (Math.PI / 180) * d,
+        initialRange: {xMin: 0, xMax: 360, yMin: -0.5, yMax: 7},
+        xLabel: '角度°',
+        notes: [
+            '换算是一条过原点的直线：180° 对应 π≈3.14 rad',
+            '动点拖到 180 看 y≈3.1416，拖到 360 看 y≈6.2832（即 2π）',
+            '用弧度后 sin、cos 的公式才最简洁，所以高等数学一律用弧度',
+        ],
+    },
+    // 指数函数 y=2^x
+    'math-formulas-28': {
+        fn: (x) => Math.pow(2, x),
+        initialRange: {xMin: -5, xMax: 5, yMin: -2, yMax: 32},
+        notes: [
+            '恒过点 (0, 1)：任何数的 0 次方都是 1',
+            'x 轴是渐近线：x 越小越贴近 0 但永不为负',
+            '爆炸式增长：x 每 +1 函数值翻倍，细胞分裂、复利都是它',
+        ],
+    },
+    // 对数函数 y=ln x
+    'math-formulas-29': {
+        fn: Math.log,
+        initialRange: {xMin: 0, xMax: 10, yMin: -4, yMax: 3},
+        notes: [
+            '定义域 x>0：y 轴（x=0）是渐近线，左侧没有图像',
+            '恒过点 (1, 0)：ln 1=0；增长极慢，x=10 时 y 才约 2.3',
+            '与指数函数互为反函数：y=ln x 与 y=e^x 关于直线 y=x 对称',
+        ],
+    },
+    // 导数：以 y=x² 为例，动点处切线的斜率就是导数
+    'math-formulas-30': {
+        fn: (x) => x * x,
+        initialRange: {xMin: -4, xMax: 4, yMin: -2, yMax: 16},
+        notes: [
+            '几何意义：动点处红色虚线切线的斜率就是 f\'(x)=2x',
+            'x>0 时切线斜率为正（函数上升），x<0 时为负（下降）',
+            'x=0 处切线水平（斜率 0），恰好是极小值点——极值处导数为 0',
+        ],
+    },
+    // 定积分：以 y=x² 为例，阴影面积就是 ∫₀ˣ
+    'math-formulas-31': {
+        fn: (x) => x * x,
+        initialRange: {xMin: -3, xMax: 3, yMin: -1, yMax: 9},
+        notes: [
+            '几何意义：图中阴影的有向面积就是 ∫₀ˣ t²dt = x³/3',
+            '动点拖到 x=1：面积≈0.333 即 ⅓；拖到 x=2：≈2.667 即 8/3',
+            '积分与导数互逆：面积函数 x³/3 的导数恰好回到 x²（微积分基本定理）',
+        ],
+    },
 };
 /**
  * 根据知识包条目 id 查找可绘制函数。

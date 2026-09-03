@@ -1,7 +1,7 @@
 {
   "id": "math-formulas",
   "name": "常用数学公式",
-  "description": "小学到初中常用数学公式 20 条",
+  "description": "小学到高中入门常用数学公式与函数 31 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -177,6 +177,62 @@
       "answer": "y=sin x",
       "extras": {
         "说明": "周期为 2π"
+      }
+    },
+    {
+      "id": "math-formulas-25",
+      "question": "余弦函数",
+      "answer": "y=cos x",
+      "extras": {
+        "说明": "周期为 2π，偶函数"
+      }
+    },
+    {
+      "id": "math-formulas-26",
+      "question": "正切函数",
+      "answer": "y=tan x",
+      "extras": {
+        "说明": "周期为 π，x=π/2+kπ 处无定义"
+      }
+    },
+    {
+      "id": "math-formulas-27",
+      "question": "弧度制",
+      "answer": "180°=π rad，1 rad≈57.3°",
+      "extras": {
+        "说明": "弧长等于半径时的圆心角为 1 弧度"
+      }
+    },
+    {
+      "id": "math-formulas-28",
+      "question": "指数函数",
+      "answer": "y=a^x（a>0 且 a≠1），如 y=2^x",
+      "extras": {
+        "说明": "恒过点 (0,1)，x 轴为渐近线"
+      }
+    },
+    {
+      "id": "math-formulas-29",
+      "question": "对数函数",
+      "answer": "y=logₐx（a>0 且 a≠1），如 y=ln x",
+      "extras": {
+        "说明": "定义域 x>0，恒过点 (1,0)"
+      }
+    },
+    {
+      "id": "math-formulas-30",
+      "question": "导数",
+      "answer": "f'(x)=lim(Δx→0) Δy/Δx，如 (x²)'=2x",
+      "extras": {
+        "说明": "几何意义：曲线在该点处切线的斜率"
+      }
+    },
+    {
+      "id": "math-formulas-31",
+      "question": "定积分",
+      "answer": "∫ₐᵇf(x)dx，如 ∫₀¹x²dx=⅓",
+      "extras": {
+        "说明": "几何意义：曲线与 x 轴围成的有向面积"
       }
     }
   ]
