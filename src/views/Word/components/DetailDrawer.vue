@@ -105,6 +105,20 @@
       </div>
     </div>
 
+    <div>
+      <div class="setting-item">
+        <div class="content">护眼模式（浅绿背景）</div>
+        <el-switch class="shorcut-desc"
+                   :model-value="wordsStore.eyeCare"
+                   inline-prompt
+                   size="large"
+                   active-text="开"
+                   inactive-text="关"
+                   @update:model-value="wordsStore.setEyeCare"
+        />
+      </div>
+    </div>
+
     <div v-if="!isUtools()">
       <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
         <div class="content" style="margin-bottom: 8px;">
