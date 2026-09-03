@@ -292,8 +292,8 @@
     </div>
 
     <!-- 函数图像对话框（math-formulas 包可绘制条目） -->
-    <el-dialog v-model="plotDialogVisible" title="函数图像" width="480px" append-to-body>
-      <FunctionPlot v-if="plotFn" :fn="plotFn" :title="plotTitle" />
+    <el-dialog v-model="plotDialogVisible" title="函数图像" width="640px" append-to-body>
+      <FunctionPlot v-if="plotFn" :fn="plotFn" :title="plotTitle" :notes="plotNotes" :initial-range="plotRange" />
     </el-dialog>
 
     <!-- 函数图像汇总入口：列出本包全部可绘制函数，点击进入绘图 -->
@@ -366,6 +366,7 @@ import { exportTableAsImage } from '@/utils/table-image-export';
 import type {TableImageData} from '@/utils/table-image-export';
 import FunctionPlot from './components/FunctionPlot.vue';
 import {getMathFormulaPlot} from './function-maps';
+import type {ViewRange} from '@/utils/function-plot-util';
 import {buildMultiplicationGrid, buildPeriodicTable} from './preview-layout';
 
 /** 打印/存图的表格形态 */
@@ -458,6 +459,8 @@ const previousItem = computed<KnowledgeItem | undefined>(() =>
 const plotDialogVisible = ref(false);
 const plotFn = ref<((x: number) => number) | null>(null);
 const plotTitle = ref('');
+const plotNotes = ref<string[]>([]);
+const plotRange = ref<ViewRange | undefined>(undefined);
 /** 函数图像汇总列表对话框状态 */
 const plotListDialogVisible = ref(false);
 /** 当前条目可绘制的函数（仅 math-formulas 包且条目有映射），不可绘制时为 null */
@@ -471,6 +474,8 @@ function openPlotFor(item: KnowledgeItem) {
   if (!plot) return;
   plotFn.value = plot.fn;
   plotTitle.value = item.question;
+  plotNotes.value = plot.notes ?? [];
+  plotRange.value = plot.initialRange;
   plotDialogVisible.value = true;
 }
 

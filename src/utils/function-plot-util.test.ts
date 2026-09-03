@@ -7,6 +7,9 @@ import {
     pixelToData,
     calcViewRange,
     isDiscontinuity,
+    findExtrema,
+    findZeros,
+    integrate,
     type ViewRange,
 } from './function-plot-util';
 
@@ -116,5 +119,82 @@ describe('isDiscontinuity 断点检测', () => {
         expect(isDiscontinuity(50, -50, {minAbs: 100})).toBe(false);
         expect(isDiscontinuity(100, -0.01, {ratio: 10, minAbs: 100})).toBe(true);
         expect(isDiscontinuity(100, -50, {ratio: 10, minAbs: 100})).toBe(false);
+    });
+});
+
+
+describe('findExtrema 极值检测', () => {
+    it('二次函数 y=x²-2x-3 在 x=1 处取极小值 -4', () => {
+        const fn = (x: number) => x * x - 2 * x - 3;
+        const extrema = findExtrema(fn, -10, 10);
+        expect(extrema).toHaveLength(1);
+        expect(extrema[0].kind).toBe('min');
+        expect(extrema[0].x).toBeCloseTo(1, 6);
+        expect(extrema[0].y).toBeCloseTo(-4, 6);
+    });
+
+    it('sin 在 [-2π, 2π] 上有两个极大值与两个极小值', () => {
+        const extrema = findExtrema(Math.sin, -2 * Math.PI, 2 * Math.PI);
+        const maxima = extrema.filter(e => e.kind === 'max');
+        const minima = extrema.filter(e => e.kind === 'min');
+        expect(maxima).toHaveLength(2);
+        expect(minima).toHaveLength(2);
+        for (const m of maxima) expect(m.y).toBeCloseTo(1, 6);
+        for (const m of minima) expect(m.y).toBeCloseTo(-1, 6);
+    });
+
+    it('常值函数与单调函数无极值', () => {
+        expect(findExtrema(() => 3, -5, 5)).toHaveLength(0);
+        expect(findExtrema((x) => 2 * x + 1, -5, 5)).toHaveLength(0);
+    });
+
+    it('渐近线附近不判定极值（y=1/x 无极值）', () => {
+        expect(findExtrema((x) => 1 / x, -10, 10)).toHaveLength(0);
+    });
+});
+
+describe('findZeros 零点求解', () => {
+    it('二次函数 y=x²-2x-3 的零点为 x=-1 与 x=3', () => {
+        const fn = (x: number) => x * x - 2 * x - 3;
+        const zeros = findZeros(fn, -10, 10);
+        expect(zeros).toHaveLength(2);
+        expect(zeros[0]).toBeCloseTo(-1, 6);
+        expect(zeros[1]).toBeCloseTo(3, 6);
+    });
+
+    it('sin 在 [0, 2π] 上的零点为 0、π、2π', () => {
+        const zeros = findZeros(Math.sin, 0, 2 * Math.PI);
+        expect(zeros).toHaveLength(3);
+        expect(zeros[1]).toBeCloseTo(Math.PI, 6);
+    });
+
+    it('渐近线两侧的符号跳变不算零点（y=1/x 无零点）', () => {
+        expect(findZeros((x) => 1 / x, -10, 10)).toHaveLength(0);
+    });
+
+    it('恒正函数无零点', () => {
+        expect(findZeros((x) => x * x + 1, -10, 10)).toHaveLength(0);
+    });
+});
+
+describe('integrate 有向面积', () => {
+    it('∫₀² x dx = 2', () => {
+        expect(integrate((x) => x, 0, 2)).toBeCloseTo(2, 6);
+    });
+
+    it('∫₀^π sin x dx = 2', () => {
+        expect(integrate(Math.sin, 0, Math.PI)).toBeCloseTo(2, 4);
+    });
+
+    it('反向积分取负（有向面积）', () => {
+        expect(integrate((x) => x, 2, 0)).toBeCloseTo(-2, 6);
+    });
+
+    it('x 轴下方面积为负', () => {
+        expect(integrate((x) => -1, 0, 3)).toBeCloseTo(-3, 6);
+    });
+
+    it('a 等于 b 时面积为 0', () => {
+        expect(integrate((x) => x * x, 1, 1)).toBe(0);
     });
 });
