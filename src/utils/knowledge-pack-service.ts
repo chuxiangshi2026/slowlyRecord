@@ -42,7 +42,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false, category: 'text'},
-    {id: 'math-formulas', name: '常用数学公式', description: '小学到初中常用数学公式', itemCount: 24, ordered: false, usableAsPeg: false, category: 'math', version: 2},
+    {id: 'math-formulas', name: '常用数学公式', description: '小学到高中入门常用数学公式与函数', itemCount: 31, ordered: false, usableAsPeg: false, category: 'math', version: 3},
     {id: 'chemistry-formulas', name: '常用化学公式', description: '初中化学常见方程式与计算式', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math'},
     {id: 'physics-formulas', name: '初中物理公式', description: '初中物理常用公式 20 条', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'physics-laws', name: '初中物理定律与原理', description: '初中物理常见定律与原理 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'text', version: 1},
