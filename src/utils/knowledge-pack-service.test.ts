@@ -55,8 +55,8 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 18 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(18)
+    it('应包含 19 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(19)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -90,6 +90,7 @@ describe('knowledge-pack-service', () => {
       expect(math.map(p => p.id).sort()).toEqual([
         'chemistry-formulas',
         'elements',
+        'math-calculus',
         'math-formulas',
         'multiplication-19x19',
         'multiplication-9x9',

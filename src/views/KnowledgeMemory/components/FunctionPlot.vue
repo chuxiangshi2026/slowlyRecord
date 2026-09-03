@@ -73,7 +73,7 @@
         <span v-for="(x, i) in intersections" :key="i" class="value">
           ({{ fmt(x) }}, {{ fmt(fn(x)) }}){{ i < intersections.length - 1 ? '；' : '' }}
         </span>
-        <span v-if="intersections.length" class="muted">← 方程组的解</span>
+        <span v-if="intersections.length" class="muted">← f(x)=g(x) 的解</span>
       </div>
       <div v-for="(note, i) in notes" :key="i" class="analysis-row">
         <span class="tag tag-note">有趣值</span>

@@ -1,5 +1,5 @@
 /**
- * math-formulas 知识包：公式条目 → 可绘制函数的映射表。
+ * 数学类知识包（math-formulas / math-calculus）：公式条目 → 可绘制函数的映射表。
  * 仅覆盖知识包中实际出现的函数类型，覆盖不了的条目不显示「函数图像」按钮。
  */
 import type {ViewRange} from '@/utils/function-plot-util';
@@ -211,6 +211,79 @@ export const MATH_FORMULA_PLOTS: Record<string, PlotFunction> = {
             '绿色线与红色线的交点 (1, 3) 就是方程组的解 x=1, y=3',
             '交点处两函数值相等：2x+1=-x+4，移项即 3x-3=0，化归为一元一次方程',
             '若两线平行（斜率相等）则无交点——方程组无解；重合则无穷多解',
+        ],
+    },
+    // ===== math-calculus 微积分包 =====
+    // 重要极限一：y=sin x / x，x→0 时趋于 1（x=0 处补上极限值便于观察）
+    'math-calculus-2': {
+        fn: (x) => (x === 0 ? 1 : Math.sin(x) / x),
+        initialRange: {xMin: -20, xMax: 20, yMin: -0.5, yMax: 1.2},
+        notes: [
+            '动点拖近 x=0：两侧函数值都无限逼近 1，这就是 lim(x→0) sin x/x = 1',
+            '图像是振荡衰减的「Sinc 函数」，零点在 x=kπ',
+            '该极限成立的前提是 x 用弧度——这也是微积分一律用弧度的原因',
+        ],
+    },
+    // 重要极限二：y=(1+1/x)^x 单调逼近红线 y=e
+    'math-calculus-3': {
+        fn: (x) => (x <= 0 ? NaN : Math.pow(1 + 1 / x, x)),
+        fn2: () => Math.E,
+        initialRange: {xMin: 0, xMax: 50, yMin: 0, yMax: 4},
+        notes: [
+            '绿线 (1+1/x)^x 单调上升，无限逼近但永不触碰红线 y=e≈2.718',
+            'x=1 时值为 2，x=10 时约 2.59，x=100 时约 2.705——越涨越慢',
+            '复利极限：年利率 100% 按无穷多次复利，本息和就是 e 倍',
+        ],
+    },
+    // 导数的定义：以 y=x³ 为例，切线斜率即 f'(x)=3x²
+    'math-calculus-4': {
+        fn: (x) => x * x * x,
+        initialRange: {xMin: -3, xMax: 3, yMin: -10, yMax: 10},
+        notes: [
+            '动点处红色切线的斜率就是 f\'(x)=3x²，拖动可验证：x=1 时斜率 3',
+            'x=0 处切线水平但不是极值点——导数为 0 只是极值的必要条件',
+            '定义中的 Δx→0 过程：切线就是割线两端点无限靠近的极限位置',
+        ],
+    },
+    // 微分：y=x² 的切线近似 Δy≈dy=f'(x)dx
+    'math-calculus-7': {
+        fn: (x) => x * x,
+        initialRange: {xMin: -4, xMax: 4, yMin: -2, yMax: 16},
+        notes: [
+            '微分 dy=f\'(x)dx 的几何意义：沿红色切线的增量，近似代替曲线真实增量 Δy',
+            'x=2 处切线斜率 4：x 微增 0.1，y 约增 0.4（真实值 0.41）',
+            '「以直代曲」是微积分近似的核心思想',
+        ],
+    },
+    // 导数与单调性、极值：y=x³-3x 在 x=±1 取极值
+    'math-calculus-9': {
+        fn: (x) => x * x * x - 3 * x,
+        initialRange: {xMin: -3, xMax: 3, yMin: -3, yMax: 3},
+        notes: [
+            'f\'(x)=3x²-3=0 解得 x=±1：x=-1 极大值 2，x=1 极小值 -2（图中橙点）',
+            'x<-1 与 x>1 区间切线斜率为正（递增），-1<x<1 为负（递减）',
+            '拖动动点看切线斜率正负变化，「递增/递减/极值」一目了然',
+        ],
+    },
+    // 牛顿-莱布尼茨：y=x² 的阴影面积 ∫₀ˣ = x³/3
+    'math-calculus-11': {
+        fn: (x) => x * x,
+        initialRange: {xMin: -3, xMax: 3, yMin: -1, yMax: 9},
+        notes: [
+            '阴影面积 ∫₀ˣ t²dt = F(x)-F(0)，其中原函数 F(x)=x³/3',
+            'x=2 时面积 = 8/3 - 0 ≈ 2.667：定积分变成原函数「两头相减」',
+            '这就是牛顿-莱布尼茨公式 ∫ₐᵇf(x)dx=F(b)-F(a) 的直观含义',
+        ],
+    },
+    // 泰勒公式：绿线 e^x 与红色二次逼近 1+x+x²/2
+    'math-calculus-13': {
+        fn: Math.exp,
+        fn2: (x) => 1 + x + (x * x) / 2,
+        initialRange: {xMin: -4, xMax: 3, yMin: -2, yMax: 22},
+        notes: [
+            '红线是 eˣ 在 x=0 处的二次泰勒逼近 1+x+x²/2，在 0 附近与绿线几乎重合',
+            'x 远离 0 后两线分离：项数不够了，加 x³/6 一项会贴合得更远',
+            '泰勒思想：任何光滑函数都能在一点附近用多项式逼近',
         ],
     },
 };

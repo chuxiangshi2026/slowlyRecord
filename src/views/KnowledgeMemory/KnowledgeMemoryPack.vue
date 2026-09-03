@@ -466,9 +466,9 @@ const plotGeometry = ref<'circle' | 'square' | undefined>(undefined);
 const plotFn2 = ref<((x: number) => number) | undefined>(undefined);
 /** 函数图像汇总列表对话框状态 */
 const plotListDialogVisible = ref(false);
-/** 当前条目可绘制的函数（仅 math-formulas 包且条目有映射），不可绘制时为 null */
+/** 当前条目可绘制的函数（条目有映射即可，不限具体包），不可绘制时为 null */
 const currentPlot = computed(() =>
-    packId.value === 'math-formulas' && currentItem.value ? getMathFormulaPlot(currentItem.value.id) : null,
+    currentItem.value ? getMathFormulaPlot(currentItem.value.id) : null,
 );
 
 /** 打开指定条目的函数图像对话框 */
