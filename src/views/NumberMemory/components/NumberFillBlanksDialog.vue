@@ -10,7 +10,13 @@
     <div v-if="entry" class="fill-blanks-container">
       <!-- 头部信息 -->
       <div class="header-info">
-        <h3>{{ entry.title }}</h3>
+        <div>
+          <h3>{{ entry.title }}</h3>
+          <div v-if="entry.mnemonic" class="mnemonic-hint">
+            <el-icon><MagicStick /></el-icon>
+            {{ entry.mnemonic }}
+          </div>
+        </div>
         <el-tag size="small" type="info">共 {{ entry.numbers.length }} 位数字</el-tag>
       </div>
 
@@ -133,7 +139,7 @@ import { ref, computed, watch } from 'vue';
 import { useNumberMemoryStore } from '@/stores/numberMemory';
 import type { NumberMemoryEntry, NumberMemoryPrompt } from '@/types/number-memory';
 import { ElMessage } from 'element-plus';
-import { Refresh, Memo } from '@element-plus/icons-vue';
+import { Refresh, Memo, MagicStick } from '@element-plus/icons-vue';
 
 interface Props {
   modelValue: boolean;
@@ -248,14 +254,23 @@ function checkAllAnswers() {
     }
   });
 
+  const percentage = total > 0 ? (correct / total) * 100 : 0;
   if (correct === total) {
     ElMessage.success(`恭喜！全部正确！(${correct}/${total})`);
-    // 更新复习次数
     if (props.entry) {
+      store.markEntryCorrect(props.entry._id);
       updateReviewCount();
+    }
+  } else if (percentage < 50) {
+    ElMessage.warning(`答对 ${correct}/${total} 题，正确率不足 50%，已降级`);
+    if (props.entry) {
+      store.markEntryWrong(props.entry._id);
     }
   } else {
     ElMessage.warning(`答对 ${correct}/${total} 题，继续加油！`);
+    if (props.entry) {
+      updateReviewCount();
+    }
   }
 }
 
@@ -311,13 +326,8 @@ function loadProgress() {
 
 // 更新复习次数
 async function updateReviewCount() {
-  // 这里可以调用 store 的方法更新复习次数
-  // 暂时使用 localStorage 记录
   if (!props.entry) return;
-  
-  const key = `number_review_count_${props.entry._id}`;
-  const count = parseInt(localStorage.getItem(key) || '0') + 1;
-  localStorage.setItem(key, String(count));
+  await store.updateReviewCount(props.entry._id);
 }
 
 // 监听条目变化
@@ -368,8 +378,16 @@ watch(() => props.entry, async (newEntry) => {
   border-radius: 8px;
 
   h3 {
-    margin: 0;
+    margin: 0 0 6px 0;
     color: var(--utools-text-primary);
+  }
+
+  .mnemonic-hint {
+    font-size: 13px;
+    color: var(--utools-warning);
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 }
 

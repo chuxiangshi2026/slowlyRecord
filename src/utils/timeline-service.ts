@@ -46,7 +46,7 @@ export interface TimelineCategoryMeta {
 /** 时间线事件分类元信息（label + 主题色，供视图上色） */
 export const TIMELINE_CATEGORIES: TimelineCategoryMeta[] = [
   { code: 'politics', label: '政治', color: '#f56c6c' },
-  { code: 'literature', label: '文学', color: '#409eff' },
+  { code: 'literature', label: '文学', color: '#595959' },
   { code: 'science', label: '科学', color: '#67c23a' },
   { code: 'thought', label: '思想', color: '#9b59b6' },
   { code: 'society', label: '社会', color: '#e6a23c' },

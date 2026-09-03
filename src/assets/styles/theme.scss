@@ -4,13 +4,13 @@
 :root {
   // ===== 亮色主题 (默认) =====
   
-  // 背景色
-  --utools-bg-primary: #ffffff;
-  --utools-bg-secondary: #f5f5f5;
-  --utools-bg-tertiary: #fafafa;
-  --utools-bg-hover: #f0f0f0;
-  --utools-bg-active: #e6e6e6;
-  --utools-bg-card: #ffffff;
+  // 背景色（护眼绿层基底，卡片保持白色形成层次）
+  --utools-bg-primary: #eaf1ea;
+  --utools-bg-secondary: #e2ebe2;
+  --utools-bg-tertiary: #f2f6f2;
+  --utools-bg-hover: #dfe9df;
+  --utools-bg-active: #d3e0d3;
+  --utools-bg-card: #f6faf6;
   --utools-bg-input: #ffffff;
   --utools-bg-overlay: rgba(0, 0, 0, 0.45);
   
@@ -27,11 +27,11 @@
   --utools-border-secondary: #f0f0f0;
   --utools-border-divider: #e8e8e8;
   
-  // 主色调 (Element Plus 蓝色)
-  --utools-primary: #409eff;
-  --utools-primary-hover: #66b1ff;
-  --utools-primary-active: #3a8ee6;
-  --utools-primary-light: #ecf5ff;
+  // 主色调（低饱和灰绿，学习工具沉静基调，不干扰注意力）
+  --utools-primary: #52796f;
+  --utools-primary-hover: #688e83;
+  --utools-primary-active: #43615a;
+  --utools-primary-light: #edf3f1;
   
   // 功能色
   --utools-success: #67c23a;
@@ -68,6 +68,26 @@
   --el-fill-color-dark: #ebedf0;
   --el-fill-color-darker: #e6e8eb;
   --el-fill-color-blank: #ffffff;
+
+  // Element Plus 主色覆盖为灰绿
+  --el-color-primary: #52796f;
+  --el-color-primary-light-3: #7d9a91;
+  --el-color-primary-light-5: #a3bab3;
+  --el-color-primary-light-7: #c9d9d4;
+  --el-color-primary-light-8: #dbe7e3;
+  --el-color-primary-light-9: #edf3f1;
+  --el-color-primary-dark-2: #43615a;
+}
+
+// ===== 关闭护眼模式：恢复中性灰基底（仅亮色主题有效） =====
+html.no-eye-care:not(.utools-dark),
+.no-eye-care:not(.utools-dark) {
+  --utools-bg-primary: #f5f5f5;
+  --utools-bg-secondary: #eeeeee;
+  --utools-bg-tertiary: #fafafa;
+  --utools-bg-hover: #f0f0f0;
+  --utools-bg-active: #e6e6e6;
+  --utools-bg-card: #ffffff;
 }
 
 // ===== 暗黑主题 =====
@@ -96,11 +116,11 @@ html.utools-dark,
   --utools-border-secondary: #333337;
   --utools-border-divider: #3e3e42;
   
-  // 主色调 (调整为适合暗黑的蓝色)
-  --utools-primary: #5b8cff;
-  --utools-primary-hover: #7ca4ff;
-  --utools-primary-active: #4a7de4;
-  --utools-primary-light: #2a3f5f;
+  // 主色调（深色下用提亮的玉绿，避免黯淡）
+  --utools-primary: #83c5a8;
+  --utools-primary-hover: #9bd4bd;
+  --utools-primary-active: #6fb396;
+  --utools-primary-light: #2e4038;
   
   // 功能色 (调整为适合暗黑的色调)
   --utools-success: #81c784;
@@ -137,6 +157,40 @@ html.utools-dark,
   --el-fill-color-dark: #2c2c2e;
   --el-fill-color-darker: #2d2d2f;
   --el-fill-color-blank: transparent;
+
+  // Element Plus 主色覆盖为玉绿（深色主题）
+  --el-color-primary: #83c5a8;
+  --el-color-primary-light-3: #6aa88e;
+  --el-color-primary-light-5: #528a72;
+  --el-color-primary-light-7: #3c6252;
+  --el-color-primary-light-8: #315042;
+  --el-color-primary-light-9: #283e34;
+  --el-color-primary-dark-2: #9cd2bb;
+}
+
+// 深色主题下主色为浅灰，叠加其上的文字/图标需反深色
+.utools-dark {
+  .el-button--primary {
+    --el-button-text-color: #1e1e1e;
+    --el-button-hover-text-color: #000000;
+    --el-button-active-text-color: #000000;
+  }
+
+  .el-radio-button {
+    --el-radio-button-checked-text-color: #1e1e1e;
+  }
+
+  .el-checkbox {
+    --el-checkbox-checked-icon-color: #1e1e1e;
+  }
+
+  .el-switch__core {
+    --el-color-white: #1e1e1e;
+  }
+
+  .el-date-table {
+    --el-color-white: #1e1e1e;
+  }
 }
 
 // ===== 全局样式适配 =====

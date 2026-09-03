@@ -145,6 +145,8 @@ export const useWordsStore =
             const mainWindowOpacity = ref(1.0);
             // 选中单词时自动发音
             const autoSpeak = ref(false);
+            // 护眼模式（浅绿背景基底），默认开启
+            const eyeCare = ref(true);
             // 专注模式设置
             const focusMode = ref<FocusModeSettings>({...defaultFocusMode});
 
@@ -274,6 +276,7 @@ export const useWordsStore =
                     "focusMode": {...defaultFocusMode},
                     "mainWindowOpacity": 1.0,
                     "autoSpeak": false,
+                    "eyeCare": true,
                 };
                 return userSet;
             }
@@ -425,8 +428,29 @@ export const useWordsStore =
             }
 
             /**
-             * 设置API密钥
+             * 应用护眼模式类名（关闭时给根元素加 no-eye-care）
              */
+            function applyEyeCareTheme(enabled: boolean) {
+                if (typeof document === 'undefined') return;
+                document.documentElement.classList.toggle('no-eye-care', !enabled);
+            }
+
+            /**
+             * 设置护眼模式开关
+             */
+            function setEyeCare(enabled: boolean) {
+                eyeCare.value = enabled;
+                applyEyeCareTheme(enabled);
+
+                let userSet = getSetDb()
+                if (userSet) {
+                    userSet.eyeCare = enabled;
+                } else {
+                    userSet = initUserSet();
+                    userSet.eyeCare = enabled;
+                }
+                addAndUpdateSetDb(userSet);
+            }
             function setApiKey(provider: TranslationPlatform, appkey: string, key: string) {
                 userApiKeys.value[provider].appkey = appkey;
                 userApiKeys.value[provider].key = key;
@@ -848,6 +872,7 @@ export const useWordsStore =
                 shortcutEnabled,
                 mainWindowOpacity,
                 autoSpeak,
+                eyeCare,
                 focusMode,
                 currentWordBankId,
                 currentWordBank,
@@ -863,6 +888,8 @@ export const useWordsStore =
                 setMainWindowOpacity,
                 applyRgbaOpacity,
                 setAutoSpeak,
+                setEyeCare,
+                applyEyeCareTheme,
                 setApiKey, // 导出设置API密钥方法
                 setOcrApiKey,
                 getApiKey, // 导出获取API密钥方法
@@ -901,6 +928,7 @@ export const useWordsStore =
                     'shortcutEnabled',
                     'mainWindowOpacity',
                     'autoSpeak',
+                    'eyeCare',
                     'focusMode',
                     'userApiKeys',
                     'userOcrApiKeys',

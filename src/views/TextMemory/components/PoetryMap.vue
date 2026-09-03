@@ -12,6 +12,7 @@
           <el-option label="全部" value="" />
           <el-option label="诗词" value="poetry" />
           <el-option label="成语" value="idiom" />
+          <el-option label="时间线" value="timeline" />
         </el-select>
 
         <el-select
@@ -53,6 +54,15 @@
         >
           清除图层
         </el-button>
+
+        <el-checkbox
+          v-model="showLibraryItems"
+          size="small"
+          style="margin-left: 12px"
+          :disabled="libraryLoading"
+        >
+          {{ libraryLoading ? '库内容加载中…' : '显示可导入的库内容' }}
+        </el-checkbox>
       </div>
 
       <div class="control-group map-legend">
@@ -62,11 +72,20 @@
         <span class="legend-item">
           <span class="legend-circle"></span>成语
         </span>
+        <span class="legend-item">
+          <span class="legend-timeline"></span>时间线
+        </span>
+        <span v-if="showLibraryItems" class="legend-item">
+          <span class="legend-library"></span>可导入
+        </span>
         <el-tag v-if="poetryCount > 0" size="small" type="info" style="margin-left: 8px">
           诗词 {{ poetryCount }} 首
         </el-tag>
         <el-tag v-if="idiomCount > 0" size="small" type="warning" style="margin-left: 6px">
           成语 {{ idiomCount }} 条
+        </el-tag>
+        <el-tag v-if="timelineCount > 0" size="small" type="danger" style="margin-left: 6px">
+          时间线 {{ timelineCount }} 事件
         </el-tag>
       </div>
     </div>
@@ -84,6 +103,13 @@
       <div v-if="selectedPoetry" class="poetry-detail">
         <div class="poetry-meta">
           <el-tag v-if="isIdiomArticle(selectedPoetry)" size="small" type="warning">成语</el-tag>
+          <template v-else-if="isTimelineArticle(selectedPoetry)">
+            <el-tag size="small" type="danger">时间线</el-tag>
+            <el-tag size="small" type="info" style="margin-left: 8px">{{ formatYear(selectedPoetry.year) }}</el-tag>
+            <el-tag v-if="getTimelineCategoryMeta(selectedPoetry.category as any)" size="small" type="info" style="margin-left: 8px">
+              {{ getTimelineCategoryMeta(selectedPoetry.category as any)?.label }}
+            </el-tag>
+          </template>
           <el-tag v-else size="small">{{ selectedPoetry.dynasty || '诗词' }}</el-tag>
           <el-tag v-if="selectedPoetry.author" size="small" type="info" style="margin-left: 8px">
             {{ selectedPoetry.author }}
@@ -105,8 +131,16 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import type { TextArticle } from '@/types/text-memory';
 import { Location } from '@element-plus/icons-vue';
-import { DYNASTY_LIST } from '@/utils/poetry-service';
+import { ElMessage } from 'element-plus';
+import { DYNASTY_LIST, fetchAllPoetry } from '@/utils/poetry-service';
+import type { PoetryItem } from '@/utils/poetry-service';
+import { fetchAllIdioms } from '@/utils/idiom-service';
+import type { IdiomItem } from '@/utils/idiom-service';
+import { fetchAllTimelineEvents, TIMELINE_CATEGORIES, getTimelineCategoryMeta } from '@/utils/timeline-service';
+import type { LibraryTimelineEvent } from '@/utils/timeline-service';
 import { getTerritoryByDynasty, getDynastyCodeByName } from '@/utils/dynasty-territory';
+import { useTextMemoryStore } from '@/stores/textMemory';
+import { buildLibraryMapItems, type LibraryMapItem } from './library-map';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -131,14 +165,27 @@ let map: L.Map | null = null;
 let markerLayer: L.LayerGroup | null = null;
 let territoryLayer: L.FeatureGroup | null = null;
 let routeLayer: L.LayerGroup | null = null;
+let libraryLayer: L.LayerGroup | null = null;
 let markerMap: Map<string, L.Marker> = new Map();
 
 // 状态
-const selectedCategory = ref<'' | 'poetry' | 'idiom'>('');
+const selectedCategory = ref<'' | 'poetry' | 'idiom' | 'timeline'>('');
 const selectedDynasty = ref('');
 const selectedAuthor = ref('');
 const detailVisible = ref(false);
 const selectedPoetry = ref<TextArticle | null>(null);
+
+// ==================== 可导入库内容图层 ====================
+const textStore = useTextMemoryStore();
+// 开关：是否显示内置题库中可导入的条目（默认关闭）
+const showLibraryItems = ref(false);
+const libraryLoading = ref(false);
+// 当前可导入条目（已按文章标题去重、只含有坐标的）
+const libraryItems = ref<LibraryMapItem[]>([]);
+// 题库原始数据（首次打开开关时懒加载，之后复用）
+let libraryRaw: { poems: PoetryItem[]; idioms: IdiomItem[]; events: LibraryTimelineEvent[] } | null = null;
+// 正在导入中的条目 key（防重复点击）
+const importingKeys = new Set<string>();
 
 // 是否为成语
 function isIdiomArticle(article: TextArticle): boolean {
@@ -147,18 +194,37 @@ function isIdiomArticle(article: TextArticle): boolean {
   return Array.isArray(article.tags) && article.tags.includes('成语');
 }
 
+// 时间线事件的合法分类集合（与 TimelineView 的识别口径一致）
+const TIMELINE_CATEGORY_SET = new Set<string>(TIMELINE_CATEGORIES.map(c => c.code));
+
+// 是否为时间线事件（category 命中时间线分类）
+function isTimelineArticle(article: TextArticle): boolean {
+  return !!article.category && TIMELINE_CATEGORY_SET.has(article.category);
+}
+
 // 当前类型筛选下生效的文章列表（用于渲染标记）
 const filteredArticles = computed(() => {
   if (!selectedCategory.value) return props.articles;
   if (selectedCategory.value === 'idiom') {
     return props.articles.filter(isIdiomArticle);
   }
-  return props.articles.filter(a => !isIdiomArticle(a));
+  if (selectedCategory.value === 'timeline') {
+    return props.articles.filter(isTimelineArticle);
+  }
+  // 诗词：排除成语与时间线事件
+  return props.articles.filter(a => !isIdiomArticle(a) && !isTimelineArticle(a));
 });
 
 // 计算属性
-const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a)).length);
+const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);
 const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
+const timelineCount = computed(() => props.articles.filter(a => a.geo && isTimelineArticle(a)).length);
+
+// 时间线事件年份展示（与 TimelineView 口径一致）
+function formatYear(year?: number): string {
+  if (year == null) return '年代未知';
+  return year < 0 ? `公元前${Math.abs(year)}年` : `公元${year}年`;
+}
 
 const dynastyOptions = computed(() => {
   return DYNASTY_LIST.map(d => ({ code: d.code, name: d.name }));
@@ -205,6 +271,7 @@ function initMap() {
   markerLayer = L.layerGroup().addTo(map);
   territoryLayer = L.featureGroup().addTo(map);
   routeLayer = L.layerGroup().addTo(map);
+  libraryLayer = L.layerGroup().addTo(map);
 
   // 渲染标记
   renderMarkers();
@@ -235,12 +302,20 @@ function renderMarkers() {
     const first = group[0];
     if (!first.geo) continue;
 
-    // 成语用专属菱形图标，诗词用按朝代上色的水滴图标
+    // 成语用圆形章戳、时间线事件用菱形、诗词用按朝代上色的水滴图标
     const isIdiom = isIdiomArticle(first);
-    const color = isIdiom ? '#E6A23C' : getDynastyColor(first.dynasty);
+    const isTimeline = !isIdiom && isTimelineArticle(first);
+    const color = isIdiom
+      ? '#E6A23C'
+      : (isTimeline ? (getTimelineCategoryMeta(first.category as any)?.color ?? '#9b59b6') : getDynastyColor(first.dynasty));
+    const shapeClass = isIdiom ? 'marker-square' : (isTimeline ? 'marker-diamond' : 'marker-pin');
+    // 菱形内数字反向旋转保持正显示
+    const countHtml = group.length > 1
+      ? (isTimeline ? `<span style="transform:rotate(-45deg)">${group.length}</span>` : `${group.length}`)
+      : '';
     const customIcon = L.divIcon({
-      className: isIdiom ? 'custom-marker idiom-marker' : 'custom-marker',
-      html: `<div class="${isIdiom ? 'marker-square' : 'marker-pin'}" style="background:${color}">${group.length > 1 ? group.length : ''}</div>`,
+      className: isIdiom ? 'custom-marker idiom-marker' : (isTimeline ? 'custom-marker timeline-marker' : 'custom-marker'),
+      html: `<div class="${shapeClass}" style="background:${color}">${countHtml}</div>`,
       iconSize: [30, 30],
       iconAnchor: [15, 30],
     });
@@ -256,14 +331,20 @@ function renderMarkers() {
     const popupContent = group.map((article, idx) => {
       const title = article.title.length > 12 ? article.title.substring(0, 12) + '...' : article.title;
       const isIdi = isIdiomArticle(article);
+      const isTl = !isIdi && isTimelineArticle(article);
+      const tlColor = isTl ? (getTimelineCategoryMeta(article.category as any)?.color ?? '#9b59b6') : '';
       const tagHtml = isIdi
         ? `<span style="background:#fdf6ec;color:#e6a23c;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">成语</span>`
-        : (article.dynasty
-            ? `<span style="background:#ecf5ff;color:#409eff;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
-            : '');
+        : isTl
+          ? `<span style="background:#f4f0f7;color:${tlColor};padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">时间线</span>`
+          : (article.dynasty
+              ? `<span style="background:#f0f0f0;color:#595959;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${article.dynasty}</span>`
+              : '');
       const subtitle = isIdi
         ? (article.location || '')
-        : (article.author || '佚名');
+        : isTl
+          ? formatYear(article.year)
+          : (article.author || '佚名');
       return `<div class="popup-item" data-id="${article._id}" style="cursor:pointer;padding:4px 0;border-bottom:${idx < group.length - 1 ? '1px solid #eee' : 'none'}">
         ${tagHtml}<strong>${title}</strong>
         ${subtitle ? `<div style="color:#666;font-size:12px;margin-top:2px"> ${subtitle}</div>` : ''}
@@ -315,7 +396,139 @@ function getDynastyColor(dynasty?: string): string {
     '清': '#800080', 'qing': '#800080',
     '近现代': '#C0C0C0', '现代': '#C0C0C0', 'xiandai': '#C0C0C0',
   };
-  return colorMap[dynasty || ''] || '#409EFF';
+  return colorMap[dynasty || ''] || '#8c8c8c';
+}
+
+// ==================== 可导入库内容图层 ====================
+
+/** 按当前已导入文章标题重新计算可导入条目（去重） */
+function refreshLibraryItems() {
+  if (!libraryRaw) return;
+  const importedTitles = new Set(props.articles.map(a => a.title.trim()));
+  libraryItems.value = buildLibraryMapItems(
+    libraryRaw.poems,
+    libraryRaw.idioms,
+    libraryRaw.events,
+    importedTitles
+  );
+}
+
+/** 懒加载内置题库（诗词 + 成语 + 时间线事件），只在首次打开开关时执行 */
+async function ensureLibraryLoaded() {
+  if (libraryRaw || libraryLoading.value) return;
+  // 地图未激活时不加载
+  if (props.active === false) return;
+  libraryLoading.value = true;
+  try {
+    const [poetryMap, idioms, events] = await Promise.all([
+      fetchAllPoetry(),
+      fetchAllIdioms(),
+      fetchAllTimelineEvents(),
+    ]);
+    libraryRaw = {
+      poems: Object.values(poetryMap).flat(),
+      idioms,
+      events,
+    };
+    refreshLibraryItems();
+  } catch (error) {
+    console.error('[PoetryMap] 加载可导入库内容失败:', error);
+    ElMessage.error('库内容加载失败，请稍后重试');
+  } finally {
+    libraryLoading.value = false;
+  }
+}
+
+/** 渲染可导入条目标记（黄色圆点，与已导入文章样式区分） */
+function renderLibraryMarkers() {
+  if (!libraryLayer || !map) return;
+  libraryLayer.clearLayers();
+  if (!showLibraryItems.value) return;
+
+  const items = libraryItems.value;
+  if (items.length === 0) return;
+
+  // 按坐标聚合，同一地点的条目放在一起
+  const clusterMap = new Map<string, LibraryMapItem[]>();
+  for (const item of items) {
+    const key = `${item.geo.lng.toFixed(2)},${item.geo.lat.toFixed(2)}`;
+    if (!clusterMap.has(key)) {
+      clusterMap.set(key, []);
+    }
+    clusterMap.get(key)!.push(item);
+  }
+
+  for (const [, group] of clusterMap) {
+    const first = group[0];
+    const libraryIcon = L.divIcon({
+      className: 'library-marker',
+      html: `<div class="library-dot">${group.length > 1 ? group.length : ''}</div>`,
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+    });
+
+    const marker = L.marker([first.geo.lat, first.geo.lng], { icon: libraryIcon });
+
+    const kindLabel: Record<LibraryMapItem['kind'], string> = {
+      poetry: '诗词',
+      idiom: '成语',
+      timeline: '事件',
+    };
+    const popupContent = group.map((item, idx) => {
+      const title = item.title.length > 14 ? item.title.substring(0, 14) + '...' : item.title;
+      return `<div class="lib-popup-item" style="padding:6px 0;border-bottom:${idx < group.length - 1 ? '1px solid #eee' : 'none'};display:flex;align-items:center;gap:8px">
+        <div style="flex:1;min-width:0">
+          <span style="background:#fdf6ec;color:#b88230;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${kindLabel[item.kind]}</span><strong>${title}</strong>
+          ${item.subtitle ? `<div style="color:#666;font-size:12px;margin-top:2px">${item.subtitle}</div>` : ''}
+          ${item.location ? `<div style="color:#999;font-size:11px;margin-top:1px">📍 ${item.location}</div>` : ''}
+        </div>
+        <button class="lib-import-btn" data-key="${item.key}">导入</button>
+      </div>`;
+    }).join('');
+
+    const headerHtml = first.geo.name
+      ? `<div style="font-size:12px;color:#909399;margin-bottom:6px;border-bottom:1px solid #f0f0f0;padding-bottom:4px">📍 ${first.geo.name}</div>`
+      : '';
+
+    marker.bindPopup(`<div class="poetry-popup library-popup">${headerHtml}${popupContent}</div>`, { maxWidth: 300 });
+    marker.on('popupopen', () => {
+      nextTick(() => {
+        const buttons = document.querySelectorAll('.lib-import-btn');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const key = btn.getAttribute('data-key');
+            if (key) importLibraryItem(key);
+          });
+        });
+      });
+    });
+
+    libraryLayer.addLayer(marker);
+  }
+}
+
+/** 导入单条库内容：落库成功后从库图层移除（articles 变化会同步重渲已导入标记） */
+async function importLibraryItem(key: string) {
+  const item = libraryItems.value.find(i => i.key === key);
+  if (!item || importingKeys.has(key)) return;
+  importingKeys.add(key);
+  try {
+    const result = await textStore.addArticle(item.article);
+    if (result.success) {
+      ElMessage.success(`已导入「${item.title}」`);
+      libraryItems.value = libraryItems.value.filter(i => i.key !== key);
+      map?.closePopup();
+      renderLibraryMarkers();
+    } else {
+      ElMessage.error(result.error || '导入失败');
+    }
+  } catch (error) {
+    console.error('[PoetryMap] 导入库内容失败:', error);
+    ElMessage.error('导入失败，请重试');
+  } finally {
+    importingKeys.delete(key);
+  }
 }
 
 // ==================== 详情展示 ====================
@@ -521,7 +734,22 @@ function clearAllOverlays() {
 
 watch(() => props.articles, () => {
   renderMarkers();
+  // 已导入列表变化时，同步从可导入图层中去掉同标题条目
+  if (libraryRaw && showLibraryItems.value) {
+    refreshLibraryItems();
+    renderLibraryMarkers();
+  }
 }, { deep: true });
+
+// 开关库内容图层：首次打开时懒加载题库，关闭时移除图层
+watch(showLibraryItems, async (on) => {
+  if (on) {
+    await ensureLibraryLoaded();
+    renderLibraryMarkers();
+  } else {
+    libraryLayer?.clearLayers();
+  }
+});
 
 // 切换类型筛选时，若已选作者已不在范围内则清空，并重渲路线
 watch(selectedCategory, () => {
@@ -541,6 +769,10 @@ watch(() => props.active, (isActive) => {
       map?.invalidateSize();
       renderMarkers();
     });
+    // 重新激活时若开关仍开着但题库尚未加载（上次处于未激活状态），补加载
+    if (showLibraryItems.value && !libraryRaw) {
+      ensureLibraryLoaded().then(() => renderLibraryMarkers());
+    }
   }
 });
 
@@ -611,7 +843,7 @@ onUnmounted(() => {
     display: inline-block;
     width: 10px;
     height: 10px;
-    background: #409eff;
+    background: #595959;
     border-radius: 50% 50% 50% 0;
     transform: rotate(-45deg);
   }
@@ -624,6 +856,25 @@ onUnmounted(() => {
     border-radius: 50%;
     border: 1px solid #fef3e0;
     box-shadow: 0 0 0 1px #e6a23c;
+  }
+
+  .legend-library {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #f7ba2a;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    box-shadow: 0 0 0 1px rgba(247, 186, 42, 0.6);
+  }
+
+  .legend-timeline {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #9b59b6;
+    transform: rotate(45deg);
+    border-radius: 2px;
   }
 }
 
@@ -662,7 +913,7 @@ onUnmounted(() => {
     width: 30px;
     height: 30px;
     border-radius: 50% 50% 50% 0;
-    background: #409eff;
+    background: #595959;
     position: absolute;
     transform: rotate(-45deg);
     left: 50%;
@@ -698,6 +949,27 @@ onUnmounted(() => {
     outline: 2px solid #e6a23c;
     outline-offset: -1px;
   }
+
+  /* 时间线事件用菱形标记，颜色按事件分类（政治/文学/科学/思想/社会） */
+  .marker-diamond {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: #9b59b6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -12px 0 0 -12px;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid #f4f0f7;
+  }
 }
 
 .route-marker {
@@ -714,6 +986,40 @@ onUnmounted(() => {
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     border: 2px solid #fff;
+  }
+}
+
+/* 可导入库内容标记：黄色小圆点，与已导入文章（水滴/圆形章戳）区分 */
+.library-marker {
+  .library-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f7ba2a;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px rgba(247, 186, 42, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a4f01;
+    font-size: 10px;
+    font-weight: bold;
+  }
+}
+
+/* 库内容弹出框的导入按钮 */
+.lib-import-btn {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: #fff;
+  background: #f7ba2a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background: #eba618;
   }
 }
 

@@ -1,0 +1,84 @@
+{
+  "id": "zodiac-12",
+  "name": "十二生肖",
+  "description": "十二生肖及其对应地支，顺序本身是考点",
+  "ordered": true,
+  "usableAsPeg": true,
+  "mnemonics": [
+    "子鼠丑牛寅虎卯兔 辰龙巳蛇午马未羊 申猴酉鸡戌狗亥猪"
+  ],
+  "items": [
+    {
+      "id": "zodiac-12-1",
+      "question": "鼠",
+      "answer": "子",
+      "order": 1
+    },
+    {
+      "id": "zodiac-12-2",
+      "question": "牛",
+      "answer": "丑",
+      "order": 2
+    },
+    {
+      "id": "zodiac-12-3",
+      "question": "虎",
+      "answer": "寅",
+      "order": 3
+    },
+    {
+      "id": "zodiac-12-4",
+      "question": "兔",
+      "answer": "卯",
+      "order": 4
+    },
+    {
+      "id": "zodiac-12-5",
+      "question": "龙",
+      "answer": "辰",
+      "order": 5
+    },
+    {
+      "id": "zodiac-12-6",
+      "question": "蛇",
+      "answer": "巳",
+      "order": 6
+    },
+    {
+      "id": "zodiac-12-7",
+      "question": "马",
+      "answer": "午",
+      "order": 7
+    },
+    {
+      "id": "zodiac-12-8",
+      "question": "羊",
+      "answer": "未",
+      "order": 8
+    },
+    {
+      "id": "zodiac-12-9",
+      "question": "猴",
+      "answer": "申",
+      "order": 9
+    },
+    {
+      "id": "zodiac-12-10",
+      "question": "鸡",
+      "answer": "酉",
+      "order": 10
+    },
+    {
+      "id": "zodiac-12-11",
+      "question": "狗",
+      "answer": "戌",
+      "order": 11
+    },
+    {
+      "id": "zodiac-12-12",
+      "question": "猪",
+      "answer": "亥",
+      "order": 12
+    }
+  ]
+}

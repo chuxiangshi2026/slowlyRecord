@@ -13,6 +13,7 @@ const Word = () => import('@/views/Word/Word.vue');
 const NumberMemory = () => import('@/views/NumberMemory/NumberMemory.vue');
 const NumberMemoryTraining = () => import('@/views/NumberMemory/NumberMemoryTraining.vue');
 const NumberMemoryEntries = () => import('@/views/NumberMemory/NumberMemoryEntries.vue');
+const NumberMemoryMapping = () => import('@/views/NumberMemory/NumberMemoryMapping.vue');
 const MemoryTest = () => import('@/views/MemoryTest/MemoryTest.vue');
 const Dictation = () => import('@/views/Dictation/Dictation.vue');
 const QuickTranslate = () => import('@/views/Translate/QuickTranslate.vue');
@@ -24,6 +25,10 @@ const PhoneticMemory = () => import('@/views/PhoneticMemory/PhoneticMemory.vue')
 const PhoneticRecognition = () => import('@/views/PhoneticMemory/PhoneticRecognition.vue');
 const MinimalPairs = () => import('@/views/PhoneticMemory/MinimalPairs.vue');
 const PhonemeBreakdown = () => import('@/views/PhoneticMemory/PhonemeBreakdown.vue');
+const KnowledgeMemoryPack = () => import('@/views/KnowledgeMemory/KnowledgeMemoryPack.vue');
+const MemoryPalaceEdit = () => import('@/views/MemoryPalace/MemoryPalaceEdit.vue');
+const MemoryPalaceDetail = () => import('@/views/MemoryPalace/MemoryPalaceDetail.vue');
+const MemoryPalaceReview = () => import('@/views/MemoryPalace/MemoryPalaceReview.vue');
 // const Exception = () => import('@/views/Exception/Exception.vue');
 // const Apply = () => import('@/views/Apply/Apply.vue');
 // const Check = () => import('@/views/Check/Check.vue');
@@ -102,6 +107,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '数字记忆条目',
+        },
+      },
+      {
+        path: 'number-memory/mapping',
+        name: 'numberMemoryMapping',
+        component: NumberMemoryMapping,
+        meta: {
+          menu: false,
+          title: '数字映射设置',
         },
       },
       {
@@ -188,6 +202,42 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '音素拆解',
+        },
+      },
+      {
+        path: 'knowledge-memory/:id',
+        name: 'knowledgeMemoryPack',
+        component: KnowledgeMemoryPack,
+        meta: {
+          menu: false,
+          title: '知识包练习',
+        },
+      },
+      {
+        path: 'memory-palace/edit/:id?',
+        name: 'memoryPalaceEdit',
+        component: MemoryPalaceEdit,
+        meta: {
+          menu: false,
+          title: '编辑宫殿',
+        },
+      },
+      {
+        path: 'memory-palace/:id',
+        name: 'memoryPalaceDetail',
+        component: MemoryPalaceDetail,
+        meta: {
+          menu: false,
+          title: '宫殿详情',
+        },
+      },
+      {
+        path: 'memory-palace/:id/review',
+        name: 'memoryPalaceReview',
+        component: MemoryPalaceReview,
+        meta: {
+          menu: false,
+          title: '宫殿巡视',
         },
       },
       ...(isDesktopEnv ? [

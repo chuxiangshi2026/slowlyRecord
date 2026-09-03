@@ -992,8 +992,8 @@ function generateComparedHtml(written: string, result: CompareResult): string {
   .temp-notepad-section {
     margin-bottom: 20px;
     padding: 16px;
-    background: linear-gradient(135deg, #f6ffed 0%, #f0f5ff 100%);
-    border: 1px solid #b7eb8f;
+    background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+    border: 1px solid #d9d9d9;
     border-radius: 8px;
 
     .notepad-header {
@@ -1004,7 +1004,7 @@ function generateComparedHtml(written: string, result: CompareResult): string {
 
       .notepad-title {
         font-weight: 600;
-        color: #52c41a;
+        color: var(--utools-text-secondary);
         font-size: 14px;
       }
 
@@ -1046,8 +1046,8 @@ function generateComparedHtml(written: string, result: CompareResult): string {
   
   .board-card {
     padding: 16px;
-    background: linear-gradient(135deg, #fffbe6 0%, #fff7e6 100%);
-    border: 1px solid #ffe58f;
+    background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+    border: 1px solid #d9d9d9;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s;
@@ -1058,13 +1058,13 @@ function generateComparedHtml(written: string, result: CompareResult): string {
     }
     
     &.is-expanded {
-      background: linear-gradient(135deg, #e6f7ff 0%, #f0f5ff 100%);
-      border-color: #91d5ff;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e6e6e6 100%);
+      border-color: #bfbfbf;
     }
     
     .card-header {
       font-weight: 600;
-      color: #d48806;
+      color: var(--utools-text-primary);
       margin-bottom: 8px;
       font-size: 14px;
     }

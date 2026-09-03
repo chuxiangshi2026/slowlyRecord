@@ -86,6 +86,8 @@ export type UserSetType = DbDoc<{
     mainWindowOpacity: number;
     /** 选中单词时自动发音 */
     autoSpeak: boolean;
+    /** 护眼模式（浅绿背景基底），默认开启 */
+    eyeCare?: boolean;
 }>;
 
 

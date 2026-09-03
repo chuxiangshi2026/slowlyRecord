@@ -77,6 +77,9 @@ export interface PresetImageMap {
   };
 }
 
+// 数字记忆条目类型
+export type NumberMemoryKind = 'pi' | 'phone' | 'idcard' | 'qq' | 'email' | 'bankcard' | 'plate' | 'date' | 'custom';
+
 // 数字记忆条目（用于记忆长串数字）
 export interface NumberMemoryEntry {
   _id: string;
@@ -84,12 +87,16 @@ export interface NumberMemoryEntry {
   type: 'number_memory_entry';
   title: string;            // 标题
   numbers: string;          // 要记忆的数字串
+  kind?: NumberMemoryKind;  // 数字类型，旧数据默认按 custom 处理
   tags: string[];           // 标签
   description?: string;     // 描述/备注
+  mnemonic?: string;        // 顺口溜/谐音助记
   createdAt: number;
   updatedAt: number;
   reviewCount: number;      // 复习次数
   lastReviewTime?: number;  // 最后复习时间
+  level?: number;           // SRS 等级 0-12，默认 1
+  learnDate?: number;       // SRS 上次学习/复习时间
 }
 
 // 数字记忆笔记

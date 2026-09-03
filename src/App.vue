@@ -635,11 +635,15 @@ onMounted(async () => {
         if (setDb.memoryFirmness) wordsStore.memoryFirmness = setDb.memoryFirmness;
         if (setDb.mainWindowOpacity !== undefined) wordsStore.mainWindowOpacity = setDb.mainWindowOpacity;
         if (setDb.autoSpeak !== undefined) wordsStore.autoSpeak = setDb.autoSpeak;
+        if (setDb.eyeCare !== undefined) wordsStore.eyeCare = setDb.eyeCare;
       }
     } catch (e) {
       console.error('加载用户设置失败:', e);
     }
   }
+
+  // 启动时应用护眼模式（亮色主题基底是否为浅绿）
+  wordsStore.applyEyeCareTheme(wordsStore.eyeCare);
 
   // 启动时应用保存的窗口透明度
   if (wordsStore.mainWindowOpacity < 1.0) {

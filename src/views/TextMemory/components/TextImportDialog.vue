@@ -3,74 +3,184 @@
       :model-value="modelValue"
       @update:model-value="$emit('update:modelValue', $event)"
       @opened="handleDialogOpened"
-      title="导入文本"
+      title="添加 / 导入文本"
       width="780px"
       destroy-on-close
   >
     <el-tabs v-model="activeTab">
-      <!-- 手动输入 -->
-      <el-tab-pane label="手动输入" name="manual">
-        <el-form :model="manualForm" label-width="80px">
+      <!-- 手动添加（默认）：顶部选择类型，字段随类型切换 -->
+      <el-tab-pane label="手动添加" name="manual">
+        <div class="type-bar">
+          <span class="type-bar-label">类型</span>
+          <el-radio-group v-model="manualType" size="small">
+            <el-radio-button label="text">普通文本</el-radio-button>
+            <el-radio-button label="poetry">诗词</el-radio-button>
+            <el-radio-button label="idiom">成语</el-radio-button>
+            <el-radio-button label="knowledge">知识条目</el-radio-button>
+            <el-radio-button label="timeline">时间线事件</el-radio-button>
+            <el-radio-button label="peg">宫殿桩</el-radio-button>
+          </el-radio-group>
+        </div>
+
+        <!-- 普通文本：内嵌共享编辑表单 -->
+        <TextEditForm v-if="manualType === 'text'" ref="manualFormRef" @submit="handleManualSubmit" />
+
+        <!-- 诗词 -->
+        <el-form v-else-if="manualType === 'poetry'" label-width="80px">
           <el-form-item label="标题">
-            <el-input v-model="manualForm.title" placeholder="输入标题"/>
+            <el-input v-model="manualPoetryForm.title" placeholder="诗词标题，如《静夜思》" maxlength="100"/>
           </el-form-item>
-          <el-form-item label="标签">
-            <el-select
-                v-model="manualForm.tags"
-                multiple
-                filterable
-                allow-create
-                placeholder="选择或输入标签"
-                style="width: 100%"
-            >
-              <el-option
-                  v-for="tag in existingTags"
-                  :key="tag"
-                  :label="tag"
-                  :value="tag"
-              />
+          <el-form-item label="朝代">
+            <el-select v-model="manualPoetryForm.dynasty" placeholder="选择朝代" clearable filterable allow-create style="width: 100%">
+              <el-option v-for="d in POETRY_DYNASTY_OPTIONS" :key="d" :label="d" :value="d"/>
             </el-select>
           </el-form-item>
-          <el-form-item label="内容">
-            <el-input
-                v-model="manualForm.content"
-                type="textarea"
-                :rows="10"
-                placeholder="粘贴或输入文本内容..."
-            />
+          <el-form-item label="作者">
+            <el-input v-model="manualPoetryForm.author" placeholder="作者（可选）" maxlength="50"/>
+          </el-form-item>
+          <el-form-item label="年份">
+            <el-input v-model="manualPoetryForm.year" type="number" placeholder="创作年份（可选，用于时间线；负数=公元前）"/>
+          </el-form-item>
+          <el-form-item label="地点">
+            <el-input v-model="manualPoetryForm.location" placeholder="创作地点（可选，用于地图）"/>
+          </el-form-item>
+          <el-form-item label="正文">
+            <el-input v-model="manualPoetryForm.content" type="textarea" :rows="8" placeholder="请输入诗词正文..."/>
+          </el-form-item>
+          <el-form-item label="标签">
+            <el-select v-model="manualPoetryForm.tags" multiple filterable allow-create placeholder="选择或输入标签" style="width: 100%">
+              <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag"/>
+            </el-select>
           </el-form-item>
         </el-form>
+
+        <!-- 成语 -->
+        <el-form v-else-if="manualType === 'idiom'" label-width="80px">
+          <el-form-item label="成语">
+            <el-input v-model="manualIdiomForm.title" placeholder="如：画蛇添足" maxlength="50"/>
+          </el-form-item>
+          <el-form-item label="释义">
+            <el-input v-model="manualIdiomForm.meaning" type="textarea" :rows="4" placeholder="请输入释义..."/>
+          </el-form-item>
+          <el-form-item label="出处">
+            <el-input v-model="manualIdiomForm.source" placeholder="出处（可选）"/>
+          </el-form-item>
+          <el-form-item label="标签">
+            <el-select v-model="manualIdiomForm.tags" multiple filterable allow-create placeholder="选择或输入标签" style="width: 100%">
+              <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag"/>
+            </el-select>
+          </el-form-item>
+        </el-form>
+
+        <!-- 知识条目 -->
+        <el-form v-else-if="manualType === 'knowledge'" label-width="80px">
+          <el-form-item label="所属知识集">
+            <el-input v-model="manualKnowledgeForm.setName" placeholder="知识集名称（可选），如：常识"/>
+          </el-form-item>
+          <el-form-item label="名称/问题">
+            <el-input v-model="manualKnowledgeForm.question" placeholder="如：水的化学式"/>
+          </el-form-item>
+          <el-form-item label="答案/释义">
+            <el-input v-model="manualKnowledgeForm.answer" type="textarea" :rows="4" placeholder="请输入答案或释义..."/>
+          </el-form-item>
+          <el-form-item label="标签">
+            <el-select v-model="manualKnowledgeForm.tags" multiple filterable allow-create placeholder="选择或输入标签" style="width: 100%">
+              <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag"/>
+            </el-select>
+          </el-form-item>
+        </el-form>
+
+        <!-- 时间线事件 -->
+        <el-form v-else-if="manualType === 'timeline'" label-width="80px">
+          <el-form-item label="事件名">
+            <el-input v-model="timelineManualForm.title" placeholder="事件名称"/>
+          </el-form-item>
+          <el-form-item label="年份">
+            <el-input v-model="timelineManualForm.year" type="number" placeholder="公元年份，负数=公元前"/>
+          </el-form-item>
+          <el-form-item label="区域">
+            <el-select v-model="timelineManualForm.region" style="width: 100%">
+              <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code"/>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="timelineManualForm.content" type="textarea" :rows="5" placeholder="具体事件描述..."/>
+          </el-form-item>
+          <el-form-item label="标签">
+            <el-select v-model="timelineManualForm.tags" multiple filterable allow-create placeholder="选择或输入标签" style="width: 100%">
+              <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag"/>
+            </el-select>
+          </el-form-item>
+        </el-form>
+
+        <!-- 宫殿桩 -->
+        <el-form v-else label-width="80px">
+          <el-form-item label="所属宫殿">
+            <el-select v-model="manualPegForm.palaceId" placeholder="选择宫殿" style="width: 100%" @change="handlePegPalaceChange">
+              <el-option v-for="p in palaceStore.palaces" :key="p._id" :label="p.name" :value="p._id"/>
+              <el-option label="新建宫殿..." value="__new__"/>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="顺序号">
+            <el-input v-model="manualPegForm.order" type="number" placeholder="插入位置（可选，默认追加到末尾）"/>
+          </el-form-item>
+          <el-form-item label="桩名">
+            <el-input v-model="manualPegForm.name" placeholder="如：大门"/>
+          </el-form-item>
+          <el-form-item label="备选桩">
+            <el-input v-model="manualPegForm.alternates" placeholder="多个备选桩用逗号分隔（可选）"/>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="manualPegForm.description" type="textarea" :rows="3" placeholder="桩的描述（可选）"/>
+          </el-form-item>
+        </el-form>
+
+        <div class="manual-form-actions">
+          <el-button type="primary" @click="handleManualSave">添加</el-button>
+        </div>
       </el-tab-pane>
 
-      <!-- 批量导入 -->
+      <!-- 批量导入：顶部选择类型，格式说明随类型切换 -->
       <el-tab-pane label="批量导入" name="batch">
+        <div class="type-bar">
+          <span class="type-bar-label">类型</span>
+          <el-radio-group v-model="batchType" size="small">
+            <el-radio-button label="text">普通文本</el-radio-button>
+            <el-radio-button label="poetry">诗词</el-radio-button>
+            <el-radio-button label="idiom">成语</el-radio-button>
+            <el-radio-button label="knowledge">知识条目</el-radio-button>
+            <el-radio-button label="timeline">时间线事件</el-radio-button>
+          </el-radio-group>
+        </div>
         <el-alert
             title="批量导入格式说明"
             type="info"
             :closable="false"
             style="margin-bottom: 16px"
         >
-          <p>每篇文章使用以下格式，多篇文章用 --- 分隔：</p>
-          <pre style="background: #f5f7fa; padding: 10px; margin-top: 8px;">
-标题：文章标题
-标签：标签1,标签2
-作者：作者名
----
-文章内容...
----
-标题：另一篇文章
-...</pre>
+          <p>{{ batchFormatTip.desc }}</p>
+          <pre style="background: #f5f7fa; padding: 10px; margin-top: 8px; white-space: pre-wrap;">{{ batchFormatTip.example }}</pre>
         </el-alert>
         <el-input
             v-model="batchContent"
             type="textarea"
             :rows="12"
-            placeholder="粘贴批量导入的文本..."
+            :placeholder="batchPlaceholder"
         />
       </el-tab-pane>
 
-      <!-- 文件导入 -->
+      <!-- 文件导入：顶部选择类型，影响导入后的分类归属 -->
       <el-tab-pane label="文件导入" name="file">
+        <div class="type-bar">
+          <span class="type-bar-label">类型</span>
+          <el-radio-group v-model="fileType" size="small">
+            <el-radio-button label="text">普通文本</el-radio-button>
+            <el-radio-button label="poetry">诗词</el-radio-button>
+            <el-radio-button label="idiom">成语</el-radio-button>
+            <el-radio-button label="knowledge">知识条目</el-radio-button>
+            <el-radio-button label="timeline">时间线事件</el-radio-button>
+          </el-radio-group>
+        </div>
         <!-- 文件格式说明 -->
         <el-alert
             title="文件导入格式说明"
@@ -181,7 +291,7 @@
               :rows="6"
               placeholder="文件内容..."
           />
-          <el-form :model="fileForm" label-width="80px" style="margin-top: 16px">
+          <el-form v-if="fileType === 'text' || fileType === 'poetry' || fileType === 'idiom'" :model="fileForm" label-width="80px" style="margin-top: 16px">
             <el-form-item label="标题">
               <el-input v-model="fileForm.title" placeholder="输入标题（默认使用文件名）"/>
             </el-form-item>
@@ -390,7 +500,7 @@
                       <div style="display: flex; justify-content: space-between; align-items: center">
                         <span style="font-weight: bold">{{ result.title }}</span>
                         <div>
-                          <el-tag size="small" style="margin-right: 8px">{{ result.author }}</el-tag>
+                          <el-tag size="small" type="info" style="margin-right: 8px">{{ result.author }}</el-tag>
                           <el-tag size="small" type="success" v-if="result.source === 'ai'">AI</el-tag>
                         </div>
                       </div>
@@ -464,7 +574,7 @@
                       <div style="display: flex; justify-content: space-between; align-items: center">
                         <span style="font-weight: bold">{{ item.title }}</span>
                         <div>
-                          <el-tag size="small" style="margin-right: 4px" v-for="tag in item.tags.slice(0, 2)" :key="tag">{{ tag }}</el-tag>
+                          <el-tag size="small" type="info" style="margin-right: 4px" v-for="tag in item.tags.slice(0, 2)" :key="tag">{{ tag }}</el-tag>
                         </div>
                       </div>
                     </template>
@@ -487,459 +597,380 @@
               </div>
             </el-tab-pane>-->
 
-      <!-- 诗词库 -->
-      <el-tab-pane label="诗词库" name="poetry">
-        <el-form :model="poetryForm" label-width="60px" size="small">
-          <el-form-item label="朝代">
-            <el-select v-model="poetryForm.dynasty" placeholder="全部" clearable style="width: 100%">
-              <el-option label="先秦" value="xianqin"/>
-              <el-option label="两汉" value="han"/>
-              <el-option label="魏晋南北朝" value="weijin"/>
-              <el-option label="隋" value="sui"/>
-              <el-option label="唐" value="tang"/>
-              <el-option label="宋" value="song"/>
-              <el-option label="元" value="yuan"/>
-              <el-option label="明" value="ming"/>
-              <el-option label="清" value="qing"/>
-              <el-option label="近现代" value="xiandai"/>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="搜索">
-            <el-input
-                v-model="poetryForm.keyword"
-                placeholder="诗词名、作者或诗句..."
-                clearable
-                @keyup.enter="handlePoetrySearch"
-            >
-              <template #append>
-                <el-button @click="handlePoetrySearch">搜索</el-button>
-              </template>
-            </el-input>
-          </el-form-item>
-        </el-form>
-
-        <div v-if="poetryLoading" class="poetry-loading">
-          <el-skeleton :rows="5" animated />
-        </div>
-
-        <div v-else-if="poetryResults.length > 0" class="poetry-results">
-          <div class="poetry-toolbar">
-            <el-checkbox
-                :model-value="isAllSelected"
-                :indeterminate="isIndeterminate"
-                @change="handleSelectAll"
-                size="small"
-            >
-              全选
-            </el-checkbox>
-            <span class="poetry-selected-count" v-if="selectedPoetries.length > 0">
-              已选 {{ selectedPoetries.length }} 首
-            </span>
-          </div>
-          <el-scrollbar height="340px">
-            <el-card
-                v-for="(poem, index) in poetryResults"
-                :key="poem.id"
-                shadow="hover"
-                style="margin-bottom: 10px; cursor: pointer"
-                @click="selectPoetry(poem)"
-                :class="{ 'selected': selectedPoetries.some(p => p.id === poem.id) }"
-                size="small"
-            >
-              <template #header>
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <el-checkbox
-                        :model-value="selectedPoetries.some(p => p.id === poem.id)"
-                        @click.stop
-                        @change="selectPoetry(poem)"
-                    />
-                    <span style="font-weight: bold; font-size: 13px">{{ poem.title }}</span>
-                  </div>
-                  <div>
-                    <el-tag size="small" type="info" style="margin-right: 6px">{{ poem.dynasty }}</el-tag>
-                    <el-tag size="small">{{ poem.author }}</el-tag>
-                  </div>
-                </div>
-              </template>
-              <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; margin-bottom: 6px; color: var(--utools-text-secondary)">
-                {{ poem.content.substring(0, 80) }}{{ poem.content.length > 80 ? '...' : '' }}
-              </div>
-              <div v-if="poem.location" style="font-size: 11px; color: #909399">
-                <el-icon size="12"><Location /></el-icon> {{ poem.location }}
-              </div>
-            </el-card>
-          </el-scrollbar>
-        </div>
-
-        <div v-else class="poetry-placeholder">
-          <el-empty description="请选择朝代或输入关键词搜索"/>
-        </div>
-      </el-tab-pane>
-
-      <!-- 成语库 -->
-      <el-tab-pane label="成语库" name="idiom">
-        <el-form :model="idiomForm" label-width="60px" size="small">
-          <el-form-item label="分类">
-            <el-select v-model="idiomForm.category" placeholder="全部" clearable style="width: 100%">
-              <el-option
-                  v-for="cat in IDIOM_CATEGORIES"
-                  :key="cat.code"
-                  :label="cat.name"
-                  :value="cat.code"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="搜索">
-            <el-input
-                v-model="idiomForm.keyword"
-                placeholder="成语、释义或拼音..."
-                clearable
-                @keyup.enter="handleIdiomSearch"
-            >
-              <template #append>
-                <el-button @click="handleIdiomSearch">搜索</el-button>
-              </template>
-            </el-input>
-          </el-form-item>
-        </el-form>
-
-        <div v-if="idiomLoading" class="idiom-loading">
-          <el-skeleton :rows="5" animated />
-        </div>
-
-        <div v-else-if="idiomResults.length > 0" class="idiom-results">
-          <div class="idiom-toolbar">
-            <el-checkbox
-                :model-value="isAllIdiomsSelected"
-                :indeterminate="isIdiomsIndeterminate"
-                @change="handleSelectAllIdioms"
-                size="small"
-            >
-              全选
-            </el-checkbox>
-            <span class="idiom-selected-count" v-if="selectedIdioms.length > 0">
-              已选 {{ selectedIdioms.length }} 条
-            </span>
-          </div>
-          <el-scrollbar height="340px">
-            <el-card
-                v-for="item in idiomResults"
-                :key="item.id"
-                shadow="hover"
-                style="margin-bottom: 10px; cursor: pointer"
-                @click="selectIdiom(item)"
-                :class="{ 'selected': selectedIdioms.some(s => s.id === item.id) }"
-                size="small"
-            >
-              <template #header>
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <el-checkbox
-                        :model-value="selectedIdioms.some(s => s.id === item.id)"
-                        @click.stop
-                        @change="selectIdiom(item)"
-                    />
-                    <span style="font-weight: bold; font-size: 13px">{{ item.title }}</span>
-                    <span v-if="item.pinyin" style="font-size: 12px; color: #909399; margin-left: 4px">{{ item.pinyin }}</span>
-                  </div>
-                  <el-tag size="small" type="info">{{ item.category }}</el-tag>
-                </div>
-              </template>
-              <div style="font-size: 12px; line-height: 1.6; color: var(--utools-text-primary)">
-                <span style="color: #909399">【释义】</span>{{ item.meaning }}
-              </div>
-              <div v-if="item.source" style="font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary); margin-top: 4px">
-                <span style="color: #909399">【出处】</span>{{ item.source }}
-              </div>
-              <div v-if="item.example" style="font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary); margin-top: 4px">
-                <span style="color: #909399">【例句】</span>{{ item.example }}
-              </div>
-            </el-card>
-          </el-scrollbar>
-        </div>
-
-        <div v-else class="idiom-placeholder">
-          <el-empty description="请选择分类或输入关键词搜索"/>
-        </div>
-      </el-tab-pane>
-
-      <!-- 时间线 -->
-      <el-tab-pane label="时间线" name="timeline">
-        <el-radio-group v-model="timelineSubTab" size="small" style="margin-bottom: 16px">
-          <el-radio-button label="library">本地库</el-radio-button>
-          <el-radio-button label="manual">手动/批量</el-radio-button>
-          <el-radio-button label="ai">AI 生成</el-radio-button>
+      <!-- 内置库：诗词库/成语库/时间线/知识库/宫殿桩库 二级切换 -->
+      <el-tab-pane label="内置库" name="library">
+        <el-radio-group v-model="libTab" size="small" style="margin-bottom: 16px">
+          <el-radio-button label="poetry">诗词库</el-radio-button>
+          <el-radio-button label="idiom">成语库</el-radio-button>
+          <el-radio-button label="timeline">时间线</el-radio-button>
+          <el-radio-button label="knowledge">知识库</el-radio-button>
+          <el-radio-button label="pegPacks">宫殿桩库</el-radio-button>
         </el-radio-group>
 
-        <!-- 本地库 -->
-        <div v-if="timelineSubTab === 'library'">
-          <el-form :model="timelineForm" label-width="60px" size="small">
-            <el-form-item label="分类">
-              <el-select v-model="timelineForm.category" placeholder="全部" clearable style="width: 100%">
-                <el-option v-for="c in TIMELINE_CATEGORIES" :key="c.code" :label="c.label" :value="c.code" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="区域">
-              <el-select v-model="timelineForm.region" placeholder="全部" clearable style="width: 100%">
-                <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code" />
-              </el-select>
-            </el-form-item>
+        <!-- 诗词库 -->
+        <div v-if="libTab === 'poetry'">
+          <el-form :model="poetryForm" label-width="60px" size="small">
             <el-form-item label="朝代">
-              <el-select v-model="timelineForm.era" placeholder="全部" clearable filterable style="width: 100%">
-                <el-option v-for="e in availableTimelineEras" :key="e" :label="e" :value="e" />
+              <el-select v-model="poetryForm.dynasty" placeholder="全部" clearable style="width: 100%">
+                <el-option label="先秦" value="xianqin"/>
+                <el-option label="两汉" value="han"/>
+                <el-option label="魏晋南北朝" value="weijin"/>
+                <el-option label="隋" value="sui"/>
+                <el-option label="唐" value="tang"/>
+                <el-option label="宋" value="song"/>
+                <el-option label="元" value="yuan"/>
+                <el-option label="明" value="ming"/>
+                <el-option label="清" value="qing"/>
+                <el-option label="近现代" value="xiandai"/>
               </el-select>
-            </el-form-item>
-            <el-form-item label="年号">
-              <el-select v-model="timelineForm.reign" placeholder="全部" clearable filterable style="width: 100%">
-                <el-option v-for="r in availableTimelineReigns" :key="r" :label="r" :value="r" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="年份">
-              <div style="display: flex; align-items: center; gap: 6px; width: 100%">
-                <el-input v-model="timelineForm.yearFrom" type="number" placeholder="起始" style="flex: 1" />
-                <span style="color: #909399">—</span>
-                <el-input v-model="timelineForm.yearTo" type="number" placeholder="结束" style="flex: 1" />
-              </div>
             </el-form-item>
             <el-form-item label="搜索">
-              <el-input v-model="timelineForm.keyword" placeholder="事件名、人物、关键词..." clearable @keyup.enter="handleTimelineSearch">
-                <template #append><el-button @click="handleTimelineSearch">搜索</el-button></template>
+              <el-input
+                  v-model="poetryForm.keyword"
+                  placeholder="诗词名、作者或诗句..."
+                  clearable
+                  @keyup.enter="handlePoetrySearch"
+              >
+                <template #append>
+                  <el-button @click="handlePoetrySearch">搜索</el-button>
+                </template>
               </el-input>
             </el-form-item>
           </el-form>
 
-          <div v-if="timelineLoading" class="poetry-loading"><el-skeleton :rows="5" animated /></div>
+          <div v-if="poetryLoading" class="poetry-loading">
+            <el-skeleton :rows="5" animated />
+          </div>
 
-          <div v-else-if="timelineResults.length > 0" class="poetry-results">
+          <div v-else-if="poetryResults.length > 0" class="poetry-results">
             <div class="poetry-toolbar">
-              <el-checkbox :model-value="isAllTimelineSelected" @change="handleSelectAllTimeline" size="small">全选</el-checkbox>
-              <span class="poetry-selected-count" v-if="selectedTimelineEvents.length > 0">已选 {{ selectedTimelineEvents.length }} 个</span>
+              <el-checkbox
+                  :model-value="isAllSelected"
+                  :indeterminate="isIndeterminate"
+                  @change="handleSelectAll"
+                  size="small"
+              >
+                全选
+              </el-checkbox>
+              <span class="poetry-selected-count" v-if="selectedPoetries.length > 0">
+                已选 {{ selectedPoetries.length }} 首
+              </span>
             </div>
             <el-scrollbar height="340px">
               <el-card
-                v-for="(ev, idx) in timelineResults"
-                :key="idx"
-                shadow="hover"
-                style="margin-bottom: 10px; cursor: pointer"
-                @click="selectTimelineEvent(ev)"
-                :class="{ selected: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) }"
-                size="small"
+                  v-for="(poem, index) in poetryResults"
+                  :key="poem.id"
+                  shadow="hover"
+                  style="margin-bottom: 10px; cursor: pointer"
+                  @click="selectPoetry(poem)"
+                  :class="{ 'selected': selectedPoetries.some(p => p.id === poem.id) }"
+                  size="small"
               >
                 <template #header>
                   <div style="display: flex; justify-content: space-between; align-items: center">
                     <div style="display: flex; align-items: center; gap: 6px">
-                      <el-checkbox :model-value="selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year)" @click.stop @change="selectTimelineEvent(ev)" />
-                      <span style="font-weight: bold; font-size: 13px">{{ ev.title }}</span>
+                      <el-checkbox
+                          :model-value="selectedPoetries.some(p => p.id === poem.id)"
+                          @click.stop
+                          @change="selectPoetry(poem)"
+                      />
+                      <span style="font-weight: bold; font-size: 13px">{{ poem.title }}</span>
                     </div>
                     <div>
-                      <el-tag size="small" type="info" style="margin-right: 6px" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
-                      <el-tag size="small" v-if="ev.era">{{ ev.era }}</el-tag>
+                      <el-tag size="small" type="info" style="margin-right: 6px">{{ poem.dynasty }}</el-tag>
+                      <el-tag size="small" type="info">{{ poem.author }}</el-tag>
                     </div>
                   </div>
                 </template>
                 <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; margin-bottom: 6px; color: var(--utools-text-secondary)">
-                  {{ ev.content.substring(0, 80) }}{{ ev.content.length > 80 ? '...' : '' }}
+                  {{ poem.content.substring(0, 80) }}{{ poem.content.length > 80 ? '...' : '' }}
                 </div>
-                <div v-if="ev.location" style="font-size: 11px; color: #909399">📍 {{ ev.location }}</div>
+                <div v-if="poem.location" style="font-size: 11px; color: #909399">
+                  <el-icon size="12"><Location /></el-icon> {{ poem.location }}
+                </div>
               </el-card>
             </el-scrollbar>
           </div>
 
-          <div v-else class="poetry-placeholder"><el-empty description="请选择分类/区域或输入关键词搜索"/></div>
+          <div v-else class="poetry-placeholder">
+            <el-empty description="请选择朝代或输入关键词搜索"/>
+          </div>
         </div>
 
-        <!-- 手动/批量 -->
-        <div v-else-if="timelineSubTab === 'manual'">
-          <el-collapse style="margin-bottom: 12px">
-            <el-collapse-item title="📝 格式说明（点击展开）" name="fmt">
-              <div style="font-size: 12px; color: #606266; line-height: 1.7">
-                <p>人物格式：每行 <code>人名|头衔|简介</code>（头衔、简介可省）</p>
-                <p>关系格式：每行 <code>人物甲|人物乙|关系类型|说明</code>（说明可省）</p>
-                <p>批量导入：多事件用 <code>---</code> 分隔，每段可写「标题：/分类：/区域：/年份：/年号：/时代：/地点：/标签：/背景：/人物：/关系：」元数据，其余行作为正文。</p>
-              </div>
-            </el-collapse-item>
-          </el-collapse>
-
-          <el-form :model="timelineManualForm" label-width="60px" size="small">
-            <el-form-item label="标题"><el-input v-model="timelineManualForm.title" placeholder="事件名称"/></el-form-item>
-            <el-form-item label="内容"><el-input v-model="timelineManualForm.content" type="textarea" :rows="4" placeholder="具体事件描述..."/></el-form-item>
+        <!-- 成语库 -->
+        <div v-else-if="libTab === 'idiom'">
+          <el-form :model="idiomForm" label-width="60px" size="small">
             <el-form-item label="分类">
-              <el-select v-model="timelineManualForm.category" style="width: 100%">
-                <el-option v-for="c in TIMELINE_CATEGORIES" :key="c.code" :label="c.label" :value="c.code" />
+              <el-select v-model="idiomForm.category" placeholder="全部" clearable style="width: 100%">
+                <el-option
+                    v-for="cat in IDIOM_CATEGORIES"
+                    :key="cat.code"
+                    :label="cat.name"
+                    :value="cat.code"
+                />
               </el-select>
             </el-form-item>
-            <el-form-item label="区域">
-              <el-select v-model="timelineManualForm.region" style="width: 100%">
-                <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="年份"><el-input v-model="timelineManualForm.year" type="number" placeholder="公元年份，负数=公元前"/></el-form-item>
-            <el-form-item label="年号"><el-input v-model="timelineManualForm.reign" placeholder="如 贞观元年（可空）"/></el-form-item>
-            <el-form-item label="时代"><el-input v-model="timelineManualForm.era" placeholder="如 唐 / 文艺复兴（可空）"/></el-form-item>
-            <el-form-item label="地点"><el-input v-model="timelineManualForm.location" placeholder="发生地点"/></el-form-item>
-            <el-form-item label="人物"><el-input v-model="timelineManualForm.figures" type="textarea" :rows="3" placeholder="每行：人名|头衔|简介"/></el-form-item>
-            <el-form-item label="关系"><el-input v-model="timelineManualForm.relations" type="textarea" :rows="3" placeholder="每行：甲|乙|关系|说明"/></el-form-item>
-            <el-form-item label="背景"><el-input v-model="timelineManualForm.background" type="textarea" :rows="2" placeholder="事件背景（可空）"/></el-form-item>
-            <el-form-item label="标签">
-              <el-select v-model="timelineManualForm.tags" multiple filterable allow-create placeholder="选择或输入标签" style="width: 100%">
-                <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag" />
-              </el-select>
+            <el-form-item label="搜索">
+              <el-input
+                  v-model="idiomForm.keyword"
+                  placeholder="成语、释义或拼音..."
+                  clearable
+                  @keyup.enter="handleIdiomSearch"
+              >
+                <template #append>
+                  <el-button @click="handleIdiomSearch">搜索</el-button>
+                </template>
+              </el-input>
             </el-form-item>
           </el-form>
 
-          <el-divider>批量导入</el-divider>
-          <el-input v-model="timelineBatchContent" type="textarea" :rows="6" placeholder="粘贴批量事件文本，用 --- 分隔..." />
-        </div>
+          <div v-if="idiomLoading" class="idiom-loading">
+            <el-skeleton :rows="5" animated />
+          </div>
 
-        <!-- AI 生成 -->
-        <div v-else>
-          <el-alert title="AI 批量生成历史事件" type="info" :closable="false" style="margin-bottom: 12px">
-            输入主题或年代范围（如「唐代大事」「工业革命」「一战」），AI 自动整理一批事件供挑选导入。可在下方选择 AI，未填 API Key 时使用「单词列表 → 设置」中的默认配置。
-          </el-alert>
-          <el-form :model="timelineAiForm" label-width="70px" size="small" style="margin-bottom: 12px">
-            <el-form-item label="AI 提供商">
-              <el-select v-model="timelineAiForm.provider" placeholder="使用默认 AI" clearable style="width: 100%">
-                <el-option v-for="p in AI_PROVIDER_OPTIONS" :key="p.value" :label="p.label" :value="p.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="API Key" v-if="timelineAiForm.provider">
-              <el-input v-model="timelineAiForm.apiKey" type="password" show-password placeholder="留空则使用单词列表设置中的 Key" />
-            </el-form-item>
-          </el-form>
-          <el-input v-model="timelineAiTopic" placeholder="输入主题，如 唐代大事 / 工业革命 / 法国大革命">
-            <template #append><el-button @click="handleTimelineAiGenerate" :loading="timelineAiLoading">生成</el-button></template>
-          </el-input>
-
-          <div v-if="timelineAiResults.length > 0" class="poetry-results" style="margin-top: 16px">
-            <div class="poetry-toolbar">
-              <span class="poetry-selected-count" v-if="selectedTimelineAi.length > 0">已选 {{ selectedTimelineAi.length }} 个</span>
+          <div v-else-if="idiomResults.length > 0" class="idiom-results">
+            <div class="idiom-toolbar">
+              <el-checkbox
+                  :model-value="isAllIdiomsSelected"
+                  :indeterminate="isIdiomsIndeterminate"
+                  @change="handleSelectAllIdioms"
+                  size="small"
+              >
+                全选
+              </el-checkbox>
+              <span class="idiom-selected-count" v-if="selectedIdioms.length > 0">
+                已选 {{ selectedIdioms.length }} 条
+              </span>
             </div>
-            <el-scrollbar height="320px">
+            <el-scrollbar height="340px">
               <el-card
-                v-for="(ev, idx) in timelineAiResults"
-                :key="idx"
-                shadow="hover"
-                style="margin-bottom: 10px; cursor: pointer"
-                @click="selectTimelineAi(ev)"
-                :class="{ selected: selectedTimelineAi.some(s => s.title === ev.title && s.year === ev.year) }"
-                size="small"
+                  v-for="item in idiomResults"
+                  :key="item.id"
+                  shadow="hover"
+                  style="margin-bottom: 10px; cursor: pointer"
+                  @click="selectIdiom(item)"
+                  :class="{ 'selected': selectedIdioms.some(s => s.id === item.id) }"
+                  size="small"
               >
                 <template #header>
                   <div style="display: flex; justify-content: space-between; align-items: center">
                     <div style="display: flex; align-items: center; gap: 6px">
-                      <el-checkbox :model-value="selectedTimelineAi.some(s => s.title === ev.title && s.year === ev.year)" @click.stop @change="selectTimelineAi(ev)" />
-                      <span style="font-weight: bold; font-size: 13px">{{ ev.title }}</span>
+                      <el-checkbox
+                          :model-value="selectedIdioms.some(s => s.id === item.id)"
+                          @click.stop
+                          @change="selectIdiom(item)"
+                      />
+                      <span style="font-weight: bold; font-size: 13px">{{ item.title }}</span>
+                      <span v-if="item.pinyin" style="font-size: 12px; color: #909399; margin-left: 4px">{{ item.pinyin }}</span>
                     </div>
-                    <el-tag size="small" type="info" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
+                    <el-tag size="small" type="info">{{ item.category }}</el-tag>
                   </div>
                 </template>
-                <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary)">
-                  {{ ev.content.substring(0, 80) }}{{ ev.content.length > 80 ? '...' : '' }}
+                <div style="font-size: 12px; line-height: 1.6; color: var(--utools-text-primary)">
+                  <span style="color: #909399">【释义】</span>{{ item.meaning }}
+                </div>
+                <div v-if="item.source" style="font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary); margin-top: 4px">
+                  <span style="color: #909399">【出处】</span>{{ item.source }}
+                </div>
+                <div v-if="item.example" style="font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary); margin-top: 4px">
+                  <span style="color: #909399">【例句】</span>{{ item.example }}
                 </div>
               </el-card>
             </el-scrollbar>
           </div>
-          <div v-else-if="!timelineAiLoading" class="poetry-placeholder"><el-empty description="输入主题后点击生成"/></div>
+
+          <div v-else class="idiom-placeholder">
+            <el-empty description="请选择分类或输入关键词搜索"/>
+          </div>
         </div>
-      </el-tab-pane>
 
-      <!-- 地图 -->
-      <el-tab-pane label="地图" name="poetryMap">
-        <div class="poetry-map-tab">
-          <div class="library-map-controls">
-            <el-select
-                v-model="mapCategory"
-                placeholder="类型"
-                size="small"
-                style="width: 110px"
-                @change="handleMapCategoryChange"
-            >
-              <el-option label="全部" value=""/>
-              <el-option label="诗词" value="poetry"/>
-              <el-option label="成语" value="idiom"/>
-              <el-option label="时间线" value="timeline"/>
-            </el-select>
+        <!-- 时间线：本地库 + AI 生成（手动/批量已由手动添加、批量导入 tab 覆盖） -->
+        <div v-else-if="libTab === 'timeline'">
+          <el-radio-group v-model="timelineSubTab" size="small" style="margin-bottom: 16px">
+            <el-radio-button label="library">本地库</el-radio-button>
+            <el-radio-button label="ai">AI 生成</el-radio-button>
+          </el-radio-group>
 
-            <el-select
-                v-model="mapDynasty"
-                placeholder="选择朝代显示疆域"
-                clearable
-                size="small"
-                style="width: 160px; margin-left: 8px"
-                :disabled="mapCategory === 'idiom' || mapCategory === 'timeline'"
-                @change="handleMapDynastyChange"
-            >
-              <el-option label="先秦" value="xianqin"/>
-              <el-option label="两汉" value="han"/>
-              <el-option label="魏晋南北朝" value="weijin"/>
-              <el-option label="隋" value="sui"/>
-              <el-option label="唐" value="tang"/>
-              <el-option label="宋" value="song"/>
-              <el-option label="元" value="yuan"/>
-              <el-option label="明" value="ming"/>
-              <el-option label="清" value="qing"/>
-              <el-option label="近现代" value="xiandai"/>
-            </el-select>
+          <!-- 本地库 -->
+          <div v-if="timelineSubTab === 'library'">
+            <el-form :model="timelineForm" label-width="60px" size="small">
+              <el-form-item label="分类">
+                <el-select v-model="timelineForm.category" placeholder="全部" clearable style="width: 100%">
+                  <el-option v-for="c in TIMELINE_CATEGORIES" :key="c.code" :label="c.label" :value="c.code" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="区域">
+                <el-select v-model="timelineForm.region" placeholder="全部" clearable style="width: 100%">
+                  <el-option v-for="r in TIMELINE_REGIONS" :key="r.code" :label="r.label" :value="r.code" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="朝代">
+                <el-select v-model="timelineForm.era" placeholder="全部" clearable filterable style="width: 100%">
+                  <el-option v-for="e in availableTimelineEras" :key="e" :label="e" :value="e" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="年号">
+                <el-select v-model="timelineForm.reign" placeholder="全部" clearable filterable style="width: 100%">
+                  <el-option v-for="r in availableTimelineReigns" :key="r" :label="r" :value="r" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="年份">
+                <div style="display: flex; align-items: center; gap: 6px; width: 100%">
+                  <el-input v-model="timelineForm.yearFrom" type="number" placeholder="起始" style="flex: 1" />
+                  <span style="color: #909399">—</span>
+                  <el-input v-model="timelineForm.yearTo" type="number" placeholder="结束" style="flex: 1" />
+                </div>
+              </el-form-item>
+              <el-form-item label="搜索">
+                <el-input v-model="timelineForm.keyword" placeholder="事件名、人物、关键词..." clearable @keyup.enter="handleTimelineSearch">
+                  <template #append><el-button @click="handleTimelineSearch">搜索</el-button></template>
+                </el-input>
+              </el-form-item>
+            </el-form>
 
-            <el-select
-                v-model="mapAuthor"
-                placeholder="选择作者"
-                clearable
-                multiple
-                filterable
-                collapse-tags
-                collapse-tags-tooltip
-                size="small"
-                style="width: 180px; margin-left: 8px"
-                :disabled="mapCategory === 'idiom' || mapCategory === 'timeline'"
-                @change="handleMapAuthorChange"
-            >
-              <el-option
-                  v-for="author in availableAuthors"
-                  :key="author"
-                  :label="author"
-                  :value="author"
-              />
-            </el-select>
+            <div v-if="timelineLoading" class="poetry-loading"><el-skeleton :rows="5" animated /></div>
 
-            <el-checkbox
-                v-if="mapAuthor.length"
-                v-model="showAuthorRoute"
-                size="small"
-                style="margin-left: 8px"
-            >
-              生平路线
-            </el-checkbox>
+            <div v-else-if="timelineResults.length > 0" class="poetry-results">
+              <div class="poetry-toolbar">
+                <el-checkbox :model-value="isAllTimelineSelected" @change="handleSelectAllTimeline" size="small">全选</el-checkbox>
+                <span class="poetry-selected-count" v-if="selectedTimelineEvents.length > 0">已选 {{ selectedTimelineEvents.length }} 个</span>
+              </div>
+              <el-scrollbar height="340px">
+                <el-card
+                  v-for="(ev, idx) in timelineResults"
+                  :key="idx"
+                  shadow="hover"
+                  style="margin-bottom: 10px; cursor: pointer"
+                  @click="selectTimelineEvent(ev)"
+                  :class="{ selected: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) }"
+                  size="small"
+                >
+                  <template #header>
+                    <div style="display: flex; justify-content: space-between; align-items: center">
+                      <div style="display: flex; align-items: center; gap: 6px">
+                        <el-checkbox :model-value="selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year)" @click.stop @change="selectTimelineEvent(ev)" />
+                        <span style="font-weight: bold; font-size: 13px">{{ ev.title }}</span>
+                      </div>
+                      <div>
+                        <el-tag size="small" type="info" style="margin-right: 6px" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
+                        <el-tag size="small" type="info" v-if="ev.era">{{ ev.era }}</el-tag>
+                      </div>
+                    </div>
+                  </template>
+                  <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; margin-bottom: 6px; color: var(--utools-text-secondary)">
+                    {{ ev.content.substring(0, 80) }}{{ ev.content.length > 80 ? '...' : '' }}
+                  </div>
+                  <div v-if="ev.location" style="font-size: 11px; color: #909399">📍 {{ ev.location }}</div>
+                </el-card>
+              </el-scrollbar>
+            </div>
 
+            <div v-else class="poetry-placeholder"><el-empty description="请选择分类/区域或输入关键词搜索"/></div>
+          </div>
+
+          <!-- AI 生成 -->
+          <div v-else>
+            <el-alert title="AI 批量生成历史事件" type="info" :closable="false" style="margin-bottom: 12px">
+              输入主题或年代范围（如「唐代大事」「工业革命」「一战」），AI 自动整理一批事件供挑选导入。可在下方选择 AI，未填 API Key 时使用「单词列表 → 设置」中的默认配置。
+            </el-alert>
+            <el-form :model="timelineAiForm" label-width="70px" size="small" style="margin-bottom: 12px">
+              <el-form-item label="AI 提供商">
+                <el-select v-model="timelineAiForm.provider" placeholder="使用默认 AI" clearable style="width: 100%">
+                  <el-option v-for="p in AI_PROVIDER_OPTIONS" :key="p.value" :label="p.label" :value="p.value" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="API Key" v-if="timelineAiForm.provider">
+                <el-input v-model="timelineAiForm.apiKey" type="password" show-password placeholder="留空则使用单词列表设置中的 Key" />
+              </el-form-item>
+            </el-form>
+            <el-input v-model="timelineAiTopic" placeholder="输入主题，如 唐代大事 / 工业革命 / 法国大革命">
+              <template #append><el-button @click="handleTimelineAiGenerate" :loading="timelineAiLoading">生成</el-button></template>
+            </el-input>
+
+            <div v-if="timelineAiResults.length > 0" class="poetry-results" style="margin-top: 16px">
+              <div class="poetry-toolbar">
+                <span class="poetry-selected-count" v-if="selectedTimelineAi.length > 0">已选 {{ selectedTimelineAi.length }} 个</span>
+              </div>
+              <el-scrollbar height="320px">
+                <el-card
+                  v-for="(ev, idx) in timelineAiResults"
+                  :key="idx"
+                  shadow="hover"
+                  style="margin-bottom: 10px; cursor: pointer"
+                  @click="selectTimelineAi(ev)"
+                  :class="{ selected: selectedTimelineAi.some(s => s.title === ev.title && s.year === ev.year) }"
+                  size="small"
+                >
+                  <template #header>
+                    <div style="display: flex; justify-content: space-between; align-items: center">
+                      <div style="display: flex; align-items: center; gap: 6px">
+                        <el-checkbox :model-value="selectedTimelineAi.some(s => s.title === ev.title && s.year === ev.year)" @click.stop @change="selectTimelineAi(ev)" />
+                        <span style="font-weight: bold; font-size: 13px">{{ ev.title }}</span>
+                      </div>
+                      <el-tag size="small" type="info" v-if="ev.year">{{ ev.year < 0 ? `前${Math.abs(ev.year)}` : ev.year }}</el-tag>
+                    </div>
+                  </template>
+                  <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; color: var(--utools-text-secondary)">
+                    {{ ev.content.substring(0, 80) }}{{ ev.content.length > 80 ? '...' : '' }}
+                  </div>
+                </el-card>
+              </el-scrollbar>
+            </div>
+            <div v-else-if="!timelineAiLoading" class="poetry-placeholder"><el-empty description="输入主题后点击生成"/></div>
+          </div>
+        </div>
+
+        <!-- 知识库：当前宿主分类（text）的内置知识包导入列表 -->
+        <div v-else-if="libTab === 'knowledge'">
+          <div v-if="knowledgePacks.length === 0" class="import-empty">暂无可导入的知识库</div>
+          <div
+              v-for="p in knowledgePacks"
+              :key="p.id"
+              class="import-pack-row"
+          >
+            <div class="import-pack-info">
+              <div class="import-pack-name">
+                {{ p.name }}
+                <span class="import-pack-count">{{ p.itemCount }} 条</span>
+              </div>
+              <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
+            </div>
             <el-button
                 size="small"
-                style="margin-left: auto"
-                @click="clearMapOverlays"
+                type="primary"
+                :disabled="isKnowledgeImported(p.id)"
+                :loading="knowledgeImportingId === p.id"
+                @click="handleImportKnowledge(p.id)"
             >
-              清除图层
+              {{ isKnowledgeImported(p.id) ? '已导入' : '导入' }}
             </el-button>
           </div>
+        </div>
 
-          <div class="library-map-legend">
-            <span class="map-legend-item">
-              <span class="map-legend-pin"></span>诗词
-            </span>
-            <span class="map-legend-item">
-              <span class="map-legend-circle"></span>成语
-            </span>
-            <span class="map-legend-item">
-              <span class="map-legend-star"></span>时间线事件
-            </span>
-          </div>
-
-          <div ref="inlineMapContainer" class="standalone-map-container"></div>
-
-          <div v-if="selectedPoetries.length > 0 || selectedIdioms.length > 0" class="map-selected-bar">
-            <span v-if="selectedPoetries.length > 0">已选 <strong>{{ selectedPoetries.length }}</strong> 首诗词</span>
-            <span v-if="selectedPoetries.length > 0 && selectedIdioms.length > 0">，</span>
-            <span v-if="selectedIdioms.length > 0">已选 <strong>{{ selectedIdioms.length }}</strong> 条成语</span>
-            <span style="color: #909399; margin-left: 6px">可返回对应库继续查看或在此继续点选</span>
+        <!-- 宫殿桩库：usableAsPeg 包导入为记忆宫殿 -->
+        <div v-else>
+          <div v-if="pegPacks.length === 0" class="import-empty">暂无可导入的桩库</div>
+          <div
+              v-for="p in pegPacks"
+              :key="p.id"
+              class="import-pack-row"
+          >
+            <div class="import-pack-info">
+              <div class="import-pack-name">
+                {{ p.name }}
+                <span class="import-pack-count">{{ p.itemCount }} 桩</span>
+              </div>
+              <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
+            </div>
+            <el-button
+                size="small"
+                type="primary"
+                :disabled="isPegImported(p.id)"
+                :loading="pegImportingId === p.id"
+                @click="handleImportPeg(p.id)"
+            >
+              {{ isPegImported(p.id) ? '已导入' : '导入' }}
+            </el-button>
           </div>
         </div>
       </el-tab-pane>
@@ -947,7 +978,7 @@
 
     <template #footer>
       <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="handleImport" :loading="importing">
+      <el-button v-if="showFooterImport" type="primary" @click="handleImport" :loading="importing">
         {{ importButtonText }}
       </el-button>
     </template>
@@ -1043,11 +1074,11 @@
               <strong>智谱 GLM-4-Flash</strong> - 免费使用，在单词列表设置中申请
             </li>
             <li>
-              <a href="https://siliconflow.cn/" target="_blank" style="color: #409eff">SiliconFlow</a>
+              <a href="https://siliconflow.cn/" target="_blank" style="color: var(--utools-text-secondary)">SiliconFlow</a>
               - 注册即送 2000 万 Tokens
             </li>
             <li>
-              <a href="https://platform.deepseek.com/" target="_blank" style="color: #409eff">DeepSeek</a>
+              <a href="https://platform.deepseek.com/" target="_blank" style="color: var(--utools-text-secondary)">DeepSeek</a>
               - 价格便宜，效果优秀
             </li>
           </ul>
@@ -1060,153 +1091,19 @@
       <el-button type="primary" @click="handleSaveAIConfig">保存</el-button>
     </template>
   </el-dialog>
-
-  <!-- 地点作品列表弹窗 -->
-  <el-dialog
-      v-model="showLocationDialog"
-      :title="locationDialogTitle"
-      width="480px"
-      destroy-on-close
-  >
-    <div style="max-height: 400px; overflow-y: auto;">
-      <div
-          v-for="poem in locationDialogPoems"
-          :key="poem.id"
-          style="padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e4e7ed; cursor: pointer;"
-          :style="{ background: selectedPoetries.some(p => p.id === poem.id) ? '#f0f9eb' : '#fff', borderColor: selectedPoetries.some(p => p.id === poem.id) ? '#b3e19d' : '#e4e7ed' }"
-          @click="togglePoetryInDialog(poem)"
-      >
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <el-checkbox
-              :model-value="selectedPoetries.some(p => p.id === poem.id)"
-              @click.stop
-              @update:model-value="togglePoetryInDialog(poem)"
-          />
-          <div style="flex: 1;">
-            <div style="font-size: 14px; font-weight: bold; color: #303133;">{{ poem.title }}</div>
-            <div style="font-size: 12px; color: #606266; margin-top: 2px;">
-              {{ poem.author }} · {{ poem.dynasty }}
-              <span v-if="poem.year" style="color: #e6a23c; margin-left: 6px;">{{ formatYear(poem.year) }}</span>
-            </div>
-            <div style="font-size: 12px; color: #909399; margin-top: 4px; line-height: 1.5;">
-              {{ poem.content.split(/\n/).filter(l => l.trim()).slice(0, 2).join(' / ') }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <template #footer>
-      <el-button @click="showLocationDialog = false">关闭</el-button>
-    </template>
-  </el-dialog>
-
-  <!-- 地点成语列表弹窗 -->
-  <el-dialog
-      v-model="showIdiomLocationDialog"
-      :title="idiomLocationDialogTitle"
-      width="480px"
-      destroy-on-close
-  >
-    <div style="max-height: 400px; overflow-y: auto;">
-      <div
-          v-for="item in idiomLocationDialogIdioms"
-          :key="item.id"
-          style="padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e4e7ed; cursor: pointer;"
-          :style="{ background: selectedIdioms.some(s => s.id === item.id) ? '#fdf6ec' : '#fff', borderColor: selectedIdioms.some(s => s.id === item.id) ? '#f5dab1' : '#e4e7ed' }"
-          @click="toggleIdiomInDialog(item)"
-      >
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <el-checkbox
-              :model-value="selectedIdioms.some(s => s.id === item.id)"
-              @click.stop
-              @update:model-value="toggleIdiomInDialog(item)"
-          />
-          <div style="flex: 1;">
-            <div style="display: flex; align-items: center; gap: 6px">
-              <span style="font-size: 14px; font-weight: bold; color: #303133;">{{ item.title }}</span>
-              <el-tag size="small" type="warning">成语</el-tag>
-              <el-tag size="small" type="info">{{ item.category }}</el-tag>
-            </div>
-            <div v-if="item.pinyin" style="font-size: 12px; color: #909399; margin-top: 2px;">
-              {{ item.pinyin }}
-            </div>
-            <div style="font-size: 12px; color: #606266; margin-top: 4px; line-height: 1.5;">
-              {{ item.meaning }}
-            </div>
-            <div v-if="item.source" style="font-size: 11px; color: #909399; margin-top: 4px;">
-              出处：{{ item.source }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <template #footer>
-      <el-button @click="showIdiomLocationDialog = false">关闭</el-button>
-    </template>
-  </el-dialog>
-
-  <!-- 地点时间线事件列表弹窗 -->
-  <el-dialog
-      v-model="showTimelineLocationDialog"
-      :title="timelineLocationDialogTitle"
-      width="480px"
-      destroy-on-close
-  >
-    <div style="max-height: 400px; overflow-y: auto;">
-      <div
-          v-for="(ev, idx) in timelineLocationDialogEvents"
-          :key="idx"
-          style="padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e4e7ed; cursor: pointer;"
-          :style="{ background: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) ? '#fef0f0' : '#fff', borderColor: selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year) ? '#fbc4c4' : '#e4e7ed' }"
-          @click="toggleTimelineInDialog(ev)"
-      >
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <el-checkbox
-              :model-value="selectedTimelineEvents.some(s => s.title === ev.title && s.year === ev.year)"
-              @click.stop
-              @update:model-value="toggleTimelineInDialog(ev)"
-          />
-          <div style="flex: 1;">
-            <div style="font-size: 14px; font-weight: bold; color: #303133;">{{ ev.title }}</div>
-            <div style="font-size: 12px; color: #e6a23c; margin-top: 2px;">
-              {{ ev.year != null ? (ev.year < 0 ? `公元前${Math.abs(ev.year)}年` : `公元${ev.year}年`) : '年代未知' }}
-              <span v-if="ev.era" style="color: #606266; margin-left: 6px;">{{ ev.era }}</span>
-            </div>
-            <div style="font-size: 12px; color: #909399; margin-top: 4px; line-height: 1.5;">
-              {{ (ev.content || '').split(/\n/).filter(l => l.trim()).slice(0, 2).join(' / ') }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <template #footer>
-      <el-button @click="showTimelineLocationDialog = false">关闭</el-button>
-    </template>
-  </el-dialog>
 </template>
 
 <script setup lang="ts">
-import {ref, computed, watch, nextTick, onUnmounted} from 'vue';
+import {ref, computed, watch, nextTick} from 'vue';
 import {useTextMemoryStore} from '@/stores/textMemory';
-import {useWordsStore} from '@/stores/words';
 import {UploadFilled, Setting, Location} from '@element-plus/icons-vue';
 import {ElMessage} from 'element-plus';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import {
   searchPoetry,
   fetchAllPoetry,
-  fetchPoetryByDynasty,
-  DYNASTY_LIST,
-  getRandomPoetry,
   type PoetryItem,
   type PoetryDynasty
 } from '@/utils/poetry-service';
-import {parseLocation} from '@/utils/poetry-location';
-import {getTerritoryByDynasty, getDynastyCodeByName} from '@/utils/dynasty-territory';
 import {
   smartSearchWithAI,
   getAISearchConfig,
@@ -1226,7 +1123,6 @@ import {
   filterTimelineEvents,
   mapLibraryEventToArticle,
   parseBatchTimeline,
-  parseTimelineLocation,
   parseFigures,
   parseRelations,
   collectEras,
@@ -1237,9 +1133,17 @@ import {
 } from '@/utils/timeline-service';
 import { generateTimelineEventsWithAI } from '@/utils/ai-search-api';
 import type { TimelineCategory, TimelineRegion } from '@/types/text-memory';
+import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
+import { useMemoryPalaceStore } from '@/stores/memoryPalace';
+import TextEditForm from './TextEditForm.vue';
 
 interface Props {
   modelValue: boolean;
+  // 打开时定位到的一级 tab（manual/batch/file/library），默认手动添加；
+  // 兼容旧值：poetry/idiom/timeline/knowledge/pegPacks 视为内置库二级
+  initialTab?: string;
+  // 内置库 tab 打开时定位到的二级面板（poetry/idiom/timeline/knowledge/pegPacks）
+  initialLibTab?: string;
 }
 
 const props = defineProps<Props>();
@@ -1250,21 +1154,49 @@ const emit = defineEmits<{
 }>();
 
 const textStore = useTextMemoryStore();
-const activeTab = ref('manual');
+const knowledgeStore = useKnowledgeMemoryStore();
+const palaceStore = useMemoryPalaceStore();
+
+// 内置库二级面板取值
+type LibTab = 'poetry' | 'idiom' | 'timeline' | 'knowledge' | 'pegPacks';
+const LIB_SUB_TABS: LibTab[] = ['poetry', 'idiom', 'timeline', 'knowledge', 'pegPacks'];
+
+// 统一的「添加/导入」入口，默认停在内置库 tab；打开时由 initialTab/initialLibTab 定位
+const activeTab = ref('library');
+const libTab = ref<LibTab>('poetry');
+
+// 按 props 解析初始 tab 定位（打开对话框与重置表单时调用）
+function applyInitialTab() {
+  const t = props.initialTab || 'library';
+  if ((LIB_SUB_TABS as string[]).includes(t)) {
+    // 旧调用方式：initialTab 直接传内置库二级名
+    activeTab.value = 'library';
+    libTab.value = t as LibTab;
+  } else {
+    activeTab.value = t;
+    if (props.initialLibTab && (LIB_SUB_TABS as string[]).includes(props.initialLibTab)) {
+      libTab.value = props.initialLibTab as LibTab;
+    }
+  }
+}
+applyInitialTab();
+
 const importing = ref(false);
-const timelineSubTab = ref<'library' | 'manual' | 'ai'>('library');
+const timelineSubTab = ref<'library' | 'ai'>('library');
 const activeCollapse = ref(['plain']); // 默认展开普通文本格式说明
 
 const importButtonText = computed(() => {
-  if ((activeTab.value === 'poetry' || activeTab.value === 'poetryMap') && selectedPoetries.value.length > 0) {
-    return `导入 ${selectedPoetries.value.length} 首`;
-  }
-  if (activeTab.value === 'idiom' && selectedIdioms.value.length > 0) {
-    return `导入 ${selectedIdioms.value.length} 条成语`;
-  }
-  if (activeTab.value === 'timeline') {
-    const n = selectedTimelineEvents.value.length + selectedTimelineAi.value.length;
-    if (n > 0) return `导入 ${n} 个事件`;
+  if (activeTab.value === 'library') {
+    if (libTab.value === 'poetry' && selectedPoetries.value.length > 0) {
+      return `导入 ${selectedPoetries.value.length} 首`;
+    }
+    if (libTab.value === 'idiom' && selectedIdioms.value.length > 0) {
+      return `导入 ${selectedIdioms.value.length} 条成语`;
+    }
+    if (libTab.value === 'timeline') {
+      const n = selectedTimelineEvents.value.length + selectedTimelineAi.value.length;
+      if (n > 0) return `导入 ${n} 个事件`;
+    }
   }
   return '导入';
 });
@@ -1272,17 +1204,287 @@ const importButtonText = computed(() => {
 // 现有标签
 const existingTags = computed(() => textStore.allTags);
 
-// 手动输入表单
-const manualForm = ref({
-  title: '',
-  tags: [] as string[],
-  content: ''
+// 底部「导入」按钮仅对批量/文件/内置库汇聚型面板有效；
+// 手动添加、知识库、宫殿桩库各自有提交/导入按钮
+const showFooterImport = computed(() => {
+  if (activeTab.value === 'manual') return false;
+  if (activeTab.value === 'library' && (libTab.value === 'knowledge' || libTab.value === 'pegPacks')) return false;
+  return true;
 });
 
-// 批量导入
+// ==================== 手动添加 ====================
+// 手动添加类型：普通文本/诗词/成语/知识条目/时间线事件/宫殿桩
+type ManualType = 'text' | 'poetry' | 'idiom' | 'knowledge' | 'timeline' | 'peg';
+const manualType = ref<ManualType>('text');
+const manualFormRef = ref<InstanceType<typeof TextEditForm>>();
+
+// 手动添加-诗词
+const POETRY_DYNASTY_OPTIONS = ['先秦', '两汉', '魏晋南北朝', '隋', '唐', '宋', '元', '明', '清', '近现代'];
+const manualPoetryForm = ref({
+  title: '',
+  dynasty: '',
+  author: '',
+  year: '' as number | '',
+  location: '',
+  content: '',
+  tags: [] as string[],
+});
+
+// 手动添加-成语
+const manualIdiomForm = ref({
+  title: '',
+  meaning: '',
+  source: '',
+  tags: [] as string[],
+});
+
+// 手动添加-知识条目
+const manualKnowledgeForm = ref({
+  setName: '',
+  question: '',
+  answer: '',
+  tags: [] as string[],
+});
+
+// 手动添加-宫殿桩
+const manualPegForm = ref({
+  palaceId: '',
+  order: '' as number | '',
+  name: '',
+  alternates: '', // 逗号分隔
+  description: '',
+});
+
+// 「新建宫殿...」仅作引导提示，宫殿创建在宫殿视图完成
+function handlePegPalaceChange(val: string) {
+  if (val === '__new__') {
+    manualPegForm.value.palaceId = '';
+    ElMessage.info('请先在「宫殿」视图中创建宫殿，再回来添加桩');
+  }
+}
+
+// 点击「添加」：按当前类型分发保存逻辑
+async function handleManualSave() {
+  switch (manualType.value) {
+    case 'text':
+      // 触发内嵌表单校验与提交
+      manualFormRef.value?.submit();
+      break;
+    case 'poetry':
+      saveManualPoetry();
+      break;
+    case 'idiom':
+      saveManualIdiom();
+      break;
+    case 'knowledge':
+      await saveManualKnowledge();
+      break;
+    case 'timeline':
+      saveManualTimeline();
+      break;
+    case 'peg':
+      await saveManualPeg();
+      break;
+  }
+}
+
+// 普通文本表单提交成功：作为单篇文章走统一 import 通道（父级添加并关闭对话框）
+function handleManualSubmit(article: any) {
+  emit('import', [article]);
+}
+
+// 诗词：保存为 category='poetry' 的 TextArticle
+function saveManualPoetry() {
+  const f = manualPoetryForm.value;
+  if (!f.title.trim() || !f.content.trim()) {
+    ElMessage.warning('请填写标题和正文');
+    return;
+  }
+  emit('import', [{
+    title: f.title.trim(),
+    content: f.content.trim(),
+    author: f.author.trim() || undefined,
+    dynasty: f.dynasty || undefined,
+    year: f.year === '' ? undefined : Number(f.year),
+    location: f.location.trim() || undefined,
+    tags: f.tags,
+    category: 'poetry',
+  }]);
+}
+
+// 成语：保存为 category='idiom' 的 TextArticle（内容与成语库导入格式一致）
+function saveManualIdiom() {
+  const f = manualIdiomForm.value;
+  if (!f.title.trim() || !f.meaning.trim()) {
+    ElMessage.warning('请填写成语和释义');
+    return;
+  }
+  const content = [
+    `【释义】${f.meaning.trim()}`,
+    f.source.trim() && `【出处】${f.source.trim()}`,
+  ].filter(Boolean).join('\n');
+  emit('import', [{
+    title: f.title.trim(),
+    content,
+    tags: ['成语', ...f.tags],
+    source: f.source.trim() || undefined,
+    category: 'idiom',
+  }]);
+}
+
+// 时间线事件：复用原 timeline 手动子 tab 的保存路径（buildManualEvent → mapLibraryEventToArticle）
+function saveManualTimeline() {
+  const ev = buildManualEvent();
+  if (!ev) return;
+  emit('import', [mapLibraryEventToArticle(ev)]);
+}
+
+// 知识条目：保存到知识库 store（自建条目），成功后保留知识集/标签便于连续录入
+async function saveManualKnowledge() {
+  const f = manualKnowledgeForm.value;
+  if (!f.question.trim() || !f.answer.trim()) {
+    ElMessage.warning('请填写名称/问题与答案/释义');
+    return;
+  }
+  try {
+    await knowledgeStore.addCustomItem({
+      setName: f.setName.trim() || undefined,
+      question: f.question.trim(),
+      answer: f.answer.trim(),
+      tags: f.tags.length ? [...f.tags] : undefined,
+    });
+    ElMessage.success('已保存到知识库');
+    manualKnowledgeForm.value = {...manualKnowledgeForm.value, question: '', answer: ''};
+  } catch (e) {
+    ElMessage.error('保存失败，请重试');
+  }
+}
+
+// 宫殿桩：向所选宫殿的 loci 追加一个桩（备选桩存 alternates）
+async function saveManualPeg() {
+  const f = manualPegForm.value;
+  if (!f.palaceId || f.palaceId === '__new__') {
+    ElMessage.warning('请选择所属宫殿');
+    return;
+  }
+  if (!f.name.trim()) {
+    ElMessage.warning('请填写桩名');
+    return;
+  }
+  const palace = palaceStore.palaces.find(p => p._id === f.palaceId);
+  if (!palace) {
+    ElMessage.error('宫殿不存在，请刷新后重试');
+    return;
+  }
+  const alternates = f.alternates.split(/[,，]/).map(s => s.trim()).filter(Boolean);
+  const newLocus = {
+    order: 0, // 占位，updatePalace 会按数组顺序重排
+    name: f.name.trim(),
+    description: f.description.trim() || undefined,
+    alternates: alternates.length ? alternates : undefined,
+  };
+  const loci = [...palace.loci];
+  const insertIdx = f.order === ''
+    ? loci.length
+    : Math.min(Math.max(Number(f.order) - 1, 0), loci.length);
+  loci.splice(insertIdx, 0, newLocus);
+  try {
+    const result = await palaceStore.updatePalace({...palace, loci});
+    if (result.ok) {
+      ElMessage.success(`已在「${palace.name}」添加桩「${newLocus.name}」`);
+      manualPegForm.value = {...manualPegForm.value, order: '', name: '', alternates: '', description: ''};
+    } else {
+      ElMessage.error('保存失败');
+    }
+  } catch (e) {
+    ElMessage.error(e instanceof Error ? e.message : '保存失败');
+  }
+}
+
+// ==================== 知识库（text 分类内置包） ====================
+const knowledgePacks = computed(() => knowledgeStore.packList.filter(p => p.category === 'text'));
+const knowledgeImportingId = ref('');
+
+function isKnowledgeImported(packId: string): boolean {
+  return knowledgeStore.importedIds.includes(packId);
+}
+
+async function handleImportKnowledge(packId: string) {
+  knowledgeImportingId.value = packId;
+  try {
+    await knowledgeStore.importPack(packId);
+    ElMessage.success('导入成功');
+  } finally {
+    knowledgeImportingId.value = '';
+  }
+}
+
+// ==================== 宫殿桩库（usableAsPeg 包） ====================
+const pegPacks = computed(() => palaceStore.listPegPacks());
+const pegImportingId = ref('');
+
+// 已存在对应 sourcePackId 的宫殿则视为已导入
+function isPegImported(packId: string): boolean {
+  return palaceStore.palaces.some(p => p.sourcePackId === packId);
+}
+
+async function handleImportPeg(packId: string) {
+  pegImportingId.value = packId;
+  try {
+    const { result, palace } = await palaceStore.importPackAsPalace(packId);
+    if (result.ok) {
+      ElMessage.success(`已导入宫殿「${palace.name}」`);
+    } else {
+      ElMessage.error('导入失败');
+    }
+  } catch (error) {
+    ElMessage.error(error instanceof Error ? error.message : '导入失败');
+  } finally {
+    pegImportingId.value = '';
+  }
+}
+
+// ==================== 批量导入 ====================
+// 批量导入类型（宫殿桩为结构化数据，不支持批量文本导入）
+type BatchType = 'text' | 'poetry' | 'idiom' | 'knowledge' | 'timeline';
+const batchType = ref<BatchType>('text');
 const batchContent = ref('');
 
-// 文件导入
+// 各类型格式说明
+const BATCH_FORMAT_TIPS: Record<BatchType, { desc: string; example: string; placeholder: string }> = {
+  text: {
+    desc: '每篇文章使用以下格式，多篇文章用 --- 分隔：',
+    example: '标题：文章标题\n标签：标签1,标签2\n作者：作者名\n---\n文章内容...\n---\n标题：另一篇文章\n...',
+    placeholder: '粘贴批量导入的文本...',
+  },
+  poetry: {
+    desc: '格式同普通文本，另支持「朝代：/年份：/地点：」元数据；导入后归类为诗词：',
+    example: '标题：静夜思\n作者：李白\n朝代：唐\n年份：726\n地点：扬州\n标签：唐诗\n---\n床前明月光，\n疑是地上霜。',
+    placeholder: '粘贴批量诗词文本，用 --- 分隔...',
+  },
+  idiom: {
+    desc: '标题即成语，正文为释义，另支持「出处：」元数据；导入后归类为成语：',
+    example: '标题：画蛇添足\n出处：《战国策·齐策二》\n标签：寓言\n---\n比喻做了多余的事，反而弄巧成拙。',
+    placeholder: '粘贴批量成语文本，用 --- 分隔...',
+  },
+  knowledge: {
+    desc: '每条一个问答对，多条用 --- 分隔；「知识集：」可省，「答案：」之后的内容并入答案；保存到知识库：',
+    example: '知识集：常识\n问题：水的化学式\n答案：H₂O\n---\n问题：光年是什么单位\n答案：长度单位',
+    placeholder: '粘贴批量知识条目，用 --- 分隔...',
+  },
+  timeline: {
+    desc: '多事件用 --- 分隔，每段可写「标题：/分类：/区域：/年份：/年号：/时代：/地点：/标签：/背景：/人物：/关系：」元数据，其余行作为正文。人物：人名|头衔|简介；关系：甲|乙|关系|说明：',
+    example: '标题：贞观之治\n分类：politics\n区域：china\n年份：627\n时代：唐\n地点：长安\n标签：盛世\n---\n唐太宗李世民即位后励精图治...',
+    placeholder: '粘贴批量事件文本，用 --- 分隔...',
+  },
+};
+
+const batchFormatTip = computed(() => BATCH_FORMAT_TIPS[batchType.value]);
+const batchPlaceholder = computed(() => BATCH_FORMAT_TIPS[batchType.value].placeholder);
+
+// ==================== 文件导入 ====================
+// 文件导入类型：影响导入后的 category 归属（知识条目/时间线按对应批量格式解析）
+const fileType = ref<BatchType>('text');
 const fileContent = ref('');
 const fileForm = ref({
   title: '',
@@ -1369,7 +1571,7 @@ watch(() => timelineForm.value.era, () => {
   timelineForm.value.reign = '';
 });
 
-// 手动/批量
+// 时间线事件手动表单（手动添加 tab 的「时间线事件」类型使用）
 const timelineManualForm = ref({
   title: '',
   content: '',
@@ -1384,7 +1586,6 @@ const timelineManualForm = ref({
   background: '',
   tags: [] as string[],
 });
-const timelineBatchContent = ref('');
 
 // AI 生成
 const timelineAiTopic = ref('');
@@ -1470,7 +1671,7 @@ async function handleTimelineSearch() {
 function buildManualEvent(): LibraryTimelineEvent | null {
   const f = timelineManualForm.value;
   if (!f.title || !f.content) {
-    ElMessage.warning('请填写事件标题和内容');
+    ElMessage.warning('请填写事件名和描述');
     return null;
   }
   return {
@@ -1525,106 +1726,6 @@ function selectTimelineAi(ev: LibraryTimelineEvent) {
   if (idx > -1) selectedTimelineAi.value.splice(idx, 1);
   else selectedTimelineAi.value.push(ev);
 }
-
-// 内嵌地图
-const inlineMapContainer = ref<HTMLDivElement>();
-let inlineMap: L.Map | null = null;
-let inlineMarkerLayer: L.LayerGroup | null = null;
-let inlineTerritoryLayer: L.FeatureGroup | null = null;
-let inlineRouteLayer: L.LayerGroup | null = null;
-let initMapTimer: ReturnType<typeof setTimeout> | null = null;
-let initMapRetries = 0;
-
-const mapDynasty = ref('');
-const mapAuthor = ref<string[]>([]);
-const mapCategory = ref<'' | 'poetry' | 'idiom' | 'timeline'>('');
-const showAuthorRoute = ref(false);
-
-// 地点作品弹窗
-const showLocationDialog = ref(false);
-const locationDialogTitle = ref('');
-const locationDialogPoems = ref<PoetryItem[]>([]);
-
-// 地点成语弹窗
-const showIdiomLocationDialog = ref(false);
-const idiomLocationDialogTitle = ref('');
-const idiomLocationDialogIdioms = ref<IdiomItem[]>([]);
-
-function openLocationDialog(poems: PoetryItem[]) {
-  if (!poems.length) return;
-  locationDialogTitle.value = poems[0].location || '未知地点';
-  locationDialogPoems.value = poems;
-  showLocationDialog.value = true;
-}
-
-function togglePoetryInDialog(poem: PoetryItem) {
-  const index = selectedPoetries.value.findIndex(p => p.id === poem.id);
-  if (index > -1) {
-    selectedPoetries.value.splice(index, 1);
-  } else {
-    selectedPoetries.value.push(poem);
-  }
-  if (activeTab.value === 'poetryMap') {
-    if (mapAuthor.value.length) {
-      renderAuthorMarkers(mapAuthor.value);
-    } else {
-      renderInlineMarkers();
-    }
-  }
-}
-
-function openIdiomLocationDialog(items: IdiomItem[]) {
-  if (!items.length) return;
-  idiomLocationDialogTitle.value = items[0].location || '未知地点';
-  idiomLocationDialogIdioms.value = items;
-  showIdiomLocationDialog.value = true;
-}
-
-// 地点时间线事件弹窗
-const showTimelineLocationDialog = ref(false);
-const timelineLocationDialogTitle = ref('');
-const timelineLocationDialogEvents = ref<LibraryTimelineEvent[]>([]);
-
-function openTimelineLocationDialog(events: LibraryTimelineEvent[]) {
-  if (!events.length) return;
-  timelineLocationDialogTitle.value = events[0].location || '未知地点';
-  timelineLocationDialogEvents.value = events;
-  showTimelineLocationDialog.value = true;
-}
-
-function toggleTimelineInDialog(ev: LibraryTimelineEvent) {
-  const idx = selectedTimelineEvents.value.findIndex(s => s.title === ev.title && s.year === ev.year);
-  if (idx > -1) selectedTimelineEvents.value.splice(idx, 1);
-  else selectedTimelineEvents.value.push(ev);
-  if (activeTab.value === 'poetryMap') renderInlineMarkers();
-}
-
-function toggleIdiomInDialog(item: IdiomItem) {
-  const index = selectedIdioms.value.findIndex(s => s.id === item.id);
-  if (index > -1) {
-    selectedIdioms.value.splice(index, 1);
-  } else {
-    selectedIdioms.value.push(item);
-  }
-  if (activeTab.value === 'poetryMap') {
-    renderInlineMarkers();
-  }
-}
-
-const availableAuthors = computed(() => {
-  const set = new Set<string>();
-  const dynasty = mapDynasty.value;
-  allLibraryPoems.value.forEach(p => {
-    if (!p.author || p.author === '佚名') return;
-    if (dynasty) {
-      const match = p.dynastyCode === dynasty || p.dynasty?.includes(getDynastyName(dynasty as PoetryDynasty));
-      if (match) set.add(p.author);
-    } else {
-      set.add(p.author);
-    }
-  });
-  return Array.from(set).sort();
-});
 
 // AI 搜索
 const aiForm = ref({
@@ -1742,624 +1843,6 @@ function getDynastyName(code: PoetryDynasty): string {
     xiandai: '近现代',
   };
   return names[code] || code;
-}
-
-// ==================== 内嵌地图功能 ====================
-
-function initInlineMap() {
-  if (!inlineMapContainer.value) return;
-  const container = inlineMapContainer.value;
-  // tab 切换动画或 Dialog 打开动画期间容器尺寸可能为 0，延迟重试
-  if (container.offsetWidth === 0 || container.offsetHeight === 0) {
-    if (initMapRetries >= 20) {
-      console.warn('[initInlineMap] 容器尺寸持续为 0，放弃初始化（已重试 20 次）');
-      initMapRetries = 0;
-      return;
-    }
-    initMapRetries++;
-    initMapTimer = setTimeout(initInlineMap, 300);
-    return;
-  }
-  // 容器已就绪，重置重试计数与定时器
-  initMapRetries = 0;
-  initMapTimer = null;
-  if (inlineMap) {
-    inlineMap.remove();
-    inlineMap = null;
-  }
-  // 强制清理容器，防止 destroy-on-close 后 Leaflet 状态残留
-  container.innerHTML = '';
-  delete (container as any)._leaflet_id;
-  // 移除 leaflet 可能添加的类名
-  container.classList.remove('leaflet-container', 'leaflet-touch', 'leaflet-fade-anim', 'leaflet-grab', 'leaflet-dragging');
-  container.removeAttribute('tabindex');
-
-  inlineMap = L.map(container, {
-    center: [35.0, 105.0],
-    zoom: 4,
-    zoomControl: false,
-    attributionControl: false,
-  });
-
-  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
-    subdomains: ['1', '2', '3', '4'],
-    maxZoom: 18,
-    attribution: '&copy; 高德地图',
-  }).addTo(inlineMap);
-
-  L.control.zoom({ position: 'bottomright' }).addTo(inlineMap);
-
-  inlineMarkerLayer = L.layerGroup().addTo(inlineMap);
-  inlineTerritoryLayer = L.featureGroup().addTo(inlineMap);
-  inlineRouteLayer = L.layerGroup().addTo(inlineMap);
-
-  nextTick(() => {
-    inlineMap?.invalidateSize();
-    renderInlineMarkers();
-    if (mapDynasty.value) renderTerritory(mapDynasty.value);
-    if (mapAuthor.value.length) renderAuthorMarkers(mapAuthor.value);
-    // 部分环境下首次渲染尺寸为 0，延迟再校正一次
-    setTimeout(() => {
-      inlineMap?.invalidateSize();
-    }, 300);
-  });
-}
-
-function getMapDisplayPoems(): PoetryItem[] {
-  if (mapCategory.value === 'idiom' || mapCategory.value === 'timeline') return [];
-  let poems = allLibraryPoems.value.filter(p => p.location);
-  if (mapAuthor.value.length) {
-    poems = poems.filter(p => mapAuthor.value.includes(p.author));
-  } else if (mapDynasty.value) {
-    poems = poems.filter(p => p.dynastyCode === mapDynasty.value || p.dynasty?.includes(getDynastyName(mapDynasty.value as PoetryDynasty)));
-  }
-  return poems;
-}
-
-function getMapDisplayIdioms(): IdiomItem[] {
-  if (mapCategory.value === 'poetry' || mapCategory.value === 'timeline') return [];
-  return allIdioms.value.filter(it => it.location);
-}
-
-function getMapDisplayTimeline(): LibraryTimelineEvent[] {
-  if (mapCategory.value !== 'timeline') return [];
-  return allTimelineEvents.value.filter(ev => ev.location);
-}
-
-function renderInlineMarkers() {
-  if (!inlineMap || !inlineMarkerLayer) return;
-  inlineMarkerLayer.clearLayers();
-
-  // 诗词标记
-  renderPoetryMarkers();
-  // 成语标记
-  renderIdiomMarkers();
-  // 时间线事件标记
-  renderTimelineMarkers();
-}
-
-// 时间线事件标记（星形，区别于诗词圆点/成语方形）
-function renderTimelineMarkers() {
-  if (!inlineMap || !inlineMarkerLayer) return;
-  const events = getMapDisplayTimeline();
-  if (!events.length) return;
-
-  // 按坐标分组
-  const locationMap = new Map<string, LibraryTimelineEvent[]>();
-  events.forEach(ev => {
-    const coord = parseTimelineLocation(ev.location);
-    if (!coord) return;
-    const key = `${coord.lng},${coord.lat}`;
-    const list = locationMap.get(key) || [];
-    list.push(ev);
-    locationMap.set(key, list);
-  });
-
-  locationMap.forEach((list) => {
-    const coord = parseTimelineLocation(list[0].location);
-    if (!coord) return;
-
-    const hasMultiple = list.length > 1;
-    const isSelected = list.some(ev => selectedTimelineEvents.value.some(s => s.title === ev.title && s.year === ev.year));
-    const allSelected = list.every(ev => selectedTimelineEvents.value.some(s => s.title === ev.title && s.year === ev.year));
-
-    const size = hasMultiple ? 20 : 16;
-    const fill = allSelected ? '#67c23a' : (isSelected ? '#95d475' : '#f56c6c');
-    const icon = L.divIcon({
-      className: 'timeline-inline-marker',
-      html: `<div style="
-        width:${size}px;height:${size}px;
-        background:${fill};border:2px solid #fff;
-        box-shadow:0 0 0 1.5px ${fill}, 0 1px 4px rgba(0,0,0,0.3);
-        display:flex;align-items:center;justify-content:center;
-        font-size:10px;font-weight:bold;color:#fff;
-        clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
-      ">${hasMultiple ? list.length : ''}</div>`,
-      iconSize: [size, size],
-      iconAnchor: [size / 2, size / 2],
-    });
-
-    const marker = L.marker([coord.lat, coord.lng], { icon }).addTo(inlineMarkerLayer!);
-
-    if (hasMultiple) {
-      const titles = list.slice(0, 3).map(ev => ev.title).join('、') + (list.length > 3 ? '...' : '');
-      const selectedCount = list.filter(ev => selectedTimelineEvents.value.some(s => s.title === ev.title && s.year === ev.year)).length;
-      marker.bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
-         <div style="font-size:12px;color:#666">共 ${list.length} 个事件 · 已选 ${selectedCount} 个</div>
-         <div style="font-size:11px;color:#909399;margin-top:2px">${titles}</div>
-         <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
-        { direction: 'top', offset: [0, -6] }
-      );
-    } else {
-      const ev = list[0];
-      const yearStr = ev.year != null ? (ev.year < 0 ? `公元前${Math.abs(ev.year)}年` : `公元${ev.year}年`) : '';
-      const figStr = ev.figures?.length ? ev.figures.map(f => f.name).join('、') : '';
-      marker.bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${ev.title}</div>
-         <div style="font-size:12px;color:#e6a23c;margin-bottom:2px">${yearStr}${ev.era ? ' · ' + ev.era : ''}</div>
-         <div style="font-size:12px;line-height:1.5;color:#666">${(ev.content || '').substring(0, 80)}${ev.content?.length > 80 ? '...' : ''}</div>
-         ${figStr ? `<div style="font-size:11px;color:#909399;margin-top:3px">👤 ${figStr}</div>` : ''}
-         <div style="font-size:11px;color:#999;margin-top:2px">${ev.location}</div>`,
-        { direction: 'top', offset: [0, -6] }
-      );
-    }
-
-    marker.on('click', () => {
-      if (list.length === 1) {
-        selectTimelineEvent(list[0]);
-        renderInlineMarkers();
-      } else {
-        openTimelineLocationDialog(list);
-      }
-    });
-  });
-}
-
-function renderPoetryMarkers() {
-  if (!inlineMap || !inlineMarkerLayer) return;
-
-  const poems = getMapDisplayPoems();
-  if (!poems.length) return;
-
-  // 按坐标分组
-  const locationMap = new Map<string, PoetryItem[]>();
-  poems.forEach(poem => {
-    const coord = parseLocation(poem.location);
-    if (!coord) return;
-    const key = `${coord.lng},${coord.lat}`;
-    const list = locationMap.get(key) || [];
-    list.push(poem);
-    locationMap.set(key, list);
-  });
-
-  locationMap.forEach((list) => {
-    const coord = parseLocation(list[0].location);
-    if (!coord) return;
-
-    const hasMultiple = list.length > 1;
-    const isSelected = list.some(p => selectedPoetries.value.some(s => s.id === p.id));
-    const allSelected = list.every(p => selectedPoetries.value.some(s => s.id === p.id));
-
-    const marker = L.circleMarker([coord.lat, coord.lng], {
-      radius: hasMultiple ? 9 : 6,
-      fillColor: allSelected ? '#67c23a' : (isSelected ? '#95d475' : (hasMultiple ? '#f56c6c' : '#409eff')),
-      color: '#fff',
-      weight: hasMultiple ? 2.5 : 1.5,
-      opacity: 1,
-      fillOpacity: 0.9,
-    }).addTo(inlineMarkerLayer!);
-
-    if (hasMultiple) {
-      const authors = [...new Set(list.map(p => p.author))].join('、');
-      const selectedCount = list.filter(p => selectedPoetries.value.some(s => s.id === p.id)).length;
-      marker.bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
-         <div style="font-size:12px;color:#666">共 ${list.length} 首作品 · 已选 ${selectedCount} 首</div>
-         <div style="font-size:11px;color:#999;margin-top:2px">${authors}</div>
-         <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
-        { direction: 'top', offset: [0, -6] }
-      );
-    } else {
-      const poem = list[0];
-      const lines = poem.content.split(/\n/).filter(l => l.trim());
-      const preview = lines.slice(0, 2).join('<br>');
-      const yearStr = formatYear(poem.year);
-      const yearHtml = yearStr ? `<div style="font-size:11px;color:#e6a23c;margin-bottom:2px">创作时间：${yearStr}</div>` : '';
-      marker.bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${poem.title}</div>
-         <div style="font-size:12px;color:#666;margin-bottom:2px">${poem.author} · ${poem.dynasty}</div>
-         ${yearHtml}
-         <div style="font-size:12px;line-height:1.5">${preview}</div>
-         <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
-        { direction: 'top', offset: [0, -6] }
-      );
-    }
-
-    marker.on('click', () => {
-      if (list.length === 1) {
-        selectPoetry(list[0]);
-        renderInlineMarkers();
-      } else {
-        openLocationDialog(list);
-      }
-    });
-  });
-}
-
-function renderIdiomMarkers() {
-  if (!inlineMap || !inlineMarkerLayer) return;
-  const idioms = getMapDisplayIdioms();
-  if (!idioms.length) return;
-
-  // 按坐标分组
-  const locationMap = new Map<string, IdiomItem[]>();
-  idioms.forEach(item => {
-    const coord = parseLocation(item.location);
-    if (!coord) return;
-    const key = `${coord.lng},${coord.lat}`;
-    const list = locationMap.get(key) || [];
-    list.push(item);
-    locationMap.set(key, list);
-  });
-
-  locationMap.forEach((list) => {
-    const coord = parseLocation(list[0].location);
-    if (!coord) return;
-
-    const hasMultiple = list.length > 1;
-    const isSelected = list.some(it => selectedIdioms.value.some(s => s.id === it.id));
-    const allSelected = list.every(it => selectedIdioms.value.some(s => s.id === it.id));
-
-    // 成语用方形标记区分诗词
-    const size = hasMultiple ? 18 : 14;
-    const fill = allSelected ? '#67c23a' : (isSelected ? '#95d475' : '#e6a23c');
-    const idiomIcon = L.divIcon({
-      className: 'idiom-inline-marker',
-      html: `<div style="
-        width:${size}px;height:${size}px;border-radius:50%;
-        background:${fill};border:2px solid #fff;
-        box-shadow:0 0 0 1.5px ${fill}, 0 1px 4px rgba(0,0,0,0.3);
-        display:flex;align-items:center;justify-content:center;
-        font-size:10px;font-weight:bold;color:#fff;
-      ">${hasMultiple ? list.length : ''}</div>`,
-      iconSize: [size, size],
-      iconAnchor: [size / 2, size / 2],
-    });
-
-    const marker = L.marker([coord.lat, coord.lng], { icon: idiomIcon }).addTo(inlineMarkerLayer!);
-
-    if (hasMultiple) {
-      const selectedCount = list.filter(it => selectedIdioms.value.some(s => s.id === it.id)).length;
-      const titles = list.slice(0, 3).map(it => it.title).join('、') + (list.length > 3 ? '...' : '');
-      marker.bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
-         <div style="font-size:12px;color:#666">共 ${list.length} 条成语 · 已选 ${selectedCount} 条</div>
-         <div style="font-size:11px;color:#909399;margin-top:2px">${titles}</div>
-         <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
-        { direction: 'top', offset: [0, -6] }
-      );
-    } else {
-      const it = list[0];
-      marker.bindTooltip(
-        `<div style="font-size:13px;font-weight:bold">${it.title}</div>
-         <div style="font-size:11px;color:#e6a23c;margin-bottom:2px">成语 · ${it.category}</div>
-         <div style="font-size:12px;line-height:1.5;color:#666">${it.meaning}</div>
-         ${it.source ? `<div style="font-size:11px;color:#909399;margin-top:3px">出处：${it.source}</div>` : ''}
-         <div style="font-size:11px;color:#999;margin-top:2px">${it.location}</div>`,
-        { direction: 'top', offset: [0, -6] }
-      );
-    }
-
-    marker.on('click', () => {
-      if (list.length === 1) {
-        selectIdiom(list[0]);
-        renderInlineMarkers();
-      } else {
-        openIdiomLocationDialog(list);
-      }
-    });
-  });
-}
-
-function renderTerritory(dynastyCode: string) {
-  if (!inlineMap || !inlineTerritoryLayer) return;
-  inlineTerritoryLayer.clearLayers();
-
-  const territory = getTerritoryByDynasty(dynastyCode);
-  if (!territory) return;
-
-  const polygons: L.Polygon[] = [];
-
-  const drawPoly = (poly: any) => {
-    const latlngs = poly.coords.map((c: [number, number]) => [c[1], c[0]] as [number, number]);
-    const polygon = L.polygon(latlngs, {
-      color: poly.color,
-      fillColor: poly.fillColor,
-      weight: 2,
-      fillOpacity: 0.25,
-    }).bindTooltip(poly.name, { direction: 'center', sticky: true });
-    polygons.push(polygon);
-    inlineTerritoryLayer!.addLayer(polygon);
-
-    poly.centers.forEach((c: any) => {
-      L.circleMarker([c.lat, c.lng], {
-        radius: 4,
-        fillColor: poly.color,
-        color: '#fff',
-        weight: 1,
-        fillOpacity: 1,
-      }).bindTooltip(c.name, { direction: 'top' }).addTo(inlineTerritoryLayer!);
-    });
-  };
-
-  drawPoly(territory.main);
-  territory.others.forEach(drawPoly);
-
-  if (polygons.length) {
-    inlineMap.fitBounds(inlineTerritoryLayer.getBounds().pad(0.1));
-  }
-}
-
-function extractSortYear(year?: string | number): number {
-  if (year == null) return Infinity;
-  if (typeof year === 'number') return year;
-  const m = String(year).match(/(-?\d+)/);
-  return m ? parseInt(m[1], 10) : Infinity;
-}
-
-function formatYear(year?: string | number): string {
-  if (year == null) return '';
-  const n = Number(year);
-  if (Number.isNaN(n)) return String(year);
-  return n < 0 ? `公元前${Math.abs(n)}年` : `公元${n}年`;
-}
-
-function getPoemPreview(poem: PoetryItem): string {
-  const lines = poem.content.split(/\n/).filter(l => l.trim());
-  return lines.slice(0, 2).join('<br>');
-}
-
-function addRouteArrows(coords: L.LatLngExpression[], layer: L.LayerGroup, color: string) {
-  if (!inlineMap || coords.length < 2) return;
-  for (let i = 0; i < coords.length - 1; i++) {
-    const p1 = inlineMap.latLngToContainerPoint(L.latLng(coords[i]));
-    const p2 = inlineMap.latLngToContainerPoint(L.latLng(coords[i + 1]));
-    const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI - 90;
-    const mid = L.latLng(
-      (L.latLng(coords[i]).lat + L.latLng(coords[i + 1]).lat) / 2,
-      (L.latLng(coords[i]).lng + L.latLng(coords[i + 1]).lng) / 2,
-    );
-    const arrowIcon = L.divIcon({
-      className: 'route-arrow',
-      html: `<div style="width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:12px solid ${color};transform:rotate(${angle}deg);filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));"></div>`,
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
-    });
-    L.marker(mid, { icon: arrowIcon, interactive: false }).addTo(layer);
-  }
-}
-
-const AUTHOR_COLORS = ['#e6a23c', '#409eff', '#67c23a', '#f56c6c', '#9b59b6', '#e74c3c', '#1abc9c', '#3498db'];
-
-function renderAuthorMarkers(authors: string[]) {
-  if (!inlineMap || !inlineRouteLayer) return;
-  inlineRouteLayer.clearLayers();
-
-  if (!authors.length) return;
-
-  let authorPoems = allLibraryPoems.value.filter(p => authors.includes(p.author) && p.location);
-  if (mapDynasty.value) {
-    authorPoems = authorPoems.filter(p => p.dynastyCode === mapDynasty.value || p.dynasty?.includes(getDynastyName(mapDynasty.value as PoetryDynasty)));
-  }
-  if (!authorPoems.length) return;
-
-  // 按作者分组，各自分配颜色
-  const authorColorMap = new Map<string, string>();
-  authors.forEach((a, i) => authorColorMap.set(a, AUTHOR_COLORS[i % AUTHOR_COLORS.length]));
-
-  const grouped = new Map<string, PoetryItem[]>();
-  authorPoems.forEach(p => {
-    const list = grouped.get(p.author) || [];
-    list.push(p);
-    grouped.set(p.author, list);
-  });
-
-  let globalIdx = 0;
-  const allCoords: L.LatLngExpression[] = [];
-
-  grouped.forEach((poems, author) => {
-    const color = authorColorMap.get(author) || '#e6a23c';
-    const coords: L.LatLngExpression[] = [];
-
-    // 按坐标再分组
-    const locationMap = new Map<string, PoetryItem[]>();
-    poems.forEach(p => {
-      const coord = parseLocation(p.location);
-      if (!coord) return;
-      const key = `${coord.lng},${coord.lat}`;
-      const list = locationMap.get(key) || [];
-      list.push(p);
-      locationMap.set(key, list);
-    });
-
-    const sortedLocations = Array.from(locationMap.entries()).sort((a, b) => {
-      const ya = extractSortYear(a[1][0].year);
-      const yb = extractSortYear(b[1][0].year);
-      if (ya !== yb) return ya - yb;
-      return a[1][0].title.localeCompare(b[1][0].title, 'zh');
-    });
-
-    sortedLocations.forEach(([, list]) => {
-      const coord = parseLocation(list[0].location);
-      if (!coord) return;
-      coords.push([coord.lat, coord.lng]);
-      allCoords.push([coord.lat, coord.lng]);
-      globalIdx++;
-
-      const hasMultiple = list.length > 1;
-      const isSelected = list.some(p => selectedPoetries.value.some(s => s.id === p.id));
-      const allSelected = list.every(p => selectedPoetries.value.some(s => s.id === p.id));
-      const bgColor = allSelected ? '#67c23a' : (isSelected ? '#95d475' : color);
-      const num = globalIdx;
-
-      const iconHtml = hasMultiple
-        ? `<div style="
-            width:22px;height:22px;border-radius:50%;
-            background:${bgColor};color:#fff;
-            display:flex;align-items:center;justify-content:center;
-            font-size:11px;font-weight:bold;border:2px solid #fff;
-            box-shadow:0 1px 4px rgba(0,0,0,0.3);
-            cursor:pointer;
-          ">${num}+</div>`
-        : `<div style="
-            width:20px;height:20px;border-radius:50%;
-            background:${bgColor};color:#fff;
-            display:flex;align-items:center;justify-content:center;
-            font-size:12px;font-weight:bold;border:2px solid #fff;
-            box-shadow:0 1px 4px rgba(0,0,0,0.3);
-            cursor:pointer;
-          ">${num}</div>`;
-
-      const icon = L.divIcon({
-        className: 'author-route-marker',
-        html: iconHtml,
-        iconSize: hasMultiple ? [22, 22] : [20, 20],
-        iconAnchor: hasMultiple ? [11, 11] : [10, 10],
-      });
-
-      if (hasMultiple) {
-        const selectedCount = list.filter(p => selectedPoetries.value.some(s => s.id === p.id)).length;
-        const marker = L.marker([coord.lat, coord.lng], { icon })
-          .bindTooltip(
-            `<div style="font-size:13px;font-weight:bold">${list[0].location}</div>
-             <div style="font-size:12px;color:#666">${author} · 共 ${list.length} 首 · 已选 ${selectedCount} 首</div>
-             <div style="font-size:11px;color:#e6a23c;margin-top:2px">点击展开列表</div>`,
-            { direction: 'top' }
-          )
-          .addTo(inlineRouteLayer!);
-
-        marker.on('click', () => {
-          openLocationDialog(list);
-        });
-      } else {
-        const poem = list[0];
-        const preview = getPoemPreview(poem);
-        const yearStr = formatYear(poem.year);
-        const yearHtml = yearStr ? `<div style="font-size:11px;color:#e6a23c;margin-bottom:2px">创作时间：${yearStr}</div>` : '';
-        const marker = L.marker([coord.lat, coord.lng], { icon })
-          .bindTooltip(
-            `<div style="font-size:13px;font-weight:bold">${poem.title}</div>
-             <div style="font-size:12px;color:#666;margin-bottom:2px">${poem.author} · ${poem.dynasty}</div>
-             ${yearHtml}
-             <div style="font-size:12px;line-height:1.5">${preview}</div>
-             <div style="font-size:11px;color:#999;margin-top:4px">${poem.location}</div>`,
-            { direction: 'top' }
-          )
-          .addTo(inlineRouteLayer!);
-
-        marker.on('click', () => {
-          selectPoetry(poem);
-          renderAuthorMarkers(authors);
-        });
-      }
-    });
-
-    if (showAuthorRoute.value && coords.length > 1) {
-      L.polyline(coords, {
-        color: color,
-        weight: 4,
-        dashArray: '6, 6',
-        opacity: 0.9,
-      }).addTo(inlineRouteLayer!);
-      addRouteArrows(coords, inlineRouteLayer!, color);
-    }
-  });
-
-  if (allCoords.length && inlineMap) {
-    const group = L.featureGroup(inlineRouteLayer.getLayers());
-    inlineMap.fitBounds(group.getBounds().pad(0.15));
-  }
-}
-
-function handleMapDynastyChange(val: string) {
-  if (!inlineMap) initInlineMap();
-  if (val) {
-    renderTerritory(val);
-  } else if (inlineTerritoryLayer) {
-    inlineTerritoryLayer.clearLayers();
-  }
-  if (!mapAuthor.value.length) {
-    renderInlineMarkers();
-  }
-}
-
-function handleMapAuthorChange(val: string[]) {
-  if (!inlineMap) initInlineMap();
-  if (inlineMarkerLayer) inlineMarkerLayer.clearLayers();
-  if (val.length) {
-    renderAuthorMarkers(val);
-    // 全部/成语模式下，作者路线之外仍显示成语标记
-    renderIdiomMarkers();
-  } else {
-    if (inlineRouteLayer) inlineRouteLayer.clearLayers();
-    renderInlineMarkers();
-  }
-}
-
-async function handleMapCategoryChange(val: string) {
-  // 切换到成语/时间线类时，禁用朝代/作者并清掉路线、疆域
-  if (val === 'idiom' || val === 'timeline') {
-    mapAuthor.value = [];
-    mapDynasty.value = '';
-    if (inlineRouteLayer) inlineRouteLayer.clearLayers();
-    if (inlineTerritoryLayer) inlineTerritoryLayer.clearLayers();
-  }
-
-  // 确保成语库已加载（成语/全部模式需要）
-  if (val !== 'poetry' && val !== 'timeline' && allIdioms.value.length === 0) {
-    try {
-      allIdioms.value = await fetchAllIdioms();
-      hasLoadedIdioms.value = true;
-    } catch (e) {
-      console.error('加载成语库失败', e);
-    }
-  }
-
-  // 确保时间线库已加载（时间线/全部模式需要）
-  if (val === 'timeline' && allTimelineEvents.value.length === 0) {
-    try {
-      allTimelineEvents.value = await fetchAllTimelineEvents();
-      hasLoadedTimeline.value = true;
-    } catch (e) {
-      console.error('加载时间线库失败', e);
-    }
-  }
-
-  if (!inlineMap) {
-    initInlineMap();
-    return;
-  }
-
-  if (mapAuthor.value.length) {
-    renderAuthorMarkers(mapAuthor.value);
-  } else {
-    renderInlineMarkers();
-  }
-}
-
-function clearMapOverlays() {
-  if (inlineTerritoryLayer) inlineTerritoryLayer.clearLayers();
-  if (inlineRouteLayer) inlineRouteLayer.clearLayers();
-  if (inlineMarkerLayer) inlineMarkerLayer.clearLayers();
-  mapCategory.value = '';
-  mapDynasty.value = '';
-  mapAuthor.value = [];
-  showAuthorRoute.value = false;
-  if (inlineMap) {
-    inlineMap.setView([35.0, 105.0], 4);
-    renderInlineMarkers();
-  }
 }
 
 // 选择诗词（多选切换）
@@ -2624,7 +2107,7 @@ async function handleSearch() {
   }
 }
 
-// 解析批量导入内容
+// 解析批量导入内容（普通文本/诗词/成语共用；支持 标题/作者/来源/出处/朝代/年份/地点/标签 元数据）
 function parseBatchContent(content: string): any[] {
   const articles: any[] = [];
   const sections = content.split(/---+/).filter(s => s.trim());
@@ -2639,7 +2122,6 @@ function parseBatchContent(content: string): any[] {
       content: ''
     };
 
-    let contentStarted = false;
     const contentLines: string[] = [];
 
     for (const line of lines) {
@@ -2652,10 +2134,18 @@ function parseBatchContent(content: string): any[] {
         article.author = trimmedLine.replace(/^作者[：:]\s*/, '');
       } else if (trimmedLine.startsWith('来源：') || trimmedLine.startsWith('来源:')) {
         article.source = trimmedLine.replace(/^来源[：:]\s*/, '');
+      } else if (trimmedLine.startsWith('出处：') || trimmedLine.startsWith('出处:')) {
+        article.source = trimmedLine.replace(/^出处[：:]\s*/, '');
+      } else if (trimmedLine.startsWith('朝代：') || trimmedLine.startsWith('朝代:')) {
+        article.dynasty = trimmedLine.replace(/^朝代[：:]\s*/, '');
+      } else if (trimmedLine.startsWith('年份：') || trimmedLine.startsWith('年份:')) {
+        const y = trimmedLine.replace(/^年份[：:]\s*/, '');
+        article.year = y ? Number(y) : undefined;
+      } else if (trimmedLine.startsWith('地点：') || trimmedLine.startsWith('地点:')) {
+        article.location = trimmedLine.replace(/^地点[：:]\s*/, '');
       } else if (trimmedLine.startsWith('标签：') || trimmedLine.startsWith('标签:')) {
         article.tags = trimmedLine.replace(/^标签[：:]\s*/, '').split(/[,，]/).map(t => t.trim()).filter(Boolean);
       } else {
-        contentStarted = true;
         contentLines.push(line);
       }
     }
@@ -2670,8 +2160,71 @@ function parseBatchContent(content: string): any[] {
   return articles;
 }
 
+// 解析批量知识条目（--- 分隔；元数据：知识集/问题（或名称）/答案（或释义）/标签，答案之后的行并入答案）
+function parseBatchKnowledge(content: string): { setName?: string; question: string; answer: string; tags?: string[] }[] {
+  const sections = content.split(/---+/).map(s => s.trim()).filter(Boolean);
+  const items: { setName?: string; question: string; answer: string; tags?: string[] }[] = [];
+  const metaRe = (key: string) => new RegExp(`^${key}[：:]\\s*`);
+  for (const section of sections) {
+    const lines = section.split('\n');
+    const item: { setName?: string; question?: string; answer?: string; tags?: string[] } = {};
+    const answerExtra: string[] = [];
+    let inAnswer = false;
+    for (const line of lines) {
+      const t = line.trim();
+      if (!inAnswer && !t) continue;
+      if (!inAnswer && metaRe('知识集').test(t)) {
+        item.setName = t.replace(metaRe('知识集'), '');
+      } else if (!inAnswer && (metaRe('问题').test(t) || metaRe('名称').test(t))) {
+        const re = metaRe('问题').test(t) ? metaRe('问题') : metaRe('名称');
+        item.question = t.replace(re, '');
+      } else if (!inAnswer && (metaRe('答案').test(t) || metaRe('释义').test(t))) {
+        const re = metaRe('答案').test(t) ? metaRe('答案') : metaRe('释义');
+        item.answer = t.replace(re, '');
+        inAnswer = true;
+      } else if (!inAnswer && metaRe('标签').test(t)) {
+        item.tags = t.replace(metaRe('标签'), '').split(/[,，]/).map(s => s.trim()).filter(Boolean);
+      } else if (inAnswer) {
+        answerExtra.push(line);
+      }
+    }
+    if (answerExtra.length) {
+      item.answer = [item.answer || '', ...answerExtra].join('\n').trim();
+    }
+    if (item.question && item.answer) {
+      items.push(item as { setName?: string; question: string; answer: string; tags?: string[] });
+    }
+  }
+  return items;
+}
+
+// 批量知识条目保存到知识库 store（不走文章 import 通道）
+async function importKnowledgeItems(items: { setName?: string; question: string; answer: string; tags?: string[] }[]): Promise<boolean> {
+  try {
+    for (const it of items) {
+      await knowledgeStore.addCustomItem(it);
+    }
+    ElMessage.success(`已保存 ${items.length} 条知识条目到知识库`);
+    return true;
+  } catch (e) {
+    ElMessage.error('保存失败，请重试');
+    return false;
+  }
+}
+
+// 按类型给批量/文件导入的文章补充 category 归属
+function applyBatchCategory(articles: any[], type: BatchType): any[] {
+  if (type === 'poetry') {
+    return articles.map(a => ({...a, category: 'poetry'}));
+  }
+  if (type === 'idiom') {
+    return articles.map(a => ({...a, category: 'idiom', tags: ['成语', ...(a.tags || [])]}));
+  }
+  return articles;
+}
+
 // 导入
-function handleImport() {
+async function handleImport() {
   if (importing.value) return;
   importing.value = true;
 
@@ -2680,45 +2233,72 @@ function handleImport() {
     let articles: any[] = [];
 
     switch (activeTab.value) {
-      case 'manual':
-        if (!manualForm.value.title || !manualForm.value.content) {
-          ElMessage.warning('请填写标题和内容');
-          return;
-        }
-        articles = [{
-          title: manualForm.value.title,
-          content: manualForm.value.content,
-          tags: manualForm.value.tags,
-          author: '',
-          source: ''
-        }];
-        break;
-
-      case 'batch':
+      case 'batch': {
         if (!batchContent.value.trim()) {
           ElMessage.warning('请输入批量导入内容');
           return;
         }
-        articles = parseBatchContent(batchContent.value);
-        if (articles.length === 0) {
-          ElMessage.warning('未能解析出有效文章，请检查格式');
+        if (batchType.value === 'timeline') {
+          // 复用原 timeline tab 的批量解析逻辑（--- 分隔 + 元数据行）
+          const evs = parseBatchTimeline(batchContent.value);
+          if (evs.length === 0) {
+            ElMessage.warning('未能解析出有效事件，请检查格式');
+            return;
+          }
+          articles = evs.map(mapLibraryEventToArticle);
+        } else if (batchType.value === 'knowledge') {
+          const items = parseBatchKnowledge(batchContent.value);
+          if (items.length === 0) {
+            ElMessage.warning('未能解析出有效条目，请检查格式');
+            return;
+          }
+          if (await importKnowledgeItems(items)) {
+            batchContent.value = '';
+          }
           return;
+        } else {
+          articles = applyBatchCategory(parseBatchContent(batchContent.value), batchType.value);
+          if (articles.length === 0) {
+            ElMessage.warning('未能解析出有效文章，请检查格式');
+            return;
+          }
         }
         break;
+      }
 
-      case 'file':
+      case 'file': {
         if (!fileContent.value) {
           ElMessage.warning('请先选择文件');
           return;
         }
-        articles = [{
-          title: fileForm.value.title || '未命名',
-          content: fileContent.value,
-          tags: fileForm.value.tags,
-          author: '',
-          source: ''
-        }];
+        if (fileType.value === 'timeline') {
+          const evs = parseBatchTimeline(fileContent.value);
+          if (evs.length === 0) {
+            ElMessage.warning('未能从文件解析出有效事件，请检查格式');
+            return;
+          }
+          articles = evs.map(mapLibraryEventToArticle);
+        } else if (fileType.value === 'knowledge') {
+          const items = parseBatchKnowledge(fileContent.value);
+          if (items.length === 0) {
+            ElMessage.warning('未能从文件解析出有效条目，请检查格式');
+            return;
+          }
+          if (await importKnowledgeItems(items)) {
+            fileContent.value = '';
+          }
+          return;
+        } else {
+          articles = applyBatchCategory([{
+            title: fileForm.value.title || '未命名',
+            content: fileContent.value,
+            tags: fileForm.value.tags,
+            author: '',
+            source: ''
+          }], fileType.value);
+        }
         break;
+      }
 
       case 'online':
         if (selectedResult.value !== null && searchResults.value[selectedResult.value]) {
@@ -2736,47 +2316,56 @@ function handleImport() {
         }
         break;
 
-      case 'poetry':
-      case 'poetryMap':
-        if (selectedPoetries.value.length > 0) {
-          articles = selectedPoetries.value.map(poem => ({
-            title: poem.title,
-            content: poem.content,
-            tags: [...poem.tags, ...poetryForm.value.tags],
-            author: poem.author,
-            source: poem.source || poem.dynasty,
-            dynasty: poem.dynasty,
-            location: poem.location,
-            category: 'poetry'
-          }));
-        } else {
-          ElMessage.warning('请至少选择一首诗词');
-          return;
+      case 'library': {
+        if (libTab.value === 'poetry') {
+          if (selectedPoetries.value.length > 0) {
+            articles = selectedPoetries.value.map(poem => ({
+              title: poem.title,
+              content: poem.content,
+              tags: [...poem.tags, ...poetryForm.value.tags],
+              author: poem.author,
+              source: poem.source || poem.dynasty,
+              dynasty: poem.dynasty,
+              location: poem.location,
+              category: 'poetry'
+            }));
+          } else {
+            ElMessage.warning('请至少选择一首诗词');
+            return;
+          }
+        } else if (libTab.value === 'idiom') {
+          if (selectedIdioms.value.length > 0) {
+            articles = selectedIdioms.value.map(it => ({
+              title: it.title,
+              content: [
+                it.pinyin && `【拼音】${it.pinyin}`,
+                `【释义】${it.meaning}`,
+                it.source && `【出处】${it.source}`,
+                it.story && `【典故】${it.story}`,
+                it.example && `【例句】${it.example}`,
+              ].filter(Boolean).join('\n'),
+              tags: ['成语', it.category, ...it.tags].filter(Boolean),
+              author: '',
+              source: it.source || '成语库',
+              category: 'idiom',
+              location: it.location,
+            }));
+          } else {
+            ElMessage.warning('请至少选择一条成语');
+            return;
+          }
+        } else if (libTab.value === 'timeline') {
+          const evs: LibraryTimelineEvent[] = timelineSubTab.value === 'ai'
+            ? [...selectedTimelineAi.value]
+            : [...selectedTimelineEvents.value];
+          if (evs.length === 0) {
+            ElMessage.warning('请选择至少一个事件');
+            return;
+          }
+          articles = evs.map(mapLibraryEventToArticle);
         }
         break;
-
-      case 'idiom':
-        if (selectedIdioms.value.length > 0) {
-          articles = selectedIdioms.value.map(it => ({
-            title: it.title,
-            content: [
-              it.pinyin && `【拼音】${it.pinyin}`,
-              `【释义】${it.meaning}`,
-              it.source && `【出处】${it.source}`,
-              it.story && `【典故】${it.story}`,
-              it.example && `【例句】${it.example}`,
-            ].filter(Boolean).join('\n'),
-            tags: ['成语', it.category, ...it.tags].filter(Boolean),
-            author: '',
-            source: it.source || '成语库',
-            category: 'idiom',
-            location: it.location,
-          }));
-        } else {
-          ElMessage.warning('请至少选择一条成语');
-          return;
-        }
-        break;
+      }
 
       case 'exam':
         if (selectedExamItem.value) {
@@ -2794,27 +2383,6 @@ function handleImport() {
           return;
         }
         break;
-
-      case 'timeline': {
-        const evs: LibraryTimelineEvent[] = [];
-        if (timelineSubTab.value === 'library') {
-          evs.push(...selectedTimelineEvents.value);
-        } else if (timelineSubTab.value === 'manual') {
-          const manual = buildManualEvent();
-          if (manual) evs.push(manual);
-          if (timelineBatchContent.value.trim()) {
-            evs.push(...parseBatchTimeline(timelineBatchContent.value));
-          }
-        } else if (timelineSubTab.value === 'ai') {
-          evs.push(...selectedTimelineAi.value);
-        }
-        if (evs.length === 0) {
-          ElMessage.warning('请选择或输入至少一个事件');
-          return;
-        }
-        articles = evs.map(mapLibraryEventToArticle);
-        break;
-      }
 
       case 'ai':
         if (selectedAIResult.value) {
@@ -2844,8 +2412,14 @@ function handleImport() {
 
 // 重置表单
 function resetForm() {
-  manualForm.value = {title: '', tags: [], content: ''};
+  manualType.value = 'text';
+  manualPoetryForm.value = {title: '', dynasty: '', author: '', year: '', location: '', content: '', tags: []};
+  manualIdiomForm.value = {title: '', meaning: '', source: '', tags: []};
+  manualKnowledgeForm.value = {setName: '', question: '', answer: '', tags: []};
+  manualPegForm.value = {palaceId: '', order: '', name: '', alternates: '', description: ''};
+  batchType.value = 'text';
   batchContent.value = '';
+  fileType.value = 'text';
   fileContent.value = '';
   fileForm.value = {title: '', tags: []};
   onlineForm.value = {type: 'search', url: '', keyword: '', tags: []};
@@ -2878,13 +2452,13 @@ function resetForm() {
     title: '', content: '', category: 'politics', region: 'china', year: '',
     reign: '', era: '', location: '', figures: '', relations: '', background: '', tags: [],
   };
-  timelineBatchContent.value = '';
   timelineAiTopic.value = '';
   timelineAiResults.value = [];
   selectedTimelineAi.value = [];
   timelineAiForm.value = { provider: '', apiKey: '' };
   timelineSubTab.value = 'library';
-  activeTab.value = 'manual';
+  libTab.value = 'poetry';
+  applyInitialTab();
 }
 
 // 关闭对话框
@@ -2893,59 +2467,17 @@ function handleClose() {
   resetForm();
 }
 
-// 对话框关闭时重置导入状态（导入成功后保持 loading，由关闭触发重置）
+// 打开时定位到 initialTab/initialLibTab；关闭时重置导入状态（导入成功后保持 loading，由关闭触发重置）
 watch(() => props.modelValue, (val) => {
-  if (!val) {
+  if (val) {
+    applyInitialTab();
+  } else {
     importing.value = false;
   }
 });
 
-function handleDialogOpened() {
-  if (activeTab.value === 'poetryMap') {
-    const tasks: Promise<any>[] = [];
-    if (!hasLoadedLibrary.value) {
-      tasks.push(fetchAllPoetry().then(all => {
-        allLibraryPoems.value = Object.values(all).flat();
-        hasLoadedLibrary.value = true;
-      }));
-    }
-    if (!hasLoadedIdioms.value) {
-      tasks.push(fetchAllIdioms().then(items => {
-        allIdioms.value = items;
-        hasLoadedIdioms.value = true;
-      }));
-    }
-    if (!hasLoadedTimeline.value) {
-      tasks.push(fetchAllTimelineEvents().then(items => {
-        allTimelineEvents.value = items;
-        hasLoadedTimeline.value = true;
-      }));
-    }
-    if (tasks.length) {
-      Promise.all(tasks).then(() => initInlineMap());
-    } else {
-      initInlineMap();
-    }
-  }
-}
-
-watch(mapDynasty, () => {
-  const valid = availableAuthors.value;
-  const removed = mapAuthor.value.filter(a => !valid.includes(a));
-  if (removed.length) {
-    mapAuthor.value = mapAuthor.value.filter(a => valid.includes(a));
-    if (inlineRouteLayer) inlineRouteLayer.clearLayers();
-    if (activeTab.value === 'poetryMap') {
-      if (mapAuthor.value.length) {
-        renderAuthorMarkers(mapAuthor.value);
-      } else {
-        renderInlineMarkers();
-      }
-    }
-  }
-});
-
-watch(activeTab, (tab) => {
+// 按内置库二级面板懒加载对应数据
+function loadLibTabData(tab: LibTab) {
   if (tab === 'poetry') {
     nextTick(() => {
       if (!hasLoadedLibrary.value) {
@@ -2958,6 +2490,14 @@ watch(activeTab, (tab) => {
         handleIdiomSearch();
       }
     });
+  } else if (tab === 'knowledge') {
+    // 加载已导入清单以正确显示禁用态，失败静默
+    knowledgeStore.loadImportedIds().catch(() => undefined);
+  } else if (tab === 'pegPacks') {
+    // 宫殿列表未加载时兜底加载，用于「已导入」判断
+    if (palaceStore.palaces.length === 0) {
+      palaceStore.loadPalaces().catch(() => undefined);
+    }
   } else if (tab === 'timeline') {
     nextTick(async () => {
       if (!hasLoadedTimeline.value) {
@@ -2969,67 +2509,33 @@ watch(activeTab, (tab) => {
         }
       }
     });
-  } else if (tab === 'poetryMap') {
-    nextTick(() => {
-      const tasks: Promise<any>[] = [];
-      if (!hasLoadedLibrary.value) {
-        tasks.push(fetchAllPoetry().then(all => {
-          allLibraryPoems.value = Object.values(all).flat();
-          hasLoadedLibrary.value = true;
-        }));
-      }
-      if (!hasLoadedIdioms.value) {
-        tasks.push(fetchAllIdioms().then(items => {
-          allIdioms.value = items;
-          hasLoadedIdioms.value = true;
-        }));
-      }
-      if (!hasLoadedTimeline.value) {
-        tasks.push(fetchAllTimelineEvents().then(items => {
-          allTimelineEvents.value = items;
-          hasLoadedTimeline.value = true;
-        }));
-      }
-      if (tasks.length) {
-        Promise.all(tasks).then(() => {
-          if (props.modelValue) initInlineMap();
-        });
-      } else if (props.modelValue) {
-        if (!inlineMap) initInlineMap();
-        else {
-          inlineMap.invalidateSize();
-          renderInlineMarkers();
-        }
-      }
-    });
+  }
+}
+
+function handleDialogOpened() {
+  // initialTab 与上次 activeTab 相同时 watch 不触发，这里兜底加载
+  if (activeTab.value === 'library') {
+    loadLibTabData(libTab.value);
+  }
+}
+
+watch(activeTab, (tab) => {
+  if (tab === 'library') {
+    loadLibTabData(libTab.value);
   }
 });
 
-watch(poetryResults, () => {
-  if (activeTab.value === 'poetryMap' && inlineMap && !mapAuthor.value.length) {
-    renderInlineMarkers();
+watch(libTab, (tab) => {
+  if (activeTab.value === 'library') {
+    loadLibTabData(tab);
   }
 });
 
-watch(showAuthorRoute, () => {
-  if (activeTab.value === 'poetryMap' && mapAuthor.value.length) {
-    renderAuthorMarkers(mapAuthor.value);
+// 手动添加切到宫殿桩时，兜底加载宫殿列表供下拉选择
+watch(manualType, (type) => {
+  if (type === 'peg' && palaceStore.palaces.length === 0) {
+    palaceStore.loadPalaces().catch(() => undefined);
   }
-});
-
-onUnmounted(() => {
-  if (initMapTimer) {
-    clearTimeout(initMapTimer);
-    initMapTimer = null;
-  }
-  initMapRetries = 0;
-  if (inlineMap) {
-    inlineMap.remove();
-    inlineMap = null;
-  }
-  inlineMarkerLayer = null;
-  inlineTerritoryLayer = null;
-  inlineRouteLayer = null;
 });
 </script>
 
@@ -3050,6 +2556,20 @@ onUnmounted(() => {
     margin-top: 0;
     margin-bottom: 12px;
     color: var(--utools-text-primary);
+  }
+}
+
+// 类型选择器行（手动添加/批量导入/文件导入顶部共用）
+.type-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  .type-bar-label {
+    font-size: 13px;
+    color: var(--utools-text-secondary);
+    flex-shrink: 0;
   }
 }
 
@@ -3092,6 +2612,11 @@ onUnmounted(() => {
 
 .poetry-placeholder {
   margin-top: 20px;
+}
+
+.poetry-loading {
+  margin-top: 16px;
+  padding: 0 4px;
 }
 
 .idiom-results {
@@ -3169,8 +2694,8 @@ onUnmounted(() => {
       display: inline-block;
       padding: 2px 8px;
       margin: 0 4px;
-      background: var(--utools-primary-light);
-      color: var(--utools-primary);
+      background: var(--utools-bg-active);
+      color: var(--utools-text-secondary);
       border-radius: 4px;
       font-size: 12px;
       font-family: monospace;
@@ -3276,87 +2801,57 @@ onUnmounted(() => {
   }
 }
 
-.library-map-controls {
+// 手动添加表单底部操作区
+.manual-form-actions {
   display: flex;
-  align-items: center;
-  padding: 8px 10px;
-  background: var(--utools-bg-secondary);
-  border: 1px solid var(--utools-border-light);
-  border-bottom: none;
-  border-radius: 8px 8px 0 0;
+  justify-content: flex-end;
+  margin-top: 4px;
 }
 
-.library-map-legend {
+// 知识库 / 宫殿桩库导入行（仿 KnowledgePackPanel 导入对话框）
+.import-pack-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 12px;
-  background: var(--utools-bg-secondary);
-  border-left: 1px solid var(--utools-border-light);
-  border-right: 1px solid var(--utools-border-light);
-  font-size: 12px;
-  color: var(--utools-text-secondary);
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--utools-border-light);
 
-  .map-legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  &:last-child {
+    border-bottom: none;
   }
 
-  .map-legend-pin {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: #409eff;
-    border-radius: 50%;
-    border: 1.5px solid #fff;
-    box-shadow: 0 0 0 1px #409eff;
+  .import-pack-info {
+    flex: 1;
+    min-width: 0;
   }
 
-  .map-legend-circle {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: #e6a23c;
-    border-radius: 50%;
-    border: 1.5px solid #fff;
-    box-shadow: 0 0 0 1.5px #e6a23c;
+  .import-pack-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--utools-text-primary);
+
+    .import-pack-count {
+      margin-left: 8px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--utools-text-tertiary);
+    }
   }
 
-  .map-legend-star {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background: #f56c6c;
-    border: 1.5px solid #fff;
-    box-shadow: 0 0 0 1.5px #f56c6c;
-    clip-path: polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  .import-pack-desc {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--utools-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
-.standalone-map-container {
-  height: 400px;
-  background: #f0f0f0;
-  border: 1px solid var(--utools-border-light);
-  border-radius: 0 0 8px 8px;
-}
-
-.map-selected-bar {
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: var(--utools-success-light);
-  border-radius: 6px;
+.import-empty {
+  padding: 24px 0;
+  text-align: center;
   font-size: 13px;
-  color: var(--utools-success);
-}
-
-.author-route-marker {
-  background: transparent !important;
-  border: none !important;
-}
-
-.route-arrow {
-  background: transparent !important;
-  border: none !important;
+  color: var(--utools-text-secondary);
 }
 </style>

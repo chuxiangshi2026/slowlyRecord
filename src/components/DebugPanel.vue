@@ -79,9 +79,19 @@ if (typeof window !== 'undefined') {
   const originalError = console.error;
   const originalWarn = console.warn;
 
+  // 安全序列化：对象可能含循环引用（如组件 vnode），不能让日志面板自身抛异常
+  const safeStringify = (a: any): string => {
+    if (typeof a !== 'object' || a === null) return String(a);
+    try {
+      return JSON.stringify(a);
+    } catch {
+      return Object.prototype.toString.call(a);
+    }
+  };
+
   console.log = function(...args: any[]) {
     originalLog.apply(console, args);
-    const message = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+    const message = args.map(safeStringify).join(' ');
     if (message.includes('[本地OCR]')) {
       addLog(message);
     }
@@ -89,7 +99,7 @@ if (typeof window !== 'undefined') {
 
   console.error = function(...args: any[]) {
     originalError.apply(console, args);
-    const message = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+    const message = args.map(safeStringify).join(' ');
     if (message.includes('[本地OCR]')) {
       addLog('[ERROR] ' + message);
     }
@@ -97,7 +107,7 @@ if (typeof window !== 'undefined') {
 
   console.warn = function(...args: any[]) {
     originalWarn.apply(console, args);
-    const message = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+    const message = args.map(safeStringify).join(' ');
     if (message.includes('[本地OCR]')) {
       addLog('[WARN] ' + message);
     }

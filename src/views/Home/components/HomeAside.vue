@@ -44,7 +44,7 @@ const iconMap: Record<string, any> = {
   'collection': Collection,
   'aim': Aim,
   'Cpu': Cpu,
-  'Tickets': Tickets
+  'Tickets': Tickets,
 };
 
 function getIconComponent(iconName?: string) {

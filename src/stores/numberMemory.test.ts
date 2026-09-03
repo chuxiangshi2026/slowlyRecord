@@ -3,6 +3,10 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useNumberMemoryStore } from './numberMemory'
 import type { NumberImageAssociation, NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt } from '@/types/number-memory'
 
+vi.mock('@/stores/words', () => ({
+  useWordsStore: vi.fn(() => ({ memoryFirmness: '正常' }))
+}))
+
 // Mock number-memory-db
 vi.mock('@/utils/number-memory-db', () => ({
   getAllAssociations: vi.fn(() => []),
@@ -35,7 +39,7 @@ vi.mock('@/utils/number-memory-preset', () => ({
 // Mock number-memory-entries-db
 vi.mock('@/utils/number-memory-entries-db', () => ({
   getAllEntries: vi.fn(() => []),
-  createEntry: vi.fn(() => Promise.resolve({ ok: true, id: 'entry_new', doc: { _id: 'entry_new', type: 'number_memory_entry' as const, title: '新条目', numbers: '123', tags: [], createdAt: 3000, updatedAt: 3000, reviewCount: 0 } })),
+  createEntry: vi.fn((title: string, numbers: string, tags: string[] = [], description?: string, kind?: string, mnemonic?: string) => Promise.resolve({ ok: true, id: 'entry_new', doc: { _id: 'entry_new', type: 'number_memory_entry' as const, title, numbers, kind, tags, description, mnemonic, createdAt: 3000, updatedAt: 3000, reviewCount: 0, level: 1 } })),
   updateEntry: vi.fn(() => Promise.resolve({ ok: true, id: 'entry_1' })),
   deleteEntry: vi.fn(() => Promise.resolve({ ok: true, id: 'entry_1' })),
   getNotesByEntryId: vi.fn(() => []),
@@ -386,7 +390,7 @@ describe('useNumberMemoryStore', () => {
         const store = useNumberMemoryStore()
         const result = await store.addEntry('新条目', '123', [], '描述')
         
-        expect(createEntry).toHaveBeenCalledWith('新条目', '123', [], '描述')
+        expect(createEntry).toHaveBeenCalledWith('新条目', '123', [], '描述', undefined, undefined)
         expect(result.ok).toBe(true)
         expect(store.entries).toContainEqual(newEntry)
       })
@@ -482,6 +486,79 @@ describe('useNumberMemoryStore', () => {
         const store = useNumberMemoryStore()
         const result = await store.updateReviewCount('nonexistent')
         expect(result.ok).toBe(false)
+      })
+    })
+
+    describe('SRS 相关', () => {
+      it('addEntry 应透传 kind 和 mnemonic', async () => {
+        const store = useNumberMemoryStore()
+        await store.addEntry('π', '3.14159', ['数学'], '', 'pi', '山巅一寺一壶酒')
+
+        expect(createEntry).toHaveBeenCalledWith('π', '3.14159', ['数学'], '', 'pi', '山巅一寺一壶酒')
+        expect(store.entries[0].kind).toBe('pi')
+        expect(store.entries[0].mnemonic).toBe('山巅一寺一壶酒')
+      })
+
+      it('dueEntries 应返回到期条目', () => {
+        const entries: NumberMemoryEntry[] = [
+          { _id: 'due', type: 'number_memory_entry', title: '到期', numbers: '123', level: 1, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 },
+          { _id: 'not_due', type: 'number_memory_entry', title: '未到期', numbers: '123', level: 1, learnDate: Date.now(), tags: [], createdAt: 2, updatedAt: 2, reviewCount: 0 },
+        ]
+        vi.mocked(getAllEntries).mockReturnValue(entries)
+        const store = useNumberMemoryStore()
+        store.loadEntries()
+
+        expect(store.dueEntries).toHaveLength(1)
+        expect(store.dueEntries[0]._id).toBe('due')
+      })
+
+      it('rememberedCount 统计已记住条目', () => {
+        const entries: NumberMemoryEntry[] = [
+          { _id: 'm1', type: 'number_memory_entry', title: '已记住', numbers: '123', level: 12, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 },
+          { _id: 'm2', type: 'number_memory_entry', title: '未记住', numbers: '123', level: 1, tags: [], createdAt: 2, updatedAt: 2, reviewCount: 0 },
+        ]
+        vi.mocked(getAllEntries).mockReturnValue(entries)
+        const store = useNumberMemoryStore()
+        store.loadEntries()
+
+        expect(store.rememberedCount).toBe(1)
+      })
+
+      it('markEntryCorrect 到期条目升级', async () => {
+        const entry: NumberMemoryEntry = { _id: 'entry_1', type: 'number_memory_entry', title: 't', numbers: '123', level: 1, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
+        vi.mocked(getAllEntries).mockReturnValue([entry])
+        vi.mocked(updateEntry).mockResolvedValueOnce({ ok: true, id: 'entry_1' })
+
+        const store = useNumberMemoryStore()
+        store.loadEntries()
+        const result = await store.markEntryCorrect('entry_1')
+
+        expect(result.ok).toBe(true)
+        expect(store.entries[0].level).toBe(2)
+        expect(store.entries[0].learnDate).toBeGreaterThan(0)
+      })
+
+      it('markEntryWrong 条目降级', async () => {
+        const entry: NumberMemoryEntry = { _id: 'entry_1', type: 'number_memory_entry', title: 't', numbers: '123', level: 5, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
+        vi.mocked(getAllEntries).mockReturnValue([entry])
+        vi.mocked(updateEntry).mockResolvedValueOnce({ ok: true, id: 'entry_1' })
+
+        const store = useNumberMemoryStore()
+        store.loadEntries()
+        const result = await store.markEntryWrong('entry_1')
+
+        expect(result.ok).toBe(true)
+        expect(store.entries[0].level).toBe(4)
+      })
+
+      it('getEntryLevelById 返回条目等级', () => {
+        const entry: NumberMemoryEntry = { _id: 'entry_1', type: 'number_memory_entry', title: 't', numbers: '123', level: 7, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
+        vi.mocked(getAllEntries).mockReturnValue([entry])
+        const store = useNumberMemoryStore()
+        store.loadEntries()
+
+        expect(store.getEntryLevelById('entry_1')).toBe(7)
+        expect(store.getEntryLevelById('none')).toBe(1)
       })
     })
   })

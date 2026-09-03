@@ -1,0 +1,73 @@
+{
+  "id": "cuisines-8",
+  "name": "八大菜系",
+  "description": "八大菜系及其代表菜与发源地",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "cuisines-8-1",
+      "question": "鲁菜",
+      "answer": "糖醋鲤鱼、葱烧海参、九转大肠",
+      "extras": {
+        "发源地": "山东"
+      }
+    },
+    {
+      "id": "cuisines-8-2",
+      "question": "川菜",
+      "answer": "麻婆豆腐、宫保鸡丁、回锅肉",
+      "extras": {
+        "发源地": "四川"
+      }
+    },
+    {
+      "id": "cuisines-8-3",
+      "question": "粤菜",
+      "answer": "白切鸡、广式烧鹅、烤乳猪",
+      "extras": {
+        "发源地": "广东"
+      }
+    },
+    {
+      "id": "cuisines-8-4",
+      "question": "苏菜",
+      "answer": "松鼠桂鱼、清炖狮子头、盐水鸭",
+      "extras": {
+        "发源地": "江苏"
+      }
+    },
+    {
+      "id": "cuisines-8-5",
+      "question": "闽菜",
+      "answer": "佛跳墙、荔枝肉、太平燕",
+      "extras": {
+        "发源地": "福建"
+      }
+    },
+    {
+      "id": "cuisines-8-6",
+      "question": "浙菜",
+      "answer": "西湖醋鱼、东坡肉、龙井虾仁",
+      "extras": {
+        "发源地": "浙江"
+      }
+    },
+    {
+      "id": "cuisines-8-7",
+      "question": "湘菜",
+      "answer": "剁椒鱼头、毛氏红烧肉、腊味合蒸",
+      "extras": {
+        "发源地": "湖南"
+      }
+    },
+    {
+      "id": "cuisines-8-8",
+      "question": "徽菜",
+      "answer": "臭鳜鱼、毛豆腐、一品锅",
+      "extras": {
+        "发源地": "安徽"
+      }
+    }
+  ]
+}

@@ -464,9 +464,9 @@ function isSemanticQuestion(type: string): boolean {
   
   &.is-selected {
     border-color: var(--utools-primary);
-    background: var(--utools-primary-light);
+    background: var(--utools-bg-active);
   }
-  
+
   &.is-correct-answer {
     border-color: #67c23a;
     background: #f0f9eb;
@@ -515,7 +515,7 @@ function isSemanticQuestion(type: string): boolean {
 
     &.is-selected {
       border-color: var(--utools-primary);
-      background: var(--utools-primary-light);
+      background: var(--utools-bg-active);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
