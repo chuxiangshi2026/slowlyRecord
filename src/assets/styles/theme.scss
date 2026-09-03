@@ -4,12 +4,12 @@
 :root {
   // ===== 亮色主题 (默认) =====
   
-  // 背景色（页面基底偏浅灰，卡片保持白色形成层次）
-  --utools-bg-primary: #f5f5f5;
-  --utools-bg-secondary: #eeeeee;
-  --utools-bg-tertiary: #fafafa;
-  --utools-bg-hover: #f0f0f0;
-  --utools-bg-active: #e6e6e6;
+  // 背景色（暖白纸感基底，卡片保持白色形成层次）
+  --utools-bg-primary: #f6f6f3;
+  --utools-bg-secondary: #efefeb;
+  --utools-bg-tertiary: #fafaf7;
+  --utools-bg-hover: #ecece7;
+  --utools-bg-active: #e1e1da;
   --utools-bg-card: #ffffff;
   --utools-bg-input: #ffffff;
   --utools-bg-overlay: rgba(0, 0, 0, 0.45);
@@ -27,11 +27,11 @@
   --utools-border-secondary: #f0f0f0;
   --utools-border-divider: #e8e8e8;
   
-  // 主色调（黑白灰中性风格，不用蓝色）
-  --utools-primary: #262626;
-  --utools-primary-hover: #595959;
-  --utools-primary-active: #000000;
-  --utools-primary-light: #f0f0f0;
+  // 主色调（低饱和灰绿，学习工具沉静基调，不干扰注意力）
+  --utools-primary: #52796f;
+  --utools-primary-hover: #688e83;
+  --utools-primary-active: #43615a;
+  --utools-primary-light: #edf3f1;
   
   // 功能色
   --utools-success: #67c23a;
@@ -69,14 +69,14 @@
   --el-fill-color-darker: #e6e8eb;
   --el-fill-color-blank: #ffffff;
 
-  // Element Plus 主色覆盖为中性灰
-  --el-color-primary: #262626;
-  --el-color-primary-light-3: #595959;
-  --el-color-primary-light-5: #8c8c8c;
-  --el-color-primary-light-7: #bfbfbf;
-  --el-color-primary-light-8: #d9d9d9;
-  --el-color-primary-light-9: #f0f0f0;
-  --el-color-primary-dark-2: #000000;
+  // Element Plus 主色覆盖为灰绿
+  --el-color-primary: #52796f;
+  --el-color-primary-light-3: #7d9a91;
+  --el-color-primary-light-5: #a3bab3;
+  --el-color-primary-light-7: #c9d9d4;
+  --el-color-primary-light-8: #dbe7e3;
+  --el-color-primary-light-9: #edf3f1;
+  --el-color-primary-dark-2: #43615a;
 }
 
 // ===== 暗黑主题 =====
@@ -105,11 +105,11 @@ html.utools-dark,
   --utools-border-secondary: #333337;
   --utools-border-divider: #3e3e42;
   
-  // 主色调（黑白灰中性风格，深色下用浅灰作主色）
-  --utools-primary: #e0e0e0;
-  --utools-primary-hover: #ffffff;
-  --utools-primary-active: #c0c0c0;
-  --utools-primary-light: #3a3a3d;
+  // 主色调（深色下用浅灰绿）
+  --utools-primary: #8fb5a9;
+  --utools-primary-hover: #a8c7bc;
+  --utools-primary-active: #7aa191;
+  --utools-primary-light: #2c3b36;
   
   // 功能色 (调整为适合暗黑的色调)
   --utools-success: #81c784;
@@ -147,14 +147,14 @@ html.utools-dark,
   --el-fill-color-darker: #2d2d2f;
   --el-fill-color-blank: transparent;
 
-  // Element Plus 主色覆盖为中性灰（深色主题）
-  --el-color-primary: #e0e0e0;
-  --el-color-primary-light-3: #b0b0b0;
-  --el-color-primary-light-5: #808080;
-  --el-color-primary-light-7: #4a4a4a;
-  --el-color-primary-light-8: #3a3a3d;
-  --el-color-primary-light-9: #2d2d30;
-  --el-color-primary-dark-2: #c8c8c8;
+  // Element Plus 主色覆盖为灰绿（深色主题）
+  --el-color-primary: #8fb5a9;
+  --el-color-primary-light-3: #74988c;
+  --el-color-primary-light-5: #5a7b70;
+  --el-color-primary-light-7: #40584f;
+  --el-color-primary-light-8: #354841;
+  --el-color-primary-light-9: #2a3731;
+  --el-color-primary-dark-2: #a8c7bc;
 }
 
 // 深色主题下主色为浅灰，叠加其上的文字/图标需反深色
