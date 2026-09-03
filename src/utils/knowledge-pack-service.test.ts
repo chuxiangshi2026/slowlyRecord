@@ -173,8 +173,8 @@ describe('knowledge-pack-service', () => {
       expect(DEFAULT_STRATEGY).toEqual({priority: 'local', useCache: true, timeout: 5000})
     })
 
-    it('math-formulas / elements / solar-terms-24 / zodiac-12 数据版本为 2，其余包默认版本为 1', () => {
-      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(2)
+    it('math-formulas 数据版本为 3，elements / solar-terms-24 / zodiac-12 为 2，其余包默认版本为 1', () => {
+      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(3)
       expect(getKnowledgePackInfo('elements')?.version).toBe(2)
       expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(2)
       expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(2)
@@ -289,9 +289,9 @@ describe('knowledge-pack-service', () => {
       const result = await fetchKnowledgePack('math-formulas')
       expect(fetchMock).toHaveBeenCalled()
       expect(result.items).toHaveLength(24)
-      // 新缓存写入 version 2
+      // 新缓存写入 version 3
       const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-math-formulas')!)
-      expect(cached.version).toBe(2)
+      expect(cached.version).toBe(3)
     })
 
     it('无 version 字段的老缓存在包升级后同样失效', async () => {
