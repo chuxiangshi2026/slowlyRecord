@@ -920,43 +920,74 @@
           </div>
         </div>
 
-        <!-- 知识库：当前宿主分类（text）的内置知识包导入列表 -->
+        <!-- 知识库：当前宿主分类（text）的内置知识包导入列表，按「可否作桩库」分组 -->
         <div v-else-if="libTab === 'knowledge'">
-          <div v-if="knowledgePacks.length === 0" class="import-empty">暂无可导入的知识库</div>
+          <el-input
+              v-model="knowledgeKeyword"
+              class="lib-search"
+              size="small"
+              clearable
+              :prefix-icon="Search"
+              placeholder="搜索知识库名称或描述"
+          />
+          <div v-if="knowledgeGroups.length === 0" class="import-empty">
+            {{ knowledgeKeyword.trim() ? '没有匹配的知识库' : '暂无可导入的知识库' }}
+          </div>
           <div
-              v-for="p in knowledgePacks"
-              :key="p.id"
-              class="import-pack-row"
+              v-for="g in knowledgeGroups"
+              :key="g.label"
+              class="import-group"
           >
-            <div class="import-pack-info">
-              <div class="import-pack-name">
-                {{ p.name }}
-                <span class="import-pack-count">{{ p.itemCount }} 条</span>
-              </div>
-              <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
-            </div>
-            <el-button
-                size="small"
-                type="primary"
-                :disabled="isKnowledgeImported(p.id)"
-                :loading="knowledgeImportingId === p.id"
-                @click="handleImportKnowledge(p.id)"
+            <div class="import-group-title">{{ g.label }}</div>
+            <div
+                v-for="p in g.packs"
+                :key="p.id"
+                class="import-pack-row"
+                :class="{ imported: isKnowledgeImported(p.id) }"
             >
-              {{ isKnowledgeImported(p.id) ? '已导入' : '导入' }}
-            </el-button>
+              <div class="import-pack-info">
+                <div class="import-pack-name">
+                  <span v-if="packEmojis(p.id)" class="pack-emojis">{{ packEmojis(p.id) }}</span>
+                  {{ p.name }}
+                  <span class="import-pack-count">{{ p.itemCount }} 条</span>
+                </div>
+                <div class="import-pack-desc" :title="p.description">{{ p.description }}</div>
+              </div>
+              <el-button
+                  size="small"
+                  type="primary"
+                  :disabled="isKnowledgeImported(p.id)"
+                  :loading="knowledgeImportingId === p.id"
+                  @click="handleImportKnowledge(p.id)"
+              >
+                {{ isKnowledgeImported(p.id) ? '已导入' : '导入' }}
+              </el-button>
+            </div>
           </div>
         </div>
 
         <!-- 宫殿桩库：usableAsPeg 包导入为记忆宫殿 -->
         <div v-else>
-          <div v-if="pegPacks.length === 0" class="import-empty">暂无可导入的桩库</div>
+          <el-input
+              v-model="pegKeyword"
+              class="lib-search"
+              size="small"
+              clearable
+              :prefix-icon="Search"
+              placeholder="搜索桩库名称或描述"
+          />
+          <div v-if="filteredPegPacks.length === 0" class="import-empty">
+            {{ pegKeyword.trim() ? '没有匹配的桩库' : '暂无可导入的桩库' }}
+          </div>
           <div
-              v-for="p in pegPacks"
+              v-for="p in filteredPegPacks"
               :key="p.id"
               class="import-pack-row"
+              :class="{ imported: isPegImported(p.id) }"
           >
             <div class="import-pack-info">
               <div class="import-pack-name">
+                <span v-if="packEmojis(p.id)" class="pack-emojis">{{ packEmojis(p.id) }}</span>
                 {{ p.name }}
                 <span class="import-pack-count">{{ p.itemCount }} 桩</span>
               </div>
@@ -1096,7 +1127,7 @@
 <script setup lang="ts">
 import {ref, computed, watch, nextTick} from 'vue';
 import {useTextMemoryStore} from '@/stores/textMemory';
-import {UploadFilled, Setting, Location} from '@element-plus/icons-vue';
+import {Search, UploadFilled, Setting, Location} from '@element-plus/icons-vue';
 import {ElMessage} from 'element-plus';
 import {
   searchPoetry,
@@ -1135,6 +1166,8 @@ import { generateTimelineEventsWithAI } from '@/utils/ai-search-api';
 import type { TimelineCategory, TimelineRegion } from '@/types/text-memory';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import { useMemoryPalaceStore } from '@/stores/memoryPalace';
+import { loadPackPreviews } from '@/utils/knowledge-pack-preview';
+import type { KnowledgePackInfo } from '@/types/knowledge-memory';
 import TextEditForm from './TextEditForm.vue';
 
 interface Props {
@@ -1404,6 +1437,31 @@ async function saveManualPeg() {
 // ==================== 知识库（text 分类内置包） ====================
 const knowledgePacks = computed(() => knowledgeStore.packList.filter(p => p.category === 'text'));
 const knowledgeImportingId = ref('');
+// 知识库搜索关键词
+const knowledgeKeyword = ref('');
+// 包配图缩略预览（packId → emoji 串），切到 tab 时按需加载
+const packPreviews = ref<Record<string, string>>({});
+
+// 关键词匹配：名称或描述包含即可
+function matchPackKeyword(info: KnowledgePackInfo, keyword: string): boolean {
+  if (!keyword) return true;
+  return info.name.toLowerCase().includes(keyword) || info.description.toLowerCase().includes(keyword);
+}
+
+// 缩略配图串：只取按需加载的预览（不读 store 包内容，避免多余请求）
+function packEmojis(packId: string): string {
+  return packPreviews.value[packId] || '';
+}
+
+// 导入候选分组：可用作宫殿桩库的包优先展示，空组不渲染标题
+const knowledgeGroups = computed<Array<{label: string; packs: KnowledgePackInfo[]}>>(() => {
+  const kw = knowledgeKeyword.value.trim().toLowerCase();
+  const filtered = knowledgePacks.value.filter(p => matchPackKeyword(p, kw));
+  return [
+    {label: '可用作记忆宫殿桩库', packs: filtered.filter(p => p.usableAsPeg)},
+    {label: '普通知识库', packs: filtered.filter(p => !p.usableAsPeg)},
+  ].filter(g => g.packs.length > 0);
+});
 
 function isKnowledgeImported(packId: string): boolean {
   return knowledgeStore.importedIds.includes(packId);
@@ -1422,6 +1480,13 @@ async function handleImportKnowledge(packId: string) {
 // ==================== 宫殿桩库（usableAsPeg 包） ====================
 const pegPacks = computed(() => palaceStore.listPegPacks());
 const pegImportingId = ref('');
+// 桩库搜索关键词
+const pegKeyword = ref('');
+
+const filteredPegPacks = computed(() => {
+  const kw = pegKeyword.value.trim().toLowerCase();
+  return pegPacks.value.filter(p => matchPackKeyword(p, kw));
+});
 
 // 已存在对应 sourcePackId 的宫殿则视为已导入
 function isPegImported(packId: string): boolean {
@@ -2491,13 +2556,19 @@ function loadLibTabData(tab: LibTab) {
       }
     });
   } else if (tab === 'knowledge') {
-    // 加载已导入清单以正确显示禁用态，失败静默
+    // 加载已导入清单以正确显示禁用态，失败静默；顺带加载缩略预览
     knowledgeStore.loadImportedIds().catch(() => undefined);
+    loadPackPreviews(knowledgePacks.value).then(map => {
+      Object.assign(packPreviews.value, map);
+    });
   } else if (tab === 'pegPacks') {
     // 宫殿列表未加载时兜底加载，用于「已导入」判断
     if (palaceStore.palaces.length === 0) {
       palaceStore.loadPalaces().catch(() => undefined);
     }
+    loadPackPreviews(pegPacks.value).then(map => {
+      Object.assign(packPreviews.value, map);
+    });
   } else if (tab === 'timeline') {
     nextTick(async () => {
       if (!hasLoadedTimeline.value) {
@@ -2808,6 +2879,33 @@ watch(manualType, (type) => {
   margin-top: 4px;
 }
 
+// 知识库 / 宫殿桩库搜索框
+.lib-search {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+// 导入候选分组标题
+.import-group-title {
+  padding: 8px 4px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--utools-text-secondary);
+
+  &:first-child {
+    padding-top: 4px;
+  }
+}
+
+// 缩略配图（emoji 串）
+.pack-emojis {
+  flex-shrink: 0;
+  margin-right: 6px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
 // 知识库 / 宫殿桩库导入行（仿 KnowledgePackPanel 导入对话框）
 .import-pack-row {
   display: flex;
@@ -2815,6 +2913,11 @@ watch(manualType, (type) => {
   gap: 12px;
   padding: 10px 4px;
   border-bottom: 1px solid var(--utools-border-light);
+
+  // 已导入的行整体置灰，弱化视觉干扰
+  &.imported {
+    opacity: 0.5;
+  }
 
   &:last-child {
     border-bottom: none;
