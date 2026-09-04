@@ -107,7 +107,7 @@ async function setup(category: 'math' | 'text', importedIds: string[] = [], extr
 describe('KnowledgePackPanel（导入后展示模式）', () => {
   it('未导入任何包时显示空态文案', async () => {
     await setup('text')
-    expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+    expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
     expect(screen.queryByText('二十四节气')).not.toBeInTheDocument()
   })
 
@@ -259,7 +259,7 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
       expect(mockStore.removeImportedPack).toHaveBeenCalledWith('pack-math')
     })
     await waitFor(() => {
-      expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+      expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
     })
   })
 
@@ -277,13 +277,13 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(screen.getByText('自建')).toBeInTheDocument()
     expect(screen.getByText('2 条')).toBeInTheDocument()
     // 有自建集时不显示空态
-    expect(screen.queryByText('暂无知识库，点击右上角导入')).not.toBeInTheDocument()
+    expect(screen.queryByText('暂无知识库，点击上方「导入」')).not.toBeInTheDocument()
   })
 
   it('math 分类不展示自建知识集', async () => {
     await setup('math', [], {}, CUSTOM_PACKS)
     expect(screen.queryByText('古诗')).not.toBeInTheDocument()
-    expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+    expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
   })
 
   it('点击自建集卡片跳转到对应练习页', async () => {

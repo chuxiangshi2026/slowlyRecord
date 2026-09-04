@@ -1,7 +1,7 @@
 <template>
   <!-- 知识包卡片面板：只展示「已导入」的知识包（math → 数字记忆，text → 文本记忆），仿内置词库导入模式 -->
   <div class="knowledge-pack-panel" v-loading="store.loading">
-    <!-- 顶部工具行：关键词搜索 + 导入入口（useExternalImport 时导入入口由宿主页统一按钮承担，不重复渲染） -->
+    <!-- 顶部工具行：关键词搜索 + 导入入口（useExternalImport 时点「导入」emit 通知父级打开统一对话框，面板不再弹内置导入对话框） -->
     <div v-if="cards.length > 0 || !useExternalImport" class="panel-toolbar">
       <el-input
         v-if="cards.length > 0"
@@ -15,7 +15,10 @@
       <el-button size="small" type="primary" plain @click="handleOpenImport">导入</el-button>
     </div>
 
-    <el-empty v-if="cards.length === 0" description="暂无知识库，点击右上角导入" />
+    <el-empty
+      v-if="cards.length === 0"
+      :description="useExternalImport ? '暂无知识库，点击顶部「添加/导入」' : '暂无知识库，点击上方「导入」'"
+    />
     <el-empty
       v-else-if="cardGroups.length === 0"
       :description="`没有匹配「${keyword.trim()}」的知识库`"

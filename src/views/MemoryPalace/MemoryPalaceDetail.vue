@@ -25,6 +25,7 @@
         size="small"
         type="danger"
         plain
+        :loading="unmounting"
         @click="handleUnmountAll"
       >全部解绑</el-button>
     </div>
@@ -204,6 +205,8 @@ const sortedLoci = computed<PalaceLocus[]>(() => {
 
 // 只看未挂载内容时过滤出的桩（已挂载的桩暂时隐藏）
 const onlyEmpty = ref(false);
+// 「全部解绑」进行中态（多桩串行解绑时按钮 loading，避免误以为卡住）
+const unmounting = ref(false);
 
 const visibleLoci = computed(() =>
   onlyEmpty.value ? sortedLoci.value.filter(l => !pegOf(l.order)) : sortedLoci.value,
@@ -335,20 +338,25 @@ async function handleUnmountAll() {
     // 用户取消
     return;
   }
-  let failed = 0;
-  for (const peg of pegs) {
-    // 单条解绑失败（DB 异常 reject 或返回 ok:false）不中断其余桩，统一计入 failed
-    try {
-      const result = await store.unmountPeg(peg);
-      if (!result.ok) failed++;
-    } catch {
-      failed++;
+  unmounting.value = true;
+  try {
+    let failed = 0;
+    for (const peg of pegs) {
+      // 单条解绑失败（DB 异常 reject 或返回 ok:false）不中断其余桩，统一计入 failed
+      try {
+        const result = await store.unmountPeg(peg);
+        if (!result.ok) failed++;
+      } catch {
+        failed++;
+      }
     }
-  }
-  if (failed === 0) {
-    ElMessage.success(`已解除全部 ${pegs.length} 条挂载`);
-  } else {
-    ElMessage.warning(`已解除 ${pegs.length - failed} 条，${failed} 条失败`);
+    if (failed === 0) {
+      ElMessage.success(`已解除全部 ${pegs.length} 条挂载`);
+    } else {
+      ElMessage.warning(`已解除 ${pegs.length - failed} 条，${failed} 条失败`);
+    }
+  } finally {
+    unmounting.value = false;
   }
 }
 

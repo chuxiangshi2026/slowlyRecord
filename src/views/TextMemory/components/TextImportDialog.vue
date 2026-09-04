@@ -2523,6 +2523,10 @@ function resetForm() {
   timelineAiForm.value = { provider: '', apiKey: '' };
   timelineSubTab.value = 'library';
   libTab.value = 'poetry';
+  // 清空内置库搜索词与缩略预览缓存，避免关闭再打开残留上次过滤态
+  knowledgeKeyword.value = '';
+  pegKeyword.value = '';
+  packPreviews.value = {};
   applyInitialTab();
 }
 
