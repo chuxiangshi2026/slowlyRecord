@@ -17,13 +17,27 @@
       />
     </div>
 
+    <!-- 工具行：未挂载筛选 + 全部解绑（桩多时逐条解绑太费劲） -->
+    <div v-if="palace && palace.loci.length > 0" class="detail-toolbar">
+      <el-checkbox v-model="onlyEmpty">只看未挂载</el-checkbox>
+      <el-button
+        v-if="store.pegs.length > 0"
+        size="small"
+        type="danger"
+        plain
+        :loading="unmounting"
+        @click="handleUnmountAll"
+      >全部解绑</el-button>
+    </div>
+
     <!-- 桩列表 -->
     <div class="loci-list-wrapper" v-loading="store.loading">
       <el-empty v-if="!palace" description="宫殿不存在或已被删除" />
       <el-empty v-else-if="palace.loci.length === 0" description="该宫殿还没有地点桩，请先编辑添加" />
+      <el-empty v-else-if="visibleLoci.length === 0" description="该宫殿的内容都已挂载" />
 
       <div
-        v-for="locus in sortedLoci"
+        v-for="locus in visibleLoci"
         :key="locus.order"
         class="list-item locus-card"
       >
@@ -189,6 +203,15 @@ const sortedLoci = computed<PalaceLocus[]>(() => {
   return [...palace.value.loci].sort((a, b) => a.order - b.order);
 });
 
+// 只看未挂载内容时过滤出的桩（已挂载的桩暂时隐藏）
+const onlyEmpty = ref(false);
+// 「全部解绑」进行中态（多桩串行解绑时按钮 loading，避免误以为卡住）
+const unmounting = ref(false);
+
+const visibleLoci = computed(() =>
+  onlyEmpty.value ? sortedLoci.value.filter(l => !pegOf(l.order)) : sortedLoci.value,
+);
+
 const selectedArticle = computed(() => {
   return textStore.articles.find(a => a._id === articleForm.value.articleId) || null;
 });
@@ -297,6 +320,46 @@ async function handleUnmount(locusOrder: number) {
   }
 }
 
+// 全部解绑：逐个调用 unmountPeg，单条失败不影响其余桩
+async function handleUnmountAll() {
+  const pegs = [...store.pegs];
+  if (pegs.length === 0) return;
+  try {
+    await ElMessageBox.confirm(
+      `确定解除该宫殿全部 ${pegs.length} 条挂载吗？`,
+      '全部解绑',
+      {
+        confirmButtonText: '全部解绑',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    );
+  } catch {
+    // 用户取消
+    return;
+  }
+  unmounting.value = true;
+  try {
+    let failed = 0;
+    for (const peg of pegs) {
+      // 单条解绑失败（DB 异常 reject 或返回 ok:false）不中断其余桩，统一计入 failed
+      try {
+        const result = await store.unmountPeg(peg);
+        if (!result.ok) failed++;
+      } catch {
+        failed++;
+      }
+    }
+    if (failed === 0) {
+      ElMessage.success(`已解除全部 ${pegs.length} 条挂载`);
+    } else {
+      ElMessage.warning(`已解除 ${pegs.length - failed} 条，${failed} 条失败`);
+    }
+  } finally {
+    unmounting.value = false;
+  }
+}
+
 function goBack() {
   // 宫殿列表已并入文本记忆的宫殿视图
   router.push('/text-memory?view=palace');
@@ -342,6 +405,17 @@ function goReview() {
   }
 }
 
+// 工具行：未挂载筛选 + 全部解绑
+.detail-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 12px;
+  background: var(--utools-bg-card);
+  border-bottom: 1px solid var(--utools-border-divider);
+}
+
 .loci-list-wrapper {
   width: 100%;
   min-height: calc(100vh - 40px - 55px);
@@ -369,18 +443,18 @@ function goReview() {
   width: 92%;
   min-height: auto;
   max-height: none;
-  padding: 12px;
-  margin-bottom: 8px;
+  padding: 10px;
+  margin-bottom: 6px;
 
   .locus-main {
     display: flex;
     gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 
     .locus-image {
       flex-shrink: 0;
-      width: 72px;
-      height: 72px;
+      width: 52px;
+      height: 52px;
       object-fit: cover;
       border-radius: 6px;
       border: 1px solid var(--utools-border-divider);
@@ -413,7 +487,7 @@ function goReview() {
   .locus-desc {
     font-size: 12px;
     color: var(--utools-text-tertiary);
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
   }
 
   .peg-content {
@@ -421,7 +495,7 @@ function goReview() {
     color: var(--utools-text-secondary);
     background: var(--utools-bg-tertiary);
     border-radius: 4px;
-    padding: 6px 8px;
+    padding: 5px 8px;
 
     .peg-text {
       word-break: break-all;

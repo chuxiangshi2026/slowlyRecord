@@ -6,6 +6,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import '@testing-library/jest-dom'
 import TextImportDialog from './TextImportDialog.vue'
+import { loadPackPreviews } from '@/utils/knowledge-pack-preview'
 
 // 每个用例在 setup 中重建响应式 mock store
 let mockKnowledgeStore: any
@@ -39,6 +40,15 @@ vi.mock('@/utils/ai-search-api', () => ({
   saveAISearchConfig: vi.fn(),
   testAIConnection: vi.fn(),
   generateTimelineEventsWithAI: vi.fn(),
+}))
+
+// 缩略预览不实际拉取包内容，直接返回固定缩略串
+vi.mock('@/utils/knowledge-pack-preview', () => ({
+  loadPackPreviews: vi.fn(async (packs: any[]) => {
+    const map: Record<string, string> = {}
+    for (const pack of packs) map[pack.id] = '🌱'
+    return map
+  }),
 }))
 
 // ElMessage 静默
@@ -180,6 +190,72 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
     await waitFor(() => {
       expect(mockPalaceStore.importPackAsPalace).toHaveBeenCalledWith('pack-text')
     }, { timeout: 3000 })
+  })
+
+  it('内置库-知识库支持搜索过滤、按桩库分组、已导入行置灰', async () => {
+    await setup({
+      props: { initialTab: 'library', initialLibTab: 'knowledge' },
+      knowledgeImportedIds: ['pack-text'],
+    })
+
+    await waitFor(() => {
+      expect(activeLibTabLabel()).toBe('知识库')
+    }, { timeout: 3000 })
+
+    const pane = document.getElementById('pane-library') as HTMLElement
+
+    // 分组：可作桩库的包与普通包分开
+    expect(within(pane).getByText('可用作记忆宫殿桩库')).toBeInTheDocument()
+    expect(within(pane).getByText('普通知识库')).toBeInTheDocument()
+
+    // 已导入行置灰，其余行正常
+    const importedRow = within(pane).getByText('二十四节气').closest('.import-pack-row') as HTMLElement
+    expect(importedRow).toHaveClass('imported')
+    expect(within(pane).getByText('唐诗精选').closest('.import-pack-row')).not.toHaveClass('imported')
+
+    // 搜索过滤：命中项保留，被过滤空的分组标题不再渲染
+    const search = within(pane).getByPlaceholderText('搜索知识库名称或描述')
+    await fireEvent.update(search, '唐诗')
+    await waitFor(() => {
+      expect(within(pane).queryByText('二十四节气')).not.toBeInTheDocument()
+    })
+    expect(within(pane).getByText('唐诗精选')).toBeInTheDocument()
+    expect(within(pane).queryByText('可用作记忆宫殿桩库')).not.toBeInTheDocument()
+
+    await fireEvent.update(search, '不存在')
+    await waitFor(() => {
+      expect(within(pane).getByText('没有匹配的知识库')).toBeInTheDocument()
+    })
+    expect(within(pane).queryByText('普通知识库')).not.toBeInTheDocument()
+
+    // 切换二级面板按需拉取缩略预览（初始定位不触发，真实环境由 el-dialog 的 opened 事件驱动）
+    await fireEvent.click(within(pane).getByText('宫殿桩库'))
+    await waitFor(() => {
+      expect(loadPackPreviews).toHaveBeenCalledTimes(1)
+    })
+    expect(loadPackPreviews).toHaveBeenCalledWith(PEG_PACKS)
+
+    await fireEvent.click(within(pane).getByText('知识库'))
+    await waitFor(() => {
+      expect(loadPackPreviews).toHaveBeenCalledWith(TEXT_PACKS)
+    })
+  })
+
+  it('内置库-宫殿桩库支持搜索过滤', async () => {
+    await setup({ props: { initialTab: 'library', initialLibTab: 'pegPacks' } })
+
+    await waitFor(() => {
+      expect(activeLibTabLabel()).toBe('宫殿桩库')
+    }, { timeout: 3000 })
+
+    const pane = document.getElementById('pane-library') as HTMLElement
+    expect(within(pane).getByText('二十四节气')).toBeInTheDocument()
+
+    await fireEvent.update(within(pane).getByPlaceholderText('搜索桩库名称或描述'), '不存在')
+    await waitFor(() => {
+      expect(within(pane).getByText('没有匹配的桩库')).toBeInTheDocument()
+    })
+    expect(within(pane).queryByText('二十四节气')).not.toBeInTheDocument()
   })
 
   it('手动添加（普通文本）表单提交后 emit import 单篇文章', async () => {

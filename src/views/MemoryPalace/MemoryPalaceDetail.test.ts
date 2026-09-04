@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/vue'
 import { createPinia, setActivePinia } from 'pinia'
 import { createRouter, createMemoryHistory } from 'vue-router'
+import ElementPlus, { ElMessage, ElMessageBox } from 'element-plus'
 import '@testing-library/jest-dom'
 import MemoryPalaceDetail from './MemoryPalaceDetail.vue'
 
@@ -111,7 +112,8 @@ async function setup() {
 
   return render(MemoryPalaceDetail, {
     global: {
-      plugins: [pinia, router],
+      // 注册 ElementPlus：否则 el-checkbox / el-button 只是未解析的标签，拿不到 role
+      plugins: [pinia, router, ElementPlus],
     },
   })
 }
@@ -143,5 +145,66 @@ describe('MemoryPalaceDetail', () => {
     await waitFor(() => {
       expect(hoisted.store.unmountPeg).toHaveBeenCalled()
     })
+  })
+
+  it('「只看未挂载」隐藏已挂载的桩，取消后恢复', async () => {
+    await setup()
+
+    expect(screen.getByText('大门')).toBeInTheDocument()
+    expect(screen.getByText('客厅')).toBeInTheDocument()
+    await fireEvent.click(screen.getByRole('checkbox'))
+
+    await waitFor(() => {
+      expect(screen.queryByText('大门')).not.toBeInTheDocument()
+      expect(screen.queryByText('客厅')).not.toBeInTheDocument()
+    })
+    // 未挂载的桩仍展示
+    expect(screen.getByText('阳台')).toBeInTheDocument()
+    expect(screen.getByText('未挂载内容')).toBeInTheDocument()
+
+    await fireEvent.click(screen.getByRole('checkbox'))
+    await waitFor(() => {
+      expect(screen.getByText('大门')).toBeInTheDocument()
+    })
+  })
+
+  it('「全部解绑」确认后逐个解除全部挂载并给出提示', async () => {
+    await setup()
+
+    await fireEvent.click(screen.getByRole('button', { name: '全部解绑' }))
+
+    await waitFor(() => {
+      expect((ElMessage.success as any).mock.calls.some((call: any[]) =>
+        String(call[0]).includes('已解除全部 2 条挂载'),
+      )).toBe(true)
+    })
+    expect(hoisted.store.unmountPeg).toHaveBeenCalledTimes(2)
+    expect((hoisted.store.unmountPeg as any).mock.calls[0][0]._id).toBe('peg-1')
+
+    // 二次确认提示条数
+    const [message, title] = (ElMessageBox.confirm as any).mock.calls[0]
+    expect(message).toContain('全部 2 条挂载')
+    expect(title).toBe('全部解绑')
+  })
+
+  it('「全部解绑」某条 DB 异常时不中断其余桩并提示失败数', async () => {
+    await setup()
+
+    // 第 2 条解绑模拟 reject（DB 异常），第 1 条正常
+    hoisted.store.unmountPeg.mockImplementation(async (peg: any) => {
+      if (peg._id === 'peg-2') throw new Error('DB 异常')
+      hoisted.store.pegs = hoisted.store.pegs.filter((p: any) => p._id !== peg._id)
+      return { ok: true }
+    })
+
+    await fireEvent.click(screen.getByRole('button', { name: '全部解绑' }))
+
+    await waitFor(() => {
+      expect((ElMessage.warning as any).mock.calls.some((call: any[]) =>
+        String(call[0]).includes('已解除 1 条，1 条失败'),
+      )).toBe(true)
+    })
+    // 即使第 2 条抛错，第 1 条仍被调用、循环未中断
+    expect(hoisted.store.unmountPeg).toHaveBeenCalledTimes(2)
   })
 })

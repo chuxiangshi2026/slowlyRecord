@@ -7,6 +7,7 @@ import { createRouter, createMemoryHistory } from 'vue-router'
 import ElementPlus, { ElMessageBox } from 'element-plus'
 import '@testing-library/jest-dom'
 import KnowledgePackPanel from './KnowledgePackPanel.vue'
+import {loadPackPreviews} from '@/utils/knowledge-pack-preview'
 
 const PACK_LIST = [
   { id: 'pack-math', name: '小九九乘法表', description: '描述1', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math' },
@@ -17,6 +18,16 @@ const CUSTOM_PACKS = [
   { id: 'custom_古诗', name: '古诗', description: '手动添加的自建条目', itemCount: 2, ordered: false, usableAsPeg: false, category: 'text' },
 ]
 
+// 包内条目的配图（emoji 字符），用于卡片/导入行的缩略预览断言
+const PACK_ITEMS: Record<string, any[]> = {
+  'pack-math': [
+    { id: 'm1', question: '1×1', answer: '1', imageUrl: '🔢' },
+    { id: 'm2', question: '2×2', answer: '4', imageUrl: '📐' },
+    { id: 'm3', question: '3×3', answer: '9', imageUrl: '🔢' },
+    { id: 'm4', question: '4×4', answer: '16', imageUrl: '🔟' },
+  ],
+}
+
 // ElMessageBox.confirm 直接视为用户确认；ElMessage 静默
 vi.mock('element-plus', async (importOriginal) => {
   const actual = await importOriginal<typeof import('element-plus')>()
@@ -25,6 +36,12 @@ vi.mock('element-plus', async (importOriginal) => {
     ElMessageBox: { confirm: vi.fn(() => Promise.resolve('confirm')) },
     ElMessage: { success: vi.fn(), error: vi.fn(), warning: vi.fn(), info: vi.fn() },
   }
+})
+
+// 缩略预览保留真实的拼装逻辑，但跳过实际的网络加载（由 knowledge-pack-preview.test.ts 覆盖）
+vi.mock('@/utils/knowledge-pack-preview', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/utils/knowledge-pack-preview')>()
+  return {...actual, loadPackPreviews: vi.fn(() => Promise.resolve({}))}
 })
 
 // 每个用例在 setup 中重建响应式 mock store
@@ -44,6 +61,7 @@ function buildStore(importedIds: string[], customPackList: any[] = []) {
     getTotalCount: vi.fn((id: string) => (id === 'pack-math' ? 81 : 0)),
     getMasteredCount: vi.fn((id: string) => (id === 'pack-math' ? 30 : 0)),
     getDueCount: vi.fn((id: string) => (id === 'pack-math' ? 5 : 0)),
+    getPack: vi.fn((id: string) => ({ items: PACK_ITEMS[id] })),
     loadPack: vi.fn(() => Promise.resolve()),
     loadImportedIds: vi.fn(() => Promise.resolve()),
     loadCustomItems: vi.fn(() => Promise.resolve()),
@@ -89,7 +107,7 @@ async function setup(category: 'math' | 'text', importedIds: string[] = [], extr
 describe('KnowledgePackPanel（导入后展示模式）', () => {
   it('未导入任何包时显示空态文案', async () => {
     await setup('text')
-    expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+    expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
     expect(screen.queryByText('二十四节气')).not.toBeInTheDocument()
   })
 
@@ -100,6 +118,54 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(screen.getByText('24 条')).toBeInTheDocument()
     expect(screen.getByText('有序')).toBeInTheDocument()
     expect(screen.getByText('可用作桩库')).toBeInTheDocument()
+  })
+
+  it('卡片按分组展示并带数量徽标，显示去重后的缩略配图', async () => {
+    await setup('math', ['pack-math'])
+
+    expect(screen.getByText(/内置知识库/)).toBeInTheDocument()
+    expect(screen.queryByText(/自建知识集/)).not.toBeInTheDocument()
+    expect(screen.getAllByText('1', { selector: '.group-count' })).toHaveLength(1)
+    // 卡片头部缩略 emoji 串：🔢 出现两次只取一次，最多取 4 枚
+    expect(screen.getByText('🔢 📐 🔟')).toBeInTheDocument()
+  })
+
+  it('自建集与内置包同时存在时分为两组，各组带数量徽标', async () => {
+    await setup('text', ['pack-text'], {}, CUSTOM_PACKS)
+
+    expect(screen.getByText(/内置知识库/)).toBeInTheDocument()
+    expect(screen.getByText(/自建知识集/)).toBeInTheDocument()
+    // 两个分组各 1 张卡片
+    expect(screen.getAllByText('1', { selector: '.group-count' })).toHaveLength(2)
+    // 自建集无条目配图，不渲染缩略串
+    expect(screen.queryByText('🔢 📐 🔟')).not.toBeInTheDocument()
+  })
+
+  it('搜索按名称或描述过滤卡片，无结果时给出提示并隐藏分组标题', async () => {
+    await setup('text', ['pack-text'])
+
+    expect(screen.getByText(/内置知识库/)).toBeInTheDocument()
+    const search = screen.getByPlaceholderText('搜索知识库名称或描述')
+
+    // 描述命中
+    await fireEvent.update(search, '描述2')
+    await waitFor(() => {
+      expect(screen.getByText('二十四节气')).toBeInTheDocument()
+    })
+
+    // 无命中
+    await fireEvent.update(search, '不存在的关键词')
+    await waitFor(() => {
+      expect(screen.getByText(/没有匹配「不存在的关键词」的知识库/)).toBeInTheDocument()
+    })
+    expect(screen.queryByText('二十四节气')).not.toBeInTheDocument()
+    expect(screen.queryByText(/内置知识库/)).not.toBeInTheDocument()
+
+    // 清空后恢复
+    await fireEvent.update(search, '')
+    await waitFor(() => {
+      expect(screen.getByText('二十四节气')).toBeInTheDocument()
+    })
   })
 
   it('展示已加载知识包的进度统计', async () => {
@@ -135,6 +201,35 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(importedBtn).toBeDisabled()
   })
 
+  it('导入对话框按「可否作桩库」分组、已导入行置灰，并支持搜索过滤', async () => {
+    await setup('text', ['pack-text'])
+    await fireEvent.click(screen.getByRole('button', { name: '导入' }))
+    const dialog = await screen.findByRole('dialog')
+
+    // 打开对话框时按当前分类拉取缩略预览
+    expect(loadPackPreviews).toHaveBeenCalledWith([PACK_LIST[1]])
+
+    // pack-text 可作桩库 → 归入桩库组；当前分类无普通包则不渲染该组标题
+    expect(within(dialog).getByText('可用作记忆宫殿桩库')).toBeInTheDocument()
+    expect(within(dialog).queryByText('普通知识库')).not.toBeInTheDocument()
+
+    // 已导入的包行带置灰样式类
+    const row = within(dialog).getByText('二十四节气').closest('.import-pack-row')
+    expect(row).toHaveClass('imported')
+
+    // 搜索过滤：命中时正常展示，无命中时给出专属空态且不残留分组标题
+    const search = within(dialog).getByPlaceholderText('搜索知识库名称或描述')
+    await fireEvent.update(search, '节气')
+    await waitFor(() => {
+      expect(within(dialog).getByText('二十四节气')).toBeInTheDocument()
+    })
+    await fireEvent.update(search, '不存在')
+    await waitFor(() => {
+      expect(within(dialog).getByText('没有匹配的知识库')).toBeInTheDocument()
+    })
+    expect(within(dialog).queryByText('二十四节气')).not.toBeInTheDocument()
+  })
+
   it('点击导入后加入清单并显示卡片', async () => {
     await setup('text')
     await fireEvent.click(screen.getByRole('button', { name: '导入' }))
@@ -164,7 +259,7 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
       expect(mockStore.removeImportedPack).toHaveBeenCalledWith('pack-math')
     })
     await waitFor(() => {
-      expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+      expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
     })
   })
 
@@ -182,13 +277,13 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(screen.getByText('自建')).toBeInTheDocument()
     expect(screen.getByText('2 条')).toBeInTheDocument()
     // 有自建集时不显示空态
-    expect(screen.queryByText('暂无知识库，点击右上角导入')).not.toBeInTheDocument()
+    expect(screen.queryByText('暂无知识库，点击上方「导入」')).not.toBeInTheDocument()
   })
 
   it('math 分类不展示自建知识集', async () => {
     await setup('math', [], {}, CUSTOM_PACKS)
     expect(screen.queryByText('古诗')).not.toBeInTheDocument()
-    expect(screen.getByText('暂无知识库，点击右上角导入')).toBeInTheDocument()
+    expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
   })
 
   it('点击自建集卡片跳转到对应练习页', async () => {
