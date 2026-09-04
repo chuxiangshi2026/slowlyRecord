@@ -310,7 +310,7 @@
 
     <!-- 现象动画对话框（化学方程式等有宏观现象的条目） -->
     <el-dialog v-model="sceneDialogVisible" title="现象动画" width="420px" append-to-body>
-      <SceneAnimation v-if="sceneType" :type="sceneType" />
+      <SceneAnimation v-if="sceneConfig" :config="sceneConfig" />
     </el-dialog>
 
     <!-- 函数图像汇总入口：列出本包全部可绘制函数，点击进入绘图 -->
@@ -386,7 +386,7 @@ import {getMathFormulaPlot} from './function-maps';
 import type {ViewRange} from '@/utils/function-plot-util';
 import SceneAnimation from './components/SceneAnimation.vue';
 import {getSceneAnimation} from './scene-maps';
-import type {SceneType} from './scene-maps';
+import type {SceneConfig} from './scene-maps';
 import {buildMultiplicationGrid, buildPeriodicTable} from './preview-layout';
 
 /** 打印/存图的表格形态 */
@@ -489,7 +489,7 @@ const plotNoArea = ref(false);
 const plotListDialogVisible = ref(false);
 /** 现象动画对话框状态 */
 const sceneDialogVisible = ref(false);
-const sceneType = ref<SceneType | null>(null);
+const sceneConfig = ref<SceneConfig | null>(null);
 /** 本包中有现象动画的条目 */
 const hasAnyScene = computed(() =>
     pack.value ? pack.value.items.some(i => getSceneAnimation(i.id) !== null) : false,
@@ -503,7 +503,7 @@ const currentScene = computed(() =>
 function openSceneFor(item: KnowledgeItem) {
   const scene = getSceneAnimation(item.id);
   if (!scene) return;
-  sceneType.value = scene;
+  sceneConfig.value = scene;
   sceneDialogVisible.value = true;
 }
 
