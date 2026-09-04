@@ -293,7 +293,7 @@
 
     <!-- 函数图像对话框（math-formulas 包可绘制条目） -->
     <el-dialog v-model="plotDialogVisible" title="函数图像" width="640px" append-to-body>
-      <FunctionPlot v-if="plotFn" :fn="plotFn" :fn2="plotFn2" :title="plotTitle" :notes="plotNotes" :initial-range="plotRange" :x-label="plotXLabel" :geometry="plotGeometry" />
+      <FunctionPlot v-if="plotFn" :fn="plotFn" :fn2="plotFn2" :title="plotTitle" :notes="plotNotes" :initial-range="plotRange" :x-label="plotXLabel" :geometry="plotGeometry" :no-area="plotNoArea" />
     </el-dialog>
 
     <!-- 函数图像汇总入口：列出本包全部可绘制函数，点击进入绘图 -->
@@ -464,6 +464,7 @@ const plotRange = ref<ViewRange | undefined>(undefined);
 const plotXLabel = ref<string | undefined>(undefined);
 const plotGeometry = ref<'circle' | 'square' | undefined>(undefined);
 const plotFn2 = ref<((x: number) => number) | undefined>(undefined);
+const plotNoArea = ref(false);
 /** 函数图像汇总列表对话框状态 */
 const plotListDialogVisible = ref(false);
 /** 当前条目可绘制的函数（条目有映射即可，不限具体包），不可绘制时为 null */
@@ -482,6 +483,7 @@ function openPlotFor(item: KnowledgeItem) {
   plotXLabel.value = plot.xLabel;
   plotGeometry.value = plot.geometry;
   plotFn2.value = plot.fn2;
+  plotNoArea.value = plot.noArea ?? false;
   plotDialogVisible.value = true;
 }
 

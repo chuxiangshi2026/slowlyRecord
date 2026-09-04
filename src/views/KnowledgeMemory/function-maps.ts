@@ -26,6 +26,8 @@ export interface PlotFunction {
     geometry?: 'circle' | 'square';
     /** 第二条曲线 y=g(x)（红色实线）：用于方程组联立，两曲线交点即方程组的解 */
     fn2?: (x: number) => number;
+    /** 曲线下面积无实际意义时置 true（如 s-t 图、成像公式），隐藏阴影与面积读数 */
+    noArea?: boolean;
 }
 
 /** 公式 id → 函数实现 */
@@ -337,6 +339,113 @@ export const MATH_FORMULA_PLOTS: Record<string, PlotFunction> = {
             '标准正态 N(0,1)：μ=0 处的钟形曲线，两侧关于 y 轴对称',
             '阴影面积就是概率：x=1 时 [0,1] 面积≈0.34，即 P(0<X<1)≈34%',
             '68-95-99.7 法则：±1σ/±2σ/±3σ 内的面积约为 68%/95%/99.7%',
+        ],
+    },
+    // ===== physics-formulas 物理包 =====
+    // 匀速直线运动：s=vt（v=2 m/s），播放动画即物体运动过程
+    'physics-formulas-1': {
+        noArea: true,
+        fn: (t) => 2 * t,
+        initialRange: {xMin: 0, xMax: 10, yMin: -1, yMax: 20},
+        xLabel: 't(s)',
+        notes: [
+            '以 v=2 m/s 为例：s-t 图像是过原点的直线，斜率就是速度',
+            '点播放按钮：动点沿直线上行，模拟物体匀速运动的路程增长',
+            '直线越陡速度越大；注意 s-t 图线下面积没有意义，v-t 图的面积才是路程',
+        ],
+    },
+    // 重力：G=mg（g 取 9.8 N/kg）
+    'physics-formulas-3': {
+        noArea: true,
+        fn: (m) => 9.8 * m,
+        initialRange: {xMin: 0, xMax: 10, yMin: -5, yMax: 100},
+        xLabel: 'm(kg)',
+        notes: [
+            'G 与 m 成正比：图像是斜率 g=9.8 的直线',
+            '1 kg 物体约受 9.8 N 重力，动点拖到 m=1 可验证',
+        ],
+    },
+    // 液体压强：p=ρgh（水 ρ=1.0×10³ kg/m³）
+    'physics-formulas-5': {
+        noArea: true,
+        fn: (h) => 1000 * 9.8 * h,
+        initialRange: {xMin: 0, xMax: 10, yMin: -5000, yMax: 100000},
+        xLabel: 'h(m)',
+        notes: [
+            '以水为例：h=10 m 深处压强约 9.8×10⁴ Pa，相当于再加一个大气压',
+            '压强只与深度有关，与容器形状无关——同一水平面上各点压强相等',
+        ],
+    },
+    // 欧姆定律：U=6 V 固定，I=U/R 随 R 反比变化
+    'physics-formulas-11': {
+        noArea: true,
+        fn: (R) => (R <= 0 ? NaN : 6 / R),
+        initialRange: {xMin: 0.5, xMax: 12, yMin: -1, yMax: 12},
+        xLabel: 'R(Ω)',
+        notes: [
+            'U=6 V 固定：I 与 R 成反比，图像是双曲线的一支',
+            'R 趋近 0 时电流趋向无穷大（短路），y 轴就是渐近线',
+            '曲线上每点的 I×R 之积恒等于 6 V——这正是不变的电压',
+        ],
+    },
+    // 焦耳定律：R=5 Ω、t=10 s 固定，Q=I²Rt 随 I 平方增长
+    'physics-formulas-14': {
+        noArea: true,
+        fn: (i) => 50 * i * i,
+        initialRange: {xMin: 0, xMax: 5, yMin: -20, yMax: 1300},
+        xLabel: 'I(A)',
+        notes: [
+            '以 R=5 Ω、t=10 s 为例：Q=50I²，图像是抛物线',
+            '电流翻倍，热量变 4 倍——大功率电器要用粗导线的原因',
+            '切线斜率随 I 增大：电流越大，热量增长得越凶猛',
+        ],
+    },
+    // 凸透镜成像：f=10 cm 固定，像距 v=fu/(u-f)
+    'physics-formulas-18': {
+        noArea: true,
+        fn: (u) => (u === 10 ? NaN : (10 * u) / (u - 10)),
+        initialRange: {xMin: 10.5, xMax: 40, yMin: -5, yMax: 60},
+        xLabel: 'u(cm)',
+        notes: [
+            '以 f=10 cm 为例：u 从右侧靠近焦点时像距 v 冲向无穷大（u=f 是渐近线）',
+            'u=2f=20 时 v=20：等大倒立的实像，曲线上的对称点',
+            'u>2f 时 v 介于 f 与 2f 之间（缩小实像），f<u<2f 时 v>2f（放大实像）',
+        ],
+    },
+    // 自由落体：h=½gt²（g 取 9.8）
+    'physics-formulas-21': {
+        noArea: true,
+        fn: (t) => 4.9 * t * t,
+        initialRange: {xMin: 0, xMax: 5, yMin: -5, yMax: 130},
+        xLabel: 't(s)',
+        notes: [
+            'h=4.9t² 是抛物线：第 1 秒落 4.9 m，第 2 秒内落 14.7 m，越落越快',
+            '点播放按钮：动点加速右移，模拟下落过程',
+            '动点处切线斜率就是瞬时速度 v=gt=9.8t——导数的物理原型',
+        ],
+    },
+    // ===== chemistry-formulas 化学包 =====
+    // 物质的量浓度：n=2 mol 固定，c=n/V 随 V 反比变化
+    'chemistry-formulas-21': {
+        noArea: true,
+        fn: (V) => (V <= 0 ? NaN : 2 / V),
+        initialRange: {xMin: 0.2, xMax: 10, yMin: -0.5, yMax: 10},
+        xLabel: 'V(L)',
+        notes: [
+            '以 n=2 mol 为例：溶液体积越大浓度越低，c 与 V 成反比',
+            '加水稀释时 n 不变：曲线上移动，cV 之积恒等于 2（稀释定律）',
+        ],
+    },
+    // 溶质质量分数：溶剂 100 g 固定，w=m/(100+m) 渐近 100%
+    'chemistry-formulas-22': {
+        noArea: true,
+        fn: (m) => (m < 0 ? NaN : (m / (100 + m)) * 100),
+        initialRange: {xMin: 0, xMax: 300, yMin: -5, yMax: 105},
+        xLabel: 'm质(g)',
+        notes: [
+            '以 100 g 水为溶剂：w=m/(100+m)×100%，曲线上升越来越平缓',
+            'm=100 g 时 w=50%：溶质与溶剂等质量时恰好一半',
+            'w 永远达不到 100%（y=100 是渐近线）——有溶剂在就永远稀',
         ],
     },
 };

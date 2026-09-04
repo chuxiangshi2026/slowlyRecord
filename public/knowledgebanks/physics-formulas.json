@@ -1,7 +1,7 @@
 {
   "id": "physics-formulas",
   "name": "初中物理公式",
-  "description": "初中物理常用公式 20 条",
+  "description": "初中物理常用公式 21 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -163,6 +163,14 @@
       "answer": "F浮=G−F拉",
       "extras": {
         "说明": "G 为物体在空气中的重力，F拉 为物体浸在液体中时弹簧测力计的示数"
+      }
+    },
+    {
+      "id": "physics-formulas-21",
+      "question": "自由落体",
+      "answer": "h=½gt²，v=gt（g≈9.8 m/s²）",
+      "extras": {
+        "说明": "下落高度与时间的平方成正比"
       }
     }
   ]

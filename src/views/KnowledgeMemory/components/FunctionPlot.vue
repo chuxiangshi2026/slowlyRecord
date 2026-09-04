@@ -48,8 +48,10 @@
           <span class="sep">·</span>
           <span>切线斜率（导数）≈ {{ fmt(slope) }}</span>
         </template>
-        <span class="sep">·</span>
-        <span>曲线与 x 轴在 [0, {{ fmt(probeX) }}] 围成的有向面积 ≈ {{ fmt(area) }}</span>
+        <template v-if="!noArea">
+          <span class="sep">·</span>
+          <span>曲线与 x 轴在 [0, {{ fmt(probeX) }}] 围成的有向面积 ≈ {{ fmt(area) }}</span>
+        </template>
       </div>
       <div class="analysis-row">
         <span class="tag tag-extremum">极值</span>
@@ -114,6 +116,8 @@ const props = withDefaults(defineProps<{
   geometry?: 'circle' | 'square';
   /** 第二条曲线 y=g(x)（红色实线）：用于方程组联立，交点即解 */
   fn2?: (x: number) => number;
+  /** 曲线下面积无实际意义时置 true：隐藏阴影与面积读数 */
+  noArea?: boolean;
 }>(), {notes: () => [], xLabel: 'x'});
 
 const X_SPAN = 10; // 自动计算范围时的 x 采样半径
@@ -283,6 +287,7 @@ function drawIntersections(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x
 
 /** 绘制动点区域阴影：曲线与 x 轴之间 [0, probeX] 的填充区（随 x 输入变化） */
 function drawArea(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  if (props.noArea) return;
   if (!Number.isFinite(probeY.value)) return;
   const xa = Math.max(Math.min(0, probeX.value), r.xMin);
   const xb = Math.min(Math.max(0, probeX.value), r.xMax);
