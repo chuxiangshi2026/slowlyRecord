@@ -35,6 +35,18 @@ export function chunkArticleContent(content: string, mode: ChunkMode): string[] 
 }
 
 /**
+ * 把 emoji 字符包成 SVG dataURL
+ *
+ * memory-palace-db 的 extract/attachImagesToPalace 只保留 data: 前缀的 imageUrl，
+ * 裸 emoji 字符或非 data: 字符串会被直接丢弃，故知识包导入宫殿桩前必须转换。
+ * 单个约 200 字节，12 桩约 3KB，远低于图片文档 800KB 上限。
+ */
+export function emojiToSvgDataUrl(emoji: string): string {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><text x="60" y="95" font-size="100" text-anchor="middle">${emoji}</text></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
+/**
  * 知识包（usableAsPeg）转换为宫殿桩列表
  * loci 顺序按 item.order（缺失时按原数组顺序）
  */
@@ -48,6 +60,10 @@ export function knowledgePackToLoci(pack: KnowledgePack): PalaceLocus[] {
       description: entry.item.answer,
       // 备选桩名透传，供编辑页循环切换
       alternates: entry.item.alternates?.length ? [...entry.item.alternates] : undefined,
+      // 配图：emoji 字符转 dataURL（DB 层只存 data:），已是 dataURL 的原样透传
+      imageUrl: entry.item.imageUrl
+        ? (entry.item.imageUrl.startsWith('data:') ? entry.item.imageUrl : emojiToSvgDataUrl(entry.item.imageUrl))
+        : undefined,
     }));
 }
 

@@ -359,6 +359,21 @@ describe('knowledge-pack-service', () => {
       const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-elements')!)
       expect(cached.pack.mnemonics).toEqual(['氢氦锂铍硼', '碳氮氧氟氖', '钠镁铝硅磷'])
     })
+
+    it('加载后应保留条目级 imageUrl（emoji 字符）', async () => {
+      const pack = makePack('zodiac-12', 12)
+      pack.items[0].imageUrl = '🐭'
+      pack.items[1].imageUrl = '🐂'
+      fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(pack)})
+      const result = await fetchKnowledgePack('zodiac-12')
+      expect(result.items[0].imageUrl).toBe('🐭')
+      expect(result.items[1].imageUrl).toBe('🐂')
+      // 无 imageUrl 的条目保持未定义，不变成空串
+      expect(result.items[2].imageUrl).toBeUndefined()
+      // 写入缓存的数据同样保留 imageUrl
+      const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-zodiac-12')!)
+      expect(cached.pack.items[0].imageUrl).toBe('🐭')
+    })
   })
 
   describe('validateKnowledgePack', () => {
@@ -411,6 +426,26 @@ describe('knowledge-pack-service', () => {
       const pack2 = makePack('x')
       pack2.items[0].alternates = [1, 2] as any
       expect(validateKnowledgePack(pack2).valid).toBe(false)
+    })
+
+    it('item 带字符串 imageUrl（emoji 字符）应通过', () => {
+      const pack = makePack('x')
+      pack.items[0].imageUrl = '🧠'
+      const result = validateKnowledgePack(pack)
+      expect(result.valid).toBe(true)
+    })
+
+    it('item 不带 imageUrl 应通过', () => {
+      const result = validateKnowledgePack(makePack('x'))
+      expect(result.valid).toBe(true)
+    })
+
+    it('item 的 imageUrl 非字符串应失败', () => {
+      const pack = makePack('x')
+      pack.items[0].imageUrl = 42 as any
+      const result = validateKnowledgePack(pack)
+      expect(result.valid).toBe(false)
+      expect(result.error).toContain('imageUrl')
     })
   })
 

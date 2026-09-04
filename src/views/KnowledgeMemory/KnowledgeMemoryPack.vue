@@ -104,7 +104,7 @@
             </thead>
             <tbody>
               <tr v-for="item in sortedItems" :key="item.id">
-                <td>{{ item.question }}</td>
+                <td><span class="item-emoji" v-if="item.imageUrl">{{ item.imageUrl }}</span>{{ item.question }}</td>
                 <td>{{ item.answer }}</td>
                 <td v-for="key in extraKeys" :key="key">{{ item.extras?.[key] ?? '' }}</td>
                 <td v-if="hasAnyPlot" class="plot-col">
@@ -173,7 +173,7 @@
               <div class="prompt-label">{{ currentMode === 'q2a' ? '问题' : '答案' }}</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
             </div>
-            <div class="prompt-main">{{ currentMode === 'q2a' ? currentItem.question : currentItem.answer }}</div>
+            <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentMode === 'q2a' ? currentItem.question : currentItem.answer }}</div>
 
             <div v-if="showAnswer" class="answer-section">
               <div class="answer-label">{{ currentMode === 'q2a' ? '答案' : '问题' }}</div>
@@ -199,7 +199,7 @@
               <div class="prompt-label">问题</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
             </div>
-            <div class="prompt-main">{{ currentItem.question }}</div>
+            <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
               <el-tag v-for="(value, key) in currentItem.extras" :key="key" size="small" type="info">{{ key }}: {{ value }}</el-tag>
             </div>
@@ -229,7 +229,7 @@
             <div v-else class="ordered-prompt">
               这是第一项，请回答：
             </div>
-            <div class="prompt-main">{{ currentItem.question }}</div>
+            <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentItem.question }}</div>
 
             <el-input
               v-model="inputAnswer"
@@ -247,7 +247,7 @@
               <div class="prompt-label">问题</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
             </div>
-            <div class="prompt-main">{{ currentItem.question }}</div>
+            <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
               <el-tag v-for="(value, key) in currentItem.extras" :key="key" size="small" type="info">{{ key }}: {{ value }}</el-tag>
             </div>
@@ -693,6 +693,14 @@ async function handleResetProgress() {
 </script>
 
 <style scoped lang="scss">
+// 条目配图：emoji 字符大字渲染（知识包 JSON 里 imageUrl 存 emoji）
+.item-emoji {
+  font-size: 1.5em;
+  margin-right: 0.3em;
+  vertical-align: middle;
+  line-height: 1;
+}
+
 .knowledge-pack-page {
   width: 100%;
   min-height: 100vh;

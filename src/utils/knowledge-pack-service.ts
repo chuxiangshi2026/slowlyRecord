@@ -280,6 +280,10 @@ export function validateKnowledgePack(data: unknown): { valid: boolean; error?: 
                 return {valid: false, error: `items[${i}] alternates 必须是字符串数组`};
             }
         }
+        // 配图（emoji 字符）为可选字段，存在时必须是字符串
+        if (it.imageUrl !== undefined && typeof it.imageUrl !== 'string') {
+            return {valid: false, error: `items[${i}] imageUrl 必须是字符串`};
+        }
         if (seenIds.has(it.id)) {
             return {valid: false, error: `items 中存在重复 id: ${it.id}`};
         }
@@ -307,6 +311,7 @@ function normalizePack(pack: KnowledgePack): KnowledgePack {
             extras: item.extras && typeof item.extras === 'object' ? item.extras : undefined,
             alternates: Array.isArray(item.alternates) ? item.alternates : undefined,
             order: typeof item.order === 'number' ? item.order : undefined,
+            imageUrl: typeof item.imageUrl === 'string' ? item.imageUrl : undefined,
         })),
     };
 }

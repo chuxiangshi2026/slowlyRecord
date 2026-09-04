@@ -16,6 +16,12 @@ export interface KnowledgeItem {
     alternates?: string[];
     /** 有序包中的顺序号（从 1 开始） */
     order?: number;
+    /**
+     * 条目配图：存 emoji 字符（如 "🧠"）。
+     * 知识包预览页直接渲染该字符；导入记忆宫殿桩时由 knowledgePackToLoci
+     * 用 emojiToSvgDataUrl 包成 SVG dataURL 再赋给 PalaceLocus.imageUrl。
+     */
+    imageUrl?: string;
 }
 
 /** 知识包元数据 + 条目 */

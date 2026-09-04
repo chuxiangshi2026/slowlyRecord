@@ -3,6 +3,7 @@ import {
   assignChunksToLoci,
   buildPegId,
   chunkArticleContent,
+  emojiToSvgDataUrl,
   knowledgePackToLoci,
   resolvePegContent,
 } from './memory-palace-util';
@@ -70,6 +71,21 @@ describe('chunkArticleContent', () => {
   });
 });
 
+describe('emojiToSvgDataUrl', () => {
+  it('把 emoji 包成 SVG dataURL', () => {
+    const url = emojiToSvgDataUrl('🧠');
+    expect(url).toMatch(/^data:image\/svg\+xml,/);
+    expect(url).toContain('120');
+  });
+
+  it('对含特殊字符的 emoji 做 URL 编码', () => {
+    const url = emojiToSvgDataUrl('🕯️');
+    // 编码后不应残留裸的 < > # 字符
+    expect(decodeURIComponent(url.slice('data:image/svg+xml,'.length))).toContain('<svg');
+    expect(url).not.toContain('#');
+  });
+});
+
 describe('knowledgePackToLoci', () => {
   it('按 item.order 生成桩列表', () => {
     const pack: KnowledgePack = {
@@ -104,6 +120,28 @@ describe('knowledgePackToLoci', () => {
     const loci = knowledgePackToLoci(pack);
     expect(loci.map(l => l.name)).toEqual(['甲', '乙']);
     expect(loci.map(l => l.order)).toEqual([1, 2]);
+  });
+
+  it('把 item.imageUrl 的 emoji 转成 dataURL，已是 dataURL 的原样透传', () => {
+    const pack: KnowledgePack = {
+      id: 'test',
+      name: 'test',
+      description: '',
+      ordered: true,
+      usableAsPeg: true,
+      items: [
+        {id: '1', question: '鼠', answer: '生肖', imageUrl: '🐭', order: 1},
+        {id: '2', question: '牛', answer: '生肖', imageUrl: 'data:image/png;base64,AAA', order: 2},
+        {id: '3', question: '虎', answer: '生肖', order: 3},
+      ],
+    };
+    const loci = knowledgePackToLoci(pack);
+    expect(loci[0].imageUrl).toMatch(/^data:image\/svg\+xml,/);
+    expect(loci[0].imageUrl).not.toBe('🐭');
+    // 已是 dataURL 的原样保留
+    expect(loci[1].imageUrl).toBe('data:image/png;base64,AAA');
+    // 无 imageUrl 时不设置该字段
+    expect(loci[2].imageUrl).toBeUndefined();
   });
 
   it('透传 item.alternates 到桩的备选桩名', () => {
