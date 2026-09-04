@@ -99,7 +99,7 @@
                 <th>题目</th>
                 <th>答案</th>
                 <th v-for="key in extraKeys" :key="key">{{ key }}</th>
-                <th v-if="hasAnyPlot" class="plot-col">图像</th>
+                <th v-if="hasAnyPlot || hasAnyScene" class="plot-col">图像/动画</th>
               </tr>
             </thead>
             <tbody>
@@ -107,7 +107,7 @@
                 <td>{{ item.question }}</td>
                 <td>{{ item.answer }}</td>
                 <td v-for="key in extraKeys" :key="key">{{ item.extras?.[key] ?? '' }}</td>
-                <td v-if="hasAnyPlot" class="plot-col">
+                <td v-if="hasAnyPlot || hasAnyScene" class="plot-col">
                   <el-button
                     v-if="getMathFormulaPlot(item.id)"
                     text
@@ -115,6 +115,14 @@
                     :icon="TrendCharts"
                     title="查看函数图像"
                     @click="openPlotFor(item)"
+                  />
+                  <el-button
+                    v-if="getSceneAnimation(item.id)"
+                    text
+                    size="small"
+                    :icon="VideoPlay"
+                    title="查看现象动画"
+                    @click="openSceneFor(item)"
                   />
                 </td>
               </tr>
@@ -172,6 +180,7 @@
             <div class="prompt-row">
               <div class="prompt-label">{{ currentMode === 'q2a' ? '问题' : '答案' }}</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
             </div>
             <div class="prompt-main">{{ currentMode === 'q2a' ? currentItem.question : currentItem.answer }}</div>
 
@@ -198,6 +207,7 @@
             <div class="prompt-row">
               <div class="prompt-label">问题</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
             </div>
             <div class="prompt-main">{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
@@ -222,6 +232,7 @@
                 <template v-if="currentItem.order"> · 第 {{ currentItem.order }} 项</template>
               </div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
             </div>
             <div v-if="previousItem" class="ordered-prompt">
               前一项是 <strong>{{ previousItem.question }}</strong>，下一项是？
@@ -246,6 +257,7 @@
             <div class="prompt-row">
               <div class="prompt-label">问题</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
             </div>
             <div class="prompt-main">{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
@@ -294,6 +306,11 @@
     <!-- 函数图像对话框（math-formulas 包可绘制条目） -->
     <el-dialog v-model="plotDialogVisible" title="函数图像" width="640px" append-to-body>
       <FunctionPlot v-if="plotFn" :fn="plotFn" :fn2="plotFn2" :title="plotTitle" :notes="plotNotes" :initial-range="plotRange" :x-label="plotXLabel" :geometry="plotGeometry" :no-area="plotNoArea" />
+    </el-dialog>
+
+    <!-- 现象动画对话框（化学方程式等有宏观现象的条目） -->
+    <el-dialog v-model="sceneDialogVisible" title="现象动画" width="420px" append-to-body>
+      <SceneAnimation v-if="sceneType" :type="sceneType" />
     </el-dialog>
 
     <!-- 函数图像汇总入口：列出本包全部可绘制函数，点击进入绘图 -->
@@ -367,6 +384,9 @@ import type {TableImageData} from '@/utils/table-image-export';
 import FunctionPlot from './components/FunctionPlot.vue';
 import {getMathFormulaPlot} from './function-maps';
 import type {ViewRange} from '@/utils/function-plot-util';
+import SceneAnimation from './components/SceneAnimation.vue';
+import {getSceneAnimation} from './scene-maps';
+import type {SceneType} from './scene-maps';
 import {buildMultiplicationGrid, buildPeriodicTable} from './preview-layout';
 
 /** 打印/存图的表格形态 */
@@ -467,6 +487,31 @@ const plotFn2 = ref<((x: number) => number) | undefined>(undefined);
 const plotNoArea = ref(false);
 /** 函数图像汇总列表对话框状态 */
 const plotListDialogVisible = ref(false);
+/** 现象动画对话框状态 */
+const sceneDialogVisible = ref(false);
+const sceneType = ref<SceneType | null>(null);
+/** 本包中有现象动画的条目 */
+const hasAnyScene = computed(() =>
+    pack.value ? pack.value.items.some(i => getSceneAnimation(i.id) !== null) : false,
+);
+/** 当前练习条目的现象动画，无则 null */
+const currentScene = computed(() =>
+    currentItem.value ? getSceneAnimation(currentItem.value.id) : null,
+);
+
+/** 打开指定条目的现象动画对话框 */
+function openSceneFor(item: KnowledgeItem) {
+  const scene = getSceneAnimation(item.id);
+  if (!scene) return;
+  sceneType.value = scene;
+  sceneDialogVisible.value = true;
+}
+
+/** 打开当前练习条目的现象动画对话框 */
+function openScene() {
+  if (!currentItem.value) return;
+  openSceneFor(currentItem.value);
+}
 /** 当前条目可绘制的函数（条目有映射即可，不限具体包），不可绘制时为 null */
 const currentPlot = computed(() =>
     currentItem.value ? getMathFormulaPlot(currentItem.value.id) : null,
