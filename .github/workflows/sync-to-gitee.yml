@@ -1,0 +1,24 @@
+name: Sync to Gitee
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ '*' ]
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (完整历史,含 tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 推送到 Gitee
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        run: |
+          # 令牌直接拼进 URL(secret 会被 Actions 自动打码,不进日志明文)
+          git remote add gitee "https://dreamerjie:${GITEE_TOKEN}@gitee.com/dreamerjie/slowlyRecord.git"
+          git push gitee --force --tags HEAD:master
