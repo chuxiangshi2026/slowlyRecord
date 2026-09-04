@@ -4,6 +4,14 @@
  */
 import type {ViewRange} from '@/utils/function-plot-util';
 
+/** 组合数 C(n, k)；k 非整数或越界时返回 0（离散分布绘图用） */
+function binom(n: number, k: number): number {
+    if (!Number.isInteger(k) || k < 0 || k > n) return 0;
+    let r = 1;
+    for (let i = 1; i <= k; i++) r = (r * (n - k + i)) / i;
+    return r;
+}
+
 /** 一个可绘制函数的描述 */
 export interface PlotFunction {
     /** 函数实现 y = f(x) */
@@ -284,6 +292,51 @@ export const MATH_FORMULA_PLOTS: Record<string, PlotFunction> = {
             '红线是 eˣ 在 x=0 处的二次泰勒逼近 1+x+x²/2，在 0 附近与绿线几乎重合',
             'x 远离 0 后两线分离：项数不够了，加 x³/6 一项会贴合得更远',
             '泰勒思想：任何光滑函数都能在一点附近用多项式逼近',
+        ],
+    },
+    // ===== math-linalg 线性代数包 =====
+    // 特征值：A=[[2,1],[1,2]] 的特征多项式 λ²-4λ+3，零点即特征值 1 和 3
+    'math-linalg-13': {
+        fn: (λ) => λ * λ - 4 * λ + 3,
+        initialRange: {xMin: -1, xMax: 5, yMin: -2, yMax: 6},
+        xLabel: 'λ',
+        notes: [
+            '以矩阵 A=[[2,1],[1,2]] 为例：特征方程 det(A-λI)=λ²-4λ+3=0',
+            '图像与 x 轴的两个交点 λ=1、λ=3 就是 A 的两个特征值',
+            '求特征值 = 解特征多项式的零点，和「方程的解=函数零点」完全同构',
+        ],
+    },
+    // ===== math-probability 概率统计包 =====
+    // 组合数：n=10 固定，C(10,k) 随 k 变化（钟形，对称）
+    'math-probability-2': {
+        fn: (k) => binom(10, Math.round(k)),
+        initialRange: {xMin: -1, xMax: 11, yMin: -10, yMax: 260},
+        xLabel: 'k',
+        notes: [
+            'n=10 固定：C(10,k) 先增后减，最大值在 k=5 处为 252',
+            '图像左右对称：C(n,k)=C(n,n-k)，取 3 个与取 7 个一样多',
+            '实际是 k=0,1,…,10 的离散点，连线仅为示意（杨辉三角第 10 行）',
+        ],
+    },
+    // 二项分布 B(10, 0.5) 的概率分布
+    'math-probability-12': {
+        fn: (k) => binom(10, Math.round(k)) * Math.pow(0.5, 10),
+        initialRange: {xMin: -1, xMax: 11, yMin: -0.02, yMax: 0.3},
+        xLabel: 'k',
+        notes: [
+            '抛 10 次硬币正面 k 次的概率：k=5 最大约 0.246，k=0 或 10 仅约 0.001',
+            '形状与组合数图一致——二项分布就是组合数乘上 pᵏ(1-p)ⁿ⁻ᵏ',
+            '阴影面积累加近似总概率 1（离散分布的严格求和是竖条面积之和）',
+        ],
+    },
+    // 标准正态分布密度曲线：阴影面积即概率
+    'math-probability-13': {
+        fn: (x) => Math.exp(-(x * x) / 2) / Math.sqrt(2 * Math.PI),
+        initialRange: {xMin: -4, xMax: 4, yMin: -0.05, yMax: 0.45},
+        notes: [
+            '标准正态 N(0,1)：μ=0 处的钟形曲线，两侧关于 y 轴对称',
+            '阴影面积就是概率：x=1 时 [0,1] 面积≈0.34，即 P(0<X<1)≈34%',
+            '68-95-99.7 法则：±1σ/±2σ/±3σ 内的面积约为 68%/95%/99.7%',
         ],
     },
 };
