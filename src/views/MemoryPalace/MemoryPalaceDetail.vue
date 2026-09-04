@@ -337,8 +337,13 @@ async function handleUnmountAll() {
   }
   let failed = 0;
   for (const peg of pegs) {
-    const result = await store.unmountPeg(peg);
-    if (!result.ok) failed++;
+    // 单条解绑失败（DB 异常 reject 或返回 ok:false）不中断其余桩，统一计入 failed
+    try {
+      const result = await store.unmountPeg(peg);
+      if (!result.ok) failed++;
+    } catch {
+      failed++;
+    }
   }
   if (failed === 0) {
     ElMessage.success(`已解除全部 ${pegs.length} 条挂载`);
