@@ -9,82 +9,121 @@
       "id": "number-pegs-12-1",
       "question": "蜡烛",
       "answer": "数字 1：形似直立的蜡烛",
-      "alternates": ["铅笔", "大树"],
-      "order": 1
+      "alternates": [
+        "铅笔",
+        "大树"
+      ],
+      "order": 1,
+      "imageUrl": "🕯️"
     },
     {
       "id": "number-pegs-12-2",
       "question": "鸭子",
       "answer": "数字 2：形似浮水的鸭子",
-      "alternates": ["天鹅", "白鹅"],
-      "order": 2
+      "alternates": [
+        "天鹅",
+        "白鹅"
+      ],
+      "order": 2,
+      "imageUrl": "🦆"
     },
     {
       "id": "number-pegs-12-3",
       "question": "耳朵",
       "answer": "数字 3：形似耳朵",
-      "alternates": ["弹簧", "蝴蝶"],
-      "order": 3
+      "alternates": [
+        "弹簧",
+        "蝴蝶"
+      ],
+      "order": 3,
+      "imageUrl": "👂"
     },
     {
       "id": "number-pegs-12-4",
       "question": "帆船",
       "answer": "数字 4：形似扬起的船帆",
-      "alternates": ["小旗", "菜刀"],
-      "order": 4
+      "alternates": [
+        "小旗",
+        "菜刀"
+      ],
+      "order": 4,
+      "imageUrl": "⛵"
     },
     {
       "id": "number-pegs-12-5",
       "question": "秤钩",
       "answer": "数字 5：形似秤钩",
-      "alternates": ["海马", "钓钩"],
-      "order": 5
+      "alternates": [
+        "海马",
+        "钓钩"
+      ],
+      "order": 5,
+      "imageUrl": "🪝"
     },
     {
       "id": "number-pegs-12-6",
       "question": "哨子",
       "answer": "数字 6：形似哨子",
-      "alternates": ["汤勺", "高尔夫球杆"],
-      "order": 6
+      "alternates": [
+        "汤勺",
+        "高尔夫球杆"
+      ],
+      "order": 6,
+      "imageUrl": "📯"
     },
     {
       "id": "number-pegs-12-7",
       "question": "镰刀",
       "answer": "数字 7：形似镰刀",
-      "order": 7
+      "order": 7,
+      "imageUrl": "🌙"
     },
     {
       "id": "number-pegs-12-8",
       "question": "葫芦",
       "answer": "数字 8：形似葫芦",
-      "order": 8
+      "order": 8,
+      "imageUrl": "🎋"
     },
     {
       "id": "number-pegs-12-9",
       "question": "气球",
       "answer": "数字 9：形似牵着线的气球",
-      "order": 9
+      "order": 9,
+      "imageUrl": "🎈"
     },
     {
       "id": "number-pegs-12-10",
       "question": "棒球",
       "answer": "数字 10：1 像球棒、0 像球",
-      "alternates": ["铅笔与鸡蛋", "筷子与碗"],
-      "order": 10
+      "alternates": [
+        "铅笔与鸡蛋",
+        "筷子与碗"
+      ],
+      "order": 10,
+      "imageUrl": "⚾"
     },
     {
       "id": "number-pegs-12-11",
       "question": "筷子",
       "answer": "数字 11：形似一双筷子",
-      "alternates": ["梯子", "铁轨"],
-      "order": 11
+      "alternates": [
+        "梯子",
+        "铁轨"
+      ],
+      "order": 11,
+      "imageUrl": "🥢"
     },
     {
       "id": "number-pegs-12-12",
       "question": "椅儿",
       "answer": "数字 12：谐音\"椅儿\"",
-      "alternates": ["钟表（12 点）", "一打鸡蛋"],
-      "order": 12
+      "alternates": [
+        "钟表（12 点）",
+        "一打鸡蛋"
+      ],
+      "order": 12,
+      "imageUrl": "🪑"
     }
   ]
 }

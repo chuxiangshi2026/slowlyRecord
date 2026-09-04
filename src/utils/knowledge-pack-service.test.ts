@@ -55,8 +55,8 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 18 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(18)
+    it('应包含 26 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(26)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -74,7 +74,7 @@ describe('knowledge-pack-service', () => {
       const info = getKnowledgePackInfo('elements')
       expect(info).toBeDefined()
       expect(info?.id).toBe('elements')
-      expect(info?.itemCount).toBe(36)
+      expect(info?.itemCount).toBe(54)
     })
 
     it('getKnowledgePackInfo 对不存在的包返回 undefined', () => {
@@ -87,28 +87,37 @@ describe('knowledge-pack-service', () => {
 
     it('listKnowledgePacks 按 category 过滤', () => {
       const math = listKnowledgePacks('math')
+      expect(math).toHaveLength(8)
       expect(math.map(p => p.id).sort()).toEqual([
         'chemistry-formulas',
+        'common-units',
         'elements',
         'math-formulas',
+        'math-formulas-2',
         'multiplication-19x19',
         'multiplication-9x9',
         'physics-formulas',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(12)
+      expect(text).toHaveLength(18)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'biology-experiments',
+        'body-pegs-12',
+        'colors-12',
         'constellations-12',
         'cuisines-8',
+        'dynasties-china',
+        'earthly-branches-12',
         'ethnic-groups-56',
         'geography-concepts',
         'home-route-12',
+        'musical-notes',
         'number-pegs-12',
         'physics-experiments',
         'physics-laws',
         'provinces-capitals',
+        'room-pegs-12',
         'solar-terms-24',
         'zodiac-12',
       ])
@@ -169,22 +178,90 @@ describe('knowledge-pack-service', () => {
       }
     })
 
+    function readPackFile(id: string): KnowledgePack {
+      return JSON.parse(
+        readFileSync(
+          fileURLToPath(new URL('../../public/knowledgebanks/' + id + '.json', import.meta.url)),
+          'utf-8',
+        ),
+      ) as KnowledgePack
+    }
+
+    it('8 个新知识与桩库包数据合法且条数与元数据一致', () => {
+      const newPacks: Array<[string, number, boolean, boolean, 'math' | 'text']> = [
+        ['body-pegs-12', 12, true, true, 'text'],
+        ['earthly-branches-12', 12, true, true, 'text'],
+        ['room-pegs-12', 12, true, true, 'text'],
+        ['dynasties-china', 18, true, true, 'text'],
+        ['common-units', 21, false, false, 'math'],
+        ['colors-12', 12, false, false, 'text'],
+        ['musical-notes', 12, true, true, 'text'],
+        ['math-formulas-2', 28, false, false, 'math'],
+      ]
+      newPacks.forEach(([id, count, ordered, usableAsPeg, category]) => {
+        const info = getKnowledgePackInfo(id)
+        expect(info).toBeDefined()
+        expect(info!.category).toBe(category)
+        expect(info!.ordered).toBe(ordered)
+        expect(info!.usableAsPeg).toBe(usableAsPeg)
+        expect(info!.version).toBe(1)
+
+        const pack = readPackFile(id)
+        expect(pack.id).toBe(id)
+        expect(validateKnowledgePack(pack).valid).toBe(true)
+        expect(pack.items).toHaveLength(count)
+        expect(pack.ordered).toBe(ordered)
+        expect(pack.usableAsPeg).toBe(usableAsPeg)
+        // 条目 id 与文件内顺序一一对应
+        pack.items.forEach((item, i) => expect(item.id).toBe(`${id}-${i + 1}`))
+      })
+    })
+
+    it('四个新桩库每条都带 emoji 配图且有序包 order 连续递增', () => {
+      const pegPackIds = ['body-pegs-12', 'earthly-branches-12', 'room-pegs-12', 'dynasties-china', 'musical-notes']
+      pegPackIds.forEach(id => {
+        const pack = readPackFile(id)
+        // emoji 直接渲染/转 SVG dataURL 都需要非空字符串
+        expect(pack.items.every(i => typeof i.imageUrl === 'string' && i.imageUrl.length > 0)).toBe(true)
+        expect(pack.items.map(i => i.imageUrl)).toHaveLength(new Set(pack.items.map(i => i.imageUrl)).size)
+        expect(pack.items.map(i => i.order)).toEqual(pack.items.map((_, i) => i + 1))
+      })
+    })
+
+    it('进阶数学公式与基础数学公式无题目重复', () => {
+      const basic = readPackFile('math-formulas')
+      const advanced = readPackFile('math-formulas-2')
+      const basicQuestions = new Set(basic.items.map(i => i.question))
+      expect(advanced.items.map(i => basicQuestions.has(i.question))).not.toContain(true)
+    })
+
     it('默认策略配置正确', () => {
       expect(DEFAULT_STRATEGY).toEqual({priority: 'local', useCache: true, timeout: 5000})
     })
 
-    it('math-formulas / elements / solar-terms-24 / zodiac-12 数据版本为 2，其余包默认版本为 1', () => {
+    it('各包数据版本符合预期，未显式声明版本的包默认 1', () => {
+      // elements 扩到 54 号元素 → 3；solar-terms-24 / zodiac-12 追加 imageUrl → 3
+      expect(getKnowledgePackInfo('elements')?.version).toBe(3)
+      expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(3)
+      expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(3)
+      expect(getPackVersion('elements')).toBe(3)
+      expect(getPackVersion('solar-terms-24')).toBe(3)
+      expect(getPackVersion('zodiac-12')).toBe(3)
+      // 从未声明过 version 的包，追加 imageUrl 后升到 2
+      expect(getPackVersion('number-pegs-12')).toBe(2)
+      expect(getPackVersion('home-route-12')).toBe(2)
+      // math-formulas 追加函数类条目后仍为 2
       expect(getKnowledgePackInfo('math-formulas')?.version).toBe(2)
-      expect(getKnowledgePackInfo('elements')?.version).toBe(2)
-      expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(2)
-      expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(2)
       expect(getPackVersion('math-formulas')).toBe(2)
-      expect(getPackVersion('elements')).toBe(2)
-      expect(getPackVersion('solar-terms-24')).toBe(2)
-      expect(getPackVersion('zodiac-12')).toBe(2)
       // 其余包（未加口诀等结构变更）仍为 1
       expect(getPackVersion('multiplication-9x9')).toBe(1)
       expect(getPackVersion('constellations-12')).toBe(1)
+      // 本轮新增的 8 个包均为 1
+      ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12', 'dynasties-china',
+        'common-units', 'colors-12', 'musical-notes', 'math-formulas-2'].forEach(id => {
+        expect(getKnowledgePackInfo(id)?.version).toBe(1)
+        expect(getPackVersion(id)).toBe(1)
+      })
       // 未知包兜底为 1
       expect(getPackVersion('not-exist')).toBe(1)
     })
@@ -221,12 +298,12 @@ describe('knowledge-pack-service', () => {
 
     it('isKnowledgePackCached 有有效缓存时返回 true', () => {
       const pack = makePack('elements')
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 2}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 3}))
       expect(isKnowledgePackCached('elements')).toBe(true)
     })
 
     it('clearKnowledgePackCache 应清除指定缓存', () => {
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 2}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 3}))
       clearKnowledgePackCache('elements')
       expect(localStorageMock.getItem('slowlyrecord-knowledgebank-elements')).toBeNull()
     })
@@ -244,8 +321,8 @@ describe('knowledge-pack-service', () => {
 
   describe('fetchKnowledgePack', () => {
     it('应使用有效缓存', async () => {
-      const pack = makePack('elements', 36)
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 2}))
+      const pack = makePack('elements', 54)
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 3}))
       const result = await fetchKnowledgePack('elements')
       expect(result.id).toBe('elements')
       expect(fetchMock).not.toHaveBeenCalled()
@@ -262,19 +339,19 @@ describe('knowledge-pack-service', () => {
     })
 
     it('应从本地加载并缓存', async () => {
-      const pack = makePack('elements', 36)
+      const pack = makePack('elements', 54)
       fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(pack)})
       const result = await fetchKnowledgePack('elements')
-      expect(result.items).toHaveLength(36)
+      expect(result.items).toHaveLength(54)
       expect(fetchMock).toHaveBeenCalledWith(
         '/knowledgebanks/elements.json',
         expect.objectContaining({method: 'GET'}),
       )
       const cached = localStorageMock.getItem('slowlyrecord-knowledgebank-elements')
       expect(cached).not.toBeNull()
-      expect(JSON.parse(cached!).pack.items).toHaveLength(36)
-      // 缓存应记录当前数据版本（elements 已升级到 2）
-      expect(JSON.parse(cached!).version).toBe(2)
+      expect(JSON.parse(cached!).pack.items).toHaveLength(54)
+      // 缓存应记录当前数据版本（elements 已升级到 3）
+      expect(JSON.parse(cached!).version).toBe(3)
     })
 
     it('缓存版本与包当前版本不一致时视为失效并重新加载', async () => {
@@ -318,10 +395,10 @@ describe('knowledge-pack-service', () => {
       const oldPack = makePack('elements', 5)
       const expired = Date.now() - 8 * 24 * 60 * 60 * 1000
       localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: oldPack, timestamp: expired}))
-      const newPack = makePack('elements', 36)
+      const newPack = makePack('elements', 54)
       fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(newPack)})
       const result = await fetchKnowledgePack('elements')
-      expect(result.items).toHaveLength(36)
+      expect(result.items).toHaveLength(54)
     })
 
     it('本地加载失败且无缓存时应抛出错误', async () => {
@@ -342,7 +419,7 @@ describe('knowledge-pack-service', () => {
     })
 
     it('并发加载同包应只 fetch 一次', async () => {
-      const pack = makePack('elements', 36)
+      const pack = makePack('elements', 54)
       fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(pack)})
       const [a, b] = await Promise.all([fetchKnowledgePack('elements'), fetchKnowledgePack('elements')])
       expect(fetchMock).toHaveBeenCalledTimes(1)
@@ -350,7 +427,7 @@ describe('knowledge-pack-service', () => {
     })
 
     it('加载后应保留包级 mnemonics 口诀字段', async () => {
-      const pack = makePack('elements', 36)
+      const pack = makePack('elements', 54)
       pack.mnemonics = ['氢氦锂铍硼', '碳氮氧氟氖', '钠镁铝硅磷']
       fetchMock.mockResolvedValueOnce({ok: true, json: () => Promise.resolve(pack)})
       const result = await fetchKnowledgePack('elements')

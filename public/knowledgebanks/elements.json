@@ -1,7 +1,7 @@
 {
   "id": "elements",
-  "name": "元素周期表（前 36 号）",
-  "description": "元素周期表前 36 号元素（氢到氪），符号与中文名",
+  "name": "元素周期表（前 54 号）",
+  "description": "元素周期表前 54 号元素（氢到氙），符号与中文名",
   "ordered": false,
   "usableAsPeg": false,
   "mnemonics": [
@@ -11,7 +11,10 @@
     "硫氯氩钾钙",
     "钪钛钒铬锰",
     "铁钴镍铜锌",
-    "镓锗砷硒溴氪"
+    "镓锗砷硒溴氪",
+    "铷锶钇锆铌钼",
+    "锝钌铑钯银镉",
+    "铟锡锑碲碘氙"
   ],
   "items": [
     {
@@ -336,6 +339,168 @@
       "extras": {
         "序数": "36",
         "拼音": "kè"
+      }
+    },
+    {
+      "id": "elements-Rb",
+      "question": "Rb",
+      "answer": "铷",
+      "extras": {
+        "序数": "37",
+        "拼音": "rú"
+      }
+    },
+    {
+      "id": "elements-Sr",
+      "question": "Sr",
+      "answer": "锶",
+      "extras": {
+        "序数": "38",
+        "拼音": "sī"
+      }
+    },
+    {
+      "id": "elements-Y",
+      "question": "Y",
+      "answer": "钇",
+      "extras": {
+        "序数": "39",
+        "拼音": "yǐ"
+      }
+    },
+    {
+      "id": "elements-Zr",
+      "question": "Zr",
+      "answer": "锆",
+      "extras": {
+        "序数": "40",
+        "拼音": "zào"
+      }
+    },
+    {
+      "id": "elements-Nb",
+      "question": "Nb",
+      "answer": "铌",
+      "extras": {
+        "序数": "41",
+        "拼音": "ní"
+      }
+    },
+    {
+      "id": "elements-Mo",
+      "question": "Mo",
+      "answer": "钼",
+      "extras": {
+        "序数": "42",
+        "拼音": "mù"
+      }
+    },
+    {
+      "id": "elements-Tc",
+      "question": "Tc",
+      "answer": "锝",
+      "extras": {
+        "序数": "43",
+        "拼音": "dē"
+      }
+    },
+    {
+      "id": "elements-Ru",
+      "question": "Ru",
+      "answer": "钌",
+      "extras": {
+        "序数": "44",
+        "拼音": "liǎo"
+      }
+    },
+    {
+      "id": "elements-Rh",
+      "question": "Rh",
+      "answer": "铑",
+      "extras": {
+        "序数": "45",
+        "拼音": "lǎo"
+      }
+    },
+    {
+      "id": "elements-Pd",
+      "question": "Pd",
+      "answer": "钯",
+      "extras": {
+        "序数": "46",
+        "拼音": "bà"
+      }
+    },
+    {
+      "id": "elements-Ag",
+      "question": "Ag",
+      "answer": "银",
+      "extras": {
+        "序数": "47",
+        "拼音": "yín"
+      }
+    },
+    {
+      "id": "elements-Cd",
+      "question": "Cd",
+      "answer": "镉",
+      "extras": {
+        "序数": "48",
+        "拼音": "gé"
+      }
+    },
+    {
+      "id": "elements-In",
+      "question": "In",
+      "answer": "铟",
+      "extras": {
+        "序数": "49",
+        "拼音": "yīn"
+      }
+    },
+    {
+      "id": "elements-Sn",
+      "question": "Sn",
+      "answer": "锡",
+      "extras": {
+        "序数": "50",
+        "拼音": "xī"
+      }
+    },
+    {
+      "id": "elements-Sb",
+      "question": "Sb",
+      "answer": "锑",
+      "extras": {
+        "序数": "51",
+        "拼音": "tī"
+      }
+    },
+    {
+      "id": "elements-Te",
+      "question": "Te",
+      "answer": "碲",
+      "extras": {
+        "序数": "52",
+        "拼音": "dì"
+      }
+    },
+    {
+      "id": "elements-I",
+      "question": "I",
+      "answer": "碘",
+      "extras": {
+        "序数": "53",
+        "拼音": "diǎn"
+      }
+    },
+    {
+      "id": "elements-Xe",
+      "question": "Xe",
+      "answer": "氙",
+      "extras": {
+        "序数": "54",
+        "拼音": "xiān"
       }
     }
   ]

@@ -1,0 +1,225 @@
+{
+  "id": "dynasties-china",
+  "name": "中国历代王朝",
+  "description": "从夏到清 18 个主要朝代，含起止年份、都城与创立者",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "dynasties-china-1",
+      "question": "夏",
+      "answer": "前 2070 – 前 1600 年",
+      "order": 1,
+      "extras": {
+        "都城": "阳城",
+        "创立者": "启",
+        "年数": "约 470"
+      },
+      "imageUrl": "🧱"
+    },
+    {
+      "id": "dynasties-china-2",
+      "question": "商",
+      "answer": "前 1600 – 前 1046 年",
+      "order": 2,
+      "extras": {
+        "都城": "殷",
+        "创立者": "商汤",
+        "年数": "554"
+      },
+      "imageUrl": "🏺"
+    },
+    {
+      "id": "dynasties-china-3",
+      "question": "西周",
+      "answer": "前 1046 – 前 771 年",
+      "order": 3,
+      "extras": {
+        "都城": "镐京",
+        "创立者": "周武王",
+        "年数": "276"
+      },
+      "imageUrl": "🛡️"
+    },
+    {
+      "id": "dynasties-china-4",
+      "question": "东周",
+      "answer": "前 770 – 前 221 年",
+      "order": 4,
+      "extras": {
+        "都城": "洛邑",
+        "创立者": "周平王",
+        "年数": "549"
+      },
+      "imageUrl": "📜"
+    },
+    {
+      "id": "dynasties-china-5",
+      "question": "秦",
+      "answer": "前 221 – 前 207 年",
+      "order": 5,
+      "extras": {
+        "都城": "咸阳",
+        "创立者": "秦始皇",
+        "年数": "15"
+      },
+      "imageUrl": "🗡️"
+    },
+    {
+      "id": "dynasties-china-6",
+      "question": "西汉",
+      "answer": "前 202 – 8 年",
+      "order": 6,
+      "extras": {
+        "都城": "长安",
+        "创立者": "刘邦",
+        "年数": "210"
+      },
+      "imageUrl": "🐫"
+    },
+    {
+      "id": "dynasties-china-7",
+      "question": "东汉",
+      "answer": "25 – 220 年",
+      "order": 7,
+      "extras": {
+        "都城": "洛阳",
+        "创立者": "刘秀",
+        "年数": "196"
+      },
+      "imageUrl": "🏛️"
+    },
+    {
+      "id": "dynasties-china-8",
+      "question": "三国",
+      "answer": "220 – 280 年",
+      "order": 8,
+      "extras": {
+        "都城": "洛阳·建业·成都",
+        "创立者": "曹魏·孙吴·蜀汉",
+        "年数": "60"
+      },
+      "imageUrl": "⚔️"
+    },
+    {
+      "id": "dynasties-china-9",
+      "question": "西晋",
+      "answer": "265 – 316 年",
+      "order": 9,
+      "extras": {
+        "都城": "洛阳",
+        "创立者": "司马炎",
+        "年数": "51"
+      },
+      "imageUrl": "📖"
+    },
+    {
+      "id": "dynasties-china-10",
+      "question": "东晋与南北朝",
+      "answer": "317 – 589 年",
+      "order": 10,
+      "extras": {
+        "都城": "建康",
+        "创立者": "司马睿",
+        "年数": "272"
+      },
+      "imageUrl": "🚣"
+    },
+    {
+      "id": "dynasties-china-11",
+      "question": "隋",
+      "answer": "581 – 618 年",
+      "order": 11,
+      "extras": {
+        "都城": "大兴(长安)",
+        "创立者": "杨坚",
+        "年数": "37"
+      },
+      "imageUrl": "🛶"
+    },
+    {
+      "id": "dynasties-china-12",
+      "question": "唐",
+      "answer": "618 – 907 年",
+      "order": 12,
+      "extras": {
+        "都城": "长安",
+        "创立者": "李渊",
+        "年数": "289"
+      },
+      "imageUrl": "🏯"
+    },
+    {
+      "id": "dynasties-china-13",
+      "question": "五代十国",
+      "answer": "907 – 960 年",
+      "order": 13,
+      "extras": {
+        "都城": "开封",
+        "创立者": "朱温(后梁)",
+        "年数": "53"
+      },
+      "imageUrl": "🧭"
+    },
+    {
+      "id": "dynasties-china-14",
+      "question": "北宋",
+      "answer": "960 – 1127 年",
+      "order": 14,
+      "extras": {
+        "都城": "东京汴梁(开封)",
+        "创立者": "赵匡胤",
+        "年数": "167"
+      },
+      "imageUrl": "🎨"
+    },
+    {
+      "id": "dynasties-china-15",
+      "question": "南宋",
+      "answer": "1127 – 1279 年",
+      "order": 15,
+      "extras": {
+        "都城": "临安(杭州)",
+        "创立者": "赵构",
+        "年数": "152"
+      },
+      "imageUrl": "🏹"
+    },
+    {
+      "id": "dynasties-china-16",
+      "question": "元",
+      "answer": "1271 – 1368 年",
+      "order": 16,
+      "extras": {
+        "都城": "大都(北京)",
+        "创立者": "忽必烈",
+        "年数": "97"
+      },
+      "imageUrl": "🐎"
+    },
+    {
+      "id": "dynasties-china-17",
+      "question": "明",
+      "answer": "1368 – 1644 年",
+      "order": 17,
+      "extras": {
+        "都城": "南京后迁北京",
+        "创立者": "朱元璋",
+        "年数": "276"
+      },
+      "imageUrl": "🏰"
+    },
+    {
+      "id": "dynasties-china-18",
+      "question": "清",
+      "answer": "1636 – 1912 年",
+      "order": 18,
+      "extras": {
+        "都城": "北京",
+        "创立者": "皇太极(入关为顺治)",
+        "年数": "276"
+      },
+      "imageUrl": "🏮"
+    }
+  ]
+}

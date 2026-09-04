@@ -1,0 +1,168 @@
+{
+  "id": "earthly-branches-12",
+  "name": "十二地支",
+  "description": "十二地支及其时辰时段、生肖、五行、阴阳与方位",
+  "ordered": true,
+  "usableAsPeg": true,
+  "mnemonics": [
+    "子丑寅卯辰巳 午未申酉戌亥"
+  ],
+  "items": [
+    {
+      "id": "earthly-branches-12-1",
+      "question": "子",
+      "answer": "子时：23:00–01:00，夜半",
+      "order": 1,
+      "extras": {
+        "生肖": "鼠",
+        "五行": "水",
+        "阴阳": "阳",
+        "方位": "北"
+      },
+      "imageUrl": "🐭"
+    },
+    {
+      "id": "earthly-branches-12-2",
+      "question": "丑",
+      "answer": "丑时：01:00–03:00，鸡鸣",
+      "order": 2,
+      "extras": {
+        "生肖": "牛",
+        "五行": "土",
+        "阴阳": "阴",
+        "方位": "东北"
+      },
+      "imageUrl": "🐂"
+    },
+    {
+      "id": "earthly-branches-12-3",
+      "question": "寅",
+      "answer": "寅时：03:00–05:00，平旦",
+      "order": 3,
+      "extras": {
+        "生肖": "虎",
+        "五行": "木",
+        "阴阳": "阳",
+        "方位": "东北"
+      },
+      "imageUrl": "🐯"
+    },
+    {
+      "id": "earthly-branches-12-4",
+      "question": "卯",
+      "answer": "卯时：05:00–07:00，日出",
+      "order": 4,
+      "extras": {
+        "生肖": "兔",
+        "五行": "木",
+        "阴阳": "阴",
+        "方位": "东"
+      },
+      "imageUrl": "🐰"
+    },
+    {
+      "id": "earthly-branches-12-5",
+      "question": "辰",
+      "answer": "辰时：07:00–09:00，食时",
+      "order": 5,
+      "extras": {
+        "生肖": "龙",
+        "五行": "土",
+        "阴阳": "阳",
+        "方位": "东南"
+      },
+      "imageUrl": "🐲"
+    },
+    {
+      "id": "earthly-branches-12-6",
+      "question": "巳",
+      "answer": "巳时：09:00–11:00，隅中",
+      "order": 6,
+      "extras": {
+        "生肖": "蛇",
+        "五行": "火",
+        "阴阳": "阴",
+        "方位": "东南"
+      },
+      "imageUrl": "🐍"
+    },
+    {
+      "id": "earthly-branches-12-7",
+      "question": "午",
+      "answer": "午时：11:00–13:00，日中",
+      "order": 7,
+      "extras": {
+        "生肖": "马",
+        "五行": "火",
+        "阴阳": "阳",
+        "方位": "南"
+      },
+      "imageUrl": "🐴"
+    },
+    {
+      "id": "earthly-branches-12-8",
+      "question": "未",
+      "answer": "未时：13:00–15:00，日昳",
+      "order": 8,
+      "extras": {
+        "生肖": "羊",
+        "五行": "土",
+        "阴阳": "阴",
+        "方位": "西南"
+      },
+      "imageUrl": "🐑"
+    },
+    {
+      "id": "earthly-branches-12-9",
+      "question": "申",
+      "answer": "申时：15:00–17:00，日入",
+      "order": 9,
+      "extras": {
+        "生肖": "猴",
+        "五行": "金",
+        "阴阳": "阳",
+        "方位": "西南"
+      },
+      "imageUrl": "🐵"
+    },
+    {
+      "id": "earthly-branches-12-10",
+      "question": "酉",
+      "answer": "酉时：17:00–19:00，昏时",
+      "order": 10,
+      "extras": {
+        "生肖": "鸡",
+        "五行": "金",
+        "阴阳": "阴",
+        "方位": "西"
+      },
+      "imageUrl": "🐔"
+    },
+    {
+      "id": "earthly-branches-12-11",
+      "question": "戌",
+      "answer": "戌时：19:00–21:00，黄昏",
+      "order": 11,
+      "extras": {
+        "生肖": "狗",
+        "五行": "土",
+        "阴阳": "阳",
+        "方位": "西北"
+      },
+      "imageUrl": "🐶"
+    },
+    {
+      "id": "earthly-branches-12-12",
+      "question": "亥",
+      "answer": "亥时：21:00–23:00，人定",
+      "order": 12,
+      "extras": {
+        "生肖": "猪",
+        "五行": "水",
+        "阴阳": "阴",
+        "方位": "西北"
+      },
+      "imageUrl": "🐷"
+    }
+  ]
+}

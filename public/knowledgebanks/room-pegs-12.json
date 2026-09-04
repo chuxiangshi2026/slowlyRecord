@@ -1,0 +1,93 @@
+{
+  "id": "room-pegs-12",
+  "name": "房间桩",
+  "description": "典型户型 12 个房间，按进出动线排列用作记忆桩",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "room-pegs-12-1",
+      "question": "玄关",
+      "answer": "第 1 桩：进门换鞋的地方，想象把东西挂在门口的鞋柜上",
+      "order": 1,
+      "imageUrl": "🚪"
+    },
+    {
+      "id": "room-pegs-12-2",
+      "question": "客厅",
+      "answer": "第 2 桩：沙发茶几是全家中心，想象把东西摆在沙发上",
+      "order": 2,
+      "imageUrl": "🛋️"
+    },
+    {
+      "id": "room-pegs-12-3",
+      "question": "餐厅",
+      "answer": "第 3 桩：餐桌餐椅，想象把东西摆在餐桌中央",
+      "order": 3,
+      "imageUrl": "🍽️"
+    },
+    {
+      "id": "room-pegs-12-4",
+      "question": "厨房",
+      "answer": "第 4 桩：灶台与橱柜，想象把东西塞进橱柜",
+      "order": 4,
+      "imageUrl": "🍳"
+    },
+    {
+      "id": "room-pegs-12-5",
+      "question": "书房",
+      "answer": "第 5 桩：书桌与书架，想象把东西搁在书桌上",
+      "order": 5,
+      "imageUrl": "📚"
+    },
+    {
+      "id": "room-pegs-12-6",
+      "question": "主卧",
+      "answer": "第 6 桩：床头与床头柜，想象把东西放在床头",
+      "order": 6,
+      "imageUrl": "🛏️"
+    },
+    {
+      "id": "room-pegs-12-7",
+      "question": "次卧",
+      "answer": "第 7 桩：小床与玩具，想象把东西丢进玩具箱",
+      "order": 7,
+      "imageUrl": "🧸"
+    },
+    {
+      "id": "room-pegs-12-8",
+      "question": "阳台",
+      "answer": "第 8 桩：晾晒与绿植，想象把东西挂在晾衣杆上",
+      "order": 8,
+      "imageUrl": "🌿"
+    },
+    {
+      "id": "room-pegs-12-9",
+      "question": "卫生间",
+      "answer": "第 9 桩：马桶与花洒，想象把东西搭在毛巾架上",
+      "order": 9,
+      "imageUrl": "🚿"
+    },
+    {
+      "id": "room-pegs-12-10",
+      "question": "洗衣房",
+      "answer": "第 10 桩：洗衣机与晾衣架，想象把东西放进洗衣篮",
+      "order": 10,
+      "imageUrl": "🧺"
+    },
+    {
+      "id": "room-pegs-12-11",
+      "question": "储物间",
+      "answer": "第 11 桩：收纳柜与纸箱，想象把东西打包装箱",
+      "order": 11,
+      "imageUrl": "📦"
+    },
+    {
+      "id": "room-pegs-12-12",
+      "question": "车库",
+      "answer": "第 12 桩：停车位，想象把东西塞进汽车后备箱",
+      "order": 12,
+      "imageUrl": "🚗"
+    }
+  ]
+}
