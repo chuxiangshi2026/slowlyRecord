@@ -1,16 +1,16 @@
 {
   "name": "中华诗词文章库",
-  "version": "2.0",
+  "version": "2.1",
   "description": "按朝代分类的经典诗词文章合集。中文系研究生参考选篇。",
-  "totalCount": 380,
-  "lastUpdated": "2026-07-01",
+  "totalCount": 429,
+  "lastUpdated": "2026-09-04",
   "dynasties": [
     {
       "code": "xianqin",
       "name": "先秦",
       "period": "前1046-前221",
       "file": "xianqin.json",
-      "count": 12,
+      "count": 20,
       "description": "诗经、楚辞、诸子百家"
     },
     {
@@ -26,7 +26,7 @@
       "name": "魏晋南北朝",
       "period": "220-589",
       "file": "weijin.json",
-      "count": 14,
+      "count": 22,
       "description": "建安文学、陶渊明、南北朝民歌"
     },
     {
@@ -42,7 +42,7 @@
       "name": "唐",
       "period": "618-907",
       "file": "tang.json",
-      "count": 184,
+      "count": 204,
       "description": "唐诗"
     },
     {
@@ -50,7 +50,7 @@
       "name": "宋",
       "period": "960-1279",
       "file": "song.json",
-      "count": 81,
+      "count": 96,
       "description": "宋词、宋诗、古文"
     },
     {

@@ -4,9 +4,9 @@
     "name": "宋词",
     "period": "960-1279",
     "description": "宋代文学的代表，词牌丰富，意境深远。收录中高考必背篇目及经典名篇",
-    "count": 81,
-    "version": "2.0",
-    "lastUpdated": "2026-07-01"
+    "count": 96,
+    "version": "2.1",
+    "lastUpdated": "2026-09-04"
   },
   "poems": [
     {
@@ -1624,6 +1624,282 @@
       "dynasty": "宋",
       "dynastyCode": "song",
       "wordCount": 48
+    },
+    {
+      "id": "song_084",
+      "title": "水龙吟·登建康赏心亭",
+      "author": "辛弃疾",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "楚天千里清秋，水随天去秋无际。\n遥岑远目，献愁供恨，玉簪螺髻。\n落日楼头，断鸿声里，江南游子。\n把吴钩看了，栏杆拍遍，无人会，登临意。\n\n休说鲈鱼堪脍，尽西风，季鹰归未？\n求田问舍，怕应羞见，刘郎才气。\n可惜流年，忧愁风雨，树犹如此！\n倩何人唤取，红巾翠袖，揾英雄泪。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "登临",
+        "名篇"
+      ],
+      "wordCount": 134,
+      "source": "《稼轩长短句》",
+      "location": "南京",
+      "year": 1173
+    },
+    {
+      "id": "song_085",
+      "title": "摸鱼儿·更能消除几番风雨",
+      "author": "辛弃疾",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "更能消、几番风雨，匆匆春又归去。\n惜春长怕花开早，何况落红无数。\n春且住，见说道，天涯芳草无归路。\n怨春不语。算只有殷勤，画檐蛛网，尽日惹飞絮。\n\n长门事，准拟佳期又误。\n蛾眉曾有人妒。\n千金纵买相如赋，脉脉此情谁诉？\n君莫舞，君不见、玉环飞燕皆尘土！\n闲愁最苦。休去倚危栏，斜阳正在，烟柳断肠处。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "咏春",
+        "名篇"
+      ],
+      "wordCount": 149,
+      "source": "《稼轩长短句》",
+      "location": "绍兴",
+      "year": 1180
+    },
+    {
+      "id": "song_086",
+      "title": "清平乐·春归何处",
+      "author": "黄庭坚",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "春归何处？寂寞无行路。\n若有人知春去处，唤取归来同住。\n春无踪迹谁知？除非问取黄鹂。\n百啭无人能解，因风飞过蔷薇。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "咏春",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 57,
+      "source": "《山谷词》",
+      "year": 1115
+    },
+    {
+      "id": "song_087",
+      "title": "卜算子·黄州定慧院寓居作",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "缺月挂疏桐，漏断人初静。\n谁见幽人独往来，缥缈孤鸿影。\n惊起却回头，有恨无人省。\n拣尽寒枝不肯栖，寂寞沙洲冷。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "咏物",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 55,
+      "source": "《东坡乐府》",
+      "location": "黄冈",
+      "year": 1082
+    },
+    {
+      "id": "song_088",
+      "title": "西江月·世事一场大梦",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "世事一场大梦，人生几度秋凉。\n夜来风叶已鸣廊，看取眉头鬓上。\n酒贱常愁客少，月明多被云妨。\n中秋谁与共孤光，把盏凄然北望。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "中秋",
+        "名篇"
+      ],
+      "wordCount": 61,
+      "source": "《东坡乐府》",
+      "location": "黄冈",
+      "year": 1094
+    },
+    {
+      "id": "song_089",
+      "title": "临江仙·夜饮东坡醒复醉",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "夜饮东坡醒复醉，归来仿佛三更。\n家童鼻息已雷鸣。\n敲门都不应，倚杖听江声。\n\n长恨此身非我有，何时忘却营营？\n夜阑风静縠纹平。\n小舟从此逝，江海寄余生。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "抒怀",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 76,
+      "source": "《东坡乐府》",
+      "location": "黄冈",
+      "year": 1082
+    },
+    {
+      "id": "song_090",
+      "title": "临江仙·送钱穆父",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "一别都门三改火，天涯踏尽红尘。\n依然一笑作春温。\n无波真古井，有节是秋筠。\n\n惆怅孤帆连夜发，送行淡月微云。\n尊前不用翠眉颦。\n人生如逆旅，我亦是行人。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "送别",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 76,
+      "source": "《东坡乐府》",
+      "location": "杭州",
+      "year": 1097
+    },
+    {
+      "id": "song_091",
+      "title": "浣溪沙·细雨斜风作晓寒",
+      "author": "苏轼",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "细雨斜风作晓寒，淡烟疏柳媚晴滩。\n入淮清洛渐漫漫。\n雪沫乳花浮午盏，蓼茸蒿笋试春盘。\n人间有味是清欢。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "咏物",
+        "名篇"
+      ],
+      "wordCount": 51,
+      "source": "《东坡乐府》",
+      "year": 1082
+    },
+    {
+      "id": "song_092",
+      "title": "醉花阴·薄雾浓云愁永昼",
+      "author": "李清照",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "薄雾浓云愁永昼，瑞脑消金兽。\n佳节又重阳，玉枕纱厨，半夜凉初透。\n东篱把酒黄昏后，有暗香盈袖。\n莫道不销魂，帘卷西风，人比黄花瘦。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "重阳",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 65,
+      "source": "《漱玉词》",
+      "location": "济南",
+      "year": 1115
+    },
+    {
+      "id": "song_093",
+      "title": "点绛唇·蹴罢秋千",
+      "author": "李清照",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "蹴罢秋千，起来慵整纤纤手。\n露浓花瘦，薄汗轻衣透。\n见客入来，袜刬金钗溜。\n和羞走，倚门回首，却把青梅嗅。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "闺情",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 53,
+      "source": "《漱玉词》",
+      "location": "济南",
+      "year": 1110
+    },
+    {
+      "id": "song_094",
+      "title": "清平乐·年年雪里",
+      "author": "李清照",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "年年雪里，常插梅花醉。\n挼尽梅花无好意，赢得满衣清泪。\n今年海角天涯，萧萧两鬓生华。\n看取晚来风势，故应难看梅花。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "咏物",
+        "名篇"
+      ],
+      "wordCount": 57,
+      "source": "《漱玉词》",
+      "year": 1129
+    },
+    {
+      "id": "song_095",
+      "title": "八声甘州·对潇潇暮雨洒江天",
+      "author": "柳永",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "对潇潇暮雨洒江天，一番洗清秋。\n渐霜风凄紧，关河冷落，残照当楼。\n是处红衰翠减，苒苒物华休。\n惟有长江水，无语东流。\n\n不忍登高临远，望故乡渺邈，归思难收。\n叹年来踪迹，何事苦淹留？\n想佳人、妆楼颙望，误几回、天际识归舟。\n争知我，倚阑干处，正恁凝愁。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "思乡",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 126,
+      "source": "《乐章集》",
+      "location": "杭州",
+      "year": 1015
+    },
+    {
+      "id": "song_096",
+      "title": "踏莎行·候馆梅残",
+      "author": "欧阳修",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "候馆梅残，溪桥柳细。\n草薰风暖摇征辔。\n离愁渐远渐无穷，迢迢不断如春水。\n寸寸柔肠，盈盈粉泪。\n楼高莫近危阑倚。\n平芜尽处是春山，行人更在春山外。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "思乡",
+        "名篇"
+      ],
+      "wordCount": 73,
+      "source": "《六一词》",
+      "location": "开封",
+      "year": 1026
+    },
+    {
+      "id": "song_097",
+      "title": "元日",
+      "author": "王安石",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "爆竹声中一岁除，春风送暖入屠苏。\n千门万户曈曈日，总把新桃换旧符。",
+      "contentType": "poetry",
+      "tags": [
+        "七言绝句",
+        "咏节令",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 33,
+      "source": "《王临川集》",
+      "location": "开封",
+      "year": 1059
+    },
+    {
+      "id": "song_098",
+      "title": "采桑子·轻舟短棹西湖好",
+      "author": "欧阳修",
+      "dynasty": "宋",
+      "dynastyCode": "song",
+      "content": "轻舟短棹西湖好，绿水逶迤。芳草长堤。隐隐笙歌处处随。\n无风水面琉璃滑，不觉船移。微动涟漪。惊起沙禽掠水飞。",
+      "contentType": "ci",
+      "tags": [
+        "宋词",
+        "写景",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 53,
+      "source": "《六一词》",
+      "location": "杭州",
+      "year": 1038
     }
   ]
 }

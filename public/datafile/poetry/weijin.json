@@ -4,9 +4,9 @@
     "name": "魏晋南北朝",
     "period": "220-589",
     "description": "建安文学、陶渊明、南北朝民歌",
-    "count": 14,
-    "version": "2.0",
-    "lastUpdated": "2026-07-01"
+    "count": 22,
+    "version": "2.1",
+    "lastUpdated": "2026-09-04"
   },
   "poems": [
     {
@@ -271,6 +271,145 @@
       "location": "江南",
       "wordCount": 192,
       "year": 500
+    },
+    {
+      "id": "weijin_015",
+      "title": "七哀（节选）",
+      "author": "王粲",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "出门无所见，白骨蔽平原。\n路有饥妇人，抱子求索食。",
+      "contentType": "poetry",
+      "tags": [
+        "五言古诗",
+        "怀古"
+      ],
+      "wordCount": 25,
+      "source": "《艺文类聚》",
+      "year": 192
+    },
+    {
+      "id": "weijin_016",
+      "title": "拟行路难·其四",
+      "author": "鲍照",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "泻水置平地，各自东西南北流。\n人生亦有命，安能行叹复坐愁？\n酌酒以自宽，举杯断绝歌路难。\n心非木石岂无感？吞声踯躅不敢言。",
+      "contentType": "poetry",
+      "tags": [
+        "五言古诗",
+        "抒怀",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 61,
+      "source": "《乐府诗集》",
+      "year": 460
+    },
+    {
+      "id": "weijin_017",
+      "title": "读山海经·其一",
+      "author": "陶渊明",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "孟夏草木长，绕屋树扶疏。\n众鸟欣有托，吾亦爱吾庐。\n既耕亦已种，时还读我书。\n穷巷隔深辙，颇回故人车。\n欢然酌春酒，摘我园中蔬。\n微雨从东来，好风与之俱。\n泛览周王传，流观山海图。\n俯仰终宇宙，不乐复何如？",
+      "contentType": "poetry",
+      "tags": [
+        "五言古诗",
+        "田园",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 103,
+      "source": "《陶渊明集》",
+      "year": 405
+    },
+    {
+      "id": "weijin_018",
+      "title": "归园田居·其三",
+      "author": "陶渊明",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "种豆南山下，草盛豆苗稀。\n晨兴理荒秽，带月荷锄归。\n道狭草木长，夕露沾我衣。\n衣沾不足惜，但使愿无违。",
+      "contentType": "poetry",
+      "tags": [
+        "五言古诗",
+        "田园",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 51,
+      "source": "《陶渊明集》",
+      "year": 405
+    },
+    {
+      "id": "weijin_019",
+      "title": "世说新语·方正（节选）",
+      "author": "刘义庆",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "陈太丘与友期行，期日中。日中不至，太丘舍去，去后乃至。\n元方时年七岁，门外戏。客问元方：『父在不？』答曰：『待君久不至，已去。』",
+      "contentType": "article",
+      "tags": [
+        "古文",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 64,
+      "source": "《世说新语·方正》",
+      "year": 430
+    },
+    {
+      "id": "weijin_020",
+      "title": "出师表（节选）",
+      "author": "诸葛亮",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "臣本布衣，躬耕于南阳，苟全性命于乱世，不求闻达于诸侯。\n先帝不以臣卑鄙，猥自枉屈，三顾臣于草庐之中，咨臣以当世之事，由是感激，遂许先帝以驱驰。\n后值倾覆，受任于败军之际，奉命于危难之间，尔来二十有一年矣。",
+      "contentType": "article",
+      "tags": [
+        "古文",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 102,
+      "source": "《三国志·诸葛亮传》",
+      "location": "成都",
+      "year": 227
+    },
+    {
+      "id": "weijin_021",
+      "title": "诫子书",
+      "author": "诸葛亮",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "夫君子之行，静以修身，俭以养德。\n非淡泊无以明志，非宁静无以致远。\n夫学须静也，才须学也，非学无以广才，非志无以成学。\n淫慢则不能励精，险躁则不能治性。\n年与时驰，意与日去，遂成枯落，多不接世，悲守穷庐，将复何及！",
+      "contentType": "prose",
+      "tags": [
+        "古文",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 107,
+      "source": "《诸葛亮集》",
+      "year": 234
+    },
+    {
+      "id": "weijin_022",
+      "title": "洛神赋（节选）",
+      "author": "曹植",
+      "dynasty": "魏晋南北朝",
+      "dynastyCode": "weijin",
+      "content": "余告之曰：『其形也，翩若惊鸿，婉若游龙。\n荣曜秋菊，华茂春松。\n仿佛兮若轻云之蔽月，飘飖兮若流风之回雪。』",
+      "contentType": "fu",
+      "tags": [
+        "赋",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 53,
+      "source": "《文选》",
+      "year": 222
     }
   ]
 }

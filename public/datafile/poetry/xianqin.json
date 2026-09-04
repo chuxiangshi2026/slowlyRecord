@@ -4,9 +4,9 @@
     "name": "先秦",
     "period": "前1046-前221",
     "description": "诗经、楚辞、诸子百家",
-    "count": 12,
-    "version": "2.0",
-    "lastUpdated": "2026-07-01"
+    "count": 20,
+    "version": "2.1",
+    "lastUpdated": "2026-09-04"
   },
   "poems": [
     {
@@ -233,6 +233,136 @@
       "location": "楚国",
       "wordCount": 130,
       "year": -300
+    },
+    {
+      "id": "xianqin_013",
+      "title": "击鼓（节选）",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "击鼓其镗，踊跃用兵。\n土国城漕，我独南行。\n从孙子仲，平陈与宋。\n不我以归，忧心有忡。\n\n死生契阔，与子成说。\n执子之手，与子偕老。",
+      "contentType": "poetry",
+      "tags": [
+        "诗经",
+        "必背",
+        "名篇"
+      ],
+      "wordCount": 66,
+      "source": "《诗经·邶风》",
+      "year": -800
+    },
+    {
+      "id": "xianqin_014",
+      "title": "东山（节选）",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "我徂东山，慆慆不归。\n我来自东，零雨其濛。\n我匪愆期，不如归，不如归。",
+      "contentType": "poetry",
+      "tags": [
+        "诗经"
+      ],
+      "wordCount": 35,
+      "source": "《诗经·豳风》",
+      "year": -800
+    },
+    {
+      "id": "xianqin_015",
+      "title": "燕燕（节选）",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "燕燕于飞，差池其羽。\n之子于归，远送于野。\n瞻望弗及，泣涕如雨。",
+      "contentType": "poetry",
+      "tags": [
+        "诗经",
+        "送别"
+      ],
+      "wordCount": 32,
+      "source": "《诗经·邶风》",
+      "year": -800
+    },
+    {
+      "id": "xianqin_016",
+      "title": "相鼠",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "相鼠有皮，人而无仪！\n人而无仪，不死何为？\n相鼠有齿，人而无止！\n人而无止，不死何俟？\n相鼠有体，人而无礼！\n人而无礼，胡不遄死？",
+      "contentType": "poetry",
+      "tags": [
+        "诗经",
+        "讽刺"
+      ],
+      "wordCount": 65,
+      "source": "《诗经·邶风》",
+      "year": -800
+    },
+    {
+      "id": "xianqin_017",
+      "title": "鹿鸣（节选）",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "呦呦鹿鸣，食野之苹。\n我有嘉宾，鼓瑟吹笙。\n吹笙鼓簧，承筐是将。\n人之好我，示我周行。",
+      "contentType": "poetry",
+      "tags": [
+        "诗经",
+        "必背",
+        "宴饮"
+      ],
+      "wordCount": 43,
+      "source": "《诗经·小雅》",
+      "year": -800
+    },
+    {
+      "id": "xianqin_018",
+      "title": "月出",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "月出皎兮，佼人僚兮。\n舒窈纠兮，劳心悄兮。\n月出皓兮，佼人懰兮。\n舒忧受兮，劳心慅兮。\n月出照兮，佼人燎兮。\n舒夭绍兮，劳心惨兮。",
+      "contentType": "poetry",
+      "tags": [
+        "诗经",
+        "名篇",
+        "怀人"
+      ],
+      "wordCount": 65,
+      "source": "《诗经·陈风》",
+      "year": -800
+    },
+    {
+      "id": "xianqin_019",
+      "title": "黍离（节选）",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "彼黍离离，彼稷之苗。\n行迈靡靡，中心摇摇。\n知我者，谓我心忧；不知我者，谓我何求。\n悠悠苍天，此何人哉？",
+      "contentType": "poetry",
+      "tags": [
+        "诗经",
+        "怀古"
+      ],
+      "wordCount": 52,
+      "source": "《诗经·王风》",
+      "year": -750
+    },
+    {
+      "id": "xianqin_020",
+      "title": "文王（节选）",
+      "author": "佚名",
+      "dynasty": "先秦",
+      "dynastyCode": "xianqin",
+      "content": "文王在上，于昭于天。\n周虽旧邦，其命维新。\n有周不显，明命不已。",
+      "contentType": "prose",
+      "tags": [
+        "诗经",
+        "名篇"
+      ],
+      "wordCount": 32,
+      "source": "《诗经·大雅》",
+      "year": -1000
     }
   ]
 }
