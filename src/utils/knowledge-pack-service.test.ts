@@ -55,8 +55,8 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 26 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(26)
+    it('应包含 29 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(29)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -87,13 +87,16 @@ describe('knowledge-pack-service', () => {
 
     it('listKnowledgePacks 按 category 过滤', () => {
       const math = listKnowledgePacks('math')
-      expect(math).toHaveLength(8)
+      expect(math).toHaveLength(11)
       expect(math.map(p => p.id).sort()).toEqual([
         'chemistry-formulas',
         'common-units',
         'elements',
+        'math-calculus',
         'math-formulas',
         'math-formulas-2',
+        'math-linalg',
+        'math-probability',
         'multiplication-19x19',
         'multiplication-9x9',
         'physics-formulas',
@@ -250,9 +253,9 @@ describe('knowledge-pack-service', () => {
       // 从未声明过 version 的包，追加 imageUrl 后升到 2
       expect(getPackVersion('number-pegs-12')).toBe(2)
       expect(getPackVersion('home-route-12')).toBe(2)
-      // math-formulas 追加函数类条目后仍为 2
-      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(2)
-      expect(getPackVersion('math-formulas')).toBe(2)
+      // math-formulas 追加函数/方程条目与图像映射 → 4
+      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(4)
+      expect(getPackVersion('math-formulas')).toBe(4)
       // 其余包（未加口诀等结构变更）仍为 1
       expect(getPackVersion('multiplication-9x9')).toBe(1)
       // constellations-12 追加星座符号 emoji imageUrl → 2
@@ -367,9 +370,9 @@ describe('knowledge-pack-service', () => {
       const result = await fetchKnowledgePack('math-formulas')
       expect(fetchMock).toHaveBeenCalled()
       expect(result.items).toHaveLength(24)
-      // 新缓存写入 version 2
+      // 新缓存写入 version 4
       const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-math-formulas')!)
-      expect(cached.version).toBe(2)
+      expect(cached.version).toBe(4)
     })
 
     it('无 version 字段的老缓存在包升级后同样失效', async () => {

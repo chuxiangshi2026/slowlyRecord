@@ -1,0 +1,23 @@
+{
+  "id": "math-linalg",
+  "name": "高等数学·线性代数基础",
+  "description": "矩阵、行列式、向量与特征值入门 14 条",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {"id": "math-linalg-1", "question": "矩阵的加法", "answer": "同型矩阵对应元素相加：C=A+B 即 cᵢⱼ=aᵢⱼ+bᵢⱼ", "extras": {"说明": "不同型的矩阵不能相加"}},
+    {"id": "math-linalg-2", "question": "矩阵的乘法", "answer": "(AB)ᵢⱼ=Σₖ aᵢₖbₖⱼ：第 i 行点乘第 j 列", "extras": {"说明": "一般 AB≠BA，不满足交换律"}},
+    {"id": "math-linalg-3", "question": "矩阵的转置", "answer": "(Aᵀ)ᵢⱼ=aⱼᵢ，行列互换", "extras": {"说明": "(AB)ᵀ=BᵀAᵀ，顺序要反过来"}},
+    {"id": "math-linalg-4", "question": "单位矩阵与逆矩阵", "answer": "I 为对角线全 1 的矩阵；若 AB=BA=I，则 B=A⁻¹", "extras": {"说明": "只有方阵才谈逆矩阵"}},
+    {"id": "math-linalg-5", "question": "二阶行列式", "answer": "|a b; c d| = ad-bc", "extras": {"说明": "主对角线乘积减副对角线乘积"}},
+    {"id": "math-linalg-6", "question": "行列式的几何意义", "answer": "二阶行列式 |ad-bc| = 两列向量张成的平行四边形面积", "extras": {"说明": "三阶对应平行六面体有向体积"}},
+    {"id": "math-linalg-7", "question": "矩阵可逆的判定", "answer": "A 可逆 ⟺ det(A)≠0", "extras": {"说明": "det(A)=0 时矩阵把空间压扁，信息丢失"}},
+    {"id": "math-linalg-8", "question": "向量的线性运算", "answer": "加减：对应分量相加减；数乘：各分量同乘一个数", "extras": {"说明": "几何上是箭头平移拼接与缩放"}},
+    {"id": "math-linalg-9", "question": "向量的数量积", "answer": "a·b=|a||b|cosθ=x₁x₂+y₁y₂", "extras": {"说明": "a·b=0 ⟺ 两向量垂直"}},
+    {"id": "math-linalg-10", "question": "向量的模长", "answer": "|a|=√(x²+y²)，三维再加 z²", "extras": {"说明": "就是勾股定理"}},
+    {"id": "math-linalg-11", "question": "线性相关与线性无关", "answer": "存在不全为 0 的系数使 k₁a₁+…+kₙaₙ=0 ⟺ 线性相关", "extras": {"说明": "相关 = 有向量能被其余向量表示出来"}},
+    {"id": "math-linalg-12", "question": "矩阵的秩", "answer": "r(A) = 矩阵中线性无关行（列）的最大个数", "extras": {"说明": "秩 = 变换后空间的维度"}},
+    {"id": "math-linalg-13", "question": "特征值与特征向量", "answer": "Av=λv：变换后方向不变的向量 v 是特征向量，λ 是特征值", "extras": {"说明": "求法：解特征方程 det(A-λI)=0"}},
+    {"id": "math-linalg-14", "question": "线性方程组的矩阵形式", "answer": "Ax=b；有唯一解 ⟺ r(A)=未知数个数", "extras": {"说明": "几何上就是直线/平面的交点问题"}}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "math-probability",
+  "name": "高等数学·概率统计基础",
+  "description": "排列组合、概率公式与常见分布入门 15 条",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {"id": "math-probability-1", "question": "排列数", "answer": "A(n,k)=n!/(n-k)!：从 n 个取 k 个排顺序", "extras": {"说明": "顺序有关用排列"}},
+    {"id": "math-probability-2", "question": "组合数", "answer": "C(n,k)=n!/[k!(n-k)!]：从 n 个取 k 个不计顺序", "extras": {"说明": "顺序无关用组合；C(n,k)=C(n,n-k)"}},
+    {"id": "math-probability-3", "question": "加法原理与乘法原理", "answer": "分类用加法，分步用乘法", "extras": {"说明": "计数问题的两条基本原理"}},
+    {"id": "math-probability-4", "question": "古典概型", "answer": "P(A)=A 包含的等可能结果数 ÷ 总结果数", "extras": {"说明": "前提：所有结果等可能且有限"}},
+    {"id": "math-probability-5", "question": "几何概型", "answer": "P(A)=A 的度量（长度/面积/体积）÷ 总度量", "extras": {"说明": "结果无限多时用量度代替计数"}},
+    {"id": "math-probability-6", "question": "条件概率", "answer": "P(A|B)=P(AB)/P(B)", "extras": {"说明": "在 B 已发生的条件下 A 的概率"}},
+    {"id": "math-probability-7", "question": "全概率公式", "answer": "P(A)=Σᵢ P(Bᵢ)P(A|Bᵢ)", "extras": {"说明": "Bᵢ 是对样本空间的一个划分"}},
+    {"id": "math-probability-8", "question": "贝叶斯公式", "answer": "P(Bᵢ|A)=P(Bᵢ)P(A|Bᵢ) ÷ Σⱼ P(Bⱼ)P(A|Bⱼ)", "extras": {"说明": "由结果反推原因的概率"}},
+    {"id": "math-probability-9", "question": "事件的独立性", "answer": "A、B 独立 ⟺ P(AB)=P(A)P(B)", "extras": {"说明": "互不影响 ⟺ 联合概率可拆成乘积"}},
+    {"id": "math-probability-10", "question": "数学期望", "answer": "E(X)=Σᵢ xᵢpᵢ：取值按概率加权的平均", "extras": {"说明": "期望是长期平均，不保证单次结果"}},
+    {"id": "math-probability-11", "question": "方差", "answer": "D(X)=E[(X-E(X))²]=E(X²)-[E(X)]²", "extras": {"说明": "衡量波动大小，标准差是方差的平方根"}},
+    {"id": "math-probability-12", "question": "二项分布", "answer": "P(X=k)=C(n,k)pᵏ(1-p)ⁿ⁻ᵏ，记 X~B(n,p)", "extras": {"说明": "n 次独立重复试验中成功 k 次的概率"}},
+    {"id": "math-probability-13", "question": "正态分布", "answer": "N(μ,σ²)，密度 f(x)=1/(σ√(2π))·e^(-(x-μ)²/2σ²)", "extras": {"说明": "约 68%/95%/99.7% 落在 μ±1σ/2σ/3σ 内"}},
+    {"id": "math-probability-14", "question": "大数定律", "answer": "试验次数足够多时，频率稳定在概率附近", "extras": {"说明": "抛硬币次数越多，正面比例越接近 1/2"}},
+    {"id": "math-probability-15", "question": "中心极限定理", "answer": "大量独立随机变量之和近似服从正态分布", "extras": {"说明": "这解释了正态分布为何无处不在"}}
+  ]
+}

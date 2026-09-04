@@ -1,7 +1,7 @@
 {
   "id": "chemistry-formulas",
   "name": "初中化学式与方程式",
-  "description": "初中常见化学式与化学方程式 20 条",
+  "description": "初中常见化学式、化学方程式与计算式 22 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -104,6 +104,22 @@
       "id": "chemistry-formulas-20",
       "question": "一氧化碳还原氧化铁（炼铁原理）",
       "answer": "3CO+Fe₂O₃ →(高温) 2Fe+3CO₂"
+    },
+    {
+      "id": "chemistry-formulas-21",
+      "question": "物质的量浓度",
+      "answer": "c=n/V（mol/L）",
+      "extras": {
+        "说明": "n 为溶质物质的量，V 为溶液体积"
+      }
+    },
+    {
+      "id": "chemistry-formulas-22",
+      "question": "溶质质量分数",
+      "answer": "w=m质/m液×100%",
+      "extras": {
+        "说明": "m液=m质+m剂"
+      }
     }
   ]
 }

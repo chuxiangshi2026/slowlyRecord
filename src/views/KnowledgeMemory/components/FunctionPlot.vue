@@ -1,10 +1,85 @@
 <template>
   <div class="function-plot">
     <div v-if="title" class="plot-title">{{ title }}</div>
-    <div ref="wrapRef" class="plot-wrap" @wheel.prevent="onWheel" @pointerleave="hover = null">
-      <canvas ref="canvasRef" class="plot-canvas" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp" @pointercancel="onPointerUp" />
-      <div v-if="hover" class="plot-tip" :style="tipStyle">
-        ({{ hover.dx.toFixed(2) }}, {{ hover.dy.toFixed(2) }})
+    <div class="plot-row">
+      <div ref="wrapRef" class="plot-wrap" @wheel.prevent="onWheel" @pointerleave="hover = null">
+        <canvas ref="canvasRef" class="plot-canvas" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp" @pointercancel="onPointerUp" />
+        <div v-if="hover" class="plot-tip" :style="tipStyle">
+          ({{ hover.dx.toFixed(2) }}, {{ hover.dy.toFixed(2) }})
+        </div>
+      </div>
+      <!-- 几何联动：图形随动点取值变化（如圆半径 r、正方形边长 a） -->
+      <div v-if="geometry" class="geo-wrap">
+        <canvas ref="geoCanvasRef" class="geo-canvas" />
+        <div class="geo-caption">几何联动</div>
+      </div>
+    </div>
+
+    <!-- 动点控制：输入数值 / 拖动滑块 / 播放动画，观察曲线上点与区域的变化；点击曲线也可取点 -->
+    <div class="probe-bar">
+      <span class="probe-label">{{ xLabel }} =</span>
+      <input
+        v-model.number="probeX"
+        type="number"
+        class="probe-input"
+        :step="sliderStep"
+        @input="stopPlay"
+      />
+      <input
+        v-model.number="probeX"
+        type="range"
+        class="probe-slider"
+        :min="range.xMin"
+        :max="range.xMax"
+        :step="sliderStep"
+        @input="stopPlay"
+      />
+      <button type="button" class="probe-play" :title="playing ? '暂停' : '播放：动点沿曲线移动'" @click="togglePlay">
+        {{ playing ? '⏸' : '▶' }}
+      </button>
+    </div>
+
+    <!-- 函数分析：动点、围成面积、极值、零点、有趣值 -->
+    <div class="plot-analysis">
+      <div v-if="Number.isFinite(probeY)" class="analysis-row">
+        <span class="tag tag-point">动点</span>
+        <span>({{ fmt(probeX) }}, {{ fmt(probeY) }})</span>
+        <template v-if="Number.isFinite(slope)">
+          <span class="sep">·</span>
+          <span>切线斜率（导数）≈ {{ fmt(slope) }}</span>
+        </template>
+        <template v-if="!noArea">
+          <span class="sep">·</span>
+          <span>曲线与 x 轴在 [0, {{ fmt(probeX) }}] 围成的有向面积 ≈ {{ fmt(area) }}</span>
+        </template>
+      </div>
+      <div class="analysis-row">
+        <span class="tag tag-extremum">极值</span>
+        <span v-if="extrema.length === 0" class="muted">当前视野内无极值</span>
+        <span v-for="(e, i) in extrema" :key="i" class="value">
+          {{ e.kind === 'max' ? '极大值' : '极小值' }} {{ fmt(e.y) }}（x = {{ fmt(e.x) }}）{{ i < extrema.length - 1 ? '；' : '' }}
+        </span>
+      </div>
+      <div class="analysis-row">
+        <span class="tag tag-zero">零点</span>
+        <span v-if="zeros.length === 0" class="muted">当前视野内与 x 轴无交点</span>
+        <span v-else class="value">x = {{ zeros.map(fmt).join('，') }}</span>
+        <template v-if="Number.isFinite(yIntercept)">
+          <span class="sep">·</span>
+          <span>y 轴截距 {{ fmt(yIntercept) }}</span>
+        </template>
+      </div>
+      <div v-if="fn2" class="analysis-row">
+        <span class="tag tag-intersection">交点</span>
+        <span v-if="intersections.length === 0" class="muted">当前视野内两曲线无交点（方程组无解）</span>
+        <span v-for="(x, i) in intersections" :key="i" class="value">
+          ({{ fmt(x) }}, {{ fmt(fn(x)) }}){{ i < intersections.length - 1 ? '；' : '' }}
+        </span>
+        <span v-if="intersections.length" class="muted">← f(x)=g(x) 的解</span>
+      </div>
+      <div v-for="(note, i) in notes" :key="i" class="analysis-row">
+        <span class="tag tag-note">有趣值</span>
+        <span>{{ note }}</span>
       </div>
     </div>
   </div>
@@ -12,7 +87,16 @@
 
 <script setup lang="ts">
 import {ref, computed, watch, onMounted, onBeforeUnmount} from 'vue';
-import {calcViewRange, dataToPixel, isDiscontinuity, pixelToData, type ViewRange} from '@/utils/function-plot-util';
+import {
+  calcViewRange,
+  dataToPixel,
+  findExtrema,
+  findZeros,
+  integrate,
+  isDiscontinuity,
+  pixelToData,
+  type ViewRange,
+} from '@/utils/function-plot-util';
 
 /** 悬停信息：鼠标像素位置 + 数据横坐标 + 曲线上函数值 */
 interface HoverInfo { px: number; py: number; dx: number; dy: number }
@@ -24,7 +108,17 @@ const props = withDefaults(defineProps<{
   title?: string;
   /** 初始可视范围（不传则按 f 在 [-10, 10] 上的取值自动计算） */
   initialRange?: ViewRange;
-}>(), {});
+  /** 该公式的「有趣值」注解（顶点、周期、渐近线等），逐条展示 */
+  notes?: string[];
+  /** 自变量标签（如 r、a），默认 "x" */
+  xLabel?: string;
+  /** 几何联动图形：按动点取值同步画出对应图形（圆：半径 r；正方形：边长 a） */
+  geometry?: 'circle' | 'square';
+  /** 第二条曲线 y=g(x)（红色实线）：用于方程组联立，交点即解 */
+  fn2?: (x: number) => number;
+  /** 曲线下面积无实际意义时置 true：隐藏阴影与面积读数 */
+  noArea?: boolean;
+}>(), {notes: () => [], xLabel: 'x'});
 
 const X_SPAN = 10; // 自动计算范围时的 x 采样半径
 const SAMPLE = 600; // 曲线采样点数
@@ -32,11 +126,44 @@ const MIN_SPAN = 1e-6; // 缩放下限，防止范围塌缩
 const MAX_SPAN = 1e6; // 缩放上限，防止范围过大
 const TIP_WIDTH = 140; // 悬停浮层估算宽度
 const TIP_HEIGHT = 24; // 悬停浮层估算高度
+const AREA_SAMPLE = 120; // 区域阴影的采样点数
+const PLAY_SECONDS = 8; // 动画扫过整个视野的时长（秒）
 
 const wrapRef = ref<HTMLDivElement>();
 const canvasRef = ref<HTMLCanvasElement>();
+const geoCanvasRef = ref<HTMLCanvasElement>();
 const hover = ref<HoverInfo | null>(null);
 const range = ref<ViewRange>({xMin: -X_SPAN, xMax: X_SPAN, yMin: -8, yMax: 8});
+/** 动点横坐标（输入框/滑块/动画驱动） */
+const probeX = ref(0);
+const playing = ref(false);
+
+/** 视野内函数分析（随平移缩放实时重算） */
+const extrema = computed(() => findExtrema(props.fn, range.value.xMin, range.value.xMax));
+const zeros = computed(() => findZeros(props.fn, range.value.xMin, range.value.xMax));
+/** 两曲线交点横坐标：求 fn - fn2 的零点（方程组的解） */
+const intersections = computed(() =>
+  props.fn2 ? findZeros((x) => props.fn(x) - props.fn2!(x), range.value.xMin, range.value.xMax) : [],
+);
+const yIntercept = computed(() => props.fn(0));
+const probeY = computed(() => props.fn(probeX.value));
+/** 动点与 x 轴围成的有向面积 ∫₀ˣ f */
+const area = computed(() => integrate(props.fn, 0, probeX.value));
+/** 动点处切线斜率（数值微分，中心差分），即导数 */
+const slope = computed(() => {
+  const r = range.value;
+  const h = (r.xMax - r.xMin) * 1e-4;
+  const y1 = props.fn(probeX.value + h);
+  const y0 = props.fn(probeX.value - h);
+  if (!Number.isFinite(y0) || !Number.isFinite(y1)) return NaN;
+  return (y1 - y0) / (2 * h);
+});
+const sliderStep = computed(() => (range.value.xMax - range.value.xMin) / 200 || 0.1);
+
+/** 数字显示：保留至多 4 位小数 */
+function fmt(v: number): string {
+  return String(Number(v.toFixed(4)));
+}
 
 // 悬停浮层位置：靠近右/上边缘时翻转到另一侧
 const tipStyle = computed(() => {
@@ -55,7 +182,12 @@ const tipStyle = computed(() => {
 let dragging = false;
 let lastX = 0;
 let lastY = 0;
+let downX = 0; // 按下位置，用于区分单击取点与拖拽平移
+let downY = 0;
 let rafId = 0;
+let playRafId = 0;
+let lastPlayTime = 0;
+let playDir = 1; // 动画方向：1 向右，-1 向左（到边缘折返）
 let resizeObserver: ResizeObserver | null = null;
 
 /** 读取 CSS 主题变量（随深色模式自动变化） */
@@ -112,15 +244,15 @@ function drawGrid(ctx: CanvasRenderingContext2D, r: ViewRange, w: number, h: num
 }
 
 /** 绘制函数曲线（断点/非有限值处断开，不跨渐近线连线） */
-function drawCurve(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
-  ctx.strokeStyle = cssVar('--utools-primary', '#409eff');
+function drawCurve(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}, fn: (x: number) => number, color: string) {
+  ctx.strokeStyle = color;
   ctx.lineWidth = 2;
   ctx.beginPath();
   let started = false;
   let prevY: number | null = null;
   for (let i = 0; i <= SAMPLE; i++) {
     const dx = r.xMin + ((r.xMax - r.xMin) * i) / SAMPLE;
-    const dy = props.fn(dx);
+    const dy = fn(dx);
     if (!Number.isFinite(dy)) { started = false; prevY = null; continue; }
     if (prevY !== null && isDiscontinuity(prevY, dy)) started = false;
     const p = dataToPixel(dx, dy, r, rect);
@@ -131,6 +263,156 @@ function drawCurve(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number
   }
   ctx.stroke();
   ctx.lineWidth = 1;
+}
+
+/** 绘制两曲线交点标记（方程组的解） */
+function drawIntersections(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  ctx.fillStyle = cssVar('--el-color-danger', '#f56c6c');
+  ctx.strokeStyle = cssVar('--utools-bg-card', '#fff');
+  for (const x of intersections.value) {
+    const y = props.fn(x);
+    if (!Number.isFinite(y)) continue;
+    const p = dataToPixel(x, y, r, rect);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    // 交点坐标标签
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(`(${fmt(x)}, ${fmt(y)})`, p.x + 8, p.y - 6);
+  }
+}
+
+/** 绘制动点区域阴影：曲线与 x 轴之间 [0, probeX] 的填充区（随 x 输入变化） */
+function drawArea(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  if (props.noArea) return;
+  if (!Number.isFinite(probeY.value)) return;
+  const xa = Math.max(Math.min(0, probeX.value), r.xMin);
+  const xb = Math.min(Math.max(0, probeX.value), r.xMax);
+  if (xb - xa <= 0) return;
+  const y0Px = dataToPixel(0, 0, r, rect).y;
+  ctx.beginPath();
+  ctx.moveTo(dataToPixel(xa, 0, r, rect).x, y0Px);
+  let started = true;
+  let prevY: number | null = null;
+  for (let i = 0; i <= AREA_SAMPLE; i++) {
+    const dx = xa + ((xb - xa) * i) / AREA_SAMPLE;
+    const dy = props.fn(dx);
+    if (!Number.isFinite(dy) || (prevY !== null && isDiscontinuity(prevY, dy))) {
+      started = false; prevY = null; continue;
+    }
+    const p = dataToPixel(dx, dy, r, rect);
+    if (started) ctx.lineTo(p.x, p.y);
+    else ctx.moveTo(p.x, p.y);
+    started = true;
+    prevY = dy;
+  }
+  ctx.lineTo(dataToPixel(xb, 0, r, rect).x, y0Px);
+  ctx.closePath();
+  ctx.globalAlpha = 0.12;
+  ctx.fillStyle = cssVar('--utools-primary', '#409eff');
+  ctx.fill();
+  ctx.globalAlpha = 1;
+}
+
+/** 绘制极值点标记（视野内的局部极大/极小） */
+function drawExtrema(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  ctx.fillStyle = cssVar('--el-color-warning', '#e6a23c');
+  ctx.strokeStyle = cssVar('--utools-bg-card', '#fff');
+  for (const e of extrema.value) {
+    const p = dataToPixel(e.x, e.y, r, rect);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+}
+
+/** 绘制动点：x 处竖直虚线 + 曲线上的圆点 */
+function drawProbe(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}, h: number) {
+  if (!Number.isFinite(probeY.value)) return;
+  if (probeX.value < r.xMin || probeX.value > r.xMax) return;
+  const p = dataToPixel(probeX.value, probeY.value, r, rect);
+  ctx.strokeStyle = cssVar('--el-color-warning', '#e6a23c');
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(p.x, 0); ctx.lineTo(p.x, h);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = cssVar('--el-color-warning', '#e6a23c');
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = cssVar('--utools-bg-card', '#fff');
+  ctx.stroke();
+}
+
+/** 绘制动点处切线（红色虚线，斜率即导数） */
+function drawTangent(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number; y: number; width: number; height: number}) {
+  const k = slope.value;
+  if (!Number.isFinite(probeY.value) || !Number.isFinite(k)) return;
+  if (probeX.value < r.xMin || probeX.value > r.xMax) return;
+  // 切线方程 y = y₀ + k(x - x₀)，画满视野宽度，超出部分由画布裁剪
+  const tangent = (x: number) => probeY.value + k * (x - probeX.value);
+  const p1 = dataToPixel(r.xMin, tangent(r.xMin), r, rect);
+  const p2 = dataToPixel(r.xMax, tangent(r.xMax), r, rect);
+  ctx.strokeStyle = cssVar('--el-color-danger', '#f56c6c');
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+  ctx.lineTo(p2.x, p2.y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+/** 绘制几何联动图形：尺寸按动点取值等比缩放（圆半径 r / 正方形边长 a） */
+function drawGeometry() {
+  const canvas = geoCanvasRef.value;
+  if (!canvas || !props.geometry) return;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  if (w <= 0 || h <= 0) return;
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = cssVar('--utools-bg-card', '#fff');
+  ctx.fillRect(0, 0, w, h);
+
+  const v = probeX.value;
+  const vMax = Math.max(Math.abs(range.value.xMin), Math.abs(range.value.xMax)) || 1;
+  ctx.font = '12px sans-serif';
+  ctx.textAlign = 'center';
+  if (!Number.isFinite(v) || v <= 0) {
+    ctx.fillStyle = cssVar('--utools-text-tertiary', '#8c8c8c');
+    ctx.fillText(`${props.xLabel} 需为正数`, w / 2, h / 2);
+    return;
+  }
+  const primary = cssVar('--utools-primary', '#409eff');
+  const size = (v / vMax) * (Math.min(w, h) / 2 - 28); // 图形尺寸（半径/半边长，像素）
+  ctx.strokeStyle = primary;
+  ctx.lineWidth = 2;
+  ctx.globalAlpha = 0.12;
+  ctx.fillStyle = primary;
+  ctx.beginPath();
+  if (props.geometry === 'circle') {
+    ctx.arc(w / 2, h / 2, Math.max(size, 1), 0, Math.PI * 2);
+  } else {
+    ctx.rect(w / 2 - size, h / 2 - size, size * 2, size * 2);
+  }
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.stroke();
+  ctx.lineWidth = 1;
+  // 标注：自变量与函数值
+  ctx.fillStyle = cssVar('--utools-text-primary', '#262626');
+  ctx.fillText(`${props.xLabel} = ${fmt(v)}`, w / 2, h - 24);
+  ctx.fillStyle = primary;
+  ctx.fillText(`y = ${fmt(probeY.value)}`, w / 2, h - 8);
 }
 
 function draw() {
@@ -154,7 +436,14 @@ function draw() {
   ctx.fillStyle = cssVar('--utools-bg-card', '#fff');
   ctx.fillRect(0, 0, w, h);
   drawGrid(ctx, r, w, h, rect);
-  drawCurve(ctx, r, rect);
+  drawArea(ctx, r, rect);
+  drawCurve(ctx, r, rect, props.fn, cssVar('--utools-primary', '#409eff'));
+  if (props.fn2) drawCurve(ctx, r, rect, props.fn2, cssVar('--el-color-danger', '#f56c6c'));
+  drawExtrema(ctx, r, rect);
+  drawIntersections(ctx, r, rect);
+  drawTangent(ctx, r, rect);
+  drawProbe(ctx, r, rect, h);
+  drawGeometry();
 
   // 悬停标记：十字虚线 + 曲线上的圆点
   if (hover.value) {
@@ -182,10 +471,41 @@ function scheduleDraw() {
   rafId = requestAnimationFrame(draw);
 }
 
+/** 播放动画：动点沿曲线在视野内往返移动，面积阴影跟随变化 */
+function playStep(time: number) {
+  if (!playing.value) return;
+  const r = range.value;
+  const span = r.xMax - r.xMin;
+  if (lastPlayTime > 0) {
+    probeX.value += (span / PLAY_SECONDS) * ((time - lastPlayTime) / 1000) * playDir;
+    if (probeX.value >= r.xMax) { probeX.value = r.xMax; playDir = -1; }
+    if (probeX.value <= r.xMin) { probeX.value = r.xMin; playDir = 1; }
+  }
+  lastPlayTime = time;
+  playRafId = requestAnimationFrame(playStep);
+}
+
+function togglePlay() {
+  playing.value = !playing.value;
+  if (playing.value) {
+    lastPlayTime = 0;
+    playRafId = requestAnimationFrame(playStep);
+  } else {
+    cancelAnimationFrame(playRafId);
+  }
+}
+
+function stopPlay() {
+  playing.value = false;
+  cancelAnimationFrame(playRafId);
+}
+
 function onPointerDown(e: PointerEvent) {
   dragging = true;
   lastX = e.offsetX;
   lastY = e.offsetY;
+  downX = e.offsetX;
+  downY = e.offsetY;
   (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
 }
 function onPointerMove(e: PointerEvent) {
@@ -214,8 +534,16 @@ function onPointerMove(e: PointerEvent) {
     scheduleDraw();
   }
 }
-function onPointerUp() {
+function onPointerUp(e: PointerEvent) {
   dragging = false;
+  // 单击（位移 < 4px）：把动点设置到点击处的横坐标；拖拽则视为平移
+  if (Math.hypot(e.offsetX - downX, e.offsetY - downY) < 4) {
+    const wrap = wrapRef.value;
+    if (!wrap) return;
+    stopPlay();
+    const d = pixelToData(e.offsetX, e.offsetY, range.value, {x: 0, y: 0, width: wrap.clientWidth, height: wrap.clientHeight});
+    probeX.value = Number(d.x.toFixed(4));
+  }
 }
 function onWheel(e: WheelEvent) {
   if (e.deltaY === 0) return;
@@ -239,8 +567,13 @@ function onWheel(e: WheelEvent) {
 }
 
 watch(() => props.fn, (fn) => {
+  stopPlay();
   range.value = props.initialRange ?? calcViewRange(fn, -X_SPAN, X_SPAN);
+  // 动点默认放在视野 70% 处，让面积阴影立即可见
+  probeX.value = range.value.xMin + (range.value.xMax - range.value.xMin) * 0.7;
 }, {immediate: true});
+// probeX 变化（输入/滑块/动画）时重绘
+watch(probeX, () => scheduleDraw());
 onMounted(() => {
   resizeObserver = new ResizeObserver(() => scheduleDraw());
   if (wrapRef.value) resizeObserver.observe(wrapRef.value);
@@ -249,6 +582,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   resizeObserver?.disconnect();
   cancelAnimationFrame(rafId);
+  cancelAnimationFrame(playRafId);
 });
 </script>
 
@@ -262,9 +596,16 @@ onBeforeUnmount(() => {
     margin-bottom: 8px;
   }
 
+  .plot-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+  }
+
   .plot-wrap {
     position: relative;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     height: 300px;
     border: 1px solid var(--utools-border-divider);
     border-radius: 8px;
@@ -291,6 +632,124 @@ onBeforeUnmount(() => {
     border: 1px solid var(--utools-border-primary);
     border-radius: 4px;
     white-space: nowrap;
+  }
+
+  // ---- 几何联动面板 ----
+  .geo-wrap {
+    flex-shrink: 0;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    .geo-canvas {
+      width: 180px;
+      height: 240px;
+      border: 1px solid var(--utools-border-divider);
+      border-radius: 8px;
+    }
+
+    .geo-caption {
+      font-size: 11px;
+      color: var(--utools-text-tertiary);
+    }
+  }
+
+  // ---- 动点控制条 ----
+  .probe-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+
+    .probe-label {
+      font-size: 13px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      color: var(--utools-text-secondary);
+    }
+
+    .probe-input {
+      width: 80px;
+      padding: 4px 8px;
+      font-size: 13px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      color: var(--utools-text-primary);
+      background: var(--utools-bg-card);
+      border: 1px solid var(--utools-border-primary);
+      border-radius: 4px;
+      outline: none;
+
+      &:focus {
+        border-color: var(--utools-primary);
+      }
+    }
+
+    .probe-slider {
+      flex: 1;
+      accent-color: var(--utools-primary);
+      cursor: pointer;
+    }
+
+    .probe-play {
+      width: 32px;
+      height: 28px;
+      font-size: 13px;
+      color: var(--utools-text-primary);
+      background: var(--utools-bg-card);
+      border: 1px solid var(--utools-border-primary);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        border-color: var(--utools-primary);
+        color: var(--utools-primary);
+      }
+    }
+  }
+
+  // ---- 函数分析面板 ----
+  .plot-analysis {
+    margin-top: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--utools-border-divider);
+    border-radius: 8px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--utools-text-secondary);
+
+    .analysis-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+
+      .value {
+        font-family: 'Menlo', 'Consolas', monospace;
+        color: var(--utools-text-primary);
+      }
+
+      .muted {
+        color: var(--utools-text-tertiary);
+      }
+
+      .sep {
+        color: var(--utools-text-tertiary);
+      }
+    }
+
+    .tag {
+      flex-shrink: 0;
+      padding: 0 6px;
+      font-size: 11px;
+      border-radius: 3px;
+      line-height: 18px;
+      color: var(--utools-primary);
+      background: var(--utools-bg-secondary);
+      border: 1px solid var(--utools-border-primary);
+    }
   }
 }
 </style>
