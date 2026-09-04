@@ -255,7 +255,8 @@ describe('knowledge-pack-service', () => {
       expect(getPackVersion('math-formulas')).toBe(2)
       // 其余包（未加口诀等结构变更）仍为 1
       expect(getPackVersion('multiplication-9x9')).toBe(1)
-      expect(getPackVersion('constellations-12')).toBe(1)
+      // constellations-12 追加星座符号 emoji imageUrl → 2
+      expect(getPackVersion('constellations-12')).toBe(2)
       // 本轮新增的 8 个包均为 1
       ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12', 'dynasties-china',
         'common-units', 'colors-12', 'musical-notes', 'math-formulas-2'].forEach(id => {

@@ -38,7 +38,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 3},
     {id: 'number-pegs-12', name: '数字桩（1-12）', description: '经典数字形象桩，1-6 号位提供多个备选桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
     {id: 'home-route-12', name: '家居路线桩（12 桩）', description: '按进门后的巡视路线排列的家居地点桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
-    {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false, category: 'text'},
+    {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false, category: 'text', version: 2},
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false, category: 'text'},

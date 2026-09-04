@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": 1788451200000,
+  "updatedAt": 1788543146050,
   "description": "历史时间线本地库（精选示例）。每条事件字段：title/content/category(politics|literature|science|thought|society，对应政治/文学/科学/思想/社会)/region(china|west)/year(公元，负数=公元前)/reign(年号)/era(时代)/location(地点，主地名需可被 parseTimelineLocation 解析)/figures(主要人物 {name,title,desc})/relations(人物关系 {from,to,type,desc})/background(背景)/tags(标签)。figures 与 relations 中人物名需对应，方可在关系图谱连线。",
   "events": [
     {
@@ -4127,29 +4127,6 @@
       ]
     },
     {
-      "title": "长征",
-      "content": "中央红军从江西瑞金出发，血战湘江、四渡赤水、巧渡金沙江、强渡大渡河、翻越雪山草地，行程两万五千里，胜利到达陕北。",
-      "category": "politics",
-      "region": "china",
-      "year": 1934,
-      "era": "近代",
-      "location": "延安",
-      "figures": [
-        {
-          "name": "毛泽东",
-          "title": "主席",
-          "desc": "长征中确立领导地位"
-        }
-      ],
-      "relations": [],
-      "background": "第五次反\"围剿\"失败，红军被迫战略转移。",
-      "tags": [
-        "近代",
-        "长征",
-        "革命"
-      ]
-    },
-    {
       "title": "真理标准问题讨论",
       "content": "《光明日报》发表《实践是检验真理的唯一标准》特约评论员文章，引发全国大讨论，冲破\"两个凡是\"禁锢，为十一届三中全会奠定思想基础。",
       "category": "thought",
@@ -5605,29 +5582,6 @@
       ]
     },
     {
-      "title": "明治维新",
-      "content": "日本明治天皇推行全面西化改革：废藩置县、殖产兴业、富国强兵、文明开化，使日本迅速成为近代强国。",
-      "category": "politics",
-      "region": "west",
-      "year": 1868,
-      "era": "近代",
-      "location": "东京",
-      "figures": [
-        {
-          "name": "明治天皇",
-          "title": "天皇",
-          "desc": "维新象征"
-        }
-      ],
-      "relations": [],
-      "background": "黑船来航迫使日本开国，幕府威信扫地。",
-      "tags": [
-        "近代",
-        "日本",
-        "维新"
-      ]
-    },
-    {
       "title": "九国公约签订",
       "content": "美、英、日、法、意、中、荷、比、葡九国在华盛顿签订《九国公约》，声称尊重中国主权独立和领土完整，实质是维持列强在华均势。",
       "category": "politics",
@@ -5814,41 +5768,6 @@
         "现代",
         "计算机",
         "信息"
-      ]
-    },
-    {
-      "title": "焚书坑儒",
-      "content": "秦始皇采纳李斯建议，焚烧《诗》《书》、百家语，坑杀诽谤朝政的儒生四百六十余人，以思想专制巩固统治。",
-      "category": "thought",
-      "region": "china",
-      "year": -213,
-      "era": "秦",
-      "location": "咸阳",
-      "figures": [
-        {
-          "name": "秦始皇",
-          "title": "始皇帝",
-          "desc": "推行思想专制"
-        },
-        {
-          "name": "李斯",
-          "title": "丞相",
-          "desc": "建议焚书"
-        }
-      ],
-      "relations": [
-        {
-          "from": "秦始皇",
-          "to": "李斯",
-          "type": "君臣",
-          "desc": "采纳焚书之策"
-        }
-      ],
-      "background": "天下初定，博士淳于越主张分封引发争论。",
-      "tags": [
-        "秦",
-        "思想",
-        "专制"
       ]
     },
     {
@@ -6751,7 +6670,7 @@
     },
     {
       "title": "前三头同盟",
-      "content": "恺撒、庞培、克拉苏结成政治同盟，共同主导罗马政局。",
+      "content": "凯撒、庞培、克拉苏结成政治同盟，共同主导罗马政局。",
       "category": "politics",
       "region": "west",
       "year": -60,
@@ -6759,12 +6678,12 @@
       "location": "罗马",
       "tags": [
         "古罗马",
-        "恺撒",
+        "凯撒",
         "同盟"
       ],
       "figures": [
         {
-          "name": "恺撒",
+          "name": "凯撒",
           "title": "罗马统帅"
         },
         {
@@ -6774,8 +6693,8 @@
       ]
     },
     {
-      "title": "恺撒渡卢比孔河",
-      "content": "恺撒率军渡过卢比孔河，越过禁令进攻罗马，引发内战，为独裁铺路。",
+      "title": "凯撒渡卢比孔河",
+      "content": "凯撒率军渡过卢比孔河，越过禁令进攻罗马，引发内战，为独裁铺路。",
       "category": "politics",
       "region": "west",
       "year": -49,
@@ -6783,12 +6702,12 @@
       "location": "罗马",
       "tags": [
         "古罗马",
-        "恺撒",
+        "凯撒",
         "内战"
       ],
       "figures": [
         {
-          "name": "恺撒",
+          "name": "凯撒",
           "title": "罗马统帅"
         }
       ]
@@ -6966,7 +6885,7 @@
       ],
       "figures": [
         {
-          "name": "阿尔伯特·爱因斯坦",
+          "name": "爱因斯坦",
           "title": "物理学家"
         }
       ]

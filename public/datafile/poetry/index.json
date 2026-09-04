@@ -2,8 +2,8 @@
   "name": "中华诗词文章库",
   "version": "2.1",
   "description": "按朝代分类的经典诗词文章合集。中文系研究生参考选篇。",
-  "totalCount": 429,
-  "lastUpdated": "2026-09-04",
+  "totalCount": 428,
+  "lastUpdated": "2026-09-05",
   "dynasties": [
     {
       "code": "xianqin",
@@ -34,7 +34,7 @@
       "name": "隋",
       "period": "581-618",
       "file": "sui.json",
-      "count": 9,
+      "count": 8,
       "description": "隋代诗歌"
     },
     {
