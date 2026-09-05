@@ -42,6 +42,9 @@
         </el-popover>
       </div>
 
+      <!-- 仅看到期 -->
+      <span :class="['ftag', { on: onlyDue }]" @click="onlyDue = !onlyDue">仅看到期</span>
+
       <!-- 分隔 -->
       <div class="filter-divider"></div>
 
@@ -63,7 +66,7 @@
 
     <!-- 条目列表 -->
     <div class="entries-list-wrapper" v-loading="store.entriesLoading">
-      <el-empty v-if="filteredEntries.length === 0" description="暂无条目" />
+      <el-empty v-if="filteredEntries.length === 0" :description="onlyDue ? '没有到期条目' : '暂无条目'" />
 
       <div
         v-for="entry in filteredEntries"
@@ -160,6 +163,9 @@
         <span class="footer-stat">共 {{ store.entries.length }} 条</span>
         <span v-if="selectedTag" class="footer-stat filter-active" @click="selectedTag = ''">
           标签: {{ selectedTag }}
+        </span>
+        <span v-if="onlyDue" class="footer-stat filter-active" @click="onlyDue = false">
+          仅看到期
         </span>
       </div>
       <div>
@@ -310,7 +316,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useNumberMemoryStore } from '@/stores/numberMemory';
 import type { NumberMemoryEntry, NumberMemoryKind } from '@/types/number-memory';
 import { ElMessage, ElMessageBox } from 'element-plus';
@@ -333,12 +339,15 @@ import NumberNotesDialog from './components/NumberNotesDialog.vue';
 import NumberPromptsDialog from './components/NumberPromptsDialog.vue';
 
 const router = useRouter();
+const route = useRoute();
 const store = useNumberMemoryStore();
 
 // 搜索和筛选
 const searchKeyword = ref('');
 const selectedTag = ref('');
 const tagPopoverVisible = ref(false);
+// 「仅看到期」过滤：支持从数字记忆主页到期角标跳转（?due=1）自动开启，与标签筛选叠加
+const onlyDue = ref(route.query.due === '1');
 
 // 排序
 const sortBy = ref<'time' | 'title' | 'review'>('time');
@@ -399,6 +408,12 @@ const filteredEntries = computed(() => {
     result = result.filter(entry =>
       entry.tags.includes(selectedTag.value)
     );
+  }
+
+  // 仅看到期（与搜索/标签筛选叠加）
+  if (onlyDue.value) {
+    const now = Date.now();
+    result = result.filter(entry => isDue(entry, now));
   }
 
   // 排序

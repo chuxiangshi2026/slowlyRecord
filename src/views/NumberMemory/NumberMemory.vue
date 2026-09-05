@@ -3,9 +3,14 @@
     <!-- 页面标题栏 -->
     <div class="page-header">
       <span class="page-title">🧠 数字记忆训练</span>
-      <el-button size="small" @click="showGuide = true">
-        ❓ 使用帮助
-      </el-button>
+      <div class="header-actions">
+        <span v-if="dueCount > 0" class="due-badge" title="有到期待复习的条目，点击查看" @click="goToEntries(true)">
+          ⏰ {{ dueCount }} 条到期待复习
+        </span>
+        <el-button size="small" @click="showGuide = true">
+          ❓ 使用帮助
+        </el-button>
+      </div>
     </div>
 
     <!-- 未完成的训练进度 -->
@@ -67,7 +72,7 @@
         <span class="section-title">🛠️ 管理</span>
       </template>
       <div class="manage-list">
-        <div class="manage-item" @click="goToEntries">
+        <div class="manage-item" @click="goToEntries()">
           <span class="manage-icon">📝</span>
           <div class="manage-info">
             <div class="manage-name">数字记忆条目</div>
@@ -168,6 +173,9 @@ const unfinishedProgressTitle = computed(() => {
 // 与训练页一致：数字→图片 / 图片→数字 模式需要至少 4 个数字关联
 const canStartTraining = computed(() => store.associationCount >= 4);
 
+// 到期条目数（角标用，为 0 不显示）
+const dueCount = computed(() => store.dueEntries.length);
+
 // Methods
 function goToTraining(mode: "numberToImage" | "imageToNumber" | "randomSequence") {
   if (mode !== "randomSequence" && !canStartTraining.value) {
@@ -187,8 +195,8 @@ function abandonProgress() {
   ElMessage.info("已放弃训练进度");
 }
 
-function goToEntries() {
-  router.push("/number-memory/entries");
+function goToEntries(onlyDue = false) {
+  router.push(onlyDue ? '/number-memory/entries?due=1' : '/number-memory/entries');
 }
 
 function goToMapping() {
@@ -230,6 +238,9 @@ function onGuideFinish() {
 onMounted(() => {
   loadTrainingHistory();
 
+  // 加载条目以计算到期角标
+  store.loadEntries();
+
   // 检查是否是首次使用
   const guideShown = localStorage.getItem("numberMemoryGuideShown");
   if (!guideShown) {
@@ -260,6 +271,30 @@ onMounted(() => {
       font-size: 18px;
       font-weight: bold;
       color: var(--utools-text-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    // 到期复习角标（语义警示色，点击跳转条目页并开启「仅看到期」）
+    .due-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      color: var(--el-color-warning);
+      border: 1px solid var(--el-color-warning);
+      border-radius: 12px;
+      padding: 2px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: var(--el-color-warning-light-9);
+      }
     }
   }
 
