@@ -264,3 +264,90 @@ export interface PhoneticProgressDoc {
   /** 按 pairKey 索引的对子进度 */
   pairs: Record<string, MinimalPairProgress>
 }
+
+// ==================== 知识库（通用知识包） ====================
+
+/** 知识包中的单个问答对（与桌面端 src/types/knowledge-memory.d.ts 一致） */
+export interface KnowledgeItem {
+  id: string
+  /** 问题/提示（如乘法 2×3、元素符号 H） */
+  question: string
+  /** 答案（如 6、氢） */
+  answer: string
+  /** 额外展示字段（如元素序数/拼音） */
+  extras?: Record<string, string>
+  /** 备选桩名（usableAsPeg 包的可选字段） */
+  alternates?: string[]
+  /** 有序包中的顺序号（从 1 开始） */
+  order?: number
+  /** 条目配图：存 emoji 字符 */
+  imageUrl?: string
+}
+
+/** 知识包元数据 + 条目 */
+export interface KnowledgePack {
+  id: string
+  name: string
+  description: string
+  /** 是否是有序列表（顺序本身是考点） */
+  ordered: boolean
+  /** 是否可作为记忆宫殿的桩库 */
+  usableAsPeg: boolean
+  /** 记忆口诀（可选） */
+  mnemonics?: string[]
+  items: KnowledgeItem[]
+}
+
+/** 知识包分类 */
+export type KnowledgePackCategory = 'math' | 'text'
+
+/** 知识包在列表中的轻量信息 */
+export interface KnowledgePackInfo {
+  id: string
+  name: string
+  description: string
+  itemCount: number
+  ordered: boolean
+  usableAsPeg: boolean
+  category: KnowledgePackCategory
+  /** 数据版本号（缺省视为 1），缓存版本不一致自动失效 */
+  version?: number
+}
+
+/** 单个条目的练习进度 */
+export interface KnowledgeItemProgress {
+  itemId: string
+  /** SRS 等级 0-12 */
+  level: number
+  /** 上次学习/复习时间戳 */
+  learnDate: number
+  /** 累计答对次数 */
+  correct: number
+  /** 累计答错次数 */
+  wrong: number
+}
+
+/** 每个知识包的进度文档（doc id 与桌面端一致：knowledge_memory_<packId>） */
+export interface KnowledgePackProgressDoc {
+  _id: string
+  _rev?: string
+  type: 'knowledge_pack_progress'
+  packId: string
+  items: Record<string, KnowledgeItemProgress>
+}
+
+/** 已导入知识包清单文档（doc id：knowledge_memory_imported） */
+export interface KnowledgeImportedDoc {
+  _id: string
+  _rev?: string
+  type: 'knowledge_imported_list'
+  ids: string[]
+}
+
+/** 练习模式（移动端精简版只用 flip / choice） */
+export type KnowledgePracticeMode =
+  | 'q2a'
+  | 'a2q'
+  | 'choice'
+  | 'ordered'
+  | 'input'

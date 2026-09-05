@@ -158,6 +158,29 @@
       ]
     },
     {
+      "root": "subPackages/pages-knowledge",
+      "pages": [
+        {
+          "path": "knowledge-list",
+          "style": {
+            "navigationBarTitleText": "知识库"
+          }
+        },
+        {
+          "path": "knowledge-detail",
+          "style": {
+            "navigationBarTitleText": "知识包详情"
+          }
+        },
+        {
+          "path": "knowledge-practice",
+          "style": {
+            "navigationBarTitleText": "知识练习"
+          }
+        }
+      ]
+    },
+    {
       "root": "subPackages/wordbank-a",
       "pages": [
         {

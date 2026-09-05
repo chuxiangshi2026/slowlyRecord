@@ -1,0 +1,136 @@
+/**
+ * 内置知识包：十二种颜色（由 public/knowledgebanks/colors-12.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "colors-12",
+  "name": "十二种颜色",
+  "description": "12 种常见颜色的色值与英文名称",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "colors-12-1",
+      "question": "红",
+      "answer": "正红 #FF0000；RGB(255,0,0)",
+      "extras": {
+        "色值": "#FF0000",
+        "英文": "Red"
+      },
+      "imageUrl": "🔴"
+    },
+    {
+      "id": "colors-12-2",
+      "question": "橙",
+      "answer": "橙色 #FFA500；RGB(255,165,0)",
+      "extras": {
+        "色值": "#FFA500",
+        "英文": "Orange"
+      },
+      "imageUrl": "🟠"
+    },
+    {
+      "id": "colors-12-3",
+      "question": "黄",
+      "answer": "正黄 #FFFF00；RGB(255,255,0)",
+      "extras": {
+        "色值": "#FFFF00",
+        "英文": "Yellow"
+      },
+      "imageUrl": "🟡"
+    },
+    {
+      "id": "colors-12-4",
+      "question": "绿",
+      "answer": "正绿 #008000；RGB(0,128,0)",
+      "extras": {
+        "色值": "#008000",
+        "英文": "Green"
+      },
+      "imageUrl": "🟢"
+    },
+    {
+      "id": "colors-12-5",
+      "question": "蓝",
+      "answer": "正蓝 #0000FF；RGB(0,0,255)",
+      "extras": {
+        "色值": "#0000FF",
+        "英文": "Blue"
+      },
+      "imageUrl": "🔷"
+    },
+    {
+      "id": "colors-12-6",
+      "question": "紫",
+      "answer": "紫色 #800080；RGB(128,0,128)",
+      "extras": {
+        "色值": "#800080",
+        "英文": "Purple"
+      },
+      "imageUrl": "🟣"
+    },
+    {
+      "id": "colors-12-7",
+      "question": "粉",
+      "answer": "粉红 #FFC0CB；RGB(255,192,203)",
+      "extras": {
+        "色值": "#FFC0CB",
+        "英文": "Pink"
+      },
+      "imageUrl": "🌸"
+    },
+    {
+      "id": "colors-12-8",
+      "question": "白",
+      "answer": "白色 #FFFFFF；RGB(255,255,255)",
+      "extras": {
+        "色值": "#FFFFFF",
+        "英文": "White"
+      },
+      "imageUrl": "⚪"
+    },
+    {
+      "id": "colors-12-9",
+      "question": "黑",
+      "answer": "黑色 #000000；RGB(0,0,0)",
+      "extras": {
+        "色值": "#000000",
+        "英文": "Black"
+      },
+      "imageUrl": "⚫"
+    },
+    {
+      "id": "colors-12-10",
+      "question": "灰",
+      "answer": "中性灰 #808080；RGB(128,128,128)",
+      "extras": {
+        "色值": "#808080",
+        "英文": "Gray"
+      },
+      "imageUrl": "🩶"
+    },
+    {
+      "id": "colors-12-11",
+      "question": "金",
+      "answer": "金色 #FFD700；RGB(255,215,0)",
+      "extras": {
+        "色值": "#FFD700",
+        "英文": "Gold"
+      },
+      "imageUrl": "🥇"
+    },
+    {
+      "id": "colors-12-12",
+      "question": "银",
+      "answer": "银色 #C0C0C0；RGB(192,192,192)",
+      "extras": {
+        "色值": "#C0C0C0",
+        "英文": "Silver"
+      },
+      "imageUrl": "🥈"
+    }
+  ]
+}
+
+export default pack

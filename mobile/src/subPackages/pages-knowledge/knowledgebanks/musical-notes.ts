@@ -1,0 +1,160 @@
+/**
+ * 内置知识包：十二平均律（由 public/knowledgebanks/musical-notes.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "musical-notes",
+  "name": "十二平均律",
+  "description": "C 大调 12 个半音的音名、十二律中文名、音阶位置与 A4 基准频率",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "musical-notes-1",
+      "question": "C",
+      "answer": "C：黄钟，宫（do，大调 1）",
+      "order": 1,
+      "extras": {
+        "中文名": "黄钟",
+        "音阶位置": "1",
+        "频率Hz": "261.63"
+      },
+      "imageUrl": "🎵"
+    },
+    {
+      "id": "musical-notes-2",
+      "question": "C#",
+      "answer": "C#：大吕，C 宫上小二度（do 升半音）",
+      "order": 2,
+      "extras": {
+        "中文名": "大吕",
+        "音阶位置": "1#",
+        "频率Hz": "277.18"
+      },
+      "imageUrl": "🎶"
+    },
+    {
+      "id": "musical-notes-3",
+      "question": "D",
+      "answer": "D：太簇，商（re，大调 2）",
+      "order": 3,
+      "extras": {
+        "中文名": "太簇",
+        "音阶位置": "2",
+        "频率Hz": "293.66"
+      },
+      "imageUrl": "🎼"
+    },
+    {
+      "id": "musical-notes-4",
+      "question": "D#",
+      "answer": "D#：夹钟，D 商上小二度（re 升半音）",
+      "order": 4,
+      "extras": {
+        "中文名": "夹钟",
+        "音阶位置": "2#",
+        "频率Hz": "311.13"
+      },
+      "imageUrl": "🎹"
+    },
+    {
+      "id": "musical-notes-5",
+      "question": "E",
+      "answer": "E：姑洗，角（mi，大调 3）",
+      "order": 5,
+      "extras": {
+        "中文名": "姑洗",
+        "音阶位置": "3",
+        "频率Hz": "329.63"
+      },
+      "imageUrl": "🎸"
+    },
+    {
+      "id": "musical-notes-6",
+      "question": "F",
+      "answer": "F：仲吕，徵（fa，大调 4）",
+      "order": 6,
+      "extras": {
+        "中文名": "仲吕",
+        "音阶位置": "4",
+        "频率Hz": "349.23"
+      },
+      "imageUrl": "🎻"
+    },
+    {
+      "id": "musical-notes-7",
+      "question": "F#",
+      "answer": "F#：蕤宾，F 徵上小二度（fa 升半音）",
+      "order": 7,
+      "extras": {
+        "中文名": "蕤宾",
+        "音阶位置": "4#",
+        "频率Hz": "369.99"
+      },
+      "imageUrl": "🥁"
+    },
+    {
+      "id": "musical-notes-8",
+      "question": "G",
+      "answer": "G：林钟，羽（sol，大调 5）",
+      "order": 8,
+      "extras": {
+        "中文名": "林钟",
+        "音阶位置": "5",
+        "频率Hz": "392.00"
+      },
+      "imageUrl": "🎺"
+    },
+    {
+      "id": "musical-notes-9",
+      "question": "G#",
+      "answer": "G#：夷则，G 羽上小二度（sol 升半音）",
+      "order": 9,
+      "extras": {
+        "中文名": "夷则",
+        "音阶位置": "5#",
+        "频率Hz": "415.30"
+      },
+      "imageUrl": "🎷"
+    },
+    {
+      "id": "musical-notes-10",
+      "question": "A",
+      "answer": "A：南吕，大调 6（la，A4 国际标准音）",
+      "order": 10,
+      "extras": {
+        "中文名": "南吕",
+        "音阶位置": "6",
+        "频率Hz": "440.00"
+      },
+      "imageUrl": "🪕"
+    },
+    {
+      "id": "musical-notes-11",
+      "question": "A#",
+      "answer": "A#：无射，A 上小二度（la 升半音）",
+      "order": 11,
+      "extras": {
+        "中文名": "无射",
+        "音阶位置": "6#",
+        "频率Hz": "466.16"
+      },
+      "imageUrl": "🪗"
+    },
+    {
+      "id": "musical-notes-12",
+      "question": "B",
+      "answer": "B：应钟，变宫（ti，大调 7）",
+      "order": 12,
+      "extras": {
+        "中文名": "应钟",
+        "音阶位置": "7",
+        "频率Hz": "493.88"
+      },
+      "imageUrl": "📯"
+    }
+  ]
+}
+
+export default pack

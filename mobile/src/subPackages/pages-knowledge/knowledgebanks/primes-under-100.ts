@@ -1,0 +1,166 @@
+/**
+ * 内置知识包：100 以内质数表（由 public/knowledgebanks/primes-under-100.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "primes-under-100",
+  "name": "100 以内质数表",
+  "description": "100 以内 25 个质数及其序位，顺序本身是考点",
+  "ordered": true,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "primes-under-100-1",
+      "question": "第 1 个质数",
+      "answer": "2",
+      "order": 1
+    },
+    {
+      "id": "primes-under-100-2",
+      "question": "第 2 个质数",
+      "answer": "3",
+      "order": 2
+    },
+    {
+      "id": "primes-under-100-3",
+      "question": "第 3 个质数",
+      "answer": "5",
+      "order": 3
+    },
+    {
+      "id": "primes-under-100-4",
+      "question": "第 4 个质数",
+      "answer": "7",
+      "order": 4
+    },
+    {
+      "id": "primes-under-100-5",
+      "question": "第 5 个质数",
+      "answer": "11",
+      "order": 5
+    },
+    {
+      "id": "primes-under-100-6",
+      "question": "第 6 个质数",
+      "answer": "13",
+      "order": 6
+    },
+    {
+      "id": "primes-under-100-7",
+      "question": "第 7 个质数",
+      "answer": "17",
+      "order": 7
+    },
+    {
+      "id": "primes-under-100-8",
+      "question": "第 8 个质数",
+      "answer": "19",
+      "order": 8
+    },
+    {
+      "id": "primes-under-100-9",
+      "question": "第 9 个质数",
+      "answer": "23",
+      "order": 9
+    },
+    {
+      "id": "primes-under-100-10",
+      "question": "第 10 个质数",
+      "answer": "29",
+      "order": 10
+    },
+    {
+      "id": "primes-under-100-11",
+      "question": "第 11 个质数",
+      "answer": "31",
+      "order": 11
+    },
+    {
+      "id": "primes-under-100-12",
+      "question": "第 12 个质数",
+      "answer": "37",
+      "order": 12
+    },
+    {
+      "id": "primes-under-100-13",
+      "question": "第 13 个质数",
+      "answer": "41",
+      "order": 13
+    },
+    {
+      "id": "primes-under-100-14",
+      "question": "第 14 个质数",
+      "answer": "43",
+      "order": 14
+    },
+    {
+      "id": "primes-under-100-15",
+      "question": "第 15 个质数",
+      "answer": "47",
+      "order": 15
+    },
+    {
+      "id": "primes-under-100-16",
+      "question": "第 16 个质数",
+      "answer": "53",
+      "order": 16
+    },
+    {
+      "id": "primes-under-100-17",
+      "question": "第 17 个质数",
+      "answer": "59",
+      "order": 17
+    },
+    {
+      "id": "primes-under-100-18",
+      "question": "第 18 个质数",
+      "answer": "61",
+      "order": 18
+    },
+    {
+      "id": "primes-under-100-19",
+      "question": "第 19 个质数",
+      "answer": "67",
+      "order": 19
+    },
+    {
+      "id": "primes-under-100-20",
+      "question": "第 20 个质数",
+      "answer": "71",
+      "order": 20
+    },
+    {
+      "id": "primes-under-100-21",
+      "question": "第 21 个质数",
+      "answer": "73",
+      "order": 21
+    },
+    {
+      "id": "primes-under-100-22",
+      "question": "第 22 个质数",
+      "answer": "79",
+      "order": 22
+    },
+    {
+      "id": "primes-under-100-23",
+      "question": "第 23 个质数",
+      "answer": "83",
+      "order": 23
+    },
+    {
+      "id": "primes-under-100-24",
+      "question": "第 24 个质数",
+      "answer": "89",
+      "order": 24
+    },
+    {
+      "id": "primes-under-100-25",
+      "question": "第 25 个质数",
+      "answer": "97",
+      "order": 25
+    }
+  ]
+}
+
+export default pack

@@ -1,0 +1,186 @@
+/**
+ * 内置知识包：中国省级行政区及省会（由 public/knowledgebanks/provinces-capitals.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "provinces-capitals",
+  "name": "中国省级行政区及省会",
+  "description": "中国 34 个省级行政区及其省会、首府或政府驻地",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "provinces-capitals-1",
+      "question": "北京市",
+      "answer": "北京"
+    },
+    {
+      "id": "provinces-capitals-2",
+      "question": "天津市",
+      "answer": "天津"
+    },
+    {
+      "id": "provinces-capitals-3",
+      "question": "河北省",
+      "answer": "石家庄"
+    },
+    {
+      "id": "provinces-capitals-4",
+      "question": "山西省",
+      "answer": "太原"
+    },
+    {
+      "id": "provinces-capitals-5",
+      "question": "内蒙古自治区",
+      "answer": "呼和浩特"
+    },
+    {
+      "id": "provinces-capitals-6",
+      "question": "辽宁省",
+      "answer": "沈阳"
+    },
+    {
+      "id": "provinces-capitals-7",
+      "question": "吉林省",
+      "answer": "长春"
+    },
+    {
+      "id": "provinces-capitals-8",
+      "question": "黑龙江省",
+      "answer": "哈尔滨"
+    },
+    {
+      "id": "provinces-capitals-9",
+      "question": "上海市",
+      "answer": "上海"
+    },
+    {
+      "id": "provinces-capitals-10",
+      "question": "江苏省",
+      "answer": "南京"
+    },
+    {
+      "id": "provinces-capitals-11",
+      "question": "浙江省",
+      "answer": "杭州"
+    },
+    {
+      "id": "provinces-capitals-12",
+      "question": "安徽省",
+      "answer": "合肥"
+    },
+    {
+      "id": "provinces-capitals-13",
+      "question": "福建省",
+      "answer": "福州"
+    },
+    {
+      "id": "provinces-capitals-14",
+      "question": "江西省",
+      "answer": "南昌"
+    },
+    {
+      "id": "provinces-capitals-15",
+      "question": "山东省",
+      "answer": "济南"
+    },
+    {
+      "id": "provinces-capitals-16",
+      "question": "河南省",
+      "answer": "郑州"
+    },
+    {
+      "id": "provinces-capitals-17",
+      "question": "湖北省",
+      "answer": "武汉"
+    },
+    {
+      "id": "provinces-capitals-18",
+      "question": "湖南省",
+      "answer": "长沙"
+    },
+    {
+      "id": "provinces-capitals-19",
+      "question": "广东省",
+      "answer": "广州"
+    },
+    {
+      "id": "provinces-capitals-20",
+      "question": "广西壮族自治区",
+      "answer": "南宁"
+    },
+    {
+      "id": "provinces-capitals-21",
+      "question": "海南省",
+      "answer": "海口"
+    },
+    {
+      "id": "provinces-capitals-22",
+      "question": "重庆市",
+      "answer": "重庆"
+    },
+    {
+      "id": "provinces-capitals-23",
+      "question": "四川省",
+      "answer": "成都"
+    },
+    {
+      "id": "provinces-capitals-24",
+      "question": "贵州省",
+      "answer": "贵阳"
+    },
+    {
+      "id": "provinces-capitals-25",
+      "question": "云南省",
+      "answer": "昆明"
+    },
+    {
+      "id": "provinces-capitals-26",
+      "question": "西藏自治区",
+      "answer": "拉萨"
+    },
+    {
+      "id": "provinces-capitals-27",
+      "question": "陕西省",
+      "answer": "西安"
+    },
+    {
+      "id": "provinces-capitals-28",
+      "question": "甘肃省",
+      "answer": "兰州"
+    },
+    {
+      "id": "provinces-capitals-29",
+      "question": "青海省",
+      "answer": "西宁"
+    },
+    {
+      "id": "provinces-capitals-30",
+      "question": "宁夏回族自治区",
+      "answer": "银川"
+    },
+    {
+      "id": "provinces-capitals-31",
+      "question": "新疆维吾尔自治区",
+      "answer": "乌鲁木齐"
+    },
+    {
+      "id": "provinces-capitals-32",
+      "question": "台湾省",
+      "answer": "台北"
+    },
+    {
+      "id": "provinces-capitals-33",
+      "question": "香港特别行政区",
+      "answer": "香港"
+    },
+    {
+      "id": "provinces-capitals-34",
+      "question": "澳门特别行政区",
+      "answer": "澳门"
+    }
+  ]
+}
+
+export default pack

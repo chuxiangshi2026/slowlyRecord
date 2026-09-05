@@ -1,0 +1,205 @@
+/**
+ * 内置知识包：常用计量单位（由 public/knowledgebanks/common-units.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "common-units",
+  "name": "常用计量单位",
+  "description": "物理量的国际单位与常见单位换算",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "common-units-1",
+      "question": "长度",
+      "answer": "米(m)；1 km=1000 m，1 m=100 cm",
+      "extras": {
+        "国际单位": "米 (m)",
+        "量纲": "L"
+      }
+    },
+    {
+      "id": "common-units-2",
+      "question": "面积",
+      "answer": "平方米(m²)；1 km²=10⁶ m²，1 m²=100 dm²",
+      "extras": {
+        "国际单位": "平方米 (m²)",
+        "量纲": "L²"
+      }
+    },
+    {
+      "id": "common-units-3",
+      "question": "体积",
+      "answer": "立方米(m³)；1 m³=1000 dm³=1000 L",
+      "extras": {
+        "国际单位": "立方米 (m³)",
+        "量纲": "L³"
+      }
+    },
+    {
+      "id": "common-units-4",
+      "question": "质量",
+      "answer": "千克(kg)；1 t=1000 kg，1 kg=1000 g",
+      "extras": {
+        "国际单位": "千克 (kg)",
+        "量纲": "M"
+      }
+    },
+    {
+      "id": "common-units-5",
+      "question": "温度",
+      "answer": "开尔文(K)；T(K)=t(℃)+273.15，1 K=1℃",
+      "extras": {
+        "国际单位": "开尔文 (K)",
+        "量纲": "Θ"
+      }
+    },
+    {
+      "id": "common-units-6",
+      "question": "时间",
+      "answer": "秒(s)；1 min=60 s，1 h=3600 s",
+      "extras": {
+        "国际单位": "秒 (s)",
+        "量纲": "T"
+      }
+    },
+    {
+      "id": "common-units-7",
+      "question": "电流",
+      "answer": "安培(A)；1 mA=10⁻³ A，1 μA=10⁻⁶ A",
+      "extras": {
+        "国际单位": "安培 (A)",
+        "量纲": "I"
+      }
+    },
+    {
+      "id": "common-units-8",
+      "question": "速度",
+      "answer": "米每秒(m/s)；1 km/h≈0.2778 m/s",
+      "extras": {
+        "国际单位": "米每秒 (m/s)",
+        "量纲": "LT⁻¹"
+      }
+    },
+    {
+      "id": "common-units-9",
+      "question": "力",
+      "answer": "牛顿(N)；F=ma，1 N=1 kg·m/s²",
+      "extras": {
+        "国际单位": "牛顿 (N)",
+        "量纲": "MLT⁻²"
+      }
+    },
+    {
+      "id": "common-units-10",
+      "question": "功与能量",
+      "answer": "焦耳(J)；1 J=1 N·m，1 kW·h=3.6×10⁶ J",
+      "extras": {
+        "国际单位": "焦耳 (J)",
+        "量纲": "ML²T⁻²"
+      }
+    },
+    {
+      "id": "common-units-11",
+      "question": "功率",
+      "answer": "瓦特(W)；P=W/t，1 kW=1000 W",
+      "extras": {
+        "国际单位": "瓦特 (W)",
+        "量纲": "ML²T⁻³"
+      }
+    },
+    {
+      "id": "common-units-12",
+      "question": "压强",
+      "answer": "帕斯卡(Pa)；1 atm≈1.013×10⁵ Pa",
+      "extras": {
+        "国际单位": "帕斯卡 (Pa)",
+        "量纲": "ML⁻¹T⁻²"
+      }
+    },
+    {
+      "id": "common-units-13",
+      "question": "电荷量",
+      "answer": "库仑(C)；Q=It，1 C=1 A·s",
+      "extras": {
+        "国际单位": "库仑 (C)",
+        "量纲": "IT"
+      }
+    },
+    {
+      "id": "common-units-14",
+      "question": "电压",
+      "answer": "伏特(V)；U=IR，1 kV=1000 V",
+      "extras": {
+        "国际单位": "伏特 (V)",
+        "量纲": "ML²T⁻³I⁻¹"
+      }
+    },
+    {
+      "id": "common-units-15",
+      "question": "电阻",
+      "answer": "欧姆(Ω)；R=U/I，1 kΩ=1000 Ω",
+      "extras": {
+        "国际单位": "欧姆 (Ω)",
+        "量纲": "ML²T⁻³I⁻²"
+      }
+    },
+    {
+      "id": "common-units-16",
+      "question": "热量",
+      "answer": "焦耳(J)；1 cal≈4.186 J，Q=cmΔt",
+      "extras": {
+        "国际单位": "焦耳 (J)",
+        "量纲": "ML²T⁻²"
+      }
+    },
+    {
+      "id": "common-units-17",
+      "question": "角度",
+      "answer": "弧度(rad)；180°=π rad，1°=π/180 rad",
+      "extras": {
+        "国际单位": "弧度 (rad)",
+        "量纲": "无量纲"
+      }
+    },
+    {
+      "id": "common-units-18",
+      "question": "频率",
+      "answer": "赫兹(Hz)；f=1/T，1 kHz=10³ Hz",
+      "extras": {
+        "国际单位": "赫兹 (Hz)",
+        "量纲": "T⁻¹"
+      }
+    },
+    {
+      "id": "common-units-19",
+      "question": "密度",
+      "answer": "千克每立方米(kg/m³)；水≈1000 kg/m³，ρ=m/V",
+      "extras": {
+        "国际单位": "千克每立方米 (kg/m³)",
+        "量纲": "ML⁻³"
+      }
+    },
+    {
+      "id": "common-units-20",
+      "question": "波长",
+      "answer": "米(m)；1 μm=10⁻⁶ m，1 nm=10⁻⁹ m，c=λf",
+      "extras": {
+        "国际单位": "米 (m)",
+        "量纲": "L"
+      }
+    },
+    {
+      "id": "common-units-21",
+      "question": "磁感应强度",
+      "answer": "特斯拉(T)；1 T=1 Wb/m²，F=BIL",
+      "extras": {
+        "国际单位": "特斯拉 (T)",
+        "量纲": "MT⁻²I⁻¹"
+      }
+    }
+  ]
+}
+
+export default pack
