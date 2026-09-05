@@ -52,6 +52,14 @@
           "style": {
             "navigationBarTitleText": "数据同步"
           }
+        },
+        {
+          "path": "focus/focus",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "white",
+            "backgroundColor": "#10241e"
+          }
         }
       ]
     },

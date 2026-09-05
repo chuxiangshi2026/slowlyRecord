@@ -63,6 +63,10 @@
           <view class="action-icon text">📜</view>
           <text class="action-text">诗词记忆</text>
         </view>
+        <view class="action-item" @click="goToFocus">
+          <view class="action-icon focus">🌙</view>
+          <text class="action-text">专注模式</text>
+        </view>
         <view class="action-item" @click="goToMemoryTest">
           <view class="action-icon test">🧠</view>
           <text class="action-text">记忆测试</text>
@@ -150,6 +154,10 @@ const goToTextMemory = () => {
 
 const goToMemoryTest = () => {
   uni.navigateTo({ url: '/subPackages/pages-memory/memory-test/memory-test' })
+}
+
+const goToFocus = () => {
+  uni.navigateTo({ url: '/subPackages/pages-tools/focus/focus' })
 }
 </script>
 
@@ -264,6 +272,7 @@ const goToMemoryTest = () => {
 .action-icon.wordbank { background: #5e35b1; }
 .action-icon.memory { background: #00897b; }
 .action-icon.text { background: #43a047; }
+.action-icon.focus { background: #456; }
 .action-icon.test { background: #ff7043; }
 
 .action-text {
