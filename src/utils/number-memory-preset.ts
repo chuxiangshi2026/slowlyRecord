@@ -44,7 +44,7 @@ export const presetImageMap: PresetImageMap = {
     ]
   },
   4: {
-    keyword: "寺/旗/蛇/ sail",
+    keyword: "寺/旗/蛇/帆",
     suggestions: [
       { name: "寺庙", url: "🏛️", description: "4谐音寺" },
       { name: "旗帜", url: "🚩", description: "4像旗帜" },
@@ -162,7 +162,7 @@ export const presetImageMap: PresetImageMap = {
     ]
   },
   17: {
-    keyword: "仪器/一起/仪器",
+    keyword: "仪器/一起/奇异",
     suggestions: [
       { name: "显微镜", url: "🔬", description: "17像仪器" },
       { name: "望远镜", url: "🔭", description: "17像仪器" },
@@ -281,7 +281,7 @@ export const presetImageMap: PresetImageMap = {
   },
   // 30-39
   30: {
-    keyword: "山洞/伞铃/山洞",
+    keyword: "山洞/伞铃/三零",
     suggestions: [
       { name: "山洞", url: "🕳️", description: "30像山洞" },
       { name: "隧道", url: "🚇", description: "30像隧道" },
@@ -358,7 +358,7 @@ export const presetImageMap: PresetImageMap = {
       { name: "女人", url: "👩", description: "38谐音女人" },
       { name: "伞把", url: "🌂", description: "38像伞把" },
       { name: "葫芦", url: "🍶", description: "38像葫芦" },
-      { name: "妈妈", url: "👩", description: "38像女人" }
+      { name: "妈妈", url: "🤱", description: "38像妈妈" }
     ]
   },
   39: {
@@ -484,7 +484,7 @@ export const presetImageMap: PresetImageMap = {
     keyword: "舞儿/屋鹅/吾儿",
     suggestions: [
       { name: "天鹅", url: "🦢", description: "52舞鹅" },
-      { name: "白鹅", url: "🦢", description: "52白鹅" },
+      { name: "白鹅", url: "🪿", description: "52白鹅" },
       { name: "小鸟", url: "🐦", description: "52吾儿鸟" },
       { name: "鸟巢", url: "🪹", description: "52吾儿巢" }
     ]
@@ -528,7 +528,7 @@ export const presetImageMap: PresetImageMap = {
   57: {
     keyword: "武器/舞鸡/屋脊",
     suggestions: [
-      { name: "武器", url: "🔫", description: "57谐音武器" },
+      { name: "武器", url: "🛡️", description: "57谐音武器" },
       { name: "剑", url: "🗡️", description: "57武器" },
       { name: "枪", url: "🔫", description: "57武器" },
       { name: "弓箭", url: "🏹", description: "57武器" }
@@ -563,7 +563,7 @@ export const presetImageMap: PresetImageMap = {
     ]
   },
   61: {
-    keyword: "六一/六一/流衣",
+    keyword: "六一/儿童/流衣",
     suggestions: [
       { name: "儿童", url: "👦", description: "61六一" },
       { name: "礼物", url: "🎁", description: "61礼物" },
@@ -592,7 +592,7 @@ export const presetImageMap: PresetImageMap = {
   64: {
     keyword: "牛屎/律师/六四",
     suggestions: [
-      { name: "律师", url: "⚖️", description: "64谐音律师" },
+      { name: "律师", url: "📜", description: "64谐音律师" },
       { name: "天平", url: "⚖️", description: "64天平" },
       { name: "法官", url: "👨‍⚖️", description: "64像法官" },
       { name: "法槌", url: "🔨", description: "64法槌" }
@@ -713,7 +713,7 @@ export const presetImageMap: PresetImageMap = {
       { name: "象棋", url: "♟️", description: "77棋棋" },
       { name: "棋盘", url: "🎯", description: "77棋盘" },
       { name: "七", url: "7️⃣", description: "77七七" },
-      { name: "双七", url: "77", description: "77双七" }
+      { name: "双七", url: "🌌", description: "77七夕星空" }
     ]
   },
   78: {
@@ -741,7 +741,7 @@ export const presetImageMap: PresetImageMap = {
       { name: "发令", url: "🏃", description: "80发令" },
       { name: "枪", url: "🔫", description: "80发令枪" },
       { name: "起跑", url: "🏁", description: "80起跑" },
-      { name: "裁判", url: "🧑‍", description: "80裁判" }
+      { name: "裁判", url: "🧑‍⚖️", description: "80裁判" }
     ]
   },
   81: {
@@ -759,7 +759,7 @@ export const presetImageMap: PresetImageMap = {
       { name: "儿子", url: "👦", description: "82发儿" },
       { name: "小孩", url: "🧒", description: "82发儿" },
       { name: "婴儿", url: "👶", description: "82发儿" },
-      { name: "爸爸", url: "👨‍", description: "82爸儿" }
+      { name: "爸爸", url: "👨‍👦", description: "82父子" }
     ]
   },
   83: {
@@ -768,7 +768,7 @@ export const presetImageMap: PresetImageMap = {
       { name: "伞", url: "☂️", description: "83发伞" },
       { name: "山", url: "⛰️", description: "83八山" },
       { name: "发财", url: "💰", description: "83发财" },
-      { name: "金山", url: "⛰️", description: "83金山" }
+      { name: "金山", url: "🗻", description: "83金山" }
     ]
   },
   84: {
@@ -803,7 +803,7 @@ export const presetImageMap: PresetImageMap = {
     suggestions: [
       { name: "妻子", url: "👩", description: "87巴妻" },
       { name: "鸡", url: "🐔", description: "87发起" },
-      { name: "开始", url: "🚀", description: "87发起" },
+      { name: "开始", url: "🌅", description: "87日出开始" },
       { name: "火箭", url: "🚀", description: "87发起" }
     ]
   },
@@ -838,7 +838,7 @@ export const presetImageMap: PresetImageMap = {
   91: {
     keyword: "九一/酒衣/舅衣",
     suggestions: [
-      { name: "衣服", url: "👘", description: "91酒衣" },
+      { name: "衣服", url: "👕", description: "91酒衣" },
       { name: "和服", url: "👘", description: "91和服" },
       { name: "酒保", url: "🤵", description: "91酒保" },
       { name: "制服", url: "🥼", description: "91制服" }
@@ -884,7 +884,7 @@ export const presetImageMap: PresetImageMap = {
     keyword: "九六/酒柳/久留",
     suggestions: [
       { name: "柳树", url: "🌿", description: "96酒柳" },
-      { name: "久留", url: "⏳", description: "96久留" },
+      { name: "久留", url: "♾️", description: "96久留" },
       { name: "沙漏", url: "⏳", description: "96沙漏" },
       { name: "树", url: "🌳", description: "96柳树" }
     ]
@@ -904,7 +904,7 @@ export const presetImageMap: PresetImageMap = {
       { name: "发财", url: "💰", description: "98酒发" },
       { name: "爸爸", url: "👨", description: "98九爸" },
       { name: "金币", url: "🪙", description: "98金币" },
-      { name: "钱袋", url: "💰", description: "98钱袋" }
+      { name: "钱袋", url: "🧧", description: "98红包" }
     ]
   },
   99: {
