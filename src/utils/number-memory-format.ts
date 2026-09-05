@@ -99,6 +99,31 @@ function segmentByPattern(numbers: string, pattern: number[]): string {
     return groups.join(' ');
 }
 
+/** 条目导出的单条字段（与 NumberMemoryEntries.vue 的 JSON 导入解析字段保持往返一致） */
+export interface EntryExportItem {
+    title: string;
+    numbers: string;
+    tags: string[];
+    kind: NumberMemoryKind;
+    description?: string;
+    mnemonic?: string;
+}
+
+/**
+ * 将条目列表序列化为导入兼容的 JSON 字符串（仅含导入解析所需的业务字段）
+ */
+export function buildEntriesExportJson(entries: NumberMemoryEntry[]): string {
+    const items: EntryExportItem[] = entries.map(entry => ({
+        title: entry.title,
+        numbers: entry.numbers,
+        tags: [...entry.tags],
+        kind: getEntryKind(entry),
+        ...(entry.description ? {description: entry.description} : {}),
+        ...(entry.mnemonic ? {mnemonic: entry.mnemonic} : {}),
+    }));
+    return JSON.stringify(items, null, 2);
+}
+
 export interface ValidateResult {
     valid: boolean;
     message?: string;

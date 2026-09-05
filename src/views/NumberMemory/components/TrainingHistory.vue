@@ -10,8 +10,8 @@
       <h4 class="section-title">📝 未完成的训练</h4>
       <el-card class="history-card" size="small">
         <div class="record-header">
-          <el-tag :type="progress.mode === 'numberToImage' ? 'primary' : 'success'">
-            {{ progress.mode === 'numberToImage' ? '数字→图片' : '图片→数字' }}
+          <el-tag :type="modeTagType(progress.mode)">
+            {{ modeLabel(progress.mode) }}
           </el-tag>
           <span class="progress-text">
             第 {{ progress.current }}/{{ progress.total }} 题
@@ -50,8 +50,8 @@
         >
           <el-card class="history-card" size="small">
             <div class="record-header">
-              <el-tag :type="record.mode === 'numberToImage' ? 'primary' : 'success'">
-                {{ record.mode === 'numberToImage' ? '数字→图片' : '图片→数字' }}
+              <el-tag :type="modeTagType(record.mode)">
+                {{ modeLabel(record.mode) }}
               </el-tag>
               <span class="accuracy" :class="getAccuracyClass(record)">
                 {{ calculateAccuracy(record) }}%
@@ -66,7 +66,11 @@
                 <span class="label">用时:</span>
                 <span class="value">{{ formatTime(record.duration) }}</span>
               </div>
-              <div class="stat">
+              <div v-if="record.mode === 'randomSequence'" class="stat">
+                <span class="label">最高:</span>
+                <span class="value">{{ maxSequenceLength(record) }}位</span>
+              </div>
+              <div v-else class="stat">
                 <span class="label">平均:</span>
                 <span class="value">{{ calculateAvgTime(record) }}秒/题</span>
               </div>
@@ -148,6 +152,27 @@ function formatTime(seconds: number): string {
 
 function calculateAccuracy(record: TrainingResult): number {
   return Math.round((record.correctAnswers / record.totalQuestions) * 100);
+}
+
+// 模式标签文案（随机序列为按轮计的记录）
+function modeLabel(mode: string): string {
+  if (mode === 'numberToImage') return '数字→图片';
+  if (mode === 'imageToNumber') return '图片→数字';
+  return '随机序列';
+}
+
+function modeTagType(mode: string): 'primary' | 'success' | 'warning' {
+  if (mode === 'numberToImage') return 'primary';
+  if (mode === 'imageToNumber') return 'success';
+  return 'warning';
+}
+
+// 随机序列记录：取答对轮次中的最大位数作为"最高记忆位数"
+function maxSequenceLength(record: TrainingResult): number {
+  return record.details.reduce(
+    (max, d) => (d.correct && d.number.length > max ? d.number.length : max),
+    0,
+  );
 }
 
 function calculateAvgTime(record: TrainingResult): number {

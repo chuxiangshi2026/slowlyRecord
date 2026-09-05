@@ -216,7 +216,7 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
    * 保存训练结果
    */
   async function saveResult(
-    mode: 'numberToImage' | 'imageToNumber',
+    mode: TrainingResult['mode'],
     totalQuestions: number,
     correctAnswers: number,
     duration: number,

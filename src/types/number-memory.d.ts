@@ -26,7 +26,7 @@ export interface TrainingResult {
   _id: string;
   _rev?: string;
   type: 'number_memory_result';
-  mode: 'numberToImage' | 'imageToNumber'; // 训练模式
+  mode: 'numberToImage' | 'imageToNumber' | 'randomSequence'; // 训练模式（randomSequence 按轮计）
   totalQuestions: number;   // 总题数
   correctAnswers: number;   // 答对题数
   duration: number;         // 用时（秒）

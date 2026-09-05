@@ -179,6 +179,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="importJson">JSON 导入</el-dropdown-item>
+              <el-dropdown-item command="exportJson">JSON 导出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -328,6 +329,7 @@ import {
   segmentNumber,
   validateNumber,
   getEntryKind,
+  buildEntriesExportJson,
 } from '@/utils/number-memory-format';
 import {getEntryLevel, isDue} from '@/utils/number-memory-srs';
 import {getMnemonicExample} from '@/utils/number-mnemonic-data';
@@ -642,11 +644,32 @@ function handlePrompts(entry: NumberMemoryEntry) {
   showPromptsDialog.value = true;
 }
 
-// 导入命令
+// 导入/导出命令
 const handleImportCommand = (command: string) => {
   if (command === 'importJson') {
     importFileInput.value?.click();
+  } else if (command === 'exportJson') {
+    handleExportJson();
   }
+};
+
+// 导出当前过滤结果为导入兼容的 JSON（字段与导入解析往返一致）
+const handleExportJson = () => {
+  if (filteredEntries.value.length === 0) {
+    ElMessage.warning('当前没有可导出的条目');
+    return;
+  }
+  const json = buildEntriesExportJson(filteredEntries.value);
+  const now = new Date();
+  const ymd = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+  const blob = new Blob([json], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `数字记忆条目-${ymd}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  ElMessage.success(`已导出 ${filteredEntries.value.length} 条条目`);
 };
 
 // 处理导入文件选择

@@ -155,7 +155,7 @@ describe('NumberMemoryTraining', () => {
     expect(screen.getByText(/第 1 轮 · 5 位/)).toBeInTheDocument()
   })
 
-  it('随机序列：生成指定位数数字串，显示结束后答错即结束且不落库', async () => {
+  it('随机序列：生成指定位数数字串，显示结束后答错即结束并按轮落库', async () => {
     await setup()
     stubRandomAllOne()
 
@@ -189,8 +189,15 @@ describe('NumberMemoryTraining', () => {
     expect(values[0]).toHaveTextContent('0')
     expect(values[1]).toHaveTextContent('0')
 
-    // 随机序列成绩不落库：不写训练结果、不写进度
-    expect(hoisted.numberStore.saveResult).not.toHaveBeenCalled()
+    // 随机序列按轮落库：本轮一条明细（答错轮 0/1），不写断点进度
+    expect(hoisted.numberStore.saveResult).toHaveBeenCalledTimes(1)
+    expect(hoisted.numberStore.saveResult).toHaveBeenCalledWith(
+      'randomSequence',
+      1,
+      0,
+      expect.any(Number),
+      [expect.objectContaining({ number: '11111', correct: false })],
+    )
     expect(hoisted.db.saveTrainingProgress).not.toHaveBeenCalled()
   }, 20000)
 
@@ -235,7 +242,18 @@ describe('NumberMemoryTraining', () => {
     expect(stats[0].textContent).toContain('5')
     expect(stats[1].textContent).toContain('1')
     expect(stats[1].textContent).not.toContain('%')
-    expect(hoisted.numberStore.saveResult).not.toHaveBeenCalled()
+    // 按轮落库：两轮明细，1 对 1 错
+    expect(hoisted.numberStore.saveResult).toHaveBeenCalledTimes(1)
+    expect(hoisted.numberStore.saveResult).toHaveBeenCalledWith(
+      'randomSequence',
+      2,
+      1,
+      expect.any(Number),
+      [
+        expect.objectContaining({ number: '11111', correct: true }),
+        expect.objectContaining({ number: '111111', correct: false }),
+      ],
+    )
   }, 20000)
 
   it('数字→图片：完成训练后结果页正确率带百分号并保存结果', async () => {

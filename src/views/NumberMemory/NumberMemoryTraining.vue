@@ -292,7 +292,7 @@ const isFinished = ref(false);
 const elapsedTime = ref(0);
 const answerResults = ref<{ question: string; selectedImage: string | null; selectedNumber: string | null; correct: boolean; responseTime: number }[]>([]);
 
-// 随机序列训练状态（纯会话，不写 DB）
+// 随机序列训练状态（结束时按轮写入训练历史）
 const randomSequenceLength = ref(5);
 const randomSequenceMin = 5;
 const randomSequenceMax = 100;
@@ -301,6 +301,9 @@ const randomSequenceInput = ref("");
 const randomSequenceShow = ref(false);
 const randomSequenceScore = ref(0);
 const randomSequenceRound = ref(1);
+// 按轮沉淀的结果（训练历史用）：每轮一条
+const randomSequenceResults = ref<{ number: string; correct: boolean; responseTime: number }[]>([]);
+let randomSequenceRoundStart = 0;
 let randomSequenceTimer: number | null = null;
 
 // Timer
@@ -445,6 +448,7 @@ function resetRandomSequenceState() {
   randomSequenceRound.value = 1;
   randomSequenceInput.value = "";
   randomSequenceQuestion.value = "";
+  randomSequenceResults.value = [];
   isFinished.value = false;
   elapsedTime.value = 0;
   answerResults.value = [];
@@ -466,6 +470,7 @@ function startRandomSequenceRound() {
   randomSequenceInput.value = "";
   randomSequenceShow.value = true;
   hasAnswered.value = false;
+  randomSequenceRoundStart = Date.now();
 
   // 限时显示：每 5 位 1 秒，最低 2 秒
   const displaySeconds = Math.max(2, Math.ceil(randomSequenceLength.value / 5));
@@ -493,6 +498,13 @@ function checkRandomSequence() {
   const correct = input === randomSequenceQuestion.value;
   isCorrect.value = correct;
 
+  // 沉淀本轮结果（训练历史用）
+  randomSequenceResults.value.push({
+    number: randomSequenceQuestion.value,
+    correct,
+    responseTime: Date.now() - randomSequenceRoundStart,
+  });
+
   if (correct) {
     randomSequenceScore.value = Math.max(randomSequenceScore.value, randomSequenceLength.value);
     ElMessage.success(`正确！进入 ${randomSequenceLength.value + 1} 位挑战`);
@@ -513,13 +525,22 @@ function checkRandomSequence() {
 }
 
 // 随机序列模式：结束
-function finishRandomSequence() {
+async function finishRandomSequence() {
   stopRandomSequenceTimer();
   stopTimer();
   isFinished.value = true;
   // 未通过任何轮时保持 0，避免首轮答错显示 "最高记忆到 4 位" 这类误导数字
   if (randomSequenceScore.value > 0) {
     randomSequenceScore.value = Math.max(randomSequenceScore.value, randomSequenceLength.value - 1);
+  }
+
+  // 按轮保存训练结果：totalQuestions=完成轮数、correctAnswers=答对轮数
+  const rounds = randomSequenceResults.value;
+  if (rounds.length === 0) return;
+  const correctRounds = rounds.filter(r => r.correct).length;
+  const result = await store.saveResult('randomSequence', rounds.length, correctRounds, elapsedTime.value, [...rounds]);
+  if (result.ok) {
+    ElMessage.success("训练结果已保存");
   }
 }
 
@@ -557,11 +578,6 @@ function nextQuestion() {
 async function finishTraining() {
   stopTimer();
   isFinished.value = true;
-
-  // 随机序列模式不保存训练结果
-  if (currentMode.value === 'randomSequence') {
-    return;
-  }
 
   // 训练完成，清除进度
   clearTrainingProgress();
