@@ -228,3 +228,39 @@ export interface RestoreResult {
   numberMemory?: MobileNumberMemory
   error?: string
 }
+
+// ==================== 音标记忆 ====================
+
+/** 单个音素的练习进度（与桌面端 src/types/phonetic-memory.d.ts 一致） */
+export interface PhonemeProgress {
+  /** IPA 符号 */
+  ipa: string
+  /** 等级 0-12，对应 DEFAULT_INTERVALS；>=7 视为已掌握 */
+  level: number
+  /** 上次练习时间戳 */
+  learnDate: number
+  /** 正确次数 */
+  correct: number
+  /** 错误次数 */
+  wrong: number
+}
+
+/** 最小对立对的练习进度 */
+export interface MinimalPairProgress {
+  /** 对子唯一键，格式 `a|b`（按字母排序） */
+  pairKey: string
+  level: number
+  learnDate: number
+  correct: number
+  wrong: number
+}
+
+/** 音标学习进度文档（doc id 与桌面端一致：phonetic_memory_progress） */
+export interface PhoneticProgressDoc {
+  _id: string
+  _rev?: string
+  /** 按 IPA 索引的音素进度 */
+  phonemes: Record<string, PhonemeProgress>
+  /** 按 pairKey 索引的对子进度 */
+  pairs: Record<string, MinimalPairProgress>
+}

@@ -2,16 +2,9 @@ import { ref, computed, shallowRef } from 'vue'
 import { defineStore } from 'pinia'
 import { getDbAdapter, type DbDoc } from '@/adapters/index'
 import { WORDBANK_LIST } from './useUtils/wordbank'
+import { DEFAULT_INTERVALS } from './useUtils/constants'
 import type { MobileItemType } from './useUtils/types'
 import { normalizeWordText, getWordKey } from '../utils/text-utils'
-
-// 默认复习间隔（单位：分钟）与桌面端保持一致
-const DEFAULT_INTERVALS = [
-  1, 5, 30, 6 * 60, 12 * 60, 24 * 60,
-  2 * 24 * 60, 4 * 24 * 60, 7 * 24 * 60,
-  15 * 24 * 60, 30 * 24 * 60, 3 * 30 * 24 * 60,
-  6 * 30 * 24 * 60, 12 * 30 * 24 * 60
-]
 
 export interface MobileWord {
   id: string

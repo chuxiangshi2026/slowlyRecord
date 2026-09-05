@@ -63,6 +63,10 @@
           <view class="action-icon text">📜</view>
           <text class="action-text">诗词记忆</text>
         </view>
+        <view class="action-item" @click="goToPhoneticMemory">
+          <view class="action-icon phonetic">🔤</view>
+          <text class="action-text">音标学习</text>
+        </view>
         <view class="action-item" @click="goToFocus">
           <view class="action-icon focus">🌙</view>
           <text class="action-text">专注模式</text>
@@ -150,6 +154,10 @@ const goToNumberMemory = () => {
 
 const goToTextMemory = () => {
   uni.navigateTo({ url: '/subPackages/pages-memory/text-memory/text-memory' })
+}
+
+const goToPhoneticMemory = () => {
+  uni.navigateTo({ url: '/subPackages/pages-memory/phonetic-memory/phonetic-memory' })
 }
 
 const goToMemoryTest = () => {
@@ -272,6 +280,7 @@ const goToFocus = () => {
 .action-icon.wordbank { background: #5e35b1; }
 .action-icon.memory { background: #00897b; }
 .action-icon.text { background: #43a047; }
+.action-icon.phonetic { background: #7b1fa2; }
 .action-icon.focus { background: #456; }
 .action-icon.test { background: #ff7043; }
 

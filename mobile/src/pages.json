@@ -107,6 +107,30 @@
           "style": {
             "navigationBarTitleText": "记忆测试"
           }
+        },
+        {
+          "path": "phonetic-memory/phonetic-memory",
+          "style": {
+            "navigationBarTitleText": "音标学习"
+          }
+        },
+        {
+          "path": "phonetic-memory/phonetic-recognition",
+          "style": {
+            "navigationBarTitleText": "音标识别"
+          }
+        },
+        {
+          "path": "phonetic-memory/phonetic-minimal-pairs",
+          "style": {
+            "navigationBarTitleText": "最小对立对"
+          }
+        },
+        {
+          "path": "phonetic-memory/phonetic-breakdown",
+          "style": {
+            "navigationBarTitleText": "音素拆解"
+          }
         }
       ]
     },
