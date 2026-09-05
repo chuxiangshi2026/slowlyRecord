@@ -74,9 +74,12 @@
           </table>
         </div>
 
-        <!-- 元素周期表：标准 18 列周期律排布 -->
+        <!-- 元素周期表：标准 18 列周期律排布（第 6/7 周期第 3 列为镧锕系占位，折行展示在末两行） -->
         <div v-else-if="periodicGrid" class="periodic-table">
           <template v-for="(row, ri) in periodicGrid" :key="ri">
+            <div v-if="ri >= F_BLOCK_ROW_START" class="f-row-label">
+              {{ ri === F_BLOCK_ROW_START ? '镧系' : '锕系' }}
+            </div>
             <div
               v-for="(cell, ci) in row"
               :key="ci"
@@ -387,7 +390,7 @@ import type {ViewRange} from '@/utils/function-plot-util';
 import SceneAnimation from './components/SceneAnimation.vue';
 import {getSceneAnimation} from './scene-maps';
 import type {SceneConfig} from './scene-maps';
-import {buildMultiplicationGrid, buildPeriodicTable} from './preview-layout';
+import {buildMultiplicationGrid, buildPeriodicTable, F_BLOCK_ROW_START} from './preview-layout';
 
 /** 打印/存图的表格形态 */
 type TableForm = 'full' | 'blank';
@@ -1011,11 +1014,22 @@ async function handleResetProgress() {
   }
 }
 
-/* 元素周期表：18 列网格 */
+/* 元素周期表：18 列网格（末两行为镧系/锕系折行，前 2 列放行标签） */
 .periodic-table {
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   gap: 4px;
+}
+
+.f-row-label {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--utools-text-tertiary);
+  border: 1px dashed var(--utools-border-primary);
+  border-radius: 6px;
 }
 
 .element-cell {

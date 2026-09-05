@@ -33,7 +33,7 @@ export const DEFAULT_STRATEGY: LoadStrategy = {
 export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math'},
     {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math'},
-    {id: 'elements', name: '元素周期表（前 54 号）', description: '元素周期表前 54 号元素（氢到氙）：符号、中文名、序数与拼音', itemCount: 54, ordered: false, usableAsPeg: false, category: 'math', version: 4},
+    {id: 'elements', name: '元素周期表', description: '元素周期表 118 号元素（氢到鿫）：符号、中文名、序数、拼音与类别', itemCount: 118, ordered: false, usableAsPeg: false, category: 'math', version: 4},
     {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 3},
     {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 3},
     {id: 'number-pegs-12', name: '数字桩（1-12）', description: '经典数字形象桩，1-6 号位提供多个备选桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},

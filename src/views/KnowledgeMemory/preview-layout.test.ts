@@ -88,12 +88,12 @@ describe('buildPeriodicTable', () => {
   const element = (n: number, symbol: string, name: string) =>
     makeItem(`elements-${symbol}`, symbol, name, {'序数': String(n)})
 
-  it('前 36 号元素排成 4 行 18 列', () => {
+  it('前 36 号元素排成 9 行（7 主周期 + 镧锕系 2 折行）18 列', () => {
     // 简化：符号用 E<n> 代替，序数 1-36 连续
     const items = Array.from({length: 36}, (_, i) => element(i + 1, `E${i + 1}`, `元素${i + 1}`))
     const rows = buildPeriodicTable(items)
     expect(rows).not.toBeNull()
-    expect(rows!).toHaveLength(4)
+    expect(rows!).toHaveLength(9)
     expect(rows![0]).toHaveLength(PERIODIC_COLUMNS)
   })
 

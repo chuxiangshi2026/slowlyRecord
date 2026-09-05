@@ -73,8 +73,15 @@ export function buildMultiplicationGrid(items: KnowledgeItem[]): MultiplicationG
 /** 周期表列数（标准 18 列） */
 export const PERIODIC_COLUMNS = 18;
 
-/** 每周期容纳的元素数（前 5 周期足够覆盖前 36 号元素） */
-const PERIOD_LENGTHS = [2, 8, 8, 18, 18];
+/** 镧系（57-71）/锕系（89-103）序数范围（f 区，折入独立行展示） */
+const LANTHANIDE_RANGE: [number, number] = [57, 71];
+const ACTINIDE_RANGE: [number, number] = [89, 103];
+
+/** 镧系折行在返回网格中的行下标（7 个主周期行之后），锕系行为其下一行 */
+export const F_BLOCK_ROW_START = 7;
+
+/** 支持的最大原子序数 */
+export const MAX_ATOMIC_NUMBER = 118;
 
 /** 周期表中的一个格子 */
 export interface PeriodicCell {
@@ -89,9 +96,11 @@ export interface PeriodicCell {
 }
 
 /**
- * 按 extras.序数 把元素排进 18 列周期表（行 = 周期，列按周期内顺序连续排列；
- * 第 1 周期特殊：H 在第 1 列、He 在第 18 列）。
- * 有条目缺少正整数序数、或超出已知周期范围时返回 null（调用方回退通用表格）。
+ * 按 extras.序数 把元素排进 18 列周期表。
+ * 返回 9 行：7 个主周期行 + 镧系/锕系 2 个折行（从第 3 列起排 15 格，
+ * 对应主行第 6/7 周期第 3 列留空作 f 区占位）。
+ * 第 1 周期特殊：H 在第 1 列、He 在第 18 列。
+ * 有条目缺少正整数序数、或序数超过 MAX_ATOMIC_NUMBER 时返回 null（调用方回退通用表格）。
  */
 export function buildPeriodicTable(items: KnowledgeItem[]): (PeriodicCell | null)[][] | null {
     if (items.length === 0) return null;
@@ -105,27 +114,47 @@ export function buildPeriodicTable(items: KnowledgeItem[]): (PeriodicCell | null
     parsed.sort((x, y) => x.n - y.n);
 
     const rows: (PeriodicCell | null)[][] = [];
-    let period = 0;
-    let col = 0;
+    for (let i = 0; i < F_BLOCK_ROW_START + 2; i++) {
+        rows.push(new Array<PeriodicCell | null>(PERIODIC_COLUMNS).fill(null));
+    }
+
+    const put = (row: number, col: number, item: KnowledgeItem, n: number) => {
+        rows[row][col] = {atomicNumber: n, symbol: item.question, name: item.answer, itemId: item.id};
+    };
+
     for (const {item, n} of parsed) {
-        // 当前周期放满则进入下一周期
-        while (period < PERIOD_LENGTHS.length && col >= PERIOD_LENGTHS[period]) {
-            period++;
-            col = 0;
+        if (n > MAX_ATOMIC_NUMBER) return null;
+        if (n === 1) {
+            put(0, 0, item, n); // H
+            continue;
         }
-        if (period >= PERIOD_LENGTHS.length) return null;
-        while (rows.length <= period) {
-            rows.push(new Array<PeriodicCell | null>(PERIODIC_COLUMNS).fill(null));
+        if (n === 2) {
+            put(0, PERIODIC_COLUMNS - 1, item, n); // He
+            continue;
         }
-        // 第 1 周期的第 2 个元素（He）放最后一列
-        const targetCol = period === 0 && col === 1 ? PERIODIC_COLUMNS - 1 : col;
-        rows[period][targetCol] = {
-            atomicNumber: n,
-            symbol: item.question,
-            name: item.answer,
-            itemId: item.id,
-        };
-        col++;
+        if (n >= LANTHANIDE_RANGE[0] && n <= LANTHANIDE_RANGE[1]) {
+            // 镧系折行：La 从第 3 列起连排 15 格
+            put(F_BLOCK_ROW_START, n - LANTHANIDE_RANGE[0] + 2, item, n);
+            continue;
+        }
+        if (n >= ACTINIDE_RANGE[0] && n <= ACTINIDE_RANGE[1]) {
+            // 锕系折行：Ac 从第 3 列起连排 15 格
+            put(F_BLOCK_ROW_START + 1, n - ACTINIDE_RANGE[0] + 2, item, n);
+            continue;
+        }
+        // 主行：第 2-5 周期按周期内序连排；第 6/7 周期跳过第 3 列（f 区占位）
+        let row: number;
+        let col: number;
+        if (n <= 10) { row = 1; col = n - 3; }
+        else if (n <= 18) { row = 2; col = n - 11; }
+        else if (n <= 36) { row = 3; col = n - 19; }
+        else if (n <= 54) { row = 4; col = n - 37; }
+        else if (n <= 56) { row = 5; col = n - 55; }
+        else if (n <= 86) { row = 5; col = n - 69; }  // 72→3 … 86→17
+        else if (n <= 88) { row = 6; col = n - 87; }
+        else { row = 6; col = n - 101; }              // 104→3 … 118→17
+        if (col < 0 || col >= PERIODIC_COLUMNS) return null;
+        put(row, col, item, n);
     }
     return rows;
 }
