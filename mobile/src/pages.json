@@ -116,6 +116,12 @@
           "style": {
             "navigationBarTitleText": "默认词库"
           }
+        },
+        {
+          "path": "wrong-words/wrong-words",
+          "style": {
+            "navigationBarTitleText": "错题本"
+          }
         }
       ]
     },
@@ -189,19 +195,27 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/words/words",
-        "text": "单词"
+        "text": "单词",
+        "iconPath": "static/tabbar/words.png",
+        "selectedIconPath": "static/tabbar/words-active.png"
       },
       {
         "pagePath": "pages/review/review",
-        "text": "复习"
+        "text": "复习",
+        "iconPath": "static/tabbar/review.png",
+        "selectedIconPath": "static/tabbar/review-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "static/tabbar/profile.png",
+        "selectedIconPath": "static/tabbar/profile-active.png"
       }
     ]
   }

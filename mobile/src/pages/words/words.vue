@@ -51,6 +51,14 @@
           </view>
         </view>
       </view>
+      <!-- 错题本入口 -->
+      <view class="filter-row">
+        <text class="filter-label">错题</text>
+        <view class="wrong-words-entry" @click="goToWrongWords">
+          <text class="wrong-entry-text">错题本（{{ wrongWordsCount }}）</text>
+          <text class="wrong-entry-arrow">›</text>
+        </view>
+      </view>
       <!-- 重置 -->
       <view class="filter-row" v-if="hasAnyFilter">
         <view class="reset-btn" @click="resetFilter">
@@ -337,6 +345,15 @@ const goToWordBank = () => {
   uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
 }
 
+// 错题本：复习过但等级仍 ≤2 的单词（与错题本页面口径一致）
+const wrongWordsCount = computed(() =>
+  wordsStore.words.filter(w => (w.level || 1) <= 2 && (w.reviewCount || 0) > 0).length
+)
+
+const goToWrongWords = () => {
+  uni.navigateTo({ url: '/subPackages/pages-data/wrong-words/wrong-words' })
+}
+
 const showAddDialog = () => {
   uni.navigateTo({ url: '/subPackages/pages-tools/add-word/add-word' }).catch((err) => {
     console.error('跳转添加单词页面失败:', err)
@@ -542,6 +559,27 @@ const formatDate = (timestamp: number): string => {
 .sort-arrow {
   margin-left: 4rpx;
   font-size: 22rpx;
+}
+
+/* 错题本入口 */
+.wrong-words-entry {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12rpx 24rpx;
+  border-radius: 24rpx;
+  background: #fff0f0;
+}
+
+.wrong-entry-text {
+  font-size: 24rpx;
+  color: #e53935;
+}
+
+.wrong-entry-arrow {
+  font-size: 26rpx;
+  color: #e53935;
 }
 
 .reset-btn {
