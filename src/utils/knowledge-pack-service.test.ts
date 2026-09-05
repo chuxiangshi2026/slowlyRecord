@@ -55,8 +55,8 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 29 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(29)
+    it('应包含 35 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(35)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -74,7 +74,7 @@ describe('knowledge-pack-service', () => {
       const info = getKnowledgePackInfo('elements')
       expect(info).toBeDefined()
       expect(info?.id).toBe('elements')
-      expect(info?.itemCount).toBe(54)
+      expect(info?.itemCount).toBe(118)
     })
 
     it('getKnowledgePackInfo 对不存在的包返回 undefined', () => {
@@ -87,7 +87,7 @@ describe('knowledge-pack-service', () => {
 
     it('listKnowledgePacks 按 category 过滤', () => {
       const math = listKnowledgePacks('math')
-      expect(math).toHaveLength(11)
+      expect(math).toHaveLength(13)
       expect(math.map(p => p.id).sort()).toEqual([
         'chemistry-formulas',
         'common-units',
@@ -100,11 +100,14 @@ describe('knowledge-pack-service', () => {
         'multiplication-19x19',
         'multiplication-9x9',
         'physics-formulas',
+        'primes-under-100',
+        'squares-cubes-powers',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(18)
+      expect(text).toHaveLength(22)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
+        'alphabet-pegs-26',
         'biology-experiments',
         'body-pegs-12',
         'colors-12',
@@ -119,9 +122,12 @@ describe('knowledge-pack-service', () => {
         'number-pegs-12',
         'physics-experiments',
         'physics-laws',
+        'poker-pegs-52',
         'provinces-capitals',
         'room-pegs-12',
         'solar-terms-24',
+        'thirty-six-stratagems',
+        'world-capitals-40',
         'zodiac-12',
       ])
     })
@@ -207,7 +213,8 @@ describe('knowledge-pack-service', () => {
         expect(info!.category).toBe(category)
         expect(info!.ordered).toBe(ordered)
         expect(info!.usableAsPeg).toBe(usableAsPeg)
-        expect(info!.version).toBe(1)
+        // dynasties-china 因史实修正（夏创立者/东周止年）升到 2，其余仍为 1
+        expect(info!.version).toBe(id === 'dynasties-china' ? 2 : 1)
 
         const pack = readPackFile(id)
         expect(pack.id).toBe(id)
@@ -243,11 +250,11 @@ describe('knowledge-pack-service', () => {
     })
 
     it('各包数据版本符合预期，未显式声明版本的包默认 1', () => {
-      // elements 扩到 54 号元素 → 3；solar-terms-24 / zodiac-12 追加 imageUrl → 3
-      expect(getKnowledgePackInfo('elements')?.version).toBe(3)
+      // elements 拼音修正 + 扩到 118 号元素 → 4；solar-terms-24 / zodiac-12 追加 imageUrl → 3
+      expect(getKnowledgePackInfo('elements')?.version).toBe(4)
       expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(3)
       expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(3)
-      expect(getPackVersion('elements')).toBe(3)
+      expect(getPackVersion('elements')).toBe(4)
       expect(getPackVersion('solar-terms-24')).toBe(3)
       expect(getPackVersion('zodiac-12')).toBe(3)
       // 从未声明过 version 的包，追加 imageUrl 后升到 2
@@ -260,14 +267,74 @@ describe('knowledge-pack-service', () => {
       expect(getPackVersion('multiplication-9x9')).toBe(1)
       // constellations-12 追加星座符号 emoji imageUrl → 2
       expect(getPackVersion('constellations-12')).toBe(2)
-      // 本轮新增的 8 个包均为 1
-      ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12', 'dynasties-china',
-        'common-units', 'colors-12', 'musical-notes', 'math-formulas-2'].forEach(id => {
+      // dynasties-china 史实修正 → 2
+      expect(getKnowledgePackInfo('dynasties-china')?.version).toBe(2)
+      expect(getPackVersion('dynasties-china')).toBe(2)
+      // 其余历史包与本轮新增的 6 个包均为 1
+      ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12',
+        'common-units', 'colors-12', 'musical-notes', 'math-formulas-2',
+        'squares-cubes-powers', 'primes-under-100', 'poker-pegs-52',
+        'alphabet-pegs-26', 'thirty-six-stratagems', 'world-capitals-40'].forEach(id => {
         expect(getKnowledgePackInfo(id)?.version).toBe(1)
         expect(getPackVersion(id)).toBe(1)
       })
       // 未知包兜底为 1
       expect(getPackVersion('not-exist')).toBe(1)
+    })
+
+    it('2026-09 新增 6 个知识包数据合法且条数与元数据一致', () => {
+      const newPacks: Array<[string, number, boolean, boolean, 'math' | 'text']> = [
+        ['squares-cubes-powers', 58, false, false, 'math'],
+        ['primes-under-100', 25, true, false, 'math'],
+        ['poker-pegs-52', 52, true, true, 'text'],
+        ['alphabet-pegs-26', 26, true, true, 'text'],
+        ['thirty-six-stratagems', 36, true, false, 'text'],
+        ['world-capitals-40', 40, false, false, 'text'],
+      ]
+      newPacks.forEach(([id, count, ordered, usableAsPeg, category]) => {
+        const info = getKnowledgePackInfo(id)
+        expect(info).toBeDefined()
+        expect(info!.category).toBe(category)
+        expect(info!.ordered).toBe(ordered)
+        expect(info!.usableAsPeg).toBe(usableAsPeg)
+        expect(info!.version).toBe(1)
+
+        const pack = readPackFile(id)
+        expect(pack.id).toBe(id)
+        expect(validateKnowledgePack(pack).valid).toBe(true)
+        expect(pack.items).toHaveLength(count)
+        expect(pack.ordered).toBe(ordered)
+        expect(pack.usableAsPeg).toBe(usableAsPeg)
+        // 条目 id 与文件内顺序一一对应
+        pack.items.forEach((item, i) => expect(item.id).toBe(`${id}-${i + 1}`))
+        // 有序包 order 连续递增
+        if (ordered) {
+          expect(pack.items.map(i => i.order)).toEqual(pack.items.map((_, i) => i + 1))
+        }
+        // 桩库包每条带唯一非空配图
+        if (usableAsPeg) {
+          const urls = pack.items.map(i => i.imageUrl)
+          expect(urls.every(u => typeof u === 'string' && u.length > 0)).toBe(true)
+          expect(urls).toHaveLength(new Set(urls).size)
+        }
+      })
+    })
+
+    it('三十六计带总诀口诀且按六套分组', () => {
+      const pack = readPackFile('thirty-six-stratagems')
+      expect(Array.isArray(pack.mnemonics)).toBe(true)
+      expect(pack.mnemonics!.length).toBeGreaterThan(0)
+      expect(pack.items[0].answer).toBe('瞒天过海')
+      expect(pack.items[35].answer).toBe('走为上计')
+      expect(pack.items[0].extras?.['套别']).toBe('胜战计')
+      expect(pack.items[35].extras?.['套别']).toBe('败战计')
+    })
+
+    it('elements 扩至 118 号且序数连续', () => {
+      const pack = readPackFile('elements')
+      expect(pack.items).toHaveLength(118)
+      expect(pack.items.map(i => Number(i.extras?.['序数'])))
+        .toEqual(Array.from({length: 118}, (_, i) => i + 1))
     })
   })
 
@@ -302,12 +369,12 @@ describe('knowledge-pack-service', () => {
 
     it('isKnowledgePackCached 有有效缓存时返回 true', () => {
       const pack = makePack('elements')
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 3}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 4}))
       expect(isKnowledgePackCached('elements')).toBe(true)
     })
 
     it('clearKnowledgePackCache 应清除指定缓存', () => {
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 3}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 4}))
       clearKnowledgePackCache('elements')
       expect(localStorageMock.getItem('slowlyrecord-knowledgebank-elements')).toBeNull()
     })
@@ -326,7 +393,7 @@ describe('knowledge-pack-service', () => {
   describe('fetchKnowledgePack', () => {
     it('应使用有效缓存', async () => {
       const pack = makePack('elements', 54)
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 3}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 4}))
       const result = await fetchKnowledgePack('elements')
       expect(result.id).toBe('elements')
       expect(fetchMock).not.toHaveBeenCalled()
@@ -354,8 +421,8 @@ describe('knowledge-pack-service', () => {
       const cached = localStorageMock.getItem('slowlyrecord-knowledgebank-elements')
       expect(cached).not.toBeNull()
       expect(JSON.parse(cached!).pack.items).toHaveLength(54)
-      // 缓存应记录当前数据版本（elements 已升级到 3）
-      expect(JSON.parse(cached!).version).toBe(3)
+      // 缓存应记录当前数据版本（elements 已升级到 4）
+      expect(JSON.parse(cached!).version).toBe(4)
     })
 
     it('缓存版本与包当前版本不一致时视为失效并重新加载', async () => {

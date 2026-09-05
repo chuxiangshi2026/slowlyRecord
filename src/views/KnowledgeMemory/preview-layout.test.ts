@@ -129,4 +129,41 @@ describe('buildPeriodicTable', () => {
   it('空数组返回 null', () => {
     expect(buildPeriodicTable([])).toBeNull()
   })
+
+  it('第 6/7 周期主行跳过第 3 列，镧系/锕系折行从第 3 列起排 15 格', () => {
+    const items = Array.from({length: 118}, (_, i) => element(i + 1, `E${i + 1}`, `元素${i + 1}`))
+    const rows = buildPeriodicTable(items)!
+    expect(rows).toHaveLength(9)
+    // 第 6 周期主行：Cs/Ba 在第 1/2 列，第 3 列留空（f 区占位），Hf 起第 4 列，Rn 收尾第 18 列
+    expect(rows[5][0]).toMatchObject({atomicNumber: 55})
+    expect(rows[5][1]).toMatchObject({atomicNumber: 56})
+    expect(rows[5][2]).toBeNull()
+    expect(rows[5][3]).toMatchObject({atomicNumber: 72})
+    expect(rows[5][17]).toMatchObject({atomicNumber: 86})
+    // 第 7 周期主行同理
+    expect(rows[6][0]).toMatchObject({atomicNumber: 87})
+    expect(rows[6][2]).toBeNull()
+    expect(rows[6][17]).toMatchObject({atomicNumber: 118})
+    // 镧系折行：La-Lu 占第 3-17 列
+    expect(rows[7][0]).toBeNull()
+    expect(rows[7][2]).toMatchObject({atomicNumber: 57})
+    expect(rows[7][16]).toMatchObject({atomicNumber: 71})
+    expect(rows[7][17]).toBeNull()
+    // 锕系折行：Ac-Lr
+    expect(rows[8][2]).toMatchObject({atomicNumber: 89})
+    expect(rows[8][16]).toMatchObject({atomicNumber: 103})
+  })
+
+  it('仅前 54 号（旧数据）时主行排布不变，折行为空行', () => {
+    const items = Array.from({length: 54}, (_, i) => element(i + 1, `E${i + 1}`, `元素${i + 1}`))
+    const rows = buildPeriodicTable(items)!
+    expect(rows).toHaveLength(9)
+    expect(rows[4][17]).toMatchObject({atomicNumber: 54})
+    expect(rows[7].every(c => c === null)).toBe(true)
+    expect(rows[8].every(c => c === null)).toBe(true)
+  })
+
+  it('序数超过 118 时回退 null', () => {
+    expect(buildPeriodicTable([element(119, 'E119', '未来元素')])).toBeNull()
+  })
 })

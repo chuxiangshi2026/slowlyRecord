@@ -429,4 +429,27 @@ describe('useKnowledgeMemoryStore', () => {
       expect(store.customPackList.map(p => p.id)).toEqual(['custom_其他'])
     })
   })
+
+  describe('SRS 分支与顺序回忆（2026-09 增补）', () => {
+    it('markItem 未到期答对仅刷新时间不升级', async () => {
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('test-pack')
+      // 首次答对：从未学习（level 0）→ 升到 1
+      await store.markItem('test-pack', 'item-a', true)
+      expect(savedProgress!.items['item-a'].level).toBe(1)
+      // 紧接着再次答对：level 1 间隔 5 分钟未到期 → 等级保持，仅累计答对次数
+      await store.markItem('test-pack', 'item-a', true)
+      const progress = savedProgress!.items['item-a']
+      expect(progress.level).toBe(1)
+      expect(progress.correct).toBe(2)
+    })
+
+    it('judgeAnswer ordered 模式比较 answer', async () => {
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('test-pack')
+      const item = store.getPack('test-pack')!.items[2]
+      expect(store.judgeAnswer('test-pack', item, '3', 'ordered')).toBe(true)
+      expect(store.judgeAnswer('test-pack', item, '2', 'ordered')).toBe(false)
+    })
+  })
 })

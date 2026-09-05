@@ -3,6 +3,7 @@ import {
     segmentNumber,
     validateNumber,
     getEntryKind,
+    buildEntriesExportJson,
     KIND_LABELS,
     DEFAULT_KIND,
 } from './number-memory-format'
@@ -150,6 +151,63 @@ describe('number-memory-format', () => {
             expect(KIND_LABELS.phone).toBe('手机号')
             expect(KIND_LABELS.pi).toBe('圆周率')
             expect(KIND_LABELS.custom).toBe('自定义')
+        })
+    })
+
+    describe('buildEntriesExportJson（2026-09 增补）', () => {
+        const entry = (overrides: Partial<NumberMemoryEntry> = {}): NumberMemoryEntry => ({
+            _id: 'e1',
+            type: 'number_memory_entry',
+            title: '手机号',
+            numbers: '13800138000',
+            kind: 'phone',
+            tags: ['手机'],
+            description: '描述',
+            mnemonic: '谐音助记',
+            createdAt: 1000,
+            updatedAt: 1000,
+            reviewCount: 0,
+            level: 3,
+            learnDate: 1000,
+            ...overrides,
+        })
+
+        it('导出字段与导入解析字段往返一致', () => {
+            // 导入解析仅读取 title/numbers/tags/description/kind/mnemonic（Entries.vue handleImportFileChange）
+            const parsed = JSON.parse(buildEntriesExportJson([entry()]))
+            expect(parsed).toEqual([
+                {
+                    title: '手机号',
+                    numbers: '13800138000',
+                    tags: ['手机'],
+                    kind: 'phone',
+                    description: '描述',
+                    mnemonic: '谐音助记',
+                },
+            ])
+        })
+
+        it('导出不含 SRS/时间戳等内部字段', () => {
+            const parsed = JSON.parse(buildEntriesExportJson([entry()]))
+            expect(parsed[0]).not.toHaveProperty('_id')
+            expect(parsed[0]).not.toHaveProperty('level')
+            expect(parsed[0]).not.toHaveProperty('learnDate')
+            expect(parsed[0]).not.toHaveProperty('createdAt')
+        })
+
+        it('旧数据无 kind 按 custom 导出，空可选字段被省略', () => {
+            const parsed = JSON.parse(buildEntriesExportJson([
+                entry({kind: undefined, description: undefined, mnemonic: undefined}),
+            ]))
+            expect(parsed[0].kind).toBe('custom')
+            expect(parsed[0]).not.toHaveProperty('description')
+            expect(parsed[0]).not.toHaveProperty('mnemonic')
+        })
+
+        it('多条目按顺序导出', () => {
+            const parsed = JSON.parse(buildEntriesExportJson([entry({_id: 'a'}), entry({_id: 'b', title: '第二条'})]))
+            expect(parsed).toHaveLength(2)
+            expect(parsed[1].title).toBe('第二条')
         })
     })
 })

@@ -713,4 +713,89 @@ describe('useNumberMemoryStore', () => {
       })
     })
   })
+
+  // ========== 训练选择题去重与 SRS 边界（2026-09 增补） ==========
+  describe('generateNumberToImageQuiz 干扰项去重', () => {
+    it('共用同一图片的数字不产生重复选项', () => {
+      const assocs: NumberImageAssociation[] = [
+        { number: '1', imageUrl: 'img1', source: 'preset' },
+        { number: '2', imageUrl: 'img1', source: 'preset' },
+        { number: '3', imageUrl: 'img2', source: 'upload' },
+      ]
+      vi.mocked(getAllAssociations).mockReturnValue(assocs)
+      const store = useNumberMemoryStore()
+      store.loadAssociations()
+
+      const quiz = store.generateNumberToImageQuiz(3)
+      expect(quiz).toHaveLength(3)
+      for (const q of quiz) {
+        // 选项值互不重复，且正确答案在选项中
+        expect(new Set(q.options).size).toBe(q.options.length)
+        expect(q.options).toContain(q.correctAnswer)
+      }
+    })
+
+    it('去重后干扰项不足 3 个时选项允许少于 4 个', () => {
+      const assocs: NumberImageAssociation[] = [
+        { number: '1', imageUrl: 'img1', source: 'preset' },
+        { number: '2', imageUrl: 'img1', source: 'preset' },
+      ]
+      vi.mocked(getAllAssociations).mockReturnValue(assocs)
+      const store = useNumberMemoryStore()
+      store.loadAssociations()
+
+      const quiz = store.generateNumberToImageQuiz(2)
+      expect(quiz).toHaveLength(2)
+      // 两个数字共用图片：正确项之外没有可用干扰项，选项只剩正确项
+      for (const q of quiz) {
+        expect(q.options).toEqual([q.correctAnswer])
+      }
+    })
+  })
+
+  describe('SRS 边界与随机序列结果', () => {
+    it('markEntryCorrect 未到期时仅刷新 learnDate 不升级', async () => {
+      const entry: NumberMemoryEntry = { _id: 'e1', type: 'number_memory_entry', title: 't', numbers: '123', level: 5, learnDate: Date.now(), tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
+      vi.mocked(getAllEntries).mockReturnValue([entry])
+      vi.mocked(updateEntry).mockResolvedValueOnce({ ok: true, id: 'e1' })
+
+      const store = useNumberMemoryStore()
+      store.loadEntries()
+      const result = await store.markEntryCorrect('e1')
+
+      expect(result.ok).toBe(true)
+      // level 5 间隔 1 天，未到期：等级保持，仅刷新学习时间
+      expect(store.entries[0].level).toBe(5)
+      expect(store.entries[0].learnDate).toBeGreaterThanOrEqual(entry.learnDate)
+    })
+
+    it('markEntryWrong 12 级答错重置回 1 级', async () => {
+      const entry: NumberMemoryEntry = { _id: 'e2', type: 'number_memory_entry', title: 't', numbers: '123', level: 12, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
+      vi.mocked(getAllEntries).mockReturnValue([entry])
+      vi.mocked(updateEntry).mockResolvedValueOnce({ ok: true, id: 'e2' })
+
+      const store = useNumberMemoryStore()
+      store.loadEntries()
+      const result = await store.markEntryWrong('e2')
+
+      expect(result.ok).toBe(true)
+      expect(store.entries[0].level).toBe(1)
+    })
+
+    it('saveResult 支持 randomSequence 模式（按轮统计）', async () => {
+      const store = useNumberMemoryStore()
+      await store.saveResult('randomSequence', 2, 1, 10, [
+        { number: '11111', correct: true, responseTime: 100 },
+        { number: '111111', correct: false, responseTime: 200 },
+      ])
+
+      expect(saveTrainingResult).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'number_memory_result',
+        mode: 'randomSequence',
+        totalQuestions: 2,
+        correctAnswers: 1,
+        duration: 10,
+      }))
+    })
+  })
 })

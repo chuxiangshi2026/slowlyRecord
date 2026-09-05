@@ -28,6 +28,42 @@ describe('number-memory-preset', () => {
         }
       }
     })
+
+    // ---- 数据质量回归（2026-09 修复） ----
+    it('所有建议 url 不含截断的零宽连接符（ZWJ 结尾）', () => {
+      for (let i = 0; i <= 99; i++) {
+        for (const suggestion of presetImageMap[i].suggestions) {
+          expect(suggestion.url.endsWith('\u200d')).toBe(false)
+        }
+      }
+    })
+
+    it('所有建议 url 均为 emoji（非纯 ASCII 文本）', () => {
+      for (let i = 0; i <= 99; i++) {
+        for (const suggestion of presetImageMap[i].suggestions) {
+          expect(/^[\x20-\x7E]+$/.test(suggestion.url)).toBe(false)
+        }
+      }
+    })
+
+    it('同一数字的建议 url 互不重复', () => {
+      for (let i = 0; i <= 99; i++) {
+        const urls = presetImageMap[i].suggestions.map(s => s.url)
+        expect(new Set(urls).size).toBe(urls.length)
+      }
+    })
+
+    it('数字 4 的 keyword 无英文残留', () => {
+      expect(getNumberKeyword(4)).toBe('寺/旗/蛇/帆')
+      expect(presetImageMap[4].keyword).not.toMatch(/[a-zA-Z]/)
+    })
+
+    it('修复替换的 emoji 在全表建议中仅出现一次', () => {
+      const allUrls = Object.values(presetImageMap).flatMap(p => p.suggestions.map(s => s.url))
+      for (const emoji of ['🤱', '🪿', '🛡️', '📜', '🗻', '🌅', '👕', '♾️', '🧧', '🌌', '🧑‍⚖️', '👨‍👦']) {
+        expect(allUrls.filter(u => u === emoji)).toHaveLength(1)
+      }
+    })
   })
 
   describe('getRecommendedImages', () => {
