@@ -11,7 +11,7 @@ import { ref, computed } from 'vue'
 import { DEFAULT_INTERVALS } from './useUtils/constants'
 import { ALL_PHONEMES } from '@/utils/phoneme-data'
 import { getDbAdapter } from '@/adapters/index'
-import type { Phoneme, PhonemeProgress, MinimalPairProgress, PhoneticProgressDoc } from './useUtils/types'
+import type { Phoneme, PhonemeProgress, MinimalPairProgress, PhoneticProgressDoc, MobilePhoneticMemory } from './useUtils/types'
 
 // doc id 与桌面端 phonetic-memory-db.ts 保持一致（同步互通的前提）
 const PROGRESS_DOC_ID = 'phonetic_memory_progress'
@@ -193,6 +193,40 @@ export const usePhoneticMemory = defineStore('phoneticMemory', () => {
     return [...due, ...fresh, ...others].slice(0, count)
   }
 
+  // ===== 同步 collect / restore =====
+
+  /** 收集音标进度（无数据返回 null） */
+  function collectSync(): MobilePhoneticMemory | null {
+    const phonemes = doc.value.phonemes
+    const pairs = doc.value.pairs
+    if (Object.keys(phonemes).length === 0 && Object.keys(pairs).length === 0) return null
+    return { phonemes, pairs }
+  }
+
+  /**
+   * 还原音标进度：逐项按 learnDate 较新者保留
+   * @returns 还原的条目数
+   */
+  function restoreSync(data: MobilePhoneticMemory): number {
+    let merged = 0
+    for (const [ipa, progress] of Object.entries(data.phonemes || {})) {
+      const local = doc.value.phonemes[ipa]
+      if (!local || (progress?.learnDate || 0) > (local.learnDate || 0)) {
+        doc.value.phonemes[ipa] = progress
+        merged++
+      }
+    }
+    for (const [key, progress] of Object.entries(data.pairs || {})) {
+      const local = doc.value.pairs[key]
+      if (!local || (progress?.learnDate || 0) > (local.learnDate || 0)) {
+        doc.value.pairs[key] = progress
+        merged++
+      }
+    }
+    if (merged > 0) persist()
+    return merged
+  }
+
   return {
     // state（只读暴露）
     doc,
@@ -210,5 +244,8 @@ export const usePhoneticMemory = defineStore('phoneticMemory', () => {
     getPairProgress,
     pickPairsForSession,
     markPair,
+    // sync
+    collectSync,
+    restoreSync,
   }
 })

@@ -9,6 +9,8 @@ import type { Word } from './words'
 import type { TextArticle, TextNote, TextPrompt } from './text-memory'
 import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from './number-memory'
 import type { LetterImageAssociation, LetterTrainingResult } from './letter-memory'
+import type { KnowledgeItemProgress } from './knowledge-memory'
+import type { PhonemeProgress, MinimalPairProgress } from './phonetic-memory'
 
 /** 同步数据版本号，用于兼容性检查 */
 export const SYNC_VERSION = 1
@@ -76,6 +78,22 @@ export interface SyncLetterMemory {
   trainingResults: LetterTrainingResult[]
 }
 
+/** 通用知识包同步数据（已导入清单 + 每包条目进度） */
+export interface SyncKnowledgeMemory {
+  /** 已导入的知识包 id 列表 */
+  importedIds: string[]
+  /** packId → items(itemId → 进度) */
+  packs: Record<string, Record<string, KnowledgeItemProgress>>
+}
+
+/** 音标学习进度同步数据 */
+export interface SyncPhoneticMemory {
+  /** 按 IPA 索引的音素进度 */
+  phonemes: Record<string, PhonemeProgress>
+  /** 按 pairKey 索引的对子进度 */
+  pairs: Record<string, MinimalPairProgress>
+}
+
 /** 完整的同步数据包 */
 export interface SyncData {
   /** 数据格式版本 */
@@ -98,6 +116,10 @@ export interface SyncData {
   shortcutMemory: SyncShortcutMemory | null
   /** 字母映射 */
   letterMemory: SyncLetterMemory | null
+  /** 通用知识包（可选：旧版客户端忽略此字段） */
+  knowledgeMemory?: SyncKnowledgeMemory | null
+  /** 音标学习进度（可选：旧版客户端忽略此字段） */
+  phoneticMemory?: SyncPhoneticMemory | null
 }
 
 /** 服务器同步状态 */

@@ -212,6 +212,23 @@ export interface MobileSyncData {
   textMemory?: MobileTextMemory
   /** 数字记忆数据（同上） */
   numberMemory?: MobileNumberMemory
+  /** 知识库数据（可选：旧版客户端忽略此字段） */
+  knowledgeMemory?: MobileKnowledgeMemory
+  /** 音标学习进度（可选：旧版客户端忽略此字段） */
+  phoneticMemory?: MobilePhoneticMemory
+}
+
+/** 知识库同步数据：已导入清单 + 每包条目进度（与桌面端 SyncKnowledgeMemory 一致） */
+export interface MobileKnowledgeMemory {
+  importedIds: string[]
+  /** packId → items(itemId → 进度) */
+  packs: Record<string, Record<string, KnowledgeItemProgress>>
+}
+
+/** 音标学习进度同步数据（与桌面端 SyncPhoneticMemory 一致） */
+export interface MobilePhoneticMemory {
+  phonemes: Record<string, PhonemeProgress>
+  pairs: Record<string, MinimalPairProgress>
 }
 
 export interface SyncResult {
@@ -226,6 +243,8 @@ export interface RestoreResult {
   count?: number
   textMemory?: MobileTextMemory
   numberMemory?: MobileNumberMemory
+  knowledgeMemory?: MobileKnowledgeMemory
+  phoneticMemory?: MobilePhoneticMemory
   error?: string
 }
 

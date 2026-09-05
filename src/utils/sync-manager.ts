@@ -4,17 +4,21 @@
  * 负责从各 Store / DB 收集数据、合并还原、冲突处理。
  * 同步数据以 SyncData 为统一格式，可导出为 JSON 或二进制文件，也可上传到临时服务器。
  */
-import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, ConflictStrategy } from '@/types/sync'
+import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
 import type { MemoryFirmnessType } from '@/types/words'
 import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from '@/types/number-memory'
 import type { LetterImageAssociation, LetterTrainingResult } from '@/types/letter-memory'
+import type { KnowledgeItemProgress } from '@/types/knowledge-memory'
+import type { PhonemeProgress, MinimalPairProgress } from '@/types/phonetic-memory'
 import { getDbAdapter } from '@/adapters/db'
 import { getPlatform } from '@/adapters/platform'
 import { getSetDb, addAndUpdateSetDb } from '@/utils/user-set-db-util'
-import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_LETTER_MEMORY } from '@/constants'
+import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_LETTER_MEMORY, DB_KEY_KNOWLEDGE_MEMORY, DB_KEY_PHONETIC_MEMORY } from '@/constants'
+import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDoc, saveProgressDoc as saveKnowledgeProgressDoc } from '@/utils/knowledge-memory-db'
+import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
 import { log } from '@/utils/logger'
 
 // ==================== 数据收集 ====================
@@ -79,6 +83,12 @@ export async function collectSyncData(): Promise<SyncData> {
   // 7. 字母映射
   const letterMemory = await collectLetterMemory()
 
+  // 8. 通用知识包
+  const knowledgeMemory = await collectKnowledgeMemory()
+
+  // 9. 音标学习进度
+  const phoneticMemory = await collectPhoneticMemory()
+
   return {
     version: SYNC_VERSION,
     exportedAt: Date.now(),
@@ -90,6 +100,8 @@ export async function collectSyncData(): Promise<SyncData> {
     numberMemory,
     shortcutMemory,
     letterMemory,
+    knowledgeMemory,
+    phoneticMemory,
   }
 }
 
@@ -198,6 +210,49 @@ async function collectLetterMemory(): Promise<SyncLetterMemory | null> {
   }
 }
 
+/**
+ * 收集通用知识包数据：已导入清单 + 每包条目进度
+ * 进度文档按 allDocs 扫描（含不在清单中但有进度的包，兼容旧数据）
+ */
+async function collectKnowledgeMemory(): Promise<SyncKnowledgeMemory | null> {
+  try {
+    const db = getDbAdapter()
+    const importedIds = getImportedIds()
+    const progressDocs = db.allDocs(DB_KEY_KNOWLEDGE_MEMORY)
+      .filter((d: any) => d.type === 'knowledge_pack_progress') as any[]
+
+    const packIds = new Set<string>([...importedIds, ...progressDocs.map(d => d.packId)])
+    if (packIds.size === 0) return null
+
+    const packs: Record<string, Record<string, KnowledgeItemProgress>> = {}
+    for (const packId of packIds) {
+      const doc = getKnowledgeProgressDoc(packId)
+      if (Object.keys(doc.items).length > 0) {
+        packs[packId] = doc.items
+      }
+    }
+
+    if (Object.keys(packs).length === 0 && importedIds.length === 0) return null
+
+    return { importedIds: [...packIds], packs }
+  } catch {
+    return null
+  }
+}
+
+/** 收集音标学习进度（单文档） */
+async function collectPhoneticMemory(): Promise<SyncPhoneticMemory | null> {
+  try {
+    const doc = getPhoneticProgressDoc()
+    const phonemes = doc.phonemes || {}
+    const pairs = doc.pairs || {}
+    if (Object.keys(phonemes).length === 0 && Object.keys(pairs).length === 0) return null
+    return { phonemes, pairs }
+  } catch {
+    return null
+  }
+}
+
 // ==================== 数据还原 ====================
 
 export interface RestoreOptions {
@@ -215,6 +270,10 @@ export interface RestoreOptions {
   restoreShortcutMemory: boolean
   /** 是否还原字母映射 */
   restoreLetterMemory: boolean
+  /** 是否还原知识库（导入清单 + 每包进度） */
+  restoreKnowledgeMemory: boolean
+  /** 是否还原音标学习进度 */
+  restorePhoneticMemory: boolean
 }
 
 export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
@@ -225,6 +284,8 @@ export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
   restoreNumberMemory: true,
   restoreShortcutMemory: true,
   restoreLetterMemory: true,
+  restoreKnowledgeMemory: true,
+  restorePhoneticMemory: true,
 }
 
 export interface RestoreResult {
@@ -235,6 +296,8 @@ export interface RestoreResult {
   numberMemoryRestored: boolean
   shortcutMemoryRestored: boolean
   letterMemoryRestored: boolean
+  knowledgeMemoryRestored: boolean
+  phoneticMemoryRestored: boolean
   errors: string[]
 }
 
@@ -250,6 +313,8 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     numberMemoryRestored: false,
     shortcutMemoryRestored: false,
     letterMemoryRestored: false,
+    knowledgeMemoryRestored: false,
+    phoneticMemoryRestored: false,
     errors: [],
   }
 
@@ -295,6 +360,18 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     if (options.restoreLetterMemory && data.letterMemory) {
       await restoreLetterMemoryData(data.letterMemory)
       result.letterMemoryRestored = true
+    }
+
+    // 7. 还原知识库（导入清单 + 每包进度；按字段存在性判断，向后兼容旧数据）
+    if (options.restoreKnowledgeMemory && data.knowledgeMemory) {
+      await restoreKnowledgeMemoryData(data.knowledgeMemory)
+      result.knowledgeMemoryRestored = true
+    }
+
+    // 8. 还原音标学习进度
+    if (options.restorePhoneticMemory && data.phoneticMemory) {
+      await restorePhoneticMemoryData(data.phoneticMemory)
+      result.phoneticMemoryRestored = true
     }
   } catch (e) {
     result.errors.push(String(e))
@@ -576,4 +653,63 @@ async function restoreLetterMemoryData(data: SyncLetterMemory) {
   }
 
   log.i('字母映射数据已还原')
+}
+
+// ==================== 知识库还原 ====================
+
+/**
+ * 还原知识库数据：并入已导入清单 + 按包合并条目进度
+ * 进度条目按 learnDate 较新者保留（双向 merge，不丢本地进度）
+ */
+async function restoreKnowledgeMemoryData(data: SyncKnowledgeMemory) {
+  const importedIds = new Set<string>([...getImportedIds(), ...(data.importedIds || [])])
+  for (const packId of importedIds) {
+    addImportedId(packId)
+  }
+
+  for (const [packId, items] of Object.entries(data.packs || {})) {
+    if (!items || typeof items !== 'object') continue
+    const doc = getKnowledgeProgressDoc(packId)
+    const merged: Record<string, KnowledgeItemProgress> = { ...doc.items }
+    for (const [itemId, progress] of Object.entries(items)) {
+      const local = merged[itemId]
+      if (!local || (progress?.learnDate || 0) > (local.learnDate || 0)) {
+        merged[itemId] = progress
+      }
+    }
+    doc.items = merged
+    await saveKnowledgeProgressDoc(doc)
+  }
+
+  log.i('知识库数据已还原')
+}
+
+// ==================== 音标进度还原 ====================
+
+/**
+ * 还原音标学习进度：逐项按 learnDate 较新者保留
+ */
+async function restorePhoneticMemoryData(data: SyncPhoneticMemory) {
+  const doc = getPhoneticProgressDoc()
+
+  const phonemes: Record<string, PhonemeProgress> = { ...doc.phonemes }
+  for (const [ipa, progress] of Object.entries(data.phonemes || {})) {
+    const local = phonemes[ipa]
+    if (!local || (progress?.learnDate || 0) > (local.learnDate || 0)) {
+      phonemes[ipa] = progress
+    }
+  }
+
+  const pairs: Record<string, MinimalPairProgress> = { ...doc.pairs }
+  for (const [key, progress] of Object.entries(data.pairs || {})) {
+    const local = pairs[key]
+    if (!local || (progress?.learnDate || 0) > (local.learnDate || 0)) {
+      pairs[key] = progress
+    }
+  }
+
+  doc.phonemes = phonemes
+  doc.pairs = pairs
+  await savePhoneticProgressDoc(doc)
+  log.i('音标学习进度已还原')
 }

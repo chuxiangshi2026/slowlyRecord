@@ -10,6 +10,8 @@ import type {
   RestoreResult,
   MobileTextMemory,
   MobileNumberMemory,
+  MobileKnowledgeMemory,
+  MobilePhoneticMemory,
 } from '@/stores/useUtils/types'
 import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
 import { log } from '../../../utils/logger'
@@ -21,6 +23,8 @@ export type {
   RestoreResult,
   MobileTextMemory,
   MobileNumberMemory,
+  MobileKnowledgeMemory,
+  MobilePhoneticMemory,
 }
 
 // ==================== 服务器配置 ====================
@@ -267,6 +271,8 @@ interface PushPayload {
   banks: MobileSyncBank[]
   textMemory?: MobileTextMemory
   numberMemory?: MobileNumberMemory
+  knowledgeMemory?: MobileKnowledgeMemory
+  phoneticMemory?: MobilePhoneticMemory
 }
 
 function collectSyncData(payload: PushPayload): MobileSyncData {
@@ -281,6 +287,8 @@ function collectSyncData(payload: PushPayload): MobileSyncData {
     },
     textMemory: payload.textMemory,
     numberMemory: payload.numberMemory,
+    knowledgeMemory: payload.knowledgeMemory,
+    phoneticMemory: payload.phoneticMemory,
   }
 }
 
@@ -291,7 +299,12 @@ function collectSyncData(payload: PushPayload): MobileSyncData {
  */
 export async function pushToServer(
   banksOrPayload: MobileSyncBank[] | PushPayload,
-  extra?: { textMemory?: MobileTextMemory; numberMemory?: MobileNumberMemory },
+  extra?: {
+    textMemory?: MobileTextMemory
+    numberMemory?: MobileNumberMemory
+    knowledgeMemory?: MobileKnowledgeMemory
+    phoneticMemory?: MobilePhoneticMemory
+  },
 ): Promise<SyncResult> {
   try {
     const payload: PushPayload = Array.isArray(banksOrPayload)
@@ -357,6 +370,8 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
         banks: data.banks,
         textMemory: data.textMemory,
         numberMemory: data.numberMemory,
+        knowledgeMemory: data.knowledgeMemory,
+        phoneticMemory: data.phoneticMemory,
       }
     } catch {
       return { success: false, error: '数据解析失败' }

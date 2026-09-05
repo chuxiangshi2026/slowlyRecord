@@ -56,12 +56,15 @@ import { ref, computed } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { useTextMemory } from '@/stores/useTextMemory'
 import { useNumberMemory } from '@/stores/useNumberMemory'
+import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '../utils/sync'
+import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
 import { drawQrCode } from '../utils/qrcode'
 
 const wordsStore = useMobileWords()
 const textMemoryStore = useTextMemory()
 const numberMemoryStore = useNumberMemory()
+const phoneticMemoryStore = usePhoneticMemory()
 
 const showPushResult = ref(false)
 const showPullInput = ref(false)
@@ -98,10 +101,16 @@ const handlePush = async () => {
       numberMemory.entries.length ||
       numberMemory.notes.length ||
       numberMemory.prompts.length
+    // 收集知识库（导入清单+每包进度）与音标进度
+    await phoneticMemoryStore.ensureLoaded()
+    const knowledgeMemory = collectKnowledgeSyncData()
+    const phoneticMemory = phoneticMemoryStore.collectSync()
     const result = await pushToServer({
       banks,
       textMemory: hasTextMemory ? textMemory : undefined,
       numberMemory: hasNumberMemory ? numberMemory : undefined,
+      knowledgeMemory: knowledgeMemory || undefined,
+      phoneticMemory: phoneticMemory || undefined,
     })
     uni.hideLoading()
     if (result.success && result.code) {
@@ -204,6 +213,15 @@ async function applyPullResult(result: any): Promise<string> {
     const r = numberMemoryStore.restore(result.numberMemory, 'merge')
     if (r.addedAssoc > 0) parts.push(`${r.addedAssoc} 个数字桩`)
     if (r.addedEntry > 0) parts.push(`${r.addedEntry} 个数字条目`)
+  }
+  if (result.knowledgeMemory) {
+    const packCount = restoreKnowledgeSyncData(result.knowledgeMemory)
+    if (packCount > 0) parts.push(`${packCount} 个知识包进度`)
+  }
+  if (result.phoneticMemory) {
+    await phoneticMemoryStore.ensureLoaded()
+    const merged = phoneticMemoryStore.restoreSync(result.phoneticMemory)
+    if (merged > 0) parts.push(`${merged} 条音标进度`)
   }
   return parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
 }

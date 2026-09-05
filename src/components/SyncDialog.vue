@@ -161,6 +161,8 @@
               <el-descriptions-item label="文本记忆">{{ syncStore.previewSummary.textArticleCount }} 篇</el-descriptions-item>
               <el-descriptions-item label="数字记忆">{{ syncStore.previewSummary.numberMemoryEntryCount }} 条</el-descriptions-item>
               <el-descriptions-item label="快捷键记忆">{{ syncStore.previewSummary.shortcutCategoryCount }} 分类</el-descriptions-item>
+              <el-descriptions-item label="知识库">{{ syncStore.previewSummary.knowledgePackCount }} 包</el-descriptions-item>
+              <el-descriptions-item label="音标进度">{{ syncStore.previewSummary.phonemeCount }} 音素</el-descriptions-item>
             </el-descriptions>
 
             <div class="sync-restore-options">
@@ -170,6 +172,8 @@
               <el-checkbox v-model="restoreOptions.restoreNumberMemory">还原数字记忆</el-checkbox>
               <el-checkbox v-model="restoreOptions.restoreShortcutMemory">还原快捷键记忆</el-checkbox>
               <el-checkbox v-model="restoreOptions.restoreLetterMemory">还原字母映射</el-checkbox>
+              <el-checkbox v-model="restoreOptions.restoreKnowledgeMemory">还原知识库</el-checkbox>
+              <el-checkbox v-model="restoreOptions.restorePhoneticMemory">还原音标进度</el-checkbox>
             </div>
 
             <div class="sync-actions">

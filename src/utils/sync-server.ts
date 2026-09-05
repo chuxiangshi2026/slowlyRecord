@@ -354,6 +354,8 @@ const EMPTY_RESTORE_RESULT: RestoreResult = {
   numberMemoryRestored: false,
   shortcutMemoryRestored: false,
   letterMemoryRestored: false,
+  knowledgeMemoryRestored: false,
+  phoneticMemoryRestored: false,
   errors: [],
 }
 
