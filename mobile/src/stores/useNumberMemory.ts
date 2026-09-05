@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { getDbAdapter } from '@/adapters/index'
 import type {
   MobileNumberAssociation,
   MobileNumberEntry,
@@ -11,11 +12,13 @@ import type {
 /**
  * 数字记忆 store（移动端）
  *
- * 第一阶段：仅文字描述桩位（type='text'），imageUrl/imageSource 字段保留待后期升级
- * 持久化：wx.Storage 单 key
+ * 桩位支持文字（type='text'）与图片（type='image'，base64 dataURL）两种形态
+ * 持久化：DB 适配器单 doc（超过 900KB 自动分块，兼容图片 base64）
  */
 
-const STORAGE_KEY = 'slowlyrecord-numbermemory-data'
+const DOC_ID = 'numbermemory-data'
+// 历史版本的裸 storage key，读取后自动迁移到 DB 适配器
+const LEGACY_STORAGE_KEY = 'slowlyrecord-numbermemory-data'
 
 interface NumberMemoryDoc {
   associations: MobileNumberAssociation[]
@@ -29,17 +32,37 @@ function generateId(): string {
   return `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`
 }
 
+function normalizeDoc(raw: any): NumberMemoryDoc {
+  return {
+    associations: Array.isArray(raw?.associations) ? raw.associations : [],
+    entries: Array.isArray(raw?.entries) ? raw.entries : [],
+    notes: Array.isArray(raw?.notes) ? raw.notes : [],
+    prompts: Array.isArray(raw?.prompts) ? raw.prompts : [],
+    updatedAt: raw?.updatedAt || 0,
+  }
+}
+
 function readDoc(): NumberMemoryDoc {
   try {
-    const raw = uni.getStorageSync(STORAGE_KEY)
+    const doc = getDbAdapter().get<NumberMemoryDoc>(DOC_ID)
+    if (doc?.data && typeof doc.data === 'object') {
+      return normalizeDoc(doc.data)
+    }
+  } catch {
+    /* 兜底走 legacy */
+  }
+  // 旧版本数据存在裸 storage key 下，读到即迁移
+  try {
+    const raw = uni.getStorageSync(LEGACY_STORAGE_KEY)
     if (raw && typeof raw === 'object') {
-      return {
-        associations: Array.isArray(raw.associations) ? raw.associations : [],
-        entries: Array.isArray(raw.entries) ? raw.entries : [],
-        notes: Array.isArray(raw.notes) ? raw.notes : [],
-        prompts: Array.isArray(raw.prompts) ? raw.prompts : [],
-        updatedAt: raw.updatedAt || 0,
+      const doc = normalizeDoc(raw)
+      try {
+        getDbAdapter().put({ _id: DOC_ID, data: { ...doc, updatedAt: Date.now() } })
+        uni.removeStorageSync(LEGACY_STORAGE_KEY)
+      } catch {
+        /* 迁移失败不影响本次读取 */
       }
+      return doc
     }
   } catch {
     /* 兜底 */
@@ -49,7 +72,14 @@ function readDoc(): NumberMemoryDoc {
 
 function writeDoc(doc: NumberMemoryDoc) {
   doc.updatedAt = Date.now()
-  uni.setStorageSync(STORAGE_KEY, doc)
+  try {
+    const result = getDbAdapter().put({ _id: DOC_ID, data: doc })
+    if (result.error) {
+      console.error('持久化数字记忆失败:', result.message)
+    }
+  } catch (e) {
+    console.error('持久化数字记忆失败:', e)
+  }
 }
 
 export const useNumberMemory = defineStore('mobileNumberMemory', () => {
@@ -118,23 +148,28 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
   // ===== 数字桩 CRUD =====
 
   /**
-   * 添加或更新文字桩
-   * 第一阶段强制 type='text'；imageUrl 字段保留为后期升级使用
+   * 添加或更新数字桩
+   * 传 imageUrl 时为图片桩（type='image'），否则为文字桩（type='text'）
    */
   function setAssociation(input: {
     number: string
     description: string
-    source?: 'user' | 'preset'
+    source?: 'user' | 'preset' | 'upload'
+    imageUrl?: string
+    imageSource?: 'base64' | 'local' | 'remote' | 'preset'
   }) {
     const idx = associations.value.findIndex((a) => a.number === input.number)
+    const prev = idx >= 0 ? associations.value[idx] : undefined
+    // 图片桩以 base64 dataURL 存 imageUrl（与桌面端格式一致，保证同步互通）
+    // 传 undefined 表示沿用原值，传 '' 表示显式清除
+    const imageUrl = input.imageUrl !== undefined ? (input.imageUrl || undefined) : prev?.imageUrl
     const next: MobileNumberAssociation = {
       number: input.number,
-      type: 'text',
+      type: imageUrl ? 'image' : 'text',
       description: input.description,
-      source: input.source || 'user',
-      // 后期升级解锁这两个字段
-      imageUrl: idx >= 0 ? associations.value[idx].imageUrl : undefined,
-      imageSource: idx >= 0 ? associations.value[idx].imageSource : undefined,
+      source: input.source || prev?.source || 'user',
+      imageUrl,
+      imageSource: imageUrl ? (input.imageSource || prev?.imageSource) : undefined,
     }
     if (idx >= 0) associations.value[idx] = next
     else associations.value.push(next)

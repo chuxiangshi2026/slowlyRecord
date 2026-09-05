@@ -44,15 +44,21 @@
           :class="{ filled: store.hasAssociation(num) }"
           @click="onPegClick(num)"
         >
-          <text class="peg-number">{{ num }}</text>
-          <text class="peg-desc" v-if="store.getAssociation(num)">
-            {{ shortDesc(store.getAssociation(num)!.description) }}
-          </text>
+          <template v-if="assoc(num)?.imageUrl">
+            <image class="peg-thumb" :src="assoc(num)!.imageUrl" mode="aspectFill" />
+            <text class="peg-number small">{{ num }}</text>
+          </template>
+          <template v-else>
+            <text class="peg-number">{{ num }}</text>
+            <text class="peg-desc" v-if="assoc(num)">
+              {{ shortDesc(assoc(num)!.description) }}
+            </text>
+          </template>
         </view>
       </view>
 
       <view class="peg-footer-tip">
-        <text>💡 点击数字编辑文字桩。同步时会带到其它设备。</text>
+        <text>💡 点击数字编辑桩位（文字/配图）。同步时会带到其它设备。</text>
       </view>
     </view>
 
@@ -135,6 +141,10 @@ const pegNumbers = computed(() => {
 function shortDesc(d: string): string {
   if (!d) return ''
   return d.length > 8 ? d.slice(0, 8) + '…' : d
+}
+
+function assoc(num: string) {
+  return store.getAssociation(num)
 }
 
 function onPegClick(num: string) {
@@ -314,6 +324,16 @@ onShow(() => store.load())
   font-size: 32rpx;
   font-weight: bold;
   color: #667eea;
+}
+.peg-number.small {
+  font-size: 22rpx;
+  margin-top: 6rpx;
+}
+.peg-thumb {
+  width: 100%;
+  height: 84rpx;
+  border-radius: 8rpx;
+  background: #f0f0f0;
 }
 .peg-desc {
   font-size: 20rpx;
