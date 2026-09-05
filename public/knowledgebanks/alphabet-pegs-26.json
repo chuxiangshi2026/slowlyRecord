@@ -1,0 +1,191 @@
+{
+  "id": "alphabet-pegs-26",
+  "name": "字母形象桩（A-Z）",
+  "description": "A-Z 26 个字母的英文首词形象桩，按字母序用作记忆宫殿桩位",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "alphabet-pegs-26-1",
+      "question": "A",
+      "answer": "苹果 Apple",
+      "order": 1,
+      "imageUrl": "🍎"
+    },
+    {
+      "id": "alphabet-pegs-26-2",
+      "question": "B",
+      "answer": "书本 Book",
+      "order": 2,
+      "imageUrl": "📖"
+    },
+    {
+      "id": "alphabet-pegs-26-3",
+      "question": "C",
+      "answer": "猫 Cat",
+      "order": 3,
+      "imageUrl": "🐱"
+    },
+    {
+      "id": "alphabet-pegs-26-4",
+      "question": "D",
+      "answer": "狗 Dog",
+      "order": 4,
+      "imageUrl": "🐕"
+    },
+    {
+      "id": "alphabet-pegs-26-5",
+      "question": "E",
+      "answer": "鸡蛋 Egg",
+      "order": 5,
+      "imageUrl": "🥚"
+    },
+    {
+      "id": "alphabet-pegs-26-6",
+      "question": "F",
+      "answer": "鱼 Fish",
+      "order": 6,
+      "imageUrl": "🐟"
+    },
+    {
+      "id": "alphabet-pegs-26-7",
+      "question": "G",
+      "answer": "女孩 Girl",
+      "order": 7,
+      "imageUrl": "👧"
+    },
+    {
+      "id": "alphabet-pegs-26-8",
+      "question": "H",
+      "answer": "帽子 Hat",
+      "order": 8,
+      "imageUrl": "🎩"
+    },
+    {
+      "id": "alphabet-pegs-26-9",
+      "question": "I",
+      "answer": "冰块 Ice",
+      "order": 9,
+      "imageUrl": "🧊"
+    },
+    {
+      "id": "alphabet-pegs-26-10",
+      "question": "J",
+      "answer": "果酱 Jam",
+      "order": 10,
+      "imageUrl": "🍯"
+    },
+    {
+      "id": "alphabet-pegs-26-11",
+      "question": "K",
+      "answer": "风筝 Kite",
+      "order": 11,
+      "imageUrl": "🪁"
+    },
+    {
+      "id": "alphabet-pegs-26-12",
+      "question": "L",
+      "answer": "狮子 Lion",
+      "order": 12,
+      "imageUrl": "🦁"
+    },
+    {
+      "id": "alphabet-pegs-26-13",
+      "question": "M",
+      "answer": "月亮 Moon",
+      "order": 13,
+      "imageUrl": "🌙"
+    },
+    {
+      "id": "alphabet-pegs-26-14",
+      "question": "N",
+      "answer": "鼻子 Nose",
+      "order": 14,
+      "imageUrl": "👃"
+    },
+    {
+      "id": "alphabet-pegs-26-15",
+      "question": "O",
+      "answer": "橙子 Orange",
+      "order": 15,
+      "imageUrl": "🍊"
+    },
+    {
+      "id": "alphabet-pegs-26-16",
+      "question": "P",
+      "answer": "钢笔 Pen",
+      "order": 16,
+      "imageUrl": "🖊️"
+    },
+    {
+      "id": "alphabet-pegs-26-17",
+      "question": "Q",
+      "answer": "女王 Queen",
+      "order": 17,
+      "imageUrl": "👸"
+    },
+    {
+      "id": "alphabet-pegs-26-18",
+      "question": "R",
+      "answer": "机器人 Robot",
+      "order": 18,
+      "imageUrl": "🤖"
+    },
+    {
+      "id": "alphabet-pegs-26-19",
+      "question": "S",
+      "answer": "太阳 Sun",
+      "order": 19,
+      "imageUrl": "☀️"
+    },
+    {
+      "id": "alphabet-pegs-26-20",
+      "question": "T",
+      "answer": "树 Tree",
+      "order": 20,
+      "imageUrl": "🌳"
+    },
+    {
+      "id": "alphabet-pegs-26-21",
+      "question": "U",
+      "answer": "雨伞 Umbrella",
+      "order": 21,
+      "imageUrl": "☂️"
+    },
+    {
+      "id": "alphabet-pegs-26-22",
+      "question": "V",
+      "answer": "小提琴 Violin",
+      "order": 22,
+      "imageUrl": "🎻"
+    },
+    {
+      "id": "alphabet-pegs-26-23",
+      "question": "W",
+      "answer": "水滴 Water",
+      "order": 23,
+      "imageUrl": "💧"
+    },
+    {
+      "id": "alphabet-pegs-26-24",
+      "question": "X",
+      "answer": "X光片 X-ray",
+      "order": 24,
+      "imageUrl": "🩻"
+    },
+    {
+      "id": "alphabet-pegs-26-25",
+      "question": "Y",
+      "answer": "悠悠球 Yoyo",
+      "order": 25,
+      "imageUrl": "🪀"
+    },
+    {
+      "id": "alphabet-pegs-26-26",
+      "question": "Z",
+      "answer": "斑马 Zebra",
+      "order": 26,
+      "imageUrl": "🦓"
+    }
+  ]
+}

@@ -1,0 +1,581 @@
+{
+  "id": "poker-pegs-52",
+  "name": "扑克牌桩（52 张）",
+  "description": "一副扑克 52 张牌的花色点数桩（黑桃/红桃/方块/梅花），按花色顺序用作记忆宫殿桩位",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "poker-pegs-52-1",
+      "question": "🂡A",
+      "answer": "黑桃尖塔",
+      "order": 1,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "A"
+      },
+      "imageUrl": "🂡"
+    },
+    {
+      "id": "poker-pegs-52-2",
+      "question": "🂢2",
+      "answer": "黑桃双子",
+      "order": 2,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "2"
+      },
+      "imageUrl": "🂢"
+    },
+    {
+      "id": "poker-pegs-52-3",
+      "question": "🂣3",
+      "answer": "黑桃三叉",
+      "order": 3,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "3"
+      },
+      "imageUrl": "🂣"
+    },
+    {
+      "id": "poker-pegs-52-4",
+      "question": "🂤4",
+      "answer": "黑桃旗帜",
+      "order": 4,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "4"
+      },
+      "imageUrl": "🂤"
+    },
+    {
+      "id": "poker-pegs-52-5",
+      "question": "🂥5",
+      "answer": "黑桃铁钩",
+      "order": 5,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "5"
+      },
+      "imageUrl": "🂥"
+    },
+    {
+      "id": "poker-pegs-52-6",
+      "question": "🂦6",
+      "answer": "黑桃哨子",
+      "order": 6,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "6"
+      },
+      "imageUrl": "🂦"
+    },
+    {
+      "id": "poker-pegs-52-7",
+      "question": "🂧7",
+      "answer": "黑桃拐杖",
+      "order": 7,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "7"
+      },
+      "imageUrl": "🂧"
+    },
+    {
+      "id": "poker-pegs-52-8",
+      "question": "🂨8",
+      "answer": "黑桃葫芦",
+      "order": 8,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "8"
+      },
+      "imageUrl": "🂨"
+    },
+    {
+      "id": "poker-pegs-52-9",
+      "question": "🂩9",
+      "answer": "黑桃气球",
+      "order": 9,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "9"
+      },
+      "imageUrl": "🂩"
+    },
+    {
+      "id": "poker-pegs-52-10",
+      "question": "🂪10",
+      "answer": "黑桃棒球",
+      "order": 10,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "10"
+      },
+      "imageUrl": "🂪"
+    },
+    {
+      "id": "poker-pegs-52-11",
+      "question": "🂫J",
+      "answer": "黑桃士兵",
+      "order": 11,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "J"
+      },
+      "imageUrl": "🂫"
+    },
+    {
+      "id": "poker-pegs-52-12",
+      "question": "🂭Q",
+      "answer": "黑桃女王",
+      "order": 12,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "Q"
+      },
+      "imageUrl": "🂭"
+    },
+    {
+      "id": "poker-pegs-52-13",
+      "question": "🂮K",
+      "answer": "黑桃国王",
+      "order": 13,
+      "extras": {
+        "花色": "黑桃",
+        "点数": "K"
+      },
+      "imageUrl": "🂮"
+    },
+    {
+      "id": "poker-pegs-52-14",
+      "question": "🂱A",
+      "answer": "红桃尖塔",
+      "order": 14,
+      "extras": {
+        "花色": "红桃",
+        "点数": "A"
+      },
+      "imageUrl": "🂱"
+    },
+    {
+      "id": "poker-pegs-52-15",
+      "question": "🂲2",
+      "answer": "红桃双子",
+      "order": 15,
+      "extras": {
+        "花色": "红桃",
+        "点数": "2"
+      },
+      "imageUrl": "🂲"
+    },
+    {
+      "id": "poker-pegs-52-16",
+      "question": "🂳3",
+      "answer": "红桃三叉",
+      "order": 16,
+      "extras": {
+        "花色": "红桃",
+        "点数": "3"
+      },
+      "imageUrl": "🂳"
+    },
+    {
+      "id": "poker-pegs-52-17",
+      "question": "🂴4",
+      "answer": "红桃旗帜",
+      "order": 17,
+      "extras": {
+        "花色": "红桃",
+        "点数": "4"
+      },
+      "imageUrl": "🂴"
+    },
+    {
+      "id": "poker-pegs-52-18",
+      "question": "🂵5",
+      "answer": "红桃铁钩",
+      "order": 18,
+      "extras": {
+        "花色": "红桃",
+        "点数": "5"
+      },
+      "imageUrl": "🂵"
+    },
+    {
+      "id": "poker-pegs-52-19",
+      "question": "🂶6",
+      "answer": "红桃哨子",
+      "order": 19,
+      "extras": {
+        "花色": "红桃",
+        "点数": "6"
+      },
+      "imageUrl": "🂶"
+    },
+    {
+      "id": "poker-pegs-52-20",
+      "question": "🂷7",
+      "answer": "红桃拐杖",
+      "order": 20,
+      "extras": {
+        "花色": "红桃",
+        "点数": "7"
+      },
+      "imageUrl": "🂷"
+    },
+    {
+      "id": "poker-pegs-52-21",
+      "question": "🂸8",
+      "answer": "红桃葫芦",
+      "order": 21,
+      "extras": {
+        "花色": "红桃",
+        "点数": "8"
+      },
+      "imageUrl": "🂸"
+    },
+    {
+      "id": "poker-pegs-52-22",
+      "question": "🂹9",
+      "answer": "红桃气球",
+      "order": 22,
+      "extras": {
+        "花色": "红桃",
+        "点数": "9"
+      },
+      "imageUrl": "🂹"
+    },
+    {
+      "id": "poker-pegs-52-23",
+      "question": "🂺10",
+      "answer": "红桃棒球",
+      "order": 23,
+      "extras": {
+        "花色": "红桃",
+        "点数": "10"
+      },
+      "imageUrl": "🂺"
+    },
+    {
+      "id": "poker-pegs-52-24",
+      "question": "🂻J",
+      "answer": "红桃士兵",
+      "order": 24,
+      "extras": {
+        "花色": "红桃",
+        "点数": "J"
+      },
+      "imageUrl": "🂻"
+    },
+    {
+      "id": "poker-pegs-52-25",
+      "question": "🂽Q",
+      "answer": "红桃女王",
+      "order": 25,
+      "extras": {
+        "花色": "红桃",
+        "点数": "Q"
+      },
+      "imageUrl": "🂽"
+    },
+    {
+      "id": "poker-pegs-52-26",
+      "question": "🂾K",
+      "answer": "红桃国王",
+      "order": 26,
+      "extras": {
+        "花色": "红桃",
+        "点数": "K"
+      },
+      "imageUrl": "🂾"
+    },
+    {
+      "id": "poker-pegs-52-27",
+      "question": "🃁A",
+      "answer": "方块尖塔",
+      "order": 27,
+      "extras": {
+        "花色": "方块",
+        "点数": "A"
+      },
+      "imageUrl": "🃁"
+    },
+    {
+      "id": "poker-pegs-52-28",
+      "question": "🃂2",
+      "answer": "方块双子",
+      "order": 28,
+      "extras": {
+        "花色": "方块",
+        "点数": "2"
+      },
+      "imageUrl": "🃂"
+    },
+    {
+      "id": "poker-pegs-52-29",
+      "question": "🃃3",
+      "answer": "方块三叉",
+      "order": 29,
+      "extras": {
+        "花色": "方块",
+        "点数": "3"
+      },
+      "imageUrl": "🃃"
+    },
+    {
+      "id": "poker-pegs-52-30",
+      "question": "🃄4",
+      "answer": "方块旗帜",
+      "order": 30,
+      "extras": {
+        "花色": "方块",
+        "点数": "4"
+      },
+      "imageUrl": "🃄"
+    },
+    {
+      "id": "poker-pegs-52-31",
+      "question": "🃅5",
+      "answer": "方块铁钩",
+      "order": 31,
+      "extras": {
+        "花色": "方块",
+        "点数": "5"
+      },
+      "imageUrl": "🃅"
+    },
+    {
+      "id": "poker-pegs-52-32",
+      "question": "🃆6",
+      "answer": "方块哨子",
+      "order": 32,
+      "extras": {
+        "花色": "方块",
+        "点数": "6"
+      },
+      "imageUrl": "🃆"
+    },
+    {
+      "id": "poker-pegs-52-33",
+      "question": "🃇7",
+      "answer": "方块拐杖",
+      "order": 33,
+      "extras": {
+        "花色": "方块",
+        "点数": "7"
+      },
+      "imageUrl": "🃇"
+    },
+    {
+      "id": "poker-pegs-52-34",
+      "question": "🃈8",
+      "answer": "方块葫芦",
+      "order": 34,
+      "extras": {
+        "花色": "方块",
+        "点数": "8"
+      },
+      "imageUrl": "🃈"
+    },
+    {
+      "id": "poker-pegs-52-35",
+      "question": "🃉9",
+      "answer": "方块气球",
+      "order": 35,
+      "extras": {
+        "花色": "方块",
+        "点数": "9"
+      },
+      "imageUrl": "🃉"
+    },
+    {
+      "id": "poker-pegs-52-36",
+      "question": "🃊10",
+      "answer": "方块棒球",
+      "order": 36,
+      "extras": {
+        "花色": "方块",
+        "点数": "10"
+      },
+      "imageUrl": "🃊"
+    },
+    {
+      "id": "poker-pegs-52-37",
+      "question": "🃋J",
+      "answer": "方块士兵",
+      "order": 37,
+      "extras": {
+        "花色": "方块",
+        "点数": "J"
+      },
+      "imageUrl": "🃋"
+    },
+    {
+      "id": "poker-pegs-52-38",
+      "question": "🃍Q",
+      "answer": "方块女王",
+      "order": 38,
+      "extras": {
+        "花色": "方块",
+        "点数": "Q"
+      },
+      "imageUrl": "🃍"
+    },
+    {
+      "id": "poker-pegs-52-39",
+      "question": "🃎K",
+      "answer": "方块国王",
+      "order": 39,
+      "extras": {
+        "花色": "方块",
+        "点数": "K"
+      },
+      "imageUrl": "🃎"
+    },
+    {
+      "id": "poker-pegs-52-40",
+      "question": "🃑A",
+      "answer": "梅花尖塔",
+      "order": 40,
+      "extras": {
+        "花色": "梅花",
+        "点数": "A"
+      },
+      "imageUrl": "🃑"
+    },
+    {
+      "id": "poker-pegs-52-41",
+      "question": "🃒2",
+      "answer": "梅花双子",
+      "order": 41,
+      "extras": {
+        "花色": "梅花",
+        "点数": "2"
+      },
+      "imageUrl": "🃒"
+    },
+    {
+      "id": "poker-pegs-52-42",
+      "question": "🃓3",
+      "answer": "梅花三叉",
+      "order": 42,
+      "extras": {
+        "花色": "梅花",
+        "点数": "3"
+      },
+      "imageUrl": "🃓"
+    },
+    {
+      "id": "poker-pegs-52-43",
+      "question": "🃔4",
+      "answer": "梅花旗帜",
+      "order": 43,
+      "extras": {
+        "花色": "梅花",
+        "点数": "4"
+      },
+      "imageUrl": "🃔"
+    },
+    {
+      "id": "poker-pegs-52-44",
+      "question": "🃕5",
+      "answer": "梅花铁钩",
+      "order": 44,
+      "extras": {
+        "花色": "梅花",
+        "点数": "5"
+      },
+      "imageUrl": "🃕"
+    },
+    {
+      "id": "poker-pegs-52-45",
+      "question": "🃖6",
+      "answer": "梅花哨子",
+      "order": 45,
+      "extras": {
+        "花色": "梅花",
+        "点数": "6"
+      },
+      "imageUrl": "🃖"
+    },
+    {
+      "id": "poker-pegs-52-46",
+      "question": "🃗7",
+      "answer": "梅花拐杖",
+      "order": 46,
+      "extras": {
+        "花色": "梅花",
+        "点数": "7"
+      },
+      "imageUrl": "🃗"
+    },
+    {
+      "id": "poker-pegs-52-47",
+      "question": "🃘8",
+      "answer": "梅花葫芦",
+      "order": 47,
+      "extras": {
+        "花色": "梅花",
+        "点数": "8"
+      },
+      "imageUrl": "🃘"
+    },
+    {
+      "id": "poker-pegs-52-48",
+      "question": "🃙9",
+      "answer": "梅花气球",
+      "order": 48,
+      "extras": {
+        "花色": "梅花",
+        "点数": "9"
+      },
+      "imageUrl": "🃙"
+    },
+    {
+      "id": "poker-pegs-52-49",
+      "question": "🃚10",
+      "answer": "梅花棒球",
+      "order": 49,
+      "extras": {
+        "花色": "梅花",
+        "点数": "10"
+      },
+      "imageUrl": "🃚"
+    },
+    {
+      "id": "poker-pegs-52-50",
+      "question": "🃛J",
+      "answer": "梅花士兵",
+      "order": 50,
+      "extras": {
+        "花色": "梅花",
+        "点数": "J"
+      },
+      "imageUrl": "🃛"
+    },
+    {
+      "id": "poker-pegs-52-51",
+      "question": "🃝Q",
+      "answer": "梅花女王",
+      "order": 51,
+      "extras": {
+        "花色": "梅花",
+        "点数": "Q"
+      },
+      "imageUrl": "🃝"
+    },
+    {
+      "id": "poker-pegs-52-52",
+      "question": "🃞K",
+      "answer": "梅花国王",
+      "order": 52,
+      "extras": {
+        "花色": "梅花",
+        "点数": "K"
+      },
+      "imageUrl": "🃞"
+    }
+  ]
+}

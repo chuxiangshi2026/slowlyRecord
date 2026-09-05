@@ -62,6 +62,10 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'math-formulas-2', name: '常用数学公式（进阶篇）', description: '高中与竞赛方向的数列、几何、圆锥曲线、微积分与概率公式', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'squares-cubes-powers', name: '平方立方与幂次', description: '1-25 平方、1-10 立方、2 的 1-16 次幂与 10 的 6-12 次幂（含中文数位）', itemCount: 58, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'primes-under-100', name: '100 以内质数表', description: '100 以内 25 个质数及其序位，顺序本身是考点', itemCount: 25, ordered: true, usableAsPeg: false, category: 'math', version: 1},
+    {id: 'poker-pegs-52', name: '扑克牌桩（52 张）', description: '一副扑克 52 张牌的花色点数桩（黑桃/红桃/方块/梅花），按花色顺序用作记忆宫殿桩位', itemCount: 52, ordered: true, usableAsPeg: true, category: 'text', version: 1},
+    {id: 'alphabet-pegs-26', name: '字母形象桩（A-Z）', description: 'A-Z 26 个字母的英文首词形象桩，按字母序用作记忆宫殿桩位', itemCount: 26, ordered: true, usableAsPeg: true, category: 'text', version: 1},
+    {id: 'thirty-six-stratagems', name: '三十六计', description: '三十六计全目，按六套（胜战/敌战/攻战/混战/并战/败战）顺序排列，顺序本身是考点', itemCount: 36, ordered: true, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'world-capitals-40', name: '世界国家与首都', description: '六大洲 40 个常见国家及其首都（南非为行政首都比勒陀利亚）', itemCount: 40, ordered: false, usableAsPeg: false, category: 'text', version: 1},
 ];
 
 interface CacheData {
