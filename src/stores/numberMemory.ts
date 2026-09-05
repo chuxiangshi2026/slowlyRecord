@@ -161,14 +161,19 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
     const selected = shuffled.slice(0, Math.min(count, shuffled.length));
     
     return selected.map(correct => {
-      // 生成干扰项（其他数字的图片）
-      const otherImages = associations.value
-        .filter(a => a.number !== correct.number)
-        .map(a => ({ number: a.number, imageUrl: a.imageUrl }));
-      
-      const distractors = shuffleArray(otherImages).slice(0, 3);
+      // 生成干扰项（其他数字的图片）。预设中多个数字可能共用同一 emoji，
+      // 需排除与正确答案相同的图片并按 imageUrl 去重，避免出现"选谁都判对"的重复选项；
+      // 去重后不足 3 个时允许选项少于 4 个
+      const seen = new Set<string>([correct.imageUrl]);
+      const distractors: { number: string; imageUrl: string }[] = [];
+      for (const a of shuffleArray(associations.value.filter(x => x.number !== correct.number))) {
+        if (seen.has(a.imageUrl)) continue;
+        seen.add(a.imageUrl);
+        distractors.push({ number: a.number, imageUrl: a.imageUrl });
+        if (distractors.length >= 3) break;
+      }
       const options = shuffleArray([...distractors, { number: correct.number, imageUrl: correct.imageUrl }]);
-      
+
       return {
         question: correct.number,
         correctAnswer: correct.imageUrl,
