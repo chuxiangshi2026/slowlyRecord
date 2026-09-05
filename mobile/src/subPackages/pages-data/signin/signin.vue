@@ -65,43 +65,24 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useSignin } from '@/stores/useSignin'
+
+const signinStore = useSignin()
+const signedDates = computed(() => signinStore.signedDates)
+const hasSignedToday = computed(() => signinStore.hasSignedToday)
+const streakDays = computed(() => signinStore.streakDays)
+const totalSignDays = computed(() => signinStore.totalSignDays)
 
 const currentYear = ref(new Date().getFullYear())
 const currentMonth = ref(new Date().getMonth())
-const signedDates = ref<string[]>([])
-const hasSignedToday = ref(false)
-
-const STORAGE_KEY = 'signin_records'
 
 const weekdays = ['日', '一', '二', '三', '四', '五', '六']
 
-const todayStr = computed(() => {
-  const d = new Date()
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-})
+const todayStr = computed(() => signinStore.todayStr)
 
-const streakDays = computed(() => {
-  let streak = 0
-  const today = new Date()
-  for (let i = 0; i < 365; i++) {
-    const d = new Date(today)
-    d.setDate(d.getDate() - i)
-    const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-    if (signedDates.value.includes(str)) {
-      streak++
-    } else if (i > 0) {
-      break
-    }
-  }
-  return streak
-})
-
-const totalSignDays = computed(() => signedDates.value.length)
-
-const monthSignDays = computed(() => {
-  const prefix = `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}`
-  return signedDates.value.filter(d => d.startsWith(prefix)).length
-})
+const monthSignDays = computed(() =>
+  signinStore.monthSignDays(currentYear.value, currentMonth.value)
+)
 
 const calendarDays = computed(() => {
   const days: { date: number; isCurrentMonth: boolean; isToday: boolean; isSigned: boolean }[] = []
@@ -139,33 +120,13 @@ const calendarDays = computed(() => {
 })
 
 onMounted(() => {
-  loadSignRecords()
+  signinStore.loadRecords()
 })
 
-const loadSignRecords = () => {
-  try {
-    const stored = uni.getStorageSync(STORAGE_KEY)
-    if (stored) {
-      signedDates.value = JSON.parse(stored)
-      hasSignedToday.value = signedDates.value.includes(todayStr.value)
-    }
-  } catch {
-    signedDates.value = []
-  }
-}
-
-const saveSignRecords = () => {
-  uni.setStorageSync(STORAGE_KEY, JSON.stringify(signedDates.value))
-}
-
 const handleSign = () => {
-  if (hasSignedToday.value) return
-
-  signedDates.value.push(todayStr.value)
-  hasSignedToday.value = true
-  saveSignRecords()
-
-  uni.showToast({ title: '打卡成功！', icon: 'success' })
+  if (signinStore.signToday()) {
+    uni.showToast({ title: '打卡成功！', icon: 'success' })
+  }
 }
 
 const prevMonth = () => {

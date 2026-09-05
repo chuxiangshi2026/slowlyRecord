@@ -75,22 +75,37 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { useSignin } from '@/stores/useSignin'
+
+const wordsStore = useMobileWords()
+const signinStore = useSignin()
 
 const wordCount = ref(0)
 const reviewCount = ref(0)
-const streakDays = ref(7)
-const todayLearned = ref(12)
+
+// 连续打卡天数来自打卡 store
+const streakDays = computed(() => signinStore.streakDays)
+
+// 今日学习 = 当天新增数 + 当天复习数（字段为 mobile 特有的 addTime/lastReviewTime）
+const todayLearned = computed(() => {
+  const todayStart = new Date()
+  todayStart.setHours(0, 0, 0, 0)
+  const start = todayStart.getTime()
+  const all = wordsStore.allWords
+  const added = all.filter(w => w.addTime >= start).length
+  const reviewed = all.filter(w => (w.lastReviewTime || 0) >= start).length
+  return added + reviewed
+})
 
 const currentBankName = computed(() => {
   const bank = wordsStore.getBankById(wordsStore.currentBankId)
   return bank?.name || '默认词库'
 })
 
-const wordsStore = useMobileWords()
-
 onMounted(() => {
   // 不 await，避免阻塞首屏渲染；数据加载后通过 watch 自动更新 UI
   wordsStore.loadWords()
+  signinStore.loadRecords()
 })
 
 // 数据加载完成后自动更新统计
