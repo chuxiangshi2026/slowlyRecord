@@ -52,28 +52,34 @@ function openDB(): Promise<IDBDatabase> {
 }
 
 async function idbGet(key: string): Promise<ArrayBuffer | null> {
+    let db: IDBDatabase | null = null
     try {
-        const db = await openDB()
+        db = await openDB()
         return await new Promise((resolve, reject) => {
-            const req = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(key)
+            const req = db!.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(key)
             req.onsuccess = () => resolve(req.result ?? null)
             req.onerror = () => reject(req.error)
         })
     } catch {
         return null
+    } finally {
+        db?.close()
     }
 }
 
 async function idbPut(key: string, data: ArrayBuffer): Promise<void> {
+    let db: IDBDatabase | null = null
     try {
-        const db = await openDB()
+        db = await openDB()
         await new Promise((resolve, reject) => {
-            const req = db.transaction(STORE_NAME, 'readwrite').objectStore(STORE_NAME).put(data, key)
+            const req = db!.transaction(STORE_NAME, 'readwrite').objectStore(STORE_NAME).put(data, key)
             req.onsuccess = () => resolve(undefined)
             req.onerror = () => reject(req.error)
         })
     } catch (e) {
         console.warn('[OCR语言包] IndexedDB 缓存写入失败:', e)
+    } finally {
+        db?.close()
     }
 }
 
@@ -165,7 +171,7 @@ export async function ensureTrainedData(
     }
 
     // 4) 入缓存
-    idbPut(ocrLang, bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength))
+    await idbPut(ocrLang, bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength))
     if (!data) lsPut(ocrLang, bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength))
     return bytes
 }
