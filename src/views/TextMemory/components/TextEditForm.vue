@@ -31,6 +31,22 @@
       />
     </el-form-item>
 
+    <el-form-item label="语言">
+      <el-select
+        v-model="formData.language"
+        placeholder="选择文章语言"
+        style="width: 100%"
+        @change="handleLanguageChange"
+      >
+        <el-option
+          v-for="opt in TEXT_LANGUAGE_OPTIONS"
+          :key="opt.code"
+          :label="opt.label"
+          :value="opt.code"
+        />
+      </el-select>
+    </el-form-item>
+
     <el-form-item label="标签">
       <el-select
         v-model="formData.tags"
@@ -105,6 +121,7 @@ import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
 import type { FormInstance, FormRules } from 'element-plus';
 import { TIMELINE_CATEGORIES, TIMELINE_REGIONS, parseFigures, parseRelations } from '@/utils/timeline-service';
+import { TEXT_LANGUAGE_OPTIONS, detectTextLanguage, normalizeArticleLanguage } from '@/utils/text-memory-util';
 
 interface Props {
   // 传入则为编辑模式，表单以其为初始值；不传为新增模式
@@ -131,6 +148,7 @@ const formData = ref({
   title: '',
   author: '',
   source: '',
+  language: 'zh',
   tags: [] as string[],
   content: '',
   // 时间线字段
@@ -157,13 +175,30 @@ const formRules: FormRules = {
   ]
 };
 
+// 语言是否被用户手动修改过：未修改时跟随内容自动检测
+let languageTouched = false;
+
+// 用户手动选择语言后，不再随内容自动变化
+function handleLanguageChange() {
+  languageTouched = true;
+}
+
+// 内容变化时自动检测语言（仅用户未手动选择过语言时）
+watch(() => formData.value.content, (content) => {
+  if (languageTouched) return;
+  formData.value.language = content.trim() ? detectTextLanguage(content) : 'zh';
+});
+
 // 监听article变化，编辑时填充数据
 watch(() => props.article, (newArticle) => {
   if (newArticle) {
+    // 编辑模式：以文章已有语言为准，视为用户显式值
+    languageTouched = true;
     formData.value = {
       title: newArticle.title,
       author: newArticle.author || '',
       source: newArticle.source || '',
+      language: normalizeArticleLanguage(newArticle.language),
       tags: [...newArticle.tags],
       content: newArticle.content,
       category: (newArticle.category as any) || '',
@@ -177,6 +212,7 @@ watch(() => props.article, (newArticle) => {
       relations: (newArticle.relations || []).map(r => [r.from, r.to, r.type, r.desc].filter(Boolean).join('|')).join('\n'),
     };
   } else {
+    languageTouched = false;
     resetForm();
   }
 }, { immediate: true });
@@ -187,6 +223,7 @@ function resetForm() {
     title: '',
     author: '',
     source: '',
+    language: 'zh',
     tags: [],
     content: '',
     category: '',
@@ -226,6 +263,7 @@ async function submit(): Promise<boolean> {
       title: formData.value.title,
       author: formData.value.author,
       source: formData.value.source,
+      language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
       ...timelineFields,
@@ -237,6 +275,7 @@ async function submit(): Promise<boolean> {
       title: formData.value.title,
       author: formData.value.author,
       source: formData.value.source,
+      language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
       ...timelineFields,

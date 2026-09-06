@@ -218,6 +218,7 @@
                     <div class="meta-field"><span class="meta-key">作者：</span>作者名称</div>
                     <div class="meta-field"><span class="meta-key">标签：</span>标签1,标签2,标签3</div>
                     <div class="meta-field"><span class="meta-key">来源：</span>文章来源</div>
+                    <div class="meta-field"><span class="meta-key">语言：</span>zh / en / ja / ru / es / fr</div>
                   </div>
                   <div class="example-box">
                     <div class="example-header">
@@ -1167,6 +1168,7 @@ import type { TimelineCategory, TimelineRegion } from '@/types/text-memory';
 import { useKnowledgeMemoryStore } from '@/stores/knowledgeMemory';
 import { useMemoryPalaceStore } from '@/stores/memoryPalace';
 import { loadPackPreviews } from '@/utils/knowledge-pack-preview';
+import { detectTextLanguage, isSupportedArticleLanguage } from '@/utils/text-memory-util';
 import type { KnowledgePackInfo } from '@/types/knowledge-memory';
 import TextEditForm from './TextEditForm.vue';
 
@@ -1518,7 +1520,7 @@ const batchContent = ref('');
 // 各类型格式说明
 const BATCH_FORMAT_TIPS: Record<BatchType, { desc: string; example: string; placeholder: string }> = {
   text: {
-    desc: '每篇文章使用以下格式，多篇文章用 --- 分隔：',
+    desc: '每篇文章使用以下格式，多篇文章用 --- 分隔；支持「语言：」元数据（zh/en/ja/ru/es/fr），缺省按内容自动检测：',
     example: '标题：文章标题\n标签：标签1,标签2\n作者：作者名\n---\n文章内容...\n---\n标题：另一篇文章\n...',
     placeholder: '粘贴批量导入的文本...',
   },
@@ -2210,12 +2212,22 @@ function parseBatchContent(content: string): any[] {
         article.location = trimmedLine.replace(/^地点[：:]\s*/, '');
       } else if (trimmedLine.startsWith('标签：') || trimmedLine.startsWith('标签:')) {
         article.tags = trimmedLine.replace(/^标签[：:]\s*/, '').split(/[,，]/).map(t => t.trim()).filter(Boolean);
+      } else if (trimmedLine.startsWith('语言：') || trimmedLine.startsWith('语言:')) {
+        // 仅接受受支持的语言值；非法值留空走下方按内容自动检测
+        const lang = trimmedLine.replace(/^语言[：:]\s*/, '').trim();
+        if (isSupportedArticleLanguage(lang)) {
+          article.language = lang;
+        }
       } else {
         contentLines.push(line);
       }
     }
 
     article.content = contentLines.join('\n').trim();
+    // 未显式指定语言时按内容自动检测（缺省视为中文）
+    if (!article.language) {
+      article.language = detectTextLanguage(article.content);
+    }
 
     if (article.title && article.content) {
       articles.push(article);
@@ -2286,6 +2298,19 @@ function applyBatchCategory(articles: any[], type: BatchType): any[] {
     return articles.map(a => ({...a, category: 'idiom', tags: ['成语', ...(a.tags || [])]}));
   }
   return articles;
+}
+
+// 文件导入语言判定：内容前部有「语言：xx」元数据行则采用，否则按内容自动检测
+function resolveImportLanguage(content: string): string {
+  const headLines = content.split('\n').slice(0, 10);
+  for (const line of headLines) {
+    const match = line.trim().match(/^语言[：:]\s*(\S+)\s*$/);
+    // 仅接受受支持的语言值；非法值视为未指定，走自动检测
+    if (match && isSupportedArticleLanguage(match[1])) {
+      return match[1];
+    }
+  }
+  return detectTextLanguage(content);
 }
 
 // 导入
@@ -2359,7 +2384,8 @@ async function handleImport() {
             content: fileContent.value,
             tags: fileForm.value.tags,
             author: '',
-            source: ''
+            source: '',
+            language: resolveImportLanguage(fileContent.value)
           }], fileType.value);
         }
         break;
@@ -2392,7 +2418,8 @@ async function handleImport() {
               source: poem.source || poem.dynasty,
               dynasty: poem.dynasty,
               location: poem.location,
-              category: 'poetry'
+              category: 'poetry',
+              language: 'zh'
             }));
           } else {
             ElMessage.warning('请至少选择一首诗词');
@@ -2414,6 +2441,7 @@ async function handleImport() {
               source: it.source || '成语库',
               category: 'idiom',
               location: it.location,
+              language: 'zh',
             }));
           } else {
             ElMessage.warning('请至少选择一条成语');

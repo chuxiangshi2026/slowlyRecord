@@ -300,6 +300,7 @@ export function mapLibraryEventToArticle(ev: LibraryTimelineEvent) {
     background: ev.background,
     tags: ev.tags ?? [],
     source: ev.era ? `时间线·${ev.era}` : '时间线',
+    language: 'zh',
   };
 }
 

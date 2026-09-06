@@ -327,6 +327,7 @@ import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle, TextPrompt } from '@/types/text-memory';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Plus, Edit, Delete, Rank, MagicStick, View } from '@element-plus/icons-vue';
+import { extractKeywordTexts, getArticleLanguage } from '@/utils/text-memory-util';
 
 // 写字板存储键
 const NOTEPAD_KEY = 'slowlyrecord-textmemory-notepad';
@@ -450,9 +451,8 @@ const quickAddPreview = computed(() => {
       break;
     case 'keywords':
       title = '关键词';
-      // 提取关键词（简化处理）
-      const words = content.match(/[\u4e00-\u9fa5]{2,4}/g) || [];
-      previewContent = [...new Set(words)].slice(0, 5).join('、');
+      // 提取关键词：中文走中文正则，其他语言按语言分词
+      previewContent = extractKeywordTexts(content, getArticleLanguage(props.article)).join('、');
       break;
     case 'summary':
       title = '段落大意';

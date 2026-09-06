@@ -351,4 +351,61 @@ describe('TextImportDialog（统一添加/导入入口）', () => {
       )
     }, { timeout: 3000 })
   })
+
+  it('批量导入解析「语言：」元数据行，缺省时按内容自动检测', async () => {
+    const { emitted } = await setup()
+
+    await fireEvent.click(screen.getByRole('tab', { name: '批量导入' }))
+    const pane = document.getElementById('pane-batch') as HTMLElement
+
+    const batchText = [
+      '标题：English Essay',
+      '作者：Someone',
+      '语言：en',
+      'The quick brown fox jumps over the lazy dog.',
+      '---',
+      '标题：Auto Detected',
+      'Practice makes perfect every single day.',
+      '---',
+      '标题：中文文章',
+      '春眠不觉晓，处处闻啼鸟。',
+    ].join('\n')
+    await fireEvent.update(within(pane).getByPlaceholderText('粘贴批量导入的文本...'), batchText)
+    await fireEvent.click(screen.getByRole('button', { name: '导入' }))
+
+    await waitFor(() => {
+      const events = emitted().import
+      expect(events).toBeTruthy()
+      const articles = (events[0] as any[])[0]
+      expect(articles).toHaveLength(3)
+      // 显式「语言：en」元数据
+      expect(articles[0].language).toBe('en')
+      // 英文内容自动检测为 en
+      expect(articles[1].language).toBe('en')
+      // 中文内容缺省为 zh
+      expect(articles[2].language).toBe('zh')
+    }, { timeout: 3000 })
+  })
+
+  it('批量导入「语言：」非法值回退按内容自动检测', async () => {
+    const { emitted } = await setup()
+
+    await fireEvent.click(screen.getByRole('tab', { name: '批量导入' }))
+    const pane = document.getElementById('pane-batch') as HTMLElement
+
+    const batchText = [
+      '标题：Fallback',
+      '语言：de',
+      'The quick brown fox jumps over the lazy dog.',
+    ].join('\n')
+    await fireEvent.update(within(pane).getByPlaceholderText('粘贴批量导入的文本...'), batchText)
+    await fireEvent.click(screen.getByRole('button', { name: '导入' }))
+
+    await waitFor(() => {
+      const events = emitted().import
+      expect(events).toBeTruthy()
+      const articles = (events[0] as any[])[0]
+      expect(articles[0].language).toBe('en')
+    }, { timeout: 3000 })
+  })
 })

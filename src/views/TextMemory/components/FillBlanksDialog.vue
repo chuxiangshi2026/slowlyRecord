@@ -43,7 +43,8 @@
           <el-radio-button label="random">随机填空</el-radio-button>
           <el-radio-button label="keyword">关键词填空</el-radio-button>
           <el-radio-button label="sentence">整句填空</el-radio-button>
-          <el-radio-button label="semantic">语义填空</el-radio-button>
+          <!-- 语义填空依赖中文近反义词库，仅中文文章可用 -->
+          <el-radio-button v-if="isZhArticle" label="semantic">语义填空</el-radio-button>
         </el-radio-group>
       </div>
 
@@ -164,6 +165,8 @@ import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
 import { ElMessage } from 'element-plus';
 import { Refresh, Check, Close } from '@element-plus/icons-vue';
+import { getArticleLanguage, extractForeignKeywords } from '@/utils/text-memory-util';
+import type { ArticleKeyword } from '@/utils/text-memory-util';
 
 interface Props {
   modelValue: boolean;
@@ -176,6 +179,10 @@ const emit = defineEmits<{
 }>();
 
 const textStore = useTextMemoryStore();
+
+// 文章语言（缺省视为中文）；非中文文章的关键词提取/挖空走分词逻辑，语义填空不可用
+const articleLang = computed(() => getArticleLanguage(props.article));
+const isZhArticle = computed(() => articleLang.value === 'zh');
 
 // 练习设置
 const blankCount = ref(10);
@@ -272,7 +279,12 @@ function generateNewExercise() {
         generateSentenceBlanks(content, segments);
         break;
       case 'semantic':
-        generateSemanticBlanks(content, segments);
+        // 语义填空依赖中文近反义词库，非中文文章回退到关键词填空
+        if (isZhArticle.value) {
+          generateSemanticBlanks(content, segments);
+        } else {
+          generateKeywordBlanks(content, segments);
+        }
         break;
     }
 
@@ -283,6 +295,12 @@ function generateNewExercise() {
 
 // 随机填空
 function generateRandomBlanks(content: string, segments: ExerciseSegment[]) {
+  // 非中文文章：按分词结果随机挖空
+  if (!isZhArticle.value) {
+    generateForeignBlanks(content, segments, false);
+    return;
+  }
+
   // 找出所有可能的2-4字词语位置
   const allWords: { word: string; start: number; end: number; len: number }[] = [];
   
@@ -367,6 +385,12 @@ function generateRandomBlanks(content: string, segments: ExerciseSegment[]) {
 
 // 关键词填空
 function generateKeywordBlanks(content: string, segments: ExerciseSegment[]) {
+  // 非中文文章：按分词提取实词挖空，优先较长的词
+  if (!isZhArticle.value) {
+    generateForeignBlanks(content, segments, true);
+    return;
+  }
+
   // 按优先级提取关键词：4字成语 > 3字词组 > 2字词语
   const allKeywords: { word: string; start: number; end: number; priority: number }[] = [];
   
@@ -470,6 +494,55 @@ function generateKeywordBlanks(content: string, segments: ExerciseSegment[]) {
     lastEnd = keyword.end;
   });
   
+  if (lastEnd < content.length) {
+    segments.push({
+      type: 'text',
+      content: content.substring(lastEnd)
+    });
+  }
+}
+
+// 非中文文章挖空：按语言分词提取实词，随机选取不重叠的词挖空
+// preferLong 为 true（关键词模式）时优先选择长度≥3 的词
+function generateForeignBlanks(content: string, segments: ExerciseSegment[], preferLong: boolean) {
+  const allKeywords = extractForeignKeywords(content, articleLang.value);
+  if (allKeywords.length === 0) {
+    segments.push({ type: 'text', content });
+    return;
+  }
+
+  let pool: ArticleKeyword[] = allKeywords;
+  if (preferLong) {
+    const longWords = allKeywords.filter(k => k.priority >= 2);
+    if (longWords.length > 0) pool = longWords;
+  }
+
+  // 分词结果本身互不重叠且按原文顺序，随机选取后重新按位置排序即可
+  const selected = [...pool]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, blankCount.value)
+    .sort((a, b) => a.start - b.start);
+
+  let lastEnd = 0;
+  selected.forEach(keyword => {
+    if (keyword.start > lastEnd) {
+      segments.push({
+        type: 'text',
+        content: content.substring(lastEnd, keyword.start)
+      });
+    }
+
+    segments.push({
+      type: 'blank',
+      answer: keyword.word,
+      userAnswer: '',
+      isChecked: false,
+      isCorrect: false
+    });
+
+    lastEnd = keyword.end;
+  });
+
   if (lastEnd < content.length) {
     segments.push({
       type: 'text',

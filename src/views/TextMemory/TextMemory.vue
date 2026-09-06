@@ -149,7 +149,16 @@
           @click.stop
         />
         <div class="article-main">
-          <h3 class="article-title">{{ article.title }}</h3>
+          <div class="article-title-row">
+            <h3 class="article-title">{{ article.title }}</h3>
+            <el-tag
+              v-if="getArticleLanguage(article) !== 'zh'"
+              size="small"
+              type="warning"
+              effect="plain"
+              class="article-lang-tag"
+            >{{ getLanguageTag(article.language) }}</el-tag>
+          </div>
           <div class="article-content-preview">
             {{ article.content.substring(0, 150) }}{{ article.content.length > 150 ? '...' : '' }}
           </div>
@@ -321,6 +330,7 @@ import {
   Finished, Printer, Picture
 } from '@element-plus/icons-vue';
 import { isUtools, isElectron } from '@/adapters/platform';
+import { getArticleLanguage, getLanguageTag } from '@/utils/text-memory-util';
 import { log } from '@/utils/logger';
 import { exportArticlesAsImage } from '@/utils/article-image-export';
 import type { ArticleImageItem } from '@/utils/article-image-export';
@@ -1065,6 +1075,21 @@ watch(currentView, (v) => {
   .article-main {
     flex: 1;
     min-width: 0;
+  }
+
+  .article-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .article-title-row .article-title {
+    margin-bottom: 0;
+  }
+
+  .article-lang-tag {
+    flex-shrink: 0;
   }
 
   .article-title {

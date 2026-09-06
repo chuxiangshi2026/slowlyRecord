@@ -16,7 +16,7 @@
           <el-col :span="6">
             <div class="stat-item">
               <div class="stat-label">速度</div>
-              <div class="stat-value">{{ wpm }} <span class="unit">字/分</span></div>
+              <div class="stat-value">{{ wpm }} <span class="unit">{{ speedUnit }}</span></div>
             </div>
           </el-col>
           <el-col :span="6">
@@ -150,6 +150,7 @@ import { ElMessage } from 'element-plus';
 import { Refresh, VideoPause, VideoPlay, Check } from '@element-plus/icons-vue';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
+import { getArticleLanguage } from '@/utils/text-memory-util';
 
 const textStore = useTextMemoryStore();
 
@@ -182,6 +183,11 @@ const lineStartIndices = ref<number[]>([0]); // 每行的起始字符索引
 const currentLine = ref(0); // 当前行号
 const LINE_LENGTH = 32; // 每行固定字数（根据显示区域宽度调整）
 
+// 文章语言（缺省视为中文）：非中文文章按词断行、速度按「词/分」统计
+const isZhArticle = computed(() => getArticleLanguage(props.article) === 'zh');
+// 速度统计单位
+const speedUnit = computed(() => (isZhArticle.value ? '字/分' : '词/分'));
+
 // 中文输入法相关
 const isComposing = ref(false); // 是否正在输入法输入中
 
@@ -199,8 +205,25 @@ const displayText = computed(() => {
 function calculateLineBreaks() {
   const text = displayText.value;
   const breaks: number[] = [0];
-  for (let i = LINE_LENGTH; i < text.length; i += LINE_LENGTH) {
-    breaks.push(i);
+  if (isZhArticle.value) {
+    for (let i = LINE_LENGTH; i < text.length; i += LINE_LENGTH) {
+      breaks.push(i);
+    }
+  } else {
+    // 非中文：不在单词中间断行，尽量回退到空格处（空格留在上一行末尾）
+    let pos = 0;
+    while (pos + LINE_LENGTH < text.length) {
+      const limit = pos + LINE_LENGTH;
+      const spaceIdx = text.lastIndexOf(' ', limit);
+      if (spaceIdx > pos) {
+        breaks.push(spaceIdx + 1);
+        pos = spaceIdx + 1;
+      } else {
+        // 长单词中间无空格可断时硬断
+        breaks.push(limit);
+        pos = limit;
+      }
+    }
   }
   lineStartIndices.value = breaks;
 }
@@ -245,7 +268,7 @@ const resultTitle = computed(() => {
 
 // 结果副标题
 const resultSubtitle = computed(() => {
-  return `速度: ${wpm.value} 字/分 | 正确率: ${accuracy.value}% | 用时: ${elapsedTime.value} 秒`;
+  return `速度: ${wpm.value} ${speedUnit.value} | 正确率: ${accuracy.value}% | 用时: ${elapsedTime.value} 秒`;
 });
 
 // 监听对话框打开
@@ -371,11 +394,14 @@ function processInput() {
   // 更新当前行
   currentLine.value = getLineIndex(currentIndex.value);
 
-  // 计算 WPM
+  // 计算 WPM：中文按字、其他语言按词
   if (startTime.value) {
     const minutes = elapsedTime.value / 60;
     if (minutes > 0) {
-      wpm.value = Math.round(input.length / minutes);
+      const typedUnits = isZhArticle.value
+        ? input.length
+        : (input.trim() ? input.trim().split(/\s+/).length : 0);
+      wpm.value = Math.round(typedUnits / minutes);
     }
   }
 

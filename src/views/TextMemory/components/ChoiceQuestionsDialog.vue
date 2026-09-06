@@ -25,10 +25,13 @@
             </el-form-item>
             <el-form-item label="题型">
               <el-select v-model="selectedTypes" multiple collapse-tags style="width: 150px">
-                <el-option label="近义词" value="synonym" />
-                <el-option label="反义词" value="antonym" />
-                <el-option label="错别字" value="typo" />
-                <el-option label="无厘头" value="nonsense" />
+                <el-option
+                  v-for="opt in typeOptions"
+                  :key="opt.value"
+                  :label="opt.label"
+                  :value="opt.value"
+                  :disabled="!isZhArticle && ZH_ONLY_TYPES.includes(opt.value)"
+                />
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -145,6 +148,18 @@ import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle, ChoiceQuestion } from '@/types/text-memory';
 import { ElMessage } from 'element-plus';
 import { Refresh, Check, Close } from '@element-plus/icons-vue';
+import { getArticleLanguage } from '@/utils/text-memory-util';
+
+// 中文专属题型（依赖中文近反义词库/错别字），非中文文章禁用
+const ZH_ONLY_TYPES = ['synonym', 'antonym', 'typo'];
+
+// 题型下拉选项
+const typeOptions = [
+  { label: '近义词', value: 'synonym' },
+  { label: '反义词', value: 'antonym' },
+  { label: '错别字', value: 'typo' },
+  { label: '无厘头', value: 'nonsense' },
+];
 
 interface Props {
   modelValue: boolean;
@@ -157,6 +172,14 @@ const emit = defineEmits<{
 }>();
 
 const textStore = useTextMemoryStore();
+
+// 文章语言（缺省视为中文）
+const isZhArticle = computed(() => getArticleLanguage(props.article) === 'zh');
+
+// 非中文文章默认只保留语言无关题型
+const defaultSelectedTypes = computed(() =>
+  isZhArticle.value ? ['synonym', 'antonym', 'typo', 'nonsense'] : ['nonsense']
+);
 
 // 练习设置
 const questionCount = ref(5);
@@ -194,14 +217,22 @@ watch(() => props.article, (newArticle) => {
     const savedProgress = textStore.getLearningProgress(newArticle._id, 'choice');
     if (savedProgress?.progress?.questions) {
       questionCount.value = savedProgress.progress.questionCount || 5;
-      selectedTypes.value = savedProgress.progress.selectedTypes || ['synonym', 'antonym', 'typo', 'nonsense'];
+      selectedTypes.value = sanitizeSelectedTypes(savedProgress.progress.selectedTypes);
       questions.value = savedProgress.progress.questions;
       ElMessage.info('已恢复上次的练习进度');
     } else {
+      selectedTypes.value = [...defaultSelectedTypes.value];
       generateNewQuestions();
     }
   }
 }, { immediate: true });
+
+// 按文章语言过滤题型：非中文文章剔除中文专属题型，空则回退无厘头
+function sanitizeSelectedTypes(types?: string[]): string[] {
+  const source = types?.length ? types : defaultSelectedTypes.value;
+  const filtered = source.filter(t => isZhArticle.value || !ZH_ONLY_TYPES.includes(t));
+  return filtered.length > 0 ? filtered : ['nonsense'];
+}
 
 // 是否有保存的进度
 const hasSavedProgress = computed(() => {
@@ -224,10 +255,11 @@ function generateNewQuestions() {
       questionCount.value
     );
     
-    // 过滤题型
-    if (selectedTypes.value.length > 0) {
-      questions.value = generatedQuestions.filter(q => 
-        selectedTypes.value.includes(q.type)
+    // 过滤题型（非中文文章再兜底剔除中文专属题型）
+    const allowedTypes = selectedTypes.value.filter(t => isZhArticle.value || !ZH_ONLY_TYPES.includes(t));
+    if (allowedTypes.length > 0) {
+      questions.value = generatedQuestions.filter(q =>
+        allowedTypes.includes(q.type)
       );
     } else {
       questions.value = generatedQuestions;
@@ -313,7 +345,7 @@ function loadProgress() {
   const savedProgress = textStore.getLearningProgress(props.article._id, 'choice');
   if (savedProgress?.progress?.questions) {
     questionCount.value = savedProgress.progress.questionCount || 5;
-    selectedTypes.value = savedProgress.progress.selectedTypes || ['synonym', 'antonym', 'typo', 'nonsense'];
+    selectedTypes.value = sanitizeSelectedTypes(savedProgress.progress.selectedTypes);
     questions.value = savedProgress.progress.questions;
     ElMessage.success('进度已恢复');
   } else {
