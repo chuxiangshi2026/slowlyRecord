@@ -103,6 +103,10 @@ function reportAppLaunch(): void {
   const label = clientVersion ? `${platform}_${APP_VERSION}_u${clientVersion}` : `${platform}_${APP_VERSION}`;
   window._hmt.push(['_trackEvent', 'app', 'launch', label]);
   window._hmt.push(['_trackEvent', 'app', 'install', getInstallId()]);
+  // 「事件分析」报告 2024 年起为商业版付费功能，免费版改用虚拟页面路径上报，
+  // 在「访问分析 → 受访页面」中按 /pv/ 前缀路径查看
+  window._hmt.push(['_trackPageview', `/pv/app/launch/${label}`]);
+  window._hmt.push(['_trackPageview', `/pv/app/install/${getInstallId()}`]);
   console.log('[百度统计] 上报启动维度:', platform, APP_VERSION);
 }
 
@@ -224,6 +228,10 @@ export function trackEvent(
   }
 
   window._hmt.push(eventData);
+  // 免费版看不到「事件分析」报告，同步推一条虚拟页面浏览，
+  // 在「受访页面」中以 /pv/<类别>/<操作>/<标签> 路径呈现
+  const pvPath = `/pv/${category}/${action}${optLabel ? `/${optLabel}` : ''}`;
+  window._hmt.push(['_trackPageview', pvPath]);
   console.log('[百度统计] 追踪事件:', eventData);
 }
 
