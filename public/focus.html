@@ -1639,7 +1639,12 @@
         dictationChecking = false;
         updateDisplay();
       } else {
-        markRemembered();
+        // 自动下一个只是学习浏览，不改变复习状态：到末尾回到开头循环
+        currentIndex = 0;
+        spellIndex = 0;
+        dictationChecking = false;
+        updateDisplay();
+        showToast('已到末尾，从头继续学习');
       }
     }
 
