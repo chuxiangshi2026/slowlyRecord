@@ -54,6 +54,14 @@
         <text class="menu-text">清空数据</text>
         <text class="menu-arrow">›</text>
       </view>
+      <!-- 意见反馈（微信官方反馈页，仅微信小程序端） -->
+      <!-- #ifdef MP-WEIXIN -->
+      <button class="menu-item feedback-btn" open-type="feedback">
+        <text class="menu-icon">F</text>
+        <text class="menu-text">意见反馈</text>
+        <text class="menu-arrow">›</text>
+      </button>
+      <!-- #endif -->
       <!-- 关于 -->
       <view class="menu-item" @click="showAbout">
         <text class="menu-icon">A</text>
@@ -339,6 +347,23 @@ const showAbout = () => {
   align-items: center;
   padding: 30rpx 40rpx;
   border-bottom: 1rpx solid #f5f5f5;
+}
+
+/* button 版菜单项（意见反馈）：清除微信 button 默认样式，与其他菜单项对齐 */
+button.menu-item.feedback-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1rpx solid #f5f5f5;
+  border-radius: 0;
+  font-size: inherit;
+  line-height: normal;
+  text-align: left;
+  margin: 0;
+}
+
+button.menu-item.feedback-btn::after {
+  border: none;
 }
 
 .menu-icon {
