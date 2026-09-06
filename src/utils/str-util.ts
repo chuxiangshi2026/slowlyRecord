@@ -274,6 +274,12 @@ const batchTranslateAndAddWords = async (
         await wordsStore.addAndUpdateWords(wordsToSave);
         wordsStore.setLastAddedWordText(wordsToSave[0].text);
     }
+
+    // 上报翻译失败的单词，避免静默丢失
+    if (errWords.length > 0) {
+        const preview = errWords.slice(0, 5).join('、');
+        ElMessage.warning(`以下 ${errWords.length} 个单词翻译失败：${preview}${errWords.length > 5 ? ' 等' : ''}`);
+    }
     // 总 数 重复数 已存在数 失败数
 
 };

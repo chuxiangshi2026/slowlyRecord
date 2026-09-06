@@ -128,8 +128,8 @@ function getWordBankChunkDocs(bankId: string): WordBankChunkDoc[] {
   const chunks: WordBankChunkDoc[] = [];
   try {
     const db = getDbAdapter();
-    // 尝试读取所有分片
-    for (let i = 0; i < 100; i++) { // 最多100个分片
+    // 尝试读取所有分片，直到取不到为止（不再限制分片数量，避免大词库被静默截断）
+    for (let i = 0; ; i++) {
       const docId = getWordBankChunkId(bankId, i);
       const doc = db.get(docId) as WordBankChunkDoc | null;
       if (doc && doc.type === 'wordbank-chunk') {
@@ -150,8 +150,6 @@ function getWordBankChunkDocs(bankId: string): WordBankChunkDoc[] {
 async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boolean> {
   try {
     const db = getDbAdapter();
-    // 先删除旧的分片
-    await deleteWordBankDataDoc(bankId);
 
     // 规范化文本，保留词组空格
     const cleanedWords = words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
@@ -192,10 +190,12 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
         console.error(`保存词库空分片失败 (${bankId}):`, result.message);
         return false;
       }
+      // 新分片写入成功后再删除多余的旧分片
+      await deleteExtraWordBankChunks(bankId, 1);
       return true;
     }
 
-    // 保存每个分片
+    // 保存每个分片（同 id 覆盖写旧分片）
     for (let i = 0; i < totalChunks; i++) {
       const start = i * MAX_WORDS_PER_CHUNK;
       const end = start + MAX_WORDS_PER_CHUNK;
@@ -225,11 +225,30 @@ async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boole
       }
     }
 
+    // 新分片全部写入成功后再删除多余的旧分片，避免中途崩溃导致整库丢词
+    await deleteExtraWordBankChunks(bankId, totalChunks);
+
     console.log(`[WordBankManager] 成功保存词库 ${bankId}，共 ${totalChunks} 个分片，${cleanedWords.length} 个单词`);
     return true;
   } catch (e) {
     console.error(`保存词库数据异常 (${bankId}):`, e);
     return false;
+  }
+}
+
+/**
+ * 删除索引 >= startIndex 的旧分片（用于新分片写入成功后清理多余旧数据）
+ */
+async function deleteExtraWordBankChunks(bankId: string, startIndex: number): Promise<void> {
+  const db = getDbAdapter();
+  // 旧分片索引是连续的，遇到第一个不存在的分片即可停止
+  for (let i = startIndex; ; i++) {
+    const docId = getWordBankChunkId(bankId, i);
+    const existingDoc = db.get(docId) as WordBankChunkDoc | null;
+    if (!existingDoc?._rev) {
+      break;
+    }
+    await db.promises.remove({ _id: docId, _rev: existingDoc._rev });
   }
 }
 
@@ -272,22 +291,18 @@ function getWordBankWords(bankId: string): Word[] {
 /**
  * 删除词库单词数据文档（删除所有分片）
  */
-async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
+export async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
   try {
     const db = getDbAdapter();
-    // 删除所有分片
-    for (let i = 0; i < 100; i++) {
+    // 删除所有分片，直到遇到第一个不存在的分片为止（不再限制分片数量）
+    for (let i = 0; ; i++) {
       const docId = getWordBankChunkId(bankId, i);
       const existingDoc = db.get(docId) as WordBankChunkDoc | null;
-      
+
       if (existingDoc?._rev) {
         await db.promises.remove({ _id: docId, _rev: existingDoc._rev });
       } else {
-        // 如果没有找到这个分片，可能已经没有更多分片了
-        if (i === 0) {
-          // 如果连第0个分片都没有，说明没有这个词库的数据
-          continue;
-        }
+        // 分片索引是连续的，第一个缺失的分片说明后面也没有了
         break;
       }
     }

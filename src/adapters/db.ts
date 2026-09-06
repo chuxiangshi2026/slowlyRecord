@@ -183,6 +183,12 @@ export async function getDbAdapterAsync(): Promise<DbAdapter> {
     return adapter
   })()
 
+  // 初始化失败时清空缓存 Promise，允许后续调用重试，避免永久卡死在同一个 rejected promise 上
+  _dbAdapterInitPromise = _dbAdapterInitPromise.catch((e) => {
+    _dbAdapterInitPromise = null
+    throw e
+  })
+
   return _dbAdapterInitPromise
 }
 

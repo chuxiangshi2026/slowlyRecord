@@ -455,7 +455,15 @@ function mergeWordsIntoExisting(existingBank: WordBank, incomingWords: Word[], m
       const existingDate = existing.learnDate ? new Date(existing.learnDate).getTime() : 0
       const incomingDate = word.learnDate ? new Date(word.learnDate).getTime() : 0
       if (incomingDate > existingDate) {
-        Object.assign(existing, { ...word })
+        // 字段级合并：远端缺失的记忆进度字段保留本地值，避免整词覆盖丢进度
+        const merged: Word = { ...existing, ...word }
+        const progressKeys: (keyof Word)[] = ['level', 'remember', 'isReview', 'learnDate', 'ctime']
+        for (const key of progressKeys) {
+          if (word[key] === undefined || word[key] === null) {
+            merged[key] = existing[key]
+          }
+        }
+        Object.assign(existing, merged)
       }
     }
   }

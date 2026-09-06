@@ -124,6 +124,21 @@ function cleanDbWord() {
         // 删除失败，打印错误原因
         console.log(result.message);
     }
+    // 单词实际存储在词库分片 slowly-record-wordbank-chunk-v2:* 中，需一并清理
+    void cleanAllWordBankChunks();
+}
+
+/**
+ * 清空所有词库的分片单词数据（动态引入避免与 wordbank-manager 产生循环依赖）
+ */
+async function cleanAllWordBankChunks(): Promise<void> {
+    try {
+        const {getAllWordBanks, deleteWordBankDataDoc} = await import('@/utils/wordbank-manager');
+        const banks = await getAllWordBanks();
+        await Promise.all(banks.map(bank => deleteWordBankDataDoc(bank.id)));
+    } catch (e) {
+        log.e('清空词库分片数据失败', e);
+    }
 }
 
 /**

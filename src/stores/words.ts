@@ -621,9 +621,10 @@ export const useWordsStore =
                         item.learnDate = learnDate;
                     }
 
-                    // 确保 level 有效，并钳制到 DEFAULT_INTERVALS 合法索引范围（1-13）
-                    const safeLevel = Math.max(1, Math.min(13, Number(item.level) || 1));
-                    const interval = DEFAULT_INTERVALS[safeLevel] || DEFAULT_INTERVALS[1];
+                    // 确保 level 有效，并钳制到 DEFAULT_INTERVALS 合法索引范围（0-12，level 0 对应下标 0 的间隔）
+                    const maxLevel = DEFAULT_INTERVALS.length - 1;
+                    const safeLevel = Math.max(0, Math.min(maxLevel, Number(item.level) || 0));
+                    const interval = DEFAULT_INTERVALS[safeLevel] ?? DEFAULT_INTERVALS[0];
 
                     const reviewTime = learnDate.getTime() + interval * 60 * 1000;
                     const now = Date.now();
@@ -679,8 +680,9 @@ export const useWordsStore =
              *查找单词
              */
             function findWord(wordText: string): Word | undefined {
-                const cleanedText = normalizeItemText(wordText);
-                const word = words.value.find(item => item.text === cleanedText);
+                // 与去重逻辑保持一致：按规范化 + 小写键比较（大小写不敏感）
+                const key = getItemKey(wordText);
+                const word = words.value.find(item => getItemKey(item.text) === key);
                 if (word) {
                     log.i('找到了单词');
                 }

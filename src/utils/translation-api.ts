@@ -914,158 +914,169 @@ export async function translateWithPlatform(
                     };
                 }
 
-                // 增加使用计数
-                const newCount = incrementUsageCounter(featureType);
-                log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
+                // 注意：使用计数移到请求成功之后，失败不占用免费次数
             }
         }
 
-        switch (platform) {
-            case 'youdao':
-                console.log('调用有道')
-                const youdaoParams = generateYoudaoParams(query, from, to);
-                const youdaoResponse = await http.get('/', {...youdaoParams}, {
-                    headers: {
-                        'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'
+        // 实际发起翻译请求（封装为内部函数，便于统一在成功后计数）
+        const doTranslate = async (): Promise<TranslationResult> => {
+            switch (platform) {
+                case 'youdao':
+                    console.log('调用有道')
+                    const youdaoParams = generateYoudaoParams(query, from, to);
+                    const youdaoResponse = await http.get('/', {...youdaoParams}, {
+                        headers: {
+                            'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'
+                        }
+                    });
+                    console.log('请求结果')
+                    {
+                        const r = handleYoudaoResponse(youdaoResponse.data, query);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
                     }
-                });
-                console.log('请求结果')
-                {
-                    const r = handleYoudaoResponse(youdaoResponse.data, query);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
 
-            case 'baidu':
-                const baiduParams = generateBaiduParams(query, from, to);
-                baiduParams.q = encodeURIComponent(baiduParams.q);
-                const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams}, {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                case 'baidu':
+                    const baiduParams = generateBaiduParams(query, from, to);
+                    baiduParams.q = encodeURIComponent(baiduParams.q);
+                    const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams}, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+                    {
+                        const r = handleBaiduResponse(baiduResponse.data, query);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
                     }
-                });
-                {
-                    const r = handleBaiduResponse(baiduResponse.data, query);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
 
-            case 'ali':
-                log.i('调用阿里翻译');
-                const aliParams = generateAliParamsSync(query, from, to);
-                const queryString = Object.entries(aliParams)
-                    .map(([key, value]) => `${encodeURIComponent(key as string)}=${encodeURIComponent(value as string)}`)
-                    .join('&');
-                const fullUrl = `https://mt.aliyuncs.com/?${queryString}`;
-                const aliResponse = await fetch(fullUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
+                case 'ali':
+                    log.i('调用阿里翻译');
+                    const aliParams = generateAliParamsSync(query, from, to);
+                    const queryString = Object.entries(aliParams)
+                        .map(([key, value]) => `${encodeURIComponent(key as string)}=${encodeURIComponent(value as string)}`)
+                        .join('&');
+                    const fullUrl = `https://mt.aliyuncs.com/?${queryString}`;
+                    const aliResponse = await fetch(fullUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                    const aliData = await aliResponse.json();
+                    {
+                        const r = handleAliResponse(aliData, query);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
                     }
-                });
-                const aliData = await aliResponse.json();
-                {
-                    const r = handleAliResponse(aliData, query);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'utoolsai':
-                let utoolAiData = await callUtoolsAi(query, from, to);
-                console.log('utool', utoolAiData)
-                setCachedTranslation(query, platform, from, to, utoolAiData);
-                return utoolAiData;
-            case 'deepseek':
-                console.log('调用DeepSeek')
-                {
-                    const r = await callDeepSeek(query, from, to);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'qwen':
-                console.log('调用通义千问')
-                {
-                    const r = await callQwen(query, from, to);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'kimi':
-                console.log('调用Kimi')
-                {
-                    const r = await callKimi(query, from, to);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'glm':
-                console.log('调用智谱GLM')
-                {
-                    const r = await callGlm(query, from, to);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'ollama':
-                console.log('调用Ollama')
-                {
-                    const r = await callOllama(query, from, to);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'minimax':
-                console.log('调用MiniMax')
-                {
-                    // 复用 OpenAI 兼容批量通道处理单词翻译
-                    const r = (await translateBatchWithAi([query], platform, from, to))[0];
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'hunyuan':
-                console.log('调用腾讯混元')
-                {
-                    const r = (await translateBatchWithAi([query], platform, from, to))[0];
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'tencent':
-                console.log('调用腾讯翻译')
-                {
-                    const r = await callTencent(query, from, to);
-                    setCachedTranslation(query, platform, from, to, r);
-                    return r;
-                }
-            case 'local':
-                console.log('调用本地词典翻译, 查询词:', query)
-                const localResult = await translateWithLocalDictionaryAsync(query);
-                console.log('本地翻译结果:', localResult)
-                if (!localResult.success) {
-                    console.log('本地词典未收录，直接显示原文:', query)
-                    const fallback: TranslationResult = {
-                        success: true,
-                        explains: query,
-                        phonetic: '',
-                        pronunciation: ''
+                case 'utoolsai':
+                    let utoolAiData = await callUtoolsAi(query, from, to);
+                    console.log('utool', utoolAiData)
+                    setCachedTranslation(query, platform, from, to, utoolAiData);
+                    return utoolAiData;
+                case 'deepseek':
+                    console.log('调用DeepSeek')
+                    {
+                        const r = await callDeepSeek(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'qwen':
+                    console.log('调用通义千问')
+                    {
+                        const r = await callQwen(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'kimi':
+                    console.log('调用Kimi')
+                    {
+                        const r = await callKimi(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'glm':
+                    console.log('调用智谱GLM')
+                    {
+                        const r = await callGlm(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'ollama':
+                    console.log('调用Ollama')
+                    {
+                        const r = await callOllama(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'minimax':
+                    console.log('调用MiniMax')
+                    {
+                        // 复用 OpenAI 兼容批量通道处理单词翻译
+                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'hunyuan':
+                    console.log('调用腾讯混元')
+                    {
+                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'tencent':
+                    console.log('调用腾讯翻译')
+                    {
+                        const r = await callTencent(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'local':
+                    console.log('调用本地词典翻译, 查询词:', query)
+                    const localResult = await translateWithLocalDictionaryAsync(query);
+                    console.log('本地翻译结果:', localResult)
+                    if (!localResult.success) {
+                        console.log('本地词典未收录，直接显示原文:', query)
+                        const fallback: TranslationResult = {
+                            success: true,
+                            explains: query,
+                            phonetic: '',
+                            pronunciation: ''
+                        };
+                        setCachedTranslation(query, platform, from, to, fallback);
+                        return fallback;
+                    }
+                    setCachedTranslation(query, platform, from, to, localResult);
+                    return localResult;
+                /*           case 'google':
+                               // Google翻译API通常需要服务端实现，这里提供基本结构
+                               const googleParams = {
+                                   q: query,
+                                   source: FROM,
+                                   target: TO,
+                                   format: 'text'
+                               };
+                               // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
+                               const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', { ...googleParams });
+                               return handleGoogleResponse(googleResponse.data);*/
+
+                default:
+                    return {
+                        success: false,
+                        errorMsg: 'Unsupported translation platform'
                     };
-                    setCachedTranslation(query, platform, from, to, fallback);
-                    return fallback;
-                }
-                setCachedTranslation(query, platform, from, to, localResult);
-                return localResult;
-            /*           case 'google':
-                           // Google翻译API通常需要服务端实现，这里提供基本结构
-                           const googleParams = {
-                               q: query,
-                               source: FROM,
-                               target: TO,
-                               format: 'text'
-                           };
-                           // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
-                           const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', { ...googleParams });
-                           return handleGoogleResponse(googleResponse.data);*/
-
-            default:
-                return {
-                    success: false,
-                    errorMsg: 'Unsupported translation platform'
-                };
+            }
         }
+
+        const result = await doTranslate();
+
+        // 请求成功后才增加使用计数，失败不占用免费次数（本地词典与使用自定义密钥的平台不计数）
+        if (platform !== 'local' && result.success && !hasCustomApiKey(platform)) {
+            const newCount = incrementUsageCounter('translation');
+            log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
+        }
+
+        return result;
     } catch (error) {
         console.error('Translation error:', error);
         return {
