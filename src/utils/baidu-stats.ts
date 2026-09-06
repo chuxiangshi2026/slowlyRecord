@@ -34,6 +34,12 @@ function shouldEnableStats(): boolean {
   } catch { /* localStorage 不可用时忽略 */ }
 
   const isUTools = !!(window as any).utools;
+
+  // uTools 开发环境（开发者工具接入运行）自动排除
+  try {
+    if (isUTools && (window as any).utools.isDev?.()) return false;
+  } catch { /* 旧版本无 isDev 时忽略 */ }
+
   const isLocalhost = window.location.hostname === 'localhost' ||
                       window.location.hostname === '127.0.0.1';
 
@@ -54,9 +60,17 @@ function shouldEnableStats(): boolean {
 
 /**
  * 获取（或首次生成）匿名安装 ID
- * 仅 localStorage 持久化，卸载/清除数据即重置；用于估算独立安装量
+ * uTools 环境优先使用 utools.getNativeId()（设备 ID，重装插件/清 localStorage 不变），
+ * 其他环境退化为 localStorage 随机 UUID（卸载/清除数据即重置）
  */
 function getInstallId(): string {
+  try {
+    const utoolsApi = (window as any).utools;
+    if (utoolsApi?.getNativeId) {
+      const nativeId = utoolsApi.getNativeId();
+      if (nativeId) return `dev_${nativeId}`.slice(0, 32);
+    }
+  } catch { /* 忽略，回退到随机 UUID */ }
   try {
     let id = window.localStorage?.getItem(INSTALL_ID_KEY);
     if (!id) {
@@ -76,13 +90,18 @@ function getInstallId(): string {
 function reportAppLaunch(): void {
   if (!shouldEnableStats() || !window._hmt) return;
   let platform = 'web';
+  let clientVersion = '';
   try {
     // 动态 require 避免模块加载顺序问题
     platform = (window as any).utools ? 'utools'
       : (window as any).electronAPI ? 'electron'
       : 'web';
+    if (platform === 'utools') {
+      clientVersion = (window as any).utools.getAppVersion?.() || '';
+    }
   } catch { /* 忽略 */ }
-  window._hmt.push(['_trackEvent', 'app', 'launch', `${platform}_${APP_VERSION}`]);
+  const label = clientVersion ? `${platform}_${APP_VERSION}_u${clientVersion}` : `${platform}_${APP_VERSION}`;
+  window._hmt.push(['_trackEvent', 'app', 'launch', label]);
   window._hmt.push(['_trackEvent', 'app', 'install', getInstallId()]);
   console.log('[百度统计] 上报启动维度:', platform, APP_VERSION);
 }
