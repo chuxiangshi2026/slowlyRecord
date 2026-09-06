@@ -1061,6 +1061,10 @@
       <span class="icon" id="btn-play" title="播放发音">
         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </span>
+      <!-- 暂停/继续自动播放（仅标准模式开启自动下一个时显示） -->
+      <span class="icon" id="btn-auto-pause" title="暂停自动播放" style="display:none">
+        <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </span>
       <!-- 忘记 -->
       <span class="icon icon-forgot" id="btn-forgot" title="忘记">
         <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
@@ -1504,8 +1508,8 @@
       elBtnPrev.classList.toggle('disabled', currentIndex <= 0);
       elBtnNext.classList.toggle('disabled', currentIndex >= words.length - 1);
 
-      // 自动发音：听写模式始终自动播放，其他模式按设置；发音按 repeatCount 连播
-      if (wordText !== lastAutoSpeakWord && (dictationMode || autoSpeakEnabled)) {
+      // 自动发音：听写模式始终自动播放，其他模式按设置（开启自动下一个时视为自动发音）；发音按 repeatCount 连播
+      if (!autoPaused && wordText !== lastAutoSpeakWord && (dictationMode || autoSpeakEnabled || autoNextEnabled)) {
         lastAutoSpeakWord = wordText;
         lastAutoSpeakKey = wordText + '@' + currentIndex;
         cancelAutoNext();
@@ -1517,7 +1521,7 @@
         } else {
           // 标准模式：连播 repeatCount 遍，播完按"自动下一个"设置决定是否推进
           speakRepeatedly(repeatCount, function() {
-            if (!autoNextEnabled) return;
+            if (!autoNextEnabled || autoPaused) return;
             scheduleAutoNext(autoRepeatSeq);
           });
         }
@@ -1526,6 +1530,7 @@
         var displayKey = wordText + '@' + currentIndex;
         if (displayKey !== lastAutoSpeakKey) cancelAutoNext();
       }
+      updateAutoPauseBtn();
     }
 
     // 音频播放器单例（避免每次播放新建 Audio 对象，便于窗口关闭时清理）
@@ -1602,6 +1607,42 @@
     function cancelRepeatSpeaking() {
       speakSeq++;
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    // 自动播放暂停状态（仅本次会话生效，不持久化）
+    var autoPaused = false;
+    var AUTO_PAUSE_SVG = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    var AUTO_PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+
+    // 暂停按钮仅在「标准模式 + 已开启自动下一个」时显示
+    function updateAutoPauseBtn() {
+      var btn = document.getElementById('btn-auto-pause');
+      if (!btn) return;
+      var show = autoNextEnabled && !dictationMode && !spellMode;
+      btn.style.display = show ? '' : 'none';
+      btn.innerHTML = autoPaused ? AUTO_PLAY_SVG : AUTO_PAUSE_SVG;
+      btn.title = autoPaused ? '继续自动播放' : '暂停自动播放';
+    }
+
+    // 暂停：打断连播与待推进计时器，停掉正在播放的声音
+    function pauseAutoPlay() {
+      autoPaused = true;
+      cancelAutoNext();
+      cancelRepeatSpeaking();
+      try { if (audioPlayer) audioPlayer.pause(); } catch (e) {}
+      updateAutoPauseBtn();
+      showToast('已暂停自动播放');
+    }
+
+    // 继续：从当前单词重新开始连播，播完按设置推进
+    function resumeAutoPlay() {
+      autoPaused = false;
+      updateAutoPauseBtn();
+      var seq = speakSeq;
+      speakRepeatedly(repeatCount, function() {
+        if (!autoNextEnabled || autoPaused) return;
+        scheduleAutoNext(seq);
+      });
     }
 
     // 连续播放 n 遍当前单词，全部播完后回调 onAllDone（任何一遍被打断则静默终止）
@@ -2395,6 +2436,9 @@
 
     document.getElementById('btn-toggle').addEventListener('click', () => { showExplains = !showExplains; updateDisplay(); });
     document.getElementById('btn-play').addEventListener('click', playAudio);
+    document.getElementById('btn-auto-pause').addEventListener('click', function() {
+      if (autoPaused) { resumeAutoPlay(); } else { pauseAutoPlay(); }
+    });
     document.getElementById('btn-remember').addEventListener('click', markRemembered);
     document.getElementById('btn-forgot').addEventListener('click', markForgot);
     document.getElementById('btn-close').addEventListener('click', () => window.close());
@@ -2507,7 +2551,9 @@
 
     function setAutoNextEnabled(value) {
       autoNextEnabled = !!value;
+      autoPaused = false;
       syncAutoNextControls();
+      updateAutoPauseBtn();
       saveFocusModeSetting('autoNext', autoNextEnabled);
       if (!autoNextEnabled) cancelAutoNext();
       showToast(autoNextEnabled ? '已开启自动下一个' : '已关闭自动下一个');
@@ -3475,6 +3521,7 @@
     if (initialState.autoNext !== null) autoNextEnabled = initialState.autoNext;
     if (initialState.repeat !== null) repeatCount = initialState.repeat;
     syncAutoNextControls();
+    updateAutoPauseBtn();
     // 从 localStorage 应用样式（主窗口实时写入，同源共享）
     loadFocusStyleFromStorage();
 
