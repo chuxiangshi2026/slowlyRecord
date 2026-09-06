@@ -32,7 +32,7 @@ const DEFAULT_SERVER_BASE = 'https://1258475269-6fkx3oixct.ap-guangzhou.tencents
 /**
  * 将 ArrayBuffer 转为 base64url 字符串
  */
-function toBase64Url(buffer: ArrayBuffer): string {
+export function toBase64Url(buffer: ArrayBuffer): string {
   const bytes = new Uint8Array(buffer)
   let binary = ''
   for (let i = 0; i < bytes.length; i++) {
@@ -47,7 +47,7 @@ function toBase64Url(buffer: ArrayBuffer): string {
 /**
  * 将 base64url 字符串转为 ArrayBuffer
  */
-function fromBase64Url(str: string): ArrayBuffer {
+export function fromBase64Url(str: string): ArrayBuffer {
   let base64 = str.replace(/-/g, '+').replace(/_/g, '/')
   while (base64.length % 4 !== 0) {
     base64 += '='
@@ -71,7 +71,7 @@ function randomBytes(length: number): Uint8Array {
  * 使用 AES-256-GCM 加密字符串
  * @returns base64url 编码的 "iv + ciphertext"
  */
-async function encrypt(plaintext: string, aesKey: CryptoKey, iv: Uint8Array): Promise<string> {
+export async function encrypt(plaintext: string, aesKey: CryptoKey, iv: Uint8Array): Promise<string> {
   const encoded = new TextEncoder().encode(plaintext)
   const ciphertext = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
@@ -89,7 +89,7 @@ async function encrypt(plaintext: string, aesKey: CryptoKey, iv: Uint8Array): Pr
  * 使用 AES-256-GCM 解密
  * @param encryptedBase64 base64url 编码的 "iv + ciphertext"
  */
-async function decrypt(encryptedBase64: string, aesKey: CryptoKey): Promise<string> {
+export async function decrypt(encryptedBase64: string, aesKey: CryptoKey): Promise<string> {
   const combined = new Uint8Array(fromBase64Url(encryptedBase64))
   const iv = combined.slice(0, 12) // GCM 推荐 12 字节 IV
   const ciphertext = combined.slice(12)
@@ -104,7 +104,7 @@ async function decrypt(encryptedBase64: string, aesKey: CryptoKey): Promise<stri
 /**
  * 生成随机 AES-256 密钥
  */
-async function generateAesKey(): Promise<CryptoKey> {
+export async function generateAesKey(): Promise<CryptoKey> {
   return crypto.subtle.generateKey(
     { name: 'AES-GCM', length: 256 },
     true, // 可导出
@@ -115,7 +115,7 @@ async function generateAesKey(): Promise<CryptoKey> {
 /**
  * 导出 AES 密钥为 base64url
  */
-async function exportKey(key: CryptoKey): Promise<string> {
+export async function exportKey(key: CryptoKey): Promise<string> {
   const raw = await crypto.subtle.exportKey('raw', key)
   return toBase64Url(raw)
 }
@@ -123,7 +123,7 @@ async function exportKey(key: CryptoKey): Promise<string> {
 /**
  * 从 base64url 导入 AES 密钥
  */
-async function importKey(base64Key: string): Promise<CryptoKey> {
+export async function importKey(base64Key: string): Promise<CryptoKey> {
   const raw = fromBase64Url(base64Key)
   return crypto.subtle.importKey(
     'raw',
@@ -145,7 +145,7 @@ function buildSyncCode(blobId: string, keyBase64: string): string {
 /**
  * 解析同步码，返回 blobId 和 keyBase64
  */
-function parseSyncCode(syncCode: string): { blobId: string; keyBase64: string } | null {
+export function parseSyncCode(syncCode: string): { blobId: string; keyBase64: string } | null {
   // 找到最后一个点来分割（blobId 本身不含点，但以防万一取最后一段）
   const lastDot = syncCode.lastIndexOf('.')
   if (lastDot < 1 || lastDot === syncCode.length - 1) {
@@ -362,7 +362,7 @@ const EMPTY_RESTORE_RESULT: RestoreResult = {
 /**
  * 压缩 JSON 字符串，返回 base64url 编码的 pako 压缩数据
  */
-async function compressToJsonPayload(json: string): Promise<string> {
+export async function compressToJsonPayload(json: string): Promise<string> {
   const jsonBytes = new TextEncoder().encode(json)
   const compressed = pako.deflate(jsonBytes)
   return toBase64Url(compressed.buffer)
@@ -371,7 +371,7 @@ async function compressToJsonPayload(json: string): Promise<string> {
 /**
  * 解压缩 base64url 编码的 pako 数据，返回 JSON 字符串
  */
-async function decompressFromJsonPayload(payload: string): Promise<string> {
+export async function decompressFromJsonPayload(payload: string): Promise<string> {
   const compressed = new Uint8Array(fromBase64Url(payload))
   const jsonBytes = pako.inflate(compressed)
   return new TextDecoder().decode(jsonBytes)
@@ -539,7 +539,8 @@ interface MobileCompatUserSettings {
   keys?: Record<string, { appkey: string; key: string }>
 }
 
-interface MobileCompatSyncData {
+/** 移动端兼容同步数据（wire format） */
+export interface MobileCompatSyncData {
   version: number
   exportedAt: number
   platform: string
@@ -570,7 +571,7 @@ function adaptMobileAssociation(a: any): any {
   return next
 }
 
-function convertDesktopWordToMobile(w: any): MobileCompatWord {
+export function convertDesktopWordToMobile(w: any): MobileCompatWord {
   const learnTime = w.learnDate ? new Date(w.learnDate).getTime() : Date.now()
   return {
     word: w.text || '',
@@ -646,7 +647,7 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
   }
 }
 
-function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncData {
+export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncData {
   const exportedAt = data.exportedAt || Date.now()
   return {
     version: SYNC_VERSION,
