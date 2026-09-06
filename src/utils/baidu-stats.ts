@@ -2,7 +2,7 @@
  * 百度移动统计工具模块
  * 用于封装百度统计的各种事件追踪功能
  */
-import { BAIDU_STATS_CONFIG } from '@/config';
+import { BAIDU_STATS_CONFIG, APP_VERSION } from '@/config';
 
 // 声明全局变量
 declare global {
@@ -12,11 +12,26 @@ declare global {
 }
 
 /**
+ * 自我排除标记的 localStorage 键：开发者本机执行
+ *   localStorage.setItem('sr_stats_exclude', '1')
+ * 后刷新即永久跳过上报（不受 IP 变动影响）；配合百度统计后台「排除 IP」双保险。
+ */
+const STATS_EXCLUDE_KEY = 'sr_stats_exclude';
+
+/** 匿名安装 ID 的 localStorage 键（仅用于统计独立安装量，不关联任何账号信息） */
+const INSTALL_ID_KEY = 'sr_install_id';
+
+/**
  * 运行时检测是否应该启用统计
  * 在模块加载时 window 可能不可用，所以在运行时检测
  */
 function shouldEnableStats(): boolean {
   if (typeof window === 'undefined') return false;
+
+  // 开发者本机自我排除（优先于一切环境判断）
+  try {
+    if (window.localStorage?.getItem(STATS_EXCLUDE_KEY) === '1') return false;
+  } catch { /* localStorage 不可用时忽略 */ }
 
   const isUTools = !!(window as any).utools;
   const isLocalhost = window.location.hostname === 'localhost' ||
@@ -35,6 +50,41 @@ function shouldEnableStats(): boolean {
   });
 
   return shouldEnable;
+}
+
+/**
+ * 获取（或首次生成）匿名安装 ID
+ * 仅 localStorage 持久化，卸载/清除数据即重置；用于估算独立安装量
+ */
+function getInstallId(): string {
+  try {
+    let id = window.localStorage?.getItem(INSTALL_ID_KEY);
+    if (!id) {
+      id = (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`).slice(0, 16);
+      window.localStorage?.setItem(INSTALL_ID_KEY, id);
+    }
+    return id;
+  } catch {
+    return 'unknown';
+  }
+}
+
+/**
+ * 上报应用启动维度：平台_版本（事件 label）与匿名安装 ID
+ * 在统计脚本加载成功后调用一次
+ */
+function reportAppLaunch(): void {
+  if (!shouldEnableStats() || !window._hmt) return;
+  let platform = 'web';
+  try {
+    // 动态 require 避免模块加载顺序问题
+    platform = (window as any).utools ? 'utools'
+      : (window as any).electronAPI ? 'electron'
+      : 'web';
+  } catch { /* 忽略 */ }
+  window._hmt.push(['_trackEvent', 'app', 'launch', `${platform}_${APP_VERSION}`]);
+  window._hmt.push(['_trackEvent', 'app', 'install', getInstallId()]);
+  console.log('[百度统计] 上报启动维度:', platform, APP_VERSION);
 }
 
 /**
@@ -89,6 +139,8 @@ function loadBaiduStatsScript(): Promise<boolean> {
       if (window._hmt) {
         console.log('[百度统计] _hmt 已就绪，当前队列:', window._hmt);
       }
+      // 上报平台/版本/匿名安装 ID 维度，用于区分真实用户与自己的测试量
+      reportAppLaunch();
       resolve(true);
     };
 
@@ -205,6 +257,24 @@ export const UserActionEvents = {
   /** 修改设置 */
   changeSettings: (settingName: string) => {
     trackEvent('settings', 'change', settingName);
+  }
+};
+
+/**
+ * 功能模块使用事件（用于观察各功能的真实使用情况）
+ */
+export const FeatureEvents = {
+  /** 打开专注模式（label 为模式：standard/spell/dictation/text 等） */
+  focusOpen: (mode: string) => {
+    trackEvent('feature', 'focus_open', mode || 'standard');
+  },
+  /** 听写练习 */
+  dictation: (action: string) => {
+    trackEvent('feature', 'dictation', action);
+  },
+  /** 通用功能使用入口 */
+  use: (feature: string, action: string) => {
+    trackEvent('feature', feature, action);
   }
 };
 

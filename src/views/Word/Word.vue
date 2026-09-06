@@ -424,6 +424,7 @@ import {
 } from '@element-plus/icons-vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
+import {FeatureEvents} from '@/utils/baidu-stats';
 import {getDbAdapter} from '@/adapters/db';
 import {isUtools, isElectron} from '@/adapters/platform';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow} from '@/utils/focus-lock';
@@ -1995,6 +1996,7 @@ const openFocusMode = async (mode = '') => {
     ElMessage.info('暂无待复习单词');
     return;
   }
+  FeatureEvents.focusOpen(mode);
 
   // 如果窗口已存在，聚焦它
   if (focusWindow && !focusWindow.isDestroyed?.()) {
