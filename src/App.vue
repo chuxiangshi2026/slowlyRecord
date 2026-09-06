@@ -355,7 +355,7 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
   const addWordActions = ['over', 'huaci', 'huaduan', 'jietu', 'paste', 'selection']
-  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', ...addWordActions].includes(action.code)) {
+  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
   // 文本记忆 - 通过 文本记忆/诗词记忆 关键字进入
