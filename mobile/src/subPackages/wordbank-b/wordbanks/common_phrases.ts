@@ -1,0 +1,739 @@
+import type { Word } from '@/stores/useUtils/wordbank'
+export default [
+  {
+    "word": "Long time no see",
+    "explains": "好久不见"
+  },
+  {
+    "word": "What's up?",
+    "explains": "怎么了；最近好吗"
+  },
+  {
+    "word": "How's it going?",
+    "explains": "最近怎么样"
+  },
+  {
+    "word": "Take your time",
+    "explains": "慢慢来；别急"
+  },
+  {
+    "word": "Take it easy",
+    "explains": "放轻松；别紧张"
+  },
+  {
+    "word": "No worries",
+    "explains": "别担心；没问题"
+  },
+  {
+    "word": "It's up to you",
+    "explains": "由你决定"
+  },
+  {
+    "word": "I'm on my way",
+    "explains": "我马上就到"
+  },
+  {
+    "word": "Let me think about it",
+    "explains": "让我想想"
+  },
+  {
+    "word": "Sounds good",
+    "explains": "听起来不错"
+  },
+  {
+    "word": "That's a good idea",
+    "explains": "好主意"
+  },
+  {
+    "word": "I have no idea",
+    "explains": "我不知道"
+  },
+  {
+    "word": "You're right",
+    "explains": "你说得对"
+  },
+  {
+    "word": "I'm not sure",
+    "explains": "我不确定"
+  },
+  {
+    "word": "It doesn't matter",
+    "explains": "没关系；无所谓"
+  },
+  {
+    "word": "Never mind",
+    "explains": "别介意"
+  },
+  {
+    "word": "Wait a moment",
+    "explains": "等一下"
+  },
+  {
+    "word": "Excuse me",
+    "explains": "打扰一下；请问"
+  },
+  {
+    "word": "I see",
+    "explains": "我明白了"
+  },
+  {
+    "word": "I don't know",
+    "explains": "我不知道"
+  },
+  {
+    "word": "I understand",
+    "explains": "我理解"
+  },
+  {
+    "word": "My pleasure",
+    "explains": "我的荣幸；不客气"
+  },
+  {
+    "word": "It's my treat",
+    "explains": "我请客"
+  },
+  {
+    "word": "Let's call it a day",
+    "explains": "今天就到这里吧"
+  },
+  {
+    "word": "Keep in touch",
+    "explains": "保持联系"
+  },
+  {
+    "word": "See you later",
+    "explains": "回头见"
+  },
+  {
+    "word": "Let's hang out",
+    "explains": "我们聚聚吧"
+  },
+  {
+    "word": "What a coincidence!",
+    "explains": "真巧"
+  },
+  {
+    "word": "You bet",
+    "explains": "当然；没错"
+  },
+  {
+    "word": "No problem",
+    "explains": "没问题"
+  },
+  {
+    "word": "Absolutely!",
+    "explains": "当然；完全同意"
+  },
+  {
+    "word": "I'm afraid not",
+    "explains": "恐怕不行"
+  },
+  {
+    "word": "I hope so",
+    "explains": "希望如此"
+  },
+  {
+    "word": "I doubt it",
+    "explains": "我表示怀疑"
+  },
+  {
+    "word": "You never know",
+    "explains": "说不准；谁知道呢"
+  },
+  {
+    "word": "So far so good",
+    "explains": "到目前为止还不错"
+  },
+  {
+    "word": "It's a long story",
+    "explains": "说来话长"
+  },
+  {
+    "word": "That makes sense",
+    "explains": "有道理"
+  },
+  {
+    "word": "It depends",
+    "explains": "看情况"
+  },
+  {
+    "word": "Let's get started",
+    "explains": "我们开始吧"
+  },
+  {
+    "word": "Let me see",
+    "explains": "让我看看"
+  },
+  {
+    "word": "Give me a minute",
+    "explains": "给我一点时间"
+  },
+  {
+    "word": "Hang in there",
+    "explains": "坚持住"
+  },
+  {
+    "word": "Cheer up!",
+    "explains": "振作起来"
+  },
+  {
+    "word": "That's too bad",
+    "explains": "那太糟糕了"
+  },
+  {
+    "word": "I'll be right back",
+    "explains": "我马上回来"
+  },
+  {
+    "word": "Make yourself at home",
+    "explains": "别拘束；当自己家"
+  },
+  {
+    "word": "What do you mean?",
+    "explains": "你是什么意思"
+  },
+  {
+    "word": "Same here",
+    "explains": "我也一样"
+  },
+  {
+    "word": "Good for you!",
+    "explains": "为你高兴；真棒"
+  },
+  {
+    "word": "Better late than never",
+    "explains": "迟到总比不到好"
+  },
+  {
+    "word": "Practice makes perfect",
+    "explains": "熟能生巧"
+  },
+  {
+    "word": "It's worth a try",
+    "explains": "值得一试"
+  },
+  {
+    "word": "Don't give up",
+    "explains": "别放弃"
+  },
+  {
+    "word": "Good luck!",
+    "explains": "祝你好运"
+  },
+  {
+    "word": "Congratulations!",
+    "explains": "恭喜"
+  },
+  {
+    "word": "Happy birthday!",
+    "explains": "生日快乐"
+  },
+  {
+    "word": "Thank you anyway",
+    "explains": "无论如何都谢谢你"
+  },
+  {
+    "word": "Actions speak louder than words",
+    "explains": "行动胜于言语"
+  },
+  {
+    "word": "Let's keep in touch",
+    "explains": "我们保持联系"
+  },
+  {
+    "word": "How much is it?",
+    "explains": "多少钱"
+  },
+  {
+    "word": "Can I have the menu?",
+    "explains": "能给我菜单吗"
+  },
+  {
+    "word": "I'd like to order...",
+    "explains": "我想点……"
+  },
+  {
+    "word": "Can I get the bill, please?",
+    "explains": "请给我结账"
+  },
+  {
+    "word": "Where is the restroom?",
+    "explains": "洗手间在哪里"
+  },
+  {
+    "word": "How do I get to the station?",
+    "explains": "去车站怎么走"
+  },
+  {
+    "word": "Is it far from here?",
+    "explains": "离这里远吗"
+  },
+  {
+    "word": "Can you help me, please?",
+    "explains": "你能帮帮我吗"
+  },
+  {
+    "word": "I'm looking for the bank",
+    "explains": "我在找银行"
+  },
+  {
+    "word": "What time does it open?",
+    "explains": "几点开门"
+  },
+  {
+    "word": "What time does it close?",
+    "explains": "几点关门"
+  },
+  {
+    "word": "I'd like a ticket to Beijing",
+    "explains": "我想买一张去北京的票"
+  },
+  {
+    "word": "When does the train leave?",
+    "explains": "火车什么时候开"
+  },
+  {
+    "word": "How long does it take?",
+    "explains": "需要多长时间"
+  },
+  {
+    "word": "Can I take a photo?",
+    "explains": "我可以拍照吗"
+  },
+  {
+    "word": "Where can I find a taxi?",
+    "explains": "哪里能打车"
+  },
+  {
+    "word": "Please stop here",
+    "explains": "请在这里停"
+  },
+  {
+    "word": "Keep the change",
+    "explains": "不用找零了"
+  },
+  {
+    "word": "Do you speak English?",
+    "explains": "你会说英语吗"
+  },
+  {
+    "word": "I don't understand",
+    "explains": "我不明白"
+  },
+  {
+    "word": "Please say it again",
+    "explains": "请再说一遍"
+  },
+  {
+    "word": "Could you speak more slowly?",
+    "explains": "能说慢一点吗"
+  },
+  {
+    "word": "What does this word mean?",
+    "explains": "这个单词什么意思"
+  },
+  {
+    "word": "Call the police!",
+    "explains": "报警"
+  },
+  {
+    "word": "Call an ambulance!",
+    "explains": "叫救护车"
+  },
+  {
+    "word": "I'm lost",
+    "explains": "我迷路了"
+  },
+  {
+    "word": "I need to see a doctor",
+    "explains": "我需要看医生"
+  },
+  {
+    "word": "Where can I find the hotel?",
+    "explains": "酒店在哪里"
+  },
+  {
+    "word": "I have a reservation",
+    "explains": "我有预订"
+  },
+  {
+    "word": "Check-in, please",
+    "explains": "请办理入住"
+  },
+  {
+    "word": "Check-out, please",
+    "explains": "请办理退房"
+  },
+  {
+    "word": "What's the weather like today?",
+    "explains": "今天天气怎么样"
+  },
+  {
+    "word": "It's going to rain",
+    "explains": "要下雨了"
+  },
+  {
+    "word": "Let me get this",
+    "explains": "这顿我来付"
+  },
+  {
+    "word": "Is there a discount?",
+    "explains": "有折扣吗"
+  },
+  {
+    "word": "Can I pay by credit card?",
+    "explains": "可以刷卡吗"
+  },
+  {
+    "word": "I'd like a refund",
+    "explains": "我想退款"
+  },
+  {
+    "word": "Where is the nearest hospital?",
+    "explains": "最近的医院在哪里"
+  },
+  {
+    "word": "Does this bus go to downtown?",
+    "explains": "这趟车去市中心吗"
+  },
+  {
+    "word": "One ticket, please",
+    "explains": "请给我一张票"
+  },
+  {
+    "word": "Where's the luggage claim?",
+    "explains": "行李提取处在哪里"
+  },
+  {
+    "word": "Could you recommend a restaurant?",
+    "explains": "能推荐一家餐厅吗"
+  },
+  {
+    "word": "It tastes delicious",
+    "explains": "味道好极了"
+  },
+  {
+    "word": "I'm allergic to peanuts",
+    "explains": "我对花生过敏"
+  },
+  {
+    "word": "Do you have anything cheaper?",
+    "explains": "有更便宜的吗"
+  },
+  {
+    "word": "Can I try it on?",
+    "explains": "我可以试穿吗"
+  },
+  {
+    "word": "What size do you take?",
+    "explains": "你穿什么尺码"
+  },
+  {
+    "word": "I'll take it",
+    "explains": "我买了"
+  },
+  {
+    "word": "Could you wrap it as a gift?",
+    "explains": "能包成礼物吗"
+  },
+  {
+    "word": "Where's the elevator?",
+    "explains": "电梯在哪里"
+  },
+  {
+    "word": "How can I get to the airport?",
+    "explains": "怎么去机场"
+  },
+  {
+    "word": "Is this seat taken?",
+    "explains": "这个座位有人吗"
+  },
+  {
+    "word": "Could you take a photo for me?",
+    "explains": "能帮我拍张照吗"
+  },
+  {
+    "word": "Where are you from?",
+    "explains": "你来自哪里"
+  },
+  {
+    "word": "I'm from China",
+    "explains": "我来自中国"
+  },
+  {
+    "word": "What do you do for a living?",
+    "explains": "你做什么工作"
+  },
+  {
+    "word": "Nice to meet you",
+    "explains": "很高兴认识你"
+  },
+  {
+    "word": "Pleased to meet you too",
+    "explains": "我也很高兴认识你"
+  },
+  {
+    "word": "Could you write it down?",
+    "explains": "能写下来吗"
+  },
+  {
+    "word": "I'm sorry to trouble you",
+    "explains": "抱歉打扰你了"
+  },
+  {
+    "word": "In my opinion",
+    "explains": "在我看来"
+  },
+  {
+    "word": "From my point of view",
+    "explains": "从我的角度看"
+  },
+  {
+    "word": "As far as I'm concerned",
+    "explains": "就我而言"
+  },
+  {
+    "word": "It is universally acknowledged that",
+    "explains": "众所周知"
+  },
+  {
+    "word": "There is no denying that",
+    "explains": "不可否认"
+  },
+  {
+    "word": "First and foremost",
+    "explains": "首先；最重要的是"
+  },
+  {
+    "word": "To begin with",
+    "explains": "首先"
+  },
+  {
+    "word": "Last but not least",
+    "explains": "最后但同样重要的是"
+  },
+  {
+    "word": "In addition",
+    "explains": "此外"
+  },
+  {
+    "word": "Moreover",
+    "explains": "而且；此外"
+  },
+  {
+    "word": "Furthermore",
+    "explains": "此外；再者"
+  },
+  {
+    "word": "What's more",
+    "explains": "更重要的是"
+  },
+  {
+    "word": "On the one hand",
+    "explains": "一方面"
+  },
+  {
+    "word": "On the other hand",
+    "explains": "另一方面"
+  },
+  {
+    "word": "However",
+    "explains": "然而"
+  },
+  {
+    "word": "Nevertheless",
+    "explains": "尽管如此"
+  },
+  {
+    "word": "Nonetheless",
+    "explains": "尽管如此"
+  },
+  {
+    "word": "In contrast",
+    "explains": "相比之下"
+  },
+  {
+    "word": "On the contrary",
+    "explains": "相反"
+  },
+  {
+    "word": "As a result",
+    "explains": "因此；结果"
+  },
+  {
+    "word": "Therefore",
+    "explains": "因此"
+  },
+  {
+    "word": "Consequently",
+    "explains": "因此；结果是"
+  },
+  {
+    "word": "Thus",
+    "explains": "因而；于是"
+  },
+  {
+    "word": "In short",
+    "explains": "简而言之"
+  },
+  {
+    "word": "In conclusion",
+    "explains": "总而言之"
+  },
+  {
+    "word": "To sum up",
+    "explains": "总结来说"
+  },
+  {
+    "word": "In a word",
+    "explains": "总之"
+  },
+  {
+    "word": "All in all",
+    "explains": "总的来说"
+  },
+  {
+    "word": "Above all",
+    "explains": "最重要的是"
+  },
+  {
+    "word": "For example",
+    "explains": "例如"
+  },
+  {
+    "word": "For instance",
+    "explains": "比如"
+  },
+  {
+    "word": "Such as",
+    "explains": "例如"
+  },
+  {
+    "word": "Take... for example",
+    "explains": "以……为例"
+  },
+  {
+    "word": "That is to say",
+    "explains": "也就是说"
+  },
+  {
+    "word": "In other words",
+    "explains": "换句话说"
+  },
+  {
+    "word": "It is worth noting that",
+    "explains": "值得注意的是"
+  },
+  {
+    "word": "It goes without saying that",
+    "explains": "不言而喻"
+  },
+  {
+    "word": "As is known to all",
+    "explains": "众所周知"
+  },
+  {
+    "word": "As far as we know",
+    "explains": "据我们所知"
+  },
+  {
+    "word": "To a large extent",
+    "explains": "在很大程度上"
+  },
+  {
+    "word": "To some extent",
+    "explains": "在某种程度上"
+  },
+  {
+    "word": "Generally speaking",
+    "explains": "一般来说"
+  },
+  {
+    "word": "Frankly speaking",
+    "explains": "坦白说"
+  },
+  {
+    "word": "Needless to say",
+    "explains": "不用说"
+  },
+  {
+    "word": "It's no wonder that",
+    "explains": "难怪"
+  },
+  {
+    "word": "It's not surprising that",
+    "explains": "不足为奇"
+  },
+  {
+    "word": "Compared with",
+    "explains": "与……相比"
+  },
+  {
+    "word": "In terms of",
+    "explains": "就……而言"
+  },
+  {
+    "word": "With regard to",
+    "explains": "关于"
+  },
+  {
+    "word": "According to",
+    "explains": "根据"
+  },
+  {
+    "word": "Based on",
+    "explains": "基于"
+  },
+  {
+    "word": "Not only... but also...",
+    "explains": "不仅……而且……"
+  },
+  {
+    "word": "No matter what",
+    "explains": "无论什么"
+  },
+  {
+    "word": "No matter how",
+    "explains": "无论如何"
+  },
+  {
+    "word": "The more..., the more...",
+    "explains": "越……越……"
+  },
+  {
+    "word": "It is high time that we",
+    "explains": "正是……的时候"
+  },
+  {
+    "word": "We should take measures to",
+    "explains": "我们应采取行动"
+  },
+  {
+    "word": "Play an important role in",
+    "explains": "在……中起重要作用"
+  },
+  {
+    "word": "There is no doubt that",
+    "explains": "毫无疑问"
+  },
+  {
+    "word": "It must be pointed out that",
+    "explains": "必须指出"
+  },
+  {
+    "word": "It is generally believed that",
+    "explains": "人们普遍认为"
+  },
+  {
+    "word": "Make full use of",
+    "explains": "充分利用"
+  },
+  {
+    "word": "Attach great importance to",
+    "explains": "非常重视"
+  },
+  {
+    "word": "Undoubtedly",
+    "explains": "毫无疑问"
+  },
+]

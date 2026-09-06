@@ -13,6 +13,7 @@ export async function loadLocalPhraseSources(): Promise<string[]> {
       fetchWordBank('phrasal-verbs'),
       fetchWordBank('collocations'),
       fetchWordBank('idioms'),
+      fetchWordBank('common-phrases'),
     ])
     builtinBanks.flat().forEach(word => {
       if (word?.text) phraseTexts.push(word.text)

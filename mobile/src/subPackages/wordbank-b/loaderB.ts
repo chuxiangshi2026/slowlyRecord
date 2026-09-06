@@ -10,6 +10,7 @@ import newConcept from './wordbanks/newConcept'
 import phrasalVerbs from './wordbanks/phrasal_verbs'
 import collocations from './wordbanks/collocations'
 import idioms from './wordbanks/idioms'
+import commonPhrases from './wordbanks/common_phrases'
 
 const data: Partial<Record<WordBankType, any[]>> = {
   bec,
@@ -22,13 +23,15 @@ const data: Partial<Record<WordBankType, any[]>> = {
   'phrasal-verbs': phrasalVerbs,
   collocations,
   idioms,
+  'common-phrases': commonPhrases,
 }
 
-export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'newConcept', 'phrasal-verbs', 'collocations', 'idioms']
+export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'newConcept', 'phrasal-verbs', 'collocations', 'idioms', 'common-phrases']
 
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
   if (type === 'collocations') return 'collocation'
   if (type === 'phrasal-verbs' || type === 'idioms') return 'phrase'
+  if (type === 'common-phrases') return 'sentence'
   return inferMobileItemType(text)
 }
 
