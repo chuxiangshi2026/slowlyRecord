@@ -16,6 +16,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
+  "miniprogramRoot": "dist/dev/mp-weixin/",
   "simulatorPluginLibVersion": {},
   "packOptions": {
     "ignore": [],
