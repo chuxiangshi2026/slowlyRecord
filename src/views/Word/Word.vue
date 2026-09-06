@@ -319,7 +319,7 @@
         <el-icon class="footer-icon" :size="18" @click="invisibleExplained"><Hide /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="筛选排序" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><Operation /></el-icon>
+        <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><FilterListIcon /></el-icon>
       </el-tooltip>
 <!--      <el-tooltip class="box-item" effect="dark" content="截图识别" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-translate" @click="startScreenCapture" style="font-weight: bold;"></i>
@@ -361,7 +361,7 @@
         <el-icon class="footer-icon" :size="18" @click="goToPhoneticMemory"><Microphone /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><Aim /></el-icon>
+        <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><PipIcon /></el-icon>
       </el-tooltip>
 
       <el-tooltip class="box-item" effect="dark" content="多端同步" placement="top" popper-class="small-tooltip">
@@ -425,14 +425,14 @@ import {
   Bottom,
   View,
   Hide,
-  Operation,
   Download,
   Upload,
   EditPen,
   Grid,
-  Aim,
   Setting
 } from '@element-plus/icons-vue';
+import FilterListIcon from '@/components/icons/FilterListIcon.vue';
+import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';

@@ -116,5 +116,21 @@ fs.mkdirSync(d3, { recursive: true });
 const used = scanUsedElIcons();
 const c3 = extractElIcons(used, d3);
 
-console.log(`\n完成：focus ${c1} 个，input-method-helper ${c2} 个，element-plus ${c3}/${used.length} 个`);
+console.log('== 自定义图标组件（src/components/icons/*.vue） ==');
+const d4 = path.join(OUT, 'custom');
+fs.mkdirSync(d4, { recursive: true });
+let c4 = 0;
+const customDir = path.join(ROOT, 'src/components/icons');
+for (const f of fs.readdirSync(customDir).filter(f => f.endsWith('.vue'))) {
+  const src = fs.readFileSync(path.join(customDir, f), 'utf8');
+  const m = src.match(/<svg[\s\S]*?<\/svg>/);
+  if (!m) continue;
+  let svg = m[0].replace(/ width="1em" height="1em"/, '').replace(/ aria-hidden="true"/, '');
+  if (!/xmlns=/.test(svg)) svg = svg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+  fs.writeFileSync(path.join(d4, f.replace('.vue', '.svg').replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()), svg + '\n');
+  c4++;
+  console.log(`  ${f}`);
+}
+
+console.log(`\n完成：focus ${c1} 个，input-method-helper ${c2} 个，element-plus ${c3}/${used.length} 个，custom ${c4} 个`);
 console.log(`输出目录：${OUT}`);

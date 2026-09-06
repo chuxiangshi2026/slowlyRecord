@@ -156,7 +156,7 @@
           <i class="iconfont icon-notebook-1 footer-icon" :class="{ active: options.showPhonetic }" @click="options.showPhonetic = !options.showPhonetic"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="释义" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-visible footer-icon" :class="{ active: options.showMeaning }" @click="options.showMeaning = !options.showMeaning"></i>
+          <el-icon class="footer-icon" :class="{ active: options.showMeaning }" :size="18" @click="options.showMeaning = !options.showMeaning"><View /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="半提示" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-edit footer-icon" :class="{ active: partialMode }" @click="partialMode = !partialMode"></i>
@@ -164,7 +164,7 @@
         <el-divider direction="vertical"/>
         <!-- 导入下拉菜单 -->
         <el-dropdown @command="handleImportCommand">
-          <i class="iconfont icon-import footer-icon"></i>
+          <el-icon class="footer-icon" :size="18"><Download /></el-icon>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="importJson">JSON导入</el-dropdown-item>
@@ -175,7 +175,7 @@
         </el-dropdown>
         <!-- 导出下拉菜单 -->
         <el-dropdown @command="handleExportCommand">
-          <i class="iconfont icon-export footer-icon"></i>
+          <el-icon class="footer-icon" :size="18"><Upload /></el-icon>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="exportJson">导出JSON</el-dropdown-item>
@@ -184,13 +184,13 @@
           </template>
         </el-dropdown>
         <el-tooltip class="box-item" effect="dark" content="筛选排序" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-level footer-icon" :class="{ 'filter-active': filterPanelVisible }" @click="toggleFilterPanel"></i>
+          <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><FilterListIcon /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-card footer-icon" @click="openFocusMode"></i>
+          <el-icon class="footer-icon" :size="18" @click="openFocusMode"><PipIcon /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-setting footer-icon" @click="drawerVisible = true"></i>
+          <el-icon class="footer-icon" :size="18" @click="drawerVisible = true"><Setting /></el-icon>
         </el-tooltip>
       </div>
     </div>
@@ -295,7 +295,9 @@
 import { ref, computed, nextTick, onMounted, watch, shallowRef } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage, ElMessageBox, ElLoading } from 'element-plus';
-import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus } from '@element-plus/icons-vue';
+import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, Download, Upload, View, Setting } from '@element-plus/icons-vue';
+import FilterListIcon from '@/components/icons/FilterListIcon.vue';
+import PipIcon from '@/components/icons/PipIcon.vue';
 import { useWordsStore } from '@/stores/words';
 import type { Word } from '@/types/words';
 import { getCurrentWordBankId, getAllWordBanks, type WordBank, createWordBank as createNewWordBank, deleteWordBank as removeWordBank, importFromBuiltinWordBank } from '@/utils/wordbank-manager';
