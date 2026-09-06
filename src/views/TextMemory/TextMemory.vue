@@ -192,31 +192,31 @@
           <el-tooltip class="box-item" effect="dark" content="跟打练习" placement="top" popper-class="small-tooltip">
             <el-icon class="action-icon" @click="handleTypingPractice(article)"><Pointer /></el-icon>
           </el-tooltip>
-          <el-tooltip class="box-item" effect="dark" content="填空练习" placement="top" popper-class="small-tooltip">
-            <el-icon class="action-icon" @click="handleFillBlanks(article)"><EditPen /></el-icon>
+          <el-tooltip v-if="isUtoolsEnv || isElectronEnv" class="box-item" effect="dark" content="专注显示" placement="top" popper-class="small-tooltip">
+            <el-icon class="action-icon" @click="openTextFocusMode(article)"><PipIcon /></el-icon>
+          </el-tooltip>
+          <el-tooltip v-if="article.geo" class="box-item" effect="dark" content="地图定位" placement="top" popper-class="small-tooltip">
+            <el-icon class="action-icon" @click="handleLocateOnMap(article)"><MapLocation /></el-icon>
           </el-tooltip>
           <el-tooltip class="box-item" effect="dark" content="笔记" placement="top" popper-class="small-tooltip">
-            <i class="iconfont icon-notebook-1 action-icon" @click="handleNotes(article)"></i>
+            <el-icon class="action-icon" @click="handleNotes(article)"><Notebook /></el-icon>
           </el-tooltip>
           <el-tooltip class="box-item" effect="dark" content="编辑" placement="top" popper-class="small-tooltip">
-            <i class="iconfont icon-edit action-icon" @click="handleEdit(article)"></i>
-          </el-tooltip>
-          <el-tooltip class="box-item" effect="dark" content="删除" placement="top" popper-class="small-tooltip">
-            <i class="iconfont icon-delete action-icon action-danger" @click="handleDelete(article)"></i>
+            <el-icon class="action-icon" @click="handleEdit(article)"><Edit /></el-icon>
           </el-tooltip>
 
           <el-dropdown trigger="click">
             <el-icon class="action-icon action-more"><More /></el-icon>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-if="isUtoolsEnv || isElectronEnv" @click="openTextFocusMode(article)">
-                  <el-icon><VideoPlay /></el-icon> 专注显示
-                </el-dropdown-item>
-                <el-dropdown-item v-if="article.geo" @click="handleLocateOnMap(article)">
-                  <el-icon><MapLocation /></el-icon> 地图定位
+                <el-dropdown-item @click="handleFillBlanks(article)">
+                  <el-icon><EditPen /></el-icon> 填空练习
                 </el-dropdown-item>
                 <el-dropdown-item @click="handlePrompts(article)">
                   <el-icon><Memo /></el-icon> 提示词
+                </el-dropdown-item>
+                <el-dropdown-item class="action-danger-item" @click="handleDelete(article)">
+                  <el-icon><Delete /></el-icon> 删除
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -326,9 +326,10 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import {
   Search, Plus, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
-  User, Clock, View, Pointer, List, MapLocation, VideoPlay, CircleClose, OfficeBuilding,
+  User, Clock, View, Pointer, List, MapLocation, CircleClose, OfficeBuilding,
   Finished, Printer, Picture
 } from '@element-plus/icons-vue';
+import PipIcon from '@/components/icons/PipIcon.vue';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { getArticleLanguage, getLanguageTag } from '@/utils/text-memory-util';
 import { log } from '@/utils/logger';
@@ -1163,10 +1164,6 @@ watch(currentView, (v) => {
         color: var(--utools-primary);
         transform: scale(1.1);
       }
-
-      &.action-danger:hover {
-        color: var(--utools-danger);
-      }
     }
   }
 }
@@ -1227,6 +1224,11 @@ watch(currentView, (v) => {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--utools-border-color);
+}
+
+/* 二级菜单中的删除项（el-dropdown 挂载到 body，scoped 样式覆盖不到，需全局） */
+.action-danger-item {
+  color: var(--el-color-danger);
 }
 </style>
 
