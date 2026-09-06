@@ -1076,7 +1076,7 @@ const handleRecreateWindow = (state: any) => {
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
       const recreateModeParam = currentFocusMode ? `&mode=${currentFocusMode}` : '';
-      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}${recreateModeParam}`, {
+      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${recreateModeParam}`, {
 
         width: 320,
         height: 100,
@@ -2040,7 +2040,7 @@ const openFocusMode = async (mode = '') => {
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
       const modeParam = mode ? `&mode=${mode}` : '';
-      const eUrl = `focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}${modeParam}`;
+      const eUrl = `focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}`;
       const winId = await api.createBrowserWindow(eUrl, {
         width: 320, height: 100, minWidth: 200, minHeight: 80, maxWidth: 400, maxHeight: 150,
         alwaysOnTop: initAlwaysOnTop, frame: false, transparent: true, backgroundColor: '#00000000',
@@ -2097,7 +2097,7 @@ const openFocusMode = async (mode = '') => {
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
       const modeParam = mode ? `&mode=${mode}` : '';
-      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}${modeParam}`, {
+      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}`, {
 
         width: 320,
         height: 100,

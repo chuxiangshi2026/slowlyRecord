@@ -675,6 +675,47 @@
       border-color: var(--primary-color);
     }
 
+    /* 自动下一个开关 / 遍数选择 */
+    .focus-switch {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .focus-switch input[type="checkbox"] {
+      accent-color: var(--primary-color);
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .focus-repeat {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .focus-repeat-btn {
+      flex: 1;
+      min-width: 0;
+      padding: 2px 0;
+    }
+
+    .focus-repeat-btn.active {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    /* 文本模式朗读按钮激活态 */
+    #text-speech.active {
+      color: var(--primary-color);
+    }
+
     /* 无背景图时禁用"图透明"滑条，避免与左下角窗口透明度混淆 */
     .style-row input[type="range"]#style-bg-opacity:disabled {
       opacity: 0.35;
@@ -981,6 +1022,9 @@
         <span class="icon" id="text-play" title="播放/暂停">
           <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </span>
+        <span class="icon" id="text-speech" title="朗读（跟随滚动播放为滚动+朗读）">
+          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </span>
         <span class="icon" id="text-forward" title="快进一点">
           <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
         </span>
@@ -1085,6 +1129,21 @@
         <label>图透明</label>
         <input type="range" id="style-bg-opacity" min="0" max="100" value="35">
         <span class="style-value" id="style-bg-opacity-value">35%</span>
+      </div>
+      <div class="style-row">
+        <label>自动</label>
+        <label class="focus-switch" title="发音结束后自动切换到下一个单词">
+          <input type="checkbox" id="style-auto-next">
+          <span>自动下一个</span>
+        </label>
+      </div>
+      <div class="style-row">
+        <label>遍数</label>
+        <div class="focus-repeat" id="style-repeat-group" title="每个单词自动发音的遍数">
+          <button class="style-btn focus-repeat-btn" data-repeat="1" type="button">1</button>
+          <button class="style-btn focus-repeat-btn" data-repeat="2" type="button">2</button>
+          <button class="style-btn focus-repeat-btn" data-repeat="3" type="button">3</button>
+        </div>
       </div>
     </div>
 
@@ -1443,20 +1502,58 @@
       elBtnPrev.classList.toggle('disabled', currentIndex <= 0);
       elBtnNext.classList.toggle('disabled', currentIndex >= words.length - 1);
 
-      // 自动发音：听写模式始终自动播放，其他模式按设置
+      // 自动发音：听写模式始终自动播放，其他模式按设置；发音按 repeatCount 连播
       if (wordText !== lastAutoSpeakWord && (dictationMode || autoSpeakEnabled)) {
         lastAutoSpeakWord = wordText;
-        playAudio();
+        lastAutoSpeakKey = wordText + '@' + currentIndex;
+        cancelAutoNext();
+        cancelRepeatSpeaking();
+        var autoRepeatSeq = speakSeq;
+        if (dictationMode) {
+          // 听写模式：连播 repeatCount 遍；推进仍由输入判定驱动，不做自动推进
+          speakRepeatedly(repeatCount, null);
+        } else {
+          // 标准模式：连播 repeatCount 遍，播完按"自动下一个"设置决定是否推进
+          speakRepeatedly(repeatCount, function() {
+            if (!autoNextEnabled) return;
+            scheduleAutoNext(autoRepeatSeq);
+          });
+        }
+      } else {
+        // 切到已发音过的单词时取消上个词待执行的自动推进；同词重复渲染（如切换释义显示）不打断
+        var displayKey = wordText + '@' + currentIndex;
+        if (displayKey !== lastAutoSpeakKey) cancelAutoNext();
       }
     }
 
     // 音频播放器单例（避免每次播放新建 Audio 对象，便于窗口关闭时清理）
     let audioPlayer = null;
 
-    // 播放发音
-    async function playAudio() {
+    // 播放发音，返回 Promise，播放结束（或超时兜底）后 resolve
+    // options.onDone：播放完成回调（与 Promise resolve 时机一致）
+    // options.timeoutMs：完成回调超时上限，默认 6 秒，防止 onend 不触发导致卡死
+    async function playAudio(options) {
+      options = options || {};
+      var onDone = options.onDone;
+      var timeoutMs = options.timeoutMs || 6000;
       var word = words[currentIndex];
-      if (!word) return;
+      if (!word) {
+        if (onDone) onDone();
+        return;
+      }
+      var settled = false;
+      var settleTimer = setTimeout(function() {
+        if (!settled) {
+          settled = true;
+          if (onDone) onDone();
+        }
+      }, timeoutMs);
+      var done = function() {
+        if (settled) return;
+        settled = true;
+        clearTimeout(settleTimer);
+        if (onDone) onDone();
+      };
       try {
         // 优先使用浏览器原生语音合成（不依赖网络，与听写主界面一致）
         var prof = getProfile();
@@ -1465,17 +1562,95 @@
           var utterance = new SpeechSynthesisUtterance(word.text);
           utterance.lang = prof.ttsLang;
           utterance.rate = 0.8;
+          utterance.onend = done;
+          utterance.onerror = function(e) {
+            // 主动取消（如切词、关窗口触发 cancel）不算失败，同样按完成处理
+            if (e && e.error === 'canceled' || e && e.error === 'interrupted') {
+              done();
+            } else {
+              console.error('语音合成失败:', e);
+              done();
+            }
+          };
           window.speechSynthesis.speak(utterance);
         } else {
           // 回退：使用有道TTS在线播放（有道仅支持英语）
-          if (prof.youdaoVoiceType === null) return;
+          if (prof.youdaoVoiceType === null) { done(); return; }
           if (!audioPlayer) audioPlayer = new Audio();
+          audioPlayer.onended = done;
+          audioPlayer.onerror = done;
           audioPlayer.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=' + prof.youdaoVoiceType;
           await audioPlayer.play();
         }
       } catch (e) {
         console.error('播放失败:', e);
+        done();
       }
+    }
+
+    // 取消待执行的自动推进（手动切词、标记认识/忘记、修改设置时调用，避免抢跑）
+    function cancelAutoNext() {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+    }
+
+    // 终止进行中的连播循环（递增代际令牌，旧循环的后续播放与回调全部失效）
+    function cancelRepeatSpeaking() {
+      speakSeq++;
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    // 连续播放 n 遍当前单词，全部播完后回调 onAllDone（任何一遍被打断则静默终止）
+    function speakRepeatedly(times, onAllDone) {
+      var seq = speakSeq;
+      var played = 0;
+      var finished = false;
+      var step = function() {
+        if (finished || seq !== speakSeq) return;
+        if (played >= times) {
+          finished = true;
+          if (onAllDone) onAllDone();
+          return;
+        }
+        played++;
+        playAudio({
+          onDone: function() {
+            if (finished || seq !== speakSeq) return;
+            if (played >= times) {
+              finished = true;
+              if (onAllDone) onAllDone();
+            } else {
+              setTimeout(step, 600);
+            }
+          }
+        });
+      };
+      step();
+    }
+
+    // 与「下一个」按钮一致的推进路径；到列表末尾复用 markRemembered 的重载逻辑
+    function goNextWord() {
+      if (words.length === 0) return;
+      if (currentIndex < words.length - 1) {
+        currentIndex++;
+        spellIndex = 0;
+        dictationChecking = false;
+        updateDisplay();
+      } else {
+        markRemembered();
+      }
+    }
+
+    // 自动下一个：发音全部播完后延迟推进（setTimeout 期间被手动操作打断则失效）
+    function scheduleAutoNext(seq) {
+      cancelAutoNext();
+      autoNextTimer = setTimeout(function() {
+        autoNextTimer = null;
+        if (seq !== speakSeq) return;
+        goNextWord();
+      }, 800);
     }
 
     // 通知主窗口单词发生了变化
@@ -1513,6 +1688,8 @@
 
     // 标记认识
     function markRemembered(forever) {
+      cancelAutoNext();
+      cancelRepeatSpeaking();
       var word = words[currentIndex];
       if (!word) return;
 
@@ -1567,6 +1744,8 @@
 
     // 标记忘记
     function markForgot() {
+      cancelAutoNext();
+      cancelRepeatSpeaking();
       var word = words[currentIndex];
       if (!word) return;
 
@@ -1853,6 +2032,13 @@
     var textArticleIndex = -1;
     var textTitleVisible = true;
 
+    // 文本朗读（TTS）状态
+    var textSpeechOn = false;        // 朗读开关是否开启
+    var textSpeechActive = false;    // 是否正在朗读（区分"开启但无语音合成环境"）
+    var textSpeechSeq = 0;           // 朗读代际令牌，停止/切文章时递增使旧队列失效
+    var TEXT_SPEAK_SVG = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+    var TEXT_SPEAK_OFF_SVG = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.59 3l2.7-2.7-1.41-1.41-2.7 2.7-2.7-2.7-1.41 1.41 2.7 2.7-2.7 2.7 1.41 1.41 2.7-2.7 2.7 2.7 1.41-1.41-2.7-2.7z"/></svg>';
+
     var PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
     var PAUSE_SVG = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 
@@ -1873,6 +2059,9 @@
       var viewport = document.getElementById('text-viewport');
 
       if (btnPlay) btnPlay.addEventListener('click', function(e) { e.stopPropagation(); toggleTextPlay(); });
+      var btnSpeech = document.getElementById('text-speech');
+      if (btnSpeech) btnSpeech.addEventListener('click', function(e) { e.stopPropagation(); toggleTextSpeech(); });
+      updateTextSpeechIcon();
       if (btnReset) btnReset.addEventListener('click', function(e) { e.stopPropagation(); resetTextScroll(); });
       if (btnSpeedLabel) btnSpeedLabel.addEventListener('click', function(e) { e.stopPropagation(); cycleTextSpeed(); });
       if (btnPrev) btnPrev.addEventListener('click', function(e) { e.stopPropagation(); switchTextArticle(-1); });
@@ -1914,6 +2103,8 @@
     }
 
     function renderTextArticle() {
+      // 切文章时停掉旧文章的朗读；开关仍开启时随后会为当前文章重新开始朗读
+      stopTextSpeech(true);
       var elTitle = document.getElementById('text-title');
       var elMeta = document.getElementById('text-meta');
       var elContent = document.getElementById('text-scroll-content');
@@ -1944,6 +2135,8 @@
         applyTextOffset();
         // 确保为暂停态并显示播放图标
         pauseTextPlay();
+        // 朗读开关仍开启时，为当前文章重新开始朗读
+        if (textSpeechOn && !textSpeechActive) speakTextArticle();
       });
     }
 
@@ -2064,12 +2257,132 @@
       if (btn) btn.innerHTML = textPlaying ? PAUSE_SVG : PLAY_SVG;
     }
 
+    // ========== 文本朗读（TTS） ==========
+
+    // 滚动速度档 → 朗读语速映射
+    function getTextSpeechRate() {
+      var speed = TEXT_SPEED_LEVELS[textSpeedIndex];
+      if (speed <= 0.5) return 0.7;
+      if (speed <= 1) return 0.9;
+      if (speed <= 2) return 1.1;
+      return 1.4;
+    }
+
+    // 文章语言 → utterance.lang：'zh' 开头用 zh-CN，其他跟随词库语言档案，缺省 en-US
+    function getTextSpeechLang(article) {
+      var lang = (article && article.language) || '';
+      if (lang) {
+        if (lang.toLowerCase().indexOf('zh') === 0) return 'zh-CN';
+        return lang;
+      }
+      var prof = getProfile();
+      return (prof && prof.ttsLang) || 'en-US';
+    }
+
+    // 按句切分文章（兼容中英文标点）
+    function splitTextToSentences(text) {
+      var matches = (text || '').match(/[^。！？；.!?;\n]+[。！？；.!?;]?/g);
+      if (!matches) return [];
+      var sentences = [];
+      for (var i = 0; i < matches.length; i++) {
+        var s = matches[i].trim();
+        if (s) sentences.push(s);
+      }
+      return sentences;
+    }
+
+    // 停止朗读（只停声音，不影响滚动）；keepSwitch 为 true 时保留开关状态（用于切文章后续读）
+    function stopTextSpeech(keepSwitch) {
+      textSpeechSeq++;
+      textSpeechActive = false;
+      if (!keepSwitch) textSpeechOn = false;
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      updateTextSpeechIcon();
+    }
+
+    // 朗读当前文章：逐句朗读，一句 onend 接下一句；被打断（代际变化）则静默停止
+    function speakTextArticle() {
+      if (!('speechSynthesis' in window)) {
+        showToast('当前环境不支持语音朗读');
+        return;
+      }
+      var article = textArticles[textArticleIndex];
+      if (!article) return;
+      var sentences = splitTextToSentences(article.content || '');
+      if (sentences.length === 0) {
+        showToast('文章内容为空');
+        return;
+      }
+      var lang = getTextSpeechLang(article);
+      var rate = getTextSpeechRate();
+      var seq = textSpeechSeq;
+      textSpeechActive = true;
+      updateTextSpeechIcon();
+
+      var speakIndex = 0;
+      var speakNext = function() {
+        if (!textSpeechActive || seq !== textSpeechSeq) return;
+        if (speakIndex >= sentences.length) {
+          // 全文读完：停声音但保留开关，若滚动未停则同时开始滚动，方便反复听读
+          textSpeechActive = false;
+          window.speechSynthesis.cancel();
+          updateTextSpeechIcon();
+          if (textSpeechOn && !textPlaying) startTextPlay();
+          return;
+        }
+        var utterance = new SpeechSynthesisUtterance(sentences[speakIndex++]);
+        utterance.lang = lang;
+        utterance.rate = rate;
+        utterance.onend = function() {
+          if (!textSpeechActive || seq !== textSpeechSeq) return;
+          setTimeout(speakNext, 80);
+        };
+        utterance.onerror = function(e) {
+          if (!textSpeechActive || seq !== textSpeechSeq) return;
+          // 主动取消以外的情况：跳过当前句继续
+          if (e && (e.error === 'canceled' || e.error === 'interrupted')) return;
+          setTimeout(speakNext, 80);
+        };
+        window.speechSynthesis.speak(utterance);
+      };
+      speakNext();
+    }
+
+    // 朗读开关：开启时若滚动未播则同时开始滚动；再次点击停止朗读（不影响滚动）
+    function toggleTextSpeech() {
+      if (textSpeechActive || textSpeechOn) {
+        stopTextSpeech(false);
+        showToast('已停止朗读');
+        return;
+      }
+      if (!('speechSynthesis' in window)) {
+        showToast('当前环境不支持语音朗读');
+        return;
+      }
+      textSpeechOn = true;
+      speakTextArticle();
+      if (!textPlaying) startTextPlay();
+    }
+
+    function updateTextSpeechIcon() {
+      var btn = document.getElementById('text-speech');
+      if (!btn) return;
+      var active = textSpeechActive || textSpeechOn;
+      btn.innerHTML = active ? TEXT_SPEAK_OFF_SVG : TEXT_SPEAK_SVG;
+      btn.classList.toggle('active', active);
+      btn.title = active ? '停止朗读' : '朗读（跟随滚动播放为滚动+朗读）';
+    }
+
     // 事件监听
     document.getElementById('btn-prev').addEventListener('click', () => {
+      cancelAutoNext();
+      cancelRepeatSpeaking();
       if (currentIndex > 0) { currentIndex--; spellIndex = 0; dictationChecking = false; updateDisplay(); }
     });
 
     document.getElementById('btn-next').addEventListener('click', () => {
+      cancelAutoNext();
+      cancelRepeatSpeaking();
       if (currentIndex < words.length - 1) { currentIndex++; spellIndex = 0; dictationChecking = false; updateDisplay(); }
     });
 
@@ -2175,8 +2488,32 @@
       }
     }
 
-    function requestRestoreFromEdge(reason = 'hover') {
-      const now = Date.now();
+    // ========== 自动下一个 / 发音遍数 ==========
+    function syncAutoNextControls() {
+      var checkbox = document.getElementById('style-auto-next');
+      if (checkbox) checkbox.checked = autoNextEnabled;
+      var btns = document.querySelectorAll('.focus-repeat-btn');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('active', parseInt(btns[i].getAttribute('data-repeat')) === repeatCount);
+      }
+    }
+
+    function setAutoNextEnabled(value) {
+      autoNextEnabled = !!value;
+      syncAutoNextControls();
+      saveFocusModeSetting('autoNext', autoNextEnabled);
+      if (!autoNextEnabled) cancelAutoNext();
+      showToast(autoNextEnabled ? '已开启自动下一个' : '已关闭自动下一个');
+    }
+
+    function setRepeatCount(value) {
+      repeatCount = Math.max(1, Math.min(3, parseInt(value) || 1));
+      syncAutoNextControls();
+      saveFocusModeSetting('repeatCount', repeatCount);
+      showToast('发音 ' + repeatCount + ' 遍');
+    }
+
+    function requestRestoreFromEdge(reason = 'hover') {      const now = Date.now();
       if (now - lastRestoreRequestAt < 200) {
         return;
       }
@@ -2648,6 +2985,19 @@
           updateFocusStyleSetting('backgroundImageOpacity', clampNumber(e.target.value, 0, 100, 35) / 100);
         });
       }
+      // 自动下一个开关 / 发音遍数
+      var autoNextInput = document.getElementById('style-auto-next');
+      if (autoNextInput) {
+        autoNextInput.addEventListener('change', function(e) {
+          setAutoNextEnabled(e.target.checked);
+        });
+      }
+      var repeatBtns = document.querySelectorAll('.focus-repeat-btn');
+      for (var i = 0; i < repeatBtns.length; i++) {
+        repeatBtns[i].addEventListener('click', function() {
+          setRepeatCount(this.getAttribute('data-repeat'));
+        });
+      }
       if (bgSelectBtn && bgFileInput) {
         bgSelectBtn.addEventListener('click', function() { bgFileInput.click(); });
         bgFileInput.addEventListener('change', function(e) {
@@ -2745,6 +3095,15 @@
             updateEdgeStickButton();
           }
 
+          // 自动下一个 / 发音遍数（仅持久化，主窗口下次打开时读取）
+          if (typeof fm.autoNext === 'boolean') {
+            autoNextEnabled = fm.autoNext;
+          }
+          var fmRepeat = parseInt(fm.repeatCount);
+          if (fmRepeat >= 1 && fmRepeat <= 3) {
+            repeatCount = fmRepeat;
+          }
+
           // 锁定状态
           if (fm.locked) {
             setLocked(true);
@@ -2819,11 +3178,15 @@
         // 左右箭头：切换单词并重置拼写进度（保持拼写模式）
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
+          cancelAutoNext();
+          cancelRepeatSpeaking();
           if (currentIndex > 0) { currentIndex--; spellIndex = 0; updateDisplay(); }
           return;
         }
         if (e.key === 'ArrowRight') {
           e.preventDefault();
+          cancelAutoNext();
+          cancelRepeatSpeaking();
           if (currentIndex < words.length - 1) { currentIndex++; spellIndex = 0; updateDisplay(); }
           return;
         }
@@ -2846,8 +3209,8 @@
       else if (e.shiftKey && e.key === 'F') { e.preventDefault(); markForgot(); }
       else if (e.shiftKey && e.key === 'P') { e.preventDefault(); playAudio(); }
       else if (e.shiftKey && e.key === 'T') { e.preventDefault(); showExplains = !showExplains; updateDisplay(); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentIndex > 0) { currentIndex--; updateDisplay(); } }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); if (currentIndex < words.length - 1) { currentIndex++; updateDisplay(); } }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); cancelAutoNext(); cancelRepeatSpeaking(); if (currentIndex > 0) { currentIndex--; updateDisplay(); } }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); cancelAutoNext(); cancelRepeatSpeaking(); if (currentIndex < words.length - 1) { currentIndex++; updateDisplay(); } }
       else if (e.key === 'ArrowDown') { e.preventDefault(); markRemembered(true); }
       else if (e.key === 'Escape') { e.preventDefault(); window.close(); }
       else if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); setLocked(!isLocked); }
@@ -2919,6 +3282,13 @@
       const autoSpeakParam = urlParams.get('autoSpeak');
       const autoSpeak = autoSpeakParam === '1' ? true : (autoSpeakParam === '0' ? false : false);
 
+      // 自动下一个（autoNext=1 开启，autoNext=0 关闭，缺省读 DB 设置）
+      const autoNextParam = urlParams.get('autoNext');
+      const autoNext = autoNextParam === null ? null : autoNextParam === '1';
+      // 发音遍数（repeat=1/2/3，缺省读 DB 设置）
+      const repeatParam = parseInt(urlParams.get('repeat') || '');
+      const repeat = repeatParam >= 1 && repeatParam <= 3 ? repeatParam : null;
+
       // 模式参数（dictation=听写模式, text=文本专注滚动）
       const mode = urlParams.get('mode') || '';
       // 文本模式文章ID
@@ -2938,6 +3308,8 @@
         sortBy: sortBy,
         sortAsc: sortAsc,
         autoSpeak: autoSpeak,
+        autoNext: autoNext,
+        repeat: repeat,
         mode: mode,
         articleId: articleId,
       };
@@ -2954,6 +3326,12 @@
     // 自动发音开关
     let autoSpeakEnabled = false;
     let lastAutoSpeakWord = '';  // 记录上次自动发音的单词，避免重复播放
+    // 自动下一个 / 发音遍数设置
+    let autoNextEnabled = false;
+    let repeatCount = 1;         // 每个单词自动发音遍数（1-3）
+    let autoNextTimer = null;    // 待执行的自动推进计时器
+    let speakSeq = 0;            // 自动发音代际令牌，切词/取消时递增，终止旧的连播循环
+    let lastAutoSpeakKey = '';   // 最近自动发音的 单词@下标，用于区分同词重复渲染
 
     // 拼写模式
     let spellMode = false;
@@ -3086,6 +3464,10 @@
       loadWords();
     }
     loadFocusModeSettings();
+    // URL 参数优先于 DB 设置（主窗口打开时把当前设置传入）
+    if (initialState.autoNext !== null) autoNextEnabled = initialState.autoNext;
+    if (initialState.repeat !== null) repeatCount = initialState.repeat;
+    syncAutoNextControls();
     // 从 localStorage 应用样式（主窗口实时写入，同源共享）
     loadFocusStyleFromStorage();
 
@@ -3102,6 +3484,8 @@
 
     // 窗口关闭时清理语音合成与音频，避免遗留播放
     window.addEventListener('beforeunload', function() {
+      cancelAutoNext();
+      stopTextSpeech(false);
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       if (audioPlayer) {
         try { audioPlayer.pause(); audioPlayer.src = ''; } catch (e) {}
