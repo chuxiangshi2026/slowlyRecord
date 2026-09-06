@@ -190,7 +190,7 @@
         <!-- 多选模式下隐藏行内操作，避免误触 -->
         <div v-if="!multiSelectMode" class="article-actions" @click.stop>
           <el-tooltip class="box-item" effect="dark" content="跟打练习" placement="top" popper-class="small-tooltip">
-            <el-icon class="action-icon" @click="handleTypingPractice(article)"><Pointer /></el-icon>
+            <el-icon class="action-icon" @click="handleTypingPractice(article)"><KeyboardIcon /></el-icon>
           </el-tooltip>
           <el-tooltip v-if="isUtoolsEnv || isElectronEnv" class="box-item" effect="dark" content="专注显示" placement="top" popper-class="small-tooltip">
             <el-icon class="action-icon" @click="openTextFocusMode(article)"><PipIcon /></el-icon>
@@ -326,10 +326,11 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import {
   Search, Plus, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
-  User, Clock, View, Pointer, List, MapLocation, CircleClose, OfficeBuilding,
+  User, Clock, View, List, MapLocation, CircleClose, OfficeBuilding,
   Finished, Printer, Picture
 } from '@element-plus/icons-vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
+import KeyboardIcon from '@/components/icons/KeyboardIcon.vue';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { getArticleLanguage, getLanguageTag } from '@/utils/text-memory-util';
 import { log } from '@/utils/logger';
