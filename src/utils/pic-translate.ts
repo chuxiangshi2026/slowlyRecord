@@ -1060,11 +1060,19 @@ async function createWorkerInternal(lang: string = 'eng'): Promise<any> {
     let downloadedLangData: Uint8Array | null = null;
     if (lang !== 'eng') {
         debugLog(`[本地OCR] 语言 ${lang} 非内置，检查/下载语言包...`);
-        downloadedLangData = await ensureTrainedData(lang as any);
+        try {
+            ElMessage.info({message: `首次使用${lang === 'jpn' ? '日语' : lang === 'rus' ? '俄语' : lang === 'spa' ? '西班牙语' : '法语'}本地识别，正在下载语言包（约 2MB）...`, duration: 10000});
+        } catch {}
+        downloadedLangData = await ensureTrainedData(lang as any, {
+            onProgress: (p) => debugLog(`[本地OCR] 语言包下载进度: ${(p * 100).toFixed(0)}%`),
+        });
         if (!downloadedLangData) {
             throw new Error(`OCR 语言包（${lang}）下载失败，请检查网络后重试`);
         }
         debugLog(`[本地OCR] 语言包就绪，大小: ${downloadedLangData.length}`);
+        try {
+            ElMessage.success('语言包下载完成');
+        } catch {}
     }
 
     debugLog('[本地OCR] 创建 Worker，尝试读取缓存...');

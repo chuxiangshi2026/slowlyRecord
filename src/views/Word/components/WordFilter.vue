@@ -53,7 +53,9 @@
           </div>
         </el-popover>
 
+        <!-- 词根词缀数据仅英语有（profile.hasAffixData），其他语言隐藏 -->
         <el-popover
+          v-if="affixAvailable"
           :visible="popoverKey === 'affix'"
           placement="bottom-start"
           :width="240"
@@ -169,6 +171,11 @@ export interface FilterState {
   sortBy: string
   sortAsc: boolean
 }
+
+import { getActiveProfile } from '@/utils/language'
+
+/** 当前语言是否有词根词缀数据（仅英语） */
+const affixAvailable = computed(() => getActiveProfile().hasAffixData)
 
 const props = defineProps<{
   visible: boolean

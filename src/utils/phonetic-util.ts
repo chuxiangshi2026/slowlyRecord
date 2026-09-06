@@ -11,6 +11,7 @@
  * 避免一次性扫全表造成长时间阻塞。
  */
 import type { Word } from '@/types/words';
+import { getActiveProfile } from '@/utils/language';
 import { queryLocalDictionaryAsync, queryLocalDictionary } from './local-dictionary';
 import { useWordsStore } from '@/stores/words';
 import { log } from './logger';
@@ -35,6 +36,8 @@ export function isValidPhonetic(phonetic: string | undefined, wordText?: string)
  * 同步查本地词库的音标，首次词库未加载时可能返回空（不会触发持久化）
  */
 export function lookupPhoneticSync(text: string): string {
+    // 本地词典是英语词典，其他语言不查（音标由翻译引擎返回读音字段）
+    if (!getActiveProfile().hasLocalDict) return '';
     const key = (text || '').trim().toLowerCase();
     if (!key || failedLookup.has(key)) return '';
     try {
@@ -49,6 +52,8 @@ export function lookupPhoneticSync(text: string): string {
  * 异步查本地词库的音标，带 inflight 去重和失败缓存
  */
 export async function lookupPhonetic(text: string): Promise<string> {
+    // 同上：仅英语走本地词典补全
+    if (!getActiveProfile().hasLocalDict) return '';
     const key = (text || '').trim().toLowerCase();
     if (!key) return '';
     if (failedLookup.has(key)) return '';
