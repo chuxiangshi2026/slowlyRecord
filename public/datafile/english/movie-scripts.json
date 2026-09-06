@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "category": "movies",
+    "name": "经典电影片段",
+    "description": "经典英文电影名段独白：希望、梦想、勇气与自由",
+    "count": 6,
+    "version": "1.0",
+    "lastUpdated": "2026-09-08"
+  },
+  "items": [
+    {
+      "id": "eng_movie_001",
+      "title": "Forrest Gump: Life Is Like a Box of Chocolates",
+      "author": "Robert Zemeckis (dir.), Eric Roth (screenplay)",
+      "content": "Hello. My name's Forrest, Forrest Gump. You want a chocolate? I could eat about a million and a half of these. My mama always said, life was like a box of chocolates. You never know what you're gonna get.\n\nThose must be comfortable shoes. I bet you could walk all day in shoes like that and not feel a thing. I wish I had shoes like that.\n\nMy mama always said there's an awful lot you can tell about a person by their shoes. Where they're going, where they've been. I've worn lots of shoes. I bet if I think about it real hard I could remember my first pair of shoes.\n\nMama said they'd take me anywhere. She said they was my magic shoes.\n\nNow, my mama always told me that miracles happen every day. Some people don't think so, but they do. I thought about Jenny, and my mama, and the white feather. I thought, maybe miracles do happen, but only if you keep running.",
+      "tags": ["电影", "人生", "温暖"],
+      "source": "Forrest Gump (1994), Paramount Pictures",
+      "year": 1994,
+      "language": "en"
+    },
+    {
+      "id": "eng_movie_002",
+      "title": "The Shawshank Redemption: Hope Is a Good Thing",
+      "author": "Frank Darabont (dir./screenplay), Stephen King (novella)",
+      "content": "Dear Red,\n\nIf you're reading this, you've gotten out. And if you've come this far, maybe you're willing to come a little further. You remember the name of the town, don't you?\n\nI could use a good man to help me get my project on wheels. I'll keep an eye out for you and the chessboard ready. Remember, Red, hope is a good thing, maybe the best of things, and no good thing ever dies. I will be hoping that this letter finds you, and finds you well.\n\nYour friend,\nAndy.\n\n—\n\nRed (voiceover): I find I'm so excited, I can barely sit still or hold a thought in my head. I think it's the excitement only a free man can feel, a free man at the start of a long journey whose conclusion is uncertain. I hope I can make it across the border. I hope to see my friend and shake his hand. I hope the Pacific is as blue as it has been in my dreams. I hope.",
+      "tags": ["电影", "希望", "自由"],
+      "source": "The Shawshank Redemption (1994), Castle Rock Entertainment",
+      "year": 1994,
+      "language": "en"
+    },
+    {
+      "id": "eng_movie_003",
+      "title": "The Pursuit of Happyness: You Got a Dream, You Gotta Protect It",
+      "author": "Gabriele Muccino (dir.), Steve Conrad (screenplay)",
+      "content": "Hey. Don't ever let somebody tell you you can't do something. Not even me. All right?\n\nYou got a dream, you gotta protect it. People can't do something themselves, they wanna tell you you can't do it. You want something, go get it. Period.\n\nAll right? Let's go.\n\n—\n\nNarration (Chris Gardner): That maybe happiness is something that we can only pursue and maybe we can actually never have it. No matter what.\n\nHow many times I have told you, you want something, go get it. As long as you keep working hard, one day you will see the light of your dream. Don't ever let somebody tell you you can't do something.",
+      "tags": ["电影", "梦想", "父爱"],
+      "source": "The Pursuit of Happyness (2006), Columbia Pictures",
+      "year": 2006,
+      "language": "en"
+    },
+    {
+      "id": "eng_movie_004",
+      "title": "The Legend of 1900: Why I Never Left the Ship",
+      "author": "Giuseppe Tornatore (dir.), Alessandro Baricco (monologue)",
+      "content": "All that city. You just couldn't see the end to it. The end? Please? You please just show me where it ends? It was the very thing that attracted me to it all. I couldn't stop. The ship kept moving. And it wasn't the sea. It was the city, the city that kept going, going... and I couldn't stop.\n\nIt wasn't what I saw that stopped me, Max. It was what I didn't see. Do you understand that? What I didn't see.\n\nIn all that sprawling city, there was everything except an end. There was no end. It's like a keyboard, Max. The keys keep going on and on, thousands and thousands of keys. And on that keyboard there is no single key you can play. Not one key. And that is infinity.\n\nChrist, did you see the streets? Just the streets. There were thousands of them! How do you do it down there? How do you choose just one? One woman, one house, one piece of land to call your own, one landscape to look at, one way to die...\n\nAll that world just weighing down on you. You don't even know where it comes to an end. I was born on this ship, and the world passed me by, but two thousand people at a time. And there were wishes here, but never more than could fit on a ship, between prow and stern. You played out your happiness, but on a piano that was not infinite. I learned to live that way.\n\nLand? Land is a ship too big for me. It's a woman too beautiful, it's a voyage too long, a perfume too strong. It's music I don't know how to make. I could never get off this ship. At best, I can step off my life. After all, I don't exist for anyone.",
+      "tags": ["电影", "选择", "孤独"],
+      "source": "The Legend of 1900 (1998), Medusa Film",
+      "year": 1998,
+      "language": "en"
+    },
+    {
+      "id": "eng_movie_005",
+      "title": "Dead Poets Society: We Read and Write Poetry",
+      "author": "Peter Weir (dir.), Tom Schulman (screenplay)",
+      "content": "We don't read and write poetry because it's cute. We read and write poetry because we are members of the human race. And the human race is filled with passion. And medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. But poetry, beauty, romance, love, these are what we stay alive for.\n\nTo quote from Whitman, \"O me! O life!... of the questions of these recurring; of the endless trains of the faithless—of cities filled with the foolish; what good amid these, O me, O life?\" Answer. That you are here—that life exists, and identity; that the powerful play goes on and you may contribute a verse.\n\nThat the powerful play goes on and you may contribute a verse. What will your verse be?\n\n—\n\nCarpe diem. Seize the day, boys. Make your lives extraordinary.",
+      "tags": ["电影", "诗歌", "教育"],
+      "source": "Dead Poets Society (1989), Touchstone Pictures",
+      "year": 1989,
+      "language": "en"
+    },
+    {
+      "id": "eng_movie_006",
+      "title": "Braveheart: They May Take Our Lives",
+      "author": "Mel Gibson (dir.), Randall Wallace (screenplay)",
+      "content": "I am William Wallace. And I see a whole army of my countrymen here in defiance of tyranny. You've come to fight as free men, and free men you are. What will you do with that freedom? Will you fight?\n\nAye, fight and you may die. Run and you'll live—at least a while. And dying in your beds many years from now, would you be willing to trade all the days from this day to that for one chance, just one chance to come back here and tell our enemies that they may take our lives, but they'll never take our freedom!\n\nAlba gu bràth!\n\nThey may take our lives, but they'll never take our freedom!\n\n—\n\nNow tell me, what does that mean to be noble? Your title gives you claim to the throne of our country, but men don't follow titles, they follow courage. If you would just lead them to freedom, they'd follow you.",
+      "tags": ["电影", "勇气", "自由"],
+      "source": "Braveheart (1995), Icon Productions",
+      "year": 1995,
+      "language": "en"
+    }
+  ]
+}

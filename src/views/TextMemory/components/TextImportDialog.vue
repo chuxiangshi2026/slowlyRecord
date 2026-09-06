@@ -603,6 +603,7 @@
         <el-radio-group v-model="libTab" size="small" style="margin-bottom: 16px">
           <el-radio-button label="poetry">诗词库</el-radio-button>
           <el-radio-button label="idiom">成语库</el-radio-button>
+          <el-radio-button label="english">英文经典</el-radio-button>
           <el-radio-button label="timeline">时间线</el-radio-button>
           <el-radio-button label="knowledge">知识库</el-radio-button>
           <el-radio-button label="pegPacks">宫殿桩库</el-radio-button>
@@ -781,6 +782,100 @@
           </div>
 
           <div v-else class="idiom-placeholder">
+            <el-empty description="请选择分类或输入关键词搜索"/>
+          </div>
+        </div>
+
+        <!-- 英文经典：演讲/诗歌/散文/电影片段 -->
+        <div v-else-if="libTab === 'english'">
+          <el-form :model="englishForm" label-width="60px" size="small">
+            <el-form-item label="分类">
+              <el-select v-model="englishForm.category" placeholder="全部" clearable style="width: 100%" @change="handleEnglishSearch">
+                <el-option
+                    v-for="cat in ENGLISH_CATEGORIES"
+                    :key="cat.code"
+                    :label="cat.name"
+                    :value="cat.code"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="搜索">
+              <el-input
+                  v-model="englishForm.keyword"
+                  placeholder="标题、作者或内容关键词..."
+                  clearable
+                  @keyup.enter="handleEnglishSearch"
+              >
+                <template #append>
+                  <el-button @click="handleEnglishSearch">搜索</el-button>
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-form>
+
+          <div v-if="englishLoading" class="english-loading">
+            <el-skeleton :rows="5" animated />
+          </div>
+
+          <div v-else-if="englishResults.length > 0" class="english-results">
+            <div class="english-toolbar">
+              <el-checkbox
+                  :model-value="isAllEnglishSelected"
+                  :indeterminate="isEnglishIndeterminate"
+                  @change="handleSelectAllEnglish"
+                  size="small"
+              >
+                全选
+              </el-checkbox>
+              <span class="english-selected-count" v-if="selectedEnglish.length > 0">
+                已选 {{ selectedEnglish.length }} 篇
+              </span>
+            </div>
+            <el-scrollbar height="340px">
+              <el-card
+                  v-for="item in englishResults"
+                  :key="item.id"
+                  shadow="hover"
+                  style="margin-bottom: 10px; cursor: pointer"
+                  @click="selectEnglish(item)"
+                  :class="{ 'selected': selectedEnglish.some(s => s.id === item.id) }"
+                  size="small"
+              >
+                <template #header>
+                  <div style="display: flex; justify-content: space-between; align-items: center">
+                    <div style="display: flex; align-items: center; gap: 6px">
+                      <el-checkbox
+                          :model-value="selectedEnglish.some(s => s.id === item.id)"
+                          @click.stop
+                          @change="selectEnglish(item)"
+                      />
+                      <span style="font-weight: bold; font-size: 13px">{{ item.title }}</span>
+                    </div>
+                    <div>
+                      <el-tag size="small" type="info" style="margin-right: 6px" v-if="item.year">{{ item.year }}</el-tag>
+                      <el-tag size="small" type="info">{{ item.author }}</el-tag>
+                    </div>
+                  </div>
+                </template>
+                <div style="white-space: pre-line; font-size: 12px; line-height: 1.6; margin-bottom: 6px; color: var(--utools-text-secondary)">
+                  {{ item.content.substring(0, 120) }}{{ item.content.length > 120 ? '...' : '' }}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                  <div>
+                    <el-tag
+                        v-for="tag in item.tags.slice(0, 3)"
+                        :key="tag"
+                        size="small"
+                        style="margin-right: 4px"
+                    >{{ tag }}</el-tag>
+                  </div>
+                  <span v-if="item.source" style="font-size: 11px; color: #909399">{{ item.source }}</span>
+                </div>
+              </el-card>
+            </el-scrollbar>
+          </div>
+
+          <div v-else class="english-placeholder">
             <el-empty description="请选择分类或输入关键词搜索"/>
           </div>
         </div>
@@ -1151,6 +1246,12 @@ import {
   type IdiomItem
 } from '@/utils/idiom-service';
 import {
+  ENGLISH_CATEGORIES,
+  fetchEnglishClassics,
+  filterEnglishClassics,
+  type EnglishClassicItem
+} from '@/utils/english-classic-service';
+import {
   fetchAllTimelineEvents,
   filterTimelineEvents,
   mapLibraryEventToArticle,
@@ -1175,9 +1276,9 @@ import TextEditForm from './TextEditForm.vue';
 interface Props {
   modelValue: boolean;
   // 打开时定位到的一级 tab（manual/batch/file/library），默认手动添加；
-  // 兼容旧值：poetry/idiom/timeline/knowledge/pegPacks 视为内置库二级
+  // 兼容旧值：poetry/idiom/english/timeline/knowledge/pegPacks 视为内置库二级
   initialTab?: string;
-  // 内置库 tab 打开时定位到的二级面板（poetry/idiom/timeline/knowledge/pegPacks）
+  // 内置库 tab 打开时定位到的二级面板（poetry/idiom/english/timeline/knowledge/pegPacks）
   initialLibTab?: string;
 }
 
@@ -1193,8 +1294,8 @@ const knowledgeStore = useKnowledgeMemoryStore();
 const palaceStore = useMemoryPalaceStore();
 
 // 内置库二级面板取值
-type LibTab = 'poetry' | 'idiom' | 'timeline' | 'knowledge' | 'pegPacks';
-const LIB_SUB_TABS: LibTab[] = ['poetry', 'idiom', 'timeline', 'knowledge', 'pegPacks'];
+type LibTab = 'poetry' | 'idiom' | 'english' | 'timeline' | 'knowledge' | 'pegPacks';
+const LIB_SUB_TABS: LibTab[] = ['poetry', 'idiom', 'english', 'timeline', 'knowledge', 'pegPacks'];
 
 // 统一的「添加/导入」入口，默认停在内置库 tab；打开时由 initialTab/initialLibTab 定位
 const activeTab = ref('library');
@@ -1227,6 +1328,9 @@ const importButtonText = computed(() => {
     }
     if (libTab.value === 'idiom' && selectedIdioms.value.length > 0) {
       return `导入 ${selectedIdioms.value.length} 条成语`;
+    }
+    if (libTab.value === 'english' && selectedEnglish.value.length > 0) {
+      return `导入 ${selectedEnglish.value.length} 篇英文经典`;
     }
     if (libTab.value === 'timeline') {
       const n = selectedTimelineEvents.value.length + selectedTimelineAi.value.length;
@@ -1606,6 +1710,25 @@ const isAllIdiomsSelected = computed(() => {
 const isIdiomsIndeterminate = computed(() => {
   return selectedIdioms.value.length > 0 && idiomResults.value.some(p => selectedIdioms.value.some(s => s.id === p.id))
       && !isAllIdiomsSelected.value;
+});
+
+// 英文经典
+const englishForm = ref({
+  category: '',
+  keyword: '',
+});
+// 各分类条目缓存（按分类懒加载）
+const englishByCategory = ref<Record<string, EnglishClassicItem[]>>({});
+const englishResults = ref<EnglishClassicItem[]>([]);
+const selectedEnglish = ref<EnglishClassicItem[]>([]);
+const englishLoading = ref(false);
+
+const isAllEnglishSelected = computed(() => {
+  return englishResults.value.length > 0 && englishResults.value.every(p => selectedEnglish.value.some(s => s.id === p.id));
+});
+
+const isEnglishIndeterminate = computed(() => {
+  return selectedEnglish.value.length > 0 && selectedEnglish.value.length < englishResults.value.length;
 });
 
 // ==================== 时间线 ====================
@@ -1990,6 +2113,75 @@ function handleSelectAllIdioms(val: boolean) {
   } else {
     const resultIds = new Set(idiomResults.value.map(p => p.id));
     selectedIdioms.value = selectedIdioms.value.filter(p => !resultIds.has(p.id));
+  }
+}
+
+// ==================== 英文经典 ====================
+
+async function handleEnglishSearch() {
+  const { category, keyword } = englishForm.value;
+  englishLoading.value = true;
+  try {
+    let items: EnglishClassicItem[];
+    if (category) {
+      // 按分类懒加载（分类文件各自独立）
+      if (!englishByCategory.value[category]) {
+        englishByCategory.value[category] = await fetchEnglishClassics(category);
+      }
+      items = englishByCategory.value[category];
+    } else {
+      // 全部：并行加载所有分类
+      const all = await Promise.all(ENGLISH_CATEGORIES.map(c => {
+        if (!englishByCategory.value[c.code]) {
+          return fetchEnglishClassics(c.code).then(list => {
+            englishByCategory.value[c.code] = list;
+            return list;
+          });
+        }
+        return Promise.resolve(englishByCategory.value[c.code]);
+      }));
+      items = all.flat();
+    }
+
+    englishResults.value = filterEnglishClassics(items, keyword);
+
+    if (keyword || category) {
+      if (englishResults.value.length > 0) {
+        ElMessage.success(`找到 ${englishResults.value.length} 篇英文经典`);
+      } else {
+        ElMessage.info('未找到匹配的条目');
+      }
+    }
+  } catch (error) {
+    console.error('英文经典搜索失败:', error);
+    ElMessage.error('搜索失败，请重试');
+  } finally {
+    englishLoading.value = false;
+  }
+}
+
+function selectEnglish(item: EnglishClassicItem) {
+  const index = selectedEnglish.value.findIndex(p => p.id === item.id);
+  if (index > -1) {
+    selectedEnglish.value.splice(index, 1);
+  } else {
+    selectedEnglish.value.push(item);
+  }
+}
+
+function handleSelectAllEnglish(val: boolean) {
+  if (val) {
+    const newSet = new Map<string, EnglishClassicItem>();
+    selectedEnglish.value.forEach(p => newSet.set(p.id, p));
+    englishResults.value.forEach(p => {
+      if (!newSet.has(p.id)) {
+        newSet.set(p.id, p);
+      }
+    });
+    selectedEnglish.value = Array.from(newSet.values());
+  } else {
+    const resultIds = new Set(englishResults.value.map(p => p.id));
+    selectedEnglish.value = selectedEnglish.value.filter(p => !resultIds.has(p.id));
   }
 }
 
@@ -2447,6 +2639,22 @@ async function handleImport() {
             ElMessage.warning('请至少选择一条成语');
             return;
           }
+        } else if (libTab.value === 'english') {
+          if (selectedEnglish.value.length > 0) {
+            articles = selectedEnglish.value.map(it => ({
+              title: it.title,
+              content: it.content,
+              tags: [...it.tags, '英文经典'],
+              author: it.author,
+              source: it.source || ENGLISH_CATEGORIES.find(c => c.code === it.category)?.name || '英文经典',
+              year: typeof it.year === 'number' ? it.year : undefined,
+              category: 'article',
+              language: 'en',
+            }));
+          } else {
+            ElMessage.warning('请至少选择一篇英文经典');
+            return;
+          }
         } else if (libTab.value === 'timeline') {
           const evs: LibraryTimelineEvent[] = timelineSubTab.value === 'ai'
             ? [...selectedTimelineAi.value]
@@ -2524,6 +2732,10 @@ function resetForm() {
   idiomForm.value = {category: '', keyword: ''};
   idiomResults.value = [];
   selectedIdioms.value = [];
+  englishForm.value = {category: '', keyword: ''};
+  englishByCategory.value = {};
+  englishResults.value = [];
+  selectedEnglish.value = [];
   examForm.value = {type: '', subject: '', keyword: '', tags: []};
   examResults.value = [];
   selectedExamItem.value = null;
@@ -2750,6 +2962,38 @@ watch(manualType, (type) => {
 }
 
 .idiom-loading {
+  margin-top: 16px;
+  padding: 0 4px;
+}
+
+.english-results {
+  margin-top: 16px;
+
+  .selected {
+    border: 2px solid var(--utools-primary);
+  }
+}
+
+.english-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.english-selected-count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--utools-primary);
+  font-weight: 500;
+}
+
+.english-placeholder {
+  margin-top: 20px;
+}
+
+.english-loading {
   margin-top: 16px;
   padding: 0 4px;
 }
