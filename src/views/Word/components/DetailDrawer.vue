@@ -309,60 +309,56 @@
     <!--     密钥设置模块 -->
     <h4 class="header">密钥</h4>
     <div class="content">
-      <h5 style="text-align:center;">翻译密钥</h5>
-      <div class="titles">
-        <span class="title">AppId</span>
-        <span class="title">SecretKey</span>
-      </div>
-      <!--      apiKeys-->
-      <div v-for="(item,index) in wordsStore.userApiKeys"
-           :key="index" class="titles" v-show="index !== 'utoolsai' && index !== 'local' && index !== 'hunyuan'">
-        <span class="shorcut-desc">
-          {{ index }} AppKey
-          <!--          type="password"-->
-          <el-input v-model="item.appkey"
-                    @update:model-value="(val: string) => updateKey(index, 'appkey', val)"
-                    style="width: 153px"
-                    :placeholder="'ollama'===index?'http://localhost:11434）':['ollama','deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan'].includes(index)?'使用必需填写':'没有请留空'"
-          />
-        </span>
-        <span class="shorcut-desc">
-          {{ index }} SecretKey
-          <!--          type="password"-->
-          <el-input v-model="item.key"
-                    :disabled="['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan'].includes(index)"
-                    @update:model-value="(val: string) => updateKey(index, 'key', val)"
-                    style="width: 185px"
-                    :placeholder="'ollama'===index?'模型名如（qwen2.5:0.5b）':['ollama', 'deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan'].includes(index)?'无需填写':'没有请留空'"/>
-        </span>
-      </div>
+      <h5 class="key-section-title">翻译密钥</h5>
+      <el-collapse v-model="activeTranslationKeys" class="key-collapse">
+        <el-collapse-item v-for="engine in translationKeyEngines" :key="engine.value" :name="engine.value">
+          <template #title>
+            <span class="key-engine-name">{{ engine.label }}</span>
+            <el-tag size="small" disable-transitions
+                    :type="hasKey(wordsStore.userApiKeys, engine.value) ? 'success' : 'info'">
+              {{ hasKey(wordsStore.userApiKeys, engine.value) ? '已配置' : '未配置' }}
+            </el-tag>
+          </template>
+          <div class="key-field">
+            <label>AppKey</label>
+            <el-input v-model="wordsStore.userApiKeys[engine.value].appkey"
+                      @update:model-value="(val: string) => updateKey(engine.value, 'appkey', val)"
+                      :placeholder="keyPlaceholders(engine.value).appkey" clearable/>
+          </div>
+          <div class="key-field">
+            <label>SecretKey</label>
+            <el-input v-model="wordsStore.userApiKeys[engine.value].key"
+                      :disabled="singleKeyPlatforms.includes(engine.value)"
+                      @update:model-value="(val: string) => updateKey(engine.value, 'key', val)"
+                      :placeholder="keyPlaceholders(engine.value).key" clearable/>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
 
-
-      <h5 style="text-align:center;">ocr图片识别密钥</h5>
-      <div class="titles">
-        <span class="title">AppId</span>
-        <span class="title">SecretKey</span>
-      </div>
-      <!--      apiKeys-->
-      <div v-for="(item,index) in wordsStore.userOcrApiKeys"
-           :key="index" class="titles"
-           v-show="index !== 'local' && index !== 'deepseek' && index !== 'glm'"
-      >
-        <span class="shorcut-desc">
-          {{ index }} AppKey
-          <!--          type="password"-->
-          <el-input v-model="item.appkey"
-                    @update:model-value="(val: string) => updateOcrKey(index, 'appkey', val)"
-                    style="width: 115px" placeholder="请填入id"/>
-        </span>
-        <span class="shorcut-desc">
-          {{ index }} SecretKey
-          <!--          type="password"-->
-          <el-input v-model="item.key"
-                    @update:model-value="(val: string) => updateOcrKey(index, 'key', val)"
-                    style="width: 190px" placeholder="请填入密钥"/>
-        </span>
-      </div>
+      <h5 class="key-section-title">OCR 图片识别密钥</h5>
+      <el-collapse v-model="activeOcrKeys" class="key-collapse">
+        <el-collapse-item v-for="engine in ocrKeyEngines" :key="engine.value" :name="engine.value">
+          <template #title>
+            <span class="key-engine-name">{{ engine.label }}</span>
+            <el-tag size="small" disable-transitions
+                    :type="hasKey(wordsStore.userOcrApiKeys, engine.value) ? 'success' : 'info'">
+              {{ hasKey(wordsStore.userOcrApiKeys, engine.value) ? '已配置' : '未配置' }}
+            </el-tag>
+          </template>
+          <div class="key-field">
+            <label>AppKey</label>
+            <el-input v-model="wordsStore.userOcrApiKeys[engine.value].appkey"
+                      @update:model-value="(val: string) => updateOcrKey(engine.value, 'appkey', val)"
+                      placeholder="AppID / AppKey" clearable/>
+          </div>
+          <div class="key-field">
+            <label>SecretKey</label>
+            <el-input v-model="wordsStore.userOcrApiKeys[engine.value].key"
+                      @update:model-value="(val: string) => updateOcrKey(engine.value, 'key', val)"
+                      placeholder="SecretKey" clearable/>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
     </div>
 
     <el-divider/>
@@ -466,7 +462,6 @@ const props = defineProps({
 })
 // 定义emit事件
 const emit = defineEmits(['update:modelValue', 'save'])
-
 
 // 核心：定义明确的更新方法
 const updateKey = (index: TranslationPlatform, field: 'appkey' | 'key', val: string) => {
@@ -779,6 +774,56 @@ const options = [
     label: 'MiniMax',
   }
 ]
+
+// ===== 密钥配置区块 =====
+// 只需 AppKey、无需 SecretKey 的翻译引擎
+const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan']
+// 不展示密钥配置的引擎（内置免费/本地）
+const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan']
+const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm']
+
+type ApiKeyMap = Record<string, { appkey: string; key: string }>
+
+const engineLabel = (list: { value: string; label: string }[], value: string) =>
+  list.find(o => o.value === value)?.label || value
+
+const translationKeyEngines = computed(() =>
+  Object.keys(wordsStore.userApiKeys)
+    .filter(k => !hiddenTranslationKeyPlatforms.includes(k))
+    .map(k => ({ value: k as TranslationPlatform, label: engineLabel(options, k) }))
+)
+const ocrKeyEngines = computed(() =>
+  Object.keys(wordsStore.userOcrApiKeys)
+    .filter(k => !hiddenOcrKeyPlatforms.includes(k))
+    .map(k => ({ value: k as OcrPlatform, label: engineLabel(ocrOptions, k) }))
+)
+
+const hasKey = (keys: ApiKeyMap, name: string) => !!(keys[name]?.appkey || keys[name]?.key)
+
+const keyPlaceholders = (platform: string) => {
+  if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
+  if (singleKeyPlatforms.includes(platform)) return { appkey: '必填，API Key', key: '该引擎无需 SecretKey' }
+  return { appkey: 'AppID / AppKey', key: 'SecretKey' }
+}
+
+// 折叠面板默认展开：当前选中引擎 + 已配置密钥的引擎
+const initActiveKeys = (engineNames: string[], keys: ApiKeyMap, current: string) => {
+  const active = engineNames.filter(name => hasKey(keys, name))
+  if (current && engineNames.includes(current) && !active.includes(current)) active.unshift(current)
+  return active
+}
+const activeTranslationKeys = ref(
+  initActiveKeys(
+    Object.keys(wordsStore.userApiKeys).filter(k => !hiddenTranslationKeyPlatforms.includes(k)),
+    wordsStore.userApiKeys, wordsStore.currentTranslationPlatform
+  )
+)
+const activeOcrKeys = ref(
+  initActiveKeys(
+    Object.keys(wordsStore.userOcrApiKeys).filter(k => !hiddenOcrKeyPlatforms.includes(k)),
+    wordsStore.userOcrApiKeys, wordsStore.currentOcrPlatform
+  )
+)
 /*{
   value: 'google',
       label: '谷歌',
@@ -1117,6 +1162,49 @@ const handleFileImport = (event: Event) => {
   color: var(--utools-text-tertiary);
   font-size: 12px;
   margin: 8px 0 0 0;
+}
+
+/* 密钥配置折叠面板 */
+.key-section-title {
+  text-align: center;
+  color: var(--utools-text-secondary);
+  margin: 8px 0;
+}
+
+.key-collapse {
+  --el-collapse-header-height: 40px;
+  border-top: none;
+
+  .key-engine-name {
+    font-weight: 600;
+    margin-right: 8px;
+  }
+
+  :deep(.el-collapse-item__header) {
+    gap: 4px;
+  }
+
+  :deep(.el-collapse-item__content) {
+    padding-bottom: 12px;
+  }
+}
+
+.key-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+
+  label {
+    flex: 0 0 72px;
+    text-align: right;
+    color: var(--utools-text-secondary);
+    font-size: 13px;
+  }
+
+  .el-input {
+    flex: 1;
+  }
 }
 
 .focus-setting-section {

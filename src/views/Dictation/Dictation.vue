@@ -126,7 +126,16 @@
       <!-- 空状态 -->
       <div v-if="wordList.length === 0" class="empty-state">
         <el-icon :size="48" color="var(--utools-text-quaternary)"><CircleCheck /></el-icon>
-        <p>当前词库没有待复习单词</p>
+        <template v-if="filterListMode === 0">
+          <p>当前词库没有到期待复习的单词</p>
+          <div v-if="reviewCount > 0 || totalCount > 0" class="empty-actions">
+            <el-button v-if="reviewCount > 0" size="small" @click="filterListMode = 1">
+              练习学习中的 {{ reviewCount }} 个单词
+            </el-button>
+            <el-button size="small" @click="filterListMode = 3">练习全部 {{ totalCount }} 个单词</el-button>
+          </div>
+        </template>
+        <p v-else>当前筛选条件下没有单词</p>
       </div>
     </div>
 
@@ -139,10 +148,10 @@
           {{ currentBankName }}
         </span>
         <el-divider direction="vertical"/>
-        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 0 }]"> 待复习: {{ forgetCount }} </span>
-        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 1 }]"> 已复习: {{ reviewCount }} </span>
-        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 2 }]"> 已记完: {{ rememberCount }} </span>
-        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 3 }]"> 单词总数: {{ totalCount }} </span>
+        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 0 }]" @click="filterListMode = 0"> 待复习: {{ forgetCount }} </span>
+        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 1 }]" @click="filterListMode = 1"> 已复习: {{ reviewCount }} </span>
+        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 2 }]" @click="filterListMode = 2"> 已记完: {{ rememberCount }} </span>
+        <span :class="['stat-item', { 'remembered-highlight': filterListMode === 3 }]" @click="filterListMode = 3"> 单词总数: {{ totalCount }} </span>
       </div>
 
       <div>
@@ -1514,7 +1523,7 @@ function handleDictationKeydown(e: KeyboardEvent) {
   .stat-item {
     padding: 2px 6px;
     border-radius: 4px;
-    cursor: default;
+    cursor: pointer;
     color: var(--utools-text-secondary);
     font-size: 13px;
   }
@@ -1719,6 +1728,13 @@ function handleDictationKeydown(e: KeyboardEvent) {
     p {
       margin-top: 16px;
       font-size: 16px;
+    }
+
+    .empty-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
     }
   }
 }
