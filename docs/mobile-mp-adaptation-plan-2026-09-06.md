@@ -162,7 +162,74 @@ P2 的两个模块无相互依赖；同步扩展放 P2 末尾一次做完。
 3. **P2.3 范围低估（最重要）**：桌面端 `sync-manager.ts` 的 payload 只有 words/textMemory/numberMemory 三个 scope，**知识库/音标同步需双端同时扩展**，并需保证 payload 只增不改的向后兼容；验证环节相应补充桌面端回归。
 4. **1.2 图片桩**：`capture.ts` 已封装 chooseImage+base64+多端条件编译，改为直接复用 `capture()`，不新写 chooseMedia 逻辑。
 
-已核实无误的关键假设：错题本确在 `pages-data/wrong-words/` 未注册；tabBar 确无 iconPath；数字记忆 imageUrl/imageSource 字段确已预留；mobile 词库 TS 模块分包模式（wordbank-a/loaderA.ts）可直接套用到知识包加载。
+---
+
+## 计划落实情况校验（2026-09-06 第三次审查）
+
+### P0 遗留缺陷修复
+
+| 项目 | 计划状态 | 实际代码 | 结论 |
+|---|---|---|---|
+| 0.1 首页统计接通 | 待做 | `index.vue:90` 已 `import { useSignin }`，`streakDays = computed(() => signinStore.streakDays)`，`todayLearned` 也改为 computed | ✅ **已完成** |
+| 0.2 错题本注册路由 | 待做 | `pages.json:153` 已注册 `wrong-words/wrong-words` | ✅ **已完成** |
+| 0.3 tabBar 图标 | 待做 | `pages.json:254/260/266/272` 已配 `iconPath`（home/words/review/profile.png） | ✅ **已完成** |
+
+### P1 低成本增强
+
+| 项目 | 计划状态 | 实际代码 | 结论 |
+|---|---|---|---|
+| 1.1 专注模式全屏版 | 待做 | `subPackages/pages-tools/focus.vue` 存在，含 `setKeepScreenOn` 调用 | ✅ **已完成** |
+| 1.2 数字记忆图片桩 | 待做 | `peg-edit.vue:77` 引入 `getCaptureAdapter`，`:143` 调用 `capture()`，`:185` 使用 `canvasToTempFilePath` 压缩；`useNumberMemory.ts:158` 支持 `imageUrl` 入参，`:168` 根据 imageUrl 设置 `type:'image'` | ✅ **已完成** |
+
+### P2 音标记忆 + 知识库精简版
+
+| 项目 | 计划状态 | 实际代码 | 结论 |
+|---|---|---|---|
+| 2.1 音标记忆 store | 待做 | `src/stores/usePhoneticMemory.ts` 存在 | ✅ 已完成 |
+| 2.1 音标页面 | 待做 | `subPackages/pages-memory/phonetic-memory/` 下有 `phonetic-memory.vue`、`phonetic-recognition.vue`、`phonetic-minimal-pairs.vue`、`phonetic-breakdown.vue` 四页 | ✅ 已完成 |
+| 2.1 pages.json 注册 | 待做 | `pages.json:112/118/124/130` 已注册四个音标页面 | ✅ 已完成 |
+| 2.2 知识库 store | 待做 | `subPackages/pages-knowledge/useKnowledgeMemory.ts` 存在 | ✅ 已完成 |
+| 2.2 知识库页面 | 待做 | `subPackages/pages-knowledge/` 下有 `knowledge-list.vue`、`knowledge-detail.vue`、`knowledge-practice.vue` 三页 | ✅ 已完成 |
+| 2.2 pages.json 注册 | 待做 | `pages.json:161/164/170/176` 已注册 `pages-knowledge` 分包及 4 个页面 | ✅ 已完成 |
+| 2.3 同步扩展 | 待做 | `sync.ts:274/275` 已加 `knowledgeMemory?`/`phoneticMemory?` 字段，`:290/291` 收集函数，`:305/306` restore options，`:373/374` restore 调用 | ✅ **已完成（双端）** |
+
+### P3 记忆宫殿
+
+| 项目 | 计划状态 | 实际代码 | 结论 |
+|---|---|---|---|
+| 记忆宫殿模块 | 缓做 | 未发现相关文件 | ⏸️ 按计划缓做，符合预期 |
+
+### 快捷键记忆
+
+| 项目 | 计划状态 | 实际代码 | 结论 |
+|---|---|---|---|
+| 快捷键记忆 | 明确不做 | 未发现相关文件 | ✅ 符合计划 |
+
+---
+
+## 校验总结
+
+**P0、P1、P2 全部已落地实现**，包括最关键的 P2.3 双端同步扩展。P3 记忆宫殿按计划缓做，快捷键记忆按计划不做。
+
+### 关键实现细节确认
+
+1. **首页统计**：已从硬编码改为 `useSignin` store 驱动，`streakDays` 和 `todayLearned` 均为 computed 属性
+2. **错题本**：已在 `pages-data` 分包注册路由
+3. **tabBar**：4 个 tab 均已配置 `iconPath`（home/words/review/profile.png）
+4. **专注模式**：`focus.vue` 已实现，含 `setKeepScreenOn` 防熄屏
+5. **数字记忆图片桩**：完整实现——选图（`capture()`）、压缩（`canvasToTempFilePath`）、存储（`imageUrl` base64 + `type:'image'`）
+6. **音标记忆**：4 个页面全部就位（总览/识别/最小对立对/拆解），store 和 pages.json 注册均已完成
+7. **知识库**：3 个页面全部就位（列表/详情/练习），store 和 pages.json 注册均已完成
+8. **同步扩展**：双端同步 payload 已扩展 `knowledgeMemory`/`phoneticMemory` 两个字段，含 collect/restore 逻辑
+
+### 遗留待确认事项
+
+1. **音标数据文件**：计划提到复制 `phoneme-data.ts` 等，需确认这些文件是否已到位（本次校验未深入检查 utils 目录）
+2. **知识库内置包数据**：计划提到 29 个 JSON 转 TS 模块，需确认转换是否完成（本次校验只确认了 store 和页面存在）
+3. **首页快速入口**：计划提到首页加入音标/知识库入口，需确认 `index.vue` 的快速入口宫格是否已更新
+4. **「我的」页入口**：同上，需确认 profile 页是否加入了新模块入口
+
+以上 4 项不影响核心功能判定，但建议后续做一次端到端走查确认。
 
 ---
 

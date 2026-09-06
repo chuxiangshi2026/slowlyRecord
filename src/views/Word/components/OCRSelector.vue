@@ -86,6 +86,7 @@ import { ElMessage } from 'element-plus';
 import { useWordsStore } from '@/stores/words.ts';
 import { extractWordAndPhraseCandidates } from '@/utils/text-candidates';
 import { loadLocalPhraseSources } from '@/utils/phrase-sources';
+import { getActiveProfile, isWordText } from '@/utils/language';
 
 // 定义props和emits
 interface Props {
@@ -248,8 +249,8 @@ const removeChineseWords = () => {
   for (const [regionKey, words] of Object.entries(selectedWordsMap.value)) {
     // 过滤掉中文词，只保留英文词
     const englishOnlyWords = words.filter(word => {
-      // 保留英文单词/词组（支持空格、连字符、撇号和数字），筛除中文
-      return /^[a-zA-Z0-9]+(?:[-'\s][a-zA-Z0-9]+)*$/.test(word);
+      // 保留当前语言的单词/词组（支持空格、连字符、撇号和数字），筛除其他语言
+      return word.split(/\s+/).every(w => !w || isWordText(w, getActiveProfile()));
     });
 
     if (englishOnlyWords.length > 0) {

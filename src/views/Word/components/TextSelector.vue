@@ -68,6 +68,7 @@ import { translateWithLocalDictionaryAsync } from '@/utils/local-dictionary';
 import type { TranslationPlatform } from '@/types/words';
 import { extractWordAndPhraseCandidates } from '@/utils/text-candidates';
 import { loadLocalPhraseSources } from '@/utils/phrase-sources';
+import { getActiveLanguage, getActiveProfile, isWordText } from '@/utils/language';
 
 // 定义props和emits
 interface Props {
@@ -128,7 +129,7 @@ const processTextContent = async (newText: string) => {
       } else {
         // 使用指定的翻译平台进行翻译
         const { translateWithPlatform } = await import('@/utils/translation-api');
-        const result = await translateWithPlatform(newText.trim(), currentPlatform as TranslationPlatform);
+        const result = await translateWithPlatform(newText.trim(), currentPlatform as TranslationPlatform, getActiveLanguage());
         console.log('[TextSelector] 平台翻译结果:', result);
         if (result.success && result.explains) {
           translatedText.value = result.explains;
@@ -200,13 +201,13 @@ const clearSelection = () => {
   selectedWords.value = [];
 };
 
-// 移除非英文单词（保留选中的英文单词）
+// 移除非当前语言单词（保留选中的有效单词/词组，字符集按词库语言判定）
 const removeNonEnglishWords = () => {
+  const profile = getActiveProfile();
   selectedWords.value = selectedWords.value.filter(word => {
-    // 保留英文单词/词组（支持空格、连字符、撇号和数字）
-    return /^[a-zA-Z0-9]+(?:[-'\s][a-zA-Z0-9]+)*$/.test(word);
+    return word.split(/\s+/).every(w => !w || isWordText(w, profile));
   });
-  ElMessage.info('已筛选出英文单词');
+  ElMessage.info('已筛选出有效单词');
 };
 
 // 添加选中的单词到单词列表

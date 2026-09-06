@@ -71,6 +71,7 @@
 </template>
 
 <script setup lang="ts">
+import { getPronunciationUrlSync } from '@/utils/translation-api';
 import type {Word} from "@/types/words";
 import { analyzeWord, getComponentClass, generateDetailedTooltip, type WordComponent } from "@/utils/word-analysis";
 import { isPhrase } from "@/utils/text-utils";
@@ -427,10 +428,10 @@ const play = async () => {
         console.log('Edge TTS 失败:', error);
       }
 
-      // 优先级2: 有道在线 TTS
+      // 优先级2: 有道在线 TTS（仅英语；其他语言跳过，直接走 Web Speech）
       console.log('Edge TTS 不可用，尝试有道 TTS...');
-      const youdaoUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(props.word.text)}&type=1`;
-      const youdaoResult = await downloadAndStoreAudio(youdaoUrl, wordId, false);
+      const youdaoUrl = getPronunciationUrlSync(props.word.text);
+      const youdaoResult = youdaoUrl ? await downloadAndStoreAudio(youdaoUrl, wordId, false) : null;
 
       if (youdaoResult) {
         audioSrc = youdaoResult.dataUrl;
