@@ -32,3 +32,8 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# 临时调试脚本与工具目录
+_debug*.cjs
+.zcode/
+
