@@ -31,6 +31,8 @@ function extractInlineSvgs(htmlPath, outDir) {
   let count = 0;
   while ((m = re.exec(html))) {
     const [, id, title, svg] = m;
+    // 跳过根容器等无意义 id（其内部第一个 svg 并非该元素的图标）
+    if (id === 'app') continue;
     let content = svg;
     if (!/xmlns=/.test(content)) {
       content = content.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');

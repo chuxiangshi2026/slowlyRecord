@@ -156,7 +156,7 @@
 
       <div>
         <el-tooltip class="box-item" effect="dark" content="返回单词列表" placement="top" popper-class="small-tooltip">
-          <el-icon class="footer-icon" :size="18" @click="goToWordList"><Back /></el-icon>
+          <el-icon class="footer-icon" :size="18" @click="goToWordList"><ListIcon /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="自动发音" placement="top" popper-class="small-tooltip">
           <el-icon class="footer-icon" :class="{ active: options.autoPlay }" :size="18" @click="options.autoPlay = !options.autoPlay"><SpeakerIcon /></el-icon>
@@ -304,10 +304,11 @@
 import { ref, computed, nextTick, onMounted, watch, shallowRef } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage, ElMessageBox, ElLoading } from 'element-plus';
-import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, Download, Upload, View, Setting, Back, Microphone, Edit } from '@element-plus/icons-vue';
+import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, Download, Upload, View, Setting, Microphone, Edit } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
 import SpeakerIcon from '@/components/icons/SpeakerIcon.vue';
+import ListIcon from '@/components/icons/ListIcon.vue';
 import { useWordsStore } from '@/stores/words';
 import type { Word } from '@/types/words';
 import { getCurrentWordBankId, getAllWordBanks, type WordBank, createWordBank as createNewWordBank, deleteWordBank as removeWordBank, importFromBuiltinWordBank } from '@/utils/wordbank-manager';
