@@ -164,7 +164,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           menu: false,
           title: '字母映射',
-          icon: 'Grid',
+          icon: 'TableIcon',
         },
       },
       {

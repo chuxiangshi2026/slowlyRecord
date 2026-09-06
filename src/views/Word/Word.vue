@@ -355,7 +355,7 @@
         <el-icon class="footer-icon" :size="18" @click="goToDictation"><EditPen /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="字母映射" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="goToLetterMemory"><Grid /></el-icon>
+        <el-icon class="footer-icon" :size="18" @click="goToLetterMemory"><TableIcon /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="音标学习" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="goToPhoneticMemory"><Microphone /></el-icon>
@@ -428,11 +428,11 @@ import {
   Download,
   Upload,
   EditPen,
-  Grid,
   Setting
 } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
+import TableIcon from '@/components/icons/TableIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';

@@ -147,19 +147,19 @@
 
       <div>
         <el-tooltip class="box-item" effect="dark" content="返回单词列表" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-left footer-icon" @click="goToWordList"></i>
+          <el-icon class="footer-icon" :size="18" @click="goToWordList"><Back /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="自动发音" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-player footer-icon" :class="{ active: options.autoPlay }" @click="options.autoPlay = !options.autoPlay"></i>
+          <el-icon class="footer-icon" :class="{ active: options.autoPlay }" :size="18" @click="options.autoPlay = !options.autoPlay"><SpeakerIcon /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="音标" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-notebook-1 footer-icon" :class="{ active: options.showPhonetic }" @click="options.showPhonetic = !options.showPhonetic"></i>
+          <el-icon class="footer-icon" :class="{ active: options.showPhonetic }" :size="18" @click="options.showPhonetic = !options.showPhonetic"><Microphone /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="释义" placement="top" popper-class="small-tooltip">
           <el-icon class="footer-icon" :class="{ active: options.showMeaning }" :size="18" @click="options.showMeaning = !options.showMeaning"><View /></el-icon>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="半提示" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-edit footer-icon" :class="{ active: partialMode }" @click="partialMode = !partialMode"></i>
+          <el-icon class="footer-icon" :class="{ active: partialMode }" :size="18" @click="partialMode = !partialMode"><Edit /></el-icon>
         </el-tooltip>
         <el-divider direction="vertical"/>
         <!-- 导入下拉菜单 -->
@@ -295,9 +295,10 @@
 import { ref, computed, nextTick, onMounted, watch, shallowRef } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage, ElMessageBox, ElLoading } from 'element-plus';
-import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, Download, Upload, View, Setting } from '@element-plus/icons-vue';
+import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, Download, Upload, View, Setting, Back, Microphone, Edit } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
+import SpeakerIcon from '@/components/icons/SpeakerIcon.vue';
 import { useWordsStore } from '@/stores/words';
 import type { Word } from '@/types/words';
 import { getCurrentWordBankId, getAllWordBanks, type WordBank, createWordBank as createNewWordBank, deleteWordBank as removeWordBank, importFromBuiltinWordBank } from '@/utils/wordbank-manager';
