@@ -417,8 +417,8 @@ async function handlePaste(event: ClipboardEvent) {
       try {
         const base64 = await blobToBase64(blob)
         // 使用 capture 适配器的 OCR 功能
-        const { getCaptureAdapter } = await import('@/adapters/capture')
-        const adapter = getCaptureAdapter()
+        const { getCaptureAdapterAsync } = await import('@/adapters/capture')
+        const adapter = await getCaptureAdapterAsync()
         const ocrResults = await adapter.ocr(base64)
         if (ocrResults.length > 0) {
           inputText.value = ocrResults.map(r => r.text).join('\n')

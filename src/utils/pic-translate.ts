@@ -201,7 +201,7 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 }
 
 // 百度OCR翻译实现
-async function ocrTranslateBaidu(
+export async function ocrTranslateBaidu(
     base64: string,
     apiKey: string,
     secretKey: string
@@ -414,7 +414,7 @@ function alisign(sk: string, str: string) {
 }
 
 // 腾讯图片翻译实现
-async function ocrTranslateTencent(
+export async function ocrTranslateTencent(
     base64: string,
     secretId: string,
     secretKey: string
@@ -1298,7 +1298,7 @@ ${workerCode}
 }
 
 
-async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
+export async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
     let worker: any = null;
     const ocrLang = getActiveProfile().ocrLang;
     // const startTime = Date.now();
