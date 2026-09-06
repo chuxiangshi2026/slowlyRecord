@@ -1,0 +1,854 @@
+[
+  {
+    "word": "To be, or not to be, that is the question.",
+    "explains": "生存还是毁灭，这是个问题。——莎士比亚"
+  },
+  {
+    "word": "All the world's a stage, and all the men and women merely players.",
+    "explains": "全世界是一个舞台，所有的男男女女不过是演员。——莎士比亚"
+  },
+  {
+    "word": "There is nothing either good or bad, but thinking makes it so.",
+    "explains": "世事本无好坏，思想使然。——莎士比亚"
+  },
+  {
+    "word": "The course of true love never did run smooth.",
+    "explains": "真爱之路从来不平坦。——莎士比亚"
+  },
+  {
+    "word": "What's in a name? That which we call a rose by any other word would smell as sweet.",
+    "explains": "名字算什么？玫瑰换个名字，依然芬芳。——莎士比亚"
+  },
+  {
+    "word": "The fault, dear Brutus, is not in our stars, but in ourselves.",
+    "explains": "错不在命运，而在我们自己。——莎士比亚"
+  },
+  {
+    "word": "Brevity is the soul of wit.",
+    "explains": "简洁是智慧的灵魂。——莎士比亚"
+  },
+  {
+    "word": "Some are born great, some achieve greatness, and some have greatness thrust upon them.",
+    "explains": "有人天生伟大，有人成就伟大，有人被迫伟大。——莎士比亚"
+  },
+  {
+    "word": "Love all, trust a few, do wrong to none.",
+    "explains": "爱所有人，信任少数人，不负任何人。——莎士比亚"
+  },
+  {
+    "word": "Hell is empty and all the devils are here.",
+    "explains": "地狱空了，群魔都在人间。——莎士比亚"
+  },
+  {
+    "word": "We know what we are, but know not what we may be.",
+    "explains": "我们知道自己现在是什么样的人，却不知道可能成为什么样的人。——莎士比亚"
+  },
+  {
+    "word": "Cowards die many times before their deaths; the valiant never taste of death but once.",
+    "explains": "懦夫在未死以前已死过多次，勇士一生只死一次。——莎士比亚"
+  },
+  {
+    "word": "Knowledge is power.",
+    "explains": "知识就是力量。——培根"
+  },
+  {
+    "word": "Reading makes a full man; conference a ready man; and writing an exact man.",
+    "explains": "读书使人充实，交谈使人机敏，写作使人严谨。——培根"
+  },
+  {
+    "word": "A wise man will make more opportunities than he finds.",
+    "explains": "智者创造的机会比找到的更多。——培根"
+  },
+  {
+    "word": "Some books are to be tasted, others to be swallowed, and some few to be chewed and digested.",
+    "explains": "书有可浅尝者，有可吞食者，少数则需咀嚼消化。——培根"
+  },
+  {
+    "word": "Imagination is more important than knowledge.",
+    "explains": "想象力比知识更重要。——爱因斯坦"
+  },
+  {
+    "word": "Life is like riding a bicycle. To keep your balance, you must keep moving.",
+    "explains": "人生就像骑自行车，要保持平衡就得不断前进。——爱因斯坦"
+  },
+  {
+    "word": "The important thing is not to stop questioning. Curiosity has its own reason for existing.",
+    "explains": "重要的是永不停止追问，好奇心自有其存在的理由。——爱因斯坦"
+  },
+  {
+    "word": "Try not to become a man of success, but rather try to become a man of value.",
+    "explains": "不要努力成为一个成功的人，要努力成为有价值的人。——爱因斯坦"
+  },
+  {
+    "word": "Insanity is doing the same thing over and over again and expecting different results.",
+    "explains": "疯狂就是重复做同一件事，却期待不同的结果。——爱因斯坦"
+  },
+  {
+    "word": "Everything should be made as simple as possible, but not simpler.",
+    "explains": "凡事都应尽可能简单，但不能过于简单。——爱因斯坦"
+  },
+  {
+    "word": "Great spirits have always encountered violent opposition from mediocre minds.",
+    "explains": "伟大的心灵总是遭到平庸之见的激烈反对。——爱因斯坦"
+  },
+  {
+    "word": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    "explains": "成功不是终点，失败也不是终结，重要的是继续前进的勇气。——丘吉尔"
+  },
+  {
+    "word": "We shall fight on the beaches, we shall fight on the landing grounds, we shall never surrender.",
+    "explains": "我们将在海滩上战斗，在登陆场上战斗……我们永不投降。——丘吉尔"
+  },
+  {
+    "word": "If you're going through hell, keep going.",
+    "explains": "如果你正经历地狱，那就继续往前走。——丘吉尔"
+  },
+  {
+    "word": "A pessimist sees the difficulty in every opportunity; an optimist sees the opportunity in every difficulty.",
+    "explains": "悲观者从每个机遇中看到困难，乐观者从每个困难中看到机遇。——丘吉尔"
+  },
+  {
+    "word": "Never, never, never give up.",
+    "explains": "永不、永不、永不放弃。——丘吉尔"
+  },
+  {
+    "word": "History is written by the victors.",
+    "explains": "历史由胜利者书写。——丘吉尔"
+  },
+  {
+    "word": "You have enemies? Good. That means you've stood up for something, sometime in your life.",
+    "explains": "你有敌人？很好，这说明你一生中曾为某些事挺身而出。——丘吉尔"
+  },
+  {
+    "word": "Government of the people, by the people, for the people, shall not perish from the earth.",
+    "explains": "民有、民治、民享的政府永不灭亡。——林肯"
+  },
+  {
+    "word": "Whatever you are, be a good one.",
+    "explains": "无论你做什么，都要做一个出色的。——林肯"
+  },
+  {
+    "word": "Nearly all men can stand adversity, but if you want to test a man's character, give him power.",
+    "explains": "几乎所有人都能承受逆境，但要考验一个人的品格，就给他权力。——林肯"
+  },
+  {
+    "word": "I am a slow walker, but I never walk back.",
+    "explains": "我走得很慢，但我从不后退。——林肯"
+  },
+  {
+    "word": "Those who deny freedom to others deserve it not for themselves.",
+    "explains": "剥夺他人自由的人，自己也不配拥有自由。——林肯"
+  },
+  {
+    "word": "And in the end, it's not the years in your life that count. It's the life in your years.",
+    "explains": "归根结底，重要的不是岁月的数量，而是岁月中的生命质量。——林肯"
+  },
+  {
+    "word": "The ballot is stronger than the bullet.",
+    "explains": "选票比子弹更有力量。——林肯"
+  },
+  {
+    "word": "Life is either a daring adventure or nothing at all.",
+    "explains": "人生要么是一场大胆的冒险，要么就什么都不是。——海伦·凯勒"
+  },
+  {
+    "word": "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
+    "explains": "世界上最美好的东西看不见也摸不着，必须用心去感受。——海伦·凯勒"
+  },
+  {
+    "word": "Alone we can do so little; together we can do so much.",
+    "explains": "一个人能做的事太少，团结起来能做的事太多。——海伦·凯勒"
+  },
+  {
+    "word": "Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.",
+    "explains": "乐观是通向成就的信念，没有希望和信心就一事无成。——海伦·凯勒"
+  },
+  {
+    "word": "Although the world is full of suffering, it is full also of the overcoming of it.",
+    "explains": "世界充满苦难，但也充满战胜苦难的力量。——海伦·凯勒"
+  },
+  {
+    "word": "The two most important days in your life are the day you are born and the day you find out why.",
+    "explains": "人生最重要的两天，是你出生的那天，和你明白自己为何而生的那天。——马克·吐温"
+  },
+  {
+    "word": "If you tell the truth, you don't have to remember anything.",
+    "explains": "如果你说实话，就不必费力去记住任何事。——马克·吐温"
+  },
+  {
+    "word": "Whenever you find yourself on the side of the majority, it is time to pause and reflect.",
+    "explains": "每当你发现自己站在多数人一边时，就该停下来反思。——马克·吐温"
+  },
+  {
+    "word": "Kindness is the language which the deaf can hear and the blind can see.",
+    "explains": "善良是聋子能听见、瞎子能看见的语言。——马克·吐温"
+  },
+  {
+    "word": "Don't go around saying the world owes you a living. The world owes you nothing. It was here first.",
+    "explains": "别到处说世界欠你一个生计，世界什么都不欠你，它比你先到。——马克·吐温"
+  },
+  {
+    "word": "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.",
+    "explains": "二十年后，让你更失望的不是做过的事，而是没做过的事。——马克·吐温"
+  },
+  {
+    "word": "We are all in the gutter, but some of us are looking at the stars.",
+    "explains": "我们都生活在阴沟里，但仍有人仰望星空。——王尔德"
+  },
+  {
+    "word": "Be yourself; everyone else is already taken.",
+    "explains": "做你自己，因为别人都有人做了。——王尔德"
+  },
+  {
+    "word": "Experience is simply the name we give our mistakes.",
+    "explains": "经验不过是我们给错误起的名字。——王尔德"
+  },
+  {
+    "word": "To live is the rarest thing in the world. Most people exist, that is all.",
+    "explains": "生活是世上最稀罕的事，大多数人只是活着而已。——王尔德"
+  },
+  {
+    "word": "Always forgive your enemies; nothing annoys them so much.",
+    "explains": "永远要原谅你的敌人，没有什么比这更让他们恼火。——王尔德"
+  },
+  {
+    "word": "I can resist everything except temptation.",
+    "explains": "除了诱惑，我什么都能抵抗。——王尔德"
+  },
+  {
+    "word": "If you shed tears when you miss the sun, you also miss the stars.",
+    "explains": "如果你因错过太阳而流泪，你也会错过群星。——泰戈尔"
+  },
+  {
+    "word": "The world has kissed my soul with its pain, asking for its return in songs.",
+    "explains": "世界以痛吻我，要我报之以歌。——泰戈尔"
+  },
+  {
+    "word": "Let life be beautiful like summer flowers and death like autumn leaves.",
+    "explains": "生如夏花之绚烂，死如秋叶之静美。——泰戈尔"
+  },
+  {
+    "word": "What you are you do not see, what you see is your shadow.",
+    "explains": "你看不见自己，你所看到的只是自己的影子。——泰戈尔"
+  },
+  {
+    "word": "The butterfly counts not months but moments, and has time enough.",
+    "explains": "蝴蝶不数月份，它只数瞬间，而它的时间足够。——泰戈尔"
+  },
+  {
+    "word": "You can't cross the sea merely by standing and staring at the water.",
+    "explains": "仅仅站着凝望着海水，是无法渡过大海的。——泰戈尔"
+  },
+  {
+    "word": "Faith is the bird that feels the light and sings when the dawn is still dark.",
+    "explains": "信念是黎明尚黑时，就已感到光明而歌唱的鸟。——泰戈尔"
+  },
+  {
+    "word": "Genius is one percent inspiration and ninety-nine percent perspiration.",
+    "explains": "天才是百分之一的灵感加百分之九十九的汗水。——爱迪生"
+  },
+  {
+    "word": "I have not failed. I've just found ten thousand ways that won't work.",
+    "explains": "我没有失败，我只是发现了一万种行不通的方法。——爱迪生"
+  },
+  {
+    "word": "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.",
+    "explains": "我们最大的弱点在于放弃，最可靠的成办法就是再试一次。——爱迪生"
+  },
+  {
+    "word": "Many of life's failures are people who did not realize how close they were to success when they gave up.",
+    "explains": "许多失败者，是因为放弃时不知道自己离成功有多近。——爱迪生"
+  },
+  {
+    "word": "There is no substitute for hard work.",
+    "explains": "没有什么能替代勤奋。——爱迪生"
+  },
+  {
+    "word": "If I have seen further it is by standing on the shoulders of giants.",
+    "explains": "如果说我看得更远，那是因为站在巨人的肩膀上。——牛顿"
+  },
+  {
+    "word": "I can calculate the motion of heavenly bodies, but not the madness of people.",
+    "explains": "我能计算天体的运行，却无法计算人们的疯狂。——牛顿"
+  },
+  {
+    "word": "An investment in knowledge pays the best interest.",
+    "explains": "对知识的投资回报最高。——富兰克林"
+  },
+  {
+    "word": "Lost time is never found again.",
+    "explains": "失去的时间再也找不回来。——富兰克林"
+  },
+  {
+    "word": "Tell me and I forget. Teach me and I remember. Involve me and I learn.",
+    "explains": "告诉我，我会忘记；教给我，我会记住；让我参与，我才会学会。——富兰克林"
+  },
+  {
+    "word": "Well done is better than well said.",
+    "explains": "说得好不如做得好。——富兰克林"
+  },
+  {
+    "word": "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+    "explains": "与我们的内心相比，身后的事和眼前的事都微不足道。——爱默生"
+  },
+  {
+    "word": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+    "explains": "不要沿着现成的路走，要在无路之处走出一条路来。——爱默生"
+  },
+  {
+    "word": "Life is a journey, not a destination.",
+    "explains": "人生是一段旅程，而不是终点。——爱默生"
+  },
+  {
+    "word": "Go confidently in the direction of your dreams. Live the life you have imagined.",
+    "explains": "自信地朝着梦想的方向前进，过你想象中的人生。——梭罗"
+  },
+  {
+    "word": "The mass of men lead lives of quiet desperation.",
+    "explains": "大多数人过着平静的绝望生活。——梭罗"
+  },
+  {
+    "word": "The price of anything is the amount of life you exchange for it.",
+    "explains": "任何东西的价格，是你用生命交换它的那部分。——梭罗"
+  },
+  {
+    "word": "That which does not kill us makes us stronger.",
+    "explains": "凡不能杀死我们的，使我们更强大。——尼采"
+  },
+  {
+    "word": "He who fights with monsters should look to it that he himself does not become a monster.",
+    "explains": "与怪物战斗的人，应当小心自己不要成为怪物。——尼采"
+  },
+  {
+    "word": "Without music, life would be a mistake.",
+    "explains": "没有音乐，人生将是一种错误。——尼采"
+  },
+  {
+    "word": "Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it.",
+    "explains": "无论你能做什么，或梦想能做什么，开始去做吧，勇气中蕴藏着天才、力量和魔力。——歌德"
+  },
+  {
+    "word": "Knowing is not enough; we must apply. Willing is not enough; we must do.",
+    "explains": "光知道还不够，我们必须运用；光有意愿还不够，我们必须行动。——歌德"
+  },
+  {
+    "word": "Even the darkest night will end and the sun will rise.",
+    "explains": "再漫长的黑夜也会过去，太阳终将升起。——雨果"
+  },
+  {
+    "word": "The supreme happiness of life is the conviction that we are loved.",
+    "explains": "生活中最大的幸福，是坚信有人爱着我们。——雨果"
+  },
+  {
+    "word": "I disapprove of what you say, but I will defend to the death your right to say it.",
+    "explains": "我不同意你的观点，但我誓死捍卫你说话的权利。——伏尔泰"
+  },
+  {
+    "word": "Man is born free, and everywhere he is in chains.",
+    "explains": "人生而自由，却无往不在枷锁之中。——卢梭"
+  },
+  {
+    "word": "The unexamined life is not worth living.",
+    "explains": "未经省察的人生不值得过。——苏格拉底"
+  },
+  {
+    "word": "I know that I know nothing.",
+    "explains": "我唯一知道的就是我一无所知。——苏格拉底"
+  },
+  {
+    "word": "The beginning is the most important part of the work.",
+    "explains": "开始是工作中最重要的部分。——柏拉图"
+  },
+  {
+    "word": "Happiness depends upon ourselves.",
+    "explains": "幸福取决于我们自己。——亚里士多德"
+  },
+  {
+    "word": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+    "explains": "我们反复做的事情造就了我们，因此卓越不是行为，而是习惯。——亚里士多德"
+  },
+  {
+    "word": "You have power over your mind - not outside events. Realize this, and you will find strength.",
+    "explains": "你能掌控自己的内心，而不是外界之事，明白这一点，你就会找到力量。——马可·奥勒留"
+  },
+  {
+    "word": "The happiness of your life depends upon the quality of your thoughts.",
+    "explains": "人生的幸福取决于思想的质量。——马可·奥勒留"
+  },
+  {
+    "word": "It is not because things are difficult that we do not dare; it is because we do not dare that they are difficult.",
+    "explains": "不是因为事情难我们不敢做，而是因为我们不敢做，事情才难。——塞涅卡"
+  },
+  {
+    "word": "Luck is what happens when preparation meets opportunity.",
+    "explains": "机遇撞上准备，就是运气。——塞涅卡"
+  },
+  {
+    "word": "It's not what happens to you, but how you react to it that matters.",
+    "explains": "重要的不是发生在你身上的事，而是你如何应对。——爱比克泰德"
+  },
+  {
+    "word": "The die is cast.",
+    "explains": "骰子已经掷下（木已成舟）。——凯撒"
+  },
+  {
+    "word": "I came, I saw, I conquered.",
+    "explains": "我来，我见，我征服。——凯撒"
+  },
+  {
+    "word": "The only thing we have to fear is fear itself.",
+    "explains": "我们唯一需要害怕的，就是害怕本身。——富兰克林·罗斯福"
+  },
+  {
+    "word": "The only limit to our realization of tomorrow is our doubts of today.",
+    "explains": "实现明天的唯一限制，是今天的疑虑。——富兰克林·罗斯福"
+  },
+  {
+    "word": "Do what you can, with what you have, where you are.",
+    "explains": "在你所在之处，用你所有之物，做你所能做之事。——西奥多·罗斯福"
+  },
+  {
+    "word": "Believe you can and you're halfway there.",
+    "explains": "相信自己能做到，你就已经成功了一半。——西奥多·罗斯福"
+  },
+  {
+    "word": "The future belongs to those who believe in the beauty of their dreams.",
+    "explains": "未来属于那些相信自己梦想之美的人。——埃莉诺·罗斯福"
+  },
+  {
+    "word": "No one can make you feel inferior without your consent.",
+    "explains": "没有你的同意，没人能让你感到自卑。——埃莉诺·罗斯福"
+  },
+  {
+    "word": "Ask not what your country can do for you; ask what you can do for your country.",
+    "explains": "不要问国家能为你做什么，要问你能为国家做什么。——约翰·肯尼迪"
+  },
+  {
+    "word": "Change is the law of life. And those who look only to the past or present are certain to miss the future.",
+    "explains": "变化是生活的法则，只看过去和现在的人，必将错过未来。——约翰·肯尼迪"
+  },
+  {
+    "word": "I have a dream.",
+    "explains": "我有一个梦想。——马丁·路德·金"
+  },
+  {
+    "word": "The time is always right to do what is right.",
+    "explains": "做正确的事，永远都不算晚。——马丁·路德·金"
+  },
+  {
+    "word": "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.",
+    "explains": "黑暗不能驱散黑暗，唯有光明可以；仇恨不能驱散仇恨，唯有爱可以。——马丁·路德·金"
+  },
+  {
+    "word": "Education is the most powerful weapon which you can use to change the world.",
+    "explains": "教育是改变世界的最有力武器。——曼德拉"
+  },
+  {
+    "word": "It always seems impossible until it's done.",
+    "explains": "事情在完成之前，看起来总是不可能。——曼德拉"
+  },
+  {
+    "word": "I never lose. I either win or learn.",
+    "explains": "我从不认输，要么胜利，要么学到东西。——曼德拉"
+  },
+  {
+    "word": "Be the change that you wish to see in the world.",
+    "explains": "成为你希望在世界上看到的改变。——甘地"
+  },
+  {
+    "word": "An eye for an eye only ends up making the whole world blind.",
+    "explains": "以眼还眼，只会让世界双目失明。——甘地"
+  },
+  {
+    "word": "The weak can never forgive. Forgiveness is the attribute of the strong.",
+    "explains": "弱者从不宽恕，宽恕是强者的特质。——甘地"
+  },
+  {
+    "word": "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+    "explains": "像明天就要死去一样生活，像永远活着一样学习。——甘地"
+  },
+  {
+    "word": "Not all of us can do great things. But we can do small things with great love.",
+    "explains": "我们并非都能做伟大的事，但我们可以用伟大的爱做小事。——特蕾莎修女"
+  },
+  {
+    "word": "Kind words can be short and easy to speak, but their echoes are truly endless.",
+    "explains": "善意的话可能简短易说，但它们的回响永无止境。——特蕾莎修女"
+  },
+  {
+    "word": "If you judge people, you have no time to love them.",
+    "explains": "你若评判别人，就没有时间去爱他们。——特蕾莎修女"
+  },
+  {
+    "word": "Stay hungry, stay foolish.",
+    "explains": "求知若饥，虚心若愚。——史蒂夫·乔布斯"
+  },
+  {
+    "word": "Your time is limited, so don't waste it living someone else's life.",
+    "explains": "你的时间有限，不要浪费在过别人的生活上。——史蒂夫·乔布斯"
+  },
+  {
+    "word": "The only way to do great work is to love what you do.",
+    "explains": "成就伟大工作的唯一途径，是热爱你所做的事。——史蒂夫·乔布斯"
+  },
+  {
+    "word": "If you can dream it, you can do it.",
+    "explains": "你能梦想到，就能做到。——华特·迪士尼"
+  },
+  {
+    "word": "The way to get started is to quit talking and begin doing.",
+    "explains": "开始的方法就是停止空谈，付诸行动。——华特·迪士尼"
+  },
+  {
+    "word": "Whether you think you can or you think you can't, you're right.",
+    "explains": "无论你认为自己行还是不行，你都是对的。——亨利·福特"
+  },
+  {
+    "word": "Failure is simply the opportunity to begin again, this time more intelligently.",
+    "explains": "失败不过是重新开始的机会，而且会更明智。——亨利·福特"
+  },
+  {
+    "word": "Price is what you pay. Value is what you get.",
+    "explains": "价格是你付出的，价值是你得到的。——巴菲特"
+  },
+  {
+    "word": "Someone's sitting in the shade today because someone planted a tree a long time ago.",
+    "explains": "今天有人能坐在树荫下，是因为很久以前有人种了一棵树。——巴菲特"
+  },
+  {
+    "word": "Success is a lousy teacher. It seduces smart people into thinking they can't lose.",
+    "explains": "成功是个糟糕的老师，它诱使聪明人以为自己不会输。——比尔·盖茨"
+  },
+  {
+    "word": "If you are born poor it's not your mistake, but if you die poor it's your mistake.",
+    "explains": "出身贫穷不是你的错，终老贫穷才是。——比尔·盖茨"
+  },
+  {
+    "word": "The world breaks everyone, and afterward, many are strong at the broken places.",
+    "explains": "世界击倒每一个人，之后许多人在破碎处变得更坚强。——海明威"
+  },
+  {
+    "word": "Courage is grace under pressure.",
+    "explains": "勇气是在压力之下的从容。——海明威"
+  },
+  {
+    "word": "There is nothing noble in being superior to your fellow man; true nobility is being superior to your former self.",
+    "explains": "优于别人并不高贵，真正的高贵是优于过去的自己。——海明威"
+  },
+  {
+    "word": "For what it's worth: it's never too late to be whoever you want to be.",
+    "explains": "只要你想，成为你想成为的人，永远都不晚。——菲茨杰拉德"
+  },
+  {
+    "word": "So we beat on, boats against the current, borne back ceaselessly into the past.",
+    "explains": "于是我们继续奋力向前，逆水行舟，被不断地向后推回过去。——菲茨杰拉德"
+  },
+  {
+    "word": "Two roads diverged in a wood, and I took the one less traveled by, and that has made all the difference.",
+    "explains": "树林里分出两条路，我选择了人迹罕至的那条，这造就了一切不同。——罗伯特·弗罗斯特"
+  },
+  {
+    "word": "In three words I can sum up everything I've learned about life: it goes on.",
+    "explains": "关于人生，我用三个字就能总结：它继续。——罗伯特·弗罗斯特"
+  },
+  {
+    "word": "The best way out is always through.",
+    "explains": "最好的出路永远是穿过去。——罗伯特·弗罗斯特"
+  },
+  {
+    "word": "Keep your face always toward the sunshine - and shadows will fall behind you.",
+    "explains": "始终面向阳光，阴影就会落在你身后。——惠特曼"
+  },
+  {
+    "word": "Hope is the thing with feathers that perches in the soul.",
+    "explains": "希望是长着羽毛的东西，栖息在灵魂深处。——狄金森"
+  },
+  {
+    "word": "All that we see or seem is but a dream within a dream.",
+    "explains": "我们所见或所感的一切，不过是一场梦中梦。——爱伦·坡"
+  },
+  {
+    "word": "Life isn't about finding yourself. Life is about creating yourself.",
+    "explains": "人生不是发现自己，而是创造自己。——萧伯纳"
+  },
+  {
+    "word": "We don't stop playing because we grow old; we grow old because we stop playing.",
+    "explains": "我们不是因为变老才停止玩耍，而是因为停止玩耍才变老。——萧伯纳"
+  },
+  {
+    "word": "It was the best of times, it was the worst of times.",
+    "explains": "这是最好的时代，也是最坏的时代。——狄更斯"
+  },
+  {
+    "word": "No one is useless in this world who lightens the burdens of another.",
+    "explains": "能减轻他人负担的人，在这世上绝非无用。——狄更斯"
+  },
+  {
+    "word": "There is no charm equal to tenderness of heart.",
+    "explains": "没有什么魅力比得上内心的温柔。——简·奥斯汀"
+  },
+  {
+    "word": "I am no bird; and no net ensnares me.",
+    "explains": "我不是鸟，也没有任何网能困住我。——夏洛蒂·勃朗特"
+  },
+  {
+    "word": "A thing of beauty is a joy forever.",
+    "explains": "美的事物是永恒的喜悦。——济慈"
+  },
+  {
+    "word": "Heard melodies are sweet, but those unheard are sweeter.",
+    "explains": "听到的旋律是甜美的，但听不到的旋律更甜美。——济慈"
+  },
+  {
+    "word": "If winter comes, can spring be far behind?",
+    "explains": "冬天来了，春天还会远吗？——雪莱"
+  },
+  {
+    "word": "She walks in beauty, like the night.",
+    "explains": "她走在美的光影里，像夜晚。——拜伦"
+  },
+  {
+    "word": "The child is father of the man.",
+    "explains": "儿童是成人之父。——华兹华斯"
+  },
+  {
+    "word": "Fill your paper with the breathings of your heart.",
+    "explains": "让你的纸张充满心灵的呼吸。——华兹华斯"
+  },
+  {
+    "word": "Education is not the filling of a pail, but the lighting of a fire.",
+    "explains": "教育不是注满一桶水，而是点燃一把火。——叶芝"
+  },
+  {
+    "word": "Ever tried. Ever failed. No matter. Try again. Fail again. Fail better.",
+    "explains": "尝试过，失败过，没关系，再尝试，再失败，失败得更好。——贝克特"
+  },
+  {
+    "word": "If you can keep your head when all about you are losing theirs, you'll be a man, my son.",
+    "explains": "如果周围的人都失去理智，你仍能保持清醒，我的孩子，你将成为一个真正的人。——吉卜林"
+  },
+  {
+    "word": "It's no use going back to yesterday, because I was a different person then.",
+    "explains": "回到昨天毫无用处，因为那时我是另一个人。——刘易斯·卡罗尔"
+  },
+  {
+    "word": "All that is gold does not glitter, not all those who wander are lost.",
+    "explains": "并非所有金子都闪光，并非所有流浪者都迷失了方向。——托尔金"
+  },
+  {
+    "word": "It's a dangerous business, Frodo, going out your door.",
+    "explains": "弗罗多，出门去冒险是件危险的事。——托尔金"
+  },
+  {
+    "word": "Friendship is born at that moment when one person says to another: \"What! You too?\"",
+    "explains": "友谊诞生于一个人对另一个人说「什么？你也这样？」的那一刻。——C.S.路易斯"
+  },
+  {
+    "word": "What you see and hear depends a good deal on where you are standing.",
+    "explains": "你看到和听到的，很大程度上取决于你站在哪里。——C.S.路易斯"
+  },
+  {
+    "word": "All animals are equal, but some animals are more equal than others.",
+    "explains": "所有动物一律平等，但有些动物比其他动物更平等。——奥威尔"
+  },
+  {
+    "word": "War is peace. Freedom is slavery. Ignorance is strength.",
+    "explains": "战争即和平，自由即奴役，无知即力量。——奥威尔"
+  },
+  {
+    "word": "The whole problem with the world is that fools and fanatics are always so certain of themselves, and wiser people so full of doubts.",
+    "explains": "世人的问题在于，愚者和狂热者总是如此自信，而智者却充满疑虑。——罗素"
+  },
+  {
+    "word": "The good life is one inspired by love and guided by knowledge.",
+    "explains": "美好的生活由爱激励，由知识引导。——罗素"
+  },
+  {
+    "word": "One day, in retrospect, the years of struggle will strike you as the most beautiful.",
+    "explains": "有朝一日回首往事，奋斗的岁月会是你生命中最美的时光。——弗洛伊德"
+  },
+  {
+    "word": "Unexpressed emotions will never die. They are buried alive and will come forth later in uglier ways.",
+    "explains": "未被表达的情绪永远不会消亡，它们被活埋，日后会以更丑陋的方式爆发。——弗洛伊德"
+  },
+  {
+    "word": "It is not the strongest of the species that survives, nor the most intelligent, but the one most responsive to change.",
+    "explains": "生存下来的不是最强的物种，也不是最聪明的，而是最能适应变化的。——达尔文"
+  },
+  {
+    "word": "A man who dares to waste one hour of time has not discovered the value of life.",
+    "explains": "敢于浪费一小时的人，尚未发现生命的价值。——达尔文"
+  },
+  {
+    "word": "Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.",
+    "explains": "生活中没有什么可怕的，只有需要理解的，多理解一些，好让我们少一些恐惧。——居里夫人"
+  },
+  {
+    "word": "Be less curious about people and more curious about ideas.",
+    "explains": "对人的好奇心少一些，对思想的好奇心多一些。——居里夫人"
+  },
+  {
+    "word": "The heart has its reasons which reason knows nothing of.",
+    "explains": "心有其自身的理由，是理性所不知的。——帕斯卡"
+  },
+  {
+    "word": "I think, therefore I am.",
+    "explains": "我思故我在。——笛卡尔"
+  },
+  {
+    "word": "Have the courage to use your own understanding.",
+    "explains": "要有勇气运用你自己的理智。——康德"
+  },
+  {
+    "word": "A book must be the axe that breaks the frozen sea within us.",
+    "explains": "一本书必须是一把能劈开我们内心冰海的斧头。——卡夫卡"
+  },
+  {
+    "word": "Work is love made visible.",
+    "explains": "工作是看得见的爱。——纪伯伦"
+  },
+  {
+    "word": "Your children are not your children. They are the sons and daughters of life's longing for itself.",
+    "explains": "你的孩子不是你的孩子，他们是生命对自身渴望的儿女。——纪伯伦"
+  },
+  {
+    "word": "Is it not a pleasure, having friends come from distant quarters?",
+    "explains": "有朋自远方来，不亦乐乎。——孔子"
+  },
+  {
+    "word": "To know what you know and what you do not know, that is true knowledge.",
+    "explains": "知之为知之，不知为不知，是知也。——孔子"
+  },
+  {
+    "word": "It does not matter how slowly you go as long as you do not stop.",
+    "explains": "只要不停下来，走得多慢都没有关系。——孔子"
+  },
+  {
+    "word": "A journey of a thousand miles begins with a single step.",
+    "explains": "千里之行，始于足下。——老子"
+  },
+  {
+    "word": "Nature does not hurry, yet everything is accomplished.",
+    "explains": "自然从不匆忙，却完成了一切。——老子"
+  },
+  {
+    "word": "Knowing others is intelligence; knowing yourself is true wisdom.",
+    "explains": "知人者智，自知者明。——老子"
+  },
+  {
+    "word": "The supreme art of war is to subdue the enemy without fighting.",
+    "explains": "用兵的最高境界，是不战而屈人之兵。——孙子"
+  },
+  {
+    "word": "I can accept failure, everyone fails at something. But I can't accept not trying.",
+    "explains": "我可以接受失败，每个人都会失败，但我不能接受不去尝试。——迈克尔·乔丹"
+  },
+  {
+    "word": "Talent wins games, but teamwork and intelligence win championships.",
+    "explains": "天赋能赢下比赛，但团队与智慧才能赢得冠军。——迈克尔·乔丹"
+  },
+  {
+    "word": "Float like a butterfly, sting like a bee.",
+    "explains": "像蝴蝶一样飞舞，像蜜蜂一样出击。——穆罕默德·阿里"
+  },
+  {
+    "word": "I hated every minute of training, but I said, \"Don't quit. Suffer now and live the rest of your life as a champion.\"",
+    "explains": "我讨厌训练的每一分钟，但我告诉自己：别放弃，现在受苦，余生以冠军的身份活着。——穆罕默德·阿里"
+  },
+  {
+    "word": "Winners never quit and quitters never win.",
+    "explains": "胜者永不放弃，放弃者永不胜利。——文斯·隆巴迪"
+  },
+  {
+    "word": "Success is no accident. It is hard work, perseverance, learning, studying, sacrifice and most of all, love of what you are doing.",
+    "explains": "成功绝非偶然，它是努力、坚持、学习、钻研、牺牲，以及最重要的——热爱你所做的事。——贝利"
+  },
+  {
+    "word": "You miss 100% of the shots you don't take.",
+    "explains": "不射门，就百分之百错过。——韦恩·格雷茨基"
+  },
+  {
+    "word": "The biggest adventure you can ever take is to live the life of your dreams.",
+    "explains": "你能踏上的最大冒险，就是过梦想中的生活。——奥普拉·温弗瑞"
+  },
+  {
+    "word": "Still I rise.",
+    "explains": "我依然奋起。——玛雅·安吉罗"
+  },
+  {
+    "word": "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
+    "explains": "人们会忘记你说过的话、做过的事，但永远不会忘记你带给他们的感受。——玛雅·安吉罗"
+  },
+  {
+    "word": "Hold fast to dreams, for if dreams die, life is a broken-winged bird that cannot fly.",
+    "explains": "紧紧抓住梦想，梦想一旦消亡，人生就像折断翅膀、无法飞翔的鸟。——兰斯顿·休斯"
+  },
+  {
+    "word": "Without a struggle, there can be no progress.",
+    "explains": "没有斗争，就没有进步。——弗雷德里克·道格拉斯"
+  },
+  {
+    "word": "I have learned over the years that when one's mind is made up, this diminishes fear.",
+    "explains": "这些年我明白，一旦下定决心，恐惧就减少了。——罗莎·帕克斯"
+  },
+  {
+    "word": "Well behaved women seldom make history.",
+    "explains": "循规蹈矩的女性很少能创造历史。——劳雷尔·撒切尔·乌尔里希"
+  },
+  {
+    "word": "Not everything that is faced can be changed, but nothing can be changed until it is faced.",
+    "explains": "并非所有面对的问题都能改变，但不去面对就什么也无法改变。——詹姆斯·鲍德温"
+  },
+  {
+    "word": "We are what we pretend to be, so we must be careful about what we pretend to be.",
+    "explains": "我们假装成什么样的人就会成为什么样的人，所以要小心自己假装成什么。——冯内古特"
+  },
+  {
+    "word": "They say time changes things, but actually you have to change them yourself.",
+    "explains": "人们说是时间改变了事物，其实你得自己改变它们。——安迪·沃霍尔"
+  },
+  {
+    "word": "It is our choices that show what we truly are, far more than our abilities.",
+    "explains": "我们的选择远比能力更能说明我们是谁。——J.K.罗琳"
+  },
+  {
+    "word": "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
+    "explains": "勿住过去，勿梦未来，专注当下。——佛陀"
+  },
+  {
+    "word": "Peace comes from within. Do not seek it without.",
+    "explains": "平静来自内心，勿向外求。——佛陀"
+  },
+  {
+    "word": "Three things cannot be long hidden: the sun, the moon, and the truth.",
+    "explains": "有三件事无法长久隐藏：太阳、月亮和真相。——佛陀"
+  },
+  {
+    "word": "The most difficult thing is the decision to act, the rest is merely tenacity.",
+    "explains": "最困难的是下决心行动，其余不过是坚持。——阿梅莉亚·埃尔哈特"
+  },
+  {
+    "word": "Adventure is worthwhile in itself.",
+    "explains": "冒险本身就有价值。——阿梅莉亚·埃尔哈特"
+  },
+  {
+    "word": "The best revenge is massive success.",
+    "explains": "最好的报复是巨大的成功。——弗兰克·辛纳屈"
+  },
+  {
+    "word": "Act as if what you do makes a difference. It does.",
+    "explains": "行动起来，仿佛你的所为有意义——它确实有意义。——威廉·詹姆斯"
+  },
+  {
+    "word": "What gets measured gets managed.",
+    "explains": "能被衡量的，才能被管理。——彼得·德鲁克"
+  },
+  {
+    "word": "The best way to predict the future is to invent it.",
+    "explains": "预测未来的最好方式是创造它。——艾伦·凯"
+  },
+  {
+    "word": "I attribute my success to this: I never gave or took any excuse.",
+    "explains": "我把成功归因于：从不为自己找任何借口，也不接受任何借口。——弗洛伦斯·南丁格尔"
+  }
+]

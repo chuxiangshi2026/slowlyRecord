@@ -30,6 +30,8 @@ export type WordBankType =
   | 'collocations'   // 固定搭配
   | 'idioms'         // 习语
   | 'common-phrases' // 常用短语短句
+  | 'movie-lines'    // 经典电影台词
+  | 'famous-quotes'  // 英语名言警句
   | 'jlpt-n5'        // 日语 JLPT N5
   | 'jlpt-n4'        // 日语 JLPT N4
   | 'jlpt-n3'        // 日语 JLPT N3
@@ -91,6 +93,8 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277, language: 'en' },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249, language: 'en' },
   { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 184, language: 'en' },
+  { id: 'movie-lines', name: '电影台词', description: '经典英文电影台词（附中文翻译与出处）', wordCount: 223, language: 'en' },
+  { id: 'famous-quotes', name: '名言警句', description: '英语名人名言警句（附中文翻译与作者）', wordCount: 213, language: 'en' },
   { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 700, language: 'ja' },
   { id: 'jlpt-n4', name: 'JLPT N4', description: '日本语能力测试 N4 级核心词汇（日语）', wordCount: 1169, language: 'ja' },
   { id: 'jlpt-n3', name: 'JLPT N3', description: '日本语能力测试 N3 级核心词汇（日语）', wordCount: 1441, language: 'ja' },
