@@ -472,6 +472,13 @@ watch(() => route.query.openFocus, openFocusFromQuery);
 const wordBankOptions = [
   {label: '四级词汇', value: 'cet4'},
   {label: 'JLPT N5（日语）', value: 'jlpt-n5'},
+  {label: 'JLPT N4（日语）', value: 'jlpt-n4'},
+  {label: '俄语 A1', value: 'ru-a1'},
+  {label: '俄语 A2', value: 'ru-a2'},
+  {label: '西语 A1', value: 'es-a1'},
+  {label: '西语 A2', value: 'es-a2'},
+  {label: '法语 A1', value: 'fr-a1'},
+  {label: '法语 A2', value: 'fr-a2'},
   {label: '六级词汇', value: 'cet6'},
   {label: '商务英语', value: 'bec'},
   {label: 'GMAT词汇', value: 'gmat'},

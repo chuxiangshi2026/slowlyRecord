@@ -27,7 +27,14 @@ export type WordBankType =
   | 'collocations'   // 固定搭配
   | 'idioms'         // 习语
   | 'common-phrases' // 常用短语短句
-  | 'jlpt-n5';       // 日语 JLPT N5
+  | 'jlpt-n5'        // 日语 JLPT N5
+  | 'jlpt-n4'        // 日语 JLPT N4
+  | 'ru-a1'          // 俄语 CEFR A1
+  | 'ru-a2'          // 俄语 CEFR A2
+  | 'es-a1'          // 西班牙语 CEFR A1
+  | 'es-a2'          // 西班牙语 CEFR A2
+  | 'fr-a1'          // 法语 CEFR A1
+  | 'fr-a2';         // 法语 CEFR A2
 
 // 词库信息配置
 export interface WordBankInfo {
@@ -77,7 +84,29 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
   { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 184 },
   { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 0 },
+  { id: 'jlpt-n4', name: 'JLPT N4', description: '日本语能力测试 N4 级核心词汇（日语）', wordCount: 0 },
+  { id: 'ru-a1', name: '俄语 A1', description: '俄语 CEFR A1 级核心词汇（俄语）', wordCount: 0 },
+  { id: 'ru-a2', name: '俄语 A2', description: '俄语 CEFR A2 级核心词汇（俄语）', wordCount: 0 },
+  { id: 'es-a1', name: '西语 A1', description: '西班牙语 CEFR A1 级核心词汇（西班牙语）', wordCount: 0 },
+  { id: 'es-a2', name: '西语 A2', description: '西班牙语 CEFR A2 级核心词汇（西班牙语）', wordCount: 0 },
+  { id: 'fr-a1', name: '法语 A1', description: '法语 CEFR A1 级核心词汇（法语）', wordCount: 0 },
+  { id: 'fr-a2', name: '法语 A2', description: '法语 CEFR A2 级核心词汇（法语）', wordCount: 0 },
 ];
+
+// 远程词库 CDN（完整词库不进 public/，超大体量词库走远程按需下载；
+// key 为词库类型，值为 JSON 地址，返回格式与本地词库 JSON 相同）
+// 约定：本地文件缺失或条目数低于 REMOTE_MIN_SIZE 时尝试远程
+const REMOTE_WORDBANK_CDN: Partial<Record<WordBankType, string>> = {
+  // 预留：后续把 N3~N1 等大词库托管到 CDN 后在此注册
+};
+// 远程词库基址（与 ocr-lang-pack 同一镜像策略：jsdelivr 仓库镜像）
+const REMOTE_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowly-record-data@main/wordbanks';
+
+// 允许走远程兜底加载的类型（本地 JSON 也在 public/ 中，仅当本地缺失时才发远程请求；
+// 控制请求面，避免对每个缺失词库都盲目打 CDN）
+const REMOTE_ENABLED_TYPES = new Set<WordBankType>([
+  'jlpt-n4', 'jlpt-n5', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
+]);
 
 // 缓存管理
 const CACHE_KEY_PREFIX = 'wordbank_cache_v2_';  // 更新版本号使旧缓存失效
@@ -178,6 +207,29 @@ async function loadLocalWordBank(type: WordBankType): Promise<Word[] | null> {
 }
 
 /**
+ * 从远程 CDN 按需加载词库（未注册远程地址的类型直接返回 null）
+ */
+async function loadRemoteWordBank(type: WordBankType): Promise<Word[] | null> {
+  const remoteUrl = REMOTE_WORDBANK_CDN[type] ?? `${REMOTE_WORDBANK_BASE}/${type}.json`;
+  if (!REMOTE_WORDBANK_CDN[type] && !REMOTE_ENABLED_TYPES.has(type)) return null;
+  try {
+    console.log(`[WordBank] 尝试远程加载词库: ${type} from ${remoteUrl}`);
+    const response = await fetch(remoteUrl, { method: 'GET', headers: { 'Accept': 'application/json' } });
+    if (!response.ok) {
+      console.warn(`[WordBank] 远程词库请求失败: ${response.status} ${response.statusText}`);
+      return null;
+    }
+    const data = await response.json();
+    const words = normalizeWords(data.words || data);
+    console.log(`[WordBank] 远程词库加载成功: ${type}, 单词数: ${words.length}`);
+    return words;
+  } catch (error) {
+    console.warn(`[WordBank] 远程词库加载失败: ${type}`, error);
+    return null;
+  }
+}
+
+/**
  * 从 affix-data.ts 加载词根词缀数据并转换为 Word 格式
  * 不依赖 JSON 文件，直接从 TS 数据源读取（单一数据源原则）
  */
@@ -248,7 +300,18 @@ export async function fetchWordBank(
   }
 
   // 仅加载本地词库
-  const words = await loadLocalWordBank(type);
+  let words = await loadLocalWordBank(type);
+
+  // 本地缺失且注册了远程地址时，尝试 CDN 按需下载
+  if (!words || words.length === 0) {
+    const remoteWords = await loadRemoteWordBank(type);
+    if (remoteWords && remoteWords.length > 0) {
+      if (config.useCache) {
+        saveToCache(type, remoteWords);
+      }
+      return remoteWords;
+    }
+  }
 
   if (words && words.length > 0) {
     // 保存到缓存
