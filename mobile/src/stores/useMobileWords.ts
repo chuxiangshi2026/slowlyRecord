@@ -171,6 +171,19 @@ export const useMobileWords = defineStore('mobileWords', () => {
       }
 
       allWords.value = loaded
+
+      // 修复存量污染数据：remembered === true 但 level < 12 的词纠正为未记住，
+      // 仅改内存并按既有 markBankDirty 机制落库
+      const pollutedBanks = new Set<string>()
+      for (const w of loaded) {
+        if (w.remembered === true && (w.level ?? 0) < 12) {
+          w.remembered = false
+          pollutedBanks.add(w.bankId || DEFAULT_BANK_ID)
+        }
+      }
+      for (const bankId of pollutedBanks) {
+        markBankDirty(bankId)
+      }
     } catch (e) {
       allWords.value = []
     } finally {
@@ -256,6 +269,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     db.remove(`bank_${bankId}_words`)
     bankList.value = bankList.value.filter(b => b.id !== bankId)
     _saveBankList()
+    // 取消该词库待 flush 的防抖状态，避免 persistBankWords 重建空文档
+    _dirtyBanks.delete(bankId)
     if (currentBankId.value === bankId) {
       switchBank(DEFAULT_BANK_ID)
     }
@@ -385,7 +400,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
   function updateWordLevel(id: string, newLevel: number) {
     const word = allWords.value.find(w => w.id === id)
     if (!word) return
-    const level = Math.max(1, Math.min(newLevel, DEFAULT_INTERVALS.length - 1))
+    // 等级钳制到 0-12，与桌面端一致；只有达到掌握阈值（12 级）才算永久记住
+    const level = Math.max(0, Math.min(newLevel, 12))
     const intervalMinutes = DEFAULT_INTERVALS[level]
     updateWord(id, {
       level,
@@ -393,7 +409,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
       lastReviewTime: Date.now(),
       nextReviewTime: Date.now() + intervalMinutes * 60 * 1000,
       needsReview: false,
-      remembered: true
+      remembered: level >= 12
     })
   }
 
@@ -504,7 +520,13 @@ export const useMobileWords = defineStore('mobileWords', () => {
   }
 
   async function moveWordToBank(wordId: string, targetBankId: string) {
+    const word = allWords.value.find(w => w.id === wordId)
+    const sourceBankId = word?.bankId || DEFAULT_BANK_ID
     await updateWord(wordId, { bankId: targetBankId })
+    // 源词库也要标脏，否则旧库残留单词不会被持久化移除
+    if (sourceBankId !== targetBankId) {
+      markBankDirty(sourceBankId)
+    }
   }
 
   /** 设置自定义复习列表（搜索单词页面筛选后调用） */

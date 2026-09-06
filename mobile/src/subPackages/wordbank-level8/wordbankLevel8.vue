@@ -120,7 +120,6 @@ async function importWords(words: Word[], startIndex: number, count: number, _ba
     bankId
   }))
   const { imported, skippedCount } = await wordsStore.importWords(mobileWords, bankId)
-  wordsStore.appendWordsToMemory(imported)
   const newProgress = startIndex + count
   wordsStore.setImportProgress(bankId, sourceId, newProgress)
   const msg = skippedCount > 0

@@ -587,7 +587,7 @@ const handleRememberForever = () => {
       remembered: true,
       needsReview: false,
       nextReviewTime: Date.now() + 100 * 365 * 24 * 60 * 60 * 1000,
-      level: 14
+      level: 12
     })
     rememberCount.value++
     nextWord()

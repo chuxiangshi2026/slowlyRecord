@@ -61,7 +61,7 @@ const LOCATION_COORD_MAP: Record<string, LocationCoord> = {
   绵阳: { lng: 104.7, lat: 31.5, name: '绵阳' },
   乐山: { lng: 103.8, lat: 29.6, name: '乐山' },
   峨眉山: { lng: 103.4, lat: 29.6, name: '峨眉山' },
-  重庆: { lng: 106.5, lat: 29.6, name: '重庆', aliases: ['渝州', '巴郡', '江州'] },
+  重庆: { lng: 106.5, lat: 29.6, name: '重庆', aliases: ['渝州', '巴郡'] },
   夔州: { lng: 109.5, lat: 31.0, name: '夔州', aliases: ['奉节', '白帝城'] },
   白帝城: { lng: 109.6, lat: 31.0, name: '白帝城' },
   剑阁: { lng: 105.5, lat: 32.3, name: '剑阁', aliases: ['剑门关'] },
@@ -125,7 +125,7 @@ const LOCATION_COORD_MAP: Record<string, LocationCoord> = {
   伊犁: { lng: 81.3, lat: 43.9, name: '伊犁' },
 
   // 西南
-  昆明: { lng: 102.8, lat: 25.0, name: '昆明', aliases: ['滇', '益州'] },
+  昆明: { lng: 102.8, lat: 25.0, name: '昆明', aliases: ['滇'] },
   大理: { lng: 100.2, lat: 25.6, name: '大理', aliases: ['南诏'] },
   丽江: { lng: 100.2, lat: 26.9, name: '丽江' },
   贵阳: { lng: 106.6, lat: 26.6, name: '贵阳', aliases: ['黔', '筑城'] },

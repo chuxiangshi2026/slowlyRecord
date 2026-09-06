@@ -26,6 +26,14 @@ describe('poetry-location: parseLocation', () => {
     expect(parseLocation('凉州')!.name).toBe('武威')
   })
 
+  it('别名冲突：益州只解析到成都（益州治所成都）', () => {
+    expect(parseLocation('益州')!.name).toBe('成都')
+  })
+
+  it('别名冲突：江州只解析到九江（《琵琶行》江州司马）', () => {
+    expect(parseLocation('江州')!.name).toBe('九江')
+  })
+
   it('应通过别名匹配（白帝城）', () => {
     // 白帝城本身就是标准名，应直接命中
     const r = parseLocation('白帝城')

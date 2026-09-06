@@ -253,10 +253,7 @@ async function importBanks(banks: any[]) {
     doneBanks++
   }
 
-  if (allImportedWords.length > 0) {
-    wordsStore.appendWordsToMemory(allImportedWords)
-  }
-
+  // importWords 内部已把导入结果合并进内存，无需再 appendWordsToMemory
   return allImportedWords.length
 }
 

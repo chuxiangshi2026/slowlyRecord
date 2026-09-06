@@ -323,11 +323,19 @@ class MiniProgramTtsAdapter implements TtsAdapter {
 
   async playAudio(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.innerAudio = uni.createInnerAudioContext()
-      this.innerAudio!.src = url
-      this.innerAudio!.onEnded(() => { this.innerAudio = null; resolve() })
-      this.innerAudio!.onError((err) => { this.innerAudio = null; reject(err) })
-      this.innerAudio!.play()
+      // 先停止并销毁旧实例，避免旧实例的 onEnded 把新引用清掉导致 stop() 失效
+      if (this.innerAudio) {
+        this.innerAudio.stop()
+        this.innerAudio.destroy?.()
+        this.innerAudio = null
+      }
+      const audio = uni.createInnerAudioContext()
+      this.innerAudio = audio
+      audio.src = url
+      // 仅当回调来源仍是当前实例时才清理引用（防止重叠播放时互相覆盖）
+      audio.onEnded(() => { if (this.innerAudio === audio) this.innerAudio = null; resolve() })
+      audio.onError((err) => { if (this.innerAudio === audio) this.innerAudio = null; reject(err) })
+      audio.play()
     })
   }
 }

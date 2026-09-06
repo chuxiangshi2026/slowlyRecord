@@ -165,7 +165,7 @@ describe('useMobileWords Store', () => {
   })
 
   describe('markAsRemembered', () => {
-    it('应该标记单词为已记住并更新复习时间', async () => {
+    it('答对应升级 level 但未达 12 级不应永久记住', async () => {
       const store = useMobileWords()
 
       const word = await store.addWord({
@@ -179,9 +179,76 @@ describe('useMobileWords Store', () => {
       await store.markAsRemembered(word.id)
 
       const updated = store.words.find(w => w.id === word.id)
-      expect(updated?.remembered).toBe(true)
+      expect(updated?.remembered).toBe(false)
+      expect(updated?.level).toBe(2)
       expect(updated?.reviewCount).toBe(1)
       expect(updated?.nextReviewTime).toBeGreaterThan(Date.now())
+    })
+
+    it('level 达到 12 级才算永久记住', async () => {
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'test',
+        meaning: '测试',
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now(),
+        level: 12,
+      })
+
+      await store.markAsRemembered(word.id)
+
+      const updated = store.words.find(w => w.id === word.id)
+      expect(updated?.level).toBe(12)
+      expect(updated?.remembered).toBe(true)
+    })
+
+    it('level 应钳制到 0-12，不会出现 13/14', async () => {
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'test',
+        meaning: '测试',
+        addTime: Date.now(),
+        reviewCount: 0,
+        nextReviewTime: Date.now(),
+        level: 12,
+      })
+
+      store.updateWordLevel(word.id, 14)
+
+      const updated = store.words.find(w => w.id === word.id)
+      expect(updated?.level).toBe(12)
+      expect(updated?.remembered).toBe(true)
+    })
+  })
+
+  describe('存量污染数据修复', () => {
+    it('加载时 remembered=true 但 level<12 的词应纠正为未记住', async () => {
+      const store = useMobileWords()
+
+      // 预置被污染的词库级数据
+      await mockDb.promises.put({
+        _id: 'bank_default_words',
+        data: [
+          { id: 'w1', word: 'polluted', meaning: '污染', addTime: Date.now(), reviewCount: 1, nextReviewTime: Date.now(), level: 3, remembered: true, bankId: 'default' },
+          { id: 'w2', word: 'clean', meaning: '正常', addTime: Date.now(), reviewCount: 1, nextReviewTime: Date.now(), level: 12, remembered: true, bankId: 'default' },
+        ]
+      })
+
+      await store.loadWords()
+
+      const polluted = store.words.find(w => w.word === 'polluted')
+      const clean = store.words.find(w => w.word === 'clean')
+      expect(polluted?.remembered).toBe(false)
+      expect(clean?.remembered).toBe(true)
+
+      // flush 时会通过既有 markBankDirty 机制落库（mock 带 _rev 冲突语义，这里只校验调用发生）
+      await store.flushDirtyBanks()
+      expect(mockDb.promises.asyncPut).toHaveBeenCalledWith(
+        expect.objectContaining({ _id: 'bank_default_words' })
+      )
     })
   })
 
