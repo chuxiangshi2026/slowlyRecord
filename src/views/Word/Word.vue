@@ -1,4 +1,4 @@
-  <template>
+    <template>
 
   <!--  <el-button type="primary" @click="clearWord">清空单词</el-button>-->
   <!--  <el-button type="primary" @click="initWord">初始化单词</el-button>-->
@@ -306,20 +306,20 @@
 
       <!--            <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
       <el-tooltip class="box-item" effect="dark" content="置顶" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-top" @click="scrollToTop"></i>
+        <el-icon class="footer-icon" :size="18" @click="scrollToTop"><Top /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="置底" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-down" @click="scrollToBottom"></i>
+        <el-icon class="footer-icon" :size="18" @click="scrollToBottom"><Bottom /></el-icon>
       </el-tooltip>
 
       <el-tooltip class="box-item" effect="dark" content="显示释义" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-visible" @click="visibleExplained"></i>
+        <el-icon class="footer-icon" :size="18" @click="visibleExplained"><View /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="隐藏释义" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-invisible" @click="invisibleExplained"></i>
+        <el-icon class="footer-icon" :size="18" @click="invisibleExplained"><Hide /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="筛选排序" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-level" :class="{ 'filter-active': filterPanelVisible }" style="cursor: pointer; font-size: 18px;" @click="toggleFilterPanel"></i>
+        <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><Operation /></el-icon>
       </el-tooltip>
 <!--      <el-tooltip class="box-item" effect="dark" content="截图识别" placement="top" popper-class="small-tooltip">
         <i class="iconfont icon-translate" @click="startScreenCapture" style="font-weight: bold;"></i>
@@ -330,7 +330,7 @@
 
       <!-- 导入下拉菜单 -->
       <el-dropdown @command="handleImportCommand" :disabled="listMode==1||listMode==2">
-        <i class="iconfont icon-import"></i>
+        <el-icon class="footer-icon" :size="18"><Download /></el-icon>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="importJson">JSON导入</el-dropdown-item>
@@ -342,7 +342,7 @@
 
       <!-- 导出下拉菜单 -->
       <el-dropdown @command="handleExportCommand">
-        <i class="iconfont icon-export"></i>
+        <el-icon class="footer-icon" :size="18"><Upload /></el-icon>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="exportJson">导出JSON</el-dropdown-item>
@@ -352,23 +352,23 @@
       </el-dropdown>
 
       <el-tooltip class="box-item" effect="dark" content="听写练习" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-list" @click="goToDictation" style="font-weight: bold;"></i>
+        <el-icon class="footer-icon" :size="18" @click="goToDictation"><EditPen /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="字母映射" placement="top" popper-class="small-tooltip">
-        <el-icon :size="18" style="cursor: pointer;" @click="goToLetterMemory"><Tickets /></el-icon>
+        <el-icon class="footer-icon" :size="18" @click="goToLetterMemory"><Grid /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="音标学习" placement="top" popper-class="small-tooltip">
-        <el-icon :size="18" style="cursor: pointer;" @click="goToPhoneticMemory"><Microphone /></el-icon>
+        <el-icon class="footer-icon" :size="18" @click="goToPhoneticMemory"><Microphone /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-card" @click="() => openFocusMode()"></i>
+        <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><Aim /></el-icon>
       </el-tooltip>
 
       <el-tooltip class="box-item" effect="dark" content="多端同步" placement="top" popper-class="small-tooltip">
-        <el-icon :size="18" style="cursor: pointer;" @click="syncDialogVisible = true"><Connection /></el-icon>
+        <el-icon class="footer-icon" :size="18" @click="syncDialogVisible = true"><Connection /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-setting" @click="drawerVisible = true"></i>
+        <el-icon class="footer-icon" :size="18" @click="drawerVisible = true"><Setting /></el-icon>
       </el-tooltip>
       <SyncDialog v-model="syncDialogVisible" />
       <!--      </el-tooltip>
@@ -386,7 +386,7 @@
 
 
 import {ElMessage, ElLoading, ElMessageBox} from "element-plus";
-import { Tickets, Microphone } from '@element-plus/icons-vue';
+import { Microphone } from '@element-plus/icons-vue';
 import {testData} from "@/testData";
 import type {Word} from "@/types/words";
 
@@ -420,7 +420,18 @@ import {
   Trophy,
   Delete,
   Plus,
-  Connection
+  Connection,
+  Top,
+  Bottom,
+  View,
+  Hide,
+  Operation,
+  Download,
+  Upload,
+  EditPen,
+  Grid,
+  Aim,
+  Setting
 } from '@element-plus/icons-vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
@@ -3265,6 +3276,19 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
     align-items: center;
     justify-content: center;
     vertical-align: middle;
+
+    &:hover {
+      background-color: var(--utools-bg-hover);
+      transform: scale(1.1);
+    }
+  }
+
+  /* 底部右侧功能图标（el-icon），与 .iconfont 风格一致、统一尺寸对齐 */
+  .footer-icon {
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--utools-bg-hover);
