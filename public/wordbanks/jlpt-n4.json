@@ -1,0 +1,5847 @@
+[
+ {
+  "word": "ありがとう",
+  "phonetic": "",
+  "explains": "谢谢"
+ },
+ {
+  "word": "エスカレーター",
+  "phonetic": "",
+  "explains": "自动扶梯"
+ },
+ {
+  "word": "エレベーター",
+  "phonetic": "",
+  "explains": "电梯"
+ },
+ {
+  "word": "エンジン",
+  "phonetic": "",
+  "explains": "发动机；引擎"
+ },
+ {
+  "word": "おいしい",
+  "phonetic": "",
+  "explains": "好吃的"
+ },
+ {
+  "word": "おいでになる",
+  "phonetic": "",
+  "explains": "来；去；在（敬语）"
+ },
+ {
+  "word": "おかげ",
+  "phonetic": "",
+  "explains": "托…的福"
+ },
+ {
+  "word": "おもちゃ",
+  "phonetic": "",
+  "explains": "玩具"
+ },
+ {
+  "word": "お泊り",
+  "phonetic": "おとまり",
+  "explains": "留宿；过夜"
+ },
+ {
+  "word": "お礼",
+  "phonetic": "おれい",
+  "explains": "感谢；答谢"
+ },
+ {
+  "word": "お粥",
+  "phonetic": "おかゆ",
+  "explains": "粥"
+ },
+ {
+  "word": "お腹",
+  "phonetic": "おなか",
+  "explains": "肚子"
+ },
+ {
+  "word": "お腹が空く",
+  "phonetic": "おなかがすく",
+  "explains": "肚子饿"
+ },
+ {
+  "word": "お迎え",
+  "phonetic": "おむかえ",
+  "explains": "迎接；接人"
+ },
+ {
+  "word": "カレーライス",
+  "phonetic": "",
+  "explains": "咖喱饭"
+ },
+ {
+  "word": "クラス会",
+  "phonetic": "クラスかい",
+  "explains": "班会；同学会"
+ },
+ {
+  "word": "クラブ",
+  "phonetic": "",
+  "explains": "俱乐部"
+ },
+ {
+  "word": "クリスマス",
+  "phonetic": "",
+  "explains": "圣诞节"
+ },
+ {
+  "word": "グラス",
+  "phonetic": "",
+  "explains": "玻璃杯"
+ },
+ {
+  "word": "この間",
+  "phonetic": "このあいだ",
+  "explains": "前些天；最近"
+ },
+ {
+  "word": "コピー機",
+  "phonetic": "コピーき",
+  "explains": "复印机"
+ },
+ {
+  "word": "こんなに",
+  "phonetic": "",
+  "explains": "这样地；这么"
+ },
+ {
+  "word": "ご馳走",
+  "phonetic": "ごちそう",
+  "explains": "盛宴；款待"
+ },
+ {
+  "word": "ちょっと",
+  "phonetic": "",
+  "explains": "稍微；一会儿"
+ },
+ {
+  "word": "できる",
+  "phonetic": "",
+  "explains": "能；会；做好"
+ },
+ {
+  "word": "のんびり",
+  "phonetic": "",
+  "explains": "悠闲地"
+ },
+ {
+  "word": "パン屋",
+  "phonetic": "パンや",
+  "explains": "面包店"
+ },
+ {
+  "word": "まとめ",
+  "phonetic": "",
+  "explains": "总结"
+ },
+ {
+  "word": "もうすぐ",
+  "phonetic": "",
+  "explains": "马上；就要"
+ },
+ {
+  "word": "もっとも",
+  "phonetic": "",
+  "explains": "最；不过"
+ },
+ {
+  "word": "ヨガ",
+  "phonetic": "",
+  "explains": "瑜伽"
+ },
+ {
+  "word": "らしい",
+  "phonetic": "",
+  "explains": "像是；典型"
+ },
+ {
+  "word": "一つ",
+  "phonetic": "ひとつ",
+  "explains": "一个"
+ },
+ {
+  "word": "一円",
+  "phonetic": "いちえん",
+  "explains": "一元；一点"
+ },
+ {
+  "word": "一刻",
+  "phonetic": "いっこく",
+  "explains": "一刻；片刻"
+ },
+ {
+  "word": "一年中",
+  "phonetic": "いちねんじゅう",
+  "explains": "一年到头"
+ },
+ {
+  "word": "一度",
+  "phonetic": "いちど",
+  "explains": "一次"
+ },
+ {
+  "word": "一度に",
+  "phonetic": "いちどに",
+  "explains": "一次；同时"
+ },
+ {
+  "word": "一息",
+  "phonetic": "ひといき",
+  "explains": "一口气"
+ },
+ {
+  "word": "一日中",
+  "phonetic": "いちにちじゅう",
+  "explains": "一整天"
+ },
+ {
+  "word": "一生",
+  "phonetic": "いっしょう",
+  "explains": "一生；一辈子"
+ },
+ {
+  "word": "一生懸命",
+  "phonetic": "いっしょうけんめい",
+  "explains": "拼命地；努力地"
+ },
+ {
+  "word": "一番",
+  "phonetic": "いちばん",
+  "explains": "最；第一"
+ },
+ {
+  "word": "一緒",
+  "phonetic": "いっしょ",
+  "explains": "一起"
+ },
+ {
+  "word": "一致",
+  "phonetic": "いっち",
+  "explains": "一致；吻合"
+ },
+ {
+  "word": "一般的",
+  "phonetic": "いっぱんてき",
+  "explains": "一般的"
+ },
+ {
+  "word": "一行",
+  "phonetic": "いちぎょう",
+  "explains": "一行"
+ },
+ {
+  "word": "丁寧",
+  "phonetic": "ていねい",
+  "explains": "有礼貌；仔细"
+ },
+ {
+  "word": "万引",
+  "phonetic": "まんびき",
+  "explains": "偷东西"
+ },
+ {
+  "word": "三つ",
+  "phonetic": "みっつ",
+  "explains": "三个"
+ },
+ {
+  "word": "上",
+  "phonetic": "うえ",
+  "explains": "上面；关于"
+ },
+ {
+  "word": "上がる",
+  "phonetic": "あがる",
+  "explains": "上；进入；提高；紧张"
+ },
+ {
+  "word": "上手",
+  "phonetic": "じょうず",
+  "explains": "高明；擅长"
+ },
+ {
+  "word": "上着",
+  "phonetic": "うわぎ",
+  "explains": "外衣；上衣"
+ },
+ {
+  "word": "上着を着る",
+  "phonetic": "うわぎをきる",
+  "explains": "穿上衣"
+ },
+ {
+  "word": "上達",
+  "phonetic": "じょうたつ",
+  "explains": "进步；长进"
+ },
+ {
+  "word": "下がる",
+  "phonetic": "さがる",
+  "explains": "下降；下垂"
+ },
+ {
+  "word": "下げる",
+  "phonetic": "さげる",
+  "explains": "降低；挂下"
+ },
+ {
+  "word": "下さる",
+  "phonetic": "くださる",
+  "explains": "给（敬语）"
+ },
+ {
+  "word": "下りる",
+  "phonetic": "おりる",
+  "explains": "下来；下降"
+ },
+ {
+  "word": "下書き",
+  "phonetic": "したがき",
+  "explains": "草稿"
+ },
+ {
+  "word": "下痢",
+  "phonetic": "げり",
+  "explains": "腹泻"
+ },
+ {
+  "word": "下着",
+  "phonetic": "したぎ",
+  "explains": "内衣"
+ },
+ {
+  "word": "世界",
+  "phonetic": "せかい",
+  "explains": "世界"
+ },
+ {
+  "word": "世界上",
+  "phonetic": "せかいじょう",
+  "explains": "世界上"
+ },
+ {
+  "word": "並ぶ",
+  "phonetic": "ならぶ",
+  "explains": "排；排列"
+ },
+ {
+  "word": "並べる",
+  "phonetic": "ならべる",
+  "explains": "排列；摆"
+ },
+ {
+  "word": "並み",
+  "phonetic": "なみ",
+  "explains": "普通；同等"
+ },
+ {
+  "word": "並木",
+  "phonetic": "なみき",
+  "explains": "行道树"
+ },
+ {
+  "word": "中古",
+  "phonetic": "ちゅうこ",
+  "explains": "二手"
+ },
+ {
+  "word": "中央",
+  "phonetic": "ちゅうおう",
+  "explains": "中央；中心"
+ },
+ {
+  "word": "中学校",
+  "phonetic": "ちゅうがっこう",
+  "explains": "初中"
+ },
+ {
+  "word": "丸い",
+  "phonetic": "まるい",
+  "explains": "圆的"
+ },
+ {
+  "word": "丸ごと",
+  "phonetic": "まるごと",
+  "explains": "整个；完整"
+ },
+ {
+  "word": "主に",
+  "phonetic": "おもに",
+  "explains": "主要"
+ },
+ {
+  "word": "乗る",
+  "phonetic": "のる",
+  "explains": "乘坐"
+ },
+ {
+  "word": "乾かす",
+  "phonetic": "かわかす",
+  "explains": "晒干；烘干"
+ },
+ {
+  "word": "乾く",
+  "phonetic": "かわく",
+  "explains": "干燥"
+ },
+ {
+  "word": "乾く前",
+  "phonetic": "かわくまえ",
+  "explains": "干之前"
+ },
+ {
+  "word": "乾杯",
+  "phonetic": "かんぱい",
+  "explains": "干杯"
+ },
+ {
+  "word": "乾杯する",
+  "phonetic": "かんぱいする",
+  "explains": "干杯"
+ },
+ {
+  "word": "乾燥",
+  "phonetic": "かんそう",
+  "explains": "干燥"
+ },
+ {
+  "word": "予告",
+  "phonetic": "よこく",
+  "explains": "预告"
+ },
+ {
+  "word": "予定",
+  "phonetic": "よてい",
+  "explains": "预定；计划"
+ },
+ {
+  "word": "予期",
+  "phonetic": "よき",
+  "explains": "预期"
+ },
+ {
+  "word": "予算",
+  "phonetic": "よさん",
+  "explains": "预算"
+ },
+ {
+  "word": "予約",
+  "phonetic": "よやく",
+  "explains": "预约"
+ },
+ {
+  "word": "予習",
+  "phonetic": "よしゅう",
+  "explains": "预习"
+ },
+ {
+  "word": "事故",
+  "phonetic": "じこ",
+  "explains": "事故"
+ },
+ {
+  "word": "二度と",
+  "phonetic": "にどと",
+  "explains": "（再）也不"
+ },
+ {
+  "word": "交差点",
+  "phonetic": "こうさてん",
+  "explains": "十字路口"
+ },
+ {
+  "word": "交通機関",
+  "phonetic": "こうつうきかん",
+  "explains": "交通工具"
+ },
+ {
+  "word": "人々",
+  "phonetic": "ひとびと",
+  "explains": "人们"
+ },
+ {
+  "word": "人物",
+  "phonetic": "じんぶつ",
+  "explains": "人物"
+ },
+ {
+  "word": "今にも",
+  "phonetic": "いまにも",
+  "explains": "马上就要"
+ },
+ {
+  "word": "今回",
+  "phonetic": "こんかい",
+  "explains": "这次"
+ },
+ {
+  "word": "今月",
+  "phonetic": "こんげつ",
+  "explains": "本月"
+ },
+ {
+  "word": "以上",
+  "phonetic": "いじょう",
+  "explains": "以上；不再"
+ },
+ {
+  "word": "以来",
+  "phonetic": "いらい",
+  "explains": "以来"
+ },
+ {
+  "word": "休み",
+  "phonetic": "やすみ",
+  "explains": "休息；请假"
+ },
+ {
+  "word": "休む",
+  "phonetic": "やすむ",
+  "explains": "休息；请假"
+ },
+ {
+  "word": "休日",
+  "phonetic": "きゅうじつ",
+  "explains": "休息日"
+ },
+ {
+  "word": "会う",
+  "phonetic": "あう",
+  "explains": "见面；会见"
+ },
+ {
+  "word": "伯母",
+  "phonetic": "おば",
+  "explains": "伯母；婶婶"
+ },
+ {
+  "word": "伯父",
+  "phonetic": "おじ",
+  "explains": "伯父；叔父"
+ },
+ {
+  "word": "伸ばす",
+  "phonetic": "のばす",
+  "explains": "伸展；延长"
+ },
+ {
+  "word": "伸びる",
+  "phonetic": "のびる",
+  "explains": "伸长；增长"
+ },
+ {
+  "word": "低い",
+  "phonetic": "ひくい",
+  "explains": "低的"
+ },
+ {
+  "word": "住む",
+  "phonetic": "すむ",
+  "explains": "居住"
+ },
+ {
+  "word": "何か",
+  "phonetic": "なにか",
+  "explains": "什么；某物"
+ },
+ {
+  "word": "余り",
+  "phonetic": "あまり",
+  "explains": "太；剩余"
+ },
+ {
+  "word": "余計",
+  "phonetic": "よけい",
+  "explains": "多余；更加"
+ },
+ {
+  "word": "使用",
+  "phonetic": "しよう",
+  "explains": "使用"
+ },
+ {
+  "word": "価値",
+  "phonetic": "かち",
+  "explains": "价值"
+ },
+ {
+  "word": "修正",
+  "phonetic": "しゅうせい",
+  "explains": "修改；修正"
+ },
+ {
+  "word": "個人的",
+  "phonetic": "こじんてき",
+  "explains": "个人的"
+ },
+ {
+  "word": "借りる",
+  "phonetic": "かりる",
+  "explains": "借；租"
+ },
+ {
+  "word": "値段",
+  "phonetic": "ねだん",
+  "explains": "价格"
+ },
+ {
+  "word": "停電",
+  "phonetic": "ていでん",
+  "explains": "停电"
+ },
+ {
+  "word": "健康",
+  "phonetic": "けんこう",
+  "explains": "健康"
+ },
+ {
+  "word": "傘",
+  "phonetic": "かさ",
+  "explains": "伞"
+ },
+ {
+  "word": "傷",
+  "phonetic": "きず",
+  "explains": "伤；瑕疵"
+ },
+ {
+  "word": "傷つく",
+  "phonetic": "きずつく",
+  "explains": "受伤；受创"
+ },
+ {
+  "word": "傷つける",
+  "phonetic": "きずつける",
+  "explains": "伤害"
+ },
+ {
+  "word": "働き",
+  "phonetic": "はたらき",
+  "explains": "劳动；作用"
+ },
+ {
+  "word": "働く",
+  "phonetic": "はたらく",
+  "explains": "劳动；工作"
+ },
+ {
+  "word": "優しい",
+  "phonetic": "やさしい",
+  "explains": "温柔的；和蔼的"
+ },
+ {
+  "word": "優れる",
+  "phonetic": "すぐれる",
+  "explains": "优秀；出色"
+ },
+ {
+  "word": "儲かる",
+  "phonetic": "もうかる",
+  "explains": "赚钱；得益"
+ },
+ {
+  "word": "元",
+  "phonetic": "もと",
+  "explains": "根源；原来"
+ },
+ {
+  "word": "兄弟",
+  "phonetic": "きょうだい",
+  "explains": "兄弟姐妹"
+ },
+ {
+  "word": "先輩",
+  "phonetic": "せんぱい",
+  "explains": "前辈"
+ },
+ {
+  "word": "光",
+  "phonetic": "ひかり",
+  "explains": "光"
+ },
+ {
+  "word": "光る",
+  "phonetic": "ひかる",
+  "explains": "发光；放光"
+ },
+ {
+  "word": "入る",
+  "phonetic": "はいる",
+  "explains": "进入；装入"
+ },
+ {
+  "word": "入学",
+  "phonetic": "にゅうがく",
+  "explains": "入学"
+ },
+ {
+  "word": "全世界",
+  "phonetic": "ぜんせかい",
+  "explains": "全世界"
+ },
+ {
+  "word": "全部",
+  "phonetic": "ぜんぶ",
+  "explains": "全部"
+ },
+ {
+  "word": "内側",
+  "phonetic": "うちがわ",
+  "explains": "内侧"
+ },
+ {
+  "word": "内分",
+  "phonetic": "ないぶ",
+  "explains": "内部"
+ },
+ {
+  "word": "写す",
+  "phonetic": "うつす",
+  "explains": "抄写；复印"
+ },
+ {
+  "word": "写真",
+  "phonetic": "しゃしん",
+  "explains": "照片"
+ },
+ {
+  "word": "冴える",
+  "phonetic": "さえる",
+  "explains": "清醒；鲜明"
+ },
+ {
+  "word": "冷える",
+  "phonetic": "ひえる",
+  "explains": "变冷；感到冷"
+ },
+ {
+  "word": "冷たい",
+  "phonetic": "つめたい",
+  "explains": "冷的；冷淡的"
+ },
+ {
+  "word": "冷やす",
+  "phonetic": "ひやす",
+  "explains": "使变冷；冰镇"
+ },
+ {
+  "word": "出かける",
+  "phonetic": "でかける",
+  "explains": "出门；外出"
+ },
+ {
+  "word": "出す",
+  "phonetic": "だす",
+  "explains": "拿出；寄出"
+ },
+ {
+  "word": "出会い",
+  "phonetic": "であい",
+  "explains": "相逢；邂逅"
+ },
+ {
+  "word": "出会う",
+  "phonetic": "であう",
+  "explains": "偶遇；相逢"
+ },
+ {
+  "word": "出口",
+  "phonetic": "でぐち",
+  "explains": "出口"
+ },
+ {
+  "word": "出来",
+  "phonetic": "でき",
+  "explains": "成绩"
+ },
+ {
+  "word": "出来るだけ",
+  "phonetic": "できるだけ",
+  "explains": "尽可能"
+ },
+ {
+  "word": "出来れば",
+  "phonetic": "できれば",
+  "explains": "如果可能的话"
+ },
+ {
+  "word": "出来上がり",
+  "phonetic": "できあがり",
+  "explains": "完成"
+ },
+ {
+  "word": "出来上がる",
+  "phonetic": "できあがる",
+  "explains": "做完；完成"
+ },
+ {
+  "word": "出来事",
+  "phonetic": "できごと",
+  "explains": "事件；变故"
+ },
+ {
+  "word": "出迎え",
+  "phonetic": "でむかえ",
+  "explains": "迎接"
+ },
+ {
+  "word": "出迎える",
+  "phonetic": "でむかえる",
+  "explains": "迎接"
+ },
+ {
+  "word": "分かる",
+  "phonetic": "わかる",
+  "explains": "明白；懂得"
+ },
+ {
+  "word": "分かれる",
+  "phonetic": "わかれる",
+  "explains": "分开；划分"
+ },
+ {
+  "word": "分ける",
+  "phonetic": "わける",
+  "explains": "分开；分配"
+ },
+ {
+  "word": "切り出す",
+  "phonetic": "きりだす",
+  "explains": "开采；开口说"
+ },
+ {
+  "word": "切り替える",
+  "phonetic": "きりかえる",
+  "explains": "切换；转换"
+ },
+ {
+  "word": "切れる",
+  "phonetic": "きれる",
+  "explains": "断；用尽；到期"
+ },
+ {
+  "word": "切符",
+  "phonetic": "きっぷ",
+  "explains": "票；券"
+ },
+ {
+  "word": "別れる",
+  "phonetic": "わかれる",
+  "explains": "分别；离婚"
+ },
+ {
+  "word": "制服",
+  "phonetic": "せいふく",
+  "explains": "制服"
+ },
+ {
+  "word": "刺す",
+  "phonetic": "さす",
+  "explains": "刺；扎"
+ },
+ {
+  "word": "刺身",
+  "phonetic": "さしみ",
+  "explains": "生鱼片"
+ },
+ {
+  "word": "割る",
+  "phonetic": "わる",
+  "explains": "打碎；分"
+ },
+ {
+  "word": "割れる",
+  "phonetic": "われる",
+  "explains": "破碎；裂开"
+ },
+ {
+  "word": "割合",
+  "phonetic": "わりあい",
+  "explains": "比例；比较"
+ },
+ {
+  "word": "割引",
+  "phonetic": "わりびき",
+  "explains": "折扣"
+ },
+ {
+  "word": "劇場",
+  "phonetic": "げきじょう",
+  "explains": "剧场；剧院"
+ },
+ {
+  "word": "力",
+  "phonetic": "ちから",
+  "explains": "力量；力气"
+ },
+ {
+  "word": "力を入れる",
+  "phonetic": "ちからをいれる",
+  "explains": "下功夫；致力于"
+ },
+ {
+  "word": "力仕事",
+  "phonetic": "ちからしごと",
+  "explains": "体力活"
+ },
+ {
+  "word": "力強い",
+  "phonetic": "ちからづよい",
+  "explains": "有力；可靠"
+ },
+ {
+  "word": "努力",
+  "phonetic": "どりょく",
+  "explains": "努力"
+ },
+ {
+  "word": "動かす",
+  "phonetic": "うごかす",
+  "explains": "开动；移动"
+ },
+ {
+  "word": "動く",
+  "phonetic": "うごく",
+  "explains": "动；开动"
+ },
+ {
+  "word": "動物園",
+  "phonetic": "どうぶつえん",
+  "explains": "动物园"
+ },
+ {
+  "word": "勘定",
+  "phonetic": "かんじょう",
+  "explains": "账单；计算"
+ },
+ {
+  "word": "勘違い",
+  "phonetic": "かんちがい",
+  "explains": "误会；判断错误"
+ },
+ {
+  "word": "務める",
+  "phonetic": "つとめる",
+  "explains": "担任；扮演"
+ },
+ {
+  "word": "勝ち",
+  "phonetic": "かち",
+  "explains": "胜利；赢"
+ },
+ {
+  "word": "勝つ",
+  "phonetic": "かつ",
+  "explains": "胜；赢"
+ },
+ {
+  "word": "勤める",
+  "phonetic": "つとめる",
+  "explains": "工作；任职"
+ },
+ {
+  "word": "勤め先",
+  "phonetic": "つとめさき",
+  "explains": "工作单位"
+ },
+ {
+  "word": "勤務",
+  "phonetic": "きんむ",
+  "explains": "工作；上班"
+ },
+ {
+  "word": "勧める",
+  "phonetic": "すすめる",
+  "explains": "劝告；建议"
+ },
+ {
+  "word": "北",
+  "phonetic": "きた",
+  "explains": "北；北方"
+ },
+ {
+  "word": "北側",
+  "phonetic": "きたがわ",
+  "explains": "北侧"
+ },
+ {
+  "word": "匙",
+  "phonetic": "さじ",
+  "explains": "匙子；勺子"
+ },
+ {
+  "word": "区切る",
+  "phonetic": "くぎる",
+  "explains": "分隔；断句"
+ },
+ {
+  "word": "医者",
+  "phonetic": "いしゃ",
+  "explains": "医生"
+ },
+ {
+  "word": "十日",
+  "phonetic": "とおか",
+  "explains": "十天；十号"
+ },
+ {
+  "word": "半分",
+  "phonetic": "はんぶん",
+  "explains": "一半"
+ },
+ {
+  "word": "半額",
+  "phonetic": "はんがく",
+  "explains": "半价"
+ },
+ {
+  "word": "南",
+  "phonetic": "みなみ",
+  "explains": "南；南方"
+ },
+ {
+  "word": "占める",
+  "phonetic": "しめる",
+  "explains": "占据"
+ },
+ {
+  "word": "原因",
+  "phonetic": "げんいん",
+  "explains": "原因"
+ },
+ {
+  "word": "厳しい",
+  "phonetic": "きびしい",
+  "explains": "严格；严厉"
+ },
+ {
+  "word": "去る",
+  "phonetic": "さる",
+  "explains": "离开；过去"
+ },
+ {
+  "word": "参考",
+  "phonetic": "さんこう",
+  "explains": "参考"
+ },
+ {
+  "word": "参観日",
+  "phonetic": "さんかんび",
+  "explains": "参观日；公开课"
+ },
+ {
+  "word": "友達",
+  "phonetic": "ともだち",
+  "explains": "朋友"
+ },
+ {
+  "word": "取る",
+  "phonetic": "とる",
+  "explains": "取；拿"
+ },
+ {
+  "word": "受かる",
+  "phonetic": "うかる",
+  "explains": "考上；考中"
+ },
+ {
+  "word": "受け入れる",
+  "phonetic": "うけいれる",
+  "explains": "接受；接纳"
+ },
+ {
+  "word": "受け取る",
+  "phonetic": "うけとる",
+  "explains": "收到；领取"
+ },
+ {
+  "word": "受験",
+  "phonetic": "じゅけん",
+  "explains": "应考；应试"
+ },
+ {
+  "word": "口頭",
+  "phonetic": "こうとう",
+  "explains": "口头"
+ },
+ {
+  "word": "叫ぶ",
+  "phonetic": "さけぶ",
+  "explains": "喊叫；呼喊"
+ },
+ {
+  "word": "台風",
+  "phonetic": "たいふう",
+  "explains": "台风"
+ },
+ {
+  "word": "合う",
+  "phonetic": "あう",
+  "explains": "合；一致；合适"
+ },
+ {
+  "word": "吊り革",
+  "phonetic": "つりかわ",
+  "explains": "吊环"
+ },
+ {
+  "word": "吊るす",
+  "phonetic": "つるす",
+  "explains": "吊；挂"
+ },
+ {
+  "word": "同じ",
+  "phonetic": "おなじ",
+  "explains": "相同"
+ },
+ {
+  "word": "同じく",
+  "phonetic": "おなじく",
+  "explains": "同样地"
+ },
+ {
+  "word": "同感",
+  "phonetic": "どうかん",
+  "explains": "同感"
+ },
+ {
+  "word": "名前",
+  "phonetic": "なまえ",
+  "explains": "名字"
+ },
+ {
+  "word": "向かう",
+  "phonetic": "むかう",
+  "explains": "朝；面向"
+ },
+ {
+  "word": "向こう",
+  "phonetic": "むこう",
+  "explains": "对面；那边"
+ },
+ {
+  "word": "向上",
+  "phonetic": "こうじょう",
+  "explains": "向上；提高"
+ },
+ {
+  "word": "吸う",
+  "phonetic": "すう",
+  "explains": "吸"
+ },
+ {
+  "word": "呑む",
+  "phonetic": "のむ",
+  "explains": "吞下；喝"
+ },
+ {
+  "word": "味",
+  "phonetic": "あじ",
+  "explains": "味道；风味"
+ },
+ {
+  "word": "味わう",
+  "phonetic": "あじわう",
+  "explains": "品尝；体会"
+ },
+ {
+  "word": "味噌",
+  "phonetic": "みそ",
+  "explains": "酱；大酱"
+ },
+ {
+  "word": "味噌汁",
+  "phonetic": "みそしる",
+  "explains": "酱汤"
+ },
+ {
+  "word": "味方",
+  "phonetic": "みかた",
+  "explains": "我方；伙伴"
+ },
+ {
+  "word": "和室",
+  "phonetic": "わしつ",
+  "explains": "日式房间"
+ },
+ {
+  "word": "和服",
+  "phonetic": "わふく",
+  "explains": "和服"
+ },
+ {
+  "word": "和紙",
+  "phonetic": "わし",
+  "explains": "和纸；日式纸"
+ },
+ {
+  "word": "品",
+  "phonetic": "しな",
+  "explains": "物品；品质"
+ },
+ {
+  "word": "品物",
+  "phonetic": "しなもの",
+  "explains": "商品；物品"
+ },
+ {
+  "word": "品質",
+  "phonetic": "ひんしつ",
+  "explains": "质量"
+ },
+ {
+  "word": "問題",
+  "phonetic": "もんだい",
+  "explains": "问题；试题"
+ },
+ {
+  "word": "喜び",
+  "phonetic": "よろこび",
+  "explains": "喜悦；高兴"
+ },
+ {
+  "word": "喜ぶ",
+  "phonetic": "よろこぶ",
+  "explains": "高兴；欢喜"
+ },
+ {
+  "word": "喧嘩",
+  "phonetic": "けんか",
+  "explains": "吵架；打架"
+ },
+ {
+  "word": "営業",
+  "phonetic": "えいぎょう",
+  "explains": "营业"
+ },
+ {
+  "word": "嘆く",
+  "phonetic": "なげく",
+  "explains": "叹气；悲叹"
+ },
+ {
+  "word": "嘘",
+  "phonetic": "うそ",
+  "explains": "谎言"
+ },
+ {
+  "word": "噂",
+  "phonetic": "うわさ",
+  "explains": "传闻；议论"
+ },
+ {
+  "word": "噂話",
+  "phonetic": "うわさばなし",
+  "explains": "闲话；传闻"
+ },
+ {
+  "word": "器用",
+  "phonetic": "きよう",
+  "explains": "灵巧；巧妙"
+ },
+ {
+  "word": "回す",
+  "phonetic": "まわす",
+  "explains": "旋转；转送"
+ },
+ {
+  "word": "回り道",
+  "phonetic": "まわりみち",
+  "explains": "绕道；弯路"
+ },
+ {
+  "word": "回る",
+  "phonetic": "まわる",
+  "explains": "旋转；轮流"
+ },
+ {
+  "word": "困る",
+  "phonetic": "こまる",
+  "explains": "为难；困扰"
+ },
+ {
+  "word": "困難",
+  "phonetic": "こんなん",
+  "explains": "困难"
+ },
+ {
+  "word": "囲む",
+  "phonetic": "かこむ",
+  "explains": "包围"
+ },
+ {
+  "word": "国境",
+  "phonetic": "こっきょう",
+  "explains": "国境；边界"
+ },
+ {
+  "word": "国際",
+  "phonetic": "こくさい",
+  "explains": "国际"
+ },
+ {
+  "word": "地図",
+  "phonetic": "ちず",
+  "explains": "地图"
+ },
+ {
+  "word": "地理",
+  "phonetic": "ちり",
+  "explains": "地理"
+ },
+ {
+  "word": "地震",
+  "phonetic": "じしん",
+  "explains": "地震"
+ },
+ {
+  "word": "地面",
+  "phonetic": "じめん",
+  "explains": "地面"
+ },
+ {
+  "word": "型",
+  "phonetic": "かた",
+  "explains": "模型；类型"
+ },
+ {
+  "word": "埋まる",
+  "phonetic": "うまる",
+  "explains": "被埋；填补"
+ },
+ {
+  "word": "埋める",
+  "phonetic": "うめる",
+  "explains": "埋；填"
+ },
+ {
+  "word": "執着",
+  "phonetic": "しゅうちゃく",
+  "explains": "执著"
+ },
+ {
+  "word": "基づく",
+  "phonetic": "もとづく",
+  "explains": "基于；根据"
+ },
+ {
+  "word": "基本",
+  "phonetic": "きほん",
+  "explains": "基本"
+ },
+ {
+  "word": "基準",
+  "phonetic": "きじゅん",
+  "explains": "标准；基准"
+ },
+ {
+  "word": "堂々",
+  "phonetic": "どうどう",
+  "explains": "堂堂正正"
+ },
+ {
+  "word": "場面",
+  "phonetic": "ばめん",
+  "explains": "场面；情景"
+ },
+ {
+  "word": "塩",
+  "phonetic": "しお",
+  "explains": "盐"
+ },
+ {
+  "word": "塵取り",
+  "phonetic": "ちりとり",
+  "explains": "簸箕"
+ },
+ {
+  "word": "壁",
+  "phonetic": "かべ",
+  "explains": "墙壁"
+ },
+ {
+  "word": "声を出す",
+  "phonetic": "こえをだす",
+  "explains": "出声"
+ },
+ {
+  "word": "売り切れる",
+  "phonetic": "うりきれる",
+  "explains": "卖完；售罄"
+ },
+ {
+  "word": "売り場",
+  "phonetic": "うりば",
+  "explains": "柜台；卖场"
+ },
+ {
+  "word": "売る",
+  "phonetic": "うる",
+  "explains": "卖；出售"
+ },
+ {
+  "word": "売上",
+  "phonetic": "うりあげ",
+  "explains": "销售额"
+ },
+ {
+  "word": "売店",
+  "phonetic": "ばいてん",
+  "explains": "小卖部；售货亭"
+ },
+ {
+  "word": "夏休み",
+  "phonetic": "なつやすみ",
+  "explains": "暑假"
+ },
+ {
+  "word": "夕方",
+  "phonetic": "ゆうがた",
+  "explains": "傍晚"
+ },
+ {
+  "word": "多い",
+  "phonetic": "おおい",
+  "explains": "多的"
+ },
+ {
+  "word": "夜",
+  "phonetic": "よる",
+  "explains": "夜晚"
+ },
+ {
+  "word": "夜中",
+  "phonetic": "よなか",
+  "explains": "半夜"
+ },
+ {
+  "word": "夜中に",
+  "phonetic": "よなかに",
+  "explains": "在半夜"
+ },
+ {
+  "word": "夢中",
+  "phonetic": "むちゅう",
+  "explains": "热衷；入迷"
+ },
+ {
+  "word": "大丈夫",
+  "phonetic": "だいじょうぶ",
+  "explains": "没问题；不要紧"
+ },
+ {
+  "word": "大人",
+  "phonetic": "おとな",
+  "explains": "成年人"
+ },
+ {
+  "word": "大人しい",
+  "phonetic": "おとなしい",
+  "explains": "温顺的；老实的"
+ },
+ {
+  "word": "大切",
+  "phonetic": "たいせつ",
+  "explains": "重要；珍惜"
+ },
+ {
+  "word": "大型",
+  "phonetic": "おおがた",
+  "explains": "大型"
+ },
+ {
+  "word": "大声",
+  "phonetic": "おおごえ",
+  "explains": "大声"
+ },
+ {
+  "word": "大工",
+  "phonetic": "だいく",
+  "explains": "木匠"
+ },
+ {
+  "word": "天ぷら",
+  "phonetic": "てんぷら",
+  "explains": "天妇罗"
+ },
+ {
+  "word": "天井",
+  "phonetic": "てんじょう",
+  "explains": "天花板"
+ },
+ {
+  "word": "天国",
+  "phonetic": "てんごく",
+  "explains": "天国；天堂"
+ },
+ {
+  "word": "天然",
+  "phonetic": "てんねん",
+  "explains": "天然"
+ },
+ {
+  "word": "天麩羅",
+  "phonetic": "てんぷら",
+  "explains": "天妇罗"
+ },
+ {
+  "word": "失う",
+  "phonetic": "うしなう",
+  "explains": "失去；丢失"
+ },
+ {
+  "word": "失恋",
+  "phonetic": "しつれん",
+  "explains": "失恋"
+ },
+ {
+  "word": "失敗",
+  "phonetic": "しっぱい",
+  "explains": "失败"
+ },
+ {
+  "word": "失礼",
+  "phonetic": "しつれい",
+  "explains": "失礼；告辞"
+ },
+ {
+  "word": "女",
+  "phonetic": "おんな",
+  "explains": "女人"
+ },
+ {
+  "word": "女の人",
+  "phonetic": "おんなのひと",
+  "explains": "女人"
+ },
+ {
+  "word": "女の子",
+  "phonetic": "おんなのこ",
+  "explains": "女孩"
+ },
+ {
+  "word": "好き",
+  "phonetic": "すき",
+  "explains": "喜欢的；随便"
+ },
+ {
+  "word": "好み",
+  "phonetic": "このみ",
+  "explains": "喜好；口味"
+ },
+ {
+  "word": "好む",
+  "phonetic": "このむ",
+  "explains": "爱好；喜欢"
+ },
+ {
+  "word": "始末",
+  "phonetic": "しまつ",
+  "explains": "处理；情形"
+ },
+ {
+  "word": "娘",
+  "phonetic": "むすめ",
+  "explains": "女儿"
+ },
+ {
+  "word": "嫌い",
+  "phonetic": "きらい",
+  "explains": "讨厌的"
+ },
+ {
+  "word": "嫌がる",
+  "phonetic": "いやがる",
+  "explains": "讨厌；不愿意"
+ },
+ {
+  "word": "季節",
+  "phonetic": "きせつ",
+  "explains": "季节"
+ },
+ {
+  "word": "学ぶ",
+  "phonetic": "まなぶ",
+  "explains": "学习"
+ },
+ {
+  "word": "学級",
+  "phonetic": "がっきゅう",
+  "explains": "班级"
+ },
+ {
+  "word": "守る",
+  "phonetic": "まもる",
+  "explains": "保护；遵守"
+ },
+ {
+  "word": "安い",
+  "phonetic": "やすい",
+  "explains": "便宜的"
+ },
+ {
+  "word": "安っぽい",
+  "phonetic": "やすっぽい",
+  "explains": "显得便宜的"
+ },
+ {
+  "word": "安全",
+  "phonetic": "あんぜん",
+  "explains": "安全"
+ },
+ {
+  "word": "安心",
+  "phonetic": "あんしん",
+  "explains": "安心；放心"
+ },
+ {
+  "word": "安物",
+  "phonetic": "やすもの",
+  "explains": "便宜货"
+ },
+ {
+  "word": "完全",
+  "phonetic": "かんぜん",
+  "explains": "完全"
+ },
+ {
+  "word": "宜しい",
+  "phonetic": "よろしい",
+  "explains": "好的；可以"
+ },
+ {
+  "word": "実は",
+  "phonetic": "じつは",
+  "explains": "其实；实际上"
+ },
+ {
+  "word": "実際",
+  "phonetic": "じっさい",
+  "explains": "实际；的确"
+ },
+ {
+  "word": "客",
+  "phonetic": "きゃく",
+  "explains": "客人；顾客"
+ },
+ {
+  "word": "客間",
+  "phonetic": "きゃくま",
+  "explains": "客厅；客房"
+ },
+ {
+  "word": "宴",
+  "phonetic": "うたげ",
+  "explains": "宴会"
+ },
+ {
+  "word": "家",
+  "phonetic": "いえ",
+  "explains": "家；房子"
+ },
+ {
+  "word": "家事",
+  "phonetic": "かじ",
+  "explains": "家务"
+ },
+ {
+  "word": "家具",
+  "phonetic": "かぐ",
+  "explains": "家具"
+ },
+ {
+  "word": "家族",
+  "phonetic": "かぞく",
+  "explains": "家人；家属"
+ },
+ {
+  "word": "家族旅行",
+  "phonetic": "かぞくりょこう",
+  "explains": "家庭旅行"
+ },
+ {
+  "word": "家賃",
+  "phonetic": "やちん",
+  "explains": "房租"
+ },
+ {
+  "word": "宿題",
+  "phonetic": "しゅくだい",
+  "explains": "作业"
+ },
+ {
+  "word": "寄る",
+  "phonetic": "よる",
+  "explains": "靠近；顺便去"
+ },
+ {
+  "word": "富",
+  "phonetic": "とみ",
+  "explains": "财富"
+ },
+ {
+  "word": "富む",
+  "phonetic": "とむ",
+  "explains": "富；丰富"
+ },
+ {
+  "word": "寒さ",
+  "phonetic": "さむさ",
+  "explains": "寒冷"
+ },
+ {
+  "word": "小包",
+  "phonetic": "こづつみ",
+  "explains": "包裹"
+ },
+ {
+  "word": "小説",
+  "phonetic": "しょうせつ",
+  "explains": "小说"
+ },
+ {
+  "word": "小鳥",
+  "phonetic": "ことり",
+  "explains": "小鸟"
+ },
+ {
+  "word": "少々",
+  "phonetic": "しょうしょう",
+  "explains": "少许；稍微"
+ },
+ {
+  "word": "少し",
+  "phonetic": "すこし",
+  "explains": "少许；一点"
+ },
+ {
+  "word": "居る",
+  "phonetic": "いる",
+  "explains": "在；有（人）"
+ },
+ {
+  "word": "居間",
+  "phonetic": "いま",
+  "explains": "起居室"
+ },
+ {
+  "word": "届け",
+  "phonetic": "とどけ",
+  "explains": "申请书；申报"
+ },
+ {
+  "word": "屋上",
+  "phonetic": "おくじょう",
+  "explains": "屋顶"
+ },
+ {
+  "word": "屋外",
+  "phonetic": "おくがい",
+  "explains": "屋外；户外"
+ },
+ {
+  "word": "屋根",
+  "phonetic": "やね",
+  "explains": "屋顶"
+ },
+ {
+  "word": "嵩張る",
+  "phonetic": "かさばる",
+  "explains": "体积大；占地方"
+ },
+ {
+  "word": "工具",
+  "phonetic": "こうぐ",
+  "explains": "工具"
+ },
+ {
+  "word": "工場",
+  "phonetic": "こうじょう",
+  "explains": "工厂"
+ },
+ {
+  "word": "工学",
+  "phonetic": "こうがく",
+  "explains": "工学；工程"
+ },
+ {
+  "word": "工業",
+  "phonetic": "こうぎょう",
+  "explains": "工业"
+ },
+ {
+  "word": "差し上げる",
+  "phonetic": "さしあげる",
+  "explains": "给（敬语）"
+ },
+ {
+  "word": "差し引き",
+  "phonetic": "さしひき",
+  "explains": "扣除；相抵"
+ },
+ {
+  "word": "差す",
+  "phonetic": "さす",
+  "explains": "照射；撑（伞）"
+ },
+ {
+  "word": "市内",
+  "phonetic": "しない",
+  "explains": "市内"
+ },
+ {
+  "word": "市町村",
+  "phonetic": "しちょうそん",
+  "explains": "市镇村"
+ },
+ {
+  "word": "希望",
+  "phonetic": "きぼう",
+  "explains": "希望；期望"
+ },
+ {
+  "word": "席",
+  "phonetic": "せき",
+  "explains": "座位"
+ },
+ {
+  "word": "帯",
+  "phonetic": "おび",
+  "explains": "腰带"
+ },
+ {
+  "word": "常識",
+  "phonetic": "じょうしき",
+  "explains": "常识"
+ },
+ {
+  "word": "幅",
+  "phonetic": "はば",
+  "explains": "宽度"
+ },
+ {
+  "word": "平ら",
+  "phonetic": "たいら",
+  "explains": "平坦"
+ },
+ {
+  "word": "年取る",
+  "phonetic": "としとる",
+  "explains": "上年纪"
+ },
+ {
+  "word": "年始",
+  "phonetic": "ねんし",
+  "explains": "年初；贺年"
+ },
+ {
+  "word": "年寄り",
+  "phonetic": "としより",
+  "explains": "老年人"
+ },
+ {
+  "word": "年月",
+  "phonetic": "としつき",
+  "explains": "年月；岁月"
+ },
+ {
+  "word": "年賀状",
+  "phonetic": "ねんがじょう",
+  "explains": "贺年卡"
+ },
+ {
+  "word": "幾つ",
+  "phonetic": "いくつ",
+  "explains": "几个"
+ },
+ {
+  "word": "床",
+  "phonetic": "ゆか",
+  "explains": "地板"
+ },
+ {
+  "word": "床屋",
+  "phonetic": "とこや",
+  "explains": "理发店"
+ },
+ {
+  "word": "店員",
+  "phonetic": "てんいん",
+  "explains": "店员"
+ },
+ {
+  "word": "座る",
+  "phonetic": "すわる",
+  "explains": "坐"
+ },
+ {
+  "word": "庭",
+  "phonetic": "にわ",
+  "explains": "院子；庭园"
+ },
+ {
+  "word": "建築",
+  "phonetic": "けんちく",
+  "explains": "建筑"
+ },
+ {
+  "word": "式",
+  "phonetic": "しき",
+  "explains": "仪式；方式"
+ },
+ {
+  "word": "引き出し",
+  "phonetic": "ひきだし",
+  "explains": "抽屉"
+ },
+ {
+  "word": "引き出す",
+  "phonetic": "ひきだす",
+  "explains": "抽出；引出"
+ },
+ {
+  "word": "引き受ける",
+  "phonetic": "ひきうける",
+  "explains": "承担；接受"
+ },
+ {
+  "word": "引き算",
+  "phonetic": "ひきざん",
+  "explains": "减法"
+ },
+ {
+  "word": "引き返す",
+  "phonetic": "ひきかえす",
+  "explains": "返回；折回"
+ },
+ {
+  "word": "引く",
+  "phonetic": "ひく",
+  "explains": "拉；查（词典）"
+ },
+ {
+  "word": "弱い",
+  "phonetic": "よわい",
+  "explains": "弱的；脆弱的"
+ },
+ {
+  "word": "弱み",
+  "phonetic": "よわみ",
+  "explains": "弱点"
+ },
+ {
+  "word": "弱る",
+  "phonetic": "よわる",
+  "explains": "衰弱；为难"
+ },
+ {
+  "word": "張る",
+  "phonetic": "はる",
+  "explains": "拉；张贴"
+ },
+ {
+  "word": "弾く",
+  "phonetic": "ひく",
+  "explains": "弹（琴）"
+ },
+ {
+  "word": "弾む",
+  "phonetic": "はずむ",
+  "explains": "弹起；兴起"
+ },
+ {
+  "word": "当たらず",
+  "phonetic": "あたらず",
+  "explains": "不中"
+ },
+ {
+  "word": "当たる",
+  "phonetic": "あたる",
+  "explains": "碰上；中（奖）"
+ },
+ {
+  "word": "当てる",
+  "phonetic": "あてる",
+  "explains": "碰上；猜中；贴上"
+ },
+ {
+  "word": "彗星",
+  "phonetic": "すいせい",
+  "explains": "彗星"
+ },
+ {
+  "word": "形",
+  "phonetic": "かたち",
+  "explains": "形状；样式"
+ },
+ {
+  "word": "影",
+  "phonetic": "かげ",
+  "explains": "影子；阴影"
+ },
+ {
+  "word": "影響",
+  "phonetic": "えいきょう",
+  "explains": "影响"
+ },
+ {
+  "word": "役に立つ",
+  "phonetic": "やくにたつ",
+  "explains": "有用；起作用"
+ },
+ {
+  "word": "役員",
+  "phonetic": "やくいん",
+  "explains": "干部；负责人"
+ },
+ {
+  "word": "彼",
+  "phonetic": "かれ",
+  "explains": "他；男朋友"
+ },
+ {
+  "word": "彼女",
+  "phonetic": "かのじょ",
+  "explains": "她；女朋友"
+ },
+ {
+  "word": "彼氏",
+  "phonetic": "かれし",
+  "explains": "男朋友"
+ },
+ {
+  "word": "待ち合わせ",
+  "phonetic": "まちあわせ",
+  "explains": "等候会面"
+ },
+ {
+  "word": "待ち合わせる",
+  "phonetic": "まちあわせる",
+  "explains": "碰头；会面"
+ },
+ {
+  "word": "待つ",
+  "phonetic": "まつ",
+  "explains": "等待"
+ },
+ {
+  "word": "後",
+  "phonetic": "あと",
+  "explains": "之后；还剩"
+ },
+ {
+  "word": "心",
+  "phonetic": "こころ",
+  "explains": "心；精神"
+ },
+ {
+  "word": "必要",
+  "phonetic": "ひつよう",
+  "explains": "必要；必须"
+ },
+ {
+  "word": "忘れる",
+  "phonetic": "わすれる",
+  "explains": "忘记"
+ },
+ {
+  "word": "忘れ物",
+  "phonetic": "わすれもの",
+  "explains": "遗忘的东西"
+ },
+ {
+  "word": "怒鳴る",
+  "phonetic": "どなる",
+  "explains": "大声喊叫"
+ },
+ {
+  "word": "思い出",
+  "phonetic": "おもいで",
+  "explains": "回忆"
+ },
+ {
+  "word": "思い出す",
+  "phonetic": "おもいだす",
+  "explains": "想起"
+ },
+ {
+  "word": "思い切る",
+  "phonetic": "おもいきる",
+  "explains": "下决心"
+ },
+ {
+  "word": "思う",
+  "phonetic": "おもう",
+  "explains": "想；认为"
+ },
+ {
+  "word": "思わず",
+  "phonetic": "おもわず",
+  "explains": "不由得；不由自主"
+ },
+ {
+  "word": "怠ける",
+  "phonetic": "なまける",
+  "explains": "懒惰；懈怠"
+ },
+ {
+  "word": "怠け者",
+  "phonetic": "なまけもの",
+  "explains": "懒汉"
+ },
+ {
+  "word": "急かす",
+  "phonetic": "せかす",
+  "explains": "催促"
+ },
+ {
+  "word": "急に",
+  "phonetic": "きゅうに",
+  "explains": "突然"
+ },
+ {
+  "word": "急行",
+  "phonetic": "きゅうこう",
+  "explains": "快车；赶往"
+ },
+ {
+  "word": "恋",
+  "phonetic": "こい",
+  "explains": "恋爱"
+ },
+ {
+  "word": "息をする",
+  "phonetic": "いきをする",
+  "explains": "呼吸"
+ },
+ {
+  "word": "息子",
+  "phonetic": "むすこ",
+  "explains": "儿子"
+ },
+ {
+  "word": "悔しい",
+  "phonetic": "くやしい",
+  "explains": "懊悔的；不甘心的"
+ },
+ {
+  "word": "悔やむ",
+  "phonetic": "くやむ",
+  "explains": "懊悔"
+ },
+ {
+  "word": "悪い",
+  "phonetic": "わるい",
+  "explains": "坏的；糟糕的"
+ },
+ {
+  "word": "悪口を言う",
+  "phonetic": "わるぐちをいう",
+  "explains": "说坏话"
+ },
+ {
+  "word": "悪気",
+  "phonetic": "わるぎ",
+  "explains": "恶意"
+ },
+ {
+  "word": "悲しい",
+  "phonetic": "かなしい",
+  "explains": "悲伤的"
+ },
+ {
+  "word": "悲しむ",
+  "phonetic": "かなしむ",
+  "explains": "悲伤"
+ },
+ {
+  "word": "惜しい",
+  "phonetic": "おしい",
+  "explains": "可惜的"
+ },
+ {
+  "word": "惡運",
+  "phonetic": "あくうん",
+  "explains": "厄运"
+ },
+ {
+  "word": "愉快",
+  "phonetic": "ゆかい",
+  "explains": "愉快"
+ },
+ {
+  "word": "意味合い",
+  "phonetic": "いみあい",
+  "explains": "含义；意思"
+ },
+ {
+  "word": "意地",
+  "phonetic": "いじ",
+  "explains": "固执；意气"
+ },
+ {
+  "word": "意外",
+  "phonetic": "いがい",
+  "explains": "意外；出乎意料"
+ },
+ {
+  "word": "意志",
+  "phonetic": "いし",
+  "explains": "意志；意向"
+ },
+ {
+  "word": "意見",
+  "phonetic": "いけん",
+  "explains": "意见"
+ },
+ {
+  "word": "意識",
+  "phonetic": "いしき",
+  "explains": "意识；知觉"
+ },
+ {
+  "word": "感じ",
+  "phonetic": "かんじ",
+  "explains": "感觉；印象"
+ },
+ {
+  "word": "感じる",
+  "phonetic": "かんじる",
+  "explains": "感觉；感到"
+ },
+ {
+  "word": "感ずる",
+  "phonetic": "かんずる",
+  "explains": "感觉；感到"
+ },
+ {
+  "word": "感動",
+  "phonetic": "かんどう",
+  "explains": "感动"
+ },
+ {
+  "word": "感心",
+  "phonetic": "かんしん",
+  "explains": "佩服；赞叹"
+ },
+ {
+  "word": "感想",
+  "phonetic": "かんそう",
+  "explains": "感想"
+ },
+ {
+  "word": "感謝",
+  "phonetic": "かんしゃ",
+  "explains": "感谢"
+ },
+ {
+  "word": "慢心",
+  "phonetic": "まんしん",
+  "explains": "自满"
+ },
+ {
+  "word": "慣れる",
+  "phonetic": "なれる",
+  "explains": "习惯；熟练"
+ },
+ {
+  "word": "憎い",
+  "phonetic": "にくい",
+  "explains": "可憎的；可恨的"
+ },
+ {
+  "word": "成功",
+  "phonetic": "せいこう",
+  "explains": "成功"
+ },
+ {
+  "word": "成績",
+  "phonetic": "せいせき",
+  "explains": "成绩"
+ },
+ {
+  "word": "成長",
+  "phonetic": "せいちょう",
+  "explains": "成长；生长"
+ },
+ {
+  "word": "我が家",
+  "phonetic": "わがや",
+  "explains": "我家"
+ },
+ {
+  "word": "我慢",
+  "phonetic": "がまん",
+  "explains": "忍耐；忍受"
+ },
+ {
+  "word": "戦争",
+  "phonetic": "せんそう",
+  "explains": "战争"
+ },
+ {
+  "word": "戸",
+  "phonetic": "と",
+  "explains": "门"
+ },
+ {
+  "word": "戸締まり",
+  "phonetic": "とじまり",
+  "explains": "锁门"
+ },
+ {
+  "word": "戻す",
+  "phonetic": "もどす",
+  "explains": "放回；退回"
+ },
+ {
+  "word": "戻る",
+  "phonetic": "もどる",
+  "explains": "返回；倒退"
+ },
+ {
+  "word": "所",
+  "phonetic": "ところ",
+  "explains": "地方；场所"
+ },
+ {
+  "word": "所が",
+  "phonetic": "ところが",
+  "explains": "然而；可是"
+ },
+ {
+  "word": "手につかない",
+  "phonetic": "てにつかない",
+  "explains": "心不在焉"
+ },
+ {
+  "word": "手に入る",
+  "phonetic": "てにはいる",
+  "explains": "到手；买到"
+ },
+ {
+  "word": "手伝い",
+  "phonetic": "てつだい",
+  "explains": "帮忙；帮手"
+ },
+ {
+  "word": "手伝う",
+  "phonetic": "てつだう",
+  "explains": "帮忙；帮助"
+ },
+ {
+  "word": "手作り",
+  "phonetic": "てづくり",
+  "explains": "手工制作"
+ },
+ {
+  "word": "手作り品",
+  "phonetic": "てづくりひん",
+  "explains": "手工品"
+ },
+ {
+  "word": "手元",
+  "phonetic": "てもと",
+  "explains": "手边；眼前"
+ },
+ {
+  "word": "手前",
+  "phonetic": "てまえ",
+  "explains": "跟前；这边"
+ },
+ {
+  "word": "手帳",
+  "phonetic": "てちょう",
+  "explains": "笔记本；手账"
+ },
+ {
+  "word": "手引き",
+  "phonetic": "てびき",
+  "explains": "指导；启蒙"
+ },
+ {
+  "word": "手掛ける",
+  "phonetic": "てがける",
+  "explains": "亲手做；照料"
+ },
+ {
+  "word": "手提げ",
+  "phonetic": "てさげ",
+  "explains": "手提包"
+ },
+ {
+  "word": "手数料",
+  "phonetic": "てすうりょう",
+  "explains": "手续费"
+ },
+ {
+  "word": "手洗い",
+  "phonetic": "てあらい",
+  "explains": "洗手；厕所"
+ },
+ {
+  "word": "手相",
+  "phonetic": "てそう",
+  "explains": "手相"
+ },
+ {
+  "word": "手続き",
+  "phonetic": "てつづき",
+  "explains": "手续"
+ },
+ {
+  "word": "手続きする",
+  "phonetic": "てつづきする",
+  "explains": "办手续"
+ },
+ {
+  "word": "手芸",
+  "phonetic": "しゅげい",
+  "explains": "手工艺"
+ },
+ {
+  "word": "手術",
+  "phonetic": "しゅじゅつ",
+  "explains": "手术"
+ },
+ {
+  "word": "手術室",
+  "phonetic": "しゅじゅつしつ",
+  "explains": "手术室"
+ },
+ {
+  "word": "手袋",
+  "phonetic": "てぶくろ",
+  "explains": "手套"
+ },
+ {
+  "word": "手遅れ",
+  "phonetic": "ておくれ",
+  "explains": "耽误；过迟"
+ },
+ {
+  "word": "手配",
+  "phonetic": "てはい",
+  "explains": "筹备；安排"
+ },
+ {
+  "word": "手間",
+  "phonetic": "てま",
+  "explains": "工夫；劳力"
+ },
+ {
+  "word": "手首",
+  "phonetic": "てくび",
+  "explains": "手腕"
+ },
+ {
+  "word": "才",
+  "phonetic": "さい",
+  "explains": "岁；才能"
+ },
+ {
+  "word": "打つ",
+  "phonetic": "うつ",
+  "explains": "打；敲"
+ },
+ {
+  "word": "払い戻し",
+  "phonetic": "はらいもどし",
+  "explains": "退款"
+ },
+ {
+  "word": "批評",
+  "phonetic": "ひひょう",
+  "explains": "批评；评论"
+ },
+ {
+  "word": "抑える",
+  "phonetic": "おさえる",
+  "explains": "按住；抑制"
+ },
+ {
+  "word": "投げる",
+  "phonetic": "なげる",
+  "explains": "投；扔"
+ },
+ {
+  "word": "折り紙",
+  "phonetic": "おりがみ",
+  "explains": "折纸"
+ },
+ {
+  "word": "折り返す",
+  "phonetic": "おりかえす",
+  "explains": "折回；回电"
+ },
+ {
+  "word": "折れる",
+  "phonetic": "おれる",
+  "explains": "折断；拐弯"
+ },
+ {
+  "word": "持つ",
+  "phonetic": "もつ",
+  "explains": "拿；持有"
+ },
+ {
+  "word": "指",
+  "phonetic": "ゆび",
+  "explains": "手指"
+ },
+ {
+  "word": "指す",
+  "phonetic": "さす",
+  "explains": "指；指向"
+ },
+ {
+  "word": "指差す",
+  "phonetic": "ゆびさす",
+  "explains": "用手指"
+ },
+ {
+  "word": "指輪",
+  "phonetic": "ゆびわ",
+  "explains": "戒指"
+ },
+ {
+  "word": "捕まえる",
+  "phonetic": "つかまえる",
+  "explains": "抓住；捉住"
+ },
+ {
+  "word": "捕まる",
+  "phonetic": "つかまる",
+  "explains": "被抓住"
+ },
+ {
+  "word": "捨てる",
+  "phonetic": "すてる",
+  "explains": "抛弃；扔掉"
+ },
+ {
+  "word": "掛け算",
+  "phonetic": "かけざん",
+  "explains": "乘法"
+ },
+ {
+  "word": "描く",
+  "phonetic": "えがく",
+  "explains": "画；描绘"
+ },
+ {
+  "word": "換える",
+  "phonetic": "かえる",
+  "explains": "换；交换"
+ },
+ {
+  "word": "換気",
+  "phonetic": "かんき",
+  "explains": "换气；通风"
+ },
+ {
+  "word": "携帯",
+  "phonetic": "けいたい",
+  "explains": "手机"
+ },
+ {
+  "word": "撮る",
+  "phonetic": "とる",
+  "explains": "拍摄"
+ },
+ {
+  "word": "擦る",
+  "phonetic": "する",
+  "explains": "摩擦"
+ },
+ {
+  "word": "支度",
+  "phonetic": "したく",
+  "explains": "准备"
+ },
+ {
+  "word": "支度が出来た",
+  "phonetic": "したくができた",
+  "explains": "准备好了"
+ },
+ {
+  "word": "改めて",
+  "phonetic": "あらためて",
+  "explains": "重新；再"
+ },
+ {
+  "word": "改める",
+  "phonetic": "あらためる",
+  "explains": "改正；改掉"
+ },
+ {
+  "word": "教科書",
+  "phonetic": "きょうかしょ",
+  "explains": "教科书"
+ },
+ {
+  "word": "散々",
+  "phonetic": "さんざん",
+  "explains": "狠狠地；糟糕"
+ },
+ {
+  "word": "散らかす",
+  "phonetic": "ちらかす",
+  "explains": "弄乱"
+ },
+ {
+  "word": "散らかる",
+  "phonetic": "ちらかる",
+  "explains": "零乱；杂乱"
+ },
+ {
+  "word": "散らす",
+  "phonetic": "ちらす",
+  "explains": "散开；驱散"
+ },
+ {
+  "word": "散布",
+  "phonetic": "さんぷ",
+  "explains": "散布"
+ },
+ {
+  "word": "散歩",
+  "phonetic": "さんぽ",
+  "explains": "散步"
+ },
+ {
+  "word": "数",
+  "phonetic": "かず",
+  "explains": "数；数量"
+ },
+ {
+  "word": "数える",
+  "phonetic": "かぞえる",
+  "explains": "数；计算"
+ },
+ {
+  "word": "整う",
+  "phonetic": "ととのう",
+  "explains": "齐备；调整好"
+ },
+ {
+  "word": "整える",
+  "phonetic": "ととのえる",
+  "explains": "整理；备齐"
+ },
+ {
+  "word": "敵",
+  "phonetic": "てき",
+  "explains": "敌人；对手"
+ },
+ {
+  "word": "敷く",
+  "phonetic": "しく",
+  "explains": "铺；垫"
+ },
+ {
+  "word": "断る",
+  "phonetic": "ことわる",
+  "explains": "拒绝；谢绝"
+ },
+ {
+  "word": "方",
+  "phonetic": "ほう",
+  "explains": "方向；方面"
+ },
+ {
+  "word": "日差し",
+  "phonetic": "ひざし",
+  "explains": "阳光"
+ },
+ {
+  "word": "日帰り",
+  "phonetic": "ひがえり",
+  "explains": "当日往返"
+ },
+ {
+  "word": "日常",
+  "phonetic": "にちじょう",
+  "explains": "日常"
+ },
+ {
+  "word": "日当たり",
+  "phonetic": "ひあたり",
+  "explains": "向阳；日照"
+ },
+ {
+  "word": "日程",
+  "phonetic": "にってい",
+  "explains": "日程"
+ },
+ {
+  "word": "日記",
+  "phonetic": "にっき",
+  "explains": "日记"
+ },
+ {
+  "word": "早々",
+  "phonetic": "そうそう",
+  "explains": "刚刚；急忙"
+ },
+ {
+  "word": "明け方",
+  "phonetic": "あけがた",
+  "explains": "黎明；拂晓"
+ },
+ {
+  "word": "明るい",
+  "phonetic": "あかるい",
+  "explains": "明亮；开朗；熟悉"
+ },
+ {
+  "word": "明日の朝",
+  "phonetic": "あすのあさ",
+  "explains": "明天早上"
+ },
+ {
+  "word": "易しい",
+  "phonetic": "やさしい",
+  "explains": "容易的；温柔的"
+ },
+ {
+  "word": "昔",
+  "phonetic": "むかし",
+  "explains": "从前；往昔"
+ },
+ {
+  "word": "映す",
+  "phonetic": "うつす",
+  "explains": "放映；照映"
+ },
+ {
+  "word": "映る",
+  "phonetic": "うつる",
+  "explains": "映；照"
+ },
+ {
+  "word": "映像",
+  "phonetic": "えいぞう",
+  "explains": "影像；图像"
+ },
+ {
+  "word": "映画",
+  "phonetic": "えいが",
+  "explains": "电影"
+ },
+ {
+  "word": "是非",
+  "phonetic": "ぜひ",
+  "explains": "务必；一定"
+ },
+ {
+  "word": "時",
+  "phonetic": "とき",
+  "explains": "时候；时间"
+ },
+ {
+  "word": "時々",
+  "phonetic": "ときどき",
+  "explains": "有时；时常"
+ },
+ {
+  "word": "晒す",
+  "phonetic": "さらす",
+  "explains": "暴露；晾晒"
+ },
+ {
+  "word": "晩",
+  "phonetic": "ばん",
+  "explains": "晚上"
+ },
+ {
+  "word": "普通",
+  "phonetic": "ふつう",
+  "explains": "普通；通常"
+ },
+ {
+  "word": "景気",
+  "phonetic": "けいき",
+  "explains": "景气；行情"
+ },
+ {
+  "word": "景色",
+  "phonetic": "けしき",
+  "explains": "风景；景色"
+ },
+ {
+  "word": "晴れ",
+  "phonetic": "はれ",
+  "explains": "晴天"
+ },
+ {
+  "word": "晴れる",
+  "phonetic": "はれる",
+  "explains": "晴；放晴"
+ },
+ {
+  "word": "暖まる",
+  "phonetic": "あたたまる",
+  "explains": "变暖；感到温暖"
+ },
+ {
+  "word": "暗い",
+  "phonetic": "くらい",
+  "explains": "暗的；阴暗的"
+ },
+ {
+  "word": "暮らし",
+  "phonetic": "くらし",
+  "explains": "生活"
+ },
+ {
+  "word": "暮らす",
+  "phonetic": "くらす",
+  "explains": "生活；过日子"
+ },
+ {
+  "word": "曇り",
+  "phonetic": "くもり",
+  "explains": "阴天"
+ },
+ {
+  "word": "更に",
+  "phonetic": "さらに",
+  "explains": "更；进一步"
+ },
+ {
+  "word": "替える",
+  "phonetic": "かえる",
+  "explains": "更换；替换"
+ },
+ {
+  "word": "最も",
+  "phonetic": "もっとも",
+  "explains": "最；极其"
+ },
+ {
+  "word": "最中",
+  "phonetic": "さいちゅう",
+  "explains": "正在…之中"
+ },
+ {
+  "word": "最初",
+  "phonetic": "さいしょ",
+  "explains": "最初；最先"
+ },
+ {
+  "word": "最後",
+  "phonetic": "さいご",
+  "explains": "最后；最终"
+ },
+ {
+  "word": "最近",
+  "phonetic": "さいきん",
+  "explains": "最近；近来"
+ },
+ {
+  "word": "月曜日",
+  "phonetic": "げつようび",
+  "explains": "星期一"
+ },
+ {
+  "word": "木",
+  "phonetic": "き",
+  "explains": "树；木头"
+ },
+ {
+  "word": "未来",
+  "phonetic": "みらい",
+  "explains": "未来"
+ },
+ {
+  "word": "村",
+  "phonetic": "むら",
+  "explains": "村；村庄"
+ },
+ {
+  "word": "束縛",
+  "phonetic": "そくばく",
+  "explains": "束缚"
+ },
+ {
+  "word": "条件",
+  "phonetic": "じょうけん",
+  "explains": "条件"
+ },
+ {
+  "word": "東",
+  "phonetic": "ひがし",
+  "explains": "东；东方"
+ },
+ {
+  "word": "果物",
+  "phonetic": "くだもの",
+  "explains": "水果"
+ },
+ {
+  "word": "枠",
+  "phonetic": "わく",
+  "explains": "框；范围"
+ },
+ {
+  "word": "枯れる",
+  "phonetic": "かれる",
+  "explains": "枯萎"
+ },
+ {
+  "word": "柔らか",
+  "phonetic": "やわらか",
+  "explains": "柔软"
+ },
+ {
+  "word": "柔らかい",
+  "phonetic": "やわらかい",
+  "explains": "柔软的"
+ },
+ {
+  "word": "柔道",
+  "phonetic": "じゅうどう",
+  "explains": "柔道"
+ },
+ {
+  "word": "柴犬",
+  "phonetic": "しばいぬ",
+  "explains": "柴犬"
+ },
+ {
+  "word": "栄養",
+  "phonetic": "えいよう",
+  "explains": "营养"
+ },
+ {
+  "word": "株",
+  "phonetic": "かぶ",
+  "explains": "股票；树桩"
+ },
+ {
+  "word": "格式",
+  "phonetic": "かくしき",
+  "explains": "格式；规格"
+ },
+ {
+  "word": "案内",
+  "phonetic": "あんない",
+  "explains": "引导；介绍"
+ },
+ {
+  "word": "案外",
+  "phonetic": "あんがい",
+  "explains": "意外地；出乎意料"
+ },
+ {
+  "word": "森",
+  "phonetic": "もり",
+  "explains": "森林"
+ },
+ {
+  "word": "椅子",
+  "phonetic": "いす",
+  "explains": "椅子"
+ },
+ {
+  "word": "植える",
+  "phonetic": "うえる",
+  "explains": "种植"
+ },
+ {
+  "word": "横",
+  "phonetic": "よこ",
+  "explains": "横；旁边"
+ },
+ {
+  "word": "横たわる",
+  "phonetic": "よこたわる",
+  "explains": "横卧"
+ },
+ {
+  "word": "横切る",
+  "phonetic": "よこぎる",
+  "explains": "横穿"
+ },
+ {
+  "word": "機嫌",
+  "phonetic": "きげん",
+  "explains": "心情；情绪"
+ },
+ {
+  "word": "欠ける",
+  "phonetic": "かける",
+  "explains": "缺少；缺损"
+ },
+ {
+  "word": "止まる",
+  "phonetic": "とまる",
+  "explains": "停止"
+ },
+ {
+  "word": "止まれ",
+  "phonetic": "とまれ",
+  "explains": "停下"
+ },
+ {
+  "word": "止む",
+  "phonetic": "やむ",
+  "explains": "停止"
+ },
+ {
+  "word": "止める",
+  "phonetic": "やめる",
+  "explains": "停止；放弃"
+ },
+ {
+  "word": "歩く",
+  "phonetic": "あるく",
+  "explains": "步行"
+ },
+ {
+  "word": "死ぬ",
+  "phonetic": "しぬ",
+  "explains": "死"
+ },
+ {
+  "word": "残す",
+  "phonetic": "のこす",
+  "explains": "留下"
+ },
+ {
+  "word": "残らず",
+  "phonetic": "のこらず",
+  "explains": "全部"
+ },
+ {
+  "word": "残る",
+  "phonetic": "のこる",
+  "explains": "留下；剩余"
+ },
+ {
+  "word": "残念",
+  "phonetic": "ざんねん",
+  "explains": "遗憾；可惜"
+ },
+ {
+  "word": "殿方",
+  "phonetic": "とのがた",
+  "explains": "男人们；男厕所"
+ },
+ {
+  "word": "母親",
+  "phonetic": "ははおや",
+  "explains": "母亲"
+ },
+ {
+  "word": "比べ",
+  "phonetic": "くらべ",
+  "explains": "比较"
+ },
+ {
+  "word": "比べる",
+  "phonetic": "くらべる",
+  "explains": "比较"
+ },
+ {
+  "word": "比較",
+  "phonetic": "ひかく",
+  "explains": "比较"
+ },
+ {
+  "word": "気",
+  "phonetic": "き",
+  "explains": "气；心绪"
+ },
+ {
+  "word": "気に入る",
+  "phonetic": "きにいる",
+  "explains": "称心；中意"
+ },
+ {
+  "word": "気持ち",
+  "phonetic": "きもち",
+  "explains": "心情；感受"
+ },
+ {
+  "word": "氷",
+  "phonetic": "こおり",
+  "explains": "冰"
+ },
+ {
+  "word": "求める",
+  "phonetic": "もとめる",
+  "explains": "寻求；要求"
+ },
+ {
+  "word": "池",
+  "phonetic": "いけ",
+  "explains": "池塘"
+ },
+ {
+  "word": "決して",
+  "phonetic": "けっして",
+  "explains": "决（不）"
+ },
+ {
+  "word": "決して～ない",
+  "phonetic": "けっして～ない",
+  "explains": "决不"
+ },
+ {
+  "word": "決まる",
+  "phonetic": "きまる",
+  "explains": "决定；规定"
+ },
+ {
+  "word": "決める",
+  "phonetic": "きめる",
+  "explains": "决定；约定"
+ },
+ {
+  "word": "汽車",
+  "phonetic": "きしゃ",
+  "explains": "火车"
+ },
+ {
+  "word": "沈む",
+  "phonetic": "しずむ",
+  "explains": "下沉；消沉"
+ },
+ {
+  "word": "沈黙",
+  "phonetic": "ちんもく",
+  "explains": "沉默"
+ },
+ {
+  "word": "沈黙する",
+  "phonetic": "ちんもくする",
+  "explains": "沉默"
+ },
+ {
+  "word": "沸く",
+  "phonetic": "わく",
+  "explains": "沸腾"
+ },
+ {
+  "word": "油",
+  "phonetic": "あぶら",
+  "explains": "油"
+ },
+ {
+  "word": "油断",
+  "phonetic": "ゆだん",
+  "explains": "疏忽；大意"
+ },
+ {
+  "word": "泊",
+  "phonetic": "はく",
+  "explains": "（住宿）晚"
+ },
+ {
+  "word": "泊まり",
+  "phonetic": "とまり",
+  "explains": "住宿；过夜"
+ },
+ {
+  "word": "泊まる",
+  "phonetic": "とまる",
+  "explains": "住宿；停留"
+ },
+ {
+  "word": "泊め",
+  "phonetic": "とめ",
+  "explains": "留宿"
+ },
+ {
+  "word": "泊める",
+  "phonetic": "とめる",
+  "explains": "留宿"
+ },
+ {
+  "word": "波",
+  "phonetic": "なみ",
+  "explains": "波浪"
+ },
+ {
+  "word": "泣く",
+  "phonetic": "なく",
+  "explains": "哭"
+ },
+ {
+  "word": "泥棒",
+  "phonetic": "どろぼう",
+  "explains": "小偷"
+ },
+ {
+  "word": "注意",
+  "phonetic": "ちゅうい",
+  "explains": "注意；小心"
+ },
+ {
+  "word": "注文",
+  "phonetic": "ちゅうもん",
+  "explains": "订购；要求"
+ },
+ {
+  "word": "泳ぐ",
+  "phonetic": "およぐ",
+  "explains": "游泳"
+ },
+ {
+  "word": "洗剤",
+  "phonetic": "せんざい",
+  "explains": "洗涤剂"
+ },
+ {
+  "word": "洗剤を入れる",
+  "phonetic": "せんざいをいれる",
+  "explains": "放洗涤剂"
+ },
+ {
+  "word": "洗濯",
+  "phonetic": "せんたく",
+  "explains": "洗衣服；洗涤"
+ },
+ {
+  "word": "洗濯物",
+  "phonetic": "せんたくもの",
+  "explains": "洗的衣服"
+ },
+ {
+  "word": "洗面所",
+  "phonetic": "せんめんじょ",
+  "explains": "洗脸间；盥洗室"
+ },
+ {
+  "word": "流し",
+  "phonetic": "ながし",
+  "explains": "水槽；洗涤处"
+ },
+ {
+  "word": "流れる",
+  "phonetic": "ながれる",
+  "explains": "流；流逝"
+ },
+ {
+  "word": "海",
+  "phonetic": "うみ",
+  "explains": "海"
+ },
+ {
+  "word": "海辺",
+  "phonetic": "うみべ",
+  "explains": "海边"
+ },
+ {
+  "word": "消える",
+  "phonetic": "きえる",
+  "explains": "消失；熄灭"
+ },
+ {
+  "word": "涙",
+  "phonetic": "なみだ",
+  "explains": "眼泪"
+ },
+ {
+  "word": "涼しい",
+  "phonetic": "すずしい",
+  "explains": "凉爽的"
+ },
+ {
+  "word": "涼む",
+  "phonetic": "すずむ",
+  "explains": "乘凉"
+ },
+ {
+  "word": "清い",
+  "phonetic": "きよい",
+  "explains": "清澈的；纯洁的"
+ },
+ {
+  "word": "済ませ",
+  "phonetic": "すませ",
+  "explains": "办完"
+ },
+ {
+  "word": "済ませる",
+  "phonetic": "すませる",
+  "explains": "办完"
+ },
+ {
+  "word": "済む",
+  "phonetic": "すむ",
+  "explains": "结束；解决"
+ },
+ {
+  "word": "渡す",
+  "phonetic": "わたす",
+  "explains": "交给"
+ },
+ {
+  "word": "渡る",
+  "phonetic": "わたる",
+  "explains": "过；渡"
+ },
+ {
+  "word": "温まる",
+  "phonetic": "あたたまる",
+  "explains": "感到温暖"
+ },
+ {
+  "word": "温度",
+  "phonetic": "おんど",
+  "explains": "温度"
+ },
+ {
+  "word": "湧き水",
+  "phonetic": "わきみず",
+  "explains": "泉水"
+ },
+ {
+  "word": "湧く",
+  "phonetic": "わく",
+  "explains": "涌出；出现"
+ },
+ {
+  "word": "湯",
+  "phonetic": "ゆ",
+  "explains": "热水；温泉"
+ },
+ {
+  "word": "湯気",
+  "phonetic": "ゆげ",
+  "explains": "蒸汽"
+ },
+ {
+  "word": "湿っぽい",
+  "phonetic": "しっけっぽい",
+  "explains": "潮湿的"
+ },
+ {
+  "word": "湿る",
+  "phonetic": "しめる",
+  "explains": "受潮"
+ },
+ {
+  "word": "湿布",
+  "phonetic": "しっぷ",
+  "explains": "湿敷；膏药"
+ },
+ {
+  "word": "湿気",
+  "phonetic": "しっけ",
+  "explains": "湿气"
+ },
+ {
+  "word": "満員",
+  "phonetic": "まんいん",
+  "explains": "满员"
+ },
+ {
+  "word": "満点",
+  "phonetic": "まんてん",
+  "explains": "满分"
+ },
+ {
+  "word": "満足",
+  "phonetic": "まんぞく",
+  "explains": "满足；满意"
+ },
+ {
+  "word": "準備",
+  "phonetic": "じゅんび",
+  "explains": "准备"
+ },
+ {
+  "word": "溜める",
+  "phonetic": "ためる",
+  "explains": "积蓄；积攒"
+ },
+ {
+  "word": "溶ける",
+  "phonetic": "とける",
+  "explains": "溶解；融化"
+ },
+ {
+  "word": "滑る",
+  "phonetic": "すべる",
+  "explains": "滑；滑倒"
+ },
+ {
+  "word": "滲む",
+  "phonetic": "にじむ",
+  "explains": "渗；模糊"
+ },
+ {
+  "word": "滴る",
+  "phonetic": "したたる",
+  "explains": "滴落"
+ },
+ {
+  "word": "漢字",
+  "phonetic": "かんじ",
+  "explains": "汉字"
+ },
+ {
+  "word": "激しい",
+  "phonetic": "はげしい",
+  "explains": "激烈的；剧烈的"
+ },
+ {
+  "word": "火事",
+  "phonetic": "かじ",
+  "explains": "火灾"
+ },
+ {
+  "word": "灯火",
+  "phonetic": "ともしび",
+  "explains": "灯火"
+ },
+ {
+  "word": "点",
+  "phonetic": "てん",
+  "explains": "点；分数"
+ },
+ {
+  "word": "点々",
+  "phonetic": "てんてん",
+  "explains": "点点；散布"
+ },
+ {
+  "word": "点呼",
+  "phonetic": "てんこ",
+  "explains": "点名"
+ },
+ {
+  "word": "点字",
+  "phonetic": "てんじ",
+  "explains": "盲文"
+ },
+ {
+  "word": "点数",
+  "phonetic": "てんすう",
+  "explains": "分数；点数"
+ },
+ {
+  "word": "点検",
+  "phonetic": "てんけん",
+  "explains": "检查；检点"
+ },
+ {
+  "word": "無事",
+  "phonetic": "ぶじ",
+  "explains": "平安；无事"
+ },
+ {
+  "word": "無理",
+  "phonetic": "むり",
+  "explains": "勉强；不合理"
+ },
+ {
+  "word": "無理やり",
+  "phonetic": "むりやり",
+  "explains": "强迫；硬要"
+ },
+ {
+  "word": "無駄",
+  "phonetic": "むだ",
+  "explains": "徒劳；浪费"
+ },
+ {
+  "word": "無駄話",
+  "phonetic": "むだばなし",
+  "explains": "闲聊"
+ },
+ {
+  "word": "焦がす",
+  "phonetic": "こがす",
+  "explains": "烧焦"
+ },
+ {
+  "word": "焦げる",
+  "phonetic": "こげる",
+  "explains": "焦；糊"
+ },
+ {
+  "word": "然し",
+  "phonetic": "しかし",
+  "explains": "但是"
+ },
+ {
+  "word": "焼く",
+  "phonetic": "やく",
+  "explains": "烧；烤"
+ },
+ {
+  "word": "焼ける",
+  "phonetic": "やける",
+  "explains": "烤好；晒黑"
+ },
+ {
+  "word": "照れる",
+  "phonetic": "てれる",
+  "explains": "害羞；难为情"
+ },
+ {
+  "word": "照明",
+  "phonetic": "しょうめい",
+  "explains": "照明"
+ },
+ {
+  "word": "爪",
+  "phonetic": "つめ",
+  "explains": "指甲"
+ },
+ {
+  "word": "片付く",
+  "phonetic": "かたづく",
+  "explains": "收拾好；解决"
+ },
+ {
+  "word": "片付ける",
+  "phonetic": "かたづける",
+  "explains": "收拾；整理"
+ },
+ {
+  "word": "片仮名",
+  "phonetic": "かたかな",
+  "explains": "片假名"
+ },
+ {
+  "word": "片道",
+  "phonetic": "かたみち",
+  "explains": "单程"
+ },
+ {
+  "word": "物語",
+  "phonetic": "ものがたり",
+  "explains": "故事"
+ },
+ {
+  "word": "物質",
+  "phonetic": "ぶっしつ",
+  "explains": "物质"
+ },
+ {
+  "word": "特に",
+  "phonetic": "とくに",
+  "explains": "特别"
+ },
+ {
+  "word": "特別",
+  "phonetic": "とくべつ",
+  "explains": "特别"
+ },
+ {
+  "word": "特定",
+  "phonetic": "とくてい",
+  "explains": "特定"
+ },
+ {
+  "word": "特徴",
+  "phonetic": "とくちょう",
+  "explains": "特征"
+ },
+ {
+  "word": "特急",
+  "phonetic": "とっきゅう",
+  "explains": "特快"
+ },
+ {
+  "word": "特産品",
+  "phonetic": "とくさんぴん",
+  "explains": "特产"
+ },
+ {
+  "word": "特色",
+  "phonetic": "とくしょく",
+  "explains": "特色"
+ },
+ {
+  "word": "独身",
+  "phonetic": "どくしん",
+  "explains": "独身；单身"
+ },
+ {
+  "word": "狭い",
+  "phonetic": "せまい",
+  "explains": "狭窄的"
+ },
+ {
+  "word": "狭める",
+  "phonetic": "せばめる",
+  "explains": "使变窄；缩小"
+ },
+ {
+  "word": "猿",
+  "phonetic": "さる",
+  "explains": "猴子"
+ },
+ {
+  "word": "玩む",
+  "phonetic": "もてあそぶ",
+  "explains": "玩弄"
+ },
+ {
+  "word": "珍しい",
+  "phonetic": "めずらしい",
+  "explains": "新奇；稀罕"
+ },
+ {
+  "word": "現れる",
+  "phonetic": "あらわれる",
+  "explains": "出现；显露"
+ },
+ {
+  "word": "現場",
+  "phonetic": "げんば",
+  "explains": "现场"
+ },
+ {
+  "word": "現象",
+  "phonetic": "げんしょう",
+  "explains": "现象"
+ },
+ {
+  "word": "甘い",
+  "phonetic": "あまい",
+  "explains": "甜；宽松；天真"
+ },
+ {
+  "word": "甘える",
+  "phonetic": "あまえる",
+  "explains": "撒娇；利用"
+ },
+ {
+  "word": "甚だしい",
+  "phonetic": "はなはだしい",
+  "explains": "非常；过分"
+ },
+ {
+  "word": "生きる",
+  "phonetic": "いきる",
+  "explains": "活着；生活"
+ },
+ {
+  "word": "生まれ",
+  "phonetic": "うまれ",
+  "explains": "出生"
+ },
+ {
+  "word": "生垣",
+  "phonetic": "いけがき",
+  "explains": "树篱"
+ },
+ {
+  "word": "生徒",
+  "phonetic": "せいと",
+  "explains": "学生"
+ },
+ {
+  "word": "生活",
+  "phonetic": "せいかつ",
+  "explains": "生活"
+ },
+ {
+  "word": "生活費",
+  "phonetic": "せいかつひ",
+  "explains": "生活费"
+ },
+ {
+  "word": "用意",
+  "phonetic": "ようい",
+  "explains": "准备；预备"
+ },
+ {
+  "word": "申し上げる",
+  "phonetic": "もうしあげる",
+  "explains": "说（谦语）"
+ },
+ {
+  "word": "申し訳",
+  "phonetic": "もうしわけ",
+  "explains": "辩解；道歉"
+ },
+ {
+  "word": "申し込む",
+  "phonetic": "もうしこむ",
+  "explains": "申请；报名"
+ },
+ {
+  "word": "申す",
+  "phonetic": "もうす",
+  "explains": "说（谦语）"
+ },
+ {
+  "word": "申請",
+  "phonetic": "しんせい",
+  "explains": "申请"
+ },
+ {
+  "word": "申込書",
+  "phonetic": "もうしこみしょ",
+  "explains": "申请书"
+ },
+ {
+  "word": "男の人",
+  "phonetic": "おとこのひと",
+  "explains": "男人"
+ },
+ {
+  "word": "男の子",
+  "phonetic": "おとこのこ",
+  "explains": "男孩"
+ },
+ {
+  "word": "町",
+  "phonetic": "まち",
+  "explains": "城镇；街"
+ },
+ {
+  "word": "疲れ",
+  "phonetic": "つかれ",
+  "explains": "疲劳"
+ },
+ {
+  "word": "疲れる",
+  "phonetic": "つかれる",
+  "explains": "疲劳；累"
+ },
+ {
+  "word": "病む",
+  "phonetic": "やむ",
+  "explains": "生病；忧虑"
+ },
+ {
+  "word": "病気",
+  "phonetic": "びょうき",
+  "explains": "疾病"
+ },
+ {
+  "word": "病院",
+  "phonetic": "びょういん",
+  "explains": "医院"
+ },
+ {
+  "word": "痛い",
+  "phonetic": "いたい",
+  "explains": "疼的；痛的"
+ },
+ {
+  "word": "痛み",
+  "phonetic": "いたみ",
+  "explains": "疼；痛；损伤"
+ },
+ {
+  "word": "発表",
+  "phonetic": "はっぴょう",
+  "explains": "发表；发布"
+ },
+ {
+  "word": "発見",
+  "phonetic": "はっけん",
+  "explains": "发现"
+ },
+ {
+  "word": "発音",
+  "phonetic": "はつおん",
+  "explains": "发音"
+ },
+ {
+  "word": "登る",
+  "phonetic": "のぼる",
+  "explains": "爬；登"
+ },
+ {
+  "word": "白い",
+  "phonetic": "しろい",
+  "explains": "白色的"
+ },
+ {
+  "word": "百",
+  "phonetic": "ひゃく",
+  "explains": "百"
+ },
+ {
+  "word": "的",
+  "phonetic": "まと",
+  "explains": "靶子；目标"
+ },
+ {
+  "word": "皆さん",
+  "phonetic": "みなさん",
+  "explains": "诸位；大家"
+ },
+ {
+  "word": "皮肉",
+  "phonetic": "ひにく",
+  "explains": "讽刺；挖苦"
+ },
+ {
+  "word": "皮膚",
+  "phonetic": "ひふ",
+  "explains": "皮肤"
+ },
+ {
+  "word": "皮膚科",
+  "phonetic": "ひふか",
+  "explains": "皮肤科"
+ },
+ {
+  "word": "皿",
+  "phonetic": "さら",
+  "explains": "盘子"
+ },
+ {
+  "word": "目上",
+  "phonetic": "めうえ",
+  "explains": "长辈；上司"
+ },
+ {
+  "word": "目下",
+  "phonetic": "めした",
+  "explains": "部下；晚辈"
+ },
+ {
+  "word": "目指す",
+  "phonetic": "めざす",
+  "explains": "以…为目标"
+ },
+ {
+  "word": "目的",
+  "phonetic": "もくてき",
+  "explains": "目的"
+ },
+ {
+  "word": "目立つ",
+  "phonetic": "めだつ",
+  "explains": "显眼；引人注目"
+ },
+ {
+  "word": "目覚まし時計",
+  "phonetic": "めざましどけい",
+  "explains": "闹钟"
+ },
+ {
+  "word": "目覚める",
+  "phonetic": "めざめる",
+  "explains": "睡醒；觉醒"
+ },
+ {
+  "word": "直し",
+  "phonetic": "なおし",
+  "explains": "修理；修改"
+ },
+ {
+  "word": "直す",
+  "phonetic": "なおす",
+  "explains": "修理；改正"
+ },
+ {
+  "word": "直ちに",
+  "phonetic": "ただちに",
+  "explains": "立刻；直接"
+ },
+ {
+  "word": "直り",
+  "phonetic": "なおり",
+  "explains": "痊愈；修好"
+ },
+ {
+  "word": "直る",
+  "phonetic": "なおる",
+  "explains": "修好；痊愈"
+ },
+ {
+  "word": "直前",
+  "phonetic": "ちょくぜん",
+  "explains": "即将之前"
+ },
+ {
+  "word": "直後",
+  "phonetic": "ちょくご",
+  "explains": "…之后马上"
+ },
+ {
+  "word": "直航",
+  "phonetic": "ちょっこう",
+  "explains": "直达"
+ },
+ {
+  "word": "看護婦",
+  "phonetic": "かんごふ",
+  "explains": "护士"
+ },
+ {
+  "word": "県",
+  "phonetic": "けん",
+  "explains": "县"
+ },
+ {
+  "word": "真ん中",
+  "phonetic": "まんなか",
+  "explains": "正中间"
+ },
+ {
+  "word": "眺め",
+  "phonetic": "ながめ",
+  "explains": "眺望；景色"
+ },
+ {
+  "word": "眺める",
+  "phonetic": "ながめる",
+  "explains": "眺望；注视"
+ },
+ {
+  "word": "眼鏡",
+  "phonetic": "めがね",
+  "explains": "眼镜"
+ },
+ {
+  "word": "着る",
+  "phonetic": "きる",
+  "explains": "穿（上衣）"
+ },
+ {
+  "word": "矢",
+  "phonetic": "や",
+  "explains": "箭"
+ },
+ {
+  "word": "知らせ",
+  "phonetic": "しらせ",
+  "explains": "通知；消息"
+ },
+ {
+  "word": "知らせる",
+  "phonetic": "しらせる",
+  "explains": "通知；告知"
+ },
+ {
+  "word": "知的",
+  "phonetic": "ちてき",
+  "explains": "智慧的；理智的"
+ },
+ {
+  "word": "石",
+  "phonetic": "いし",
+  "explains": "石头"
+ },
+ {
+  "word": "確か",
+  "phonetic": "たしか",
+  "explains": "确实；大概"
+ },
+ {
+  "word": "確かめる",
+  "phonetic": "たしかめる",
+  "explains": "确认；查明"
+ },
+ {
+  "word": "示す",
+  "phonetic": "しめす",
+  "explains": "出示；表示"
+ },
+ {
+  "word": "社会",
+  "phonetic": "しゃかい",
+  "explains": "社会"
+ },
+ {
+  "word": "社長",
+  "phonetic": "しゃちょう",
+  "explains": "总经理；社长"
+ },
+ {
+  "word": "祝い",
+  "phonetic": "いわい",
+  "explains": "祝贺；贺礼"
+ },
+ {
+  "word": "祝う",
+  "phonetic": "いわう",
+  "explains": "祝贺；庆祝"
+ },
+ {
+  "word": "祭り",
+  "phonetic": "まつり",
+  "explains": "祭祀；节日"
+ },
+ {
+  "word": "禁煙",
+  "phonetic": "きんえん",
+  "explains": "禁烟"
+ },
+ {
+  "word": "私",
+  "phonetic": "わたし",
+  "explains": "我"
+ },
+ {
+  "word": "科目",
+  "phonetic": "かもく",
+  "explains": "科目；学科"
+ },
+ {
+  "word": "移す",
+  "phonetic": "うつす",
+  "explains": "移动；迁移"
+ },
+ {
+  "word": "移る",
+  "phonetic": "うつる",
+  "explains": "转移；感染"
+ },
+ {
+  "word": "税金",
+  "phonetic": "ぜいきん",
+  "explains": "税；税款"
+ },
+ {
+  "word": "種類",
+  "phonetic": "しゅるい",
+  "explains": "种类"
+ },
+ {
+  "word": "積む",
+  "phonetic": "つむ",
+  "explains": "堆；积累"
+ },
+ {
+  "word": "積極的",
+  "phonetic": "せっきょくてき",
+  "explains": "积极的"
+ },
+ {
+  "word": "空き瓶",
+  "phonetic": "あきびん",
+  "explains": "空瓶子"
+ },
+ {
+  "word": "空き缶",
+  "phonetic": "あきかん",
+  "explains": "空罐子"
+ },
+ {
+  "word": "窓",
+  "phonetic": "まど",
+  "explains": "窗户"
+ },
+ {
+  "word": "笑い",
+  "phonetic": "わらい",
+  "explains": "笑；笑声"
+ },
+ {
+  "word": "笑い声",
+  "phonetic": "わらいごえ",
+  "explains": "笑声"
+ },
+ {
+  "word": "笑う",
+  "phonetic": "わらう",
+  "explains": "笑"
+ },
+ {
+  "word": "笑顔",
+  "phonetic": "えがお",
+  "explains": "笑脸；笑容"
+ },
+ {
+  "word": "笑顔に戻る",
+  "phonetic": "えがおにもどる",
+  "explains": "恢复笑容"
+ },
+ {
+  "word": "笑顔を作る",
+  "phonetic": "えがおをつくる",
+  "explains": "露出笑容"
+ },
+ {
+  "word": "等する",
+  "phonetic": "とうする",
+  "explains": "等同"
+ },
+ {
+  "word": "筋肉",
+  "phonetic": "きんにく",
+  "explains": "肌肉"
+ },
+ {
+  "word": "答える",
+  "phonetic": "こたえる",
+  "explains": "回答"
+ },
+ {
+  "word": "答え合わせ",
+  "phonetic": "こたえあわせ",
+  "explains": "对答案"
+ },
+ {
+  "word": "算数",
+  "phonetic": "さんすう",
+  "explains": "算术"
+ },
+ {
+  "word": "箱",
+  "phonetic": "はこ",
+  "explains": "箱子；盒"
+ },
+ {
+  "word": "簡単",
+  "phonetic": "かんたん",
+  "explains": "简单；简易"
+ },
+ {
+  "word": "粗い",
+  "phonetic": "あらい",
+  "explains": "粗糙的；粗略的"
+ },
+ {
+  "word": "約する",
+  "phonetic": "やくする",
+  "explains": "约定"
+ },
+ {
+  "word": "約束",
+  "phonetic": "やくそく",
+  "explains": "约定；承诺"
+ },
+ {
+  "word": "素晴らしい",
+  "phonetic": "すばらしい",
+  "explains": "极好的；了不起的"
+ },
+ {
+  "word": "素直",
+  "phonetic": "すなお",
+  "explains": "坦率；纯真"
+ },
+ {
+  "word": "紹介",
+  "phonetic": "しょうかい",
+  "explains": "介绍"
+ },
+ {
+  "word": "終わる",
+  "phonetic": "おわる",
+  "explains": "结束；完了"
+ },
+ {
+  "word": "組み合わせ",
+  "phonetic": "くみあわせ",
+  "explains": "组合；搭配"
+ },
+ {
+  "word": "組み合わせる",
+  "phonetic": "くみあわせる",
+  "explains": "组合；配合"
+ },
+ {
+  "word": "組む",
+  "phonetic": "くむ",
+  "explains": "合伙；组成"
+ },
+ {
+  "word": "経つ",
+  "phonetic": "たつ",
+  "explains": "（时间）过去"
+ },
+ {
+  "word": "経験",
+  "phonetic": "けいけん",
+  "explains": "经验"
+ },
+ {
+  "word": "結ぶ",
+  "phonetic": "むすぶ",
+  "explains": "系；结合"
+ },
+ {
+  "word": "結婚式",
+  "phonetic": "けっこんしき",
+  "explains": "婚礼"
+ },
+ {
+  "word": "結果",
+  "phonetic": "けっか",
+  "explains": "结果"
+ },
+ {
+  "word": "結構",
+  "phonetic": "けっこう",
+  "explains": "很好；不必"
+ },
+ {
+  "word": "結論",
+  "phonetic": "けつろん",
+  "explains": "结论"
+ },
+ {
+  "word": "給料",
+  "phonetic": "きゅうりょう",
+  "explains": "工资"
+ },
+ {
+  "word": "絵の具",
+  "phonetic": "えのぐ",
+  "explains": "颜料"
+ },
+ {
+  "word": "絶対に",
+  "phonetic": "ぜったいに",
+  "explains": "绝对"
+ },
+ {
+  "word": "緑",
+  "phonetic": "みどり",
+  "explains": "绿；绿色"
+ },
+ {
+  "word": "締める",
+  "phonetic": "しめる",
+  "explains": "系紧；收紧"
+ },
+ {
+  "word": "編む",
+  "phonetic": "あむ",
+  "explains": "编织"
+ },
+ {
+  "word": "緩む",
+  "phonetic": "ゆるむ",
+  "explains": "松；缓和"
+ },
+ {
+  "word": "緩める",
+  "phonetic": "ゆるめる",
+  "explains": "放松；松开"
+ },
+ {
+  "word": "縛る",
+  "phonetic": "しばる",
+  "explains": "绑；束缚"
+ },
+ {
+  "word": "縦",
+  "phonetic": "たて",
+  "explains": "纵；竖"
+ },
+ {
+  "word": "纏める",
+  "phonetic": "まとめる",
+  "explains": "归纳；汇总"
+ },
+ {
+  "word": "缶詰",
+  "phonetic": "かんづめ",
+  "explains": "罐头"
+ },
+ {
+  "word": "置き土産",
+  "phonetic": "おきみやげ",
+  "explains": "临别赠品"
+ },
+ {
+  "word": "置き場",
+  "phonetic": "おきば",
+  "explains": "放置场所"
+ },
+ {
+  "word": "置く",
+  "phonetic": "おく",
+  "explains": "放置；设置"
+ },
+ {
+  "word": "義理",
+  "phonetic": "ぎり",
+  "explains": "情理；义务"
+ },
+ {
+  "word": "翌日",
+  "phonetic": "よくじつ",
+  "explains": "第二天；次日"
+ },
+ {
+  "word": "習う",
+  "phonetic": "ならう",
+  "explains": "学习；练习"
+ },
+ {
+  "word": "考える",
+  "phonetic": "かんがえる",
+  "explains": "思考；考虑"
+ },
+ {
+  "word": "者",
+  "phonetic": "もの",
+  "explains": "人；东西"
+ },
+ {
+  "word": "耳",
+  "phonetic": "みみ",
+  "explains": "耳朵"
+ },
+ {
+  "word": "聞き返す",
+  "phonetic": "ききかえす",
+  "explains": "再问一遍"
+ },
+ {
+  "word": "聞こえる",
+  "phonetic": "きこえる",
+  "explains": "听得见"
+ },
+ {
+  "word": "肌",
+  "phonetic": "はだ",
+  "explains": "皮肤"
+ },
+ {
+  "word": "肝心",
+  "phonetic": "かんじん",
+  "explains": "首要；关键"
+ },
+ {
+  "word": "背中",
+  "phonetic": "せなか",
+  "explains": "背；脊背"
+ },
+ {
+  "word": "背伸び",
+  "phonetic": "せのび",
+  "explains": "踮脚；逞强"
+ },
+ {
+  "word": "背広",
+  "phonetic": "せびろ",
+  "explains": "西装"
+ },
+ {
+  "word": "胸",
+  "phonetic": "むね",
+  "explains": "胸；心胸"
+ },
+ {
+  "word": "腰",
+  "phonetic": "こし",
+  "explains": "腰"
+ },
+ {
+  "word": "腹",
+  "phonetic": "はら",
+  "explains": "肚子"
+ },
+ {
+  "word": "膝",
+  "phonetic": "ひざ",
+  "explains": "膝盖"
+ },
+ {
+  "word": "自信",
+  "phonetic": "じしん",
+  "explains": "自信"
+ },
+ {
+  "word": "自分",
+  "phonetic": "じぶん",
+  "explains": "自己"
+ },
+ {
+  "word": "自動車",
+  "phonetic": "じどうしゃ",
+  "explains": "汽车"
+ },
+ {
+  "word": "興味",
+  "phonetic": "きょうみ",
+  "explains": "兴趣；兴致"
+ },
+ {
+  "word": "舌",
+  "phonetic": "した",
+  "explains": "舌头"
+ },
+ {
+  "word": "航海",
+  "phonetic": "こうかい",
+  "explains": "航海"
+ },
+ {
+  "word": "良い",
+  "phonetic": "よい",
+  "explains": "好的"
+ },
+ {
+  "word": "色",
+  "phonetic": "いろ",
+  "explains": "颜色"
+ },
+ {
+  "word": "色々",
+  "phonetic": "いろいろ",
+  "explains": "各种各样"
+ },
+ {
+  "word": "芝生",
+  "phonetic": "しばふ",
+  "explains": "草坪"
+ },
+ {
+  "word": "花束",
+  "phonetic": "はなたば",
+  "explains": "花束"
+ },
+ {
+  "word": "花瓶",
+  "phonetic": "かびん",
+  "explains": "花瓶"
+ },
+ {
+  "word": "花粉",
+  "phonetic": "かふん",
+  "explains": "花粉"
+ },
+ {
+  "word": "花見",
+  "phonetic": "はなみ",
+  "explains": "赏花"
+ },
+ {
+  "word": "若々しい",
+  "phonetic": "わかわかしい",
+  "explains": "年轻的"
+ },
+ {
+  "word": "若い",
+  "phonetic": "わかい",
+  "explains": "年轻的"
+ },
+ {
+  "word": "若者",
+  "phonetic": "わかもの",
+  "explains": "年轻人"
+ },
+ {
+  "word": "苦しい",
+  "phonetic": "くるしい",
+  "explains": "痛苦；难受"
+ },
+ {
+  "word": "苦情",
+  "phonetic": "くじょう",
+  "explains": "抱怨；投诉"
+ },
+ {
+  "word": "苦手",
+  "phonetic": "にがて",
+  "explains": "不擅长；怕"
+ },
+ {
+  "word": "英語",
+  "phonetic": "えいご",
+  "explains": "英语"
+ },
+ {
+  "word": "茂る",
+  "phonetic": "しげる",
+  "explains": "茂盛"
+ },
+ {
+  "word": "茶色",
+  "phonetic": "ちゃいろ",
+  "explains": "茶色；棕色"
+ },
+ {
+  "word": "荒い",
+  "phonetic": "あらい",
+  "explains": "激烈的；粗暴的"
+ },
+ {
+  "word": "荒い波",
+  "phonetic": "あらいなみ",
+  "explains": "狂浪"
+ },
+ {
+  "word": "行き",
+  "phonetic": "いき",
+  "explains": "去；去的方向"
+ },
+ {
+  "word": "行き先",
+  "phonetic": "いきさき",
+  "explains": "目的地；去向"
+ },
+ {
+  "word": "行き帰り",
+  "phonetic": "いきかえり",
+  "explains": "往返；来回"
+ },
+ {
+  "word": "行き止まり",
+  "phonetic": "いきどまり",
+  "explains": "尽头；死胡同"
+ },
+ {
+  "word": "行き過ぎ",
+  "phonetic": "いきすぎ",
+  "explains": "过度；过头"
+ },
+ {
+  "word": "行く",
+  "phonetic": "いく",
+  "explains": "去"
+ },
+ {
+  "word": "行事",
+  "phonetic": "ぎょうじ",
+  "explains": "活动；仪式"
+ },
+ {
+  "word": "行儀",
+  "phonetic": "ぎょうぎ",
+  "explains": "礼仪；举止"
+ },
+ {
+  "word": "行列のできる",
+  "phonetic": "ぎょうれつのできる",
+  "explains": "排长队的"
+ },
+ {
+  "word": "行動",
+  "phonetic": "こうどう",
+  "explains": "行动"
+ },
+ {
+  "word": "行方",
+  "phonetic": "ゆくえ",
+  "explains": "去向；下落"
+ },
+ {
+  "word": "行方不明",
+  "phonetic": "ゆくえふめい",
+  "explains": "下落不明"
+ },
+ {
+  "word": "行進",
+  "phonetic": "こうしん",
+  "explains": "行进"
+ },
+ {
+  "word": "裏",
+  "phonetic": "うら",
+  "explains": "里面；背面"
+ },
+ {
+  "word": "裏切り",
+  "phonetic": "うらぎり",
+  "explains": "背叛"
+ },
+ {
+  "word": "裏切る",
+  "phonetic": "うらぎる",
+  "explains": "背叛"
+ },
+ {
+  "word": "裸",
+  "phonetic": "はだか",
+  "explains": "裸体"
+ },
+ {
+  "word": "裸足",
+  "phonetic": "はだし",
+  "explains": "赤脚"
+ },
+ {
+  "word": "製品",
+  "phonetic": "せいひん",
+  "explains": "产品；制品"
+ },
+ {
+  "word": "西洋",
+  "phonetic": "せいよう",
+  "explains": "西洋；西方"
+ },
+ {
+  "word": "要る",
+  "phonetic": "いる",
+  "explains": "需要"
+ },
+ {
+  "word": "見える",
+  "phonetic": "みえる",
+  "explains": "看得见"
+ },
+ {
+  "word": "見かける",
+  "phonetic": "みかける",
+  "explains": "偶然看到"
+ },
+ {
+  "word": "見つかる",
+  "phonetic": "みつかる",
+  "explains": "找到；被发现"
+ },
+ {
+  "word": "見つける",
+  "phonetic": "みつける",
+  "explains": "发现；找到"
+ },
+ {
+  "word": "見学",
+  "phonetic": "けんがく",
+  "explains": "参观"
+ },
+ {
+  "word": "見物",
+  "phonetic": "けんぶつ",
+  "explains": "观光；游览"
+ },
+ {
+  "word": "見直す",
+  "phonetic": "みなおす",
+  "explains": "重新看；重新考虑"
+ },
+ {
+  "word": "見舞い",
+  "phonetic": "みまい",
+  "explains": "探望；问候"
+ },
+ {
+  "word": "見舞う",
+  "phonetic": "みまう",
+  "explains": "探望"
+ },
+ {
+  "word": "規則",
+  "phonetic": "きそく",
+  "explains": "规则"
+ },
+ {
+  "word": "規模",
+  "phonetic": "きぼ",
+  "explains": "规模"
+ },
+ {
+  "word": "覚える",
+  "phonetic": "おぼえる",
+  "explains": "记住；学会"
+ },
+ {
+  "word": "覚ます",
+  "phonetic": "さます",
+  "explains": "叫醒"
+ },
+ {
+  "word": "覚める",
+  "phonetic": "さめる",
+  "explains": "醒；减退"
+ },
+ {
+  "word": "親",
+  "phonetic": "おや",
+  "explains": "父母；双亲"
+ },
+ {
+  "word": "親切",
+  "phonetic": "しんせつ",
+  "explains": "热情；好意"
+ },
+ {
+  "word": "親切心",
+  "phonetic": "しんせつしん",
+  "explains": "好心"
+ },
+ {
+  "word": "親子",
+  "phonetic": "おやこ",
+  "explains": "父母与子女"
+ },
+ {
+  "word": "観察",
+  "phonetic": "かんさつ",
+  "explains": "观察"
+ },
+ {
+  "word": "解ける",
+  "phonetic": "とける",
+  "explains": "解开；解除"
+ },
+ {
+  "word": "言う",
+  "phonetic": "いう",
+  "explains": "说；讲"
+ },
+ {
+  "word": "言葉",
+  "phonetic": "ことば",
+  "explains": "语言；词语"
+ },
+ {
+  "word": "言語",
+  "phonetic": "げんご",
+  "explains": "语言"
+ },
+ {
+  "word": "計画的",
+  "phonetic": "けいかくてき",
+  "explains": "有计划的"
+ },
+ {
+  "word": "計算",
+  "phonetic": "けいさん",
+  "explains": "计算"
+ },
+ {
+  "word": "討論",
+  "phonetic": "とうろん",
+  "explains": "讨论"
+ },
+ {
+  "word": "記録",
+  "phonetic": "きろく",
+  "explains": "记录"
+ },
+ {
+  "word": "設備",
+  "phonetic": "せつび",
+  "explains": "设备"
+ },
+ {
+  "word": "訳",
+  "phonetic": "わけ",
+  "explains": "理由；意思"
+ },
+ {
+  "word": "訳す",
+  "phonetic": "やくす",
+  "explains": "翻译"
+ },
+ {
+  "word": "訳ない",
+  "phonetic": "わけない",
+  "explains": "不难；简单"
+ },
+ {
+  "word": "訴える",
+  "phonetic": "うったえる",
+  "explains": "诉说；起诉"
+ },
+ {
+  "word": "試し",
+  "phonetic": "ためし",
+  "explains": "试验；尝试"
+ },
+ {
+  "word": "詩人",
+  "phonetic": "しじん",
+  "explains": "诗人"
+ },
+ {
+  "word": "詰める",
+  "phonetic": "つめる",
+  "explains": "塞进；缩短"
+ },
+ {
+  "word": "話し合い",
+  "phonetic": "はなしあい",
+  "explains": "商议；商谈"
+ },
+ {
+  "word": "話し合う",
+  "phonetic": "はなしあう",
+  "explains": "商量；商谈"
+ },
+ {
+  "word": "話し声",
+  "phonetic": "はなしごえ",
+  "explains": "说话声"
+ },
+ {
+  "word": "話し方",
+  "phonetic": "はなしかた",
+  "explains": "说法；讲话方式"
+ },
+ {
+  "word": "話し相手",
+  "phonetic": "はなしあいて",
+  "explains": "谈话对象"
+ },
+ {
+  "word": "話す",
+  "phonetic": "はなす",
+  "explains": "说话；讲"
+ },
+ {
+  "word": "話題",
+  "phonetic": "わだい",
+  "explains": "话题"
+ },
+ {
+  "word": "詳細",
+  "phonetic": "しょうさい",
+  "explains": "详细"
+ },
+ {
+  "word": "認める",
+  "phonetic": "みとめる",
+  "explains": "认可；承认"
+ },
+ {
+  "word": "認識",
+  "phonetic": "にんしき",
+  "explains": "认识；理解"
+ },
+ {
+  "word": "誘い",
+  "phonetic": "さそい",
+  "explains": "邀请"
+ },
+ {
+  "word": "誘い出す",
+  "phonetic": "さそいだす",
+  "explains": "邀请出来"
+ },
+ {
+  "word": "誘う",
+  "phonetic": "さそう",
+  "explains": "邀请；劝诱"
+ },
+ {
+  "word": "誤る",
+  "phonetic": "あやまる",
+  "explains": "弄错"
+ },
+ {
+  "word": "説得",
+  "phonetic": "せっとく",
+  "explains": "说服"
+ },
+ {
+  "word": "読み方",
+  "phonetic": "よみかた",
+  "explains": "读法"
+ },
+ {
+  "word": "読む",
+  "phonetic": "よむ",
+  "explains": "读；念"
+ },
+ {
+  "word": "読書",
+  "phonetic": "どくしょ",
+  "explains": "读书"
+ },
+ {
+  "word": "調べる",
+  "phonetic": "しらべる",
+  "explains": "调查；查找"
+ },
+ {
+  "word": "謝る",
+  "phonetic": "あやまる",
+  "explains": "道歉；认错"
+ },
+ {
+  "word": "警告",
+  "phonetic": "けいこく",
+  "explains": "警告"
+ },
+ {
+  "word": "負ける",
+  "phonetic": "まける",
+  "explains": "输；屈服"
+ },
+ {
+  "word": "貸す",
+  "phonetic": "かす",
+  "explains": "借出；出租"
+ },
+ {
+  "word": "貼る",
+  "phonetic": "はる",
+  "explains": "贴；粘"
+ },
+ {
+  "word": "賑やか",
+  "phonetic": "にぎやか",
+  "explains": "热闹的"
+ },
+ {
+  "word": "賑わう",
+  "phonetic": "にぎわう",
+  "explains": "热闹；繁荣"
+ },
+ {
+  "word": "質問",
+  "phonetic": "しつもん",
+  "explains": "问题；提问"
+ },
+ {
+  "word": "賭け",
+  "phonetic": "かけ",
+  "explains": "赌；打赌"
+ },
+ {
+  "word": "贈る",
+  "phonetic": "おくる",
+  "explains": "赠送"
+ },
+ {
+  "word": "赤ちゃん",
+  "phonetic": "あかちゃん",
+  "explains": "婴儿"
+ },
+ {
+  "word": "赤ん坊",
+  "phonetic": "あかんぼう",
+  "explains": "婴儿"
+ },
+ {
+  "word": "起こす",
+  "phonetic": "おこす",
+  "explains": "叫醒；引起"
+ },
+ {
+  "word": "起こる",
+  "phonetic": "おこる",
+  "explains": "发生"
+ },
+ {
+  "word": "超える",
+  "phonetic": "こえる",
+  "explains": "超过；越过"
+ },
+ {
+  "word": "越す",
+  "phonetic": "こす",
+  "explains": "越过；度过"
+ },
+ {
+  "word": "趣味",
+  "phonetic": "しゅみ",
+  "explains": "爱好；趣味"
+ },
+ {
+  "word": "足りない",
+  "phonetic": "たりない",
+  "explains": "不足"
+ },
+ {
+  "word": "足りる",
+  "phonetic": "たりる",
+  "explains": "足够"
+ },
+ {
+  "word": "足音",
+  "phonetic": "あしおと",
+  "explains": "脚步声"
+ },
+ {
+  "word": "跳ねる",
+  "phonetic": "はねる",
+  "explains": "跳；溅"
+ },
+ {
+  "word": "踊り",
+  "phonetic": "おどり",
+  "explains": "舞蹈"
+ },
+ {
+  "word": "踊る",
+  "phonetic": "おどる",
+  "explains": "跳舞"
+ },
+ {
+  "word": "身に付ける",
+  "phonetic": "みにつける",
+  "explains": "掌握；学会"
+ },
+ {
+  "word": "転がす",
+  "phonetic": "ころがす",
+  "explains": "滚动；弄倒"
+ },
+ {
+  "word": "転がる",
+  "phonetic": "ころがる",
+  "explains": "滚动；倒下"
+ },
+ {
+  "word": "転倒",
+  "phonetic": "てんとう",
+  "explains": "跌倒；颠倒"
+ },
+ {
+  "word": "転勤",
+  "phonetic": "てんきん",
+  "explains": "调动工作"
+ },
+ {
+  "word": "転売",
+  "phonetic": "てんばい",
+  "explains": "转卖"
+ },
+ {
+  "word": "転職",
+  "phonetic": "てんしょく",
+  "explains": "转职；改行"
+ },
+ {
+  "word": "軽々しい",
+  "phonetic": "かるがるしい",
+  "explains": "轻率的"
+ },
+ {
+  "word": "載る",
+  "phonetic": "のる",
+  "explains": "登载；刊载"
+ },
+ {
+  "word": "輪投げ",
+  "phonetic": "わなげ",
+  "explains": "套圈游戏"
+ },
+ {
+  "word": "輪郭",
+  "phonetic": "りんかく",
+  "explains": "轮廓"
+ },
+ {
+  "word": "辛抱",
+  "phonetic": "しんぼう",
+  "explains": "忍耐；忍受"
+ },
+ {
+  "word": "辞書",
+  "phonetic": "じしょ",
+  "explains": "词典"
+ },
+ {
+  "word": "農業",
+  "phonetic": "のうぎょう",
+  "explains": "农业"
+ },
+ {
+  "word": "迎える",
+  "phonetic": "むかえる",
+  "explains": "迎接"
+ },
+ {
+  "word": "近所",
+  "phonetic": "きんじょ",
+  "explains": "附近；近处"
+ },
+ {
+  "word": "返す",
+  "phonetic": "かえす",
+  "explains": "归还；回答"
+ },
+ {
+  "word": "返事",
+  "phonetic": "へんじ",
+  "explains": "回复；回答"
+ },
+ {
+  "word": "送る",
+  "phonetic": "おくる",
+  "explains": "送；寄；发送"
+ },
+ {
+  "word": "逃げる",
+  "phonetic": "にげる",
+  "explains": "逃跑；逃避"
+ },
+ {
+  "word": "逆さ",
+  "phonetic": "さかさ",
+  "explains": "颠倒；倒"
+ },
+ {
+  "word": "逆に",
+  "phonetic": "ぎゃくに",
+  "explains": "反而"
+ },
+ {
+  "word": "通り",
+  "phonetic": "とおり",
+  "explains": "大街；按照"
+ },
+ {
+  "word": "通る",
+  "phonetic": "とおる",
+  "explains": "通过；穿过"
+ },
+ {
+  "word": "通訳",
+  "phonetic": "つうやく",
+  "explains": "口译"
+ },
+ {
+  "word": "連れ",
+  "phonetic": "つれ",
+  "explains": "同伴；伙伴"
+ },
+ {
+  "word": "連れる",
+  "phonetic": "つれる",
+  "explains": "带；领"
+ },
+ {
+  "word": "連れ出す",
+  "phonetic": "つれだす",
+  "explains": "带出去"
+ },
+ {
+  "word": "進む",
+  "phonetic": "すすむ",
+  "explains": "前进；进展"
+ },
+ {
+  "word": "進める",
+  "phonetic": "すすめる",
+  "explains": "推进；劝"
+ },
+ {
+  "word": "進歩",
+  "phonetic": "しんぽ",
+  "explains": "进步"
+ },
+ {
+  "word": "遅い",
+  "phonetic": "おそい",
+  "explains": "慢的；晚的"
+ },
+ {
+  "word": "遅ればせながら",
+  "phonetic": "おくればせながら",
+  "explains": "迟迟"
+ },
+ {
+  "word": "遅れる",
+  "phonetic": "おくれる",
+  "explains": "迟到；耽误"
+ },
+ {
+  "word": "遊び",
+  "phonetic": "あそび",
+  "explains": "游戏；玩耍"
+ },
+ {
+  "word": "遊ぶ",
+  "phonetic": "あそぶ",
+  "explains": "玩；游玩"
+ },
+ {
+  "word": "運",
+  "phonetic": "うん",
+  "explains": "运气"
+ },
+ {
+  "word": "運がいい",
+  "phonetic": "うんがいい",
+  "explains": "运气好"
+ },
+ {
+  "word": "運ぶ",
+  "phonetic": "はこぶ",
+  "explains": "搬运；运送"
+ },
+ {
+  "word": "運動",
+  "phonetic": "うんどう",
+  "explains": "运动；锻炼"
+ },
+ {
+  "word": "運命",
+  "phonetic": "うんめい",
+  "explains": "命运"
+ },
+ {
+  "word": "運転",
+  "phonetic": "うんてん",
+  "explains": "驾驶；开车"
+ },
+ {
+  "word": "運送",
+  "phonetic": "うんそう",
+  "explains": "运输；运送"
+ },
+ {
+  "word": "過ぎ",
+  "phonetic": "すぎ",
+  "explains": "过度；以后"
+ },
+ {
+  "word": "過ぎる",
+  "phonetic": "すぎる",
+  "explains": "通过；超过"
+ },
+ {
+  "word": "過ごす",
+  "phonetic": "すごす",
+  "explains": "度过；生活"
+ },
+ {
+  "word": "過ち",
+  "phonetic": "あやまち",
+  "explains": "过错；失误"
+ },
+ {
+  "word": "道",
+  "phonetic": "みち",
+  "explains": "道路"
+ },
+ {
+  "word": "道具",
+  "phonetic": "どうぐ",
+  "explains": "工具；道具"
+ },
+ {
+  "word": "違い",
+  "phonetic": "ちがい",
+  "explains": "差异；差别"
+ },
+ {
+  "word": "違う",
+  "phonetic": "ちがう",
+  "explains": "不同；错"
+ },
+ {
+  "word": "遠く",
+  "phonetic": "とおく",
+  "explains": "远处"
+ },
+ {
+  "word": "遠くに",
+  "phonetic": "とおくに",
+  "explains": "在远处"
+ },
+ {
+  "word": "遠回り",
+  "phonetic": "とおまわり",
+  "explains": "绕远"
+ },
+ {
+  "word": "遠慮",
+  "phonetic": "えんりょ",
+  "explains": "客气；回避"
+ },
+ {
+  "word": "遠足",
+  "phonetic": "えんそく",
+  "explains": "远足；郊游"
+ },
+ {
+  "word": "選ぶ",
+  "phonetic": "えらぶ",
+  "explains": "选择；挑选"
+ },
+ {
+  "word": "選択",
+  "phonetic": "せんたく",
+  "explains": "选择"
+ },
+ {
+  "word": "選考",
+  "phonetic": "せんこう",
+  "explains": "选拔"
+ },
+ {
+  "word": "郵便局",
+  "phonetic": "ゆうびんきょく",
+  "explains": "邮局"
+ },
+ {
+  "word": "郵便番号",
+  "phonetic": "ゆうびんばんごう",
+  "explains": "邮政编码"
+ },
+ {
+  "word": "都会",
+  "phonetic": "とかい",
+  "explains": "城市；都市"
+ },
+ {
+  "word": "都合が悪い",
+  "phonetic": "つごうがわるい",
+  "explains": "不方便"
+ },
+ {
+  "word": "都合よい",
+  "phonetic": "つごうよい",
+  "explains": "方便"
+ },
+ {
+  "word": "配る",
+  "phonetic": "くばる",
+  "explains": "分发；分配"
+ },
+ {
+  "word": "酒",
+  "phonetic": "さけ",
+  "explains": "酒；日本酒"
+ },
+ {
+  "word": "酸っぱい",
+  "phonetic": "すっぱい",
+  "explains": "酸的"
+ },
+ {
+  "word": "重い",
+  "phonetic": "おもい",
+  "explains": "重的；沉重的"
+ },
+ {
+  "word": "重さ",
+  "phonetic": "おもさ",
+  "explains": "重量"
+ },
+ {
+  "word": "重なる",
+  "phonetic": "かさなる",
+  "explains": "重叠"
+ },
+ {
+  "word": "重ねる",
+  "phonetic": "かさねる",
+  "explains": "叠加；重复"
+ },
+ {
+  "word": "重んじる",
+  "phonetic": "おもんじる",
+  "explains": "重视"
+ },
+ {
+  "word": "重力",
+  "phonetic": "じゅうりょく",
+  "explains": "重力"
+ },
+ {
+  "word": "野原",
+  "phonetic": "のはら",
+  "explains": "原野"
+ },
+ {
+  "word": "野生",
+  "phonetic": "やせい",
+  "explains": "野生"
+ },
+ {
+  "word": "野菜",
+  "phonetic": "やさい",
+  "explains": "蔬菜"
+ },
+ {
+  "word": "金持ち",
+  "phonetic": "かねもち",
+  "explains": "有钱人"
+ },
+ {
+  "word": "金持ちになる",
+  "phonetic": "かねもちになる",
+  "explains": "变富"
+ },
+ {
+  "word": "金額",
+  "phonetic": "きんがく",
+  "explains": "金额"
+ },
+ {
+  "word": "釣り",
+  "phonetic": "つり",
+  "explains": "钓鱼"
+ },
+ {
+  "word": "釣り合い",
+  "phonetic": "つりあい",
+  "explains": "平衡；相称"
+ },
+ {
+  "word": "釣り合う",
+  "phonetic": "つりあう",
+  "explains": "平衡；相称"
+ },
+ {
+  "word": "釣る",
+  "phonetic": "つる",
+  "explains": "钓鱼"
+ },
+ {
+  "word": "銀行員",
+  "phonetic": "ぎんこういん",
+  "explains": "银行职员"
+ },
+ {
+  "word": "鍵をかける",
+  "phonetic": "かぎをかける",
+  "explains": "上锁"
+ },
+ {
+  "word": "長さ",
+  "phonetic": "ながさ",
+  "explains": "长度"
+ },
+ {
+  "word": "閉める",
+  "phonetic": "しめる",
+  "explains": "关闭"
+ },
+ {
+  "word": "開かす",
+  "phonetic": "あかす",
+  "explains": "弄空；说破"
+ },
+ {
+  "word": "開く",
+  "phonetic": "あく",
+  "explains": "开；营业"
+ },
+ {
+  "word": "開催",
+  "phonetic": "かいさい",
+  "explains": "举办；召开"
+ },
+ {
+  "word": "間に合う",
+  "phonetic": "まにあう",
+  "explains": "来得及；赶得上"
+ },
+ {
+  "word": "間違い",
+  "phonetic": "まちがい",
+  "explains": "错误"
+ },
+ {
+  "word": "間違いない",
+  "phonetic": "まちがいない",
+  "explains": "没错；确实"
+ },
+ {
+  "word": "間違える",
+  "phonetic": "まちがえる",
+  "explains": "搞错；弄错"
+ },
+ {
+  "word": "関係",
+  "phonetic": "かんけい",
+  "explains": "关系"
+ },
+ {
+  "word": "関西",
+  "phonetic": "かんさい",
+  "explains": "关西"
+ },
+ {
+  "word": "降りる",
+  "phonetic": "おりる",
+  "explains": "下；降"
+ },
+ {
+  "word": "階段",
+  "phonetic": "かいだん",
+  "explains": "楼梯；台阶"
+ },
+ {
+  "word": "階級",
+  "phonetic": "かいきゅう",
+  "explains": "阶级；等级"
+ },
+ {
+  "word": "随分",
+  "phonetic": "ずいぶん",
+  "explains": "相当；非常"
+ },
+ {
+  "word": "集まり",
+  "phonetic": "あつまり",
+  "explains": "集会；集合"
+ },
+ {
+  "word": "集まる",
+  "phonetic": "あつまる",
+  "explains": "聚集；集合"
+ },
+ {
+  "word": "集める",
+  "phonetic": "あつめる",
+  "explains": "收集；集中"
+ },
+ {
+  "word": "雑談",
+  "phonetic": "ざつだん",
+  "explains": "闲谈；聊天"
+ },
+ {
+  "word": "離す",
+  "phonetic": "はなす",
+  "explains": "放开；使分开"
+ },
+ {
+  "word": "離れる",
+  "phonetic": "はなれる",
+  "explains": "离开；分离"
+ },
+ {
+  "word": "難しい",
+  "phonetic": "むずかしい",
+  "explains": "难的；难懂的"
+ },
+ {
+  "word": "雨が降る",
+  "phonetic": "あめがふる",
+  "explains": "下雨"
+ },
+ {
+  "word": "雪",
+  "phonetic": "ゆき",
+  "explains": "雪"
+ },
+ {
+  "word": "雲",
+  "phonetic": "くも",
+  "explains": "云"
+ },
+ {
+  "word": "雲取り",
+  "phonetic": "くもとり",
+  "explains": "驱云"
+ },
+ {
+  "word": "雷",
+  "phonetic": "かみなり",
+  "explains": "雷"
+ },
+ {
+  "word": "電動",
+  "phonetic": "でんどう",
+  "explains": "电动"
+ },
+ {
+  "word": "電報",
+  "phonetic": "でんぽう",
+  "explains": "电报"
+ },
+ {
+  "word": "電子レンジ",
+  "phonetic": "でんしレンジ",
+  "explains": "微波炉"
+ },
+ {
+  "word": "電池",
+  "phonetic": "でんち",
+  "explains": "电池"
+ },
+ {
+  "word": "電灯",
+  "phonetic": "でんとう",
+  "explains": "电灯"
+ },
+ {
+  "word": "電線",
+  "phonetic": "でんせん",
+  "explains": "电线"
+ },
+ {
+  "word": "電車賃",
+  "phonetic": "でんしゃちん",
+  "explains": "电车费"
+ },
+ {
+  "word": "青年",
+  "phonetic": "せいねん",
+  "explains": "青年"
+ },
+ {
+  "word": "青空",
+  "phonetic": "あおぞら",
+  "explains": "蓝天"
+ },
+ {
+  "word": "静か",
+  "phonetic": "しずか",
+  "explains": "安静；平静"
+ },
+ {
+  "word": "静まる",
+  "phonetic": "しずまる",
+  "explains": "安静下来"
+ },
+ {
+  "word": "面接",
+  "phonetic": "めんせつ",
+  "explains": "面试"
+ },
+ {
+  "word": "面白い",
+  "phonetic": "おもしろい",
+  "explains": "有趣的；新颖的"
+ },
+ {
+  "word": "面白味",
+  "phonetic": "おもしろみ",
+  "explains": "趣味"
+ },
+ {
+  "word": "靴下",
+  "phonetic": "くつした",
+  "explains": "袜子"
+ },
+ {
+  "word": "音",
+  "phonetic": "おと",
+  "explains": "声音；音响"
+ },
+ {
+  "word": "音楽",
+  "phonetic": "おんがく",
+  "explains": "音乐"
+ },
+ {
+  "word": "響き",
+  "phonetic": "ひびき",
+  "explains": "响声；回声"
+ },
+ {
+  "word": "響く",
+  "phonetic": "ひびく",
+  "explains": "响；影响"
+ },
+ {
+  "word": "頂く",
+  "phonetic": "いただく",
+  "explains": "领受；吃（谦语）"
+ },
+ {
+  "word": "預かる",
+  "phonetic": "あずかる",
+  "explains": "保管；收养"
+ },
+ {
+  "word": "預ける",
+  "phonetic": "あずける",
+  "explains": "寄存；委托"
+ },
+ {
+  "word": "頑固",
+  "phonetic": "がんこ",
+  "explains": "顽固"
+ },
+ {
+  "word": "頑張る",
+  "phonetic": "がんばる",
+  "explains": "努力；加油"
+ },
+ {
+  "word": "頭",
+  "phonetic": "あたま",
+  "explains": "头；头脑"
+ },
+ {
+  "word": "頭が固い",
+  "phonetic": "あたまがかたい",
+  "explains": "顽固"
+ },
+ {
+  "word": "頼み",
+  "phonetic": "たのみ",
+  "explains": "请求；委托"
+ },
+ {
+  "word": "頼む",
+  "phonetic": "たのむ",
+  "explains": "请求；委托"
+ },
+ {
+  "word": "頼もしい",
+  "phonetic": "たのもしい",
+  "explains": "可靠；有出息"
+ },
+ {
+  "word": "顔色",
+  "phonetic": "かおいろ",
+  "explains": "脸色"
+ },
+ {
+  "word": "風",
+  "phonetic": "かぜ",
+  "explains": "风；感冒"
+ },
+ {
+  "word": "飛ぶ",
+  "phonetic": "とぶ",
+  "explains": "飞；跳"
+ },
+ {
+  "word": "飛行機",
+  "phonetic": "ひこうき",
+  "explains": "飞机"
+ },
+ {
+  "word": "食事",
+  "phonetic": "しょくじ",
+  "explains": "饭食；进餐"
+ },
+ {
+  "word": "食卓",
+  "phonetic": "しょくたく",
+  "explains": "餐桌"
+ },
+ {
+  "word": "食器",
+  "phonetic": "しょっき",
+  "explains": "餐具"
+ },
+ {
+  "word": "食後",
+  "phonetic": "しょくご",
+  "explains": "饭后"
+ },
+ {
+  "word": "飢える",
+  "phonetic": "うえる",
+  "explains": "饥饿；渴求"
+ },
+ {
+  "word": "飲み物",
+  "phonetic": "のみもの",
+  "explains": "饮料"
+ },
+ {
+  "word": "飲み込み",
+  "phonetic": "のみこみ",
+  "explains": "吞咽；理解"
+ },
+ {
+  "word": "飲み込む",
+  "phonetic": "のみこむ",
+  "explains": "吞下；理解"
+ },
+ {
+  "word": "飲む",
+  "phonetic": "のむ",
+  "explains": "喝；吞"
+ },
+ {
+  "word": "香水",
+  "phonetic": "こうすい",
+  "explains": "香水"
+ },
+ {
+  "word": "駅",
+  "phonetic": "えき",
+  "explains": "车站"
+ },
+ {
+  "word": "駆ける",
+  "phonetic": "かける",
+  "explains": "跑；奔跑"
+ },
+ {
+  "word": "駐車場",
+  "phonetic": "ちゅうしゃじょう",
+  "explains": "停车场"
+ },
+ {
+  "word": "驚かす",
+  "phonetic": "おどろかす",
+  "explains": "使吃惊"
+ },
+ {
+  "word": "驚く",
+  "phonetic": "おどろく",
+  "explains": "惊讶；吃惊"
+ },
+ {
+  "word": "高低",
+  "phonetic": "こうてい",
+  "explains": "高低"
+ },
+ {
+  "word": "鬼",
+  "phonetic": "おに",
+  "explains": "鬼；妖怪"
+ },
+ {
+  "word": "鬼ごっこ",
+  "phonetic": "おにごっこ",
+  "explains": "捉人游戏"
+ },
+ {
+  "word": "魚",
+  "phonetic": "さかな",
+  "explains": "鱼"
+ },
+ {
+  "word": "鳥",
+  "phonetic": "とり",
+  "explains": "鸟"
+ },
+ {
+  "word": "鳴く",
+  "phonetic": "なく",
+  "explains": "（动物）叫"
+ },
+ {
+  "word": "鳴る",
+  "phonetic": "なる",
+  "explains": "响；鸣"
+ },
+ {
+  "word": "鳶",
+  "phonetic": "とび",
+  "explains": "鸢；老鹰"
+ },
+ {
+  "word": "鳶職",
+  "phonetic": "とびしょく",
+  "explains": "高空作业工"
+ },
+ {
+  "word": "鶴",
+  "phonetic": "つる",
+  "explains": "鹤"
+ },
+ {
+  "word": "鶴の恩返し",
+  "phonetic": "つるのおんがえし",
+  "explains": "仙鹤报恩"
+ },
+ {
+  "word": "鹿",
+  "phonetic": "しか",
+  "explains": "鹿"
+ },
+ {
+  "word": "麦",
+  "phonetic": "むぎ",
+  "explains": "麦子"
+ },
+ {
+  "word": "黄色い",
+  "phonetic": "きいろい",
+  "explains": "黄色的"
+ },
+ {
+  "word": "黒板",
+  "phonetic": "こくばん",
+  "explains": "黑板"
+ },
+ {
+  "word": "黒板消し",
+  "phonetic": "こくばんけし",
+  "explains": "黑板擦"
+ },
+ {
+  "word": "鼻",
+  "phonetic": "はな",
+  "explains": "鼻子"
+ }
+]
