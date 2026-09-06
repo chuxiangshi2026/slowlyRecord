@@ -1,0 +1,8902 @@
+[
+  {
+    "word": "a",
+    "phonetic": "/ə; eɪ/",
+    "explains": "art. 一（个）；每一（个）"
+  },
+  {
+    "word": "abandon",
+    "phonetic": "/əˈbændən/",
+    "explains": "v. 放弃；抛弃"
+  },
+  {
+    "word": "ability",
+    "phonetic": "/əˈbɪləti/",
+    "explains": "n. 能力；才能"
+  },
+  {
+    "word": "able",
+    "phonetic": "/ˈeɪb(ə)l/",
+    "explains": "adj. 有能力的；能干的"
+  },
+  {
+    "word": "about",
+    "phonetic": "/əˈbaʊt/",
+    "explains": "prep. 关于；大约　adv. 到处；四处"
+  },
+  {
+    "word": "above",
+    "phonetic": "/əˈbʌv/",
+    "explains": "prep. 在……上方　adv. 在上面"
+  },
+  {
+    "word": "abroad",
+    "phonetic": "/əˈbrɔːd/",
+    "explains": "adv. 到国外；在国外"
+  },
+  {
+    "word": "absent",
+    "phonetic": "/ˈæbsənt/",
+    "explains": "adj. 缺席的；不在的"
+  },
+  {
+    "word": "accept",
+    "phonetic": "/əkˈsept/",
+    "explains": "v. 接受；同意"
+  },
+  {
+    "word": "accident",
+    "phonetic": "/ˈæksɪdənt/",
+    "explains": "n. 事故；意外"
+  },
+  {
+    "word": "according to",
+    "phonetic": "/əˈkɔːdɪŋ tuː/",
+    "explains": "根据；按照"
+  },
+  {
+    "word": "account",
+    "phonetic": "/əˈkaʊnt/",
+    "explains": "n. 账户；记述"
+  },
+  {
+    "word": "achieve",
+    "phonetic": "/əˈtʃiːv/",
+    "explains": "v. 达到；实现"
+  },
+  {
+    "word": "across",
+    "phonetic": "/əˈkrɒs/",
+    "explains": "prep. 穿过；横过　adv. 横过"
+  },
+  {
+    "word": "act",
+    "phonetic": "/ækt/",
+    "explains": "n. 行为；法令　v. 行动；表演"
+  },
+  {
+    "word": "action",
+    "phonetic": "/ˈækʃ(ə)n/",
+    "explains": "n. 行动；作为"
+  },
+  {
+    "word": "active",
+    "phonetic": "/ˈæktɪv/",
+    "explains": "adj. 积极的；主动的"
+  },
+  {
+    "word": "activity",
+    "phonetic": "/ækˈtɪvɪti/",
+    "explains": "n. 活动"
+  },
+  {
+    "word": "actor",
+    "phonetic": "/ˈæktə/",
+    "explains": "n. 男演员"
+  },
+  {
+    "word": "actress",
+    "phonetic": "/ˈæktrɪs/",
+    "explains": "n. 女演员"
+  },
+  {
+    "word": "actual",
+    "phonetic": "/ˈæktʃʊəl/",
+    "explains": "adj. 实际的；真实的"
+  },
+  {
+    "word": "add",
+    "phonetic": "/æd/",
+    "explains": "v. 增加；添加"
+  },
+  {
+    "word": "address",
+    "phonetic": "/əˈdres/",
+    "explains": "n. 地址；演说"
+  },
+  {
+    "word": "advantage",
+    "phonetic": "/ədˈvɑːntɪdʒ/",
+    "explains": "n. 优点；优势"
+  },
+  {
+    "word": "adventure",
+    "phonetic": "/ədˈventʃə/",
+    "explains": "n. 冒险；奇遇"
+  },
+  {
+    "word": "advice",
+    "phonetic": "/ədˈvaɪs/",
+    "explains": "n. 忠告；建议"
+  },
+  {
+    "word": "advise",
+    "phonetic": "/ədˈvaɪz/",
+    "explains": "v. 劝告；建议"
+  },
+  {
+    "word": "afford",
+    "phonetic": "/əˈfɔːd/",
+    "explains": "v. 买得起；负担得起"
+  },
+  {
+    "word": "afraid",
+    "phonetic": "/əˈfreɪd/",
+    "explains": "adj. 害怕的；担心的"
+  },
+  {
+    "word": "after",
+    "phonetic": "/ˈɑːftə/",
+    "explains": "prep. 在……之后　conj. 在……以后"
+  },
+  {
+    "word": "afternoon",
+    "phonetic": "/ˌɑːftəˈnuːn/",
+    "explains": "n. 下午"
+  },
+  {
+    "word": "again",
+    "phonetic": "/əˈɡen; əˈɡeɪn/",
+    "explains": "adv. 又一次；再"
+  },
+  {
+    "word": "against",
+    "phonetic": "/əˈɡenst; əˈɡeɪnst/",
+    "explains": "prep. 反对；对着"
+  },
+  {
+    "word": "age",
+    "phonetic": "/eɪdʒ/",
+    "explains": "n. 年龄；时代"
+  },
+  {
+    "word": "ago",
+    "phonetic": "/əˈɡəʊ/",
+    "explains": "adv. 以前"
+  },
+  {
+    "word": "agree",
+    "phonetic": "/əˈɡriː/",
+    "explains": "v. 同意；赞成"
+  },
+  {
+    "word": "agreement",
+    "phonetic": "/əˈɡriːmənt/",
+    "explains": "n. 同意；协议"
+  },
+  {
+    "word": "agriculture",
+    "phonetic": "/ˈæɡrɪkʌltʃə/",
+    "explains": "n. 农业"
+  },
+  {
+    "word": "ahead",
+    "phonetic": "/əˈhed/",
+    "explains": "adv. 在前面；向前"
+  },
+  {
+    "word": "aim",
+    "phonetic": "/eɪm/",
+    "explains": "n. 目标　v. 瞄准；旨在"
+  },
+  {
+    "word": "air",
+    "phonetic": "/eə/",
+    "explains": "n. 空气；天空"
+  },
+  {
+    "word": "airline",
+    "phonetic": "/ˈeəlaɪn/",
+    "explains": "n. 航线；航空公司"
+  },
+  {
+    "word": "airport",
+    "phonetic": "/ˈeəpɔːt/",
+    "explains": "n. 机场"
+  },
+  {
+    "word": "album",
+    "phonetic": "/ˈælbəm/",
+    "explains": "n. 相册；集邮册"
+  },
+  {
+    "word": "all",
+    "phonetic": "/ɔːl/",
+    "explains": "adj. 全部的　pron. 全部"
+  },
+  {
+    "word": "allow",
+    "phonetic": "/əˈlaʊ/",
+    "explains": "v. 允许；准许"
+  },
+  {
+    "word": "almost",
+    "phonetic": "/ˈɔːlməʊst/",
+    "explains": "adv. 几乎；差不多"
+  },
+  {
+    "word": "alone",
+    "phonetic": "/əˈləʊn/",
+    "explains": "adj. 单独的　adv. 独自地"
+  },
+  {
+    "word": "along",
+    "phonetic": "/əˈlɒŋ/",
+    "explains": "prep. 沿着　adv. 向前"
+  },
+  {
+    "word": "aloud",
+    "phonetic": "/əˈlaʊd/",
+    "explains": "adv. 出声地；大声地"
+  },
+  {
+    "word": "already",
+    "phonetic": "/ɔːlˈredɪ/",
+    "explains": "adv. 已经"
+  },
+  {
+    "word": "also",
+    "phonetic": "/ˈɔːlsəʊ/",
+    "explains": "adv. 也"
+  },
+  {
+    "word": "although",
+    "phonetic": "/ɔːlˈðəʊ/",
+    "explains": "conj. 虽然；尽管"
+  },
+  {
+    "word": "altogether",
+    "phonetic": "/ˌɔːltəˈɡeðə/",
+    "explains": "adv. 完全；总共"
+  },
+  {
+    "word": "always",
+    "phonetic": "/ˈɔːlweɪz; -ɪz/",
+    "explains": "adv. 总是；一直"
+  },
+  {
+    "word": "am",
+    "phonetic": "/æm; əm/",
+    "explains": "v. 是"
+  },
+  {
+    "word": "amazing",
+    "phonetic": "/əˈmeɪzɪŋ/",
+    "explains": "adj. 令人惊奇的"
+  },
+  {
+    "word": "America",
+    "phonetic": "/əˈmerɪkə/",
+    "explains": "n. 美国；美洲"
+  },
+  {
+    "word": "American",
+    "phonetic": "/əˈmerɪkən/",
+    "explains": "adj. 美国的　n. 美国人"
+  },
+  {
+    "word": "among",
+    "phonetic": "/əˈmʌŋ/",
+    "explains": "prep. 在……之中"
+  },
+  {
+    "word": "ancient",
+    "phonetic": "/ˈeɪnʃənt/",
+    "explains": "adj. 古代的；古老的"
+  },
+  {
+    "word": "and",
+    "phonetic": "/ænd; ənd/",
+    "explains": "conj. 和；与"
+  },
+  {
+    "word": "anger",
+    "phonetic": "/ˈæŋɡə/",
+    "explains": "n. 愤怒"
+  },
+  {
+    "word": "angry",
+    "phonetic": "/ˈæŋɡrɪ/",
+    "explains": "adj. 生气的；愤怒的"
+  },
+  {
+    "word": "animal",
+    "phonetic": "/ˈænɪm(ə)l/",
+    "explains": "n. 动物"
+  },
+  {
+    "word": "another",
+    "phonetic": "/əˈnʌðə/",
+    "explains": "adj. 另一个　pron. 另一个"
+  },
+  {
+    "word": "answer",
+    "phonetic": "/ˈɑːnsə/",
+    "explains": "n. 回答　v. 回答"
+  },
+  {
+    "word": "any",
+    "phonetic": "/ˈenɪ/",
+    "explains": "adj. 任何的　pron. 任何一个"
+  },
+  {
+    "word": "anybody",
+    "phonetic": "/ˈenɪˌbɒdɪ/",
+    "explains": "pron. 任何人"
+  },
+  {
+    "word": "anyone",
+    "phonetic": "/ˈenɪwʌn/",
+    "explains": "pron. 任何人"
+  },
+  {
+    "word": "anything",
+    "phonetic": "/ˈenɪθɪŋ/",
+    "explains": "pron. 任何事物"
+  },
+  {
+    "word": "anywhere",
+    "phonetic": "/ˈenɪweə/",
+    "explains": "adv. 任何地方"
+  },
+  {
+    "word": "apart",
+    "phonetic": "/əˈpɑːt/",
+    "explains": "adv. 分开；相距"
+  },
+  {
+    "word": "apple",
+    "phonetic": "/ˈæp(ə)l/",
+    "explains": "n. 苹果"
+  },
+  {
+    "word": "application",
+    "phonetic": "/ˌæplɪˈkeɪʃ(ə)n/",
+    "explains": "n. 申请；应用"
+  },
+  {
+    "word": "apply",
+    "phonetic": "/əˈplaɪ/",
+    "explains": "v. 申请；应用"
+  },
+  {
+    "word": "appointment",
+    "phonetic": "/əˈpɔɪntmənt/",
+    "explains": "n. 约会；任命"
+  },
+  {
+    "word": "April",
+    "phonetic": "/ˈeɪprəl/",
+    "explains": "n. 四月"
+  },
+  {
+    "word": "area",
+    "phonetic": "/ˈeərɪə/",
+    "explains": "n. 面积；地区"
+  },
+  {
+    "word": "arm",
+    "phonetic": "/ɑːm/",
+    "explains": "n. 手臂；武器"
+  },
+  {
+    "word": "army",
+    "phonetic": "/ˈɑːmɪ/",
+    "explains": "n. 军队"
+  },
+  {
+    "word": "around",
+    "phonetic": "/əˈraʊnd/",
+    "explains": "adv. 在周围　prep. 在……周围"
+  },
+  {
+    "word": "arrange",
+    "phonetic": "/əˈreɪndʒ/",
+    "explains": "v. 安排；布置"
+  },
+  {
+    "word": "arrival",
+    "phonetic": "/əˈraɪv(ə)l/",
+    "explains": "n. 到达"
+  },
+  {
+    "word": "arrive",
+    "phonetic": "/əˈraɪv/",
+    "explains": "v. 到达"
+  },
+  {
+    "word": "art",
+    "phonetic": "/ɑːt/",
+    "explains": "n. 艺术；美术"
+  },
+  {
+    "word": "article",
+    "phonetic": "/ˈɑːtɪk(ə)l/",
+    "explains": "n. 文章；物品"
+  },
+  {
+    "word": "artist",
+    "phonetic": "/ˈɑːtɪst/",
+    "explains": "n. 艺术家"
+  },
+  {
+    "word": "as",
+    "phonetic": "/æz; əz/",
+    "explains": "conj. 当……时；作为　prep. 作为"
+  },
+  {
+    "word": "Asia",
+    "phonetic": "/ˈeɪʃə/",
+    "explains": "n. 亚洲"
+  },
+  {
+    "word": "Asian",
+    "phonetic": "/ˈeɪʃən; ˈeɪʒən/",
+    "explains": "adj. 亚洲的　n. 亚洲人"
+  },
+  {
+    "word": "ask",
+    "phonetic": "/ɑːsk/",
+    "explains": "v. 问；要求"
+  },
+  {
+    "word": "asleep",
+    "phonetic": "/əˈsliːp/",
+    "explains": "adj. 睡着的"
+  },
+  {
+    "word": "assistant",
+    "phonetic": "/əˈsɪst(ə)nt/",
+    "explains": "n. 助手"
+  },
+  {
+    "word": "at",
+    "phonetic": "/æt; ət/",
+    "explains": "prep. 在；以"
+  },
+  {
+    "word": "attack",
+    "phonetic": "/əˈtæk/",
+    "explains": "v. 攻击　n. 攻击"
+  },
+  {
+    "word": "attempt",
+    "phonetic": "/əˈtempt/",
+    "explains": "v. 尝试　n. 尝试"
+  },
+  {
+    "word": "attention",
+    "phonetic": "/əˈtenʃ(ə)n/",
+    "explains": "n. 注意；关心"
+  },
+  {
+    "word": "August",
+    "phonetic": "/ˈɔːɡəst/",
+    "explains": "n. 八月"
+  },
+  {
+    "word": "aunt",
+    "phonetic": "/ɑːnt; ænt/",
+    "explains": "n. 姑妈；姨妈；婶婶"
+  },
+  {
+    "word": "Australia",
+    "phonetic": "/ɒˈstreɪlɪə/",
+    "explains": "n. 澳大利亚"
+  },
+  {
+    "word": "Australian",
+    "phonetic": "/ɒˈstreɪlɪən/",
+    "explains": "adj. 澳大利亚的　n. 澳大利亚人"
+  },
+  {
+    "word": "autumn",
+    "phonetic": "/ˈɔːtəm/",
+    "explains": "n. 秋天"
+  },
+  {
+    "word": "available",
+    "phonetic": "/əˈveɪləb(ə)l/",
+    "explains": "adj. 可获得的；可用的"
+  },
+  {
+    "word": "average",
+    "phonetic": "/ˈæv(ə)rɪdʒ/",
+    "explains": "adj. 平均的　n. 平均数"
+  },
+  {
+    "word": "avoid",
+    "phonetic": "/əˈvɔɪd/",
+    "explains": "v. 避免；躲开"
+  },
+  {
+    "word": "awake",
+    "phonetic": "/əˈweɪk/",
+    "explains": "adj. 醒着的"
+  },
+  {
+    "word": "away",
+    "phonetic": "/əˈweɪ/",
+    "explains": "adv. 离开；远离"
+  },
+  {
+    "word": "baby",
+    "phonetic": "/ˈbeɪbɪ/",
+    "explains": "n. 婴儿"
+  },
+  {
+    "word": "back",
+    "phonetic": "/bæk/",
+    "explains": "n. 背部；后面　adv. 回原处"
+  },
+  {
+    "word": "background",
+    "phonetic": "/ˈbækɡraʊnd/",
+    "explains": "n. 背景"
+  },
+  {
+    "word": "bad",
+    "phonetic": "/bæd/",
+    "explains": "adj. 坏的；严重的"
+  },
+  {
+    "word": "bag",
+    "phonetic": "/bæɡ/",
+    "explains": "n. 袋；包"
+  },
+  {
+    "word": "baggage",
+    "phonetic": "/ˈbæɡɪdʒ/",
+    "explains": "n. 行李"
+  },
+  {
+    "word": "bake",
+    "phonetic": "/beɪk/",
+    "explains": "v. 烤；烘"
+  },
+  {
+    "word": "bakery",
+    "phonetic": "/ˈbeɪkərɪ/",
+    "explains": "n. 面包店"
+  },
+  {
+    "word": "balance",
+    "phonetic": "/ˈbæləns/",
+    "explains": "n. 平衡　v. 使平衡"
+  },
+  {
+    "word": "ball",
+    "phonetic": "/bɔːl/",
+    "explains": "n. 球"
+  },
+  {
+    "word": "balloon",
+    "phonetic": "/bəˈluːn/",
+    "explains": "n. 气球"
+  },
+  {
+    "word": "bamboo",
+    "phonetic": "/bæmˈbuː/",
+    "explains": "n. 竹子"
+  },
+  {
+    "word": "banana",
+    "phonetic": "/bəˈnɑːnə/",
+    "explains": "n. 香蕉"
+  },
+  {
+    "word": "band",
+    "phonetic": "/bænd/",
+    "explains": "n. 乐队；带子"
+  },
+  {
+    "word": "bank",
+    "phonetic": "/bæŋk/",
+    "explains": "n. 银行；岸"
+  },
+  {
+    "word": "baseball",
+    "phonetic": "/ˈbeɪsbɔːl/",
+    "explains": "n. 棒球"
+  },
+  {
+    "word": "basic",
+    "phonetic": "/ˈbeɪsɪk/",
+    "explains": "adj. 基本的"
+  },
+  {
+    "word": "basket",
+    "phonetic": "/ˈbɑːskɪt; ˈbæskɪt/",
+    "explains": "n. 篮子"
+  },
+  {
+    "word": "basketball",
+    "phonetic": "/ˈbɑːskɪtbɔːl; ˈbæskɪtbɔːl/",
+    "explains": "n. 篮球"
+  },
+  {
+    "word": "bath",
+    "phonetic": "/bɑːθ; bæθ/",
+    "explains": "n. 洗澡"
+  },
+  {
+    "word": "bathroom",
+    "phonetic": "/ˈbɑːθruːm; ˈbæθruːm/",
+    "explains": "n. 浴室"
+  },
+  {
+    "word": "battery",
+    "phonetic": "/ˈbæt(ə)rɪ/",
+    "explains": "n. 电池"
+  },
+  {
+    "word": "battle",
+    "phonetic": "/ˈbæt(ə)l/",
+    "explains": "n. 战役；战斗"
+  },
+  {
+    "word": "be",
+    "phonetic": "/bɪ; biː/",
+    "explains": "v. 是；存在"
+  },
+  {
+    "word": "beach",
+    "phonetic": "/biːtʃ/",
+    "explains": "n. 海滩"
+  },
+  {
+    "word": "bear",
+    "phonetic": "/beə/",
+    "explains": "n. 熊　v. 承担；忍受；生（孩子）"
+  },
+  {
+    "word": "beat",
+    "phonetic": "/biːt/",
+    "explains": "v. 打败；敲打"
+  },
+  {
+    "word": "beautiful",
+    "phonetic": "/ˈbjuːtɪf(ə)l; -tɪf(ə)l/",
+    "explains": "adj. 美丽的"
+  },
+  {
+    "word": "because",
+    "phonetic": "/bɪˈkɒz; bɪˈkəz/",
+    "explains": "conj. 因为"
+  },
+  {
+    "word": "become",
+    "phonetic": "/bɪˈkʌm/",
+    "explains": "v. 变成；成为"
+  },
+  {
+    "word": "bed",
+    "phonetic": "/bed/",
+    "explains": "n. 床"
+  },
+  {
+    "word": "bedroom",
+    "phonetic": "/ˈbedruːm/",
+    "explains": "n. 卧室"
+  },
+  {
+    "word": "beef",
+    "phonetic": "/biːf/",
+    "explains": "n. 牛肉"
+  },
+  {
+    "word": "beer",
+    "phonetic": "/bɪə/",
+    "explains": "n. 啤酒"
+  },
+  {
+    "word": "before",
+    "phonetic": "/bɪˈfɔː/",
+    "explains": "prep. 在……之前　conj. 在……之前"
+  },
+  {
+    "word": "begin",
+    "phonetic": "/bɪˈɡɪn/",
+    "explains": "v. 开始"
+  },
+  {
+    "word": "beginning",
+    "phonetic": "/bɪˈɡɪnɪŋ/",
+    "explains": "n. 开始；开端"
+  },
+  {
+    "word": "behave",
+    "phonetic": "/bɪˈheɪv/",
+    "explains": "v. 表现；举止"
+  },
+  {
+    "word": "behind",
+    "phonetic": "/bɪˈhaɪnd/",
+    "explains": "prep. 在……后面　adv. 在后面"
+  },
+  {
+    "word": "Belgium",
+    "phonetic": "/ˈbeldʒəm/",
+    "explains": "n. 比利时"
+  },
+  {
+    "word": "believe",
+    "phonetic": "/bɪˈliːv/",
+    "explains": "v. 相信"
+  },
+  {
+    "word": "bell",
+    "phonetic": "/bel/",
+    "explains": "n. 铃；钟"
+  },
+  {
+    "word": "belong",
+    "phonetic": "/bɪˈlɒŋ/",
+    "explains": "v. 属于"
+  },
+  {
+    "word": "below",
+    "phonetic": "/bɪˈləʊ/",
+    "explains": "prep. 在……下面　adv. 在下面"
+  },
+  {
+    "word": "belt",
+    "phonetic": "/belt/",
+    "explains": "n. 腰带；皮带"
+  },
+  {
+    "word": "bench",
+    "phonetic": "/ben(t)ʃ/",
+    "explains": "n. 长凳"
+  },
+  {
+    "word": "beside",
+    "phonetic": "/bɪˈsaɪd/",
+    "explains": "prep. 在……旁边"
+  },
+  {
+    "word": "best",
+    "phonetic": "/best/",
+    "explains": "adj. 最好的　adv. 最好地"
+  },
+  {
+    "word": "better",
+    "phonetic": "/ˈbetə/",
+    "explains": "adj. 更好的　adv. 更好地"
+  },
+  {
+    "word": "between",
+    "phonetic": "/bɪˈtwiːn/",
+    "explains": "prep. 在（两者）之间"
+  },
+  {
+    "word": "beyond",
+    "phonetic": "/bɪˈjɒnd/",
+    "explains": "prep. 超过；在……另一边"
+  },
+  {
+    "word": "bicycle",
+    "phonetic": "/ˈbaɪsɪk(ə)l/",
+    "explains": "n. 自行车"
+  },
+  {
+    "word": "big",
+    "phonetic": "/bɪɡ/",
+    "explains": "adj. 大的"
+  },
+  {
+    "word": "bike",
+    "phonetic": "/baɪk/",
+    "explains": "n. 自行车"
+  },
+  {
+    "word": "bill",
+    "phonetic": "/bɪl/",
+    "explains": "n. 账单；钞票"
+  },
+  {
+    "word": "bird",
+    "phonetic": "/bɜːd/",
+    "explains": "n. 鸟"
+  },
+  {
+    "word": "birth",
+    "phonetic": "/bɜːθ/",
+    "explains": "n. 出生"
+  },
+  {
+    "word": "birthday",
+    "phonetic": "/ˈbɜːθdeɪ/",
+    "explains": "n. 生日"
+  },
+  {
+    "word": "biscuit",
+    "phonetic": "/ˈbɪskɪt/",
+    "explains": "n. 饼干"
+  },
+  {
+    "word": "bit",
+    "phonetic": "/bɪt/",
+    "explains": "n. 一点；小块"
+  },
+  {
+    "word": "bite",
+    "phonetic": "/baɪt/",
+    "explains": "v. 咬"
+  },
+  {
+    "word": "black",
+    "phonetic": "/blæk/",
+    "explains": "adj. 黑色的　n. 黑色"
+  },
+  {
+    "word": "blackboard",
+    "phonetic": "/ˈblækbɔːd/",
+    "explains": "n. 黑板"
+  },
+  {
+    "word": "blame",
+    "phonetic": "/bleɪm/",
+    "explains": "v. 责备　n. 过失"
+  },
+  {
+    "word": "blank",
+    "phonetic": "/blæŋk/",
+    "explains": "adj. 空白的　n. 空白处"
+  },
+  {
+    "word": "blanket",
+    "phonetic": "/ˈblæŋkɪt/",
+    "explains": "n. 毛毯"
+  },
+  {
+    "word": "bleed",
+    "phonetic": "/bliːd/",
+    "explains": "v. 流血"
+  },
+  {
+    "word": "bless",
+    "phonetic": "/bles/",
+    "explains": "v. 祝福"
+  },
+  {
+    "word": "blind",
+    "phonetic": "/blaɪnd/",
+    "explains": "adj. 瞎的；盲的"
+  },
+  {
+    "word": "block",
+    "phonetic": "/blɒk/",
+    "explains": "n. 街区；大块　v. 阻塞"
+  },
+  {
+    "word": "blood",
+    "phonetic": "/blʌd/",
+    "explains": "n. 血；血液"
+  },
+  {
+    "word": "blouse",
+    "phonetic": "/blaʊz; blaʊs/",
+    "explains": "n. 女衬衫"
+  },
+  {
+    "word": "blow",
+    "phonetic": "/bləʊ/",
+    "explains": "v. 吹"
+  },
+  {
+    "word": "blue",
+    "phonetic": "/bluː/",
+    "explains": "adj. 蓝色的　n. 蓝色"
+  },
+  {
+    "word": "board",
+    "phonetic": "/bɔːd/",
+    "explains": "n. 木板；委员会　v. 上（船/车）"
+  },
+  {
+    "word": "boat",
+    "phonetic": "/bəʊt/",
+    "explains": "n. 小船"
+  },
+  {
+    "word": "body",
+    "phonetic": "/ˈbɒdɪ/",
+    "explains": "n. 身体"
+  },
+  {
+    "word": "boil",
+    "phonetic": "/bɔɪl/",
+    "explains": "v. 煮沸"
+  },
+  {
+    "word": "bold",
+    "phonetic": "/bəʊld/",
+    "explains": "adj. 大胆的；粗体的"
+  },
+  {
+    "word": "bomb",
+    "phonetic": "/bɒm/",
+    "explains": "n. 炸弹"
+  },
+  {
+    "word": "book",
+    "phonetic": "/bʊk/",
+    "explains": "n. 书　v. 预定"
+  },
+  {
+    "word": "bookshop",
+    "phonetic": "/ˈbʊkʃɒp/",
+    "explains": "n. 书店"
+  },
+  {
+    "word": "boot",
+    "phonetic": "/buːt/",
+    "explains": "n. 靴子"
+  },
+  {
+    "word": "border",
+    "phonetic": "/ˈbɔːdə/",
+    "explains": "n. 边界；边缘"
+  },
+  {
+    "word": "boring",
+    "phonetic": "/ˈbɔːrɪŋ/",
+    "explains": "adj. 令人厌烦的"
+  },
+  {
+    "word": "born",
+    "phonetic": "/bɔːn/",
+    "explains": "adj. 出生的"
+  },
+  {
+    "word": "borrow",
+    "phonetic": "/ˈbɒrəʊ/",
+    "explains": "v. 借；借入"
+  },
+  {
+    "word": "boss",
+    "phonetic": "/bɒs/",
+    "explains": "n. 老板；上司"
+  },
+  {
+    "word": "both",
+    "phonetic": "/bəʊθ/",
+    "explains": "pron. 两者　adj. 两个的"
+  },
+  {
+    "word": "bottle",
+    "phonetic": "/ˈbɒt(ə)l/",
+    "explains": "n. 瓶子"
+  },
+  {
+    "word": "bottom",
+    "phonetic": "/ˈbɒtəm/",
+    "explains": "n. 底部"
+  },
+  {
+    "word": "bow",
+    "phonetic": "/bəʊ; baʊ/",
+    "explains": "v. 鞠躬　n. 弓；蝴蝶结"
+  },
+  {
+    "word": "bowl",
+    "phonetic": "/bəʊl/",
+    "explains": "n. 碗"
+  },
+  {
+    "word": "box",
+    "phonetic": "/bɒks/",
+    "explains": "n. 盒子；箱子"
+  },
+  {
+    "word": "boy",
+    "phonetic": "/bɔɪ/",
+    "explains": "n. 男孩"
+  },
+  {
+    "word": "brain",
+    "phonetic": "/breɪn/",
+    "explains": "n. 脑；头脑"
+  },
+  {
+    "word": "branch",
+    "phonetic": "/brɑːn(t)ʃ; bræn(t)ʃ/",
+    "explains": "n. 树枝；分支"
+  },
+  {
+    "word": "brand",
+    "phonetic": "/brænd/",
+    "explains": "n. 品牌"
+  },
+  {
+    "word": "brave",
+    "phonetic": "/breɪv/",
+    "explains": "adj. 勇敢的"
+  },
+  {
+    "word": "bread",
+    "phonetic": "/bred/",
+    "explains": "n. 面包"
+  },
+  {
+    "word": "break",
+    "phonetic": "/breɪk/",
+    "explains": "v. 打破　n. 休息；中断"
+  },
+  {
+    "word": "breakfast",
+    "phonetic": "/ˈbrekfəst/",
+    "explains": "n. 早餐"
+  },
+  {
+    "word": "breath",
+    "phonetic": "/breθ/",
+    "explains": "n. 呼吸；气息"
+  },
+  {
+    "word": "breathe",
+    "phonetic": "/briːð/",
+    "explains": "v. 呼吸"
+  },
+  {
+    "word": "brick",
+    "phonetic": "/brɪk/",
+    "explains": "n. 砖"
+  },
+  {
+    "word": "bridge",
+    "phonetic": "/brɪdʒ/",
+    "explains": "n. 桥"
+  },
+  {
+    "word": "brief",
+    "phonetic": "/briːf/",
+    "explains": "adj. 简短的"
+  },
+  {
+    "word": "bright",
+    "phonetic": "/braɪt/",
+    "explains": "adj. 明亮的；聪明的"
+  },
+  {
+    "word": "bring",
+    "phonetic": "/brɪŋ/",
+    "explains": "v. 带来"
+  },
+  {
+    "word": "Britain",
+    "phonetic": "/ˈbrɪtən/",
+    "explains": "n. 英国"
+  },
+  {
+    "word": "British",
+    "phonetic": "/ˈbrɪtɪʃ/",
+    "explains": "adj. 英国的"
+  },
+  {
+    "word": "broad",
+    "phonetic": "/brɔːd/",
+    "explains": "adj. 宽的；宽阔的"
+  },
+  {
+    "word": "broadcast",
+    "phonetic": "/ˈbrɔːdkɑːst/",
+    "explains": "v. 广播　n. 广播节目"
+  },
+  {
+    "word": "brother",
+    "phonetic": "/ˈbrʌðə/",
+    "explains": "n. 兄弟"
+  },
+  {
+    "word": "brown",
+    "phonetic": "/braʊn/",
+    "explains": "adj. 棕色的　n. 棕色"
+  },
+  {
+    "word": "brunch",
+    "phonetic": "/brʌn(t)ʃ/",
+    "explains": "n. 早午餐"
+  },
+  {
+    "word": "brush",
+    "phonetic": "/brʌʃ/",
+    "explains": "n. 刷子　v. 刷"
+  },
+  {
+    "word": "bubble",
+    "phonetic": "/ˈbʌb(ə)l/",
+    "explains": "n. 泡沫"
+  },
+  {
+    "word": "build",
+    "phonetic": "/bɪld/",
+    "explains": "v. 建造"
+  },
+  {
+    "word": "building",
+    "phonetic": "/ˈbɪldɪŋ/",
+    "explains": "n. 建筑物"
+  },
+  {
+    "word": "bun",
+    "phonetic": "/bʌn/",
+    "explains": "n. 小圆面包"
+  },
+  {
+    "word": "burn",
+    "phonetic": "/bɜːn/",
+    "explains": "v. 燃烧；烧毁"
+  },
+  {
+    "word": "burst",
+    "phonetic": "/bɜːst/",
+    "explains": "v. 爆发；破裂"
+  },
+  {
+    "word": "bury",
+    "phonetic": "/ˈberɪ/",
+    "explains": "v. 埋葬"
+  },
+  {
+    "word": "bus",
+    "phonetic": "/bʌs/",
+    "explains": "n. 公共汽车"
+  },
+  {
+    "word": "bush",
+    "phonetic": "/bʊʃ/",
+    "explains": "n. 灌木"
+  },
+  {
+    "word": "business",
+    "phonetic": "/ˈbɪznɪs/",
+    "explains": "n. 生意；事务"
+  },
+  {
+    "word": "busy",
+    "phonetic": "/ˈbɪzɪ/",
+    "explains": "adj. 忙的"
+  },
+  {
+    "word": "but",
+    "phonetic": "/bʌt; bət/",
+    "explains": "conj. 但是"
+  },
+  {
+    "word": "butcher",
+    "phonetic": "/ˈbʊtʃə/",
+    "explains": "n. 屠夫"
+  },
+  {
+    "word": "butter",
+    "phonetic": "/ˈbʌtə/",
+    "explains": "n. 黄油"
+  },
+  {
+    "word": "butterfly",
+    "phonetic": "/ˈbʌtəflaɪ/",
+    "explains": "n. 蝴蝶"
+  },
+  {
+    "word": "button",
+    "phonetic": "/ˈbʌt(ə)n/",
+    "explains": "n. 纽扣；按钮"
+  },
+  {
+    "word": "buy",
+    "phonetic": "/baɪ/",
+    "explains": "v. 买"
+  },
+  {
+    "word": "by",
+    "phonetic": "/baɪ/",
+    "explains": "prep. 在……旁；被；由"
+  },
+  {
+    "word": "bye",
+    "phonetic": "/baɪ/",
+    "explains": "int. 再见"
+  },
+  {
+    "word": "cabbage",
+    "phonetic": "/ˈkæbɪdʒ/",
+    "explains": "n. 卷心菜"
+  },
+  {
+    "word": "cafe",
+    "phonetic": "/ˈkæfeɪ; ˈkæfɪ/",
+    "explains": "n. 咖啡馆"
+  },
+  {
+    "word": "cage",
+    "phonetic": "/keɪdʒ/",
+    "explains": "n. 笼子"
+  },
+  {
+    "word": "cake",
+    "phonetic": "/keɪk/",
+    "explains": "n. 蛋糕"
+  },
+  {
+    "word": "call",
+    "phonetic": "/kɔːl/",
+    "explains": "v. 呼叫；打电话　n. 电话"
+  },
+  {
+    "word": "calm",
+    "phonetic": "/kɑːm; kæm/",
+    "explains": "adj. 平静的　v. 使平静"
+  },
+  {
+    "word": "camera",
+    "phonetic": "/ˈkæm(ə)rə/",
+    "explains": "n. 照相机"
+  },
+  {
+    "word": "camp",
+    "phonetic": "/kæmp/",
+    "explains": "n. 营地　v. 露营"
+  },
+  {
+    "word": "can",
+    "phonetic": "/kæn; kən/",
+    "explains": "v. 能；可以　n. 罐头"
+  },
+  {
+    "word": "Canada",
+    "phonetic": "/ˈkænədə/",
+    "explains": "n. 加拿大"
+  },
+  {
+    "word": "Canadian",
+    "phonetic": "/kəˈneɪdɪən/",
+    "explains": "adj. 加拿大的　n. 加拿大人"
+  },
+  {
+    "word": "canal",
+    "phonetic": "/kəˈnæl/",
+    "explains": "n. 运河"
+  },
+  {
+    "word": "cancel",
+    "phonetic": "/ˈkæns(ə)l/",
+    "explains": "v. 取消"
+  },
+  {
+    "word": "cancer",
+    "phonetic": "/ˈkænsə/",
+    "explains": "n. 癌症"
+  },
+  {
+    "word": "candle",
+    "phonetic": "/ˈkænd(ə)l/",
+    "explains": "n. 蜡烛"
+  },
+  {
+    "word": "candy",
+    "phonetic": "/ˈkændɪ/",
+    "explains": "n. 糖果"
+  },
+  {
+    "word": "cap",
+    "phonetic": "/kæp/",
+    "explains": "n. 帽子"
+  },
+  {
+    "word": "capital",
+    "phonetic": "/ˈkæpɪt(ə)l/",
+    "explains": "n. 首都；资本　adj. 大写的"
+  },
+  {
+    "word": "captain",
+    "phonetic": "/ˈkæptɪn/",
+    "explains": "n. 船长；队长"
+  },
+  {
+    "word": "car",
+    "phonetic": "/kɑː/",
+    "explains": "n. 汽车"
+  },
+  {
+    "word": "card",
+    "phonetic": "/kɑːd/",
+    "explains": "n. 卡片"
+  },
+  {
+    "word": "care",
+    "phonetic": "/keə/",
+    "explains": "n. 关心　v. 在乎；关心"
+  },
+  {
+    "word": "careful",
+    "phonetic": "/ˈkeəfʊl; ˈkeəf(ə)l/",
+    "explains": "adj. 仔细的；小心的"
+  },
+  {
+    "word": "careless",
+    "phonetic": "/ˈkeəlɪs/",
+    "explains": "adj. 粗心的"
+  },
+  {
+    "word": "carrot",
+    "phonetic": "/ˈkærət/",
+    "explains": "n. 胡萝卜"
+  },
+  {
+    "word": "carry",
+    "phonetic": "/ˈkærɪ/",
+    "explains": "v. 携带；搬运"
+  },
+  {
+    "word": "cartoon",
+    "phonetic": "/kɑːˈtuːn/",
+    "explains": "n. 动画片"
+  },
+  {
+    "word": "case",
+    "phonetic": "/keɪs/",
+    "explains": "n. 情况；箱子"
+  },
+  {
+    "word": "cash",
+    "phonetic": "/kæʃ/",
+    "explains": "n. 现金"
+  },
+  {
+    "word": "cassette",
+    "phonetic": "/kəˈset/",
+    "explains": "n. 磁带"
+  },
+  {
+    "word": "castle",
+    "phonetic": "/ˈkɑːs(ə)l; ˈkæs(ə)l/",
+    "explains": "n. 城堡"
+  },
+  {
+    "word": "cat",
+    "phonetic": "/kæt/",
+    "explains": "n. 猫"
+  },
+  {
+    "word": "catch",
+    "phonetic": "/kætʃ/",
+    "explains": "v. 抓住；赶上"
+  },
+  {
+    "word": "category",
+    "phonetic": "/ˈkætɪɡərɪ/",
+    "explains": "n. 类别"
+  },
+  {
+    "word": "cause",
+    "phonetic": "/kɔːz/",
+    "explains": "n. 原因　v. 导致"
+  },
+  {
+    "word": "celebrate",
+    "phonetic": "/ˈselɪbreɪt/",
+    "explains": "v. 庆祝"
+  },
+  {
+    "word": "cell",
+    "phonetic": "/sel/",
+    "explains": "n. 细胞；电池"
+  },
+  {
+    "word": "cent",
+    "phonetic": "/sent/",
+    "explains": "n. 美分"
+  },
+  {
+    "word": "centre",
+    "phonetic": "/ˈsentə/",
+    "explains": "n. 中心"
+  },
+  {
+    "word": "century",
+    "phonetic": "/ˈsen(t)ʃʊrɪ/",
+    "explains": "n. 世纪"
+  },
+  {
+    "word": "certain",
+    "phonetic": "/ˈsɜːt(ə)n; ˈsɜːtn/",
+    "explains": "adj. 某个；确定的"
+  },
+  {
+    "word": "chain",
+    "phonetic": "/tʃeɪn/",
+    "explains": "n. 链子"
+  },
+  {
+    "word": "chair",
+    "phonetic": "/tʃeə/",
+    "explains": "n. 椅子"
+  },
+  {
+    "word": "chalk",
+    "phonetic": "/tʃɔːk/",
+    "explains": "n. 粉笔"
+  },
+  {
+    "word": "chance",
+    "phonetic": "/tʃɑːns; tʃæns/",
+    "explains": "n. 机会"
+  },
+  {
+    "word": "change",
+    "phonetic": "/tʃeɪn(d)ʒ/",
+    "explains": "n. 变化　v. 改变"
+  },
+  {
+    "word": "channel",
+    "phonetic": "/ˈtʃæn(ə)l/",
+    "explains": "n. 频道；海峡"
+  },
+  {
+    "word": "character",
+    "phonetic": "/ˈkærɪktə/",
+    "explains": "n. 性格；角色；字符"
+  },
+  {
+    "word": "charge",
+    "phonetic": "/tʃɑːdʒ/",
+    "explains": "v. 收费；充电　n. 费用；充电"
+  },
+  {
+    "word": "cheap",
+    "phonetic": "/tʃiːp/",
+    "explains": "adj. 便宜的"
+  },
+  {
+    "word": "check",
+    "phonetic": "/tʃek/",
+    "explains": "v. 检查　n. 检查；支票"
+  },
+  {
+    "word": "cheer",
+    "phonetic": "/tʃɪə/",
+    "explains": "v. 欢呼"
+  },
+  {
+    "word": "cheese",
+    "phonetic": "/tʃiːz/",
+    "explains": "n. 奶酪"
+  },
+  {
+    "word": "chemistry",
+    "phonetic": "/ˈkemɪstrɪ/",
+    "explains": "n. 化学"
+  },
+  {
+    "word": "chest",
+    "phonetic": "/tʃest/",
+    "explains": "n. 胸部"
+  },
+  {
+    "word": "chicken",
+    "phonetic": "/ˈtʃɪkɪn/",
+    "explains": "n. 鸡；鸡肉"
+  },
+  {
+    "word": "chief",
+    "phonetic": "/tʃiːf/",
+    "explains": "adj. 主要的　n. 首长"
+  },
+  {
+    "word": "child",
+    "phonetic": "/tʃaɪld/",
+    "explains": "n. 孩子"
+  },
+  {
+    "word": "childhood",
+    "phonetic": "/ˈtʃaɪldhʊd/",
+    "explains": "n. 童年"
+  },
+  {
+    "word": "China",
+    "phonetic": "/ˈtʃaɪnə/",
+    "explains": "n. 中国"
+  },
+  {
+    "word": "Chinese",
+    "phonetic": "/ˌtʃaɪˈniːz/",
+    "explains": "adj. 中国的　n. 中文；中国人"
+  },
+  {
+    "word": "chips",
+    "phonetic": "/tʃɪps/",
+    "explains": "n. 炸薯条"
+  },
+  {
+    "word": "chocolate",
+    "phonetic": "/ˈtʃɒklɪt; ˈtʃɒk(ə)lɪt/",
+    "explains": "n. 巧克力"
+  },
+  {
+    "word": "choice",
+    "phonetic": "/tʃɔɪs/",
+    "explains": "n. 选择"
+  },
+  {
+    "word": "choose",
+    "phonetic": "/tʃuːz/",
+    "explains": "v. 选择"
+  },
+  {
+    "word": "chopsticks",
+    "phonetic": "/ˈtʃɒpstɪks/",
+    "explains": "n. 筷子"
+  },
+  {
+    "word": "Christmas",
+    "phonetic": "/ˈkrɪsməs/",
+    "explains": "n. 圣诞节"
+  },
+  {
+    "word": "church",
+    "phonetic": "/tʃɜːtʃ/",
+    "explains": "n. 教堂"
+  },
+  {
+    "word": "cinema",
+    "phonetic": "/ˈsɪnɪmə; ˈsɪnəmɑː/",
+    "explains": "n. 电影院"
+  },
+  {
+    "word": "circle",
+    "phonetic": "/ˈsɜːk(ə)l/",
+    "explains": "n. 圆圈　v. 圈出"
+  },
+  {
+    "word": "citizen",
+    "phonetic": "/ˈsɪtɪz(ə)n/",
+    "explains": "n. 公民"
+  },
+  {
+    "word": "city",
+    "phonetic": "/ˈsɪtɪ/",
+    "explains": "n. 城市"
+  },
+  {
+    "word": "class",
+    "phonetic": "/klɑːs; klæs/",
+    "explains": "n. 班级；课"
+  },
+  {
+    "word": "classmate",
+    "phonetic": "/ˈklɑːsmeɪt; ˈklæsmeɪt/",
+    "explains": "n. 同学"
+  },
+  {
+    "word": "classroom",
+    "phonetic": "/ˈklɑːsruːm; ˈklæsruːm/",
+    "explains": "n. 教室"
+  },
+  {
+    "word": "clean",
+    "phonetic": "/kliːn/",
+    "explains": "adj. 干净的　v. 打扫"
+  },
+  {
+    "word": "clear",
+    "phonetic": "/klɪə/",
+    "explains": "adj. 清楚的　v. 清除"
+  },
+  {
+    "word": "clever",
+    "phonetic": "/ˈklevə/",
+    "explains": "adj. 聪明的"
+  },
+  {
+    "word": "click",
+    "phonetic": "/klɪk/",
+    "explains": "v. 点击"
+  },
+  {
+    "word": "climate",
+    "phonetic": "/ˈklaɪmɪt/",
+    "explains": "n. 气候"
+  },
+  {
+    "word": "climb",
+    "phonetic": "/klaɪm/",
+    "explains": "v. 爬；攀登"
+  },
+  {
+    "word": "clinic",
+    "phonetic": "/ˈklɪnɪk/",
+    "explains": "n. 诊所"
+  },
+  {
+    "word": "clock",
+    "phonetic": "/klɒk/",
+    "explains": "n. 时钟"
+  },
+  {
+    "word": "close",
+    "phonetic": "/kləʊz; kləʊs/",
+    "explains": "v. 关　adj. 近的"
+  },
+  {
+    "word": "cloth",
+    "phonetic": "/klɒθ; klɒθ/",
+    "explains": "n. 布"
+  },
+  {
+    "word": "clothes",
+    "phonetic": "/kləʊðz; klɒðz/",
+    "explains": "n. 衣服"
+  },
+  {
+    "word": "cloud",
+    "phonetic": "/klaʊd/",
+    "explains": "n. 云"
+  },
+  {
+    "word": "club",
+    "phonetic": "/klʌb/",
+    "explains": "n. 俱乐部"
+  },
+  {
+    "word": "coal",
+    "phonetic": "/kəʊl/",
+    "explains": "n. 煤"
+  },
+  {
+    "word": "coast",
+    "phonetic": "/kəʊst/",
+    "explains": "n. 海岸"
+  },
+  {
+    "word": "coat",
+    "phonetic": "/kəʊt/",
+    "explains": "n. 外套"
+  },
+  {
+    "word": "cock",
+    "phonetic": "/kɒk/",
+    "explains": "n. 公鸡"
+  },
+  {
+    "word": "cocoa",
+    "phonetic": "/ˈkəʊkəʊ/",
+    "explains": "n. 可可粉"
+  },
+  {
+    "word": "coffee",
+    "phonetic": "/ˈkɒfɪ/",
+    "explains": "n. 咖啡"
+  },
+  {
+    "word": "coin",
+    "phonetic": "/kɔɪn/",
+    "explains": "n. 硬币"
+  },
+  {
+    "word": "Coke",
+    "phonetic": "/kəʊk/",
+    "explains": "n. 可口可乐"
+  },
+  {
+    "word": "cold",
+    "phonetic": "/kəʊld/",
+    "explains": "adj. 冷的　n. 感冒"
+  },
+  {
+    "word": "collect",
+    "phonetic": "/kəˈlekt/",
+    "explains": "v. 收集"
+  },
+  {
+    "word": "college",
+    "phonetic": "/ˈkɒlɪdʒ/",
+    "explains": "n. 学院；大学"
+  },
+  {
+    "word": "colony",
+    "phonetic": "/ˈkɒlənɪ/",
+    "explains": "n. 殖民地"
+  },
+  {
+    "word": "colour",
+    "phonetic": "/ˈkʌlə/",
+    "explains": "n. 颜色　v. 着色"
+  },
+  {
+    "word": "comb",
+    "phonetic": "/kəʊm/",
+    "explains": "n. 梳子　v. 梳"
+  },
+  {
+    "word": "come",
+    "phonetic": "/kʌm/",
+    "explains": "v. 来"
+  },
+  {
+    "word": "comfort",
+    "phonetic": "/ˈkʌmfət/",
+    "explains": "n. 舒适　v. 安慰"
+  },
+  {
+    "word": "comfortable",
+    "phonetic": "/ˈkʌmf(ə)təb(ə)l/",
+    "explains": "adj. 舒适的"
+  },
+  {
+    "word": "common",
+    "phonetic": "/ˈkɒmən/",
+    "explains": "adj. 普通的；共同的"
+  },
+  {
+    "word": "communicate",
+    "phonetic": "/kəˈmjuːnɪkeɪt/",
+    "explains": "v. 交流；沟通"
+  },
+  {
+    "word": "communication",
+    "phonetic": "/kəˌmjuːnɪˈkeɪʃ(ə)n/",
+    "explains": "n. 交流；通讯"
+  },
+  {
+    "word": "community",
+    "phonetic": "/kəˈmjuːnɪtɪ/",
+    "explains": "n. 社区"
+  },
+  {
+    "word": "company",
+    "phonetic": "/ˈkʌmp(ə)nɪ/",
+    "explains": "n. 公司；陪伴"
+  },
+  {
+    "word": "compare",
+    "phonetic": "/kəmˈpeə/",
+    "explains": "v. 比较"
+  },
+  {
+    "word": "complete",
+    "phonetic": "/kəmˈpliːt/",
+    "explains": "adj. 完整的　v. 完成"
+  },
+  {
+    "word": "computer",
+    "phonetic": "/kəmˈpjuːtə/",
+    "explains": "n. 电脑"
+  },
+  {
+    "word": "conclusion",
+    "phonetic": "/kənˈkluːʒ(ə)n/",
+    "explains": "n. 结论"
+  },
+  {
+    "word": "condition",
+    "phonetic": "/kənˈdɪʃ(ə)n/",
+    "explains": "n. 条件；状况"
+  },
+  {
+    "word": "conference",
+    "phonetic": "/ˈkɒnf(ə)rəns/",
+    "explains": "n. 会议"
+  },
+  {
+    "word": "connect",
+    "phonetic": "/kəˈnekt/",
+    "explains": "v. 连接"
+  },
+  {
+    "word": "consider",
+    "phonetic": "/kənˈsɪdə/",
+    "explains": "v. 考虑"
+  },
+  {
+    "word": "consist",
+    "phonetic": "/kənˈsɪst/",
+    "explains": "v. 由……组成"
+  },
+  {
+    "word": "constant",
+    "phonetic": "/ˈkɒnstənt/",
+    "explains": "adj. 不断的；恒定的"
+  },
+  {
+    "word": "contain",
+    "phonetic": "/kənˈteɪn/",
+    "explains": "v. 包含；容纳"
+  },
+  {
+    "word": "contest",
+    "phonetic": "/ˈkɒntest/",
+    "explains": "n. 比赛"
+  },
+  {
+    "word": "context",
+    "phonetic": "/ˈkɒntekst/",
+    "explains": "n. 上下文；语境"
+  },
+  {
+    "word": "continue",
+    "phonetic": "/kənˈtɪnjuː/",
+    "explains": "v. 继续"
+  },
+  {
+    "word": "control",
+    "phonetic": "/kənˈtrəʊl/",
+    "explains": "v. 控制　n. 控制"
+  },
+  {
+    "word": "convenient",
+    "phonetic": "/kənˈviːnɪənt/",
+    "explains": "adj. 方便的"
+  },
+  {
+    "word": "conversation",
+    "phonetic": "/ˌkɒnvəˈseɪʃ(ə)n/",
+    "explains": "n. 谈话；会话"
+  },
+  {
+    "word": "cook",
+    "phonetic": "/kʊk/",
+    "explains": "v. 烹调　n. 厨师"
+  },
+  {
+    "word": "cooker",
+    "phonetic": "/ˈkʊkə/",
+    "explains": "n. 炊具"
+  },
+  {
+    "word": "cookie",
+    "phonetic": "/ˈkʊkɪ/",
+    "explains": "n. 饼干"
+  },
+  {
+    "word": "cool",
+    "phonetic": "/kuːl/",
+    "explains": "adj. 凉爽的；酷的"
+  },
+  {
+    "word": "copy",
+    "phonetic": "/ˈkɒpɪ/",
+    "explains": "v. 抄写；复印　n. 副本"
+  },
+  {
+    "word": "corn",
+    "phonetic": "/kɔːn/",
+    "explains": "n. 玉米"
+  },
+  {
+    "word": "corner",
+    "phonetic": "/ˈkɔːnə/",
+    "explains": "n. 角落"
+  },
+  {
+    "word": "correct",
+    "phonetic": "/kəˈrekt/",
+    "explains": "adj. 正确的　v. 改正"
+  },
+  {
+    "word": "cost",
+    "phonetic": "/kɒst; kɒst/",
+    "explains": "v. 花费　n. 费用"
+  },
+  {
+    "word": "cottage",
+    "phonetic": "/ˈkɒtɪdʒ/",
+    "explains": "n. 村舍；小屋"
+  },
+  {
+    "word": "cotton",
+    "phonetic": "/ˈkɒt(ə)n/",
+    "explains": "n. 棉花"
+  },
+  {
+    "word": "cough",
+    "phonetic": "/kɒf; kɒf/",
+    "explains": "v. 咳嗽　n. 咳嗽"
+  },
+  {
+    "word": "could",
+    "phonetic": "/kʊd; kəd/",
+    "explains": "v. 能（can的过去式）"
+  },
+  {
+    "word": "count",
+    "phonetic": "/kaʊnt/",
+    "explains": "v. 数数"
+  },
+  {
+    "word": "country",
+    "phonetic": "/ˈkʌntrɪ/",
+    "explains": "n. 国家；乡村"
+  },
+  {
+    "word": "countryside",
+    "phonetic": "/ˈkʌntrɪsaɪd/",
+    "explains": "n. 乡村"
+  },
+  {
+    "word": "county",
+    "phonetic": "/ˈkaʊntɪ/",
+    "explains": "n. 县"
+  },
+  {
+    "word": "couple",
+    "phonetic": "/ˈkʌp(ə)l/",
+    "explains": "n. 夫妇；一对"
+  },
+  {
+    "word": "courage",
+    "phonetic": "/ˈkʌrɪdʒ/",
+    "explains": "n. 勇气"
+  },
+  {
+    "word": "course",
+    "phonetic": "/kɔːs/",
+    "explains": "n. 课程；过程"
+  },
+  {
+    "word": "court",
+    "phonetic": "/kɔːt/",
+    "explains": "n. 法庭；球场"
+  },
+  {
+    "word": "cousin",
+    "phonetic": "/ˈkʌz(ə)n/",
+    "explains": "n. 堂兄弟姐妹；表兄弟姐妹"
+  },
+  {
+    "word": "cover",
+    "phonetic": "/ˈkʌvə/",
+    "explains": "v. 覆盖　n. 封面"
+  },
+  {
+    "word": "cow",
+    "phonetic": "/kaʊ/",
+    "explains": "n. 母牛"
+  },
+  {
+    "word": "crayon",
+    "phonetic": "/ˈkreɪɒn/",
+    "explains": "n. 蜡笔"
+  },
+  {
+    "word": "crazy",
+    "phonetic": "/ˈkreɪzɪ/",
+    "explains": "adj. 疯狂的"
+  },
+  {
+    "word": "cream",
+    "phonetic": "/kriːm/",
+    "explains": "n. 奶油；面霜"
+  },
+  {
+    "word": "create",
+    "phonetic": "/krɪˈeɪt/",
+    "explains": "v. 创造"
+  },
+  {
+    "word": "credit",
+    "phonetic": "/ˈkredɪt/",
+    "explains": "n. 信用；学分"
+  },
+  {
+    "word": "crew",
+    "phonetic": "/kruː/",
+    "explains": "n. 全体船员"
+  },
+  {
+    "word": "crime",
+    "phonetic": "/kraɪm/",
+    "explains": "n. 犯罪"
+  },
+  {
+    "word": "cross",
+    "phonetic": "/krɒs/",
+    "explains": "v. 穿过　n. 十字"
+  },
+  {
+    "word": "crowd",
+    "phonetic": "/kraʊd/",
+    "explains": "n. 人群"
+  },
+  {
+    "word": "cry",
+    "phonetic": "/kraɪ/",
+    "explains": "v. 哭；叫喊"
+  },
+  {
+    "word": "cucumber",
+    "phonetic": "/ˈkjuːkʌmbə/",
+    "explains": "n. 黄瓜"
+  },
+  {
+    "word": "cultural",
+    "phonetic": "/ˈkʌltʃ(ə)r(ə)l/",
+    "explains": "adj. 文化的"
+  },
+  {
+    "word": "culture",
+    "phonetic": "/ˈkʌltʃə/",
+    "explains": "n. 文化"
+  },
+  {
+    "word": "cup",
+    "phonetic": "/kʌp/",
+    "explains": "n. 杯子"
+  },
+  {
+    "word": "cure",
+    "phonetic": "/kjʊə/",
+    "explains": "v. 治愈　n. 疗法"
+  },
+  {
+    "word": "curious",
+    "phonetic": "/ˈkjʊərɪəs/",
+    "explains": "adj. 好奇的"
+  },
+  {
+    "word": "current",
+    "phonetic": "/ˈkʌr(ə)nt/",
+    "explains": "adj. 当前的　n. 水流；电流"
+  },
+  {
+    "word": "custom",
+    "phonetic": "/ˈkʌstəm/",
+    "explains": "n. 习俗"
+  },
+  {
+    "word": "customer",
+    "phonetic": "/ˈkʌstəmə/",
+    "explains": "n. 顾客"
+  },
+  {
+    "word": "cut",
+    "phonetic": "/kʌt/",
+    "explains": "v. 切；割"
+  },
+  {
+    "word": "cute",
+    "phonetic": "/kjuːt/",
+    "explains": "adj. 可爱的"
+  },
+  {
+    "word": "cycle",
+    "phonetic": "/ˈsaɪk(ə)l/",
+    "explains": "n. 循环　v. 骑自行车"
+  },
+  {
+    "word": "dad",
+    "phonetic": "/dæd/",
+    "explains": "n. 爸爸"
+  },
+  {
+    "word": "daily",
+    "phonetic": "/ˈdeɪlɪ/",
+    "explains": "adj. 每日的　adv. 每天"
+  },
+  {
+    "word": "damage",
+    "phonetic": "/ˈdæmɪdʒ/",
+    "explains": "n. 损害　v. 损害"
+  },
+  {
+    "word": "dance",
+    "phonetic": "/dɑːns; dæns/",
+    "explains": "v. 跳舞　n. 舞蹈"
+  },
+  {
+    "word": "danger",
+    "phonetic": "/ˈdeɪn(d)ʒə/",
+    "explains": "n. 危险"
+  },
+  {
+    "word": "dangerous",
+    "phonetic": "/ˈdeɪn(d)ʒ(ə)rəs/",
+    "explains": "adj. 危险的"
+  },
+  {
+    "word": "dare",
+    "phonetic": "/deə/",
+    "explains": "v. 敢"
+  },
+  {
+    "word": "dark",
+    "phonetic": "/dɑːk/",
+    "explains": "adj. 黑暗的"
+  },
+  {
+    "word": "data",
+    "phonetic": "/ˈdeɪtə; ˈdɑːtə/",
+    "explains": "n. 数据"
+  },
+  {
+    "word": "date",
+    "phonetic": "/deɪt/",
+    "explains": "n. 日期　v. 约会"
+  },
+  {
+    "word": "daughter",
+    "phonetic": "/ˈdɔːtə/",
+    "explains": "n. 女儿"
+  },
+  {
+    "word": "day",
+    "phonetic": "/deɪ/",
+    "explains": "n. 天；日子"
+  },
+  {
+    "word": "dead",
+    "phonetic": "/ded/",
+    "explains": "adj. 死的"
+  },
+  {
+    "word": "deaf",
+    "phonetic": "/def/",
+    "explains": "adj. 聋的"
+  },
+  {
+    "word": "deal",
+    "phonetic": "/diːl/",
+    "explains": "v. 处理　n. 交易"
+  },
+  {
+    "word": "dear",
+    "phonetic": "/dɪə/",
+    "explains": "adj. 亲爱的"
+  },
+  {
+    "word": "death",
+    "phonetic": "/deθ/",
+    "explains": "n. 死亡"
+  },
+  {
+    "word": "December",
+    "phonetic": "/dɪˈsembə/",
+    "explains": "n. 十二月"
+  },
+  {
+    "word": "decide",
+    "phonetic": "/dɪˈsaɪd/",
+    "explains": "v. 决定"
+  },
+  {
+    "word": "decision",
+    "phonetic": "/dɪˈsɪʒ(ə)n/",
+    "explains": "n. 决定"
+  },
+  {
+    "word": "deep",
+    "phonetic": "/diːp/",
+    "explains": "adj. 深的"
+  },
+  {
+    "word": "deer",
+    "phonetic": "/dɪə/",
+    "explains": "n. 鹿"
+  },
+  {
+    "word": "defend",
+    "phonetic": "/dɪˈfend/",
+    "explains": "v. 防御；保护"
+  },
+  {
+    "word": "degree",
+    "phonetic": "/dɪˈɡriː/",
+    "explains": "n. 程度；学位"
+  },
+  {
+    "word": "delay",
+    "phonetic": "/dɪˈleɪ/",
+    "explains": "v. 推迟　n. 延迟"
+  },
+  {
+    "word": "delicious",
+    "phonetic": "/dɪˈlɪʃəs/",
+    "explains": "adj. 美味的"
+  },
+  {
+    "word": "deliver",
+    "phonetic": "/dɪˈlɪvə/",
+    "explains": "v. 递送；交付"
+  },
+  {
+    "word": "demand",
+    "phonetic": "/dɪˈmɑːnd; dɪˈmænd/",
+    "explains": "v. 要求　n. 需求"
+  },
+  {
+    "word": "depend",
+    "phonetic": "/dɪˈpend/",
+    "explains": "v. 依靠；取决于"
+  },
+  {
+    "word": "describe",
+    "phonetic": "/dɪˈskraɪb/",
+    "explains": "v. 描述"
+  },
+  {
+    "word": "description",
+    "phonetic": "/dɪˈskrɪpʃ(ə)n/",
+    "explains": "n. 描述"
+  },
+  {
+    "word": "desert",
+    "phonetic": "/ˈdezət; dɪˈzɜːt/",
+    "explains": "n. 沙漠"
+  },
+  {
+    "word": "design",
+    "phonetic": "/dɪˈzaɪn/",
+    "explains": "v. 设计　n. 设计"
+  },
+  {
+    "word": "desk",
+    "phonetic": "/desk/",
+    "explains": "n. 书桌"
+  },
+  {
+    "word": "detective",
+    "phonetic": "/dɪˈtektɪv/",
+    "explains": "n. 侦探"
+  },
+  {
+    "word": "develop",
+    "phonetic": "/dɪˈveləp/",
+    "explains": "v. 发展；开发"
+  },
+  {
+    "word": "development",
+    "phonetic": "/dɪˈveləpmənt/",
+    "explains": "n. 发展"
+  },
+  {
+    "word": "dialogue",
+    "phonetic": "/ˈdaɪəlɒɡ/",
+    "explains": "n. 对话"
+  },
+  {
+    "word": "diary",
+    "phonetic": "/ˈdaɪərɪ/",
+    "explains": "n. 日记"
+  },
+  {
+    "word": "dictionary",
+    "phonetic": "/ˈdɪkʃ(ə)n(ə)rɪ; ˈdɪkʃənrɪ/",
+    "explains": "n. 词典"
+  },
+  {
+    "word": "die",
+    "phonetic": "/daɪ/",
+    "explains": "v. 死"
+  },
+  {
+    "word": "difference",
+    "phonetic": "/ˈdɪf(ə)rəns/",
+    "explains": "n. 差异"
+  },
+  {
+    "word": "different",
+    "phonetic": "/ˈdɪf(ə)r(ə)nt/",
+    "explains": "adj. 不同的"
+  },
+  {
+    "word": "difficult",
+    "phonetic": "/ˈdɪfɪk(ə)lt/",
+    "explains": "adj. 困难的"
+  },
+  {
+    "word": "difficulty",
+    "phonetic": "/ˈdɪfɪkəltɪ/",
+    "explains": "n. 困难"
+  },
+  {
+    "word": "dig",
+    "phonetic": "/dɪɡ/",
+    "explains": "v. 挖"
+  },
+  {
+    "word": "dining",
+    "phonetic": "/ˈdaɪnɪŋ/",
+    "explains": "n. 用餐"
+  },
+  {
+    "word": "dinner",
+    "phonetic": "/ˈdɪnə/",
+    "explains": "n. 正餐"
+  },
+  {
+    "word": "direct",
+    "phonetic": "/dəˈrekt; dɪˈrekt/",
+    "explains": "adj. 直接的　v. 指导"
+  },
+  {
+    "word": "direction",
+    "phonetic": "/dəˈrekʃ(ə)n; dɪˈrekʃ(ə)n/",
+    "explains": "n. 方向"
+  },
+  {
+    "word": "director",
+    "phonetic": "/dəˈrektə; dɪˈrektə/",
+    "explains": "n. 导演；主任"
+  },
+  {
+    "word": "dirty",
+    "phonetic": "/ˈdɜːtɪ/",
+    "explains": "adj. 肮脏的"
+  },
+  {
+    "word": "discover",
+    "phonetic": "/dɪˈskʌvə/",
+    "explains": "v. 发现"
+  },
+  {
+    "word": "discovery",
+    "phonetic": "/dɪˈskʌv(ə)rɪ/",
+    "explains": "n. 发现"
+  },
+  {
+    "word": "discuss",
+    "phonetic": "/dɪˈskʌs/",
+    "explains": "v. 讨论"
+  },
+  {
+    "word": "discussion",
+    "phonetic": "/dɪˈskʌʃ(ə)n/",
+    "explains": "n. 讨论"
+  },
+  {
+    "word": "disease",
+    "phonetic": "/dɪˈziːz/",
+    "explains": "n. 疾病"
+  },
+  {
+    "word": "dish",
+    "phonetic": "/dɪʃ/",
+    "explains": "n. 盘；菜"
+  },
+  {
+    "word": "disk",
+    "phonetic": "/dɪsk/",
+    "explains": "n. 磁盘"
+  },
+  {
+    "word": "display",
+    "phonetic": "/dɪˈspleɪ/",
+    "explains": "v. 展示　n. 展示"
+  },
+  {
+    "word": "distance",
+    "phonetic": "/ˈdɪstəns/",
+    "explains": "n. 距离"
+  },
+  {
+    "word": "divide",
+    "phonetic": "/dɪˈvaɪd/",
+    "explains": "v. 分开；分割"
+  },
+  {
+    "word": "doctor",
+    "phonetic": "/ˈdɒktə/",
+    "explains": "n. 医生；博士"
+  },
+  {
+    "word": "document",
+    "phonetic": "/ˈdɒkjʊmənt/",
+    "explains": "n. 文件"
+  },
+  {
+    "word": "dog",
+    "phonetic": "/dɒɡ/",
+    "explains": "n. 狗"
+  },
+  {
+    "word": "dollar",
+    "phonetic": "/ˈdɒlə/",
+    "explains": "n. 美元"
+  },
+  {
+    "word": "door",
+    "phonetic": "/dɔː/",
+    "explains": "n. 门"
+  },
+  {
+    "word": "dormitory",
+    "phonetic": "/ˈdɔːmɪt(ə)rɪ/",
+    "explains": "n. 宿舍"
+  },
+  {
+    "word": "double",
+    "phonetic": "/ˈdʌb(ə)l/",
+    "explains": "adj. 双倍的　n. 两倍"
+  },
+  {
+    "word": "doubt",
+    "phonetic": "/daʊt/",
+    "explains": "n. 怀疑　v. 怀疑"
+  },
+  {
+    "word": "down",
+    "phonetic": "/daʊn/",
+    "explains": "adv. 向下　prep. 沿着"
+  },
+  {
+    "word": "download",
+    "phonetic": "/ˌdaʊnˈləʊd/",
+    "explains": "v. 下载"
+  },
+  {
+    "word": "downstairs",
+    "phonetic": "/ˌdaʊnˈsteəz/",
+    "explains": "adv. 楼下"
+  },
+  {
+    "word": "dozen",
+    "phonetic": "/ˈdʌz(ə)n/",
+    "explains": "n. 一打"
+  },
+  {
+    "word": "draw",
+    "phonetic": "/drɔː/",
+    "explains": "v. 画画；拉"
+  },
+  {
+    "word": "dream",
+    "phonetic": "/driːm/",
+    "explains": "n. 梦　v. 做梦"
+  },
+  {
+    "word": "dress",
+    "phonetic": "/dres/",
+    "explains": "n. 连衣裙　v. 穿衣"
+  },
+  {
+    "word": "drink",
+    "phonetic": "/drɪŋk/",
+    "explains": "v. 喝　n. 饮料"
+  },
+  {
+    "word": "drive",
+    "phonetic": "/draɪv/",
+    "explains": "v. 驾驶"
+  },
+  {
+    "word": "driver",
+    "phonetic": "/ˈdraɪvə/",
+    "explains": "n. 司机"
+  },
+  {
+    "word": "drop",
+    "phonetic": "/drɒp/",
+    "explains": "v. 掉下　n. 滴"
+  },
+  {
+    "word": "drug",
+    "phonetic": "/drʌɡ/",
+    "explains": "n. 药；毒品"
+  },
+  {
+    "word": "drum",
+    "phonetic": "/drʌm/",
+    "explains": "n. 鼓"
+  },
+  {
+    "word": "dry",
+    "phonetic": "/draɪ/",
+    "explains": "adj. 干的　v. 弄干"
+  },
+  {
+    "word": "duck",
+    "phonetic": "/dʌk/",
+    "explains": "n. 鸭子"
+  },
+  {
+    "word": "during",
+    "phonetic": "/ˈdjʊərɪŋ; ˈdʒʊərɪŋ/",
+    "explains": "prep. 在……期间"
+  },
+  {
+    "word": "duty",
+    "phonetic": "/ˈdjuːtɪ; ˈduːtɪ/",
+    "explains": "n. 责任；义务"
+  },
+  {
+    "word": "each",
+    "phonetic": "/iːtʃ/",
+    "explains": "adj. 每个　pron. 各自"
+  },
+  {
+    "word": "ear",
+    "phonetic": "/ɪə/",
+    "explains": "n. 耳朵"
+  },
+  {
+    "word": "early",
+    "phonetic": "/ˈɜːlɪ/",
+    "explains": "adv. 早　adj. 早的"
+  },
+  {
+    "word": "earn",
+    "phonetic": "/ɜːn/",
+    "explains": "v. 赚得"
+  },
+  {
+    "word": "earth",
+    "phonetic": "/ɜːθ/",
+    "explains": "n. 地球；泥土"
+  },
+  {
+    "word": "east",
+    "phonetic": "/iːst/",
+    "explains": "n. 东方　adj. 东方的"
+  },
+  {
+    "word": "easy",
+    "phonetic": "/ˈiːzɪ/",
+    "explains": "adj. 容易的"
+  },
+  {
+    "word": "eat",
+    "phonetic": "/iːt/",
+    "explains": "v. 吃"
+  },
+  {
+    "word": "education",
+    "phonetic": "/ˌedjʊˈkeɪʃ(ə)n; ˌedʒʊˈkeɪʃ(ə)n/",
+    "explains": "n. 教育"
+  },
+  {
+    "word": "effect",
+    "phonetic": "/ɪˈfekt/",
+    "explains": "n. 效果；影响"
+  },
+  {
+    "word": "effort",
+    "phonetic": "/ˈefət/",
+    "explains": "n. 努力"
+  },
+  {
+    "word": "egg",
+    "phonetic": "/eɡ/",
+    "explains": "n. 鸡蛋"
+  },
+  {
+    "word": "eight",
+    "phonetic": "/eɪt/",
+    "explains": "num. 八"
+  },
+  {
+    "word": "eighteen",
+    "phonetic": "/ˌeɪˈtiːn; ˈeɪtiːn/",
+    "explains": "num. 十八"
+  },
+  {
+    "word": "eighty",
+    "phonetic": "/ˈeɪtɪ/",
+    "explains": "num. 八十"
+  },
+  {
+    "word": "either",
+    "phonetic": "/ˈaɪðə; ˈiːðə/",
+    "explains": "pron. 两者之一　adj. 任一的"
+  },
+  {
+    "word": "elder",
+    "phonetic": "/ˈeldə/",
+    "explains": "adj. 年长的"
+  },
+  {
+    "word": "elect",
+    "phonetic": "/ɪˈlekt/",
+    "explains": "v. 选举"
+  },
+  {
+    "word": "electric",
+    "phonetic": "/ɪˈlektrɪk/",
+    "explains": "adj. 电的"
+  },
+  {
+    "word": "electricity",
+    "phonetic": "/ˌɪlɛkˈtrɪsɪtɪ; ˌɪlɛkˈtrɪsətɪ/",
+    "explains": "n. 电"
+  },
+  {
+    "word": "elephant",
+    "phonetic": "/ˈelɪfənt/",
+    "explains": "n. 大象"
+  },
+  {
+    "word": "eleven",
+    "phonetic": "/ɪˈlev(ə)n/",
+    "explains": "num. 十一"
+  },
+  {
+    "word": "else",
+    "phonetic": "/els/",
+    "explains": "adv. 其他；另外"
+  },
+  {
+    "word": "email",
+    "phonetic": "/ˈiːmeɪl/",
+    "explains": "n. 电子邮件"
+  },
+  {
+    "word": "empty",
+    "phonetic": "/ˈem(p)tɪ/",
+    "explains": "adj. 空的　v. 倒空"
+  },
+  {
+    "word": "end",
+    "phonetic": "/end/",
+    "explains": "n. 末端　v. 结束"
+  },
+  {
+    "word": "enemy",
+    "phonetic": "/ˈenɪmɪ/",
+    "explains": "n. 敌人"
+  },
+  {
+    "word": "energy",
+    "phonetic": "/ˈenədʒɪ/",
+    "explains": "n. 精力；能源"
+  },
+  {
+    "word": "engineer",
+    "phonetic": "/ˌendʒɪˈnɪə/",
+    "explains": "n. 工程师"
+  },
+  {
+    "word": "England",
+    "phonetic": "/ˈɪŋɡlənd/",
+    "explains": "n. 英格兰"
+  },
+  {
+    "word": "English",
+    "phonetic": "/ˈɪŋɡlɪʃ/",
+    "explains": "n. 英语　adj. 英国的"
+  },
+  {
+    "word": "enjoy",
+    "phonetic": "/ɪnˈdʒɔɪ/",
+    "explains": "v. 享受"
+  },
+  {
+    "word": "enough",
+    "phonetic": "/ɪˈnʌf/",
+    "explains": "adj. 足够的　adv. 足够地"
+  },
+  {
+    "word": "enter",
+    "phonetic": "/ˈentə/",
+    "explains": "v. 进入"
+  },
+  {
+    "word": "environment",
+    "phonetic": "/ɪnˈvaɪrənmənt; ɪnˈvaɪərənmənt/",
+    "explains": "n. 环境"
+  },
+  {
+    "word": "especially",
+    "phonetic": "/ɪˈspeʃəlɪ/",
+    "explains": "adv. 尤其"
+  },
+  {
+    "word": "Europe",
+    "phonetic": "/ˈjʊərəp/",
+    "explains": "n. 欧洲"
+  },
+  {
+    "word": "European",
+    "phonetic": "/ˌjʊərəˈpiː(ə)n/",
+    "explains": "adj. 欧洲的　n. 欧洲人"
+  },
+  {
+    "word": "eve",
+    "phonetic": "/iːv/",
+    "explains": "n. 前夜"
+  },
+  {
+    "word": "even",
+    "phonetic": "/ˈiːv(ə)n/",
+    "explains": "adv. 甚至　adj. 偶数的"
+  },
+  {
+    "word": "evening",
+    "phonetic": "/ˈiːvnɪŋ/",
+    "explains": "n. 傍晚"
+  },
+  {
+    "word": "event",
+    "phonetic": "/ɪˈvent/",
+    "explains": "n. 事件"
+  },
+  {
+    "word": "ever",
+    "phonetic": "/ˈevə/",
+    "explains": "adv. 曾经"
+  },
+  {
+    "word": "every",
+    "phonetic": "/ˈevrɪ/",
+    "explains": "adj. 每一"
+  },
+  {
+    "word": "everybody",
+    "phonetic": "/ˈevrɪˌbɒdɪ/",
+    "explains": "pron. 每个人"
+  },
+  {
+    "word": "everyone",
+    "phonetic": "/ˈevrɪwʌn/",
+    "explains": "pron. 每个人"
+  },
+  {
+    "word": "everything",
+    "phonetic": "/ˈevrɪθɪŋ/",
+    "explains": "pron. 一切"
+  },
+  {
+    "word": "everywhere",
+    "phonetic": "/ˈevrɪweə/",
+    "explains": "adv. 到处"
+  },
+  {
+    "word": "exact",
+    "phonetic": "/ɪɡˈzækt/",
+    "explains": "adj. 确切的"
+  },
+  {
+    "word": "exam",
+    "phonetic": "/ɪɡˈzæm/",
+    "explains": "n. 考试"
+  },
+  {
+    "word": "examine",
+    "phonetic": "/ɪɡˈzæmɪn; ɪɡˈzæmən/",
+    "explains": "v. 检查"
+  },
+  {
+    "word": "example",
+    "phonetic": "/ɪɡˈzɑːmp(ə)l; ɪɡˈzæmp(ə)l/",
+    "explains": "n. 例子"
+  },
+  {
+    "word": "excellent",
+    "phonetic": "/ˈeks(ə)lənt/",
+    "explains": "adj. 优秀的"
+  },
+  {
+    "word": "except",
+    "phonetic": "/ɪkˈsept/",
+    "explains": "prep. 除……之外"
+  },
+  {
+    "word": "excited",
+    "phonetic": "/ɪkˈsaɪtɪd/",
+    "explains": "adj. 兴奋的"
+  },
+  {
+    "word": "exciting",
+    "phonetic": "/ɪkˈsaɪtɪŋ/",
+    "explains": "adj. 令人兴奋的"
+  },
+  {
+    "word": "excuse",
+    "phonetic": "/ɪkˈskjuːz; ɪkˈskjuːs/",
+    "explains": "n. 借口　v. 原谅"
+  },
+  {
+    "word": "exercise",
+    "phonetic": "/ˈeksəsaɪz/",
+    "explains": "n. 锻炼；练习　v. 锻炼"
+  },
+  {
+    "word": "exhibition",
+    "phonetic": "/ˌeksɪˈbɪʃ(ə)n/",
+    "explains": "n. 展览"
+  },
+  {
+    "word": "exist",
+    "phonetic": "/ɪɡˈzɪst/",
+    "explains": "v. 存在"
+  },
+  {
+    "word": "expect",
+    "phonetic": "/ɪkˈspekt/",
+    "explains": "v. 期望"
+  },
+  {
+    "word": "expensive",
+    "phonetic": "/ɪkˈspensɪv/",
+    "explains": "adj. 昂贵的"
+  },
+  {
+    "word": "experience",
+    "phonetic": "/ɪkˈspɪərɪəns/",
+    "explains": "n. 经验；经历"
+  },
+  {
+    "word": "experiment",
+    "phonetic": "/ɪkˈsperɪmənt/",
+    "explains": "n. 实验"
+  },
+  {
+    "word": "expert",
+    "phonetic": "/ˈekspɜːt/",
+    "explains": "n. 专家"
+  },
+  {
+    "word": "explain",
+    "phonetic": "/ɪkˈspleɪn/",
+    "explains": "v. 解释"
+  },
+  {
+    "word": "explore",
+    "phonetic": "/ɪkˈsplɔː/",
+    "explains": "v. 探索"
+  },
+  {
+    "word": "express",
+    "phonetic": "/ɪkˈspres/",
+    "explains": "v. 表达　adj. 快速的"
+  },
+  {
+    "word": "expression",
+    "phonetic": "/ɪkˈspreʃ(ə)n/",
+    "explains": "n. 表达；表情"
+  },
+  {
+    "word": "extra",
+    "phonetic": "/ˈekstrə/",
+    "explains": "adj. 额外的"
+  },
+  {
+    "word": "eye",
+    "phonetic": "/aɪ/",
+    "explains": "n. 眼睛"
+  },
+  {
+    "word": "face",
+    "phonetic": "/feɪs/",
+    "explains": "n. 脸　v. 面对"
+  },
+  {
+    "word": "fact",
+    "phonetic": "/fækt/",
+    "explains": "n. 事实"
+  },
+  {
+    "word": "factory",
+    "phonetic": "/ˈfækt(ə)rɪ; ˈfæktərɪ/",
+    "explains": "n. 工厂"
+  },
+  {
+    "word": "fail",
+    "phonetic": "/feɪl/",
+    "explains": "v. 失败"
+  },
+  {
+    "word": "fair",
+    "phonetic": "/feə/",
+    "explains": "adj. 公平的；金发的"
+  },
+  {
+    "word": "fall",
+    "phonetic": "/fɔːl/",
+    "explains": "v. 落下　n. 秋天"
+  },
+  {
+    "word": "family",
+    "phonetic": "/ˈfæmɪlɪ; ˈfæmbəlɪ/",
+    "explains": "n. 家庭"
+  },
+  {
+    "word": "famous",
+    "phonetic": "/ˈfeɪməs/",
+    "explains": "adj. 著名的"
+  },
+  {
+    "word": "fan",
+    "phonetic": "/fæn/",
+    "explains": "n. 扇子；粉丝"
+  },
+  {
+    "word": "far",
+    "phonetic": "/fɑː/",
+    "explains": "adv. 远　adj. 远的"
+  },
+  {
+    "word": "farm",
+    "phonetic": "/fɑːm/",
+    "explains": "n. 农场"
+  },
+  {
+    "word": "farmer",
+    "phonetic": "/ˈfɑːmə/",
+    "explains": "n. 农民"
+  },
+  {
+    "word": "fast",
+    "phonetic": "/fɑːst; fæst/",
+    "explains": "adj. 快的　adv. 快地"
+  },
+  {
+    "word": "fat",
+    "phonetic": "/fæt/",
+    "explains": "adj. 胖的"
+  },
+  {
+    "word": "father",
+    "phonetic": "/ˈfɑːðə/",
+    "explains": "n. 父亲"
+  },
+  {
+    "word": "favourite",
+    "phonetic": "/ˈfeɪvərɪt/",
+    "explains": "adj. 最喜欢的　n. 最爱"
+  },
+  {
+    "word": "fear",
+    "phonetic": "/fɪə/",
+    "explains": "n. 恐惧　v. 害怕"
+  },
+  {
+    "word": "February",
+    "phonetic": "/ˈfebrʊərɪ/",
+    "explains": "n. 二月"
+  },
+  {
+    "word": "feed",
+    "phonetic": "/fiːd/",
+    "explains": "v. 喂养"
+  },
+  {
+    "word": "feel",
+    "phonetic": "/fiːl/",
+    "explains": "v. 感觉"
+  },
+  {
+    "word": "feeling",
+    "phonetic": "/ˈfiːlɪŋ/",
+    "explains": "n. 感觉"
+  },
+  {
+    "word": "festival",
+    "phonetic": "/ˈfestɪv(ə)l/",
+    "explains": "n. 节日"
+  },
+  {
+    "word": "fetch",
+    "phonetic": "/fetʃ/",
+    "explains": "v. 取来"
+  },
+  {
+    "word": "fever",
+    "phonetic": "/ˈfiːvə/",
+    "explains": "n. 发烧"
+  },
+  {
+    "word": "few",
+    "phonetic": "/fjuː/",
+    "explains": "adj. 很少的"
+  },
+  {
+    "word": "field",
+    "phonetic": "/fiːld/",
+    "explains": "n. 田野；领域"
+  },
+  {
+    "word": "fifteen",
+    "phonetic": "/ˌfɪfˈtiːn; ˈfɪftiːn/",
+    "explains": "num. 十五"
+  },
+  {
+    "word": "fifty",
+    "phonetic": "/ˈfɪftɪ/",
+    "explains": "num. 五十"
+  },
+  {
+    "word": "fight",
+    "phonetic": "/faɪt/",
+    "explains": "v. 战斗　n. 打架"
+  },
+  {
+    "word": "fill",
+    "phonetic": "/fɪl/",
+    "explains": "v. 装满"
+  },
+  {
+    "word": "film",
+    "phonetic": "/fɪlm/",
+    "explains": "n. 电影"
+  },
+  {
+    "word": "final",
+    "phonetic": "/ˈfaɪn(ə)l/",
+    "explains": "adj. 最后的"
+  },
+  {
+    "word": "find",
+    "phonetic": "/faɪnd/",
+    "explains": "v. 找到"
+  },
+  {
+    "word": "fine",
+    "phonetic": "/faɪn/",
+    "explains": "adj. 好的　v. 罚款"
+  },
+  {
+    "word": "finger",
+    "phonetic": "/ˈfɪŋɡə/",
+    "explains": "n. 手指"
+  },
+  {
+    "word": "finish",
+    "phonetic": "/ˈfɪnɪʃ/",
+    "explains": "v. 完成"
+  },
+  {
+    "word": "fire",
+    "phonetic": "/ˈfaɪə/",
+    "explains": "n. 火　v. 开火；解雇"
+  },
+  {
+    "word": "fireman",
+    "phonetic": "/ˈfaɪəmən/",
+    "explains": "n. 消防员"
+  },
+  {
+    "word": "first",
+    "phonetic": "/fɜːst/",
+    "explains": "num. 第一　adj. 首先的"
+  },
+  {
+    "word": "fish",
+    "phonetic": "/fɪʃ/",
+    "explains": "n. 鱼　v. 钓鱼"
+  },
+  {
+    "word": "fisherman",
+    "phonetic": "/ˈfɪʃəmən/",
+    "explains": "n. 渔夫"
+  },
+  {
+    "word": "fit",
+    "phonetic": "/fɪt/",
+    "explains": "adj. 健康的　v. 合身"
+  },
+  {
+    "word": "five",
+    "phonetic": "/faɪv/",
+    "explains": "num. 五"
+  },
+  {
+    "word": "fix",
+    "phonetic": "/fɪks/",
+    "explains": "v. 修理"
+  },
+  {
+    "word": "flag",
+    "phonetic": "/flæɡ/",
+    "explains": "n. 旗帜"
+  },
+  {
+    "word": "flat",
+    "phonetic": "/flæt/",
+    "explains": "adj. 平的　n. 公寓"
+  },
+  {
+    "word": "flight",
+    "phonetic": "/flaɪt/",
+    "explains": "n. 航班；飞行"
+  },
+  {
+    "word": "floor",
+    "phonetic": "/flɔː/",
+    "explains": "n. 地板；楼层"
+  },
+  {
+    "word": "flower",
+    "phonetic": "/ˈflaʊə/",
+    "explains": "n. 花"
+  },
+  {
+    "word": "flu",
+    "phonetic": "/fluː/",
+    "explains": "n. 流感"
+  },
+  {
+    "word": "fly",
+    "phonetic": "/flaɪ/",
+    "explains": "v. 飞　n. 苍蝇"
+  },
+  {
+    "word": "focus",
+    "phonetic": "/ˈfəʊkəs/",
+    "explains": "v. 集中　n. 焦点"
+  },
+  {
+    "word": "follow",
+    "phonetic": "/ˈfɒləʊ/",
+    "explains": "v. 跟随"
+  },
+  {
+    "word": "following",
+    "phonetic": "/ˈfɒləʊɪŋ/",
+    "explains": "adj. 接着的"
+  },
+  {
+    "word": "food",
+    "phonetic": "/fuːd/",
+    "explains": "n. 食物"
+  },
+  {
+    "word": "fool",
+    "phonetic": "/fuːl/",
+    "explains": "n. 傻瓜　v. 愚弄"
+  },
+  {
+    "word": "foot",
+    "phonetic": "/fʊt/",
+    "explains": "n. 脚"
+  },
+  {
+    "word": "football",
+    "phonetic": "/ˈfʊtbɔːl/",
+    "explains": "n. 足球"
+  },
+  {
+    "word": "for",
+    "phonetic": "/fə; fɔː/",
+    "explains": "prep. 为了；因为"
+  },
+  {
+    "word": "force",
+    "phonetic": "/fɔːs/",
+    "explains": "v. 强迫　n. 力量"
+  },
+  {
+    "word": "foreign",
+    "phonetic": "/ˈfɒrɪn; ˈfɒrən/",
+    "explains": "adj. 外国的"
+  },
+  {
+    "word": "foreigner",
+    "phonetic": "/ˈfɒrɪnə; ˈfɒrənə/",
+    "explains": "n. 外国人"
+  },
+  {
+    "word": "forest",
+    "phonetic": "/ˈfɒrɪst/",
+    "explains": "n. 森林"
+  },
+  {
+    "word": "forever",
+    "phonetic": "/fərˈevə/",
+    "explains": "adv. 永远"
+  },
+  {
+    "word": "forget",
+    "phonetic": "/fəˈɡet/",
+    "explains": "v. 忘记"
+  },
+  {
+    "word": "fork",
+    "phonetic": "/fɔːk/",
+    "explains": "n. 叉子"
+  },
+  {
+    "word": "form",
+    "phonetic": "/fɔːm/",
+    "explains": "n. 形式　v. 形成"
+  },
+  {
+    "word": "former",
+    "phonetic": "/ˈfɔːmə/",
+    "explains": "adj. 前者的"
+  },
+  {
+    "word": "forty",
+    "phonetic": "/ˈfɔːtɪ/",
+    "explains": "num. 四十"
+  },
+  {
+    "word": "forward",
+    "phonetic": "/ˈfɔːwəd/",
+    "explains": "adv. 向前"
+  },
+  {
+    "word": "four",
+    "phonetic": "/fɔː/",
+    "explains": "num. 四"
+  },
+  {
+    "word": "fourteen",
+    "phonetic": "/ˌfɔːˈtiːn; ˈfɔːtiːn/",
+    "explains": "num. 十四"
+  },
+  {
+    "word": "fox",
+    "phonetic": "/fɒks/",
+    "explains": "n. 狐狸"
+  },
+  {
+    "word": "free",
+    "phonetic": "/friː/",
+    "explains": "adj. 自由的；免费的"
+  },
+  {
+    "word": "freeze",
+    "phonetic": "/friːz/",
+    "explains": "v. 结冰"
+  },
+  {
+    "word": "French",
+    "phonetic": "/fren(t)ʃ/",
+    "explains": "adj. 法国的　n. 法语"
+  },
+  {
+    "word": "fresh",
+    "phonetic": "/freʃ/",
+    "explains": "adj. 新鲜的"
+  },
+  {
+    "word": "Friday",
+    "phonetic": "/ˈfraɪdeɪ; ˈfraɪdɪ/",
+    "explains": "n. 星期五"
+  },
+  {
+    "word": "fridge",
+    "phonetic": "/frɪdʒ/",
+    "explains": "n. 冰箱"
+  },
+  {
+    "word": "friend",
+    "phonetic": "/frend/",
+    "explains": "n. 朋友"
+  },
+  {
+    "word": "friendly",
+    "phonetic": "/ˈfren(d)lɪ/",
+    "explains": "adj. 友好的"
+  },
+  {
+    "word": "friendship",
+    "phonetic": "/ˈfren(d)ʃɪp/",
+    "explains": "n. 友谊"
+  },
+  {
+    "word": "from",
+    "phonetic": "/frɒm; frəm/",
+    "explains": "prep. 从"
+  },
+  {
+    "word": "front",
+    "phonetic": "/frʌnt/",
+    "explains": "n. 前面"
+  },
+  {
+    "word": "fruit",
+    "phonetic": "/fruːt/",
+    "explains": "n. 水果"
+  },
+  {
+    "word": "fuel",
+    "phonetic": "/ˈfjuːəl/",
+    "explains": "n. 燃料"
+  },
+  {
+    "word": "full",
+    "phonetic": "/fʊl/",
+    "explains": "adj. 满的"
+  },
+  {
+    "word": "fun",
+    "phonetic": "/fʌn/",
+    "explains": "n. 乐趣"
+  },
+  {
+    "word": "function",
+    "phonetic": "/ˈfʌŋkʃ(ə)n/",
+    "explains": "n. 功能"
+  },
+  {
+    "word": "funny",
+    "phonetic": "/ˈfʌnɪ/",
+    "explains": "adj. 有趣的"
+  },
+  {
+    "word": "future",
+    "phonetic": "/ˈfjuːtʃə/",
+    "explains": "n. 未来"
+  },
+  {
+    "word": "game",
+    "phonetic": "/ɡeɪm/",
+    "explains": "n. 游戏"
+  },
+  {
+    "word": "garden",
+    "phonetic": "/ˈɡɑːd(ə)n/",
+    "explains": "n. 花园"
+  },
+  {
+    "word": "gas",
+    "phonetic": "/ɡæs/",
+    "explains": "n. 气体；汽油"
+  },
+  {
+    "word": "gate",
+    "phonetic": "/ɡeɪt/",
+    "explains": "n. 大门"
+  },
+  {
+    "word": "gather",
+    "phonetic": "/ˈɡæðə/",
+    "explains": "v. 聚集"
+  },
+  {
+    "word": "general",
+    "phonetic": "/ˈdʒen(ə)r(ə)l/",
+    "explains": "adj. 普遍的；总的"
+  },
+  {
+    "word": "generation",
+    "phonetic": "/ˌdʒenəˈreɪʃ(ə)n/",
+    "explains": "n. 代；一代"
+  },
+  {
+    "word": "gentle",
+    "phonetic": "/ˈdʒent(ə)l/",
+    "explains": "adj. 温柔的"
+  },
+  {
+    "word": "gentleman",
+    "phonetic": "/ˈdʒent(ə)lmən/",
+    "explains": "n. 绅士"
+  },
+  {
+    "word": "geography",
+    "phonetic": "/dʒɪˈɒɡrəfɪ/",
+    "explains": "n. 地理"
+  },
+  {
+    "word": "German",
+    "phonetic": "/ˈdʒɜːmən/",
+    "explains": "adj. 德国的　n. 德国人"
+  },
+  {
+    "word": "Germany",
+    "phonetic": "/ˈdʒɜːmənɪ/",
+    "explains": "n. 德国"
+  },
+  {
+    "word": "get",
+    "phonetic": "/ɡet/",
+    "explains": "v. 得到；变得"
+  },
+  {
+    "word": "gift",
+    "phonetic": "/ɡɪft/",
+    "explains": "n. 礼物"
+  },
+  {
+    "word": "giraffe",
+    "phonetic": "/dʒɪˈrɑːf; dʒəˈrɑːf/",
+    "explains": "n. 长颈鹿"
+  },
+  {
+    "word": "girl",
+    "phonetic": "/ɡɜːl/",
+    "explains": "n. 女孩"
+  },
+  {
+    "word": "give",
+    "phonetic": "/ɡɪv/",
+    "explains": "v. 给"
+  },
+  {
+    "word": "glad",
+    "phonetic": "/ɡlæd/",
+    "explains": "adj. 高兴的"
+  },
+  {
+    "word": "glass",
+    "phonetic": "/ɡlɑːs; ɡlæs/",
+    "explains": "n. 玻璃；玻璃杯"
+  },
+  {
+    "word": "glasses",
+    "phonetic": "/ˈɡlɑːsɪz; ˈɡlæsɪz/",
+    "explains": "n. 眼镜"
+  },
+  {
+    "word": "goal",
+    "phonetic": "/ɡəʊl/",
+    "explains": "n. 目标；球门"
+  },
+  {
+    "word": "goat",
+    "phonetic": "/ɡəʊt/",
+    "explains": "n. 山羊"
+  },
+  {
+    "word": "god",
+    "phonetic": "/ɡɒd/",
+    "explains": "n. 神"
+  },
+  {
+    "word": "gold",
+    "phonetic": "/ɡəʊld/",
+    "explains": "n. 金子　adj. 金色的"
+  },
+  {
+    "word": "golden",
+    "phonetic": "/ˈɡəʊld(ə)n/",
+    "explains": "adj. 金色的"
+  },
+  {
+    "word": "golf",
+    "phonetic": "/ɡɒlf; ɡɒːlf/",
+    "explains": "n. 高尔夫"
+  },
+  {
+    "word": "good",
+    "phonetic": "/ɡʊd/",
+    "explains": "adj. 好的"
+  },
+  {
+    "word": "goodbye",
+    "phonetic": "/ˌɡʊdˈbaɪ/",
+    "explains": "int. 再见"
+  },
+  {
+    "word": "grade",
+    "phonetic": "/ɡreɪd/",
+    "explains": "n. 年级；分数"
+  },
+  {
+    "word": "grammar",
+    "phonetic": "/ˈɡræmə/",
+    "explains": "n. 语法"
+  },
+  {
+    "word": "grandchild",
+    "phonetic": "/ˈɡræn(d)ˌtʃaɪld/",
+    "explains": "n. 孙辈"
+  },
+  {
+    "word": "granddaughter",
+    "phonetic": "/ˈɡrænˌdɔːtə/",
+    "explains": "n. 孙女"
+  },
+  {
+    "word": "grandfather",
+    "phonetic": "/ˈɡræn(d)ˌfɑːðə/",
+    "explains": "n. 祖父"
+  },
+  {
+    "word": "grandmother",
+    "phonetic": "/ˈɡræn(d)ˌmʌðə/",
+    "explains": "n. 祖母"
+  },
+  {
+    "word": "grandparent",
+    "phonetic": "/ˈɡræn(d)ˌpeərənt/",
+    "explains": "n. 祖父母"
+  },
+  {
+    "word": "grandson",
+    "phonetic": "/ˈɡræn(d)sʌn/",
+    "explains": "n. 孙子"
+  },
+  {
+    "word": "granny",
+    "phonetic": "/ˈɡrænɪ/",
+    "explains": "n. 奶奶；外婆"
+  },
+  {
+    "word": "grape",
+    "phonetic": "/ɡreɪp/",
+    "explains": "n. 葡萄"
+  },
+  {
+    "word": "grass",
+    "phonetic": "/ɡrɑːs; ɡræs/",
+    "explains": "n. 草"
+  },
+  {
+    "word": "great",
+    "phonetic": "/ɡreɪt/",
+    "explains": "adj. 伟大的；极好的"
+  },
+  {
+    "word": "green",
+    "phonetic": "/ɡriːn/",
+    "explains": "adj. 绿色的"
+  },
+  {
+    "word": "grey",
+    "phonetic": "/ɡreɪ/",
+    "explains": "adj. 灰色的"
+  },
+  {
+    "word": "ground",
+    "phonetic": "/ɡraʊnd/",
+    "explains": "n. 地面"
+  },
+  {
+    "word": "group",
+    "phonetic": "/ɡruːp/",
+    "explains": "n. 组"
+  },
+  {
+    "word": "grow",
+    "phonetic": "/ɡrəʊ/",
+    "explains": "v. 生长；种植"
+  },
+  {
+    "word": "guard",
+    "phonetic": "/ɡɑːd/",
+    "explains": "n. 卫兵　v. 守卫"
+  },
+  {
+    "word": "guess",
+    "phonetic": "/ɡes/",
+    "explains": "v. 猜"
+  },
+  {
+    "word": "guest",
+    "phonetic": "/ɡest/",
+    "explains": "n. 客人"
+  },
+  {
+    "word": "guide",
+    "phonetic": "/ɡaɪd/",
+    "explains": "n. 向导　v. 引导"
+  },
+  {
+    "word": "gun",
+    "phonetic": "/ɡʌn/",
+    "explains": "n. 枪"
+  },
+  {
+    "word": "habit",
+    "phonetic": "/ˈhæbɪt/",
+    "explains": "n. 习惯"
+  },
+  {
+    "word": "hair",
+    "phonetic": "/heə/",
+    "explains": "n. 头发"
+  },
+  {
+    "word": "haircut",
+    "phonetic": "/ˈheəkʌt/",
+    "explains": "n. 理发"
+  },
+  {
+    "word": "hairdryer",
+    "phonetic": "/ˈheədraɪə/",
+    "explains": "n. 吹风机"
+  },
+  {
+    "word": "half",
+    "phonetic": "/hɑːf; hæf/",
+    "explains": "n. 一半"
+  },
+  {
+    "word": "hall",
+    "phonetic": "/hɔːl/",
+    "explains": "n. 大厅"
+  },
+  {
+    "word": "ham",
+    "phonetic": "/hæm/",
+    "explains": "n. 火腿"
+  },
+  {
+    "word": "hamburger",
+    "phonetic": "/ˈhæmbɜːɡə/",
+    "explains": "n. 汉堡包"
+  },
+  {
+    "word": "hand",
+    "phonetic": "/hænd/",
+    "explains": "n. 手　v. 交出"
+  },
+  {
+    "word": "handbag",
+    "phonetic": "/ˈhæn(d)bæɡ/",
+    "explains": "n. 手提包"
+  },
+  {
+    "word": "handsome",
+    "phonetic": "/ˈhænsəm/",
+    "explains": "adj. 英俊的"
+  },
+  {
+    "word": "handwriting",
+    "phonetic": "/ˈhændraɪtɪŋ/",
+    "explains": "n. 书法"
+  },
+  {
+    "word": "hang",
+    "phonetic": "/hæŋ/",
+    "explains": "v. 悬挂"
+  },
+  {
+    "word": "happen",
+    "phonetic": "/ˈhæp(ə)n/",
+    "explains": "v. 发生"
+  },
+  {
+    "word": "happy",
+    "phonetic": "/ˈhæpɪ/",
+    "explains": "adj. 快乐的"
+  },
+  {
+    "word": "hard",
+    "phonetic": "/hɑːd/",
+    "explains": "adj. 硬的；困难的　adv. 努力地"
+  },
+  {
+    "word": "hardly",
+    "phonetic": "/ˈhɑːdlɪ/",
+    "explains": "adv. 几乎不"
+  },
+  {
+    "word": "hat",
+    "phonetic": "/hæt/",
+    "explains": "n. 帽子"
+  },
+  {
+    "word": "hate",
+    "phonetic": "/heɪt/",
+    "explains": "v. 讨厌"
+  },
+  {
+    "word": "have",
+    "phonetic": "/hæv; həv/",
+    "explains": "v. 有"
+  },
+  {
+    "word": "he",
+    "phonetic": "/hiː; ɪ; iː/",
+    "explains": "pron. 他"
+  },
+  {
+    "word": "head",
+    "phonetic": "/hed/",
+    "explains": "n. 头"
+  },
+  {
+    "word": "headache",
+    "phonetic": "/ˈhedeɪk/",
+    "explains": "n. 头痛"
+  },
+  {
+    "word": "health",
+    "phonetic": "/helθ/",
+    "explains": "n. 健康"
+  },
+  {
+    "word": "healthy",
+    "phonetic": "/ˈhelθɪ/",
+    "explains": "adj. 健康的"
+  },
+  {
+    "word": "hear",
+    "phonetic": "/hɪə/",
+    "explains": "v. 听见"
+  },
+  {
+    "word": "heart",
+    "phonetic": "/hɑːt/",
+    "explains": "n. 心"
+  },
+  {
+    "word": "heat",
+    "phonetic": "/hiːt/",
+    "explains": "n. 热　v. 加热"
+  },
+  {
+    "word": "heavy",
+    "phonetic": "/ˈhevɪ/",
+    "explains": "adj. 重的"
+  },
+  {
+    "word": "height",
+    "phonetic": "/haɪt/",
+    "explains": "n. 高度"
+  },
+  {
+    "word": "hello",
+    "phonetic": "/həˈləʊ; heˈləʊ/",
+    "explains": "int. 喂"
+  },
+  {
+    "word": "help",
+    "phonetic": "/help/",
+    "explains": "v. 帮助　n. 帮助"
+  },
+  {
+    "word": "helpful",
+    "phonetic": "/ˈhelpfʊl; ˈhelpf(ə)l/",
+    "explains": "adj. 有帮助的"
+  },
+  {
+    "word": "her",
+    "phonetic": "/hɜː; ə; hə/",
+    "explains": "pron. 她；她的"
+  },
+  {
+    "word": "here",
+    "phonetic": "/hɪə/",
+    "explains": "adv. 这里"
+  },
+  {
+    "word": "hero",
+    "phonetic": "/ˈhɪərəʊ/",
+    "explains": "n. 英雄"
+  },
+  {
+    "word": "hide",
+    "phonetic": "/haɪd/",
+    "explains": "v. 躲藏"
+  },
+  {
+    "word": "high",
+    "phonetic": "/haɪ/",
+    "explains": "adj. 高的"
+  },
+  {
+    "word": "hike",
+    "phonetic": "/haɪk/",
+    "explains": "v. 徒步旅行"
+  },
+  {
+    "word": "hill",
+    "phonetic": "/hɪl/",
+    "explains": "n. 小山"
+  },
+  {
+    "word": "him",
+    "phonetic": "/hɪm/",
+    "explains": "pron. 他"
+  },
+  {
+    "word": "himself",
+    "phonetic": "/hɪmˈself/",
+    "explains": "pron. 他自己"
+  },
+  {
+    "word": "hire",
+    "phonetic": "/ˈhaɪə/",
+    "explains": "v. 租用"
+  },
+  {
+    "word": "his",
+    "phonetic": "/hɪz; ɪz/",
+    "explains": "pron. 他的"
+  },
+  {
+    "word": "history",
+    "phonetic": "/ˈhɪst(ə)rɪ/",
+    "explains": "n. 历史"
+  },
+  {
+    "word": "hit",
+    "phonetic": "/hɪt/",
+    "explains": "v. 打"
+  },
+  {
+    "word": "hobby",
+    "phonetic": "/ˈhɒbɪ/",
+    "explains": "n. 爱好"
+  },
+  {
+    "word": "hold",
+    "phonetic": "/həʊld/",
+    "explains": "v. 拿；举行"
+  },
+  {
+    "word": "hole",
+    "phonetic": "/həʊl/",
+    "explains": "n. 洞"
+  },
+  {
+    "word": "holiday",
+    "phonetic": "/ˈhɒlɪdeɪ; ˈhɒlədeɪ/",
+    "explains": "n. 假日"
+  },
+  {
+    "word": "home",
+    "phonetic": "/həʊm/",
+    "explains": "n. 家"
+  },
+  {
+    "word": "homework",
+    "phonetic": "/ˈhəʊmwɜːk/",
+    "explains": "n. 家庭作业"
+  },
+  {
+    "word": "honest",
+    "phonetic": "/ˈɒnɪst/",
+    "explains": "adj. 诚实的"
+  },
+  {
+    "word": "honey",
+    "phonetic": "/ˈhʌnɪ/",
+    "explains": "n. 蜂蜜"
+  },
+  {
+    "word": "Hong Kong",
+    "phonetic": "/ˌhɒŋˈkɒŋ/",
+    "explains": "n. 香港"
+  },
+  {
+    "word": "hope",
+    "phonetic": "/həʊp/",
+    "explains": "v. 希望　n. 希望"
+  },
+  {
+    "word": "horse",
+    "phonetic": "/hɔːs/",
+    "explains": "n. 马"
+  },
+  {
+    "word": "hospital",
+    "phonetic": "/ˈhɒspɪt(ə)l/",
+    "explains": "n. 医院"
+  },
+  {
+    "word": "hot",
+    "phonetic": "/hɒt/",
+    "explains": "adj. 热的"
+  },
+  {
+    "word": "hotel",
+    "phonetic": "/həʊˈtel/",
+    "explains": "n. 旅馆"
+  },
+  {
+    "word": "hour",
+    "phonetic": "/ˈaʊə/",
+    "explains": "n. 小时"
+  },
+  {
+    "word": "house",
+    "phonetic": "/haʊs/",
+    "explains": "n. 房子"
+  },
+  {
+    "word": "housework",
+    "phonetic": "/ˈhaʊswɜːk/",
+    "explains": "n. 家务"
+  },
+  {
+    "word": "how",
+    "phonetic": "/haʊ/",
+    "explains": "adv. 怎样；多少"
+  },
+  {
+    "word": "however",
+    "phonetic": "/haʊˈevə/",
+    "explains": "adv. 然而"
+  },
+  {
+    "word": "hug",
+    "phonetic": "/hʌɡ/",
+    "explains": "v. 拥抱"
+  },
+  {
+    "word": "huge",
+    "phonetic": "/hjuːdʒ/",
+    "explains": "adj. 巨大的"
+  },
+  {
+    "word": "human",
+    "phonetic": "/ˈhjuːmən/",
+    "explains": "adj. 人类的　n. 人"
+  },
+  {
+    "word": "hundred",
+    "phonetic": "/ˈhʌndrəd/",
+    "explains": "num. 百"
+  },
+  {
+    "word": "hungry",
+    "phonetic": "/ˈhʌŋɡrɪ/",
+    "explains": "adj. 饥饿的"
+  },
+  {
+    "word": "hunt",
+    "phonetic": "/hʌnt/",
+    "explains": "v. 打猎；搜寻"
+  },
+  {
+    "word": "hurry",
+    "phonetic": "/ˈhʌrɪ/",
+    "explains": "v. 匆忙"
+  },
+  {
+    "word": "hurt",
+    "phonetic": "/hɜːt/",
+    "explains": "v. 受伤"
+  },
+  {
+    "word": "husband",
+    "phonetic": "/ˈhʌzbənd/",
+    "explains": "n. 丈夫"
+  },
+  {
+    "word": "I",
+    "phonetic": "/aɪ/",
+    "explains": "pron. 我"
+  },
+  {
+    "word": "ice",
+    "phonetic": "/aɪs/",
+    "explains": "n. 冰"
+  },
+  {
+    "word": "ice cream",
+    "phonetic": "/ˈaɪs kriːm/",
+    "explains": "n. 冰淇淋"
+  },
+  {
+    "word": "idea",
+    "phonetic": "/aɪˈdɪə/",
+    "explains": "n. 主意"
+  },
+  {
+    "word": "if",
+    "phonetic": "/ɪf/",
+    "explains": "conj. 如果；是否"
+  },
+  {
+    "word": "ill",
+    "phonetic": "/ɪl/",
+    "explains": "adj. 生病的"
+  },
+  {
+    "word": "illness",
+    "phonetic": "/ˈɪlnɪs/",
+    "explains": "n. 疾病"
+  },
+  {
+    "word": "imagine",
+    "phonetic": "/ɪˈmædʒɪn/",
+    "explains": "v. 想象"
+  },
+  {
+    "word": "immediately",
+    "phonetic": "/ɪˈmiːdɪətlɪ/",
+    "explains": "adv. 立即"
+  },
+  {
+    "word": "important",
+    "phonetic": "/ɪmˈpɔːt(ə)nt/",
+    "explains": "adj. 重要的"
+  },
+  {
+    "word": "impossible",
+    "phonetic": "/ɪmˈpɒsɪb(ə)l/",
+    "explains": "adj. 不可能的"
+  },
+  {
+    "word": "improve",
+    "phonetic": "/ɪmˈpruːv/",
+    "explains": "v. 改善"
+  },
+  {
+    "word": "in",
+    "phonetic": "/ɪn/",
+    "explains": "prep. 在……里"
+  },
+  {
+    "word": "inch",
+    "phonetic": "/ɪn(t)ʃ/",
+    "explains": "n. 英寸"
+  },
+  {
+    "word": "include",
+    "phonetic": "/ɪnˈkluːd/",
+    "explains": "v. 包含"
+  },
+  {
+    "word": "increase",
+    "phonetic": "/ɪnˈkriːs/",
+    "explains": "v. 增加　n. 增加"
+  },
+  {
+    "word": "indeed",
+    "phonetic": "/ɪnˈdiːd/",
+    "explains": "adv. 确实"
+  },
+  {
+    "word": "India",
+    "phonetic": "/ˈɪndɪə/",
+    "explains": "n. 印度"
+  },
+  {
+    "word": "Indian",
+    "phonetic": "/ˈɪndɪən/",
+    "explains": "adj. 印度的　n. 印度人"
+  },
+  {
+    "word": "indoor",
+    "phonetic": "/ˈɪndɔː/",
+    "explains": "adj. 室内的"
+  },
+  {
+    "word": "industry",
+    "phonetic": "/ˈɪndəstrɪ/",
+    "explains": "n. 工业"
+  },
+  {
+    "word": "information",
+    "phonetic": "/ˌɪnfəˈmeɪʃ(ə)n/",
+    "explains": "n. 信息"
+  },
+  {
+    "word": "ink",
+    "phonetic": "/ɪŋk/",
+    "explains": "n. 墨水"
+  },
+  {
+    "word": "inside",
+    "phonetic": "/ˌɪnˈsaɪd; ˈɪnsaɪd/",
+    "explains": "prep. 在……里面　adv. 在里面"
+  },
+  {
+    "word": "insist",
+    "phonetic": "/ɪnˈsɪst/",
+    "explains": "v. 坚持"
+  },
+  {
+    "word": "instead",
+    "phonetic": "/ɪnˈsted/",
+    "explains": "adv. 代替"
+  },
+  {
+    "word": "instruction",
+    "phonetic": "/ɪnˈstrʌkʃ(ə)n/",
+    "explains": "n. 指示；说明"
+  },
+  {
+    "word": "instrument",
+    "phonetic": "/ˈɪnstrʊmənt/",
+    "explains": "n. 乐器；工具"
+  },
+  {
+    "word": "interest",
+    "phonetic": "/ˈɪntrɪst; ˈɪnt(ə)rɪst/",
+    "explains": "n. 兴趣　v. 使感兴趣"
+  },
+  {
+    "word": "interesting",
+    "phonetic": "/ˈɪntrɪstɪŋ; ˈɪntrəstɪŋ/",
+    "explains": "adj. 有趣的"
+  },
+  {
+    "word": "international",
+    "phonetic": "/ˌɪntəˈnæʃ(ə)n(ə)l/",
+    "explains": "adj. 国际的"
+  },
+  {
+    "word": "Internet",
+    "phonetic": "/ˈɪntənɛt/",
+    "explains": "n. 互联网"
+  },
+  {
+    "word": "interview",
+    "phonetic": "/ˈɪntəvjuː/",
+    "explains": "n. 面试　v. 采访"
+  },
+  {
+    "word": "into",
+    "phonetic": "/ˈɪntə; ˈɪntuː/",
+    "explains": "prep. 进入"
+  },
+  {
+    "word": "introduce",
+    "phonetic": "/ˌɪntrəˈdjuːs/",
+    "explains": "v. 介绍"
+  },
+  {
+    "word": "invent",
+    "phonetic": "/ɪnˈvent/",
+    "explains": "v. 发明"
+  },
+  {
+    "word": "invention",
+    "phonetic": "/ɪnˈvenʃ(ə)n/",
+    "explains": "n. 发明"
+  },
+  {
+    "word": "invite",
+    "phonetic": "/ɪnˈvaɪt/",
+    "explains": "v. 邀请"
+  },
+  {
+    "word": "island",
+    "phonetic": "/ˈaɪlənd/",
+    "explains": "n. 岛屿"
+  },
+  {
+    "word": "it",
+    "phonetic": "/ɪt/",
+    "explains": "pron. 它"
+  },
+  {
+    "word": "Italian",
+    "phonetic": "/ɪˈtæljən/",
+    "explains": "adj. 意大利的　n. 意大利人"
+  },
+  {
+    "word": "Italy",
+    "phonetic": "/ˈɪtəlɪ/",
+    "explains": "n. 意大利"
+  },
+  {
+    "word": "its",
+    "phonetic": "/ɪts/",
+    "explains": "pron. 它的"
+  },
+  {
+    "word": "itself",
+    "phonetic": "/ɪtˈself/",
+    "explains": "pron. 它自己"
+  },
+  {
+    "word": "jacket",
+    "phonetic": "/ˈdʒækɪt/",
+    "explains": "n. 夹克"
+  },
+  {
+    "word": "January",
+    "phonetic": "/ˈdʒænjʊərɪ/",
+    "explains": "n. 一月"
+  },
+  {
+    "word": "Japan",
+    "phonetic": "/dʒəˈpæn/",
+    "explains": "n. 日本"
+  },
+  {
+    "word": "Japanese",
+    "phonetic": "/ˌdʒæpəˈniːz/",
+    "explains": "adj. 日本的　n. 日本人；日语"
+  },
+  {
+    "word": "jar",
+    "phonetic": "/dʒɑː/",
+    "explains": "n. 罐子"
+  },
+  {
+    "word": "jazz",
+    "phonetic": "/dʒæz/",
+    "explains": "n. 爵士乐"
+  },
+  {
+    "word": "jeans",
+    "phonetic": "/dʒiːnz/",
+    "explains": "n. 牛仔裤"
+  },
+  {
+    "word": "jeep",
+    "phonetic": "/dʒiːp/",
+    "explains": "n. 吉普车"
+  },
+  {
+    "word": "job",
+    "phonetic": "/dʒɒb/",
+    "explains": "n. 工作"
+  },
+  {
+    "word": "join",
+    "phonetic": "/dʒɔɪn/",
+    "explains": "v. 加入"
+  },
+  {
+    "word": "joke",
+    "phonetic": "/dʒəʊk/",
+    "explains": "n. 笑话"
+  },
+  {
+    "word": "journalist",
+    "phonetic": "/ˈdʒɜːn(ə)lɪst/",
+    "explains": "n. 记者"
+  },
+  {
+    "word": "journey",
+    "phonetic": "/ˈdʒɜːnɪ/",
+    "explains": "n. 旅程"
+  },
+  {
+    "word": "joy",
+    "phonetic": "/dʒɔɪ/",
+    "explains": "n. 欢乐"
+  },
+  {
+    "word": "judge",
+    "phonetic": "/dʒʌdʒ/",
+    "explains": "v. 判断　n. 法官"
+  },
+  {
+    "word": "juice",
+    "phonetic": "/dʒuːs/",
+    "explains": "n. 果汁"
+  },
+  {
+    "word": "July",
+    "phonetic": "/dʒʊˈlaɪ/",
+    "explains": "n. 七月"
+  },
+  {
+    "word": "jump",
+    "phonetic": "/dʒʌmp/",
+    "explains": "v. 跳"
+  },
+  {
+    "word": "June",
+    "phonetic": "/dʒuːn/",
+    "explains": "n. 六月"
+  },
+  {
+    "word": "just",
+    "phonetic": "/dʒʌst/",
+    "explains": "adv. 刚刚；仅仅"
+  },
+  {
+    "word": "keep",
+    "phonetic": "/kiːp/",
+    "explains": "v. 保持"
+  },
+  {
+    "word": "key",
+    "phonetic": "/kiː/",
+    "explains": "n. 钥匙；答案"
+  },
+  {
+    "word": "keyboard",
+    "phonetic": "/ˈkiːbɔːd/",
+    "explains": "n. 键盘"
+  },
+  {
+    "word": "kick",
+    "phonetic": "/kɪk/",
+    "explains": "v. 踢"
+  },
+  {
+    "word": "kid",
+    "phonetic": "/kɪd/",
+    "explains": "n. 小孩"
+  },
+  {
+    "word": "kill",
+    "phonetic": "/kɪl/",
+    "explains": "v. 杀死"
+  },
+  {
+    "word": "kilo",
+    "phonetic": "/ˈkiːləʊ/",
+    "explains": "n. 千克"
+  },
+  {
+    "word": "kilometre",
+    "phonetic": "/ˈkɪləˌmiːtə; kɪˈlɒmɪtə/",
+    "explains": "n. 千米"
+  },
+  {
+    "word": "kind",
+    "phonetic": "/kaɪnd/",
+    "explains": "n. 种类　adj. 善良的"
+  },
+  {
+    "word": "king",
+    "phonetic": "/kɪŋ/",
+    "explains": "n. 国王"
+  },
+  {
+    "word": "kiss",
+    "phonetic": "/kɪs/",
+    "explains": "v. 吻"
+  },
+  {
+    "word": "kitchen",
+    "phonetic": "/ˈkɪtʃɪn; ˈkɪtʃən/",
+    "explains": "n. 厨房"
+  },
+  {
+    "word": "kite",
+    "phonetic": "/kaɪt/",
+    "explains": "n. 风筝"
+  },
+  {
+    "word": "knee",
+    "phonetic": "/niː/",
+    "explains": "n. 膝盖"
+  },
+  {
+    "word": "knife",
+    "phonetic": "/naɪf/",
+    "explains": "n. 刀"
+  },
+  {
+    "word": "knock",
+    "phonetic": "/nɒk/",
+    "explains": "v. 敲"
+  },
+  {
+    "word": "know",
+    "phonetic": "/nəʊ/",
+    "explains": "v. 知道"
+  },
+  {
+    "word": "knowledge",
+    "phonetic": "/ˈnɒlɪdʒ/",
+    "explains": "n. 知识"
+  },
+  {
+    "word": "lab",
+    "phonetic": "/læb/",
+    "explains": "n. 实验室"
+  },
+  {
+    "word": "label",
+    "phonetic": "/ˈleɪb(ə)l/",
+    "explains": "n. 标签"
+  },
+  {
+    "word": "labour",
+    "phonetic": "/ˈleɪbə/",
+    "explains": "n. 劳动"
+  },
+  {
+    "word": "lady",
+    "phonetic": "/ˈleɪdɪ/",
+    "explains": "n. 女士"
+  },
+  {
+    "word": "lake",
+    "phonetic": "/leɪk/",
+    "explains": "n. 湖"
+  },
+  {
+    "word": "lamb",
+    "phonetic": "/læm/",
+    "explains": "n. 羊羔"
+  },
+  {
+    "word": "lamp",
+    "phonetic": "/læmp/",
+    "explains": "n. 灯"
+  },
+  {
+    "word": "land",
+    "phonetic": "/lænd/",
+    "explains": "n. 土地　v. 降落"
+  },
+  {
+    "word": "language",
+    "phonetic": "/ˈlæŋɡwɪdʒ/",
+    "explains": "n. 语言"
+  },
+  {
+    "word": "large",
+    "phonetic": "/lɑːdʒ/",
+    "explains": "adj. 大的"
+  },
+  {
+    "word": "last",
+    "phonetic": "/lɑːst; læst/",
+    "explains": "adj. 最后的　v. 持续"
+  },
+  {
+    "word": "late",
+    "phonetic": "/leɪt/",
+    "explains": "adj. 迟的"
+  },
+  {
+    "word": "later",
+    "phonetic": "/ˈleɪtə/",
+    "explains": "adv. 后来"
+  },
+  {
+    "word": "laugh",
+    "phonetic": "/lɑːf; læf/",
+    "explains": "v. 笑"
+  },
+  {
+    "word": "law",
+    "phonetic": "/lɔː/",
+    "explains": "n. 法律"
+  },
+  {
+    "word": "lawyer",
+    "phonetic": "/ˈlɔːjə; ˈlɔːɪə/",
+    "explains": "n. 律师"
+  },
+  {
+    "word": "lay",
+    "phonetic": "/leɪ/",
+    "explains": "v. 放；产卵"
+  },
+  {
+    "word": "lazy",
+    "phonetic": "/ˈleɪzɪ/",
+    "explains": "adj. 懒惰的"
+  },
+  {
+    "word": "lead",
+    "phonetic": "/liːd/",
+    "explains": "v. 引导；导致"
+  },
+  {
+    "word": "leader",
+    "phonetic": "/ˈliːdə/",
+    "explains": "n. 领导者"
+  },
+  {
+    "word": "leaf",
+    "phonetic": "/liːf/",
+    "explains": "n. 叶子"
+  },
+  {
+    "word": "lean",
+    "phonetic": "/liːn/",
+    "explains": "v. 倾斜"
+  },
+  {
+    "word": "learn",
+    "phonetic": "/lɜːn/",
+    "explains": "v. 学习"
+  },
+  {
+    "word": "least",
+    "phonetic": "/liːst/",
+    "explains": "adv. 最少"
+  },
+  {
+    "word": "leave",
+    "phonetic": "/liːv/",
+    "explains": "v. 离开；留下"
+  },
+  {
+    "word": "left",
+    "phonetic": "/left/",
+    "explains": "adj. 左边的　n. 左边"
+  },
+  {
+    "word": "leg",
+    "phonetic": "/leɡ/",
+    "explains": "n. 腿"
+  },
+  {
+    "word": "lemon",
+    "phonetic": "/ˈlemən/",
+    "explains": "n. 柠檬"
+  },
+  {
+    "word": "lemonade",
+    "phonetic": "/ˌleməˈneɪd/",
+    "explains": "n. 柠檬水"
+  },
+  {
+    "word": "lend",
+    "phonetic": "/lend/",
+    "explains": "v. 借出"
+  },
+  {
+    "word": "less",
+    "phonetic": "/les/",
+    "explains": "adj. 较少的"
+  },
+  {
+    "word": "lesson",
+    "phonetic": "/ˈles(ə)n/",
+    "explains": "n. 课"
+  },
+  {
+    "word": "let",
+    "phonetic": "/let/",
+    "explains": "v. 让"
+  },
+  {
+    "word": "letter",
+    "phonetic": "/ˈletə/",
+    "explains": "n. 字母；信"
+  },
+  {
+    "word": "level",
+    "phonetic": "/ˈlev(ə)l/",
+    "explains": "n. 水平"
+  },
+  {
+    "word": "library",
+    "phonetic": "/ˈlaɪbrərɪ; ˈlaɪbr(ə)rɪ/",
+    "explains": "n. 图书馆"
+  },
+  {
+    "word": "licence",
+    "phonetic": "/ˈlaɪs(ə)ns/",
+    "explains": "n. 执照"
+  },
+  {
+    "word": "lie",
+    "phonetic": "/laɪ/",
+    "explains": "v. 躺；位于；撒谎"
+  },
+  {
+    "word": "life",
+    "phonetic": "/laɪf/",
+    "explains": "n. 生命；生活"
+  },
+  {
+    "word": "lift",
+    "phonetic": "/lɪft/",
+    "explains": "v. 举起　n. 电梯"
+  },
+  {
+    "word": "light",
+    "phonetic": "/laɪt/",
+    "explains": "n. 光　adj. 轻的；亮的"
+  },
+  {
+    "word": "like",
+    "phonetic": "/laɪk/",
+    "explains": "v. 喜欢　prep. 像"
+  },
+  {
+    "word": "line",
+    "phonetic": "/laɪn/",
+    "explains": "n. 线；排"
+  },
+  {
+    "word": "lion",
+    "phonetic": "/ˈlaɪən/",
+    "explains": "n. 狮子"
+  },
+  {
+    "word": "lip",
+    "phonetic": "/lɪp/",
+    "explains": "n. 嘴唇"
+  },
+  {
+    "word": "list",
+    "phonetic": "/lɪst/",
+    "explains": "n. 名单　v. 列举"
+  },
+  {
+    "word": "listen",
+    "phonetic": "/ˈlɪs(ə)n/",
+    "explains": "v. 听"
+  },
+  {
+    "word": "literature",
+    "phonetic": "/ˈlɪt(ə)rətʃə/",
+    "explains": "n. 文学"
+  },
+  {
+    "word": "little",
+    "phonetic": "/ˈlɪt(ə)l/",
+    "explains": "adj. 小的"
+  },
+  {
+    "word": "live",
+    "phonetic": "/lɪv/",
+    "explains": "v. 居住"
+  },
+  {
+    "word": "lively",
+    "phonetic": "/ˈlaɪvlɪ/",
+    "explains": "adj. 活泼的"
+  },
+  {
+    "word": "local",
+    "phonetic": "/ˈləʊk(ə)l/",
+    "explains": "adj. 当地的"
+  },
+  {
+    "word": "lock",
+    "phonetic": "/lɒk/",
+    "explains": "v. 锁　n. 锁"
+  },
+  {
+    "word": "London",
+    "phonetic": "/ˈlʌndən/",
+    "explains": "n. 伦敦"
+  },
+  {
+    "word": "lonely",
+    "phonetic": "/ˈləʊnlɪ/",
+    "explains": "adj. 孤独的"
+  },
+  {
+    "word": "long",
+    "phonetic": "/lɒŋ; lɒŋ/",
+    "explains": "adj. 长的"
+  },
+  {
+    "word": "look",
+    "phonetic": "/lʊk/",
+    "explains": "v. 看　n. 看；样子"
+  },
+  {
+    "word": "loose",
+    "phonetic": "/luːs/",
+    "explains": "adj. 松的"
+  },
+  {
+    "word": "lorry",
+    "phonetic": "/ˈlɒrɪ/",
+    "explains": "n. 卡车"
+  },
+  {
+    "word": "lose",
+    "phonetic": "/luːz/",
+    "explains": "v. 丢失"
+  },
+  {
+    "word": "loss",
+    "phonetic": "/lɒs/",
+    "explains": "n. 损失"
+  },
+  {
+    "word": "lot",
+    "phonetic": "/lɒt/",
+    "explains": "n. 很多"
+  },
+  {
+    "word": "loud",
+    "phonetic": "/laʊd/",
+    "explains": "adj. 大声的"
+  },
+  {
+    "word": "love",
+    "phonetic": "/lʌv/",
+    "explains": "v. 爱　n. 爱"
+  },
+  {
+    "word": "lovely",
+    "phonetic": "/ˈlʌvlɪ/",
+    "explains": "adj. 可爱的"
+  },
+  {
+    "word": "low",
+    "phonetic": "/ləʊ/",
+    "explains": "adj. 低的"
+  },
+  {
+    "word": "luck",
+    "phonetic": "/lʌk/",
+    "explains": "n. 运气"
+  },
+  {
+    "word": "lucky",
+    "phonetic": "/ˈlʌkɪ/",
+    "explains": "adj. 幸运的"
+  },
+  {
+    "word": "lunch",
+    "phonetic": "/lʌn(t)ʃ/",
+    "explains": "n. 午餐"
+  },
+  {
+    "word": "machine",
+    "phonetic": "/məˈʃiːn/",
+    "explains": "n. 机器"
+  },
+  {
+    "word": "mad",
+    "phonetic": "/mæd/",
+    "explains": "adj. 疯的"
+  },
+  {
+    "word": "magazine",
+    "phonetic": "/ˌmæɡəˈziːn; ˈmæɡəziːn/",
+    "explains": "n. 杂志"
+  },
+  {
+    "word": "magic",
+    "phonetic": "/ˈmædʒɪk/",
+    "explains": "n. 魔法"
+  },
+  {
+    "word": "mail",
+    "phonetic": "/meɪl/",
+    "explains": "n. 邮件"
+  },
+  {
+    "word": "main",
+    "phonetic": "/meɪn/",
+    "explains": "adj. 主要的"
+  },
+  {
+    "word": "make",
+    "phonetic": "/meɪk/",
+    "explains": "v. 制作；使"
+  },
+  {
+    "word": "male",
+    "phonetic": "/meɪl/",
+    "explains": "adj. 男性的"
+  },
+  {
+    "word": "man",
+    "phonetic": "/mæn/",
+    "explains": "n. 男人"
+  },
+  {
+    "word": "manage",
+    "phonetic": "/ˈmænɪdʒ/",
+    "explains": "v. 管理"
+  },
+  {
+    "word": "manager",
+    "phonetic": "/ˈmænɪdʒə/",
+    "explains": "n. 经理"
+  },
+  {
+    "word": "many",
+    "phonetic": "/ˈmenɪ/",
+    "explains": "adj. 许多"
+  },
+  {
+    "word": "map",
+    "phonetic": "/mæp/",
+    "explains": "n. 地图"
+  },
+  {
+    "word": "March",
+    "phonetic": "/mɑːtʃ/",
+    "explains": "n. 三月"
+  },
+  {
+    "word": "mark",
+    "phonetic": "/mɑːk/",
+    "explains": "n. 标记　v. 标记"
+  },
+  {
+    "word": "market",
+    "phonetic": "/ˈmɑːkɪt/",
+    "explains": "n. 市场"
+  },
+  {
+    "word": "marriage",
+    "phonetic": "/ˈmærɪdʒ/",
+    "explains": "n. 婚姻"
+  },
+  {
+    "word": "marry",
+    "phonetic": "/ˈmærɪ/",
+    "explains": "v. 结婚"
+  },
+  {
+    "word": "match",
+    "phonetic": "/mætʃ/",
+    "explains": "n. 比赛　v. 匹配"
+  },
+  {
+    "word": "math",
+    "phonetic": "/mæθ/",
+    "explains": "n. 数学"
+  },
+  {
+    "word": "maths",
+    "phonetic": "/mæθs/",
+    "explains": "n. 数学"
+  },
+  {
+    "word": "matter",
+    "phonetic": "/ˈmætə/",
+    "explains": "n. 事情　v. 要紧"
+  },
+  {
+    "word": "may",
+    "phonetic": "/meɪ/",
+    "explains": "v. 可以；可能"
+  },
+  {
+    "word": "maybe",
+    "phonetic": "/ˈmeɪbiː/",
+    "explains": "adv. 也许"
+  },
+  {
+    "word": "me",
+    "phonetic": "/miː; mɪ/",
+    "explains": "pron. 我"
+  },
+  {
+    "word": "meal",
+    "phonetic": "/miːl/",
+    "explains": "n. 一餐"
+  },
+  {
+    "word": "mean",
+    "phonetic": "/miːn/",
+    "explains": "v. 意思是"
+  },
+  {
+    "word": "meaning",
+    "phonetic": "/ˈmiːnɪŋ/",
+    "explains": "n. 意思"
+  },
+  {
+    "word": "meat",
+    "phonetic": "/miːt/",
+    "explains": "n. 肉"
+  },
+  {
+    "word": "medical",
+    "phonetic": "/ˈmedɪk(ə)l/",
+    "explains": "adj. 医学的"
+  },
+  {
+    "word": "medicine",
+    "phonetic": "/ˈmeds(ə)n; ˈmedɪs(ə)n/",
+    "explains": "n. 药"
+  },
+  {
+    "word": "meet",
+    "phonetic": "/miːt/",
+    "explains": "v. 遇见"
+  },
+  {
+    "word": "meeting",
+    "phonetic": "/ˈmiːtɪŋ/",
+    "explains": "n. 会议"
+  },
+  {
+    "word": "melon",
+    "phonetic": "/ˈmelən/",
+    "explains": "n. 瓜"
+  },
+  {
+    "word": "member",
+    "phonetic": "/ˈmembə/",
+    "explains": "n. 成员"
+  },
+  {
+    "word": "memory",
+    "phonetic": "/ˈmem(ə)rɪ/",
+    "explains": "n. 记忆"
+  },
+  {
+    "word": "mend",
+    "phonetic": "/mend/",
+    "explains": "v. 修理"
+  },
+  {
+    "word": "menu",
+    "phonetic": "/ˈmenjuː/",
+    "explains": "n. 菜单"
+  },
+  {
+    "word": "message",
+    "phonetic": "/ˈmesɪdʒ/",
+    "explains": "n. 消息"
+  },
+  {
+    "word": "metal",
+    "phonetic": "/ˈmet(ə)l/",
+    "explains": "n. 金属"
+  },
+  {
+    "word": "metre",
+    "phonetic": "/ˈmiːtə/",
+    "explains": "n. 米"
+  },
+  {
+    "word": "middle",
+    "phonetic": "/ˈmɪd(ə)l/",
+    "explains": "adj. 中间的"
+  },
+  {
+    "word": "midnight",
+    "phonetic": "/ˈmɪdnaɪt/",
+    "explains": "n. 午夜"
+  },
+  {
+    "word": "might",
+    "phonetic": "/maɪt/",
+    "explains": "v. 可能"
+  },
+  {
+    "word": "mile",
+    "phonetic": "/maɪl/",
+    "explains": "n. 英里"
+  },
+  {
+    "word": "milk",
+    "phonetic": "/mɪlk/",
+    "explains": "n. 牛奶"
+  },
+  {
+    "word": "million",
+    "phonetic": "/ˈmɪljən/",
+    "explains": "num. 百万"
+  },
+  {
+    "word": "mind",
+    "phonetic": "/maɪnd/",
+    "explains": "n. 头脑　v. 介意"
+  },
+  {
+    "word": "mine",
+    "phonetic": "/maɪn/",
+    "explains": "pron. 我的"
+  },
+  {
+    "word": "mineral",
+    "phonetic": "/ˈmɪn(ə)r(ə)l/",
+    "explains": "n. 矿物　adj. 矿物的"
+  },
+  {
+    "word": "minute",
+    "phonetic": "/ˈmɪnɪt/",
+    "explains": "n. 分钟"
+  },
+  {
+    "word": "mirror",
+    "phonetic": "/ˈmɪrə/",
+    "explains": "n. 镜子"
+  },
+  {
+    "word": "miss",
+    "phonetic": "/mɪs/",
+    "explains": "v. 想念；错过"
+  },
+  {
+    "word": "missing",
+    "phonetic": "/ˈmɪsɪŋ/",
+    "explains": "adj. 缺失的"
+  },
+  {
+    "word": "mistake",
+    "phonetic": "/mɪˈsteɪk/",
+    "explains": "n. 错误"
+  },
+  {
+    "word": "model",
+    "phonetic": "/ˈmɒd(ə)l/",
+    "explains": "n. 模型；模特"
+  },
+  {
+    "word": "modern",
+    "phonetic": "/ˈmɒdən/",
+    "explains": "adj. 现代的"
+  },
+  {
+    "word": "moment",
+    "phonetic": "/ˈməʊmənt/",
+    "explains": "n. 片刻"
+  },
+  {
+    "word": "Monday",
+    "phonetic": "/ˈmʌndeɪ; ˈmʌndɪ/",
+    "explains": "n. 星期一"
+  },
+  {
+    "word": "money",
+    "phonetic": "/ˈmʌnɪ/",
+    "explains": "n. 钱"
+  },
+  {
+    "word": "monkey",
+    "phonetic": "/ˈmʌŋkɪ/",
+    "explains": "n. 猴子"
+  },
+  {
+    "word": "month",
+    "phonetic": "/mʌnθ/",
+    "explains": "n. 月"
+  },
+  {
+    "word": "moon",
+    "phonetic": "/muːn/",
+    "explains": "n. 月亮"
+  },
+  {
+    "word": "moral",
+    "phonetic": "/ˈmɒr(ə)l/",
+    "explains": "adj. 道德的"
+  },
+  {
+    "word": "more",
+    "phonetic": "/mɔː/",
+    "explains": "adj. 更多的"
+  },
+  {
+    "word": "morning",
+    "phonetic": "/ˈmɔːnɪŋ/",
+    "explains": "n. 早上"
+  },
+  {
+    "word": "most",
+    "phonetic": "/məʊst/",
+    "explains": "adj. 最多的"
+  },
+  {
+    "word": "mother",
+    "phonetic": "/ˈmʌðə/",
+    "explains": "n. 母亲"
+  },
+  {
+    "word": "motor",
+    "phonetic": "/ˈməʊtə/",
+    "explains": "n. 马达"
+  },
+  {
+    "word": "mouse",
+    "phonetic": "/maʊs/",
+    "explains": "n. 老鼠；鼠标"
+  },
+  {
+    "word": "mouth",
+    "phonetic": "/maʊθ/",
+    "explains": "n. 嘴"
+  },
+  {
+    "word": "move",
+    "phonetic": "/muːv/",
+    "explains": "v. 移动"
+  },
+  {
+    "word": "movie",
+    "phonetic": "/ˈmuːvɪ/",
+    "explains": "n. 电影"
+  },
+  {
+    "word": "Mr",
+    "phonetic": "/ˈmɪstə/",
+    "explains": "n. 先生"
+  },
+  {
+    "word": "Mrs",
+    "phonetic": "/ˈmɪsɪz/",
+    "explains": "n. 夫人"
+  },
+  {
+    "word": "much",
+    "phonetic": "/mʌtʃ/",
+    "explains": "adj. 大量的"
+  },
+  {
+    "word": "museum",
+    "phonetic": "/mjuːˈzɪəm/",
+    "explains": "n. 博物馆"
+  },
+  {
+    "word": "music",
+    "phonetic": "/ˈmjuːzɪk/",
+    "explains": "n. 音乐"
+  },
+  {
+    "word": "must",
+    "phonetic": "/mʌst; məst/",
+    "explains": "v. 必须"
+  },
+  {
+    "word": "my",
+    "phonetic": "/maɪ/",
+    "explains": "pron. 我的"
+  },
+  {
+    "word": "myself",
+    "phonetic": "/maɪˈself/",
+    "explains": "pron. 我自己"
+  },
+  {
+    "word": "name",
+    "phonetic": "/neɪm/",
+    "explains": "n. 名字　v. 命名"
+  },
+  {
+    "word": "national",
+    "phonetic": "/ˈnæʃ(ə)n(ə)l/",
+    "explains": "adj. 国家的"
+  },
+  {
+    "word": "natural",
+    "phonetic": "/ˈnætʃ(ə)r(ə)l/",
+    "explains": "adj. 自然的"
+  },
+  {
+    "word": "nature",
+    "phonetic": "/ˈneɪtʃə/",
+    "explains": "n. 大自然"
+  },
+  {
+    "word": "near",
+    "phonetic": "/nɪə/",
+    "explains": "prep. 在……附近　adj. 近的"
+  },
+  {
+    "word": "nearly",
+    "phonetic": "/ˈnɪəlɪ/",
+    "explains": "adv. 几乎"
+  },
+  {
+    "word": "necessary",
+    "phonetic": "/ˈnesəs(ə)rɪ/",
+    "explains": "adj. 必要的"
+  },
+  {
+    "word": "neck",
+    "phonetic": "/nek/",
+    "explains": "n. 脖子"
+  },
+  {
+    "word": "need",
+    "phonetic": "/niːd/",
+    "explains": "v. 需要"
+  },
+  {
+    "word": "neighbour",
+    "phonetic": "/ˈneɪbə/",
+    "explains": "n. 邻居"
+  },
+  {
+    "word": "neither",
+    "phonetic": "/ˈnaɪðə; ˈniːðə/",
+    "explains": "pron. 两者都不"
+  },
+  {
+    "word": "nervous",
+    "phonetic": "/ˈnɜːvəs/",
+    "explains": "adj. 紧张的"
+  },
+  {
+    "word": "net",
+    "phonetic": "/net/",
+    "explains": "n. 网"
+  },
+  {
+    "word": "never",
+    "phonetic": "/ˈnevə/",
+    "explains": "adv. 从不"
+  },
+  {
+    "word": "new",
+    "phonetic": "/njuː; nuː/",
+    "explains": "adj. 新的"
+  },
+  {
+    "word": "news",
+    "phonetic": "/njuːz; nuːz/",
+    "explains": "n. 新闻"
+  },
+  {
+    "word": "newspaper",
+    "phonetic": "/ˈnjuːzˌpeɪpə; ˈnjuːzˌpeɪpə/",
+    "explains": "n. 报纸"
+  },
+  {
+    "word": "next",
+    "phonetic": "/nekst/",
+    "explains": "adj. 下一个的"
+  },
+  {
+    "word": "nice",
+    "phonetic": "/naɪs/",
+    "explains": "adj. 好的"
+  },
+  {
+    "word": "night",
+    "phonetic": "/naɪt/",
+    "explains": "n. 夜晚"
+  },
+  {
+    "word": "nine",
+    "phonetic": "/naɪn/",
+    "explains": "num. 九"
+  },
+  {
+    "word": "nineteen",
+    "phonetic": "/ˌnaɪnˈtiːn; ˈnaɪntiːn/",
+    "explains": "num. 十九"
+  },
+  {
+    "word": "ninety",
+    "phonetic": "/ˈnaɪntɪ/",
+    "explains": "num. 九十"
+  },
+  {
+    "word": "no",
+    "phonetic": "/nəʊ/",
+    "explains": "adv. 不"
+  },
+  {
+    "word": "nobody",
+    "phonetic": "/ˈnəʊbədɪ/",
+    "explains": "pron. 没有人"
+  },
+  {
+    "word": "noise",
+    "phonetic": "/nɔɪz/",
+    "explains": "n. 噪音"
+  },
+  {
+    "word": "none",
+    "phonetic": "/nʌn/",
+    "explains": "pron. 没有任何东西"
+  },
+  {
+    "word": "noodle",
+    "phonetic": "/ˈnuːd(ə)l/",
+    "explains": "n. 面条"
+  },
+  {
+    "word": "noon",
+    "phonetic": "/nuːn/",
+    "explains": "n. 中午"
+  },
+  {
+    "word": "nor",
+    "phonetic": "/nɔː/",
+    "explains": "conj. 也不"
+  },
+  {
+    "word": "normal",
+    "phonetic": "/ˈnɔːm(ə)l/",
+    "explains": "adj. 正常的"
+  },
+  {
+    "word": "north",
+    "phonetic": "/nɔːθ/",
+    "explains": "n. 北方　adj. 北方的"
+  },
+  {
+    "word": "nose",
+    "phonetic": "/nəʊz/",
+    "explains": "n. 鼻子"
+  },
+  {
+    "word": "not",
+    "phonetic": "/nɒt/",
+    "explains": "adv. 不"
+  },
+  {
+    "word": "note",
+    "phonetic": "/nəʊt/",
+    "explains": "n. 笔记　v. 注意"
+  },
+  {
+    "word": "notebook",
+    "phonetic": "/ˈnəʊtbʊk/",
+    "explains": "n. 笔记本"
+  },
+  {
+    "word": "nothing",
+    "phonetic": "/ˈnʌθɪŋ/",
+    "explains": "pron. 没有东西"
+  },
+  {
+    "word": "notice",
+    "phonetic": "/ˈnəʊtɪs/",
+    "explains": "v. 注意到　n. 通知"
+  },
+  {
+    "word": "November",
+    "phonetic": "/nəʊˈvembə/",
+    "explains": "n. 十一月"
+  },
+  {
+    "word": "now",
+    "phonetic": "/naʊ/",
+    "explains": "adv. 现在"
+  },
+  {
+    "word": "number",
+    "phonetic": "/ˈnʌmbə/",
+    "explains": "n. 数字"
+  },
+  {
+    "word": "nurse",
+    "phonetic": "/nɜːs/",
+    "explains": "n. 护士"
+  },
+  {
+    "word": "o'clock",
+    "phonetic": "/əˈklɒk/",
+    "explains": "adv. ……点钟"
+  },
+  {
+    "word": "object",
+    "phonetic": "/ˈɒbdʒɪkt; əbˈdʒekt/",
+    "explains": "n. 物品　v. 反对"
+  },
+  {
+    "word": "occur",
+    "phonetic": "/əˈkɜː/",
+    "explains": "v. 发生"
+  },
+  {
+    "word": "ocean",
+    "phonetic": "/ˈəʊʃ(ə)n/",
+    "explains": "n. 海洋"
+  },
+  {
+    "word": "October",
+    "phonetic": "/ɒkˈtəʊbə/",
+    "explains": "n. 十月"
+  },
+  {
+    "word": "of",
+    "phonetic": "/ɒv; əv/",
+    "explains": "prep. ……的"
+  },
+  {
+    "word": "off",
+    "phonetic": "/ɒf; ɒːf/",
+    "explains": "adv. 离开；关掉"
+  },
+  {
+    "word": "offer",
+    "phonetic": "/ˈɒfə/",
+    "explains": "v. 提供"
+  },
+  {
+    "word": "office",
+    "phonetic": "/ˈɒfɪs/",
+    "explains": "n. 办公室"
+  },
+  {
+    "word": "officer",
+    "phonetic": "/ˈɒfɪsə/",
+    "explains": "n. 官员"
+  },
+  {
+    "word": "often",
+    "phonetic": "/ˈɒf(ə)n; ˈɒft(ə)n/",
+    "explains": "adv. 经常"
+  },
+  {
+    "word": "oil",
+    "phonetic": "/ɔɪl/",
+    "explains": "n. 油"
+  },
+  {
+    "word": "old",
+    "phonetic": "/əʊld/",
+    "explains": "adj. 老的；旧的"
+  },
+  {
+    "word": "on",
+    "phonetic": "/ɒn/",
+    "explains": "prep. 在……上；关于"
+  },
+  {
+    "word": "once",
+    "phonetic": "/wʌns/",
+    "explains": "adv. 一次"
+  },
+  {
+    "word": "one",
+    "phonetic": "/wʌn/",
+    "explains": "num. 一"
+  },
+  {
+    "word": "online",
+    "phonetic": "/ˌɒnˈlaɪn/",
+    "explains": "adj. 在线的"
+  },
+  {
+    "word": "only",
+    "phonetic": "/ˈəʊnlɪ/",
+    "explains": "adv. 只；仅仅"
+  },
+  {
+    "word": "onto",
+    "phonetic": "/ˈɒntə/",
+    "explains": "prep. 到……上"
+  },
+  {
+    "word": "open",
+    "phonetic": "/ˈəʊp(ə)n/",
+    "explains": "adj. 开着的　v. 打开"
+  },
+  {
+    "word": "operate",
+    "phonetic": "/ˈɒpəreɪt/",
+    "explains": "v. 操作；动手术"
+  },
+  {
+    "word": "operation",
+    "phonetic": "/ˌɒpəˈreɪʃ(ə)n/",
+    "explains": "n. 手术；操作"
+  },
+  {
+    "word": "opinion",
+    "phonetic": "/əˈpɪnjən/",
+    "explains": "n. 意见"
+  },
+  {
+    "word": "opposite",
+    "phonetic": "/ˈɒpəzɪt; ˈɒpəsɪt/",
+    "explains": "adj. 对面的"
+  },
+  {
+    "word": "or",
+    "phonetic": "/ɔː; ə/",
+    "explains": "conj. 或；或者"
+  },
+  {
+    "word": "orange",
+    "phonetic": "/ˈɒrɪn(d)ʒ/",
+    "explains": "n. 橙子　adj. 橙色的"
+  },
+  {
+    "word": "order",
+    "phonetic": "/ˈɔːdə/",
+    "explains": "n. 顺序；订单　v. 命令；订购"
+  },
+  {
+    "word": "ordinary",
+    "phonetic": "/ˈɔːdɪn(ə)rɪ; ˈɔːd(ə)nrɪ/",
+    "explains": "adj. 普通的"
+  },
+  {
+    "word": "organize",
+    "phonetic": "/ˈɔːɡənaɪz/",
+    "explains": "v. 组织"
+  },
+  {
+    "word": "other",
+    "phonetic": "/ˈʌðə/",
+    "explains": "adj. 另外的"
+  },
+  {
+    "word": "our",
+    "phonetic": "/ˈaʊə/",
+    "explains": "pron. 我们的"
+  },
+  {
+    "word": "out",
+    "phonetic": "/aʊt/",
+    "explains": "adv. 外面；出来"
+  },
+  {
+    "word": "outdoor",
+    "phonetic": "/ˌaʊtˈdɔː/",
+    "explains": "adj. 户外的"
+  },
+  {
+    "word": "outside",
+    "phonetic": "/ˌaʊtˈsaɪd; ˈaʊtsaɪd/",
+    "explains": "prep. 在……外面　adv. 在外面"
+  },
+  {
+    "word": "over",
+    "phonetic": "/ˈəʊvə/",
+    "explains": "prep. 在……上方；超过"
+  },
+  {
+    "word": "own",
+    "phonetic": "/əʊn/",
+    "explains": "adj. 自己的　v. 拥有"
+  },
+  {
+    "word": "owner",
+    "phonetic": "/ˈəʊnə/",
+    "explains": "n. 主人"
+  },
+  {
+    "word": "pack",
+    "phonetic": "/pæk/",
+    "explains": "v. 打包　n. 包裹"
+  },
+  {
+    "word": "page",
+    "phonetic": "/peɪdʒ/",
+    "explains": "n. 页"
+  },
+  {
+    "word": "pain",
+    "phonetic": "/peɪn/",
+    "explains": "n. 痛苦"
+  },
+  {
+    "word": "paint",
+    "phonetic": "/peɪnt/",
+    "explains": "v. 画画　n. 油漆"
+  },
+  {
+    "word": "painting",
+    "phonetic": "/ˈpeɪntɪŋ/",
+    "explains": "n. 绘画"
+  },
+  {
+    "word": "pair",
+    "phonetic": "/peə/",
+    "explains": "n. 一双；一对"
+  },
+  {
+    "word": "palace",
+    "phonetic": "/ˈpælɪs/",
+    "explains": "n. 宫殿"
+  },
+  {
+    "word": "pale",
+    "phonetic": "/peɪl/",
+    "explains": "adj. 苍白的"
+  },
+  {
+    "word": "pancake",
+    "phonetic": "/ˈpænkeɪk/",
+    "explains": "n. 煎饼"
+  },
+  {
+    "word": "panda",
+    "phonetic": "/ˈpændə/",
+    "explains": "n. 熊猫"
+  },
+  {
+    "word": "paper",
+    "phonetic": "/ˈpeɪpə/",
+    "explains": "n. 纸；论文"
+  },
+  {
+    "word": "pardon",
+    "phonetic": "/ˈpɑːd(ə)n/",
+    "explains": "v. 原谅"
+  },
+  {
+    "word": "parent",
+    "phonetic": "/ˈpeər(ə)nt/",
+    "explains": "n. 父母"
+  },
+  {
+    "word": "park",
+    "phonetic": "/pɑːk/",
+    "explains": "n. 公园　v. 停车"
+  },
+  {
+    "word": "part",
+    "phonetic": "/pɑːt/",
+    "explains": "n. 部分"
+  },
+  {
+    "word": "party",
+    "phonetic": "/ˈpɑːtɪ/",
+    "explains": "n. 聚会；党派"
+  },
+  {
+    "word": "pass",
+    "phonetic": "/pɑːs; pæs/",
+    "explains": "v. 经过；通过"
+  },
+  {
+    "word": "passage",
+    "phonetic": "/ˈpæsɪdʒ/",
+    "explains": "n. 段落；通道"
+  },
+  {
+    "word": "passenger",
+    "phonetic": "/ˈpæsɪndʒə/",
+    "explains": "n. 乘客"
+  },
+  {
+    "word": "passport",
+    "phonetic": "/ˈpɑːspɔːt; ˈpæspɔːt/",
+    "explains": "n. 护照"
+  },
+  {
+    "word": "password",
+    "phonetic": "/ˈpɑːswɜːd; ˈpæswɜːd/",
+    "explains": "n. 密码"
+  },
+  {
+    "word": "past",
+    "phonetic": "/pɑːst; pæst/",
+    "explains": "adj. 过去的　n. 过去"
+  },
+  {
+    "word": "path",
+    "phonetic": "/pɑːθ; pæθ/",
+    "explains": "n. 小路"
+  },
+  {
+    "word": "patient",
+    "phonetic": "/ˈpeɪʃ(ə)nt/",
+    "explains": "n. 病人　adj. 耐心的"
+  },
+  {
+    "word": "pattern",
+    "phonetic": "/ˈpæt(ə)n/",
+    "explains": "n. 模式"
+  },
+  {
+    "word": "pay",
+    "phonetic": "/peɪ/",
+    "explains": "v. 付款"
+  },
+  {
+    "word": "PE",
+    "phonetic": "/ˌpiː ˈiː/",
+    "explains": "n. 体育（Physical Education）"
+  },
+  {
+    "word": "peace",
+    "phonetic": "/piːs/",
+    "explains": "n. 和平"
+  },
+  {
+    "word": "pear",
+    "phonetic": "/peə/",
+    "explains": "n. 梨"
+  },
+  {
+    "word": "pen",
+    "phonetic": "/pen/",
+    "explains": "n. 钢笔"
+  },
+  {
+    "word": "pencil",
+    "phonetic": "/ˈpens(ə)l; ˈpensəl/",
+    "explains": "n. 铅笔"
+  },
+  {
+    "word": "people",
+    "phonetic": "/ˈpiːp(ə)l/",
+    "explains": "n. 人们"
+  },
+  {
+    "word": "pepper",
+    "phonetic": "/ˈpepə/",
+    "explains": "n. 胡椒"
+  },
+  {
+    "word": "perfect",
+    "phonetic": "/ˈpɜːfɪkt/",
+    "explains": "adj. 完美的"
+  },
+  {
+    "word": "perhaps",
+    "phonetic": "/pəˈhæps; præps/",
+    "explains": "adv. 也许"
+  },
+  {
+    "word": "period",
+    "phonetic": "/ˈpɪərɪəd/",
+    "explains": "n. 时期；一节课"
+  },
+  {
+    "word": "person",
+    "phonetic": "/ˈpɜːs(ə)n/",
+    "explains": "n. 人"
+  },
+  {
+    "word": "personal",
+    "phonetic": "/ˈpɜːs(ə)n(ə)l/",
+    "explains": "adj. 个人的"
+  },
+  {
+    "word": "pet",
+    "phonetic": "/pet/",
+    "explains": "n. 宠物"
+  },
+  {
+    "word": "phone",
+    "phonetic": "/fəʊn/",
+    "explains": "n. 电话"
+  },
+  {
+    "word": "photo",
+    "phonetic": "/ˈfəʊtəʊ/",
+    "explains": "n. 照片"
+  },
+  {
+    "word": "photograph",
+    "phonetic": "/ˈfəʊtəɡrɑːf; ˈfəʊtəɡræf/",
+    "explains": "n. 照片"
+  },
+  {
+    "word": "phrase",
+    "phonetic": "/freɪz/",
+    "explains": "n. 短语"
+  },
+  {
+    "word": "physics",
+    "phonetic": "/ˈfɪzɪks/",
+    "explains": "n. 物理"
+  },
+  {
+    "word": "piano",
+    "phonetic": "/pɪˈænəʊ; ˈpjænəʊ/",
+    "explains": "n. 钢琴"
+  },
+  {
+    "word": "pick",
+    "phonetic": "/pɪk/",
+    "explains": "v. 捡；挑选"
+  },
+  {
+    "word": "picnic",
+    "phonetic": "/ˈpɪknɪk/",
+    "explains": "n. 野餐"
+  },
+  {
+    "word": "picture",
+    "phonetic": "/ˈpɪktʃə/",
+    "explains": "n. 图片"
+  },
+  {
+    "word": "piece",
+    "phonetic": "/piːs/",
+    "explains": "n. 一块；一件"
+  },
+  {
+    "word": "pig",
+    "phonetic": "/pɪɡ/",
+    "explains": "n. 猪"
+  },
+  {
+    "word": "pigeon",
+    "phonetic": "/ˈpɪdʒɪn; ˈpɪdʒ(ə)n/",
+    "explains": "n. 鸽子"
+  },
+  {
+    "word": "pill",
+    "phonetic": "/pɪl/",
+    "explains": "n. 药丸"
+  },
+  {
+    "word": "pilot",
+    "phonetic": "/ˈpaɪlət/",
+    "explains": "n. 飞行员"
+  },
+  {
+    "word": "pineapple",
+    "phonetic": "/ˈpaɪnˌæp(ə)l/",
+    "explains": "n. 菠萝"
+  },
+  {
+    "word": "ping-pong",
+    "phonetic": "/ˈpɪŋpɒŋ/",
+    "explains": "n. 乒乓球"
+  },
+  {
+    "word": "pink",
+    "phonetic": "/pɪŋk/",
+    "explains": "adj. 粉红色的"
+  },
+  {
+    "word": "pioneer",
+    "phonetic": "/ˌpaɪəˈnɪə/",
+    "explains": "n. 先锋"
+  },
+  {
+    "word": "pity",
+    "phonetic": "/ˈpɪtɪ/",
+    "explains": "n. 遗憾"
+  },
+  {
+    "word": "pizza",
+    "phonetic": "/ˈpiːtsə/",
+    "explains": "n. 比萨饼"
+  },
+  {
+    "word": "place",
+    "phonetic": "/pleɪs/",
+    "explains": "n. 地方　v. 放置"
+  },
+  {
+    "word": "plain",
+    "phonetic": "/pleɪn/",
+    "explains": "adj. 朴素的　n. 平原"
+  },
+  {
+    "word": "plan",
+    "phonetic": "/plæn/",
+    "explains": "n. 计划　v. 计划"
+  },
+  {
+    "word": "plane",
+    "phonetic": "/pleɪn/",
+    "explains": "n. 飞机"
+  },
+  {
+    "word": "planet",
+    "phonetic": "/ˈplænɪt/",
+    "explains": "n. 行星"
+  },
+  {
+    "word": "plant",
+    "phonetic": "/plɑːnt; plænt/",
+    "explains": "n. 植物　v. 种植"
+  },
+  {
+    "word": "plastic",
+    "phonetic": "/ˈplæstɪk/",
+    "explains": "adj. 塑料的"
+  },
+  {
+    "word": "plate",
+    "phonetic": "/pleɪt/",
+    "explains": "n. 盘子"
+  },
+  {
+    "word": "play",
+    "phonetic": "/pleɪ/",
+    "explains": "v. 玩；播放　n. 戏剧"
+  },
+  {
+    "word": "player",
+    "phonetic": "/ˈpleɪə/",
+    "explains": "n. 选手；播放器"
+  },
+  {
+    "word": "playground",
+    "phonetic": "/ˈpleɪgraʊnd/",
+    "explains": "n. 操场"
+  },
+  {
+    "word": "pleasant",
+    "phonetic": "/ˈplez(ə)nt/",
+    "explains": "adj. 令人愉快的"
+  },
+  {
+    "word": "please",
+    "phonetic": "/pliːz/",
+    "explains": "v. 请；使高兴"
+  },
+  {
+    "word": "pleasure",
+    "phonetic": "/ˈpleʒə/",
+    "explains": "n. 愉快"
+  },
+  {
+    "word": "plenty",
+    "phonetic": "/ˈplentɪ/",
+    "explains": "n. 丰富"
+  },
+  {
+    "word": "plus",
+    "phonetic": "/plʌs/",
+    "explains": "prep. 加"
+  },
+  {
+    "word": "pocket",
+    "phonetic": "/ˈpɒkɪt/",
+    "explains": "n. 口袋"
+  },
+  {
+    "word": "poem",
+    "phonetic": "/ˈpəʊɪm/",
+    "explains": "n. 诗"
+  },
+  {
+    "word": "poet",
+    "phonetic": "/ˈpəʊɪt/",
+    "explains": "n. 诗人"
+  },
+  {
+    "word": "point",
+    "phonetic": "/pɔɪnt/",
+    "explains": "n. 分数；观点　v. 指"
+  },
+  {
+    "word": "poison",
+    "phonetic": "/ˈpɔɪz(ə)n/",
+    "explains": "n. 毒药"
+  },
+  {
+    "word": "police",
+    "phonetic": "/pəˈliːs/",
+    "explains": "n. 警察"
+  },
+  {
+    "word": "policeman",
+    "phonetic": "/pəˈliːsmən/",
+    "explains": "n. 男警察"
+  },
+  {
+    "word": "policy",
+    "phonetic": "/ˈpɒlɪsɪ/",
+    "explains": "n. 政策"
+  },
+  {
+    "word": "polite",
+    "phonetic": "/pəˈlaɪt/",
+    "explains": "adj. 有礼貌的"
+  },
+  {
+    "word": "pollute",
+    "phonetic": "/pəˈluːt/",
+    "explains": "v. 污染"
+  },
+  {
+    "word": "pool",
+    "phonetic": "/puːl/",
+    "explains": "n. 池子"
+  },
+  {
+    "word": "poor",
+    "phonetic": "/pʊə; pɔː/",
+    "explains": "adj. 贫穷的"
+  },
+  {
+    "word": "pop",
+    "phonetic": "/pɒp/",
+    "explains": "adj. 流行的"
+  },
+  {
+    "word": "popular",
+    "phonetic": "/ˈpɒpjʊlə/",
+    "explains": "adj. 受欢迎的"
+  },
+  {
+    "word": "population",
+    "phonetic": "/ˌpɒpjʊˈleɪʃ(ə)n/",
+    "explains": "n. 人口"
+  },
+  {
+    "word": "pork",
+    "phonetic": "/pɔːk/",
+    "explains": "n. 猪肉"
+  },
+  {
+    "word": "port",
+    "phonetic": "/pɔːt/",
+    "explains": "n. 港口"
+  },
+  {
+    "word": "position",
+    "phonetic": "/pəˈzɪʃ(ə)n/",
+    "explains": "n. 位置；职位"
+  },
+  {
+    "word": "possible",
+    "phonetic": "/ˈpɒsɪb(ə)l/",
+    "explains": "adj. 可能的"
+  },
+  {
+    "word": "post",
+    "phonetic": "/pəʊst/",
+    "explains": "n. 邮件　v. 邮寄；张贴"
+  },
+  {
+    "word": "post office",
+    "phonetic": "/ˈpəʊst ˈɒfɪs/",
+    "explains": "n. 邮局"
+  },
+  {
+    "word": "postcard",
+    "phonetic": "/ˈpəʊstkɑːd/",
+    "explains": "n. 明信片"
+  },
+  {
+    "word": "poster",
+    "phonetic": "/ˈpəʊstə/",
+    "explains": "n. 海报"
+  },
+  {
+    "word": "postman",
+    "phonetic": "/ˈpəʊstmən/",
+    "explains": "n. 邮递员"
+  },
+  {
+    "word": "pot",
+    "phonetic": "/pɒt/",
+    "explains": "n. 锅；罐"
+  },
+  {
+    "word": "potato",
+    "phonetic": "/pəˈteɪtəʊ/",
+    "explains": "n. 土豆"
+  },
+  {
+    "word": "pound",
+    "phonetic": "/paʊnd/",
+    "explains": "n. 英镑"
+  },
+  {
+    "word": "practice",
+    "phonetic": "/ˈpræktɪs/",
+    "explains": "n. 练习"
+  },
+  {
+    "word": "practise",
+    "phonetic": "/ˈpræktɪs/",
+    "explains": "v. 练习"
+  },
+  {
+    "word": "praise",
+    "phonetic": "/preɪz/",
+    "explains": "v. 表扬"
+  },
+  {
+    "word": "prefer",
+    "phonetic": "/prɪˈfɜː/",
+    "explains": "v. 更喜欢"
+  },
+  {
+    "word": "prepare",
+    "phonetic": "/prɪˈpeə/",
+    "explains": "v. 准备"
+  },
+  {
+    "word": "present",
+    "phonetic": "/ˈprez(ə)nt/",
+    "explains": "n. 礼物　adj. 出席的"
+  },
+  {
+    "word": "president",
+    "phonetic": "/ˈprezɪdənt/",
+    "explains": "n. 总统；校长"
+  },
+  {
+    "word": "press",
+    "phonetic": "/pres/",
+    "explains": "v. 按；压"
+  },
+  {
+    "word": "pretend",
+    "phonetic": "/prɪˈtend/",
+    "explains": "v. 假装"
+  },
+  {
+    "word": "pretty",
+    "phonetic": "/ˈprɪtɪ/",
+    "explains": "adj. 漂亮的"
+  },
+  {
+    "word": "prevent",
+    "phonetic": "/prɪˈvent/",
+    "explains": "v. 阻止"
+  },
+  {
+    "word": "price",
+    "phonetic": "/praɪs/",
+    "explains": "n. 价格"
+  },
+  {
+    "word": "pride",
+    "phonetic": "/praɪd/",
+    "explains": "n. 骄傲"
+  },
+  {
+    "word": "print",
+    "phonetic": "/prɪnt/",
+    "explains": "v. 印刷"
+  },
+  {
+    "word": "prison",
+    "phonetic": "/ˈprɪz(ə)n/",
+    "explains": "n. 监狱"
+  },
+  {
+    "word": "private",
+    "phonetic": "/ˈpraɪvɪt/",
+    "explains": "adj. 私人的"
+  },
+  {
+    "word": "prize",
+    "phonetic": "/praɪz/",
+    "explains": "n. 奖品"
+  },
+  {
+    "word": "probably",
+    "phonetic": "/ˈprɒbəblɪ/",
+    "explains": "adv. 也许"
+  },
+  {
+    "word": "problem",
+    "phonetic": "/ˈprɒbləm/",
+    "explains": "n. 问题"
+  },
+  {
+    "word": "process",
+    "phonetic": "/ˈprəʊses/",
+    "explains": "n. 过程　v. 加工"
+  },
+  {
+    "word": "produce",
+    "phonetic": "/prəˈdjuːs/",
+    "explains": "v. 生产"
+  },
+  {
+    "word": "product",
+    "phonetic": "/ˈprɒdʌkt/",
+    "explains": "n. 产品"
+  },
+  {
+    "word": "production",
+    "phonetic": "/prəˈdʌkʃ(ə)n/",
+    "explains": "n. 生产"
+  },
+  {
+    "word": "professor",
+    "phonetic": "/prəˈfesə/",
+    "explains": "n. 教授"
+  },
+  {
+    "word": "program",
+    "phonetic": "/ˈprəʊɡræm/",
+    "explains": "n. 节目"
+  },
+  {
+    "word": "programme",
+    "phonetic": "/ˈprəʊɡræm/",
+    "explains": "n. 节目；计划"
+  },
+  {
+    "word": "project",
+    "phonetic": "/ˈprɒdʒekt/",
+    "explains": "n. 项目"
+  },
+  {
+    "word": "promise",
+    "phonetic": "/ˈprɒmɪs/",
+    "explains": "n. 诺言　v. 承诺"
+  },
+  {
+    "word": "protect",
+    "phonetic": "/prəˈtekt/",
+    "explains": "v. 保护"
+  },
+  {
+    "word": "proud",
+    "phonetic": "/praʊd/",
+    "explains": "adj. 骄傲的"
+  },
+  {
+    "word": "prove",
+    "phonetic": "/pruːv/",
+    "explains": "v. 证明"
+  },
+  {
+    "word": "provide",
+    "phonetic": "/prəˈvaɪd/",
+    "explains": "v. 提供"
+  },
+  {
+    "word": "province",
+    "phonetic": "/ˈprɒvɪns/",
+    "explains": "n. 省"
+  },
+  {
+    "word": "pub",
+    "phonetic": "/pʌb/",
+    "explains": "n. 酒馆"
+  },
+  {
+    "word": "public",
+    "phonetic": "/ˈpʌblɪk/",
+    "explains": "adj. 公共的"
+  },
+  {
+    "word": "pull",
+    "phonetic": "/pʊl/",
+    "explains": "v. 拉"
+  },
+  {
+    "word": "punish",
+    "phonetic": "/ˈpʌnɪʃ/",
+    "explains": "v. 惩罚"
+  },
+  {
+    "word": "pupil",
+    "phonetic": "/ˈpjuːpɪl; ˈpjuːp(ə)l/",
+    "explains": "n. 小学生"
+  },
+  {
+    "word": "puppy",
+    "phonetic": "/ˈpʌpɪ/",
+    "explains": "n. 小狗"
+  },
+  {
+    "word": "pure",
+    "phonetic": "/pjʊə/",
+    "explains": "adj. 纯的"
+  },
+  {
+    "word": "purpose",
+    "phonetic": "/ˈpɜːpəs/",
+    "explains": "n. 目的"
+  },
+  {
+    "word": "purse",
+    "phonetic": "/pɜːs/",
+    "explains": "n. 钱包"
+  },
+  {
+    "word": "push",
+    "phonetic": "/pʊʃ/",
+    "explains": "v. 推"
+  },
+  {
+    "word": "put",
+    "phonetic": "/pʊt/",
+    "explains": "v. 放"
+  },
+  {
+    "word": "puzzle",
+    "phonetic": "/ˈpʌz(ə)l/",
+    "explains": "n. 谜"
+  },
+  {
+    "word": "quality",
+    "phonetic": "/ˈkwɒlɪtɪ/",
+    "explains": "n. 质量"
+  },
+  {
+    "word": "quarter",
+    "phonetic": "/ˈkwɔːtə/",
+    "explains": "n. 四分之一"
+  },
+  {
+    "word": "queen",
+    "phonetic": "/kwiːn/",
+    "explains": "n. 女王"
+  },
+  {
+    "word": "question",
+    "phonetic": "/ˈkwestʃ(ə)n/",
+    "explains": "n. 问题"
+  },
+  {
+    "word": "quick",
+    "phonetic": "/kwɪk/",
+    "explains": "adj. 快的"
+  },
+  {
+    "word": "quiet",
+    "phonetic": "/ˈkwaɪət/",
+    "explains": "adj. 安静的"
+  },
+  {
+    "word": "quite",
+    "phonetic": "/kwaɪt/",
+    "explains": "adv. 相当"
+  },
+  {
+    "word": "rabbit",
+    "phonetic": "/ˈræbɪt/",
+    "explains": "n. 兔子"
+  },
+  {
+    "word": "race",
+    "phonetic": "/reɪs/",
+    "explains": "n. 比赛　v. 赛跑"
+  },
+  {
+    "word": "radio",
+    "phonetic": "/ˈreɪdɪəʊ/",
+    "explains": "n. 收音机"
+  },
+  {
+    "word": "railway",
+    "phonetic": "/ˈreɪlweɪ/",
+    "explains": "n. 铁路"
+  },
+  {
+    "word": "rain",
+    "phonetic": "/reɪn/",
+    "explains": "n. 雨　v. 下雨"
+  },
+  {
+    "word": "raincoat",
+    "phonetic": "/ˈreɪnkəʊt/",
+    "explains": "n. 雨衣"
+  },
+  {
+    "word": "rainy",
+    "phonetic": "/ˈreɪnɪ/",
+    "explains": "adj. 下雨的"
+  },
+  {
+    "word": "raise",
+    "phonetic": "/reɪz/",
+    "explains": "v. 举起；抚养"
+  },
+  {
+    "word": "reach",
+    "phonetic": "/riːtʃ/",
+    "explains": "v. 到达"
+  },
+  {
+    "word": "read",
+    "phonetic": "/riːd/",
+    "explains": "v. 读"
+  },
+  {
+    "word": "ready",
+    "phonetic": "/ˈredɪ/",
+    "explains": "adj. 准备好的"
+  },
+  {
+    "word": "real",
+    "phonetic": "/ˈrɪəl; riːl/",
+    "explains": "adj. 真实的"
+  },
+  {
+    "word": "realize",
+    "phonetic": "/ˈrɪəlaɪz/",
+    "explains": "v. 意识到"
+  },
+  {
+    "word": "really",
+    "phonetic": "/ˈrɪəlɪ; ˈrɪːlɪ/",
+    "explains": "adv. 真正地"
+  },
+  {
+    "word": "reason",
+    "phonetic": "/ˈriːz(ə)n/",
+    "explains": "n. 原因"
+  },
+  {
+    "word": "receive",
+    "phonetic": "/rɪˈsiːv/",
+    "explains": "v. 收到"
+  },
+  {
+    "word": "recent",
+    "phonetic": "/ˈriːs(ə)nt/",
+    "explains": "adj. 最近的"
+  },
+  {
+    "word": "record",
+    "phonetic": "/ˈrekɔːd; rɪˈkɔːd/",
+    "explains": "n. 记录　v. 录制"
+  },
+  {
+    "word": "red",
+    "phonetic": "/red/",
+    "explains": "adj. 红色的"
+  },
+  {
+    "word": "reduce",
+    "phonetic": "/rɪˈdjuːs/",
+    "explains": "v. 减少"
+  },
+  {
+    "word": "refuse",
+    "phonetic": "/rɪˈfjuːz/",
+    "explains": "v. 拒绝"
+  },
+  {
+    "word": "regret",
+    "phonetic": "/rɪˈɡret/",
+    "explains": "v. 后悔"
+  },
+  {
+    "word": "relation",
+    "phonetic": "/rɪˈleɪʃ(ə)n/",
+    "explains": "n. 关系"
+  },
+  {
+    "word": "relative",
+    "phonetic": "/ˈrelətɪv/",
+    "explains": "n. 亲戚"
+  },
+  {
+    "word": "relax",
+    "phonetic": "/rɪˈlæks/",
+    "explains": "v. 放松"
+  },
+  {
+    "word": "remain",
+    "phonetic": "/rɪˈmeɪn/",
+    "explains": "v. 保持；留下"
+  },
+  {
+    "word": "remember",
+    "phonetic": "/rɪˈmembə/",
+    "explains": "v. 记得"
+  },
+  {
+    "word": "remove",
+    "phonetic": "/rɪˈmuːv/",
+    "explains": "v. 移开"
+  },
+  {
+    "word": "rent",
+    "phonetic": "/rent/",
+    "explains": "v. 租"
+  },
+  {
+    "word": "repair",
+    "phonetic": "/rɪˈpeə/",
+    "explains": "v. 修理"
+  },
+  {
+    "word": "repeat",
+    "phonetic": "/rɪˈpiːt/",
+    "explains": "v. 重复"
+  },
+  {
+    "word": "reply",
+    "phonetic": "/rɪˈplaɪ/",
+    "explains": "v. 回复"
+  },
+  {
+    "word": "report",
+    "phonetic": "/rɪˈpɔːt/",
+    "explains": "n. 报告　v. 报道"
+  },
+  {
+    "word": "republic",
+    "phonetic": "/rɪˈpʌblɪk/",
+    "explains": "n. 共和国"
+  },
+  {
+    "word": "require",
+    "phonetic": "/rɪˈkwaɪə/",
+    "explains": "v. 需要"
+  },
+  {
+    "word": "research",
+    "phonetic": "/rɪˈsɜːtʃ; ˈriːsɜːtʃ/",
+    "explains": "n. 研究"
+  },
+  {
+    "word": "respect",
+    "phonetic": "/rɪˈspekt/",
+    "explains": "v. 尊重　n. 尊敬"
+  },
+  {
+    "word": "rest",
+    "phonetic": "/rest/",
+    "explains": "n. 休息　v. 休息"
+  },
+  {
+    "word": "restaurant",
+    "phonetic": "/ˈrestrɒnt; ˈrestrənt/",
+    "explains": "n. 餐馆"
+  },
+  {
+    "word": "result",
+    "phonetic": "/rɪˈzʌlt/",
+    "explains": "n. 结果"
+  },
+  {
+    "word": "return",
+    "phonetic": "/rɪˈtɜːn/",
+    "explains": "v. 返回"
+  },
+  {
+    "word": "review",
+    "phonetic": "/rɪˈvjuː/",
+    "explains": "v. 复习　n. 评论"
+  },
+  {
+    "word": "rice",
+    "phonetic": "/raɪs/",
+    "explains": "n. 米饭"
+  },
+  {
+    "word": "rich",
+    "phonetic": "/rɪtʃ/",
+    "explains": "adj. 富有的"
+  },
+  {
+    "word": "ride",
+    "phonetic": "/raɪd/",
+    "explains": "v. 骑　n. 乘坐"
+  },
+  {
+    "word": "right",
+    "phonetic": "/raɪt/",
+    "explains": "adj. 正确的；右边的　n. 权利"
+  },
+  {
+    "word": "ring",
+    "phonetic": "/rɪŋ/",
+    "explains": "v. 响　n. 戒指"
+  },
+  {
+    "word": "rise",
+    "phonetic": "/raɪz/",
+    "explains": "v. 升起"
+  },
+  {
+    "word": "risk",
+    "phonetic": "/rɪsk/",
+    "explains": "n. 风险"
+  },
+  {
+    "word": "river",
+    "phonetic": "/ˈrɪvə/",
+    "explains": "n. 河"
+  },
+  {
+    "word": "road",
+    "phonetic": "/rəʊd/",
+    "explains": "n. 路"
+  },
+  {
+    "word": "robot",
+    "phonetic": "/ˈrəʊbɒt/",
+    "explains": "n. 机器人"
+  },
+  {
+    "word": "rock",
+    "phonetic": "/rɒk/",
+    "explains": "n. 岩石"
+  },
+  {
+    "word": "role",
+    "phonetic": "/rəʊl/",
+    "explains": "n. 角色"
+  },
+  {
+    "word": "roll",
+    "phonetic": "/rəʊl/",
+    "explains": "v. 滚动"
+  },
+  {
+    "word": "room",
+    "phonetic": "/ruːm; rʊm/",
+    "explains": "n. 房间"
+  },
+  {
+    "word": "rope",
+    "phonetic": "/rəʊp/",
+    "explains": "n. 绳子"
+  },
+  {
+    "word": "rose",
+    "phonetic": "/rəʊz/",
+    "explains": "n. 玫瑰"
+  },
+  {
+    "word": "round",
+    "phonetic": "/raʊnd/",
+    "explains": "adj. 圆的　adv. 在周围"
+  },
+  {
+    "word": "row",
+    "phonetic": "/rəʊ; raʊ/",
+    "explains": "n. 一排　v. 划船"
+  },
+  {
+    "word": "rubber",
+    "phonetic": "/ˈrʌbə/",
+    "explains": "n. 橡胶"
+  },
+  {
+    "word": "rubbish",
+    "phonetic": "/ˈrʌbɪʃ/",
+    "explains": "n. 垃圾"
+  },
+  {
+    "word": "rule",
+    "phonetic": "/ruːl/",
+    "explains": "n. 规则"
+  },
+  {
+    "word": "run",
+    "phonetic": "/rʌn/",
+    "explains": "v. 跑；经营"
+  },
+  {
+    "word": "runner",
+    "phonetic": "/ˈrʌnə/",
+    "explains": "n. 赛跑者"
+  },
+  {
+    "word": "rush",
+    "phonetic": "/rʌʃ/",
+    "explains": "v. 冲"
+  },
+  {
+    "word": "sad",
+    "phonetic": "/sæd/",
+    "explains": "adj. 悲伤的"
+  },
+  {
+    "word": "safe",
+    "phonetic": "/seɪf/",
+    "explains": "adj. 安全的"
+  },
+  {
+    "word": "safety",
+    "phonetic": "/ˈseɪftɪ/",
+    "explains": "n. 安全"
+  },
+  {
+    "word": "salad",
+    "phonetic": "/ˈsæləd/",
+    "explains": "n. 沙拉"
+  },
+  {
+    "word": "salary",
+    "phonetic": "/ˈsælərɪ/",
+    "explains": "n. 薪水"
+  },
+  {
+    "word": "sale",
+    "phonetic": "/seɪl/",
+    "explains": "n. 出售"
+  },
+  {
+    "word": "salt",
+    "phonetic": "/sɔːlt; sɒlt/",
+    "explains": "n. 盐"
+  },
+  {
+    "word": "same",
+    "phonetic": "/seɪm/",
+    "explains": "adj. 相同的"
+  },
+  {
+    "word": "sand",
+    "phonetic": "/sænd/",
+    "explains": "n. 沙"
+  },
+  {
+    "word": "sandwich",
+    "phonetic": "/ˈsæn(d)wɪdʒ; ˈsæn(d)wɪtʃ/",
+    "explains": "n. 三明治"
+  },
+  {
+    "word": "satisfy",
+    "phonetic": "/ˈsætɪsfaɪ/",
+    "explains": "v. 使满意"
+  },
+  {
+    "word": "Saturday",
+    "phonetic": "/ˈsætədeɪ; ˈsætədɪ/",
+    "explains": "n. 星期六"
+  },
+  {
+    "word": "save",
+    "phonetic": "/seɪv/",
+    "explains": "v. 救；节省"
+  },
+  {
+    "word": "say",
+    "phonetic": "/seɪ/",
+    "explains": "v. 说"
+  },
+  {
+    "word": "scarf",
+    "phonetic": "/skɑːf/",
+    "explains": "n. 围巾"
+  },
+  {
+    "word": "school",
+    "phonetic": "/skuːl/",
+    "explains": "n. 学校"
+  },
+  {
+    "word": "schoolbag",
+    "phonetic": "/ˈskuːlbæɡ/",
+    "explains": "n. 书包"
+  },
+  {
+    "word": "science",
+    "phonetic": "/ˈsaɪəns/",
+    "explains": "n. 科学"
+  },
+  {
+    "word": "scientist",
+    "phonetic": "/ˈsaɪəntɪst/",
+    "explains": "n. 科学家"
+  },
+  {
+    "word": "scissors",
+    "phonetic": "/ˈsɪzəz/",
+    "explains": "n. 剪刀"
+  },
+  {
+    "word": "score",
+    "phonetic": "/skɔː/",
+    "explains": "n. 分数"
+  },
+  {
+    "word": "screen",
+    "phonetic": "/skriːn/",
+    "explains": "n. 屏幕"
+  },
+  {
+    "word": "sea",
+    "phonetic": "/siː/",
+    "explains": "n. 海"
+  },
+  {
+    "word": "search",
+    "phonetic": "/sɜːtʃ/",
+    "explains": "v. 搜索"
+  },
+  {
+    "word": "season",
+    "phonetic": "/ˈsiːz(ə)n/",
+    "explains": "n. 季节"
+  },
+  {
+    "word": "seat",
+    "phonetic": "/siːt/",
+    "explains": "n. 座位"
+  },
+  {
+    "word": "second",
+    "phonetic": "/ˈsekənd/",
+    "explains": "num. 第二　n. 秒"
+  },
+  {
+    "word": "secret",
+    "phonetic": "/ˈsiːkrɪt/",
+    "explains": "adj. 秘密的　n. 秘密"
+  },
+  {
+    "word": "secretary",
+    "phonetic": "/ˈsekrət(ə)rɪ/",
+    "explains": "n. 秘书"
+  },
+  {
+    "word": "see",
+    "phonetic": "/siː/",
+    "explains": "v. 看见"
+  },
+  {
+    "word": "seem",
+    "phonetic": "/siːm/",
+    "explains": "v. 似乎"
+  },
+  {
+    "word": "seldom",
+    "phonetic": "/ˈseldəm/",
+    "explains": "adv. 很少"
+  },
+  {
+    "word": "select",
+    "phonetic": "/sɪˈlekt/",
+    "explains": "v. 挑选"
+  },
+  {
+    "word": "sell",
+    "phonetic": "/sel/",
+    "explains": "v. 卖"
+  },
+  {
+    "word": "send",
+    "phonetic": "/send/",
+    "explains": "v. 发送"
+  },
+  {
+    "word": "sense",
+    "phonetic": "/sens/",
+    "explains": "n. 感觉"
+  },
+  {
+    "word": "sentence",
+    "phonetic": "/ˈsent(ə)ns/",
+    "explains": "n. 句子"
+  },
+  {
+    "word": "September",
+    "phonetic": "/sepˈtembə/",
+    "explains": "n. 九月"
+  },
+  {
+    "word": "serious",
+    "phonetic": "/ˈsɪərɪəs/",
+    "explains": "adj. 严肃的"
+  },
+  {
+    "word": "servant",
+    "phonetic": "/ˈsɜːv(ə)nt/",
+    "explains": "n. 仆人"
+  },
+  {
+    "word": "serve",
+    "phonetic": "/sɜːv/",
+    "explains": "v. 服务"
+  },
+  {
+    "word": "service",
+    "phonetic": "/ˈsɜːvɪs/",
+    "explains": "n. 服务"
+  },
+  {
+    "word": "set",
+    "phonetic": "/set/",
+    "explains": "v. 放置　n. 一套"
+  },
+  {
+    "word": "settle",
+    "phonetic": "/ˈset(ə)l/",
+    "explains": "v. 解决；定居"
+  },
+  {
+    "word": "seven",
+    "phonetic": "/ˈsev(ə)n/",
+    "explains": "num. 七"
+  },
+  {
+    "word": "seventeen",
+    "phonetic": "/ˌsev(ə)nˈtiːn; ˈsev(ə)ntiːn/",
+    "explains": "num. 十七"
+  },
+  {
+    "word": "seventy",
+    "phonetic": "/ˈsev(ə)ntɪ/",
+    "explains": "num. 七十"
+  },
+  {
+    "word": "several",
+    "phonetic": "/ˈsev(ə)r(ə)l/",
+    "explains": "adj. 几个"
+  },
+  {
+    "word": "shake",
+    "phonetic": "/ʃeɪk/",
+    "explains": "v. 摇"
+  },
+  {
+    "word": "shall",
+    "phonetic": "/ʃæl; ʃəl/",
+    "explains": "v. 将要"
+  },
+  {
+    "word": "shame",
+    "phonetic": "/ʃeɪm/",
+    "explains": "n. 遗憾；羞耻"
+  },
+  {
+    "word": "shape",
+    "phonetic": "/ʃeɪp/",
+    "explains": "n. 形状"
+  },
+  {
+    "word": "share",
+    "phonetic": "/ʃeə/",
+    "explains": "v. 分享"
+  },
+  {
+    "word": "she",
+    "phonetic": "/ʃiː/",
+    "explains": "pron. 她"
+  },
+  {
+    "word": "sheep",
+    "phonetic": "/ʃiːp/",
+    "explains": "n. 绵羊"
+  },
+  {
+    "word": "sheet",
+    "phonetic": "/ʃiːt/",
+    "explains": "n. 床单；一张"
+  },
+  {
+    "word": "shelf",
+    "phonetic": "/ʃelf/",
+    "explains": "n. 架子"
+  },
+  {
+    "word": "shine",
+    "phonetic": "/ʃaɪn/",
+    "explains": "v. 照耀"
+  },
+  {
+    "word": "ship",
+    "phonetic": "/ʃɪp/",
+    "explains": "n. 船"
+  },
+  {
+    "word": "shirt",
+    "phonetic": "/ʃɜːt/",
+    "explains": "n. 衬衫"
+  },
+  {
+    "word": "shoe",
+    "phonetic": "/ʃuː/",
+    "explains": "n. 鞋子"
+  },
+  {
+    "word": "shop",
+    "phonetic": "/ʃɒp/",
+    "explains": "n. 商店"
+  },
+  {
+    "word": "shopkeeper",
+    "phonetic": "/ˈʃɒpˌkiːpə/",
+    "explains": "n. 店主"
+  },
+  {
+    "word": "shore",
+    "phonetic": "/ʃɔː/",
+    "explains": "n. 岸"
+  },
+  {
+    "word": "short",
+    "phonetic": "/ʃɔːt/",
+    "explains": "adj. 短的；矮的"
+  },
+  {
+    "word": "shot",
+    "phonetic": "/ʃɒt/",
+    "explains": "n. 射击"
+  },
+  {
+    "word": "should",
+    "phonetic": "/ʃʊd; ʃəd/",
+    "explains": "v. 应该"
+  },
+  {
+    "word": "shoulder",
+    "phonetic": "/ˈʃəʊldə/",
+    "explains": "n. 肩膀"
+  },
+  {
+    "word": "shout",
+    "phonetic": "/ʃaʊt/",
+    "explains": "v. 叫喊"
+  },
+  {
+    "word": "show",
+    "phonetic": "/ʃəʊ/",
+    "explains": "v. 给……看　n. 演出"
+  },
+  {
+    "word": "shower",
+    "phonetic": "/ˈʃaʊə/",
+    "explains": "n. 淋浴"
+  },
+  {
+    "word": "shut",
+    "phonetic": "/ʃʌt/",
+    "explains": "v. 关"
+  },
+  {
+    "word": "shy",
+    "phonetic": "/ʃaɪ/",
+    "explains": "adj. 害羞的"
+  },
+  {
+    "word": "sick",
+    "phonetic": "/sɪk/",
+    "explains": "adj. 生病的"
+  },
+  {
+    "word": "side",
+    "phonetic": "/saɪd/",
+    "explains": "n. 边"
+  },
+  {
+    "word": "sight",
+    "phonetic": "/saɪt/",
+    "explains": "n. 视力；景象"
+  },
+  {
+    "word": "silly",
+    "phonetic": "/ˈsɪlɪ/",
+    "explains": "adj. 傻的"
+  },
+  {
+    "word": "silver",
+    "phonetic": "/ˈsɪlvə/",
+    "explains": "n. 银"
+  },
+  {
+    "word": "similar",
+    "phonetic": "/ˈsɪmɪlə/",
+    "explains": "adj. 相似的"
+  },
+  {
+    "word": "simple",
+    "phonetic": "/ˈsɪmp(ə)l/",
+    "explains": "adj. 简单的"
+  },
+  {
+    "word": "since",
+    "phonetic": "/sɪns/",
+    "explains": "conj. 自从；因为"
+  },
+  {
+    "word": "sing",
+    "phonetic": "/sɪŋ/",
+    "explains": "v. 唱歌"
+  },
+  {
+    "word": "singer",
+    "phonetic": "/ˈsɪŋə/",
+    "explains": "n. 歌手"
+  },
+  {
+    "word": "single",
+    "phonetic": "/ˈsɪŋɡ(ə)l/",
+    "explains": "adj. 单个的"
+  },
+  {
+    "word": "sink",
+    "phonetic": "/sɪŋk/",
+    "explains": "v. 下沉"
+  },
+  {
+    "word": "sir",
+    "phonetic": "/sɜː/",
+    "explains": "n. 先生"
+  },
+  {
+    "word": "sister",
+    "phonetic": "/ˈsɪstə/",
+    "explains": "n. 姐妹"
+  },
+  {
+    "word": "sit",
+    "phonetic": "/sɪt/",
+    "explains": "v. 坐"
+  },
+  {
+    "word": "site",
+    "phonetic": "/saɪt/",
+    "explains": "n. 地点"
+  },
+  {
+    "word": "situation",
+    "phonetic": "/ˌsɪtʃʊˈeɪʃ(ə)n/",
+    "explains": "n. 情况"
+  },
+  {
+    "word": "six",
+    "phonetic": "/sɪks/",
+    "explains": "num. 六"
+  },
+  {
+    "word": "sixteen",
+    "phonetic": "/ˌsɪksˈtiːn; ˈsɪkstiːn/",
+    "explains": "num. 十六"
+  },
+  {
+    "word": "sixty",
+    "phonetic": "/ˈsɪkstɪ/",
+    "explains": "num. 六十"
+  },
+  {
+    "word": "size",
+    "phonetic": "/saɪz/",
+    "explains": "n. 尺寸"
+  },
+  {
+    "word": "skate",
+    "phonetic": "/skeɪt/",
+    "explains": "v. 滑冰"
+  },
+  {
+    "word": "ski",
+    "phonetic": "/skiː/",
+    "explains": "v. 滑雪"
+  },
+  {
+    "word": "skill",
+    "phonetic": "/skɪl/",
+    "explains": "n. 技能"
+  },
+  {
+    "word": "skirt",
+    "phonetic": "/skɜːt/",
+    "explains": "n. 裙子"
+  },
+  {
+    "word": "sky",
+    "phonetic": "/skaɪ/",
+    "explains": "n. 天空"
+  },
+  {
+    "word": "sleep",
+    "phonetic": "/sliːp/",
+    "explains": "v. 睡觉"
+  },
+  {
+    "word": "slow",
+    "phonetic": "/sləʊ/",
+    "explains": "adj. 慢的"
+  },
+  {
+    "word": "small",
+    "phonetic": "/smɔːl/",
+    "explains": "adj. 小的"
+  },
+  {
+    "word": "smart",
+    "phonetic": "/smɑːt/",
+    "explains": "adj. 聪明的"
+  },
+  {
+    "word": "smell",
+    "phonetic": "/smel/",
+    "explains": "v. 闻　n. 气味"
+  },
+  {
+    "word": "smile",
+    "phonetic": "/smaɪl/",
+    "explains": "v. 微笑　n. 微笑"
+  },
+  {
+    "word": "smoke",
+    "phonetic": "/sməʊk/",
+    "explains": "v. 吸烟　n. 烟"
+  },
+  {
+    "word": "snake",
+    "phonetic": "/sneɪk/",
+    "explains": "n. 蛇"
+  },
+  {
+    "word": "snow",
+    "phonetic": "/snəʊ/",
+    "explains": "n. 雪　v. 下雪"
+  },
+  {
+    "word": "snowy",
+    "phonetic": "/ˈsnəʊɪ/",
+    "explains": "adj. 下雪的"
+  },
+  {
+    "word": "so",
+    "phonetic": "/səʊ/",
+    "explains": "adv. 如此；所以"
+  },
+  {
+    "word": "soap",
+    "phonetic": "/səʊp/",
+    "explains": "n. 肥皂"
+  },
+  {
+    "word": "soccer",
+    "phonetic": "/ˈsɒkə/",
+    "explains": "n. 足球"
+  },
+  {
+    "word": "social",
+    "phonetic": "/ˈsəʊʃ(ə)l/",
+    "explains": "adj. 社会的"
+  },
+  {
+    "word": "society",
+    "phonetic": "/səˈsaɪɪtɪ/",
+    "explains": "n. 社会"
+  },
+  {
+    "word": "sock",
+    "phonetic": "/sɒk/",
+    "explains": "n. 短袜"
+  },
+  {
+    "word": "sofa",
+    "phonetic": "/ˈsəʊfə/",
+    "explains": "n. 沙发"
+  },
+  {
+    "word": "soft",
+    "phonetic": "/sɒft/",
+    "explains": "adj. 柔软的"
+  },
+  {
+    "word": "soldier",
+    "phonetic": "/ˈsəʊldʒə/",
+    "explains": "n. 士兵"
+  },
+  {
+    "word": "solid",
+    "phonetic": "/ˈsɒlɪd/",
+    "explains": "adj. 固体的"
+  },
+  {
+    "word": "solve",
+    "phonetic": "/sɒlv/",
+    "explains": "v. 解决"
+  },
+  {
+    "word": "some",
+    "phonetic": "/sʌm; səm/",
+    "explains": "adj. 一些"
+  },
+  {
+    "word": "somebody",
+    "phonetic": "/ˈsʌmbədɪ/",
+    "explains": "pron. 某人"
+  },
+  {
+    "word": "someone",
+    "phonetic": "/ˈsʌmwʌn/",
+    "explains": "pron. 某人"
+  },
+  {
+    "word": "something",
+    "phonetic": "/ˈsʌmθɪŋ/",
+    "explains": "pron. 某事"
+  },
+  {
+    "word": "sometimes",
+    "phonetic": "/ˈsʌmtaɪmz/",
+    "explains": "adv. 有时"
+  },
+  {
+    "word": "somewhere",
+    "phonetic": "/ˈsʌmweə/",
+    "explains": "adv. 某处"
+  },
+  {
+    "word": "son",
+    "phonetic": "/sʌn/",
+    "explains": "n. 儿子"
+  },
+  {
+    "word": "song",
+    "phonetic": "/sɒŋ; sɒŋ/",
+    "explains": "n. 歌"
+  },
+  {
+    "word": "soon",
+    "phonetic": "/suːn/",
+    "explains": "adv. 不久"
+  },
+  {
+    "word": "sorry",
+    "phonetic": "/ˈsɒrɪ/",
+    "explains": "adj. 对不起的"
+  },
+  {
+    "word": "sort",
+    "phonetic": "/sɔːt/",
+    "explains": "n. 种类"
+  },
+  {
+    "word": "sound",
+    "phonetic": "/saʊnd/",
+    "explains": "n. 声音　v. 听起来"
+  },
+  {
+    "word": "soup",
+    "phonetic": "/suːp/",
+    "explains": "n. 汤"
+  },
+  {
+    "word": "sour",
+    "phonetic": "/ˈsaʊə/",
+    "explains": "adj. 酸的"
+  },
+  {
+    "word": "south",
+    "phonetic": "/saʊθ/",
+    "explains": "n. 南方"
+  },
+  {
+    "word": "southern",
+    "phonetic": "/ˈsʌð(ə)n/",
+    "explains": "adj. 南方的"
+  },
+  {
+    "word": "space",
+    "phonetic": "/speɪs/",
+    "explains": "n. 空间；太空"
+  },
+  {
+    "word": "spare",
+    "phonetic": "/speə/",
+    "explains": "adj. 空闲的"
+  },
+  {
+    "word": "speak",
+    "phonetic": "/spiːk/",
+    "explains": "v. 说；讲"
+  },
+  {
+    "word": "special",
+    "phonetic": "/ˈspeʃ(ə)l/",
+    "explains": "adj. 特别的"
+  },
+  {
+    "word": "speech",
+    "phonetic": "/spiːtʃ/",
+    "explains": "n. 演讲"
+  },
+  {
+    "word": "speed",
+    "phonetic": "/spiːd/",
+    "explains": "n. 速度"
+  },
+  {
+    "word": "spell",
+    "phonetic": "/spel/",
+    "explains": "v. 拼写"
+  },
+  {
+    "word": "spend",
+    "phonetic": "/spend/",
+    "explains": "v. 花费"
+  },
+  {
+    "word": "spirit",
+    "phonetic": "/ˈspɪrɪt/",
+    "explains": "n. 精神"
+  },
+  {
+    "word": "spoon",
+    "phonetic": "/spuːn/",
+    "explains": "n. 勺子"
+  },
+  {
+    "word": "sport",
+    "phonetic": "/spɔːt/",
+    "explains": "n. 运动"
+  },
+  {
+    "word": "spread",
+    "phonetic": "/spred/",
+    "explains": "v. 传播"
+  },
+  {
+    "word": "spring",
+    "phonetic": "/sprɪŋ/",
+    "explains": "n. 春天；泉水"
+  },
+  {
+    "word": "square",
+    "phonetic": "/skweə/",
+    "explains": "n. 广场；正方形"
+  },
+  {
+    "word": "stage",
+    "phonetic": "/steɪdʒ/",
+    "explains": "n. 舞台；阶段"
+  },
+  {
+    "word": "stair",
+    "phonetic": "/steə/",
+    "explains": "n. 楼梯"
+  },
+  {
+    "word": "stamp",
+    "phonetic": "/stæmp/",
+    "explains": "n. 邮票"
+  },
+  {
+    "word": "stand",
+    "phonetic": "/stænd/",
+    "explains": "v. 站；忍受"
+  },
+  {
+    "word": "standard",
+    "phonetic": "/ˈstændəd/",
+    "explains": "n. 标准"
+  },
+  {
+    "word": "star",
+    "phonetic": "/stɑː/",
+    "explains": "n. 星星"
+  },
+  {
+    "word": "start",
+    "phonetic": "/stɑːt/",
+    "explains": "v. 开始"
+  },
+  {
+    "word": "state",
+    "phonetic": "/steɪt/",
+    "explains": "n. 状态；州"
+  },
+  {
+    "word": "station",
+    "phonetic": "/ˈsteɪʃ(ə)n/",
+    "explains": "n. 车站"
+  },
+  {
+    "word": "stay",
+    "phonetic": "/steɪ/",
+    "explains": "v. 停留"
+  },
+  {
+    "word": "steal",
+    "phonetic": "/stiːl/",
+    "explains": "v. 偷"
+  },
+  {
+    "word": "steam",
+    "phonetic": "/stiːm/",
+    "explains": "n. 蒸汽"
+  },
+  {
+    "word": "steel",
+    "phonetic": "/stiːl/",
+    "explains": "n. 钢"
+  },
+  {
+    "word": "step",
+    "phonetic": "/step/",
+    "explains": "n. 步骤　v. 走"
+  },
+  {
+    "word": "stick",
+    "phonetic": "/stɪk/",
+    "explains": "n. 棍子　v. 粘"
+  },
+  {
+    "word": "still",
+    "phonetic": "/stɪl/",
+    "explains": "adv. 仍然"
+  },
+  {
+    "word": "stomach",
+    "phonetic": "/ˈstʌmək/",
+    "explains": "n. 胃"
+  },
+  {
+    "word": "stone",
+    "phonetic": "/stəʊn/",
+    "explains": "n. 石头"
+  },
+  {
+    "word": "stop",
+    "phonetic": "/stɒp/",
+    "explains": "v. 停止　n. 车站"
+  },
+  {
+    "word": "store",
+    "phonetic": "/stɔː/",
+    "explains": "n. 商店　v. 储存"
+  },
+  {
+    "word": "storm",
+    "phonetic": "/stɔːm/",
+    "explains": "n. 暴风雨"
+  },
+  {
+    "word": "story",
+    "phonetic": "/ˈstɔːrɪ/",
+    "explains": "n. 故事"
+  },
+  {
+    "word": "straight",
+    "phonetic": "/streɪt; streɪt/",
+    "explains": "adj. 直的　adv. 直接地"
+  },
+  {
+    "word": "strange",
+    "phonetic": "/streɪn(d)ʒ/",
+    "explains": "adj. 陌生的；奇怪的"
+  },
+  {
+    "word": "strawberry",
+    "phonetic": "/ˈstrɔːb(ə)rɪ/",
+    "explains": "n. 草莓"
+  },
+  {
+    "word": "stream",
+    "phonetic": "/striːm/",
+    "explains": "n. 小溪"
+  },
+  {
+    "word": "street",
+    "phonetic": "/striːt/",
+    "explains": "n. 街道"
+  },
+  {
+    "word": "strict",
+    "phonetic": "/strɪkt/",
+    "explains": "adj. 严格的"
+  },
+  {
+    "word": "strike",
+    "phonetic": "/straɪk/",
+    "explains": "v. 打击"
+  },
+  {
+    "word": "strong",
+    "phonetic": "/strɒŋ; strɒŋ/",
+    "explains": "adj. 强壮的"
+  },
+  {
+    "word": "struggle",
+    "phonetic": "/ˈstrʌɡ(ə)l/",
+    "explains": "v. 挣扎　n. 斗争"
+  },
+  {
+    "word": "student",
+    "phonetic": "/ˈstjuːd(ə)nt; ˈst(j)uːd(ə)nt/",
+    "explains": "n. 学生"
+  },
+  {
+    "word": "study",
+    "phonetic": "/ˈstʌdɪ/",
+    "explains": "v. 学习　n. 书房"
+  },
+  {
+    "word": "stupid",
+    "phonetic": "/ˈstjuːpɪd; ˈst(j)uːpɪd/",
+    "explains": "adj. 愚蠢的"
+  },
+  {
+    "word": "style",
+    "phonetic": "/staɪl/",
+    "explains": "n. 风格"
+  },
+  {
+    "word": "subject",
+    "phonetic": "/ˈsʌbdʒɪkt/",
+    "explains": "n. 科目"
+  },
+  {
+    "word": "succeed",
+    "phonetic": "/səkˈsiːd/",
+    "explains": "v. 成功"
+  },
+  {
+    "word": "success",
+    "phonetic": "/səkˈses/",
+    "explains": "n. 成功"
+  },
+  {
+    "word": "successful",
+    "phonetic": "/səkˈsesfʊl; səkˈsesf(ə)l/",
+    "explains": "adj. 成功的"
+  },
+  {
+    "word": "such",
+    "phonetic": "/sʌtʃ/",
+    "explains": "adj. 这样的"
+  },
+  {
+    "word": "sudden",
+    "phonetic": "/ˈsʌd(ə)n/",
+    "explains": "adj. 突然的"
+  },
+  {
+    "word": "sugar",
+    "phonetic": "/ˈʃʊɡə/",
+    "explains": "n. 糖"
+  },
+  {
+    "word": "suggest",
+    "phonetic": "/səˈdʒest; səˈdʒest/",
+    "explains": "v. 建议"
+  },
+  {
+    "word": "suit",
+    "phonetic": "/suːt; sjuːt/",
+    "explains": "n. 套装　v. 适合"
+  },
+  {
+    "word": "summer",
+    "phonetic": "/ˈsʌmə/",
+    "explains": "n. 夏天"
+  },
+  {
+    "word": "sun",
+    "phonetic": "/sʌn/",
+    "explains": "n. 太阳"
+  },
+  {
+    "word": "Sunday",
+    "phonetic": "/ˈsʌndeɪ; ˈsʌndɪ/",
+    "explains": "n. 星期日"
+  },
+  {
+    "word": "sunny",
+    "phonetic": "/ˈsʌnɪ/",
+    "explains": "adj. 晴朗的"
+  },
+  {
+    "word": "supermarket",
+    "phonetic": "/ˈsuːpəˌmɑːkɪt/",
+    "explains": "n. 超市"
+  },
+  {
+    "word": "supper",
+    "phonetic": "/ˈsʌpə/",
+    "explains": "n. 晚餐"
+  },
+  {
+    "word": "supply",
+    "phonetic": "/səˈplaɪ/",
+    "explains": "v. 供应　n. 供应"
+  },
+  {
+    "word": "support",
+    "phonetic": "/səˈpɔːt/",
+    "explains": "v. 支持"
+  },
+  {
+    "word": "suppose",
+    "phonetic": "/səˈpəʊz/",
+    "explains": "v. 假设"
+  },
+  {
+    "word": "sure",
+    "phonetic": "/ʃʊə; ʃɔː/",
+    "explains": "adj. 确信的"
+  },
+  {
+    "word": "surprise",
+    "phonetic": "/səˈpraɪz/",
+    "explains": "n. 惊讶　v. 使惊讶"
+  },
+  {
+    "word": "survey",
+    "phonetic": "/ˈsɜːveɪ; səˈveɪ/",
+    "explains": "n. 调查"
+  },
+  {
+    "word": "survive",
+    "phonetic": "/səˈvaɪv/",
+    "explains": "v. 幸存"
+  },
+  {
+    "word": "sweater",
+    "phonetic": "/ˈswetə/",
+    "explains": "n. 毛衣"
+  },
+  {
+    "word": "sweep",
+    "phonetic": "/swiːp/",
+    "explains": "v. 扫"
+  },
+  {
+    "word": "sweet",
+    "phonetic": "/swiːt/",
+    "explains": "adj. 甜的　n. 糖果"
+  },
+  {
+    "word": "swim",
+    "phonetic": "/swɪm/",
+    "explains": "v. 游泳"
+  },
+  {
+    "word": "swing",
+    "phonetic": "/swɪŋ/",
+    "explains": "v. 摇摆　n. 秋千"
+  },
+  {
+    "word": "T-shirt",
+    "phonetic": "/ˈtiːʃɜːt/",
+    "explains": "n. T恤衫"
+  },
+  {
+    "word": "table",
+    "phonetic": "/ˈteɪb(ə)l/",
+    "explains": "n. 桌子"
+  },
+  {
+    "word": "table tennis",
+    "phonetic": "/ˈteɪb(ə)l ˈtenɪs/",
+    "explains": "n. 乒乓球"
+  },
+  {
+    "word": "tail",
+    "phonetic": "/teɪl/",
+    "explains": "n. 尾巴"
+  },
+  {
+    "word": "take",
+    "phonetic": "/teɪk/",
+    "explains": "v. 拿"
+  },
+  {
+    "word": "tale",
+    "phonetic": "/teɪl/",
+    "explains": "n. 故事"
+  },
+  {
+    "word": "talk",
+    "phonetic": "/tɔːk/",
+    "explains": "v. 谈话　n. 谈话"
+  },
+  {
+    "word": "tall",
+    "phonetic": "/tɔːl/",
+    "explains": "adj. 高的"
+  },
+  {
+    "word": "tank",
+    "phonetic": "/tæŋk/",
+    "explains": "n. 坦克；水箱"
+  },
+  {
+    "word": "tape",
+    "phonetic": "/teɪp/",
+    "explains": "n. 磁带"
+  },
+  {
+    "word": "task",
+    "phonetic": "/tɑːsk; tæsk/",
+    "explains": "n. 任务"
+  },
+  {
+    "word": "taste",
+    "phonetic": "/teɪst/",
+    "explains": "v. 品尝　n. 味道"
+  },
+  {
+    "word": "taxi",
+    "phonetic": "/ˈtæksɪ/",
+    "explains": "n. 出租车"
+  },
+  {
+    "word": "tea",
+    "phonetic": "/tiː/",
+    "explains": "n. 茶"
+  },
+  {
+    "word": "teach",
+    "phonetic": "/tiːtʃ/",
+    "explains": "v. 教"
+  },
+  {
+    "word": "teacher",
+    "phonetic": "/ˈtiːtʃə/",
+    "explains": "n. 老师"
+  },
+  {
+    "word": "team",
+    "phonetic": "/tiːm/",
+    "explains": "n. 队"
+  },
+  {
+    "word": "technology",
+    "phonetic": "/tekˈnɒlədʒɪ/",
+    "explains": "n. 技术"
+  },
+  {
+    "word": "telephone",
+    "phonetic": "/ˈtelɪfəʊn/",
+    "explains": "n. 电话"
+  },
+  {
+    "word": "television",
+    "phonetic": "/ˈtelɪvɪʒ(ə)n/",
+    "explains": "n. 电视"
+  },
+  {
+    "word": "tell",
+    "phonetic": "/tel/",
+    "explains": "v. 告诉"
+  },
+  {
+    "word": "temperature",
+    "phonetic": "/ˈtemprɪtʃə; ˈtemprətʃə/",
+    "explains": "n. 温度"
+  },
+  {
+    "word": "ten",
+    "phonetic": "/ten/",
+    "explains": "num. 十"
+  },
+  {
+    "word": "tennis",
+    "phonetic": "/ˈtenɪs/",
+    "explains": "n. 网球"
+  },
+  {
+    "word": "term",
+    "phonetic": "/tɜːm/",
+    "explains": "n. 学期"
+  },
+  {
+    "word": "terrible",
+    "phonetic": "/ˈterɪb(ə)l/",
+    "explains": "adj. 可怕的"
+  },
+  {
+    "word": "test",
+    "phonetic": "/test/",
+    "explains": "n. 测试"
+  },
+  {
+    "word": "text",
+    "phonetic": "/tekst/",
+    "explains": "n. 文本"
+  },
+  {
+    "word": "than",
+    "phonetic": "/ðæn; ðən/",
+    "explains": "conj. 比"
+  },
+  {
+    "word": "thank",
+    "phonetic": "/θæŋk/",
+    "explains": "v. 感谢"
+  },
+  {
+    "word": "that",
+    "phonetic": "/ðæt/",
+    "explains": "pron. 那个"
+  },
+  {
+    "word": "the",
+    "phonetic": "/ðə; ðiː/",
+    "explains": "art. 这；那"
+  },
+  {
+    "word": "theatre",
+    "phonetic": "/ˈθɪətə/",
+    "explains": "n. 剧院"
+  },
+  {
+    "word": "their",
+    "phonetic": "/ðeə/",
+    "explains": "pron. 他们的"
+  },
+  {
+    "word": "them",
+    "phonetic": "/ðem; əm/",
+    "explains": "pron. 他们"
+  },
+  {
+    "word": "themselves",
+    "phonetic": "/ðəmˈselvz/",
+    "explains": "pron. 他们自己"
+  },
+  {
+    "word": "then",
+    "phonetic": "/ðen/",
+    "explains": "adv. 然后"
+  },
+  {
+    "word": "there",
+    "phonetic": "/ðeə/",
+    "explains": "adv. 那里"
+  },
+  {
+    "word": "these",
+    "phonetic": "/ðiːz/",
+    "explains": "pron. 这些"
+  },
+  {
+    "word": "they",
+    "phonetic": "/ðeɪ/",
+    "explains": "pron. 他们"
+  },
+  {
+    "word": "thick",
+    "phonetic": "/θɪk/",
+    "explains": "adj. 厚的"
+  },
+  {
+    "word": "thin",
+    "phonetic": "/θɪn/",
+    "explains": "adj. 薄的；瘦的"
+  },
+  {
+    "word": "thing",
+    "phonetic": "/θɪŋ/",
+    "explains": "n. 东西"
+  },
+  {
+    "word": "think",
+    "phonetic": "/θɪŋk/",
+    "explains": "v. 思考"
+  },
+  {
+    "word": "third",
+    "phonetic": "/θɜːd/",
+    "explains": "num. 第三"
+  },
+  {
+    "word": "thirsty",
+    "phonetic": "/ˈθɜːstɪ/",
+    "explains": "adj. 口渴的"
+  },
+  {
+    "word": "thirteen",
+    "phonetic": "/ˌθɜːˈtiːn; ˈθɜːtiːn/",
+    "explains": "num. 十三"
+  },
+  {
+    "word": "thirty",
+    "phonetic": "/ˈθɜːtɪ/",
+    "explains": "num. 三十"
+  },
+  {
+    "word": "this",
+    "phonetic": "/ðɪs/",
+    "explains": "pron. 这个"
+  },
+  {
+    "word": "though",
+    "phonetic": "/ðəʊ/",
+    "explains": "conj. 虽然"
+  },
+  {
+    "word": "thought",
+    "phonetic": "/θɔːt/",
+    "explains": "n. 想法"
+  },
+  {
+    "word": "thousand",
+    "phonetic": "/ˈθaʊzənd/",
+    "explains": "num. 千"
+  },
+  {
+    "word": "three",
+    "phonetic": "/θriː/",
+    "explains": "num. 三"
+  },
+  {
+    "word": "throat",
+    "phonetic": "/θrəʊt/",
+    "explains": "n. 喉咙"
+  },
+  {
+    "word": "through",
+    "phonetic": "/θruː/",
+    "explains": "prep. 穿过"
+  },
+  {
+    "word": "throw",
+    "phonetic": "/θrəʊ/",
+    "explains": "v. 扔"
+  },
+  {
+    "word": "Thursday",
+    "phonetic": "/ˈθɜːzdeɪ; ˈθɜːzdɪ/",
+    "explains": "n. 星期四"
+  },
+  {
+    "word": "ticket",
+    "phonetic": "/ˈtɪkɪt/",
+    "explains": "n. 票"
+  },
+  {
+    "word": "tie",
+    "phonetic": "/taɪ/",
+    "explains": "v. 系　n. 领带"
+  },
+  {
+    "word": "tiger",
+    "phonetic": "/ˈtaɪɡə/",
+    "explains": "n. 老虎"
+  },
+  {
+    "word": "tight",
+    "phonetic": "/taɪt/",
+    "explains": "adj. 紧的"
+  },
+  {
+    "word": "till",
+    "phonetic": "/tɪl/",
+    "explains": "prep. 直到"
+  },
+  {
+    "word": "time",
+    "phonetic": "/taɪm/",
+    "explains": "n. 时间；次数"
+  },
+  {
+    "word": "tiny",
+    "phonetic": "/ˈtaɪnɪ/",
+    "explains": "adj. 微小的"
+  },
+  {
+    "word": "tip",
+    "phonetic": "/tɪp/",
+    "explains": "n. 尖端；小费"
+  },
+  {
+    "word": "tired",
+    "phonetic": "/ˈtaɪəd/",
+    "explains": "adj. 疲倦的"
+  },
+  {
+    "word": "to",
+    "phonetic": "/tuː; tə/",
+    "explains": "prep. 到"
+  },
+  {
+    "word": "today",
+    "phonetic": "/təˈdeɪ/",
+    "explains": "n. 今天"
+  },
+  {
+    "word": "toe",
+    "phonetic": "/təʊ/",
+    "explains": "n. 脚趾"
+  },
+  {
+    "word": "tofu",
+    "phonetic": "/ˈtəʊfuː/",
+    "explains": "n. 豆腐"
+  },
+  {
+    "word": "toilet",
+    "phonetic": "/ˈtɔɪlɪt/",
+    "explains": "n. 厕所"
+  },
+  {
+    "word": "tomato",
+    "phonetic": "/təˈmɑːtəʊ; təˈmeɪtəʊ/",
+    "explains": "n. 西红柿"
+  },
+  {
+    "word": "tomb",
+    "phonetic": "/tuːm/",
+    "explains": "n. 坟墓"
+  },
+  {
+    "word": "tomorrow",
+    "phonetic": "/təˈmɒrəʊ/",
+    "explains": "n. 明天"
+  },
+  {
+    "word": "ton",
+    "phonetic": "/tʌn/",
+    "explains": "n. 吨"
+  },
+  {
+    "word": "tonight",
+    "phonetic": "/təˈnaɪt/",
+    "explains": "n. 今晚"
+  },
+  {
+    "word": "too",
+    "phonetic": "/tuː/",
+    "explains": "adv. 也；太"
+  },
+  {
+    "word": "tool",
+    "phonetic": "/tuːl/",
+    "explains": "n. 工具"
+  },
+  {
+    "word": "tooth",
+    "phonetic": "/tuːθ/",
+    "explains": "n. 牙齿"
+  },
+  {
+    "word": "toothbrush",
+    "phonetic": "/ˈtuːθbrʌʃ/",
+    "explains": "n. 牙刷"
+  },
+  {
+    "word": "toothpaste",
+    "phonetic": "/ˈtuːθpeɪst/",
+    "explains": "n. 牙膏"
+  },
+  {
+    "word": "top",
+    "phonetic": "/tɒp/",
+    "explains": "n. 顶部"
+  },
+  {
+    "word": "topic",
+    "phonetic": "/ˈtɒpɪk/",
+    "explains": "n. 话题"
+  },
+  {
+    "word": "total",
+    "phonetic": "/ˈtəʊt(ə)l/",
+    "explains": "adj. 总计的"
+  },
+  {
+    "word": "touch",
+    "phonetic": "/tʌtʃ/",
+    "explains": "v. 触摸"
+  },
+  {
+    "word": "tour",
+    "phonetic": "/tʊə/",
+    "explains": "n. 旅行"
+  },
+  {
+    "word": "tourist",
+    "phonetic": "/ˈtʊərɪst/",
+    "explains": "n. 游客"
+  },
+  {
+    "word": "toward",
+    "phonetic": "/təˈwɔːd/",
+    "explains": "prep. 朝向"
+  },
+  {
+    "word": "towel",
+    "phonetic": "/ˈtaʊəl/",
+    "explains": "n. 毛巾"
+  },
+  {
+    "word": "tower",
+    "phonetic": "/ˈtaʊə/",
+    "explains": "n. 塔"
+  },
+  {
+    "word": "town",
+    "phonetic": "/taʊn/",
+    "explains": "n. 城镇"
+  },
+  {
+    "word": "toy",
+    "phonetic": "/tɔɪ/",
+    "explains": "n. 玩具"
+  },
+  {
+    "word": "traffic",
+    "phonetic": "/ˈtræfɪk/",
+    "explains": "n. 交通"
+  },
+  {
+    "word": "train",
+    "phonetic": "/treɪn/",
+    "explains": "n. 火车　v. 训练"
+  },
+  {
+    "word": "training",
+    "phonetic": "/ˈtreɪnɪŋ/",
+    "explains": "n. 训练"
+  },
+  {
+    "word": "translate",
+    "phonetic": "/trænsˈleɪt; trænzˈleɪt/",
+    "explains": "v. 翻译"
+  },
+  {
+    "word": "transport",
+    "phonetic": "/ˈtrænspɔːt; trænsˈpɔːt/",
+    "explains": "n. 交通　v. 运输"
+  },
+  {
+    "word": "travel",
+    "phonetic": "/ˈtræv(ə)l/",
+    "explains": "v. 旅行"
+  },
+  {
+    "word": "tree",
+    "phonetic": "/triː/",
+    "explains": "n. 树"
+  },
+  {
+    "word": "trick",
+    "phonetic": "/trɪk/",
+    "explains": "n. 戏法；诡计"
+  },
+  {
+    "word": "trip",
+    "phonetic": "/trɪp/",
+    "explains": "n. 旅行"
+  },
+  {
+    "word": "trouble",
+    "phonetic": "/ˈtrʌb(ə)l/",
+    "explains": "n. 麻烦"
+  },
+  {
+    "word": "trousers",
+    "phonetic": "/ˈtraʊzəz/",
+    "explains": "n. 裤子"
+  },
+  {
+    "word": "truck",
+    "phonetic": "/trʌk/",
+    "explains": "n. 卡车"
+  },
+  {
+    "word": "true",
+    "phonetic": "/truː/",
+    "explains": "adj. 真实的"
+  },
+  {
+    "word": "trust",
+    "phonetic": "/trʌst/",
+    "explains": "v. 信任"
+  },
+  {
+    "word": "truth",
+    "phonetic": "/truːθ/",
+    "explains": "n. 真相"
+  },
+  {
+    "word": "try",
+    "phonetic": "/traɪ/",
+    "explains": "v. 尝试"
+  },
+  {
+    "word": "Tuesday",
+    "phonetic": "/ˈtjuːzdeɪ; ˈtjuːzdɪ/",
+    "explains": "n. 星期二"
+  },
+  {
+    "word": "turn",
+    "phonetic": "/tɜːn/",
+    "explains": "v. 转　n. 轮流"
+  },
+  {
+    "word": "twelve",
+    "phonetic": "/twelv/",
+    "explains": "num. 十二"
+  },
+  {
+    "word": "twenty",
+    "phonetic": "/ˈtwentɪ/",
+    "explains": "num. 二十"
+  },
+  {
+    "word": "twice",
+    "phonetic": "/twaɪs/",
+    "explains": "adv. 两次"
+  },
+  {
+    "word": "twin",
+    "phonetic": "/twɪn/",
+    "explains": "n. 双胞胎"
+  },
+  {
+    "word": "two",
+    "phonetic": "/tuː/",
+    "explains": "num. 二"
+  },
+  {
+    "word": "type",
+    "phonetic": "/taɪp/",
+    "explains": "v. 打字　n. 类型"
+  },
+  {
+    "word": "typewriter",
+    "phonetic": "/ˈtaɪpraɪtə/",
+    "explains": "n. 打字机"
+  },
+  {
+    "word": "tyre",
+    "phonetic": "/ˈtaɪə/",
+    "explains": "n. 轮胎"
+  },
+  {
+    "word": "ugly",
+    "phonetic": "/ˈʌɡlɪ/",
+    "explains": "adj. 丑陋的"
+  },
+  {
+    "word": "umbrella",
+    "phonetic": "/ʌmˈbrelə/",
+    "explains": "n. 雨伞"
+  },
+  {
+    "word": "uncle",
+    "phonetic": "/ˈʌŋk(ə)l/",
+    "explains": "n. 叔叔"
+  },
+  {
+    "word": "under",
+    "phonetic": "/ˈʌndə/",
+    "explains": "prep. 在……下面"
+  },
+  {
+    "word": "understand",
+    "phonetic": "/ˌʌndəˈstænd/",
+    "explains": "v. 理解"
+  },
+  {
+    "word": "university",
+    "phonetic": "/ˌjuːnɪˈvɜːsɪtɪ/",
+    "explains": "n. 大学"
+  },
+  {
+    "word": "unless",
+    "phonetic": "/ʌnˈles/",
+    "explains": "conj. 除非"
+  },
+  {
+    "word": "until",
+    "phonetic": "/ʌnˈtɪl/",
+    "explains": "prep. 直到"
+  },
+  {
+    "word": "up",
+    "phonetic": "/ʌp/",
+    "explains": "adv. 向上"
+  },
+  {
+    "word": "upload",
+    "phonetic": "/ˌʌpˈləʊd/",
+    "explains": "v. 上传"
+  },
+  {
+    "word": "upon",
+    "phonetic": "/əˈpɒn/",
+    "explains": "prep. 在……上"
+  },
+  {
+    "word": "upstairs",
+    "phonetic": "/ˌʌpˈsteəz/",
+    "explains": "adv. 楼上"
+  },
+  {
+    "word": "us",
+    "phonetic": "/ʌs; əs/",
+    "explains": "pron. 我们"
+  },
+  {
+    "word": "use",
+    "phonetic": "/juːz/",
+    "explains": "v. 使用　n. 使用"
+  },
+  {
+    "word": "used",
+    "phonetic": "/juːzd/",
+    "explains": "adj. 习惯的"
+  },
+  {
+    "word": "useful",
+    "phonetic": "/ˈjuːsfʊl; ˈjuːsf(ə)l/",
+    "explains": "adj. 有用的"
+  },
+  {
+    "word": "usual",
+    "phonetic": "/ˈjuːʒʊəl/",
+    "explains": "adj. 通常的"
+  },
+  {
+    "word": "usually",
+    "phonetic": "/ˈjuːʒʊəlɪ/",
+    "explains": "adv. 通常"
+  },
+  {
+    "word": "vacation",
+    "phonetic": "/vəˈkeɪʃ(ə)n; veɪˈkeɪʃ(ə)n/",
+    "explains": "n. 假期"
+  },
+  {
+    "word": "valuable",
+    "phonetic": "/ˈvæljʊəb(ə)l/",
+    "explains": "adj. 贵重的"
+  },
+  {
+    "word": "value",
+    "phonetic": "/ˈvæljuː/",
+    "explains": "n. 价值"
+  },
+  {
+    "word": "vegetable",
+    "phonetic": "/ˈvedʒ(ɪ)təb(ə)l/",
+    "explains": "n. 蔬菜"
+  },
+  {
+    "word": "very",
+    "phonetic": "/ˈverɪ/",
+    "explains": "adv. 非常"
+  },
+  {
+    "word": "victory",
+    "phonetic": "/ˈvɪkt(ə)rɪ/",
+    "explains": "n. 胜利"
+  },
+  {
+    "word": "video",
+    "phonetic": "/ˈvɪdɪəʊ/",
+    "explains": "n. 录像"
+  },
+  {
+    "word": "village",
+    "phonetic": "/ˈvɪlɪdʒ/",
+    "explains": "n. 村庄"
+  },
+  {
+    "word": "violence",
+    "phonetic": "/ˈvaɪələns/",
+    "explains": "n. 暴力"
+  },
+  {
+    "word": "violin",
+    "phonetic": "/ˌvaɪəˈlɪn/",
+    "explains": "n. 小提琴"
+  },
+  {
+    "word": "visit",
+    "phonetic": "/ˈvɪzɪt/",
+    "explains": "v. 访问"
+  },
+  {
+    "word": "visitor",
+    "phonetic": "/ˈvɪzɪtə/",
+    "explains": "n. 访客"
+  },
+  {
+    "word": "voice",
+    "phonetic": "/vɔɪs/",
+    "explains": "n. 声音"
+  },
+  {
+    "word": "volleyball",
+    "phonetic": "/ˈvɒlɪbɔːl/",
+    "explains": "n. 排球"
+  },
+  {
+    "word": "wait",
+    "phonetic": "/weɪt/",
+    "explains": "v. 等待"
+  },
+  {
+    "word": "waiter",
+    "phonetic": "/ˈweɪtə/",
+    "explains": "n. 男服务员"
+  },
+  {
+    "word": "wake",
+    "phonetic": "/weɪk/",
+    "explains": "v. 醒来"
+  },
+  {
+    "word": "walk",
+    "phonetic": "/wɔːk/",
+    "explains": "v. 走　n. 散步"
+  },
+  {
+    "word": "wall",
+    "phonetic": "/wɔːl/",
+    "explains": "n. 墙"
+  },
+  {
+    "word": "wallet",
+    "phonetic": "/ˈwɒlɪt/",
+    "explains": "n. 钱包"
+  },
+  {
+    "word": "want",
+    "phonetic": "/wɒnt/",
+    "explains": "v. 想要"
+  },
+  {
+    "word": "war",
+    "phonetic": "/wɔː/",
+    "explains": "n. 战争"
+  },
+  {
+    "word": "warm",
+    "phonetic": "/wɔːm/",
+    "explains": "adj. 温暖的"
+  },
+  {
+    "word": "warn",
+    "phonetic": "/wɔːn/",
+    "explains": "v. 警告"
+  },
+  {
+    "word": "wash",
+    "phonetic": "/wɒʃ/",
+    "explains": "v. 洗"
+  },
+  {
+    "word": "waste",
+    "phonetic": "/weɪst/",
+    "explains": "n. 浪费　v. 浪费"
+  },
+  {
+    "word": "watch",
+    "phonetic": "/wɒtʃ/",
+    "explains": "v. 观看　n. 手表"
+  },
+  {
+    "word": "water",
+    "phonetic": "/ˈwɔːtə/",
+    "explains": "n. 水　v. 浇水"
+  },
+  {
+    "word": "watermelon",
+    "phonetic": "/ˈwɔːtəˌmelən/",
+    "explains": "n. 西瓜"
+  },
+  {
+    "word": "wave",
+    "phonetic": "/weɪv/",
+    "explains": "v. 挥手　n. 波浪"
+  },
+  {
+    "word": "way",
+    "phonetic": "/weɪ/",
+    "explains": "n. 路；方法"
+  },
+  {
+    "word": "we",
+    "phonetic": "/wiː; wɪ/",
+    "explains": "pron. 我们"
+  },
+  {
+    "word": "weak",
+    "phonetic": "/wiːk/",
+    "explains": "adj. 弱的"
+  },
+  {
+    "word": "wealth",
+    "phonetic": "/welθ/",
+    "explains": "n. 财富"
+  },
+  {
+    "word": "wear",
+    "phonetic": "/weə/",
+    "explains": "v. 穿"
+  },
+  {
+    "word": "weather",
+    "phonetic": "/ˈweðə/",
+    "explains": "n. 天气"
+  },
+  {
+    "word": "website",
+    "phonetic": "/ˈwebsaɪt/",
+    "explains": "n. 网站"
+  },
+  {
+    "word": "Wednesday",
+    "phonetic": "/ˈwenzdeɪ; ˈwenzdɪ/",
+    "explains": "n. 星期三"
+  },
+  {
+    "word": "week",
+    "phonetic": "/wiːk/",
+    "explains": "n. 周"
+  },
+  {
+    "word": "weekday",
+    "phonetic": "/ˈwiːkdeɪ/",
+    "explains": "n. 工作日"
+  },
+  {
+    "word": "weekend",
+    "phonetic": "/ˌwiːkˈend; ˈwiːkend/",
+    "explains": "n. 周末"
+  },
+  {
+    "word": "weigh",
+    "phonetic": "/weɪ/",
+    "explains": "v. 称重"
+  },
+  {
+    "word": "weight",
+    "phonetic": "/weɪt/",
+    "explains": "n. 重量"
+  },
+  {
+    "word": "welcome",
+    "phonetic": "/ˈwelkəm/",
+    "explains": "adj. 受欢迎的　v. 欢迎"
+  },
+  {
+    "word": "well",
+    "phonetic": "/wel/",
+    "explains": "adv. 好　adj. 健康的"
+  },
+  {
+    "word": "west",
+    "phonetic": "/west/",
+    "explains": "n. 西方"
+  },
+  {
+    "word": "western",
+    "phonetic": "/ˈwest(ə)n/",
+    "explains": "adj. 西方的"
+  },
+  {
+    "word": "wet",
+    "phonetic": "/wet/",
+    "explains": "adj. 湿的"
+  },
+  {
+    "word": "what",
+    "phonetic": "/wɒt; wɒt/",
+    "explains": "pron. 什么"
+  },
+  {
+    "word": "whatever",
+    "phonetic": "/wɒtˈevə/",
+    "explains": "pron. 无论什么"
+  },
+  {
+    "word": "wheat",
+    "phonetic": "/wiːt/",
+    "explains": "n. 小麦"
+  },
+  {
+    "word": "wheel",
+    "phonetic": "/wiːl/",
+    "explains": "n. 轮子"
+  },
+  {
+    "word": "when",
+    "phonetic": "/wen/",
+    "explains": "adv. 何时　conj. 当……时"
+  },
+  {
+    "word": "where",
+    "phonetic": "/weə/",
+    "explains": "adv. 哪里"
+  },
+  {
+    "word": "whether",
+    "phonetic": "/ˈweðə/",
+    "explains": "conj. 是否"
+  },
+  {
+    "word": "which",
+    "phonetic": "/wɪtʃ/",
+    "explains": "pron. 哪个"
+  },
+  {
+    "word": "while",
+    "phonetic": "/waɪl/",
+    "explains": "conj. 当……时"
+  },
+  {
+    "word": "white",
+    "phonetic": "/waɪt/",
+    "explains": "adj. 白色的"
+  },
+  {
+    "word": "who",
+    "phonetic": "/huː/",
+    "explains": "pron. 谁"
+  },
+  {
+    "word": "whole",
+    "phonetic": "/həʊl/",
+    "explains": "adj. 整个的"
+  },
+  {
+    "word": "whom",
+    "phonetic": "/huːm/",
+    "explains": "pron. 谁（宾格）"
+  },
+  {
+    "word": "whose",
+    "phonetic": "/huːz/",
+    "explains": "pron. 谁的"
+  },
+  {
+    "word": "why",
+    "phonetic": "/waɪ/",
+    "explains": "adv. 为什么"
+  },
+  {
+    "word": "wide",
+    "phonetic": "/waɪd/",
+    "explains": "adj. 宽的"
+  },
+  {
+    "word": "wife",
+    "phonetic": "/waɪf/",
+    "explains": "n. 妻子"
+  },
+  {
+    "word": "wild",
+    "phonetic": "/waɪld/",
+    "explains": "adj. 野生的"
+  },
+  {
+    "word": "will",
+    "phonetic": "/wɪl/",
+    "explains": "v. 将　n. 意志；遗嘱"
+  },
+  {
+    "word": "win",
+    "phonetic": "/wɪn/",
+    "explains": "v. 赢"
+  },
+  {
+    "word": "wind",
+    "phonetic": "/wɪnd/",
+    "explains": "n. 风"
+  },
+  {
+    "word": "window",
+    "phonetic": "/ˈwɪndəʊ/",
+    "explains": "n. 窗户"
+  },
+  {
+    "word": "windy",
+    "phonetic": "/ˈwɪndɪ/",
+    "explains": "adj. 有风的"
+  },
+  {
+    "word": "wine",
+    "phonetic": "/waɪn/",
+    "explains": "n. 酒"
+  },
+  {
+    "word": "wing",
+    "phonetic": "/wɪŋ/",
+    "explains": "n. 翅膀"
+  },
+  {
+    "word": "winner",
+    "phonetic": "/ˈwɪnə/",
+    "explains": "n. 获胜者"
+  },
+  {
+    "word": "winter",
+    "phonetic": "/ˈwɪntə/",
+    "explains": "n. 冬天"
+  },
+  {
+    "word": "wise",
+    "phonetic": "/waɪz/",
+    "explains": "adj. 聪明的"
+  },
+  {
+    "word": "wish",
+    "phonetic": "/wɪʃ/",
+    "explains": "v. 希望　n. 愿望"
+  },
+  {
+    "word": "with",
+    "phonetic": "/wɪð/",
+    "explains": "prep. 和；用"
+  },
+  {
+    "word": "within",
+    "phonetic": "/wɪˈðɪn/",
+    "explains": "prep. 在……之内"
+  },
+  {
+    "word": "without",
+    "phonetic": "/wɪˈðaʊt/",
+    "explains": "prep. 没有"
+  },
+  {
+    "word": "woman",
+    "phonetic": "/ˈwʊmən/",
+    "explains": "n. 女人"
+  },
+  {
+    "word": "wonder",
+    "phonetic": "/ˈwʌndə/",
+    "explains": "v. 想知道　n. 惊奇"
+  },
+  {
+    "word": "wonderful",
+    "phonetic": "/ˈwʌndəfʊl; ˈwʌndəf(ə)l/",
+    "explains": "adj. 极好的"
+  },
+  {
+    "word": "wood",
+    "phonetic": "/wʊd/",
+    "explains": "n. 木头"
+  },
+  {
+    "word": "wooden",
+    "phonetic": "/ˈwʊd(ə)n/",
+    "explains": "adj. 木制的"
+  },
+  {
+    "word": "word",
+    "phonetic": "/wɜːd/",
+    "explains": "n. 单词"
+  },
+  {
+    "word": "work",
+    "phonetic": "/wɜːk/",
+    "explains": "v. 工作　n. 工作"
+  },
+  {
+    "word": "worker",
+    "phonetic": "/ˈwɜːkə/",
+    "explains": "n. 工人"
+  },
+  {
+    "word": "world",
+    "phonetic": "/wɜːld/",
+    "explains": "n. 世界"
+  },
+  {
+    "word": "worry",
+    "phonetic": "/ˈwʌrɪ/",
+    "explains": "v. 担心"
+  },
+  {
+    "word": "worse",
+    "phonetic": "/wɜːs/",
+    "explains": "adj. 更坏的"
+  },
+  {
+    "word": "worst",
+    "phonetic": "/wɜːst/",
+    "explains": "adj. 最坏的"
+  },
+  {
+    "word": "worth",
+    "phonetic": "/wɜːθ/",
+    "explains": "adj. 值得的"
+  },
+  {
+    "word": "would",
+    "phonetic": "/wʊd; wəd/",
+    "explains": "v. 将"
+  },
+  {
+    "word": "wound",
+    "phonetic": "/wuːnd/",
+    "explains": "n. 伤口"
+  },
+  {
+    "word": "write",
+    "phonetic": "/raɪt/",
+    "explains": "v. 写"
+  },
+  {
+    "word": "writer",
+    "phonetic": "/ˈraɪtə/",
+    "explains": "n. 作家"
+  },
+  {
+    "word": "wrong",
+    "phonetic": "/rɒŋ/",
+    "explains": "adj. 错误的"
+  },
+  {
+    "word": "yard",
+    "phonetic": "/jɑːd/",
+    "explains": "n. 院子"
+  },
+  {
+    "word": "year",
+    "phonetic": "/jɪə; jɜː/",
+    "explains": "n. 年"
+  },
+  {
+    "word": "yellow",
+    "phonetic": "/ˈjeləʊ/",
+    "explains": "adj. 黄色的"
+  },
+  {
+    "word": "yes",
+    "phonetic": "/jes/",
+    "explains": "adv. 是"
+  },
+  {
+    "word": "yesterday",
+    "phonetic": "/ˈjestədeɪ; ˈjestədɪ/",
+    "explains": "n. 昨天"
+  },
+  {
+    "word": "yet",
+    "phonetic": "/jet/",
+    "explains": "adv. 还"
+  },
+  {
+    "word": "you",
+    "phonetic": "/juː; jʊ/",
+    "explains": "pron. 你"
+  },
+  {
+    "word": "young",
+    "phonetic": "/jʌŋ/",
+    "explains": "adj. 年轻的"
+  },
+  {
+    "word": "your",
+    "phonetic": "/jɔː; jʊə/",
+    "explains": "pron. 你的"
+  },
+  {
+    "word": "yours",
+    "phonetic": "/jɔːz; jʊəz/",
+    "explains": "pron. 你的"
+  },
+  {
+    "word": "yourself",
+    "phonetic": "/jɔːˈself; jʊəˈself/",
+    "explains": "pron. 你自己"
+  },
+  {
+    "word": "zero",
+    "phonetic": "/ˈzɪərəʊ/",
+    "explains": "num. 零"
+  },
+  {
+    "word": "zoo",
+    "phonetic": "/zuː/",
+    "explains": "n. 动物园"
+  }
+]

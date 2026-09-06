@@ -9,6 +9,8 @@ import {inferItemType} from '@/utils/text-utils';
 
 // 词库类型定义
 export type WordBankType =
+  | 'zhongkao'  // 中考词汇
+  | 'gaokao'    // 高考词汇
   | 'cet4'      // 英语四级
   | 'cet6'      // 英语六级
   | 'kaogong'   // 考公英语
@@ -29,6 +31,7 @@ export type WordBankType =
   | 'common-phrases' // 常用短语短句
   | 'jlpt-n5'        // 日语 JLPT N5
   | 'jlpt-n4'        // 日语 JLPT N4
+  | 'jlpt-n3'        // 日语 JLPT N3
   | 'ru-a1'          // 俄语 CEFR A1
   | 'ru-a2'          // 俄语 CEFR A2
   | 'es-a1'          // 西班牙语 CEFR A1
@@ -65,32 +68,35 @@ export const DEFAULT_STRATEGY: LoadStrategy = {
 
 // 词库信息列表（从本地 wordbanks 目录加载）
 export const WORDBANK_LIST: WordBankInfo[] = [
-  { id: 'cet4', name: '四级词汇', description: '大学英语四级核心词汇', wordCount: 0 },
-  { id: 'cet6', name: '六级词汇', description: '大学英语六级核心词汇', wordCount: 0 },
-  { id: 'bec', name: '商务英语', description: '商务英语考试核心词汇', wordCount: 0 },
-  { id: 'gmat', name: 'GMAT词汇', description: 'GMAT考试核心词汇', wordCount: 0 },
-  { id: 'gre', name: 'GRE词汇', description: 'GRE考试核心词汇', wordCount: 0 },
-  { id: 'ielts', name: '雅思词汇', description: '雅思考试核心词汇', wordCount: 0 },
-  { id: 'kaogong', name: '考公词汇', description: '公务员考试英语词汇', wordCount: 0 },
-  { id: 'kaoyan', name: '考研词汇', description: '研究生入学考试核心词汇', wordCount: 0 },
-  { id: 'level4', name: '专业四级', description: '英语专业四级核心词汇', wordCount: 0 },
-  { id: 'level8', name: '专业八级', description: '英语专业八级核心词汇', wordCount: 0 },
-  { id: 'sat', name: 'SAT词汇', description: 'SAT考试核心词汇', wordCount: 0 },
-  { id: 'toefl', name: '托福词汇', description: '托福考试核心词汇', wordCount: 0 },
-  { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 0 },
-  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 452 },
+  { id: 'zhongkao', name: '中考词汇', description: '初中课标核心词汇（中考）', wordCount: 1780 },
+  { id: 'gaokao', name: '高考词汇', description: '高中课标 3500 词汇（高考）', wordCount: 3746 },
+  { id: 'cet4', name: '四级词汇', description: '大学英语四级核心词汇', wordCount: 3739 },
+  { id: 'cet6', name: '六级词汇', description: '大学英语六级核心词汇', wordCount: 2078 },
+  { id: 'bec', name: '商务英语', description: '商务英语考试核心词汇', wordCount: 2825 },
+  { id: 'gmat', name: 'GMAT词汇', description: 'GMAT考试核心词汇', wordCount: 3254 },
+  { id: 'gre', name: 'GRE词汇', description: 'GRE考试核心词汇', wordCount: 7199 },
+  { id: 'ielts', name: '雅思词汇', description: '雅思考试核心词汇', wordCount: 3427 },
+  { id: 'kaogong', name: '考公词汇', description: '公务员考试英语词汇', wordCount: 313 },
+  { id: 'kaoyan', name: '考研词汇', description: '研究生入学考试核心词汇', wordCount: 4533 },
+  { id: 'level4', name: '专业四级', description: '英语专业四级核心词汇', wordCount: 4025 },
+  { id: 'level8', name: '专业八级', description: '英语专业八级核心词汇', wordCount: 12197 },
+  { id: 'sat', name: 'SAT词汇', description: 'SAT考试核心词汇', wordCount: 4423 },
+  { id: 'toefl', name: '托福词汇', description: '托福考试核心词汇', wordCount: 9213 },
+  { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 297 },
+  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568 },
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317 },
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277 },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
   { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 184 },
-  { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 0 },
-  { id: 'jlpt-n4', name: 'JLPT N4', description: '日本语能力测试 N4 级核心词汇（日语）', wordCount: 0 },
-  { id: 'ru-a1', name: '俄语 A1', description: '俄语 CEFR A1 级核心词汇（俄语）', wordCount: 0 },
-  { id: 'ru-a2', name: '俄语 A2', description: '俄语 CEFR A2 级核心词汇（俄语）', wordCount: 0 },
-  { id: 'es-a1', name: '西语 A1', description: '西班牙语 CEFR A1 级核心词汇（西班牙语）', wordCount: 0 },
-  { id: 'es-a2', name: '西语 A2', description: '西班牙语 CEFR A2 级核心词汇（西班牙语）', wordCount: 0 },
-  { id: 'fr-a1', name: '法语 A1', description: '法语 CEFR A1 级核心词汇（法语）', wordCount: 0 },
-  { id: 'fr-a2', name: '法语 A2', description: '法语 CEFR A2 级核心词汇（法语）', wordCount: 0 },
+  { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 700 },
+  { id: 'jlpt-n4', name: 'JLPT N4', description: '日本语能力测试 N4 级核心词汇（日语）', wordCount: 1169 },
+  { id: 'jlpt-n3', name: 'JLPT N3', description: '日本语能力测试 N3 级核心词汇（日语）', wordCount: 1441 },
+  { id: 'ru-a1', name: '俄语 A1', description: '俄语 CEFR A1 级核心词汇（俄语）', wordCount: 471 },
+  { id: 'ru-a2', name: '俄语 A2', description: '俄语 CEFR A2 级核心词汇（俄语）', wordCount: 303 },
+  { id: 'es-a1', name: '西语 A1', description: '西班牙语 CEFR A1 级核心词汇（西班牙语）', wordCount: 391 },
+  { id: 'es-a2', name: '西语 A2', description: '西班牙语 CEFR A2 级核心词汇（西班牙语）', wordCount: 749 },
+  { id: 'fr-a1', name: '法语 A1', description: '法语 CEFR A1 级核心词汇（法语）', wordCount: 514 },
+  { id: 'fr-a2', name: '法语 A2', description: '法语 CEFR A2 级核心词汇（法语）', wordCount: 799 },
 ];
 
 // 远程词库 CDN（完整词库不进 public/，超大体量词库走远程按需下载；
@@ -105,7 +111,7 @@ const REMOTE_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowly
 // 允许走远程兜底加载的类型（本地 JSON 也在 public/ 中，仅当本地缺失时才发远程请求；
 // 控制请求面，避免对每个缺失词库都盲目打 CDN）
 const REMOTE_ENABLED_TYPES = new Set<WordBankType>([
-  'jlpt-n4', 'jlpt-n5', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
+  'jlpt-n3', 'jlpt-n4', 'jlpt-n5', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
 ]);
 
 // 缓存管理
