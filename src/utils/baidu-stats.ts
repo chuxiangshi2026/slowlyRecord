@@ -84,10 +84,25 @@ function getInstallId(): string {
 }
 
 /**
+ * 读取插件版本：优先取构建产物根目录 plugin.json 的 version（uTools 构建含此文件，
+ * 发版前只需改 public/plugin.json 一处）；Electron/Web 构建无此文件时回退到编译期常量
+ */
+async function getPluginVersion(): Promise<string> {
+  try {
+    const res = await fetch('plugin.json');
+    if (res.ok) {
+      const json = await res.json();
+      if (json?.version) return json.version;
+    }
+  } catch { /* 无 plugin.json 的环境忽略 */ }
+  return APP_VERSION;
+}
+
+/**
  * 上报应用启动维度：平台_版本（事件 label）与匿名安装 ID
  * 在统计脚本加载成功后调用一次
  */
-function reportAppLaunch(): void {
+async function reportAppLaunch(): Promise<void> {
   if (!shouldEnableStats() || !window._hmt) return;
   let platform = 'web';
   let clientVersion = '';
@@ -100,14 +115,15 @@ function reportAppLaunch(): void {
       clientVersion = (window as any).utools.getAppVersion?.() || '';
     }
   } catch { /* 忽略 */ }
-  const label = clientVersion ? `${platform}_${APP_VERSION}_u${clientVersion}` : `${platform}_${APP_VERSION}`;
+  const appVersion = await getPluginVersion();
+  const label = clientVersion ? `${platform}_${appVersion}_u${clientVersion}` : `${platform}_${appVersion}`;
   window._hmt.push(['_trackEvent', 'app', 'launch', label]);
   window._hmt.push(['_trackEvent', 'app', 'install', getInstallId()]);
   // 「事件分析」报告 2024 年起为商业版付费功能，免费版改用虚拟页面路径上报，
   // 在「访问分析 → 受访页面」中按 /pv/ 前缀路径查看
   window._hmt.push(['_trackPageview', `/pv/app/launch/${label}`]);
   window._hmt.push(['_trackPageview', `/pv/app/install/${getInstallId()}`]);
-  console.log('[百度统计] 上报启动维度:', platform, APP_VERSION);
+  console.log('[百度统计] 上报启动维度:', platform, appVersion);
 }
 
 /**
@@ -163,7 +179,7 @@ function loadBaiduStatsScript(): Promise<boolean> {
         console.log('[百度统计] _hmt 已就绪，当前队列:', window._hmt);
       }
       // 上报平台/版本/匿名安装 ID 维度，用于区分真实用户与自己的测试量
-      reportAppLaunch();
+      void reportAppLaunch();
       resolve(true);
     };
 

@@ -1,7 +1,7 @@
 {
   "pluginName": "wordBook",
   "description": "慢记 - 基于艾宾浩斯遗忘曲线的多场景记忆训练工具，支持单词、听写、数字、文本、快捷键、音标、知识库等多元记忆与翻译",
-  "version": "1.0.12",
+  "version": "1.1.17",
   "main": "index.html",
   "preload": "preload/services.js",
   "logo": "logo.png",
