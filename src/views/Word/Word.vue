@@ -149,15 +149,23 @@
       :close-on-click-modal="false"
   >
     <div class="wordbank-select-content">
+      <el-select v-model="importLang" class="wordbank-lang-select" placeholder="选择语言">
+        <el-option
+            v-for="lang in languageOptions"
+            :key="lang.code"
+            :label="lang.nameZh + '（' + lang.name + '）'"
+            :value="lang.code"
+        />
+      </el-select>
       <el-radio-group v-model="selectedImportBank" class="wordbank-radio-group">
         <el-radio
-            v-for="bank in wordBankOptions"
+            v-for="bank in filteredImportBankOptions"
             :key="bank.value"
             :label="bank.value"
             border
             class="wordbank-radio"
         >
-          {{ bank.label }}
+          {{ bank.label }}（{{ bank.wordCount }}词）
           <span v-if="isWordBankCached(bank.value as WordBankType)" class="cached-tag">已缓存</span>
         </el-radio>
       </el-radio-group>
@@ -255,9 +263,9 @@
           <el-select v-model="newWordBankForm.importBank" placeholder="请选择要导入的词库" style="width: 100%"
                      popper-class="wordbank-import-dropdown">
             <el-option
-                v-for="bank in wordBankOptions"
+                v-for="bank in filteredCreateBankOptions"
                 :key="bank.value"
-                :label="bank.label"
+                :label="bank.label + '（' + bank.wordCount + '词）'"
                 :value="bank.value"
             />
           </el-select>
@@ -468,35 +476,26 @@ const openFocusFromQuery = () => {
 openFocusFromQuery();
 watch(() => route.query.openFocus, openFocusFromQuery);
 
-// 切换词库选项
-const wordBankOptions = [
-  {label: '四级词汇', value: 'cet4'},
-  {label: 'JLPT N5（日语）', value: 'jlpt-n5'},
-  {label: 'JLPT N4（日语）', value: 'jlpt-n4'},
-  {label: '俄语 A1', value: 'ru-a1'},
-  {label: '俄语 A2', value: 'ru-a2'},
-  {label: '西语 A1', value: 'es-a1'},
-  {label: '西语 A2', value: 'es-a2'},
-  {label: '法语 A1', value: 'fr-a1'},
-  {label: '法语 A2', value: 'fr-a2'},
-  {label: '六级词汇', value: 'cet6'},
-  {label: '商务英语', value: 'bec'},
-  {label: 'GMAT词汇', value: 'gmat'},
-  {label: 'GRE词汇', value: 'gre'},
-  {label: '雅思词汇', value: 'ielts'},
-  {label: '考公词汇', value: 'kaogong'},
-  {label: '考研词汇', value: 'kaoyan'},
-  {label: '专业四级', value: 'level4'},
-  {label: '专业八级', value: 'level8'},
-  {label: 'SAT词汇', value: 'sat'},
-  {label: '托福词汇', value: 'toefl'},
-  {label: '专升本词汇', value: 'zsb'},
-  {label: '词根词缀', value: 'roots'},
-  {label: '短语动词', value: 'phrasal-verbs'},
-  {label: '固定搭配', value: 'collocations'},
-  {label: '习语', value: 'idioms'},
-  {label: '常用短语短句', value: 'common-phrases'},
-];
+// 切换词库选项（从注册表派生，支持按语言筛选）
+const wordBankOptions = WORDBANK_LIST.map(wb => ({
+  label: wb.name,
+  value: wb.id as WordBankType,
+  language: wb.language,
+  wordCount: wb.wordCount,
+}))
+
+// 导入词库对话框的语言筛选（默认跟随当前词库语言）
+const importLang = ref<LanguageCode>((wordsStore.currentWordBank?.language as LanguageCode) || 'en')
+// 导入对话框中按语言过滤后的词库选项
+const filteredImportBankOptions = computed(() =>
+  wordBankOptions.filter(b => b.language === importLang.value)
+)
+// 新建词库对话框中按所选学习语言过滤后的词库选项
+const filteredCreateBankOptions = computed(() =>
+  wordBankOptions.filter(b => b.language === newWordBankForm.value.language)
+)
+// 切换语言时清空已选的待导入词库，避免跨语言残留
+watch(importLang, () => { selectedImportBank.value = '' })
 
 const drawerVisible = ref(false)
 const syncDialogVisible = ref(false)
@@ -517,6 +516,8 @@ const newWordBankForm = ref({
 })
 // 可选语言列表（词库级语言）
 const languageOptions = listLanguages()
+// 切换学习语言时清空已选的内置词库，避免跨语言残留
+watch(() => newWordBankForm.value.language, () => { newWordBankForm.value.importBank = '' })
 
 // 加载自定义词库列表
 const loadCustomWordBanks = async () => {
@@ -2625,7 +2626,8 @@ const handleImportCommand = (command: string) => {
       importTextWords();
       break;
     case 'importFromWordBank':
-      // 打开词库选择对话框
+      // 打开词库选择对话框，语言筛选跟随当前词库
+      importLang.value = (wordsStore.currentWordBank?.language as LanguageCode) || 'en';
       wordBankSelectVisible.value = true;
       break;
   }
@@ -3412,6 +3414,11 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 // 词库选择对话框样式
 .wordbank-select-content {
   padding: 10px 0;
+
+  .wordbank-lang-select {
+    width: 100%;
+    margin-bottom: 14px;
+  }
 
   .wordbank-radio-group {
     display: flex;
