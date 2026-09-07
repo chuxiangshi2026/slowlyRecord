@@ -113,9 +113,9 @@
 import {ref, computed, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
 import {ArrowLeft, VideoPlay, Right, CircleCheckFilled, CircleCloseFilled, RefreshRight, Timer} from '@element-plus/icons-vue';
-import {MINIMAL_PAIRS, type MinimalPair} from '@/utils/phoneme-data';
-import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
+import {type MinimalPair} from '@/utils/phoneme-data';
 import {usePhoneticMemoryStore} from '@/stores/phoneticMemory';
+import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
 
 const router = useRouter();
 const TOTAL = 15;
@@ -148,7 +148,7 @@ const accuracy = computed(() => {
 
 function generateQuestions() {
     // 按间隔重复优先级抽对子
-    const picked = phoneticStore.pickPairsForSession(MINIMAL_PAIRS, TOTAL);
+    const picked = phoneticStore.pickPairsForSession(phoneticStore.dataset.minimalPairs || [], TOTAL);
     questions.value = picked.map<Question>(pair => ({
         pair,
         answer: Math.random() < 0.5 ? 'a' : 'b',

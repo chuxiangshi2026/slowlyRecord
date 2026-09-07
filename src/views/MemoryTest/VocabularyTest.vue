@@ -273,7 +273,11 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useVocabularyTestStore, WORD_BANK_LEVELS, type WordBankLevel, type ReadingLevel } from '@/stores/vocabularyTest';
+import { useVocabularyTestStore, getWordBankLevels, type WordBankLevel, type ReadingLevel } from '@/stores/vocabularyTest';
+import { getActiveLanguage } from '@/utils/language/profiles';
+
+// 当前语言的等级表（en=CET~GRE，ja=JLPT，ru/es/fr=CEFR）
+const LEVELS = getWordBankLevels(getActiveLanguage());
 import { getWordBankInfo, type WordBankType } from '@/utils/wordbank-service';
 import { log } from '@/utils/logger';
 import {
@@ -344,8 +348,8 @@ const progressPercent = computed(() =>
 );
 
 const currentLevel = computed(() => {
-  const levelIndex = Math.min(currentRound.value - 1, WORD_BANK_LEVELS.length - 1);
-  return WORD_BANK_LEVELS[levelIndex];
+  const levelIndex = Math.min(currentRound.value - 1, LEVELS.length - 1);
+  return LEVELS[levelIndex];
 });
 
 const currentWord = computed(() => 
@@ -358,7 +362,7 @@ const isLastWord = computed(() =>
 );
 
 const levelBreakdown = computed(() => {
-  return WORD_BANK_LEVELS.filter(level => results.value[level.id]).map(level => {
+  return LEVELS.filter(level => results.value[level.id]).map(level => {
     const result = results.value[level.id];
     return {
       id: level.id,
@@ -410,7 +414,7 @@ async function generateTestWords() {
   const words: WordItem[] = [];
   
   for (let i = 0; i < totalRounds.value; i++) {
-    const level = WORD_BANK_LEVELS[Math.min(i, WORD_BANK_LEVELS.length - 1)];
+    const level = LEVELS[Math.min(i, LEVELS.length - 1)];
     const bankWords = await loadWordBank(level.id);
     
     if (bankWords.length === 0) continue;

@@ -123,9 +123,9 @@ import {ref, computed, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
 import {ArrowLeft, VideoPlay, Right, RefreshLeft, Check} from '@element-plus/icons-vue';
 import {BREAKDOWN_WORDS, breakdownPhonetic, type BreakdownWord} from '@/utils/phoneme-breakdown';
-import {ALL_PHONEMES, type Phoneme} from '@/utils/phoneme-data';
-import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
+import type {Phoneme} from '@/utils/phoneme-data';
 import {usePhoneticMemoryStore} from '@/stores/phoneticMemory';
+import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
 
 const router = useRouter();
 const TOTAL = 10;
@@ -200,7 +200,7 @@ function buildQuestion(word: BreakdownWord): BreakdownQuestion | null {
     const {phonemes, complete} = breakdownPhonetic(word.phonetic);
     if (!complete || phonemes.length === 0) return null;
     const targetIpas = new Set(phonemes.map(p => p.ipa));
-    const distractorPool = ALL_PHONEMES.filter(p => !targetIpas.has(p.ipa));
+    const distractorPool = phoneticStore.dataset.all.filter(p => !targetIpas.has(p.ipa));
     // 干扰数量 = max(2, ceil(target/2)),保证总池子不会太大也不会太空
     const distractorCount = Math.max(2, Math.ceil(phonemes.length / 2));
     const distractors = shuffle(distractorPool).slice(0, distractorCount);

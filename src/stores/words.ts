@@ -17,6 +17,7 @@ import {
   type WordBank
 } from "@/utils/wordbank-manager.ts";
 import {APP_KEY, DB_KEY, DB_KEY_USER_SET, DEFAULT_INTERVALS, FROM, KEY, TO} from "@/constants";
+import {setActiveLanguage, getActiveLanguage} from "@/utils/language";
 import {truncate} from "lodash";
 import {AppInfo} from "@/config.ts";
 // import {downloadAndStoreAudio} from "@/utils/audio-util.ts";
@@ -92,6 +93,8 @@ export const useWordsStore =
             const currentWordBankId = ref<string>('')
             // 当前词库信息
             const currentWordBank = ref<WordBank | null>(null)
+            // 当前词库语言（缺省 'en'），供组件响应式使用
+            const currentLanguage = computed(() => currentWordBank.value?.language || 'en')
 
             // 初始化词库信息
             async function initWordBankInfo() {
@@ -103,6 +106,7 @@ export const useWordsStore =
                     currentWordBankId.value = 'default'
                     currentWordBank.value = null
                 }
+                setActiveLanguage(currentWordBank.value?.language)
             }
 
             const lastAddedWordText = ref('')    //记录最新添加的单词
@@ -527,6 +531,7 @@ export const useWordsStore =
                 currentWordBankId.value = bankId
                 currentWordBank.value = bank
                 setCurrentWordBankId(bankId)
+                setActiveLanguage(bank.language)
 
                 // 重新加载新词库的单词
                 words.value = []
@@ -548,6 +553,7 @@ export const useWordsStore =
                 // 从当前词库获取单词
                 const bank = await getWordBank(currentWordBankId.value)
                 currentWordBank.value = bank
+                setActiveLanguage(bank?.language)
 
                 if (bank) {
                     // 如果是默认词库且为空，尝试从旧数据库迁移数据
@@ -876,6 +882,7 @@ export const useWordsStore =
                 focusMode,
                 currentWordBankId,
                 currentWordBank,
+                currentLanguage,
                 userApiKeys, // 导出用户API密钥
                 userOcrApiKeys,
                 setLastAddedWordText,
@@ -902,11 +909,11 @@ export const useWordsStore =
                 initWordBankInfo,
                 translateWithPlatform: async (query: string) => {
                     log.i('store翻译调用, 当前平台:', currentTranslationPlatform.value, '查询词:', query)
-                    return await externalTranslateWithPlatform(query, currentTranslationPlatform.value);
+                    return await externalTranslateWithPlatform(query, currentTranslationPlatform.value, getActiveLanguage());
                 },
                 translateBatchWithPlatform: async (queries: string[]) => {
                     log.i('store批量翻译调用, 当前平台:', currentTranslationPlatform.value, '数量:', queries.length)
-                    return await externalTranslateBatchWithPlatform(queries, currentTranslationPlatform.value);
+                    return await externalTranslateBatchWithPlatform(queries, currentTranslationPlatform.value, getActiveLanguage());
                 },
                 removeWords,
                 deleteWord,

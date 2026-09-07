@@ -205,6 +205,7 @@ import {
   TrendCharts
 } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
+import { getBasicWords } from '@/utils/language/data/basic-words';
 
 // 测试模式
 type TestMode = 'number' | 'word' | 'pattern' | 'vocabulary';
@@ -233,11 +234,8 @@ const currentNumber = ref('');
 
 // 单词记忆
 const currentWords = ref<string[]>([]);
-const commonWords = [
-  'apple', 'book', 'cat', 'dog', 'egg', 'fish', 'girl', 'hat', 'ice', 'jump',
-  'kite', 'lamp', 'moon', 'nest', 'orange', 'pen', 'queen', 'rose', 'sun', 'tree',
-  'umbrella', 'violin', 'water', 'box', 'yellow', 'zoo', 'ant', 'bird', 'car', 'desk'
-];
+// 基础词表按当前词库语言取（见 utils/language/data/basic-words.ts）
+const commonWords = getBasicWords(wordsStore.currentLanguage);
 
 // 图案记忆
 const patternCells = ref(Array(16).fill(0));

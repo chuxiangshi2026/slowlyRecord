@@ -230,11 +230,24 @@ export function getLetterKeyword(letter: string): string {
   return preset?.keyword || '';
 }
 
+/** 各语言字母表（联想建议仅 en/ja 精做，其他语言 suggestions 为空数组） */
+const ALPHABET_BY_LANG: Record<string, string[]> = {
+  en: LETTER_PRESETS.map(p => p.letter),
+  ja: [
+    'あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ',
+    'た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ',
+    'ま','み','む','め','も','や','ゆ','よ','ら','り','る','れ','ろ','わ','を','ん',
+  ],
+  ru: ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я'],
+  es: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z'],
+  fr: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'],
+}
+
 /**
- * 获取26个英文字母列表
+ * 获取当前语言的字母列表（默认英语 26 字母，行为不变）
  */
-export function getAlphabetLetters(): string[] {
-  return LETTER_PRESETS.map(p => p.letter);
+export function getAlphabetLetters(lang: string = 'en'): string[] {
+  return ALPHABET_BY_LANG[lang] || ALPHABET_BY_LANG.en;
 }
 
 /**
@@ -247,8 +260,8 @@ export function getComboLetters(): string[] {
 /**
  * 获取所有预设字母/组合列表
  */
-export function getAllPresetLetters(): string[] {
-  return [...getAlphabetLetters(), ...getComboLetters()];
+export function getAllPresetLetters(lang: string = 'en'): string[] {
+  return [...getAlphabetLetters(lang), ...getComboLetters()];
 }
 
 /**

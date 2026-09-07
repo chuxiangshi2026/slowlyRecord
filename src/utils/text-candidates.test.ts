@@ -51,4 +51,38 @@ describe('extractWordAndPhraseCandidates', () => {
 
     expect(result.map(item => item.text)).toEqual(['Hello', 'world', 'IPv6'])
   })
+
+  // ---- 英语行为快照（多语言适配回归基线） ----
+
+  it('短选中文本（≤6词）整体作为词组返回', () => {
+    const result = extractWordAndPhraseCandidates("well-known don't give up", [])
+
+    expect(result).toEqual([{ text: "well-known don't give up", itemType: 'phrase' }])
+  })
+
+  it('词组匹配大小写不敏感，保留词库词组的原写法', () => {
+    // 长文本（>6词）走逐 token 匹配，命中词库词组时用词库中的写法
+    const result = extractWordAndPhraseCandidates(
+      'Please Take Care of the little dog while I am away from home',
+      ['take care'],
+    )
+
+    expect(result.find(item => item.itemType === 'phrase')).toEqual({
+      text: 'Take Care',
+      itemType: 'phrase',
+    })
+  })
+
+  it('单个单词的选中文本返回 word 而非 phrase', () => {
+    const result = extractWordAndPhraseCandidates('hello', [])
+
+    expect(result).toEqual([{ text: 'hello', itemType: 'word' }])
+  })
+
+  it('超过最大词长的选中文本按单词逐个提取', () => {
+    const result = extractWordAndPhraseCandidates('a b c d e f g', [], 6)
+
+    expect(result.every(item => item.itemType === 'word')).toBe(true)
+    expect(result).toHaveLength(7)
+  })
 })

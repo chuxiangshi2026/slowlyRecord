@@ -26,6 +26,8 @@ export interface SyncWordBank {
   createdAt: number
   updatedAt: number
   isDefault?: boolean
+  /** 词库语言，缺省视为 'en'；旧端收到会忽略 */
+  language?: import('@/utils/language/types').LanguageCode
 }
 
 /** 用户设置的同步数据 */

@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <script src="lang-core.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>专注模式</title>
   <style>
@@ -1133,6 +1134,23 @@
 
     // 当前词库ID（从URL参数获取）
     let currentBankId = '';
+    // 当前词库语言档案（加载词库时刷新）
+    let currentProfile = window.LangCore ? window.LangCore.getProfile('en') : null;
+    function getProfile() {
+      if (!currentProfile && window.LangCore) currentProfile = window.LangCore.getProfile('en');
+      return currentProfile;
+    }
+    function refreshProfile() {
+      try {
+        if (typeof utools === 'undefined' || !utools.db) return;
+        var metaDoc = utools.db.get('slowly-record-wordbank-meta-v2');
+        var bankId = localStorage.getItem(CURRENT_WORDBANK_KEY) || currentBankId;
+        if (metaDoc && metaDoc.banks && bankId) {
+          var bank = metaDoc.banks.find(function(b) { return b.id === bankId; });
+          currentProfile = window.LangCore.getProfile(bank && bank.language || 'en');
+        }
+      } catch (e) { console.warn('[专注模式] 读取词库语言失败', e); }
+    }
 
     // 文本专注模式：当前文章ID
     let currentArticleId = '';
@@ -1262,6 +1280,7 @@
     // 加载数据
     async function loadWords() {
       try {
+        refreshProfile();
         var allLoadedWords = [];
         if (typeof utools !== 'undefined') {
           // 优先从当前词库分片加载单词
@@ -1313,8 +1332,9 @@
       if (!container) return;
       var word = words[currentIndex];
       if (!word) return;
-      var wordText = (word.text || '').replace(/\s+/g, '');
-      var typed = (elDictationInput.value || '').replace(/\s+/g, '');
+      var prof = getProfile();
+      var wordText = LangCore.splitSpellUnits((word.text || '').replace(/\s+/g, ''), prof).join('');
+      var typed = Array.from((elDictationInput.value || '').replace(/\s+/g, ''));
       var html = '';
       for (var i = 0; i < wordText.length; i++) {
         var cls = 'dictation-slot';
@@ -1439,16 +1459,18 @@
       if (!word) return;
       try {
         // 优先使用浏览器原生语音合成（不依赖网络，与听写主界面一致）
+        var prof = getProfile();
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           var utterance = new SpeechSynthesisUtterance(word.text);
-          utterance.lang = 'en-US';
+          utterance.lang = prof.ttsLang;
           utterance.rate = 0.8;
           window.speechSynthesis.speak(utterance);
         } else {
-          // 回退：使用有道TTS在线播放
+          // 回退：使用有道TTS在线播放（有道仅支持英语）
+          if (prof.youdaoVoiceType === null) return;
           if (!audioPlayer) audioPlayer = new Audio();
-          audioPlayer.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=1';
+          audioPlayer.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=' + prof.youdaoVoiceType;
           await audioPlayer.play();
         }
       } catch (e) {
@@ -1592,6 +1614,12 @@
 
     // 进入拼写模式
     function enterSpellMode() {
+      // 日语等非字母书写系统禁用拼写模式（IME 无法逐键拦截）
+      if (!LangCore.supportsSpelling(getProfile())) {
+        showToast('当前语言不支持拼写模式');
+        enterDictationMode();
+        return;
+      }
       spellMode = true;
       spellIndex = 0;
       btnSpell.classList.add('active');
@@ -1628,11 +1656,12 @@
 
       // 期望的字母
       var expected = wordText[spellIndex];
-      // 大小写不敏感比较
-      var typed = key.toLowerCase();
-      var expectedLower = expected.toLowerCase();
+      // 按语言决定是否大小写不敏感
+      var prof = getProfile();
+      var typed = prof.caseInsensitive ? key.toLowerCase() : key;
+      var expectedNorm = prof.caseInsensitive ? expected.toLowerCase() : expected;
 
-      if (typed === expectedLower) {
+      if (typed === expectedNorm) {
         // 正确
         spellIndex++;
         // 清除之前的错误状态
@@ -1735,8 +1764,8 @@
       if (!dictationMode || dictationChecking) return;
       var word = words[currentIndex];
       if (!word) return;
-      var wordText = (word.text || '').replace(/\s+/g, '');
-      var typed = (elDictationInput.value || '').replace(/\s+/g, '');
+      var wordText = Array.from((word.text || '').replace(/\s+/g, ''));
+      var typed = Array.from((elDictationInput.value || '').replace(/\s+/g, ''));
       // 更新占位符显示
       renderDictationSlots();
       // 输入长度达到单词长度时自动判定
@@ -1748,8 +1777,9 @@
     function checkDictationAnswer() {
       var word = words[currentIndex];
       if (!word) return;
-      var wordText = (word.text || '').replace(/\s+/g, '').toLowerCase();
-      var typed = (elDictationInput.value || '').replace(/\s+/g, '').toLowerCase();
+      var prof = getProfile();
+      var wordText = LangCore.normalizeForCompare((word.text || '').replace(/\s+/g, ''), prof);
+      var typed = LangCore.normalizeForCompare(elDictationInput.value || '', prof);
 
       if (typed === wordText) {
         // 正确
@@ -2797,8 +2827,8 @@
           if (currentIndex < words.length - 1) { currentIndex++; spellIndex = 0; updateDisplay(); }
           return;
         }
-        // 只处理单字母按键（a-z, A-Z）
-        if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
+        // 只处理当前语言的有效拼写单键（英语 a-z；其他拉丁/西里尔语言按字母判定；日语禁用拼写模式）
+        if (e.key.length === 1 && LangCore.isSpellChar(e.key, getProfile())) {
           e.preventDefault();
           handleSpellKey(e.key);
           return;
@@ -2996,7 +3026,7 @@
         list = list.sort(function(a, b) {
           switch (currentSortBy) {
             case 'alpha':
-              return dir * (a.text || '').localeCompare(b.text || '', 'en');
+              return dir * LangCore.compareWords(a.text || '', b.text || '', getProfile());
             case 'length':
               return dir * ((a.text || '').length - (b.text || '').length);
             case 'time':

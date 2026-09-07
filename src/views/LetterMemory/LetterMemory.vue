@@ -246,6 +246,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { Check, Delete, Upload, ArrowLeft } from "@element-plus/icons-vue";
 import type { UploadFile } from "element-plus";
 import { getAlphabetLetters, getComboLetters } from "@/utils/letter-memory-preset";
+import { getActiveLanguage } from "@/utils/language/profiles";
 import { compressImage } from "@/utils/image-compress";
 import { EMOJI_LIST } from "@/utils/emoji-data";
 import { log } from "@/utils/logger";
@@ -274,7 +275,7 @@ const displayLetters = computed((): string[] => {
   const customList = customCombos.value.filter(c => !combos.includes(c));
   switch (displayMode.value) {
     case 'alphabet':
-      return getAlphabetLetters();
+      return getAlphabetLetters(getActiveLanguage());
     case 'combo':
       return [...combos, ...customList];
     case 'all':

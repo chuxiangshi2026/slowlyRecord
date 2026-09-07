@@ -6,6 +6,7 @@
  */
 
 import {loadDictionaryFromDB, queryWordFromDB, hasDictionaryInDB} from './dictionary-db';
+import {getPronunciationUrlSync} from './translation-api';
 
 export interface DictionaryEntry {
   word: string;
@@ -309,24 +310,14 @@ export interface LocalTranslationResult {
 }
 
 // 发音URL缓存（与translation-api.ts独立，避免循环依赖）
-const pronunciationCache = new Map<string, string>();
 
 /**
  * 获取单词发音URL（本地词典版本）
  * 使用有道TTS（稳定可靠）
  */
 function getPronunciationUrlForLocal(word: string): string {
-  const cacheKey = word.toLowerCase().trim();
-
-  // 检查缓存
-  if (pronunciationCache.has(cacheKey)) {
-    return pronunciationCache.get(cacheKey)!;
-  }
-
-  // 使用有道TTS URL（稳定，CORS友好）
-  const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
-  pronunciationCache.set(cacheKey, youdaoTtsUrl);
-  return youdaoTtsUrl;
+  // 本地词典仅英语收录；发音 URL 直接复用 translation-api 的按语言收口实现
+  return getPronunciationUrlSync(word);
 }
 
 /**

@@ -11,6 +11,7 @@ import {log} from "@/utils/logger.ts";
 import {getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {translateWithLocalDictionaryAsync} from "./local-dictionary";
 import {getDbStorage} from "@/adapters/db";
+import {getActiveProfile, getProfile} from "@/utils/language";
 
 // 发音URL缓存 Map
 const pronunciationCache = new Map<string, string>();
@@ -155,12 +156,24 @@ const TTS_SOURCES: TTSConfig[] = [
  * 生成 Edge TTS 的请求配置
  * Edge TTS 使用 WebSocket 或特殊的 HTTP 请求
  */
-function generateEdgeTTSConfig(word: string) {
-    const voice = 'en-US-AnaNeural'; // 美式英语女声，音质很好
+function generateEdgeTTSConfig(word: string, lang?: string) {
+    const profile = getActiveProfile();
+    if (lang && lang !== profile.code) {
+        // 显式指定语言时按指定语言取 profile
+        const specified = (window as any).LangCore?.getProfile?.(lang);
+        if (specified) {
+            return buildEdgeTTSConfig(word, specified);
+        }
+    }
+    return buildEdgeTTSConfig(word, profile);
+}
+
+function buildEdgeTTSConfig(word: string, profile: { ttsLang: string; edgeVoice: string }) {
+    const voice = profile.edgeVoice; // 按语言选择音色
     const outputFormat = 'audio-24khz-48kbitrate-mono-mp3';
 
     // SSML 格式
-    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${profile.ttsLang}">
         <voice name="${voice}">
             <prosody rate="0%" pitch="0%">${word}</prosody>
         </voice>
@@ -181,7 +194,7 @@ function generateEdgeTTSConfig(word: string) {
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Dest': 'audio',
             'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Language': `${profile.ttsLang},${profile.ttsLang.split('-')[0]};q=0.9`,
         },
         ssml,
         voice,
@@ -194,8 +207,11 @@ function generateEdgeTTSConfig(word: string) {
  * 优先使用 Edge TTS（音质最好），回退到有道TTS
  * 带缓存机制
  */
-async function getPronunciationUrl(word: string): Promise<string> {
-    const cacheKey = word.toLowerCase().trim();
+async function getPronunciationUrl(word: string, lang?: string): Promise<string> {
+    const profile = getActiveProfile();
+    // 有道 dictvoice 仅支持英语；其他语言返回空串，由调用方回退到 Edge/Web Speech
+    if (profile.youdaoVoiceType === null) return '';
+    const cacheKey = `${profile.code}|${word.toLowerCase().trim()}`;
 
     // 1. 检查缓存
     if (pronunciationCache.has(cacheKey)) {
@@ -205,7 +221,7 @@ async function getPronunciationUrl(word: string): Promise<string> {
     // 2. 优先使用 Edge TTS（通过代理或直接使用）
     // 由于浏览器 CORS 限制，这里返回有道 TTS 的 URL
     // 实际的 Edge TTS 调用在 speakWithEdgeTTS 函数中
-    const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
+    const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=${profile.youdaoVoiceType}`;
     pronunciationCache.set(cacheKey, youdaoTtsUrl);
     return youdaoTtsUrl;
 }
@@ -213,8 +229,11 @@ async function getPronunciationUrl(word: string): Promise<string> {
 /**
  * 同步获取发音URL（使用有道，稳定可靠）
  */
-function getPronunciationUrlSync(word: string): string {
-    const cacheKey = word.toLowerCase().trim();
+export function getPronunciationUrlSync(word: string, lang?: string): string {
+    const profile = getActiveProfile();
+    // 有道 dictvoice 仅支持英语；其他语言返回空串，由调用方回退到 Edge/Web Speech
+    if (profile.youdaoVoiceType === null) return '';
+    const cacheKey = `${profile.code}|${word.toLowerCase().trim()}`;
 
     // 检查缓存
     if (pronunciationCache.has(cacheKey)) {
@@ -222,7 +241,7 @@ function getPronunciationUrlSync(word: string): string {
     }
 
     // 使用有道TTS（最稳定，CORS 友好）
-    const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
+    const youdaoTtsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=${profile.youdaoVoiceType}`;
     pronunciationCache.set(cacheKey, youdaoTtsUrl);
     return youdaoTtsUrl;
 }
@@ -266,10 +285,12 @@ function detectEnvironment(): { isUTools: boolean; isEdge: boolean; isChrome: bo
  * 使用 Edge TTS 播放发音（最佳音质）
  * 适配 uTools/Chromium 环境
  */
-export async function speakWithEdgeTTS(word: string): Promise<boolean> {
+export async function speakWithEdgeTTS(word: string, lang?: string): Promise<boolean> {
     try {
         console.log('尝试使用 Edge TTS:', word);
 
+        const profile = lang ? getProfile(lang) : getActiveProfile();
+        const langPrefix = profile.ttsLang.split('-')[0];
         const env = detectEnvironment();
         console.log('运行环境:', env);
 
@@ -277,26 +298,26 @@ export async function speakWithEdgeTTS(word: string): Promise<boolean> {
         const voices = await waitForVoices();
         console.log('可用语音总数:', voices.length);
 
-        // 打印所有英文语音供调试
-        const englishVoices = voices.filter(v => v.lang.startsWith('en'));
-        console.log('可用英文语音:', englishVoices.map(v => v.name));
+        // 打印当前语言可用语音供调试
+        const langVoices = voices.filter(v => v.lang.startsWith(langPrefix));
+        console.log(`可用${profile.nameZh}语音:`, langVoices.map(v => v.name));
 
         // uTools/Chromium 环境：优先使用 Google 语音（音质好）
         if (env.isUTools || env.isChrome) {
             const googleVoices = voices.filter(v =>
-                v.name.includes('Google') && v.lang.startsWith('en')
+                v.name.includes('Google') && v.lang.startsWith(langPrefix)
             );
 
             if (googleVoices.length > 0) {
                 const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'en-US';
+                utterance.lang = profile.ttsLang;
                 utterance.rate = 0.9;
                 utterance.pitch = 1;
                 utterance.volume = 1;
 
-                // 优先选择 US 语音
-                const voice = googleVoices.find(v => v.lang === 'en-US') ||
-                             googleVoices.find(v => v.name.includes('US')) ||
+                // 优先选择与目标语言完全匹配的语音
+                const voice = googleVoices.find(v => v.lang === profile.ttsLang) ||
+                             googleVoices.find(v => v.name.includes(profile.ttsLang.split('-')[1] || '')) ||
                              googleVoices[0];
 
                 utterance.voice = voice;
@@ -320,12 +341,12 @@ export async function speakWithEdgeTTS(word: string): Promise<boolean> {
         // Edge 浏览器环境：优先使用 Microsoft 语音
         if (env.isEdge) {
             const microsoftVoices = voices.filter(v =>
-                v.name.includes('Microsoft') && v.lang.startsWith('en')
+                v.name.includes('Microsoft') && v.lang.startsWith(langPrefix)
             );
 
             if (microsoftVoices.length > 0) {
                 const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'en-US';
+                utterance.lang = profile.ttsLang;
                 utterance.rate = 1.0;
                 utterance.pitch = 1;
                 utterance.volume = 1;
@@ -352,14 +373,14 @@ export async function speakWithEdgeTTS(word: string): Promise<boolean> {
             }
         }
 
-        // Fallback：使用任意可用英文语音
-        if (englishVoices.length > 0) {
+        // Fallback：使用任意可用的当前语言语音
+        if (langVoices.length > 0) {
             const utterance = new SpeechSynthesisUtterance(word);
-            utterance.voice = englishVoices[0];
-            utterance.lang = 'en-US';
+            utterance.voice = langVoices[0];
+            utterance.lang = profile.ttsLang;
             utterance.rate = 0.9;
 
-            console.log('使用默认语音:', englishVoices[0].name);
+            console.log('使用默认语音:', langVoices[0].name);
 
             return new Promise((resolve) => {
                 utterance.onend = () => resolve(true);
@@ -380,17 +401,20 @@ export async function speakWithEdgeTTS(word: string): Promise<boolean> {
  * 使用 Web Speech API 播放发音（支持 Microsoft Edge 语音）
  * 在 Edge 浏览器中会自动使用 Microsoft 的高质量语音
  */
-export function speakWithWebSpeech(word: string): boolean {
+export function speakWithWebSpeech(word: string, lang?: string): boolean {
     if (!('speechSynthesis' in window)) {
         console.warn('浏览器不支持 Web Speech API');
         return false;
     }
 
+    const profile = lang ? getProfile(lang) : getActiveProfile();
+    const langPrefix = profile.ttsLang.split('-')[0];
+
     // 取消当前正在播放的语音
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'en-US';
+    utterance.lang = profile.ttsLang;
     utterance.rate = 0.9;
     utterance.pitch = 1;
     utterance.volume = 1;
@@ -415,20 +439,20 @@ export function speakWithWebSpeech(word: string): boolean {
         'Microsoft Mark - English (United States)',
     ];
 
-    // 查找最佳语音
+    // 查找最佳语音（preferredVoices 为英语优选列表，其他语言不会命中，自动走下面的通用筛选）
     let selectedVoice = voices.find(v => preferredVoices.includes(v.name));
 
-    // 如果没找到 Microsoft 语音，找其他英文语音
+    // 如果没找到优选语音，找当前语言的其他高质量语音
     if (!selectedVoice) {
         selectedVoice = voices.find(v =>
-            v.lang.startsWith('en') &&
-            (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel'))
+            v.lang.startsWith(langPrefix) &&
+            (v.name.includes('Google') || v.name.includes('Online (Natural)') || v.name.includes('Samantha') || v.name.includes('Daniel'))
         );
     }
 
-    // 最后 fallback 到任意英文语音
+    // 最后 fallback 到任意当前语言语音
     if (!selectedVoice) {
-        selectedVoice = voices.find(v => v.lang.startsWith('en'));
+        selectedVoice = voices.find(v => v.lang.startsWith(langPrefix));
     }
 
     if (selectedVoice) {
@@ -461,9 +485,10 @@ export function getAvailableVoices(): SpeechSynthesisVoice[] {
  */
 export function logAvailableVoices(): void {
     const voices = getAvailableVoices();
+    const langPrefix = getActiveProfile().ttsLang.split('-')[0];
     console.log('=== 可用语音列表 ===');
     voices
-        .filter(v => v.lang.startsWith('en'))
+        .filter(v => v.lang.startsWith(langPrefix))
         .forEach((v, i) => {
             console.log(`${i + 1}. ${v.name} (${v.lang}) ${v.default ? '- 默认' : ''}`);
         });
@@ -628,10 +653,47 @@ interface BatchAiItem {
     memoryImage?: string;
 }
 
+/**
+ * 多语言泛化的 AI 单词翻译 prompt（ja/ru/es/fr → zh 等非英中组合）
+ * 英→中/中→英分支保持原有 prompt 逐字不变（回归保障），仅其他语言组合走这里。
+ * examples 仍要求返回 english/chinese 键（语义=源文/译文），下游解析零迁移。
+ */
+const AI_LANG_NAME_ZH: Record<string, string> = {
+    auto: '自动识别语言', en: '英语', ja: '日语', ru: '俄语', es: '西班牙语', fr: '法语', zh: '中文',
+};
+
+function aiLangNameZh(lang: string): string {
+    return AI_LANG_NAME_ZH[lang] || lang;
+}
+
+function buildAiWordPrompt(from: string, to: string): string {
+    const sourceName = aiLangNameZh(from);
+    const targetName = aiLangNameZh(to);
+    return `你是一个专业的${sourceName}${targetName}翻译助手。请将用户输入的${sourceName}单词或短语翻译成${targetName}，并以JSON格式返回以下信息：
+{
+  "translation": "${targetName}翻译",
+  "phonetic": "读音标注（日语用假名读音，俄语用重音标注，西/法语音标；如无则留空）",
+  "examples": [
+    {"english": "${sourceName}例句1", "chinese": "${targetName}翻译1"},
+    {"english": "${sourceName}例句2", "chinese": "${targetName}翻译2"}
+  ],
+  "synonyms": ["${targetName}近义词1", "${targetName}近义词2"],
+  "antonyms": ["${targetName}反义词1", "${targetName}反义词2"],
+  "memoryTip": "记忆提示：用中文解释如何记住这个词，可用发音规律、谐音联想、场景联想等方法",
+  "memoryImage": "用中文描述一个生动的画面，帮助通过视觉联想记住这个词"
+}
+注意：
+1. 如果是单个单词，请提供读音标注、2-3个例句、近义词和反义词、记忆提示和记忆画面描述
+2. 如果是短语或句子，只需提供translation和examples
+3. examples 中的 english 键填${sourceName}原文例句，chinese 键填${targetName}翻译（键名仅为固定格式）
+4. memoryTip/memoryImage 使用中文，分别 50/80 字以内
+5. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
+}
+
 function buildBatchAiPrompt(queries: string[], from: string, to: string): string {
-    return `请将以下${queries.length}个文本从 ${from === 'auto' ? '自动识别语言' : from} 翻译为 ${to}。
+    return `请将以下${queries.length}个文本从 ${aiLangNameZh(from)} 翻译为 ${aiLangNameZh(to)}。
 只返回 JSON 数组，不要 Markdown，不要额外说明。数组长度必须与输入数量一致，每项格式：
-{"query":"原文本","translation":"翻译结果","phonetic":"音标（没有则空字符串）","examples":[]}
+{"query":"原文本","translation":"翻译结果","phonetic":"读音标注（日语用假名读音，没有则空字符串）","examples":[]}
 
 输入：
 ${queries.map((q, i) => `${i + 1}. ${q}`).join('\n')}`;
@@ -1020,8 +1082,8 @@ function handleYoudaoResponse(data: any, query: string): TranslationResult {
     if (data.errorCode === '0') {
         const explains = data.translation?.[0] || '';
         const phonetic = data.basic?.phonetic || '';
-        // 优先使用有道发音（更可靠），百度作为备选
-        const pronunciation = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(query)}&type=1`;
+        // 优先使用有道发音（更可靠）；有道仅支持英语，其他语言返回空串回退 Edge/Web Speech
+        const pronunciation = getPronunciationUrlSync(query);
 
         return {
             success: true,
@@ -1106,7 +1168,7 @@ async function callUtoolsAi(query: string, from: string = 'auto', to: string = '
         // 根据语言方向确定翻译指令
         const isToEnglish = to === 'en';
         const targetLang = isToEnglish ? '英文' : '中文';
-        const sourceLang = from === 'zh' ? '中文' : (from === 'en' ? '英文' : '文本');
+        const sourceLang = aiLangNameZh(from);
 
         const messages = [
             {
@@ -1169,7 +1231,7 @@ async function callOllama(query: string, from: string = 'auto', to: string = 'zh
         // 根据语言方向确定翻译指令
         const isToEnglish = to === 'en';
         const targetLang = isToEnglish ? '英文' : '中文';
-        const sourceLang = from === 'zh' ? '中文' : (from === 'en' ? '英文' : '文本');
+        const sourceLang = aiLangNameZh(from);
 
         const response = await fetch(`${ollamaUrl}/api/generate`, {
             method: 'POST',
@@ -1292,16 +1354,8 @@ async function callDeepSeek(query: string, from: string = 'auto', to: string = '
 4. memoryImage要求：用中文描述一个具体的视觉画面，80字以内
 5. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
         } else {
-            // 其他语言组合，简化处理
-            systemPrompt = `你是一个专业的翻译助手。请将用户输入的文本翻译成目标语言，并以JSON格式返回：
-{
-  "translation": "翻译结果",
-  "examples": [
-    {"source": "原文例句1", "target": "翻译1"},
-    {"source": "原文例句2", "target": "翻译2"}
-  ]
-}
-必须返回有效的JSON格式，不要添加任何其他文字说明`;
+            // 多语言组合（如 ja/ru/es/fr → zh）
+            systemPrompt = buildAiWordPrompt(from, to);
         }
 
         const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
@@ -1439,15 +1493,8 @@ async function callQwen(query: string, from: string = 'auto', to: string = 'zh')
 4. memoryImage要求：用中文描述一个具体的视觉画面，80字以内
 5. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
         } else {
-            systemPrompt = `你是一个专业的翻译助手。请将用户输入的文本翻译成目标语言，并以JSON格式返回：
-{
-  "translation": "翻译结果",
-  "examples": [
-    {"source": "原文例句1", "target": "翻译1"},
-    {"source": "原文例句2", "target": "翻译2"}
-  ]
-}
-必须返回有效的JSON格式，不要添加任何其他文字说明`;
+            // 多语言组合（如 ja/ru/es/fr → zh）
+            systemPrompt = buildAiWordPrompt(from, to);
         }
 
         const response = await fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
@@ -1584,15 +1631,8 @@ async function callKimi(query: string, from: string = 'auto', to: string = 'zh')
 4. memoryImage要求：用中文描述一个具体的视觉画面，80字以内
 5. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
         } else {
-            systemPrompt = `你是一个专业的翻译助手。请将用户输入的文本翻译成目标语言，并以JSON格式返回：
-{
-  "translation": "翻译结果",
-  "examples": [
-    {"source": "原文例句1", "target": "翻译1"},
-    {"source": "原文例句2", "target": "翻译2"}
-  ]
-}
-必须返回有效的JSON格式，不要添加任何其他文字说明`;
+            // 多语言组合（如 ja/ru/es/fr → zh）
+            systemPrompt = buildAiWordPrompt(from, to);
         }
 
         // Kimi由月之暗面开发，但目前API可能需要特定接入方式
@@ -1751,15 +1791,8 @@ async function callGlm(query: string, from: string = 'auto', to: string = 'zh'):
 4. memoryImage要求：用中文描述一个具体的视觉画面，80字以内
 5. 必须返回有效的JSON格式，不要添加任何其他文字说明`;
         } else {
-            systemPrompt = `你是一个专业的翻译助手。请将用户输入的文本翻译成目标语言，并以JSON格式返回：
-{
-  "translation": "翻译结果",
-  "examples": [
-    {"source": "原文例句1", "target": "翻译1"},
-    {"source": "原文例句2", "target": "翻译2"}
-  ]
-}
-必须返回有效的JSON格式，不要添加任何其他文字说明`;
+            // 多语言组合（如 ja/ru/es/fr → zh）
+            systemPrompt = buildAiWordPrompt(from, to);
         }
 
         const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {

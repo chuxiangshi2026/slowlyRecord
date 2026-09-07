@@ -235,6 +235,11 @@
           <el-form-item label="词库名称">
             <el-input v-model="newWordBankForm.name" placeholder="请输入词库名称" maxlength="20" show-word-limit/>
           </el-form-item>
+          <el-form-item label="学习语言">
+            <el-select v-model="newWordBankForm.language" style="width: 100%">
+              <el-option v-for="lang in languageOptions" :key="lang.code" :label="lang.nameZh + '（' + lang.name + '）'" :value="lang.code"/>
+            </el-select>
+          </el-form-item>
           <el-form-item label="初始内容">
             <el-radio-group v-model="newWordBankForm.initType">
               <el-radio label="empty">空词库</el-radio>
@@ -294,6 +299,8 @@ import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus } from '@
 import { useWordsStore } from '@/stores/words';
 import type { Word } from '@/types/words';
 import { getCurrentWordBankId, getAllWordBanks, type WordBank, createWordBank as createNewWordBank, deleteWordBank as removeWordBank, importFromBuiltinWordBank } from '@/utils/wordbank-manager';
+import { listLanguages, getActiveProfile, isWordText, isPhraseText, compareWords, splitSpellUnits, normalizeForCompare } from '@/utils/language';
+import type { LanguageCode } from '@/utils/language';
 import { filterWordsForJsonExport, filterWordsForTextExport, parseFileContent, validateImportedWords } from '@/utils/word-util';
 import { batchTranslateAndAddWords } from '@/utils/str-util';
 import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/phonetic-util';
@@ -333,9 +340,12 @@ const customWordBanks = ref<WordBank[]>([]);
 // 新建词库表单
 const newWordBankForm = ref({
   name: '',
+  language: 'en' as LanguageCode,
   initType: 'empty' as 'empty' | 'import',
   importBank: '' as string
 });
+// 可选语言列表（词库级语言）
+const languageOptions = listLanguages();
 
 // 切换词库选项
 const wordBankOptions = [
@@ -356,6 +366,7 @@ const wordBankOptions = [
   {label: '短语动词', value: 'phrasal-verbs'},
   {label: '固定搭配', value: 'collocations'},
   {label: '习语', value: 'idioms'},
+  {label: '常用短语短句', value: 'common-phrases'},
 ];
 
 // 是否有活跃筛选
@@ -505,7 +516,7 @@ function applyFilters(list: Word[]): Word[] {
     const dir = currentFilter.value.sortAsc ? 1 : -1;
     result = result.sort((a, b) => {
       switch (currentFilter.value.sortBy) {
-        case 'alpha': return dir * (a.text || '').localeCompare(b.text || '', 'en');
+        case 'alpha': return dir * compareWords(a.text || '', b.text || '', getActiveProfile());
         case 'length': return dir * ((a.text || '').length - (b.text || '').length);
         case 'time': return dir * (new Date(a.ctime || 0).getTime() - new Date(b.ctime || 0).getTime());
         case 'level': return dir * ((a.level || 0) - (b.level || 0));
@@ -588,16 +599,18 @@ async function loadWords() {
     wordList.value = [];
     return;
   }
-  // 只取纯英文单词，应用筛选条件，随机打乱
-  const englishWords = allWords.filter(w => w.text && /^[a-zA-Z]+$/.test(w.text));
-  wordList.value = applyFilters(englishWords).sort(() => Math.random() - 0.5);
+  // 只取当前语言的单词（排除词组），应用筛选条件，随机打乱
+  const profile = getActiveProfile();
+  const singleWords = allWords.filter(w => w.text && isWordText(w.text, profile) && !isPhraseText(w.text, profile));
+  wordList.value = applyFilters(singleWords).sort(() => Math.random() - 0.5);
   currentIndex.value = 0;
 }
 
 /** 更新单词后刷新列表（移除不再匹配筛选条件的单词） */
 function refreshWordList() {
   // 从 store 重新构建列表
-  const allWords = wordsStore.words.filter(w => w.text && /^[a-zA-Z]+$/.test(w.text));
+  const profile = getActiveProfile();
+  const allWords = wordsStore.words.filter(w => w.text && isWordText(w.text, profile) && !isPhraseText(w.text, profile));
   const newList = applyFilters(allWords);
   // 如果当前单词还在新列表中，保持位置
   const curWord = currentWord.value;
@@ -697,6 +710,7 @@ const confirmDeleteWordBank = (bank: WordBank) => {
 const showCreateWordBankDialog = () => {
   newWordBankForm.value = {
     name: '',
+    language: 'en',
     initType: 'empty',
     importBank: ''
   };
@@ -717,7 +731,7 @@ const confirmCreateWordBank = async () => {
     return;
   }
   // 创建词库
-  const newBank = await createNewWordBank(name);
+  const newBank = await createNewWordBank(name, [], newWordBankForm.value.language);
   // 如果从系统词库导入
   if (newWordBankForm.value.initType === 'import' && newWordBankForm.value.importBank) {
     const loading = ElLoading.service({
@@ -1017,7 +1031,7 @@ function prepareWord() {
   if (!word) return;
 
   if (displayMode.value === 'partial') {
-    const letters = word.text.split('');
+    const letters = splitSpellUnits(word.text, getActiveProfile());
     const len = letters.length;
     let hideCount = Math.floor(len * 0.5);
     if (hideCount < 1) hideCount = 1;
@@ -1058,7 +1072,8 @@ function handleInput() {
   const word = currentWord.value;
   if (!word) return;
 
-  userInput.value = rawInput.value.split('').slice(0, word.text.length);
+  const unitCount = splitSpellUnits(word.text, getActiveProfile()).length;
+  userInput.value = Array.from(rawInput.value).slice(0, unitCount);
 
   if (userInput.value.length === word.text.length) {
     checkAnswer();
@@ -1068,7 +1083,7 @@ function handleInput() {
 function handlePartialInput(index: number) {
   const slot = partialSlots.value[index];
   if (slot?.value) {
-    slot.value = slot.value.toLowerCase();
+    slot.value = getActiveProfile().caseInsensitive ? slot.value.toLowerCase() : slot.value;
     const nextIndex = partialSlots.value.findIndex((s, i) => i > index && !s.fixed && !s.value);
     if (nextIndex >= 0) {
       slotRefs.value[nextIndex]?.focus();
@@ -1103,7 +1118,7 @@ function playWord() {
   if (!word?.text) return;
 
   const utterance = new SpeechSynthesisUtterance(word.text);
-  utterance.lang = 'en-US';
+  utterance.lang = getActiveProfile().ttsLang;
   utterance.rate = 0.8;
   window.speechSynthesis.speak(utterance);
 }
@@ -1121,14 +1136,15 @@ async function checkAnswer() {
   const word = currentWord.value;
   if (!word) return;
 
+  const profile = getActiveProfile();
   let userAnswer = '';
   if (displayMode.value === 'blank') {
-    userAnswer = userInput.value.join('').toLowerCase();
+    userAnswer = normalizeForCompare(userInput.value.join(''), profile);
   } else {
-    userAnswer = partialSlots.value.map(s => s.value || s.letter).join('').toLowerCase();
+    userAnswer = normalizeForCompare(partialSlots.value.map(s => s.value || s.letter).join(''), profile);
   }
 
-  const isCorrect = userAnswer === word.text.toLowerCase();
+  const isCorrect = userAnswer === normalizeForCompare(word.text, profile);
 
   if (isCorrect) {
     // 正确：与主列表统一标准 —— 过了当前等级的复习间隔（且在时间窗口内）才升级，

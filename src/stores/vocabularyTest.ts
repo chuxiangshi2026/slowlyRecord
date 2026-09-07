@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import { getActiveLanguage } from '@/utils/language/profiles';
 
 // 词库难度等级定义
 export interface WordBankLevel {
@@ -51,6 +52,36 @@ export const WORD_BANK_LEVELS: WordBankLevel[] = [
   { id: 'gmat', name: 'GMAT', minWords: 7500, maxWords: 10000, avgDifficulty: 7, description: 'GMAT核心' },
   { id: 'gre', name: 'GRE', minWords: 9000, maxWords: 15000, avgDifficulty: 8.5, description: 'GRE核心' },
 ];
+
+/** CEFR 通用档位（ru/es/fr 首发复用） */
+const CEFR_LEVELS: WordBankLevel[] = [
+  { id: 'a1', name: 'A1', minWords: 500, maxWords: 800, avgDifficulty: 1, description: '入门' },
+  { id: 'a2', name: 'A2', minWords: 1000, maxWords: 1500, avgDifficulty: 2, description: '初级' },
+  { id: 'b1', name: 'B1', minWords: 2000, maxWords: 3000, avgDifficulty: 4, description: '中级' },
+  { id: 'b2', name: 'B2', minWords: 3500, maxWords: 4500, avgDifficulty: 6, description: '中高级' },
+  { id: 'c1', name: 'C1', minWords: 5000, maxWords: 7000, avgDifficulty: 7.5, description: '高级' },
+  { id: 'c2', name: 'C2', minWords: 8000, maxWords: 12000, avgDifficulty: 9, description: '精通' },
+];
+
+/** 各语言的词库等级（en 保持现有 CET~GRE 阶梯；ja 用 JLPT；ru/es/fr 用 CEFR 档位） */
+export const WORD_BANK_LEVELS_BY_LANG: Record<string, WordBankLevel[]> = {
+  en: WORD_BANK_LEVELS,
+  ja: [
+    { id: 'n5', name: 'N5', minWords: 800, maxWords: 1000, avgDifficulty: 1, description: 'JLPT N5 入门' },
+    { id: 'n4', name: 'N4', minWords: 1500, maxWords: 2000, avgDifficulty: 2, description: 'JLPT N4 初级' },
+    { id: 'n3', name: 'N3', minWords: 3000, maxWords: 3750, avgDifficulty: 4, description: 'JLPT N3 中级' },
+    { id: 'n2', name: 'N2', minWords: 6000, maxWords: 7000, avgDifficulty: 6, description: 'JLPT N2 中上级' },
+    { id: 'n1', name: 'N1', minWords: 10000, maxWords: 12000, avgDifficulty: 8, description: 'JLPT N1 上级' },
+  ],
+  ru: CEFR_LEVELS,
+  es: CEFR_LEVELS,
+  fr: CEFR_LEVELS,
+};
+
+/** 按语言取词库等级，非法语言回退英语 */
+export function getWordBankLevels(lang: string): WordBankLevel[] {
+  return WORD_BANK_LEVELS_BY_LANG[lang] || WORD_BANK_LEVELS;
+}
 
 // 阅读水平定义
 export const READING_LEVELS: ReadingLevel[] = [
@@ -236,7 +267,7 @@ export const useVocabularyTestStore = defineStore('vocabularyTest', () => {
     let totalEstimated = 0;
     let totalWeight = 0;
 
-    for (const level of WORD_BANK_LEVELS) {
+    for (const level of getWordBankLevels(getActiveLanguage())) {
       const correct = correctByLevel[level.id] || 0;
       const total = totalByLevel[level.id] || 0;
       

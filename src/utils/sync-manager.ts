@@ -38,6 +38,7 @@ export async function collectSyncData(): Promise<SyncData> {
     createdAt: bank.createdAt,
     updatedAt: bank.updatedAt,
     isDefault: bank.isDefault,
+    language: bank.language,
   }))
 
   // 2. 当前词库 ID（复用已加载的 banks，避免再次调用 getAllWordBanks）
@@ -421,6 +422,7 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
         createdAt: bank.createdAt,
         updatedAt: bank.updatedAt,
         isDefault: bank.isDefault,
+        language: bank.language,
       }
       await saveWordBank(newBank)
     }

@@ -54,7 +54,7 @@
 
       <!-- 音标表 -->
       <div
-          v-for="(group, gIdx) in PHONEME_TABLE"
+          v-for="(group, gIdx) in phoneticStore.dataset.table"
           :key="gIdx"
           class="group"
           :class="`group--${gIdx === 0 ? 'vowel' : 'consonant'}`"
@@ -154,7 +154,7 @@
 import {ref, computed, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
 import {ArrowLeft, VideoPlay} from '@element-plus/icons-vue';
-import {PHONEME_TABLE, findPhoneme, type Phoneme} from '@/utils/phoneme-data';
+import type {Phoneme} from '@/utils/phoneme-data';
 import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
 import {usePhoneticMemoryStore} from '@/stores/phoneticMemory';
 
@@ -164,7 +164,7 @@ const detailVisible = ref(false);
 const activeIpa = ref('');
 
 const activePhoneme = computed<Phoneme | undefined>(() =>
-    activeIpa.value ? findPhoneme(activeIpa.value) : undefined,
+    activeIpa.value ? phoneticStore.dataset.all.find(p => p.ipa === activeIpa.value) : undefined,
 );
 
 onMounted(() => {
@@ -179,7 +179,7 @@ function selectPhoneme(ph: Phoneme) {
 }
 
 function jumpToSimilar(ipa: string) {
-  const ph = findPhoneme(ipa);
+  const ph = phoneticStore.dataset.all.find(p => p.ipa === ipa);
   if (ph) selectPhoneme(ph);
 }
 

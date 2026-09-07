@@ -4,6 +4,7 @@
  * 采用分文档+分片存储策略避免 1MB 限制
  */
 import type { Word } from '@/types/words';
+import type { LanguageCode } from '@/utils/language/types';
 import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 import {getDbAdapter} from '@/adapters/db';
@@ -17,6 +18,7 @@ export interface WordBank {
   createdAt: number;    // 创建时间
   updatedAt: number;    // 更新时间
   isDefault?: boolean;  // 是否为默认词库
+  language?: LanguageCode; // 词库语言，缺省视为 'en'（旧数据无需迁移）
 }
 
 // 词库元数据文档结构（存储词库列表，不包含单词）
@@ -26,6 +28,18 @@ interface WordBankMetaDoc {
   type: 'wordbank-meta';
   banks: Omit<WordBank, 'words'>[];  // 词库列表（不包含单词数据）
   updatedAt: number;
+}
+
+/** 词库 → 元数据（新增字段时只需改这里） */
+function toBankMeta(b: WordBank): Omit<WordBank, 'words'> {
+  return {
+    id: b.id,
+    name: b.name,
+    createdAt: b.createdAt,
+    updatedAt: b.updatedAt,
+    isDefault: b.isDefault,
+    language: b.language,
+  };
 }
 
 // 词库数据分片文档结构
@@ -307,11 +321,8 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
       // 迁移数据到新格式
       const banks: WordBank[] = oldDoc.data;
       const metaBanks = banks.map(b => ({
-        id: b.id,
+        ...toBankMeta(b),
         name: b.name === '我的词库' ? '默认词库' : (b.name === '基础词库' ? '默认词库' : b.name),
-        createdAt: b.createdAt,
-        updatedAt: b.updatedAt,
-        isDefault: b.isDefault
       }));
       
       // 保存元数据
@@ -427,27 +438,23 @@ export function createDefaultWordBank(): WordBank {
  * 创建新词库
  * @param name 词库名称
  * @param words 初始单词列表（可选）
+ * @param language 词库语言（可选，缺省 'en'）
  */
-export async function createWordBank(name: string, words: Word[] = []): Promise<WordBank> {
+export async function createWordBank(name: string, words: Word[] = [], language?: LanguageCode): Promise<WordBank> {
   const bank: WordBank = {
     id: uuidv4(),
     name: name.trim() || '未命名词库',
     words: cloneDeep(words),
     createdAt: Date.now(),
-    updatedAt: Date.now()
+    updatedAt: Date.now(),
+    language: language || 'en'
   };
-  
+
   const banks = await getAllWordBanks();
   banks.push(bank);
-  
+
   // 分离元数据和单词数据
-  const metaBanks = banks.map(b => ({
-    id: b.id,
-    name: b.name,
-    createdAt: b.createdAt,
-    updatedAt: b.updatedAt,
-    isDefault: b.isDefault
-  }));
+  const metaBanks = banks.map(toBankMeta);
   
   // 保存元数据
   await saveWordBankMetaDoc(metaBanks);
@@ -473,14 +480,8 @@ export async function saveWordBank(bank: WordBank): Promise<boolean> {
   }
   
   // 分离元数据和单词数据
-  const metaBanks = banks.map(b => ({
-    id: b.id,
-    name: b.name,
-    createdAt: b.createdAt,
-    updatedAt: b.updatedAt,
-    isDefault: b.isDefault
-  }));
-  
+  const metaBanks = banks.map(toBankMeta);
+
   // 保存元数据
   const metaSuccess = await saveWordBankMetaDoc(metaBanks);
   if (!metaSuccess) {
@@ -515,13 +516,7 @@ export async function deleteWordBank(id: string): Promise<boolean> {
     const filtered = banks.filter(b => b.id !== id);
     
     // 保存元数据（不包含被删除的词库）
-    const metaBanks = filtered.map(b => ({
-      id: b.id,
-      name: b.name,
-      createdAt: b.createdAt,
-      updatedAt: b.updatedAt,
-      isDefault: b.isDefault
-    }));
+    const metaBanks = filtered.map(toBankMeta);
     const metaSuccess = await saveWordBankMetaDoc(metaBanks);
     if (!metaSuccess) return false;
     

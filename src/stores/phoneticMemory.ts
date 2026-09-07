@@ -8,9 +8,11 @@
 import {defineStore} from 'pinia';
 import {ref, computed} from 'vue';
 import {DEFAULT_INTERVALS} from '@/constants';
-import {ALL_PHONEMES} from '@/utils/phoneme-data';
+import {getPhoneticDataset} from '@/utils/language/phonetics';
+import {getActiveLanguage} from '@/utils/language/profiles';
 import {getProgressDoc, saveProgressDoc} from '@/utils/phonetic-memory-db';
 import type {PhonemeProgress, MinimalPairProgress, PhoneticProgressDoc} from '@/types/phonetic-memory';
+import type {Phoneme} from '@/utils/phoneme-data';
 
 /** level >= 7 视为已掌握（音标模块自己的阈值，与单词的 12 级 remember 标准无关） */
 const MASTERED_LEVEL = 7;
@@ -32,12 +34,18 @@ function isDue(item: {level: number; learnDate: number}, now: number): boolean {
 export const usePhoneticMemoryStore = defineStore('phoneticMemory', () => {
     const doc = ref<PhoneticProgressDoc>({_id: '', phonemes: {}, pairs: {}});
     const loaded = ref(false);
+    /** 当前语言（跟随激活词库）及其数据集 */
+    const language = ref<string>(getActiveLanguage());
+    const dataset = computed(() => getPhoneticDataset(language.value));
+    const allPhonemes = computed(() => dataset.value.all);
 
     /** 加载持久化进度,幂等 */
     async function ensureLoaded(): Promise<void> {
-        if (loaded.value) return;
+        const lang = getActiveLanguage();
+        if (loaded.value && language.value === lang) return;
+        language.value = lang;
         try {
-            doc.value = getProgressDoc();
+            doc.value = getProgressDoc(lang);
         } catch {
             doc.value = {_id: '', phonemes: {}, pairs: {}};
         }
@@ -52,7 +60,7 @@ export const usePhoneticMemoryStore = defineStore('phoneticMemory', () => {
     const dueCount = computed(() => {
         const now = Date.now();
         let count = 0;
-        for (const ph of ALL_PHONEMES) {
+        for (const ph of allPhonemes.value) {
             const prog = doc.value.phonemes[ph.ipa];
             // 没学过 或 到期 都算待练习
             if (!prog || isDue(prog, now)) count++;
@@ -71,12 +79,12 @@ export const usePhoneticMemoryStore = defineStore('phoneticMemory', () => {
      * 2) 没练过(level=0 且无 learnDate)
      * 3) 都不够再从全部里随机补
      */
-    function pickPhonemesForSession(count: number): typeof ALL_PHONEMES {
+    function pickPhonemesForSession(count: number): Phoneme[] {
         const now = Date.now();
-        const due: typeof ALL_PHONEMES = [];
-        const fresh: typeof ALL_PHONEMES = [];
-        const others: typeof ALL_PHONEMES = [];
-        for (const ph of ALL_PHONEMES) {
+        const due: Phoneme[] = [];
+        const fresh: Phoneme[] = [];
+        const others: Phoneme[] = [];
+        for (const ph of allPhonemes.value) {
             const prog = doc.value.phonemes[ph.ipa];
             if (!prog) {
                 fresh.push(ph);
@@ -111,7 +119,7 @@ export const usePhoneticMemoryStore = defineStore('phoneticMemory', () => {
             wrong: prev.wrong + (isCorrect ? 0 : 1),
         };
         doc.value.phonemes[ipa] = next;
-        await saveProgressDoc(doc.value);
+        await saveProgressDoc(doc.value, language.value);
     }
 
     // ===== 对子进度 =====
@@ -140,7 +148,7 @@ export const usePhoneticMemoryStore = defineStore('phoneticMemory', () => {
             correct: prev.correct + (isCorrect ? 1 : 0),
             wrong: prev.wrong + (isCorrect ? 0 : 1),
         };
-        await saveProgressDoc(doc.value);
+        await saveProgressDoc(doc.value, language.value);
     }
 
     /** 从对子列表里按优先级抽 count 个出题 */
@@ -165,6 +173,8 @@ export const usePhoneticMemoryStore = defineStore('phoneticMemory', () => {
         // state(只读暴露)
         doc,
         loaded,
+        language,
+        dataset,
         // 统计
         masteredCount,
         dueCount,

@@ -6,6 +6,7 @@ import {
   saveAssociation,
   removeAssociation,
 } from "@/utils/letter-memory-db";
+import {getActiveLanguage} from '@/utils/language/profiles';
 import {
   getRecommendedImages,
   getLetterKeyword,
@@ -34,7 +35,7 @@ export const useLetterMemoryStore = defineStore("letterMemory", () => {
   };
 
   // 字母列表
-  const alphabetLetters = computed(() => getAlphabetLetters());
+  const alphabetLetters = computed(() => getAlphabetLetters(getActiveLanguage()));
   const comboLetters = computed(() => getComboLetters());
 
   // 统计已映射的字母数
@@ -163,7 +164,7 @@ export const useLetterMemoryStore = defineStore("letterMemory", () => {
    * 批量导入预设（跳过已存在的映射）
    */
   async function batchImportPresets(letters?: string[]) {
-    const targets = letters || getAlphabetLetters();
+    const targets = letters || getAlphabetLetters(getActiveLanguage());
     let importedCount = 0;
 
     for (const letter of targets) {

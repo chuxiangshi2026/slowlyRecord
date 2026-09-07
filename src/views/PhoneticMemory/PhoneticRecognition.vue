@@ -115,9 +115,9 @@
 import {ref, computed, onMounted} from 'vue';
 import {useRouter, useRoute} from 'vue-router';
 import {ArrowLeft, VideoPlay, Right, CircleCheckFilled, CircleCloseFilled} from '@element-plus/icons-vue';
-import {ALL_PHONEMES, findPhoneme, type Phoneme} from '@/utils/phoneme-data';
-import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
+import type {Phoneme} from '@/utils/phoneme-data';
 import {usePhoneticMemoryStore} from '@/stores/phoneticMemory';
+import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
 
 const router = useRouter();
 const route = useRoute();
@@ -172,14 +172,14 @@ function buildForwardQuestion(phoneme: Phoneme): Question {
     const distractors: string[] = [];
     const similarIpas = phoneme.similar || [];
     for (const ipa of similarIpas) {
-        const ph = findPhoneme(ipa);
+        const ph = phoneticStore.dataset.all.find(p => p.ipa === ipa);
         if (!ph) continue;
         const word = ph.examples[Math.floor(Math.random() * ph.examples.length)];
         if (word !== correct && !distractors.includes(word)) distractors.push(word);
         if (distractors.length >= 3) break;
     }
     while (distractors.length < 3) {
-        const ph = ALL_PHONEMES[Math.floor(Math.random() * ALL_PHONEMES.length)];
+        const ph = phoneticStore.dataset.all[Math.floor(Math.random() * phoneticStore.dataset.all.length)];
         if (ph.ipa === phoneme.ipa) continue;
         const word = ph.examples[Math.floor(Math.random() * ph.examples.length)];
         if (word !== correct && !distractors.includes(word)) distractors.push(word);
@@ -201,7 +201,7 @@ function buildBackwardQuestion(phoneme: Phoneme): Question {
         if (distractors.length >= 3) break;
     }
     while (distractors.length < 3) {
-        const ph = ALL_PHONEMES[Math.floor(Math.random() * ALL_PHONEMES.length)];
+        const ph = phoneticStore.dataset.all[Math.floor(Math.random() * phoneticStore.dataset.all.length)];
         if (ph.ipa !== correctIpa && !distractors.includes(ph.ipa)) distractors.push(ph.ipa);
     }
     const options = shuffle([correctIpa, ...distractors]);

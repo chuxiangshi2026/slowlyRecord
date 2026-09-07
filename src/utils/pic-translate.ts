@@ -6,10 +6,14 @@ import {USAGE_LIMITS} from "@/constants";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {AppInfo} from "@/config.ts";
 import {getOcrApiKey, getTranslationApiKey} from "@/utils/get-api-key.ts";
+import {getActiveLanguage} from "@/utils/language";
 import {log} from "@/utils/logger.ts";
 import {ElMessage} from "element-plus";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import {getDbStorage} from "@/adapters/db";
+import {toEngineLang} from "@/utils/translation-lang-map";
+import {getActiveProfile} from "@/utils/language";
+import {ensureTrainedData} from "@/utils/ocr-lang-pack";
 
 const API = 'https://openapi.youdao.com/ocrtransapi'
 
@@ -152,7 +156,11 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 
                 let result: OcrResult;
                 if (ocrPlatform === 'youdao') {
-                    result = await ocrTranslate(base64, appkey, key, 'en', 'zh-CHS');
+                    {
+                    const from = toEngineLang('youdao', getActiveLanguage(), 'ocr');
+                    if (!from) throw new Error('有道OCR不支持当前语言');
+                    result = await ocrTranslate(base64, appkey, key, from, 'zh-CHS');
+                }
                 } else if (ocrPlatform === 'baidu') {
                     result = await ocrTranslateBaidu(base64, appkey, key);
                 } else if (ocrPlatform === 'ali') {
@@ -209,7 +217,7 @@ async function ocrTranslateBaidu(
     const salt = Date.now().toString();
     const cuid = 'APICUID';
     const mac = 'mac';
-    const from = 'en';
+    const from = toEngineLang('baidu', getActiveLanguage(), 'ocr') ?? 'en';
     const to = 'zh';
 
     /* 3. 签名 */
@@ -864,7 +872,7 @@ async function translateWithLargeModel(text: string, platform: TranslationPlatfo
     const {translateWithPlatform} = await import('./translation-api');
 
     // 使用大模型平台进行翻译
-    return await translateWithPlatform(text, platform);
+    return await translateWithPlatform(text, platform, getActiveLanguage());
 }
 
 /**
@@ -882,8 +890,9 @@ function isUTools(): boolean {
     return checkIsUtools();
 }
 
-// Worker 缓存 - 避免重复创建
+// Worker 缓存 - 避免重复创建（按语言隔离，切语言后需重建 worker 注入对应 traineddata）
 let cachedWorker: any = null;
+let cachedWorkerLang = '';
 let cachedWorkerPromise: Promise<any> | null = null;
 let lastUsedTime = 0;
 const WORKER_IDLE_TIMEOUT = 5 * 60 * 1000; // 5分钟无使用则释放
@@ -1001,8 +1010,15 @@ async function saveCachedScripts(workerCode: string, coreCode: string, langDataB
 /**
  * 获取或创建 Worker（带缓存）
  */
-async function getOrCreateWorker(): Promise<any> {
+async function getOrCreateWorker(lang: string = 'eng'): Promise<any> {
     const now = Date.now();
+
+    // 语言变化时释放旧 worker（traineddata 已固化在 worker 内）
+    if (cachedWorker && cachedWorkerLang !== lang) {
+        debugLog(`[本地OCR] 语言切换 ${cachedWorkerLang} -> ${lang}，重建 Worker`);
+        try { cachedWorker.terminate(); } catch {}
+        cachedWorker = null;
+    }
 
     // 检查缓存的 Worker 是否可用
     if (cachedWorker) {
@@ -1022,8 +1038,9 @@ async function getOrCreateWorker(): Promise<any> {
 
     // 创建新的 Worker
     debugLog('[本地OCR] 🐌 首次创建 Worker（需要加载资源，较慢）');
-    cachedWorkerPromise = createWorkerInternal();
+    cachedWorkerPromise = createWorkerInternal(lang);
     cachedWorker = await cachedWorkerPromise;
+    cachedWorkerLang = lang;
     lastUsedTime = now;
     cachedWorkerPromise = null;
 
@@ -1036,8 +1053,19 @@ async function getOrCreateWorker(): Promise<any> {
 /**
  * 内部创建 Worker 的方法
  */
-async function createWorkerInternal(): Promise<any> {
+async function createWorkerInternal(lang: string = 'eng'): Promise<any> {
     const {createWorker} = await import('tesseract.js');
+
+    // 非英语：按需下载语言包（IndexedDB/localStorage 缓存，成功后后续秒开）
+    let downloadedLangData: Uint8Array | null = null;
+    if (lang !== 'eng') {
+        debugLog(`[本地OCR] 语言 ${lang} 非内置，检查/下载语言包...`);
+        downloadedLangData = await ensureTrainedData(lang as any);
+        if (!downloadedLangData) {
+            throw new Error(`OCR 语言包（${lang}）下载失败，请检查网络后重试`);
+        }
+        debugLog(`[本地OCR] 语言包就绪，大小: ${downloadedLangData.length}`);
+    }
 
     debugLog('[本地OCR] 创建 Worker，尝试读取缓存...');
 
@@ -1057,11 +1085,13 @@ async function createWorkerInternal(): Promise<any> {
     } else {
         // 从文件加载
         debugLog('[本地OCR] 缓存不存在，从文件加载资源...');
-        const [workerData, coreData, langData] = await Promise.all([
+        const [workerData, coreData] = await Promise.all([
             readLocalFile('./worker.min.js'),
-            readLocalFile('./tesseract-core-simd-lstm.wasm.js'),
-            readLocalFile('./tessdata/eng.traineddata.fast')
+            readLocalFile('./tesseract-core-simd-lstm.wasm.js')
         ]);
+        const langData: ArrayBuffer = downloadedLangData
+            ? downloadedLangData.slice().buffer
+            : await readLocalFile('./tessdata/eng.traineddata.fast');
 
         // 将文件内容转为字符串
         workerCode = new TextDecoder().decode(workerData);
@@ -1075,7 +1105,7 @@ async function createWorkerInternal(): Promise<any> {
     }
 
     // 创建内联 Worker 脚本
-    const workerUrl = createInlineWorkerScript(workerCode, coreCode, langDataBase64);
+    const workerUrl = createInlineWorkerScript(workerCode, coreCode, langDataBase64, lang);
 
     // 创建 worker 配置
     const workerConfig: any = {
@@ -1097,7 +1127,7 @@ async function createWorkerInternal(): Promise<any> {
 
     // 等待初始化完成
     await new Promise(resolve => setTimeout(resolve, 100));
-    await worker.reinitialize('eng');
+    await worker.reinitialize(lang);
 
     debugLog('[本地OCR] Worker 创建并初始化完成');
     return worker;
@@ -1224,8 +1254,9 @@ function createDataUrl(data: ArrayBuffer, type: string): string {
  * 创建内联 Worker 脚本
  * 将 worker、core 和语言数据合并，避免外部请求
  */
-function createInlineWorkerScript(workerCode: string, coreCode: string, langDataBase64: string): string {
+function createInlineWorkerScript(workerCode: string, coreCode: string, langDataBase64: string, lang: string = 'eng'): string {
     const script = `
+const __LANG__ = '${lang}';
 // 内联的 tesseract-core 代码 - 直接执行，不通过 importScripts
 ${coreCode}
 
@@ -1239,7 +1270,7 @@ ${coreCode}
                 try { TesseractCore.FS.mkdir('/tessdata'); } catch(e) {}
                 // 写入语言数据
                 const langData = Uint8Array.from(atob('${langDataBase64}'), c => c.charCodeAt(0));
-                TesseractCore.FS.writeFile('/tessdata/eng.traineddata', langData);
+                TesseractCore.FS.writeFile('/tessdata/' + __LANG__ + '.traineddata', langData);
                 console.log('[Worker] 语言数据注入成功');
             } catch (e) {
                 console.error('[Worker] 语言数据注入失败:', e);
@@ -1261,6 +1292,7 @@ ${workerCode}
 
 async function ocrTranslateLocal(base64: string, translatePlatform: TranslationPlatform = 'local'): Promise<OcrResult> {
     let worker: any = null;
+    const ocrLang = getActiveProfile().ocrLang;
     // const startTime = Date.now();
 
     try {
@@ -1268,7 +1300,7 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
         const imageUrl = `data:image/png;base64,${base64}`;
 
         // 获取缓存的 Worker（首次会创建）
-        worker = await getOrCreateWorker();
+        worker = await getOrCreateWorker(ocrLang);
         // const workerReadyTime = Date.now();
         // debugLog(`[本地OCR] Worker 准备耗时: ${workerReadyTime - startTime}ms`);
 
@@ -1316,7 +1348,7 @@ async function ocrTranslateLocal(base64: string, translatePlatform: TranslationP
                 // 使用指定的翻译平台进行翻译
                 try {
                     const {translateWithPlatform} = await import('./translation-api');
-                    const translationResult = await translateWithPlatform(text, translatePlatform);
+                    const translationResult = await translateWithPlatform(text, translatePlatform, getActiveLanguage());
                     translatedText = translationResult.explains || text;
                     // console.log('[本地OCR] 平台翻译结果:', translatedText);
                 } catch (error) {

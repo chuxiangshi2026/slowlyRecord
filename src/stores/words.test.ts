@@ -954,7 +954,7 @@ describe('useWordsStore', () => {
 
       await store.translateWithPlatform('hello')
 
-      expect(translateWithPlatform).toHaveBeenCalledWith('hello', 'glm')
+      expect(translateWithPlatform).toHaveBeenCalledWith('hello', 'glm', 'en')
     })
 
     it('应该使用不同的翻译平台', async () => {
@@ -963,7 +963,7 @@ describe('useWordsStore', () => {
 
       await store.translateWithPlatform('world')
 
-      expect(translateWithPlatform).toHaveBeenCalledWith('world', 'deepseek')
+      expect(translateWithPlatform).toHaveBeenCalledWith('world', 'deepseek', 'en')
     })
   })
 })

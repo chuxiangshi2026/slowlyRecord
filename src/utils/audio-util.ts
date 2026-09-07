@@ -1,3 +1,6 @@
+// 有道发音 URL 收口（仅英语返回 URL，其他语言返回空串）
+import { getPronunciationUrlSync as getWordAudioUrl } from './translation-api';
+
 // 将 AudioBuffer 转换为 WAV 格式的函数
 export const bufferToWave = (buffer: AudioBuffer, sampleRate: number): Blob => {
     const length = buffer.length;
@@ -203,8 +206,12 @@ export const playWordAudio = async (word: string, pronunciation?: string): Promi
             if (pronunciation && (pronunciation.startsWith('data:audio') || pronunciation.startsWith('http'))) {
                 audio.src = pronunciation;
             } else {
-                // 使用有道TTS服务
-                const ttsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`;
+                // 使用有道TTS服务（仅英语；其他语言返回空串，跳过 Audio 播放）
+                const ttsUrl = getWordAudioUrl(word);
+                if (!ttsUrl) {
+                    reject(new Error('当前语言不支持有道发音'));
+                    return;
+                }
                 audio.src = ttsUrl;
             }
             

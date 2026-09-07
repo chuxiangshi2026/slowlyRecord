@@ -235,6 +235,16 @@
               show-word-limit
           />
         </el-form-item>
+        <el-form-item label="学习语言">
+          <el-select v-model="newWordBankForm.language" style="width: 100%">
+            <el-option
+                v-for="lang in languageOptions"
+                :key="lang.code"
+                :label="lang.nameZh + '（' + lang.name + '）'"
+                :value="lang.code"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="初始内容">
           <el-radio-group v-model="newWordBankForm.initType">
             <el-radio label="empty">空词库</el-radio>
@@ -423,6 +433,8 @@ import {
   importFromBuiltinWordBank,
   getCurrentWordBankId
 } from '@/utils/wordbank-manager';
+import { listLanguages, getActiveProfile, tokenize } from '@/utils/language';
+import type { LanguageCode } from '@/utils/language';
 
 const FOCUS_MODE_ACTION_STORAGE_KEY = 'slowly-record-focus-mode-action';
 const FOCUS_MODE_DB_ACTION_TTL = 15000;
@@ -459,6 +471,7 @@ watch(() => route.query.openFocus, openFocusFromQuery);
 // 切换词库选项
 const wordBankOptions = [
   {label: '四级词汇', value: 'cet4'},
+  {label: 'JLPT N5（日语）', value: 'jlpt-n5'},
   {label: '六级词汇', value: 'cet6'},
   {label: '商务英语', value: 'bec'},
   {label: 'GMAT词汇', value: 'gmat'},
@@ -475,6 +488,7 @@ const wordBankOptions = [
   {label: '短语动词', value: 'phrasal-verbs'},
   {label: '固定搭配', value: 'collocations'},
   {label: '习语', value: 'idioms'},
+  {label: '常用短语短句', value: 'common-phrases'},
 ];
 
 const drawerVisible = ref(false)
@@ -490,9 +504,12 @@ const customWordBanks = ref<WordBank[]>([])
 // 新建词库表单
 const newWordBankForm = ref({
   name: '',
+  language: 'en' as LanguageCode,
   initType: 'empty' as 'empty' | 'import',
   importBank: '' as WordBankType | ''
 })
+// 可选语言列表（词库级语言）
+const languageOptions = listLanguages()
 
 // 加载自定义词库列表
 const loadCustomWordBanks = async () => {
@@ -577,6 +594,7 @@ const doDeleteWordBank = async (bankId: string) => {
 const showCreateWordBankDialog = () => {
   newWordBankForm.value = {
     name: '',
+    language: 'en',
     initType: 'empty',
     importBank: ''
   }
@@ -599,7 +617,7 @@ const confirmCreateWordBank = async () => {
   }
 
   // 创建词库
-  const newBank = await createNewWordBank(name)
+  const newBank = await createNewWordBank(name, [], newWordBankForm.value.language)
 
   // 如果从系统词库导入
   if (newWordBankForm.value.initType === 'import' && newWordBankForm.value.importBank) {
@@ -2324,7 +2342,7 @@ const showFilteredWords = computed(() => {
     list = [...list].sort((a, b) => {
       switch (f.sortBy) {
         case 'alpha':
-          return dir * a.text.localeCompare(b.text, 'en')
+          return dir * a.text.localeCompare(b.text, getActiveProfile().sortLocale)
         case 'length':
           const lenA = isPhrase(a) ? getWordCount(a.text) : a.text.length
           const lenB = isPhrase(b) ? getWordCount(b.text) : b.text.length
@@ -3030,6 +3048,7 @@ const startScreenCapture = async () => {
     }
 
     // 提取所有识别到的文本
+    const profile = getActiveProfile();
     const allTexts: string[] = [];
     const allWords: string[] = [];
 
@@ -3038,12 +3057,12 @@ const startScreenCapture = async () => {
       if (text.trim()) {
         allTexts.push(text.trim());
       }
-      // 使用正则提取英文单词（支持带连字符的单词和数字）
-      const words = text.match(/[a-zA-Z]+(?:[-'][a-zA-Z]+)*|[a-zA-Z0-9]+/g) || [];
+      // 按当前词库语言提取候选词（拉丁/西里尔走 Unicode 正则，日语走分词器）
+      const words = tokenize(text, getActiveProfile());
       words.forEach((word: string) => {
-        // 过滤合理长度的单词，且必须包含至少一个字母
-        if (word.length >= 2 && word.length <= 25 && /[a-zA-Z]/.test(word)) {
-          allWords.push(word.toLowerCase());
+        // 过滤合理长度的单词，且必须包含至少一个字母/假名/西里尔字母
+        if (word.length >= 2 && word.length <= 25 && /[\p{L}]/u.test(word)) {
+          allWords.push(profile.caseInsensitive ? word.toLowerCase() : word);
         }
       });
     });

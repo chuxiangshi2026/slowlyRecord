@@ -11,7 +11,7 @@
 
 export type PhonemeType = 'vowel' | 'consonant';
 export type VowelGroup = 'short' | 'long' | 'diphthong';
-export type ConsonantGroup = 'plosive' | 'fricative' | 'affricate' | 'nasal' | 'lateral' | 'semivowel';
+export type ConsonantGroup = 'plosive' | 'fricative' | 'affricate' | 'nasal' | 'lateral' | 'semivowel' | 'kana';
 
 export interface Phoneme {
     /** IPA 符号(无斜杠) */

@@ -50,6 +50,7 @@ import {getSetDb} from "@/utils/user-set-db-util.ts";
 import {RETIRED_MODEL_NAMES} from "@/config.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
+import { getActiveProfile, isWordText } from '@/utils/language';
 
 const wordsStore = useWordsStore();
 const router = useRouter();
@@ -557,8 +558,9 @@ function checkShearBoardAddWork(text: string) {
   // 去除首尾空格并替换多个连续空格为单个空格
   let processedText = text.trim().replace(/\s{2,}/g, ' ');
 
-  // 检查是否为空字符串或仅包含空格
-  if (!processedText || processedText.length > 50 || !/^[a-zA-Z\-'\s]+$/.test(processedText)) {
+  // 检查是否为空字符串或仅包含空格；字符集按当前词库语言判定（支持日/俄/西/法）
+  const profile = getActiveProfile();
+  if (!processedText || processedText.length > 50 || !isWordText(processedText, profile)) {
     ElMessage.error('请选中单个有效单词或短语');
     return;
   }
