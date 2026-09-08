@@ -2,7 +2,7 @@
  * 通用知识包 Pinia store（移动端精简版）
  *
  * 移植自桌面端 src/stores/knowledgeMemory.ts：
- * - 只保留翻卡（q2a）与四选一（choice）两种练习模式
+ * - 支持翻卡（q2a）、四选一（choice）、点选拼答案（spell，碎片由 generateFragments 生成）三种练习模式
  * - 不含自建知识条目（custom items）能力
  * - 内置包加载走分包 knowledge-pack-loader（小程序无 fetch）
  *
@@ -38,8 +38,13 @@ import {
   markCorrect,
   markWrong,
 } from '@/utils/knowledge-memory-srs'
+import {
+  tokenizeAnswer,
+  buildFragmentTiles,
+  type AnswerTile,
+} from '@/utils/answer-tokens'
 
-function normalizeAnswer(value: string): string {
+export function normalizeAnswer(value: string): string {
   return value
     .toLowerCase()
     .split('')
@@ -325,6 +330,37 @@ export const useKnowledgeMemory = defineStore('knowledgeMemory', () => {
   }
 
   /**
+   * 生成「点选拼答案」碎片格子（正确答案 token + 本包其他答案 token 中抽取的 2~3 个干扰碎片）
+   *
+   * 长度闸在页面侧控制：token 数 > 8 的条目不走本方法，自动回退翻卡自评。
+   */
+  function generateFragments(
+    packId: string,
+    correctItem: KnowledgeItem,
+  ): AnswerTile[] {
+    const correctTokens = tokenizeAnswer(correctItem.answer)
+    const pack = getPack(packId)
+    if (!pack) return buildFragmentTiles(correctTokens, [], 0, normalizeAnswer)
+
+    // 候选池：本包其他条目的答案 token，按归一化文本去重
+    const pool: string[] = []
+    const seen = new Set<string>()
+    for (const i of pack.items) {
+      if (i.id === correctItem.id) continue
+      for (const t of tokenizeAnswer(i.answer)) {
+        const key = normalizeAnswer(t)
+        if (!key || seen.has(key)) continue
+        seen.add(key)
+        pool.push(t)
+      }
+    }
+
+    // 干扰碎片取 2~3 个（候选不足时有多少取多少）
+    const distractorCount = Math.min(pool.length, 2 + Math.floor(Math.random() * 2))
+    return buildFragmentTiles(correctTokens, pool, distractorCount, normalizeAnswer)
+  }
+
+  /**
    * 清空某知识包进度（内存 + DB）
    */
   function resetPackProgress(packId: string): void {
@@ -371,6 +407,7 @@ export const useKnowledgeMemory = defineStore('knowledgeMemory', () => {
     pickItemsForSession,
     markItem,
     generateChoices,
+    generateFragments,
     resetPackProgress,
   }
 })

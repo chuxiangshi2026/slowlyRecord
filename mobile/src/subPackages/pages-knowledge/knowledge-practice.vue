@@ -2,7 +2,7 @@
   <view class="practice-page">
     <!-- 顶部进度 -->
     <view class="header">
-      <text class="title">{{ mode === 'flip' ? '翻卡练习' : '四选一' }}</text>
+      <text class="title">{{ modeTitle }}</text>
       <view class="stats">
         <text class="stat correct">✓ {{ correctCount }}</text>
         <text class="stat wrong">✗ {{ wrongCount }}</text>
@@ -14,8 +14,54 @@
 
     <!-- 答题区 -->
     <view v-if="currentItem && !finished" class="quiz">
-      <!-- 翻卡模式 -->
-      <template v-if="mode === 'flip'">
+      <!-- 拼答案模式（答案 token 数 2~8 时点选，否则回退翻卡自评） -->
+      <template v-if="mode === 'spell' && !spellFallback">
+        <view class="choice-prompt">
+          <text class="q-label">按顺序点选碎片拼出答案</text>
+          <text class="q-text">{{ currentItem.question }}</text>
+          <text v-if="extrasText" class="q-extras">{{ extrasText }}</text>
+        </view>
+
+        <!-- 答题区：已点碎片序列，点按可撤回 -->
+        <view
+          class="spell-answer"
+          :class="{ correct: spellDone && spellCorrect, wrong: spellDone && !spellCorrect }"
+        >
+          <view
+            v-for="(tile, idx) in spellPlaced"
+            :key="tile.id"
+            class="spell-placed"
+            @click="recallTile(idx)"
+          >
+            <text class="spell-placed-text">{{ tile.text }}</text>
+          </view>
+          <text v-if="spellPlaced.length === 0" class="spell-placeholder">点击下方碎片开始拼答案</text>
+        </view>
+
+        <!-- 判分反馈 -->
+        <view v-if="spellDone" class="spell-feedback">
+          <text v-if="spellCorrect" class="feedback-text ok">✓ 拼对了</text>
+          <text v-else class="feedback-text bad">✗ 正确答案：{{ currentItem.answer }}</text>
+        </view>
+
+        <!-- 碎片格子区 -->
+        <view class="spell-pool">
+          <view
+            v-for="tile in spellTiles"
+            :key="tile.id"
+            v-show="!tile.used"
+            class="spell-tile"
+            @click="pickTile(tile)"
+          >
+            <text class="spell-tile-text">{{ tile.text }}</text>
+          </view>
+        </view>
+
+        <button v-if="spellDone" class="btn-next" @click="nextQuestion">下一题</button>
+      </template>
+
+      <!-- 翻卡模式（含拼答案回退条目） -->
+      <template v-else-if="mode === 'flip' || spellFallback">
         <view class="flip-card" @click="reveal">
           <template v-if="!revealed">
             <text class="q-label">问题</text>
@@ -33,6 +79,7 @@
           <button class="btn-forget" @click="mark(false)">没记住</button>
           <button class="btn-remember" @click="mark(true)">记住了</button>
         </view>
+        <text v-if="spellFallback" class="fallback-tip">该答案过长或过短，已切换为翻卡自评</text>
       </template>
 
       <!-- 四选一模式 -->
@@ -78,14 +125,18 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
-import { useKnowledgeMemory } from './useKnowledgeMemory'
+import { useKnowledgeMemory, normalizeAnswer } from './useKnowledgeMemory'
+import { tokenizeAnswer, type AnswerTile } from '@/utils/answer-tokens'
 import type { KnowledgeItem } from '@/stores/useUtils/types'
 
 const SESSION_SIZE = 10
+/** 拼答案长度闸：token 数 2~8 才点选，其余回退翻卡自评 */
+const MIN_SPELL_TOKENS = 2
+const MAX_SPELL_TOKENS = 8
 
 const store = useKnowledgeMemory()
 const packId = ref('')
-const mode = ref<'flip' | 'choice'>('flip')
+const mode = ref<'flip' | 'choice' | 'spell'>('flip')
 
 const sessionItems = ref<KnowledgeItem[]>([])
 const currentIndex = ref(0)
@@ -101,10 +152,29 @@ const options = ref<string[]>([])
 const answered = ref(false)
 const pickedIdx = ref<number | null>(null)
 
+// 拼答案状态
+const spellTiles = ref<(AnswerTile & { used: boolean })[]>([])
+const spellPlaced = ref<AnswerTile[]>([])
+const spellDone = ref(false)
+const spellCorrect = ref(false)
+
 const currentItem = computed(() => sessionItems.value[currentIndex.value] || null)
 
+const modeTitle = computed(() => {
+  if (mode.value === 'flip') return '翻卡练习'
+  if (mode.value === 'choice') return '四选一'
+  return '拼答案'
+})
+
+/** 拼答案长度闸：答案 token 数不在 2~8 区间时，该条目回退为翻卡自评 */
+const spellFallback = computed(() => {
+  if (mode.value !== 'spell' || !currentItem.value) return false
+  const n = tokenizeAnswer(currentItem.value.answer).length
+  return n < MIN_SPELL_TOKENS || n > MAX_SPELL_TOKENS
+})
+
 const progressPercent = computed(() =>
-  Math.round(((currentIndex.value + (answered.value || revealed.value ? 1 : 0)) / sessionItems.value.length) * 100),
+  Math.round(((currentIndex.value + (answered.value || revealed.value || (spellDone.value && !spellFallback.value) ? 1 : 0)) / sessionItems.value.length) * 100),
 )
 
 const extrasText = computed(() => {
@@ -129,13 +199,20 @@ function resetQuestionState() {
   revealed.value = false
   answered.value = false
   pickedIdx.value = null
+  spellPlaced.value = []
+  spellDone.value = false
+  spellCorrect.value = false
   if (mode.value === 'choice' && currentItem.value) {
     options.value = store.generateChoices(packId.value, currentItem.value)
+  }
+  if (mode.value === 'spell' && currentItem.value && !spellFallback.value) {
+    spellTiles.value = store.generateFragments(packId.value, currentItem.value).map(t => ({ ...t, used: false }))
   }
 }
 
 function reveal() {
-  if (mode.value === 'flip') revealed.value = true
+  // 翻卡模式 + 拼答案回退条目（长度闸外）都走翻卡自评
+  if (mode.value === 'flip' || spellFallback.value) revealed.value = true
 }
 
 /** 翻卡自评 */
@@ -167,6 +244,40 @@ function choose(idx: number) {
   else wrongCount.value++
 }
 
+/** 拼答案：点选碎片放入答题区，放满自动判分 */
+function pickTile(tile: AnswerTile & { used: boolean }) {
+  const item = currentItem.value
+  if (!item || spellDone.value || tile.used) return
+  tile.used = true
+  spellPlaced.value.push({ id: tile.id, text: tile.text })
+  if (spellPlaced.value.length === tokenizeAnswer(item.answer).length) {
+    gradeSpell()
+  }
+}
+
+/** 拼答案：点按已放碎片撤回 */
+function recallTile(idx: number) {
+  if (spellDone.value) return
+  const tile = spellPlaced.value[idx]
+  if (!tile) return
+  const poolTile = spellTiles.value.find(t => t.id === tile.id)
+  if (poolTile) poolTile.used = false
+  spellPlaced.value.splice(idx, 1)
+}
+
+/** 拼答案判分：比较归一化后的 token 拼接序列，与翻卡自评同等计入进度 */
+function gradeSpell() {
+  const item = currentItem.value
+  if (!item || spellDone.value) return
+  const joined = spellPlaced.value.map(t => t.text).join('')
+  const isCorrect = normalizeAnswer(joined) === normalizeAnswer(item.answer)
+  spellDone.value = true
+  spellCorrect.value = isCorrect
+  store.markItem(packId.value, item.id, isCorrect)
+  if (isCorrect) correctCount.value++
+  else wrongCount.value++
+}
+
 function nextQuestion() {
   if (currentIndex.value + 1 >= sessionItems.value.length) {
     finished.value = true
@@ -187,6 +298,7 @@ function goBack() {
 onLoad((opt: any) => {
   if (opt?.packId) packId.value = opt.packId
   if (opt?.mode === 'choice') mode.value = 'choice'
+  if (opt?.mode === 'spell') mode.value = 'spell'
 })
 
 // 详情页 loadPack 是异步的，等包加载完再抽题
@@ -399,6 +511,118 @@ onShow(() => {
   font-size: 30rpx;
   border: none;
   padding: 0 90rpx;
+}
+
+/* 拼答案 */
+.spell-answer {
+  width: 100%;
+  min-height: 130rpx;
+  background: #fff;
+  border: 3rpx dashed #cfd8dc;
+  border-radius: 20rpx;
+  padding: 24rpx 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 14rpx;
+  margin-bottom: 26rpx;
+  transition: border-color 0.2s;
+}
+
+.spell-answer.correct {
+  border-color: #4caf50;
+  border-style: solid;
+  background: #f2fbf4;
+}
+
+.spell-answer.wrong {
+  border-color: #e64340;
+  border-style: solid;
+  background: #fef2f2;
+}
+
+.spell-placeholder {
+  font-size: 26rpx;
+  color: #bbb;
+  align-self: center;
+}
+
+.spell-placed {
+  min-width: 72rpx;
+  height: 88rpx;
+  padding: 0 16rpx;
+  background: #eef4f0;
+  border: 3rpx solid #52796f;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spell-placed-text {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #52796f;
+}
+
+.spell-feedback {
+  width: 100%;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.feedback-text {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.feedback-text.ok {
+  color: #4caf50;
+}
+
+.feedback-text.bad {
+  color: #e64340;
+}
+
+.spell-pool {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18rpx;
+  padding: 30rpx 10rpx;
+  background: #eef0f4;
+  border-radius: 20rpx;
+}
+
+.spell-tile {
+  min-width: 88rpx;
+  height: 96rpx;
+  padding: 0 20rpx;
+  background: #fff;
+  border: 3rpx solid #d5ddd8;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3rpx 8rpx rgba(82, 121, 111, 0.12);
+}
+
+.spell-tile:active {
+  transform: scale(0.92);
+}
+
+.spell-tile-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #303030;
+}
+
+.fallback-tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 24rpx;
 }
 
 /* 结果页 */

@@ -43,8 +43,34 @@
 
       <!-- 输入区域 -->
       <view class="input-area" :class="{ shaking: isShaking }">
+        <!-- 点选拼写模式（≤8 字母的单词，长单词自动回退打字模式） -->
+        <view v-if="tapInputActive" class="tap-mode">
+          <view class="tap-slots">
+            <view
+              v-for="i in currentWord.word.length"
+              :key="'tap-slot-' + i"
+              class="tap-slot"
+              :class="{ filled: tapPlaced[i-1] }"
+              @click="tapRecall(i - 1)"
+            >
+              <text class="tap-slot-text">{{ tapPlaced[i-1]?.text || '' }}</text>
+            </view>
+          </view>
+          <view class="tap-pool">
+            <view
+              v-for="tile in tapTiles"
+              :key="tile.id"
+              v-show="!tile.used"
+              class="tap-tile"
+              @click="tapPick(tile)"
+            >
+              <text class="tap-tile-text">{{ tile.text }}</text>
+            </view>
+          </view>
+        </view>
+
         <!-- 全盲模式 -->
-        <view v-if="displayMode === 'blank'" class="blank-mode">
+        <view v-else-if="displayMode === 'blank'" class="blank-mode">
           <view class="input-slots">
             <view
               v-for="i in currentWord.word.length"
@@ -157,6 +183,9 @@
         <view class="toggle-btn" :class="{ active: partialMode }" @click="togglePartialMode">
           <text>半提示</text>
         </view>
+        <view class="toggle-btn tap-toggle" :class="{ 'tap-on': tapMode }" @click="toggleTapMode">
+          <text>点选</text>
+        </view>
       </view>
     </view>
   </view>
@@ -166,15 +195,28 @@
 import { ref, computed, nextTick, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
+import { buildFragmentTiles, type AnswerTile } from '@/utils/answer-tokens'
 
 const wordsStore = useMobileWords()
 
 // ========== 常量 ==========
 const MAX_ERRORS_BEFORE_HINT = 3
+/** 点选拼写长度闸：≤8 字母的单词才走碎片点选，长单词自动回退打字模式 */
+const MAX_TAP_LETTERS = 8
 
 // ========== 选项 ==========
+// 半提示模式
 const partialMode = ref(true)
 const displayMode = computed<'blank' | 'partial'>(() => partialMode.value ? 'partial' : 'blank')
+
+// 点选拼写模式（与打字模式并列的输入方式，长单词自动回退）
+const tapMode = ref(false)
+const tapTiles = ref<(AnswerTile & { used: boolean })[]>([])
+const tapPlaced = ref<AnswerTile[]>([])
+const tapInputActive = computed(() => {
+  const w = currentWord.value
+  return tapMode.value && !!w && w.word.length <= MAX_TAP_LETTERS
+})
 const options = ref({
   autoPlay: true,
   showPhonetic: true,
@@ -274,11 +316,19 @@ function prepareWord() {
   partialSlots.value = []
   hintType.value = 'none'
   focusedSlotIndex.value = -1
+  tapPlaced.value = []
+  tapTiles.value = []
 
   const word = currentWord.value
   if (!word) return
 
-  if (displayMode.value === 'partial') {
+  if (tapInputActive.value) {
+    // 点选拼写：单词字母 + 2~3 个干扰字母（干扰字母不与单词已有字母重复）
+    const letters = word.word.toLowerCase().split('')
+    const pool = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(l => !letters.includes(l))
+    const distractorCount = 2 + (Math.random() < 0.5 ? 1 : 0)
+    tapTiles.value = buildFragmentTiles(letters, pool, distractorCount).map(t => ({ ...t, used: false }))
+  } else if (displayMode.value === 'partial') {
     const letters = word.word.split('')
     const len = letters.length
     let hideCount = Math.floor(len * 0.5)
@@ -357,6 +407,27 @@ function onSlotTap(index: number) {
   }
 }
 
+// ========== 点选拼写输入 ==========
+function tapPick(tile: AnswerTile & { used: boolean }) {
+  const word = currentWord.value
+  if (!word || tile.used) return
+  tile.used = true
+  tapPlaced.value.push({ id: tile.id, text: tile.text })
+  // 放满单词长度自动判分
+  if (tapPlaced.value.length === word.word.length) {
+    checkAnswer()
+  }
+}
+
+/** 点按已放字母撤回 */
+function tapRecall(index: number) {
+  const tile = tapPlaced.value[index]
+  if (!tile) return
+  const poolTile = tapTiles.value.find(t => t.id === tile.id)
+  if (poolTile) poolTile.used = false
+  tapPlaced.value.splice(index, 1)
+}
+
 // ========== 语音播放 ==========
 function playWord() {
   const word = currentWord.value
@@ -393,7 +464,9 @@ async function checkAnswer() {
   if (!word) return
 
   let userAnswer = ''
-  if (displayMode.value === 'blank') {
+  if (tapInputActive.value) {
+    userAnswer = tapPlaced.value.map(t => t.text).join('').toLowerCase()
+  } else if (displayMode.value === 'blank') {
     userAnswer = userInput.value.join('').toLowerCase()
   } else {
     userAnswer = partialSlots.value.map(s => s.value || s.letter).join('').toLowerCase()
@@ -439,7 +512,10 @@ async function checkAnswer() {
     }
 
     // 清空输入让用户重新尝试
-    if (displayMode.value === 'partial') {
+    if (tapInputActive.value) {
+      tapPlaced.value = []
+      tapTiles.value.forEach(t => { t.used = false })
+    } else if (displayMode.value === 'partial') {
       partialSlots.value.forEach(slot => {
         if (!slot.fixed) slot.value = ''
       })
@@ -513,7 +589,10 @@ function nextWord() {
 function showLetterHint() {
   if (!currentWord.value) return
 
-  if (displayMode.value === 'partial') {
+  if (tapInputActive.value) {
+    // 点选模式无字母逐个提示，直接展示完整答案
+    hintType.value = 'full'
+  } else if (displayMode.value === 'partial') {
     const emptySlots = partialSlots.value
       .map((s, i) => ({ slot: s, index: i }))
       .filter(({ slot }) => !slot.fixed && !slot.value)
@@ -537,7 +616,22 @@ function showLetterHint() {
 function showHintDialog() {
   if (!currentWord.value || isShowingHint.value) return
 
-  if (displayMode.value === 'partial') {
+  if (tapInputActive.value) {
+    // 点选模式：闪烁显示完整单词后还原已选字母
+    const word = currentWord.value!.word.toLowerCase()
+    const original = [...tapPlaced.value]
+    if (original.length >= word.length) return
+
+    isShowingHint.value = true
+    tapTiles.value.forEach(t => { t.used = false })
+    tapPlaced.value = word.split('').map((text, i) => ({ id: -1 - i, text }))
+
+    setTimeout(() => {
+      tapPlaced.value = original
+      tapTiles.value.forEach(t => { t.used = tapPlaced.value.some(p => p.id === t.id) })
+      isShowingHint.value = false
+    }, 900)
+  } else if (displayMode.value === 'partial') {
     // 闪烁提示：临时显示所有空位字母
     const tempValues: { index: number; originalValue: string }[] = []
     const emptySlots: number[] = []
@@ -597,6 +691,12 @@ function toggleOption(key: 'autoPlay' | 'showPhonetic' | 'showMeaning') {
 
 function togglePartialMode() {
   partialMode.value = !partialMode.value
+  prepareWord()
+}
+
+/** 切换点选拼写输入（长单词自动回退打字模式，由 tapInputActive 控制） */
+function toggleTapMode() {
+  tapMode.value = !tapMode.value
   prepareWord()
 }
 
@@ -883,6 +983,82 @@ watch(() => wordsStore.currentBankId, async () => {
   background: transparent;
 }
 
+/* 点选拼写模式 */
+.tap-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tap-slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 24rpx;
+}
+
+.tap-slot {
+  width: 72rpx;
+  height: 88rpx;
+  border: 3rpx solid #ddd;
+  border-style: dashed;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.tap-slot.filled {
+  border-color: #52796f;
+  border-style: solid;
+  background: #eef4f0;
+}
+
+.tap-slot-text {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #52796f;
+}
+
+.tap-pool {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16rpx;
+  padding: 28rpx 20rpx;
+  margin-top: 16rpx;
+  background: #eef0f2;
+  border-radius: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tap-tile {
+  min-width: 80rpx;
+  height: 92rpx;
+  padding: 0 18rpx;
+  background: #fff;
+  border: 3rpx solid #c9d4cf;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3rpx 8rpx rgba(82, 121, 111, 0.12);
+}
+
+.tap-tile:active {
+  transform: scale(0.92);
+}
+
+.tap-tile-text {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
 /* 错误提示区域 */
 .hint-area {
   width: 100%;
@@ -1048,5 +1224,11 @@ watch(() => wordsStore.currentBankId, async () => {
 .toggle-btn.active {
   color: #1976d2;
   background: #e3f2fd;
+}
+
+/* 点选拼写开关：主色 #52796f 系列 */
+.toggle-btn.tap-on {
+  color: #fff;
+  background: #52796f;
 }
 </style>

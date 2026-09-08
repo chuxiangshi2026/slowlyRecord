@@ -20,6 +20,9 @@
           <button class="btn-practice choice" @click="goPractice('choice')">
             🎯 四选一
           </button>
+          <button class="btn-practice spell" @click="goPractice('spell')">
+            🧩 拼答案
+          </button>
         </view>
       </view>
 
@@ -166,7 +169,7 @@ function extrasPreview(item: KnowledgeItem): string {
     .join(' · ')
 }
 
-function goPractice(mode: 'flip' | 'choice') {
+function goPractice(mode: 'flip' | 'choice' | 'spell') {
   uni.navigateTo({
     url: `/subPackages/pages-knowledge/knowledge-practice?packId=${packId.value}&mode=${mode}`,
   })
@@ -279,6 +282,11 @@ onLoad(async (opt: any) => {
   background: #fff;
   color: #667eea;
   border: 2rpx solid #667eea;
+}
+
+.btn-practice.spell {
+  background: #52796f;
+  color: #fff;
 }
 
 /* 口诀 */
