@@ -579,6 +579,35 @@ describe('pushToServer / pullFromServer', () => {
     expect(result.success).toBe(false)
     expect(result.error).toContain('同步码格式无效')
   })
+
+  it('push → pull 往返应保留打卡记录（signin scope）', async () => {
+    // 确保走 AES-GCM 路径（与真机小程序一致）；jsdom 的 crypto 为 getter-only 时跳过
+    try {
+      const { webcrypto } = await import('node:crypto')
+      Object.defineProperty(globalThis, 'crypto', { value: webcrypto, configurable: true })
+    } catch { /* 已有可用的 crypto 则保持原样 */ }
+
+    // 捕获上传的密文，GET 时原样返回
+    let uploadedEncrypted = ''
+    mockUni.request.mockImplementation((opts: any) => {
+      if (opts.method === 'POST') {
+        uploadedEncrypted = opts.data.e
+        opts.success({ statusCode: 201, data: { code: 'blob-signin' } })
+      } else {
+        opts.success({ statusCode: 200, data: { e: uploadedEncrypted } })
+      }
+    })
+
+    const pushResult: SyncResult = await pushToServer({
+      banks: mockBanks,
+      signin: { dates: ['2026-09-01', '2026-09-02'] },
+    })
+    expect(pushResult.success).toBe(true)
+
+    const pullResult: RestoreResult = await pullFromServer(pushResult.code!)
+    expect(pullResult.success).toBe(true)
+    expect(pullResult.signin).toEqual({ dates: ['2026-09-01', '2026-09-02'] })
+  })
 })
 
 // ==================== 翻译测试 ====================

@@ -1,16 +1,20 @@
+/**
+ * 每日打卡 store（桌面端）
+ *
+ * 结构对齐移动端 mobile/src/stores/useSignin.ts，
+ * 打卡记录存取统一走 src/utils/signin-db.ts（存储 key 与移动端一致）。
+ */
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { MobileSigninData } from './useUtils/types'
-
-// 打卡记录沿用 signin 页面原有存储 key（无 slowlyrecord_ 前缀），老数据无需迁移
-const SIGNIN_STORAGE_KEY = 'signin_records'
+import type { SyncSignin } from '@/types/sync'
+import { getSigninDates, saveSigninDates } from '@/utils/signin-db'
 
 /** 本地时区日期 → YYYY-MM-DD */
 function formatDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-export const useSignin = defineStore('signin', () => {
+export const useSigninStore = defineStore('signin', () => {
   const signedDates = ref<string[]>([])
   let _loaded = false
 
@@ -46,25 +50,12 @@ export const useSignin = defineStore('signin', () => {
   /** 从存储加载打卡记录（幂等，可在多个页面安全调用） */
   function loadRecords() {
     if (_loaded) return
-    try {
-      const stored = uni.getStorageSync(SIGNIN_STORAGE_KEY)
-      if (stored) {
-        // 历史数据以 JSON 字符串写入，兼容直接存数组的情况
-        const parsed = typeof stored === 'string' ? JSON.parse(stored) : stored
-        if (Array.isArray(parsed)) signedDates.value = parsed
-      }
-    } catch {
-      signedDates.value = []
-    }
+    signedDates.value = getSigninDates()
     _loaded = true
   }
 
   function persist() {
-    try {
-      uni.setStorageSync(SIGNIN_STORAGE_KEY, JSON.stringify(signedDates.value))
-    } catch (e) {
-      console.error('保存打卡记录失败:', e)
-    }
+    saveSigninDates(signedDates.value)
   }
 
   /** 今日打卡，重复打卡返回 false */
@@ -75,20 +66,20 @@ export const useSignin = defineStore('signin', () => {
     return true
   }
 
-  // ===== 同步 collect / restore =====
+  // ===== 同步 collect / restore（与移动端 useSignin 同签名） =====
 
-  /** 收集打卡记录用于同步（无数据返回 null，避免无意义负载） */
-  function collectSync(): MobileSigninData | null {
+  /** 收集打卡记录用于同步（无数据返回 null） */
+  function collectSync(): SyncSignin | null {
     loadRecords()
     if (signedDates.value.length === 0) return null
     return { dates: [...signedDates.value] }
   }
 
   /**
-   * 还原打卡记录：与本地记录取并集后写回（打卡只有"某天是否打卡"，天然无冲突）
+   * 还原打卡记录：与本地取并集后写回（打卡按日期合并，无冲突）
    * @returns 本次新增的打卡天数
    */
-  function restoreSync(data: MobileSigninData): number {
+  function restoreSync(data: SyncSignin): number {
     loadRecords()
     const local = new Set(signedDates.value)
     let added = 0

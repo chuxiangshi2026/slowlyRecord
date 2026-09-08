@@ -296,4 +296,16 @@ describe('convertMobileCompatToSyncData', () => {
     expect(data.textMemory).toBeNull()
     expect(data.numberMemory).toBeNull()
   })
+
+  it('signin 字段原样透传（移动端推送 → 桌面端 SyncData）', () => {
+    const input = buildMobileData()
+    input.signin = { dates: ['2026-09-01', '2026-09-02'] }
+    const data = convertMobileCompatToSyncData(input)
+    expect(data.signin).toEqual({ dates: ['2026-09-01', '2026-09-02'] })
+  })
+
+  it('signin 缺省为 null（旧版移动端 payload 无打卡字段）', () => {
+    const data = convertMobileCompatToSyncData(buildMobileData())
+    expect(data.signin).toBeNull()
+  })
 })

@@ -163,6 +163,7 @@
               <el-descriptions-item label="快捷键记忆">{{ syncStore.previewSummary.shortcutCategoryCount }} 分类</el-descriptions-item>
               <el-descriptions-item label="知识库">{{ syncStore.previewSummary.knowledgePackCount }} 包</el-descriptions-item>
               <el-descriptions-item label="音标进度">{{ syncStore.previewSummary.phonemeCount }} 音素</el-descriptions-item>
+              <el-descriptions-item label="打卡记录">{{ syncStore.previewSummary.signinDayCount }} 天</el-descriptions-item>
             </el-descriptions>
 
             <div class="sync-restore-options">
@@ -174,6 +175,7 @@
               <el-checkbox v-model="restoreOptions.restoreLetterMemory">还原字母映射</el-checkbox>
               <el-checkbox v-model="restoreOptions.restoreKnowledgeMemory">还原知识库</el-checkbox>
               <el-checkbox v-model="restoreOptions.restorePhoneticMemory">还原音标进度</el-checkbox>
+              <el-checkbox v-model="restoreOptions.restoreSignin">还原打卡记录</el-checkbox>
             </div>
 
             <div class="sync-actions">

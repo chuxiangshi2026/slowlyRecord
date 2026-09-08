@@ -4,7 +4,7 @@
  * 负责从各 Store / DB 收集数据、合并还原、冲突处理。
  * 同步数据以 SyncData 为统一格式，可导出为 JSON 或二进制文件，也可上传到临时服务器。
  */
-import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, ConflictStrategy } from '@/types/sync'
+import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
@@ -19,6 +19,7 @@ import { getSetDb, addAndUpdateSetDb } from '@/utils/user-set-db-util'
 import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_LETTER_MEMORY, DB_KEY_KNOWLEDGE_MEMORY, DB_KEY_PHONETIC_MEMORY } from '@/constants'
 import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDoc, saveProgressDoc as saveKnowledgeProgressDoc } from '@/utils/knowledge-memory-db'
 import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
+import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
 import { log } from '@/utils/logger'
 
 // ==================== 数据收集 ====================
@@ -90,6 +91,9 @@ export async function collectSyncData(): Promise<SyncData> {
   // 9. 音标学习进度
   const phoneticMemory = await collectPhoneticMemory()
 
+  // 10. 每日打卡记录
+  const signin = collectSigninSync()
+
   return {
     version: SYNC_VERSION,
     exportedAt: Date.now(),
@@ -103,6 +107,7 @@ export async function collectSyncData(): Promise<SyncData> {
     letterMemory,
     knowledgeMemory,
     phoneticMemory,
+    signin,
   }
 }
 
@@ -275,6 +280,8 @@ export interface RestoreOptions {
   restoreKnowledgeMemory: boolean
   /** 是否还原音标学习进度 */
   restorePhoneticMemory: boolean
+  /** 是否还原每日打卡记录 */
+  restoreSignin: boolean
 }
 
 export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
@@ -287,6 +294,7 @@ export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
   restoreLetterMemory: true,
   restoreKnowledgeMemory: true,
   restorePhoneticMemory: true,
+  restoreSignin: true,
 }
 
 export interface RestoreResult {
@@ -299,6 +307,7 @@ export interface RestoreResult {
   letterMemoryRestored: boolean
   knowledgeMemoryRestored: boolean
   phoneticMemoryRestored: boolean
+  signinRestored: boolean
   errors: string[]
 }
 
@@ -316,6 +325,7 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     letterMemoryRestored: false,
     knowledgeMemoryRestored: false,
     phoneticMemoryRestored: false,
+    signinRestored: false,
     errors: [],
   }
 
@@ -373,6 +383,12 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     if (options.restorePhoneticMemory && data.phoneticMemory) {
       await restorePhoneticMemoryData(data.phoneticMemory)
       result.phoneticMemoryRestored = true
+    }
+
+    // 9. 还原每日打卡记录（按日期并集合并，无冲突）
+    if (options.restoreSignin && data.signin) {
+      restoreSigninSync(data.signin)
+      result.signinRestored = true
     }
   } catch (e) {
     result.errors.push(String(e))

@@ -12,6 +12,7 @@ import type {
   MobileNumberMemory,
   MobileKnowledgeMemory,
   MobilePhoneticMemory,
+  MobileSigninData,
 } from '@/stores/useUtils/types'
 import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
 import { log } from '../../../utils/logger'
@@ -25,6 +26,7 @@ export type {
   MobileNumberMemory,
   MobileKnowledgeMemory,
   MobilePhoneticMemory,
+  MobileSigninData,
 }
 
 // ==================== 服务器配置 ====================
@@ -273,6 +275,7 @@ interface PushPayload {
   numberMemory?: MobileNumberMemory
   knowledgeMemory?: MobileKnowledgeMemory
   phoneticMemory?: MobilePhoneticMemory
+  signin?: MobileSigninData
 }
 
 function collectSyncData(payload: PushPayload): MobileSyncData {
@@ -289,6 +292,7 @@ function collectSyncData(payload: PushPayload): MobileSyncData {
     numberMemory: payload.numberMemory,
     knowledgeMemory: payload.knowledgeMemory,
     phoneticMemory: payload.phoneticMemory,
+    signin: payload.signin,
   }
 }
 
@@ -304,6 +308,7 @@ export async function pushToServer(
     numberMemory?: MobileNumberMemory
     knowledgeMemory?: MobileKnowledgeMemory
     phoneticMemory?: MobilePhoneticMemory
+    signin?: MobileSigninData
   },
 ): Promise<SyncResult> {
   try {
@@ -372,6 +377,7 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
         numberMemory: data.numberMemory,
         knowledgeMemory: data.knowledgeMemory,
         phoneticMemory: data.phoneticMemory,
+        signin: data.signin,
       }
     } catch {
       return { success: false, error: '数据解析失败' }

@@ -154,6 +154,7 @@ export async function pickAndImportSyncFile(options?: Partial<RestoreOptions>): 
       letterMemoryRestored: false,
       knowledgeMemoryRestored: false,
       phoneticMemoryRestored: false,
+      signinRestored: false,
       errors: ['未选择文件'],
     }
   }
@@ -208,5 +209,6 @@ export function getSyncDataSummary(data: SyncData) {
     shortcutCategoryCount: data.shortcutMemory?.customCategories?.length || 0,
     knowledgePackCount: data.knowledgeMemory?.importedIds?.length || 0,
     phonemeCount: Object.keys(data.phoneticMemory?.phonemes || {}).length,
+    signinDayCount: data.signin?.dates?.length || 0,
   }
 }

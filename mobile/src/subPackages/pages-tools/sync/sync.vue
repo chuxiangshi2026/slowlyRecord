@@ -57,6 +57,7 @@ import { useMobileWords } from '@/stores/useMobileWords'
 import { useTextMemory } from '@/stores/useTextMemory'
 import { useNumberMemory } from '@/stores/useNumberMemory'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
+import { useSignin } from '@/stores/useSignin'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '../utils/sync'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
 import { drawQrCode } from '../utils/qrcode'
@@ -65,6 +66,7 @@ const wordsStore = useMobileWords()
 const textMemoryStore = useTextMemory()
 const numberMemoryStore = useNumberMemory()
 const phoneticMemoryStore = usePhoneticMemory()
+const signinStore = useSignin()
 
 const showPushResult = ref(false)
 const showPullInput = ref(false)
@@ -105,12 +107,15 @@ const handlePush = async () => {
     await phoneticMemoryStore.ensureLoaded()
     const knowledgeMemory = collectKnowledgeSyncData()
     const phoneticMemory = phoneticMemoryStore.collectSync()
+    // 收集每日打卡记录
+    const signin = signinStore.collectSync()
     const result = await pushToServer({
       banks,
       textMemory: hasTextMemory ? textMemory : undefined,
       numberMemory: hasNumberMemory ? numberMemory : undefined,
       knowledgeMemory: knowledgeMemory || undefined,
       phoneticMemory: phoneticMemory || undefined,
+      signin: signin || undefined,
     })
     uni.hideLoading()
     if (result.success && result.code) {
@@ -222,6 +227,10 @@ async function applyPullResult(result: any): Promise<string> {
     await phoneticMemoryStore.ensureLoaded()
     const merged = phoneticMemoryStore.restoreSync(result.phoneticMemory)
     if (merged > 0) parts.push(`${merged} 条音标进度`)
+  }
+  if (result.signin) {
+    const added = signinStore.restoreSync(result.signin)
+    if (added > 0) parts.push(`${added} 天打卡`)
   }
   return parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
 }

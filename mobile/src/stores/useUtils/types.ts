@@ -217,6 +217,8 @@ export interface MobileSyncData {
   knowledgeMemory?: MobileKnowledgeMemory
   /** 音标学习进度（可选：旧版客户端忽略此字段） */
   phoneticMemory?: MobilePhoneticMemory
+  /** 每日打卡记录（可选：旧版客户端忽略此字段） */
+  signin?: MobileSigninData
 }
 
 /** 知识库同步数据：已导入清单 + 每包条目进度（与桌面端 SyncKnowledgeMemory 一致） */
@@ -230,6 +232,11 @@ export interface MobileKnowledgeMemory {
 export interface MobilePhoneticMemory {
   phonemes: Record<string, PhonemeProgress>
   pairs: Record<string, MinimalPairProgress>
+}
+
+/** 每日打卡同步数据（与桌面端 SyncSignin 一致：YYYY-MM-DD 日期数组，合并取并集） */
+export interface MobileSigninData {
+  dates: string[]
 }
 
 export interface SyncResult {
@@ -246,6 +253,7 @@ export interface RestoreResult {
   numberMemory?: MobileNumberMemory
   knowledgeMemory?: MobileKnowledgeMemory
   phoneticMemory?: MobilePhoneticMemory
+  signin?: MobileSigninData
   error?: string
 }
 

@@ -15,10 +15,11 @@
  * - 攻击者拿到 blobId 只能看到密文，拿到 key 没有 blobId 也下载不到密文
  */
 
-import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory } from '@/types/sync'
+import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { getSetDb } from '@/utils/user-set-db-util'
+import { collectSigninSync } from '@/utils/signin-db'
 import { exportToJson, importFromJson } from '@/utils/sync-file'
 import { log } from '@/utils/logger'
 import { getAllWordBanks } from '@/utils/wordbank-manager'
@@ -356,6 +357,7 @@ const EMPTY_RESTORE_RESULT: RestoreResult = {
   letterMemoryRestored: false,
   knowledgeMemoryRestored: false,
   phoneticMemoryRestored: false,
+  signinRestored: false,
   errors: [],
 }
 
@@ -551,6 +553,8 @@ export interface MobileCompatSyncData {
   textMemory?: SyncTextMemory
   /** 数字记忆数据（与桌面端 SyncNumberMemory 同 wire format；移动端可能省略 trainingResults） */
   numberMemory?: SyncNumberMemory
+  /** 每日打卡记录（与桌面端 SyncSignin 同 wire format） */
+  signin?: SyncSignin
 }
 
 /**
@@ -644,6 +648,7 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     userSettings: collectMobileCompatUserSettings(),
     textMemory,
     numberMemory,
+    signin: collectSigninSync() || undefined,
   }
 }
 
@@ -694,6 +699,7 @@ export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncD
       : null,
     shortcutMemory: null,
     letterMemory: null,
+    signin: data.signin ?? null,
   }
 }
 

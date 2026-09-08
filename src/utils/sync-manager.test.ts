@@ -279,3 +279,90 @@ describe('sync-manager', () => {
     })
   })
 })
+
+describe('sync-manager 打卡记录（signin scope）', () => {
+  const SIGNIN_KEY = 'signin_records'
+  let mockDb: DbAdapter
+
+  const createMockSyncData = (): SyncData => ({
+    version: 1,
+    exportedAt: Date.now(),
+    platform: 'test',
+    wordBanks: [],
+    currentWordBankId: '',
+    userSettings: null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  })
+
+  beforeEach(() => {
+    mockDb = createMockDb()
+    setDbAdapter(mockDb)
+    resetPlatformCache()
+    setPlatform('web')
+    vi.resetAllMocks()
+    localStorage.clear()
+  })
+
+  afterEach(() => {
+    resetDbAdapter()
+    resetPlatformCache()
+    localStorage.clear()
+  })
+
+  it('collectSyncData 应收集打卡记录', async () => {
+    localStorage.setItem(SIGNIN_KEY, JSON.stringify(['2026-09-01', '2026-09-02']))
+
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+
+    expect(result.signin).toEqual({ dates: ['2026-09-01', '2026-09-02'] })
+  })
+
+  it('collectSyncData 无打卡记录时应为 null', async () => {
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+
+    expect(result.signin).toBeNull()
+  })
+
+  it('restoreSyncData 应按日期并集合并打卡记录', async () => {
+    localStorage.setItem(SIGNIN_KEY, JSON.stringify(['2026-09-01']))
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      signin: { dates: ['2026-09-01', '2026-09-03', '2026-09-02'] },
+    })
+
+    expect(result.signinRestored).toBe(true)
+    // 并集 + 排序写回
+    expect(JSON.parse(localStorage.getItem(SIGNIN_KEY)!)).toEqual(['2026-09-01', '2026-09-02', '2026-09-03'])
+  })
+
+  it('restoreSyncData 可通过 restoreSignin 选项跳过打卡还原', async () => {
+    localStorage.setItem(SIGNIN_KEY, JSON.stringify(['2026-09-01']))
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData(
+      { ...createMockSyncData(), signin: { dates: ['2026-09-05'] } },
+      {
+        conflictStrategy: 'merge',
+        restoreWordBanks: false,
+        restoreUserSettings: false,
+        restoreTextMemory: false,
+        restoreNumberMemory: false,
+        restoreShortcutMemory: false,
+        restoreLetterMemory: false,
+        restoreKnowledgeMemory: false,
+        restorePhoneticMemory: false,
+        restoreSignin: false,
+      },
+    )
+
+    expect(result.signinRestored).toBe(false)
+    expect(JSON.parse(localStorage.getItem(SIGNIN_KEY)!)).toEqual(['2026-09-01'])
+  })
+})

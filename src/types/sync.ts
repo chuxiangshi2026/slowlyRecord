@@ -96,6 +96,12 @@ export interface SyncPhoneticMemory {
   pairs: Record<string, MinimalPairProgress>
 }
 
+/** 每日打卡同步数据（与移动端 signin_records 一致） */
+export interface SyncSignin {
+  /** 已打卡日期列表（YYYY-MM-DD，本地时区），合并时取并集 */
+  dates: string[]
+}
+
 /** 完整的同步数据包 */
 export interface SyncData {
   /** 数据格式版本 */
@@ -122,6 +128,8 @@ export interface SyncData {
   knowledgeMemory?: SyncKnowledgeMemory | null
   /** 音标学习进度（可选：旧版客户端忽略此字段） */
   phoneticMemory?: SyncPhoneticMemory | null
+  /** 每日打卡记录（可选：旧版客户端忽略此字段） */
+  signin?: SyncSignin | null
 }
 
 /** 服务器同步状态 */
