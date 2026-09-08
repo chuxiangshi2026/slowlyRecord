@@ -1,18 +1,25 @@
 /**
- * 英文经典库服务
- * 管理英文经典（演讲/诗歌/散文/电影片段）的加载、缓存和查询
+ * 外文经典库服务
+ * 管理外文经典（演讲/诗歌/散文/电影片段 + 日/法/俄文 + 中英对照）的加载、缓存和查询
  */
 
-// 英文经典条目结构
+// 外文经典支持的语言（与 TextArticle.language 保持一致）
+export type ClassicLanguage = 'en' | 'ja' | 'ru' | 'es' | 'fr';
+
+// 外文经典条目结构
 export interface EnglishClassicItem {
   id: string;
   title: string;
   author: string;
   content: string;
+  // 中文译文（中英对照素材用）
+  translation?: string;
+  // 创作地点（文本描述，如"巴黎/葛底斯堡"）
+  location?: string;
   tags: string[];
   source?: string;
   year?: string | number;
-  language: 'en';
+  language: ClassicLanguage;
   category: string;   // 类别 code，与 ENGLISH_CATEGORIES 一致
   wordCount: number;
 }
@@ -23,18 +30,24 @@ export interface EnglishClassicCategory {
   name: string;
   file: string;
   description: string;
+  // 该分类默认语言（缺省 'en'）
+  language?: ClassicLanguage;
 }
 
 // 分类列表（与 public/datafile/english/ 下的文件一一对应）
 export const ENGLISH_CATEGORIES: EnglishClassicCategory[] = [
-  { code: 'speeches', name: '经典演讲', file: 'speeches.json', description: '影响世界的英文演讲名篇' },
-  { code: 'poems', name: '经典诗歌', file: 'poems.json', description: '英美诗歌名篇' },
-  { code: 'essays', name: '散文名篇', file: 'essays.json', description: '论学、人生、自然与青春' },
-  { code: 'movies', name: '电影片段', file: 'movie-scripts.json', description: '经典电影独白与名段' },
+  { code: 'speeches', name: '经典演讲', file: 'speeches.json', description: '影响世界的英文演讲名篇', language: 'en' },
+  { code: 'poems', name: '经典诗歌', file: 'poems.json', description: '英美诗歌名篇', language: 'en' },
+  { code: 'essays', name: '散文名篇', file: 'essays.json', description: '论学、人生、自然与青春', language: 'en' },
+  { code: 'movies', name: '电影片段', file: 'movie-scripts.json', description: '经典电影独白与名段', language: 'en' },
+  { code: 'japanese', name: '日文名篇', file: 'japanese.json', description: '日本经典随笔、俳句小诗与演说', language: 'ja' },
+  { code: 'french', name: '法文名篇', file: 'french.json', description: '法国经典散文、诗歌与短文', language: 'fr' },
+  { code: 'russian', name: '俄文名篇', file: 'russian.json', description: '俄罗斯经典诗歌与散文', language: 'ru' },
+  { code: 'bilingual', name: '中英对照', file: 'bilingual.json', description: '世界名篇英文原文与中文译文成对', language: 'en' },
 ];
 
 // 缓存配置
-const CACHE_KEY_PREFIX = 'english_classic_cache_v1_';
+const CACHE_KEY_PREFIX = 'english_classic_cache_v2_';
 const CACHE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // 30 天
 
 // 数据文件路径
@@ -157,15 +170,20 @@ function normalizeEnglishData(data: any[], category: string): EnglishClassicItem
     return [];
   }
 
+  const cat = ENGLISH_CATEGORIES.find(c => c.code === category);
+  const defaultLang = cat?.language || 'en';
+
   return data.map((item, index) => ({
     id: item.id || `english_${category}_${Date.now()}_${index}`,
     title: item.title || 'Untitled',
     author: item.author || 'Anonymous',
     content: item.content || '',
+    translation: item.translation,
+    location: item.location,
     tags: Array.isArray(item.tags) ? item.tags : [],
     source: item.source,
     year: item.year,
-    language: 'en' as const,
+    language: (item.language as ClassicLanguage) || defaultLang,
     category,
     wordCount: item.content ? item.content.split(/\s+/).filter(Boolean).length : 0,
   })).filter(it => it.content && it.title);

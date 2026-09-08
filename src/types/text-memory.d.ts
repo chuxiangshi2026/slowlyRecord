@@ -90,6 +90,8 @@ export interface TextArticle {
   category?: TextCategory;
   // 文章语言：'zh'（缺省，中文走原有中文逻辑）| 'en' | 'ja' | 'ru' | 'es' | 'fr'
   language?: string;
+  // 中文译文/对照译文（中英对照素材用）
+  translation?: string;
   // 地理坐标（解析后的）
   geo?: GeoLocation;
   // 创作年份（可选，用于时间线；负数=公元前）
