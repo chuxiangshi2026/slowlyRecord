@@ -140,6 +140,29 @@
             <text class="stat-label">忘记</text>
           </view>
         </view>
+        <view class="complete-guides">
+          <button
+            v-if="canGoDictation"
+            class="btn-guide"
+            @click="goAfterReview('/subPackages/pages-tools/dictation/dictation')"
+          >
+            ✏️ 练拼写
+          </button>
+          <button
+            v-if="wrongWordsCount > 0"
+            class="btn-guide"
+            @click="goAfterReview('/subPackages/pages-data/wrong-words/wrong-words')"
+          >
+            📕 看错题（{{ wrongWordsCount }}）
+          </button>
+          <button
+            v-if="!signinStore.hasSignedToday"
+            class="btn-guide"
+            @click="goAfterReview('/subPackages/pages-data/signin/signin')"
+          >
+            📅 去打卡
+          </button>
+        </view>
         <button class="btn-done" @click="finishReview">完成</button>
       </view>
     </view>
@@ -162,10 +185,12 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
+import { useSignin } from '@/stores/useSignin'
 import { getTtsAdapter } from '@/adapters/index'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 
 const wordsStore = useMobileWords()
+const signinStore = useSignin()
 const currentIndex = ref(0)
 const isFlipped = ref(false)
 const showComplete = ref(false)
@@ -207,6 +232,14 @@ const isSwiping = ref(false)
 const swipeDirection = ref<'left' | 'right' | 'down' | ''>('')
 
 const reviewWords = computed(() => wordsStore.reviewWords)
+
+// 错题数：低等级且复习过（与错题本页口径一致），>0 时完成页才显示"看错题"
+const wrongWordsCount = computed(() => {
+  return wordsStore.words.filter(w => (w.level || 1) <= 2 && (w.reviewCount || 0) > 0).length
+})
+
+// 拼写练习需要当前词库有单词才显示引导
+const canGoDictation = computed(() => wordsStore.words.length > 0)
 
 const canStartReview = computed(() => reviewWords.value.length > 0 || wordsStore.words.length > 0)
 
@@ -259,6 +292,8 @@ const cardStyle = computed(() => {
 })
 
 onMounted(() => {
+  // 打卡数据用于完成页"去打卡"引导判断
+  signinStore.loadRecords()
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享，无需重复调用
   // 等数据准备好后尝试恢复未完成的复习会话；恢复不到则自动按当前待复习列表新建会话
   const tryInit = () => {
@@ -615,6 +650,12 @@ const finishReview = () => {
   // 清除自定义复习列表，下次进入时恢复默认
   wordsStore.setCustomReviewWords(null)
   uni.showToast({ title: '复习完成', icon: 'success' })
+}
+
+// 完成页引导：先收尾本次会话，再跳转到对应模块
+const goAfterReview = (url: string) => {
+  finishReview()
+  uni.navigateTo({ url })
 }
 </script>
 
@@ -1015,6 +1056,25 @@ const finishReview = () => {
   font-size: 32rpx;
   border: none;
   width: 100%;
+}
+
+/* 完成页引导链：主色绿按钮 */
+.complete-guides {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.btn-guide {
+  background: #52796f;
+  color: #fff;
+  border-radius: 50rpx;
+  height: 84rpx;
+  font-size: 30rpx;
+  border: none;
+  width: 100%;
+  line-height: 84rpx;
 }
 
 /* 删除确认 */

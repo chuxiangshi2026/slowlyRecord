@@ -5,6 +5,34 @@
       <text class="subtitle">高效记忆，轻松学习</text>
     </view>
 
+    <!-- 今日任务区：打开即见"今天该学什么"，一步直达 -->
+    <view class="today-task">
+      <!-- 主任务卡：今日待复习 -->
+      <view class="task-main" :class="{ done: reviewCount === 0 }" @click="goToReview">
+        <view class="task-main-info">
+          <text class="task-main-title">{{ reviewCount > 0 ? '今日待复习' : '今日已完成' }}</text>
+          <text class="task-main-num">{{ reviewCount > 0 ? reviewCount + ' 词' : '🎉 全部搞定' }}</text>
+          <text class="task-main-hint">{{ reviewCount > 0 ? '点击开始复习 →' : '太棒了，继续保持！' }}</text>
+        </view>
+        <view v-if="reviewCount > 0" class="task-main-action">开始复习</view>
+      </view>
+      <!-- 次级任务：文本记忆 / 错题 / 连续打卡 -->
+      <view class="task-sub-list">
+        <view class="task-sub" @click="goToTextMemory">
+          <text class="task-sub-num">{{ textCount }}</text>
+          <text class="task-sub-label">文本记忆</text>
+        </view>
+        <view class="task-sub" @click="goToWrongWords">
+          <text class="task-sub-num">{{ wrongWordsCount }}</text>
+          <text class="task-sub-label">错题</text>
+        </view>
+        <view class="task-sub" @click="goToSignin">
+          <text class="task-sub-num">{{ streakDays }}</text>
+          <text class="task-sub-label">连续打卡</text>
+        </view>
+      </view>
+    </view>
+
     <view class="stats-grid">
       <view class="stat-card" @click="goToWords">
         <text class="stat-num">{{ wordCount }}</text>
@@ -14,11 +42,11 @@
         <text class="stat-num">{{ reviewCount }}</text>
         <text class="stat-label">待复习</text>
       </view>
-      <view class="stat-card">
+      <view class="stat-card" @click="goToSignin">
         <text class="stat-num">{{ streakDays }}</text>
         <text class="stat-label">连续打卡</text>
       </view>
-      <view class="stat-card">
+      <view class="stat-card" @click="goToWords">
         <text class="stat-num">{{ todayLearned }}</text>
         <text class="stat-label">今日学习</text>
       </view>
@@ -41,43 +69,23 @@
         </view>
         <view class="action-item" @click="goToTranslate">
           <view class="action-icon translate">🌐</view>
-          <text class="action-text">快速翻译</text>
+          <text class="action-text">翻译取词</text>
         </view>
-        <view class="action-item" @click="goToWords">
-          <view class="action-icon words">➕</view>
-          <text class="action-text">添加单词</text>
+        <view class="action-item" @click="goToTextMemory">
+          <view class="action-icon text">📜</view>
+          <text class="action-text">文本记忆</text>
         </view>
         <view class="action-item" @click="goToSignin">
           <view class="action-icon signin">📅</view>
           <text class="action-text">每日打卡</text>
         </view>
-        <view class="action-item" @click="goToWordbank">
-          <view class="action-icon wordbank">📚</view>
-          <text class="action-text">默认词库</text>
-        </view>
         <view class="action-item" @click="goToNumberMemory">
           <view class="action-icon memory">🔢</view>
           <text class="action-text">数字记忆</text>
         </view>
-        <view class="action-item" @click="goToTextMemory">
-          <view class="action-icon text">📜</view>
-          <text class="action-text">诗词记忆</text>
-        </view>
-        <view class="action-item" @click="goToPhoneticMemory">
-          <view class="action-icon phonetic">🔤</view>
-          <text class="action-text">音标学习</text>
-        </view>
-        <view class="action-item" @click="goToKnowledge">
-          <view class="action-icon knowledge">📖</view>
-          <text class="action-text">知识库</text>
-        </view>
-        <view class="action-item" @click="goToFocus">
-          <view class="action-icon focus">🌙</view>
-          <text class="action-text">专注模式</text>
-        </view>
-        <view class="action-item" @click="goToMemoryTest">
-          <view class="action-icon test">🧠</view>
-          <text class="action-text">记忆测试</text>
+        <view class="action-item" @click="goToAllFeatures">
+          <view class="action-icon all">⋯</view>
+          <text class="action-text">全部功能</text>
         </view>
       </view>
     </view>
@@ -87,9 +95,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { useTextMemory } from '@/stores/useTextMemory'
 import { useSignin } from '@/stores/useSignin'
 
 const wordsStore = useMobileWords()
+const textStore = useTextMemory()
 const signinStore = useSignin()
 
 const wordCount = ref(0)
@@ -97,6 +107,14 @@ const reviewCount = ref(0)
 
 // 连续打卡天数来自打卡 store
 const streakDays = computed(() => signinStore.streakDays)
+
+// 文本记忆篇目数（移动端文本记忆暂无"到期复习"概念，统计全部篇目）
+const textCount = computed(() => textStore.totalArticles)
+
+// 错题数：低等级且复习过（与错题本页口径一致）
+const wrongWordsCount = computed(() => {
+  return wordsStore.words.filter(w => (w.level || 1) <= 2 && (w.reviewCount || 0) > 0).length
+})
 
 // 今日学习 = 当天新增数 + 当天复习数（字段为 mobile 特有的 addTime/lastReviewTime）
 const todayLearned = computed(() => {
@@ -118,6 +136,7 @@ onMounted(() => {
   // 不 await，避免阻塞首屏渲染；数据加载后通过 watch 自动更新 UI
   wordsStore.loadWords()
   signinStore.loadRecords()
+  textStore.load()
 })
 
 // 数据加载完成后自动更新统计
@@ -160,20 +179,12 @@ const goToTextMemory = () => {
   uni.navigateTo({ url: '/subPackages/pages-memory/text-memory/text-memory' })
 }
 
-const goToPhoneticMemory = () => {
-  uni.navigateTo({ url: '/subPackages/pages-memory/phonetic-memory/phonetic-memory' })
+const goToWrongWords = () => {
+  uni.navigateTo({ url: '/subPackages/pages-data/wrong-words/wrong-words' })
 }
 
-const goToKnowledge = () => {
-  uni.navigateTo({ url: '/subPackages/pages-knowledge/knowledge-list' })
-}
-
-const goToMemoryTest = () => {
-  uni.navigateTo({ url: '/subPackages/pages-memory/memory-test/memory-test' })
-}
-
-const goToFocus = () => {
-  uni.navigateTo({ url: '/subPackages/pages-tools/focus/focus' })
+const goToAllFeatures = () => {
+  uni.navigateTo({ url: '/pages/features/features' })
 }
 </script>
 
@@ -181,7 +192,7 @@ const goToFocus = () => {
 .home-container {
   padding: 20rpx;
   min-height: 100vh;
-  background: linear-gradient(180deg, #e3f2fd 0%, #f5f5f5 100%);
+  background: linear-gradient(180deg, #eaf1ea 0%, #f5f7f5 100%);
 }
 
 .header {
@@ -192,7 +203,7 @@ const goToFocus = () => {
 .title {
   font-size: 48rpx;
   font-weight: bold;
-  color: #1976d2;
+  color: #52796f;
   display: block;
 }
 
@@ -200,6 +211,85 @@ const goToFocus = () => {
   font-size: 28rpx;
   color: #666;
   margin-top: 10rpx;
+  display: block;
+}
+
+/* ===== 今日任务区 ===== */
+.today-task {
+  margin-bottom: 30rpx;
+}
+
+.task-main {
+  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8rpx 24rpx rgba(82, 121, 111, 0.35);
+}
+
+.task-main.done {
+  background: linear-gradient(135deg, #83c5a8 0%, #52796f 100%);
+}
+
+.task-main-title {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.85);
+  display: block;
+}
+
+.task-main-num {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 10rpx;
+  display: block;
+}
+
+.task-main-hint {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 16rpx;
+  display: block;
+}
+
+.task-main-action {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+  padding: 20rpx 36rpx;
+  border-radius: 50rpx;
+}
+
+.task-sub-list {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.task-sub {
+  flex: 1;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 0;
+  text-align: center;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.task-sub-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #52796f;
+  display: block;
+}
+
+.task-sub-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
   display: block;
 }
 
@@ -216,7 +306,7 @@ const goToFocus = () => {
 
 .bank-name {
   font-size: 36rpx !important;
-  color: #667eea !important;
+  color: #52796f !important;
 }
 
 .stat-card {
@@ -224,13 +314,13 @@ const goToFocus = () => {
   border-radius: 16rpx;
   padding: 30rpx;
   text-align: center;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.1);
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
 }
 
 .stat-num {
   font-size: 48rpx;
   font-weight: bold;
-  color: #1976d2;
+  color: #52796f;
   display: block;
 }
 
@@ -246,7 +336,7 @@ const goToFocus = () => {
   border-radius: 16rpx;
   padding: 30rpx;
   margin-top: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.1);
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
 }
 
 .action-title {
@@ -280,18 +370,14 @@ const goToFocus = () => {
   font-weight: bold;
 }
 
-.action-icon.review { background: #1976d2; }
-.action-icon.dictation { background: #7b1fa2; }
-.action-icon.translate { background: #388e3c; }
-.action-icon.words { background: #f57c00; }
-.action-icon.signin { background: #e91e63; }
-.action-icon.wordbank { background: #5e35b1; }
-.action-icon.memory { background: #00897b; }
-.action-icon.text { background: #43a047; }
-.action-icon.phonetic { background: #7b1fa2; }
-.action-icon.knowledge { background: #5e35b1; }
-.action-icon.focus { background: #456; }
-.action-icon.test { background: #ff7043; }
+/* 主色 #52796f 系列的低饱和同族色 */
+.action-icon.review { background: #52796f; }
+.action-icon.dictation { background: #3d5a52; }
+.action-icon.translate { background: #74937d; }
+.action-icon.text { background: #6f9a8d; }
+.action-icon.signin { background: #83a89a; }
+.action-icon.memory { background: #5c7a6b; }
+.action-icon.all { background: #97b1a6; }
 
 .action-text {
   font-size: 24rpx;
