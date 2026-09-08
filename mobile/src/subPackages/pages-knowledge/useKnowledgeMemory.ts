@@ -65,6 +65,55 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
+/** Levenshtein 编辑距离（干扰项候选均为短字符串，直接 O(nm) 计算即可） */
+function levenshtein(a: string, b: string): number {
+  const m = a.length
+  const n = b.length
+  if (m === 0) return n
+  if (n === 0) return m
+  let prev = Array.from({ length: n + 1 }, (_, j) => j)
+  for (let i = 1; i <= m; i++) {
+    const cur: number[] = [i]
+    for (let j = 1; j <= n; j++) {
+      cur[j] = Math.min(
+        prev[j] + 1,
+        cur[j - 1] + 1,
+        prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
+      )
+    }
+    prev = cur
+  }
+  return prev[n]
+}
+
+/** 取条目 extras 中的「序数」（元素包），缺失或无法解析时返回 NaN */
+function getOrdinal(item: KnowledgeItem): number {
+  const raw = item.extras?.['序数']
+  if (!raw) return NaN
+  const n = parseInt(raw, 10)
+  return Number.isFinite(n) ? n : NaN
+}
+
+/**
+ * 干扰项相似度打分（越小越优先）：
+ * a) 条目带「序数」（元素包）时按序数距离排序，相邻序数（同周期/同族）优先；
+ * b) 否则按答案编辑距离排序，距离相同再按长度差排序，保证干扰项"长得像"。
+ */
+function scoreDistractor(
+  correctItem: KnowledgeItem,
+  correctText: string,
+  candidateItem: KnowledgeItem,
+  candidateText: string,
+): number {
+  const correctOrdinal = getOrdinal(correctItem)
+  const candidateOrdinal = getOrdinal(candidateItem)
+  if (!Number.isNaN(correctOrdinal) && !Number.isNaN(candidateOrdinal)) {
+    return Math.abs(candidateOrdinal - correctOrdinal) * 10000
+  }
+  const dist = levenshtein(normalizeAnswer(correctText), normalizeAnswer(candidateText))
+  return dist * 1000 + Math.abs(candidateText.length - correctText.length)
+}
+
 export const useKnowledgeMemory = defineStore('knowledgeMemory', () => {
   // ===== State =====
   const packs = ref<Record<string, KnowledgePack>>({})
@@ -235,7 +284,10 @@ export const useKnowledgeMemory = defineStore('knowledgeMemory', () => {
   }
 
   /**
-   * 生成四选一选项（正确答案 + 同包其他条目答案随机 3 个干扰项）
+   * 生成四选一选项（正确答案 + 同包其他条目答案 3 个干扰项）
+   *
+   * 策略：候选池去重后按与正确答案的相似度排序（元素包按序数距离，
+   * 其余按编辑距离），确定性地取最相似的前 N-1 个，只打乱选项位置。
    */
   function generateChoices(
     packId: string,
@@ -248,24 +300,27 @@ export const useKnowledgeMemory = defineStore('knowledgeMemory', () => {
 
     const correctNormalized = normalizeAnswer(correctRaw)
 
-    const pool = pack.items
-      .filter(i => i.id !== correctItem.id)
-      .map(i => i.answer)
-      .filter(v => v && normalizeAnswer(v) !== correctNormalized)
-
-    // 按归一化文本去重，保留原始展示文本
+    // 候选池：本包其他条目的答案，按归一化文本去重，保留原始展示文本
     const seen = new Set<string>([correctNormalized])
-    const deduped: string[] = []
-    for (const v of pool) {
+    const candidates: { text: string; item: KnowledgeItem }[] = []
+    for (const i of pack.items) {
+      if (i.id === correctItem.id) continue
+      const v = i.answer
+      if (!v) continue
       const n = normalizeAnswer(v)
-      if (!seen.has(n)) {
-        seen.add(n)
-        deduped.push(v)
-      }
+      if (seen.has(n)) continue
+      seen.add(n)
+      candidates.push({ text: v, item: i })
     }
 
-    const shuffled = shuffleArray(deduped)
-    const options = [correctRaw, ...shuffled.slice(0, optionCount - 1)]
+    // 按相似度升序排序（下标作最终决胜，保证排序稳定可预期）
+    const sorted = candidates
+      .map((c, index) => ({ ...c, score: scoreDistractor(correctItem, correctRaw, c.item, c.text), index }))
+      .sort((a, b) => a.score - b.score || a.index - b.index)
+
+    // 确定性地取打分最低（最相似）的前 N-1 个，保证干扰项质量稳定
+    const picked = sorted.slice(0, optionCount - 1)
+    const options = [correctRaw, ...picked.map(p => p.text)]
     return shuffleArray(options)
   }
 

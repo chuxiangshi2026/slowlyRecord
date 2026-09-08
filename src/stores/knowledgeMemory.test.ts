@@ -264,6 +264,52 @@ describe('useKnowledgeMemoryStore', () => {
       expect(new Set(choices.map(normalizeForTest)).size).toBe(choices.length)
       expect(choices.length).toBe(3)
     })
+
+    it('元素包（extras 带序数）干扰项应优先相邻序数条目', async () => {
+      const elementPack: KnowledgePack = {
+        ...mockPack,
+        id: 'element-pack',
+        items: [
+          {id: 'el-1', question: 'H', answer: '氢', extras: {'序数': '1'}},
+          {id: 'el-2', question: 'He', answer: '氦', extras: {'序数': '2'}},
+          {id: 'el-3', question: 'Li', answer: '锂', extras: {'序数': '3'}},
+          {id: 'el-4', question: 'Be', answer: '铍', extras: {'序数': '4'}},
+        ],
+      }
+      ;(fetchKnowledgePack as any).mockResolvedValueOnce(elementPack)
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('element-pack')
+      const item = store.getPack('element-pack')!.items[2] // 锂，序数 3
+      const choices = store.generateChoices('element-pack', item, 'q2a', 4)
+      expect(choices).toContain('锂')
+      // 候选只有 3 个全部入选：相邻序数（2 氦、4 铍）必须在内，而不是一眼假的远序数
+      expect(choices).toContain('氦')
+      expect(choices).toContain('铍')
+      expect(choices).toContain('氢')
+    })
+
+    it('公式类干扰项应优先编辑距离近的相似公式', async () => {
+      const formulaPack: KnowledgePack = {
+        ...mockPack,
+        id: 'formula-pack',
+        items: [
+          {id: 'f-1', question: '圆柱体积', answer: 'V=πr²h'},
+          {id: 'f-2', question: '圆面积', answer: 'S=πr²'},
+          {id: 'f-3', question: '圆周长', answer: 'C=2πrh'},
+          {id: 'f-4', question: '一次函数', answer: 'y=2x+1'},
+        ],
+      }
+      ;(fetchKnowledgePack as any).mockResolvedValueOnce(formulaPack)
+      const store = useKnowledgeMemoryStore()
+      await store.loadPack('formula-pack')
+      const item = store.getPack('formula-pack')!.items[0] // V=πr²h
+      const choices = store.generateChoices('formula-pack', item, 'q2a', 3)
+      expect(choices).toContain('V=πr²h')
+      // 只取 2 个干扰项：应选相似的 S=πr²、C=2πrh，排除毫不相干的 y=2x+1
+      expect(choices).toContain('S=πr²')
+      expect(choices).toContain('C=2πrh')
+      expect(choices).not.toContain('y=2x+1')
+    })
   })
 
   describe('getPreviousOrderedItem', () => {
