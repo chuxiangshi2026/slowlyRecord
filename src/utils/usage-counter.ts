@@ -129,8 +129,8 @@ export function getCurrentUsageCount(feature: string): number {
 import type {TranslationPlatform} from '@/types/words';
 
 export function hasCustomApiKey(platform: TranslationPlatform): boolean {
-    // 本地平台和本地OCR不需要API密钥，直接返回true
-    if (platform === 'local') {
+    // 本地平台和 Google 免费接口不需要API密钥，直接返回true
+    if (platform === 'local' || platform === 'google') {
         return true;
     }
 

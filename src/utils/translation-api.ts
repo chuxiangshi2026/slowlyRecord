@@ -12,6 +12,7 @@ import {getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {translateWithLocalDictionaryAsync} from "./local-dictionary";
 import {getDbStorage} from "@/adapters/db";
 import {getActiveProfile, getProfile} from "@/utils/language";
+import {isWeb} from "@/adapters/platform";
 
 // 发音URL缓存 Map
 const pronunciationCache = new Map<string, string>();
@@ -29,7 +30,7 @@ const TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS = 5000;
 // 内存缓存上限远高于持久化上限：命中率优先，持久化仅保留最近最热的一部分
 const TRANSLATION_CACHE_MAX = 5000;
 const TRANSLATION_CACHE_PERSIST_MAX = 1000;
-const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan'] as TranslationPlatform[]);
+const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan', 'qiniu'] as TranslationPlatform[]);
 const AI_BATCH_SIZE = 20;
 // 非 AI 平台的并发限制；批量回退路径必须保留，否则百度免费版 QPS=1 会被立即触发限流（54003）
 const NON_AI_CONCURRENCY: Record<string, number> = {
@@ -815,7 +816,142 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
     if (platform === 'hunyuan') {
         return requestOpenAiCompatibleBatch('https://api.hunyuan.cloud.tencent.com/v1/chat/completions', apiKey, modelName || 'hunyuan-lite', queries, platform, from, to);
     }
+    if (platform === 'qiniu') {
+        return requestOpenAiCompatibleBatch('https://openai.qiniu.com/v1/chat/completions', apiKey, modelName || 'deepseek-v3', queries, platform, from, to);
+    }
     throw new Error(`Unsupported AI batch platform: ${platform}`);
+}
+
+// ============ DeepL / 微软(Azure) / Google 免费接口 / 超额停服 ============
+
+// 应用内部语言代码 -> 各引擎语言代码
+const DEEPL_LANG_MAP: Record<string, string> = { zh: 'ZH', en: 'EN', ja: 'JA', ru: 'RU', es: 'ES', fr: 'FR' };
+const AZURE_LANG_MAP: Record<string, string> = { zh: 'zh-Hans', en: 'en', ja: 'ja', ru: 'ru', es: 'es', fr: 'fr' };
+const GOOGLE_LANG_MAP: Record<string, string> = { zh: 'zh-CN', en: 'en', ja: 'ja', ru: 'ru', es: 'es', fr: 'fr' };
+
+// 内置共享 key 额度耗尽的平台（会话内记忆；停用仅对使用内置 key 的用户生效，
+// 填了自己 key 的用户不受影响，重启后允许重试一次再重新标记）
+const builtinQuotaExhausted = new Set<TranslationPlatform>();
+
+function markBuiltinQuotaExhausted(platform: TranslationPlatform): void {
+    builtinQuotaExhausted.add(platform);
+    log.w(`平台 ${platform} 内置额度已用完，本次会话内停用内置 key`);
+}
+
+/**
+ * DeepL 翻译：官方 REST API，免费版 key 以 :fx 结尾走 api-free 端点
+ */
+async function callDeepL(query: string, from: string, to: string): Promise<TranslationResult> {
+    const {appkey: authKey, key: endpoint} = getTranslationApiKey('deepl');
+    if (!authKey) {
+        return { success: false, errorMsg: '请先在设置中配置 DeepL API Key' };
+    }
+    const baseUrl = endpoint?.trim() || (authKey.endsWith(':fx') ? 'https://api-free.deepl.com' : 'https://api.deepl.com');
+    const body: Record<string, any> = {
+        text: [query],
+        target_lang: DEEPL_LANG_MAP[to] || to.toUpperCase(),
+    };
+    if (from !== 'auto') {
+        body.source_lang = DEEPL_LANG_MAP[from] || from.toUpperCase();
+    }
+    const response = await fetch(`${baseUrl}/v2/translate`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `DeepL-Auth-Key ${authKey}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    if (response.status === 456) {
+        markBuiltinQuotaExhausted('deepl');
+        return { success: false, errorMsg: 'DeepL 免费额度已用完（456），请设置自己的 API Key 或切换其他引擎' };
+    }
+    if (response.status === 403) {
+        return { success: false, errorMsg: 'DeepL API Key 无效（403）' };
+    }
+    if (!response.ok) {
+        return { success: false, errorMsg: `DeepL 请求失败: ${response.status}` };
+    }
+    const data = await response.json();
+    const text = data.translations?.[0]?.text || '';
+    if (!text) {
+        return { success: false, errorMsg: 'DeepL 未返回译文' };
+    }
+    return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+}
+
+/**
+ * 微软翻译（Azure Cognitive Services）：订阅 Key + 区域
+ */
+async function callAzure(query: string, from: string, to: string): Promise<TranslationResult> {
+    const {appkey: subKey, key: region} = getTranslationApiKey('azure');
+    if (!subKey) {
+        return { success: false, errorMsg: '请先在设置中配置微软翻译订阅 Key' };
+    }
+    const params = new URLSearchParams({
+        'api-version': '3.0',
+        to: AZURE_LANG_MAP[to] || to,
+    });
+    if (from !== 'auto') {
+        params.set('from', AZURE_LANG_MAP[from] || from);
+    }
+    const headers: Record<string, string> = {
+        'Ocp-Apim-Subscription-Key': subKey,
+        'Content-Type': 'application/json',
+    };
+    if (region) {
+        headers['Ocp-Apim-Subscription-Region'] = region;
+    }
+    const response = await fetch(`https://api.cognitive.microsofttranslator.com/translate?${params.toString()}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify([{ Text: query }]),
+    });
+    if (response.status === 429) {
+        markBuiltinQuotaExhausted('azure');
+        return { success: false, errorMsg: '微软翻译额度已用完（429），请设置自己的订阅 Key 或切换其他引擎' };
+    }
+    if (response.status === 401 || response.status === 403) {
+        return { success: false, errorMsg: '微软翻译订阅 Key 或区域无效' };
+    }
+    if (!response.ok) {
+        return { success: false, errorMsg: `微软翻译请求失败: ${response.status}` };
+    }
+    const data = await response.json();
+    const text = data?.[0]?.translations?.[0]?.text || '';
+    if (!text) {
+        return { success: false, errorMsg: '微软翻译未返回译文' };
+    }
+    return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+}
+
+/**
+ * Google 免费网页接口（client=gtx）：无需密钥，但 Web 端受 CORS 限制不可用
+ */
+async function callGoogleFree(query: string, from: string, to: string): Promise<TranslationResult> {
+    if (isWeb()) {
+        return { success: false, errorMsg: 'Google 免费接口在 Web 端受跨域限制不可用，请切换其他引擎' };
+    }
+    const params = new URLSearchParams({
+        client: 'gtx',
+        sl: from === 'auto' ? 'auto' : (GOOGLE_LANG_MAP[from] || from),
+        tl: GOOGLE_LANG_MAP[to] || to,
+        dt: 't',
+        q: query,
+    });
+    const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params.toString()}`);
+    if (response.status === 429) {
+        return { success: false, errorMsg: 'Google 免费接口被限流（429），请稍后再试' };
+    }
+    if (!response.ok) {
+        return { success: false, errorMsg: `Google 翻译请求失败: ${response.status}` };
+    }
+    const data = await response.json();
+    const text = Array.isArray(data?.[0]) ? data[0].map((seg: any) => seg?.[0] || '').join('') : '';
+    if (!text) {
+        return { success: false, errorMsg: 'Google 未返回译文' };
+    }
+    return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
 }
 
 /**
@@ -900,6 +1036,13 @@ export async function translateWithPlatform(
     try {
         // 本地翻译不使用限制检查
         if (platform !== 'local') {
+            // 内置共享 key 已被标记额度耗尽：直接停服，不再打 API
+            if (builtinQuotaExhausted.has(platform) && !hasCustomApiKey(platform)) {
+                return {
+                    success: false,
+                    errorMsg: '该引擎内置免费额度已用完，请在设置中填入自己的 API Key 或切换其他翻译引擎'
+                };
+            }
             // 检查是否超出了每日使用限制
             if (!hasCustomApiKey(platform)) {
                 // 如果没有自定义API密钥，检查是否超过每日限制
@@ -1021,6 +1164,35 @@ export async function translateWithPlatform(
                     console.log('调用腾讯混元')
                     {
                         const r = (await translateBatchWithAi([query], platform, from, to))[0];
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'qiniu':
+                    console.log('调用七牛AI')
+                    {
+                        // 复用 OpenAI 兼容批量通道处理单词翻译
+                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'deepl':
+                    console.log('调用DeepL')
+                    {
+                        const r = await callDeepL(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'azure':
+                    console.log('调用微软翻译')
+                    {
+                        const r = await callAzure(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'google':
+                    console.log('调用Google免费接口')
+                    {
+                        const r = await callGoogleFree(query, from, to);
                         setCachedTranslation(query, platform, from, to, r);
                         return r;
                     }

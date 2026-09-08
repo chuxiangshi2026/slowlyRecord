@@ -772,14 +772,26 @@ const options = [
   }, {
     value: 'minimax',
     label: 'MiniMax',
+  }, {
+    value: 'deepl',
+    label: 'DeepL',
+  }, {
+    value: 'azure',
+    label: '微软翻译',
+  }, {
+    value: 'qiniu',
+    label: '七牛AI',
+  }, {
+    value: 'google',
+    label: 'Google(免Key,桌面端)',
   }
 ]
 
 // ===== 密钥配置区块 =====
 // 只需 AppKey、无需 SecretKey 的翻译引擎
-const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan']
+const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'deepl', 'qiniu']
 // 不展示密钥配置的引擎（内置免费/本地）
-const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan']
+const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan', 'google']
 const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm']
 
 type ApiKeyMap = Record<string, { appkey: string; key: string }>
@@ -802,6 +814,8 @@ const hasKey = (keys: ApiKeyMap, name: string) => !!(keys[name]?.appkey || keys[
 
 const keyPlaceholders = (platform: string) => {
   if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
+  if (platform === 'azure') return { appkey: '必填，订阅 Key', key: '区域，如 eastasia' }
+  if (platform === 'deepl') return { appkey: '必填，API Key（免费版以 :fx 结尾）', key: '该引擎无需 SecretKey' }
   if (singleKeyPlatforms.includes(platform)) return { appkey: '必填，API Key', key: '该引擎无需 SecretKey' }
   return { appkey: 'AppID / AppKey', key: 'SecretKey' }
 }

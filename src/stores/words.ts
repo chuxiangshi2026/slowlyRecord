@@ -130,6 +130,10 @@ export const useWordsStore =
                 kimi: {appkey: '', key: ''},
                 minimax: {appkey: '', key: ''},
                 hunyuan: {appkey: '', key: ''},
+                deepl: {appkey: '', key: ''},
+                azure: {appkey: '', key: ''},
+                qiniu: {appkey: '', key: ''},
+                google: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref({
