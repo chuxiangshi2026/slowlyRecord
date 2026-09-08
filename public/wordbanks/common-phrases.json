@@ -1,5 +1,77 @@
 [
   {
+    "word": "Good morning",
+    "explains": "早上好"
+  },
+  {
+    "word": "Good afternoon",
+    "explains": "下午好"
+  },
+  {
+    "word": "Good evening",
+    "explains": "晚上好"
+  },
+  {
+    "word": "Good night",
+    "explains": "晚安"
+  },
+  {
+    "word": "How are you?",
+    "explains": "你好吗"
+  },
+  {
+    "word": "Pretty good",
+    "explains": "挺好的"
+  },
+  {
+    "word": "Thank you",
+    "explains": "谢谢你"
+  },
+  {
+    "word": "I really appreciate it",
+    "explains": "非常感谢"
+  },
+  {
+    "word": "You're welcome",
+    "explains": "不客气"
+  },
+  {
+    "word": "Goodbye",
+    "explains": "再见"
+  },
+  {
+    "word": "See you tomorrow",
+    "explains": "明天见"
+  },
+  {
+    "word": "See you soon",
+    "explains": "很快再见"
+  },
+  {
+    "word": "Have a nice day",
+    "explains": "祝你今天愉快"
+  },
+  {
+    "word": "Take care",
+    "explains": "保重"
+  },
+  {
+    "word": "How have you been?",
+    "explains": "最近过得怎么样"
+  },
+  {
+    "word": "What's your name?",
+    "explains": "你叫什么名字"
+  },
+  {
+    "word": "It's very kind of you",
+    "explains": "你真好"
+  },
+  {
+    "word": "Not at all",
+    "explains": "一点也不；别客气"
+  },
+  {
     "word": "Long time no see",
     "explains": "好久不见"
   },
@@ -240,6 +312,378 @@
     "explains": "我们保持联系"
   },
   {
+    "word": "That's great!",
+    "explains": "太好了"
+  },
+  {
+    "word": "Really?",
+    "explains": "真的吗"
+  },
+  {
+    "word": "Exactly!",
+    "explains": "没错；正是"
+  },
+  {
+    "word": "Of course",
+    "explains": "当然"
+  },
+  {
+    "word": "Why not?",
+    "explains": "有什么不可以；好啊"
+  },
+  {
+    "word": "I don't think so",
+    "explains": "我不这么认为"
+  },
+  {
+    "word": "No way!",
+    "explains": "不可能；没门"
+  },
+  {
+    "word": "Fair enough",
+    "explains": "有道理；说得过去"
+  },
+  {
+    "word": "Good point",
+    "explains": "说得有道理"
+  },
+  {
+    "word": "I don't care",
+    "explains": "我不在乎"
+  },
+  {
+    "word": "No big deal",
+    "explains": "没什么大不了"
+  },
+  {
+    "word": "I changed my mind",
+    "explains": "我改主意了"
+  },
+  {
+    "word": "I mean it",
+    "explains": "我是认真的"
+  },
+  {
+    "word": "Are you kidding me?",
+    "explains": "你在开玩笑吧"
+  },
+  {
+    "word": "Just kidding",
+    "explains": "开玩笑的"
+  },
+  {
+    "word": "Oh my goodness!",
+    "explains": "我的天哪"
+  },
+  {
+    "word": "Unbelievable!",
+    "explains": "难以置信"
+  },
+  {
+    "word": "What a pity!",
+    "explains": "真遗憾"
+  },
+  {
+    "word": "Guess what!",
+    "explains": "你猜怎么着"
+  },
+  {
+    "word": "Believe it or not",
+    "explains": "信不信由你"
+  },
+  {
+    "word": "To be honest",
+    "explains": "说实话"
+  },
+  {
+    "word": "By the way",
+    "explains": "顺便说一下"
+  },
+  {
+    "word": "What's the matter?",
+    "explains": "怎么了；出什么事了"
+  },
+  {
+    "word": "What's wrong?",
+    "explains": "怎么了"
+  },
+  {
+    "word": "What happened?",
+    "explains": "发生什么事了"
+  },
+  {
+    "word": "Are you OK?",
+    "explains": "你还好吗"
+  },
+  {
+    "word": "Calm down",
+    "explains": "冷静点"
+  },
+  {
+    "word": "Don't worry about it",
+    "explains": "别放在心上"
+  },
+  {
+    "word": "I'm so sorry",
+    "explains": "非常抱歉"
+  },
+  {
+    "word": "My bad",
+    "explains": "是我的错"
+  },
+  {
+    "word": "That's all right",
+    "explains": "没关系"
+  },
+  {
+    "word": "Could you do me a favor?",
+    "explains": "能帮我个忙吗"
+  },
+  {
+    "word": "Could you give me a hand?",
+    "explains": "能帮我搭把手吗"
+  },
+  {
+    "word": "Would you mind...?",
+    "explains": "你介意……吗"
+  },
+  {
+    "word": "Do you need any help?",
+    "explains": "需要帮忙吗"
+  },
+  {
+    "word": "Let me help you",
+    "explains": "让我来帮你"
+  },
+  {
+    "word": "After you",
+    "explains": "您先请"
+  },
+  {
+    "word": "Help yourself",
+    "explains": "请自便"
+  },
+  {
+    "word": "Here you are",
+    "explains": "给你"
+  },
+  {
+    "word": "Anything else?",
+    "explains": "还要别的吗"
+  },
+  {
+    "word": "That's all",
+    "explains": "就这些了"
+  },
+  {
+    "word": "I have a question",
+    "explains": "我有个问题"
+  },
+  {
+    "word": "What did you say?",
+    "explains": "你刚才说什么"
+  },
+  {
+    "word": "How do you say this in English?",
+    "explains": "这个用英语怎么说"
+  },
+  {
+    "word": "How do you spell it?",
+    "explains": "怎么拼写"
+  },
+  {
+    "word": "What do you think?",
+    "explains": "你觉得呢"
+  },
+  {
+    "word": "How about you?",
+    "explains": "你呢"
+  },
+  {
+    "word": "What are you up to?",
+    "explains": "你在忙什么呢"
+  },
+  {
+    "word": "Are you free tomorrow?",
+    "explains": "你明天有空吗"
+  },
+  {
+    "word": "Do you have any plans this weekend?",
+    "explains": "周末有什么安排"
+  },
+  {
+    "word": "Count me in",
+    "explains": "算我一个"
+  },
+  {
+    "word": "That works for me",
+    "explains": "我这边没问题"
+  },
+  {
+    "word": "What time works for you?",
+    "explains": "你什么时间方便"
+  },
+  {
+    "word": "Where shall we meet?",
+    "explains": "我们在哪儿见"
+  },
+  {
+    "word": "It's a deal",
+    "explains": "一言为定"
+  },
+  {
+    "word": "I'm running late",
+    "explains": "我快迟到了"
+  },
+  {
+    "word": "I'm stuck in traffic",
+    "explains": "我堵在路上了"
+  },
+  {
+    "word": "Something came up",
+    "explains": "临时有点事"
+  },
+  {
+    "word": "Let's take a break",
+    "explains": "我们休息一下吧"
+  },
+  {
+    "word": "I'm starving",
+    "explains": "我饿死了"
+  },
+  {
+    "word": "I'm full",
+    "explains": "我吃饱了"
+  },
+  {
+    "word": "I'm exhausted",
+    "explains": "我累坏了"
+  },
+  {
+    "word": "I'm freezing",
+    "explains": "我快冻僵了"
+  },
+  {
+    "word": "I can't stand it",
+    "explains": "我受不了了"
+  },
+  {
+    "word": "I've had enough",
+    "explains": "我受够了"
+  },
+  {
+    "word": "I don't feel well",
+    "explains": "我不太舒服"
+  },
+  {
+    "word": "I have a headache",
+    "explains": "我有点头疼"
+  },
+  {
+    "word": "Get well soon",
+    "explains": "早日康复"
+  },
+  {
+    "word": "I overslept",
+    "explains": "我睡过头了"
+  },
+  {
+    "word": "I'm home",
+    "explains": "我回来了"
+  },
+  {
+    "word": "Welcome back",
+    "explains": "欢迎回来"
+  },
+  {
+    "word": "Dinner is ready",
+    "explains": "吃饭啦"
+  },
+  {
+    "word": "Time for bed",
+    "explains": "该睡觉了"
+  },
+  {
+    "word": "Sweet dreams",
+    "explains": "做个好梦"
+  },
+  {
+    "word": "Hurry up",
+    "explains": "快点"
+  },
+  {
+    "word": "Slow down",
+    "explains": "慢一点"
+  },
+  {
+    "word": "Be careful",
+    "explains": "小心点"
+  },
+  {
+    "word": "Watch out",
+    "explains": "当心"
+  },
+  {
+    "word": "Good job!",
+    "explains": "干得好"
+  },
+  {
+    "word": "Well done",
+    "explains": "做得漂亮"
+  },
+  {
+    "word": "You can do it",
+    "explains": "你能做到的"
+  },
+  {
+    "word": "You made it",
+    "explains": "你做到了"
+  },
+  {
+    "word": "You deserve it",
+    "explains": "这是你应得的"
+  },
+  {
+    "word": "I'm proud of you",
+    "explains": "我为你骄傲"
+  },
+  {
+    "word": "Keep up the good work",
+    "explains": "再接再厉"
+  },
+  {
+    "word": "It's a piece of cake",
+    "explains": "小菜一碟"
+  },
+  {
+    "word": "It's worth it",
+    "explains": "很值得"
+  },
+  {
+    "word": "I can't afford it",
+    "explains": "我买不起"
+  },
+  {
+    "word": "What time is it?",
+    "explains": "现在几点了"
+  },
+  {
+    "word": "What day is it today?",
+    "explains": "今天星期几"
+  },
+  {
+    "word": "Time flies",
+    "explains": "时光飞逝"
+  },
+  {
+    "word": "As soon as possible",
+    "explains": "尽快"
+  },
+  {
+    "word": "It's a nice day today",
+    "explains": "今天天气不错"
+  },
+  {
     "word": "How much is it?",
     "explains": "多少钱"
   },
@@ -450,6 +894,54 @@
   {
     "word": "Could you take a photo for me?",
     "explains": "能帮我拍张照吗"
+  },
+  {
+    "word": "May I speak to...?",
+    "explains": "请问……在吗"
+  },
+  {
+    "word": "Hold on, please",
+    "explains": "请稍等，别挂断"
+  },
+  {
+    "word": "Can I take a message?",
+    "explains": "要留言吗"
+  },
+  {
+    "word": "You've got the wrong number",
+    "explains": "你打错电话了"
+  },
+  {
+    "word": "I'll call you back",
+    "explains": "我待会儿回你电话"
+  },
+  {
+    "word": "Talk to you later",
+    "explains": "回头再聊"
+  },
+  {
+    "word": "Text me",
+    "explains": "给我发消息"
+  },
+  {
+    "word": "I'm just browsing",
+    "explains": "我只是随便看看"
+  },
+  {
+    "word": "It's on sale",
+    "explains": "在打折"
+  },
+  {
+    "word": "It's sold out",
+    "explains": "卖完了"
+  },
+  {
+    "word": "For here or to go?",
+    "explains": "在这儿吃还是带走"
+  },
+  {
+    "word": "To go, please",
+    "explains": "麻烦带走"
   },
   {
     "word": "Where are you from?",

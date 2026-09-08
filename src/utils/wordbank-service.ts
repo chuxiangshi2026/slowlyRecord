@@ -92,7 +92,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317, language: 'en' },
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277, language: 'en' },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249, language: 'en' },
-  { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 184, language: 'en' },
+  { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 307, language: 'en' },
   { id: 'movie-lines', name: '电影台词', description: '经典英文电影台词（附中文翻译与出处）', wordCount: 223, language: 'en' },
   { id: 'famous-quotes', name: '名言警句', description: '英语名人名言警句（附中文翻译与作者）', wordCount: 213, language: 'en' },
   { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 700, language: 'ja' },

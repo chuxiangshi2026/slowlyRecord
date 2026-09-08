@@ -32,7 +32,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317 },
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277 },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
-  { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 184 },
+  { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 307 },
   { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568 },
 ]
 
