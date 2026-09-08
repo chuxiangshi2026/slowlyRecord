@@ -1100,6 +1100,11 @@
             </el-button>
           </div>
         </div>
+
+        <!-- 版权声明：内置库所有素材版权归原作者所有，仅作学习用途 -->
+        <p class="import-copyright-note">
+          内置库素材仅供个人学习与背诵使用，作品版权归原作者及相关权利人所有。若有侵权，请联系我们删除。
+        </p>
       </el-tab-pane>
     </el-tabs>
 
@@ -3237,5 +3242,14 @@ watch(manualType, (type) => {
   text-align: center;
   font-size: 13px;
   color: var(--utools-text-secondary);
+}
+
+/* 内置库版权声明 */
+.import-copyright-note {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--utools-text-tertiary);
+  text-align: center;
 }
 </style>
