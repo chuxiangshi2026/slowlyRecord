@@ -1,0 +1,403 @@
+import type { Word } from '@/stores/useUtils/wordbank'
+export default [
+  {
+    "word": "I'm hungry",
+    "explains": "我饿了"
+  },
+  {
+    "word": "I'm thirsty",
+    "explains": "我渴了"
+  },
+  {
+    "word": "I'm tired",
+    "explains": "我累了"
+  },
+  {
+    "word": "I'm sleepy",
+    "explains": "我困了"
+  },
+  {
+    "word": "I'm cold",
+    "explains": "我很冷"
+  },
+  {
+    "word": "I'm hot",
+    "explains": "我很热"
+  },
+  {
+    "word": "I'm busy",
+    "explains": "我很忙"
+  },
+  {
+    "word": "I'm fine",
+    "explains": "我很好"
+  },
+  {
+    "word": "I'm ready",
+    "explains": "我准备好了"
+  },
+  {
+    "word": "I'm happy today",
+    "explains": "我今天很开心"
+  },
+  {
+    "word": "Help me, please",
+    "explains": "请帮帮我"
+  },
+  {
+    "word": "Come here",
+    "explains": "过来"
+  },
+  {
+    "word": "Come with me",
+    "explains": "跟我来"
+  },
+  {
+    "word": "Follow me",
+    "explains": "跟着我"
+  },
+  {
+    "word": "Sit down, please",
+    "explains": "请坐"
+  },
+  {
+    "word": "Open the door",
+    "explains": "把门打开"
+  },
+  {
+    "word": "Close the window",
+    "explains": "把窗户关上"
+  },
+  {
+    "word": "Turn on the light",
+    "explains": "把灯打开"
+  },
+  {
+    "word": "Turn off the TV",
+    "explains": "把电视关了"
+  },
+  {
+    "word": "Wake me up at seven",
+    "explains": "七点叫醒我"
+  },
+  {
+    "word": "Wait for me",
+    "explains": "等等我"
+  },
+  {
+    "word": "Give it to me",
+    "explains": "把它给我"
+  },
+  {
+    "word": "Show me",
+    "explains": "给我看看"
+  },
+  {
+    "word": "Tell me, please",
+    "explains": "请告诉我"
+  },
+  {
+    "word": "Stop it",
+    "explains": "别闹了；停下"
+  },
+  {
+    "word": "Don't move",
+    "explains": "别动"
+  },
+  {
+    "word": "Be quiet, please",
+    "explains": "请安静点"
+  },
+  {
+    "word": "Let's go",
+    "explains": "我们走吧"
+  },
+  {
+    "word": "Let me try",
+    "explains": "让我试试"
+  },
+  {
+    "word": "Try again",
+    "explains": "再试一次"
+  },
+  {
+    "word": "One more time",
+    "explains": "再来一次"
+  },
+  {
+    "word": "I'll try",
+    "explains": "我试试看"
+  },
+  {
+    "word": "I give up",
+    "explains": "我放弃了"
+  },
+  {
+    "word": "What's this?",
+    "explains": "这是什么"
+  },
+  {
+    "word": "What's that?",
+    "explains": "那是什么"
+  },
+  {
+    "word": "Who is he?",
+    "explains": "他是谁"
+  },
+  {
+    "word": "Who's that?",
+    "explains": "那是谁"
+  },
+  {
+    "word": "Whose book is this?",
+    "explains": "这是谁的书"
+  },
+  {
+    "word": "Where is my phone?",
+    "explains": "我的手机呢"
+  },
+  {
+    "word": "Where are you going?",
+    "explains": "你去哪儿"
+  },
+  {
+    "word": "When do we leave?",
+    "explains": "我们什么时候出发"
+  },
+  {
+    "word": "Why are you late?",
+    "explains": "你怎么迟到了"
+  },
+  {
+    "word": "How many people?",
+    "explains": "一共多少人"
+  },
+  {
+    "word": "How old is he?",
+    "explains": "他多大了"
+  },
+  {
+    "word": "What do you want?",
+    "explains": "你想要什么"
+  },
+  {
+    "word": "Do you want some?",
+    "explains": "要不要来一点"
+  },
+  {
+    "word": "Do you like it?",
+    "explains": "你喜欢吗"
+  },
+  {
+    "word": "Do you understand?",
+    "explains": "你明白了吗"
+  },
+  {
+    "word": "Did you sleep well?",
+    "explains": "你睡得好吗"
+  },
+  {
+    "word": "Have you eaten yet?",
+    "explains": "你吃饭了吗"
+  },
+  {
+    "word": "What's for dinner?",
+    "explains": "晚饭吃什么"
+  },
+  {
+    "word": "Is that so?",
+    "explains": "是这样吗"
+  },
+  {
+    "word": "I know",
+    "explains": "我知道"
+  },
+  {
+    "word": "I remember now",
+    "explains": "我现在想起来了"
+  },
+  {
+    "word": "I forgot",
+    "explains": "我忘了"
+  },
+  {
+    "word": "I don't remember",
+    "explains": "我不记得了"
+  },
+  {
+    "word": "I think so",
+    "explains": "我觉得是"
+  },
+  {
+    "word": "I hope not",
+    "explains": "希望不会"
+  },
+  {
+    "word": "I agree",
+    "explains": "我同意"
+  },
+  {
+    "word": "I disagree",
+    "explains": "我不同意"
+  },
+  {
+    "word": "That's right",
+    "explains": "没错"
+  },
+  {
+    "word": "It's true",
+    "explains": "是真的"
+  },
+  {
+    "word": "It's easy",
+    "explains": "很简单"
+  },
+  {
+    "word": "It's difficult",
+    "explains": "很难"
+  },
+  {
+    "word": "It's important",
+    "explains": "这很重要"
+  },
+  {
+    "word": "I like it very much",
+    "explains": "我非常喜欢"
+  },
+  {
+    "word": "I don't want it",
+    "explains": "我不想要"
+  },
+  {
+    "word": "I love you",
+    "explains": "我爱你"
+  },
+  {
+    "word": "I miss you",
+    "explains": "我想你"
+  },
+  {
+    "word": "Me too",
+    "explains": "我也是"
+  },
+  {
+    "word": "I want to go home",
+    "explains": "我想回家"
+  },
+  {
+    "word": "I need some water",
+    "explains": "我需要点水"
+  },
+  {
+    "word": "I can't find it",
+    "explains": "我找不到"
+  },
+  {
+    "word": "I can't hear you",
+    "explains": "我听不见"
+  },
+  {
+    "word": "I can't see it",
+    "explains": "我看不见"
+  },
+  {
+    "word": "It looks nice",
+    "explains": "看起来不错"
+  },
+  {
+    "word": "It smells good",
+    "explains": "闻起来很香"
+  },
+  {
+    "word": "It's very cheap",
+    "explains": "很便宜"
+  },
+  {
+    "word": "It's too heavy",
+    "explains": "太重了"
+  },
+  {
+    "word": "This is mine",
+    "explains": "这是我的"
+  },
+  {
+    "word": "It's broken",
+    "explains": "它坏了"
+  },
+  {
+    "word": "My back hurts",
+    "explains": "我背疼"
+  },
+  {
+    "word": "My phone is dead",
+    "explains": "我手机没电了"
+  },
+  {
+    "word": "It's eight o'clock",
+    "explains": "现在八点了"
+  },
+  {
+    "word": "I live here",
+    "explains": "我住在这儿"
+  },
+  {
+    "word": "I work here",
+    "explains": "我在这儿工作"
+  },
+  {
+    "word": "I'm learning English",
+    "explains": "我在学英语"
+  },
+  {
+    "word": "English is hard",
+    "explains": "英语好难"
+  },
+  {
+    "word": "I'm a student",
+    "explains": "我是学生"
+  },
+  {
+    "word": "I'm from Beijing",
+    "explains": "我来自北京"
+  },
+  {
+    "word": "I get up at six",
+    "explains": "我六点起床"
+  },
+  {
+    "word": "I go to bed at ten",
+    "explains": "我十点睡觉"
+  },
+  {
+    "word": "I walk to school",
+    "explains": "我走路去学校"
+  },
+  {
+    "word": "I usually cook at home",
+    "explains": "我通常在家做饭"
+  },
+  {
+    "word": "I stay home on weekends",
+    "explains": "我周末待在家里"
+  },
+  {
+    "word": "Not yet",
+    "explains": "还没"
+  },
+  {
+    "word": "Of course not",
+    "explains": "当然不会"
+  },
+  {
+    "word": "That's funny",
+    "explains": "真好笑"
+  },
+  {
+    "word": "I'm sorry to hear that",
+    "explains": "听到这个我很难过"
+  },
+  {
+    "word": "See you next time",
+    "explains": "下次见"
+  },
+]

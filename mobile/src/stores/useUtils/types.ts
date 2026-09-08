@@ -40,6 +40,9 @@ export type WordBankType =
   | 'collocations'
   | 'idioms'
   | 'common-phrases'
+  | 'oral-basic'
+  | 'oral-intermediate'
+  | 'oral-advanced'
   | 'roots'
 
 export interface WordBankInfo {

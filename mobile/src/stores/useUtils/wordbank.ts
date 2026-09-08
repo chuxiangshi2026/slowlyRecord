@@ -33,6 +33,9 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277 },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249 },
   { id: 'common-phrases', name: '常用短语短句', description: '日常口语短句、场景实用句与写作表达', wordCount: 307 },
+  { id: 'oral-basic', name: '口语入门', description: '零基础也能上口的高频日常口语短句', wordCount: 100 },
+  { id: 'oral-intermediate', name: '口语进阶', description: '完整对话与观点表达的日常口语短句', wordCount: 98 },
+  { id: 'oral-advanced', name: '口语高阶', description: '地道习语与深度讨论的高阶口语短句', wordCount: 105 },
   { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568 },
 ]
 
@@ -42,7 +45,7 @@ const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
   if (type === 'collocations') return 'collocation'
   if (type === 'phrasal-verbs' || type === 'idioms') return 'phrase'
-  if (type === 'common-phrases') return 'sentence'
+  if (type === 'common-phrases' || type.startsWith('oral-')) return 'sentence'
   if (type === 'roots') return 'word'
   return inferMobileItemType(text)
 }
@@ -120,6 +123,9 @@ export async function loadWordBank(
       collocations: () => import('@/subPackages/wordbank-b/wordbanks/collocations'),
       idioms: () => import('@/subPackages/wordbank-b/wordbanks/idioms'),
       'common-phrases': () => import('@/subPackages/wordbank-b/wordbanks/common_phrases'),
+      'oral-basic': () => import('@/subPackages/wordbank-b/wordbanks/oral_basic'),
+      'oral-intermediate': () => import('@/subPackages/wordbank-b/wordbanks/oral_intermediate'),
+      'oral-advanced': () => import('@/subPackages/wordbank-b/wordbanks/oral_advanced'),
       roots: () => import('@/subPackages/wordbank-d/wordbanks/roots'),
     }
     const impLoader = importLoaders[type]

@@ -11,6 +11,9 @@ import phrasalVerbs from './wordbanks/phrasal_verbs'
 import collocations from './wordbanks/collocations'
 import idioms from './wordbanks/idioms'
 import commonPhrases from './wordbanks/common_phrases'
+import oralBasic from './wordbanks/oral_basic'
+import oralIntermediate from './wordbanks/oral_intermediate'
+import oralAdvanced from './wordbanks/oral_advanced'
 
 const data: Partial<Record<WordBankType, any[]>> = {
   bec,
@@ -24,14 +27,17 @@ const data: Partial<Record<WordBankType, any[]>> = {
   collocations,
   idioms,
   'common-phrases': commonPhrases,
+  'oral-basic': oralBasic,
+  'oral-intermediate': oralIntermediate,
+  'oral-advanced': oralAdvanced,
 }
 
-export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'newConcept', 'phrasal-verbs', 'collocations', 'idioms', 'common-phrases']
+export const WORDBANK_B_IDS: WordBankType[] = ['bec', 'cet4', 'cet6', 'ielts', 'kaogong', 'zsb', 'newConcept', 'phrasal-verbs', 'collocations', 'idioms', 'common-phrases', 'oral-basic', 'oral-intermediate', 'oral-advanced']
 
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
   if (type === 'collocations') return 'collocation'
   if (type === 'phrasal-verbs' || type === 'idioms') return 'phrase'
-  if (type === 'common-phrases') return 'sentence'
+  if (type === 'common-phrases' || type.startsWith('oral-')) return 'sentence'
   return inferMobileItemType(text)
 }
 

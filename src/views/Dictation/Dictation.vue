@@ -380,6 +380,9 @@ const wordBankOptions = [
   {label: '固定搭配', value: 'collocations'},
   {label: '习语', value: 'idioms'},
   {label: '常用短语短句', value: 'common-phrases'},
+  {label: '口语入门', value: 'oral-basic'},
+  {label: '口语进阶', value: 'oral-intermediate'},
+  {label: '口语高阶', value: 'oral-advanced'},
 ];
 
 // 是否有活跃筛选
