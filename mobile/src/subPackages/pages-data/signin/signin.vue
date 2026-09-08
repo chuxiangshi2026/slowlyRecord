@@ -59,13 +59,47 @@
 
     <view v-if="hasSignedToday" class="sign-reward">
       <text class="reward-text">🎉 打卡成功！继续加油！</text>
+      <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
+      <button class="share-btn" @click="handleShare">🎨 分享成就</button>
+      <!-- #endif -->
+    </view>
+
+    <!-- 分享卡离屏画布（canvas 2d，仅小程序端） -->
+    <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
+    <canvas
+      type="2d"
+      id="signinShareCanvas"
+      class="share-canvas"
+      :style="{ width: CARD_WIDTH + 'px', height: CARD_HEIGHT + 'px' }"
+    />
+    <!-- #endif -->
+
+    <!-- 分享卡预览弹窗 -->
+    <view v-if="shareImage" class="share-mask" @click="shareImage = ''">
+      <view class="share-dialog" @click.stop>
+        <image class="share-preview" :src="shareImage" mode="widthFix" />
+        <view class="share-actions">
+          <button class="share-action primary" @click="saveToAlbum">保存到相册</button>
+          <!-- #ifdef MP-WEIXIN -->
+          <button class="share-action" open-type="share">分享给好友</button>
+          <!-- #endif -->
+        </view>
+      </view>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, getCurrentInstance } from 'vue'
+import { onShareAppMessage } from '@dcloudio/uni-app'
 import { useSignin } from '@/stores/useSignin'
+import {
+  buildCardInfo,
+  drawSigninCard,
+  CARD_WIDTH,
+  CARD_HEIGHT,
+  type ShareCardCtx,
+} from './signin-card'
 
 const signinStore = useSignin()
 const signedDates = computed(() => signinStore.signedDates)
@@ -127,6 +161,115 @@ const handleSign = () => {
   if (signinStore.signToday()) {
     uni.showToast({ title: '打卡成功！', icon: 'success' })
   }
+}
+
+// ===== 分享成就卡 =====
+
+const instance = getCurrentInstance()
+const shareImage = ref('')
+const generating = ref(false)
+
+/**
+ * 页面级分享：标题带连续天数；
+ * imageUrl 用已缓存的分享卡临时路径，未生成（或生成失败）时留空退化为默认截图分享。
+ */
+onShareAppMessage(() => ({
+  title: `我在「慢记」已连续打卡 ${streakDays.value} 天，一起坚持！`,
+  path: '/subPackages/pages-data/signin/signin',
+  imageUrl: shareImage.value || '',
+}))
+
+/** 获取 canvas 2d 节点 */
+function getCanvasNode(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    // dcloudio 类型里 fields 需要回调参数，实际可选，这里整链放宽
+    const query = uni.createSelectorQuery().in(instance?.proxy as any) as any
+    query
+      .select('#signinShareCanvas')
+      .fields({ node: true, size: true })
+      .exec((res: any[]) => {
+        const node = res?.[0]?.node
+        if (node) resolve(node)
+        else reject(new Error('canvas 节点获取失败'))
+      })
+  })
+}
+
+/** canvas 节点导出为临时图片路径 */
+function canvasToTemp(canvasNode: any, destWidth: number, destHeight: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    uni.canvasToTempFilePath({
+      canvas: canvasNode,
+      canvasId: 'signinShareCanvas',
+      destWidth,
+      destHeight,
+      fileType: 'png',
+      success: (res: any) => resolve(res.tempFilePath),
+      fail: reject,
+    } as any)
+  })
+}
+
+/** 绘制分享卡并导出（微信/抖音 canvas 2d 基本对齐，异常由调用方兜底） */
+async function generateShareImage(): Promise<string> {
+  const node = await getCanvasNode()
+  // 按设备 pixelRatio 放大导出，保证分享图清晰度
+  let dpr = 2
+  try {
+    const info: any = (uni as any).getWindowInfo ? (uni as any).getWindowInfo() : uni.getSystemInfoSync()
+    dpr = info.pixelRatio || 2
+  } catch {
+    dpr = 2
+  }
+  node.width = CARD_WIDTH * dpr
+  node.height = CARD_HEIGHT * dpr
+  const ctx = node.getContext('2d') as ShareCardCtx
+  ctx.scale(dpr, dpr)
+  drawSigninCard(
+    ctx,
+    buildCardInfo(new Date(), signedDates.value, streakDays.value, totalSignDays.value)
+  )
+  return canvasToTemp(node, CARD_WIDTH * dpr, CARD_HEIGHT * dpr)
+}
+
+/** 点击「分享成就」：生成图片并弹出预览 */
+async function handleShare() {
+  if (generating.value || shareImage.value) return
+  generating.value = true
+  uni.showLoading({ title: '生成中' })
+  try {
+    shareImage.value = await generateShareImage()
+  } catch (e) {
+    console.error('分享卡生成失败:', e)
+    uni.showToast({ title: '分享图生成失败', icon: 'none' })
+  } finally {
+    uni.hideLoading()
+    generating.value = false
+  }
+}
+
+/** 保存到相册：拒绝授权时引导去设置页开启 */
+function saveToAlbum() {
+  if (!shareImage.value) return
+  uni.saveImageToPhotosAlbum({
+    filePath: shareImage.value,
+    success: () => uni.showToast({ title: '已保存到相册', icon: 'success' }),
+    fail: (err: any) => {
+      const msg: string = err?.errMsg || ''
+      if (msg.includes('auth') || msg.includes('deny')) {
+        uni.showModal({
+          title: '需要相册权限',
+          content: '请在设置中允许保存图片到相册',
+          confirmText: '去设置',
+          success: r => {
+            if (r.confirm) uni.openSetting()
+          },
+        })
+      } else {
+        uni.showToast({ title: '保存失败', icon: 'none' })
+      }
+    },
+  })
 }
 
 const prevMonth = () => {
@@ -303,5 +446,75 @@ const nextMonth = () => {
 .reward-text {
   font-size: 28rpx;
   color: #4caf50;
+}
+
+.share-btn {
+  margin-top: 20rpx;
+  background: #52796f;
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+  border: none;
+  width: 60%;
+}
+
+.share-btn::after {
+  border: none;
+}
+
+.share-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+}
+
+.share-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.share-dialog {
+  width: 78%;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+}
+
+.share-preview {
+  width: 100%;
+  border-radius: 16rpx;
+  background: #eaf1ea;
+}
+
+.share-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.share-action {
+  flex: 1;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+  border: none;
+  background: #f0f4f0;
+  color: #52796f;
+}
+
+.share-action::after {
+  border: none;
+}
+
+.share-action.primary {
+  background: #52796f;
+  color: #fff;
 }
 </style>
