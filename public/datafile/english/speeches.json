@@ -3,7 +3,7 @@
     "category": "speeches",
     "name": "英文经典演讲",
     "description": "影响世界的英文演讲名篇节选：政治演说、就职演说、毕业典礼演讲等",
-    "count": 9,
+    "count": 10,
     "version": "1.0",
     "lastUpdated": "2026-09-08"
   },
@@ -13,77 +13,116 @@
       "title": "The Gettysburg Address",
       "author": "Abraham Lincoln",
       "content": "Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.\n\nNow we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.\n\nBut, in a larger sense, we can not dedicate—we can not consecrate—we can not hallow—this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us—that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion—that we here highly resolve that these dead shall not have died in vain—that this nation, under God, shall have a new birth of freedom—and that government of the people, by the people, for the people, shall not perish from the earth.",
-      "tags": ["演讲", "历史", "自由"],
+      "tags": [
+        "演讲",
+        "历史",
+        "自由"
+      ],
       "source": "Gettysburg, Pennsylvania, November 19, 1863",
       "year": 1863,
-      "language": "en"
+      "language": "en",
+      "location": "葛底斯堡"
     },
     {
       "id": "eng_speech_002",
       "title": "I Have a Dream (Excerpt)",
       "author": "Martin Luther King Jr.",
       "content": "I say to you today, my friends, so even though we face the difficulties of today and tomorrow, I still have a dream. It is a dream deeply rooted in the American dream.\n\nI have a dream that one day this nation will rise up and live out the true meaning of its creed: \"We hold these truths to be self-evident, that all men are created equal.\"\n\nI have a dream that one day on the red hills of Georgia, the sons of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood.\n\nI have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice.\n\nI have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream today!\n\nI have a dream that one day every valley shall be exalted, and every hill and mountain shall be made low, the rough places will be made plain, and the crooked places will be made straight; \"and the glory of the Lord shall be revealed and all flesh shall see it together.\"\n\nAnd when this happens, and when we allow freedom ring, when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of God's children, black men and white men, Jews and Gentiles, Protestants and Catholics, will be able to join hands and sing in the words of the old Negro spiritual: \"Free at last! Free at last! Thank God Almighty, we are free at last!\"",
-      "tags": ["演讲", "民权", "梦想"],
+      "tags": [
+        "演讲",
+        "民权",
+        "梦想"
+      ],
       "source": "March on Washington, August 28, 1963",
       "year": 1963,
-      "language": "en"
+      "language": "en",
+      "location": "华盛顿"
     },
     {
       "id": "eng_speech_003",
       "title": "Inaugural Address (Excerpt)",
       "author": "John F. Kennedy",
       "content": "Let every nation know, whether it wishes us well or ill, that we shall pay any price, bear any burden, meet any hardship, support any friend, oppose any foe to assure the survival and the success of liberty.\n\nThis much we pledge—and more.\n\nTo those old allies whose cultural and spiritual origins we share, we pledge the loyalty of faithful friends. United there is little we cannot do in a host of cooperative ventures. Divided there is little we can do—for we dare not meet a powerful challenge at odds and split asunder.\n\nTo those new states whom we welcome to the ranks of the free, we pledge our word that one form of colonial control shall not have passed away merely to be replaced by a far more iron tyranny. We shall not always expect to find them supporting our view. But we shall always hope to find them strongly supporting their own freedom—and to remember that, in the past, those who foolishly sought power by riding the back of the tiger ended up inside.\n\nAnd so, my fellow Americans: ask not what your country can do for you—ask what you can do for your country.\n\nMy fellow citizens of the world: ask not what America will do for you, but what together we can do for the freedom of man.",
-      "tags": ["演讲", "爱国", "责任"],
+      "tags": [
+        "演讲",
+        "爱国",
+        "责任"
+      ],
       "source": "Washington, D.C., January 20, 1961",
       "year": 1961,
-      "language": "en"
+      "language": "en",
+      "location": "华盛顿"
     },
     {
       "id": "eng_speech_004",
       "title": "Stanford Commencement Address (Excerpt: Stay Hungry, Stay Foolish)",
       "author": "Steve Jobs",
       "content": "When I was young, there was an amazing publication called The Whole Earth Catalog, which was one of the bibles of my generation. It was created by a fellow named Stewart Brand not far from here in Menlo Park, and he brought it to life with his poetic touch. This was in the late 1960s, before personal computers and desktop publishing, so it was all made with typewriters, scissors and Polaroid cameras. It was sort of like Google in paperback form, 35 years before Google came along: it was idealistic, overflowing with neat tools and great notions.\n\nStewart and his team put out several issues of The Whole Earth Catalog, and then when it had run its course, they put out a final issue. It was the mid-1970s, and I was your age. On the back cover of their final issue was a photograph of an early morning country road, the kind you might find yourself hitchhiking on if you were so adventurous. Beneath it were the words: \"Stay Hungry. Stay Foolish.\" It was their farewell message as they signed off. Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.\n\nStay Hungry. Stay Foolish.\n\nThank you all very much.",
-      "tags": ["演讲", "励志", "人生"],
+      "tags": [
+        "演讲",
+        "励志",
+        "人生"
+      ],
       "source": "Stanford University, June 12, 2005",
       "year": 2005,
-      "language": "en"
+      "language": "en",
+      "location": "帕洛阿尔托"
     },
     {
       "id": "eng_speech_005",
       "title": "We Shall Fight on the Beaches (Excerpt)",
       "author": "Winston Churchill",
       "content": "We shall go on to the end. We shall fight in France, we shall fight on the seas and oceans, we shall fight with growing confidence and growing strength in the air, we shall defend our Island, whatever the cost may be. We shall fight on the beaches, we shall fight on the landing grounds, we shall fight in the fields and in the streets, we shall fight in the hills; we shall never surrender, and if, which I do not for a moment believe, this Island or a large part of it were subjugated and starving, then our Empire beyond the seas, armed and guarded by the British Fleet, would carry on the struggle, until, in God's good time, the New World, with all its power and might, steps forth to the rescue and the liberation of the old.",
-      "tags": ["演讲", "勇气", "二战"],
+      "tags": [
+        "演讲",
+        "勇气",
+        "二战"
+      ],
       "source": "House of Commons, London, June 4, 1940",
       "year": 1940,
-      "language": "en"
+      "language": "en",
+      "location": "伦敦"
     },
     {
       "id": "eng_speech_006",
       "title": "Election Night Victory Speech \"Yes We Can\" (Excerpt)",
       "author": "Barack Obama",
       "content": "If there is anyone out there who still doubts that America is a place where all things are possible; who still wonders if the dream of our founders is alive in our time; who still questions the power of our democracy, tonight is your answer.\n\nIt's the answer told by lines that stretched around schools and churches in numbers this nation has never seen; by people who waited three hours and four hours, many for the very first time in their lives, because they believed that this time must be different; that their voice could be that difference.\n\nIt's the answer spoken by young and old, rich and poor, Democrat and Republican, black, white, Latino, Asian, Native American, gay, straight, disabled and not disabled—Americans who sent a message to the world that we have never been a collection of red states and blue states; we are, and always will be, the United States of America.\n\nIt's the answer that led those who have been told for so long by so many to be cynical, and fearful, and doubtful of what we can achieve to put their hands on the arc of history and bend it once more toward the hope of a better day.\n\nBecause of what we did on this day, in this election, at this defining moment, change has come to America.",
-      "tags": ["演讲", "希望", "变革"],
+      "tags": [
+        "演讲",
+        "希望",
+        "变革"
+      ],
       "source": "Grant Park, Chicago, November 4, 2008",
       "year": 2008,
-      "language": "en"
+      "language": "en",
+      "location": "芝加哥"
     },
     {
       "id": "eng_speech_007",
       "title": "Speech to the Troops at Tilbury",
       "author": "Elizabeth I",
       "content": "My loving people,\n\nWe have been persuaded by some that are careful of our safety, to take heed how we commit ourselves to armed multitudes, for fear of treachery; but I assure you I do not desire to live to distrust my faithful and loving people. Let tyrants fear. I have always so behaved myself that, under God, I have placed my chiefest strength and safeguard in the loyal hearts and good-will of my subjects; and therefore I am come amongst you, as you see, at this time, not for my recreation and disport, but being resolved, in the midst and heat of the battle, to live and die amongst you all; to lay down for my God, and for my kingdom, and my people, my honour and my blood, even in the dust.\n\nI know I have the body of a weak, feeble woman; but I have the heart and stomach of a king, and of a king of England too, and think foul scorn that Parma or Spain, or any prince of Europe, should dare to invade the borders of my realm; to which rather than any dishonour shall grow by me, I myself will take up arms, I myself will be your general, judge, and rewarder of every one of your virtues in the field.\n\nI know already, for your forwardness you have deserved rewards and crowns; and We do assure you on a word of a prince, they shall be duly paid you.",
-      "tags": ["演讲", "勇气", "领导力"],
+      "tags": [
+        "演讲",
+        "勇气",
+        "领导力"
+      ],
       "source": "Tilbury, England, 1588",
       "year": 1588,
-      "language": "en"
+      "language": "en",
+      "location": "蒂尔伯里"
     },
     {
       "id": "eng_speech_008",
       "title": "The Great Dictator: Final Speech (Excerpt)",
       "author": "Charlie Chaplin",
       "content": "I'm sorry, but I don't want to be an emperor. That's not my business. I don't want to rule or conquer anyone. I should like to help everyone if possible—Jew, Gentile, black man, white. We all want to help one another. Human beings are like that. We want to live by each other's happiness, not by each other's misery. We don't want to hate and despise one another. In this world there's room for everyone, and the good earth is rich and can provide for everyone. The way of life can be free and beautiful, but we have lost the way.\n\nGreed has poisoned men's souls, has barricaded the world with hate, has goose-stepped us into misery and bloodshed. We have developed speed, but we have shut ourselves in. Machinery that gives abundance has left us in want. Our knowledge has made us cynical. Our cleverness, hard and unkind. We think too much and feel too little. More than machinery we need humanity. More than cleverness we need kindness and gentleness. Without these qualities, life will be violent and all will be lost.\n\nThe airplane and the radio have brought us closer together. The very nature of these inventions cries out for the goodness in men, cries out for universal brotherhood, for the unity of us all. Even now my voice is reaching millions throughout the world—millions of despairing men, women, and little children—victims of a system that makes men torture and imprison innocent people.\n\nTo those who can hear me, I say—do not despair. The misery that is now upon us is but the passing of greed, the bitterness of men who fear the way of human progress. The hate of men will pass, and dictators die, and the power they took from the people will return to the people. And so long as men die, liberty will never perish.",
-      "tags": ["演讲", "人性", "和平"],
+      "tags": [
+        "演讲",
+        "人性",
+        "和平"
+      ],
       "source": "The Great Dictator (film), 1940",
       "year": 1940,
       "language": "en"
@@ -93,10 +132,30 @@
       "title": "First Inaugural Address (Excerpt)",
       "author": "Franklin D. Roosevelt",
       "content": "I am certain that my fellow Americans expect that on my induction into the Presidency I will address them with a candor and a decision which the present situation of our Nation impels. This is preeminently the time to speak the truth, the whole truth, frankly and boldly. Nor need we shrink from honestly facing conditions in our country today. This great Nation will endure as it has endured, will revive and will prosper. So, first of all, let me assert my firm belief that the only thing we have to fear is fear itself—nameless, unreasoning, unjustified terror which paralyzes needed efforts to convert retreat into advance.\n\nIn every dark hour of our national life a leadership of frankness and vigor has met with that understanding and support of the people themselves which is essential to victory. I am convinced that you will again give that support to leadership in these critical days.\n\nHappiness lies not in the mere possession of money; it lies in the joy of achievement, in the thrill of creative effort. The joy and moral stimulation of work no longer must be forgotten in the mad chase of evanescent profits. These dark days will be worth all they cost us if they teach us that our true destiny is not to be ministered unto but to minister to ourselves and to our fellow men.",
-      "tags": ["演讲", "勇气", "危机"],
+      "tags": [
+        "演讲",
+        "勇气",
+        "危机"
+      ],
       "source": "Washington, D.C., March 4, 1933",
       "year": 1933,
-      "language": "en"
+      "language": "en",
+      "location": "华盛顿"
+    },
+    {
+      "id": "eng_speech_010",
+      "title": "Never Give In",
+      "author": "Winston Churchill",
+      "content": "Almost a year has passed since I came down here at your Head Master's kind invitation in order to cheer myself and cheer the hearts of a few of my friends by singing some of our own songs. The ten months that have passed have seen very terrible catastrophic events in the world—ups and downs, misfortunes—but can anyone sitting here this afternoon, this October afternoon, fail to be drawn by the past year's events from their ordinary way of thinking? I feel sure that the past year has made us all follow the march of events with far more intense and far more responsible acceleration.\n\nThe strange, unaccountable thing is that the deterrents displayed at the beginning of the month have not prevented or stopped what has happened. I want to speak to you—and I speak with greater freedom because I am here as a friend, and not as a Minister in what I may say—about the crisis through which we are passing.\n\nThere is no doubt, a very harmful mistake was made. But I can say that, at whatever cost, it will be repaired. Never give in, never give in, never, never, never, never—in nothing, great or small, large or petty—never give in except to convictions of honour and good sense. Never yield to force; never yield to the apparently overwhelming might of the enemy. We stood all alone a year ago, and to many countries it may have seemed that our account was closed, we were finished. But we are carrying on, and the great pulse of the British nation remains beating.",
+      "tags": [
+        "演讲",
+        "勇气",
+        "二战"
+      ],
+      "source": "Harrow School, London, October 29, 1941",
+      "year": 1941,
+      "language": "en",
+      "location": "伦敦"
     }
   ]
 }

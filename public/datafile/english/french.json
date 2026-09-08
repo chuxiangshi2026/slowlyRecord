@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "category": "french",
+    "name": "法文名篇",
+    "description": "法国经典散文、诗歌与文学开篇节选",
+    "count": 5,
+    "version": "1.0",
+    "lastUpdated": "2026-09-09"
+  },
+  "items": [
+    {
+      "id": "fr_001",
+      "title": "À la recherche du temps perdu ・ 冒頭",
+      "author": "Marcel Proust",
+      "content": "Longtemps, je me suis couché de bonne heure. Parfois, à peine ma bougie éteinte, mes yeux se fermaient si vite que je n'avais pas le temps de me dire : « Je m'endors. »\n\nUne demi-heure après, la pensée qu'il était temps de chercher le sommeil m'éveillait ; je voulais poser le volume que je croyais avoir encore dans les mains et souffler ma lumière ; je n'avais pas cessé en dormant de faire des réflexions sur ce que je venais de lire, mais ces réflexions avaient pris un tour un peu particulier. Il me semblait que j'étais moi-même ce dont parlait l'ouvrage : une église, un quatuor, la rivalité de François Ier et de Charles Quint.",
+      "tags": ["novel", "mémoire", "temps"],
+      "source": "Du côté de chez Swann, 1913",
+      "year": 1913,
+      "language": "fr",
+      "location": "巴黎"
+    },
+    {
+      "id": "fr_002",
+      "title": "Le Petit Prince ・ 第 1 章（節録）",
+      "author": "Antoine de Saint-Exupéry",
+      "content": "Quand j'avais six ans j'ai vu, une fois, une magnifique image, dans un livre sur la Forêt Vierge qui s'appelait « Histoires vécues ». Ça représentait un serpent boa qui avalait un fauve.\n\nLes grandes personnes m'ont conseillé de laisser de côté les dessins de serpents boas ouverts ou fermés, et de m'intéresser plutôt à la géographie, à l'histoire, au calcul et à la grammaire. C'est ainsi que j'ai abandonné, à six ans, une magnifique carrière de peintre. J'avais été découragé par l'insuccès de mon dessin numéro 1 et de mon dessin numéro 2. Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant, pour les enfants, de toujours et toujours leur donner des explications.",
+      "tags": ["conte", "enfance", "imagination"],
+      "source": "Le Petit Prince, 1943",
+      "year": 1943,
+      "language": "fr",
+      "location": "纽约"
+    },
+    {
+      "id": "fr_003",
+      "title": "Essais ・  savoir être à soi（節録）",
+      "author": "Michel de Montaigne",
+      "content": "La plus grande chose du monde, c'est de savoir être à soi.\n\nÀ se dérober à ses devoirs et à s'absoudre au besoin : s'isoler par discipline, non par indolence ! Il faut bien se juger, mais se juger sans se flatter.\n\nIl est temps de se détacher de la foule, et de n'en plus recevoir la loi. Sachez donc disposer votre vie à quelque but qui vaille la peine, afin de n'avoir pas à vous repentir d'avoir tant vécu pour rien, quand l'heure de la réflexion sonnera.",
+      "tags": ["essai", "littérature", "sagesse"],
+      "source": "Essais, Livre I, 1580",
+      "year": 1580,
+      "language": "fr",
+      "location": "波尔多"
+    },
+    {
+      "id": "fr_004",
+      "title": "Le Mythe de Sisyphe ・ 冒頭",
+      "author": "Albert Camus",
+      "content": "Les dieux avaient condamné Sisyphe à rouler sans cesse un rocher jusqu'au sommet d'une montagne, d'où la pierre retombait par son propre poids. Ils avaient pensé avec quelque raison qu'il n'est pas de plus terrible punition que le travail inutile et sans espoir.\n\nIl est difficile de dire quelles pensées vivaient sur le chemin de Sisyphe, mais on peut imaginer que cet amoureux de la terre a mesuré, en marchant, la durée de son supplice : alors, l'effort et la douleur trouvaient enfin leur réponse. Il faut imaginer Sisyphe heureux.",
+      "tags": ["essai", "absurde", "philosophie"],
+      "source": "Le Mythe de Sisyphe, 1942",
+      "year": 1942,
+      "language": "fr",
+      "location": "巴黎"
+    },
+    {
+      "id": "fr_005",
+      "title": "Les Fleurs du mal ・ Correspondances",
+      "author": "Charles Baudelaire",
+      "content": "La Nature est un temple où de vivants piliers\nLaissent parfois sortir de confuses paroles ;\nL'homme y passe à travers des forêts de symboles\nQui l'observent avec des regards familiers.\n\nComme de longs échos qui de loin se confondent\nDans une ténébreuse et profonde unité,\nVaste comme la nuit et comme la clarté,\nLes parfums, les couleurs et les sons se répondent.",
+      "tags": ["poésie", "symbole", "nature"],
+      "source": "Les Fleurs du mal, 1857",
+      "year": 1857,
+      "language": "fr",
+      "location": "巴黎"
+    }
+  ]
+}

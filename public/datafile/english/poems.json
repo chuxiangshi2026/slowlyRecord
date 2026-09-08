@@ -3,7 +3,7 @@
     "category": "poems",
     "name": "英文经典诗歌",
     "description": "英美诗歌名篇：十四行诗、抒情诗、现代诗与哲理短章",
-    "count": 9,
+    "count": 10,
     "version": "1.0",
     "lastUpdated": "2026-09-08"
   },
@@ -13,47 +13,71 @@
       "title": "Sonnet 18 (Shall I compare thee to a summer's day?)",
       "author": "William Shakespeare",
       "content": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date;\nSometime too hot the eye of heaven shines,\nAnd often is his gold complexion dimm'd;\nAnd every fair from fair sometime declines,\nBy chance or nature's changing course untrimm'd;\nBut thy eternal summer shall not fade,\nNor lose possession of that fair thou ow'st;\nNor shall death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st:\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee.",
-      "tags": ["诗歌", "爱情", "十四行诗"],
+      "tags": [
+        "诗歌",
+        "爱情",
+        "十四行诗"
+      ],
       "source": "Shakespeare's Sonnets, 1609",
       "year": 1609,
-      "language": "en"
+      "language": "en",
+      "location": "伦敦"
     },
     {
       "id": "eng_poem_002",
       "title": "The Road Not Taken",
       "author": "Robert Frost",
       "content": "Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\nAnd looked down one as far as I could\nTo where it bent in the undergrowth;\n\nThen took the other, as just as fair,\nAnd having perhaps the better claim,\nBecause it was grassy and wanted wear;\nThough as for that the passing there\nHad worn them really about the same,\n\nAnd both that morning equally lay\nIn leaves no step had trodden black.\nOh, I kept the first for another day!\nYet knowing how way leads on to way,\nI doubted if I should ever come back.\n\nI shall be telling this with a sigh\nSomewhere ages and ages hence:\nTwo roads diverged in a wood, and I—\nI took the one less traveled by,\nAnd that has made all the difference.",
-      "tags": ["诗歌", "人生", "抉择"],
+      "tags": [
+        "诗歌",
+        "人生",
+        "抉择"
+      ],
       "source": "Mountain Interval, 1916",
       "year": 1916,
-      "language": "en"
+      "language": "en",
+      "location": "德里"
     },
     {
       "id": "eng_poem_003",
       "title": "I Wandered Lonely as a Cloud (Daffodils)",
       "author": "William Wordsworth",
       "content": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils;\nBeside the lake, beneath the trees,\nFluttering and dancing in the breeze.\n\nContinuous as the stars that shine\nAnd twinkle on the milky way,\nThey stretched in never-ending line\nAlong the margin of a bay:\nTen thousand saw I at a glance,\nTossing their heads in sprightly dance.\n\nThe waves beside them danced; but they\nOut-did the sparkling waves in glee:\nA poet could not but be gay,\nIn such a jocund company:\nI gazed—and gazed—but little thought\nWhat wealth the show to me had brought:\n\nFor oft, when on my couch I lie\nIn vacant or in pensive mood,\nThey flash upon that inward eye\nWhich is the bliss of solitude;\nAnd then my heart with pleasure fills,\nAnd dances with the daffodils.",
-      "tags": ["诗歌", "自然", "名篇"],
+      "tags": [
+        "诗歌",
+        "自然",
+        "名篇"
+      ],
       "source": "Poems, in Two Volumes, 1807",
       "year": 1807,
-      "language": "en"
+      "language": "en",
+      "location": "湖区"
     },
     {
       "id": "eng_poem_004",
       "title": "Stray Birds (Excerpt)",
       "author": "Rabindranath Tagore",
       "content": "Stray birds of summer come to my window to sing and fly away.\nAnd yellow leaves of autumn, which have no songs, flutter and fall there with a sigh.\n\nO troupe of little vagrants of the world, leave your footprints in my words.\n\nThe world puts off its mask of vastness to its lover.\nIt becomes small as one song, as one kiss of the eternal.\n\nIt is the tears of the earth that keep her smiles in bloom.\n\nThe mighty desert is burning for the love of a blade of grass who shakes her head and laughs and flies away.\n\nIf you shed tears when you miss the sun, you also miss the stars.\n\nThe waterfall sing, \"I find my song, when I find my freedom.\"\n\nWe come nearest to the great when we are great in humility.\n\nThe sparrow is sorry for the peacock at the burden of its tail.\n\nNever be afraid of the moments—thus sings the voice of the everlasting.\n\nThe Perfect decks itself in beauty for the love of the Imperfect.",
-      "tags": ["诗歌", "哲理", "短章"],
+      "tags": [
+        "诗歌",
+        "哲理",
+        "短章"
+      ],
       "source": "Stray Birds, 1916",
       "year": 1916,
-      "language": "en"
+      "language": "en",
+      "location": "印度"
     },
     {
       "id": "eng_poem_005",
       "title": "Annabel Lee",
       "author": "Edgar Allan Poe",
       "content": "It was many and many a year ago,\nIn a kingdom by the sea,\nThat a maiden there lived whom you may know\nBy the name of Annabel Lee;\nAnd this maiden she lived with no other thought\nThan to love and be loved by me.\n\nI was a child and she was a child,\nIn this kingdom by the sea,\nBut we loved with a love that was more than love—\nI and my Annabel Lee—\nWith a love that the wingèd seraphs of Heaven\nCoveted her and me.\n\nAnd this was the reason that, long ago,\nIn this kingdom by the sea,\nA wind blew out of a cloud, chilling\nMy beautiful Annabel Lee;\nSo that her highborn kinsmen came\nAnd bore her away from me,\nTo shut her up in a sepulchre\nIn this kingdom by the sea.\n\nThe angels, not half so happy in Heaven,\nWent envying her and me—\nYes!—that was the reason (as all men know,\nIn this kingdom by the sea)\nThat the wind came out of the cloud by night,\nChilling and killing my Annabel Lee.\n\nBut our love it was stronger by far than the love\nOf those who were older than we—\nOf many far wiser than we—\nAnd neither the angels in Heaven above\nNor the demons down under the sea\nCan ever dissever my soul from the soul\nOf the beautiful Annabel Lee:\n\nFor the moon never beams, without bringing me dreams\nOf the beautiful Annabel Lee;\nAnd the stars never rise, but I feel the bright eyes\nOf the beautiful Annabel Lee;\nAnd so, all the night-tide, I lie down by the side\nOf my darling—my darling—my life and my bride,\nIn her sepulchre there by the sea—\nIn her tomb by the sounding sea.",
-      "tags": ["诗歌", "爱情", "哀歌"],
+      "tags": [
+        "诗歌",
+        "爱情",
+        "哀歌"
+      ],
       "source": "The Southern Literary Messenger, 1849",
       "year": 1849,
       "language": "en"
@@ -63,40 +87,75 @@
       "title": "Do Not Go Gentle into That Good Night",
       "author": "Dylan Thomas",
       "content": "Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light.\n\nThough wise men at their end know dark is right,\nBecause their words had forked no lightning they\nDo not go gentle into that good night.\n\nGood men, the last wave by, crying how bright\nTheir frail deeds might have danced in a green bay,\nRage, rage against the dying of the light.\n\nWild men who caught and sang the sun in flight,\nAnd learn, too late, they grieved it on its way,\nDo not go gentle into that good night.\n\nGrave men, near death, who see with blinding sight\nBlind eyes could blaze like meteors and be gay,\nRage, rage against the dying of the light.\n\nAnd you, my father, there on the sad height,\nCurse, bless, me now with your fierce tears, I pray.\nDo not go gentle into that good night.\nRage, rage against the dying of the light.",
-      "tags": ["诗歌", "生命", "抗争"],
+      "tags": [
+        "诗歌",
+        "生命",
+        "抗争"
+      ],
       "source": "Botteghe Oscure, 1951",
       "year": 1951,
-      "language": "en"
+      "language": "en",
+      "location": "威尔士"
     },
     {
       "id": "eng_poem_007",
       "title": "She Walks in Beauty",
       "author": "Lord Byron",
       "content": "She walks in beauty, like the night\nOf cloudless climes and starry skies;\nAnd all that's best of dark and bright\nMeet in her aspect and her eyes;\nThus mellowed to that tender light\nWhich heaven to gaudy day denies.\n\nOne shade the more, one ray the less,\nHad half impaired the nameless grace\nWhich waves in every raven tress,\nOr softly lightens o'er her face;\nWhere thoughts serenely sweet express,\nHow pure, how dear their dwelling-place.\n\nAnd on that cheek, and o'er that brow,\nSo soft, so calm, yet eloquent,\nThe smiles that win, the tints that glow,\nBut tell of days in goodness spent,\nA mind at peace with all below,\nA heart whose love is innocent!",
-      "tags": ["诗歌", "爱情", "唯美"],
+      "tags": [
+        "诗歌",
+        "爱情",
+        "唯美"
+      ],
       "source": "Hebrew Melodies, 1815",
       "year": 1814,
-      "language": "en"
+      "language": "en",
+      "location": "伦敦"
     },
     {
       "id": "eng_poem_008",
       "title": "Ozymandias",
       "author": "Percy Bysshe Shelley",
       "content": "I met a traveller from an antique land,\nWho said—\"Two vast and trunkless legs of stone\nStand in the desert. . . . Near them, on the sand,\nHalf sunk a shattered visage lies, whose frown,\nAnd wrinkled lip, and sneer of cold command,\nTell that its sculptor well those passions read\nWhich yet survive, stamped on these lifeless things,\nThe hand that mocked them, and the heart that fed;\nAnd on the pedestal, these words appear:\nMy name is Ozymandias, King of Kings;\nLook on my Works, ye Mighty, and despair!\nNothing beside remains. Round the decay\nOf that colossal Wreck, boundless and bare\nThe lone and level sands stretch far away.\"",
-      "tags": ["诗歌", "历史", "讽刺"],
+      "tags": [
+        "诗歌",
+        "历史",
+        "讽刺"
+      ],
       "source": "The Examiner, 1818",
       "year": 1818,
-      "language": "en"
+      "language": "en",
+      "location": "伦敦"
     },
     {
       "id": "eng_poem_009",
       "title": "To Autumn",
       "author": "John Keats",
       "content": "Season of mists and mellow fruitfulness,\nClose bosom-friend of the maturing sun;\nConspiring with him how to load and bless\nWith fruit the vines that round the thatch-eves run;\nTo bend with apples the moss'd cottage-trees,\nAnd fill all fruit with ripeness to the core;\nTo swell the gourd, and plump the hazel shells\nWith a sweet kernel; to set budding more,\nAnd still more, later flowers for the bees,\nUntil they think warm days will never cease,\nFor summer has o'er-brimm'd their clammy cells.\n\nWho hath not seen thee oft amid thy store?\nSometimes whoever seeks abroad may find\nThee sitting careless on a granary floor,\nThy hair soft-lifted by the winnowing wind;\nOr on a half-reap'd furrow sound asleep,\nDrows'd with the fume of poppies, while thy hook\nSpares the next swath and all its twined flowers:\nAnd sometimes like a gleaner thou dost keep\nSteady thy laden head across a brook;\nOr by a cyder-press, with patient look,\nThou watchest the last oozings hours by hours.\n\nWhere are the songs of spring? Ay, where are they?\nThink not of them, thou hast thy music too,—\nWhile barred clouds bloom the soft-dying day,\nAnd touch the stubble-plains with rosy hue;\nThen in a wailful choir the small gnats mourn\nAmong the river sallows, borne aloft\nOr sinking as the light wind lives or dies;\nAnd full-grown lambs loud bleat from hilly bourn;\nHedge-crickets sing; and now with treble soft\nThe red-breast whistles from a garden-croft;\nAnd gathering swallows twitter in the skies.",
-      "tags": ["诗歌", "自然", "秋"],
+      "tags": [
+        "诗歌",
+        "自然",
+        "秋"
+      ],
       "source": "Lamia, Isabella, The Eve of St. Agnes, and Other Poems, 1820",
       "year": 1820,
-      "language": "en"
+      "language": "en",
+      "location": "温彻斯特"
+    },
+    {
+      "id": "eng_poem_010",
+      "title": "Hope Is the Thing with Feathers",
+      "author": "Emily Dickinson",
+      "content": "Hope is the thing with feathers\nThat perches in the soul,\nAnd sings the tune without the words,\nAnd never stops at all,\n\nAnd sweetest in the gale is heard;\nAnd sore must be the storm\nThat could abash the little bird\nThat kept so many warm.\n\nI've heard it in the chillest land,\nAnd on the strangest sea;\nYet, never, in extremity,\nIt asked a crumb of me.",
+      "tags": [
+        "诗歌",
+        "希望",
+        "自然"
+      ],
+      "source": "The Poems of Emily Dickinson, published 1890",
+      "year": 1861,
+      "language": "en",
+      "location": "阿默斯特"
     }
   ]
 }

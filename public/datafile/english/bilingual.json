@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "category": "bilingual",
+    "name": "中英对照",
+    "description": "世界名篇英文原文与中文译文成对，供对照背诵与阅读",
+    "count": 8,
+    "version": "1.0",
+    "lastUpdated": "2026-09-09"
+  },
+  "items": [
+    {
+      "id": "bil_001",
+      "title": "The Gettysburg Address / 葛底斯堡演说",
+      "author": "Abraham Lincoln",
+      "content": "Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.\n\nNow we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.\n\nBut, in a larger sense, we can not dedicate—we can not consecrate—we can not hallow—this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here.",
+      "translation": "八十七年以前，我们的祖先在这片大陆上缔造了一个新的国家，孕育于自由之中，致力于人人生而平等的信念。\n\n现在我们正陷入一场伟大的内战，以考验这个国家，或任何同类孕育并致力于这一信念的国家，能否长久存续。我们在这片战场前来，是要把它的土地的一角奉献给那些为国捐躯、使此国得以存续的人作为最后的安息之所。我们这样做是完全恰当、完全应当的。\n\n但从更广的意义上说，我们无法奉献、无法圣化、无法神化这片土地。那些曾在此浴血奋战的勇士们，不论健在抑或牺牲，早已将这片土地神圣化了，远非我们凡俗之力所能增减。世人不会注意，也不会长久记住我们在此说的话，却永远不会忘记他们在这里所做的事。",
+      "tags": ["演讲", "自由", "对照"],
+      "source": "Gettysburg, Pennsylvania, November 19, 1863",
+      "year": 1863,
+      "language": "en",
+      "location": "葛底斯堡"
+    },
+    {
+      "id": "bil_002",
+      "title": "Declaration of Independence ・ Preamble / 独立宣言序言",
+      "author": "Thomas Jefferson",
+      "content": "When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.\n\nWe hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness. That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed.",
+      "translation": "在人类事务的进程中，当一个民族必须解除其与另一个民族之间所建立的政治联系，并在世界列国中依照自然法则和自然之神的意旨，取得独立与平等的地位时，出于对人类舆论的尊重，应当把促使他们独立的原因予以宣布。\n\n我们认为下述真理是不言而喻的：人人生而平等，造物者赋予他们若干不可剥夺的权利，其中包括生命权、自由权和追求幸福的权利。为了保障这些权利，人类才在他们之间建立政府，而政府的正当权力，则来自被统治者的同意。",
+      "tags": ["文献", "自由", "对照"],
+      "source": "Philadelphia, July 4, 1776",
+      "year": 1776,
+      "language": "en",
+      "location": "费城"
+    },
+    {
+      "id": "bil_003",
+      "title": "I Have a Dream (Excerpt) / 我有一个梦想（节选）",
+      "author": "Martin Luther King Jr.",
+      "content": "I say to you today, my friends, so even though we face the difficulties of today and tomorrow, I still have a dream. It is a dream deeply rooted in the American dream.\n\nI have a dream that one day this nation will rise up and live out the true meaning of its creed: \"We hold these truths to be self-evident, that all men are created equal.\"\n\nI have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream today!",
+      "translation": "今天，我要对你们说，尽管今天和明天我们仍将面对重重困难，但我仍然怀有一个梦想。这个梦想深深植根于美国之梦中。\n\n我有一个梦想：总有一天，这个国家将会奋起，实现其立国信条的真谛——我们认为这些真理是不言而喻的：人人生而平等。\n\n我有一个梦想：我的四个年幼的孩子，总有一天将生活在一个不以肤色、而以品格的优劣来评判他们的国度里。今天，我有一个梦想！",
+      "tags": ["演讲", "民权", "对照"],
+      "source": "March on Washington, August 28, 1963",
+      "year": 1963,
+      "language": "en",
+      "location": "华盛顿"
+    },
+    {
+      "id": "bil_004",
+      "title": "Of Studies (Excerpt) / 论读书（节选）",
+      "author": "Francis Bacon",
+      "content": "Studies serve for delight, for ornament, and for ability. Their chief use for delight, is in privateness and retiring; for ornament, is in discourse; and for ability, is in the judgment and disposition of business.\n\nRead not to contradict and confute; nor to believe and take for granted; nor to find talk and discourse; but to weigh and consider.\n\nReading maketh a full man; conference a ready man; and writing an exact man.",
+      "translation": "读书足以怡情，足以傅彩，足以长才。其怡情也，最见于独处幽居之时；其傅彩也，最见于高谈阔论之中；其长才也，最见于处世事判事之际。\n\n读书时不可存心诘难作者，不可尽信书上所言，亦不可只为寻章摘句，而应推敲细思。\n\n读书使人充实，讨论使人机智，笔记使人准确。",
+      "tags": ["散文", "学习", "对照"],
+      "source": "The Essays or Counsels, Civil and Moral, 1625",
+      "year": 1625,
+      "language": "en",
+      "location": "伦敦"
+    },
+    {
+      "id": "bil_005",
+      "title": "Sonnet 18 / 十四行诗 第十八首",
+      "author": "William Shakespeare",
+      "content": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date;\nSometimes too hot the eye of heaven shines,\nAnd often is his gold complexion dimm'd;\nAnd every fair from fair sometime declines,\nBy chance or nature's changing course untrimm'd;\nBut thy eternal summer shall not fade,\nNor lose possession of that fair thou ow'st;\nNor shall death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st:\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee.",
+      "translation": "我能否将你比作夏天？\n你却比它更加可爱更加温婉：\n狂风会摧残五月娇柔的花蕾，\n夏日的光阴转瞬便过于短暂；\n有时天日高悬灼热难当，\n又常被淡淡阴翳遮暗容颜；\n一切美好终会随岁月凋残，\n或为机遇所褪，或为自然所改观；\n可你永恒的夏天却不会消逝，\n拥有的美好也不会就此衰残；\n死神也无法夸口你在他的荫下彷徨，\n当你在永恒的诗行中将岁月绵延：\n只要人类还在呼吸，眼睛还能看见，\n此诗便将长存，并赋予你以生命。",
+      "tags": ["诗歌", "爱情", "对照"],
+      "source": "Shakespeare's Sonnets, 1609",
+      "year": 1609,
+      "language": "en",
+      "location": "伦敦"
+    },
+    {
+      "id": "bil_006",
+      "title": "Ode to the West Wind (Final Stanza) / 西风颂（末节）",
+      "author": "Percy Bysshe Shelley",
+      "content": "Make me thy lyre, even as the forest is:\nWhat if my leaves are falling like its own!\nThe tumult of thy mighty harmonies\nWill take from both a deep, autumnal tone,\nSweet though in sadness. Be thou, Spirit fierce,\nMy spirit! Be thou me, impetuous one!\n\nDrive my dead thoughts over the universe\nLike withered leaves to quicken a new birth!\nAnd, by the incantation of this verse,\nScatter, as from an unextinguish'd hearth\nAshes and sparks, my words among mankind!\nBe through my lips to unawaken'd earth\n\nThe trumpet of a prophecy! O Wind,\nIf Winter comes, can Spring be far behind?",
+      "translation": "把我当作你的竖琴吧，犹如树林：\n纵然我的叶落纷纷，又有何妨！\n你浩荡的谐律奏出的天籁之音，\n将带着深刻的秋意，从两者中回荡，\n虽含几分悲伤。狂暴的精灵啊，\n愿你成为我的精神！愿你成为我，迅猛的一身！\n\n把我死灭的思想吹遍寰宇四方，\n像吹落枯叶，以催发新的生机！\n借这诗篇的咒语，\n像从不灭的炉膛里，\n把我言语的灰烬与火花，撒向人间！\n借我的嘴唇，向沉睡的大地\n\n吹起那预言号角！啊，西风，\n若是冬天已经来了，春天还会远吗？",
+      "tags": ["诗歌", "希望", "对照"],
+      "source": "Prometheus Unbound and Other Poems, 1820",
+      "year": 1819,
+      "language": "en",
+      "location": "佛罗伦萨"
+    },
+    {
+      "id": "bil_007",
+      "title": "The Little Prince ・ The Fox / 小王子・狐狸的名言",
+      "author": "Antoine de Saint-Exupéry",
+      "content": "It is only with the heart that one can see rightly; what is essential is invisible to the eye.\n\nIt is the time you have wasted for your rose that makes your rose so important.\n\nYou become responsible, forever, for what you have tamed. You are responsible for your rose.",
+      "translation": "只有用心才能看得清。真正重要的东西，用眼睛是看不见的。\n\n正是你为你的玫瑰花费的时间，才使你的玫瑰变得如此重要。\n\n你要永远对你驯养过的一切负责。你要对你的玫瑰负责。",
+      "tags": ["童话", "哲理", "对照"],
+      "source": "Le Petit Prince, 1943（英译本）",
+      "year": 1943,
+      "language": "en",
+      "location": "纽约"
+    },
+    {
+      "id": "bil_008",
+      "title": "The Old Man and the Sea (Excerpt) / 老人与海（节选）",
+      "author": "Ernest Hemingway",
+      "content": "It was then that the old man realized that he could not be beaten. But, he thought, what is it, this thing that defeats a man? I know I am not defeated now, he told himself. I have that big fish on my line, and I will not let it go.\n\nBut man is not made for defeat. A man can be destroyed but not defeated.",
+      "translation": "就在那时，老人意识到他不会被击败。可他心想：究竟是什么东西，能让一个人失败呢？现在我并未失败，他对自己说。那条大鱼还在我的钓线上，我决不会放开它。\n\n可一个人并不是生来就要被打败的。你尽可以把他消灭掉，可就是打不败他。",
+      "tags": ["小说", "意志", "对照"],
+      "source": "The Old Man and the Sea, 1952",
+      "year": 1952,
+      "language": "en",
+      "location": "古巴"
+    }
+  ]
+}

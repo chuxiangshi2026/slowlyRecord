@@ -3,7 +3,7 @@
     "category": "essays",
     "name": "英文经典散文",
     "description": "英美散文名篇节选：论学、人生、自然与青春",
-    "count": 6,
+    "count": 7,
     "version": "1.0",
     "lastUpdated": "2026-09-08"
   },
@@ -13,60 +13,105 @@
       "title": "Of Studies",
       "author": "Francis Bacon",
       "content": "Studies serve for delight, for ornament, and for ability. Their chief use for delight, is in privateness and retiring; for ornament, is in discourse; and for ability, is in the judgment and disposition of business. For expert men can execute, and perhaps judge of particulars, one by one; but the general counsels, and the plots and marshalling of affairs, come best from those that are learned.\n\nTo spend too much time in studies is sloth; to use them too much for ornament, is affectation; to make judgment wholly by their rules, is the humour of a scholar. They perfect nature, and are perfected by experience: for natural abilities are like natural plants, that need pruning by study; and studies themselves do give forth directions too much at large, except they be bounded in by experience.\n\nRead not to contradict and confute; nor to believe and take for granted; nor to find talk and discourse; but to weigh and consider. Some books are to be tasted, others to be swallowed, and some few to be chewed and digested; that is, some books are to be read only in parts; others to be read, but not curiously; and some few to be read wholly, and with diligence and attention. Some books also may be read by deputy, and extracts made of them by others; but that would be only in the less important arguments, and the meaner sort of books, else distilled books are like common distilled waters, flashy things.\n\nReading maketh a full man; conference a ready man; and writing an exact man.",
-      "tags": ["散文", "学习", "哲理"],
+      "tags": [
+        "散文",
+        "学习",
+        "哲理"
+      ],
       "source": "Essays, 1597 / The Essays or Counsels, Civil and Moral, 1625",
       "year": 1625,
-      "language": "en"
+      "language": "en",
+      "location": "伦敦"
     },
     {
       "id": "eng_essay_002",
       "title": "What I Have Lived For",
       "author": "Bertrand Russell",
       "content": "Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind. These passions, like great winds, have blown me hither and thither, in a wayward course, over a deep ocean of anguish, reaching to the very verge of despair.\n\nI have sought love, first, because it brings ecstasy—ecstasy so great that I would often have sacrificed all the rest of life for a few hours of this joy. I have sought it, next, because it relieves loneliness—that terrible loneliness in which one shivering consciousness looks over the rim of the world into the cold unfathomable lifeless abyss. I have sought it finally, because in the union of love I have seen, in a mystic miniature, the prefiguring vision of the heaven that saints and poets have imagined. This is what I sought, and though it might seem too good for human life, this is what—at last—I have found.\n\nWith equal passion I have sought knowledge. I have wished to understand the hearts of men. I have wished to know why the stars shine. And I have tried to apprehend the Pythagorean power by which number holds sway above the flux. A little of this, but not much, I have achieved.\n\nLove and knowledge, so far as they were possible, led upward toward the heavens. But always pity brought me back to earth. Echoes of cries of pain reverberate in my heart. Children in famine, victims tortured by oppressors, helpless old people a hated burden to their sons, and the whole world of loneliness, poverty, and pain make a mockery of what human life should be. I long to alleviate the evil, but I cannot, and I too suffer.\n\nThis has been my life. I have found it worth living, and would gladly live it again if the chance were offered me.",
-      "tags": ["散文", "人生", "哲理"],
+      "tags": [
+        "散文",
+        "人生",
+        "哲理"
+      ],
       "source": "The Autobiography of Bertrand Russell, Prologue",
       "year": 1967,
-      "language": "en"
+      "language": "en",
+      "location": "英国"
     },
     {
       "id": "eng_essay_003",
       "title": "Walden (Excerpt: Where I Lived, and What I Lived For)",
       "author": "Henry David Thoreau",
       "content": "I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach, and not, when I came to die, discover that I had not lived. I did not wish to live what was not life, living is so dear; nor did I wish to practise resignation, unless it was quite necessary. I wanted to live deep and suck out all the marrow of life, to live so sturdily and Spartan-like as to put to rout all that was not life, to cut a broad swath and shave close, to drive life into a corner, and reduce it to its lowest terms, and, if it proved to be mean, why then to get the whole and genuine meanness of it, and publish its meanness to the world; or if it were sublime, to know it by experience, and be able to give a true account of it in my next excursion.\n\nSimplicity, simplicity, simplicity! I say, let your affairs be as two or three, and not a hundred or a thousand; instead of a million count half a dozen, and keep your accounts on your thumb-nail. In the midst of this chopping sea of civilized life, such are the clouds and storms and quicksands and thousand-and-one items to be allowed for, that a man has to live, if he would not founder and go to the bottom and not make his port at all, by dead reckoning, and he must be a great calculator indeed who succeeds. Simplify, simplify.",
-      "tags": ["散文", "自然", "简朴"],
+      "tags": [
+        "散文",
+        "自然",
+        "简朴"
+      ],
       "source": "Walden; or, Life in the Woods, 1854",
       "year": 1854,
-      "language": "en"
+      "language": "en",
+      "location": "康科德"
     },
     {
       "id": "eng_essay_004",
       "title": "Youth",
       "author": "Samuel Ullman",
       "content": "Youth is not a time of life; it is a state of mind; it is not a matter of rosy cheeks, red lips and supple knees; it is a matter of the will, a quality of the imagination, a vigor of the emotions; it is the freshness of the deep springs of life.\n\nYouth means a temperamental predominance of courage over timidity of the appetite, for adventure over the love of ease. This often exists in a man of sixty more than a boy of twenty. Nobody grows old merely by a number of years. We grow old by deserting our ideals.\n\nYears may wrinkle the skin, but to give up enthusiasm wrinkles the soul. Worry, fear, self-distrust bows the heart and turns the spirit back to dust.\n\nWhether sixty or sixteen, there is in every human being's heart the lure of wonder, the unfailing child-like appetite of what's next, and the joy of the game of living. In the center of your heart and my heart there is a wireless station; so long as it receives messages of beauty, hope, cheer, courage and power from men and from the Infinite, so long are you young.\n\nWhen the aerials are down, and your spirit is covered with snows of cynicism and the ice of pessimism, then you are grown old, even at twenty, but as long as your aerials are up, to catch the waves of optimism, there is hope you may die young at eighty.",
-      "tags": ["散文", "励志", "青春"],
+      "tags": [
+        "散文",
+        "励志",
+        "青春"
+      ],
       "source": "Published in the General Catalog of the University of Birmingham, Alabama, 1918",
       "year": 1918,
-      "language": "en"
+      "language": "en",
+      "location": "伯明翰"
     },
     {
       "id": "eng_essay_005",
       "title": "Self-Reliance (Excerpt)",
       "author": "Ralph Waldo Emerson",
       "content": "There is a time in every man's education when he arrives at the conviction that envy is ignorance; that imitation is suicide; that he must take himself for better, for worse, as his portion; that though the wide universe is full of good, no kernel of nourishing corn can come to him but through his toil bestowed on that plot of ground which is given to him to till. The power which resides in him is new in nature, and none but he knows what that is which he can do, nor does he know until he has tried.\n\nTrust thyself: every heart vibrates to that iron string. Accept the place the divine providence has found for you, the society of your contemporaries, the connection of events. Great men have always done so, and confided themselves childlike to the genius of their age, betraying their perception that the absolutely trustworthy was seated at their heart, working through their hands, predominating in all their being.\n\nWhoso would be a man must be a nonconformist. He who would gather immortal palms must not be hindered by the name of goodness, but must explore if it be goodness. Nothing is at last sacred but the integrity of your own mind.",
-      "tags": ["散文", "自信", "独立"],
+      "tags": [
+        "散文",
+        "自信",
+        "独立"
+      ],
       "source": "Essays: First Series, 1841",
       "year": 1841,
-      "language": "en"
+      "language": "en",
+      "location": "康科德"
     },
     {
       "id": "eng_essay_006",
       "title": "A Tale of Two Cities (Opening)",
       "author": "Charles Dickens",
       "content": "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way—in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.\n\nThere were a king with a large jaw and a queen with a plain face, on the throne of England; there were a king with a large jaw and a queen with a fair face, on the throne of France. In both countries it was clearer than crystal to the lords of the State preserves of loaves and fishes, that things in general were settled for ever.\n\nIt was the year of Our Lord one thousand seven hundred and seventy-five. Spiritual revelations were conceded to England at that favoured period, as at this. Mrs. Southcott had recently attained her five-and-twentieth blessed birthday, of whom a prophetic private in the Life Guards had heralded the sublime appearance by announcing that arrangements were made for the swallowing up of London and Westminster.",
-      "tags": ["散文", "名著", "开篇"],
+      "tags": [
+        "散文",
+        "名著",
+        "开篇"
+      ],
       "source": "A Tale of Two Cities, 1859",
       "year": 1859,
-      "language": "en"
+      "language": "en",
+      "location": "伦敦"
+    },
+    {
+      "id": "eng_essay_007",
+      "title": "Once More to the Lake (Excerpt)",
+      "author": "E. B. White",
+      "content": "We had good times there in summer, passing into and out of each other's lives and paying no heed or sign. I wonder whether the evenness of the summer day, and the long stretches of time from meal to meal, did not help me to a more patient and receptive mood than I can command now, when the clock is always ticking and the mind races at its own whim.\n\nWe set out one summer morning in a car with the windows down and the air of the countryside streaming in. We were going to the lake in Maine, the same lake we had gone to when I was a boy. It was a place of reeds and snags and a wooden dock, where the larches grew at the water's edge. The lake remained, in large part, exactly as I had remembered it: the same water, clear to the sandy bottom, the same afternoon stillness, broken only by the distant sound of an outboard motor.\n\nI watched my son, at about the age I had been when I first came, and I had the strange conviction that I was my own father entering, once again, the water that had closed over me as a boy. There was a continuity that the turning years had not broken: I went to the water, and he came after me, and we were, for a moment, one person, two ages of the same soul.\n\nI kept thinking of another thing—that wherever this lake lay, in the heart of a boy it was forever the same lake, and it was I, not the world, that had grown old. For a time, the two of us were sustained there on the quiet water, and the past and the present were, for that enchanted afternoon, one and the same.",
+      "tags": [
+        "散文",
+        "自然",
+        "亲情"
+      ],
+      "source": "Harper's Magazine, August 1941",
+      "year": 1941,
+      "language": "en",
+      "location": "缅因州"
     }
   ]
 }
