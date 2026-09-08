@@ -7,7 +7,8 @@ import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
 import {log} from "@/utils/logger.ts";
 import {queryLocalDictionaryAsync} from "@/utils/local-dictionary";
-import {normalizeItemText, inferItemType} from "@/utils/text-utils";
+import {normalizeItemText, inferItemType, isSentenceLike} from "@/utils/text-utils";
+import {useSentencesStore} from "@/stores/sentences";
 
 /**
  * 初始化单词状态
@@ -298,4 +299,29 @@ const batchAddWords = async (wordTexts: string[]) => {
   });
 };
 
-export {getInitWord, addWord, batchAddWords,batchTranslateAndAddWords}
+/**
+ * 录入自动分流：句子进句子库，单词/词组进单词库
+ * 英文句子顺带用当前翻译平台补译文，失败静默留空
+ */
+const addTextAuto = async (text: string): Promise<{type: 'word' | 'sentence', success: boolean, message: string, text: string}> => {
+    if (!isSentenceLike(text)) {
+        const res = await addWord(text);
+        return {type: 'word', success: res.success, message: res.message, text: res.text};
+    }
+    const sentencesStore = useSentencesStore();
+    // 英文句子尝试补译文，失败不影响入库
+    let translation: string | undefined;
+    try {
+        const wordsStore = useWordsStore();
+        const res = await wordsStore.translateWithPlatform(normalizeItemText(text));
+        if (res.success && res.explains) {
+            translation = res.explains;
+        }
+    } catch (e) {
+        log.i('句子补译文失败，忽略', e);
+    }
+    const res = await sentencesStore.add(text, translation ? {translation} : {});
+    return {type: 'sentence', success: res.success, message: res.message, text: normalizeItemText(text)};
+};
+
+export {getInitWord, addWord, batchAddWords, batchTranslateAndAddWords, addTextAuto}
