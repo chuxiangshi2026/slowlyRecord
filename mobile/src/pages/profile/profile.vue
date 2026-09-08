@@ -54,6 +54,12 @@
         <text class="menu-text">清空数据</text>
         <text class="menu-arrow">›</text>
       </view>
+      <!-- 复习提醒（一次性订阅消息，仅微信小程序端可授权） -->
+      <view class="menu-item" @click="showRemind">
+        <text class="menu-icon remind">R</text>
+        <text class="menu-text">复习提醒</text>
+        <text class="menu-arrow">›</text>
+      </view>
       <!-- 意见反馈（微信官方反馈页，仅微信小程序端） -->
       <!-- #ifdef MP-WEIXIN -->
       <button class="menu-item feedback-btn" open-type="feedback">
@@ -104,6 +110,30 @@
         </view>
       </view>
     </view>
+
+    <!-- 复习提醒弹窗 -->
+    <view v-if="showRemindModal" class="popup-overlay" @click="showRemindModal = false">
+      <view class="popup-content remind-popup" @click.stop>
+        <view class="popup-title">复习提醒</view>
+        <view class="remind-desc">
+          <view class="remind-desc-item">· 受微信能力限制，工具类小程序只有「一次性订阅消息」：每授权一次，复习到期时收到一条提醒，不能自动天天推送。</view>
+          <view class="remind-desc-item">· 提醒主战场是首页「今日待办」，订阅消息仅作辅助；授权仅在微信小程序内可用。</view>
+          <view v-if="subscribeRecord.times > 0" class="remind-desc-item">· 已累计授权 {{ subscribeRecord.times }} 次，最近一次：{{ lastSubscribeText }}</view>
+        </view>
+        <!-- #ifdef MP-WEIXIN -->
+        <view class="popup-actions">
+          <button class="btn-cancel" @click="showRemindModal = false">取消</button>
+          <button class="btn-confirm btn-remind" @click="enableRemind">开启提醒</button>
+        </view>
+        <!-- #endif -->
+        <!-- #ifndef MP-WEIXIN -->
+        <view class="remind-unsupported">当前平台暂不支持，请在微信小程序中使用</view>
+        <view class="popup-actions">
+          <button class="btn-confirm btn-remind" @click="showRemindModal = false">知道了</button>
+        </view>
+        <!-- #endif -->
+      </view>
+    </view>
   </view>
 </template>
 
@@ -112,6 +142,7 @@ import { ref, computed } from 'vue'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS } from '@/stores/useUtils/translation-settings'
 import type { TranslationPlatform } from '@/stores/useUtils/types'
+import { SUBSCRIBE_TEMPLATE_ID, getSubscribeRecord, recordSubscribeSuccess, type SubscribeRecord } from '@/utils/subscribe-remind'
 
 const wordsStore = useMobileWords()
 
@@ -183,6 +214,52 @@ const resetApiKeyForPlatform = () => {
   setTranslationApiKey(settingsPlatform.value, '', '')
   apiKeyInput.value = { appkey: '', key: '' }
   uni.showToast({ title: '已恢复默认密钥', icon: 'success' })
+}
+
+// ==================== 复习提醒（一次性订阅消息） ====================
+
+const showRemindModal = ref(false)
+const subscribeRecord = ref<SubscribeRecord>({ times: 0, lastTime: 0 })
+
+const lastSubscribeText = computed(() => {
+  if (!subscribeRecord.value.lastTime) return ''
+  const d = new Date(subscribeRecord.value.lastTime)
+  return `${d.getMonth() + 1}月${d.getDate()}日`
+})
+
+const showRemind = () => {
+  subscribeRecord.value = getSubscribeRecord()
+  showRemindModal.value = true
+}
+
+// 开启提醒：拉起微信一次性订阅消息授权（仅微信小程序端进入此函数）
+const enableRemind = () => {
+  // 模板 ID 在小程序后台申请后配置；未配置时给出提示，不报错
+  if (!SUBSCRIBE_TEMPLATE_ID) {
+    uni.showToast({ title: '提醒功能尚未配置模板', icon: 'none' })
+    return
+  }
+  uni.requestSubscribeMessage({
+    tmplIds: [SUBSCRIBE_TEMPLATE_ID],
+    success: (res) => {
+      // 授权结果以模板 ID 为键：accept 接受 / reject 拒绝 / ban 被封禁
+      const result = (res as any)[SUBSCRIBE_TEMPLATE_ID]
+      if (result === 'accept') {
+        subscribeRecord.value = recordSubscribeSuccess()
+        showRemindModal.value = false
+        // TODO（服务端）：一次授权对应一条可推送额度。当前授权记录仅保存本地，
+        // 后续需扩展同步 payload 或新增上报接口，由服务端在复习到期时消费推送。
+        uni.showToast({ title: '已开启，复习到期将提醒你', icon: 'success' })
+      } else if (result === 'reject') {
+        uni.showToast({ title: '已取消授权，可随时重新开启', icon: 'none' })
+      } else {
+        uni.showToast({ title: '暂时无法订阅提醒，请稍后再试', icon: 'none' })
+      }
+    },
+    fail: () => {
+      uni.showToast({ title: '授权未完成，可稍后再试', icon: 'none' })
+    },
+  })
 }
 
 const getPlatformLink = (platform: TranslationPlatform) => {
@@ -390,6 +467,12 @@ button.menu-item.feedback-btn::after {
   color: #f44336;
 }
 
+/* 复习提醒入口：主色 #52796f */
+.menu-icon.remind {
+  background: #e8f1ec;
+  color: #52796f;
+}
+
 .menu-text {
   flex: 1;
   font-size: 30rpx;
@@ -527,5 +610,29 @@ button.menu-item.feedback-btn::after {
 .btn-confirm {
   background: #1976d2;
   color: #fff;
+}
+
+/* 复习提醒弹窗 */
+.remind-popup .remind-desc {
+  margin-bottom: 20rpx;
+}
+
+.remind-popup .remind-desc-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 12rpx;
+}
+
+.remind-popup .btn-remind {
+  background: #52796f;
+  color: #fff;
+}
+
+.remind-popup .remind-unsupported {
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+  margin-bottom: 20rpx;
 }
 </style>
