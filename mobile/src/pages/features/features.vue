@@ -64,7 +64,7 @@ const features = [
     icon: '🌙',
     cls: 'focus',
     text: '专注模式',
-    desc: '沉浸式专注学习',
+    desc: '沉浸式学习 / 连播听词（防熄屏）',
     action: () => navigate('/subPackages/pages-tools/focus/focus'),
   },
 ]

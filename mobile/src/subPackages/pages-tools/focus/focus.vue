@@ -76,6 +76,23 @@
       </view>
     </view>
 
+    <!-- 连播听词模式：自动连续播放单词发音，屏幕大字显示释义 -->
+    <view v-else-if="settings.mode === 'listen' && currentWord" class="stage">
+      <view class="word-stage">
+        <text class="listen-state">{{ listenPlaying ? '🔊 连播中' : '⏸ 已暂停' }}</text>
+        <text class="focus-word">{{ currentWord.word }}</text>
+        <text v-if="currentWord.phonetic" class="focus-phonetic">{{ currentWord.phonetic }}</text>
+        <text class="focus-meaning">{{ currentWord.meaning || '暂无释义' }}</text>
+        <text v-if="currentWord.example" class="focus-example">{{ currentWord.example }}</text>
+        <text class="listen-hint">亮屏连播，锁屏/退后台会中断</text>
+      </view>
+      <view class="listen-controls">
+        <button class="listen-btn" @click="listenPrev">⏮</button>
+        <button class="listen-btn main" @click="toggleListenPlay">{{ listenPlaying ? '⏸' : '▶' }}</button>
+        <button class="listen-btn" @click="listenNext">⏭</button>
+      </view>
+    </view>
+
     <!-- 拼写/听写模式 -->
     <view v-else-if="currentWord" class="stage">
       <view class="word-stage">
@@ -144,24 +161,26 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
+import { ListenPlayer } from './listen-play'
 
 const wordsStore = useMobileWords()
 
 // ========== 设置（持久化到 slowlyrecord-focus-settings） ==========
 const SETTINGS_KEY = 'slowlyrecord-focus-settings'
 
-type FocusMode = 'standard' | 'spelling' | 'dictation'
+type FocusMode = 'standard' | 'spelling' | 'dictation' | 'listen'
 
 interface FocusSettings {
   mode: FocusMode
-  intervalSec: number  // 自动翻页间隔，0 = 手动
+  intervalSec: number  // 自动翻页间隔 / 连播听词词间停顿，0 = 手动（听词模式取默认停顿）
   autoPlay: boolean    // 自动发音
 }
 
 const modeOptions: { value: FocusMode; label: string }[] = [
   { value: 'standard', label: '标准' },
   { value: 'spelling', label: '拼写' },
-  { value: 'dictation', label: '听写' }
+  { value: 'dictation', label: '听写' },
+  { value: 'listen', label: '听词' }
 ]
 
 const intervalOptions = [
@@ -177,7 +196,7 @@ function loadSettings(): FocusSettings {
     const raw = uni.getStorageSync(SETTINGS_KEY)
     if (raw && typeof raw === 'object') {
       return {
-        mode: raw.mode === 'spelling' || raw.mode === 'dictation' ? raw.mode : 'standard',
+        mode: ['standard', 'spelling', 'dictation', 'listen'].includes(raw.mode) ? raw.mode : 'standard',
         intervalSec: typeof raw.intervalSec === 'number' ? raw.intervalSec : 0,
         autoPlay: !!raw.autoPlay
       }
@@ -279,6 +298,75 @@ function playCurrent() {
   }
 }
 
+// ========== 连播听词（亮屏连播，锁屏/退后台由系统中断，不承诺后台播放） ==========
+let listenPlayer: ListenPlayer | null = null
+const listenPlaying = ref(false)
+
+/** 词间停顿：复用「自动翻页」设置的秒数，手动(0)时取默认 1.5s */
+function listenPauseMs(): number {
+  return settings.value.intervalSec > 0 ? settings.value.intervalSec * 1000 : 1500
+}
+
+function startListen() {
+  if (settings.value.mode !== 'listen' || showComplete.value || wordList.value.length === 0) return
+  stopListenPlayer()
+  listenPlayer = new ListenPlayer(
+    wordList.value.map(w => w.word),
+    getTtsAdapter(),
+    listenPauseMs,
+    {
+      onIndexChange: (i) => { currentIndex.value = i },
+      onFinished: () => {
+        listenPlaying.value = false
+        showComplete.value = true
+      },
+      onError: () => {
+        uni.showToast({ title: '发音加载失败，已跳过', icon: 'none' })
+      }
+    }
+  )
+  listenPlaying.value = true
+  listenPlayer.start()
+}
+
+function stopListenPlayer() {
+  if (listenPlayer) {
+    listenPlayer.destroy()
+    listenPlayer = null
+  }
+  listenPlaying.value = false
+}
+
+function toggleListenPlay() {
+  if (!listenPlayer) {
+    startListen()
+    return
+  }
+  if (listenPlaying.value) {
+    listenPlayer.pause()
+    try { getTtsAdapter().stop() } catch { /* 静默 */ }
+    listenPlaying.value = false
+  } else {
+    listenPlaying.value = true
+    listenPlayer.resume()
+  }
+}
+
+function listenPrev() {
+  if (!listenPlayer) return
+  listenPlayer.prev()
+  listenPlaying.value = listenPlayer.isPlaying
+}
+
+function listenNext() {
+  if (!listenPlayer) {
+    startListen()
+    return
+  }
+  listenPlayer.next()
+  listenPlaying.value = listenPlayer.isPlaying
+}
+
 // ========== 流程控制 ==========
 function resetWordState() {
   isRevealed.value = false
@@ -287,6 +375,12 @@ function resetWordState() {
   isCorrect.value = false
   played.value = false
   clearAutoTimer()
+  stopListenPlayer()
+  if (settings.value.mode === 'listen') {
+    // 进入/重开听词：从当前下标自动连播
+    nextTick(() => startListen())
+    return
+  }
   nextTick(() => {
     if (settings.value.mode !== 'standard') {
       inputFocus.value = true
@@ -394,6 +488,8 @@ function restart() {
 
 function exitFocus() {
   clearAutoTimer()
+  stopListenPlayer()
+  try { getTtsAdapter().stop() } catch { /* 静默 */ }
   uni.navigateBack()
 }
 
@@ -411,6 +507,8 @@ onMounted(async () => {
 
 onUnmounted(() => {
   clearAutoTimer()
+  stopListenPlayer()
+  try { getTtsAdapter().stop() } catch { /* 静默 */ }
   try {
     uni.setKeepScreenOn({ keepScreenOn: false })
   } catch {}
@@ -722,6 +820,51 @@ onUnmounted(() => {
   justify-content: center;
   line-height: 92rpx;
   padding: 0;
+}
+
+/* 连播听词 */
+.listen-state {
+  font-size: 26rpx;
+  color: rgba(131, 197, 168, 0.85);
+  margin-bottom: 30rpx;
+}
+
+.listen-hint {
+  font-size: 22rpx;
+  color: rgba(234, 241, 234, 0.35);
+  margin-top: 50rpx;
+}
+
+.listen-controls {
+  display: flex;
+  gap: 40rpx;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 60rpx;
+}
+
+.listen-btn {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #eaf1ea;
+  font-size: 36rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 96rpx;
+  padding: 0;
+}
+
+.listen-btn.main {
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  font-size: 48rpx;
+  background: #83c5a8;
+  color: #10241e;
 }
 
 /* 完成弹层 */
