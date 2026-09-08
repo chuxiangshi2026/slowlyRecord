@@ -4,9 +4,9 @@
     "name": "近现代",
     "period": "1912-至今",
     "description": "现代诗歌、新诗，传统与现代的融合",
-    "count": 18,
+    "count": 36,
     "version": "2.0",
-    "lastUpdated": "2026-07-01"
+    "lastUpdated": "2026-09-09"
   },
   "poems": [
     {
@@ -367,6 +367,348 @@
       "dynasty": "近现代",
       "dynastyCode": "xiandai",
       "wordCount": 229
+    },
+    {
+      "id": "xiandai_019",
+      "title": "七律·长征",
+      "author": "毛泽东",
+      "content": "红军不怕远征难，万水千山只等闲。五岭逶迤腾细浪，乌蒙磅礴走泥丸。金沙水拍云崖暖，大渡桥横铁索寒。更喜岷山千里雪，三军过后尽开颜。",
+      "contentType": "poetry",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "初中必背",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 56,
+      "location": "陕北",
+      "year": 1935,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_020",
+      "title": "忆秦娥·娄山关",
+      "author": "毛泽东",
+      "content": "西风烈，长空雁叫霜晨月。霜晨月，马蹄声碎，喇叭声咽。雄关漫道真如铁，而今迈步从头越。从头越，苍山如海，残阳如血。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 46,
+      "location": "遵义/娄山关",
+      "year": 1935,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_021",
+      "title": "清平乐·六盘山",
+      "author": "毛泽东",
+      "content": "天高云淡，望断南飞雁。不到长城非好汉，屈指行程二万。六盘山上高峰，红旗漫卷西风。今日长缨在手，何时缚住苍龙？",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 46,
+      "location": "固原/六盘山",
+      "year": 1935,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_022",
+      "title": "菩萨蛮·黄鹤楼",
+      "author": "毛泽东",
+      "content": "茫茫九派流中国，沉沉一线穿南北。烟雨莽苍苍，龟蛇锁大江。黄鹤知何去？剩有游人处。把酒酹滔滔，心潮逐浪高！",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 44,
+      "location": "武汉/黄鹤楼",
+      "year": 1927,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_023",
+      "title": "西江月·井冈山",
+      "author": "毛泽东",
+      "content": "山下旌旗在望，山头鼓角相闻。敌军围困万千重，我自岿然不动。早已森严壁垒，更加众志成城。黄洋界上炮声隆，报道敌军宵遁。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 50,
+      "location": "井冈山",
+      "year": 1928,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_024",
+      "title": "采桑子·重阳",
+      "author": "毛泽东",
+      "content": "人生易老天难老，岁岁重阳。今又重阳，战地黄花分外香。一年一度秋风劲，不似春光。胜似春光，寥廓江天万里霜。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 44,
+      "location": "上杭",
+      "year": 1929,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_025",
+      "title": "菩萨蛮·大柏地",
+      "author": "毛泽东",
+      "content": "赤橙黄绿青蓝紫，谁持彩练当空舞？雨后复斜阳，关山阵阵苍。当年鏖战急，弹洞前村壁。装点此关山，今朝更好看。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 44,
+      "location": "瑞金",
+      "year": 1933,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_026",
+      "title": "清平乐·会昌",
+      "author": "毛泽东",
+      "content": "东方欲晓，莫道君行早。踏遍青山人未老，风景这边独好。会昌城外高峰，颠连直接东溟。战士指看南粤，更加郁郁葱葱。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 46,
+      "location": "会昌",
+      "year": 1934,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_027",
+      "title": "念奴娇·昆仑",
+      "author": "毛泽东",
+      "content": "横空出世，莽昆仑，阅尽人间春色。飞起玉龙三百万，搅得周天寒彻。夏日消溶，江河横溢，人或为鱼鳖。千秋功罪，谁人曾与评说？而今我谓昆仑：不要这高，不要这多雪。安得倚天抽宝剑，把汝裁为三截？一截遗欧，一截赠美，一截还东国。太平世界，环球同此凉热。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 100,
+      "location": "陕北",
+      "year": 1935,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_028",
+      "title": "七律·人民解放军占领南京",
+      "author": "毛泽东",
+      "content": "钟山风雨起苍黄，百万雄师过大江。虎踞龙盘今胜昔，天翻地覆慨而慷。宜将剩勇追穷寇，不可沽名学霸王。天若有情天亦老，人间正道是沧桑。",
+      "contentType": "poetry",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 56,
+      "location": "南京",
+      "year": 1949,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_029",
+      "title": "七律·和柳亚子先生",
+      "author": "毛泽东",
+      "content": "饮茶粤海未能忘，索句渝州叶正黄。三十一年还旧国，落花时节读华章。牢骚太盛防肠断，风物长宜放眼量。莫道昆明池水浅，观鱼胜过富春江。",
+      "contentType": "poetry",
+      "tags": [
+        "现代诗",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 56,
+      "location": "北京",
+      "year": 1949,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_030",
+      "title": "浪淘沙·北戴河",
+      "author": "毛泽东",
+      "content": "大雨落幽燕，白浪滔天，秦皇岛外打鱼船。一片汪洋都不见，知向谁边？往事越千年，魏武挥鞭，东临碣石有遗篇。萧瑟秋风今又是，换了人间。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 54,
+      "location": "北戴河",
+      "year": 1954,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_031",
+      "title": "水调歌头·游泳",
+      "author": "毛泽东",
+      "content": "才饮长沙水，又食武昌鱼。万里长江横渡，极目楚天舒。不管风吹浪打，胜似闲庭信步，今日得宽馀。子在川上曰：逝者如斯夫！风樯动，龟蛇静，起宏图。一桥飞架南北，天堑变通途。更立西江石壁，截断巫山云雨，高峡出平湖。神女应无恙，当惊世界殊。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 95,
+      "location": "武汉",
+      "year": 1956,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_032",
+      "title": "蝶恋花·答李淑一",
+      "author": "毛泽东",
+      "content": "我失骄杨君失柳，杨柳轻飏直上重霄九。问讯吴刚何所有，吴刚捧出桂花酒。寂寞嫦娥舒广袖，万里长空且为忠魂舞。忽报人间曾伏虎，泪飞顿作倾盆雨。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 60,
+      "location": "北京",
+      "year": 1957,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_033",
+      "title": "七律·到韶山",
+      "author": "毛泽东",
+      "content": "别梦依稀咒逝川，故园三十二年前。红旗卷起农奴戟，黑手高悬霸主鞭。为有牺牲多壮志，敢教日月换新天。喜看稻菽千重浪，遍地英雄下夕烟。",
+      "contentType": "poetry",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 56,
+      "location": "韶山",
+      "year": 1959,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_034",
+      "title": "七律·登庐山",
+      "author": "毛泽东",
+      "content": "一山飞峙大江边，跃上葱茏四百旋。冷眼向洋看世界，热风吹雨洒江天。云横九派浮黄鹤，浪下三吴起白烟。陶令不知何处去，桃花源里可耕田？",
+      "contentType": "poetry",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 56,
+      "location": "庐山",
+      "year": 1959,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_035",
+      "title": "卜算子·咏梅",
+      "author": "毛泽东",
+      "content": "风雨送春归，飞雪迎春到。已是悬崖百丈冰，犹有花枝俏。俏也不争春，只把春来报。待到山花烂漫时，她在丛中笑。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "名篇",
+        "咏物",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 44,
+      "location": "北京",
+      "year": 1961,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
+    },
+    {
+      "id": "xiandai_036",
+      "title": "满江红·和郭沫若同志",
+      "author": "毛泽东",
+      "content": "小小寰球，有几个苍蝇碰壁。嗡嗡叫，几声凄厉，几声抽泣。蚂蚁缘槐夸大国，蚍蜉撼树谈何易。正西风落叶下长安，飞鸣镝。多少事，从来急；天地转，光阴迫。一万年太久，只争朝夕。四海翻腾云水怒，五洲震荡风雷激。要扫除一切害人虫，全无敌。",
+      "contentType": "ci",
+      "tags": [
+        "现代诗",
+        "豪放",
+        "名篇",
+        "毛泽东"
+      ],
+      "source": "《毛泽东诗词》",
+      "wordCount": 93,
+      "location": "北京",
+      "year": 1963,
+      "dynasty": "近现代",
+      "dynastyCode": "xiandai"
     }
   ]
 }
