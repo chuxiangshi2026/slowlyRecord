@@ -329,6 +329,21 @@
       transition: color 0.3s ease, opacity 0.2s ease;
     }
 
+    .text-translation {
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text-tertiary);
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 4px 8px;
+      max-height: 22vh;
+      overflow-y: auto;
+      user-select: text;
+      opacity: var(--focus-content-opacity);
+      border-top: 1px dashed rgba(128, 128, 128, 0.25);
+      -webkit-app-region: no-drag;
+    }
+
     .text-viewport {
       flex: 1;
       min-height: 0;
@@ -1011,6 +1026,7 @@
     <div class="text-focus" id="text-focus">
       <div class="text-title" id="text-title"></div>
       <div class="text-meta" id="text-meta"></div>
+      <div class="text-translation" id="text-translation" style="display:none"></div>
       <div class="text-viewport" id="text-viewport">
         <div class="text-scroll-content" id="text-scroll-content"></div>
       </div>
@@ -2155,6 +2171,7 @@
       stopTextSpeech(true);
       var elTitle = document.getElementById('text-title');
       var elMeta = document.getElementById('text-meta');
+      var elTranslation = document.getElementById('text-translation');
       var elContent = document.getElementById('text-scroll-content');
       var article = textArticles[textArticleIndex];
 
@@ -2173,6 +2190,14 @@
       if (article.source) metaParts.push(article.source);
       if (elMeta) elMeta.textContent = metaParts.join(' · ');
       if (elContent) elContent.textContent = article.content || '';
+      if (elTranslation) {
+        if (article.translation) {
+          elTranslation.textContent = article.translation;
+          elTranslation.style.display = '';
+        } else {
+          elTranslation.style.display = 'none';
+        }
+      }
 
       updateTextNavButtons();
 

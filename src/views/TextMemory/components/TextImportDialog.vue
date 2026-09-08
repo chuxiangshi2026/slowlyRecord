@@ -2641,18 +2641,23 @@ async function handleImport() {
           }
         } else if (libTab.value === 'english') {
           if (selectedEnglish.value.length > 0) {
+            const langTagMap: Record<string, string> = {
+              en: '英文经典', ja: '日文经典', fr: '法文经典', ru: '俄文经典',
+            };
             articles = selectedEnglish.value.map(it => ({
               title: it.title,
               content: it.content,
-              tags: [...it.tags, '英文经典'],
+              translation: it.translation,
+              location: it.location,
+              tags: [...it.tags, langTagMap[it.language] || '外文经典'],
               author: it.author,
-              source: it.source || ENGLISH_CATEGORIES.find(c => c.code === it.category)?.name || '英文经典',
+              source: it.source || ENGLISH_CATEGORIES.find(c => c.code === it.category)?.name || '外文经典',
               year: typeof it.year === 'number' ? it.year : undefined,
               category: 'article',
-              language: 'en',
+              language: it.language || 'en',
             }));
           } else {
-            ElMessage.warning('请至少选择一篇英文经典');
+            ElMessage.warning('请至少选择一篇外文经典');
             return;
           }
         } else if (libTab.value === 'timeline') {

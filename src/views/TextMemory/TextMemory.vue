@@ -162,6 +162,10 @@
           <div class="article-content-preview">
             {{ article.content.substring(0, 150) }}{{ article.content.length > 150 ? '...' : '' }}
           </div>
+          <div v-if="article.translation" class="article-translation-preview">
+            <el-icon class="translation-icon"><View /></el-icon>
+            {{ article.translation.substring(0, 150) }}{{ article.translation.length > 150 ? '...' : '' }}
+          </div>
           <div class="article-footer">
             <div class="article-tags">
               <el-tag
@@ -1111,6 +1115,25 @@ watch(currentView, (v) => {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .article-translation-preview {
+    color: var(--utools-text-secondary);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    padding: 4px 8px;
+    border-left: 3px solid var(--utools-primary);
+    background: color-mix(in srgb, var(--utools-primary) 6%, transparent);
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+  }
+
+  .article-translation-preview .translation-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--utools-primary);
   }
 
   .article-footer {

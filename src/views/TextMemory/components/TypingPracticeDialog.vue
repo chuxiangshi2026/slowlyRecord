@@ -45,6 +45,9 @@
         <div class="section-title">
           原文
           <el-tag size="small" type="info" style="margin-left: 8px">第 {{ currentLine + 1 }} 行 / 共 {{ lineStartIndices.length }} 行</el-tag>
+          <el-button v-if="article.translation" size="small" text type="primary" style="margin-left: 8px" @click="toggleTranslation">
+            {{ showTranslation ? '隐藏译文' : '译文' }}
+          </el-button>
         </div>
         <div ref="originalTextRef" class="original-text">
           <template v-for="(lineStart, lineIdx) in lineStartIndices" :key="lineIdx">
@@ -64,6 +67,12 @@
               >{{ char }}</span>
             </div>
           </template>
+        </div>
+
+        <!-- 译文（中英对照素材） -->
+        <div v-show="showTranslation && article.translation" class="translation-panel">
+          <div class="translation-label">译 文</div>
+          <div class="translation-text">{{ article.translation }}</div>
         </div>
       </div>
 
@@ -187,6 +196,12 @@ const LINE_LENGTH = 32; // 每行固定字数（根据显示区域宽度调整�
 const isZhArticle = computed(() => getArticleLanguage(props.article) === 'zh');
 // 速度统计单位
 const speedUnit = computed(() => (isZhArticle.value ? '字/分' : '词/分'));
+
+// 中英对照：是否显示译文
+const showTranslation = ref(false);
+function toggleTranslation() {
+  showTranslation.value = !showTranslation.value;
+}
 
 // 中文输入法相关
 const isComposing = ref(false); // 是否正在输入法输入中
@@ -723,6 +738,31 @@ function handleClose() {
   background: var(--utools-bg-secondary);
   border-radius: 8px;
   padding: 16px;
+
+  .translation-panel {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-left: 3px solid var(--utools-primary);
+    background: color-mix(in srgb, var(--utools-primary) 6%, transparent);
+    border-radius: 6px;
+    max-height: 22vh;
+    overflow-y: auto;
+
+    .translation-label {
+      font-size: 12px;
+      color: var(--utools-primary);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .translation-text {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--utools-text-secondary);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
 
   .original-text {
     font-size: 18px;

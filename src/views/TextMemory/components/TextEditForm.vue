@@ -112,6 +112,16 @@
         show-word-limit
       />
     </el-form-item>
+
+    <el-form-item label="译文">
+      <el-input
+        v-model="formData.translation"
+        type="textarea"
+        :rows="6"
+        placeholder="请输入对照译文（可选）..."
+        maxlength="20000"
+      />
+    </el-form-item>
   </el-form>
 </template>
 
@@ -151,6 +161,7 @@ const formData = ref({
   language: 'zh',
   tags: [] as string[],
   content: '',
+  translation: '',
   // 时间线字段
   category: '' as '' | 'politics' | 'literature' | 'science' | 'thought' | 'society',
   region: '' as '' | 'china' | 'west' | 'modern',
@@ -201,6 +212,7 @@ watch(() => props.article, (newArticle) => {
       language: normalizeArticleLanguage(newArticle.language),
       tags: [...newArticle.tags],
       content: newArticle.content,
+      translation: newArticle.translation || '',
       category: (newArticle.category as any) || '',
       region: newArticle.region || '',
       year: newArticle.year ?? '',
@@ -226,6 +238,7 @@ function resetForm() {
     language: 'zh',
     tags: [],
     content: '',
+    translation: '',
     category: '',
     region: '',
     year: '',
@@ -266,6 +279,7 @@ async function submit(): Promise<boolean> {
       language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
+      translation: formData.value.translation || undefined,
       ...timelineFields,
     };
     emit('submit', updatedArticle);
@@ -278,6 +292,7 @@ async function submit(): Promise<boolean> {
       language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
+      translation: formData.value.translation || undefined,
       ...timelineFields,
     });
   }
