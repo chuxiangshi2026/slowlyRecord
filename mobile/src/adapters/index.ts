@@ -307,8 +307,71 @@ export interface TtsAdapter {
   playAudio(url: string): Promise<void>
 }
 
+// ---------- 音频本地缓存（纯函数部分，便于单测）----------
+
+/** 缓存清单条目：key 为单词文本哈希，filePath 为本地持久文件路径 */
+export interface AudioCacheEntry {
+  key: string
+  filePath: string
+  lastUsed: number
+}
+
+/** FNV-1a 哈希：把任意单词文本映射为固定长度的缓存 key，规避特殊字符与超长 key */
+export function hashAudioCacheKey(text: string): string {
+  let hash = 0x811c9dc5
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193) >>> 0
+  }
+  return hash.toString(36)
+}
+
+/** LRU 淘汰：清单超过上限时，按最久未用顺序挑出应淘汰的条目 */
+export function pickLruEvictions(entries: AudioCacheEntry[], maxFiles: number): AudioCacheEntry[] {
+  if (entries.length <= maxFiles) return []
+  return [...entries]
+    .sort((a, b) => a.lastUsed - b.lastUsed)
+    .slice(0, entries.length - maxFiles)
+}
+
+/** 从 TTS URL 提取缓存 key 用的单词文本（支持有道 dictvoice 的 audio 参数与 google tts 的 q 参数），提取不到返回 null */
+export function parseAudioCacheWord(url: string): string | null {
+  try {
+    const qIndex = url.indexOf('?')
+    if (qIndex < 0) return null
+    const params = new URLSearchParams(url.slice(qIndex + 1))
+    const raw = params.get('audio') ?? params.get('q')
+    const word = raw?.trim().toLowerCase()
+    return word ? word : null
+  } catch {
+    return null
+  }
+}
+
+// ---------- 播放器实现 ----------
+
+/** 缓存清单在 Storage 中的 key */
+const AUDIO_CACHE_MANIFEST_KEY = 'slowlyrecord_audio_cache_manifest'
+/** 本地音频缓存文件数上限，超出按最久未用淘汰 */
+const AUDIO_CACHE_MAX_FILES = 200
+/** 单次播放超时（弱网兜底，触发即视为失败进入重试） */
+const AUDIO_PLAY_TIMEOUT = 15000
+/** 播放失败的最大重试次数 */
+const AUDIO_MAX_RETRY = 2
+/** 重试基础间隔（毫秒），第 N 次重试等待 N 倍间隔 */
+const AUDIO_RETRY_BASE_DELAY = 400
+/** 播放失败 toast 的最小间隔，避免连续弹窗 */
+const AUDIO_FAIL_TOAST_INTERVAL = 30000
+
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 class MiniProgramTtsAdapter implements TtsAdapter {
   private innerAudio: any = null
+  /** 缓存清单（null 表示尚未加载），缓存读写全部容错，绝不影响发音主流程 */
+  private cacheManifest: Record<string, AudioCacheEntry> | null = null
+  private lastFailToastAt = 0
 
   speak(_text: string, _options?: { lang?: string; rate?: number; pitch?: number }): void {
     console.warn('MiniProgramTtsAdapter.speak: Use playAudio with TTS URL instead')
@@ -322,21 +385,208 @@ class MiniProgramTtsAdapter implements TtsAdapter {
   }
 
   async playAudio(url: string): Promise<void> {
+    // 命中本地缓存则直接播本地路径，弱网也能即时发音
+    const cacheWord = parseAudioCacheWord(url)
+    const cacheKey = cacheWord ? hashAudioCacheKey(cacheWord) : null
+    const cachedPath = cacheKey ? this.readCachePath(cacheKey) : null
+    const targetUrl = cachedPath || url
+
+    let lastErr: any = null
+    for (let attempt = 0; attempt <= AUDIO_MAX_RETRY; attempt++) {
+      try {
+        await this.playOnce(targetUrl)
+        // 播放成功后后台补齐本地缓存（仅在线地址命中且本地无缓存时）
+        if (!cachedPath && cacheKey) {
+          this.downloadAndCache(url, cacheKey).catch(() => { /* 缓存失败静默 */ })
+        }
+        return
+      } catch (e) {
+        lastErr = e
+        if (attempt < AUDIO_MAX_RETRY) {
+          await delay(AUDIO_RETRY_BASE_DELAY * (attempt + 1))
+        }
+      }
+    }
+
+    // 重试耗尽：节流提示一次，错误继续抛给调用方走备用音源等兜底
+    this.toastFailThrottled()
+    throw lastErr
+  }
+
+  /** 单次播放：出错或超时视为失败，由上层决定是否重试 */
+  private playOnce(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       // 先停止并销毁旧实例，避免旧实例的 onEnded 把新引用清掉导致 stop() 失效
       if (this.innerAudio) {
-        this.innerAudio.stop()
-        this.innerAudio.destroy?.()
+        try { this.innerAudio.stop() } catch { /* ignore */ }
+        try { this.innerAudio.destroy?.() } catch { /* ignore */ }
         this.innerAudio = null
       }
-      const audio = uni.createInnerAudioContext()
+
+      let audio: any
+      try {
+        audio = uni.createInnerAudioContext()
+      } catch (e) {
+        reject(e)
+        return
+      }
       this.innerAudio = audio
-      audio.src = url
+
+      let settled = false
+      const timer = setTimeout(() => {
+        if (settled) return
+        settled = true
+        try { audio.stop() } catch { /* ignore */ }
+        try { audio.destroy?.() } catch { /* ignore */ }
+        if (this.innerAudio === audio) this.innerAudio = null
+        reject(new Error('audio play timeout'))
+      }, AUDIO_PLAY_TIMEOUT)
+
       // 仅当回调来源仍是当前实例时才清理引用（防止重叠播放时互相覆盖）
-      audio.onEnded(() => { if (this.innerAudio === audio) this.innerAudio = null; resolve() })
-      audio.onError((err) => { if (this.innerAudio === audio) this.innerAudio = null; reject(err) })
+      audio.onEnded(() => {
+        if (settled) return
+        settled = true
+        clearTimeout(timer)
+        if (this.innerAudio === audio) this.innerAudio = null
+        resolve()
+      })
+      audio.onError((err: any) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timer)
+        if (this.innerAudio === audio) this.innerAudio = null
+        reject(err)
+      })
+      audio.src = url
       audio.play()
     })
+  }
+
+  /** 读取缓存路径并刷新 lastUsed，任何异常返回 null 走在线播放 */
+  private readCachePath(key: string): string | null {
+    try {
+      const entry = this.loadManifest()[key]
+      if (!entry || !entry.filePath) return null
+      entry.lastUsed = Date.now()
+      this.persistManifest()
+      return entry.filePath
+    } catch {
+      return null
+    }
+  }
+
+  /** 下载在线音频并保存为本地持久文件，全部容错：失败静默返回，不影响发音 */
+  private async downloadAndCache(url: string, key: string): Promise<void> {
+    try {
+      const tempFilePath = await new Promise<string>((resolve, reject) => {
+        uni.downloadFile({
+          url,
+          success: (res: any) => {
+            if (res && res.statusCode >= 200 && res.statusCode < 300 && res.tempFilePath) {
+              resolve(res.tempFilePath)
+            } else {
+              reject(new Error(`downloadFile status ${res?.statusCode}`))
+            }
+          },
+          fail: reject,
+        })
+      })
+
+      const savedFilePath = await this.saveFileLocal(tempFilePath)
+      if (!savedFilePath) return
+
+      const manifest = this.loadManifest()
+      manifest[key] = { key, filePath: savedFilePath, lastUsed: Date.now() }
+
+      // 容量兜底：超出上限按最久未用淘汰，并删除对应的本地文件
+      const evicted = pickLruEvictions(Object.values(manifest), AUDIO_CACHE_MAX_FILES)
+      for (const item of evicted) {
+        delete manifest[item.key]
+        this.removeSavedFile(item.filePath)
+      }
+      this.persistManifest()
+    } catch {
+      // 缓存失败静默，下次播放仍走在线地址
+    }
+  }
+
+  /** 保存临时文件为持久文件：优先 FileSystemManager.saveFile，缺失时回退 uni.saveFile（兼容抖音/微信差异），均失败返回 null */
+  private async saveFileLocal(tempFilePath: string): Promise<string | null> {
+    try {
+      const fs = (uni as any).getFileSystemManager?.()
+      if (fs && typeof fs.saveFile === 'function') {
+        const saved = await new Promise<string | null>((resolve) => {
+          fs.saveFile({
+            tempFilePath,
+            success: (res: any) => resolve(res?.savedFilePath || null),
+            fail: () => resolve(null),
+          })
+        })
+        if (saved) return saved
+      }
+    } catch {
+      // 继续尝试 uni.saveFile
+    }
+    try {
+      if (typeof (uni as any).saveFile === 'function') {
+        return await new Promise<string | null>((resolve) => {
+          uni.saveFile({
+            tempFilePath,
+            success: (res: any) => resolve(res?.savedFilePath || null),
+            fail: () => resolve(null),
+          })
+        })
+      }
+    } catch {
+      // ignore
+    }
+    return null
+  }
+
+  /** 删除本地持久文件，逐个 API 尝试，全部容错 */
+  private removeSavedFile(filePath: string): void {
+    try {
+      const fs = (uni as any).getFileSystemManager?.()
+      if (fs && typeof fs.removeSavedFile === 'function') {
+        fs.removeSavedFile({ filePath, fail: () => { /* ignore */ } })
+        return
+      }
+    } catch { /* ignore */ }
+    try {
+      if (typeof (uni as any).removeSavedFile === 'function') {
+        uni.removeSavedFile({ filePath, fail: () => { /* ignore */ } })
+      }
+    } catch { /* ignore */ }
+  }
+
+  private loadManifest(): Record<string, AudioCacheEntry> {
+    if (this.cacheManifest) return this.cacheManifest
+    try {
+      const data = uni.getStorageSync(AUDIO_CACHE_MANIFEST_KEY)
+      this.cacheManifest = data && typeof data === 'object' ? data : {}
+    } catch {
+      this.cacheManifest = {}
+    }
+    return this.cacheManifest
+  }
+
+  private persistManifest(): void {
+    try {
+      uni.setStorageSync(AUDIO_CACHE_MANIFEST_KEY, this.cacheManifest || {})
+    } catch {
+      // 清单写失败不影响发音，下次缓存命中失败会自动回退在线播放
+    }
+  }
+
+  private toastFailThrottled(): void {
+    const now = Date.now()
+    if (now - this.lastFailToastAt < AUDIO_FAIL_TOAST_INTERVAL) return
+    this.lastFailToastAt = now
+    try {
+      ;(uni as any).showToast?.({ title: '发音加载失败，请检查网络', icon: 'none', duration: 2000 })
+    } catch {
+      // ignore
+    }
   }
 }
 
