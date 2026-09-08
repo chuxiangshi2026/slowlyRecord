@@ -17,7 +17,7 @@ import type {RouteRecordName} from "vue-router";
 import {useRouter,useRoute} from "vue-router";
 // import {useStore} from "@/store";
 import {ref} from "vue";
-import { DocumentAdd, Calendar, FirstAidKit, Document, Collection, Aim, Cpu, Microphone, Warning, Finished } from '@element-plus/icons-vue';
+import { DocumentAdd, Calendar, FirstAidKit, Document, Collection, Aim, Cpu, Microphone, Warning, Finished, Notebook } from '@element-plus/icons-vue';
 import TableIcon from '@/components/icons/TableIcon.vue';
 
 // const  store = useStore()
@@ -43,6 +43,7 @@ const iconMap: Record<string, any> = {
   'FirstAidKit': FirstAidKit,
   'document-copy': Document,
   'collection': Collection,
+  'notebook': Notebook,
   'aim': Aim,
   'Cpu': Cpu,
   'TableIcon': TableIcon,

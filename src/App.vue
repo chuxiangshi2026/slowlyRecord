@@ -34,7 +34,7 @@ import {onMounted, onUnmounted, ref} from 'vue';
 import {useWordsStore} from "@/stores/words.ts";
 // import {storeToRefs} from "pinia";
 import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
-import {addWord, batchAddWords} from "@/utils/str-util.ts";
+import {addWord, addTextAuto, batchAddWords} from "@/utils/str-util.ts";
 import {ElMessage} from "element-plus";
 import {ocrTranslate, ocrTranslateMultiPlatform, preloadWorker} from "@/utils/pic-translate.ts";
 // import path from "node:path";
@@ -51,6 +51,7 @@ import {RETIRED_MODEL_NAMES} from "@/config.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import { getActiveProfile, isWordText } from '@/utils/language';
+import { isSentenceLike } from '@/utils/text-utils';
 
 const wordsStore = useWordsStore();
 const router = useRouter();
@@ -443,10 +444,23 @@ function handleSelectOCRItem(region: any) {
   }
 
   if (word) {
-    console.log('待添加的选中单词' + `[${word}]`)
-    batchAddWords([`${word}`.trim()]);
-    // 添加单词后跳转到单词列表
-    router.push('/word')
+    console.log('待添加的选中文本' + `[${word}]`)
+    const text = `${word}`.trim();
+    if (isSentenceLike(text)) {
+      // 句子分流进句子库
+      addTextAuto(text).then(res => {
+        if (res.success) {
+          ElMessage.success(res.message);
+          router.push('/sentences');
+        } else if (res.message) {
+          ElMessage.warning(res.message);
+        }
+      });
+    } else {
+      batchAddWords([text]);
+      // 添加单词后跳转到单词列表
+      router.push('/word')
+    }
     // ElMessage.success(`已保存: ${word} - ${translation}`);
   } else {
     ElMessage.warning('单词或翻译内容为空');
@@ -457,20 +471,33 @@ function handleSelectOCRItem(region: any) {
  * 选择所有OCR识别项
  */
 function handleSelectAllItems(items: any[]) {
+  let sentenceCount = 0;
+  const wordTexts: string[] = [];
   items.forEach(region => {
     const word = region.context || '';
     // const translation = region.tranContent || '';
 
     if (word) {
-      addWord(`${word}`).then(err => {
-        ElMessage.warning(err.message)
-      });
+      const text = `${word}`.trim();
+      if (isSentenceLike(text)) {
+        // 句子分流进句子库
+        sentenceCount++;
+        addTextAuto(text);
+      } else {
+        wordTexts.push(text);
+      }
     }
   });
 
+  if (wordTexts.length > 0) {
+    batchAddWords(wordTexts);
+  }
+
   if (items.length > 0) {
-    ElMessage.success(`已保存全部 ${items.length} 个单词`);
-    // 添加单词后跳转到单词列表
+    ElMessage.success(sentenceCount > 0
+      ? `已保存 ${wordTexts.length} 个单词、${sentenceCount} 条句子`
+      : `已保存全部 ${items.length} 个单词`);
+    // 添加后跳转到单词列表
     router.push('/word')
   }
 }
@@ -488,6 +515,19 @@ function closeOCRPanel() {
  * @param text
  */
 function checkAddWork(text: string) {
+  // 长文本若是句子，分流进句子库
+  const trimmed = text.trim();
+  if (trimmed && isSentenceLike(trimmed)) {
+    addTextAuto(trimmed).then(res => {
+      if (res.success) {
+        ElMessage.success(res.message);
+        router.push('/sentences');
+      } else if (res.message) {
+        ElMessage.warning(res.message);
+      }
+    });
+    return;
+  }
   // 5. 判断逻辑（根据你的场景调整阈值）
   const textError = (
       text.length <= 0 ||
@@ -557,6 +597,19 @@ function checkShearBoardAddWork(text: string) {
   }
   // 去除首尾空格并替换多个连续空格为单个空格
   let processedText = text.trim().replace(/\s{2,}/g, ' ');
+
+  // 长文本若是句子，分流进句子库
+  if (processedText && isSentenceLike(processedText)) {
+    addTextAuto(processedText).then(res => {
+      if (res.success) {
+        ElMessage.success(res.message);
+        router.push('/sentences');
+      } else if (res.message) {
+        ElMessage.warning(res.message);
+      }
+    });
+    return;
+  }
 
   // 检查是否为空字符串或仅包含空格；字符集按当前词库语言判定（支持日/俄/西/法）
   const profile = getActiveProfile();
@@ -848,7 +901,12 @@ async function handlePluginAddWord(payload: string) {
 
   // console.log('addWord====================', action.payload)
   // 传入 scrollToWordByText 作为回调函数
-  await batchAddWords([payload])
+  // 句子自动分流进句子库，单词/词组走批量添加
+  if (isSentenceLike(payload)) {
+    await addTextAuto(payload);
+  } else {
+    await batchAddWords([payload])
+  }
 
 //   退出插件
 
