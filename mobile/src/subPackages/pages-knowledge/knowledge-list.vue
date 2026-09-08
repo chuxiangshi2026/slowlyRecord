@@ -45,6 +45,23 @@
 
       <!-- 内置知识库 -->
       <template v-else>
+        <!-- 分类筛选条（横向滚动） -->
+        <scroll-view scroll-x class="category-bar" :show-scrollbar="false">
+          <view
+            v-for="opt in categoryOptions"
+            :key="opt.value"
+            class="category-chip"
+            :class="{ active: activeCategory === opt.value }"
+            @click="activeCategory = opt.value"
+          >
+            {{ opt.label }}
+          </view>
+        </scroll-view>
+
+        <view v-if="builtinGroups.length === 0" class="empty-filter">
+          <text class="empty-filter-text">该分类下暂无知识包</text>
+        </view>
+
         <view v-for="group in builtinGroups" :key="group.label" class="category-group">
           <view class="category-header">
             <text class="category-title">{{ group.label }}</text>
@@ -84,6 +101,10 @@
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useKnowledgeMemory } from './useKnowledgeMemory'
+import {
+  PACK_CATEGORY_OPTIONS,
+  getPackDisplayCategory,
+} from './utils/pack-category'
 import type { KnowledgePackInfo } from '@/stores/useUtils/types'
 
 const store = useKnowledgeMemory()
@@ -94,6 +115,10 @@ const tabs = [
 ] as const
 type TabValue = (typeof tabs)[number]['value']
 const activeTab = ref<TabValue>('mine')
+
+// 内置知识库的分类筛选（全部/数学/物理/化学/语文/记忆桩/地理/其他）
+const categoryOptions = PACK_CATEGORY_OPTIONS
+const activeCategory = ref<(typeof PACK_CATEGORY_OPTIONS)[number]['value']>('all')
 
 // 展示模型：从 packList 派生，附带导入状态与进度
 interface PackRow {
@@ -132,6 +157,10 @@ const importedPacks = computed<PackRow[]>(() => {
 
 const builtinGroups = computed(() => {
   if (!store.importedLoaded) return []
+  // 先按分类筛选条的展示分类过滤，再按包原有的 math/text 大类分组
+  const filtered = store.packList.filter(
+    p => activeCategory.value === 'all' || getPackDisplayCategory(p.id) === activeCategory.value,
+  )
   const groups = [
     { label: '数字 · 公式 · 理科', category: 'math' as const },
     { label: '常识 · 记忆桩', category: 'text' as const },
@@ -139,7 +168,7 @@ const builtinGroups = computed(() => {
   return groups
     .map(g => ({
       label: g.label,
-      packs: store.packList.filter(p => p.category === g.category).map(toRow),
+      packs: filtered.filter(p => p.category === g.category).map(toRow),
     }))
     .filter(g => g.packs.length > 0)
 })
@@ -267,6 +296,39 @@ onShow(() => {
   padding: 0 50rpx;
   height: 80rpx;
   line-height: 80rpx;
+}
+
+/* 分类筛选条 */
+.category-bar {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.category-chip {
+  display: inline-block;
+  font-size: 24rpx;
+  color: #666;
+  background: #fff;
+  padding: 12rpx 30rpx;
+  border-radius: 30rpx;
+  margin-right: 16rpx;
+  border: 1rpx solid #e8e8e8;
+}
+
+.category-chip.active {
+  background: #52796f;
+  color: #fff;
+  border-color: #52796f;
+}
+
+.empty-filter {
+  padding: 80rpx 0;
+  text-align: center;
+}
+
+.empty-filter-text {
+  font-size: 24rpx;
+  color: #999;
 }
 
 /* 分类组 */

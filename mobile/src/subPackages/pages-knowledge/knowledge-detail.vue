@@ -23,8 +23,21 @@
         </view>
       </view>
 
+      <!-- 视图切换（仅元素周期表包提供：预览表 / 周期表 / 口诀） -->
+      <view v-if="isElements" class="view-tabs">
+        <view
+          v-for="v in viewTabs"
+          :key="v.value"
+          class="view-tab"
+          :class="{ active: detailView === v.value }"
+          @click="detailView = v.value"
+        >
+          {{ v.label }}
+        </view>
+      </view>
+
       <!-- 记忆口诀 -->
-      <view v-if="pack.mnemonics?.length" class="mnemonics-card">
+      <view v-if="pack.mnemonics?.length && detailView !== 'periodic'" class="mnemonics-card">
         <text class="section-label">🧠 记忆口诀</text>
         <text
           v-for="(m, i) in pack.mnemonics"
@@ -33,8 +46,27 @@
         >{{ m }}</text>
       </view>
 
+      <!-- 周期表视图：按周期分组的列表（第 N 周期一行，行内按序数排列） -->
+      <view v-if="detailView === 'periodic'" class="periodic-card">
+        <text class="section-label">元素周期表</text>
+        <view v-for="row in periodicRows" :key="row.period" class="period-row">
+          <text class="period-label">第{{ row.period }}周期</text>
+          <view class="period-elements">
+            <view
+              v-for="item in row.items"
+              :key="item.id"
+              class="element-chip"
+              @click="showElementDetail(item)"
+            >
+              <text class="element-symbol">{{ item.question }}</text>
+              <text class="element-name">{{ item.answer }}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
       <!-- 条目预览 -->
-      <view class="items-card">
+      <view v-if="detailView === 'list'" class="items-card">
         <text class="section-label">条目预览</text>
         <view class="item-row head">
           <text class="item-q">问题</text>
@@ -72,6 +104,58 @@ const pack = computed(() => store.getPack(packId.value))
 
 const masteredCount = computed(() => store.getMasteredCount(packId.value))
 const dueCount = computed(() => store.getDueCount(packId.value))
+
+/** 是否为元素周期表包（该包提供「周期表」视图切换） */
+const isElements = computed(() => packId.value === 'elements')
+
+// 详情页视图：list 预览表 / periodic 周期表 / mnemonic 口诀
+type DetailView = 'list' | 'periodic' | 'mnemonic'
+const viewTabs: { value: DetailView; label: string }[] = [
+  { value: 'list', label: '预览表' },
+  { value: 'periodic', label: '周期表' },
+  { value: 'mnemonic', label: '口诀' },
+]
+const detailView = ref<DetailView>('list')
+
+// 各周期最大序数边界（第 1~7 周期），运行时按元素 extras.序数 推导周期归属
+const PERIOD_MAX_ATOMIC_NUMBERS = [2, 10, 18, 36, 54, 86, 118]
+
+/** 取元素序数（extras「序数」），解析失败返回 NaN */
+function atomicNumberOf(item: KnowledgeItem): number {
+  return Number.parseInt(String(item.extras?.['序数'] ?? ''), 10)
+}
+
+/** 周期表分组：每个周期一行，行内按序数升序 */
+const periodicRows = computed(() => {
+  const rows: { period: number; items: KnowledgeItem[] }[] = []
+  for (const item of pack.value?.items ?? []) {
+    const n = atomicNumberOf(item)
+    if (!Number.isFinite(n) || n <= 0) continue
+    let period = PERIOD_MAX_ATOMIC_NUMBERS.findIndex(max => n <= max) + 1
+    if (period <= 0) period = PERIOD_MAX_ATOMIC_NUMBERS.length
+    const row = rows[period - 1] ?? (rows[period - 1] = { period, items: [] })
+    row.items.push(item)
+  }
+  for (const row of rows) {
+    row.items.sort((a, b) => atomicNumberOf(a) - atomicNumberOf(b))
+  }
+  return rows.filter(Boolean)
+})
+
+/** 点击查看元素详情（名称/符号/序数/拼音/类别） */
+function showElementDetail(item: KnowledgeItem) {
+  const n = atomicNumberOf(item)
+  const pinyin = item.extras?.['拼音']
+  const kind = item.extras?.['类别']
+  const lines = [`序数：${Number.isFinite(n) ? n : '未知'}`]
+  if (pinyin) lines.push(`拼音：${pinyin}`)
+  if (kind) lines.push(`类别：${kind}`)
+  uni.showModal({
+    title: `${item.answer}（${item.question}）`,
+    content: lines.join('\n'),
+    showCancel: false,
+  })
+}
 
 /** 拼接 extras 摘要（最多 2 个键值） */
 function extrasPreview(item: KnowledgeItem): string {
@@ -211,6 +295,82 @@ onLoad(async (opt: any) => {
   color: #8a6d1a;
   line-height: 1.8;
   display: block;
+}
+
+/* 视图切换（仅元素周期表包） */
+.view-tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.view-tab {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #666;
+  padding: 14rpx 0;
+  border-radius: 12rpx;
+}
+
+.view-tab.active {
+  background: #52796f;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 周期表视图 */
+.periodic-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 26rpx;
+}
+
+.period-row {
+  margin-bottom: 24rpx;
+}
+
+.period-row:last-child {
+  margin-bottom: 0;
+}
+
+.period-label {
+  font-size: 24rpx;
+  color: #52796f;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.period-elements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.element-chip {
+  width: 72rpx;
+  padding: 10rpx 0 8rpx;
+  background: #f0f5f1;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.element-symbol {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #303030;
+  line-height: 1.2;
+}
+
+.element-name {
+  font-size: 18rpx;
+  color: #888;
+  margin-top: 2rpx;
 }
 
 /* 条目预览 */
