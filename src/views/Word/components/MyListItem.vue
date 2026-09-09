@@ -19,7 +19,9 @@
       <span class="phonetic">{{ displayPhonetic }}</span>
     </p>
     <div class="level">
-      <i :class="`iconfont icon-level-${word.level}`"></i>
+      <el-tooltip class="box-item" effect="dark" :content="levelTooltip" placement="top" popper-class="small-tooltip">
+        <i :class="`iconfont icon-level-${word.level}`"></i>
+      </el-tooltip>
     </div>
     <div class="operate">
       <div class="operate-group">
@@ -34,14 +36,14 @@
         </el-tooltip>
       </div>
       <div class="operate-group">
-        <el-tooltip class="box-item" effect="dark" content="认识" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="认识（答对，按记忆牢固度升级）" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="忘记" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="忘记（答错，等级降一级）" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-close iconHover" @click="forget"
              :class="{ disabled: disableActions==1||disableActions==3}"></i>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="已记完" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="已记完（直接标记为记住，不再参与复习）" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-lock iconHover" @click="remembered" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
         <el-tooltip class="box-item" effect="dark" content="删除"
@@ -110,7 +112,7 @@ import {DEFAULT_INTERVALS} from "@/constants";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
 import {computed, nextTick, onMounted, ref, toRef} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const wordsStore = useWordsStore();
 // 是否处于焦点状态
@@ -124,6 +126,24 @@ const displayPhonetic = computed(() => {
     return '';
   }
   return phonetic;
+});
+
+// 将分钟数换算为人类可读的复习间隔
+const formatInterval = (minutes: number): string => {
+  if (minutes < 60) {
+    return `${minutes} 分钟`;
+  }
+  if (minutes < 24 * 60) {
+    return `${Math.round(minutes / 60)} 小时`;
+  }
+  return `${Math.round(minutes / (24 * 60))} 天`;
+};
+
+// 等级图标提示：等级与下次复习间隔
+const levelTooltip = computed(() => {
+  const level = Number(props.word.level) || 0;
+  const minutes = DEFAULT_INTERVALS[Math.min(level, DEFAULT_INTERVALS.length - 1)];
+  return `等级 ${level}/12 · 下次复习约 ${formatInterval(minutes)}后`;
 });
 
 const isPhraseWord = computed(() => isPhrase(props.word));
@@ -596,8 +616,10 @@ const remember = () => {
     // 否则等级不变，仅更新复习时间
     if (now <= startLearnDate) {
       console.log("[未升级] 复习太早，还没到升级时间");
+      ElMessage.info('复习时间未到，本次不计升级');
     } else {
       console.log("[未升级] 复习太晚，已错过升级时间窗口");
+      ElMessage.info('已过升级窗口，本次不计升级');
     }
   }
 
@@ -612,7 +634,7 @@ const remember = () => {
 /**
  * 已记完,不再复习
  */
-const remembered = () => {
+const remembered = async () => {
 
   if (props.disableActions) return;
 
@@ -620,6 +642,18 @@ const remembered = () => {
   const targetWord = wordsStore.words.find(w => w._id === props.word._id);
   if (!targetWord) {
     console.error('remembered: 在 wordsStore.words 中找不到单词', props.word._id, props.word.text);
+    return;
+  }
+
+  // 二次确认，避免误触直接满级
+  try {
+    await ElMessageBox.confirm('直接标记为已记住（满级 12），不再参与复习？', '已记完', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    });
+  } catch {
+    // 用户取消
     return;
   }
 
@@ -673,9 +707,11 @@ const forget = () => {
     console.log("降级")
     updatedWord.level = (targetWord.level - 1) as Word['level'];
   } else {
-    // level 为 1 时，显示提示
-    ElMessage.info('单词等级已为 1，无法继续降级');
-    return;
+    // level 为 1 时无法继续降级，重置学习计时重新开始学习
+    console.log("1级单词忘记，重置学习计时")
+    updatedWord.learnDate = new Date();
+    // 保持原有 isReview 状态不变
+    ElMessage.info('已重新开始学习该词');
   }
   if (updatedWord.level < 12) {
     updatedWord.remember = false;

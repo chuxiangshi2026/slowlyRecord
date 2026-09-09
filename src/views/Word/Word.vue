@@ -1,18 +1,32 @@
     <template>
 
-  <!--  <el-button type="primary" @click="clearWord">清空单词</el-button>-->
-  <!--  <el-button type="primary" @click="initWord">初始化单词</el-button>-->
-
-  <!--  <el-row>
-      <el-col>
-        <el-input :span="6" v-model="word" placeholder="请输入单词"></el-input>
-                    <el-button :span="2" type="primary" @click="addWord(word)">添加单词</el-button>
-        <el-button :span="2" type="primary" @click="scrollToWordByText(word)">滚动到单词</el-button>
-
-      </el-col>
-    </el-row>-->
-
-  <div v-if="showWords">暂无数据,请在主界面输入框添加单词</div>
+  <!-- 空白态 / 今日复习完成态 -->
+  <div v-if="showWords" class="empty-state">
+    <!-- 词库为空：引导式空白态 -->
+    <template v-if="wordsStore.count === 0">
+      <p class="empty-tip">在 uTools 输入框输入「划词添加」「截图添加」可快速收集单词</p>
+      <div class="empty-actions">
+        <el-button size="small" @click="emptyAddVisible = !emptyAddVisible">手动添加</el-button>
+        <el-button size="small" @click="openImportFromWordBank">从内置词库导入</el-button>
+      </div>
+      <!-- 手动加词输入框 -->
+      <div v-if="emptyAddVisible" class="empty-add">
+        <el-input
+            v-model="emptyAddText"
+            size="small"
+            placeholder="输入单词或句子，回车添加"
+            @keyup.enter="handleEmptyAdd"
+        />
+        <el-button type="primary" size="small" @click="handleEmptyAdd">添加</el-button>
+      </div>
+      <p class="empty-tip empty-tip-secondary">截图添加：在 uTools 输入框输入「截图添加」关键词触发，无需在页面内操作</p>
+    </template>
+    <!-- 今日复习完成态 -->
+    <template v-else>
+      <p class="empty-tip">今日复习已完成 🎉 词库共 {{ wordsStore.count }} 词</p>
+      <el-button text type="primary" size="small" @click="showAll">查看全部单词</el-button>
+    </template>
+  </div>
   <div v-else>
     <!-- 筛选排序面板 -->
     <WordFilter
@@ -2198,6 +2212,32 @@ const showWords = computed(() => {
   return wordsStore.forgetCount <= 0 && listMode.value == 0
 })
 
+// 空白态手动加词相关状态
+const emptyAddVisible = ref(false)
+const emptyAddText = ref('')
+
+/**
+ * 手动添加单词（空白态输入框，复用 addWord 主流程）
+ */
+const handleEmptyAdd = async () => {
+  const text = emptyAddText.value.trim()
+  if (!text) {
+    ElMessage.warning('请输入要添加的单词')
+    return
+  }
+  const result = await addWord(text)
+  if (result.success) {
+    // 部分分支（如补充释义）addWord 内部已有成功提示，这里仅清空输入
+    emptyAddText.value = ''
+    if (result.message === '更新成功') return
+    ElMessage.success('添加成功')
+  } else if (result.message && result.message.includes('已存在')) {
+    ElMessage.info('单词已存在')
+  } else {
+    ElMessage.error(result.message || '添加失败')
+  }
+}
+
 
 // 控制是否只显示已记住的单词 0 待复习(正在显示)  1 已复习(暂时不需要复习的) 2 已记住
 const listMode = ref(0);
@@ -2639,11 +2679,16 @@ const handleImportCommand = (command: string) => {
       importTextWords();
       break;
     case 'importFromWordBank':
-      // 打开词库选择对话框，语言筛选跟随当前词库
-      importLang.value = (wordsStore.currentWordBank?.language as LanguageCode) || 'en';
-      wordBankSelectVisible.value = true;
+      openImportFromWordBank();
       break;
   }
+};
+
+// 打开内置词库导入选择对话框（空白态与导入下拉共用）
+const openImportFromWordBank = () => {
+  // 语言筛选跟随当前词库
+  importLang.value = (wordsStore.currentWordBank?.language as LanguageCode) || 'en';
+  wordBankSelectVisible.value = true;
 };
 
 // 词库选择对话框
@@ -3226,6 +3271,38 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
 </style>
 
 <style scoped lang="scss">
+
+/* 空白态 / 今日复习完成态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 16px;
+  color: var(--utools-text-secondary);
+
+  .empty-tip {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .empty-tip-secondary {
+    font-size: 12px;
+    color: var(--utools-text-tertiary);
+  }
+
+  .empty-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .empty-add {
+    display: flex;
+    gap: 8px;
+    width: 340px;
+    max-width: 90%;
+  }
+}
 
 .input-above-button {
   position: absolute;
