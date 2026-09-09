@@ -58,6 +58,7 @@ import { useTextMemory } from '@/stores/useTextMemory'
 import { useNumberMemory } from '@/stores/useNumberMemory'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { useSignin } from '@/stores/useSignin'
+import { useMemoryPalace } from '@/stores/useMemoryPalace'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '../utils/sync'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
 import { drawQrCode } from '../utils/qrcode'
@@ -67,6 +68,7 @@ const textMemoryStore = useTextMemory()
 const numberMemoryStore = useNumberMemory()
 const phoneticMemoryStore = usePhoneticMemory()
 const signinStore = useSignin()
+const memoryPalaceStore = useMemoryPalace()
 
 const showPushResult = ref(false)
 const showPullInput = ref(false)
@@ -109,6 +111,9 @@ const handlePush = async () => {
     const phoneticMemory = phoneticMemoryStore.collectSync()
     // 收集每日打卡记录
     const signin = signinStore.collectSync()
+    // 收集记忆宫殿（查看版：桩图超大殿在桌面端同步时已剔除）
+    memoryPalaceStore.load()
+    const memoryPalace = memoryPalaceStore.collectSync()
     const result = await pushToServer({
       banks,
       textMemory: hasTextMemory ? textMemory : undefined,
@@ -116,6 +121,7 @@ const handlePush = async () => {
       knowledgeMemory: knowledgeMemory || undefined,
       phoneticMemory: phoneticMemory || undefined,
       signin: signin || undefined,
+      memoryPalace: memoryPalace || undefined,
     })
     uni.hideLoading()
     if (result.success && result.code) {
@@ -231,6 +237,10 @@ async function applyPullResult(result: any): Promise<string> {
   if (result.signin) {
     const added = signinStore.restoreSync(result.signin)
     if (added > 0) parts.push(`${added} 天打卡`)
+  }
+  if (result.memoryPalace) {
+    const palaceCount = memoryPalaceStore.restoreSync(result.memoryPalace)
+    if (palaceCount > 0) parts.push(`${palaceCount} 座记忆宫殿`)
   }
   return parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
 }

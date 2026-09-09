@@ -309,3 +309,27 @@ describe('convertMobileCompatToSyncData', () => {
     expect(data.signin).toBeNull()
   })
 })
+
+describe('convertMobileCompatToSyncData memoryPalace 字段', () => {
+  it('memoryPalace 字段原样透传（移动端推送 → 桌面端 SyncData）', async () => {
+    const { convertMobileCompatToSyncData } = await import('./sync-server')
+    const input: any = {
+      version: 1,
+      exportedAt: Date.now(),
+      platform: 'mobile',
+      banks: [],
+      memoryPalace: {
+        palaces: [{ _id: 'p1', name: '宫殿', loci: [{ order: 1, name: '大门' }], ctime: 1, utime: 1 }],
+        pegs: { p1: [{ _id: 'peg_p1_1', palaceId: 'p1', locusOrder: 1, freeText: '内容', level: 4, learnDate: 100 }] },
+      },
+    }
+    const data = convertMobileCompatToSyncData(input)
+    expect(data.memoryPalace).toEqual(input.memoryPalace)
+  })
+
+  it('memoryPalace 缺省为 null（旧版移动端 payload 无宫殿字段）', async () => {
+    const { convertMobileCompatToSyncData } = await import('./sync-server')
+    const input: any = { version: 1, exportedAt: Date.now(), platform: 'mobile', banks: [] }
+    expect(convertMobileCompatToSyncData(input).memoryPalace).toBeNull()
+  })
+})

@@ -137,6 +137,18 @@
           "style": {
             "navigationBarTitleText": "音素拆解"
           }
+        },
+        {
+          "path": "memory-palace/list",
+          "style": {
+            "navigationBarTitleText": "记忆宫殿"
+          }
+        },
+        {
+          "path": "memory-palace/review",
+          "style": {
+            "navigationBarTitleText": "宫殿巡视"
+          }
         }
       ]
     },

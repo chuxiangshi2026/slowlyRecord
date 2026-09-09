@@ -14,6 +14,7 @@ import {DB_KEY_MEMORY_PALACE} from '@/constants';
 import {getDbAdapter, type DbReturn} from '@/adapters/db';
 import {log} from '@/utils/logger';
 import type {Palace, PalaceImagesDoc, PalaceListDoc, PegItem, PegListDoc} from '@/types/memory-palace';
+import type {SyncMemoryPalace} from '@/types/sync';
 
 // 宫殿列表文档键
 const PALACES_KEY = DB_KEY_MEMORY_PALACE + 'palaces';
@@ -24,6 +25,13 @@ const PEGS_KEY_PREFIX = DB_KEY_MEMORY_PALACE + 'pegs_';
 
 // 图片文档体积阈值（uTools 单文档上限约 1MB，留 200KB 余量）
 const MAX_IMAGES_DOC_BYTES = 800 * 1024;
+
+/**
+ * 单张图片的同步体积上限（字符数 ≈ 字节数）
+ * 宫殿桩图多为 emoji SVG dataURL（约几百字节），必保留；
+ * 大图剔除后移动端查看版退化为纯文字桩，避免同步 payload 膨胀
+ */
+export const MAX_SYNC_IMAGE_CHARS = 32 * 1024;
 
 /** 宫殿总图在图片文档中的保留键（桩 order 均为数字，不会冲突） */
 export const OVERVIEW_IMAGE_KEY = '__overview__';
@@ -401,4 +409,124 @@ export async function removePegItem(palaceId: string, pegId: string): Promise<Db
     log.e('删除桩挂载失败', result.message);
   }
   return result;
+}
+
+// ==================== 多端同步（memoryPalace scope） ====================
+
+/** 剔除超大图片（dataURL 超过 MAX_SYNC_IMAGE_CHARS 的桩图与总图） */
+export function stripOversizedImages(palace: Palace): Palace {
+  const cleaned = cloneDeep(palace);
+  let stripped = 0;
+  for (const locus of cleaned.loci) {
+    if (locus.imageUrl && locus.imageUrl.length > MAX_SYNC_IMAGE_CHARS) {
+      delete locus.imageUrl;
+      stripped++;
+    }
+  }
+  if (cleaned.overviewImage && cleaned.overviewImage.length > MAX_SYNC_IMAGE_CHARS) {
+    delete cleaned.overviewImage;
+    stripped++;
+  }
+  if (stripped > 0) {
+    log.w(`宫殿 ${palace._id} 同步时剔除 ${stripped} 张超大图片（>${MAX_SYNC_IMAGE_CHARS / 1024}KB），移动端将只显示文字`);
+  }
+  return cleaned;
+}
+
+/**
+ * 合并两个宫殿（同 _id）：utime 较新者覆盖；
+ * 覆盖方缺失的图片字段保留被覆盖方的本地图片（同步剔除大图后不留白）
+ */
+export function mergePalace(local: Palace, remote: Palace): Palace {
+  const remoteWins = (remote.utime || 0) >= (local.utime || 0);
+  const winner = cloneDeep(remoteWins ? remote : local);
+  const fallback = remoteWins ? local : remote;
+  for (const locus of winner.loci) {
+    if (!locus.imageUrl) {
+      const fb = fallback.loci.find(l => l.order === locus.order);
+      if (fb?.imageUrl) locus.imageUrl = fb.imageUrl;
+    }
+  }
+  if (!winner.overviewImage && fallback.overviewImage) {
+    winner.overviewImage = fallback.overviewImage;
+  }
+  return winner;
+}
+
+/**
+ * 合并宫殿列表：按 _id 匹配，utime 较新者覆盖（图片字段双向兜底）
+ */
+export function mergePalaceList(local: Palace[], remote: Palace[]): Palace[] {
+  const map = new Map<string, Palace>();
+  for (const palace of local) map.set(palace._id, cloneDeep(palace));
+  for (const palace of remote) {
+    const existing = map.get(palace._id);
+    map.set(palace._id, existing ? mergePalace(existing, palace) : cloneDeep(palace));
+  }
+  return Array.from(map.values());
+}
+
+/**
+ * 合并单个宫殿的桩挂载：按 locusOrder 匹配（一桩一挂载），
+ * learnDate 较新者保留（双端都可能巡视自评，不丢进度）
+ */
+export function mergePegItemList(local: PegItem[], remote: PegItem[]): PegItem[] {
+  const map = new Map<number, PegItem>();
+  for (const peg of local) map.set(peg.locusOrder, cloneDeep(peg));
+  for (const peg of remote) {
+    const existing = map.get(peg.locusOrder);
+    if (!existing || (peg.learnDate || 0) >= (existing.learnDate || 0)) {
+      map.set(peg.locusOrder, cloneDeep(peg));
+    }
+  }
+  return Array.from(map.values()).sort((a, b) => a.locusOrder - b.locusOrder);
+}
+
+/**
+ * 收集记忆宫殿同步数据（无宫殿返回 null，避免无意义负载）
+ * 桩图/总图中的超大 dataURL 会被剔除（见 stripOversizedImages）
+ */
+export function collectMemoryPalaceSync(): SyncMemoryPalace | null {
+  const palaces = getAllPalaces();
+  if (palaces.length === 0) return null;
+  const pegs: Record<string, PegItem[]> = {};
+  for (const palace of palaces) {
+    const items = getPegsByPalace(palace._id);
+    if (items.length > 0) {
+      pegs[palace._id] = items;
+    }
+  }
+  return {
+    palaces: palaces.map(stripOversizedImages),
+    pegs,
+  };
+}
+
+/**
+ * 还原记忆宫殿同步数据：按 id/utime 合并宫殿、按 learnDate 合并桩挂载后写回 DB
+ * @returns 参与合并的宫殿数量
+ */
+export async function restoreMemoryPalaceSync(data: SyncMemoryPalace): Promise<number> {
+  const localPalaces = getAllPalaces();
+  const mergedPalaces = mergePalaceList(localPalaces, data.palaces || []);
+
+  for (const palace of mergedPalaces) {
+    const result = await savePalace(palace);
+    if (!result.ok) {
+      log.e('还原宫殿失败', palace._id, result.message);
+      continue;
+    }
+    const localPegs = getPegsByPalace(palace._id);
+    const remotePegs = data.pegs?.[palace._id] || [];
+    const mergedPegs = mergePegItemList(localPegs, remotePegs);
+    if (mergedPegs.length > 0) {
+      const pegsResult = await savePegItems(mergedPegs);
+      if (!pegsResult.ok) {
+        log.e('还原宫殿桩挂载失败', palace._id, pegsResult.message);
+      }
+    }
+  }
+
+  log.i('记忆宫殿数据已还原', mergedPalaces.length);
+  return mergedPalaces.length;
 }

@@ -4,7 +4,7 @@
  * 负责从各 Store / DB 收集数据、合并还原、冲突处理。
  * 同步数据以 SyncData 为统一格式，可导出为 JSON 或二进制文件，也可上传到临时服务器。
  */
-import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, ConflictStrategy } from '@/types/sync'
+import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, SyncMemoryPalace, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
@@ -20,6 +20,7 @@ import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_L
 import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDoc, saveProgressDoc as saveKnowledgeProgressDoc } from '@/utils/knowledge-memory-db'
 import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
 import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
+import { collectMemoryPalaceSync, restoreMemoryPalaceSync } from '@/utils/memory-palace-db'
 import { log } from '@/utils/logger'
 
 // ==================== 数据收集 ====================
@@ -94,6 +95,9 @@ export async function collectSyncData(): Promise<SyncData> {
   // 10. 每日打卡记录
   const signin = collectSigninSync()
 
+  // 11. 记忆宫殿
+  const memoryPalace = collectMemoryPalaceSync()
+
   return {
     version: SYNC_VERSION,
     exportedAt: Date.now(),
@@ -108,6 +112,7 @@ export async function collectSyncData(): Promise<SyncData> {
     knowledgeMemory,
     phoneticMemory,
     signin,
+    memoryPalace,
   }
 }
 
@@ -282,6 +287,8 @@ export interface RestoreOptions {
   restorePhoneticMemory: boolean
   /** 是否还原每日打卡记录 */
   restoreSignin: boolean
+  /** 是否还原记忆宫殿 */
+  restoreMemoryPalace: boolean
 }
 
 export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
@@ -295,6 +302,7 @@ export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
   restoreKnowledgeMemory: true,
   restorePhoneticMemory: true,
   restoreSignin: true,
+  restoreMemoryPalace: true,
 }
 
 export interface RestoreResult {
@@ -308,6 +316,7 @@ export interface RestoreResult {
   knowledgeMemoryRestored: boolean
   phoneticMemoryRestored: boolean
   signinRestored: boolean
+  memoryPalaceRestored: boolean
   errors: string[]
 }
 
@@ -326,6 +335,7 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     knowledgeMemoryRestored: false,
     phoneticMemoryRestored: false,
     signinRestored: false,
+    memoryPalaceRestored: false,
     errors: [],
   }
 
@@ -389,6 +399,12 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     if (options.restoreSignin && data.signin) {
       restoreSigninSync(data.signin)
       result.signinRestored = true
+    }
+
+    // 10. 还原记忆宫殿（宫殿按 utime 合并、桩挂载按 learnDate 合并）
+    if (options.restoreMemoryPalace && data.memoryPalace) {
+      await restoreMemoryPalaceSync(data.memoryPalace)
+      result.memoryPalaceRestored = true
     }
   } catch (e) {
     result.errors.push(String(e))

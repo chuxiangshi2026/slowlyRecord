@@ -61,6 +61,13 @@ const features = [
     action: () => navigate('/subPackages/pages-knowledge/knowledge-list'),
   },
   {
+    icon: '🏛️',
+    cls: 'palace',
+    text: '记忆宫殿',
+    desc: '查看宫殿 / 巡视复习',
+    action: () => navigate('/subPackages/pages-memory/memory-palace/list'),
+  },
+  {
     icon: '🌙',
     cls: 'focus',
     text: '专注模式',
@@ -120,6 +127,7 @@ const features = [
 .menu-icon.phonetic { background: #6f9a8d; }
 .menu-icon.test { background: #3d5a52; }
 .menu-icon.knowledge { background: #83a89a; }
+.menu-icon.palace { background: #4a6b62; }
 .menu-icon.focus { background: #5c7a6b; }
 
 .menu-info {

@@ -15,7 +15,7 @@
  * - 攻击者拿到 blobId 只能看到密文，拿到 key 没有 blobId 也下载不到密文
  */
 
-import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin } from '@/types/sync'
+import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { getSetDb } from '@/utils/user-set-db-util'
@@ -358,6 +358,7 @@ const EMPTY_RESTORE_RESULT: RestoreResult = {
   knowledgeMemoryRestored: false,
   phoneticMemoryRestored: false,
   signinRestored: false,
+  memoryPalaceRestored: false,
   errors: [],
 }
 
@@ -555,6 +556,8 @@ export interface MobileCompatSyncData {
   numberMemory?: SyncNumberMemory
   /** 每日打卡记录（与桌面端 SyncSignin 同 wire format） */
   signin?: SyncSignin
+  /** 记忆宫殿（与桌面端 SyncMemoryPalace 同 wire format） */
+  memoryPalace?: SyncMemoryPalace
 }
 
 /**
@@ -632,10 +635,12 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
   // 注意：collectSyncData 还会拉词库等其他数据，但读取本身廉价（已缓存）
   let textMemory: SyncTextMemory | undefined
   let numberMemory: SyncNumberMemory | undefined
+  let memoryPalace: SyncMemoryPalace | undefined
   try {
     const fullData = await collectSyncData()
     textMemory = fullData.textMemory || undefined
     numberMemory = fullData.numberMemory || undefined
+    memoryPalace = fullData.memoryPalace || undefined
   } catch (e) {
     log.w('收集文本/数字记忆数据失败，将以空数据上传', e)
   }
@@ -649,6 +654,7 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     textMemory,
     numberMemory,
     signin: collectSigninSync() || undefined,
+    memoryPalace,
   }
 }
 
@@ -700,6 +706,7 @@ export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncD
     shortcutMemory: null,
     letterMemory: null,
     signin: data.signin ?? null,
+    memoryPalace: data.memoryPalace ?? null,
   }
 }
 

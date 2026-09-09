@@ -222,6 +222,8 @@ export interface MobileSyncData {
   phoneticMemory?: MobilePhoneticMemory
   /** 每日打卡记录（可选：旧版客户端忽略此字段） */
   signin?: MobileSigninData
+  /** 记忆宫殿（可选：旧版客户端忽略此字段） */
+  memoryPalace?: MobileMemoryPalace
 }
 
 /** 知识库同步数据：已导入清单 + 每包条目进度（与桌面端 SyncKnowledgeMemory 一致） */
@@ -242,6 +244,64 @@ export interface MobileSigninData {
   dates: string[]
 }
 
+// ==================== 记忆宫殿（查看版） ====================
+
+/** 宫殿中的一个地点桩（与桌面端 PalaceLocus 同 wire format） */
+export interface MobilePalaceLocus {
+  /** 顺序号（从 1 开始，巡视按此顺序） */
+  order: number
+  /** 桩名称 */
+  name: string
+  /** 桩图片（emoji SVG dataURL 或小图；大图在同步时被剔除） */
+  imageUrl?: string
+  /** 桩描述 */
+  description?: string
+  /** 备选桩名 */
+  alternates?: string[]
+}
+
+/** 记忆宫殿（与桌面端 Palace 同 wire format） */
+export interface MobilePalace {
+  _id: string
+  _rev?: string
+  name: string
+  loci: MobilePalaceLocus[]
+  overviewImage?: string
+  sourcePackId?: string
+  ctime: number
+  utime: number
+}
+
+/** 挂载内容引用（与桌面端 PegContentRef 同 wire format） */
+export interface MobilePegContentRef {
+  type: 'text-article'
+  articleId: string
+  chunkIndex: number
+  mode?: 'sentence' | 'paragraph'
+}
+
+/** 桩上挂载的内容（与桌面端 PegItem 同 wire format） */
+export interface MobilePegItem {
+  _id: string
+  _rev?: string
+  palaceId: string
+  locusOrder: number
+  contentRef?: MobilePegContentRef
+  freeText?: string
+  mnemonic?: string
+  /** SRS 等级 0-12（未自评过为空，按 0 处理） */
+  level?: number
+  /** 上次自评时间戳 */
+  learnDate?: number
+}
+
+/** 记忆宫殿同步数据（与桌面端 SyncMemoryPalace 一致） */
+export interface MobileMemoryPalace {
+  palaces: MobilePalace[]
+  /** palaceId → 该宫殿的桩挂载列表 */
+  pegs: Record<string, MobilePegItem[]>
+}
+
 export interface SyncResult {
   success: boolean
   code?: string
@@ -257,6 +317,7 @@ export interface RestoreResult {
   knowledgeMemory?: MobileKnowledgeMemory
   phoneticMemory?: MobilePhoneticMemory
   signin?: MobileSigninData
+  memoryPalace?: MobileMemoryPalace
   error?: string
 }
 
@@ -313,6 +374,10 @@ export interface KnowledgeItem {
   order?: number
   /** 条目配图：存 emoji 字符 */
   imageUrl?: string
+  /** 复杂公式的 LaTeX 源码（构建期由 scripts/render-formula-pngs.cjs 预渲染成 PNG） */
+  latex?: string
+  /** 复杂公式预渲染 PNG 的相对路径（相对于应用静态资源根，如 knowledgebanks/images/xxx.png） */
+  image?: string
 }
 
 /** 知识包元数据 + 条目 */

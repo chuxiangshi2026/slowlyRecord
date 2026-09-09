@@ -263,3 +263,103 @@ describe('memory-palace-db', () => {
     expect(migratedPalace?.overviewImage).toBeUndefined();
   });
 });
+
+describe('memory-palace-db 同步（memoryPalace scope）', () => {
+  let mockDb: DbAdapter;
+
+  beforeEach(() => {
+    mockDb = createMockDb();
+    setDbAdapter(mockDb);
+  });
+
+  afterEach(() => {
+    resetDbAdapter();
+    vi.restoreAllMocks();
+  });
+
+  it('collectMemoryPalaceSync 无宫殿时返回 null', async () => {
+    const {collectMemoryPalaceSync} = await import('./memory-palace-db');
+    expect(collectMemoryPalaceSync()).toBeNull();
+  });
+
+  it('collectMemoryPalaceSync 收集宫殿与桩挂载，并剔除超大图片', async () => {
+    const {savePalace, savePegItems, collectMemoryPalaceSync, MAX_SYNC_IMAGE_CHARS} = await import('./memory-palace-db');
+    const palace: Palace = {
+      ...makePalace('p1'),
+      loci: [
+        {order: 1, name: '大门', imageUrl: 'data:image/svg+xml,small'},
+        {order: 2, name: '客厅', imageUrl: `data:image/png;base64,${'x'.repeat(MAX_SYNC_IMAGE_CHARS + 1)}`},
+      ],
+      overviewImage: 'data:image/svg+xml,overview-small',
+    };
+    await savePalace(palace);
+    await savePegItems([makePeg('p1', 1)]);
+
+    const data = collectMemoryPalaceSync();
+    expect(data).not.toBeNull();
+    expect(data!.palaces).toHaveLength(1);
+    // 小图保留、超大图剔除
+    expect(data!.palaces[0].loci[0].imageUrl).toBe('data:image/svg+xml,small');
+    expect(data!.palaces[0].loci[1].imageUrl).toBeUndefined();
+    expect(data!.palaces[0].overviewImage).toBe('data:image/svg+xml,overview-small');
+    expect(data!.pegs['p1']).toHaveLength(1);
+  });
+
+  it('mergePalace 按 utime 较新者覆盖，缺失图片回退本地', async () => {
+    const {mergePalace} = await import('./memory-palace-db');
+    const local: Palace = {
+      ...makePalace('p1'),
+      utime: 100,
+      loci: [{order: 1, name: '旧名', imageUrl: 'data:local-img'}],
+    };
+    const remote: Palace = {
+      ...makePalace('p1'),
+      name: '新名',
+      utime: 200,
+      loci: [{order: 1, name: '新名'}],
+    };
+    const merged = mergePalace(local, remote);
+    expect(merged.name).toBe('新名');
+    // 远端该桩无图，保留本地图片
+    expect(merged.loci[0].imageUrl).toBe('data:local-img');
+
+    // 本地较新时保留本地
+    const merged2 = mergePalace({...local, utime: 300}, remote);
+    expect(merged2.loci[0].name).toBe('旧名');
+  });
+
+  it('mergePegItemList 按 locusOrder 合并，learnDate 较新者保留', async () => {
+    const {mergePegItemList} = await import('./memory-palace-db');
+    const local = [{...makePeg('p1', 1), level: 5, learnDate: 100}];
+    const remote = [{...makePeg('p1', 1), level: 8, learnDate: 200}, {...makePeg('p1', 2), level: 1, learnDate: 50}];
+    const merged = mergePegItemList(local, remote);
+    expect(merged).toHaveLength(2);
+    expect(merged.find(p => p.locusOrder === 1)?.level).toBe(8);
+    expect(merged.find(p => p.locusOrder === 2)?.level).toBe(1);
+    // 远端较旧时保留本地
+    const merged2 = mergePegItemList(local, [{...makePeg('p1', 1), level: 2, learnDate: 50}]);
+    expect(merged2[0].level).toBe(5);
+  });
+
+  it('restoreMemoryPalaceSync 合并写入 DB（新宫殿新增、已有宫殿按 utime 合并）', async () => {
+    const {savePalace, restoreMemoryPalaceSync, getPalaceById, getPegsByPalace} = await import('./memory-palace-db');
+    await savePalace({...makePalace('p1'), utime: 100});
+
+    const count = await restoreMemoryPalaceSync({
+      palaces: [
+        {...makePalace('p1'), name: '远端新名', utime: 200},
+        {...makePalace('p2'), name: '远端宫殿', utime: 1},
+      ],
+      pegs: {
+        p1: [{...makePeg('p1', 1), level: 3, learnDate: 100}],
+        p2: [makePeg('p2', 1)],
+      },
+    });
+
+    expect(count).toBe(2);
+    expect(getPalaceById('p1')?.name).toBe('远端新名');
+    expect(getPalaceById('p2')?.name).toBe('远端宫殿');
+    expect(getPegsByPalace('p1')[0].level).toBe(3);
+    expect(getPegsByPalace('p2')).toHaveLength(1);
+  });
+});

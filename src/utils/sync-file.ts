@@ -155,6 +155,7 @@ export async function pickAndImportSyncFile(options?: Partial<RestoreOptions>): 
       knowledgeMemoryRestored: false,
       phoneticMemoryRestored: false,
       signinRestored: false,
+      memoryPalaceRestored: false,
       errors: ['未选择文件'],
     }
   }
@@ -210,5 +211,6 @@ export function getSyncDataSummary(data: SyncData) {
     knowledgePackCount: data.knowledgeMemory?.importedIds?.length || 0,
     phonemeCount: Object.keys(data.phoneticMemory?.phonemes || {}).length,
     signinDayCount: data.signin?.dates?.length || 0,
+    palaceCount: data.memoryPalace?.palaces?.length || 0,
   }
 }

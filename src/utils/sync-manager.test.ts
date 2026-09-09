@@ -258,6 +258,10 @@ describe('sync-manager', () => {
         restoreNumberMemory: false,
         restoreShortcutMemory: false,
         restoreLetterMemory: false,
+        restoreKnowledgeMemory: false,
+        restorePhoneticMemory: false,
+        restoreSignin: false,
+        restoreMemoryPalace: false,
       })
 
       expect(result.wordBanksRestored).toBe(0)
@@ -276,6 +280,10 @@ describe('sync-manager', () => {
       expect(DEFAULT_RESTORE_OPTIONS.restoreNumberMemory).toBe(true)
       expect(DEFAULT_RESTORE_OPTIONS.restoreShortcutMemory).toBe(true)
       expect(DEFAULT_RESTORE_OPTIONS.restoreLetterMemory).toBe(true)
+      expect(DEFAULT_RESTORE_OPTIONS.restoreKnowledgeMemory).toBe(true)
+      expect(DEFAULT_RESTORE_OPTIONS.restorePhoneticMemory).toBe(true)
+      expect(DEFAULT_RESTORE_OPTIONS.restoreSignin).toBe(true)
+      expect(DEFAULT_RESTORE_OPTIONS.restoreMemoryPalace).toBe(true)
     })
   })
 })
@@ -364,5 +372,109 @@ describe('sync-manager 打卡记录（signin scope）', () => {
 
     expect(result.signinRestored).toBe(false)
     expect(JSON.parse(localStorage.getItem(SIGNIN_KEY)!)).toEqual(['2026-09-01'])
+  })
+})
+
+describe('sync-manager 记忆宫殿（memoryPalace scope）', () => {
+  const PALACES_DOC_ID = 'memory_palace_palaces'
+  let mockDb: DbAdapter
+
+  const createMockSyncData = (): SyncData => ({
+    version: 1,
+    exportedAt: Date.now(),
+    platform: 'test',
+    wordBanks: [],
+    currentWordBankId: '',
+    userSettings: null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  })
+
+  const makePalaceDoc = (palaces: any[] = []) => ({
+    _id: PALACES_DOC_ID,
+    type: 'memory_palace_palaces',
+    palaces,
+    updatedAt: Date.now(),
+  })
+
+  beforeEach(() => {
+    mockDb = createMockDb()
+    setDbAdapter(mockDb)
+    resetPlatformCache()
+    setPlatform('web')
+    vi.resetAllMocks()
+  })
+
+  afterEach(() => {
+    resetDbAdapter()
+    resetPlatformCache()
+    vi.restoreAllMocks()
+  })
+
+  it('collectSyncData 应收集记忆宫殿（含桩挂载）', async () => {
+    mockDb.put!(makePalaceDoc([{ _id: 'p1', name: '测试宫殿', loci: [{ order: 1, name: '大门' }], ctime: 1, utime: 1 }]))
+    mockDb.put!({
+      _id: 'memory_palace_pegs_p1',
+      type: 'memory_palace_pegs',
+      palaceId: 'p1',
+      items: [{ _id: 'peg_p1_1', palaceId: 'p1', locusOrder: 1, freeText: '内容', level: 2, learnDate: 100 }],
+      updatedAt: Date.now(),
+    })
+
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+
+    expect(result.memoryPalace).not.toBeNull()
+    expect(result.memoryPalace!.palaces).toHaveLength(1)
+    expect(result.memoryPalace!.pegs['p1']).toHaveLength(1)
+  })
+
+  it('collectSyncData 无宫殿时应为 null', async () => {
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+    expect(result.memoryPalace).toBeNull()
+  })
+
+  it('restoreSyncData 应合并还原记忆宫殿（新宫殿写入 DB）', async () => {
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      memoryPalace: {
+        palaces: [{ _id: 'p1', name: '远端宫殿', loci: [{ order: 1, name: '大门' }], ctime: 1, utime: 1 }],
+        pegs: { p1: [{ _id: 'peg_p1_1', palaceId: 'p1', locusOrder: 1, freeText: '内容' }] },
+      },
+    })
+
+    expect(result.memoryPalaceRestored).toBe(true)
+    const palacesDoc = mockDb.get!(PALACES_DOC_ID) as any
+    expect(palacesDoc?.palaces).toHaveLength(1)
+    expect(palacesDoc?.palaces[0].name).toBe('远端宫殿')
+    const pegsDoc = mockDb.get!('memory_palace_pegs_p1') as any
+    expect(pegsDoc?.items).toHaveLength(1)
+  })
+
+  it('restoreSyncData 可通过 restoreMemoryPalace 选项跳过宫殿还原', async () => {
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData(
+      { ...createMockSyncData(), memoryPalace: { palaces: [{ _id: 'p1', name: 'x', loci: [], ctime: 1, utime: 1 }], pegs: {} } },
+      {
+        conflictStrategy: 'merge',
+        restoreWordBanks: false,
+        restoreUserSettings: false,
+        restoreTextMemory: false,
+        restoreNumberMemory: false,
+        restoreShortcutMemory: false,
+        restoreLetterMemory: false,
+        restoreKnowledgeMemory: false,
+        restorePhoneticMemory: false,
+        restoreSignin: false,
+        restoreMemoryPalace: false,
+      },
+    )
+
+    expect(result.memoryPalaceRestored).toBe(false)
+    expect(mockDb.get!(PALACES_DOC_ID)).toBeNull()
   })
 })

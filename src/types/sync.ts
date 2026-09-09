@@ -11,6 +11,7 @@ import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberIma
 import type { LetterImageAssociation, LetterTrainingResult } from './letter-memory'
 import type { KnowledgeItemProgress } from './knowledge-memory'
 import type { PhonemeProgress, MinimalPairProgress } from './phonetic-memory'
+import type { Palace, PegItem } from './memory-palace'
 
 /** 同步数据版本号，用于兼容性检查 */
 export const SYNC_VERSION = 1
@@ -102,6 +103,17 @@ export interface SyncSignin {
   dates: string[]
 }
 
+/**
+ * 记忆宫殿同步数据
+ * 宫殿结构（桩列表）与每宫殿的桩挂载（含巡视 SRS 进度）分开存放；
+ * 图片为 dataURL，收集时超大图会被剔除（见 memory-palace-db 的体积守卫）
+ */
+export interface SyncMemoryPalace {
+  palaces: Palace[]
+  /** palaceId → 该宫殿的桩挂载列表 */
+  pegs: Record<string, PegItem[]>
+}
+
 /** 完整的同步数据包 */
 export interface SyncData {
   /** 数据格式版本 */
@@ -130,6 +142,8 @@ export interface SyncData {
   phoneticMemory?: SyncPhoneticMemory | null
   /** 每日打卡记录（可选：旧版客户端忽略此字段） */
   signin?: SyncSignin | null
+  /** 记忆宫殿（可选：旧版客户端忽略此字段） */
+  memoryPalace?: SyncMemoryPalace | null
 }
 
 /** 服务器同步状态 */
