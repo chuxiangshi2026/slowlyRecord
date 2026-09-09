@@ -45,6 +45,21 @@
           </view>
         </view>
       </view>
+      <!-- 词间停顿：仅听词模式使用，与「自动翻页」相互独立 -->
+      <view v-if="settings.mode === 'listen'" class="setting-row">
+        <text class="setting-label">词间停顿</text>
+        <view class="setting-chips">
+          <view
+            v-for="opt in listenPauseOptions"
+            :key="opt.value"
+            class="chip"
+            :class="{ on: settings.listenPauseSec === opt.value }"
+            @click="setListenPauseSec(opt.value)"
+          >
+            <text>{{ opt.label }}</text>
+          </view>
+        </view>
+      </view>
       <text class="settings-hint">当前词库：{{ bankName }} · 待复习 {{ wordList.length }} 词</text>
     </view>
 
@@ -149,6 +164,10 @@
             <text class="stat-value bad">{{ forgetCount }}</text>
             <text class="stat-label">忘记</text>
           </view>
+          <view class="stat">
+            <text class="stat-value skip">{{ skipCount }}</text>
+            <text class="stat-label">跳过</text>
+          </view>
         </view>
         <button class="btn-restart" @click="restart">再来一轮</button>
         <button class="btn-exit wide" @click="exitFocus">退出专注</button>
@@ -172,8 +191,9 @@ type FocusMode = 'standard' | 'spelling' | 'dictation' | 'listen'
 
 interface FocusSettings {
   mode: FocusMode
-  intervalSec: number  // 自动翻页间隔 / 连播听词词间停顿，0 = 手动（听词模式取默认停顿）
-  autoPlay: boolean    // 自动发音
+  intervalSec: number     // 标准模式自动翻页间隔，0 = 手动
+  listenPauseSec: number  // 听词模式词间停顿（秒）
+  autoPlay: boolean       // 自动发音
 }
 
 const modeOptions: { value: FocusMode; label: string }[] = [
@@ -191,6 +211,14 @@ const intervalOptions = [
   { value: 60, label: '60s' }
 ]
 
+const listenPauseOptions = [
+  { value: 1, label: '1s' },
+  { value: 1.5, label: '1.5s' },
+  { value: 2, label: '2s' },
+  { value: 3, label: '3s' },
+  { value: 5, label: '5s' }
+]
+
 function loadSettings(): FocusSettings {
   try {
     const raw = uni.getStorageSync(SETTINGS_KEY)
@@ -198,11 +226,15 @@ function loadSettings(): FocusSettings {
       return {
         mode: ['standard', 'spelling', 'dictation', 'listen'].includes(raw.mode) ? raw.mode : 'standard',
         intervalSec: typeof raw.intervalSec === 'number' ? raw.intervalSec : 0,
+        // 旧版本用 intervalSec 兼作听词停顿：无独立设置时沿用原秒数，否则取默认 1.5s
+        listenPauseSec: typeof raw.listenPauseSec === 'number'
+          ? raw.listenPauseSec
+          : (typeof raw.intervalSec === 'number' && raw.intervalSec > 0 ? raw.intervalSec : 1.5),
         autoPlay: !!raw.autoPlay
       }
     }
   } catch {}
-  return { mode: 'standard', intervalSec: 0, autoPlay: true }
+  return { mode: 'standard', intervalSec: 0, listenPauseSec: 1.5, autoPlay: true }
 }
 
 const settings = ref<FocusSettings>(loadSettings())
@@ -228,6 +260,12 @@ function setIntervalSec(sec: number) {
   scheduleAutoTimer()
 }
 
+function setListenPauseSec(sec: number) {
+  settings.value.listenPauseSec = sec
+  persistSettings()
+  // 无需重启播放器：ListenPlayer 每次调度前都会重新读取停顿毫秒数
+}
+
 function toggleAutoPlay() {
   settings.value.autoPlay = !settings.value.autoPlay
   persistSettings()
@@ -241,6 +279,7 @@ const isRevealed = ref(false)
 const showComplete = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
+const skipCount = ref(0)
 
 // 拼写/听写状态
 const userInput = ref('')
@@ -302,9 +341,9 @@ function playCurrent() {
 let listenPlayer: ListenPlayer | null = null
 const listenPlaying = ref(false)
 
-/** 词间停顿：复用「自动翻页」设置的秒数，手动(0)时取默认 1.5s */
+/** 词间停顿：使用听词模式独立的停顿设置 */
 function listenPauseMs(): number {
-  return settings.value.intervalSec > 0 ? settings.value.intervalSec * 1000 : 1500
+  return settings.value.listenPauseSec * 1000
 }
 
 function startListen() {
@@ -443,14 +482,8 @@ function checkAnswer() {
 /** 进入下一个词；走完一轮弹出完成层。markDone 表示本词 SRS 已落盘 */
 function advance(markDone: boolean) {
   if (!markDone) {
-    // 自动翻页未标记：按当前揭示状态记为"没记住"
-    const word = currentWord.value
-    if (word) {
-      if (isRevealed.value) {
-        wordsStore.markAsForgotten(word.id)
-        forgetCount.value++
-      }
-    }
+    // 自动翻页超时：记为"跳过"，不写 SRS 判定、不计入忘记
+    skipCount.value++
   }
   if (currentIndex.value < wordList.value.length - 1) {
     currentIndex.value++
@@ -476,6 +509,7 @@ function restart() {
   currentIndex.value = 0
   rememberCount.value = 0
   forgetCount.value = 0
+  skipCount.value = 0
   // 重新拉取最新的待复习列表（本轮标记会改变队列）
   wordList.value = [...wordsStore.reviewWords]
   if (wordList.value.length === 0) {
@@ -904,7 +938,7 @@ onUnmounted(() => {
 .complete-stats {
   display: flex;
   justify-content: center;
-  gap: 50rpx;
+  gap: 40rpx;
   margin: 40rpx 0;
 }
 
@@ -925,6 +959,10 @@ onUnmounted(() => {
 
 .stat-value.bad {
   color: #e58f8f;
+}
+
+.stat-value.skip {
+  color: rgba(234, 241, 234, 0.45);
 }
 
 .stat-label {

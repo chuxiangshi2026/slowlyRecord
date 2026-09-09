@@ -79,11 +79,10 @@
               <text class="pack-meta">{{ info.itemCount }} 条{{ info.ordered ? ' · 有序' : '' }}</text>
             </view>
             <view class="pack-side">
-              <text
-                v-if="info.imported"
-                class="imported-badge"
-                @click.stop="onRemove(info)"
-              >已导入</text>
+              <template v-if="info.imported">
+                <text class="imported-badge">已导入 ✓</text>
+                <text class="remove-btn" @click.stop="onRemove(info)">移除</text>
+              </template>
               <button
                 v-else
                 class="import-btn"
@@ -432,8 +431,8 @@ onShow(() => {
 
 .imported-badge {
   font-size: 22rpx;
-  color: #999;
-  background: #f5f5f5;
+  color: #52796f;
+  background: rgba(82, 121, 111, 0.1);
   padding: 8rpx 22rpx;
   border-radius: 26rpx;
 }

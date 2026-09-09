@@ -16,10 +16,6 @@
 
 <script setup lang="ts">
 // 「全部功能」列表页：收纳首页宫格收敛后移除的入口，路由保持不变
-const goToWords = () => {
-  uni.switchTab({ url: '/pages/words/words' })
-}
-
 const navigate = (url: string) => {
   uni.navigateTo({ url })
 }
@@ -30,7 +26,7 @@ const features = [
     cls: 'add',
     text: '添加单词',
     desc: '手动添加或拍照取词',
-    action: goToWords,
+    action: () => navigate('/subPackages/pages-tools/add-word/add-word'),
   },
   {
     icon: '📚',

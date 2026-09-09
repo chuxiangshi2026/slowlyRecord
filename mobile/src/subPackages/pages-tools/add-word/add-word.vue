@@ -1,5 +1,11 @@
 <template>
   <view class="add-word-container">
+    <!-- 落点提示：告知词将加入哪个词库，可点击切换 -->
+    <view class="bank-tip" @click="goToWordbank">
+      <text class="bank-tip-text">添加到：{{ currentBankName }}</text>
+      <text class="bank-tip-arrow">切换 ›</text>
+    </view>
+
     <!-- 输入单词/词组/句子 -->
     <view class="form-group">
       <text class="form-label">单词/词组/句子</text>
@@ -59,10 +65,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { translateText } from '../utils/translation'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
+import { getWordKey } from '@/utils/text-utils'
 
 const wordsStore = useMobileWords()
 const translating = ref(false)
@@ -74,11 +82,18 @@ const newWord = ref({
   example: ''
 })
 
-// 自动翻译
-const autoTranslate = async () => {
-  const wordText = normalizeMobileItemText(newWord.value.word)
-  if (!wordText || translating.value) return
-  if (newWord.value.meaning.trim()) return
+// 当前词库名（词库切换后返回时通过 onShow 重新加载刷新）
+const currentBankName = computed(() => {
+  const bank = wordsStore.getBankById(wordsStore.currentBankId)
+  return bank?.name || '默认词库'
+})
+
+onShow(() => {
+  wordsStore.loadWords()
+})
+
+// 执行翻译并填充释义（调用方已处理覆盖确认）
+const doTranslate = async (wordText: string) => {
   translating.value = true
   try {
     const result = await translateText(wordText, 'auto', 'zh')
@@ -104,10 +119,35 @@ const autoTranslate = async () => {
   }
 }
 
+// 自动翻译：释义框已有内容时先确认覆盖，避免静默无反应
+const autoTranslate = async () => {
+  const wordText = normalizeMobileItemText(newWord.value.word)
+  if (!wordText || translating.value) return
+  if (newWord.value.meaning.trim()) {
+    uni.showModal({
+      title: '重新翻译',
+      content: '释义框已有内容，重新翻译将覆盖当前释义，是否继续？',
+      confirmText: '覆盖',
+      confirmColor: '#52796f',
+      success: (res) => {
+        if (res.confirm) doTranslate(wordText)
+      }
+    })
+    return
+  }
+  await doTranslate(wordText)
+}
+
 const addWord = async () => {
   const wordText = normalizeMobileItemText(newWord.value.word)
   if (!wordText || !newWord.value.meaning.trim()) {
     uni.showToast({ title: '请填写单词/词组/句子和释义', icon: 'none' })
+    return
+  }
+  // 查重：同词（忽略大小写与空白差异）已在当前词库时阻止添加
+  const key = getWordKey(wordText)
+  if (wordsStore.words.some(w => getWordKey(w.word) === key)) {
+    uni.showToast({ title: '该词已在词库中', icon: 'none' })
     return
   }
   try {
@@ -131,6 +171,10 @@ const addWord = async () => {
   }
 }
 
+const goToWordbank = () => {
+  uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
+}
+
 const goBack = () => {
   uni.navigateBack()
 }
@@ -141,6 +185,27 @@ const goBack = () => {
   padding: 30rpx;
   min-height: 100vh;
   background: #f5f5f5;
+}
+
+/* 落点提示条 */
+.bank-tip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 22rpx 24rpx;
+  margin-bottom: 30rpx;
+}
+
+.bank-tip-text {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.bank-tip-arrow {
+  font-size: 24rpx;
+  color: #52796f;
 }
 
 .form-group {
@@ -175,7 +240,7 @@ const goBack = () => {
 .btn-translate {
   width: 140rpx;
   height: 80rpx;
-  background: #4caf50;
+  background: #74937d;
   color: #fff;
   border-radius: 12rpx;
   font-size: 26rpx;
@@ -215,7 +280,7 @@ const goBack = () => {
 }
 
 .btn-confirm {
-  background: #1976d2;
+  background: #52796f;
   color: #fff;
 }
 </style>

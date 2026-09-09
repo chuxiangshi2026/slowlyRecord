@@ -24,7 +24,10 @@
     <view class="bank-list">
       <view v-for="bank in wordsStore.bankList" :key="bank.id" class="bank-item" :class="{ active: bank.id === wordsStore.currentBankId }" @click="onBankTap(bank)">
         <view class="bank-info">
-          <text class="bank-name">{{ bank.name }}</text>
+          <view class="bank-name-row">
+            <text class="bank-name">{{ bank.name }}</text>
+            <text v-if="bank.id === wordsStore.currentBankId" class="current-badge">当前</text>
+          </view>
           <text class="bank-count">{{ getBankCount(bank.id) }} 个单词</text>
         </view>
         <view class="bank-actions" v-if="!bank.isDefault">
@@ -143,6 +146,7 @@ function onBankChange(e: any) {
 function onBankTap(bank: WordBankMeta) {
   if (bank.id !== wordsStore.currentBankId) {
     wordsStore.switchBank(bank.id)
+    uni.showToast({ title: `已切换到「${bank.name}」`, icon: 'none' })
   }
 }
 
@@ -224,10 +228,12 @@ const goTo = (url: string) => {
 .section-add { font-size: 28rpx; color: #667eea; }
 
 .bank-list { padding: 0 20rpx; }
-.bank-item { background: #fff; border-radius: 16rpx; padding: 24rpx 30rpx; margin-bottom: 12rpx; display: flex; justify-content: space-between; align-items: center; }
-.bank-item.active { border-left: 16rpx solid #667eea; }
+.bank-item { background: #fff; border-radius: 16rpx; padding: 24rpx 30rpx; margin-bottom: 12rpx; display: flex; justify-content: space-between; align-items: center; border-left: 16rpx solid transparent; box-sizing: border-box; }
+.bank-item.active { border-left-color: #52796f; background: #f2f6f3; }
 .bank-info { flex: 1; }
-.bank-name { font-size: 30rpx; font-weight: bold; color: #333; display: block; }
+.bank-name-row { display: flex; align-items: center; gap: 14rpx; }
+.bank-name { font-size: 30rpx; font-weight: bold; color: #333; }
+.current-badge { font-size: 20rpx; color: #fff; background: #52796f; border-radius: 20rpx; padding: 4rpx 16rpx; }
 .bank-count { font-size: 24rpx; color: #999; margin-top: 6rpx; display: block; }
 .bank-actions { display: flex; gap: 20rpx; }
 .action-text { font-size: 24rpx; color: #667eea; }
