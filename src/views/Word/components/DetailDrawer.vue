@@ -326,9 +326,9 @@
                       :placeholder="keyPlaceholders(engine.value).appkey" clearable/>
           </div>
           <div class="key-field">
-            <label>SecretKey</label>
+            <label>{{ keyFieldLabel(engine.value) }}</label>
             <el-input v-model="wordsStore.userApiKeys[engine.value].key"
-                      :disabled="singleKeyPlatforms.includes(engine.value)"
+                      :disabled="keyFieldDisabled(engine.value)"
                       @update:model-value="(val: string) => updateKey(engine.value, 'key', val)"
                       :placeholder="keyPlaceholders(engine.value).key" clearable/>
           </div>
@@ -790,6 +790,8 @@ const options = [
 // ===== 密钥配置区块 =====
 // 只需 AppKey、无需 SecretKey 的翻译引擎
 const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'deepl', 'qiniu']
+// AI 引擎的第二个字段是「模型名」，允许用户自定义模型版本（留空则用内置默认模型）
+const modelEditablePlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'qiniu', 'ollama']
 // 不展示密钥配置的引擎（内置免费/本地）
 const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan', 'google']
 const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm']
@@ -812,9 +814,21 @@ const ocrKeyEngines = computed(() =>
 
 const hasKey = (keys: ApiKeyMap, name: string) => !!(keys[name]?.appkey || keys[name]?.key)
 
+// 第二个字段的标题：AI 引擎是模型名，其余是 SecretKey
+const keyFieldLabel = (platform: string) =>
+  modelEditablePlatforms.includes(platform) ? '模型名（可选）' : 'SecretKey'
+
+// 第二个字段是否禁用：AI 引擎可编辑模型名，单 key 的传统引擎禁用
+const keyFieldDisabled = (platform: string) =>
+  singleKeyPlatforms.includes(platform) && !modelEditablePlatforms.includes(platform)
+
 const keyPlaceholders = (platform: string) => {
   if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
   if (platform === 'azure') return { appkey: '必填，订阅 Key', key: '区域，如 eastasia' }
+  if (modelEditablePlatforms.includes(platform)) {
+    const defaultModel = (AppInfo as Record<string, { appkey: string; key: string }>)[platform]?.key
+    return { appkey: '必填，API Key', key: defaultModel ? `留空默认 ${defaultModel}` : '模型名（可选）' }
+  }
   if (platform === 'deepl') return { appkey: '必填，API Key（免费版以 :fx 结尾）', key: '该引擎无需 SecretKey' }
   if (singleKeyPlatforms.includes(platform)) return { appkey: '必填，API Key', key: '该引擎无需 SecretKey' }
   return { appkey: 'AppID / AppKey', key: 'SecretKey' }
