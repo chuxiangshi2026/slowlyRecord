@@ -72,6 +72,12 @@
           <template v-else>
             <text class="q-label">{{ currentItem.question }}</text>
             <text class="a-text">{{ currentItem.answer }}</text>
+            <image
+              v-if="currentItem.image"
+              class="formula-img"
+              :src="formulaImageSrc(currentItem.image)"
+              mode="widthFix"
+            />
           </template>
         </view>
 
@@ -102,6 +108,14 @@
           </view>
         </view>
 
+        <!-- 答题后才显示公式图：提问阶段展示会直接泄露正确答案 -->
+        <image
+          v-if="answered && currentItem.image"
+          class="formula-img"
+          :src="formulaImageSrc(currentItem.image)"
+          mode="widthFix"
+        />
+
         <button v-if="answered" class="btn-next" @click="nextQuestion">下一题</button>
       </template>
     </view>
@@ -126,6 +140,7 @@
 import { ref, computed } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { useKnowledgeMemory, normalizeAnswer } from './useKnowledgeMemory'
+import { formulaImageSrc } from './utils/knowledge-image'
 import { tokenizeAnswer, type AnswerTile } from '@/utils/answer-tokens'
 import type { KnowledgeItem } from '@/stores/useUtils/types'
 
@@ -423,6 +438,15 @@ onShow(() => {
   font-weight: bold;
   line-height: 1.5;
   word-break: break-all;
+}
+
+/* 复杂公式预渲染 PNG */
+.formula-img {
+  display: block;
+  width: 100%;
+  max-width: 520rpx;
+  margin-top: 24rpx;
+  background: #fff;
 }
 
 .flip-actions {

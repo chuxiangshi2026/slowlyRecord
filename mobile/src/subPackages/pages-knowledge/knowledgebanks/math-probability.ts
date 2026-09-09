@@ -16,7 +16,9 @@ const pack: KnowledgePack = {
       "answer": "A(n,k)=n!/(n-k)!：从 n 个取 k 个排顺序",
       "extras": {
         "说明": "顺序有关用排列"
-      }
+      },
+      "latex": "A_n^k=\\frac{n!}{(n-k)!}",
+      "image": "knowledgebanks/images/math-probability-1.png"
     },
     {
       "id": "math-probability-2",
@@ -24,7 +26,9 @@ const pack: KnowledgePack = {
       "answer": "C(n,k)=n!/[k!(n-k)!]：从 n 个取 k 个不计顺序",
       "extras": {
         "说明": "顺序无关用组合；C(n,k)=C(n,n-k)"
-      }
+      },
+      "latex": "C(n,k)=\\frac{n!}{k!(n-k)!}",
+      "image": "knowledgebanks/images/math-probability-2.png"
     },
     {
       "id": "math-probability-3",
@@ -56,7 +60,9 @@ const pack: KnowledgePack = {
       "answer": "P(A|B)=P(AB)/P(B)",
       "extras": {
         "说明": "在 B 已发生的条件下 A 的概率"
-      }
+      },
+      "latex": "P(A\\mid B)=\\frac{P(AB)}{P(B)}",
+      "image": "knowledgebanks/images/math-probability-6.png"
     },
     {
       "id": "math-probability-7",
@@ -64,7 +70,9 @@ const pack: KnowledgePack = {
       "answer": "P(A)=Σᵢ P(Bᵢ)P(A|Bᵢ)",
       "extras": {
         "说明": "Bᵢ 是对样本空间的一个划分"
-      }
+      },
+      "latex": "P(A)=\\sum_{i=1}^{n}P(B_i)P(A\\mid B_i)",
+      "image": "knowledgebanks/images/math-probability-7.png"
     },
     {
       "id": "math-probability-8",
@@ -72,7 +80,9 @@ const pack: KnowledgePack = {
       "answer": "P(Bᵢ|A)=P(Bᵢ)P(A|Bᵢ) ÷ Σⱼ P(Bⱼ)P(A|Bⱼ)",
       "extras": {
         "说明": "由结果反推原因的概率"
-      }
+      },
+      "latex": "P(B_i|A)=\\frac{P(B_i)P(A|B_i)}{\\sum_j P(B_j)P(A|B_j)}",
+      "image": "knowledgebanks/images/math-probability-8.png"
     },
     {
       "id": "math-probability-9",
@@ -88,7 +98,9 @@ const pack: KnowledgePack = {
       "answer": "E(X)=Σᵢ xᵢpᵢ：取值按概率加权的平均",
       "extras": {
         "说明": "期望是长期平均，不保证单次结果"
-      }
+      },
+      "latex": "E(X)=\\sum_i x_ip_i",
+      "image": "knowledgebanks/images/math-probability-10.png"
     },
     {
       "id": "math-probability-11",
@@ -104,7 +116,9 @@ const pack: KnowledgePack = {
       "answer": "P(X=k)=C(n,k)pᵏ(1-p)ⁿ⁻ᵏ，记 X~B(n,p)",
       "extras": {
         "说明": "n 次独立重复试验中成功 k 次的概率"
-      }
+      },
+      "latex": "P(X=k)=\\binom{n}{k}p^{k}(1-p)^{n-k}",
+      "image": "knowledgebanks/images/math-probability-12.png"
     },
     {
       "id": "math-probability-13",
@@ -112,7 +126,9 @@ const pack: KnowledgePack = {
       "answer": "N(μ,σ²)，密度 f(x)=1/(σ√(2π))·e^(-(x-μ)²/2σ²)",
       "extras": {
         "说明": "约 68%/95%/99.7% 落在 μ±1σ/2σ/3σ 内"
-      }
+      },
+      "latex": "f(x)=\\frac{1}{\\sigma\\sqrt{2\\pi}}\\,e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}",
+      "image": "knowledgebanks/images/math-probability-13.png"
     },
     {
       "id": "math-probability-14",

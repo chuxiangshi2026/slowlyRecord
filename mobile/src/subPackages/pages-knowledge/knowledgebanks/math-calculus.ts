@@ -16,7 +16,9 @@ const pack: KnowledgePack = {
       "answer": "lim(x→a) f(x)=A：x 无限接近 a 时，f(x) 无限接近 A",
       "extras": {
         "说明": "ε-δ 语言是其严格化表述"
-      }
+      },
+      "latex": "\\lim_{x\\to a}f(x)=A",
+      "image": "knowledgebanks/images/math-calculus-1.png"
     },
     {
       "id": "math-calculus-2",
@@ -24,7 +26,9 @@ const pack: KnowledgePack = {
       "answer": "lim(x→0) sin x / x = 1",
       "extras": {
         "说明": "x 必须用弧度；x 很小时 sin x≈x"
-      }
+      },
+      "latex": "\\lim_{x\\to 0}\\frac{\\sin x}{x}=1",
+      "image": "knowledgebanks/images/math-calculus-2.png"
     },
     {
       "id": "math-calculus-3",
@@ -32,7 +36,9 @@ const pack: KnowledgePack = {
       "answer": "lim(x→∞) (1+1/x)^x = e ≈ 2.71828",
       "extras": {
         "说明": "自然常数 e 的定义之一"
-      }
+      },
+      "latex": "\\lim_{x\\to\\infty}\\left(1+\\frac{1}{x}\\right)^{x}=e",
+      "image": "knowledgebanks/images/math-calculus-3.png"
     },
     {
       "id": "math-calculus-4",
@@ -40,7 +46,9 @@ const pack: KnowledgePack = {
       "answer": "f'(x₀)=lim(Δx→0) [f(x₀+Δx)-f(x₀)]/Δx",
       "extras": {
         "说明": "瞬时变化率，几何意义是切线斜率"
-      }
+      },
+      "latex": "f'(x_0)=\\lim_{\\Delta x\\to 0}\\frac{f(x_0+\\Delta x)-f(x_0)}{\\Delta x}",
+      "image": "knowledgebanks/images/math-calculus-4.png"
     },
     {
       "id": "math-calculus-5",
@@ -56,7 +64,9 @@ const pack: KnowledgePack = {
       "answer": "(u±v)'=u'±v'；(uv)'=u'v+uv'；(u/v)'=(u'v-uv')/v²；[f(g(x))]'=f'(g)·g'(x)",
       "extras": {
         "说明": "末式为复合函数链式法则"
-      }
+      },
+      "latex": "\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^2}",
+      "image": "knowledgebanks/images/math-calculus-6.png"
     },
     {
       "id": "math-calculus-7",
@@ -72,7 +82,9 @@ const pack: KnowledgePack = {
       "answer": "0/0 或 ∞/∞ 型极限：lim f/g = lim f'/g'",
       "extras": {
         "说明": "需满足可导等条件，可连续使用多次"
-      }
+      },
+      "latex": "\\lim\\frac{f(x)}{g(x)}=\\lim\\frac{f'(x)}{g'(x)}",
+      "image": "knowledgebanks/images/math-calculus-8.png"
     },
     {
       "id": "math-calculus-9",
@@ -88,7 +100,9 @@ const pack: KnowledgePack = {
       "answer": "∫f(x)dx=F(x)+C，其中 F'(x)=f(x)",
       "extras": {
         "说明": "求导的逆运算，结果别丢常数 C"
-      }
+      },
+      "latex": "\\int f(x)\\,dx=F(x)+C",
+      "image": "knowledgebanks/images/math-calculus-10.png"
     },
     {
       "id": "math-calculus-11",
@@ -96,7 +110,9 @@ const pack: KnowledgePack = {
       "answer": "∫ₐᵇf(x)dx=F(b)-F(a)",
       "extras": {
         "说明": "定积分 = 原函数在端点处取差"
-      }
+      },
+      "latex": "\\int_a^b f(x)\\,dx=F(b)-F(a)",
+      "image": "knowledgebanks/images/math-calculus-11.png"
     },
     {
       "id": "math-calculus-12",
@@ -104,7 +120,9 @@ const pack: KnowledgePack = {
       "answer": "面积函数 A(x)=∫ₐˣf(t)dt 的导数 A'(x)=f(x)",
       "extras": {
         "说明": "积分与微分互为逆运算"
-      }
+      },
+      "latex": "A'(x)=\\frac{d}{dx}\\int_a^x f(t)\\,dt=f(x)",
+      "image": "knowledgebanks/images/math-calculus-12.png"
     },
     {
       "id": "math-calculus-13",
@@ -112,7 +130,9 @@ const pack: KnowledgePack = {
       "answer": "f(x)≈f(0)+f'(0)x+f″(0)x²/2!+…；如 eˣ≈1+x+x²/2",
       "extras": {
         "说明": "用多项式逼近函数，项数越多越精确"
-      }
+      },
+      "latex": "e^x=1+x+\\frac{x^2}{2!}+\\frac{x^3}{3!}+\\cdots",
+      "image": "knowledgebanks/images/math-calculus-13.png"
     },
     {
       "id": "math-calculus-14",
@@ -120,7 +140,9 @@ const pack: KnowledgePack = {
       "answer": "1+r+r²+…=1/(1-r)（|r|<1），如 1+1/2+1/4+…=2",
       "extras": {
         "说明": "无穷项相加也可以等于有限值"
-      }
+      },
+      "latex": "\\sum_{n=0}^{\\infty}r^{n}=\\frac{1}{1-r}\\quad(|r|<1)",
+      "image": "knowledgebanks/images/math-calculus-14.png"
     },
     {
       "id": "math-calculus-15",
@@ -128,7 +150,9 @@ const pack: KnowledgePack = {
       "answer": "1+1/2+1/3+… 发散：增长极慢但趋向无穷",
       "extras": {
         "说明": "通项趋于 0 不足以保证级数收敛"
-      }
+      },
+      "latex": "H_n=1+\\frac{1}{2}+\\frac{1}{3}+\\cdots+\\frac{1}{n}\\to\\infty",
+      "image": "knowledgebanks/images/math-calculus-15.png"
     }
   ]
 }

@@ -263,6 +263,10 @@ describe('knowledge-pack-service', () => {
       // math-formulas 追加函数/方程条目与图像映射 → 4
       expect(getKnowledgePackInfo('math-formulas')?.version).toBe(4)
       expect(getPackVersion('math-formulas')).toBe(4)
+      // 微积分/线代/概率三包补 latex 源码 + 预渲染公式图 → 2
+      expect(getPackVersion('math-calculus')).toBe(2)
+      expect(getPackVersion('math-linalg')).toBe(2)
+      expect(getPackVersion('math-probability')).toBe(2)
       // 其余包（未加口诀等结构变更）仍为 1
       expect(getPackVersion('multiplication-9x9')).toBe(1)
       // constellations-12 追加星座符号 emoji imageUrl → 2

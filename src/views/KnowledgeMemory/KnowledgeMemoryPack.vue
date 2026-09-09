@@ -108,7 +108,10 @@
             <tbody>
               <tr v-for="item in sortedItems" :key="item.id">
                 <td><span class="item-emoji" v-if="item.imageUrl">{{ item.imageUrl }}</span>{{ item.question }}</td>
-                <td>{{ item.answer }}</td>
+                <td>
+                  {{ item.answer }}
+                  <img v-if="item.image" class="formula-img" :src="assetUrl(item.image)" :alt="item.question" />
+                </td>
                 <td v-for="key in extraKeys" :key="key">{{ item.extras?.[key] ?? '' }}</td>
                 <td v-if="hasAnyPlot || hasAnyScene" class="plot-col">
                   <el-button
@@ -190,6 +193,7 @@
             <div v-if="showAnswer" class="answer-section">
               <div class="answer-label">{{ currentMode === 'q2a' ? '答案' : '问题' }}</div>
               <div class="answer-main">{{ currentMode === 'q2a' ? currentItem.answer : currentItem.question }}</div>
+              <img v-if="currentMode === 'q2a' && currentItem.image" class="formula-img" :src="assetUrl(currentItem.image)" :alt="currentItem.question" />
               <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
                 <el-tag v-for="(value, key) in currentItem.extras" :key="key" size="small" type="info">{{ key }}: {{ value }}</el-tag>
               </div>
@@ -705,6 +709,11 @@ function buildTableData(form: TableForm): TableImageData | null {
   };
 }
 
+/** 静态资源相对路径 → 完整 URL（知识包 image 字段用） */
+function assetUrl(p: string): string {
+  return import.meta.env.BASE_URL + p;
+}
+
 /** 当前日期，如「2026年9月2日」 */
 function formatDate(d: Date = new Date()): string {
   return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
@@ -754,6 +763,15 @@ async function handleResetProgress() {
 </script>
 
 <style scoped lang="scss">
+// 复杂公式预渲染 PNG（与移动端共用 public/knowledgebanks/images/ 产物）
+.formula-img {
+  display: block;
+  max-width: 280px;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 4px;
+}
+
 // 条目配图：emoji 字符大字渲染（知识包 JSON 里 imageUrl 存 emoji）
 .item-emoji {
   font-size: 1.5em;

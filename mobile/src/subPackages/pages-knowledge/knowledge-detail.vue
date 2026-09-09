@@ -26,7 +26,7 @@
         </view>
       </view>
 
-      <!-- 视图切换（仅元素周期表包提供：预览表 / 周期表 / 口诀） -->
+      <!-- 视图切换（仅元素周期表包提供：预览表 / 周期表 / 完整表格 / 口诀） -->
       <view v-if="isElements" class="view-tabs">
         <view
           v-for="v in viewTabs"
@@ -40,7 +40,7 @@
       </view>
 
       <!-- 记忆口诀 -->
-      <view v-if="pack.mnemonics?.length && detailView !== 'periodic'" class="mnemonics-card">
+      <view v-if="pack.mnemonics?.length && (detailView === 'list' || detailView === 'mnemonic')" class="mnemonics-card">
         <text class="section-label">🧠 记忆口诀</text>
         <text
           v-for="(m, i) in pack.mnemonics"
@@ -68,6 +68,34 @@
         </view>
       </view>
 
+      <!-- 完整表格视图：18 列真实周期表布局，横向拖动 + 双指缩放 -->
+      <view v-if="detailView === 'table'" class="periodic-full-card">
+        <text class="section-label">完整周期表（双指缩放 · 拖动查看）</text>
+        <movable-area class="pt-area" scale-area>
+          <movable-view
+            class="pt-view"
+            direction="all"
+            scale
+            scale-min="0.4"
+            scale-max="3"
+            :style="{ width: ptWidth + 'px', height: ptHeight + 'px' }"
+          >
+            <view
+              v-for="cell in ptFlatCells"
+              :key="cell.itemId"
+              class="pt-cell"
+              :class="{ fblock: cell.row >= F_BLOCK_ROW_START }"
+              :style="ptCellStyle(cell.row, cell.col)"
+              @click="showElementDetailById(cell.itemId)"
+            >
+              <text class="pt-num">{{ cell.atomicNumber }}</text>
+              <text class="pt-symbol">{{ cell.symbol }}</text>
+            </view>
+          </movable-view>
+        </movable-area>
+        <text class="pt-tip">7 个主周期 + 镧系/锕系折行；点按格子查看详情</text>
+      </view>
+
       <!-- 条目预览 -->
       <view v-if="detailView === 'list'" class="items-card">
         <text class="section-label">条目预览</text>
@@ -80,7 +108,23 @@
             <text class="q-text">{{ item.question }}</text>
             <text v-if="extrasPreview(item)" class="q-extras">{{ extrasPreview(item) }}</text>
           </view>
-          <text class="item-a cell">{{ item.answer }}</text>
+          <view class="item-a cell">
+            <text>{{ item.answer }}</text>
+            <!-- 复杂公式：优先显示预渲染 PNG，小程序 image 不支持 SVG -->
+            <image
+              v-if="item.image"
+              class="formula-img"
+              :src="formulaImageSrc(item.image)"
+              mode="widthFix"
+            />
+            <!-- 可绘制函数：canvas 2d 简化图像（坐标轴 + 曲线） -->
+            <canvas
+              v-if="plotSpecOf(item)"
+              :id="plotCanvasId(item.id)"
+              :canvas-id="plotCanvasId(item.id)"
+              class="plot-canvas"
+            />
+          </view>
         </view>
       </view>
     </view>
@@ -94,9 +138,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick, watch } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useKnowledgeMemory } from './useKnowledgeMemory'
+import { getMobilePlot } from './utils/plot-map'
+import { formulaImageSrc } from './utils/knowledge-image'
+import {
+  calcPlotYRange,
+  compileExpression,
+  drawPlot,
+  sampleFunction,
+  type PlotCtx,
+} from './utils/function-plot'
+import {
+  buildPeriodicGrid,
+  F_BLOCK_ROW_START,
+  PERIODIC_COLUMNS,
+  PERIODIC_ROWS,
+  type PeriodicCell,
+} from './utils/periodic-layout'
 import type { KnowledgeItem } from '@/stores/useUtils/types'
 
 const store = useKnowledgeMemory()
@@ -111,14 +171,113 @@ const dueCount = computed(() => store.getDueCount(packId.value))
 /** 是否为元素周期表包（该包提供「周期表」视图切换） */
 const isElements = computed(() => packId.value === 'elements')
 
-// 详情页视图：list 预览表 / periodic 周期表 / mnemonic 口诀
-type DetailView = 'list' | 'periodic' | 'mnemonic'
+// 详情页视图：list 预览表 / periodic 周期分组 / table 完整表格 / mnemonic 口诀
+type DetailView = 'list' | 'periodic' | 'table' | 'mnemonic'
 const viewTabs: { value: DetailView; label: string }[] = [
   { value: 'list', label: '预览表' },
   { value: 'periodic', label: '周期表' },
+  { value: 'table', label: '完整表格' },
   { value: 'mnemonic', label: '口诀' },
 ]
 const detailView = ref<DetailView>('list')
+
+// ===== 完整周期表网格（18 列真实布局） =====
+
+/** 格子边长与间距（px，逻辑尺寸） */
+const PT_CELL = 46
+const PT_GAP = 4
+
+const ptWidth = PERIODIC_COLUMNS * (PT_CELL + PT_GAP) - PT_GAP
+const ptHeight = PERIODIC_ROWS * (PT_CELL + PT_GAP) - PT_GAP
+
+/** 展平的格子列表（含行列坐标），null 空位不渲染 */
+const ptFlatCells = computed<(PeriodicCell & { row: number; col: number })[]>(() => {
+  const grid = buildPeriodicGrid(pack.value?.items ?? [])
+  if (!grid) return []
+  const out: (PeriodicCell & { row: number; col: number })[] = []
+  grid.forEach((row, r) => {
+    row.forEach((cell, c) => {
+      if (cell) out.push({ ...cell, row: r, col: c })
+    })
+  })
+  return out
+})
+
+function ptCellStyle(row: number, col: number) {
+  return {
+    left: `${col * (PT_CELL + PT_GAP)}px`,
+    top: `${row * (PT_CELL + PT_GAP)}px`,
+    width: `${PT_CELL}px`,
+    height: `${PT_CELL}px`,
+  }
+}
+
+/** 按条目 id 查看元素详情（完整表格视图用） */
+function showElementDetailById(itemId: string) {
+  const item = pack.value?.items.find(i => i.id === itemId)
+  if (item) showElementDetail(item)
+}
+
+// ===== 函数图像（canvas 2d 简化版） =====
+
+/** 条目的函数图像描述（无映射返回 null） */
+function plotSpecOf(item: KnowledgeItem) {
+  return getMobilePlot(item.id)
+}
+
+function plotCanvasId(itemId: string) {
+  return `kplot-${itemId}`
+}
+
+/** 绘制单个条目的函数图像到 canvas 2d context（逻辑尺寸取实际布局尺寸，缺省 320×220） */
+function renderPlot(canvas: any, dpr: number, item: KnowledgeItem, size?: { width: number; height: number }) {
+  const spec = plotSpecOf(item)
+  if (!spec || !canvas) return
+  let fn
+  try {
+    fn = compileExpression(spec.expr)
+  } catch {
+    return // 表达式非法时静默跳过（映射表数据应保证合法）
+  }
+  // 画布缓冲区必须与 CSS 布局尺寸成比例，否则图像会被拉伸变形
+  const cssW = size && size.width > 0 ? size.width : 320
+  const cssH = size && size.height > 0 ? size.height : 220
+  canvas.width = cssW * dpr
+  canvas.height = cssH * dpr
+  const ctx = canvas.getContext('2d') as PlotCtx
+  if (!ctx) return
+  ctx.scale(dpr, dpr)
+  const segments = sampleFunction(fn, spec.xMin, spec.xMax)
+  const { yMin, yMax } = calcPlotYRange(segments)
+  drawPlot(ctx, cssW, cssH, segments, { xMin: spec.xMin, xMax: spec.xMax, yMin, yMax })
+}
+
+/** 预览表渲染后，为所有含函数映射的条目绘制图像 */
+async function drawAllPlots() {
+  const items = pack.value?.items ?? []
+  const plotItems = items.filter(i => plotSpecOf(i))
+  if (plotItems.length === 0) return
+  await nextTick()
+  let dpr = 1
+  try {
+    dpr = uni.getSystemInfoSync().pixelRatio || 1
+  } catch {
+    dpr = 1
+  }
+  for (const item of plotItems) {
+    const cid = `#${plotCanvasId(item.id)}`
+    const res = await new Promise<any[]>(resolve => {
+      uni.createSelectorQuery().select(cid).fields({ node: true, size: true }).exec(resolve)
+    })
+    const info = res?.[0]
+    if (info?.node) renderPlot(info.node, dpr, item, { width: info.width, height: info.height })
+  }
+}
+
+// 包加载完成或切回预览表时绘制函数图像
+watch([pack, detailView], ([p, view]) => {
+  if (p && view === 'list') drawAllPlots()
+})
 
 // 各周期最大序数边界（第 1~7 周期），运行时按元素 extras.序数 推导周期归属
 const PERIOD_MAX_ATOMIC_NUMBERS = [2, 10, 18, 36, 54, 86, 118]
@@ -447,6 +606,86 @@ onLoad(async (opt: any) => {
   font-size: 26rpx;
   color: #555;
   word-break: break-all;
+}
+
+/* 复杂公式预渲染 PNG */
+.formula-img {
+  display: block;
+  width: 100%;
+  max-width: 480rpx;
+  margin-top: 12rpx;
+  background: #fff;
+}
+
+/* 函数图像 canvas（缓冲区按实际布局尺寸 × dpr 设置，见 renderPlot） */
+.plot-canvas {
+  display: block;
+  width: 100%;
+  height: 280rpx;
+  margin-top: 12rpx;
+  border-radius: 12rpx;
+  background: #fff;
+}
+
+/* 完整周期表网格 */
+.periodic-full-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 26rpx;
+}
+
+.pt-area {
+  width: 100%;
+  height: 760rpx;
+  overflow: hidden;
+  background: #f7faf8;
+  border-radius: 12rpx;
+}
+
+.pt-view {
+  position: relative;
+}
+
+.pt-cell {
+  position: absolute;
+  background: #eef4f0;
+  border: 1rpx solid #d5ddd8;
+  border-radius: 8rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.pt-cell.fblock {
+  background: #f3f0fa;
+  border-color: #d8d0e8;
+}
+
+.pt-cell:active {
+  opacity: 0.7;
+}
+
+.pt-num {
+  font-size: 9px;
+  color: #999;
+  line-height: 1.1;
+}
+
+.pt-symbol {
+  font-size: 15px;
+  font-weight: bold;
+  color: #303030;
+  line-height: 1.2;
+}
+
+.pt-tip {
+  font-size: 20rpx;
+  color: #aaa;
+  margin-top: 14rpx;
+  display: block;
+  text-align: center;
 }
 
 /* 加载/错误态 */

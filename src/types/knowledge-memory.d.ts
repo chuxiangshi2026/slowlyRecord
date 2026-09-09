@@ -22,6 +22,16 @@ export interface KnowledgeItem {
      * 用 emojiToSvgDataUrl 包成 SVG dataURL 再赋给 PalaceLocus.imageUrl。
      */
     imageUrl?: string;
+    /**
+     * 复杂公式的 LaTeX 源码（可选）。与移动端共用 public/knowledgebanks/*.json 源数据，
+     * 构建期由 scripts/render-formula-pngs.cjs 预渲染成 PNG。
+     */
+    latex?: string;
+    /**
+     * 复杂公式预渲染 PNG 的相对路径（相对于应用静态资源根，
+     * 如 "knowledgebanks/images/math-calculus-4.png"）。
+     */
+    image?: string;
 }
 
 /** 知识包元数据 + 条目 */

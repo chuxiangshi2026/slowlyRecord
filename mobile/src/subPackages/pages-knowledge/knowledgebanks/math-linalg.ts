@@ -16,7 +16,9 @@ const pack: KnowledgePack = {
       "answer": "同型矩阵对应元素相加：C=A+B 即 cᵢⱼ=aᵢⱼ+bᵢⱼ",
       "extras": {
         "说明": "不同型的矩阵不能相加"
-      }
+      },
+      "latex": "c_{ij}=a_{ij}+b_{ij}",
+      "image": "knowledgebanks/images/math-linalg-1.png"
     },
     {
       "id": "math-linalg-2",
@@ -24,7 +26,9 @@ const pack: KnowledgePack = {
       "answer": "(AB)ᵢⱼ=Σₖ aᵢₖbₖⱼ：第 i 行点乘第 j 列",
       "extras": {
         "说明": "一般 AB≠BA，不满足交换律"
-      }
+      },
+      "latex": "(AB)_{ij}=\\sum_k a_{ik}b_{kj}",
+      "image": "knowledgebanks/images/math-linalg-2.png"
     },
     {
       "id": "math-linalg-3",
@@ -32,7 +36,9 @@ const pack: KnowledgePack = {
       "answer": "(Aᵀ)ᵢⱼ=aⱼᵢ，行列互换",
       "extras": {
         "说明": "(AB)ᵀ=BᵀAᵀ，顺序要反过来"
-      }
+      },
+      "latex": "(A^{\\mathrm{T}})_{ij}=a_{ji}",
+      "image": "knowledgebanks/images/math-linalg-3.png"
     },
     {
       "id": "math-linalg-4",
@@ -40,7 +46,9 @@ const pack: KnowledgePack = {
       "answer": "I 为对角线全 1 的矩阵；若 AB=BA=I，则 B=A⁻¹",
       "extras": {
         "说明": "只有方阵才谈逆矩阵"
-      }
+      },
+      "latex": "AB=BA=I\\;\\Longrightarrow\\;B=A^{-1}",
+      "image": "knowledgebanks/images/math-linalg-4.png"
     },
     {
       "id": "math-linalg-5",
@@ -48,7 +56,9 @@ const pack: KnowledgePack = {
       "answer": "|a b; c d| = ad-bc",
       "extras": {
         "说明": "主对角线乘积减副对角线乘积"
-      }
+      },
+      "latex": "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}=ad-bc",
+      "image": "knowledgebanks/images/math-linalg-5.png"
     },
     {
       "id": "math-linalg-6",
@@ -80,7 +90,9 @@ const pack: KnowledgePack = {
       "answer": "a·b=|a||b|cosθ=x₁x₂+y₁y₂",
       "extras": {
         "说明": "a·b=0 ⟺ 两向量垂直"
-      }
+      },
+      "latex": "\\vec a\\cdot\\vec b=|\\vec a|\\,|\\vec b|\\cos\\theta=x_1x_2+y_1y_2",
+      "image": "knowledgebanks/images/math-linalg-9.png"
     },
     {
       "id": "math-linalg-10",
@@ -88,7 +100,9 @@ const pack: KnowledgePack = {
       "answer": "|a|=√(x²+y²)，三维再加 z²",
       "extras": {
         "说明": "就是勾股定理"
-      }
+      },
+      "latex": "|\\vec a|=\\sqrt{x^2+y^2}",
+      "image": "knowledgebanks/images/math-linalg-10.png"
     },
     {
       "id": "math-linalg-11",
@@ -96,7 +110,9 @@ const pack: KnowledgePack = {
       "answer": "存在不全为 0 的系数使 k₁a₁+…+kₙaₙ=0 ⟺ 线性相关",
       "extras": {
         "说明": "相关 = 有向量能被其余向量表示出来"
-      }
+      },
+      "latex": "k_1\\vec a_1+\\cdots+k_n\\vec a_n=\\vec 0",
+      "image": "knowledgebanks/images/math-linalg-11.png"
     },
     {
       "id": "math-linalg-12",
@@ -112,7 +128,9 @@ const pack: KnowledgePack = {
       "answer": "Av=λv：变换后方向不变的向量 v 是特征向量，λ 是特征值",
       "extras": {
         "说明": "求法：解特征方程 det(A-λI)=0"
-      }
+      },
+      "latex": "A\\vec v=\\lambda\\vec v",
+      "image": "knowledgebanks/images/math-linalg-13.png"
     },
     {
       "id": "math-linalg-14",
@@ -120,7 +138,9 @@ const pack: KnowledgePack = {
       "answer": "Ax=b；有唯一解 ⟺ r(A)=未知数个数",
       "extras": {
         "说明": "几何上就是直线/平面的交点问题"
-      }
+      },
+      "latex": "A\\vec x=\\vec b",
+      "image": "knowledgebanks/images/math-linalg-14.png"
     }
   ]
 }
