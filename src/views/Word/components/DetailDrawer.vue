@@ -788,6 +788,9 @@ const options = [
     value: 'spark',
     label: '讯飞星火',
   }, {
+    value: 'xftrans',
+    label: '讯飞机器翻译',
+  }, {
     value: 'bing',
     label: '微软网页版(免Key,桌面端)',
   }
@@ -838,6 +841,7 @@ const keyFieldDisabled = (platform: string) => {
 const keyPlaceholders = (platform: string) => {
   if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
   if (platform === 'azure') return { appkey: '必填，订阅 Key', key: '区域，如 eastasia' }
+  if (platform === 'xftrans') return { appkey: '必填，APPID:APIKey（冒号分隔）', key: '必填，APISecret' }
   if (modelEditablePlatforms.includes(platform)) {
     const defaultModel = (AppInfo as Record<string, { appkey: string; key: string }>)[platform]?.key
     const usingBuiltin = !userAppkeyOf(platform)

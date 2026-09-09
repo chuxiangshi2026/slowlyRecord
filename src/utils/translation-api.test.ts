@@ -47,7 +47,7 @@ const PLATFORM_MATRIX = [
   { platform: 'minimax', url: 'https://api.minimaxi.com/v1/chat/completions', model: 'MiniMax-M2.7', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'hunyuan', url: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions', model: 'hunyuan-lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'qiniu', url: 'https://openai.qiniu.com/v1/chat/completions', model: 'deepseek-v3', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
-  { platform: 'spark', url: 'https://spark-api-open.xf-yun.com/v1/chat/completions', model: 'lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
+  { platform: 'spark', url: 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions', model: 'spark-x2.5-1.7b', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
 ] as const
 
 describe('AI 翻译平台调用', () => {
@@ -227,5 +227,63 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
 
     expect(result.success).toBe(true)
     expect(fetchMock).toHaveBeenCalledTimes(1) // 只有翻译请求，复用上一用例缓存的令牌
+  })
+
+  it('spark 模型名为 lite 时走旧的 spark-api-open 端点', async () => {
+    apiKeys.spark = { appkey: 'test-spark-key', key: 'lite' }
+    mockChatResponse(JSON.stringify([{ query: 'hello-spark-lite', translation: '你好' }]))
+
+    const result = await translateWithPlatform('hello-spark-lite', 'spark' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(lastRequest().url).toBe('https://spark-api-open.xf-yun.com/v1/chat/completions')
+    expect(lastRequest().body.model).toBe('lite')
+  })
+
+  it('xftrans 讯飞机器翻译签名结构与请求体正确', async () => {
+    apiKeys.xftrans = { appkey: 'myappid:myapikey', key: 'myapisecret' }
+    // 讯飞响应：payload.result.text 是 JSON 的 base64
+    const inner = btoa(unescape(encodeURIComponent(JSON.stringify({
+      trans_result: { dst: '你好世界', src: 'hello world' }, from: 'en', to: 'zh'
+    }))))
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      header: { code: 0, message: 'success', sid: 'test' },
+      payload: { result: { seq: '0', status: '3', text: inner } }
+    }), { status: 200 }))
+
+    const result = await translateWithPlatform('hello-xftrans world', 'xftrans' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(result.explains).toBe('你好世界')
+
+    const [url, init] = fetchMock.mock.lastCall!
+    const u = new URL(url)
+    expect(u.origin + u.pathname).toBe('https://itrans.xf-yun.com/v1/its')
+    expect(u.searchParams.get('host')).toBe('itrans.xf-yun.com')
+    const date = u.searchParams.get('date')!
+    expect(date).toContain('GMT')
+
+    // 用同样的 APISecret 重新计算签名，验证 authorization 中的签名一致
+    const CryptoJS = (await import('crypto-js')).default
+    const signatureOrigin = `host: itrans.xf-yun.com\ndate: ${date}\nPOST /v1/its HTTP/1.1`
+    const expectedSig = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(signatureOrigin, 'myapisecret'))
+    const authOrigin = atob(u.searchParams.get('authorization')!)
+    expect(authOrigin).toContain('api_key="myapikey"')
+    expect(authOrigin).toContain(`signature="${expectedSig}"`)
+
+    // 请求体：appid、英译中、base64 文本
+    const body = JSON.parse(init.body as string)
+    expect(body.header.app_id).toBe('myappid')
+    expect(body.parameter.its.from).toBe('en') // 不含中文时 auto 推断为英文
+    expect(body.parameter.its.to).toBe('zh')
+    expect(atob(body.payload.input_data.text)).toBe('hello-xftrans world')
+  })
+
+  it('xftrans 缺凭证时直接返回提示，不发请求', async () => {
+    apiKeys.xftrans = { appkey: 'onlyappid', key: '' }
+    const result = await translateWithPlatform('hello-xftrans-nokey', 'xftrans' as any, 'auto', 'zh')
+    expect(result.success).toBe(false)
+    expect(result.errorMsg).toContain('讯飞机器翻译')
+    expect(fetchMock).not.toHaveBeenCalled()
   })
 })

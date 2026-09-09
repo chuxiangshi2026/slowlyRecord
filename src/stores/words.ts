@@ -136,6 +136,7 @@ export const useWordsStore =
                 google: {appkey: '', key: ''},
                 spark: {appkey: '', key: ''},
                 bing: {appkey: '', key: ''},
+                xftrans: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref({

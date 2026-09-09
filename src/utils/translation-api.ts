@@ -820,7 +820,12 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
         return requestOpenAiCompatibleBatch('https://openai.qiniu.com/v1/chat/completions', apiKey, modelName || 'deepseek-v3', queries, platform, from, to);
     }
     if (platform === 'spark') {
-        return requestOpenAiCompatibleBatch('https://spark-api-open.xf-yun.com/v1/chat/completions', apiKey, modelName || 'lite', queries, platform, from, to);
+        // lite 走旧的 spark-api-open 端点；MaaS 平台的模型（默认 spark-x2.5-1.7b）走 maas-api v2
+        const sparkModel = modelName || 'spark-x2.5-1.7b';
+        const sparkUrl = sparkModel === 'lite'
+            ? 'https://spark-api-open.xf-yun.com/v1/chat/completions'
+            : 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions';
+        return requestOpenAiCompatibleBatch(sparkUrl, apiKey, sparkModel, queries, platform, from, to);
     }
     throw new Error(`Unsupported AI batch platform: ${platform}`);
 }
@@ -1022,6 +1027,86 @@ async function callBingFree(query: string, from: string, to: string): Promise<Tr
         return { success: false, errorMsg: '微软网页接口未返回译文' };
     }
     return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+}
+
+// 讯飞机器翻译（ITS）语种代码基本与应用内部一致
+const XFTRANS_LANG_MAP: Record<string, string> = { zh: 'zh', en: 'en', ja: 'ja', ru: 'ru', es: 'es', fr: 'fr' };
+
+/**
+ * 生成讯飞 ITS 接口鉴权参数（HMAC-SHA256 签名）
+ * 签名原文：host/date/request-line 三行拼接，APISecret 为密钥
+ */
+function buildXftransAuth(apiKey: string, apiSecret: string): { authorization: string; date: string } {
+    const host = 'itrans.xf-yun.com';
+    const date = new Date().toUTCString(); // RFC1123 GMT 格式
+    const signatureOrigin = `host: ${host}\ndate: ${date}\nPOST /v1/its HTTP/1.1`;
+    const signature = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(signatureOrigin, apiSecret));
+    const authorizationOrigin = `api_key="${apiKey}", algorithm="hmac-sha256", headers="host date request-line", signature="${signature}"`;
+    return { authorization: btoa(authorizationOrigin), date };
+}
+
+/**
+ * UTF-8 安全的 base64 编码（讯飞 ITS 要求文本 base64 传输）
+ */
+function base64EncodeUtf8(text: string): string {
+    const bytes = new TextEncoder().encode(text);
+    let binary = '';
+    for (const b of bytes) binary += String.fromCharCode(b);
+    return btoa(binary);
+}
+
+/**
+ * UTF-8 安全的 base64 解码（atob 只按 Latin-1 解，直接解中文会乱码）
+ */
+function base64DecodeUtf8(b64: string): string {
+    const binary = atob(b64);
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+}
+
+/**
+ * 讯飞机器翻译（传统 ITS 接口）
+ * 凭证三个：appkey 字段填 APPID:APIKey（冒号分隔），key 字段填 APISecret
+ */
+async function callXftrans(query: string, from: string, to: string): Promise<TranslationResult> {
+    const {appkey, key: apiSecret} = getTranslationApiKey('xftrans');
+    const sep = appkey.indexOf(':');
+    const appId = sep > 0 ? appkey.slice(0, sep).trim() : '';
+    const apiKey = sep > 0 ? appkey.slice(sep + 1).trim() : '';
+    if (!appId || !apiKey || !apiSecret) {
+        return { success: false, errorMsg: '请先在设置中配置讯飞机器翻译密钥（AppKey 填 APPID:APIKey，SecretKey 填 APISecret）' };
+    }
+    // ITS 不支持 auto：按是否含中文推断源语种
+    const fromLang = from === 'auto' ? (/[一-龥]/.test(query) ? 'zh' : 'en') : (XFTRANS_LANG_MAP[from] || from);
+    const toLang = XFTRANS_LANG_MAP[to] || to;
+    const { authorization, date } = buildXftransAuth(apiKey, apiSecret);
+    const url = `https://itrans.xf-yun.com/v1/its?host=itrans.xf-yun.com&date=${encodeURIComponent(date)}&authorization=${encodeURIComponent(authorization)}`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            header: { app_id: appId, status: 3 },
+            parameter: { its: { from: fromLang, to: toLang, result: {} } },
+            payload: { input_data: { status: 3, text: base64EncodeUtf8(query) } },
+        }),
+    });
+    if (!response.ok) {
+        return { success: false, errorMsg: `讯飞机器翻译请求失败: ${response.status}` };
+    }
+    const data = await response.json();
+    if (data.header?.code !== 0) {
+        return { success: false, errorMsg: `讯飞机器翻译错误 ${data.header?.code}: ${data.header?.message || '未知错误'}` };
+    }
+    try {
+        const textJson = JSON.parse(base64DecodeUtf8(data.payload?.result?.text || ''));
+        const dst = textJson.trans_result?.dst || '';
+        if (!dst) {
+            return { success: false, errorMsg: '讯飞机器翻译未返回译文' };
+        }
+        return { success: true, explains: dst, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+    } catch {
+        return { success: false, errorMsg: '讯飞机器翻译响应解析失败' };
+    }
 }
 
 /**
@@ -1277,6 +1362,13 @@ export async function translateWithPlatform(
                     console.log('调用微软网页免费接口')
                     {
                         const r = await callBingFree(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'xftrans':
+                    console.log('调用讯飞机器翻译')
+                    {
+                        const r = await callXftrans(query, from, to);
                         setCachedTranslation(query, platform, from, to, r);
                         return r;
                     }

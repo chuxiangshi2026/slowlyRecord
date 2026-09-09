@@ -296,6 +296,7 @@ const targetLanguageOptions = computed(() =>
 const platformOptions = [
   { label: '智谱 GLM', value: 'glm' },
   { label: '讯飞星火', value: 'spark' },
+  { label: '讯飞机器翻译', value: 'xftrans' },
   { label: '七牛AI', value: 'qiniu' },
   { label: 'DeepSeek', value: 'deepseek' },
   { label: '通义千问', value: 'qwen' },

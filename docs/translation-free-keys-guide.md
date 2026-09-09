@@ -21,11 +21,17 @@
 - 申请：注册 <https://open.bigmodel.cn> → 用户中心 → API keys → 新建
 - 设置页填到「智谱GLM」的 API Key
 
-### 讯飞星火 Spark Lite
+### 讯飞星火（大模型，MaaS 平台）
 
-- 免费模型：`lite`（官方 2024-05 宣布**永久免费**；⚠️ 但 2026 年起多方资料显示新注册用户改为「200 万 tokens / 30 天」限时体验额度，政策可能已收紧，**申请后请先在控制台确认当前免费政策再决定是否依赖**）
-- 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → 创建应用 → 领取 Spark Lite 的 APIPassword
-- 设置页填到「讯飞星火」的 API Key
+- 免费模型：`spark-x2.5-1.7b`（MaaS 平台免费模型，OpenAI 兼容端点 `maas-api.cn-huabei-1.xf-yun.com/v2`）
+- 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → MaaS 平台领取免费模型 → 创建 API Key
+- 设置页填到「讯飞星火」的 API Key；模型名留空默认 `spark-x2.5-1.7b`，填 `lite` 则走旧的 spark-api-open 端点（Lite 官方 2024 年宣布永久免费，但 2026 年起新用户疑似改为限时体验额度）
+
+### 讯飞机器翻译（传统 ITS 接口）
+
+- 传统神经网络翻译，响应快、术语一致性好；新用户送限时免费包（注意：免费额度通常有时间限制，非永久）
+- 申请：<https://www.xfyun.cn/services/xftrans_new> 开通后获取 APPID / APIKey / APISecret 三个凭证
+- 设置页填到「讯飞机器翻译」：AppKey 填 `APPID:APIKey`（冒号分隔），SecretKey 填 `APISecret`
 
 ### 腾讯混元 hunyuan-lite（已暂停展示）
 
