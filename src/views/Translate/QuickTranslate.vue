@@ -292,9 +292,11 @@ const targetLanguageOptions = computed(() =>
   languageOptions.filter(lang => lang.value !== 'auto')
 );
 
-// 翻译平台选项
+// 翻译平台选项（hunyuan 因旧平台 2026-09-30 停服暂不展示）
 const platformOptions = [
   { label: '智谱 GLM', value: 'glm' },
+  { label: '讯飞星火', value: 'spark' },
+  { label: '七牛AI', value: 'qiniu' },
   { label: 'DeepSeek', value: 'deepseek' },
   { label: '通义千问', value: 'qwen' },
   { label: 'Kimi', value: 'kimi' },
@@ -303,6 +305,10 @@ const platformOptions = [
   { label: '有道翻译', value: 'youdao' },
   { label: '百度翻译', value: 'baidu' },
   { label: '阿里翻译', value: 'ali' },
+  { label: 'DeepL', value: 'deepl' },
+  { label: '微软翻译', value: 'azure' },
+  { label: 'Google(免Key)', value: 'google' },
+  { label: '微软网页版(免Key)', value: 'bing' },
   { label: 'uTools AI', value: 'utoolsai' },
   { label: 'Ollama', value: 'ollama' },
   { label: '本地词典', value: 'local' },

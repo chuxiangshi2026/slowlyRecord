@@ -27,11 +27,10 @@
 - 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → 创建应用 → 领取 Spark Lite 的 APIPassword
 - 设置页填到「讯飞星火」的 API Key
 
-### 腾讯混元 hunyuan-lite
+### 腾讯混元 hunyuan-lite（已暂停展示）
 
 - 免费模型：`hunyuan-lite`（官方宣称永久免费不限量）
-- ⚠️ 注意：腾讯原混元平台将于 2026-09-30 停服并迁移至 TokenHub，届时接入地址/模型名可能变化，请留意官方公告
-- 申请：<https://console.cloud.tencent.com/hunyuan>
+- ⚠️ 腾讯原混元平台将于 2026-09-30 停服并迁移至 TokenHub，新平台暂无明确免费政策，**设置页已暂不展示该引擎**，待新平台政策明朗后再恢复
 
 ### MiniMax
 
