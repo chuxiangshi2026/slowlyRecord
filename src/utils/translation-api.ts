@@ -820,8 +820,8 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
         return requestOpenAiCompatibleBatch('https://openai.qiniu.com/v1/chat/completions', apiKey, modelName || 'deepseek-v3', queries, platform, from, to);
     }
     if (platform === 'spark') {
-        // lite 走旧的 spark-api-open 端点；MaaS 平台的模型（默认 spark-x2.5-1.7b）走 maas-api v2
-        const sparkModel = modelName || 'spark-x2.5-1.7b';
+        // lite 走旧的 spark-api-open 端点；MaaS 平台的模型（默认取服务卡片 modelId，如 xspark13b6k）走 maas-api v2
+        const sparkModel = modelName || 'xspark13b6k';
         const sparkUrl = sparkModel === 'lite'
             ? 'https://spark-api-open.xf-yun.com/v1/chat/completions'
             : 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions';

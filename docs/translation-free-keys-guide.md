@@ -23,9 +23,9 @@
 
 ### 讯飞星火（大模型，MaaS 平台）
 
-- 免费模型：`spark-x2.5-1.7b`（MaaS 平台免费模型，OpenAI 兼容端点 `maas-api.cn-huabei-1.xf-yun.com/v2`）
-- 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → MaaS 平台领取免费模型 → 创建 API Key
-- 设置页填到「讯飞星火」的 API Key；模型名留空默认 `spark-x2.5-1.7b`，填 `lite` 则走旧的 spark-api-open 端点（Lite 官方 2024 年宣布永久免费，但 2026 年起新用户疑似改为限时体验额度）
+- 免费服务卡片：星火 MaaS 平台的免费模型（如 Spark X2.5），OpenAI 兼容端点 `maas-api.cn-huabei-1.xf-yun.com/v2`
+- 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → MaaS 平台领取免费服务 → 创建 API Key
+- 设置页填到「讯飞星火」的 API Key；模型名留空默认 `xspark13b6k`。注意 MaaS 的模型名以**服务卡片上的 modelId** 为准（形如 `xspark13b6k`，不是 `spark-x2.5-1.7b` 这类友好名），更换服务时复制卡片上的 modelId；填 `lite` 则走旧的 spark-api-open 端点（Lite 官方 2024 年宣布永久免费，但 2026 年起新用户疑似改为限时体验额度）
 
 ### 讯飞机器翻译（传统 ITS 接口）
 

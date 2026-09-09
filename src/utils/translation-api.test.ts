@@ -47,7 +47,7 @@ const PLATFORM_MATRIX = [
   { platform: 'minimax', url: 'https://api.minimaxi.com/v1/chat/completions', model: 'MiniMax-M2.7', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'hunyuan', url: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions', model: 'hunyuan-lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'qiniu', url: 'https://openai.qiniu.com/v1/chat/completions', model: 'deepseek-v3', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
-  { platform: 'spark', url: 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions', model: 'spark-x2.5-1.7b', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
+  { platform: 'spark', url: 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions', model: 'xspark13b6k', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
 ] as const
 
 describe('AI 翻译平台调用', () => {
