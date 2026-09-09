@@ -539,7 +539,7 @@ describe('useNumberMemoryStore', () => {
       })
 
       it('markEntryWrong 条目降级', async () => {
-        const entry: NumberMemoryEntry = { _id: 'entry_1', type: 'number_memory_entry', title: 't', numbers: '123', level: 5, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
+        const entry: NumberMemoryEntry = { _id: 'entry_1', type: 'number_memory_entry', title: 't', numbers: '123', level: 9, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
         vi.mocked(getAllEntries).mockReturnValue([entry])
         vi.mocked(updateEntry).mockResolvedValueOnce({ ok: true, id: 'entry_1' })
 
@@ -548,7 +548,7 @@ describe('useNumberMemoryStore', () => {
         const result = await store.markEntryWrong('entry_1')
 
         expect(result.ok).toBe(true)
-        expect(store.entries[0].level).toBe(4)
+        expect(store.entries[0].level).toBe(5)
       })
 
       it('getEntryLevelById 返回条目等级', () => {
@@ -769,7 +769,7 @@ describe('useNumberMemoryStore', () => {
       expect(store.entries[0].learnDate).toBeGreaterThanOrEqual(entry.learnDate)
     })
 
-    it('markEntryWrong 12 级答错重置回 1 级', async () => {
+    it('markEntryWrong 12 级答错降为 8 级（降级幅度封顶 -4）', async () => {
       const entry: NumberMemoryEntry = { _id: 'e2', type: 'number_memory_entry', title: 't', numbers: '123', level: 12, tags: [], createdAt: 1, updatedAt: 1, reviewCount: 0 }
       vi.mocked(getAllEntries).mockReturnValue([entry])
       vi.mocked(updateEntry).mockResolvedValueOnce({ ok: true, id: 'e2' })
@@ -779,7 +779,7 @@ describe('useNumberMemoryStore', () => {
       const result = await store.markEntryWrong('e2')
 
       expect(result.ok).toBe(true)
-      expect(store.entries[0].level).toBe(1)
+      expect(store.entries[0].level).toBe(8)
     })
 
     it('saveResult 支持 randomSequence 模式（按轮统计）', async () => {

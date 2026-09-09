@@ -137,15 +137,17 @@ describe('srs', () => {
   });
 
   describe('computeLevelDown', () => {
-    it('满级重置为 1', () => {
-      expect(computeLevelDown(MASTERED_LEVEL)).toBe(1);
+    it('满级答错降 4 级（12 → 8）', () => {
+      expect(computeLevelDown(MASTERED_LEVEL)).toBe(8);
     });
 
-    it('普通等级 -1', () => {
-      expect(computeLevelDown(5)).toBe(4);
+    it('降级幅度封顶 -4', () => {
+      expect(computeLevelDown(9)).toBe(5);
+      expect(computeLevelDown(6)).toBe(2);
     });
 
     it('下限 1', () => {
+      expect(computeLevelDown(3)).toBe(1);
       expect(computeLevelDown(1)).toBe(1);
       expect(computeLevelDown(0)).toBe(1);
     });

@@ -6,7 +6,7 @@
  * - 升级窗口：开始时间 = learnDate + DEFAULT_INTERVALS[level]
  *              结束时间 = learnDate + DEFAULT_INTERVALS[min(level+3, len-1)]
  * - 记忆牢固度：'较强' +2，'极强' +3，其余 +1，封顶 12
- * - 降级：≥12 重置为 1，否则 -1，下限 1
+ * - 降级：每次 -4，下限 1（12 级答错降到 8 级，不再重置回 1）
  */
 import {DEFAULT_INTERVALS} from '@/constants';
 import type {MemoryFirmnessType} from '@/types/words';
@@ -102,9 +102,8 @@ export function computeLevelUp(level: number, firmness: MemoryFirmnessType | str
 
 /**
  * 计算降级后的等级
- * ≥12 重置为 1，否则 -1，下限 1
+ * 降级幅度封顶 -4，下限 1：12 级答错降到 8 级，低等级行为不变
  */
 export function computeLevelDown(level: number): number {
-    if (level >= MASTERED_LEVEL) return 1;
-    return Math.max(level - 1, 1);
+    return Math.max(level - 4, 1);
 }

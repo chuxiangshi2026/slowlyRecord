@@ -88,6 +88,9 @@
           </div>
         </div>
 
+        <!-- 判错标红提示（前两次不降级） -->
+        <div v-if="errorTip" class="error-tip">{{ errorTip }}</div>
+
         <!-- 错误提示 -->
         <div v-if="canShowHint" class="hint-area">
           <el-alert
@@ -320,6 +323,7 @@ import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/pho
 import { fetchWordBank, WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
 import { DEFAULT_INTERVALS } from '@/constants';
+import { computeLevelDown } from '@/utils/srs';
 import DetailDrawer from '@/views/Word/components/DetailDrawer.vue';
 import WordFilter from '@/views/Word/components/WordFilter.vue';
 import type { FilterState } from '@/views/Word/components/WordFilter.vue';
@@ -564,7 +568,9 @@ const currentIndex = ref(0);
 const userInput = ref<string[]>([]);
 const rawInput = ref('');
 const isShaking = ref(false);
-const errorCountMap = ref<Record<number, number>>({});
+// 错误计数以单词 _id/text 为键，避免列表刷新后 currentIndex 漂移导致计数串位
+const errorCountMap = ref<Record<string, number>>({});
+const errorTip = ref('');
 const showHint = ref(false);
 const hintType = ref<'none' | 'letter' | 'full'>('none');
 const flashingSlotIndex = ref<number>(-1);
@@ -590,13 +596,19 @@ watch(currentWord, (word) => {
   if (word) ensurePhonetic(word);
 });
 
+// 取单词的错误计数键（优先 _id，兜底 text）
+function getWordErrorKey(word: Word): string {
+  return word._id || word.text;
+}
+
 const getCurrentErrorCount = computed(() => {
-  return errorCountMap.value[currentIndex.value] || 0;
+  const word = currentWord.value;
+  if (!word) return 0;
+  return errorCountMap.value[getWordErrorKey(word)] || 0;
 });
 
 const canShowHint = computed(() => {
-  const count = errorCountMap.value[currentIndex.value] || 0;
-  return count >= MAX_ERRORS_BEFORE_HINT;
+  return getCurrentErrorCount.value >= MAX_ERRORS_BEFORE_HINT;
 });
 
 // ========== 词库加载 ==========
@@ -1039,6 +1051,7 @@ function prepareWord() {
   userInput.value = [];
   rawInput.value = '';
   isShaking.value = false;
+  errorTip.value = '';
   partialSlots.value = [];
   hintType.value = 'none';
   showHint.value = false;
@@ -1189,25 +1202,14 @@ async function checkAnswer() {
     await wordsStore.upReview();
 
     // 清除该单词的错误记录
-    delete errorCountMap.value[currentIndex.value];
+    delete errorCountMap.value[getWordErrorKey(word)];
     refreshWordList();
     nextWord();
   } else {
-    // 错误：触发忘记（与主列表统一：12 级忘记直接重置回 1 级，其余降级）
-    if ((word.level || 1) >= 12) {
-      word.level = 1 as Word['level'];
-    } else {
-      word.level = Math.max(1, (word.level || 1) - 1) as Word['level'];
-    }
-    word.remember = false;
-    word.isReview = true;
-
-    await wordsStore.addAndUpdateWord(word);
-    await wordsStore.upReview();
-
-    // 记录错误次数
-    errorCountMap.value[currentIndex.value] = (errorCountMap.value[currentIndex.value] || 0) + 1;
-    refreshWordList();
+    // 记录错误次数（以单词为键，避免列表刷新后 currentIndex 漂移）
+    const key = getWordErrorKey(word);
+    const errorCount = (errorCountMap.value[key] || 0) + 1;
+    errorCountMap.value[key] = errorCount;
 
     // 晃动提示
     isShaking.value = true;
@@ -1215,8 +1217,39 @@ async function checkAnswer() {
       isShaking.value = false;
     }, 500);
 
+    // 清空输入，方便用户直接重输
+    rawInput.value = '';
+    userInput.value = [];
+    if (displayMode.value === 'partial') {
+      partialSlots.value.forEach(slot => {
+        if (!slot.fixed) slot.value = '';
+      });
+      nextTick(() => {
+        const firstEmpty = partialSlots.value.findIndex(s => !s.fixed);
+        if (firstEmpty >= 0) slotRefs.value[firstEmpty]?.focus();
+      });
+    }
+
+    if (errorCount < MAX_ERRORS_BEFORE_HINT) {
+      // 前两次判错不降级，仅标红提示
+      errorTip.value = '拼写错误，再试一次';
+      return;
+    }
+
+    // 第 3 次起判错才执行降级（降级幅度封顶 -4，与 SRS 统一）
+    const level = Number(word.level) || 1;
+    const newLevel = computeLevelDown(level);
+    word.level = newLevel as Word['level'];
+    word.remember = false;
+    word.isReview = true;
+    errorTip.value = `答错 ${MAX_ERRORS_BEFORE_HINT} 次，记忆等级 -${level - newLevel}`;
+
+    await wordsStore.addAndUpdateWord(word);
+    await wordsStore.upReview();
+    refreshWordList();
+
     // 如果错误次数达到阈值，自动显示完整提示
-    if (errorCountMap.value[currentIndex.value] >= MAX_ERRORS_BEFORE_HINT + 2) {
+    if (errorCount >= MAX_ERRORS_BEFORE_HINT + 2) {
       hintType.value = 'full';
       showHint.value = true;
     }
@@ -1230,11 +1263,7 @@ async function handleForget() {
   const word = currentWord.value;
   if (!word) return;
 
-  if ((word.level || 1) >= 12) {
-    word.level = 1 as Word['level'];
-  } else {
-    word.level = Math.max(1, (word.level || 1) - 1) as Word['level'];
-  }
+  word.level = computeLevelDown(Number(word.level) || 1) as Word['level'];
   word.remember = false;
   word.isReview = true;
 
@@ -1714,6 +1743,13 @@ function handleDictationKeydown(e: KeyboardEvent) {
     display: flex;
     justify-content: center;
     gap: 12px;
+  }
+
+  .error-tip {
+    margin: -16px 0 24px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--utools-danger);
   }
 
   .hint-area {

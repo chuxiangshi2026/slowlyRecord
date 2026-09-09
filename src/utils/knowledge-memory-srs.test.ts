@@ -143,10 +143,10 @@ describe('knowledge-memory-srs', () => {
 
   describe('markWrong', () => {
     it('普通等级降级并增加错误次数', () => {
-      const progress = makeProgress({level: 5, wrong: 1})
+      const progress = makeProgress({level: 9, wrong: 1})
       const now = Date.now()
       const result = markWrong(progress, now)
-      expect(result.level).toBe(4)
+      expect(result.level).toBe(5)
       expect(result.learnDate).toBe(now)
       expect(result.wrong).toBe(2)
     })
@@ -156,11 +156,11 @@ describe('knowledge-memory-srs', () => {
       expect(result.level).toBe(1)
     })
 
-    it('12 级答错重置为 1 级', () => {
+    it('12 级答错降为 8 级（降级幅度封顶 -4）', () => {
       const progress = makeProgress({level: MASTERED_LEVEL})
       const now = Date.now()
       const result = markWrong(progress, now)
-      expect(result.level).toBe(1)
+      expect(result.level).toBe(8)
       expect(result.learnDate).toBe(now)
     })
   })

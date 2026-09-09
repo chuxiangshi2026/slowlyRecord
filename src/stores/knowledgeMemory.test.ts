@@ -211,10 +211,10 @@ describe('useKnowledgeMemoryStore', () => {
     it('答错应降级并持久化', async () => {
       const store = useKnowledgeMemoryStore()
       await store.loadPack('test-pack')
-      // 先设置为 5 级
-      store.progress['test-pack'].items['item-a'] = {itemId: 'item-a', level: 5, learnDate: 0, correct: 0, wrong: 0}
+      // 先设置为 9 级
+      store.progress['test-pack'].items['item-a'] = {itemId: 'item-a', level: 9, learnDate: 0, correct: 0, wrong: 0}
       const result = await store.markItem('test-pack', 'item-a', false)
-      expect(result.progress.level).toBe(4)
+      expect(result.progress.level).toBe(5)
       expect(result.progress.wrong).toBe(1)
     })
 

@@ -78,14 +78,14 @@ describe('memory-palace-srs', () => {
 
   it('自评忘记降级', () => {
     const now = Date.now();
-    const updated = markForgotten(makePeg(5, now - 1000), now);
-    expect(updated.level).toBe(4);
+    const updated = markForgotten(makePeg(9, now - 1000), now);
+    expect(updated.level).toBe(5);
     expect(updated.learnDate).toBe(now);
   });
 
-  it('12 级忘记直接重置为 1 级', () => {
+  it('12 级忘记降为 8 级（降级幅度封顶 -4）', () => {
     const updated = markForgotten(makePeg(12, Date.now() - 1000));
-    expect(updated.level).toBe(1);
+    expect(updated.level).toBe(8);
   });
 
   it('0 级忘记按统一下限升为 1 级', () => {
