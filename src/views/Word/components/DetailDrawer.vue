@@ -842,6 +842,7 @@ const keyPlaceholders = (platform: string) => {
   if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
   if (platform === 'azure') return { appkey: '必填，订阅 Key', key: '区域，如 eastasia' }
   if (platform === 'xftrans') return { appkey: '必填，APPID:APIKey（冒号分隔）', key: '必填，APISecret' }
+  if (platform === 'spark') return { appkey: 'MaaS 平台填 ak- 开头的 APIKey；旧平台填 APIPassword', key: 'MaaS 必填服务卡片 modelId；旧平台留空默认 lite' }
   if (modelEditablePlatforms.includes(platform)) {
     const defaultModel = (AppInfo as Record<string, { appkey: string; key: string }>)[platform]?.key
     const usingBuiltin = !userAppkeyOf(platform)

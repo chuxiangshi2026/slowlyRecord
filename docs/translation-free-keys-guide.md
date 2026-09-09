@@ -21,12 +21,15 @@
 - 申请：注册 <https://open.bigmodel.cn> → 用户中心 → API keys → 新建
 - 设置页填到「智谱GLM」的 API Key
 
-### 讯飞星火（大模型，MaaS 平台）
+### 讯飞星火（新旧两个平台，按 key 格式自动路由）
 
-- 免费服务卡片：星火 MaaS 平台的免费模型（如 Spark X2.5），OpenAI 兼容端点 `maas-api.cn-huabei-1.xf-yun.com/v2`
-- 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → MaaS 平台领取免费服务 → 创建 API Key
-- 设置页填到「讯飞星火」的 API Key；模型名留空默认 `xspark13b6k`。注意 MaaS 的模型名以**服务卡片上的 modelId** 为准（形如 `xspark13b6k`，不是 `spark-x2.5-1.7b` 这类友好名），更换服务时复制卡片上的 modelId
-- 填 `lite` 则走旧的 spark-api-open 端点（Lite 官方宣布免费）。注意新旧平台凭证不通用：`lite` 模式下 API Key 必须填**旧平台的 APIPassword**（控制台 <https://console.xfyun.cn/services/cbm> 对应 Lite 版本页面获取），填 MaaS 的 `ak-` key 会鉴权失败
+- **旧平台 spark-api-open（内置默认）**：Lite 官方宣布永久免费，模型名还可选 `generalv3` / `pro-128k` / `generalv3.5` / `max-32k` / `4.0Ultra`（其他版本为付费）。不填 key 时使用内置共享 key + `lite` 开箱即用
+  - 申请自己的：产品页 <https://xinghuo.xfyun.cn/sparkapi> 领取 Lite 免费额度 → 控制台 <https://console.xfyun.cn/services/cbm> 对应版本页面获取 **APIPassword**
+  - 设置页：AppKey 填 APIPassword，模型名留空默认 `lite`
+- **MaaS 星辰平台（新平台）**：免费与否以服务卡片为准（价格见 <https://training.xfyun.cn/account>），OpenAI 兼容端点 `maas-api.cn-huabei-1.xf-yun.com/v2`
+  - 申请：<https://console.xfyun.cn> 实名认证 → MaaS 平台领取服务 → 创建 API Key（`ak-` 开头）
+  - 设置页：AppKey 填 `ak-` 开头的 APIKey，**模型名必填服务卡片上的 modelId**（形如 `xspark13b6k`，是领取服务时按账号生成的，不是友好名，也不是全局通用值）
+- 代码按 AppKey 格式自动路由：`ak-` 开头 → MaaS；其余 → 旧平台
 
 ### 讯飞机器翻译（传统 ITS 接口）
 

@@ -47,7 +47,7 @@ const PLATFORM_MATRIX = [
   { platform: 'minimax', url: 'https://api.minimaxi.com/v1/chat/completions', model: 'MiniMax-M2.7', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'hunyuan', url: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions', model: 'hunyuan-lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'qiniu', url: 'https://openai.qiniu.com/v1/chat/completions', model: 'deepseek-v3', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
-  { platform: 'spark', url: 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions', model: 'xspark13b6k', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
+  { platform: 'spark', url: 'https://spark-api-open.xf-yun.com/v1/chat/completions', model: 'lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
 ] as const
 
 describe('AI 翻译平台调用', () => {
@@ -238,6 +238,26 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
     expect(result.success).toBe(true)
     expect(lastRequest().url).toBe('https://spark-api-open.xf-yun.com/v1/chat/completions')
     expect(lastRequest().body.model).toBe('lite')
+  })
+
+  it('spark 的 ak- 开头 key 走 MaaS v2 端点并使用用户 modelId', async () => {
+    apiKeys.spark = { appkey: 'ak-test123', key: 'xspark13b6k' }
+    mockChatResponse(JSON.stringify([{ query: 'hello-spark-maas', translation: '你好' }]))
+
+    const result = await translateWithPlatform('hello-spark-maas', 'spark' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(lastRequest().url).toBe('https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions')
+    expect(lastRequest().body.model).toBe('xspark13b6k')
+  })
+
+  it('spark 的 ak- key 模型名留空（回退 lite）时给出明确报错', async () => {
+    apiKeys.spark = { appkey: 'ak-test123', key: '' }
+
+    const result = await translateWithPlatform('hello-spark-no-model', 'spark' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(false)
+    expect(fetchMock).not.toHaveBeenCalled()
   })
 
   it('xftrans 讯飞机器翻译签名结构与请求体正确', async () => {

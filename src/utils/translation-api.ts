@@ -820,12 +820,16 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
         return requestOpenAiCompatibleBatch('https://openai.qiniu.com/v1/chat/completions', apiKey, modelName || 'deepseek-v3', queries, platform, from, to);
     }
     if (platform === 'spark') {
-        // lite 走旧的 spark-api-open 端点；MaaS 平台的模型（默认取服务卡片 modelId，如 xspark13b6k）走 maas-api v2
-        const sparkModel = modelName || 'xspark13b6k';
-        const sparkUrl = sparkModel === 'lite'
-            ? 'https://spark-api-open.xf-yun.com/v1/chat/completions'
-            : 'https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions';
-        return requestOpenAiCompatibleBatch(sparkUrl, apiKey, sparkModel, queries, platform, from, to);
+        // 按 key 格式区分平台：MaaS 平台的 APIKey 以 ak- 开头；其余视为旧平台（spark-api-open）的 APIPassword
+        if (apiKey.startsWith('ak-')) {
+            // MaaS 的 modelId 是每用户领取服务时生成的，无全局默认；内置默认 lite 是旧平台模型，对 MaaS 无意义
+            if (!modelName || modelName === 'lite') {
+                throw new Error('讯飞星火 MaaS 平台的模型名必填：请填写服务卡片上的 modelId（形如 xspark13b6k）；旧平台 APIPassword 用户请填 lite');
+            }
+            return requestOpenAiCompatibleBatch('https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions', apiKey, modelName, queries, platform, from, to);
+        }
+        // 旧平台：模型名留空默认 lite（免费），也可填 generalv3 / pro-128k / generalv3.5 / max-32k / 4.0Ultra
+        return requestOpenAiCompatibleBatch('https://spark-api-open.xf-yun.com/v1/chat/completions', apiKey, modelName || 'lite', queries, platform, from, to);
     }
     throw new Error(`Unsupported AI batch platform: ${platform}`);
 }
