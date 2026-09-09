@@ -427,7 +427,8 @@
     .focus-container.text-mode .spell-hint,
     .focus-container.text-mode .btn-spell,
     .focus-container.text-mode .btn-edge,
-    .focus-container.text-mode .mode-label {
+    .focus-container.text-mode .mode-label,
+    .focus-container.text-mode .forget-count {
       display: none !important;
     }
 
@@ -814,6 +815,7 @@
     .focus-container.edge-hidden .opacity-bar,
     .focus-container.edge-hidden .counter,
     .focus-container.edge-hidden .mode-label,
+    .focus-container.edge-hidden .forget-count,
     .focus-container.edge-hidden .spell-hint {
       opacity: 0;
       pointer-events: none;
@@ -835,6 +837,7 @@
     .focus-container.edge-preview .opacity-bar,
     .focus-container.edge-preview .counter,
     .focus-container.edge-preview .mode-label,
+    .focus-container.edge-preview .forget-count,
     .focus-container.edge-preview .spell-hint {
       opacity: 1;
       pointer-events: auto;
@@ -888,6 +891,7 @@
     .focus-container.locked .explains,
     .focus-container.locked .counter,
     .focus-container.locked .mode-label,
+    .focus-container.locked .forget-count,
     .focus-container.locked .spell-hint {
       opacity: 1;
     }
@@ -926,6 +930,17 @@
 
     .mode-label.active {
       color: var(--primary-color);
+    }
+
+    /* 今日待复习计数（留存钩子，口径与主窗口 forgetCount 一致） */
+    .forget-count {
+      position: absolute;
+      bottom: 2px;
+      left: 6px;
+      font-size: 10px;
+      color: var(--text-quaternary);
+      transition: color 0.3s ease;
+      user-select: none;
     }
 
     /* 拼写模式提示 */
@@ -1179,6 +1194,7 @@
       <input type="range" class="opacity-slider" id="opacity-slider" min="30" max="100" value="100">
     </div>
     <div class="counter" id="counter">0/0</div>
+    <div class="forget-count" id="forget-count"></div>
     <div class="mode-label" id="mode-label">标准</div>
 
 
@@ -1316,6 +1332,7 @@
     }
     const elExplains = document.getElementById('explains');
     const elCounter = document.getElementById('counter');
+    const elForgetCount = document.getElementById('forget-count');
     const elBtnPrev = document.getElementById('btn-prev');
     const elBtnNext = document.getElementById('btn-next');
     const elBtnToggle = document.getElementById('btn-toggle');
@@ -1358,6 +1375,22 @@
       });
     }
 
+    // 今日待复习计数（口径与主窗口 words.ts forgetCount 一致：当前词库中 isReview 的词条数）
+    var pendingReviewCount = 0;
+    function renderPendingReviewCount() {
+      if (elForgetCount) elForgetCount.textContent = '待复习 ' + pendingReviewCount;
+    }
+    // 加载词库后从全量词条重算（此时已执行 upReview）
+    function refreshPendingReviewCount(allWords) {
+      pendingReviewCount = (allWords || []).filter(function(w) { return w && w.isReview; }).length;
+      renderPendingReviewCount();
+    }
+    // 答题后增量更新：isReview false→true 或 true→false 时调整计数
+    function adjustPendingReviewCount(delta) {
+      pendingReviewCount = Math.max(0, pendingReviewCount + delta);
+      renderPendingReviewCount();
+    }
+
     // 加载数据
     async function loadWords() {
       try {
@@ -1389,6 +1422,9 @@
           // 重新计算 isReview 状态
           upReview(allLoadedWords);
         }
+
+        // 刷新今日待复习计数（与主窗口 forgetCount 同口径）
+        refreshPendingReviewCount(allLoadedWords);
 
         // 应用筛选条件
         words = applyFilters(allLoadedWords);
@@ -1757,6 +1793,7 @@
       var word = words[currentIndex];
       if (!word) return;
 
+      var wasReview = !!word.isReview;
       if (forever) {
         // 永久记住：直接标记为已掌握，不再进入复习
         word.remember = true;
@@ -1767,6 +1804,8 @@
         word.isReview = false;
         if (word.level >= 7) word.remember = true;
       }
+      // 答对一条，待复习计数减一（重载时还会从词库全量重算校准）
+      if (wasReview) adjustPendingReviewCount(-1);
       word.learnDate = Date.now();
 
       // 保存到旧数据库（兼容）
@@ -1813,8 +1852,11 @@
       var word = words[currentIndex];
       if (!word) return;
 
+      var wasReview = !!word.isReview;
       word.level = Math.max(1, (word.level || 1) - 1);
       word.isReview = true;
+      // 原本不在待复习队列（如在"已复习"列表中答错），计数加一
+      if (!wasReview) adjustPendingReviewCount(1);
 
       // 保存到旧数据库（兼容）
       if (typeof utools !== 'undefined') utools.db.put(word);
@@ -2050,8 +2092,10 @@
           // 降级
           var w = words[currentIndex];
           if (w) {
+            var wasReview = !!w.isReview;
             w.level = Math.max(1, (w.level || 1) - 1);
             w.isReview = true;
+            if (!wasReview) adjustPendingReviewCount(1);
             if (typeof utools !== 'undefined') utools.db.put(w);
             if (currentBankId) updateWordInBank(currentBankId, w);
             postWordChanged(w);
