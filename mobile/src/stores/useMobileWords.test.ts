@@ -271,6 +271,82 @@ describe('useMobileWords Store', () => {
       expect(updated?.needsReview).toBe(true)
       expect(updated?.nextReviewTime).toBeLessThanOrEqual(Date.now() + 11 * 60 * 1000)
     })
+
+    it('忘记应降级而非无条件归 1：与桌面端 computeLevelDown 口径一致（≥12 重置 1，否则 -1，下限 1）', async () => {
+      const store = useMobileWords()
+
+      const lv6 = await store.addWord({
+        word: 'downgrade6', meaning: '六级词', addTime: Date.now(), reviewCount: 3,
+        nextReviewTime: Date.now(), level: 6,
+      })
+      const lv12 = await store.addWord({
+        word: 'downgrade12', meaning: '满级词', addTime: Date.now(), reviewCount: 9,
+        nextReviewTime: Date.now(), level: 12, remembered: true,
+      })
+      const lv1 = await store.addWord({
+        word: 'downgrade1', meaning: '一级词', addTime: Date.now(), reviewCount: 0,
+        nextReviewTime: Date.now(), level: 1,
+      })
+
+      await store.markAsForgotten(lv6.id)
+      await store.markAsForgotten(lv12.id)
+      await store.markAsForgotten(lv1.id)
+
+      const w6 = store.words.find(w => w.id === lv6.id)
+      const w12 = store.words.find(w => w.id === lv12.id)
+      const w1 = store.words.find(w => w.id === lv1.id)
+      // 6 级答错降到 5 级，不再归零
+      expect(w6?.level).toBe(5)
+      expect(w6?.remembered).toBe(false)
+      // 满级答错重置回 1 级
+      expect(w12?.level).toBe(1)
+      // 1 级答错保持 1 级，不会掉到 0 以下
+      expect(w1?.level).toBe(1)
+    })
+  })
+
+  describe('computeForgotLevel / snapshotReviewState（撤销判定用纯函数）', () => {
+    it('computeForgotLevel 降级口径正确', async () => {
+      const { computeForgotLevel } = await import('./useMobileWords')
+      expect(computeForgotLevel(12)).toBe(1)
+      expect(computeForgotLevel(13)).toBe(1)
+      expect(computeForgotLevel(6)).toBe(5)
+      expect(computeForgotLevel(1)).toBe(1)
+      expect(computeForgotLevel(0)).toBe(1)
+      expect(computeForgotLevel(undefined as any)).toBe(1)
+    })
+
+    it('snapshotReviewState 应完整抽取判定会改动的字段', async () => {
+      const { snapshotReviewState } = await import('./useMobileWords')
+      const word = {
+        id: 'w1', word: 'apple', meaning: '苹果', addTime: 1, reviewCount: 4,
+        nextReviewTime: 123, needsReview: false, remembered: true, level: 8, lastReviewTime: 456,
+      }
+      expect(snapshotReviewState(word as any)).toEqual({
+        level: 8, reviewCount: 4, lastReviewTime: 456, nextReviewTime: 123,
+        needsReview: false, remembered: true,
+      })
+    })
+
+    it('判定后可用快照恢复原状态（撤销流程）', async () => {
+      const { snapshotReviewState } = await import('./useMobileWords')
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'undo-me', meaning: '撤销', addTime: Date.now(), reviewCount: 4,
+        nextReviewTime: Date.now(), level: 7,
+      })
+      const before = snapshotReviewState(store.words.find(w => w.id === word.id)!)
+
+      await store.markAsForgotten(word.id)
+      expect(store.words.find(w => w.id === word.id)?.level).toBe(6)
+
+      // 撤销：整体写回快照字段
+      await store.updateWord(word.id, { ...before })
+      const restored = store.words.find(w => w.id === word.id)
+      expect(restored?.level).toBe(7)
+      expect(restored?.reviewCount).toBe(4)
+    })
   })
 
   describe('exportWords / importWords', () => {

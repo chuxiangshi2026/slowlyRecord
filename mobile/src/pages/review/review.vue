@@ -6,12 +6,18 @@
       <button v-if="wordsStore.customReviewWords !== null" class="btn-start-review" @click="goToWords">
         返回搜索单词
       </button>
-      <button v-else-if="canStartReview" class="btn-start-review" @click="startReview">
-        开始复习
-      </button>
-      <button v-else class="btn-start-review" @click="goToWords">
-        去添加单词
-      </button>
+      <template v-else>
+        <button v-if="canStartReview" class="btn-start-review" @click="onStartReviewClick">
+          {{ earlyReviewText }}
+        </button>
+        <button v-else class="btn-start-review" @click="goToWords">
+          去添加单词
+        </button>
+        <!-- 次要入口：练拼写不写入 SRS，不污染遗忘曲线 -->
+        <button v-if="wordsStore.words.length > 0" class="btn-secondary" @click="goToDictation">
+          ✏️ 练拼写
+        </button>
+      </template>
     </view>
 
     <view v-else class="review-area">
@@ -121,6 +127,12 @@
       </view>
     </view>
 
+    <!-- 撤销浮动条：最近一次判定可撤销，几秒后自动消失 -->
+    <view v-if="showUndoBar && !showComplete" class="undo-bar" @click="undoLastJudgement">
+      <text class="undo-text">{{ undoLabel }}</text>
+      <text class="undo-btn">撤销</text>
+    </view>
+
     <!-- 完成弹窗 -->
     <view v-if="showComplete" class="complete-overlay">
       <view class="complete-card">
@@ -183,8 +195,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
-import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewState } from '@/stores/useMobileWords'
 import { useSignin } from '@/stores/useSignin'
 import { getTtsAdapter } from '@/adapters/index'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
@@ -197,6 +209,18 @@ const showComplete = ref(false)
 const showDeleteConfirm = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
+
+// 撤销：只保留最近一次的判定快照（字段快照 + 判定类型），配合浮动条撤回
+interface LastJudgement {
+  wordId: string
+  state: WordReviewState
+  label: string
+  stat: 'remember' | 'forget' | 'forever'
+}
+const lastJudgement = ref<LastJudgement | null>(null)
+const showUndoBar = ref(false)
+const undoLabel = ref('')
+let undoTimer: ReturnType<typeof setTimeout> | null = null
 
 // 会话快照：本次复习的单词列表，进入页面时冻结
 // 用快照而不是 store.reviewWords，确保：
@@ -242,6 +266,9 @@ const wrongWordsCount = computed(() => {
 const canGoDictation = computed(() => wordsStore.words.length > 0)
 
 const canStartReview = computed(() => reviewWords.value.length > 0 || wordsStore.words.length > 0)
+
+// 空态主按钮文案：如实说明会把全库未到期的词也纳入本次复习
+const earlyReviewText = computed(() => `提前复习全部 ${wordsStore.words.length} 词`)
 
 const currentWord = computed(() => {
   return sessionWords.value[currentIndex.value]
@@ -408,6 +435,23 @@ function clearSession() {
   } catch {
     // ignore
   }
+}
+
+// 空态按钮：先弹确认说明"会绕过遗忘曲线"，确认后才强制全库待复习
+const onStartReviewClick = () => {
+  uni.showModal({
+    title: '提前复习',
+    content: '这会把还没到复习时间的单词也纳入本次复习，确认继续吗？',
+    confirmText: '开始复习',
+    cancelText: '再想想',
+    success: (res) => {
+      if (res.confirm) startReview()
+    }
+  })
+}
+
+const goToDictation = () => {
+  uni.navigateTo({ url: '/subPackages/pages-tools/dictation/dictation' })
 }
 
 const startReview = () => {
@@ -600,24 +644,51 @@ const resetCard = () => {
 
 // ==================== 操作处理 ====================
 
+/** 判定前记录快照（供撤销），只保留最近一份 */
+const captureJudgement = (word: MobileWord, label: string, stat: LastJudgement['stat']) => {
+  lastJudgement.value = {
+    wordId: word.id,
+    state: snapshotReviewState(word),
+    label,
+    stat
+  }
+}
+
+/** 判定后弹出可撤销浮动条；最后一张牌弹完成弹窗时不出现 */
+const showUndoIfNeeded = () => {
+  if (showComplete.value || !lastJudgement.value) return
+  undoLabel.value = lastJudgement.value.label
+  showUndoBar.value = true
+  if (undoTimer) clearTimeout(undoTimer)
+  undoTimer = setTimeout(() => {
+    showUndoBar.value = false
+    undoTimer = null
+  }, 3500)
+}
+
 const handleRemember = () => {
   if (currentWord.value) {
+    captureJudgement(currentWord.value, '已标记为认识', 'remember')
     wordsStore.markAsRemembered(currentWord.value.id)
     rememberCount.value++
     nextWord()
+    showUndoIfNeeded()
   }
 }
 
 const handleForget = () => {
   if (currentWord.value) {
+    captureJudgement(currentWord.value, '已标记为忘记 · 降级', 'forget')
     wordsStore.markAsForgotten(currentWord.value.id)
     forgetCount.value++
     nextWord()
+    showUndoIfNeeded()
   }
 }
 
 const handleRememberForever = () => {
   if (currentWord.value) {
+    captureJudgement(currentWord.value, '已标记为已记完', 'forever')
     wordsStore.updateWord(currentWord.value.id, {
       remembered: true,
       needsReview: false,
@@ -626,8 +697,35 @@ const handleRememberForever = () => {
     })
     rememberCount.value++
     nextWord()
+    showUndoIfNeeded()
   }
 }
+
+/** 撤销最近一次判定：恢复字段快照、卡片回到被判定位置（正面未答）、统计回退 */
+const undoLastJudgement = () => {
+  const j = lastJudgement.value
+  if (!j) return
+  if (undoTimer) {
+    clearTimeout(undoTimer)
+    undoTimer = null
+  }
+  wordsStore.updateWord(j.wordId, { ...j.state })
+  if (j.stat === 'forget') {
+    forgetCount.value = Math.max(0, forgetCount.value - 1)
+  } else {
+    rememberCount.value = Math.max(0, rememberCount.value - 1)
+  }
+  // nextWord 曾把下标推进一格，回退即插回队列当前位置
+  currentIndex.value = Math.max(0, currentIndex.value - 1)
+  isFlipped.value = false
+  lastJudgement.value = null
+  showUndoBar.value = false
+  persistSession()
+}
+
+onUnmounted(() => {
+  if (undoTimer) clearTimeout(undoTimer)
+})
 
 const nextWord = () => {
   isFlipped.value = false
@@ -1114,5 +1212,44 @@ const goAfterReview = (url: string) => {
 .btn-confirm-delete {
   background: #ff5252;
   color: #fff;
+}
+
+/* 撤销浮动条：底部悬浮，点击整栏撤销 */
+.undo-bar {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 60rpx;
+  background: rgba(51, 51, 51, 0.95);
+  border-radius: 50rpx;
+  padding: 24rpx 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 900;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.35);
+}
+
+.undo-text {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.undo-btn {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #83c5a8;
+  padding: 0 10rpx;
+}
+
+/* 空态次要入口：练拼写不写入 SRS */
+.btn-secondary {
+  margin-top: 24rpx;
+  background: rgba(82, 121, 111, 0.12);
+  color: #52796f;
+  border-radius: 50rpx;
+  height: 84rpx;
+  font-size: 30rpx;
+  border: 2rpx solid #52796f;
 }
 </style>

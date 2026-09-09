@@ -38,6 +38,37 @@ const BANKS_STORAGE_KEY = 'mobile_wordbanks'
 const CURRENT_BANK_KEY = 'mobile_current_bank'
 const IMPORT_PROGRESS_KEY = 'mobile_import_progress'
 
+/**
+ * 答错（忘记）后的降级等级：与桌面端 src/utils/srs.ts 的 computeLevelDown 口径一致
+ * —— 满级（12 级）答错重置回 1 级，否则降 1 级，下限 1 级，不再无条件归零
+ */
+export function computeForgotLevel(level: number): number {
+  if (level >= 12) return 1
+  return Math.max((level || 1) - 1, 1)
+}
+
+/** 判定会改动的复习状态字段，判定前快照、撤销时整体恢复 */
+export interface WordReviewState {
+  level?: number
+  reviewCount: number
+  lastReviewTime?: number
+  nextReviewTime: number
+  needsReview?: boolean
+  remembered?: boolean
+}
+
+/** 抽取单词的复习状态快照（复习页"撤销上一张"用，纯函数便于测试） */
+export function snapshotReviewState(word: MobileWord): WordReviewState {
+  return {
+    level: word.level,
+    reviewCount: word.reviewCount,
+    lastReviewTime: word.lastReviewTime,
+    nextReviewTime: word.nextReviewTime,
+    needsReview: word.needsReview,
+    remembered: word.remembered
+  }
+}
+
 // 默认词库ID
 const DEFAULT_BANK_ID = 'default'
 
@@ -424,9 +455,11 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const word = allWords.value.find(w => w.id === id)
     if (!word) return
 
+    // 忘记只降级（对齐桌面端 computeLevelDown 口径），不再无条件打回 1 级
+    const newLevel = computeForgotLevel(word.level || 1)
     allWords.value = allWords.value.map(w =>
       w.id === id
-        ? { ...w, remembered: false, needsReview: true, level: 1, nextReviewTime: Date.now() + 10 * 60 * 1000 }
+        ? { ...w, remembered: false, needsReview: true, level: newLevel, nextReviewTime: Date.now() + 10 * 60 * 1000 }
         : w
     )
     markBankDirty(word.bankId || DEFAULT_BANK_ID)

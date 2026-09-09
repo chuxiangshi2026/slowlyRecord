@@ -8,13 +8,13 @@
     <!-- 今日任务区：打开即见"今天该学什么"，一步直达 -->
     <view class="today-task">
       <!-- 主任务卡：今日待复习 -->
-      <view class="task-main" :class="{ done: reviewCount === 0 }" @click="goToReview">
+      <view class="task-main" :class="{ done: reviewCount === 0 && !isLibraryEmpty }" @click="goToMainTask">
         <view class="task-main-info">
-          <text class="task-main-title">{{ reviewCount > 0 ? '今日待复习' : '今日已完成' }}</text>
-          <text class="task-main-num">{{ reviewCount > 0 ? reviewCount + ' 词' : '🎉 全部搞定' }}</text>
-          <text class="task-main-hint">{{ reviewCount > 0 ? '点击开始复习 →' : '太棒了，继续保持！' }}</text>
+          <text class="task-main-title">{{ mainTitle }}</text>
+          <text class="task-main-num">{{ mainNum }}</text>
+          <text class="task-main-hint">{{ mainHint }}</text>
         </view>
-        <view v-if="reviewCount > 0" class="task-main-action">开始复习</view>
+        <view v-if="showMainAction" class="task-main-action">{{ mainActionText }}</view>
       </view>
       <!-- 次级任务：文本记忆 / 错题 / 连续打卡 -->
       <view class="task-sub-list">
@@ -83,6 +83,10 @@
           <view class="action-icon memory">🔢</view>
           <text class="action-text">数字记忆</text>
         </view>
+        <view class="action-item" @click="goToAddWord">
+          <view class="action-icon addword">➕</view>
+          <text class="action-text">添加单词</text>
+        </view>
         <view class="action-item" @click="goToAllFeatures">
           <view class="action-icon all">⋯</view>
           <text class="action-text">全部功能</text>
@@ -107,6 +111,27 @@ const reviewCount = ref(0)
 
 // 连续打卡天数来自打卡 store
 const streakDays = computed(() => signinStore.streakDays)
+
+// 词库是否为空：新用户（0 词）与"今日已学完"是两种完全不同的状态，文案必须区分
+const isLibraryEmpty = computed(() => wordsStore.wordCount === 0)
+
+const mainTitle = computed(() => {
+  if (isLibraryEmpty.value) return '开始你的记忆之旅'
+  return reviewCount.value > 0 ? '今日待复习' : '今日已完成'
+})
+
+const mainNum = computed(() => {
+  if (isLibraryEmpty.value) return '词库还是空的'
+  return reviewCount.value > 0 ? reviewCount.value + ' 词' : '🎉 全部搞定'
+})
+
+const mainHint = computed(() => {
+  if (isLibraryEmpty.value) return '先导入一个内置词库，马上开始'
+  return reviewCount.value > 0 ? '点击开始复习 →' : '太棒了，继续保持！'
+})
+
+const mainActionText = computed(() => (isLibraryEmpty.value ? '去选词库' : '开始复习'))
+const showMainAction = computed(() => isLibraryEmpty.value || reviewCount.value > 0)
 
 // 文本记忆篇目数（移动端文本记忆暂无"到期复习"概念，统计全部篇目）
 const textCount = computed(() => textStore.totalArticles)
@@ -155,6 +180,15 @@ const goToReview = () => {
   uni.switchTab({ url: '/pages/review/review' })
 }
 
+// 主任务卡点击：空词库时引导去选词库，否则进入复习
+const goToMainTask = () => {
+  if (isLibraryEmpty.value) {
+    goToWordbank()
+  } else {
+    goToReview()
+  }
+}
+
 const goToDictation = () => {
   uni.navigateTo({ url: '/subPackages/pages-tools/dictation/dictation' })
 }
@@ -173,6 +207,10 @@ const goToWordbank = () => {
 
 const goToNumberMemory = () => {
   uni.navigateTo({ url: '/subPackages/pages-memory/number-memory/number-memory' })
+}
+
+const goToAddWord = () => {
+  uni.navigateTo({ url: '/subPackages/pages-tools/add-word/add-word' })
 }
 
 const goToTextMemory = () => {
@@ -377,6 +415,7 @@ const goToAllFeatures = () => {
 .action-icon.text { background: #6f9a8d; }
 .action-icon.signin { background: #83a89a; }
 .action-icon.memory { background: #5c7a6b; }
+.action-icon.addword { background: #74937d; }
 .action-icon.all { background: #97b1a6; }
 
 .action-text {
