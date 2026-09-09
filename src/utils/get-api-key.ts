@@ -22,12 +22,21 @@ export function getTranslationApiKey(provider: TranslationPlatform) {
         };
     }
 
-    // 如果用户设置了密钥（非空且非纯空格），则使用用户设置的；否则使用默认配置
     const trimmedAppKey = userKeys.appkey?.trim();
     const trimmedKey = userKeys.key?.trim();
 
+    // 安全约束：用户未填自己的 appkey（即使用内置共享 key）时，第二个字段强制回退内置默认值，
+    // 防止用户把 AI 引擎模型名改成付费模型，导致内置 key 持有人被扣费
+    if (!trimmedAppKey) {
+        return {
+            appkey: AppInfo[provider]?.appkey ?? '',
+            key: AppInfo[provider]?.key ?? ''
+        };
+    }
+
+    // 用户使用自己的 key：模型名/密钥允许自定义，留空回退默认
     return {
-        appkey: (trimmedAppKey && trimmedAppKey.length > 0) ? trimmedAppKey : (AppInfo[provider]?.appkey ?? ''),
+        appkey: trimmedAppKey,
         key: (trimmedKey && trimmedKey.length > 0) ? trimmedKey : (AppInfo[provider]?.key ?? '')
     };
 }

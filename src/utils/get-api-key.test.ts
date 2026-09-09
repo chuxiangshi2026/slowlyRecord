@@ -73,14 +73,35 @@ describe('get-api-key', () => {
       expect(result.key).toBe('default_youdao_key')
     })
 
-    it('用户只设置了 key 时应混合使用', async () => {
+    it('用户只设置了 key（未填 appkey）时整体回退默认配置，防止内置共享 key 被配付费模型', async () => {
+      // 安全约束：用内置 key 时第二字段（模型名/SecretKey）不允许单独覆盖，
+      // 否则用户把 GLM 改成付费模型会扣内置 key 持有人的钱
       mockGetApiKey.mockReturnValue({ appkey: '', key: 'user_key' })
 
       const { getTranslationApiKey } = await import('./get-api-key')
       const result = getTranslationApiKey('baidu')
 
       expect(result.appkey).toBe('default_baidu_appkey')
-      expect(result.key).toBe('user_key')
+      expect(result.key).toBe('default_baidu_key')
+    })
+
+    it('AI 引擎：使用内置 key 时用户自定义模型名不生效', async () => {
+      mockGetApiKey.mockReturnValue({ appkey: '', key: 'glm-5.2' })
+
+      const { getTranslationApiKey } = await import('./get-api-key')
+      const result = getTranslationApiKey('glm')
+
+      expect(result.key).not.toBe('glm-5.2')
+    })
+
+    it('AI 引擎：填了自己的 appkey 后自定义模型名生效', async () => {
+      mockGetApiKey.mockReturnValue({ appkey: 'user_own_key', key: 'glm-5.2' })
+
+      const { getTranslationApiKey } = await import('./get-api-key')
+      const result = getTranslationApiKey('glm')
+
+      expect(result.appkey).toBe('user_own_key')
+      expect(result.key).toBe('glm-5.2')
     })
   })
 

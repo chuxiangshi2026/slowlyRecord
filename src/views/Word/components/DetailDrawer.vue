@@ -818,15 +818,26 @@ const hasKey = (keys: ApiKeyMap, name: string) => !!(keys[name]?.appkey || keys[
 const keyFieldLabel = (platform: string) =>
   modelEditablePlatforms.includes(platform) ? '模型名（可选）' : 'SecretKey'
 
-// 第二个字段是否禁用：AI 引擎可编辑模型名，单 key 的传统引擎禁用
-const keyFieldDisabled = (platform: string) =>
-  singleKeyPlatforms.includes(platform) && !modelEditablePlatforms.includes(platform)
+// 第二个字段是否禁用：AI 引擎可编辑模型名，但使用内置共享 key 时锁死（防止改成付费模型扣内置 key 持有人的钱）
+const userAppkeyOf = (platform: string) =>
+  (wordsStore.userApiKeys as ApiKeyMap)[platform]?.appkey?.trim()
+
+const keyFieldDisabled = (platform: string) => {
+  if (modelEditablePlatforms.includes(platform)) {
+    return !userAppkeyOf(platform)
+  }
+  return singleKeyPlatforms.includes(platform)
+}
 
 const keyPlaceholders = (platform: string) => {
   if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
   if (platform === 'azure') return { appkey: '必填，订阅 Key', key: '区域，如 eastasia' }
   if (modelEditablePlatforms.includes(platform)) {
     const defaultModel = (AppInfo as Record<string, { appkey: string; key: string }>)[platform]?.key
+    const usingBuiltin = !userAppkeyOf(platform)
+    if (usingBuiltin && defaultModel) {
+      return { appkey: '必填，API Key', key: `使用内置 key 时模型固定为 ${defaultModel}` }
+    }
     return { appkey: '必填，API Key', key: defaultModel ? `留空默认 ${defaultModel}` : '模型名（可选）' }
   }
   if (platform === 'deepl') return { appkey: '必填，API Key（免费版以 :fx 结尾）', key: '该引擎无需 SecretKey' }
