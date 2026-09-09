@@ -28,6 +28,7 @@ import {v4 as uuidv4} from "uuid";
 import type {UserSetType, FocusModeSettings} from "@/types/user-set";
 import {isUtools} from "@/adapters/platform";
 import {normalizeItemText, getItemKey} from "@/utils/text-utils";
+import {useSigninStore} from "@/stores/signin";
 
 // 默认专注模式设置
 const defaultFocusMode: FocusModeSettings = {
@@ -815,6 +816,11 @@ export const useWordsStore =
              */
             async function addAndUpdateWord(word: Word): Promise<void> {
                 console.log("更新词库单个词", word)
+                // 单词状态变更（remember/forget、level 升降等复习动作）均视为学习行为，自动完成今日打卡
+                // 先幂等加载打卡记录再签到，避免覆盖本地已有记录（signin.ts 不依赖本 store，无循环引用）
+                const signinStore = useSigninStore();
+                signinStore.loadRecords();
+                signinStore.signToday();
                 // 规范化文本：保留词组空格，只折叠多余空白
                 const cleanedWord = { ...word, text: normalizeItemText(word.text) }
                 // 使用 _id 查找索引，避免脏数据中的换行符导致 text 不匹配

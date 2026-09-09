@@ -58,7 +58,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/word',
     meta: {
       menu: true,
-      title: '考勤管理',
+      title: '慢记',
       icon: 'document-copy',
     },
     children: [

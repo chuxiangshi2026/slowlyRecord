@@ -8,14 +8,19 @@
     <span class="home-header-title">慢记</span>
 
     <el-dropdown>
-      <el-badge :value="12">
-        <el-icon :size="20">
-          <Bell/>
-        </el-icon>
-      </el-badge>
+      <span class="bell-trigger" @click="handleBellClick">
+        <el-badge :value="forgetCount" :max="99" :hidden="forgetCount <= 0">
+          <el-icon :size="20">
+            <Bell/>
+          </el-icon>
+        </el-badge>
+      </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>暂无消息</el-dropdown-item>
+          <el-dropdown-item v-if="forgetCount > 0" @click="handleToWord">
+            今日待复习 {{ forgetCount }} 个，点击去复习
+          </el-dropdown-item>
+          <el-dropdown-item v-else disabled>暂无消息</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -36,7 +41,25 @@
 
 <script setup lang="ts">
 import {Bell} from '@element-plus/icons-vue'
+import {useRouter} from "vue-router";
+import {useWordsStore} from "@/stores/words.ts";
+import {storeToRefs} from "pinia";
 
+const router = useRouter();
+const wordsStore = useWordsStore();
+const {forgetCount} = storeToRefs(wordsStore)
+
+// 点击待复习消息跳转到单词页
+const handleToWord = () => {
+  router.push('/word')
+}
+
+// 有待复习单词时，点击铃铛直接跳转到单词页
+const handleBellClick = () => {
+  if (forgetCount.value > 0) {
+    handleToWord()
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -77,6 +100,12 @@ import {Bell} from '@element-plus/icons-vue'
 
   .home-header-space {
     margin-left: 20px;
+  }
+
+  .bell-trigger {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
   }
 }
 </style>
