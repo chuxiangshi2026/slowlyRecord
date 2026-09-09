@@ -18,6 +18,7 @@ const MemoryTest = () => import('@/views/MemoryTest/MemoryTest.vue');
 const Dictation = () => import('@/views/Dictation/Dictation.vue');
 const QuickTranslate = () => import('@/views/Translate/QuickTranslate.vue');
 const TextMemory = () => import('@/views/TextMemory/TextMemory.vue');
+const Sentences = () => import('@/views/Sentences/Sentences.vue');
 const ShortcutMemory = () => import('@/views/ShortcutMemory/ShortcutMemory.vue');
 const ShortcutMemoryTraining = () => import('@/views/ShortcutMemory/ShortcutMemoryTraining.vue');
 const LetterMemory = () => import('@/views/LetterMemory/LetterMemory.vue');
@@ -155,6 +156,16 @@ const routes: Array<RouteRecordRaw> = [
           menu: true,
           title: '文本记忆',
           icon: 'collection',
+        },
+      },
+      {
+        path: 'sentences',
+        name: 'sentences',
+        component: Sentences,
+        meta: {
+          menu: true,
+          title: '句子库',
+          icon: 'notebook',
         },
       },
       {

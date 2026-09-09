@@ -256,7 +256,9 @@ import {
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
 import { addWord } from '@/utils/str-util';
+import { isSentenceLike } from '@/utils/text-utils';
 import { useWordsStore } from '@/stores/words';
+import { useSentencesStore } from '@/stores/sentences';
 import type { TranslationPlatform, TranslationResult, ExampleSentence, LanguageOption } from '@/types/words';
 
 const wordsStore = useWordsStore();
@@ -517,11 +519,22 @@ function isWordInList(text: string): boolean {
   return !!wordsStore.findWord(cleaned);
 }
 
-// 从历史记录添加到单词列表
+// 从历史记录收录：句子进句子库（译文直接用当次翻译结果），单词进单词列表
 async function addHistoryWord(item: {source: string, target: string, platform: TranslationPlatform, from: string, to: string}) {
-  const wordText = item.source.replace(/\s+/g, '');
-  if (!wordText) return;
+  const sourceText = item.source.trim();
+  if (!sourceText) return;
   try {
+    if (isSentenceLike(sourceText)) {
+      const sentencesStore = useSentencesStore();
+      const res = await sentencesStore.add(sourceText, { translation: item.target || undefined });
+      if (res.success) {
+        ElMessage.success('已收录到句子库');
+      } else {
+        ElMessage.info(res.message || '该句子已在句子库中');
+      }
+      return;
+    }
+    const wordText = sourceText.replace(/\s+/g, '');
     const res = await addWord(wordText);
     if (res.success) {
       ElMessage.success(res.message || '已添加到单词列表');

@@ -5,6 +5,7 @@ import {
   getWordCount,
   inferItemType,
   isPhrase,
+  isSentenceLike,
   normalizeItemText,
 } from './text-utils'
 
@@ -61,6 +62,41 @@ describe('text-utils 英语行为快照', () => {
     it('单词与词组推断', () => {
       expect(inferItemType('hello')).toBe('word')
       expect(inferItemType('take care')).toBe('phrase')
+    })
+  })
+
+  describe('isSentenceLike', () => {
+    it('单词和词组不是句子', () => {
+      expect(isSentenceLike('hello')).toBe(false)
+      expect(isSentenceLike('take care of')).toBe(false)
+      expect(isSentenceLike('美好')).toBe(false)
+      expect(isSentenceLike('')).toBe(false)
+      expect(isSentenceLike('   ')).toBe(false)
+    })
+
+    it('以中英文句末标点结尾是句子', () => {
+      expect(isSentenceLike('愿所有美好如期而至。')).toBe(true)
+      expect(isSentenceLike('真的吗？')).toBe(true)
+      expect(isSentenceLike('The best is yet to come!')).toBe(true)
+      expect(isSentenceLike('Hello world?')).toBe(true)
+      expect(isSentenceLike('路漫漫其修远兮……')).toBe(true)
+    })
+
+    it('内部含句读标点是句子', () => {
+      expect(isSentenceLike('你好，世界。欢迎')).toBe(true)
+      expect(isSentenceLike('Spring is coming; flowers will bloom')).toBe(true)
+      expect(isSentenceLike('一是婴儿哭啼，二是学游戏')).toBe(false) // 逗号不算句读
+    })
+
+    it('长英文按词数判定', () => {
+      expect(isSentenceLike('The quick brown fox jumps over the lazy dog')).toBe(true) // 9 词
+      expect(isSentenceLike('a b c d e f')).toBe(false) // 恰好 6 词
+      expect(isSentenceLike('a b c d e f g')).toBe(true) // 7 词
+    })
+
+    it('纯中文连续文本按字数判定', () => {
+      expect(isSentenceLike('愿你走出半生归来仍是少年')).toBe(false) // 12 字
+      expect(isSentenceLike('愿你在被打击时记起你的珍贵抵抗恶意愿你在迷茫时坚信你的珍贵')).toBe(true) // >20 字
     })
   })
 })

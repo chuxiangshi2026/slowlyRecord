@@ -72,3 +72,28 @@ export function inferItemType(text: string, explicitType?: WordItemType): WordIt
   if (isMultiWordText(text)) return 'phrase';
   return 'word';
 }
+
+/**
+ * 判断文本是否更像「句子」而非单词/词组
+ * 用于录入分流：句子进句子库，否则进单词库
+ * 命中任一规则即为句子（trim 后判断）：
+ * - 以中英文句末标点结尾（。！？!?…）
+ * - 内部含中英文句末/分句标点（。！？!?；;）→ 多句或复句
+ * - 英文超过 6 个词
+ * - 纯中文连续文本超过 20 字
+ */
+export function isSentenceLike(text: string): boolean {
+  const t = text.trim();
+  if (!t) return false;
+  // 句末标点结尾（英文 "." 除外，避免缩写/词组带点误判）
+  if (/[。！？!?…]$/.test(t)) return true;
+  // 内部含句读标点
+  if (/[。！？!?；;]/.test(t.slice(0, -1))) return true;
+  const hasCjk = /[一-龥]/.test(t);
+  if (hasCjk) {
+    // 纯中文连续文本（无空格）超过 20 字
+    return !/\s/.test(t) && t.length > 20;
+  }
+  // 英文：超过 6 个词视为句子
+  return t.split(/\s+/).length > 6;
+}
