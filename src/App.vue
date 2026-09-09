@@ -36,7 +36,16 @@ import {useWordsStore} from "@/stores/words.ts";
 import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
 import {addWord, addTextAuto, batchAddWords} from "@/utils/str-util.ts";
 import {ElMessage} from "element-plus";
-import {ocrTranslate, ocrTranslateMultiPlatform, preloadWorker} from "@/utils/pic-translate.ts";
+import {
+  ocrTranslate,
+  ocrTranslateAli,
+  ocrTranslateBaidu,
+  ocrTranslateLocal,
+  ocrTranslateMultiPlatform,
+  ocrTranslateTencent,
+  preloadWorker,
+  type OcrResult
+} from "@/utils/pic-translate.ts";
 // import path from "node:path";
 import picData from '../testdata/picdata.json';
 import baidupicData from '../testdata/baidupicdata.json';
@@ -47,10 +56,14 @@ import TextSelector from '@/views/Word/components/TextSelector.vue';
 import DebugPanel from '@/components/DebugPanel.vue';
 // import {AppInfo} from "@/config.ts";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
+import {getOcrApiKey} from "@/utils/get-api-key.ts";
+import {toEngineLang} from "@/utils/translation-lang-map.ts";
+import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from "@/utils/usage-counter.ts";
+import {getNotificationAdapter} from "@/adapters/notification.ts";
 import {RETIRED_MODEL_NAMES} from "@/config.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
-import { getActiveProfile, isWordText } from '@/utils/language';
+import { getActiveProfile, getActiveLanguage, isWordText } from '@/utils/language';
 import { isSentenceLike } from '@/utils/text-utils';
 
 const wordsStore = useWordsStore();
@@ -71,6 +84,9 @@ const textContent = ref<string>('');
 // 添加调试面板相关的响应式变量
 const showDebugPanel = ref<boolean>(false);
 const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
+
+// 会话内复习提醒去重：每次插件进程只提醒一次
+let reviewReminderNotified = false;
 
 ;(window as any).utools?.onPluginEnter?.(async (action: any) => {
   // 先同步 设置
@@ -169,8 +185,17 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
     }
   }
   // 延迟调用，避免初始化时重复计算
-  setTimeout(() => {
-    updateReview();
+  setTimeout(async () => {
+    await updateReview();
+    // 到期复习提醒：仅 uTools 平台，有待复习内容时发系统通知；每次插件进程只提醒一次
+    try {
+      if (checkIsUtools() && !reviewReminderNotified && wordsStore.forgetCount > 0) {
+        reviewReminderNotified = true;
+        getNotificationAdapter().show('慢记复习提醒', `今日还有 ${wordsStore.forgetCount} 个单词/句子待复习`);
+      }
+    } catch (e) {
+      console.error('[复习提醒] 发送通知失败:', e);
+    }
   }, 100);
 
   // { code, type, payload, option, from }
@@ -269,12 +294,19 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
 
   if (action.code === 'jietu') {
     try {
-      // 先隐藏主窗口，确保截图时看不到界面
-
-      // 等待一下确保窗口已隐藏
-
-      // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
-      const result = await ocrTranslateMultiPlatform();
+      let result: OcrResult;
+      if (action.type === 'img' && action.payload) {
+        // 用户复制/截图图片后直接呼出：跳过屏幕截图，直接对已有图片做 OCR
+        const base64 = await resolveImgPayloadToBase64(action.payload);
+        if (!base64) {
+          ElMessage.warning('未能读取图片内容，请重试');
+          return;
+        }
+        result = await ocrExistingImage(base64);
+      } else {
+        // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
+        result = await ocrTranslateMultiPlatform();
+      }
 
 
       // 处理错误情况
@@ -288,12 +320,13 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
         }
         if (result.errorCode === 'LOCAL_OCR_FAILED') {
           console.error('[截图添加] 本地OCR失败详情:', result.errorMessage);
+          ElMessage.error('本地 OCR 识别失败，可在设置中切换云端 OCR 引擎');
           return;
         }
 
         // 其他错误，也尝试显示结果（可能部分成功）
         if (!result.resRegions || result.resRegions.length === 0) {
-          ElMessage.error(`OCR识别失败: ${result.errorCode}`);
+          ElMessage.error(`OCR 识别失败，请稍后重试或切换 OCR 引擎（错误码: ${result.errorCode}）`);
           return;
         }
       }
@@ -405,6 +438,85 @@ function logToFile(message: string) {
  */
 function isUTools(): boolean {
   return checkIsUtools();
+}
+
+/**
+ * 把 uTools img 指令的 payload（data URL / 纯 base64 / 临时文件路径）统一解析为纯 base64
+ */
+async function resolveImgPayloadToBase64(payload: any): Promise<string> {
+  if (typeof payload !== 'string') return '';
+  const trimmed = payload.trim();
+  if (!trimmed) return '';
+
+  // data URL：去掉前缀
+  if (trimmed.startsWith('data:')) {
+    return trimmed.includes(',') ? trimmed.split(',').pop() || '' : trimmed;
+  }
+
+  // 纯 base64：无路径分隔特征且长度足够
+  if (trimmed.length > 100 && /^[A-Za-z0-9+/=\r\n]+$/.test(trimmed) && !/[/\\]/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // 临时文件路径：通过 preload 暴露的 Node fs 读取后转 base64
+  try {
+    const services = (window as any).services;
+    if (services?.fs && services.fs.existsSync?.(trimmed)) {
+      const data = services.fs.readFileSync(trimmed);
+      const bytes: Uint8Array = data instanceof Uint8Array
+        ? data
+        : new Uint8Array(data?.buffer || data);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
+    }
+  } catch (e) {
+    console.error('[截图添加] 读取图片文件失败:', e);
+  }
+  return '';
+}
+
+/**
+ * 对已有图片直接走现有 OCR 引擎（与 ocrTranslateMultiPlatform 的平台分发一致，但不触发屏幕截图）
+ * @param base64 图片 base64（不含 data: 前缀）
+ */
+async function ocrExistingImage(base64: string): Promise<OcrResult> {
+  const wordsStore = useWordsStore();
+  const ocrPlatform = wordsStore.currentOcrPlatform || 'tencent';
+
+  // 与 ocrTranslateMultiPlatform 保持一致的每日免费次数限制（本地 OCR 不记次数）
+  if (ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform)) {
+    const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
+    const dailyLimit = ocrPlatform === 'tencent' ? USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT : USAGE_LIMITS.OCR_DAILY_LIMIT;
+    if (isOverDailyLimit(counterKey)) {
+      const usedCount = getCurrentUsageCount(counterKey);
+      throw new Error(`每日免费${ocrPlatform === 'tencent' ? '腾讯' : ''}截图翻译次数已达上限 (${usedCount}/${dailyLimit} 次)，请设置自定义API密钥以继续使用`);
+    }
+    incrementUsageCounter(counterKey);
+  }
+
+  const {appkey, key} = getOcrApiKey(ocrPlatform);
+  if (ocrPlatform === 'youdao') {
+    const from = toEngineLang('youdao', getActiveLanguage(), 'ocr');
+    if (!from) throw new Error('有道OCR不支持当前语言');
+    return await ocrTranslate(base64, appkey, key, from, 'zh-CHS');
+  }
+  if (ocrPlatform === 'baidu') {
+    return await ocrTranslateBaidu(base64, appkey, key);
+  }
+  if (ocrPlatform === 'ali') {
+    return await ocrTranslateAli(base64, appkey, key);
+  }
+  if (ocrPlatform === 'local') {
+    return await ocrTranslateLocal(base64, wordsStore.currentTranslationPlatform || 'local');
+  }
+  if (ocrPlatform === 'deepseek' || ocrPlatform === 'glm') {
+    // 视觉大模型 OCR 的封装在 ocrTranslateMultiPlatform 内部（会触发截图），已有图片入口暂不支持
+    throw new Error('当前 OCR 引擎为视觉大模型，暂不支持直接识别已有图片，请先在设置中切换为云端 OCR 引擎');
+  }
+  return await ocrTranslateTencent(base64, appkey, key);
 }
 
 
@@ -545,9 +657,18 @@ function checkAddWork(text: string) {
 
 // ==================== 核心：静默获取选中文本 ====================
 async function getSelectedTextFromSystem(): Promise<string> {
-  // 清空剪贴板，避免读到旧内容
   const utoolsApi = (window as any).utools;
   if (!utoolsApi) return '';
+
+  // 先备份当前剪贴板文本，模拟复制失败或读不到新选中文本时可恢复，避免误清空用户剪贴板
+  let backupText = '';
+  try {
+    backupText = await navigator.clipboard.readText();
+  } catch (e) {
+    debugLog('备份剪贴板内容失败:', e);
+  }
+
+  // 清空剪贴板，避免读到旧内容
   utoolsApi.copyText?.('')
 
   let b = utoolsApi.hideMainWindow?.();
@@ -581,6 +702,19 @@ async function getSelectedTextFromSystem(): Promise<string> {
   const selectedText = await navigator.clipboard.readText();
 
   debugLog('[划段添加] 获取到的文本:', selectedText);
+
+  // 模拟复制失败（读不到新内容或与备份一致）时恢复原剪贴板并提示用户
+  if (!selectedText || selectedText === backupText) {
+    if (backupText) {
+      try {
+        utoolsApi.copyText?.(backupText);
+        debugLog('已恢复原剪贴板内容');
+      } catch (e) {
+        debugLog('恢复剪贴板内容失败:', e);
+      }
+    }
+    ElMessage.warning('未获取到新的选中文本，已恢复原有剪贴板内容');
+  }
 
   return selectedText;
 }
@@ -921,7 +1055,7 @@ async function handlePluginAddWord(payload: string) {
  */
 function updateReview() {
   // 调用 listWords 会自动触发 upReview 计算待复习单词
-  wordsStore.listWords();
+  return wordsStore.listWords();
 }
 
 </script>
