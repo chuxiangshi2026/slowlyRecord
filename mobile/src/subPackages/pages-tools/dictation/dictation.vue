@@ -41,6 +41,11 @@
         </view>
       </view>
 
+      <!-- 点选模式超长回退打字模式的轻提示 -->
+      <view v-if="tapFallbackTip" class="tap-fallback-tip">
+        <text class="tap-fallback-text">该词较长，已切换为键盘输入</text>
+      </view>
+
       <!-- 输入区域 -->
       <view class="input-area" :class="{ shaking: isShaking }">
         <!-- 点选拼写模式（≤8 字母的单词，长单词自动回退打字模式） -->
@@ -159,7 +164,11 @@
     <!-- 空状态 -->
     <view v-if="wordList.length === 0 && !isLoading" class="empty-state">
       <text class="empty-icon">✓</text>
-      <text class="empty-text">当前词库没有可练习的单词</text>
+      <text class="empty-text">{{ emptyState.text }}</text>
+      <text v-if="filteredOutCount > 0" class="empty-sub">{{ getFilteredHint(filteredOutCount) }}</text>
+      <view class="empty-btn" @click="goAddWord">
+        <text class="empty-btn-text">去添加单词</text>
+      </view>
     </view>
 
     <!-- 底部操作栏 -->
@@ -196,6 +205,8 @@ import { ref, computed, nextTick, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
 import { buildFragmentTiles, type AnswerTile } from '@/utils/answer-tokens'
+// 等级口径与主复习体系（12 级标准）对齐，拼写模块不单独"毕业"单词
+import { nextLevelOnCorrect, nextLevelOnWrong, getEmptyState, getFilteredHint } from './dictation-level'
 
 const wordsStore = useMobileWords()
 
@@ -217,6 +228,11 @@ const tapInputActive = computed(() => {
   const w = currentWord.value
   return tapMode.value && !!w && w.word.length <= MAX_TAP_LETTERS
 })
+// 点选模式开启但单词超长被静默回退打字模式时，给用户一行轻提示
+const tapFallbackTip = computed(() => {
+  const w = currentWord.value
+  return tapMode.value && !!w && w.word.length > MAX_TAP_LETTERS
+})
 const options = ref({
   autoPlay: true,
   showPhonetic: true,
@@ -236,6 +252,13 @@ const hintType = ref<'none' | 'letter' | 'full'>('none')
 const isShowingHint = ref(false)
 const isLoading = ref(false)
 const inputFocus = ref(false)
+
+// 空态统计：当前范围内的总条数与被 ^[a-zA-Z]+$ 过滤掉的词组/句子条数
+const rangeTotalCount = ref(0)
+const filteredOutCount = ref(0)
+
+// 空态文案（含"词组/句子被过滤"解释）
+const emptyState = computed(() => getEmptyState(rangeTotalCount.value, filteredOutCount.value))
 
 // 半提示模式
 const partialSlots = ref<{ fixed: boolean; letter: string; value?: string }[]>([])
@@ -278,12 +301,15 @@ async function loadWords() {
   isLoading.value = true
   try {
     const allWords = getWords()
+    rangeTotalCount.value = allWords.length
     if (allWords.length === 0) {
       wordList.value = []
+      filteredOutCount.value = 0
       return
     }
     // 只取纯英文单词，随机打乱
     const englishWords = allWords.filter(w => w.word && /^[a-zA-Z]+$/.test(w.word))
+    filteredOutCount.value = allWords.length - englishWords.length
     wordList.value = [...englishWords].sort(() => Math.random() - 0.5)
     currentIndex.value = 0
   } finally {
@@ -294,7 +320,9 @@ async function loadWords() {
 /** 刷新单词列表（答对后移除已记住的单词等） */
 function refreshWordList() {
   const allWords = getWords()
+  rangeTotalCount.value = allWords.length
   const englishWords = allWords.filter(w => w.word && /^[a-zA-Z]+$/.test(w.word))
+  filteredOutCount.value = allWords.length - englishWords.length
   const curWord = currentWord.value
   if (curWord) {
     const newIdx = englishWords.findIndex(w => w.id === curWord.id)
@@ -475,25 +503,17 @@ async function checkAnswer() {
   const isCorrect = userAnswer === word.word.toLowerCase()
 
   if (isCorrect) {
-    // 正确：等级+1，与桌面端逻辑一致
-    const newLevel = Math.min(7, (word.level || 1) + 1)
-    await wordsStore.updateWord(word.id, {
-      level: newLevel,
-      reviewCount: (word.reviewCount || 0) + 1,
-      lastReviewTime: Date.now(),
-      needsReview: newLevel < 7,
-      remembered: newLevel >= 7
-    })
+    // 正确：等级 +1（复用主体系升降级逻辑，封顶 12 级，remembered 仅 12 级判定）
+    wordsStore.updateWordLevel(word.id, nextLevelOnCorrect(word.level || 1))
 
     stats.value.correct++
     delete errorCountMap.value[currentIndex.value]
     refreshWordList()
     nextWord()
   } else {
-    // 错误：等级-1
-    const newLevel = Math.max(1, (word.level || 1) - 1)
+    // 错误：等级 -1，不单独"毕业"/重置，只标记需要复习
     await wordsStore.updateWord(word.id, {
-      level: newLevel,
+      level: nextLevelOnWrong(word.level || 1),
       needsReview: true,
       remembered: false
     })
@@ -536,9 +556,8 @@ async function handleForget() {
   const word = currentWord.value
   if (!word) return
 
-  const newLevel = Math.max(1, (word.level || 1) - 1)
   await wordsStore.updateWord(word.id, {
-    level: newLevel,
+    level: nextLevelOnWrong(word.level || 1),
     needsReview: true,
     remembered: false
   })
@@ -711,6 +730,11 @@ function goToWordbank() {
   uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
 }
 
+/** 空态引导：去添加单词页 */
+function goAddWord() {
+  uni.navigateTo({ url: '/subPackages/pages-tools/add-word/add-word' })
+}
+
 // ========== 初始化 ==========
 onMounted(async () => {
   await wordsStore.loadWords()
@@ -850,6 +874,22 @@ watch(() => wordsStore.currentBankId, async () => {
   width: 100%;
   margin-bottom: 40rpx;
   transition: transform 0.05s;
+}
+
+/* 点选模式超长回退打字模式的轻提示 */
+.tap-fallback-tip {
+  width: 100%;
+  margin-bottom: 16rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.tap-fallback-text {
+  font-size: 24rpx;
+  color: #52796f;
+  background: #eef4f0;
+  padding: 8rpx 24rpx;
+  border-radius: 20rpx;
 }
 
 .input-area.shaking {
@@ -1172,6 +1212,33 @@ watch(() => wordsStore.currentBankId, async () => {
 .empty-text {
   font-size: 30rpx;
   color: #999;
+}
+
+/* 空态补充说明（词组/句子被过滤） */
+.empty-sub {
+  font-size: 26rpx;
+  color: #888;
+  margin-top: 16rpx;
+  text-align: center;
+  line-height: 1.6;
+  padding: 0 20rpx;
+}
+
+/* 空态出口按钮 */
+.empty-btn {
+  margin-top: 40rpx;
+  padding: 20rpx 64rpx;
+  background: #52796f;
+  border-radius: 40rpx;
+}
+
+.empty-btn:active {
+  opacity: 0.85;
+}
+
+.empty-btn-text {
+  font-size: 30rpx;
+  color: #fff;
 }
 
 /* 底部操作栏 */
