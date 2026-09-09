@@ -47,7 +47,7 @@
           <el-option
               v-for="item in options"
               :key="item.value"
-              :label="item.label"
+              :label="translationOptionLabel(item.value, item.label)"
               :value="item.value"
           />
         </el-select>
@@ -268,7 +268,9 @@
 
     <!--     快捷键模块 -->
     <h4 class="header">快捷键</h4>
-    <div class="content">
+    <el-collapse class="shortcut-collapse">
+      <el-collapse-item title="快捷键一览" name="shortcutList">
+        <div class="content">
       <h5 style="text-align:center;">列表模式</h5>
       <div class="titles">
         <span class="title">功能说明</span>
@@ -301,7 +303,9 @@
         <span class="shorcut-desc">{{ item.desc }}</span>
         <span class="shorcut-desc">{{ item.shortcut }}</span>
       </div>
-    </div>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
 
     <el-divider/>
 
@@ -310,6 +314,7 @@
     <h4 class="header">密钥</h4>
     <div class="content">
       <h5 class="key-section-title">翻译密钥</h5>
+      <p class="key-section-hint">默认引擎已内置免费额度，每日 500 次，无需配置；仅切换其他引擎或额度用尽时才需填写</p>
       <el-collapse v-model="activeTranslationKeys" class="key-collapse">
         <el-collapse-item v-for="engine in translationKeyEngines" :key="engine.value" :name="engine.value">
           <template #title>
@@ -336,6 +341,7 @@
       </el-collapse>
 
       <h5 class="key-section-title">OCR 图片识别密钥</h5>
+      <p class="key-section-hint">默认本地识别无需配置</p>
       <el-collapse v-model="activeOcrKeys" class="key-collapse">
         <el-collapse-item v-for="engine in ocrKeyEngines" :key="engine.value" :name="engine.value">
           <template #title>
@@ -386,7 +392,7 @@
     <div class="content">
       <h5 style="text-align:center;">申请密钥</h5>
       <p class="limit-info">
-        由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日10次(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
+        由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日{{ USAGE_LIMITS.OCR_DAILY_LIMIT }}次（腾讯引擎{{ USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT }}次）(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
       <!--      <div class="view-version-btn">-->
 
       <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
@@ -435,6 +441,7 @@ import {computed, onMounted, reactive, ref, watch} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {AppInfo, TRANSLATION_PLATFORM_LINKS} from "@/config.ts";
+import {USAGE_LIMITS} from "@/constants";
 import {getSetDb, addAndUpdateSetDb} from "@/utils/user-set-db-util.ts";
 import {log} from "@/utils/logger.ts";
 import {isUtools} from "@/adapters/platform";
@@ -783,7 +790,7 @@ const options = [
     label: '七牛AI',
   }, {
     value: 'google',
-    label: 'Google(免Key,桌面端)',
+    label: 'Google',
   }, {
     value: 'spark',
     label: '讯飞星火',
@@ -792,9 +799,21 @@ const options = [
     label: '讯飞机器翻译',
   }, {
     value: 'bing',
-    label: '微软网页版(免Key,桌面端)',
+    label: '微软网页版',
   }
 ]
+
+// 免配置标签：内置 key 非空的引擎零配置可用；google/bing 走免费网页接口免 key
+const translationOptionLabel = (value: string, label: string) => {
+  let suffix = ''
+  if (value === 'google' || value === 'bing') {
+    suffix = '（免费免key）'
+  } else if ((AppInfo as Record<string, { appkey?: string }>)[value]?.appkey) {
+    suffix = '（免配置）'
+  }
+  // 默认引擎 glm 额外标注推荐
+  return value === 'glm' ? `${label}${suffix}·推荐` : `${label}${suffix}`
+}
 
 // ===== 密钥配置区块 =====
 // 只需 AppKey、无需 SecretKey 的翻译引擎
@@ -1219,6 +1238,27 @@ const handleFileImport = (event: Event) => {
   text-align: center;
   color: var(--utools-text-secondary);
   margin: 8px 0;
+}
+
+.key-section-hint {
+  margin: 0 0 6px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--utools-text-tertiary);
+}
+
+.shortcut-collapse {
+  border-top: none;
+
+  :deep(.el-collapse-item__header) {
+    padding: 0 10px;
+    color: var(--utools-text-primary);
+  }
+
+  :deep(.el-collapse-item__content) {
+    padding-bottom: 12px;
+  }
 }
 
 .key-collapse {
