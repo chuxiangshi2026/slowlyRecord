@@ -68,7 +68,7 @@ export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 
 export type MemoryFirmnessType = '正常' | '较强' | '极强';
 
 
-export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local' | 'minimax' | 'hunyuan' | 'deepl' | 'azure' | 'qiniu' | 'google';
+export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local' | 'minimax' | 'hunyuan' | 'deepl' | 'azure' | 'qiniu' | 'google' | 'spark' | 'bing';
 
 /**
  * 例句

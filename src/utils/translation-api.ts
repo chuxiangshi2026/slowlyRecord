@@ -30,7 +30,7 @@ const TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS = 5000;
 // 内存缓存上限远高于持久化上限：命中率优先，持久化仅保留最近最热的一部分
 const TRANSLATION_CACHE_MAX = 5000;
 const TRANSLATION_CACHE_PERSIST_MAX = 1000;
-const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan', 'qiniu'] as TranslationPlatform[]);
+const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan', 'qiniu', 'spark'] as TranslationPlatform[]);
 const AI_BATCH_SIZE = 20;
 // 非 AI 平台的并发限制；批量回退路径必须保留，否则百度免费版 QPS=1 会被立即触发限流（54003）
 const NON_AI_CONCURRENCY: Record<string, number> = {
@@ -819,6 +819,9 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
     if (platform === 'qiniu') {
         return requestOpenAiCompatibleBatch('https://openai.qiniu.com/v1/chat/completions', apiKey, modelName || 'deepseek-v3', queries, platform, from, to);
     }
+    if (platform === 'spark') {
+        return requestOpenAiCompatibleBatch('https://spark-api-open.xf-yun.com/v1/chat/completions', apiKey, modelName || 'lite', queries, platform, from, to);
+    }
     throw new Error(`Unsupported AI batch platform: ${platform}`);
 }
 
@@ -950,6 +953,73 @@ async function callGoogleFree(query: string, from: string, to: string): Promise<
     const text = Array.isArray(data?.[0]) ? data[0].map((seg: any) => seg?.[0] || '').join('') : '';
     if (!text) {
         return { success: false, errorMsg: 'Google 未返回译文' };
+    }
+    return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+}
+
+// 微软网页免费接口（Edge 通道）的令牌缓存：JWT 有效期约 10 分钟，提前 1 分钟刷新
+let bingTokenCache: { token: string; expiresAt: number } | null = null;
+
+async function getBingAuthToken(): Promise<string> {
+    if (bingTokenCache && Date.now() < bingTokenCache.expiresAt) {
+        return bingTokenCache.token;
+    }
+    const response = await fetch('https://edge.microsoft.com/translate/auth');
+    if (!response.ok) {
+        throw new Error(`获取微软翻译授权令牌失败: ${response.status}`);
+    }
+    const token = (await response.text()).trim();
+    // 解析 JWT payload 的 exp（秒），失败则按 9 分钟缓存
+    let expiresAt = Date.now() + 9 * 60 * 1000;
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.exp) {
+            expiresAt = payload.exp * 1000 - 60 * 1000;
+        }
+    } catch { /* 用默认缓存时长 */ }
+    bingTokenCache = { token, expiresAt };
+    return token;
+}
+
+/**
+ * 微软网页免费接口（Edge 通道）：无需密钥，但 Web 端受 CORS 限制不可用
+ */
+async function callBingFree(query: string, from: string, to: string): Promise<TranslationResult> {
+    if (isWeb()) {
+        return { success: false, errorMsg: '微软网页免费接口在 Web 端受跨域限制不可用，请切换其他引擎' };
+    }
+    const token = await getBingAuthToken();
+    const params = new URLSearchParams({
+        'api-version': '3.0',
+        to: AZURE_LANG_MAP[to] || to,
+    });
+    if (from !== 'auto') {
+        params.set('from', AZURE_LANG_MAP[from] || from);
+    }
+    const doRequest = async (authToken: string) => fetch(`https://api-edge.cognitive.microsofttranslator.com/translate?${params.toString()}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([{ Text: query }]),
+    });
+    let response = await doRequest(token);
+    if (response.status === 401) {
+        // 令牌失效：强制刷新后重试一次
+        bingTokenCache = null;
+        response = await doRequest(await getBingAuthToken());
+    }
+    if (response.status === 429) {
+        return { success: false, errorMsg: '微软网页免费接口被限流（429），请稍后再试' };
+    }
+    if (!response.ok) {
+        return { success: false, errorMsg: `微软网页翻译请求失败: ${response.status}` };
+    }
+    const data = await response.json();
+    const text = data?.[0]?.translations?.[0]?.text || '';
+    if (!text) {
+        return { success: false, errorMsg: '微软网页接口未返回译文' };
     }
     return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
 }
@@ -1193,6 +1263,20 @@ export async function translateWithPlatform(
                     console.log('调用Google免费接口')
                     {
                         const r = await callGoogleFree(query, from, to);
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'spark':
+                    console.log('调用讯飞星火')
+                    {
+                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
+                        setCachedTranslation(query, platform, from, to, r);
+                        return r;
+                    }
+                case 'bing':
+                    console.log('调用微软网页免费接口')
+                    {
+                        const r = await callBingFree(query, from, to);
                         setCachedTranslation(query, platform, from, to, r);
                         return r;
                     }

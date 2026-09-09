@@ -46,7 +46,8 @@ const PLATFORM_MATRIX = [
   { platform: 'kimi', url: 'https://api.moonshot.cn/v1/chat/completions', model: 'kimi-k2.6', content: JSON.stringify({ translation: '你好' }) },
   { platform: 'minimax', url: 'https://api.minimaxi.com/v1/chat/completions', model: 'MiniMax-M2.7', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
   { platform: 'hunyuan', url: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions', model: 'hunyuan-lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
-  { platform: 'qiniu', url: 'https://openai.qiniu.com/v1/chat/completions', model: 'deepseek-v3', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
+  { platform: 'qiniu', url: 'https://openai.qiniu.com/v1/chat/completions', model: 'deepseek-v3', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) },
+  { platform: 'spark', url: 'https://spark-api-open.xf-yun.com/v1/chat/completions', model: 'lite', content: JSON.stringify([{ query: 'hello', translation: '你好' }]) }
 ] as const
 
 describe('AI 翻译平台调用', () => {
@@ -194,5 +195,37 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
     const result = await translateWithPlatform('hello-google-429', 'google' as any, 'auto', 'zh')
     expect(result.success).toBe(false)
     expect(result.errorMsg).toContain('429')
+  })
+
+  it('bing 网页接口先取授权令牌再翻译，无需 key', async () => {
+    // 伪造 JWT：header.payload.signature，payload 带 exp
+    const payload = btoa(JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 600 }))
+    const fakeToken = `header.${payload}.signature`
+    fetchMock
+      .mockResolvedValueOnce(new Response(fakeToken, { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify([
+        { translations: [{ text: '你好', to: 'zh-Hans' }] }
+      ]), { status: 200 }))
+
+    const result = await translateWithPlatform('hello-bing', 'bing' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(result.explains).toBe('你好')
+    expect(fetchMock.mock.calls[0][0]).toBe('https://edge.microsoft.com/translate/auth')
+    const [url, init] = fetchMock.mock.calls[1]
+    expect(url).toContain('https://api-edge.cognitive.microsofttranslator.com/translate')
+    expect(url).toContain('to=zh-Hans')
+    expect((init.headers as Record<string, string>)['Authorization']).toBe(`Bearer ${fakeToken}`)
+  })
+
+  it('bing 令牌缓存有效时不重复取令牌', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify([
+      { translations: [{ text: '世界', to: 'zh-Hans' }] }
+    ]), { status: 200 }))
+
+    const result = await translateWithPlatform('hello-bing-2', 'bing' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(fetchMock).toHaveBeenCalledTimes(1) // 只有翻译请求，复用上一用例缓存的令牌
   })
 })

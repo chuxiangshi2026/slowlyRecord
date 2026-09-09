@@ -134,6 +134,8 @@ export const useWordsStore =
                 azure: {appkey: '', key: ''},
                 qiniu: {appkey: '', key: ''},
                 google: {appkey: '', key: ''},
+                spark: {appkey: '', key: ''},
+                bing: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref({

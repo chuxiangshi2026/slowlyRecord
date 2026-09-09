@@ -784,16 +784,22 @@ const options = [
   }, {
     value: 'google',
     label: 'Google(免Key,桌面端)',
+  }, {
+    value: 'spark',
+    label: '讯飞星火',
+  }, {
+    value: 'bing',
+    label: '微软网页版(免Key,桌面端)',
   }
 ]
 
 // ===== 密钥配置区块 =====
 // 只需 AppKey、无需 SecretKey 的翻译引擎
-const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'deepl', 'qiniu']
+const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'deepl', 'qiniu', 'spark']
 // AI 引擎的第二个字段是「模型名」，允许用户自定义模型版本（留空则用内置默认模型）
-const modelEditablePlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'qiniu', 'ollama']
+const modelEditablePlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'qiniu', 'ollama', 'spark']
 // 不展示密钥配置的引擎（内置免费/本地）
-const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan', 'google']
+const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan', 'google', 'bing']
 const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm']
 
 type ApiKeyMap = Record<string, { appkey: string; key: string }>

@@ -1,0 +1,66 @@
+# 翻译引擎免费密钥申请指南
+
+本项目支持三层免费翻译方案，按优先级：**免 key 引擎开箱即用 → 内置官方免费模型 → 自填各平台免费密钥（BYOK）**。
+
+## 一、免密钥引擎（无需任何申请）
+
+| 引擎 | 说明 | 限制 |
+|---|---|---|
+| 本地词典 | 离线内置词库 | 仅覆盖已收录单词 |
+| Google（免费网页接口） | 无需 key | 仅 uTools/Electron 桌面端（Web 端跨域受限），非官方接口有失效风险 |
+| 微软网页版（免费接口） | 无需 key，走 Edge 通道 | 同上，仅桌面端 |
+| uTools AI | uTools 平台能力 | 仅 uTools 插件内可用 |
+
+## 二、官方免费模型（推荐自填，也可由作者内置）
+
+这些平台有**官方长期免费的模型**，个人申请 key 即可永久免费调用；作者内置的也是这类模型，且内置 key 时模型名已锁定为免费版本（防止被改为付费模型扣费）。
+
+### 智谱 GLM（当前默认引擎）
+
+- 免费模型：`glm-4.7-flash`（长期免费）
+- 申请：注册 <https://open.bigmodel.cn> → 用户中心 → API keys → 新建
+- 设置页填到「智谱GLM」的 API Key
+
+### 讯飞星火 Spark Lite
+
+- 免费模型：`lite`（官方 2024-05 起宣布**永久免费**）
+- 申请：注册 <https://console.xfyun.cn> → 完成个人实名认证 → 创建应用 → 领取 Spark Lite 的 APIPassword
+- 设置页填到「讯飞星火」的 API Key
+
+### 腾讯混元 hunyuan-lite
+
+- 免费模型：`hunyuan-lite`（官方宣称永久免费不限量）
+- ⚠️ 注意：腾讯原混元平台将于 2026-09-30 停服并迁移至 TokenHub，届时接入地址/模型名可能变化，请留意官方公告
+- 申请：<https://console.cloud.tencent.com/hunyuan>
+
+### MiniMax
+
+- `MiniMax-M2.7` 有免费额度
+- 申请：<https://platform.minimaxi.com/>
+
+### 七牛 AI（OpenAI 兼容大模型网关）
+
+- 新用户有免费 token 额度，默认模型 `deepseek-v3`，可在设置页改其他模型
+- 申请：<https://portal.qiniu.com/ai-inference> 创建 API Key
+
+## 三、传统翻译 API（免费额度，按月重置）
+
+| 平台 | 免费额度 | 申请入口 |
+|---|---|---|
+| 百度翻译 | 标准版 100 万字符/月（QPS=1） | <https://fanyi-api.baidu.com/choose> |
+| 腾讯翻译 | 500 万字符/月 | 腾讯云控制台开通机器翻译 |
+| 有道翻译 | 新用户体验金 | <https://ai.youdao.com/console> |
+| 阿里翻译 | 100 万字符/月 | <https://mt.console.aliyun.com/service> |
+| 微软翻译（Azure 正式版） | 200 万字符/月（需绑卡验证，国内双币卡一般可行） | Azure 门户创建 Text Translation 资源，填「订阅 Key + 区域」 |
+| DeepL | 50 万字符/月（**需海外发行的信用卡**，国内卡不支持） | <https://www.deepl.com/pro-api> |
+
+## 四、本地大模型（完全免费，隐私最好）
+
+- 安装 [Ollama](https://ollama.com/download)，运行 `ollama run qwen2.5:0.5b`
+- 设置页「ollama」填服务地址（默认 `http://localhost:11434`）和模型名
+
+## 安全说明（给开发者）
+
+- 内置共享 key 仅用于**官方免费模型**；`getTranslationApiKey` 已做整体回退：用户未填自己的 appkey 时模型名强制锁定为内置默认值，无法切换为付费模型
+- 内置 key 被平台判定额度耗尽（456/429）时，引擎在会话内自动停服并提示用户自填 key
+- 每个免 key/内置 key 用户另有每日免费次数限制（`USAGE_LIMITS`），自填 key 后不受限
