@@ -39,7 +39,10 @@
 
       <view class="card" :class="{ flipped: isFlipped }" @click="flipCard">
         <view class="card-front">
-          <text class="word-text">{{ currentWord?.word }}</text>
+          <view class="word-row">
+            <text class="word-text">{{ currentWord?.word }}</text>
+            <text class="speak-btn" @click.stop="playWord">🔊</text>
+          </view>
           <text class="hint">点击查看释义</text>
         </view>
         <view class="card-back">
@@ -58,8 +61,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, onMounted } from 'vue'
+import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
+import { getTtsAdapter } from '@/adapters/index'
+import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 // 快照遍历纯逻辑：进入页面取一次快照，"已掌握"只从剩余待处理移除，不破坏遍历索引
 import {
   createWrongWordsSession,
@@ -114,6 +119,27 @@ onMounted(() => {
 const flipCard = () => {
   isFlipped.value = true
 }
+
+/** 播放当前单词发音：有道优先，失败回退谷歌 TTS，均失败静默 */
+function playWord() {
+  const word = currentWord.value?.word
+  if (!word) return
+  try {
+    const tts = getTtsAdapter()
+    tts.playAudio(getPronunciationUrl(word, 'us')).catch(() => {
+      tts.playAudio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`).catch(() => {
+        // 发音不可用，静默失败
+      })
+    })
+  } catch {
+    // TTS 不可用，静默失败
+  }
+}
+
+// 翻面显示释义时自动发音一次（无开关，跟随复习页同一套 adapter）
+watch(isFlipped, (flipped) => {
+  if (flipped) playWord()
+})
 
 const handleStillForget = () => {
   const word = currentWord.value
@@ -301,6 +327,21 @@ const goHome = () => {
   font-size: 64rpx;
   font-weight: bold;
   color: #333;
+}
+
+.word-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.speak-btn {
+  font-size: 40rpx;
+  padding: 8rpx;
+}
+
+.speak-btn:active {
+  opacity: 0.5;
 }
 
 .hint {

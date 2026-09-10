@@ -24,14 +24,32 @@
         <text class="result-title">识别结果</text>
       </view>
       <text class="result-text">{{ ocrResult }}</text>
-      <!-- 识别文本分词后的词条列表，可一键加入当前词库 -->
+      <!-- 识别文本分词后的词条列表，可选中并批量加入当前词库 -->
       <view v-if="ocrTokens.length" class="token-list">
-        <view v-for="token in ocrTokens" :key="token" class="token-item">
+        <!-- 批量操作条 -->
+        <view class="token-toolbar">
+          <text class="toolbar-action" @click="selectAllTokens">全选</text>
+          <text class="toolbar-action" @click="clearSelectedTokens">清空</text>
+          <button
+            class="token-batch-btn"
+            :disabled="isBatchAdding || selectedTokens.length === 0"
+            @click="batchAddToBank"
+          >
+            {{ isBatchAdding ? '加入中...' : `批量加入词库（${selectedTokens.length}）` }}
+          </button>
+        </view>
+        <view
+          v-for="token in ocrTokens"
+          :key="token"
+          class="token-item"
+          :class="{ selected: selectedKeys.has(getWordKey(token)) }"
+          @click="toggleToken(token)"
+        >
           <text class="token-word">{{ token }}</text>
           <button
             class="token-add-btn"
             :disabled="addingKey === getWordKey(token) || addedKeys.has(getWordKey(token))"
-            @click="addTokenToBank(token)"
+            @click.stop="addTokenToBank(token)"
           >
             {{ addedKeys.has(getWordKey(token)) ? '已加入' : '加入词库' }}
           </button>
@@ -73,6 +91,12 @@ import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/
 import { useMobileWords } from '@/stores/useMobileWords'
 import { getWordKey } from '@/utils/text-utils'
 import { getCaptureAdapter } from '../utils/capture'
+import {
+  defaultSelectedTokens,
+  toggleTokenSelection,
+  selectedTokenList,
+  summarizeBatchAdd
+} from './translate-tokens'
 
 const wordsStore = useMobileWords()
 const inputText = ref('')
@@ -81,10 +105,30 @@ const isTranslating = ref(false)
 const ocrResult = ref('')
 // OCR 文本分词后的词条列表
 const ocrTokens = ref<string[]>([])
+// 词条选中态（key 为 getWordKey 规范化小写），新一次 OCR 识别后默认全选
+const selectedKeys = ref<Set<string>>(new Set())
+// 批量加入进行中，防止连点
+const isBatchAdding = ref(false)
 // 已加入词库的词条 key（getWordKey 规范化小写）
 const addedKeys = ref<Set<string>>(new Set())
 // 正在添加中的词条 key，防止重复点击
 const addingKey = ref('')
+
+// 当前选中的词条列表（保持原顺序，用于批量加入）
+const selectedTokens = computed(() => selectedTokenList(ocrTokens.value, selectedKeys.value))
+
+/** 点击词条本身切换选中态 */
+const toggleToken = (token: string) => {
+  selectedKeys.value = toggleTokenSelection(selectedKeys.value, token)
+}
+
+const selectAllTokens = () => {
+  selectedKeys.value = defaultSelectedTokens(ocrTokens.value)
+}
+
+const clearSelectedTokens = () => {
+  selectedKeys.value = new Set<string>()
+}
 
 // 翻译结果存在且输入不是超长文本时，允许整段加入词库
 const canAddInput = computed(() => {
@@ -110,17 +154,22 @@ const extractWordTokens = (text: string): string[] => {
 /**
  * 把词条加入当前激活词库（复用 add-word 页的添加流程）。
  * 已有释义则直接传入；否则尝试调用翻译引擎补全，拿不到就只存单词。
+ * silent 为 true 时不弹 toast（批量加入模式），返回加入结果供汇总。
  */
-const addWordToBank = async (rawText: string, presetMeaning = '') => {
+const addWordToBank = async (
+  rawText: string,
+  presetMeaning = '',
+  silent = false
+): Promise<'added' | 'duplicate' | 'failed'> => {
   const wordText = normalizeMobileItemText(rawText)
-  if (!wordText || addingKey.value === getWordKey(wordText)) return
+  if (!wordText || addingKey.value === getWordKey(wordText)) return 'failed'
 
   // 确保词库数据已加载，否则判重会失效
   await wordsStore.loadWords()
   const key = getWordKey(wordText)
   if (wordsStore.words.some(w => getWordKey(w.word) === key)) {
-    uni.showToast({ title: '已在词库中', icon: 'none' })
-    return
+    if (!silent) uni.showToast({ title: '已在词库中', icon: 'none' })
+    return 'duplicate'
   }
 
   addingKey.value = key
@@ -157,9 +206,11 @@ const addWordToBank = async (rawText: string, presetMeaning = '') => {
       nextReviewTime: Date.now() + 24 * 60 * 60 * 1000
     })
     addedKeys.value.add(key)
-    uni.showToast({ title: '已加入词库', icon: 'success' })
+    if (!silent) uni.showToast({ title: '已加入词库', icon: 'success' })
+    return 'added'
   } catch (e: any) {
-    uni.showToast({ title: '添加失败: ' + (e.message || '未知错误'), icon: 'none' })
+    if (!silent) uni.showToast({ title: '添加失败: ' + (e.message || '未知错误'), icon: 'none' })
+    return 'failed'
   } finally {
     addingKey.value = ''
   }
@@ -167,6 +218,28 @@ const addWordToBank = async (rawText: string, presetMeaning = '') => {
 
 // OCR 词条加入词库
 const addTokenToBank = (token: string) => addWordToBank(token)
+
+/** 批量加入选中词条：逐条走单条加入逻辑（判重 + 释义补全），完成后统一汇总 toast */
+const batchAddToBank = async () => {
+  if (isBatchAdding.value) return
+  const tokens = selectedTokens.value
+  if (tokens.length === 0) return
+  isBatchAdding.value = true
+  let added = 0
+  let duplicated = 0
+  let failed = 0
+  try {
+    for (const token of tokens) {
+      const status = await addWordToBank(token, '', true)
+      if (status === 'added') added++
+      else if (status === 'duplicate') duplicated++
+      else failed++
+    }
+    uni.showToast({ title: summarizeBatchAdd(added, duplicated, failed), icon: 'none' })
+  } finally {
+    isBatchAdding.value = false
+  }
+}
 
 // 输入的整段文本（翻译结果原文）加入词库，释义直接复用翻译结果
 const addInputToBank = () => addWordToBank(inputText.value, result.value?.translation || '')
@@ -217,8 +290,9 @@ const handleCapture = async () => {
       const ocrRes = await adapter.ocr(capture.base64)
       if (ocrRes.length > 0) {
         ocrResult.value = ocrRes.map(r => r.text).join('\n')
-        // 识别结果分词为词条列表，供一键加入词库
+        // 识别结果分词为词条列表，供一键加入词库；新识别结果默认全选
         ocrTokens.value = extractWordTokens(ocrResult.value)
+        selectedKeys.value = defaultSelectedTokens(ocrTokens.value)
         addedKeys.value = new Set()
         inputText.value = ocrResult.value
         // 自动翻译
@@ -277,7 +351,7 @@ const handleCapture = async () => {
 .translate-btn {
   flex: 1;
   height: 90rpx;
-  background: #1976d2;
+  background: #52796f;
   color: #fff;
   border-radius: 12rpx;
   font-size: 32rpx;
@@ -291,7 +365,7 @@ const handleCapture = async () => {
 .camera-btn {
   width: 200rpx;
   height: 90rpx;
-  background: #4caf50;
+  background: #74937d;
   color: #fff;
   border-radius: 12rpx;
   font-size: 28rpx;
@@ -363,10 +437,58 @@ const handleCapture = async () => {
   gap: 12rpx;
 }
 
+/* 批量操作条 */
+.token-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-bottom: 8rpx;
+}
+
+.toolbar-action {
+  font-size: 26rpx;
+  color: #52796f;
+  padding: 8rpx 4rpx;
+}
+
+.toolbar-action:active {
+  opacity: 0.6;
+}
+
+.token-batch-btn {
+  margin-left: auto;
+  height: 60rpx;
+  line-height: 60rpx;
+  background: #52796f;
+  color: #fff;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  border: none;
+  padding: 0 28rpx;
+}
+
+.token-batch-btn[disabled] {
+  background: #b7c9c2;
+  color: #fff;
+}
+
 .token-item {
   display: flex;
   align-items: center;
   gap: 16rpx;
+  padding: 12rpx 16rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+}
+
+/* 选中态：主色边框高亮 */
+.token-item.selected {
+  border-color: #52796f;
+  background: rgba(82, 121, 111, 0.08);
+}
+
+.token-item:active {
+  background: rgba(82, 121, 111, 0.05);
 }
 
 .token-word {

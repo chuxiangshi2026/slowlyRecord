@@ -21,9 +21,15 @@
     </view>
 
     <view v-else class="review-area">
-      <!-- 进度 -->
+      <!-- 进度 + 自动发音开关 -->
       <view class="progress-bar-top">
-        <text class="progress-text">{{ currentIndex + 1 }} / {{ sessionWords.length }}</text>
+        <view class="progress-row">
+          <text class="progress-text">{{ currentIndex + 1 }} / {{ sessionWords.length }}</text>
+          <view class="autoplay-toggle" @click="toggleAutoPlay">
+            <text class="autoplay-icon">{{ autoPlay ? '🔊' : '🔇' }}</text>
+            <text class="autoplay-label">自动发音</text>
+          </view>
+        </view>
         <view class="progress-track">
           <view class="progress-fill" :style="{ width: progressPercent + '%' }"></view>
         </view>
@@ -199,7 +205,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewState } from '@/stores/useMobileWords'
 import { useSignin } from '@/stores/useSignin'
 import { getTtsAdapter } from '@/adapters/index'
-import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
+import { queryOfflineDict, getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 
 const wordsStore = useMobileWords()
 const signinStore = useSignin()
@@ -209,6 +215,19 @@ const showComplete = ref(false)
 const showDeleteConfirm = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
+
+// 翻面自动发音开关：默认开，持久化到 storage
+const AUTOPLAY_STORAGE_KEY = 'slowlyrecord-review-autoplay'
+const autoPlay = ref(true)
+
+const toggleAutoPlay = () => {
+  autoPlay.value = !autoPlay.value
+  try {
+    uni.setStorageSync(AUTOPLAY_STORAGE_KEY, autoPlay.value)
+  } catch {
+    // 存储失败不影响本次使用
+  }
+}
 
 // 撤销：只保留最近一次的判定快照（字段快照 + 判定类型），配合浮动条撤回
 interface LastJudgement {
@@ -321,6 +340,13 @@ const cardStyle = computed(() => {
 onMounted(() => {
   // 打卡数据用于完成页"去打卡"引导判断
   signinStore.loadRecords()
+  // 恢复自动发音开关设置（默认开）
+  try {
+    const saved = uni.getStorageSync(AUTOPLAY_STORAGE_KEY)
+    if (typeof saved === 'boolean') autoPlay.value = saved
+  } catch {
+    // 读取失败用默认值
+  }
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享，无需重复调用
   // 等数据准备好后尝试恢复未完成的复习会话；恢复不到则自动按当前待复习列表新建会话
   const tryInit = () => {
@@ -473,15 +499,25 @@ const goToWords = () => {
 }
 
 const playWord = () => {
-  if (currentWord.value?.word) {
-    try {
-      const tts = getTtsAdapter()
-      tts.speak(currentWord.value.word, { lang: 'en-US', rate: 0.8 })
-    } catch {
-      // TTS 不可用，静默失败
-    }
+  const word = currentWord.value?.word
+  if (!word) return
+  try {
+    const tts = getTtsAdapter()
+    // 有道发音优先，失败回退谷歌 TTS，均失败静默
+    tts.playAudio(getPronunciationUrl(word, 'us')).catch(() => {
+      tts.playAudio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`).catch(() => {
+        // 发音不可用，静默失败
+      })
+    })
+  } catch {
+    // TTS 不可用，静默失败
   }
 }
+
+// 翻面显示释义时自动发音一次；新词出现（isFlipped 归 false）不播，先让用户回忆
+watch(isFlipped, (flipped) => {
+  if (flipped && autoPlay.value) playWord()
+})
 
 // ==================== 手势处理（微信小程序兼容）====================
 
@@ -807,6 +843,34 @@ const goAfterReview = (url: string) => {
 
 .progress-bar-top {
   padding: 20rpx 0;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.autoplay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 20rpx;
+  background: rgba(255,255,255,0.2);
+  border-radius: 30rpx;
+}
+
+.autoplay-toggle:active {
+  opacity: 0.7;
+}
+
+.autoplay-icon {
+  font-size: 26rpx;
+}
+
+.autoplay-label {
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.9);
 }
 
 .progress-text {
