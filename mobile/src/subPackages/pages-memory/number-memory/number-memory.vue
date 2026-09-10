@@ -17,12 +17,19 @@
       </view>
     </view>
 
-    <!-- 数字桩 tab -->
+    <!-- 桩位配置 tab（默认折叠，前几次配置好后不用常来） -->
     <view v-if="activeTab === 'pegs'" class="content">
+      <!-- 首次配置引导：桩少于 10 个时显示 -->
+      <view v-if="store.associationCount < 10" class="guide-bar">
+        <text>💡 先配置你的数字钩子（已编 {{ store.associationCount }}/100），配好后点"开始练习"就能用了</text>
+      </view>
       <view class="peg-toolbar">
         <view class="peg-stat">
           已编辑 {{ store.associationCount }} / 100
         </view>
+        <button v-if="store.associationCount < 30" class="fill-default-btn" @click="fillDefaults">
+          ⚡ 一键填充推荐桩
+        </button>
         <view class="range-toggle">
           <view
             v-for="r in ranges"
@@ -116,14 +123,15 @@
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useNumberMemory } from '@/stores/useNumberMemory'
+import { fillDefaultPegs, DEFAULT_PEG_SUGGESTIONS } from './default-pegs'
 
 const store = useNumberMemory()
 
 const tabs = [
-  { value: 'pegs', label: '数字桩 0–99' },
   { value: 'entries', label: '数字条目' },
+  { value: 'pegs', label: '桩位配置' },
 ]
-const activeTab = ref<'pegs' | 'entries'>('pegs')
+const activeTab = ref<'entries' | 'pegs'>('entries')
 
 // ============ 数字桩 ============
 
@@ -159,6 +167,18 @@ function onPegClick(num: string) {
   uni.navigateTo({
     url: `/subPackages/pages-memory/number-memory/peg-edit?number=${encodeURIComponent(num)}`,
   })
+}
+
+/** 一键填充推荐桩：只填还没有桩的数字，不覆盖已有 */
+function fillDefaults() {
+  const existing: Record<string, { description: string }> = {}
+  for (const a of store.associations) {
+    existing[a.number] = { description: a.description || '' }
+  }
+  const filled = fillDefaultPegs(existing, (num, desc) => {
+    store.setAssociation({ number: num, description: desc, source: 'preset' })
+  })
+  uni.showToast({ title: filled > 0 ? `已填充 ${filled} 个推荐桩` : '没有可填充的推荐桩', icon: 'none' })
 }
 
 // 数字桩自测：随机报数回忆桩，范围沿用当前选中范围
@@ -312,6 +332,25 @@ onShow(() => store.load())
 .peg-stat {
   font-size: 24rpx;
   color: #666;
+}
+.guide-bar {
+  background: #fdf6ec;
+  border: 1rpx solid #ffe2b8;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  font-size: 24rpx;
+  color: #8a6d1a;
+  margin-bottom: 16rpx;
+}
+.fill-default-btn {
+  background: #52796f;
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 28rpx;
+  padding: 0 20rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  margin-left: 12rpx;
 }
 .range-toggle {
   display: flex;
