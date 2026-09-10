@@ -34,27 +34,55 @@
         </view>
       </swiper-item>
 
-      <!-- 第三屏：行动 -->
+      <!-- 第三屏：行动（多模块起点） -->
       <swiper-item>
         <view class="screen">
-          <text class="screen-title">选一个词库，马上开始</text>
-          <text class="screen-subtitle">先导入前 {{ STARTER_WORD_COUNT }} 词，之后可随时在词库管理续导全部</text>
-          <view class="bank-list">
-            <view
-              v-for="bank in recommendedBanks"
-              :key="bank.sourceId"
-              class="bank-card"
-              :class="{ disabled: importing !== '' }"
-              @click="importBank(bank)"
-            >
-              <text class="bank-emoji">{{ bank.emoji }}</text>
-              <view class="bank-info">
-                <text class="bank-name">{{ bank.name }}</text>
-                <text class="bank-desc">{{ bank.desc }} · 约 {{ bank.wordCount }} 词</text>
+          <text class="screen-title">从哪儿开始？</text>
+          <text class="screen-subtitle">选一个方向马上开始，其余功能之后随时可用</text>
+          <scroll-view scroll-y class="start-scroll">
+            <!-- 单词区 -->
+            <view class="start-section">
+              <text class="section-label">📖 背单词</text>
+              <view
+                v-for="bank in recommendedBanks"
+                :key="bank.sourceId"
+                class="start-card"
+                :class="{ disabled: importing !== '' }"
+                @click="importBank(bank)"
+              >
+                <text class="start-emoji">{{ bank.emoji }}</text>
+                <view class="start-info">
+                  <text class="start-name">{{ bank.name }}</text>
+                  <text class="start-desc">{{ bank.desc }} · 前 {{ STARTER_WORD_COUNT }} 词</text>
+                </view>
+                <text class="start-action">{{ importing === bank.sourceId ? '导入中…' : '开始' }}</text>
               </view>
-              <text class="bank-action">{{ importing === bank.sourceId ? '导入中…' : '导入并开始' }}</text>
             </view>
-          </view>
+            <!-- 文本背诵区 -->
+            <view class="start-section">
+              <text class="section-label">📜 背课文/诗词</text>
+              <view class="start-card" @click="goTextMemory">
+                <text class="start-emoji">📜</text>
+                <view class="start-info">
+                  <text class="start-name">文本背诵</text>
+                  <text class="start-desc">遮挡分段背，先逛逛内置诗词库</text>
+                </view>
+                <text class="start-action plain">去看看</text>
+              </view>
+            </view>
+            <!-- 公式/知识库区 -->
+            <view class="start-section">
+              <text class="section-label">📐 记公式/知识点</text>
+              <view class="start-card" @click="goKnowledge">
+                <text class="start-emoji">📐</text>
+                <view class="start-info">
+                  <text class="start-name">知识库</text>
+                  <text class="start-desc">数学公式、元素周期表等 35 个知识包</text>
+                </view>
+                <text class="start-action plain">去看看</text>
+              </view>
+            </view>
+          </scroll-view>
           <text class="skip-btn" @click="skip">跳过，随便看看</text>
         </view>
       </swiper-item>
@@ -109,6 +137,17 @@ function finish() {
 
 function skip() {
   finish()
+}
+
+// 文本背诵/知识库入口：写标记后跳对应模块（分包页用 navigateTo）
+function goTextMemory() {
+  markOnboarded()
+  uni.navigateTo({ url: '/subPackages/pages-memory/text-memory/import' })
+}
+
+function goKnowledge() {
+  markOnboarded()
+  uni.navigateTo({ url: '/subPackages/pages-knowledge/knowledge-list' })
 }
 
 // 一键导入推荐词库的前 STARTER_WORD_COUNT 词到默认词库，随后进首页
@@ -180,6 +219,19 @@ async function importBank(bank: RecommendedBank & { wordCount: number }) {
 .bank-desc { font-size: 24rpx; color: #888; margin-top: 6rpx; display: block; }
 .bank-action { font-size: 26rpx; color: #fff; background: #52796f; border-radius: 32rpx; padding: 14rpx 28rpx; }
 .skip-btn { font-size: 28rpx; color: #a0b3ab; margin-top: 20rpx; padding: 16rpx 40rpx; }
+
+/* 行动屏多模块起点 */
+.start-scroll { width: 100%; max-height: 55vh; }
+.start-section { margin-bottom: 28rpx; }
+.section-label { font-size: 26rpx; color: #74937d; font-weight: bold; margin-bottom: 12rpx; display: block; }
+.start-card { display: flex; align-items: center; background: #fff; border-radius: 20rpx; padding: 24rpx 30rpx; margin-bottom: 16rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
+.start-card.disabled { opacity: 0.6; }
+.start-emoji { font-size: 44rpx; margin-right: 20rpx; }
+.start-info { flex: 1; }
+.start-name { font-size: 30rpx; font-weight: bold; color: #333; display: block; }
+.start-desc { font-size: 24rpx; color: #888; margin-top: 4rpx; display: block; }
+.start-action { font-size: 24rpx; color: #fff; background: #52796f; border-radius: 28rpx; padding: 10rpx 24rpx; }
+.start-action.plain { background: #eaf1ea; color: #52796f; }
 
 .dots { position: absolute; bottom: 60rpx; left: 0; right: 0; display: flex; justify-content: center; gap: 16rpx; }
 .dot { width: 16rpx; height: 16rpx; border-radius: 50%; background: #c8d6d0; }
