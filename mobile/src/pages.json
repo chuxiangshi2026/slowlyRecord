@@ -163,6 +163,12 @@
           }
         },
         {
+          "path": "memory-palace/edit",
+          "style": {
+            "navigationBarTitleText": "创建宫殿"
+          }
+        },
+        {
           "path": "memory-palace/review",
           "style": {
             "navigationBarTitleText": "过一遍宫殿"

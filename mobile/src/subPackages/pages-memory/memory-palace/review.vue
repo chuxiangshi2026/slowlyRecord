@@ -68,7 +68,21 @@
       </view>
       <view class="review-nav">
         <text class="nav-btn" :class="{ disabled: currentIndex === 0 }" @click="prev">‹ 上一个</text>
+        <text class="nav-btn edit-content" @click="showPegEdit = true">挂内容</text>
         <text class="nav-btn" @click="next">跳过 ›</text>
+      </view>
+    </view>
+
+    <!-- 桩内容编辑弹层 -->
+    <view v-if="showPegEdit" class="peg-edit-overlay" @click="showPegEdit = false">
+      <view class="peg-edit-sheet" @click.stop>
+        <text class="peg-edit-title">#{{ currentLocus?.order }} {{ currentLocus?.name }}</text>
+        <textarea v-model="pegFreeText" class="peg-edit-input" placeholder="要记的内容（如：圆周率前 10 位）" maxlength="200" />
+        <input v-model="pegMnemonic" class="peg-edit-mnemonic" placeholder="助记口诀（可选）" maxlength="50" />
+        <view class="peg-edit-actions">
+          <button class="btn plain" @click="removePegContent" v-if="currentPeg">移除内容</button>
+          <button class="btn primary" @click="savePegContent">保存</button>
+        </view>
       </view>
     </view>
   </view>
@@ -102,6 +116,39 @@ const finished = ref(false)
 const stats = ref({ remembered: 0, forgotten: 0, skipped: 0 })
 // 已评/已跳过桩序号，返回重评时不重复累计
 const assessedOrders = ref(new Set<number>())
+
+// 桩内容编辑弹层
+const showPegEdit = ref(false)
+const pegFreeText = ref('')
+const pegMnemonic = ref('')
+
+watch(showPegEdit, (show) => {
+  if (show) {
+    pegFreeText.value = currentPeg.value?.freeText || ''
+    pegMnemonic.value = currentPeg.value?.mnemonic || ''
+  }
+})
+
+function savePegContent() {
+  const order = currentLocus.value?.order
+  if (order === undefined) return
+  const text = pegFreeText.value.trim()
+  if (!text) {
+    uni.showToast({ title: '请输入内容', icon: 'none' })
+    return
+  }
+  palaceStore.setPegContent(palaceId.value, order, text, pegMnemonic.value.trim() || undefined)
+  showPegEdit.value = false
+  uni.showToast({ title: '已保存', icon: 'success' })
+}
+
+function removePegContent() {
+  const order = currentLocus.value?.order
+  if (order === undefined) return
+  palaceStore.removePegContent(palaceId.value, order)
+  showPegEdit.value = false
+  uni.showToast({ title: '已移除', icon: 'success' })
+}
 
 const sortedLoci = computed<MobilePalaceLocus[]>(() => {
   if (!palace.value) return []
@@ -411,6 +458,72 @@ watch(recallMode, () => {
 
 .nav-btn.disabled {
   color: #ccc;
+}
+
+.nav-btn.edit-content {
+  color: #74937d;
+  font-size: 24rpx;
+}
+
+/* 桩内容编辑弹层 */
+.peg-edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.peg-edit-sheet {
+  width: 100%;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 40rpx 30rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.peg-edit-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.peg-edit-input {
+  width: 100%;
+  height: 160rpx;
+  border: 1rpx solid #e0e6e2;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  background: #fafcfa;
+  box-sizing: border-box;
+}
+
+.peg-edit-mnemonic {
+  width: 100%;
+  margin-top: 16rpx;
+  border: 1rpx solid #e0e6e2;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  font-size: 26rpx;
+  background: #fafcfa;
+  box-sizing: border-box;
+}
+
+.peg-edit-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 24rpx;
+}
+
+.peg-edit-actions .btn {
+  flex: 1;
 }
 
 .finished {

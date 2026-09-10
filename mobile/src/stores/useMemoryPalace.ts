@@ -126,7 +126,135 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     return updated
   }
 
-  // ===== 同步 collect / restore =====
+  // ===== 创建 / 编辑 =====
+
+  /** 生成新宫殿 ID */
+  function newPalaceId(): string {
+    return 'palace-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6)
+  }
+
+  /** 创建宫殿（仅名称，桩位后续逐个添加） */
+  function createPalace(name: string): MobilePalace {
+    load()
+    const now = Date.now()
+    const palace: MobilePalace = {
+      _id: newPalaceId(),
+      name,
+      loci: [],
+      ctime: now,
+      utime: now,
+    }
+    palaces.value = [...palaces.value, palace]
+    persistPalaces()
+    return palace
+  }
+
+  /** 更新宫殿名称 */
+  function updatePalace(palaceId: string, name: string) {
+    load()
+    palaces.value = palaces.value.map(p =>
+      p._id === palaceId ? { ...p, name, utime: Date.now() } : p
+    )
+    persistPalaces()
+  }
+
+  /** 删除宫殿（连带桩挂载） */
+  function deletePalace(palaceId: string) {
+    load()
+    palaces.value = palaces.value.filter(p => p._id !== palaceId)
+    delete pegsMap.value[palaceId]
+    persistPalaces()
+    const db = getDbAdapter()
+    db.remove(pegsDocId(palaceId))
+  }
+
+  /** 添加桩位 */
+  function addLocus(palaceId: string, locus: { name: string; description?: string; imageUrl?: string }) {
+    load()
+    const palace = getPalace(palaceId)
+    if (!palace) return
+    const order = palace.loci.length + 1
+    palaces.value = palaces.value.map(p =>
+      p._id === palaceId ? { ...p, loci: [...p.loci, { order, ...locus }], utime: Date.now() } : p
+    )
+    persistPalaces()
+  }
+
+  /** 更新桩位 */
+  function updateLocus(palaceId: string, order: number, patch: Partial<MobilePalaceLocus>) {
+    load()
+    palaces.value = palaces.value.map(p =>
+      p._id === palaceId
+        ? { ...p, loci: p.loci.map(l => l.order === order ? { ...l, ...patch } : l), utime: Date.now() }
+        : p
+    )
+    persistPalaces()
+  }
+
+  /** 删除桩位（重排剩余桩的 order） */
+  function removeLocus(palaceId: string, order: number) {
+    load()
+    const palace = getPalace(palaceId)
+    if (!palace) return
+    const nextLoci = palace.loci.filter(l => l.order !== order).map((l, i) => ({ ...l, order: i + 1 }))
+    palaces.value = palaces.value.map(p =>
+      p._id === palaceId ? { ...p, loci: nextLoci, utime: Date.now() } : p
+    )
+    persistPalaces()
+    // 删除对应桩挂载并重排剩余挂载的 locusOrder
+    const items = (pegsMap.value[palaceId] || []).filter(p => p.locusOrder !== order)
+      .map((p, i) => ({ ...p, locusOrder: i + 1 }))
+    pegsMap.value = { ...pegsMap.value, [palaceId]: items }
+    persistPegs(palaceId)
+  }
+
+  /** 桩位上下移动 */
+  function moveLocus(palaceId: string, order: number, dir: -1 | 1) {
+    load()
+    const palace = getPalace(palaceId)
+    if (!palace) return
+    const idx = palace.loci.findIndex(l => l.order === order)
+    const target = idx + dir
+    if (idx < 0 || target < 0 || target >= palace.loci.length) return
+    const nextLoci = [...palace.loci]
+    ;[nextLoci[idx], nextLoci[target]] = [nextLoci[target], nextLoci[idx]]
+    // 重排 order 保持连续
+    nextLoci.forEach((l, i) => { l.order = i + 1 })
+    palaces.value = palaces.value.map(p =>
+      p._id === palaceId ? { ...p, loci: nextLoci, utime: Date.now() } : p
+    )
+    persistPalaces()
+  }
+
+  /** 给桩挂内容（纯文字 + 助记） */
+  function setPegContent(palaceId: string, locusOrder: number, freeText: string, mnemonic?: string) {
+    load()
+    const items = pegsMap.value[palaceId] || []
+    const idx = items.findIndex(p => p.locusOrder === locusOrder)
+    if (idx >= 0) {
+      const next = [...items]
+      next[idx] = { ...next[idx], freeText, mnemonic }
+      pegsMap.value = { ...pegsMap.value, [palaceId]: next }
+    } else {
+      const peg: MobilePegItem = {
+        _id: 'peg-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6),
+        palaceId,
+        locusOrder,
+        freeText,
+        mnemonic,
+      }
+      pegsMap.value = { ...pegsMap.value, [palaceId]: [...items, peg].sort((a, b) => a.locusOrder - b.locusOrder) }
+    }
+    persistPegs(palaceId)
+  }
+
+  /** 移除桩上挂载内容 */
+  function removePegContent(palaceId: string, locusOrder: number) {
+    load()
+    const items = (pegsMap.value[palaceId] || []).filter(p => p.locusOrder !== locusOrder)
+    pegsMap.value = { ...pegsMap.value, [palaceId]: items }
+    persistPegs(palaceId)
+  }
 
   /** 收集记忆宫殿用于同步（无宫殿返回 null，避免无意义负载） */
   function collectSync(): MobileMemoryPalace | null {
@@ -175,5 +303,14 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     assess,
     collectSync,
     restoreSync,
+    createPalace,
+    updatePalace,
+    deletePalace,
+    addLocus,
+    updateLocus,
+    removeLocus,
+    moveLocus,
+    setPegContent,
+    removePegContent,
   }
 })
