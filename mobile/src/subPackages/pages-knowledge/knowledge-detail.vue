@@ -12,16 +12,19 @@
           <text v-if="dueCount > 0" class="stat-chip due-chip">待复习 {{ dueCount }}</text>
         </view>
 
-        <!-- 练习入口 -->
+        <!-- 练习入口（副标题一句话说明玩法） -->
         <view class="practice-actions">
           <button class="btn-practice flip" @click="goPractice('flip')">
             🔄 翻卡练习
+            <text class="btn-practice-sub">看问题，自己回忆答案</text>
           </button>
           <button class="btn-practice choice" @click="goPractice('choice')">
             🎯 四选一
+            <text class="btn-practice-sub">从四个选项里选答案</text>
           </button>
           <button class="btn-practice spell" @click="goPractice('spell')">
             🧩 拼答案
+            <text class="btn-practice-sub">点碎片把答案拼出来</text>
           </button>
         </view>
       </view>
@@ -425,11 +428,23 @@ onLoad(async (opt: any) => {
 
 .btn-practice {
   flex: 1;
-  height: 84rpx;
+  min-height: 84rpx;
   border-radius: 42rpx;
   font-size: 28rpx;
   border: none;
-  line-height: 84rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 8rpx;
+  line-height: 1.3;
+}
+
+/* 玩法一句话说明 */
+.btn-practice-sub {
+  font-size: 20rpx;
+  opacity: 0.75;
+  margin-top: 4rpx;
 }
 
 .btn-practice.flip {

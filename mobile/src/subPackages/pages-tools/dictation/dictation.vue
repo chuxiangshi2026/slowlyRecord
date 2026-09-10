@@ -190,7 +190,7 @@
           <text>释义</text>
         </view>
         <view class="toggle-btn" :class="{ active: partialMode }" @click="togglePartialMode">
-          <text>半提示</text>
+          <text>给一半字母</text>
         </view>
         <view class="toggle-btn tap-toggle" :class="{ 'tap-on': tapMode }" @click="toggleTapMode">
           <text>点选</text>
