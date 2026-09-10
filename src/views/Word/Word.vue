@@ -1919,6 +1919,16 @@ const handleChildMessage = (message: any) => {
   const src = typeof message === 'object' ? (message.source ?? payload?.source) : undefined;
   if (src === 'text') return;
 
+  // at 去重：同一动作可能经 IPC + DB 轮询两条通道各到一次
+  const actionAt = Number(message.at || 0);
+  if (actionAt && actionAt <= lastHandledFocusModeActionAt) {
+    console.log('[handleChildMessage] 动作已处理过(at 去重):', actionAt);
+    return;
+  }
+  if (actionAt) {
+    lastHandledFocusModeActionAt = actionAt;
+  }
+
   console.log('[handleChildMessage] 消息通道:', channel, 'payload:', payload);
 
   if (channel === 'openWordList') {
@@ -1978,6 +1988,21 @@ const handleChildMessage = (message: any) => {
         }
       } catch (e) {
         console.error('[handleChildMessage] 聚焦专注窗口失败:', e);
+      }
+    }
+  } else if (channel === 'settingsChanged') {
+    console.log('[handleChildMessage] 处理 settingsChanged，payload:', payload);
+    // 子窗口请求更新 user-set.focusMode 设置，由父窗口统一写入避免 _rev 冲突
+    if (payload && typeof payload === 'object') {
+      updateFocusModeDoc((focusMode) => {
+        Object.entries(payload).forEach(([k, v]) => {
+          (focusMode as any)[k] = v;
+        });
+      });
+      if (wordsStore.focusMode) {
+        Object.entries(payload).forEach(([k, v]) => {
+          (wordsStore.focusMode as any)[k] = v;
+        });
       }
     }
   } else {
@@ -2097,6 +2122,7 @@ const openFocusMode = async (mode = '') => {
         }
       });
       api.onChildDbPut((doc: any) => { handleFocusChildDbPut(doc); });
+      api.onFocusChildAction((data: any) => { handleChildMessage(data); });
       startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
       setTimeout(() => { setupEdgeStick(); }, 500);
       setupMessageListener();

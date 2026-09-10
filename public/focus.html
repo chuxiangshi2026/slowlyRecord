@@ -1755,26 +1755,7 @@
 
     // 通知主窗口单词发生了变化
     function postWordChanged(word) {
-      // 通过 storage 事件通知主窗口
-      try {
-        var action = {
-          type: 'wordChanged',
-          payload: { word: JSON.parse(JSON.stringify(word)) },
-          at: Date.now()
-        };
-        localStorage.setItem(FOCUS_MODE_ACTION_STORAGE_KEY, JSON.stringify(action));
-      } catch (e) {
-        console.error('[专注模式] 发送单词变更通知失败:', e);
-      }
-
-      // 通过 utools 直接通信
-      if (typeof utools !== 'undefined' && utools.sendToParent) {
-        try {
-          utools.sendToParent('wordChanged', { word: JSON.parse(JSON.stringify(word)) });
-        } catch (e) {
-          console.error('[专注模式] 通过 utools 发送通知失败:', e);
-        }
-      }
+      postFocusModeAction('wordChanged', { word: JSON.parse(JSON.stringify(word)) }, { persistPendingAction: true });
     }
 
     // 判断当前单词是否应该保留在当前列表模式中
@@ -3158,18 +3139,8 @@
 
 
     function saveFocusModeSetting(key, value) {
-      try {
-        const userSetDoc = getUserSetDoc();
-        if (!userSetDoc) {
-          console.warn('[专注模式] 未找到 user-set 配置文档，保存失败');
-          return;
-        }
-        if (!userSetDoc.focusMode) userSetDoc.focusMode = {};
-        userSetDoc.focusMode[key] = value;
-        utools.db.put(userSetDoc);
-      } catch (e) {
-        console.error('保存设置失败:', e);
-      }
+      // 不再直接 utools.db.put(userSetDoc)，改为发 settingsChanged 动作由父窗口统一写入
+      postFocusModeAction('settingsChanged', { [key]: value }, { persistPendingAction: true });
     }
 
     function saveFocusModePendingAction(type, payload, at = Date.now()) {
@@ -3184,7 +3155,7 @@
           at,
           source: textMode ? 'text' : 'word',
         };
-        utools.db.put(userSetDoc);
+        putWithRetry(userSetDoc);
       } catch (e) {
         console.error('[专注模式] 保存待处理动作失败:', e);
       }
