@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/onboarding/onboarding",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/words/words",
       "style": {
         "navigationBarTitleText": "单词列表"
