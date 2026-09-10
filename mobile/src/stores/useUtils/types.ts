@@ -110,6 +110,10 @@ export interface MobileTextArticle {
   utime: number
   reviewCount: number
   lastReviewTime?: number
+  /** 轻量复习调度：记忆等级（0-12，缺省按 0 处理） */
+  level?: number
+  /** 轻量复习调度：下次到期复习时间戳（ms），空视为到期 */
+  nextReview?: number
 }
 
 export interface MobileTextNote {
@@ -162,6 +166,10 @@ export interface MobileNumberAssociation {
   /** 后期升级图片字段，第一阶段留空 */
   imageUrl?: string
   imageSource?: 'base64' | 'local' | 'remote' | 'preset'
+  /** 轻量复习调度：记忆等级（0-12，缺省按 0 处理） */
+  level?: number
+  /** 轻量复习调度：下次到期复习时间戳（ms），空视为到期 */
+  nextReview?: number
 }
 
 export interface MobileNumberEntry {
@@ -175,6 +183,10 @@ export interface MobileNumberEntry {
   updatedAt: number
   reviewCount: number
   lastReviewTime?: number
+  /** 轻量复习调度：记忆等级（0-12，缺省按 0 处理） */
+  level?: number
+  /** 轻量复习调度：下次到期复习时间戳（ms），空视为到期 */
+  nextReview?: number
 }
 
 export interface MobileNumberNote {

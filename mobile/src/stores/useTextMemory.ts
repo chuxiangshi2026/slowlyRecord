@@ -7,6 +7,11 @@ import type {
   MobileTextMemory,
 } from './useUtils/types'
 import { parseLocation } from '../utils/poetry-location'
+import {
+  isPracticeDue,
+  scheduleOnRemembered,
+  scheduleOnForgotten,
+} from '../utils/practice-srs'
 
 /**
  * 文本记忆 store（移动端）
@@ -16,6 +21,7 @@ import { parseLocation } from '../utils/poetry-location'
  * - 单 key 命名 `slowlyrecord-textmemory-data`，与桌面端 TEXTMEMORY_DOC_ID 对齐
  *
  * 已实现：列表/添加/编辑/删除文章 + 内置库导入 + 批量粘贴 + 导入页地图 Tab(标点/作者生平路线)
+ *          + 遮挡回忆自测（recall.vue，自评接轻量复习调度 level/nextReview）
  * 不实现：跟打/填空/选择题/文件导入/AI 搜索
  */
 
@@ -95,6 +101,21 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     articles.value.forEach((a) => a.category && set.add(a.category))
     return Array.from(set)
   })
+
+  /** 到期待复习的文章列表（按到期时间升序） */
+  const dueArticles = computed(() =>
+    articles.value
+      .filter((a) => isPracticeDue(a.nextReview))
+      .sort((a, b) => (a.nextReview || 0) - (b.nextReview || 0)),
+  )
+
+  /** 到期待复习篇数（首页今日任务区等展示用） */
+  const dueArticleCount = computed(() => dueArticles.value.length)
+
+  /** 单篇文章是否到期待复习 */
+  function isArticleDue(article: MobileTextArticle): boolean {
+    return isPracticeDue(article.nextReview)
+  }
 
   function notesOf(articleId: string): MobileTextNote[] {
     return notes.value
@@ -220,6 +241,28 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     return articles.value.length !== before
   }
 
+  /**
+   * 遮挡回忆自评结果落库：更新复习调度（level / nextReview）与统计
+   * remembered=true 表示「记住了」，false 表示「还没记住」
+   */
+  function rateArticle(id: string, remembered: boolean, now: number = Date.now()) {
+    const idx = articles.value.findIndex((a) => a._id === id)
+    if (idx < 0) return false
+    const prev = articles.value[idx]
+    const schedule = remembered
+      ? scheduleOnRemembered(prev.level, now)
+      : scheduleOnForgotten(prev.level, now)
+    articles.value[idx] = {
+      ...prev,
+      level: schedule.level,
+      nextReview: schedule.nextReview,
+      lastReviewTime: now,
+      reviewCount: (prev.reviewCount || 0) + 1,
+    }
+    persist()
+    return true
+  }
+
   // ===== 笔记 / 提示词（最小实现，暂不开放 UI 也保持数据完整） =====
 
   function addNote(articleId: string, content: string, selectedText?: string) {
@@ -328,6 +371,9 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     sortedArticles,
     allTags,
     allCategories,
+    dueArticles,
+    dueArticleCount,
+    isArticleDue,
     notesOf,
     promptsOf,
     // actions
@@ -336,6 +382,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     addArticles,
     updateArticle,
     deleteArticle,
+    rateArticle,
     addNote,
     deleteNote,
     addPrompt,

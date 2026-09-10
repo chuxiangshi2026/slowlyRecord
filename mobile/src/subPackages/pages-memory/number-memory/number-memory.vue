@@ -36,6 +36,10 @@
         </view>
       </view>
 
+      <button class="practice-btn" @click="goPracticePegs">
+        <text>🎯 开始练习（随机报数，回忆桩）</text>
+      </button>
+
       <view class="peg-grid">
         <view
           v-for="num in pegNumbers"
@@ -72,6 +76,10 @@
         />
         <button class="entry-add-btn" @click="goAddEntry">＋ 添加</button>
       </view>
+
+      <button class="practice-btn" @click="goPracticeEntries">
+        <text>🎯 开始练习（看标题回忆数字）</text>
+      </button>
 
       <view v-if="filteredEntries.length === 0" class="entry-empty">
         <text class="empty-icon">🔢</text>
@@ -150,6 +158,28 @@ function assoc(num: string) {
 function onPegClick(num: string) {
   uni.navigateTo({
     url: `/subPackages/pages-memory/number-memory/peg-edit?number=${encodeURIComponent(num)}`,
+  })
+}
+
+// 数字桩自测：随机报数回忆桩，范围沿用当前选中范围
+function goPracticePegs() {
+  if (store.associationCount === 0) {
+    uni.showToast({ title: '先点数字编几个桩吧', icon: 'none' })
+    return
+  }
+  uni.navigateTo({
+    url: `/subPackages/pages-memory/number-memory/practice?mode=pegs&range=${pegRange.value}`,
+  })
+}
+
+// 条目回忆：看标题回忆数字串
+function goPracticeEntries() {
+  if (store.totalEntries === 0) {
+    uni.showToast({ title: '先添加几条数字条目吧', icon: 'none' })
+    return
+  }
+  uni.navigateTo({
+    url: `/subPackages/pages-memory/number-memory/practice?mode=entries`,
   })
 }
 
@@ -377,6 +407,19 @@ onShow(() => store.load())
   border-radius: 38rpx;
   border: none;
   margin: 0;
+}
+
+/* 自测练习入口 */
+.practice-btn {
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+  background: #52796f;
+  color: #fff;
+  font-size: 26rpx;
+  border-radius: 42rpx;
+  border: none;
+  margin: 0 0 20rpx;
 }
 
 .entry-empty {

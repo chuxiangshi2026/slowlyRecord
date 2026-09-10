@@ -1,6 +1,11 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDbAdapter } from '@/adapters/index'
+import {
+  isPracticeDue,
+  scheduleOnRemembered,
+  scheduleOnForgotten,
+} from '../utils/practice-srs'
 import type {
   MobileNumberAssociation,
   MobileNumberEntry,
@@ -13,6 +18,7 @@ import type {
  * 数字记忆 store（移动端）
  *
  * 桩位支持文字（type='text'）与图片（type='image'，base64 dataURL）两种形态
+ * 自测练习（practice.vue）：报数回忆桩 / 条目回忆，自评接轻量复习调度 level/nextReview
  * 持久化：DB 适配器单 doc（超过 900KB 自动分块，兼容图片 base64）
  */
 
@@ -118,6 +124,32 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     return associationMap.value.has(number)
   }
 
+  /** 某数字桩是否到期待复习 */
+  function isAssociationDue(number: string): boolean {
+    const assoc = associationMap.value.get(number)
+    return isPracticeDue(assoc?.nextReview)
+  }
+
+  /** 某数字条目是否到期待复习 */
+  function isEntryDue(id: string): boolean {
+    const entry = entries.value.find((e) => e._id === id)
+    return isPracticeDue(entry?.nextReview)
+  }
+
+  /** 到期待复习的数字桩（按到期时间升序） */
+  const dueAssociations = computed(() =>
+    associations.value
+      .filter((a) => isPracticeDue(a.nextReview))
+      .sort((a, b) => (a.nextReview || 0) - (b.nextReview || 0)),
+  )
+
+  /** 到期待复习的数字条目（按到期时间升序） */
+  const dueEntries = computed(() =>
+    entries.value
+      .filter((e) => isPracticeDue(e.nextReview))
+      .sort((a, b) => (a.nextReview || 0) - (b.nextReview || 0)),
+  )
+
   // ===== 加载 / 持久化 =====
 
   function load() {
@@ -183,6 +215,19 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     if (associations.value.length !== before) persist()
   }
 
+  /** 数字桩自评落库：更新复习调度（level / nextReview） */
+  function rateAssociation(number: string, remembered: boolean, now: number = Date.now()) {
+    const idx = associations.value.findIndex((a) => a.number === number)
+    if (idx < 0) return false
+    const prev = associations.value[idx]
+    const schedule = remembered
+      ? scheduleOnRemembered(prev.level, now)
+      : scheduleOnForgotten(prev.level, now)
+    associations.value[idx] = { ...prev, level: schedule.level, nextReview: schedule.nextReview }
+    persist()
+    return true
+  }
+
   function clearAllAssociations() {
     if (associations.value.length === 0) return
     associations.value = []
@@ -228,6 +273,25 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     notes.value = notes.value.filter((n) => n.entryId !== id)
     prompts.value = prompts.value.filter((p) => p.entryId !== id)
     if (entries.value.length !== before) persist()
+  }
+
+  /** 数字条目自评落库：更新复习调度（level / nextReview）与统计 */
+  function rateEntry(id: string, remembered: boolean, now: number = Date.now()) {
+    const idx = entries.value.findIndex((e) => e._id === id)
+    if (idx < 0) return false
+    const prev = entries.value[idx]
+    const schedule = remembered
+      ? scheduleOnRemembered(prev.level, now)
+      : scheduleOnForgotten(prev.level, now)
+    entries.value[idx] = {
+      ...prev,
+      level: schedule.level,
+      nextReview: schedule.nextReview,
+      lastReviewTime: now,
+      reviewCount: (prev.reviewCount || 0) + 1,
+    }
+    persist()
+    return true
   }
 
   // ===== 同步辅助 =====
@@ -320,14 +384,20 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     associationMap,
     getAssociation,
     hasAssociation,
+    isAssociationDue,
+    isEntryDue,
+    dueAssociations,
+    dueEntries,
     // actions
     load,
     setAssociation,
     deleteAssociation,
     clearAllAssociations,
+    rateAssociation,
     addEntry,
     updateEntry,
     deleteEntry,
+    rateEntry,
     // sync
     collect,
     restore,

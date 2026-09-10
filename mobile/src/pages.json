@@ -91,6 +91,12 @@
           }
         },
         {
+          "path": "number-memory/practice",
+          "style": {
+            "navigationBarTitleText": "数字自测"
+          }
+        },
+        {
           "path": "text-memory/text-memory",
           "style": {
             "navigationBarTitleText": "文本记忆"
@@ -106,6 +112,12 @@
           "path": "text-memory/import",
           "style": {
             "navigationBarTitleText": "导入文本"
+          }
+        },
+        {
+          "path": "text-memory/recall",
+          "style": {
+            "navigationBarTitleText": "遮挡回忆"
           }
         },
         {
@@ -129,13 +141,13 @@
         {
           "path": "phonetic-memory/phonetic-minimal-pairs",
           "style": {
-            "navigationBarTitleText": "最小对立对"
+            "navigationBarTitleText": "辨音练习"
           }
         },
         {
           "path": "phonetic-memory/phonetic-breakdown",
           "style": {
-            "navigationBarTitleText": "音素拆解"
+            "navigationBarTitleText": "拆音练习"
           }
         },
         {
@@ -147,7 +159,7 @@
         {
           "path": "memory-palace/review",
           "style": {
-            "navigationBarTitleText": "宫殿巡视"
+            "navigationBarTitleText": "过一遍宫殿"
           }
         }
       ]

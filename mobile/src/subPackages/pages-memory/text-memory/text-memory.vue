@@ -63,6 +63,7 @@
       >
         <view class="article-header">
           <text class="article-title">{{ article.title }}</text>
+          <text v-if="store.isArticleDue(article)" class="due-badge">待复习</text>
           <view
             class="more-btn"
             @click.stop="onMoreClick(article)"
@@ -115,7 +116,8 @@
         <text v-if="detailArticle.source" class="detail-source">出处：{{ detailArticle.source }}</text>
         <view class="detail-actions">
           <button class="detail-btn secondary" @click="detailArticle = null">关闭</button>
-          <button class="detail-btn primary" @click="onEditFromDetail">编辑</button>
+          <button class="detail-btn secondary" @click="onEditFromDetail">编辑</button>
+          <button class="detail-btn primary" @click="onRecallFromDetail">开始背诵</button>
         </view>
       </view>
     </view>
@@ -183,6 +185,16 @@ function onEditFromDetail() {
   const a = detailArticle.value
   detailArticle.value = null
   goEdit(a)
+}
+
+// 进入遮挡回忆页（零键盘背诵：点击揭示 + 自评）
+function onRecallFromDetail() {
+  if (!detailArticle.value) return
+  const a = detailArticle.value
+  detailArticle.value = null
+  uni.navigateTo({
+    url: `/subPackages/pages-memory/text-memory/recall?id=${encodeURIComponent(a._id)}`,
+  })
 }
 
 function goAdd() {
@@ -344,6 +356,15 @@ function confirmDelete(article: MobileTextArticle) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.due-badge {
+  flex-shrink: 0;
+  font-size: 20rpx;
+  padding: 2rpx 14rpx;
+  border-radius: 14rpx;
+  background: #fdecec;
+  color: #d4564e;
+  margin-right: 8rpx;
 }
 .more-btn {
   width: 60rpx;
