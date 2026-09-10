@@ -2,7 +2,7 @@
   <view class="breakdown-page">
     <!-- 顶部 -->
     <view class="header">
-      <text class="title">音素拆解</text>
+      <text class="title">拆音练习</text>
       <view class="stats">
         <text class="stat correct">✓ {{ correctCount }}</text>
         <text class="stat wrong">✗ {{ wrongCount }}</text>
@@ -14,7 +14,7 @@
 
     <!-- 答题区 -->
     <view v-if="currentQ && !finished" class="quiz">
-      <text class="quiz-prompt">把单词的音标拆成音素（{{ difficultyLabel(currentQ.word.difficulty) }}）</text>
+      <text class="quiz-prompt">把单词的音标拆成一个个音（{{ difficultyLabel(currentQ.word.difficulty) }}）</text>
 
       <view class="word-display" @click="speakTarget">
         <text class="word-text">{{ currentQ.word.word }}</text>
@@ -74,7 +74,10 @@
         <text class="result-num wrong">{{ wrongCount }}</text>
         <text class="result-label">答错</text>
       </view>
+      <text class="result-accuracy">正确率 {{ accuracy }}%</text>
+      <text class="result-encourage">{{ encourageText }}</text>
       <button class="btn-restart" @click="restart">再来一组</button>
+      <button class="btn-back" @click="goReview">📚 去复习单词</button>
       <button class="btn-back" @click="goBack">返回音标表</button>
     </view>
   </view>
@@ -87,6 +90,7 @@ import { BREAKDOWN_WORDS, breakdownPhonetic, type BreakdownWord } from '@/utils/
 import { ALL_PHONEMES, type Phoneme } from '@/utils/phoneme-data'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { getTtsAdapter } from '@/adapters/index'
+import { getEncourageText } from '@/utils/encourage'
 
 const TOTAL = 10
 const phoneticStore = usePhoneticMemory()
@@ -120,6 +124,8 @@ const slotCorrect = ref<boolean[]>([])
 const answered = ref(false)
 const finished = ref(false)
 const shaking = ref(false)
+// 完成页鼓励语：每组开始时刷新
+const encourageText = ref(getEncourageText())
 
 const currentQ = computed<BreakdownQuestion | null>(() => questions.value[currentIndex.value] || null)
 
@@ -195,6 +201,7 @@ async function startSession() {
   correctCount.value = 0
   wrongCount.value = 0
   finished.value = false
+  encourageText.value = getEncourageText()
   setupQuiz()
   setTimeout(speakTarget, 300)
 }
@@ -275,6 +282,11 @@ function restart() {
 
 function goBack() {
   uni.navigateBack()
+}
+
+// 完成页引导：去主复习页接着练单词
+function goReview() {
+  uni.switchTab({ url: '/pages/review/review' })
 }
 
 onLoad(() => {
@@ -546,6 +558,21 @@ onLoad(() => {
   font-size: 26rpx;
   color: #999;
   margin-right: 20rpx;
+}
+
+.result-accuracy {
+  font-size: 28rpx;
+  color: #667eea;
+  margin-top: 16rpx;
+}
+
+.result-encourage {
+  font-size: 26rpx;
+  color: #52796f;
+  margin-top: 24rpx;
+  text-align: center;
+  line-height: 1.6;
+  padding: 0 30rpx;
 }
 
 .btn-restart {

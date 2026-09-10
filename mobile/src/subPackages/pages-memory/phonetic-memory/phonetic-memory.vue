@@ -4,11 +4,11 @@
     <view class="progress-row">
       <view class="progress-stat">
         <text class="stat-num">{{ phoneticStore.masteredCount }}<text class="stat-total">/48</text></text>
-        <text class="stat-label">已掌握音素</text>
+        <text class="stat-label">已掌握音</text>
       </view>
       <view class="progress-stat">
         <text class="stat-num" :class="{ active: phoneticStore.dueCount > 0 }">{{ phoneticStore.dueCount }}</text>
-        <text class="stat-label">待练习音素</text>
+        <text class="stat-label">待练习音</text>
       </view>
     </view>
 
@@ -26,13 +26,13 @@
       </view>
       <view class="practice-card" @click="goMinimalPairs">
         <text class="card-icon">🎧</text>
-        <text class="card-title">最小对立对</text>
+        <text class="card-title">辨音练习</text>
         <text class="card-desc">听音 → 二选一</text>
       </view>
       <view class="practice-card" @click="goBreakdown">
         <text class="card-icon">🧩</text>
-        <text class="card-title">音素拆解</text>
-        <text class="card-desc">单词 → 拼音素</text>
+        <text class="card-title">拆音练习</text>
+        <text class="card-desc">单词 → 拆成音</text>
       </view>
     </view>
 

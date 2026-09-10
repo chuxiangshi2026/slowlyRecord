@@ -76,7 +76,7 @@
             <view class="pack-main">
               <text class="pack-name">{{ info.name }}</text>
               <text class="pack-desc">{{ info.desc }}</text>
-              <text class="pack-meta">{{ info.itemCount }} 条{{ info.ordered ? ' · 有序' : '' }}</text>
+              <text class="pack-meta">{{ info.itemCount }} 条{{ info.ordered ? ' · 按顺序记' : '' }}</text>
             </view>
             <view class="pack-side">
               <template v-if="info.imported">

@@ -2,7 +2,7 @@
   <view class="pairs-page">
     <!-- 顶部 -->
     <view class="header">
-      <text class="title">最小对立对</text>
+      <text class="title">辨音练习</text>
       <view class="stats">
         <text class="stat correct">✓ {{ correctCount }}</text>
         <text class="stat wrong">✗ {{ wrongCount }}</text>
@@ -73,7 +73,9 @@
         <text class="result-label">答错</text>
       </view>
       <text class="result-accuracy">正确率 {{ accuracy }}%</text>
+      <text class="result-encourage">{{ encourageText }}</text>
       <button class="btn-restart" @click="restart">再来一组</button>
+      <button class="btn-back" @click="goReview">📚 去复习单词</button>
       <button class="btn-back" @click="goBack">返回音标表</button>
     </view>
   </view>
@@ -85,6 +87,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import { MINIMAL_PAIRS, type MinimalPair } from '@/utils/phoneme-data'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { getTtsAdapter } from '@/adapters/index'
+import { getEncourageText } from '@/utils/encourage'
 
 const TOTAL = 15
 const phoneticStore = usePhoneticMemory()
@@ -102,6 +105,8 @@ const wrongCount = ref(0)
 const picked = ref<'a' | 'b' | null>(null)
 const answered = ref(false)
 const finished = ref(false)
+// 完成页鼓励语：每组开始时刷新
+const encourageText = ref(getEncourageText())
 
 const currentQ = computed<Question | null>(() => questions.value[currentIndex.value] || null)
 
@@ -128,6 +133,7 @@ async function startSession() {
   picked.value = null
   answered.value = false
   finished.value = false
+  encourageText.value = getEncourageText()
   setTimeout(playTarget, 400)
 }
 
@@ -195,6 +201,11 @@ function restart() {
 
 function goBack() {
   uni.navigateBack()
+}
+
+// 完成页引导：去主复习页接着练单词
+function goReview() {
+  uni.switchTab({ url: '/pages/review/review' })
 }
 
 onLoad(() => {
@@ -444,6 +455,15 @@ onLoad(() => {
   font-size: 28rpx;
   color: #667eea;
   margin-top: 16rpx;
+}
+
+.result-encourage {
+  font-size: 26rpx;
+  color: #52796f;
+  margin-top: 24rpx;
+  text-align: center;
+  line-height: 1.6;
+  padding: 0 30rpx;
 }
 
 .btn-restart {
