@@ -148,6 +148,7 @@ import { useKnowledgeMemory, normalizeAnswer } from './useKnowledgeMemory'
 import { formulaImageSrc } from './utils/knowledge-image'
 import { tokenizeAnswer, type AnswerTile } from '@/utils/answer-tokens'
 import { getEncourageText } from '@/utils/encourage'
+import { vibrateOnJudge } from '@/utils/practice-feedback'
 import { getPackDisplayCategory } from './utils/pack-category'
 import { getProgressDoc } from '@/utils/knowledge-memory-db'
 import { isRemembered } from '@/utils/knowledge-memory-srs'
@@ -248,6 +249,7 @@ function mark(isCorrect: boolean) {
   const item = currentItem.value
   if (!item) return
   store.markItem(packId.value, item.id, isCorrect)
+  vibrateOnJudge(isCorrect ? 'correct' : 'wrong')
   if (isCorrect) correctCount.value++
   else wrongCount.value++
   nextQuestion()
@@ -268,6 +270,7 @@ function choose(idx: number) {
   answered.value = true
   const isCorrect = options.value[idx] === currentItem.value.answer
   store.markItem(packId.value, currentItem.value.id, isCorrect)
+  vibrateOnJudge(isCorrect ? 'correct' : 'wrong')
   if (isCorrect) correctCount.value++
   else wrongCount.value++
 }
@@ -302,6 +305,7 @@ function gradeSpell() {
   spellDone.value = true
   spellCorrect.value = isCorrect
   store.markItem(packId.value, item.id, isCorrect)
+  vibrateOnJudge(isCorrect ? 'correct' : 'wrong')
   if (isCorrect) correctCount.value++
   else wrongCount.value++
 }
@@ -404,7 +408,7 @@ onShow(() => {
 }
 
 .stat.correct {
-  color: #4caf50;
+  color: #52796f;
   font-weight: bold;
 }
 
@@ -420,7 +424,7 @@ onShow(() => {
 
 .progress-fill {
   height: 100%;
-  background: #667eea;
+  background: #52796f;
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -476,7 +480,7 @@ onShow(() => {
 
 .a-text {
   font-size: 48rpx;
-  color: #667eea;
+  color: #52796f;
   font-weight: bold;
   line-height: 1.5;
   word-break: break-all;
@@ -515,7 +519,7 @@ onShow(() => {
 }
 
 .btn-remember {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
 }
 
@@ -548,8 +552,8 @@ onShow(() => {
 }
 
 .choice-card.correct {
-  border-color: #4caf50;
-  background: #f2fbf4;
+  border-color: #52796f;
+  background: #f4faf5;
 }
 
 .choice-card.wrong {
@@ -570,7 +574,7 @@ onShow(() => {
 
 .btn-next {
   margin-top: 40rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;
@@ -597,9 +601,9 @@ onShow(() => {
 }
 
 .spell-answer.correct {
-  border-color: #4caf50;
+  border-color: #52796f;
   border-style: solid;
-  background: #f2fbf4;
+  background: #f4faf5;
 }
 
 .spell-answer.wrong {
@@ -644,7 +648,7 @@ onShow(() => {
 }
 
 .feedback-text.ok {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .feedback-text.bad {
@@ -725,7 +729,7 @@ onShow(() => {
 }
 
 .result-num.correct {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .result-num.wrong {
@@ -765,7 +769,7 @@ onShow(() => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;  border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;

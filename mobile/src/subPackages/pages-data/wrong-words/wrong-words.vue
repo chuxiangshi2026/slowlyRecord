@@ -38,6 +38,8 @@
       </view>
 
       <view class="card" :class="{ flipped: isFlipped }" @click="flipCard">
+        <!-- 升级飘字（"已掌握"升级时短暂展示于卡片右上角） -->
+        <LevelUpFloat v-if="levelUpFloat" :from="levelUpFloat.from" :to="levelUpFloat.to" />
         <view class="card-front">
           <view class="word-row">
             <text class="word-text">{{ currentWord?.word }}</text>
@@ -65,6 +67,9 @@ import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
+import { vibrateOnJudge } from '@/utils/practice-feedback'
+import LevelUpFloat from '@/components/LevelUpFloat.vue'
+import { useAchievements } from '@/stores/useAchievements'
 // 快照遍历纯逻辑：进入页面取一次快照，"已掌握"只从剩余待处理移除，不破坏遍历索引
 import {
   createWrongWordsSession,
@@ -78,6 +83,18 @@ import {
 
 const wordsStore = useMobileWords()
 const isFlipped = ref(false)
+
+// 升级飘字：Lv 提升时短暂展示「Lv5 → 6」，1s 后消失（"还是不会"降级不飘）
+const levelUpFloat = ref<{ from: number; to: number } | null>(null)
+let levelUpTimer: ReturnType<typeof setTimeout> | null = null
+function triggerLevelUp(from: number, to: number) {
+  levelUpFloat.value = { from, to }
+  if (levelUpTimer) clearTimeout(levelUpTimer)
+  levelUpTimer = setTimeout(() => {
+    levelUpFloat.value = null
+    levelUpTimer = null
+  }, 1000)
+}
 
 // 本轮遍历的快照（进入页面时取一次，之后词被标"已掌握"也不会导致跳词/空卡片）
 const session = reactive<WrongWordsSessionState>(createWrongWordsSession([]))
@@ -93,6 +110,11 @@ const currentWord = computed(() => {
 })
 
 const stats = computed(() => sessionStats(session))
+
+// 错题清零成就：完成一轮且仍有遗漏时也检查（清零判定在 checkNow 内）
+watch(isDone, (done) => {
+  if (done) useAchievements().checkNow()
+})
 
 const progressPercent = computed(() => {
   if (session.ids.length === 0) return 0
@@ -145,6 +167,7 @@ const handleStillForget = () => {
   const word = currentWord.value
   if (word) {
     wordsStore.markAsForgotten(word.id)
+    vibrateOnJudge('wrong')
     markForgotten(session)
     isFlipped.value = false
   }
@@ -153,7 +176,12 @@ const handleStillForget = () => {
 const handleMastered = () => {
   const word = currentWord.value
   if (word) {
+    const beforeLevel = word.level || 1
     wordsStore.markAsRemembered(word.id)
+    vibrateOnJudge('correct')
+    // 升级判定：快照是旧引用，从 store 取判定后的最新 level 比较
+    const afterLevel = wordsStore.words.find(w => w.id === word.id)?.level ?? beforeLevel
+    if (afterLevel > beforeLevel) triggerLevelUp(beforeLevel, afterLevel)
     markMastered(session)
     isFlipped.value = false
   }
@@ -171,7 +199,7 @@ const goHome = () => {
 <style scoped>
 .wrong-words-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  background: linear-gradient(135deg, #52796f 0%, #74937d 100%);
   padding: 40rpx;
   display: flex;
   flex-direction: column;
@@ -385,6 +413,6 @@ const goHome = () => {
 
 .btn-remember {
   background: #fff;
-  color: #ee5a6f;
+  color: #c0564f;
 }
 </style>

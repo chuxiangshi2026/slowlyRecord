@@ -35,6 +35,9 @@
         </view>
       </view>
 
+      <!-- 升级飘字（Lv 提升时短暂展示于卡片区右上角） -->
+      <LevelUpFloat v-if="levelUpFloat" :from="levelUpFloat.from" :to="levelUpFloat.to" />
+
       <!-- 手势提示 -->
       <view class="gesture-hints">
         <text class="hint-left">左划 忘记</text>
@@ -206,6 +209,10 @@ import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewSt
 import { useSignin } from '@/stores/useSignin'
 import { getTtsAdapter } from '@/adapters/index'
 import { queryOfflineDict, getPronunciationUrl } from '@/stores/useUtils/offline-dict'
+import { vibrateOnJudge } from '@/utils/practice-feedback'
+import LevelUpFloat from '@/components/LevelUpFloat.vue'
+import { loadDailyGoal, countReviewedToday, checkGoalJustAchieved, DEFAULT_DAILY_GOAL } from '@/utils/daily-goal'
+import { useAchievements } from '@/stores/useAchievements'
 
 const wordsStore = useMobileWords()
 const signinStore = useSignin()
@@ -215,6 +222,17 @@ const showComplete = ref(false)
 const showDeleteConfirm = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
+
+// 每日目标：判定后据此给出"目标达成"轻反馈，进入页面时读取
+const dailyGoal = ref(DEFAULT_DAILY_GOAL)
+
+/** 判定后检查今日复习数是否恰好跨过目标线，跨过则轻 toast（不打断判定流程） */
+const checkGoalReached = (before: number) => {
+  const after = countReviewedToday(wordsStore.allWords)
+  if (checkGoalJustAchieved(before, after, dailyGoal.value)) {
+    uni.showToast({ title: '🎯 今日目标达成', icon: 'none' })
+  }
+}
 
 // 翻面自动发音开关：默认开，持久化到 storage
 const AUTOPLAY_STORAGE_KEY = 'slowlyrecord-review-autoplay'
@@ -240,6 +258,18 @@ const lastJudgement = ref<LastJudgement | null>(null)
 const showUndoBar = ref(false)
 const undoLabel = ref('')
 let undoTimer: ReturnType<typeof setTimeout> | null = null
+
+// 升级飘字：Lv 提升时短暂展示「Lv5 → 6」，1s 后消失（降级不飘，负反馈已有标红）
+const levelUpFloat = ref<{ from: number; to: number } | null>(null)
+let levelUpTimer: ReturnType<typeof setTimeout> | null = null
+function triggerLevelUp(from: number, to: number) {
+  levelUpFloat.value = { from, to }
+  if (levelUpTimer) clearTimeout(levelUpTimer)
+  levelUpTimer = setTimeout(() => {
+    levelUpFloat.value = null
+    levelUpTimer = null
+  }, 1000)
+}
 
 // 会话快照：本次复习的单词列表，进入页面时冻结
 // 用快照而不是 store.reviewWords，确保：
@@ -340,6 +370,8 @@ const cardStyle = computed(() => {
 onMounted(() => {
   // 打卡数据用于完成页"去打卡"引导判断
   signinStore.loadRecords()
+  // 每日目标值（轻反馈用）
+  dailyGoal.value = loadDailyGoal()
   // 恢复自动发音开关设置（默认开）
   try {
     const saved = uni.getStorageSync(AUTOPLAY_STORAGE_KEY)
@@ -704,8 +736,16 @@ const showUndoIfNeeded = () => {
 
 const handleRemember = () => {
   if (currentWord.value) {
+    const wordId = currentWord.value.id
+    const beforeLevel = currentWord.value.level || 1
+    const reviewedBefore = countReviewedToday(wordsStore.allWords)
     captureJudgement(currentWord.value, '已标记为认识', 'remember')
-    wordsStore.markAsRemembered(currentWord.value.id)
+    wordsStore.markAsRemembered(wordId)
+    checkGoalReached(reviewedBefore)
+    vibrateOnJudge('correct')
+    // 升级判定：会话快照可能是旧引用，从 store 取判定后的最新 level 比较
+    const afterLevel = wordsStore.words.find(w => w.id === wordId)?.level ?? beforeLevel
+    if (afterLevel > beforeLevel) triggerLevelUp(beforeLevel, afterLevel)
     rememberCount.value++
     nextWord()
     showUndoIfNeeded()
@@ -714,8 +754,12 @@ const handleRemember = () => {
 
 const handleForget = () => {
   if (currentWord.value) {
+    const reviewedBefore = countReviewedToday(wordsStore.allWords)
     captureJudgement(currentWord.value, '已标记为忘记 · 降级', 'forget')
     wordsStore.markAsForgotten(currentWord.value.id)
+    // 忘记不更新 lastReviewTime（store 口径），此处前后数一致，不会误触发目标达成
+    checkGoalReached(reviewedBefore)
+    vibrateOnJudge('wrong')
     forgetCount.value++
     nextWord()
     showUndoIfNeeded()
@@ -724,6 +768,7 @@ const handleForget = () => {
 
 const handleRememberForever = () => {
   if (currentWord.value) {
+    const reviewedBefore = countReviewedToday(wordsStore.allWords)
     captureJudgement(currentWord.value, '已标记为已记完', 'forever')
     wordsStore.updateWord(currentWord.value.id, {
       remembered: true,
@@ -731,6 +776,9 @@ const handleRememberForever = () => {
       nextReviewTime: Date.now() + 100 * 365 * 24 * 60 * 60 * 1000,
       level: 12
     })
+    // "已记完"同样不改 lastReviewTime，仅"认识"判定会计入今日目标进度
+    checkGoalReached(reviewedBefore)
+    vibrateOnJudge('correct')
     rememberCount.value++
     nextWord()
     showUndoIfNeeded()
@@ -761,6 +809,7 @@ const undoLastJudgement = () => {
 
 onUnmounted(() => {
   if (undoTimer) clearTimeout(undoTimer)
+  if (levelUpTimer) clearTimeout(levelUpTimer)
 })
 
 const nextWord = () => {
@@ -784,6 +833,8 @@ const finishReview = () => {
   // 清除自定义复习列表，下次进入时恢复默认
   wordsStore.setCustomReviewWords(null)
   uni.showToast({ title: '复习完成', icon: 'success' })
+  // 复习完成后检查成就（累计复习词次、词库学完、错题清零等）
+  useAchievements().checkNow()
 }
 
 // 完成页引导：先收尾本次会话，再跳转到对应模块
@@ -796,7 +847,7 @@ const goAfterReview = (url: string) => {
 <style scoped>
 .review-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #52796f 0%, #74937d 100%);
   padding: 20rpx;
   display: flex;
   flex-direction: column;
@@ -826,7 +877,7 @@ const goAfterReview = (url: string) => {
 
 .btn-start-review {
   margin-top: 40rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 50rpx;
   height: 90rpx;
@@ -839,6 +890,7 @@ const goAfterReview = (url: string) => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .progress-bar-top {
@@ -908,9 +960,9 @@ const goAfterReview = (url: string) => {
   color: rgba(255,255,255,0.7);
 }
 
-.hint-left { color: #ffab40; }
-.hint-down { color: #69f0ae; }
-.hint-right { color: #4caf50; }
+.hint-left { color: #e6a23c; }
+.hint-down { color: #83c5a8; }
+.hint-right { color: #52796f; }
 
 /* 卡片容器 */
 .card-wrapper {
@@ -942,7 +994,7 @@ const goAfterReview = (url: string) => {
 }
 
 .level-badge {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #52796f, #74937d);
   color: #fff;
   font-size: 22rpx;
   font-weight: bold;
@@ -979,7 +1031,7 @@ const goAfterReview = (url: string) => {
 }
 
 .swipe-overlay.left {
-  background: rgba(255, 82, 82, 0.15);
+  background: rgba(192, 86, 79, 0.15);
 }
 
 .swipe-overlay.right {
@@ -1004,10 +1056,10 @@ const goAfterReview = (url: string) => {
 /* 离线词典释义 */
 .offline-meaning {
   font-size: 28rpx;
-  color: #4caf50;
+  color: #52796f;
   margin-top: 20rpx;
   padding: 16rpx;
-  background: #e8f5e9;
+  background: #eaf1ea;
   border-radius: 12rpx;
   line-height: 1.5;
 }
@@ -1030,7 +1082,7 @@ const goAfterReview = (url: string) => {
 
 .phonetic {
   font-size: 32rpx;
-  color: #667eea;
+  color: #52796f;
   margin-top: 20rpx;
   font-family: 'Times New Roman', serif;
 }
@@ -1064,7 +1116,7 @@ const goAfterReview = (url: string) => {
 
 .btn-play {
   background: #f0f0f0;
-  color: #667eea;
+  color: #52796f;
   border-radius: 50rpx;
   padding: 16rpx 40rpx;
   font-size: 28rpx;
@@ -1098,9 +1150,9 @@ const goAfterReview = (url: string) => {
   color: #666;
 }
 
-.guide-item.left .guide-arrow { color: #ff5252; }
-.guide-item.down .guide-arrow { color: #4caf50; }
-.guide-item.right .guide-arrow { color: #4caf50; }
+.guide-item.left .guide-arrow { color: #c0564f; }
+.guide-item.down .guide-arrow { color: #52796f; }
+.guide-item.right .guide-arrow { color: #52796f; }
 
 /* 底部操作按钮 */
 .action-buttons {
@@ -1123,17 +1175,17 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-forget {
-  background: #ff5252;
+  background: #c0564f;
   color: #fff;
 }
 
 .btn-remember-forever {
-  background: #69f0ae;
+  background: #83c5a8;
   color: #333;
 }
 
 .btn-remember {
-  background: #4caf50;
+  background: #52796f;
   color: #fff;
 }
 
@@ -1196,11 +1248,11 @@ const goAfterReview = (url: string) => {
 }
 
 .stat-value.success {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .stat-value.error {
-  color: #ff5252;
+  color: #c0564f;
 }
 
 .stat-label {
@@ -1211,7 +1263,7 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-done {
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #52796f, #74937d);
   color: #fff;
   border-radius: 50rpx;
   height: 90rpx;
@@ -1274,7 +1326,7 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-confirm-delete {
-  background: #ff5252;
+  background: #c0564f;
   color: #fff;
 }
 

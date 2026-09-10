@@ -26,6 +26,9 @@
 
     <!-- 听写主区域 -->
     <view class="review-panel" v-if="currentWord">
+      <!-- 升级飘字（判对升级时短暂展示于练习区右上角） -->
+      <LevelUpFloat v-if="levelUpFloat" :from="levelUpFloat.from" :to="levelUpFloat.to" />
+
       <!-- 提示区域 -->
       <view class="hints-area">
         <view v-if="options.showPhonetic && currentWord.phonetic" class="hint-item">
@@ -205,6 +208,8 @@ import { ref, computed, nextTick, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
 import { buildFragmentTiles, type AnswerTile } from '@/utils/answer-tokens'
+import { vibrateOnJudge } from '@/utils/practice-feedback'
+import LevelUpFloat from '@/components/LevelUpFloat.vue'
 // 等级口径与主复习体系（12 级标准）对齐，拼写模块不单独"毕业"单词
 import { nextLevelOnCorrect, nextLevelOnWrong, getEmptyState, getFilteredHint } from './dictation-level'
 
@@ -266,6 +271,18 @@ const focusedSlotIndex = ref(-1)
 
 // 统计
 const stats = ref({ correct: 0, wrong: 0 })
+
+// 升级飘字：Lv 提升时短暂展示「Lv5 → 6」，1s 后消失（降级不飘，抖动已够）
+const levelUpFloat = ref<{ from: number; to: number } | null>(null)
+let levelUpTimer: ReturnType<typeof setTimeout> | null = null
+function triggerLevelUp(from: number, to: number) {
+  levelUpFloat.value = { from, to }
+  if (levelUpTimer) clearTimeout(levelUpTimer)
+  levelUpTimer = setTimeout(() => {
+    levelUpFloat.value = null
+    levelUpTimer = null
+  }, 1000)
+}
 
 // ========== 计算属性 ==========
 const currentWord = computed(() => wordList.value[currentIndex.value] || null)
@@ -504,7 +521,11 @@ async function checkAnswer() {
 
   if (isCorrect) {
     // 正确：等级 +1（复用主体系升降级逻辑，封顶 12 级，remembered 仅 12 级判定）
-    wordsStore.updateWordLevel(word.id, nextLevelOnCorrect(word.level || 1))
+    const beforeLevel = word.level || 1
+    const nextLevel = nextLevelOnCorrect(beforeLevel)
+    wordsStore.updateWordLevel(word.id, nextLevel)
+    vibrateOnJudge('correct')
+    if (nextLevel > beforeLevel) triggerLevelUp(beforeLevel, nextLevel)
 
     stats.value.correct++
     delete errorCountMap.value[currentIndex.value]
@@ -518,6 +539,7 @@ async function checkAnswer() {
       remembered: false
     })
 
+    vibrateOnJudge('wrong')
     stats.value.wrong++
     errorCountMap.value[currentIndex.value] = (errorCountMap.value[currentIndex.value] || 0) + 1
     refreshWordList()
@@ -562,6 +584,7 @@ async function handleForget() {
     remembered: false
   })
 
+  vibrateOnJudge('wrong')
   stats.value.wrong++
   uni.showToast({ title: `已忘记: ${word.word}`, icon: 'none' })
   refreshWordList()
@@ -816,11 +839,11 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .stat-correct {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .stat-wrong {
-  color: #f44336;
+  color: #c0564f;
 }
 
 /* 主区域 */
@@ -830,6 +853,7 @@ watch(() => wordsStore.currentBankId, async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 /* 提示区域 */
@@ -931,13 +955,13 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .input-slot.filled {
-  border-color: #1976d2;
-  background: #e3f2fd;
+  border-color: #52796f;
+  background: #eaf1ea;
 }
 
 .input-slot.flashing {
-  border-color: #ff9800;
-  background: #fff3e0;
+  border-color: #e6a23c;
+  background: #fdf6ec;
   animation: flashAnim 0.3s ease 3;
 }
 
@@ -988,8 +1012,8 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .letter-slot.fixed {
-  border-color: #c8e6c9;
-  background: #e8f5e9;
+  border-color: #c8d6cc;
+  background: #eaf1ea;
 }
 
 .letter-slot.empty {
@@ -998,19 +1022,19 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .letter-slot.filled {
-  border-color: #1976d2;
+  border-color: #52796f;
   border-style: solid;
-  background: #e3f2fd;
+  background: #eaf1ea;
 }
 
 .letter-slot.flashing {
-  border-color: #ff9800;
-  background: #fff3e0;
+  border-color: #e6a23c;
+  background: #fdf6ec;
   animation: flashAnim 0.3s ease 3;
 }
 
 .fixed-text {
-  color: #2e7d32;
+  color: #3d5a52;
 }
 
 .letter-input {
@@ -1107,27 +1131,27 @@ watch(() => wordsStore.currentBankId, async () => {
 
 .full-hint {
   padding: 24rpx 32rpx;
-  background: #e3f2fd;
+  background: #eaf1ea;
   border-radius: 16rpx;
   text-align: center;
 }
 
 .full-hint-text {
   font-size: 30rpx;
-  color: #1565c0;
+  color: #3d5a52;
   font-weight: 500;
 }
 
 .letter-hint-btn {
   padding: 20rpx 32rpx;
-  background: #fff3e0;
+  background: #fdf6ec;
   border-radius: 16rpx;
   text-align: center;
 }
 
 .letter-hint-text {
   font-size: 28rpx;
-  color: #e65100;
+  color: #c07a2b;
 }
 
 /* 控制按钮 */
@@ -1161,7 +1185,7 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .ctrl-btn.play-btn {
-  background: #1976d2;
+  background: #52796f;
 }
 
 .ctrl-btn.play-btn .ctrl-icon {
@@ -1169,7 +1193,7 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .ctrl-btn.forget-btn {
-  background: #fff3e0;
+  background: #fdf6ec;
 }
 
 .ctrl-btn.skip-btn {
@@ -1177,7 +1201,7 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .ctrl-btn.hint-trigger {
-  background: #e8f5e9;
+  background: #eaf1ea;
   width: 80rpx;
   height: 80rpx;
 }
@@ -1205,7 +1229,7 @@ watch(() => wordsStore.currentBankId, async () => {
 
 .empty-icon {
   font-size: 96rpx;
-  color: #4caf50;
+  color: #52796f;
   margin-bottom: 24rpx;
 }
 
@@ -1261,7 +1285,7 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .bank-name {
-  color: #1976d2;
+  color: #52796f;
   font-weight: 500;
 }
 
@@ -1289,8 +1313,8 @@ watch(() => wordsStore.currentBankId, async () => {
 }
 
 .toggle-btn.active {
-  color: #1976d2;
-  background: #e3f2fd;
+  color: #52796f;
+  background: #eaf1ea;
 }
 
 /* 点选拼写开关：主色 #52796f 系列 */
