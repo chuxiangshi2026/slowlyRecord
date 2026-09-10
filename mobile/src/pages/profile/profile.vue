@@ -23,10 +23,24 @@
     </view>
 
     <view class="menu-list">
+      <!-- 每日目标：首页进度环的目标值，选中即存 -->
+      <view class="menu-item" @click="showDailyGoalPicker">
+        <text class="menu-icon goal">G</text>
+        <text class="menu-text">每日目标</text>
+        <text class="menu-value">{{ dailyGoal }} 词</text>
+        <text class="menu-arrow">›</text>
+      </view>
       <!-- 同步（跳转分包页面） -->
       <view class="menu-item" @click="goSyncPage">
         <text class="menu-icon sync">S</text>
         <text class="menu-text">数据同步</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <!-- 我的成就（跳打卡页成就墙区域） -->
+      <view class="menu-item" @click="goAchievements">
+        <text class="menu-icon achievement">🏆</text>
+        <text class="menu-text">我的成就</text>
+        <text class="menu-value">{{ achievementStore.unlockedCount }}/{{ achievementStore.totalCount }}</text>
         <text class="menu-arrow">›</text>
       </view>
       <!-- 翻译设置 -->
@@ -139,12 +153,44 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { useAchievements } from '@/stores/useAchievements'
 import { getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS } from '@/stores/useUtils/translation-settings'
 import type { TranslationPlatform } from '@/stores/useUtils/types'
 import { SUBSCRIBE_TEMPLATE_ID, getSubscribeRecord, recordSubscribeSuccess, type SubscribeRecord } from '@/utils/subscribe-remind'
+import { loadDailyGoal, saveDailyGoal, DAILY_GOAL_OPTIONS } from '@/utils/daily-goal'
 
 const wordsStore = useMobileWords()
+
+// 每日目标：首页进度环的目标值（默认 20 词），选中即存 storage
+const dailyGoal = ref(loadDailyGoal())
+
+const showDailyGoalPicker = () => {
+  uni.showActionSheet({
+    itemList: DAILY_GOAL_OPTIONS.map(n => `${n} 词`),
+    success: (res) => {
+      const goal = DAILY_GOAL_OPTIONS[res.tapIndex]
+      if (goal) {
+        dailyGoal.value = goal
+        saveDailyGoal(goal)
+        uni.showToast({ title: `每日目标已设为 ${goal} 词`, icon: 'none' })
+      }
+    }
+  })
+}
+const achievementStore = useAchievements()
+
+// 成就入口计数刷新 + 顺带做一次成就检查（复习完成等路径未逐一接入，这里兜底）
+onShow(() => {
+  achievementStore.load()
+  achievementStore.checkNow().catch(() => {})
+})
+
+// 跳转打卡页（成就墙在打卡页下方区域）
+const goAchievements = () => {
+  uni.navigateTo({ url: '/subPackages/pages-data/signin/signin' })
+}
 
 // 翻译引擎显示名
 const platformNames: Record<string, string> = {
@@ -359,7 +405,7 @@ const showAbout = () => {
 }
 
 .header {
-  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
   padding: 80rpx 40rpx;
   text-align: center;
 }
@@ -403,7 +449,7 @@ const showAbout = () => {
 .stat-num {
   font-size: 40rpx;
   font-weight: bold;
-  color: #1976d2;
+  color: #52796f;
   display: block;
 }
 
@@ -446,29 +492,41 @@ button.menu-item.feedback-btn::after {
 .menu-icon {
   width: 48rpx;
   height: 48rpx;
-  background: #e3f2fd;
+  background: #eaf1ea;
   border-radius: 12rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20rpx;
   font-size: 24rpx;
-  color: #1976d2;
+  color: #52796f;
   font-weight: bold;
 }
 
 .menu-icon.sync {
-  background: #e8f5e9;
-  color: #4caf50;
+  background: #eaf1ea;
+  color: #52796f;
 }
 
 .menu-icon.danger {
   background: #ffebee;
-  color: #f44336;
+  color: #c0564f;
 }
 
 /* 复习提醒入口：主色 #52796f */
 .menu-icon.remind {
+  background: #e8f1ec;
+  color: #52796f;
+}
+
+/* 每日目标入口：同为 #52796f 主色 */
+.menu-icon.goal {
+  background: #e8f1ec;
+  color: #52796f;
+}
+
+/* 成就入口：主色 #52796f */
+.menu-icon.achievement {
   background: #e8f1ec;
   color: #52796f;
 }
@@ -531,7 +589,7 @@ button.menu-item.feedback-btn::after {
   justify-content: space-between;
   align-items: center;
   padding: 16rpx 20rpx;
-  background: #f0f2ff;
+  background: #eaf1ea;
   border-radius: 12rpx;
   margin-bottom: 10rpx;
 }
@@ -539,12 +597,12 @@ button.menu-item.feedback-btn::after {
 .translation-settings .bank-picker-text {
   font-size: 30rpx;
   font-weight: bold;
-  color: #667eea;
+  color: #52796f;
 }
 
 .translation-settings .bank-picker-arrow {
   font-size: 24rpx;
-  color: #667eea;
+  color: #52796f;
 }
 
 .translation-settings .api-key-section {
@@ -564,7 +622,7 @@ button.menu-item.feedback-btn::after {
 
 .translation-settings .link-text {
   font-size: 24rpx;
-  color: #1976d2;
+  color: #52796f;
 }
 
 .translation-settings .popup-actions {
@@ -608,7 +666,7 @@ button.menu-item.feedback-btn::after {
 }
 
 .btn-confirm {
-  background: #1976d2;
+  background: #52796f;
   color: #fff;
 }
 

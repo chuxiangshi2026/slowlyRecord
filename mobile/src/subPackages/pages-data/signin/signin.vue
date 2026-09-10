@@ -64,6 +64,35 @@
       <!-- #endif -->
     </view>
 
+    <!-- 成就墙 -->
+    <view class="achievement-wall">
+      <view class="wall-header">
+        <text class="wall-title">🏆 成就墙</text>
+        <text class="wall-progress">{{ achievementStore.unlockedCount }}/{{ achievementStore.totalCount }}</text>
+      </view>
+      <view class="wall-grid">
+        <view
+          v-for="def in ACHIEVEMENTS"
+          :key="def.id"
+          class="achievement-cell"
+          :class="{ unlocked: achievementStore.isUnlocked(def.id) }"
+        >
+          <text class="achievement-icon">{{ def.icon }}</text>
+          <text class="achievement-name">{{ def.name }}</text>
+          <text v-if="achievementStore.isUnlocked(def.id)" class="achievement-date">
+            {{ formatUnlockDate(achievementStore.unlockedTime(def.id)) }}
+          </text>
+          <text v-else class="achievement-target">{{ def.target }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 成就解锁通知条（非模态，底部浮出 3 秒后消失） -->
+    <view v-if="toastVisible" class="achievement-toast">
+      <text class="toast-icon">{{ toastItem?.icon }}</text>
+      <text class="toast-text">解锁成就：{{ toastItem?.name }}</text>
+    </view>
+
     <!-- 分享卡离屏画布（canvas 2d，仅小程序端） -->
     <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
     <canvas
@@ -91,8 +120,10 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, getCurrentInstance } from 'vue'
-import { onShareAppMessage } from '@dcloudio/uni-app'
+import { onShow, onShareAppMessage } from '@dcloudio/uni-app'
 import { useSignin } from '@/stores/useSignin'
+import { useAchievements } from '@/stores/useAchievements'
+import { ACHIEVEMENTS, type AchievementDef } from '@/utils/achievements'
 import {
   buildCardInfo,
   drawSigninCard,
@@ -102,6 +133,7 @@ import {
 } from './signin-card'
 
 const signinStore = useSignin()
+const achievementStore = useAchievements()
 const signedDates = computed(() => signinStore.signedDates)
 const hasSignedToday = computed(() => signinStore.hasSignedToday)
 const streakDays = computed(() => signinStore.streakDays)
@@ -157,9 +189,62 @@ onMounted(() => {
   signinStore.loadRecords()
 })
 
+// ===== 成就检查与解锁通知 =====
+
+/** 通知条状态：当前展示项与可见标志（队列逐个展示，每条 3 秒） */
+const toastVisible = ref(false)
+const toastItem = ref<AchievementDef | null>(null)
+let _toastTimer: ReturnType<typeof setTimeout> | null = null
+let _toastQueue: AchievementDef[] = []
+
+/** 解锁时间戳 → YYYY-MM-DD（成就墙展示用） */
+function formatUnlockDate(ts: number): string {
+  if (!ts) return ''
+  const d = new Date(ts)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+/** 展示下一条成就通知；队列空时隐藏 */
+function showNextToast() {
+  const next = _toastQueue.shift()
+  if (!next) {
+    toastVisible.value = false
+    toastItem.value = null
+    return
+  }
+  toastItem.value = next
+  toastVisible.value = true
+  _toastTimer = setTimeout(showNextToast, 3000)
+}
+
+/** 解锁成就入队通知（同一成就由 store 去重，这里只管展示） */
+function notifyUnlocks(list: AchievementDef[]) {
+  if (list.length === 0) return
+  _toastQueue.push(...list)
+  if (!toastVisible.value) showNextToast()
+}
+
+/** 检查成就并弹通知；供打卡成功与页面 onShow 调用 */
+async function checkAndNotify() {
+  try {
+    notifyUnlocks(await achievementStore.checkNow())
+  } catch (e) {
+    console.error('成就检查失败:', e)
+  }
+}
+
+// 每次进入打卡页检查一次（覆盖从复习页/我的页返回等路径）
+onShow(() => {
+  signinStore.loadRecords()
+  achievementStore.load()
+  checkAndNotify()
+})
+
 const handleSign = () => {
   if (signinStore.signToday()) {
     uni.showToast({ title: '打卡成功！', icon: 'success' })
+    // 打卡可能触发连签类成就，立即检查一次
+    checkAndNotify()
   }
 }
 
@@ -377,11 +462,11 @@ const nextMonth = () => {
 }
 
 .day-cell.today {
-  background: #e3f2fd;
+  background: #eaf1ea;
 }
 
 .day-cell.signed {
-  background: #e8f5e9;
+  background: #eaf1ea;
 }
 
 .day-num {
@@ -391,7 +476,7 @@ const nextMonth = () => {
 
 .sign-mark {
   font-size: 20rpx;
-  color: #4caf50;
+  color: #52796f;
   position: absolute;
   bottom: 4rpx;
 }
@@ -412,7 +497,7 @@ const nextMonth = () => {
 .stat-num {
   font-size: 40rpx;
   font-weight: bold;
-  color: #1976d2;
+  color: #52796f;
   display: block;
 }
 
@@ -426,7 +511,7 @@ const nextMonth = () => {
 .sign-btn {
   width: 100%;
   height: 100rpx;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #52796f, #74937d);
   color: #fff;
   border-radius: 50rpx;
   font-size: 36rpx;
@@ -445,7 +530,7 @@ const nextMonth = () => {
 
 .reward-text {
   font-size: 28rpx;
-  color: #4caf50;
+  color: #52796f;
 }
 
 .share-btn {
@@ -516,5 +601,112 @@ const nextMonth = () => {
 .share-action.primary {
   background: #52796f;
   color: #fff;
+}
+
+/* ===== 成就墙 ===== */
+
+.achievement-wall {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-top: 20rpx;
+}
+
+.wall-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.wall-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.wall-progress {
+  font-size: 26rpx;
+  color: #52796f;
+  font-weight: bold;
+}
+
+.wall-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+.achievement-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 10rpx;
+  border-radius: 16rpx;
+  background: #f5f5f5;
+  opacity: 0.55;
+}
+
+/* 已解锁：主色点亮 */
+.achievement-cell.unlocked {
+  background: #e8f1ec;
+  opacity: 1;
+  border: 1rpx solid #52796f;
+}
+
+.achievement-icon {
+  font-size: 44rpx;
+}
+
+.achievement-cell.unlocked .achievement-icon {
+  font-size: 48rpx;
+}
+
+.achievement-name {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: bold;
+  margin-top: 10rpx;
+}
+
+.achievement-target {
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 6rpx;
+  text-align: center;
+}
+
+.achievement-date {
+  font-size: 20rpx;
+  color: #52796f;
+  margin-top: 6rpx;
+}
+
+/* ===== 成就解锁通知条（非模态，底部浮出） ===== */
+
+.achievement-toast {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 80rpx;
+  background: #52796f;
+  border-radius: 50rpx;
+  padding: 24rpx 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  box-shadow: 0 8rpx 30rpx rgba(82, 121, 111, 0.4);
+}
+
+.toast-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.toast-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: bold;
 }
 </style>
