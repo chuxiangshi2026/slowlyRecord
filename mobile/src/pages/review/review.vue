@@ -38,12 +38,14 @@
       <!-- 升级飘字（Lv 提升时短暂展示于卡片区右上角） -->
       <LevelUpFloat v-if="levelUpFloat" :from="levelUpFloat.from" :to="levelUpFloat.to" />
 
-      <!-- 手势提示 -->
-      <view class="gesture-hints">
+      <!-- 手势提示（仅新手期显示，滑动判定满 10 次后自动隐藏） -->
+      <view v-if="showGestureHints" class="gesture-hints">
         <text class="hint-left">左划 忘记</text>
         <text class="hint-down">下划 已记完</text>
         <text class="hint-right">右划 认识</text>
       </view>
+      <!-- 手势说明找回入口（任何时期可查看） -->
+      <view v-else class="gesture-help" @click="showGestureHelp">?</view>
 
       <!-- 卡片（微信小程序用 catchtouch 阻止页面滚动） -->
       <view class="card-wrapper">
@@ -302,6 +304,20 @@ const cardRotateX = ref(0)
 const cardRotateY = ref(0)
 const isAnimating = ref(false)
 const isSwiping = ref(false)
+
+// 手势提示新手期：滑动判定满阈值后自动隐藏，减少常驻噪音
+const SWIPE_HINT_THRESHOLD = 10
+const swipeJudgeCount = ref(Number(uni.getStorageSync('slowlyrecord-review-swipe-count') || 0))
+const showGestureHints = computed(() => swipeJudgeCount.value < SWIPE_HINT_THRESHOLD)
+function showGestureHelp() {
+  uni.showModal({ title: '手势说明', content: '左划=忘记，右划=认识，下划=已记完。底部按钮可随时点。', showCancel: false, confirmColor: '#52796f' })
+}
+function countSwipeJudge() {
+  swipeJudgeCount.value++
+  if (swipeJudgeCount.value === SWIPE_HINT_THRESHOLD) {
+    uni.setStorageSync('slowlyrecord-review-swipe-count', swipeJudgeCount.value)
+  }
+}
 const swipeDirection = ref<'left' | 'right' | 'down' | ''>('')
 
 const reviewWords = computed(() => wordsStore.reviewWords)
@@ -625,12 +641,14 @@ const handleTouchEnd = (e: any) => {
 
   // 判断手势方向
   if (absX > absY && absX > 80) {
+    countSwipeJudge()
     if (deltaX > 0) {
       animateCard('right', () => handleRemember())
     } else {
       animateCard('left', () => handleForget())
     }
   } else if (absY > absX && absY > 80 && deltaY > 0) {
+    countSwipeJudge()
     animateCard('down', () => handleRememberForever())
   } else {
     resetCard()
@@ -952,6 +970,21 @@ const goAfterReview = (url: string) => {
   display: flex;
   justify-content: space-between;
   padding: 10rpx 20rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 手势说明找回按钮（提示隐藏后显示） */
+.gesture-help {
+  align-self: flex-end;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 10rpx;
 }
 
