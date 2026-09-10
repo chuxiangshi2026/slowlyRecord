@@ -19,10 +19,11 @@
     <!-- 巡视完成 -->
     <view v-else-if="finished" class="review-body finished">
       <text class="finished-icon">✅</text>
-      <text class="finished-title">巡视完成</text>
+      <text class="finished-title">已经过完一遍</text>
       <text class="finished-stat">记住 {{ stats.remembered }} · 忘记 {{ stats.forgotten }} · 跳过 {{ stats.skipped }}</text>
       <view class="finished-actions">
         <button class="btn primary" @click="restart">再来一轮</button>
+        <button v-if="!signinStore.hasSignedToday" class="btn guide" @click="goSignin">📅 去打卡</button>
         <button class="btn plain" @click="goBack">返回宫殿</button>
       </view>
     </view>
@@ -52,9 +53,9 @@
             <text v-if="resolved.articleTitle" class="answer-source">—— 《{{ resolved.articleTitle }}》</text>
             <text v-if="currentPeg?.mnemonic" class="answer-mnemonic">助记：{{ currentPeg.mnemonic }}</text>
           </template>
-          <text v-else class="answer-none">该桩未挂载内容</text>
+          <text v-else class="answer-none">该钩子没挂内容</text>
         </view>
-        <text v-else-if="recallMode" class="reveal-tip">口头回忆挂载内容，点击卡片查看答案</text>
+        <text v-else-if="recallMode" class="reveal-tip">口头回忆挂上的内容，点击卡片查看答案</text>
       </view>
 
       <!-- 自评 / 翻页 -->
@@ -78,6 +79,7 @@ import { computed, ref, watch } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useMemoryPalace } from '@/stores/useMemoryPalace'
 import { useTextMemory } from '@/stores/useTextMemory'
+import { useSignin } from '@/stores/useSignin'
 import { resolvePegContent } from '../../../utils/memory-palace'
 import type { MobilePalaceLocus } from '@/stores/useUtils/types'
 
@@ -85,6 +87,9 @@ import type { MobilePalaceLocus } from '@/stores/useUtils/types'
 // 按桩顺序翻页巡视，支持回忆模式（先桩位提示、点击揭示）与记住/忘记自评
 const palaceStore = useMemoryPalace()
 const textStore = useTextMemory()
+// 打卡数据用于完成页"去打卡"引导判断
+const signinStore = useSignin()
+signinStore.loadRecords()
 
 const palaceId = ref('')
 const palace = computed(() => palaceStore.getPalace(palaceId.value))
@@ -178,6 +183,11 @@ function restart() {
 
 function goBack() {
   uni.navigateBack()
+}
+
+// 完成页引导：今日未打卡时引导去打卡页
+function goSignin() {
+  uni.navigateTo({ url: '/subPackages/pages-data/signin/signin' })
 }
 
 // 回忆模式开关切换时，按新模式重置当前卡片的揭示状态
@@ -379,6 +389,11 @@ watch(recallMode, () => {
 .btn.plain {
   background: #eee;
   color: #666;
+}
+
+.btn.guide {
+  background: #e8f0ec;
+  color: #52796f;
 }
 
 .review-nav {

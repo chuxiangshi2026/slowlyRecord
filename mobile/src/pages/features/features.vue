@@ -7,6 +7,7 @@
         <view class="menu-info">
           <text class="menu-text">{{ item.text }}</text>
           <text class="menu-desc">{{ item.desc }}</text>
+          <text v-if="item.text === '记忆测试' && testBestText" class="menu-best">{{ testBestText }}</text>
         </view>
         <text class="menu-arrow">›</text>
       </view>
@@ -15,10 +16,24 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { getMemoryTestBest } from '@/utils/memory-test-best'
+
 // 「全部功能」列表页：收纳首页宫格收敛后移除的入口，路由保持不变
 const navigate = (url: string) => {
   uni.navigateTo({ url })
 }
+
+// 记忆测评历史最佳（等级优先展示，两个模式取更高者）
+const testBestText = computed(() => {
+  const color = getMemoryTestBest('color')
+  const sequence = getMemoryTestBest('sequence')
+  let best = color
+  if (sequence && (!best || sequence.level > best.level || (sequence.level === best.level && sequence.score > best.score))) {
+    best = sequence
+  }
+  return best ? `最佳：Lv ${best.level} · ${best.score} 分` : ''
+})
 
 const features = [
   {
@@ -39,7 +54,7 @@ const features = [
     icon: '🔤',
     cls: 'phonetic',
     text: '音标学习',
-    desc: '音标识别 / 最小对立对',
+    desc: '音标识别 / 辨音练习',
     action: () => navigate('/subPackages/pages-memory/phonetic-memory/phonetic-memory'),
   },
   {
@@ -60,7 +75,7 @@ const features = [
     icon: '🏛️',
     cls: 'palace',
     text: '记忆宫殿',
-    desc: '查看宫殿 / 巡视复习',
+    desc: '查看宫殿 / 钩子过一遍',
     action: () => navigate('/subPackages/pages-memory/memory-palace/list'),
   },
   {
@@ -141,6 +156,16 @@ const features = [
   color: #999;
   margin-top: 6rpx;
   display: block;
+}
+
+.menu-best {
+  display: inline-block;
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #52796f;
+  background: rgba(82, 121, 111, 0.12);
+  padding: 2rpx 14rpx;
+  border-radius: 18rpx;
 }
 
 .menu-arrow {

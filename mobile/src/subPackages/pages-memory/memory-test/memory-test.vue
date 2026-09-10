@@ -11,11 +11,13 @@
           <text class="option-icon">🎨</text>
           <text class="option-title">颜色记忆</text>
           <text class="option-desc">记住颜色出现的位置</text>
+          <text v-if="colorBest" class="option-best">最佳：Lv {{ colorBest.level }} · {{ colorBest.score }} 分</text>
         </view>
         <view class="option-card" @click="startSequenceTest">
           <text class="option-icon">🔢</text>
           <text class="option-title">顺序记忆</text>
           <text class="option-desc">按顺序点击数字</text>
+          <text v-if="sequenceBest" class="option-best">最佳：Lv {{ sequenceBest.level }} · {{ sequenceBest.score }} 分</text>
         </view>
       </view>
     </view>
@@ -33,7 +35,7 @@
         />
       </view>
       <text class="level-info">等级 {{ colorLevel }} | 得分 {{ colorScore }}</text>
-      <button class="back-btn" @click="goToMenu">返回</button>
+      <button class="back-btn" @click="finishTest">结束本轮</button>
     </view>
 
     <view v-else-if="gameState === 'sequence-test'" class="sequence-test">
@@ -51,15 +53,57 @@
         </view>
       </view>
       <text class="level-info">等级 {{ sequenceLevel }} | 得分 {{ sequenceScore }}</text>
-      <button class="back-btn" @click="goToMenu">返回</button>
+      <button class="back-btn" @click="finishTest">结束本轮</button>
+    </view>
+
+    <!-- 本轮结果：成绩落库后给出下一步引导 -->
+    <view v-else-if="gameState === 'result'" class="result-panel">
+      <text class="result-icon">🎉</text>
+      <text class="result-encourage">{{ encourageText }}</text>
+      <view class="result-stats">
+        <view class="result-stat">
+          <text class="result-num">{{ resultLevel }}</text>
+          <text class="result-label">本次等级</text>
+        </view>
+        <view class="result-stat">
+          <text class="result-num">{{ resultScore }}</text>
+          <text class="result-label">本次得分</text>
+        </view>
+      </view>
+      <text v-if="newBest" class="result-new-best">✨ 新纪录！历史最佳：Lv {{ bestLevel }}</text>
+      <button class="result-btn primary" @click="retryTest">再来一次</button>
+      <button class="result-btn guide" @click="goToNumberMemory">🔢 去练数字记忆</button>
+      <button class="result-btn plain" @click="goToMenu">返回菜单</button>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { getEncourageText } from '@/utils/encourage'
+import { getMemoryTestBest, saveMemoryTestBest, type MemoryTestBest, type MemoryTestMode } from '@/utils/memory-test-best'
 
-const gameState = ref<'menu' | 'color-test' | 'sequence-test'>('menu')
+type GameState = 'menu' | 'color-test' | 'sequence-test' | 'result'
+const gameState = ref<GameState>('menu')
+
+// 各模式历史最佳成绩（等级优先、得分其次，仅在打破纪录时落库）
+const colorBest = ref<MemoryTestBest | null>(null)
+const sequenceBest = ref<MemoryTestBest | null>(null)
+
+function refreshBests() {
+  colorBest.value = getMemoryTestBest('color')
+  sequenceBest.value = getMemoryTestBest('sequence')
+}
+
+onMounted(refreshBests)
+
+// 结果区状态：刚结束的模式与成绩
+const lastMode = ref<MemoryTestMode>('color')
+const resultLevel = ref(1)
+const resultScore = ref(0)
+const newBest = ref(false)
+const bestLevel = ref(1)
+const encourageText = ref(getEncourageText())
 
 // 颜色记忆测试
 const colorCells = ref<{ active: boolean; color: string; highlight: boolean }[]>([])
@@ -191,6 +235,30 @@ const handleNumberClick = (index: number) => {
   }
 }
 
+// 结束本轮：成绩落库（仅打破纪录时），进入结果区给下一步引导
+const finishTest = () => {
+  clearInterval(timerInterval)
+  const isColor = gameState.value === 'color-test'
+  lastMode.value = isColor ? 'color' : 'sequence'
+  resultLevel.value = isColor ? colorLevel.value : sequenceLevel.value
+  resultScore.value = isColor ? colorScore.value : sequenceScore.value
+  newBest.value = saveMemoryTestBest(lastMode.value, resultLevel.value, resultScore.value)
+  bestLevel.value = getMemoryTestBest(lastMode.value)?.level ?? resultLevel.value
+  encourageText.value = getEncourageText()
+  refreshBests()
+  gameState.value = 'result'
+}
+
+// 结果区引导：重开刚结束的模式 / 去数字记忆训练 / 返回菜单
+const retryTest = () => {
+  if (lastMode.value === 'color') startColorTest()
+  else startSequenceTest()
+}
+
+const goToNumberMemory = () => {
+  uni.navigateTo({ url: '/subPackages/pages-memory/number-memory/number-memory' })
+}
+
 const goToMenu = () => {
   clearInterval(timerInterval)
   gameState.value = 'menu'
@@ -262,6 +330,16 @@ onUnmounted(() => {
   color: #999;
   margin-top: 8rpx;
   display: block;
+}
+
+.option-best {
+  display: inline-block;
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: #52796f;
+  background: rgba(82, 121, 111, 0.12);
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
 }
 
 .color-test, .sequence-test {
@@ -343,5 +421,83 @@ onUnmounted(() => {
   border-radius: 35rpx;
   font-size: 28rpx;
   border: 2rpx solid #fff;
+}
+
+/* 本轮结果区 */
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 40rpx;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24rpx;
+  margin-top: 40rpx;
+}
+
+.result-icon {
+  font-size: 90rpx;
+}
+
+.result-encourage {
+  font-size: 26rpx;
+  color: #52796f;
+  margin-top: 20rpx;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.result-stats {
+  display: flex;
+  gap: 60rpx;
+  margin-top: 30rpx;
+}
+
+.result-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result-num {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.result-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.result-new-best {
+  font-size: 26rpx;
+  color: #c07a2b;
+  margin-top: 20rpx;
+}
+
+.result-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  margin-top: 24rpx;
+  border: none;
+}
+
+.result-btn.primary {
+  background: #52796f;
+  color: #fff;
+}
+
+.result-btn.guide {
+  background: #e8f0ec;
+  color: #52796f;
+}
+
+.result-btn.plain {
+  background: #f5f5f5;
+  color: #666;
 }
 </style>

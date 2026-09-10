@@ -130,6 +130,11 @@
         <text class="result-num wrong">{{ wrongCount }}</text>
         <text class="result-label">答错</text>
       </view>
+      <text class="result-encourage">{{ encourageText }}</text>
+      <view class="result-guides">
+        <button v-if="nextPack" class="btn-guide" @click="goNextPack">📦 接着学：{{ nextPack.name }}</button>
+        <button v-else class="btn-guide" @click="goReview">📚 去复习单词</button>
+      </view>
       <button class="btn-restart" @click="restart">再来一轮</button>
       <button class="btn-back" @click="goBack">返回详情</button>
     </view>
@@ -142,7 +147,11 @@ import { onLoad, onShow } from '@dcloudio/uni-app'
 import { useKnowledgeMemory, normalizeAnswer } from './useKnowledgeMemory'
 import { formulaImageSrc } from './utils/knowledge-image'
 import { tokenizeAnswer, type AnswerTile } from '@/utils/answer-tokens'
-import type { KnowledgeItem } from '@/stores/useUtils/types'
+import { getEncourageText } from '@/utils/encourage'
+import { getPackDisplayCategory } from './utils/pack-category'
+import { getProgressDoc } from '@/utils/knowledge-memory-db'
+import { isRemembered } from '@/utils/knowledge-memory-srs'
+import type { KnowledgeItem, KnowledgePackInfo } from '@/stores/useUtils/types'
 
 const SESSION_SIZE = 10
 /** 拼答案长度闸：token 数 2~8 才点选，其余回退翻卡自评 */
@@ -158,6 +167,10 @@ const currentIndex = ref(0)
 const correctCount = ref(0)
 const wrongCount = ref(0)
 const finished = ref(false)
+// 完成页鼓励语：每轮开始时刷新
+const encourageText = ref(getEncourageText())
+// 完成页引导：同类（同展示分类）里第一个未掌握的包，无则引导去复习单词
+const nextPack = ref<KnowledgePackInfo | null>(null)
 
 // 翻卡状态
 const revealed = ref(false)
@@ -296,10 +309,39 @@ function gradeSpell() {
 function nextQuestion() {
   if (currentIndex.value + 1 >= sessionItems.value.length) {
     finished.value = true
+    encourageText.value = getEncourageText()
+    resolveNextPack()
     return
   }
   currentIndex.value++
   resetQuestionState()
+}
+
+/** 同类包里第一个未掌握的包：进度文档中达到记住等级的条目数 < 包条目总数 */
+function resolveNextPack() {
+  const category = getPackDisplayCategory(packId.value)
+  const candidates = store.packList.filter(
+    info => info.id !== packId.value && getPackDisplayCategory(info.id) === category,
+  )
+  for (const info of candidates) {
+    const mastered = Object.values(getProgressDoc(info.id).items).filter(p => isRemembered(p)).length
+    if (mastered < info.itemCount) {
+      nextPack.value = info
+      return
+    }
+  }
+  nextPack.value = null
+}
+
+// 完成页引导：替换当前页进入同类下一个包的详情页
+function goNextPack() {
+  if (!nextPack.value) return
+  uni.redirectTo({ url: `/subPackages/pages-knowledge/knowledge-detail?packId=${nextPack.value.id}` })
+}
+
+// 完成页引导：无同类可学包时去主复习页
+function goReview() {
+  uni.switchTab({ url: '/pages/review/review' })
 }
 
 function restart() {
@@ -696,11 +738,35 @@ onShow(() => {
   margin-right: 20rpx;
 }
 
+.result-encourage {
+  font-size: 26rpx;
+  color: #52796f;
+  margin-top: 24rpx;
+  text-align: center;
+  line-height: 1.6;
+  padding: 0 30rpx;
+}
+
+.result-guides {
+  width: 100%;
+  margin-top: 30rpx;
+}
+
+.btn-guide {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #52796f;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  border: none;
+}
+
 .btn-restart {
   margin-top: 60rpx;
   background: #667eea;
-  color: #fff;
-  border-radius: 44rpx;
+  color: #fff;  border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
   border: none;

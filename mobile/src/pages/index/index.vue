@@ -19,8 +19,8 @@
       <!-- 次级任务：文本记忆 / 错题 / 连续打卡 -->
       <view class="task-sub-list">
         <view class="task-sub" @click="goToTextMemory">
-          <text class="task-sub-num">{{ textCount }}</text>
-          <text class="task-sub-label">文本记忆</text>
+          <text class="task-sub-num">{{ textDueCount }}</text>
+          <text class="task-sub-label">待背文本</text>
         </view>
         <view class="task-sub" @click="goToWrongWords">
           <text class="task-sub-num">{{ wrongWordsCount }}</text>
@@ -59,10 +59,7 @@
     <view class="quick-actions">
       <view class="action-title">快速入口</view>
       <view class="action-list">
-        <view class="action-item" @click="goToReview">
-          <view class="action-icon review">📚</view>
-          <text class="action-text">开始复习</text>
-        </view>
+        <!-- 宫格与今日任务区去重：开始复习（主任务卡）与每日打卡（次级条）不再出现在宫格 -->
         <view class="action-item" @click="goToDictation">
           <view class="action-icon dictation">✏️</view>
           <text class="action-text">拼写练习</text>
@@ -74,10 +71,6 @@
         <view class="action-item" @click="goToTextMemory">
           <view class="action-icon text">📜</view>
           <text class="action-text">文本记忆</text>
-        </view>
-        <view class="action-item" @click="goToSignin">
-          <view class="action-icon signin">📅</view>
-          <text class="action-text">每日打卡</text>
         </view>
         <view class="action-item" @click="goToNumberMemory">
           <view class="action-icon memory">🔢</view>
@@ -133,8 +126,8 @@ const mainHint = computed(() => {
 const mainActionText = computed(() => (isLibraryEmpty.value ? '去选词库' : '开始复习'))
 const showMainAction = computed(() => isLibraryEmpty.value || reviewCount.value > 0)
 
-// 文本记忆篇目数（移动端文本记忆暂无"到期复习"概念，统计全部篇目）
-const textCount = computed(() => textStore.totalArticles)
+// 文本记忆待背篇数（已接入遮挡回忆 SRS；无到期篇目时显示总篇数，保持入口可发现）
+const textDueCount = computed(() => textStore.dueArticleCount || textStore.totalArticles)
 
 // 错题数：低等级且复习过（与错题本页口径一致）
 const wrongWordsCount = computed(() => {
@@ -409,11 +402,9 @@ const goToAllFeatures = () => {
 }
 
 /* 主色 #52796f 系列的低饱和同族色 */
-.action-icon.review { background: #52796f; }
 .action-icon.dictation { background: #3d5a52; }
 .action-icon.translate { background: #74937d; }
 .action-icon.text { background: #6f9a8d; }
-.action-icon.signin { background: #83a89a; }
 .action-icon.memory { background: #5c7a6b; }
 .action-icon.addword { background: #74937d; }
 .action-icon.all { background: #97b1a6; }
