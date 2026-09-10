@@ -262,7 +262,7 @@ onLoad((opt: any) => {
 }
 
 .stat.correct {
-  color: #4caf50;
+  color: #52796f;
   font-weight: bold;
 }
 
@@ -278,7 +278,7 @@ onLoad((opt: any) => {
 
 .progress-fill {
   height: 100%;
-  background: #667eea;
+  background: #52796f;
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -325,7 +325,7 @@ onLoad((opt: any) => {
 
 .prompt-play {
   font-size: 22rpx;
-  color: #667eea;
+  color: #52796f;
   margin-top: 16rpx;
 }
 
@@ -352,8 +352,8 @@ onLoad((opt: any) => {
 }
 
 .option-card.correct {
-  border-color: #4caf50;
-  background: #f2fbf4;
+  border-color: #52796f;
+  background: #f4faf5;
 }
 
 .option-card.wrong {
@@ -380,7 +380,7 @@ onLoad((opt: any) => {
 
 .btn-next {
   margin-top: 50rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;
@@ -423,7 +423,7 @@ onLoad((opt: any) => {
 }
 
 .result-num.correct {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .result-num.wrong {
@@ -438,7 +438,7 @@ onLoad((opt: any) => {
 
 .result-accuracy {
   font-size: 28rpx;
-  color: #667eea;
+  color: #52796f;
   margin-top: 16rpx;
 }
 
@@ -453,7 +453,7 @@ onLoad((opt: any) => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;

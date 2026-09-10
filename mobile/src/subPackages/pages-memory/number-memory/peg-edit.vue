@@ -262,7 +262,7 @@ function onCancel() {
 .number-text {
   font-size: 160rpx;
   font-weight: bold;
-  color: #667eea;
+  color: #52796f;
   letter-spacing: 8rpx;
   font-family: 'Courier New', monospace;
   display: block;
@@ -324,7 +324,7 @@ function onCancel() {
   height: 200rpx;
   border-radius: 12rpx;
   background: #f7f8fa;
-  border: 2rpx dashed #c8cce8;
+  border: 2rpx dashed #c8d6cc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -345,9 +345,9 @@ function onCancel() {
 }
 .image-action-link {
   font-size: 24rpx;
-  color: #667eea;
+  color: #52796f;
   padding: 8rpx 20rpx;
-  background: #f0eefa;
+  background: #eef4f0;
   border-radius: 20rpx;
 }
 .image-action-link.danger {
@@ -378,8 +378,8 @@ function onCancel() {
 }
 .suggest-chip {
   padding: 12rpx 20rpx;
-  background: #f0eefa;
-  color: #667eea;
+  background: #eef4f0;
+  color: #52796f;
   border-radius: 24rpx;
   font-size: 24rpx;
 }
@@ -406,7 +406,7 @@ function onCancel() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
 }
 .action-btn.secondary {

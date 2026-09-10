@@ -379,10 +379,10 @@ const copySyncCode = () => {
   font-weight: bold;
 }
 
-.menu-icon.push { background: #e8f5e9; color: #4caf50; }
-.menu-icon.pull { background: #e3f2fd; color: #1976d2; }
-.menu-icon.scan { background: #fff3e0; color: #ff9800; }
-.menu-icon.server { background: #f3e5f5; color: #9c27b0; }
+.menu-icon.push { background: #eaf1ea; color: #52796f; }
+.menu-icon.pull { background: #e8f0ec; color: #3d5a52; }
+.menu-icon.scan { background: #eef4f0; color: #74937d; }
+.menu-icon.server { background: #f4faf5; color: #6f9a8d; }
 
 .menu-text {
   flex: 1;
@@ -415,7 +415,7 @@ const copySyncCode = () => {
 
 .sync-code-value {
   font-size: 26rpx;
-  color: #1976d2;
+  color: #52796f;
   font-weight: bold;
   word-break: break-all;
 }
@@ -457,7 +457,7 @@ const copySyncCode = () => {
 }
 
 .btn-confirm {
-  background: #1976d2;
+  background: #52796f;
   color: #fff;
 }
 

@@ -414,7 +414,7 @@ const formatDate = (timestamp: number): string => {
 
 .bank-name-text {
   font-size: 28rpx;
-  color: #667eea;
+  color: #52796f;
   font-weight: bold;
   margin: 0 8rpx;
 }
@@ -453,13 +453,13 @@ const formatDate = (timestamp: number): string => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f2ff;
+  background: #eaf1ea;
   border-radius: 50%;
   transition: all 0.2s;
 }
 
 .filter-toggle.active {
-  background: #667eea;
+  background: #52796f;
 }
 
 .filter-toggle.active .filter-icon {
@@ -468,13 +468,13 @@ const formatDate = (timestamp: number): string => {
 
 .filter-icon {
   font-size: 32rpx;
-  color: #667eea;
+  color: #52796f;
 }
 
 .add-btn {
   width: 72rpx;
   height: 72rpx;
-  background: #1976d2;
+  background: #52796f;
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -546,13 +546,13 @@ const formatDate = (timestamp: number): string => {
   align-items: center;
   padding: 8rpx 20rpx;
   border-radius: 24rpx;
-  background: #f0f2ff;
+  background: #eaf1ea;
   font-size: 24rpx;
-  color: #667eea;
+  color: #52796f;
 }
 
 .sort-chip.on {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
 }
 
@@ -574,12 +574,12 @@ const formatDate = (timestamp: number): string => {
 
 .wrong-entry-text {
   font-size: 24rpx;
-  color: #e53935;
+  color: #c0564f;
 }
 
 .wrong-entry-arrow {
   font-size: 26rpx;
-  color: #e53935;
+  color: #c0564f;
 }
 
 .reset-btn {
@@ -590,7 +590,7 @@ const formatDate = (timestamp: number): string => {
 
 .reset-text {
   font-size: 24rpx;
-  color: #e53935;
+  color: #c0564f;
 }
 
 /* 列表模式切换 */
@@ -612,18 +612,18 @@ const formatDate = (timestamp: number): string => {
 }
 
 .mode-item.active {
-  background: #f0f2ff;
+  background: #eaf1ea;
 }
 
 .mode-num {
   font-size: 32rpx;
   font-weight: bold;
-  color: #1976d2;
+  color: #52796f;
   display: block;
 }
 
 .mode-item.active .mode-num {
-  color: #667eea;
+  color: #52796f;
 }
 
 .mode-label {
@@ -635,7 +635,7 @@ const formatDate = (timestamp: number): string => {
 
 .mode-action {
   font-size: 26rpx;
-  color: #4caf50;
+  color: #52796f;
   font-weight: bold;
   line-height: 80rpx;
 }
@@ -653,7 +653,7 @@ const formatDate = (timestamp: number): string => {
 
 .btn-goto-bank {
   margin-top: 30rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 40rpx;
   font-size: 28rpx;
@@ -708,7 +708,7 @@ const formatDate = (timestamp: number): string => {
 }
 
 .review-badge {
-  background: #ff5252;
+  background: #c0564f;
   color: #fff;
   font-size: 20rpx;
   padding: 4rpx 12rpx;
@@ -717,8 +717,8 @@ const formatDate = (timestamp: number): string => {
 }
 
 .reviewed-badge {
-  background: #e8f5e9;
-  color: #4caf50;
+  background: #eaf1ea;
+  color: #52796f;
   font-size: 20rpx;
   padding: 4rpx 12rpx;
   border-radius: 20rpx;
@@ -726,8 +726,8 @@ const formatDate = (timestamp: number): string => {
 }
 
 .remembered-badge {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: #eaf1ea;
+  color: #52796f;
   font-size: 20rpx;
   padding: 4rpx 12rpx;
   border-radius: 20rpx;
@@ -808,14 +808,14 @@ const formatDate = (timestamp: number): string => {
 
 .detail-example {
   padding: 20rpx;
-  background: #e3f2fd;
+  background: #eaf1ea;
   border-radius: 12rpx;
   margin-bottom: 20rpx;
 }
 
 .detail-example-label {
   font-size: 24rpx;
-  color: #1976d2;
+  color: #52796f;
   font-weight: bold;
   display: block;
   margin-bottom: 8rpx;
@@ -852,7 +852,7 @@ const formatDate = (timestamp: number): string => {
   border-radius: 8rpx;
   font-size: 28rpx;
   border: none;
-  background: #ff5252;
+  background: #c0564f;
   color: #fff;
 }
 </style>

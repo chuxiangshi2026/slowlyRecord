@@ -213,19 +213,19 @@ const goTo = (url: string) => {
 
 <style scoped>
 .wordbank-container { min-height: 100vh; background: #f5f5f5; padding-bottom: 40rpx; }
-.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 60rpx 40rpx; text-align: center; }
+.header { background: linear-gradient(135deg, #52796f 0%, #74937d 100%); padding: 60rpx 40rpx; text-align: center; }
 .title { font-size: 40rpx; font-weight: bold; color: #fff; display: block; }
 .subtitle { font-size: 26rpx; color: rgba(255,255,255,0.8); margin-top: 10rpx; display: block; }
 
 .current-bank-section { margin: 20rpx; background: #fff; border-radius: 16rpx; padding: 30rpx; }
 .section-label { font-size: 26rpx; color: #999; margin-bottom: 16rpx; display: block; }
-.bank-picker { display: flex; justify-content: space-between; align-items: center; padding: 16rpx 20rpx; background: #f0f2ff; border-radius: 12rpx; }
-.bank-picker-text { font-size: 32rpx; font-weight: bold; color: #667eea; }
-.bank-picker-arrow { font-size: 24rpx; color: #667eea; }
+.bank-picker { display: flex; justify-content: space-between; align-items: center; padding: 16rpx 20rpx; background: #eaf1ea; border-radius: 12rpx; }
+.bank-picker-text { font-size: 32rpx; font-weight: bold; color: #52796f; }
+.bank-picker-arrow { font-size: 24rpx; color: #52796f; }
 
 .section-header { display: flex; justify-content: space-between; align-items: center; padding: 20rpx 30rpx 10rpx; }
 .section-title { font-size: 30rpx; font-weight: bold; color: #333; }
-.section-add { font-size: 28rpx; color: #667eea; }
+.section-add { font-size: 28rpx; color: #52796f; }
 
 .bank-list { padding: 0 20rpx; }
 .bank-item { background: #fff; border-radius: 16rpx; padding: 24rpx 30rpx; margin-bottom: 12rpx; display: flex; justify-content: space-between; align-items: center; border-left: 16rpx solid transparent; box-sizing: border-box; }
@@ -236,12 +236,12 @@ const goTo = (url: string) => {
 .current-badge { font-size: 20rpx; color: #fff; background: #52796f; border-radius: 20rpx; padding: 4rpx 16rpx; }
 .bank-count { font-size: 24rpx; color: #999; margin-top: 6rpx; display: block; }
 .bank-actions { display: flex; gap: 20rpx; }
-.action-text { font-size: 24rpx; color: #667eea; }
-.action-text.danger { color: #e53935; }
+.action-text { font-size: 24rpx; color: #52796f; }
+.action-text.danger { color: #c0564f; }
 .action-text.muted { color: #ccc; }
 
 .mapping-item {
-  background: #f0f2ff;
+  background: #eaf1ea;
   border-radius: 12rpx;
   padding: 20rpx 30rpx;
   margin: 0 20rpx 12rpx;
@@ -257,7 +257,7 @@ const goTo = (url: string) => {
 .mapping-source {
   font-size: 26rpx;
   font-weight: bold;
-  color: #667eea;
+  color: #52796f;
 }
 .mapping-arrow {
   font-size: 24rpx;
@@ -286,5 +286,5 @@ const goTo = (url: string) => {
 .dialog-buttons { display: flex; justify-content: space-between; margin-top: 30rpx; gap: 20rpx; }
 .dialog-btn { flex: 1; text-align: center; padding: 20rpx; border-radius: 12rpx; font-size: 30rpx; }
 .dialog-btn.cancel { background: #f5f5f5; color: #666; }
-.dialog-btn.confirm { background: #667eea; color: #fff; }
+.dialog-btn.confirm { background: #52796f; color: #fff; }
 </style>

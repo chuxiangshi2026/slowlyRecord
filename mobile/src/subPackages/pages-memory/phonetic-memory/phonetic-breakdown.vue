@@ -323,7 +323,7 @@ onLoad(() => {
 }
 
 .stat.correct {
-  color: #4caf50;
+  color: #52796f;
   font-weight: bold;
 }
 
@@ -339,7 +339,7 @@ onLoad(() => {
 
 .progress-fill {
   height: 100%;
-  background: #667eea;
+  background: #52796f;
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -377,7 +377,7 @@ onLoad(() => {
 
 .word-phonetic {
   font-size: 36rpx;
-  color: #667eea;
+  color: #52796f;
   margin-top: 8rpx;
   font-family: 'Times New Roman', serif;
 }
@@ -410,7 +410,7 @@ onLoad(() => {
 .slot {
   width: 110rpx;
   height: 110rpx;
-  border: 3rpx dashed #c8cce8;
+  border: 3rpx dashed #c8d6cc;
   border-radius: 16rpx;
   display: flex;
   align-items: center;
@@ -420,13 +420,13 @@ onLoad(() => {
 
 .slot.filled {
   border-style: solid;
-  border-color: #667eea;
-  background: #f0eefa;
+  border-color: #52796f;
+  background: #eef4f0;
 }
 
 .slot.ok {
-  border-color: #4caf50;
-  background: #f2fbf4;
+  border-color: #52796f;
+  background: #f4faf5;
 }
 
 .slot.bad {
@@ -469,7 +469,7 @@ onLoad(() => {
 .pool-ipa {
   font-size: 30rpx;
   font-weight: bold;
-  color: #667eea;
+  color: #52796f;
   font-family: 'Times New Roman', serif;
 }
 
@@ -481,7 +481,7 @@ onLoad(() => {
 
 .btn-check {
   flex: 2;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;
@@ -505,7 +505,7 @@ onLoad(() => {
 
 .btn-next {
   flex: 1;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;
@@ -547,7 +547,7 @@ onLoad(() => {
 }
 
 .result-num.correct {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .result-num.wrong {
@@ -562,7 +562,7 @@ onLoad(() => {
 
 .result-accuracy {
   font-size: 28rpx;
-  color: #667eea;
+  color: #52796f;
   margin-top: 16rpx;
 }
 
@@ -577,7 +577,7 @@ onLoad(() => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;

@@ -212,7 +212,7 @@ function previewContent(content: string): string {
 
 .select-all-label {
   font-size: 26rpx;
-  color: #43a047;
+  color: #52796f;
 }
 
 .selected-info {
@@ -235,12 +235,12 @@ function previewContent(content: string): string {
   transition: all 0.15s;
 }
 .checkbox.checked {
-  background: #43a047;
-  border-color: #43a047;
+  background: #52796f;
+  border-color: #52796f;
 }
 .checkbox.indeterminate {
-  background: #43a047;
-  border-color: #43a047;
+  background: #52796f;
+  border-color: #52796f;
 }
 .check-mark {
   color: #fff;

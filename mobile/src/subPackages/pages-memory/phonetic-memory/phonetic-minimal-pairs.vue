@@ -242,7 +242,7 @@ onLoad(() => {
 }
 
 .stat.correct {
-  color: #4caf50;
+  color: #52796f;
   font-weight: bold;
 }
 
@@ -258,7 +258,7 @@ onLoad(() => {
 
 .progress-fill {
   height: 100%;
-  background: #667eea;
+  background: #52796f;
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -287,7 +287,7 @@ onLoad(() => {
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -297,8 +297,8 @@ onLoad(() => {
 
 .play-btn.slow {
   background: #fff;
-  border: 3rpx solid #667eea;
-  color: #667eea;
+  border: 3rpx solid #52796f;
+  color: #52796f;
 }
 
 .play-icon {
@@ -327,8 +327,8 @@ onLoad(() => {
 }
 
 .pair-card.correct {
-  border-color: #4caf50;
-  background: #f2fbf4;
+  border-color: #52796f;
+  background: #f4faf5;
 }
 
 .pair-card.wrong {
@@ -374,7 +374,7 @@ onLoad(() => {
 
 .contrast-text {
   font-size: 26rpx;
-  color: #667eea;
+  color: #52796f;
   font-family: 'Times New Roman', serif;
 }
 
@@ -388,14 +388,14 @@ onLoad(() => {
 .contrast-play {
   font-size: 28rpx;
   color: #303030;
-  background: #f0eefa;
+  background: #eef4f0;
   padding: 12rpx 28rpx;
   border-radius: 12rpx;
 }
 
 .btn-next {
   margin-top: 40rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;
@@ -438,7 +438,7 @@ onLoad(() => {
 }
 
 .result-num.correct {
-  color: #4caf50;
+  color: #52796f;
 }
 
 .result-num.wrong {
@@ -453,7 +453,7 @@ onLoad(() => {
 
 .result-accuracy {
   font-size: 28rpx;
-  color: #667eea;
+  color: #52796f;
   margin-top: 16rpx;
 }
 
@@ -468,7 +468,7 @@ onLoad(() => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 44rpx;
   height: 88rpx;

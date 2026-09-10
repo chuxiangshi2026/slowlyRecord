@@ -614,7 +614,7 @@ const emptyHint = computed(() => {
   color: #999;
 }
 .picker-value {
-  color: #43a047;
+  color: #52796f;
   font-weight: 600;
 }
 
@@ -634,14 +634,14 @@ const emptyHint = computed(() => {
   gap: 12rpx;
   padding: 14rpx 24rpx;
   background: #f4faf5;
-  border-bottom: 1rpx solid #e8f5e9;
+  border-bottom: 1rpx solid #eaf1ea;
   font-size: 24rpx;
-  color: #2e7d32;
+  color: #3d5a52;
 }
 .route-checkbox {
   width: 30rpx;
   height: 30rpx;
-  border: 2rpx solid #66bb6a;
+  border: 2rpx solid #83c5a8;
   border-radius: 6rpx;
   background: #fff;
   display: flex;
@@ -649,8 +649,8 @@ const emptyHint = computed(() => {
   justify-content: center;
 }
 .route-checkbox.checked {
-  background: #43a047;
-  border-color: #43a047;
+  background: #52796f;
+  border-color: #52796f;
 }
 .route-checkbox .check-mark {
   color: #fff;
@@ -661,7 +661,7 @@ const emptyHint = computed(() => {
   flex: 1;
 }
 .route-hint {
-  color: #66bb6a;
+  color: #83c5a8;
   font-size: 22rpx;
   font-variant-numeric: tabular-nums;
 }
@@ -738,6 +738,6 @@ const emptyHint = computed(() => {
   background: #e6a23c;
 }
 .legend-dot.cluster {
-  background: #f56c6c;
+  background: #c0564f;
 }
 </style>

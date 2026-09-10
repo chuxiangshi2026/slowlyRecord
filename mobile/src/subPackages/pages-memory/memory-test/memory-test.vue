@@ -272,7 +272,7 @@ onUnmounted(() => {
 <style scoped>
 .memory-test-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
+  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
   padding: 40rpx;
 }
 
@@ -396,8 +396,8 @@ onUnmounted(() => {
 }
 
 .number-cell.clicked {
-  background: #c8e6c9;
-  color: #2e7d32;
+  background: #c8d6cc;
+  color: #3d5a52;
 }
 
 .timer {

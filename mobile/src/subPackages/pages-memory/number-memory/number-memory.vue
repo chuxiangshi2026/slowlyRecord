@@ -253,7 +253,7 @@ onShow(() => store.load())
 }
 
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #52796f 0%, #74937d 100%);
   padding: 60rpx 40rpx 40rpx;
   text-align: center;
 }
@@ -284,7 +284,7 @@ onShow(() => store.load())
   position: relative;
 }
 .tab.active {
-  color: #667eea;
+  color: #52796f;
   font-weight: 600;
 }
 .tab.active::after {
@@ -294,7 +294,7 @@ onShow(() => store.load())
   left: 30%;
   right: 30%;
   height: 4rpx;
-  background: #667eea;
+  background: #52796f;
   border-radius: 2rpx;
 }
 
@@ -326,7 +326,7 @@ onShow(() => store.load())
   border-radius: 20rpx;
 }
 .range-chip.active {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
 }
 
@@ -347,13 +347,13 @@ onShow(() => store.load())
   border: 2rpx solid transparent;
 }
 .peg-cell.filled {
-  background: #f0eefa;
-  border-color: #667eea;
+  background: #eef4f0;
+  border-color: #52796f;
 }
 .peg-number {
   font-size: 32rpx;
   font-weight: bold;
-  color: #667eea;
+  color: #52796f;
 }
 .peg-number.small {
   font-size: 22rpx;
@@ -401,7 +401,7 @@ onShow(() => store.load())
   height: 76rpx;
   line-height: 76rpx;
   padding: 0 28rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   font-size: 26rpx;
   border-radius: 38rpx;
@@ -481,7 +481,7 @@ onShow(() => store.load())
 .entry-numbers {
   font-size: 36rpx;
   font-weight: 500;
-  color: #667eea;
+  color: #52796f;
   font-family: 'Courier New', monospace;
   letter-spacing: 4rpx;
   display: block;
@@ -495,8 +495,8 @@ onShow(() => store.load())
 }
 .entry-tag {
   font-size: 20rpx;
-  background: #f0eefa;
-  color: #667eea;
+  background: #eef4f0;
+  color: #52796f;
   border-radius: 4rpx;
   padding: 2rpx 12rpx;
 }

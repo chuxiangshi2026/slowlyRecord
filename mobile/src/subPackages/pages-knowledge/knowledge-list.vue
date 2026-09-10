@@ -240,7 +240,7 @@ onShow(() => {
 }
 
 .tab.active {
-  color: #667eea;
+  color: #52796f;
   font-weight: 600;
 }
 
@@ -251,7 +251,7 @@ onShow(() => {
   left: 30%;
   right: 30%;
   height: 4rpx;
-  background: #667eea;
+  background: #52796f;
   border-radius: 2rpx;
 }
 
@@ -287,7 +287,7 @@ onShow(() => {
 
 .btn-goto-builtin {
   margin-top: 40rpx;
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border-radius: 40rpx;
   font-size: 28rpx;
@@ -401,7 +401,7 @@ onShow(() => {
 
 .progress-text {
   font-size: 22rpx;
-  color: #4caf50;
+  color: #52796f;
 }
 
 .progress-due {
@@ -418,7 +418,7 @@ onShow(() => {
 }
 
 .import-btn {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
   border: none;
   border-radius: 30rpx;

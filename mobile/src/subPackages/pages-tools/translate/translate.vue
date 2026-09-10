@@ -377,7 +377,7 @@ const handleCapture = async () => {
   border-radius: 12rpx;
   padding: 30rpx;
   margin-bottom: 30rpx;
-  border-left: 8rpx solid #ff9800;
+  border-left: 8rpx solid #52796f;
 }
 
 .result-section {
@@ -422,10 +422,10 @@ const handleCapture = async () => {
 .offline-tag {
   margin-top: 20rpx;
   padding: 16rpx;
-  background: #fff3e0;
+  background: #fdf6ec;
   border-radius: 8rpx;
   font-size: 24rpx;
-  color: #e65100;
+  color: #c07a2b;
 }
 
 .token-list {

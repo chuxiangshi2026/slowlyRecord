@@ -235,7 +235,7 @@ function confirmDelete(article: MobileTextArticle) {
 }
 
 .header {
-  background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
   padding: 60rpx 40rpx 40rpx;
   text-align: center;
 }
@@ -288,13 +288,13 @@ function confirmDelete(article: MobileTextArticle) {
   margin: 0;
 }
 .btn-add {
-  background: #43a047;
+  background: #52796f;
   color: #fff;
 }
 .btn-import {
   background: #fff;
-  color: #43a047;
-  border: 1rpx solid #43a047;
+  color: #52796f;
+  border: 1rpx solid #52796f;
 }
 
 .tag-bar {
@@ -312,9 +312,9 @@ function confirmDelete(article: MobileTextArticle) {
   border: 1rpx solid transparent;
 }
 .tag-chip.active {
-  background: #e8f5e9;
-  color: #2e7d32;
-  border-color: #43a047;
+  background: #eaf1ea;
+  color: #3d5a52;
+  border-color: #52796f;
 }
 
 .stats-bar {
@@ -521,7 +521,7 @@ function confirmDelete(article: MobileTextArticle) {
   color: #666;
 }
 .detail-btn.primary {
-  background: #43a047;
+  background: #52796f;
   color: #fff;
 }
 </style>

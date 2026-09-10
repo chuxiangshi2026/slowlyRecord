@@ -132,21 +132,21 @@ async function importWords(words: Word[], startIndex: number, count: number, _ba
 
 <style scoped>
 .wordbank-container { min-height: 100vh; background: #f5f5f5; }
-.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 60rpx 40rpx; text-align: center; }
+.header { background: linear-gradient(135deg, #52796f 0%, #74937d 100%); padding: 60rpx 40rpx; text-align: center; }
 .title { font-size: 40rpx; font-weight: bold; color: #fff; display: block; }
 .target-section { margin: 20rpx; background: #fff; border-radius: 16rpx; padding: 24rpx 30rpx; display: flex; align-items: center; }
 .target-label { font-size: 28rpx; color: #666; margin-right: 16rpx; }
-.target-picker { display: flex; align-items: center; padding: 10rpx 20rpx; background: #f0f2ff; border-radius: 10rpx; }
-.target-text { font-size: 28rpx; color: #667eea; font-weight: bold; }
-.target-arrow { font-size: 20rpx; color: #667eea; margin-left: 8rpx; }
+.target-picker { display: flex; align-items: center; padding: 10rpx 20rpx; background: #eaf1ea; border-radius: 10rpx; }
+.target-text { font-size: 28rpx; color: #52796f; font-weight: bold; }
+.target-arrow { font-size: 20rpx; color: #52796f; margin-left: 8rpx; }
 .wordbank-list { padding: 0 20rpx; }
 .bank-item { background: #fff; border-radius: 16rpx; padding: 30rpx; margin-bottom: 16rpx; display: flex; justify-content: space-between; align-items: center; }
 .bank-info { flex: 1; }
 .bank-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
 .bank-desc { font-size: 24rpx; color: #999; margin-top: 8rpx; display: block; }
-.bank-count { font-size: 22rpx; color: #667eea; margin-top: 8rpx; display: block; }
+.bank-count { font-size: 22rpx; color: #52796f; margin-top: 8rpx; display: block; }
 .bank-actions { text-align: right; }
-.cached-badge { font-size: 20rpx; color: #4caf50; display: block; margin-bottom: 8rpx; }
-.action-btn { width: 160rpx; height: 64rpx; background: #667eea; color: #fff; border-radius: 32rpx; font-size: 26rpx; border: none; line-height: 64rpx; }
+.cached-badge { font-size: 20rpx; color: #52796f; display: block; margin-bottom: 8rpx; }
+.action-btn { width: 160rpx; height: 64rpx; background: #52796f; color: #fff; border-radius: 32rpx; font-size: 26rpx; border: none; line-height: 64rpx; }
 .action-btn.cached { background: #f0f0f0; color: #666; }
 </style>

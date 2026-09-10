@@ -652,7 +652,7 @@ function handleImportFromMap() {
   position: relative;
 }
 .tab.active {
-  color: #43a047;
+  color: #52796f;
   font-weight: 600;
 }
 .tab.active::after {
@@ -662,7 +662,7 @@ function handleImportFromMap() {
   left: 30%;
   right: 30%;
   height: 4rpx;
-  background: #43a047;
+  background: #52796f;
   border-radius: 2rpx;
 }
 
@@ -806,7 +806,7 @@ function handleImportFromMap() {
   color: #888;
 }
 .select-all {
-  color: #43a047;
+  color: #52796f;
 }
 
 .lib-scroll {
@@ -823,7 +823,7 @@ function handleImportFromMap() {
   border: 2rpx solid transparent;
 }
 .lib-item.selected {
-  border-color: #43a047;
+  border-color: #52796f;
   background: #f4faf5;
 }
 .lib-item-header {
@@ -878,7 +878,7 @@ function handleImportFromMap() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #43a047;
+  background: #52796f;
   color: #fff;
 }
 .action-btn[disabled] {

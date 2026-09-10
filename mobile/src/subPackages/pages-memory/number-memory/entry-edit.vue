@@ -200,7 +200,7 @@ function onCancel() {
 }
 .peg-hints {
   font-size: 22rpx;
-  color: #667eea;
+  color: #52796f;
   display: block;
   margin-top: 10rpx;
   line-height: 1.6;
@@ -227,7 +227,7 @@ function onCancel() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
 }
 .action-btn.secondary {

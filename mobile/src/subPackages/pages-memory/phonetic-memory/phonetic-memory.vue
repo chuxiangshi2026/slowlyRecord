@@ -227,7 +227,7 @@ function goBreakdown() {
 }
 
 .stat-num.active {
-  color: #667eea;
+  color: #52796f;
 }
 
 .stat-total {
@@ -291,7 +291,7 @@ function goBreakdown() {
 }
 
 .group--vowel .group-header {
-  border-left-color: #67c23a;
+  border-left-color: #52796f;
 }
 
 .group-title {
@@ -355,8 +355,8 @@ function goBreakdown() {
 }
 
 .phoneme-card.mastered {
-  border-color: #bfe8c8;
-  background: #f2fbf4;
+  border-color: #c8d6cc;
+  background: #f4faf5;
 }
 
 .ipa {
@@ -387,7 +387,7 @@ function goBreakdown() {
 }
 
 .badge.voiced {
-  background: #e1f3d8;
+  background: #dbe7de;
   color: #5daf34;
 }
 
@@ -443,8 +443,8 @@ function goBreakdown() {
   font-size: 20rpx;
   padding: 4rpx 14rpx;
   border-radius: 8rpx;
-  background: #f0eefa;
-  color: #667eea;
+  background: #eef4f0;
+  color: #52796f;
 }
 
 .tag.plain {
@@ -453,17 +453,17 @@ function goBreakdown() {
 }
 
 .tag.vowel {
-  background: #e8f5e9;
-  color: #4caf50;
+  background: #eaf1ea;
+  color: #52796f;
 }
 
 .tag.consonant {
-  background: #fff3e0;
+  background: #fdf6ec;
   color: #e6a23c;
 }
 
 .tag.voiced-tag {
-  background: #e1f3d8;
+  background: #dbe7de;
   color: #5daf34;
 }
 
@@ -493,8 +493,8 @@ function goBreakdown() {
 
 .example-chip {
   font-size: 26rpx;
-  color: #667eea;
-  background: #f0eefa;
+  color: #52796f;
+  background: #eef4f0;
   padding: 12rpx 24rpx;
   border-radius: 12rpx;
 }
@@ -507,7 +507,7 @@ function goBreakdown() {
 
 .similar-tag {
   font-size: 26rpx;
-  color: #667eea;
+  color: #52796f;
   font-family: 'Times New Roman', serif;
   background: #f5f5f5;
   padding: 8rpx 20rpx;

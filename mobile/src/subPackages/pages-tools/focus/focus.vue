@@ -791,7 +791,7 @@ onUnmounted(() => {
 
 .result-icon.bad,
 .wrong-input {
-  color: #e58f8f;
+  color: #c08f8a;
 }
 
 .wrong-input {
@@ -830,9 +830,9 @@ onUnmounted(() => {
 }
 
 .btn-forget {
-  background: rgba(229, 143, 143, 0.18);
-  color: #e58f8f;
-  border: 1rpx solid rgba(229, 143, 143, 0.5);
+  background: rgba(192, 143, 138, 0.18);
+  color: #c08f8a;
+  border: 1rpx solid rgba(192, 143, 138, 0.5);
 }
 
 .btn-remember {
@@ -958,7 +958,7 @@ onUnmounted(() => {
 }
 
 .stat-value.bad {
-  color: #e58f8f;
+  color: #c08f8a;
 }
 
 .stat-value.skip {

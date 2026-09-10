@@ -411,8 +411,8 @@ onLoad(async (opt: any) => {
 }
 
 .stat-chip.mastered-chip {
-  background: #f2fbf4;
-  color: #4caf50;
+  background: #f4faf5;
+  color: #52796f;
 }
 
 .stat-chip.due-chip {
@@ -448,14 +448,14 @@ onLoad(async (opt: any) => {
 }
 
 .btn-practice.flip {
-  background: #667eea;
+  background: #52796f;
   color: #fff;
 }
 
 .btn-practice.choice {
   background: #fff;
-  color: #667eea;
-  border: 2rpx solid #667eea;
+  color: #52796f;
+  border: 2rpx solid #52796f;
 }
 
 .btn-practice.spell {
@@ -674,8 +674,8 @@ onLoad(async (opt: any) => {
 }
 
 .pt-cell.fblock {
-  background: #f3f0fa;
-  border-color: #d8d0e8;
+  background: #eef4f0;
+  border-color: #c8d6cc;
 }
 
 .pt-cell:active {

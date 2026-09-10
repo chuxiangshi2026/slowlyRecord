@@ -266,9 +266,9 @@ function onCancel() {
 }
 
 .category-chip.active {
-  background: #e8f5e9;
-  color: #2e7d32;
-  border-color: #43a047;
+  background: #eaf1ea;
+  color: #3d5a52;
+  border-color: #52796f;
 }
 
 .actions {
@@ -293,7 +293,7 @@ function onCancel() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #43a047;
+  background: #52796f;
   color: #fff;
 }
 .action-btn.secondary {
