@@ -1,13 +1,14 @@
 /**
- * 词库远程下载（GitHub + jsDelivr CDN 双通道）
+ * 词库远程下载（jsDelivr CDN 缓存 GitHub 仓库）
  *
- * 数据存放在 GitHub 仓库 mobile/wordbank-json/，通过 raw.githubusercontent.com 拉取。
+ * 数据存放在 GitHub 仓库 mobile/wordbank-json/，通过 jsDelivr CDN 拉取。
+ * jsDelivr 自动缓存 GitHub 内容，国内有 CDN 节点，比 raw.githubusercontent.com 稳定。
  * 首次下载后缓存到本地 storage，之后离线可用。
  *
- * 域名白名单：小程序后台需把 https://raw.githubusercontent.com 加入 downloadFile 合法域名。
+ * 域名白名单：小程序后台需把 https://cdn.jsdelivr.net 加入 downloadFile 合法域名。
  */
 
-const GITHUB_BASE = 'https://raw.githubusercontent.com/chuxiangshi2026/slowlyRecord/master/mobile/wordbank-json'
+const JSDELIVR_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/mobile/wordbank-json'
 const CACHE_KEY_PREFIX = 'slowlyrecord_remote_wordbank_'
 const CACHE_INDEX_KEY = 'slowlyrecord_remote_wordbank_index'
 
@@ -56,7 +57,7 @@ export function downloadWordBank(
   onProgress?: (percent: number) => void,
 ): Promise<any[]> {
   return new Promise((resolve, reject) => {
-    const url = `${GITHUB_BASE}/${id}.json`
+    const url = `${JSDELIVR_BASE}/${id}.json`
     const task = uni.downloadFile({
       url,
       success: (res) => {
@@ -90,7 +91,7 @@ export function downloadWordBank(
       fail: (err) => {
         const msg = err.errMsg || ''
         if (msg.includes('domain') || msg.includes('url not')) {
-          reject(new Error('请先在小程序后台把 https://raw.githubusercontent.com 加入 downloadFile 合法域名'))
+          reject(new Error('请先在小程序后台把 https://cdn.jsdelivr.net 加入 downloadFile 合法域名'))
         } else {
           reject(new Error(`下载失败：${msg}`))
         }
@@ -116,7 +117,7 @@ export async function getWordBank(
 export function fetchRemoteIndex(): Promise<RemoteWordBankInfo[] | null> {
   return new Promise((resolve) => {
     uni.request({
-      url: `${GITHUB_BASE}/index.json`,
+      url: `${JSDELIVR_BASE}/index.json`,
       success: (res) => {
         if (res.statusCode === 200 && Array.isArray(res.data)) {
           resolve(res.data)
