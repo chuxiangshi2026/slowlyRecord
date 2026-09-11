@@ -3,18 +3,12 @@
     <div class="common-layout">
 
       <el-container>
-<!--        <el-header>
-          &lt;!&ndash;          Header&ndash;&gt;
-          <HomeHeader/>
-        </el-header>-->
+        <!-- 统一头部：页面名 + 列表模式切换 + 打卡 streak（uTools 原生已有插件头，这里只保留一行全局状态） -->
+        <el-header height="34px">
+          <AppHeader/>
+        </el-header>
         <el-container>
-<!--          <el-aside width="56px">-->
-<!--            &lt;!&ndash;            Aside&ndash;&gt;-->
-<!--            <HomeAside/>-->
-<!--          </el-aside>-->
           <el-main>
-            <!--            Main-->
-<!--            <HomeBreadcrumb/>-->
             <HomeMain/>
           </el-main>
         </el-container>
@@ -27,22 +21,27 @@
 
     <!--    </router-view>-->
     <!--    <el-button type="primary">ok</el-button>-->
+
+    <!-- 同步与备份：挂到 Home 层，头部状态点与「更多」抽屉共用同一实例 -->
+    <SyncDialog v-model="uiStore.syncDialogVisible"/>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import HomeHeader from "@/views/Home/components/HomeHeader.vue";
-import HomeFood from "@/views/Home/components/HomeFood.vue";
+import AppHeader from "@/components/AppHeader.vue";
 import HomeMain from "@/views/Home/components/HomeMain.vue";
-import HomeAside from "@/views/Home/components/HomeAside.vue";
-import HomeBreadcrumb from "@/views/Home/components/HomeBreadcrumb.vue";
+import SyncDialog from "@/components/SyncDialog.vue";
+import {useUiStore} from "@/stores/ui";
+
+const uiStore = useUiStore();
 </script>
 
 <style scoped lang="scss">
 .el-header {
   box-shadow: 0 8px 24px -2px rgba(0, 0, 0, .05);
   background-color: var(--utools-bg-primary);
+  padding: 0;
 }
 .el-aside {
   box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05);
