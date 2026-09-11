@@ -1780,10 +1780,11 @@
         word.remember = true;
         word.isReview = false;
       } else {
-        word.level = Math.min(7, (word.level || 1) + 1);
+        // 与 srs.ts 统一：封顶 12 级，12 级才视为已记住（原来是 7 级，口径不一致）
+        word.level = Math.min(12, (word.level || 1) + 1);
         // 答对后设为不需要复习（刚复习过），等 upReview 根据间隔时间重新计算
         word.isReview = false;
-        if (word.level >= 7) word.remember = true;
+        if (word.level >= 12) word.remember = true;
       }
       // 答对一条，待复习计数减一（重载时还会从词库全量重算校准）
       if (wasReview) adjustPendingReviewCount(-1);
@@ -1834,7 +1835,9 @@
       if (!word) return;
 
       var wasReview = !!word.isReview;
-      word.level = Math.max(1, (word.level || 1) - 1);
+      // 与 srs.ts computeLevelDown 统一：降级封顶 -4，下限 1（原来是固定 -1）
+      word.level = Math.max(1, (word.level || 1) - 4);
+      word.remember = false;
       word.isReview = true;
       // 原本不在待复习队列（如在"已复习"列表中答错），计数加一
       if (!wasReview) adjustPendingReviewCount(1);

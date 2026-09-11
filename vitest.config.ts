@@ -21,6 +21,9 @@ export default defineConfig({
       { find: /^@\/adapters(\/index)?$/, replacement: resolve(__dirname, 'mobile/src/adapters/index') },
       { find: /^@\/stores$/, replacement: resolve(__dirname, 'mobile/src/stores') },
       { find: /^@\/utils$/, replacement: resolve(__dirname, 'mobile/src/stores/useUtils') },
+      // mobile/src/utils 下的模块（远程词库下载等），mobile 代码以 @/utils/xxx 引用，
+      // 需优先映射到 mobile 目录，避免落到桌面端 src/utils（不存在该文件）
+      { find: /^@\/utils\/remote-wordbank$/, replacement: resolve(__dirname, 'mobile/src/utils/remote-wordbank.ts') },
       // mobile 端的 `import ... from '@/config'`（不带扩展名）指向 mobile/src/config.ts，
       // 桌面端使用 `@/config.ts`（带扩展名），由后面通用规则解析到 src/config.ts
       { find: /^@\/config$/, replacement: resolve(__dirname, 'mobile/src/config.ts') },

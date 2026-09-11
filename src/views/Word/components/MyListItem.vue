@@ -108,6 +108,7 @@ const isDeleting = ref(false)
 
 
 import {DEFAULT_INTERVALS} from "@/constants";
+import {computeLevelDown} from "@/utils/srs";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
@@ -584,7 +585,6 @@ const remember = () => {
   // 直接修改 targetWord 后传入 addAndUpdateWord，Object.assign(obj, obj) 是空操作，不会触发响应式更新
   const updatedWord: Word = {
     ...targetWord,
-    learnDate: new Date(),
     isReview: false,
     explainedHidden: true,
   };
@@ -600,6 +600,7 @@ const remember = () => {
   console.log(`升级检查: 当前时间=${new Date(now).toLocaleString()}, 开始时间=${new Date(startLearnDate).toLocaleString()}, 结束时间=${new Date(endLearnDate).toLocaleString()}, 可升级=${canLevelUp}`);
 
   if (canLevelUp) {
+    updatedWord.learnDate = new Date();
     // 根据记忆牢固度决定升级速度
     const firmness = wordsStore.memoryFirmness;
     let levelIncrement = 1; // 默认正常：+1级
@@ -613,12 +614,13 @@ const remember = () => {
     updatedWord.level = Math.min(currentLevel + levelIncrement, 12) as Word['level'];
     console.log(`[升级成功] 记忆牢固度: ${firmness}, 提升: +${levelIncrement}级, 当前等级: ${updatedWord.level}`);
   } else {
-    // 否则等级不变，仅更新复习时间
+    // 否则等级不变：提前复习保留原学习计时（不推迟升级窗口）；已过窗口则重启当前等级计时
     if (now <= startLearnDate) {
       console.log("[未升级] 复习太早，还没到升级时间");
       ElMessage.info('复习时间未到，本次不计升级');
     } else {
       console.log("[未升级] 复习太晚，已错过升级时间窗口");
+      updatedWord.learnDate = new Date();
       ElMessage.info('已过升级窗口，本次不计升级');
     }
   }
@@ -697,15 +699,13 @@ const forget = () => {
   // 创建新对象而非直接修改原对象，确保 Vue 响应式系统能正确检测到变更
   const updatedWord: Word = { ...targetWord };
 
-  if (targetWord?.level >= 12) {
-    console.log("12级单词忘记了")
-    updatedWord.level = 1 as Word['level'];
+  const currentLevel = Number(targetWord.level) || 1;
+  if (currentLevel > 1) {
+    // 与 srs.ts/听写统一：降级封顶 -4（12 级答错降到 8 级，不再清零回 1）
+    updatedWord.level = computeLevelDown(currentLevel) as Word['level'];
     updatedWord.remember = false;
     updatedWord.isReview = true;
     updatedWord.learnDate = new Date();
-  } else if (targetWord?.level && targetWord.level > 1) {
-    console.log("降级")
-    updatedWord.level = (targetWord.level - 1) as Word['level'];
   } else {
     // level 为 1 时无法继续降级，重置学习计时重新开始学习
     console.log("1级单词忘记，重置学习计时")
