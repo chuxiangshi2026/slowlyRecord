@@ -221,61 +221,6 @@
           }
         }
       ]
-    },
-    {
-      "root": "subPackages/wordbank-a",
-      "pages": [
-        {
-          "path": "wordbankA",
-          "style": {
-            "navigationBarTitleText": "考研/GMAT词库"
-          }
-        }
-      ]
-    },
-    {
-      "root": "subPackages/wordbank-b",
-      "pages": [
-        {
-          "path": "wordbankB",
-          "style": {
-            "navigationBarTitleText": "默认词库"
-          }
-        }
-      ]
-    },
-    {
-      "root": "subPackages/wordbank-c",
-      "pages": [
-        {
-          "path": "wordbankC",
-          "style": {
-            "navigationBarTitleText": "进阶词库 II"
-          }
-        }
-      ]
-    },
-    {
-      "root": "subPackages/wordbank-level8",
-      "pages": [
-        {
-          "path": "wordbankLevel8",
-          "style": {
-            "navigationBarTitleText": "专业八级词库"
-          }
-        }
-      ]
-    },
-    {
-      "root": "subPackages/wordbank-d",
-      "pages": [
-        {
-          "path": "wordbankD",
-          "style": {
-            "navigationBarTitleText": "进阶词库 III"
-          }
-        }
-      ]
     }
   ],
   "globalStyle": {

@@ -456,7 +456,7 @@ const polylines = computed<UniPolyline[]>(() => {
         latitude: p.latitude,
         longitude: p.longitude,
       })),
-      color: '#43a047cc',
+      color: '#52796fcc',
       width: 4,
       dottedLine: true,
       arrowLine: true,

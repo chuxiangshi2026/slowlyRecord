@@ -5,6 +5,7 @@
 
 import type { MobileItemType, WordBankType, WordBankInfo, Word, LoadStrategy } from './types'
 import { inferMobileItemType, normalizeMobileItemText } from './text'
+import { downloadWordBank as fetchRemoteWordBank } from '@/utils/remote-wordbank'
 
 export type { WordBankType, WordBankInfo, Word, LoadStrategy }
 
@@ -95,7 +96,6 @@ export async function loadWordBank(
 
   try {
     let rawData: any
-    // #ifdef MP-WEIXIN || MP-TOUTIAO
     // 小程序：词库数据在分包中，主包只从缓存读取
     const cached = getFromCache(type)
     if (cached && cached.length > 0) {
@@ -104,34 +104,8 @@ export async function loadWordBank(
     throw new Error('请先在"词库管理"页面下载词库')
     // #endif
     // #ifndef MP-WEIXIN || MP-TOUTIAO
-    const importLoaders: Record<string, () => Promise<any>> = {
-      cet4: () => import('@/subPackages/wordbank-b/wordbanks/cet4'),
-      cet6: () => import('@/subPackages/wordbank-b/wordbanks/cet6'),
-      bec: () => import('@/subPackages/wordbank-b/wordbanks/bec'),
-      gre: () => import('@/subPackages/wordbank-c/wordbanks/gre'),
-      gmat: () => import('@/subPackages/wordbank-a/wordbanks/gmat'),
-      ielts: () => import('@/subPackages/wordbank-b/wordbanks/ielts'),
-      kaogong: () => import('@/subPackages/wordbank-b/wordbanks/kaogong'),
-      kaoyan: () => import('@/subPackages/wordbank-a/wordbanks/kaoyan'),
-      level4: () => import('@/subPackages/wordbank-c/wordbanks/level4'),
-      level8: () => import('@/subPackages/wordbank-level8/wordbanks/level8'),
-      sat: () => import('@/subPackages/wordbank-c/wordbanks/sat'),
-      toefl: () => import('@/subPackages/wordbank-d/wordbanks/toefl'),
-      zsb: () => import('@/subPackages/wordbank-b/wordbanks/zsb'),
-      newConcept: () => import('@/subPackages/wordbank-b/wordbanks/newConcept'),
-      'phrasal-verbs': () => import('@/subPackages/wordbank-b/wordbanks/phrasal_verbs'),
-      collocations: () => import('@/subPackages/wordbank-b/wordbanks/collocations'),
-      idioms: () => import('@/subPackages/wordbank-b/wordbanks/idioms'),
-      'common-phrases': () => import('@/subPackages/wordbank-b/wordbanks/common_phrases'),
-      'oral-basic': () => import('@/subPackages/wordbank-b/wordbanks/oral_basic'),
-      'oral-intermediate': () => import('@/subPackages/wordbank-b/wordbanks/oral_intermediate'),
-      'oral-advanced': () => import('@/subPackages/wordbank-b/wordbanks/oral_advanced'),
-      roots: () => import('@/subPackages/wordbank-d/wordbanks/roots'),
-    }
-    const impLoader = importLoaders[type]
-    if (!impLoader) throw new Error(`未知词库类型: ${type}`)
-    const h5Module = await impLoader()
-    rawData = h5Module.default || h5Module
+    // H5/App 端也走远程下载（jsDelivr CDN）
+    rawData = await fetchRemoteWordBank(type)
     const words = (Array.isArray(rawData) ? rawData : []).map((w: any) => {
       const wordText = normalizeMobileItemText(w.word || '')
       return {
