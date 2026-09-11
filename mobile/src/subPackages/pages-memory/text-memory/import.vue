@@ -632,7 +632,8 @@ function handleImportFromMap() {
 
 <style scoped>
 .import-page {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: #f5f6fa;
   display: flex;
   flex-direction: column;
@@ -812,7 +813,7 @@ function handleImportFromMap() {
 .lib-scroll {
   flex: 1;
   margin-bottom: 20rpx;
-  height: 100rpx; /* flex 兜底 */
+  height: 0; /* flex 子项 scroll-view 需要明确高度约束 */
 }
 
 .lib-item {
