@@ -138,6 +138,66 @@ export interface DbStorageAdapter {
 let _dbAdapter: DbAdapter | null = null
 let _dbAdapterInitPromise: Promise<DbAdapter> | null = null
 
+// 写入动作统一上报「本地已改动」，供同步状态点显示未同步标识；
+// 使用动态导入避免与 sync-dirty 模块形成静态循环依赖。
+let _markLocalChange: (() => void) | null = null
+
+function notifyLocalChange(): void {
+  if (_markLocalChange) {
+    _markLocalChange()
+    return
+  }
+  import('@/utils/sync-dirty')
+    .then((m) => {
+      _markLocalChange = m.markLocalChange
+      _markLocalChange()
+    })
+    .catch(() => { /* 忽略：脏标记失败不影响数据写入 */ })
+}
+
+/**
+ * 包装适配器写入方法：写入成功（或未显式返回失败）时标记本地已改动
+ */
+function wrapWithDirtyTracking(adapter: DbAdapter): DbAdapter {
+  const markIfOk = (result: unknown) => {
+    if (!result || (result as DbReturn).ok !== false) notifyLocalChange()
+    return result
+  }
+
+  return new Proxy(adapter, {
+    get(target, prop, receiver) {
+      if (prop === 'put') {
+        return (doc: DbDoc) => markIfOk(target.put(doc))
+      }
+      if (prop === 'remove') {
+        return (doc: string | DbDoc) => markIfOk(target.remove(doc))
+      }
+      if (prop === 'bulkDocs') {
+        return (docs: DbDoc[]) => {
+          const result = target.bulkDocs(docs)
+          notifyLocalChange()
+          return result
+        }
+      }
+      if (prop === 'promises') {
+        const promises = target.promises
+        return {
+          get: promises.get.bind(promises),
+          put: async (doc: DbDoc) => markIfOk(await promises.put(doc)),
+          remove: async (doc: string | DbDoc) => markIfOk(await promises.remove(doc)),
+          bulkDocs: async (docs: DbDoc[]) => {
+            const result = await promises.bulkDocs(docs)
+            notifyLocalChange()
+            return result
+          },
+        }
+      }
+      const value = Reflect.get(target, prop, receiver)
+      return typeof value === 'function' ? value.bind(target) : value
+    },
+  }) as DbAdapter
+}
+
 /**
  * 获取数据库适配器实例（异步）
  * 
@@ -178,9 +238,9 @@ export async function getDbAdapterAsync(): Promise<DbAdapter> {
       }
     }
 
-    _dbAdapter = adapter
+    _dbAdapter = wrapWithDirtyTracking(adapter)
     _dbAdapterInitPromise = null
-    return adapter
+    return _dbAdapter
   })()
 
   // 初始化失败时清空缓存 Promise，允许后续调用重试，避免永久卡死在同一个 rejected promise 上

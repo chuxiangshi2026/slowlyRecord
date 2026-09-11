@@ -1220,6 +1220,21 @@ export const useTextMemoryStore = defineStore('textMemory', {
     },
 
     /**
+     * 当前文章剩余段数（基于填空题进度的未答数量，供页面头部摘要使用）
+     */
+    getCurrentArticleRemainingSegments(): number {
+      const article = this.currentArticle;
+      if (!article) return 0;
+      const progress = this.getLearningProgress(article._id, 'fillBlanks') as any;
+      const stats = progress?.progress?.stats;
+      if (stats && typeof stats.total === 'number') {
+        const unanswered = stats.total - (stats.correct || 0) - (stats.wrong || 0);
+        return Math.max(0, unanswered);
+      }
+      return 0;
+    },
+
+    /**
      * 获取所有学习进度
      */
     getAllLearningProgress(): Record<string, LearningProgress> {

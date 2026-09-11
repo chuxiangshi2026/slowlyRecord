@@ -12,6 +12,7 @@ import { downloadSyncFile, pickAndImportSyncFile, importFromFile, getSyncDataSum
 import { uploadToServer, downloadFromServer, checkServerAvailable, setSyncServerUrl, resetSyncServer, uploadToServerMobileCompat } from '@/utils/sync-server'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
+import { markSynced } from '@/utils/sync-dirty'
 
 // 持久化键
 const LS_SERVER_URL = 'sync_server_url'
@@ -111,6 +112,7 @@ export const useSyncStore = defineStore('sync', () => {
       if (result.success) {
         resultMessage.value = '还原成功'
         previewData.value = null
+        markSynced()
       } else {
         resultMessage.value = `还原失败: ${result.errors.join('; ')}`
       }
@@ -134,6 +136,7 @@ export const useSyncStore = defineStore('sync', () => {
       lastRestoreResult.value = result
       if (result.success) {
         resultMessage.value = '导入成功'
+        markSynced()
       } else {
         resultMessage.value = `导入失败: ${result.errors.join('; ')}`
       }
@@ -180,6 +183,7 @@ export const useSyncStore = defineStore('sync', () => {
       if (result.success && result.code) {
         syncCode.value = result.code
         resultMessage.value = '推送成功'
+        markSynced()
       } else {
         resultMessage.value = `推送失败: ${result.error || '未知错误'}`
       }
@@ -207,6 +211,7 @@ export const useSyncStore = defineStore('sync', () => {
       if (result.success && result.code) {
         syncCode.value = result.code
         resultMessage.value = '推送成功（小程序可拉取）'
+        markSynced()
       } else {
         resultMessage.value = `推送失败: ${result.error || '未知错误'}`
       }
@@ -241,6 +246,7 @@ export const useSyncStore = defineStore('sync', () => {
       if (result.success) {
         resultMessage.value = '拉取成功'
         inputCode.value = ''
+        markSynced()
       } else {
         resultMessage.value = `拉取失败: ${result.errors.join('; ')}`
       }

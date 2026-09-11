@@ -2,12 +2,34 @@
 
   <!-- 空白态 / 今日复习完成态 -->
   <div v-if="showWords" class="empty-state">
-    <!-- 词库为空：引导式空白态 -->
+    <!-- 词库为空：引导式空白态（三条主收集路径卡片化） -->
     <template v-if="wordsStore.count === 0">
-      <p class="empty-tip">在 uTools 输入框输入「划词添加」「截图添加」可快速收集单词</p>
+      <p class="empty-tip">还没有单词，从下面任意一种方式开始收集 👇</p>
+      <div class="guide-cards">
+        <div class="guide-card" @click="showCollectTip('划词添加', '在任意应用选中文字后呼出 uTools，选择「划词添加」即可收入词库')">
+          <span class="g-icon">✍️</span>
+          <div>
+            <div class="g-title">划词添加</div>
+            <div class="g-desc">任意界面选中文字，呼出 uTools 一键收入词库</div>
+          </div>
+        </div>
+        <div class="guide-card" @click="showCollectTip('截图添加', '截图或复制图片后呼出 uTools，选择「截图添加」，OCR 识别批量收入词库')">
+          <span class="g-icon">📷</span>
+          <div>
+            <div class="g-title">截图添加</div>
+            <div class="g-desc">截图后呼出 uTools「截图添加」，OCR 批量收入</div>
+          </div>
+        </div>
+        <div class="guide-card" @click="openImportFromWordBank">
+          <span class="g-icon">📚</span>
+          <div>
+            <div class="g-title">导入内置词库</div>
+            <div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div>
+          </div>
+        </div>
+      </div>
       <div class="empty-actions">
         <el-button size="small" @click="emptyAddVisible = !emptyAddVisible">手动添加</el-button>
-        <el-button size="small" @click="openImportFromWordBank">从内置词库导入</el-button>
       </div>
       <!-- 手动加词输入框 -->
       <div v-if="emptyAddVisible" class="empty-add">
@@ -19,7 +41,6 @@
         />
         <el-button type="primary" size="small" @click="handleEmptyAdd">添加</el-button>
       </div>
-      <p class="empty-tip empty-tip-secondary">截图添加：在 uTools 输入框输入「截图添加」关键词触发，无需在页面内操作</p>
     </template>
     <!-- 今日复习完成态 -->
     <template v-else>
@@ -33,6 +54,7 @@
         ref="wordFilterRef"
         :visible="filterPanelVisible"
         :match-count="showFilteredWords.length"
+        :total-count="wordsStore.count"
         @change="onFilterChange"
         @reset="onFilterReset"
     />
@@ -300,91 +322,47 @@
 
   <div class="home_footer">
     <div>
-      <!-- 当前词库名称显示 -->
+      <!-- 当前词库名称显示（列表模式统计已上移统一头部 AppHeader） -->
       <span class="current-bank-name" @click="openWordBankManager">
         <i class="iconfont icon-library"></i>
-        {{ wordsStore.currentWordBank?.name || '默认词库' }}
+        {{ wordsStore.currentWordBank?.name || '默认词库' }} ▾
       </span>
-      <el-divider direction="vertical"/>
-      <span :class="{ 'remembered-highlight': listMode==0 }" @click="showOnlyForget"> 待复习: {{
-          wordsStore.forgetCount
-        }} </span>
-      <span :class="{ 'remembered-highlight': listMode==1 }" @click="showOnlyReview"> 已复习: {{
-          wordsStore.reviewCount
-        }} </span>
-      <span :class="{ 'remembered-highlight': listMode==2 }"
-            @click="showOnlyRemembered"> 已记完: {{ wordsStore.rememberCount }} </span>
-      <span :class="{ 'remembered-highlight': listMode==3 }" @click="showAll"> 单词总数: {{ wordsStore.count }} </span>
     </div>
     <div>
 
-      <!--            <i class="iconfont icon-time" @click="scrollToWordByText('disk')"></i>-->
-      <el-tooltip class="box-item" effect="dark" content="置顶" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="scrollToTop"><Top /></el-icon>
-      </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="置底" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="scrollToBottom"><Bottom /></el-icon>
+      <!-- 置顶/置底合并：按滚动位置智能切换 -->
+      <el-tooltip class="box-item" effect="dark" content="置顶/置底" placement="top" popper-class="small-tooltip">
+        <el-icon class="footer-icon" :size="18" @click="scrollTopOrBottom"><Sort /></el-icon>
       </el-tooltip>
 
-      <el-tooltip class="box-item" effect="dark" content="显示释义" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="visibleExplained"><View /></el-icon>
+      <!-- 显示/隐藏释义合并为一个开关 -->
+      <el-tooltip class="box-item" effect="dark" :content="showExplained===1 ? '隐藏释义' : '显示释义'" placement="top" popper-class="small-tooltip">
+        <el-icon class="footer-icon" :class="{ 'filter-active': showExplained===1 }" :size="18" @click="toggleExplained"><View /></el-icon>
       </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="隐藏释义" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="invisibleExplained"><Hide /></el-icon>
-      </el-tooltip>
+
       <el-tooltip class="box-item" effect="dark" content="筛选排序" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><FilterListIcon /></el-icon>
       </el-tooltip>
-<!--      <el-tooltip class="box-item" effect="dark" content="截图识别" placement="top" popper-class="small-tooltip">
-        <i class="iconfont icon-translate" @click="startScreenCapture" style="font-weight: bold;"></i>
-      </el-tooltip>-->
-
-      <!--      <i class="iconfont icon-import" @click="importWords"></i>
-            <i class="iconfont icon-export" @click="exportWords"></i-->
-
-      <!-- 导入下拉菜单 -->
-      <el-dropdown @command="handleImportCommand" :disabled="listMode==1||listMode==2">
-        <el-icon class="footer-icon" :size="18"><Download /></el-icon>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="importJson">JSON导入</el-dropdown-item>
-            <el-dropdown-item command="importText">TXT/CSV导入</el-dropdown-item>
-            <el-dropdown-item divided command="importFromWordBank">从词库导入</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-
-      <!-- 导出下拉菜单 -->
-      <el-dropdown @command="handleExportCommand">
-        <el-icon class="footer-icon" :size="18"><Upload /></el-icon>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="exportJson">导出JSON</el-dropdown-item>
-            <el-dropdown-item command="exportText">导出TXT</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
 
       <el-tooltip class="box-item" effect="dark" content="听写练习" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="goToDictation"><EditPen /></el-icon>
-      </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="字母映射" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="goToLetterMemory"><TableIcon /></el-icon>
-      </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="音标学习" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="goToPhoneticMemory"><Microphone /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><PipIcon /></el-icon>
       </el-tooltip>
 
-      <el-tooltip class="box-item" effect="dark" content="多端同步" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="syncDialogVisible = true"><Connection /></el-icon>
+      <!-- 更多：导入导出/字母映射/音标/同步/设置等低频入口 -->
+      <el-tooltip class="box-item" effect="dark" content="更多" placement="top" popper-class="small-tooltip">
+        <el-icon class="footer-icon" :size="18" @click="moreDrawerVisible = true"><MoreFilled /></el-icon>
       </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="设置" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="drawerVisible = true"><Setting /></el-icon>
-      </el-tooltip>
-      <SyncDialog v-model="syncDialogVisible" />
+      <MoreDrawer
+          v-model="moreDrawerVisible"
+          :import-disabled="listMode==1||listMode==2"
+          @import-command="handleImportCommand"
+          @export-command="handleExportCommand"
+          @sync="uiStore.openSyncDialog()"
+          @settings="drawerVisible = true"
+      />
       <!--      </el-tooltip>
                   <a href="#/home/list" style="margin-left: 16px;">
                     &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;
@@ -400,7 +378,6 @@
 
 
 import {ElMessage, ElLoading, ElMessageBox} from "element-plus";
-import { Microphone } from '@element-plus/icons-vue';
 import {testData} from "@/testData";
 import type {Word} from "@/types/words";
 
@@ -409,7 +386,7 @@ import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import WordFilter from "@/views/Word/components/WordFilter.vue";
 import type { FilterState } from "@/views/Word/components/WordFilter.vue";
-import SyncDialog from "@/components/SyncDialog.vue";
+import {useUiStore} from "@/stores/ui";
 import {computed, nextTick, onMounted, onUnmounted, ref, watch, shallowRef} from "vue";
 import {
   filterWordsForJsonExport,
@@ -434,19 +411,14 @@ import {
   Trophy,
   Delete,
   Plus,
-  Connection,
-  Top,
-  Bottom,
+  Sort,
   View,
-  Hide,
-  Download,
-  Upload,
   EditPen,
-  Setting
+  MoreFilled
 } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
-import TableIcon from '@/components/icons/TableIcon.vue';
+import MoreDrawer from '@/components/MoreDrawer.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';
@@ -481,6 +453,7 @@ const EDGE_DRAG_OUT_THRESHOLD = 24;
 
 const word = ref('')
 const wordsStore = useWordsStore();
+const uiStore = useUiStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -524,7 +497,20 @@ const filteredCreateBankOptions = computed(() =>
 watch(importLang, () => { selectedImportBank.value = '' })
 
 const drawerVisible = ref(false)
-const syncDialogVisible = ref(false)
+// 「更多」抽屉可见性（导入导出/字母映射/音标/同步/设置等低频入口）
+const moreDrawerVisible = ref(false)
+
+// 全局设置入口：头部 ⋯ 从任意页面请求打开设置抽屉
+watch(
+  () => uiStore.settingsDrawerRequested,
+  (requested) => {
+    if (requested) {
+      drawerVisible.value = true;
+      uiStore.settingsDrawerRequested = false;
+    }
+  },
+  {immediate: true}
+)
 const title = ref('设置')
 const currentId = ref<string | number | undefined>(undefined)
 
@@ -2245,6 +2231,13 @@ const emptyAddText = ref('')
 /**
  * 手动添加单词（空白态输入框，复用 addWord 主流程）
  */
+/**
+ * 空态引导卡点击提示
+ */
+const showCollectTip = (title: string, tip: string) => {
+  ElMessage.info(`${title}：${tip}`)
+}
+
 const handleEmptyAdd = async () => {
   const text = emptyAddText.value.trim()
   if (!text) {
@@ -2256,7 +2249,7 @@ const handleEmptyAdd = async () => {
     // 部分分支（如补充释义）addWord 内部已有成功提示，这里仅清空输入
     emptyAddText.value = ''
     if (result.message === '更新成功') return
-    ElMessage.success('添加成功')
+    ElMessage.success(`已加入 ${wordsStore.currentWordBank?.name || '默认词库'} · 今日待复习 +1`)
   } else if (result.message && result.message.includes('已存在')) {
     ElMessage.info('单词已存在')
   } else {
@@ -2266,21 +2259,13 @@ const handleEmptyAdd = async () => {
 
 
 // 控制是否只显示已记住的单词 0 待复习(正在显示)  1 已复习(暂时不需要复习的) 2 已记住
-const listMode = ref(0);
+// 已上移到 words store，与统一头部 AppHeader 共享
+const listMode = computed({
+  get: () => wordsStore.listMode,
+  set: (v) => { wordsStore.listMode = v }
+});
 
 
-const showOnlyForget = () => {
-  listMode.value = 0;
-}
-
-const showOnlyReview = () => {
-  listMode.value = listMode.value != 1 ? 1 : 0;
-}
-
-// 切换只显示已记住的单词
-const showOnlyRemembered = () => {
-  listMode.value = listMode.value != 2 ? 2 : 0;
-}
 const showAll = () => {
   listMode.value = listMode.value != 3 ? 3 : 0;
 }
@@ -2537,21 +2522,16 @@ const scrollToWord = (index: number) => {
 };
 
 
-// 滚动到顶部
-const scrollToTop = () => {
-  const scroller = document.querySelector('.scroller');
-  if (scroller) {
-    scroller.scrollTop = 0;
-  } else if (scrollContainer.value) {
-    scrollContainer.value.scrollTop = 0;
-  } else {
+// 置顶/置底合并为一个智能按钮：已在底部时回顶部，否则滚到底部
+const scrollTopOrBottom = () => {
+  const scroller = document.querySelector('.scroller') as HTMLElement | null;
+  const el: HTMLElement | null = scroller || scrollContainer.value;
+  if (!el) {
     window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
   }
-  /*  if (scrollContainer.value) {
-      scrollContainer.value.scrollTop = 0
-    } else {
-      window.scrollTo({top: 0, behavior: 'smooth'})
-    }*/
+  const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 10;
+  el.scrollTo({top: nearBottom ? 0 : el.scrollHeight, behavior: 'smooth'});
 }
 
 // 滚动到底部
@@ -3077,23 +3057,10 @@ const showExplained = ref(-1)
 // 单独控制当前的卡片释义
 // const hiddenExplain = ref('')
 /**
- * 显示全部解释
+ * 显示/隐藏全部释义合并开关：1 显示全部 ↔ 0 隐藏全部（-1 为单卡控制态，点击后归入显示全部）
  */
-const visibleExplained = () => {
-  showExplained.value = showExplained.value != 1 ? 1 : -1
-  // wordsStore.words.forEach(x => x.explainedHidden = false)
-  // wordsStore.hiddenExplain=''
-  // hiddenExplain.value=''
-}
-/**
- * 隐藏全部解释
- */
-const invisibleExplained = () => {
-  // wordsStore.hiddenExplain = ''
-  showExplained.value = showExplained.value != 0 ? 0 : -1
-  // wordsStore.hiddenExplain=''
-  // hiddenExplain.value=''
-  // wordsStore.words.forEach(x => x.explainedHidden = true)
+const toggleExplained = () => {
+  showExplained.value = showExplained.value === 1 ? 0 : 1
 }
 
 /**
@@ -3227,7 +3194,7 @@ const confirmAddOcrWords = async () => {
 
   // 显示添加结果
   if (addedCount > 0) {
-    ElMessage.success(`成功添加 ${addedCount} 个单词`);
+    ElMessage.success(`已加入 ${wordsStore.currentWordBank?.name || '默认词库'} · 今日待复习 +${addedCount}`);
   }
   if (existCount > 0) {
     ElMessage.info(`${existCount} 个单词已存在`);
@@ -3250,15 +3217,6 @@ function goToDictation() {
   const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
   router.push(`/dictation?listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}`);
 }
-
-function goToLetterMemory() {
-  router.push('/letter-memory')
-}
-
-function goToPhoneticMemory() {
-  router.push('/phonetic-memory')
-}
-
 
 // 当新数据更新时 自动滚动到单词处  放到最后
 // 监听 Store 中的 lastAddedWordText 状态

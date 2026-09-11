@@ -4,8 +4,11 @@
 import { getPlatform } from './platform'
 
 export interface NotificationAdapter {
-  /** 显示通知 */
-  show(title: string, body?: string): void
+  /**
+   * 显示通知
+   * @param onClick 点击回调（仅 Web Notification 等支持点击的平台会触发；uTools/小程序忽略）
+   */
+  show(title: string, body?: string, onClick?: () => void): void
   /** 显示成功提示 */
   success(message: string): void
   /** 显示警告提示 */
@@ -15,6 +18,7 @@ export interface NotificationAdapter {
 }
 
 class UtoolsNotification implements NotificationAdapter {
+  // uTools 的 showNotification 暂不支持点击回调，仅展示
   show(title: string, body?: string): void {
     ;(window as any).utools?.showNotification?.(body || title)
   }
@@ -68,13 +72,22 @@ class DouyinNotification implements NotificationAdapter {
 }
 
 class WebNotification implements NotificationAdapter {
-  show(title: string, body?: string): void {
+  show(title: string, body?: string, onClick?: () => void): void {
+    const notify = () => {
+      const n = new Notification(title, { body })
+      if (onClick) {
+        n.onclick = () => {
+          window.focus()
+          onClick()
+        }
+      }
+    }
     if (Notification.permission === 'granted') {
-      new Notification(title, { body })
+      notify()
     } else if (Notification.permission !== 'denied') {
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
-          new Notification(title, { body })
+          notify()
         }
       })
     }

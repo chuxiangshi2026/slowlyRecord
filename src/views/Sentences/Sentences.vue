@@ -31,6 +31,13 @@
       >{{ tag }}</el-check-tag>
     </div>
 
+    <!-- 跨功能引导：句子收集到一定量后，去文本记忆整篇背诵 -->
+    <div v-if="showTextMemoryTip" class="cross-tip">
+      <span>句子收集够啦，去文本记忆整篇背诵 →</span>
+      <el-button text size="small" type="primary" @click="goTextMemory">去看看</el-button>
+      <el-icon class="tip-close" @click="dismissTextMemoryTip"><Close/></el-icon>
+    </div>
+
     <!-- 句子卡片列表 -->
     <div v-loading="sentencesStore.loading" class="sentence-list">
       <el-empty v-if="!filteredSentences.length" description="暂无句子，去添加或划句收录吧" />
@@ -116,14 +123,31 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Search, Plus, Star, StarFilled, Edit, Delete } from '@element-plus/icons-vue';
+import { Search, Plus, Star, StarFilled, Edit, Delete, Close } from '@element-plus/icons-vue';
 import { useSentencesStore } from '@/stores/sentences';
 import { useWordsStore } from '@/stores/words';
+import { getDbStorage } from '@/adapters/db';
 import type { Sentence } from '@/types/sentences';
 
+const router = useRouter();
 const sentencesStore = useSentencesStore();
 const wordsStore = useWordsStore();
+
+// 跨功能引导：句子 → 文本记忆（可关闭，关闭后不再提示）
+const SENTENCES_TIP_KEY = 'slowlyrecord_tip_sentences_to_text';
+const tipDismissed = ref(false);
+const showTextMemoryTip = computed(() => !tipDismissed.value && sentencesStore.sentences.length >= 5);
+function dismissTextMemoryTip() {
+  tipDismissed.value = true;
+  try {
+    getDbStorage().setItem(SENTENCES_TIP_KEY, true);
+  } catch { /* 忽略 */ }
+}
+function goTextMemory() {
+  router.push('/text-memory');
+}
 
 const keyword = ref('');
 const activeTag = ref('');
@@ -246,6 +270,9 @@ async function removeSentence(item: Sentence) {
 }
 
 onMounted(() => {
+  try {
+    tipDismissed.value = getDbStorage().getItem(SENTENCES_TIP_KEY) === true;
+  } catch { /* 忽略 */ }
   sentencesStore.load();
 });
 </script>
@@ -274,6 +301,29 @@ onMounted(() => {
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
+}
+
+.cross-tip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--utools-bg-card);
+  border: 1px solid var(--utools-border-divider);
+  font-size: 13px;
+  color: var(--utools-text-secondary);
+
+  .tip-close {
+    margin-left: auto;
+    cursor: pointer;
+    color: var(--utools-text-tertiary);
+
+    &:hover {
+      color: var(--utools-text-primary);
+    }
+  }
 }
 
 .sentence-list {

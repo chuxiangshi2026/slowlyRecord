@@ -66,6 +66,13 @@
       </div>
     </el-card>
 
+    <!-- 跨功能引导：训练过一段时间后，去记忆力测试检验 -->
+    <div v-if="showMemoryTestTip" class="cross-tip">
+      <span>训练做得不错，去记忆力测试检验一下 →</span>
+      <el-button text size="small" type="primary" @click="goMemoryTest">去测试</el-button>
+      <el-icon class="tip-close" @click="dismissMemoryTestTip"><Close/></el-icon>
+    </div>
+
     <!-- 管理区 -->
     <el-card class="section-card">
       <template #header>
@@ -146,12 +153,13 @@ import { useRouter } from "vue-router";
 import { useNumberMemoryStore } from "@/stores/numberMemory";
 import { useWordsStore } from "@/stores/words";
 import { ElMessage } from "element-plus";
-import { ArrowRight } from "@element-plus/icons-vue";
+import { ArrowRight, Close } from "@element-plus/icons-vue";
 import TrainingHistory from "./components/TrainingHistory.vue";
 import QuickStartGuide from "./components/QuickStartGuide.vue";
 import KnowledgePackPanel from "@/views/TextMemory/components/KnowledgePackPanel.vue";
 import type { TrainingResult } from "@/types/number-memory";
 import { clearAllTrainingResults, getTrainingProgress, clearTrainingProgress } from "@/utils/number-memory-db";
+import { getDbStorage } from "@/adapters/db";
 
 const router = useRouter();
 const store = useNumberMemoryStore();
@@ -162,6 +170,20 @@ const showHistory = ref(false);
 const showGuide = ref(false);
 const trainingHistory = ref<TrainingResult[]>([]);
 const unfinishedProgress = ref<{ mode: string; current: number; total: number } | null>(null);
+
+// 跨功能引导：数字记忆训练 → 记忆力测试（可关闭）
+const MEMORY_TEST_TIP_KEY = 'slowlyrecord_tip_number_to_test';
+const testTipDismissed = ref(false);
+const showMemoryTestTip = computed(() => !testTipDismissed.value && trainingHistory.value.length > 0);
+function dismissMemoryTestTip() {
+  testTipDismissed.value = true;
+  try {
+    getDbStorage().setItem(MEMORY_TEST_TIP_KEY, true);
+  } catch { /* 忽略 */ }
+}
+function goMemoryTest() {
+  router.push('/memory');
+}
 
 // Computed
 const unfinishedProgressTitle = computed(() => {
@@ -236,6 +258,9 @@ function onGuideFinish() {
 }
 
 onMounted(() => {
+  try {
+    testTipDismissed.value = getDbStorage().getItem(MEMORY_TEST_TIP_KEY) === true;
+  } catch { /* 忽略 */ }
   loadTrainingHistory();
 
   // 加载条目以计算到期角标
@@ -303,6 +328,29 @@ onMounted(() => {
 
     .el-button {
       margin-left: 10px;
+    }
+  }
+
+  .cross-tip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--utools-bg-card);
+    border: 1px solid var(--utools-border-divider);
+    font-size: 13px;
+    color: var(--utools-text-secondary);
+
+    .tip-close {
+      margin-left: auto;
+      cursor: pointer;
+      color: var(--utools-text-tertiary);
+
+      &:hover {
+        color: var(--utools-text-primary);
+      }
     }
   }
 

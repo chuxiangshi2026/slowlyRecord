@@ -150,8 +150,8 @@
         </span>
       </div>
 
-      <!-- 匹配数 -->
-      <span class="match-count">{{ matchCount }}</span>
+      <!-- 匹配数 / 总数 -->
+      <span class="match-count">匹配 {{ matchCount }} / 共 {{ totalCount }}</span>
     </div>
   </transition>
 </template>
@@ -180,6 +180,7 @@ const affixAvailable = computed(() => getActiveProfile().hasAffixData)
 const props = defineProps<{
   visible: boolean
   matchCount: number
+  totalCount?: number
 }>()
 
 const emit = defineEmits<{
