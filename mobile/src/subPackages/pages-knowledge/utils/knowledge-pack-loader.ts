@@ -119,43 +119,45 @@ function saveToCache(id: string, pack: KnowledgePack): void {
     }
 }
 
-// 懒加载注册表：每个包一个动态 import()，全部 chunk 留在本分包
-const packLoaders: Record<string, () => Promise<{ default: KnowledgePack }>> = {
-    'multiplication-9x9': () => import('../knowledgebanks/multiplication-9x9'),
-    'multiplication-19x19': () => import('../knowledgebanks/multiplication-19x19'),
-    'elements': () => import('../knowledgebanks/elements'),
-    'solar-terms-24': () => import('../knowledgebanks/solar-terms-24'),
-    'zodiac-12': () => import('../knowledgebanks/zodiac-12'),
-    'number-pegs-12': () => import('../knowledgebanks/number-pegs-12'),
-    'home-route-12': () => import('../knowledgebanks/home-route-12'),
-    'constellations-12': () => import('../knowledgebanks/constellations-12'),
-    'ethnic-groups-56': () => import('../knowledgebanks/ethnic-groups-56'),
-    'cuisines-8': () => import('../knowledgebanks/cuisines-8'),
-    'provinces-capitals': () => import('../knowledgebanks/provinces-capitals'),
-    'math-formulas': () => import('../knowledgebanks/math-formulas'),
-    'math-calculus': () => import('../knowledgebanks/math-calculus'),
-    'math-linalg': () => import('../knowledgebanks/math-linalg'),
-    'math-probability': () => import('../knowledgebanks/math-probability'),
-    'chemistry-formulas': () => import('../knowledgebanks/chemistry-formulas'),
-    'physics-formulas': () => import('../knowledgebanks/physics-formulas'),
-    'physics-laws': () => import('../knowledgebanks/physics-laws'),
-    'physics-experiments': () => import('../knowledgebanks/physics-experiments'),
-    'biology-experiments': () => import('../knowledgebanks/biology-experiments'),
-    'geography-concepts': () => import('../knowledgebanks/geography-concepts'),
-    'body-pegs-12': () => import('../knowledgebanks/body-pegs-12'),
-    'earthly-branches-12': () => import('../knowledgebanks/earthly-branches-12'),
-    'room-pegs-12': () => import('../knowledgebanks/room-pegs-12'),
-    'dynasties-china': () => import('../knowledgebanks/dynasties-china'),
-    'common-units': () => import('../knowledgebanks/common-units'),
-    'colors-12': () => import('../knowledgebanks/colors-12'),
-    'musical-notes': () => import('../knowledgebanks/musical-notes'),
-    'math-formulas-2': () => import('../knowledgebanks/math-formulas-2'),
-    'squares-cubes-powers': () => import('../knowledgebanks/squares-cubes-powers'),
-    'primes-under-100': () => import('../knowledgebanks/primes-under-100'),
-    'poker-pegs-52': () => import('../knowledgebanks/poker-pegs-52'),
-    'alphabet-pegs-26': () => import('../knowledgebanks/alphabet-pegs-26'),
-    'thirty-six-stratagems': () => import('../knowledgebanks/thirty-six-stratagems'),
-    'world-capitals-40': () => import('../knowledgebanks/world-capitals-40'),
+// 懒加载注册表
+// 小程序环境：require() 同步加载（import() 被 uni-app 编译成路径字符串导致真机加载失败）
+// H5/App/测试环境：import() 异步加载
+const packLoaders: Record<string, () => KnowledgePack> = {
+    'multiplication-9x9': () => require('../knowledgebanks/multiplication-9x9').default,
+    'multiplication-19x19': () => require('../knowledgebanks/multiplication-19x19').default,
+    'elements': () => require('../knowledgebanks/elements').default,
+    'solar-terms-24': () => require('../knowledgebanks/solar-terms-24').default,
+    'zodiac-12': () => require('../knowledgebanks/zodiac-12').default,
+    'number-pegs-12': () => require('../knowledgebanks/number-pegs-12').default,
+    'home-route-12': () => require('../knowledgebanks/home-route-12').default,
+    'constellations-12': () => require('../knowledgebanks/constellations-12').default,
+    'ethnic-groups-56': () => require('../knowledgebanks/ethnic-groups-56').default,
+    'cuisines-8': () => require('../knowledgebanks/cuisines-8').default,
+    'provinces-capitals': () => require('../knowledgebanks/provinces-capitals').default,
+    'math-formulas': () => require('../knowledgebanks/math-formulas').default,
+    'math-calculus': () => require('../knowledgebanks/math-calculus').default,
+    'math-linalg': () => require('../knowledgebanks/math-linalg').default,
+    'math-probability': () => require('../knowledgebanks/math-probability').default,
+    'chemistry-formulas': () => require('../knowledgebanks/chemistry-formulas').default,
+    'physics-formulas': () => require('../knowledgebanks/physics-formulas').default,
+    'physics-laws': () => require('../knowledgebanks/physics-laws').default,
+    'physics-experiments': () => require('../knowledgebanks/physics-experiments').default,
+    'biology-experiments': () => require('../knowledgebanks/biology-experiments').default,
+    'geography-concepts': () => require('../knowledgebanks/geography-concepts').default,
+    'body-pegs-12': () => require('../knowledgebanks/body-pegs-12').default,
+    'earthly-branches-12': () => require('../knowledgebanks/earthly-branches-12').default,
+    'room-pegs-12': () => require('../knowledgebanks/room-pegs-12').default,
+    'dynasties-china': () => require('../knowledgebanks/dynasties-china').default,
+    'common-units': () => require('../knowledgebanks/common-units').default,
+    'colors-12': () => require('../knowledgebanks/colors-12').default,
+    'musical-notes': () => require('../knowledgebanks/musical-notes').default,
+    'math-formulas-2': () => require('../knowledgebanks/math-formulas-2').default,
+    'squares-cubes-powers': () => require('../knowledgebanks/squares-cubes-powers').default,
+    'primes-under-100': () => require('../knowledgebanks/primes-under-100').default,
+    'poker-pegs-52': () => require('../knowledgebanks/poker-pegs-52').default,
+    'alphabet-pegs-26': () => require('../knowledgebanks/alphabet-pegs-26').default,
+    'thirty-six-stratagems': () => require('../knowledgebanks/thirty-six-stratagems').default,
+    'world-capitals-40': () => require('../knowledgebanks/world-capitals-40').default,
 }
 
 /**
@@ -171,30 +173,17 @@ export async function fetchKnowledgePack(id: string): Promise<KnowledgePack> {
         return cached
     }
 
-    if (inFlight.has(id)) {
-        return inFlight.get(id)!
+    // require() 是同步的，直接调用 loader 获取模块
+    const loader = packLoaders[id]
+    if (!loader) throw new Error(`[KnowledgePack] 未知知识包: ${id}`)
+    const pack = normalizePack(loader())
+    const validation = validateKnowledgePack(pack)
+    if (!validation.valid) {
+        throw new Error(`[KnowledgePack] 数据校验失败: ${id}, ${validation.error}`)
     }
-
-    const promise = (async (): Promise<KnowledgePack> => {
-        try {
-            const loader = packLoaders[id]
-            if (!loader) throw new Error(`[KnowledgePack] 未知知识包: ${id}`)
-            const mod = await loader()
-            const pack = normalizePack(mod.default)
-            const validation = validateKnowledgePack(pack)
-            if (!validation.valid) {
-                throw new Error(`[KnowledgePack] 数据校验失败: ${id}, ${validation.error}`)
-            }
-            memoryCache.set(id, pack)
-            saveToCache(id, pack)
-            return pack
-        } finally {
-            inFlight.delete(id)
-        }
-    })()
-
-    inFlight.set(id, promise)
-    return promise
+    memoryCache.set(id, pack)
+    saveToCache(id, pack)
+    return pack
 }
 
 /** 校验知识包结构 */
