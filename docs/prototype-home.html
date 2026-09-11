@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>慢记 uTools 端首页原型 v2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #d8e2da; display: flex; gap: 24px; padding: 40px 24px 24px; flex-wrap: wrap; justify-content: center; }
+  .device { width: 800px; height: 560px; background: #eaf1ea; border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,.18); overflow: hidden; display: flex; flex-direction: column; position: relative; }
+  .device-label { position: absolute; top: -22px; left: 0; font-size: 13px; color: #666; }
+
+  /* 统一头部（一行） */
+  .header { background: #eaf1ea; border-bottom: 1px solid #d5e0d6; padding: 8px 14px; }
+  .header-line { display: flex; align-items: center; gap: 4px; font-size: 13px; color: #555; }
+  .page-name { font-size: 14px; font-weight: 600; color: #52796f; margin-right: 10px; }
+  .mode-seg { cursor: pointer; padding: 2px 6px; border-radius: 6px; color: #888; }
+  .mode-seg:hover { background: #dde8df; }
+  .mode-seg.active { color: #52796f; font-weight: 600; }
+  .summary { color: #888; font-size: 12px; }
+  .spacer { flex: 1; }
+  .streak { color: #b07503; cursor: pointer; padding: 2px 8px; border-radius: 6px; font-size: 13px; }
+  .streak:hover { background: #f3ead6; }
+  .back { color: #52796f; cursor: pointer; padding: 2px 8px; border-radius: 6px; font-size: 13px; }
+  .back:hover { background: #dde8df; }
+  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #c0392b; cursor: pointer; margin: 0 4px; }
+
+  /* 主区域 */
+  .main { flex: 1; overflow-y: auto; padding: 10px 14px; }
+  .word-card { background: #fff; border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+  .word-text { font-size: 17px; font-weight: 600; color: #333; width: 130px; }
+  .word-phonetic { font-size: 12px; color: #999; }
+  .word-meaning { flex: 1; font-size: 13px; color: #666; }
+  .lv { font-size: 11px; color: #a0b3ab; border: 1px solid #dfe8e1; border-radius: 8px; padding: 1px 6px; }
+  .btn { border: none; border-radius: 8px; padding: 5px 14px; font-size: 12px; cursor: pointer; }
+  .btn-know { background: #52796f; color: #fff; }
+  .btn-forget { background: #f2e7e4; color: #b3543f; }
+  .btn-plain { background: #eef3ee; color: #52796f; }
+
+  /* 底部工具栏 */
+  .toolbar { background: #eaf1ea; border-top: 1px solid #d5e0d6; padding: 8px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .toolbar .left, .toolbar .right { display: flex; gap: 14px; align-items: center; }
+  .t-item { font-size: 12px; color: #52796f; cursor: pointer; padding: 4px 6px; border-radius: 6px; white-space: nowrap; }
+  .t-item:hover { background: #dde8df; }
+
+  /* 更多抽屉 */
+  .drawer-mask { position: absolute; inset: 0; background: rgba(0,0,0,.25); display: none; }
+  .drawer { position: absolute; left: 0; right: 0; bottom: 0; background: #f5f8f5; border-radius: 14px 14px 0 0; padding: 14px 18px 20px; transform: translateY(105%); transition: transform .2s; max-height: 76%; overflow-y: auto; z-index: 2; }
+  .drawer.open { transform: translateY(0); }
+  .drawer-mask.open { display: block; }
+  .drawer h4 { font-size: 13px; color: #74937d; margin: 12px 0 6px; }
+  .d-item { display: flex; justify-content: space-between; background: #fff; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; font-size: 14px; color: #333; cursor: pointer; }
+  .d-item:hover { background: #f2f7f3; }
+  .d-item small { color: #999; font-size: 12px; }
+
+  /* 打卡页 */
+  .sign-hero { text-align: center; padding: 30px 0 10px; }
+  .sign-hero .num { font-size: 52px; font-weight: 700; color: #52796f; }
+  .sign-hero .label { color: #888; font-size: 13px; }
+  .heatmap { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; padding: 16px 24px; }
+  .cell { aspect-ratio: 1; border-radius: 3px; background: #e3ece5; }
+  .cell.on { background: #52796f; }
+  .cell.half { background: #a5c0b4; }
+  .stat-row { display: flex; justify-content: center; gap: 30px; padding: 8px 0 16px; font-size: 13px; color: #666; }
+  .stat-row b { color: #52796f; font-size: 18px; display: block; text-align: center; }
+
+  /* 设置-引擎卡片 */
+  .engine-card { background: #fff; border-radius: 10px; padding: 16px; margin: 14px; }
+  .engine-card .cur { display: flex; justify-content: space-between; align-items: center; }
+  .engine-card .cur b { color: #333; font-size: 15px; }
+  .tag { font-size: 11px; background: #e3efe7; color: #52796f; border-radius: 8px; padding: 2px 8px; margin-left: 8px; }
+  .engine-card .tip { font-size: 12px; color: #74937d; margin-top: 10px; line-height: 1.7; }
+  .collapse-line { margin: 0 14px 8px; font-size: 13px; color: #888; background: #f5f8f5; border: 1px dashed #d5e0d6; border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+
+  /* 通用卡片（数字记忆/文本/知识库等） */
+  .m-card { background: #fff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+  .m-title { font-size: 15px; font-weight: 600; color: #333; }
+  .m-desc { flex: 1; font-size: 12px; color: #888; }
+  .progress { height: 5px; background: #e3ece5; border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .progress i { display: block; height: 100%; background: #52796f; border-radius: 3px; }
+
+  /* 翻译页 */
+  .t-input { width: 100%; border: 1px solid #d5e0d6; border-radius: 10px; padding: 12px 14px; font-size: 14px; background: #fff; outline: none; margin-bottom: 10px; }
+  .t-result { background: #fff; border-radius: 10px; padding: 14px 16px; font-size: 14px; color: #333; }
+  .t-result small { display: block; color: #999; font-size: 12px; margin-top: 6px; }
+
+  /* 空态 */
+  .empty-guide { text-align: center; color: #74937d; font-size: 13px; padding: 26px 0 16px; }
+  .guide-card { background: #fff; border-radius: 10px; padding: 16px; margin: 0 40px 12px; display: flex; align-items: center; gap: 14px; cursor: pointer; }
+  .guide-card:hover { background: #f2f7f3; }
+  .guide-card .g-icon { font-size: 24px; }
+  .guide-card .g-title { font-size: 14px; font-weight: 600; color: #333; }
+  .guide-card .g-desc { font-size: 12px; color: #999; }
+
+  .hint { position: absolute; bottom: 6px; right: 10px; font-size: 11px; color: #aaa; }
+</style>
+</head>
+<body>
+
+<!-- ① 单词主页 -->
+<div class="device" id="page-word">
+  <span class="device-label">① 单词主页（默认页 · 一行头部 + 7 格工具栏）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">单词</span>
+      <span class="mode-seg active" onclick="switchMode(this)">待复习: <b>5</b></span>
+      <span class="mode-seg" onclick="switchMode(this)">已复习: <b>12</b></span>
+      <span class="mode-seg" onclick="switchMode(this)">已记完: <b>30</b></span>
+      <span class="spacer"></span>
+      <span class="sync-dot" title="演示：同步异常时才出现的状态点" onclick="alert('打开同步弹窗：有 3 条改动未同步')"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="word-card">
+      <div><div class="word-text">apple</div><div class="word-phonetic">/ˈæpəl/</div></div>
+      <div class="word-meaning">n. 苹果</div>
+      <span class="lv">Lv.3</span>
+      <button class="btn btn-know" onclick="know(this)">认识</button>
+      <button class="btn btn-forget" onclick="alert('已重新开始学习该词')">忘记</button>
+    </div>
+    <div class="word-card">
+      <div><div class="word-text">banana</div><div class="word-phonetic">/bəˈnɑːnə/</div></div>
+      <div class="word-meaning">n. 香蕉</div>
+      <span class="lv">Lv.1</span>
+      <button class="btn btn-know" onclick="know(this)">认识</button>
+      <button class="btn btn-forget" onclick="alert('已重新开始学习该词')">忘记</button>
+    </div>
+    <div class="word-card">
+      <div><div class="word-text">cherry</div><div class="word-phonetic">/ˈtʃeri/</div></div>
+      <div class="word-meaning">n. 樱桃</div>
+      <span class="lv">Lv.8</span>
+      <button class="btn btn-know" onclick="know(this)">认识</button>
+      <button class="btn btn-forget" onclick="alert('已重新开始学习该词')">忘记</button>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div class="left"><span class="t-item">默认词库 ▼</span></div>
+    <div class="right">
+      <span class="t-item" id="scroll-toggle" onclick="scrollToggle()">⇩ 置底</span>
+      <span class="t-item" onclick="alert('切换 显示/隐藏 释义')">释义</span>
+      <span class="t-item" onclick="alert('筛选排序面板（底部显示单词总数: 47）')">筛选 ▼</span>
+      <span class="t-item" onclick="alert('进入听写练习')">听写</span>
+      <span class="t-item" onclick="alert('打开专注悬浮窗')">专注</span>
+      <span class="t-item" onclick="toggleDrawer(true)">更多 ▾</span>
+    </div>
+  </div>
+  <div class="drawer-mask" id="mask" onclick="toggleDrawer(false)"></div>
+  <div class="drawer" id="drawer">
+    <h4>记忆训练</h4>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-number')"><span>🔢 数字记忆</span><small>今日已训练 3 次</small></div>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-text')"><span>📜 文本记忆</span><small>《静夜思》还剩 2 段</small></div>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-knowledge')"><span>🎓 知识库</span><small>数学公式 待复习 3</small></div>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-sentences')"><span>📖 句子库</span><small>已收集 12 句</small></div>
+    <h4>工具与评估</h4>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-translate')"><span>⚡ 快速翻译</span><small></small></div>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-test')"><span>🧪 记忆力测试</span><small>上次: 3 天前</small></div>
+    <h4>辅助</h4>
+    <div class="d-item"><span>🔤 字母映射</span><small>工具</small></div>
+    <div class="d-item"><span>🎵 音标学习</span><small>工具</small></div>
+    <div class="d-item"><span>🏛️ 记忆宫殿</span><small>方法</small></div>
+    <div class="d-item"><span>⌨️ 快捷键记忆</span><small>工具</small></div>
+    <h4>数据</h4>
+    <div class="d-item"><span>📥 导入 / 📤 导出</span><small></small></div>
+    <div class="d-item" onclick="alert('打开同步弹窗')"><span>☁️ 同步与备份</span><small>上次同步: 今天 10:23</small></div>
+    <div class="d-item" onclick="toggleDrawer(false);go('page-settings')"><span>⚙️ 设置</span><small>翻译引擎 · API Key · 快捷键</small></div>
+  </div>
+  <span class="hint">点「🔥」→打卡页；「更多」→抽屉（13 项）；红点是同步异常演示</span>
+</div>
+
+<!-- ② 打卡页 -->
+<div class="device" id="page-sign" style="display:none">
+  <span class="device-label">② 打卡页（点头部"🔥"进入）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">打卡</span>
+      <span class="spacer"></span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="sign-hero">
+      <div class="num">7</div>
+      <div class="label">连续打卡天数 · 今日已打卡 ✅（复习即自动打卡）</div>
+    </div>
+    <div class="stat-row">
+      <span><b>28</b>累计天数</span>
+      <span><b>156</b>本月复习</span>
+      <span><b>342</b>累计记住</span>
+    </div>
+    <div class="heatmap" id="heatmap"></div>
+  </div>
+  <span class="hint">复习任意单词即自动完成当日打卡</span>
+</div>
+
+<!-- ③ 设置页 -->
+<div class="device" id="page-settings" style="display:none">
+  <span class="device-label">③ 设置页（从「更多」进入 · 引擎卡片化）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">设置</span>
+      <span class="spacer"></span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main" style="padding:0">
+    <div class="engine-card">
+      <div class="cur">
+        <div><b>翻译引擎：讯飞星火</b><span class="tag">免配置</span><span class="tag">每日 500 次</span></div>
+        <button class="btn btn-know" onclick="alert('弹出引擎选择：讯飞星火 / 有道 / 百度 / Google / Bing / 智谱GLM（其他引擎 ▸）')">切换引擎</button>
+      </div>
+      <div class="tip">✅ 免配置即可用：默认内置免费额度；额度耗尽时自动切换备用引擎（星火 → 有道 → 百度 → Google → Bing → GLM）</div>
+    </div>
+    <div class="collapse-line" onclick="alert('展开密钥配置（13 个引擎的 AppKey 面板）')">▶ 高级设置（自定义 API Key）——默认收起，免费够用不用管</div>
+    <div class="collapse-line">▶ OCR 图片识别密钥——默认本地识别无需配置</div>
+    <div class="collapse-line">▶ 记忆牢固度 / 自动发音 / 护眼模式</div>
+    <div class="collapse-line">▶ 快捷键一览</div>
+  </div>
+</div>
+
+<!-- ④ 数字记忆 -->
+<div class="device" id="page-number" style="display:none">
+  <span class="device-label">④ 数字记忆（同构头部 · 状态摘要换内容）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">数字记忆</span>
+      <span class="summary">⏰ 3 条到期 · 今日已练 3 次</span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="m-card"><span class="m-title">🔢➡️🖼️ 数字 → 图片</span><span class="m-desc">看到数字，选择对应的图片</span><button class="btn btn-know">开始</button></div>
+    <div class="m-card"><span class="m-title">🖼️➡️🔢 图片 → 数字</span><span class="m-desc">看到图片，选择对应的数字</span><button class="btn btn-know">开始</button></div>
+    <div class="m-card"><span class="m-title">🎲 随机序列</span><span class="m-desc">限时记忆随机数字串，逐级加长</span><button class="btn btn-know">开始</button></div>
+    <div class="m-card"><span class="m-title">🖼️ 映射设置</span><span class="m-desc">已配置 100 个映射（一次性配置，弹窗完成）</span><button class="btn btn-plain">配置</button></div>
+  </div>
+  <span class="hint">无底部工具栏；头部右侧为 🔥 + 返回</span>
+</div>
+
+<!-- ⑤ 文本记忆 -->
+<div class="device" id="page-text" style="display:none">
+  <span class="device-label">⑤ 文本记忆（页内地图/时间线视图保留不动）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">文本记忆</span>
+      <span class="summary">《静夜思》还剩 2 段</span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="m-card">
+      <div style="flex:1">
+        <span class="m-title">📜 静夜思 · 李白</span>
+        <div class="progress"><i style="width:60%"></i></div>
+      </div>
+      <span class="m-desc">已背 3/5 段</span>
+      <button class="btn btn-know">继续</button>
+    </div>
+    <div class="m-card">
+      <div style="flex:1">
+        <span class="m-title">📜 出师表 · 诸葛亮</span>
+        <div class="progress"><i style="width:20%"></i></div>
+      </div>
+      <span class="m-desc">已背 1/6 段</span>
+      <button class="btn btn-know">继续</button>
+    </div>
+    <div class="m-card">
+      <span class="m-title">➕ 添加 / 导入</span>
+      <span class="m-desc">内置库（默认停留）· 粘贴文本 · 文件导入</span>
+      <button class="btn btn-plain" onclick="alert('打开 TextImportDialog，默认停在「内置库」tab')">打开</button>
+    </div>
+    <div class="m-card">
+      <span class="m-title">🗺️ 地图 / 🕐 时间线 / 🕸️ 关系图</span>
+      <span class="m-desc">页内视图切换，本期原样保留不动</span>
+      <button class="btn btn-plain" onclick="alert('切换到诗词地图 PoetryMap 视图')">查看</button>
+    </div>
+  </div>
+</div>
+
+<!-- ⑥ 知识库 -->
+<div class="device" id="page-knowledge" style="display:none">
+  <span class="device-label">⑥ 知识库（新独立入口 · 函数/公式/实验演示都在包内，不动）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">知识库</span>
+      <span class="summary">4 个包 · 待复习 8 条</span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="m-card">
+      <div style="flex:1">
+        <span class="m-title">📐 数学公式大全</span>
+        <div class="progress"><i style="width:44%"></i></div>
+      </div>
+      <span class="m-desc">已掌握 20/45 · 待复习 3</span>
+      <button class="btn btn-know" onclick="alert('进入 /knowledge-memory/math（含 latex 公式渲染）')">练习</button>
+    </div>
+    <div class="m-card">
+      <div style="flex:1">
+        <span class="m-title">📈 函数图像</span>
+        <div class="progress"><i style="width:60%"></i></div>
+      </div>
+      <span class="m-desc">已掌握 12/20</span>
+      <button class="btn btn-know" onclick="alert('FunctionPlot 函数图像演示页')">练习</button>
+    </div>
+    <div class="m-card">
+      <div style="flex:1">
+        <span class="m-title">🧪 化学实验操作</span>
+        <div class="progress"><i style="width:25%"></i></div>
+      </div>
+      <span class="m-desc">已掌握 5/20 · 待复习 5</span>
+      <button class="btn btn-know" onclick="alert('实验操作场景演示（scene-maps）')">练习</button>
+    </div>
+    <div class="m-card">
+      <span class="m-title">➕ 导入知识包</span>
+      <span class="m-desc">内置包 / 自建包 / 桩库</span>
+      <button class="btn btn-plain">导入</button>
+    </div>
+  </div>
+</div>
+
+<!-- ⑦ 句子库 -->
+<div class="device" id="page-sentences" style="display:none">
+  <span class="device-label">⑦ 句子库（仅换头，搜索/标签/列表不动）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">句子库</span>
+      <span class="summary">已收集 12 句</span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <input class="t-input" placeholder="搜索原句 / 译文 / 备注 / 来源">
+    <div class="m-card"><span class="m-desc" style="flex:1">The quick brown fox jumps over the lazy dog.<br><small style="color:#aaa">敏捷的棕色狐狸跳过懒狗 · 来源: 划词</small></span><span class="lv">Lv.2</span></div>
+    <div class="m-card"><span class="m-desc" style="flex:1">Actions speak louder than words.<br><small style="color:#aaa">行动胜于言语 · 标签: 谚语</small></span><span class="lv">Lv.5</span></div>
+  </div>
+</div>
+
+<!-- ⑧ 快速翻译 -->
+<div class="device" id="page-translate" style="display:none">
+  <span class="device-label">⑧ 快速翻译（仅换头）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">快速翻译</span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <input class="t-input" value="serendipity" placeholder="输入要翻译的内容">
+    <div class="t-result">
+      n. 意外发现珍奇事物的运气；机缘巧合
+      <small>引擎: 讯飞星火（免配置）· 额度耗尽时自动降级: 有道 → 百度 → Google → Bing → GLM</small>
+    </div>
+  </div>
+</div>
+
+<!-- ⑨ 记忆力测试 -->
+<div class="device" id="page-test" style="display:none">
+  <span class="device-label">⑨ 记忆力测试（仅换头）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">记忆力测试</span>
+      <span class="summary">上次: 3 天前</span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 7 天</span>
+      <span class="back" onclick="go('page-word')">← 返回</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="m-card"><span class="m-title">🔢 数字记忆</span><span class="m-desc">记住一串数字并复述</span><button class="btn btn-know">开始</button></div>
+    <div class="m-card"><span class="m-title">📝 单词记忆</span><span class="m-desc">限时记住一组单词</span><button class="btn btn-know">开始</button></div>
+    <div class="m-card"><span class="m-title">🧩 图案记忆</span><span class="m-desc">记住图案位置</span><button class="btn btn-know">开始</button></div>
+    <div class="m-card"><span class="m-title">📊 词汇量测试</span><span class="m-desc">估算你的词汇量</span><button class="btn btn-know">开始</button></div>
+  </div>
+</div>
+
+<!-- ⑩ 空态主页 -->
+<div class="device" id="page-empty" style="display:none">
+  <span class="device-label">⑩ 空态主页（新用户冷启动引导 · P0）</span>
+  <div class="header">
+    <div class="header-line">
+      <span class="page-name">单词</span>
+      <span class="mode-seg active">待复习: <b>0</b></span>
+      <span class="mode-seg">已复习: <b>0</b></span>
+      <span class="mode-seg">已记完: <b>0</b></span>
+      <span class="spacer"></span>
+      <span class="streak" onclick="go('page-sign')">🔥 0 天</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="empty-guide">还没有单词，从下面任意一种方式开始收集 👇</div>
+    <div class="guide-card" onclick="alert('提示：在任意应用选中文本 → 呼出 uTools → 划词添加')">
+      <span class="g-icon">✍️</span>
+      <div><div class="g-title">划词添加</div><div class="g-desc">任意界面选中文字，呼出 uTools 一键收入词库</div></div>
+    </div>
+    <div class="guide-card" onclick="alert('提示：复制图片/截图 → 呼出 uTools → 截图添加（OCR）')">
+      <span class="g-icon">📷</span>
+      <div><div class="g-title">截图添加</div><div class="g-desc">截图 OCR 识别英文内容，批量收入词库</div></div>
+    </div>
+    <div class="guide-card" onclick="alert('打开内置词库列表：四级 / 六级 / 考研 / 雅思…')">
+      <span class="g-icon">📚</span>
+      <div><div class="g-title">导入内置词库</div><div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div></div>
+    </div>
+  </div>
+  <span class="hint">添加成功后轻提示：已加入 xx 词库 · 今日待复习 +1</span>
+</div>
+
+<script>
+  function go(id) {
+    document.querySelectorAll('.device').forEach(d => d.style.display = 'none');
+    document.getElementById(id).style.display = 'flex';
+    window.scrollTo(0, 0);
+  }
+  function toggleDrawer(open) {
+    document.getElementById('drawer').classList.toggle('open', open);
+    document.getElementById('mask').classList.toggle('open', open);
+  }
+  function switchMode(seg) {
+    seg.parentElement.querySelectorAll('.mode-seg').forEach(s => s.classList.remove('active'));
+    seg.classList.add('active');
+  }
+  let atBottom = false;
+  function scrollToggle() {
+    const main = document.querySelector('#page-word .main');
+    atBottom = !atBottom;
+    main.scrollTop = atBottom ? main.scrollHeight : 0;
+    document.getElementById('scroll-toggle').textContent = atBottom ? '⇧ 置顶' : '⇩ 置底';
+  }
+  function know(btn) {
+    btn.closest('.word-card').style.opacity = '.35';
+    btn.closest('.word-card').querySelector('.lv').textContent = '已复习';
+  }
+  // 打卡热力图假数据
+  const hm = document.getElementById('heatmap');
+  for (let i = 0; i < 84; i++) {
+    const c = document.createElement('div');
+    c.className = 'cell' + (Math.random() > .55 ? ' on' : (Math.random() > .8 ? ' half' : ''));
+    hm.appendChild(c);
+  }
+</script>
+</body>
+</html>
