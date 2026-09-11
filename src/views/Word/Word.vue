@@ -355,19 +355,7 @@
       <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><PipIcon /></el-icon>
       </el-tooltip>
-
-      <!-- 更多：导入导出/字母映射/音标/同步/设置等低频入口 -->
-      <el-tooltip class="box-item" effect="dark" content="更多" placement="top" popper-class="small-tooltip">
-        <el-icon class="footer-icon" :size="18" @click="moreDrawerVisible = true"><MoreFilled /></el-icon>
-      </el-tooltip>
-      <MoreDrawer
-          v-model="moreDrawerVisible"
-          :import-disabled="listMode==1||listMode==2"
-          @import-command="handleImportCommand"
-          @export-command="handleExportCommand"
-          @sync="uiStore.openSyncDialog()"
-          @settings="drawerVisible = true"
-      />
+      <!-- 「更多」已上移到统一头部 ☰（全局抽屉），此处不再重复 -->
       <!--      </el-tooltip>
                   <a href="#/home/list" style="margin-left: 16px;">
                     &lt;!&ndash;        <i class="iconfont icon-list active"></i>&ndash;&gt;
@@ -419,11 +407,9 @@ import {
   Sort,
   View,
   EditPen,
-  MoreFilled
 } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
-import MoreDrawer from '@/components/MoreDrawer.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';
@@ -502,8 +488,18 @@ const filteredCreateBankOptions = computed(() =>
 watch(importLang, () => { selectedImportBank.value = '' })
 
 const drawerVisible = ref(false)
-// 「更多」抽屉可见性（导入导出/字母映射/音标/同步/设置等低频入口）
-const moreDrawerVisible = ref(false)
+
+// 全局「更多」抽屉（头部 ☰）发出的导入/导出指令在此执行
+watch(() => uiStore.pendingImportCommand, (req) => {
+  if (!req) return;
+  uiStore.pendingImportCommand = null;
+  handleImportCommand(req.cmd);
+});
+watch(() => uiStore.pendingExportCommand, (req) => {
+  if (!req) return;
+  uiStore.pendingExportCommand = null;
+  handleExportCommand(req.cmd);
+});
 
 const title = ref('设置')
 const currentId = ref<string | number | undefined>(undefined)

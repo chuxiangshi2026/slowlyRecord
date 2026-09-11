@@ -180,18 +180,7 @@
         <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
           <el-icon class="footer-icon" :size="18" @click="openFocusMode"><PipIcon /></el-icon>
         </el-tooltip>
-
-        <!-- 更多：导入导出/其他模块/同步/设置等低频入口（与单词列表一致） -->
-        <el-tooltip class="box-item" effect="dark" content="更多" placement="top" popper-class="small-tooltip">
-          <el-icon class="footer-icon" :size="18" @click="moreDrawerVisible = true"><MoreFilled /></el-icon>
-        </el-tooltip>
-        <MoreDrawer
-            v-model="moreDrawerVisible"
-            @import-command="handleImportCommand"
-            @export-command="handleExportCommand"
-            @sync="uiStore.openSyncDialog()"
-            @settings="drawerVisible = true"
-        />
+        <!-- 「更多」已上移到统一头部 ☰（全局抽屉），此处不再重复 -->
       </div>
     </div>
 
@@ -295,14 +284,12 @@
 import { ref, computed, nextTick, onMounted, watch, shallowRef } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage, ElMessageBox, ElLoading } from 'element-plus';
-import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, MoreFilled, View, Microphone, Edit } from '@element-plus/icons-vue';
+import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, View, Microphone, Edit } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
 import SpeakerIcon from '@/components/icons/SpeakerIcon.vue';
 import ListIcon from '@/components/icons/ListIcon.vue';
-import MoreDrawer from '@/components/MoreDrawer.vue';
 import { useWordsStore } from '@/stores/words';
-import { useUiStore } from '@/stores/ui';
 import type { Word } from '@/types/words';
 import { getCurrentWordBankId, getAllWordBanks, type WordBank, createWordBank as createNewWordBank, deleteWordBank as removeWordBank, importFromBuiltinWordBank } from '@/utils/wordbank-manager';
 import { listLanguages, getActiveProfile, isWordText, isPhraseText, compareWords, splitSpellUnits, normalizeForCompare } from '@/utils/language';
@@ -321,8 +308,6 @@ import type { FilterState } from '@/views/Word/components/WordFilter.vue';
 const router = useRouter();
 const route = useRoute();
 const wordsStore = useWordsStore();
-const uiStore = useUiStore();
-const moreDrawerVisible = ref(false);
 
 // ========== 常量 ==========
 const MAX_ERRORS_BEFORE_HINT = 3;

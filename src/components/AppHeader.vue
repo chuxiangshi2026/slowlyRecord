@@ -2,6 +2,9 @@
   <div class="app-header">
     <span class="page-name">{{ pageTitle }}</span>
 
+    <!-- 更多：模块导航抽屉，所有页面可达 -->
+    <span class="header-action" title="更多功能" @click="uiStore.moreDrawerVisible = true">☰</span>
+
     <!-- 非单词页：当前模块的一句话状态摘要 -->
     <span v-if="!isWordPage && pageSummary" class="page-summary">{{ pageSummary }}</span>
 

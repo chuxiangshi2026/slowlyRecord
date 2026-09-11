@@ -26,6 +26,14 @@
     <SyncDialog v-model="uiStore.syncDialogVisible"/>
     <!-- 设置抽屉：Home 层全局单例，任意页面可直接打开 -->
     <DetailDrawer v-model="uiStore.settingsDrawerVisible" title="设置"/>
+    <!-- 「更多」抽屉：Home 层全局单例，头部 ☰ 入口；导入导出指令经 uiStore 转发给单词页执行 -->
+    <MoreDrawer
+        v-model="uiStore.moreDrawerVisible"
+        @import-command="(cmd: string) => uiStore.pendingImportCommand = { cmd, at: Date.now() }"
+        @export-command="(cmd: string) => uiStore.pendingExportCommand = { cmd, at: Date.now() }"
+        @sync="uiStore.openSyncDialog()"
+        @settings="uiStore.settingsDrawerVisible = true"
+    />
   </div>
 </template>
 
@@ -35,6 +43,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import HomeMain from "@/views/Home/components/HomeMain.vue";
 import SyncDialog from "@/components/SyncDialog.vue";
 import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
+import MoreDrawer from "@/components/MoreDrawer.vue";
 import {useUiStore} from "@/stores/ui";
 
 const uiStore = useUiStore();
