@@ -160,6 +160,7 @@
       <!-- 地图区域（sheet 打开时缩到上半部） -->
       <view class="map-area-wrap" :class="{ 'sheet-open': mapSheetVisible }">
         <PoetryMapTab
+          v-if="mapTabVisible"
           :selected-poetry-ids="selectedPoetryIds"
           :selected-idiom-ids="selectedIdiomIds"
           @tap-marker="onMapMarkerTap"
@@ -220,6 +221,18 @@ const tabs = [
 ] as const
 type TabValue = (typeof tabs)[number]['value']
 const activeTab = ref<TabValue>('paste')
+
+// 地图 tab 可见性：切到地图时延迟挂载 map 组件，切走时立即销毁
+// 微信小程序原生 map 组件销毁有延迟，不主动控制会残留遮挡其他 tab
+const mapTabVisible = ref(false)
+watch(activeTab, (tab) => {
+  if (tab === 'map') {
+    // 延迟一帧让外层 v-if 先渲染
+    setTimeout(() => { mapTabVisible.value = true }, 50)
+  } else {
+    mapTabVisible.value = false
+  }
+}, { immediate: true })
 
 // ============ 粘贴批量 ============
 
