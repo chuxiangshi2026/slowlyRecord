@@ -297,7 +297,7 @@ interface ReviewSession {
 const touchStartX = ref(0)
 const touchStartY = ref(0)
 const touchStartTime = ref(0)
-const cardOffsetX = ref(0)
+const cardOffsetX = ref(0) // 保留声明兼容旧引用，实际使用 cardTransform
 const cardOffsetY = ref(0)
 const cardRotate = ref(0)
 const cardRotateX = ref(0)
@@ -319,6 +319,11 @@ function countSwipeJudge() {
   }
 }
 const swipeDirection = ref<'left' | 'right' | 'down' | ''>('')
+
+// 卡片变换状态：合并为一个对象，减少 touchmove 期间的 setData 次数
+const cardTransform = ref({
+  x: 0, y: 0, rotate: 0, rotateX: 0, rotateY: 0,
+})
 
 const reviewWords = computed(() => wordsStore.reviewWords)
 
@@ -367,19 +372,20 @@ const displayMeaning = computed(() => {
   return offlineDictMeaning.value || currentWord.value.meaning || '暂无释义'
 })
 
-// 卡片样式（手势位移 + 3D 翻转）
+// 卡片样式：touchmove 期间高频更新，合并为单次对象赋值减少 setData
 const cardStyle = computed(() => {
-  const baseTransform = `translateX(${cardOffsetX.value}px) translateY(${cardOffsetY.value}px) rotate(${cardRotate.value}deg) rotateX(${cardRotateX.value}deg) rotateY(${cardRotateY.value}deg)`
+  const { x, y, rotate, rotateX, rotateY } = cardTransform.value
+  const baseTransform = `translateX(${x}px) translateY(${y}px) rotate(${rotate}deg) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
   if (isAnimating.value) {
     return {
       transform: baseTransform,
       transition: 'transform 0.3s ease-out',
-      opacity: Math.max(0.3, 1 - Math.abs(cardOffsetX.value) / 300),
+      opacity: Math.max(0.3, 1 - Math.abs(x) / 300),
     }
   }
   return {
     transform: baseTransform,
-    transition: cardOffsetX.value === 0 && cardOffsetY.value === 0 && cardRotateX.value === 0 && cardRotateY.value === 0 ? 'transform 0.3s ease-out' : 'none',
+    transition: x === 0 && y === 0 && rotateX === 0 && rotateY === 0 ? 'transform 0.3s ease-out' : 'none',
   }
 })
 
@@ -592,24 +598,20 @@ const handleTouchMove = (e: any) => {
     isSwiping.value = true
   }
 
-  // 限制位移范围
-  cardOffsetX.value = deltaX * 0.6
-  cardOffsetY.value = deltaY > 0 ? deltaY * 0.6 : deltaY * 0.3
-  cardRotate.value = deltaX * 0.03
+  // 合并为单次赋值，减少 setData 触发次数
+  const x = deltaX * 0.6
+  const y = deltaY > 0 ? deltaY * 0.6 : deltaY * 0.3
+  let rotate = deltaX * 0.03
+  let rotateX = 0
+  let rotateY = 0
 
-  // 3D 翻转：根据划动方向动态旋转
   if (absX > absY) {
-    // 左右划动：绕 Y 轴翻转
-    cardRotateY.value = deltaX * 0.08
-    cardRotateX.value = 0
+    rotateY = deltaX * 0.08
   } else if (deltaY > 0) {
-    // 向下划动：绕 X 轴翻转
-    cardRotateX.value = deltaY * 0.08
-    cardRotateY.value = 0
-  } else {
-    cardRotateX.value = 0
-    cardRotateY.value = 0
+    rotateX = deltaY * 0.08
   }
+
+  cardTransform.value = { x, y, rotate, rotateX, rotateY }
 
   // 实时显示划动方向
   if (absX > absY && absX > 40) {
@@ -697,35 +699,22 @@ const confirmDelete = () => {
 const animateCard = (direction: 'left' | 'right' | 'down', callback: () => void) => {
   isAnimating.value = true
   if (direction === 'right') {
-    cardOffsetX.value = 400
-    cardRotate.value = 20
-    cardRotateY.value = 45
+    cardTransform.value = { x: 400, y: 0, rotate: 20, rotateX: 0, rotateY: 45 }
   } else if (direction === 'left') {
-    cardOffsetX.value = -400
-    cardRotate.value = -20
-    cardRotateY.value = -45
+    cardTransform.value = { x: -400, y: 0, rotate: -20, rotateX: 0, rotateY: -45 }
   } else if (direction === 'down') {
-    cardOffsetY.value = 500
-    cardRotateX.value = 45
+    cardTransform.value = { x: 0, y: 500, rotate: 0, rotateX: 45, rotateY: 0 }
   }
 
   setTimeout(() => {
     callback()
-    cardOffsetX.value = 0
-    cardOffsetY.value = 0
-    cardRotate.value = 0
-    cardRotateX.value = 0
-    cardRotateY.value = 0
+    cardTransform.value = { x: 0, y: 0, rotate: 0, rotateX: 0, rotateY: 0 }
     isAnimating.value = false
   }, 300)
 }
 
 const resetCard = () => {
-  cardOffsetX.value = 0
-  cardOffsetY.value = 0
-  cardRotate.value = 0
-  cardRotateX.value = 0
-  cardRotateY.value = 0
+  cardTransform.value = { x: 0, y: 0, rotate: 0, rotateX: 0, rotateY: 0 }
 }
 
 // ==================== 操作处理 ====================
