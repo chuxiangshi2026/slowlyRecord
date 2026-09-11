@@ -137,6 +137,11 @@ export function hasCustomApiKey(platform: TranslationPlatform): boolean {
     const wordsStore = useWordsStore();
     const userKeys = wordsStore.getApiKey(platform);
 
+    // 测试桩或未初始化 store 时按无自定义密钥处理
+    if (!userKeys) {
+        return false;
+    }
+
     // 检查用户是否设置了密钥（非空且非默认值）
     if (!userKeys.appkey || !userKeys.key) {
         return false;

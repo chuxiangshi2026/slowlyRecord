@@ -126,7 +126,7 @@ describe('useWordsStore', () => {
       expect(store.rememberCount).toBe(0)
       expect(store.reviewCount).toBe(0)
       expect(store.lastAddedWordText).toBe('')
-      expect(store.currentTranslationPlatform).toBe('glm')
+      expect(store.currentTranslationPlatform).toBe('spark')
       expect(store.currentOcrPlatform).toBe('local')
       expect(store.memoryFirmness).toBe('正常')
       expect(store.pluginStatus).toBe(false)

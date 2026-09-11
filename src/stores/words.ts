@@ -114,7 +114,7 @@ export const useWordsStore =
             const lastFocusWordText = ref('')    //需光标定位单词
             const lastFocusWordIndex = ref(-1)   //需光标定位单词在过滤列表中的索引
 
-            const currentTranslationPlatform = ref<TranslationPlatform>('glm'); // 默认使用glm翻译
+            const currentTranslationPlatform = ref<TranslationPlatform>('spark'); // 默认使用讯飞星火翻译
             const currentOcrPlatform = ref<OcrPlatform>('local'); // 默认使用离线识图
             const memoryFirmness = ref<MemoryFirmnessType>('正常');
             // 用户翻译api密钥
@@ -194,6 +194,9 @@ export const useWordsStore =
             const rememberCount = computed(() => {
                 return words.value.filter((word: Word) => word.remember).length
             })
+
+            /** 列表模式：0 待复习 1 已复习 2 已记完 3 全部（单词页与统一头部共享） */
+            const listMode = ref(0);
 
             // actions 用普通函数
             function setLastAddedWordText(text: string) {
@@ -280,7 +283,7 @@ export const useWordsStore =
                     "_id": DB_KEY_USER_SET + uuidv4(), // 假设_id为必填项
                     "pluginStatus": false,
                     "shortcutEnabled": false,
-                    "translationPlatform": 'tencent',
+                    "translationPlatform": 'spark',
                     "ocrPlatform": 'tencent',
                     "memoryFirmness": '正常',
                     "keys": {},
@@ -890,6 +893,7 @@ export const useWordsStore =
                 rememberCount,
                 reviewCount,
                 forgetCount,
+                listMode,
                 shortcutEnabled,
                 mainWindowOpacity,
                 autoSpeak,

@@ -1118,7 +1118,7 @@ async function callXftrans(query: string, from: string, to: string): Promise<Tra
  */
 export async function translateBatchWithPlatform(
     queries: string[],
-    platform: TranslationPlatform = 'tencent',
+    platform: TranslationPlatform = 'spark',
     from: string = 'auto',
     to: string = 'zh',
 ): Promise<TranslationResult[]> {
@@ -1174,55 +1174,73 @@ export async function translateBatchWithPlatform(
 }
 
 /**
+ * 免费引擎自动降级链：额度耗尽 / 429 / 不可用时依次尝试
+ */
+const FREE_ENGINE_CHAIN: TranslationPlatform[] = ['spark', 'youdao', 'baidu', 'google', 'bing', 'glm'];
+
+function shouldFallback(result: TranslationResult): boolean {
+    if (result.success) return false;
+    const msg = result.errorMsg || '';
+    return /额度已用完|每日免费.*已达上限|429|限流|暂不可用|受跨域限制|API Key|请先配置|服务错误|Translation failed/i.test(msg);
+}
+
+/**
  * 调用不同平台的翻译接口
  */
 export async function translateWithPlatform(
     query: string,
-    platform: TranslationPlatform = 'tencent',
+    platform: TranslationPlatform = 'spark',
     from: string = 'auto',
     to: string = 'zh'
 ): Promise<TranslationResult> {
     log.i('待翻译参数', query)
 
-    // 缓存优先：相同 (platform, from, to, query) 7 天内直接返回，避免重复打 API
-    // 注意：ollama / local 也走缓存，不影响正确性（命中即为之前同一引擎的成功结果）
-    const cached = getCachedTranslation(query, platform, from, to);
-    if (cached) {
-        log.i('翻译缓存命中', query, platform);
-        return cached;
-    }
+    // 仅在使用内置免费 key（用户未配置 appkey）时启用免费引擎降级链；
+    // 用户只要填写了任意 API 标识，就只尝试指定平台并返回其原生错误，避免跨引擎误降级。
+    const userKeysForPlatform = useWordsStore().getApiKey(platform);
+    const usingBuiltinKey = !userKeysForPlatform?.appkey?.trim();
+    const chain = usingBuiltinKey && FREE_ENGINE_CHAIN.includes(platform)
+        ? FREE_ENGINE_CHAIN.slice(FREE_ENGINE_CHAIN.indexOf(platform))
+        : [platform];
 
-    try {
+    let lastResult: TranslationResult = {
+        success: false,
+        errorMsg: '所有可用翻译引擎均失败'
+    };
+
+    for (const currentPlatform of chain) {
+        // 缓存优先：相同 (platform, from, to, query) 7 天内直接返回，避免重复打 API
+        const cached = getCachedTranslation(query, currentPlatform, from, to);
+        if (cached) {
+            log.i('翻译缓存命中', query, currentPlatform);
+            return cached;
+        }
+
         // 本地翻译不使用限制检查
-        if (platform !== 'local') {
-            // 内置共享 key 已被标记额度耗尽：直接停服，不再打 API
-            if (builtinQuotaExhausted.has(platform) && !hasCustomApiKey(platform)) {
-                return {
-                    success: false,
-                    errorMsg: '该引擎内置免费额度已用完，请在设置中填入自己的 API Key 或切换其他翻译引擎'
-                };
+        if (currentPlatform !== 'local') {
+            // 内置共享 key 已被标记额度耗尽：跳过，触发降级
+            if (builtinQuotaExhausted.has(currentPlatform) && !hasCustomApiKey(currentPlatform)) {
+                const exhaustedMsg = '该引擎内置免费额度已用完，请在设置中填入自己的 API Key 或切换其他翻译引擎';
+                log.w(`平台 ${currentPlatform} ${exhaustedMsg}`);
+                lastResult = { success: false, errorMsg: exhaustedMsg };
+                continue;
             }
-            // 检查是否超出了每日使用限制
-            if (!hasCustomApiKey(platform)) {
-                // 如果没有自定义API密钥，检查是否超过每日限制
-                // 普通翻译和批量翻译一起计数
+            // 超出每日免费额度：跳过，触发降级
+            if (!hasCustomApiKey(currentPlatform)) {
                 const featureType = 'translation'; // 普通翻译与批量翻译共用计数
-
                 if (isOverDailyLimit(featureType)) {
                     const usedCount = getCurrentUsageCount(featureType);
-                    return {
-                        success: false,
-                        errorMsg: `每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`
-                    };
+                    const dailyMsg = `每日免费翻译次数已达上限 (${usedCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次)，请设置自定义API密钥以继续使用`;
+                    log.w(dailyMsg);
+                    lastResult = { success: false, errorMsg: dailyMsg };
+                    continue;
                 }
-
-                // 注意：使用计数移到请求成功之后，失败不占用免费次数
             }
         }
 
         // 实际发起翻译请求（封装为内部函数，便于统一在成功后计数）
         const doTranslate = async (): Promise<TranslationResult> => {
-            switch (platform) {
+            switch (currentPlatform) {
                 case 'youdao':
                     console.log('调用有道')
                     const youdaoParams = generateYoudaoParams(query, from, to);
@@ -1234,7 +1252,7 @@ export async function translateWithPlatform(
                     console.log('请求结果')
                     {
                         const r = handleYoudaoResponse(youdaoResponse.data, query);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
 
@@ -1248,7 +1266,7 @@ export async function translateWithPlatform(
                     });
                     {
                         const r = handleBaiduResponse(baiduResponse.data, query);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
 
@@ -1268,119 +1286,119 @@ export async function translateWithPlatform(
                     const aliData = await aliResponse.json();
                     {
                         const r = handleAliResponse(aliData, query);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'utoolsai':
                     let utoolAiData = await callUtoolsAi(query, from, to);
                     console.log('utool', utoolAiData)
-                    setCachedTranslation(query, platform, from, to, utoolAiData);
+                    setCachedTranslation(query, currentPlatform, from, to, utoolAiData);
                     return utoolAiData;
                 case 'deepseek':
                     console.log('调用DeepSeek')
                     {
                         const r = await callDeepSeek(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'qwen':
                     console.log('调用通义千问')
                     {
                         const r = await callQwen(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'kimi':
                     console.log('调用Kimi')
                     {
                         const r = await callKimi(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'glm':
                     console.log('调用智谱GLM')
                     {
                         const r = await callGlm(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'ollama':
                     console.log('调用Ollama')
                     {
                         const r = await callOllama(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'minimax':
                     console.log('调用MiniMax')
                     {
                         // 复用 OpenAI 兼容批量通道处理单词翻译
-                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
-                        setCachedTranslation(query, platform, from, to, r);
+                        const r = (await translateBatchWithAi([query], currentPlatform, from, to))[0];
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'hunyuan':
                     console.log('调用腾讯混元')
                     {
-                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
-                        setCachedTranslation(query, platform, from, to, r);
+                        const r = (await translateBatchWithAi([query], currentPlatform, from, to))[0];
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'qiniu':
                     console.log('调用七牛AI')
                     {
                         // 复用 OpenAI 兼容批量通道处理单词翻译
-                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
-                        setCachedTranslation(query, platform, from, to, r);
+                        const r = (await translateBatchWithAi([query], currentPlatform, from, to))[0];
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'deepl':
                     console.log('调用DeepL')
                     {
                         const r = await callDeepL(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'azure':
                     console.log('调用微软翻译')
                     {
                         const r = await callAzure(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'google':
                     console.log('调用Google免费接口')
                     {
                         const r = await callGoogleFree(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'spark':
                     console.log('调用讯飞星火')
                     {
-                        const r = (await translateBatchWithAi([query], platform, from, to))[0];
-                        setCachedTranslation(query, platform, from, to, r);
+                        const r = (await translateBatchWithAi([query], currentPlatform, from, to))[0];
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'bing':
                     console.log('调用微软网页免费接口')
                     {
                         const r = await callBingFree(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'xftrans':
                     console.log('调用讯飞机器翻译')
                     {
                         const r = await callXftrans(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'tencent':
                     console.log('调用腾讯翻译')
                     {
                         const r = await callTencent(query, from, to);
-                        setCachedTranslation(query, platform, from, to, r);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
                 case 'local':
@@ -1395,22 +1413,11 @@ export async function translateWithPlatform(
                             phonetic: '',
                             pronunciation: ''
                         };
-                        setCachedTranslation(query, platform, from, to, fallback);
+                        setCachedTranslation(query, currentPlatform, from, to, fallback);
                         return fallback;
                     }
-                    setCachedTranslation(query, platform, from, to, localResult);
+                    setCachedTranslation(query, currentPlatform, from, to, localResult);
                     return localResult;
-                /*           case 'google':
-                               // Google翻译API通常需要服务端实现，这里提供基本结构
-                               const googleParams = {
-                                   q: query,
-                                   source: FROM,
-                                   target: TO,
-                                   format: 'text'
-                               };
-                               // 注意：Google翻译API需要服务端实现，因为浏览器端直接调用会有CORS问题
-                               const googleResponse = await http.get('https://translation.googleapis.com/language/translate/v2', { ...googleParams });
-                               return handleGoogleResponse(googleResponse.data);*/
 
                 default:
                     return {
@@ -1420,22 +1427,43 @@ export async function translateWithPlatform(
             }
         }
 
-        const result = await doTranslate();
+        try {
+            const result = await doTranslate();
+            lastResult = result;
 
-        // 请求成功后才增加使用计数，失败不占用免费次数（本地词典与使用自定义密钥的平台不计数）
-        if (platform !== 'local' && result.success && !hasCustomApiKey(platform)) {
-            const newCount = incrementUsageCounter('translation');
-            log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
+            if (result.success) {
+                // 请求成功后才增加使用计数，失败不占用免费次数（本地词典与使用自定义密钥的平台不计数）
+                if (currentPlatform !== 'local' && !hasCustomApiKey(currentPlatform)) {
+                    const newCount = incrementUsageCounter('translation');
+                    log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
+                }
+                return result;
+            }
+
+            // 额度耗尽类错误，标记后降级
+            if (result.errorMsg?.includes('额度已用完') || result.errorMsg?.includes('456')) {
+                markBuiltinQuotaExhausted(currentPlatform);
+            }
+
+            if (!shouldFallback(result)) {
+                // 非可降级错误直接返回
+                return result;
+            }
+            log.w(`平台 ${currentPlatform} 翻译失败，尝试降级`, result.errorMsg);
+        } catch (error) {
+            console.error(`Translation error on ${currentPlatform}:`, error);
+            lastResult = {
+                success: false,
+                errorMsg: 'Translation failed: ' + (error as Error).message
+            };
         }
-
-        return result;
-    } catch (error) {
-        console.error('Translation error:', error);
-        return {
-            success: false,
-            errorMsg: 'Translation failed: ' + (error as Error).message
-        };
     }
+
+    // 链式降级全部失败，返回最后结果（多引擎尝试时附带链信息）
+    if (!lastResult.success && chain.length > 1 && !lastResult.errorMsg?.includes('自动降级')) {
+        lastResult.errorMsg = `[${chain.join(' → ')} 自动降级均失败] ${lastResult.errorMsg}`;
+    }
+    return lastResult;
 }
 
 /**

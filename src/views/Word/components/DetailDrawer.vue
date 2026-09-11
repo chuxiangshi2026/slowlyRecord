@@ -37,12 +37,15 @@
       </div>
     </div>
     <div>
-      <div class="setting-item">
-        <div class="content">翻译引擎</div>
-        <!--        ;justify-content: space-between;  size="large"-->
+      <!-- 当前翻译引擎卡片：第一屏只呈现当前引擎与免配置状态，切换走右侧下拉 -->
+      <div class="engine-card">
+        <div class="engine-card-main">
+          <span class="engine-card-name">{{ currentEngineLabel }}</span>
+          <span class="engine-card-hint">{{ currentEngineHint }}</span>
+        </div>
         <el-select class="shorcut-desc" :model-value="wordsStore.currentTranslationPlatform"
                    @update:model-value="(val: TranslationPlatform) => wordsStore.setTranslationPlatform(val)"
-                   placeholder="选择"
+                   placeholder="切换引擎"
                    style="width:150px">
           <el-option
               v-for="item in options"
@@ -313,8 +316,8 @@
     <!--     密钥设置模块 -->
     <h4 class="header">密钥</h4>
     <div class="content">
-      <h5 class="key-section-title">翻译密钥</h5>
-      <p class="key-section-hint">默认引擎已内置免费额度，每日 500 次，无需配置；仅切换其他引擎或额度用尽时才需填写</p>
+      <h5 class="key-section-title">高级设置（自定义 API Key）</h5>
+      <p class="key-section-hint">默认使用讯飞星火（免配置 · 每日 500 次），额度耗尽或限流时会自动降级到有道/百度/Google/Bing/GLM；仅切换其他引擎或需要更高额度时才需填写</p>
       <el-collapse v-model="activeTranslationKeys" class="key-collapse">
         <el-collapse-item v-for="engine in translationKeyEngines" :key="engine.value" :name="engine.value">
           <template #title>
@@ -811,9 +814,18 @@ const translationOptionLabel = (value: string, label: string) => {
   } else if ((AppInfo as Record<string, { appkey?: string }>)[value]?.appkey) {
     suffix = '（免配置）'
   }
-  // 默认引擎 glm 额外标注推荐
-  return value === 'glm' ? `${label}${suffix}·推荐` : `${label}${suffix}`
+  // 默认引擎 spark 额外标注推荐
+  return value === 'spark' ? `${label}${suffix}·推荐` : `${label}${suffix}`
 }
+
+// 当前引擎卡片文案：免配置引擎标出免费额度，其余提示需配置
+const currentEngineLabel = computed(() => engineLabel(options, wordsStore.currentTranslationPlatform))
+const currentEngineHint = computed(() => {
+  const p = wordsStore.currentTranslationPlatform
+  if (p === 'google' || p === 'bing') return '免配置'
+  if ((AppInfo as Record<string, { appkey?: string }>)[p]?.appkey) return '免配置 · 每日 500 次'
+  return '需配置 API Key'
+})
 
 // ===== 密钥配置区块 =====
 // 只需 AppKey、无需 SecretKey 的翻译引擎
@@ -875,24 +887,9 @@ const keyPlaceholders = (platform: string) => {
   return { appkey: 'AppID / AppKey', key: 'SecretKey' }
 }
 
-// 折叠面板默认展开：当前选中引擎 + 已配置密钥的引擎
-const initActiveKeys = (engineNames: string[], keys: ApiKeyMap, current: string) => {
-  const active = engineNames.filter(name => hasKey(keys, name))
-  if (current && engineNames.includes(current) && !active.includes(current)) active.unshift(current)
-  return active
-}
-const activeTranslationKeys = ref(
-  initActiveKeys(
-    Object.keys(wordsStore.userApiKeys).filter(k => !hiddenTranslationKeyPlatforms.includes(k)),
-    wordsStore.userApiKeys, wordsStore.currentTranslationPlatform
-  )
-)
-const activeOcrKeys = ref(
-  initActiveKeys(
-    Object.keys(wordsStore.userOcrApiKeys).filter(k => !hiddenOcrKeyPlatforms.includes(k)),
-    wordsStore.userOcrApiKeys, wordsStore.currentOcrPlatform
-  )
-)
+// 折叠面板默认收起；用户展开后再单独填写对应引擎的 API Key
+const activeTranslationKeys = ref<string[]>([])
+const activeOcrKeys = ref<string[]>([])
 /*{
   value: 'google',
       label: '谷歌',
@@ -1142,6 +1139,36 @@ const handleFileImport = (event: Event) => {
     .setting-item {
       display: flex;
       align-items: center;
+    }
+
+    .engine-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 6px 20px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--utools-bg-card);
+      border: 1px solid var(--utools-border-divider);
+
+      .engine-card-main {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+
+      .engine-card-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--utools-text-primary);
+      }
+
+      .engine-card-hint {
+        font-size: 12px;
+        color: var(--utools-text-tertiary);
+      }
     }
 
     .deprecate-notice {

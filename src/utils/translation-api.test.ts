@@ -190,11 +190,12 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
     expect(url).toContain('tl=zh-CN')
   })
 
-  it('google 429 返回限流提示', async () => {
+  it('google 429 触发免费引擎降级链', async () => {
     fetchMock.mockResolvedValueOnce(new Response('rate limited', { status: 429 }))
     const result = await translateWithPlatform('hello-google-429', 'google' as any, 'auto', 'zh')
     expect(result.success).toBe(false)
-    expect(result.errorMsg).toContain('429')
+    // 429 后应继续尝试 bing / glm，而不是直接返回 google 的错误
+    expect(fetchMock.mock.calls.length).toBeGreaterThanOrEqual(2)
   })
 
   it('bing 网页接口先取授权令牌再翻译，无需 key', async () => {
