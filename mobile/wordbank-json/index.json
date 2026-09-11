@@ -1,0 +1,134 @@
+[
+  {
+    "id": "kaoyan",
+    "name": "考研词汇",
+    "wordCount": 4533,
+    "sizeKB": 518
+  },
+  {
+    "id": "gmat",
+    "name": "GMAT词汇",
+    "wordCount": 3254,
+    "sizeKB": 361
+  },
+  {
+    "id": "bec",
+    "name": "BEC商务英语",
+    "wordCount": 2825,
+    "sizeKB": 316
+  },
+  {
+    "id": "cet4",
+    "name": "四级词汇",
+    "wordCount": 3739,
+    "sizeKB": 305
+  },
+  {
+    "id": "cet6",
+    "name": "六级词汇",
+    "wordCount": 2078,
+    "sizeKB": 172
+  },
+  {
+    "id": "collocations",
+    "name": "常用搭配",
+    "wordCount": 277,
+    "sizeKB": 15
+  },
+  {
+    "id": "common-phrases",
+    "name": "常用短语",
+    "wordCount": 307,
+    "sizeKB": 17
+  },
+  {
+    "id": "idioms",
+    "name": "成语习语",
+    "wordCount": 249,
+    "sizeKB": 17
+  },
+  {
+    "id": "ielts",
+    "name": "雅思词汇",
+    "wordCount": 3427,
+    "sizeKB": 302
+  },
+  {
+    "id": "kaogong",
+    "name": "考公词汇",
+    "wordCount": 313,
+    "sizeKB": 25
+  },
+  {
+    "id": "newConcept",
+    "name": "新概念英语",
+    "wordCount": 0,
+    "sizeKB": 0
+  },
+  {
+    "id": "oral-advanced",
+    "name": "口语高阶",
+    "wordCount": 105,
+    "sizeKB": 6
+  },
+  {
+    "id": "oral-basic",
+    "name": "口语入门",
+    "wordCount": 100,
+    "sizeKB": 5
+  },
+  {
+    "id": "oral-intermediate",
+    "name": "口语进阶",
+    "wordCount": 98,
+    "sizeKB": 6
+  },
+  {
+    "id": "phrasal-verbs",
+    "name": "动词短语",
+    "wordCount": 317,
+    "sizeKB": 27
+  },
+  {
+    "id": "zsb",
+    "name": "专升本词汇",
+    "wordCount": 297,
+    "sizeKB": 22
+  },
+  {
+    "id": "level4",
+    "name": "Level 4",
+    "wordCount": 4025,
+    "sizeKB": 451
+  },
+  {
+    "id": "sat",
+    "name": "SAT词汇",
+    "wordCount": 4423,
+    "sizeKB": 481
+  },
+  {
+    "id": "roots",
+    "name": "词根词缀",
+    "wordCount": 568,
+    "sizeKB": 62
+  },
+  {
+    "id": "gre",
+    "name": "GRE词汇",
+    "wordCount": 7199,
+    "sizeKB": 639
+  },
+  {
+    "id": "toefl",
+    "name": "托福词汇",
+    "wordCount": 9213,
+    "sizeKB": 743
+  },
+  {
+    "id": "level8",
+    "name": "Level 8",
+    "wordCount": 12197,
+    "sizeKB": 1358
+  }
+]
