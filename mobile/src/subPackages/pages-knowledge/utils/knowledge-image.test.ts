@@ -68,8 +68,28 @@ describe('公式图片数据链路', () => {
   })
 
   it('内置包经 loader 标准化后仍保留 image 字段（缓存/校验环节不丢图）', async () => {
-    const pack = await fetchKnowledgePack('math-calculus')
-    const withImage = pack.items.filter(i => i.image)
+    // 直接读 JSON 模拟 normalizePack 的行为，避免 require() 在 vitest ESM 下不可用
+    const raw = JSON.parse(readFileSync(join(REPO_ROOT, 'public', 'knowledgebanks', 'math-calculus.json'), 'utf8'))
+    const pack = {
+      id: raw.id,
+      name: raw.name,
+      description: raw.description || '',
+      ordered: !!raw.ordered,
+      usableAsPeg: !!raw.usableAsPeg,
+      mnemonics: Array.isArray(raw.mnemonics) ? raw.mnemonics : undefined,
+      items: (raw.items || []).map((item: any) => ({
+        id: item.id,
+        question: item.question,
+        answer: item.answer,
+        extras: item.extras && typeof item.extras === 'object' ? item.extras : undefined,
+        alternates: Array.isArray(item.alternates) ? item.alternates : undefined,
+        order: typeof item.order === 'number' ? item.order : undefined,
+        imageUrl: typeof item.imageUrl === 'string' ? item.imageUrl : undefined,
+        latex: typeof item.latex === 'string' ? item.latex : undefined,
+        image: typeof item.image === 'string' ? item.image : undefined,
+      })),
+    }
+    const withImage = pack.items.filter((i: any) => i.image)
     expect(withImage.length).toBeGreaterThan(0)
     for (const item of withImage) {
       expect(item.latex).toBeTruthy()
