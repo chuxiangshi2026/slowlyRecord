@@ -322,11 +322,16 @@
 
   <div class="home_footer">
     <div>
-      <!-- 当前词库名称显示（列表模式统计已上移统一头部 AppHeader） -->
+      <!-- 当前词库名称显示 -->
       <span class="current-bank-name" @click="openWordBankManager">
         <i class="iconfont icon-library"></i>
         {{ wordsStore.currentWordBank?.name || '默认词库' }} ▾
       </span>
+      <el-divider direction="vertical"/>
+      <span :class="{ 'remembered-highlight': wordsStore.listMode==0 }" @click="showOnlyForget"> 待复习: {{ wordsStore.forgetCount }} </span>
+      <span :class="{ 'remembered-highlight': wordsStore.listMode==1 }" @click="showOnlyReview"> 已复习: {{ wordsStore.reviewCount }} </span>
+      <span :class="{ 'remembered-highlight': wordsStore.listMode==2 }" @click="showOnlyRemembered"> 已记完: {{ wordsStore.rememberCount }} </span>
+      <span :class="{ 'remembered-highlight': wordsStore.listMode==3 }" @click="showAll"> 总数: {{ wordsStore.count }} </span>
     </div>
     <div>
 
@@ -500,17 +505,6 @@ const drawerVisible = ref(false)
 // 「更多」抽屉可见性（导入导出/字母映射/音标/同步/设置等低频入口）
 const moreDrawerVisible = ref(false)
 
-// 全局设置入口：头部 ⋯ 从任意页面请求打开设置抽屉
-watch(
-  () => uiStore.settingsDrawerRequested,
-  (requested) => {
-    if (requested) {
-      drawerVisible.value = true;
-      uiStore.settingsDrawerRequested = false;
-    }
-  },
-  {immediate: true}
-)
 const title = ref('设置')
 const currentId = ref<string | number | undefined>(undefined)
 
@@ -2265,6 +2259,19 @@ const listMode = computed({
   set: (v) => { wordsStore.listMode = v }
 });
 
+
+const showOnlyForget = () => {
+  listMode.value = 0;
+}
+
+const showOnlyReview = () => {
+  listMode.value = listMode.value != 1 ? 1 : 0;
+}
+
+// 切换只显示已记住的单词
+const showOnlyRemembered = () => {
+  listMode.value = listMode.value != 2 ? 2 : 0;
+}
 
 const showAll = () => {
   listMode.value = listMode.value != 3 ? 3 : 0;

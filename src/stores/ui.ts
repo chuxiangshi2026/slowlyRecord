@@ -8,21 +8,16 @@ export const useUiStore = defineStore('ui', () => {
   /** 同步与备份弹窗（Home 层渲染一次，头部状态点与「更多」抽屉共用） */
   const syncDialogVisible = ref(false)
 
-  /** 请求打开设置抽屉（由 Word 页的 DetailDrawer 承载） */
-  const settingsDrawerRequested = ref(false)
+  /** 设置抽屉（Home 层渲染一次，任意页面可直接打开） */
+  const settingsDrawerVisible = ref(false)
 
   function openSyncDialog() {
     syncDialogVisible.value = true
   }
 
-  function requestSettings() {
-    settingsDrawerRequested.value = true
-  }
-
   return {
     syncDialogVisible,
-    settingsDrawerRequested,
+    settingsDrawerVisible,
     openSyncDialog,
-    requestSettings,
   }
 })

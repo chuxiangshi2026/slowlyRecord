@@ -5,21 +5,6 @@
     <!-- 非单词页：当前模块的一句话状态摘要 -->
     <span v-if="!isWordPage && pageSummary" class="page-summary">{{ pageSummary }}</span>
 
-    <!-- 单词页：列表模式切换（与 Word.vue 共享 wordsStore.listMode） -->
-    <template v-if="isWordPage">
-      <span
-          v-for="seg in modeSegments"
-          :key="seg.mode"
-          :class="['mode-seg', { active: wordsStore.listMode === seg.mode }]"
-          @click="switchMode(seg.mode)"
-      >
-        {{ seg.label }}: <b>{{ seg.count.value }}</b>
-      </span>
-      <span v-if="wordsStore.listMode === 0 && wordsStore.forgetCount === 0 && wordsStore.count > 0" class="done-tip">
-        今日复习已完成 🎉
-      </span>
-    </template>
-
     <span class="spacer"></span>
 
     <!-- 同步异常状态点：正常不显示；同步失败/有未同步改动时红色，同步中灰色 -->
@@ -125,26 +110,12 @@ const pageSummary = computed(() => {
 const isWordPage = computed(() => route.name === 'word');
 const pageTitle = computed(() => (route.meta?.title as string) || '慢记');
 
-const modeSegments = computed(() => [
-  {mode: 0, label: '待复习', count: computed(() => wordsStore.forgetCount)},
-  {mode: 1, label: '已复习', count: computed(() => wordsStore.reviewCount)},
-  {mode: 2, label: '已记完', count: computed(() => wordsStore.rememberCount)},
-]);
-
-// 点击切换列表模式；再次点击当前模式回到默认「待复习」
-const switchMode = (mode: number) => {
-  wordsStore.listMode = wordsStore.listMode === mode ? 0 : mode;
-};
-
 const goSign = () => router.push('/sign');
 const goWord = () => router.push('/word');
 
-// 设置入口：非单词页先回单词页，由 Word.vue 监听 settingsDrawerRequested 打开设置抽屉
+// 设置入口：任意页面直接打开全局设置抽屉（挂在 Home 层，不再先回单词页）
 const openSettings = () => {
-  uiStore.requestSettings();
-  if (!isWordPage.value) {
-    router.push('/word');
-  }
+  uiStore.settingsDrawerVisible = true;
 };
 
 // 今日首次复习/添加后，轻提示连续打卡天数并触发头部动画
@@ -197,32 +168,6 @@ onMounted(() => {
   }
 
   .page-summary {
-    font-size: 12px;
-    color: var(--utools-text-tertiary);
-  }
-
-  .mode-seg {
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 6px;
-    color: var(--utools-text-tertiary);
-
-    &:hover {
-      background: var(--utools-bg-hover);
-    }
-
-    &.active {
-      color: var(--utools-primary);
-      font-weight: 600;
-    }
-
-    b {
-      font-weight: 600;
-    }
-  }
-
-  .done-tip {
-    margin-left: 8px;
     font-size: 12px;
     color: var(--utools-text-tertiary);
   }

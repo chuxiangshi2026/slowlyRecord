@@ -24,6 +24,8 @@
 
     <!-- 同步与备份：挂到 Home 层，头部状态点与「更多」抽屉共用同一实例 -->
     <SyncDialog v-model="uiStore.syncDialogVisible"/>
+    <!-- 设置抽屉：Home 层全局单例，任意页面可直接打开 -->
+    <DetailDrawer v-model="uiStore.settingsDrawerVisible" title="设置"/>
   </div>
 </template>
 
@@ -32,6 +34,7 @@
 import AppHeader from "@/components/AppHeader.vue";
 import HomeMain from "@/views/Home/components/HomeMain.vue";
 import SyncDialog from "@/components/SyncDialog.vue";
+import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import {useUiStore} from "@/stores/ui";
 
 const uiStore = useUiStore();
