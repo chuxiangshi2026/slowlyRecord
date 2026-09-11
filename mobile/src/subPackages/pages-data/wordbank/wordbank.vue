@@ -53,45 +53,30 @@
       <text class="mapping-count">{{ mapping.wordCount }} 词</text>
     </view>
 
-    <!-- 内置词库入口 -->
+    <!-- 远程词库下载 -->
     <view class="section-header">
-      <text class="section-title">导入内置词库</text>
+      <text class="section-title">下载词库</text>
+      <text class="section-add" @click="refreshRemoteIndex">刷新</text>
     </view>
-    <view class="builtin-section">
-      <view class="section-item" @click="goTo('/subPackages/wordbank-b/wordbankB')">
-        <view class="section-info">
-          <text class="section-name">默认词库</text>
-          <text class="section-desc">四六级、雅思、新概念、商务、考公、专升本、短语动词、固定搭配、习语等</text>
-        </view>
-        <text class="arrow">›</text>
+    <view class="remote-section">
+      <view v-if="remoteList.length === 0" class="remote-loading">
+        <text>{{ remoteError || '加载词库清单中…' }}</text>
       </view>
-      <view class="section-item" @click="goTo('/subPackages/wordbank-a/wordbankA')">
-        <view class="section-info">
-          <text class="section-name">考研/GMAT词库</text>
-          <text class="section-desc">考研、GMAT等</text>
+      <view
+        v-for="bank in remoteList"
+        :key="bank.id"
+        class="remote-item"
+        @click="onRemoteBankTap(bank)"
+      >
+        <view class="remote-info">
+          <text class="remote-name">{{ bank.name }}</text>
+          <text class="remote-desc">{{ bank.wordCount }} 词 · {{ bank.sizeKB }}KB</text>
         </view>
-        <text class="arrow">›</text>
-      </view>
-      <view class="section-item" @click="goTo('/subPackages/wordbank-c/wordbankC')">
-        <view class="section-info">
-          <text class="section-name">进阶词库 II</text>
-          <text class="section-desc">GRE、SAT、专四等</text>
+        <view class="remote-status">
+          <text v-if="downloadingId === bank.id" class="downloading">{{ downloadProgress }}%</text>
+          <text v-else-if="cachedIds.includes(bank.id)" class="cached">已下载</text>
+          <text v-else class="not-cached">下载</text>
         </view>
-        <text class="arrow">›</text>
-      </view>
-      <view class="section-item" @click="goTo('/subPackages/wordbank-d/wordbankD')">
-        <view class="section-info">
-          <text class="section-name">进阶词库 III</text>
-          <text class="section-desc">托福、词根词缀</text>
-        </view>
-        <text class="arrow">›</text>
-      </view>
-      <view class="section-item" @click="goTo('/subPackages/wordbank-level8/wordbankLevel8')">
-        <view class="section-info">
-          <text class="section-name">专业八级词库</text>
-          <text class="section-desc">英语专业八级核心词汇</text>
-        </view>
-        <text class="arrow">›</text>
       </view>
     </view>
 
@@ -112,14 +97,75 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
+import { fetchRemoteIndex, getWordBank, getCachedBankIds, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
 
 const wordsStore = useMobileWords()
 const createDialogVisible = ref(false)
 const newBankName = ref('')
 
+// 远程词库下载
+const remoteList = ref<RemoteWordBankInfo[]>([])
+const remoteError = ref('')
+const cachedIds = ref<string[]>([])
+const downloadingId = ref('')
+const downloadProgress = ref(0)
+
 onMounted(async () => {
   await wordsStore.loadWords()
+  cachedIds.value = getCachedBankIds()
+  refreshRemoteIndex()
 })
+
+async function refreshRemoteIndex() {
+  remoteError.value = ''
+  const list = await fetchRemoteIndex()
+  if (list) {
+    remoteList.value = list
+  } else {
+    remoteError.value = '词库清单加载失败，请检查网络后点"刷新"'
+  }
+}
+
+// 点击远程词库：已缓存的直接导入，未缓存的先下载再导入
+async function onRemoteBankTap(bank: RemoteWordBankInfo) {
+  if (downloadingId.value) return
+  try {
+    downloadingId.value = bank.id
+    downloadProgress.value = 0
+    const rawWords = await getWordBank(bank.id, (p) => { downloadProgress.value = p })
+    cachedIds.value = getCachedBankIds()
+    // 导入到当前词库（复用现有导入逻辑）
+    await importToCurrentBank(bank, rawWords)
+  } catch (e: any) {
+    uni.showToast({ title: e?.message || '下载失败', icon: 'none' })
+  } finally {
+    downloadingId.value = ''
+    downloadProgress.value = 0
+  }
+}
+
+// 把远程词库导入当前词库（与词库管理页导入内置词库同一口径）
+async function importToCurrentBank(bank: RemoteWordBankInfo, rawWords: any[]) {
+  const bankId = wordsStore.currentBankId
+  const now = Date.now()
+  const mobileWords = rawWords.map(w => {
+    const wordText = w.word || ''
+    return {
+      id: '',
+      word: wordText,
+      meaning: w.meaning || w.explains || '',
+      phonetic: w.phonetic || undefined,
+      example: w.example || undefined,
+      itemType: wordText.includes(' ') ? 'phrase' : 'word',
+      addTime: now,
+      reviewCount: 0,
+      nextReviewTime: now,
+      bankId,
+    }
+  })
+  await wordsStore.importWords(mobileWords, bankId)
+  uni.showToast({ title: `已导入 ${rawWords.length} 词`, icon: 'success' })
+}
 
 const currentBankName = computed(() => {
   const bank = wordsStore.getBankById(wordsStore.currentBankId)
@@ -271,6 +317,30 @@ const goTo = (url: string) => {
   font-size: 24rpx;
   color: #999;
 }
+
+.remote-section { padding: 0 20rpx; }
+.remote-loading { text-align: center; color: #999; font-size: 26rpx; padding: 40rpx 0; }
+.remote-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.remote-info { flex: 1; }
+.remote-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
+.remote-desc { font-size: 24rpx; color: #999; margin-top: 6rpx; display: block; }
+.remote-status {
+  font-size: 26rpx;
+  padding: 10rpx 24rpx;
+  border-radius: 28rpx;
+  white-space: nowrap;
+}
+.remote-status .cached { color: #52796f; }
+.remote-status .not-cached { color: #fff; background: #52796f; }
+.remote-status .downloading { color: #74937d; }
 
 .builtin-section { padding: 0 20rpx; }
 .section-item { background: #fff; border-radius: 16rpx; padding: 36rpx 30rpx; margin-bottom: 16rpx; display: flex; justify-content: space-between; align-items: center; }
