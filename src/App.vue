@@ -187,11 +187,16 @@ let reviewReminderNotified = false;
   // 延迟调用，避免初始化时重复计算
   setTimeout(async () => {
     await updateReview();
-    // 到期复习提醒：仅 uTools 平台，有待复习内容时发系统通知；每次插件进程只提醒一次
+    // 到期复习提醒：仅在「待复习较多且非复习入口」时提醒一次，避免与头部「待复习 N」重复触达；
+    // 支持点击的平台（Web Notification）点击后直达待复习列表
     try {
-      if (checkIsUtools() && !reviewReminderNotified && wordsStore.forgetCount > 0) {
+      const isReviewEntry = action?.code === 'review';
+      if (checkIsUtools() && !reviewReminderNotified && !isReviewEntry && wordsStore.forgetCount >= 5) {
         reviewReminderNotified = true;
-        getNotificationAdapter().show('慢记复习提醒', `今日还有 ${wordsStore.forgetCount} 个单词/句子待复习`);
+        getNotificationAdapter().show('慢记复习提醒', `今日还有 ${wordsStore.forgetCount} 个单词/句子待复习`, () => {
+          if (checkIsUtools()) (window as any).utools?.showMainWindow?.();
+          router.push('/word');
+        });
       }
     } catch (e) {
       console.error('[复习提醒] 发送通知失败:', e);
@@ -252,8 +257,7 @@ let reviewReminderNotified = false;
     // action.type =='over'
     // console.log('我是快捷键进来的')
     const selectedText = await navigator.clipboard.readText();
-    // 显示文本选择面板
-    await displayTextSelection(selectedText);
+    checkShearBoardAddWork(selectedText);
   }
 
   if (action.code === 'huaci' && action.from == 'main') {
@@ -264,32 +268,6 @@ let reviewReminderNotified = false;
           checkShearBoardAddWork(text);
         }
     );
-  }
-
-  if (action.code === 'huaduan' && action.from === 'hotkey') {
-    console.log('[划段添加] 通过快捷键触发');
-    // 给系统一点时间来完成复制操作
-    await new Promise(r => setTimeout(r, 200));
-    const selectedText = await navigator.clipboard.readText();
-    console.log('[划段添加] 快捷键方式获取文本:', selectedText);
-    // 显示文本选择面板
-    await displayTextSelection(selectedText);
-  }
-
-  if (action.code === 'huaduan' && action.from == 'main') {
-    console.log('[划段添加] 通过主界面触发');
-    getSelectedTextFromSystem().then(async (text) => {
-      console.log('[划段添加] 获取到文本:', text);
-      if (text === '使用此功能，请先关闭自动分离') {
-        ElMessage.error('使用此功能，请先关闭自动分离');
-        return;
-      }
-      // 显示文本选择面板
-      await displayTextSelection(text);
-    }).catch(error => {
-      console.error('[划段添加] 获取文本失败:', error);
-      ElMessage.error('获取选中文本失败，请重试');
-    });
   }
 
   if (action.code === 'jietu') {
@@ -388,7 +366,7 @@ let reviewReminderNotified = false;
 
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
-  const addWordActions = ['over', 'huaci', 'huaduan', 'jietu', 'paste', 'selection']
+  const addWordActions = ['over', 'huaci', 'jietu', 'paste', 'selection']
   if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
@@ -745,13 +723,26 @@ function checkShearBoardAddWork(text: string) {
     return;
   }
 
-  // 检查是否为空字符串或仅包含空格；字符集按当前词库语言判定（支持日/俄/西/法）
+  // 检查是否为空字符串或仅包含空格
+  if (!processedText) {
+    ElMessage.error('请选中有效文本');
+    return;
+  }
+
+  // 长段落/多词按「划段」模式展示选择面板，让用户挑选单词
   const profile = getActiveProfile();
-  if (!processedText || processedText.length > 50 || !isWordText(processedText, profile)) {
+  const isLongText = processedText.length > 50 || processedText.includes('\n') || processedText.split(/\s+/).filter(Boolean).length > 3;
+  if (isLongText) {
+    displayTextSelection(processedText);
+    return;
+  }
+
+  // 字符集按当前词库语言判定（支持日/俄/西/法）
+  if (!isWordText(processedText, profile)) {
     ElMessage.error('请选中单个有效单词或短语');
     return;
   }
-  // 验证处理后的文本是否符合要求（非空且不超过限制）
+  // 验证处理后的文本是否符合要求
   addWord(processedText).then(err => {
     ElMessage.warning(err.message)
   });

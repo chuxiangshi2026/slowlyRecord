@@ -30,25 +30,14 @@
     },
     {
       "code": "huaci",
-      "explain": "划词添加",
+      "explain": "划词/划段添加",
       "cmds": [
         {
           "type": "over",
           "label": "划词添加",
           "minLength": 1
         },
-        "划词添加"
-      ]
-    },
-    {
-      "code": "huaduan",
-      "explain": "划段添加",
-      "cmds": [
-        {
-          "type": "over",
-          "label": "划段添加",
-          "minLength": 1
-        },
+        "划词添加",
         "划段添加"
       ]
     },
