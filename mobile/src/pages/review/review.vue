@@ -107,20 +107,6 @@
               📚 离线释义：{{ offlineDictMeaning }}
             </text>
           </view>
-          <view class="gesture-guide">
-            <view class="guide-item left">
-              <text class="guide-arrow">←</text>
-              <text class="guide-label">忘记</text>
-            </view>
-            <view class="guide-item down">
-              <text class="guide-arrow">↓</text>
-              <text class="guide-label">已记完</text>
-            </view>
-            <view class="guide-item right">
-              <text class="guide-arrow">→</text>
-              <text class="guide-label">认识</text>
-            </view>
-          </view>
         </view>
       </view>
 
