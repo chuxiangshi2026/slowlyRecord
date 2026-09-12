@@ -46,11 +46,6 @@ import {
   preloadWorker,
   type OcrResult
 } from "@/utils/pic-translate.ts";
-// import path from "node:path";
-import picData from '../testdata/picdata.json';
-import baidupicData from '../testdata/baidupicdata.json';
-import picaliData from '../testdata/picalidata.json';
-import picTencentData from '../testdata/picTencentdata.json';
 import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
 import DebugPanel from '@/components/DebugPanel.vue';
