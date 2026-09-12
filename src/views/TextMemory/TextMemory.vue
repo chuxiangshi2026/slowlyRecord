@@ -90,12 +90,12 @@
             </el-tooltip>
           </el-radio-button>
           <el-radio-button label="palace">
-            <el-tooltip effect="dark" content="记忆宫殿" placement="top" popper-class="small-tooltip">
+            <el-tooltip effect="dark" content="记忆宫殿（内嵌）" placement="top" popper-class="small-tooltip">
               <el-icon><OfficeBuilding /></el-icon>
             </el-tooltip>
           </el-radio-button>
           <el-radio-button label="knowledge">
-            <el-tooltip effect="dark" content="知识库" placement="top" popper-class="small-tooltip">
+            <el-tooltip effect="dark" content="知识库（内嵌）" placement="top" popper-class="small-tooltip">
               <el-icon><Notebook /></el-icon>
             </el-tooltip>
           </el-radio-button>

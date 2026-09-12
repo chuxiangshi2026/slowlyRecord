@@ -45,10 +45,6 @@
       <h4>辅助</h4>
       <div class="d-item" @click="go('letter-memory', '/letter-memory')"><span>🔤 字母映射</span></div>
       <div class="d-item" @click="go('phonetic-memory', '/phonetic-memory')"><span>🎵 音标学习</span></div>
-      <div class="d-item" @click="go('memory-palace', '/memory-palace')">
-        <span>🏛️ 记忆宫殿</span>
-        <small>{{ memoryPalaceSummary }}</small>
-      </div>
       <div class="d-item" @click="go('shortcut-memory', '/shortcut-memory')"><span>⌨️ 快捷键记忆</span></div>
 
       <h4>数据</h4>
@@ -67,10 +63,8 @@ import {computed, onMounted, ref} from 'vue';
 import {useRouter, useRoute} from 'vue-router';
 import {useNumberMemoryStore} from '@/stores/numberMemory';
 import {useTextMemoryStore} from '@/stores/textMemory';
-import {useKnowledgeMemoryStore} from '@/stores/knowledgeMemory';
 import {useSentencesStore} from '@/stores/sentences';
 import {useMemoryStore} from '@/stores/memory';
-import {useMemoryPalaceStore} from '@/stores/memoryPalace';
 import {getDbStorage} from '@/adapters/db';
 
 const props = defineProps<{
@@ -119,10 +113,8 @@ function sortByUsage<T extends {key: string}>(list: T[]): T[] {
 
 const numberMemoryStore = useNumberMemoryStore();
 const textMemoryStore = useTextMemoryStore();
-const knowledgeMemoryStore = useKnowledgeMemoryStore();
 const sentencesStore = useSentencesStore();
 const memoryStore = useMemoryStore();
-const memoryPalaceStore = useMemoryPalaceStore();
 
 const visible = computed({
   get: () => props.modelValue,
@@ -178,11 +170,6 @@ const textMemorySummary = computed(() => {
   return total > 0 ? `已收集 ${total} 篇` : '';
 });
 
-const knowledgeMemorySummary = computed(() => {
-  const imported = knowledgeMemoryStore.importedIds?.length ?? 0;
-  return imported > 0 ? `已导入 ${imported} 个包` : '';
-});
-
 const sentencesSummary = computed(() => {
   const count = sentencesStore.sentences?.length ?? 0;
   return count > 0 ? `已收集 ${count} 句` : '';
@@ -193,16 +180,10 @@ const memoryTestSummary = computed(() => {
   return total > 0 ? `已完成 ${total} 次` : '';
 });
 
-const memoryPalaceSummary = computed(() => {
-  const count = memoryPalaceStore.palaces?.length ?? 0;
-  return count > 0 ? `已创建 ${count} 座宫殿` : '';
-});
-
 // 按使用频率排序后的菜单项（P2：高频功能自动上浮）
 const memoryItems = computed(() => sortByUsage([
   {key: 'number-memory', label: '🔢 数字记忆', summary: numberMemorySummary.value, path: '/number-memory'},
   {key: 'text-memory', label: '📜 文本记忆', summary: textMemorySummary.value, path: '/text-memory'},
-  {key: 'knowledge-memory', label: '🎓 知识库', summary: knowledgeMemorySummary.value, path: '/knowledge-memory'},
   {key: 'sentences', label: '📖 句子库', summary: sentencesSummary.value, path: '/sentences'},
 ]));
 
@@ -222,13 +203,7 @@ onMounted(async () => {
     await textMemoryStore.loadArticles();
   } catch (e) { /* ignore */ }
   try {
-    await knowledgeMemoryStore.loadImportedIds();
-  } catch (e) { /* ignore */ }
-  try {
     await sentencesStore.load();
-  } catch (e) { /* ignore */ }
-  try {
-    await memoryPalaceStore.loadPalaces();
   } catch (e) { /* ignore */ }
 });
 </script>
