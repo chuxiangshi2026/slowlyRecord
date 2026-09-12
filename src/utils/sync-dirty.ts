@@ -47,3 +47,10 @@ export function markSynced(ts: number = Date.now()): void {
   writeTs(LAST_SYNC_KEY, ts)
   refreshSyncDirty()
 }
+
+/** 距上次同步的天数；从未同步过返回 -1 */
+export function daysSinceLastSync(): number {
+  const lastSync = readTs(LAST_SYNC_KEY)
+  if (lastSync <= 0) return -1
+  return Math.floor((Date.now() - lastSync) / 86400000)
+}

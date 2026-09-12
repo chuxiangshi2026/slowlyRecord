@@ -9,6 +9,16 @@
     <el-tabs v-model="activeTab" class="sync-tabs">
       <!-- 服务器同步 Tab -->
       <el-tab-pane label="服务器同步" name="server">
+        <!-- 备份时效提醒：超过 3 天未同步时显示 -->
+        <el-alert
+          v-if="backupDays > 3"
+          :title="backupDays === 0 ? '今日尚未同步' : `距上次同步已 ${backupDays} 天，建议尽快推送备份`"
+          type="warning"
+          :closable="false"
+          show-icon
+          class="sync-alert"
+          style="margin-bottom: 10px"
+        />
         <el-alert
           title="端到端加密 · 临时传输"
           type="success"
@@ -209,7 +219,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 import { useSyncStore } from '@/stores/sync'
 import { ElMessage } from 'element-plus'
 import { Upload, Download } from '@element-plus/icons-vue'
@@ -217,6 +227,7 @@ import QRCode from 'qrcode'
 import type { SyncFormat } from '@/types/sync'
 import type { RestoreOptions } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
+import { daysSinceLastSync } from '@/utils/sync-dirty'
 
 const props = defineProps<{
   modelValue: boolean
@@ -227,6 +238,9 @@ const emit = defineEmits<{
 }>()
 
 const syncStore = useSyncStore()
+
+// 距上次同步天数（-1 表示从未同步）
+const backupDays = computed(() => daysSinceLastSync())
 
 const activeTab = ref('server')
 const customServerUrl = ref(syncStore.savedServerUrl)
