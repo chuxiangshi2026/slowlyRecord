@@ -365,6 +365,9 @@
       <!--      </a>-->
     </div>
   </div>
+
+  <!-- 首次启动引导浮层 -->
+  <OnboardingOverlay v-model="showOnboarding" @finish="onOnboardingFinish"/>
 </template>
 
 <script setup lang="ts">
@@ -379,6 +382,7 @@ import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import WordFilter from "@/views/Word/components/WordFilter.vue";
 import type { FilterState } from "@/views/Word/components/WordFilter.vue";
+import OnboardingOverlay from "@/components/OnboardingOverlay.vue";
 import {useUiStore} from "@/stores/ui";
 import {computed, nextTick, onMounted, onUnmounted, ref, watch, shallowRef} from "vue";
 import {
@@ -3240,6 +3244,29 @@ watch(() => wordsStore.lastAddedWordText, (wordText) => {
   }
   log.i("清空滚动更新单词", wordText);
 }, {immediate: true})
+
+// ========== 首次启动引导浮层 ==========
+const ONBOARDED_KEY = 'slowlyrecord-onboarded'
+const showOnboarding = ref(false)
+
+onMounted(async () => {
+  // 已引导过或词库已有数据 → 不再显示引导
+  try {
+    if (localStorage.getItem(ONBOARDED_KEY) === '1') return
+  } catch { /* ignore */ }
+
+  await wordsStore.listWords()
+  if (wordsStore.count === 0) {
+    showOnboarding.value = true
+  }
+})
+
+function onOnboardingFinish() {
+  try {
+    localStorage.setItem(ONBOARDED_KEY, '1')
+  } catch { /* ignore */ }
+  showOnboarding.value = false
+}
 </script>
 
 <style lang="scss">
