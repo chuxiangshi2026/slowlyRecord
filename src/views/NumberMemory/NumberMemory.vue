@@ -277,7 +277,8 @@ onMounted(() => {
   padding-bottom: 75px; // 为底部工具栏留出空间
   width: 100%;
   box-sizing: border-box;
-  min-height: 100vh;
+  flex: 1;
+  overflow-y: auto;
   background-color: var(--utools-bg-secondary);
 
   .page-header {

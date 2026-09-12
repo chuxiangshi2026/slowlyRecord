@@ -868,7 +868,7 @@ watch(currentView, (v) => {
 <style scoped lang="scss">
 .text-memory-container {
   padding: 0;
-  height: 100%;
+  flex: 1;
   overflow-y: auto;
 }
 
