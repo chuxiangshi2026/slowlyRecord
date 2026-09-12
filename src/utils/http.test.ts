@@ -158,11 +158,10 @@ describe('http', () => {
 
   describe('axios 实例创建', () => {
     it('应使用正确的 baseURL 创建 axios 实例', () => {
-      // http 模块在导入时已调用 axios.create 完成实例化
-      // timeout 放宽到 30s 以适配 AI 翻译引擎的首响应延迟（之前 5s 会误超时）
+      // timeout 12s：翻译类请求（AI 引擎首响应 3-8s，普通翻译 <1s）足够覆盖且不会让用户等太久
       expect(axios.create).toHaveBeenCalledWith({
         baseURL: 'https://openapi.youdao.com/api',
-        timeout: 30000,
+        timeout: 12000,
       })
     })
   })

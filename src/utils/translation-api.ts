@@ -1452,9 +1452,23 @@ export async function translateWithPlatform(
             log.w(`平台 ${currentPlatform} 翻译失败，尝试降级`, result.errorMsg);
         } catch (error) {
             console.error(`Translation error on ${currentPlatform}:`, error);
+            const rawMsg = (error as Error).message || '';
+            // 把技术性错误翻译成用户可行动的中文提示
+            let friendlyMsg = '翻译失败';
+            if (/timeout|超时|ECONNABORTED|ETIMEDOUT/i.test(rawMsg)) {
+                friendlyMsg = '翻译超时，请检查网络后重试';
+            } else if (/401|403|Unauthorized|Forbidden/i.test(rawMsg)) {
+                friendlyMsg = 'API 密钥无效或已过期，请到设置中检查';
+            } else if (/429|Too Many Requests|限流/i.test(rawMsg)) {
+                friendlyMsg = '请求过于频繁，请稍后再试';
+            } else if (/Network Error|Failed to fetch|ECONNREFUSED/i.test(rawMsg)) {
+                friendlyMsg = '网络连接失败，请检查网络设置';
+            } else {
+                friendlyMsg = `翻译失败：${rawMsg}`;
+            }
             lastResult = {
                 success: false,
-                errorMsg: 'Translation failed: ' + (error as Error).message
+                errorMsg: friendlyMsg
             };
         }
     }
