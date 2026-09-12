@@ -1141,25 +1141,18 @@ async function checkAnswer() {
   const isCorrect = userAnswer === normalizeForCompare(word.text, profile);
 
   if (isCorrect) {
-    // 正确：与主列表统一标准 —— 过了当前等级的复习间隔（且在时间窗口内）才升级，
-    // 按记忆牢固度提升 1~3 级，封顶 12 级，12 级视为已记住
-    const now = Date.now();
-    const level = Number(word.level) || 1;
-    const learnDate = word.learnDate ? new Date(word.learnDate).getTime() : 0;
-    const startLearnDate = learnDate + DEFAULT_INTERVALS[level] * 60 * 1000;
-    const endLearnDate = learnDate + DEFAULT_INTERVALS[Math.min(level + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000;
-
-    if (now > startLearnDate && now < endLearnDate) {
-      const firmness = wordsStore.memoryFirmness;
-      let levelIncrement = 1;
-      if (firmness === '较强') {
-        levelIncrement = 2;
-      } else if (firmness === '极强') {
-        levelIncrement = 3;
-      }
-      word.level = Math.min(12, level + levelIncrement) as Word['level'];
-      if (word.level >= 12) word.remember = true;
+    // 正确：upReview 已保证只有到了复习时间的词才进入听写，
+    // 因此答对就直接升级，按记忆牢固度提升 1~3 级，封顶 12 级
+    const firmness = wordsStore.memoryFirmness;
+    let levelIncrement = 1;
+    if (firmness === '较强') {
+      levelIncrement = 2;
+    } else if (firmness === '极强') {
+      levelIncrement = 3;
     }
+    const level = Number(word.level) || 1;
+    word.level = Math.min(12, level + levelIncrement) as Word['level'];
+    if (word.level >= 12) word.remember = true;
     word.isReview = false;
     word.learnDate = new Date();
 

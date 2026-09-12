@@ -545,6 +545,9 @@ const play = async () => {
 
 /**
  * 认识
+ *
+ * upReview 已保证只有到了复习时间的词才出现在待复习列表中，
+ * 因此能点"认识"就说明是有效复习——直接升级并更新 learnDate。
  */
 const remember = () => {
 
@@ -562,68 +565,32 @@ const remember = () => {
   wordsStore.lastFocusWordText = cleanWordText.value;
   wordsStore.lastFocusWordIndex = props.wordIndex;
 
-  //如果 当前时间大于  上次复习时间+当前等级*默认复习间隔 且小于上次复习时间+（当前等级+3）*默认复习间隔  等级+1
-  // 当前时间
-  const now = new Date().getTime();
-  let learnDate = targetWord.learnDate;
-
-  // 确保 learnDate 是 Date 对象
-  if (typeof learnDate === 'string') {
-    learnDate = new Date(learnDate);
-  } else if (!(learnDate instanceof Date)) {
-    learnDate = new Date(); // 如果不是有效的日期，使用当前时间
-  }
-  // 开始复习时间 (上次复习时间 + 当前等级对应的默认复习间隔)
-  let level = targetWord.level;
-
-  const startLearnDate = learnDate.getTime() + DEFAULT_INTERVALS[level] * 60 * 1000;
-
-  // 结束复习时间 (上次复习时间 + (当前等级 + 3) 对应的默认复习间隔)
-  const endLearnDate = learnDate.getTime() + DEFAULT_INTERVALS[Math.min(level + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000;
-
   // 创建新对象而非直接修改原对象，确保 Vue 响应式系统能正确检测到变更
-  // 直接修改 targetWord 后传入 addAndUpdateWord，Object.assign(obj, obj) 是空操作，不会触发响应式更新
   const updatedWord: Word = {
     ...targetWord,
     isReview: false,
     explainedHidden: true,
+    learnDate: new Date(),
   };
 
-  if (targetWord.level >= 12) {
+  // 根据记忆牢固度决定升级速度
+  const firmness = wordsStore.memoryFirmness;
+  let levelIncrement = 1; // 默认正常：+1级
+  if (firmness === '较强') {
+    levelIncrement = 2; // 较强：+2级
+  } else if (firmness === '极强') {
+    levelIncrement = 3; // 极强：+3级
+  }
+  // 升级等级，但不超过12级
+  const currentLevel = Number(targetWord.level) || 1;
+  updatedWord.level = Math.min(currentLevel + levelIncrement, 12) as Word['level'];
+
+  // 升到满级时标记为已记住
+  if (updatedWord.level >= 12) {
     updatedWord.remember = true;
   }
 
-  console.log('缓存单词数据', JSON.stringify(updatedWord));
-
-  // 判断是否满足条件
-  const canLevelUp = now > startLearnDate && now < endLearnDate;
-  console.log(`升级检查: 当前时间=${new Date(now).toLocaleString()}, 开始时间=${new Date(startLearnDate).toLocaleString()}, 结束时间=${new Date(endLearnDate).toLocaleString()}, 可升级=${canLevelUp}`);
-
-  if (canLevelUp) {
-    updatedWord.learnDate = new Date();
-    // 根据记忆牢固度决定升级速度
-    const firmness = wordsStore.memoryFirmness;
-    let levelIncrement = 1; // 默认正常：+1级
-    if (firmness === '较强') {
-      levelIncrement = 2; // 较强：+2级
-    } else if (firmness === '极强') {
-      levelIncrement = 3; // 极强：+3级
-    }
-    // 升级等级，但不超过12级
-    const currentLevel = Number(targetWord.level) || 1;
-    updatedWord.level = Math.min(currentLevel + levelIncrement, 12) as Word['level'];
-    console.log(`[升级成功] 记忆牢固度: ${firmness}, 提升: +${levelIncrement}级, 当前等级: ${updatedWord.level}`);
-  } else {
-    // 否则等级不变：提前复习保留原学习计时（不推迟升级窗口）；已过窗口则重启当前等级计时
-    if (now <= startLearnDate) {
-      console.log("[未升级] 复习太早，还没到升级时间");
-      ElMessage.info('复习时间未到，本次不计升级');
-    } else {
-      console.log("[未升级] 复习太晚，已错过升级时间窗口");
-      updatedWord.learnDate = new Date();
-      ElMessage.info('已过升级窗口，本次不计升级');
-    }
-  }
+  console.log(`[认识] 记忆牢固度: ${firmness}, 提升: +${levelIncrement}级, 当前等级: ${updatedWord.level}`);
 
   // 同步回 wordModel，保持 v-model 一致
   if (wordModel.value && wordModel.value._id === updatedWord._id) {
