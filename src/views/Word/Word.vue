@@ -46,6 +46,12 @@
     <template v-else>
       <p class="empty-tip">今日复习已完成 🎉 词库共 {{ wordsStore.count }} 词</p>
       <el-button text type="primary" size="small" @click="showAll">查看全部单词</el-button>
+      <!-- 跨功能引导：完成复习后提示专注模式（可关闭，关闭后不再提示） -->
+      <div v-if="showFocusTip" class="cross-tip">
+        <span>复习完成！试试专注模式，悬浮窗随时记 →</span>
+        <el-button text size="small" type="primary" @click="goFocusMode">去体验</el-button>
+        <el-icon class="tip-close" @click="dismissFocusTip"><Close/></el-icon>
+      </div>
     </template>
   </div>
   <div v-else>
@@ -411,13 +417,14 @@ import {
   Sort,
   View,
   EditPen,
+  Close,
 } from '@element-plus/icons-vue';
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';
-import {getDbAdapter} from '@/adapters/db';
+import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron} from '@/adapters/platform';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow} from '@/utils/focus-lock';
 import {
@@ -2222,6 +2229,24 @@ const showWords = computed(() => {
 const emptyAddVisible = ref(false)
 const emptyAddText = ref('')
 
+// 跨功能引导：复习完成后提示专注模式（可关闭，关闭后不再提示）
+const FOCUS_TIP_KEY = 'slowlyrecord_tip_focus_mode'
+const focusTipDismissed = ref(false)
+try {
+  focusTipDismissed.value = getDbStorage().getItem(FOCUS_TIP_KEY) === true
+} catch { /* 忽略 */ }
+const showFocusTip = computed(() => !focusTipDismissed.value)
+function dismissFocusTip() {
+  focusTipDismissed.value = true
+  try {
+    getDbStorage().setItem(FOCUS_TIP_KEY, true)
+  } catch { /* 忽略 */ }
+}
+function goFocusMode() {
+  dismissFocusTip()
+  openFocusMode()
+}
+
 /**
  * 手动添加单词（空白态输入框，复用 addWord 主流程）
  */
@@ -3664,6 +3689,29 @@ function onOnboardingFinish() {
 // 新建词库对话框样式
 .create-wordbank-content {
   padding: 10px 0;
+}
+
+// 跨功能引导提示条
+.cross-tip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--utools-bg-card);
+  border: 1px solid var(--utools-border-divider);
+  font-size: 13px;
+  color: var(--utools-text-secondary);
+
+  .tip-close {
+    margin-left: auto;
+    cursor: pointer;
+    color: var(--utools-text-tertiary);
+    &:hover {
+      color: var(--utools-text-primary);
+    }
+  }
 }
 
 </style>
