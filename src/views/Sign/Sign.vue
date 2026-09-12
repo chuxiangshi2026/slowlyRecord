@@ -51,6 +51,17 @@
         <span class="legend-label">已打卡</span>
       </div>
     </div>
+
+    <!-- 成就区：低成本里程碑，从现有 store 数据计算，无需额外存储 -->
+    <div class="achievements-card">
+      <div class="achievements-title">🏆 成就</div>
+      <div class="achievements-grid">
+        <div v-for="a in achievements" :key="a.id" class="achievement" :class="{ unlocked: a.unlocked }" :title="a.desc">
+          <span class="achievement-emoji">{{ a.unlocked ? a.emoji : '🔒' }}</span>
+          <span class="achievement-name">{{ a.name }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -58,8 +69,10 @@
 import { computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useSigninStore } from '@/stores/signin'
+import { useWordsStore } from '@/stores/words'
 
 const signinStore = useSigninStore()
+const wordsStore = useWordsStore()
 
 onMounted(() => {
   signinStore.loadRecords()
@@ -70,6 +83,66 @@ const monthDays = computed(() => {
   const now = new Date()
   return signinStore.monthSignDays(now.getFullYear(), now.getMonth())
 })
+
+// 成就：从现有 store 数据计算，无需额外存储
+const achievements = computed(() => [
+  {
+    id: 'streak-7',
+    name: '连续 7 天',
+    emoji: '🔥',
+    desc: '连续打卡 7 天',
+    unlocked: signinStore.streakDays >= 7,
+  },
+  {
+    id: 'streak-30',
+    name: '连续 30 天',
+    emoji: '💪',
+    desc: '连续打卡 30 天',
+    unlocked: signinStore.streakDays >= 30,
+  },
+  {
+    id: 'streak-100',
+    name: '百日坚持',
+    emoji: '👑',
+    desc: '连续打卡 100 天',
+    unlocked: signinStore.streakDays >= 100,
+  },
+  {
+    id: 'remember-100',
+    name: '记住 100 词',
+    emoji: '📚',
+    desc: '累计记住 100 个单词',
+    unlocked: wordsStore.rememberCount >= 100,
+  },
+  {
+    id: 'remember-500',
+    name: '记住 500 词',
+    emoji: '🎓',
+    desc: '累计记住 500 个单词',
+    unlocked: wordsStore.rememberCount >= 500,
+  },
+  {
+    id: 'remember-1000',
+    name: '千词斩',
+    emoji: '🏆',
+    desc: '累计记住 1000 个单词',
+    unlocked: wordsStore.rememberCount >= 1000,
+  },
+  {
+    id: 'total-30',
+    name: '坚持 30 天',
+    emoji: '⭐',
+    desc: '累计打卡 30 天',
+    unlocked: signinStore.totalSignDays >= 30,
+  },
+  {
+    id: 'total-100',
+    name: '坚持 100 天',
+    emoji: '💎',
+    desc: '累计打卡 100 天',
+    unlocked: signinStore.totalSignDays >= 100,
+  },
+])
 
 /** 本地时区日期 → YYYY-MM-DD */
 function formatDate(d: Date): string {
@@ -254,6 +327,57 @@ function handleSignToday() {
   .legend-signed {
     background-color: var(--utools-primary);
     opacity: 0.35;
+  }
+}
+
+/* 成就区 */
+.achievements-card {
+  margin-top: 16px;
+  background: var(--utools-bg-card);
+  border-radius: 12px;
+  padding: 16px;
+
+  .achievements-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--utools-text-primary);
+    margin-bottom: 12px;
+  }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .achievement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 6px;
+    border-radius: 10px;
+    background: var(--utools-bg-secondary);
+    opacity: 0.45;
+    filter: grayscale(0.8);
+    transition: all 0.2s;
+
+    &.unlocked {
+      opacity: 1;
+      filter: none;
+      background: var(--utools-primary-light);
+    }
+
+    .achievement-emoji {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .achievement-name {
+      font-size: 11px;
+      color: var(--utools-text-secondary);
+      margin-top: 6px;
+      text-align: center;
+    }
   }
 }
 </style>
