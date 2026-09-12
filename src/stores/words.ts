@@ -7,7 +7,8 @@ import http from "@/utils/http.ts";
 import {log} from "@/utils/logger.ts"
 import type {AxiosResponse} from 'axios'
 import CryptoJS from "crypto-js";
-import {addAndUpdateDbWord, cleanDbWord, listDbWords, removeDbWordById, updateDbWordList} from "@/utils/db-util.ts";
+import {cleanDbWord} from "@/utils/db-util.ts";
+import {cleanupLegacyPerWordDocs} from "@/utils/db-util-cleanup";
 import {
   getAllWordBanks,
   getCurrentWordBankId,
@@ -567,27 +568,16 @@ export const useWordsStore =
                 setActiveLanguage(bank?.language)
 
                 if (bank) {
-                    // 如果是默认词库且为空，尝试从旧数据库迁移数据
-                    if (bank.isDefault && bank.words.length === 0) {
-                        const dbWords = listDbWords();
-                        if (dbWords.length > 0) {
-                            console.log('检测到默认词库为空，从旧数据库迁移数据:', dbWords.length);
-                            bank.words = [...dbWords]
-                            await saveWordBank(bank)
-                            words.value = []
-                            pushWords(dbWords)
-                        } else {
-                            words.value = []
-                            pushWords(bank.words)
-                        }
-                    } else {
-                        words.value = []
-                        pushWords(bank.words)
-                    }
+                    words.value = []
+                    pushWords(bank.words)
                 }
 
                 // 加载单词后重新计算待复习状态
                 await upReview()
+
+                // 后台清理旧的 per-word 文档（不阻塞加载）
+                cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
+
                 return words.value
             }
 
@@ -682,8 +672,6 @@ export const useWordsStore =
                 } catch (error) {
                     log.e('保存复习状态到当前词库失败', error);
                 }
-
-                await Promise.allSettled(changedWords.map(word => addAndUpdateDbWord(word)));
             }
 
 
@@ -749,14 +737,8 @@ export const useWordsStore =
                     }
                 }
 
-                // 先保存要删除的单词ID（兼容旧数据库）
-                const wordId = word._id;
                 // 删除index索引下的数值,删除长度为1
                 words.value.splice(index, 1)
-                // 按id删除单词
-                if (wordId) {
-                    removeDbWordById(wordId)
-                }
             }
 
             /**
@@ -802,8 +784,6 @@ export const useWordsStore =
                         pushWords(memoryNewWords)
                     }
 
-                    // 同时兼容旧数据库
-                    await updateDbWordList(cleanedPayload);
                     log.i('批量更新成功');
                     return true;
                 } catch (error) {
@@ -863,11 +843,6 @@ export const useWordsStore =
                         currentWordBank.value = bank
                     }
                 }
-
-                // 同时兼容旧数据库
-                addAndUpdateDbWord(cleanedWord).then(() => {
-                    console.log("添加单个词到数据库", cleanedWord)
-                })
             }
 
 

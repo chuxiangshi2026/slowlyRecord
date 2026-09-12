@@ -263,7 +263,6 @@ describe('useWordsStore', () => {
       expect(result).toBe(true)
       expect(store.words.length).toBe(2)
       expect(mockBank.words.length).toBe(2)
-      expect(updateDbWordList).toHaveBeenCalledWith(words)
     })
 
     it('应该去重合并批量添加的单词', async () => {
@@ -393,7 +392,6 @@ describe('useWordsStore', () => {
 
       expect(store.words.length).toBe(0)
       expect(mockBank.words.length).toBe(0)
-      expect(removeDbWordById).toHaveBeenCalledWith('1')
     })
 
     it('删除不存在的索引应该不报错', async () => {
@@ -817,29 +815,11 @@ describe('useWordsStore', () => {
       expect(store.words.length).toBe(1)
     })
 
-    it('应该从旧数据库迁移数据到空的默认词库', async () => {
-      const store = useWordsStore()
-      const oldWord = createWord({ text: 'old-word' })
-      const mockBank = createWordBank({ words: [], isDefault: true })
-
-      vi.mocked(getWordBank).mockResolvedValue(mockBank)
-      vi.mocked(listDbWords).mockReturnValue([oldWord])
-      vi.mocked(saveWordBank).mockResolvedValue(true)
-
-      store.currentWordBankId = 'default'
-      const result = await store.listWords()
-
-      expect(store.words.length).toBe(1)
-      expect(store.words[0].text).toBe('old-word')
-      expect(saveWordBank).toHaveBeenCalled()
-    })
-
-    it('空的默认词库且旧数据库也为空时应该正常加载', async () => {
+    it('空的默认词库应该正常加载（无单词）', async () => {
       const store = useWordsStore()
       const mockBank = createWordBank({ words: [], isDefault: true })
 
       vi.mocked(getWordBank).mockResolvedValue(mockBank)
-      vi.mocked(listDbWords).mockReturnValue([])
 
       store.currentWordBankId = 'default'
       const result = await store.listWords()
@@ -886,7 +866,6 @@ describe('useWordsStore', () => {
       await store.upReview()
 
       expect(store.words[0].isReview).toBe(true)
-      expect(addAndUpdateDbWord).toHaveBeenCalled()
     })
 
     it('不应该将还没到复习时间的非新单词设为待复习', () => {

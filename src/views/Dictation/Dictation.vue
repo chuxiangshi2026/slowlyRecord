@@ -1,17 +1,5 @@
  <template>
   <div class="dictation-page">
-    <!-- 顶部栏 -->
-    <div class="dictation-header">
-      <div class="header-left">
-        <span class="title">听写练习</span>
-      </div>
-      <div class="header-right">
-        <span class="progress" v-if="wordList.length > 0">
-          {{ currentIndex + 1 }} / {{ wordList.length }}
-        </span>
-      </div>
-    </div>
-
     <!-- 筛选排序面板（顶部显示） -->
     <WordFilter
       ref="wordFilterRef"
@@ -1446,43 +1434,11 @@ function handleDictationKeydown(e: KeyboardEvent) {
 
 <style scoped lang="scss">
 .dictation-page {
-  min-height: 100vh;
+  flex: 1;
+  overflow: hidden;
   background: var(--utools-bg-secondary);
   display: flex;
   flex-direction: column;
-}
-
-// 顶部栏
-.dictation-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 24px;
-  background: var(--utools-bg-card);
-  border-bottom: 1px solid var(--utools-border-divider);
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    .title {
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--utools-text-primary);
-    }
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    .progress {
-      font-size: 14px;
-      color: var(--utools-text-secondary);
-    }
-  }
 }
 
 // 底部操作栏（与单词列表 home_footer 样式一致）

@@ -65,6 +65,9 @@ let _migrationChecked = false;
 // 旧版存储键名（用于数据迁移）
 const OLD_WORDBANK_DOC_ID = 'wordbank_data';
 
+// 最早期 per-word 文档前缀（每个单词一个文档）
+const LEGACY_WORDS_PREFIX = 'words-list';
+
 // 每个分片的最大单词数（估算约 500-800KB）
 const MAX_WORDS_PER_CHUNK = 300;
 
@@ -313,53 +316,99 @@ export async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
   }
 }
 
+// 迁移进行中的 Promise，防止并发重复迁移
+let _migrationPromise: Promise<boolean> | null = null;
+
 /**
  * 检查并迁移旧版数据
+ *
+ * 迁移顺序：wordbank_data（单文档）→ words-list_*（per-word 文档）。
+ * 三种历史存储格式：
+ *   1. words-list_<uuid> — 最早期，每个单词一个文档
+ *   2. wordbank_data — 中期，单个文档存所有词库
+ *   3. chunked（当前）— 分片存储
+ *
+ * 安全保证：先写 chunks，再写 meta。只有 chunks 写入成功后才写 meta，
+ * 确保清理函数看到 meta 时数据已在 chunks 中。
  */
 async function migrateOldDataIfNeeded(): Promise<boolean> {
   // 已检查过则跳过
   if (_migrationChecked) return false;
-  try {
-    const db = getDbAdapter();
-    // 检查是否已有新版数据
-    const metaDoc = getWordBankMetaDoc();
-    if (metaDoc?.banks && metaDoc.banks.length > 0) {
-      _migrationChecked = true;
-      return false; // 已有新版数据，不需要迁移
-    }
-    
-    // 检查是否有旧版数据
-    const oldDoc = db.get(OLD_WORDBANK_DOC_ID) as any;
-    if (oldDoc?.data && Array.isArray(oldDoc.data) && oldDoc.data.length > 0) {
-      console.log('[WordBankManager] 发现旧版数据，开始迁移...');
-      
-      // 迁移数据到新格式
-      const banks: WordBank[] = oldDoc.data;
-      const metaBanks = banks.map(b => ({
-        ...toBankMeta(b),
-        name: b.name === '我的词库' ? '默认词库' : (b.name === '基础词库' ? '默认词库' : b.name),
-      }));
-      
-      // 保存元数据
-      await saveWordBankMetaDoc(metaBanks);
-      
-      // 分别保存每个词库的单词数据（使用分片存储）
-      for (const bank of banks) {
-        const cleanedWords = bank.words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
-        await saveWordBankDataDoc(bank.id, cleanedWords);
+  // 防止并发：如果迁移正在进行，等待它完成
+  if (_migrationPromise) return _migrationPromise;
+  _migrationPromise = (async () => {
+    try {
+      const db = getDbAdapter();
+      // 检查是否已有新版数据
+      const metaDoc = getWordBankMetaDoc();
+      if (metaDoc?.banks && metaDoc.banks.length > 0) {
+        _migrationChecked = true;
+        return false; // 已有新版数据，不需要迁移
       }
-      
-      console.log('[WordBankManager] 数据迁移完成');
+
+      // ── 迁移路径 1：wordbank_data（中期单文档格式）──
+      const oldDoc = db.get(OLD_WORDBANK_DOC_ID) as any;
+      if (oldDoc?.data && Array.isArray(oldDoc.data) && oldDoc.data.length > 0) {
+        console.log('[WordBankManager] 发现旧版数据，开始迁移...');
+
+        // 迁移数据到新格式
+        const banks: WordBank[] = oldDoc.data;
+        const metaBanks = banks.map(b => ({
+          ...toBankMeta(b),
+          name: b.name === '我的词库' ? '默认词库' : (b.name === '基础词库' ? '默认词库' : b.name),
+        }));
+
+        // 先写 chunks（单词数据），再写 meta（元数据）
+        // 这样清理函数看到 meta 时，chunks 已经写入成功
+        for (const bank of banks) {
+          const cleanedWords = bank.words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
+          const success = await saveWordBankDataDoc(bank.id, cleanedWords);
+          if (!success) {
+            console.error('[WordBankManager] chunk 写入失败，跳过 meta 写入以保护数据');
+            _migrationChecked = true;
+            return false;
+          }
+        }
+        await saveWordBankMetaDoc(metaBanks);
+
+        console.log('[WordBankManager] 数据迁移完成');
+        _migrationChecked = true;
+        return true;
+      }
+
+      // ── 迁移路径 2：words-list_*（最早期 per-word 文档格式）──
+      const legacyWords = db.allDocs<Word & { _rev?: string }>(LEGACY_WORDS_PREFIX);
+      if (legacyWords.length > 0) {
+        console.log(`[WordBankManager] 发现 ${legacyWords.length} 个 words-list_* 文档，开始迁移...`);
+
+        const defaultBank = createDefaultWordBank();
+        const cleanedWords = legacyWords.map(w => ({ ...w, text: normalizeItemText(w.text) }));
+
+        // 先写 chunks，再写 meta
+        const success = await saveWordBankDataDoc(defaultBank.id, cleanedWords);
+        if (!success) {
+          console.error('[WordBankManager] chunk 写入失败，跳过 meta 写入以保护数据');
+          _migrationChecked = true;
+          return false;
+        }
+        await saveWordBankMetaDoc([toBankMeta(defaultBank)]);
+
+        console.log('[WordBankManager] words-list_* 迁移完成');
+        _migrationChecked = true;
+        return true;
+      }
+
       _migrationChecked = true;
-      return true;
+      return false;
+    } catch (e) {
+      console.error('[WordBankManager] 数据迁移失败:', e);
+      _migrationChecked = true;
+      return false;
+    } finally {
+      _migrationPromise = null;
     }
-    
-    _migrationChecked = true;
-    return false;
-  } catch (e) {
-    console.error('[WordBankManager] 数据迁移失败:', e);
-    return false;
-  }
+  })();
+  return _migrationPromise;
 }
 
 /**

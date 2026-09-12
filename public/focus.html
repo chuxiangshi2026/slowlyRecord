@@ -1464,14 +1464,6 @@
           // 如果词库为空或没有 bankId，回退到旧数据库方式加载
           if (allLoadedWords.length === 0 && currentBankId) {
             console.log('[专注模式] 词库存在但无单词');
-          } else if (allLoadedWords.length === 0) {
-            console.log('[专注模式] 词库为空或未设置，回退到旧数据库加载');
-            try {
-              allLoadedWords = utools.db.allDocs('words-list');
-            } catch (e) {
-              allLoadedWords = [];
-              console.warn('加载词库失败:', e);
-            }
           }
 
           // 重新计算 isReview 状态

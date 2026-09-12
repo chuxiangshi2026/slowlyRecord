@@ -14,6 +14,9 @@
   background: var(--utools-bg-secondary);
   border-radius: 8px;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   position: relative;
 }
 </style>
