@@ -994,6 +994,10 @@ function handlePluginTextMemory() {
 function handlePluginShortcutMemory() {
   // 显示主窗口
   if (isUTools()) (window as any).utools?.showMainWindow?.()
+
+  // 清空最后访问的页面，强制进入快捷键记忆页
+  wordsStore.setLastVisitedPage('')
+
   // 跳转到快捷键记忆页面
   router.push('/shortcut-memory')
 }

@@ -1436,7 +1436,7 @@ function handleDictationKeydown(e: KeyboardEvent) {
 .dictation-page {
   flex: 1;
   overflow: hidden;
-  background: var(--utools-bg-secondary);
+  background: var(--utools-bg-primary);
   display: flex;
   flex-direction: column;
 }
