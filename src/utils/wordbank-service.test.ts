@@ -42,7 +42,11 @@ describe('wordbank-service', () => {
         'phrasal-verbs', 'collocations', 'idioms', 'common-phrases',
         'oral-basic', 'oral-intermediate', 'oral-advanced', 'movie-lines',
         'famous-quotes', 'jlpt-n5',
-        'jlpt-n4', 'jlpt-n3', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2']
+        'jlpt-n4', 'jlpt-n3', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
+        'ja-common-phrases', 'ja-collocations', 'ja-sentences',
+        'ru-common-phrases', 'ru-collocations', 'ru-sentences',
+        'es-common-phrases', 'es-collocations', 'es-sentences',
+        'fr-common-phrases', 'fr-collocations', 'fr-sentences']
       
       expect(WORDBANK_LIST).toHaveLength(expectedTypes.length)
       

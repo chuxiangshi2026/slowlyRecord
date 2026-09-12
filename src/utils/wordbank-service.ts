@@ -43,7 +43,19 @@ export type WordBankType =
   | 'es-a1'          // 西班牙语 CEFR A1
   | 'es-a2'          // 西班牙语 CEFR A2
   | 'fr-a1'          // 法语 CEFR A1
-  | 'fr-a2';         // 法语 CEFR A2
+  | 'fr-a2'          // 法语 CEFR A2
+  | 'ja-common-phrases' // 日语常用短语短句
+  | 'ja-collocations'   // 日语固定搭配
+  | 'ja-sentences'      // 日语常用句子
+  | 'ru-common-phrases' // 俄语常用短语短句
+  | 'ru-collocations'   // 俄语固定搭配
+  | 'ru-sentences'      // 俄语常用句子
+  | 'es-common-phrases' // 西语常用短语短句
+  | 'es-collocations'   // 西语固定搭配
+  | 'es-sentences'      // 西语常用句子
+  | 'fr-common-phrases' // 法语常用短语短句
+  | 'fr-collocations'   // 法语固定搭配
+  | 'fr-sentences';     // 法语常用句子
 
 // 词库信息配置
 export interface WordBankInfo {
@@ -110,6 +122,18 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'es-a2', name: '西语 A2', description: '西班牙语 CEFR A2 级核心词汇（西班牙语）', wordCount: 749, language: 'es' },
   { id: 'fr-a1', name: '法语 A1', description: '法语 CEFR A1 级核心词汇（法语）', wordCount: 514, language: 'fr' },
   { id: 'fr-a2', name: '法语 A2', description: '法语 CEFR A2 级核心词汇（法语）', wordCount: 799, language: 'fr' },
+  { id: 'ja-common-phrases', name: '日语常用短语', description: '日语日常高频短语与寒暄表达（日语）', wordCount: 98, language: 'ja' },
+  { id: 'ja-collocations', name: '日语固定搭配', description: '日语常用句型与语法搭配（日语）', wordCount: 77, language: 'ja' },
+  { id: 'ja-sentences', name: '日语常用句子', description: '日语日常场景实用句子（日语）', wordCount: 71, language: 'ja' },
+  { id: 'ru-common-phrases', name: '俄语常用短语', description: '俄语日常高频短语与寒暄表达（俄语）', wordCount: 98, language: 'ru' },
+  { id: 'ru-collocations', name: '俄语固定搭配', description: '俄语常用动词短语与语法搭配（俄语）', wordCount: 86, language: 'ru' },
+  { id: 'ru-sentences', name: '俄语常用句子', description: '俄语日常场景实用句子（俄语）', wordCount: 56, language: 'ru' },
+  { id: 'es-common-phrases', name: '西语常用短语', description: '西班牙语日常高频短语与寒暄表达（西班牙语）', wordCount: 99, language: 'es' },
+  { id: 'es-collocations', name: '西语固定搭配', description: '西班牙语常用动词短语与语法搭配（西班牙语）', wordCount: 85, language: 'es' },
+  { id: 'es-sentences', name: '西语常用句子', description: '西班牙语日常场景实用句子（西班牙语）', wordCount: 58, language: 'es' },
+  { id: 'fr-common-phrases', name: '法语常用短语', description: '法语日常高频短语与寒暄表达（法语）', wordCount: 96, language: 'fr' },
+  { id: 'fr-collocations', name: '法语固定搭配', description: '法语常用动词短语与语法搭配（法语）', wordCount: 85, language: 'fr' },
+  { id: 'fr-sentences', name: '法语常用句子', description: '法语日常场景实用句子（法语）', wordCount: 58, language: 'fr' },
 ];
 
 // 远程词库 CDN（完整词库不进 public/，超大体量词库走远程按需下载；
@@ -125,6 +149,10 @@ const REMOTE_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowly
 // 控制请求面，避免对每个缺失词库都盲目打 CDN）
 const REMOTE_ENABLED_TYPES = new Set<WordBankType>([
   'jlpt-n3', 'jlpt-n4', 'jlpt-n5', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
+  'ja-common-phrases', 'ja-collocations', 'ja-sentences',
+  'ru-common-phrases', 'ru-collocations', 'ru-sentences',
+  'es-common-phrases', 'es-collocations', 'es-sentences',
+  'fr-common-phrases', 'fr-collocations', 'fr-sentences',
 ]);
 
 // 缓存管理
