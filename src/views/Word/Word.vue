@@ -3386,7 +3386,7 @@ function onOnboardingFinish() {
     font-size: 20px;
     padding: 6px;
     border-radius: 6px;
-    transition: all 0.2s;
+    transition: background-color 0.2s, color 0.2s;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -3395,7 +3395,6 @@ function onOnboardingFinish() {
 
     &:hover {
       background-color: var(--utools-bg-hover);
-      transform: scale(1.1);
     }
   }
 

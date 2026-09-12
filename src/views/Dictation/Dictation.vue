@@ -1517,7 +1517,6 @@ function handleDictationKeydown(e: KeyboardEvent) {
 
     &:hover {
       background-color: var(--utools-bg-hover);
-      transform: scale(1.1);
     }
 
     &.active {
