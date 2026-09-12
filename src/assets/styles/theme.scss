@@ -200,6 +200,8 @@ body {
   background-color: var(--utools-bg-primary);
   color: var(--utools-text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* 防止 tooltip 弹出等场景撑出滚动条 */
+  overflow: hidden;
 }
 
 // 页面背景
