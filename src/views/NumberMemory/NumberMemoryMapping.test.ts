@@ -288,7 +288,7 @@ describe('NumberMemoryMapping 映射设置页', () => {
 
       await user.click(screen.getByRole('button', { name: '返回' }))
 
-      expect(pushSpy).toHaveBeenCalledWith('/number-memory')
+      expect(pushSpy).toHaveBeenCalledWith(expect.objectContaining({ path: '/number-memory' }))
     })
   })
 })

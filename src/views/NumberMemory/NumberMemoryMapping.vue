@@ -214,7 +214,7 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useNumberMemoryStore } from "@/stores/numberMemory";
 import { log } from "@/utils/logger";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -223,6 +223,7 @@ import type { UploadFile } from "element-plus";
 import { exportMappingAsImage, buildMappingGridCells } from "@/utils/mapping-image-export";
 
 const router = useRouter();
+const route = useRoute();
 const store = useNumberMemoryStore();
 
 // State
@@ -383,7 +384,7 @@ async function deleteCurrentAssociation() {
 }
 
 function goBack() {
-  router.push("/number-memory");
+  router.push({ path: "/number-memory", query: { from: route.fullPath } });
 }
 
 /** 导出映射表图片：把当前范围的数字映射渲染成一张网格 PNG 下载 */

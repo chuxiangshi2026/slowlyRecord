@@ -828,7 +828,7 @@ function handleLocateOnMap(article: TextArticle) {
 function handleOpenWordSettings() {
   showImportDialog.value = false;
   // 导航到单词列表页面
-  router.push('/word');
+  router.push({ path: '/word', query: { from: route.fullPath } });
 }
 
 // 地图选中诗词

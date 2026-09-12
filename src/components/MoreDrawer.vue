@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import {useRouter} from 'vue-router';
+import {useRouter, useRoute} from 'vue-router';
 import {useNumberMemoryStore} from '@/stores/numberMemory';
 import {useTextMemoryStore} from '@/stores/textMemory';
 import {useKnowledgeMemoryStore} from '@/stores/knowledgeMemory';
@@ -88,6 +88,7 @@ const emit = defineEmits<{
 }>();
 
 const router = useRouter();
+const route = useRoute();
 const ioPanel = ref<'none' | 'io'>('none');
 
 // ===== 「更多」菜单使用频率排序（P2） =====
@@ -136,7 +137,7 @@ const close = () => { visible.value = false; };
 const go = (key: string, path: string) => {
   recordUsage(key);
   close();
-  router.push(path);
+  router.push({ path, query: { from: route.fullPath } });
 };
 
 const openImportExportPanel = () => {

@@ -209,7 +209,7 @@ function restart() {
 }
 
 function goBack() {
-  router.push(`/memory-palace/${palaceId}`);
+  router.push({ path: `/memory-palace/${palaceId}`, query: { from: route.fullPath } });
 }
 </script>
 

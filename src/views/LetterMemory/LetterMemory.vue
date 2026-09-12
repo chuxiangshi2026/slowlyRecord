@@ -239,7 +239,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useLetterMemoryStore } from "@/stores/letterMemory";
 import { useWordsStore } from "@/stores/words";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -254,6 +254,7 @@ import { log } from "@/utils/logger";
 const store = useLetterMemoryStore();
 const wordsStore = useWordsStore();
 const router = useRouter();
+const route = useRoute();
 
 // State
 const selectedLetter = ref<string | null>(null);
@@ -328,7 +329,7 @@ const filteredEmojiList = computed(() => {
 
 // Methods
 function goBack() {
-  router.push('/word');
+  router.push({ path: '/word', query: { from: route.fullPath } });
 }
 
 function selectLetter(letter: string) {

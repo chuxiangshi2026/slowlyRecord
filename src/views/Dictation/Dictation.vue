@@ -515,7 +515,7 @@ function applyFilters(list: Word[]): Word[] {
 
 // 打开词库管理器（筛选/排序） → 回单词列表
 function goToWordList() {
-  router.push('/word');
+  router.push({ path: '/word', query: { from: route.fullPath } });
 }
 
 // ========== 选项 ==========

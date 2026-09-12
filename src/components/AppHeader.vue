@@ -27,8 +27,8 @@
       🔥 {{ signinStore.streakDays }} 天
     </span>
 
-    <!-- 非主页：返回 -->
-    <span v-if="!isWordPage" class="back" @click="goWord">← 返回</span>
+    <!-- 非主页：返回（优先回来源页面） -->
+    <span v-if="!isWordPage" class="back" @click="goBack">← 返回</span>
   </div>
 </template>
 
@@ -117,6 +117,16 @@ const pageTitle = computed(() => (route.meta?.title as string) || '慢记');
 
 const goSign = () => router.push('/sign');
 const goWord = () => router.push('/word');
+
+// 返回：优先回到来源页面（query.from），否则回单词列表
+const goBack = () => {
+  const from = route.query.from as string;
+  if (from) {
+    router.push(from);
+  } else {
+    goWord();
+  }
+};
 
 // 设置入口：任意页面直接打开全局设置抽屉（挂在 Home 层，不再先回单词页）
 const openSettings = () => {
@@ -247,6 +257,10 @@ onMounted(() => {
     padding: 2px 8px;
     border-radius: 6px;
     color: var(--utools-primary);
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
       background: var(--utools-bg-hover);

@@ -492,7 +492,7 @@ function formatDate(timestamp: number): string {
 
 // 返回
 function goBack() {
-  router.push('/number-memory');
+  router.push({ path: '/number-memory', query: { from: route.fullPath } });
 }
 
 // 去训练

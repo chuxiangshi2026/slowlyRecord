@@ -1,10 +1,8 @@
 <template>
   <div class="knowledge-pack-page">
-    <!-- 顶部：返回 + 标题 + 预留按钮 -->
+    <!-- 顶部：标题 + 预留按钮（返回已由统一头部承载） -->
     <div class="pack-header">
-      <div class="left">
-        <el-button text @click="goBack" :icon="ArrowLeft" size="large">返回</el-button>
-      </div>
+      <div class="left"></div>
       <div class="center">
         <h2>{{ pack?.name || '知识包练习' }}</h2>
         <span v-if="pack" class="subtitle">{{ pack.items.length }} 条 · 已掌握 {{ masteredCount }}</span>
@@ -293,11 +291,6 @@
     <!-- 底部工具栏 -->
     <div v-if="pack" class="home_footer">
       <div>
-        <span class="footer-stat" @click="goBack">
-          <el-icon><ArrowLeft /></el-icon>
-          返回
-        </span>
-        <el-divider direction="vertical" />
         <span class="footer-stat">{{ pack.name }}</span>
       </div>
       <div>
@@ -372,7 +365,6 @@ import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {
-  ArrowLeft,
   Printer,
   Picture,
   View,
@@ -620,7 +612,8 @@ function generateCurrentOptions() {
 function goBack() {
   // 按知识包分类回到宿主模块：math → 数字记忆主页，其余 → 文本记忆的知识库视图
   const category = getKnowledgePackInfo(packId.value)?.category;
-  router.push(category === 'math' ? '/number-memory' : '/text-memory?view=knowledge');
+  const target = category === 'math' ? '/number-memory' : '/text-memory?view=knowledge';
+  router.push({ path: target, query: { from: route.fullPath } });
 }
 
 function isCorrectOption(opt: string): boolean {

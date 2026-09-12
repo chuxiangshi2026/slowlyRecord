@@ -152,13 +152,14 @@
 
 <script setup lang="ts">
 import {ref, computed, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
+import {useRouter, useRoute} from 'vue-router';
 import {ArrowLeft, VideoPlay} from '@element-plus/icons-vue';
 import type {Phoneme} from '@/utils/phoneme-data';
 import {speakWithEdgeTTS, speakWithWebSpeech} from '@/utils/translation-api';
 import {usePhoneticMemoryStore} from '@/stores/phoneticMemory';
 
 const router = useRouter();
+const route = useRoute();
 const phoneticStore = usePhoneticMemoryStore();
 const detailVisible = ref(false);
 const activeIpa = ref('');
@@ -214,7 +215,7 @@ function speakArticulation(ph: Phoneme) {
 
 function goBack() {
   // 直接回单词列表,避免 uTools / 刷新等无 history 场景下 back 失效
-  router.push('/word');
+  router.push({ path: '/word', query: { from: route.fullPath } });
 }
 
 function goRecognition(direction: 'forward' | 'backward' = 'forward') {

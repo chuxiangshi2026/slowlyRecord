@@ -258,7 +258,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useNumberMemoryStore } from "@/stores/numberMemory";
 import { useWordsStore } from "@/stores/words";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -278,6 +278,7 @@ function isBase64Image(url: string): boolean {
 }
 
 const router = useRouter();
+const route = useRoute();
 const store = useNumberMemoryStore();
 const wordsStore = useWordsStore();
 
@@ -614,7 +615,7 @@ function restartTraining() {
 
 async function goBack() {
   await saveCurrentProgress();
-  router.push("/number-memory");
+  router.push({ path: "/number-memory", query: { from: route.fullPath } });
 }
 
 // 保存当前训练进度
