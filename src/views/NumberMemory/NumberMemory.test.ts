@@ -215,10 +215,9 @@ describe('NumberMemory 主页面', () => {
       expect(screen.getByRole('button', { name: /查看训练历史/ })).toBeInTheDocument()
     })
 
-    it('应显示使用帮助按钮与返回入口', () => {
+    it('应显示使用帮助按钮', () => {
       setup()
       expect(screen.getByRole('button', { name: /使用帮助/ })).toBeInTheDocument()
-      expect(screen.getByText('返回')).toBeInTheDocument()
     })
 
     it('关联不足 4 个时模式卡片应给出提示', () => {
@@ -404,15 +403,6 @@ describe('NumberMemory 主页面', () => {
       await user.click(screen.getByText('数字 → 图片'))
 
       expect(pushSpy).toHaveBeenCalledWith('/number-memory/training')
-    })
-
-    it('点击返回应导航到单词列表', async () => {
-      const { user, router } = setup()
-      const pushSpy = vi.spyOn(router, 'push')
-
-      await user.click(screen.getByText('返回'))
-
-      expect(pushSpy).toHaveBeenCalledWith('/word')
     })
   })
 

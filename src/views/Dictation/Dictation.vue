@@ -1443,6 +1443,11 @@ function handleDictationKeydown(e: KeyboardEvent) {
 
 // 底部操作栏（与单词列表 home_footer 样式一致）
 .home_footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

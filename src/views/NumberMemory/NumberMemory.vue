@@ -124,10 +124,7 @@
     <!-- 底部工具栏：返回单词列表 -->
     <div class="home_footer">
       <div>
-        <span class="footer-stat" @click="goBack">
-          <i class="iconfont icon-left"></i>
-          返回
-        </span>
+        <span class="footer-stat">{{ store.associationCount }} 条映射</span>
       </div>
       <div></div>
     </div>
@@ -149,7 +146,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useNumberMemoryStore } from "@/stores/numberMemory";
 import { useWordsStore } from "@/stores/words";
 import { ElMessage } from "element-plus";
@@ -162,6 +159,7 @@ import { clearAllTrainingResults, getTrainingProgress, clearTrainingProgress } f
 import { getDbStorage } from "@/adapters/db";
 
 const router = useRouter();
+const route = useRoute();
 const store = useNumberMemoryStore();
 const wordsStore = useWordsStore();
 
@@ -223,10 +221,6 @@ function goToEntries(onlyDue = false) {
 
 function goToMapping() {
   router.push("/number-memory/mapping");
-}
-
-function goBack() {
-  router.push("/word");
 }
 
 // 加载训练历史和未完成的进度
