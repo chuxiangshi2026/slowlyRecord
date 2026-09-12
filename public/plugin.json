@@ -23,7 +23,7 @@
       "cmds": [
         {
           "type": "over",
-          "label": "加入单词簿",
+          "label": "加入慢记",
           "minLength": 1
         }
       ]
