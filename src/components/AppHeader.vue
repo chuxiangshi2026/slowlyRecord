@@ -44,7 +44,7 @@ import {useTextMemoryStore} from '@/stores/textMemory';
 import {useSentencesStore} from '@/stores/sentences';
 import {useMemoryStore} from '@/stores/memory';
 import {useKnowledgeMemoryStore} from '@/stores/knowledgeMemory';
-import {refreshSyncDirty, syncDirty} from '@/utils/sync-dirty';
+import {refreshSyncDirty, syncDirty, daysSinceLastSync} from '@/utils/sync-dirty';
 import {ElMessage} from 'element-plus';
 
 const route = useRoute();
@@ -54,13 +54,15 @@ const signinStore = useSigninStore();
 const syncStore = useSyncStore();
 const uiStore = useUiStore();
 
-// 同步状态点：同步中灰色常显；失败或有未同步改动时提示，点击打开同步弹窗
+// 同步状态点：同步中灰色常显；失败/有未同步改动/从未备份且词库有数据 时提示，点击打开同步弹窗
 const isSyncing = computed(() => syncStore.status === 'uploading' || syncStore.status === 'downloading');
 const syncFailed = computed(() => /失败/.test(syncStore.resultMessage || ''));
 const syncUnsynced = computed(() => syncDirty.value);
-const syncDotVisible = computed(() => isSyncing.value || syncFailed.value || syncUnsynced.value);
+const neverSynced = computed(() => daysSinceLastSync() === -1 && wordsStore.count > 0);
+const syncDotVisible = computed(() => isSyncing.value || syncFailed.value || syncUnsynced.value || neverSynced.value);
 const syncDotTitle = computed(() => {
   if (syncFailed.value) return `同步异常：${syncStore.resultMessage}`;
+  if (neverSynced.value) return '还没有备份过数据，点击同步备份';
   if (syncUnsynced.value) return '有未同步改动，点击同步';
   return '正在同步…';
 });
