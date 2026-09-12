@@ -259,6 +259,34 @@
       animation: spell-shake 0.3s ease;
     }
 
+    /* 空态/失败态引导区 */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .empty-state .empty-text {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      text-align: center;
+    }
+
+    .empty-state .empty-action {
+      font-size: 12px;
+      color: var(--primary-color);
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 6px;
+      -webkit-app-region: no-drag;
+    }
+
+    .empty-state .empty-action:hover {
+      background: var(--hover-bg);
+    }
+
     /* 听写模式隐藏输入框 */
     .dictation-input.dictation-slot-mode,
     .dictation-input.dictation-slot-mode:focus {
@@ -1031,6 +1059,11 @@
 <body>
   <div class="focus-container" id="app">
     <div class="word" id="word">加载中...</div>
+    <!-- 空态/失败态引导（词库为空或加载失败时显示） -->
+    <div class="empty-state" id="empty-state">
+      <div class="empty-text" id="empty-text"></div>
+      <div class="empty-action" id="empty-action" style="display:none"></div>
+    </div>
     <div class="phonetic" id="phonetic"></div>
     <input class="dictation-input" id="dictation-input" type="text" placeholder="输入单词..." style="display:none" autocomplete="off" spellcheck="false">
     <div class="dictation-slots" id="dictation-slots"></div>
@@ -1333,6 +1366,9 @@
     const elExplains = document.getElementById('explains');
     const elCounter = document.getElementById('counter');
     const elForgetCount = document.getElementById('forget-count');
+    const elEmptyState = document.getElementById('empty-state');
+    const elEmptyText = document.getElementById('empty-text');
+    const elEmptyAction = document.getElementById('empty-action');
     const elBtnPrev = document.getElementById('btn-prev');
     const elBtnNext = document.getElementById('btn-next');
     const elBtnToggle = document.getElementById('btn-toggle');
@@ -1391,6 +1427,25 @@
       renderPendingReviewCount();
     }
 
+    // 空态/失败态显示与隐藏
+    function showEmptyState(text, actionText, actionFn) {
+      elWord.style.display = 'none';
+      elEmptyState.style.display = 'flex';
+      elEmptyText.textContent = text;
+      if (actionText && actionFn) {
+        elEmptyAction.textContent = actionText;
+        elEmptyAction.style.display = 'block';
+        elEmptyAction.onclick = actionFn;
+      } else {
+        elEmptyAction.style.display = 'none';
+      }
+    }
+
+    function hideEmptyState() {
+      elWord.style.display = 'block';
+      elEmptyState.style.display = 'none';
+    }
+
     // 加载数据
     async function loadWords() {
       try {
@@ -1431,15 +1486,24 @@
         console.log('[专注模式] 加载', allLoadedWords.length, '个单词，筛选后:', words.length);
 
         if (words.length === 0) {
-          elWord.textContent = '暂无待复习单词';
+          showEmptyState('暂无待复习单词', '去添加单词', function() {
+            postFocusModeAction('openWordList', undefined, { persistPendingAction: true });
+            if (typeof utools !== 'undefined' && utools.showMainWindow) utools.showMainWindow();
+            setTimeout(function() { window.close(); }, 100);
+          });
           elCounter.textContent = '0/0';
           return;
         }
 
+        hideEmptyState();
         updateDisplay();
       } catch (e) {
         console.error('加载失败:', e);
-        elWord.textContent = '加载失败';
+        showEmptyState('加载失败', '重试', function() {
+          hideEmptyState();
+          elWord.textContent = '加载中...';
+          loadWords();
+        });
       }
     }
 
@@ -1471,9 +1535,10 @@
     function updateDisplay() {
       var word = words[currentIndex];
       if (!word) {
-        // 列表为空，显示完成提示
+        // 列表为空（全部复习完成），显示完成提示 + 去添加入口
+        hideEmptyState();
         elWord.style.display = 'block';
-        elWord.textContent = '暂无待复习单词';
+        elWord.textContent = '今日复习已完成 🎉';
         elWord.classList.remove('spelling');
         elPhonetic.textContent = '';
         elDictationInput.style.display = 'none';
