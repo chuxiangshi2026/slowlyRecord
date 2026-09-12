@@ -1776,7 +1776,10 @@
 
       var wasReview = !!word.isReview;
       if (forever) {
-        // 永久记住：直接标记为已掌握，不再进入复习
+        // 永久记住需二次确认（误触代价不可逆）
+        if (!confirm('将「' + (word.text || '') + '」标记为永久记住？此操作不可撤销。')) {
+          return;
+        }
         word.remember = true;
         word.isReview = false;
       } else {
