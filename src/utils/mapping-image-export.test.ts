@@ -2,9 +2,11 @@ import {describe, it, expect} from 'vitest'
 import {
     computeMappingGridLayout,
     buildMappingGridCells,
+    buildLetterGridCells,
     isBase64ImageUrl,
 } from './mapping-image-export'
 import type {NumberImageAssociation} from '@/types/number-memory'
+import type {LetterImageAssociation} from '@/types/letter-memory'
 
 describe('computeMappingGridLayout', () => {
     it('默认 10 列，100 个单元格为 10 行', () => {
@@ -66,6 +68,31 @@ describe('buildMappingGridCells', () => {
 
     it('空数字列表返回空数组', () => {
         expect(buildMappingGridCells([], associations)).toEqual([])
+    })
+})
+
+describe('buildLetterGridCells', () => {
+    const letterAssociations: LetterImageAssociation[] = [
+        {letter: 'a', imageUrl: '🍎', source: 'preset'},
+        {letter: 'ch', imageUrl: 'data:image/png;base64,yyyy', source: 'upload'},
+    ]
+
+    it('按字母列表生成单元格，标签大写，已配置的带上图片', () => {
+        const cells = buildLetterGridCells(['a', 'b', 'ch'], letterAssociations)
+        expect(cells).toEqual([
+            {number: 'A', imageUrl: '🍎'},
+            {number: 'B', imageUrl: null},
+            {number: 'CH', imageUrl: 'data:image/png;base64,yyyy'},
+        ])
+    })
+
+    it('无映射时全部格子为 null', () => {
+        const cells = buildLetterGridCells(['a', 'b'], [])
+        expect(cells.every(c => c.imageUrl === null)).toBe(true)
+    })
+
+    it('空字母列表返回空数组', () => {
+        expect(buildLetterGridCells([], letterAssociations)).toEqual([])
     })
 })
 

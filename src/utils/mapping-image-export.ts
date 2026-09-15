@@ -1,15 +1,17 @@
 /**
- * 数字映射表图片导出工具（Canvas 2D 手绘，零依赖）
+ * 映射表图片导出工具（Canvas 2D 手绘，零依赖）
  *
- * 把 0-99（或当前范围）的数字-图片映射渲染成一张网格大图：
- * 每格包含数字 + 对应的 emoji / 上传图片；未配置的格子置灰。
+ * 把数字（0-99 或当前范围）/ 字母（A-Z、字母组合）的图片映射渲染成一张网格大图：
+ * 每格包含标签 + 对应的 emoji / 上传图片；未配置的格子置灰。
  * emoji 直接 fillText，dataURL 图片用 Image 异步加载后 drawImage。
  *
- * 布局计算（computeMappingGridLayout / buildMappingGridCells）为纯函数，
- * 可在 Node 环境下单测；只有真正绘制/下载的函数才会触碰 document / canvas。
+ * 布局计算（computeMappingGridLayout）与单元格构建（buildMappingGridCells /
+ * buildLetterGridCells）为纯函数，可在 Node 环境下单测；
+ * 只有真正绘制/下载的函数才会触碰 document / canvas。
  */
 
 import type { NumberImageAssociation } from '@/types/number-memory';
+import type { LetterImageAssociation } from '@/types/letter-memory';
 import { buildFilename } from './table-image-export';
 
 /** 网格中的一个单元格数据 */
@@ -105,6 +107,15 @@ export function computeMappingGridLayout(cellCount: number, options: MappingGrid
 export function buildMappingGridCells(numbers: string[], associations: NumberImageAssociation[]): MappingCellData[] {
     const map = new Map(associations.map(a => [a.number, a.imageUrl]));
     return numbers.map(num => ({ number: num, imageUrl: map.get(num) ?? null }));
+}
+
+/**
+ * 按给定字母列表生成单元格数据（纯函数）：字母大写作标签，
+ * 有映射的格子带上 imageUrl，未配置的格子 imageUrl 为 null。
+ */
+export function buildLetterGridCells(letters: string[], associations: LetterImageAssociation[]): MappingCellData[] {
+    const map = new Map(associations.map(a => [a.letter, a.imageUrl]));
+    return letters.map(letter => ({ number: letter.toUpperCase(), imageUrl: map.get(letter) ?? null }));
 }
 
 /** 判断是否为 base64 dataURL 图片（否则按 emoji 文本处理） */
@@ -230,13 +241,11 @@ export async function renderMappingToCanvas(
     return canvas;
 }
 
-/** 生成映射表 PNG 并触发浏览器下载，返回绘制的画布（便于调用方复用） */
-export async function exportMappingAsImage(
-    numbers: string[],
-    associations: NumberImageAssociation[],
-    options: MappingGridOptions = {},
+/** 绘制单元格网格并下载为 PNG，返回画布（数字/字母导出的公共路径） */
+async function exportCellsAsImage(
+    cells: MappingCellData[],
+    options: MappingGridOptions,
 ): Promise<HTMLCanvasElement> {
-    const cells = buildMappingGridCells(numbers, associations);
     const layout = computeMappingGridLayout(cells.length, options);
     const canvas = await renderMappingToCanvas(cells, layout, options);
 
@@ -254,4 +263,23 @@ export async function exportMappingAsImage(
     link.click();
     link.remove();
     return canvas;
+}
+
+/** 生成数字映射表 PNG 并触发浏览器下载，返回绘制的画布（便于调用方复用） */
+export function exportMappingAsImage(
+    numbers: string[],
+    associations: NumberImageAssociation[],
+    options: MappingGridOptions = {},
+): Promise<HTMLCanvasElement> {
+    return exportCellsAsImage(buildMappingGridCells(numbers, associations), options);
+}
+
+/** 生成字母映射表 PNG 并触发浏览器下载，返回绘制的画布（默认标题「字母映射表」） */
+export function exportLetterMappingAsImage(
+    letters: string[],
+    associations: LetterImageAssociation[],
+    options: MappingGridOptions = {},
+): Promise<HTMLCanvasElement> {
+    const title = options.title ?? '字母映射表';
+    return exportCellsAsImage(buildLetterGridCells(letters, associations), { ...options, title });
 }

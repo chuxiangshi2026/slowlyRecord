@@ -17,6 +17,8 @@
             <el-button type="warning" @click="batchImportPresets">
               ⚡ 一键导入预设
             </el-button>
+            <el-button @click="handleExportImage">🖼️ 导出图片</el-button>
+            <el-button @click="handlePrint">🖨️ 打印</el-button>
           </div>
         </div>
       </template>
@@ -234,11 +236,34 @@
         <el-button type="primary" @click="addComboLetter">添加</el-button>
       </template>
     </el-dialog>
+
+    <!-- 打印容器：屏幕隐藏，打印时显示的映射网格 -->
+    <div class="print-area letter-print-area">
+      <div class="print-title">字母映射表</div>
+      <div class="print-date">{{ printDate }} · {{ modeText }}</div>
+      <div class="print-grid">
+        <div
+          v-for="cell in printCells"
+          :key="cell.number"
+          class="print-cell"
+          :class="{ empty: !cell.imageUrl }"
+        >
+          <div class="print-cell-number">{{ cell.number }}</div>
+          <img
+            v-if="cell.imageUrl && isBase64Image(cell.imageUrl)"
+            :src="cell.imageUrl"
+            class="print-cell-image"
+            alt=""
+          />
+          <div v-else-if="cell.imageUrl" class="print-cell-emoji">{{ cell.imageUrl }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useLetterMemoryStore } from "@/stores/letterMemory";
 import { useWordsStore } from "@/stores/words";
@@ -249,6 +274,7 @@ import { getAlphabetLetters, getComboLetters } from "@/utils/letter-memory-prese
 import { getActiveLanguage } from "@/utils/language/profiles";
 import { compressImage } from "@/utils/image-compress";
 import { EMOJI_LIST } from "@/utils/emoji-data";
+import { exportLetterMappingAsImage, buildLetterGridCells } from "@/utils/mapping-image-export";
 import { log } from "@/utils/logger";
 
 const store = useLetterMemoryStore();
@@ -281,7 +307,8 @@ const displayLetters = computed((): string[] => {
       return [...combos, ...customList];
     case 'all':
     default:
-      return [...getAlphabetLetters(), ...combos, ...customList];
+      // 与 alphabet 模式一致，跟随当前语言（否则导出/打印的「全部」与单字母集合对不上）
+      return [...getAlphabetLetters(getActiveLanguage()), ...combos, ...customList];
   }
 });
 
@@ -292,6 +319,37 @@ const associationMap = computed(() => {
   });
   return map;
 });
+
+// 当前模式文案（导出图片标题与打印日期行用）
+const modeText = computed(() =>
+  displayMode.value === 'alphabet' ? '单字母 A-Z' : displayMode.value === 'combo' ? '字母组合' : '全部'
+);
+
+// 打印网格数据：当前模式下的全部字母（未配置的格子留空置灰）
+const printDate = ref('');
+const printCells = computed(() => buildLetterGridCells(displayLetters.value, store.associations));
+
+/** 导出映射表图片：把当前模式的字母映射渲染成一张网格 PNG 下载 */
+async function handleExportImage() {
+  try {
+    await exportLetterMappingAsImage(displayLetters.value, store.associations, {
+      title: `字母映射表（${modeText.value}）`,
+    });
+    ElMessage.success('图片已保存');
+  } catch (e) {
+    log.e('导出字母映射表图片失败', e);
+    ElMessage.error('导出失败');
+  }
+}
+
+/** 打印映射表：渲染打印容器后调用系统打印 */
+async function handlePrint() {
+  const now = new Date();
+  printDate.value = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+  // 等 DOM 应用完打印样式后再触发打印
+  await nextTick();
+  window.print();
+}
 
 const currentAssociation = computed(() => {
   if (selectedLetter.value === null) return null;
@@ -793,6 +851,91 @@ onMounted(() => {
     .table-emoji {
       font-size: 32px;
       line-height: 50px;
+    }
+  }
+}
+</style>
+
+<!-- 打印样式（非 scoped，需覆盖全局布局）：
+     屏幕隐藏打印容器，打印时隐藏页面其余内容、仅输出映射网格 -->
+<style lang="scss">
+.letter-print-area {
+  display: none;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .letter-memory-page {
+    background: #fff !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 只保留打印容器，其余（卡片、列表）全部隐藏 */
+  .letter-memory-page > *:not(.letter-print-area) {
+    display: none !important;
+  }
+
+  .letter-print-area {
+    display: block;
+    color: #000;
+
+    .print-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .print-date {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .print-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 4px;
+    }
+
+    .print-cell {
+      border: 1px solid #999;
+      border-radius: 4px;
+      padding: 2px;
+      text-align: center;
+      break-inside: avoid;
+
+      &.empty {
+        border-color: #ccc;
+        background: #f5f5f5;
+
+        .print-cell-number {
+          color: #bbb;
+        }
+      }
+
+      .print-cell-number {
+        font-size: 11px;
+        font-weight: 700;
+        color: #333;
+        line-height: 1.4;
+      }
+
+      .print-cell-emoji {
+        font-size: 22px;
+        line-height: 1.6;
+      }
+
+      .print-cell-image {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
     }
   }
 }
