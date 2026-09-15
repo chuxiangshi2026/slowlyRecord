@@ -5,16 +5,17 @@
  * 操作 BrowserWindow。单词模式的处理在 Word.vue 内，但文本模式从 TextMemory.vue
  * 打开时 Word.vue 已卸载，故由本控制器常驻处理。
  *
- * 通信通道：仅 DB pendingAction 轮询。
- *   - utools.onMessage 不在 uTools 官方 API（实测 hasApi:false），无效。
- *   - storage 事件在 uTools 父子窗口不同源，不触发，无效。
- *   - DB（utools.db）跨窗口共享，是唯一可靠通道。子窗口 postFocusModeAction
- *     以 persistPendingAction:true 写入 user-set.focusMode.pendingAction，
- *     本控制器轮询读取并执行。
+ * 通信通道（与单词模式一致，多通道冗余、at 去重，先到先处理）：
+ *   - utools.sendToParent → 父窗口 utools.onMessage（即时，Word.vue 同款通道）
+ *   - localStorage 'slowly-record-focus-mode-action' storage 事件（即时，跨窗口可能不同源不触发）
+ *   - DB user-set.focusMode.pendingAction 轮询 + 窗口关闭时兜底消费（可靠兜底，
+ *     子窗口 postFocusModeAction 以 persistPendingAction:true 写入）
+ * "返回列表"等动作必须走即时通道：子窗口点击后 100ms 即自关，300ms 轮询常常来不及，
+ * 且子窗口自关后 uTools 可能连带隐藏主窗口，父窗口需在子窗口关闭前主动 close + showMainWindow。
  *
  * 复用 @/utils/focus-lock 的鼠标穿透判断。
  */
-import { shouldIgnoreMouseInLockedFocusWindow } from '@/utils/focus-lock';
+import { shouldIgnoreMouseInLockedFocusWindow, focusWindowClosed } from '@/utils/focus-lock';
 import { isUtools } from '@/adapters/platform';
 import { getSetDb } from '@/utils/user-set-db-util';
 import { getDbAdapter } from '@/adapters/db';
@@ -24,6 +25,26 @@ const DB_PENDING_POLL_INTERVAL = 300;
 const DB_PENDING_TTL = 15000;
 
 let focusWindow: any = null;
+// 已打开的所有文本专注窗口（setTextFocusWindow 只持有"当前"引用，并发计数需全量跟踪）
+const textFocusWindows = new Set<any>();
+
+/** 当前文本专注窗口是否仍存活 */
+export function textFocusWindowAlive(): boolean {
+  return !!focusWindow && !focusWindow.isDestroyed?.();
+}
+
+/** 仍存活的文本专注窗口数（打开入口重算并发计数用；已销毁的引用顺手清理） */
+export function getAliveTextFocusWindowCount(): number {
+  let alive = 0;
+  for (const w of textFocusWindows) {
+    if (w && !w.isDestroyed?.()) {
+      alive++;
+    } else {
+      textFocusWindows.delete(w);
+    }
+  }
+  return alive;
+}
 let lastSyncedLocked = false;
 let ignoreMousePollTimer: any = null;
 let lastPolledIgnoreMouse: boolean | null = null;
@@ -37,6 +58,7 @@ let lastHandledAt = 0;
 export function setTextFocusWindow(win: any) {
   focusWindow = win;
   if (win) {
+    textFocusWindows.add(win);
     if ((win as any)._winId !== undefined && (window as any).electronAPI) {
       // Electron 代理：用 ipc 实时通信，替代 DB pendingAction 轮询
       bindElectronListeners((win as any)._winId);
@@ -103,14 +125,23 @@ function bindElectronListeners(winId: number) {
     handleChildDbPut(doc);
   });
   api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
-    if (id !== currentElectronWinId) return;
-    if (event === 'closed') {
-      focusWindow = null;
-      lastSyncedLocked = false;
-      stopIgnoreMousePoll();
-      stopDbPendingPoll();
-      currentElectronWinId = null;
+    if (event !== 'closed') return;
+    // 多窗口时关闭的可能不是当前窗口：按 winId 登记销毁 + 回收并发计数
+    for (const w of textFocusWindows) {
+      if (w?._winId === id) {
+        w._destroyed = true;
+        textFocusWindows.delete(w);
+      }
     }
+    focusWindowClosed('text');
+    // 关闭前 100ms 写入的 pendingAction（如返回列表）轮询来不及读到，兜底消费一次
+    consumeLatestTextFocusPendingAction();
+    if (id !== currentElectronWinId) return;
+    focusWindow = null;
+    lastSyncedLocked = false;
+    stopIgnoreMousePoll();
+    stopDbPendingPoll();
+    currentElectronWinId = null;
   });
 }
 
@@ -292,6 +323,7 @@ function dispatchAction(action: any) {
   const type = typeof action.type === 'string' ? action.type : (action.channel || '');
   const payload = action.payload;
   if (!type) return;
+  console.log('[textFocus] dispatchAction:', type, '窗口存活:', textFocusWindowAlive());
 
   switch (type) {
     case 'setAlwaysOnTop':
@@ -304,6 +336,15 @@ function dispatchAction(action: any) {
       focusLockWindow();
       break;
     case 'openTextMemory':
+      // 对齐单词模式 handleOpenWordList：父窗口先主动关闭子窗口再返回列表，
+      // 否则子窗口自关后 uTools 可能连带隐藏主窗口，showMainWindow 失效
+      if (focusWindow && !focusWindow.isDestroyed?.()) {
+        try {
+          focusWindow.close();
+        } catch (e) {
+          // ignore
+        }
+      }
       if (returnHandler) returnHandler();
       break;
     // 贴边相关动作文本模式不支持，忽略
@@ -326,11 +367,12 @@ function clearDbPendingAction() {
   }
 }
 
-function consumeDbPendingAction() {
-  if (!focusWindow || focusWindow.isDestroyed?.()) {
-    stopDbPendingPoll();
-    return;
-  }
+/**
+ * 消费一次 DB 中的文本专注 pendingAction（若有且未过期）。
+ * 与轮询解耦：窗口关闭瞬间（轮询已停）也可兜底调用，
+ * 否则"返回列表"这类关闭前写入的动作会丢失（对齐单词模式 closed 时消费的做法）。
+ */
+export function consumeLatestTextFocusPendingAction() {
   try {
     const focusMode = getSetDb(true)?.focusMode;
     const pending = focusMode?.pendingAction;
@@ -341,12 +383,21 @@ function consumeDbPendingAction() {
     if (at && at <= lastHandledAt) return;
     if (at && Date.now() - at > DB_PENDING_TTL) return;
     lastHandledAt = at || Date.now();
+    console.log('[textFocus] 消费 DB pendingAction:', pending.type);
     dispatchAction(pending);
     // 处理后清理 pendingAction，避免进程重启后重复执行
     clearDbPendingAction();
   } catch (e) {
     console.error('[textFocus] 读取 DB pendingAction 失败:', e);
   }
+}
+
+function consumeDbPendingAction() {
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    stopDbPendingPoll();
+    return;
+  }
+  consumeLatestTextFocusPendingAction();
 }
 
 function startDbPendingPoll() {
@@ -362,16 +413,54 @@ function stopDbPendingPoll() {
   }
 }
 
+// ========== 即时通道：storage 事件 + utools.onMessage ==========
+
+const FOCUS_MODE_ACTION_STORAGE_KEY = 'slowly-record-focus-mode-action';
+let instantListenersBound = false;
+
+// storage 通道：与单词模式 handleFocusModeStorageEvent 一致，只接管文本模式动作
+function handleFocusActionStorageEvent(event: StorageEvent) {
+  if (event.key !== FOCUS_MODE_ACTION_STORAGE_KEY || !event.newValue) return;
+  try {
+    const action = JSON.parse(event.newValue);
+    if (!action || action.source !== 'text') return;
+    const at = Number(action.at || 0);
+    if (at && at <= lastHandledAt) return;
+    if (at) lastHandledAt = at;
+    console.log('[textFocus] storage 通道收到动作:', action.type);
+    dispatchAction(action);
+  } catch (e) {
+    // ignore
+  }
+}
+
 /**
  * 注册监听（模块级单例，幂等）。
- * 实际通道 DB-poll 在 setTextFocusWindow 时启动，此处保留空实现以兼容旧调用。
+ * DB-poll 由 setTextFocusWindow 触发；此处注册即时通道（storage + onMessage），
+ * 让"返回列表"等动作在子窗口自关（100ms）前送达。
  */
 export function setupTextFocusListeners() {
-  // DB-poll 由 setTextFocusWindow 触发，无需在此注册
+  if (instantListenersBound) return;
+  instantListenersBound = true;
+  window.addEventListener('storage', handleFocusActionStorageEvent);
+  const hasOnMessage = isUtools() && typeof (window as any).utools?.onMessage === 'function';
+  console.log('[textFocus] 即时通道已注册: storage=true onMessage=', hasOnMessage);
+  if (hasOnMessage) {
+    (window as any).utools.onMessage((message: any) => {
+      const channel = typeof message === 'string' ? message : (message?.channel || message?.type);
+      const payload = typeof message === 'object' ? (message?.payload ?? message?.args?.[0]) : undefined;
+      console.log('[textFocus] onMessage 收到:', channel, '文本窗口存活:', textFocusWindowAlive());
+      // 仅文本专注窗口存活时接管（否则是单词模式动作，交给 Word.vue）
+      if (!channel || !textFocusWindowAlive()) return;
+      dispatchAction({ type: channel, payload });
+    });
+  }
 }
 
 /** 注销监听并清理状态 */
 export function teardownTextFocusListeners() {
+  instantListenersBound = false;
+  window.removeEventListener('storage', handleFocusActionStorageEvent);
   stopIgnoreMousePoll();
   stopDbPendingPoll();
   lastSyncedLocked = false;

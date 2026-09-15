@@ -67,11 +67,13 @@
 
       <!-- 视图切换与添加导入 -->
       <div class="filter-actions">
-        <!-- 多选模式开关（仅列表视图可用） -->
-        <el-tooltip v-if="currentView === 'list'" effect="dark" content="多选（批量打印 / 存图）" placement="top" popper-class="small-tooltip">
-          <el-button size="small" :type="multiSelectMode ? 'primary' : 'default'" @click="toggleMultiSelectMode">
-            <el-icon><Finished /></el-icon>
-          </el-button>
+        <!-- 多选模式开关（仅列表视图可用；常驻占位，避免切换视图时按钮位置变动） -->
+        <el-tooltip effect="dark" content="多选（批量打印 / 存图，仅列表视图可用）" placement="top" popper-class="small-tooltip">
+          <span class="btn-slot">
+            <el-button size="small" :type="multiSelectMode ? 'primary' : 'default'" :disabled="currentView !== 'list'" @click="toggleMultiSelectMode">
+              <el-icon><Finished /></el-icon>
+            </el-button>
+          </span>
         </el-tooltip>
         <el-radio-group v-model="currentView" size="small">
           <el-radio-button label="list">
@@ -87,16 +89,6 @@
           <el-radio-button label="timeline">
             <el-tooltip effect="dark" content="时间线视图" placement="top" popper-class="small-tooltip">
               <el-icon><Clock /></el-icon>
-            </el-tooltip>
-          </el-radio-button>
-          <el-radio-button label="palace">
-            <el-tooltip effect="dark" content="记忆宫殿（内嵌）" placement="top" popper-class="small-tooltip">
-              <el-icon><OfficeBuilding /></el-icon>
-            </el-tooltip>
-          </el-radio-button>
-          <el-radio-button label="knowledge">
-            <el-tooltip effect="dark" content="知识库（内嵌）" placement="top" popper-class="small-tooltip">
-              <el-icon><Notebook /></el-icon>
             </el-tooltip>
           </el-radio-button>
         </el-radio-group>
@@ -296,16 +288,6 @@
       />
     </div>
 
-    <!-- 宫殿视图（嵌入记忆宫殿列表，含新建/导入桩库/删除） -->
-    <div v-if="currentView === 'palace'" class="palace-view">
-      <MemoryPalace @open-peg-import="openImportDialog('library', 'pegPacks')" />
-    </div>
-
-    <!-- 知识库视图（文本类知识包卡片） -->
-    <div v-if="currentView === 'knowledge'" class="knowledge-view">
-      <KnowledgePackPanel category="text" use-external-import @open-import="openImportDialog('library', 'knowledge')" />
-    </div>
-
     <!-- 批量打印专用容器：屏幕隐藏，打印时仅输出此区域（选中文章逐篇排版） -->
     <div v-if="printArticles.length > 0" class="article-print-area">
       <div class="print-title">文本记忆</div>
@@ -330,7 +312,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import {
   Search, Plus, More, Edit, Delete,
   EditPen, QuestionFilled, Notebook, Memo,
-  User, Clock, View, List, MapLocation, CircleClose, OfficeBuilding,
+  User, Clock, View, List, MapLocation, CircleClose,
   Finished, Printer, Picture
 } from '@element-plus/icons-vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
@@ -348,6 +330,8 @@ import {
   createElectronWindowProxy,
   collectTextFocusDocsForChild
 } from '@/utils/text-focus-window';
+import { canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount } from '@/utils/focus-lock';
+import { getAliveTextFocusWindowCount, consumeLatestTextFocusPendingAction } from '@/utils/text-focus-window';
 
 // 导入子组件
 import TextEditDialog from './components/TextEditDialog.vue';
@@ -359,9 +343,6 @@ import PromptsDialog from './components/PromptsDialog.vue';
 import TypingPracticeDialog from './components/TypingPracticeDialog.vue';
 import PoetryMap from './components/PoetryMap.vue';
 import TimelineView from './components/TimelineView.vue';
-import KnowledgePackPanel from './components/KnowledgePackPanel.vue';
-// 记忆宫殿列表作为子组件嵌入「宫殿」视图
-import MemoryPalace from '@/views/MemoryPalace/MemoryPalace.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -386,12 +367,12 @@ const sortOptions = [
   { key: 'reviewCount' as SortField, label: '复习次数' }
 ];
 
-// 当前视图：list | map | timeline | palace | knowledge
-type TextMemoryView = 'list' | 'map' | 'timeline' | 'palace' | 'knowledge';
+// 当前视图：list | map | timeline
+type TextMemoryView = 'list' | 'map' | 'timeline';
 const currentView = ref<TextMemoryView>('list');
 
-// 支持通过 query 定位视图，如 /text-memory?view=palace、?view=knowledge
-const VALID_VIEWS: TextMemoryView[] = ['list', 'map', 'timeline', 'palace', 'knowledge'];
+// 支持通过 query 定位视图，如 /text-memory?view=map
+const VALID_VIEWS: TextMemoryView[] = ['list', 'map', 'timeline'];
 function applyViewFromQuery() {
   const qv = route.query.view;
   const v = Array.isArray(qv) ? qv[0] : qv;
@@ -583,7 +564,40 @@ const timelineEventCount = computed(() =>
 onMounted(async () => {
   // 先注册监听（不依赖文章数据），确保打开浮窗时动作通道已就绪
   setupTextFocusListeners();
-  setReturnToListHandler(() => router.push('/text-memory'));
+  // 返回列表：跳转路由 + 弹出主窗口（专注窗口关闭后主窗口可能仍在后台，与单词模式 handleOpenWordList 一致）
+  setReturnToListHandler(() => {
+    console.log('[文本专注] 返回列表回调执行');
+    // 刷新文章数据（子窗口可能已更新背诵进度）
+    textStore.loadArticles().catch(() => {});
+    // hash 路由兜底：与单词模式一致，防止路由静默失败
+    router.replace('/text-memory').catch(() => {});
+    if (window.location.hash !== '#/text-memory') {
+      window.location.hash = '#/text-memory';
+    }
+    // uTools 会在浮窗关闭后连带隐藏主窗口（失焦自动隐藏），且时机飘忽（实测最后一次
+    // 隐藏可能出现在 2s 之后）。事件驱动兜底：监听期内每次被隐藏都立即重新唤起，直到稳定
+    if (isUtools() && (window as any).utools?.showMainWindow) {
+      const utoolsApi = (window as any).utools;
+      const deadline = Date.now() + 6000;
+      const show = (tag: string) => {
+        const ok = utoolsApi.showMainWindow();
+        console.log(`[文本专注] showMainWindow(${tag}) 返回:`, ok, '可见性:', document.visibilityState);
+      };
+      const onVisChange = () => {
+        console.log('[文本专注] visibilitychange =>', document.visibilityState);
+        if (document.visibilityState === 'hidden' && Date.now() < deadline) {
+          show('被隐藏后重试');
+        }
+      };
+      document.addEventListener('visibilitychange', onVisChange);
+      setTimeout(() => document.removeEventListener('visibilitychange', onVisChange), 6000);
+
+      show('立即');
+      [150, 400, 800, 1300, 2000].forEach((delay) => {
+        setTimeout(() => show(`${delay}ms`), delay);
+      });
+    }
+  });
   document.addEventListener('click', onDocClick, true);
   applyViewFromQuery();
   await textStore.loadArticles();
@@ -613,6 +627,13 @@ async function openTextFocusMode(article: TextArticle) {
     ElMessage.warning('专注显示仅在 uTools 桌面端可用');
     return;
   }
+  // 并发上限：最多同时 2 个专注窗口（与单词模式共享限额，太多会卡）
+  // 先按本来源实际存活窗口重算计数（uTools 子窗口可能不触发 closed 事件，计数只加不减会误报）
+  resyncFocusWindowCount('text', getAliveTextFocusWindowCount());
+  if (!canOpenFocusWindow()) {
+    ElMessage.warning(`最多同时打开 ${getOpenFocusWindowCount()} 个专注窗口，请先关闭一个`);
+    return;
+  }
   const isDark = document.documentElement.classList.contains('dark');
   const themeParam = isDark ? 'dark' : 'light';
   const articleId = encodeURIComponent(article._id);
@@ -629,6 +650,7 @@ async function openTextFocusMode(article: TextArticle) {
       const winId = await api.createBrowserWindow(url, windowOpts);
       const win = createElectronWindowProxy(winId);
       setTextFocusWindow(win);
+      focusWindowOpened('text');
       // 推送文章 + user-set 快照给子窗口 utools shim，然后显示
       setTimeout(async () => {
         const docs = collectTextFocusDocsForChild();
@@ -649,10 +671,17 @@ async function openTextFocusMode(article: TextArticle) {
     // 立即注入窗口引用，使控制器能处理置顶/锁定等动作（storage 事件来时已就绪）
     log.d('[文本专注] createBrowserWindow 返回 win:', !!win, '类型:', typeof win, 'setAlwaysOnTop:', typeof win?.setAlwaysOnTop);
     setTextFocusWindow(win);
+    focusWindowOpened('text');
     // 窗口关闭后清理引用
     if (win && typeof win.on === 'function') {
       try {
-        win.on('closed', () => setTextFocusWindow(null));
+        win.on('closed', () => {
+          console.log('[文本专注] 子窗口 closed 事件触发');
+          // 关闭前写入的 pendingAction（如返回列表）轮询来不及读到，兜底消费一次
+          consumeLatestTextFocusPendingAction();
+          focusWindowClosed('text');
+          setTextFocusWindow(null);
+        });
       } catch (e) {
         // 某些环境不支持事件监听，忽略；控制器已用 isDestroyed 兜底
       }
@@ -870,6 +899,10 @@ watch(currentView, (v) => {
   padding: 0;
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: none; /* 隐藏滚动条 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 // 顶部筛选排序条（仿 WordFilter.vue）
@@ -1010,6 +1043,11 @@ watch(currentView, (v) => {
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+}
+
+/* 禁用按钮的 tooltip 包裹层（disabled 按钮不触发鼠标事件） */
+.btn-slot {
+  display: inline-flex;
 }
 
 // 多选工具条

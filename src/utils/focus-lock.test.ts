@@ -1,9 +1,14 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, beforeEach } from 'vitest'
 import {
   FOCUS_LOCK_TOP_INTERACTIVE_HEIGHT,
   isPointInBounds,
   mergeFocusModeSettings,
   shouldIgnoreMouseInLockedFocusWindow,
+  canOpenFocusWindow,
+  focusWindowOpened,
+  focusWindowClosed,
+  getOpenFocusWindowCount,
+  resyncFocusWindowCount,
 } from './focus-lock'
 
 describe('focus-lock', () => {
@@ -73,6 +78,37 @@ describe('focus-lock', () => {
         edgeStickEnabled: true,
         opacity: 0.5,
       })
+    })
+  })
+
+  describe('专注窗口并发计数', () => {
+    // 计数为模块级状态，用例间先归零
+    beforeEach(() => {
+      resyncFocusWindowCount('word', 0)
+      resyncFocusWindowCount('text', 0)
+    })
+
+    it('两个来源合计达到 2 个后不能再打开', () => {
+      focusWindowOpened('word')
+      focusWindowOpened('text')
+
+      expect(getOpenFocusWindowCount()).toBe(2)
+      expect(canOpenFocusWindow()).toBe(false)
+    })
+
+    it('某来源 resync 只重置本来源，不影响另一来源计数', () => {
+      focusWindowOpened('word')
+      // 文本入口重算本来源存活数（0 个），单词窗口的计数不能被清掉
+      resyncFocusWindowCount('text', 0)
+      expect(getOpenFocusWindowCount()).toBe(1)
+
+      focusWindowOpened('text')
+      expect(canOpenFocusWindow()).toBe(false)
+    })
+
+    it('关闭计数不会减到负数', () => {
+      focusWindowClosed('text')
+      expect(getOpenFocusWindowCount()).toBe(0)
     })
   })
 })

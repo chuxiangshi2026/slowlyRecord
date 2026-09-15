@@ -455,8 +455,7 @@
     .focus-container.text-mode .spell-hint,
     .focus-container.text-mode .btn-spell,
     .focus-container.text-mode .btn-edge,
-    .focus-container.text-mode .mode-label,
-    .focus-container.text-mode .forget-count {
+    .focus-container.text-mode .mode-label {
       display: none !important;
     }
 
@@ -843,7 +842,6 @@
     .focus-container.edge-hidden .opacity-bar,
     .focus-container.edge-hidden .counter,
     .focus-container.edge-hidden .mode-label,
-    .focus-container.edge-hidden .forget-count,
     .focus-container.edge-hidden .spell-hint {
       opacity: 0;
       pointer-events: none;
@@ -865,7 +863,6 @@
     .focus-container.edge-preview .opacity-bar,
     .focus-container.edge-preview .counter,
     .focus-container.edge-preview .mode-label,
-    .focus-container.edge-preview .forget-count,
     .focus-container.edge-preview .spell-hint {
       opacity: 1;
       pointer-events: auto;
@@ -919,7 +916,6 @@
     .focus-container.locked .explains,
     .focus-container.locked .counter,
     .focus-container.locked .mode-label,
-    .focus-container.locked .forget-count,
     .focus-container.locked .spell-hint {
       opacity: 1;
     }
@@ -958,17 +954,6 @@
 
     .mode-label.active {
       color: var(--primary-color);
-    }
-
-    /* 今日待复习计数（留存钩子，口径与主窗口 forgetCount 一致） */
-    .forget-count {
-      position: absolute;
-      bottom: 2px;
-      left: 6px;
-      font-size: 10px;
-      color: var(--text-quaternary);
-      transition: color 0.3s ease;
-      user-select: none;
     }
 
     /* 拼写模式提示 */
@@ -1125,6 +1110,8 @@
       <span class="icon" id="btn-play" title="播放发音">
         <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
       </span>
+      <!-- 发音速度标签：点击循环切换档位，同步控制发音语速 -->
+      <span class="text-speed-label word-speed-label" id="word-speed-label" title="点击切换发音速度">1x</span>
       <!-- 暂停/继续自动播放（仅标准模式开启自动下一个时显示） -->
       <span class="icon" id="btn-auto-pause" title="暂停自动播放" style="display:none">
         <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -1227,7 +1214,6 @@
       <input type="range" class="opacity-slider" id="opacity-slider" min="30" max="100" value="100">
     </div>
     <div class="counter" id="counter">0/0</div>
-    <div class="forget-count" id="forget-count"></div>
     <div class="mode-label" id="mode-label">标准</div>
 
 
@@ -1365,7 +1351,6 @@
     }
     const elExplains = document.getElementById('explains');
     const elCounter = document.getElementById('counter');
-    const elForgetCount = document.getElementById('forget-count');
     const elEmptyState = document.getElementById('empty-state');
     const elEmptyText = document.getElementById('empty-text');
     const elEmptyAction = document.getElementById('empty-action');
@@ -1411,20 +1396,16 @@
       });
     }
 
-    // 今日待复习计数（口径与主窗口 words.ts forgetCount 一致：当前词库中 isReview 的词条数）
+    // 今日待复习计数：专注模式内不可交互（公共头/主窗口才有待复习入口），
+    // 且与左下角窗口透明度条位置重叠，已移除显示，仅保留计数供答题逻辑用
     var pendingReviewCount = 0;
-    function renderPendingReviewCount() {
-      if (elForgetCount) elForgetCount.textContent = '待复习 ' + pendingReviewCount;
-    }
     // 加载词库后从全量词条重算（此时已执行 upReview）
     function refreshPendingReviewCount(allWords) {
       pendingReviewCount = (allWords || []).filter(function(w) { return w && w.isReview; }).length;
-      renderPendingReviewCount();
     }
     // 答题后增量更新：isReview false→true 或 true→false 时调整计数
     function adjustPendingReviewCount(delta) {
       pendingReviewCount = Math.max(0, pendingReviewCount + delta);
-      renderPendingReviewCount();
     }
 
     // 空态/失败态显示与隐藏
@@ -1677,7 +1658,7 @@
           window.speechSynthesis.cancel();
           var utterance = new SpeechSynthesisUtterance(word.text);
           utterance.lang = prof.ttsLang;
-          utterance.rate = 0.8;
+          utterance.rate = getWordSpeechRate();
           utterance.onend = done;
           utterance.onerror = function(e) {
             // 主动取消（如切词、关窗口触发 cancel）不算失败，同样按完成处理
@@ -2188,6 +2169,7 @@
     var textSpeechOn = false;        // 朗读开关是否开启
     var textSpeechActive = false;    // 是否正在朗读（区分"开启但无语音合成环境"）
     var textSpeechSeq = 0;           // 朗读代际令牌，停止/切文章时递增使旧队列失效
+    var textSpeechResumeSentence = 0; // 下一句要读的句子下标（暂停后继续用；读完/切文章/重置时清零）
     var TEXT_SPEAK_SVG = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
     var TEXT_SPEAK_OFF_SVG = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.59 3l2.7-2.7-1.41-1.41-2.7 2.7-2.7-2.7-1.41 1.41 2.7 2.7-2.7 2.7 1.41 1.41 2.7-2.7 2.7 2.7 1.41-1.41-2.7-2.7z"/></svg>';
 
@@ -2339,6 +2321,11 @@
 
     function textTick(ts) {
       if (!textPlaying) return;
+      // 朗读开启时滚动由句首事件驱动（syncScrollToSentence），暂停匀速推进避免不同步
+      if (textSpeechActive || textSpeechOn) {
+        textRafId = requestAnimationFrame(textTick);
+        return;
+      }
       if (!textLastTs) textLastTs = ts;
       var delta = ts - textLastTs;
       textLastTs = ts;
@@ -2373,12 +2360,23 @@
         cancelAnimationFrame(textRafId);
         textRafId = null;
       }
+      // 联动：滚动暂停时朗读也暂停（声音与滚动同步，滚动停声音不能独走；进度保留可续读）
+      if (textSpeechActive || textSpeechOn) {
+        pauseTextSpeech();
+      }
       updatePlayIcon();
     }
 
     function toggleTextPlay() {
-      if (textPlaying) pauseTextPlay();
-      else startTextPlay();
+      if (textPlaying) {
+        pauseTextPlay();
+      } else {
+        startTextPlay();
+        // 联动：滚动恢复播放时，若朗读开着则从暂停句继续朗读
+        if (textSpeechOn && !textSpeechActive) {
+          speakTextArticle();
+        }
+      }
     }
 
     function resetTextScroll() {
@@ -2411,6 +2409,13 @@
     function updateTextSpeedLabel() {
       var label = document.getElementById('text-speed-label');
       if (label) label.textContent = TEXT_SPEED_LEVELS[textSpeedIndex] + 'x';
+      var wordLabel = document.getElementById('word-speed-label');
+      if (wordLabel) wordLabel.textContent = TEXT_SPEED_LEVELS[textSpeedIndex] + 'x';
+    }
+
+    // 单词发音语速：档位映射到语速值（与文本朗读的映射一致）
+    function getWordSpeechRate() {
+      return getTextSpeechRate();
     }
 
     function updatePlayIcon() {
@@ -2429,15 +2434,47 @@
       return 1.4;
     }
 
-    // 文章语言 → utterance.lang：'zh' 开头用 zh-CN，其他跟随词库语言档案，缺省 en-US
+    // 文章语言 → utterance.lang：标注语言优先（zh → zh-CN）；缺省按内容判断
+    // （含汉字用中文，仅假名用日语，避免中文文章落到英语引擎读不出来）
     function getTextSpeechLang(article) {
       var lang = (article && article.language) || '';
-      if (lang) {
-        if (lang.toLowerCase().indexOf('zh') === 0) return 'zh-CN';
-        return lang;
-      }
+      if (lang === 'zh') return 'zh-CN';
+      if (lang) return lang;
+      var content = (article && article.content) || '';
+      var hasHan = /[一-龥]/.test(content);
+      var hasKana = /[ぁ-んァ-ヶ]/.test(content);
+      if (hasKana && !hasHan) return 'ja-JP';
+      if (hasHan || hasKana) return 'zh-CN';
       var prof = getProfile();
       return (prof && prof.ttsLang) || 'en-US';
+    }
+
+    // 中文朗读优先选高质量语音：微软自然语音（Xiaoxiao/Yunxi 等）/Google 国语，
+    // 多音字准确率明显高于系统默认合成引擎；找不到则保持 utterance 默认（按 lang 自动选）
+    var cachedZhVoice; // undefined=未查找，null=没找到
+    function getPreferredZhVoice() {
+      if (cachedZhVoice !== undefined) return cachedZhVoice;
+      cachedZhVoice = null;
+      try {
+        var voices = window.speechSynthesis.getVoices() || [];
+        var zhVoices = voices.filter(function(v) {
+          return (v.lang || '').toLowerCase().replace('_', '-').indexOf('zh') === 0;
+        });
+        var preferred = ['natural', 'online', 'xiaoxiao', 'yunxi', 'xiaoyi', 'yunjian', 'google'];
+        for (var i = 0; i < preferred.length; i++) {
+          for (var j = 0; j < zhVoices.length; j++) {
+            if ((zhVoices[j].name || '').toLowerCase().indexOf(preferred[i]) !== -1) {
+              cachedZhVoice = zhVoices[j];
+              return cachedZhVoice;
+            }
+          }
+        }
+      } catch (e) {}
+      return cachedZhVoice;
+    }
+    // 语音列表异步加载，加载完成后重选
+    if ('speechSynthesis' in window && window.speechSynthesis.addEventListener) {
+      window.speechSynthesis.addEventListener('voiceschanged', function() { cachedZhVoice = undefined; });
     }
 
     // 按句切分文章（兼容中英文标点）
@@ -2452,16 +2489,24 @@
       return sentences;
     }
 
-    // 停止朗读（只停声音，不影响滚动）；keepSwitch 为 true 时保留开关状态（用于切文章后续读）
-    function stopTextSpeech(keepSwitch) {
+    // 暂停朗读：声音停但保留进度，恢复时从暂停句继续（滚动暂停/朗读按钮停止共用）
+    function pauseTextSpeech() {
       textSpeechSeq++;
       textSpeechActive = false;
-      if (!keepSwitch) textSpeechOn = false;
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       updateTextSpeechIcon();
     }
 
+    // 彻底停止朗读（切文章/关闭窗口）：进度清零；keepSwitch 为 true 时保留开关状态（用于切文章后续读）
+    function stopTextSpeech(keepSwitch) {
+      pauseTextSpeech();
+      textSpeechResumeSentence = 0;
+      if (!keepSwitch) textSpeechOn = false;
+    }
+
     // 朗读当前文章：逐句朗读，一句 onend 接下一句；被打断（代际变化）则静默停止
+    // 同步：朗读开启时滚动改为由句首事件驱动（每句把滚动对齐到该句顶部），
+    // 匀速 tick 暂停，避免"声音读第 3 句、屏幕滚到第 5 句"的不同步
     function speakTextArticle() {
       if (!('speechSynthesis' in window)) {
         showToast('当前环境不支持语音朗读');
@@ -2469,7 +2514,8 @@
       }
       var article = textArticles[textArticleIndex];
       if (!article) return;
-      var sentences = splitTextToSentences(article.content || '');
+      // 朗读用 speechContent（同音字替换的朗读专用文本，与 content 等长同结构；滚动跟随仍按 content 定位）
+      var sentences = splitTextToSentences(article.speechContent || article.content || '');
       if (sentences.length === 0) {
         showToast('文章内容为空');
         return;
@@ -2480,20 +2526,37 @@
       textSpeechActive = true;
       updateTextSpeechIcon();
 
-      var speakIndex = 0;
+      // 从上次暂停处继续（全新朗读/读完/切文章时该下标已清零）
+      var speakIndex = Math.min(textSpeechResumeSentence, sentences.length - 1);
       var speakNext = function() {
         if (!textSpeechActive || seq !== textSpeechSeq) return;
         if (speakIndex >= sentences.length) {
-          // 全文读完：停声音但保留开关，若滚动未停则同时开始滚动，方便反复听读
+          // 全文读完：停声音、进度清零但保留开关，若滚动未停则同时开始滚动，方便反复听读
           textSpeechActive = false;
+          textSpeechResumeSentence = 0;
           window.speechSynthesis.cancel();
           updateTextSpeechIcon();
           if (textSpeechOn && !textPlaying) startTextPlay();
           return;
         }
-        var utterance = new SpeechSynthesisUtterance(sentences[speakIndex++]);
+        var idx = speakIndex++;
+        var utterance = new SpeechSynthesisUtterance(sentences[idx]);
         utterance.lang = lang;
         utterance.rate = rate;
+        // 入队即记录当前句下标：暂停/停止后从这句重读（不依赖 onstart，部分引擎不触发）
+        textSpeechResumeSentence = idx;
+        // 中文优先选高质量语音（微软自然语音等多音字发音更准）
+        if (lang.indexOf('zh') === 0) {
+          var zhVoice = getPreferredZhVoice();
+          if (zhVoice) utterance.voice = zhVoice;
+        }
+        // 句首朗读时把滚动位置对齐到当前句，实现"滚动跟随朗读"
+        utterance.onstart = function() {
+          if (!textSpeechActive || seq !== textSpeechSeq) return;
+          if (textPlaying) {
+            syncScrollToSentence(idx);
+          }
+        };
         utterance.onend = function() {
           if (!textSpeechActive || seq !== textSpeechSeq) return;
           setTimeout(speakNext, 80);
@@ -2510,9 +2573,49 @@
     }
 
     // 朗读开关：开启时若滚动未播则同时开始滚动；再次点击停止朗读（不影响滚动）
+    // 同步模式：朗读开启时按句对齐滚动（tick 停止），关闭朗读恢复匀速滚动
+    function syncScrollToSentence(sentenceIdx) {
+      var el = document.getElementById('text-scroll-content');
+      if (!el) return;
+      // 按句切分后逐句累计字符长度，在渲染节点中查找该句首个文本节点的纵坐标
+      var article = textArticles[textArticleIndex];
+      if (!article) return;
+      var sentences = splitTextToSentences(article.content || '');
+      if (sentenceIdx < 0 || sentenceIdx >= sentences.length) return;
+      // 计算该句在全文中的起始字符位置
+      var charPos = 0;
+      for (var i = 0; i < sentenceIdx; i++) charPos += sentences[i].length;
+      // 遍历文本节点找到该字符位置对应的纵坐标
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      var node, consumed = 0, targetTop = null;
+      var viewport = document.getElementById('text-viewport');
+      while ((node = walker.nextNode())) {
+        var len = node.textContent.length;
+        if (consumed + len > charPos) {
+          var range = document.createRange();
+          range.setStart(node, Math.min(charPos - consumed, len - 1 < 0 ? 0 : charPos - consumed));
+          range.collapse(true);
+          var rect = range.getBoundingClientRect();
+          var vRect = viewport ? viewport.getBoundingClientRect() : el.getBoundingClientRect();
+          targetTop = rect.top - vRect.top;
+          break;
+        }
+        consumed += len;
+      }
+      if (targetTop === null) return;
+      // 目标偏移 = 当前偏移 + 该句距视口顶部的距离
+      var newOffset = Math.max(0, textOffset + targetTop - 8);
+      if (newOffset > textMaxOffset) newOffset = textMaxOffset;
+      textOffset = newOffset;
+      applyTextOffset();
+    }
+
     function toggleTextSpeech() {
       if (textSpeechActive || textSpeechOn) {
-        stopTextSpeech(false);
+        // 停止朗读 = 暂停：保留进度（再开朗读/滚动时从这句继续），并联动暂停滚动
+        textSpeechOn = false;
+        pauseTextSpeech();
+        if (textPlaying) pauseTextPlay();
         showToast('已停止朗读');
         return;
       }
@@ -2522,6 +2625,7 @@
       }
       textSpeechOn = true;
       speakTextArticle();
+      // 联动：开启朗读时滚动若未播则同时开始
       if (!textPlaying) startTextPlay();
     }
 
@@ -2549,6 +2653,10 @@
 
     document.getElementById('btn-toggle').addEventListener('click', () => { showExplains = !showExplains; updateDisplay(); });
     document.getElementById('btn-play').addEventListener('click', playAudio);
+    document.getElementById('word-speed-label').addEventListener('click', function(e) {
+      e.stopPropagation();
+      cycleTextSpeed();
+    });
     document.getElementById('btn-auto-pause').addEventListener('click', function() {
       if (autoPaused) { resumeAutoPlay(); } else { pauseAutoPlay(); }
     });
@@ -2771,12 +2879,15 @@
 
       // 根据当前模式返回对应的界面：文本模式→文本记忆，听写模式→听写练习，其他→单词列表
       var returnAction = textMode ? 'openTextMemory' : (dictationMode ? 'openDictation' : 'openWordList');
+      console.log('[专注模式] 点击返回列表, returnAction:', returnAction);
       postFocusModeAction(returnAction, undefined, { persistPendingAction: true });
 
 
       try {
+        console.log('[专注模式] 子窗口调用 showMainWindow: 存在=', !!(typeof utools !== 'undefined' && utools.showMainWindow));
         if (typeof utools !== 'undefined' && utools.showMainWindow) {
-          utools.showMainWindow();
+          var showOk = utools.showMainWindow();
+          console.log('[专注模式] 子窗口 showMainWindow 返回:', showOk);
         }
       } catch (e) {
         console.error('[专注模式] 显示主窗口失败:', e);
