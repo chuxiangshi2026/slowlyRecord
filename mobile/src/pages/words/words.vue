@@ -70,7 +70,7 @@
     <!-- 列表模式切换（与桌面端对齐） -->
     <view class="mode-bar">
       <view class="mode-item" :class="{ active: listMode === 0 }" @click="listMode = 0">
-        <text class="mode-num">{{ wordsStore.reviewWords.length }}</text>
+        <text class="mode-num">{{ wordsStore.words.filter(w => w.needsReview || !w.remembered).length }}</text>
         <text class="mode-label">待复习</text>
       </view>
       <view class="mode-item" :class="{ active: listMode === 1 }" @click="listMode = 1">
@@ -127,7 +127,7 @@
 
     <!-- 单词详情弹窗 -->
     <view v-if="showDetail" class="popup-overlay" @click="closeDetail" @touchmove.stop.prevent="() => {}">
-      <view class="detail-content" @click.stop @touchmove.stop>
+      <scroll-view scroll-y class="detail-content" @click.stop @touchmove.stop>
         <view class="detail-word">{{ detailWord.word }}</view>
         <view v-if="detailWord.phonetic" class="detail-phonetic">[{{ detailWord.phonetic }}]</view>
         <view class="detail-meaning">{{ detailWord.meaning }}</view>
@@ -143,7 +143,7 @@
           <button class="btn-cancel" @click="closeDetail">关闭</button>
           <button class="btn-delete" @click="deleteCurrentWord">删除</button>
         </view>
-      </view>
+      </scroll-view>
     </view>
   </view>
 </template>
@@ -799,7 +799,7 @@ const formatDate = (timestamp: number): string => {
   padding: 40rpx;
   width: 620rpx;
   max-height: 80vh;
-  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .detail-word {

@@ -196,14 +196,19 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     load()
     const palace = getPalace(palaceId)
     if (!palace) return
-    const nextLoci = palace.loci.filter(l => l.order !== order).map((l, i) => ({ ...l, order: i + 1 }))
+    const keptLoci = palace.loci.filter(l => l.order !== order)
+    // 旧 order → 新 order 映射（删除点之后的桩位顺次前移），挂载重排与桩位保持一致
+    const orderMap = new Map(keptLoci.map((l, i) => [l.order, i + 1]))
+    const nextLoci = keptLoci.map((l, i) => ({ ...l, order: i + 1 }))
     palaces.value = palaces.value.map(p =>
       p._id === palaceId ? { ...p, loci: nextLoci, utime: Date.now() } : p
     )
     persistPalaces()
-    // 删除对应桩挂载并重排剩余挂载的 locusOrder
-    const items = (pegsMap.value[palaceId] || []).filter(p => p.locusOrder !== order)
-      .map((p, i) => ({ ...p, locusOrder: i + 1 }))
+    // 删除被删桩的挂载，其余挂载按映射表改 locusOrder
+    const items = (pegsMap.value[palaceId] || [])
+      .filter(p => p.locusOrder !== order)
+      .map(p => ({ ...p, locusOrder: orderMap.get(p.locusOrder) ?? p.locusOrder }))
+      .sort((a, b) => a.locusOrder - b.locusOrder)
     pegsMap.value = { ...pegsMap.value, [palaceId]: items }
     persistPegs(palaceId)
   }
@@ -224,6 +229,16 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
       p._id === palaceId ? { ...p, loci: nextLoci, utime: Date.now() } : p
     )
     persistPalaces()
+    // 同步交换两个桩位上挂载的 locusOrder，保证内容跟随桩位
+    const fromOrder = idx + 1
+    const toOrder = target + 1
+    const items = (pegsMap.value[palaceId] || []).map(p => {
+      if (p.locusOrder === fromOrder) return { ...p, locusOrder: toOrder }
+      if (p.locusOrder === toOrder) return { ...p, locusOrder: fromOrder }
+      return p
+    }).sort((a, b) => a.locusOrder - b.locusOrder)
+    pegsMap.value = { ...pegsMap.value, [palaceId]: items }
+    persistPegs(palaceId)
   }
 
   /** 给桩挂内容（纯文字 + 助记） */

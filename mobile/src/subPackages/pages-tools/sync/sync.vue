@@ -112,6 +112,8 @@ const currentServerDisplay = computed(() => {
 
 // 推送（与坚果云备份共用同一份数据收集）
 const buildPushPayload = async (): Promise<PushPayload> => {
+  // 冷启动直达本页时内存中无词库数据，先确保已加载，避免推送空词库
+  await wordsStore.loadWords()
   const banks = wordsStore.bankList.map(bank => ({
     id: bank.id,
     name: bank.name,
@@ -358,6 +360,8 @@ async function applyPullResult(result: any): Promise<string> {
 
 // 按词库分组导入
 async function importBanks(banks: any[]) {
+  // 先确保本地词库已加载，importWords 以完整本地数据为基准合并，避免丢本地独有单词
+  await wordsStore.loadWords()
   const allImportedWords: any[] = []
   let doneBanks = 0
   const totalBanks = banks.length

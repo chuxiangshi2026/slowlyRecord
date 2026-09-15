@@ -140,4 +140,66 @@ describe('useMemoryPalace（查看版）', () => {
     expect(store.dueCount('p1')).toBe(1)
     expect(store.dueCount('p2')).toBe(0)
   })
+
+  it('removeLocus：挂载按「旧 order → 新 order」映射重排，被删桩挂载移除', () => {
+    const store = useMemoryPalace()
+    store.restoreSync({
+      palaces: [makePalace({
+        loci: [1, 2, 3, 4, 5].map(order => ({ order, name: `桩${order}` })),
+      })],
+      pegs: {
+        p1: [
+          makePeg({ _id: 'peg_3', locusOrder: 3 }),
+          makePeg({ _id: 'peg_5', locusOrder: 5 }),
+        ],
+      },
+    })
+    // 删除 1 号桩：剩余桩重排为 1-4，旧 3/5 号挂载应变为 2/4
+    store.removeLocus('p1', 1)
+    expect(store.getPalace('p1')?.loci.map(l => l.order)).toEqual([1, 2, 3, 4])
+    const orders = store.pegsOf('p1').map(p => ({ id: p._id, locusOrder: p.locusOrder }))
+    expect(orders).toEqual([{ id: 'peg_3', locusOrder: 2 }, { id: 'peg_5', locusOrder: 4 }])
+    // 持久化后新实例读回仍一致
+    setActivePinia(createPinia())
+    const store2 = useMemoryPalace()
+    store2.load()
+    expect(store2.pegsOf('p1').map(p => p.locusOrder)).toEqual([2, 4])
+  })
+
+  it('removeLocus：删除被删桩的挂载', () => {
+    const store = useMemoryPalace()
+    store.restoreSync({
+      palaces: [makePalace()],
+      pegs: { p1: [makePeg(), makePeg({ _id: 'peg_p1_2', locusOrder: 2 })] },
+    })
+    store.removeLocus('p1', 1)
+    expect(store.pegsOf('p1').map(p => p.locusOrder)).toEqual([1])
+  })
+
+  it('moveLocus：挂载的 locusOrder 随桩位交换', () => {
+    const store = useMemoryPalace()
+    store.restoreSync({
+      palaces: [makePalace({
+        loci: [1, 2, 3].map(order => ({ order, name: `桩${order}` })),
+      })],
+      pegs: {
+        p1: [
+          makePeg({ _id: 'peg_1', locusOrder: 1 }),
+          makePeg({ _id: 'peg_2', locusOrder: 2 }),
+        ],
+      },
+    })
+    // 1 号桩下移：挂载 1↔2 互换
+    store.moveLocus('p1', 1, 1)
+    expect(store.getPalace('p1')?.loci.map(l => l.name)).toEqual(['桩2', '桩1', '桩3'])
+    expect(store.pegsOf('p1').map(p => ({ id: p._id, locusOrder: p.locusOrder })))
+      .toEqual([{ id: 'peg_2', locusOrder: 1 }, { id: 'peg_1', locusOrder: 2 }])
+    // 3 号桩上移：与 2 号桩（挂着 peg_1）交换，peg_1 跟随桩 1 移到 3 号位
+    store.moveLocus('p1', 3, -1)
+    expect(store.pegsOf('p1').map(p => ({ id: p._id, locusOrder: p.locusOrder })))
+      .toEqual([{ id: 'peg_2', locusOrder: 1 }, { id: 'peg_1', locusOrder: 3 }])
+    // 边界：再往上移不生效
+    store.moveLocus('p1', 1, -1)
+    expect(store.getPalace('p1')?.loci.map(l => l.name)).toEqual(['桩2', '桩3', '桩1'])
+  })
 })
