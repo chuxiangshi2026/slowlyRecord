@@ -96,8 +96,8 @@
     </view>
 
     <view class="word-list">
-      <view 
-        v-for="word in filteredWords" 
+      <view
+        v-for="word in displayedWords"
         :key="word.id"
         class="word-item"
         @click="showWordDetail(word)"
@@ -113,6 +113,10 @@
           <text class="word-level">Lv{{ word.level || 1 }}</text>
         </view>
       </view>
+    </view>
+
+    <view v-if="displayedWords.length < filteredWords.length" class="load-more-tip">
+      <text>上拉加载更多 · 还有 {{ filteredWords.length - displayedWords.length }} 个</text>
     </view>
 
     <view v-if="filteredWords.length === 0" class="empty-state">
@@ -146,6 +150,7 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, watch } from 'vue'
+import { onReachBottom } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 
 const wordsStore = useMobileWords()
@@ -253,6 +258,16 @@ const hasAnyFilter = computed(() =>
 
 // 筛选/排序/模式变化时自动持久化
 watch([listMode, filterState, showFilterPanel], saveFilterState, { deep: true })
+
+// ========== 长列表分页渲染：首屏 50 条，触底追加，避免大词库全量渲染卡顿 ==========
+const PAGE_SIZE = 50
+const showCount = ref(PAGE_SIZE)
+const displayedWords = computed(() => filteredWords.value.slice(0, showCount.value))
+// 筛选/模式变化时回到第一页
+watch([listMode, filterState], () => { showCount.value = PAGE_SIZE }, { deep: true })
+onReachBottom(() => {
+  if (showCount.value < filteredWords.value.length) showCount.value += PAGE_SIZE
+})
 
 function resetFilter() {
   filterState.minLength = 0
@@ -742,6 +757,13 @@ const formatDate = (timestamp: number): string => {
 .empty-state {
   text-align: center;
   padding: 100rpx 40rpx;
+}
+
+.load-more-tip {
+  text-align: center;
+  padding: 24rpx;
+  font-size: 24rpx;
+  color: #999;
 }
 
 .empty-text {
