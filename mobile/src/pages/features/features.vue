@@ -79,6 +79,13 @@ const features = [
     action: () => navigate('/subPackages/pages-memory/memory-palace/list'),
   },
   {
+    icon: '💬',
+    cls: 'sentences',
+    text: '句子收藏',
+    desc: '收藏的句子与译文',
+    action: () => navigate('/subPackages/pages-memory/sentences/sentences'),
+  },
+  {
     icon: '🌙',
     cls: 'focus',
     text: '专注模式',
@@ -139,6 +146,7 @@ const features = [
 .menu-icon.test { background: #3d5a52; }
 .menu-icon.knowledge { background: #83a89a; }
 .menu-icon.palace { background: #4a6b62; }
+.menu-icon.sentences { background: #8ba89c; }
 .menu-icon.focus { background: #5c7a6b; }
 
 .menu-info {

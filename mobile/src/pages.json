@@ -127,6 +127,12 @@
           }
         },
         {
+          "path": "sentences/sentences",
+          "style": {
+            "navigationBarTitleText": "句子收藏"
+          }
+        },
+        {
           "path": "memory-test/memory-test",
           "style": {
             "navigationBarTitleText": "记忆测试"
@@ -218,6 +224,13 @@
           "path": "knowledge-practice",
           "style": {
             "navigationBarTitleText": "知识练习"
+          }
+        },
+        {
+          "path": "knowledge-table",
+          "style": {
+            "navigationBarTitleText": "表格预览",
+            "pageOrientation": "landscape"
           }
         }
       ]

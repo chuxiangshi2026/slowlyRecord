@@ -7,6 +7,7 @@ import {
   niceStep,
   sampleFunction,
 } from './function-plot'
+import { MOBILE_PLOT_MAP } from './plot-map'
 
 describe('compileExpression', () => {
   it('常量与四则运算', () => {
@@ -127,5 +128,25 @@ describe('niceStep', () => {
     expect(niceStep(3)).toBe(5)
     expect(niceStep(8)).toBe(10)
     expect(niceStep(0.03)).toBeCloseTo(0.05)
+  })
+})
+
+describe('MOBILE_PLOT_MAP 映射表', () => {
+  const entries = Object.entries(MOBILE_PLOT_MAP)
+
+  it('每条映射的表达式均可编译', () => {
+    for (const [id, spec] of entries) {
+      expect(() => compileExpression(spec.expr), id).not.toThrow()
+    }
+  })
+
+  it('量程内采样至少 80% 为有限值', () => {
+    const N = 240
+    for (const [id, spec] of entries) {
+      const fn = compileExpression(spec.expr)
+      const segs = sampleFunction(fn, spec.xMin, spec.xMax, N)
+      const finite = segs.reduce((sum, seg) => sum + seg.length, 0)
+      expect(finite / (N + 1), id).toBeGreaterThanOrEqual(0.8)
+    }
   })
 })

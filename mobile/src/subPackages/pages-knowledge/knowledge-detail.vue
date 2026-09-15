@@ -26,6 +26,10 @@
             🧩 拼答案
             <text class="btn-practice-sub">点碎片把答案拼出来</text>
           </button>
+          <button class="btn-practice table" @click="goTable">
+            📊 横屏表格
+            <text class="btn-practice-sub">整包条目铺开对照查看</text>
+          </button>
         </view>
       </view>
 
@@ -337,6 +341,12 @@ function goPractice(mode: 'flip' | 'choice' | 'spell') {
   })
 }
 
+function goTable() {
+  uni.navigateTo({
+    url: `/subPackages/pages-knowledge/knowledge-table?packId=${packId.value}`,
+  })
+}
+
 function goBack() {
   uni.navigateBack()
 }
@@ -422,6 +432,7 @@ onLoad(async (opt: any) => {
 
 .practice-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 20rpx;
   margin-top: 26rpx;
 }
@@ -461,6 +472,20 @@ onLoad(async (opt: any) => {
 .btn-practice.spell {
   background: #52796f;
   color: #fff;
+}
+
+/* 横屏表格入口独占一行，避免四个按钮挤在一起 */
+.btn-practice.table {
+  flex-basis: 100%;
+  min-height: 72rpx;
+  flex-direction: row;
+  gap: 12rpx;
+  background: #fff;
+  color: #52796f;
+  border: 2rpx solid #52796f;
+}
+.btn-practice.table .btn-practice-sub {
+  margin-top: 0;
 }
 
 /* 口诀 */

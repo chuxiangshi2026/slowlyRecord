@@ -236,6 +236,8 @@ export interface MobileSyncData {
   signin?: MobileSigninData
   /** 记忆宫殿（可选：旧版客户端忽略此字段） */
   memoryPalace?: MobileMemoryPalace
+  /** 句子库（可选：旧版客户端忽略此字段） */
+  sentences?: MobileSentences
 }
 
 /** 知识库同步数据：已导入清单 + 每包条目进度（与桌面端 SyncKnowledgeMemory 一致） */
@@ -254,6 +256,24 @@ export interface MobilePhoneticMemory {
 /** 每日打卡同步数据（与桌面端 SyncSignin 一致：YYYY-MM-DD 日期数组，合并取并集） */
 export interface MobileSigninData {
   dates: string[]
+}
+
+/** 句子库同步数据（与桌面端 SyncSentences 一致：整库列表，合并按 id 去重） */
+export interface MobileSentences {
+  sentences: MobileSentenceItem[]
+}
+
+/** 句子条目（与桌面端 Sentence 同 wire format） */
+export interface MobileSentenceItem {
+  id: string
+  text: string
+  translation?: string
+  lang: 'zh' | 'en' | 'other'
+  tags: string[]
+  note?: string
+  source?: string
+  favorite: boolean
+  createdAt: number
 }
 
 // ==================== 记忆宫殿（查看版） ====================
@@ -318,6 +338,8 @@ export interface SyncResult {
   success: boolean
   code?: string
   error?: string
+  /** 数据未变更，跳过了上传 */
+  skipped?: boolean
 }
 
 export interface RestoreResult {
@@ -330,6 +352,7 @@ export interface RestoreResult {
   phoneticMemory?: MobilePhoneticMemory
   signin?: MobileSigninData
   memoryPalace?: MobileMemoryPalace
+  sentences?: MobileSentences
   error?: string
 }
 
