@@ -323,7 +323,7 @@ onMounted(startSession);
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(64, 158, 255, 0.25);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--utools-primary) 25%, transparent);
   }
 
   .speaker-hint {

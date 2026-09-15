@@ -791,7 +791,7 @@ function handleClose() {
       height: 36px;
 
       &.current-line {
-        background: rgba(64, 158, 255, 0.1);
+        background: color-mix(in srgb, var(--utools-primary) 10%, transparent);
         border-left: 3px solid var(--utools-primary);
         padding-left: 8px;
       }
@@ -887,7 +887,7 @@ function handleClose() {
         min-height: 36px;
 
         &.current-line {
-          background: rgba(64, 158, 255, 0.05);
+          background: color-mix(in srgb, var(--utools-primary) 5%, transparent);
         }
       }
 

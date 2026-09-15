@@ -226,8 +226,8 @@ function onKeyUp(event: KeyboardEvent) {
     &:focus,
     &.capturing {
       border-color: var(--utools-primary);
-      box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
-      background: rgba(64, 158, 255, 0.05);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--utools-primary) 20%, transparent);
+      background: color-mix(in srgb, var(--utools-primary) 5%, transparent);
     }
 
     .keys-text {

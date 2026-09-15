@@ -837,7 +837,6 @@ const setFocusWindowMouseIgnore = (shouldIgnore: boolean) => {
     return;
   }
 
-  console.log('[focusLock] 切换鼠标穿透:', shouldIgnore ? '穿透' : '禁止穿透');
   if (shouldIgnore) {
     focusWindow.setIgnoreMouseEvents(true, { forward: true });
   } else {
@@ -1588,7 +1587,6 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
           : initialEdgeStickEnabled;
 
       if (latestAlwaysOnTop !== lastSyncedAlwaysOnTop) {
-        console.log('[focusModeSync] 检测到 DB 置顶状态变化:', lastSyncedAlwaysOnTop, '=>', latestAlwaysOnTop);
         handleSetAlwaysOnTop({
           currentIndex: focusWindowState.currentIndex,
           showExplains: focusWindowState.showExplains,
@@ -1601,14 +1599,12 @@ const startFocusModeSync = (initialAlwaysOnTop: boolean, initialEdgeStickEnabled
       }
 
       if (latestEdgeStickEnabled !== lastSyncedEdgeStickEnabled) {
-        console.log('[focusModeSync] 检测到 DB 贴边隐藏状态变化:', lastSyncedEdgeStickEnabled, '=>', latestEdgeStickEnabled);
         applyEdgeStickEnabled(latestEdgeStickEnabled, 'focusModeSync');
       }
 
       // 检测锁定状态变化（来自 focus.html 的持久化动作）
       const latestLocked = typeof focusMode?.locked === 'boolean' ? focusMode.locked : false;
       if (latestLocked !== lastSyncedLocked) {
-        console.log('[focusModeSync] 检测到 DB 锁定状态变化:', lastSyncedLocked, '=>', latestLocked);
         lastSyncedLocked = latestLocked;
         if (wordsStore.focusMode) {
           wordsStore.focusMode.locked = latestLocked;
@@ -3405,7 +3401,6 @@ function onOnboardingFinish() {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3569,7 +3564,9 @@ function onOnboardingFinish() {
 
 .words-cards-wrapper {
   width: 100%;
-  height: calc(100vh - 70px);
+  /* 不用 100vh：页面缩放(zoom>1)时视口单位不随缩放补偿会导致高度溢出，改用 flex 填满 el-main 剩余空间 */
+  flex: 1;
+  min-height: 0;
   padding: 4px;
   background-color: var(--utools-bg-secondary);
   border-radius: 0;

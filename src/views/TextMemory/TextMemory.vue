@@ -325,8 +325,6 @@ import type { ArticleImageItem } from '@/utils/article-image-export';
 import {
   setupTextFocusListeners,
   setTextFocusWindow,
-  setReturnToListHandler,
-  teardownTextFocusListeners,
   createElectronWindowProxy,
   collectTextFocusDocsForChild
 } from '@/utils/text-focus-window';
@@ -562,50 +560,16 @@ const timelineEventCount = computed(() =>
 
 // 初始化加载
 onMounted(async () => {
-  // 先注册监听（不依赖文章数据），确保打开浮窗时动作通道已就绪
+  // 先注册监听（不依赖文章数据），确保打开浮窗时动作通道已就绪；
+  // “返回列表”的跳转与主窗口唤起由 text-focus-window 控制器常驻负责，
+  // 页面卸载后（路由切走）点击返回列表仍能回到文本记忆页
   setupTextFocusListeners();
-  // 返回列表：跳转路由 + 弹出主窗口（专注窗口关闭后主窗口可能仍在后台，与单词模式 handleOpenWordList 一致）
-  setReturnToListHandler(() => {
-    console.log('[文本专注] 返回列表回调执行');
-    // 刷新文章数据（子窗口可能已更新背诵进度）
-    textStore.loadArticles().catch(() => {});
-    // hash 路由兜底：与单词模式一致，防止路由静默失败
-    router.replace('/text-memory').catch(() => {});
-    if (window.location.hash !== '#/text-memory') {
-      window.location.hash = '#/text-memory';
-    }
-    // uTools 会在浮窗关闭后连带隐藏主窗口（失焦自动隐藏），且时机飘忽（实测最后一次
-    // 隐藏可能出现在 2s 之后）。事件驱动兜底：监听期内每次被隐藏都立即重新唤起，直到稳定
-    if (isUtools() && (window as any).utools?.showMainWindow) {
-      const utoolsApi = (window as any).utools;
-      const deadline = Date.now() + 6000;
-      const show = (tag: string) => {
-        const ok = utoolsApi.showMainWindow();
-        console.log(`[文本专注] showMainWindow(${tag}) 返回:`, ok, '可见性:', document.visibilityState);
-      };
-      const onVisChange = () => {
-        console.log('[文本专注] visibilitychange =>', document.visibilityState);
-        if (document.visibilityState === 'hidden' && Date.now() < deadline) {
-          show('被隐藏后重试');
-        }
-      };
-      document.addEventListener('visibilitychange', onVisChange);
-      setTimeout(() => document.removeEventListener('visibilitychange', onVisChange), 6000);
-
-      show('立即');
-      [150, 400, 800, 1300, 2000].forEach((delay) => {
-        setTimeout(() => show(`${delay}ms`), delay);
-      });
-    }
-  });
   document.addEventListener('click', onDocClick, true);
   applyViewFromQuery();
   await textStore.loadArticles();
 });
 
 onBeforeUnmount(() => {
-  setReturnToListHandler(null);
-  teardownTextFocusListeners();
   document.removeEventListener('click', onDocClick, true);
 });
 
@@ -676,7 +640,6 @@ async function openTextFocusMode(article: TextArticle) {
     if (win && typeof win.on === 'function') {
       try {
         win.on('closed', () => {
-          console.log('[文本专注] 子窗口 closed 事件触发');
           // 关闭前写入的 pendingAction（如返回列表）轮询来不及读到，兜底消费一次
           consumeLatestTextFocusPendingAction();
           focusWindowClosed('text');

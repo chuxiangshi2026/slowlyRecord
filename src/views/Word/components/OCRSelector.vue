@@ -403,8 +403,7 @@ const copyAllTranslation = async () => {
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100vw;
-  height: 100vh;
+  /* 不写 100vw/100vh：页面缩放时视口单位不补偿会导致遮罩尺寸错误，inset 四边已足够 */
   background-color: rgba(0, 0, 0, 0.6) !important;
   z-index: 99999 !important;
   display: flex;

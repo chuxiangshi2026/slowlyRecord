@@ -902,7 +902,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   color: white;
-  box-shadow: 0 8px 32px rgba(64, 158, 255, 0.3);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--utools-primary) 30%, transparent);
 }
 
 .score-number {

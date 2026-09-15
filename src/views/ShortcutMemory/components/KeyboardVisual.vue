@@ -323,7 +323,7 @@ function isTargetKey(key: string): boolean {
     background: var(--utools-primary);
     color: #fff;
     border-color: var(--utools-primary);
-    box-shadow: 0 0 8px rgba(64, 158, 255, 0.5);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--utools-primary) 50%, transparent);
     transform: translateY(2px);
   }
 

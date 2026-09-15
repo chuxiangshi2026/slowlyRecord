@@ -471,7 +471,7 @@ onMounted(startSession);
 
   &.current {
     border-color: var(--utools-primary, #409eff);
-    box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.18);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--utools-primary) 18%, transparent);
   }
 
   &.correct {
