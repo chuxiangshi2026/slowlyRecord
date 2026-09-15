@@ -311,7 +311,7 @@ export const FeatureEvents = {
   focusOpen: (mode: string) => {
     trackEvent('feature', 'focus_open', mode || 'standard');
   },
-  /** 听写练习 */
+  /** 拼写练习 */
   dictation: (action: string) => {
     trackEvent('feature', 'dictation', action);
   },

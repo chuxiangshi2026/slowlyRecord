@@ -5,12 +5,12 @@
       <input v-model="name" class="input" placeholder="如：我的家" maxlength="20" />
     </view>
 
-    <view class="section-title">记忆钩子（按顺序排列）</view>
-    <view v-if="loci.length === 0" class="empty-loci">还没有钩子，点击下方添加</view>
+    <view class="section-title">记忆桩（按顺序排列）</view>
+    <view v-if="loci.length === 0" class="empty-loci">还没有桩，点击下方添加</view>
     <view v-for="(locus, idx) in loci" :key="idx" class="locus-item">
       <view class="locus-order">{{ idx + 1 }}</view>
       <view class="locus-body">
-        <input v-model="locus.name" class="input" placeholder="钩子名称，如：大门" maxlength="12" />
+        <input v-model="locus.name" class="input" placeholder="桩名称，如：大门" maxlength="12" />
         <input v-model="locus.description" class="input sub" placeholder="描述（可选）" maxlength="30" />
         <view class="locus-image-row">
           <image v-if="locus.imageUrl" class="locus-thumb" :src="locus.imageUrl" mode="aspectFill" @click="chooseImage(idx)" />
@@ -28,7 +28,7 @@
       </view>
     </view>
 
-    <button class="add-locus-btn" @click="addLocus">＋ 添加钩子</button>
+    <button class="add-locus-btn" @click="addLocus">＋ 添加桩</button>
 
     <view class="footer">
       <button class="btn-cancel" @click="goBack">取消</button>
@@ -84,13 +84,13 @@ function save() {
   }
   const validLoci = loci.value.filter(l => l.name.trim())
   if (validLoci.length === 0) {
-    uni.showToast({ title: '至少添加一个钩子', icon: 'none' })
+    uni.showToast({ title: '至少添加一个桩', icon: 'none' })
     return
   }
   if (palaceId.value) {
-    // 编辑：改名称 + 全量替换钩子（简单可靠，进度挂在 pegs 上按 locusOrder 保留）
+    // 编辑：改名称 + 全量替换桩（简单可靠，进度挂在 pegs 上按 locusOrder 保留）
     store.updatePalace(palaceId.value, trimmed)
-    // 重建钩子：先删后加
+    // 重建桩：先删后加
     const existing = store.getPalace(palaceId.value)?.loci.length || 0
     for (let i = existing; i >= 1; i--) store.removeLocus(palaceId.value, i)
     validLoci.forEach(l => store.addLocus(palaceId.value, l))

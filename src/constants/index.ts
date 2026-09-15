@@ -123,7 +123,7 @@ const DB_KEY_USER_SET = 'user-set';
 const DB_KEY_NUMBER_MEMORY = 'number_memory_';
 
 /**
- * 听写练习进度数据库前缀
+ * 拼写练习进度数据库前缀
  */
 const DB_KEY_DICTATION = 'dictation_';
 

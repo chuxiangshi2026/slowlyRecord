@@ -468,7 +468,7 @@ export function mergePalaceList(local: Palace[], remote: Palace[]): Palace[] {
 
 /**
  * 合并单个宫殿的桩挂载：按 locusOrder 匹配（一桩一挂载），
- * learnDate 较新者保留（双端都可能巡视自评，不丢进度）
+ * learnDate 较新者保留（双端都可能过一遍自评，不丢进度）
  */
 export function mergePegItemList(local: PegItem[], remote: PegItem[]): PegItem[] {
   const map = new Map<number, PegItem>();

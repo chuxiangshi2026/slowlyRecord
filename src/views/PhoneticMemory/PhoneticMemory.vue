@@ -42,7 +42,7 @@
         </div>
         <div class="practice-card pairs" @click="goMinimalPairs">
           <div class="card-icon">🎧</div>
-          <div class="card-title">最小对立对</div>
+          <div class="card-title">辨音练习</div>
           <div class="card-desc">听音 → 二选一</div>
         </div>
         <div class="practice-card breakdown" @click="goBreakdown">

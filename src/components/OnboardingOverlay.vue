@@ -52,7 +52,7 @@
             <div class="feature-item">
               <span class="feature-emoji">✏️</span>
               <div class="feature-info">
-                <div class="feature-name">听写</div>
+                <div class="feature-name">拼写</div>
                 <div class="feature-desc">看释义默写单词，专治拼不对</div>
               </div>
             </div>

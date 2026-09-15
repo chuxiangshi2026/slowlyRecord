@@ -21,7 +21,7 @@
     <view v-if="activeTab === 'pegs'" class="content">
       <!-- 首次配置引导：桩少于 10 个时显示 -->
       <view v-if="store.associationCount < 10" class="guide-bar">
-        <text>💡 先配置你的数字钩子（已编 {{ store.associationCount }}/100），配好后点"开始练习"就能用了</text>
+        <text>💡 先配置你的数字桩（已编 {{ store.associationCount }}/100），配好后点"开始练习"就能用了</text>
       </view>
       <view class="peg-toolbar">
         <view class="peg-stat">

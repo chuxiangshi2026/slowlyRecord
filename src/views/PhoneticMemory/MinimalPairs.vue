@@ -3,7 +3,7 @@
     <div class="header">
       <el-button text @click="goBack" :icon="ArrowLeft" size="large">返回</el-button>
       <div class="title">
-        <h2>最小对立对</h2>
+        <h2>辨音练习</h2>
         <span class="subtitle">听音 · 二选一</span>
       </div>
       <div class="stats">

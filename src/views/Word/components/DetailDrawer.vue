@@ -285,7 +285,7 @@
         <span class="shorcut-desc">{{ item.shortcut }}</span>
       </div>
 
-      <h5 style="text-align:center; margin-top: 20px;">听写模式</h5>
+      <h5 style="text-align:center; margin-top: 20px;">拼写模式</h5>
       <div class="titles">
         <span class="title">功能说明</span>
         <span class="title">快捷键</span>

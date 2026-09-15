@@ -49,7 +49,7 @@ export interface FocusModeSettings {
     backgroundImageOpacity: number; // 背景图片透明度 0-1
     locked?: boolean; // 锁定后内容区鼠标穿透
     autoNext?: boolean; // 发音结束后自动切换到下一个单词（标准模式）
-    repeatCount?: number; // 每个单词自动发音遍数（1-3，听写模式表示每个词发音几遍）
+    repeatCount?: number; // 每个单词自动发音遍数（1-3，拼写模式表示每个词发音几遍）
     pendingAction?: FocusModePendingAction;
 }
 

@@ -158,7 +158,7 @@
         <el-tooltip class="box-item" effect="dark" content="释义" placement="top" popper-class="small-tooltip">
           <el-icon class="footer-icon" :class="{ active: options.showMeaning }" :size="18" @click="options.showMeaning = !options.showMeaning"><View /></el-icon>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="半提示" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="给一半字母" placement="top" popper-class="small-tooltip">
           <el-icon class="footer-icon" :class="{ active: partialMode }" :size="18" @click="partialMode = !partialMode"><Edit /></el-icon>
         </el-tooltip>
         <el-divider direction="vertical"/>
@@ -519,7 +519,7 @@ function goToWordList() {
 }
 
 // ========== 选项 ==========
-const partialMode = ref(true); // true=半提示模式, false=全盲模式
+const partialMode = ref(true); // true=给一半字母模式, false=全盲模式
 const displayMode = computed<'blank' | 'partial'>(() => partialMode.value ? 'partial' : 'blank');
 const options = ref({
   autoPlay: true,

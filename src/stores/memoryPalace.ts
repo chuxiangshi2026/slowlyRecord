@@ -230,7 +230,7 @@ export const useMemoryPalaceStore = defineStore('memoryPalace', () => {
   }
 
   /**
-   * 巡视自评（记住/忘记），按统一 SRS 标准更新
+   * 过一遍自评（记住/忘记），按统一 SRS 标准更新
    */
   async function assessPeg(peg: PegItem, remembered: boolean) {
     await ensureDb();

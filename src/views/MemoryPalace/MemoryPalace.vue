@@ -32,7 +32,7 @@
     <div class="palace-list-wrapper" v-loading="store.loading">
       <el-empty v-if="filteredPalaces.length === 0">
         <template #description>
-          <p class="palace-empty-concept">记忆宫殿：把要记的内容「挂」到一组熟悉的空间位置（桩）上，回忆时按路线逐个巡视取回</p>
+          <p class="palace-empty-concept">记忆宫殿：把要记的内容「挂」到一组熟悉的空间位置（桩）上，回忆时按路线过一遍取回</p>
           <p>暂无记忆宫殿，点击右下角新建或导入内置桩库</p>
         </template>
       </el-empty>
@@ -61,7 +61,7 @@
 
         <div class="operate" @click.stop>
           <div class="operate-group">
-            <el-tooltip effect="dark" content="巡视复习" placement="top" popper-class="small-tooltip">
+            <el-tooltip effect="dark" content="过一遍复习" placement="top" popper-class="small-tooltip">
               <el-icon class="iconHover" :size="20" @click="goReview(palace._id)"><View /></el-icon>
             </el-tooltip>
           </div>

@@ -4,7 +4,7 @@
     <div class="review-header">
       <span class="footer-stat" @click="goBack">
         <el-icon><ArrowLeft /></el-icon>
-        退出巡视
+        退出过一遍
       </span>
       <span class="review-progress">{{ currentIndex + 1 }} / {{ total }}</span>
     </div>
@@ -13,11 +13,11 @@
       <el-empty description="宫殿不存在或已被删除" />
     </div>
 
-    <!-- 巡视完成 -->
+    <!-- 过一遍完成 -->
     <div v-else-if="finished" class="review-body finished-body">
       <el-result
         icon="success"
-        title="巡视完成"
+        title="过一遍完成"
         :sub-title="`记住 ${stats.remembered} · 忘记 ${stats.forgotten} · 跳过 ${stats.skipped}`"
       >
         <template #extra>
@@ -27,7 +27,7 @@
       </el-result>
     </div>
 
-    <!-- 巡视主体 -->
+    <!-- 过一遍主体 -->
     <div v-else-if="currentLocus" class="review-body">
       <div class="locus-stage" @click="showAnswer">
         <img v-if="currentLocus.imageUrl" :src="currentLocus.imageUrl" class="stage-image" alt="桩图片" />

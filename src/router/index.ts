@@ -137,7 +137,7 @@ const routes: Array<RouteRecordRaw> = [
         component: Dictation,
         meta: {
           menu: false,
-          title: '听写练习',
+          title: '拼写练习',
         },
       },
       {
@@ -205,7 +205,7 @@ const routes: Array<RouteRecordRaw> = [
         component: MinimalPairs,
         meta: {
           menu: false,
-          title: '最小对立对',
+          title: '辨音练习',
         },
       },
       {
@@ -270,7 +270,7 @@ const routes: Array<RouteRecordRaw> = [
         component: MemoryPalaceReview,
         meta: {
           menu: false,
-          title: '宫殿巡视',
+          title: '过一遍宫殿',
         },
       },
       ...(isDesktopEnv ? [

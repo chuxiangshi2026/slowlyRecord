@@ -106,7 +106,7 @@ export interface SyncSignin {
 
 /**
  * 记忆宫殿同步数据
- * 宫殿结构（桩列表）与每宫殿的桩挂载（含巡视 SRS 进度）分开存放；
+ * 宫殿结构（桩列表）与每宫殿的桩挂载（含过一遍 SRS 进度）分开存放；
  * 图片为 dataURL，收集时超大图会被剔除（见 memory-palace-db 的体积守卫）
  */
 export interface SyncMemoryPalace {

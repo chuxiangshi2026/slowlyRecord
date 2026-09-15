@@ -365,7 +365,7 @@
         <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><FilterListIcon /></el-icon>
       </el-tooltip>
 
-      <el-tooltip class="box-item" effect="dark" content="听写练习" placement="top" popper-class="small-tooltip">
+      <el-tooltip class="box-item" effect="dark" content="拼写练习" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="goToDictation"><EditPen /></el-icon>
       </el-tooltip>
       <el-tooltip class="box-item" effect="dark" content="专注模式（悬浮小窗记单词）" placement="top" popper-class="small-tooltip">
@@ -1746,10 +1746,10 @@ const handleWordChanged = async (payload: any) => {
 
 
 /**
- * 处理从专注模式跳转到听写练习的请求
+ * 处理从专注模式跳转到拼写练习的请求
  */
 const handleOpenDictation = async () => {
-  console.log('专注模式请求跳转到听写练习');
+  console.log('专注模式请求跳转到拼写练习');
   clearFocusModePendingAction();
 
   // 刷新单词列表数据
@@ -3282,10 +3282,10 @@ const confirmAddOcrWords = async () => {
   }
 }
 
-// ========== 听写练习功能 ==========
+// ========== 拼写练习功能 ==========
 
 /**
- * 跳转到听写练习页面（携带筛选参数同步）
+ * 跳转到拼写练习页面（携带筛选参数同步）
  */
 function goToDictation() {
   const filterPattern = encodeURIComponent(currentFilter.value.pattern || '');

@@ -106,13 +106,13 @@ describe('MemoryPalaceEdit', () => {
     expect(screen.getByDisplayValue('我的家')).toBeInTheDocument()
     expect(screen.getByDisplayValue('大门')).toBeInTheDocument()
     expect(screen.getByDisplayValue('客厅')).toBeInTheDocument()
-    expect(screen.getByText('地点桩（2 个，按巡视顺序排列）')).toBeInTheDocument()
+    expect(screen.getByText('地点桩（2 个，按过一遍顺序排列）')).toBeInTheDocument()
   })
 
   it('添加新桩', async () => {
     await setup()
     await fireEvent.click(screen.getByText('添加桩'))
-    expect(screen.getByText('地点桩（3 个，按巡视顺序排列）')).toBeInTheDocument()
+    expect(screen.getByText('地点桩（3 个，按过一遍顺序排列）')).toBeInTheDocument()
     expect(screen.getAllByPlaceholderText('桩名称（如：大门）')).toHaveLength(3)
   })
 
@@ -121,7 +121,7 @@ describe('MemoryPalaceEdit', () => {
     const deleteIcons = screen.getAllByText('delete')
     expect(deleteIcons).toHaveLength(2)
     await fireEvent.click(deleteIcons[0])
-    expect(screen.getByText('地点桩（1 个，按巡视顺序排列）')).toBeInTheDocument()
+    expect(screen.getByText('地点桩（1 个，按过一遍顺序排列）')).toBeInTheDocument()
   })
 
   it('下移调整桩顺序', async () => {

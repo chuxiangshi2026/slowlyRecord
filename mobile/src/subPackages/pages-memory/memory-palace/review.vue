@@ -16,7 +16,7 @@
       <text class="empty-text">宫殿不存在或已被删除</text>
     </view>
 
-    <!-- 巡视完成 -->
+    <!-- 过一遍完成 -->
     <view v-else-if="finished" class="review-body finished">
       <text class="finished-icon">✅</text>
       <text class="finished-title">已经过完一遍</text>
@@ -28,7 +28,7 @@
       </view>
     </view>
 
-    <!-- 巡视主体 -->
+    <!-- 过一遍主体 -->
     <view v-else-if="currentLocus" class="review-body">
       <view class="locus-card" @click="reveal">
         <!-- 桩图：渲染失败（如抖音小程序不支持 SVG dataURL）时自动隐藏，只留文字 -->
@@ -53,9 +53,9 @@
             <text v-if="resolved.articleTitle" class="answer-source">—— 《{{ resolved.articleTitle }}》</text>
             <text v-if="currentPeg?.mnemonic" class="answer-mnemonic">助记：{{ currentPeg.mnemonic }}</text>
           </template>
-          <text v-else class="answer-none">该钩子没挂内容</text>
+          <text v-else class="answer-none">该桩未挂载内容</text>
         </view>
-        <text v-else-if="recallMode" class="reveal-tip">口头回忆挂上的内容，点击卡片查看答案</text>
+        <text v-else-if="recallMode" class="reveal-tip">口头回忆挂载的内容，点击卡片查看答案</text>
       </view>
 
       <!-- 自评 / 翻页 -->
@@ -68,7 +68,7 @@
       </view>
       <view class="review-nav">
         <text class="nav-btn" :class="{ disabled: currentIndex === 0 }" @click="prev">‹ 上一个</text>
-        <text class="nav-btn edit-content" @click="showPegEdit = true">挂内容</text>
+        <text class="nav-btn edit-content" @click="showPegEdit = true">挂载内容</text>
         <text class="nav-btn" @click="next">跳过 ›</text>
       </view>
     </view>
@@ -97,8 +97,8 @@ import { useSignin } from '@/stores/useSignin'
 import { resolvePegContent } from '../../../utils/memory-palace'
 import type { MobilePalaceLocus } from '@/stores/useUtils/types'
 
-// 宫殿巡视复习（查看版精简实现，对应桌面端 MemoryPalaceReview）：
-// 按桩顺序翻页巡视，支持回忆模式（先桩位提示、点击揭示）与记住/忘记自评
+// 宫殿过一遍复习（查看版精简实现，对应桌面端 MemoryPalaceReview）：
+// 按桩顺序翻页过一遍，支持回忆模式（先桩位提示、点击揭示）与记住/忘记自评
 const palaceStore = useMemoryPalace()
 const textStore = useTextMemory()
 // 打卡数据用于完成页"去打卡"引导判断

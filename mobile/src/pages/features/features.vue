@@ -75,7 +75,7 @@ const features = [
     icon: '🏛️',
     cls: 'palace',
     text: '记忆宫殿',
-    desc: '查看宫殿 / 钩子过一遍',
+    desc: '查看宫殿 / 按桩过一遍',
     action: () => navigate('/subPackages/pages-memory/memory-palace/list'),
   },
   {

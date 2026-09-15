@@ -31,7 +31,7 @@
 
       <!-- 桩列表编辑 -->
       <div class="loci-header">
-        <span>地点桩（{{ loci.length }} 个，按巡视顺序排列）</span>
+        <span>地点桩（{{ loci.length }} 个，按过一遍顺序排列）</span>
         <el-button size="small" type="primary" plain @click="addLocus">
           <el-icon><Plus /></el-icon>
           添加桩

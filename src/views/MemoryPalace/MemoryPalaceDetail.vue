@@ -102,7 +102,7 @@
         <el-tooltip effect="dark" content="编辑宫殿" placement="top" popper-class="small-tooltip">
           <el-icon :size="20" class="footer-icon" @click="goEdit"><Edit /></el-icon>
         </el-tooltip>
-        <el-tooltip effect="dark" content="开始巡视" placement="top" popper-class="small-tooltip">
+        <el-tooltip effect="dark" content="开始过一遍" placement="top" popper-class="small-tooltip">
           <el-icon :size="20" class="footer-icon" @click="goReview"><View /></el-icon>
         </el-tooltip>
       </div>

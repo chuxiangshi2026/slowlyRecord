@@ -7,7 +7,7 @@
 
 /** 宫殿中的一个地点桩 */
 export interface PalaceLocus {
-  /** 顺序号（从 1 开始，巡视按此顺序） */
+  /** 顺序号（从 1 开始，过一遍按此顺序） */
   order: number;
   /** 桩名称（如"立春"、"大门"） */
   name: string;

@@ -221,7 +221,7 @@ const MAX_ERRORS_BEFORE_HINT = 3
 const MAX_TAP_LETTERS = 8
 
 // ========== 选项 ==========
-// 半提示模式
+// 给一半字母模式
 const partialMode = ref(true)
 const displayMode = computed<'blank' | 'partial'>(() => partialMode.value ? 'partial' : 'blank')
 
@@ -265,7 +265,7 @@ const filteredOutCount = ref(0)
 // 空态文案（含"词组/句子被过滤"解释）
 const emptyState = computed(() => getEmptyState(rangeTotalCount.value, filteredOutCount.value))
 
-// 半提示模式
+// 给一半字母模式
 const partialSlots = ref<{ fixed: boolean; letter: string; value?: string }[]>([])
 const focusedSlotIndex = ref(-1)
 
@@ -984,7 +984,7 @@ watch(() => wordsStore.currentBankId, async () => {
   opacity: 0;
 }
 
-/* 半提示模式 */
+/* 给一半字母模式 */
 .partial-mode {
   display: flex;
   flex-direction: column;

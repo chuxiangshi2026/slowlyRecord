@@ -22,13 +22,13 @@
         <view class="palace-main">
           <text class="palace-name">{{ palace.name }}</text>
           <text class="palace-meta">
-            {{ palace.loci.length }} 个钩子 · 已挂上 {{ mountedCount(palace._id) }}
+            {{ palace.loci.length }} 个桩 · 已挂载 {{ mountedCount(palace._id) }}
           </text>
           <text class="palace-time">更新于 {{ formatTime(palace.utime) }}</text>
         </view>
         <view class="palace-side">
           <view v-if="dueCountOf(palace._id) > 0" class="due-badge">
-            <text>{{ dueCountOf(palace._id) }} 个钩子待过一遍</text>
+            <text>{{ dueCountOf(palace._id) }} 个桩待过一遍</text>
           </view>
           <view v-else class="due-clear">
             <text>✓ 已过一遍</text>
@@ -46,7 +46,7 @@
 import { computed } from 'vue'
 import { useMemoryPalace } from '@/stores/useMemoryPalace'
 
-// 记忆宫殿列表（查看版）：展示名称 / 桩数 / 待巡视状态，点击进巡视页
+// 记忆宫殿列表（查看版）：展示名称 / 桩数 / 待过一遍状态，点击进过一遍页
 const store = useMemoryPalace()
 store.load()
 
@@ -83,7 +83,7 @@ function goEdit(palaceId: string) {
 function confirmDelete(palaceId: string, name: string) {
   uni.showModal({
     title: '删除宫殿',
-    content: `删除「${name}」将同时删除其所有钩子与学习进度，不可恢复`,
+    content: `删除「${name}」将同时删除其所有桩与学习进度，不可恢复`,
     confirmColor: '#c0564f',
     success: (res) => {
       if (res.confirm) {
