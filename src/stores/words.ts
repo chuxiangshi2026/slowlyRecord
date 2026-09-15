@@ -563,13 +563,20 @@ export const useWordsStore =
             async function listWords(): Promise<Word[]> {
                 if (_listWordsPromise) return _listWordsPromise;
                 _listWordsPromise = (async (): Promise<Word[]> => {
+                  try {
                     // 确保词库信息已初始化
                     if (!currentWordBankId.value) {
                         await initWordBankInfo()
                     }
 
+                    // 竞态守卫：await 期间用户可能已切换词库，记录起始词库ID，写回前校验
+                    const bankIdAtStart = currentWordBankId.value
                     // 从当前词库获取单词
                     const bank = await getWordBank(currentWordBankId.value)
+                    if (currentWordBankId.value !== bankIdAtStart) {
+                        // 词库已切换，放弃本次结果，避免旧词库覆盖新词库列表
+                        return words.value
+                    }
                     currentWordBank.value = bank
                     setActiveLanguage(bank?.language)
 
@@ -587,6 +594,11 @@ export const useWordsStore =
                     cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
 
                     return words.value
+                  } catch (e) {
+                    // 调用方（App.vue / Word.vue 多处）未接 catch，这里兜底返回现状
+                    log.e('加载单词列表失败', e)
+                    return words.value
+                  }
                 })();
                 try {
                     return await _listWordsPromise;
@@ -812,7 +824,7 @@ export const useWordsStore =
              * @param word
              */
             async function addAndUpdateWord(word: Word): Promise<void> {
-                console.log("更新词库单个词", word)
+              try {
                 // 单词状态变更（remember/forget、level 升降等复习动作）均视为学习行为，自动完成今日打卡
                 // 先幂等加载打卡记录再签到，避免覆盖本地已有记录（signin.ts 不依赖本 store，无循环引用）
                 const signinStore = useSigninStore();
@@ -857,6 +869,10 @@ export const useWordsStore =
                         currentWordBank.value = bank
                     }
                 }
+              } catch (e) {
+                // 调用方（含专注模式同步）普遍未接 catch，这里吞掉异常只记日志，避免未处理的 Promise 拒绝
+                log.e('更新单词失败', e)
+              }
             }
 
 

@@ -25,8 +25,10 @@ export const useUiStore = defineStore('ui', () => {
   /** 应用界面缩放（CSS zoom，Chromium 布局级缩放，无需改各处 px 样式） */
   function applyUiZoom(v: number) {
     uiZoom.value = v
-    localStorage.setItem(UI_ZOOM_KEY, String(v))
-    document.documentElement.style.zoom = v === 1 ? '' : String(v)
+    try {
+      localStorage.setItem(UI_ZOOM_KEY, String(v))
+      document.documentElement.style.zoom = v === 1 ? '' : String(v)
+    } catch { /* 存储不可用（quota/禁用）时跳过，不影响后续初始化 */ }
   }
 
   function openSyncDialog() {

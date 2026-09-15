@@ -262,13 +262,17 @@ function handleOpenImport() {
   showImportDialog.value = true;
   loadPackPreviews(allPacks.value).then(map => {
     Object.assign(previewMap.value, map);
-  });
+  }).catch(() => { /* 预览加载失败不阻塞导入 */ });
 }
 
 // 导入知识包：加入清单并加载
 async function handleImport(packId: string) {
-  await store.importPack(packId);
-  ElMessage.success('导入成功');
+  try {
+    await store.importPack(packId);
+    ElMessage.success('导入成功');
+  } catch {
+    ElMessage.error('导入失败，请重试');
+  }
 }
 
 // 移除知识包：确认后下架（进度文档保留）
@@ -287,8 +291,12 @@ async function handleRemove(packId: string, name: string) {
     // 用户取消
     return;
   }
-  await store.removeImportedPack(packId);
-  ElMessage.success('已移除');
+  try {
+    await store.removeImportedPack(packId);
+    ElMessage.success('已移除');
+  } catch {
+    ElMessage.error('移除失败，请重试');
+  }
 }
 
 // 删除自建知识集：确认后删除该集全部条目及进度（不可恢复）
@@ -307,8 +315,12 @@ async function handleDeleteCustom(pack: KnowledgePackInfo) {
     // 用户取消
     return;
   }
-  await store.removeCustomSet(pack.name);
-  ElMessage.success('已删除');
+  try {
+    await store.removeCustomSet(pack.name);
+    ElMessage.success('已删除');
+  } catch {
+    ElMessage.error('删除失败，请重试');
+  }
 }
 
 // 加载已导入清单（含老用户进度自动并入）与自建条目，再加载各包内容用于进度统计，失败静默忽略

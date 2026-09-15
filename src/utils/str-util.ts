@@ -66,7 +66,11 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
 
             findWord.isReview=true
             findWord.explainedHidden=false
-            await wordsStore.addAndUpdateWord(findWord)
+            try {
+                await wordsStore.addAndUpdateWord(findWord)
+            } catch (e) {
+                return {success: false, message: '保存失败，请重试', text: wordText};
+            }
             // 数据更新完成后设置定位，确保watcher触发时数据已就绪
             wordsStore.setLastAddedWordText(wordText);
             // ElMessage.success('单词已存在');
