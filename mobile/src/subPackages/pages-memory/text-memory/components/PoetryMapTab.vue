@@ -71,23 +71,23 @@
       <text class="empty-hint">{{ emptyHint }}</text>
     </view>
 
-    <!-- 地图 -->
-    <map
-      v-else
-      id="poetryMap"
-      class="map-area"
-      :latitude="centerLat"
-      :longitude="centerLng"
-      :scale="mapScale"
-      :markers="markers"
-      :polyline="polylines"
-      :include-points="includePoints"
-      show-compass
-      enable-3D
-      enable-overlooking
-      @markertap="onMarkerTap"
-      @regionchange="onRegionChange"
-    />
+    <!-- 地图：外层容器占位（沿用 flex 高度），map 使用测得的显式像素尺寸渲染 -->
+    <view v-else class="map-box">
+      <map
+        v-if="mapStyle"
+        id="poetryMap"
+        class="map-area"
+        :style="mapStyle"
+        :latitude="centerLat"
+        :longitude="centerLng"
+        :scale="mapScale"
+        :markers="markers"
+        :polyline="polylines"
+        :include-points="includePoints"
+        @markertap="onMarkerTap"
+        @regionchange="onRegionChange"
+      />
+    </view>
 
     <!-- 图例 -->
     <view class="legend">
@@ -108,7 +108,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, shallowRef, computed, watch, onMounted } from 'vue'
+import {
+  ref,
+  shallowRef,
+  computed,
+  watch,
+  onMounted,
+  onUnmounted,
+  nextTick,
+  getCurrentInstance,
+} from 'vue'
 import {
   loadAllPoetry,
   loadAllIdioms,
@@ -125,6 +134,11 @@ interface Props {
   selectedPoetryIds: Set<string>
   /** 已选中的成语 ID 列表（与父组件双向绑定） */
   selectedIdiomIds: Set<string>
+  /**
+   * 外层容器尺寸变化信号（如底部 sheet 展开/收起）。
+   * 值变化时地图重新测量容器尺寸，避免原生层渲染区域与容器不一致。
+   */
+  resizeKey?: number
 }
 
 const props = defineProps<Props>()
@@ -387,8 +401,8 @@ const markers = computed<UniMarker[]>(() => {
     indexMap.set(idx, g)
   })
   markerIndexMap.value = indexMap
-  // 冻结数组以阻止 Vue 在传给小程序 map 组件前做深 proxy
-  return Object.freeze(list) as UniMarker[]
+  // 冻结数组及每个 marker 对象，阻止 Vue 深度 proxy 干扰原生 map 组件
+  return Object.freeze(list.map((m) => Object.freeze(m))) as UniMarker[]
 })
 
 // ===== 路线 polyline =====
@@ -498,6 +512,89 @@ const includePoints = computed(() => {
   }))
 })
 
+// ===== 地图尺寸同步 =====
+// 小程序原生 map 是同层渲染的原生组件：宽高完全交给 flex/百分比推导时，
+// 偶尔会出现原生渲染区域与容器尺寸不一致（表现为地图只渲染一部分、另一半空白）。
+// 这里改为先测量容器真实像素尺寸，再用显式 px 尺寸渲染 map。
+
+const mapBoxSize = ref<{ w: number; h: number } | null>(null)
+/** 测量连续失败时的兜底开关：退回百分比尺寸，至少让地图能显示 */
+const sizeFallback = ref(false)
+const mapStyle = computed(() => {
+  if (mapBoxSize.value) {
+    return `width:${mapBoxSize.value.w}px;height:${mapBoxSize.value.h}px;`
+  }
+  return sizeFallback.value ? 'width:100%;height:100%;' : ''
+})
+const instance = getCurrentInstance()
+
+/** 有数据且不在加载中时才渲染地图 */
+const showMap = computed(() => !loading.value && locationGroups.value.length > 0)
+
+let disposed = false
+onUnmounted(() => {
+  disposed = true
+})
+
+function applyBoxSize(rect: { width: number; height: number } | null): boolean {
+  if (!rect || rect.width < 1 || rect.height < 1) return false
+  const w = Math.round(rect.width)
+  const h = Math.round(rect.height)
+  if (mapBoxSize.value?.w !== w || mapBoxSize.value?.h !== h) {
+    mapBoxSize.value = { w, h }
+  }
+  return true
+}
+
+/** 测量地图容器尺寸；首次布局未完成时 rect 可能取到 0，按次数重试 */
+function measureMapBox(attempt = 0) {
+  if (disposed) return
+  const query = uni.createSelectorQuery()
+  // 自定义组件内查询节点必须 in(proxy)，否则取不到节点
+  if (instance) query.in(instance.proxy as any)
+  query
+    .select('.map-box')
+    .boundingClientRect((rect: any) => {
+      if (disposed) return
+      if (applyBoxSize(rect)) return
+      if (attempt < 5) {
+        setTimeout(() => measureMapBox(attempt + 1), 100)
+      } else {
+        // 兜底：退回百分比尺寸（极端情况下至少能显示地图）
+        sizeFallback.value = true
+      }
+    })
+    .exec()
+}
+
+watch(
+  showMap,
+  async (visible) => {
+    if (!visible) {
+      mapBoxSize.value = null
+      sizeFallback.value = false
+      return
+    }
+    await nextTick()
+    measureMapBox()
+    // iOS 真机上布局偶尔晚一拍才稳定，延迟再校验一次尺寸
+    setTimeout(() => {
+      if (!disposed && showMap.value) measureMapBox()
+    }, 300)
+  },
+  { immediate: true },
+)
+
+// 外层容器尺寸变化（如底部 sheet 展开/收起）后重新测量
+watch(
+  () => props.resizeKey,
+  async () => {
+    if (!showMap.value) return
+    await nextTick()
+    setTimeout(() => measureMapBox(), 50)
+  },
+)
+
 // ===== 事件 =====
 
 function onMarkerTap(e: any) {
@@ -584,6 +681,8 @@ const emptyHint = computed(() => {
 .map-tab {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-width: 0;
   height: 100%;
   background: #f5f6fa;
 }
@@ -666,10 +765,18 @@ const emptyHint = computed(() => {
   font-variant-numeric: tabular-nums;
 }
 
-/* 地图 */
-.map-area {
+/* 地图：map-box 只负责占位，真实 map 用测量出的 px 尺寸绝对定位填充，
+   避免原生组件尺寸由 flex 反推导致的渲染区域错位 */
+.map-box {
   flex: 1;
+  min-height: 0;
   width: 100%;
+  position: relative;
+}
+.map-area {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .loading-mask {

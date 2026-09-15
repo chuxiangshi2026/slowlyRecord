@@ -163,6 +163,7 @@
           v-if="mapTabVisible"
           :selected-poetry-ids="selectedPoetryIds"
           :selected-idiom-ids="selectedIdiomIds"
+          :resize-key="mapResizeKey"
           @tap-marker="onMapMarkerTap"
         />
       </view>
@@ -195,7 +196,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useTextMemory } from '@/stores/useTextMemory'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
 import {
@@ -502,11 +503,19 @@ const MAP_SELECT_LIMIT = 50
 
 const mapSheetVisible = ref(false)
 const mapSheetPayload = ref<MarkerTapPayload | null>(null)
+/** 地图容器尺寸变化信号：sheet 展开/收起后通知地图重新测量尺寸 */
+const mapResizeKey = ref(0)
 
 function onMapMarkerTap(payload: MarkerTapPayload) {
   mapSheetPayload.value = payload
   mapSheetVisible.value = true
 }
+
+// map 区域高度随 sheet 开关变化，布局完成后通知地图重测尺寸
+watch(mapSheetVisible, async () => {
+  await nextTick()
+  mapResizeKey.value++
+})
 
 /** 当前已选总数 */
 function totalSelected(): number {
@@ -694,12 +703,12 @@ function handleImportFromMap() {
   overflow: hidden;
 }
 
-/* 地图区域：默认满高，sheet 展开时缩到上半部 */
+/* 地图区域：默认满高，sheet 展开时缩到上半部。
+   注意不要用 flex 居中/过渡动画驱动原生 map 的尺寸，否则原生层容易渲染错位 */
 .map-area-wrap {
   flex: 1;
   min-height: 0;
-  display: flex;
-  transition: flex-basis 0.25s ease;
+  position: relative;
 }
 .map-area-wrap.sheet-open {
   flex: 0 0 35%;
