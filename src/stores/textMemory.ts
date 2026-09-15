@@ -230,7 +230,9 @@ export const useTextMemoryStore = defineStore('textMemory', {
         // 历史地名扩展表（含中外近代）优先，内部已 fallback 到诗词古地名库
         const coord = parseTimelineLocation(article.location);
         if (coord) {
-          article.geo = { lng: coord.lng, lat: coord.lat, name: coord.name };
+          // geo 必须是纯数据副本：parseTimelineLocation 可能返回模块级共享常量引用，
+          // 直接存入会让 utools.db.put 序列化时报 An object could not be cloned
+          article.geo = { lng: coord.lng, lat: coord.lat, name: coord.name, ...(coord.aliases ? { aliases: [...coord.aliases] } : {}) };
         }
       }
       return article;

@@ -120,11 +120,12 @@ export function parseTimelineLocation(locationText?: string): LocationCoord | nu
   const text = locationText.trim();
   // 取第一个 "/" 或 "," 前的主地名
   const main = text.split(/[/,，、]/)[0].trim();
-  if (TIMELINE_LOCATION_COORDS[main]) return TIMELINE_LOCATION_COORDS[main];
+  // 返回纯数据副本：调用方会把结果存入词库文档，共享常量引用会让 utools.db.put 克隆失败
+  if (TIMELINE_LOCATION_COORDS[main]) return { ...TIMELINE_LOCATION_COORDS[main] };
   // 别名匹配
   for (const key in TIMELINE_LOCATION_COORDS) {
     const c = TIMELINE_LOCATION_COORDS[key];
-    if (c.aliases?.includes(main)) return c;
+    if (c.aliases?.includes(main)) return { ...c };
   }
   // fallback 诗词地名库
   return parseLocation(text);

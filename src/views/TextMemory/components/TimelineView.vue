@@ -267,6 +267,10 @@ function onRelationLocate(article: TextArticle) {
   padding: 8px 4px;
   max-height: calc(100vh - 280px);
   overflow-y: auto;
+  scrollbar-width: none; /* 隐藏滚动条 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tl-card {
