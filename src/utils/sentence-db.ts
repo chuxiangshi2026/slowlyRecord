@@ -4,6 +4,7 @@
  */
 import { getDbAdapter } from '@/adapters/db';
 import type { Sentence } from '@/types/sentences';
+import cloneDeep from 'lodash.clonedeep';
 
 export const SENTENCES_DOC_ID = 'slowlyrecord-sentences-data';
 
@@ -39,7 +40,9 @@ export async function saveSentences(sentences: Sentence[]): Promise<{ success: b
     const doc: SentencesDoc = {
       _id: SENTENCES_DOC_ID,
       type: 'sentences',
-      sentences,
+      // 深拷贝为纯数据：sentences 是 Pinia 响应式数组（Proxy），
+      // 直接传给 utools.db.promises.put 会报 An object could not be cloned
+      sentences: cloneDeep(sentences),
       updatedAt: Date.now()
     };
     if (existingDoc?._rev) {

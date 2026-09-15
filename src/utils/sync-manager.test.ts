@@ -233,6 +233,40 @@ describe('sync-manager', () => {
       expect(result.textMemoryRestored).toBe(true)
     })
 
+    it('还原文本记忆应按 _id 合并而非覆盖', async () => {
+      const { restoreSyncData, DEFAULT_RESTORE_OPTIONS } = await loadModule()
+      // 本地已有 article-local
+      mockDb.put!({
+        _id: 'slowlyrecord-textmemory-data',
+        type: 'textmemory',
+        articles: [{ _id: 'article-same', title: '本地版本' }],
+        notes: [],
+        prompts: [],
+        updatedAt: 1,
+      } as any)
+
+      const data: SyncData = {
+        ...createMockSyncData(),
+        textMemory: {
+          articles: [
+            { _id: 'article-same', title: '远端版本', content: '', createdAt: 1, updatedAt: 1 },
+            { _id: 'article-new', title: '远端新增', content: '', createdAt: 1, updatedAt: 1 },
+          ],
+          notes: [],
+          prompts: [],
+        },
+      }
+
+      const result = await restoreSyncData(data, DEFAULT_RESTORE_OPTIONS)
+
+      expect(result.textMemoryRestored).toBe(true)
+      const doc = mockDb.get!('slowlyrecord-textmemory-data') as any
+      expect(doc.articles).toHaveLength(2)
+      // 同 _id 保留本地版本，不背远端覆盖
+      expect(doc.articles.find((a: any) => a._id === 'article-same').title).toBe('本地版本')
+      expect(doc.articles.find((a: any) => a._id === 'article-new').title).toBe('远端新增')
+    })
+
     it('应该根据选项选择性还原', async () => {
       const { restoreSyncData } = await loadModule()
       const data: SyncData = {
@@ -476,5 +510,103 @@ describe('sync-manager 记忆宫殿（memoryPalace scope）', () => {
 
     expect(result.memoryPalaceRestored).toBe(false)
     expect(mockDb.get!(PALACES_DOC_ID)).toBeNull()
+  })
+})
+
+describe('sync-manager 句子库（sentences scope）', () => {
+  const DOC_ID = 'slowlyrecord-sentences-data'
+  let mockDb: DbAdapter
+
+  const createMockSyncData = (): SyncData => ({
+    version: 1,
+    exportedAt: Date.now(),
+    platform: 'test',
+    wordBanks: [],
+    currentWordBankId: '',
+    userSettings: null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  })
+
+  const makeSentence = (id: string, text: string): any => ({
+    id,
+    text,
+    lang: 'zh',
+    tags: [],
+    favorite: false,
+    createdAt: 1,
+  })
+
+  beforeEach(() => {
+    mockDb = createMockDb()
+    setDbAdapter(mockDb)
+    resetPlatformCache()
+    setPlatform('web')
+    vi.resetAllMocks()
+  })
+
+  afterEach(() => {
+    resetDbAdapter()
+    resetPlatformCache()
+    vi.restoreAllMocks()
+  })
+
+  it('collectSyncData 应收集句子库', async () => {
+    mockDb.put!({ _id: DOC_ID, type: 'sentences', sentences: [makeSentence('s1', '句子一')], updatedAt: 1 })
+
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+
+    expect(result.sentences).not.toBeNull()
+    expect(result.sentences!.sentences).toHaveLength(1)
+  })
+
+  it('collectSyncData 空库时应为 null', async () => {
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+    expect(result.sentences).toBeNull()
+  })
+
+  it('restoreSyncData 应按 id 合并去重', async () => {
+    mockDb.put!({ _id: DOC_ID, type: 'sentences', sentences: [makeSentence('s1', '本地版本')], updatedAt: 1 })
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      sentences: { sentences: [makeSentence('s1', '远端版本'), makeSentence('s2', '新句子')] },
+    })
+
+    expect(result.sentencesRestored).toBe(true)
+    const doc = mockDb.get!(DOC_ID) as any
+    expect(doc?.sentences).toHaveLength(2)
+    // 已有 id 保留本地版本
+    expect(doc?.sentences.find((s: any) => s.id === 's1').text).toBe('本地版本')
+    expect(doc?.sentences.find((s: any) => s.id === 's2').text).toBe('新句子')
+  })
+
+  it('restoreSyncData 可通过 restoreSentences 选项跳过', async () => {
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData(
+      { ...createMockSyncData(), sentences: { sentences: [makeSentence('s1', 'x')] } },
+      {
+        conflictStrategy: 'merge',
+        restoreWordBanks: false,
+        restoreUserSettings: false,
+        restoreTextMemory: false,
+        restoreNumberMemory: false,
+        restoreShortcutMemory: false,
+        restoreLetterMemory: false,
+        restoreKnowledgeMemory: false,
+        restorePhoneticMemory: false,
+        restoreSignin: false,
+        restoreMemoryPalace: false,
+        restoreSentences: false,
+      },
+    )
+
+    expect(result.sentencesRestored).toBe(false)
+    expect(mockDb.get!(DOC_ID)).toBeNull()
   })
 })

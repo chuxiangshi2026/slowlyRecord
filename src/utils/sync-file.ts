@@ -156,6 +156,7 @@ export async function pickAndImportSyncFile(options?: Partial<RestoreOptions>): 
       phoneticMemoryRestored: false,
       signinRestored: false,
       memoryPalaceRestored: false,
+      sentencesRestored: false,
       errors: ['未选择文件'],
     }
   }

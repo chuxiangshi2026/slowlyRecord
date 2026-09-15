@@ -14,6 +14,7 @@ import type {
   MobilePhoneticMemory,
   MobileSigninData,
   MobileMemoryPalace,
+  MobileSentences,
 } from '@/stores/useUtils/types'
 import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
 import { log } from '../../../utils/logger'
@@ -29,6 +30,7 @@ export type {
   MobilePhoneticMemory,
   MobileSigninData,
   MobileMemoryPalace,
+  MobileSentences,
 }
 
 // ==================== 服务器配置 ====================
@@ -138,7 +140,7 @@ function generateSyncKey(): string {
   return randomString(32)
 }
 
-function utf8ToBytes(str: string): Uint8Array {
+export function utf8ToBytes(str: string): Uint8Array {
   try { if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(str) } catch { /* */ }
   const bytes: number[] = []
   for (let i = 0; i < str.length; i++) {
@@ -153,7 +155,7 @@ function utf8ToBytes(str: string): Uint8Array {
   return new Uint8Array(bytes)
 }
 
-function bytesToUtf8(bytes: Uint8Array): string {
+export function bytesToUtf8(bytes: Uint8Array): string {
   try { if (typeof TextDecoder !== 'undefined') return new TextDecoder().decode(bytes) } catch { /* */ }
   let str = '', i = 0
   while (i < bytes.length) {
@@ -169,7 +171,7 @@ function bytesToUtf8(bytes: Uint8Array): string {
   return str
 }
 
-function uint8ArrayToBase64(bytes: Uint8Array): string {
+export function uint8ArrayToBase64(bytes: Uint8Array): string {
   try { if (typeof wx !== 'undefined' && wx.arrayBufferToBase64) return wx.arrayBufferToBase64(bytes.buffer as ArrayBuffer) } catch { /* */ }
   try { if (typeof tt !== 'undefined' && tt.arrayBufferToBase64) return tt.arrayBufferToBase64(bytes.buffer as ArrayBuffer) } catch { /* */ }
   try {
@@ -188,7 +190,7 @@ function uint8ArrayToBase64(bytes: Uint8Array): string {
   return result
 }
 
-function base64ToUint8Array(base64: string): Uint8Array {
+export function base64ToUint8Array(base64: string): Uint8Array {
   try { if (typeof wx !== 'undefined' && wx.base64ToArrayBuffer) return new Uint8Array(wx.base64ToArrayBuffer(base64)) } catch { /* */ }
   try { if (typeof tt !== 'undefined' && tt.base64ToArrayBuffer) return new Uint8Array(tt.base64ToArrayBuffer(base64)) } catch { /* */ }
   try { const binary = atob(base64); const bytes = new Uint8Array(binary.length); for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i); return bytes } catch { /* */ }
@@ -207,7 +209,7 @@ function base64ToUint8Array(base64: string): Uint8Array {
   return bytes
 }
 
-function xorCrypt(data: Uint8Array, key: string): Uint8Array {
+export function xorCrypt(data: Uint8Array, key: string): Uint8Array {
   const keyBytes = utf8ToBytes(key)
   const result = new Uint8Array(data.length)
   for (let i = 0; i < data.length; i++) result[i] = data[i] ^ keyBytes[i % keyBytes.length]
@@ -269,9 +271,38 @@ export function checkServerAvailable(): Promise<boolean> {
   })
 }
 
-// ==================== 同步主入口 ====================
+/**
+ * 上传 payload 体积上限（字节）
+ * CloudBase 云函数 HTTP 触发器请求体上限约 6MB，留 1MB 余量
+ */
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
 
-interface PushPayload {
+/**
+ * 单张图片的同步体积上限（字符数 ≈ 字节数）
+ * 超过此大小的 dataURL 在收集同步数据时被剔除，避免 payload 膨胀
+ */
+const MAX_SYNC_IMAGE_CHARS = 32 * 1024
+
+/** uni storage key：上次成功推送的 JSON 哈希，用于跳过未变更的同步 */
+const LAST_PUSH_HASH_KEY = 'slowlyrecord-last-push-hash'
+
+/** 计算 SHA-256 哈希（hex 字符串），用于判断数据是否变更 */
+async function sha256Hex(text: string): Promise<string> {
+  const subtle = (globalThis as any)?.crypto?.subtle
+  if (!subtle) {
+    // 无 WebCrypto 时退回简单哈希（djb2），只用于去重判断
+    let hash = 5381
+    for (let i = 0; i < text.length; i++) hash = ((hash << 5) + hash + text.charCodeAt(i)) | 0
+    return hash.toString(16)
+  }
+  const bytes = utf8ToBytes(text)
+  const hashBuffer = await subtle.digest('SHA-256', bytes)
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+}
+
+export interface PushPayload {
   banks: MobileSyncBank[]
   textMemory?: MobileTextMemory
   numberMemory?: MobileNumberMemory
@@ -279,9 +310,10 @@ interface PushPayload {
   phoneticMemory?: MobilePhoneticMemory
   signin?: MobileSigninData
   memoryPalace?: MobileMemoryPalace
+  sentences?: MobileSentences
 }
 
-function collectSyncData(payload: PushPayload): MobileSyncData {
+export function collectSyncData(payload: PushPayload): MobileSyncData {
   return {
     version: 1,
     exportedAt: Date.now(),
@@ -297,6 +329,7 @@ function collectSyncData(payload: PushPayload): MobileSyncData {
     phoneticMemory: payload.phoneticMemory,
     signin: payload.signin,
     memoryPalace: payload.memoryPalace,
+    sentences: payload.sentences,
   }
 }
 
@@ -314,6 +347,7 @@ export async function pushToServer(
     phoneticMemory?: MobilePhoneticMemory
     signin?: MobileSigninData
     memoryPalace?: MobileMemoryPalace
+    sentences?: MobileSentences
   },
 ): Promise<SyncResult> {
   try {
@@ -322,6 +356,15 @@ export async function pushToServer(
       : banksOrPayload
     const data = collectSyncData(payload)
     const json = JSON.stringify(data)
+
+    // 跳过未变更的同步：对 JSON 取哈希，与上次成功推送的哈希比对
+    const hash = await sha256Hex(json)
+    const lastHash = uni.getStorageSync(LAST_PUSH_HASH_KEY)
+    if (lastHash && hash === lastHash) {
+      log.i('[sync] 数据未变更，跳过上传')
+      return { success: true, code: '', skipped: true }
+    }
+
     const jsonBytes = utf8ToBytes(json)
     const pako = (await import('pako')).default
     const compressed = pako.deflate(jsonBytes)
@@ -337,7 +380,14 @@ export async function pushToServer(
     } else {
       encryptedBase64 = uint8ArrayToBase64(xorCrypt(compressed, syncKey))
     }
+    const uploadPayload = JSON.stringify({ e: encryptedBase64 })
+    log.i(`[sync] 数据大小: 原始JSON ${(jsonBytes.length / 1024).toFixed(1)}KB, 上传payload ${(uploadPayload.length / 1024).toFixed(1)}KB (${(uploadPayload.length / 1024 / 1024).toFixed(2)}MB)`)
+    if (uploadPayload.length > MAX_UPLOAD_BYTES) {
+      const mb = (uploadPayload.length / 1024 / 1024).toFixed(1)
+      return { success: false, error: `数据量过大（${mb}MB），请减少词库或图片后重试` }
+    }
     const blobId = await uploadRaw(encryptedBase64)
+    uni.setStorageSync(LAST_PUSH_HASH_KEY, hash)
     const syncCode = buildSyncCode(blobId, syncKey)
     return { success: true, code: syncCode }
   } catch (e) {
@@ -384,6 +434,7 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
         phoneticMemory: data.phoneticMemory,
         signin: data.signin,
         memoryPalace: data.memoryPalace,
+        sentences: data.sentences,
       }
     } catch {
       return { success: false, error: '数据解析失败' }

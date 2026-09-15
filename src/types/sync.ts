@@ -12,6 +12,7 @@ import type { LetterImageAssociation, LetterTrainingResult } from './letter-memo
 import type { KnowledgeItemProgress } from './knowledge-memory'
 import type { PhonemeProgress, MinimalPairProgress } from './phonetic-memory'
 import type { Palace, PegItem } from './memory-palace'
+import type { Sentence } from './sentences'
 
 /** 同步数据版本号，用于兼容性检查 */
 export const SYNC_VERSION = 1
@@ -144,6 +145,13 @@ export interface SyncData {
   signin?: SyncSignin | null
   /** 记忆宫殿（可选：旧版客户端忽略此字段） */
   memoryPalace?: SyncMemoryPalace | null
+  /** 句子库（可选：旧版客户端忽略此字段） */
+  sentences?: SyncSentences | null
+}
+
+/** 句子库同步数据（整库列表，合并按 id 去重） */
+export interface SyncSentences {
+  sentences: Sentence[]
 }
 
 /** 服务器同步状态 */
@@ -155,6 +163,8 @@ export interface SyncServerResult {
   code?: string
   error?: string
   data?: SyncData
+  /** 数据未变更，跳过了上传 */
+  skipped?: boolean
 }
 
 /** 同步冲突策略 */

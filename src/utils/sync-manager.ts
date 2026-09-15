@@ -4,7 +4,7 @@
  * 负责从各 Store / DB 收集数据、合并还原、冲突处理。
  * 同步数据以 SyncData 为统一格式，可导出为 JSON 或二进制文件，也可上传到临时服务器。
  */
-import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, SyncMemoryPalace, ConflictStrategy } from '@/types/sync'
+import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, SyncMemoryPalace, SyncSentences, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
@@ -21,6 +21,7 @@ import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDo
 import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
 import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
 import { collectMemoryPalaceSync, restoreMemoryPalaceSync } from '@/utils/memory-palace-db'
+import { SENTENCES_DOC_ID } from '@/utils/sentence-db'
 import { log } from '@/utils/logger'
 
 // ==================== 数据收集 ====================
@@ -98,6 +99,9 @@ export async function collectSyncData(): Promise<SyncData> {
   // 11. 记忆宫殿
   const memoryPalace = collectMemoryPalaceSync()
 
+  // 12. 句子库
+  const sentences = collectSentences()
+
   return {
     version: SYNC_VERSION,
     exportedAt: Date.now(),
@@ -113,6 +117,19 @@ export async function collectSyncData(): Promise<SyncData> {
     phoneticMemory,
     signin,
     memoryPalace,
+    sentences,
+  }
+}
+
+/** 句子库收集（单文档同步读，空库返回 null） */
+function collectSentences(): SyncSentences | null {
+  try {
+    const db = getDbAdapter()
+    const doc = db.get(SENTENCES_DOC_ID) as any
+    if (!doc || !Array.isArray(doc.sentences) || doc.sentences.length === 0) return null
+    return { sentences: doc.sentences }
+  } catch {
+    return null
   }
 }
 
@@ -289,6 +306,8 @@ export interface RestoreOptions {
   restoreSignin: boolean
   /** 是否还原记忆宫殿 */
   restoreMemoryPalace: boolean
+  /** 是否还原句子库 */
+  restoreSentences: boolean
 }
 
 export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
@@ -303,6 +322,7 @@ export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
   restorePhoneticMemory: true,
   restoreSignin: true,
   restoreMemoryPalace: true,
+  restoreSentences: true,
 }
 
 export interface RestoreResult {
@@ -317,6 +337,7 @@ export interface RestoreResult {
   phoneticMemoryRestored: boolean
   signinRestored: boolean
   memoryPalaceRestored: boolean
+  sentencesRestored: boolean
   errors: string[]
 }
 
@@ -336,6 +357,7 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     phoneticMemoryRestored: false,
     signinRestored: false,
     memoryPalaceRestored: false,
+    sentencesRestored: false,
     errors: [],
   }
 
@@ -405,6 +427,12 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     if (options.restoreMemoryPalace && data.memoryPalace) {
       await restoreMemoryPalaceSync(data.memoryPalace)
       result.memoryPalaceRestored = true
+    }
+
+    // 11. 还原句子库（按 id 合并去重，已有 id 保留本地版本）
+    if (options.restoreSentences && data.sentences) {
+      await restoreSentences(data.sentences)
+      result.sentencesRestored = true
     }
   } catch (e) {
     result.errors.push(String(e))
@@ -546,18 +574,36 @@ async function restoreUserSettings(settings: SyncUserSettings) {
 
 // ==================== 文本记忆还原 ====================
 
+/**
+ * 文本记忆按 _id 合并（与移动端 restore 的 merge 语义一致）：
+ * 本地已有的 _id 保留本地版本，远端新增条目追加；不再整库覆盖，
+ * 避免旧同步包盖掉本地新改动
+ */
 async function restoreTextMemory(data: SyncTextMemory) {
   try {
     const db = getDbAdapter()
     const DOC_ID = 'slowlyrecord-textmemory-data'
     const existingDoc = db.get(DOC_ID) as any
 
+    const mergeById = (localList: any[], remoteList: any[]): any[] => {
+      const local = Array.isArray(localList) ? localList : []
+      const ids = new Set(local.map((i: any) => i?._id))
+      const merged = [...local]
+      for (const item of Array.isArray(remoteList) ? remoteList : []) {
+        if (item && item._id && !ids.has(item._id)) {
+          ids.add(item._id)
+          merged.push(item)
+        }
+      }
+      return merged
+    }
+
     const doc: any = {
       _id: DOC_ID,
       type: 'textmemory',
-      articles: data.articles || [],
-      notes: data.notes || [],
-      prompts: data.prompts || [],
+      articles: mergeById(existingDoc?.articles, data.articles),
+      notes: mergeById(existingDoc?.notes, data.notes),
+      prompts: mergeById(existingDoc?.prompts, data.prompts),
       updatedAt: Date.now(),
     }
 
@@ -569,6 +615,40 @@ async function restoreTextMemory(data: SyncTextMemory) {
     log.i('文本记忆数据已还原')
   } catch (e) {
     log.e('还原文本记忆失败', e)
+    throw e
+  }
+}
+
+// ==================== 句子库还原 ====================
+
+/** 句子库按 id 合并：本地已有的 id 保留本地版本，新 id 追加 */
+async function restoreSentences(data: SyncSentences) {
+  try {
+    const db = getDbAdapter()
+    const existingDoc = db.get(SENTENCES_DOC_ID) as any
+    const existingList: any[] = Array.isArray(existingDoc?.sentences) ? existingDoc.sentences : []
+    const ids = new Set(existingList.map((s: any) => s.id))
+    const merged = [...existingList]
+    for (const s of data.sentences || []) {
+      if (s && s.id && !ids.has(s.id)) {
+        ids.add(s.id)
+        merged.push(s)
+      }
+    }
+
+    const doc: any = {
+      _id: SENTENCES_DOC_ID,
+      type: 'sentences',
+      sentences: merged,
+      updatedAt: Date.now(),
+    }
+    if (existingDoc?._rev) {
+      doc._rev = existingDoc._rev
+    }
+    await db.promises.put(doc)
+    log.i('句子库数据已还原')
+  } catch (e) {
+    log.e('还原句子库失败', e)
     throw e
   }
 }
