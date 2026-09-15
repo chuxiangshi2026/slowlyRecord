@@ -29,7 +29,7 @@ export const DEFAULT_STRATEGY: LoadStrategy = {
 };
 
 // 内置知识包元数据（与 public/knowledgebanks/*.json 对应）
-// category: math 类融入「数字记忆」主页，text 类融入「文本记忆」知识库视图
+// category: math 为数理化（数学/物理/化学/生物等），text 为文史常识；展示层再按 peg/math/text 三个 tab 过滤
 export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math'},
     {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math'},
@@ -48,9 +48,9 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'math-probability', name: '高等数学·概率统计基础', description: '排列组合、概率公式与常见分布入门 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'chemistry-formulas', name: '常用化学公式', description: '初中化学常见方程式与计算式 22 条', itemCount: 22, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'physics-formulas', name: '初中物理公式', description: '初中物理常用公式 21 条', itemCount: 21, ordered: false, usableAsPeg: false, category: 'math', version: 2},
-    {id: 'physics-laws', name: '初中物理定律与原理', description: '初中物理常见定律与原理 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'text', version: 1},
-    {id: 'physics-experiments', name: '初中物理实验', description: '初中常见物理实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'text', version: 1},
-    {id: 'biology-experiments', name: '初中生物实验', description: '初中常见生物实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'physics-laws', name: '初中物理定律与原理', description: '初中物理常见定律与原理 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
+    {id: 'physics-experiments', name: '初中物理实验', description: '初中常见物理实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
+    {id: 'biology-experiments', name: '初中生物实验', description: '初中常见生物实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'geography-concepts', name: '初中地理核心概念', description: '初中地理核心概念 20 条', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
     {id: 'body-pegs-12', name: '身体桩', description: '从头顶到脚底 12 个身体部位，按从上到下的固定顺序用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'earthly-branches-12', name: '十二地支', description: '十二地支及其时辰时段、生肖、五行、阴阳与方位', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
@@ -369,7 +369,7 @@ export function getKnowledgePackInfo(id: string): KnowledgePackInfo | undefined 
 }
 
 /**
- * 列出内置知识包元数据，可按 category 过滤（math → 数字记忆，text → 文本记忆）
+ * 列出内置知识包元数据，可按 category 过滤（math → 数理化，text → 文史常识）
  */
 export function listKnowledgePacks(category?: KnowledgePackCategory): KnowledgePackInfo[] {
     return KNOWLEDGE_PACK_LIST

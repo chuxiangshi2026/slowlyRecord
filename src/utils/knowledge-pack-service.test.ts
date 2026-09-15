@@ -87,8 +87,9 @@ describe('knowledge-pack-service', () => {
 
     it('listKnowledgePacks 按 category 过滤', () => {
       const math = listKnowledgePacks('math')
-      expect(math).toHaveLength(13)
+      expect(math).toHaveLength(16)
       expect(math.map(p => p.id).sort()).toEqual([
+        'biology-experiments',
         'chemistry-formulas',
         'common-units',
         'elements',
@@ -99,16 +100,17 @@ describe('knowledge-pack-service', () => {
         'math-probability',
         'multiplication-19x19',
         'multiplication-9x9',
+        'physics-experiments',
         'physics-formulas',
+        'physics-laws',
         'primes-under-100',
         'squares-cubes-powers',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(22)
+      expect(text).toHaveLength(19)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'alphabet-pegs-26',
-        'biology-experiments',
         'body-pegs-12',
         'colors-12',
         'constellations-12',
@@ -120,8 +122,6 @@ describe('knowledge-pack-service', () => {
         'home-route-12',
         'musical-notes',
         'number-pegs-12',
-        'physics-experiments',
-        'physics-laws',
         'poker-pegs-52',
         'provinces-capitals',
         'room-pegs-12',
@@ -143,8 +143,10 @@ describe('knowledge-pack-service', () => {
       newPackIds.forEach(id => {
         const info = getKnowledgePackInfo(id)
         expect(info).toBeDefined()
-        // 新包均归入正确分类：物理公式归 math，其余归 text
-        expect(info!.category).toBe(id === 'physics-formulas' ? 'math' : 'text')
+        // 分类归属：物理公式/定律/实验与生物实验归数理化（math），地理核心概念归文史常识（text）
+        expect(info!.category).toBe(id === 'geography-concepts' ? 'text' : 'math')
+        // 物理定律/实验与生物实验因归入数理化升到版本 2，地理概念保持 1
+        expect(info!.version ?? 1).toBe(id === 'geography-concepts' ? 1 : 2)
         // 相对本文件定位 public/knowledgebanks（src/utils → 项目根目录 → public/knowledgebanks）
         const raw = readFileSync(
           fileURLToPath(new URL('../../public/knowledgebanks/' + id + '.json', import.meta.url)),

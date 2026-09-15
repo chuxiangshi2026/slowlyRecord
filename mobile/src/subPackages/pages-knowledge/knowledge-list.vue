@@ -115,7 +115,7 @@ const tabs = [
 type TabValue = (typeof tabs)[number]['value']
 const activeTab = ref<TabValue>('mine')
 
-// 内置知识库的分类筛选（全部/数学/物理/化学/语文/记忆桩/地理/其他）
+// 内置知识库的分类筛选（全部/桩库/数理化/文史常识）
 const categoryOptions = PACK_CATEGORY_OPTIONS
 const activeCategory = ref<(typeof PACK_CATEGORY_OPTIONS)[number]['value']>('all')
 
@@ -156,18 +156,19 @@ const importedPacks = computed<PackRow[]>(() => {
 
 const builtinGroups = computed(() => {
   if (!store.importedLoaded) return []
-  // 先按分类筛选条的展示分类过滤，再按包原有的 math/text 大类分组
+  // 先按分类筛选条的展示分类过滤，再按同一展示分类分组（组标题与筛选条一致）
   const filtered = store.packList.filter(
     p => activeCategory.value === 'all' || getPackDisplayCategory(p.id) === activeCategory.value,
   )
   const groups = [
-    { label: '数字 · 公式 · 理科', category: 'math' as const },
-    { label: '常识 · 记忆桩', category: 'text' as const },
+    { label: '桩库', category: 'pegs' as const },
+    { label: '数理化', category: 'science' as const },
+    { label: '文史常识', category: 'liberal' as const },
   ]
   return groups
     .map(g => ({
       label: g.label,
-      packs: filtered.filter(p => p.category === g.category).map(toRow),
+      packs: filtered.filter(p => getPackDisplayCategory(p.id) === g.category).map(toRow),
     }))
     .filter(g => g.packs.length > 0)
 })

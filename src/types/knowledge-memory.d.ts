@@ -52,8 +52,11 @@ export interface KnowledgePack {
     items: KnowledgeItem[];
 }
 
-/** 知识包分类：math 融入数字记忆，text 融入文本记忆 */
-export type KnowledgePackCategory = 'math' | 'text';
+/**
+ * 知识包分类：peg 桩库（跨 math/text 大类，取 usableAsPeg 的包）、math 数理化、text 文史常识。
+ * 注册表中 category 仍只存 math/text，peg 仅作界面筛选值。
+ */
+export type KnowledgePackCategory = 'peg' | 'math' | 'text';
 
 /** 知识包在列表中的轻量信息 */
 export interface KnowledgePackInfo {
@@ -63,7 +66,7 @@ export interface KnowledgePackInfo {
     itemCount: number;
     ordered: boolean;
     usableAsPeg: boolean;
-    /** 宿主分类：数学强相关为 math，文本/常识类为 text */
+    /** 宿主分类：数理化（数学/物理/化学/生物等）为 math，文史常识（语文/传统文化/地理等）为 text */
     category: KnowledgePackCategory;
     /**
      * 数据版本号（缺省视为 1）。包内容发生结构性变更时递增，

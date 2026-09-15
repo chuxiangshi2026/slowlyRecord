@@ -1,6 +1,6 @@
 <template>
   <div class="knowledge-memory-page">
-    <!-- 分类切换：数字知识包 / 文本知识包 -->
+    <!-- 分类切换：桩库 / 数理化 / 文史常识 -->
     <div class="category-switch">
       <span
           v-for="tab in tabs"
@@ -18,24 +18,28 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import KnowledgePackPanel from '@/views/TextMemory/components/KnowledgePackPanel.vue';
 import {useKnowledgeMemoryStore} from '@/stores/knowledgeMemory';
 import type {KnowledgePackCategory} from '@/types/knowledge-memory';
 
 const store = useKnowledgeMemoryStore();
+// 默认停在「数理化」
 const category = ref<KnowledgePackCategory>('math');
 
 const tabs: Array<{ label: string; value: KnowledgePackCategory }> = [
-  {label: '数字知识包', value: 'math'},
-  {label: '文本知识包', value: 'text'},
+  {label: '桩库', value: 'peg'},
+  {label: '数理化', value: 'math'},
+  {label: '文史常识', value: 'text'},
 ];
 
-const importedCount = computed(() => store.importedIds.length);
-const mathCount = computed(() => store.importedIds.filter(id => store.packList.find(p => p.id === id)?.category === 'math').length);
-const textCount = computed(() => importedCount.value - mathCount.value);
-
-const countOf = (c: KnowledgePackCategory) => (c === 'math' ? mathCount.value : textCount.value);
+// 各 tab 计数：桩库 = 可用作桩的包（跨 math/text 大类）；数理化/文史常识 = 对应大类且非桩库（桩库已单列，不重复计数）
+const countOf = (c: KnowledgePackCategory) =>
+  store.importedIds.filter(id => {
+    const info = store.packList.find(p => p.id === id);
+    if (!info) return false;
+    return c === 'peg' ? info.usableAsPeg : info.category === c && !info.usableAsPeg;
+  }).length;
 
 onMounted(async () => {
   await store.loadImportedIds().catch(() => {});

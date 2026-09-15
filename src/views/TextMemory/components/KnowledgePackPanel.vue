@@ -1,5 +1,5 @@
 <template>
-  <!-- 知识包卡片面板：只展示「已导入」的知识包（math → 数字记忆，text → 文本记忆），仿内置词库导入模式 -->
+  <!-- 知识包卡片面板：只展示「已导入」的知识包（peg → 桩库，math → 数理化，text → 文史常识），仿内置词库导入模式 -->
   <div class="knowledge-pack-panel" v-loading="store.loading">
     <!-- 顶部工具行：关键词搜索 + 导入入口（useExternalImport 时点「导入」emit 通知父级打开统一对话框，面板不再弹内置导入对话框） -->
     <div v-if="cards.length > 0 || !useExternalImport" class="panel-toolbar">
@@ -171,12 +171,19 @@ function matchKeyword(info: KnowledgePackInfo, kw: string): boolean {
   return info.name.toLowerCase().includes(kw) || info.description.toLowerCase().includes(kw);
 }
 
+// 分类过滤：桩库 = 可用作桩的包（跨 math/text 两大类）；数理化/文史常识 = 对应大类。
+// 桩库已单列成一个 tab，math/text 下过滤掉 usableAsPeg，避免同一个包出现在两个 tab。
+function matchCategory(p: KnowledgePackInfo): boolean {
+  if (props.category === 'peg') return p.usableAsPeg;
+  return p.category === props.category && !p.usableAsPeg;
+}
+
 // 已导入的包（面板只展示这些）
 const packs = computed(() =>
-  store.packList.filter(p => p.category === props.category && store.importedIds.includes(p.id)),
+  store.packList.filter(p => matchCategory(p) && store.importedIds.includes(p.id)),
 );
 
-// 自建知识集（仅文本记忆分类展示，与内置包同样的卡片样式，标签为「自建」）
+// 自建知识集（仅文史常识分类展示，与内置包同样的卡片样式，标签为「自建」）
 const customPacks = computed(() =>
   props.category === 'text' ? store.customPackList : [],
 );
@@ -198,7 +205,7 @@ const cardGroups = computed<Array<{label: string; count: number; packs: PackCard
 });
 
 // 当前分类下的全部内置包（导入对话框候选）
-const allPacks = computed(() => store.packList.filter(p => p.category === props.category));
+const allPacks = computed(() => store.packList.filter(p => matchCategory(p)));
 
 // 导入对话框候选分组：可用作记忆宫殿桩库的包优先展示
 const importGroups = computed<Array<{label: string; count: number; packs: KnowledgePackInfo[]}>>(() => {

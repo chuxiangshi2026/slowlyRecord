@@ -8,10 +8,13 @@ import ElementPlus, { ElMessageBox } from 'element-plus'
 import '@testing-library/jest-dom'
 import KnowledgePackPanel from './KnowledgePackPanel.vue'
 import {loadPackPreviews} from '@/utils/knowledge-pack-preview'
+import type {KnowledgePackCategory} from '@/types/knowledge-memory'
 
 const PACK_LIST = [
   { id: 'pack-math', name: '小九九乘法表', description: '描述1', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math' },
-  { id: 'pack-text', name: '二十四节气', description: '描述2', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text' },
+  { id: 'pack-text', name: '二十四节气', description: '描述2', itemCount: 24, ordered: true, usableAsPeg: false, category: 'text' },
+  { id: 'pack-peg', name: '数字桩（1-12）', description: '描述3', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text' },
+  { id: 'pack-math-peg', name: '十二星座', description: '描述4', itemCount: 12, ordered: true, usableAsPeg: true, category: 'math' },
 ]
 
 const CUSTOM_PACKS = [
@@ -77,7 +80,7 @@ function buildStore(importedIds: string[], customPackList: any[] = []) {
   })
 }
 
-async function setup(category: 'math' | 'text', importedIds: string[] = [], extraProps: Record<string, any> = {}, customPackList: any[] = []) {
+async function setup(category: KnowledgePackCategory, importedIds: string[] = [], extraProps: Record<string, any> = {}, customPackList: any[] = []) {
   const pinia = createPinia()
   setActivePinia(pinia)
 
@@ -117,7 +120,29 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(screen.queryByText('小九九乘法表')).not.toBeInTheDocument()
     expect(screen.getByText('24 条')).toBeInTheDocument()
     expect(screen.getByText('有序')).toBeInTheDocument()
-    expect(screen.getByText('可用作桩库')).toBeInTheDocument()
+  })
+
+  it('桩库 tab 展示跨大类的 usableAsPeg 包（卡片带「可用作桩库」标签）', async () => {
+    await setup('peg', ['pack-peg', 'pack-math-peg'])
+    // text 大类的数字桩与 math 大类的十二星座都归入桩库
+    expect(screen.getByText('数字桩（1-12）')).toBeInTheDocument()
+    expect(screen.getByText('十二星座')).toBeInTheDocument()
+    expect(screen.getAllByText('可用作桩库').length).toBe(2)
+    // 非桩库包不展示
+    expect(screen.queryByText('二十四节气')).not.toBeInTheDocument()
+    expect(screen.queryByText('小九九乘法表')).not.toBeInTheDocument()
+  })
+
+  it('数理化 tab 不展示桩库包（桩库已单列）', async () => {
+    await setup('math', ['pack-math', 'pack-math-peg'])
+    expect(screen.getByText('小九九乘法表')).toBeInTheDocument()
+    expect(screen.queryByText('十二星座')).not.toBeInTheDocument()
+  })
+
+  it('文史常识 tab 不展示桩库包（桩库已单列）', async () => {
+    await setup('text', ['pack-text', 'pack-peg'])
+    expect(screen.getByText('二十四节气')).toBeInTheDocument()
+    expect(screen.queryByText('数字桩（1-12）')).not.toBeInTheDocument()
   })
 
   it('卡片按分组展示并带数量徽标，显示去重后的缩略配图', async () => {
@@ -191,9 +216,10 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     await fireEvent.click(screen.getByRole('button', { name: '导入' }))
     const dialog = await screen.findByRole('dialog')
 
-    // 当前分类（text）的包被列出，math 分类不出现
+    // 当前分类（文史常识）的非桩库包被列出；数理化包与桩库包不出现
     expect(within(dialog).getByText('二十四节气')).toBeInTheDocument()
     expect(within(dialog).queryByText('小九九乘法表')).not.toBeInTheDocument()
+    expect(within(dialog).queryByText('数字桩（1-12）')).not.toBeInTheDocument()
     expect(within(dialog).getByText(/24 条/)).toBeInTheDocument()
 
     // 已导入的包按钮为「已导入」且禁用
@@ -202,32 +228,32 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
   })
 
   it('导入对话框按「可否作桩库」分组、已导入行置灰，并支持搜索过滤', async () => {
-    await setup('text', ['pack-text'])
+    await setup('peg', ['pack-peg'])
     await fireEvent.click(screen.getByRole('button', { name: '导入' }))
     const dialog = await screen.findByRole('dialog')
 
-    // 打开对话框时按当前分类拉取缩略预览
-    expect(loadPackPreviews).toHaveBeenCalledWith([PACK_LIST[1]])
+    // 打开对话框时按当前分类（跨大类桩库）拉取缩略预览
+    expect(loadPackPreviews).toHaveBeenCalledWith([PACK_LIST[2], PACK_LIST[3]])
 
-    // pack-text 可作桩库 → 归入桩库组；当前分类无普通包则不渲染该组标题
+    // 候选均为桩库包 → 归入桩库组；无普通包则不渲染该组标题
     expect(within(dialog).getByText('可用作记忆宫殿桩库')).toBeInTheDocument()
     expect(within(dialog).queryByText('普通知识库')).not.toBeInTheDocument()
 
     // 已导入的包行带置灰样式类
-    const row = within(dialog).getByText('二十四节气').closest('.import-pack-row')
+    const row = within(dialog).getByText('数字桩（1-12）').closest('.import-pack-row')
     expect(row).toHaveClass('imported')
 
     // 搜索过滤：命中时正常展示，无命中时给出专属空态且不残留分组标题
     const search = within(dialog).getByPlaceholderText('搜索知识库名称或描述')
-    await fireEvent.update(search, '节气')
+    await fireEvent.update(search, '数字桩')
     await waitFor(() => {
-      expect(within(dialog).getByText('二十四节气')).toBeInTheDocument()
+      expect(within(dialog).getByText('数字桩（1-12）')).toBeInTheDocument()
     })
     await fireEvent.update(search, '不存在')
     await waitFor(() => {
       expect(within(dialog).getByText('没有匹配的知识库')).toBeInTheDocument()
     })
-    expect(within(dialog).queryByText('二十四节气')).not.toBeInTheDocument()
+    expect(within(dialog).queryByText('数字桩（1-12）')).not.toBeInTheDocument()
   })
 
   it('点击导入后加入清单并显示卡片', async () => {
@@ -271,7 +297,7 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  it('text 分类展示自建知识集卡片（自建标签 + 条数）', async () => {
+  it('文史常识 tab 展示自建知识集卡片（自建标签 + 条数）', async () => {
     await setup('text', [], {}, CUSTOM_PACKS)
     expect(screen.getByText('古诗')).toBeInTheDocument()
     expect(screen.getByText('自建')).toBeInTheDocument()
@@ -280,7 +306,7 @@ describe('KnowledgePackPanel（导入后展示模式）', () => {
     expect(screen.queryByText('暂无知识库，点击上方「导入」')).not.toBeInTheDocument()
   })
 
-  it('math 分类不展示自建知识集', async () => {
+  it('数理化 tab 不展示自建知识集', async () => {
     await setup('math', [], {}, CUSTOM_PACKS)
     expect(screen.queryByText('古诗')).not.toBeInTheDocument()
     expect(screen.getByText('暂无知识库，点击上方「导入」')).toBeInTheDocument()
