@@ -30,7 +30,12 @@
 
     <!-- 宫殿卡片列表 -->
     <div class="palace-list-wrapper" v-loading="store.loading">
-      <el-empty v-if="filteredPalaces.length === 0" description="暂无记忆宫殿，点击右下角新建或导入内置桩库" />
+      <el-empty v-if="filteredPalaces.length === 0">
+        <template #description>
+          <p class="palace-empty-concept">记忆宫殿：把要记的内容「挂」到一组熟悉的空间位置（桩）上，回忆时按路线逐个巡视取回</p>
+          <p>暂无记忆宫殿，点击右下角新建或导入内置桩库</p>
+        </template>
+      </el-empty>
 
       <div
         v-for="palace in filteredPalaces"
@@ -316,6 +321,13 @@ async function handleDelete(palace: Palace) {
   font-size: 11px;
   color: var(--utools-text-tertiary);
   flex-shrink: 0;
+}
+
+.palace-empty-concept {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--utools-text-tertiary);
+  margin: 0 0 8px;
 }
 
 // ---- 列表区域 ----

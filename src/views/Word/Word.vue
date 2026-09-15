@@ -208,7 +208,7 @@
             class="wordbank-radio"
         >
           {{ bank.label }}（{{ bank.wordCount }}词）
-          <span v-if="isWordBankCached(bank.value as WordBankType)" class="cached-tag">已缓存</span>
+          <span v-if="isWordBankCached(bank.value as WordBankType)" class="cached-tag" title="词库已下载到本地，导入秒完成；未缓存的需先下载">已缓存</span>
         </el-radio>
       </el-radio-group>
     </div>
@@ -329,15 +329,25 @@
   <div class="home_footer">
     <div>
       <!-- 当前词库名称显示 -->
-      <span class="current-bank-name" @click="openWordBankManager">
-        <i class="iconfont icon-library"></i>
-        {{ wordsStore.currentWordBank?.name || '默认词库' }} ▾
-      </span>
+      <el-tooltip class="box-item" effect="dark" content="切换 / 管理词库" placement="top" popper-class="small-tooltip">
+        <span class="current-bank-name" @click="openWordBankManager">
+          <i class="iconfont icon-library"></i>
+          {{ wordsStore.currentWordBank?.name || '默认词库' }} ▾
+        </span>
+      </el-tooltip>
       <el-divider direction="vertical"/>
-      <span :class="{ 'remembered-highlight': wordsStore.listMode==0 }" @click="showOnlyForget"> 待复习: {{ wordsStore.forgetCount }} </span>
-      <span :class="{ 'remembered-highlight': wordsStore.listMode==1 }" @click="showOnlyReview"> 已复习: {{ wordsStore.reviewCount }} </span>
-      <span :class="{ 'remembered-highlight': wordsStore.listMode==2 }" @click="showOnlyRemembered"> 已记完: {{ wordsStore.rememberCount }} </span>
-      <span :class="{ 'remembered-highlight': wordsStore.listMode==3 }" @click="showAll"> 总数: {{ wordsStore.count }} </span>
+      <el-tooltip class="box-item" effect="dark" content="到了复习时间、需要现在复习" placement="top" popper-class="small-tooltip">
+        <span :class="{ 'remembered-highlight': wordsStore.listMode==0 }" @click="showOnlyForget"> 待复习: {{ wordsStore.forgetCount }} </span>
+      </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="已学过但还没到下次复习时间" placement="top" popper-class="small-tooltip">
+        <span :class="{ 'remembered-highlight': wordsStore.listMode==1 }" @click="showOnlyReview"> 已复习: {{ wordsStore.reviewCount }} </span>
+      </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="记忆等级已满，无需再复习" placement="top" popper-class="small-tooltip">
+        <span :class="{ 'remembered-highlight': wordsStore.listMode==2 }" @click="showOnlyRemembered"> 已记完: {{ wordsStore.rememberCount }} </span>
+      </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="当前词库全部条目" placement="top" popper-class="small-tooltip">
+        <span :class="{ 'remembered-highlight': wordsStore.listMode==3 }" @click="showAll"> 总数: {{ wordsStore.count }} </span>
+      </el-tooltip>
     </div>
     <div>
 
@@ -358,7 +368,7 @@
       <el-tooltip class="box-item" effect="dark" content="听写练习" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="goToDictation"><EditPen /></el-icon>
       </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="专注模式" placement="top" popper-class="small-tooltip">
+      <el-tooltip class="box-item" effect="dark" content="专注模式（悬浮小窗记单词）" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><PipIcon /></el-icon>
       </el-tooltip>
       <!-- 「更多」已上移到统一头部 ☰（全局抽屉），此处不再重复 -->

@@ -74,6 +74,7 @@
               推送到移动端
             </el-button>
           </div>
+          <p class="sync-desc sync-push-hint">另一端是电脑/网页选「推送到桌面端」，是微信小程序/App 选「推送到移动端」。同步码为临时传输，请尽快在另一台设备使用；数据长期备份请用「云盘同步」。</p>
 
           <!-- 同步码 + 二维码展示 -->
           <div v-if="syncStore.syncCode" class="sync-code-box">
@@ -484,6 +485,11 @@ async function handleConfirmRestore() {
   font-size: 12px;
   color: var(--el-text-color-secondary);
   margin: 0 0 12px;
+}
+
+.sync-push-hint {
+  margin: 8px 0 0;
+  line-height: 1.6;
 }
 
 /* 开发者选项折叠区弱化展示，避免普通用户误填自建服务器 */
