@@ -35,6 +35,15 @@
                    @change="onCloseAfterAddSwitchChange"
         />
       </div>
+      <div class="setting-item">
+        <div class="content">界面字号</div>
+        <el-radio-group :model-value="uiStore.uiZoom"
+                        @update:model-value="(v: string | number | boolean | undefined) => uiStore.applyUiZoom(Number(v) || 1)">
+          <el-radio-button :value="0.9">小</el-radio-button>
+          <el-radio-button :value="1">标准</el-radio-button>
+          <el-radio-button :value="1.15">大</el-radio-button>
+        </el-radio-group>
+      </div>
     </div>
     <div>
       <!-- 当前翻译引擎卡片：第一屏只呈现当前引擎与免配置状态，切换走右侧下拉 -->
@@ -442,6 +451,7 @@
 <script setup lang="ts">
 import {computed, onMounted, reactive, ref, watch} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
+import {useUiStore} from "@/stores/ui.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {AppInfo, TRANSLATION_PLATFORM_LINKS} from "@/config.ts";
 import {USAGE_LIMITS} from "@/constants";
@@ -713,6 +723,7 @@ const kuaijiejian = (type: number) => {
 
 
 let wordsStore = useWordsStore();
+const uiStore = useUiStore();
 
 // 记忆牢固度选项
 const memoryFirmnessOptions = ['正常' , '较强' , '极强'];

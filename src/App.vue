@@ -32,6 +32,7 @@ import {RouterView, useRouter} from 'vue-router'
 
 import {onMounted, onUnmounted, ref} from 'vue';
 import {useWordsStore} from "@/stores/words.ts";
+import {useUiStore} from "@/stores/ui.ts";
 // import {storeToRefs} from "pinia";
 import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
 import {addWord, addTextAuto, batchAddWords} from "@/utils/str-util.ts";
@@ -809,6 +810,9 @@ function closeTextPanel() {
 }
 
 onMounted(async () => {
+
+  // 恢复界面字号档位（缩放比例已持久化在 localStorage）
+  useUiStore().applyUiZoom(useUiStore().uiZoom);
 
   // 首页刷新时触发   自动更新需要复习的单词
   // 延迟调用，避免初始化时重复计算

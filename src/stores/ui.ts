@@ -18,6 +18,17 @@ export const useUiStore = defineStore('ui', () => {
   const pendingImportCommand = ref<{ cmd: string; at: number } | null>(null)
   const pendingExportCommand = ref<{ cmd: string; at: number } | null>(null)
 
+  /** 界面字号档位对应的缩放比例（小/标准/大），localStorage 持久化 */
+  const UI_ZOOM_KEY = 'slowlyrecord-ui-zoom'
+  const uiZoom = ref<number>(Number(localStorage.getItem(UI_ZOOM_KEY)) || 1)
+
+  /** 应用界面缩放（CSS zoom，Chromium 布局级缩放，无需改各处 px 样式） */
+  function applyUiZoom(v: number) {
+    uiZoom.value = v
+    localStorage.setItem(UI_ZOOM_KEY, String(v))
+    document.documentElement.style.zoom = v === 1 ? '' : String(v)
+  }
+
   function openSyncDialog() {
     syncDialogVisible.value = true
   }
@@ -28,6 +39,8 @@ export const useUiStore = defineStore('ui', () => {
     moreDrawerVisible,
     pendingImportCommand,
     pendingExportCommand,
+    uiZoom,
+    applyUiZoom,
     openSyncDialog,
   }
 })
