@@ -72,36 +72,40 @@
       </div>
     </div>
 
-    <!-- 底部工具行（嵌入文本记忆页内，使用内联布局而非固定底栏，避免页中页） -->
+    <!-- 底部工具行（内联布局而非固定底栏） -->
     <div class="palace-toolbar">
       <span class="toolbar-stat">共 {{ store.palaces.length }} 座宫殿</span>
       <div class="toolbar-actions">
         <el-tooltip effect="dark" content="导入内置桩库" placement="top" popper-class="small-tooltip">
-          <el-icon :size="20" class="toolbar-icon" @click="emit('openPegImport')"><Download /></el-icon>
+          <el-icon :size="20" class="toolbar-icon" @click="showPegImport = true"><Download /></el-icon>
         </el-tooltip>
         <el-tooltip effect="dark" content="新建宫殿" placement="top" popper-class="small-tooltip">
           <el-icon :size="20" class="toolbar-icon" @click="goEdit('')"><Plus /></el-icon>
         </el-tooltip>
       </div>
     </div>
+
+    <!-- 桩库导入：复用统一「添加/导入」对话框，直达宫殿桩库 tab；v-if 保证首次点击才真正加载对话框 chunk -->
+    <TextImportDialog v-if="showPegImport" v-model="showPegImport" initial-lib-tab="pegPacks" />
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import {computed, defineAsyncComponent, onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {CircleClose, Delete, Download, Edit, Plus, Search, View} from '@element-plus/icons-vue';
 import {useMemoryPalaceStore} from '@/stores/memoryPalace';
 import type {Palace} from '@/types/memory-palace';
 
+// 导入对话框体量大（含诗词/知识库等子模块），按需加载，首次点击导入时才拉取
+const TextImportDialog = defineAsyncComponent(() => import('@/views/TextMemory/components/TextImportDialog.vue'));
+
 const router = useRouter();
 const store = useMemoryPalaceStore();
 
-// 作为嵌入组件：桩库导入入口统一由宿主页面的「添加/导入」对话框承担
-const emit = defineEmits<{
-  (e: 'openPegImport'): void;
-}>();
+// 桩库导入对话框可见性（组件内自弹，不依赖宿主页面）
+const showPegImport = ref(false);
 
 const searchKeyword = ref('');
 const sortBy = ref<'time' | 'name' | 'loci'>('time');

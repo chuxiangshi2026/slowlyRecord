@@ -12,6 +12,14 @@
       <view class="locus-body">
         <input v-model="locus.name" class="input" placeholder="钩子名称，如：大门" maxlength="12" />
         <input v-model="locus.description" class="input sub" placeholder="描述（可选）" maxlength="30" />
+        <view class="locus-image-row">
+          <image v-if="locus.imageUrl" class="locus-thumb" :src="locus.imageUrl" mode="aspectFill" @click="chooseImage(idx)" />
+          <view v-else class="locus-thumb-placeholder" @click="chooseImage(idx)">
+            <text class="thumb-plus">＋</text>
+            <text class="thumb-hint">图片</text>
+          </view>
+          <text v-if="locus.imageUrl" class="img-action danger" @click="removeImage(idx)">删除</text>
+        </view>
       </view>
       <view class="locus-actions">
         <text v-if="idx > 0" class="action-btn" @click="moveLocus(idx, -1)">↑</text>
@@ -36,7 +44,7 @@ import { useMemoryPalace } from '@/stores/useMemoryPalace'
 const store = useMemoryPalace()
 const palaceId = ref('')
 const name = ref('')
-const loci = ref<{ name: string; description?: string }[]>([])
+const loci = ref<{ name: string; description?: string; imageUrl?: string }[]>([])
 
 onMounted(() => {
   const pages = getCurrentPages()
@@ -47,7 +55,7 @@ onMounted(() => {
     const palace = store.getPalace(palaceId.value)
     if (palace) {
       name.value = palace.name
-      loci.value = palace.loci.map(l => ({ name: l.name, description: l.description }))
+      loci.value = palace.loci.map(l => ({ name: l.name, description: l.description, imageUrl: l.imageUrl }))
     }
   }
 })
@@ -96,6 +104,35 @@ function save() {
 
 function goBack() {
   uni.navigateBack()
+}
+
+function chooseImage(idx: number) {
+  uni.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['album', 'camera'],
+    success: (res) => {
+      const path = res.tempFilePaths[0]
+      // 小程序里无法直接 read file → 用 getFileSystemManager 读 base64
+      const fs = uni.getFileSystemManager()
+      fs.readFile({
+        filePath: path,
+        encoding: 'base64',
+        success: (read: any) => {
+          const dataURL = `data:image/jpeg;base64,${read.data}`
+          loci.value[idx].imageUrl = dataURL
+        },
+        fail: () => {
+          // 读取失败时退回直接存路径（H5/App 可用）
+          loci.value[idx].imageUrl = path
+        },
+      })
+    },
+  })
+}
+
+function removeImage(idx: number) {
+  loci.value[idx].imageUrl = undefined
 }
 </script>
 
@@ -232,5 +269,48 @@ function goBack() {
   color: #fff;
   border-radius: 16rpx;
   font-size: 30rpx;
+}
+
+.locus-image-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 12rpx;
+}
+
+.locus-thumb {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  border: 1rpx solid #e0e6e2;
+}
+
+.locus-thumb-placeholder {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  border: 2rpx dashed #b0c4b8;
+  background: #f5f7f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
+}
+
+.thumb-plus {
+  font-size: 36rpx;
+  color: #b0c4b8;
+  line-height: 1;
+}
+
+.thumb-hint {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.img-action {
+  font-size: 24rpx;
+  color: #c0564f;
 }
 </style>

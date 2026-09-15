@@ -31,6 +31,10 @@
     <!-- 主面板 -->
     <template v-else>
       <h4>记忆训练</h4>
+      <div class="d-item" @click="go('word', '/word')">
+        <span>📝 单词</span>
+        <small>{{ wordSummary }}</small>
+      </div>
       <div v-for="item in memoryItems" :key="item.key" class="d-item" @click="go(item.key, item.path)">
         <span>{{ item.label }}</span>
         <small>{{ item.summary }}</small>
@@ -65,6 +69,7 @@ import {useNumberMemoryStore} from '@/stores/numberMemory';
 import {useTextMemoryStore} from '@/stores/textMemory';
 import {useSentencesStore} from '@/stores/sentences';
 import {useMemoryStore} from '@/stores/memory';
+import {useWordsStore} from '@/stores/words';
 import {getDbStorage} from '@/adapters/db';
 
 const props = defineProps<{
@@ -115,6 +120,7 @@ const numberMemoryStore = useNumberMemoryStore();
 const textMemoryStore = useTextMemoryStore();
 const sentencesStore = useSentencesStore();
 const memoryStore = useMemoryStore();
+const wordsStore = useWordsStore();
 
 const visible = computed({
   get: () => props.modelValue,
@@ -129,6 +135,10 @@ const close = () => { visible.value = false; };
 const go = (key: string, path: string) => {
   recordUsage(key);
   close();
+  // 单词页依赖 wordsStore.words，若未预载（如从文本页直接跳转）则先加载
+  if (path === '/word' && wordsStore.count === 0) {
+    wordsStore.initWordBankInfo().then(() => wordsStore.listWords()).catch(() => {});
+  }
   router.push({ path, query: { from: route.fullPath } });
 };
 
@@ -158,6 +168,13 @@ const onSettings = () => {
 };
 
 // 状态摘要
+const wordSummary = computed(() => {
+  const due = wordsStore.forgetCount ?? 0;
+  if (due > 0) return `⏰ ${due} 词待复习`;
+  const total = wordsStore.count ?? 0;
+  return total > 0 ? `共 ${total} 词` : '';
+});
+
 const numberMemorySummary = computed(() => {
   const due = numberMemoryStore.dueEntries?.length ?? 0;
   if (due > 0) return `⏰ ${due} 条到期`;
@@ -185,6 +202,8 @@ const memoryItems = computed(() => sortByUsage([
   {key: 'number-memory', label: '🔢 数字记忆', summary: numberMemorySummary.value, path: '/number-memory'},
   {key: 'text-memory', label: '📜 文本记忆', summary: textMemorySummary.value, path: '/text-memory'},
   {key: 'sentences', label: '📖 句子库', summary: sentencesSummary.value, path: '/sentences'},
+  {key: 'memory-palace', label: '🏛️ 记忆宫殿', summary: '', path: '/memory-palace'},
+  {key: 'knowledge-memory', label: '📚 知识库', summary: '', path: '/knowledge-memory'},
 ]));
 
 const toolItems = computed(() => sortByUsage([
@@ -205,6 +224,13 @@ onMounted(async () => {
   try {
     await sentencesStore.load();
   } catch (e) { /* ignore */ }
+  // 单词摘要：words 为空且不在单词页时才预载，避免覆盖单词页自身状态
+  if (wordsStore.count === 0 && route.path !== '/word') {
+    try {
+      await wordsStore.initWordBankInfo();
+      await wordsStore.listWords();
+    } catch (e) { /* ignore */ }
+  }
 });
 </script>
 

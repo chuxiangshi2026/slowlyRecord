@@ -90,21 +90,6 @@ vi.mock('@/stores/words', () => ({
   })),
 }))
 
-// 主页嵌入了知识表面板，这里 mock 掉知识包 store，避免引入 DB 适配层
-vi.mock('@/stores/knowledgeMemory', () => ({
-  useKnowledgeMemoryStore: vi.fn(() => ({
-    packList: [],
-    loading: false,
-    importedIds: [],
-    isPackLoaded: vi.fn(() => false),
-    getTotalCount: vi.fn(() => 0),
-    getMasteredCount: vi.fn(() => 0),
-    getDueCount: vi.fn(() => 0),
-    loadPack: vi.fn(() => Promise.resolve()),
-    loadImportedIds: vi.fn(() => Promise.resolve()),
-  })),
-}))
-
 // Mock localStorage
 const localStorageMock = {
   getItem: vi.fn(() => null),
@@ -208,10 +193,9 @@ describe('NumberMemory 主页面', () => {
       expect(screen.getByText('数字-图片映射设置')).toBeInTheDocument()
     })
 
-    it('应显示训练历史与知识表分区', () => {
+    it('应显示训练历史分区', () => {
       setup()
       expect(screen.getByText('📊 训练历史')).toBeInTheDocument()
-      expect(screen.getByText('📚 知识表')).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /查看训练历史/ })).toBeInTheDocument()
     })
 

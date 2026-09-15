@@ -361,8 +361,8 @@ async function handleUnmountAll() {
 }
 
 function goBack() {
-  // 宫殿列表已并入文本记忆的宫殿视图
-  router.push('/text-memory?view=palace');
+  // 记忆宫殿为独立一级模块
+  router.push('/memory-palace');
 }
 
 function goEdit() {

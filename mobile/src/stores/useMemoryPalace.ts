@@ -256,6 +256,25 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     persistPegs(palaceId)
   }
 
+  /**
+   * 同步时剔除超大图片（dataURL 超过 32KB 的桩图与总图）
+   * 与桌面端 stripOversizedImages 保持一致，避免 payload 膨胀
+   */
+  const MAX_SYNC_IMAGE_CHARS = 32 * 1024
+
+  function stripOversizedImages(palace: MobilePalace): MobilePalace {
+    const cleaned: MobilePalace = { ...palace, loci: palace.loci.map(l => ({ ...l })) }
+    for (const locus of cleaned.loci) {
+      if (locus.imageUrl && locus.imageUrl.length > MAX_SYNC_IMAGE_CHARS) {
+        delete locus.imageUrl
+      }
+    }
+    if (cleaned.overviewImage && cleaned.overviewImage.length > MAX_SYNC_IMAGE_CHARS) {
+      delete cleaned.overviewImage
+    }
+    return cleaned
+  }
+
   /** 收集记忆宫殿用于同步（无宫殿返回 null，避免无意义负载） */
   function collectSync(): MobileMemoryPalace | null {
     load()
@@ -264,7 +283,10 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     for (const [palaceId, items] of Object.entries(pegsMap.value)) {
       if (items.length > 0) pegs[palaceId] = items
     }
-    return { palaces: palaces.value, pegs }
+    return {
+      palaces: palaces.value.map(stripOversizedImages),
+      pegs,
+    }
   }
 
   /**

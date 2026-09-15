@@ -222,7 +222,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'knowledgeMemory',
         component: KnowledgeMemory,
         meta: {
-          menu: false,
+          menu: true,
           title: '知识库',
           icon: 'Reading',
         },
@@ -241,7 +241,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'memoryPalace',
         component: MemoryPalace,
         meta: {
-          menu: false,
+          menu: true,
           title: '记忆宫殿',
           icon: 'OfficeBuilding',
         },

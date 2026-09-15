@@ -121,6 +121,12 @@ async function setup() {
   return render(MemoryPalace, {
     global: {
       plugins: [pinia, router],
+      stubs: {
+        TextImportDialog: {
+          props: ['modelValue'],
+          template: '<div class="peg-import-dialog" :data-visible="String(modelValue)" />',
+        },
+      },
     },
   })
 }
@@ -158,13 +164,16 @@ describe('MemoryPalace', () => {
     expect(screen.getByText('上班路线')).toBeInTheDocument()
   })
 
-  it('点击导入内置桩库入口时向父级抛出 openPegImport 事件', async () => {
-    const { emitted } = await setup()
+  it('点击导入内置桩库入口时打开桩库导入对话框（组件自弹，不依赖宿主页面）', async () => {
+    await setup()
 
-    // 桩库导入统一由宿主页面的「添加/导入」对话框承担，组件只负责通知
+    // v-if 延迟挂载：点击前对话框不存在
+    expect(document.querySelector('.peg-import-dialog')).toBeNull()
+
     await fireEvent.click(screen.getByText('download'))
 
-    expect(emitted().openPegImport).toBeTruthy()
-    expect(emitted().openPegImport).toHaveLength(1)
+    const dialog = document.querySelector('.peg-import-dialog') as HTMLElement
+    expect(dialog).not.toBeNull()
+    expect(dialog.dataset.visible).toBe('true')
   })
 })

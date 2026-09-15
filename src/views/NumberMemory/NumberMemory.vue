@@ -113,14 +113,6 @@
       </div>
     </el-card>
 
-    <!-- 数学类知识表（乘法表/元素周期表/公式等） -->
-    <el-card class="section-card knowledge-card">
-      <template #header>
-        <span class="section-title">📚 知识表</span>
-      </template>
-      <KnowledgePackPanel category="math" />
-    </el-card>
-
     <!-- 底部工具栏：返回单词列表 -->
     <div class="home_footer">
       <div>
@@ -153,7 +145,6 @@ import { ElMessage } from "element-plus";
 import { ArrowRight, Close } from "@element-plus/icons-vue";
 import TrainingHistory from "./components/TrainingHistory.vue";
 import QuickStartGuide from "./components/QuickStartGuide.vue";
-import KnowledgePackPanel from "@/views/TextMemory/components/KnowledgePackPanel.vue";
 import type { TrainingResult } from "@/types/number-memory";
 import { clearAllTrainingResults, getTrainingProgress, clearTrainingProgress } from "@/utils/number-memory-db";
 import { getDbStorage } from "@/adapters/db";
@@ -279,6 +270,10 @@ onMounted(() => {
   box-sizing: border-box;
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: none; /* 隐藏滚动条 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
   background-color: var(--utools-bg-secondary);
 
   .page-header {
@@ -473,17 +468,6 @@ onMounted(() => {
     .history-count {
       font-size: 13px;
       color: var(--utools-text-secondary);
-    }
-  }
-
-  .knowledge-card {
-    // 面板内卡片在 el-card 中拉通宽度
-    :deep(.knowledge-pack-panel) {
-      padding: 0;
-
-      .knowledge-pack-card {
-        width: 100%;
-      }
     }
   }
 
