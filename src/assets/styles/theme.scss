@@ -196,6 +196,11 @@ html.utools-dark,
 // ===== 全局样式适配 =====
 
 // 基础背景色
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: var(--utools-bg-primary);
   color: var(--utools-text-primary);
@@ -207,7 +212,27 @@ body {
 // 页面背景
 #app {
   background-color: var(--utools-bg-primary);
-  min-height: 100vh;
+  height: 100%;
+}
+
+// Home 布局高度链：让 el-container/el-main 正确撑满，子页面才能内部滚动
+#app > div {
+  height: 100%;
+}
+.common-layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.common-layout .el-container {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+.el-main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 // 卡片样式
@@ -286,17 +311,21 @@ body {
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--utools-scrollbar-track);
+/* 默认隐藏滚动条，鼠标悬停所在区域时才显示（滚动功能不受影响） */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+*:hover > ::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--utools-scrollbar-thumb);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--utools-text-tertiary);
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--utools-scrollbar-thumb);
-  border-radius: 4px;
-  
-  &:hover {
-    background: var(--utools-text-tertiary);
-  }
+::-webkit-scrollbar-track {
+  background: var(--utools-scrollbar-track);
 }
 
 // 输入框和表单
