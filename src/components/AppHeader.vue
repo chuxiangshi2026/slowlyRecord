@@ -118,14 +118,20 @@ const pageTitle = computed(() => (route.meta?.title as string) || '慢记');
 const goSign = () => router.push('/sign');
 const goWord = () => router.push('/word');
 
-// 返回：优先回到来源页面（query.from），否则回单词列表
+// 返回：优先回到来源页面（query.from）；关键词入口进入（query.entry）时回对应模块首页；
+// 否则回单词列表
 const goBack = () => {
   const from = route.query.from as string;
   if (from) {
     router.push(from);
-  } else {
-    goWord();
+    return;
   }
+  // 关键词入口进入的会话：返回回该模块首页而非单词页
+  if (route.query.entry === 'textMemory') {
+    router.push('/text-memory');
+    return;
+  }
+  goWord();
 };
 
 // 设置入口：任意页面直接打开全局设置抽屉（挂在 Home 层，不再先回单词页）

@@ -447,7 +447,20 @@ const canSave = computed(() => {
 onMounted(async () => {
   await store.loadEntries();
   document.addEventListener('click', onDocClick, true);
+  applyNumbersQuery(route.query.numbers);
 });
+
+// uTools 超级面板「数字记忆」入口带入选中的数字：预填并打开添加对话框
+// （对话框关闭时表单会被重置，故消费后清掉 query，保证同一数字可再次触发）
+function applyNumbersQuery(raw: unknown) {
+  const preset = typeof raw === 'string' ? raw.trim() : '';
+  if (!preset) return;
+  entryForm.value.numbers = preset;
+  showAddDialog.value = true;
+  router.replace({ query: { ...route.query, numbers: undefined } });
+}
+
+watch(() => route.query.numbers, (val) => applyNumbersQuery(val));
 
 onUnmounted(() => {
   document.removeEventListener('click', onDocClick, true);

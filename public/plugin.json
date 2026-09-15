@@ -19,11 +19,11 @@
     },
     {
       "code": "over",
-      "explain": "添加单词",
+      "explain": "添加单词/句子",
       "cmds": [
         {
           "type": "over",
-          "label": "加入慢记",
+          "label": "收进单词/句子库",
           "minLength": 1
         }
       ]
@@ -37,8 +37,7 @@
           "label": "划词添加",
           "minLength": 1
         },
-        "划词添加",
-        "划段添加"
+        "划词添加"
       ]
     },
     {
@@ -58,30 +57,6 @@
       ]
     },
     {
-      "code": "jycs",
-      "explain": "记忆测试",
-      "cmds": [
-        {
-          "type": "over",
-          "label": "记忆测试",
-          "minLength": 1
-        },
-        "记忆测试"
-      ]
-    },
-    {
-      "code": "numMemory",
-      "explain": "数字记忆",
-      "cmds": [
-        {
-          "type": "over",
-          "label": "数字记忆",
-          "minLength": 1
-        },
-        "数字记忆"
-      ]
-    },
-    {
       "code": "translate",
       "explain": "快速翻译",
       "cmds": [
@@ -92,8 +67,7 @@
         },
         "翻译"
       ]
-    }
-  ,
+    },
     {
       "code": "textMemory",
       "explain": "文本记忆",
@@ -102,22 +76,46 @@
       ]
     },
     {
-      "code": "shortcutMemory",
-      "explain": "快捷键记忆",
-      "cmds": [
-        "快捷键记忆",
-        "快捷键",
-        "kjj"
-      ]
-    },
-    {
       "code": "focusMode",
       "explain": "专注模式",
       "cmds": [
         "专注"
       ]
+    },
+    {
+      "code": "numMemory",
+      "explain": "数字记忆",
+      "cmds": [
+        {
+          "type": "regex",
+          "label": "数字记忆",
+          "match": "/\\d/",
+          "minLength": 1
+        },
+        "数字记忆"
+      ]
+    },
+    {
+      "code": "shortcutMemory",
+      "explain": "快捷键记忆",
+      "cmds": [
+        "快捷键记忆"
+      ]
+    },
+    {
+      "code": "palace",
+      "explain": "记忆宫殿",
+      "cmds": [
+        "记忆宫殿"
+      ]
+    },
+    {
+      "code": "knowledge",
+      "explain": "知识库",
+      "cmds": [
+        "知识库"
+      ]
     }
-
   ],
   "permissions": {
     "clipboard": true,
@@ -126,4 +124,3 @@
   },
   "$schema": "../node_modules/utools-api-types/resource/utools.schema.json"
 }
-

@@ -37,3 +37,23 @@ window.services = {
     fs: require('node:fs'),
     path: require('node:path')
 }
+
+// 提前注册 onPluginEnter（preload 阶段，早于渲染进程任何代码），
+// 避免 Vite 冷启动慢导致 enter 事件在 App.vue 注册前发出而丢失。
+// 渲染进程就绪后把处理器挂到 __pluginEnterHandlers，事件即转发；
+// 就绪前到达的事件缓存在 __pluginEnterQueue，由渲染进程启动时消费。
+window.__pluginEnterQueue = []
+window.__pluginEnterHandlers = []
+try {
+    if (window.utools && window.utools.onPluginEnter) {
+        window.utools.onPluginEnter((action) => {
+            if (window.__pluginEnterHandlers.length > 0) {
+                window.__pluginEnterHandlers.forEach(fn => fn(action))
+            } else {
+                window.__pluginEnterQueue.push(action)
+            }
+        })
+    }
+} catch (e) {
+    // 非 uTools 环境忽略
+}

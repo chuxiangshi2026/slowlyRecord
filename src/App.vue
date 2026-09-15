@@ -84,6 +84,14 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
 let reviewReminderNotified = false;
 
 ;(window as any).utools?.onPluginEnter?.(async (action: any) => {
+  console.log('[onPluginEnter] 回调已触发, code=', action?.code, '时间=', new Date().toISOString());
+  handleUtoolsEnter(action)
+})
+
+// uTools enter 事件统一处理：兼容 preload 阶段缓存的事件
+// （preload/services.js 已提前注册 onPluginEnter，防止 Vite 冷启动慢时事件丢失）
+async function handleUtoolsEnter(action: any) {
+  console.log('[handleUtoolsEnter] code=', action?.code, '时间=', new Date().toISOString());
   // 先同步 设置
   let setDb = getSetDb();
 
@@ -221,7 +229,7 @@ let reviewReminderNotified = false;
 
   // await initUtoolSetting()
 
-  console.log("action对象", JSON.stringify(action))
+  console.log("action对象", JSON.stringify(action), "code=", action?.code, "时间=", new Date().toISOString())
   /*  if (action.code === 'snap') {
       console.log('进来了')
       window.services.snap()
@@ -336,12 +344,8 @@ let reviewReminderNotified = false;
     handlePluginReview()
   }
 
-  if (action.code === 'jycs') {
-    handlePluginMemoryTest()
-  }
-
   if (action.code === 'numMemory') {
-    handlePluginNumMemory()
+    handlePluginNumMemory(action)
   }
 
   // 快速翻译 - 通过 fy/翻译/fanyi 关键字进入
@@ -349,7 +353,7 @@ let reviewReminderNotified = false;
     handlePluginTranslate(action)
   }
 
-  // 快捷键记忆 - 通过 快捷键记忆/kjj 关键字进入
+  // 快捷键记忆 - 通过 快捷键记忆 关键字进入
   if (action.code === 'shortcutMemory') {
     handlePluginShortcutMemory()
   }
@@ -359,19 +363,42 @@ let reviewReminderNotified = false;
     handlePluginFocusMode()
   }
 
+  // 记忆宫殿 - 通过 记忆宫殿 关键字进入
+  if (action.code === 'palace') {
+    handlePluginSimpleRoute('/memory-palace')
+  }
+
+  // 知识库 - 通过 知识库 关键字进入
+  if (action.code === 'knowledge') {
+    handlePluginSimpleRoute('/knowledge-memory')
+  }
+
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
   const addWordActions = ['over', 'huaci', 'jietu', 'paste', 'selection']
-  if (!['review', 'jycs', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', ...addWordActions].includes(action.code)) {
+  if (!['review', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', 'palace', 'knowledge', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
   // 文本记忆 - 通过 文本记忆/诗词记忆 关键字进入
   if (action.code === 'textMemory') {
     handlePluginTextMemory()
   }
+}
 
-
-})
+// 消费 preload 阶段缓存的 enter 事件（App 挂载后调用）
+function consumeQueuedPluginEnter() {
+  const w = window as any;
+  if (w.__pluginEnterQueue && w.__pluginEnterQueue.length > 0) {
+    const queued = w.__pluginEnterQueue.splice(0);
+    console.log('[App] 消费 preload 缓存的 enter 事件:', queued.map((a: any) => a?.code).join(','));
+    queued.forEach((action: any) => handleUtoolsEnter(action));
+  }
+  // 注册后续 enter 的转发
+  if (w.__pluginEnterHandlers) {
+    w.__pluginEnterHandlers.push(handleUtoolsEnter);
+  }
+}
+consumeQueuedPluginEnter();
 
 /**
  * 显示调试信息（控制台 + 日志文件 + DebugPanel）
@@ -921,24 +948,28 @@ function handlePluginReview() {
 }
 
 /**
- * 处理记忆力测试的插件入口
+ * 处理数字记忆的插件入口
  */
-function handlePluginMemoryTest() {
+function handlePluginNumMemory(action?: any) {
   // 显示主窗口
   if (isUTools()) (window as any).utools?.showMainWindow?.()
-
-  // 跳转到记忆力测试页面
-  router.push('/memory')
+  // 超级面板选中文本进入：若文本含数字则直达条目页并预填添加对话框，否则只打开主页
+  const raw = typeof action?.payload === 'string' ? action.payload : ''
+  const numbers = raw.replace(/[^\d.]/g, '')
+  if (/\d/.test(numbers)) {
+    router.push({ path: '/number-memory/entries', query: { numbers } })
+  } else {
+    router.push('/number-memory')
+  }
 }
 
 /**
- * 处理数字记忆的插件入口
+ * 简单路由类关键词入口（记忆宫殿 / 知识库）：显示主窗口 + 跳页
  */
-function handlePluginNumMemory() {
-  // 显示主窗口
+function handlePluginSimpleRoute(path: string) {
   if (isUTools()) (window as any).utools?.showMainWindow?.()
-  // 跳转到数字记忆页面
-  router.push('/number-memory')
+  wordsStore.setLastVisitedPage('')
+  router.push(path)
 }
 
 /**
@@ -984,8 +1015,8 @@ function handlePluginTranslate(action: any) {
 function handlePluginTextMemory() {
   // 显示主窗口
   if (isUTools()) (window as any).utools?.showMainWindow?.()
-  // 跳转到文本记忆页面
-  router.push('/text-memory')
+  // 跳转到文本记忆页面（带 entry 标记：公共头返回时回到文本记忆首页而非单词页）
+  router.push({ path: '/text-memory', query: { entry: 'textMemory' } })
 }
 
 /**
