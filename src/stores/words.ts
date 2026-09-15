@@ -553,32 +553,44 @@ export const useWordsStore =
                 return true
             }
 
+            let _listWordsPromise: Promise<Word[]> | null = null;
+
             /**
              *获取全部单词
+             * 并发去重：入口 updateReview 与页面 onMounted 常同时触发，
+             * 共享进行中的 Promise，避免重复读库与 upReview 计算
              */
             async function listWords(): Promise<Word[]> {
-                // 确保词库信息已初始化
-                if (!currentWordBankId.value) {
-                    await initWordBankInfo()
+                if (_listWordsPromise) return _listWordsPromise;
+                _listWordsPromise = (async (): Promise<Word[]> => {
+                    // 确保词库信息已初始化
+                    if (!currentWordBankId.value) {
+                        await initWordBankInfo()
+                    }
+
+                    // 从当前词库获取单词
+                    const bank = await getWordBank(currentWordBankId.value)
+                    currentWordBank.value = bank
+                    setActiveLanguage(bank?.language)
+
+                    if (bank) {
+                        words.value = []
+                        pushWords(bank.words)
+                    }
+
+                    // 加载单词后重新计算待复习状态
+                    await upReview()
+
+                    // 后台清理旧的逐词遗留文档（不阻塞加载）
+                    cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
+
+                    return words.value
+                })();
+                try {
+                    return await _listWordsPromise;
+                } finally {
+                    _listWordsPromise = null;
                 }
-
-                // 从当前词库获取单词
-                const bank = await getWordBank(currentWordBankId.value)
-                currentWordBank.value = bank
-                setActiveLanguage(bank?.language)
-
-                if (bank) {
-                    words.value = []
-                    pushWords(bank.words)
-                }
-
-                // 加载单词后重新计算待复习状态
-                await upReview()
-
-                // 后台清理旧的 per-word 文档（不阻塞加载）
-                cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
-
-                return words.value
             }
 
 

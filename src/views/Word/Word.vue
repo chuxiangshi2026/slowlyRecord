@@ -426,7 +426,7 @@ import {getSetDb} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron} from '@/adapters/platform';
-import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow} from '@/utils/focus-lock';
+import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount} from '@/utils/focus-lock';
 import {
   fetchWordBank,
   WORDBANK_LIST,
@@ -933,6 +933,12 @@ const consumeLatestFocusModePendingAction = (source = 'db') => {
       return false;
     }
 
+    // 文本专注模式动作由 text-focus-window 控制器处理：这里直接跳过，
+    // 且不占用时间戳（否则抢步会让后续路径误判"已处理"）
+    if (pendingAction.source === 'text') {
+      return false;
+    }
+
     if (pendingActionAt && pendingActionAt <= lastHandledFocusModeActionAt) {
       return false;
     }
@@ -1060,6 +1066,7 @@ const handleRecreateWindow = (state: any) => {
 
   // 强制清空引用
   focusWindow = null;
+  focusWindowClosed('word');
   console.log('[handleRecreateWindow] focusWindow 已置为 null');
 
   // 清理贴边相关
@@ -1107,6 +1114,7 @@ const handleRecreateWindow = (state: any) => {
       }, () => {
         console.log('[handleRecreateWindow] 新专注窗口已创建，置顶状态:', newAlwaysOnTop);
         applyFocusWindowAlwaysOnTop(focusWindow, newAlwaysOnTop, 'handleRecreateWindow');
+        focusWindowOpened('word');
         if (focusWindow && typeof focusWindow.show === 'function') {
           focusWindow.show();
         }
@@ -1123,6 +1131,7 @@ const handleRecreateWindow = (state: any) => {
 
         if (focusWindow === recreatedWindow) {
           focusWindow = null;
+          focusWindowClosed('word');
           clearFocusModeSync();
           clearEdgeStickResources();
           isEdgeHidden = false;
@@ -1664,6 +1673,7 @@ const handleOpenWordList = async () => {
       console.error('关闭专注窗口失败:', e);
     }
     focusWindow = null;
+    focusWindowClosed('word');
   }
 
   // 清理贴边相关
@@ -1684,7 +1694,12 @@ const handleOpenWordList = async () => {
 
   // 显示主窗口并刷新
   if (isUtools() && (window as any).utools?.showMainWindow) {
-    (window as any).utools.showMainWindow();
+    const ok = (window as any).utools.showMainWindow();
+    console.log('[专注模式-单词] showMainWindow 返回:', ok, '可见性:', document.visibilityState);
+    // 临时诊断：与文本模式对照主窗口显示/隐藏时序
+    const onVisChange = () => console.log('[专注模式-单词] visibilitychange =>', document.visibilityState);
+    document.addEventListener('visibilitychange', onVisChange);
+    setTimeout(() => document.removeEventListener('visibilitychange', onVisChange), 3500);
   }
 
   setTimeout(async () => {
@@ -1742,6 +1757,7 @@ const handleOpenDictation = async () => {
       console.error('关闭专注窗口失败:', e);
     }
     focusWindow = null;
+    focusWindowClosed('word');
   }
 
   // 清理相关资源
@@ -1816,6 +1832,11 @@ const handleFocusModeStorageAction = (rawValue: string | null) => {
       return;
     }
 
+    // 文本专注模式动作不占用本页时间戳（由 text-focus-window 控制器处理）
+    if (action.source === 'text') {
+      return;
+    }
+
     const actionAt = Number(action.at || 0);
     if (actionAt && actionAt <= lastHandledFocusModeActionAt) {
       return;
@@ -1881,6 +1902,7 @@ onUnmounted(() => {
     }
   }
   focusWindow = null;
+  focusWindowClosed('word');
   clearEdgeStickResources();
   isEdgeHidden = false;
   savedBounds = null;
@@ -2040,6 +2062,16 @@ const openFocusMode = async (mode = '') => {
     focusWindow.focus?.();
     return;
   }
+  // 本页窗口引用已失效：重算本来源存活窗口数（文本来源的计数由文本入口自行维护，不受影响）
+  if (!focusWindow || focusWindow.isDestroyed?.()) {
+    resyncFocusWindowCount('word', 0);
+  }
+
+  // 并发上限：最多同时 2 个专注窗口（共享渲染进程，太多会卡）
+  if (!canOpenFocusWindow()) {
+    ElMessage.warning(`最多同时打开 ${getOpenFocusWindowCount()} 个专注窗口，请先关闭一个`);
+    return;
+  }
 
   // 获取当前主题
   const isDark = document.body.classList.contains('utools-dark') ||
@@ -2086,6 +2118,7 @@ const openFocusMode = async (mode = '') => {
         resizable: true, modal: false, closable: true,
       });
       focusWindow = createElectronWindowProxy(winId, initAlwaysOnTop);
+      focusWindowOpened('word');
       const createdFocusWindow = focusWindow;
       api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
         if (id !== winId) return;
@@ -2094,6 +2127,7 @@ const openFocusMode = async (mode = '') => {
           if (focusWindow === createdFocusWindow) {
             consumeLatestFocusModePendingAction('closed');
             focusWindow = null;
+            focusWindowClosed('word');
             clearFocusModeSync();
             clearEdgeStickResources();
             isEdgeHidden = false;
@@ -2157,6 +2191,7 @@ const openFocusMode = async (mode = '') => {
       }, () => {
         console.log('[openFocusMode] 窗口创建回调执行，focusWindow:', focusWindow, '主题:', themeParam);
         applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
+        focusWindowOpened('word');
         // 显示窗口
         if (focusWindow && typeof focusWindow.show === 'function') {
           focusWindow.show();
@@ -2173,6 +2208,7 @@ const openFocusMode = async (mode = '') => {
 
         if (focusWindow === createdFocusWindow) {
           focusWindow = null;
+          focusWindowClosed('word');
           clearFocusModeSync();
           clearEdgeStickResources();
           isEdgeHidden = false;
@@ -3280,7 +3316,10 @@ onMounted(async () => {
     if (localStorage.getItem(ONBOARDED_KEY) === '1') return
   } catch { /* ignore */ }
 
-  await wordsStore.listWords()
+  // 单词可能已被入口流程（App 的 updateReview）加载过，避免重复 listWords
+  if (wordsStore.count === 0) {
+    await wordsStore.listWords()
+  }
   if (wordsStore.count === 0) {
     showOnboarding.value = true
   }
