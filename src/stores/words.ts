@@ -581,6 +581,8 @@ export const useWordsStore =
                     // 加载单词后重新计算待复习状态
                     await upReview()
 
+                    console.log(`[启动耗时] 单词列表就绪: ${performance.now().toFixed(0)}ms（${words.value.length} 词）`)
+
                     // 后台清理旧的逐词遗留文档（不阻塞加载）
                     cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
 
