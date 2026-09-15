@@ -113,6 +113,16 @@
       />
     </el-form-item>
 
+    <el-form-item label="朗读文本">
+      <el-input
+        v-model="formData.speechContent"
+        type="textarea"
+        :rows="4"
+        placeholder="可选：专注模式朗读时使用。用于纠正机读误读（如把「衰」换成同音字「催」），须与内容等长同结构（逐字一一对应，只换字不调标点/换行），留空则朗读原文"
+        maxlength="20000"
+      />
+    </el-form-item>
+
     <el-form-item label="译文">
       <el-input
         v-model="formData.translation"
@@ -161,6 +171,7 @@ const formData = ref({
   language: 'zh',
   tags: [] as string[],
   content: '',
+  speechContent: '',
   translation: '',
   // 时间线字段
   category: '' as '' | 'politics' | 'literature' | 'science' | 'thought' | 'society',
@@ -212,6 +223,7 @@ watch(() => props.article, (newArticle) => {
       language: normalizeArticleLanguage(newArticle.language),
       tags: [...newArticle.tags],
       content: newArticle.content,
+      speechContent: newArticle.speechContent || '',
       translation: newArticle.translation || '',
       category: (newArticle.category as any) || '',
       region: newArticle.region || '',
@@ -238,6 +250,7 @@ function resetForm() {
     language: 'zh',
     tags: [],
     content: '',
+    speechContent: '',
     translation: '',
     category: '',
     region: '',
@@ -279,6 +292,7 @@ async function submit(): Promise<boolean> {
       language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
+      speechContent: formData.value.speechContent || undefined,
       translation: formData.value.translation || undefined,
       ...timelineFields,
     };
@@ -292,6 +306,7 @@ async function submit(): Promise<boolean> {
       language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
+      speechContent: formData.value.speechContent || undefined,
       translation: formData.value.translation || undefined,
       ...timelineFields,
     });

@@ -29,6 +29,7 @@ export interface PoetryItem {
   dynasty: string;
   dynastyCode: PoetryDynasty;
   content: string;
+  speechContent?: string;   // 朗读专用文本：与 content 等长同结构的同音字替换版（纠正机读误读），仅用于 TTS
   contentType: ContentType;
   tags: string[];
   source?: string;
@@ -81,7 +82,7 @@ export const DYNASTY_LIST: DynastyInfo[] = [
 ];
 
 // 缓存配置
-const CACHE_KEY_PREFIX = 'poetry_cache_v4_';
+const CACHE_KEY_PREFIX = 'poetry_cache_v5_';
 const CACHE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // 30天过期
 const POETRY_INDEX_KEY = 'poetry_index_cache';
 

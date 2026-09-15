@@ -51,6 +51,7 @@ function poemToItem(poem: PoetryItem): LibraryMapItem | null {
     article: {
       title: poem.title,
       content: poem.content,
+      speechContent: poem.speechContent,
       author: poem.author,
       source: poem.source || poem.dynasty,
       dynasty: poem.dynasty,

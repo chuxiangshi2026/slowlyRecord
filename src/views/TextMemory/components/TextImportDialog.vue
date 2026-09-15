@@ -2356,6 +2356,7 @@ async function handleSearch() {
         searchResults.value = results.map(p => ({
           title: `${p.title} - ${p.author}`,
           content: p.content,
+          speechContent: p.speechContent,
           author: p.author,
           source: p.dynasty,
           location: p.location
@@ -2594,6 +2595,7 @@ async function handleImport() {
           articles = [{
             title: result.title,
             content: result.content,
+            speechContent: result.speechContent,
             tags: onlineForm.value.tags,
             author: '',
             source: onlineForm.value.url || ''
@@ -2610,6 +2612,7 @@ async function handleImport() {
             articles = selectedPoetries.value.map(poem => ({
               title: poem.title,
               content: poem.content,
+              speechContent: poem.speechContent,
               tags: [...poem.tags, ...poetryForm.value.tags],
               author: poem.author,
               source: poem.source || poem.dynasty,

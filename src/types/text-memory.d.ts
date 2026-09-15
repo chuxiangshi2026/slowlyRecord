@@ -78,6 +78,9 @@ export interface TextArticle {
   title: string;
   // 内容
   content: string;
+  // 朗读专用文本（可选）：与 content 等长同结构的同音字替换版（纠正机读误读，如"衰"→"催"读 cuī）
+  // 仅用于 TTS 朗读，展示/滚动跟随仍用 content；因滚动按 content 计算字符位置，两者必须逐字一一对应
+  speechContent?: string;
   // 作者（可选）
   author?: string;
   // 来源（可选）
