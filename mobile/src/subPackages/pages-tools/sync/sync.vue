@@ -27,8 +27,27 @@
       </view>
     </view>
 
+    <!-- 坚果云备份面板 -->
+    <view v-if="showWebdav && !showPushResult && !showPullInput" class="section">
+      <view class="section-title">坚果云备份</view>
+      <input class="popup-input" v-model="webdavUrl" placeholder="WebDAV 地址" />
+      <input class="popup-input" v-model="webdavUsername" placeholder="账号（坚果云注册邮箱）" />
+      <input class="popup-input" v-model="webdavPassword" password placeholder="应用密码（不是登录密码）" />
+      <view class="webdav-guide">
+        获取应用密码：电脑登录坚果云官网 → 右上角头像 → 账户信息 → 安全选项 → 第三方应用管理 → 添加应用密码，生成后复制到上方。免费版每月 1GB 上传流量，同步包仅几十 KB，完全够用。数据加密后存到你自己的网盘，可长期保留。
+      </view>
+      <view class="btn-row">
+        <button class="btn-confirm" @click="handleWebdavPush">备份到云盘</button>
+        <button class="btn-confirm" @click="handleWebdavPull">从云盘恢复</button>
+      </view>
+      <view class="btn-row">
+        <button class="btn-cancel" @click="handleWebdavTest">测试连接</button>
+        <button class="btn-cancel" @click="showWebdav = false">返回</button>
+      </view>
+    </view>
+
     <!-- 操作按钮 -->
-    <view v-if="!showPushResult && !showPullInput" class="menu-list">
+    <view v-if="!showPushResult && !showPullInput && !showWebdav" class="menu-list">
       <view class="menu-item" @click="handlePush">
         <text class="menu-icon push">↑</text>
         <text class="menu-text">推送数据（上传）</text>
@@ -40,6 +59,11 @@
       <view class="menu-item" @click="scanAndPull">
         <text class="menu-icon scan">◎</text>
         <text class="menu-text">扫码拉取</text>
+      </view>
+      <view class="menu-item" @click="openWebdav">
+        <text class="menu-icon webdav">☁</text>
+        <text class="menu-text">坚果云备份（WebDAV）</text>
+        <text class="menu-value">{{ webdavConfigured ? '已配置' : '' }}</text>
       </view>
       <view class="menu-divider"></view>
       <view class="menu-item" @click="showServerSetting">
@@ -59,7 +83,9 @@ import { useNumberMemory } from '@/stores/useNumberMemory'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { useSignin } from '@/stores/useSignin'
 import { useMemoryPalace } from '@/stores/useMemoryPalace'
-import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable } from '../utils/sync'
+import { useSentences } from '@/stores/useSentences'
+import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable, type PushPayload } from '../utils/sync'
+import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, testWebDavConnection, pushToWebDav, pullFromWebDav } from '../utils/sync-webdav'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
 import { drawQrCode } from '../utils/qrcode'
 
@@ -69,6 +95,7 @@ const numberMemoryStore = useNumberMemory()
 const phoneticMemoryStore = usePhoneticMemory()
 const signinStore = useSignin()
 const memoryPalaceStore = useMemoryPalace()
+const sentencesStore = useSentences()
 
 const showPushResult = ref(false)
 const showPullInput = ref(false)
@@ -83,48 +110,57 @@ const currentServerDisplay = computed(() => {
   })()
 })
 
-// 推送
+// 推送（与坚果云备份共用同一份数据收集）
+const buildPushPayload = async (): Promise<PushPayload> => {
+  const banks = wordsStore.bankList.map(bank => ({
+    id: bank.id,
+    name: bank.name,
+    words: wordsStore.allWords.filter(w => w.bankId === bank.id || (!w.bankId && bank.id === 'default')),
+  })).filter(b => b.words.length > 0)
+  // 收集文本/数字记忆（懒加载确保数据已读取）
+  textMemoryStore.load()
+  numberMemoryStore.load()
+  const textMemory = textMemoryStore.collect()
+  const numberMemory = numberMemoryStore.collect()
+  // 仅有数据时才带上字段，避免无意义负载
+  const hasTextMemory =
+    textMemory.articles.length || textMemory.notes.length || textMemory.prompts.length
+  const hasNumberMemory =
+    numberMemory.associations.length ||
+    numberMemory.entries.length ||
+    numberMemory.notes.length ||
+    numberMemory.prompts.length
+  // 收集知识库（导入清单+每包进度）与音标进度
+  await phoneticMemoryStore.ensureLoaded()
+  const knowledgeMemory = collectKnowledgeSyncData()
+  const phoneticMemory = phoneticMemoryStore.collectSync()
+  // 收集每日打卡记录
+  const signin = signinStore.collectSync()
+  // 收集记忆宫殿（查看版：桩图超大殿在桌面端同步时已剔除）
+  memoryPalaceStore.load()
+  const memoryPalace = memoryPalaceStore.collectSync()
+  // 收集句子库（空库返回 null）
+  const sentences = sentencesStore.collect()
+  return {
+    banks,
+    textMemory: hasTextMemory ? textMemory : undefined,
+    numberMemory: hasNumberMemory ? numberMemory : undefined,
+    knowledgeMemory: knowledgeMemory || undefined,
+    phoneticMemory: phoneticMemory || undefined,
+    signin: signin || undefined,
+    memoryPalace: memoryPalace || undefined,
+    sentences: sentences || undefined,
+  }
+}
+
 const handlePush = async () => {
   uni.showLoading({ title: '推送中...' })
   try {
-    const banks = wordsStore.bankList.map(bank => ({
-      id: bank.id,
-      name: bank.name,
-      words: wordsStore.allWords.filter(w => w.bankId === bank.id || (!w.bankId && bank.id === 'default')),
-    })).filter(b => b.words.length > 0)
-    // 收集文本/数字记忆（懒加载确保数据已读取）
-    textMemoryStore.load()
-    numberMemoryStore.load()
-    const textMemory = textMemoryStore.collect()
-    const numberMemory = numberMemoryStore.collect()
-    // 仅有数据时才带上字段，避免无意义负载
-    const hasTextMemory =
-      textMemory.articles.length || textMemory.notes.length || textMemory.prompts.length
-    const hasNumberMemory =
-      numberMemory.associations.length ||
-      numberMemory.entries.length ||
-      numberMemory.notes.length ||
-      numberMemory.prompts.length
-    // 收集知识库（导入清单+每包进度）与音标进度
-    await phoneticMemoryStore.ensureLoaded()
-    const knowledgeMemory = collectKnowledgeSyncData()
-    const phoneticMemory = phoneticMemoryStore.collectSync()
-    // 收集每日打卡记录
-    const signin = signinStore.collectSync()
-    // 收集记忆宫殿（查看版：桩图超大殿在桌面端同步时已剔除）
-    memoryPalaceStore.load()
-    const memoryPalace = memoryPalaceStore.collectSync()
-    const result = await pushToServer({
-      banks,
-      textMemory: hasTextMemory ? textMemory : undefined,
-      numberMemory: hasNumberMemory ? numberMemory : undefined,
-      knowledgeMemory: knowledgeMemory || undefined,
-      phoneticMemory: phoneticMemory || undefined,
-      signin: signin || undefined,
-      memoryPalace: memoryPalace || undefined,
-    })
+    const result = await pushToServer(await buildPushPayload())
     uni.hideLoading()
-    if (result.success && result.code) {
+    if (result.skipped) {
+      uni.showToast({ title: '数据未变更，已跳过', icon: 'none' })
+    } else if (result.success && result.code) {
       syncCode.value = result.code
       showPushResult.value = true
       setTimeout(() => {
@@ -207,6 +243,77 @@ const scanAndPull = () => {
   // #endif
 }
 
+// ==================== 坚果云备份（WebDAV） ====================
+
+const showWebdav = ref(false)
+const webdavUrl = ref('')
+const webdavUsername = ref('')
+const webdavPassword = ref('')
+const webdavConfigured = ref(isWebDavConfigured())
+
+const openWebdav = () => {
+  const cfg = getWebDavConfig()
+  webdavUrl.value = cfg.url
+  webdavUsername.value = cfg.username
+  webdavPassword.value = cfg.password
+  webdavConfigured.value = isWebDavConfigured()
+  showWebdav.value = true
+}
+
+const saveWebdavForm = () => {
+  saveWebDavConfig({ url: webdavUrl.value, username: webdavUsername.value, password: webdavPassword.value })
+  webdavConfigured.value = isWebDavConfigured()
+}
+
+const handleWebdavTest = async () => {
+  saveWebdavForm()
+  uni.showLoading({ title: '测试中...' })
+  const result = await testWebDavConnection(getWebDavConfig())
+  uni.hideLoading()
+  uni.showModal({ title: result.ok ? '连接成功' : '连接失败', content: result.message, showCancel: false })
+}
+
+const handleWebdavPush = async () => {
+  saveWebdavForm()
+  if (!isWebDavConfigured()) {
+    uni.showToast({ title: '请填写账号和应用密码', icon: 'none' })
+    return
+  }
+  uni.showLoading({ title: '备份中...' })
+  try {
+    const result = await pushToWebDav(getWebDavConfig(), await buildPushPayload())
+    uni.hideLoading()
+    uni.showToast({ title: result.success ? '已备份到云盘' : (result.error || '备份失败'), icon: 'none' })
+  } catch (e) {
+    uni.hideLoading()
+    uni.showToast({ title: '备份失败', icon: 'none' })
+  }
+}
+
+const handleWebdavPull = async () => {
+  saveWebdavForm()
+  if (!isWebDavConfigured()) {
+    uni.showToast({ title: '请填写账号和应用密码', icon: 'none' })
+    return
+  }
+  uni.showLoading({ title: '下载中...' })
+  try {
+    const result = await pullFromWebDav(getWebDavConfig())
+    if (result.success) {
+      uni.showLoading({ title: '导入中...' })
+      const summary = await applyPullResult(result)
+      uni.hideLoading()
+      uni.showModal({ title: '恢复成功', content: summary, showCancel: false })
+    } else {
+      uni.hideLoading()
+      uni.showToast({ title: result.error || '恢复失败', icon: 'none' })
+    }
+  } catch (e) {
+    uni.hideLoading()
+    uni.showToast({ title: '恢复失败', icon: 'none' })
+  }
+}
+
 /** 把 pullFromServer 结果分别写入各 store，返回中文摘要 */
 async function applyPullResult(result: any): Promise<string> {
   const parts: string[] = []
@@ -242,6 +349,10 @@ async function applyPullResult(result: any): Promise<string> {
     const palaceCount = memoryPalaceStore.restoreSync(result.memoryPalace)
     if (palaceCount > 0) parts.push(`${palaceCount} 座记忆宫殿`)
   }
+  if (result.sentences) {
+    const added = sentencesStore.restore(result.sentences)
+    if (added > 0) parts.push(`${added} 条句子`)
+  }
   return parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
 }
 
@@ -263,7 +374,8 @@ async function importBanks(banks: any[]) {
     const wordsArr = Array.isArray(bank.words) ? bank.words : []
     if (wordsArr.length > 0) {
       try {
-        const imported = await wordsStore.importWords(wordsArr, targetBank.id)
+        // importWords 返回 { imported, skippedCount, invalidCount }，取其中的数组
+        const { imported } = await wordsStore.importWords(wordsArr, targetBank.id)
         for (const w of imported) allImportedWords.push(w)
       } catch (e) {
         console.error(`导入词库 ${bankName} 失败:`, e)
@@ -284,7 +396,7 @@ const showServerSetting = async () => {
   uni.showActionSheet({
     itemList: [
       isDefault ? '✓ 默认服务器' : '默认服务器',
-      '设置自定义服务器',
+      '设置自定义服务器（开发者）',
       '测试连接'
     ],
     success: async (res) => {
@@ -383,6 +495,14 @@ const copySyncCode = () => {
 .menu-icon.pull { background: #e8f0ec; color: #3d5a52; }
 .menu-icon.scan { background: #eef4f0; color: #74937d; }
 .menu-icon.server { background: #f4faf5; color: #6f9a8d; }
+.menu-icon.webdav { background: #eaf3ee; color: #52796f; }
+
+.webdav-guide {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
 
 .menu-text {
   flex: 1;

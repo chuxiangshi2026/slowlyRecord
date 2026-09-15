@@ -117,19 +117,96 @@
 
         <el-divider />
 
-        <!-- 自定义服务器 -->
+        <!-- 自定义服务器（开发者选项：需自行部署配套后端，普通用户请用默认服务器） -->
+        <el-collapse class="sync-advanced">
+          <el-collapse-item title="开发者选项：自建服务器" name="custom-server">
+            <p class="sync-desc">需自行部署与本插件协议一致的后端（POST /sync、GET /sync/:code、GET /ping），普通用户请使用默认服务器</p>
+            <div class="sync-download-row">
+              <el-input
+                v-model="customServerUrl"
+                placeholder="https://your-server.com"
+                clearable
+                class="sync-code-input"
+              />
+              <el-button @click="handleSetCustomServer">设置</el-button>
+              <el-button @click="handleResetServer">恢复默认</el-button>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+      </el-tab-pane>
+
+      <!-- 云盘同步 Tab（坚果云等 WebDAV 网盘，长期备份） -->
+      <el-tab-pane label="云盘同步" name="webdav">
+        <el-alert
+          title="坚果云等 WebDAV 网盘 · 长期备份"
+          type="success"
+          :closable="false"
+          show-icon
+          class="sync-alert"
+        >
+          <template #default>
+            数据加密后存到<strong>你自己的网盘</strong>，长期保留、不限次数；两台设备填同样的账号和应用密码即可互相同步。
+          </template>
+        </el-alert>
+        <el-alert
+          v-if="isWebPlatform"
+          title="浏览器环境受跨域限制，WebDAV 直连可能失败，请使用 uTools / Electron / 小程序端"
+          type="warning"
+          :closable="false"
+          show-icon
+          class="sync-alert"
+        />
+
         <div class="sync-section">
-          <h4>自定义服务器</h4>
-          <p class="sync-desc">数据已加密传输，也可替换为自建服务器</p>
-          <div class="sync-download-row">
-            <el-input
-              v-model="customServerUrl"
-              placeholder="https://your-server.com"
-              clearable
-              class="sync-code-input"
-            />
-            <el-button @click="handleSetCustomServer">设置</el-button>
-            <el-button @click="handleResetServer">恢复默认</el-button>
+          <h4>网盘配置</h4>
+          <el-input v-model="syncStore.webdavUrl" placeholder="WebDAV 地址" class="webdav-field" />
+          <el-input v-model="syncStore.webdavUsername" placeholder="账号（坚果云注册邮箱）" class="webdav-field" />
+          <el-input v-model="syncStore.webdavPassword" type="password" show-password placeholder="应用密码（不是登录密码）" class="webdav-field" />
+
+          <el-collapse class="sync-advanced">
+            <el-collapse-item title="如何获取坚果云应用密码？" name="webdav-guide">
+              <ol class="webdav-guide">
+                <li>电脑浏览器登录坚果云官网（jianguoyun.com）</li>
+                <li>右上角头像 → 账户信息 → 安全选项 → 第三方应用管理</li>
+                <li>点击「添加应用密码」，名称随意（如「慢记」），生成后复制密码</li>
+                <li>把<strong>注册邮箱</strong>和<strong>应用密码</strong>填到上方</li>
+              </ol>
+              <p class="sync-desc">免费版每月 1GB 上传 / 3GB 下载流量；同步包仅几十 KB，完全够用。</p>
+            </el-collapse-item>
+          </el-collapse>
+
+          <div class="sync-actions webdav-config-actions">
+            <el-button size="small" @click="handleWebDavSave">保存配置</el-button>
+            <el-button size="small" :loading="webdavTesting" :disabled="!syncStore.webdavConfigured" @click="handleWebDavTest">测试连接</el-button>
+          </div>
+        </div>
+
+        <el-divider />
+
+        <div class="sync-section">
+          <h4>备份与恢复</h4>
+          <p class="sync-desc">恢复时按 id 合并：本地已有的数据保留本地版本，不会被覆盖</p>
+          <div class="sync-actions">
+            <el-button
+              type="primary"
+              size="large"
+              :loading="syncStore.status === 'uploading'"
+              :disabled="!syncStore.webdavConfigured"
+              @click="handleWebDavUpload"
+            >
+              <el-icon style="margin-right: 4px;"><Upload /></el-icon>
+              备份到云盘
+            </el-button>
+            <el-button
+              type="success"
+              size="large"
+              :loading="syncStore.status === 'downloading'"
+              :disabled="!syncStore.webdavConfigured"
+              @click="handleWebDavDownload"
+            >
+              <el-icon style="margin-right: 4px;"><Download /></el-icon>
+              从云盘恢复
+            </el-button>
           </div>
         </div>
       </el-tab-pane>
@@ -188,6 +265,7 @@
               <el-checkbox v-model="restoreOptions.restorePhoneticMemory">还原音标进度</el-checkbox>
               <el-checkbox v-model="restoreOptions.restoreSignin">还原打卡记录</el-checkbox>
               <el-checkbox v-model="restoreOptions.restoreMemoryPalace">还原记忆宫殿</el-checkbox>
+              <el-checkbox v-model="restoreOptions.restoreSentences">还原句子库</el-checkbox>
             </div>
 
             <div class="sync-actions">
@@ -228,6 +306,10 @@ import type { SyncFormat } from '@/types/sync'
 import type { RestoreOptions } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { daysSinceLastSync } from '@/utils/sync-dirty'
+import { isWeb } from '@/adapters/platform'
+
+const isWebPlatform = isWeb()
+const webdavTesting = ref(false)
 
 const props = defineProps<{
   modelValue: boolean
@@ -326,6 +408,37 @@ function handleResetServer() {
   syncStore.checkServer()
 }
 
+// ===== 云盘同步（WebDAV） =====
+
+function handleWebDavSave() {
+  syncStore.saveWebDavConfig()
+  ElMessage.success('配置已保存到本地')
+}
+
+async function handleWebDavTest() {
+  webdavTesting.value = true
+  try {
+    syncStore.saveWebDavConfig()
+    const result = await syncStore.testWebDav()
+    if (result.ok) ElMessage.success(result.message)
+    else ElMessage.error(result.message)
+  } finally {
+    webdavTesting.value = false
+  }
+}
+
+async function handleWebDavUpload() {
+  const result = await syncStore.webdavUpload()
+  if (result.success) ElMessage.success('已备份到云盘')
+  else ElMessage.error(result.error || '备份失败')
+}
+
+async function handleWebDavDownload() {
+  const result = await syncStore.webdavDownload()
+  if (result.success) ElMessage.success('已从云盘恢复，部分数据需刷新页面后生效')
+  else ElMessage.error(result.errors?.join('; ') || '恢复失败')
+}
+
 // ===== 文件同步 =====
 
 async function handleExport(format: SyncFormat) {
@@ -371,6 +484,37 @@ async function handleConfirmRestore() {
   font-size: 12px;
   color: var(--el-text-color-secondary);
   margin: 0 0 12px;
+}
+
+/* 开发者选项折叠区弱化展示，避免普通用户误填自建服务器 */
+.sync-advanced {
+  --el-collapse-header-height: 36px;
+  border-top: none;
+}
+
+.sync-advanced :deep(.el-collapse-item__header) {
+  font-size: 12px;
+  color: var(--el-text-color-secondary);
+}
+
+.sync-advanced :deep(.el-collapse-item__wrap) {
+  border-bottom: none;
+}
+
+.webdav-field {
+  margin-bottom: 8px;
+}
+
+.webdav-config-actions {
+  margin-top: 12px;
+}
+
+.webdav-guide {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--el-text-color-regular);
 }
 
 .sync-actions {

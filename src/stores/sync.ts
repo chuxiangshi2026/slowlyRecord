@@ -10,6 +10,7 @@ import type { RestoreOptions, RestoreResult } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { downloadSyncFile, pickAndImportSyncFile, importFromFile, getSyncDataSummary } from '@/utils/sync-file'
 import { uploadToServer, downloadFromServer, checkServerAvailable, setSyncServerUrl, resetSyncServer, uploadToServerMobileCompat } from '@/utils/sync-server'
+import { NUTSTORE_WEBDAV_URL, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
 import { markSynced } from '@/utils/sync-dirty'
@@ -53,6 +54,19 @@ export const useSyncStore = defineStore('sync', () => {
   /** 自定义服务器地址（持久化，使用 dbStorage 替代 localStorage 以兼容 uTools） */
   const _storage = getDbStorage()
   const savedServerUrl = ref((_storage.getItem(LS_SERVER_URL) as string) || '')
+
+  // ==================== WebDAV（坚果云）配置 ====================
+
+  const LS_WEBDAV_URL = 'sync_webdav_url'
+  const LS_WEBDAV_USERNAME = 'sync_webdav_username'
+  const LS_WEBDAV_PASSWORD = 'sync_webdav_password'
+
+  const webdavUrl = ref((_storage.getItem(LS_WEBDAV_URL) as string) || NUTSTORE_WEBDAV_URL)
+  const webdavUsername = ref((_storage.getItem(LS_WEBDAV_USERNAME) as string) || '')
+  const webdavPassword = ref((_storage.getItem(LS_WEBDAV_PASSWORD) as string) || '')
+
+  /** 是否已填写完整凭据 */
+  const webdavConfigured = computed(() => !!(webdavUrl.value.trim() && webdavUsername.value.trim() && webdavPassword.value.trim()))
 
   // ==================== 文件操作 ====================
 
@@ -180,7 +194,9 @@ export const useSyncStore = defineStore('sync', () => {
 
     try {
       const result = await uploadToServer()
-      if (result.success && result.code) {
+      if (result.skipped) {
+        resultMessage.value = '数据未变更，已跳过上传'
+      } else if (result.success && result.code) {
         syncCode.value = result.code
         resultMessage.value = '推送成功'
         markSynced()
@@ -299,6 +315,72 @@ export const useSyncStore = defineStore('sync', () => {
     serverAvailable.value = null
   }
 
+  // ==================== WebDAV（坚果云）操作 ====================
+
+  function currentWebDavConfig() {
+    return { url: webdavUrl.value.trim(), username: webdavUsername.value.trim(), password: webdavPassword.value.trim() }
+  }
+
+  /** 保存 WebDAV 凭据到本地（与应用内 API key 同级存储，不上传） */
+  function saveWebDavConfig() {
+    const cfg = currentWebDavConfig()
+    _storage.setItem(LS_WEBDAV_URL, cfg.url)
+    _storage.setItem(LS_WEBDAV_USERNAME, cfg.username)
+    _storage.setItem(LS_WEBDAV_PASSWORD, cfg.password)
+  }
+
+  async function testWebDav(): Promise<{ ok: boolean; message: string }> {
+    const result = await testWebDavConnection(currentWebDavConfig())
+    resultMessage.value = result.message
+    return result
+  }
+
+  async function webdavUpload(): Promise<SyncServerResult> {
+    if (isBusy.value) return { success: false, error: '正在操作中' }
+    if (!webdavConfigured.value) return { success: false, error: '请先填写网盘地址、账号和应用密码' }
+
+    status.value = 'uploading'
+    resultMessage.value = ''
+    try {
+      saveWebDavConfig()
+      const result = await uploadToWebDav(currentWebDavConfig())
+      resultMessage.value = result.success ? '已备份到云盘' : `备份失败: ${result.error || '未知错误'}`
+      if (result.success) markSynced()
+      return result
+    } catch (e) {
+      resultMessage.value = `备份失败: ${e}`
+      return { success: false, error: String(e) }
+    } finally {
+      status.value = 'idle'
+    }
+  }
+
+  async function webdavDownload(options?: Partial<RestoreOptions>): Promise<RestoreResult> {
+    if (isBusy.value) return makeEmptyResult('正在操作中')
+    if (!webdavConfigured.value) return makeEmptyResult('请先填写网盘地址、账号和应用密码')
+
+    status.value = 'downloading'
+    resultMessage.value = ''
+    try {
+      saveWebDavConfig()
+      const result = await downloadFromWebDav(currentWebDavConfig(), options)
+      lastRestoreResult.value = result
+      if (result.success) {
+        resultMessage.value = '已从云盘恢复（按 id 合并，本地已有数据不会被覆盖）'
+        markSynced()
+      } else {
+        resultMessage.value = `恢复失败: ${result.errors.join('; ')}`
+      }
+      return result
+    } catch (e) {
+      const failResult = makeEmptyResult(String(e))
+      resultMessage.value = `恢复失败: ${e}`
+      return failResult
+    } finally {
+      status.value = 'idle'
+    }
+  }
+
   // ==================== 辅助 ====================
 
   function makeEmptyResult(...errors: string[]): RestoreResult {
@@ -314,6 +396,7 @@ export const useSyncStore = defineStore('sync', () => {
       phoneticMemoryRestored: false,
       signinRestored: false,
       memoryPalaceRestored: false,
+      sentencesRestored: false,
       errors,
     }
   }
@@ -347,6 +430,15 @@ export const useSyncStore = defineStore('sync', () => {
     previewSummary,
     isBusy,
     savedServerUrl,
+    // WebDAV
+    webdavUrl,
+    webdavUsername,
+    webdavPassword,
+    webdavConfigured,
+    saveWebDavConfig,
+    testWebDav,
+    webdavUpload,
+    webdavDownload,
     // 文件操作
     exportFile,
     previewFile,

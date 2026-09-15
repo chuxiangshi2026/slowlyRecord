@@ -15,7 +15,7 @@
  * - 攻击者拿到 blobId 只能看到密文，拿到 key 没有 blobId 也下载不到密文
  */
 
-import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace } from '@/types/sync'
+import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace, SyncSentences } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { getSetDb } from '@/utils/user-set-db-util'
@@ -27,6 +27,23 @@ import pako from 'pako'
 
 /** 默认同步服务器地址（腾讯云 CloudBase 云函数） */
 const DEFAULT_SERVER_BASE = 'https://1258475269-6fkx3oixct.ap-guangzhou.tencentscf.com'
+
+/**
+ * 上传 payload 体积上限（字节）
+ * CloudBase 云函数 HTTP 触发器请求体上限约 6MB，留 1MB 余量给 JSON 包装和 base64 膨胀
+ */
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
+
+/** localStorage key：上次成功推送的 JSON 哈希，用于跳过未变更的同步 */
+const LAST_PUSH_HASH_KEY = 'slowlyrecord-last-push-hash'
+
+/** 计算 SHA-256 哈希（hex 字符串），用于判断数据是否变更 */
+async function sha256Hex(text: string): Promise<string> {
+  const bytes = new TextEncoder().encode(text)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', bytes)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+}
 
 // ==================== 客户端加密 ====================
 
@@ -359,6 +376,7 @@ const EMPTY_RESTORE_RESULT: RestoreResult = {
   phoneticMemoryRestored: false,
   signinRestored: false,
   memoryPalaceRestored: false,
+  sentencesRestored: false,
   errors: [],
 }
 
@@ -389,6 +407,14 @@ export async function uploadToServer(): Promise<SyncServerResult> {
     const data = await collectSyncData()
     const json = exportToJson(data)
 
+    // 跳过未变更的同步：对 JSON 取哈希，与上次成功推送的哈希比对
+    const hash = await sha256Hex(json)
+    const lastHash = localStorage.getItem(LAST_PUSH_HASH_KEY)
+    if (lastHash && hash === lastHash) {
+      log.i('数据未变更，跳过上传')
+      return { success: true, code: '', skipped: true }
+    }
+
     // 1. 压缩 JSON
     const compressedPayload = await compressToJsonPayload(json)
 
@@ -402,8 +428,16 @@ export async function uploadToServer(): Promise<SyncServerResult> {
     // 4. 上传密文
     const uploadPayload = JSON.stringify({ e: encrypted })
     log.i(`桌面端上传: JSON ${(new TextEncoder().encode(json).length / 1024).toFixed(1)}KB, 上传payload ${(uploadPayload.length / 1024).toFixed(1)}KB (${(uploadPayload.length / 1024 / 1024).toFixed(2)}MB)`)
+    if (uploadPayload.length > MAX_UPLOAD_BYTES) {
+      const mb = (uploadPayload.length / 1024 / 1024).toFixed(1)
+      log.e(`上传 payload ${mb}MB 超过 ${MAX_UPLOAD_BYTES / 1024 / 1024}MB 上限`)
+      return { success: false, error: `数据量过大（${mb}MB），请减少词库或图片后重试` }
+    }
     const adapter = getSyncServerAdapter()
     const blobId = await adapter.uploadRaw(encrypted)
+
+    // 上传成功后记录哈希，下次未变更则跳过
+    localStorage.setItem(LAST_PUSH_HASH_KEY, hash)
 
     // 5. 导出密钥，构建同步码
     const keyBase64 = await exportKey(aesKey)
@@ -486,7 +520,7 @@ function randomString32(): string {
 }
 
 /** 将 Uint8Array 转为 base64（分块避免栈溢出） */
-function uint8ArrayToBase64(bytes: Uint8Array): string {
+export function uint8ArrayToBase64(bytes: Uint8Array): string {
   const CHUNK = 0x8000
   const chunks: string[] = []
   for (let i = 0; i < bytes.length; i += CHUNK) {
@@ -496,7 +530,7 @@ function uint8ArrayToBase64(bytes: Uint8Array): string {
   return btoa(chunks.join(''))
 }
 
-function base64ToUint8Array(base64: string): Uint8Array {
+export function base64ToUint8Array(base64: string): Uint8Array {
   const binary = atob(base64)
   const bytes = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) {
@@ -506,7 +540,7 @@ function base64ToUint8Array(base64: string): Uint8Array {
 }
 
 /** XOR 加密/解密 Uint8Array（对称操作） */
-function xorCrypt(data: Uint8Array, key: string): Uint8Array {
+export function xorCrypt(data: Uint8Array, key: string): Uint8Array {
   const keyBytes = new TextEncoder().encode(key)
   const keyLen = keyBytes.length
   const result = new Uint8Array(data.length)
@@ -558,6 +592,8 @@ export interface MobileCompatSyncData {
   signin?: SyncSignin
   /** 记忆宫殿（与桌面端 SyncMemoryPalace 同 wire format） */
   memoryPalace?: SyncMemoryPalace
+  /** 句子库（与桌面端 SyncSentences 同 wire format） */
+  sentences?: SyncSentences
 }
 
 /**
@@ -613,7 +649,7 @@ function collectMobileCompatUserSettings(): MobileCompatUserSettings | undefined
   }
 }
 
-async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
+export async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
   const allBanks = await getAllWordBanks()
   const banks: MobileCompatBank[] = []
 
@@ -636,11 +672,13 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
   let textMemory: SyncTextMemory | undefined
   let numberMemory: SyncNumberMemory | undefined
   let memoryPalace: SyncMemoryPalace | undefined
+  let sentences: SyncSentences | undefined
   try {
     const fullData = await collectSyncData()
     textMemory = fullData.textMemory || undefined
     numberMemory = fullData.numberMemory || undefined
     memoryPalace = fullData.memoryPalace || undefined
+    sentences = fullData.sentences || undefined
   } catch (e) {
     log.w('收集文本/数字记忆数据失败，将以空数据上传', e)
   }
@@ -655,6 +693,7 @@ async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     numberMemory,
     signin: collectSigninSync() || undefined,
     memoryPalace,
+    sentences,
   }
 }
 
@@ -707,6 +746,7 @@ export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncD
     letterMemory: null,
     signin: data.signin ?? null,
     memoryPalace: data.memoryPalace ?? null,
+    sentences: data.sentences ?? null,
   }
 }
 
@@ -751,6 +791,11 @@ export async function uploadToServerMobileCompat(): Promise<SyncServerResult> {
     const encryptedBase64 = uint8ArrayToBase64(encrypted)
     const uploadPayload = JSON.stringify({ e: encryptedBase64 })
     log.i(`数据大小: 原始JSON ${(jsonBytes.length / 1024).toFixed(1)}KB, 压缩后 ${(compressed.length / 1024).toFixed(1)}KB, 上传payload ${(uploadPayload.length / 1024).toFixed(1)}KB (${(uploadPayload.length / 1024 / 1024).toFixed(2)}MB)`)
+    if (uploadPayload.length > MAX_UPLOAD_BYTES) {
+      const mb = (uploadPayload.length / 1024 / 1024).toFixed(1)
+      log.e(`移动端兼容推送 payload ${mb}MB 超过 ${MAX_UPLOAD_BYTES / 1024 / 1024}MB 上限`)
+      return { success: false, error: `数据量过大（${mb}MB），请减少词库或图片后重试` }
+    }
     const adapter = getSyncServerAdapter()
     const blobId = await adapter.uploadRaw(encryptedBase64)
     const syncCode = `${blobId}.${key}`
