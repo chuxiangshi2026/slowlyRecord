@@ -97,7 +97,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
-import { fetchRemoteIndex, getWordBank, getCachedBankIds, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
+import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
 
 const wordsStore = useMobileWords()
 const createDialogVisible = ref(false)
@@ -112,6 +112,8 @@ const downloadProgress = ref(0)
 
 onMounted(async () => {
   await wordsStore.loadWords()
+  // 词库管理页要展示各库词数：懒加载后内存只有当前词库，后台补读其余词库（不阻塞页面渲染）
+  wordsStore.ensureAllBanksLoaded().catch(() => { /* 补读失败时词数显示 0，可刷新页面重试 */ })
   cachedIds.value = getCachedBankIds()
   refreshRemoteIndex()
 })
@@ -136,6 +138,8 @@ async function onRemoteBankTap(bank: RemoteWordBankInfo) {
     cachedIds.value = getCachedBankIds()
     // 导入到当前词库（复用现有导入逻辑）
     await importToCurrentBank(bank, rawWords)
+    // 导入成功后缓存已删（见 importToCurrentBank），刷新缓存标记
+    cachedIds.value = getCachedBankIds()
   } catch (e: any) {
     uni.showToast({ title: e?.message || '下载失败', icon: 'none' })
   } finally {
@@ -163,7 +167,13 @@ async function importToCurrentBank(bank: RemoteWordBankInfo, rawWords: any[]) {
       bankId,
     }
   })
-  await wordsStore.importWords(mobileWords, bankId)
+  const result = await wordsStore.importWords(mobileWords, bankId)
+  if (!result.success) {
+    uni.showToast({ title: result.message || '导入失败', icon: 'none' })
+    return
+  }
+  // 导入成功后删除下载缓存：词库已进入分块存储，原始 JSON 缓存（GRE 级约 650KB）留着只占 storage 配额
+  removeCachedWordBank(bank.id)
   uni.showToast({ title: `已导入 ${rawWords.length} 词`, icon: 'success' })
 }
 

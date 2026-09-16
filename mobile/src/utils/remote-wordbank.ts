@@ -11,6 +11,8 @@
 const JSDELIVR_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/mobile/wordbank-json'
 const CACHE_KEY_PREFIX = 'slowlyrecord_remote_wordbank_'
 const CACHE_INDEX_KEY = 'slowlyrecord_remote_wordbank_index'
+// 微信 storage 单 key 上限 1MB，超出需分块（与 adapters/index.ts 的 CHUNK_SIZE 一致）
+const CHUNK_SIZE = 900 * 1024
 
 /** 词库清单条目（与 index.json 一致） */
 export interface RemoteWordBankInfo {
@@ -39,16 +41,66 @@ function markCached(id: string) {
   }
 }
 
-/** 从本地缓存读取词库（未缓存返回 null） */
+/** 从本地缓存读取词库（未缓存返回 null）；兼容分块与旧版整存两种形态 */
 export function loadCachedWordBank(id: string): any[] | null {
   try {
     const raw = uni.getStorageSync(CACHE_KEY_PREFIX + id)
     if (!raw) return null
+    // 分块形态：主 key 存 {_chunks, _chunkKeys} 元信息
+    if (typeof raw === 'object' && raw._chunkKeys) {
+      let joined = ''
+      for (const chunkKey of raw._chunkKeys) {
+        const part = uni.getStorageSync(chunkKey)
+        if (typeof part !== 'string' || !part) return null
+        joined += part
+      }
+      const data = JSON.parse(joined)
+      return Array.isArray(data) ? data : null
+    }
     const data = typeof raw === 'string' ? JSON.parse(raw) : raw
     return Array.isArray(data) ? data : null
   } catch {
     return null
   }
+}
+
+/** 写入缓存，超 1MB 自动分块（level8 等大词库整存必然写失败） */
+function saveCacheWithChunks(id: string, jsonStr: string): void {
+  const key = CACHE_KEY_PREFIX + id
+  if (jsonStr.length <= CHUNK_SIZE) {
+    uni.setStorageSync(key, jsonStr)
+    markCached(id)
+    return
+  }
+  const chunkKeys: string[] = []
+  for (let i = 0, n = 0; i < jsonStr.length; i += CHUNK_SIZE, n++) {
+    chunkKeys.push(`${key}__chunk__${n}`)
+  }
+  try {
+    chunkKeys.forEach((chunkKey, i) => {
+      uni.setStorageSync(chunkKey, jsonStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE))
+    })
+    uni.setStorageSync(key, { _chunks: chunkKeys.length, _chunkKeys: chunkKeys })
+    markCached(id)
+  } catch (e) {
+    // 失败清理残留分块，避免半成品缓存
+    chunkKeys.forEach((chunkKey) => { try { uni.removeStorageSync(chunkKey) } catch { /* ignore */ } })
+    throw e
+  }
+}
+
+/** 删除词库缓存（含分块） */
+export function removeCachedWordBank(id: string): void {
+  const key = CACHE_KEY_PREFIX + id
+  try {
+    const raw = uni.getStorageSync(key)
+    if (raw && typeof raw === 'object' && raw._chunkKeys) {
+      for (const chunkKey of raw._chunkKeys) {
+        try { uni.removeStorageSync(chunkKey) } catch { /* ignore */ }
+      }
+    }
+    uni.removeStorageSync(key)
+  } catch { /* ignore */ }
 }
 
 /** 下载词库 JSON（带进度回调），成功后写入缓存 */
@@ -73,12 +125,11 @@ export function downloadWordBank(
             try {
               const data = JSON.parse(readRes.data as string)
               if (!Array.isArray(data)) throw new Error('格式错误')
-              // 写缓存
+              // 写缓存（超 1MB 自动分块，level8 等大词库整存必然写失败）
               try {
-                uni.setStorageSync(CACHE_KEY_PREFIX + id, readRes.data)
-                markCached(id)
+                saveCacheWithChunks(id, readRes.data as string)
               } catch {
-                // 缓存写失败不阻塞（可能是超分块上限，下次重新下）
+                // 缓存写失败不阻塞，下次重新下
               }
               resolve(data)
             } catch (e: any) {

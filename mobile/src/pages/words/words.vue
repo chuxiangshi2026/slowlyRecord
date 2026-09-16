@@ -10,7 +10,7 @@
     <view class="search-bar">
       <input 
         class="search-input" 
-        v-model="filterState.pattern"
+        v-model="searchInput"
         placeholder="搜索单词/释义 (*通配符)"
       />
       <view class="search-actions">
@@ -70,19 +70,19 @@
     <!-- 列表模式切换（与桌面端对齐） -->
     <view class="mode-bar">
       <view class="mode-item" :class="{ active: listMode === 0 }" @click="listMode = 0">
-        <text class="mode-num">{{ wordsStore.words.filter(w => w.needsReview || !w.remembered).length }}</text>
+        <text class="mode-num">{{ modeCounts.pending }}</text>
         <text class="mode-label">待复习</text>
       </view>
       <view class="mode-item" :class="{ active: listMode === 1 }" @click="listMode = 1">
-        <text class="mode-num">{{ wordsStore.words.filter(w => !w.needsReview && !w.remembered).length }}</text>
+        <text class="mode-num">{{ modeCounts.reviewed }}</text>
         <text class="mode-label">已复习</text>
       </view>
       <view class="mode-item" :class="{ active: listMode === 2 }" @click="listMode = 2">
-        <text class="mode-num">{{ wordsStore.words.filter(w => w.remembered).length }}</text>
+        <text class="mode-num">{{ modeCounts.remembered }}</text>
         <text class="mode-label">已记完</text>
       </view>
       <view class="mode-item" :class="{ active: listMode === 3 }" @click="listMode = 3">
-        <text class="mode-num">{{ wordsStore.words.length }}</text>
+        <text class="mode-num">{{ modeCounts.total }}</text>
         <text class="mode-label">全部</text>
       </view>
       <view class="mode-item" @click="goToReview">
@@ -218,6 +218,26 @@ const filterState = reactive({
 
 const showFilterPanel = ref(savedFilter?.showFilterPanel ?? false)
 
+// 搜索输入防抖：输入框直连 searchInput，300ms 后才写入 filterState.pattern，
+// 避免每次击键都触发全量过滤/排序 + deep watch 写 storage
+const searchInput = ref(filterState.pattern)
+let searchTimer: ReturnType<typeof setTimeout> | null = null
+watch(searchInput, (v) => {
+  if (searchTimer) clearTimeout(searchTimer)
+  searchTimer = setTimeout(() => { filterState.pattern = v }, 300)
+})
+
+// 各模式计数一次遍历算完（模板内联 4 处 filter 每次渲染要扫 4 遍全库）
+const modeCounts = computed(() => {
+  let pending = 0, reviewed = 0, remembered = 0
+  for (const w of wordsStore.words) {
+    if (w.needsReview || !w.remembered) pending++
+    if (!w.needsReview && !w.remembered) reviewed++
+    if (w.remembered) remembered++
+  }
+  return { pending, reviewed, remembered, total: wordsStore.words.length }
+})
+
 // ========== 排序选项 ==========
 const sortOptions = [
   { key: 'alpha', label: 'A-Z' },
@@ -270,6 +290,9 @@ onReachBottom(() => {
 })
 
 function resetFilter() {
+  // 清掉未决的防抖定时器，避免旧输入在重置后被重新写入
+  if (searchTimer) { clearTimeout(searchTimer); searchTimer = null }
+  searchInput.value = ''
   filterState.minLength = 0
   filterState.maxLength = 0
   filterState.pattern = ''
