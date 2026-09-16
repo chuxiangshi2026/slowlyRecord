@@ -1039,6 +1039,8 @@ async function getOrCreateWorker(lang: string = 'eng'): Promise<any> {
     // 创建新的 Worker
     debugLog('[本地OCR] 🐌 首次创建 Worker（需要加载资源，较慢）');
     cachedWorkerPromise = createWorkerInternal(lang);
+    // 创建失败必须清空缓存引用，否则后续调用永远 await 同一个 rejected promise，本地 OCR 无法再重试
+    cachedWorkerPromise.catch(() => { cachedWorkerPromise = null; });
     cachedWorker = await cachedWorkerPromise;
     cachedWorkerLang = lang;
     lastUsedTime = now;
