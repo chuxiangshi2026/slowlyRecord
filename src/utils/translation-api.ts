@@ -325,7 +325,7 @@ export async function speakWithEdgeTTS(word: string, lang?: string): Promise<boo
                 console.log('使用 Google 语音 (uTools):', voice.name);
 
                 return new Promise((resolve) => {
-                    utterance.onstart = () => console.log('TTS 开始播放:', word);
+                    utterance.onstart = () => log.d('TTS 开始播放:', word);
                     utterance.onend = () => {
                         console.log('TTS 播放完成');
                         resolve(true);
@@ -360,7 +360,7 @@ export async function speakWithEdgeTTS(word: string, lang?: string): Promise<boo
                 console.log('使用 Microsoft 语音 (Edge):', voice.name);
 
                 return new Promise((resolve) => {
-                    utterance.onstart = () => console.log('TTS 开始播放:', word);
+                    utterance.onstart = () => log.d('TTS 开始播放:', word);
                     utterance.onend = () => {
                         console.log('TTS 播放完成');
                         resolve(true);
@@ -463,8 +463,8 @@ export function speakWithWebSpeech(word: string, lang?: string): boolean {
         console.log('使用默认语音');
     }
 
-    utterance.onstart = () => console.log('Web Speech 开始播放:', word);
-    utterance.onend = () => console.log('Web Speech 播放完成');
+    utterance.onstart = () => log.d('Web Speech 开始播放:', word);
+    utterance.onend = () => log.d('Web Speech 播放完成');
     utterance.onerror = (e) => console.error('Web Speech 播放错误:', e);
 
     window.speechSynthesis.speak(utterance);

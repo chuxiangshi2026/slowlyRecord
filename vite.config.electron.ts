@@ -53,6 +53,13 @@ export default defineConfig({
       input: {
         main: './index.html',
       },
+      output: {
+        manualChunks: {
+          echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'],
+          'element-plus': ['element-plus'],
+          'vue-vendor': ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate', 'vue-virtual-scroller'],
+        },
+      },
     },
   },
   assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf', '**/*.traineddata'],
@@ -61,6 +68,6 @@ export default defineConfig({
     __PLATFORM__: JSON.stringify('electron'),
   },
   esbuild: {
-    pure: ['log.d', 'log.i'],
+    pure: ['log.d', 'log.i', 'console.log'],
   },
 })
