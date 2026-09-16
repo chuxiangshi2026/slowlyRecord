@@ -145,6 +145,7 @@
 import { ref, computed } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { useKnowledgeMemory, normalizeAnswer } from './useKnowledgeMemory'
+import './knowledge-pack-data'
 import { formulaImageSrc } from './utils/knowledge-image'
 import { tokenizeAnswer, type AnswerTile } from '@/utils/answer-tokens'
 import { getEncourageText } from '@/utils/encourage'

@@ -1,7 +1,7 @@
 /**
  * 内置知识包加载器（knowledge-pack-loader.ts）单元测试
  *
- * 注册表与知识包条目直接用真实内置数据（静态 import，无网络层），
+ * 注册表与知识包条目直接用真实内置数据（经 knowledge-pack-data 注册桥接，无网络层），
  * 仅 mock uni.*StorageSync 供缓存读写。
  * 重点验证：isCacheUsable 缓存失效三要素（版本/有效期/结构）与 getPackVersion 版本取值。
  */
@@ -16,6 +16,8 @@ import {
   listKnowledgePacks,
   validateKnowledgePack,
 } from './knowledge-pack-loader'
+// 数据模块静态 import 全部内置包并注册到 loader（与真机 detail/practice/table 页一致）
+import '../knowledge-pack-data'
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 type CacheData = NonNullable<Parameters<typeof isCacheUsable>[0]>

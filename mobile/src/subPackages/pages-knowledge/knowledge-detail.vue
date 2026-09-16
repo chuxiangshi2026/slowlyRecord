@@ -148,6 +148,7 @@
 import { ref, computed, nextTick, watch } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useKnowledgeMemory } from './useKnowledgeMemory'
+import './knowledge-pack-data'
 import { getMobilePlot } from './utils/plot-map'
 import { formulaImageSrc } from './utils/knowledge-image'
 import {

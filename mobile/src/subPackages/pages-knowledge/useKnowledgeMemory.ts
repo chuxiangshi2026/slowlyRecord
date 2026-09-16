@@ -19,6 +19,7 @@ import type {
 } from '@/stores/useUtils/types'
 import {
   fetchKnowledgePack,
+  isKnowledgePackDataRegistered,
   listKnowledgePacks,
 } from './utils/knowledge-pack-loader'
 import type { KnowledgePackInfo } from '@/stores/useUtils/types'
@@ -223,7 +224,9 @@ export const useKnowledgeMemory = defineStore('knowledgeMemory', () => {
     if (importedIds.value.includes(packId)) return
     addImportedId(packId)
     importedIds.value = [...importedIds.value, packId]
-    if (!isPackLoaded(packId)) {
+    // 包条目数据模块只在详情/练习/表格页注册；列表页导入时跳过预加载，
+    // 进入任一包页面时会自动加载
+    if (isKnowledgePackDataRegistered() && !isPackLoaded(packId)) {
       try {
         await loadPack(packId)
       } catch (e) {

@@ -37,6 +37,7 @@
 import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useKnowledgeMemory } from './useKnowledgeMemory'
+import './knowledge-pack-data'
 import type { KnowledgeItem } from '@/stores/useUtils/types'
 
 /**

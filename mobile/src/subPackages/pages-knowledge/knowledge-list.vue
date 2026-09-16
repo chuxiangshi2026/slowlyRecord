@@ -100,6 +100,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useKnowledgeMemory } from './useKnowledgeMemory'
+import { isKnowledgePackDataRegistered } from './utils/knowledge-pack-loader'
 import {
   PACK_CATEGORY_OPTIONS,
   getPackDisplayCategory,
@@ -208,10 +209,13 @@ onShow(() => {
   if (!store.importedLoaded) {
     store.loadImportedIds()
   }
-  // 已导入的包按需加载内容以显示进度
-  for (const id of store.importedIds) {
-    if (!store.isPackLoaded(id)) {
-      store.loadPack(id).catch(() => {})
+  // 已导入的包按需加载内容以显示进度。包条目数据模块只在详情/练习/表格页注册，
+  // 列表页冷启动时不解析包数据（进度在进入过任一包页面后展示）
+  if (isKnowledgePackDataRegistered()) {
+    for (const id of store.importedIds) {
+      if (!store.isPackLoaded(id)) {
+        store.loadPack(id).catch(() => {})
+      }
     }
   }
 })
