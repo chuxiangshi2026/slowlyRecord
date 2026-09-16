@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// testTimeout: 挂载 ElementPlus + jsdom 渲染较重，全量并行跑时偶发 5s 默认超时，放宽到 30s
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/vue'
 import { createPinia, setActivePinia } from 'pinia'
@@ -6,6 +7,8 @@ import { createRouter, createMemoryHistory } from 'vue-router'
 import ElementPlus, { ElMessage, ElMessageBox } from 'element-plus'
 import '@testing-library/jest-dom'
 import MemoryPalaceDetail from './MemoryPalaceDetail.vue'
+
+vi.setConfig({ testTimeout: 30000 })
 
 const hoisted = vi.hoisted(() => {
   const palace = {

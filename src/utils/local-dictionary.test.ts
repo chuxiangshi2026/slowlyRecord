@@ -18,6 +18,9 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 
+// testTimeout: 每用例 vi.resetModules() 后动态 import 大 JSON 分片，全量并行跑时偶发默认超时，放宽到 30s
+vi.setConfig({ testTimeout: 30000 })
+
 // ---- hoisted 可控状态（vi.mock 工厂内只能访问 vi.hoisted 的变量） ----
 const { shardHolder, shardFailHolder, phraseHolder, phraseFailHolder, dbHolder, dbQuerySpy } = vi.hoisted(() => ({
   shardHolder: {} as Record<string, Record<string, any>>,

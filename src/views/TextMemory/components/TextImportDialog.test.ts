@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// testTimeout: 挂载 ElementPlus + jsdom 渲染较重，全量并行跑时偶发 5s 默认超时，放宽到 30s
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { reactive } from 'vue'
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/vue'
@@ -7,6 +8,8 @@ import ElementPlus from 'element-plus'
 import '@testing-library/jest-dom'
 import TextImportDialog from './TextImportDialog.vue'
 import { loadPackPreviews } from '@/utils/knowledge-pack-preview'
+
+vi.setConfig({ testTimeout: 30000 })
 
 // 每个用例在 setup 中重建响应式 mock store
 let mockKnowledgeStore: any
