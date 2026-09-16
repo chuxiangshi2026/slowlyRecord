@@ -72,6 +72,10 @@ export function snapshotReviewState(word: MobileWord): WordReviewState {
 // 默认词库ID
 const DEFAULT_BANK_ID = 'default'
 
+// 脏词库落盘防抖间隔：复习停顿期间不整库回写（persistBankWords 内含整库 JSON.stringify），
+// 拉长到 15s 降低大词库的重复序列化开销；App.vue onHide 已有 flushDirtyBanks 兜底
+const PERSIST_DEBOUNCE_MS = 15000
+
 export const useMobileWords = defineStore('mobileWords', () => {
   const allWords = shallowRef<MobileWord[]>([])
   const isLoading = ref(false)
@@ -85,13 +89,18 @@ export const useMobileWords = defineStore('mobileWords', () => {
   const _dirtyBanks = new Set<string>()
   let _persistTimer: ReturnType<typeof setTimeout> | null = null
 
+  // ========== 词库懒加载 ==========
+  // 首屏只完整读当前激活词库，其余词库 words 置空、切换/同步时再读入
+  const _loadedBanks = new Set<string>()
+  const _bankLoadPromises = new Map<string, Promise<void>>()
+
   function markBankDirty(bankId: string) {
     _dirtyBanks.add(bankId)
     if (!_persistTimer) {
       _persistTimer = setTimeout(() => {
         _persistTimer = null
         flushDirtyBanks()
-      }, 3000)
+      }, PERSIST_DEBOUNCE_MS)
     }
   }
 
@@ -110,6 +119,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
   /** 将一个词库的全部单词写入 storage（一条记录） */
   async function persistBankWords(bankId: string) {
+    // 懒加载未读入的词库内存数据不完整，跳过写入，避免用半份数据覆盖整库
+    if (!_loadedBanks.has(bankId)) return
     const bankWords = allWords.value.filter(w =>
       w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID)
     )
@@ -154,7 +165,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
   async function loadWords() {
     if (_loadingPromise) return _loadingPromise
-    if (allWords.value.length > 0 && bankList.value.length > 0) return
+    if (bankList.value.length > 0 && (allWords.value.length > 0 || _loadedBanks.has(currentBankId.value))) return
 
     _loadingPromise = _doLoadWords()
     try {
@@ -174,51 +185,102 @@ export const useMobileWords = defineStore('mobileWords', () => {
     }
   }
 
+  /** 读取词库级记录：优先走适配器异步读（uni.getStorage），无异步实现时回退同步 get */
+  async function readBankDoc(bankId: string): Promise<DbDoc | null> {
+    const db = getDbAdapter()
+    if (typeof db.getAsync === 'function') return db.getAsync(`bank_${bankId}_words`)
+    return db.get(`bank_${bankId}_words`)
+  }
+
+  /** 修复存量污染数据：remembered === true 但 level < 12 的词纠正为未记住，返回受影响的词库集合 */
+  function _fixPollutedWords(words: MobileWord[]): Set<string> {
+    const pollutedBanks = new Set<string>()
+    for (const w of words) {
+      if (w.remembered === true && (w.level ?? 0) < 12) {
+        w.remembered = false
+        pollutedBanks.add(w.bankId || DEFAULT_BANK_ID)
+      }
+    }
+    return pollutedBanks
+  }
+
   async function _doLoadWords() {
     isLoading.value = true
     try {
       _loadBankList()
-      const db = getDbAdapter()
       const loaded: MobileWord[] = []
       let hasBankLevelData = false
 
-      // 1. 读取词库级记录（新格式，每库一条）
-      for (const bank of bankList.value) {
-        const doc = db.get(`bank_${bank.id}_words`)
-        if (doc && Array.isArray(doc.data)) {
-          loaded.push(...doc.data)
-          hasBankLevelData = true
-        }
+      // 1. 首屏只完整读当前激活词库的词表，其余词库懒加载（switchBank/同步时再读），
+      //    避免启动时同步读取所有大词库（GRE 级 1.2MB+）阻塞首屏 JS 线程
+      const currentDoc = await readBankDoc(currentBankId.value)
+      if (currentDoc && Array.isArray(currentDoc.data)) {
+        loaded.push(...currentDoc.data)
+        hasBankLevelData = true
       }
+      _loadedBanks.clear()
+      _loadedBanks.add(currentBankId.value)
 
-      // 2. 如果没有词库级记录，回退到逐条记录（旧格式，兼容）
+      // 2. 如果当前词库没有词库级记录，回退到逐条记录（旧格式，兼容）
       if (!hasBankLevelData) {
+        const db = getDbAdapter()
         const allDocs = db.allDocs(DB_KEY)
         const oldWords = allDocs.map((item: any) => ({
           ...item.data,
           id: item._id
         })) || []
         loaded.push(...oldWords)
+        // 旧格式单词全部归属默认词库，且已随本次加载完整读入内存
+        if (oldWords.length > 0) {
+          _loadedBanks.add(DEFAULT_BANK_ID)
+        }
       }
 
       allWords.value = loaded
 
-      // 修复存量污染数据：remembered === true 但 level < 12 的词纠正为未记住，
-      // 仅改内存并按既有 markBankDirty 机制落库
-      const pollutedBanks = new Set<string>()
-      for (const w of loaded) {
-        if (w.remembered === true && (w.level ?? 0) < 12) {
-          w.remembered = false
-          pollutedBanks.add(w.bankId || DEFAULT_BANK_ID)
-        }
-      }
-      for (const bankId of pollutedBanks) {
+      // 修复存量污染数据，仅改内存并按既有 markBankDirty 机制落库
+      for (const bankId of _fixPollutedWords(loaded)) {
         markBankDirty(bankId)
       }
     } catch (e) {
       allWords.value = []
+      _loadedBanks.clear()
     } finally {
       isLoading.value = false
+    }
+  }
+
+  /** 懒加载单个词库的单词：读入后整体替换该库在内存中的词表 */
+  async function _loadBankWords(bankId: string) {
+    const doc = await readBankDoc(bankId)
+    const bankWords = doc && Array.isArray(doc.data) ? (doc.data as MobileWord[]) : []
+    allWords.value = [
+      ...allWords.value.filter(w => !(w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))),
+      ...bankWords,
+    ]
+    // 修复存量污染数据（与 _doLoadWords 同口径），仅改内存并按既有机制落库
+    for (const pollutedId of _fixPollutedWords(bankWords)) {
+      markBankDirty(pollutedId)
+    }
+    _loadedBanks.add(bankId)
+  }
+
+  /** 确保某个词库的单词已读入内存（切换词库 / 向该库导入前调用） */
+  async function ensureBankLoaded(bankId: string) {
+    if (_loadedBanks.has(bankId)) return
+    const pending = _bankLoadPromises.get(bankId)
+    if (pending) return pending
+    const p = _loadBankWords(bankId).finally(() => {
+      _bankLoadPromises.delete(bankId)
+    })
+    _bankLoadPromises.set(bankId, p)
+    return p
+  }
+
+  /** 确保所有词库的单词都已读入内存（同步推送 / 按库合并导入前调用） */
+  async function ensureAllBanksLoaded() {
+    for (const bank of bankList.value) {
+      await ensureBankLoaded(bank.id)
     }
   }
 
@@ -302,6 +364,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     _saveBankList()
     // 取消该词库待 flush 的防抖状态，避免 persistBankWords 重建空文档
     _dirtyBanks.delete(bankId)
+    _loadedBanks.delete(bankId)
     if (currentBankId.value === bankId) {
       switchBank(DEFAULT_BANK_ID)
     }
@@ -321,6 +384,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     }
     currentBankId.value = bankId
     _saveCurrentBankId()
+    // 懒加载：目标词库首屏未读入时，切换后异步补读（不阻塞切换本身，读完自动刷新各页）
+    ensureBankLoaded(bankId).catch(() => { /* 读取失败保持空库，可再次切换触发重试 */ })
   }
 
   function getBankById(bankId: string): WordBankMeta | undefined {
@@ -388,11 +453,14 @@ export const useMobileWords = defineStore('mobileWords', () => {
   // ========== 单词 CRUD ==========
 
   async function addWord(word: Omit<MobileWord, 'id'>) {
+    const bankId = word.bankId || currentBankId.value
+    // 目标词库可能懒加载未读入：先确保已加载，避免后续整库落盘用半份数据覆盖
+    await ensureBankLoaded(bankId)
     const id = `${DB_KEY}_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`
     const newWord: MobileWord = {
       ...word,
       id,
-      bankId: word.bankId || currentBankId.value,
+      bankId,
       level: word.level ?? 1,
       needsReview: word.needsReview ?? true,
       lastReviewTime: word.lastReviewTime ?? 0
@@ -426,6 +494,27 @@ export const useMobileWords = defineStore('mobileWords', () => {
     newArr[index] = updated
     allWords.value = newArr
     markBankDirty(updated.bankId || DEFAULT_BANK_ID)
+  }
+
+  /**
+   * 批量标记当前词库全部单词 needsReview（复习页「提前复习全部」入口）：
+   * 一次遍历、单次整体赋值，避免逐词 updateWord 造成 O(n²) 全量拷贝与各页 computed 反复重算
+   */
+  function markAllNeedsReview() {
+    const bankId = currentBankId.value
+    let changed = false
+    const next = allWords.value.map(w => {
+      const inBank = w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID)
+      if (inBank && !w.needsReview) {
+        changed = true
+        return { ...w, needsReview: true }
+      }
+      return w
+    })
+    if (changed) {
+      allWords.value = next
+      markBankDirty(bankId)
+    }
   }
 
   function updateWordLevel(id: string, newLevel: number) {
@@ -477,8 +566,10 @@ export const useMobileWords = defineStore('mobileWords', () => {
    * 批量导入单词：整个词库写为一条 storage 记录
    * 从内存合并已有单词后一次性写入，16k 词 → 1 条记录
    */
-  async function importWords(data: MobileWord[], targetBankId?: string): Promise<{ imported: MobileWord[]; skippedCount: number; invalidCount: number }> {
+  async function importWords(data: MobileWord[], targetBankId?: string): Promise<{ imported: MobileWord[]; skippedCount: number; invalidCount: number; success: boolean; message?: string }> {
     const bankId = targetBankId || currentBankId.value
+    // 目标词库可能懒加载未读入：先确保已加载，importWords 以完整本地数据为基准合并，避免丢已有单词
+    await ensureBankLoaded(bankId)
 
     const importedMap = new Map<string, MobileWord>()
     let duplicateInImportCount = 0
@@ -519,10 +610,13 @@ export const useMobileWords = defineStore('mobileWords', () => {
           ...allWords.value.filter(w => !(w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))),
           ...mergedWords,
         ]
+      } else {
+        // 写库失败：内存不合并，返回失败信息避免调用方误报成功
+        return { imported: [], skippedCount, invalidCount, success: false, message: '词库写入失败' }
       }
     }
 
-    return { imported: newOnly, skippedCount, invalidCount }
+    return { imported: newOnly, skippedCount, invalidCount, success: true }
   }
 
   /** 一次性追加单词到内存（shallowRef 赋值本身很快） */
@@ -537,6 +631,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     )
     const db = getDbAdapter()
     db.remove(`bank_${targetBankId}_words`)
+    // 清空后内存与存储一致为空库，视为已加载，避免后续懒加载读回旧数据
+    _loadedBanks.add(targetBankId)
   }
 
   async function clearBankWords(bankId: string) {
@@ -545,6 +641,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     )
     const db = getDbAdapter()
     db.remove(`bank_${bankId}_words`)
+    // 同 clearAllWords：清空后视为已加载
+    _loadedBanks.add(bankId)
     const bank = bankList.value.find(b => b.id === bankId)
     if (bank) {
       bank.updatedAt = Date.now()
@@ -555,6 +653,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function moveWordToBank(wordId: string, targetBankId: string) {
     const word = allWords.value.find(w => w.id === wordId)
     const sourceBankId = word?.bankId || DEFAULT_BANK_ID
+    // 目标词库可能懒加载未读入：先确保已加载，否则落盘时会用半份数据覆盖目标词库
+    await ensureBankLoaded(targetBankId)
     await updateWord(wordId, { bankId: targetBankId })
     // 源词库也要标脏，否则旧库残留单词不会被持久化移除
     if (sourceBankId !== targetBankId) {
@@ -583,9 +683,12 @@ export const useMobileWords = defineStore('mobileWords', () => {
     // 方法
     loadWords,
     reloadWords,
+    ensureBankLoaded,
+    ensureAllBanksLoaded,
     addWord,
     deleteWord,
     updateWord,
+    markAllNeedsReview,
     updateWordLevel,
     markAsRemembered,
     markAsForgotten,

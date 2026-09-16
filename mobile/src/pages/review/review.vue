@@ -193,6 +193,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewState } from '@/stores/useMobileWords'
 import { useSignin } from '@/stores/useSignin'
 import { getTtsAdapter } from '@/adapters/index'
@@ -375,6 +376,17 @@ const cardStyle = computed(() => {
   }
 })
 
+// 记录上次用过的带筛选复习列表引用：同一引用（会话进行中切 tab 回来）不重置，新引用（再次「去复习」）才重开会话
+let lastCustomWords: MobileWord[] | null = null
+
+onShow(() => {
+  // tab 页常驻不销毁：onShow 时若 store 中的带筛选列表是新引用，重开复习会话
+  if (wordsStore.customReviewWords !== null && wordsStore.customReviewWords !== lastCustomWords) {
+    lastCustomWords = wordsStore.customReviewWords
+    initSessionFromReviewWords()
+  }
+})
+
 onMounted(() => {
   // 打卡数据用于完成页"去打卡"引导判断
   signinStore.loadRecords()
@@ -394,6 +406,7 @@ onMounted(() => {
     if (wordsStore.allWords.length === 0 && wordsStore.customReviewWords === null) return false
     // 带筛选进入时优先使用 customReviewWords，覆盖任何保存的常规会话
     if (wordsStore.customReviewWords !== null) {
+      lastCustomWords = wordsStore.customReviewWords
       initSessionFromReviewWords()
       return true
     }
@@ -522,13 +535,8 @@ const goToDictation = () => {
 
 const startReview = () => {
   if (wordsStore.words.length > 0 && reviewWords.value.length === 0) {
-    const all = wordsStore.words
-    for (let i = 0; i < all.length; i++) {
-      const w = all[i]
-      if (!w.needsReview) {
-        wordsStore.updateWord(w.id, { needsReview: true })
-      }
-    }
+    // 单次遍历批量标脏，避免逐词 updateWord 的 O(n²) 全量拷贝冻结大词库
+    wordsStore.markAllNeedsReview()
   }
   // 把当前待复习单词冻结为本次会话
   initSessionFromReviewWords()
@@ -575,7 +583,7 @@ const handleTouchMove = (e: any) => {
   if (isAnimating.value) return
   const t = e.touches[0]
   const deltaX = t.clientX - touchStartX.value
-  const deltaY = t.touches[0].clientY - touchStartY.value
+  const deltaY = t.clientY - touchStartY.value
   const absX = Math.abs(deltaX)
   const absY = Math.abs(deltaY)
 

@@ -31,6 +31,9 @@
     <view v-if="showWebdav && !showPushResult && !showPullInput" class="section">
       <view class="section-title">坚果云备份</view>
       <input class="popup-input" v-model="webdavUrl" placeholder="WebDAV 地址" />
+      <!-- #ifdef MP-WEIXIN -->
+      <view class="webdav-guide">微信端受域名白名单限制，仅支持默认坚果云地址（dav.jianguoyun.com），改填其他域名会请求失败。</view>
+      <!-- #endif -->
       <input class="popup-input" v-model="webdavUsername" placeholder="账号（坚果云注册邮箱）" />
       <input class="popup-input" v-model="webdavPassword" password placeholder="应用密码（不是登录密码）" />
       <view class="webdav-guide">
@@ -112,8 +115,10 @@ const currentServerDisplay = computed(() => {
 
 // 推送（与坚果云备份共用同一份数据收集）
 const buildPushPayload = async (): Promise<PushPayload> => {
-  // 冷启动直达本页时内存中无词库数据，先确保已加载，避免推送空词库
+  // 冷启动直达本页时内存中无词库数据，先确保已加载，避免推送空词库；
+  // 词库懒加载后内存可能只有当前词库，推送需要全量数据，再补读其余词库
   await wordsStore.loadWords()
+  await wordsStore.ensureAllBanksLoaded()
   const banks = wordsStore.bankList.map(bank => ({
     id: bank.id,
     name: bank.name,
@@ -360,8 +365,10 @@ async function applyPullResult(result: any): Promise<string> {
 
 // 按词库分组导入
 async function importBanks(banks: any[]) {
-  // 先确保本地词库已加载，importWords 以完整本地数据为基准合并，避免丢本地独有单词
+  // 先确保本地词库已加载，importWords 以完整本地数据为基准合并，避免丢本地独有单词；
+  // 词库懒加载后需补读其余词库，合并基准才是全量数据
   await wordsStore.loadWords()
+  await wordsStore.ensureAllBanksLoaded()
   const allImportedWords: any[] = []
   let doneBanks = 0
   const totalBanks = banks.length
@@ -378,9 +385,11 @@ async function importBanks(banks: any[]) {
     const wordsArr = Array.isArray(bank.words) ? bank.words : []
     if (wordsArr.length > 0) {
       try {
-        // importWords 返回 { imported, skippedCount, invalidCount }，取其中的数组
-        const { imported } = await wordsStore.importWords(wordsArr, targetBank.id)
-        for (const w of imported) allImportedWords.push(w)
+        // importWords 返回 { imported, skippedCount, invalidCount, success }，取其中的数组
+        const { imported, success } = await wordsStore.importWords(wordsArr, targetBank.id)
+        if (success) {
+          for (const w of imported) allImportedWords.push(w)
+        }
       } catch (e) {
         console.error(`导入词库 ${bankName} 失败:`, e)
       }
@@ -409,6 +418,15 @@ const showServerSetting = async () => {
         serverUrlCache.value = getSyncServerUrl()
         uni.showToast({ title: '已恢复默认服务器', icon: 'success' })
       } else if (res.tapIndex === 1) {
+        // #ifdef MP-WEIXIN
+        uni.showModal({
+          title: '设置同步服务器',
+          content: '微信正式版只能访问后台白名单内的域名，自定义服务器地址大概率不可用，建议用默认服务器或坚果云备份',
+          showCancel: false,
+        })
+        return
+        // #endif
+        // #ifndef MP-WEIXIN
         uni.showModal({
           title: '设置同步服务器',
           content: '请输入服务器地址，如：http://192.168.1.100:3000',
@@ -427,6 +445,7 @@ const showServerSetting = async () => {
             }
           }
         })
+        // #endif
       } else if (res.tapIndex === 2) {
         uni.showLoading({ title: '测试中...' })
         const ok = await checkServerAvailable()

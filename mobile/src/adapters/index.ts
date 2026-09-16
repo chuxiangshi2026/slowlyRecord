@@ -21,6 +21,8 @@ export interface DbReturn {
 
 export interface DbAdapter {
   get<T extends {} = Record<string, any>>(id: string): DbDoc<T> | null
+  /** 异步读单条文档（可选实现）：分片文档异步重组，避免大词库同步 JSON.parse 阻塞 JS 线程 */
+  getAsync?<T extends {} = Record<string, any>>(id: string): Promise<DbDoc<T> | null>
   put(doc: DbDoc): DbReturn
   allDocs<T extends {} = Record<string, any>>(prefix?: string): DbDoc<T>[]
   remove(doc: string | DbDoc): DbReturn
@@ -64,6 +66,17 @@ export function resetDbAdapter(): void {
 
 const STORAGE_PREFIX = 'slowlyrecord_'
 const CHUNK_SIZE = 900 * 1024
+
+/** uni.getStorage 的 Promise 封装：读不到时 resolve null，与同步读取的容错语义对齐 */
+function getStorageAsync(key: string): Promise<any> {
+  return new Promise((resolve) => {
+    uni.getStorage({
+      key,
+      success: (res: any) => resolve(res?.data ?? null),
+      fail: () => resolve(null),
+    })
+  })
+}
 
 export class MiniProgramDbAdapter implements DbAdapter {
   private prefix: string
@@ -175,8 +188,37 @@ export class MiniProgramDbAdapter implements DbAdapter {
     }
   }
 
+  /** 异步分块读取：与 readWithChunksSync 逻辑一致，但读取走 uni.getStorage 异步接口 */
+  private async readWithChunksAsync<T>(key: string): Promise<DbDoc<T> | null> {
+    try {
+      const data = await getStorageAsync(key)
+      if (!data) {
+        return null
+      }
+
+      if (data._chunks && data._chunkKeys) {
+        let fullData = ''
+        for (const chunkKey of data._chunkKeys) {
+          const chunk = await getStorageAsync(chunkKey)
+          if (chunk === undefined || chunk === null) return null
+          fullData += chunk
+        }
+        return JSON.parse(fullData) as DbDoc<T>
+      }
+
+      return data as DbDoc<T>
+    } catch (e) {
+      return null
+    }
+  }
+
   get<T extends {} = Record<string, any>>(id: string): DbDoc<T> | null {
     return this.readWithChunksSync<T>(this.getKey(id))
+  }
+
+  /** 异步读单条文档：语义与 get 一致，但全程走 uni.getStorage，避免大词库阻塞首屏 JS 线程 */
+  async getAsync<T extends {} = Record<string, any>>(id: string): Promise<DbDoc<T> | null> {
+    return this.readWithChunksAsync<T>(this.getKey(id))
   }
 
   put(doc: DbDoc): DbReturn {

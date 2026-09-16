@@ -497,4 +497,121 @@ describe('useMobileWords Store', () => {
       expect(updated?.needsReview).toBe(true)
     })
   })
+
+  describe('markAllNeedsReview（提前复习全部）', () => {
+    it('应把当前词库全部单词标记为待复习并落库', async () => {
+      const store = useMobileWords()
+
+      await store.importWords([
+        { id: 'mr-1', word: 'early-a', meaning: '甲', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() + 86400000, needsReview: false },
+        { id: 'mr-2', word: 'early-b', meaning: '乙', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() + 86400000, needsReview: false },
+      ])
+
+      store.markAllNeedsReview()
+
+      expect(store.words.every(w => w.needsReview === true)).toBe(true)
+      // 未到期的词全部进入待复习列表
+      expect(store.reviewWords.length).toBe(2)
+
+      await store.flushDirtyBanks()
+      expect(mockDb.promises.asyncPut).toHaveBeenCalledWith(
+        expect.objectContaining({ _id: 'bank_default_words' })
+      )
+    })
+
+    it('不应改动其他词库的单词', async () => {
+      const store = useMobileWords()
+      await store.loadWords()
+
+      const gre = store.createBank('GRE')
+      store.switchBank(gre.id)
+      await store.addWord({
+        word: 'gre-word', meaning: 'GRE词', addTime: Date.now(), reviewCount: 0,
+        nextReviewTime: Date.now() + 86400000, needsReview: false,
+      })
+      store.switchBank('default')
+      await store.addWord({
+        word: 'default-word', meaning: '默认词', addTime: Date.now(), reviewCount: 0,
+        nextReviewTime: Date.now() + 86400000, needsReview: false,
+      })
+
+      store.markAllNeedsReview()
+
+      const greWord = store.allWords.find(w => w.word === 'gre-word')
+      const defaultWord = store.allWords.find(w => w.word === 'default-word')
+      expect(greWord?.needsReview).toBe(false)
+      expect(defaultWord?.needsReview).toBe(true)
+    })
+  })
+
+  describe('词库懒加载', () => {
+    it('首屏只读当前激活词库，ensureAllBanksLoaded 后其余词库补齐', async () => {
+      const store = useMobileWords()
+
+      // 预置词库级记录：默认库（当前激活）与未激活的 GRE 库
+      await mockDb.promises.put({
+        _id: 'bank_default_words',
+        data: [{ id: 'd1', word: 'default-word', meaning: '默认', addTime: 1, reviewCount: 0, nextReviewTime: 1, bankId: 'default' }],
+      })
+      await mockDb.promises.put({
+        _id: 'bank_gre_words',
+        data: [{ id: 'g1', word: 'gre-word', meaning: 'GRE', addTime: 1, reviewCount: 0, nextReviewTime: 1, bankId: 'gre' }],
+      })
+      // bankList 元数据登记两个词库，当前库保持 default
+      const getSync = (global as any).uni.getStorageSync
+      getSync.mockImplementation((key: string) => {
+        if (key === 'mobile_wordbanks') {
+          return [
+            { id: 'default', name: '默认词库', createdAt: 1, updatedAt: 1, isDefault: true },
+            { id: 'gre', name: 'GRE', createdAt: 1, updatedAt: 1 },
+          ]
+        }
+        return null
+      })
+
+      try {
+        await store.loadWords()
+        // 首屏只读当前激活词库，其余词库保持元数据（words 为空）
+        expect(store.words.map(w => w.word)).toEqual(['default-word'])
+        expect(store.allWords.some(w => w.word === 'gre-word')).toBe(false)
+
+        // 同步推送前补读全部词库
+        await store.ensureAllBanksLoaded()
+        expect(store.allWords.some(w => w.word === 'gre-word')).toBe(true)
+        expect(store.getBankWordCount('gre')).toBe(1)
+      } finally {
+        getSync.mockImplementation(() => null)
+      }
+    })
+
+    it('切换词库时应异步读入目标词库的单词', async () => {
+      const store = useMobileWords()
+
+      await mockDb.promises.put({
+        _id: 'bank_gre_words',
+        data: [{ id: 'g1', word: 'gre-word', meaning: 'GRE', addTime: 1, reviewCount: 0, nextReviewTime: 1, bankId: 'gre' }],
+      })
+      const getSync = (global as any).uni.getStorageSync
+      getSync.mockImplementation((key: string) => {
+        if (key === 'mobile_wordbanks') {
+          return [
+            { id: 'default', name: '默认词库', createdAt: 1, updatedAt: 1, isDefault: true },
+            { id: 'gre', name: 'GRE', createdAt: 1, updatedAt: 1 },
+          ]
+        }
+        return null
+      })
+
+      try {
+        await store.loadWords()
+        store.switchBank('gre')
+        // switchBank 触发的懒加载完成后，目标词库单词可读
+        await new Promise(resolve => setTimeout(resolve, 0))
+        expect(store.currentBankId).toBe('gre')
+        expect(store.words.map(w => w.word)).toEqual(['gre-word'])
+      } finally {
+        getSync.mockImplementation(() => null)
+      }
+    })
+  })
 })
