@@ -6,7 +6,8 @@
  * 背景：微信小程序 image 组件不支持 SVG，复杂公式（分式/积分/矩阵）需预渲染 PNG。
  * 输出位置（两处内容相同，条目 JSON 里 image 字段统一记 "knowledgebanks/images/x.png"）：
  *   - public/knowledgebanks/images/              桌面端（vite public 目录，随构建分发）
- *   - mobile/src/static/knowledgebanks/images/   移动端（uni-app 的 static 目录，编译后为 /static/...）
+ *   - mobile/src/subPackages/pages-knowledge/static/knowledgebanks/images/
+ *     移动端（pages-knowledge 分包 static 目录，编译后为 /subPackages/pages-knowledge/static/...，不占主包）
  *
  * 渲染后需重跑 mobile/scripts/convert-knowledgebanks.cjs 把 JSON 同步进小程序分包：
  *   node scripts/render-formula-pngs.cjs
@@ -21,7 +22,7 @@ const ROOT = path.join(__dirname, '..');
 const JSON_DIR = path.join(ROOT, 'public', 'knowledgebanks');
 const OUT_DIRS = [
   path.join(ROOT, 'public', 'knowledgebanks', 'images'),
-  path.join(ROOT, 'mobile', 'src', 'static', 'knowledgebanks', 'images'),
+  path.join(ROOT, 'mobile', 'src', 'subPackages', 'pages-knowledge', 'static', 'knowledgebanks', 'images'),
 ];
 
 // ---- MathJax v3：TeX → SVG（无 DOM 环境，lite adaptor）----

@@ -17,14 +17,14 @@ function readAllPacks(): Record<string, any>[] {
 }
 
 describe('formulaImageSrc', () => {
-  it('相对路径补 /static 前缀', () => {
+  it('相对路径补分包 static 前缀', () => {
     expect(formulaImageSrc('knowledgebanks/images/math-calculus-4.png')).toBe(
-      '/static/knowledgebanks/images/math-calculus-4.png',
+      '/subPackages/pages-knowledge/static/knowledgebanks/images/math-calculus-4.png',
     )
   })
 
   it('已带斜杠或 static 前缀时不重复拼接', () => {
-    expect(formulaImageSrc('/knowledgebanks/images/a.png')).toBe('/static/knowledgebanks/images/a.png')
+    expect(formulaImageSrc('/knowledgebanks/images/a.png')).toBe('/subPackages/pages-knowledge/static/knowledgebanks/images/a.png')
     expect(formulaImageSrc('static/knowledgebanks/images/a.png')).toBe('/static/knowledgebanks/images/a.png')
   })
 
@@ -54,13 +54,13 @@ describe('公式图片数据链路', () => {
     expect(count).toBeGreaterThan(0)
   })
 
-  it('每个公式 PNG 都同时存在于桌面端 public 与移动端 static', () => {
+  it('每个公式 PNG 都同时存在于桌面端 public 与移动端分包 static', () => {
     for (const pack of readAllPacks()) {
       for (const item of pack.items ?? []) {
         if (!item.image) continue
         expect(existsSync(join(REPO_ROOT, 'public', item.image)), `${item.image} 缺桌面端产物`).toBe(true)
         expect(
-          existsSync(join(REPO_ROOT, 'mobile', 'src', 'static', item.image)),
+          existsSync(join(REPO_ROOT, 'mobile', 'src', 'subPackages', 'pages-knowledge', 'static', item.image)),
           `${item.image} 缺移动端产物`,
         ).toBe(true)
       }
@@ -93,7 +93,7 @@ describe('公式图片数据链路', () => {
     expect(withImage.length).toBeGreaterThan(0)
     for (const item of withImage) {
       expect(item.latex).toBeTruthy()
-      expect(formulaImageSrc(item.image)).toBe(`/static/${item.image}`)
+      expect(formulaImageSrc(item.image)).toBe(`/subPackages/pages-knowledge/static/${item.image}`)
     }
   })
 })

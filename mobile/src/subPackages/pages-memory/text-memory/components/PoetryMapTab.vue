@@ -300,9 +300,9 @@ const locationGroups = computed<LocationGroup[]>(() => {
 
 // ===== 标记图标路径 =====
 // 注意：小程序原生 map 的 iconPath 必须是绝对/相对路径，不能是 base64
-// 放在主包 static 目录，编译后路径为 /static/map-icons/*.png
+// 放在 pages-memory 分包 static 目录（不占主包体积），编译后路径为 /subPackages/pages-memory/static/map-icons/*.png
 
-const ICON_BASE = '/static/map-icons'
+const ICON_BASE = '/subPackages/pages-memory/static/map-icons'
 const ICONS = {
   poetry: `${ICON_BASE}/poetry.png`,
   poetryActive: `${ICON_BASE}/poetry-active.png`,
