@@ -234,7 +234,7 @@ describe('ocrTranslate（有道）', () => {
     expect(params.get('sign')).not.toBe(notExpected)
   })
 
-  it('q≤20 时不截断；非法 base64 仅打印日志仍发请求（记录当前行为）', async () => {
+  it('q≤20 时不截断；非法 base64 直接抛错不发请求', async () => {
     axiosMock.post.mockResolvedValue({ data: { errorCode: '0', resRegions: [] } })
 
     await ocrTranslate(HELLO_BASE64, 'appKey-x', 'secret-x') // 长度 8 ≤ 20
@@ -244,8 +244,8 @@ describe('ocrTranslate（有道）', () => {
     ).toString(CryptoJS.enc.Hex)
     expect(params.get('sign')).toBe(expected)
 
-    await ocrTranslate('!!!not-base64!!!', 'appKey-x', 'secret-x') // 非法字符仅 console 打印
-    expect(axiosMock.post).toHaveBeenCalledTimes(2)
+    await expect(ocrTranslate('!!!not-base64!!!', 'appKey-x', 'secret-x')).rejects.toThrow('图片 base64 数据格式非法')
+    expect(axiosMock.post).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -387,7 +387,7 @@ describe('ocrTranslateAli（阿里）', () => {
 
     const result = await ocrTranslateAli(HELLO_BASE64, 'ak-id', 'ak-secret')
 
-    expect(result.errorCode).toBe('200')
+    expect(result.errorCode).toBe('0')
     expect(result.resRegions).toEqual(aliSample.resRegions)
     expect(result.resRegions).toHaveLength(4)
   })
@@ -408,7 +408,7 @@ describe('ocrTranslateAli（阿里）', () => {
 
     const result = await ocrTranslateAli(HELLO_BASE64, 'ak-id', 'ak-secret')
 
-    expect(result).toEqual({ errorCode: '200', resRegions: [] })
+    expect(result).toEqual({ errorCode: '0', resRegions: [] })
   })
 
   it('TemplateJson 非法 JSON 时不崩溃，返回空区域数组', async () => {
@@ -416,7 +416,7 @@ describe('ocrTranslateAli（阿里）', () => {
 
     const result = await ocrTranslateAli(HELLO_BASE64, 'ak-id', 'ak-secret')
 
-    expect(result).toEqual({ errorCode: '200', resRegions: [] })
+    expect(result).toEqual({ errorCode: '0', resRegions: [] })
   })
 
   it('Code 非 200 / 缺失时的错误分支', async () => {
@@ -644,6 +644,14 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图取消')
     expect(localStorageMock.getItem('usage_ocr_counter')).not.toBeNull()
     expect(JSON.parse(localStorageMock.getItem('usage_ocr_counter')!).count).toBe(99) // 未增加
+  })
+
+  it('截图数据 base64 非法时直接 reject，不发请求也不计次', async () => {
+    setupUtoolsWindow((cb) => cb('data:image/png;base64,%%%不是base64%%%'))
+
+    await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图数据格式异常，请重新截图')
+    expect(axiosMock.post).not.toHaveBeenCalled()
+    expect(localStorageMock.getItem('usage_ocr_counter')).not.toBeNull() // 截图成功已计次
   })
 
   it('用户取消截图时 reject「截图取消」，且不消耗免费次数', async () => {

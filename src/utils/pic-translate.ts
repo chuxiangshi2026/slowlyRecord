@@ -65,10 +65,9 @@ export async function ocrTranslate(
     to = 'zh-CHS'
 ): Promise<OcrResult> {
     // const img = await fileToBase64(file)
-    console.log("base64", img.length)
-    // 验证base64数据是否有效（检查是否包含字母数字+/=字符）
-    const isValidBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(img);
-    console.log("base64格式是否有效:", isValidBase64);
+    if (!/^[A-Za-z0-9+/]+={0,2}$/.test(img)) {
+        throw new Error('图片 base64 数据格式非法');
+    }
 
     const salt = CryptoJS.lib.WordArray.random(16).toString()
     const curtime = Math.round(Date.now() / 1000).toString()
@@ -148,6 +147,11 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
             try {
                 // 去除 data:image/png;base64, 前缀
                 const base64 = image.includes(',') ? image.split(',')[1] : image;
+                // base64 非法时直接失败，避免向各 OCR 引擎发出必然失败的请求
+                if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
+                    reject(new Error('截图数据格式异常，请重新截图'));
+                    return;
+                }
                 // console.log('[OCR] 开始调用平台:', ocrPlatform);
 
                 let result: OcrResult;
@@ -323,7 +327,8 @@ export async function ocrTranslateAli(
         SignatureVersion: '1.0',
         SourceLanguage: 'auto',
         TargetLanguage: targetLang,
-        Timestamp: new Date().toISOString(),
+        // 去掉毫秒，与翻译侧 Timestamp 格式对齐
+        Timestamp: new Date().toISOString().replace(/\.\d+Z/, 'Z'),
         Version: '2018-10-12'
     };
 
@@ -385,7 +390,7 @@ export async function ocrTranslateAli(
         }
 
         return {
-            errorCode: json.Code,
+            errorCode: '0',
             resRegions: resRegions // 阿里云图片翻译返回的数据结构与我们期望的不同
         };
     } else {
