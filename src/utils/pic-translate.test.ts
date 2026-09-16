@@ -646,11 +646,11 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
     expect(JSON.parse(localStorageMock.getItem('usage_ocr_counter')!).count).toBe(99) // 未增加
   })
 
-  it('用户取消截图时 reject「截图取消」，但计数已在截图前增加（记录当前行为）', async () => {
+  it('用户取消截图时 reject「截图取消」，且不消耗免费次数', async () => {
     setupUtoolsWindow((cb) => cb(''))
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图取消')
-    expect(JSON.parse(localStorageMock.getItem('usage_ocr_counter')!).count).toBe(1)
+    expect(localStorageMock.getItem('usage_ocr_counter')).toBeNull() // 取消不计次
   })
 
   it('非 uTools 环境 reject「截图功能仅在 uTools 环境中可用」', async () => {

@@ -109,20 +109,13 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 
 
     // 检查是否超出了每日使用限制（本地OCR不记次数）
-    if (ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform)) {
-        // 如果没有自定义API密钥，检查是否超过每日限制
-        // 腾讯 OCR 使用独立的计数器，其他 OCR 使用通用计数器
-        const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
-        const dailyLimit = ocrPlatform === 'tencent' ? USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT : USAGE_LIMITS.OCR_DAILY_LIMIT;
-
-        if (isOverDailyLimit(counterKey)) {
-            const usedCount = getCurrentUsageCount(counterKey);
-            throw new Error(`每日免费${ocrPlatform === 'tencent' ? '腾讯' : ''}截图翻译次数已达上限 (${usedCount}/${dailyLimit} 次)，请设置自定义API密钥以继续使用`);
-        }
-
-        // 增加使用计数
-        const newCount = incrementUsageCounter(counterKey);
-        console.log(`${ocrPlatform === 'tencent' ? '腾讯' : ''}OCR使用次数: ${newCount}/${dailyLimit}`);
+    const isFreeOcr = ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform);
+    // 腾讯 OCR 使用独立的计数器，其他 OCR 使用通用计数器
+    const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
+    const dailyLimit = ocrPlatform === 'tencent' ? USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT : USAGE_LIMITS.OCR_DAILY_LIMIT;
+    if (isFreeOcr && isOverDailyLimit(counterKey)) {
+        const usedCount = getCurrentUsageCount(counterKey);
+        throw new Error(`每日免费${ocrPlatform === 'tencent' ? '腾讯' : ''}截图翻译次数已达上限 (${usedCount}/${dailyLimit} 次)，请设置自定义API密钥以继续使用`);
     }
 
     // const {appkey, key} = getTranslationApiKey(platform);
@@ -143,9 +136,12 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
             // console.log('[OCR] 截图回调触发，图片数据长度:', image ? image.length : 0);
             if (!image) {
                 // 用户取消截图，由 App.vue 控制窗口显示
-                // console.log('[OCR] 用户取消截图');
                 reject(new Error('截图取消'));
                 return;
+            }
+            // 截图成功才计次（用户取消不消耗免费额度）
+            if (isFreeOcr) {
+                incrementUsageCounter(counterKey);
             }
             // 截图成功，由 App.vue 控制窗口显示
 
