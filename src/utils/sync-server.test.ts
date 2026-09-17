@@ -308,6 +308,21 @@ describe('convertMobileCompatToSyncData', () => {
     const data = convertMobileCompatToSyncData(buildMobileData())
     expect(data.signin).toBeNull()
   })
+
+  it('knowledgeMemory/phoneticMemory 透传（移动端推送 → 桌面端 SyncData，此前被静默丢弃）', () => {
+    const input = buildMobileData()
+    input.knowledgeMemory = { importedIds: ['k1'], packs: { k1: { i1: { level: 3, learnDate: 100 } } } }
+    input.phoneticMemory = { phonemes: { 'e': { level: 2, learnDate: 50 } }, pairs: {} }
+    const data = convertMobileCompatToSyncData(input)
+    expect(data.knowledgeMemory).toEqual(input.knowledgeMemory)
+    expect(data.phoneticMemory).toEqual(input.phoneticMemory)
+  })
+
+  it('knowledgeMemory/phoneticMemory 缺省为 null（旧版移动端 payload 无这两个字段）', () => {
+    const data = convertMobileCompatToSyncData(buildMobileData())
+    expect(data.knowledgeMemory).toBeNull()
+    expect(data.phoneticMemory).toBeNull()
+  })
 })
 
 describe('convertMobileCompatToSyncData memoryPalace 字段', () => {

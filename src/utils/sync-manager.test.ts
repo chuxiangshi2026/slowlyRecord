@@ -30,12 +30,16 @@ async function loadModule() {
 const createMockDb = (): DbAdapter => {
   const storage = new Map<string, any>()
 
+  // put/bulkDocs 保留调用方显式传入的 _rev（未传时分配 '1-rev'），
+  // 便于断言「覆盖写时使用本地 _rev、剥离远端 _rev」
+  const putImpl = (doc: any) => {
+    storage.set(doc._id, { ...doc, _rev: doc._rev || '1-rev' })
+    return { ok: true, id: doc._id, rev: doc._rev || '1-rev' }
+  }
+
   return {
     get: vi.fn((id: string) => storage.get(id) || null),
-    put: vi.fn((doc: any) => {
-      storage.set(doc._id, { ...doc, _rev: '1-rev' })
-      return { ok: true, id: doc._id, rev: '1-rev' }
-    }),
+    put: vi.fn(putImpl),
     remove: vi.fn((id: string) => {
       storage.delete(id)
       return { ok: true, id }
@@ -50,33 +54,25 @@ const createMockDb = (): DbAdapter => {
       return docs
     }),
     bulkDocs: vi.fn((docs: any[]) => {
-      return docs.map(doc => {
-        storage.set(doc._id, { ...doc, _rev: '1-rev' })
-        return { ok: true, id: doc._id, rev: '1-rev' }
-      })
+      return docs.map(putImpl)
     }),
     promises: {
       get: vi.fn(async (id: string) => storage.get(id) || null),
-      put: vi.fn(async (doc: any) => {
-        storage.set(doc._id, { ...doc, _rev: '1-rev' })
-        return { ok: true, id: doc._id, rev: '1-rev' }
-      }),
+      put: vi.fn(async (doc: any) => putImpl(doc)),
       remove: vi.fn(async (id: string) => {
         storage.delete(id)
         return { ok: true, id }
       }),
       bulkDocs: vi.fn(async (docs: any[]) => {
-        return docs.map(doc => {
-          storage.set(doc._id, { ...doc, _rev: '1-rev' })
-          return { ok: true, id: doc._id, rev: '1-rev' }
-        })
+        return docs.map(putImpl)
       }),
     },
   }
 }
 
-import { getAllWordBanks } from '@shared/utils/wordbank-manager'
+import { getAllWordBanks, saveWordBank } from '@shared/utils/wordbank-manager'
 import { getSetDb } from '@shared/utils/user-set-db-util'
+import { TOMBSTONES_DOC_ID } from '@shared/utils/sync-tombstone'
 import type { SyncData } from '@shared/types/sync'
 
 describe('sync-manager', () => {
@@ -194,6 +190,57 @@ describe('sync-manager', () => {
       const result = await restoreSyncData(data, DEFAULT_RESTORE_OPTIONS)
 
       expect(result.wordBanksRestored).toBe(1)
+    })
+
+    it('词库级墓碑：本地已删除该词库（删除不早于远端更新）时跳过恢复，不让空壳复活', async () => {
+      const { restoreSyncData, DEFAULT_RESTORE_OPTIONS } = await loadModule()
+      vi.mocked(getAllWordBanks).mockResolvedValue([] as any)
+      const now = Date.now()
+      // 本地埋了 bank-deleted 的词库墓碑
+      mockDb.put!({
+        _id: TOMBSTONES_DOC_ID,
+        type: 'sync-tombstones',
+        tombstones: { 'bank-deleted': now },
+        updatedAt: now,
+      } as any)
+      const data: SyncData = {
+        ...createMockSyncData(),
+        wordBanks: [
+          { id: 'bank-deleted', name: '已删词库', words: [{ _id: 'w1', text: 'hello' } as any], createdAt: 1, updatedAt: now - 1000 },
+          { id: 'bank-alive', name: '正常词库', words: [], createdAt: 1, updatedAt: now - 1000 },
+        ],
+      }
+
+      const result = await restoreSyncData(data, DEFAULT_RESTORE_OPTIONS)
+
+      expect(result.wordBanksRestored).toBe(2)
+      const savedIds = vi.mocked(saveWordBank).mock.calls.map(c => (c[0] as any).id)
+      // 被删词库不复活，正常词库照常恢复
+      expect(savedIds).not.toContain('bank-deleted')
+      expect(savedIds).toContain('bank-alive')
+    })
+
+    it('词库墓碑早于远端 updatedAt（远端在删除后又更新过）时仍恢复', async () => {
+      const { restoreSyncData, DEFAULT_RESTORE_OPTIONS } = await loadModule()
+      vi.mocked(getAllWordBanks).mockResolvedValue([] as any)
+      const now = Date.now()
+      mockDb.put!({
+        _id: TOMBSTONES_DOC_ID,
+        type: 'sync-tombstones',
+        tombstones: { 'bank-1': now - 1000 },
+        updatedAt: now - 1000,
+      } as any)
+      const data: SyncData = {
+        ...createMockSyncData(),
+        wordBanks: [
+          { id: 'bank-1', name: '删除后又有更新的词库', words: [], createdAt: 1, updatedAt: now },
+        ],
+      }
+
+      await restoreSyncData(data, DEFAULT_RESTORE_OPTIONS)
+
+      const savedIds = vi.mocked(saveWordBank).mock.calls.map(c => (c[0] as any).id)
+      expect(savedIds).toContain('bank-1')
     })
 
     it('应该还原用户设置', async () => {
@@ -489,6 +536,31 @@ describe('sync-manager 记忆宫殿（memoryPalace scope）', () => {
     expect(pegsDoc?.items).toHaveLength(1)
   })
 
+  it('restoreSyncData 应跳过本地已埋墓碑的宫殿（不复活、pegs 也不回来）', async () => {
+    const now = Date.now()
+    // 本地删除 p1 宫殿的墓碑（晚于远端 utime）
+    mockDb.put!({
+      _id: TOMBSTONES_DOC_ID,
+      type: 'sync-tombstones',
+      tombstones: { p1: now },
+      updatedAt: now,
+    } as any)
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      memoryPalace: {
+        palaces: [{ _id: 'p1', name: '已删宫殿', loci: [{ order: 1, name: '大门' }], ctime: 1, utime: now - 1000 }],
+        pegs: { p1: [{ _id: 'peg_p1_1', palaceId: 'p1', locusOrder: 1, freeText: '内容' }] },
+      },
+    })
+
+    expect(result.memoryPalaceRestored).toBe(true)
+    // 宫殿与其桩挂载都不复活
+    expect(mockDb.get!(PALACES_DOC_ID)).toBeNull()
+    expect(mockDb.get!('memory_palace_pegs_p1')).toBeNull()
+  })
+
   it('restoreSyncData 可通过 restoreMemoryPalace 选项跳过宫殿还原', async () => {
     const { restoreSyncData } = await loadModule()
     const result = await restoreSyncData(
@@ -608,5 +680,408 @@ describe('sync-manager 句子库（sentences scope）', () => {
 
     expect(result.sentencesRestored).toBe(false)
     expect(mockDb.get!(DOC_ID)).toBeNull()
+  })
+})
+
+describe('sync-manager 墓碑过滤（tombstone scope）', () => {
+  const TOMBSTONES_DOC_ID = 'slowly-record-sync-tombstones'
+  const SENTENCES_DOC_ID = 'slowlyrecord-sentences-data'
+  let mockDb: DbAdapter
+
+  const createMockSyncData = (): SyncData => ({
+    version: 1,
+    exportedAt: Date.now(),
+    platform: 'test',
+    wordBanks: [],
+    currentWordBankId: '',
+    userSettings: null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  })
+
+  const seedTombstones = (tombstones: Record<string, number>) => {
+    mockDb.put!({ _id: TOMBSTONES_DOC_ID, type: 'sync-tombstones', tombstones, updatedAt: Date.now() } as any)
+  }
+
+  beforeEach(() => {
+    mockDb = createMockDb()
+    setDbAdapter(mockDb)
+    resetPlatformCache()
+    setPlatform('web')
+    vi.resetAllMocks()
+  })
+
+  afterEach(() => {
+    resetDbAdapter()
+    resetPlatformCache()
+    vi.restoreAllMocks()
+  })
+
+  it('restoreWordBanks 时远端已被本机删除的单词不复活', async () => {
+    const now = Date.now()
+    seedTombstones({ 'word-deleted': now })
+    vi.mocked(getAllWordBanks).mockResolvedValue([])
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      wordBanks: [
+        {
+          id: 'bank-1',
+          name: 'Test',
+          createdAt: 1,
+          updatedAt: 1,
+          words: [
+            { _id: 'word-deleted', text: 'deleted', ctime: new Date(now - 1000) } as any,
+            { _id: 'word-alive', text: 'alive', ctime: new Date(now - 1000) } as any,
+          ],
+        },
+      ],
+    })
+
+    expect(result.wordBanksRestored).toBe(1)
+    // 新词库创建路径：saveWordBank 收到的 words 应已过滤掉墓碑词
+    const savedBank = vi.mocked(saveWordBank).mock.calls[0][0] as any
+    expect(savedBank.words.map((w: any) => w._id)).toEqual(['word-alive'])
+  })
+
+  it('restoreTextMemory 时远端已删除的文章不复活', async () => {
+    const now = Date.now()
+    seedTombstones({ 'article-deleted': now })
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      textMemory: {
+        articles: [
+          { _id: 'article-deleted', title: '已删文章', content: '', createdAt: 1, updatedAt: 1 },
+          { _id: 'article-new', title: '远端新增', content: '', createdAt: 1, updatedAt: 1 },
+        ],
+        notes: [],
+        prompts: [],
+      },
+    })
+
+    expect(result.textMemoryRestored).toBe(true)
+    const doc = mockDb.get!('slowlyrecord-textmemory-data') as any
+    expect(doc.articles.map((a: any) => a._id)).toEqual(['article-new'])
+  })
+
+  it('restoreSentences 时远端已删除的句子不复活', async () => {
+    const now = Date.now()
+    seedTombstones({ 's-deleted': now })
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      sentences: {
+        sentences: [
+          { id: 's-deleted', text: '已删句子', lang: 'zh', tags: [], favorite: false, createdAt: 1 },
+          { id: 's-new', text: '新句子', lang: 'zh', tags: [], favorite: false, createdAt: 1 },
+        ],
+      },
+    })
+
+    expect(result.sentencesRestored).toBe(true)
+    const doc = mockDb.get!(SENTENCES_DOC_ID) as any
+    expect(doc.sentences.map((s: any) => s.id)).toEqual(['s-new'])
+  })
+
+  it('payload 携带的远端墓碑合并进本地墓碑表（取较大 deletedAt）', async () => {
+    const now = Date.now()
+    seedTombstones({ shared: now - 1000 })
+
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      tombstones: { shared: now - 500, 'remote-only': now - 100 },
+    })
+
+    const doc = mockDb.get!(TOMBSTONES_DOC_ID) as any
+    // 远端较新的 shared 采纳远端值；remote-only 并入本地
+    expect(doc.tombstones['shared']).toBe(now - 500)
+    expect(doc.tombstones['remote-only']).toBe(now - 100)
+  })
+
+  it('collectSyncData 应附带本地墓碑表', async () => {
+    const now = Date.now()
+    seedTombstones({ 'word-x': now })
+    vi.mocked(getAllWordBanks).mockResolvedValue([])
+
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+
+    expect(result.tombstones).toEqual({ 'word-x': now })
+  })
+})
+
+describe('sync-manager 数字记忆还原（numberMemory scope）', () => {
+  const PREFIX = 'number_memory_'
+  let mockDb: DbAdapter
+
+  const createMockSyncData = (): SyncData => ({
+    version: 1,
+    exportedAt: Date.now(),
+    platform: 'test',
+    wordBanks: [],
+    currentWordBankId: '',
+    userSettings: null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  })
+
+  const makeEntry = (_id: string, title: string, updatedAt: number, extra: any = {}): any => ({
+    _id,
+    type: 'number_memory_entry',
+    title,
+    numbers: '1234',
+    tags: [],
+    createdAt: updatedAt,
+    updatedAt,
+    reviewCount: 0,
+    ...extra,
+  })
+
+  beforeEach(() => {
+    mockDb = createMockDb()
+    setDbAdapter(mockDb)
+    resetPlatformCache()
+    setPlatform('web')
+    vi.resetAllMocks()
+  })
+
+  afterEach(() => {
+    resetDbAdapter()
+    resetPlatformCache()
+    vi.restoreAllMocks()
+  })
+
+  it('本地条目较新时不被远端旧数据覆盖', async () => {
+    mockDb.put!(makeEntry(PREFIX + 'entry_local', '本地新版本', 300))
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: 400,
+      numberMemory: {
+        entries: [makeEntry(PREFIX + 'entry_local', '远端旧版本', 100, { _rev: '9-remote' })],
+        notes: [],
+        prompts: [],
+        associations: [],
+        trainingResults: [],
+      },
+    })
+
+    expect(result.numberMemoryRestored).toBe(true)
+    const doc = mockDb.get!(PREFIX + 'entry_local') as any
+    expect(doc.title).toBe('本地新版本')
+  })
+
+  it('远端条目较新时覆盖且 _rev 用本地的（剥离远端 _rev）', async () => {
+    mockDb.put!({ ...makeEntry(PREFIX + 'entry_local', '本地旧版本', 100), _rev: '5-local' })
+
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: 400,
+      numberMemory: {
+        entries: [makeEntry(PREFIX + 'entry_local', '远端新版本', 300, { _rev: '9-remote' })],
+        notes: [],
+        prompts: [],
+        associations: [],
+        trainingResults: [],
+      },
+    })
+
+    const doc = mockDb.get!(PREFIX + 'entry_local') as any
+    expect(doc.title).toBe('远端新版本')
+    expect(doc._rev).toBe('5-local')
+  })
+
+  it('远端新增条目写入时剥离远端 _rev（由适配器分配新 rev）', async () => {
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: 400,
+      numberMemory: {
+        entries: [makeEntry(PREFIX + 'entry_new9', '远端新增', 100, { _rev: '9-remote' })],
+        notes: [],
+        prompts: [],
+        associations: [],
+        trainingResults: [],
+      },
+    })
+
+    const doc = mockDb.get!(PREFIX + 'entry_new9') as any
+    expect(doc.title).toBe('远端新增')
+    expect(doc._rev).not.toBe('9-remote')
+  })
+
+  it('墓碑中的条目 id 不从远端复活', async () => {
+    const now = Date.now()
+    mockDb.put!({ _id: 'slowly-record-sync-tombstones', type: 'sync-tombstones', tombstones: { [PREFIX + 'entry_dead']: now }, updatedAt: now })
+
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: now + 100,
+      numberMemory: {
+        entries: [makeEntry(PREFIX + 'entry_dead', '已删条目', now - 1000)],
+        notes: [],
+        prompts: [],
+        associations: [],
+        trainingResults: [],
+      },
+    })
+
+    expect(mockDb.get!(PREFIX + 'entry_dead')).toBeNull()
+  })
+
+  it('associations 按 number 键合并：远端导出较新时覆盖，否则保留本地', async () => {
+    // 场景一：远端导出时间(200) >= 本地训练文档 updatedAt(100) → 远端覆盖 number 0，新增 number 1
+    mockDb.put!({
+      _id: PREFIX + 'training_1',
+      type: 'number_memory_training',
+      associations: [{ number: '0', imageUrl: 'local-0', source: 'upload' }],
+      createdAt: 100,
+      updatedAt: 100,
+    })
+
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: 200,
+      numberMemory: {
+        entries: [],
+        notes: [],
+        prompts: [],
+        associations: [
+          { number: '0', imageUrl: 'remote-0', source: 'upload' },
+          { number: '1', imageUrl: 'remote-1', source: 'upload' },
+        ],
+        trainingResults: [],
+      },
+    })
+
+    let training = mockDb.get!(PREFIX + 'training_1') as any
+    expect(training.associations).toHaveLength(2)
+    expect(training.associations.find((a: any) => a.number === '0').imageUrl).toBe('remote-0')
+    expect(training.associations.find((a: any) => a.number === '1').imageUrl).toBe('remote-1')
+
+    // 场景二：远端导出时间(150) < 本地 updatedAt(200) → 保留本地
+    mockDb.put!({
+      _id: PREFIX + 'training_1',
+      type: 'number_memory_training',
+      associations: [
+        { number: '0', imageUrl: 'local-0', source: 'upload' },
+        { number: '1', imageUrl: 'remote-1', source: 'upload' },
+      ],
+      createdAt: 100,
+      updatedAt: 200,
+    })
+
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: 150,
+      numberMemory: {
+        entries: [],
+        notes: [],
+        prompts: [],
+        associations: [{ number: '0', imageUrl: 'remote-0-v2', source: 'upload' }],
+        trainingResults: [],
+      },
+    })
+
+    training = mockDb.get!(PREFIX + 'training_1') as any
+    expect(training.associations.find((a: any) => a.number === '0').imageUrl).toBe('local-0')
+  })
+
+  it('墓碑中的 number 关联不从远端复活', async () => {
+    const now = Date.now()
+    mockDb.put!({ _id: 'slowly-record-sync-tombstones', type: 'sync-tombstones', tombstones: { '7': now }, updatedAt: now })
+    mockDb.put!({
+      _id: PREFIX + 'training_1',
+      type: 'number_memory_training',
+      associations: [],
+      createdAt: 1,
+      updatedAt: 1,
+    })
+
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: now + 100,
+      numberMemory: {
+        entries: [],
+        notes: [],
+        prompts: [],
+        associations: [{ number: '7', imageUrl: 'remote-7', source: 'upload' }],
+        trainingResults: [],
+      },
+    })
+
+    const training = mockDb.get!(PREFIX + 'training_1') as any
+    expect(training.associations).toHaveLength(0)
+  })
+
+  it('prompts/trainingResults 无时间字段：本地优先不覆盖，远端新增才追加', async () => {
+    mockDb.put!({
+      _id: PREFIX + 'prompt_1',
+      type: 'number_memory_prompt',
+      entryId: 'entry-1',
+      title: '本地提示词',
+      content: 'local',
+      order: 1,
+      enabled: true,
+      createdAt: 100,
+      _rev: '3-local',
+    })
+    mockDb.put!({
+      _id: PREFIX + 'result_1',
+      type: 'number_memory_result',
+      mode: 'numberToImage',
+      totalQuestions: 1,
+      correctAnswers: 1,
+      duration: 10,
+      details: [],
+      createdAt: 100,
+      _rev: '3-local',
+    })
+
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      exportedAt: 999,
+      numberMemory: {
+        entries: [],
+        notes: [],
+        prompts: [
+          { _id: PREFIX + 'prompt_1', type: 'number_memory_prompt', entryId: 'entry-1', title: '远端提示词', content: 'remote', order: 1, enabled: true, createdAt: 100, _rev: '9-remote' },
+          { _id: PREFIX + 'prompt_new', type: 'number_memory_prompt', entryId: 'entry-1', title: '远端新增提示词', content: 'new', order: 2, enabled: true, createdAt: 100, _rev: '9-remote' },
+        ],
+        associations: [],
+        trainingResults: [
+          { _id: PREFIX + 'result_1', type: 'number_memory_result', mode: 'numberToImage', totalQuestions: 2, correctAnswers: 2, duration: 20, details: [], createdAt: 100, _rev: '9-remote' },
+          { _id: PREFIX + 'result_new', type: 'number_memory_result', mode: 'imageToNumber', totalQuestions: 1, correctAnswers: 1, duration: 5, details: [], createdAt: 100, _rev: '9-remote' },
+        ],
+      },
+    })
+
+    // 同 _id 保留本地版本（含本地 _rev）
+    const prompt = mockDb.get!(PREFIX + 'prompt_1') as any
+    expect(prompt.title).toBe('本地提示词')
+    expect(prompt._rev).toBe('3-local')
+    const result = mockDb.get!(PREFIX + 'result_1') as any
+    expect(result.totalQuestions).toBe(1)
+
+    // 远端新增追加且剥离远端 _rev
+    const newPrompt = mockDb.get!(PREFIX + 'prompt_new') as any
+    expect(newPrompt.title).toBe('远端新增提示词')
+    expect(newPrompt._rev).not.toBe('9-remote')
+    expect(mockDb.get!(PREFIX + 'result_new')).toBeTruthy()
   })
 })

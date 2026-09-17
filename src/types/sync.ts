@@ -147,6 +147,8 @@ export interface SyncData {
   memoryPalace?: SyncMemoryPalace | null
   /** 句子库（可选：旧版客户端忽略此字段） */
   sentences?: SyncSentences | null
+  /** 删除墓碑表 id → deletedAt（可选：旧版客户端忽略此字段；restore 端合并取较大 deletedAt） */
+  tombstones?: Record<string, number>
 }
 
 /** 句子库同步数据（整库列表，合并按 id 去重） */

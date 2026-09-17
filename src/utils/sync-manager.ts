@@ -22,6 +22,7 @@ import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhonet
 import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
 import { collectMemoryPalaceSync, restoreMemoryPalaceSync } from '@/utils/memory-palace-db'
 import { SENTENCES_DOC_ID } from '@/utils/sentence-db'
+import { filterByTombstones, getTombstones, mergeTombstones, pruneTombstones, TOMBSTONE_MAX_AGE_MS } from '@/utils/sync-tombstone'
 import { log } from '@/utils/logger'
 
 // ==================== 数据收集 ====================
@@ -118,6 +119,8 @@ export async function collectSyncData(): Promise<SyncData> {
     signin,
     memoryPalace,
     sentences,
+    // 墓碑表：随包传输，restore 端合并后用于过滤「删除复活」的条目
+    tombstones: getTombstones(),
   }
 }
 
@@ -368,10 +371,13 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     return result
   }
 
+  // 墓碑：读取本地墓碑并合并 payload 携带的远端墓碑（取较大 deletedAt，合并后清理过期项）
+  const tombstones = await mergeTombstones(data.tombstones)
+
   try {
     // 1. 还原词库
     if (options.restoreWordBanks && data.wordBanks?.length) {
-      await restoreWordBanks(data.wordBanks, data.currentWordBankId, options.conflictStrategy)
+      await restoreWordBanks(data.wordBanks, data.currentWordBankId, options.conflictStrategy, tombstones)
       result.wordBanksRestored = data.wordBanks.length
     }
 
@@ -383,13 +389,13 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
 
     // 3. 还原文本记忆
     if (options.restoreTextMemory && data.textMemory) {
-      await restoreTextMemory(data.textMemory)
+      await restoreTextMemory(data.textMemory, tombstones)
       result.textMemoryRestored = true
     }
 
     // 4. 还原数字记忆
     if (options.restoreNumberMemory && data.numberMemory) {
-      await restoreNumberMemoryData(data.numberMemory)
+      await restoreNumberMemoryData(data.numberMemory, tombstones, data.exportedAt)
       result.numberMemoryRestored = true
     }
 
@@ -423,15 +429,15 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
       result.signinRestored = true
     }
 
-    // 10. 还原记忆宫殿（宫殿按 utime 合并、桩挂载按 learnDate 合并）
+    // 10. 还原记忆宫殿（宫殿按 utime 合并、桩挂载按 learnDate 合并；宫殿级墓碑剔除已删宫殿）
     if (options.restoreMemoryPalace && data.memoryPalace) {
-      await restoreMemoryPalaceSync(data.memoryPalace)
+      await restoreMemoryPalaceSync(data.memoryPalace, tombstones)
       result.memoryPalaceRestored = true
     }
 
     // 11. 还原句子库（按 id 合并去重，已有 id 保留本地版本）
     if (options.restoreSentences && data.sentences) {
-      await restoreSentences(data.sentences)
+      await restoreSentences(data.sentences, tombstones)
       result.sentencesRestored = true
     }
   } catch (e) {
@@ -439,16 +445,24 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     result.success = false
   }
 
+  // 还原完成后兜底清理一次过期墓碑（无远端墓碑合并时 mergeTombstones 内部不会清理）
+  await pruneTombstones(TOMBSTONE_MAX_AGE_MS)
+
   return result
 }
 
 // ==================== 词库还原 ====================
 
-async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, strategy: ConflictStrategy) {
+async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, strategy: ConflictStrategy, tombstones: Record<string, number> = {}) {
   const existingBanks = await getAllWordBanks()
   const existingMap = new Map(existingBanks.map(b => [b.id, b]))
 
   for (const bank of banks) {
+    // 词库级墓碑：本机已删除该词库且删除不早于远端最后更新时，跳过恢复，不让已删词库复活为空壳
+    const bankDeletedAt = tombstones[bank.id]
+    if (bankDeletedAt !== undefined && bankDeletedAt >= (bank.updatedAt || 0)) continue
+    // 远端词条先过墓碑过滤：已被本机删除的词不让它复活（词的 id 字段是 _id）
+    const incomingWords = filterByTombstones(bank.words || [], 'remote', tombstones)
     const existing = existingMap.get(bank.id)
     if (existing) {
       // 冲突处理
@@ -457,19 +471,19 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
           continue
         case 'local-first':
           // 本地优先，仅合并不存在的单词
-          mergeWordsIntoExisting(existing, bank.words, 'local-first')
+          mergeWordsIntoExisting(existing, incomingWords, 'local-first')
           await saveWordBank(existing)
           break
         case 'remote-first':
           // 远端优先，用远端数据覆盖
-          existing.words = bank.words
+          existing.words = incomingWords
           existing.name = bank.name
           existing.updatedAt = bank.updatedAt
           await saveWordBank(existing)
           break
         case 'merge':
         default:
-          mergeWordsIntoExisting(existing, bank.words, 'merge')
+          mergeWordsIntoExisting(existing, incomingWords, 'merge')
           await saveWordBank(existing)
           break
       }
@@ -478,7 +492,7 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
       const newBank: WordBank = {
         id: bank.id,
         name: bank.name,
-        words: [...bank.words],
+        words: [...incomingWords],
         createdAt: bank.createdAt,
         updatedAt: bank.updatedAt,
         isDefault: bank.isDefault,
@@ -558,12 +572,25 @@ async function restoreUserSettings(settings: SyncUserSettings) {
   userSet.pluginStatus = settings.pluginStatus
   userSet.shortcutEnabled = settings.shortcutEnabled
 
-  // 合并 API 密钥
+  // 合并 API 密钥：远端未配置的空条目（appkey 为空）不覆盖本地已配置的密钥，
+  // 否则 A 设备存过空 key、B 设备拉取后自己配好的密钥会被静默清空
   if (settings.keys) {
-    userSet.keys = { ...userSet.keys, ...settings.keys }
+    const mergedKeys = { ...userSet.keys }
+    for (const [provider, remote] of Object.entries(settings.keys as Record<string, { appkey?: string; key?: string }>)) {
+      if (remote && (remote.appkey ?? '').trim() !== '') {
+        mergedKeys[provider] = remote as any
+      }
+    }
+    userSet.keys = mergedKeys
   }
   if (settings.ocrKeys) {
-    userSet.ocrKeys = { ...userSet.ocrKeys, ...settings.ocrKeys }
+    const mergedOcrKeys = { ...userSet.ocrKeys }
+    for (const [provider, remote] of Object.entries(settings.ocrKeys as Record<string, { appkey?: string; key?: string }>)) {
+      if (remote && (remote.appkey ?? '').trim() !== '') {
+        mergedOcrKeys[provider] = remote as any
+      }
+    }
+    userSet.ocrKeys = mergedOcrKeys
   }
   if (settings.focusMode) {
     userSet.focusMode = { ...userSet.focusMode, ...settings.focusMode }
@@ -579,7 +606,7 @@ async function restoreUserSettings(settings: SyncUserSettings) {
  * 本地已有的 _id 保留本地版本，远端新增条目追加；不再整库覆盖，
  * 避免旧同步包盖掉本地新改动
  */
-async function restoreTextMemory(data: SyncTextMemory) {
+async function restoreTextMemory(data: SyncTextMemory, tombstones: Record<string, number> = {}) {
   try {
     const db = getDbAdapter()
     const DOC_ID = 'slowlyrecord-textmemory-data'
@@ -589,7 +616,9 @@ async function restoreTextMemory(data: SyncTextMemory) {
       const local = Array.isArray(localList) ? localList : []
       const ids = new Set(local.map((i: any) => i?._id))
       const merged = [...local]
-      for (const item of Array.isArray(remoteList) ? remoteList : []) {
+      // 远端条目先过墓碑过滤：本机已删除的文章/笔记/提示词不让它复活
+      const remoteFiltered = filterByTombstones(Array.isArray(remoteList) ? remoteList : [], 'remote', tombstones)
+      for (const item of remoteFiltered) {
         if (item && item._id && !ids.has(item._id)) {
           ids.add(item._id)
           merged.push(item)
@@ -622,14 +651,16 @@ async function restoreTextMemory(data: SyncTextMemory) {
 // ==================== 句子库还原 ====================
 
 /** 句子库按 id 合并：本地已有的 id 保留本地版本，新 id 追加 */
-async function restoreSentences(data: SyncSentences) {
+async function restoreSentences(data: SyncSentences, tombstones: Record<string, number> = {}) {
   try {
     const db = getDbAdapter()
     const existingDoc = db.get(SENTENCES_DOC_ID) as any
     const existingList: any[] = Array.isArray(existingDoc?.sentences) ? existingDoc.sentences : []
     const ids = new Set(existingList.map((s: any) => s.id))
     const merged = [...existingList]
-    for (const s of data.sentences || []) {
+    // 远端句子先过墓碑过滤：本机已删除的句子不让它复活
+    const remoteFiltered = filterByTombstones(data.sentences || [], 'remote', tombstones)
+    for (const s of remoteFiltered) {
       if (s && s.id && !ids.has(s.id)) {
         ids.add(s.id)
         merged.push(s)
@@ -655,48 +686,142 @@ async function restoreSentences(data: SyncSentences) {
 
 // ==================== 数字记忆还原 ====================
 
-async function restoreNumberMemoryData(data: SyncNumberMemory) {
-  const db = getDbAdapter()
-  const prefix = DB_KEY_NUMBER_MEMORY
+/**
+ * 数字记忆条目时间戳：取 updatedAt / learnDate 较新者
+ * （entries 有 updatedAt + learnDate，notes 有 updatedAt）
+ */
+function numberItemTime(item: any): number {
+  return Math.max(item?.updatedAt || 0, item?.learnDate || 0)
+}
 
-  // 还原训练文档（包含 associations）
-  if (data.associations?.length) {
-    const existingTraining = db.allDocs(prefix).find((d: any) => d.type === 'number_memory_training') as any
-    const doc: any = {
-      _id: existingTraining?._id || (prefix + 'training_' + Date.now()),
-      type: 'number_memory_training',
-      associations: data.associations,
-      createdAt: existingTraining?.createdAt || Date.now(),
-      updatedAt: Date.now(),
-    }
-    if (existingTraining?._rev) doc._rev = existingTraining._rev
-    await db.promises.put(doc)
-  }
-
-  // 批量收集所有需要写入的条目
-  const bulkItems: any[] = []
-  if (data.entries?.length) bulkItems.push(...data.entries)
-  if (data.notes?.length) bulkItems.push(...data.notes)
-  if (data.prompts?.length) bulkItems.push(...data.prompts)
-  if (data.trainingResults?.length) bulkItems.push(...data.trainingResults)
-
-  // 分批 bulkDocs（每批 200 条）
-  if (bulkItems.length > 0) {
-    const BATCH_SIZE = 200
-    for (let i = 0; i < bulkItems.length; i += BATCH_SIZE) {
-      const batch = bulkItems.slice(i, i + BATCH_SIZE)
-      try {
-        await db.promises.bulkDocs(batch)
-      } catch (e) {
-        // bulkDocs 失败时逐条降级写入
-        for (const item of batch) {
-          try {
-            await db.promises.put(item)
-          } catch { /* skip */ }
-        }
+/**
+ * 批量写入文档列表（每批 200 条），失败时逐条降级
+ */
+async function bulkWriteDocs(db: ReturnType<typeof getDbAdapter>, docs: any[]) {
+  const BATCH_SIZE = 200
+  for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+    const batch = docs.slice(i, i + BATCH_SIZE)
+    try {
+      await db.promises.bulkDocs(batch)
+    } catch (e) {
+      // bulkDocs 失败时逐条降级写入
+      for (const item of batch) {
+        try {
+          await db.promises.put(item)
+        } catch { /* skip */ }
       }
     }
   }
+}
+
+/**
+ * 数字记忆还原：条目级时间合并（对齐 restoreTextMemory 的 mergeById 语义）。
+ *
+ * 与旧实现的差异：
+ * - 剥离远端 _rev：远端 _id 命中本地已有文档时改用本地 _rev 写入
+ *   （避免 uTools 下 conflict 静默跳过、IndexedDB 下被旧 rev 覆盖）；
+ *   远端新增文档不带 _rev，由适配器分配新 rev
+ * - entries/notes：按条目时间（updatedAt/learnDate 较新者）仲裁，远端较新才覆盖
+ * - prompts/trainingResults：无 updatedAt/learnDate 字段（仅 createdAt，视为不可变历史），
+ *   本地优先不覆盖，远端新增条目才追加
+ * - associations（number → 图片映射）：按 number 键合并，两侧都有时
+ *   以「远端导出时间 vs 本地训练文档 updatedAt」判断新旧，远端较新才覆盖
+ */
+async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Record<string, number> = {}, remoteExportedAt = 0) {
+  const db = getDbAdapter()
+  const prefix = DB_KEY_NUMBER_MEMORY
+
+  // 本地现有文档（按 _id 索引）
+  const localEntries = db.allDocs(prefix + 'entry_').filter((d: any) => d.type === 'number_memory_entry')
+  const localNotes = db.allDocs(prefix + 'note_').filter((d: any) => d.type === 'number_memory_note')
+  const localPrompts = db.allDocs(prefix + 'prompt_').filter((d: any) => d.type === 'number_memory_prompt')
+  const localResults = db.allDocs(prefix + 'result_').filter((d: any) => d.type === 'number_memory_result')
+  const existingTraining = db.allDocs(prefix).find((d: any) => d.type === 'number_memory_training') as any
+
+  // 按条目时间合并：远端较新才覆盖本地，覆盖时保留本地 _rev。
+  // 只返回需要写入的文档（远端新增 + 远端较新的覆盖），本地未变文档不回写
+  const mergeByTime = (localList: any[], remoteList: any[], timeOf: (item: any) => number): any[] => {
+    const localMap = new Map(localList.map(d => [d._id, d]))
+    const toWrite: any[] = []
+    for (const remote of Array.isArray(remoteList) ? remoteList : []) {
+      if (!remote?._id) continue
+      const local = localMap.get(remote._id)
+      if (!local) {
+        // 远端新增：剥离远端 _rev，让适配器分配新 rev
+        const { _rev, ...remoteClean } = remote
+        toWrite.push(remoteClean)
+        localMap.set(remote._id, remoteClean)
+      } else if (timeOf(remote) > timeOf(local)) {
+        const { _rev, ...remoteClean } = remote
+        const doc: any = { ...remoteClean }
+        if (local._rev) doc._rev = local._rev
+        toWrite.push(doc)
+      }
+    }
+    return toWrite
+  }
+
+  // 本地优先合并：远端新增才追加（已有 _id 保留本地版本，不回写）
+  const mergeLocalFirst = (localList: any[], remoteList: any[]): any[] => {
+    const localIds = new Set(localList.map(d => d._id))
+    const toWrite: any[] = []
+    for (const remote of Array.isArray(remoteList) ? remoteList : []) {
+      if (!remote?._id || localIds.has(remote._id)) continue
+      const { _rev, ...remoteClean } = remote
+      toWrite.push(remoteClean)
+      localIds.add(remote._id)
+    }
+    return toWrite
+  }
+
+  // entries/notes 远端先过墓碑过滤，再按条目时间合并（仅写回变更文档）
+  const entriesToWrite = mergeByTime(localEntries, filterByTombstones(data.entries || [], 'remote', tombstones), numberItemTime)
+  const notesToWrite = mergeByTime(localNotes, filterByTombstones(data.notes || [], 'remote', tombstones), numberItemTime)
+  const promptsToWrite = mergeLocalFirst(localPrompts, filterByTombstones(data.prompts || [], 'remote', tombstones))
+  const resultsToWrite = mergeLocalFirst(localResults, data.trainingResults || [])
+
+  // associations 远端先过墓碑过滤（墓碑键为 number），按 number 键合并
+  const remoteAssocs = (data.associations || []).filter((a: any) => {
+    const deletedAt = a?.number !== undefined ? tombstones[a.number] : undefined
+    return !(deletedAt !== undefined && deletedAt >= 0)
+  })
+  const localAssocs: any[] = existingTraining?.associations || []
+  const localAssocMap = new Map(localAssocs.map((a: any) => [a.number, a]))
+  const remoteIsNewer = !existingTraining || (remoteExportedAt || 0) >= (existingTraining.updatedAt || 0)
+  const mergedAssocs = [...localAssocs]
+  for (const remote of remoteAssocs) {
+    if (!remote?.number) continue
+    if (!localAssocMap.has(remote.number)) {
+      mergedAssocs.push(remote)
+      localAssocMap.set(remote.number, remote)
+    } else if (remoteIsNewer) {
+      const index = mergedAssocs.findIndex((a: any) => a.number === remote.number)
+      mergedAssocs[index] = remote
+    }
+  }
+
+  // 回写训练文档（保留本地 _rev）
+  if (existingTraining?._id) {
+    await db.promises.put({
+      ...existingTraining,
+      associations: mergedAssocs,
+      updatedAt: Date.now(),
+    })
+  } else if (mergedAssocs.length > 0) {
+    const now = Date.now()
+    await db.promises.put({
+      _id: prefix + 'training_' + now,
+      type: 'number_memory_training',
+      associations: mergedAssocs,
+      createdAt: now,
+      updatedAt: now,
+    })
+  }
+
+  await bulkWriteDocs(db, entriesToWrite)
+  await bulkWriteDocs(db, notesToWrite)
+  await bulkWriteDocs(db, promptsToWrite)
+  await bulkWriteDocs(db, resultsToWrite)
 
   log.i('数字记忆数据已还原')
 }

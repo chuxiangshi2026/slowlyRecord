@@ -1,11 +1,13 @@
 /**
  * WebDAV 同步（sync-webdav.ts）单元测试
  *
- * collectMobileCompatData / restoreSyncData 依赖数据库，这里用 vi.mock 替换，
- * 聚焦验证：加解密闭环、URL 拼接、认证头、HTTP 状态翻译、传输往返。
+ * collectSyncData / restoreSyncData 依赖数据库，这里用 vi.mock 替换，
+ * 聚焦验证：加解密闭环、URL 拼接、认证头、HTTP 状态翻译、传输往返、
+ * 完整 SyncData 格式上传与新旧格式恢复分流。
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import type { RestoreResult } from '@/utils/sync-manager'
+import { SYNC_VERSION } from '@shared/types/sync'
 
 const restoreSyncDataMock = vi.fn(async (): Promise<RestoreResult> => ({
   success: true,
@@ -23,22 +25,33 @@ const restoreSyncDataMock = vi.fn(async (): Promise<RestoreResult> => ({
   errors: [],
 }))
 
+/** 完整 SyncData 样本（含四模块，验证 WebDAV 备份走完整格式） */
+const fullSyncDataSample = {
+  version: SYNC_VERSION,
+  exportedAt: 789,
+  platform: 'desktop',
+  wordBanks: [{ id: 'b1', name: '测试词库', words: [], createdAt: 1, updatedAt: 1 }],
+  currentWordBankId: 'b1',
+  userSettings: null,
+  textMemory: null,
+  numberMemory: null,
+  shortcutMemory: { customCategories: [], trainingRecords: [], learningProgress: [] },
+  letterMemory: { associations: [], trainingResults: [] },
+  knowledgeMemory: null,
+  phoneticMemory: null,
+  signin: null,
+  memoryPalace: null,
+  sentences: null,
+  tombstones: {},
+}
+
 vi.mock('@/utils/sync-manager', async (importOriginal) => {
   const mod = await importOriginal<typeof import('@/utils/sync-manager')>()
-  return { ...mod, restoreSyncData: (...args: unknown[]) => restoreSyncDataMock(...args) }
-})
-
-vi.mock('@/utils/sync-server', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('@/utils/sync-server')>()
   return {
     ...mod,
+    restoreSyncData: (...args: unknown[]) => restoreSyncDataMock(...args),
     // 避免测试触库：上传时的数据收集换成固定样本
-    collectMobileCompatData: vi.fn(async () => ({
-      version: 1,
-      exportedAt: 123,
-      platform: 'desktop',
-      banks: [{ id: 'b1', name: '测试词库', words: [] }],
-    })),
+    collectSyncData: vi.fn(async () => fullSyncDataSample as any),
   }
 })
 
@@ -125,7 +138,31 @@ describe('uploadToWebDav', () => {
     expect(String((seenInit?.headers as Record<string, string>).Authorization)).toMatch(/^Basic /)
 
     const decoded = JSON.parse(decodeWebDavFile(String(seenInit?.body), key))
-    expect(decoded.banks[0].name).toBe('测试词库')
+    expect(decoded.version).toBe(SYNC_VERSION)
+    expect(decoded.wordBanks[0].name).toBe('测试词库')
+  })
+
+  it('备份内容为完整 SyncData 格式（快捷键/字母映射等四模块齐全）', async () => {
+    let seenBody = ''
+    mockFetchOnce(async (_url: unknown, init: unknown) => {
+      seenBody = String((init as RequestInit).body)
+      return { ok: true, status: 201 }
+    })
+
+    const result = await uploadToWebDav(cfg)
+    expect(result.success).toBe(true)
+
+    const decoded = JSON.parse(decodeWebDavFile(seenBody, key))
+    // 完整格式标识：version + wordBanks 数组（区别于 MobileCompat 的 banks）
+    expect(decoded.version).toBe(SYNC_VERSION)
+    expect(Array.isArray(decoded.wordBanks)).toBe(true)
+    // MobileCompat 缺失的四个模块都在
+    expect(decoded.shortcutMemory).toEqual(fullSyncDataSample.shortcutMemory)
+    expect(decoded.letterMemory).toEqual(fullSyncDataSample.letterMemory)
+    expect(decoded).toHaveProperty('knowledgeMemory')
+    expect(decoded).toHaveProperty('phoneticMemory')
+    // 附带墓碑表
+    expect(decoded.tombstones).toEqual({})
   })
 
   it('401 时返回应用密码错误提示', async () => {
@@ -142,6 +179,22 @@ describe('downloadFromWebDav', () => {
     const result = await downloadFromWebDav(cfg)
     expect(result.success).toBe(false)
     expect(result.errors[0]).toContain('首次使用')
+  })
+
+  it('下载完整 SyncData 格式 → 直通 restoreSyncData（不经过转换）', async () => {
+    const body = encodeWebDavFile(JSON.stringify(fullSyncDataSample), key)
+    mockFetchOnce(async () => ({ ok: true, status: 200, text: async () => body }))
+
+    const result = await downloadFromWebDav(cfg)
+    expect(result.success).toBe(true)
+    expect(restoreSyncDataMock).toHaveBeenCalledTimes(1)
+
+    // 直通：restoreSyncData 收到的就是解析后的原对象（四模块数据原样保留）
+    const syncData = restoreSyncDataMock.mock.calls[0][0] as any
+    expect(syncData.version).toBe(SYNC_VERSION)
+    expect(syncData.wordBanks[0].name).toBe('测试词库')
+    expect(syncData.shortcutMemory).toEqual(fullSyncDataSample.shortcutMemory)
+    expect(syncData.letterMemory).toEqual(fullSyncDataSample.letterMemory)
   })
 
   it('下载密文 → 解密 → 转 SyncData 后走合并还原', async () => {

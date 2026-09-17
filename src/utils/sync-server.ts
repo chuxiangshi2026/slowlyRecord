@@ -15,11 +15,12 @@
  * - 攻击者拿到 blobId 只能看到密文，拿到 key 没有 blobId 也下载不到密文
  */
 
-import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace, SyncSentences } from '@/types/sync'
+import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace, SyncSentences, SyncKnowledgeMemory, SyncPhoneticMemory } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
 import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { getSetDb } from '@/utils/user-set-db-util'
 import { collectSigninSync } from '@/utils/signin-db'
+import { getTombstones } from '@/utils/sync-tombstone'
 import { exportToJson, importFromJson } from '@/utils/sync-file'
 import { log } from '@/utils/logger'
 import { getAllWordBanks } from '@/utils/wordbank-manager'
@@ -198,11 +199,21 @@ export interface SyncServerAdapter {
  * - GET  /sync/:code → 下载加密数据，返回 { e: string }（阅后即焚）
  * - GET  /ping     → 健康检查
  */
+
+/** 同步请求超时：网络黑洞时 fetch 永不落定，同步状态机会卡死在 uploading/downloading 只能重启 */
+const SYNC_FETCH_TIMEOUT_MS = 30000
+
+function fetchWithTimeout(url: string, options: RequestInit = {}): Promise<Response> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), SYNC_FETCH_TIMEOUT_MS)
+  return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer))
+}
+
 class DefaultServerAdapter implements SyncServerAdapter {
   private baseUrl = DEFAULT_SERVER_BASE
 
   async uploadRaw(encryptedPayload: string): Promise<string> {
-    const response = await fetch(`${this.baseUrl}/sync`, {
+    const response = await fetchWithTimeout(`${this.baseUrl}/sync`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ e: encryptedPayload }),
@@ -223,7 +234,7 @@ class DefaultServerAdapter implements SyncServerAdapter {
 
   async downloadRaw(blobId: string): Promise<string | null> {
     try {
-      const response = await fetch(`${this.baseUrl}/sync/${blobId}`, {
+      const response = await fetchWithTimeout(`${this.baseUrl}/sync/${blobId}`, {
         method: 'GET',
         headers: { 'Accept': 'application/json' },
       })
@@ -252,7 +263,7 @@ class DefaultServerAdapter implements SyncServerAdapter {
 
   async ping(): Promise<boolean> {
     try {
-      const response = await fetch(`${this.baseUrl}/ping`, { method: 'GET' })
+      const response = await fetchWithTimeout(`${this.baseUrl}/ping`, { method: 'GET' })
       return response.ok
     } catch {
       return false
@@ -277,7 +288,7 @@ class CustomServerAdapter implements SyncServerAdapter {
   constructor(private baseUrl: string) {}
 
   async uploadRaw(encryptedPayload: string): Promise<string> {
-    const response = await fetch(`${this.baseUrl}/sync`, {
+    const response = await fetchWithTimeout(`${this.baseUrl}/sync`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ e: encryptedPayload }),
@@ -298,7 +309,7 @@ class CustomServerAdapter implements SyncServerAdapter {
 
   async downloadRaw(blobId: string): Promise<string | null> {
     try {
-      const response = await fetch(`${this.baseUrl}/sync/${blobId}`, {
+      const response = await fetchWithTimeout(`${this.baseUrl}/sync/${blobId}`, {
         method: 'GET',
         headers: { 'Accept': 'application/json' },
       })
@@ -325,7 +336,7 @@ class CustomServerAdapter implements SyncServerAdapter {
 
   async ping(): Promise<boolean> {
     try {
-      const response = await fetch(`${this.baseUrl}/ping`, {
+      const response = await fetchWithTimeout(`${this.baseUrl}/ping`, {
         method: 'GET',
       }).catch(() => null)
       return response?.ok || false
@@ -594,6 +605,12 @@ export interface MobileCompatSyncData {
   memoryPalace?: SyncMemoryPalace
   /** 句子库（与桌面端 SyncSentences 同 wire format） */
   sentences?: SyncSentences
+  /** 通用知识包进度（与桌面端 SyncKnowledgeMemory 同 wire format；旧客户端忽略） */
+  knowledgeMemory?: SyncKnowledgeMemory
+  /** 音标学习进度（与桌面端 SyncPhoneticMemory 同 wire format；旧客户端忽略） */
+  phoneticMemory?: SyncPhoneticMemory
+  /** 删除墓碑表 id → deletedAt（旧客户端忽略；restore 端合并取较大 deletedAt） */
+  tombstones?: Record<string, number>
 }
 
 /**
@@ -673,12 +690,16 @@ export async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
   let numberMemory: SyncNumberMemory | undefined
   let memoryPalace: SyncMemoryPalace | undefined
   let sentences: SyncSentences | undefined
+  let knowledgeMemory: SyncKnowledgeMemory | undefined
+  let phoneticMemory: SyncPhoneticMemory | undefined
   try {
     const fullData = await collectSyncData()
     textMemory = fullData.textMemory || undefined
     numberMemory = fullData.numberMemory || undefined
     memoryPalace = fullData.memoryPalace || undefined
     sentences = fullData.sentences || undefined
+    knowledgeMemory = fullData.knowledgeMemory || undefined
+    phoneticMemory = fullData.phoneticMemory || undefined
   } catch (e) {
     log.w('收集文本/数字记忆数据失败，将以空数据上传', e)
   }
@@ -694,6 +715,9 @@ export async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     signin: collectSigninSync() || undefined,
     memoryPalace,
     sentences,
+    knowledgeMemory,
+    phoneticMemory,
+    tombstones: getTombstones(),
   }
 }
 
@@ -747,6 +771,11 @@ export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncD
     signin: data.signin ?? null,
     memoryPalace: data.memoryPalace ?? null,
     sentences: data.sentences ?? null,
+    // 透传知识包/音标进度：此前未透传，移动端推来的这两个模块进度被静默丢弃
+    knowledgeMemory: data.knowledgeMemory ?? null,
+    phoneticMemory: data.phoneticMemory ?? null,
+    // 透传墓碑表：restore 端合并进本地墓碑
+    tombstones: data.tombstones,
   }
 }
 

@@ -8,7 +8,10 @@
  *
  * 文件格式（与移动端共享，两端可互传）：
  *   固定路径 {网盘地址}/slowlyRecord-sync.enc
- *   内容 = base64( XOR( pako压缩( MobileCompatSyncData JSON ), 凭据密钥 ) )
+ *   内容 = base64( XOR( pako压缩( 同步数据 JSON ), 凭据密钥 ) )
+ *   内层 JSON 的 version 字段标识格式：完整 SyncData（SYNC_VERSION，四模块齐全）
+ *   或旧 MobileCompatSyncData（version:1，无快捷键/字母映射等模块）。
+ *   恢复时按 version 分流：完整格式直通 restoreSyncData，旧格式先经 convertMobileCompatToSyncData 转换。
  *   采用 XOR 而非 AES-GCM 是因为微信小程序没有 WebCrypto，XOR 是两端唯一共同可用的
  *   对称方案（与现有移动端服务器同步的加密强度一致）；文件存于用户私有网盘，
  *   威胁模型仅为「网盘侧不可读」。
@@ -18,16 +21,25 @@
  */
 
 import pako from 'pako'
-import type { SyncServerResult } from '@/types/sync'
-import { DEFAULT_RESTORE_OPTIONS, restoreSyncData, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
+import type { SyncData, SyncServerResult } from '@/types/sync'
+import { SYNC_VERSION } from '@/types/sync'
+import { collectSyncData, DEFAULT_RESTORE_OPTIONS, restoreSyncData, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import {
   base64ToUint8Array,
-  collectMobileCompatData,
   convertMobileCompatToSyncData,
   uint8ArrayToBase64,
   xorCrypt,
   type MobileCompatSyncData,
 } from '@/utils/sync-server'
+
+/** 同步请求超时：网络黑洞时 fetch 永不落定，同步状态机会卡死在 uploading/downloading 只能重启 */
+const SYNC_FETCH_TIMEOUT_MS = 30000
+
+function fetchWithTimeout(url: string, options: RequestInit = {}): Promise<Response> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), SYNC_FETCH_TIMEOUT_MS)
+  return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer))
+}
 import { log } from '@/utils/logger'
 
 export interface WebDavConfig {
@@ -94,7 +106,7 @@ function explainNetworkError(e: unknown): string {
  */
 export async function testWebDavConnection(config: WebDavConfig): Promise<{ ok: boolean; message: string }> {
   try {
-    const resp = await fetch(webDavFileUrl(config), {
+    const resp = await fetchWithTimeout(webDavFileUrl(config), {
       method: 'GET',
       headers: { Authorization: buildAuthHeader(config) },
     })
@@ -106,10 +118,10 @@ export async function testWebDavConnection(config: WebDavConfig): Promise<{ ok: 
   }
 }
 
-/** 备份：收集全量数据 → 加密打包 → PUT 到网盘 */
+/** 备份：收集全量数据（完整 SyncData 格式，四模块齐全）→ 加密打包 → PUT 到网盘 */
 export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerResult> {
   try {
-    const data = await collectMobileCompatData()
+    const data = await collectSyncData()
     const json = JSON.stringify(data)
     const body = encodeWebDavFile(json, buildWebDavKey(config))
     log.i(`[WebDAV] 上传: JSON ${(new TextEncoder().encode(json).length / 1024).toFixed(1)}KB, 密文 ${(body.length / 1024).toFixed(1)}KB`)
@@ -117,7 +129,7 @@ export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerRe
       return { success: false, error: `数据量过大（${(body.length / 1024 / 1024).toFixed(1)}MB），请减少词库或图片后重试` }
     }
 
-    const resp = await fetch(webDavFileUrl(config), {
+    const resp = await fetchWithTimeout(webDavFileUrl(config), {
       method: 'PUT',
       headers: {
         Authorization: buildAuthHeader(config),
@@ -157,7 +169,7 @@ export async function downloadFromWebDav(
     errors: [],
   }
   try {
-    const resp = await fetch(webDavFileUrl(config), {
+    const resp = await fetchWithTimeout(webDavFileUrl(config), {
       method: 'GET',
       headers: { Authorization: buildAuthHeader(config) },
     })
@@ -166,18 +178,27 @@ export async function downloadFromWebDav(
     }
     const body = await resp.text()
 
-    let mobileData: MobileCompatSyncData
+    // 解密解包：内层 JSON 的 version 字段区分格式
+    // - version === SYNC_VERSION 且 wordBanks 为数组 → 完整 SyncData，直通 restoreSyncData
+    // - 其他（version:1 的 MobileCompatSyncData）→ 旧备份，先转换再还原
+    let parsed: SyncData | MobileCompatSyncData
     try {
-      mobileData = JSON.parse(decodeWebDavFile(body, buildWebDavKey(config)))
+      parsed = JSON.parse(decodeWebDavFile(body, buildWebDavKey(config)))
     } catch {
       return { ...empty, errors: ['解密失败：应用密码与备份时不一致，或文件已损坏'] }
     }
+
+    const restoreOpts = { ...DEFAULT_RESTORE_OPTIONS, ...options }
+    if (parsed.version === SYNC_VERSION && Array.isArray((parsed as SyncData).wordBanks)) {
+      return restoreSyncData(parsed as SyncData, restoreOpts)
+    }
+
+    const mobileData = parsed as MobileCompatSyncData
     if (!Array.isArray(mobileData.banks)) {
       return { ...empty, errors: ['文件内容不是有效的同步数据'] }
     }
-
     const syncData = convertMobileCompatToSyncData(mobileData)
-    return restoreSyncData(syncData, { ...DEFAULT_RESTORE_OPTIONS, ...options })
+    return restoreSyncData(syncData, restoreOpts)
   } catch (e) {
     log.e('[WebDAV] 恢复失败', e)
     return { ...empty, errors: [explainNetworkError(e)] }
