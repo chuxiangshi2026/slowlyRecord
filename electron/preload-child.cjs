@@ -34,8 +34,10 @@ contextBridge.exposeInMainWorld('utools', {
       return { ok: true, id: doc._id, rev: (doc._rev || '1') + '-shim' }
     },
   },
-  sendToParent: (channel, payload) => {
-    ipcRenderer.send('focusChildAction', { channel, payload })
+  sendToParent: (channel, payload, at, source) => {
+    // at/source 为可选元数据：at 供父窗口多通道去重，source 标记来源窗口
+    // （word=单词专注 / text=文本专注 / ime=输入法键盘），避免父窗口误分发
+    ipcRenderer.send('focusChildAction', { channel, payload, at, source })
   },
   isDark: () => {
     try { return window.matchMedia('(prefers-color-scheme: dark)').matches } catch (e) { return false }

@@ -70,9 +70,9 @@ function createWindow() {
     mainWindow?.show()
   })
 
-  // 关闭时保存状态并最小化到托盘
+  // 关闭时保存状态并最小化到托盘；无托盘（图标缺失）时直接退出，避免隐藏进程
   mainWindow.on('close', (event) => {
-    if (!app.isQuiting) {
+    if (!app.isQuiting && tray) {
       event.preventDefault()
       saveWindowState()
       mainWindow?.hide()
@@ -85,11 +85,23 @@ function createWindow() {
 }
 
 function createTray() {
-  // 使用简单图标（emoji 或内置）
-  const iconPath = path.join(__dirname, process.platform === 'win32' ? '../images/logo.ico' : '../images/logo.png')
-  const trayIcon = fs.existsSync(iconPath) ? iconPath : undefined
+  // 图标候选：打包后仅 dist-electron/** 进包（electron-builder files），仓库内
+  // ../images 不随包分发，因此兜底用包内 public 拷贝来的 logo.png
+  const iconCandidates = [
+    path.join(__dirname, process.platform === 'win32' ? '../images/logo.ico' : '../images/logo.png'),
+    path.join(__dirname, 'logo.png'),
+  ]
+  const iconPath = iconCandidates.find(p => fs.existsSync(p))
 
-  tray = new Tray(trayIcon || path.join(__dirname, 'icon.png'))
+  try {
+    tray = new Tray(iconPath)
+  } catch (e) {
+    // 图标缺失时不挂托盘：主窗口 close 将直接退出（见 createWindow），
+    // 否则窗口隐藏后既无托盘也无进程入口，应用变成杀不掉的隐藏进程
+    console.error('[Electron] 创建托盘失败（图标缺失）:', e)
+    tray = null
+    return
+  }
   tray.setToolTip('慢记')
 
   const contextMenu = Menu.buildFromTemplate([
@@ -177,9 +189,11 @@ function registerGlobalShortcuts() {
   console.log('[Electron] 全局快捷键已注册')
 }
 
-// 所有窗口关闭时不退出（由托盘控制）
+// 所有窗口关闭时不退出（由托盘控制）；托盘不可用时直接退出
 app.on('window-all-closed', () => {
-  // 不退出，保持托盘运行
+  if (!tray) {
+    app.quit()
+  }
 })
 
 // 退出前清理
@@ -298,7 +312,13 @@ ipcMain.handle('createBrowserWindow', async (_event, { url, options }) => {
   win.on('blur', () => forwardEvent('blur'))
   win.on('focus', () => forwardEvent('focus'))
   childWindows.set(winId, win)
-  win.loadURL(resolveChildUrl(url)).catch(e => console.error('[Electron] 加载子窗口失败:', url, e))
+  // 开发环境走 dev server；生产必须用 loadFile——loadURL 传文件路径会 ERR_INVALID_URL，
+  // 导致打包版子窗口（专注模式/输入法键盘）全部白屏（主窗口自己就是 loadFile）
+  if (process.env.VITE_DEV_SERVER_URL) {
+    win.loadURL(resolveChildUrl(url)).catch(e => console.error('[Electron] 加载子窗口失败:', url, e))
+  } else {
+    win.loadFile(path.join(__dirname, url)).catch(e => console.error('[Electron] 加载子窗口失败:', url, e))
+  }
   return winId
 })
 
@@ -339,10 +359,11 @@ ipcMain.handle('focusWindowExecuteJS', async (_event, { winId, js }) => {
   }
 })
 
-// 子窗口 -> 父窗口：sendToParent 动作转发
-ipcMain.on('focusChildAction', (_event, { channel, payload }) => {
+// 子窗口 -> 父窗口：sendToParent 动作转发（at/source 由子窗口随载荷传入：
+// at 用于父窗口多通道去重，source 区分单词/文本/输入法键盘窗口，避免误分发）
+ipcMain.on('focusChildAction', (_event, { channel, payload, at, source }) => {
   if (mainWindow && !mainWindow.isDestroyed()) {
-    mainWindow.webContents.send('focus-child-action', { channel, payload })
+    mainWindow.webContents.send('focus-child-action', { channel, payload, at, source })
   }
 })
 

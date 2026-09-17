@@ -20,7 +20,7 @@
  */
 import { shouldIgnoreMouseInLockedFocusWindow, focusWindowClosed } from '@/utils/focus-lock';
 import { isUtools } from '@/adapters/platform';
-import { getSetDb } from '@/utils/user-set-db-util';
+import { getSetDb, putSetDbWithRetry } from '@/utils/user-set-db-util';
 import { getDbAdapter } from '@/adapters/db';
 import router from '@/router';
 import { useTextMemoryStore } from '@/stores/textMemory';
@@ -122,8 +122,11 @@ function bindElectronListeners(winId: number) {
   if (electronListenersBound) return;
   electronListenersBound = true;
   const api = (window as any).electronAPI;
-  api.onFocusChildAction(({ channel, payload }: { channel: string; payload: any }) => {
-    dispatchAction({ type: channel, payload, at: Date.now() });
+  api.onFocusChildAction(({ channel, payload, at, source }: { channel: string; payload: any; at?: number; source?: string }) => {
+    // 只接管文本专注窗口（source='text' 或旧格式无 source）；word/ime 交给各自控制器
+    if (source && source !== 'text') return;
+    // at 用子窗口原始时间戳，与 storage/DB 通道一致，多通道重复到达可正确去重
+    dispatchAction({ type: channel, payload, at: at || Date.now() });
   });
   api.onChildDbPut((doc: any) => {
     handleChildDbPut(doc);
@@ -356,6 +359,28 @@ function focusLockWindow() {
   }
 }
 
+/**
+ * 子窗口请求更新 user-set.focusMode 设置（透明度/字号/背景/自动下一词等），
+ * 由父窗口统一写入避免 _rev 冲突（对齐 Word.vue 的 settingsChanged 处理）。
+ * 子窗口 setLocked 与 settingsChanged 共用 DB pendingAction 单槽，后者会覆盖前者，
+ * 因此设置携带 locked 时在此直接联动锁定（鼠标穿透），否则 uTools 下锁定永不生效。
+ */
+function handleSettingsChanged(payload: any) {
+  if (!payload || typeof payload !== 'object') return;
+  try {
+    const userSetDoc = getSetDb(true);
+    if (userSetDoc) {
+      userSetDoc.focusMode = { ...(userSetDoc.focusMode || {}), ...payload };
+      putSetDbWithRetry(userSetDoc);
+    }
+  } catch (e) {
+    console.error('[textFocus] 写入专注设置失败:', e);
+  }
+  if ('locked' in payload) {
+    handleSetLocked({ locked: payload.locked === true });
+  }
+}
+
 function dispatchAction(action: any) {
   if (!action) return;
   const type = typeof action.type === 'string' ? action.type : (action.channel || '');
@@ -375,6 +400,10 @@ function dispatchAction(action: any) {
       break;
     case 'focusLockWindow':
       focusLockWindow();
+      break;
+    case 'settingsChanged':
+      // 子窗口设置写入此前被 default 静默吞掉（uTools 下透明度/字号/锁定全不落库）
+      handleSettingsChanged(payload);
       break;
     case 'openTextMemory':
       // 对齐单词模式 handleOpenWordList：父窗口先主动关闭子窗口再返回列表，
@@ -405,7 +434,7 @@ function clearDbPendingAction() {
     const userSetDoc = getSetDb(true);
     if (!userSetDoc?.focusMode?.pendingAction) return;
     delete userSetDoc.focusMode.pendingAction;
-    getDbAdapter().put(userSetDoc);
+    putSetDbWithRetry(userSetDoc);
   } catch (e) {
     console.error('[textFocus] 清理 DB pendingAction 失败:', e);
   }

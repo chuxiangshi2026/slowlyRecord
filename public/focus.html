@@ -455,7 +455,8 @@
     .focus-container.text-mode .spell-hint,
     .focus-container.text-mode .btn-spell,
     .focus-container.text-mode .btn-edge,
-    .focus-container.text-mode .mode-label {
+    .focus-container.text-mode .mode-label,
+    .focus-container.text-mode .counter {
       display: none !important;
     }
 
@@ -2120,6 +2121,8 @@
             var wasReview = !!w.isReview;
             w.level = Math.max(1, (w.level || 1) - 1);
             w.isReview = true;
+            // 满级已记完的词答错重新进入复习，清掉已记完标记（对齐主窗口/听写页口径）
+            w.remember = false;
             if (!wasReview) adjustPendingReviewCount(1);
             if (typeof utools !== 'undefined') utools.db.put(w);
             if (currentBankId) updateWordInBank(currentBankId, w);
@@ -2168,6 +2171,7 @@
     // 文本朗读（TTS）状态
     var textSpeechOn = false;        // 朗读开关是否开启
     var textSpeechActive = false;    // 是否正在朗读（区分"开启但无语音合成环境"）
+    var textSpeechFinished = false;  // 本轮朗读是否已读完（读完后匀速滚动接管，开关保留供反复听读）
     var textSpeechSeq = 0;           // 朗读代际令牌，停止/切文章时递增使旧队列失效
     var textSpeechResumeSentence = 0; // 下一句要读的句子下标（暂停后继续用；读完/切文章/重置时清零）
     var TEXT_SPEAK_SVG = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
@@ -2321,8 +2325,9 @@
 
     function textTick(ts) {
       if (!textPlaying) return;
-      // 朗读开启时滚动由句首事件驱动（syncScrollToSentence），暂停匀速推进避免不同步
-      if (textSpeechActive || textSpeechOn) {
+      // 朗读开启时滚动由句首事件驱动（syncScrollToSentence），暂停匀速推进避免不同步；
+      // 读完（textSpeechFinished）后匀速滚动接管，否则 tick 会因开关仍开着永久空转
+      if (textSpeechActive || (textSpeechOn && !textSpeechFinished)) {
         textRafId = requestAnimationFrame(textTick);
         return;
       }
@@ -2524,6 +2529,7 @@
       var rate = getTextSpeechRate();
       var seq = textSpeechSeq;
       textSpeechActive = true;
+      textSpeechFinished = false;
       updateTextSpeechIcon();
 
       // 从上次暂停处继续（全新朗读/读完/切文章时该下标已清零）
@@ -2533,6 +2539,7 @@
         if (speakIndex >= sentences.length) {
           // 全文读完：停声音、进度清零但保留开关，若滚动未停则同时开始滚动，方便反复听读
           textSpeechActive = false;
+          textSpeechFinished = true;
           textSpeechResumeSentence = 0;
           window.speechSynthesis.cancel();
           updateTextSpeechIcon();
@@ -2712,9 +2719,11 @@
 
       // 三通道发送：sendToParent(主) + storage(备份) + DB pendingAction(poll 兜底)，
       // 与单词专注模式一致，确保父窗口控制器可靠收到置顶/锁定动作。
+      // at/source 随载荷传给 Electron ipc 通道：at 供父窗口多通道去重，
+      // source 区分单词/文本窗口，避免父窗口把动作分发到错误的窗口
       if (typeof utools !== 'undefined' && utools.sendToParent) {
         try {
-          utools.sendToParent(channel, payload);
+          utools.sendToParent(channel, payload, actionAt, textMode ? 'text' : 'word');
         } catch (e) {}
       } else {
         console.warn('[专注模式] utools.sendToParent 不可用，已使用本地动作兜底:', channel, payload);
@@ -3731,6 +3740,26 @@
       loadWords();
     }
     loadFocusModeSettings();
+
+    // Electron 快照竞态兜底：父窗口在创建窗口 ~500ms 后才把 DB 快照推给子窗口
+    // （initFocusData），而本脚本的初始化已跑完、读到的是空快照。父窗口推送完
+    // 会调用本钩子重载数据（uTools 走共享 db 无此问题，不会触发）。
+    window.__reloadFocusData = function() {
+      try {
+        if (textMode) {
+          loadTextArticle(currentArticleId);
+        } else {
+          loadWords();
+          // 听写入口模式：初始化时因快照为空未能进入，数据到位后补进
+          if (!dictationMode && initialState.mode === 'dictation' && words.length > 0) {
+            enterDictationMode();
+          }
+        }
+        loadFocusModeSettings();
+      } catch (e) {
+        console.error('[专注模式] 重载数据失败:', e);
+      }
+    };
     // URL 参数优先于 DB 设置（主窗口打开时把当前设置传入）
     if (initialState.autoNext !== null) autoNextEnabled = initialState.autoNext;
     if (initialState.repeat !== null) repeatCount = initialState.repeat;

@@ -243,9 +243,10 @@
     // storage（备份）
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(action)); } catch (e) {}
 
-    // sendToParent（主，uTools 父子可能无效，作冗余）
+    // sendToParent（主，uTools 父子可能无效，作冗余）；at/source 随载荷传给
+    // Electron ipc 通道，父窗口按来源过滤，避免误分发到其他子窗口
     if (typeof utools !== 'undefined' && utools.sendToParent) {
-      try { utools.sendToParent(channel, payload); } catch (e) {}
+      try { utools.sendToParent(channel, payload, action.at, 'ime'); } catch (e) {}
     }
   }
 

@@ -619,6 +619,8 @@ async function openTextFocusMode(article: TextArticle) {
       setTimeout(async () => {
         const docs = collectTextFocusDocsForChild();
         await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+        // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
+        await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
         api.focusWindowInvoke(winId, 'show', []);
       }, 500);
       return;

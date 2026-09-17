@@ -54,7 +54,7 @@
       </div>
     </template>
   </div>
-  <div v-else>
+  <div v-else class="words-page">
     <!-- 筛选排序面板 -->
     <WordFilter
         ref="wordFilterRef"
@@ -432,7 +432,7 @@ import {
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
-import {getSetDb} from '@/utils/user-set-db-util.ts';
+import {getSetDb, putSetDbWithRetry} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/baidu-stats';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron} from '@/adapters/platform';
@@ -909,7 +909,7 @@ const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
     }
 
     userSetDoc.focusMode = nextFocusMode;
-    getDbAdapter().put(userSetDoc);
+    putSetDbWithRetry(userSetDoc);
   } catch (e) {
     console.error('[focusModeDoc] 更新专注模式文档失败:', e);
   }
@@ -1930,9 +1930,9 @@ const handleChildMessage = (message: any) => {
   const payload = typeof message === 'string'
       ? undefined
       : (message.payload ?? message.args?.[0] ?? message.params?.[0] ?? message.data);
-  // 文本专注模式动作（source='text'）由 text-focus-window 控制器处理，单词页忽略
+  // 其他来源子窗口的动作（source='text'/'ime'）由各自控制器处理，单词页只接管 word
   const src = typeof message === 'object' ? (message.source ?? payload?.source) : undefined;
-  if (src === 'text') return;
+  if (src && src !== 'word') return;
 
   // at 去重：同一动作可能经 IPC + DB 轮询两条通道各到一次
   const actionAt = Number(message.at || 0);
@@ -2027,6 +2027,42 @@ const handleChildMessage = (message: any) => {
 
 
 let messageListenerReady = false;
+
+// Electron 子窗口 ipc 监听：幂等绑定（页面重挂载/重复开窗不叠加监听器），
+// 事件按当前专注窗口 _winId 路由；childDbPut 持久化所有子窗口写入
+function bindElectronFocusListenersOnce() {
+  if ((window as any).__wordElectronFocusBound) return;
+  (window as any).__wordElectronFocusBound = true;
+  const api = (window as any).electronAPI;
+  api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
+    const win: any = focusWindow;
+    if (!win || win._winId !== id) return;
+    if (event === 'closed') {
+      win._destroyed = true;
+      consumeLatestFocusModePendingAction('closed');
+      focusWindow = null;
+      focusWindowClosed('word');
+      clearFocusModeSync();
+      clearEdgeStickResources();
+      isEdgeHidden = false;
+      savedBounds = null;
+      edgeHiddenSide = null;
+      edgeRestoreSuspendedUntil = 0;
+      isExpandedFromEdge = false;
+    } else if (event === 'focus') {
+      win._focused = true;
+    } else if (event === 'blur') {
+      win._focused = false;
+    }
+  });
+  api.onChildDbPut((doc: any) => { handleFocusChildDbPut(doc); });
+  api.onFocusChildAction((data: any) => {
+    // 只接管单词专注窗口（source='word' 或旧格式无 source）的动作；
+    // text（文本专注）/ime（输入法键盘）子窗口交给各自控制器，避免误分发
+    if (data?.source && data.source !== 'word') return;
+    handleChildMessage(data);
+  });
+}
 
 // 全局设置 uTools 消息监听
 // @ts-ignore
@@ -2125,31 +2161,7 @@ const openFocusMode = async (mode = '') => {
       });
       focusWindow = createElectronWindowProxy(winId, initAlwaysOnTop);
       focusWindowOpened('word');
-      const createdFocusWindow = focusWindow;
-      api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
-        if (id !== winId) return;
-        if (event === 'closed') {
-          createdFocusWindow._destroyed = true;
-          if (focusWindow === createdFocusWindow) {
-            consumeLatestFocusModePendingAction('closed');
-            focusWindow = null;
-            focusWindowClosed('word');
-            clearFocusModeSync();
-            clearEdgeStickResources();
-            isEdgeHidden = false;
-            savedBounds = null;
-            edgeHiddenSide = null;
-            edgeRestoreSuspendedUntil = 0;
-            isExpandedFromEdge = false;
-          }
-        } else if (event === 'focus') {
-          createdFocusWindow._focused = true;
-        } else if (event === 'blur') {
-          createdFocusWindow._focused = false;
-        }
-      });
-      api.onChildDbPut((doc: any) => { handleFocusChildDbPut(doc); });
-      api.onFocusChildAction((data: any) => { handleChildMessage(data); });
+      bindElectronFocusListenersOnce();
       startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
       setTimeout(() => { setupEdgeStick(); }, 500);
       setupMessageListener();
@@ -2158,6 +2170,8 @@ const openFocusMode = async (mode = '') => {
         if (!focusWindow || focusWindow.isDestroyed?.()) return;
         const docs = collectFocusDocsForChild(wordsStore.currentWordBankId || '');
         await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+        // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
+        await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
         applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
         api.focusWindowInvoke(winId, 'show', []);
         setTimeout(pushFocusStyleToChild, 500);
@@ -3560,6 +3574,14 @@ function onOnboardingFinish() {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+// 单词页根节点成 flex 容器，让 .words-cards-wrapper 的 flex:1 高度链成立（否则内容撑高、外层出现滚动条）
+.words-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .words-cards-wrapper {

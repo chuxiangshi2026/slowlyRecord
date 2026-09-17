@@ -8,9 +8,10 @@
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { replaceMock, loadArticlesMock } = vi.hoisted(() => ({
+const { replaceMock, loadArticlesMock, putMock } = vi.hoisted(() => ({
   replaceMock: vi.fn().mockResolvedValue(undefined),
   loadArticlesMock: vi.fn().mockResolvedValue(undefined),
+  putMock: vi.fn().mockReturnValue({ ok: true }),
 }));
 
 vi.mock('@/router', () => ({ default: { replace: replaceMock } }));
@@ -18,14 +19,24 @@ vi.mock('@/stores/textMemory', () => ({
   useTextMemoryStore: () => ({ loadArticles: loadArticlesMock }),
 }));
 vi.mock('@/adapters/platform', () => ({ isUtools: () => false }));
-vi.mock('@/adapters/db', () => ({
-  getDbAdapter: () => ({ get: () => null, allDocs: () => [], put: () => ({ ok: true }) }),
-}));
-
 // user-set 文档由 getSetDb 返回，clearDbPendingAction 会原地删除 pendingAction
 let userSetDoc: any;
 vi.mock('@/utils/user-set-db-util', () => ({
   getSetDb: () => userSetDoc,
+  // putSetDbWithRetry 经 db.promises.put 写入，mock 透传到 putMock
+  putSetDbWithRetry: (doc: any) => {
+    putMock(doc);
+    return true;
+  },
+}));
+
+vi.mock('@/adapters/db', () => ({
+  getDbAdapter: () => ({
+    get: () => null,
+    allDocs: () => [],
+    put: putMock,
+    promises: { put: vi.fn().mockResolvedValue({ ok: true }) },
+  }),
 }));
 
 import {
@@ -82,6 +93,40 @@ describe('文本专注「返回列表」动作消费', () => {
     expect(aliveWin.close).not.toHaveBeenCalled();
     // pendingAction 未被清理，留给 Word.vue 处理
     expect(userSetDoc.focusMode.pendingAction).toBeTruthy();
+    setTextFocusWindow(null);
+  });
+});
+
+describe('文本专注 settingsChanged 设置持久化', () => {
+  it('设置写入 user-set.focusMode，且携带 locked 时联动鼠标穿透（子窗口单槽覆盖 setLocked 的兜底）', async () => {
+    userSetDoc = {
+      _id: 'user-set',
+      focusMode: {
+        opacity: 1,
+        pendingAction: { type: 'settingsChanged', payload: { opacity: 0.5, locked: true }, at: Date.now(), source: 'text' },
+      },
+    };
+    const aliveWin = {
+      isDestroyed: () => false,
+      close: vi.fn(),
+      setIgnoreMouseEvents: vi.fn(),
+      focus: vi.fn(),
+      getBounds: () => ({ x: 0, y: 0, width: 100, height: 100 }),
+    };
+    setTextFocusWindow(aliveWin);
+    consumeLatestTextFocusPendingAction();
+    // putSetDbWithRetry 走 db.promises.put（异步），等微任务队列排空后断言
+    await Promise.resolve();
+    await Promise.resolve();
+
+    // 设置被合并进 focusMode 并落库
+    const lastPut = putMock.mock.calls[putMock.mock.calls.length - 1]?.[0];
+    expect(lastPut.focusMode.opacity).toBe(0.5);
+    expect(lastPut.focusMode.locked).toBe(true);
+    expect(lastPut.focusMode.pendingAction).toBeUndefined();
+    // locked 联动：锁定后内容区鼠标穿透
+    expect(aliveWin.setIgnoreMouseEvents).toHaveBeenCalledWith(true, { forward: true });
+    expect(replaceMock).not.toHaveBeenCalled();
     setTextFocusWindow(null);
   });
 });
