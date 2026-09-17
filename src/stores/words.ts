@@ -15,6 +15,7 @@ import {
   setCurrentWordBankId,
   getWordBank,
   saveWordBank,
+  updateWordInBankChunk,
   type WordBank
 } from "@/utils/wordbank-manager.ts";
 import {APP_KEY, DB_KEY, DB_KEY_USER_SET, DEFAULT_INTERVALS, FROM, KEY, TO} from "@/constants";
@@ -25,11 +26,11 @@ import {AppInfo} from "@/config.ts";
 // 导入翻译服务 abandon
 import {translateWithPlatform as externalTranslateWithPlatform, translateBatchWithPlatform as externalTranslateBatchWithPlatform} from "@/utils/translation-api";
 import {addAndUpdateSetDb, getSetDb} from "@/utils/user-set-db-util.ts";
-import {v4 as uuidv4} from "uuid";
 import type {UserSetType, FocusModeSettings} from "@/types/user-set";
 import {isUtools} from "@/adapters/platform";
 import {normalizeItemText, getItemKey} from "@/utils/text-utils";
 import {useSigninStore} from "@/stores/signin";
+import {recordTombstone} from "@/utils/sync-tombstone";
 
 // 默认专注模式设置
 const defaultFocusMode: FocusModeSettings = {
@@ -281,7 +282,9 @@ export const useWordsStore =
             * */
             function initUserSet() {
                 let userSet: UserSetType = {
-                    "_id": DB_KEY_USER_SET + uuidv4(), // 假设_id为必填项
+                    // 固定 _id：历史版本用 user-set<uuid>，并发首写会生成多份设置文档，
+                    // 而 getSetDb 用 allDocs[0] 随机选取，表现为密钥/设置随机回退（脑裂）
+                    "_id": DB_KEY_USER_SET,
                     "pluginStatus": false,
                     "shortcutEnabled": false,
                     "translationPlatform": 'spark',
@@ -588,7 +591,7 @@ export const useWordsStore =
                     // 加载单词后重新计算待复习状态
                     await upReview()
 
-                    console.log(`[启动耗时] 单词列表就绪: ${performance.now().toFixed(0)}ms（${words.value.length} 词）`)
+                    console.info(`[启动耗时] 单词列表就绪: ${performance.now().toFixed(0)}ms（${words.value.length} 词）`)
 
                     // 后台清理旧的逐词遗留文档（不阻塞加载）
                     cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
@@ -639,6 +642,11 @@ export const useWordsStore =
                 const changedWords: Word[] = [];
 
                 words.value.forEach((item) => {
+                    // 满级已记完（remember=true）的词不参与复习调度，既不进入待复习也不取消待复习
+                    if (item.remember === true) {
+                        return;
+                    }
+
                     // 确保 learnDate 和 ctime 是 Date 对象
                     let learnDate = item.learnDate instanceof Date ? item.learnDate : new Date(item.learnDate);
                     let ctime = item.ctime instanceof Date ? item.ctime : new Date(item.ctime);
@@ -737,6 +745,11 @@ export const useWordsStore =
                 if (!word) {
                     log.e('删除单词失败：单词不存在', word);
                     return;
+                }
+
+                // 同步墓碑：防止被删单词在另一台设备「删除复活」
+                if (word._id) {
+                    recordTombstone(word._id);
                 }
 
                 // 从当前词库删除 - 直接使用 currentWordBank.value 避免重新加载导致数据不一致
@@ -847,12 +860,20 @@ export const useWordsStore =
                     // 同时清理词库中的历史脏数据，规范化文本
                     currentWordBank.value.words.forEach(w => { w.text = normalizeItemText(w.text) })
                     const wordIndex = currentWordBank.value.words.findIndex(w => w._id === cleanedWord._id)
+                    const wordKey = getItemKey(cleanedWord.text)
+                    // 词是否已存在（_id 优先、规范化文本兜底）：已存在走分片 merge 写（复习热路径只写 1 个分片，
+                    // 双窗口并发写同一词库时不会回退对方刚写的其他单词进度）；新词保持现有整库路径
+                    const wordExists = wordIndex !== -1 || currentWordBank.value.words.some(w => getItemKey(w.text) === wordKey)
                     if (wordIndex !== -1) {
                         Object.assign(currentWordBank.value.words[wordIndex], cleanedWord)
                     } else {
                         currentWordBank.value.words.push(cleanedWord)
                     }
-                    await saveWordBank(currentWordBank.value)
+                    if (wordExists) {
+                        await updateWordInBankChunk(currentWordBankId.value, cleanedWord)
+                    } else {
+                        await saveWordBank(currentWordBank.value)
+                    }
                 } else {
                     // 如果 currentWordBank.value 不匹配，重新加载
                     const bank = await getWordBank(currentWordBankId.value)
@@ -860,12 +881,18 @@ export const useWordsStore =
                         // 同时清理词库中的历史脏数据，规范化文本
                         bank.words.forEach(w => { w.text = normalizeItemText(w.text) })
                         const wordIndex = bank.words.findIndex(w => w._id === cleanedWord._id)
+                        const wordKey = getItemKey(cleanedWord.text)
+                        const wordExists = wordIndex !== -1 || bank.words.some(w => getItemKey(w.text) === wordKey)
                         if (wordIndex !== -1) {
                             Object.assign(bank.words[wordIndex], cleanedWord)
                         } else {
                             bank.words.push(cleanedWord)
                         }
-                        await saveWordBank(bank)
+                        if (wordExists) {
+                            await updateWordInBankChunk(currentWordBankId.value, cleanedWord)
+                        } else {
+                            await saveWordBank(bank)
+                        }
                         currentWordBank.value = bank
                     }
                 }

@@ -10,7 +10,9 @@ global.localStorage = {
   key: vi.fn()
 } as unknown as Storage
 
-// 内存数据库模拟
+// 内存数据库模拟（严格对齐 utools.db 语义）
+// put：文档已存在时，仅当携带库中当前 _rev 才成功（_rev 不同或缺失返回 conflict）；新文档直接创建
+// get：返回最新文档的副本；remove：校验 _rev，不一致返回 conflict
 let memoryDb: Record<string, any> = {}
 let memCounter = 0
 
@@ -18,24 +20,44 @@ function nextRev() {
   return String(++memCounter) + '-rev'
 }
 
+function putImpl(doc: any) {
+  if (!doc._id) {
+    return { ok: false, message: 'missing _id' }
+  }
+  const existing = memoryDb[doc._id]
+  if (existing && doc._rev !== existing._rev) {
+    return { ok: false, message: 'conflict' }
+  }
+  const rev = nextRev()
+  memoryDb[doc._id] = { ...doc, _rev: rev }
+  return { ok: true, id: doc._id, rev }
+}
+
+function removeImpl(doc: any) {
+  const id = typeof doc === 'string' ? doc : doc._id
+  const rev = typeof doc === 'string' ? undefined : doc._rev
+  const existing = memoryDb[id]
+  if (!existing) {
+    return { ok: false, message: 'not found' }
+  }
+  if (rev !== existing._rev) {
+    return { ok: false, message: 'conflict' }
+  }
+  delete memoryDb[id]
+  return { ok: true, id }
+}
+
 const mockDbAdapter = {
   get: vi.fn((id: string) => {
     const doc = memoryDb[id]
     return doc ? { ...doc } : null
   }),
-  put: vi.fn((doc: any) => {
-    if (doc._id) {
-      if (!doc._rev) doc._rev = nextRev()
-      memoryDb[doc._id] = { ...doc }
-    }
-    return { ok: true, id: doc._id || '', rev: doc._rev }
-  }),
-  remove: vi.fn((doc: { _id: string; _rev: string }) => {
-    delete memoryDb[doc._id]
-    return { ok: true, id: doc._id }
-  }),
-  allDocs: vi.fn(() => {
-    return Object.values(memoryDb).map(doc => ({ ...doc }))
+  put: vi.fn((doc: any) => putImpl(doc)),
+  remove: vi.fn((doc: any) => removeImpl(doc)),
+  allDocs: vi.fn((prefix?: string) => {
+    return Object.values(memoryDb)
+      .filter((doc: any) => !prefix || String(doc._id).startsWith(prefix))
+      .map(doc => ({ ...doc }))
   }),
   bulkDocs: vi.fn(() => []),
   promises: {
@@ -43,19 +65,41 @@ const mockDbAdapter = {
       const doc = memoryDb[id]
       return doc ? { ...doc } : null
     }),
-    put: vi.fn(async (doc: any) => {
-      if (doc._id) {
-        if (!doc._rev) doc._rev = nextRev()
-        memoryDb[doc._id] = { ...doc }
-      }
-      return { ok: true, id: doc._id || '', rev: doc._rev }
-    }),
-    remove: vi.fn(async (doc: { _id: string; _rev: string }) => {
-      delete memoryDb[doc._id]
-      return { ok: true, id: doc._id }
-    }),
+    put: vi.fn(async (doc: any) => putImpl(doc)),
+    remove: vi.fn(async (doc: any) => removeImpl(doc)),
     bulkDocs: vi.fn(async () => []),
   },
+}
+
+// 辅助：以合法 _rev 将文档直接种入内存库（模拟 utools 中已持久化的文档）
+function seedDoc(id: string, doc: any) {
+  memoryDb[id] = { ...doc, _id: id, _rev: doc._rev || nextRev() }
+}
+
+// 辅助：直接种入完整词库（1 个 meta 文档 + 每库 1 个分片文档）
+function seedBanks(entries: { id: string; words: any[]; name?: string; isDefault?: boolean }[]) {
+  seedDoc('slowly-record-wordbank-meta-v2', {
+    type: 'wordbank-meta',
+    banks: entries.map(e => ({
+      id: e.id,
+      name: e.name || e.id,
+      createdAt: 1,
+      updatedAt: 2,
+      isDefault: !!e.isDefault,
+      language: 'en',
+    })),
+    updatedAt: Date.now()
+  })
+  for (const e of entries) {
+    seedDoc(`slowly-record-wordbank-chunk-v2:${e.id}:0`, {
+      type: 'wordbank-chunk',
+      bankId: e.id,
+      chunkIndex: 0,
+      totalChunks: 1,
+      words: e.words,
+      updatedAt: Date.now()
+    })
+  }
 }
 
 // Mock @/adapters/db
@@ -73,6 +117,7 @@ vi.mock('uuid', () => ({
 import {
   createDefaultWordBank,
   getAllWordBanks,
+  getAllWordBankMetas,
   getCurrentWordBankId,
   setCurrentWordBankId,
   createWordBank,
@@ -81,6 +126,7 @@ import {
   deleteWordBank,
   updateWordBankName,
   updateWordBankWords,
+  updateWordInBankChunk,
   exportWordBankToJson,
   type WordBank
 } from './wordbank-manager'
@@ -151,26 +197,21 @@ describe('setCurrentWordBankId / getCurrentWordBankId', () => {
   })
 
   it('当本地无存储时，返回默认词库ID', async () => {
-    const defaultBank = createDefaultWordBank()
-    const { words: _, ...meta } = defaultBank
-    memoryDb['slowly-record-wordbank-meta-v2'] = {
-      _id: 'slowly-record-wordbank-meta-v2',
-      type: 'wordbank-meta',
-      banks: [meta],
-      updatedAt: Date.now()
-    }
-    memoryDb['slowly-record-wordbank-chunk-v2:default:0'] = {
-      _id: 'slowly-record-wordbank-chunk-v2:default:0',
-      type: 'wordbank-chunk',
-      bankId: 'default',
-      chunkIndex: 0,
-      totalChunks: 1,
-      words: [],
-      updatedAt: Date.now()
-    }
+    seedBanks([{ id: 'default', name: '默认词库', isDefault: true, words: [] }])
 
     const id = await getCurrentWordBankId()
     expect(id).toBe('default')
+  })
+
+  it('不触发任何分片读取（只读 meta 文档）', async () => {
+    seedBanks([{ id: 'current-bank', isDefault: true, words: [makeWord()] }])
+    ;(localStorage.getItem as any).mockReturnValue('current-bank')
+
+    const id = await getCurrentWordBankId()
+    expect(id).toBe('current-bank')
+
+    const getIds = mockDbAdapter.get.mock.calls.map(([id]) => String(id))
+    expect(getIds.every(i => !i.includes('slowly-record-wordbank-chunk-v2'))).toBe(true)
   })
 })
 
@@ -185,24 +226,7 @@ describe('getAllWordBanks', () => {
   })
 
   it('已有词库时返回列表', async () => {
-    const bank = makeBank({ id: 'custom-1', name: '自定义词库' })
-    const { words: _, ...meta } = bank
-    memoryDb['slowly-record-wordbank-meta-v2'] = {
-      _id: 'slowly-record-wordbank-meta-v2',
-      type: 'wordbank-meta',
-      banks: [meta],
-      updatedAt: Date.now()
-    }
-    // 词库数据分片
-    memoryDb['slowly-record-wordbank-chunk-v2:custom-1:0'] = {
-      _id: 'slowly-record-wordbank-chunk-v2:custom-1:0',
-      type: 'wordbank-chunk',
-      bankId: 'custom-1',
-      chunkIndex: 0,
-      totalChunks: 1,
-      words: bank.words,
-      updatedAt: Date.now()
-    }
+    seedBanks([{ id: 'custom-1', name: '自定义词库', words: [makeWord(), makeWord({ _id: 'w2', text: 'world' })] }])
 
     const banks = await getAllWordBanks()
     expect(banks.length).toBe(1)
@@ -211,23 +235,7 @@ describe('getAllWordBanks', () => {
   })
 
   it('迁移：将"我的词库"重命名为"默认词库"', async () => {
-    const bank = makeBank({ id: 'old-1', name: '我的词库', isDefault: true })
-    const { words: _, ...meta } = bank
-    memoryDb['slowly-record-wordbank-meta-v2'] = {
-      _id: 'slowly-record-wordbank-meta-v2',
-      type: 'wordbank-meta',
-      banks: [{ ...meta, name: '我的词库' }],
-      updatedAt: Date.now()
-    }
-    memoryDb['slowly-record-wordbank-chunk-v2:old-1:0'] = {
-      _id: 'slowly-record-wordbank-chunk-v2:old-1:0',
-      type: 'wordbank-chunk',
-      bankId: 'old-1',
-      chunkIndex: 0,
-      totalChunks: 1,
-      words: bank.words,
-      updatedAt: Date.now()
-    }
+    seedBanks([{ id: 'old-1', name: '我的词库', isDefault: true, words: [makeWord()] }])
 
     const banks = await getAllWordBanks()
     expect(banks.length).toBe(1)
@@ -235,23 +243,7 @@ describe('getAllWordBanks', () => {
   })
 
   it('迁移：将"基础词库"重命名为"默认词库"', async () => {
-    const bank = makeBank({ id: 'old-2', name: '基础词库', isDefault: true })
-    const { words: _, ...meta } = bank
-    memoryDb['slowly-record-wordbank-meta-v2'] = {
-      _id: 'slowly-record-wordbank-meta-v2',
-      type: 'wordbank-meta',
-      banks: [{ ...meta, name: '基础词库' }],
-      updatedAt: Date.now()
-    }
-    memoryDb['slowly-record-wordbank-chunk-v2:old-2:0'] = {
-      _id: 'slowly-record-wordbank-chunk-v2:old-2:0',
-      type: 'wordbank-chunk',
-      bankId: 'old-2',
-      chunkIndex: 0,
-      totalChunks: 1,
-      words: bank.words,
-      updatedAt: Date.now()
-    }
+    seedBanks([{ id: 'old-2', name: '基础词库', isDefault: true, words: [makeWord()] }])
 
     const banks = await getAllWordBanks()
     expect(banks.length).toBe(1)
@@ -440,5 +432,178 @@ describe('exportWordBankToJson', () => {
   it('不存在的词库返回空字符串', async () => {
     const json = await exportWordBankToJson('nonexistent')
     expect(json).toBe('')
+  })
+})
+
+// ==================== getAllWordBankMetas ====================
+describe('getAllWordBankMetas', () => {
+  it('返回 meta 列表且不包含 words 字段、不读取任何分片', async () => {
+    seedBanks([{ id: 'meta-bank', name: '元数据词库', words: [makeWord()] }])
+
+    const metas = await getAllWordBankMetas()
+    expect(metas.length).toBe(1)
+    expect(metas[0].id).toBe('meta-bank')
+    expect(metas[0].name).toBe('元数据词库')
+    expect(metas[0]).not.toHaveProperty('words')
+
+    const getIds = mockDbAdapter.get.mock.calls.map(([id]) => String(id))
+    expect(getIds.every(i => !i.includes('slowly-record-wordbank-chunk-v2'))).toBe(true)
+  })
+
+  it('无数据时创建默认词库并返回其 meta', async () => {
+    const metas = await getAllWordBankMetas()
+    expect(metas.length).toBe(1)
+    expect(metas[0].id).toBe('default')
+    expect(metas[0].isDefault).toBe(true)
+    // 默认词库的分片也应已创建
+    expect(memoryDb['slowly-record-wordbank-chunk-v2:default:0']).toBeDefined()
+  })
+})
+
+// ==================== saveWordBank 读写隔离 ====================
+describe('saveWordBank 读写隔离', () => {
+  it('只写目标词库分片，不读/写其他词库分片', async () => {
+    seedBanks([
+      { id: 'bank-a', words: [makeWord({ _id: 'a1', text: 'apple' })] },
+      { id: 'bank-b', words: [makeWord({ _id: 'b1', text: 'banana' })] },
+    ])
+
+    const getCallsBefore = mockDbAdapter.get.mock.calls.length
+    const putCallsBefore = mockDbAdapter.promises.put.mock.calls.length
+
+    const bankA = makeBank({
+      id: 'bank-a',
+      words: [makeWord({ _id: 'a1', text: 'apple' }), makeWord({ _id: 'a2', text: 'avocado' })],
+    })
+    const success = await saveWordBank(bankA)
+    expect(success).toBe(true)
+
+    const getIds = mockDbAdapter.get.mock.calls.slice(getCallsBefore).map(([id]) => String(id))
+    const putIds = mockDbAdapter.promises.put.mock.calls.slice(putCallsBefore).map(([doc]) => String(doc._id))
+    // 不允许出现 bank-b 的分片读取与写入
+    expect(getIds.filter(i => i.includes('slowly-record-wordbank-chunk-v2:bank-b'))).toEqual([])
+    expect(putIds.filter(i => i.includes('slowly-record-wordbank-chunk-v2:bank-b'))).toEqual([])
+    // 目标词库分片有写入
+    expect(putIds).toContain('slowly-record-wordbank-chunk-v2:bank-a:0')
+    // 其他词库数据完好
+    expect(memoryDb['slowly-record-wordbank-chunk-v2:bank-b:0'].words[0].text).toBe('banana')
+  })
+})
+
+// ==================== updateWordInBankChunk（分片 merge 写） ====================
+describe('updateWordInBankChunk', () => {
+  it('merge 写保留对方窗口刚写入的同分片其他单词进度', async () => {
+    const w1 = makeWord({ _id: 'w1', text: 'hello', level: 3 })
+    const w2 = makeWord({ _id: 'w2', text: 'world', level: 1 })
+    seedBanks([{ id: 'bank-a', words: [w1, w2] }])
+
+    // 模拟子窗口（专注浮窗）先写：读最新分片，更新 w1 的复习进度后带最新 _rev 写入
+    const childChunk = mockDbAdapter.get('slowly-record-wordbank-chunk-v2:bank-a:0')
+    const childResult = await mockDbAdapter.promises.put({
+      ...childChunk,
+      words: childChunk.words.map((w: any) => (w._id === 'w1' ? { ...w, level: 9, remember: true } : w)),
+      updatedAt: Date.now(),
+    })
+    expect(childResult.ok).toBe(true)
+
+    // 父窗口基于更旧的内存快照做复习更新（w2 升级），走 merge 写
+    const ok = await updateWordInBankChunk('bank-a', { ...w2, level: 5 })
+    expect(ok).toBe(true)
+
+    const finalChunk = memoryDb['slowly-record-wordbank-chunk-v2:bank-a:0']
+    const finalW1 = finalChunk.words.find((w: any) => w._id === 'w1')
+    const finalW2 = finalChunk.words.find((w: any) => w._id === 'w2')
+    // 对方窗口的 w1 进度保留，父窗口的 w2 更新生效，且无重复/丢词
+    expect(finalW1.level).toBe(9)
+    expect(finalW1.remember).toBe(true)
+    expect(finalW2.level).toBe(5)
+    expect(finalChunk.words.length).toBe(2)
+  })
+
+  it('put 冲突时重读重试，二次成功', async () => {
+    seedBanks([{ id: 'bank-a', words: [makeWord({ _id: 'w1', text: 'hello', level: 1 })] }])
+
+    // 首次 put 强制返回 conflict（模拟两窗口恰同刻写同一分片）
+    mockDbAdapter.promises.put.mockImplementationOnce(async (doc: any) => ({ ok: false, message: 'conflict' }))
+
+    const putCallsBefore = mockDbAdapter.promises.put.mock.calls.length
+    const ok = await updateWordInBankChunk('bank-a', makeWord({ _id: 'w1', text: 'hello', level: 4 }))
+    expect(ok).toBe(true)
+    // 首次 conflict + 重试成功，共 2 次 put
+    expect(mockDbAdapter.promises.put.mock.calls.length - putCallsBefore).toBe(2)
+
+    const finalChunk = memoryDb['slowly-record-wordbank-chunk-v2:bank-a:0']
+    expect(finalChunk.words.length).toBe(1)
+    expect(finalChunk.words[0].level).toBe(4)
+  })
+
+  it('连续冲突超过重试上限后返回 false', async () => {
+    seedBanks([{ id: 'bank-a', words: [makeWord({ _id: 'w1', text: 'hello' })] }])
+
+    const basePut = async (doc: any) => putImpl(doc)
+    mockDbAdapter.promises.put.mockImplementation(async (doc: any) => ({ ok: false, message: 'conflict' }))
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const ok = await updateWordInBankChunk('bank-a', makeWord({ _id: 'w1', text: 'hello', level: 4 }))
+    expect(ok).toBe(false)
+
+    mockDbAdapter.promises.put.mockImplementation(basePut)
+    errSpy.mockRestore()
+  })
+
+  it('新词落入未满的最后一个分片', async () => {
+    seedBanks([{ id: 'bank-a', words: [makeWord({ _id: 'w1', text: 'hello' }), makeWord({ _id: 'w2', text: 'world' })] }])
+
+    const ok = await updateWordInBankChunk('bank-a', makeWord({ _id: 'w3', text: 'new word' }))
+    expect(ok).toBe(true)
+
+    const chunk0 = memoryDb['slowly-record-wordbank-chunk-v2:bank-a:0']
+    expect(chunk0.words.length).toBe(3)
+    expect(chunk0.words.map((w: any) => w._id)).toContain('w3')
+    // 未新建分片
+    expect(memoryDb['slowly-record-wordbank-chunk-v2:bank-a:1']).toBeUndefined()
+  })
+
+  it('最后一个分片已满时为新词新建分片', async () => {
+    const many = Array.from({ length: 300 }, (_, i) => makeWord({ _id: `w${i}`, text: `word${i}` }))
+    seedBanks([{ id: 'bank-full', words: many }])
+
+    const ok = await updateWordInBankChunk('bank-full', makeWord({ _id: 'w300', text: 'extra' }))
+    expect(ok).toBe(true)
+
+    const chunk0 = memoryDb['slowly-record-wordbank-chunk-v2:bank-full:0']
+    const chunk1 = memoryDb['slowly-record-wordbank-chunk-v2:bank-full:1']
+    expect(chunk0.words.length).toBe(300)
+    expect(chunk1).toBeDefined()
+    expect(chunk1.chunkIndex).toBe(1)
+    expect(chunk1.words.length).toBe(1)
+    expect(chunk1.words[0]._id).toBe('w300')
+  })
+
+  it('无 _id 命中时按规范化文本定位并替换（不重复入库）', async () => {
+    seedBanks([{ id: 'bank-a', words: [makeWord({ _id: 'w1', text: 'hello', level: 1 })] }])
+
+    const ok = await updateWordInBankChunk('bank-a', makeWord({ _id: 'w-new', text: '  hello  ', level: 7 }))
+    expect(ok).toBe(true)
+
+    const chunk = memoryDb['slowly-record-wordbank-chunk-v2:bank-a:0']
+    expect(chunk.words.length).toBe(1)
+    expect(chunk.words[0]._id).toBe('w-new')
+    expect(chunk.words[0].level).toBe(7)
+    expect(chunk.words[0].text).toBe('hello')
+  })
+
+  it('词库无任何分片时创建第一个分片写入', async () => {
+    seedBanks([{ id: 'empty-bank', words: [] }])
+    // 移除空分片，模拟无任何分片文档的词库
+    delete memoryDb['slowly-record-wordbank-chunk-v2:empty-bank:0']
+
+    const ok = await updateWordInBankChunk('empty-bank', makeWord({ _id: 'w1', text: 'hello' }))
+    expect(ok).toBe(true)
+
+    const chunk0 = memoryDb['slowly-record-wordbank-chunk-v2:empty-bank:0']
+    expect(chunk0).toBeDefined()
+    expect(chunk0.words.length).toBe(1)
+    expect(chunk0.words[0]._id).toBe('w1')
   })
 })

@@ -100,11 +100,16 @@ export class DbAdapterIndexedDB implements DbAdapter {
   async preloadToCache(prefix?: string): Promise<void> {
     const db = await this.getDB()
     const store = getStore(db)
-    
+
     if (prefix) {
       // 使用游标遍历，过滤前缀
       const request = store.openCursor()
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
+        // 补 onerror：IndexedDB 事务出错时若不拒绝，应用启动的 await 会永久挂起（白屏且零日志）
+        request.onerror = () => {
+          console.error('[db-indexeddb] preloadToCache 游标遍历失败:', request.error)
+          reject(request.error)
+        }
         request.onsuccess = (event) => {
           const cursor = (event.target as IDBRequest).result
           if (cursor) {
@@ -120,7 +125,11 @@ export class DbAdapterIndexedDB implements DbAdapter {
       })
     } else {
       const request = store.getAll()
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
+        request.onerror = () => {
+          console.error('[db-indexeddb] preloadToCache 读取失败:', request.error)
+          reject(request.error)
+        }
         request.onsuccess = () => {
           const docs = request.result as DbDoc[]
           docs.forEach(doc => this.syncCache.set(doc._id, doc))

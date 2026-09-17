@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 import {getDbAdapter} from '@/adapters/db';
 import {normalizeItemText} from '@/utils/text-utils';
+import {recordTombstone} from '@/utils/sync-tombstone';
 
 // 词库数据结构
 export interface WordBank {
@@ -49,7 +50,13 @@ interface WordBankChunkDoc {
   type: 'wordbank-chunk';
   bankId: string;
   chunkIndex: number;   // 分片索引
-  totalChunks: number;  // 总分片数
+  /**
+   * 总分片数。
+   * 注意：此字段非权威——桌面读路径（getWordBankChunkDocs/updateWordInBankChunk）
+   * 一律按「顺序扫到首个缺失分片即停」定位分片边界，不读本字段。
+   * merge 写（updateWordInBankChunk）按定位时快照填写，可能小于实际分片数，勿据此截断读取。
+   */
+  totalChunks: number;
   words: Word[];        // 该分片的单词数据
   updatedAt: number;
 }
@@ -256,6 +263,90 @@ async function deleteExtraWordBankChunks(bankId: string, startIndex: number): Pr
 }
 
 /**
+ * 按分片 merge 写更新单词（复习热路径：一次只写一词，避免整库重写）
+ *
+ * 双窗口（主窗口 + 专注浮窗）并发写同一词库时，uTools 的 _rev 校验会拒绝陈旧写入；
+ * 冲突重试前先重新 db.get 取最新分片，保住对方窗口刚写入的同分片其他单词进度。
+ *
+ * @param bankId 词库ID
+ * @param word 要更新/追加的单词
+ * @returns 是否写入成功
+ */
+export async function updateWordInBankChunk(bankId: string, word: Word): Promise<boolean> {
+  const db = getDbAdapter();
+  const cleanedWord: Word = { ...cloneDeep(word), text: normalizeItemText(word.text) };
+  const MAX_RETRY = 3; // conflict 时重读重试的最大次数
+
+  for (let attempt = 0; ; attempt++) {
+    // 1. 定位单词所在分片（顺序扫，分片索引连续，遇到缺失即停，找到即停）
+    let targetChunkIndex = -1;
+    let lastChunkIndex = -1;
+    let lastChunkWordCount = 0;
+    for (let i = 0; ; i++) {
+      const doc = db.get(getWordBankChunkId(bankId, i)) as WordBankChunkDoc | null;
+      if (!doc || doc.type !== 'wordbank-chunk') break;
+      lastChunkIndex = i;
+      lastChunkWordCount = doc.words.length;
+      const hitById = !!cleanedWord._id && doc.words.some(w => w._id === cleanedWord._id);
+      const hitByText = doc.words.some(w => normalizeItemText(w.text) === cleanedWord.text);
+      if (hitById || hitByText) {
+        targetChunkIndex = i;
+        break;
+      }
+    }
+
+    // 全部分片都没有该词：落到最后一个分片；最后分片已满则新开一片
+    if (targetChunkIndex === -1) {
+      targetChunkIndex = (lastChunkIndex === -1 || lastChunkWordCount >= MAX_WORDS_PER_CHUNK)
+        ? lastChunkIndex + 1
+        : lastChunkIndex;
+    }
+
+    const chunkId = getWordBankChunkId(bankId, targetChunkIndex);
+
+    // 2. put 前重新取最新分片（拿到对方窗口刚写入的其他单词进度）
+    const latestDoc = db.get(chunkId) as WordBankChunkDoc | null;
+    const mergedWords: Word[] = (latestDoc && latestDoc.type === 'wordbank-chunk') ? cloneDeep(latestDoc.words) : [];
+
+    // 3. 在最新分片中替换该词（_id 优先、text 兜底，无匹配则 push）
+    const indexById = cleanedWord._id ? mergedWords.findIndex(w => w._id === cleanedWord._id) : -1;
+    if (indexById !== -1) {
+      mergedWords.splice(indexById, 1, cleanedWord);
+    } else {
+      const indexByText = mergedWords.findIndex(w => normalizeItemText(w.text) === cleanedWord.text);
+      if (indexByText !== -1) {
+        mergedWords.splice(indexByText, 1, cleanedWord);
+      } else {
+        mergedWords.push(cleanedWord);
+      }
+    }
+
+    const doc: WordBankChunkDoc = {
+      _id: chunkId,
+      type: 'wordbank-chunk',
+      bankId,
+      chunkIndex: targetChunkIndex,
+      totalChunks: Math.max(targetChunkIndex + 1, lastChunkIndex + 1),
+      words: mergedWords,
+      updatedAt: Date.now()
+    };
+    if (latestDoc?._rev) {
+      doc._rev = latestDoc._rev;
+    }
+
+    // 4. 带最新 _rev put；conflict 时重读重试
+    const result = await db.promises.put(doc);
+    if (result.ok) {
+      return true;
+    }
+    if (!result.message?.includes('conflict') || attempt >= MAX_RETRY) {
+      console.error(`[WordBankManager] 分片单词更新失败 (${bankId}, chunk ${targetChunkIndex}):`, result.message);
+      return false;
+    }
+  }
+}
+
+/**
  * 获取词库的所有单词（合并所有分片）
  */
 function getWordBankWords(bankId: string): Word[] {
@@ -412,14 +503,15 @@ async function migrateOldDataIfNeeded(): Promise<boolean> {
 }
 
 /**
- * 获取所有词库列表
+ * 获取所有词库的元数据列表（不包含单词，不读取任何分片）
+ * 只读 meta 文档，用于词库切换、存在性检查等不需要单词数据的场景
  */
-export async function getAllWordBanks(): Promise<WordBank[]> {
+export async function getAllWordBankMetas(): Promise<Omit<WordBank, 'words'>[]> {
   // 尝试迁移旧数据
   await migrateOldDataIfNeeded();
-  
+
   const metaDoc = getWordBankMetaDoc();
-  
+
   if (metaDoc?.banks && Array.isArray(metaDoc.banks) && metaDoc.banks.length > 0) {
     // 迁移：将"我的词库"或"基础词库"重命名为"默认词库"
     let needSave = false;
@@ -432,23 +524,32 @@ export async function getAllWordBanks(): Promise<WordBank[]> {
     if (needSave) {
       await saveWordBankMetaDoc(metaDoc.banks);
     }
-    
-    // 从各个分片加载单词并合并
-    return metaDoc.banks.map(bankMeta => {
-      const words = getWordBankWords(bankMeta.id);
-      return {
-        ...bankMeta,
-        words
-      } as WordBank;
-    });
+
+    return cloneDeep(metaDoc.banks);
   }
-  
+
   // 如果没有数据，创建默认词库
   const defaultBank = createDefaultWordBank();
   const { words: _, ...defaultBankMeta } = defaultBank;
   await saveWordBankMetaDoc([defaultBankMeta]);
   await saveWordBankDataDoc(defaultBank.id, defaultBank.words);
-  return [defaultBank];
+  return [defaultBankMeta];
+}
+
+/**
+ * 获取所有词库列表
+ */
+export async function getAllWordBanks(): Promise<WordBank[]> {
+  const metas = await getAllWordBankMetas();
+
+  // 从各个分片加载单词并合并
+  return metas.map(bankMeta => {
+    const words = getWordBankWords(bankMeta.id);
+    return {
+      ...bankMeta,
+      words
+    } as WordBank;
+  });
 }
 
 /**
@@ -458,8 +559,8 @@ export async function getCurrentWordBankId(): Promise<string> {
   try {
     const id = localStorage.getItem(CURRENT_WORDBANK_KEY);
     if (id) {
-      // 检查词库是否存在
-      const banks = await getAllWordBanks();
+      // 检查词库是否存在（只读 meta，不加载单词分片）
+      const banks = await getAllWordBankMetas();
       if (banks.find(b => b.id === id)) {
         return id;
       }
@@ -468,7 +569,7 @@ export async function getCurrentWordBankId(): Promise<string> {
     console.error('获取当前词库ID失败:', e);
   }
   // 返回默认词库ID
-  const banks = await getAllWordBanks();
+  const banks = await getAllWordBankMetas();
   const defaultBank = banks.find(b => b.isDefault);
   return defaultBank?.id || banks[0]?.id || '';
 }
@@ -514,14 +615,11 @@ export async function createWordBank(name: string, words: Word[] = [], language?
     language: language || 'en'
   };
 
-  const banks = await getAllWordBanks();
-  banks.push(bank);
+  const banks = await getAllWordBankMetas();
+  banks.push(toBankMeta(bank));
 
-  // 分离元数据和单词数据
-  const metaBanks = banks.map(toBankMeta);
-  
   // 保存元数据
-  await saveWordBankMetaDoc(metaBanks);
+  await saveWordBankMetaDoc(banks);
   // 保存单词数据（分片存储）
   await saveWordBankDataDoc(bank.id, bank.words);
   
@@ -530,28 +628,27 @@ export async function createWordBank(name: string, words: Word[] = [], language?
 
 /**
  * 保存词库（新增或更新）
+ * 只更新 meta 中该词库的元数据 + 重写该词库分片，不再全量加载所有词库
  */
 export async function saveWordBank(bank: WordBank): Promise<boolean> {
-  const banks = await getAllWordBanks();
-  const index = banks.findIndex(b => b.id === bank.id);
-  
+  // 只读 meta 定位/追加该词库（metaDoc 为空时内部走创建默认词库的兜底逻辑）
+  const banks = await getAllWordBankMetas();
+
   bank.updatedAt = Date.now();
-  
+
+  const index = banks.findIndex(b => b.id === bank.id);
   if (index >= 0) {
-    banks[index] = cloneDeep(bank);
+    banks[index] = toBankMeta(bank);
   } else {
-    banks.push(cloneDeep(bank));
+    banks.push(toBankMeta(bank));
   }
-  
-  // 分离元数据和单词数据
-  const metaBanks = banks.map(toBankMeta);
 
   // 保存元数据
-  const metaSuccess = await saveWordBankMetaDoc(metaBanks);
+  const metaSuccess = await saveWordBankMetaDoc(banks);
   if (!metaSuccess) {
     return false;
   }
-  
+
   // 保存单词数据到分片文档
   const dataSuccess = await saveWordBankDataDoc(bank.id, bank.words);
   return dataSuccess;
@@ -575,7 +672,14 @@ export async function deleteWordBank(id: string): Promise<boolean> {
     if (bank?.isDefault) {
       return false; // 默认词库不能删除
     }
-    
+
+    // 同步墓碑：词库 id + 库内每个单词的 _id 都埋点，
+    // 防止词库/单词在另一台设备上「删除复活」
+    recordTombstone(id);
+    for (const w of bank?.words || []) {
+      if (w._id) recordTombstone(w._id);
+    }
+
     const banks = await getAllWordBanks();
     const filtered = banks.filter(b => b.id !== id);
     
@@ -603,28 +707,54 @@ export async function deleteWordBank(id: string): Promise<boolean> {
 
 /**
  * 更新词库名称
+ * 轻量路径：只改 meta，不加载单词分片
  */
 export async function updateWordBankName(id: string, name: string): Promise<boolean> {
-  const bank = await getWordBank(id);
-  if (!bank) return false;
-  
-  bank.name = name.trim() || bank.name;
-  bank.updatedAt = Date.now();
-  
-  return await saveWordBank(bank);
+  await migrateOldDataIfNeeded();
+
+  const metaDoc = getWordBankMetaDoc();
+  if (!metaDoc?.banks || !Array.isArray(metaDoc.banks)) return false;
+
+  const metaBanks = cloneDeep(metaDoc.banks);
+  const bankMeta = metaBanks.find(b => b.id === id);
+  if (!bankMeta) return false;
+
+  bankMeta.name = name.trim() || bankMeta.name;
+  bankMeta.updatedAt = Date.now();
+
+  return await saveWordBankMetaDoc(metaBanks);
 }
 
 /**
  * 更新词库单词列表
+ * 轻量路径：直接重写该词库分片 + 更新 meta 的 updatedAt，不加载任何单词
  */
 export async function updateWordBankWords(id: string, words: Word[]): Promise<boolean> {
-  const bank = await getWordBank(id);
-  if (!bank) return false;
-  
-  bank.words = cloneDeep(words);
-  bank.updatedAt = Date.now();
-  
-  return await saveWordBank(bank);
+  await migrateOldDataIfNeeded();
+
+  const metaDoc = getWordBankMetaDoc();
+  if (!metaDoc?.banks || !metaDoc.banks.some(b => b.id === id)) return false;
+
+  // diff 前后单词列表，找出被移除的单词并埋墓碑（diff 式整数组传入时捕获词条删除）
+  const oldWords = getWordBankWords(id);
+  const newIds = new Set(words.map(w => w._id).filter(Boolean));
+  for (const oldWord of oldWords) {
+    if (oldWord._id && !newIds.has(oldWord._id)) {
+      recordTombstone(oldWord._id);
+    }
+  }
+
+  // 先写分片，成功后再更新 meta
+  const dataSuccess = await saveWordBankDataDoc(id, cloneDeep(words));
+  if (!dataSuccess) return false;
+
+  const metaBanks = cloneDeep(metaDoc.banks);
+  const bankMeta = metaBanks.find(b => b.id === id);
+  if (bankMeta) {
+    bankMeta.updatedAt = Date.now();
+  }
+
+  return await saveWordBankMetaDoc(metaBanks);
 }
 
 /**

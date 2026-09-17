@@ -19,6 +19,7 @@ vi.mock('@/utils/wordbank-manager.ts', () => ({
   setCurrentWordBankId: vi.fn(),
   getWordBank: vi.fn(),
   saveWordBank: vi.fn(),
+  updateWordInBankChunk: vi.fn(() => Promise.resolve(true)),
   createDefaultWordBank: vi.fn(() => ({
     id: 'default',
     name: '默认词库',
@@ -67,6 +68,7 @@ import {
   getWordBank,
   saveWordBank,
   getCurrentWordBankId,
+  updateWordInBankChunk,
   type WordBank
 } from '@/utils/wordbank-manager.ts'
 
@@ -207,7 +209,7 @@ describe('useWordsStore', () => {
       expect(saveWordBank).toHaveBeenCalledWith(mockBank)
     })
 
-    it('应该更新已存在的单词', async () => {
+    it('应该更新已存在的单词（已存在词走分片 merge 写，不再整库重写）', async () => {
       const store = useWordsStore()
       const existingWord = createWord()
       const mockBank = createWordBank({ words: [{ ...existingWord }] })
@@ -224,6 +226,9 @@ describe('useWordsStore', () => {
 
       expect(store.words[0].explains).toBe('你好啊')
       expect(store.words[0].level).toBe(2)
+      // 已存在词：走分片 merge 写，不整库重写
+      expect(updateWordInBankChunk).toHaveBeenCalledWith('default', expect.objectContaining({ _id: '1', level: 2 }))
+      expect(saveWordBank).not.toHaveBeenCalled()
     })
 
     it('currentWordBank 不匹配时应该重新加载词库', async () => {
@@ -922,6 +927,49 @@ describe('useWordsStore', () => {
       store.upReview()
 
       // 默认 level=1 对应 5 分钟间隔，过去100分钟，应该需要复习
+      expect(store.words[0].isReview).toBe(true)
+    })
+
+    it('满级已记完（remember=true）的词不应重返待复习', async () => {
+      const store = useWordsStore()
+      // level 12 + remember=true，learnDate 一年前（360 天间隔早已过），不应被重新设为待复习
+      const pastDate = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)
+      const mastered = createWord({
+        isReview: false,
+        remember: true,
+        level: 12,
+        learnDate: pastDate,
+        ctime: pastDate
+      })
+      store.words = [mastered]
+      await store.upReview()
+
+      expect(store.words[0].isReview).toBe(false)
+
+      // 反向：未记完的同期词会被设为待复习
+      const notMastered = createWord({
+        isReview: false,
+        remember: false,
+        level: 12,
+        learnDate: pastDate,
+        ctime: pastDate,
+        _id: 'word-not-mastered'
+      })
+      store.words = [notMastered]
+      await store.upReview()
+      expect(store.words[0].isReview).toBe(true)
+    })
+
+    it('remember=true 的词保持原有待复习状态不变（既不设置也不取消）', async () => {
+      const store = useWordsStore()
+      const learnDate = new Date(Date.now() - 2 * 60 * 1000)
+      const ctime = new Date(Date.now() - 200 * 60 * 1000)
+      // remember=true 且 isReview=true（遗留状态），时间未到也不取消，保持原状
+      const word = createWord({ isReview: true, remember: true, level: 12, learnDate, ctime })
+
+      store.words = [word]
+      store.upReview()
+
       expect(store.words[0].isReview).toBe(true)
     })
   })
