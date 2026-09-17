@@ -305,27 +305,18 @@ body {
   background: var(--utools-bg-secondary);
 }
 
-// 滚动条样式
+/* 滚动条统一隐藏（所有页面），滚动功能不受影响 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 0;
+  height: 0;
 }
-
-/* 默认隐藏滚动条，鼠标悬停所在区域时才显示（滚动功能不受影响） */
-::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-}
-*:hover > ::-webkit-scrollbar-thumb,
-*:hover::-webkit-scrollbar-thumb {
-  background: var(--utools-scrollbar-thumb);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--utools-text-tertiary);
-}
-
+::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-track {
-  background: var(--utools-scrollbar-track);
+  background: transparent;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 // 输入框和表单

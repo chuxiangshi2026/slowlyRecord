@@ -288,7 +288,7 @@ import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/pho
 import { fetchWordBank, WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
 import { DEFAULT_INTERVALS } from '@/constants';
-import { computeLevelDown } from '@/utils/srs';
+import { computeLevelDown, isDue } from '@/utils/srs';
 import DetailDrawer from '@/views/Word/components/DetailDrawer.vue';
 import WordFilter from '@/views/Word/components/WordFilter.vue';
 import type { FilterState } from '@/views/Word/components/WordFilter.vue';
@@ -1141,24 +1141,27 @@ async function checkAnswer() {
   const isCorrect = userAnswer === normalizeForCompare(word.text, profile);
 
   if (isCorrect) {
-    // 正确：upReview 已保证只有到了复习时间的词才进入听写，
-    // 因此答对就直接升级，按记忆牢固度提升 1~3 级，封顶 12 级
-    const firmness = wordsStore.memoryFirmness;
-    let levelIncrement = 1;
-    if (firmness === '较强') {
-      levelIncrement = 2;
-    } else if (firmness === '极强') {
-      levelIncrement = 3;
-    }
+    // 答对只在到期时才升级 SRS 字段：模式 0（听写）只含到期词，直接升级；
+    // 模式 1/3（练习）可能包含未到期词，练习答对不应刷级
     const level = Number(word.level) || 1;
-    word.level = Math.min(12, level + levelIncrement) as Word['level'];
-    if (word.level >= 12) word.remember = true;
-    word.isReview = false;
-    word.learnDate = new Date();
+    const due = isDue(word.learnDate, level, Date.now());
+    if (due) {
+      const firmness = wordsStore.memoryFirmness;
+      let levelIncrement = 1;
+      if (firmness === '较强') {
+        levelIncrement = 2;
+      } else if (firmness === '极强') {
+        levelIncrement = 3;
+      }
+      word.level = Math.min(12, level + levelIncrement) as Word['level'];
+      if (word.level >= 12) word.remember = true;
+      word.isReview = false;
+      word.learnDate = new Date();
+      await wordsStore.addAndUpdateWord(word);
+      await wordsStore.upReview();
+    }
 
-    await wordsStore.addAndUpdateWord(word);
-    await wordsStore.upReview();
-
+    // 未到期（练习刷词）不动 SRS 字段，仅继续流程
     // 清除该单词的错误记录
     delete errorCountMap.value[getWordErrorKey(word)];
     refreshWordList();

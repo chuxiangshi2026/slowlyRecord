@@ -65,6 +65,7 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             console.log('待添加单词释义都已存在');
 
             findWord.isReview=true
+            findWord.remember=false
             findWord.explainedHidden=false
             try {
                 await wordsStore.addAndUpdateWord(findWord)
@@ -127,7 +128,6 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
         log.i('返回翻译api结果', res)
 
         if (res.success) {
-            let oldWords = wordsStore.words
             // 如果翻译API没有返回音标，尝试从本地词典获取
             let phonetic = res.phonetic || '';
             // 防止音标字段包含URL
@@ -144,7 +144,9 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             let newWords = getInitWord(wordText, res.explains || wordText, res.pronunciation || '', '', phonetic)
             console.log('翻译后的初始化结果', newWords)
 
-            const data = oldWords ? [newWords, ...oldWords] : [newWords]
+            // 单新词添加：只保存新词本身，不把整个内存词表传给合并逻辑，
+            // 避免内存残留但已从词库删除的词被 push 回词库（复活已删词）
+            const data = [newWords]
 
             // console.log(data, '更新单词成功');
             await wordsStore.addAndUpdateWords(data)
@@ -255,14 +257,12 @@ const batchTranslateAndAddWords = async (
         }
 
         if (existingWord) {
+            // 已有词只补数据（释义/发音/音标），完全不动 level/remember/isReview 等 SRS 进度
             wordsToSave.push({
                 ...existingWord,
                 explains: item.result.explains || item.wordText,
-                isReview: true,
                 pronunciation: item.result.pronunciation,
                 phonetic,
-                remember: false,
-                level: 1,
             });
         } else {
             wordsToSave.push(getInitWord(
