@@ -39,6 +39,7 @@ import {
   reorderPrompts
 } from "@/utils/number-memory-entries-db";
 import {DEFAULT_LEVEL, getEntryLevel, isDue, isRemembered, markCorrect, markWrong} from "@/utils/number-memory-srs";
+import {recordTombstone} from "@/utils/sync-tombstone";
 import {useWordsStore} from "@/stores/words";
 
 export const useNumberMemoryStore = defineStore("numberMemory", () => {
@@ -126,6 +127,8 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
   async function deleteAssociation(number: string) {
     const result = await removeAssociation(number);
     if (result.ok) {
+      // 同步墓碑：以 number 为键，防止被删关联在另一台设备「删除复活」
+      recordTombstone(number);
       loadAssociations();
     }
     return result;
@@ -304,6 +307,8 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
   async function deleteEntryItem(id: string) {
     const result = await deleteEntry(id);
     if (result.ok) {
+      // 同步墓碑：防止被删条目在另一台设备「删除复活」
+      recordTombstone(id);
       entries.value = entries.value.filter(e => e._id !== id);
       if (currentEntry.value?._id === id) {
         currentEntry.value = null;
@@ -414,6 +419,8 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
   async function deleteNoteItem(id: string) {
     const result = await deleteNote(id);
     if (result.ok) {
+      // 同步墓碑：防止被删笔记在另一台设备「删除复活」
+      recordTombstone(id);
       currentNotes.value = currentNotes.value.filter(n => n._id !== id);
     }
     return result;
@@ -463,6 +470,8 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
   async function deletePromptItem(id: string) {
     const result = await deletePrompt(id);
     if (result.ok) {
+      // 同步墓碑：防止被删提示词在另一台设备「删除复活」
+      recordTombstone(id);
       currentPrompts.value = currentPrompts.value.filter(p => p._id !== id);
     }
     return result;

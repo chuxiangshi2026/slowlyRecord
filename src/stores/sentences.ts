@@ -7,6 +7,7 @@ import type { Sentence } from '@/types/sentences';
 import { loadSentencesDoc, saveSentences } from '@/utils/sentence-db';
 import { detectTextLanguage } from '@/utils/text-memory-util';
 import { normalizeItemText } from '@/utils/text-utils';
+import { recordTombstone } from '@/utils/sync-tombstone';
 
 // 生成唯一ID
 function generateId(): string {
@@ -143,6 +144,8 @@ export const useSentencesStore = defineStore('sentences', {
           this.sentences = backup;
           return { success: false, message: res.error || '保存失败' };
         }
+        // 同步墓碑：防止被删句子在另一台设备「删除复活」
+        recordTombstone(id);
         return { success: true, message: '已删除' };
       });
     },

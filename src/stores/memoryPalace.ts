@@ -24,6 +24,7 @@ import {
 } from '@/utils/memory-palace-db';
 import {assignChunksToLoci, buildPegId, chunkArticleContent, knowledgePackToLoci} from '@/utils/memory-palace-util';
 import {markForgotten, markRemembered} from '@/utils/memory-palace-srs';
+import {recordTombstone} from '@/utils/sync-tombstone';
 import {useWordsStore} from '@/stores/words';
 
 // 生成唯一 ID
@@ -123,6 +124,8 @@ export const useMemoryPalaceStore = defineStore('memoryPalace', () => {
     await ensureDb();
     const result = await removePalace(palaceId);
     if (result.ok) {
+      // 同步墓碑：防止被删宫殿在另一台设备「删除复活」
+      recordTombstone(palaceId);
       palaces.value = palaces.value.filter(p => p._id !== palaceId);
       if (currentPalaceId.value === palaceId) {
         currentPalaceId.value = '';

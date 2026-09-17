@@ -362,4 +362,30 @@ describe('memory-palace-db 同步（memoryPalace scope）', () => {
     expect(getPegsByPalace('p1')[0].level).toBe(3);
     expect(getPegsByPalace('p2')).toHaveLength(1);
   });
+
+  it('restoreMemoryPalaceSync 按宫殿墓碑剔除已删宫殿（宫殿不复活、pegs 也不回流）', async () => {
+    const {restoreMemoryPalaceSync, getPalaceById, getPegsByPalace} = await import('./memory-palace-db');
+    const now = Date.now();
+
+    const count = await restoreMemoryPalaceSync(
+      {
+        palaces: [
+          {...makePalace('p1'), name: '正常宫殿', utime: now - 1000},
+          {...makePalace('p2'), name: '已删宫殿', utime: now - 1000},
+        ],
+        pegs: {
+          p1: [makePeg('p1', 1)],
+          p2: [makePeg('p2', 1)],
+        },
+      },
+      // 本机删除 p2 的时间晚于远端 utime → 剔除
+      {p2: now},
+    );
+
+    expect(count).toBe(1);
+    expect(getPalaceById('p1')?.name).toBe('正常宫殿');
+    // 被删宫殿不复活，其桩挂载也不回流
+    expect(getPalaceById('p2')).toBeNull();
+    expect(getPegsByPalace('p2')).toHaveLength(0);
+  });
 });

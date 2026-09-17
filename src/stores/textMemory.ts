@@ -12,6 +12,7 @@ import type {
 import cloneDeep from 'lodash.clonedeep';
 import { parseTimelineLocation } from '@/utils/timeline-service';
 import {getDbAdapter} from '@/adapters/db';
+import {recordTombstone} from '@/utils/sync-tombstone';
 
 // 存储键名
 const TEXTMEMORY_DOC_ID = 'slowlyrecord-textmemory-data';
@@ -332,6 +333,15 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const article = this.articles.find(a => a._id === articleId);
         if (!article) return { success: false, error: '文章不存在' };
 
+        // 同步墓碑：文章及级联删除的笔记/提示词一并埋点，防止「删除复活」
+        recordTombstone(articleId);
+        for (const n of doc.notes.filter((n: TextNote) => n.articleId === articleId)) {
+          if (n._id) recordTombstone(n._id);
+        }
+        for (const p of doc.prompts.filter((p: TextPrompt) => p.articleId === articleId)) {
+          if (p._id) recordTombstone(p._id);
+        }
+
         // 删除文章
         const articles = doc.articles.filter((a: TextArticle) => a._id !== articleId);
         
@@ -489,6 +499,9 @@ export const useTextMemoryStore = defineStore('textMemory', {
         const note = this.currentNotes.find(n => n._id === noteId);
         if (!note) return { success: false, error: '笔记不存在' };
 
+        // 同步墓碑：防止被删笔记在另一台设备「删除复活」
+        recordTombstone(noteId);
+
         const notes = doc.notes.filter((n: TextNote) => n._id !== noteId);
         const { success, error: saveError } = await this.saveTextMemoryDoc({ notes });
         
@@ -601,6 +614,9 @@ export const useTextMemoryStore = defineStore('textMemory', {
 
         const prompt = this.currentPrompts.find(p => p._id === promptId);
         if (!prompt) return { success: false, error: '提示词不存在' };
+
+        // 同步墓碑：防止被删提示词在另一台设备「删除复活」
+        recordTombstone(promptId);
 
         const prompts = doc.prompts.filter((p: TextPrompt) => p._id !== promptId);
         const { success, error: saveError } = await this.saveTextMemoryDoc({ prompts });

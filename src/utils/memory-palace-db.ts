@@ -15,6 +15,7 @@ import {getDbAdapter, type DbReturn} from '@/adapters/db';
 import {log} from '@/utils/logger';
 import type {Palace, PalaceImagesDoc, PalaceListDoc, PegItem, PegListDoc} from '@/types/memory-palace';
 import type {SyncMemoryPalace} from '@/types/sync';
+import {filterByTombstones} from '@/utils/sync-tombstone';
 
 // 宫殿列表文档键
 const PALACES_KEY = DB_KEY_MEMORY_PALACE + 'palaces';
@@ -504,11 +505,14 @@ export function collectMemoryPalaceSync(): SyncMemoryPalace | null {
 
 /**
  * 还原记忆宫殿同步数据：按 id/utime 合并宫殿、按 learnDate 合并桩挂载后写回 DB
+ * @param tombstones 墓碑表：本机已删除的宫殿（删除不早于远端 utime）连同其桩挂载一并剔除，不让复活
  * @returns 参与合并的宫殿数量
  */
-export async function restoreMemoryPalaceSync(data: SyncMemoryPalace): Promise<number> {
+export async function restoreMemoryPalaceSync(data: SyncMemoryPalace, tombstones: Record<string, number> = {}): Promise<number> {
   const localPalaces = getAllPalaces();
-  const mergedPalaces = mergePalaceList(localPalaces, data.palaces || []);
+  // 宫殿级墓碑过滤：已删宫殿不合并（其 pegs 随宫殿一并跳过，不会单独回流）
+  const remotePalaces = filterByTombstones(data.palaces || [], 'remote', tombstones);
+  const mergedPalaces = mergePalaceList(localPalaces, remotePalaces);
 
   for (const palace of mergedPalaces) {
     const result = await savePalace(palace);
