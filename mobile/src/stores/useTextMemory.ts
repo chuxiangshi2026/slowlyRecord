@@ -12,6 +12,7 @@ import {
   scheduleOnRemembered,
   scheduleOnForgotten,
 } from '../utils/practice-srs'
+import { recordTombstones } from './useUtils/sync-tombstone'
 
 /**
  * 文本记忆 store（移动端）
@@ -234,10 +235,19 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
 
   function deleteArticle(id: string) {
     const before = articles.value.length
+    // 同步墓碑：文章及其级联删除的笔记/提示词一并埋点，防止另一端推送时「删除复活」
+    const cascadeIds = [
+      id,
+      ...notes.value.filter((n) => n.articleId === id).map((n) => n._id),
+      ...prompts.value.filter((p) => p.articleId === id).map((p) => p._id),
+    ]
     articles.value = articles.value.filter((a) => a._id !== id)
     notes.value = notes.value.filter((n) => n.articleId !== id)
     prompts.value = prompts.value.filter((p) => p.articleId !== id)
-    if (articles.value.length !== before) persist()
+    if (articles.value.length !== before) {
+      recordTombstones(cascadeIds)
+      persist()
+    }
     return articles.value.length !== before
   }
 
@@ -281,7 +291,11 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
   function deleteNote(noteId: string) {
     const before = notes.value.length
     notes.value = notes.value.filter((n) => n._id !== noteId)
-    if (notes.value.length !== before) persist()
+    if (notes.value.length !== before) {
+      // 同步墓碑：防止被删笔记在另一台设备「删除复活」
+      recordTombstones([noteId])
+      persist()
+    }
   }
 
   function addPrompt(articleId: string, title: string, content: string) {
@@ -303,7 +317,11 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
   function deletePrompt(id: string) {
     const before = prompts.value.length
     prompts.value = prompts.value.filter((p) => p._id !== id)
-    if (prompts.value.length !== before) persist()
+    if (prompts.value.length !== before) {
+      // 同步墓碑：防止被删提示词在另一台设备「删除复活」
+      recordTombstones([id])
+      persist()
+    }
   }
 
   // ===== 同步辅助 =====

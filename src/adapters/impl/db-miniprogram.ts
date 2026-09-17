@@ -176,19 +176,23 @@ export class DbAdapterMiniprogram implements DbAdapter {
    */
   private saveDoc(doc: DbDoc): void {
     const size = estimateSize(doc)
-    
+
+    // 清理旧分片残留：文档由大变小（如词库大量删除）时若不清理，
+    // get 会发现旧 __meta 重组分片返回过期数据，而 allDocs 返回新文档——读写视图不一致
+    this.cleanupExistingChunks(doc._id)
+
     if (size > MAX_CHUNK_SIZE) {
       // 需要分片
       const json = JSON.stringify(doc)
       const chunkSize = Math.ceil(json.length / Math.ceil(size / MAX_CHUNK_SIZE))
       const totalChunks = Math.ceil(json.length / chunkSize)
-      
+
       // 保存分片
       for (let i = 0; i < totalChunks; i++) {
         const chunk = json.slice(i * chunkSize, (i + 1) * chunkSize)
         this.storage.setStorageSync(`${doc._id}::__chunk__${i}`, chunk)
       }
-      
+
       // 保存元数据
       this.storage.setStorageSync(`${doc._id}::__meta`, {
         chunked: true,
@@ -199,5 +203,16 @@ export class DbAdapterMiniprogram implements DbAdapter {
       // 普通存储
       this.storage.setStorageSync(doc._id, doc)
     }
+  }
+
+  /** 删除该文档 id 下的旧分片与 meta（若有），无分片时无副作用 */
+  private cleanupExistingChunks(id: string): void {
+    const metaKey = `${id}::__meta`
+    const meta = this.storage.getStorageSync(metaKey)
+    if (!meta || !meta.chunked) return
+    for (let i = 0; i < (meta.totalChunks || 0); i++) {
+      this.storage.removeStorageSync(`${id}::__chunk__${i}`)
+    }
+    this.storage.removeStorageSync(metaKey)
   }
 }

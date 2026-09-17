@@ -8,8 +8,26 @@ import { isPracticeDue } from '../../../utils/practice-srs'
 /** 单行超过该长度时按句读再切分，避免一块过长 */
 const MAX_BLOCK_LENGTH = 40
 
-/** 句读切分点（中文标点 + 英文句点/分号/问号/感叹号） */
-const SENTENCE_END_RE = /(?<=[。！？；，、.?!;])/
+/** 句读切分点字符集（中文标点 + 英文句点/分号/问号/感叹号） */
+const SENTENCE_END_CHARS = '。！？；，、.?!;'
+
+/**
+ * 按句读切分单行（不用 lookbehind，兼容 iOS<16.4 的 JavaScriptCore）：
+ * 遇标点即切出片段，标点保留在片段尾部，余下非空片段也收集
+ */
+function splitSentences(line: string): string[] {
+  const pieces: string[] = []
+  let buffer = ''
+  for (const ch of line) {
+    buffer += ch
+    if (SENTENCE_END_CHARS.includes(ch)) {
+      pieces.push(buffer)
+      buffer = ''
+    }
+  }
+  if (buffer) pieces.push(buffer)
+  return pieces
+}
 
 /**
  * 将正文切分为遮挡块：
@@ -31,7 +49,7 @@ export function splitContentToBlocks(content: string): string[] {
       push(line)
       continue
     }
-    const sentences = line.split(SENTENCE_END_RE).map((s) => s.trim()).filter(Boolean)
+    const sentences = splitSentences(line).map((s) => s.trim()).filter(Boolean)
     let buffer = ''
     for (const sentence of sentences) {
       if (buffer && buffer.length + sentence.length > MAX_BLOCK_LENGTH) {

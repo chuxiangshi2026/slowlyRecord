@@ -44,7 +44,7 @@ import { useMemoryPalace } from '@/stores/useMemoryPalace'
 const store = useMemoryPalace()
 const palaceId = ref('')
 const name = ref('')
-const loci = ref<{ name: string; description?: string; imageUrl?: string }[]>([])
+const loci = ref<{ name: string; description?: string; imageUrl?: string; origOrder?: number }[]>([])
 
 onMounted(() => {
   const pages = getCurrentPages()
@@ -55,7 +55,7 @@ onMounted(() => {
     const palace = store.getPalace(palaceId.value)
     if (palace) {
       name.value = palace.name
-      loci.value = palace.loci.map(l => ({ name: l.name, description: l.description, imageUrl: l.imageUrl }))
+      loci.value = palace.loci.map(l => ({ name: l.name, description: l.description, imageUrl: l.imageUrl, origOrder: l.order }))
     }
   }
 })
@@ -88,12 +88,9 @@ function save() {
     return
   }
   if (palaceId.value) {
-    // 编辑：改名称 + 全量替换桩（简单可靠，进度挂在 pegs 上按 locusOrder 保留）
+    // 编辑：改名称 + 全量替换桩（replaceLoci 按 origOrder 重映射挂载，保留 SRS 进度）
     store.updatePalace(palaceId.value, trimmed)
-    // 重建桩：先删后加
-    const existing = store.getPalace(palaceId.value)?.loci.length || 0
-    for (let i = existing; i >= 1; i--) store.removeLocus(palaceId.value, i)
-    validLoci.forEach(l => store.addLocus(palaceId.value, l))
+    store.replaceLoci(palaceId.value, validLoci)
   } else {
     const palace = store.createPalace(trimmed)
     validLoci.forEach(l => store.addLocus(palace._id, l))

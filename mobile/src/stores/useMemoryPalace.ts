@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { MobileMemoryPalace, MobilePalace, MobilePegItem } from './useUtils/types'
+import type { MobileMemoryPalace, MobilePalace, MobilePalaceLocus, MobilePegItem } from './useUtils/types'
+import { recordTombstone } from './useUtils/sync-tombstone'
 import { getDbAdapter } from '@/adapters/index'
 import {
   isPegDue,
@@ -166,6 +167,8 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     persistPalaces()
     const db = getDbAdapter()
     db.remove(pegsDocId(palaceId))
+    // 墓碑：另一台手机拉旧备份时不让已删宫殿复活
+    recordTombstone(palaceId)
   }
 
   /** 添加桩位 */
@@ -189,6 +192,38 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
         : p
     )
     persistPalaces()
+  }
+
+  /**
+   * 全量替换桩位（编辑宫殿用）：挂载按 origOrder 携带身份重映射，
+   * 不带 origOrder 的新增桩不挂载，被删除的桩挂载丢弃
+   */
+  function replaceLoci(palaceId: string, loci: Array<{ name: string; description?: string; imageUrl?: string; origOrder?: number }>) {
+    load()
+    const palace = getPalace(palaceId)
+    if (!palace) return
+    // 新顺序按数组下标重排 order，origOrder 记录原 order 以便挂载跟随
+    const nextLoci = loci.map((l, i) => ({
+      order: i + 1,
+      name: l.name,
+      description: l.description,
+      imageUrl: l.imageUrl,
+    }))
+    palaces.value = palaces.value.map(p =>
+      p._id === palaceId ? { ...p, loci: nextLoci, utime: Date.now() } : p
+    )
+    persistPalaces()
+    // 旧 order → 新 order 映射，被删桩（不在映射中）的挂载丢弃
+    const orderMap = new Map<number, number>()
+    loci.forEach((l, i) => {
+      if (l.origOrder != null) orderMap.set(l.origOrder, i + 1)
+    })
+    const items = (pegsMap.value[palaceId] || [])
+      .filter(p => orderMap.has(p.locusOrder))
+      .map(p => ({ ...p, locusOrder: orderMap.get(p.locusOrder)! }))
+      .sort((a, b) => a.locusOrder - b.locusOrder)
+    pegsMap.value = { ...pegsMap.value, [palaceId]: items }
+    persistPegs(palaceId)
   }
 
   /** 删除桩位（重排剩余桩的 order） */
@@ -347,6 +382,7 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     updateLocus,
     removeLocus,
     moveLocus,
+    replaceLoci,
     setPegContent,
     removePegContent,
   }

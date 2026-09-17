@@ -614,4 +614,103 @@ describe('useMobileWords Store', () => {
       }
     })
   })
+
+  describe('删除埋点（同步墓碑）', () => {
+    it('deleteWord 应记录该词 id 的墓碑（fire-and-forget 异步落库）', async () => {
+      const store = useMobileWords()
+
+      const word = await store.addWord({
+        word: 'tombstone-me', meaning: '埋点', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now(),
+      })
+      await store.deleteWord(word.id)
+      await new Promise(resolve => setTimeout(resolve, 20))
+
+      const doc = mockDb.get('slowly-record-sync-tombstones') as any
+      expect(doc?.tombstones?.[word.id]).toBeTypeOf('number')
+    })
+
+    it('deleteBank 应记录词库 id 与库内全部词 id 的墓碑', async () => {
+      const store = useMobileWords()
+      await store.loadWords()
+
+      const bank = store.createBank('墓碑库')
+      store.switchBank(bank.id)
+      const w1 = await store.addWord({ word: 'bk-a', meaning: '甲', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
+      const w2 = await store.addWord({ word: 'bk-b', meaning: '乙', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
+      store.switchBank('default')
+      await store.deleteBank(bank.id)
+      await new Promise(resolve => setTimeout(resolve, 20))
+
+      const tombstones = (mockDb.get('slowly-record-sync-tombstones') as any)?.tombstones
+      expect(tombstones?.[bank.id]).toBeTypeOf('number')
+      expect(tombstones?.[w1.id]).toBeTypeOf('number')
+      expect(tombstones?.[w2.id]).toBeTypeOf('number')
+    })
+  })
+
+  describe('持久化失败退避与 toast 限频', () => {
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('连续失败时防抖间隔按失败次数退避、toast 每 5 分钟限 1 次、成功后复位', async () => {
+      const store = useMobileWords()
+      const uniMock = (global as any).uni
+
+      // 复位模块级失败计数：前面用例在 mock 适配器 conflict 语义下可能残留失败计数
+      // （脏集为空的 flush 不会触发 persist，计数不会被复位），先标脏再走一次成功落盘
+      await store.addWord({ word: 'count-reset', meaning: '复位', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
+      await store.flushDirtyBanks()
+      uniMock.showToast.mockClear()
+      mockDb.promises.asyncPut.mockClear()
+      const okImpl = mockDb.promises.asyncPut.getMockImplementation()!
+
+      // 假时钟默认从 epoch 0 起走；且前面用例可能已触发过失败 toast（_lastToastAt 为真实时间）。
+      // 把锚点设到真实时间 +10 分钟：首个失败的 toast 必然触发，其后 5 分钟限频按相对时间推进
+      vi.useFakeTimers()
+      vi.setSystemTime(Date.now() + 10 * 60 * 1000)
+
+      // 持久化持续失败（模拟存储写满）
+      mockDb.promises.asyncPut.mockImplementation(async () => ({ ok: false, error: true, message: 'quota exceeded' }))
+
+      await store.addWord({ word: 'fail-1', meaning: '失败1', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
+      // 基准防抖 15s（失败计数 0 → 倍数钳到 1）→ flush#1 失败，弹第 1 次 toast
+      await vi.advanceTimersByTimeAsync(20000)
+      expect(mockDb.promises.asyncPut).toHaveBeenCalledTimes(1)
+      expect(uniMock.showToast).toHaveBeenCalledTimes(1)
+
+      // 失败 1 次：退避 15s×1 → flush#2 失败；toast 5 分钟内限频不弹
+      await vi.advanceTimersByTimeAsync(20000)
+      expect(mockDb.promises.asyncPut).toHaveBeenCalledTimes(2)
+      expect(uniMock.showToast).toHaveBeenCalledTimes(1)
+
+      // 失败 2 次：退避拉长到 30s —— 再走 15s 不 flush，凑满 30s 后 flush#3
+      await vi.advanceTimersByTimeAsync(15000)
+      expect(mockDb.promises.asyncPut).toHaveBeenCalledTimes(2)
+      await vi.advanceTimersByTimeAsync(15000)
+      expect(mockDb.promises.asyncPut).toHaveBeenCalledTimes(3)
+      expect(uniMock.showToast).toHaveBeenCalledTimes(1)
+
+      // 持续失败（退避 45s/60s/75s/90s…）：距第 1 次 toast 超过 5 分钟后才弹第 2 次
+      await vi.advanceTimersByTimeAsync(50000)  // flush#4（c=4 → 60s）
+      expect(uniMock.showToast).toHaveBeenCalledTimes(1)
+      await vi.advanceTimersByTimeAsync(65000)  // flush#5（c=5 → 75s）
+      expect(uniMock.showToast).toHaveBeenCalledTimes(1)
+      await vi.advanceTimersByTimeAsync(80000)  // flush#6（c=6 → 90s）
+      expect(uniMock.showToast).toHaveBeenCalledTimes(1)
+      await vi.advanceTimersByTimeAsync(95000)  // flush#7：距第 1 次 toast 已 > 5 分钟
+      expect(uniMock.showToast).toHaveBeenCalledTimes(2)
+
+      // 恢复可写：手动 flush 成功 → 失败计数复位，防抖间隔回到基准 15s
+      mockDb.promises.asyncPut.mockImplementation(okImpl)
+      await store.flushDirtyBanks()
+      expect(uniMock.showToast).toHaveBeenCalledTimes(2)
+
+      await store.addWord({ word: 'fail-2', meaning: '失败2', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
+      await vi.advanceTimersByTimeAsync(20000)
+      // 若未复位，此时间隔会是 15s×7=105s，20s 内不会 flush
+      expect(mockDb.promises.asyncPut).toHaveBeenCalled()
+      expect(uniMock.showToast).toHaveBeenCalledTimes(2)
+    })
+  })
 })

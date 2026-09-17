@@ -176,13 +176,30 @@ describe('DbAdapterMiniprogram', () => {
     it('should remove chunked documents properly', async () => {
       const largeData = 'x'.repeat(500000)
       await adapter.promises.put({ _id: 'large-1', data: largeData })
-      
+
       const result = adapter.remove('large-1')
       expect(result.ok).toBe(true)
-      
+
       // 验证所有分片和 meta 都被清理
       expect(adapter.get('large-1')).toBeNull()
       expect(mockStorage.store.has('large-1::__meta')).toBe(false)
+    })
+
+    it('文档由大变小时应清理旧分片，get 返回新数据（P0 回归：分片残留导致读到过期数据）', async () => {
+      // 先写大文档（产生分片 + meta）
+      await adapter.promises.put({ _id: 'bank-1', data: 'x'.repeat(500000) })
+      expect(mockStorage.store.get('bank-1::__meta')).toBeDefined()
+
+      // 再写同一 id 的小文档
+      await adapter.promises.put({ _id: 'bank-1', data: 'small' })
+
+      // get 必须返回新数据（旧实现会重组旧分片返回过期大文档）
+      const result = adapter.get('bank-1')
+      expect(result).not.toBeNull()
+      expect(result?.data).toBe('small')
+      // 旧分片与 meta 已清理
+      expect(mockStorage.store.has('bank-1::__meta')).toBe(false)
+      expect(mockStorage.store.has('bank-1::__chunk__0')).toBe(false)
     })
   })
 })

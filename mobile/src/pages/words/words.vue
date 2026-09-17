@@ -150,7 +150,7 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, watch } from 'vue'
-import { onReachBottom } from '@dcloudio/uni-app'
+import { onReachBottom, onHide } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 
 const wordsStore = useMobileWords()
@@ -371,6 +371,11 @@ const filteredWords = computed(() => {
 
 onMounted(() => {
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享
+})
+
+// 页面隐藏时立即落盘脏词库：App 级 onHide 在微信强杀时不保证执行，页面级兜底
+onHide(() => {
+  wordsStore.flushDirtyBanks()
 })
 
 const goToReview = () => {

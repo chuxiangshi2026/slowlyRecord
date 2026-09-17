@@ -238,6 +238,8 @@ export interface MobileSyncData {
   memoryPalace?: MobileMemoryPalace
   /** 句子库（可选：旧版客户端忽略此字段） */
   sentences?: MobileSentences
+  /** 同步墓碑（可选：删除埋点透传，拉取端合并后过滤「删除复活」的条目） */
+  tombstones?: Record<string, number>
 }
 
 /** 知识库同步数据：已导入清单 + 每包条目进度（与桌面端 SyncKnowledgeMemory 一致） */

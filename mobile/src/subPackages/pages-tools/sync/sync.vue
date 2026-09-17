@@ -90,6 +90,7 @@ import { useSentences } from '@/stores/useSentences'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable, type PushPayload } from '../utils/sync'
 import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, testWebDavConnection, pushToWebDav, pullFromWebDav } from '../utils/sync-webdav'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
+import { getTombstones } from '@/stores/useUtils/sync-tombstone'
 import { drawQrCode } from '../utils/qrcode'
 
 const wordsStore = useMobileWords()
@@ -157,6 +158,8 @@ const buildPushPayload = async (): Promise<PushPayload> => {
     signin: signin || undefined,
     memoryPalace: memoryPalace || undefined,
     sentences: sentences || undefined,
+    // 同步墓碑：本机删除埋点随 payload 透传，对端拉取时过滤「删除复活」的条目
+    tombstones: getTombstones(),
   }
 }
 

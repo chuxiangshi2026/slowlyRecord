@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { getDbAdapter, type DbDoc } from '@/adapters/index'
 import { WORDBANK_LIST } from './useUtils/wordbank'
 import { DEFAULT_INTERVALS } from './useUtils/constants'
+import { recordTombstone, recordTombstones } from './useUtils/sync-tombstone'
 import type { MobileItemType } from './useUtils/types'
 import { normalizeWordText, getWordKey } from '../utils/text-utils'
 
@@ -76,6 +77,11 @@ const DEFAULT_BANK_ID = 'default'
 // 拉长到 15s 降低大词库的重复序列化开销；App.vue onHide 已有 flushDirtyBanks 兜底
 const PERSIST_DEBOUNCE_MS = 15000
 
+// 持久化失败退避：连续失败时按失败次数拉长防抖间隔（15s → 最长 5 分钟），成功即复位
+let _persistFailCount = 0
+// 失败 toast 限频：每 5 分钟最多弹 1 次，避免存储持续写满时无限弹窗
+let _lastToastAt = 0
+
 export const useMobileWords = defineStore('mobileWords', () => {
   const allWords = shallowRef<MobileWord[]>([])
   const isLoading = ref(false)
@@ -97,10 +103,12 @@ export const useMobileWords = defineStore('mobileWords', () => {
   function markBankDirty(bankId: string) {
     _dirtyBanks.add(bankId)
     if (!_persistTimer) {
+      // 退避：失败越多重试间隔越长（15s × 失败次数，上限 20 次 = 5 分钟）。
+      // 倍数下限钳到 1，失败计数为 0 时保持基准 15s 防抖（字面 ×0 会变成 0ms，退化成每词即刷）
       _persistTimer = setTimeout(() => {
         _persistTimer = null
         flushDirtyBanks()
-      }, PERSIST_DEBOUNCE_MS)
+      }, PERSIST_DEBOUNCE_MS * Math.min(Math.max(_persistFailCount, 1), 20))
     }
   }
 
@@ -112,26 +120,53 @@ export const useMobileWords = defineStore('mobileWords', () => {
     }
     const banks = [..._dirtyBanks]
     _dirtyBanks.clear()
+    let failed = 0
     for (const bankId of banks) {
-      await persistBankWords(bankId)
+      const ok = await persistBankWords(bankId)
+      if (!ok) failed++
+    }
+    // 写满等持久化失败：用户可见提示（复习记录可能丢失），脏词库保留待下次 flush 重试。
+    // toast 限频：存储持续写满时最多每 5 分钟弹 1 次，不随失败重试无限循环
+    if (failed > 0) {
+      const now = Date.now()
+      if (now - _lastToastAt > 5 * 60 * 1000) {
+        _lastToastAt = now
+        try {
+          uni.showToast({ title: `存储空间不足，${failed} 个词库进度未保存`, icon: 'none' })
+        } catch { /* toast 失败忽略 */ }
+      }
     }
   }
 
-  /** 将一个词库的全部单词写入 storage（一条记录） */
-  async function persistBankWords(bankId: string) {
+  /** 将一个词库的全部单词写入 storage（一条记录）
+   *  @returns 是否写入成功；失败时词库重新标脏，待下次 flush 重试 */
+  async function persistBankWords(bankId: string): Promise<boolean> {
     // 懒加载未读入的词库内存数据不完整，跳过写入，避免用半份数据覆盖整库
-    if (!_loadedBanks.has(bankId)) return
+    if (!_loadedBanks.has(bankId)) return true
     const bankWords = allWords.value.filter(w =>
       w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID)
     )
     try {
       const db = getDbAdapter()
-      await db.promises.asyncPut({
+      const result = await db.promises.asyncPut({
         _id: `bank_${bankId}_words`,
         data: bankWords
       })
+      if (!result.ok) {
+        console.error(`持久化词库 ${bankId} 失败:`, result.message)
+        // 失败计数 +1，markBankDirty 按新计数退避重试
+        _persistFailCount++
+        markBankDirty(bankId)
+        return false
+      }
+      // 写入成功：失败计数复位，退避间隔回到基准值
+      _persistFailCount = 0
+      return true
     } catch (e) {
       console.error(`持久化词库 ${bankId} 失败:`, e)
+      _persistFailCount++
+      markBankDirty(bankId)
+      return false
     }
   }
 
@@ -357,6 +392,11 @@ export const useMobileWords = defineStore('mobileWords', () => {
     if (bankId === DEFAULT_BANK_ID) {
       throw new Error('默认词库不能删除')
     }
+    // 同步墓碑：词库 id + 库内全部词 id 一并埋点，防止另一端推送时「删除复活」
+    recordTombstone(bankId)
+    recordTombstones(allWords.value
+      .filter(w => w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))
+      .map(w => w.id))
     allWords.value = allWords.value.filter(w => w.bankId !== bankId)
     const db = getDbAdapter()
     db.remove(`bank_${bankId}_words`)
@@ -480,6 +520,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function deleteWord(id: string) {
     const word = allWords.value.find(w => w.id === id)
     if (!word) return
+    // 同步墓碑：防止被删单词在另一台设备「删除复活」
+    recordTombstone(id)
     const bankId = word.bankId || DEFAULT_BANK_ID
     allWords.value = allWords.value.filter(w => w.id !== id)
     markBankDirty(bankId)
@@ -626,6 +668,9 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
   async function clearAllWords() {
     const targetBankId = currentBankId.value
+    recordTombstones(allWords.value
+      .filter(w => w.bankId === targetBankId || (!w.bankId && targetBankId === DEFAULT_BANK_ID))
+      .map(w => w.id))
     allWords.value = allWords.value.filter(w =>
       w.bankId !== targetBankId && !(!w.bankId && targetBankId === DEFAULT_BANK_ID)
     )
@@ -636,6 +681,9 @@ export const useMobileWords = defineStore('mobileWords', () => {
   }
 
   async function clearBankWords(bankId: string) {
+    recordTombstones(allWords.value
+      .filter(w => w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))
+      .map(w => w.id))
     allWords.value = allWords.value.filter(w =>
       w.bankId !== bankId && !(!w.bankId && bankId === DEFAULT_BANK_ID)
     )

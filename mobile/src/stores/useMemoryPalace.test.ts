@@ -202,4 +202,60 @@ describe('useMemoryPalace（查看版）', () => {
     store.moveLocus('p1', 1, -1)
     expect(store.getPalace('p1')?.loci.map(l => l.name)).toEqual(['桩2', '桩3', '桩1'])
   })
+
+  it('replaceLoci：挂载按 origOrder 重映射，被删桩挂载丢弃，新增桩不挂载', () => {
+    const store = useMemoryPalace()
+    store.restoreSync({
+      palaces: [makePalace({
+        loci: [1, 2, 3].map(order => ({ order, name: `桩${order}` })),
+      })],
+      pegs: {
+        p1: [
+          makePeg({ _id: 'peg_1', locusOrder: 1 }),
+          makePeg({ _id: 'peg_2', locusOrder: 2 }),
+        ],
+      },
+    })
+    // 编辑后顺序变为 [原2, 原1, 新增]：原 order2 的挂载跟随到新 order1，原 order1 的到新 order2，原 order3 无挂载
+    store.replaceLoci('p1', [
+      { name: '桩2', origOrder: 2 },
+      { name: '桩1', origOrder: 1 },
+      { name: '新桩' },
+    ])
+    expect(store.getPalace('p1')?.loci.map(l => ({ order: l.order, name: l.name }))).toEqual([
+      { order: 1, name: '桩2' },
+      { order: 2, name: '桩1' },
+      { order: 3, name: '新桩' },
+    ])
+    expect(store.pegsOf('p1').map(p => ({ id: p._id, locusOrder: p.locusOrder })))
+      .toEqual([{ id: 'peg_2', locusOrder: 1 }, { id: 'peg_1', locusOrder: 2 }])
+    // 持久化后新实例读回仍一致
+    setActivePinia(createPinia())
+    const store2 = useMemoryPalace()
+    store2.load()
+    expect(store2.pegsOf('p1').map(p => ({ id: p._id, locusOrder: p.locusOrder })))
+      .toEqual([{ id: 'peg_2', locusOrder: 1 }, { id: 'peg_1', locusOrder: 2 }])
+  })
+
+  it('replaceLoci：被删桩的挂载丢弃', () => {
+    const store = useMemoryPalace()
+    store.restoreSync({
+      palaces: [makePalace({
+        loci: [1, 2, 3].map(order => ({ order, name: `桩${order}` })),
+      })],
+      pegs: {
+        p1: [
+          makePeg({ _id: 'peg_2', locusOrder: 2 }),
+          makePeg({ _id: 'peg_3', locusOrder: 3 }),
+        ],
+      },
+    })
+    // 只保留原 1、2 号桩：peg_3 随被删桩丢弃
+    store.replaceLoci('p1', [
+      { name: '桩1', origOrder: 1 },
+      { name: '桩2', origOrder: 2 },
+    ])
+    expect(store.pegsOf('p1').map(p => ({ id: p._id, locusOrder: p.locusOrder })))
+      .toEqual([{ id: 'peg_2', locusOrder: 2 }])
+  })
 })

@@ -19,6 +19,13 @@ function createMockStorage() {
     uni: {
       setStorageSync: vi.fn((key: string, data: any) => { store.set(key, data) }),
       getStorageSync: vi.fn((key: string) => store.get(key) ?? null),
+      getStorage: vi.fn(({ key, success, fail }: any) => {
+        if (store.has(key)) {
+          success({ data: store.get(key) })
+        } else {
+          fail({ errMsg: 'getStorage:fail data not found' })
+        }
+      }),
       removeStorageSync: vi.fn((key: string) => { store.delete(key) }),
       getStorageInfoSync: vi.fn(() => ({
         keys: Array.from(store.keys()),
@@ -162,6 +169,31 @@ describe('MiniProgramDbAdapter', () => {
       // 验证分片被清理
       const hasChunk = Array.from(mockStorage.store.keys()).some(k => k.includes('large-1__chunk__'))
       expect(hasChunk).toBe(false)
+    })
+  })
+
+  describe('getAsync（异步分块读取）', () => {
+    it('应该异步读到未分片文档', async () => {
+      adapter.put({ _id: 'doc-1', data: { text: 'a' } })
+
+      const result = await adapter.getAsync('doc-1')
+      expect(result).not.toBeNull()
+      expect(result?.data.text).toBe('a')
+      expect(mockStorage.uni.getStorage).toHaveBeenCalled()
+    })
+
+    it('应该异步重组分片文档', async () => {
+      const largeData = 'x'.repeat(1000000)
+      adapter.put({ _id: 'large-1', data: { content: largeData } })
+
+      const result = await adapter.getAsync('large-1')
+      expect(result).not.toBeNull()
+      expect(result?.data.content.length).toBe(1000000)
+    })
+
+    it('读取不存在的文档应返回 null', async () => {
+      const result = await adapter.getAsync('non-existent')
+      expect(result).toBeNull()
     })
   })
 })

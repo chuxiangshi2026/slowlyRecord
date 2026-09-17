@@ -17,6 +17,7 @@ import type {
   MobileSentences,
 } from '@/stores/useUtils/types'
 import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
+import { filterByTombstones, mergeTombstones } from '@/stores/useUtils/sync-tombstone'
 import { log } from '../../../utils/logger'
 
 export type {
@@ -311,6 +312,8 @@ export interface PushPayload {
   signin?: MobileSigninData
   memoryPalace?: MobileMemoryPalace
   sentences?: MobileSentences
+  /** 同步墓碑：本机删除埋点随 payload 透传，对端拉取时按它过滤「删除复活」的条目 */
+  tombstones?: Record<string, number>
 }
 
 export function collectSyncData(payload: PushPayload): MobileSyncData {
@@ -330,6 +333,7 @@ export function collectSyncData(payload: PushPayload): MobileSyncData {
     signin: payload.signin,
     memoryPalace: payload.memoryPalace,
     sentences: payload.sentences,
+    tombstones: payload.tombstones,
   }
 }
 
@@ -425,15 +429,39 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
       if (data.userSettings) {
         applyTranslationSettings(data.userSettings)
       }
+      // 墓碑合并 + 按墓碑过滤入库条目：已被任一端删除的词/词库不让它复活。
+      // 注意两端 id 体系不同（桌面词 _id ≠ 移动端词 id），桌面侧删除的词在移动端
+      // 无法按 id 匹配；移动端双设备间经 payload 透传 id，删除可互通。
+      const tombstones = await mergeTombstones(data.tombstones)
+      let banks = data.banks
+      if (Array.isArray(banks) && Object.keys(tombstones).length > 0) {
+        banks = banks.map(bank => ({
+          ...bank,
+          words: filterByTombstones(bank.words || [], 'remote', tombstones),
+        }))
+      }
+      // 宫殿级墓碑过滤：已删宫殿不复活（pegs 随宫殿一并跳过）
+      let memoryPalace = data.memoryPalace
+      if (memoryPalace && Array.isArray(memoryPalace.palaces) && Object.keys(tombstones).length > 0) {
+        const palaces = filterByTombstones(memoryPalace.palaces, 'remote', tombstones)
+        const keptIds = new Set(palaces.map(p => p._id))
+        memoryPalace = {
+          ...memoryPalace,
+          palaces,
+          pegs: Object.fromEntries(
+            Object.entries(memoryPalace.pegs || {}).filter(([palaceId]) => keptIds.has(palaceId))
+          ),
+        }
+      }
       return {
         success: true,
-        banks: data.banks,
+        banks,
         textMemory: data.textMemory,
         numberMemory: data.numberMemory,
         knowledgeMemory: data.knowledgeMemory,
         phoneticMemory: data.phoneticMemory,
         signin: data.signin,
-        memoryPalace: data.memoryPalace,
+        memoryPalace,
         sentences: data.sentences,
       }
     } catch {

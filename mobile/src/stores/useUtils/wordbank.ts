@@ -96,6 +96,7 @@ export async function loadWordBank(
 
   try {
     let rawData: any
+    // #ifdef MP-WEIXIN || MP-TOUTIAO
     // 小程序：词库数据在分包中，主包只从缓存读取
     const cached = getFromCache(type)
     if (cached && cached.length > 0) {

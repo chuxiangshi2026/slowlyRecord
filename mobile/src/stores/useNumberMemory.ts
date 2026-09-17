@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDbAdapter } from '@/adapters/index'
+import { recordTombstones } from './useUtils/sync-tombstone'
 import {
   isPracticeDue,
   scheduleOnRemembered,
@@ -212,7 +213,11 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
   function deleteAssociation(number: string) {
     const before = associations.value.length
     associations.value = associations.value.filter((a) => a.number !== number)
-    if (associations.value.length !== before) persist()
+    if (associations.value.length !== before) {
+      // 同步墓碑：数字桩以「数字本身」为墓碑键（与桌面端一致），防止另一端推送时「删除复活」
+      recordTombstones([number])
+      persist()
+    }
   }
 
   /** 数字桩自评落库：更新复习调度（level / nextReview） */
@@ -230,6 +235,7 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
 
   function clearAllAssociations() {
     if (associations.value.length === 0) return
+    recordTombstones(associations.value.map((a) => a.number))
     associations.value = []
     persist()
   }
@@ -269,10 +275,19 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
 
   function deleteEntry(id: string) {
     const before = entries.value.length
+    // 同步墓碑：条目及其级联删除的笔记/提示词一并埋点，防止另一端推送时「删除复活」
+    const cascadeIds = [
+      id,
+      ...notes.value.filter((n) => n.entryId === id).map((n) => n._id),
+      ...prompts.value.filter((p) => p.entryId === id).map((p) => p._id),
+    ]
     entries.value = entries.value.filter((e) => e._id !== id)
     notes.value = notes.value.filter((n) => n.entryId !== id)
     prompts.value = prompts.value.filter((p) => p.entryId !== id)
-    if (entries.value.length !== before) persist()
+    if (entries.value.length !== before) {
+      recordTombstones(cascadeIds)
+      persist()
+    }
   }
 
   /** 数字条目自评落库：更新复习调度（level / nextReview）与统计 */
