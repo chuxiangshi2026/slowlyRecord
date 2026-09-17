@@ -128,9 +128,10 @@ router.afterEach((to) => {
 
 // 初始化数据库适配器（必须完成后再挂载应用，避免组件在初始化前调用 getDbAdapter()）
 getDbAdapterAsync().then(() => {
-  console.log(`[启动耗时] 数据库适配器就绪: ${performance.now().toFixed(0)}ms`);
+  // console.info 不在生产构建的 pure 抹除名单内，保证打点可存活到生产
+  console.info(`[启动耗时] 数据库适配器就绪: ${performance.now().toFixed(0)}ms`);
   app.mount('#app');
-  console.log(`[启动耗时] 应用挂载完成: ${performance.now().toFixed(0)}ms`);
+  console.info(`[启动耗时] 应用挂载完成: ${performance.now().toFixed(0)}ms`);
 }).catch((err) => {
   console.error('[App] 数据库适配器初始化失败:', err);
   // 即使初始化失败也挂载应用，避免白屏
