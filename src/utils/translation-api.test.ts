@@ -20,9 +20,11 @@ vi.mock('@/stores/words.ts', () => ({
 }))
 vi.mock('@/utils/str-util.ts', () => ({ batchTranslateAndAddWords: vi.fn() }))
 vi.mock('@/utils/local-dictionary', () => ({ translateWithLocalDictionaryAsync: vi.fn() }))
+vi.mock('@/utils/http.ts', () => ({ default: { get: vi.fn() } }))
 
 import { translateWithPlatform, translateBatchWithPlatform } from '@/utils/translation-api'
 import { RETIRED_MODEL_NAMES, AppInfo } from '@/config.ts'
+import http from '@/utils/http.ts'
 
 const fetchMock = vi.fn()
 vi.stubGlobal('fetch', fetchMock)
@@ -306,5 +308,22 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
     expect(result.success).toBe(false)
     expect(result.errorMsg).toContain('讯飞机器翻译')
     expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('baidu q 参数不被双重编码：含空格的原文经一次解码后应等于原文', async () => {
+    apiKeys.baidu = { appkey: 'test-baidu-appid', key: 'test-baidu-secret' }
+    const httpGet = vi.mocked(http.get)
+    httpGet.mockReset()
+    httpGet.mockResolvedValueOnce({ data: { trans_result: [{ dst: '你好世界' }] } } as any)
+
+    const result = await translateWithPlatform('hello world, 你好!', 'baidu' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(httpGet).toHaveBeenCalledTimes(1)
+    const [, params] = httpGet.mock.calls[0]
+    // axios 会做一次编码，这里反向解码一次后应还原原文，证明没有叠加手工 encodeURIComponent
+    expect(decodeURIComponent((params as any).q as string)).toBe('hello world, 你好!')
+    // 且 q 内不出现双重编码痕迹（%25）
+    expect(String((params as any).q)).not.toContain('%25')
   })
 })

@@ -68,7 +68,7 @@ function getInstallId(): string {
     const utoolsApi = (window as any).utools;
     if (utoolsApi?.getNativeId) {
       const nativeId = utoolsApi.getNativeId();
-      if (nativeId) return `dev_${nativeId}`.slice(0, 32);
+      if (nativeId) return nativeId.slice(0, 32);
     }
   } catch { /* 忽略，回退到随机 UUID */ }
   try {

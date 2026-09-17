@@ -78,6 +78,10 @@ if (typeof window !== 'undefined') {
   const originalLog = console.log;
   const originalError = console.error;
   const originalWarn = console.warn;
+  const originalInfo = console.info;
+
+  // 白名单：任一前缀命中即记录
+  const LOG_PREFIX_WHITELIST = ['[本地OCR]', '[启动耗时]'];
 
   // 安全序列化：对象可能含循环引用（如组件 vnode），不能让日志面板自身抛异常
   const safeStringify = (a: any): string => {
@@ -89,10 +93,13 @@ if (typeof window !== 'undefined') {
     }
   };
 
+  const shouldCapture = (message: string): boolean =>
+    LOG_PREFIX_WHITELIST.some(prefix => message.includes(prefix));
+
   console.log = function(...args: any[]) {
     originalLog.apply(console, args);
     const message = args.map(safeStringify).join(' ');
-    if (message.includes('[本地OCR]')) {
+    if (shouldCapture(message)) {
       addLog(message);
     }
   };
@@ -100,7 +107,7 @@ if (typeof window !== 'undefined') {
   console.error = function(...args: any[]) {
     originalError.apply(console, args);
     const message = args.map(safeStringify).join(' ');
-    if (message.includes('[本地OCR]')) {
+    if (shouldCapture(message)) {
       addLog('[ERROR] ' + message);
     }
   };
@@ -108,8 +115,16 @@ if (typeof window !== 'undefined') {
   console.warn = function(...args: any[]) {
     originalWarn.apply(console, args);
     const message = args.map(safeStringify).join(' ');
-    if (message.includes('[本地OCR]')) {
+    if (shouldCapture(message)) {
       addLog('[WARN] ' + message);
+    }
+  };
+
+  console.info = function(...args: any[]) {
+    originalInfo.apply(console, args);
+    const message = args.map(safeStringify).join(' ');
+    if (shouldCapture(message)) {
+      addLog(message);
     }
   };
 }

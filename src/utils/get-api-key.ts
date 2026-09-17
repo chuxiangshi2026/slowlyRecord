@@ -47,7 +47,8 @@ export function getOcrApiKey(provider: OcrPlatform) {
     const userKeys = wordsStore.getOcrApiKey(provider);
 
     // 添加调试日志
-    console.log(`getOcrApiKey调用: provider=${provider}, userKeys=`, userKeys);
+    // 只输出 provider，避免泄漏用户的密钥内容
+    console.log(`getOcrApiKey调用: provider=${provider}`);
 
     // 添加安全检查，防止userKeys为undefined
     if (!userKeys) {
@@ -56,7 +57,6 @@ export function getOcrApiKey(provider: OcrPlatform) {
             appkey: OcrKeyInfo[provider]?.appkey || '',
             key: OcrKeyInfo[provider]?.key || ''
         };
-        console.log(`使用默认配置:`, result);
         return result;
     }
 

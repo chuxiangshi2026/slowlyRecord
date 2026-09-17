@@ -1139,13 +1139,22 @@ export async function translateBatchWithPlatform(
         if (chunk.length > 1 && AI_BATCH_PLATFORMS.has(platform)) {
             try {
                 const batchResults = await translateBatchWithAi(chunk.map(x => x.query), platform, from, to);
+                let batchSuccessCount = 0;
                 batchResults.forEach((result, idx) => {
                     const target = chunk[idx];
                     if (result?.success) {
                         setCachedTranslation(target.query, platform, from, to, result);
                         results[target.index] = result;
+                        batchSuccessCount++;
                     }
                 });
+                // 与普通翻译共用 'translation' 计数：按成功条数补计数，失败的条目不占免费次数
+                if (batchSuccessCount > 0 && !hasCustomApiKey(platform)) {
+                    for (let c = 0; c < batchSuccessCount; c++) {
+                        incrementUsageCounter('translation');
+                    }
+                    log.i(`AI 批量翻译成功 ${batchSuccessCount} 条，累计使用次数: ${getCurrentUsageCount('translation')}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
+                }
             } catch (error) {
                 log.w('AI 批量翻译失败，回退逐词翻译', error);
             }
@@ -1257,8 +1266,9 @@ export async function translateWithPlatform(
                     }
 
                 case 'baidu':
+                    // q 直接交给 axios params 序列化，避免手工 encodeURIComponent 与
+                    // axios 序列化叠加造成双重编码（% → %25）
                     const baiduParams = generateBaiduParams(query, from, to);
-                    baiduParams.q = encodeURIComponent(baiduParams.q);
                     const baiduResponse = await http.get('https://fanyi-api.baidu.com/api/trans/vip/translate', {...baiduParams}, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -1700,7 +1710,6 @@ async function callDeepSeek(query: string, from: string = 'auto', to: string = '
     try {
         const {appkey: apiKey, key: modelName} = getTranslationApiKey('deepseek');
 
-        console.log('apikey', apiKey, modelName)
         if (!apiKey) {
             return {
                 success: false,
