@@ -64,7 +64,9 @@ import {
   encodeWebDavFile,
   formatWebDavDiagnosis,
   normalizeWebDavUrl,
+  checkDirWritable,
   parseChildCollections,
+  probeCandidateDirs,
   testWebDavConnection,
   uploadToWebDav,
   webDavFileUrl,
@@ -305,6 +307,36 @@ describe('uploadToWebDav：根目录不可写时自动改用子目录', () => {
     const r = await uploadToWebDav(cfg)
     expect(r.success).toBe(false)
     expect(r.error).toContain('HTTP 404')
+  })
+})
+
+describe('checkDirWritable / probeCandidateDirs：逐个目录试写', () => {
+  it('各目录可写性分别返回（可写目录会清理探针）', async () => {
+    const deleted: string[] = []
+    globalThis.fetch = vi.fn(async (url: unknown, init: any) => {
+      const u = String(url)
+      const headers = new Headers()
+      if (init?.method === 'DELETE') {
+        deleted.push(u)
+        return { ok: true, status: 204, headers, text: async () => '' }
+      }
+      const okDir = u.includes(encodeURIComponent('我的坚果云'))
+      return { ok: okDir, status: okDir ? 201 : 403, headers, text: async () => '' }
+    }) as any
+
+    const dirs = ['https://dav.jianguoyun.com/dav/我的坚果云/', 'https://dav.jianguoyun.com/dav/只读目录/']
+    const probed = await probeCandidateDirs(cfg, dirs)
+    expect(probed).toEqual([
+      { dir: dirs[0], writable: true },
+      { dir: dirs[1], writable: false },
+    ])
+    expect(deleted.some(u => u.includes(encodeURIComponent('我的坚果云')))).toBe(true)
+    expect(deleted.some(u => u.includes(encodeURIComponent('只读目录')))).toBe(false)
+  })
+
+  it('checkDirWritable：请求抛错视为不可写（不抛异常）', async () => {
+    globalThis.fetch = vi.fn(async () => { throw new TypeError('Failed to fetch') }) as any
+    await expect(checkDirWritable(cfg, NUTSTORE_WEBDAV_URL)).resolves.toBe(false)
   })
 })
 

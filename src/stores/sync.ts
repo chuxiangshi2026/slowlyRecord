@@ -10,7 +10,7 @@ import type { RestoreOptions, RestoreResult } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { downloadSyncFile, pickAndImportSyncFile, importFromFile, getSyncDataSummary } from '@/utils/sync-file'
 import { uploadToServer, downloadFromServer, checkServerAvailable, setSyncServerUrl, resetSyncServer, uploadToServerMobileCompat } from '@/utils/sync-server'
-import { NUTSTORE_WEBDAV_URL, diagnoseWebDav, normalizeWebDavUrl, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
+import { NUTSTORE_WEBDAV_URL, checkDirWritable, diagnoseWebDav, normalizeWebDavUrl, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
 import type { WebDavDiagnosis } from '@/utils/sync-webdav'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
@@ -338,6 +338,16 @@ export const useSyncStore = defineStore('sync', () => {
     return result
   }
 
+  /** 当前同步目录是否可写：null=尚未检查，true/false=最近一次检查结果 */
+  const webdavDirWritable = ref<boolean | null>(null)
+
+  /** 保存配置后即时验证目录可写性（写不进去再引导用户做完整诊断） */
+  async function checkWebDavDir(): Promise<boolean> {
+    const writable = await checkDirWritable(currentWebDavConfig(), normalizeWebDavUrl(webdavUrl.value))
+    webdavDirWritable.value = writable
+    return writable
+  }
+
   /** 诊断 WebDAV：逐步执行并返回结构化结果（UI 据此着色与给出修复入口） */
   async function webdavDiagnose(): Promise<WebDavDiagnosis> {
     saveWebDavConfig()
@@ -359,9 +369,13 @@ export const useSyncStore = defineStore('sync', () => {
         // 坚果云根目录不允许直接创建文件，已自动改用可写子目录：记住它，后续备份/恢复直连该目录
         webdavUrl.value = result.resolvedDir
         saveWebDavConfig()
-        resultMessage.value = `已备份到云盘（自动改用可写目录：${result.resolvedDir}）`
+        webdavDirWritable.value = true
+        resultMessage.value = `已备份到 ${result.resolvedDir}（已自动改用可写目录，并记入地址栏）`
       } else {
-        resultMessage.value = result.success ? '已备份到云盘' : `备份失败: ${result.error || '未知错误'}`
+        resultMessage.value = result.success
+          ? `已备份到 ${normalizeWebDavUrl(webdavUrl.value)}`
+          : `备份失败: ${result.error || '未知错误'}`
+        if (result.success) webdavDirWritable.value = true
       }
       if (result.success) markSynced()
       return result
@@ -456,6 +470,8 @@ export const useSyncStore = defineStore('sync', () => {
     saveWebDavConfig,
     testWebDav,
     webdavDiagnose,
+    webdavDirWritable,
+    checkWebDavDir,
     webdavUpload,
     webdavDownload,
     // 文件操作

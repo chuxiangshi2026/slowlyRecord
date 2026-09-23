@@ -111,35 +111,64 @@ export function parseChildCollections(xml: string, baseDir: string): string[] {
   return out
 }
 
+/** 目录候选与其可写性（诊断里逐个探测，用户可直观看到哪些目录能写） */
+export interface WebDavDirCandidate {
+  dir: string
+  writable: boolean
+}
+
+/** 试写 1 字节探针判断单个目录是否可写，成功即清理探针 */
+export async function checkDirWritable(config: WebDavConfig, dir: string): Promise<boolean> {
+  const auth = buildAuthHeader(config)
+  const probeUrl = `${encodeWebDavPath(dir)}${PROBE_FILE}`
+  try {
+    const put = await fetchWithTimeout(probeUrl, {
+      method: 'PUT',
+      headers: { Authorization: auth, 'Content-Type': 'application/octet-stream' },
+      body: 'ping',
+    })
+    const writable = put.status === 201 || put.status === 204
+    if (writable) {
+      void fetchWithTimeout(probeUrl, { method: 'DELETE', headers: { Authorization: auth } }).catch(() => {})
+    }
+    return writable
+  } catch {
+    return false
+  }
+}
+
+/** 逐个探测候选目录的可写性（顺序探测，失败不影响其余） */
+export async function probeCandidateDirs(config: WebDavConfig, dirs: string[]): Promise<WebDavDirCandidate[]> {
+  const out: WebDavDirCandidate[] = []
+  for (const dir of dirs) {
+    out.push({ dir, writable: await checkDirWritable(config, dir) })
+  }
+  return out
+}
+
+/** 列出根目录下的一级子集合（拿不到或未认证时返回空数组） */
+export async function listChildCollections(config: WebDavConfig): Promise<string[]> {
+  const dir = normalizeWebDavUrl(config.url)
+  try {
+    const resp = await fetchWithTimeout(dir, {
+      method: 'PROPFIND',
+      headers: { Authorization: buildAuthHeader(config), Depth: '1' },
+    })
+    if (!resp.ok) return []
+    return parseChildCollections(await resp.text(), dir)
+  } catch {
+    return []
+  }
+}
+
 /**
- * 探测真正可写的目录：列出一级子集合，逐个试写 1 字节探针（成功即清理）。
- * 返回可写目录 URL，全部失败返回 null。
+ * 探测真正可写的目录：列出一级子集合，逐个试写探针，返回第一个可写目录。
+ * 全部失败返回 null（上传/恢复路径据此决定是否改用别的目录）。
  */
 export async function resolveWritableDir(config: WebDavConfig): Promise<string | null> {
-  const dir = normalizeWebDavUrl(config.url)
-  const auth = buildAuthHeader(config)
-  try {
-    const resp = await fetchWithTimeout(dir, { method: 'PROPFIND', headers: { Authorization: auth, Depth: '1' } })
-    if (!resp.ok) return null
-    const children = parseChildCollections(await resp.text(), dir)
-    for (const child of children) {
-      const probeUrl = `${encodeWebDavPath(child)}${PROBE_FILE}`
-      try {
-        const put = await fetchWithTimeout(probeUrl, {
-          method: 'PUT',
-          headers: { Authorization: auth, 'Content-Type': 'application/octet-stream' },
-          body: 'ping',
-        })
-        if (put.status === 201 || put.status === 204) {
-          void fetchWithTimeout(probeUrl, { method: 'DELETE', headers: { Authorization: auth } }).catch(() => {})
-          return child
-        }
-      } catch {
-        // 试下一个候选目录
-      }
-    }
-  } catch {
-    // 列目录失败，交给上层按原错误提示
+  const children = await listChildCollections(config)
+  for (const candidate of await probeCandidateDirs(config, children)) {
+    if (candidate.writable) return candidate.dir
   }
   return null
 }
@@ -260,6 +289,8 @@ export interface WebDavDiagnosis {
   resolvedDir?: string
   /** 根目录下发现的一级子目录（供用户选择） */
   candidates: string[]
+  /** 各候选目录的可写性（测试时逐个探测，让用户看到哪些能写） */
+  candidateDirs: WebDavDirCandidate[]
 }
 
 /** 诊断版本：改诊断逻辑时递增，便于确认用户跑的是哪一版（旧版报告会少几行） */
@@ -409,18 +440,22 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
   }
 
   // 当前目录写不进去时，探测是否存在可写子目录（决定「黄色：改配置即可」还是「红色」）
-  let resolvedDir: string | null = null
-  if (!created && !(bigResp !== null && (bigResp.status === 201 || bigResp.status === 204))) {
-    resolvedDir = await resolveWritableDir(config)
+  const configuredWritable = created || (bigResp !== null && (bigResp.status === 201 || bigResp.status === 204))
+  // 逐个探测候选目录的可写性：测试即告诉用户「哪些目录能写」，而不是只报一个结论
+  const candidateDirs = candidates.length ? await probeCandidateDirs(config, candidates) : []
+  const resolvedDir = configuredWritable ? null : (candidateDirs.find(c => c.writable)?.dir ?? null)
+  if (!configuredWritable) {
     checks.push({
       step: '可写目录探测',
       status: resolvedDir ? 201 : null,
-      detail: resolvedDir ? `可改用：${resolvedDir}` : '未找到可写子目录',
+      detail: candidateDirs.length
+        ? candidateDirs.map(c => `${c.dir}${c.writable ? '（可写）' : '（不可写）'}`).join('；')
+        : '未找到可写子目录',
     })
   }
 
   const { verdict, level, canRead, canWrite } = buildWebDavVerdict(checks, resolvedDir)
-  return { dir, fileUrl: file, checks, verdict, level, canRead, canWrite, resolvedDir: resolvedDir ?? undefined, candidates }
+  return { dir, fileUrl: file, checks, verdict, level, canRead, canWrite, resolvedDir: resolvedDir ?? undefined, candidates, candidateDirs }
 }
 
 /** 诊断结果排版成可复制的文本（纯函数，便于测试） */

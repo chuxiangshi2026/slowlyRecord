@@ -161,6 +161,19 @@
         <div class="sync-section">
           <h4>网盘配置</h4>
           <el-input v-model="syncStore.webdavUrl" placeholder="WebDAV 地址" class="webdav-field" />
+          <!-- 同步目录常驻可见：让用户随时知道备份到底存在网盘哪里 -->
+          <div class="webdav-dir-status">
+            <span class="webdav-dir-label">同步目录：</span>
+            <span class="webdav-dir-path">{{ syncStore.webdavUrl || '未填写' }}</span>
+            <span
+              v-if="syncStore.webdavDirWritable !== null"
+              class="webdav-dir-flag"
+              :class="syncStore.webdavDirWritable ? 'is-ok' : 'is-bad'"
+            >
+              {{ syncStore.webdavDirWritable ? '可写' : '不可写' }}
+            </span>
+            <span class="webdav-dir-hint">备份文件 slowlyRecord-sync.enc 会存放于该目录</span>
+          </div>
           <el-input v-model="syncStore.webdavUsername" placeholder="账号（坚果云注册邮箱）" class="webdav-field" />
           <el-input v-model="syncStore.webdavPassword" type="password" show-password placeholder="应用密码（不是登录密码）" class="webdav-field" />
 
@@ -309,13 +322,14 @@
     <div v-if="webdavDiagCandidates.length" class="webdav-diag-candidates">
       <span class="webdav-diag-hint">可用目录（点击即改用）：</span>
       <el-button
-        v-for="dir in webdavDiagCandidates"
-        :key="dir"
+        v-for="c in webdavDiagCandidates"
+        :key="c.dir"
         size="small"
-        :type="dir === webdavDiagResolved ? 'primary' : 'default'"
-        @click="useDiagDir(dir)"
+        :type="c.dir === webdavDiagResolved ? 'primary' : 'default'"
+        :disabled="!c.writable"
+        @click="useDiagDir(c.dir)"
       >
-        {{ shortenDir(dir) }}
+        {{ shortenDir(c.dir) }}{{ c.writable ? ' ✅ 可写' : ' ❌ 不可写' }}
       </el-button>
     </div>
     <el-input v-model="webdavDiagText" type="textarea" :rows="10" readonly />
@@ -345,7 +359,7 @@ const webdavDiagVisible = ref(false)
 const webdavDiagText = ref('')
 const webdavDiagVerdict = ref('')
 const webdavDiagType = ref<'success' | 'warning' | 'error'>('success')
-const webdavDiagCandidates = ref<string[]>([])
+const webdavDiagCandidates = ref<{ dir: string; writable: boolean }[]>([])
 const webdavDiagResolved = ref('')
 
 const props = defineProps<{
@@ -447,9 +461,20 @@ function handleResetServer() {
 
 // ===== 云盘同步（WebDAV） =====
 
-function handleWebDavSave() {
+async function handleWebDavSave() {
   syncStore.saveWebDavConfig()
-  ElMessage.success('配置已保存到本地')
+  webdavTesting.value = true
+  try {
+    // 保存时顺手验证目录能不能写：能写给绿色提示，不能写就引导去诊断（列出可写目录）
+    const writable = await syncStore.checkWebDavDir()
+    if (writable) {
+      ElMessage.success(`配置已保存，目录可写：${syncStore.webdavUrl}`)
+    } else {
+      ElMessage.warning('配置已保存，但该目录写不进去——点「测试连接」可列出可写目录')
+    }
+  } finally {
+    webdavTesting.value = false
+  }
 }
 
 /** 一键恢复坚果云默认地址（用户填错地址导致 PUT 404/409 时的兜底） */
@@ -472,7 +497,9 @@ async function handleWebDavTest() {
     webdavDiagText.value = formatWebDavDiagnosis(d)
     webdavDiagVerdict.value = d.verdict
     webdavDiagType.value = d.level === 'ok' ? 'success' : d.level === 'config' ? 'warning' : 'error'
-    webdavDiagCandidates.value = d.candidates
+    webdavDiagCandidates.value = d.candidateDirs.length
+      ? d.candidateDirs
+      : d.candidates.map(dir => ({ dir, writable: false }))
     webdavDiagResolved.value = d.resolvedDir || ''
   } finally {
     webdavTesting.value = false
@@ -579,6 +606,37 @@ async function handleConfirmRestore() {
 
 .webdav-field {
   margin-bottom: 8px;
+}
+
+.webdav-dir-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 10px;
+  font-size: 12px;
+  color: var(--text-tertiary, #909399);
+}
+
+.webdav-dir-path {
+  font-family: monospace;
+  color: var(--utools-primary, #52796f);
+}
+
+.webdav-dir-flag {
+  padding: 0 6px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.webdav-dir-flag.is-ok {
+  background: #e8f3ec;
+  color: #52796f;
+}
+
+.webdav-dir-flag.is-bad {
+  background: #fbeeee;
+  color: #d9534f;
 }
 
 .webdav-diag-candidates {

@@ -32,6 +32,7 @@
       <view class="section-title">坚果云备份</view>
       <input class="popup-input" v-model="webdavUrl" placeholder="WebDAV 地址" />
       <view class="webdav-default-link" @click="useDefaultWebdavUrl">用默认地址（dav.jianguoyun.com/dav/）</view>
+      <view class="webdav-target">备份文件将存放在：{{ webdavUrl || '（未填写地址）' }}slowlyRecord-sync.enc</view>
       <view v-if="diagVerdict" class="diag-banner" :class="diagLevel === 'ok' ? 'diag-ok' : 'diag-error'">
         <text class="diag-text">{{ diagVerdict }}</text>
       </view>
@@ -314,7 +315,11 @@ const handleWebdavPush = async () => {
     const result = await pushToWebDav(getWebDavConfig(), await buildPushPayload())
     uni.hideLoading()
     if (result.success) {
-      uni.showToast({ title: '已备份到云盘', icon: 'none' })
+      uni.showModal({
+        title: '备份成功',
+        content: `文件已加密存放于：\n${webdavUrl.value.replace(/\/+$/, '')}/slowlyRecord-sync.enc`,
+        showCancel: false,
+      })
     } else {
       // 失败信息可能较长（含状态码与实际请求地址），用弹窗完整展示
       uni.showModal({ title: '备份失败', content: result.error || '备份失败', showCancel: false })
@@ -554,6 +559,13 @@ const copySyncCode = () => {
   color: #999;
   line-height: 1.6;
   margin-bottom: 20rpx;
+}
+
+.webdav-target {
+  font-size: 22rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+  word-break: break-all;
 }
 
 .diag-banner {
