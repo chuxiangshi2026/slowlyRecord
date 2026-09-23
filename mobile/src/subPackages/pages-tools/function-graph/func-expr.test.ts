@@ -177,6 +177,25 @@ describe('findRoots：曲线与 x 轴交点', () => {
     expect(roots.length).toBe(1)
     expect(roots[0]).toBeCloseTo(1, 5)
   })
+
+  it('渐近线不误报为根：tan(x) 在 [-5,5] 只返回 -π、0、π', () => {
+    const fn = compileExpression('tan(x)')
+    const roots = findRoots(x => fn(x, { a: 0, b: 0, c: 0 }), -5, 5)
+    expect(roots.length).toBe(3)
+    expect(roots[0]).toBeCloseTo(-Math.PI, 4)
+    expect(roots[1]).toBeCloseTo(0, 4)
+    expect(roots[2]).toBeCloseTo(Math.PI, 4)
+  })
+
+  it('渐近线不误报为根：1/x 无交点', () => {
+    const fn = compileExpression('1/x')
+    expect(findRoots(x => fn(x, { a: 0, b: 0, c: 0 }), -10, 10)).toEqual([])
+  })
+
+  it('渐近线落在采样点之间也不误报：1/(x-2.001) 无交点', () => {
+    const fn = compileExpression('1/(x-2.001)')
+    expect(findRoots(x => fn(x, { a: 0, b: 0, c: 0 }), -10, 10)).toEqual([])
+  })
 })
 
 describe('sampleCurve：折线段采样', () => {

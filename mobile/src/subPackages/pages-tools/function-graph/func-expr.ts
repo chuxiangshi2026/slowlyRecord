@@ -290,8 +290,20 @@ function pushRoot(roots: number[], x: number): void {
 }
 
 /**
+ * 判断二分结果是否为真根而非渐近线处的假根。
+ * 跨越渐近线同样会形成符号翻转（如 tan(x) 的 π/2、1/(x-2) 的 2），
+ * 但逼近奇点时函数值发散、真根处趋近 0，故用「根处函数值相对两端量级须足够小」来区分。
+ */
+function isRealRoot(fn: (x: number) => number, x: number, neighborScale: number): boolean {
+  const v = fn(x)
+  if (!Number.isFinite(v)) return false
+  return Math.abs(v) <= Math.max(1e-6, neighborScale * 1e-6)
+}
+
+/**
  * 求 fn 在 [xMin, xMax] 内与 x 轴的交点（即方程 f(x)=0 的数值解）。
  * 按 samples 均匀采样，相邻采样点符号变化处用二分法细化；定义域外（NaN）跳过。
+ * 渐近线处的符号翻转会被真根校验剔除（如 tan(x) 的 π/2 不再误报为根）。
  * 注意：与轴相切但不变号的根（如 x^2 的 0 点）采样法抓不到。
  */
 export function findRoots(
@@ -320,7 +332,11 @@ export function findRoots(
     if (y === 0) {
       pushRoot(roots, x)
     } else if (!Number.isNaN(prevY) && prevY * y < 0) {
-      pushRoot(roots, bisect(fn, prevX, x))
+      // 符号变化可能是真根，也可能是跨越渐近线（tan/反比例等），二分后需校验
+      const candidate = bisect(fn, prevX, x)
+      if (isRealRoot(fn, candidate, Math.min(Math.abs(prevY), Math.abs(y)))) {
+        pushRoot(roots, candidate)
+      }
     }
     prevX = x
     prevY = y
