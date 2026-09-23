@@ -11,6 +11,7 @@ import {
   NUTSTORE_WEBDAV_URL,
   getWebDavConfig,
   isWebDavConfigured,
+  normalizeWebDavUrl,
   pullFromWebDav,
   pushToWebDav,
   testWebDavConnection,
@@ -102,6 +103,32 @@ describe('testWebDavConnection', () => {
     const result = await testWebDavConnection(cfg)
     expect(result.ok).toBe(false)
     expect(result.message).toContain('合法域名')
+  })
+})
+
+describe('normalizeWebDavUrl：用户手填地址的容错', () => {
+  it('只填坚果云主机时自动补 /dav/（否则 PUT 打到不存在的集合，报「目录不存在」）', () => {
+    expect(normalizeWebDavUrl('dav.jianguoyun.com')).toBe(NUTSTORE_WEBDAV_URL)
+    expect(normalizeWebDavUrl('https://dav.jianguoyun.com')).toBe(NUTSTORE_WEBDAV_URL)
+    expect(normalizeWebDavUrl('https://dav.jianguoyun.com/')).toBe(NUTSTORE_WEBDAV_URL)
+  })
+
+  it('缺协议时补 https://；空地址回退默认地址', () => {
+    expect(normalizeWebDavUrl('example.com/dav')).toBe('https://example.com/dav/')
+    expect(normalizeWebDavUrl('')).toBe(NUTSTORE_WEBDAV_URL)
+  })
+
+  it('去掉零宽字符、全角空格与首尾引号', () => {
+    expect(normalizeWebDavUrl('  "https://example.com/dav"  ')).toBe('https://example.com/dav/')
+    expect(normalizeWebDavUrl('https://example.com\u3000/dav')).toBe('https://example.com/dav/')
+    expect(normalizeWebDavUrl('\u200Bhttps://example.com/dav\uFEFF')).toBe('https://example.com/dav/')
+  })
+
+  it('误把同步文件全路径粘进来时去掉文件名；重复斜杠折叠', () => {
+    expect(normalizeWebDavUrl('https://example.com/dav/slowlyRecord-sync.enc'))
+      .toBe('https://example.com/dav/')
+    expect(normalizeWebDavUrl('https://example.com//dav//sub'))
+      .toBe('https://example.com/dav/sub/')
   })
 })
 

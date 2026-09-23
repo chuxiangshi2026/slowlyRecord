@@ -10,7 +10,7 @@ import type { RestoreOptions, RestoreResult } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { downloadSyncFile, pickAndImportSyncFile, importFromFile, getSyncDataSummary } from '@/utils/sync-file'
 import { uploadToServer, downloadFromServer, checkServerAvailable, setSyncServerUrl, resetSyncServer, uploadToServerMobileCompat } from '@/utils/sync-server'
-import { NUTSTORE_WEBDAV_URL, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
+import { NUTSTORE_WEBDAV_URL, normalizeWebDavUrl, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
 import { markSynced } from '@/utils/sync-dirty'
@@ -321,10 +321,12 @@ export const useSyncStore = defineStore('sync', () => {
     return { url: webdavUrl.value.trim(), username: webdavUsername.value.trim(), password: webdavPassword.value.trim() }
   }
 
-  /** 保存 WebDAV 凭据到本地（与应用内 API key 同级存储，不上传） */
+  /** 保存 WebDAV 凭据到本地（与应用内 API key 同级存储，不上传）；地址顺手规范化并存回输入框 */
   function saveWebDavConfig() {
     const cfg = currentWebDavConfig()
-    _storage.setItem(LS_WEBDAV_URL, cfg.url)
+    const normalizedUrl = normalizeWebDavUrl(cfg.url)
+    webdavUrl.value = normalizedUrl
+    _storage.setItem(LS_WEBDAV_URL, normalizedUrl)
     _storage.setItem(LS_WEBDAV_USERNAME, cfg.username)
     _storage.setItem(LS_WEBDAV_PASSWORD, cfg.password)
   }

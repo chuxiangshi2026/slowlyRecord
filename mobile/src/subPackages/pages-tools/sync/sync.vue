@@ -31,6 +31,7 @@
     <view v-if="showWebdav && !showPushResult && !showPullInput" class="section">
       <view class="section-title">坚果云备份</view>
       <input class="popup-input" v-model="webdavUrl" placeholder="WebDAV 地址" />
+      <view class="webdav-default-link" @click="useDefaultWebdavUrl">用默认地址（dav.jianguoyun.com/dav/）</view>
       <!-- #ifdef MP-WEIXIN -->
       <view class="webdav-guide">微信端受域名白名单限制，仅支持默认坚果云地址（dav.jianguoyun.com），改填其他域名会请求失败。</view>
       <!-- #endif -->
@@ -88,7 +89,7 @@ import { useSignin } from '@/stores/useSignin'
 import { useMemoryPalace } from '@/stores/useMemoryPalace'
 import { useSentences } from '@/stores/useSentences'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable, type PushPayload } from '../utils/sync'
-import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, testWebDavConnection, pushToWebDav, pullFromWebDav } from '../utils/sync-webdav'
+import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, testWebDavConnection, pushToWebDav, pullFromWebDav, NUTSTORE_WEBDAV_URL } from '../utils/sync-webdav'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
 import { getTombstones } from '@/stores/useUtils/sync-tombstone'
 import { drawQrCode } from '../utils/qrcode'
@@ -272,7 +273,16 @@ const openWebdav = () => {
 
 const saveWebdavForm = () => {
   saveWebDavConfig({ url: webdavUrl.value, username: webdavUsername.value, password: webdavPassword.value })
+  // 回填规范化后的地址（补协议/补 /dav/），避免用户看到自己填的错地址以为已生效
+  webdavUrl.value = getWebDavConfig().url
   webdavConfigured.value = isWebDavConfigured()
+}
+
+/** 一键恢复坚果云默认地址（填错地址导致 PUT 返回 404/409 时的兜底） */
+const useDefaultWebdavUrl = () => {
+  webdavUrl.value = NUTSTORE_WEBDAV_URL
+  saveWebdavForm()
+  uni.showToast({ title: '已恢复默认地址', icon: 'none' })
 }
 
 const handleWebdavTest = async () => {
@@ -293,7 +303,12 @@ const handleWebdavPush = async () => {
   try {
     const result = await pushToWebDav(getWebDavConfig(), await buildPushPayload())
     uni.hideLoading()
-    uni.showToast({ title: result.success ? '已备份到云盘' : (result.error || '备份失败'), icon: 'none' })
+    if (result.success) {
+      uni.showToast({ title: '已备份到云盘', icon: 'none' })
+    } else {
+      // 失败信息可能较长（含状态码与实际请求地址），用弹窗完整展示
+      uni.showModal({ title: '备份失败', content: result.error || '备份失败', showCancel: false })
+    }
   } catch (e) {
     uni.hideLoading()
     uni.showToast({ title: '备份失败', icon: 'none' })
@@ -316,7 +331,8 @@ const handleWebdavPull = async () => {
       uni.showModal({ title: '恢复成功', content: summary, showCancel: false })
     } else {
       uni.hideLoading()
-      uni.showToast({ title: result.error || '恢复失败', icon: 'none' })
+      // 失败信息可能较长，用弹窗完整展示（toast 会截断）
+      uni.showModal({ title: '恢复失败', content: result.error || '恢复失败', showCancel: false })
     }
   } catch (e) {
     uni.hideLoading()
@@ -528,6 +544,13 @@ const copySyncCode = () => {
   color: #999;
   line-height: 1.6;
   margin-bottom: 20rpx;
+}
+
+.webdav-default-link {
+  font-size: 24rpx;
+  color: #52796f;
+  margin-bottom: 16rpx;
+  padding: 4rpx 0;
 }
 
 .menu-text {

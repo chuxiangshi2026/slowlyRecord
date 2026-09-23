@@ -57,9 +57,48 @@ const FILE_NAME = 'slowlyRecord-sync.enc'
 /** 上传体积上限：坚果云免费版单文件 500MB，这里沿用服务器同步的 5MB 自律上限 */
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
 
-/** 规范化网盘地址并拼出同步文件的完整 URL */
+/**
+ * 规范化 WebDAV 地址（用户手填，容错常见笔误）：
+ * - 去掉零宽字符、全角/半角空白、首尾误带的引号或尖括号
+ * - 缺协议时补 https://
+ * - 误把同步文件全路径粘进来时去掉文件名
+ * - 坚果云只填了主机（dav.jianguoyun.com）时自动补 /dav/——否则 PUT 会打到不存在的集合，
+ *   网盘返回 404/409，用户看到的却是「目录不存在」而无从下手
+ * - 折叠重复斜杠并统一补尾部斜杠
+ */
+export function normalizeWebDavUrl(raw: string): string {
+  let s = String(raw || '')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .replace(/[\s\u3000]+/g, '')
+    .replace(/^[<"']+|[>"']+$/g, '')
+  if (!s) return NUTSTORE_WEBDAV_URL
+  if (!/^https?:\/\//i.test(s)) s = `https://${s}`
+  if (s.toLowerCase().endsWith(`/${FILE_NAME.toLowerCase()}`)) {
+    s = s.slice(0, -(FILE_NAME.length + 1))
+  }
+  // 折叠重复斜杠（协议后的 // 不处理）
+  s = s.replace(/([^:]\/)\/+/g, '$1')
+  // 坚果云：只填主机或根路径都视为官方 DAV 根目录
+  if (/^https?:\/\/dav\.jianguoyun\.com\/?$/i.test(s)) return NUTSTORE_WEBDAV_URL
+  return s.endsWith('/') ? s : `${s}/`
+}
+
+/** 逐段 URL 编码路径（支持中文、含空格的子文件夹），保留协议与目录结构 */
+function encodeWebDavPath(url: string): string {
+  const m = /^(https?:\/\/[^/]+)(\/.*)?$/i.exec(url)
+  if (!m) return url
+  const path = m[2] || '/'
+  return m[1] + path.split('/').map(seg => (seg ? encodeURIComponent(seg) : '')).join('/')
+}
+
+/** 展示用地址：抹掉可能被写进 URL 的账号密码 */
+function maskUrl(url: string): string {
+  return url.replace(/\/\/[^/@]+@/, '//***@')
+}
+
+/** 规范化网盘地址并拼出同步文件的完整 URL（路径逐段编码，支持中文子文件夹） */
 export function webDavFileUrl(config: WebDavConfig): string {
-  return `${config.url.trim().replace(/\/+$/, '')}/${FILE_NAME}`
+  return encodeWebDavPath(`${normalizeWebDavUrl(config.url)}${FILE_NAME}`)
 }
 
 /** 凭据派生加密密钥：两台设备凭据相同则密钥相同，无需传输密钥 */
@@ -90,6 +129,17 @@ function explainHttpError(status: number): string {
   if (status === 404) return '网盘上还没有同步数据（首次使用请先备份）'
   if (status === 507) return '网盘空间不足'
   return `网盘返回错误（${status}）`
+}
+
+/**
+ * 上传时的错误翻译：PUT 会自动创建文件，返回 404/409 只可能是父目录不存在
+ * （地址填错，或填了网盘里还没创建的子文件夹），不能沿用下载的「请先备份」提示
+ */
+function explainUploadError(status: number, url: string): string {
+  if (status === 404 || status === 409) {
+    return `网盘目录不存在（HTTP ${status}）：实际请求 ${maskUrl(url)}。坚果云请填 https://dav.jianguoyun.com/dav/（可点「恢复默认地址」，同步文件会自动创建在根目录）；自建子文件夹需先在网盘中创建`
+  }
+  return explainHttpError(status)
 }
 
 function explainNetworkError(e: unknown): string {
@@ -138,7 +188,7 @@ export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerRe
       body,
     })
     if (!resp.ok) {
-      return { success: false, error: explainHttpError(resp.status) }
+      return { success: false, error: explainUploadError(resp.status, webDavFileUrl(config)) }
     }
     log.i('[WebDAV] 备份完成')
     return { success: true }

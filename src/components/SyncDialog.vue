@@ -179,6 +179,7 @@
           <div class="sync-actions webdav-config-actions">
             <el-button size="small" @click="handleWebDavSave">保存配置</el-button>
             <el-button size="small" :loading="webdavTesting" :disabled="!syncStore.webdavConfigured" @click="handleWebDavTest">测试连接</el-button>
+            <el-button size="small" @click="handleWebDavUseDefaultUrl">恢复默认地址</el-button>
           </div>
         </div>
 
@@ -306,6 +307,7 @@ import QRCode from 'qrcode'
 import type { SyncFormat } from '@/types/sync'
 import type { RestoreOptions } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
+import { NUTSTORE_WEBDAV_URL } from '@/utils/sync-webdav'
 import { daysSinceLastSync } from '@/utils/sync-dirty'
 import { isWeb } from '@/adapters/platform'
 
@@ -414,6 +416,13 @@ function handleResetServer() {
 function handleWebDavSave() {
   syncStore.saveWebDavConfig()
   ElMessage.success('配置已保存到本地')
+}
+
+/** 一键恢复坚果云默认地址（用户填错地址导致 PUT 404/409 时的兜底） */
+function handleWebDavUseDefaultUrl() {
+  syncStore.webdavUrl = NUTSTORE_WEBDAV_URL
+  syncStore.saveWebDavConfig()
+  ElMessage.success('已恢复默认地址（dav.jianguoyun.com/dav/）')
 }
 
 async function handleWebDavTest() {
