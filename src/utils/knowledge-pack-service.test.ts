@@ -74,7 +74,7 @@ describe('knowledge-pack-service', () => {
       const info = getKnowledgePackInfo('elements')
       expect(info).toBeDefined()
       expect(info?.id).toBe('elements')
-      expect(info?.itemCount).toBe(118)
+      expect(info?.itemCount).toBe(137)
     })
 
     it('getKnowledgePackInfo 对不存在的包返回 undefined', () => {
@@ -252,11 +252,11 @@ describe('knowledge-pack-service', () => {
     })
 
     it('各包数据版本符合预期，未显式声明版本的包默认 1', () => {
-      // elements 拼音修正 + 扩到 118 号元素 → 4；solar-terms-24 / zodiac-12 追加 imageUrl → 3
-      expect(getKnowledgePackInfo('elements')?.version).toBe(4)
+      // elements 拼音修正 + 扩到 118 号元素 → 4；追加 19 条经典记忆口诀 → 5
+      expect(getKnowledgePackInfo('elements')?.version).toBe(5)
       expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(3)
       expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(3)
-      expect(getPackVersion('elements')).toBe(4)
+      expect(getPackVersion('elements')).toBe(5)
       expect(getPackVersion('solar-terms-24')).toBe(3)
       expect(getPackVersion('zodiac-12')).toBe(3)
       // 从未声明过 version 的包，追加 imageUrl 后升到 2
@@ -336,11 +336,16 @@ describe('knowledge-pack-service', () => {
       expect(pack.items[35].extras?.['套别']).toBe('败战计')
     })
 
-    it('elements 扩至 118 号且序数连续', () => {
+    it('elements 扩至 118 号且序数连续（另附 19 条口诀条目）', () => {
       const pack = readPackFile('elements')
-      expect(pack.items).toHaveLength(118)
-      expect(pack.items.map(i => Number(i.extras?.['序数'])))
+      const elementItems = pack.items.filter(i => i.extras?.['序数'])
+      expect(elementItems).toHaveLength(118)
+      expect(elementItems.map(i => Number(i.extras?.['序数'])))
         .toEqual(Array.from({length: 118}, (_, i) => i + 1))
+      // 记忆口诀条目：五言 1 条 + 按周期谐音 10 条 + 按主族谐音 8 条
+      const mnemonicItems = pack.items.filter(i => !i.extras?.['序数'])
+      expect(mnemonicItems).toHaveLength(19)
+      expect(mnemonicItems.every(i => i.extras?.['口诀类型'] && i.extras?.['对应'])).toBe(true)
     })
   })
 
@@ -375,12 +380,12 @@ describe('knowledge-pack-service', () => {
 
     it('isKnowledgePackCached 有有效缓存时返回 true', () => {
       const pack = makePack('elements')
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 4}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 5}))
       expect(isKnowledgePackCached('elements')).toBe(true)
     })
 
     it('clearKnowledgePackCache 应清除指定缓存', () => {
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 4}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack: makePack('elements'), timestamp: Date.now(), version: 5}))
       clearKnowledgePackCache('elements')
       expect(localStorageMock.getItem('slowlyrecord-knowledgebank-elements')).toBeNull()
     })
@@ -399,7 +404,7 @@ describe('knowledge-pack-service', () => {
   describe('fetchKnowledgePack', () => {
     it('应使用有效缓存', async () => {
       const pack = makePack('elements', 54)
-      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 4}))
+      localStorageMock.setItem('slowlyrecord-knowledgebank-elements', JSON.stringify({pack, timestamp: Date.now(), version: 5}))
       const result = await fetchKnowledgePack('elements')
       expect(result.id).toBe('elements')
       expect(fetchMock).not.toHaveBeenCalled()
@@ -427,8 +432,8 @@ describe('knowledge-pack-service', () => {
       const cached = localStorageMock.getItem('slowlyrecord-knowledgebank-elements')
       expect(cached).not.toBeNull()
       expect(JSON.parse(cached!).pack.items).toHaveLength(54)
-      // 缓存应记录当前数据版本（elements 已升级到 4）
-      expect(JSON.parse(cached!).version).toBe(4)
+      // 缓存应记录当前数据版本（elements 已升级到 5）
+      expect(JSON.parse(cached!).version).toBe(5)
     })
 
     it('缓存版本与包当前版本不一致时视为失效并重新加载', async () => {

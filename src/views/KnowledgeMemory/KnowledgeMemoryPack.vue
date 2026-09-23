@@ -433,10 +433,13 @@ const multColNumbers = computed(() => {
   return Array.from({length: g.end - g.start + 1}, (_, i) => g.start + i);
 });
 
-/** 元素周期表排布（仅 elements 包且序数齐全时非 null） */
+/** 元素周期表排布（仅 elements 包且序数齐全时非 null；口诀等非元素条目不参与排布） */
 const periodicGrid = computed(() => {
   if (packId.value !== 'elements' || !pack.value) return null;
-  return buildPeriodicTable(pack.value.items);
+  return buildPeriodicTable(pack.value.items.filter(i => {
+    const n = Number.parseInt(String(i.extras?.['序数'] ?? ''), 10);
+    return Number.isInteger(n) && n > 0;
+  }));
 });
 
 /** 通用表格的 extras 附加列（全包出现过的 extras 键，保持出现顺序） */

@@ -63,7 +63,7 @@ beforeEach(() => {
 
 describe('getPackVersion', () => {
   it('注册表显式声明 version 的包取声明值', () => {
-    expect(getPackVersion('elements')).toBe(4)
+    expect(getPackVersion('elements')).toBe(5)
     expect(getPackVersion('solar-terms-24')).toBe(3)
     expect(getPackVersion('math-formulas')).toBe(4)
     expect(getPackVersion('dynasties-china')).toBe(2)
@@ -123,8 +123,8 @@ describe('注册表与内置数据（真实数据完整性）', () => {
     await fetchKnowledgePack('elements')
     const cached = env.store.get('slowlyrecord-knowledgebank-elements')
     expect(cached).toBeDefined()
-    expect(cached.version).toBe(4)
-    expect(cached.pack.items).toHaveLength(118)
+    expect(cached.version).toBe(5)
+    expect(cached.pack.items).toHaveLength(137)
   })
 
   it('二次加载优先命中内存缓存，不再读 storage', async () => {

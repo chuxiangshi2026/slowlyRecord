@@ -31,6 +31,9 @@ function findCell(rows: (PeriodicCell | null)[][], n: number): { row: number; co
   throw new Error(`序数 ${n} 不在网格中`)
 }
 
+/** 内置元素包中的元素条目（带「序数」 extras；包内口诀条目不参与周期表排布） */
+const packElementItems = elementsPack.items.filter(i => i.extras?.['序数'])
+
 describe('buildPeriodicGrid', () => {
   it('空数组返回 null', () => {
     expect(buildPeriodicGrid([])).toBeNull()
@@ -42,13 +45,13 @@ describe('buildPeriodicGrid', () => {
   })
 
   it('返回 9 行 × 18 列', () => {
-    const rows = buildPeriodicGrid(elementsPack.items)!
+    const rows = buildPeriodicGrid(packElementItems)!
     expect(rows.length).toBe(PERIODIC_ROWS)
     expect(rows.every(r => r.length === PERIODIC_COLUMNS)).toBe(true)
   })
 
   it('第 1 周期：H 在第 1 列、He 在第 18 列', () => {
-    const rows = buildPeriodicGrid(elementsPack.items)!
+    const rows = buildPeriodicGrid(packElementItems)!
     expect(findCell(rows, 1).col).toBe(0)
     expect(findCell(rows, 2).col).toBe(PERIODIC_COLUMNS - 1)
   })
@@ -86,7 +89,8 @@ describe('buildPeriodicGrid', () => {
   })
 
   it('完整内置元素包（1-118）无重叠无遗漏', () => {
-    const rows = buildPeriodicGrid(elementsPack.items)!
+    expect(packElementItems).toHaveLength(118)
+    const rows = buildPeriodicGrid(packElementItems)!
     const seen: number[] = []
     for (const row of rows) {
       for (const cell of row) {

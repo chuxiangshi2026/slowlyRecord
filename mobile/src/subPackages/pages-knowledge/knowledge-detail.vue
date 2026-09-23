@@ -198,9 +198,17 @@ const PT_GAP = 4
 const ptWidth = PERIODIC_COLUMNS * (PT_CELL + PT_GAP) - PT_GAP
 const ptHeight = PERIODIC_ROWS * (PT_CELL + PT_GAP) - PT_GAP
 
+/** 元素条目（带合法「序数」 extras 的条目；包内口诀等非元素条目不参与周期表排布） */
+const elementItems = computed(() =>
+  (pack.value?.items ?? []).filter(i => {
+    const n = Number.parseInt(String(i.extras?.['序数'] ?? ''), 10)
+    return Number.isInteger(n) && n > 0
+  }),
+)
+
 /** 展平的格子列表（含行列坐标），null 空位不渲染 */
 const ptFlatCells = computed<(PeriodicCell & { row: number; col: number })[]>(() => {
-  const grid = buildPeriodicGrid(pack.value?.items ?? [])
+  const grid = buildPeriodicGrid(elementItems.value)
   if (!grid) return []
   const out: (PeriodicCell & { row: number; col: number })[] = []
   grid.forEach((row, r) => {
@@ -298,7 +306,7 @@ function atomicNumberOf(item: KnowledgeItem): number {
 /** 周期表分组：每个周期一行，行内按序数升序 */
 const periodicRows = computed(() => {
   const rows: { period: number; items: KnowledgeItem[] }[] = []
-  for (const item of pack.value?.items ?? []) {
+  for (const item of elementItems.value) {
     const n = atomicNumberOf(item)
     if (!Number.isFinite(n) || n <= 0) continue
     let period = PERIOD_MAX_ATOMIC_NUMBERS.findIndex(max => n <= max) + 1
