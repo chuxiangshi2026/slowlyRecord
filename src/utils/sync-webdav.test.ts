@@ -64,6 +64,7 @@ import {
   encodeWebDavFile,
   formatWebDavDiagnosis,
   normalizeWebDavUrl,
+  parseChildCollections,
   testWebDavConnection,
   uploadToWebDav,
   webDavFileUrl,
@@ -147,7 +148,7 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
     const d = await diagnoseWebDav(cfg)
     expect(d.canRead).toBe(true)
     expect(d.canWrite).toBe(false)
-    expect(d.verdict).toContain('账号侧写权限限制')
+    expect(d.verdict).toContain('创建不了')
     const text = formatWebDavDiagnosis(d)
     expect(text).toContain('PUT 探针（1 字节）：HTTP 404')
     expect(text).toContain('PUT 探针（64KB）：HTTP 404')
@@ -186,6 +187,20 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
     expect(methods).toContain('DELETE')
   })
 
+  it('PUT 404 且正文为 ObjectNotFound → 结论指向「需写入子目录」并列出可用子目录', async () => {
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      const headers = new Headers()
+      if (init?.method === 'PUT') return { ok: false, status: 404, headers, text: async () => '<d:error><s:exception>ObjectNotFound</s:exception></d:error>' }
+      if (init?.method === 'PROPFIND') return { ok: true, status: 207, headers, text: async () => PROPFIND_XML }
+      return { ok: true, status: 200, headers, text: async () => '' }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    expect(d.verdict).toContain('ObjectNotFound')
+    expect(d.verdict).toContain('子目录')
+    expect(formatWebDavDiagnosis(d)).toContain('可用子目录：https://dav.jianguoyun.com/dav/我的坚果云/')
+  })
+
   it('全部 401 → 判定认证失败（而非目录不存在）', async () => {
     globalThis.fetch = vi.fn(async () => ({ ok: false, status: 401, headers: new Headers() })) as any
     const d = await diagnoseWebDav(cfg)
@@ -199,6 +214,63 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
       { step: 'PUT 探针文件', status: null },
     ])
     expect(verdict).toContain('未能到达网盘')
+  })
+})
+
+const PROPFIND_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:">
+  <d:response><d:href>/dav/</d:href></d:response>
+  <d:response><d:href>/dav/%E6%88%91%E7%9A%84%E5%9D%9A%E6%9E%9C%E4%BA%91/</d:href></d:response>
+  <d:response><d:href>/dav/notes.txt</d:href></d:response>
+</d:multistatus>`
+
+describe('parseChildCollections：从 PROPFIND 找可写目录', () => {
+  it('取出子集合完整 URL（解码中文），排除根自身与文件', () => {
+    expect(parseChildCollections(PROPFIND_XML, NUTSTORE_WEBDAV_URL))
+      .toEqual(['https://dav.jianguoyun.com/dav/我的坚果云/'])
+  })
+
+  it('无子目录时返回空数组', () => {
+    expect(parseChildCollections('<d:multistatus><d:response><d:href>/dav/</d:href></d:response></d:multistatus>', NUTSTORE_WEBDAV_URL))
+      .toEqual([])
+  })
+})
+
+describe('uploadToWebDav：根目录不可写时自动改用子目录', () => {
+  it('根目录 PUT 404(ObjectNotFound) → 找到可写子目录并重传成功，返回 resolvedDir', async () => {
+    const putUrls: string[] = []
+    globalThis.fetch = vi.fn(async (url: unknown, init: any) => {
+      const u = String(url)
+      const headers = new Headers()
+      if (init?.method === 'PUT') {
+        putUrls.push(u)
+        return u.includes(encodeURIComponent('我的坚果云'))
+          ? { ok: true, status: 201, headers, text: async () => '' }
+          : { ok: false, status: 404, headers, text: async () => '<d:error><s:exception>ObjectNotFound</s:exception></d:error>' }
+      }
+      if (init?.method === 'PROPFIND') return { ok: true, status: 207, headers, text: async () => PROPFIND_XML }
+      if (init?.method === 'DELETE') return { ok: true, status: 204, headers, text: async () => '' }
+      return { ok: true, status: 200, headers, text: async () => '' }
+    }) as any
+
+    const r = await uploadToWebDav(cfg)
+    expect(r.success).toBe(true)
+    expect(r.resolvedDir).toBe('https://dav.jianguoyun.com/dav/我的坚果云/')
+    // 根目录正式上传 1 次 + 子目录探针 1 次 + 子目录正式上传 1 次
+    expect(putUrls.length).toBe(3)
+  })
+
+  it('子目录也写不进去 → 返回失败并带 HTTP 状态与目录', async () => {
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      const headers = new Headers()
+      if (init?.method === 'PUT') return { ok: false, status: 404, headers, text: async () => '<d:error><s:exception>ObjectNotFound</s:exception></d:error>' }
+      if (init?.method === 'PROPFIND') return { ok: true, status: 207, headers, text: async () => PROPFIND_XML }
+      return { ok: true, status: 200, headers, text: async () => '' }
+    }) as any
+
+    const r = await uploadToWebDav(cfg)
+    expect(r.success).toBe(false)
+    expect(r.error).toContain('HTTP 404')
   })
 })
 

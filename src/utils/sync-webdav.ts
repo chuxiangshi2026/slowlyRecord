@@ -83,6 +83,67 @@ export function normalizeWebDavUrl(raw: string): string {
   return s.endsWith('/') ? s : `${s}/`
 }
 
+/**
+ * 从 PROPFIND(Depth:1) 响应里解析一级子集合（目录）完整 URL。
+ * 用途：坚果云对「在集合根直接创建文件」会返回 404 ObjectNotFound，
+ * 而账号真实可写的个人空间是它的子目录（如 /dav/我的坚果云/），需要靠列目录找到。
+ */
+export function parseChildCollections(xml: string, baseDir: string): string[] {
+  const base = normalizeWebDavUrl(baseDir)
+  const origin = (/^(https?:\/\/[^/]+)/i.exec(base) || [])[1] || ''
+  const basePath = base.slice(origin.length)
+  const out: string[] = []
+  const seen = new Set<string>()
+  for (const m of xml.matchAll(/<[^>]*href[^>]*>([^<]+)<\/[^>]*href>/gi)) {
+    let path: string
+    try {
+      const raw = m[1].trim()
+      path = decodeURIComponent(/^https?:/i.test(raw) ? new URL(raw).pathname : raw)
+    } catch {
+      continue
+    }
+    if (!path.endsWith('/') || !path.startsWith(basePath) || path === basePath) continue
+    const full = origin + path
+    if (seen.has(full)) continue
+    seen.add(full)
+    out.push(full)
+  }
+  return out
+}
+
+/**
+ * 探测真正可写的目录：列出一级子集合，逐个试写 1 字节探针（成功即清理）。
+ * 返回可写目录 URL，全部失败返回 null。
+ */
+export async function resolveWritableDir(config: WebDavConfig): Promise<string | null> {
+  const dir = normalizeWebDavUrl(config.url)
+  const auth = buildAuthHeader(config)
+  try {
+    const resp = await fetchWithTimeout(dir, { method: 'PROPFIND', headers: { Authorization: auth, Depth: '1' } })
+    if (!resp.ok) return null
+    const children = parseChildCollections(await resp.text(), dir)
+    for (const child of children) {
+      const probeUrl = `${encodeWebDavPath(child)}${PROBE_FILE}`
+      try {
+        const put = await fetchWithTimeout(probeUrl, {
+          method: 'PUT',
+          headers: { Authorization: auth, 'Content-Type': 'application/octet-stream' },
+          body: 'ping',
+        })
+        if (put.status === 201 || put.status === 204) {
+          void fetchWithTimeout(probeUrl, { method: 'DELETE', headers: { Authorization: auth } }).catch(() => {})
+          return child
+        }
+      } catch {
+        // 试下一个候选目录
+      }
+    }
+  } catch {
+    // 列目录失败，交给上层按原错误提示
+  }
+  return null
+}
+
 /** 逐段 URL 编码路径（支持中文、含空格的子文件夹），保留协议与目录结构 */
 function encodeWebDavPath(url: string): string {
   const m = /^(https?:\/\/[^/]+)(\/.*)?$/i.exec(url)
@@ -237,8 +298,17 @@ export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; ca
     return { verdict: '读写均正常（含 64KB 探针）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者', canRead: true, canWrite: true }
   }
   const putStatus = put?.status ?? '未执行'
+  const putDetail = put?.detail || ''
+  const listDetail = checks.find(c => c.step === 'PROPFIND 目录（含子项）')?.detail || ''
+  if (/ObjectNotFound/i.test(putDetail)) {
+    return {
+      verdict: `坚果云返回 ObjectNotFound：它不允许在你填的目录里直接创建文件，需要写入它的子目录（${listDetail || '请查看上一行的可用子目录'}）。新版会自动改用可写子目录重试；也可手动把地址填成上面列出的某个子目录`,
+      canRead: true,
+      canWrite: false,
+    }
+  }
   return {
-    verdict: `认证通过、目录可读，且服务端 OPTIONS 声明支持 PUT（${find('OPTIONS 目录')?.status === 200 ? '已确认' : '未确认'}），但连 1 字节文件都创建不了（PUT 返回 ${putStatus}）。这属于账号侧写权限限制：请在坚果云「账户信息 → 安全选项 → 第三方应用管理」确认该应用密码是「读写」而非「只读」，并检查「流量明细」中本月上传流量是否已用尽`,
+    verdict: `认证通过、目录可读，且服务端 OPTIONS 声明支持 PUT（${find('OPTIONS 目录')?.status === 200 ? '已确认' : '未确认'}），但连 1 字节文件都创建不了（PUT 返回 ${putStatus}）。请核对应用密码是否为「读写」、本月上传流量是否用尽，并把本页内容发给开发者`,
     canRead: true,
     canWrite: false,
   }
@@ -279,7 +349,17 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
 
   await probe('OPTIONS 目录', dir, { method: 'OPTIONS' }, r => r.headers.get('allow') || r.headers.get('dav') || '')
   await probe('PROPFIND 目录', dir, { method: 'PROPFIND', headers: { Depth: '0' } })
-  await probe('PROPFIND 目录（含子项）', dir, { method: 'PROPFIND', headers: { Depth: '1' } })
+  // 列出根目录下的一级子集合：坚果云常常只允许在子目录里创建文件（根目录 PUT 报 ObjectNotFound）
+  const listResp = await probe('PROPFIND 目录（含子项）', dir, { method: 'PROPFIND', headers: { Depth: '1' } })
+  if (listResp && listResp.ok) {
+    try {
+      const children = parseChildCollections(await listResp.text(), dir)
+      const last = checks[checks.length - 1]
+      if (last) last.detail = children.length ? `可用子目录：${children.join(' , ')}` : '根目录下没有子目录'
+    } catch {
+      // 读正文失败不影响其余诊断
+    }
+  }
   await probe('GET 备份文件', file, { method: 'GET' })
   const probeUrl = `${dir}${PROBE_FILE}`
   // 先用 1 字节探针判断「能不能写」，再用 64KB 探针区分是否被体积/中间层限制
@@ -316,7 +396,7 @@ export function formatWebDavDiagnosis(d: WebDavDiagnosis): string {
 }
 
 /** 备份：收集全量数据（完整 SyncData 格式，四模块齐全）→ 加密打包 → PUT 到网盘 */
-export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerResult> {
+export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerResult & { resolvedDir?: string }> {
   try {
     const data = await collectSyncData()
     const json = JSON.stringify(data)
@@ -326,7 +406,7 @@ export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerRe
       return { success: false, error: `数据量过大（${(body.length / 1024 / 1024).toFixed(1)}MB），请减少词库或图片后重试` }
     }
 
-    const resp = await fetchWithTimeout(webDavFileUrl(config), {
+    const putOnce = (dir: string) => fetchWithTimeout(`${encodeWebDavPath(dir)}${FILE_NAME}`, {
       method: 'PUT',
       headers: {
         Authorization: buildAuthHeader(config),
@@ -334,11 +414,27 @@ export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerRe
       },
       body,
     })
+
+    const configuredDir = normalizeWebDavUrl(config.url)
+    let usedDir = configuredDir
+    let resp = await putOnce(configuredDir)
+
+    // 坚果云对「在集合根创建文件」返回 404 ObjectNotFound，但允许写入其子目录：
+    // 列出一级子集合并试写探针，找到可写目录后自动重传一次（成功后由上层记住该目录）
+    if (!resp.ok && (resp.status === 404 || resp.status === 409)) {
+      const resolved = await resolveWritableDir(config)
+      if (resolved && resolved !== configuredDir) {
+        log.i(`[WebDAV] 根目录不可写，改用可写子目录: ${resolved}`)
+        resp = await putOnce(resolved)
+        usedDir = resolved
+      }
+    }
+
     if (!resp.ok) {
-      return { success: false, error: explainUploadError(resp.status, webDavFileUrl(config)) }
+      return { success: false, error: explainUploadError(resp.status, `${usedDir}${FILE_NAME}`) }
     }
     log.i('[WebDAV] 备份完成')
-    return { success: true }
+    return { success: true, resolvedDir: usedDir !== configuredDir ? usedDir : undefined }
   } catch (e) {
     log.e('[WebDAV] 备份失败', e)
     return { success: false, error: explainNetworkError(e) }
@@ -366,10 +462,20 @@ export async function downloadFromWebDav(
     errors: [],
   }
   try {
-    const resp = await fetchWithTimeout(webDavFileUrl(config), {
+    let resp = await fetchWithTimeout(webDavFileUrl(config), {
       method: 'GET',
       headers: { Authorization: buildAuthHeader(config) },
     })
+    // 备份可能被自动放到了子目录（见 uploadToWebDav），根目录 404 时再找一次
+    if (!resp.ok && resp.status === 404) {
+      const resolved = await resolveWritableDir(config)
+      if (resolved && resolved !== normalizeWebDavUrl(config.url)) {
+        resp = await fetchWithTimeout(`${encodeWebDavPath(resolved)}${FILE_NAME}`, {
+          method: 'GET',
+          headers: { Authorization: buildAuthHeader(config) },
+        })
+      }
+    }
     if (!resp.ok) {
       return { ...empty, errors: [explainHttpError(resp.status)] }
     }

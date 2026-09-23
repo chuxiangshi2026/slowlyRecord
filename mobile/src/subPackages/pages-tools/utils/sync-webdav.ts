@@ -181,6 +181,10 @@ export function buildWebDavVerdict(checks: WebDavCheck[]): string {
   if (get?.status === 401 || tinyPut?.status === 401 || bigPut?.status === 401) {
     return '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）'
   }
+  const notFoundBody = `${tinyPut?.detail ?? ''}${bigPut?.detail ?? ''}`
+  if (/ObjectNotFound/i.test(notFoundBody)) {
+    return '坚果云返回 ObjectNotFound：它不允许在该目录里直接创建文件，需要写入子目录。小程序端无法列目录，请在电脑上运行应用内诊断（会列出可用子目录）或 node scripts/webdav-probe.cjs，把地址改成列出的子目录（如 https://dav.jianguoyun.com/dav/你的目录/）后重试'
+  }
   const readable = get?.status === 200 || get?.status === 404
   if (readable) {
     return `认证通过、目录可读，但连 1 字节文件都创建不了（PUT 返回 ${tinyPut?.status ?? '未执行'}）。这属于账号侧写权限限制：请在坚果云「账户信息 → 安全选项 → 第三方应用管理」确认该应用密码是「读写」而非「只读」，并检查「流量明细」中本月上传流量是否已用尽`

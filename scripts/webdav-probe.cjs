@@ -83,6 +83,26 @@ async function probe(step, target, init = {}) {
   await probe('PROPFIND 目录（深度 1）', dir, { method: 'PROPFIND', headers: { Depth: '1' } })
   await probe('GET 备份文件', `${dir}${FILE_NAME}`, { method: 'GET' })
 
+  // 列出根目录下的一级子目录：坚果云常要求写入子目录（根目录创建文件报 ObjectNotFound）
+  try {
+    const resp = await fetch(dir, { method: 'PROPFIND', headers: { Authorization: auth, Depth: '1' } })
+    const xml = await resp.text()
+    const origin = (/^(https?:\/\/[^/]+)/i.exec(dir) || [])[1] || ''
+    const basePath = dir.slice(origin.length)
+    const children = []
+    for (const m of xml.matchAll(/<[^>]*href[^>]*>([^<]+)<\/[^>]*href>/gi)) {
+      const raw = m[1].trim()
+      const path = raw.startsWith('http') ? new URL(raw).pathname : raw
+      if (!path.endsWith('/') || path === basePath || !path.startsWith(basePath)) continue
+      const full = origin + decodeURIComponent(path)
+      if (!children.includes(full)) children.push(full)
+    }
+    console.log(`\n可用子目录（若根目录写不进去，就把地址填成其中一个）:`)
+    console.log(children.length ? children.map(c => `  - ${c}`).join('\n') : '  （无子目录）')
+  } catch (e) {
+    console.log(`\n列目录失败: ${e && e.message ? e.message : String(e)}`)
+  }
+
   const probeUrl = `${dir}${PROBE_FILE}`
   const tiny = await probe('PUT 探针（1 字节）', probeUrl, {
     method: 'PUT',

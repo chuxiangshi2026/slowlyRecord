@@ -354,7 +354,14 @@ export const useSyncStore = defineStore('sync', () => {
     try {
       saveWebDavConfig()
       const result = await uploadToWebDav(currentWebDavConfig())
-      resultMessage.value = result.success ? '已备份到云盘' : `备份失败: ${result.error || '未知错误'}`
+      if (result.success && result.resolvedDir) {
+        // 坚果云根目录不允许直接创建文件，已自动改用可写子目录：记住它，后续备份/恢复直连该目录
+        webdavUrl.value = result.resolvedDir
+        saveWebDavConfig()
+        resultMessage.value = `已备份到云盘（自动改用可写目录：${result.resolvedDir}）`
+      } else {
+        resultMessage.value = result.success ? '已备份到云盘' : `备份失败: ${result.error || '未知错误'}`
+      }
       if (result.success) markSynced()
       return result
     } catch (e) {
