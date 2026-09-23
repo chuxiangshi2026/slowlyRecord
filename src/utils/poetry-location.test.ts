@@ -38,6 +38,26 @@ describe('poetry-location: parseLocation', () => {
     expect(parseLocation('赤壁矶')!.name).toBe('赤壁')
   })
 
+  it('最长匹配优先：终南山匹配终南山，不被庐山短别名"南山"吞掉', () => {
+    expect(parseLocation('终南山')!.name).toBe('终南山')
+    expect(parseLocation('终南山/西安')!.name).toBe('终南山')
+  })
+
+  it('别名冲突消解（确定性）：益州只解析到成都，江州只解析到九江', () => {
+    // 益州治所成都；江州司马（《琵琶行》）在九江
+    expect(parseLocation('益州')!.name).toBe('成都')
+    expect(parseLocation('江州')!.name).toBe('九江')
+    // 白帝城是独立条目，不再被夔州别名覆盖
+    expect(parseLocation('白帝城')!.name).toBe('白帝城')
+  })
+
+  it('新补录的古地名可解析（密州/辋川/延安/井冈山）', () => {
+    expect(parseLocation('密州/山东诸城')!.name).toBe('密州')
+    expect(parseLocation('辋川/蓝田')!.name).toBe('蓝田')
+    expect(parseLocation('陕北')!.name).toBe('延安')
+    expect(parseLocation('井冈山')!.name).toBe('井冈山')
+  })
+
   it('无法解析时返回 null', () => {
     expect(parseLocation('火星')).toBeNull()
     expect(parseLocation('')).toBeNull()
