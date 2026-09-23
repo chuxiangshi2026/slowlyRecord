@@ -24,6 +24,14 @@ export default defineConfig({
       // mobile/src/utils 下的模块（远程词库下载等），mobile 代码以 @/utils/xxx 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/utils（不存在该文件）
       { find: /^@\/utils\/remote-wordbank$/, replacement: resolve(__dirname, 'mobile/src/utils/remote-wordbank.ts') },
+      // mobile 单词发音统一入口：mobile 代码以 @/utils/word-audio 引用，
+      // 需优先映射到 mobile 目录，避免落到桌面端 src/utils（不存在该文件）
+      { find: /^@\/utils\/word-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/word-audio.ts') },
+      // mobile 中文发音音源：mobile 代码以 @/utils/youdao-tts 引用，同上需优先映射到 mobile 目录
+      { find: /^@\/utils\/youdao-tts$/, replacement: resolve(__dirname, 'mobile/src/utils/youdao-tts.ts') },
+      // mobile 单词 store：mobile 代码以 @/stores/useMobileWords 引用，
+      // 需优先映射到 mobile 目录，避免落到桌面端 src/stores（不存在该文件）
+      { find: /^@\/stores\/useMobileWords$/, replacement: resolve(__dirname, 'mobile/src/stores/useMobileWords.ts') },
       // mobile 端的 `import ... from '@/config'`（不带扩展名）指向 mobile/src/config.ts，
       // 桌面端使用 `@/config.ts`（带扩展名），由后面通用规则解析到 src/config.ts
       { find: /^@\/config$/, replacement: resolve(__dirname, 'mobile/src/config.ts') },

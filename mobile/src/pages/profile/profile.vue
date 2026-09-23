@@ -2,9 +2,10 @@
   <view class="profile-container">
     <view class="header">
       <view class="avatar">
-        <text>U</text>
+        <text>{{ avatarText }}</text>
       </view>
-      <text class="username">慢记用户</text>
+      <text class="username" @click="editUsername">{{ displayUsername }} ✏️</text>
+      <text class="username-hint">仅保存在本地，点击可修改</text>
     </view>
 
     <view class="stats-row">
@@ -132,12 +133,25 @@
         <view class="remind-desc">
           <view class="remind-desc-item">· 受微信能力限制，工具类小程序只有「一次性订阅消息」：每授权一次，复习到期时收到一条提醒，不能自动天天推送。</view>
           <view class="remind-desc-item">· 提醒主战场是首页「今日待办」，订阅消息仅作辅助；授权仅在微信小程序内可用。</view>
-          <view v-if="subscribeRecord.times > 0" class="remind-desc-item">· 已累计授权 {{ subscribeRecord.times }} 次，最近一次：{{ lastSubscribeText }}</view>
+          <view v-if="subscribeRecord.times > 0" class="remind-desc-item">· 已开启提醒，当前还可接收 {{ subscribeRecord.times }} 条推送<template v-if="lastSubscribeText">，最近一次授权：{{ lastSubscribeText }}</template>。</view>
+          <view v-if="subscribeStatusText" class="remind-desc-item">· 最近授权结果：{{ subscribeStatusText }}</view>
         </view>
         <!-- #ifdef MP-WEIXIN -->
+        <!-- 模板 ID 由用户在公众平台申请后自行填入并本地持久化，未配置时无法开启订阅 -->
+        <view class="remind-template-section">
+          <view class="remind-template-label">订阅消息模板 ID</view>
+          <view class="template-input-row">
+            <input class="dialog-input" v-model="templateIdInput" placeholder="粘贴模板 ID，保存后生效" />
+            <button class="btn-save-template" @click="saveTemplateId">保存</button>
+          </view>
+          <view class="remind-template-hint">
+            模板需小程序管理员在 mp.weixin.qq.com → 功能 → 订阅消息 中申请：「选用模板」搜索"复习/学习提醒"类（如"每日学习提醒"），建议关键词：复习内容、提醒时间。申请通过后将模板 ID 粘贴到上方。
+          </view>
+        </view>
+        <view v-if="!isTemplateConfigured" class="remind-template-hint">未配置模板 ID，无法开启订阅</view>
         <view class="popup-actions">
           <button class="btn-cancel" @click="showRemindModal = false">取消</button>
-          <button class="btn-confirm btn-remind" @click="enableRemind">开启提醒</button>
+          <button class="btn-confirm btn-remind" :class="{ 'btn-disabled': !isTemplateConfigured }" @click="enableRemind">开启提醒</button>
         </view>
         <!-- #endif -->
         <!-- #ifndef MP-WEIXIN -->
@@ -155,13 +169,34 @@
 import { ref, computed } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { useUserProfile } from '@/stores/useUserProfile'
 import { useAchievements } from '@/stores/useAchievements'
 import { getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS } from '@/stores/useUtils/translation-settings'
 import type { TranslationPlatform } from '@/stores/useUtils/types'
-import { SUBSCRIBE_TEMPLATE_ID, getSubscribeRecord, recordSubscribeSuccess, type SubscribeRecord } from '@/utils/subscribe-remind'
+import { getSubscribeRecord, recordSubscribeOutcome, getSubscribeTemplateId, setSubscribeTemplateId, parseSubscribeResult, isSubscribeMessageSupported, type SubscribeRecord } from '@/utils/subscribe-remind'
 import { loadDailyGoal, saveDailyGoal, DAILY_GOAL_OPTIONS } from '@/utils/daily-goal'
 
 const wordsStore = useMobileWords()
+const userProfile = useUserProfile()
+
+// 本地用户名：未设置时回退默认展示名；头像取用户名首字符（未设置用 U）
+const displayUsername = computed(() => userProfile.username || '慢记用户')
+const avatarText = computed(() => (userProfile.username || 'U').charAt(0).toUpperCase())
+
+// 编辑用户名：纯本地持久化（store 已接 persistedstate），不同步、不上传
+const editUsername = () => {
+  uni.showModal({
+    title: '设置用户名',
+    content: userProfile.username,
+    editable: true,
+    placeholderText: '输入用户名，留空恢复默认',
+    success: (res) => {
+      if (!res.confirm) return
+      userProfile.setUsername(res.content || '')
+      uni.showToast({ title: userProfile.username ? '已保存' : '已恢复默认用户名', icon: 'none' })
+    },
+  })
+}
 
 // 每日目标：首页进度环的目标值（默认 20 词），选中即存 storage
 const dailyGoal = ref(loadDailyGoal())
@@ -265,7 +300,11 @@ const resetApiKeyForPlatform = () => {
 // ==================== 复习提醒（一次性订阅消息） ====================
 
 const showRemindModal = ref(false)
-const subscribeRecord = ref<SubscribeRecord>({ times: 0, lastTime: 0 })
+const subscribeRecord = ref<SubscribeRecord>({ times: 0, lastTime: 0, lastStatus: '', rejectTimes: 0 })
+// 模板 ID：从本地持久化设置读取（用户在公众平台申请后自行填入），输入框改动需先保存
+const subscribeTemplateId = ref('')
+const templateIdInput = ref('')
+const isTemplateConfigured = computed(() => !!subscribeTemplateId.value)
 
 const lastSubscribeText = computed(() => {
   if (!subscribeRecord.value.lastTime) return ''
@@ -273,33 +312,65 @@ const lastSubscribeText = computed(() => {
   return `${d.getMonth() + 1}月${d.getDate()}日`
 })
 
+// 最近一次授权结果的中文展示
+const subscribeStatusText = computed(() => {
+  const s = subscribeRecord.value.lastStatus
+  if (!s) return ''
+  return ({ accept: '已接受', reject: '已拒绝（可到小程序设置中重新开启）', ban: '订阅能力被微信限制', expired: '授权已过期', unknown: '结果未知' } as Record<string, string>)[s] || ''
+})
+
 const showRemind = () => {
   subscribeRecord.value = getSubscribeRecord()
+  subscribeTemplateId.value = getSubscribeTemplateId()
+  templateIdInput.value = subscribeTemplateId.value
   showRemindModal.value = true
 }
 
-// 开启提醒：拉起微信一次性订阅消息授权（仅微信小程序端进入此函数）
+// 保存模板 ID（空值提示，不写入）
+const saveTemplateId = () => {
+  const id = templateIdInput.value.trim()
+  if (!id) {
+    uni.showToast({ title: '请先粘贴模板 ID', icon: 'none' })
+    return
+  }
+  setSubscribeTemplateId(id)
+  subscribeTemplateId.value = id
+  uni.showToast({ title: '模板 ID 已保存', icon: 'success' })
+}
+
+// 开启提醒：拉起微信一次性订阅消息授权（仅微信小程序端可进入，此处再兜底做一次能力检测）
 const enableRemind = () => {
-  // 模板 ID 在小程序后台申请后配置；未配置时给出提示，不报错
-  if (!SUBSCRIBE_TEMPLATE_ID) {
-    uni.showToast({ title: '提醒功能尚未配置模板', icon: 'none' })
+  // 模板 ID 为本地用户配置；未配置时按钮置灰，点击也给提示兜底
+  if (!subscribeTemplateId.value) {
+    uni.showToast({ title: '请先配置模板 ID', icon: 'none' })
+    return
+  }
+  if (!isSubscribeMessageSupported()) {
+    uni.showToast({ title: '当前平台不支持订阅消息', icon: 'none' })
     return
   }
   uni.requestSubscribeMessage({
-    tmplIds: [SUBSCRIBE_TEMPLATE_ID],
+    tmplIds: [subscribeTemplateId.value],
     success: (res) => {
-      // 授权结果以模板 ID 为键：accept 接受 / reject 拒绝 / ban 被封禁
-      const result = (res as any)[SUBSCRIBE_TEMPLATE_ID]
+      const result = parseSubscribeResult(res as Record<string, unknown>, subscribeTemplateId.value)
+      // 授权结果（接受/拒绝/封禁/过期）记录到本地
+      subscribeRecord.value = recordSubscribeOutcome(result)
       if (result === 'accept') {
-        subscribeRecord.value = recordSubscribeSuccess()
         showRemindModal.value = false
-        // TODO（服务端）：一次授权对应一条可推送额度。当前授权记录仅保存本地，
-        // 后续需扩展同步 payload 或新增上报接口，由服务端在复习到期时消费推送。
+        // 一次授权对应一条可推送额度；服务端推送待办见 subscribe-remind.ts 顶部 TODO ②
         uni.showToast({ title: '已开启，复习到期将提醒你', icon: 'success' })
-      } else if (result === 'reject') {
-        uni.showToast({ title: '已取消授权，可随时重新开启', icon: 'none' })
+      } else if (result === 'reject' || result === 'ban') {
+        // 拒绝/封禁后的引导：拒绝可在小程序设置里重新开启，封禁只能等待微信解除
+        uni.showModal({
+          title: result === 'reject' ? '已拒绝授权' : '订阅能力受限',
+          content: result === 'reject'
+            ? '如需接收复习提醒，请点小程序右上角「···」→ 设置 → 订阅消息，打开对应开关后重新授权。'
+            : '微信限制了本小程序的订阅能力，暂时无法开启提醒，可稍后再试。',
+          showCancel: false,
+          confirmText: '知道了',
+        })
       } else {
-        uni.showToast({ title: '暂时无法订阅提醒，请稍后再试', icon: 'none' })
+        uni.showToast({ title: '授权结果未知，可稍后再试', icon: 'none' })
       }
     },
     fail: () => {
@@ -428,6 +499,13 @@ const showAbout = () => {
   color: #fff;
   font-size: 36rpx;
   font-weight: bold;
+}
+
+.username-hint {
+  display: block;
+  color: rgba(255,255,255,0.6);
+  font-size: 22rpx;
+  margin-top: 10rpx;
 }
 
 .stats-row {
@@ -685,6 +763,61 @@ button.menu-item.feedback-btn::after {
 .remind-popup .btn-remind {
   background: #52796f;
   color: #fff;
+}
+
+/* 模板 ID 未配置时「开启提醒」置灰 */
+.remind-popup .btn-remind.btn-disabled {
+  background: #b8c8c2;
+  color: #fff;
+}
+
+.remind-popup .remind-template-section {
+  margin-bottom: 12rpx;
+}
+
+.remind-popup .remind-template-label {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.remind-popup .template-input-row {
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.remind-popup .template-input-row .dialog-input {
+  flex: 1;
+  height: 80rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.remind-popup .btn-save-template {
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #eaf1ea;
+  color: #52796f;
+  font-size: 26rpx;
+  border: none;
+  border-radius: 8rpx;
+  padding: 0 28rpx;
+  margin: 0;
+}
+
+.remind-popup .btn-save-template::after {
+  border: none;
+}
+
+.remind-popup .remind-template-hint {
+  font-size: 22rpx;
+  color: #999;
+  line-height: 1.6;
+  margin-top: 10rpx;
 }
 
 .remind-popup .remind-unsupported {

@@ -98,6 +98,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
 import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
+import { askImportTargetBank } from '@/utils/wordbank-import-target'
 
 const wordsStore = useMobileWords()
 const createDialogVisible = ref(false)
@@ -128,7 +129,7 @@ async function refreshRemoteIndex() {
   }
 }
 
-// 点击远程词库：已缓存的直接导入，未缓存的先下载再导入
+// 点击远程词库：已缓存的直接导入，未缓存的先下载再导入；导入前询问目标词库
 async function onRemoteBankTap(bank: RemoteWordBankInfo) {
   if (downloadingId.value) return
   try {
@@ -136,9 +137,11 @@ async function onRemoteBankTap(bank: RemoteWordBankInfo) {
     downloadProgress.value = 0
     const rawWords = await getWordBank(bank.id, (p) => { downloadProgress.value = p })
     cachedIds.value = getCachedBankIds()
-    // 导入到当前词库（复用现有导入逻辑）
-    await importToCurrentBank(bank, rawWords)
-    // 导入成功后缓存已删（见 importToCurrentBank），刷新缓存标记
+    // 询问目标词库：导入当前 / 新建并导入 / 选择其他已有词库；取消则保留下载缓存（显示"已下载"）
+    const targetBankId = await askImportTargetBank(bank.name)
+    if (!targetBankId) return
+    await importToBank(bank, rawWords, targetBankId)
+    // 导入成功后缓存已删（见 importToBank），刷新缓存标记
     cachedIds.value = getCachedBankIds()
   } catch (e: any) {
     uni.showToast({ title: e?.message || '下载失败', icon: 'none' })
@@ -148,9 +151,8 @@ async function onRemoteBankTap(bank: RemoteWordBankInfo) {
   }
 }
 
-// 把远程词库导入当前词库（与词库管理页导入内置词库同一口径）
-async function importToCurrentBank(bank: RemoteWordBankInfo, rawWords: any[]) {
-  const bankId = wordsStore.currentBankId
+// 把远程词库导入指定词库（与词库管理页导入内置词库同一口径）
+async function importToBank(bank: RemoteWordBankInfo, rawWords: any[], bankId: string) {
   const now = Date.now()
   const mobileWords = rawWords.map(w => {
     const wordText = w.word || ''

@@ -102,6 +102,7 @@ import { WORDBANK_LIST } from '@/stores/useUtils/wordbank'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
 import { RECOMMENDED_BANKS, STARTER_WORD_COUNT, markOnboarded, type RecommendedBank } from '@/utils/onboarding'
 import { STARTER_BANKS } from '@/utils/onboarding-starter-banks'
+import { askImportTargetBank } from '@/utils/wordbank-import-target'
 
 const TOTAL = 3
 const current = ref(0)
@@ -150,14 +151,17 @@ function goKnowledge() {
   uni.navigateTo({ url: '/subPackages/pages-knowledge/knowledge-list' })
 }
 
-// 一键导入推荐词库的前 STARTER_WORD_COUNT 词到默认词库，随后进首页
+// 一键导入推荐词库的前 STARTER_WORD_COUNT 词，随后进首页
 // 导入进度与 sourceId 按词库管理页的口径落库，用户之后可续导剩余部分
+// 导入前询问目标词库（与词库管理页同一口径）：当前词库 / 新建词库 / 其他已有词库
 async function importBank(bank: RecommendedBank & { wordCount: number }) {
   if (importing.value) return
   importing.value = bank.sourceId
   try {
     await wordsStore.loadWords()
-    const bankId = wordsStore.currentBankId
+    // 用户取消选择时停留在引导页，可重新选择
+    const bankId = await askImportTargetBank(bank.name)
+    if (!bankId) return
     const raw = STARTER_BANKS[bank.sourceId] || []
     const now = Date.now()
     const mobileWords = raw.map(w => {
