@@ -206,7 +206,7 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
-import { getTtsAdapter } from '@/adapters/index'
+import { speakWord } from '@/utils/word-audio'
 import { buildFragmentTiles, type AnswerTile } from '@/utils/answer-tokens'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
@@ -474,7 +474,7 @@ function tapRecall(index: number) {
 }
 
 // ========== 语音播放 ==========
-function playWord() {
+function playWord(userInitiated = false) {
   const word = currentWord.value
   if (!word?.word) return
 
@@ -486,21 +486,13 @@ function playWord() {
   // #endif
 
   // #ifdef MP-WEIXIN || MP-TOUTIAO
-  // 使用有道 TTS 接口（免费，无需密钥）
-  const ttsUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word.word)}&type=2`
-  const tts = getTtsAdapter()
-  tts.playAudio(ttsUrl).catch(() => {
-    // 有道 TTS 失败时，尝试 Google TTS
-    const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word.word)}`
-    tts.playAudio(googleUrl).catch(() => {
-      uni.showToast({ title: '语音播放失败', icon: 'none' })
-    })
-  })
+  // 全局统一发音入口：有道优先、失败回退谷歌；自动播放失败静默，手动点按失败才节流提示
+  speakWord(word.word, { userInitiated })
   // #endif
 }
 
 function replayWord() {
-  playWord()
+  playWord(true)
 }
 
 // ========== 答案检查 ==========

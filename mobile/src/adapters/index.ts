@@ -343,10 +343,17 @@ export class MiniProgramDbAdapter implements DbAdapter {
 
 // ==================== TtsAdapter ====================
 
+export interface PlayAudioOptions {
+  /** 静默模式：播放失败时不弹 toast（自动发音/自动连播用）；用户主动发音缺省会弹节流提示 */
+  silent?: boolean
+}
+
 export interface TtsAdapter {
   speak(text: string, options?: { lang?: string; rate?: number; pitch?: number }): void
   stop(): void
-  playAudio(url: string): Promise<void>
+  playAudio(url: string, options?: PlayAudioOptions): Promise<void>
+  /** 预取音频到本地缓存（可选实现）：播当前词时提前缓存下一个词，降低切词后的发音延迟 */
+  prefetchAudio?(url: string): void
 }
 
 // ---------- 音频本地缓存（纯函数部分，便于单测）----------
@@ -403,7 +410,7 @@ const AUDIO_MAX_RETRY = 2
 /** 重试基础间隔（毫秒），第 N 次重试等待 N 倍间隔 */
 const AUDIO_RETRY_BASE_DELAY = 400
 /** 播放失败 toast 的最小间隔，避免连续弹窗 */
-const AUDIO_FAIL_TOAST_INTERVAL = 30000
+const AUDIO_FAIL_TOAST_INTERVAL = 3000
 
 function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -414,19 +421,25 @@ class MiniProgramTtsAdapter implements TtsAdapter {
   /** 缓存清单（null 表示尚未加载），缓存读写全部容错，绝不影响发音主流程 */
   private cacheManifest: Record<string, AudioCacheEntry> | null = null
   private lastFailToastAt = 0
+  /** 播放代次：每次 playAudio/stop 自增，旧代次的待重试与回调一律作废，防止过期音频抢跑 */
+  private generation = 0
 
   speak(_text: string, _options?: { lang?: string; rate?: number; pitch?: number }): void {
     console.warn('MiniProgramTtsAdapter.speak: Use playAudio with TTS URL instead')
   }
 
   stop(): void {
+    // 自增代次：进行中的播放与待重试的旧请求随之作废（拒绝时静默，不弹提示）
+    this.generation++
     if (this.innerAudio) {
-      this.innerAudio.stop()
+      try { this.innerAudio.stop() } catch { /* ignore */ }
+      try { this.innerAudio.destroy?.() } catch { /* ignore */ }
       this.innerAudio = null
     }
   }
 
-  async playAudio(url: string): Promise<void> {
+  async playAudio(url: string, options?: PlayAudioOptions): Promise<void> {
+    const generation = ++this.generation
     // 命中本地缓存则直接播本地路径，弱网也能即时发音
     const cacheWord = parseAudioCacheWord(url)
     const cacheKey = cacheWord ? hashAudioCacheKey(cacheWord) : null
@@ -435,6 +448,8 @@ class MiniProgramTtsAdapter implements TtsAdapter {
 
     let lastErr: any = null
     for (let attempt = 0; attempt <= AUDIO_MAX_RETRY; attempt++) {
+      // 代际校验：已被更新的播放取代（切词/手动停止）时，旧请求直接作废，不再重试
+      if (generation !== this.generation) throw lastErr ?? new Error('stale audio play aborted')
       try {
         await this.playOnce(targetUrl)
         // 播放成功后后台补齐本地缓存（仅在线地址命中且本地无缓存时）
@@ -450,9 +465,26 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       }
     }
 
-    // 重试耗尽：节流提示一次，错误继续抛给调用方走备用音源等兜底
-    this.toastFailThrottled()
+    // 代际作废后的失败一律静默；仅用户主动发音（非静默）才节流提示，
+    // 错误继续抛给调用方走备用音源等兜底
+    if (generation !== this.generation) throw lastErr
+    if (!options?.silent) {
+      this.toastFailThrottled()
+    }
     throw lastErr
+  }
+
+  /** 预取音频：本地缓存缺失时后台下载落盘，下次 playAudio 命中缓存即可即时发音 */
+  prefetchAudio(url: string): void {
+    const word = parseAudioCacheWord(url)
+    if (!word) return
+    const key = hashAudioCacheKey(word)
+    try {
+      if (this.loadManifest()[key]?.filePath) return
+    } catch {
+      return
+    }
+    this.downloadAndCache(url, key).catch(() => { /* 预取失败静默，播放时仍走在线地址 */ })
   }
 
   /** 单次播放：出错或超时视为失败，由上层决定是否重试 */

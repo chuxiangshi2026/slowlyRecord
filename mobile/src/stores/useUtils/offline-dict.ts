@@ -2,6 +2,7 @@
  * 离线词典 - 轻量模块，被 review.vue（主包）和 translate.vue（分包）引用
  */
 
+import { getTtsAdapter } from '@/adapters/index'
 import type { WordBankType } from './types'
 import { queryPhoneticFromWordBankCache } from './wordbank'
 
@@ -137,10 +138,6 @@ export function getPronunciationUrl(word: string, lang: 'en' | 'us' = 'us'): str
 }
 
 export function playPronunciation(word: string, lang: 'en' | 'us' = 'us'): void {
-  const url = getPronunciationUrl(word, lang)
-  const audio = uni.createInnerAudioContext()
-  audio.src = url
-  audio.play()
-  audio.onEnded(() => { audio.destroy() })
-  audio.onError(() => { audio.destroy() })
+  // 收敛到 TTS 适配器单例：播新音前停旧音、走缓存与重试，失败静默
+  getTtsAdapter().playAudio(getPronunciationUrl(word, lang), { silent: true }).catch(() => {})
 }

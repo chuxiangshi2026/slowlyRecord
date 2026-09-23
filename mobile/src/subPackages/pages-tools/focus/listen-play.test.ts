@@ -9,6 +9,13 @@ describe('buildWordAudioUrls', () => {
     expect(urls[0]).toContain(encodeURIComponent('take care'))
     expect(urls[1]).toContain('translate.google.com')
   })
+
+  it('中文词应走有道智云 TTS 与谷歌 zh-CN 兜底', () => {
+    const urls = buildWordAudioUrls('你好')
+    expect(urls[0]).toContain('openapi.youdao.com/ttsapi')
+    expect(urls[0]).toContain(encodeURIComponent('你好'))
+    expect(urls[urls.length - 1]).toContain('tl=zh-CN')
+  })
 })
 
 describe('ListenPlayer', () => {

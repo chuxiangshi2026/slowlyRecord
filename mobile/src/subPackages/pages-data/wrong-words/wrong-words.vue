@@ -65,8 +65,7 @@
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
-import { getTtsAdapter } from '@/adapters/index'
-import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
+import { speakWord, stopSpeaking } from '@/utils/word-audio'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
 import { useAchievements } from '@/stores/useAchievements'
@@ -142,20 +141,13 @@ const flipCard = () => {
   isFlipped.value = true
 }
 
-/** 播放当前单词发音：有道优先，失败回退谷歌 TTS，均失败静默 */
+/** 播放当前单词发音：全局统一入口（播前停旧音、代际防抢跑、预取下一词），失败静默 */
 function playWord() {
   const word = currentWord.value?.word
   if (!word) return
-  try {
-    const tts = getTtsAdapter()
-    tts.playAudio(getPronunciationUrl(word, 'us')).catch(() => {
-      tts.playAudio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`).catch(() => {
-        // 发音不可用，静默失败
-      })
-    })
-  } catch {
-    // TTS 不可用，静默失败
-  }
+  const nextId = session.ids[session.pos + 1]
+  const next = nextId != null ? snapshotWords.value.find(w => w.id === nextId)?.word : undefined
+  speakWord(word, { prefetchNext: next })
 }
 
 // 翻面显示释义时自动发音一次（无开关，跟随复习页同一套 adapter）
@@ -169,6 +161,8 @@ const handleStillForget = () => {
     wordsStore.markAsForgotten(word.id)
     vibrateOnJudge('wrong')
     markForgotten(session)
+    // 切词先停旧朗读，并作废旧词待完成的音源回退
+    stopSpeaking()
     isFlipped.value = false
   }
 }
@@ -183,6 +177,8 @@ const handleMastered = () => {
     const afterLevel = wordsStore.words.find(w => w.id === word.id)?.level ?? beforeLevel
     if (afterLevel > beforeLevel) triggerLevelUp(beforeLevel, afterLevel)
     markMastered(session)
+    // 切词先停旧朗读，并作废旧词待完成的音源回退
+    stopSpeaking()
     isFlipped.value = false
   }
 }

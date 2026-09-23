@@ -86,7 +86,7 @@
       </view>
       <view class="action-row">
         <button class="btn-forget" @click="markCurrent(false)">没记住</button>
-        <button class="btn-play" @click.stop="playCurrent">🔊</button>
+        <button class="btn-play" @click.stop="playCurrent(true)">🔊</button>
         <button class="btn-remember" @click="markCurrent(true)">记住了</button>
       </view>
     </view>
@@ -117,7 +117,7 @@
           <text v-if="currentWord.phonetic" class="focus-phonetic">{{ currentWord.phonetic }}</text>
         </template>
         <template v-else>
-          <view class="audio-trigger" @click="playCurrent">
+          <view class="audio-trigger" @click="playCurrent(true)">
             <text class="audio-icon">🔊</text>
             <text class="audio-text">{{ played ? '再听一遍' : '点击播放' }}</text>
           </view>
@@ -180,6 +180,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
+import { speakWord, stopSpeaking } from '@/utils/word-audio'
 import { ListenPlayer } from './listen-play'
 
 const wordsStore = useMobileWords()
@@ -320,20 +321,29 @@ function scheduleAutoTimer() {
   }, settings.value.intervalSec * 1000)
 }
 
-// ========== 发音（与听写页同一 TTS 通道） ==========
-function playCurrent() {
+// ========== 发音（全局统一入口：播前停旧音、代际防抢跑、预取下一词） ==========
+function playCurrent(userInitiated = false) {
   const word = currentWord.value
   if (!word?.word) return
   played.value = true
-  try {
-    const tts = getTtsAdapter()
-    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word.word)}&type=2`
-    tts.playAudio(url).catch(() => {
-      const fallback = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word.word)}`
-      tts.playAudio(fallback).catch(() => {})
-    })
-  } catch {
-    // TTS 不可用，静默失败
+  speakWord(word.word, {
+    userInitiated,
+    prefetchNext: wordList.value[currentIndex.value + 1]?.word,
+    // 自动发音开启时，发音自然播完即切下一个并继续发音（自动连播）
+    onEnded: settings.value.autoPlay ? advanceByAudio : undefined
+  })
+}
+
+/** 发音播完自动推进：仅标准/听写模式生效，与「自动翻页」定时器相互独立，先到者生效 */
+function advanceByAudio() {
+  if (!settings.value.autoPlay || showComplete.value) return
+  if (settings.value.mode !== 'standard' && settings.value.mode !== 'dictation') return
+  clearAutoTimer()
+  if (currentIndex.value < wordList.value.length - 1) {
+    currentIndex.value++
+    resetWordState()
+  } else {
+    showComplete.value = true
   }
 }
 
@@ -360,7 +370,8 @@ function startListen() {
         showComplete.value = true
       },
       onError: () => {
-        uni.showToast({ title: '发音加载失败，已跳过', icon: 'none' })
+        // 连播失败静默跳过该词（降噪：不弹 toast），只留控制台告警便于排查
+        console.warn('ListenPlayer: 单词发音全部音源失败，已跳过')
       }
     }
   )
@@ -408,6 +419,8 @@ function listenNext() {
 
 // ========== 流程控制 ==========
 function resetWordState() {
+  // 切词/切模式先停旧朗读，并作废旧词待完成的音源回退
+  stopSpeaking()
   isRevealed.value = false
   userInput.value = ''
   checked.value = false

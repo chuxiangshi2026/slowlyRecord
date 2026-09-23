@@ -255,3 +255,111 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
     expect(storage.get('slowlyrecord_audio_cache_manifest') ?? {}).toEqual({})
   })
 })
+
+describe('MiniProgramTtsAdapter 代际作废与提示降噪', () => {
+  let storage: Map<string, any>
+  let audioInstances: any[]
+  let uniMock: any
+
+  function createAudioMock() {
+    const handlers: Record<string, Function[]> = {}
+    const audio: any = {
+      src: '',
+      play: vi.fn(),
+      stop: vi.fn(),
+      destroy: vi.fn(),
+      onEnded: (fn: Function) => { (handlers['ended'] ||= []).push(fn) },
+      onError: (fn: Function) => { (handlers['error'] ||= []).push(fn) },
+      trigger: (event: string, arg?: any) => { (handlers[event] || []).forEach(fn => fn(arg)) },
+    }
+    return audio
+  }
+
+  beforeEach(() => {
+    vi.useFakeTimers()
+    storage = new Map()
+    audioInstances = []
+    uniMock = {
+      getStorageSync: vi.fn((key: string) => storage.get(key) ?? null),
+      setStorageSync: vi.fn((key: string, data: any) => { storage.set(key, data) }),
+      removeStorageSync: vi.fn((key: string) => { storage.delete(key) }),
+      createInnerAudioContext: vi.fn(() => {
+        const audio = createAudioMock()
+        audioInstances.push(audio)
+        return audio
+      }),
+      downloadFile: vi.fn(({ success }: any) => {
+        success({ statusCode: 200, tempFilePath: 'tmp://audio.mp3' })
+      }),
+      saveFile: vi.fn(({ tempFilePath, success }: any) => {
+        success({ savedFilePath: `saved://${tempFilePath}` })
+      }),
+      removeSavedFile: vi.fn(),
+      showToast: vi.fn(),
+    }
+    ;(global as any).uni = uniMock
+    setTtsAdapter(null as any)
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    setTtsAdapter(null as any)
+  })
+
+  it('静默模式重试耗尽仍 reject，但不弹 toast', async () => {
+    const promise = getTtsAdapter().playAudio('https://dict.youdao.com/dictvoice?audio=hello&type=2', { silent: true })
+    // 先挂接 rejection 断言，避免 promise 先拒绝产生 unhandled rejection
+    const assertion = expect(promise).rejects.toBeTruthy()
+    for (let i = 0; i <= 2; i++) {
+      await vi.advanceTimersByTimeAsync(0)
+      audioInstances[i].trigger('error', { errMsg: 'net error' })
+      await vi.advanceTimersByTimeAsync(1200)
+    }
+    await assertion
+    expect(uniMock.showToast).not.toHaveBeenCalled()
+  })
+
+  it('新播放开始后，旧播放的待重试被代际作废且静默失败', async () => {
+    const stale = getTtsAdapter().playAudio('https://dict.youdao.com/dictvoice?audio=oldword&type=2')
+    // 先挂接 rejection 断言，避免 promise 先拒绝产生 unhandled rejection
+    const staleAssertion = expect(stale).rejects.toBeTruthy()
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[0].trigger('error', { errMsg: 'net error' })
+    // 重试间隔内用户切词发起新播放：旧请求代次作废
+    const fresh = getTtsAdapter().playAudio('https://dict.youdao.com/dictvoice?audio=newword&type=2')
+    await vi.advanceTimersByTimeAsync(0)
+    expect(audioInstances).toHaveLength(2)
+    audioInstances[1].trigger('ended')
+    await expect(fresh).resolves.toBeUndefined()
+    // 旧请求重试间隔到期：直接作废，不再创建新实例、不弹 toast
+    await vi.advanceTimersByTimeAsync(1200)
+    await staleAssertion
+    expect(audioInstances).toHaveLength(2)
+    expect(uniMock.showToast).not.toHaveBeenCalled()
+  })
+
+  it('stop() 使进行中的非静默播放作废且不弹 toast', async () => {
+    const promise = getTtsAdapter().playAudio('https://dict.youdao.com/dictvoice?audio=hello&type=2')
+    // 先挂接 rejection 断言，避免 promise 先拒绝产生 unhandled rejection
+    const assertion = expect(promise).rejects.toBeTruthy()
+    await vi.advanceTimersByTimeAsync(0)
+    getTtsAdapter().stop()
+    // playOnce 挂起直至 15s 超时兜底 → 重试前代际校验作废
+    await vi.advanceTimersByTimeAsync(15500)
+    await assertion
+    expect(uniMock.showToast).not.toHaveBeenCalled()
+  })
+
+  it('prefetchAudio 后台下载缓存，已缓存时不重复下载', async () => {
+    const url = 'https://dict.youdao.com/dictvoice?audio=hello&type=2'
+    getTtsAdapter().prefetchAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
+    // 再次预取同一词：命中缓存，不再下载
+    getTtsAdapter().prefetchAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
+    const manifest = storage.get('slowlyrecord_audio_cache_manifest')
+    expect(manifest[hashAudioCacheKey('hello')]?.filePath).toBe('saved://tmp://audio.mp3')
+  })
+})

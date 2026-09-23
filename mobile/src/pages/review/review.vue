@@ -25,9 +25,15 @@
       <view class="progress-bar-top">
         <view class="progress-row">
           <text class="progress-text">{{ currentIndex + 1 }} / {{ sessionWords.length }}</text>
-          <view class="autoplay-toggle" @click="toggleAutoPlay">
-            <text class="autoplay-icon">{{ autoPlay ? '🔊' : '🔇' }}</text>
-            <text class="autoplay-label">自动发音</text>
+          <view class="toggle-group">
+            <view class="autoplay-toggle" @click="toggleAutoPlay">
+              <text class="autoplay-icon">{{ autoPlay ? '🔊' : '🔇' }}</text>
+              <text class="autoplay-label">自动发音</text>
+            </view>
+            <view class="autoplay-toggle" @click="toggleDirectMeaning">
+              <text class="autoplay-icon">{{ directMeaning ? '👁' : '🙈' }}</text>
+              <text class="autoplay-label">直接释义</text>
+            </view>
           </view>
         </view>
         <view class="progress-track">
@@ -49,9 +55,9 @@
 
       <!-- 卡片（微信小程序用 catchtouch 阻止页面滚动） -->
       <view class="card-wrapper">
-        <!-- 正面 -->
+        <!-- 正面（开启「直接释义」后不再渲染正面，卡片恒为释义面） -->
         <view
-          v-if="!isFlipped"
+          v-if="!cardFlipped"
           class="review-card card-front"
           :class="{ swiping: isSwiping }"
           :style="cardStyle"
@@ -70,7 +76,7 @@
             <text class="flip-hint">点击翻转 / 长按删除</text>
           </view>
           <view class="quick-actions">
-            <button class="btn-play" @tap.stop="playWord">🔊 发音</button>
+            <button class="btn-play" @tap.stop="playWord(true)">🔊 发音</button>
           </view>
           <!-- 划动视觉反馈 -->
           <view v-if="swipeDirection === 'left'" class="swipe-overlay left">
@@ -196,8 +202,8 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewState } from '@/stores/useMobileWords'
 import { useSignin } from '@/stores/useSignin'
-import { getTtsAdapter } from '@/adapters/index'
-import { queryOfflineDict, getPronunciationUrl } from '@/stores/useUtils/offline-dict'
+import { speakWord, stopSpeaking } from '@/utils/word-audio'
+import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
 import { loadDailyGoal, countReviewedToday, checkGoalJustAchieved, DEFAULT_DAILY_GOAL } from '@/utils/daily-goal'
@@ -227,10 +233,26 @@ const checkGoalReached = (before: number) => {
 const AUTOPLAY_STORAGE_KEY = 'slowlyrecord-review-autoplay'
 const autoPlay = ref(true)
 
+// 「直接显示释义」开关：默认关，持久化到 storage；开启后卡片无需点击即显示释义面
+const DIRECT_MEANING_STORAGE_KEY = 'slowlyrecord-review-direct-meaning'
+const directMeaning = ref(false)
+
+// 卡片实际是否展示释义面：点击翻面 或 开启「直接释义」
+const cardFlipped = computed(() => isFlipped.value || directMeaning.value)
+
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
   try {
     uni.setStorageSync(AUTOPLAY_STORAGE_KEY, autoPlay.value)
+  } catch {
+    // 存储失败不影响本次使用
+  }
+}
+
+const toggleDirectMeaning = () => {
+  directMeaning.value = !directMeaning.value
+  try {
+    uni.setStorageSync(DIRECT_MEANING_STORAGE_KEY, directMeaning.value)
   } catch {
     // 存储失败不影响本次使用
   }
@@ -399,6 +421,13 @@ onMounted(() => {
   } catch {
     // 读取失败用默认值
   }
+  // 恢复「直接显示释义」设置（默认关）
+  try {
+    const saved = uni.getStorageSync(DIRECT_MEANING_STORAGE_KEY)
+    if (typeof saved === 'boolean') directMeaning.value = saved
+  } catch {
+    // 读取失败用默认值
+  }
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享，无需重复调用
   // 等数据准备好后尝试恢复未完成的复习会话；恢复不到则自动按当前待复习列表新建会话
   const tryInit = () => {
@@ -546,25 +575,21 @@ const goToWords = () => {
   uni.switchTab({ url: '/pages/words/words' })
 }
 
-const playWord = () => {
+const playWord = (userInitiated = false) => {
   const word = currentWord.value?.word
   if (!word) return
-  try {
-    const tts = getTtsAdapter()
-    // 有道发音优先，失败回退谷歌 TTS，均失败静默
-    tts.playAudio(getPronunciationUrl(word, 'us')).catch(() => {
-      tts.playAudio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`).catch(() => {
-        // 发音不可用，静默失败
-      })
-    })
-  } catch {
-    // TTS 不可用，静默失败
-  }
+  // 全局统一发音入口：播前停旧音、代际防抢跑、预取下一词；自动发音失败静默
+  speakWord(word, { userInitiated, prefetchNext: sessionWords.value[currentIndex.value + 1]?.word })
 }
 
 // 翻面显示释义时自动发音一次；新词出现（isFlipped 归 false）不播，先让用户回忆
 watch(isFlipped, (flipped) => {
   if (flipped && autoPlay.value) playWord()
+})
+
+// 开启「直接释义」时新词一上卡释义即显示，视同翻面补一次自动发音
+watch(currentWord, (word) => {
+  if (word && directMeaning.value && autoPlay.value) playWord()
 })
 
 // ==================== 手势处理（微信小程序兼容）====================
@@ -809,11 +834,14 @@ const undoLastJudgement = () => {
 }
 
 onUnmounted(() => {
+  stopSpeaking()
   if (undoTimer) clearTimeout(undoTimer)
   if (levelUpTimer) clearTimeout(levelUpTimer)
 })
 
 const nextWord = () => {
+  // 切词先停旧朗读，并作废旧词待完成的音源回退
+  stopSpeaking()
   isFlipped.value = false
   if (currentIndex.value < sessionWords.value.length - 1) {
     currentIndex.value++
@@ -902,6 +930,12 @@ const goAfterReview = (url: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
 }
 
 .autoplay-toggle {

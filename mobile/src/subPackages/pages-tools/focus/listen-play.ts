@@ -1,7 +1,9 @@
 /**
- * 连播听词播放控制器（纯逻辑，不依赖 uni API，可单测）
+ * 连播听词播放控制器（不直接依赖 uni API，可单测）
  * 流程：播放单词发音 → 停顿 → 自动推进下一个；发音失败按音源回退，全部失败则跳过该词。
  */
+
+import { buildChineseAudioUrls, containsChinese } from '@/utils/youdao-tts'
 
 export interface WordAudioPlayer {
   playAudio(url: string): Promise<void>
@@ -16,8 +18,9 @@ export interface ListenPlayCallbacks {
   onError?: (index: number) => void
 }
 
-/** 构建单词发音音源列表：有道优先，谷歌翻译 TTS 兜底 */
+/** 构建单词发音音源列表：英文有道优先、谷歌兜底；中文走有道智云 TTS → 谷歌（tl=zh-CN），与 word-audio 同一策略 */
 export function buildWordAudioUrls(word: string): string[] {
+  if (containsChinese(word)) return buildChineseAudioUrls(word)
   return [
     `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=2`,
     `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`
