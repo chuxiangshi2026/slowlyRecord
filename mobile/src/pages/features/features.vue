@@ -92,6 +92,13 @@ const features = [
     desc: '沉浸式学习 / 连播听词（防熄屏）',
     action: () => navigate('/subPackages/pages-tools/focus/focus'),
   },
+  {
+    icon: '📈',
+    cls: 'graph',
+    text: '函数图像',
+    desc: '公式 / 函数可视化动态展示',
+    action: () => navigate('/subPackages/pages-tools/function-graph/function-graph'),
+  },
 ]
 </script>
 
@@ -148,6 +155,7 @@ const features = [
 .menu-icon.palace { background: #4a6b62; }
 .menu-icon.sentences { background: #8ba89c; }
 .menu-icon.focus { background: #5c7a6b; }
+.menu-icon.graph { background: #6b8f7f; }
 
 .menu-info {
   flex: 1;

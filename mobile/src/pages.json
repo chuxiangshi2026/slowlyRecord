@@ -72,6 +72,12 @@
             "navigationBarTextStyle": "white",
             "backgroundColor": "#10241e"
           }
+        },
+        {
+          "path": "function-graph/function-graph",
+          "style": {
+            "navigationBarTitleText": "函数图像"
+          }
         }
       ]
     },
