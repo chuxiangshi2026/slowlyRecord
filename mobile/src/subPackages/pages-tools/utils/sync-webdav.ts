@@ -133,6 +133,9 @@ export interface WebDavCheck {
   detail?: string
 }
 
+/** 诊断版本：改诊断逻辑时递增，便于确认用户跑的是哪一版 */
+const DIAG_VERSION = '3（1字节+64KB探针，含响应正文）'
+
 /** 探针文件名：诊断可写性用，用完即删，避免污染用户数据 */
 const PROBE_FILE = 'slowlyRecord-probe.txt'
 
@@ -149,7 +152,11 @@ function requestOnce(cfg: WebDavConfig, url: string, method: string, data?: stri
         ? { Authorization: authHeader(cfg), 'Content-Type': 'application/octet-stream' }
         : { Authorization: authHeader(cfg) },
       data,
-      success: (res) => resolve({ step: '', status: res.statusCode }),
+      success: (res) => {
+        // 错误响应的正文往往写明原因（如坚果云的权限/配额提示）
+        const raw = res.statusCode >= 400 ? String(res.data ?? '').replace(/\s+/g, ' ').slice(0, 200) : ''
+        resolve({ step: '', status: res.statusCode, detail: raw ? `响应正文：${raw}` : undefined })
+      },
       fail: (err) => resolve({ step: '', status: null, detail: err.errMsg || '网络错误' }),
     })
   })
@@ -208,6 +215,7 @@ export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDa
   const verdict = buildWebDavVerdict(checks)
   const text = [
     '【WebDAV 诊断】',
+    `诊断版本：${DIAG_VERSION}`,
     `目录：${dir}`,
     `文件：${file}`,
     ...checks.map(c => `${c.step}：${c.status === null ? '请求失败' : `HTTP ${c.status}`}${c.detail ? `（${c.detail}）` : ''}`),

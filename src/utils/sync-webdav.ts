@@ -188,6 +188,9 @@ export interface WebDavDiagnosis {
   canWrite: boolean
 }
 
+/** 诊断版本：改诊断逻辑时递增，便于确认用户跑的是哪一版（旧版报告会少几行） */
+const DIAG_VERSION = '3（1字节+64KB探针，含响应正文）'
+
 /** 探针文件名：诊断可写性用，用完即删，避免污染用户数据 */
 const PROBE_FILE = 'slowlyRecord-probe.txt'
 
@@ -256,7 +259,17 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
   ): Promise<Response | null> => {
     try {
       const resp = await fetchWithTimeout(url, { ...init, headers: { Authorization: auth, ...(init.headers || {}) } })
-      checks.push({ step, status: resp.status, detail: detailFrom ? detailFrom(resp) : undefined })
+      let detail = detailFrom ? detailFrom(resp) : undefined
+      // 错误响应的正文往往写明原因（如坚果云的权限/配额提示），抓下来便于定位
+      if (!detail && resp.status >= 400) {
+        try {
+          const body = await resp.text()
+          if (body) detail = `响应正文：${body.replace(/\s+/g, ' ').slice(0, 200)}`
+        } catch {
+          // 读正文失败不影响诊断
+        }
+      }
+      checks.push({ step, status: resp.status, detail })
       return resp
     } catch (e) {
       checks.push({ step, status: null, detail: String(e).slice(0, 120) })
@@ -293,6 +306,7 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
 export function formatWebDavDiagnosis(d: WebDavDiagnosis): string {
   const lines = [
     '【WebDAV 诊断】',
+    `诊断版本：${DIAG_VERSION}`,
     `目录：${d.dir}`,
     `文件：${d.fileUrl}`,
     ...d.checks.map(c => `${c.step}：${c.status === null ? '请求失败' : `HTTP ${c.status}`}${c.detail ? `（${c.detail}）` : ''}`),
