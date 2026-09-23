@@ -97,6 +97,9 @@ async function probe(step, target, init = {}) {
       const full = origin + decodeURIComponent(path)
       if (!children.includes(full)) children.push(full)
     }
+    // 优先「我的坚果云」（坚果云默认个人空间），其余按原顺序，最多列 10 个
+    children.sort((a, b) => (/我的坚果云/.test(b) ? 1 : 0) - (/我的坚果云/.test(a) ? 1 : 0))
+    children.splice(10)
     console.log(`\n可用子目录（若根目录写不进去，就把地址填成其中一个）:`)
     console.log(children.length ? children.map(c => `  - ${c}`).join('\n') : '  （无子目录）')
   } catch (e) {

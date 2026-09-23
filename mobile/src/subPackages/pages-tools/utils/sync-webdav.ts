@@ -106,6 +106,11 @@ function fileUrl(cfg: WebDavConfig): string {
   return encodeWebDavPath(`${normalizeWebDavUrl(cfg.url)}${FILE_NAME}`)
 }
 
+/** 子目录下的同步文件地址（小程序按默认个人空间兜底时用） */
+function childFileUrl(cfg: WebDavConfig, name: string): string {
+  return `${encodeWebDavPath(normalizeWebDavUrl(cfg.url))}${encodeURIComponent(name)}/${FILE_NAME}`
+}
+
 function authHeader(cfg: WebDavConfig): string {
   return `Basic ${uint8ArrayToBase64(utf8ToBytes(`${cfg.username}:${cfg.password}`))}`
 }
@@ -135,6 +140,9 @@ export interface WebDavCheck {
 
 /** 诊断版本：改诊断逻辑时递增，便于确认用户跑的是哪一版 */
 const DIAG_VERSION = '3（1字节+64KB探针，含响应正文）'
+
+/** 坚果云个人空间默认目录名：桌面端优先写入这里；小程序无法列目录，故按同名目录兜底重试 */
+const FALLBACK_DIR_NAME = '我的坚果云'
 
 /** 探针文件名：诊断可写性用，用完即删，避免污染用户数据 */
 const PROBE_FILE = 'slowlyRecord-probe.txt'
@@ -186,7 +194,7 @@ export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; le
   }
   const notFoundBody = `${tinyPut?.detail ?? ''}${bigPut?.detail ?? ''}`
   if (/ObjectNotFound/i.test(notFoundBody)) {
-    return { verdict: '坚果云返回 ObjectNotFound：它不允许在该目录里直接创建文件，需要写入子目录。小程序端无法列目录，请在电脑上运行应用内诊断（会列出可用子目录）或 node scripts/webdav-probe.cjs，把地址改成列出的子目录（如 https://dav.jianguoyun.com/dav/你的目录/）后重试', level: 'error' }
+    return { verdict: '坚果云返回 ObjectNotFound：它不允许在该目录里直接创建文件，需要写入子目录。小程序端无法列出目录，请在电脑端应用内点「测试连接」查看可写目录，把地址改成该目录（如 https://dav.jianguoyun.com/dav/你的目录/）后重试', level: 'error' }
   }
   const readable = get?.status === 200 || get?.status === 404
   if (readable) {
@@ -250,7 +258,7 @@ export function testWebDavConnection(cfg: WebDavConfig): Promise<{ ok: boolean; 
 }
 
 /** 备份到网盘：与服务器推送共用同一套数据收集 */
-export async function pushToWebDav(cfg: WebDavConfig, payload: PushPayload): Promise<SyncResult> {
+export async function pushToWebDav(cfg: WebDavConfig, payload: PushPayload): Promise<SyncResult & { usedDir?: string }> {
   try {
     const data = collectSyncData(payload)
     const json = JSON.stringify(data)
@@ -262,17 +270,28 @@ export async function pushToWebDav(cfg: WebDavConfig, payload: PushPayload): Pro
     }
 
     return await new Promise((resolve) => {
-      uni.request({
-        url: fileUrl(cfg),
-        method: 'PUT',
-        header: { Authorization: authHeader(cfg), 'Content-Type': 'application/octet-stream' },
-        data: body,
-        success: (res) => {
-          if (res.statusCode >= 200 && res.statusCode < 300) resolve({ success: true })
-          else resolve({ success: false, error: explainPushStatus(res.statusCode, fileUrl(cfg)) })
-        },
-        fail: (err) => resolve({ success: false, error: `上传失败：${err.errMsg || '网络错误'}` }),
-      })
+      const request = (url: string, isFallback: boolean) => {
+        uni.request({
+          url,
+          method: 'PUT',
+          header: { Authorization: authHeader(cfg), 'Content-Type': 'application/octet-stream' },
+          data: body,
+          success: (res) => {
+            if (res.statusCode >= 200 && res.statusCode < 300) {
+              resolve({ success: true, usedDir: isFallback ? normalizeWebDavUrl(cfg.url) + FALLBACK_DIR_NAME + '/' : undefined })
+              return
+            }
+            // 坚果云不允许在集合根创建文件：按默认个人空间目录兜底重试一次（与桌面端首选一致）
+            if (!isFallback && (res.statusCode === 404 || res.statusCode === 409)) {
+              request(childFileUrl(cfg, FALLBACK_DIR_NAME), true)
+              return
+            }
+            resolve({ success: false, error: explainPushStatus(res.statusCode, url) })
+          },
+          fail: (err) => resolve({ success: false, error: `上传失败：${err.errMsg || '网络错误'}` }),
+        })
+      }
+      request(fileUrl(cfg), false)
     })
   } catch (e) {
     return { success: false, error: String(e) }
@@ -323,12 +342,18 @@ function normalizePulledData(data: any): MobileSyncData | null {
 /** 从网盘恢复：返回结构与 pullFromServer 一致，复用页面上的 applyPullResult */
 export function pullFromWebDav(cfg: WebDavConfig): Promise<RestoreResult> {
   return new Promise((resolve) => {
-    uni.request({
-      url: fileUrl(cfg),
+    const request = (url: string, isFallback: boolean) => {
+      uni.request({
+      url,
       method: 'GET',
       header: { Authorization: authHeader(cfg) },
       success: async (res) => {
         if (res.statusCode !== 200) {
+          // 根目录没有备份时，按默认个人空间目录兜底再找一次（与桌面端写入位置一致）
+          if (!isFallback && res.statusCode === 404) {
+            request(childFileUrl(cfg, FALLBACK_DIR_NAME), true)
+            return
+          }
           resolve({ success: false, error: explainStatus(res.statusCode) })
           return
         }
@@ -347,6 +372,8 @@ export function pullFromWebDav(cfg: WebDavConfig): Promise<RestoreResult> {
         }
       },
       fail: (err) => resolve({ success: false, error: `下载失败：${err.errMsg || '网络错误'}` }),
-    })
+      })
+    }
+    request(fileUrl(cfg), false)
   })
 }

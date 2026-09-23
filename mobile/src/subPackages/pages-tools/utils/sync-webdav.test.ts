@@ -225,16 +225,42 @@ describe('pushToWebDav', () => {
   })
 
   it('404/409 时提示检查 WebDAV 地址（PUT 会创建文件，4xx 是父目录不存在）', async () => {
-    env.requestMock.mockImplementationOnce((opts: any) => { opts.success({ statusCode: 404, data: '' }) })
+    // 根目录与兜底目录都 404：最终按失败处理并给出可读提示
+    env.requestMock.mockImplementation((opts: any) => { opts.success({ statusCode: 404, data: '' }) })
     const notFound = await pushToWebDav(cfg, { banks: [] })
     expect(notFound.success).toBe(false)
     expect(notFound.error).toContain('目录不存在')
     expect(notFound.error).not.toContain('首次使用')
 
-    env.requestMock.mockImplementationOnce((opts: any) => { opts.success({ statusCode: 409, data: '' }) })
+    env.requestMock.mockImplementation((opts: any) => { opts.success({ statusCode: 409, data: '' }) })
     const conflict = await pushToWebDav(cfg, { banks: [] })
     expect(conflict.success).toBe(false)
     expect(conflict.error).toContain('目录不存在')
+  })
+
+  it('根目录不可写时自动兜底写入「我的坚果云」并回传实际目录', async () => {
+    const seen: string[] = []
+    env.requestMock.mockImplementation((opts: any) => {
+      seen.push(opts.url)
+      const isFallback = opts.url.includes(encodeURIComponent('我的坚果云'))
+      opts.success({ statusCode: isFallback ? 201 : 404, data: '' })
+    })
+
+    const result = await pushToWebDav(cfg, { banks: [] })
+    expect(result.success).toBe(true)
+    expect(seen.length).toBe(2)
+    expect(result.usedDir).toBe(`${NUTSTORE_WEBDAV_URL}我的坚果云/`)
+  })
+
+  it('根目录没有备份时自动到「我的坚果云」兜底拉取', async () => {
+    const body = encryptBackup(JSON.stringify({ version: 1, banks: [{ id: 'b1', name: '库', words: [] }] }))
+    env.requestMock.mockImplementation((opts: any) => {
+      const isFallback = opts.url.includes(encodeURIComponent('我的坚果云'))
+      opts.success({ statusCode: isFallback ? 200 : 404, data: isFallback ? body : '' })
+    })
+
+    const result = await pullFromWebDav(cfg)
+    expect(result.success).toBe(true)
   })
 
   it('网络失败时提示上传失败', async () => {
@@ -248,7 +274,8 @@ describe('pushToWebDav', () => {
 
 describe('pullFromWebDav', () => {
   it('404 → 失败并提示先备份（首次使用）', async () => {
-    env.requestMock.mockImplementationOnce((opts: any) => { opts.success({ statusCode: 404, data: '' }) })
+    // 根目录与兜底目录都没有备份 → 提示先备份
+    env.requestMock.mockImplementation((opts: any) => { opts.success({ statusCode: 404, data: '' }) })
     const result = await pullFromWebDav(cfg)
     expect(result.success).toBe(false)
     expect(result.error).toContain('首次使用')

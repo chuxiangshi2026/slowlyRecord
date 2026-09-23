@@ -315,9 +315,15 @@ const handleWebdavPush = async () => {
     const result = await pushToWebDav(getWebDavConfig(), await buildPushPayload())
     uni.hideLoading()
     if (result.success) {
+      const usedDir = (result as any).usedDir as string | undefined
+      if (usedDir && usedDir !== webdavUrl.value) {
+        // 根目录不可写时已自动写入默认个人空间目录：记入地址栏，后续操作直连
+        webdavUrl.value = usedDir
+        saveWebdavForm()
+      }
       uni.showModal({
         title: '备份成功',
-        content: `文件已加密存放于：\n${webdavUrl.value.replace(/\/+$/, '')}/slowlyRecord-sync.enc`,
+        content: `文件已加密存放于：\n${(usedDir || webdavUrl.value).replace(/\/+$/, '')}/slowlyRecord-sync.enc${usedDir ? '\n（已自动改用可写目录并记入地址栏）' : ''}`,
         showCancel: false,
       })
     } else {

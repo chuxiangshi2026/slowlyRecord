@@ -111,6 +111,30 @@ export function parseChildCollections(xml: string, baseDir: string): string[] {
   return out
 }
 
+/** 单次诊断最多探测的候选目录数：账号里目录很多时避免请求爆炸 */
+const MAX_DIR_PROBES = 10
+
+/**
+ * 候选目录排序与截断（纯函数）：
+ * 优先坚果云默认个人空间「我的坚果云」，其余保持 PROPFIND 原顺序；
+ * 超过 limit 的丢弃——写入位置可预期，也不至于因目录多而发一堆探测请求。
+ */
+export function rankDirCandidates(dirs: string[], limit = MAX_DIR_PROBES): string[] {
+  const preferred: string[] = []
+  const rest: string[] = []
+  for (const dir of dirs) {
+    let decoded = dir
+    try {
+      decoded = decodeURIComponent(dir)
+    } catch {
+      // 解码失败就用原始串判断
+    }
+    if (/我的坚果云/.test(decoded)) preferred.push(dir)
+    else rest.push(dir)
+  }
+  return [...preferred, ...rest].slice(0, limit)
+}
+
 /** 目录候选与其可写性（诊断里逐个探测，用户可直观看到哪些目录能写） */
 export interface WebDavDirCandidate {
   dir: string
@@ -166,7 +190,7 @@ export async function listChildCollections(config: WebDavConfig): Promise<string
  * 全部失败返回 null（上传/恢复路径据此决定是否改用别的目录）。
  */
 export async function resolveWritableDir(config: WebDavConfig): Promise<string | null> {
-  const children = await listChildCollections(config)
+  const children = rankDirCandidates(await listChildCollections(config))
   for (const candidate of await probeCandidateDirs(config, children)) {
     if (candidate.writable) return candidate.dir
   }
@@ -441,8 +465,10 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
 
   // 当前目录写不进去时，探测是否存在可写子目录（决定「黄色：改配置即可」还是「红色」）
   const configuredWritable = created || (bigResp !== null && (bigResp.status === 201 || bigResp.status === 204))
-  // 逐个探测候选目录的可写性：测试即告诉用户「哪些目录能写」，而不是只报一个结论
-  const candidateDirs = candidates.length ? await probeCandidateDirs(config, candidates) : []
+  // 仅当当前目录写不进去时，才逐个探测候选目录——既回答「哪些目录能写」，也不给健康配置添多余请求
+  const candidateDirs = !configuredWritable && candidates.length
+    ? await probeCandidateDirs(config, rankDirCandidates(candidates))
+    : []
   const resolvedDir = configuredWritable ? null : (candidateDirs.find(c => c.writable)?.dir ?? null)
   if (!configuredWritable) {
     checks.push({

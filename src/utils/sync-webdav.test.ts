@@ -67,6 +67,7 @@ import {
   checkDirWritable,
   parseChildCollections,
   probeCandidateDirs,
+  rankDirCandidates,
   testWebDavConnection,
   uploadToWebDav,
   webDavFileUrl,
@@ -307,6 +308,22 @@ describe('uploadToWebDav：根目录不可写时自动改用子目录', () => {
     const r = await uploadToWebDav(cfg)
     expect(r.success).toBe(false)
     expect(r.error).toContain('HTTP 404')
+  })
+})
+
+describe('rankDirCandidates：优先默认个人空间并限制探测数量', () => {
+  it('「我的坚果云」排最前，其余保持原顺序', () => {
+    const dirs = [
+      'https://dav.jianguoyun.com/dav/归档/',
+      'https://dav.jianguoyun.com/dav/%E6%88%91%E7%9A%84%E5%9D%9A%E6%9E%9C%E4%BA%91/',
+      'https://dav.jianguoyun.com/dav/工作/',
+    ]
+    expect(rankDirCandidates(dirs)).toEqual([dirs[1], dirs[0], dirs[2]])
+  })
+
+  it('超过上限（10）时截断，避免目录多时请求爆炸', () => {
+    const many = Array.from({ length: 15 }, (_, i) => `https://dav.jianguoyun.com/dav/d${i}/`)
+    expect(rankDirCandidates(many).length).toBe(10)
   })
 })
 
