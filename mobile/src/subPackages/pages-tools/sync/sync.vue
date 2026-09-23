@@ -89,7 +89,7 @@ import { useSignin } from '@/stores/useSignin'
 import { useMemoryPalace } from '@/stores/useMemoryPalace'
 import { useSentences } from '@/stores/useSentences'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable, type PushPayload } from '../utils/sync'
-import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, testWebDavConnection, pushToWebDav, pullFromWebDav, NUTSTORE_WEBDAV_URL } from '../utils/sync-webdav'
+import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, diagnoseWebDav, pushToWebDav, pullFromWebDav, NUTSTORE_WEBDAV_URL } from '../utils/sync-webdav'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
 import { getTombstones } from '@/stores/useUtils/sync-tombstone'
 import { drawQrCode } from '../utils/qrcode'
@@ -287,10 +287,16 @@ const useDefaultWebdavUrl = () => {
 
 const handleWebdavTest = async () => {
   saveWebdavForm()
-  uni.showLoading({ title: '测试中...' })
-  const result = await testWebDavConnection(getWebDavConfig())
+  uni.showLoading({ title: '诊断中...' })
+  // 逐步诊断（GET 备份文件 → PUT 探针 → DELETE 探针），结果复制到剪贴板便于反馈
+  const report = await diagnoseWebDav(getWebDavConfig())
   uni.hideLoading()
-  uni.showModal({ title: result.ok ? '连接成功' : '连接失败', content: result.message, showCancel: false })
+  uni.setClipboardData({ data: report.text, success: () => {} })
+  uni.showModal({
+    title: '连接诊断（完整结果已复制）',
+    content: report.verdict,
+    showCancel: false,
+  })
 }
 
 const handleWebdavPush = async () => {

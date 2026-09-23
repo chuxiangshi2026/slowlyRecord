@@ -57,9 +57,12 @@ vi.mock('@/utils/sync-manager', async (importOriginal) => {
 
 import {
   NUTSTORE_WEBDAV_URL,
+  buildWebDavVerdict,
   decodeWebDavFile,
+  diagnoseWebDav,
   downloadFromWebDav,
   encodeWebDavFile,
+  formatWebDavDiagnosis,
   normalizeWebDavUrl,
   testWebDavConnection,
   uploadToWebDav,
@@ -129,6 +132,56 @@ describe('normalizeWebDavUrl：用户手填地址的容错', () => {
   it('中文子文件夹逐段编码，路径结构保留', () => {
     expect(webDavFileUrl({ ...cfg, url: 'https://example.com/dav/我的备份' }))
       .toBe(`https://example.com/dav/${encodeURIComponent('我的备份')}/slowlyRecord-sync.enc`)
+  })
+})
+
+describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () => {
+  it('认证通过但 PUT 被拒（404）→ 判定为账号侧写权限受限，而非地址问题（用户实际场景）', async () => {
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      const method = init?.method
+      if (method === 'GET') return { ok: false, status: 404, headers: new Headers() }
+      if (method === 'PUT') return { ok: false, status: 404, headers: new Headers() }
+      return { ok: true, status: 207, headers: new Headers() }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    expect(d.canRead).toBe(true)
+    expect(d.canWrite).toBe(false)
+    expect(d.verdict).toContain('能读不能写')
+    const text = formatWebDavDiagnosis(d)
+    expect(text).toContain('PUT 探针文件：HTTP 404')
+    expect(text).toContain('PROPFIND 目录：HTTP 207')
+  })
+
+  it('PUT 探针成功（201）→ 读写正常，且自动清理探针文件', async () => {
+    const methods: string[] = []
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      methods.push(String(init?.method))
+      if (init?.method === 'PUT') return { ok: true, status: 201, headers: new Headers() }
+      if (init?.method === 'DELETE') return { ok: true, status: 204, headers: new Headers() }
+      if (init?.method === 'GET') return { ok: false, status: 404, headers: new Headers() }
+      return { ok: true, status: 207, headers: new Headers() }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    expect(d.canWrite).toBe(true)
+    expect(d.verdict).toContain('读写均正常')
+    expect(methods).toContain('DELETE')
+  })
+
+  it('全部 401 → 判定认证失败（而非目录不存在）', async () => {
+    globalThis.fetch = vi.fn(async () => ({ ok: false, status: 401, headers: new Headers() })) as any
+    const d = await diagnoseWebDav(cfg)
+    expect(d.verdict).toContain('认证失败')
+    expect(d.verdict).not.toContain('目录不存在')
+  })
+
+  it('网络不可达 → 提示未到达网盘', () => {
+    const { verdict } = buildWebDavVerdict([
+      { step: 'PROPFIND 目录', status: null, detail: 'TypeError: Failed to fetch' },
+      { step: 'PUT 探针文件', status: null },
+    ])
+    expect(verdict).toContain('未能到达网盘')
   })
 })
 

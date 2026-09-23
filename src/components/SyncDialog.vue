@@ -296,6 +296,15 @@
       <el-button @click="visible = false">关闭</el-button>
     </template>
   </el-dialog>
+
+  <!-- WebDAV 诊断结果：可复制的纯文本报告，便于排查「能连上但传不了」 -->
+  <el-dialog v-model="webdavDiagVisible" title="WebDAV 连接诊断" width="600px">
+    <el-input v-model="webdavDiagText" type="textarea" :rows="12" readonly />
+    <template #footer>
+      <el-button @click="copyWebdavDiag">复制全文</el-button>
+      <el-button type="primary" @click="webdavDiagVisible = false">关闭</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -313,6 +322,8 @@ import { isWeb } from '@/adapters/platform'
 
 const isWebPlatform = isWeb()
 const webdavTesting = ref(false)
+const webdavDiagVisible = ref(false)
+const webdavDiagText = ref('')
 
 const props = defineProps<{
   modelValue: boolean
@@ -429,12 +440,19 @@ async function handleWebDavTest() {
   webdavTesting.value = true
   try {
     syncStore.saveWebDavConfig()
-    const result = await syncStore.testWebDav()
-    if (result.ok) ElMessage.success(result.message)
-    else ElMessage.error(result.message)
+    // 逐步诊断（OPTIONS/PROPFIND/GET/PUT 探针），结果可复制给开发者定位
+    webdavDiagText.value = '诊断中…'
+    webdavDiagVisible.value = true
+    webdavDiagText.value = await syncStore.webdavDiagnose()
   } finally {
     webdavTesting.value = false
   }
+}
+
+function copyWebdavDiag() {
+  navigator.clipboard?.writeText(webdavDiagText.value)
+    .then(() => ElMessage.success('诊断结果已复制'))
+    .catch(() => ElMessage.warning('复制失败，请手动选中文本复制'))
 }
 
 async function handleWebDavUpload() {

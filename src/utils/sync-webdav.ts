@@ -168,6 +168,122 @@ export async function testWebDavConnection(config: WebDavConfig): Promise<{ ok: 
   }
 }
 
+/** 诊断单步结果 */
+export interface WebDavCheck {
+  step: string
+  /** HTTP 状态码；请求抛错（网络/跨域）时为 null */
+  status: number | null
+  detail?: string
+}
+
+export interface WebDavDiagnosis {
+  dir: string
+  fileUrl: string
+  checks: WebDavCheck[]
+  /** 结论（一句中文，直接展示给用户） */
+  verdict: string
+  /** 能读（认证通过且目录可见） */
+  canRead: boolean
+  /** 能写（探针文件创建成功） */
+  canWrite: boolean
+}
+
+/** 探针文件名：诊断可写性用，用完即删，避免污染用户数据 */
+const PROBE_FILE = 'slowlyRecord-probe.txt'
+
+/** 探针体积约 64KB：小请求能过、大请求被代理/网关拦的情况靠它区分 */
+const PROBE_BODY = 'slowlyRecord-webdav-probe'.repeat(2600)
+
+/**
+ * 诊断结论（纯函数，便于测试）：
+ * 认证通过但写被拒 → 多半是应用密码只读/账号权限或流量受限，而非地址问题
+ */
+export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; canRead: boolean; canWrite: boolean } {
+  const find = (step: string) => checks.find(c => c.step === step)
+  const propfind = find('PROPFIND 目录')
+  const get = find('GET 备份文件')
+  const put = find('PUT 探针文件')
+  const networkFailed = checks.some(c => c.status === null)
+
+  const authed = propfind?.status === 207 || propfind?.status === 200
+    || get?.status === 200 || get?.status === 404
+    || put?.status === 201 || put?.status === 204
+  if (!authed) {
+    if (networkFailed) {
+      return { verdict: '请求未能到达网盘（网络或跨域拦截），请检查网络与代理设置', canRead: false, canWrite: false }
+    }
+    const s = propfind?.status ?? get?.status ?? put?.status
+    if (s === 401 || s === 403) {
+      return { verdict: '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）', canRead: false, canWrite: false }
+    }
+    return { verdict: `无法确认网盘可用性（HTTP ${s ?? '未知'}），请把本页内容发给开发者`, canRead: false, canWrite: false }
+  }
+
+  const canWrite = put?.status === 201 || put?.status === 204
+  if (canWrite) {
+    return { verdict: '读写均正常（探针约 64KB）。若正式备份仍失败，问题多半在请求体积或中间层（系统代理/MITM），请把本页内容发给开发者', canRead: true, canWrite: true }
+  }
+  const putStatus = put?.status ?? '未执行'
+  return {
+    verdict: `认证通过、目录可读，但网盘拒绝创建文件（PUT 返回 ${putStatus}）。这种「能读不能写」通常是账号侧限制：应用密码被设为只读、或本月上传流量已用尽，请在坚果云「账户信息 → 安全选项 → 第三方应用管理 / 流量明细」中确认`,
+    canRead: true,
+    canWrite: false,
+  }
+}
+
+/** 逐步诊断 WebDAV：OPTIONS → PROPFIND → GET → PUT 探针 → DELETE 探针，逐项返回状态码 */
+export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagnosis> {
+  const dir = normalizeWebDavUrl(config.url)
+  const file = webDavFileUrl(config)
+  const auth = buildAuthHeader(config)
+  const checks: WebDavCheck[] = []
+
+  const probe = async (
+    step: string,
+    url: string,
+    init: { method: string; headers?: Record<string, string>; body?: string },
+    detailFrom?: (r: Response) => string,
+  ): Promise<Response | null> => {
+    try {
+      const resp = await fetchWithTimeout(url, { ...init, headers: { Authorization: auth, ...(init.headers || {}) } })
+      checks.push({ step, status: resp.status, detail: detailFrom ? detailFrom(resp) : undefined })
+      return resp
+    } catch (e) {
+      checks.push({ step, status: null, detail: String(e).slice(0, 120) })
+      return null
+    }
+  }
+
+  await probe('OPTIONS 目录', dir, { method: 'OPTIONS' }, r => r.headers.get('allow') || r.headers.get('dav') || '')
+  await probe('PROPFIND 目录', dir, { method: 'PROPFIND', headers: { Depth: '0' } })
+  await probe('PROPFIND 目录（含子项）', dir, { method: 'PROPFIND', headers: { Depth: '1' } })
+  await probe('GET 备份文件', file, { method: 'GET' })
+  const probeUrl = `${dir}${PROBE_FILE}`
+  const putResp = await probe('PUT 探针文件', probeUrl, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/octet-stream' },
+    body: PROBE_BODY,
+  })
+  if (putResp && (putResp.status === 201 || putResp.status === 204)) {
+    await probe('DELETE 探针文件', probeUrl, { method: 'DELETE' })
+  }
+
+  const { verdict, canRead, canWrite } = buildWebDavVerdict(checks)
+  return { dir, fileUrl: file, checks, verdict, canRead, canWrite }
+}
+
+/** 诊断结果排版成可复制的文本（纯函数，便于测试） */
+export function formatWebDavDiagnosis(d: WebDavDiagnosis): string {
+  const lines = [
+    '【WebDAV 诊断】',
+    `目录：${d.dir}`,
+    `文件：${d.fileUrl}`,
+    ...d.checks.map(c => `${c.step}：${c.status === null ? '请求失败' : `HTTP ${c.status}`}${c.detail ? `（${c.detail}）` : ''}`),
+    `结论：${d.verdict}`,
+  ]
+  return lines.join('\n')
+}
+
 /** 备份：收集全量数据（完整 SyncData 格式，四模块齐全）→ 加密打包 → PUT 到网盘 */
 export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerResult> {
   try {

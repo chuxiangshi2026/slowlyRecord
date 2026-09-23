@@ -9,6 +9,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import pako from 'pako'
 import {
   NUTSTORE_WEBDAV_URL,
+  buildWebDavVerdict,
+  diagnoseWebDav,
   getWebDavConfig,
   isWebDavConfigured,
   normalizeWebDavUrl,
@@ -77,6 +79,41 @@ describe('isWebDavConfigured', () => {
     const c = getWebDavConfig()
     expect(c.url).toBe(NUTSTORE_WEBDAV_URL)
     expect(c.username).toBe('')
+  })
+})
+
+describe('diagnoseWebDav：能读不能写的诊断', () => {
+  it('GET 404 + PUT 404 → 判定为账号侧写权限受限，而非地址问题（用户实际场景）', async () => {
+    env.requestMock.mockImplementation((opts: any) => opts.success({ statusCode: 404, data: '' }))
+    const r = await diagnoseWebDav(cfg)
+    expect(r.checks.map(c => c.step)).toEqual(['GET 备份文件', 'PUT 探针文件'])
+    expect(r.text).toContain('PUT 探针文件：HTTP 404')
+    expect(r.verdict).toContain('能读不能写')
+  })
+
+  it('PUT 探针成功（201）→ 读写正常，并 DELETE 清理探针', async () => {
+    const methods: string[] = []
+    env.requestMock.mockImplementation((opts: any) => {
+      methods.push(opts.method)
+      const statusCode = opts.method === 'PUT' ? 201 : opts.method === 'DELETE' ? 204 : 404
+      opts.success({ statusCode, data: '' })
+    })
+    const r = await diagnoseWebDav(cfg)
+    expect(r.verdict).toContain('读写均正常')
+    expect(methods).toContain('DELETE')
+  })
+
+  it('请求失败（未配合法域名/断网）→ 提示未能到达网盘', async () => {
+    env.requestMock.mockImplementation((opts: any) => opts.fail({ errMsg: 'request:fail url not in domain list' }))
+    const r = await diagnoseWebDav(cfg)
+    expect(r.verdict).toContain('未能到达网盘')
+  })
+
+  it('buildWebDavVerdict：401 → 认证失败结论', () => {
+    expect(buildWebDavVerdict([
+      { step: 'GET 备份文件', status: 401 },
+      { step: 'PUT 探针文件', status: 401 },
+    ])).toContain('认证失败')
   })
 })
 

@@ -125,6 +125,86 @@ function explainPushStatus(status: number, url: string): string {
   return explainStatus(status)
 }
 
+/** 诊断单步结果 */
+export interface WebDavCheck {
+  step: string
+  /** HTTP 状态码；请求失败（网络/未配白名单）时为 null */
+  status: number | null
+  detail?: string
+}
+
+/** 探针文件名：诊断可写性用，用完即删，避免污染用户数据 */
+const PROBE_FILE = 'slowlyRecord-probe.txt'
+
+/** 探针体积约 64KB：小请求能过、大请求被网关拦的情况靠它区分 */
+const PROBE_BODY = 'slowlyRecord-webdav-probe'.repeat(2600)
+
+/** 单次请求并记录状态码（小程序不支持 PROPFIND/OPTIONS，只用 GET/PUT/DELETE） */
+function requestOnce(cfg: WebDavConfig, url: string, method: string, data?: string): Promise<WebDavCheck> {
+  return new Promise((resolve) => {
+    uni.request({
+      url,
+      method: method as any,
+      header: data
+        ? { Authorization: authHeader(cfg), 'Content-Type': 'application/octet-stream' }
+        : { Authorization: authHeader(cfg) },
+      data,
+      success: (res) => resolve({ step: '', status: res.statusCode }),
+      fail: (err) => resolve({ step: '', status: null, detail: err.errMsg || '网络错误' }),
+    })
+  })
+}
+
+/** 诊断结论（纯函数，便于测试）：能读不能写通常是账号侧限制，而非地址问题 */
+export function buildWebDavVerdict(checks: WebDavCheck[]): string {
+  const find = (step: string) => checks.find(c => c.step === step)
+  const get = find('GET 备份文件')
+  const put = find('PUT 探针文件')
+  if (checks.every(c => c.status === null)) {
+    return '请求未能到达网盘：网络不可用，或该域名未加入微信后台的 request 合法域名'
+  }
+  if (put?.status === 201 || put?.status === 204) {
+    return '读写均正常（探针约 64KB）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者'
+  }
+  if (get?.status === 401 || put?.status === 401) {
+    return '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）'
+  }
+  const readable = get?.status === 200 || get?.status === 404
+  if (readable) {
+    return `认证通过、目录可读，但网盘拒绝创建文件（PUT 返回 ${put?.status ?? '未执行'}）。这种「能读不能写」通常是账号侧限制：应用密码被设为只读、或本月上传流量已用尽，请在坚果云「账户信息 → 安全选项 → 第三方应用管理 / 流量明细」中确认`
+  }
+  return `无法确认网盘可用性（GET ${get?.status ?? '未执行'} / PUT ${put?.status ?? '未执行'}），请把本页内容发给开发者`
+}
+
+/** 逐步诊断：GET 备份文件 → PUT 探针 → DELETE 探针，逐项返回状态码与结论 */
+export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDavCheck[]; verdict: string; text: string }> {
+  const dir = normalizeWebDavUrl(cfg.url)
+  const file = fileUrl(cfg)
+  const probeUrl = `${dir}${PROBE_FILE}`
+  const checks: WebDavCheck[] = []
+
+  const get = await requestOnce(cfg, file, 'GET')
+  checks.push({ ...get, step: 'GET 备份文件' })
+
+  const put = await requestOnce(cfg, probeUrl, 'PUT', PROBE_BODY)
+  checks.push({ ...put, step: 'PUT 探针文件' })
+
+  if (put.status === 201 || put.status === 204) {
+    const del = await requestOnce(cfg, probeUrl, 'DELETE')
+    checks.push({ ...del, step: 'DELETE 探针文件' })
+  }
+
+  const verdict = buildWebDavVerdict(checks)
+  const text = [
+    '【WebDAV 诊断】',
+    `目录：${dir}`,
+    `文件：${file}`,
+    ...checks.map(c => `${c.step}：${c.status === null ? '请求失败' : `HTTP ${c.status}`}${c.detail ? `（${c.detail}）` : ''}`),
+    `结论：${verdict}`,
+  ].join('\n')
+  return { checks, verdict, text }
+}
+
 /** 测试连接：GET 同步文件；200=已有备份，404=连接正常但首次使用 */
 export function testWebDavConnection(cfg: WebDavConfig): Promise<{ ok: boolean; message: string }> {
   return new Promise((resolve) => {
