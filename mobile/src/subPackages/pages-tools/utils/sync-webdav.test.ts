@@ -86,9 +86,24 @@ describe('diagnoseWebDav：能读不能写的诊断', () => {
   it('GET 404 + PUT 404 → 判定为账号侧写权限受限，而非地址问题（用户实际场景）', async () => {
     env.requestMock.mockImplementation((opts: any) => opts.success({ statusCode: 404, data: '' }))
     const r = await diagnoseWebDav(cfg)
-    expect(r.checks.map(c => c.step)).toEqual(['GET 备份文件', 'PUT 探针文件'])
-    expect(r.text).toContain('PUT 探针文件：HTTP 404')
-    expect(r.verdict).toContain('能读不能写')
+    expect(r.checks.map(c => c.step)).toEqual(['GET 备份文件', 'PUT 探针（1 字节）', 'PUT 探针（64KB）'])
+    expect(r.text).toContain('PUT 探针（1 字节）：HTTP 404')
+    expect(r.verdict).toContain('账号侧写权限限制')
+  })
+
+  it('1 字节探针成功、64KB 被拒 → 判定为体积/中间层拦截', async () => {
+    env.requestMock.mockImplementation((opts: any) => {
+      if (opts.method === 'PUT') {
+        const len = String(opts.data ?? '').length
+        opts.success({ statusCode: len < 10 ? 201 : 404, data: '' })
+        return
+      }
+      if (opts.method === 'DELETE') { opts.success({ statusCode: 204, data: '' }); return }
+      opts.success({ statusCode: 404, data: '' })
+    })
+    const r = await diagnoseWebDav(cfg)
+    expect(r.verdict).toContain('64KB 上传被拒')
+    expect(r.verdict).toContain('中间层')
   })
 
   it('PUT 探针成功（201）→ 读写正常，并 DELETE 清理探针', async () => {

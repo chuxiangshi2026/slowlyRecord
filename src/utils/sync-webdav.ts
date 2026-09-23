@@ -202,7 +202,10 @@ export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; ca
   const find = (step: string) => checks.find(c => c.step === step)
   const propfind = find('PROPFIND 目录')
   const get = find('GET 备份文件')
-  const put = find('PUT 探针文件')
+  const tinyPut = find('PUT 探针（1 字节）')
+  const bigPut = find('PUT 探针（64KB）')
+  const put = bigPut ?? tinyPut
+  const ok = (c?: WebDavCheck) => c?.status === 201 || c?.status === 204
   const networkFailed = checks.some(c => c.status === null)
 
   const authed = propfind?.status === 207 || propfind?.status === 200
@@ -219,13 +222,20 @@ export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; ca
     return { verdict: `无法确认网盘可用性（HTTP ${s ?? '未知'}），请把本页内容发给开发者`, canRead: false, canWrite: false }
   }
 
-  const canWrite = put?.status === 201 || put?.status === 204
+  const canWrite = ok(tinyPut) || ok(bigPut)
+  if (ok(tinyPut) && !ok(bigPut)) {
+    return {
+      verdict: `网盘能创建小文件（1 字节成功），但 64KB 上传被拒（HTTP ${bigPut?.status ?? '未执行'}）——说明不是账号权限问题，而是请求体积或中间层（系统代理 / 公司网关 / MITM）拦截。请关闭代理后重试，或把本页内容发给开发者`,
+      canRead: true,
+      canWrite: true,
+    }
+  }
   if (canWrite) {
-    return { verdict: '读写均正常（探针约 64KB）。若正式备份仍失败，问题多半在请求体积或中间层（系统代理/MITM），请把本页内容发给开发者', canRead: true, canWrite: true }
+    return { verdict: '读写均正常（含 64KB 探针）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者', canRead: true, canWrite: true }
   }
   const putStatus = put?.status ?? '未执行'
   return {
-    verdict: `认证通过、目录可读，但网盘拒绝创建文件（PUT 返回 ${putStatus}）。这种「能读不能写」通常是账号侧限制：应用密码被设为只读、或本月上传流量已用尽，请在坚果云「账户信息 → 安全选项 → 第三方应用管理 / 流量明细」中确认`,
+    verdict: `认证通过、目录可读，且服务端 OPTIONS 声明支持 PUT（${find('OPTIONS 目录')?.status === 200 ? '已确认' : '未确认'}），但连 1 字节文件都创建不了（PUT 返回 ${putStatus}）。这属于账号侧写权限限制：请在坚果云「账户信息 → 安全选项 → 第三方应用管理」确认该应用密码是「读写」而非「只读」，并检查「流量明细」中本月上传流量是否已用尽`,
     canRead: true,
     canWrite: false,
   }
@@ -259,12 +269,19 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
   await probe('PROPFIND 目录（含子项）', dir, { method: 'PROPFIND', headers: { Depth: '1' } })
   await probe('GET 备份文件', file, { method: 'GET' })
   const probeUrl = `${dir}${PROBE_FILE}`
-  const putResp = await probe('PUT 探针文件', probeUrl, {
+  // 先用 1 字节探针判断「能不能写」，再用 64KB 探针区分是否被体积/中间层限制
+  const tinyResp = await probe('PUT 探针（1 字节）', probeUrl, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/octet-stream' },
+    body: 'ping',
+  })
+  const created = tinyResp !== null && (tinyResp.status === 201 || tinyResp.status === 204)
+  const bigResp = await probe('PUT 探针（64KB）', probeUrl, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/octet-stream' },
     body: PROBE_BODY,
   })
-  if (putResp && (putResp.status === 201 || putResp.status === 204)) {
+  if (created || (bigResp !== null && (bigResp.status === 201 || bigResp.status === 204))) {
     await probe('DELETE 探针文件', probeUrl, { method: 'DELETE' })
   }
 

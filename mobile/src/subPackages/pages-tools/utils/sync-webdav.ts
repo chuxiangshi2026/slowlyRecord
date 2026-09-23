@@ -159,21 +159,26 @@ function requestOnce(cfg: WebDavConfig, url: string, method: string, data?: stri
 export function buildWebDavVerdict(checks: WebDavCheck[]): string {
   const find = (step: string) => checks.find(c => c.step === step)
   const get = find('GET 备份文件')
-  const put = find('PUT 探针文件')
+  const tinyPut = find('PUT 探针（1 字节）')
+  const bigPut = find('PUT 探针（64KB）')
+  const ok = (c?: WebDavCheck) => c?.status === 201 || c?.status === 204
   if (checks.every(c => c.status === null)) {
     return '请求未能到达网盘：网络不可用，或该域名未加入微信后台的 request 合法域名'
   }
-  if (put?.status === 201 || put?.status === 204) {
-    return '读写均正常（探针约 64KB）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者'
+  if (ok(tinyPut) && !ok(bigPut)) {
+    return `网盘能创建小文件，但 64KB 上传被拒（HTTP ${bigPut?.status ?? '未执行'}）——不是账号权限问题，而是请求体积或中间层（代理 / 网关）拦截，请把本页内容发给开发者`
   }
-  if (get?.status === 401 || put?.status === 401) {
+  if (ok(tinyPut) || ok(bigPut)) {
+    return '读写均正常（含 64KB 探针）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者'
+  }
+  if (get?.status === 401 || tinyPut?.status === 401 || bigPut?.status === 401) {
     return '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）'
   }
   const readable = get?.status === 200 || get?.status === 404
   if (readable) {
-    return `认证通过、目录可读，但网盘拒绝创建文件（PUT 返回 ${put?.status ?? '未执行'}）。这种「能读不能写」通常是账号侧限制：应用密码被设为只读、或本月上传流量已用尽，请在坚果云「账户信息 → 安全选项 → 第三方应用管理 / 流量明细」中确认`
+    return `认证通过、目录可读，但连 1 字节文件都创建不了（PUT 返回 ${tinyPut?.status ?? '未执行'}）。这属于账号侧写权限限制：请在坚果云「账户信息 → 安全选项 → 第三方应用管理」确认该应用密码是「读写」而非「只读」，并检查「流量明细」中本月上传流量是否已用尽`
   }
-  return `无法确认网盘可用性（GET ${get?.status ?? '未执行'} / PUT ${put?.status ?? '未执行'}），请把本页内容发给开发者`
+  return `无法确认网盘可用性（GET ${get?.status ?? '未执行'} / PUT ${tinyPut?.status ?? '未执行'}），请把本页内容发给开发者`
 }
 
 /** 逐步诊断：GET 备份文件 → PUT 探针 → DELETE 探针，逐项返回状态码与结论 */
@@ -186,10 +191,16 @@ export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDa
   const get = await requestOnce(cfg, file, 'GET')
   checks.push({ ...get, step: 'GET 备份文件' })
 
-  const put = await requestOnce(cfg, probeUrl, 'PUT', PROBE_BODY)
-  checks.push({ ...put, step: 'PUT 探针文件' })
+  // 先用 1 字节探针判断「能不能写」，再用 64KB 探针区分是否被体积/中间层限制
+  const tinyPut = await requestOnce(cfg, probeUrl, 'PUT', 'ping')
+  checks.push({ ...tinyPut, step: 'PUT 探针（1 字节）' })
 
-  if (put.status === 201 || put.status === 204) {
+  const bigPut = await requestOnce(cfg, probeUrl, 'PUT', PROBE_BODY)
+  checks.push({ ...bigPut, step: 'PUT 探针（64KB）' })
+
+  const created = tinyPut.status === 201 || tinyPut.status === 204
+    || bigPut.status === 201 || bigPut.status === 204
+  if (created) {
     const del = await requestOnce(cfg, probeUrl, 'DELETE')
     checks.push({ ...del, step: 'DELETE 探针文件' })
   }

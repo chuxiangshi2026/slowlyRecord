@@ -147,10 +147,27 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
     const d = await diagnoseWebDav(cfg)
     expect(d.canRead).toBe(true)
     expect(d.canWrite).toBe(false)
-    expect(d.verdict).toContain('能读不能写')
+    expect(d.verdict).toContain('账号侧写权限限制')
     const text = formatWebDavDiagnosis(d)
-    expect(text).toContain('PUT 探针文件：HTTP 404')
+    expect(text).toContain('PUT 探针（1 字节）：HTTP 404')
+    expect(text).toContain('PUT 探针（64KB）：HTTP 404')
     expect(text).toContain('PROPFIND 目录：HTTP 207')
+  })
+
+  it('1 字节探针成功、64KB 被拒 → 判定为体积/中间层拦截而非账号权限', async () => {
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      if (init?.method === 'PUT') {
+        const len = String(init?.body ?? '').length
+        return { ok: len < 10, status: len < 10 ? 201 : 404, headers: new Headers() }
+      }
+      if (init?.method === 'DELETE') return { ok: true, status: 204, headers: new Headers() }
+      if (init?.method === 'GET') return { ok: false, status: 404, headers: new Headers() }
+      return { ok: true, status: 207, headers: new Headers() }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    expect(d.verdict).toContain('64KB 上传被拒')
+    expect(d.verdict).toContain('中间层')
   })
 
   it('PUT 探针成功（201）→ 读写正常，且自动清理探针文件', async () => {
