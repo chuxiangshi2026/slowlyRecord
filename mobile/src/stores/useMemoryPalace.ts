@@ -12,9 +12,10 @@ import {
 } from '../utils/memory-palace'
 
 /**
- * 记忆宫殿 store（移动端查看版）
+ * 记忆宫殿 store（移动端）
  *
- * 只做查看 + 巡视自评，不做编辑。存储 doc id 与桌面端一致：
+ * 支持宫殿与桩位的创建/编辑（含导入桩库后的批量添加）、巡视自评。
+ * 存储 doc id 与桌面端一致：
  * - `memory_palace_palaces`：所有宫殿（含桩图 dataURL，走 MiniProgramDbAdapter 900KB 自动分块）
  * - `memory_palace_pegs_<palaceId>`：每宫殿的桩挂载（含巡视 SRS 进度）
  */

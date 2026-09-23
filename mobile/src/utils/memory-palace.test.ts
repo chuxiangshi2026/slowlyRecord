@@ -14,8 +14,10 @@ import {
   mergePegItemList,
   chunkArticleContent,
   resolvePegContent,
+  pegImageSrc,
+  pegPackToLoci,
 } from './memory-palace'
-import type { MobilePalace, MobilePegItem, MobileTextArticle } from '@/stores/useUtils/types'
+import type { KnowledgePack, MobilePalace, MobilePegItem, MobileTextArticle } from '@/stores/useUtils/types'
 
 function makePalace(overrides: Partial<MobilePalace> = {}): MobilePalace {
   return {
@@ -154,5 +156,65 @@ describe('文章切块与挂载解析', () => {
     expect(resolvePegContent(peg, []).deleted).toBe(true)
     const outOfRange: MobilePegItem = { ...peg, contentRef: { type: 'text-article', articleId: 'a1', chunkIndex: 9 } }
     expect(resolvePegContent(outOfRange, [article])).toEqual({ text: '', deleted: true, articleTitle: '文章' })
+  })
+})
+
+describe('桩库导入映射', () => {
+  function makePegPack(overrides: Partial<KnowledgePack> = {}): KnowledgePack {
+    return {
+      id: 'test-pegs',
+      name: '测试桩库',
+      description: '',
+      ordered: true,
+      usableAsPeg: true,
+      items: [
+        { id: 'p2', question: '鞋柜', answer: '放下随身物品', order: 2, imageUrl: '👟' },
+        { id: 'p1', question: '大门', answer: '进门第一站', order: 1, imageUrl: '🚪' },
+      ],
+      ...overrides,
+    }
+  }
+
+  it('pegImageSrc：http/dataURL 原样，相对路径补 pages-knowledge 分包前缀', () => {
+    expect(pegImageSrc('')).toBe('')
+    expect(pegImageSrc('https://a.com/x.png')).toBe('https://a.com/x.png')
+    expect(pegImageSrc('data:image/png;base64,xx')).toBe('data:image/png;base64,xx')
+    expect(pegImageSrc('knowledgebanks/images/a.png')).toBe('/subPackages/pages-knowledge/static/knowledgebanks/images/a.png')
+    expect(pegImageSrc('static/knowledgebanks/images/a.png')).toBe('/static/knowledgebanks/images/a.png')
+    expect(pegImageSrc('/knowledgebanks/images/a.png')).toBe('/subPackages/pages-knowledge/static/knowledgebanks/images/a.png')
+  })
+
+  it('pegPackToLoci：按 order 排序，名称/描述映射，emoji 配图入 emoji 字段不入 imageUrl', () => {
+    const loci = pegPackToLoci(makePegPack())
+    expect(loci.map(l => l.name)).toEqual(['大门', '鞋柜'])
+    expect(loci[0].description).toBe('进门第一站')
+    expect(loci[0].emoji).toBe('🚪')
+    expect(loci[0].imageUrl).toBeUndefined()
+  })
+
+  it('pegPackToLoci：order 缺失按原数组顺序；可渲染图片（dataURL）原样入 imageUrl', () => {
+    const pack = makePegPack({
+      items: [
+        { id: 'p1', question: 'A', answer: 'a', imageUrl: 'data:image/svg+xml,x' },
+        { id: 'p2', question: 'B', answer: 'b' },
+      ],
+    })
+    const loci = pegPackToLoci(pack)
+    expect(loci.map(l => l.name)).toEqual(['A', 'B'])
+    expect(loci[0].imageUrl).toBe('data:image/svg+xml,x')
+    expect(loci[0].emoji).toBeUndefined()
+    expect(loci[1].imageUrl).toBeUndefined()
+    expect(loci[1].emoji).toBeUndefined()
+  })
+
+  it('pegPackToLoci：公式预渲染 PNG（image 字段）补分包前缀；image 优先于 emoji 配图', () => {
+    const pack = makePegPack({
+      items: [
+        { id: 'p1', question: '公式桩', answer: 'x', order: 1, imageUrl: '🚪', image: 'knowledgebanks/images/f.png' },
+      ],
+    })
+    const loci = pegPackToLoci(pack)
+    expect(loci[0].imageUrl).toBe('/subPackages/pages-knowledge/static/knowledgebanks/images/f.png')
+    expect(loci[0].emoji).toBe('🚪')
   })
 })

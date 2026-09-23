@@ -1,12 +1,13 @@
 /**
- * 记忆宫殿纯函数工具（移动端查看版）
+ * 记忆宫殿纯函数工具（移动端）
  *
  * 移植自桌面端 src/utils/memory-palace-db.ts 的同步合并逻辑、
  * src/utils/memory-palace-srs.ts 的 SRS 与 src/utils/memory-palace-util.ts 的切块/解析，
- * 供 useMemoryPalace store 与页面使用（查看 + 巡视复习，不做编辑）。
+ * 另含桩库（usableAsPeg 知识包）→ 宫殿桩的导入映射；供 useMemoryPalace store 与页面使用。
  */
 import { DEFAULT_INTERVALS } from '@/stores/useUtils/constants'
 import type {
+  KnowledgePack,
   MobilePalace,
   MobilePegItem,
   MobileTextArticle,
@@ -168,4 +169,61 @@ export function resolvePegContent(peg: MobilePegItem, articles: MobileTextArticl
     return { text: chunk, deleted: false, articleTitle: article.title }
   }
   return { text: peg.freeText ?? '', deleted: false }
+}
+
+// ==================== 桩库导入（导入桩库为宫殿桩） ====================
+
+/** 桩库条目映射出的宫殿桩草稿（与 edit 页 loci 元素结构对应，emoji 仅为编辑期展示、不入库） */
+export interface PegLocusDraft {
+  name: string
+  description?: string
+  imageUrl?: string
+  /** 条目配图 emoji（小程序 image 组件不支持 SVG dataURL，仅编辑期占位展示） */
+  emoji?: string
+}
+
+/** pages-knowledge 分包静态资源前缀（与 pages-knowledge/utils/knowledge-image.ts 的 STATIC_PREFIX 保持一致） */
+const KNOWLEDGE_STATIC_PREFIX = '/subPackages/pages-knowledge/static/'
+
+/**
+ * 桩库公式配图相对路径 → 小程序图片地址（语义同 pages-knowledge/utils/knowledge-image.ts 的 formulaImageSrc）。
+ * 已是绝对 URL / dataURL 时原样返回，无图返回空串。
+ */
+export function pegImageSrc(image?: string): string {
+  if (!image) return ''
+  if (/^https?:\/\//.test(image) || image.startsWith('data:')) return image
+  const trimmed = image.replace(/^\/+/, '')
+  if (trimmed.startsWith('static/')) return `/${trimmed}`
+  return KNOWLEDGE_STATIC_PREFIX + trimmed
+}
+
+/** imageUrl 是否可直接作为图片地址渲染（dataURL / http(s) / 以 / 开头的本地路径） */
+function isRenderableImage(url: string): boolean {
+  return url.startsWith('data:') || /^https?:\/\//.test(url) || url.startsWith('/')
+}
+
+/**
+ * 桩库（usableAsPeg 知识包）→ 宫殿桩草稿列表，顺序按 item.order（缺失时按原数组顺序）。
+ *
+ * 与桌面端 knowledgePackToLoci 的差异：桌面端把 emoji 配图转成 SVG dataURL 入库，
+ * 但小程序 image 组件不支持 SVG，故移动端 emoji 不转图，仅放入 emoji 字段供编辑期展示，
+ * 桩图片保持现有占位/选图行为；公式预渲染 PNG（image 字段）经 pegImageSrc 补分包前缀后入库。
+ */
+export function pegPackToLoci(pack: KnowledgePack): PegLocusDraft[] {
+  return pack.items
+    .map((item, index) => ({ item, key: item.order ?? index + 1 }))
+    .sort((a, b) => a.key - b.key)
+    .map(entry => {
+      const raw = entry.item.imageUrl
+      const emoji = raw && !isRenderableImage(raw) ? raw : undefined
+      const imageUrl = entry.item.image
+        ? pegImageSrc(entry.item.image)
+        : raw && isRenderableImage(raw) ? raw : undefined
+      return {
+        name: entry.item.question,
+        description: entry.item.answer,
+        imageUrl,
+        emoji,
+      }
+    })
 }
