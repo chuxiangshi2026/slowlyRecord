@@ -344,6 +344,13 @@
       line-height: 1.3;
       opacity: var(--focus-content-opacity);
       transition: color 0.3s ease, opacity 0.2s ease;
+      /* 限宽避让头部右侧绝对定位按钮（最远 right:146px + 图标宽约24px），
+         防止长标题盖住按钮热区；超出部分省略号截断，不影响窗口拖拽 */
+      max-width: calc(100% - 180px);
+      margin-right: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .text-meta {
@@ -1658,8 +1665,13 @@
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           var utterance = new SpeechSynthesisUtterance(word.text);
-          utterance.lang = prof.ttsLang;
+          // 词条含汉字时用中文朗读（自定义词库可能收中文词，profile 只有 en/ja 等档案）
+          var wordLang = /[一-龥]/.test(word.text) ? 'zh-CN' : prof.ttsLang;
+          utterance.lang = wordLang;
           utterance.rate = getWordSpeechRate();
+          // 按语言选高质量语音（与文本朗读同一套优先级），无匹配则保持系统默认音
+          var preferredVoice = getPreferredVoice(wordLang);
+          if (preferredVoice) utterance.voice = preferredVoice;
           utterance.onend = done;
           utterance.onerror = function(e) {
             // 主动取消（如切词、关窗口触发 cancel）不算失败，同样按完成处理
@@ -2454,32 +2466,48 @@
       return (prof && prof.ttsLang) || 'en-US';
     }
 
-    // 中文朗读优先选高质量语音：微软自然语音（Xiaoxiao/Yunxi 等）/Google 国语，
+    // 选高质量语音：微软自然语音（Xiaoxiao/Yunxi 等）/Google 国语优先，
     // 多音字准确率明显高于系统默认合成引擎；找不到则保持 utterance 默认（按 lang 自动选）
-    var cachedZhVoice; // undefined=未查找，null=没找到
-    function getPreferredZhVoice() {
-      if (cachedZhVoice !== undefined) return cachedZhVoice;
-      cachedZhVoice = null;
+    // 优先级与桌面端 src/adapters/speech-voice.ts 保持一致：Natural/Online > Google > Microsoft > 其他
+    var cachedVoiceByLang = {}; // lang → voice/null，voiceschanged 后清空重查
+    function getPreferredVoice(lang) {
+      if (!lang) return null;
+      if (Object.prototype.hasOwnProperty.call(cachedVoiceByLang, lang)) return cachedVoiceByLang[lang];
+      cachedVoiceByLang[lang] = null;
       try {
         var voices = window.speechSynthesis.getVoices() || [];
-        var zhVoices = voices.filter(function(v) {
-          return (v.lang || '').toLowerCase().replace('_', '-').indexOf('zh') === 0;
+        var target = String(lang).replace(/_/g, '-').toLowerCase();
+        var base = target.split('-')[0];
+        var langVoices = voices.filter(function(v) {
+          return String(v.lang || '').replace(/_/g, '-').toLowerCase().split('-')[0] === base;
         });
-        var preferred = ['natural', 'online', 'xiaoxiao', 'yunxi', 'xiaoyi', 'yunjian', 'google'];
-        for (var i = 0; i < preferred.length; i++) {
-          for (var j = 0; j < zhVoices.length; j++) {
-            if ((zhVoices[j].name || '').toLowerCase().indexOf(preferred[i]) !== -1) {
-              cachedZhVoice = zhVoices[j];
-              return cachedZhVoice;
-            }
-          }
+        function scoreVoice(v) {
+          var vl = String(v.lang || '').replace(/_/g, '-').toLowerCase();
+          var n = (v.name || '').toLowerCase();
+          var s = 1;
+          if (vl === target) s += 8;
+          if (n.indexOf('natural') !== -1 || n.indexOf('online') !== -1) s += 40;
+          if (n.indexOf('google') !== -1) s += 30;
+          if (n.indexOf('microsoft') !== -1) s += 20;
+          s += v.localService ? 5 : 2;
+          return s;
         }
+        var best = null, bestScore = -1;
+        for (var i = 0; i < langVoices.length; i++) {
+          var sc = scoreVoice(langVoices[i]);
+          if (sc > bestScore) { best = langVoices[i]; bestScore = sc; }
+        }
+        cachedVoiceByLang[lang] = best;
       } catch (e) {}
-      return cachedZhVoice;
+      return cachedVoiceByLang[lang];
+    }
+    // 中文朗读用的便捷封装
+    function getPreferredZhVoice() {
+      return getPreferredVoice('zh');
     }
     // 语音列表异步加载，加载完成后重选
     if ('speechSynthesis' in window && window.speechSynthesis.addEventListener) {
-      window.speechSynthesis.addEventListener('voiceschanged', function() { cachedZhVoice = undefined; });
+      window.speechSynthesis.addEventListener('voiceschanged', function() { cachedVoiceByLang = {}; });
     }
 
     // 按句切分文章（兼容中英文标点）
@@ -3488,6 +3516,7 @@
       else if (e.key === 'ArrowLeft') { e.preventDefault(); cancelAutoNext(); cancelRepeatSpeaking(); if (currentIndex > 0) { currentIndex--; updateDisplay(); } }
       else if (e.key === 'ArrowRight') { e.preventDefault(); cancelAutoNext(); cancelRepeatSpeaking(); if (currentIndex < words.length - 1) { currentIndex++; updateDisplay(); } }
       else if (e.key === 'ArrowDown') { e.preventDefault(); markRemembered(true); }
+      else if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); if (autoNextEnabled) { if (autoPaused) { resumeAutoPlay(); } else { pauseAutoPlay(); } } }
       else if (e.key === 'Escape') { e.preventDefault(); window.close(); }
       else if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); setLocked(!isLocked); }
     });

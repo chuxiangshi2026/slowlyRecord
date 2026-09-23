@@ -5,472 +5,49 @@
       size="430px"
       destroy-on-close
   >
-
-
-    <!--    <div style={{ position: 'relative', overflow: 'hidden' }}>-->
-    <!--    <Drawer-->
-    <!--        onChange={(e)
-        => onChange(e as any)}
-        open={showSetting}
-        onClose={(e) => onTouchEnd(e as any)}
-        placement="right"
-        handler={false}
-        level={null}
-        afterVisibleChange={(c: boolean) => {
-        console.log('transitionEnd: ', c)
-        }}
-        width="30vw"
-        >-->
-    <!--     设置模块 -->
-    <h4 class="header">设置</h4>
-    <div class="titles">
-      <div class="setting-item">
-        <div class="content">加入单词后退出插件</div>
-        <el-switch class="shorcut-desc"
-                   v-model="wordsStore.pluginStatus"
-                   inline-prompt
-                   size="large"
-                   active-text="开"
-                   inactive-text="关"
-                   @change="onCloseAfterAddSwitchChange"
-        />
-      </div>
-      <div class="setting-item">
-        <div class="content">界面字号</div>
-        <el-radio-group :model-value="uiStore.uiZoom"
-                        @update:model-value="(v: string | number | boolean | undefined) => uiStore.applyUiZoom(Number(v) || 1)">
-          <el-radio-button :value="0.9">小</el-radio-button>
-          <el-radio-button :value="1">标准</el-radio-button>
-          <el-radio-button :value="1.15">大</el-radio-button>
-        </el-radio-group>
-      </div>
-    </div>
-    <div>
-      <!-- 当前翻译引擎卡片：第一屏只呈现当前引擎与免配置状态，切换走右侧下拉 -->
-      <div class="engine-card">
-        <div class="engine-card-main">
-          <span class="engine-card-name">{{ currentEngineLabel }}</span>
-          <span class="engine-card-hint">{{ currentEngineHint }}</span>
-        </div>
-        <el-select class="shorcut-desc" :model-value="wordsStore.currentTranslationPlatform"
-                   @update:model-value="(val: TranslationPlatform) => wordsStore.setTranslationPlatform(val)"
-                   placeholder="切换引擎"
-                   style="width:150px">
-          <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="translationOptionLabel(item.value, item.label)"
-              :value="item.value"
-          />
-        </el-select>
-      </div>
-      <p v-if="wordsStore.currentTranslationPlatform === 'tencent'" class="deprecate-notice">
-        提示：腾讯机器翻译业务即将下线，本软件预计9月底移除支持，请尽快切换其他翻译引擎。
-      </p>
-    </div>
-    <div>
-      <div class="setting-item">
-        <div class="content">ocr图片识别引擎</div>
-        <!--        ;justify-content: space-between;  size="large"-->
-        <el-select class="shorcut-desc" :model-value="wordsStore.currentOcrPlatform"
-                   @update:model-value="(val: OcrPlatform) => wordsStore.setOcrPlatform(val)"
-                   placeholder="选择"
-                   style="width:100px">
-          <el-option
-              v-for="item in ocrOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-
-          />
-        </el-select>
-      </div>
-    </div>
-
-
-
-    <div>
-      <div class="setting-item">
-        <div class="content">记忆牢固度</div>
-        <el-select class="shorcut-desc" :model-value="wordsStore.memoryFirmness"
-                   @update:model-value="wordsStore.setMemoryFirmness"
-                   placeholder="选择"
-                   style="width:100px">
-          <el-option
-              v-for="item in memoryFirmnessOptions"
-              :key="item"
-              :label="item"
-              :value="item"
-          />
-        </el-select>
-      </div>
-    </div>
-
-    <div>
-      <div class="setting-item">
-        <div class="content">选中单词自动发音</div>
-        <el-switch class="shorcut-desc"
-                   :model-value="wordsStore.autoSpeak"
-                   inline-prompt
-                   size="large"
-                   active-text="开"
-                   inactive-text="关"
-                   @update:model-value="wordsStore.setAutoSpeak"
-        />
-      </div>
-    </div>
-
-    <div>
-      <div class="setting-item">
-        <div class="content">护眼模式（浅绿背景）</div>
-        <el-switch class="shorcut-desc"
-                   :model-value="wordsStore.eyeCare"
-                   inline-prompt
-                   size="large"
-                   active-text="开"
-                   inactive-text="关"
-                   @update:model-value="wordsStore.setEyeCare"
-        />
-      </div>
-    </div>
-
-    <div v-if="!isUtools()">
-      <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
-        <div class="content" style="margin-bottom: 8px;">
-          主窗口透明度
-        </div>
-        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
-          <el-slider
-            v-model="opacityPercent"
-            :min="30"
-            :max="100"
-            :step="5"
-            :show-tooltip="false"
-            style="flex: 1;"
-            @change="onOpacityChange"
-          />
-          <span class="shorcut-desc" style="margin-top: 0; min-width: 40px; text-align: right;">{{ opacityPercent }}%</span>
-        </div>
-      </div>
-    </div>
-
-    <el-divider/>
-
-    <h4 class="header">专注模式设置</h4>
-    <div class="focus-setting-section">
-      <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
-        <div class="content" style="margin-bottom: 8px;">
-          显示样式
-        </div>
-        <div class="focus-style-grid">
-          <div class="focus-style-row">
-            <span class="focus-style-label">字体颜色</span>
-            <div class="focus-style-control">
-              <el-color-picker
-                  :model-value="wordsStore.focusMode.fontColor || ''"
-                  show-alpha
-                  @change="onFocusFontColorChange"
-              />
-              <el-button size="small" link @click="resetFocusFontColor">跟随主题</el-button>
+    <div class="settings-root">
+      <!-- 一级：分组入口列表（高频组靠前，低频组沉底） -->
+      <transition name="panel-fade" mode="out-in">
+        <div v-if="!activeGroup" key="list" class="group-list">
+          <div
+              v-for="group in settingGroups"
+              :key="group.key"
+              class="group-entry"
+              @click="activeGroup = group.key"
+          >
+            <div class="group-entry-main">
+              <span class="group-entry-name">{{ group.name }}</span>
+              <span class="group-entry-desc">{{ group.desc }}</span>
             </div>
-          </div>
-          <div class="focus-style-row">
-            <span class="focus-style-label">单词字号</span>
-            <div class="focus-style-control">
-              <el-slider
-                  v-model="focusFontSize"
-                  :min="14"
-                  :max="40"
-                  :step="1"
-                  :show-tooltip="false"
-                  style="flex: 1;"
-                  @change="onFocusFontSizeChange"
-              />
-              <span class="focus-style-value">{{ focusFontSize }}px</span>
-            </div>
-          </div>
-          <div class="focus-style-row">
-            <span class="focus-style-label">释义字号</span>
-            <div class="focus-style-control">
-              <el-slider
-                  v-model="focusExplainFontSize"
-                  :min="9"
-                  :max="24"
-                  :step="1"
-                  :show-tooltip="false"
-                  style="flex: 1;"
-                  @change="onFocusExplainFontSizeChange"
-              />
-              <span class="focus-style-value">{{ focusExplainFontSize }}px</span>
-            </div>
-          </div>
-          <div class="focus-style-row">
-            <span class="focus-style-label">背景图片</span>
-            <div class="focus-style-control">
-              <el-button size="small" @click="triggerFocusBackgroundImport">选择图片</el-button>
-              <el-button size="small" link :disabled="!wordsStore.focusMode.backgroundImage" @click="clearFocusBackground">清除</el-button>
-              <input
-                  type="file"
-                  ref="focusBgInput"
-                  style="display: none"
-                  accept="image/*"
-                  @change="handleFocusBackgroundImport"
-              />
-            </div>
-          </div>
-          <div class="focus-style-row">
-            <span class="focus-style-label">背景透明</span>
-            <div class="focus-style-control">
-              <el-slider
-                  v-model="focusBackgroundOpacityPercent"
-                  :min="0"
-                  :max="100"
-                  :step="5"
-                  :show-tooltip="false"
-                  style="flex: 1;"
-                  @change="onFocusBackgroundOpacityChange"
-              />
-              <span class="focus-style-value">{{ focusBackgroundOpacityPercent }}%</span>
-            </div>
+            <el-icon class="group-entry-arrow"><ArrowRight/></el-icon>
           </div>
         </div>
-      </div>
-    </div>
 
-
-    <div class="titles">
-      <div class="setting-item">
-        <div class="content">启用快捷键</div>
-        <el-switch class="shorcut-desc"
-                   v-model="wordsStore.shortcutEnabled"
-                   inline-prompt
-                   size="large"
-                   active-text="开"
-                   inactive-text="关"
-                   @change="openTheShortcut"
-        />
-      </div>
-    </div>
-
-
-    <el-divider/>
-
-    <!--     功能模块 -->
-    <!--    <h4 class="header">功能</h4>
-        <div class="content">
-          <div class="function-item">
-            <div>导出</div>
-            <div>导入</div>
+        <!-- 二级：分组详情面板，全宽覆盖一级列表 -->
+        <div v-else key="panel" class="group-panel">
+          <div class="group-panel-header">
+            <el-button class="group-panel-back" link :icon="ArrowLeft" @click="activeGroup = ''">返回</el-button>
+            <span class="group-panel-title">{{ activeGroupName }}</span>
           </div>
+          <el-scrollbar class="group-panel-body">
+            <component :is="activeGroupComponent"/>
+          </el-scrollbar>
         </div>
-        <el-divider/>-->
-
-    <h4 class="header">设置全局快捷键</h4>
-    <div class="titles">
-      <div class="setting-item">
-        <!--        <div class="content">打开全局快捷键</div>-->
-        <el-button type="info" @click="kuaijiejian(1)">划词快捷键</el-button>
-        <el-button type="info" @click="kuaijiejian(2)">划段快捷键</el-button>
-        <el-button type="info" @click="kuaijiejian(3)">截图快捷键</el-button>
-      </div>
+      </transition>
     </div>
-
-    <el-divider/>
-
-
-    <!--     快捷键模块 -->
-    <h4 class="header">快捷键</h4>
-    <el-collapse class="shortcut-collapse">
-      <el-collapse-item title="快捷键一览" name="shortcutList">
-        <div class="content">
-      <h5 style="text-align:center;">列表模式</h5>
-      <div class="titles">
-        <span class="title">功能说明</span>
-        <span class="title">快捷键</span>
-      </div>
-      <div v-for="(item,index) in listShortcuts"
-           :key="index" class="titles">
-        <span class="shorcut-desc">{{ item.desc }}</span>
-        <span class="shorcut-desc">{{ item.shortcut }}</span>
-      </div>
-
-      <h5 style="text-align:center; margin-top: 20px;">拼写模式</h5>
-      <div class="titles">
-        <span class="title">功能说明</span>
-        <span class="title">快捷键</span>
-      </div>
-      <div v-for="(item,index) in dictationShortcuts"
-           :key="index" class="titles">
-        <span class="shorcut-desc">{{ item.desc }}</span>
-        <span class="shorcut-desc">{{ item.shortcut }}</span>
-      </div>
-
-      <h5 style="text-align:center; margin-top: 20px;">专注模式</h5>
-      <div class="titles">
-        <span class="title">功能说明</span>
-        <span class="title">快捷键</span>
-      </div>
-      <div v-for="(item,index) in focusShortcuts"
-           :key="index" class="titles">
-        <span class="shorcut-desc">{{ item.desc }}</span>
-        <span class="shorcut-desc">{{ item.shortcut }}</span>
-      </div>
-        </div>
-      </el-collapse-item>
-    </el-collapse>
-
-    <el-divider/>
-
-
-    <!--     密钥设置模块 -->
-    <h4 class="header">密钥</h4>
-    <div class="content">
-      <h5 class="key-section-title">高级设置（自定义 API Key）</h5>
-      <p class="key-section-hint">默认使用讯飞星火（免配置 · 每日 500 次），额度耗尽或限流时会自动降级到有道/百度/Google/Bing/GLM；仅切换其他引擎或需要更高额度时才需填写</p>
-      <el-collapse v-model="activeTranslationKeys" class="key-collapse">
-        <el-collapse-item v-for="engine in translationKeyEngines" :key="engine.value" :name="engine.value">
-          <template #title>
-            <span class="key-engine-name">{{ engine.label }}</span>
-            <el-tag size="small" disable-transitions
-                    :type="hasKey(wordsStore.userApiKeys, engine.value) ? 'success' : 'info'">
-              {{ hasKey(wordsStore.userApiKeys, engine.value) ? '已配置' : '未配置' }}
-            </el-tag>
-          </template>
-          <div class="key-field">
-            <label>AppKey</label>
-            <el-input v-model="wordsStore.userApiKeys[engine.value].appkey"
-                      @update:model-value="(val: string) => updateKey(engine.value, 'appkey', val)"
-                      :placeholder="keyPlaceholders(engine.value).appkey" clearable/>
-          </div>
-          <div class="key-field">
-            <label>{{ keyFieldLabel(engine.value) }}</label>
-            <el-input v-model="wordsStore.userApiKeys[engine.value].key"
-                      :disabled="keyFieldDisabled(engine.value)"
-                      @update:model-value="(val: string) => updateKey(engine.value, 'key', val)"
-                      :placeholder="keyPlaceholders(engine.value).key" clearable/>
-          </div>
-        </el-collapse-item>
-      </el-collapse>
-
-      <h5 class="key-section-title">OCR 图片识别密钥</h5>
-      <p class="key-section-hint">默认本地识别无需配置</p>
-      <el-collapse v-model="activeOcrKeys" class="key-collapse">
-        <el-collapse-item v-for="engine in ocrKeyEngines" :key="engine.value" :name="engine.value">
-          <template #title>
-            <span class="key-engine-name">{{ engine.label }}</span>
-            <el-tag size="small" disable-transitions
-                    :type="hasKey(wordsStore.userOcrApiKeys, engine.value) ? 'success' : 'info'">
-              {{ hasKey(wordsStore.userOcrApiKeys, engine.value) ? '已配置' : '未配置' }}
-            </el-tag>
-          </template>
-          <div class="key-field">
-            <label>AppKey</label>
-            <el-input v-model="wordsStore.userOcrApiKeys[engine.value].appkey"
-                      @update:model-value="(val: string) => updateOcrKey(engine.value, 'appkey', val)"
-                      placeholder="AppID / AppKey" clearable/>
-          </div>
-          <div class="key-field">
-            <label>SecretKey</label>
-            <el-input v-model="wordsStore.userOcrApiKeys[engine.value].key"
-                      @update:model-value="(val: string) => updateOcrKey(engine.value, 'key', val)"
-                      placeholder="SecretKey" clearable/>
-          </div>
-        </el-collapse-item>
-      </el-collapse>
-    </div>
-
-    <el-divider/>
-
-
-    <h4 class="header">配置管理</h4>
-    <div class="content">
-      <div class="config-buttons">
-        <el-button type="primary" @click="exportConfig" :icon="Download">导出配置</el-button>
-        <el-button type="success" @click="triggerImport" :icon="Upload">导入配置</el-button>
-        <input
-          type="file"
-          ref="fileInput"
-          style="display: none"
-          accept=".json"
-          @change="handleFileImport"
-        />
-      </div>
-      <p class="config-hint">导出配置可保存您的 API 密钥、翻译引擎设置等个人配置</p>
-    </div>
-
-    <el-divider/>
-
-    <h4 class="header">其他</h4>
-    <div class="content">
-      <h5 style="text-align:center;">申请密钥</h5>
-      <p class="limit-info">
-        由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日{{ USAGE_LIMITS.OCR_DAILY_LIMIT }}次（腾讯引擎{{ USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT }}次）(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
-      <!--      <div class="view-version-btn">-->
-
-      <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
-           :key="platform.key"
-           class="titles">
-        <div class="setting-item">
-          <div class="content">{{ platform.content }}</div>
-          <a href="#"
-             @click.prevent="openUrl(platform.url)"
-             class="external-link">跳转{{ platform.name }}</a>
-        </div>
-      </div>
-    </div>
-
-    <!--      <div class="view-version-btn" @click="updateshowNotification(true)">查看版本说明</div>-->
-    <!--    </div>-->
-
-    <!--    </Drawer>-->
-
-    <!-- 内容区按模块拆分 -->
-    <!--    <el-scrollbar height="100%">-->
-    <!--      <div class="drawer-body">-->
-    <!--        &lt;!&ndash; 基础信息 &ndash;&gt;-->
-    <!--        <BasicInfoForm :data="detailData" @change="handleBasicChange" />-->
-
-    <!--        &lt;!&ndash; 分割线 &ndash;&gt;-->
-    <!--        <el-divider />-->
-
-    <!--        &lt;!&ndash; 高级配置 &ndash;&gt;-->
-    <!--        <AdvancedConfig v-model:config="detailData.config" />-->
-
-    <!--        &lt;!&ndash; 操作日志 &ndash;&gt;-->
-    <!--        <LogTable :user-id="detailId" />-->
-    <!--      </div>-->
-
-    <!--      &lt;!&ndash; 底部操作 &ndash;&gt;-->
-    <!--      <div class="drawer-footer">-->
-    <!--        <el-button @click="close">取消</el-button>-->
-    <!--        <el-button type="primary" @click="save">保存</el-button>-->
-    <!--      </div>-->
-    <!--    </el-scrollbar>-->
   </el-drawer>
 </template>
 <script setup lang="ts">
-import {computed, onMounted, reactive, ref, watch} from 'vue'
-import {useWordsStore} from "@/stores/words.ts";
-import {useUiStore} from "@/stores/ui.ts";
-import type {OcrPlatform, TranslationPlatform} from "@/types/words";
-import {AppInfo, TRANSLATION_PLATFORM_LINKS} from "@/config.ts";
-import {USAGE_LIMITS} from "@/constants";
-import {getSetDb, addAndUpdateSetDb} from "@/utils/user-set-db-util.ts";
-import {log} from "@/utils/logger.ts";
-import {isUtools} from "@/adapters/platform";
-import { Download, Upload } from '@element-plus/icons-vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-// import BasicInfoForm from './BasicInfoForm.vue'
-// import AdvancedConfig from './AdvancedConfig.vue'
-// import LogTable from './LogTable.vue'
+import {computed, markRaw, ref} from 'vue'
+import {ArrowLeft, ArrowRight} from '@element-plus/icons-vue'
+import GeneralSection from './settings/GeneralSection.vue'
+import FocusSection from './settings/FocusSection.vue'
+import ShortcutSection from './settings/ShortcutSection.vue'
+import ApiKeySection from './settings/ApiKeySection.vue'
+import ConfigSection from './settings/ConfigSection.vue'
+import OtherSection from './settings/OtherSection.vue'
 
-const FOCUS_BACKGROUND_MAX_SIZE = 2 * 1024 * 1024
-
-const clampNumber = (value: number, min: number, max: number, fallback: number) => {
-  const num = Number(value)
-  if (!Number.isFinite(num)) return fallback
-  return Math.max(min, Math.min(max, num))
-}
+type GroupKey = 'general' | 'focus' | 'shortcut' | 'apikey' | 'config' | 'other'
 
 const props = defineProps({
   modelValue: Boolean,
@@ -483,915 +60,136 @@ const props = defineProps({
 // 定义emit事件
 const emit = defineEmits(['update:modelValue', 'save'])
 
-// 核心：定义明确的更新方法
-const updateKey = (index: TranslationPlatform, field: 'appkey' | 'key', val: string) => {
-  // 更新 store 中的 API 密钥
-  wordsStore.setApiKey(index, field === 'appkey' ? val : wordsStore.userApiKeys[index].appkey, field === 'key' ? val : wordsStore.userApiKeys[index].key);
-}
-const updateOcrKey = (index: OcrPlatform, field: 'appkey' | 'key', val: string) => {
-  log.i('updateOcrKey', index, field, val)
-  // 更新 store 中的 API 密钥
-  wordsStore.setOcrApiKey(index, field === 'appkey' ? val : wordsStore.userOcrApiKeys[index].appkey, field === 'key' ? val : wordsStore.userOcrApiKeys[index].key);
-}
-// 创建响应式API密钥数据，优先使用用户设置的值
-// const apiKeys = reactive({
-//   youdao: {
-//     // || AppInfo.youdao.appkey
-//     appkey: localStorage.getItem('api_key_youdao_appkey') || '',
-//     // || AppInfo.youdao.key
-//     key: localStorage.getItem('api_key_youdao_key') || ''
-//   },
-//   ali: {
-//     // || AppInfo.ali.appkey
-//     appkey: localStorage.getItem('api_key_ali_appkey') || '',
-//     // || AppInfo.ali.key
-//     key: localStorage.getItem('api_key_ali_key') || ''
-//   },
-//   baidu: {
-//     // || AppInfo.baidu.appkey
-//     appkey: localStorage.getItem('api_key_baidu_appkey') || '',
-//     // || AppInfo.baidu.key
-//     key: localStorage.getItem('api_key_baidu_key') || ''
-//   },
-//   utoolsai: {
-//     appkey: localStorage.getItem('api_key_utoolsai_appkey') || '',
-//     key: localStorage.getItem('api_key_utoolsai_key') || ''
-//   },
-//   ollama: {
-//     appkey: localStorage.getItem('api_key_ollama_appkey') || '',
-//     key: localStorage.getItem('api_key_ollama_key') || ''
-//   },
-//   deepseek: {
-//     appkey: localStorage.getItem('api_key_deepseek_appkey') || '',
-//     key: localStorage.getItem('api_key_deepseek_key') || ''
-//   },
-//   qwen: {
-//     appkey: localStorage.getItem('api_key_qwen_appkey') || '',
-//     key: localStorage.getItem('api_key_qwen_key') || ''
-//   },
-//   kimi: {
-//     appkey: localStorage.getItem('api_key_kimi_appkey') || '',
-//     key: localStorage.getItem('api_key_kimi_key') || ''
-//   }
-// } as Record<TranslationPlatform, { appkey: string; key: string }>)
-
-// 监听API密钥变化并保存
-// watch(() => apiKeys.ali, () => {
-//   saveApiKeys('ali')
-// }, {deep: true})
-//
-// watch(() => apiKeys.youdao, () => {
-//   saveApiKeys('youdao')
-// }, {deep: true})
-//
-// watch(() => apiKeys.baidu, () => {
-//   saveApiKeys('baidu')
-// }, {deep: true})
-//
-// watch(() => apiKeys.utoolsai, () => {
-//   saveApiKeys('utoolsai')
-// }, {deep: true})
-//
-// watch(() => apiKeys.ollama, () => {
-//   saveApiKeys('ollama')
-// }, {deep: true})
-//
-// watch(() => apiKeys.deepseek, () => {
-//   saveApiKeys('deepseek')
-// }, {deep: true})
-//
-// watch(() => apiKeys.qwen, () => {
-//   saveApiKeys('qwen')
-// }, {deep: true})
-//
-// watch(() => apiKeys.kimi, () => {
-//   saveApiKeys('kimi')
-// }, {deep: true})
-//
-// const saveApiKeys = (provider: TranslationPlatform) => {
-//   // 保存API密钥到本地存储
-//   wordsStore.setApiKey(provider, apiKeys[provider].appkey, apiKeys[provider].key)
-//   console.log(`${provider} API密钥已保存`, apiKeys[provider])
-// }
-
-// 退出插件
-// const exitThePlugin = ref(false)
-
-
-const openUrl = (url: string) => {
-  if (isUtools()) {
-    (window as any).utools?.shellOpenExternal?.(url);
-  } else {
-    window.open(url, '_blank');
-  }
-}
-
-
-// const shortcutEnabled = ref(false) // 快捷键开关状态
-// const autoFocusFirstItem = ref(true) // 自动聚焦第一个单词状态
-
-// 实现快捷键开关功能
-const openTheShortcut = () => {
-  // 可以在这里添加持久化保存快捷键状态的逻辑
-  wordsStore.setShortcutEnabled(wordsStore.shortcutEnabled)
-}
-// 在组件挂载时读取快捷键状态
-// onMounted(() => {
-//   // const savedStatus = localStorage.getItem('shortcutEnabled')
-//   shortcutEnabled.value = wordsStore.shortcutEnabled
-//
-//   // const savedStatus = localStorage.getItem('shortcutEnabled')
-//   exitThePlugin.value = wordsStore.pluginStatus
-//
-//   // const savedStatus = localStorage.getItem('shortcutEnabled')
-//   tranApi.value = wordsStore.currentTranslationPlatform
-// })
-
-const onCloseAfterAddSwitchChange = () => {
-  wordsStore.setClosePlugin(wordsStore.pluginStatus)
-}
-
-// 主窗口透明度百分比（显示用）
-const opacityPercent = computed({
-  get: () => Math.round(wordsStore.mainWindowOpacity * 100),
-  set: (val: number) => {
-    wordsStore.setMainWindowOpacity(val / 100)
-  }
-})
-
-const onOpacityChange = (val: number) => {
-  wordsStore.setMainWindowOpacity(val / 100)
-}
-
-const focusBgInput = ref<HTMLInputElement | null>(null)
-
-const focusFontSize = computed({
-  get: () => clampNumber(wordsStore.focusMode.fontSize, 14, 40, 20),
-  set: (val: number) => {
-    wordsStore.setFocusMode({ fontSize: clampNumber(val, 14, 40, 20) })
-  }
-})
-
-const focusExplainFontSize = computed({
-  get: () => clampNumber(wordsStore.focusMode.explainFontSize, 9, 24, 11),
-  set: (val: number) => {
-    wordsStore.setFocusMode({ explainFontSize: clampNumber(val, 9, 24, 11) })
-  }
-})
-
-const focusBackgroundOpacityPercent = computed({
-  get: () => Math.round(clampNumber(wordsStore.focusMode.backgroundImageOpacity, 0, 1, 0.35) * 100),
-  set: (val: number) => {
-    wordsStore.setFocusMode({ backgroundImageOpacity: clampNumber(val / 100, 0, 1, 0.35) })
-  }
-})
-
-const onFocusFontColorChange = (color: string | null) => {
-  wordsStore.setFocusMode({ fontColor: color || '' })
-}
-
-const resetFocusFontColor = () => {
-  wordsStore.setFocusMode({ fontColor: '' })
-}
-
-const onFocusFontSizeChange = (val: number) => {
-  wordsStore.setFocusMode({ fontSize: clampNumber(val, 14, 40, 20) })
-}
-
-const onFocusExplainFontSizeChange = (val: number) => {
-  wordsStore.setFocusMode({ explainFontSize: clampNumber(val, 9, 24, 11) })
-}
-
-const onFocusBackgroundOpacityChange = (val: number) => {
-  wordsStore.setFocusMode({ backgroundImageOpacity: clampNumber(val / 100, 0, 1, 0.35) })
-}
-
-const triggerFocusBackgroundImport = () => {
-  focusBgInput.value?.click()
-}
-
-const clearFocusBackground = () => {
-  wordsStore.setFocusMode({ backgroundImage: '' })
-}
-
-const handleFocusBackgroundImport = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-  if (!file) return
-
-  if (file.size > FOCUS_BACKGROUND_MAX_SIZE) {
-    ElMessage.warning('背景图片不能超过 2MB')
-    target.value = ''
-    return
-  }
-
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    const dataUrl = e.target?.result as string
-    if (dataUrl) {
-      wordsStore.setFocusMode({ backgroundImage: dataUrl })
-      ElMessage.success('专注模式背景已更新')
-    }
-    target.value = ''
-  }
-  reader.onerror = () => {
-    ElMessage.error('读取背景图片失败')
-    target.value = ''
-  }
-  reader.readAsDataURL(file)
-}
-
-const onAutoSpeakChange = () => {
-  wordsStore.setAutoSpeak(wordsStore.autoSpeak)
-}
-
-
-
-const kuaijiejian = (type: number) => {
-  const utoolsApi = (window as any).utools;
-  if (!isUtools() || !utoolsApi?.redirectHotKeySetting) return;
-  if (type == 1) {
-    utoolsApi.redirectHotKeySetting("划词添加", true);
-  }
-  if (type == 2) {
-    utoolsApi.redirectHotKeySetting("划段添加", true)
-  }
-  if (type == 3) {
-    utoolsApi.redirectHotKeySetting("截图添加", true)
-  }
-}
-
-
-let wordsStore = useWordsStore();
-const uiStore = useUiStore();
-
-// 记忆牢固度选项
-const memoryFirmnessOptions = ['正常' , '较强' , '极强'];
-
-const ocrOptions = [
-  {
-    value: 'local',
-    label: '本地词典(离线)',
-  },
-  {
-    value: 'tencent',
-    label: '腾讯(即将下线)',
-  }, {
-    value: 'baidu',
-    label: '百度',
-  },
-  {
-    value: 'youdao',
-    label: '有道',
-  }, {
-    value: 'ali',
-    label: '阿里',
-  }, {
-    value: 'deepseek',
-    label: '深度求索(视觉)',
-  }, {
-    value: 'glm',
-    label: '智谱GLM(视觉)',
-  }]
-const options = [
-  {
-    value: 'utoolsai',
-    label: 'utoolsAI',
-  },
-  {
-    value: 'local',
-    label: '本地词典(离线)',
-  },
-  {
-    value: 'tencent',
-    label: '腾讯(即将下线)',
-  }, {
-    value: 'baidu',
-    label: '百度',
-  },
-  {
-    value: 'youdao',
-    label: '有道',
-  }, {
-    value: 'ali',
-    label: '阿里',
-  }, {
-    value: 'ollama',
-    label: 'ollama',
-  }, {
-    value: 'deepseek',
-    label: 'deepseek',
-  }, {
-    value: 'qwen',
-    label: '千问',
-  }, {
-    value: 'kimi',
-    label: 'kimi',
-  }, {
-    value: 'glm',
-    label: '智谱GLM',
-  }, {
-    value: 'minimax',
-    label: 'MiniMax',
-  }, {
-    value: 'deepl',
-    label: 'DeepL',
-  }, {
-    value: 'azure',
-    label: '微软翻译',
-  }, {
-    value: 'qiniu',
-    label: '七牛AI',
-  }, {
-    value: 'google',
-    label: 'Google',
-  }, {
-    value: 'spark',
-    label: '讯飞星火',
-  }, {
-    value: 'xftrans',
-    label: '讯飞机器翻译',
-  }, {
-    value: 'bing',
-    label: '微软网页版',
-  }
+// 设置分组：高频组（常规/专注模式）靠前，低频组（密钥/配置管理/快捷键/其他）沉底
+const settingGroups: { key: GroupKey; name: string; desc: string; component: any }[] = [
+  {key: 'general', name: '常规设置', desc: '翻译/OCR 引擎、发音、护眼模式、界面字号', component: markRaw(GeneralSection)},
+  {key: 'focus', name: '专注模式', desc: '专注窗口样式、背景与快捷键开关', component: markRaw(FocusSection)},
+  {key: 'shortcut', name: '快捷键', desc: '全局快捷键设置与快捷键一览', component: markRaw(ShortcutSection)},
+  {key: 'apikey', name: 'API 密钥', desc: '翻译/OCR 引擎自定义密钥（默认免配置）', component: markRaw(ApiKeySection)},
+  {key: 'config', name: '配置管理', desc: '导出/导入个人配置（含 API 密钥）', component: markRaw(ConfigSection)},
+  {key: 'other', name: '其他', desc: '申请密钥入口与使用说明', component: markRaw(OtherSection)},
 ]
 
-// 免配置标签：内置 key 非空的引擎零配置可用；google/bing 走免费网页接口免 key
-const translationOptionLabel = (value: string, label: string) => {
-  let suffix = ''
-  if (value === 'google' || value === 'bing') {
-    suffix = '（免费免key）'
-  } else if ((AppInfo as Record<string, { appkey?: string }>)[value]?.appkey) {
-    suffix = '（免配置）'
-  }
-  // 默认引擎 spark 额外标注推荐
-  return value === 'spark' ? `${label}${suffix}·推荐` : `${label}${suffix}`
-}
+// 当前进入的二级分组（空串表示停留在一级列表）
+const activeGroup = ref<GroupKey | ''>('')
 
-// 当前引擎卡片文案：免配置引擎标出免费额度，其余提示需配置
-const currentEngineLabel = computed(() => engineLabel(options, wordsStore.currentTranslationPlatform))
-const currentEngineHint = computed(() => {
-  const p = wordsStore.currentTranslationPlatform
-  if (p === 'google' || p === 'bing') return '免配置'
-  if ((AppInfo as Record<string, { appkey?: string }>)[p]?.appkey) return '免配置 · 每日 500 次'
-  return '需配置 API Key'
-})
-
-// ===== 密钥配置区块 =====
-// 只需 AppKey、无需 SecretKey 的翻译引擎
-const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'deepl', 'qiniu', 'spark']
-// AI 引擎的第二个字段是「模型名」，允许用户自定义模型版本（留空则用内置默认模型）
-const modelEditablePlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'qiniu', 'ollama', 'spark']
-// 不展示密钥配置的引擎（内置免费/本地）
-const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan', 'google', 'bing']
-const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm']
-
-type ApiKeyMap = Record<string, { appkey: string; key: string }>
-
-const engineLabel = (list: { value: string; label: string }[], value: string) =>
-  list.find(o => o.value === value)?.label || value
-
-const translationKeyEngines = computed(() =>
-  Object.keys(wordsStore.userApiKeys)
-    .filter(k => !hiddenTranslationKeyPlatforms.includes(k))
-    .map(k => ({ value: k as TranslationPlatform, label: engineLabel(options, k) }))
+const activeGroupName = computed(() =>
+  settingGroups.find(g => g.key === activeGroup.value)?.name || ''
 )
-const ocrKeyEngines = computed(() =>
-  Object.keys(wordsStore.userOcrApiKeys)
-    .filter(k => !hiddenOcrKeyPlatforms.includes(k))
-    .map(k => ({ value: k as OcrPlatform, label: engineLabel(ocrOptions, k) }))
+const activeGroupComponent = computed(() =>
+  settingGroups.find(g => g.key === activeGroup.value)?.component
 )
 
-const hasKey = (keys: ApiKeyMap, name: string) => !!(keys[name]?.appkey || keys[name]?.key)
-
-// 第二个字段的标题：AI 引擎是模型名，其余是 SecretKey
-const keyFieldLabel = (platform: string) =>
-  modelEditablePlatforms.includes(platform) ? '模型名（可选）' : 'SecretKey'
-
-// 第二个字段是否禁用：AI 引擎可编辑模型名，但使用内置共享 key 时锁死（防止改成付费模型扣内置 key 持有人的钱）
-const userAppkeyOf = (platform: string) =>
-  (wordsStore.userApiKeys as ApiKeyMap)[platform]?.appkey?.trim()
-
-const keyFieldDisabled = (platform: string) => {
-  if (modelEditablePlatforms.includes(platform)) {
-    return !userAppkeyOf(platform)
-  }
-  return singleKeyPlatforms.includes(platform)
-}
-
-const keyPlaceholders = (platform: string) => {
-  if (platform === 'ollama') return { appkey: '服务地址，如 http://localhost:11434', key: '模型名，如 qwen2.5:0.5b' }
-  if (platform === 'azure') return { appkey: '必填，订阅 Key', key: '区域，如 eastasia' }
-  if (platform === 'xftrans') return { appkey: '必填，APPID:APIKey（冒号分隔）', key: '必填，APISecret' }
-  if (platform === 'spark') return { appkey: 'MaaS 平台填 ak- 开头的 APIKey；旧平台填 APIPassword', key: 'MaaS 必填服务卡片 modelId；旧平台留空默认 lite' }
-  if (modelEditablePlatforms.includes(platform)) {
-    const defaultModel = (AppInfo as Record<string, { appkey: string; key: string }>)[platform]?.key
-    const usingBuiltin = !userAppkeyOf(platform)
-    if (usingBuiltin && defaultModel) {
-      return { appkey: '必填，API Key', key: `使用内置 key 时模型固定为 ${defaultModel}` }
-    }
-    return { appkey: '必填，API Key', key: defaultModel ? `留空默认 ${defaultModel}` : '模型名（可选）' }
-  }
-  if (platform === 'deepl') return { appkey: '必填，API Key（免费版以 :fx 结尾）', key: '该引擎无需 SecretKey' }
-  if (singleKeyPlatforms.includes(platform)) return { appkey: '必填，API Key', key: '该引擎无需 SecretKey' }
-  return { appkey: 'AppID / AppKey', key: 'SecretKey' }
-}
-
-// 折叠面板默认收起；用户展开后再单独填写对应引擎的 API Key
-const activeTranslationKeys = ref<string[]>([])
-const activeOcrKeys = ref<string[]>([])
-/*{
-  value: 'google',
-      label: '谷歌',
-},
-{
-  value: 'Option5',
-      label: 'Option5',
-},*/
 const visible = computed({
   get: () => props.modelValue,
   set: (val) => emit('update:modelValue', val)
 })
-
-const detailData = ref({})
-
-// 监听id变化加载数据
-/*watch(() => props.detailId, async (id) => {
-  if (id && visible.value) {
-    detailData.value = await fetchDetail(id)
-  }
-}, { immediate: true })*/
-
-const close = () => {
-  visible.value = false
-  detailData.value = {}
-}
-
-const save = () => {
-  emit('save', detailData.value)
-  close()
-}
-
-
-const listShortcuts = [
-  {desc: '记得选中单词', shortcut: 'Shift + R'},
-  {desc: '忘记选中单词', shortcut: 'Shift + F'},
-  {desc: '选中单词发音', shortcut: 'Shift + P'},
-  {desc: '翻译选中单词', shortcut: 'Shift + T'},
-  {desc: '保存释义', shortcut: 'Ctrl + Enter'}
-]
-
-const cardShortcuts = [
-  {desc: '下一个', shortcut: 'Shift + >'},
-  {desc: '上一个', shortcut: 'Shift + <'},
-  {desc: '单词发音', shortcut: 'Shift + P'},
-  {desc: '模式切换', shortcut: 'Shift + M'},
-  {desc: '开启/关闭翻译', shortcut: 'Shift + T'},
-]
-
-const dictationShortcuts = [
-  {desc: '显示提示', shortcut: 'Shift + H'},
-  {desc: '上一个单词', shortcut: 'Shift + ←'},
-  {desc: '跳过/下一个单词', shortcut: 'Shift + →'},
-  {desc: '播放发音', shortcut: 'Space'},
-  {desc: '跳过单词', shortcut: 'Enter'},
-]
-
-const focusShortcuts = [
-  {desc: '认识（升级）', shortcut: 'Shift + R'},
-  {desc: '忘记（降级）', shortcut: 'Shift + F'},
-  {desc: '播放发音', shortcut: 'Shift + P'},
-  {desc: '显示/隐藏释义', shortcut: 'Shift + T'},
-  {desc: '永久记住', shortcut: '↓'},
-  {desc: '上一个单词', shortcut: '←'},
-  {desc: '下一个单词', shortcut: '→'},
-  {desc: '锁定/解锁', shortcut: 'Ctrl + L'},
-  {desc: '关闭专注窗口', shortcut: 'Esc'},
-]
-
-// 配置文件导入导出
-const fileInput = ref<HTMLInputElement | null>(null)
-
-// 导出配置
-const exportConfig = () => {
-  const userSet = getSetDb()
-  if (!userSet) {
-    ElMessage.warning('暂无配置可导出')
-    return
-  }
-
-  const configData = {
-    version: '1.0',
-    exportTime: new Date().toISOString(),
-    settings: {
-      pluginStatus: userSet.pluginStatus,
-      shortcutEnabled: userSet.shortcutEnabled,
-      translationPlatform: userSet.translationPlatform,
-      ocrPlatform: userSet.ocrPlatform,
-      memoryFirmness: userSet.memoryFirmness,
-      mainWindowOpacity: userSet.mainWindowOpacity ?? 1.0,
-      autoSpeak: userSet.autoSpeak ?? false,
-      focusMode: userSet.focusMode || {},
-      keys: userSet.keys || {},
-      ocrKeys: userSet.ocrKeys || {}
-    }
-  }
-
-  const blob = new Blob([JSON.stringify(configData, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = `slowlyRecord-config-${new Date().toISOString().split('T')[0]}.json`
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-  URL.revokeObjectURL(url)
-
-  ElMessage.success('配置已导出')
-}
-
-// 触发文件选择
-const triggerImport = () => {
-  fileInput.value?.click()
-}
-
-// 处理文件导入
-const handleFileImport = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-
-  if (!file) {
-    return
-  }
-
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    try {
-      const content = e.target?.result as string
-      const configData = JSON.parse(content)
-
-      // 验证配置文件格式
-      if (!configData.settings) {
-        throw new Error('配置文件格式错误')
-      }
-
-      ElMessageBox.confirm(
-        '导入配置将覆盖当前的 API 密钥和设置，是否继续？',
-        '确认导入',
-        {
-          confirmButtonText: '确认导入',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).then(() => {
-        // 应用配置
-        const settings = configData.settings
-
-        // 更新 store
-        if (settings.pluginStatus !== undefined) {
-          wordsStore.setClosePlugin(settings.pluginStatus)
-        }
-        if (settings.shortcutEnabled !== undefined) {
-          wordsStore.setShortcutEnabled(settings.shortcutEnabled)
-        }
-        if (settings.translationPlatform) {
-          wordsStore.setTranslationPlatform(settings.translationPlatform)
-        }
-        if (settings.ocrPlatform) {
-          wordsStore.setOcrPlatform(settings.ocrPlatform)
-        }
-        if (settings.memoryFirmness) {
-          wordsStore.setMemoryFirmness(settings.memoryFirmness)
-        }
-        if (settings.mainWindowOpacity !== undefined) {
-          wordsStore.setMainWindowOpacity(settings.mainWindowOpacity)
-        }
-        if (settings.autoSpeak !== undefined) {
-          wordsStore.setAutoSpeak(settings.autoSpeak)
-        }
-        if (settings.focusMode) {
-          wordsStore.setFocusMode(settings.focusMode)
-        }
-
-        // 更新 API Keys
-        if (settings.keys) {
-          Object.entries(settings.keys).forEach(([platform, keys]: [string, any]) => {
-            if (keys.appkey !== undefined && keys.key !== undefined) {
-              wordsStore.setApiKey(platform as TranslationPlatform, keys.appkey, keys.key)
-            }
-          })
-        }
-
-        // 更新 OCR Keys
-        if (settings.ocrKeys) {
-          Object.entries(settings.ocrKeys).forEach(([platform, keys]: [string, any]) => {
-            if (keys.appkey !== undefined && keys.key !== undefined) {
-              wordsStore.setOcrApiKey(platform as OcrPlatform, keys.appkey, keys.key)
-            }
-          })
-        }
-
-        ElMessage.success('配置导入成功')
-      }).catch(() => {
-        // 用户取消
-      })
-    } catch (error) {
-      ElMessage.error('配置文件解析失败，请检查文件格式')
-      console.error('导入配置错误:', error)
-    }
-
-    // 清空 input 值，允许重复导入同一文件
-    target.value = ''
-  }
-
-  reader.readAsText(file)
-}
 </script>
 <style scoped lang="scss">
-.el-drawer {
-  .rc-switch-checked {
-    border: 1px solid var(--utools-primary);
-    background-color: var(--utools-primary);
-  }
-
-  //&-content
-  &__body {
-    background-color: var(--utools-bg-secondary);
-    padding-bottom: 20px;
-    box-sizing: border-box;
-
-    .view-version-btn {
-      background-color: var(--utools-text-tertiary);
-      border: none;
-      color: var(--utools-text-inverse);
-      padding: 4px 8px;
-      box-sizing: border-box;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 12px;
-      margin: 4px 2px;
-      cursor: pointer;
-      -webkit-transition-duration: 0.4s;
-      transition-duration: 0.4s;
-      border-radius: 4px;
-
-      &:hover {
-        box-shadow: var(--utools-shadow-md);
-      }
-    }
-
-    .header {
-      padding: 0 10px;
-      color: var(--utools-text-primary);
-    }
-
-    .setting-item {
-      display: flex;
-      align-items: center;
-    }
-
-    .engine-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 6px 20px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: var(--utools-bg-card);
-      border: 1px solid var(--utools-border-divider);
-
-      .engine-card-main {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        min-width: 0;
-      }
-
-      .engine-card-name {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--utools-text-primary);
-      }
-
-      .engine-card-hint {
-        font-size: 12px;
-        color: var(--utools-text-tertiary);
-      }
-    }
-
-    .deprecate-notice {
-      margin: 6px 20px 0;
-      font-size: 12px;
-      line-height: 1.5;
-      color: var(--el-color-warning);
-    }
-
-    .content {
-      padding: 0 20px;
-      color: var(--utools-text-secondary);
-      font-size: 12px;
-
-      .titles {
-        display: flex;
-        justify-content: space-between;
-        font-weight: bold;
-        color: var(--utools-text-primary);
-      }
-
-      .shorcut-desc {
-        margin-top: 10px;
-        font-size: 12px;
-        font-weight: 400;
-        color: var(--utools-text-secondary);
-      }
-    }
-  }
+.settings-root {
+  height: 100%;
 }
 
-.el-switch {
-  --el-switch-on-color: var(--utools-primary);
-  --el-switch-off-color: var(--utools-text-tertiary);
+// 一级：分组入口列表
+.group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
 }
 
-.external-link {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 4px;
-  text-decoration: none;
-  color: var(--utools-text-secondary);
-  background-color: var(--utools-bg-tertiary);
-  transition: background-color 0.3s ease;
+.group-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 6px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--utools-bg-card);
+  border: 1px solid var(--utools-border-divider);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--utools-bg-hover);
-    color: var(--utools-primary);
-  }
-}
+    background: var(--utools-bg-hover);
 
-.config-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  padding: 16px 0;
-
-  :deep(.el-button--primary) {
-    background-color: var(--utools-primary);
-    border-color: var(--utools-primary);
-    color: #fff;
-
-    &:hover {
-      background-color: var(--utools-primary-hover, var(--utools-primary));
-      border-color: var(--utools-primary-hover, var(--utools-primary));
+    .group-entry-arrow {
+      color: var(--utools-primary);
     }
   }
 
-  :deep(.el-button--success) {
-    background-color: var(--utools-success, #67c23a);
-    border-color: var(--utools-success, #67c23a);
-    color: #fff;
-
-    &:hover {
-      background-color: var(--utools-success-hover, #85ce61);
-      border-color: var(--utools-success-hover, #85ce61);
-    }
+  .group-entry-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    flex: 1;
   }
 
-  :deep(.el-button .el-icon) {
-    color: inherit;
-  }
-}
-
-.config-hint {
-  text-align: center;
-  color: var(--utools-text-tertiary);
-  font-size: 12px;
-  margin: 8px 0 0 0;
-}
-
-/* 密钥配置折叠面板 */
-.key-section-title {
-  text-align: center;
-  color: var(--utools-text-secondary);
-  margin: 8px 0;
-}
-
-.key-section-hint {
-  margin: 0 0 6px;
-  text-align: center;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--utools-text-tertiary);
-}
-
-.shortcut-collapse {
-  border-top: none;
-
-  :deep(.el-collapse-item__header) {
-    padding: 0 10px;
+  .group-entry-name {
+    font-size: 14px;
+    font-weight: 600;
     color: var(--utools-text-primary);
   }
 
-  :deep(.el-collapse-item__content) {
-    padding-bottom: 12px;
+  .group-entry-desc {
+    font-size: 12px;
+    color: var(--utools-text-tertiary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .group-entry-arrow {
+    flex-shrink: 0;
+    color: var(--utools-text-tertiary);
+    transition: color 0.2s ease;
   }
 }
 
-.key-collapse {
-  --el-collapse-header-height: 40px;
-  border-top: none;
-
-  .key-engine-name {
-    font-weight: 600;
-    margin-right: 8px;
-  }
-
-  :deep(.el-collapse-item__header) {
-    gap: 4px;
-  }
-
-  :deep(.el-collapse-item__content) {
-    padding-bottom: 12px;
-  }
-}
-
-.key-field {
+// 二级：分组详情面板
+.group-panel {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 6px 0;
+  flex-direction: column;
+  height: 100%;
 
-  label {
-    flex: 0 0 72px;
-    text-align: right;
-    color: var(--utools-text-secondary);
-    font-size: 13px;
+  .group-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px 10px;
+    border-bottom: 1px solid var(--utools-border-divider);
+    margin-bottom: 12px;
+
+    .group-panel-back {
+      color: var(--utools-text-secondary);
+
+      &:hover {
+        color: var(--utools-primary);
+      }
+    }
+
+    .group-panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--utools-text-primary);
+    }
   }
 
-  .el-input {
+  .group-panel-body {
     flex: 1;
   }
 }
 
-.focus-setting-section {
-  margin-bottom: 8px;
+// 两级切换的简单过渡动画
+.panel-fade-enter-active,
+.panel-fade-leave-active {
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
-.focus-style-grid {
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.focus-style-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.focus-style-label {
-  width: 64px;
-  flex-shrink: 0;
-  color: var(--utools-text-secondary);
-  font-size: 12px;
-}
-
-.focus-style-control {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.focus-style-value {
-  width: 44px;
-  flex-shrink: 0;
-  text-align: right;
-  color: var(--utools-text-secondary);
-  font-size: 12px;
-}
-
-:deep(.el-input.is-disabled .el-input__wrapper) {
-  background-color: var(--utools-bg-tertiary);
-  border-color: var(--utools-border-primary);
-  color: var(--utools-text-disabled);
-  cursor: not-allowed;
-}
-
-:deep(.el-input.is-disabled .el-input__inner) {
-  color: var(--utools-text-disabled);
-  cursor: not-allowed;
-}
-
-:deep(.el-input__wrapper) {
-  background-color: var(--utools-bg-input);
-}
-
-:deep(.el-input__inner) {
-  color: var(--utools-text-primary);
+.panel-fade-enter-from,
+.panel-fade-leave-to {
+  opacity: 0;
+  transform: translateX(12px);
 }
 </style>

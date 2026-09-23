@@ -87,9 +87,11 @@ describe('tts adapter', () => {
       expect(window.speechSynthesis.cancel).toHaveBeenCalled()
     })
 
-    it('speak 支持 options 参数', () => {
+    it('speak 支持 options 参数', async () => {
       const adapter = getTtsAdapter()
       adapter.speak('bonjour', { lang: 'fr', rate: 0.8, pitch: 1.2 })
+      // 指定 lang 时会先等语音列表（mock 无 addEventListener，立即就绪），异步一拍后真正发声
+      await new Promise(resolve => setTimeout(resolve, 0))
       const utterance = (window.speechSynthesis.speak as any).mock.calls[0][0]
       expect(utterance.lang).toBe('fr')
       expect(utterance.rate).toBe(0.8)
@@ -119,6 +121,41 @@ describe('tts adapter', () => {
       adapter.speak('two')
       // cancel 会被再次调用（因为第一次 speak 也会调 cancel）
       expect(window.speechSynthesis.cancel).toHaveBeenCalled()
+    })
+
+    it('指定 lang 时按质量选 voice（Natural > Google > Microsoft）', async () => {
+      const zhVoices = [
+        { name: 'Microsoft Huihui - Chinese', lang: 'zh-CN', localService: true, default: false },
+        { name: 'Google 普通话（中国大陆）', lang: 'zh-CN', localService: false, default: false },
+        { name: 'Microsoft Xiaoxiao Online (Natural) - Chinese', lang: 'zh-CN', localService: false, default: false },
+      ]
+      ;(window.speechSynthesis.getVoices as any).mockReturnValue(zhVoices)
+      const adapter = getTtsAdapter()
+      adapter.speak('你好', { lang: 'zh-CN' })
+      await new Promise(resolve => setTimeout(resolve, 0))
+      const utterance = (window.speechSynthesis.speak as any).mock.calls[0][0]
+      expect(utterance.voice?.name).toBe('Microsoft Xiaoxiao Online (Natural) - Chinese')
+    })
+
+    it('语音列表未就绪时等待 voiceschanged，期间 stop 则丢弃待发语音', async () => {
+      let voicesChangedHandler: (() => void) | null = null
+      Object.defineProperty(window, 'speechSynthesis', {
+        value: {
+          speak: vi.fn(),
+          cancel: vi.fn(),
+          getVoices: vi.fn(() => []),
+          addEventListener: vi.fn((_event: string, handler: () => void) => { voicesChangedHandler = handler }),
+          removeEventListener: vi.fn(),
+        },
+        writable: true,
+      })
+      const adapter = getTtsAdapter()
+      adapter.speak('你好', { lang: 'zh-CN' })
+      adapter.stop()
+      // 模拟语音列表加载完成：待发语音应被代际丢弃，不再 speak
+      voicesChangedHandler?.()
+      await new Promise(resolve => setTimeout(resolve, 0))
+      expect(window.speechSynthesis.speak).not.toHaveBeenCalled()
     })
   })
 
