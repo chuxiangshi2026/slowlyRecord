@@ -162,38 +162,41 @@ function requestOnce(cfg: WebDavConfig, url: string, method: string, data?: stri
   })
 }
 
+/** 诊断分级（UI 着色）：ok=绿，error=红；小程序无法列目录，故没有「改配置即可」的黄色档 */
+export type WebDavDiagLevel = 'ok' | 'error'
+
 /** 诊断结论（纯函数，便于测试）：能读不能写通常是账号侧限制，而非地址问题 */
-export function buildWebDavVerdict(checks: WebDavCheck[]): string {
+export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; level: WebDavDiagLevel } {
   const find = (step: string) => checks.find(c => c.step === step)
   const get = find('GET 备份文件')
   const tinyPut = find('PUT 探针（1 字节）')
   const bigPut = find('PUT 探针（64KB）')
   const ok = (c?: WebDavCheck) => c?.status === 201 || c?.status === 204
   if (checks.every(c => c.status === null)) {
-    return '请求未能到达网盘：网络不可用，或该域名未加入微信后台的 request 合法域名'
+    return { verdict: '请求未能到达网盘：网络不可用，或该域名未加入微信后台的 request 合法域名', level: 'error' }
   }
   if (ok(tinyPut) && !ok(bigPut)) {
-    return `网盘能创建小文件，但 64KB 上传被拒（HTTP ${bigPut?.status ?? '未执行'}）——不是账号权限问题，而是请求体积或中间层（代理 / 网关）拦截，请把本页内容发给开发者`
+    return { verdict: `网盘能创建小文件，但 64KB 上传被拒（HTTP ${bigPut?.status ?? '未执行'}）——不是账号权限问题，而是请求体积或中间层（代理 / 网关）拦截，请把本页内容发给开发者`, level: 'error' }
   }
   if (ok(tinyPut) || ok(bigPut)) {
-    return '读写均正常（含 64KB 探针）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者'
+    return { verdict: '读写均正常（含 64KB 探针）：当前配置即可正常备份', level: 'ok' }
   }
   if (get?.status === 401 || tinyPut?.status === 401 || bigPut?.status === 401) {
-    return '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）'
+    return { verdict: '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）', level: 'error' }
   }
   const notFoundBody = `${tinyPut?.detail ?? ''}${bigPut?.detail ?? ''}`
   if (/ObjectNotFound/i.test(notFoundBody)) {
-    return '坚果云返回 ObjectNotFound：它不允许在该目录里直接创建文件，需要写入子目录。小程序端无法列目录，请在电脑上运行应用内诊断（会列出可用子目录）或 node scripts/webdav-probe.cjs，把地址改成列出的子目录（如 https://dav.jianguoyun.com/dav/你的目录/）后重试'
+    return { verdict: '坚果云返回 ObjectNotFound：它不允许在该目录里直接创建文件，需要写入子目录。小程序端无法列目录，请在电脑上运行应用内诊断（会列出可用子目录）或 node scripts/webdav-probe.cjs，把地址改成列出的子目录（如 https://dav.jianguoyun.com/dav/你的目录/）后重试', level: 'error' }
   }
   const readable = get?.status === 200 || get?.status === 404
   if (readable) {
-    return `认证通过、目录可读，但连 1 字节文件都创建不了（PUT 返回 ${tinyPut?.status ?? '未执行'}）。这属于账号侧写权限限制：请在坚果云「账户信息 → 安全选项 → 第三方应用管理」确认该应用密码是「读写」而非「只读」，并检查「流量明细」中本月上传流量是否已用尽`
+    return { verdict: `认证通过、目录可读，但连 1 字节文件都创建不了（PUT 返回 ${tinyPut?.status ?? '未执行'}）。请核对应用密码是否为「读写」、本月上传流量是否用尽，并把诊断内容发给开发者`, level: 'error' }
   }
-  return `无法确认网盘可用性（GET ${get?.status ?? '未执行'} / PUT ${tinyPut?.status ?? '未执行'}），请把本页内容发给开发者`
+  return { verdict: `无法确认网盘可用性（GET ${get?.status ?? '未执行'} / PUT ${tinyPut?.status ?? '未执行'}），请把本页内容发给开发者`, level: 'error' }
 }
 
 /** 逐步诊断：GET 备份文件 → PUT 探针 → DELETE 探针，逐项返回状态码与结论 */
-export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDavCheck[]; verdict: string; text: string }> {
+export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDavCheck[]; verdict: string; level: WebDavDiagLevel; text: string }> {
   const dir = normalizeWebDavUrl(cfg.url)
   const file = fileUrl(cfg)
   const probeUrl = `${dir}${PROBE_FILE}`
@@ -216,7 +219,7 @@ export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDa
     checks.push({ ...del, step: 'DELETE 探针文件' })
   }
 
-  const verdict = buildWebDavVerdict(checks)
+  const { verdict, level } = buildWebDavVerdict(checks)
   const text = [
     '【WebDAV 诊断】',
     `诊断版本：${DIAG_VERSION}`,
@@ -224,8 +227,9 @@ export async function diagnoseWebDav(cfg: WebDavConfig): Promise<{ checks: WebDa
     `文件：${file}`,
     ...checks.map(c => `${c.step}：${c.status === null ? '请求失败' : `HTTP ${c.status}`}${c.detail ? `（${c.detail}）` : ''}`),
     `结论：${verdict}`,
+    `分级：${level === 'ok' ? '正常（绿）' : '异常（红）'}`,
   ].join('\n')
-  return { checks, verdict, text }
+  return { checks, verdict, level, text }
 }
 
 /** 测试连接：GET 同步文件；200=已有备份，404=连接正常但首次使用 */

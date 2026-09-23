@@ -237,16 +237,29 @@ export interface WebDavCheck {
   detail?: string
 }
 
+/**
+ * 诊断分级（供 UI 着色）：
+ * - ok：当前配置就能用（绿）
+ * - config：当前配置不能写，但改地址即可（黄，可一键改用发现的可写目录）
+ * - error：认证失败 / 无可写目录 / 网络不通（红）
+ */
+export type WebDavDiagLevel = 'ok' | 'config' | 'error'
+
 export interface WebDavDiagnosis {
   dir: string
   fileUrl: string
   checks: WebDavCheck[]
   /** 结论（一句中文，直接展示给用户） */
   verdict: string
+  level: WebDavDiagLevel
   /** 能读（认证通过且目录可见） */
   canRead: boolean
   /** 能写（探针文件创建成功） */
   canWrite: boolean
+  /** 配置目录不可写、但探测到的可写子目录（黄色时的修复目标） */
+  resolvedDir?: string
+  /** 根目录下发现的一级子目录（供用户选择） */
+  candidates: string[]
 }
 
 /** 诊断版本：改诊断逻辑时递增，便于确认用户跑的是哪一版（旧版报告会少几行） */
@@ -262,7 +275,10 @@ const PROBE_BODY = 'slowlyRecord-webdav-probe'.repeat(2600)
  * 诊断结论（纯函数，便于测试）：
  * 认证通过但写被拒 → 多半是应用密码只读/账号权限或流量受限，而非地址问题
  */
-export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; canRead: boolean; canWrite: boolean } {
+export function buildWebDavVerdict(
+  checks: WebDavCheck[],
+  resolvedDir?: string | null,
+): { verdict: string; level: WebDavDiagLevel; canRead: boolean; canWrite: boolean } {
   const find = (step: string) => checks.find(c => c.step === step)
   const propfind = find('PROPFIND 目录')
   const get = find('GET 备份文件')
@@ -270,45 +286,58 @@ export function buildWebDavVerdict(checks: WebDavCheck[]): { verdict: string; ca
   const bigPut = find('PUT 探针（64KB）')
   const put = bigPut ?? tinyPut
   const ok = (c?: WebDavCheck) => c?.status === 201 || c?.status === 204
-  const networkFailed = checks.some(c => c.status === null)
+  // 网络不可达的判定只看真实 HTTP 请求，别把「可写目录探测」这类结果项算进来
+  const probed = checks.filter(c => c.step !== '可写目录探测')
+  const networkFailed = probed.length > 0 && probed.every(c => c.status === null)
 
   const authed = propfind?.status === 207 || propfind?.status === 200
     || get?.status === 200 || get?.status === 404
     || put?.status === 201 || put?.status === 204
   if (!authed) {
     if (networkFailed) {
-      return { verdict: '请求未能到达网盘（网络或跨域拦截），请检查网络与代理设置', canRead: false, canWrite: false }
+      return { verdict: '请求未能到达网盘（网络或跨域拦截），请检查网络与代理设置', level: 'error', canRead: false, canWrite: false }
     }
     const s = propfind?.status ?? get?.status ?? put?.status
     if (s === 401 || s === 403) {
-      return { verdict: '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）', canRead: false, canWrite: false }
+      return { verdict: '认证失败：账号或应用密码不正确（注意要用「应用密码」，不是登录密码）', level: 'error', canRead: false, canWrite: false }
     }
-    return { verdict: `无法确认网盘可用性（HTTP ${s ?? '未知'}），请把本页内容发给开发者`, canRead: false, canWrite: false }
+    return { verdict: `无法确认网盘可用性（HTTP ${s ?? '未知'}），请把本页内容发给开发者`, level: 'error', canRead: false, canWrite: false }
   }
 
   const canWrite = ok(tinyPut) || ok(bigPut)
   if (ok(tinyPut) && !ok(bigPut)) {
     return {
       verdict: `网盘能创建小文件（1 字节成功），但 64KB 上传被拒（HTTP ${bigPut?.status ?? '未执行'}）——说明不是账号权限问题，而是请求体积或中间层（系统代理 / 公司网关 / MITM）拦截。请关闭代理后重试，或把本页内容发给开发者`,
+      level: 'error',
       canRead: true,
       canWrite: true,
     }
   }
   if (canWrite) {
-    return { verdict: '读写均正常（含 64KB 探针）。若正式备份仍失败，问题多半在请求体积或中间层，请把本页内容发给开发者', canRead: true, canWrite: true }
+    return { verdict: '读写均正常（含 64KB 探针）：当前配置即可正常备份', level: 'ok', canRead: true, canWrite: true }
+  }
+  if (resolvedDir) {
+    return {
+      verdict: `当前目录不能直接创建文件，但已找到可写目录，改用后即可备份：${resolvedDir}`,
+      level: 'config',
+      canRead: true,
+      canWrite: false,
+    }
   }
   const putStatus = put?.status ?? '未执行'
   const putDetail = put?.detail || ''
   const listDetail = checks.find(c => c.step === 'PROPFIND 目录（含子项）')?.detail || ''
   if (/ObjectNotFound/i.test(putDetail)) {
     return {
-      verdict: `坚果云返回 ObjectNotFound：它不允许在你填的目录里直接创建文件，需要写入它的子目录（${listDetail || '请查看上一行的可用子目录'}）。新版会自动改用可写子目录重试；也可手动把地址填成上面列出的某个子目录`,
+      verdict: `坚果云返回 ObjectNotFound：它不允许在你填的目录里直接创建文件${resolvedDir ? `（已找到可写目录：${resolvedDir}）` : '，且未找到可写子目录'}。请改用子目录${listDetail ? `：${listDetail}` : ''}`,
+      level: resolvedDir ? 'config' : 'error',
       canRead: true,
       canWrite: false,
     }
   }
   return {
     verdict: `认证通过、目录可读，且服务端 OPTIONS 声明支持 PUT（${find('OPTIONS 目录')?.status === 200 ? '已确认' : '未确认'}），但连 1 字节文件都创建不了（PUT 返回 ${putStatus}）。请核对应用密码是否为「读写」、本月上传流量是否用尽，并把本页内容发给开发者`,
+    level: 'error',
     canRead: true,
     canWrite: false,
   }
@@ -320,6 +349,7 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
   const file = webDavFileUrl(config)
   const auth = buildAuthHeader(config)
   const checks: WebDavCheck[] = []
+  let candidates: string[] = []
 
   const probe = async (
     step: string,
@@ -353,9 +383,9 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
   const listResp = await probe('PROPFIND 目录（含子项）', dir, { method: 'PROPFIND', headers: { Depth: '1' } })
   if (listResp && listResp.ok) {
     try {
-      const children = parseChildCollections(await listResp.text(), dir)
+      candidates = parseChildCollections(await listResp.text(), dir)
       const last = checks[checks.length - 1]
-      if (last) last.detail = children.length ? `可用子目录：${children.join(' , ')}` : '根目录下没有子目录'
+      if (last) last.detail = candidates.length ? `可用子目录：${candidates.join(' , ')}` : '根目录下没有子目录'
     } catch {
       // 读正文失败不影响其余诊断
     }
@@ -378,8 +408,19 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
     await probe('DELETE 探针文件', probeUrl, { method: 'DELETE' })
   }
 
-  const { verdict, canRead, canWrite } = buildWebDavVerdict(checks)
-  return { dir, fileUrl: file, checks, verdict, canRead, canWrite }
+  // 当前目录写不进去时，探测是否存在可写子目录（决定「黄色：改配置即可」还是「红色」）
+  let resolvedDir: string | null = null
+  if (!created && !(bigResp !== null && (bigResp.status === 201 || bigResp.status === 204))) {
+    resolvedDir = await resolveWritableDir(config)
+    checks.push({
+      step: '可写目录探测',
+      status: resolvedDir ? 201 : null,
+      detail: resolvedDir ? `可改用：${resolvedDir}` : '未找到可写子目录',
+    })
+  }
+
+  const { verdict, level, canRead, canWrite } = buildWebDavVerdict(checks, resolvedDir)
+  return { dir, fileUrl: file, checks, verdict, level, canRead, canWrite, resolvedDir: resolvedDir ?? undefined, candidates }
 }
 
 /** 诊断结果排版成可复制的文本（纯函数，便于测试） */
@@ -389,8 +430,14 @@ export function formatWebDavDiagnosis(d: WebDavDiagnosis): string {
     `诊断版本：${DIAG_VERSION}`,
     `目录：${d.dir}`,
     `文件：${d.fileUrl}`,
-    ...d.checks.map(c => `${c.step}：${c.status === null ? '请求失败' : `HTTP ${c.status}`}${c.detail ? `（${c.detail}）` : ''}`),
+    ...d.checks.map(c => {
+      const label = c.status === null
+        ? (c.step === '可写目录探测' ? '未找到' : '请求失败')
+        : `HTTP ${c.status}`
+      return `${c.step}：${label}${c.detail ? `（${c.detail}）` : ''}`
+    }),
     `结论：${d.verdict}`,
+    `分级：${d.level === 'ok' ? '正常（绿）' : d.level === 'config' ? '改配置即可（黄）' : '异常（红）'}`,
   ]
   return lines.join('\n')
 }

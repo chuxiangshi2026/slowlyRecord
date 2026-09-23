@@ -297,9 +297,28 @@
     </template>
   </el-dialog>
 
-  <!-- WebDAV 诊断结果：可复制的纯文本报告，便于排查「能连上但传不了」 -->
-  <el-dialog v-model="webdavDiagVisible" title="WebDAV 连接诊断" width="600px">
-    <el-input v-model="webdavDiagText" type="textarea" :rows="12" readonly />
+  <!-- WebDAV 诊断结果：绿=当前配置可用，黄=改地址即可，红=认证/网络/权限异常 -->
+  <el-dialog v-model="webdavDiagVisible" title="WebDAV 连接诊断" width="620px">
+    <el-alert
+      v-if="webdavDiagVerdict"
+      :type="webdavDiagType"
+      :title="webdavDiagVerdict"
+      :closable="false"
+      show-icon
+    />
+    <div v-if="webdavDiagCandidates.length" class="webdav-diag-candidates">
+      <span class="webdav-diag-hint">可用目录（点击即改用）：</span>
+      <el-button
+        v-for="dir in webdavDiagCandidates"
+        :key="dir"
+        size="small"
+        :type="dir === webdavDiagResolved ? 'primary' : 'default'"
+        @click="useDiagDir(dir)"
+      >
+        {{ shortenDir(dir) }}
+      </el-button>
+    </div>
+    <el-input v-model="webdavDiagText" type="textarea" :rows="10" readonly />
     <template #footer>
       <el-button @click="copyWebdavDiag">复制全文</el-button>
       <el-button type="primary" @click="webdavDiagVisible = false">关闭</el-button>
@@ -316,7 +335,7 @@ import QRCode from 'qrcode'
 import type { SyncFormat } from '@/types/sync'
 import type { RestoreOptions } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
-import { NUTSTORE_WEBDAV_URL } from '@/utils/sync-webdav'
+import { NUTSTORE_WEBDAV_URL, formatWebDavDiagnosis } from '@/utils/sync-webdav'
 import { daysSinceLastSync } from '@/utils/sync-dirty'
 import { isWeb } from '@/adapters/platform'
 
@@ -324,6 +343,10 @@ const isWebPlatform = isWeb()
 const webdavTesting = ref(false)
 const webdavDiagVisible = ref(false)
 const webdavDiagText = ref('')
+const webdavDiagVerdict = ref('')
+const webdavDiagType = ref<'success' | 'warning' | 'error'>('success')
+const webdavDiagCandidates = ref<string[]>([])
+const webdavDiagResolved = ref('')
 
 const props = defineProps<{
   modelValue: boolean
@@ -440,13 +463,33 @@ async function handleWebDavTest() {
   webdavTesting.value = true
   try {
     syncStore.saveWebDavConfig()
-    // 逐步诊断（OPTIONS/PROPFIND/GET/PUT 探针），结果可复制给开发者定位
+    // 逐步诊断（OPTIONS/PROPFIND/GET/PUT 探针）：绿=可用，黄=改地址即可，红=异常
     webdavDiagText.value = '诊断中…'
+    webdavDiagVerdict.value = ''
+    webdavDiagCandidates.value = []
     webdavDiagVisible.value = true
-    webdavDiagText.value = await syncStore.webdavDiagnose()
+    const d = await syncStore.webdavDiagnose()
+    webdavDiagText.value = formatWebDavDiagnosis(d)
+    webdavDiagVerdict.value = d.verdict
+    webdavDiagType.value = d.level === 'ok' ? 'success' : d.level === 'config' ? 'warning' : 'error'
+    webdavDiagCandidates.value = d.candidates
+    webdavDiagResolved.value = d.resolvedDir || ''
   } finally {
     webdavTesting.value = false
   }
+}
+
+/** 诊断里点击候选目录：直接改用并重新诊断验证（黄色场景的一键修复） */
+async function useDiagDir(dir: string) {
+  syncStore.webdavUrl = dir
+  syncStore.saveWebDavConfig()
+  ElMessage.success(`已改用 ${dir}`)
+  await handleWebDavTest()
+}
+
+/** 候选目录只显示相对路径部分，按钮不至于太长 */
+function shortenDir(dir: string) {
+  return dir.replace(/^https?:\/\/[^/]+/i, '')
 }
 
 function copyWebdavDiag() {
@@ -536,6 +579,19 @@ async function handleConfirmRestore() {
 
 .webdav-field {
   margin-bottom: 8px;
+}
+
+.webdav-diag-candidates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 6px;
+}
+
+.webdav-diag-hint {
+  font-size: 12px;
+  color: var(--text-tertiary, #909399);
 }
 
 .webdav-config-actions {

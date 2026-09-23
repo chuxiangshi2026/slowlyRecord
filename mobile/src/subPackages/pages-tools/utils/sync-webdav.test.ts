@@ -88,7 +88,8 @@ describe('diagnoseWebDav：能读不能写的诊断', () => {
     const r = await diagnoseWebDav(cfg)
     expect(r.checks.map(c => c.step)).toEqual(['GET 备份文件', 'PUT 探针（1 字节）', 'PUT 探针（64KB）'])
     expect(r.text).toContain('PUT 探针（1 字节）：HTTP 404')
-    expect(r.verdict).toContain('账号侧写权限限制')
+    expect(r.verdict).toContain('应用密码')
+    expect(r.level).toBe('error')
   })
 
   it('1 字节探针成功、64KB 被拒 → 判定为体积/中间层拦截', async () => {
@@ -124,11 +125,17 @@ describe('diagnoseWebDav：能读不能写的诊断', () => {
     expect(r.verdict).toContain('未能到达网盘')
   })
 
-  it('buildWebDavVerdict：401 → 认证失败结论', () => {
+  it('buildWebDavVerdict：401 → 认证失败（红），PUT 成功 → 正常（绿）', () => {
     expect(buildWebDavVerdict([
       { step: 'GET 备份文件', status: 401 },
-      { step: 'PUT 探针文件', status: 401 },
-    ])).toContain('认证失败')
+      { step: 'PUT 探针（1 字节）', status: 401 },
+    ]).verdict).toContain('认证失败')
+
+    expect(buildWebDavVerdict([
+      { step: 'GET 备份文件', status: 404 },
+      { step: 'PUT 探针（1 字节）', status: 201 },
+      { step: 'PUT 探针（64KB）', status: 201 },
+    ]).level).toBe('ok')
   })
 })
 

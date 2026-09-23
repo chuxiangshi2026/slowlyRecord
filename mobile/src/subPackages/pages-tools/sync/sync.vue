@@ -32,6 +32,9 @@
       <view class="section-title">坚果云备份</view>
       <input class="popup-input" v-model="webdavUrl" placeholder="WebDAV 地址" />
       <view class="webdav-default-link" @click="useDefaultWebdavUrl">用默认地址（dav.jianguoyun.com/dav/）</view>
+      <view v-if="diagVerdict" class="diag-banner" :class="diagLevel === 'ok' ? 'diag-ok' : 'diag-error'">
+        <text class="diag-text">{{ diagVerdict }}</text>
+      </view>
       <!-- #ifdef MP-WEIXIN -->
       <view class="webdav-guide">微信端受域名白名单限制，仅支持默认坚果云地址（dav.jianguoyun.com），改填其他域名会请求失败。</view>
       <!-- #endif -->
@@ -285,18 +288,19 @@ const useDefaultWebdavUrl = () => {
   uni.showToast({ title: '已恢复默认地址', icon: 'none' })
 }
 
+const diagVerdict = ref('')
+const diagLevel = ref<'ok' | 'error'>('error')
+
 const handleWebdavTest = async () => {
   saveWebdavForm()
   uni.showLoading({ title: '诊断中...' })
-  // 逐步诊断（GET 备份文件 → PUT 探针 → DELETE 探针），结果复制到剪贴板便于反馈
+  // 逐步诊断（GET 备份文件 → PUT 探针 → DELETE 探针）：绿=可用，红=异常
   const report = await diagnoseWebDav(getWebDavConfig())
   uni.hideLoading()
+  diagVerdict.value = report.verdict
+  diagLevel.value = report.level
   uni.setClipboardData({ data: report.text, success: () => {} })
-  uni.showModal({
-    title: '连接诊断（完整结果已复制）',
-    content: report.verdict,
-    showCancel: false,
-  })
+  uni.showToast({ title: '完整诊断已复制', icon: 'none' })
 }
 
 const handleWebdavPush = async () => {
@@ -550,6 +554,28 @@ const copySyncCode = () => {
   color: #999;
   line-height: 1.6;
   margin-bottom: 20rpx;
+}
+
+.diag-banner {
+  padding: 16rpx 20rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.diag-ok {
+  background: #e8f3ec;
+  border-left: 6rpx solid #52796f;
+}
+
+.diag-error {
+  background: #fbeeee;
+  border-left: 6rpx solid #d9534f;
+}
+
+.diag-text {
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: #333;
 }
 
 .webdav-default-link {

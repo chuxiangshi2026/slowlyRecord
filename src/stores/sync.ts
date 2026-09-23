@@ -10,7 +10,8 @@ import type { RestoreOptions, RestoreResult } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { downloadSyncFile, pickAndImportSyncFile, importFromFile, getSyncDataSummary } from '@/utils/sync-file'
 import { uploadToServer, downloadFromServer, checkServerAvailable, setSyncServerUrl, resetSyncServer, uploadToServerMobileCompat } from '@/utils/sync-server'
-import { NUTSTORE_WEBDAV_URL, diagnoseWebDav, formatWebDavDiagnosis, normalizeWebDavUrl, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
+import { NUTSTORE_WEBDAV_URL, diagnoseWebDav, normalizeWebDavUrl, testWebDavConnection, uploadToWebDav, downloadFromWebDav } from '@/utils/sync-webdav'
+import type { WebDavDiagnosis } from '@/utils/sync-webdav'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
 import { markSynced } from '@/utils/sync-dirty'
@@ -337,12 +338,12 @@ export const useSyncStore = defineStore('sync', () => {
     return result
   }
 
-  /** 诊断 WebDAV：逐步执行并返回可复制的报告文本（用于排查「能连上但传不了」） */
-  async function webdavDiagnose(): Promise<string> {
+  /** 诊断 WebDAV：逐步执行并返回结构化结果（UI 据此着色与给出修复入口） */
+  async function webdavDiagnose(): Promise<WebDavDiagnosis> {
     saveWebDavConfig()
     const diagnosis = await diagnoseWebDav(currentWebDavConfig())
     resultMessage.value = diagnosis.verdict
-    return formatWebDavDiagnosis(diagnosis)
+    return diagnosis
   }
 
   async function webdavUpload(): Promise<SyncServerResult> {

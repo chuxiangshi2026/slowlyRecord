@@ -155,6 +155,40 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
     expect(text).toContain('PROPFIND 目录：HTTP 207')
   })
 
+  it('当前目录不可写、存在可写子目录 → 黄色（config）并给出 resolvedDir', async () => {
+    globalThis.fetch = vi.fn(async (url: unknown, init: any) => {
+      const u = String(url)
+      const headers = new Headers()
+      if (init?.method === 'PUT') {
+        return u.includes(encodeURIComponent('我的坚果云'))
+          ? { ok: true, status: 201, headers, text: async () => '' }
+          : { ok: false, status: 404, headers, text: async () => '<d:error><s:exception>ObjectNotFound</s:exception></d:error>' }
+      }
+      if (init?.method === 'PROPFIND') return { ok: true, status: 207, headers, text: async () => PROPFIND_XML }
+      return { ok: true, status: 204, headers, text: async () => '' }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    expect(d.level).toBe('config')
+    expect(d.resolvedDir).toBe('https://dav.jianguoyun.com/dav/我的坚果云/')
+    expect(d.candidates).toEqual(['https://dav.jianguoyun.com/dav/我的坚果云/'])
+    expect(formatWebDavDiagnosis(d)).toContain('分级：改配置即可（黄）')
+  })
+
+  it('当前目录可写 → 绿色（ok）', async () => {
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      const headers = new Headers()
+      if (init?.method === 'PUT') return { ok: true, status: 201, headers, text: async () => '' }
+      if (init?.method === 'PROPFIND') return { ok: true, status: 207, headers, text: async () => PROPFIND_XML }
+      return { ok: true, status: 200, headers, text: async () => '' }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    expect(d.level).toBe('ok')
+    expect(d.resolvedDir).toBeUndefined()
+    expect(formatWebDavDiagnosis(d)).toContain('分级：正常（绿）')
+  })
+
   it('1 字节探针成功、64KB 被拒 → 判定为体积/中间层拦截而非账号权限', async () => {
     globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
       if (init?.method === 'PUT') {
