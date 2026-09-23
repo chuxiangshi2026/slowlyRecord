@@ -1,8 +1,12 @@
 /**
  * 同步服务 - 重量级模块，已迁移到分包
  * 包含 XOR 加密、pako 压缩、服务器通信
+ *
+ * pako 必须静态 import：uni-app alpha 编译 mp-weixin 时 import('pako') 会被
+ * 编译成纯字符串字面量（renderDynamicImport 返回 '(' + ')'），真机拿不到模块。
  */
 
+import pako from 'pako'
 import type {
   MobileSyncBank,
   MobileSyncData,
@@ -370,7 +374,6 @@ export async function pushToServer(
     }
 
     const jsonBytes = utf8ToBytes(json)
-    const pako = (await import('pako')).default
     const compressed = pako.deflate(jsonBytes)
     const syncKey = generateSyncKey()
     let encryptedBase64: string
@@ -399,6 +402,52 @@ export async function pushToServer(
   }
 }
 
+/**
+ * 拉取到 MobileSyncData 后的统一入库前处理：应用翻译设置、合并墓碑并按墓碑
+ * 过滤「删除复活」的词条/宫殿。pullFromServer 与 pullFromWebDav 共用，
+ * 保证服务器同步码与 WebDAV 网盘两条拉取链路行为一致。
+ */
+export async function buildRestoreResult(data: MobileSyncData): Promise<RestoreResult> {
+  if (data.userSettings) {
+    applyTranslationSettings(data.userSettings)
+  }
+  // 墓碑合并 + 按墓碑过滤入库条目：已被任一端删除的词/词库不让它复活。
+  // 注意两端 id 体系不同（桌面词 _id ≠ 移动端词 id），桌面侧删除的词在移动端
+  // 无法按 id 匹配；移动端双设备间经 payload 透传 id，删除可互通。
+  const tombstones = await mergeTombstones(data.tombstones)
+  let banks = data.banks
+  if (Array.isArray(banks) && Object.keys(tombstones).length > 0) {
+    banks = banks.map(bank => ({
+      ...bank,
+      words: filterByTombstones(bank.words || [], 'remote', tombstones),
+    }))
+  }
+  // 宫殿级墓碑过滤：已删宫殿不复活（pegs 随宫殿一并跳过）
+  let memoryPalace = data.memoryPalace
+  if (memoryPalace && Array.isArray(memoryPalace.palaces) && Object.keys(tombstones).length > 0) {
+    const palaces = filterByTombstones(memoryPalace.palaces, 'remote', tombstones)
+    const keptIds = new Set(palaces.map(p => p._id))
+    memoryPalace = {
+      ...memoryPalace,
+      palaces,
+      pegs: Object.fromEntries(
+        Object.entries(memoryPalace.pegs || {}).filter(([palaceId]) => keptIds.has(palaceId))
+      ),
+    }
+  }
+  return {
+    success: true,
+    banks,
+    textMemory: data.textMemory,
+    numberMemory: data.numberMemory,
+    knowledgeMemory: data.knowledgeMemory,
+    phoneticMemory: data.phoneticMemory,
+    signin: data.signin,
+    memoryPalace,
+    sentences: data.sentences,
+  }
+}
+
 export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
   try {
     const parsed = parseSyncCode(syncCode.trim())
@@ -421,52 +470,15 @@ export async function pullFromServer(syncCode: string): Promise<RestoreResult> {
         return { success: false, error: '解密失败，同步码可能不正确或数据已被篡改' }
       }
     }
-    const pako = (await import('pako')).default
     const jsonBytes = pako.inflate(compressed)
     const json = bytesToUtf8(jsonBytes)
+    let data: MobileSyncData
     try {
-      const data: MobileSyncData = JSON.parse(json)
-      if (data.userSettings) {
-        applyTranslationSettings(data.userSettings)
-      }
-      // 墓碑合并 + 按墓碑过滤入库条目：已被任一端删除的词/词库不让它复活。
-      // 注意两端 id 体系不同（桌面词 _id ≠ 移动端词 id），桌面侧删除的词在移动端
-      // 无法按 id 匹配；移动端双设备间经 payload 透传 id，删除可互通。
-      const tombstones = await mergeTombstones(data.tombstones)
-      let banks = data.banks
-      if (Array.isArray(banks) && Object.keys(tombstones).length > 0) {
-        banks = banks.map(bank => ({
-          ...bank,
-          words: filterByTombstones(bank.words || [], 'remote', tombstones),
-        }))
-      }
-      // 宫殿级墓碑过滤：已删宫殿不复活（pegs 随宫殿一并跳过）
-      let memoryPalace = data.memoryPalace
-      if (memoryPalace && Array.isArray(memoryPalace.palaces) && Object.keys(tombstones).length > 0) {
-        const palaces = filterByTombstones(memoryPalace.palaces, 'remote', tombstones)
-        const keptIds = new Set(palaces.map(p => p._id))
-        memoryPalace = {
-          ...memoryPalace,
-          palaces,
-          pegs: Object.fromEntries(
-            Object.entries(memoryPalace.pegs || {}).filter(([palaceId]) => keptIds.has(palaceId))
-          ),
-        }
-      }
-      return {
-        success: true,
-        banks,
-        textMemory: data.textMemory,
-        numberMemory: data.numberMemory,
-        knowledgeMemory: data.knowledgeMemory,
-        phoneticMemory: data.phoneticMemory,
-        signin: data.signin,
-        memoryPalace,
-        sentences: data.sentences,
-      }
+      data = JSON.parse(json)
     } catch {
       return { success: false, error: '数据解析失败' }
     }
+    return buildRestoreResult(data)
   } catch (e) {
     return { success: false, error: String(e) }
   }

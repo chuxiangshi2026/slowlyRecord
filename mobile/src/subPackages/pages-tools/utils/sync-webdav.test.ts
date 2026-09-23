@@ -138,6 +138,19 @@ describe('pushToWebDav', () => {
     expect(result.error).toContain('空间不足')
   })
 
+  it('404/409 时提示检查 WebDAV 地址（PUT 会创建文件，4xx 是父目录不存在）', async () => {
+    env.requestMock.mockImplementationOnce((opts: any) => { opts.success({ statusCode: 404, data: '' }) })
+    const notFound = await pushToWebDav(cfg, { banks: [] })
+    expect(notFound.success).toBe(false)
+    expect(notFound.error).toContain('目录不存在')
+    expect(notFound.error).not.toContain('首次使用')
+
+    env.requestMock.mockImplementationOnce((opts: any) => { opts.success({ statusCode: 409, data: '' }) })
+    const conflict = await pushToWebDav(cfg, { banks: [] })
+    expect(conflict.success).toBe(false)
+    expect(conflict.error).toContain('目录不存在')
+  })
+
   it('网络失败时提示上传失败', async () => {
     env.requestMock.mockImplementationOnce((opts: any) => { opts.fail({ errMsg: 'request:fail timeout' }) })
     const result = await pushToWebDav(cfg, { banks: [] })
@@ -173,6 +186,41 @@ describe('pullFromWebDav', () => {
     expect(seen.url).toBe(`${NUTSTORE_WEBDAV_URL}slowlyRecord-sync.enc`)
     expect(String(seen.header.Authorization)).toMatch(/^Basic /)
     expect(result.banks?.[0].name).toBe('测试词库')
+  })
+
+  it('桌面端完整格式备份（wordBanks）可拉取：词字段系转换到移动端 banks', async () => {
+    // 桌面端 WebDAV 备份写的是完整 SyncData（wordBanks + text/explains/learnDate 字段系）
+    const desktopData = {
+      version: 2,
+      exportedAt: 456,
+      platform: 'desktop',
+      wordBanks: [{
+        id: 'b1',
+        name: '桌面词库',
+        words: [{
+          _id: 'w1', text: 'hello world', explains: '你好世界', itemType: 'phrase',
+          phonetic: '', ctime: 1000, learnDate: 2000, isReview: true, remember: false, level: 3,
+        }],
+      }],
+      textMemory: { articles: [{ _id: 'a1', title: '静夜思' }] },
+      tombstones: {},
+    }
+    env.requestMock.mockImplementationOnce((opts: any) => {
+      opts.success({ statusCode: 200, data: encryptBackup(JSON.stringify(desktopData)) })
+    })
+
+    const result = await pullFromWebDav(cfg)
+    expect(result.success).toBe(true)
+    expect(result.banks?.[0].name).toBe('桌面词库')
+    const w = result.banks?.[0].words[0]
+    expect(w.word).toBe('hello world')
+    expect(w.meaning).toBe('你好世界')
+    expect(w.itemType).toBe('phrase')
+    expect(w.level).toBe(3)
+    expect(w.needsReview).toBe(true)
+    expect(w.addTime).toBe(2000)
+    // 其余模块 wire format 一致，直通
+    expect(result.textMemory).toEqual(desktopData.textMemory)
   })
 
   it('密文损坏时提示解密失败', async () => {

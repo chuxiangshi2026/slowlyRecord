@@ -1,11 +1,26 @@
 /**
  * 文本记忆 - 内置库加载器（移动端）
  *
- * 用 import() 动态拉取分包内的 JSON，避免主包加载所有诗词数据。
- * 在小程序中静态 import JSON 是支持的（uni 编译期会处理）。
+ * 静态 import 分包内的 ts 数据模块（数据并进 pages-memory 分包 chunk 图，不进主包）。
+ * 不能用动态 import()：uni-app alpha 编译 mp-weixin 时会把 import('xx.js') 变成
+ * 纯字符串字面量（renderDynamicImport 返回 '(' + ')'），真机运行拿不到模块。
  *
- * 数据格式与桌面端 public/datafile/* 完全一致，便于同步互通。
+ * 数据模块由 mobile/scripts/convert-poetry.cjs 从 text-memory/data/*.json 生成
+ * （ts 模块的 chunk 归属引用方所在分包；.json 动态 import 会被工具链归入主包）。
+ *
+ * 数据格式与 text-memory/data/*.json 一致（移动端精简版），便于同步互通。
  */
+import poetryXianqin from './poetry-data/poetry-xianqin'
+import poetryHan from './poetry-data/poetry-han'
+import poetryWeijin from './poetry-data/poetry-weijin'
+import poetrySui from './poetry-data/poetry-sui'
+import poetryTang from './poetry-data/poetry-tang'
+import poetrySong from './poetry-data/poetry-song'
+import poetryYuan from './poetry-data/poetry-yuan'
+import poetryMing from './poetry-data/poetry-ming'
+import poetryQing from './poetry-data/poetry-qing'
+import poetryXiandai from './poetry-data/poetry-xiandai'
+import idiomData from './poetry-data/idioms'
 
 export interface MobilePoetryItem {
   id: string
@@ -71,6 +86,20 @@ export const IDIOM_CATEGORIES = [
 const poetryCache = new Map<string, MobilePoetryItem[]>()
 let idiomCache: MobileIdiomItem[] | null = null
 
+// 朝代代码 → 对应的数据模块（静态 import，见文件头说明）
+const POETRY_DATA: Record<string, typeof poetryTang> = {
+  xianqin: poetryXianqin,
+  han: poetryHan,
+  weijin: poetryWeijin,
+  sui: poetrySui,
+  tang: poetryTang,
+  song: poetrySong,
+  yuan: poetryYuan,
+  ming: poetryMing,
+  qing: poetryQing,
+  xiandai: poetryXiandai,
+}
+
 function normalizePoetry(raw: any[], dynastyCode: string): MobilePoetryItem[] {
   if (!Array.isArray(raw)) return []
   return raw.map((it: any, idx: number) => ({
@@ -94,22 +123,9 @@ function normalizePoetry(raw: any[], dynastyCode: string): MobilePoetryItem[] {
  */
 export async function loadPoetryByDynasty(code: string): Promise<MobilePoetryItem[]> {
   if (poetryCache.has(code)) return poetryCache.get(code)!
-  let raw: any
-  switch (code) {
-    case 'xianqin': raw = await import('./data/poetry-xianqin.json'); break
-    case 'han': raw = await import('./data/poetry-han.json'); break
-    case 'weijin': raw = await import('./data/poetry-weijin.json'); break
-    case 'sui': raw = await import('./data/poetry-sui.json'); break
-    case 'tang': raw = await import('./data/poetry-tang.json'); break
-    case 'song': raw = await import('./data/poetry-song.json'); break
-    case 'yuan': raw = await import('./data/poetry-yuan.json'); break
-    case 'ming': raw = await import('./data/poetry-ming.json'); break
-    case 'qing': raw = await import('./data/poetry-qing.json'); break
-    case 'xiandai': raw = await import('./data/poetry-xiandai.json'); break
-    default: return []
-  }
-  const data = (raw as any).default ?? raw
-  const list = normalizePoetry(data.poems || data, code)
+  const data = POETRY_DATA[code]
+  if (!data) return []
+  const list = normalizePoetry((data.poems || []) as any[], code)
   poetryCache.set(code, list)
   return list
 }
@@ -131,9 +147,7 @@ export async function loadAllPoetry(): Promise<MobilePoetryItem[]> {
  */
 export async function loadAllIdioms(): Promise<MobileIdiomItem[]> {
   if (idiomCache) return idiomCache
-  const raw: any = await import('./data/idioms.json')
-  const data = raw.default ?? raw
-  const list = (data.idioms || data || []).map((it: any, idx: number) => ({
+  const list = ((idiomData.idioms || []) as any[]).map((it: any, idx: number) => ({
     id: it.id || `idiom_${idx}`,
     title: it.title || '',
     pinyin: it.pinyin,

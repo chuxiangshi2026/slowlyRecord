@@ -1,0 +1,184 @@
+/**
+ * 内置诗词数据：poetry-ming（由 text-memory/data/poetry-ming.json 转换生成，请勿手改；改源数据后重跑 mobile/scripts/convert-poetry.cjs）
+ */
+
+const data = {
+  "metadata": {
+    "dynasty": "ming",
+    "name": "明",
+    "period": "1368-1644",
+    "description": "明代诗词",
+    "count": 9,
+    "version": "2.0",
+    "lastUpdated": "2026-07-01"
+  },
+  "poems": [
+    {
+      "id": "ming_001",
+      "title": "石灰吟",
+      "author": "于谦",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "千锤万凿出深山，烈火焚烧若等闲。粉骨碎身浑不怕，要留清白在人间。",
+      "contentType": "poetry",
+      "tags": [
+        "咏物",
+        "言志",
+        "小学必背"
+      ],
+      "source": "《于忠肃集》",
+      "location": "北京",
+      "wordCount": 32,
+      "year": 1440
+    },
+    {
+      "id": "ming_002",
+      "title": "临江仙·滚滚长江东逝水",
+      "author": "杨慎",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "滚滚长江东逝水，浪花淘尽英雄。是非成败转头空。青山依旧在，几度夕阳红。白发渔樵江渚上，惯看秋月春风。一壶浊酒喜相逢。古今多少事，都付笑谈中。",
+      "contentType": "poetry",
+      "tags": [
+        "明词",
+        "怀古",
+        "名篇"
+      ],
+      "source": "《升庵集》",
+      "location": "云南/永昌",
+      "wordCount": 70,
+      "year": 1524
+    },
+    {
+      "id": "ming_003",
+      "title": "明日歌",
+      "author": "钱福",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "明日复明日，明日何其多。我生待明日，万事成蹉跎。世人若被明日累，春去秋来老将至。朝看水东流，暮看日西坠。百年明日能几何？请君听我明日歌。",
+      "contentType": "poetry",
+      "tags": [
+        "劝学",
+        "惜时",
+        "名篇"
+      ],
+      "source": "《鹤滩集》",
+      "location": "松江/上海",
+      "wordCount": 68,
+      "year": 1500
+    },
+    {
+      "id": "ming_004",
+      "title": "桃花庵歌",
+      "author": "唐寅",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "桃花坞里桃花庵，桃花庵下桃花仙。桃花仙人种桃树，又摘桃花换酒钱。酒醒只在花前坐，酒醉还来花下眠。半醒半醉日复日，花落花开年复年。但愿老死花酒间，不愿鞠躬车马前。别人笑我太疯癫，我笑他人看不穿。不见五陵豪杰墓，无花无酒锄作田。",
+      "contentType": "poetry",
+      "tags": [
+        "桃花",
+        "隐逸",
+        "名篇",
+        "唐伯虎"
+      ],
+      "source": "《六如居士集》",
+      "location": "苏州/桃花坞",
+      "wordCount": 112,
+      "year": 1500
+    },
+    {
+      "id": "ming_005",
+      "title": "送东阳马生序",
+      "author": "宋濂",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "余幼时即嗜学。家贫，无从致书以观，每假借于藏书之家，手自笔录，计日以还。天大寒，砚冰坚，手指不可屈伸，弗之怠。录毕，走送之，不敢稍逾约。以是人多以书假余，余因得遍观群书。既加冠，益慕圣贤之道……其业有不精、德有不成者，非天质之卑，则心不若余之专耳，岂他人之过哉？",
+      "contentType": "poetry",
+      "tags": [
+        "劝学",
+        "散文",
+        "初中必背"
+      ],
+      "source": "《宋学士文集》",
+      "location": "东阳/金华",
+      "wordCount": 131,
+      "year": 1370
+    },
+    {
+      "id": "ming_006",
+      "title": "项脊轩志",
+      "author": "归有光",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "项脊轩，旧南阁子也。室仅方丈，可容一人居。百年老屋，尘泥渗漉，雨泽下注；每移案，顾视无可置者。又北向，不能得日，日过午已昏。余稍为修葺，使不上漏。前辟四窗，垣墙周庭，以当南日，日影反照，室始洞然。又杂植兰桂竹木于庭，旧时栏楯，亦遂增胜。借书满架，偃仰啸歌，冥然兀坐，万籁有声；而庭阶寂寂，小鸟时来啄食，人至不去。三五之夜，明月半墙，桂影斑驳，风移影动，珊珊可爱。庭有枇杷树，吾妻死之年所手植也，今已亭亭如盖矣。",
+      "contentType": "poetry",
+      "tags": [
+        "抒情",
+        "散文",
+        "高中必背"
+      ],
+      "source": "《震川文集》",
+      "location": "昆山/江苏",
+      "wordCount": 205,
+      "year": 1530
+    },
+    {
+      "id": "ming_007",
+      "title": "登金陵雨花台望大江",
+      "author": "高启",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "大江来从万山中，山势尽与江流东。钟山如龙独西上，欲破巨浪乘长风。江山相雄不相让，形胜争夸天下壮。秦皇空此瘗黄金，佳气葱葱至今王。",
+      "contentType": "poetry",
+      "tags": [
+        "七言古诗",
+        "怀古",
+        "高启",
+        "名篇"
+      ],
+      "source": "《高太史集》",
+      "location": "金陵/南京",
+      "wordCount": 64,
+      "year": 1370
+    },
+    {
+      "id": "ming_008",
+      "title": "牡丹亭·游园惊梦",
+      "author": "汤显祖",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "原来姹紫嫣红开遍，似这般都付与断井颓垣。良辰美景奈何天，赏心乐事谁家院？朝飞暮卷，云霞翠轩；雨丝风片，烟波画船。锦屏人忒看得这韶光贱！",
+      "contentType": "poetry",
+      "tags": [
+        "昆曲",
+        "爱情",
+        "名篇",
+        "汤显祖"
+      ],
+      "source": "《牡丹亭》",
+      "location": "临川/江西",
+      "wordCount": 67,
+      "year": 1598
+    },
+    {
+      "id": "ming_009",
+      "title": "浣溪沙·谁道闲情抛弃久",
+      "author": "杨慎",
+      "dynasty": "明",
+      "dynastyCode": "ming",
+      "content": "谁道闲情抛弃久？每到春来，惆怅还依旧。日日花前常病酒，不辞镜里朱颜瘦。河畔青芜堤上柳，为问新愁，何事年年有？独立小桥风满袖，平林新月人归后。",
+      "contentType": "poetry",
+      "tags": [
+        "明词",
+        "婉约",
+        "名篇"
+      ],
+      "source": "《升庵集》",
+      "location": "云南",
+      "wordCount": 70,
+      "year": 1530
+    }
+  ]
+} as const
+
+export default data

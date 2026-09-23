@@ -11,18 +11,20 @@
  * 微信小程序需先把 https://dav.jianguoyun.com 配进 request 合法域名。
  */
 
+import pako from 'pako'
 import {
   base64ToUint8Array,
+  buildRestoreResult,
   bytesToUtf8,
   collectSyncData,
   uint8ArrayToBase64,
   utf8ToBytes,
   xorCrypt,
+  type MobileSyncData,
   type PushPayload,
   type RestoreResult,
   type SyncResult,
 } from './sync'
-import { applyTranslationSettings } from '@/stores/useUtils/translation-settings'
 import { log } from '../../../utils/logger'
 
 export interface WebDavConfig {
@@ -76,6 +78,14 @@ function explainStatus(status: number): string {
   return `网盘返回错误（${status}）`
 }
 
+/** 上传时的错误翻译：PUT 会自动创建文件，404/409 只可能是父目录不存在（地址填错或子文件夹未创建） */
+function explainPushStatus(status: number): string {
+  if (status === 404 || status === 409) {
+    return '网盘目录不存在：请检查 WebDAV 地址，坚果云直接填默认地址即可（同步文件会自动创建在根目录；自建子文件夹需先在网盘中创建）'
+  }
+  return explainStatus(status)
+}
+
 /** 测试连接：GET 同步文件；200=已有备份，404=连接正常但首次使用 */
 export function testWebDavConnection(cfg: WebDavConfig): Promise<{ ok: boolean; message: string }> {
   return new Promise((resolve) => {
@@ -98,7 +108,6 @@ export async function pushToWebDav(cfg: WebDavConfig, payload: PushPayload): Pro
   try {
     const data = collectSyncData(payload)
     const json = JSON.stringify(data)
-    const pako = (await import('pako')).default
     const compressed = pako.deflate(utf8ToBytes(json))
     const body = uint8ArrayToBase64(xorCrypt(compressed, `${cfg.username}:${cfg.password}`))
     log.i(`[WebDAV] 上传: JSON ${(utf8ToBytes(json).length / 1024).toFixed(1)}KB, 密文 ${(body.length / 1024).toFixed(1)}KB`)
@@ -114,13 +123,54 @@ export async function pushToWebDav(cfg: WebDavConfig, payload: PushPayload): Pro
         data: body,
         success: (res) => {
           if (res.statusCode >= 200 && res.statusCode < 300) resolve({ success: true })
-          else resolve({ success: false, error: explainStatus(res.statusCode) })
+          else resolve({ success: false, error: explainPushStatus(res.statusCode) })
         },
         fail: (err) => resolve({ success: false, error: `上传失败：${err.errMsg || '网络错误'}` }),
       })
     })
   } catch (e) {
     return { success: false, error: String(e) }
+  }
+}
+
+/**
+ * 桌面端单词 → 移动端同步词条（与桌面端 convertDesktopWordToMobile 镜像，
+ * 桌面词是 text/explains/learnDate 字段系，移动端是 word/meaning/addTime 字段系）
+ */
+function convertDesktopWord(w: any) {
+  const learnTime = w.learnDate ? new Date(w.learnDate).getTime() : Date.now()
+  return {
+    word: w.text || '',
+    meaning: w.explains || '',
+    itemType: w.itemType || (String(w.text || '').includes(' ') ? 'phrase' : 'word'),
+    phonetic: w.phonetic || '',
+    example: '',
+    addTime: learnTime,
+    reviewCount: 0,
+    nextReviewTime: Date.now() + 24 * 60 * 60 * 1000,
+    needsReview: !!w.isReview,
+    remembered: !!w.remember,
+    level: typeof w.level === 'number' ? w.level : 0,
+    lastReviewTime: learnTime,
+  }
+}
+
+/**
+ * 把网盘上的备份统一成 MobileSyncData：
+ * - 移动端备份：version:1 带 banks，原样返回
+ * - 桌面端备份：完整 SyncData 带 wordBanks，词字段系转换后落到 banks
+ * 其余模块（文本/数字/知识包/音标/打卡/宫殿/句子/墓碑）两端 wire format 一致，直通。
+ */
+function normalizePulledData(data: any): MobileSyncData | null {
+  if (Array.isArray(data?.banks)) return data as MobileSyncData
+  if (!Array.isArray(data?.wordBanks)) return null
+  return {
+    ...data,
+    banks: data.wordBanks.map((bank: any) => ({
+      id: bank.id,
+      name: bank.name,
+      words: (bank.words || []).map(convertDesktopWord),
+    })),
   }
 }
 
@@ -138,27 +188,14 @@ export function pullFromWebDav(cfg: WebDavConfig): Promise<RestoreResult> {
         }
         try {
           const body = typeof res.data === 'string' ? res.data : String(res.data || '')
-          const pako = (await import('pako')).default
           const compressed = xorCrypt(base64ToUint8Array(body.trim()), `${cfg.username}:${cfg.password}`)
-          const data = JSON.parse(bytesToUtf8(pako.inflate(compressed)))
-          if (!Array.isArray(data.banks)) {
+          const data = normalizePulledData(JSON.parse(bytesToUtf8(pako.inflate(compressed))))
+          if (!data) {
             resolve({ success: false, error: '文件内容不是有效的同步数据' })
             return
           }
-          if (data.userSettings) {
-            applyTranslationSettings(data.userSettings)
-          }
-          resolve({
-            success: true,
-            banks: data.banks,
-            textMemory: data.textMemory,
-            numberMemory: data.numberMemory,
-            knowledgeMemory: data.knowledgeMemory,
-            phoneticMemory: data.phoneticMemory,
-            signin: data.signin,
-            memoryPalace: data.memoryPalace,
-            sentences: data.sentences,
-          })
+          // 与服务器拉取共用同一入库处理：应用翻译设置 + 墓碑合并过滤
+          resolve(await buildRestoreResult(data))
         } catch {
           resolve({ success: false, error: '解密失败：应用密码与备份时不一致，或文件已损坏' })
         }

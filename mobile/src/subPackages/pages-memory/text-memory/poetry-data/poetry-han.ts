@@ -1,0 +1,279 @@
+/**
+ * 内置诗词数据：poetry-han（由 text-memory/data/poetry-han.json 转换生成，请勿手改；改源数据后重跑 mobile/scripts/convert-poetry.cjs）
+ */
+
+const data = {
+  "metadata": {
+    "dynasty": "han",
+    "name": "两汉",
+    "period": "前206-220",
+    "description": "汉赋、汉乐府、古诗十九首",
+    "count": 14,
+    "version": "2.0",
+    "lastUpdated": "2026-07-01"
+  },
+  "poems": [
+    {
+      "id": "han_001",
+      "title": "长歌行",
+      "author": "汉乐府",
+      "content": "青青园中葵，朝露待日晞。\n阳春布德泽，万物生光辉。\n常恐秋节至，焜黄华叶衰。\n百川东到海，何时复西归？\n少壮不努力，老大徒伤悲。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "劝学",
+        "哲理",
+        "小学必背"
+      ],
+      "source": "《乐府诗集》",
+      "location": "长安",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 60
+    },
+    {
+      "id": "han_002",
+      "title": "短歌行",
+      "author": "曹操",
+      "content": "对酒当歌，人生几何！\n譬如朝露，去日苦多。\n慨当以慷，忧思难忘。\n何以解忧？唯有杜康。\n青青子衿，悠悠我心。\n但为君故，沉吟至今。\n呦呦鹿鸣，食野之苹。\n我有嘉宾，鼓瑟吹笙。\n明明如月，何时可掇？\n忧从中来，不可断绝。\n越陌度阡，枉用相存。\n契阔谈讌，心念旧恩。\n月明星稀，乌鹊南飞。\n绕树三匝，何枝可依？\n山不厌高，海不厌深。\n周公吐哺，天下归心。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "求贤",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《曹操集》",
+      "location": "邺城/河北",
+      "year": 208,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 160
+    },
+    {
+      "id": "han_003",
+      "title": "观沧海",
+      "author": "曹操",
+      "content": "东临碣石，以观沧海。\n水何澹澹，山岛竦峙。\n树木丛生，百草丰茂。\n秋风萧瑟，洪波涌起。\n日月之行，若出其中。\n星汉灿烂，若出其里。\n幸甚至哉，歌以咏志。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "写景",
+        "豪放",
+        "初中必背"
+      ],
+      "source": "《曹操集》",
+      "location": "碣石山/河北秦皇岛",
+      "year": 207,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 70
+    },
+    {
+      "id": "han_004",
+      "title": "龟虽寿",
+      "author": "曹操",
+      "content": "神龟虽寿，犹有竟时。\n腾蛇乘雾，终为土灰。\n老骥伏枥，志在千里。\n烈士暮年，壮心不已。\n盈缩之期，不但在天。\n养怡之福，可得永年。\n幸甚至哉，歌以咏志。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "哲理",
+        "名篇",
+        "初中必背"
+      ],
+      "source": "《曹操集》",
+      "location": "邺城/河北",
+      "year": 207,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 70
+    },
+    {
+      "id": "han_005",
+      "title": "陌上桑",
+      "author": "汉乐府",
+      "content": "日出东南隅，照我秦氏楼。秦氏有好女，自名为罗敷。\n罗敷喜蚕桑，采桑城南隅。青丝为笼系，桂枝为笼钩。\n头上倭堕髻，耳中明月珠。缃绮为下裙，紫绮为上襦。\n行者见罗敷，下担捋髭须。少年见罗敷，脱帽著帩头。\n耕者忘其犁，锄者忘其锄。来归相怨怒，但坐观罗敷。\n使君从南来，五马立踟蹰。使君遣吏往，问是谁家姝？\n秦氏有好女，自名为罗敷。罗敷年几何？二十尚不足，十五颇有余。\n使君谢罗敷：宁可共载不？罗敷前致辞：使君一何愚！\n使君自有妇，罗敷自有夫。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "叙事",
+        "名篇"
+      ],
+      "source": "《乐府诗集》",
+      "location": "长安",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 210
+    },
+    {
+      "id": "han_006",
+      "title": "孔雀东南飞（节选）",
+      "author": "佚名",
+      "content": "孔雀东南飞，五里一徘徊。\n十三能织素，十四学裁衣。\n十五弹箜篌，十六诵诗书。\n十七为君妇，心中常苦悲。\n君既为府吏，守节情不移。\n贱妾留空房，相见常日稀。\n鸡鸣入机织，夜夜不得息。\n三日断五匹，大人故嫌迟。\n非为织作迟，君家妇难为。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "叙事",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《乐府诗集》",
+      "location": "庐江/安徽",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 108
+    },
+    {
+      "id": "han_007",
+      "title": "古诗十九首·行行重行行",
+      "author": "佚名",
+      "content": "行行重行行，与君生别离。\n相去万余里，各在天一涯。\n道路阻且长，会面安可知？\n胡马依北风，越鸟巢南枝。\n相去日已远，衣带日已缓。\n浮云蔽白日，游子不顾返。\n思君令人老，岁月忽已晚。\n弃捐勿复道，努力加餐饭。",
+      "contentType": "poetry",
+      "tags": [
+        "古诗十九首",
+        "思乡",
+        "名篇",
+        "高中必背"
+      ],
+      "source": "《文选》",
+      "location": "洛阳",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 96
+    },
+    {
+      "id": "han_008",
+      "title": "古诗十九首·迢迢牵牛星",
+      "author": "佚名",
+      "content": "迢迢牵牛星，皎皎河汉女。\n纤纤擢素手，札札弄机杼。\n终日不成章，泣涕零如雨。\n河汉清且浅，相去复几许。\n盈盈一水间，脉脉不得语。",
+      "contentType": "poetry",
+      "tags": [
+        "古诗十九首",
+        "爱情",
+        "名篇",
+        "初中必背"
+      ],
+      "source": "《文选》",
+      "location": "洛阳",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 60
+    },
+    {
+      "id": "han_009",
+      "title": "古诗十九首·涉江采芙蓉",
+      "author": "佚名",
+      "content": "涉江采芙蓉，兰泽多芳草。\n采之欲遗谁，所思在远道。\n还顾望旧乡，长路漫浩浩。\n同心而离居，忧伤以终老。",
+      "contentType": "poetry",
+      "tags": [
+        "古诗十九首",
+        "思乡",
+        "名篇"
+      ],
+      "source": "《文选》",
+      "location": "洛阳",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 48
+    },
+    {
+      "id": "han_010",
+      "title": "十五从军征",
+      "author": "汉乐府",
+      "content": "十五从军征，八十始得归。\n道逢乡里人：家中有阿谁？\n遥看是君家，松柏冢累累。\n兔从狗窦入，雉从梁上飞。\n中庭生旅谷，井上生旅葵。\n舂谷持作饭，采葵持作羹。\n羹饭一时熟，不知饴阿谁。\n出门东向看，泪落沾我衣。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "战争",
+        "名篇",
+        "初中必背"
+      ],
+      "source": "《乐府诗集》",
+      "location": "长安",
+      "year": 0,
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "wordCount": 96
+    },
+    {
+      "id": "han_011",
+      "title": "四愁诗",
+      "author": "张衡",
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "content": "我所思兮在太山，欲往从之梁父艰。侧身东望涕沾翰。美人赠我金错刀，何以报之英琼瑶。路远莫致倚逍遥，何为怀忧心烦劳。",
+      "contentType": "poetry",
+      "tags": [
+        "七言诗",
+        "抒情",
+        "名篇"
+      ],
+      "source": "《张衡集》",
+      "location": "洛阳",
+      "wordCount": 56,
+      "year": 100
+    },
+    {
+      "id": "han_012",
+      "title": "赠从弟",
+      "author": "刘桢",
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "content": "亭亭山上松，瑟瑟谷中风。风声一何盛，松枝一何劲。冰霜正惨凄，终岁常端正。岂不罹凝寒，松柏有本性。",
+      "contentType": "poetry",
+      "tags": [
+        "五言诗",
+        "咏物",
+        "名篇"
+      ],
+      "source": "《刘公幹集》",
+      "location": "洛阳",
+      "wordCount": 48,
+      "year": 200
+    },
+    {
+      "id": "han_013",
+      "title": "悲愤诗",
+      "author": "蔡琰",
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "content": "汉季失权柄，董卓乱天常。志欲图篡弑，先害诸贤良。逼迫迁旧邦，拥主以自强。海内兴义师，欲共讨不祥。",
+      "contentType": "poetry",
+      "tags": [
+        "五言诗",
+        "叙事",
+        "名篇"
+      ],
+      "source": "《蔡文姬集》",
+      "location": "长安",
+      "wordCount": 48,
+      "year": 195
+    },
+    {
+      "id": "han_014",
+      "title": "江南",
+      "author": "汉乐府",
+      "dynasty": "两汉",
+      "dynastyCode": "han",
+      "content": "江南可采莲，莲叶何田田。鱼戏莲叶间。鱼戏莲叶东，鱼戏莲叶西，鱼戏莲叶南，鱼戏莲叶北。",
+      "contentType": "poetry",
+      "tags": [
+        "乐府",
+        "民歌",
+        "小学必背"
+      ],
+      "source": "《乐府诗集》",
+      "location": "江南",
+      "wordCount": 42,
+      "year": 0
+    }
+  ]
+} as const
+
+export default data
