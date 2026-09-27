@@ -105,14 +105,16 @@ function createWordBank(overrides: Partial<WordBank> = {}): WordBank {
   }
 }
 
-// 动态导入 store 以避免在 mock 之前加载
+// 动态导入 store：words.ts 模块作用域用到 localStorage（persist 配置），
+// 必须先赋值 global.localStorage 再加载模块，静态 import 会在赋值前执行而报错。
+// 导入只付一次成本（模块缓存）；开发机负载高时首次导入可能超过默认钩子超时，
+// 全局 hookTimeout 已在 vitest.config.ts 放宽。
 describe('useWordsStore', () => {
   let useWordsStore: typeof import('./words').useWordsStore
 
   beforeEach(async () => {
     setActivePinia(createPinia())
     vi.resetAllMocks()
-    // 动态导入 store
     useWordsStore = (await import('./words')).useWordsStore
   })
 
