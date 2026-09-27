@@ -3,6 +3,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // Web 版构建配置
 // 与默认配置类似，但：
@@ -14,6 +16,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
     vueDevTools(),
+    Components({resolvers: [ElementPlusResolver({importStyle: 'css'})]}),
   ],
   resolve: {
     alias: {
@@ -56,7 +59,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'],
-          'element-plus': ['element-plus'],
           'vue-vendor': ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate', 'vue-virtual-scroller'],
         },
       },

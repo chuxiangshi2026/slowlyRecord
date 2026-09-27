@@ -1,12 +1,14 @@
 // import './assets/main.css'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
 // 引入 Element Plus 暗黑主题
 import 'element-plus/theme-chalk/dark/css-vars.css'
 // 引入图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-// element国际化支持
+// element国际化支持（locale 经 <el-config-provider> 提供，见 App.vue）
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+// 命令式组件（ElMessage/ElMessageBox/ElLoading）非模板组件，按需插件不注入其样式，这里集中引一次
+import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/message-box/style/css'
+import 'element-plus/es/components/loading/style/css'
 
 
 import {createApp} from 'vue'
@@ -109,7 +111,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 let pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia)
-app.use(ElementPlus, {locale: zhCn})
 app.use(router)
 app.use(VueVirtualScroller)
 

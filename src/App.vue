@@ -1,34 +1,39 @@
 <template>
-  <RouterView/>
-  <!-- 引入OCR选择器组件 -->
-  <OCRSelector
-      :visible="showOCRPanel"
-      :ocr-results="ocrResults"
-      @close="closeOCRPanel"
-      @select="handleSelectOCRItem"
-      @select-all="handleSelectAllItems"
-  />
+  <!-- 按需引入后无 app.use(ElementPlus)，locale 经此提供，保证内置文案（如 MessageBox 按钮）为中文 -->
+  <el-config-provider :locale="zhCn">
+    <RouterView/>
+    <!-- 引入OCR选择器组件 -->
+    <OCRSelector
+        :visible="showOCRPanel"
+        :ocr-results="ocrResults"
+        @close="closeOCRPanel"
+        @select="handleSelectOCRItem"
+        @select-all="handleSelectAllItems"
+    />
 
-  <!-- 引入文本选择器组件 -->
-  <TextSelector
-      :visible="showTextPanel"
-      :text-content="textContent"
-      @close="closeTextPanel"
-      @select="handleSelectTextItems"
-  />
+    <!-- 引入文本选择器组件 -->
+    <TextSelector
+        :visible="showTextPanel"
+        :text-content="textContent"
+        @close="closeTextPanel"
+        @select="handleSelectTextItems"
+    />
 
-  <!-- 调试面板 -->
-  <DebugPanel
-      :visible="showDebugPanel"
-      @open="showDebugPanel = true"
-      @close="showDebugPanel = false"
-      ref="debugPanelRef"
-  />
+    <!-- 调试面板 -->
+    <DebugPanel
+        :visible="showDebugPanel"
+        @open="showDebugPanel = true"
+        @close="showDebugPanel = false"
+        ref="debugPanelRef"
+    />
+  </el-config-provider>
 </template>
 
 
 <script setup lang="ts">
 import {RouterView, useRouter} from 'vue-router'
+
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 import {onMounted, onUnmounted, ref} from 'vue';
 import {useWordsStore} from "@/stores/words.ts";

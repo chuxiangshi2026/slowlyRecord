@@ -4,6 +4,8 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import Components from 'unplugin-vue-components/vite'
+import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,6 +14,8 @@ export default defineConfig({
         vue(),
         vueJsx(),
         vueDevTools(),
+        // Element Plus 按需引入：自动解析模板里的 <el-*> 组件并注入对应样式，避免全量打包
+        Components({resolvers: [ElementPlusResolver({importStyle: 'css'})]}),
     ],
     resolve: {
         alias: {
@@ -55,8 +59,6 @@ export default defineConfig({
                 manualChunks: {
                     // ECharts/ZRender 体积大、变动少，独立成包避免与业务代码交织重复 transform
                     echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'],
-                    // ElementPlus 全量引入约占主包一半，独立成包让主包低于体积告警线
-                    'element-plus': ['element-plus'],
                     'vue-vendor': ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate', 'vue-virtual-scroller'],
                 },
             },

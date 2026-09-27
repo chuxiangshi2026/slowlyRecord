@@ -4,12 +4,15 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   base: './',
   plugins: [
     vue(),
     vueJsx(),
+    Components({resolvers: [ElementPlusResolver({importStyle: 'css'})]}),
     electron([
       {
         // 主进程入口
@@ -56,7 +59,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'],
-          'element-plus': ['element-plus'],
           'vue-vendor': ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate', 'vue-virtual-scroller'],
         },
       },
