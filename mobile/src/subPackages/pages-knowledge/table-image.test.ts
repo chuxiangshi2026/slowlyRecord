@@ -11,6 +11,8 @@ import {
   type TableImageData,
   type TableImageCtx,
   type MeasureTextFn,
+  exportDpr,
+  MAX_EXPORT_CANVAS_PX,
 } from './table-image'
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
@@ -24,6 +26,32 @@ const DATA: TableImageData = {
     { header: '答案', values: ['1', '2'] },
   ],
 }
+
+describe('exportDpr：长表导出时按 canvas 物理尺寸上限降 dpr', () => {
+  it('小表保持设备 dpr 不变', () => {
+    expect(exportDpr(1200, 800, 3)).toBe(3)
+    expect(exportDpr(1200, 800, 2)).toBe(2)
+  })
+
+  it('长表（81 行乘法表级）高分屏自动降 dpr 到上限内', () => {
+    // 逻辑高约 2900px，dpr=3 会到 8700px → 压到 ~1.37
+    const d = exportDpr(1200, 2900, 3)
+    expect(2900 * d).toBeLessThanOrEqual(MAX_EXPORT_CANVAS_PX)
+    expect(d).toBeLessThan(3)
+    expect(d).toBeGreaterThanOrEqual(1)
+  })
+
+  it('即使设备 dpr=1 也不低于 1（不放大）', () => {
+    expect(exportDpr(1200, 2900, 1)).toBe(1)
+  })
+
+  it('异常输入（NaN/0）回退到安全值且不放大', () => {
+    expect(exportDpr(NaN, 0, 3)).toBe(3)
+    expect(exportDpr(0, 0, 3)).toBe(3)
+    expect(exportDpr(500, 500, NaN)).toBe(2)
+    expect(exportDpr(500, 99999, 3)).toBe(1)
+  })
+})
 
 describe('wrapText', () => {
   it('空字符串返回一个空行（填空位）', () => {

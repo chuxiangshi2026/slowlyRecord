@@ -203,6 +203,27 @@ export function computeTableLayout(
   return { canvasWidth, canvasHeight, columnWidths, headerHeight, titleHeight, rowHeights, paddingY: cellPaddingY }
 }
 
+/**
+ * 导出用有效像素比（纯函数）：
+ * 微信小程序 canvas 的物理尺寸过大（高分屏 × 长表，如 81 行乘法表 dpr=3 可达 8000px+）
+ * 会导致 canvasToTempFilePath 失败或内存暴涨，故按 MAX_EXPORT_CANVAS_PX 限制物理边长，
+ * 超出时自动降低 dpr——宁可略降清晰度也不让导出失败。
+ */
+export const MAX_EXPORT_CANVAS_PX = 4000
+
+export function exportDpr(
+  logicalW: number,
+  logicalH: number,
+  deviceDpr: number,
+  maxPx = MAX_EXPORT_CANVAS_PX,
+): number {
+  const limit = Math.max(logicalW || 0, logicalH || 0)
+  const dpr = Number.isFinite(deviceDpr) && deviceDpr > 0 ? deviceDpr : 2
+  if (!Number.isFinite(limit) || limit <= 0) return Math.min(dpr, 3)
+  const capped = Math.floor((maxPx / limit) * 100) / 100
+  return Math.max(1, Math.min(dpr, capped))
+}
+
 /** 由知识包组装表格数据：题目/答案两列，完整表带答案、填空表答案留空（与桌面端一致） */
 export function buildTableImageData(pack: KnowledgePack, form: TableForm): TableImageData {
   // 有序包按 order 排序，保证打印/导出顺序正确

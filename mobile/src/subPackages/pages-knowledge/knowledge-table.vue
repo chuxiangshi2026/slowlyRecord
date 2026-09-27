@@ -60,6 +60,7 @@ import {
   computeTableLayout,
   createMeasure,
   drawTableImage,
+  exportDpr,
   type TableForm,
 } from './table-image'
 import type { KnowledgeItem } from '@/stores/useUtils/types'
@@ -208,9 +209,12 @@ async function handleSaveImage() {
     // 样式尺寸同步为逻辑尺寸，避免个别端按样式尺寸裁剪
     exportSize.value = { w: layout.canvasWidth, h: layout.canvasHeight }
     await nextTick()
-    node.width = Math.round(layout.canvasWidth * dpr)
-    node.height = Math.round(layout.canvasHeight * dpr)
-    ctx.scale(dpr, dpr)
+    // 长表（如 81/100 行乘法表）在高分屏上物理尺寸会超微信 canvas 稳定上限，自动降 dpr
+    const effDpr = exportDpr(layout.canvasWidth, layout.canvasHeight, dpr)
+    if (effDpr < dpr) console.info(`[表格导出] 画布 ${layout.canvasWidth}×${layout.canvasHeight}，dpr ${dpr}→${effDpr}`)
+    node.width = Math.round(layout.canvasWidth * effDpr)
+    node.height = Math.round(layout.canvasHeight * effDpr)
+    ctx.scale(effDpr, effDpr)
     drawTableImage(ctx, data, layout, measure)
     const tempPath = await canvasToTemp(node, node.width, node.height)
     await saveToAlbum(tempPath)
