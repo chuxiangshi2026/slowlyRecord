@@ -5,7 +5,9 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import {
   hashAudioCacheKey,
   pickLruEvictions,
+  pickLruEvictionsForBytes,
   parseAudioCacheWord,
+  storageQuotaWarning,
   getTtsAdapter,
   setTtsAdapter,
   type AudioCacheEntry,
@@ -57,6 +59,58 @@ describe('音频缓存纯函数', () => {
       const entries = [entry('a', 2), entry('b', 1)]
       pickLruEvictions(entries, 1)
       expect(entries.map(e => e.key)).toEqual(['a', 'b'])
+    })
+  })
+
+  describe('pickLruEvictionsForBytes', () => {
+    const entry = (key: string, lastUsed: number, size: number): AudioCacheEntry =>
+      ({ key, filePath: `/cache/${key}`, lastUsed, size })
+
+    it('未超字节上限时不淘汰', () => {
+      const entries = [entry('a', 1, 1000), entry('b', 2, 2000)]
+      expect(pickLruEvictionsForBytes(entries, 10000)).toEqual([])
+      expect(pickLruEvictionsForBytes(entries, 3000)).toEqual([])
+    })
+
+    it('超限时按最久未用淘汰直到不超上限', () => {
+      // 按旧到新排序：a(1000) c(2000) b(3000) d(4000)，总 10000，上限 6000
+      // 淘汰 a→9000, c→7000, b→4000（停）；留下 d(4000)
+      const entries = [entry('a', 100, 1000), entry('b', 300, 3000), entry('c', 200, 2000), entry('d', 400, 4000)]
+      const evicted = pickLruEvictionsForBytes(entries, 6000)
+      expect(evicted.map(e => e.key)).toEqual(['a', 'c', 'b'])
+    })
+
+    it('size 缺失的条目按 0 计，不影响其余淘汰', () => {
+      // a 无 size(0)、b=8000，总 8000，上限 4000 → 淘汰 a(0) 后仍 8000，再淘汰 b
+      const entries = [
+        { key: 'a', filePath: '/a', lastUsed: 1 },
+        { key: 'b', filePath: '/b', lastUsed: 2, size: 8000 },
+      ]
+      const evicted = pickLruEvictionsForBytes(entries as AudioCacheEntry[], 4000)
+      expect(evicted.map(e => e.key)).toEqual(['a', 'b'])
+    })
+
+    it('不修改原数组', () => {
+      const entries = [entry('a', 1, 3000), entry('b', 2, 3000)]
+      pickLruEvictionsForBytes(entries, 1000)
+      expect(entries.map(e => e.key)).toEqual(['a', 'b'])
+    })
+  })
+
+  describe('storageQuotaWarning', () => {
+    it('低于阈值返回空串（不提示）', () => {
+      expect(storageQuotaWarning(400, 1024)).toBe('')
+    })
+
+    it('超过 80% 返回清理提示', () => {
+      expect(storageQuotaWarning(900, 1024)).toContain('清理')
+      expect(storageQuotaWarning(1024, 1024)).toContain('清理')
+    })
+
+    it('参数非法返回空串', () => {
+      expect(storageQuotaWarning(-1, 1024)).toBe('')
+      expect(storageQuotaWarning(100, 0)).toBe('')
+      expect(storageQuotaWarning(NaN, NaN)).toBe('')
     })
   })
 

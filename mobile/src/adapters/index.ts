@@ -363,6 +363,8 @@ export interface AudioCacheEntry {
   key: string
   filePath: string
   lastUsed: number
+  /** 本地文件字节数（有则记录，用于字节上限淘汰） */
+  size?: number
 }
 
 /** FNV-1a 哈希：把任意单词文本映射为固定长度的缓存 key，规避特殊字符与超长 key */
@@ -381,6 +383,21 @@ export function pickLruEvictions(entries: AudioCacheEntry[], maxFiles: number): 
   return [...entries]
     .sort((a, b) => a.lastUsed - b.lastUsed)
     .slice(0, entries.length - maxFiles)
+}
+
+/** 按字节上限淘汰：总字节超过 maxBytes 时，按最久未用顺序淘汰，直到不超上限。返回应淘汰的条目 */
+export function pickLruEvictionsForBytes(entries: AudioCacheEntry[], maxBytes: number): AudioCacheEntry[] {
+  const total = entries.reduce((sum, e) => sum + (e.size || 0), 0)
+  if (total <= maxBytes) return []
+  const byUsed = [...entries].sort((a, b) => a.lastUsed - b.lastUsed)
+  let acc = total
+  const evicted: AudioCacheEntry[] = []
+  for (const e of byUsed) {
+    if (acc <= maxBytes) break
+    acc -= e.size || 0
+    evicted.push(e)
+  }
+  return evicted
 }
 
 /** 从 TTS URL 提取缓存 key 用的单词文本（支持有道 dictvoice 的 audio 参数与 google tts 的 q 参数），提取不到返回 null */
@@ -403,6 +420,26 @@ export function parseAudioCacheWord(url: string): string | null {
 const AUDIO_CACHE_MANIFEST_KEY = 'slowlyrecord_audio_cache_manifest'
 /** 本地音频缓存文件数上限，超出按最久未用淘汰 */
 const AUDIO_CACHE_MAX_FILES = 200
+/** 本地音频缓存总字节上限：小程序用户数据目录同样有 10MB 级配额，防顶满 */
+const AUDIO_CACHE_MAX_BYTES = 5 * 1024 * 1024
+
+/** 存储配额告警阈值：currentSize/limitSize 超过此比例时提示清理 */
+const STORAGE_QUOTA_RATIO = 0.8
+/** 存储配额提示的最小间隔，避免连续弹 toast */
+const QUOTA_TOAST_INTERVAL = 5 * 60 * 1000
+
+/**
+ * 存储配额检查（纯函数，便于单测）：超出阈值时返回提示文案，否则返回空串。
+ * @param currentSize 已用字节
+ * @param limitSize   配额上限字节
+ */
+export function storageQuotaWarning(currentSize: number, limitSize: number): string {
+  if (!(limitSize > 0) || !(currentSize >= 0)) return ''
+  if (currentSize / limitSize >= STORAGE_QUOTA_RATIO) {
+    return `存储空间已用 ${Math.round((currentSize / limitSize) * 100)}%，建议清理音频缓存或精简词库`
+  }
+  return ''
+}
 /** 单次播放超时（弱网兜底，触发即视为失败进入重试） */
 const AUDIO_PLAY_TIMEOUT = 15000
 /** 播放失败的最大重试次数 */
@@ -419,8 +456,10 @@ function delay(ms: number): Promise<void> {
 class MiniProgramTtsAdapter implements TtsAdapter {
   private innerAudio: any = null
   /** 缓存清单（null 表示尚未加载），缓存读写全部容错，绝不影响发音主流程 */
+  /** 缓存清单在 Storage 中的 key */
   private cacheManifest: Record<string, AudioCacheEntry> | null = null
   private lastFailToastAt = 0
+  private lastQuotaToastAt = 0
   /** 播放代次：每次 playAudio/stop 自增，旧代次的待重试与回调一律作废，防止过期音频抢跑 */
   private generation = 0
 
@@ -569,11 +608,17 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       const savedFilePath = await this.saveFileLocal(tempFilePath)
       if (!savedFilePath) return
 
+      this.toastQuotaIfHigh()
+      const fileSize = await this.localFileSize(savedFilePath)
       const manifest = this.loadManifest()
-      manifest[key] = { key, filePath: savedFilePath, lastUsed: Date.now() }
+      manifest[key] = { key, filePath: savedFilePath, lastUsed: Date.now(), size: fileSize ?? undefined }
 
-      // 容量兜底：超出上限按最久未用淘汰，并删除对应的本地文件
-      const evicted = pickLruEvictions(Object.values(manifest), AUDIO_CACHE_MAX_FILES)
+      // 容量兜底：文件数或总字节任一超限，按最久未用淘汰并删除本地文件
+      const byCount = pickLruEvictions(Object.values(manifest), AUDIO_CACHE_MAX_FILES)
+      const byBytes = pickLruEvictionsForBytes(Object.values(manifest), AUDIO_CACHE_MAX_BYTES)
+      const evicted = [...byBytes, ...byCount].filter(
+        (item, i, arr) => arr.findIndex(x => x.key === item.key) === i,
+      )
       for (const item of evicted) {
         delete manifest[item.key]
         this.removeSavedFile(item.filePath)
@@ -633,6 +678,42 @@ class MiniProgramTtsAdapter implements TtsAdapter {
     } catch { /* ignore */ }
   }
 
+  /** 查询本地文件字节数：优先 FileSystemManager.stat，缺失时回退 getFileInfo；拿不到返回 null */
+  private localFileSize(filePath: string): Promise<number | null> {
+    return new Promise((resolve) => {
+      const fs = (uni as any).getFileSystemManager?.()
+      if (fs && typeof fs.stat === 'function') {
+        try {
+          fs.stat({
+            path: filePath,
+            success: (res: any) => resolve(typeof res?.stats?.size === 'number' ? res.stats.size : null),
+            fail: () => this.getFileInfoSize(filePath, resolve),
+          })
+          return
+        } catch {
+          // fall through
+        }
+      }
+      this.getFileInfoSize(filePath, resolve)
+    })
+  }
+
+  /** getFileInfo 兜底取文件大小 */
+  private getFileInfoSize(filePath: string, resolve: (n: number | null) => void): void {
+    try {
+      const fs = (uni as any).getFileSystemManager?.()
+      if (fs && typeof fs.getFileInfo === 'function') {
+        fs.getFileInfo({
+          filePath,
+          success: (res: any) => resolve(typeof res?.size === 'number' ? res.size : null),
+          fail: () => resolve(null),
+        })
+        return
+      }
+    } catch { /* ignore */ }
+    resolve(null)
+  }
+
   private loadManifest(): Record<string, AudioCacheEntry> {
     if (this.cacheManifest) return this.cacheManifest
     try {
@@ -658,6 +739,21 @@ class MiniProgramTtsAdapter implements TtsAdapter {
     this.lastFailToastAt = now
     try {
       ;(uni as any).showToast?.({ title: '发音加载失败，请检查网络', icon: 'none', duration: 2000 })
+    } catch {
+      // ignore
+    }
+  }
+
+  /** 存储配额过高时节流提示一次（只提示，不影响正常写入） */
+  private toastQuotaIfHigh(): void {
+    const now = Date.now()
+    if (now - this.lastQuotaToastAt < QUOTA_TOAST_INTERVAL) return
+    try {
+      const info: any = (uni as any).getStorageInfoSync?.()
+      const warning = storageQuotaWarning(Number(info?.currentSize), Number(info?.limitSize))
+      if (!warning) return
+      this.lastQuotaToastAt = now
+      ;(uni as any).showToast?.({ title: warning, icon: 'none', duration: 2500 })
     } catch {
       // ignore
     }

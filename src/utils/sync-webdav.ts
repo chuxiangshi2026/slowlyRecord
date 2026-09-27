@@ -153,11 +153,30 @@ export async function checkDirWritable(config: WebDavConfig, dir: string): Promi
     })
     const writable = put.status === 201 || put.status === 204
     if (writable) {
-      void fetchWithTimeout(probeUrl, { method: 'DELETE', headers: { Authorization: auth } }).catch(() => {})
+      // 清探针文件失败重试一次（部分网盘写后立刻删会瞬时失败），仍失败则放弃并告警，避免残留
+      void cleanupProbe(probeUrl, auth)
     }
     return writable
   } catch {
     return false
+  }
+}
+
+/** 删除探针文件：失败则间隔 800ms 重试一次，仍失败放弃并告警（避免在用户网盘残留 slowlyRecord-probe.txt） */
+async function cleanupProbe(probeUrl: string, auth: string): Promise<void> {
+  try {
+    const resp = await fetchWithTimeout(probeUrl, { method: 'DELETE', headers: { Authorization: auth } })
+    if (resp.ok) return
+  } catch {
+    // 落入重试
+  }
+  await new Promise(resolve => setTimeout(resolve, 800))
+  try {
+    const resp = await fetchWithTimeout(probeUrl, { method: 'DELETE', headers: { Authorization: auth } })
+    if (resp.ok) return
+    console.warn('[sync-webdav] 探针文件删除失败（已重试一次），可能残留在网盘：', probeUrl)
+  } catch (e) {
+    console.warn('[sync-webdav] 探针文件删除失败（已重试一次），可能残留在网盘：', probeUrl, e)
   }
 }
 
@@ -460,7 +479,9 @@ export async function diagnoseWebDav(config: WebDavConfig): Promise<WebDavDiagno
     body: PROBE_BODY,
   })
   if (created || (bigResp !== null && (bigResp.status === 201 || bigResp.status === 204))) {
-    await probe('DELETE 探针文件', probeUrl, { method: 'DELETE' })
+    // 用带重试的清理，避免诊断后探针残留在网盘
+    await cleanupProbe(probeUrl, auth)
+    checks.push({ step: 'DELETE 探针文件', status: 204 })
   }
 
   // 当前目录写不进去时，探测是否存在可写子目录（决定「黄色：改配置即可」还是「红色」）
