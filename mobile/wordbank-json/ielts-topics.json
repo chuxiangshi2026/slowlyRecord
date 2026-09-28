@@ -1,0 +1,1502 @@
+[
+ {
+  "word": "curriculum",
+  "phonetic": "/kəˈrɪkjʊləm/",
+  "explains": "【教育】n. 全部课程；课程体系"
+ },
+ {
+  "word": "compulsory",
+  "phonetic": "/kəmˈpʌls(ə)rɪ/",
+  "explains": "【教育】adj. 强制的；必修的"
+ },
+ {
+  "word": "tertiary",
+  "phonetic": "/'tɜːʃ(ə)rɪ/",
+  "explains": "【教育】adj. 高等的（教育）"
+ },
+ {
+  "word": "tuition",
+  "phonetic": "/tjuːˈɪʃ(ə)n/",
+  "explains": "【教育】n. 学费；教学"
+ },
+ {
+  "word": "scholarship",
+  "phonetic": "/ˈskɒləʃɪp/",
+  "explains": "【教育】n. 奖学金；学识"
+ },
+ {
+  "word": "semester",
+  "phonetic": "/sɪˈmestə/",
+  "explains": "【教育】n. 学期"
+ },
+ {
+  "word": "plagiarism",
+  "phonetic": "/'pleɪdʒərɪz(ə)m/",
+  "explains": "【教育】n. 抄袭；剽窃"
+ },
+ {
+  "word": "literacy",
+  "phonetic": "/'lɪt(ə)rəsɪ/",
+  "explains": "【教育】n. 读写能力；文化素养"
+ },
+ {
+  "word": "pedagogy",
+  "phonetic": "/'pedəgɒdʒɪ; -gɒgɪ/",
+  "explains": "【教育】n. 教学法；教育学"
+ },
+ {
+  "word": "dissertation",
+  "phonetic": "/,dɪsə'teɪʃ(ə)n/",
+  "explains": "【教育】n. 学位论文"
+ },
+ {
+  "word": "seminar",
+  "phonetic": "/ˈsemɪnɑː/",
+  "explains": "【教育】n. 研讨课；研讨会"
+ },
+ {
+  "word": "sophomore",
+  "phonetic": "/'sɒfəmɔː/",
+  "explains": "【教育】n. 大学二年级学生"
+ },
+ {
+  "word": "enrollment",
+  "phonetic": "/ɪn'rəʊlmənt/",
+  "explains": "【教育】n. 入学登记；注册人数"
+ },
+ {
+  "word": "evaluation",
+  "phonetic": "/ɪˌvæljuˈeɪʃn/",
+  "explains": "【教育】n. 评估；评价"
+ },
+ {
+  "word": "vocational",
+  "phonetic": "/vəu'keiʃənəl/",
+  "explains": "【教育】adj. 职业教育的"
+ },
+ {
+  "word": "extracurricular",
+  "phonetic": "/ekstrəkə'rɪkjʊlə/",
+  "explains": "【教育】adj. 课外的"
+ },
+ {
+  "word": "mentor",
+  "phonetic": "/'mentɔː/",
+  "explains": "【教育】n. 导师；指导者"
+ },
+ {
+  "word": "internship",
+  "phonetic": "/'ɪntɜːnʃɪp/",
+  "explains": "【教育】n. 实习（期）"
+ },
+ {
+  "word": "transcript",
+  "phonetic": "/'trænskrɪpt; 'trɑːn-/",
+  "explains": "【教育】n. 成绩单；誊本"
+ },
+ {
+  "word": "accreditation",
+  "phonetic": "/əˌkredɪ'teɪʃn/",
+  "explains": "【教育】n. （学校）认证；鉴定"
+ },
+ {
+  "word": "undergraduate",
+  "phonetic": "/ʌndə'grædjʊət/",
+  "explains": "【教育】n. 本科生"
+ },
+ {
+  "word": "freshman",
+  "phonetic": "/ˈfreʃmən/",
+  "explains": "【教育】n. 大学新生"
+ },
+ {
+  "word": "disciplinary",
+  "phonetic": "/'dɪsɪplɪn(ə)rɪ; ,dɪsɪ'plɪn-/",
+  "explains": "【教育】adj. 纪律的；惩戒的"
+ },
+ {
+  "word": "absenteeism",
+  "phonetic": "/ˌæbsən'tiːizəm/",
+  "explains": "【教育】n. 旷课；旷工"
+ },
+ {
+  "word": "cramming",
+  "phonetic": "/'kræmɪŋ/",
+  "explains": "【教育】n. 死记硬背；考前突击"
+ },
+ {
+  "word": "kindergarten",
+  "phonetic": "/'kɪndə,gɑːt(ə)n/",
+  "explains": "【教育】n. 幼儿园"
+ },
+ {
+  "word": "prestige",
+  "phonetic": "/pre'stiː(d)ʒ/",
+  "explains": "【教育】n. 声望；威望"
+ },
+ {
+  "word": "tutorial",
+  "phonetic": "/tjuː'tɔːrɪəl/",
+  "explains": "【教育】n. 辅导课；个别指导"
+ },
+ {
+  "word": "graduation",
+  "phonetic": "/ˌɡrædʒuˈeɪʃn/",
+  "explains": "【教育】n. 毕业"
+ },
+ {
+  "word": "academy",
+  "phonetic": "/əˈkædəmi/",
+  "explains": "【教育】n. 学院；研究院"
+ },
+ {
+  "word": "innovation",
+  "phonetic": "/ˌɪnəˈveɪʃn/",
+  "explains": "【科技】n. 创新；革新"
+ },
+ {
+  "word": "automation",
+  "phonetic": "/ɔːtə'meɪʃ(ə)n/",
+  "explains": "【科技】n. 自动化"
+ },
+ {
+  "word": "algorithm",
+  "phonetic": "/'ælɡərɪðəm/",
+  "explains": "【科技】n. 算法"
+ },
+ {
+  "word": "encryption",
+  "phonetic": "/in'kripʃən/",
+  "explains": "【科技】n. 加密（技术）"
+ },
+ {
+  "word": "broadband",
+  "phonetic": "/'brɔːdbænd/",
+  "explains": "【科技】n. 宽带"
+ },
+ {
+  "word": "virtual",
+  "phonetic": "/ˈvɜːtʃʊəl/",
+  "explains": "【科技】adj. 虚拟的"
+ },
+ {
+  "word": "wearable",
+  "phonetic": "/'weərəbl/",
+  "explains": "【科技】adj. 可穿戴的（设备）"
+ },
+ {
+  "word": "wireless",
+  "phonetic": "/'waiəlis/",
+  "explains": "【科技】adj. 无线的"
+ },
+ {
+  "word": "satellite",
+  "phonetic": "/ˈsætəlaɪt/",
+  "explains": "【科技】n. 卫星"
+ },
+ {
+  "word": "interface",
+  "phonetic": "/ˈɪntəfeɪs/",
+  "explains": "【科技】n. 界面；接口"
+ },
+ {
+  "word": "robotic",
+  "phonetic": "/rəʊ'bɒtɪk/",
+  "explains": "【科技】adj. 机器人的；自动的"
+ },
+ {
+  "word": "drone",
+  "phonetic": "/drəʊn/",
+  "explains": "【科技】n. 无人机"
+ },
+ {
+  "word": "biotechnology",
+  "phonetic": "/,baɪə(ʊ)tek'nɒlədʒɪ/",
+  "explains": "【科技】n. 生物技术"
+ },
+ {
+  "word": "nanotechnology",
+  "phonetic": "/ˌnænəʊtek'nɒlədʒi/",
+  "explains": "【科技】n. 纳米技术"
+ },
+ {
+  "word": "cybersecurity",
+  "phonetic": "/ˌsaɪbəsɪ'kjʊərəti/",
+  "explains": "【科技】n. 网络安全"
+ },
+ {
+  "word": "blockchain",
+  "phonetic": "/'blɒktʃeɪn/",
+  "explains": "【科技】n. 区块链"
+ },
+ {
+  "word": "streaming",
+  "phonetic": "/'striːmɪŋ/",
+  "explains": "【科技】n. 流媒体；流式传输"
+ },
+ {
+  "word": "pixel",
+  "phonetic": "/'pɪksl/",
+  "explains": "【科技】n. 像素"
+ },
+ {
+  "word": "gadget",
+  "phonetic": "/'gædʒit/",
+  "explains": "【科技】n. 小玩意；电子设备"
+ },
+ {
+  "word": "database",
+  "phonetic": "/ˈdeɪtəbeɪs/",
+  "explains": "【科技】n. 数据库"
+ },
+ {
+  "word": "digital",
+  "phonetic": "/ˈdɪdʒɪtl/",
+  "explains": "【科技】adj. 数字的"
+ },
+ {
+  "word": "artificial",
+  "phonetic": "/ˌɑːtɪˈfɪʃl/",
+  "explains": "【科技】adj. 人工的；人造的"
+ },
+ {
+  "word": "software",
+  "phonetic": "/ˈsɒf(t)weə/",
+  "explains": "【科技】n. 软件"
+ },
+ {
+  "word": "hardware",
+  "phonetic": "/ˈhɑːdweə/",
+  "explains": "【科技】n. 硬件"
+ },
+ {
+  "word": "telecommuting",
+  "phonetic": "/'telɪkə,mjuːtɪŋ/",
+  "explains": "【科技】n. 远程办公"
+ },
+ {
+  "word": "cloud",
+  "phonetic": "/klaʊd/",
+  "explains": "【科技】n. 云（计算）"
+ },
+ {
+  "word": "tablet",
+  "phonetic": "/'tæblɪt/",
+  "explains": "【科技】n. 平板电脑"
+ },
+ {
+  "word": "semiconductor",
+  "phonetic": "/,semɪkən'dʌktə/",
+  "explains": "【科技】n. 半导体"
+ },
+ {
+  "word": "smartphone",
+  "phonetic": "/'smɑːtfəʊn/",
+  "explains": "【科技】n. 智能手机"
+ },
+ {
+  "word": "coding",
+  "phonetic": "/'kəʊdɪŋ/",
+  "explains": "【科技】n. 编程"
+ },
+ {
+  "word": "pollution",
+  "phonetic": "/pəˈluːʃ(ə)n/",
+  "explains": "【环境】n. 污染"
+ },
+ {
+  "word": "emission",
+  "phonetic": "/ɪ'mɪʃ(ə)n/",
+  "explains": "【环境】n. 排放；排放物"
+ },
+ {
+  "word": "deforestation",
+  "phonetic": "/ˌdiːfɒrɪ'steɪʃn/",
+  "explains": "【环境】n. 森林砍伐"
+ },
+ {
+  "word": "biodiversity",
+  "phonetic": "/,baɪə(ʊ)daɪ'vɜːsɪtɪ/",
+  "explains": "【环境】n. 生物多样性"
+ },
+ {
+  "word": "ecosystem",
+  "phonetic": "/'iːkəʊsɪstəm/",
+  "explains": "【环境】n. 生态系统"
+ },
+ {
+  "word": "sustainable",
+  "phonetic": "/sə'steinəbl/",
+  "explains": "【环境】adj. 可持续的"
+ },
+ {
+  "word": "renewable",
+  "phonetic": "/rɪ'njuːəbəl/",
+  "explains": "【环境】adj. 可再生的"
+ },
+ {
+  "word": "recycling",
+  "phonetic": "/ˌriː'saɪklɪŋ/",
+  "explains": "【环境】n. 回收利用"
+ },
+ {
+  "word": "conservation",
+  "phonetic": "/ˌkɒnsəˈveɪʃ(ə)n/",
+  "explains": "【环境】n. 保护；节约"
+ },
+ {
+  "word": "pesticide",
+  "phonetic": "/'pestɪsaɪd/",
+  "explains": "【环境】n. 农药"
+ },
+ {
+  "word": "greenhouse",
+  "phonetic": "/'griːnhaʊs/",
+  "explains": "【环境】n. 温室"
+ },
+ {
+  "word": "glacier",
+  "phonetic": "/'glæsɪə; 'gleɪsɪə/",
+  "explains": "【环境】n. 冰川"
+ },
+ {
+  "word": "drought",
+  "phonetic": "/draʊt/",
+  "explains": "【环境】n. 干旱"
+ },
+ {
+  "word": "erosion",
+  "phonetic": "/ɪ'rəʊʒ(ə)n/",
+  "explains": "【环境】n. 侵蚀；水土流失"
+ },
+ {
+  "word": "habitat",
+  "phonetic": "/'hæbɪtæt/",
+  "explains": "【环境】n. 栖息地"
+ },
+ {
+  "word": "endangered",
+  "phonetic": "/ɪn'deɪndʒəd/",
+  "explains": "【环境】adj. 濒危的"
+ },
+ {
+  "word": "extinction",
+  "phonetic": "/ɪk'stɪŋ(k)ʃ(ə)n; ek-/",
+  "explains": "【环境】n. 灭绝"
+ },
+ {
+  "word": "landfill",
+  "phonetic": "/'læn(d)fɪl/",
+  "explains": "【环境】n. 垃圾填埋场"
+ },
+ {
+  "word": "sewage",
+  "phonetic": "/'suːɪdʒ/",
+  "explains": "【环境】n. 污水"
+ },
+ {
+  "word": "smog",
+  "phonetic": "/smɒg/",
+  "explains": "【环境】n. 烟雾；霾"
+ },
+ {
+  "word": "ozone",
+  "phonetic": "/'əʊzəʊn/",
+  "explains": "【环境】n. 臭氧"
+ },
+ {
+  "word": "carbon",
+  "phonetic": "/ˈkɑːbən/",
+  "explains": "【环境】n. 碳"
+ },
+ {
+  "word": "wetland",
+  "phonetic": "/'wetlənd/",
+  "explains": "【环境】n. 湿地"
+ },
+ {
+  "word": "afforestation",
+  "phonetic": "/əˌfɒrɪ'steɪʃn/",
+  "explains": "【环境】n. 植树造林"
+ },
+ {
+  "word": "desertification",
+  "phonetic": "/dɪˌzɜ:tɪfɪˈkeɪʃn/",
+  "explains": "【环境】n. 荒漠化"
+ },
+ {
+  "word": "ecological",
+  "phonetic": "/iːkə'lɒdʒɪk(ə)l; ek-/",
+  "explains": "【环境】adj. 生态的"
+ },
+ {
+  "word": "fertilizer",
+  "phonetic": "/'fɜːtɪlaɪzə/",
+  "explains": "【环境】n. 化肥"
+ },
+ {
+  "word": "acid",
+  "phonetic": "/ˈæsɪd/",
+  "explains": "【环境】n. 酸"
+ },
+ {
+  "word": "climate",
+  "phonetic": "/ˈklaɪmɪt/",
+  "explains": "【环境】n. 气候"
+ },
+ {
+  "word": "contamination",
+  "phonetic": "/kən,tæmɪ'neɪʃən/",
+  "explains": "【环境】n. 污染（物）"
+ },
+ {
+  "word": "urbanization",
+  "phonetic": "/,ɜːbənaɪ'zeɪʃən/",
+  "explains": "【城市】n. 城市化"
+ },
+ {
+  "word": "infrastructure",
+  "phonetic": "/'ɪnfrəstrʌktʃə/",
+  "explains": "【城市】n. 基础设施"
+ },
+ {
+  "word": "congestion",
+  "phonetic": "/kən'dʒestʃ(ə)n/",
+  "explains": "【城市】n. 拥堵；充血"
+ },
+ {
+  "word": "skyscraper",
+  "phonetic": "/ˈskaɪskreɪpə/",
+  "explains": "【城市】n. 摩天大楼"
+ },
+ {
+  "word": "suburban",
+  "phonetic": "/sə'bɜːb(ə)n/",
+  "explains": "【城市】adj. 郊区的"
+ },
+ {
+  "word": "metropolitan",
+  "phonetic": "/metrə'pɒlɪt(ə)n/",
+  "explains": "【城市】adj. 大都市的"
+ },
+ {
+  "word": "municipality",
+  "phonetic": "/mjʊ,nɪsɪ'pælɪtɪ/",
+  "explains": "【城市】n. 市政当局；自治市"
+ },
+ {
+  "word": "sanitation",
+  "phonetic": "/sænɪ'teɪʃ(ə)n/",
+  "explains": "【城市】n. 环境卫生"
+ },
+ {
+  "word": "housing",
+  "phonetic": "/haʊzɪŋ/",
+  "explains": "【城市】n. 住房"
+ },
+ {
+  "word": "gentrification",
+  "phonetic": "/ˌdʒentrɪfɪ'keɪʃn/",
+  "explains": "【城市】n. （旧区）士绅化改造"
+ },
+ {
+  "word": "commute",
+  "phonetic": "/kə'mjuːt/",
+  "explains": "【城市】n. 通勤"
+ },
+ {
+  "word": "pedestrian",
+  "phonetic": "/pɪˈdestrɪən/",
+  "explains": "【城市】n. 行人"
+ },
+ {
+  "word": "skyline",
+  "phonetic": "/'skaɪlaɪn/",
+  "explains": "【城市】n. 天际线"
+ },
+ {
+  "word": "slum",
+  "phonetic": "/slʌm/",
+  "explains": "【城市】n. 贫民窟"
+ },
+ {
+  "word": "sprawl",
+  "phonetic": "/sprɔːl/",
+  "explains": "【城市】n. 城市蔓延"
+ },
+ {
+  "word": "amenity",
+  "phonetic": "/ə'miːnəti; ə'menəti/",
+  "explains": "【城市】n. 便利设施"
+ },
+ {
+  "word": "density",
+  "phonetic": "/ˈdensəti/",
+  "explains": "【城市】n. 密度"
+ },
+ {
+  "word": "landmark",
+  "phonetic": "/'lændmɑːk/",
+  "explains": "【城市】n. 地标"
+ },
+ {
+  "word": "borough",
+  "phonetic": "/'bʌrə/",
+  "explains": "【城市】n. （英）自治市镇；区"
+ },
+ {
+  "word": "transit",
+  "phonetic": "/'trænzit/",
+  "explains": "【城市】n. 公共交通"
+ },
+ {
+  "word": "walkability",
+  "phonetic": "/ˌwɔːkə'bɪləti/",
+  "explains": "【城市】n. 步行便利性"
+ },
+ {
+  "word": "precinct",
+  "phonetic": "/'priːsɪŋ(k)t/",
+  "explains": "【城市】n. 街区；辖区"
+ },
+ {
+  "word": "downtown",
+  "phonetic": "/ˌdaʊnˈtaʊn/",
+  "explains": "【城市】n. 市中心"
+ },
+ {
+  "word": "residential",
+  "phonetic": "/rezɪ'denʃ(ə)l/",
+  "explains": "【城市】adj. 住宅的"
+ },
+ {
+  "word": "commercial",
+  "phonetic": "/kəˈmɜːʃ(ə)l/",
+  "explains": "【城市】adj. 商业的"
+ },
+ {
+  "word": "industrial",
+  "phonetic": "/ɪnˈdʌstrɪəl/",
+  "explains": "【城市】adj. 工业的"
+ },
+ {
+  "word": "zoning",
+  "phonetic": "/'zəʊnɪŋ/",
+  "explains": "【城市】n. （城市）分区规划"
+ },
+ {
+  "word": "metropolis",
+  "phonetic": "/mɪ'trɒp(ə)lɪs/",
+  "explains": "【城市】n. 大都市"
+ },
+ {
+  "word": "urbanite",
+  "phonetic": "/'ɜːbənaɪt/",
+  "explains": "【城市】n. 城市居民"
+ },
+ {
+  "word": "municipal",
+  "phonetic": "/mjʊ'nɪsɪp(ə)l/",
+  "explains": "【城市】adj. 市政的"
+ },
+ {
+  "word": "nutrition",
+  "phonetic": "/njuːˈtrɪʃ(ə)n/",
+  "explains": "【健康】n. 营养"
+ },
+ {
+  "word": "obesity",
+  "phonetic": "/ə(ʊ)'biːsɪtɪ/",
+  "explains": "【健康】n. 肥胖（症）"
+ },
+ {
+  "word": "epidemic",
+  "phonetic": "/epɪ'demɪk/",
+  "explains": "【健康】n. 流行病"
+ },
+ {
+  "word": "vaccine",
+  "phonetic": "/'væksiːn; -ɪn/",
+  "explains": "【健康】n. 疫苗"
+ },
+ {
+  "word": "chronic",
+  "phonetic": "/ˈkrɒnɪk/",
+  "explains": "【健康】adj. 慢性的"
+ },
+ {
+  "word": "hygiene",
+  "phonetic": "/'haɪdʒiːn/",
+  "explains": "【健康】n. 卫生"
+ },
+ {
+  "word": "diagnosis",
+  "phonetic": "/ˌdaɪəgˈnəʊsɪs/",
+  "explains": "【健康】n. 诊断"
+ },
+ {
+  "word": "therapy",
+  "phonetic": "/ˈθerəpɪ/",
+  "explains": "【健康】n. 治疗；疗法"
+ },
+ {
+  "word": "medication",
+  "phonetic": "/medɪ'keɪʃ(ə)n/",
+  "explains": "【健康】n. 药物；用药"
+ },
+ {
+  "word": "surgeon",
+  "phonetic": "/ˈsɜːdʒ(ə)n/",
+  "explains": "【健康】n. 外科医生"
+ },
+ {
+  "word": "physician",
+  "phonetic": "/fɪˈzɪʃ(ə)n/",
+  "explains": "【健康】n. 内科医生"
+ },
+ {
+  "word": "pediatric",
+  "phonetic": "/ˌpiːdi'ætrɪk/",
+  "explains": "【健康】adj. 儿科的"
+ },
+ {
+  "word": "wellness",
+  "phonetic": "/'welnəs/",
+  "explains": "【健康】n. 健康（状态）"
+ },
+ {
+  "word": "fitness",
+  "phonetic": "/ˈfɪtnɪs/",
+  "explains": "【健康】n. 健身；健康"
+ },
+ {
+  "word": "organic",
+  "phonetic": "/ɔːˈgænɪk/",
+  "explains": "【健康】adj. 有机的"
+ },
+ {
+  "word": "vegetarian",
+  "phonetic": "/vɛdʒɪˈtɛːrɪən/",
+  "explains": "【健康】n. 素食主义者"
+ },
+ {
+  "word": "calorie",
+  "phonetic": "/ˈkælərɪ/",
+  "explains": "【健康】n. 卡路里；热量"
+ },
+ {
+  "word": "protein",
+  "phonetic": "/'prəʊtiːn/",
+  "explains": "【健康】n. 蛋白质"
+ },
+ {
+  "word": "vitamin",
+  "phonetic": "/ˈvɪtəmɪn; ˈvaɪ-/",
+  "explains": "【健康】n. 维生素"
+ },
+ {
+  "word": "carbohydrate",
+  "phonetic": "/kɑːbə'haɪdreɪt/",
+  "explains": "【健康】n. 碳水化合物"
+ },
+ {
+  "word": "cholesterol",
+  "phonetic": "/kə'lestərɒl/",
+  "explains": "【健康】n. 胆固醇"
+ },
+ {
+  "word": "diabetes",
+  "phonetic": "/,daɪə'biːtiːz/",
+  "explains": "【健康】n. 糖尿病"
+ },
+ {
+  "word": "insomnia",
+  "phonetic": "/ɪn'sɒmnɪə/",
+  "explains": "【健康】n. 失眠"
+ },
+ {
+  "word": "addiction",
+  "phonetic": "/ə'dɪkʃ(ə)n/",
+  "explains": "【健康】n. 成瘾"
+ },
+ {
+  "word": "rehabilitation",
+  "phonetic": "/'riːhə,bɪlɪ'teɪʃən/",
+  "explains": "【健康】n. 康复"
+ },
+ {
+  "word": "immunization",
+  "phonetic": "/ˌɪmjunaɪ'zeɪʃn/",
+  "explains": "【健康】n. 免疫接种"
+ },
+ {
+  "word": "clinic",
+  "phonetic": "/ˈklɪnɪk/",
+  "explains": "【健康】n. 诊所"
+ },
+ {
+  "word": "pharmacy",
+  "phonetic": "/'fɑːməsɪ/",
+  "explains": "【健康】n. 药房"
+ },
+ {
+  "word": "epidemiology",
+  "phonetic": "/ˌepɪˌdiːmi'ɒlədʒi/",
+  "explains": "【健康】n. 流行病学"
+ },
+ {
+  "word": "cardiovascular",
+  "phonetic": "/,kɑːdɪəʊ'væskjʊlə/",
+  "explains": "【健康】adj. 心血管的"
+ },
+ {
+  "word": "inflation",
+  "phonetic": "/ɪn'fleɪʃ(ə)n/",
+  "explains": "【经济】n. 通货膨胀"
+ },
+ {
+  "word": "recession",
+  "phonetic": "/ri'seʃən/",
+  "explains": "【经济】n. 经济衰退"
+ },
+ {
+  "word": "deficit",
+  "phonetic": "/ˈdefɪsɪt/",
+  "explains": "【经济】n. 赤字；逆差"
+ },
+ {
+  "word": "surplus",
+  "phonetic": "/ˈsɜːpləs/",
+  "explains": "【经济】n. 盈余；顺差"
+ },
+ {
+  "word": "tariff",
+  "phonetic": "/'tærɪf/",
+  "explains": "【经济】n. 关税"
+ },
+ {
+  "word": "subsidy",
+  "phonetic": "/'sʌbsɪdɪ/",
+  "explains": "【经济】n. 补贴"
+ },
+ {
+  "word": "monopoly",
+  "phonetic": "/mə'nɒp(ə)lɪ/",
+  "explains": "【经济】n. 垄断"
+ },
+ {
+  "word": "merger",
+  "phonetic": "/'məːdʒə/",
+  "explains": "【经济】n. 合并；兼并"
+ },
+ {
+  "word": "bankruptcy",
+  "phonetic": "/'bæŋkrʌptsi/",
+  "explains": "【经济】n. 破产"
+ },
+ {
+  "word": "dividend",
+  "phonetic": "/'dɪvɪdend/",
+  "explains": "【经济】n. 红利；股息"
+ },
+ {
+  "word": "portfolio",
+  "phonetic": "/ˌpɔːt'fəuliəu/",
+  "explains": "【经济】n. 投资组合"
+ },
+ {
+  "word": "mortgage",
+  "phonetic": "/ˈmɔːgɪdʒ/",
+  "explains": "【经济】n. 抵押贷款"
+ },
+ {
+  "word": "currency",
+  "phonetic": "/ˈkʌrənsɪ/",
+  "explains": "【经济】n. 货币"
+ },
+ {
+  "word": "taxation",
+  "phonetic": "/tæk'seiʃən/",
+  "explains": "【经济】n. 征税；税制"
+ },
+ {
+  "word": "welfare",
+  "phonetic": "/ˈwelfeə/",
+  "explains": "【经济】n. 福利"
+ },
+ {
+  "word": "pension",
+  "phonetic": "/ˈpenʃ(ə)n/",
+  "explains": "【经济】n. 养老金"
+ },
+ {
+  "word": "unemployment",
+  "phonetic": "/ʌnɪm'plɒɪm(ə)nt; -em-/",
+  "explains": "【经济】n. 失业"
+ },
+ {
+  "word": "productivity",
+  "phonetic": "/prɒdʌk'tɪvɪtɪ/",
+  "explains": "【经济】n. 生产率"
+ },
+ {
+  "word": "commodity",
+  "phonetic": "/kəˈmɒdɪtɪ/",
+  "explains": "【经济】n. 商品；大宗商品"
+ },
+ {
+  "word": "entrepreneurship",
+  "phonetic": "/ˌɔntrəprə'nəːʃip/",
+  "explains": "【经济】n. 创业精神；企业家能力"
+ },
+ {
+  "word": "franchise",
+  "phonetic": "/ˈfræn(t)ʃaɪz/",
+  "explains": "【经济】n. 特许经营（权）"
+ },
+ {
+  "word": "retail",
+  "phonetic": "/ˈriːteɪl/",
+  "explains": "【经济】n. 零售"
+ },
+ {
+  "word": "wholesale",
+  "phonetic": "/'həulseil/",
+  "explains": "【经济】n. 批发"
+ },
+ {
+  "word": "logistics",
+  "phonetic": "/lə'dʒistiks/",
+  "explains": "【经济】n. 物流"
+ },
+ {
+  "word": "outsourcing",
+  "phonetic": "/'aʊtsɔːsɪŋ/",
+  "explains": "【经济】n. 外包"
+ },
+ {
+  "word": "globalization",
+  "phonetic": "/ˌgləubəlai'zeiʃən/",
+  "explains": "【经济】n. 全球化"
+ },
+ {
+  "word": "austerity",
+  "phonetic": "/ɒ'sterɪtɪ; ɔː-/",
+  "explains": "【经济】n. 紧缩政策"
+ },
+ {
+  "word": "stimulus",
+  "phonetic": "/'stɪmjʊləs/",
+  "explains": "【经济】n. 刺激（政策）"
+ },
+ {
+  "word": "venture",
+  "phonetic": "/ˈventʃə/",
+  "explains": "【经济】n. 风险投资；冒险"
+ },
+ {
+  "word": "deflation",
+  "phonetic": "/di'fleiʃən/",
+  "explains": "【经济】n. 通货紧缩"
+ },
+ {
+  "word": "heritage",
+  "phonetic": "/ˈherɪtɪdʒ/",
+  "explains": "【文化】n. 遗产；传统"
+ },
+ {
+  "word": "ritual",
+  "phonetic": "/ˈrɪtʃʊəl/",
+  "explains": "【文化】n. 仪式；习俗"
+ },
+ {
+  "word": "cuisine",
+  "phonetic": "/kwɪˈziːn/",
+  "explains": "【文化】n. 菜肴；烹饪"
+ },
+ {
+  "word": "dialect",
+  "phonetic": "/ˈdaɪəlekt/",
+  "explains": "【文化】n. 方言"
+ },
+ {
+  "word": "folklore",
+  "phonetic": "/'fəʊklɔː/",
+  "explains": "【文化】n. 民间传说"
+ },
+ {
+  "word": "craftsmanship",
+  "phonetic": "/'krɑːf(t)smənʃɪp/",
+  "explains": "【文化】n. 工艺；手艺"
+ },
+ {
+  "word": "antique",
+  "phonetic": "/æn'tiːk/",
+  "explains": "【文化】n. 古董"
+ },
+ {
+  "word": "calligraphy",
+  "phonetic": "/kə'lɪgrəfɪ/",
+  "explains": "【文化】n. 书法"
+ },
+ {
+  "word": "porcelain",
+  "phonetic": "/'pɔːs(ə)lɪn/",
+  "explains": "【文化】n. 瓷器"
+ },
+ {
+  "word": "etiquette",
+  "phonetic": "/'etɪket; etɪ'ket/",
+  "explains": "【文化】n. 礼仪"
+ },
+ {
+  "word": "legend",
+  "phonetic": "/'ledʒ(ə)nd/",
+  "explains": "【文化】n. 传说"
+ },
+ {
+  "word": "mythology",
+  "phonetic": "/mɪ'θɒlədʒɪ/",
+  "explains": "【文化】n. 神话"
+ },
+ {
+  "word": "mural",
+  "phonetic": "/'mjʊər(ə)l/",
+  "explains": "【文化】n. 壁画"
+ },
+ {
+  "word": "instrument",
+  "phonetic": "/ˈɪnstrʊmənt/",
+  "explains": "【文化】n. 乐器；器械"
+ },
+ {
+  "word": "festival",
+  "phonetic": "/ˈfestɪvl/",
+  "explains": "【文化】n. 节日"
+ },
+ {
+  "word": "carnival",
+  "phonetic": "/'kɑːnɪv(ə)l/",
+  "explains": "【文化】n. 狂欢节"
+ },
+ {
+  "word": "opera",
+  "phonetic": "/ˈɒp(ə)rə/",
+  "explains": "【文化】n. 歌剧"
+ },
+ {
+  "word": "museum",
+  "phonetic": "/mjuˈziːəm/",
+  "explains": "【文化】n. 博物馆"
+ },
+ {
+  "word": "minority",
+  "phonetic": "/maɪˈnɒrɪtɪ; mɪ-/",
+  "explains": "【文化】n. 少数民族；少数群体"
+ },
+ {
+  "word": "costume",
+  "phonetic": "/ˈkɒstjuːm/",
+  "explains": "【文化】n. 服装；戏服"
+ },
+ {
+  "word": "banquet",
+  "phonetic": "/'bæŋkwɪt/",
+  "explains": "【文化】n. 宴会"
+ },
+ {
+  "word": "philosophy",
+  "phonetic": "/fɪˈlɒsəfɪ/",
+  "explains": "【文化】n. 哲学"
+ },
+ {
+  "word": "religion",
+  "phonetic": "/rɪˈlɪdʒ(ə)n/",
+  "explains": "【文化】n. 宗教"
+ },
+ {
+  "word": "silk",
+  "phonetic": "/sɪlk/",
+  "explains": "【文化】n. 丝绸"
+ },
+ {
+  "word": "tea",
+  "phonetic": "/tiː/",
+  "explains": "【文化】n. 茶"
+ },
+ {
+  "word": "martial",
+  "phonetic": "/'mɑːʃ(ə)l/",
+  "explains": "【文化】adj. 武术的；军事的"
+ },
+ {
+  "word": "tradition",
+  "phonetic": "/trəˈdɪʃ(ə)n/",
+  "explains": "【文化】n. 传统"
+ },
+ {
+  "word": "antiquity",
+  "phonetic": "/æn'tɪkwɪtɪ/",
+  "explains": "【文化】n. 古代；古物"
+ },
+ {
+  "word": "handicraft",
+  "phonetic": "/'hændɪkrɑːft/",
+  "explains": "【文化】n. 手工艺品"
+ },
+ {
+  "word": "epic",
+  "phonetic": "/'epɪk/",
+  "explains": "【文化】n. 史诗"
+ },
+ {
+  "word": "journalism",
+  "phonetic": "/'dʒɜːn(ə)lɪz(ə)m/",
+  "explains": "【媒体】n. 新闻业；新闻学"
+ },
+ {
+  "word": "censorship",
+  "phonetic": "/'sensəʃɪp/",
+  "explains": "【媒体】n. 审查制度"
+ },
+ {
+  "word": "propaganda",
+  "phonetic": "/prɒpə'gændə/",
+  "explains": "【媒体】n. 宣传"
+ },
+ {
+  "word": "circulation",
+  "phonetic": "/sɜːkjʊ'leɪʃ(ə)n/",
+  "explains": "【媒体】n. 发行量；流通"
+ },
+ {
+  "word": "editorial",
+  "phonetic": "/edɪ'tɔːrɪəl/",
+  "explains": "【媒体】n. 社论"
+ },
+ {
+  "word": "headline",
+  "phonetic": "/'hedlaɪn/",
+  "explains": "【媒体】n. 头条；标题"
+ },
+ {
+  "word": "columnist",
+  "phonetic": "/'kɒləm(n)ɪst/",
+  "explains": "【媒体】n. 专栏作家"
+ },
+ {
+  "word": "anchor",
+  "phonetic": "/'æŋkə/",
+  "explains": "【媒体】n. （新闻）主播"
+ },
+ {
+  "word": "documentary",
+  "phonetic": "/dɒkjʊ'ment(ə)rɪ/",
+  "explains": "【媒体】n. 纪录片"
+ },
+ {
+  "word": "broadcast",
+  "phonetic": "/ˈbrɔːdkɑːst/",
+  "explains": "【媒体】n. 广播；播出"
+ },
+ {
+  "word": "podcast",
+  "phonetic": "/'pɒdkɑːst/",
+  "explains": "【媒体】n. 播客"
+ },
+ {
+  "word": "vlog",
+  "phonetic": "/vlɒɡ/",
+  "explains": "【媒体】n. 视频日志"
+ },
+ {
+  "word": "influencer",
+  "phonetic": "/'ɪnfluənsə/",
+  "explains": "【媒体】n. 网红；意见领袖"
+ },
+ {
+  "word": "subscriber",
+  "phonetic": "/səb'skraɪbə/",
+  "explains": "【媒体】n. 订阅者"
+ },
+ {
+  "word": "clickbait",
+  "phonetic": "/'klɪkbeɪt/",
+  "explains": "【媒体】n. 标题党内容"
+ },
+ {
+  "word": "misinformation",
+  "phonetic": "/ˌmɪsɪnfə'meɪʃn/",
+  "explains": "【媒体】n. 虚假信息"
+ },
+ {
+  "word": "sensationalism",
+  "phonetic": "/sen'seɪʃ(ə)n(ə)lɪz(ə)m/",
+  "explains": "【媒体】n. 耸人听闻的报道手法"
+ },
+ {
+  "word": "paparazzi",
+  "phonetic": "/ˌpæpə'rætsi/",
+  "explains": "【媒体】n. 狗仔队"
+ },
+ {
+  "word": "syndication",
+  "phonetic": "/ˌsɪndɪ'keɪʃn/",
+  "explains": "【媒体】n. （稿件）联合供稿"
+ },
+ {
+  "word": "primetime",
+  "phonetic": "/'praɪmtaɪm/",
+  "explains": "【媒体】n. 黄金时段"
+ },
+ {
+  "word": "rerun",
+  "phonetic": "/'riːrʌn/",
+  "explains": "【媒体】n. 重播"
+ },
+ {
+  "word": "trailer",
+  "phonetic": "/'treɪlə/",
+  "explains": "【媒体】n. 预告片"
+ },
+ {
+  "word": "spoiler",
+  "phonetic": "/'spɔɪlə/",
+  "explains": "【媒体】n. 剧透"
+ },
+ {
+  "word": "meme",
+  "phonetic": "/miːm/",
+  "explains": "【媒体】n. 网络梗图；模因"
+ },
+ {
+  "word": "viral",
+  "phonetic": "/'vaɪr(ə)l/",
+  "explains": "【媒体】adj. 病毒式传播的"
+ },
+ {
+  "word": "hashtag",
+  "phonetic": "/'hæʃtæɡ/",
+  "explains": "【媒体】n. 话题标签"
+ },
+ {
+  "word": "freelance",
+  "phonetic": "/'friːlɑːns/",
+  "explains": "【媒体】n. 自由职业"
+ },
+ {
+  "word": "trending",
+  "phonetic": "/'trendɪŋ/",
+  "explains": "【媒体】adj. 趋势热榜上的"
+ },
+ {
+  "word": "airtime",
+  "phonetic": "/'eətaɪm/",
+  "explains": "【媒体】n. 播出时段"
+ },
+ {
+  "word": "readership",
+  "phonetic": "/'riːdəʃɪp/",
+  "explains": "【媒体】n. 读者群"
+ },
+ {
+  "word": "itinerary",
+  "phonetic": "/ai'tinərəri/",
+  "explains": "【旅游】n. 行程；旅行计划"
+ },
+ {
+  "word": "accommodation",
+  "phonetic": "/əˌkɒməˈdeɪʃ(ə)n/",
+  "explains": "【旅游】n. 住宿"
+ },
+ {
+  "word": "hostel",
+  "phonetic": "/'hɔstl/",
+  "explains": "【旅游】n. 青年旅舍"
+ },
+ {
+  "word": "resort",
+  "phonetic": "/rɪ'zɔːt/",
+  "explains": "【旅游】n. 度假村"
+ },
+ {
+  "word": "cruise",
+  "phonetic": "/kruːz/",
+  "explains": "【旅游】n. 游轮（旅行）"
+ },
+ {
+  "word": "safari",
+  "phonetic": "/sə'fɑːrɪ/",
+  "explains": "【旅游】n. （非洲）野游"
+ },
+ {
+  "word": "backpacker",
+  "phonetic": "/'bækpækə/",
+  "explains": "【旅游】n. 背包客"
+ },
+ {
+  "word": "visa",
+  "phonetic": "/'viːzə/",
+  "explains": "【旅游】n. 签证"
+ },
+ {
+  "word": "passport",
+  "phonetic": "/ˈpɑːspɔːt; ˈpæspɔːt/",
+  "explains": "【旅游】n. 护照"
+ },
+ {
+  "word": "customs",
+  "phonetic": "/'kʌstəmz/",
+  "explains": "【旅游】n. 海关"
+ },
+ {
+  "word": "luggage",
+  "phonetic": "/ˈlʌgɪdʒ/",
+  "explains": "【旅游】n. 行李"
+ },
+ {
+  "word": "boarding",
+  "phonetic": "/'bɔːdɪŋ/",
+  "explains": "【旅游】n. 登机；寄宿"
+ },
+ {
+  "word": "jetlag",
+  "phonetic": "/'dʒetlæɡ/",
+  "explains": "【旅游】n. 时差反应"
+ },
+ {
+  "word": "excursion",
+  "phonetic": "/ɪk'skɜːʃ(ə)n; ek-/",
+  "explains": "【旅游】n. 短途旅行；远足"
+ },
+ {
+  "word": "souvenir",
+  "phonetic": "/ˈsuːvənɪ/",
+  "explains": "【旅游】n. 纪念品"
+ },
+ {
+  "word": "guidebook",
+  "phonetic": "/'ɡaɪdbʊk/",
+  "explains": "【旅游】n. 旅行指南"
+ },
+ {
+  "word": "sightseeing",
+  "phonetic": "/'saɪtsiːɪŋ/",
+  "explains": "【旅游】n. 观光"
+ },
+ {
+  "word": "departure",
+  "phonetic": "/dɪˈpɑːtʃə/",
+  "explains": "【旅游】n. 出发；离港"
+ },
+ {
+  "word": "arrival",
+  "phonetic": "/əˈraɪvl/",
+  "explains": "【旅游】n. 到达；抵达"
+ },
+ {
+  "word": "gateway",
+  "phonetic": "/'geɪtweɪ/",
+  "explains": "【旅游】n. 门户；入口"
+ },
+ {
+  "word": "layover",
+  "phonetic": "/'leɪəʊvə/",
+  "explains": "【旅游】n. （旅途）中转停留"
+ },
+ {
+  "word": "terminal",
+  "phonetic": "/ˈtɜːmɪn(ə)l/",
+  "explains": "【旅游】n. 航站楼；终点站"
+ },
+ {
+  "word": "carousel",
+  "phonetic": "/ˌkærə'sel/",
+  "explains": "【旅游】n. 行李传送带"
+ },
+ {
+  "word": "check-in",
+  "phonetic": "/'tʃek ɪn/",
+  "explains": "【旅游】n. 办理登机/入住"
+ },
+ {
+  "word": "overbooked",
+  "phonetic": "/ˌəʊvə'bʊkt/",
+  "explains": "【旅游】adj. 超额预订的"
+ },
+ {
+  "word": "all-inclusive",
+  "phonetic": "/ˌɔːl ɪn'kluːsɪv/",
+  "explains": "【旅游】adj. 全包的（旅行）"
+ },
+ {
+  "word": "ecotourism",
+  "phonetic": "/'iːkəʊtʊərɪzəm/",
+  "explains": "【旅游】n. 生态旅游"
+ },
+ {
+  "word": "voucher",
+  "phonetic": "/'vautʃə/",
+  "explains": "【旅游】n. 代金券；凭证"
+ },
+ {
+  "word": "budget",
+  "phonetic": "/ˈbʌdʒɪt/",
+  "explains": "【旅游】n. 预算"
+ },
+ {
+  "word": "stopover",
+  "phonetic": "/'stɒpəʊvə/",
+  "explains": "【旅游】n. 中途停留"
+ },
+ {
+  "word": "demographic",
+  "phonetic": "/,demə'græfɪk/",
+  "explains": "【社会】adj. 人口统计的"
+ },
+ {
+  "word": "census",
+  "phonetic": "/ˈsensəs/",
+  "explains": "【社会】n. 人口普查"
+ },
+ {
+  "word": "inequality",
+  "phonetic": "/ɪnɪ'kwɒlɪtɪ/",
+  "explains": "【社会】n. 不平等"
+ },
+ {
+  "word": "discrimination",
+  "phonetic": "/dɪˌskrɪmɪˈneɪʃn/",
+  "explains": "【社会】n. 歧视"
+ },
+ {
+  "word": "prejudice",
+  "phonetic": "/ˈpredʒʊdɪs/",
+  "explains": "【社会】n. 偏见"
+ },
+ {
+  "word": "stereotype",
+  "phonetic": "/'sterɪə(ʊ)taɪp; 'stɪərɪə(ʊ)-/",
+  "explains": "【社会】n. 刻板印象"
+ },
+ {
+  "word": "diversity",
+  "phonetic": "/daɪˈvɜːsəti/",
+  "explains": "【社会】n. 多样性"
+ },
+ {
+  "word": "integration",
+  "phonetic": "/ˌinti'greiʃən/",
+  "explains": "【社会】n. 融合；一体化"
+ },
+ {
+  "word": "migration",
+  "phonetic": "/maɪ'greɪʃ(ə)n/",
+  "explains": "【社会】n. 迁移；移民"
+ },
+ {
+  "word": "refugee",
+  "phonetic": "/ˌrefjʊˈdʒiː/",
+  "explains": "【社会】n. 难民"
+ },
+ {
+  "word": "asylum",
+  "phonetic": "/ə'saɪləm/",
+  "explains": "【社会】n. （政治）庇护"
+ },
+ {
+  "word": "homelessness",
+  "phonetic": "/'həʊmləsnəs/",
+  "explains": "【社会】n. 无家可归"
+ },
+ {
+  "word": "poverty",
+  "phonetic": "/ˈpɒvətɪ/",
+  "explains": "【社会】n. 贫困"
+ },
+ {
+  "word": "charity",
+  "phonetic": "/ˈtʃærɪtɪ/",
+  "explains": "【社会】n. 慈善（机构）"
+ },
+ {
+  "word": "volunteer",
+  "phonetic": "/ˌvɒlənˈtɪə/",
+  "explains": "【社会】n. 志愿者"
+ },
+ {
+  "word": "community",
+  "phonetic": "/kəˈmjuːnɪtɪ/",
+  "explains": "【社会】n. 社区"
+ },
+ {
+  "word": "cohesion",
+  "phonetic": "/kə(ʊ)'hiːʒ(ə)n/",
+  "explains": "【社会】n. 凝聚力"
+ },
+ {
+  "word": "judicial",
+  "phonetic": "/dʒuː'dɪʃ(ə)l/",
+  "explains": "【社会】adj. 司法的"
+ },
+ {
+  "word": "legislation",
+  "phonetic": "/ledʒɪs'leɪʃ(ə)n/",
+  "explains": "【社会】n. 立法；法规"
+ },
+ {
+  "word": "petition",
+  "phonetic": "/pɪ'tɪʃ(ə)n/",
+  "explains": "【社会】n. 请愿（书）"
+ },
+ {
+  "word": "activism",
+  "phonetic": "/'æktɪvɪz(ə)m/",
+  "explains": "【社会】n. 行动主义；倡导活动"
+ },
+ {
+  "word": "advocacy",
+  "phonetic": "/'ædvəkəsɪ/",
+  "explains": "【社会】n. 倡导；辩护"
+ },
+ {
+  "word": "ballot",
+  "phonetic": "/'bælət/",
+  "explains": "【社会】n. 选票"
+ },
+ {
+  "word": "turnout",
+  "phonetic": "/'tɜːnaʊt/",
+  "explains": "【社会】n. 投票率；出席人数"
+ },
+ {
+  "word": "lobby",
+  "phonetic": "/ˈlɒbɪ/",
+  "explains": "【社会】n. 游说（团体）"
+ },
+ {
+  "word": "corruption",
+  "phonetic": "/kəˈrʌpʃ(ə)n/",
+  "explains": "【社会】n. 腐败"
+ },
+ {
+  "word": "transparency",
+  "phonetic": "/træn'spær(ə)nsɪ; trɑːn-; -'speə-/",
+  "explains": "【社会】n. 透明度"
+ },
+ {
+  "word": "accountability",
+  "phonetic": "/əˌkauntə'biləti/",
+  "explains": "【社会】n. 问责制"
+ },
+ {
+  "word": "philanthropy",
+  "phonetic": "/fɪ'lænθrəpɪ/",
+  "explains": "【社会】n. 慈善事业"
+ },
+ {
+  "word": "segregation",
+  "phonetic": "/,segrɪ'geɪʃ(ə)n/",
+  "explains": "【社会】n. （种族）隔离"
+ }
+]

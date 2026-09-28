@@ -1,0 +1,1502 @@
+[
+ {
+  "word": "organism",
+  "phonetic": "/'ɔːg(ə)nɪz(ə)m/",
+  "explains": "【生物】n. 生物；有机体"
+ },
+ {
+  "word": "membrane",
+  "phonetic": "/'membreɪn/",
+  "explains": "【生物】n. 细胞膜；膜"
+ },
+ {
+  "word": "nucleus",
+  "phonetic": "/'njuːklɪəs/",
+  "explains": "【生物】n. 细胞核；原子核"
+ },
+ {
+  "word": "chromosome",
+  "phonetic": "/'krəʊməsəʊm/",
+  "explains": "【生物】n. 染色体"
+ },
+ {
+  "word": "enzyme",
+  "phonetic": "/'enzaɪm/",
+  "explains": "【生物】n. 酶"
+ },
+ {
+  "word": "hormone",
+  "phonetic": "/'hɔːməʊn/",
+  "explains": "【生物】n. 激素"
+ },
+ {
+  "word": "evolution",
+  "phonetic": "/ˌiːvəˈluːʃ(ə)n; ˌevəˈluːʃ(ə)n/",
+  "explains": "【生物】n. 进化"
+ },
+ {
+  "word": "species",
+  "phonetic": "/ˈspiːʃiːz; -ʃəs; ˈspiːs-/",
+  "explains": "【生物】n. 物种"
+ },
+ {
+  "word": "adaptation",
+  "phonetic": "/ædəp'teɪʃ(ə)n/",
+  "explains": "【生物】n. 适应；改编"
+ },
+ {
+  "word": "mutation",
+  "phonetic": "/mjuː'teɪʃ(ə)n/",
+  "explains": "【生物】n. 突变"
+ },
+ {
+  "word": "photosynthesis",
+  "phonetic": "/,fəʊtə(ʊ)'sɪnθɪsɪs/",
+  "explains": "【生物】n. 光合作用"
+ },
+ {
+  "word": "metabolism",
+  "phonetic": "/mɪ'tæbəlɪz(ə)m/",
+  "explains": "【生物】n. 新陈代谢"
+ },
+ {
+  "word": "microscope",
+  "phonetic": "/ˈmaɪkrəskəʊp/",
+  "explains": "【生物】n. 显微镜"
+ },
+ {
+  "word": "specimen",
+  "phonetic": "/'spesɪmɪn/",
+  "explains": "【生物】n. 标本"
+ },
+ {
+  "word": "dissection",
+  "phonetic": "/dɪ'sekʃn/",
+  "explains": "【生物】n. 解剖"
+ },
+ {
+  "word": "embryology",
+  "phonetic": "/ˌembri'ɒlədʒi/",
+  "explains": "【生物】n. 胚胎学"
+ },
+ {
+  "word": "taxonomy",
+  "phonetic": "/tæk'sɒnəmɪ/",
+  "explains": "【生物】n. 分类学"
+ },
+ {
+  "word": "parasite",
+  "phonetic": "/'pærəsaɪt/",
+  "explains": "【生物】n. 寄生虫"
+ },
+ {
+  "word": "predator",
+  "phonetic": "/'predətə/",
+  "explains": "【生物】n. 捕食者"
+ },
+ {
+  "word": "pollination",
+  "phonetic": "/ˌpɒləˈneɪʃn/",
+  "explains": "【生物】n. 传粉"
+ },
+ {
+  "word": "germination",
+  "phonetic": "/,dʒɝmə'neʃən/",
+  "explains": "【生物】n. 发芽"
+ },
+ {
+  "word": "larva",
+  "phonetic": "/'lɑːvə/",
+  "explains": "【生物】n. 幼虫"
+ },
+ {
+  "word": "mammal",
+  "phonetic": "/'mæm(ə)l/",
+  "explains": "【生物】n. 哺乳动物"
+ },
+ {
+  "word": "reptile",
+  "phonetic": "/'reptaɪl/",
+  "explains": "【生物】n. 爬行动物"
+ },
+ {
+  "word": "amphibian",
+  "phonetic": "/æm'fɪbɪən/",
+  "explains": "【生物】n. 两栖动物"
+ },
+ {
+  "word": "respiration",
+  "phonetic": "/respɪ'reɪʃ(ə)n/",
+  "explains": "【生物】n. 呼吸（作用）"
+ },
+ {
+  "word": "naturalist",
+  "phonetic": "/'nætʃ(ə)rəlɪst/",
+  "explains": "【生物】n. 博物学家"
+ },
+ {
+  "word": "protein",
+  "phonetic": "/'prəʊtiːn/",
+  "explains": "【生物】n. 蛋白质"
+ },
+ {
+  "word": "botany",
+  "phonetic": "/'bɒt(ə)nɪ/",
+  "explains": "【生物】n. 植物学"
+ },
+ {
+  "word": "zoology",
+  "phonetic": "/zuː'ɒlədʒɪ; zəʊ-/",
+  "explains": "【生物】n. 动物学"
+ },
+ {
+  "word": "mineral",
+  "phonetic": "/ˈmɪn(ə)r(ə)l/",
+  "explains": "【地质】n. 矿物"
+ },
+ {
+  "word": "sedimentary",
+  "phonetic": "/sedɪ'mentrɪ/",
+  "explains": "【地质】adj. 沉积的"
+ },
+ {
+  "word": "igneous",
+  "phonetic": "/'ɪgnɪəs/",
+  "explains": "【地质】adj. 火成的"
+ },
+ {
+  "word": "metamorphic",
+  "phonetic": "/metə'mɔːfɪk/",
+  "explains": "【地质】adj. 变质的"
+ },
+ {
+  "word": "magma",
+  "phonetic": "/'mægmə/",
+  "explains": "【地质】n. 岩浆"
+ },
+ {
+  "word": "crust",
+  "phonetic": "/krʌst/",
+  "explains": "【地质】n. 地壳；外壳"
+ },
+ {
+  "word": "mantle",
+  "phonetic": "/'mænt(ə)l/",
+  "explains": "【地质】n. 地幔"
+ },
+ {
+  "word": "fault",
+  "phonetic": "/fɔːlt/",
+  "explains": "【地质】n. 断层；断层线"
+ },
+ {
+  "word": "plateau",
+  "phonetic": "/'plætəʊ/",
+  "explains": "【地质】n. 高原"
+ },
+ {
+  "word": "canyon",
+  "phonetic": "/'kænjən/",
+  "explains": "【地质】n. 峡谷"
+ },
+ {
+  "word": "volcano",
+  "phonetic": "/vɒlˈkeɪnəʊ/",
+  "explains": "【地质】n. 火山"
+ },
+ {
+  "word": "seismic",
+  "phonetic": "/'saɪzmɪk/",
+  "explains": "【地质】adj. 地震的"
+ },
+ {
+  "word": "tectonic",
+  "phonetic": "/tek'tɒnɪk/",
+  "explains": "【地质】adj. 构造的；地壳运动的"
+ },
+ {
+  "word": "stratum",
+  "phonetic": "/'strɑːtəm; 'streɪtəm/",
+  "explains": "【地质】n. 岩层；地层"
+ },
+ {
+  "word": "fossil",
+  "phonetic": "/'fɒs(ə)l; -sɪl/",
+  "explains": "【地质】n. 化石"
+ },
+ {
+  "word": "limestone",
+  "phonetic": "/'laɪmstəʊn/",
+  "explains": "【地质】n. 石灰岩"
+ },
+ {
+  "word": "granite",
+  "phonetic": "/'grænɪt/",
+  "explains": "【地质】n. 花岗岩"
+ },
+ {
+  "word": "quartz",
+  "phonetic": "/kwɔːts/",
+  "explains": "【地质】n. 石英"
+ },
+ {
+  "word": "crystal",
+  "phonetic": "/ˈkrɪst(ə)l/",
+  "explains": "【地质】n. 晶体"
+ },
+ {
+  "word": "delta",
+  "phonetic": "/'deltə/",
+  "explains": "【地质】n. 三角洲"
+ },
+ {
+  "word": "landslide",
+  "phonetic": "/'læn(d)slaɪd/",
+  "explains": "【地质】n. 山体滑坡"
+ },
+ {
+  "word": "lava",
+  "phonetic": "/'lɑːvə/",
+  "explains": "【地质】n. 熔岩"
+ },
+ {
+  "word": "ore",
+  "phonetic": "/ɔː/",
+  "explains": "【地质】n. 矿石"
+ },
+ {
+  "word": "erosion",
+  "phonetic": "/ɪ'rəʊʒ(ə)n/",
+  "explains": "【地质】n. 侵蚀"
+ },
+ {
+  "word": "geologist",
+  "phonetic": "/dʒɪ'ɒlədʒɪst/",
+  "explains": "【地质】n. 地质学家"
+ },
+ {
+  "word": "earthquake",
+  "phonetic": "/ˈɜːθkweɪk/",
+  "explains": "【地质】n. 地震"
+ },
+ {
+  "word": "core",
+  "phonetic": "/kɔː/",
+  "explains": "【地质】n. 地核；核心"
+ },
+ {
+  "word": "geyser",
+  "phonetic": "/'giːzə; 'gaɪ-/",
+  "explains": "【地质】n. 间歇泉"
+ },
+ {
+  "word": "topography",
+  "phonetic": "/tə'pɒgrəfɪ/",
+  "explains": "【地质】n. 地形；地形学"
+ },
+ {
+  "word": "sediment",
+  "phonetic": "/'sedɪm(ə)nt/",
+  "explains": "【地质】n. 沉积物"
+ },
+ {
+  "word": "orbit",
+  "phonetic": "/ˈɔːbɪt/",
+  "explains": "【天文】n. 轨道"
+ },
+ {
+  "word": "rotation",
+  "phonetic": "/rə(ʊ)'teɪʃ(ə)n/",
+  "explains": "【天文】n. 自转"
+ },
+ {
+  "word": "revolution",
+  "phonetic": "/ˌrevəˈluːʃ(ə)n/",
+  "explains": "【天文】n. 公转；革命"
+ },
+ {
+  "word": "galaxy",
+  "phonetic": "/'gæləksɪ/",
+  "explains": "【天文】n. 星系"
+ },
+ {
+  "word": "nebula",
+  "phonetic": "/'nebjʊlə/",
+  "explains": "【天文】n. 星云"
+ },
+ {
+  "word": "constellation",
+  "phonetic": "/,kɒnstə'leɪʃ(ə)n/",
+  "explains": "【天文】n. 星座"
+ },
+ {
+  "word": "comet",
+  "phonetic": "/ˈkɒmɪt/",
+  "explains": "【天文】n. 彗星"
+ },
+ {
+  "word": "meteor",
+  "phonetic": "/'miːtɪə; -tɪɔː/",
+  "explains": "【天文】n. 流星"
+ },
+ {
+  "word": "asteroid",
+  "phonetic": "/'æstərɒɪd/",
+  "explains": "【天文】n. 小行星"
+ },
+ {
+  "word": "telescope",
+  "phonetic": "/'telɪskəʊp/",
+  "explains": "【天文】n. 望远镜"
+ },
+ {
+  "word": "observatory",
+  "phonetic": "/əb'zɜːvət(ə)rɪ/",
+  "explains": "【天文】n. 天文台"
+ },
+ {
+  "word": "gravity",
+  "phonetic": "/ˈgrævɪtɪ/",
+  "explains": "【天文】n. 重力"
+ },
+ {
+  "word": "lunar",
+  "phonetic": "/ˈluːnə/",
+  "explains": "【天文】adj. 月球的"
+ },
+ {
+  "word": "eclipse",
+  "phonetic": "/ɪ'klɪps/",
+  "explains": "【天文】n. （日/月）食"
+ },
+ {
+  "word": "astronaut",
+  "phonetic": "/ˈæstrənɔːt/",
+  "explains": "【天文】n. 宇航员"
+ },
+ {
+  "word": "cosmos",
+  "phonetic": "/'kɒzmɒs/",
+  "explains": "【天文】n. 宇宙"
+ },
+ {
+  "word": "interstellar",
+  "phonetic": "/,ɪntə'stelə/",
+  "explains": "【天文】adj. 星际的"
+ },
+ {
+  "word": "supernova",
+  "phonetic": "/,suːpə'nəʊvə; ,sjuː-/",
+  "explains": "【天文】n. 超新星"
+ },
+ {
+  "word": "quasar",
+  "phonetic": "/'kweɪzɑː; -sɑː/",
+  "explains": "【天文】n. 类星体"
+ },
+ {
+  "word": "spectrum",
+  "phonetic": "/'spektrəm/",
+  "explains": "【天文】n. 光谱"
+ },
+ {
+  "word": "wavelength",
+  "phonetic": "/'weɪvleŋθ; -leŋkθ/",
+  "explains": "【天文】n. 波长"
+ },
+ {
+  "word": "photon",
+  "phonetic": "/'fəʊtɒn/",
+  "explains": "【天文】n. 光子"
+ },
+ {
+  "word": "celestial",
+  "phonetic": "/sɪ'lestɪəl/",
+  "explains": "【天文】adj. 天体的"
+ },
+ {
+  "word": "equinox",
+  "phonetic": "/'iːkwɪnɒks; 'ekwɪ-/",
+  "explains": "【天文】n. 二分点；昼夜平分点"
+ },
+ {
+  "word": "solar",
+  "phonetic": "/ˈsəʊlə/",
+  "explains": "【天文】adj. 太阳的"
+ },
+ {
+  "word": "planet",
+  "phonetic": "/ˈplænɪt/",
+  "explains": "【天文】n. 行星"
+ },
+ {
+  "word": "black hole",
+  "phonetic": "/blæk həʊl/",
+  "explains": "【天文】n. 黑洞"
+ },
+ {
+  "word": "vacuum",
+  "phonetic": "/ˈvækjʊəm/",
+  "explains": "【天文】n. 真空"
+ },
+ {
+  "word": "cosmology",
+  "phonetic": "/kɒz'mɒlədʒi/",
+  "explains": "【天文】n. 宇宙学"
+ },
+ {
+  "word": "redshift",
+  "phonetic": "/'redʃɪft/",
+  "explains": "【天文】n. 红移"
+ },
+ {
+  "word": "artifact",
+  "phonetic": "/'ɑ:təˌfækt/",
+  "explains": "【考古】n. （美式）人工制品；文物"
+ },
+ {
+  "word": "excavation",
+  "phonetic": "/ekskə'veɪʃ(ə)n/",
+  "explains": "【考古】n. 发掘；挖掘"
+ },
+ {
+  "word": "ruins",
+  "phonetic": "/'ruːɪnz/",
+  "explains": "【考古】n. 遗迹；废墟"
+ },
+ {
+  "word": "tomb",
+  "phonetic": "/tuːm/",
+  "explains": "【考古】n. 坟墓"
+ },
+ {
+  "word": "pottery",
+  "phonetic": "/'pɒt(ə)rɪ/",
+  "explains": "【考古】n. 陶器"
+ },
+ {
+  "word": "bronze",
+  "phonetic": "/brɒnz/",
+  "explains": "【考古】n. 青铜"
+ },
+ {
+  "word": "inscription",
+  "phonetic": "/ɪn'skrɪpʃ(ə)n/",
+  "explains": "【考古】n. 铭文；碑文"
+ },
+ {
+  "word": "hieroglyph",
+  "phonetic": "/'haɪ(ə)rəglɪf/",
+  "explains": "【考古】n. 象形文字"
+ },
+ {
+  "word": "manuscript",
+  "phonetic": "/ˈmænjʊskrɪpt/",
+  "explains": "【考古】n. 手稿"
+ },
+ {
+  "word": "scroll",
+  "phonetic": "/skrəʊl/",
+  "explains": "【考古】n. 卷轴"
+ },
+ {
+  "word": "pyramid",
+  "phonetic": "/'pɪrəmɪd/",
+  "explains": "【考古】n. 金字塔"
+ },
+ {
+  "word": "mummy",
+  "phonetic": "/'mʌmɪ/",
+  "explains": "【考古】n. 木乃伊"
+ },
+ {
+  "word": "stratigraphy",
+  "phonetic": "/strə'tɪɡrəfi/",
+  "explains": "【考古】n. 地层学"
+ },
+ {
+  "word": "ceramic",
+  "phonetic": "/sɪ'ræmɪk/",
+  "explains": "【考古】n. 陶瓷（制品）"
+ },
+ {
+  "word": "jade",
+  "phonetic": "/dʒeɪd/",
+  "explains": "【考古】n. 玉"
+ },
+ {
+  "word": "ivory",
+  "phonetic": "/'aɪv(ə)rɪ/",
+  "explains": "【考古】n. 象牙"
+ },
+ {
+  "word": "settlement",
+  "phonetic": "/ˈset(ə)lmənt/",
+  "explains": "【考古】n. 定居点"
+ },
+ {
+  "word": "nomadic",
+  "phonetic": "/nəʊ'mædɪk/",
+  "explains": "【考古】adj. 游牧的"
+ },
+ {
+  "word": "agrarian",
+  "phonetic": "/ə'greərɪən/",
+  "explains": "【考古】adj. 农耕的"
+ },
+ {
+  "word": "chronology",
+  "phonetic": "/krə'nɒlədʒɪ/",
+  "explains": "【考古】n. 年代学"
+ },
+ {
+  "word": "anthropologist",
+  "phonetic": "/,ænθrə'pɒlədʒɪst/",
+  "explains": "【考古】n. 人类学家"
+ },
+ {
+  "word": "ethnography",
+  "phonetic": "/eθ'nɒgrəfɪ/",
+  "explains": "【考古】n. 民族志"
+ },
+ {
+  "word": "relic",
+  "phonetic": "/'relɪk/",
+  "explains": "【考古】n. 遗物；遗迹"
+ },
+ {
+  "word": "temple",
+  "phonetic": "/ˈtemp(ə)l/",
+  "explains": "【考古】n. 庙宇"
+ },
+ {
+  "word": "carbon",
+  "phonetic": "/ˈkɑːbən/",
+  "explains": "【考古】n. 碳"
+ },
+ {
+  "word": "conservation",
+  "phonetic": "/ˌkɒnsəˈveɪʃ(ə)n/",
+  "explains": "【考古】n. （文物）保护"
+ },
+ {
+  "word": "archaeologist",
+  "phonetic": "/,ɑːkɪ'ɒlədʒɪst/",
+  "explains": "【考古】n. 考古学家"
+ },
+ {
+  "word": "papyrus",
+  "phonetic": "/pə'paɪrəs/",
+  "explains": "【考古】n. 纸莎草纸"
+ },
+ {
+  "word": "cuneiform",
+  "phonetic": "/'kjuːnɪfɔːm; kjuː'neɪɪfɔːm/",
+  "explains": "【考古】n. 楔形文字"
+ },
+ {
+  "word": "excavate",
+  "phonetic": "/'ekskəveɪt/",
+  "explains": "【考古】v. 发掘；挖掘"
+ },
+ {
+  "word": "cognitive",
+  "phonetic": "/'kɒɡnɪtɪv/",
+  "explains": "【心理】adj. 认知的"
+ },
+ {
+  "word": "behavioral",
+  "phonetic": "/bi'heivjərəl/",
+  "explains": "【心理】adj. 行为的"
+ },
+ {
+  "word": "stimulus",
+  "phonetic": "/'stɪmjʊləs/",
+  "explains": "【心理】n. 刺激"
+ },
+ {
+  "word": "reflex",
+  "phonetic": "/'riːfleks/",
+  "explains": "【心理】n. 反射"
+ },
+ {
+  "word": "perception",
+  "phonetic": "/pə'sepʃ(ə)n/",
+  "explains": "【心理】n. 知觉；感知"
+ },
+ {
+  "word": "cognition",
+  "phonetic": "/kɒg'nɪʃ(ə)n/",
+  "explains": "【心理】n. 认知"
+ },
+ {
+  "word": "motivation",
+  "phonetic": "/məʊtɪ'veɪʃ(ə)n/",
+  "explains": "【心理】n. 动机"
+ },
+ {
+  "word": "emotion",
+  "phonetic": "/ɪˈmoʊʃn/",
+  "explains": "【心理】n. 情绪"
+ },
+ {
+  "word": "temperament",
+  "phonetic": "/'temp(ə)rəm(ə)nt/",
+  "explains": "【心理】n. 气质；性情"
+ },
+ {
+  "word": "personality",
+  "phonetic": "/ˌpɜːsəˈnælɪtɪ/",
+  "explains": "【心理】n. 人格；个性"
+ },
+ {
+  "word": "intelligence",
+  "phonetic": "/ɪnˈtelɪdʒ(ə)ns/",
+  "explains": "【心理】n. 智力"
+ },
+ {
+  "word": "placebo",
+  "phonetic": "/plə'siːbəʊ/",
+  "explains": "【心理】n. 安慰剂"
+ },
+ {
+  "word": "trauma",
+  "phonetic": "/'trɔːmə; 'traʊmə/",
+  "explains": "【心理】n. 创伤"
+ },
+ {
+  "word": "anxiety",
+  "phonetic": "/æŋˈzaɪəti/",
+  "explains": "【心理】n. 焦虑"
+ },
+ {
+  "word": "depression",
+  "phonetic": "/dɪˈpreʃ(ə)n/",
+  "explains": "【心理】n. 抑郁；萧条"
+ },
+ {
+  "word": "conditioning",
+  "phonetic": "/kən'dɪʃnɪŋ/",
+  "explains": "【心理】n. 条件反射训练"
+ },
+ {
+  "word": "reinforcement",
+  "phonetic": "/riːɪn'fɔːsm(ə)nt/",
+  "explains": "【心理】n. 强化"
+ },
+ {
+  "word": "subconscious",
+  "phonetic": "/sʌb'kɒnʃəs/",
+  "explains": "【心理】adj. 潜意识的"
+ },
+ {
+  "word": "psychoanalysis",
+  "phonetic": "/,saɪkəʊə'nælɪsɪs/",
+  "explains": "【心理】n. 精神分析"
+ },
+ {
+  "word": "schizophrenia",
+  "phonetic": "/,skɪtsə(ʊ)'friːnɪə/",
+  "explains": "【心理】n. 精神分裂症"
+ },
+ {
+  "word": "autism",
+  "phonetic": "/'ɔːtɪz(ə)m/",
+  "explains": "【心理】n. 自闭症"
+ },
+ {
+  "word": "empathy",
+  "phonetic": "/'empəθɪ/",
+  "explains": "【心理】n. 共情"
+ },
+ {
+  "word": "socialization",
+  "phonetic": "/,səʊʃəlaɪ'zeɪʃən/",
+  "explains": "【心理】n. 社会化"
+ },
+ {
+  "word": "adolescence",
+  "phonetic": "/ædə'les(ə)ns/",
+  "explains": "【心理】n. 青春期"
+ },
+ {
+  "word": "developmental",
+  "phonetic": "/dɪ,veləp'ment(ə)l/",
+  "explains": "【心理】adj. 发展的"
+ },
+ {
+  "word": "hypothesis",
+  "phonetic": "/haɪ'pɒθɪsɪs/",
+  "explains": "【心理】n. 假设"
+ },
+ {
+  "word": "variable",
+  "phonetic": "/ˈveərɪəb(ə)l/",
+  "explains": "【心理】n. 变量"
+ },
+ {
+  "word": "neurosis",
+  "phonetic": "/,njʊə'rəʊsɪs/",
+  "explains": "【心理】n. 神经症"
+ },
+ {
+  "word": "questionnaire",
+  "phonetic": "/ˌkwestʃəˈneə(r)/",
+  "explains": "【心理】n. 问卷"
+ },
+ {
+  "word": "empirical",
+  "phonetic": "/em'pɪrɪk(ə)l; ɪm-/",
+  "explains": "【心理】adj. 经验主义的"
+ },
+ {
+  "word": "supply",
+  "phonetic": "/səˈplaɪ/",
+  "explains": "【经济】n. 供给"
+ },
+ {
+  "word": "demand",
+  "phonetic": "/dɪˈmɑːnd/",
+  "explains": "【经济】n. 需求"
+ },
+ {
+  "word": "equilibrium",
+  "phonetic": "/,iːkwɪ'lɪbrɪəm; ,ekwɪ-/",
+  "explains": "【经济】n. 均衡"
+ },
+ {
+  "word": "marginal",
+  "phonetic": "/'mɑːdʒɪn(ə)l/",
+  "explains": "【经济】adj. 边际的"
+ },
+ {
+  "word": "utility",
+  "phonetic": "/juːˈtɪlɪtɪ/",
+  "explains": "【经济】n. 效用；实用"
+ },
+ {
+  "word": "elasticity",
+  "phonetic": "/elæ'stɪsɪtɪ; iː-; ɪ-/",
+  "explains": "【经济】n. 弹性"
+ },
+ {
+  "word": "scarcity",
+  "phonetic": "/'skeəsəti/",
+  "explains": "【经济】n. 稀缺"
+ },
+ {
+  "word": "fiscal",
+  "phonetic": "/'fiskəl/",
+  "explains": "【经济】adj. 财政的"
+ },
+ {
+  "word": "monetary",
+  "phonetic": "/'mʌnɪt(ə)rɪ/",
+  "explains": "【经济】adj. 货币的"
+ },
+ {
+  "word": "equity",
+  "phonetic": "/'ekwiti/",
+  "explains": "【经济】n. 股权；公平"
+ },
+ {
+  "word": "bond",
+  "phonetic": "/bɒnd/",
+  "explains": "【经济】n. 债券"
+ },
+ {
+  "word": "interest",
+  "phonetic": "/ˈɪntrəst/",
+  "explains": "【经济】n. 利息；利益"
+ },
+ {
+  "word": "entrepreneur",
+  "phonetic": "/ˌɒntrəprəˈnɜː(r)/",
+  "explains": "【经济】n. 企业家"
+ },
+ {
+  "word": "oligopoly",
+  "phonetic": "/ˌɒlɪ'ɡɒpəli/",
+  "explains": "【经济】n. 寡头垄断"
+ },
+ {
+  "word": "competition",
+  "phonetic": "/ˌkɒmpɪˈtɪʃ(ə)n/",
+  "explains": "【经济】n. 竞争"
+ },
+ {
+  "word": "externality",
+  "phonetic": "/ˌekstɜː'næləti/",
+  "explains": "【经济】n. 外部效应"
+ },
+ {
+  "word": "consumption",
+  "phonetic": "/kən'sʌm(p)ʃ(ə)n/",
+  "explains": "【经济】n. 消费"
+ },
+ {
+  "word": "investment",
+  "phonetic": "/ɪn'ves(t)m(ə)nt/",
+  "explains": "【经济】n. 投资"
+ },
+ {
+  "word": "savings",
+  "phonetic": "/'seiviŋz/",
+  "explains": "【经济】n. 储蓄"
+ },
+ {
+  "word": "aggregate",
+  "phonetic": "/'ægrɪgət; (for v.) ˈægrɪgeɪt/",
+  "explains": "【经济】adj. 总计的；合计的"
+ },
+ {
+  "word": "depression",
+  "phonetic": "/dɪˈpreʃ(ə)n/",
+  "explains": "【经济】n. 经济萧条"
+ },
+ {
+  "word": "bubble",
+  "phonetic": "/ˈbʌbl/",
+  "explains": "【经济】n. （经济）泡沫"
+ },
+ {
+  "word": "speculation",
+  "phonetic": "/,spekjʊ'leɪʃn/",
+  "explains": "【经济】n. 投机"
+ },
+ {
+  "word": "liquidity",
+  "phonetic": "/li'kwidəti/",
+  "explains": "【经济】n. 流动性"
+ },
+ {
+  "word": "appreciation",
+  "phonetic": "/əˌpriːʃiˈeɪʃn/",
+  "explains": "【经济】n. 升值；欣赏"
+ },
+ {
+  "word": "depreciation",
+  "phonetic": "/diˌpriːʃi'eiʃən/",
+  "explains": "【经济】n. 贬值；折旧"
+ },
+ {
+  "word": "macroeconomics",
+  "phonetic": "/ˌmækrəʊiːkə'nɒmɪks/",
+  "explains": "【经济】n. 宏观经济学"
+ },
+ {
+  "word": "microeconomics",
+  "phonetic": "/ˌmaɪkrəʊiːkə'nɒmɪks/",
+  "explains": "【经济】n. 微观经济学"
+ },
+ {
+  "word": "incentive",
+  "phonetic": "/ɪn'sentɪv/",
+  "explains": "【经济】n. 激励；诱因"
+ },
+ {
+  "word": "deregulation",
+  "phonetic": "/diːˌregju'leiʃən/",
+  "explains": "【经济】n. 放松管制"
+ },
+ {
+  "word": "element",
+  "phonetic": "/ˈelɪmənt/",
+  "explains": "【化学】n. 元素"
+ },
+ {
+  "word": "compound",
+  "phonetic": "/ˈkɒmpaʊnd/",
+  "explains": "【化学】n. 化合物"
+ },
+ {
+  "word": "molecule",
+  "phonetic": "/'mɒlɪkjuːl/",
+  "explains": "【化学】n. 分子"
+ },
+ {
+  "word": "atom",
+  "phonetic": "/ˈætəm/",
+  "explains": "【化学】n. 原子"
+ },
+ {
+  "word": "electron",
+  "phonetic": "/ɪ'lektrɒn/",
+  "explains": "【化学】n. 电子"
+ },
+ {
+  "word": "proton",
+  "phonetic": "/'prəʊtɒn/",
+  "explains": "【化学】n. 质子"
+ },
+ {
+  "word": "neutron",
+  "phonetic": "/'njuːtrɒn/",
+  "explains": "【化学】n. 中子"
+ },
+ {
+  "word": "ion",
+  "phonetic": "/'aɪən/",
+  "explains": "【化学】n. 离子"
+ },
+ {
+  "word": "catalyst",
+  "phonetic": "/'kæt(ə)lɪst/",
+  "explains": "【化学】n. 催化剂"
+ },
+ {
+  "word": "solvent",
+  "phonetic": "/'sɔlvənt/",
+  "explains": "【化学】n. 溶剂"
+ },
+ {
+  "word": "solute",
+  "phonetic": "/'sɒljuːt; sɒ'ljuːt/",
+  "explains": "【化学】n. 溶质"
+ },
+ {
+  "word": "alkali",
+  "phonetic": "/'ælkəlaɪ/",
+  "explains": "【化学】n. 碱"
+ },
+ {
+  "word": "oxide",
+  "phonetic": "/'ɒksaɪd/",
+  "explains": "【化学】n. 氧化物"
+ },
+ {
+  "word": "reduction",
+  "phonetic": "/rɪˈdʌkʃ(ə)n/",
+  "explains": "【化学】n. 还原（作用）"
+ },
+ {
+  "word": "oxidation",
+  "phonetic": "/ˌɒksɪ'deɪʃn/",
+  "explains": "【化学】n. 氧化（作用）"
+ },
+ {
+  "word": "isotope",
+  "phonetic": "/'aɪsətəʊp/",
+  "explains": "【化学】n. 同位素"
+ },
+ {
+  "word": "polymer",
+  "phonetic": "/'pɒlɪmə/",
+  "explains": "【化学】n. 聚合物"
+ },
+ {
+  "word": "inorganic",
+  "phonetic": "/ɪnɔː'gænɪk/",
+  "explains": "【化学】adj. 无机的"
+ },
+ {
+  "word": "titration",
+  "phonetic": "/taɪ'treɪʃn/",
+  "explains": "【化学】n. 滴定"
+ },
+ {
+  "word": "distillation",
+  "phonetic": "/,dɪstɪ'leɪʃn/",
+  "explains": "【化学】n. 蒸馏"
+ },
+ {
+  "word": "chromatography",
+  "phonetic": "/ˌkrəʊmə'tɒɡrəfi/",
+  "explains": "【化学】n. 色谱法"
+ },
+ {
+  "word": "periodic",
+  "phonetic": "/,pɪərɪ'ɒdɪk/",
+  "explains": "【化学】adj. 周期的"
+ },
+ {
+  "word": "valence",
+  "phonetic": "/'veɪləns/",
+  "explains": "【化学】n. （化合）价"
+ },
+ {
+  "word": "aqueous",
+  "phonetic": "/'eɪkwɪəs/",
+  "explains": "【化学】adj. 水溶液的"
+ },
+ {
+  "word": "reaction",
+  "phonetic": "/rɪˈækʃ(ə)n/",
+  "explains": "【化学】n. 反应"
+ },
+ {
+  "word": "acid",
+  "phonetic": "/ˈæsɪd/",
+  "explains": "【化学】n. 酸"
+ },
+ {
+  "word": "base",
+  "phonetic": "/beɪs/",
+  "explains": "【化学】n. 碱（基）"
+ },
+ {
+  "word": "organic",
+  "phonetic": "/ɔːˈgænɪk/",
+  "explains": "【化学】adj. 有机的"
+ },
+ {
+  "word": "spectroscopy",
+  "phonetic": "/spek'trɒskəpi/",
+  "explains": "【化学】n. 光谱分析法"
+ },
+ {
+  "word": "electrolyte",
+  "phonetic": "/ɪ'lektrəlaɪt/",
+  "explains": "【化学】n. 电解质"
+ },
+ {
+  "word": "velocity",
+  "phonetic": "/vəˈlɒsəti/",
+  "explains": "【物理】n. 速度"
+ },
+ {
+  "word": "acceleration",
+  "phonetic": "/əkselə'reɪʃ(ə)n/",
+  "explains": "【物理】n. 加速度"
+ },
+ {
+  "word": "momentum",
+  "phonetic": "/mə'mentəm/",
+  "explains": "【物理】n. 动量"
+ },
+ {
+  "word": "friction",
+  "phonetic": "/ˈfrɪkʃ(ə)n/",
+  "explains": "【物理】n. 摩擦力"
+ },
+ {
+  "word": "kinetic",
+  "phonetic": "/kɪ'netɪk; kaɪ-/",
+  "explains": "【物理】adj. 动能的；运动的"
+ },
+ {
+  "word": "potential",
+  "phonetic": "/pəˈtenʃ(ə)l/",
+  "explains": "【物理】adj. 势能的；潜在的"
+ },
+ {
+  "word": "thermodynamics",
+  "phonetic": "/,θɜːmə(ʊ)daɪ'næmɪks/",
+  "explains": "【物理】n. 热力学"
+ },
+ {
+  "word": "entropy",
+  "phonetic": "/'entrəpi/",
+  "explains": "【物理】n. 熵"
+ },
+ {
+  "word": "optics",
+  "phonetic": "/'ɒptɪks/",
+  "explains": "【物理】n. 光学"
+ },
+ {
+  "word": "prism",
+  "phonetic": "/'prɪz(ə)m/",
+  "explains": "【物理】n. 棱镜"
+ },
+ {
+  "word": "refraction",
+  "phonetic": "/rɪ'frækʃ(ə)n/",
+  "explains": "【物理】n. 折射"
+ },
+ {
+  "word": "diffraction",
+  "phonetic": "/dɪ'frækʃn/",
+  "explains": "【物理】n. 衍射"
+ },
+ {
+  "word": "interference",
+  "phonetic": "/ɪntə'fɪər(ə)ns/",
+  "explains": "【物理】n. 干涉"
+ },
+ {
+  "word": "quantum",
+  "phonetic": "/'kwɔntəm/",
+  "explains": "【物理】n. 量子"
+ },
+ {
+  "word": "particle",
+  "phonetic": "/'pɑːtɪk(ə)l/",
+  "explains": "【物理】n. 粒子"
+ },
+ {
+  "word": "relativity",
+  "phonetic": "/relə'tɪvɪtɪ/",
+  "explains": "【物理】n. 相对论"
+ },
+ {
+  "word": "electromagnetism",
+  "phonetic": "/ɪˌlektrəʊ'mæɡnətɪzəm/",
+  "explains": "【物理】n. 电磁学"
+ },
+ {
+  "word": "circuit",
+  "phonetic": "/ˈsɜːkɪt/",
+  "explains": "【物理】n. 电路"
+ },
+ {
+  "word": "resistor",
+  "phonetic": "/rɪ'zɪstə/",
+  "explains": "【物理】n. 电阻器"
+ },
+ {
+  "word": "conductor",
+  "phonetic": "/kənˈdʌktə/",
+  "explains": "【物理】n. 导体；指挥"
+ },
+ {
+  "word": "insulator",
+  "phonetic": "/'ɪnsjʊleɪtə/",
+  "explains": "【物理】n. 绝缘体"
+ },
+ {
+  "word": "frequency",
+  "phonetic": "/ˈfriːkwənsɪ/",
+  "explains": "【物理】n. 频率"
+ },
+ {
+  "word": "amplitude",
+  "phonetic": "/'æmplɪtjuːd/",
+  "explains": "【物理】n. 振幅"
+ },
+ {
+  "word": "lens",
+  "phonetic": "/lenz/",
+  "explains": "【物理】n. 透镜"
+ },
+ {
+  "word": "magnet",
+  "phonetic": "/ˈmægnɪt/",
+  "explains": "【物理】n. 磁铁"
+ },
+ {
+  "word": "vacuum",
+  "phonetic": "/ˈvækjʊəm/",
+  "explains": "【物理】n. 真空"
+ },
+ {
+  "word": "inertia",
+  "phonetic": "/ɪ'nɜːʃə/",
+  "explains": "【物理】n. 惯性"
+ },
+ {
+  "word": "pendulum",
+  "phonetic": "/'pendjʊləm/",
+  "explains": "【物理】n. 钟摆"
+ },
+ {
+  "word": "superconductor",
+  "phonetic": "/ˌsuːpəkən'dʌktə/",
+  "explains": "【物理】n. 超导体"
+ },
+ {
+  "word": "torque",
+  "phonetic": "/tɔːk/",
+  "explains": "【物理】n. 扭矩"
+ },
+ {
+  "word": "ancient",
+  "phonetic": "/ˈeɪnʃənt/",
+  "explains": "【历史】adj. 古代的"
+ },
+ {
+  "word": "medieval",
+  "phonetic": "/ˌmediˈi:vl/",
+  "explains": "【历史】adj. 中世纪的"
+ },
+ {
+  "word": "renaissance",
+  "phonetic": "/rɪ'neɪsəns/",
+  "explains": "【历史】n. 文艺复兴"
+ },
+ {
+  "word": "reformation",
+  "phonetic": "/ˌrefə'meɪʃn/",
+  "explains": "【历史】n. 宗教改革"
+ },
+ {
+  "word": "revolution",
+  "phonetic": "/ˌrevəˈluːʃ(ə)n/",
+  "explains": "【历史】n. 革命"
+ },
+ {
+  "word": "dynasty",
+  "phonetic": "/'dɪnəstɪ/",
+  "explains": "【历史】n. 王朝；朝代"
+ },
+ {
+  "word": "empire",
+  "phonetic": "/ˈempaɪər/",
+  "explains": "【历史】n. 帝国"
+ },
+ {
+  "word": "colony",
+  "phonetic": "/ˈkɒlənɪ/",
+  "explains": "【历史】n. 殖民地"
+ },
+ {
+  "word": "independence",
+  "phonetic": "/ɪndɪ'pend(ə)ns/",
+  "explains": "【历史】n. 独立"
+ },
+ {
+  "word": "constitution",
+  "phonetic": "/ˌkɒnstɪˈtjuːʃ(ə)n/",
+  "explains": "【历史】n. 宪法"
+ },
+ {
+  "word": "treaty",
+  "phonetic": "/ˈtriːtɪ/",
+  "explains": "【历史】n. 条约"
+ },
+ {
+  "word": "alliance",
+  "phonetic": "/ə'laɪəns/",
+  "explains": "【历史】n. 联盟；同盟"
+ },
+ {
+  "word": "regime",
+  "phonetic": "/reɪ'ʒiːm/",
+  "explains": "【历史】n. 政权；政体"
+ },
+ {
+  "word": "ideology",
+  "phonetic": "/,aɪdɪ'ɒlədʒɪ; ɪd-/",
+  "explains": "【历史】n. 意识形态"
+ },
+ {
+  "word": "imperialism",
+  "phonetic": "/ɪm'pɪərɪəlɪz(ə)m/",
+  "explains": "【历史】n. 帝国主义"
+ },
+ {
+  "word": "nationalism",
+  "phonetic": "/'næʃ(ə)n(ə)lɪz(ə)m/",
+  "explains": "【历史】n. 民族主义"
+ },
+ {
+  "word": "industrialization",
+  "phonetic": "/ɪnˌdʌstriəlaɪ'zeɪʃn/",
+  "explains": "【历史】n. 工业化"
+ },
+ {
+  "word": "enlightenment",
+  "phonetic": "/ɪn'laɪt(ə)nm(ə)nt; en-/",
+  "explains": "【历史】n. 启蒙运动"
+ },
+ {
+  "word": "feudalism",
+  "phonetic": "/'fjuːdəlɪz(ə)m/",
+  "explains": "【历史】n. 封建主义"
+ },
+ {
+  "word": "monarch",
+  "phonetic": "/'mɒnək/",
+  "explains": "【历史】n. 君主"
+ },
+ {
+  "word": "aristocracy",
+  "phonetic": "/,ærɪ'stɒkrəsɪ/",
+  "explains": "【历史】n. 贵族（统治）"
+ },
+ {
+  "word": "bourgeoisie",
+  "phonetic": "/,bʊəʒwɑː'ziː/",
+  "explains": "【历史】n. 资产阶级"
+ },
+ {
+  "word": "abolition",
+  "phonetic": "/æbə'lɪʃ(ə)n/",
+  "explains": "【历史】n. 废除；废奴运动"
+ },
+ {
+  "word": "suffrage",
+  "phonetic": "/'sʌfrɪdʒ/",
+  "explains": "【历史】n. 选举权"
+ },
+ {
+  "word": "civil",
+  "phonetic": "/ˈsɪv(ə)l/",
+  "explains": "【历史】adj. 公民的；民事的"
+ },
+ {
+  "word": "capitalism",
+  "phonetic": "/ˈkæpɪtəlɪz(ə)m/",
+  "explains": "【历史】n. 资本主义"
+ },
+ {
+  "word": "socialism",
+  "phonetic": "/'səʊʃəlɪz(ə)m/",
+  "explains": "【历史】n. 社会主义"
+ },
+ {
+  "word": "peasantry",
+  "phonetic": "/'pezntri/",
+  "explains": "【历史】n. 农民（阶级）"
+ },
+ {
+  "word": "chronicle",
+  "phonetic": "/'krɒnɪk(ə)l/",
+  "explains": "【历史】n. 编年史"
+ },
+ {
+  "word": "uprising",
+  "phonetic": "/'ʌpraɪzɪŋ/",
+  "explains": "【历史】n. 起义"
+ },
+ {
+  "word": "aesthetic",
+  "phonetic": "/iːs'θetɪk; es-/",
+  "explains": "【艺术】adj. 审美的；美学的"
+ },
+ {
+  "word": "masterpiece",
+  "phonetic": "/'mɑːstəpiːs/",
+  "explains": "【艺术】n. 杰作"
+ },
+ {
+  "word": "portrait",
+  "phonetic": "/ˈpɔːtrɪt/",
+  "explains": "【艺术】n. 肖像"
+ },
+ {
+  "word": "landscape",
+  "phonetic": "/ˈlæn(d)skeɪp/",
+  "explains": "【艺术】n. 风景；风景画"
+ },
+ {
+  "word": "fresco",
+  "phonetic": "/'freskəʊ/",
+  "explains": "【艺术】n. 湿壁画"
+ },
+ {
+  "word": "mosaic",
+  "phonetic": "/mə(ʊ)'zeɪɪk/",
+  "explains": "【艺术】n. 马赛克；镶嵌画"
+ },
+ {
+  "word": "architecture",
+  "phonetic": "/ˈɑːkɪtektʃər/",
+  "explains": "【艺术】n. 建筑（学）"
+ },
+ {
+  "word": "gothic",
+  "phonetic": "/'ɡɒθɪk/",
+  "explains": "【艺术】adj. 哥特式的"
+ },
+ {
+  "word": "baroque",
+  "phonetic": "/bə'rɒk/",
+  "explains": "【艺术】adj. 巴洛克式的"
+ },
+ {
+  "word": "romanticism",
+  "phonetic": "/rə(ʊ)'mæntɪsɪz(ə)m/",
+  "explains": "【艺术】n. 浪漫主义"
+ },
+ {
+  "word": "impressionism",
+  "phonetic": "/ɪm'preʃənɪzəm/",
+  "explains": "【艺术】n. 印象派"
+ },
+ {
+  "word": "cubism",
+  "phonetic": "/'kjuːbɪz(ə)m/",
+  "explains": "【艺术】n. 立体主义"
+ },
+ {
+  "word": "surrealism",
+  "phonetic": "/sə'rɪəlɪzəm/",
+  "explains": "【艺术】n. 超现实主义"
+ },
+ {
+  "word": "canvas",
+  "phonetic": "/ˈkænvəs/",
+  "explains": "【艺术】n. 画布"
+ },
+ {
+  "word": "pigment",
+  "phonetic": "/'pɪgm(ə)nt/",
+  "explains": "【艺术】n. 颜料"
+ },
+ {
+  "word": "watercolor",
+  "phonetic": "/'wɔ:tə,kʌlə, 'wɔ-/",
+  "explains": "【艺术】n. 水彩画"
+ },
+ {
+  "word": "palette",
+  "phonetic": "/'pælɪt/",
+  "explains": "【艺术】n. 调色板"
+ },
+ {
+  "word": "easel",
+  "phonetic": "/'iːz(ə)l/",
+  "explains": "【艺术】n. 画架"
+ },
+ {
+  "word": "exhibition",
+  "phonetic": "/ˌeksɪˈbɪʃn/",
+  "explains": "【艺术】n. 展览"
+ },
+ {
+  "word": "curator",
+  "phonetic": "/kjʊ(ə)'reɪtə/",
+  "explains": "【艺术】n. （博物馆/展览）策展人"
+ },
+ {
+  "word": "composition",
+  "phonetic": "/ˌkɒmpəˈzɪʃ(ə)n/",
+  "explains": "【艺术】n. 构图；作品"
+ },
+ {
+  "word": "perspective",
+  "phonetic": "/pəˈspektɪv/",
+  "explains": "【艺术】n. 透视法；视角"
+ },
+ {
+  "word": "proportion",
+  "phonetic": "/prə'pɔːʃ(ə)n/",
+  "explains": "【艺术】n. 比例"
+ },
+ {
+  "word": "symmetry",
+  "phonetic": "/'sɪmɪtrɪ/",
+  "explains": "【艺术】n. 对称"
+ },
+ {
+  "word": "gallery",
+  "phonetic": "/ˈɡælərɪ/",
+  "explains": "【艺术】n. 画廊"
+ },
+ {
+  "word": "sculpture",
+  "phonetic": "/ˈskʌlptʃə/",
+  "explains": "【艺术】n. 雕塑"
+ },
+ {
+  "word": "oil",
+  "phonetic": "/ɔɪl/",
+  "explains": "【艺术】n. 油画；油"
+ },
+ {
+  "word": "collection",
+  "phonetic": "/kəˈlekʃ(ə)n/",
+  "explains": "【艺术】n. 收藏；收藏品"
+ },
+ {
+  "word": "abstract",
+  "phonetic": "/ˈæbstrækt/",
+  "explains": "【艺术】adj. 抽象的"
+ },
+ {
+  "word": "contemporary",
+  "phonetic": "/kənˈtemp(ə)rərɪ/",
+  "explains": "【艺术】adj. 当代的"
+ }
+]

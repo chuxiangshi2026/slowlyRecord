@@ -130,5 +130,17 @@
     "name": "Level 8",
     "wordCount": 12197,
     "sizeKB": 1358
+  },
+  {
+    "id": "ielts-topics",
+    "name": "雅思话题词汇",
+    "wordCount": 300,
+    "sizeKB": 32
+  },
+  {
+    "id": "toefl-academic",
+    "name": "托福学术词汇",
+    "wordCount": 300,
+    "sizeKB": 32
   }
 ]
