@@ -7,10 +7,10 @@
 
 export const ONBOARDED_STORAGE_KEY = 'slowlyrecord-onboarded'
 
-/** 引导页一键导入的起步词数（完整词库在分包中，可后续在词库管理页续导） */
-export const STARTER_WORD_COUNT = 100
+/** 引导页一键导入的起步词数（词频靠前的示例词；完整词库引导创建库后从远程词库下载续导） */
+export const STARTER_WORD_COUNT = 20
 
-/** 行动屏推荐的内置词库（主包起步数据只含前 STARTER_WORD_COUNT 词） */
+/** 行动屏推荐的内置词库（主包起步数据只含前 STARTER_WORD_COUNT 个示例词） */
 export interface RecommendedBank {
   /** 内置词库 sourceId（WordBankType），与词库管理页口径一致 */
   sourceId: string
