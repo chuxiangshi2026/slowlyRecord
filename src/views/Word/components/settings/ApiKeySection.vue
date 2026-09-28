@@ -52,6 +52,24 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+
+    <!-- 申请密钥入口：与各引擎密钥配置放在一起，方便配置时直接跳转申请 -->
+    <div class="apply-key-block">
+      <h5 style="text-align:center;">申请密钥</h5>
+      <p class="limit-info">
+        由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日{{ USAGE_LIMITS.OCR_DAILY_LIMIT }}次(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
+
+      <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
+           :key="platform.key"
+           class="titles">
+        <div class="setting-item">
+          <div class="content">{{ platform.content }}</div>
+          <a href="#"
+             @click.prevent="openUrl(platform.url)"
+             class="external-link">跳转{{ platform.name }}</a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -59,8 +77,18 @@
 import {computed, ref} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
-import {AppInfo} from "@/config.ts";
+import {AppInfo, TRANSLATION_PLATFORM_LINKS} from "@/config.ts";
+import {USAGE_LIMITS} from "@/constants";
+import {isUtools} from "@/adapters/platform";
 import {log} from "@/utils/logger.ts";
+
+const openUrl = (url: string) => {
+  if (isUtools()) {
+    (window as any).utools?.shellOpenExternal?.(url);
+  } else {
+    window.open(url, '_blank');
+  }
+}
 
 const wordsStore = useWordsStore();
 
@@ -298,5 +326,46 @@ const activeOcrKeys = ref<string[]>([])
 
 :deep(.el-input__inner) {
   color: var(--utools-text-primary);
+}
+
+/* 申请密钥入口 */
+.apply-key-block {
+  margin-top: 16px;
+
+  h5 {
+    margin: 8px 0;
+    color: var(--utools-text-secondary);
+  }
+
+  .limit-info {
+    margin: 0 20px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--utools-text-tertiary);
+  }
+
+  .titles {
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    & + .titles {
+      margin-top: 10px;
+    }
+  }
+
+  .setting-item .content {
+    padding: 0;
+  }
+
+  .external-link {
+    flex-shrink: 0;
+    color: var(--utools-primary);
+    font-size: 12px;
+    text-decoration: none;
+  }
 }
 </style>

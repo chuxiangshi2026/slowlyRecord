@@ -45,9 +45,8 @@ import FocusSection from './settings/FocusSection.vue'
 import ShortcutSection from './settings/ShortcutSection.vue'
 import ApiKeySection from './settings/ApiKeySection.vue'
 import ConfigSection from './settings/ConfigSection.vue'
-import OtherSection from './settings/OtherSection.vue'
 
-type GroupKey = 'general' | 'focus' | 'shortcut' | 'apikey' | 'config' | 'other'
+type GroupKey = 'general' | 'focus' | 'shortcut' | 'apikey' | 'config'
 
 const props = defineProps({
   modelValue: Boolean,
@@ -63,11 +62,10 @@ const emit = defineEmits(['update:modelValue', 'save'])
 // 设置分组：高频组（常规/专注模式）靠前，低频组（密钥/配置管理/快捷键/其他）沉底
 const settingGroups: { key: GroupKey; name: string; desc: string; component: any }[] = [
   {key: 'general', name: '常规设置', desc: '翻译/OCR 引擎、发音、护眼模式、界面字号', component: markRaw(GeneralSection)},
-  {key: 'focus', name: '专注模式', desc: '专注窗口样式、背景与快捷键开关', component: markRaw(FocusSection)},
-  {key: 'shortcut', name: '快捷键', desc: '全局快捷键设置与快捷键一览', component: markRaw(ShortcutSection)},
-  {key: 'apikey', name: 'API 密钥', desc: '翻译/OCR 引擎自定义密钥（默认免配置）', component: markRaw(ApiKeySection)},
+  {key: 'focus', name: '专注模式', desc: '专注窗口样式与背景设置', component: markRaw(FocusSection)},
+  {key: 'shortcut', name: '快捷键', desc: '全局快捷键设置、开关与快捷键一览', component: markRaw(ShortcutSection)},
+  {key: 'apikey', name: 'API 密钥', desc: '翻译/OCR 引擎自定义密钥与密钥申请入口（默认免配置）', component: markRaw(ApiKeySection)},
   {key: 'config', name: '配置管理', desc: '导出/导入个人配置（含 API 密钥）', component: markRaw(ConfigSection)},
-  {key: 'other', name: '其他', desc: '申请密钥入口与使用说明', component: markRaw(OtherSection)},
 ]
 
 // 当前进入的二级分组（空串表示停留在一级列表）

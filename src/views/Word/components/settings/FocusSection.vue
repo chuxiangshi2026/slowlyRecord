@@ -79,20 +79,6 @@
         </div>
       </div>
     </div>
-
-    <div class="titles">
-      <div class="setting-item">
-        <div class="content">启用快捷键</div>
-        <el-switch class="shorcut-desc"
-                   v-model="wordsStore.shortcutEnabled"
-                   inline-prompt
-                   size="large"
-                   active-text="开"
-                   inactive-text="关"
-                   @change="openTheShortcut"
-        />
-      </div>
-    </div>
   </div>
 </template>
 
@@ -110,12 +96,6 @@ const clampNumber = (value: number, min: number, max: number, fallback: number) 
 }
 
 const wordsStore = useWordsStore();
-
-// 实现快捷键开关功能
-const openTheShortcut = () => {
-  // 可以在这里添加持久化保存快捷键状态的逻辑
-  wordsStore.setShortcutEnabled(wordsStore.shortcutEnabled)
-}
 
 const focusBgInput = ref<HTMLInputElement | null>(null)
 

@@ -1,7 +1,7 @@
 <template>
 
   <!--ref="root"-->
-  <div class="list-item" :class="{ 'shortcut-enabled': wordsStore.shortcutEnabled, 'first-item': isFocus }"
+  <div class="list-item" :class="[{ 'shortcut-enabled': wordsStore.shortcutEnabled, 'first-item': isFocus }, densityClass]"
        ref="itemRef" :data-word="cleanWordText" tabindex="0" @keydown="handleKeyDown" @click="onClick">
 
     <p class="word">
@@ -116,6 +116,15 @@ import {computed, nextTick, onMounted, ref, toRef} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 const wordsStore = useWordsStore();
+import {useUiStore} from "@/stores/ui.ts";
+const uiStore = useUiStore();
+
+// 字号档位驱动的列表密度：小字号=紧凑（隐藏音标、释义截一行），大字号=宽松（音标常驻、释义最多三行）
+const densityClass = computed(() => {
+  if (uiStore.uiZoom <= 0.95) return 'density-compact';
+  if (uiStore.uiZoom >= 1.1) return 'density-comfort';
+  return '';
+});
 // 是否处于焦点状态
 const isFocus = ref(false);
 
@@ -778,6 +787,31 @@ const deleteWord = () => {
 /* 第一个元素的样式 */
 .list-item.first-item {
   border-color: var(--utools-primary);
+}
+
+/* ===== 字号档位密度适配 ===== */
+/* 小字号档：紧凑模式——隐藏音标、释义截单行，同屏显示更多单词 */
+.density-compact {
+  .phonetic {
+    display: none;
+  }
+
+  .translation .translate-editable {
+    max-height: 1.4em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+/* 大字号档：宽松模式——音标常驻、释义最多三行，减少同屏条数 */
+.density-comfort {
+  .translation .translate-editable {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 </style>

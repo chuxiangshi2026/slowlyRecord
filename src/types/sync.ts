@@ -51,6 +51,12 @@ export interface SyncUserSettings {
     backgroundImage?: string
     backgroundImageOpacity?: number
   }
+  /** 以下为显示类设置，后补字段（旧端同步数据可能缺省） */
+  autoSpeak?: boolean
+  eyeCare?: boolean
+  mainWindowOpacity?: number
+  /** 界面字号档位（localStorage 持久化，随配置一并同步） */
+  uiZoom?: number
 }
 
 /** 文本记忆同步数据 */

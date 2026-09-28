@@ -73,6 +73,10 @@ export async function collectSyncData(): Promise<SyncData> {
       keys: userSetDoc.keys ?? {},
       ocrKeys: userSetDoc.ocrKeys ?? {},
       focusMode: userSetDoc.focusMode ?? { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true },
+      autoSpeak: userSetDoc.autoSpeak ?? false,
+      eyeCare: userSetDoc.eyeCare ?? false,
+      mainWindowOpacity: userSetDoc.mainWindowOpacity ?? 1,
+      uiZoom: (typeof localStorage !== 'undefined' && Number(localStorage.getItem('slowlyrecord-ui-zoom'))) || 1,
     }
   }
 
@@ -571,6 +575,13 @@ async function restoreUserSettings(settings: SyncUserSettings) {
   if (settings.memoryFirmness) userSet.memoryFirmness = settings.memoryFirmness as MemoryFirmnessType
   userSet.pluginStatus = settings.pluginStatus
   userSet.shortcutEnabled = settings.shortcutEnabled
+  // 显示类设置（旧端同步数据可能缺省，缺省保持本地值）
+  if (settings.autoSpeak !== undefined) userSet.autoSpeak = settings.autoSpeak
+  if (settings.eyeCare !== undefined) userSet.eyeCare = settings.eyeCare
+  if (settings.mainWindowOpacity !== undefined) userSet.mainWindowOpacity = settings.mainWindowOpacity
+  if (settings.uiZoom && typeof localStorage !== 'undefined') {
+    localStorage.setItem('slowlyrecord-ui-zoom', String(settings.uiZoom))
+  }
 
   // 合并 API 密钥：远端未配置的空条目（appkey 为空）不覆盖本地已配置的密钥，
   // 否则 A 设备存过空 key、B 设备拉取后自己配好的密钥会被静默清空

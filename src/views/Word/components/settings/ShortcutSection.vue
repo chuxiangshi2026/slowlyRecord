@@ -1,5 +1,21 @@
 <template>
   <div>
+    <!-- 主窗口快捷键总开关：只作用于主窗口单词列表与听写练习；专注窗口内快捷键独立生效，不受此开关控制 -->
+    <div class="setting-item" style="margin-bottom: 4px;">
+      <div class="content">主窗口列表/听写快捷键</div>
+      <el-switch class="shorcut-desc"
+                 v-model="wordsStore.shortcutEnabled"
+                 inline-prompt
+                 size="large"
+                 active-text="开"
+                 inactive-text="关"
+                 @change="persistShortcut"
+      />
+    </div>
+    <p class="scope-note">
+      关闭后仅停用主窗口与听写的快捷键；专注窗口内的快捷键（Shift+R/F/P/T、空格、方向键等）始终生效，见下方「专注模式」一览。
+    </p>
+
     <!-- 设置全局快捷键 -->
     <div class="titles">
       <div class="setting-item">
@@ -8,6 +24,7 @@
         <el-button type="info" @click="kuaijiejian(3)">截图快捷键</el-button>
       </div>
     </div>
+    <p class="scope-note">为 uTools 全局功能「划词添加 / 划段添加 / 截图添加」设置唤起快捷键（需在 uTools 中使用）。</p>
 
     <!-- 快捷键一览 -->
     <el-collapse class="shortcut-collapse">
@@ -53,6 +70,13 @@
 
 <script setup lang="ts">
 import {isUtools} from "@/adapters/platform";
+import {useWordsStore} from "@/stores/words.ts";
+
+const wordsStore = useWordsStore();
+
+const persistShortcut = () => {
+  wordsStore.setShortcutEnabled(wordsStore.shortcutEnabled)
+}
 
 const kuaijiejian = (type: number) => {
   const utoolsApi = (window as any).utools;
@@ -107,6 +131,13 @@ const focusShortcuts = [
 </script>
 
 <style scoped lang="scss">
+.scope-note {
+  margin: 0 20px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--utools-text-tertiary);
+}
+
 .titles {
   .setting-item {
     display: flex;
