@@ -490,7 +490,7 @@ async function resolveImgPayloadToBase64(payload: any): Promise<string> {
  */
 async function ocrExistingImage(base64: string): Promise<OcrResult> {
   const wordsStore = useWordsStore();
-  const ocrPlatform = wordsStore.currentOcrPlatform || 'tencent';
+  const ocrPlatform = wordsStore.currentOcrPlatform || 'local';
 
   // 与 ocrTranslateMultiPlatform 保持一致的每日免费次数限制（本地 OCR 不记次数）
   if (ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform)) {

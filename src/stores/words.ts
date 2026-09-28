@@ -243,6 +243,11 @@ export const useWordsStore =
                 if (platform === 'tencent') setTranslationPlatform('spark');
             }, {flush: 'sync'})
 
+            // 桌面端腾讯截图翻译实为 TMT 图片翻译（ImageTranslate），已停售进入退市周期：默认离线，存量 tencent 回退 local
+            watch(currentOcrPlatform, (platform) => {
+                if (platform === 'tencent') setOcrPlatform('local');
+            }, {flush: 'sync'})
+
             /**
              * 获取当前orc识别平台
              */
@@ -293,7 +298,7 @@ export const useWordsStore =
                     "pluginStatus": false,
                     "shortcutEnabled": false,
                     "translationPlatform": 'spark',
-                    "ocrPlatform": 'tencent',
+                    "ocrPlatform": 'local',
                     "memoryFirmness": '正常',
                     "keys": {},
                     "ocrKeys": {},

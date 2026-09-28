@@ -162,9 +162,6 @@ const ocrOptions = [
     label: '本地词典(离线)',
   },
   {
-    value: 'tencent',
-    label: '腾讯(即将下线)',
-  }, {
     value: 'baidu',
     label: '百度',
   },

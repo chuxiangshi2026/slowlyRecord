@@ -2,7 +2,7 @@
   <div class="content">
     <h5 style="text-align:center;">申请密钥</h5>
     <p class="limit-info">
-      由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日{{ USAGE_LIMITS.OCR_DAILY_LIMIT }}次（腾讯引擎{{ USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT }}次）(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
+      由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日{{ USAGE_LIMITS.OCR_DAILY_LIMIT }}次(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
 
     <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
          :key="platform.key"

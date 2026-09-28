@@ -80,9 +80,6 @@ const ocrOptions = [
     label: '本地词典(离线)',
   },
   {
-    value: 'tencent',
-    label: '腾讯(即将下线)',
-  }, {
     value: 'baidu',
     label: '百度',
   },
@@ -167,7 +164,7 @@ const singleKeyPlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyu
 const modelEditablePlatforms = ['deepseek', 'qwen', 'kimi', 'glm', 'minimax', 'hunyuan', 'qiniu', 'ollama', 'spark']
 // 不展示密钥配置的引擎（内置免费/本地）
 const hiddenTranslationKeyPlatforms = ['utoolsai', 'local', 'hunyuan', 'google', 'bing', 'tencent']
-const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm']
+const hiddenOcrKeyPlatforms = ['local', 'deepseek', 'glm', 'tencent']
 
 type ApiKeyMap = Record<string, { appkey: string; key: string }>
 

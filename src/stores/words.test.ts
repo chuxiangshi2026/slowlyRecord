@@ -625,6 +625,12 @@ describe('useWordsStore', () => {
       expect(mockUserSet.ocrPlatform).toBe('baidu')
       expect(addAndUpdateSetDb).toHaveBeenCalled()
     })
+
+    it('腾讯图片翻译已停售退市，设置 tencent 应回退离线', () => {
+      const store = useWordsStore()
+      store.setOcrPlatform('tencent')
+      expect(store.currentOcrPlatform).toBe('local')
+    })
   })
 
   describe('setMemoryFirmness', () => {
