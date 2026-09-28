@@ -104,7 +104,7 @@ export async function ocrTranslate(
 export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 
     const wordsStore = useWordsStore();
-    const ocrPlatform = wordsStore.currentOcrPlatform || 'tencent';
+    const ocrPlatform = wordsStore.currentOcrPlatform || 'local';
 
 
     // 检查是否超出了每日使用限制（本地OCR不记次数）
