@@ -138,6 +138,20 @@ const focusShortcuts = [
   color: var(--utools-text-tertiary);
 }
 
+/* 总开关行：不在 .titles 内，需独立的两端对齐布局（.titles 内的按钮组保持原有居中样式） */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  .content {
+    padding: 0;
+  }
+}
+
 .titles {
   .setting-item {
     display: flex;

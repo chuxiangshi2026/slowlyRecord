@@ -801,6 +801,13 @@ const deleteWord = () => {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    /* 点击编辑时解除截断，保证长释义可编辑 */
+    &:focus {
+      max-height: none;
+      overflow: visible;
+      white-space: normal;
+    }
   }
 }
 
@@ -811,6 +818,13 @@ const deleteWord = () => {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    /* 点击编辑时解除行数限制 */
+    &:focus {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+    }
   }
 }
 
