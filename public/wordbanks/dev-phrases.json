@@ -1,0 +1,762 @@
+[
+  {
+    "word": "I'm on it",
+    "explains": "我接手了 / 正在处理"
+  },
+  {
+    "word": "I'm looking into it",
+    "explains": "我在查"
+  },
+  {
+    "word": "Let me take a look",
+    "explains": "我看一下"
+  },
+  {
+    "word": "Let me check",
+    "explains": "我确认一下"
+  },
+  {
+    "word": "On my way",
+    "explains": "我马上去"
+  },
+  {
+    "word": "Got it",
+    "explains": "收到"
+  },
+  {
+    "word": "Sounds good",
+    "explains": "可以，就这么办"
+  },
+  {
+    "word": "Makes sense",
+    "explains": "有道理"
+  },
+  {
+    "word": "Good catch",
+    "explains": "好眼力（指出得好）"
+  },
+  {
+    "word": "Nice catch",
+    "explains": "抓得好（发现得好）"
+  },
+  {
+    "word": "Good catch, I'll fix it",
+    "explains": "抓得好，我来修"
+  },
+  {
+    "word": "LGTM",
+    "explains": "我这边没问题（Looks good to me）"
+  },
+  {
+    "word": "Approve with nit",
+    "explains": "小问题不影响通过"
+  },
+  {
+    "word": "Push your changes",
+    "explains": "把你的改动推上去"
+  },
+  {
+    "word": "Pull the latest",
+    "explains": "拉取最新代码"
+  },
+  {
+    "word": "Pull in my branch",
+    "explains": "把我的分支合进来"
+  },
+  {
+    "word": "Pick up my branch",
+    "explains": "接上我的分支"
+  },
+  {
+    "word": "Rebase onto main",
+    "explains": "把分支变基到主干"
+  },
+  {
+    "word": "Squash the commits",
+    "explains": "把提交压成一个"
+  },
+  {
+    "word": "Squash and merge",
+    "explains": "压缩合并"
+  },
+  {
+    "word": "Fast-forward merge",
+    "explains": "快进合并"
+  },
+  {
+    "word": "Cherry-pick that commit",
+    "explains": "摘取那个提交"
+  },
+  {
+    "word": "Revert that commit",
+    "explains": "回滚那个提交"
+  },
+  {
+    "word": "Let's merge this",
+    "explains": "合并这个吧"
+  },
+  {
+    "word": "This needs a review",
+    "explains": "这个需要评审"
+  },
+  {
+    "word": "Can you review my PR?",
+    "explains": "能帮我看看这个 PR 吗"
+  },
+  {
+    "word": "Mind reviewing this?",
+    "explains": "方便评审这个吗"
+  },
+  {
+    "word": "I'm blocking on this",
+    "explains": "我卡在这个上了"
+  },
+  {
+    "word": "I'm blocked by this",
+    "explains": "我被这个阻塞了"
+  },
+  {
+    "word": "I'm stuck on this",
+    "explains": "我卡在这里了"
+  },
+  {
+    "word": "Unblock me",
+    "explains": "帮我解个卡"
+  },
+  {
+    "word": "Can you unblock me?",
+    "explains": "能帮我解个卡吗"
+  },
+  {
+    "word": "I'm pinged out",
+    "explains": "我这边没人响应"
+  },
+  {
+    "word": "Ping me",
+    "explains": "提醒我"
+  },
+  {
+    "word": "Ping me when it's done",
+    "explains": "好了叫我一下"
+  },
+  {
+    "word": "Pinging you on this",
+    "explains": "这事我拉你一起看"
+  },
+  {
+    "word": "Loop me in",
+    "explains": "把我加进这个事"
+  },
+  {
+    "word": "Loop me in on this",
+    "explains": "这事让我知道一下"
+  },
+  {
+    "word": "Keep me in the loop",
+    "explains": "有进展同步我"
+  },
+  {
+    "word": "Keep me posted",
+    "explains": "进展随时同步我"
+  },
+  {
+    "word": "I'll keep you posted",
+    "explains": "我会同步进展"
+  },
+  {
+    "word": "I'll keep you updated",
+    "explains": "我会更新你"
+  },
+  {
+    "word": "I'll update you",
+    "explains": "有情况我告诉你"
+  },
+  {
+    "word": "Let me know if you need anything",
+    "explains": "需要啥跟我说"
+  },
+  {
+    "word": "Let me know how it goes",
+    "explains": "进展如何告诉我"
+  },
+  {
+    "word": "Let me know if anything's off",
+    "explains": "有任何不对告诉我"
+  },
+  {
+    "word": "Holler if you need help",
+    "explains": "需要帮忙就喊我"
+  },
+  {
+    "word": "Shout if you're stuck",
+    "explains": "卡住了就说"
+  },
+  {
+    "word": "Holler me if you're stuck",
+    "explains": "卡住喊我一声"
+  },
+  {
+    "word": "Shout out if something's wrong",
+    "explains": "有问题就说"
+  },
+  {
+    "word": "I'll leave it to you",
+    "explains": "这个交给你了"
+  },
+  {
+    "word": "Leave it to me",
+    "explains": "交给我吧"
+  },
+  {
+    "word": "I'll take this one",
+    "explains": "这条我接了"
+  },
+  {
+    "word": "I'll pick this up",
+    "explains": "我来接这个"
+  },
+  {
+    "word": "I'll own this",
+    "explains": "我来负责这个"
+  },
+  {
+    "word": "I own this area",
+    "explains": "这块是我的"
+  },
+  {
+    "word": "Who owns this?",
+    "explains": "这块谁负责"
+  },
+  {
+    "word": "Who's on this?",
+    "explains": "这个谁在做"
+  },
+  {
+    "word": "Who's driving this?",
+    "explains": "这个谁主导"
+  },
+  {
+    "word": "I'm driving this",
+    "explains": "我来主导这个"
+  },
+  {
+    "word": "I'm carrying this",
+    "explains": "我在扛这个"
+  },
+  {
+    "word": "I've been carrying this",
+    "explains": "这一直是我在扛"
+  },
+  {
+    "word": "I'm drowning in tickets",
+    "explains": "我被工单淹了"
+  },
+  {
+    "word": "I'm swamped",
+    "explains": "我忙不过来"
+  },
+  {
+    "word": "I'm slammed",
+    "explains": "我忙得脚不沾地"
+  },
+  {
+    "word": "I'm buried",
+    "explains": "我被压得喘不过气"
+  },
+  {
+    "word": "I'm underwater",
+    "explains": "我忙爆了"
+  },
+  {
+    "word": "I'm at capacity",
+    "explains": "我排满了"
+  },
+  {
+    "word": "I'm maxed out",
+    "explains": "我满了"
+  },
+  {
+    "word": "My plate is full",
+    "explains": "我手上活满了"
+  },
+  {
+    "word": "My plate is full already",
+    "explains": "我手上已经满了"
+  },
+  {
+    "word": "I'm spread thin",
+    "explains": "我分身乏术"
+  },
+  {
+    "word": "I'm stretched thin",
+    "explains": "我分身乏术"
+  },
+  {
+    "word": "I don't have bandwidth for this",
+    "explains": "我腾不出精力做这个"
+  },
+  {
+    "word": "I have no bandwidth right now",
+    "explains": "我现在没空"
+  },
+  {
+    "word": "I've got zero bandwidth",
+    "explains": "我现在一点空都没有"
+  },
+  {
+    "word": "I've got zero context on this",
+    "explains": "这事我完全没底"
+  },
+  {
+    "word": "I'm in over my head",
+    "explains": "这事我驾驭不了"
+  },
+  {
+    "word": "I'm above my pay grade",
+    "explains": "这事超出我能力范围"
+  },
+  {
+    "word": "It's out of my hands",
+    "explains": "这事不在我这边"
+  },
+  {
+    "word": "It's out of my scope",
+    "explains": "这事不在我的范围"
+  },
+  {
+    "word": "That's out of scope",
+    "explains": "这超出范围了"
+  },
+  {
+    "word": "That's a scope creep",
+    "explains": "这算范围蔓延"
+  },
+  {
+    "word": "That's scope creep",
+    "explains": "这算范围蔓延"
+  },
+  {
+    "word": "That's a can of worms",
+    "explains": "这事很麻烦"
+  },
+  {
+    "word": "That's a rabbit hole",
+    "explains": "这是个坑，钻下去出不来"
+  },
+  {
+    "word": "We're going down a rabbit hole",
+    "explains": "我们要钻牛角尖了"
+  },
+  {
+    "word": "Let's not go down that rabbit hole",
+    "explains": "别在这个坑里耗着"
+  },
+  {
+    "word": "Let's not go down this rabbit hole",
+    "explains": "别在这上面钻牛角尖"
+  },
+  {
+    "word": "Let's park this for now",
+    "explains": "这事先放一放"
+  },
+  {
+    "word": "Let's table this",
+    "explains": "这事先搁置"
+  },
+  {
+    "word": "Let's put this on hold",
+    "explains": "这事先挂起"
+  },
+  {
+    "word": "Let's defer this",
+    "explains": "这事往后推"
+  },
+  {
+    "word": "Let's punt on this",
+    "explains": "这事先别管"
+  },
+  {
+    "word": "Let's punt this to next sprint",
+    "explains": "这事推到下个迭代"
+  },
+  {
+    "word": "Let's move this to the backlog",
+    "explains": "这事挪到待办池"
+  },
+  {
+    "word": "Let's kick this back",
+    "explains": "这事退回去"
+  },
+  {
+    "word": "Let's punt it back",
+    "explains": "这事踢回去"
+  },
+  {
+    "word": "Let's not boil the ocean",
+    "explains": "别想一口吃成胖子"
+  },
+  {
+    "word": "Let's not reinvent the wheel",
+    "explains": "别重复造轮子"
+  },
+  {
+    "word": "Don't reinvent the wheel",
+    "explains": "别重复造轮子"
+  },
+  {
+    "word": "Let's not solve this the hard way",
+    "explains": "别走弯路"
+  },
+  {
+    "word": "Let's take the easy route",
+    "explains": "走简单那条路"
+  },
+  {
+    "word": "Let's take the easy way out",
+    "explains": "咱走捷径"
+  },
+  {
+    "word": "Let's ship the dumb version",
+    "explains": "先上个糙版"
+  },
+  {
+    "word": "Let's ship the ugly version",
+    "explains": "先上个丑版"
+  },
+  {
+    "word": "Let's ship it as-is",
+    "explains": "就这样发"
+  },
+  {
+    "word": "Let's ship it as is",
+    "explains": "就这样发"
+  },
+  {
+    "word": "Let's ship and iterate",
+    "explains": "先发再迭代"
+  },
+  {
+    "word": "Let's ship it and iterate",
+    "explains": "先发再迭代"
+  },
+  {
+    "word": "Let's iterate on this",
+    "explains": "这个我们迭代着改"
+  },
+  {
+    "word": "Let's iterate later",
+    "explains": "这个以后迭代"
+  },
+  {
+    "word": "Let's revisit this later",
+    "explains": "这个以后再看"
+  },
+  {
+    "word": "Let's circle back on this",
+    "explains": "这事回头再议"
+  },
+  {
+    "word": "Let's circle back",
+    "explains": "回头再聊"
+  },
+  {
+    "word": "Let's circle back tomorrow",
+    "explains": "明天再聊"
+  },
+  {
+    "word": "Let's revisit this",
+    "explains": "这个我们再聊一次"
+  },
+  {
+    "word": "Let's discuss this offline",
+    "explains": "这个线下聊"
+  },
+  {
+    "word": "Let's take this offline",
+    "explains": "这个线下聊"
+  },
+  {
+    "word": "Let's take this out of the meeting",
+    "explains": "这个别在会上聊"
+  },
+  {
+    "word": "Let's do this separately",
+    "explains": "这个单独聊"
+  },
+  {
+    "word": "Let's handle this separately",
+    "explains": "这个单独处理"
+  },
+  {
+    "word": "Let's break this down",
+    "explains": "这个我们拆一下"
+  },
+  {
+    "word": "Let's break this into pieces",
+    "explains": "这个拆成几块"
+  },
+  {
+    "word": "Let's split this up",
+    "explains": "这个拆一下"
+  },
+  {
+    "word": "Let's scope this down",
+    "explains": "这个收窄范围"
+  },
+  {
+    "word": "Let's narrow the scope",
+    "explains": "把范围缩小"
+  },
+  {
+    "word": "Let's cut the scope",
+    "explains": "砍范围"
+  },
+  {
+    "word": "Let's trim this down",
+    "explains": "这个精简一下"
+  },
+  {
+    "word": "Let's simplify this",
+    "explains": "这个简化一下"
+  },
+  {
+    "word": "Let's dumb it down",
+    "explains": "这个搞简单点"
+  },
+  {
+    "word": "Let's keep it simple",
+    "explains": "保持简单"
+  },
+  {
+    "word": "Let's go simple",
+    "explains": "走简单方案"
+  },
+  {
+    "word": "Let's not over-engineer this",
+    "explains": "别过度设计"
+  },
+  {
+    "word": "Let's not over-engineer it",
+    "explains": "别过度设计"
+  },
+  {
+    "word": "Don't over-engineer this",
+    "explains": "别把这个搞复杂"
+  },
+  {
+    "word": "Don't over-engineer it",
+    "explains": "别过度设计"
+  },
+  {
+    "word": "Let's not boil the ocean on this",
+    "explains": "这事别想着一次做全"
+  },
+  {
+    "word": "Let's not scope this too big",
+    "explains": "别把这个搞太大"
+  },
+  {
+    "word": "Let's ship the MVP",
+    "explains": "先出个 MVP"
+  },
+  {
+    "word": "Let's ship an MVP",
+    "explains": "先出个 MVP"
+  },
+  {
+    "word": "Let's ship a first version",
+    "explains": "先出个第一版"
+  },
+  {
+    "word": "Let's get something working",
+    "explains": "先弄个能跑的"
+  },
+  {
+    "word": "Let's get something running",
+    "explains": "先弄个能跑的"
+  },
+  {
+    "word": "Let's get it working first",
+    "explains": "先让它跑起来"
+  },
+  {
+    "word": "Let's make it work first",
+    "explains": "先让它能用"
+  },
+  {
+    "word": "Let's make it work, then make it right",
+    "explains": "先能用，再做好"
+  },
+  {
+    "word": "Let's make it work, then make it fast",
+    "explains": "先能用，再做快"
+  },
+  {
+    "word": "Let's make it right",
+    "explains": "把它做对"
+  },
+  {
+    "word": "Let's make it fast",
+    "explains": "把它做快"
+  },
+  {
+    "word": "Let's make it fast, then make it right",
+    "explains": "先做快，再做对"
+  },
+  {
+    "word": "Let's not prematurely optimize",
+    "explains": "别过早优化"
+  },
+  {
+    "word": "Don't prematurely optimize",
+    "explains": "别过早优化"
+  },
+  {
+    "word": "Let's not optimize for this yet",
+    "explains": "这个先别优化"
+  },
+  {
+    "word": "Let's profile it first",
+    "explains": "先做性能分析"
+  },
+  {
+    "word": "Let's measure first",
+    "explains": "先量化"
+  },
+  {
+    "word": "Let's measure, don't guess",
+    "explains": "先量化，别瞎猜"
+  },
+  {
+    "word": "Let's take a look at the numbers",
+    "explains": "看看数据"
+  },
+  {
+    "word": "Let's take a look at the metrics",
+    "explains": "看看指标"
+  },
+  {
+    "word": "Let's take a look at the logs",
+    "explains": "看看日志"
+  },
+  {
+    "word": "Let's take a look at the stack trace",
+    "explains": "看看堆栈"
+  },
+  {
+    "word": "Let's read the traceback",
+    "explains": "看看报错回溯"
+  },
+  {
+    "word": "Let's read the error",
+    "explains": "看看报错"
+  },
+  {
+    "word": "Let's see what it actually says",
+    "explains": "看看它到底怎么说"
+  },
+  {
+    "word": "Let's see what's going on",
+    "explains": "看看到底怎么回事"
+  },
+  {
+    "word": "Let's see what's happening",
+    "explains": "看看发生了啥"
+  },
+  {
+    "word": "Let's see what's going wrong",
+    "explains": "看看哪里出问题"
+  },
+  {
+    "word": "Let's figure this out",
+    "explains": "把这个弄清楚"
+  },
+  {
+    "word": "Let's figure out what's going on",
+    "explains": "搞清怎么回事"
+  },
+  {
+    "word": "Let's find the root cause",
+    "explains": "查一下根因"
+  },
+  {
+    "word": "Let's track this down",
+    "explains": "把这个追出来"
+  },
+  {
+    "word": "Let's chase this down",
+    "explains": "把这个追出来"
+  },
+  {
+    "word": "Let's dig in",
+    "explains": "深入看一下"
+  },
+  {
+    "word": "Let's dig into this",
+    "explains": "深入看下这个"
+  },
+  {
+    "word": "Let's drill down",
+    "explains": "往下钻"
+  },
+  {
+    "word": "Let's drill into this",
+    "explains": "深入看下这个"
+  },
+  {
+    "word": "Let's dig deeper",
+    "explains": "再深一层"
+  },
+  {
+    "word": "Let's go deeper",
+    "explains": "再深一层"
+  },
+  {
+    "word": "Let's go down to the source",
+    "explains": "追到源码"
+  },
+  {
+    "word": "Let's trace it back",
+    "explains": "回溯一下"
+  },
+  {
+    "word": "Let's trace it to the source",
+    "explains": "回溯到源头"
+  },
+  {
+    "word": "Let's trace it to the root",
+    "explains": "回溯到根"
+  },
+  {
+    "word": "Let's trace it back to the commit",
+    "explains": "回溯到那个提交"
+  },
+  {
+    "word": "Let's bisect for it",
+    "explains": "二分查找一下"
+  },
+  {
+    "word": "Let's bisect this",
+    "explains": "二分查一下"
+  },
+  {
+    "word": "Let's git bisect",
+    "explains": "用 git 二分查一下"
+  },
+  {
+    "word": "Let's bisect to find the bad commit",
+    "explains": "二分查出那个坏提交"
+  },
+  {
+    "word": "Let's bisect to find the first bad commit",
+    "explains": "二分查出第一个坏提交"
+  },
+  {
+    "word": "Let's bisect the regression",
+    "explains": "二分查回归"
+  },
+  {
+    "word": "Let's bisect the history",
+    "explains": "二分历史"
+  }
+]

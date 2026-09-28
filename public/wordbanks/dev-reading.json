@@ -1,0 +1,418 @@
+[
+  {
+    "word": "Let me check the docs.",
+    "explains": "我查下文档"
+  },
+  {
+    "word": "How to use this API?",
+    "explains": "这个 API 怎么用？"
+  },
+  {
+    "word": "See the README for details.",
+    "explains": "详见 README"
+  },
+  {
+    "word": "Follow the steps below.",
+    "explains": "按以下步骤操作"
+  },
+  {
+    "word": "Prerequisites:",
+    "explains": "前置条件："
+  },
+  {
+    "word": "Installation:",
+    "explains": "安装："
+  },
+  {
+    "word": "Quick start",
+    "explains": "快速开始"
+  },
+  {
+    "word": "Get started in 5 minutes.",
+    "explains": "5 分钟上手"
+  },
+  {
+    "word": "Configuration options",
+    "explains": "配置项"
+  },
+  {
+    "word": "Default values",
+    "explains": "默认值"
+  },
+  {
+    "word": "Environment variables",
+    "explains": "环境变量"
+  },
+  {
+    "word": "See also",
+    "explains": "参见"
+  },
+  {
+    "word": "Related topics",
+    "explains": "相关主题"
+  },
+  {
+    "word": "Full API reference",
+    "explains": "完整 API 参考"
+  },
+  {
+    "word": "Method signature",
+    "explains": "方法签名"
+  },
+  {
+    "word": "Parameters",
+    "explains": "参数"
+  },
+  {
+    "word": "Return value",
+    "explains": "返回值"
+  },
+  {
+    "word": "Arguments",
+    "explains": "参数（函数入参）"
+  },
+  {
+    "word": "Optional parameter",
+    "explains": "可选参数"
+  },
+  {
+    "word": "Required parameter",
+    "explains": "必填参数"
+  },
+  {
+    "word": "Side effects",
+    "explains": "副作用"
+  },
+  {
+    "word": "Raises",
+    "explains": "抛出的异常"
+  },
+  {
+    "word": "Raises an exception when ...",
+    "explains": "当...时抛出异常"
+  },
+  {
+    "word": "Throws if the input is null.",
+    "explains": "输入为 null 时抛错"
+  },
+  {
+    "word": "Supported platforms",
+    "explains": "支持平台"
+  },
+  {
+    "word": "Browser compatibility",
+    "explains": "浏览器兼容性"
+  },
+  {
+    "word": "Requires Node 18+.",
+    "explains": "需要 Node 18 及以上"
+  },
+  {
+    "word": "Compatible with ...",
+    "explains": "兼容..."
+  },
+  {
+    "word": "Deprecation notice",
+    "explains": "弃用公告"
+  },
+  {
+    "word": "Deprecated since v2.0.",
+    "explains": "自 v2.0 起弃用"
+  },
+  {
+    "word": "Use X instead of Y.",
+    "explains": "用 X 代替 Y"
+  },
+  {
+    "word": "Breaking changes",
+    "explains": "破坏性变更"
+  },
+  {
+    "word": "Changelog",
+    "explains": "变更日志"
+  },
+  {
+    "word": "Release notes",
+    "explains": "发布说明"
+  },
+  {
+    "word": "Known issues",
+    "explains": "已知问题"
+  },
+  {
+    "word": "Workarounds",
+    "explains": "变通方案"
+  },
+  {
+    "word": "Frequently asked questions",
+    "explains": "常见问题"
+  },
+  {
+    "word": "Troubleshooting",
+    "explains": "故障排查"
+  },
+  {
+    "word": "How to fix ...",
+    "explains": "如何修复..."
+  },
+  {
+    "word": "Common errors",
+    "explains": "常见错误"
+  },
+  {
+    "word": "Search the docs.",
+    "explains": "搜索文档"
+  },
+  {
+    "word": "Full-text search",
+    "explains": "全文搜索"
+  },
+  {
+    "word": "The docs are outdated.",
+    "explains": "文档过时了"
+  },
+  {
+    "word": "Docs don't match the code.",
+    "explains": "文档和代码不一致"
+  },
+  {
+    "word": "The example doesn't work.",
+    "explains": "示例跑不通"
+  },
+  {
+    "word": "I couldn't find it in the docs.",
+    "explains": "文档里没找到"
+  },
+  {
+    "word": "Is this still supported?",
+    "explains": "这个还支持吗？"
+  },
+  {
+    "word": "How do I get this working?",
+    "explains": "怎么让它跑起来？"
+  },
+  {
+    "word": "What's the recommended approach?",
+    "explains": "推荐做法是什么？"
+  },
+  {
+    "word": "Best practices for ...",
+    "explains": "…的最佳实践"
+  },
+  {
+    "word": "Anti-patterns",
+    "explains": "反模式"
+  },
+  {
+    "word": "Gotchas",
+    "explains": "坑点"
+  },
+  {
+    "word": "Caveats",
+    "explains": "注意事项"
+  },
+  {
+    "word": "Performance tips",
+    "explains": "性能优化提示"
+  },
+  {
+    "word": "Memory usage",
+    "explains": "内存占用"
+  },
+  {
+    "word": "Security considerations",
+    "explains": "安全注意事项"
+  },
+  {
+    "word": "License",
+    "explains": "许可证"
+  },
+  {
+    "word": "MIT licensed.",
+    "explains": "MIT 许可"
+  },
+  {
+    "word": "Contributing guide",
+    "explains": "贡献指南"
+  },
+  {
+    "word": "Code of conduct",
+    "explains": "行为准则"
+  },
+  {
+    "word": "How to contribute",
+    "explains": "如何贡献"
+  },
+  {
+    "word": "Pull requests welcome.",
+    "explains": "欢迎提交 PR"
+  },
+  {
+    "word": "Good first issue",
+    "explains": "适合新手入门的 issue"
+  },
+  {
+    "word": "Help wanted",
+    "explains": "求助中"
+  },
+  {
+    "word": "Open a new issue",
+    "explains": "提一个新 issue"
+  },
+  {
+    "word": "Please provide a minimal repro.",
+    "explains": "请提供最小复现"
+  },
+  {
+    "word": "Steps to reproduce",
+    "explains": "复现步骤"
+  },
+  {
+    "word": "Expected behavior",
+    "explains": "期望行为"
+  },
+  {
+    "word": "Actual behavior",
+    "explains": "实际行为"
+  },
+  {
+    "word": "Environment",
+    "explains": "环境（issue 模板字段）"
+  },
+  {
+    "word": "Stack trace",
+    "explains": "堆栈"
+  },
+  {
+    "word": "Console output",
+    "explains": "控制台输出"
+  },
+  {
+    "word": "Screenshot attached.",
+    "explains": "已附截图"
+  },
+  {
+    "word": "Video walkthrough",
+    "explains": "视频演示"
+  },
+  {
+    "word": "Reproduced locally.",
+    "explains": "本地复现成功"
+  },
+  {
+    "word": "Cannot reproduce.",
+    "explains": "无法复现"
+  },
+  {
+    "word": "Works on my machine.",
+    "explains": "我机器上正常（潜台词：你的机器有问题）"
+  },
+  {
+    "word": "Search GitHub issues first.",
+    "explains": "先搜一下 GitHub issues"
+  },
+  {
+    "word": "Duplicate of #123.",
+    "explains": "和 #123 重复"
+  },
+  {
+    "word": "Fixed in #456.",
+    "explains": "在 #456 修复"
+  },
+  {
+    "word": "Closed as stale.",
+    "explains": "因长期无响应关闭"
+  },
+  {
+    "word": "Pinned comment",
+    "explains": "置顶评论"
+  },
+  {
+    "word": "The maintainer replied.",
+    "explains": "维护者回复了"
+  },
+  {
+    "word": "Upvote this issue.",
+    "explains": "给这个 issue 顶一下"
+  },
+  {
+    "word": "Star this repo.",
+    "explains": "给这个仓库点个星"
+  },
+  {
+    "word": "Fork me on GitHub.",
+    "explains": "在 GitHub 上 fork 我"
+  },
+  {
+    "word": "Run the benchmark.",
+    "explains": "跑一下压测"
+  },
+  {
+    "word": "Read the release notes.",
+    "explains": "读一下发布说明"
+  },
+  {
+    "word": "Check the migration guide.",
+    "explains": "看下迁移指南"
+  },
+  {
+    "word": "Follow the upgrade path.",
+    "explains": "按升级路径操作"
+  },
+  {
+    "word": "Skip a major version.",
+    "explains": "跳过一个大版本"
+  },
+  {
+    "word": "Long-term support (LTS)",
+    "explains": "长期支持版"
+  },
+  {
+    "word": "End of life (EOL)",
+    "explains": "停止维护"
+  },
+  {
+    "word": "Community edition",
+    "explains": "社区版"
+  },
+  {
+    "word": "Enterprise edition",
+    "explains": "企业版"
+  },
+  {
+    "word": "Trial available",
+    "explains": "提供试用"
+  },
+  {
+    "word": "Self-hosted option",
+    "explains": "支持自托管"
+  },
+  {
+    "word": "Managed service",
+    "explains": "托管服务"
+  },
+  {
+    "word": "Cloud-hosted",
+    "explains": "云端托管"
+  },
+  {
+    "word": "Deploy to production",
+    "explains": "部署到生产环境"
+  },
+  {
+    "word": "Sandbox environment",
+    "explains": "沙箱环境"
+  },
+  {
+    "word": "Mock server",
+    "explains": "模拟服务"
+  },
+  {
+    "word": "Staging environment",
+    "explains": "预发布环境"
+  },
+  {
+    "word": "Rollback plan",
+    "explains": "回滚方案"
+  }
+]

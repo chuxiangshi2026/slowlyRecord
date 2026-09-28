@@ -1,0 +1,474 @@
+[
+  {
+    "word": "The build is red",
+    "explains": "流水线红了"
+  },
+  {
+    "word": "The build is green",
+    "explains": "流水线全绿"
+  },
+  {
+    "word": "The build is broken",
+    "explains": "构建挂了"
+  },
+  {
+    "word": "The build is failing",
+    "explains": "构建失败"
+  },
+  {
+    "word": "The build passes",
+    "explains": "构建通过"
+  },
+  {
+    "word": "CI is red",
+    "explains": "CI 红了"
+  },
+  {
+    "word": "CI is green",
+    "explains": "CI 全绿"
+  },
+  {
+    "word": "CI is failing",
+    "explains": "CI 挂了"
+  },
+  {
+    "word": "CI is passing",
+    "explains": "CI 通过了"
+  },
+  {
+    "word": "Tests are red",
+    "explains": "测试挂了"
+  },
+  {
+    "word": "Tests are failing",
+    "explains": "测试挂了"
+  },
+  {
+    "word": "Tests are green",
+    "explains": "测试全绿"
+  },
+  {
+    "word": "Tests are passing",
+    "explains": "测试通过了"
+  },
+  {
+    "word": "All tests pass",
+    "explains": "所有测试都过了"
+  },
+  {
+    "word": "The test is flaky",
+    "explains": "这个测试不稳定"
+  },
+  {
+    "word": "It's a flaky test",
+    "explains": "这是个不稳定测试"
+  },
+  {
+    "word": "It flakes sometimes",
+    "explains": "它偶尔会挂"
+  },
+  {
+    "word": "It flaked again",
+    "explains": "它又偶发挂了"
+  },
+  {
+    "word": "It's been flaking on CI",
+    "explains": "它最近在 CI 上一直偶发挂"
+  },
+  {
+    "word": "It's been flaking on main",
+    "explains": "它最近在主干上一直偶发挂"
+  },
+  {
+    "word": "It's a false positive",
+    "explains": "这是误报"
+  },
+  {
+    "word": "It's a false negative",
+    "explains": "这是漏报"
+  },
+  {
+    "word": "It's a regression",
+    "explains": "这是回归"
+  },
+  {
+    "word": "It regressed",
+    "explains": "它出回归了"
+  },
+  {
+    "word": "It broke on this commit",
+    "explains": "在这个提交上坏的"
+  },
+  {
+    "word": "It broke after the merge",
+    "explains": "合并之后坏的"
+  },
+  {
+    "word": "It broke after the deploy",
+    "explains": "发布之后坏的"
+  },
+  {
+    "word": "It broke in prod",
+    "explains": "在生产环境坏了"
+  },
+  {
+    "word": "It broke in staging",
+    "explains": "在预发环境坏了"
+  },
+  {
+    "word": "It works on my machine",
+    "explains": "我本地是好的（经典推诿）"
+  },
+  {
+    "word": "It works locally",
+    "explains": "本地能跑"
+  },
+  {
+    "word": "It works on my end",
+    "explains": "我这边是好的"
+  },
+  {
+    "word": "It's broken on my end",
+    "explains": "我这边是坏的"
+  },
+  {
+    "word": "It's not working for me",
+    "explains": "我这边跑不起来"
+  },
+  {
+    "word": "It's not working in production",
+    "explains": "生产环境跑不起来"
+  },
+  {
+    "word": "It's not reproducible",
+    "explains": "复现不出来"
+  },
+  {
+    "word": "It's not reproducible on my machine",
+    "explains": "我本地复现不出来"
+  },
+  {
+    "word": "It's hard to reproduce",
+    "explains": "很难复现"
+  },
+  {
+    "word": "It's a race condition",
+    "explains": "这是竞态条件"
+  },
+  {
+    "word": "It's timing dependent",
+    "explains": "跟时序有关"
+  },
+  {
+    "word": "It's order dependent",
+    "explains": "跟执行顺序有关"
+  },
+  {
+    "word": "It's state dependent",
+    "explains": "跟状态有关"
+  },
+  {
+    "word": "It's environment specific",
+    "explains": "特定环境才有"
+  },
+  {
+    "word": "It fails intermittently",
+    "explains": "间歇性失败"
+  },
+  {
+    "word": "It fails non-deterministically",
+    "explains": "非确定性失败"
+  },
+  {
+    "word": "It fails under load",
+    "explains": "压测时才会失败"
+  },
+  {
+    "word": "It fails at scale",
+    "explains": "规模上去就失败"
+  },
+  {
+    "word": "It fails on cold start",
+    "explains": "冷启动时会失败"
+  },
+  {
+    "word": "It fails on retry",
+    "explains": "重试时会失败"
+  },
+  {
+    "word": "It fails consistently",
+    "explains": "每次跑都失败"
+  },
+  {
+    "word": "It fails reliably",
+    "explains": "稳定失败（不是 flake）"
+  },
+  {
+    "word": "It's a real bug",
+    "explains": "这是真 bug"
+  },
+  {
+    "word": "It's not a bug",
+    "explains": "这不是 bug"
+  },
+  {
+    "word": "It's not our bug",
+    "explains": "这不是我们的 bug"
+  },
+  {
+    "word": "It's a known issue",
+    "explains": "这是已知问题"
+  },
+  {
+    "word": "It's a known flake",
+    "explains": "这是已知 flake"
+  },
+  {
+    "word": "It's a WIP",
+    "explains": "还在写（Work in progress）"
+  },
+  {
+    "word": "It's still WIP",
+    "explains": "还在写，没写完"
+  },
+  {
+    "word": "It's half done",
+    "explains": "做了一半"
+  },
+  {
+    "word": "It's not done yet",
+    "explains": "还没做完"
+  },
+  {
+    "word": "It's not ready yet",
+    "explains": "还没准备好"
+  },
+  {
+    "word": "It's not ready for review",
+    "explains": "还没到能评审的程度"
+  },
+  {
+    "word": "It's ready for review",
+    "explains": "可以评审了"
+  },
+  {
+    "word": "It's ready to merge",
+    "explains": "可以合并了"
+  },
+  {
+    "word": "It's ready to ship",
+    "explains": "可以发了"
+  },
+  {
+    "word": "It's shippable",
+    "explains": "可以发的程度了"
+  },
+  {
+    "word": "It's not shippable",
+    "explains": "还不能发"
+  },
+  {
+    "word": "It's a ship blocker",
+    "explains": "这是发布阻塞"
+  },
+  {
+    "word": "It's a merge blocker",
+    "explains": "这是合并阻塞"
+  },
+  {
+    "word": "It's a blocker",
+    "explains": "这是阻塞项"
+  },
+  {
+    "word": "It's a P0",
+    "explains": "这是 P0 级问题"
+  },
+  {
+    "word": "It's a P1",
+    "explains": "这是 P1 级问题"
+  },
+  {
+    "word": "It's critical",
+    "explains": "这是关键问题"
+  },
+  {
+    "word": "It's severe",
+    "explains": "这是严重问题"
+  },
+  {
+    "word": "It's blocking",
+    "explains": "这是阻塞问题"
+  },
+  {
+    "word": "It's non-blocking",
+    "explains": "这不阻塞"
+  },
+  {
+    "word": "It's a showstopper",
+    "explains": "这是发布杀手"
+  },
+  {
+    "word": "It's a must-fix",
+    "explains": "必须修"
+  },
+  {
+    "word": "It's a nice-to-have",
+    "explains": "有更好"
+  },
+  {
+    "word": "It's a nit",
+    "explains": "小问题（不影响通过）"
+  },
+  {
+    "word": "It's a nitpick",
+    "explains": "吹毛求疵"
+  },
+  {
+    "word": "It's a trivial fix",
+    "explains": "这改动很轻"
+  },
+  {
+    "word": "It's a one-liner",
+    "explains": "一行就能改完"
+  },
+  {
+    "word": "It has a big blast radius",
+    "explains": "它影响面很大"
+  },
+  {
+    "word": "It has a small blast radius",
+    "explains": "它影响面很小"
+  },
+  {
+    "word": "It's low risk",
+    "explains": "低风险"
+  },
+  {
+    "word": "It's high risk",
+    "explains": "高风险"
+  },
+  {
+    "word": "It's risky",
+    "explains": "这有风险"
+  },
+  {
+    "word": "It's a safe change",
+    "explains": "这是安全改动"
+  },
+  {
+    "word": "It's a safe revert",
+    "explains": "这是安全回滚"
+  },
+  {
+    "word": "It's a quick fix",
+    "explains": "这是快速修复"
+  },
+  {
+    "word": "It's a quick win",
+    "explains": "这是快速收益"
+  },
+  {
+    "word": "It's low-hanging fruit",
+    "explains": "这是容易摘的果子"
+  },
+  {
+    "word": "It's a no-brainer",
+    "explains": "这不用想"
+  },
+  {
+    "word": "It's a must have",
+    "explains": "这是必需项"
+  },
+  {
+    "word": "It's launch blocking",
+    "explains": "这是上线阻塞项"
+  },
+  {
+    "word": "It's not launch blocking",
+    "explains": "这不阻塞上线"
+  },
+  {
+    "word": "It's a go-no-go",
+    "explains": "这是 go-no-go 项"
+  },
+  {
+    "word": "It's a go",
+    "explains": "可以发"
+  },
+  {
+    "word": "It's a no-go",
+    "explains": "不能发"
+  },
+  {
+    "word": "It's a go for now",
+    "explains": "现在可以发"
+  },
+  {
+    "word": "It's a no-go for now",
+    "explains": "现在不能发"
+  },
+  {
+    "word": "It's a go for this release",
+    "explains": "这个版本可以发"
+  },
+  {
+    "word": "It's a no-go for this release",
+    "explains": "这个版本不能发"
+  },
+  {
+    "word": "It's a go for production",
+    "explains": "可以上生产"
+  },
+  {
+    "word": "It's a no-go for production",
+    "explains": "不能上生产"
+  },
+  {
+    "word": "It's a go for staging",
+    "explains": "可以上预发"
+  },
+  {
+    "word": "It's a no-go for staging",
+    "explains": "不能上预发"
+  },
+  {
+    "word": "It's a go for review",
+    "explains": "可以评审"
+  },
+  {
+    "word": "It's a no-go for review",
+    "explains": "不能评审"
+  },
+  {
+    "word": "It's a go for demo",
+    "explains": "可以演示"
+  },
+  {
+    "word": "It's a no-go for demo",
+    "explains": "不能演示"
+  },
+  {
+    "word": "It's a go for merge",
+    "explains": "合并可以过"
+  },
+  {
+    "word": "It's a no-go for merge",
+    "explains": "合并不能过"
+  },
+  {
+    "word": "It's a go for canary",
+    "explains": "可以灰度"
+  },
+  {
+    "word": "It's a no-go for canary",
+    "explains": "不能灰度"
+  },
+  {
+    "word": "It's a go for rollout",
+    "explains": "可以放量"
+  },
+  {
+    "word": "It's a no-go for rollout",
+    "explains": "不能放量"
+  }
+]

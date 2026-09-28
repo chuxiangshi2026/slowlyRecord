@@ -1,0 +1,390 @@
+[
+  {
+    "word": "For here or to go?",
+    "explains": "堂食还是打包？"
+  },
+  {
+    "word": "Can I get a table for two?",
+    "explains": "有两位的位子吗？"
+  },
+  {
+    "word": "Reservation under my name.",
+    "explains": "用我的名字订的位"
+  },
+  {
+    "word": "Any table available?",
+    "explains": "有空位吗？"
+  },
+  {
+    "word": "Window seat if possible.",
+    "explains": "能安排靠窗吗？"
+  },
+  {
+    "word": "A quiet corner, please.",
+    "explains": "麻烦给个安静的角落"
+  },
+  {
+    "word": "We have a group of six.",
+    "explains": "我们六个人"
+  },
+  {
+    "word": "High chair needed.",
+    "explains": "需要婴儿椅"
+  },
+  {
+    "word": "Where can I park?",
+    "explains": "车能停哪？"
+  },
+  {
+    "word": "Do you have valet parking?",
+    "explains": "提供代客泊车吗？"
+  },
+  {
+    "word": "Is this place dog-friendly?",
+    "explains": "可以带狗吗？"
+  },
+  {
+    "word": "Are we alone on the menu?",
+    "explains": "有菜单吗？（还没点）"
+  },
+  {
+    "word": "Can I see the menu?",
+    "explains": "能看下菜单吗？"
+  },
+  {
+    "word": "What do you recommend?",
+    "explains": "推荐什么？"
+  },
+  {
+    "word": "What's the special today?",
+    "explains": "今天有什么特色菜？"
+  },
+  {
+    "word": "Signature dish.",
+    "explains": "招牌菜"
+  },
+  {
+    "word": "Chef's special.",
+    "explains": "主厨推荐"
+  },
+  {
+    "word": "How spicy is it?",
+    "explains": "多辣？"
+  },
+  {
+    "word": "Less spicy, please.",
+    "explains": "少辣"
+  },
+  {
+    "word": "No spice, thanks.",
+    "explains": "不辣，谢谢"
+  },
+  {
+    "word": "I'm on a gluten-free diet.",
+    "explains": "我麸质过敏"
+  },
+  {
+    "word": "Dairy-free option?",
+    "explains": "有不含乳制品的吗？"
+  },
+  {
+    "word": "Nut allergy — please check.",
+    "explains": "坚果过敏，麻烦查一下"
+  },
+  {
+    "word": "Vegetarian options?",
+    "explains": "有素食吗？"
+  },
+  {
+    "word": "Vegan alternatives?",
+    "explains": "有纯素选项吗？"
+  },
+  {
+    "word": "Halal meat, please.",
+    "explains": "要清真肉"
+  },
+  {
+    "word": "Kosher options?",
+    "explains": "有犹太洁食吗？"
+  },
+  {
+    "word": "Any alcohol in this dish?",
+    "explains": "这道菜含酒精吗？"
+  },
+  {
+    "word": "Is it deep-fried?",
+    "explains": "是油炸的吗？"
+  },
+  {
+    "word": "Steamed is preferable.",
+    "explains": "最好清蒸"
+  },
+  {
+    "word": "Well-done, please.",
+    "explains": "全熟"
+  },
+  {
+    "word": "Medium-rare, please.",
+    "explains": "三分熟"
+  },
+  {
+    "word": "Rare, please.",
+    "explains": "一分熟（近乎生）"
+  },
+  {
+    "word": "Extra rice, please.",
+    "explains": "多加饭"
+  },
+  {
+    "word": "No cilantro, thanks.",
+    "explains": "不要香菜"
+  },
+  {
+    "word": "Separate the sauce.",
+    "explains": "酱汁分开装"
+  },
+  {
+    "word": "Half portion.",
+    "explains": "小份"
+  },
+  {
+    "word": "Kids menu?",
+    "explains": "有儿童套餐吗？"
+  },
+  {
+    "word": "Sharing plates.",
+    "explains": "分享份（多人分享）"
+  },
+  {
+    "word": "Appetizer for the table?",
+    "explains": "要不要先点份前菜？"
+  },
+  {
+    "word": "Soup of the day.",
+    "explains": "今日汤品"
+  },
+  {
+    "word": "Dumplings on the menu?",
+    "explains": "有饺子吗？"
+  },
+  {
+    "word": "Fresh seafood available?",
+    "explains": "有新鲜海鲜吗？"
+  },
+  {
+    "word": "Live lobster.",
+    "explains": "活龙虾"
+  },
+  {
+    "word": "Grilled fish, whole.",
+    "explains": "整条烤鱼"
+  },
+  {
+    "word": "Spring rolls.",
+    "explains": "春卷"
+  },
+  {
+    "word": "Stir-fry noodles.",
+    "explains": "炒面"
+  },
+  {
+    "word": "Rice bowl.",
+    "explains": "盖饭"
+  },
+  {
+    "word": "Sashimi.",
+    "explains": "刺身"
+  },
+  {
+    "word": "Sushi platter.",
+    "explains": "寿司拼盘"
+  },
+  {
+    "word": "Soy sauce on the side.",
+    "explains": "酱油另放"
+  },
+  {
+    "word": "Wasabi and ginger.",
+    "explains": "芥末和姜片"
+  },
+  {
+    "word": "Tea refills?",
+    "explains": "有续茶吗？"
+  },
+  {
+    "word": "Ice water or tap water?",
+    "explains": "加冰还是直饮？"
+  },
+  {
+    "word": "Sparkling water.",
+    "explains": "气泡水"
+  },
+  {
+    "word": "House red or white?",
+    "explains": "本店红葡萄酒还是白葡萄酒？"
+  },
+  {
+    "word": "Craft beer on tap?",
+    "explains": "有精酿生啤吗？"
+  },
+  {
+    "word": "Beer of the day.",
+    "explains": "今日啤酒"
+  },
+  {
+    "word": "Coffee after the meal?",
+    "explains": "饭后喝咖啡吗？"
+  },
+  {
+    "word": "Espresso, double shot.",
+    "explains": "双份浓缩"
+  },
+  {
+    "word": "Oat milk latte.",
+    "explains": "燕麦拿铁"
+  },
+  {
+    "word": "No sugar.",
+    "explains": "无糖"
+  },
+  {
+    "word": "Takeout order ready?",
+    "explains": "打包好了吗？"
+  },
+  {
+    "word": "Bag me this up.",
+    "explains": "打包一份这个"
+  },
+  {
+    "word": "Extra napkins and chopsticks.",
+    "explains": "多拿张纸巾和筷子"
+  },
+  {
+    "word": "Can I have the bill?",
+    "explains": "买单了"
+  },
+  {
+    "word": "Check, please.",
+    "explains": "结账（美式）"
+  },
+  {
+    "word": "Split the bill.",
+    "explains": "AA 制"
+  },
+  {
+    "word": "Each pays their own.",
+    "explains": "各付各的"
+  },
+  {
+    "word": "Put it on my tab.",
+    "explains": "挂账"
+  },
+  {
+    "word": "Keep the change.",
+    "explains": "零钱不用找了"
+  },
+  {
+    "word": "The food arrived cold.",
+    "explains": "菜上来了是凉的"
+  },
+  {
+    "word": "It's not cooked through.",
+    "explains": "没熟"
+  },
+  {
+    "word": "There's a hair in the soup.",
+    "explains": "汤里有一根头发"
+  },
+  {
+    "word": "I ordered two mains, only one came.",
+    "explains": "点两份主菜只上了一份"
+  },
+  {
+    "word": "Table number seven.",
+    "explains": "七号桌"
+  },
+  {
+    "word": "Can I get a to-go box?",
+    "explains": "能给我打包盒吗？"
+  },
+  {
+    "word": "I'll be back in ten.",
+    "explains": "十分钟后回来"
+  },
+  {
+    "word": "Is the restroom on the second floor?",
+    "explains": "洗手间在二楼吗？"
+  },
+  {
+    "word": "Where's the coat check?",
+    "explains": "寄存处在哪？"
+  },
+  {
+    "word": "How do I tip the waiter?",
+    "explains": "怎么给小费？"
+  },
+  {
+    "word": "Service included.",
+    "explains": "服务费已含"
+  },
+  {
+    "word": "No extra charge, thanks.",
+    "explains": "不用加收小费了"
+  },
+  {
+    "word": "The bill seems high.",
+    "explains": "账单好像太高了"
+  },
+  {
+    "word": "Wrong item charged.",
+    "explains": "多收了一份没点的菜"
+  },
+  {
+    "word": "The restaurant closed early today.",
+    "explains": "餐厅今天提前打烊"
+  },
+  {
+    "word": "Kitchen's closed for the night.",
+    "explains": "后厨今晚不再接单"
+  },
+  {
+    "word": "Last orders for the night.",
+    "explains": "今晚最后一轮点单"
+  },
+  {
+    "word": "Delivery order ready?",
+    "explains": "外卖订单好了吗？"
+  },
+  {
+    "word": "I ordered on the app.",
+    "explains": "我在 App 上下单的"
+  },
+  {
+    "word": "The tip went missing.",
+    "explains": "小费没到账"
+  },
+  {
+    "word": "The reviewer raved about it.",
+    "explains": "点评里疯狂推荐"
+  },
+  {
+    "word": "The place was packed.",
+    "explains": "店里挤爆了"
+  },
+  {
+    "word": "Long wait, short queue.",
+    "explains": "排队要很久"
+  },
+  {
+    "word": "Skip the line with a reservation.",
+    "explains": "有预约可以直接进"
+  },
+  {
+    "word": "I'd love to book for Saturday night.",
+    "explains": "想订周六晚上的位"
+  },
+  {
+    "word": "A booth if you can.",
+    "explains": "能安排卡座吗"
+  }
+]

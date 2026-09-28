@@ -1,0 +1,422 @@
+[
+  {
+    "word": "Where is the nearest station?",
+    "explains": "最近的站在哪？"
+  },
+  {
+    "word": "Which line goes to the airport?",
+    "explains": "哪条线去机场？"
+  },
+  {
+    "word": "At which stop should I get off?",
+    "explains": "在哪站下车？"
+  },
+  {
+    "word": "Is this the last train?",
+    "explains": "这是末班车吗？"
+  },
+  {
+    "word": "What time is the first train?",
+    "explains": "首班车几点？"
+  },
+  {
+    "word": "How often do buses run?",
+    "explains": "公交车多久一班？"
+  },
+  {
+    "word": "Peak hours only.",
+    "explains": "仅高峰期运行"
+  },
+  {
+    "word": "Next train in 5 minutes.",
+    "explains": "5 分钟后下一班"
+  },
+  {
+    "word": "The train is delayed.",
+    "explains": "火车延误了"
+  },
+  {
+    "word": "What's the reason for the delay?",
+    "explains": "为什么延误？"
+  },
+  {
+    "word": "Signal failure ahead.",
+    "explains": "前方信号故障"
+  },
+  {
+    "word": "Track works in progress.",
+    "explains": "线路施工"
+  },
+  {
+    "word": "Service suspended between X and Y.",
+    "explains": "X 到 Y 段停运"
+  },
+  {
+    "word": "Shuttle bus provided.",
+    "explains": "提供摆渡车"
+  },
+  {
+    "word": "Please stand clear of the doors.",
+    "explains": "请离车门远一点"
+  },
+  {
+    "word": "Mind the gap.",
+    "explains": "注意车缝"
+  },
+  {
+    "word": "Last stop ahead.",
+    "explains": "下一站是终点"
+  },
+  {
+    "word": "This is a smoking car.",
+    "explains": "吸烟车厢"
+  },
+  {
+    "word": "Quiet carriage.",
+    "explains": "静音车厢"
+  },
+  {
+    "word": "Priority seating.",
+    "explains": "优先座位（老幼病残孕）"
+  },
+  {
+    "word": "Reserved seating only.",
+    "explains": "仅限有票乘客"
+  },
+  {
+    "word": "Standee zone.",
+    "explains": "站立区"
+  },
+  {
+    "word": "Watch your belongings.",
+    "explains": "保管好随身物品"
+  },
+  {
+    "word": "Watch out for pickpockets.",
+    "explains": "当心扒手"
+  },
+  {
+    "word": "Lost and found.",
+    "explains": "失物招领"
+  },
+  {
+    "word": "I left my bag on the train.",
+    "explains": "我包落车上了"
+  },
+  {
+    "word": "Do you have a transit pass?",
+    "explains": "你有交通卡吗？"
+  },
+  {
+    "word": "Single ride or day pass?",
+    "explains": "单次还是日票？"
+  },
+  {
+    "word": "How much is a one-way ticket?",
+    "explains": "单程票多少钱？"
+  },
+  {
+    "word": "Do you sell student fares?",
+    "explains": "有学生票吗？"
+  },
+  {
+    "word": "Senior discount available.",
+    "explains": "有老年优惠"
+  },
+  {
+    "word": "You're going the wrong way.",
+    "explains": "你坐反了"
+  },
+  {
+    "word": "Transfer here for Line 2.",
+    "explains": "在这里换乘 2 号线"
+  },
+  {
+    "word": "Follow the exit signs.",
+    "explains": "跟着出口指示牌走"
+  },
+  {
+    "word": "Take the escalator.",
+    "explains": "走扶梯"
+  },
+  {
+    "word": "Use the lift instead.",
+    "explains": "坐电梯（无障碍）"
+  },
+  {
+    "word": "Elevator is out of order.",
+    "explains": "电梯坏了"
+  },
+  {
+    "word": "This station is under construction.",
+    "explains": "这个站在施工"
+  },
+  {
+    "word": "Platform 7.",
+    "explains": "7 号站台"
+  },
+  {
+    "word": "Track 2, gate B.",
+    "explains": "2 号检票口 B"
+  },
+  {
+    "word": "Mind the step.",
+    "explains": "注意台阶"
+  },
+  {
+    "word": "Boarding now.",
+    "explains": "正在检票上车"
+  },
+  {
+    "word": "All aboard.",
+    "explains": "全体上车"
+  },
+  {
+    "word": "Train is about to depart.",
+    "explains": "火车即将出发"
+  },
+  {
+    "word": "Departures board.",
+    "explains": "出发信息板"
+  },
+  {
+    "word": "Arrivals board.",
+    "explains": "到达信息板"
+  },
+  {
+    "word": "Flight delayed.",
+    "explains": "航班延误"
+  },
+  {
+    "word": "Flight cancelled.",
+    "explains": "航班取消"
+  },
+  {
+    "word": "Gate has changed to D12.",
+    "explains": "登机口改到 D12"
+  },
+  {
+    "word": "Last call for boarding.",
+    "explains": "最后一次登机呼叫"
+  },
+  {
+    "word": "Please have your passport ready.",
+    "explains": "准备好护照"
+  },
+  {
+    "word": "Empty your pockets.",
+    "explains": "把口袋清空（安检）"
+  },
+  {
+    "word": "Remove your laptop from the bag.",
+    "explains": "把笔记本电脑拿出来"
+  },
+  {
+    "word": "Liquids over 100ml are not allowed.",
+    "explains": "液体超过 100 毫升不能带"
+  },
+  {
+    "word": "Sharp objects must go in checked baggage.",
+    "explains": "利器需托运"
+  },
+  {
+    "word": "You can check in online.",
+    "explains": "可以网上值机"
+  },
+  {
+    "word": "Boarding pass ready?",
+    "explains": "登机牌好了吗？"
+  },
+  {
+    "word": "Window or aisle?",
+    "explains": "靠窗还是靠过道？"
+  },
+  {
+    "word": "Seat 14A.",
+    "explains": "14A 座位"
+  },
+  {
+    "word": "I'd like to upgrade to first class.",
+    "explains": "我想升头等舱"
+  },
+  {
+    "word": "Can I carry this item on board?",
+    "explains": "这个能带上飞机吗？"
+  },
+  {
+    "word": "Extra baggage fee.",
+    "explains": "超重行李费"
+  },
+  {
+    "word": "Luggage is oversized.",
+    "explains": "行李超规"
+  },
+  {
+    "word": "Customs declaration.",
+    "explains": "海关申报"
+  },
+  {
+    "word": "Do you have anything to declare?",
+    "explains": "有物品要申报吗？"
+  },
+  {
+    "word": "Immigration checkpoint.",
+    "explains": "移民局关口"
+  },
+  {
+    "word": "Have a nice stay!",
+    "explains": "祝停留愉快（边检）"
+  },
+  {
+    "word": "Where's the baggage claim?",
+    "explains": "行李提取处在哪？"
+  },
+  {
+    "word": "My suitcase is missing.",
+    "explains": "我的行李箱丢了"
+  },
+  {
+    "word": "I'd like to file a baggage report.",
+    "explains": "我要报失行李"
+  },
+  {
+    "word": "Where do I rent a car?",
+    "explains": "在哪租车？"
+  },
+  {
+    "word": "Do you need an international driving permit?",
+    "explains": "需要国际驾照吗？"
+  },
+  {
+    "word": "Full tank on return.",
+    "explains": "还车需加满"
+  },
+  {
+    "word": "I'd like to call an Uber.",
+    "explains": "我想叫个 Uber"
+  },
+  {
+    "word": "Can I cancel the ride?",
+    "explains": "能取消订单吗？"
+  },
+  {
+    "word": "The driver can't find me.",
+    "explains": "司机找不到我"
+  },
+  {
+    "word": "I'm at the north exit.",
+    "explains": "我在北出口"
+  },
+  {
+    "word": "How do I rate the driver?",
+    "explains": "怎么给司机评分？"
+  },
+  {
+    "word": "That was a smooth ride.",
+    "explains": "这趟开得很稳"
+  },
+  {
+    "word": "The driver took a shortcut.",
+    "explains": "司机抄了近道"
+  },
+  {
+    "word": "Turn left at the next intersection.",
+    "explains": "下个路口左转"
+  },
+  {
+    "word": "Take the second exit on the highway.",
+    "explains": "高速走第二个出口"
+  },
+  {
+    "word": "Merge into the left lane.",
+    "explains": "并入左车道"
+  },
+  {
+    "word": "Keep to the right.",
+    "explains": "靠右行驶"
+  },
+  {
+    "word": "Slow down, speed camera ahead.",
+    "explains": "减速，前方有测速"
+  },
+  {
+    "word": "No parking here.",
+    "explains": "此处禁停"
+  },
+  {
+    "word": "One-way street.",
+    "explains": "单行道"
+  },
+  {
+    "word": "Roundabout ahead.",
+    "explains": "前方环岛"
+  },
+  {
+    "word": "Traffic jam.",
+    "explains": "堵车"
+  },
+  {
+    "word": "The roads are clear.",
+    "explains": "路况畅通"
+  },
+  {
+    "word": "Road closed for maintenance.",
+    "explains": "道路维修封闭"
+  },
+  {
+    "word": "Diversion in place.",
+    "explains": "有绕行方案"
+  },
+  {
+    "word": "Heavy snowfall.",
+    "explains": "大雪"
+  },
+  {
+    "word": "Fog is reducing visibility.",
+    "explains": "雾大能见度低"
+  },
+  {
+    "word": "Bike lane.",
+    "explains": "自行车道"
+  },
+  {
+    "word": "Walkway closed.",
+    "explains": "人行道封闭"
+  },
+  {
+    "word": "Crosswalk ahead.",
+    "explains": "前方斑马线"
+  },
+  {
+    "word": "Pedestrians have right of way.",
+    "explains": "行人优先"
+  },
+  {
+    "word": "Yield to oncoming traffic.",
+    "explains": "让对面来车"
+  },
+  {
+    "word": "I'm stranded.",
+    "explains": "我被困住了（打不到车/车坏了）"
+  },
+  {
+    "word": "Can you give me a lift?",
+    "explains": "能捎我一程吗？"
+  },
+  {
+    "word": "Let me walk, it's close.",
+    "explains": "我自己走，不远"
+  },
+  {
+    "word": "I missed my flight.",
+    "explains": "我错过航班了"
+  },
+  {
+    "word": "Rearrange my booking.",
+    "explains": "帮我改签"
+  },
+  {
+    "word": "Get a refund for the unused ticket.",
+    "explains": "退未使用的票款"
+  }
+]

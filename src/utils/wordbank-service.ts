@@ -33,6 +33,14 @@ export type WordBankType =
   | 'oral-basic'       // 口语入门
   | 'oral-intermediate' // 口语进阶
   | 'oral-advanced'    // 口语高阶
+  | 'tech-vocab'       // 程序员常用单词
+  | 'dev-phrases'      // 程序员场景短句
+  | 'dev-status'       // 开发状态短句
+  | 'dev-debugging'    // 程序员排 bug 与性能问题
+  | 'dev-reading'      // 程序员看文档/浏览技术站点
+  | 'shopping'         // 日常购物
+  | 'transport'        // 日常交通出行
+  | 'dining'           // 日常吃饭点餐
   | 'movie-lines'    // 经典电影台词
   | 'famous-quotes'  // 英语名言警句
   | 'jlpt-n5'        // 日语 JLPT N5
@@ -111,6 +119,14 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'oral-basic', name: '口语入门', description: '零基础也能上口的高频日常口语短句', wordCount: 100, language: 'en' },
   { id: 'oral-intermediate', name: '口语进阶', description: '完整对话与观点表达的日常口语短句', wordCount: 98, language: 'en' },
   { id: 'oral-advanced', name: '口语高阶', description: '地道习语与深度讨论的高阶口语短句', wordCount: 105, language: 'en' },
+  { id: 'tech-vocab', name: '程序员常用单词', description: '覆盖编码、调试、测试、部署、协作、线上运维等高频技术词', wordCount: 585, language: 'en' },
+  { id: 'dev-phrases', name: '程序员场景短句', description: '站会、PR 评审、沟通协作等真实工作场景常用英文短句', wordCount: 190, language: 'en' },
+  { id: 'dev-status', name: '开发状态短句', description: 'CI、测试、构建、发布等开发状态常用英文表述', wordCount: 118, language: 'en' },
+  { id: 'dev-debugging', name: '排 bug 与性能', description: '排查 bug、定位性能瓶颈、线上问题复盘的常用英文表达', wordCount: 193, language: 'en' },
+  { id: 'dev-reading', name: '看文档与查资料', description: '读 README、看 API 文档、逛 Stack Overflow 与 GitHub 的常用短句', wordCount: 104, language: 'en' },
+  { id: 'shopping', name: '日常购物', description: '结账、退换货、优惠券、快递与售后等购物场景常用英文短句', wordCount: 86, language: 'en' },
+  { id: 'transport', name: '日常交通出行', description: '地铁公交、打车、坐飞机、读路牌等出行场景常用英文短句', wordCount: 105, language: 'en' },
+  { id: 'dining', name: '日常吃饭点餐', description: '堂食点单、打包外带、过敏说明、结账等就餐场景常用英文短句', wordCount: 97, language: 'en' },
   { id: 'movie-lines', name: '电影台词', description: '经典英文电影台词（附中文翻译与出处）', wordCount: 223, language: 'en' },
   { id: 'famous-quotes', name: '名言警句', description: '英语名人名言警句（附中文翻译与作者）', wordCount: 213, language: 'en' },
   { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 700, language: 'ja' },

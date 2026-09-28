@@ -43,6 +43,14 @@ export type WordBankType =
   | 'oral-basic'
   | 'oral-intermediate'
   | 'oral-advanced'
+  | 'tech-vocab'
+  | 'dev-phrases'
+  | 'dev-status'
+  | 'dev-debugging'
+  | 'dev-reading'
+  | 'shopping'
+  | 'transport'
+  | 'dining'
   | 'roots'
 
 export interface WordBankInfo {

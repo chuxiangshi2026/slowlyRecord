@@ -1,0 +1,2342 @@
+[
+  {
+    "word": "deploy",
+    "explains": "部署（把代码发布到服务器）"
+  },
+  {
+    "word": "rollback",
+    "explains": "回滚（撤销到上一个版本）"
+  },
+  {
+    "word": "hotfix",
+    "explains": "热修复（紧急修复上线）"
+  },
+  {
+    "word": "release",
+    "explains": "发布、版本"
+  },
+  {
+    "word": "patch",
+    "explains": "补丁"
+  },
+  {
+    "word": "build",
+    "explains": "构建、编译"
+  },
+  {
+    "word": "compile",
+    "explains": "编译"
+  },
+  {
+    "word": "bundle",
+    "explains": "打包、包体"
+  },
+  {
+    "word": "minify",
+    "explains": "压缩混淆（代码体积优化）"
+  },
+  {
+    "word": "tree-shaking",
+    "explains": "树摇（移除未使用的代码）"
+  },
+  {
+    "word": "lint",
+    "explains": "静态检查代码规范"
+  },
+  {
+    "word": "type-check",
+    "explains": "类型检查"
+  },
+  {
+    "word": "refactor",
+    "explains": "重构"
+  },
+  {
+    "word": "rename",
+    "explains": "重命名"
+  },
+  {
+    "word": "scope",
+    "explains": "作用域、范围"
+  },
+  {
+    "word": "closure",
+    "explains": "闭包"
+  },
+  {
+    "word": "hoisting",
+    "explains": "变量提升"
+  },
+  {
+    "word": "undefined",
+    "explains": "未定义"
+  },
+  {
+    "word": "null",
+    "explains": "空值"
+  },
+  {
+    "word": "type",
+    "explains": "类型"
+  },
+  {
+    "word": "interface",
+    "explains": "接口"
+  },
+  {
+    "word": "namespace",
+    "explains": "命名空间"
+  },
+  {
+    "word": "generic",
+    "explains": "泛型"
+  },
+  {
+    "word": "overload",
+    "explains": "重载"
+  },
+  {
+    "word": "async",
+    "explains": "异步"
+  },
+  {
+    "word": "await",
+    "explains": "等待异步结果"
+  },
+  {
+    "word": "promise",
+    "explains": "承诺对象（异步结果占位）"
+  },
+  {
+    "word": "callback",
+    "explains": "回调函数"
+  },
+  {
+    "word": "event loop",
+    "explains": "事件循环"
+  },
+  {
+    "word": "microtask",
+    "explains": "微任务"
+  },
+  {
+    "word": "macrotask",
+    "explains": "宏任务"
+  },
+  {
+    "word": "render",
+    "explains": "渲染"
+  },
+  {
+    "word": "mount",
+    "explains": "挂载组件"
+  },
+  {
+    "word": "unmount",
+    "explains": "卸载组件"
+  },
+  {
+    "word": "reactive",
+    "explains": "响应式的"
+  },
+  {
+    "word": "computed",
+    "explains": "计算属性"
+  },
+  {
+    "word": "watch",
+    "explains": "侦听变化"
+  },
+  {
+    "word": "props",
+    "explains": "父传子的属性"
+  },
+  {
+    "word": "slot",
+    "explains": "插槽"
+  },
+  {
+    "word": "directive",
+    "explains": "指令"
+  },
+  {
+    "word": "hydration",
+    "explains": "水合（SSR 接管页面）"
+  },
+  {
+    "word": "SSR",
+    "explains": "服务端渲染"
+  },
+  {
+    "word": "CSR",
+    "explains": "客户端渲染"
+  },
+  {
+    "word": "cache",
+    "explains": "缓存"
+  },
+  {
+    "word": "stale",
+    "explains": "过期的、陈旧的"
+  },
+  {
+    "word": "ttl",
+    "explains": "存活时间"
+  },
+  {
+    "word": "in-memory",
+    "explains": "内存中的"
+  },
+  {
+    "word": "persist",
+    "explains": "持久化"
+  },
+  {
+    "word": "hydration mismatch",
+    "explains": "水合不一致"
+  },
+  {
+    "word": "re-render",
+    "explains": "重复渲染"
+  },
+  {
+    "word": "diff",
+    "explains": "差异对比"
+  },
+  {
+    "word": "vdom",
+    "explains": "虚拟 DOM"
+  },
+  {
+    "word": "state",
+    "explains": "状态"
+  },
+  {
+    "word": "reducer",
+    "explains": "状态归约函数"
+  },
+  {
+    "word": "action",
+    "explains": "动作"
+  },
+  {
+    "word": "middleware",
+    "explains": "中间件"
+  },
+  {
+    "word": "interceptor",
+    "explains": "拦截器"
+  },
+  {
+    "word": "polyfill",
+    "explains": "特性补丁（兼容旧环境）"
+  },
+  {
+    "word": "feature detect",
+    "explains": "特性检测"
+  },
+  {
+    "word": "fallback",
+    "explains": "兜底方案"
+  },
+  {
+    "word": "degrade",
+    "explains": "降级"
+  },
+  {
+    "word": "guard",
+    "explains": "守卫（拦截保护）"
+  },
+  {
+    "word": "permission",
+    "explains": "权限"
+  },
+  {
+    "word": "token",
+    "explains": "令牌"
+  },
+  {
+    "word": "refresh",
+    "explains": "刷新"
+  },
+  {
+    "word": "oauth",
+    "explains": "第三方授权登录"
+  },
+  {
+    "word": "sso",
+    "explains": "单点登录"
+  },
+  {
+    "word": "csrf",
+    "explains": "跨站请求伪造"
+  },
+  {
+    "word": "cors",
+    "explains": "跨域资源共享"
+  },
+  {
+    "word": "cookie",
+    "explains": "浏览器存储的键值对"
+  },
+  {
+    "word": "session",
+    "explains": "会话"
+  },
+  {
+    "word": "endpoint",
+    "explains": "接口地址"
+  },
+  {
+    "word": "payload",
+    "explains": "请求负载数据"
+  },
+  {
+    "word": "schema",
+    "explains": "结构定义、模式"
+  },
+  {
+    "word": "validation",
+    "explains": "校验"
+  },
+  {
+    "word": "serialization",
+    "explains": "序列化"
+  },
+  {
+    "word": "deserialization",
+    "explains": "反序列化"
+  },
+  {
+    "word": "encoding",
+    "explains": "编码"
+  },
+  {
+    "word": "decoding",
+    "explains": "解码"
+  },
+  {
+    "word": "url",
+    "explains": "统一资源定位符"
+  },
+  {
+    "word": "path",
+    "explains": "路径"
+  },
+  {
+    "word": "route",
+    "explains": "路由"
+  },
+  {
+    "word": "query",
+    "explains": "查询参数"
+  },
+  {
+    "word": "header",
+    "explains": "请求头"
+  },
+  {
+    "word": "body",
+    "explains": "请求体"
+  },
+  {
+    "word": "content-type",
+    "explains": "内容类型"
+  },
+  {
+    "word": "gzip",
+    "explains": "压缩格式"
+  },
+  {
+    "word": "latency",
+    "explains": "延迟"
+  },
+  {
+    "word": "timeout",
+    "explains": "超时"
+  },
+  {
+    "word": "retry",
+    "explains": "重试"
+  },
+  {
+    "word": "backoff",
+    "explains": "退避策略"
+  },
+  {
+    "word": "rate limit",
+    "explains": "限流"
+  },
+  {
+    "word": "throttle",
+    "explains": "节流"
+  },
+  {
+    "word": "debounce",
+    "explains": "防抖"
+  },
+  {
+    "word": "concurrency",
+    "explains": "并发"
+  },
+  {
+    "word": "lock",
+    "explains": "锁"
+  },
+  {
+    "word": "deadlock",
+    "explains": "死锁"
+  },
+  {
+    "word": "race condition",
+    "explains": "竞态条件"
+  },
+  {
+    "word": "idempotent",
+    "explains": "幂等的（重复调用结果一致）"
+  },
+  {
+    "word": "atomic",
+    "explains": "原子的"
+  },
+  {
+    "word": "transaction",
+    "explains": "事务"
+  },
+  {
+    "word": "commit",
+    "explains": "提交"
+  },
+  {
+    "word": "abort",
+    "explains": "中止"
+  },
+  {
+    "word": "crash",
+    "explains": "崩溃"
+  },
+  {
+    "word": "stack trace",
+    "explains": "堆栈跟踪"
+  },
+  {
+    "word": "traceback",
+    "explains": "报错回溯信息"
+  },
+  {
+    "word": "assertion",
+    "explains": "断言"
+  },
+  {
+    "word": "assertion failed",
+    "explains": "断言失败"
+  },
+  {
+    "word": "exception",
+    "explains": "异常"
+  },
+  {
+    "word": "stack overflow",
+    "explains": "栈溢出"
+  },
+  {
+    "word": "memory leak",
+    "explains": "内存泄漏"
+  },
+  {
+    "word": "out of memory",
+    "explains": "内存耗尽"
+  },
+  {
+    "word": "garbage collection",
+    "explains": "垃圾回收"
+  },
+  {
+    "word": "benchmark",
+    "explains": "性能基准测试"
+  },
+  {
+    "word": "profiler",
+    "explains": "性能剖析工具"
+  },
+  {
+    "word": "bottleneck",
+    "explains": "瓶颈"
+  },
+  {
+    "word": "throughput",
+    "explains": "吞吐量"
+  },
+  {
+    "word": "warm up",
+    "explains": "预热"
+  },
+  {
+    "word": "cold start",
+    "explains": "冷启动"
+  },
+  {
+    "word": "index",
+    "explains": "索引"
+  },
+  {
+    "word": "query plan",
+    "explains": "查询执行计划"
+  },
+  {
+    "word": "n+1 query",
+    "explains": "逐条查询的低效模式"
+  },
+  {
+    "word": "shard",
+    "explains": "分片"
+  },
+  {
+    "word": "replica",
+    "explains": "副本"
+  },
+  {
+    "word": "replicate",
+    "explains": "复制"
+  },
+  {
+    "word": "consistency",
+    "explains": "一致性"
+  },
+  {
+    "word": "availability",
+    "explains": "可用性"
+  },
+  {
+    "word": "partition",
+    "explains": "分区"
+  },
+  {
+    "word": "circuit breaker",
+    "explains": "熔断器"
+  },
+  {
+    "word": "retry policy",
+    "explains": "重试策略"
+  },
+  {
+    "word": "graceful shutdown",
+    "explains": "优雅停机"
+  },
+  {
+    "word": "health check",
+    "explains": "健康检查"
+  },
+  {
+    "word": "log",
+    "explains": "日志"
+  },
+  {
+    "word": "trace id",
+    "explains": "链路追踪标识"
+  },
+  {
+    "word": "metric",
+    "explains": "指标"
+  },
+  {
+    "word": "dashboard",
+    "explains": "仪表盘"
+  },
+  {
+    "word": "alarm",
+    "explains": "告警"
+  },
+  {
+    "word": "incident",
+    "explains": "线上事故"
+  },
+  {
+    "word": "postmortem",
+    "explains": "事故复盘"
+  },
+  {
+    "word": "sla",
+    "explains": "服务等级协议"
+  },
+  {
+    "word": "downtime",
+    "explains": "停机时间"
+  },
+  {
+    "word": "on-call",
+    "explains": "值班"
+  },
+  {
+    "word": "monitor",
+    "explains": "监控"
+  },
+  {
+    "word": "audit",
+    "explains": "审计"
+  },
+  {
+    "word": "sensitive",
+    "explains": "敏感的（数据）"
+  },
+  {
+    "word": "desensitize",
+    "explains": "脱敏"
+  },
+  {
+    "word": "encrypt",
+    "explains": "加密"
+  },
+  {
+    "word": "decrypt",
+    "explains": "解密"
+  },
+  {
+    "word": "hash",
+    "explains": "哈希"
+  },
+  {
+    "word": "salt",
+    "explains": "加盐"
+  },
+  {
+    "word": "credential",
+    "explains": "凭证、密钥"
+  },
+  {
+    "word": "leak",
+    "explains": "泄漏"
+  },
+  {
+    "word": "xss",
+    "explains": "跨站脚本攻击"
+  },
+  {
+    "word": "sanitize",
+    "explains": "净化（输入）"
+  },
+  {
+    "word": "upload",
+    "explains": "上传"
+  },
+  {
+    "word": "download",
+    "explains": "下载"
+  },
+  {
+    "word": "import",
+    "explains": "导入"
+  },
+  {
+    "word": "export",
+    "explains": "导出"
+  },
+  {
+    "word": "migrate",
+    "explains": "迁移"
+  },
+  {
+    "word": "seed",
+    "explains": "初始化数据"
+  },
+  {
+    "word": "fixture",
+    "explains": "测试固定数据"
+  },
+  {
+    "word": "mock",
+    "explains": "模拟"
+  },
+  {
+    "word": "stub",
+    "explains": "桩函数"
+  },
+  {
+    "word": "spy",
+    "explains": "监听（函数调用）"
+  },
+  {
+    "word": "coverage",
+    "explains": "覆盖率"
+  },
+  {
+    "word": "e2e test",
+    "explains": "端到端测试"
+  },
+  {
+    "word": "unit test",
+    "explains": "单元测试"
+  },
+  {
+    "word": "integration test",
+    "explains": "集成测试"
+  },
+  {
+    "word": "regression",
+    "explains": "回归"
+  },
+  {
+    "word": "flaky test",
+    "explains": "不稳定的测试"
+  },
+  {
+    "word": "snapshot",
+    "explains": "快照"
+  },
+  {
+    "word": "ci",
+    "explains": "持续集成"
+  },
+  {
+    "word": "cd",
+    "explains": "持续交付"
+  },
+  {
+    "word": "pipeline",
+    "explains": "流水线"
+  },
+  {
+    "word": "artifact",
+    "explains": "构建产物"
+  },
+  {
+    "word": "tag",
+    "explains": "标签、版本标记"
+  },
+  {
+    "word": "branch",
+    "explains": "分支"
+  },
+  {
+    "word": "merge",
+    "explains": "合并"
+  },
+  {
+    "word": "rebase",
+    "explains": "变基"
+  },
+  {
+    "word": "conflict",
+    "explains": "冲突"
+  },
+  {
+    "word": "cherry-pick",
+    "explains": "摘取单个提交"
+  },
+  {
+    "word": "stash",
+    "explains": "暂存当前改动"
+  },
+  {
+    "word": "commit message",
+    "explains": "提交说明"
+  },
+  {
+    "word": "pull request",
+    "explains": "合并请求"
+  },
+  {
+    "word": "code review",
+    "explains": "代码评审"
+  },
+  {
+    "word": "approver",
+    "explains": "审批人"
+  },
+  {
+    "word": "sign-off",
+    "explains": "签字确认"
+  },
+  {
+    "word": "scope creep",
+    "explains": "范围蔓延"
+  },
+  {
+    "word": "deadline",
+    "explains": "截止日期"
+  },
+  {
+    "word": "milestone",
+    "explains": "里程碑"
+  },
+  {
+    "word": "backlog",
+    "explains": "待办池"
+  },
+  {
+    "word": "sprint",
+    "explains": "迭代"
+  },
+  {
+    "word": "retro",
+    "explains": "回顾会"
+  },
+  {
+    "word": "standup",
+    "explains": "站会"
+  },
+  {
+    "word": "demo",
+    "explains": "演示"
+  },
+  {
+    "word": "acceptance criteria",
+    "explains": "验收标准"
+  },
+  {
+    "word": "deliverable",
+    "explains": "交付物"
+  },
+  {
+    "word": "spec",
+    "explains": "规格说明"
+  },
+  {
+    "word": "wireframe",
+    "explains": "线框图"
+  },
+  {
+    "word": "mockup",
+    "explains": "视觉稿"
+  },
+  {
+    "word": "responsive",
+    "explains": "响应式的（适配多端）"
+  },
+  {
+    "word": "accessibility",
+    "explains": "可访问性（a11y）"
+  },
+  {
+    "word": "semver",
+    "explains": "语义化版本号"
+  },
+  {
+    "word": "changelog",
+    "explains": "变更日志"
+  },
+  {
+    "word": "roadmap",
+    "explains": "路线图"
+  },
+  {
+    "word": "legacy",
+    "explains": "遗留的（旧代码）"
+  },
+  {
+    "word": "tech debt",
+    "explains": "技术债"
+  },
+  {
+    "word": "boilerplate",
+    "explains": "样板代码"
+  },
+  {
+    "word": "scaffolding",
+    "explains": "脚手架"
+  },
+  {
+    "word": "template",
+    "explains": "模板"
+  },
+  {
+    "word": "abstraction",
+    "explains": "抽象"
+  },
+  {
+    "word": "coupling",
+    "explains": "耦合"
+  },
+  {
+    "word": "dependency",
+    "explains": "依赖"
+  },
+  {
+    "word": "injection",
+    "explains": "注入"
+  },
+  {
+    "word": "singleton",
+    "explains": "单例"
+  },
+  {
+    "word": "factory",
+    "explains": "工厂"
+  },
+  {
+    "word": "adapter",
+    "explains": "适配器"
+  },
+  {
+    "word": "wrapper",
+    "explains": "封装层"
+  },
+  {
+    "word": "hook",
+    "explains": "钩子"
+  },
+  {
+    "word": "plugin",
+    "explains": "插件"
+  },
+  {
+    "word": "sdk",
+    "explains": "开发工具包"
+  },
+  {
+    "word": "cli",
+    "explains": "命令行工具"
+  },
+  {
+    "word": "config",
+    "explains": "配置"
+  },
+  {
+    "word": "env variable",
+    "explains": "环境变量"
+  },
+  {
+    "word": "placeholder",
+    "explains": "占位符"
+  },
+  {
+    "word": "magic number",
+    "explains": "硬编码的魔法数字"
+  },
+  {
+    "word": "dead code",
+    "explains": "死代码"
+  },
+  {
+    "word": "TODO",
+    "explains": "待办标记"
+  },
+  {
+    "word": "deprecated",
+    "explains": "已弃用的"
+  },
+  {
+    "word": "breaking change",
+    "explains": "破坏性变更"
+  },
+  {
+    "word": "backward compatible",
+    "explains": "向后兼容"
+  },
+  {
+    "word": "upstream",
+    "explains": "上游"
+  },
+  {
+    "word": "downstream",
+    "explains": "下游"
+  },
+  {
+    "word": "third-party",
+    "explains": "第三方的"
+  },
+  {
+    "word": "opensource",
+    "explains": "开源的"
+  },
+  {
+    "word": "license",
+    "explains": "许可协议"
+  },
+  {
+    "word": "convention",
+    "explains": "约定"
+  },
+  {
+    "word": "idempotent cleanup",
+    "explains": "幂等清理"
+  },
+  {
+    "word": "side effect",
+    "explains": "副作用"
+  },
+  {
+    "word": "pure function",
+    "explains": "纯函数"
+  },
+  {
+    "word": "immutable",
+    "explains": "不可变的"
+  },
+  {
+    "word": "mutable",
+    "explains": "可变的"
+  },
+  {
+    "word": "reference",
+    "explains": "引用"
+  },
+  {
+    "word": "shallow copy",
+    "explains": "浅拷贝"
+  },
+  {
+    "word": "deep copy",
+    "explains": "深拷贝"
+  },
+  {
+    "word": "clone",
+    "explains": "克隆"
+  },
+  {
+    "word": "merge conflict",
+    "explains": "合并冲突"
+  },
+  {
+    "word": "overwrite",
+    "explains": "覆盖"
+  },
+  {
+    "word": "truncate",
+    "explains": "截断"
+  },
+  {
+    "word": "escape",
+    "explains": "转义"
+  },
+  {
+    "word": "interpolate",
+    "explains": "插值"
+  },
+  {
+    "word": "parse",
+    "explains": "解析"
+  },
+  {
+    "word": "formatter",
+    "explains": "格式化器"
+  },
+  {
+    "word": "localization",
+    "explains": "本地化"
+  },
+  {
+    "word": "i18n",
+    "explains": "国际化"
+  },
+  {
+    "word": "fallback language",
+    "explains": "兜底语言"
+  },
+  {
+    "word": "pagination",
+    "explains": "分页"
+  },
+  {
+    "word": "infinite scroll",
+    "explains": "无限滚动"
+  },
+  {
+    "word": "virtual list",
+    "explains": "虚拟列表"
+  },
+  {
+    "word": "lazy load",
+    "explains": "懒加载"
+  },
+  {
+    "word": "preconnect",
+    "explains": "预连接"
+  },
+  {
+    "word": "preheat",
+    "explains": "预热（提前准备）"
+  },
+  {
+    "word": "prefetch",
+    "explains": "预取"
+  },
+  {
+    "word": "cache-bust",
+    "explains": "破坏缓存"
+  },
+  {
+    "word": "etag",
+    "explains": "资源版本标识"
+  },
+  {
+    "word": "etag mismatch",
+    "explains": "缓存版本不一致"
+  },
+  {
+    "word": "retryable",
+    "explains": "可重试的"
+  },
+  {
+    "word": "non-retryable",
+    "explains": "不可重试的"
+  },
+  {
+    "word": "best effort",
+    "explains": "尽力而为"
+  },
+  {
+    "word": "attempts",
+    "explains": "尝试次数"
+  },
+  {
+    "word": "backpressure",
+    "explains": "背压（下游处理不过来）"
+  },
+  {
+    "word": "buffer",
+    "explains": "缓冲"
+  },
+  {
+    "word": "queue",
+    "explains": "队列"
+  },
+  {
+    "word": "worker",
+    "explains": "工作线程"
+  },
+  {
+    "word": "thread pool",
+    "explains": "线程池"
+  },
+  {
+    "word": "goroutine",
+    "explains": "协程"
+  },
+  {
+    "word": "scheduler",
+    "explains": "调度器"
+  },
+  {
+    "word": "cron",
+    "explains": "定时任务"
+  },
+  {
+    "word": "heartbeat",
+    "explains": "心跳"
+  },
+  {
+    "word": "polling",
+    "explains": "轮询"
+  },
+  {
+    "word": "websocket",
+    "explains": "全双工长连接"
+  },
+  {
+    "word": "stream",
+    "explains": "流"
+  },
+  {
+    "word": "chunk",
+    "explains": "分块"
+  },
+  {
+    "word": "streaming response",
+    "explains": "流式响应"
+  },
+  {
+    "word": "starvation",
+    "explains": "饥饿（任务长期得不到执行）"
+  },
+  {
+    "word": "throttled",
+    "explains": "被限流的"
+  },
+  {
+    "word": "404",
+    "explains": "资源不存在"
+  },
+  {
+    "word": "429",
+    "explains": "请求过多被限流"
+  },
+  {
+    "word": "500",
+    "explains": "服务端内部错误"
+  },
+  {
+    "word": "502",
+    "explains": "网关错误"
+  },
+  {
+    "word": "503",
+    "explains": "服务不可用"
+  },
+  {
+    "word": "504",
+    "explains": "网关超时"
+  },
+  {
+    "word": "http status code",
+    "explains": "HTTP 状态码"
+  },
+  {
+    "word": "payload too large",
+    "explains": "请求体过大"
+  },
+  {
+    "word": "connection refused",
+    "explains": "连接被拒绝"
+  },
+  {
+    "word": "connection reset",
+    "explains": "连接被重置"
+  },
+  {
+    "word": "dns resolve failed",
+    "explains": "域名解析失败"
+  },
+  {
+    "word": "tls handshake",
+    "explains": "TLS 握手"
+  },
+  {
+    "word": "cert expired",
+    "explains": "证书过期"
+  },
+  {
+    "word": "ssl",
+    "explains": "加密传输协议"
+  },
+  {
+    "word": "cdn",
+    "explains": "内容分发网络"
+  },
+  {
+    "word": "origin server",
+    "explains": "源站服务器"
+  },
+  {
+    "word": "load balancer",
+    "explains": "负载均衡器"
+  },
+  {
+    "word": "reverse proxy",
+    "explains": "反向代理"
+  },
+  {
+    "word": "orchestration",
+    "explains": "编排"
+  },
+  {
+    "word": "provision",
+    "explains": "资源开通"
+  },
+  {
+    "word": "provisioned",
+    "explains": "已开通的"
+  },
+  {
+    "word": "quota",
+    "explains": "配额"
+  },
+  {
+    "word": "billing",
+    "explains": "计费"
+  },
+  {
+    "word": "overage",
+    "explains": "超额部分"
+  },
+  {
+    "word": "sandbox",
+    "explains": "沙箱环境"
+  },
+  {
+    "word": "staging",
+    "explains": "预发布环境"
+  },
+  {
+    "word": "staging env",
+    "explains": "预发布环境"
+  },
+  {
+    "word": "prod",
+    "explains": "生产环境"
+  },
+  {
+    "word": "pre-prod",
+    "explains": "准生产环境"
+  },
+  {
+    "word": "local dev",
+    "explains": "本地开发环境"
+  },
+  {
+    "word": "ci env",
+    "explains": "流水线环境"
+  },
+  {
+    "word": "env parity",
+    "explains": "环境一致性"
+  },
+  {
+    "word": "drift",
+    "explains": "配置漂移（环境间不一致）"
+  },
+  {
+    "word": "blue-green",
+    "explains": "蓝绿发布"
+  },
+  {
+    "word": "canary",
+    "explains": "灰度"
+  },
+  {
+    "word": "feature flag",
+    "explains": "功能开关"
+  },
+  {
+    "word": "kill switch",
+    "explains": "一键关停开关"
+  },
+  {
+    "word": "gray release",
+    "explains": "灰度发布"
+  },
+  {
+    "word": "staged rollout",
+    "explains": "分批放量"
+  },
+  {
+    "word": "rollback window",
+    "explains": "回滚窗口期"
+  },
+  {
+    "word": "smoke test",
+    "explains": "冒烟测试"
+  },
+  {
+    "word": "canary deploy",
+    "explains": "灰度部署"
+  },
+  {
+    "word": "hot deploy",
+    "explains": "热部署"
+  },
+  {
+    "word": "zero downtime",
+    "explains": "零停机"
+  },
+  {
+    "word": "deregister",
+    "explains": "注销（服务实例下线）"
+  },
+  {
+    "word": "register",
+    "explains": "注册（服务实例上线）"
+  },
+  {
+    "word": "health probe",
+    "explains": "健康探针"
+  },
+  {
+    "word": "resource limit",
+    "explains": "资源限制"
+  },
+  {
+    "word": "oom",
+    "explains": "内存溢出"
+  },
+  {
+    "word": "cpu spike",
+    "explains": "CPU 飙升"
+  },
+  {
+    "word": "memory spike",
+    "explains": "内存飙升"
+  },
+  {
+    "word": "latency spike",
+    "explains": "延迟飙升"
+  },
+  {
+    "word": "error rate",
+    "explains": "错误率"
+  },
+  {
+    "word": "p99",
+    "explains": "99 分位延迟"
+  },
+  {
+    "word": "rt",
+    "explains": "响应时间"
+  },
+  {
+    "word": "qps",
+    "explains": "每秒请求数"
+  },
+  {
+    "word": "traffic",
+    "explains": "流量"
+  },
+  {
+    "word": "peak hour",
+    "explains": "高峰时段"
+  },
+  {
+    "word": "cold pool",
+    "explains": "冷池（未预热实例）"
+  },
+  {
+    "word": "warm pool",
+    "explains": "热池（已预热实例）"
+  },
+  {
+    "word": "scaling",
+    "explains": "伸缩"
+  },
+  {
+    "word": "scale up",
+    "explains": "扩容"
+  },
+  {
+    "word": "scale down",
+    "explains": "缩容"
+  },
+  {
+    "word": "autoscale",
+    "explains": "自动伸缩"
+  },
+  {
+    "word": "stateless",
+    "explains": "无状态的"
+  },
+  {
+    "word": "stateful",
+    "explains": "有状态的"
+  },
+  {
+    "word": "persistence",
+    "explains": "持久化"
+  },
+  {
+    "word": "ttl cleanup",
+    "explains": "过期清理"
+  },
+  {
+    "word": "eviction",
+    "explains": "逐出（缓存淘汰）"
+  },
+  {
+    "word": "ttl expired",
+    "explains": "已过期"
+  },
+  {
+    "word": "orphan",
+    "explains": "孤儿数据（无主残留）"
+  },
+  {
+    "word": "orphan process",
+    "explains": "孤儿进程"
+  },
+  {
+    "word": "zombie",
+    "explains": "僵尸进程"
+  },
+  {
+    "word": "daemon",
+    "explains": "守护进程"
+  },
+  {
+    "word": "pid",
+    "explains": "进程标识号"
+  },
+  {
+    "word": "stdout",
+    "explains": "标准输出"
+  },
+  {
+    "word": "stderr",
+    "explains": "标准错误输出"
+  },
+  {
+    "word": "stdin",
+    "explains": "标准输入"
+  },
+  {
+    "word": "pipe",
+    "explains": "管道"
+  },
+  {
+    "word": "redirection",
+    "explains": "重定向"
+  },
+  {
+    "word": "shell",
+    "explains": "命令行外壳"
+  },
+  {
+    "word": "script",
+    "explains": "脚本"
+  },
+  {
+    "word": "one-liner",
+    "explains": "单行命令"
+  },
+  {
+    "word": "wildcard",
+    "explains": "通配符"
+  },
+  {
+    "word": "regex",
+    "explains": "正则表达式"
+  },
+  {
+    "word": "anchor",
+    "explains": "锚点"
+  },
+  {
+    "word": "capture group",
+    "explains": "捕获组"
+  },
+  {
+    "word": "lazy match",
+    "explains": "非贪婪匹配"
+  },
+  {
+    "word": "greedy match",
+    "explains": "贪婪匹配"
+  },
+  {
+    "word": "case sensitive",
+    "explains": "区分大小写"
+  },
+  {
+    "word": "trim",
+    "explains": "去除首尾空白"
+  },
+  {
+    "word": "whitespace",
+    "explains": "空白字符"
+  },
+  {
+    "word": "newline",
+    "explains": "换行符"
+  },
+  {
+    "word": "crlf",
+    "explains": "Windows 换行符"
+  },
+  {
+    "word": "lf",
+    "explains": "Unix 换行符"
+  },
+  {
+    "word": "bom",
+    "explains": "字节顺序标记"
+  },
+  {
+    "word": "utf-8",
+    "explains": "常见字符编码"
+  },
+  {
+    "word": "charset",
+    "explains": "字符集"
+  },
+  {
+    "word": "mojibake",
+    "explains": "乱码"
+  },
+  {
+    "word": "encoding mismatch",
+    "explains": "编码不一致"
+  },
+  {
+    "word": "charset mismatch",
+    "explains": "字符集不一致"
+  },
+  {
+    "word": "null byte",
+    "explains": "空字节"
+  },
+  {
+    "word": "binary",
+    "explains": "二进制"
+  },
+  {
+    "word": "text mode",
+    "explains": "文本模式"
+  },
+  {
+    "word": "base64",
+    "explains": "Base64 编码"
+  },
+  {
+    "word": "btoa",
+    "explains": "转 Base64"
+  },
+  {
+    "word": "atob",
+    "explains": "从 Base64 解码"
+  },
+  {
+    "word": "uri encode",
+    "explains": "URL 编码"
+  },
+  {
+    "word": "uri decode",
+    "explains": "URL 解码"
+  },
+  {
+    "word": "query string",
+    "explains": "查询字符串"
+  },
+  {
+    "word": "hash route",
+    "explains": "hash 路由"
+  },
+  {
+    "word": "history mode",
+    "explains": "history 路由模式"
+  },
+  {
+    "word": "navigation guard",
+    "explains": "导航守卫"
+  },
+  {
+    "word": "lazy route",
+    "explains": "懒加载路由"
+  },
+  {
+    "word": "breadcrumb",
+    "explains": "面包屑"
+  },
+  {
+    "word": "sidebar",
+    "explains": "侧边栏"
+  },
+  {
+    "word": "toolbar",
+    "explains": "工具栏"
+  },
+  {
+    "word": "breadcrumb nav",
+    "explains": "面包屑导航"
+  },
+  {
+    "word": "tab bar",
+    "explains": "标签栏"
+  },
+  {
+    "word": "drawer",
+    "explains": "抽屉面板"
+  },
+  {
+    "word": "popover",
+    "explains": "弹出气泡"
+  },
+  {
+    "word": "tooltip",
+    "explains": "悬浮提示"
+  },
+  {
+    "word": "toast",
+    "explains": "轻提示"
+  },
+  {
+    "word": "modal",
+    "explains": "模态对话框"
+  },
+  {
+    "word": "dialog",
+    "explains": "对话框"
+  },
+  {
+    "word": "confirm",
+    "explains": "确认框"
+  },
+  {
+    "word": "alert",
+    "explains": "警告提示"
+  },
+  {
+    "word": "loading state",
+    "explains": "加载中状态"
+  },
+  {
+    "word": "skeleton",
+    "explains": "骨架屏"
+  },
+  {
+    "word": "empty state",
+    "explains": "空状态"
+  },
+  {
+    "word": "error state",
+    "explains": "错误状态"
+  },
+  {
+    "word": "boundary",
+    "explains": "边界（错误边界）"
+  },
+  {
+    "word": "error boundary",
+    "explains": "错误边界组件"
+  },
+  {
+    "word": "crash boundary",
+    "explains": "崩溃边界"
+  },
+  {
+    "word": "recovery",
+    "explains": "恢复"
+  },
+  {
+    "word": "self-healing",
+    "explains": "自愈"
+  },
+  {
+    "word": "retryable error",
+    "explains": "可重试错误"
+  },
+  {
+    "word": "fatal error",
+    "explains": "致命错误"
+  },
+  {
+    "word": "non-fatal",
+    "explains": "非致命的"
+  },
+  {
+    "word": "warning",
+    "explains": "警告"
+  },
+  {
+    "word": "debug log",
+    "explains": "调试日志"
+  },
+  {
+    "word": "log level",
+    "explains": "日志级别"
+  },
+  {
+    "word": "verbose",
+    "explains": "冗长的、详细的"
+  },
+  {
+    "word": "trace level",
+    "explains": "追踪级别"
+  },
+  {
+    "word": "silent mode",
+    "explains": "静默模式"
+  },
+  {
+    "word": "mute",
+    "explains": "静音（屏蔽输出）"
+  },
+  {
+    "word": "noise",
+    "explains": "噪音（无关日志）"
+  },
+  {
+    "word": "signal",
+    "explains": "信号（有价值的信息）"
+  },
+  {
+    "word": "signal-to-noise",
+    "explains": "信噪比"
+  },
+  {
+    "word": "context",
+    "explains": "上下文"
+  },
+  {
+    "word": "context window",
+    "explains": "上下文窗口"
+  },
+  {
+    "word": "prompt",
+    "explains": "提示词"
+  },
+  {
+    "word": "inference",
+    "explains": "推理"
+  },
+  {
+    "word": "embedding",
+    "explains": "向量嵌入"
+  },
+  {
+    "word": "token limit",
+    "explains": "Token 上限"
+  },
+  {
+    "word": "truncation",
+    "explains": "截断"
+  },
+  {
+    "word": "rate limited",
+    "explains": "被限流"
+  },
+  {
+    "word": "cooldown",
+    "explains": "冷却时间"
+  },
+  {
+    "word": "quota exceeded",
+    "explains": "超出配额"
+  },
+  {
+    "word": "plan",
+    "explains": "套餐、计划"
+  },
+  {
+    "word": "tier",
+    "explains": "等级、档位"
+  },
+  {
+    "word": "subscription",
+    "explains": "订阅"
+  },
+  {
+    "word": "trial",
+    "explains": "试用"
+  },
+  {
+    "word": "renew",
+    "explains": "续费"
+  },
+  {
+    "word": "cancel",
+    "explains": "取消"
+  },
+  {
+    "word": "refund",
+    "explains": "退款"
+  },
+  {
+    "word": "invoice",
+    "explains": "账单"
+  },
+  {
+    "word": "receipt",
+    "explains": "收据"
+  },
+  {
+    "word": "ledger",
+    "explains": "账本"
+  },
+  {
+    "word": "reconcile",
+    "explains": "对账"
+  },
+  {
+    "word": "statement",
+    "explains": "对账单"
+  },
+  {
+    "word": "chargeback",
+    "explains": "拒付"
+  },
+  {
+    "word": "fraud",
+    "explains": "欺诈"
+  },
+  {
+    "word": "fraud detection",
+    "explains": "欺诈检测"
+  },
+  {
+    "word": "risk control",
+    "explains": "风控"
+  },
+  {
+    "word": "compliance",
+    "explains": "合规"
+  },
+  {
+    "word": "gdpr",
+    "explains": "通用数据保护条例"
+  },
+  {
+    "word": "consent",
+    "explains": "同意、授权"
+  },
+  {
+    "word": "opt-in",
+    "explains": "主动选择加入"
+  },
+  {
+    "word": "opt-out",
+    "explains": "主动选择退出"
+  },
+  {
+    "word": "retention",
+    "explains": "数据留存"
+  },
+  {
+    "word": "right to delete",
+    "explains": "删除权"
+  },
+  {
+    "word": "pseudonymize",
+    "explains": "假名化"
+  },
+  {
+    "word": "mask",
+    "explains": "遮盖、掩码"
+  },
+  {
+    "word": "redact",
+    "explains": "编辑抹除（敏感信息）"
+  },
+  {
+    "word": "anonymize",
+    "explains": "匿名化"
+  },
+  {
+    "word": "aggregate",
+    "explains": "聚合（统计汇总）"
+  },
+  {
+    "word": "sample",
+    "explains": "抽样、样本"
+  },
+  {
+    "word": "cohort",
+    "explains": "群体（用户分群）"
+  },
+  {
+    "word": "funnel",
+    "explains": "漏斗"
+  },
+  {
+    "word": "conversion",
+    "explains": "转化"
+  },
+  {
+    "word": "churn",
+    "explains": "流失"
+  },
+  {
+    "word": "activation",
+    "explains": "激活"
+  },
+  {
+    "word": "onboarding",
+    "explains": "新手引导"
+  },
+  {
+    "word": "activation rate",
+    "explains": "激活率"
+  },
+  {
+    "word": "dau",
+    "explains": "日活跃用户数"
+  },
+  {
+    "word": "mau",
+    "explains": "月活跃用户数"
+  },
+  {
+    "word": "retention rate",
+    "explains": "留存率"
+  },
+  {
+    "word": "new user",
+    "explains": "新用户"
+  },
+  {
+    "word": "returning user",
+    "explains": "回访用户"
+  },
+  {
+    "word": "power user",
+    "explains": "重度用户"
+  },
+  {
+    "word": "free tier",
+    "explains": "免费版"
+  },
+  {
+    "word": "paid tier",
+    "explains": "付费版"
+  },
+  {
+    "word": "premium",
+    "explains": "高级版"
+  },
+  {
+    "word": "lite",
+    "explains": "精简版"
+  },
+  {
+    "word": "pro",
+    "explains": "专业版"
+  },
+  {
+    "word": "enterprise",
+    "explains": "企业版"
+  },
+  {
+    "word": "trial account",
+    "explains": "试用账号"
+  },
+  {
+    "word": "paywall",
+    "explains": "付费墙"
+  },
+  {
+    "word": "upsell",
+    "explains": "引导升级"
+  },
+  {
+    "word": "cross-sell",
+    "explains": "交叉销售"
+  },
+  {
+    "word": "lifetime deal",
+    "explains": "终身买断"
+  },
+  {
+    "word": "seat",
+    "explains": "席位（按人授权）"
+  },
+  {
+    "word": "per-seat",
+    "explains": "按席位计费"
+  },
+  {
+    "word": "usage based",
+    "explains": "按用量计费"
+  },
+  {
+    "word": "flat rate",
+    "explains": "固定费率"
+  },
+  {
+    "word": "tiered pricing",
+    "explains": "阶梯定价"
+  },
+  {
+    "word": "discount",
+    "explains": "折扣"
+  },
+  {
+    "word": "coupon",
+    "explains": "优惠券"
+  },
+  {
+    "word": "voucher",
+    "explains": "代金券"
+  },
+  {
+    "word": "promocode",
+    "explains": "优惠码"
+  },
+  {
+    "word": "redeem",
+    "explains": "兑换"
+  },
+  {
+    "word": "expire",
+    "explains": "到期"
+  },
+  {
+    "word": "expired",
+    "explains": "已过期的"
+  },
+  {
+    "word": "renewal",
+    "explains": "续约"
+  },
+  {
+    "word": "grace period",
+    "explains": "宽限期"
+  },
+  {
+    "word": "dunning",
+    "explains": "催缴"
+  },
+  {
+    "word": "churned",
+    "explains": "已流失的"
+  },
+  {
+    "word": "reactivation",
+    "explains": "重新激活"
+  },
+  {
+    "word": "win-back",
+    "explains": "召回（流失用户）"
+  },
+  {
+    "word": "feedback",
+    "explains": "反馈"
+  },
+  {
+    "word": "bug report",
+    "explains": "缺陷报告"
+  },
+  {
+    "word": "crash report",
+    "explains": "崩溃报告"
+  },
+  {
+    "word": "sentry",
+    "explains": "错误监控服务"
+  },
+  {
+    "word": "error tracking",
+    "explains": "错误追踪"
+  },
+  {
+    "word": "grouped",
+    "explains": "已聚合的（相似报错归组）"
+  },
+  {
+    "word": "fingerprint",
+    "explains": "指纹（报错指纹）"
+  },
+  {
+    "word": "occurrence",
+    "explains": "发生次数"
+  },
+  {
+    "word": "affected users",
+    "explains": "受影响用户"
+  },
+  {
+    "word": "release health",
+    "explains": "版本健康度"
+  },
+  {
+    "word": "adoption",
+    "explains": "采用率"
+  },
+  {
+    "word": "stickiness",
+    "explains": "粘性"
+  },
+  {
+    "word": "engagement",
+    "explains": "参与度"
+  },
+  {
+    "word": "session duration",
+    "explains": "会话时长"
+  },
+  {
+    "word": "bounce",
+    "explains": "跳出"
+  },
+  {
+    "word": "bounce rate",
+    "explains": "跳出率"
+  },
+  {
+    "word": "landing page",
+    "explains": "落地页"
+  },
+  {
+    "word": "call to action",
+    "explains": "行动号召（CTA）"
+  },
+  {
+    "word": "cta",
+    "explains": "行动号召按钮"
+  },
+  {
+    "word": "align",
+    "explains": "对齐、达成一致"
+  },
+  {
+    "word": "sign off on",
+    "explains": "批准、签字"
+  },
+  {
+    "word": "get the green light",
+    "explains": "得到批准"
+  },
+  {
+    "word": "green light",
+    "explains": "绿灯放行"
+  },
+  {
+    "word": "flag something",
+    "explains": "标记出来"
+  },
+  {
+    "word": "flagged",
+    "explains": "已被标记"
+  },
+  {
+    "word": "sunset",
+    "explains": "下线（功能/服务）"
+  },
+  {
+    "word": "sunsetted",
+    "explains": "已下线的"
+  },
+  {
+    "word": "sunsetting",
+    "explains": "正在下线"
+  },
+  {
+    "word": "deprecate",
+    "explains": "弃用"
+  },
+  {
+    "word": "phase out",
+    "explains": "逐步淘汰"
+  },
+  {
+    "word": "phase in",
+    "explains": "逐步引入"
+  },
+  {
+    "word": "roll out",
+    "explains": "发布、上线"
+  },
+  {
+    "word": "rolled out",
+    "explains": "已发布的"
+  },
+  {
+    "word": "roll back",
+    "explains": "回退"
+  },
+  {
+    "word": "roll forward",
+    "explains": "向前修复（不回退）"
+  },
+  {
+    "word": "spin up",
+    "explains": "快速启动"
+  },
+  {
+    "word": "spun up",
+    "explains": "已启动"
+  },
+  {
+    "word": "spin down",
+    "explains": "关停缩减"
+  },
+  {
+    "word": "scaled down",
+    "explains": "已缩容"
+  },
+  {
+    "word": "hand off",
+    "explains": "交接"
+  },
+  {
+    "word": "handed over",
+    "explains": "已交接"
+  },
+  {
+    "word": "hand over",
+    "explains": "移交"
+  },
+  {
+    "word": "pass off",
+    "explains": "转手、推给"
+  },
+  {
+    "word": "get started",
+    "explains": "开始"
+  },
+  {
+    "word": "catch up",
+    "explains": "补上（进度）；追赶"
+  },
+  {
+    "word": "caught up",
+    "explains": "已追上；已被缠住"
+  },
+  {
+    "word": "acknowledge",
+    "explains": "确认收到"
+  },
+  {
+    "word": "acknowledged",
+    "explains": "已确认"
+  },
+  {
+    "word": "confirmed",
+    "explains": "已确认"
+  },
+  {
+    "word": "verified",
+    "explains": "已验证"
+  },
+  {
+    "word": "approved",
+    "explains": "已批准"
+  },
+  {
+    "word": "rejected",
+    "explains": "已拒绝"
+  },
+  {
+    "word": "declined",
+    "explains": "已婉拒"
+  },
+  {
+    "word": "denied",
+    "explains": "已驳回"
+  },
+  {
+    "word": "accepted",
+    "explains": "已接受"
+  },
+  {
+    "word": "accepted for review",
+    "explains": "已进入评审"
+  },
+  {
+    "word": "ready for review",
+    "explains": "待评审"
+  },
+  {
+    "word": "under review",
+    "explains": "评审中"
+  },
+  {
+    "word": "in review",
+    "explains": "评审中"
+  },
+  {
+    "word": "pending review",
+    "explains": "待评审"
+  },
+  {
+    "word": "review requested",
+    "explains": "请求评审"
+  },
+  {
+    "word": "review approved",
+    "explains": "评审通过"
+  },
+  {
+    "word": "approved and merged",
+    "explains": "已批准并合并"
+  },
+  {
+    "word": "merged",
+    "explains": "已合并"
+  },
+  {
+    "word": "conflict resolved",
+    "explains": "冲突已解决"
+  },
+  {
+    "word": "resolve conflict",
+    "explains": "解决冲突"
+  },
+  {
+    "word": "conflicted",
+    "explains": "存在冲突的"
+  },
+  {
+    "word": "conflicting",
+    "explains": "相互冲突的"
+  },
+  {
+    "word": "conflict of interest",
+    "explains": "利益冲突"
+  }
+]
