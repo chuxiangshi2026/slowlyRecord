@@ -294,7 +294,7 @@ const targetLanguageOptions = computed(() =>
   languageOptions.filter(lang => lang.value !== 'auto')
 );
 
-// 翻译平台选项（hunyuan 因旧平台 2026-09-30 停服暂不展示）
+// 翻译平台选项（hunyuan 旧平台与腾讯机器翻译已于 2026-09-30 停服，不再展示）
 const platformOptions = [
   { label: '智谱 GLM', value: 'glm' },
   { label: '讯飞星火', value: 'spark' },
@@ -304,7 +304,6 @@ const platformOptions = [
   { label: '通义千问', value: 'qwen' },
   { label: 'Kimi', value: 'kimi' },
   { label: 'MiniMax', value: 'minimax' },
-  { label: '腾讯翻译', value: 'tencent' },
   { label: '有道翻译', value: 'youdao' },
   { label: '百度翻译', value: 'baidu' },
   { label: '阿里翻译', value: 'ali' },

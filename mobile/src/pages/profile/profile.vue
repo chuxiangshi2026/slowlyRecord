@@ -232,7 +232,6 @@ const platformNames: Record<string, string> = {
   youdao: '有道翻译',
   baidu: '百度翻译',
   ali: '阿里翻译',
-  tencent: '腾讯翻译',
   deepseek: 'DeepSeek AI',
   qwen: '通义千问',
   kimi: 'Kimi 月之暗面',

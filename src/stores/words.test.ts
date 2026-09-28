@@ -598,12 +598,18 @@ describe('useWordsStore', () => {
 
     it('应该支持所有翻译平台', () => {
       const store = useWordsStore()
-      const platforms: TranslationPlatform[] = ['glm', 'tencent', 'youdao', 'baidu', 'ali', 'deepseek', 'qwen', 'kimi', 'ollama', 'local', 'minimax', 'hunyuan']
+      const platforms: TranslationPlatform[] = ['glm', 'youdao', 'baidu', 'ali', 'deepseek', 'qwen', 'kimi', 'ollama', 'local', 'minimax', 'hunyuan']
 
       for (const platform of platforms) {
         store.setTranslationPlatform(platform)
         expect(store.currentTranslationPlatform).toBe(platform)
       }
+    })
+
+    it('腾讯翻译已停服，设置 tencent 应回退默认引擎', () => {
+      const store = useWordsStore()
+      store.setTranslationPlatform('tencent')
+      expect(store.currentTranslationPlatform).toBe('spark')
     })
   })
 

@@ -1,4 +1,4 @@
-import {computed, type Ref, ref} from "vue";
+import {computed, type Ref, ref, watch} from "vue";
 import type {MemoryFirmnessType, OcrPlatform, TranslationPlatform, TranslationResult, Word} from "@/types/words";
 import {defineStore} from "pinia";
 // import {parse, stringify} from 'zipson'
@@ -237,6 +237,11 @@ export const useWordsStore =
                 }
                 addAndUpdateSetDb(userSet);
             }
+
+            // 腾讯机器翻译已于 2026-09-30 停服：任何来源（localStorage/DB/同步导入）写入 tencent 一律回退默认引擎
+            watch(currentTranslationPlatform, (platform) => {
+                if (platform === 'tencent') setTranslationPlatform('spark');
+            }, {flush: 'sync'})
 
             /**
              * 获取当前orc识别平台

@@ -33,6 +33,8 @@ function loadTranslationSettings() {
     if (saved && typeof saved === 'string') {
       currentPlatform = saved as TranslationPlatform
     }
+    // 腾讯机器翻译已于 2026-09-30 停服，存量设置回退默认引擎
+    if (currentPlatform === 'tencent') currentPlatform = 'glm'
   } catch { /* ignore */ }
 }
 
@@ -47,6 +49,8 @@ const userApiKeys: Record<TranslationPlatform, { appkey: string; key: string }> 
 })()
 
 export function setTranslationPlatform(platform: TranslationPlatform) {
+  // 腾讯机器翻译已于 2026-09-30 停服，统一回退默认引擎
+  if (platform === 'tencent') platform = 'glm'
   currentPlatform = platform
   try { uni.setStorageSync(STORAGE_KEY_TRANSLATION_PLATFORM, platform) } catch { /* ignore */ }
 }

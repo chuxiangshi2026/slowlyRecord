@@ -136,9 +136,9 @@ describe('翻译平台设置', () => {
     expect(getTranslationPlatform()).toBe('ali')
   })
 
-  it('可以设置为 tencent', () => {
+  it('腾讯翻译已停服，设置 tencent 应回退 glm', () => {
     setTranslationPlatform('tencent')
-    expect(getTranslationPlatform()).toBe('tencent')
+    expect(getTranslationPlatform()).toBe('glm')
   })
 
   it('可以设置为 deepseek', () => {
