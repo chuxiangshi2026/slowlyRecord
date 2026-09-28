@@ -39,6 +39,7 @@ describe('wordbank-service', () => {
     it('应该包含所有词库类型', () => {
       const expectedTypes = ['zhongkao', 'gaokao', 'cet4', 'cet6', 'bec', 'gmat', 'gre', 'ielts',
         'kaogong', 'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'zsb', 'roots',
+        'ielts-topics', 'toefl-academic',
         'phrasal-verbs', 'collocations', 'idioms', 'common-phrases',
         'oral-basic', 'oral-intermediate', 'oral-advanced', 'movie-lines',
         'tech-vocab', 'dev-phrases', 'dev-status', 'dev-debugging', 'dev-reading',

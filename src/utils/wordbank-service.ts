@@ -18,6 +18,8 @@ export type WordBankType =
   | 'kaoyan'    // 考研英语
   | 'ielts'     // 雅思
   | 'toefl'     // 托福
+  | 'ielts-topics'   // 雅思话题分类词
+  | 'toefl-academic' // 托福学科学术词
   | 'gre'       // GRE
   | 'gmat'      // GMAT
   | 'bec'       // 商务英语
@@ -110,6 +112,8 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'level8', name: '专业八级', description: '英语专业八级核心词汇', wordCount: 12197, language: 'en' },
   { id: 'sat', name: 'SAT词汇', description: 'SAT考试核心词汇', wordCount: 4423, language: 'en' },
   { id: 'toefl', name: '托福词汇', description: '托福考试核心词汇', wordCount: 9213, language: 'en' },
+  { id: 'ielts-topics', name: '雅思话题词汇', description: '雅思写作与口语十大话题高频词（教育/科技/环境/城市/健康/经济/文化/媒体/旅游/社会）', wordCount: 300, language: 'en' },
+  { id: 'toefl-academic', name: '托福学术词汇', description: '托福听力与阅读十大学科场景词（生物/地质/天文/考古/心理/经济/化学/物理/历史/艺术）', wordCount: 300, language: 'en' },
   { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 297, language: 'en' },
   { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568, language: 'en' },
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317, language: 'en' },
