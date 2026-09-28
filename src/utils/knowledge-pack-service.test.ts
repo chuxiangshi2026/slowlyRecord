@@ -56,7 +56,7 @@ describe('knowledge-pack-service', () => {
 
   describe('常量与元数据', () => {
     it('应包含 35 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(35)
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(38)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -87,10 +87,11 @@ describe('knowledge-pack-service', () => {
 
     it('listKnowledgePacks 按 category 过滤', () => {
       const math = listKnowledgePacks('math')
-      expect(math).toHaveLength(16)
+      expect(math).toHaveLength(18)
       expect(math.map(p => p.id).sort()).toEqual([
         'biology-experiments',
         'chemistry-formulas',
+        'chemistry-valences',
         'common-units',
         'elements',
         'math-calculus',
@@ -102,12 +103,13 @@ describe('knowledge-pack-service', () => {
         'multiplication-9x9',
         'physics-experiments',
         'physics-formulas',
+        'physics-formulas-high',
         'physics-laws',
         'primes-under-100',
         'squares-cubes-powers',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(19)
+      expect(text).toHaveLength(20)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'alphabet-pegs-26',
@@ -119,6 +121,7 @@ describe('knowledge-pack-service', () => {
         'earthly-branches-12',
         'ethnic-groups-56',
         'geography-concepts',
+        'history-mnemonics',
         'home-route-12',
         'musical-notes',
         'number-pegs-12',
@@ -280,7 +283,8 @@ describe('knowledge-pack-service', () => {
       ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12',
         'colors-12', 'musical-notes', 'math-formulas-2',
         'squares-cubes-powers', 'primes-under-100', 'poker-pegs-52',
-        'alphabet-pegs-26', 'thirty-six-stratagems'].forEach(id => {
+        'alphabet-pegs-26', 'thirty-six-stratagems',
+        'physics-formulas-high', 'chemistry-valences', 'history-mnemonics'].forEach(id => {
         expect(getKnowledgePackInfo(id)?.version).toBe(1)
         expect(getPackVersion(id)).toBe(1)
       })
@@ -324,6 +328,29 @@ describe('knowledge-pack-service', () => {
           expect(urls.every(u => typeof u === 'string' && u.length > 0)).toBe(true)
           expect(urls).toHaveLength(new Set(urls).size)
         }
+      })
+    })
+
+    it('2026-09-30 新增 3 个知识包数据合法且条数与元数据一致', () => {
+      const newPacks: Array<[string, number, 'math' | 'text']> = [
+        ['physics-formulas-high', 28, 'math'],
+        ['chemistry-valences', 28, 'math'],
+        ['history-mnemonics', 10, 'text'],
+      ]
+      newPacks.forEach(([id, count, category]) => {
+        const info = getKnowledgePackInfo(id)
+        expect(info).toBeDefined()
+        expect(info!.category).toBe(category)
+        expect(info!.version).toBe(1)
+
+        const pack = readPackFile(id)
+        expect(pack.id).toBe(id)
+        expect(validateKnowledgePack(pack).valid).toBe(true)
+        expect(pack.items).toHaveLength(count)
+        expect(pack.ordered).toBe(false)
+        expect(pack.usableAsPeg).toBe(false)
+        // 条目 id 与文件内顺序一一对应
+        pack.items.forEach((item, i) => expect(item.id).toBe(`${id}-${i + 1}`))
       })
     })
 

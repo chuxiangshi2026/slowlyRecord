@@ -57,6 +57,9 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'alphabet-pegs-26', name: '字母形象桩（A-Z）', description: 'A-Z 26 个字母的英文首词形象桩，按字母序用作记忆宫殿桩位', itemCount: 26, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'thirty-six-stratagems', name: '三十六计', description: '三十六计全目，按六套（胜战/敌战/攻战/混战/并战/败战）顺序排列，顺序本身是考点', itemCount: 36, ordered: true, usableAsPeg: false, category: 'text', version: 1},
     {id: 'world-capitals-40', name: '世界国家与首都', description: '六大洲 100 个常见国家及其首都（南非为行政首都比勒陀利亚，玻利维亚为法定首都苏克雷，坦桑尼亚为法定首都多多马）', itemCount: 100, ordered: false, usableAsPeg: false, category: 'text', version: 2},
+    {id: 'physics-formulas-high', name: '高中物理公式', description: '高中物理必修主干公式 28 条（直线运动、力学、电磁学）', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
+    {id: 'chemistry-valences', name: '常见元素化合价', description: '常见元素与原子团化合价 28 条，含化合价口诀', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
+    {id: 'history-mnemonics', name: '历史朝代口诀', description: '朝代歌与战国七雄、五代十国等历史速记口诀 10 条', itemCount: 10, ordered: false, usableAsPeg: false, category: 'text', version: 1},
 ]
 
 interface CacheData {

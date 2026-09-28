@@ -45,6 +45,9 @@ import pokerPegs52 from './knowledgebanks/poker-pegs-52'
 import alphabetPegs26 from './knowledgebanks/alphabet-pegs-26'
 import thirtySixStratagems from './knowledgebanks/thirty-six-stratagems'
 import worldCapitals40 from './knowledgebanks/world-capitals-40'
+import physicsFormulasHigh from './knowledgebanks/physics-formulas-high'
+import chemistryValences from './knowledgebanks/chemistry-valences'
+import historyMnemonics from './knowledgebanks/history-mnemonics'
 
 const packDataLoaders: Record<string, () => KnowledgePack> = {
     'multiplication-9x9': () => multiplication9x9,
@@ -82,6 +85,9 @@ const packDataLoaders: Record<string, () => KnowledgePack> = {
     'alphabet-pegs-26': () => alphabetPegs26,
     'thirty-six-stratagems': () => thirtySixStratagems,
     'world-capitals-40': () => worldCapitals40,
+    'physics-formulas-high': () => physicsFormulasHigh,
+    'chemistry-valences': () => chemistryValences,
+    'history-mnemonics': () => historyMnemonics,
 }
 
 registerKnowledgePackData(packDataLoaders)
