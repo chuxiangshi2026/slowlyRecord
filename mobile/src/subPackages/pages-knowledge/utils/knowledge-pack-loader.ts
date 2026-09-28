@@ -60,6 +60,10 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'physics-formulas-high', name: '高中物理公式', description: '高中物理必修主干公式 28 条（直线运动、力学、电磁学）', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'chemistry-valences', name: '常见元素化合价', description: '常见元素与原子团化合价 28 条，含化合价口诀', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'history-mnemonics', name: '历史朝代口诀', description: '朝代歌与战国七雄、五代十国等历史速记口诀 10 条', itemCount: 10, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'english-roots-affixes', name: '英语常用词根词缀', description: '高频词根 14 个、前缀 9 个、后缀 7 个，附例词', itemCount: 30, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'chinese-classical-words', name: '文言文常见实词虚词', description: '中考高频文言虚词 8 个 + 古今异义实词 12 个', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'biology-basics', name: '初中生物核心概念', description: '初中生物核心概念 20 条（细胞、生理、遗传、生态）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math', version: 1},
+    {id: 'world-geography-records', name: '世界地理之最', description: '世界地理之最 20 条（山川、河湖、海陆、人文）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
 ]
 
 interface CacheData {

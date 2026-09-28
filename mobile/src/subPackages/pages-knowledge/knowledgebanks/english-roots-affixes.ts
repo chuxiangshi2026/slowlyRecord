@@ -1,0 +1,256 @@
+/**
+ * 内置知识包：英语常用词根词缀（由 public/knowledgebanks/english-roots-affixes.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "english-roots-affixes",
+  "name": "英语常用词根词缀",
+  "description": "高频词根 14 个、前缀 9 个、后缀 7 个，附例词",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "english-roots-affixes-1",
+      "question": "词根 spect",
+      "answer": "看；inspect 检查（往里看）、respect 尊敬（反复看）、retrospect 回顾",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-2",
+      "question": "词根 port",
+      "answer": "拿、运；export 出口、import 进口、support 支持（扛在下方）、porter 搬运工",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-3",
+      "question": "词根 dict",
+      "answer": "说；predict 预言（预先说）、dictionary 词典、contradict 反驳（反着说）",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-4",
+      "question": "词根 duc/duct",
+      "answer": "引导；introduce 介绍（引进来）、educate 教育（引出潜能）、conduct 引导/指挥",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-5",
+      "question": "词根 mit/miss",
+      "answer": "送、派；admit 准许进入（送进去）、mission 使命/使团、transmit 传送",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-6",
+      "question": "词根 fer",
+      "answer": "携带、带来；transfer 转移、offer 提供、differ 不同（各带各的）",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-7",
+      "question": "词根 vis/vid",
+      "answer": "看；visible 可见的、video 视频、revise 修订（再看一遍）",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-8",
+      "question": "词根 aud",
+      "answer": "听；audience 听众、audio 音频、auditorium 礼堂",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-9",
+      "question": "词根 bio",
+      "answer": "生命；biology 生物学、biography 传记（写生平）",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-10",
+      "question": "词根 geo",
+      "answer": "地、地球；geography 地理、geology 地质学",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-11",
+      "question": "词根 graph",
+      "answer": "写、画；photograph 照片（用光写）、paragraph 段落、autograph 亲笔签名",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-12",
+      "question": "词根 phon",
+      "answer": "声音；telephone 电话（远处的声音）、symphony 交响乐、microphone 麦克风",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-13",
+      "question": "词根 scrib/scrip",
+      "answer": "写；describe 描述、manuscript 手稿（手写）",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-14",
+      "question": "词根 ject",
+      "answer": "投掷；reject 拒绝（扔回去）、project 投射/项目、eject 弹出",
+      "extras": {
+        "类型": "词根"
+      }
+    },
+    {
+      "id": "english-roots-affixes-15",
+      "question": "前缀 un-",
+      "answer": "不、无；unfair 不公平、unlock 解锁、unhappy 不开心",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-16",
+      "question": "前缀 dis-",
+      "answer": "否定、分离；disagree 不同意、disappear 消失、disable 使失去能力",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-17",
+      "question": "前缀 re-",
+      "answer": "再、重新；rewrite 重写、review 复习/回顾、recycle 回收利用",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-18",
+      "question": "前缀 pre-",
+      "answer": "预先、在前；preview 预习/预览、predict 预测、prepare 预备",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-19",
+      "question": "前缀 inter-",
+      "answer": "在…之间；international 国际的、internet 互联网、interview 面谈",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-20",
+      "question": "前缀 trans-",
+      "answer": "横跨、转移；transport 运输、translate 翻译、transform 改变形态",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-21",
+      "question": "前缀 sub-",
+      "answer": "在…之下；subway 地铁、subtitle 字幕、submarine 潜艇",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-22",
+      "question": "前缀 super-",
+      "answer": "超、在上；supermarket 超市、superman 超人、supreme 最高的",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-23",
+      "question": "前缀 tele-",
+      "answer": "远；telephone 电话、telescope 望远镜、television 电视",
+      "extras": {
+        "类型": "前缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-24",
+      "question": "后缀 -tion/-sion",
+      "answer": "构成名词（动作/状态）；action 行动、decision 决定、education 教育",
+      "extras": {
+        "类型": "后缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-25",
+      "question": "后缀 -er/-or",
+      "answer": "…的人或物；teacher 教师、actor 演员、computer 计算机",
+      "extras": {
+        "类型": "后缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-26",
+      "question": "后缀 -ful/-less",
+      "answer": "充满…的 / 没有…的；careful 细心的、careless 粗心的、hopeful/hopeless",
+      "extras": {
+        "类型": "后缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-27",
+      "question": "后缀 -able/-ible",
+      "answer": "可…的、能…的；comfortable 舒适的、readable 可读的、responsible 负责任的",
+      "extras": {
+        "类型": "后缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-28",
+      "question": "后缀 -ly",
+      "answer": "构成副词；quickly 快速地、carefully 仔细地、usually 通常",
+      "extras": {
+        "类型": "后缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-29",
+      "question": "后缀 -ness",
+      "answer": "构成名词（性质/状态）；happiness 幸福、darkness 黑暗、kindness 善良",
+      "extras": {
+        "类型": "后缀"
+      }
+    },
+    {
+      "id": "english-roots-affixes-30",
+      "question": "后缀 -ize/-ise",
+      "answer": "使…化（构成动词）；realize 实现、modernize 使现代化、organize 组织",
+      "extras": {
+        "类型": "后缀"
+      }
+    }
+  ]
+}
+
+export default pack

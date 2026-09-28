@@ -114,7 +114,7 @@ describe('isCacheUsable', () => {
 
 describe('注册表与内置数据（真实数据完整性）', () => {
   it('35 个内置包全部可加载，结构合法且条数与元数据一致', async () => {
-    expect(KNOWLEDGE_PACK_LIST).toHaveLength(38)
+    expect(KNOWLEDGE_PACK_LIST).toHaveLength(42)
     for (const info of KNOWLEDGE_PACK_LIST) {
       const pack = await fetchKnowledgePack(info.id)
       expect(validateKnowledgePack(pack).valid).toBe(true)
@@ -143,10 +143,10 @@ describe('注册表与内置数据（真实数据完整性）', () => {
 
   it('listKnowledgePacks 按 category 过滤并返回副本', () => {
     const math = listKnowledgePacks('math')
-    expect(math).toHaveLength(18)
+    expect(math).toHaveLength(19)
     expect(math.every(p => p.category === 'math')).toBe(true)
     const text = listKnowledgePacks('text')
-    expect(text).toHaveLength(20)
+    expect(text).toHaveLength(23)
 
     math[0].name = 'modified'
     expect(getKnowledgePackInfo(math[0].id)?.name).not.toBe('modified')

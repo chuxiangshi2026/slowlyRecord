@@ -1,0 +1,29 @@
+{
+  "id": "chinese-classical-words",
+  "name": "文言文常见实词虚词",
+  "description": "中考高频文言虚词 8 个 + 古今异义实词 12 个",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {"id": "chinese-classical-words-1", "question": "虚词：之", "answer": "① 代词，代人/事/物（如“愿借明驼千里足”类指代用法）；② 结构助词“的”（予独爱莲之出淤泥而不染例外）；③ 用于主谓之间，取消句子独立性；④ 动词“到、往”（辍耕之垄上）", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-2", "question": "虚词：其", "answer": "① 代词“他（们）的/它（们）的”（如“择其善者而从之”）；② 指示代词“那、这”；③ 语气词，表揣测“大概”、反问“难道”（其真无马邪）", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-3", "question": "虚词：而", "answer": "① 表并列（又、并且）；② 表承接（就、然后）；③ 表转折“却、但是”（如“学而不思则罔”）；④ 表修饰（地、着）", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-4", "question": "虚词：以", "answer": "① 介词“用、拿、把”（如“以刀劈狼首”）；② 介词“因为”；③ 连词“来、用来”（表目的）；④ 动词“认为”（如“皆以美于徐公”）", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-5", "question": "虚词：于", "answer": "① 介词“在”（如“战于长勺”）；② 介词“向、对、到”；③ 表比较“比”（如“苛政猛于虎”）；④ 表被动“被”", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-6", "question": "虚词：为", "answer": "① 动词“做、担任、成为”；② 介词“替、给”（为人谋而不忠乎）；③ 介词“被”（为……所……）；④ 句末语气词“呢”", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-7", "question": "虚词：乃", "answer": "① 副词“于是、就”（乃重修岳阳楼）；② 副词“才”；③ 副词“竟然”（乃不知有汉）；④ 判断词“是”", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-8", "question": "虚词：焉", "answer": "① 兼词“于此、于之”（三人行，必有我师焉）；② 句末语气词“了、呢”；③ 疑问代词“哪里、怎么”（且焉置土石）", "extras": {"类别": "虚词"}},
+    {"id": "chinese-classical-words-9", "question": "古今异义：走", "answer": "古义：跑、逃跑（双兔傍地走）；今义：行走", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-10", "question": "古今异义：妻子", "answer": "古义：妻子和儿女（率妻子邑人来此绝境）；今义：男子的配偶", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-11", "question": "古今异义：交通", "answer": "古义：交错相通（阡陌交通，鸡犬相闻）；今义：运输往来事业", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-12", "question": "古今异义：牺牲", "answer": "古义：祭祀用的纯色全体牲畜（牺牲玉帛，弗敢加也）；今义：为正义事业献出生命或利益", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-13", "question": "古今异义：无论", "answer": "古义：不要说、更不必说（乃不知有汉，无论魏晋）；今义：表条件关系的连词", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-14", "question": "古今异义：可以", "answer": "古义：可以凭借（可以一战）；今义：表示许可的能愿动词", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-15", "question": "古今异义：其实", "answer": "古义：它的果实（叶徒相似，其实味不同）；今义：表示转折的副词“实际上”", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-16", "question": "古今异义：卑鄙", "answer": "古义：身份低微、见识短浅（先帝不以臣卑鄙）；今义：（语言、行为）恶劣不道德", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-17", "question": "古今异义：感激", "answer": "古义：感动奋发（由是感激，遂许先帝以驱驰）；今义：因对方的好意而感谢", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-18", "question": "古今异义：故事", "answer": "古义：旧事、先例（苟以天下之大，下而从六国破亡之故事）；今义：叙述的事情", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-19", "question": "古今异义：绝境", "answer": "古义：与外界隔绝的地方（来此绝境，不复出焉）；今义：没有出路的境地", "extras": {"类别": "古今异义"}},
+    {"id": "chinese-classical-words-20", "question": "古今异义：中国", "answer": "古义：中原地区（莅中国而抚四夷也）；今义：中华人民共和国的简称", "extras": {"类别": "古今异义"}}
+  ]
+}

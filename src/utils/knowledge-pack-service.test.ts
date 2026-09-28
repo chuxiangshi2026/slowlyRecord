@@ -56,7 +56,7 @@ describe('knowledge-pack-service', () => {
 
   describe('常量与元数据', () => {
     it('应包含 35 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(38)
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(42)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
@@ -87,8 +87,9 @@ describe('knowledge-pack-service', () => {
 
     it('listKnowledgePacks 按 category 过滤', () => {
       const math = listKnowledgePacks('math')
-      expect(math).toHaveLength(18)
+      expect(math).toHaveLength(19)
       expect(math.map(p => p.id).sort()).toEqual([
+        'biology-basics',
         'biology-experiments',
         'chemistry-formulas',
         'chemistry-valences',
@@ -109,16 +110,18 @@ describe('knowledge-pack-service', () => {
         'squares-cubes-powers',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(20)
+      expect(text).toHaveLength(23)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'alphabet-pegs-26',
         'body-pegs-12',
+        'chinese-classical-words',
         'colors-12',
         'constellations-12',
         'cuisines-8',
         'dynasties-china',
         'earthly-branches-12',
+        'english-roots-affixes',
         'ethnic-groups-56',
         'geography-concepts',
         'history-mnemonics',
@@ -131,6 +134,7 @@ describe('knowledge-pack-service', () => {
         'solar-terms-24',
         'thirty-six-stratagems',
         'world-capitals-40',
+        'world-geography-records',
         'zodiac-12',
       ])
     })
@@ -284,7 +288,8 @@ describe('knowledge-pack-service', () => {
         'colors-12', 'musical-notes', 'math-formulas-2',
         'squares-cubes-powers', 'primes-under-100', 'poker-pegs-52',
         'alphabet-pegs-26', 'thirty-six-stratagems',
-        'physics-formulas-high', 'chemistry-valences', 'history-mnemonics'].forEach(id => {
+        'physics-formulas-high', 'chemistry-valences', 'history-mnemonics',
+        'english-roots-affixes', 'chinese-classical-words', 'biology-basics', 'world-geography-records'].forEach(id => {
         expect(getKnowledgePackInfo(id)?.version).toBe(1)
         expect(getPackVersion(id)).toBe(1)
       })
@@ -331,11 +336,15 @@ describe('knowledge-pack-service', () => {
       })
     })
 
-    it('2026-09-30 新增 3 个知识包数据合法且条数与元数据一致', () => {
+    it('2026-09-30 新增 7 个知识包数据合法且条数与元数据一致', () => {
       const newPacks: Array<[string, number, 'math' | 'text']> = [
         ['physics-formulas-high', 28, 'math'],
         ['chemistry-valences', 28, 'math'],
         ['history-mnemonics', 10, 'text'],
+        ['english-roots-affixes', 30, 'text'],
+        ['chinese-classical-words', 20, 'text'],
+        ['biology-basics', 20, 'math'],
+        ['world-geography-records', 20, 'text'],
       ]
       newPacks.forEach(([id, count, category]) => {
         const info = getKnowledgePackInfo(id)

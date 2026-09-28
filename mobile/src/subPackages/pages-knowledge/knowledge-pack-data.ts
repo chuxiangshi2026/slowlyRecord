@@ -48,6 +48,10 @@ import worldCapitals40 from './knowledgebanks/world-capitals-40'
 import physicsFormulasHigh from './knowledgebanks/physics-formulas-high'
 import chemistryValences from './knowledgebanks/chemistry-valences'
 import historyMnemonics from './knowledgebanks/history-mnemonics'
+import englishRootsAffixes from './knowledgebanks/english-roots-affixes'
+import chineseClassicalWords from './knowledgebanks/chinese-classical-words'
+import biologyBasics from './knowledgebanks/biology-basics'
+import worldGeographyRecords from './knowledgebanks/world-geography-records'
 
 const packDataLoaders: Record<string, () => KnowledgePack> = {
     'multiplication-9x9': () => multiplication9x9,
@@ -88,6 +92,10 @@ const packDataLoaders: Record<string, () => KnowledgePack> = {
     'physics-formulas-high': () => physicsFormulasHigh,
     'chemistry-valences': () => chemistryValences,
     'history-mnemonics': () => historyMnemonics,
+    'english-roots-affixes': () => englishRootsAffixes,
+    'chinese-classical-words': () => chineseClassicalWords,
+    'biology-basics': () => biologyBasics,
+    'world-geography-records': () => worldGeographyRecords,
 }
 
 registerKnowledgePackData(packDataLoaders)
