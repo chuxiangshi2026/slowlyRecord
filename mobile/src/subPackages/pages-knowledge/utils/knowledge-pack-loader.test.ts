@@ -67,12 +67,15 @@ describe('getPackVersion', () => {
     expect(getPackVersion('solar-terms-24')).toBe(3)
     expect(getPackVersion('math-formulas')).toBe(4)
     expect(getPackVersion('dynasties-china')).toBe(2)
+    expect(getPackVersion('world-capitals-40')).toBe(2)
+    expect(getPackVersion('geography-concepts')).toBe(2)
+    expect(getPackVersion('common-units')).toBe(2)
   })
 
   it('注册表未声明 version 的包为 1', () => {
     expect(getPackVersion('multiplication-9x9')).toBe(1)
     expect(getPackVersion('body-pegs-12')).toBe(1)
-    expect(getPackVersion('world-capitals-40')).toBe(1)
+    expect(getPackVersion('colors-12')).toBe(1)
     expect(getKnowledgePackInfo('multiplication-9x9')?.version).toBeUndefined()
   })
 

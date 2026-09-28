@@ -145,8 +145,8 @@ describe('knowledge-pack-service', () => {
         expect(info).toBeDefined()
         // 分类归属：物理公式/定律/实验与生物实验归数理化（math），地理核心概念归文史常识（text）
         expect(info!.category).toBe(id === 'geography-concepts' ? 'text' : 'math')
-        // 物理定律/实验与生物实验因归入数理化升到版本 2，地理概念保持 1
-        expect(info!.version ?? 1).toBe(id === 'geography-concepts' ? 1 : 2)
+        // 物理定律/实验与生物实验此前因归入数理化升到 2；地理概念因扩充到 41 条升到 2
+        expect(info!.version ?? 1).toBe(2)
         // 相对本文件定位 public/knowledgebanks（src/utils → 项目根目录 → public/knowledgebanks）
         const raw = readFileSync(
           fileURLToPath(new URL('../../public/knowledgebanks/' + id + '.json', import.meta.url)),
@@ -204,7 +204,7 @@ describe('knowledge-pack-service', () => {
         ['earthly-branches-12', 12, true, true, 'text'],
         ['room-pegs-12', 12, true, true, 'text'],
         ['dynasties-china', 18, true, true, 'text'],
-        ['common-units', 21, false, false, 'math'],
+        ['common-units', 35, false, false, 'math'],
         ['colors-12', 12, false, false, 'text'],
         ['musical-notes', 12, true, true, 'text'],
         ['math-formulas-2', 28, false, false, 'math'],
@@ -215,8 +215,8 @@ describe('knowledge-pack-service', () => {
         expect(info!.category).toBe(category)
         expect(info!.ordered).toBe(ordered)
         expect(info!.usableAsPeg).toBe(usableAsPeg)
-        // dynasties-china 因史实修正（夏创立者/东周止年）升到 2，其余仍为 1
-        expect(info!.version).toBe(id === 'dynasties-china' ? 2 : 1)
+        // dynasties-china 因史实修正（夏创立者/东周止年）升到 2；common-units 扩充到 35 条升到 2
+        expect(info!.version).toBe(id === 'dynasties-china' || id === 'common-units' ? 2 : 1)
 
         const pack = readPackFile(id)
         expect(pack.id).toBe(id)
@@ -276,11 +276,11 @@ describe('knowledge-pack-service', () => {
       // dynasties-china 史实修正 → 2
       expect(getKnowledgePackInfo('dynasties-china')?.version).toBe(2)
       expect(getPackVersion('dynasties-china')).toBe(2)
-      // 其余历史包与本轮新增的 6 个包均为 1
+      // 其余历史包与本轮新增的 6 个包均为 1（common-units/world-capitals-40 已扩充升到 2）
       ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12',
-        'common-units', 'colors-12', 'musical-notes', 'math-formulas-2',
+        'colors-12', 'musical-notes', 'math-formulas-2',
         'squares-cubes-powers', 'primes-under-100', 'poker-pegs-52',
-        'alphabet-pegs-26', 'thirty-six-stratagems', 'world-capitals-40'].forEach(id => {
+        'alphabet-pegs-26', 'thirty-six-stratagems'].forEach(id => {
         expect(getKnowledgePackInfo(id)?.version).toBe(1)
         expect(getPackVersion(id)).toBe(1)
       })
@@ -295,7 +295,7 @@ describe('knowledge-pack-service', () => {
         ['poker-pegs-52', 52, true, true, 'text'],
         ['alphabet-pegs-26', 26, true, true, 'text'],
         ['thirty-six-stratagems', 36, true, false, 'text'],
-        ['world-capitals-40', 40, false, false, 'text'],
+        ['world-capitals-40', 100, false, false, 'text'],
       ]
       newPacks.forEach(([id, count, ordered, usableAsPeg, category]) => {
         const info = getKnowledgePackInfo(id)
@@ -303,7 +303,8 @@ describe('knowledge-pack-service', () => {
         expect(info!.category).toBe(category)
         expect(info!.ordered).toBe(ordered)
         expect(info!.usableAsPeg).toBe(usableAsPeg)
-        expect(info!.version).toBe(1)
+        // world-capitals-40 扩充到 100 条升到 2，其余仍为 1
+        expect(info!.version).toBe(id === 'world-capitals-40' ? 2 : 1)
 
         const pack = readPackFile(id)
         expect(pack.id).toBe(id)

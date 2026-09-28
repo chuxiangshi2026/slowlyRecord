@@ -193,6 +193,132 @@
         "国际单位": "特斯拉 (T)",
         "量纲": "MT⁻²I⁻¹"
       }
+    },
+    {
+      "id": "common-units-22",
+      "question": "加速度",
+      "answer": "米每二次方秒(m/s²)；a=Δv/Δt，重力加速度 g≈9.8 m/s²",
+      "extras": {
+        "国际单位": "米每二次方秒 (m/s²)",
+        "量纲": "LT⁻²"
+      }
+    },
+    {
+      "id": "common-units-23",
+      "question": "角速度",
+      "answer": "弧度每秒(rad/s)；ω=2π/T=2πf",
+      "extras": {
+        "国际单位": "弧度每秒 (rad/s)",
+        "量纲": "T⁻¹"
+      }
+    },
+    {
+      "id": "common-units-24",
+      "question": "容积",
+      "answer": "立方米(m³)；1 L=1 dm³=1000 mL",
+      "extras": {
+        "国际单位": "立方米 (m³)",
+        "量纲": "L³"
+      }
+    },
+    {
+      "id": "common-units-25",
+      "question": "数据存储",
+      "answer": "字节(B)；1 KB=1024 B，1 MB=1024 KB，1 GB=1024 MB，1 TB=1024 GB",
+      "extras": {
+        "国际单位": "字节 (B)",
+        "量纲": "—"
+      }
+    },
+    {
+      "id": "common-units-26",
+      "question": "物质的量",
+      "answer": "摩尔(mol)；1 mol 约含 6.02×10²³ 个微粒（阿伏伽德罗常数）",
+      "extras": {
+        "国际单位": "摩尔 (mol)",
+        "量纲": "N"
+      }
+    },
+    {
+      "id": "common-units-27",
+      "question": "发光强度",
+      "answer": "坎德拉(cd)；国际单位制七个基本单位之一",
+      "extras": {
+        "国际单位": "坎德拉 (cd)",
+        "量纲": "J"
+      }
+    },
+    {
+      "id": "common-units-28",
+      "question": "电容",
+      "answer": "法拉(F)；C=Q/U，1 μF=10⁻⁶ F",
+      "extras": {
+        "国际单位": "法拉 (F)",
+        "量纲": "M⁻¹L⁻²T⁴I²"
+      }
+    },
+    {
+      "id": "common-units-29",
+      "question": "电感",
+      "answer": "亨利(H)；1 mH=10⁻³ H",
+      "extras": {
+        "国际单位": "亨利 (H)",
+        "量纲": "ML²T⁻²I⁻²"
+      }
+    },
+    {
+      "id": "common-units-30",
+      "question": "磁通量",
+      "answer": "韦伯(Wb)；Φ=BS，1 Wb=1 T·m²",
+      "extras": {
+        "国际单位": "韦伯 (Wb)",
+        "量纲": "ML²T⁻²I⁻¹"
+      }
+    },
+    {
+      "id": "common-units-31",
+      "question": "力矩",
+      "answer": "牛·米(N·m)；M=F×L（力×力臂）",
+      "extras": {
+        "国际单位": "牛·米 (N·m)",
+        "量纲": "ML²T⁻²"
+      }
+    },
+    {
+      "id": "common-units-32",
+      "question": "声强级",
+      "answer": "分贝(dB)；0 dB 为人耳刚能听到的声音，长期超过 90 dB 会损伤听力",
+      "extras": {
+        "国际单位": "分贝 (dB)",
+        "量纲": "—"
+      }
+    },
+    {
+      "id": "common-units-33",
+      "question": "转速",
+      "answer": "转每秒(r/s)；常用 r/min，1 r/s=60 r/min",
+      "extras": {
+        "国际单位": "转每秒 (r/s)",
+        "量纲": "T⁻¹"
+      }
+    },
+    {
+      "id": "common-units-34",
+      "question": "流量",
+      "answer": "立方米每秒(m³/s)；Q=Sv（横截面积×流速）",
+      "extras": {
+        "国际单位": "立方米每秒 (m³/s)",
+        "量纲": "L³T⁻¹"
+      }
+    },
+    {
+      "id": "common-units-35",
+      "question": "光照度",
+      "answer": "勒克斯(lx)；1 lx=1 lm/m²",
+      "extras": {
+        "国际单位": "勒克斯 (lx)",
+        "量纲": "JL⁻²"
+      }
     }
   ]
 }

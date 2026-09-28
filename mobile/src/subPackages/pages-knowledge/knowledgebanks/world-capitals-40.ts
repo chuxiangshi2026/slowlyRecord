@@ -6,7 +6,7 @@ import type { KnowledgePack } from '@/stores/useUtils/types'
 const pack: KnowledgePack = {
   "id": "world-capitals-40",
   "name": "世界国家与首都",
-  "description": "六大洲 40 个常见国家及其首都（南非为行政首都比勒陀利亚）",
+  "description": "六大洲 100 个常见国家及其首都（南非为行政首都比勒陀利亚，玻利维亚为法定首都苏克雷，坦桑尼亚为法定首都多多马）",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -326,6 +326,486 @@ const pack: KnowledgePack = {
       "id": "world-capitals-40-40",
       "question": "新西兰",
       "answer": "惠灵顿",
+      "extras": {
+        "大洲": "大洋洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-41",
+      "question": "菲律宾",
+      "answer": "马尼拉",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-42",
+      "question": "缅甸",
+      "answer": "内比都",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-43",
+      "question": "柬埔寨",
+      "answer": "金边",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-44",
+      "question": "老挝",
+      "answer": "万象",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-45",
+      "question": "孟加拉国",
+      "answer": "达卡",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-46",
+      "question": "巴基斯坦",
+      "answer": "伊斯兰堡",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-47",
+      "question": "尼泊尔",
+      "answer": "加德满都",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-48",
+      "question": "蒙古",
+      "answer": "乌兰巴托",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-49",
+      "question": "哈萨克斯坦",
+      "answer": "阿斯塔纳",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-50",
+      "question": "乌兹别克斯坦",
+      "answer": "塔什干",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-51",
+      "question": "伊拉克",
+      "answer": "巴格达",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-52",
+      "question": "阿富汗",
+      "answer": "喀布尔",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-53",
+      "question": "阿联酋",
+      "answer": "阿布扎比",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-54",
+      "question": "卡塔尔",
+      "answer": "多哈",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-55",
+      "question": "阿曼",
+      "answer": "马斯喀特",
+      "extras": {
+        "大洲": "亚洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-56",
+      "question": "乌克兰",
+      "answer": "基辅",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-57",
+      "question": "白俄罗斯",
+      "answer": "明斯克",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-58",
+      "question": "比利时",
+      "answer": "布鲁塞尔",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-59",
+      "question": "奥地利",
+      "answer": "维也纳",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-60",
+      "question": "捷克",
+      "answer": "布拉格",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-61",
+      "question": "匈牙利",
+      "answer": "布达佩斯",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-62",
+      "question": "罗马尼亚",
+      "answer": "布加勒斯特",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-63",
+      "question": "保加利亚",
+      "answer": "索非亚",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-64",
+      "question": "塞尔维亚",
+      "answer": "贝尔格莱德",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-65",
+      "question": "挪威",
+      "answer": "奥斯陆",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-66",
+      "question": "丹麦",
+      "answer": "哥本哈根",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-67",
+      "question": "芬兰",
+      "answer": "赫尔辛基",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-68",
+      "question": "爱尔兰",
+      "answer": "都柏林",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-69",
+      "question": "冰岛",
+      "answer": "雷克雅未克",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-70",
+      "question": "卢森堡",
+      "answer": "卢森堡市",
+      "extras": {
+        "大洲": "欧洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-71",
+      "question": "阿尔及利亚",
+      "answer": "阿尔及尔",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-72",
+      "question": "突尼斯",
+      "answer": "突尼斯",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-73",
+      "question": "利比亚",
+      "answer": "的黎波里",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-74",
+      "question": "苏丹",
+      "answer": "喀土穆",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-75",
+      "question": "坦桑尼亚",
+      "answer": "多多马",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-76",
+      "question": "乌干达",
+      "answer": "坎帕拉",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-77",
+      "question": "加纳",
+      "answer": "阿克拉",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-78",
+      "question": "塞内加尔",
+      "answer": "达喀尔",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-79",
+      "question": "刚果(金)",
+      "answer": "金沙萨",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-80",
+      "question": "安哥拉",
+      "answer": "罗安达",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-81",
+      "question": "赞比亚",
+      "answer": "卢萨卡",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-82",
+      "question": "津巴布韦",
+      "answer": "哈拉雷",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-83",
+      "question": "马达加斯加",
+      "answer": "塔那那利佛",
+      "extras": {
+        "大洲": "非洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-84",
+      "question": "巴拿马",
+      "answer": "巴拿马城",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-85",
+      "question": "牙买加",
+      "answer": "金斯敦",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-86",
+      "question": "危地马拉",
+      "answer": "危地马拉城",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-87",
+      "question": "洪都拉斯",
+      "answer": "特古西加尔巴",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-88",
+      "question": "哥斯达黎加",
+      "answer": "圣何塞",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-89",
+      "question": "多米尼加",
+      "answer": "圣多明各",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-90",
+      "question": "海地",
+      "answer": "太子港",
+      "extras": {
+        "大洲": "北美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-91",
+      "question": "哥伦比亚",
+      "answer": "波哥大",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-92",
+      "question": "委内瑞拉",
+      "answer": "加拉加斯",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-93",
+      "question": "厄瓜多尔",
+      "answer": "基多",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-94",
+      "question": "玻利维亚",
+      "answer": "苏克雷",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-95",
+      "question": "巴拉圭",
+      "answer": "亚松森",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-96",
+      "question": "乌拉圭",
+      "answer": "蒙得维的亚",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-97",
+      "question": "圭亚那",
+      "answer": "乔治敦",
+      "extras": {
+        "大洲": "南美洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-98",
+      "question": "巴布亚新几内亚",
+      "answer": "莫尔兹比港",
+      "extras": {
+        "大洲": "大洋洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-99",
+      "question": "斐济",
+      "answer": "苏瓦",
+      "extras": {
+        "大洲": "大洋洲"
+      }
+    },
+    {
+      "id": "world-capitals-40-100",
+      "question": "所罗门群岛",
+      "answer": "霍尼亚拉",
       "extras": {
         "大洲": "大洋洲"
       }

@@ -42,12 +42,12 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'physics-laws', name: '初中物理定律与原理', description: '初中物理常见定律与原理 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'physics-experiments', name: '初中物理实验', description: '初中常见物理实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'biology-experiments', name: '初中生物实验', description: '初中常见生物实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
-    {id: 'geography-concepts', name: '初中地理核心概念', description: '初中地理核心概念 20 条', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'geography-concepts', name: '初中地理核心概念', description: '初中地理核心概念 41 条', itemCount: 41, ordered: false, usableAsPeg: false, category: 'text', version: 2},
     {id: 'body-pegs-12', name: '身体桩', description: '从头顶到脚底 12 个身体部位，按从上到下的固定顺序用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'earthly-branches-12', name: '十二地支', description: '十二地支及其时辰时段、生肖、五行、阴阳与方位', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'room-pegs-12', name: '房间桩', description: '典型户型 12 个房间，按进出动线排列用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'dynasties-china', name: '中国历代王朝', description: '从夏到清 18 个主要朝代，含起止年份、都城与创立者', itemCount: 18, ordered: true, usableAsPeg: true, category: 'text', version: 2},
-    {id: 'common-units', name: '常用计量单位', description: '物理量的国际单位与常见单位换算', itemCount: 21, ordered: false, usableAsPeg: false, category: 'math', version: 1},
+    {id: 'common-units', name: '常用计量单位', description: '物理量的国际单位与常见单位换算', itemCount: 35, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'colors-12', name: '十二种颜色', description: '12 种常见颜色的色值与英文名称', itemCount: 12, ordered: false, usableAsPeg: false, category: 'text', version: 1},
     {id: 'musical-notes', name: '十二平均律', description: 'C 大调 12 个半音的音名、十二律中文名、音阶位置与 A4 基准频率', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'math-formulas-2', name: '常用数学公式（进阶篇）', description: '高中与竞赛方向的数列、几何、圆锥曲线、微积分与概率公式', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
@@ -56,7 +56,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'poker-pegs-52', name: '扑克牌桩（52 张）', description: '一副扑克 52 张牌的花色点数桩（黑桃/红桃/方块/梅花），按花色顺序用作记忆宫殿桩位', itemCount: 52, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'alphabet-pegs-26', name: '字母形象桩（A-Z）', description: 'A-Z 26 个字母的英文首词形象桩，按字母序用作记忆宫殿桩位', itemCount: 26, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'thirty-six-stratagems', name: '三十六计', description: '三十六计全目，按六套（胜战/敌战/攻战/混战/并战/败战）顺序排列，顺序本身是考点', itemCount: 36, ordered: true, usableAsPeg: false, category: 'text', version: 1},
-    {id: 'world-capitals-40', name: '世界国家与首都', description: '六大洲 40 个常见国家及其首都（南非为行政首都比勒陀利亚）', itemCount: 40, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'world-capitals-40', name: '世界国家与首都', description: '六大洲 100 个常见国家及其首都（南非为行政首都比勒陀利亚，玻利维亚为法定首都苏克雷，坦桑尼亚为法定首都多多马）', itemCount: 100, ordered: false, usableAsPeg: false, category: 'text', version: 2},
 ]
 
 interface CacheData {
