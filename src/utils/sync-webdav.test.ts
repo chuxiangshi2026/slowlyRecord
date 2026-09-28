@@ -238,6 +238,21 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
     expect(formatWebDavDiagnosis(d)).toContain('可用子目录：https://dav.jianguoyun.com/dav/我的坚果云/')
   })
 
+  it('DELETE 失败时如实回填状态，不谎报 204', async () => {
+    globalThis.fetch = vi.fn(async (_url: unknown, init: any) => {
+      const headers = new Headers()
+      if (init?.method === 'PUT') return { ok: true, status: 201, headers, text: async () => '' }
+      if (init?.method === 'DELETE') return { ok: false, status: 403, headers, text: async () => 'forbidden' }
+      if (init?.method === 'PROPFIND') return { ok: true, status: 207, headers, text: async () => PROPFIND_XML }
+      return { ok: true, status: 200, headers, text: async () => '' }
+    }) as any
+
+    const d = await diagnoseWebDav(cfg)
+    const del = d.checks.find(c => c.step === 'DELETE 探针文件')
+    expect(del?.status).toBe(403)
+    expect(formatWebDavDiagnosis(d)).toContain('DELETE 探针文件：HTTP 403')
+  })
+
   it('全部 401 → 判定认证失败（而非目录不存在）', async () => {
     globalThis.fetch = vi.fn(async () => ({ ok: false, status: 401, headers: new Headers() })) as any
     const d = await diagnoseWebDav(cfg)
