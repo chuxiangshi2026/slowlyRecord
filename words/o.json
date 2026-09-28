@@ -1,11 +1,4 @@
 {
-  "ocean": {
-    "word": "ocean",
-    "phonetic": "/ˈəʊʃn/",
-    "explains": [
-      "n. 海洋；大海"
-    ]
-  },
   "o'clock": {
     "word": "o'clock",
     "phonetic": "/əˈklɒk/",
@@ -13,11 +6,907 @@
       "adv. …… 点钟"
     ]
   },
+  "oafish": {
+    "word": "oafish",
+    "phonetic": "/'ofɪʃ/",
+    "explains": [
+      "adj. 痴呆的, 畸形的"
+    ]
+  },
+  "oak": {
+    "word": "oak",
+    "phonetic": "/əʊk/",
+    "explains": [
+      "n. 栎属植物；栎木，橡木"
+    ]
+  },
+  "oakland": {
+    "word": "oakland",
+    "phonetic": "/'əuklənd/",
+    "explains": [
+      "n. 奥克兰(美国加利福尼亚州西部城市)"
+    ]
+  },
+  "oar": {
+    "word": "oar",
+    "phonetic": "/ɔː/",
+    "explains": [
+      "n. 浆，橹"
+    ]
+  },
+  "oasis": {
+    "word": "oasis",
+    "phonetic": "/əʊ'eɪsɪs/",
+    "explains": [
+      "n. (沙漠中)绿洲,舒适的地方"
+    ]
+  },
+  "oat": {
+    "word": "oat",
+    "phonetic": "/əʊt/",
+    "explains": [
+      "n. [植]燕麦, 麦片粥"
+    ]
+  },
+  "oath": {
+    "word": "oath",
+    "phonetic": "/əʊθ/",
+    "explains": [
+      "n. 誓言，誓约，宣誓"
+    ]
+  },
+  "oats": {
+    "word": "oats",
+    "phonetic": "/əuts/",
+    "explains": [
+      "n. 燕麦；燕麦片（oat的复数）；燕麦粥"
+    ]
+  },
+  "oauth": {
+    "word": "oauth",
+    "phonetic": "",
+    "explains": [
+      "第三方授权登录"
+    ]
+  },
+  "obbligato": {
+    "word": "obbligato",
+    "phonetic": "/,ɒblɪ'gɑːtəʊ/",
+    "explains": [
+      "n. 伴奏"
+    ]
+  },
+  "obdurate": {
+    "word": "obdurate",
+    "phonetic": "/'ɒbdjʊrət/",
+    "explains": [
+      "adj. 顽固的，执拗的；冷酷无情的"
+    ]
+  },
+  "obedecer": {
+    "word": "obedecer",
+    "phonetic": "",
+    "explains": [
+      "v. 服从"
+    ]
+  },
+  "obedience": {
+    "word": "obedience",
+    "phonetic": "/ə'biːdɪəns/",
+    "explains": [
+      "n. 服从，顺从"
+    ]
+  },
+  "obedient": {
+    "word": "obedient",
+    "phonetic": "/ə'biːdɪənt/",
+    "explains": [
+      "adj. 服从的，顺从的"
+    ]
+  },
+  "obeisance": {
+    "word": "obeisance",
+    "phonetic": "/ə(ʊ)'beɪs(ə)ns/",
+    "explains": [
+      "n. 敬礼, 鞠躬, 顿首, 服从"
+    ]
+  },
+  "obese": {
+    "word": "obese",
+    "phonetic": "/ə(ʊ)'biːs/",
+    "explains": [
+      "adj. 肥胖的，过胖的"
+    ]
+  },
+  "obesity": {
+    "word": "obesity",
+    "phonetic": "/ə(ʊ)'biːsɪtɪ/",
+    "explains": [
+      "n. 肥大，肥胖"
+    ]
+  },
+  "obey": {
+    "word": "obey",
+    "phonetic": "/ə(ʊ)ˈbeɪ/",
+    "explains": [
+      "v. 服从"
+    ]
+  },
+  "obfuscate": {
+    "word": "obfuscate",
+    "phonetic": "/'ɒbfʌskeɪt/",
+    "explains": [
+      "v. 使模糊；使迷乱；弄暗"
+    ]
+  },
+  "obituary": {
+    "word": "obituary",
+    "phonetic": "/ə(ʊ)'bɪtʃʊərɪ; -tʃərɪ; -tjʊərɪ/",
+    "explains": [
+      "adj. 讣告的；死亡的；n. 讣告"
+    ]
+  },
+  "object": {
+    "word": "object",
+    "phonetic": "/ˈɒbdʒɪkt; əbˈdʒekt/",
+    "explains": [
+      "n. 物品　v. 反对"
+    ]
+  },
+  "objectify": {
+    "word": "objectify",
+    "phonetic": "/ɒb'dʒektɪfaɪ/",
+    "explains": [
+      "v. 使客观化,具体化"
+    ]
+  },
+  "objection": {
+    "word": "objection",
+    "phonetic": "/əb'dʒekʃ(ə)n/",
+    "explains": [
+      "n. 反对，异议；不喜欢"
+    ]
+  },
+  "objectionable": {
+    "word": "objectionable",
+    "phonetic": "/əb'dʒekʃ(ə)nəb(ə)l/",
+    "explains": [
+      "adj. 引起反对的, 讨厌的"
+    ]
+  },
+  "objective": {
+    "word": "objective",
+    "phonetic": "/əbˈdʒektɪv/",
+    "explains": [
+      "n. 目标　adj. 客观的"
+    ]
+  },
+  "objectively": {
+    "word": "objectively",
+    "phonetic": "/əb'dʒektɪvlɪ/",
+    "explains": [
+      "adv. 客观地"
+    ]
+  },
+  "objet": {
+    "word": "objet",
+    "phonetic": "",
+    "explains": [
+      "n.m. 物体"
+    ]
+  },
+  "objeto": {
+    "word": "objeto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 物品；宾语"
+    ]
+  },
+  "objurgate": {
+    "word": "objurgate",
+    "phonetic": "/'ɒbdʒəgeɪt/",
+    "explains": [
+      "v. 申斥, 非难"
+    ]
+  },
+  "oblateness": {
+    "word": "oblateness",
+    "phonetic": "",
+    "explains": [
+      "n. 扁圆形；[天] 扁率"
+    ]
+  },
+  "oblation": {
+    "word": "oblation",
+    "phonetic": "/ə'bleɪʃ(ə)n/",
+    "explains": [
+      "n. 祭品"
+    ]
+  },
+  "obligar": {
+    "word": "obligar",
+    "phonetic": "",
+    "explains": [
+      "v. 强迫"
+    ]
+  },
+  "obligate": {
+    "word": "obligate",
+    "phonetic": "/'ɔbligeit/",
+    "explains": [
+      "v.  使在道义上负责， 有责任； 使负有义务； 强迫"
+    ]
+  },
+  "obligation": {
+    "word": "obligation",
+    "phonetic": "/ɒblɪ'geɪʃ(ə)n/",
+    "explains": [
+      "n. 义务，职责，责任"
+    ]
+  },
+  "obligatory": {
+    "word": "obligatory",
+    "phonetic": "/ə'blɪgət(ə)rɪ/",
+    "explains": [
+      "adj. (法律或道义上)必须的，应尽的"
+    ]
+  },
+  "oblige": {
+    "word": "oblige",
+    "phonetic": "/ə'blaɪdʒ/",
+    "explains": [
+      "v. 迫使"
+    ]
+  },
+  "obliging": {
+    "word": "obliging",
+    "phonetic": "/ə'blaɪdʒɪŋ/",
+    "explains": [
+      "adj. 乐于助人的"
+    ]
+  },
+  "oblique": {
+    "word": "oblique",
+    "phonetic": "/ə'bliːk/",
+    "explains": [
+      "adj. 斜的，偏斜的"
+    ]
+  },
+  "obliterate": {
+    "word": "obliterate",
+    "phonetic": "/ə'blɪtəreɪt/",
+    "explains": [
+      "v. 涂去, 删除, 使湮没"
+    ]
+  },
+  "oblivion": {
+    "word": "oblivion",
+    "phonetic": "/ə'blɪvɪən/",
+    "explains": [
+      "n. 遗忘；湮没；赦免"
+    ]
+  },
+  "oblivious": {
+    "word": "oblivious",
+    "phonetic": "/ə'blɪvɪəs/",
+    "explains": [
+      "adj. 没注意到, 健忘的"
+    ]
+  },
+  "oblong": {
+    "word": "oblong",
+    "phonetic": "/'ɒblɒŋ/",
+    "explains": [
+      "n&a. 长方形(的)"
+    ]
+  },
+  "obloquy": {
+    "word": "obloquy",
+    "phonetic": "/'ɒbləkwɪ/",
+    "explains": [
+      "n. 漫骂, 毁谤"
+    ]
+  },
+  "obnoxious": {
+    "word": "obnoxious",
+    "phonetic": "/əb'nɒkʃəs/",
+    "explains": [
+      "adj. 非常讨厌的；可憎的"
+    ]
+  },
+  "oboe": {
+    "word": "oboe",
+    "phonetic": "/'əʊbəʊ/",
+    "explains": [
+      "n. 双簧管"
+    ]
+  },
+  "obra": {
+    "word": "obra",
+    "phonetic": "",
+    "explains": [
+      "n.f. 作品；工程"
+    ]
+  },
+  "obscene": {
+    "word": "obscene",
+    "phonetic": "/əb'siːn/",
+    "explains": [
+      "adj. (文学，图画)猥亵的，淫秽的"
+    ]
+  },
+  "obscenity": {
+    "word": "obscenity",
+    "phonetic": "/əb'senɪtɪ/",
+    "explains": [
+      "n. 猥亵，淫秽；猥亵的言语（或行为）"
+    ]
+  },
+  "obscure": {
+    "word": "obscure",
+    "phonetic": "/əb'skjʊə/",
+    "explains": [
+      "adj. 无名的；鲜为人知的"
+    ]
+  },
+  "obscurity": {
+    "word": "obscurity",
+    "phonetic": "/əb'skjʊərɪtɪ/",
+    "explains": [
+      "n. 朦胧；阴暗；晦涩；身份低微；不分明"
+    ]
+  },
+  "obsequies": {
+    "word": "obsequies",
+    "phonetic": "/'ɒbsɪkwɪz/",
+    "explains": [
+      "n. 葬礼"
+    ]
+  },
+  "obsequious": {
+    "word": "obsequious",
+    "phonetic": "/əb'siːkwɪəs/",
+    "explains": [
+      "adj. 谄媚的；奉承的；顺从的"
+    ]
+  },
+  "observance": {
+    "word": "observance",
+    "phonetic": "/əb'zɜːv(ə)ns/",
+    "explains": [
+      "n. (法律习俗等)遵守；奉行；礼仪，仪式"
+    ]
+  },
+  "observant": {
+    "word": "observant",
+    "phonetic": "/əb'zɜːv(ə)nt/",
+    "explains": [
+      "adj. 善于观察的；机警的；严格遵守的"
+    ]
+  },
+  "observar": {
+    "word": "observar",
+    "phonetic": "",
+    "explains": [
+      "v. 观察"
+    ]
+  },
+  "observation": {
+    "word": "observation",
+    "phonetic": "/ˌɒbzəˈveɪʃ(ə)n/",
+    "explains": [
+      "n. 观察"
+    ]
+  },
+  "observatory": {
+    "word": "observatory",
+    "phonetic": "/əb'zɜːvət(ə)rɪ/",
+    "explains": [
+      "adj. 天文台,气象台"
+    ]
+  },
+  "observe": {
+    "word": "observe",
+    "phonetic": "/əbˈzɜːv/",
+    "explains": [
+      "v. 观察"
+    ]
+  },
+  "observer": {
+    "word": "observer",
+    "phonetic": "/əb'zɜːvə/",
+    "explains": [
+      "n. 观察员，观测者"
+    ]
+  },
+  "obsess": {
+    "word": "obsess",
+    "phonetic": "/əb'ses/",
+    "explains": [
+      "v. 迷住, 使困扰"
+    ]
+  },
+  "obsession": {
+    "word": "obsession",
+    "phonetic": "/əb'seʃ(ə)n/",
+    "explains": [
+      "n. 痴迷；困扰；[内科][心理] 强迫观念"
+    ]
+  },
+  "obsessive": {
+    "word": "obsessive",
+    "phonetic": "/əb'sesɪv/",
+    "explains": [
+      "adj. 强迫性的；着迷的；分神的"
+    ]
+  },
+  "obsidian": {
+    "word": "obsidian",
+    "phonetic": "/əb'sɪdɪən/",
+    "explains": [
+      "n. [矿]黑曜石"
+    ]
+  },
+  "obsolescence": {
+    "word": "obsolescence",
+    "phonetic": "/ˌɔbsə'lesəns/",
+    "explains": [
+      "n.  陈旧； 荒废"
+    ]
+  },
+  "obsolescent": {
+    "word": "obsolescent",
+    "phonetic": "/ˌɔbsə'lesənt/",
+    "explains": [
+      "adj.  逐渐被废弃的； 即将过时的"
+    ]
+  },
+  "obsolete": {
+    "word": "obsolete",
+    "phonetic": "/'ɒbsəliːt/",
+    "explains": [
+      "adj. 废弃的；老式的；n. 废词；陈腐的人；vt. 淘汰；废弃"
+    ]
+  },
+  "obstacle": {
+    "word": "obstacle",
+    "phonetic": "/ˈɒbstək(ə)l/",
+    "explains": [
+      "n. 障碍"
+    ]
+  },
+  "obstetrics": {
+    "word": "obstetrics",
+    "phonetic": "/əb'stetrɪks/",
+    "explains": [
+      "n. 产科学"
+    ]
+  },
+  "obstinate": {
+    "word": "obstinate",
+    "phonetic": "/'ɒbstɪnət/",
+    "explains": [
+      "adj. 固执的；顽强的"
+    ]
+  },
+  "obstreperous": {
+    "word": "obstreperous",
+    "phonetic": "/əbˈstrɛpərəs/",
+    "explains": [
+      "adj. 吵闹的，喧嚣的；难驾驭的"
+    ]
+  },
+  "obstruct": {
+    "word": "obstruct",
+    "phonetic": "/əb'strʌkt/",
+    "explains": [
+      "v. 妨碍；阻塞；遮断"
+    ]
+  },
+  "obstruction": {
+    "word": "obstruction",
+    "phonetic": "/əb'strʌkʃ(ə)n/",
+    "explains": [
+      "n. 障碍；阻碍；妨碍"
+    ]
+  },
+  "obtain": {
+    "word": "obtain",
+    "phonetic": "/əbˈteɪn/",
+    "explains": [
+      "v. 获得"
+    ]
+  },
+  "obtener": {
+    "word": "obtener",
+    "phonetic": "",
+    "explains": [
+      "v. 获得"
+    ]
+  },
+  "obtenir": {
+    "word": "obtenir",
+    "phonetic": "",
+    "explains": [
+      "v. 获得"
+    ]
+  },
+  "obtrude": {
+    "word": "obtrude",
+    "phonetic": "/əb'truːd/",
+    "explains": [
+      "v. 逼使；强迫；冲出"
+    ]
+  },
+  "obtrusive": {
+    "word": "obtrusive",
+    "phonetic": "/əb'truːsɪv/",
+    "explains": [
+      "adj. 突出的；强迫人的；冒失的"
+    ]
+  },
+  "obtundent": {
+    "word": "obtundent",
+    "phonetic": "/ɒb'tʌndənt/",
+    "explains": [
+      "adj. 使缓和的"
+    ]
+  },
+  "obtuse": {
+    "word": "obtuse",
+    "phonetic": "/əbˈtju:s/",
+    "explains": [
+      "adj. 迟钝的；圆头的；不锋利的"
+    ]
+  },
+  "obverse": {
+    "word": "obverse",
+    "phonetic": "/'ɒbvɜːs/",
+    "explains": [
+      "adj. 正面的"
+    ]
+  },
+  "obviate": {
+    "word": "obviate",
+    "phonetic": "/'ɒbvɪeɪt/",
+    "explains": [
+      "v. 排除；避免；消除"
+    ]
+  },
+  "obvious": {
+    "word": "obvious",
+    "phonetic": "/ˈɒbvɪəs/",
+    "explains": [
+      "adj. 明显的"
+    ]
+  },
+  "obviously": {
+    "word": "obviously",
+    "phonetic": "/'ɒbvɪəslɪ/",
+    "explains": [
+      "adv. 明显地，显然地"
+    ]
+  },
+  "occasion": {
+    "word": "occasion",
+    "phonetic": "/əˈkeɪʒ(ə)n/",
+    "explains": [
+      "n. 场合"
+    ]
+  },
+  "occasional": {
+    "word": "occasional",
+    "phonetic": "/ə'keɪʒ(ə)n(ə)l/",
+    "explains": [
+      "adj. 偶然的；临时的"
+    ]
+  },
+  "occasionally": {
+    "word": "occasionally",
+    "phonetic": "",
+    "explains": [
+      "adv. 偶然；非经常地"
+    ]
+  },
+  "occidental": {
+    "word": "occidental",
+    "phonetic": "/ɒksɪ'dent(ə)l/",
+    "explains": [
+      "n. 欧美人, 西方人"
+    ]
+  },
+  "occlude": {
+    "word": "occlude",
+    "phonetic": "/ə'kluːd/",
+    "explains": [
+      "v. 使闭塞；封闭；挡住"
+    ]
+  },
+  "occult": {
+    "word": "occult",
+    "phonetic": "/ɒ'kʌlt; 'ɒkʌlt/",
+    "explains": [
+      "adj. 神秘的；超自然的；难以理解的；v. 掩蔽；n. 神秘学"
+    ]
+  },
+  "occupancy": {
+    "word": "occupancy",
+    "phonetic": "/'ɔkjupənsi/",
+    "explains": [
+      "n.  占有， 使用； 居住； 供占用的住房"
+    ]
+  },
+  "occupant": {
+    "word": "occupant",
+    "phonetic": "/'ɒkjʊp(ə)nt/",
+    "explains": [
+      "n. 占有者, 居住者"
+    ]
+  },
+  "occupation": {
+    "word": "occupation",
+    "phonetic": "/ˌɒkjʊˈpeɪʃ(ə)n/",
+    "explains": [
+      "n. 职业"
+    ]
+  },
+  "occupational": {
+    "word": "occupational",
+    "phonetic": "/ɒkjʊ'peɪʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 职业的"
+    ]
+  },
+  "occupy": {
+    "word": "occupy",
+    "phonetic": "/ˈɒkjʊpaɪ/",
+    "explains": [
+      "v. 占据"
+    ]
+  },
+  "occur": {
+    "word": "occur",
+    "phonetic": "/əˈkɜː/",
+    "explains": [
+      "v. 发生"
+    ]
+  },
+  "occurrence": {
+    "word": "occurrence",
+    "phonetic": "/ə'kʌr(ə)ns/",
+    "explains": [
+      "n. 发生，出现；事件"
+    ]
+  },
+  "ocean": {
+    "word": "ocean",
+    "phonetic": "/ˈəʊʃn/",
+    "explains": [
+      "n. 海洋；大海"
+    ]
+  },
+  "oceania": {
+    "word": "oceania",
+    "phonetic": "/,əʊsɪ'ɑːnɪə; -ʃɪ-/",
+    "explains": [
+      "n. 大洋洲"
+    ]
+  },
+  "oceanic": {
+    "word": "oceanic",
+    "phonetic": "/,əʊsɪ'ænɪk; -ʃɪ-/",
+    "explains": [
+      "adj. 海洋的"
+    ]
+  },
+  "oceanographer": {
+    "word": "oceanographer",
+    "phonetic": "/,əʊʃɪə'nɒɡrəfə/",
+    "explains": [
+      "n. 海洋学者, 海洋研究者"
+    ]
+  },
+  "oceanographic": {
+    "word": "oceanographic",
+    "phonetic": "/,əuʃiənəu'ɡræfik/",
+    "explains": [
+      "adj. 海洋学的"
+    ]
+  },
+  "oceanography": {
+    "word": "oceanography",
+    "phonetic": "/,əʊʃə'nɒgrəfɪ/",
+    "explains": [
+      "n. 海洋学"
+    ]
+  },
+  "ocher": {
+    "word": "ocher",
+    "phonetic": "/'əʊkə/",
+    "explains": [
+      "n. 黄土, 赭土"
+    ]
+  },
+  "octagon": {
+    "word": "octagon",
+    "phonetic": "/'ɒktəg(ə)n/",
+    "explains": [
+      "n. 八边形，八角形"
+    ]
+  },
   "october": {
     "word": "October",
     "phonetic": "/ɒkˈtəʊbə(r)/",
     "explains": [
       "n. 十月"
+    ]
+  },
+  "octobre": {
+    "word": "octobre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 十月"
+    ]
+  },
+  "octogenarian": {
+    "word": "octogenarian",
+    "phonetic": "/,ɒktə(ʊ)dʒɪ'neərɪən/",
+    "explains": [
+      "adj. 八十岁的, 八十多岁的"
+    ]
+  },
+  "octopus": {
+    "word": "octopus",
+    "phonetic": "/'ɒktəpəs/",
+    "explains": [
+      "n. 章鱼"
+    ]
+  },
+  "octubre": {
+    "word": "octubre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 十月"
+    ]
+  },
+  "ocular": {
+    "word": "ocular",
+    "phonetic": "/'ɒkjʊlə/",
+    "explains": [
+      "adj. 眼睛的；视觉的；目击的；n. [光] 目镜"
+    ]
+  },
+  "oculist": {
+    "word": "oculist",
+    "phonetic": "/'ɒkjʊlɪst/",
+    "explains": [
+      "n. 眼科医生"
+    ]
+  },
+  "ocultar": {
+    "word": "ocultar",
+    "phonetic": "",
+    "explains": [
+      "v. 隐藏"
+    ]
+  },
+  "ocupado": {
+    "word": "ocupado",
+    "phonetic": "",
+    "explains": [
+      "adj. 忙碌的"
+    ]
+  },
+  "ocurrir": {
+    "word": "ocurrir",
+    "phonetic": "",
+    "explains": [
+      "v. 发生"
+    ]
+  },
+  "odd": {
+    "word": "odd",
+    "phonetic": "/ɒd/",
+    "explains": [
+      "adj. 奇怪的；奇数的"
+    ]
+  },
+  "odds": {
+    "word": "odds",
+    "phonetic": "/ɒdz/",
+    "explains": [
+      "n. 几率；胜算；不平等；差别"
+    ]
+  },
+  "ode": {
+    "word": "ode",
+    "phonetic": "/əʊd/",
+    "explains": [
+      "n. 颂诗, 赋"
+    ]
+  },
+  "odeur": {
+    "word": "odeur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 气味"
+    ]
+  },
+  "odio": {
+    "word": "odio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 憎恨"
+    ]
+  },
+  "odious": {
+    "word": "odious",
+    "phonetic": "/'əʊdɪəs/",
+    "explains": [
+      "adj. 可憎的；讨厌的"
+    ]
+  },
+  "odium": {
+    "word": "odium",
+    "phonetic": "/'əʊdɪəm/",
+    "explains": [
+      "n. 憎恶, 讨厌"
+    ]
+  },
+  "odometer": {
+    "word": "odometer",
+    "phonetic": "/əʊ'dɒmɪtə/",
+    "explains": [
+      "n. （汽车的）里程表，[车辆] 里程计"
+    ]
+  },
+  "odor": {
+    "word": "odor",
+    "phonetic": "/'əʊdə/",
+    "explains": [
+      "n. 气味；名声"
+    ]
+  },
+  "odoriferous": {
+    "word": "odoriferous",
+    "phonetic": "/,əʊdə'rɪf(ə)rəs/",
+    "explains": [
+      "adj. 臭的，散发气味的；芬芳的"
+    ]
+  },
+  "odorous": {
+    "word": "odorous",
+    "phonetic": "/'əʊd(ə)rəs/",
+    "explains": [
+      "adj. 香的；有气味的；难闻的"
+    ]
+  },
+  "odour": {
+    "word": "odour",
+    "phonetic": "/'əʊdə/",
+    "explains": [
+      "n. 气味，味道"
+    ]
+  },
+  "odyssey": {
+    "word": "odyssey",
+    "phonetic": "/'ɔdisi/",
+    "explains": [
+      "n.  长期冒险的旅途"
+    ]
+  },
+  "oesophagus": {
+    "word": "oesophagus",
+    "phonetic": "/ɪ'sɒfəgəs/",
+    "explains": [
+      "n. [解]食管"
+    ]
+  },
+  "oeste": {
+    "word": "oeste",
+    "phonetic": "",
+    "explains": [
+      "n.m. 西方"
     ]
   },
   "of": {
@@ -34,6 +923,69 @@
       "adv. 离开；脱落 prep. 离开；偏离"
     ]
   },
+  "off-season": {
+    "word": "off-season",
+    "phonetic": "/'ɔf'siːzn/",
+    "explains": [
+      "adj.  淡季的；n. 淡季"
+    ]
+  },
+  "off-the-peg": {
+    "word": "off-the-peg",
+    "phonetic": "/'ɔfðə'peg/",
+    "explains": [
+      "adj.  现成的"
+    ]
+  },
+  "off-the-shelf": {
+    "word": "off-the-shelf",
+    "phonetic": "/'ɔfðə'ʃelf/",
+    "explains": [
+      "adj.  现货供应的， 不用定制的"
+    ]
+  },
+  "offal": {
+    "word": "offal",
+    "phonetic": "/'ɒf(ə)l/",
+    "explains": [
+      "n. 碎屑, 残渣, 废弃物, 垃圾, (猪、牛、羊等屠宰后的)头, 尾, 下水"
+    ]
+  },
+  "offence": {
+    "word": "offence",
+    "phonetic": "/əˈfens/",
+    "explains": [
+      "n. 犯罪"
+    ]
+  },
+  "offend": {
+    "word": "offend",
+    "phonetic": "/ə'fend/",
+    "explains": [
+      "v. 冒犯；v. 犯罪，违法"
+    ]
+  },
+  "offender": {
+    "word": "offender",
+    "phonetic": "/ə'fendə(r)/",
+    "explains": [
+      "n. 罪犯；冒犯者；违法者"
+    ]
+  },
+  "offense": {
+    "word": "offense",
+    "phonetic": "/ə'fens/",
+    "explains": [
+      "n. 进攻"
+    ]
+  },
+  "offensive": {
+    "word": "offensive",
+    "phonetic": "/ə'fensɪv/",
+    "explains": [
+      "adj. 冒犯的；进攻的"
+    ]
+  },
   "offer": {
     "word": "offer",
     "phonetic": "/ˈɒfə(r)/",
@@ -41,11 +993,32 @@
       "v./n. 提供；出价；提议"
     ]
   },
+  "offering": {
+    "word": "offering",
+    "phonetic": "/'ɒf(ə)rɪŋ/",
+    "explains": [
+      "n. 提供, 奉献物"
+    ]
+  },
+  "offhand": {
+    "word": "offhand",
+    "phonetic": "/ɒf'hænd; 'ɒfhænd/",
+    "explains": [
+      "adj. 随便的；即时的；无准备的；即席的；adv. 随便地；即席地；即时地"
+    ]
+  },
   "office": {
     "word": "office",
     "phonetic": "/ˈɒfɪs/",
     "explains": [
       "n. 办公室；办公楼；公职"
+    ]
+  },
+  "officeholder": {
+    "word": "officeholder",
+    "phonetic": "/'ɒfɪs,həʊldə/",
+    "explains": [
+      "n. 官员,公务员"
     ]
   },
   "officer": {
@@ -63,11 +1036,130 @@
       "n. 官员；公务员"
     ]
   },
+  "officially": {
+    "word": "officially",
+    "phonetic": "/ə'fɪʃəlɪ/",
+    "explains": [
+      "adv. 职务上, 正式"
+    ]
+  },
+  "officier": {
+    "word": "officier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 军官"
+    ]
+  },
+  "officious": {
+    "word": "officious",
+    "phonetic": "/ə'fɪʃəs/",
+    "explains": [
+      "adj. 多管闲事的, 非官方的, 非正式的"
+    ]
+  },
+  "offish": {
+    "word": "offish",
+    "phonetic": "/'ɒfɪʃ/",
+    "explains": [
+      "adj. 冷漠的"
+    ]
+  },
+  "offline": {
+    "word": "offline",
+    "phonetic": "/ˌɒfˈlaɪn/",
+    "explains": [
+      "adj. 离线的"
+    ]
+  },
+  "offrande": {
+    "word": "offrande",
+    "phonetic": "",
+    "explains": [
+      "n.f. 供品；祭品"
+    ]
+  },
+  "offset": {
+    "word": "offset",
+    "phonetic": "/'ɒfset/",
+    "explains": [
+      "v. 抵销"
+    ]
+  },
+  "offshoot": {
+    "word": "offshoot",
+    "phonetic": "/'ɒfʃuːt/",
+    "explains": [
+      "n. 分支, 支流"
+    ]
+  },
+  "offshore": {
+    "word": "offshore",
+    "phonetic": "/'ɔf'ʃɔː/",
+    "explains": [
+      "adj.  向海的； 离岸的； 在海上的"
+    ]
+  },
+  "offspring": {
+    "word": "offspring",
+    "phonetic": "/'ɒfsprɪŋ/",
+    "explains": [
+      "n. 儿女，子孙，后代"
+    ]
+  },
+  "oft": {
+    "word": "oft",
+    "phonetic": "/ɒft/",
+    "explains": [
+      "adv. 常常, 再三"
+    ]
+  },
   "often": {
     "word": "often",
     "phonetic": "/ˈɒfn/",
     "explains": [
       "adv. 经常；常常；时常"
+    ]
+  },
+  "ogallala": {
+    "word": "ogallala",
+    "phonetic": "",
+    "explains": [
+      "n. 奥加拉拉(美国地名)"
+    ]
+  },
+  "ogle": {
+    "word": "ogle",
+    "phonetic": "/'əʊg(ə)l/",
+    "explains": [
+      "v. 向…抛媚眼；注视；n. 眉目传情；媚眼"
+    ]
+  },
+  "ogreish": {
+    "word": "ogreish",
+    "phonetic": "",
+    "explains": [
+      "adj. 鬼似的, 恐怖的"
+    ]
+  },
+  "oh": {
+    "word": "oh",
+    "phonetic": "/əʊ/",
+    "explains": [
+      "int. 嗬，哦，唉呀"
+    ]
+  },
+  "ohio": {
+    "word": "ohio",
+    "phonetic": "/əu'haiəu/",
+    "explains": [
+      "n. 俄亥俄州(美国州名)"
+    ]
+  },
+  "ohm": {
+    "word": "ohm",
+    "phonetic": "/əʊm/",
+    "explains": [
+      "n. 欧姆"
     ]
   },
   "oil": {
@@ -77,11 +1169,235 @@
       "n. 油；石油；油画颜料"
     ]
   },
+  "oilskin": {
+    "word": "oilskin",
+    "phonetic": "/'ɒɪlskɪn/",
+    "explains": [
+      "n. 油布, 防水布"
+    ]
+  },
+  "oily": {
+    "word": "oily",
+    "phonetic": "/'ɒɪlɪ/",
+    "explains": [
+      "adj. 油的, 油滑的"
+    ]
+  },
+  "ointment": {
+    "word": "ointment",
+    "phonetic": "/'ɒɪntm(ə)nt/",
+    "explains": [
+      "n. 药膏, 油膏"
+    ]
+  },
+  "oiseau": {
+    "word": "oiseau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 鸟"
+    ]
+  },
+  "ojo": {
+    "word": "ojo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 眼睛"
+    ]
+  },
+  "okay": {
+    "word": "okay",
+    "phonetic": "/'əʊ'keɪ/",
+    "explains": [
+      "convention. 对，好"
+    ]
+  },
+  "oklahoma": {
+    "word": "oklahoma",
+    "phonetic": "/,əuklə'həumə/",
+    "explains": [
+      "n. 俄克拉荷马州"
+    ]
+  },
   "old": {
     "word": "old",
     "phonetic": "/əʊld/",
     "explains": [
       "adj. 年老的；陈旧的；古老的"
+    ]
+  },
+  "oleaginous": {
+    "word": "oleaginous",
+    "phonetic": "/,əʊlɪ'ædʒɪnəs/",
+    "explains": [
+      "adj. 油质的"
+    ]
+  },
+  "olericulture": {
+    "word": "olericulture",
+    "phonetic": "/'ɒlərɪ,kʌltʃə/",
+    "explains": [
+      "n. 蔬菜栽培, 蔬菜园艺"
+    ]
+  },
+  "olfactory": {
+    "word": "olfactory",
+    "phonetic": "/ɒl'fækt(ə)rɪ/",
+    "explains": [
+      "adj. 嗅觉的"
+    ]
+  },
+  "oligarchy": {
+    "word": "oligarchy",
+    "phonetic": "/'ɒlɪgɑːkɪ/",
+    "explains": [
+      "n. 寡头政治, 寡头政治的执政团"
+    ]
+  },
+  "olive": {
+    "word": "olive",
+    "phonetic": "/'ɒlɪv/",
+    "explains": [
+      "n. 橄榄；橄榄树"
+    ]
+  },
+  "oliver": {
+    "word": "oliver",
+    "phonetic": "/'ɒlɪvə/",
+    "explains": [
+      "n. 脚踏铁槌"
+    ]
+  },
+  "olor": {
+    "word": "olor",
+    "phonetic": "",
+    "explains": [
+      "n.m. 气味"
+    ]
+  },
+  "olvidar": {
+    "word": "olvidar",
+    "phonetic": "",
+    "explains": [
+      "v. 忘记"
+    ]
+  },
+  "olympic": {
+    "word": "olympic",
+    "phonetic": "/əˈlɪmpɪk/",
+    "explains": [
+      "adj. 奥林匹斯山的，奥林匹亚的；奥林匹克的"
+    ]
+  },
+  "ombrage": {
+    "word": "ombrage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 树荫；猜疑"
+    ]
+  },
+  "ombre": {
+    "word": "ombre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 阴影"
+    ]
+  },
+  "ombrometer": {
+    "word": "ombrometer",
+    "phonetic": "",
+    "explains": [
+      "n. 雨量计, 雨计"
+    ]
+  },
+  "omega": {
+    "word": "omega",
+    "phonetic": "/'əʊmɪgə/",
+    "explains": [
+      "n. 最后；终了；希腊字母的最后一个字Ω"
+    ]
+  },
+  "omelette": {
+    "word": "omelette",
+    "phonetic": "/'ɒmlɪt/",
+    "explains": [
+      "n. 煎蛋卷"
+    ]
+  },
+  "omen": {
+    "word": "omen",
+    "phonetic": "/'əʊmən/",
+    "explains": [
+      "n. 预兆，征兆"
+    ]
+  },
+  "ominous": {
+    "word": "ominous",
+    "phonetic": "/'ɒmɪnəs/",
+    "explains": [
+      "adj. 不祥的，不吉利的"
+    ]
+  },
+  "omission": {
+    "word": "omission",
+    "phonetic": "/ə(ʊ)'mɪʃ(ə)n/",
+    "explains": [
+      "n. 冗长,疏漏"
+    ]
+  },
+  "omit": {
+    "word": "omit",
+    "phonetic": "/ə(ʊ)'mɪt/",
+    "explains": [
+      "v. 省略，省去；遗漏"
+    ]
+  },
+  "omnibus": {
+    "word": "omnibus",
+    "phonetic": "/'ɒmnɪbəs/",
+    "explains": [
+      "n. 公共汽车, 精选集 a综合性的"
+    ]
+  },
+  "omnificent": {
+    "word": "omnificent",
+    "phonetic": "/ɒm'nɪfɪsənt/",
+    "explains": [
+      "adj. <罕>创造一切的, 有无限创造力的"
+    ]
+  },
+  "omnipotent": {
+    "word": "omnipotent",
+    "phonetic": "/ɔm'nipətənt/",
+    "explains": [
+      "adj.  全能的， 万能的"
+    ]
+  },
+  "omnipresent": {
+    "word": "omnipresent",
+    "phonetic": "/ɒmnɪ'prez(ə)nt/",
+    "explains": [
+      "adj. 无所不在的"
+    ]
+  },
+  "omniscient": {
+    "word": "omniscient",
+    "phonetic": "/ɒm'nɪsɪənt/",
+    "explains": [
+      "adj. 全知的；无所不知的；n. 上帝；无所不知者"
+    ]
+  },
+  "omnivore": {
+    "word": "omnivore",
+    "phonetic": "/'ɒmnɪvɔː/",
+    "explains": [
+      "n. [动] 杂食动物；不偏食的人"
+    ]
+  },
+  "omnivorous": {
+    "word": "omnivorous",
+    "phonetic": "/ɒm'nɪv(ə)rəs/",
+    "explains": [
+      "adj. 杂食的；什么都读的；无所不吃的"
     ]
   },
   "on": {
@@ -91,11 +1407,39 @@
       "prep. 在… 上；关于；在… 时候"
     ]
   },
+  "on-call": {
+    "word": "on-call",
+    "phonetic": "",
+    "explains": [
+      "值班"
+    ]
+  },
+  "onboarding": {
+    "word": "onboarding",
+    "phonetic": "",
+    "explains": [
+      "新手引导"
+    ]
+  },
   "once": {
     "word": "once",
     "phonetic": "/wʌns/",
     "explains": [
       "adv. 一次；曾经 conj. 一旦"
+    ]
+  },
+  "oncle": {
+    "word": "oncle",
+    "phonetic": "",
+    "explains": [
+      "n.m. 叔叔；舅舅"
+    ]
+  },
+  "oncoming": {
+    "word": "oncoming",
+    "phonetic": "/'ɒnkʌmɪŋ/",
+    "explains": [
+      "adj. 即将来临的；接近的"
     ]
   },
   "one": {
@@ -105,6 +1449,69 @@
       "num. 一；一个 pron. 一个人；任何人"
     ]
   },
+  "one-liner": {
+    "word": "one-liner",
+    "phonetic": "",
+    "explains": [
+      "单行命令"
+    ]
+  },
+  "oneness": {
+    "word": "oneness",
+    "phonetic": "/'wʌnnɪs/",
+    "explains": [
+      "n. 单一,  统一"
+    ]
+  },
+  "onerous": {
+    "word": "onerous",
+    "phonetic": "/'əʊn(ə)rəs; 'ɒn-/",
+    "explains": [
+      "adj. 繁重的；麻烦的；负有义务的；负有法律责任的"
+    ]
+  },
+  "oneself": {
+    "word": "oneself",
+    "phonetic": "/wʌn'self/",
+    "explains": [
+      "pron. 自己；亲自"
+    ]
+  },
+  "onetime": {
+    "word": "onetime",
+    "phonetic": "",
+    "explains": [
+      "adj. 从前的,  一度的；adv. 从前"
+    ]
+  },
+  "ongoing": {
+    "word": "ongoing",
+    "phonetic": "/'ɒngəʊɪŋ/",
+    "explains": [
+      "adj. 正在进行的"
+    ]
+  },
+  "onion": {
+    "word": "onion",
+    "phonetic": "/ˈʌnjən/",
+    "explains": [
+      "n. 洋葱"
+    ]
+  },
+  "online": {
+    "word": "online",
+    "phonetic": "/ˌɒnˈlaɪn/",
+    "explains": [
+      "adj. 在线的"
+    ]
+  },
+  "onlooker": {
+    "word": "onlooker",
+    "phonetic": "/'ɒnlʊkə/",
+    "explains": [
+      "n. 旁观者"
+    ]
+  },
   "only": {
     "word": "only",
     "phonetic": "/ˈəʊnli/",
@@ -112,11 +1519,186 @@
       "adv. 只；仅仅；不料"
     ]
   },
+  "onrush": {
+    "word": "onrush",
+    "phonetic": "/'ɒnrʌʃ/",
+    "explains": [
+      "n. 猛冲；突进；袭击；急流"
+    ]
+  },
+  "onrushing": {
+    "word": "onrushing",
+    "phonetic": "/'ɑn,rʌʃɪŋ/",
+    "explains": [
+      "adj. 猛冲的"
+    ]
+  },
+  "onset": {
+    "word": "onset",
+    "phonetic": "/'ɒnset/",
+    "explains": [
+      "n. 开始；攻击"
+    ]
+  },
+  "onslaught": {
+    "word": "onslaught",
+    "phonetic": "/'ɒnslɔːt/",
+    "explains": [
+      "n. 冲击"
+    ]
+  },
+  "onstage": {
+    "word": "onstage",
+    "phonetic": "/ɒn'steɪdʒ/",
+    "explains": [
+      "adj. 台上的,舞台表演区的"
+    ]
+  },
+  "ontario": {
+    "word": "ontario",
+    "phonetic": "/ɔn'tεəriəu/",
+    "explains": [
+      "n. 安大略湖[北美洲]"
+    ]
+  },
+  "ontic": {
+    "word": "ontic",
+    "phonetic": "/'ɒntɪk/",
+    "explains": [
+      "adj. 本体的, 实体的"
+    ]
+  },
+  "onto": {
+    "word": "onto",
+    "phonetic": "/ˈɒntə/",
+    "explains": [
+      "prep. 到……上"
+    ]
+  },
+  "ontology": {
+    "word": "ontology",
+    "phonetic": "/ɒn'tɒlədʒɪ/",
+    "explains": [
+      "n. [哲]存在论"
+    ]
+  },
+  "onus": {
+    "word": "onus",
+    "phonetic": "/'əunəs/",
+    "explains": [
+      "n.  责任； 负担； 过失； 污辱"
+    ]
+  },
+  "onward": {
+    "word": "onward",
+    "phonetic": "/'ɒnwəd/",
+    "explains": [
+      "adj. 向前的；adv. 向前,在前面"
+    ]
+  },
+  "onwards": {
+    "word": "onwards",
+    "phonetic": "/'ɒnwədz/",
+    "explains": [
+      "adv. 向前；在前面"
+    ]
+  },
+  "oom": {
+    "word": "oom",
+    "phonetic": "",
+    "explains": [
+      "内存溢出"
+    ]
+  },
+  "oomph": {
+    "word": "oomph",
+    "phonetic": "/ʊmf; uːmf/",
+    "explains": [
+      "n. 性感, 性的魅力, 精神, 精力"
+    ]
+  },
+  "ooze": {
+    "word": "ooze",
+    "phonetic": "/uːz/",
+    "explains": [
+      "n. 软泥 v渗出"
+    ]
+  },
+  "opacity": {
+    "word": "opacity",
+    "phonetic": "/ə(ʊ)'pæsɪtɪ/",
+    "explains": [
+      "n. 不透明性"
+    ]
+  },
+  "opal": {
+    "word": "opal",
+    "phonetic": "/'əʊp(ə)l/",
+    "explains": [
+      "n. 猫眼石，蛋白石；乳白玻璃"
+    ]
+  },
+  "opalescent": {
+    "word": "opalescent",
+    "phonetic": "/əʊpə'les(ə)nt/",
+    "explains": [
+      "adj. 乳白色的"
+    ]
+  },
+  "opaque": {
+    "word": "opaque",
+    "phonetic": "/ə(ʊ)'peɪk/",
+    "explains": [
+      "adj. 不透明的"
+    ]
+  },
   "open": {
     "word": "open",
     "phonetic": "/ˈəʊpən/",
     "explains": [
       "adj. 公开的；敞开的 v. 打开；公开"
+    ]
+  },
+  "opener": {
+    "word": "opener",
+    "phonetic": "/'əʊp(ə)nə/",
+    "explains": [
+      "n. [五金] 开启工具；开启的人"
+    ]
+  },
+  "opening": {
+    "word": "opening",
+    "phonetic": "/ˈəʊp(ə)nɪŋ/",
+    "explains": [
+      "n. 开幕；洞"
+    ]
+  },
+  "openly": {
+    "word": "openly",
+    "phonetic": "/'opənli/",
+    "explains": [
+      "adv. 不隐瞒地, 公然地"
+    ]
+  },
+  "opensource": {
+    "word": "opensource",
+    "phonetic": "",
+    "explains": [
+      "开源的"
+    ]
+  },
+  "opera": {
+    "word": "opera",
+    "phonetic": "/ˈɒp(ə)rə/",
+    "explains": [
+      "n. 歌剧"
+    ]
+  },
+  "operagoer": {
+    "word": "operagoer",
+    "phonetic": "/'ɒpərə,ɡəʊə/",
+    "explains": [
+      "n. 经常看歌剧的人"
     ]
   },
   "operate": {
@@ -133,11 +1715,102 @@
       "n. 操作；经营；手术；运算"
     ]
   },
+  "operational": {
+    "word": "operational",
+    "phonetic": "/ɒpə'reɪʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 操作上的；可使用的"
+    ]
+  },
+  "operative": {
+    "word": "operative",
+    "phonetic": "/'ɔpərətiv/",
+    "explains": [
+      "adj.  实施的； 工作着的； 操作的； 运转的；n. 工人"
+    ]
+  },
+  "operator": {
+    "word": "operator",
+    "phonetic": "/ˈɒpəreɪtə/",
+    "explains": [
+      "n. 操作员"
+    ]
+  },
+  "operetta": {
+    "word": "operetta",
+    "phonetic": "/ɒpə'retə/",
+    "explains": [
+      "n. 小歌剧"
+    ]
+  },
+  "ophthalmology": {
+    "word": "ophthalmology",
+    "phonetic": "/,ɒfθæl'mɒlədʒɪ; ,ɒpθæl'mɒlədʒɪ/",
+    "explains": [
+      "n. [医]眼科学"
+    ]
+  },
+  "opiate": {
+    "word": "opiate",
+    "phonetic": "/'əʊpɪət/",
+    "explains": [
+      "n. 鸦片剂"
+    ]
+  },
   "opinion": {
     "word": "opinion",
     "phonetic": "/əˈpɪnjən/",
     "explains": [
       "n. 意见；主张；看法"
+    ]
+  },
+  "opinionated": {
+    "word": "opinionated",
+    "phonetic": "/ə'pɪnjəneɪtɪd/",
+    "explains": [
+      "adj. 固执己见的, 武断的"
+    ]
+  },
+  "opium": {
+    "word": "opium",
+    "phonetic": "/'əʊpɪəm/",
+    "explains": [
+      "n. 鸦片；麻醉剂"
+    ]
+  },
+  "opossum": {
+    "word": "opossum",
+    "phonetic": "/ə'pɒs(ə)m/",
+    "explains": [
+      "n. 负鼠；装死"
+    ]
+  },
+  "opponent": {
+    "word": "opponent",
+    "phonetic": "/ə'pəʊnənt/",
+    "explains": [
+      "n. 对手，敌手；对抗者"
+    ]
+  },
+  "opportune": {
+    "word": "opportune",
+    "phonetic": "/'ɒpətjuːn; ,ɒpə'tjuːn/",
+    "explains": [
+      "adj. 适当的；恰好的；合时宜的"
+    ]
+  },
+  "opportunist": {
+    "word": "opportunist",
+    "phonetic": "/ɒpə'tjuːnɪst/",
+    "explains": [
+      "n. 机会主义者,投机取巧者"
+    ]
+  },
+  "opportunistic": {
+    "word": "opportunistic",
+    "phonetic": "/ɒpətjuː'nɪstɪk/",
+    "explains": [
+      "adj. 机会主义的, 投机取巧的"
     ]
   },
   "opportunity": {
@@ -162,11 +1835,214 @@
       "n. 对立面；反面 prep. 在…对面"
     ]
   },
+  "oppositely": {
+    "word": "oppositely",
+    "phonetic": "",
+    "explains": [
+      "adv. 相反地, 相对地"
+    ]
+  },
+  "opposition": {
+    "word": "opposition",
+    "phonetic": "/ɒpə'zɪʃ(ə)n/",
+    "explains": [
+      "n. 反对,相反"
+    ]
+  },
+  "oppress": {
+    "word": "oppress",
+    "phonetic": "/ə'pres/",
+    "explains": [
+      "v. 压迫，压制；压抑"
+    ]
+  },
+  "oppressive": {
+    "word": "oppressive",
+    "phonetic": "/ə'presɪv/",
+    "explains": [
+      "adj. 压迫的；沉重的；压制性的；难以忍受的"
+    ]
+  },
+  "opprobrious": {
+    "word": "opprobrious",
+    "phonetic": "/ə'prəʊbrɪəs/",
+    "explains": [
+      "adj. 嘴不干净的, 无礼的, 粗野的, 该骂的, 可耻的"
+    ]
+  },
+  "opprobrium": {
+    "word": "opprobrium",
+    "phonetic": "/ə'prəʊbrɪəm/",
+    "explains": [
+      "n. 耻辱，不名誉；责骂，咒骂"
+    ]
+  },
+  "opt": {
+    "word": "opt",
+    "phonetic": "/ɒpt/",
+    "explains": [
+      "v. 选择"
+    ]
+  },
+  "opt-in": {
+    "word": "opt-in",
+    "phonetic": "",
+    "explains": [
+      "主动选择加入"
+    ]
+  },
+  "opt-out": {
+    "word": "opt-out",
+    "phonetic": "",
+    "explains": [
+      "主动选择退出"
+    ]
+  },
+  "optic": {
+    "word": "optic",
+    "phonetic": "/'ɒptɪk/",
+    "explains": [
+      "adj. 光学的；视觉的；眼睛的；n. 眼睛；镜片"
+    ]
+  },
+  "optical": {
+    "word": "optical",
+    "phonetic": "/'ɒptɪk(ə)l/",
+    "explains": [
+      "adj. 眼的；光学的"
+    ]
+  },
+  "optics": {
+    "word": "optics",
+    "phonetic": "/'ɒptɪks/",
+    "explains": [
+      "n. [光] 光学"
+    ]
+  },
+  "optimal": {
+    "word": "optimal",
+    "phonetic": "/'ɔptiməl/",
+    "explains": [
+      "adj.  最佳的， 最适度的， 最优的"
+    ]
+  },
+  "optimise": {
+    "word": "optimise",
+    "phonetic": "/'ɒptɪmaɪz/",
+    "explains": [
+      "v. 使优化；充分利用"
+    ]
+  },
+  "optimism": {
+    "word": "optimism",
+    "phonetic": "/'ɒptɪmɪz(ə)m/",
+    "explains": [
+      "n. 乐观，乐观主义"
+    ]
+  },
+  "optimistic": {
+    "word": "optimistic",
+    "phonetic": "/ˌɒptɪˈmɪstɪk/",
+    "explains": [
+      "adj. 乐观的"
+    ]
+  },
+  "optimization": {
+    "word": "optimization",
+    "phonetic": "/,ɒptɪmaɪ'zeɪʃən/",
+    "explains": [
+      "n. 最佳化, 最优化"
+    ]
+  },
+  "optimize": {
+    "word": "optimize",
+    "phonetic": "/'ɔptimaiz/",
+    "explains": [
+      "vt.  使最优化"
+    ]
+  },
+  "optimum": {
+    "word": "optimum",
+    "phonetic": "/'ɒptɪməm/",
+    "explains": [
+      "adj. 最优的，最适宜的"
+    ]
+  },
+  "option": {
+    "word": "option",
+    "phonetic": "/ˈɒpʃ(ə)n/",
+    "explains": [
+      "n. 选择"
+    ]
+  },
+  "optional": {
+    "word": "optional",
+    "phonetic": "/ˈɒpʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 可选的"
+    ]
+  },
+  "optometrist": {
+    "word": "optometrist",
+    "phonetic": "/ɒp'tɒmɪtrɪst/",
+    "explains": [
+      "n. 验光师, 视力测定者"
+    ]
+  },
+  "opuesto": {
+    "word": "opuesto",
+    "phonetic": "",
+    "explains": [
+      "adj. 相反的"
+    ]
+  },
+  "opulence": {
+    "word": "opulence",
+    "phonetic": "/'ɒpjʊl(ə)ns; 'ɒpjʊləns/",
+    "explains": [
+      "n. 富裕"
+    ]
+  },
+  "opulent": {
+    "word": "opulent",
+    "phonetic": "/'ɒpjʊl(ə)nt/",
+    "explains": [
+      "adj. 丰富的；富裕的；大量的"
+    ]
+  },
   "or": {
     "word": "or",
     "phonetic": "/ɔː(r)/",
     "explains": [
       "conj. 或者；还是；否则"
+    ]
+  },
+  "oracle": {
+    "word": "oracle",
+    "phonetic": "/'ɒrək(ə)l/",
+    "explains": [
+      "n. [宗](古希腊)神谕, 预言, 神谕处, 神使, 哲人, 圣贤美国ORACLE公司, 主要生产数据库产品, 也是主要的网络计算机的倡导者"
+    ]
+  },
+  "oracular": {
+    "word": "oracular",
+    "phonetic": "/ɒ'rækjʊlə/",
+    "explains": [
+      "adj. 神谕的, 谜似的"
+    ]
+  },
+  "orage": {
+    "word": "orage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 暴风雨"
+    ]
+  },
+  "oral": {
+    "word": "oral",
+    "phonetic": "/ˈɔːr(ə)l/",
+    "explains": [
+      "adj. 口头的"
     ]
   },
   "orange": {
@@ -176,11 +2052,158 @@
       "n. 橙子；橙色 adj. 橙色的"
     ]
   },
+  "oration": {
+    "word": "oration",
+    "phonetic": "/ɒ'reɪʃ(ə)n/",
+    "explains": [
+      "n. 演说；致辞；叙述法"
+    ]
+  },
+  "orator": {
+    "word": "orator",
+    "phonetic": "/'ɒrətə/",
+    "explains": [
+      "n. 演说者；演讲者；雄辩家；原告"
+    ]
+  },
+  "oratorio": {
+    "word": "oratorio",
+    "phonetic": "/,ɒrə'tɔːrɪəʊ/",
+    "explains": [
+      "n. 宗教剧"
+    ]
+  },
+  "oratory": {
+    "word": "oratory",
+    "phonetic": "/'ɒrət(ə)rɪ/",
+    "explains": [
+      "n. 雄辩；演讲术"
+    ]
+  },
+  "orbit": {
+    "word": "orbit",
+    "phonetic": "/ˈɔːbɪt/",
+    "explains": [
+      "n. 轨道"
+    ]
+  },
+  "orbital": {
+    "word": "orbital",
+    "phonetic": "/'ɔːbɪt(ə)l/",
+    "explains": [
+      "adj. 轨道的"
+    ]
+  },
+  "orchard": {
+    "word": "orchard",
+    "phonetic": "/'ɔːtʃəd/",
+    "explains": [
+      "n. 果园"
+    ]
+  },
+  "orchestic": {
+    "word": "orchestic",
+    "phonetic": "",
+    "explains": [
+      "adj. 舞蹈的"
+    ]
+  },
+  "orchestra": {
+    "word": "orchestra",
+    "phonetic": "/ˈɔːkɪstrə; -kestrə/",
+    "explains": [
+      "n. 管弦乐队"
+    ]
+  },
+  "orchestral": {
+    "word": "orchestral",
+    "phonetic": "/ɔː'kestr(ə)l/",
+    "explains": [
+      "adj. 管弦乐的,管弦乐队的"
+    ]
+  },
+  "orchestrate": {
+    "word": "orchestrate",
+    "phonetic": "/'ɔːkɪstreɪt/",
+    "explains": [
+      "v. 把…编成管弦乐曲；（美）精心安排；把…协调地结合起来"
+    ]
+  },
+  "orchestration": {
+    "word": "orchestration",
+    "phonetic": "",
+    "explains": [
+      "编排"
+    ]
+  },
+  "orchid": {
+    "word": "orchid",
+    "phonetic": "/'ɔːkɪd/",
+    "explains": [
+      "n. 兰花"
+    ]
+  },
+  "ordain": {
+    "word": "ordain",
+    "phonetic": "/ɔː'deɪn/",
+    "explains": [
+      "v. 注定, 规定, 任命(牧师)"
+    ]
+  },
+  "ordeal": {
+    "word": "ordeal",
+    "phonetic": "/ɔː'diːəl/",
+    "explains": [
+      "n. (对品格或忍耐力的)严格考验"
+    ]
+  },
+  "orden": {
+    "word": "orden",
+    "phonetic": "",
+    "explains": [
+      "n.m. 顺序；命令"
+    ]
+  },
+  "ordenar": {
+    "word": "ordenar",
+    "phonetic": "",
+    "explains": [
+      "v. 整理；点菜；命令"
+    ]
+  },
   "order": {
     "word": "order",
     "phonetic": "/ˈɔːdə(r)/",
     "explains": [
       "n. 命令；顺序；规则 v. 命令；订货"
+    ]
+  },
+  "orderly": {
+    "word": "orderly",
+    "phonetic": "/'ɔːd(ə)lɪ/",
+    "explains": [
+      "adj. 整洁的；有秩序的"
+    ]
+  },
+  "ordinal": {
+    "word": "ordinal",
+    "phonetic": "/'ɔːdɪn(ə)l/",
+    "explains": [
+      "adj. 顺序的，依次的；n. [数] 序数"
+    ]
+  },
+  "ordinance": {
+    "word": "ordinance",
+    "phonetic": "/'ɔːdɪnəns/",
+    "explains": [
+      "n. 法令，条例"
+    ]
+  },
+  "ordinarily": {
+    "word": "ordinarily",
+    "phonetic": "/'ɔːd(ə),n(ə)rɪlɪ; ,ɔːdɪ'nerɪlɪ/",
+    "explains": [
+      "adv. 通常，大概"
     ]
   },
   "ordinary": {
@@ -190,11 +2213,235 @@
       "adj. 普通的；平凡的；平常的"
     ]
   },
+  "ordinate": {
+    "word": "ordinate",
+    "phonetic": "/'ɔːdɪnət/",
+    "explains": [
+      "n. [数] 纵坐标"
+    ]
+  },
+  "ordinateur": {
+    "word": "ordinateur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 电脑"
+    ]
+  },
+  "ordination": {
+    "word": "ordination",
+    "phonetic": "/ɔːdɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 排成等级, 分类, 任命, [宗]神职授任, 颁布法令"
+    ]
+  },
+  "ordnance": {
+    "word": "ordnance",
+    "phonetic": "/'ɔːdnəns/",
+    "explains": [
+      "n. 军火"
+    ]
+  },
+  "ordre": {
+    "word": "ordre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 顺序；命令"
+    ]
+  },
+  "ore": {
+    "word": "ore",
+    "phonetic": "/ɔː/",
+    "explains": [
+      "n. 矿，矿石，矿砂"
+    ]
+  },
+  "oregon": {
+    "word": "oregon",
+    "phonetic": "/'ɔriɡən; -ɡɔn/",
+    "explains": [
+      "n. 俄勒冈州(美国州名)"
+    ]
+  },
+  "oreille": {
+    "word": "oreille",
+    "phonetic": "",
+    "explains": [
+      "n.f. 耳朵"
+    ]
+  },
+  "oreja": {
+    "word": "oreja",
+    "phonetic": "",
+    "explains": [
+      "n.f. 耳朵"
+    ]
+  },
+  "orexis": {
+    "word": "orexis",
+    "phonetic": "/ɔː'reksɪs/",
+    "explains": [
+      "n. 欲望, [医]食欲"
+    ]
+  },
+  "organ": {
+    "word": "organ",
+    "phonetic": "/ˈɔːgən/",
+    "explains": [
+      "n. 器官"
+    ]
+  },
+  "organelle": {
+    "word": "organelle",
+    "phonetic": "/,ɔːgə'nel/",
+    "explains": [
+      "n. [细胞] 细胞器；细胞器官"
+    ]
+  },
+  "organic": {
+    "word": "organic",
+    "phonetic": "/ɔːˈgænɪk/",
+    "explains": [
+      "adj. 有机的"
+    ]
+  },
+  "organically": {
+    "word": "organically",
+    "phonetic": "",
+    "explains": [
+      "adv. 器官上地, 有机地"
+    ]
+  },
+  "organisation": {
+    "word": "organisation",
+    "phonetic": "/,ɔːɡənaɪ'zeɪʃən/",
+    "explains": [
+      "n. 组织；团体（等于organization）"
+    ]
+  },
+  "organise": {
+    "word": "organise",
+    "phonetic": "/ˈɔːgənaɪz/",
+    "explains": [
+      "v. 组织"
+    ]
+  },
+  "organism": {
+    "word": "organism",
+    "phonetic": "/'ɔːg(ə)nɪz(ə)m/",
+    "explains": [
+      "n. 生物体；有机体"
+    ]
+  },
+  "organizar": {
+    "word": "organizar",
+    "phonetic": "",
+    "explains": [
+      "v. 组织"
+    ]
+  },
+  "organization": {
+    "word": "organization",
+    "phonetic": "/ˌɔːɡənaɪ'zeɪʃn/",
+    "explains": [
+      "n. 组织；团体，机构"
+    ]
+  },
+  "organizational": {
+    "word": "organizational",
+    "phonetic": "/ˌɔːgənai'zeiʃənəl/",
+    "explains": [
+      "adj.  组织的"
+    ]
+  },
   "organize": {
     "word": "organize",
     "phonetic": "/ˈɔːɡənaɪz/",
     "explains": [
       "v. 组织；安排；筹备"
+    ]
+  },
+  "orgasm": {
+    "word": "orgasm",
+    "phonetic": "/'ɔːgæz(ə)m/",
+    "explains": [
+      "n. [生理] 性高潮；极度兴奋"
+    ]
+  },
+  "orgueil": {
+    "word": "orgueil",
+    "phonetic": "",
+    "explains": [
+      "n.m. 骄傲"
+    ]
+  },
+  "orgullo": {
+    "word": "orgullo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 骄傲"
+    ]
+  },
+  "orgulous": {
+    "word": "orgulous",
+    "phonetic": "",
+    "explains": [
+      "adj. 骄傲的, 高傲的"
+    ]
+  },
+  "orgy": {
+    "word": "orgy",
+    "phonetic": "/'ɔːdʒɪ/",
+    "explains": [
+      "n. 狂欢；放荡"
+    ]
+  },
+  "orient": {
+    "word": "orient",
+    "phonetic": "/'ɔːrɪənt; 'ɒr-/",
+    "explains": [
+      "n. 东方；亚洲，远东"
+    ]
+  },
+  "oriental": {
+    "word": "oriental",
+    "phonetic": "/ɔːrɪ'ent(ə)l; ɒr-/",
+    "explains": [
+      "adj. 东方的；东方国家的"
+    ]
+  },
+  "orientate": {
+    "word": "orientate",
+    "phonetic": "/'ɔːrɪənteɪt; 'ɒr-/",
+    "explains": [
+      "v. 定位；给定位"
+    ]
+  },
+  "orientation": {
+    "word": "orientation",
+    "phonetic": "/,ɔːrɪən'teɪʃ(ə)n; ,ɒr-/",
+    "explains": [
+      "n. 定位；方向"
+    ]
+  },
+  "oriented": {
+    "word": "oriented",
+    "phonetic": "/'ɔːrɪentɪd/",
+    "explains": [
+      "adj. 导向的；定向的；以…为方向的；v. 调整；使朝向（orient的过去分词）；确定…的方位"
+    ]
+  },
+  "orifice": {
+    "word": "orifice",
+    "phonetic": "/'ɒrɪfɪs/",
+    "explains": [
+      "n. [机] 孔口"
+    ]
+  },
+  "origen": {
+    "word": "origen",
+    "phonetic": "",
+    "explains": [
+      "n.m. 起源"
     ]
   },
   "origin": {
@@ -212,6 +2459,300 @@
       "n. 原作；原件；原稿"
     ]
   },
+  "originality": {
+    "word": "originality",
+    "phonetic": "/ə,rɪdʒɪ'nælɪtɪ/",
+    "explains": [
+      "n. 独创性"
+    ]
+  },
+  "originally": {
+    "word": "originally",
+    "phonetic": "/ə'ridʒənəli/",
+    "explains": [
+      "adv.  最初， 原先"
+    ]
+  },
+  "originate": {
+    "word": "originate",
+    "phonetic": "/ə'rɪdʒɪneɪt; ɒ-/",
+    "explains": [
+      "v. 发源；首创"
+    ]
+  },
+  "originator": {
+    "word": "originator",
+    "phonetic": "/ə'rɪdʒɪneɪtə(r)/",
+    "explains": [
+      "n. 创始人, 发起人"
+    ]
+  },
+  "origine": {
+    "word": "origine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 起源；出身"
+    ]
+  },
+  "orilla": {
+    "word": "orilla",
+    "phonetic": "",
+    "explains": [
+      "n.f. 岸边"
+    ]
+  },
+  "orleans": {
+    "word": "orleans",
+    "phonetic": "",
+    "explains": [
+      "n. 奥尔良[法国]"
+    ]
+  },
+  "ornament": {
+    "word": "ornament",
+    "phonetic": "/ˈɔːnəmənt/",
+    "explains": [
+      "n. 装饰品"
+    ]
+  },
+  "ornamental": {
+    "word": "ornamental",
+    "phonetic": "/ɔːnə'ment(ə)l/",
+    "explains": [
+      "adj. 装饰的"
+    ]
+  },
+  "ornamentation": {
+    "word": "ornamentation",
+    "phonetic": "/ɔːnəmen'teɪʃ(ə)n/",
+    "explains": [
+      "n. 装饰"
+    ]
+  },
+  "ornate": {
+    "word": "ornate",
+    "phonetic": "/ɔː'neɪt/",
+    "explains": [
+      "adj. 华丽的, 装饰的"
+    ]
+  },
+  "ornement": {
+    "word": "ornement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 装饰"
+    ]
+  },
+  "ornery": {
+    "word": "ornery",
+    "phonetic": "/'ɔːnərɪ/",
+    "explains": [
+      "adj. 爱争吵的, 卑下的, 一般的"
+    ]
+  },
+  "ornithology": {
+    "word": "ornithology",
+    "phonetic": "/,ɔːnɪ'θɒlədʒɪ/",
+    "explains": [
+      "n. 鸟类学, 鸟学论文"
+    ]
+  },
+  "oro": {
+    "word": "oro",
+    "phonetic": "",
+    "explains": [
+      "n.m. 金子"
+    ]
+  },
+  "orogeny": {
+    "word": "orogeny",
+    "phonetic": "/ɒ'rɒdʒənɪ/",
+    "explains": [
+      "n. [地] 山岳之形成"
+    ]
+  },
+  "orotund": {
+    "word": "orotund",
+    "phonetic": "/'ɒrə(ʊ)tʌnd; 'ɔː-/",
+    "explains": [
+      "adj. 响朗的, 洪亮的, 夸大的"
+    ]
+  },
+  "orphan": {
+    "word": "orphan",
+    "phonetic": "/'ɔːf(ə)n/",
+    "explains": [
+      "n. 孤儿"
+    ]
+  },
+  "orphanage": {
+    "word": "orphanage",
+    "phonetic": "/'ɔːf(ə)nɪdʒ/",
+    "explains": [
+      "n. 孤儿院, 孤儿身份"
+    ]
+  },
+  "orthodontics": {
+    "word": "orthodontics",
+    "phonetic": "/,ɔːθə'dɒntɪks/",
+    "explains": [
+      "n. [医]畸齿矫正(术), 正牙学"
+    ]
+  },
+  "orthodox": {
+    "word": "orthodox",
+    "phonetic": "/'ɔːθədɒks/",
+    "explains": [
+      "adj. 正统的；传统的；惯常的；东正教的；n. 正统的人；正统的事物"
+    ]
+  },
+  "orthodoxy": {
+    "word": "orthodoxy",
+    "phonetic": "/'ɔːθədɒksɪ/",
+    "explains": [
+      "n. 正统；正教；正统说法"
+    ]
+  },
+  "orthopedics": {
+    "word": "orthopedics",
+    "phonetic": "/,ɔ:θə'pi:dɪks/",
+    "explains": [
+      "n. [医]整形外科, 整形术"
+    ]
+  },
+  "orthopteran": {
+    "word": "orthopteran",
+    "phonetic": "/ɔː'θɒpt(ə)rən/",
+    "explains": [
+      "n. 直翅类的昆虫"
+    ]
+  },
+  "ortie": {
+    "word": "ortie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 荨麻"
+    ]
+  },
+  "oscillate": {
+    "word": "oscillate",
+    "phonetic": "/'ɒsɪleɪt/",
+    "explains": [
+      "v. 振荡"
+    ]
+  },
+  "oscillation": {
+    "word": "oscillation",
+    "phonetic": "/,ɒsɪ'leɪʃn/",
+    "explains": [
+      "n. 摆动, 振动"
+    ]
+  },
+  "osculate": {
+    "word": "osculate",
+    "phonetic": "/'ɒskjʊleɪt/",
+    "explains": [
+      "v. 接吻, 接触"
+    ]
+  },
+  "osculation": {
+    "word": "osculation",
+    "phonetic": "",
+    "explains": [
+      "n. 接吻, 密切, 接触"
+    ]
+  },
+  "oscuro": {
+    "word": "oscuro",
+    "phonetic": "",
+    "explains": [
+      "adj. 黑暗的"
+    ]
+  },
+  "osmosis": {
+    "word": "osmosis",
+    "phonetic": "/ɒz'məʊsɪs/",
+    "explains": [
+      "n. [物] 渗透；[物] 渗透性；渗透作用"
+    ]
+  },
+  "osmotic": {
+    "word": "osmotic",
+    "phonetic": "/ɒz'mɒtɪk/",
+    "explains": [
+      "adj. 渗透性的，渗透的"
+    ]
+  },
+  "osprey": {
+    "word": "osprey",
+    "phonetic": "/'ɒsprɪ; -preɪ/",
+    "explains": [
+      "n. 白色的羽毛, 鱼鹰"
+    ]
+  },
+  "osseous": {
+    "word": "osseous",
+    "phonetic": "/'ɒsɪəs/",
+    "explains": [
+      "adj. [生化]骨的, 骨质的"
+    ]
+  },
+  "ossify": {
+    "word": "ossify",
+    "phonetic": "/'ɒsɪfaɪ/",
+    "explains": [
+      "v. 骨化；硬化；僵化"
+    ]
+  },
+  "ostensible": {
+    "word": "ostensible",
+    "phonetic": "/ɒ'stensɪb(ə)l/",
+    "explains": [
+      "adj. (指理由)表面的；假装的"
+    ]
+  },
+  "ostensibly": {
+    "word": "ostensibly",
+    "phonetic": "/ɒ'stensɪblɪ/",
+    "explains": [
+      "adv. 表面上；外表"
+    ]
+  },
+  "ostentation": {
+    "word": "ostentation",
+    "phonetic": "/,ɒsten'teɪʃ(ə)n/",
+    "explains": [
+      "n. 夸耀，卖弄"
+    ]
+  },
+  "ostentatious": {
+    "word": "ostentatious",
+    "phonetic": "/,ɒsten'teɪʃəs/",
+    "explains": [
+      "adj. 招摇的；卖弄的；夸耀的；铺张的；惹人注目的"
+    ]
+  },
+  "osteoarthritis": {
+    "word": "osteoarthritis",
+    "phonetic": "/,ɒstɪəʊɑː'θraɪtɪs/",
+    "explains": [
+      "n. [外科] 骨关节炎"
+    ]
+  },
+  "ostracize": {
+    "word": "ostracize",
+    "phonetic": "/'ɔstrəsaiz/",
+    "explains": [
+      "v. (古希腊)贝壳放逐法, 放逐, 排斥"
+    ]
+  },
+  "ostrich": {
+    "word": "ostrich",
+    "phonetic": "/'ɒstrɪtʃ/",
+    "explains": [
+      "n. 鸵鸟"
+    ]
+  },
   "other": {
     "word": "other",
     "phonetic": "/ˈʌðə(r)/",
@@ -219,11 +2760,81 @@
       "adj. 其他的；另外的 pron. 另外一个"
     ]
   },
+  "otherwise": {
+    "word": "otherwise",
+    "phonetic": "/'ʌðəwaɪz/",
+    "explains": [
+      "adv. 否则；要不然"
+    ]
+  },
+  "otherworldly": {
+    "word": "otherworldly",
+    "phonetic": "/'ʌðə'wɜːldlɪ/",
+    "explains": [
+      "adj. 来世的, 修来世的, 专注于精神方面的"
+    ]
+  },
+  "otiose": {
+    "word": "otiose",
+    "phonetic": "/'əʊtɪəʊs; 'əʊʃɪ-; -z/",
+    "explains": [
+      "adj. 闲着的, 怠惰的, 没有用的, 多余的"
+    ]
+  },
+  "otter": {
+    "word": "otter",
+    "phonetic": "/'ɒtə/",
+    "explains": [
+      "n. 水獭, 水獭皮"
+    ]
+  },
+  "oubli": {
+    "word": "oubli",
+    "phonetic": "",
+    "explains": [
+      "n.m. 遗忘；疏忽"
+    ]
+  },
+  "ouest": {
+    "word": "ouest",
+    "phonetic": "",
+    "explains": [
+      "n.m. 西方"
+    ]
+  },
+  "ought": {
+    "word": "ought",
+    "phonetic": "/ɔːt/",
+    "explains": [
+      "modal. 应当，应该"
+    ]
+  },
+  "oui": {
+    "word": "oui",
+    "phonetic": "",
+    "explains": [
+      "adv. 是的"
+    ]
+  },
+  "ounce": {
+    "word": "ounce",
+    "phonetic": "/aʊns/",
+    "explains": [
+      "n. 盎司，英两"
+    ]
+  },
   "our": {
     "word": "our",
     "phonetic": "/ˈaʊə(r)/",
     "explains": [
       "pron. 我们的"
+    ]
+  },
+  "ouragan": {
+    "word": "ouragan",
+    "phonetic": "",
+    "explains": [
+      "n.m. 飓风"
     ]
   },
   "ours": {
@@ -240,11 +2851,109 @@
       "pron. 我们自己；我们亲自"
     ]
   },
+  "ourson": {
+    "word": "ourson",
+    "phonetic": "",
+    "explains": [
+      "n.m. 小熊"
+    ]
+  },
+  "oust": {
+    "word": "oust",
+    "phonetic": "/aʊst/",
+    "explains": [
+      "v. 剥夺,取代,罢免"
+    ]
+  },
   "out": {
     "word": "out",
     "phonetic": "/aʊt/",
     "explains": [
       "adv. 出现；在外；出局"
+    ]
+  },
+  "out-goings": {
+    "word": "out-goings",
+    "phonetic": "/'autˌgəuiŋz/",
+    "explains": [
+      "n.  开支"
+    ]
+  },
+  "outbreak": {
+    "word": "outbreak",
+    "phonetic": "/'aʊtbreɪk/",
+    "explains": [
+      "n. （战争、愤怒等）爆发"
+    ]
+  },
+  "outbuilding": {
+    "word": "outbuilding",
+    "phonetic": "/'aʊtbɪldɪŋ/",
+    "explains": [
+      "n. [建]外屋, (指车库, 谷仓等)"
+    ]
+  },
+  "outburst": {
+    "word": "outburst",
+    "phonetic": "/'aʊtbɜːst/",
+    "explains": [
+      "n. （火山、情感等的）爆发；破裂"
+    ]
+  },
+  "outcast": {
+    "word": "outcast",
+    "phonetic": "/'aʊtkɑːst/",
+    "explains": [
+      "a&n. 被遗弃的；被遗弃者，被逐出者"
+    ]
+  },
+  "outcome": {
+    "word": "outcome",
+    "phonetic": "/ˈaʊtkʌm/",
+    "explains": [
+      "n. 结果"
+    ]
+  },
+  "outcrop": {
+    "word": "outcrop",
+    "phonetic": "/'aʊtkrɒp/",
+    "explains": [
+      "n. 露出地面的岩层"
+    ]
+  },
+  "outcry": {
+    "word": "outcry",
+    "phonetic": "/'aʊtkraɪ/",
+    "explains": [
+      "n. 大声疾呼"
+    ]
+  },
+  "outdated": {
+    "word": "outdated",
+    "phonetic": "/ˌaut'deitid/",
+    "explains": [
+      "adj.  陈旧的； 过时的"
+    ]
+  },
+  "outdo": {
+    "word": "outdo",
+    "phonetic": "/aʊt'duː/",
+    "explains": [
+      "v. 超过；胜过"
+    ]
+  },
+  "outdoor": {
+    "word": "outdoor",
+    "phonetic": "/ˌaʊtˈdɔː/",
+    "explains": [
+      "adj. 户外的"
+    ]
+  },
+  "outdoors": {
+    "word": "outdoors",
+    "phonetic": "/aʊt'dɔːz/",
+    "explains": [
+      "adv. 在户外，在野外"
     ]
   },
   "outer": {
@@ -254,11 +2963,473 @@
       "adj. 外面的；外部的；外围的"
     ]
   },
+  "outermost": {
+    "word": "outermost",
+    "phonetic": "/'aʊtəməʊst/",
+    "explains": [
+      "adj. 最外面的，最远的"
+    ]
+  },
+  "outface": {
+    "word": "outface",
+    "phonetic": "/aʊt'feɪs/",
+    "explains": [
+      "v. 睥睨, 蔑视"
+    ]
+  },
+  "outfit": {
+    "word": "outfit",
+    "phonetic": "/'aʊtfɪt/",
+    "explains": [
+      "n. 机构；用具；全套装备；v. 得到装备"
+    ]
+  },
+  "outflow": {
+    "word": "outflow",
+    "phonetic": "/'aʊtfləʊ/",
+    "explains": [
+      "n. 流出(物)"
+    ]
+  },
+  "outfox": {
+    "word": "outfox",
+    "phonetic": "/aʊt'fɒks/",
+    "explains": [
+      "v. 以计取胜"
+    ]
+  },
+  "outgassing": {
+    "word": "outgassing",
+    "phonetic": "",
+    "explains": [
+      "n. 除气 v除气 a释气的"
+    ]
+  },
+  "outgoing": {
+    "word": "outgoing",
+    "phonetic": "/'aʊtgəʊɪŋ/",
+    "explains": [
+      "adj. 外向的"
+    ]
+  },
+  "outgrow": {
+    "word": "outgrow",
+    "phonetic": "/aʊt'grəʊ/",
+    "explains": [
+      "v. 过大而不适于；出生；长大成熟而不再"
+    ]
+  },
+  "outil": {
+    "word": "outil",
+    "phonetic": "",
+    "explains": [
+      "n.m. 工具"
+    ]
+  },
+  "outing": {
+    "word": "outing",
+    "phonetic": "/'aʊtɪŋ/",
+    "explains": [
+      "n. 远足；短途旅游；体育比赛；adj. 远足适用的；v. 出来；暴露（out的ing形式）"
+    ]
+  },
+  "outlandish": {
+    "word": "outlandish",
+    "phonetic": "/aʊt'lændɪʃ/",
+    "explains": [
+      "adj. 古怪的；奇异的；异国风格的；偏僻的"
+    ]
+  },
+  "outlast": {
+    "word": "outlast",
+    "phonetic": "/aʊt'lɑːst/",
+    "explains": [
+      "v. 比…长久；从…中逃生"
+    ]
+  },
+  "outlaw": {
+    "word": "outlaw",
+    "phonetic": "/'aʊtlɔː/",
+    "explains": [
+      "n. 逃犯，歹徒"
+    ]
+  },
+  "outlay": {
+    "word": "outlay",
+    "phonetic": "/'autlei/",
+    "explains": [
+      "n.  费用"
+    ]
+  },
+  "outlet": {
+    "word": "outlet",
+    "phonetic": "/'aʊtlet/",
+    "explains": [
+      "n. 出口；出路；排遣"
+    ]
+  },
+  "outline": {
+    "word": "outline",
+    "phonetic": "/ˈaʊtlaɪn/",
+    "explains": [
+      "n. 提纲"
+    ]
+  },
+  "outlive": {
+    "word": "outlive",
+    "phonetic": "/aʊt'lɪv/",
+    "explains": [
+      "v. 比…活得长；比…经久；经受住；渡过…而存在"
+    ]
+  },
+  "outlook": {
+    "word": "outlook",
+    "phonetic": "/'aʊtlʊk/",
+    "explains": [
+      "n. 观点，看法；展望"
+    ]
+  },
+  "outlying": {
+    "word": "outlying",
+    "phonetic": "/'aʊtlaɪɪŋ/",
+    "explains": [
+      "adj. 远离中心的，偏僻的"
+    ]
+  },
+  "outmoded": {
+    "word": "outmoded",
+    "phonetic": "/aʊt'məʊdɪd/",
+    "explains": [
+      "adj. 过时的，不流行的；v. 使不流行（outmode的过去分词）"
+    ]
+  },
+  "outnumber": {
+    "word": "outnumber",
+    "phonetic": "/aʊt'nʌmbə/",
+    "explains": [
+      "v. 数目超过, 比多"
+    ]
+  },
+  "outpatient": {
+    "word": "outpatient",
+    "phonetic": "/'aʊtpeɪʃ(ə)nt/",
+    "explains": [
+      "n. 门诊病人"
+    ]
+  },
+  "outpost": {
+    "word": "outpost",
+    "phonetic": "/'aʊtpəʊst/",
+    "explains": [
+      "n. 前哨；警戒部队；边区村落"
+    ]
+  },
+  "outpouring": {
+    "word": "outpouring",
+    "phonetic": "/'aʊtpɔrɪŋ/",
+    "explains": [
+      "n. 倾泄, 流出, 流露"
+    ]
+  },
+  "output": {
+    "word": "output",
+    "phonetic": "/ˈaʊtpʊt/",
+    "explains": [
+      "n. 产量"
+    ]
+  },
+  "outrage": {
+    "word": "outrage",
+    "phonetic": "/'aʊtreɪdʒ/",
+    "explains": [
+      "n. 愤怒，愤慨；暴行；侮辱；v. 凌辱，强奸；对…施暴行；激起愤怒"
+    ]
+  },
+  "outrageous": {
+    "word": "outrageous",
+    "phonetic": "/aʊt'reɪdʒəs/",
+    "explains": [
+      "adj. 残暴的，蛮横的"
+    ]
+  },
+  "outre": {
+    "word": "outre",
+    "phonetic": "",
+    "explains": [
+      "adj. 越出常轨的, 过度的"
+    ]
+  },
+  "outreach": {
+    "word": "outreach",
+    "phonetic": "/aʊt'riːtʃ/",
+    "explains": [
+      "vt. 超越，伸出；超出…的范围；vi. 拓广，延伸；n. 延伸，拓广；扩大服务范围；adj. 扩大服务的"
+    ]
+  },
+  "outrigger": {
+    "word": "outrigger",
+    "phonetic": "/'aʊtrɪgə/",
+    "explains": [
+      "n. (承力外伸)支架"
+    ]
+  },
+  "outright": {
+    "word": "outright",
+    "phonetic": "/aʊt'raɪt/",
+    "explains": [
+      "adj. 直率的, 彻底的 ad直率地, 彻底地"
+    ]
+  },
+  "outset": {
+    "word": "outset",
+    "phonetic": "/'aʊtset/",
+    "explains": [
+      "n. 开始，开端"
+    ]
+  },
+  "outside": {
+    "word": "outside",
+    "phonetic": "/ˌaʊtˈsaɪd; ˈaʊtsaɪd/",
+    "explains": [
+      "prep. 在……外面　adv. 在外面"
+    ]
+  },
+  "outsider": {
+    "word": "outsider",
+    "phonetic": "/aʊt'saɪdə/",
+    "explains": [
+      "n. 外行, 局外人"
+    ]
+  },
+  "outskirt": {
+    "word": "outskirt",
+    "phonetic": "/'aʊtskɜːt/",
+    "explains": [
+      "n. 外边，郊区"
+    ]
+  },
+  "outskirts": {
+    "word": "outskirts",
+    "phonetic": "/'aʊtskɜːts/",
+    "explains": [
+      "n. 市郊，郊区"
+    ]
+  },
+  "outsource": {
+    "word": "outsource",
+    "phonetic": "/'autsɔːs/",
+    "explains": [
+      "v.  外部采办， 外购； 外包"
+    ]
+  },
+  "outspoken": {
+    "word": "outspoken",
+    "phonetic": "/aʊt'spəʊk(ə)n/",
+    "explains": [
+      "adj. 直言的，坦率的"
+    ]
+  },
+  "outstanding": {
+    "word": "outstanding",
+    "phonetic": "/aʊtˈstændɪŋ/",
+    "explains": [
+      "adj. 杰出的"
+    ]
+  },
+  "outstretch": {
+    "word": "outstretch",
+    "phonetic": "/aʊt'stretʃ/",
+    "explains": [
+      "vt. 拉长；伸展得超出的范围"
+    ]
+  },
+  "outstrip": {
+    "word": "outstrip",
+    "phonetic": "/ˌaut'strip/",
+    "explains": [
+      "vt.  超过"
+    ]
+  },
+  "outward": {
+    "word": "outward",
+    "phonetic": "/ˈaʊtwəd/",
+    "explains": [
+      "adj. 向外的"
+    ]
+  },
+  "outwards": {
+    "word": "outwards",
+    "phonetic": "/'aʊtwədz/",
+    "explains": [
+      "adv. 向外，往海外"
+    ]
+  },
+  "outwash": {
+    "word": "outwash",
+    "phonetic": "/'aʊtwɒʃ/",
+    "explains": [
+      "n. [地质]冰水沉积"
+    ]
+  },
+  "outweigh": {
+    "word": "outweigh",
+    "phonetic": "/aut'wei/",
+    "explains": [
+      "v.  在重量上超过"
+    ]
+  },
+  "outwit": {
+    "word": "outwit",
+    "phonetic": "/aʊt'wɪt/",
+    "explains": [
+      "v. 瞒骗, 以智取胜"
+    ]
+  },
+  "outwork": {
+    "word": "outwork",
+    "phonetic": "/'aʊtwɜːk/",
+    "explains": [
+      "n. 外包活"
+    ]
+  },
+  "ouverture": {
+    "word": "ouverture",
+    "phonetic": "",
+    "explains": [
+      "n.f. 打开；开幕式"
+    ]
+  },
+  "ouvrage": {
+    "word": "ouvrage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 作品；工程"
+    ]
+  },
+  "ouvrier": {
+    "word": "ouvrier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 工人"
+    ]
+  },
+  "oval": {
+    "word": "oval",
+    "phonetic": "/'əʊv(ə)l/",
+    "explains": [
+      "adj. 卵形的；n. 卵形"
+    ]
+  },
+  "ovation": {
+    "word": "ovation",
+    "phonetic": "/ə(ʊ)'veɪʃ(ə)n/",
+    "explains": [
+      "n. 热烈欢迎，欢呼"
+    ]
+  },
+  "oven": {
+    "word": "oven",
+    "phonetic": "/'ʌv(ə)n/",
+    "explains": [
+      "n. 炉，灶；烘箱"
+    ]
+  },
   "over": {
     "word": "over",
     "phonetic": "/ˈəʊvə(r)/",
     "explains": [
       "prep. 在… 上方；越过；关于"
+    ]
+  },
+  "over-demand": {
+    "word": "over-demand",
+    "phonetic": "/'əuvəˌdɪ'mɑːnd/",
+    "explains": [
+      "n.  需求过量"
+    ]
+  },
+  "overact": {
+    "word": "overact",
+    "phonetic": "/əʊvər'ækt/",
+    "explains": [
+      "v. 夸张表演"
+    ]
+  },
+  "overage": {
+    "word": "overage",
+    "phonetic": "",
+    "explains": [
+      "超额部分"
+    ]
+  },
+  "overall": {
+    "word": "overall",
+    "phonetic": "/ˈəʊvərɔːl/",
+    "explains": [
+      "adj. 总的"
+    ]
+  },
+  "overbalance": {
+    "word": "overbalance",
+    "phonetic": "/əʊvə'bæl(ə)ns/",
+    "explains": [
+      "v. 失去平衡"
+    ]
+  },
+  "overbearing": {
+    "word": "overbearing",
+    "phonetic": "/əʊvə'beərɪŋ/",
+    "explains": [
+      "adj. 傲慢的, 专横的"
+    ]
+  },
+  "overboard": {
+    "word": "overboard",
+    "phonetic": "/'əʊvəbɔːd/",
+    "explains": [
+      "adv. 自船上落下；向船外；adj. 极其热心的；全身心投入的"
+    ]
+  },
+  "overbrim": {
+    "word": "overbrim",
+    "phonetic": "/əʊvə'brɪm/",
+    "explains": [
+      "vi. 溢出, 满出"
+    ]
+  },
+  "overburden": {
+    "word": "overburden",
+    "phonetic": "/əʊvə'bɜːd(ə)n/",
+    "explains": [
+      "v. 装载过多, 负担过多"
+    ]
+  },
+  "overcapitalize": {
+    "word": "overcapitalize",
+    "phonetic": "/əʊvə'kæpɪt(ə)laɪz/",
+    "explains": [
+      "v. 对…之资本估价过高；过分投资于"
+    ]
+  },
+  "overcast": {
+    "word": "overcast",
+    "phonetic": "/'əʊvəkɑːst/",
+    "explains": [
+      "v. 遮盖,变暗；n. 覆盖, 阴天"
+    ]
+  },
+  "overcharge": {
+    "word": "overcharge",
+    "phonetic": "/ˌəuvə'tʃɑːdʒ/",
+    "explains": [
+      "v. 索价过高；过量装填；过度充电；n.  超载； 过高的要价"
+    ]
+  },
+  "overcoat": {
+    "word": "overcoat",
+    "phonetic": "/'əʊvəkəʊt/",
+    "explains": [
+      "n. 外衣，大衣"
     ]
   },
   "overcome": {
@@ -268,6 +3439,587 @@
       "v. 克服；战胜；征服"
     ]
   },
+  "overconfident": {
+    "word": "overconfident",
+    "phonetic": "/əʊvə'kɒnfɪd(ə)nt/",
+    "explains": [
+      "adj. 自负的, 过于自信的"
+    ]
+  },
+  "overcrowd": {
+    "word": "overcrowd",
+    "phonetic": "/əʊvə'kraʊd/",
+    "explains": [
+      "v. 过度拥挤"
+    ]
+  },
+  "overcultivation": {
+    "word": "overcultivation",
+    "phonetic": "",
+    "explains": [
+      "n. 耕种过度"
+    ]
+  },
+  "overdo": {
+    "word": "overdo",
+    "phonetic": "/əʊvə'duː/",
+    "explains": [
+      "v. 把…做得过分；使过于疲劳；对…表演过火；夸张"
+    ]
+  },
+  "overdose": {
+    "word": "overdose",
+    "phonetic": "/'əʊvədəʊs/",
+    "explains": [
+      "v. 配药过量；使过分沉溺；n. 药量过多（等于overdosage）"
+    ]
+  },
+  "overdraft": {
+    "word": "overdraft",
+    "phonetic": "/'əuvədrɑːft/",
+    "explains": [
+      "n.  透支， 透支的款项"
+    ]
+  },
+  "overdraw": {
+    "word": "overdraw",
+    "phonetic": "/ˌəuvə'drɔː/",
+    "explains": [
+      "v.  透支"
+    ]
+  },
+  "overdue": {
+    "word": "overdue",
+    "phonetic": "/əʊvə'djuː/",
+    "explains": [
+      "adj. 过期未付的"
+    ]
+  },
+  "overestimate": {
+    "word": "overestimate",
+    "phonetic": "/əʊvər'estɪmeɪt/",
+    "explains": [
+      "v. 过高估计"
+    ]
+  },
+  "overexploitation": {
+    "word": "overexploitation",
+    "phonetic": "/'əʊvə,reksplɒɪ'teɪʃən/",
+    "explains": [
+      "n. (对资源等的)过度开采,(对工人等的)过度剥削"
+    ]
+  },
+  "overextend": {
+    "word": "overextend",
+    "phonetic": "/əʊv(ə)rɪk'stend; -rek-/",
+    "explains": [
+      "v. 过分扩展；过分延长；使…承担过多的义务"
+    ]
+  },
+  "overfish": {
+    "word": "overfish",
+    "phonetic": "",
+    "explains": [
+      "vt. 对…进行过度捕捞"
+    ]
+  },
+  "overflow": {
+    "word": "overflow",
+    "phonetic": "/əʊvə'fləʊ/",
+    "explains": [
+      "v. 从…中溢出"
+    ]
+  },
+  "overgeneralize": {
+    "word": "overgeneralize",
+    "phonetic": "",
+    "explains": [
+      "v. 太笼统地概括"
+    ]
+  },
+  "overgraze": {
+    "word": "overgraze",
+    "phonetic": "",
+    "explains": [
+      "vt. 使过度放牧"
+    ]
+  },
+  "overgrow": {
+    "word": "overgrow",
+    "phonetic": "/əʊvə'grəʊ/",
+    "explains": [
+      "v. 长满"
+    ]
+  },
+  "overgrown": {
+    "word": "overgrown",
+    "phonetic": "/əʊvə'grəʊn; 'əʊvəgrəʊn/",
+    "explains": [
+      "adj. 蔓生的；生长过快的；v. 生长过度（overgrow的过去分词）"
+    ]
+  },
+  "overhang": {
+    "word": "overhang",
+    "phonetic": "/əʊvə'hæŋ/",
+    "explains": [
+      "v. 悬于…之上，悬垂"
+    ]
+  },
+  "overhaul": {
+    "word": "overhaul",
+    "phonetic": "/əʊvə'hɔːl/",
+    "explains": [
+      "v. 彻底检修；赶上"
+    ]
+  },
+  "overhead": {
+    "word": "overhead",
+    "phonetic": "",
+    "explains": [
+      "adj. 在头顶上的；架空的"
+    ]
+  },
+  "overhear": {
+    "word": "overhear",
+    "phonetic": "/əʊvə'hɪə/",
+    "explains": [
+      "v. 偶然听到；偷听"
+    ]
+  },
+  "overheat": {
+    "word": "overheat",
+    "phonetic": "/əʊvə'hiːt/",
+    "explains": [
+      "v. 使过热， 变得过热"
+    ]
+  },
+  "overirrigation": {
+    "word": "overirrigation",
+    "phonetic": "",
+    "explains": [
+      "n. 过量灌溉"
+    ]
+  },
+  "overjoyed": {
+    "word": "overjoyed",
+    "phonetic": "/əʊvə'dʒɒɪd/",
+    "explains": [
+      "adj. 狂喜的；极度高兴的；v. 使…万分高兴；使…狂喜（overjoy的过去分词）"
+    ]
+  },
+  "overkill": {
+    "word": "overkill",
+    "phonetic": "/'əʊvəkɪl/",
+    "explains": [
+      "n. 过度的杀伤威力；v. 超量杀伤"
+    ]
+  },
+  "overland": {
+    "word": "overland",
+    "phonetic": "/'əʊvəlænd/",
+    "explains": [
+      "adj. /ad经过陆地的, 陆上的"
+    ]
+  },
+  "overlap": {
+    "word": "overlap",
+    "phonetic": "/əʊvə'læp/",
+    "explains": [
+      "v. 与…交搭，重叠"
+    ]
+  },
+  "overlay": {
+    "word": "overlay",
+    "phonetic": "/əʊvə'leɪ/",
+    "explains": [
+      "n. 覆盖图；覆盖物；v. 在表面上铺一薄层，镀"
+    ]
+  },
+  "overleaf": {
+    "word": "overleaf",
+    "phonetic": "/əʊvə'liːf/",
+    "explains": [
+      "adv. 在次页；在背面；adj. 背面的；次页的"
+    ]
+  },
+  "overleap": {
+    "word": "overleap",
+    "phonetic": "/əʊvə'liːp/",
+    "explains": [
+      "v. 越过；跳过；忽略"
+    ]
+  },
+  "overlie": {
+    "word": "overlie",
+    "phonetic": "/əʊvə'laɪ/",
+    "explains": [
+      "v. 躺在上面"
+    ]
+  },
+  "overload": {
+    "word": "overload",
+    "phonetic": "/əʊvə'ləʊd/",
+    "explains": [
+      "v. 使超载"
+    ]
+  },
+  "overlook": {
+    "word": "overlook",
+    "phonetic": "/ˌəʊvəˈlʊk/",
+    "explains": [
+      "v. 忽视"
+    ]
+  },
+  "overlord": {
+    "word": "overlord",
+    "phonetic": "/'əʊvəlɔːd/",
+    "explains": [
+      "n. 霸王；大君主；最高统治者；封建领主"
+    ]
+  },
+  "overly": {
+    "word": "overly",
+    "phonetic": "/'əʊvəlɪ/",
+    "explains": [
+      "adv. 过度地, 极度地"
+    ]
+  },
+  "overmeasure": {
+    "word": "overmeasure",
+    "phonetic": "",
+    "explains": [
+      "n. 强行剩余"
+    ]
+  },
+  "overnight": {
+    "word": "overnight",
+    "phonetic": "/əʊvə'naɪt/",
+    "explains": [
+      "adv. 一夜；突然"
+    ]
+  },
+  "overpass": {
+    "word": "overpass",
+    "phonetic": "/'əʊvəpɑːs/",
+    "explains": [
+      "vt. 超越；胜过；忽略；n. 天桥；陆桥"
+    ]
+  },
+  "overpay": {
+    "word": "overpay",
+    "phonetic": "/ˌəuvə'pei/",
+    "explains": [
+      "vi.  付得过多；vt. 多付"
+    ]
+  },
+  "overpayment": {
+    "word": "overpayment",
+    "phonetic": "",
+    "explains": [
+      "n. 多付的款项"
+    ]
+  },
+  "overpower": {
+    "word": "overpower",
+    "phonetic": "/əʊvə'paʊə/",
+    "explains": [
+      "v. 压倒；克服；使无法忍受"
+    ]
+  },
+  "overprint": {
+    "word": "overprint",
+    "phonetic": "/əʊvə'prɪnt/",
+    "explains": [
+      "vt& n. 套印, 印戳"
+    ]
+  },
+  "overproduction": {
+    "word": "overproduction",
+    "phonetic": "",
+    "explains": [
+      "n. 生产过剩"
+    ]
+  },
+  "overqualified": {
+    "word": "overqualified",
+    "phonetic": "/ˌəuvə'kwɔlifaid/",
+    "explains": [
+      "adj.  资历过高的"
+    ]
+  },
+  "overreach": {
+    "word": "overreach",
+    "phonetic": "/əʊvə'riːtʃ/",
+    "explains": [
+      "v. 走过头"
+    ]
+  },
+  "override": {
+    "word": "override",
+    "phonetic": "/əʊvə'raɪd/",
+    "explains": [
+      "v. 不顾，否决"
+    ]
+  },
+  "overriding": {
+    "word": "overriding",
+    "phonetic": "/əʊvə'raɪdɪŋ/",
+    "explains": [
+      "adj. 最重要的；高于一切的"
+    ]
+  },
+  "overrule": {
+    "word": "overrule",
+    "phonetic": "/əʊvə'ruːl/",
+    "explains": [
+      "v. 驳回, 否决, 支配, 制服"
+    ]
+  },
+  "overrun": {
+    "word": "overrun",
+    "phonetic": "/əʊvə'rʌn/",
+    "explains": [
+      "n. 泛滥成灾 v超过, 泛滥"
+    ]
+  },
+  "oversea": {
+    "word": "oversea",
+    "phonetic": "/'əʊvə'siː/",
+    "explains": [
+      "adj. 外国的, 海外的"
+    ]
+  },
+  "overseas": {
+    "word": "overseas",
+    "phonetic": "/ˌəʊvəˈsiːz/",
+    "explains": [
+      "adv. 海外"
+    ]
+  },
+  "oversee": {
+    "word": "oversee",
+    "phonetic": "/əʊvə'siː/",
+    "explains": [
+      "v. 监督，监管"
+    ]
+  },
+  "overshadow": {
+    "word": "overshadow",
+    "phonetic": "/əʊvə'ʃædəʊ/",
+    "explains": [
+      "v. 遮蔽, 使失色"
+    ]
+  },
+  "oversight": {
+    "word": "oversight",
+    "phonetic": "/'əʊvəsaɪt/",
+    "explains": [
+      "n. 疏忽,  看管"
+    ]
+  },
+  "overstaffed": {
+    "word": "overstaffed",
+    "phonetic": "/ˌəuvə'stɑːfd/",
+    "explains": [
+      "adj.  人员超编的"
+    ]
+  },
+  "overstate": {
+    "word": "overstate",
+    "phonetic": "/əʊvə'steɪt/",
+    "explains": [
+      "v. 夸张；夸大的叙述"
+    ]
+  },
+  "overstock": {
+    "word": "overstock",
+    "phonetic": "/əʊvə'stɒk/",
+    "explains": [
+      "v. 使进货过多；n. [经管] 库存过剩"
+    ]
+  },
+  "oversubscribe": {
+    "word": "oversubscribe",
+    "phonetic": "/ˌəuvəsəb'skraib/",
+    "explains": [
+      "vt.  超额认购"
+    ]
+  },
+  "oversupply": {
+    "word": "oversupply",
+    "phonetic": "/əʊvəsə'plaɪ/",
+    "explains": [
+      "n. [经] 供给过多；过多的供应品；v. 过度供给"
+    ]
+  },
+  "overt": {
+    "word": "overt",
+    "phonetic": "/əʊ'vɜːt; 'əʊvət/",
+    "explains": [
+      "adj. 明显的, 公然的"
+    ]
+  },
+  "overtake": {
+    "word": "overtake",
+    "phonetic": "/əʊvə'teɪk/",
+    "explains": [
+      "v. 追上，赶上"
+    ]
+  },
+  "overtax": {
+    "word": "overtax",
+    "phonetic": "/əʊvə'tæks/",
+    "explains": [
+      "v. 课税过重, 使负担过度"
+    ]
+  },
+  "overthrow": {
+    "word": "overthrow",
+    "phonetic": "/əʊvə'θrəʊ/",
+    "explains": [
+      "v. 推翻；n. 推翻，瓦解"
+    ]
+  },
+  "overtime": {
+    "word": "overtime",
+    "phonetic": "/'əʊvətaɪm/",
+    "explains": [
+      "n. 加班；加班的时间"
+    ]
+  },
+  "overtone": {
+    "word": "overtone",
+    "phonetic": "/'əʊvətəʊn/",
+    "explains": [
+      "n. 寓意；眩外音；暗示"
+    ]
+  },
+  "overtrade": {
+    "word": "overtrade",
+    "phonetic": "/ˌəuvə'treid/",
+    "explains": [
+      "vi.  贸易过度"
+    ]
+  },
+  "overture": {
+    "word": "overture",
+    "phonetic": "/'əʊvətj(ʊ)ə/",
+    "explains": [
+      "n. 提议，建议；序曲"
+    ]
+  },
+  "overturn": {
+    "word": "overturn",
+    "phonetic": "/əʊvə'tɜːn/",
+    "explains": [
+      "v. 推翻；倾覆；破坏；n. 倾覆；周转；破灭"
+    ]
+  },
+  "overvalued": {
+    "word": "overvalued",
+    "phonetic": "/ˌəuvə'væljud/",
+    "explains": [
+      "adj.  定价过高的， 估价过高的"
+    ]
+  },
+  "overview": {
+    "word": "overview",
+    "phonetic": "/'əʊvəvjuː/",
+    "explains": [
+      "n. [图情] 综述；概观"
+    ]
+  },
+  "overweening": {
+    "word": "overweening",
+    "phonetic": "/əʊvə'wiːnɪŋ/",
+    "explains": [
+      "adj. 骄傲的, 自负的, 夸大了的"
+    ]
+  },
+  "overweight": {
+    "word": "overweight",
+    "phonetic": "/ˌəʊvəˈweɪt/",
+    "explains": [
+      "adj. 超重的"
+    ]
+  },
+  "overwhelm": {
+    "word": "overwhelm",
+    "phonetic": "/əʊvə'welm/",
+    "explains": [
+      "v. 使（某人）感到不能自持，使不知所措；压倒，击败"
+    ]
+  },
+  "overwhelming": {
+    "word": "overwhelming",
+    "phonetic": "/,ovɚ'wɛlmɪŋ/",
+    "explains": [
+      "adj. 压倒的，势不可挡的"
+    ]
+  },
+  "overwhelmingly": {
+    "word": "overwhelmingly",
+    "phonetic": "/,ovə'hwelmiŋli/",
+    "explains": [
+      "adv. 压倒性地, 不可抵抗地"
+    ]
+  },
+  "overwork": {
+    "word": "overwork",
+    "phonetic": "/əʊvə'wɜːk/",
+    "explains": [
+      "v. 工作过度；n. 过度工作"
+    ]
+  },
+  "overwrite": {
+    "word": "overwrite",
+    "phonetic": "",
+    "explains": [
+      "覆盖"
+    ]
+  },
+  "overwrought": {
+    "word": "overwrought",
+    "phonetic": "/əʊvə'rɔːt/",
+    "explains": [
+      "adj. 过分劳累的，过度兴奋的"
+    ]
+  },
+  "ovulate": {
+    "word": "ovulate",
+    "phonetic": "/'ɒvjʊleɪt/",
+    "explains": [
+      "v. 排卵；adj. 具胚珠的"
+    ]
+  },
+  "ovum": {
+    "word": "ovum",
+    "phonetic": "/'əʊvəm/",
+    "explains": [
+      "n. [细胞][组织] 卵；卵子；卵形装饰"
+    ]
+  },
+  "owe": {
+    "word": "owe",
+    "phonetic": "/əʊ/",
+    "explains": [
+      "v. 欠；应把…归功于"
+    ]
+  },
+  "owing": {
+    "word": "owing",
+    "phonetic": "/'əʊɪŋ/",
+    "explains": [
+      "adj. 未付的；欠着的；v. 欠；把…归功于（owe的ing形式）"
+    ]
+  },
+  "owl": {
+    "word": "owl",
+    "phonetic": "/aʊl/",
+    "explains": [
+      "n. 猫头鹰，枭"
+    ]
+  },
   "own": {
     "word": "own",
     "phonetic": "/əʊn/",
@@ -275,11 +4027,102 @@
       "adj. 自己的；特有的 v. 拥有；承认"
     ]
   },
+  "own-brand": {
+    "word": "own-brand",
+    "phonetic": "/'əunbrænd/",
+    "explains": [
+      "adj.  使用自己品牌的"
+    ]
+  },
   "owner": {
     "word": "owner",
     "phonetic": "/ˈəʊnə(r)/",
     "explains": [
       "n. 所有者；物主；老板"
+    ]
+  },
+  "ownership": {
+    "word": "ownership",
+    "phonetic": "/'əʊnəʃɪp/",
+    "explains": [
+      "n. 所有（权），所有制"
+    ]
+  },
+  "ox": {
+    "word": "ox",
+    "phonetic": "/ɒks/",
+    "explains": [
+      "n. 阉牛；牛；公牛"
+    ]
+  },
+  "oxfordshire": {
+    "word": "oxfordshire",
+    "phonetic": "/'ɔksfədʃiə/",
+    "explains": [
+      "n. 牛津郡[英国]"
+    ]
+  },
+  "oxide": {
+    "word": "oxide",
+    "phonetic": "/'ɒksaɪd/",
+    "explains": [
+      "n. 氧化物"
+    ]
+  },
+  "oxidizable": {
+    "word": "oxidizable",
+    "phonetic": "",
+    "explains": [
+      "adj. 可氧化的"
+    ]
+  },
+  "oxidize": {
+    "word": "oxidize",
+    "phonetic": "/'ɒksɪdaɪz/",
+    "explains": [
+      "v. 氧化，使生锈"
+    ]
+  },
+  "oxidizer": {
+    "word": "oxidizer",
+    "phonetic": "",
+    "explains": [
+      "n. [助剂] 氧化剂"
+    ]
+  },
+  "oxygen": {
+    "word": "oxygen",
+    "phonetic": "/'ɒksɪdʒ(ə)n/",
+    "explains": [
+      "n. [化学] 氧气，[化学] 氧"
+    ]
+  },
+  "oxyopia": {
+    "word": "oxyopia",
+    "phonetic": "",
+    "explains": [
+      "n. [医]视觉锐敏"
+    ]
+  },
+  "oyster": {
+    "word": "oyster",
+    "phonetic": "/'ɒɪstə/",
+    "explains": [
+      "n. 牡蛎"
+    ]
+  },
+  "oystercatcher": {
+    "word": "oystercatcher",
+    "phonetic": "/'ɔɪstɚkætʃɚ/",
+    "explains": [
+      "n. 〈动〉蛎鹬"
+    ]
+  },
+  "ozone": {
+    "word": "ozone",
+    "phonetic": "/'əʊzəʊn/",
+    "explains": [
+      "n. [化学] 臭氧；新鲜的空气"
     ]
   }
 }

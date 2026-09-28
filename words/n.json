@@ -1,4 +1,95 @@
 {
+  "n": {
+    "word": "n",
+    "phonetic": "/en/",
+    "explains": [
+      "n. 字母n"
+    ]
+  },
+  "nab": {
+    "word": "nab",
+    "phonetic": "/næb/",
+    "explains": [
+      "v. <口>捉住, 逮捕, 抢夺"
+    ]
+  },
+  "nacer": {
+    "word": "nacer",
+    "phonetic": "",
+    "explains": [
+      "v. 出生"
+    ]
+  },
+  "nacional": {
+    "word": "nacional",
+    "phonetic": "",
+    "explains": [
+      "adj. 国家的"
+    ]
+  },
+  "nada": {
+    "word": "nada",
+    "phonetic": "",
+    "explains": [
+      "pron. 没有东西"
+    ]
+  },
+  "nadie": {
+    "word": "nadie",
+    "phonetic": "",
+    "explains": [
+      "pron. 没有人"
+    ]
+  },
+  "nadir": {
+    "word": "nadir",
+    "phonetic": "/'neɪdɪə; 'nædɪə/",
+    "explains": [
+      "n. 最低点，最底点；[天] 天底"
+    ]
+  },
+  "nag": {
+    "word": "nag",
+    "phonetic": "/næg/",
+    "explains": [
+      "n. 老马, 驽马, 劣等竞赛马, (作坐骑的)矮小马, 唠叨"
+    ]
+  },
+  "nail": {
+    "word": "nail",
+    "phonetic": "/neɪl/",
+    "explains": [
+      "n. 钉子"
+    ]
+  },
+  "naissance": {
+    "word": "naissance",
+    "phonetic": "",
+    "explains": [
+      "n.f. 出生"
+    ]
+  },
+  "naive": {
+    "word": "naive",
+    "phonetic": "/naɪ'iːv; nɑː'iːv/",
+    "explains": [
+      "adj. 天真的,幼稚的"
+    ]
+  },
+  "naivety": {
+    "word": "naivety",
+    "phonetic": "/naɪ'iːvtɪ; nɑː'iːvtɪ/",
+    "explains": [
+      "n. 天真烂漫, 无邪的行为"
+    ]
+  },
+  "naked": {
+    "word": "naked",
+    "phonetic": "/ˈneɪkɪd/",
+    "explains": [
+      "adj. 裸的"
+    ]
+  },
   "name": {
     "word": "name",
     "phonetic": "/neɪm/",
@@ -6,11 +97,193 @@
       "n. 名字；名称 v. 命名；名叫"
     ]
   },
+  "namely": {
+    "word": "namely",
+    "phonetic": "/ˈneɪmlɪ/",
+    "explains": [
+      "adv. 即"
+    ]
+  },
+  "namesake": {
+    "word": "namesake",
+    "phonetic": "/'neɪmseɪk/",
+    "explains": [
+      "n. 名义；同名物；同名的人"
+    ]
+  },
+  "namespace": {
+    "word": "namespace",
+    "phonetic": "",
+    "explains": [
+      "命名空间"
+    ]
+  },
+  "nanism": {
+    "word": "nanism",
+    "phonetic": "/'neɪnɪzəm/",
+    "explains": [
+      "n. [医]矮小, 侏儒症,[植]矮态"
+    ]
+  },
+  "nap": {
+    "word": "nap",
+    "phonetic": "/næp/",
+    "explains": [
+      "n. 小睡，打盹，瞌睡"
+    ]
+  },
+  "nape": {
+    "word": "nape",
+    "phonetic": "/neɪp/",
+    "explains": [
+      "n. 颈背；项"
+    ]
+  },
+  "napkin": {
+    "word": "napkin",
+    "phonetic": "/'næpkɪn/",
+    "explains": [
+      "n. 餐巾（纸）"
+    ]
+  },
+  "nappy": {
+    "word": "nappy",
+    "phonetic": "/'næpɪ/",
+    "explains": [
+      "n. 尿布；adj. 起毛的"
+    ]
+  },
+  "naranja": {
+    "word": "naranja",
+    "phonetic": "",
+    "explains": [
+      "n.f. 橙子；adj. 橙色的"
+    ]
+  },
+  "narcissism": {
+    "word": "narcissism",
+    "phonetic": "/'nɑːsɪsɪz(ə)m; nɑː'sɪs-/",
+    "explains": [
+      "n. [心理] 自恋，自我陶醉"
+    ]
+  },
+  "narcissistic": {
+    "word": "narcissistic",
+    "phonetic": "/,nɑːsɪ'sɪstɪk/",
+    "explains": [
+      "adj. 自恋的；自我陶醉的"
+    ]
+  },
+  "narcissus": {
+    "word": "narcissus",
+    "phonetic": "",
+    "explains": [
+      "n. 水仙"
+    ]
+  },
+  "narcosis": {
+    "word": "narcosis",
+    "phonetic": "/nɑː'kəʊsɪs/",
+    "explains": [
+      "n. 昏迷状态, 麻醉"
+    ]
+  },
+  "narcotic": {
+    "word": "narcotic",
+    "phonetic": "/nɑː'kɒtɪk/",
+    "explains": [
+      "n. 麻醉药,镇静剂；adj. 麻醉的"
+    ]
+  },
+  "nariz": {
+    "word": "nariz",
+    "phonetic": "",
+    "explains": [
+      "n.f. 鼻子"
+    ]
+  },
+  "narky": {
+    "word": "narky",
+    "phonetic": "",
+    "explains": [
+      "adj. 脾气坏的, 易生气的"
+    ]
+  },
+  "narrate": {
+    "word": "narrate",
+    "phonetic": "/nə'reɪt/",
+    "explains": [
+      "v. 叙述,作解说"
+    ]
+  },
+  "narration": {
+    "word": "narration",
+    "phonetic": "/nə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 叙述；故事；叙述法"
+    ]
+  },
+  "narrative": {
+    "word": "narrative",
+    "phonetic": "/'nærətɪv/",
+    "explains": [
+      "n. 叙述；故事；讲述；adj. 叙事的，叙述的；叙事体的"
+    ]
+  },
+  "narrator": {
+    "word": "narrator",
+    "phonetic": "/nə'reɪtə/",
+    "explains": [
+      "n. 讲述者"
+    ]
+  },
   "narrow": {
     "word": "narrow",
     "phonetic": "/ˈnærəʊ/",
     "explains": [
       "adj. 狭窄的；有限的"
+    ]
+  },
+  "narrower": {
+    "word": "narrower",
+    "phonetic": "",
+    "explains": [
+      "adj. 有限的, 精密的；n. 海峡"
+    ]
+  },
+  "narrowly": {
+    "word": "narrowly",
+    "phonetic": "/'nærəʊlɪ/",
+    "explains": [
+      "adv. 勉强地, 精细地"
+    ]
+  },
+  "nasal": {
+    "word": "nasal",
+    "phonetic": "/'neɪz(ə)l/",
+    "explains": [
+      "adj. 鼻的, 鼻音的, 护鼻的"
+    ]
+  },
+  "nascent": {
+    "word": "nascent",
+    "phonetic": "/'næs(ə)nt; 'neɪ-/",
+    "explains": [
+      "adj. 初期的；开始存在的，发生中的"
+    ]
+  },
+  "nasty": {
+    "word": "nasty",
+    "phonetic": "/'nɑːstɪ/",
+    "explains": [
+      "adj. 龌龊的；淫猥的"
+    ]
+  },
+  "natal": {
+    "word": "natal",
+    "phonetic": "/'neɪt(ə)l/",
+    "explains": [
+      "adj. 出生的；诞生的"
     ]
   },
   "nation": {
@@ -27,6 +300,69 @@
       "adj. 国家的；民族的"
     ]
   },
+  "nationalism": {
+    "word": "nationalism",
+    "phonetic": "/'næʃ(ə)n(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 民族主义, 国家主义"
+    ]
+  },
+  "nationalistic": {
+    "word": "nationalistic",
+    "phonetic": "/,næʃnə'lɪstɪk/",
+    "explains": [
+      "adj. 国家主义的"
+    ]
+  },
+  "nationality": {
+    "word": "nationality",
+    "phonetic": "/ˌnæʃəˈnælɪtɪ/",
+    "explains": [
+      "n. 国籍"
+    ]
+  },
+  "nationalization": {
+    "word": "nationalization",
+    "phonetic": "/ˌnæʃənəlai'zeiʃən/",
+    "explains": [
+      "n.  国有化"
+    ]
+  },
+  "nationally": {
+    "word": "nationally",
+    "phonetic": "",
+    "explains": [
+      "adv. 全国性地, 在全国范围内"
+    ]
+  },
+  "nationwide": {
+    "word": "nationwide",
+    "phonetic": "/'neɪʃ(ə)nwaɪd; -'waɪd/",
+    "explains": [
+      "adj. 全国性的"
+    ]
+  },
+  "native": {
+    "word": "native",
+    "phonetic": "/ˈneɪtɪv/",
+    "explains": [
+      "adj. 本地的"
+    ]
+  },
+  "nativity": {
+    "word": "nativity",
+    "phonetic": "/nə'tɪvɪtɪ/",
+    "explains": [
+      "n. 出生, (the Nativity)基督降生"
+    ]
+  },
+  "natty": {
+    "word": "natty",
+    "phonetic": "/'nætɪ/",
+    "explains": [
+      "adj. 整洁的"
+    ]
+  },
   "natural": {
     "word": "natural",
     "phonetic": "/ˈnætʃrəl/",
@@ -34,11 +370,200 @@
       "adj. 自然的；天生的"
     ]
   },
+  "naturaleza": {
+    "word": "naturaleza",
+    "phonetic": "",
+    "explains": [
+      "n.f. 自然"
+    ]
+  },
+  "naturalise": {
+    "word": "naturalise",
+    "phonetic": "",
+    "explains": [
+      "v. 使入国籍；使归化"
+    ]
+  },
+  "naturalism": {
+    "word": "naturalism",
+    "phonetic": "/'nætʃ(ə)rəlɪz(ə)m/",
+    "explains": [
+      "n. 自然主义"
+    ]
+  },
+  "naturalist": {
+    "word": "naturalist",
+    "phonetic": "/'nætʃ(ə)rəlɪst/",
+    "explains": [
+      "n. 自然主义者"
+    ]
+  },
+  "naturalistic": {
+    "word": "naturalistic",
+    "phonetic": "/nætʃ(ə)rə'lɪstɪk/",
+    "explains": [
+      "adj. 自然的, 自然主义的"
+    ]
+  },
+  "naturalize": {
+    "word": "naturalize",
+    "phonetic": "/'nætʃ(ə)rəlaɪz/",
+    "explains": [
+      "v. 移植；使入国籍；采纳"
+    ]
+  },
+  "naturally": {
+    "word": "naturally",
+    "phonetic": "/'nætʃ(ə)rəlɪ/",
+    "explains": [
+      "adv. 自然地；天然地"
+    ]
+  },
   "nature": {
     "word": "nature",
     "phonetic": "/ˈneɪtʃə(r)/",
     "explains": [
       "n. 自然；天性；性质"
+    ]
+  },
+  "naufrage": {
+    "word": "naufrage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 海难"
+    ]
+  },
+  "naught": {
+    "word": "naught",
+    "phonetic": "/nɔːt/",
+    "explains": [
+      "n. =naught无，零"
+    ]
+  },
+  "naughty": {
+    "word": "naughty",
+    "phonetic": "/ˈnɔːtɪ/",
+    "explains": [
+      "adj. 顽皮的"
+    ]
+  },
+  "nausea": {
+    "word": "nausea",
+    "phonetic": "/ˈnɔ:ziə/",
+    "explains": [
+      "n. 恶心，晕船；vt. 使恶心"
+    ]
+  },
+  "nauseate": {
+    "word": "nauseate",
+    "phonetic": "/'nɔːsɪeɪt; -z-/",
+    "explains": [
+      "v. 作呕；厌恶；产生恶感"
+    ]
+  },
+  "nauseous": {
+    "word": "nauseous",
+    "phonetic": "/'nɔːsɪəs; -z-/",
+    "explains": [
+      "adj. 令人作呕的；厌恶的"
+    ]
+  },
+  "nautical": {
+    "word": "nautical",
+    "phonetic": "/'nɔːtɪk(ə)l/",
+    "explains": [
+      "adj. 航海的，船舶的，海员的"
+    ]
+  },
+  "naval": {
+    "word": "naval",
+    "phonetic": "/'neɪv(ə)l/",
+    "explains": [
+      "adj. 海军的，军舰的"
+    ]
+  },
+  "nave": {
+    "word": "nave",
+    "phonetic": "/neɪv/",
+    "explains": [
+      "n. 中央广场, 车轮的中心部"
+    ]
+  },
+  "navel": {
+    "word": "navel",
+    "phonetic": "/'neɪv(ə)l/",
+    "explains": [
+      "n. [解]脐, 肚脐, 中央, 中心点"
+    ]
+  },
+  "navette": {
+    "word": "navette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 班车；梭子"
+    ]
+  },
+  "navigable": {
+    "word": "navigable",
+    "phonetic": "/'nævɪgəb(ə)l/",
+    "explains": [
+      "adj. 可航行的,可操纵的"
+    ]
+  },
+  "navigate": {
+    "word": "navigate",
+    "phonetic": "/'nævɪgeɪt/",
+    "explains": [
+      "v. 航行,航海"
+    ]
+  },
+  "navigation": {
+    "word": "navigation",
+    "phonetic": "/nævɪ'geɪʃ(ə)n/",
+    "explains": [
+      "n. 航行；航海术"
+    ]
+  },
+  "navigational": {
+    "word": "navigational",
+    "phonetic": "/,nævɪ'geɪʃnəl/",
+    "explains": [
+      "adj. 导航的, 航行的"
+    ]
+  },
+  "navigator": {
+    "word": "navigator",
+    "phonetic": "/'nævɪgeɪtə/",
+    "explains": [
+      "n. 航海家"
+    ]
+  },
+  "navy": {
+    "word": "navy",
+    "phonetic": "/ˈneɪvɪ/",
+    "explains": [
+      "n. 海军"
+    ]
+  },
+  "nazi": {
+    "word": "nazi",
+    "phonetic": "",
+    "explains": [
+      "n. 纳粹党人；纳粹主义信徒；adj. 纳粹党的；纳粹主义的"
+    ]
+  },
+  "nazism": {
+    "word": "nazism",
+    "phonetic": "/'nɑ:tsizəm; 'næ-/",
+    "explains": [
+      "n. 纳粹主义"
+    ]
+  },
+  "neanderthal": {
+    "word": "neanderthal",
+    "phonetic": "/ni'ændətɑ:l; -θɔ:l/",
+    "explains": [
+      "adv. 穴居人的"
     ]
   },
   "near": {
@@ -62,6 +587,69 @@
       "adv. 几乎；差不多"
     ]
   },
+  "nearness": {
+    "word": "nearness",
+    "phonetic": "",
+    "explains": [
+      "n. 靠近, 接近"
+    ]
+  },
+  "neat": {
+    "word": "neat",
+    "phonetic": "/niːt/",
+    "explains": [
+      "adj. 整洁的"
+    ]
+  },
+  "neatness": {
+    "word": "neatness",
+    "phonetic": "",
+    "explains": [
+      "n. 整洁, 干净"
+    ]
+  },
+  "nebula": {
+    "word": "nebula",
+    "phonetic": "/'nebjʊlə/",
+    "explains": [
+      "n. 星云"
+    ]
+  },
+  "nebular": {
+    "word": "nebular",
+    "phonetic": "",
+    "explains": [
+      "adj. [天]星云的"
+    ]
+  },
+  "nebulous": {
+    "word": "nebulous",
+    "phonetic": "/'nebjʊləs/",
+    "explains": [
+      "adj. 朦胧的；星云的，星云状的"
+    ]
+  },
+  "necesidad": {
+    "word": "necesidad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 需要"
+    ]
+  },
+  "necesitar": {
+    "word": "necesitar",
+    "phonetic": "",
+    "explains": [
+      "v. 需要"
+    ]
+  },
+  "necessarily": {
+    "word": "necessarily",
+    "phonetic": "/ˌnesəˈserɪlɪ; ˌnesəˈsesərɪlɪ/",
+    "explains": [
+      "adv. 必然地"
+    ]
+  },
   "necessary": {
     "word": "necessary",
     "phonetic": "/ˈnesəsəri/",
@@ -69,11 +657,67 @@
       "adj. 必要的；必须的"
     ]
   },
+  "necessitate": {
+    "word": "necessitate",
+    "phonetic": "/nɪ'sesɪteɪt/",
+    "explains": [
+      "v. 使成为必需，需要；迫使"
+    ]
+  },
+  "necessitous": {
+    "word": "necessitous",
+    "phonetic": "/nɪ'sesɪtəs/",
+    "explains": [
+      "adj. 贫困的"
+    ]
+  },
+  "necessity": {
+    "word": "necessity",
+    "phonetic": "/nɪˈsesɪtɪ/",
+    "explains": [
+      "n. 必需品"
+    ]
+  },
   "neck": {
     "word": "neck",
     "phonetic": "/nek/",
     "explains": [
       "n. 脖子；颈部"
+    ]
+  },
+  "necklace": {
+    "word": "necklace",
+    "phonetic": "/ˈneklɪs/",
+    "explains": [
+      "n. 项链"
+    ]
+  },
+  "necromancy": {
+    "word": "necromancy",
+    "phonetic": "/'nɛkromænsi/",
+    "explains": [
+      "n. 巫术"
+    ]
+  },
+  "necropolis": {
+    "word": "necropolis",
+    "phonetic": "/ne'krɒpəlɪs/",
+    "explains": [
+      "n. 大墓地, 古代的埋葬地"
+    ]
+  },
+  "necrosis": {
+    "word": "necrosis",
+    "phonetic": "/ne'krəʊsɪs/",
+    "explains": [
+      "n. 坏死"
+    ]
+  },
+  "nectar": {
+    "word": "nectar",
+    "phonetic": "/'nektə/",
+    "explains": [
+      "n. [希神] 神酒, 任何美味的饮料, 花蜜"
     ]
   },
   "need": {
@@ -90,11 +734,200 @@
       "n. 针；指针；针状物"
     ]
   },
+  "needlefish": {
+    "word": "needlefish",
+    "phonetic": "/'niːd(ə)lfɪʃ/",
+    "explains": [
+      "n. [动] 颌针鱼(一种长嘴便鳞之海鱼)"
+    ]
+  },
+  "needlelike": {
+    "word": "needlelike",
+    "phonetic": "",
+    "explains": [
+      "adj. 针状的"
+    ]
+  },
+  "needless": {
+    "word": "needless",
+    "phonetic": "",
+    "explains": [
+      "adj. 不需要的"
+    ]
+  },
+  "needlework": {
+    "word": "needlework",
+    "phonetic": "/'niːd(ə)lwɜːk/",
+    "explains": [
+      "n. 刺绣, 缝纫"
+    ]
+  },
+  "needy": {
+    "word": "needy",
+    "phonetic": "/'niːdɪ/",
+    "explains": [
+      "adj. 贫困的, 缺乏生活必需品的"
+    ]
+  },
+  "nefarious": {
+    "word": "nefarious",
+    "phonetic": "/nɪ'feərɪəs/",
+    "explains": [
+      "adj. 邪恶的；穷凶极恶的；不法的"
+    ]
+  },
+  "negate": {
+    "word": "negate",
+    "phonetic": "/nɪ'geɪt/",
+    "explains": [
+      "v. 否定, 打消"
+    ]
+  },
+  "negation": {
+    "word": "negation",
+    "phonetic": "/nɪ'geɪʃ(ə)n/",
+    "explains": [
+      "n. 否定；否认"
+    ]
+  },
+  "negative": {
+    "word": "negative",
+    "phonetic": "/ˈnegətɪv/",
+    "explains": [
+      "adj. 消极的；否定的"
+    ]
+  },
+  "neglect": {
+    "word": "neglect",
+    "phonetic": "/nɪˈglekt/",
+    "explains": [
+      "v. 忽视"
+    ]
+  },
+  "neglected": {
+    "word": "neglected",
+    "phonetic": "/nɪ'glektɪd/",
+    "explains": [
+      "adj. 被忽视的；未被好好照管的；v. 忽视；疏忽（neglect的过去分词）"
+    ]
+  },
+  "neglectful": {
+    "word": "neglectful",
+    "phonetic": "/nɪ'ɡlektfl/",
+    "explains": [
+      "adj. 疏忽的；忽略的；不小心的"
+    ]
+  },
+  "negligence": {
+    "word": "negligence",
+    "phonetic": "/'neglɪdʒ(ə)ns/",
+    "explains": [
+      "n. 疏忽，粗心大意"
+    ]
+  },
+  "negligent": {
+    "word": "negligent",
+    "phonetic": "/'neɡlɪdʒənt/",
+    "explains": [
+      "adj. 疏忽的；粗心大意的"
+    ]
+  },
+  "negligible": {
+    "word": "negligible",
+    "phonetic": "/'neglɪdʒɪb(ə)l/",
+    "explains": [
+      "adj. 微不足道的"
+    ]
+  },
+  "negligibly": {
+    "word": "negligibly",
+    "phonetic": "",
+    "explains": [
+      "adv. 可忽略不计地, 微不足道地, 极小地"
+    ]
+  },
+  "negocio": {
+    "word": "negocio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 生意"
+    ]
+  },
+  "negotiable": {
+    "word": "negotiable",
+    "phonetic": "/ni'gəuʃiəbl/",
+    "explains": [
+      "adj.  可协商解决的； 可转让的"
+    ]
+  },
+  "negotiate": {
+    "word": "negotiate",
+    "phonetic": "/nɪˈgəʊʃɪeɪt; -ʃəs-/",
+    "explains": [
+      "v. 谈判"
+    ]
+  },
+  "negotiation": {
+    "word": "negotiation",
+    "phonetic": "/nɪgəʊʃɪ'eɪʃ(ə)n/",
+    "explains": [
+      "n. 商议, 谈判"
+    ]
+  },
+  "negro": {
+    "word": "negro",
+    "phonetic": "/'niːgrəʊ/",
+    "explains": [
+      "n. 黑人"
+    ]
+  },
+  "neige": {
+    "word": "neige",
+    "phonetic": "",
+    "explains": [
+      "n.f. 雪"
+    ]
+  },
+  "neigh": {
+    "word": "neigh",
+    "phonetic": "/neɪ/",
+    "explains": [
+      "n. 马嘶声"
+    ]
+  },
+  "neighbor": {
+    "word": "neighbor",
+    "phonetic": "/'neɪbə/",
+    "explains": [
+      "n. 邻居；adj. 邻近的；v. 友好；毗邻而居"
+    ]
+  },
+  "neighborhood": {
+    "word": "neighborhood",
+    "phonetic": "/'neɪbə,hʊd/",
+    "explains": [
+      "n. 附近；街坊；接近；街区"
+    ]
+  },
   "neighbour": {
     "word": "neighbour",
     "phonetic": "/ˈneɪbə(r)/",
     "explains": [
       "n. 邻居；邻近的"
+    ]
+  },
+  "neighbourhood": {
+    "word": "neighbourhood",
+    "phonetic": "/ˈneɪbəhʊd/",
+    "explains": [
+      "n. 街坊"
+    ]
+  },
+  "neighbouring": {
+    "word": "neighbouring",
+    "phonetic": "/'neɪb(ə)rɪŋ/",
+    "explains": [
+      "adj. 邻近的，接壤的"
     ]
   },
   "neither": {
@@ -104,11 +937,165 @@
       "conj. 也不；既不"
     ]
   },
+  "nematode": {
+    "word": "nematode",
+    "phonetic": "/'nemətəʊd/",
+    "explains": [
+      "adj. 线虫类的；n. 线虫，线虫类"
+    ]
+  },
+  "nemesis": {
+    "word": "nemesis",
+    "phonetic": "",
+    "explains": [
+      "n. 报应；给与惩罚的人；天罚"
+    ]
+  },
+  "neoclassical": {
+    "word": "neoclassical",
+    "phonetic": "/niːəʊ'klæsɪk(ə)l/",
+    "explains": [
+      "adj. 新古典主义的"
+    ]
+  },
+  "neodoxy": {
+    "word": "neodoxy",
+    "phonetic": "",
+    "explains": [
+      "n. 新学说, 新见解"
+    ]
+  },
+  "neolithic": {
+    "word": "neolithic",
+    "phonetic": "/ˌni:əˈlɪθɪk/",
+    "explains": [
+      "adj. 新石器时代的"
+    ]
+  },
+  "neologism": {
+    "word": "neologism",
+    "phonetic": "/nɪ'ɒlədʒɪz(ə)m/",
+    "explains": [
+      "n. 新词；新义；新词的使用"
+    ]
+  },
+  "neology": {
+    "word": "neology",
+    "phonetic": "/niː'ɒlədʒɪ/",
+    "explains": [
+      "n. 新词；旧词新义（等于neologism）"
+    ]
+  },
+  "neomercantilist": {
+    "word": "neomercantilist",
+    "phonetic": "/ˌniəu'məːkəntailist/",
+    "explains": [
+      "n.  新重商主义者"
+    ]
+  },
+  "neon": {
+    "word": "neon",
+    "phonetic": "/'niːɒn/",
+    "explains": [
+      "n. [化]氖"
+    ]
+  },
+  "neonate": {
+    "word": "neonate",
+    "phonetic": "/'niːə(ʊ)neɪt/",
+    "explains": [
+      "n. 初生婴儿"
+    ]
+  },
+  "neophyte": {
+    "word": "neophyte",
+    "phonetic": "/'niːə(ʊ)faɪt/",
+    "explains": [
+      "n. 新信徒；新入教者；初学者"
+    ]
+  },
+  "nepenthe": {
+    "word": "nepenthe",
+    "phonetic": "/ne'penθɪ/",
+    "explains": [
+      "n. (据传说古希腊人用的)忘忧药, 解忧烦之物"
+    ]
+  },
+  "nephew": {
+    "word": "nephew",
+    "phonetic": "/ˈnefjuː; ˈnevjuː/",
+    "explains": [
+      "n. 侄子"
+    ]
+  },
+  "nephritis": {
+    "word": "nephritis",
+    "phonetic": "/nɪ'fraɪtɪs/",
+    "explains": [
+      "n. 肾炎"
+    ]
+  },
+  "nepotism": {
+    "word": "nepotism",
+    "phonetic": "/'nepətɪz(ə)m/",
+    "explains": [
+      "n. 偏袒, 起用亲戚, 裙带关系"
+    ]
+  },
+  "neptune": {
+    "word": "neptune",
+    "phonetic": "/ˈneptju:n/",
+    "explains": [
+      "n. [天]海王星"
+    ]
+  },
+  "nerve": {
+    "word": "nerve",
+    "phonetic": "/nɜːv/",
+    "explains": [
+      "n. 神经；勇敢，胆量"
+    ]
+  },
+  "nerveless": {
+    "word": "nerveless",
+    "phonetic": "/'nɜːvlɪs/",
+    "explains": [
+      "adj. 无力的, 松懈的"
+    ]
+  },
+  "nervio": {
+    "word": "nervio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 神经"
+    ]
+  },
   "nervous": {
     "word": "nervous",
     "phonetic": "/ˈnɜːvəs/",
     "explains": [
       "adj. 紧张的；神经的"
+    ]
+  },
+  "nervousness": {
+    "word": "nervousness",
+    "phonetic": "/'nɜːvəsnəs/",
+    "explains": [
+      "n. 神经质；[心理] 神经过敏；紧张不安"
+    ]
+  },
+  "nervy": {
+    "word": "nervy",
+    "phonetic": "/'nɜːvɪ/",
+    "explains": [
+      "adj. 肌肉发达的, 有勇气的, 冷静的"
+    ]
+  },
+  "nescient": {
+    "word": "nescient",
+    "phonetic": "/'nesɪənt/",
+    "explains": [
+      "adj. 无学的, 无知的"
     ]
   },
   "nest": {
@@ -118,11 +1105,207 @@
       "n. 巢；窝 v. 筑巢"
     ]
   },
+  "nestle": {
+    "word": "nestle",
+    "phonetic": "/'nes(ə)l/",
+    "explains": [
+      "v. 依偎,（舒适地）安顿"
+    ]
+  },
+  "nestling": {
+    "word": "nestling",
+    "phonetic": "/'nes(t)lɪŋ/",
+    "explains": [
+      "n. 尚未离巢的小鸟,婴孩"
+    ]
+  },
   "net": {
     "word": "net",
     "phonetic": "/net/",
     "explains": [
       "n. 网；网状物；网络"
+    ]
+  },
+  "nether": {
+    "word": "nether",
+    "phonetic": "/'neðə/",
+    "explains": [
+      "adj. 下面的, 下层社会的"
+    ]
+  },
+  "netherland": {
+    "word": "netherland",
+    "phonetic": "",
+    "explains": [
+      "n. 荷兰"
+    ]
+  },
+  "netherlands": {
+    "word": "netherlands",
+    "phonetic": "/'neðələndz/",
+    "explains": [
+      "n. 荷兰[国家]"
+    ]
+  },
+  "nethermost": {
+    "word": "nethermost",
+    "phonetic": "/'neðəməʊst/",
+    "explains": [
+      "adj. 最底下的, 最下面的"
+    ]
+  },
+  "nettle": {
+    "word": "nettle",
+    "phonetic": "/'net(ə)l/",
+    "explains": [
+      "v. 刺激；惹恼；用荨麻刺；n. 荨麻；adj. 荨麻科的"
+    ]
+  },
+  "network": {
+    "word": "network",
+    "phonetic": "/ˈnetwɜːk/",
+    "explains": [
+      "n. 网络"
+    ]
+  },
+  "neuf": {
+    "word": "neuf",
+    "phonetic": "",
+    "explains": [
+      "adj. 新的；num. 九"
+    ]
+  },
+  "neural": {
+    "word": "neural",
+    "phonetic": "/'njʊər(ə)l/",
+    "explains": [
+      "adj. 神经的；神经系统的；背的；神经中枢的；n. (Neural)人名；(捷)诺伊拉尔"
+    ]
+  },
+  "neurilemmal": {
+    "word": "neurilemmal",
+    "phonetic": "",
+    "explains": [
+      "adj. 神经膜的, 神经鞘的"
+    ]
+  },
+  "neuroglia": {
+    "word": "neuroglia",
+    "phonetic": "/,njʊə'rɒglɪə/",
+    "explains": [
+      "n. [解]神经胶(质)"
+    ]
+  },
+  "neurological": {
+    "word": "neurological",
+    "phonetic": "/,njʊərə'lɒdʒɪkl/",
+    "explains": [
+      "adj. 神经病学的，神经学上的"
+    ]
+  },
+  "neurology": {
+    "word": "neurology",
+    "phonetic": "/,njʊə'rɒlədʒɪ/",
+    "explains": [
+      "n. 神经学, 神经病学"
+    ]
+  },
+  "neuron": {
+    "word": "neuron",
+    "phonetic": "/'njʊərɒn/",
+    "explains": [
+      "n. [解]神经细胞,神经元"
+    ]
+  },
+  "neurosis": {
+    "word": "neurosis",
+    "phonetic": "/,njʊə'rəʊsɪs/",
+    "explains": [
+      "n. 神经官能病，精神性神经病"
+    ]
+  },
+  "neurospora": {
+    "word": "neurospora",
+    "phonetic": "",
+    "explains": [
+      "n. [微]脉孢菌"
+    ]
+  },
+  "neurotic": {
+    "word": "neurotic",
+    "phonetic": "/njʊə'rɒtɪk/",
+    "explains": [
+      "adj. 神经病的，神经过敏的；n. 神经过敏者"
+    ]
+  },
+  "neurotransmitter": {
+    "word": "neurotransmitter",
+    "phonetic": "/,njʊərəʊtrænz'mɪtə/",
+    "explains": [
+      "n. [生化]神经传递素"
+    ]
+  },
+  "neutral": {
+    "word": "neutral",
+    "phonetic": "/ˈnjuːtr(ə)l/",
+    "explains": [
+      "adj. 中立的"
+    ]
+  },
+  "neutralise": {
+    "word": "neutralise",
+    "phonetic": "",
+    "explains": [
+      "v. 中和；使中立；使无效"
+    ]
+  },
+  "neutrality": {
+    "word": "neutrality",
+    "phonetic": "/njuː'trælɪtɪ/",
+    "explains": [
+      "n. 中立, 中性"
+    ]
+  },
+  "neutralization": {
+    "word": "neutralization",
+    "phonetic": "/,njuːtrəlaɪ'zeɪʃən/",
+    "explains": [
+      "n. [化学] 中和；[化学] 中和作用；中立状态"
+    ]
+  },
+  "neutralize": {
+    "word": "neutralize",
+    "phonetic": "/'nju:trəlaiz/",
+    "explains": [
+      "v. 压制"
+    ]
+  },
+  "neutrino": {
+    "word": "neutrino",
+    "phonetic": "/njuː'triːnəʊ/",
+    "explains": [
+      "n. 【核物理学】中微子"
+    ]
+  },
+  "neutron": {
+    "word": "neutron",
+    "phonetic": "/'njuːtrɒn/",
+    "explains": [
+      "n. 中子"
+    ]
+  },
+  "nevada": {
+    "word": "nevada",
+    "phonetic": "/ni'vædə; -'vɑ:-/",
+    "explains": [
+      "n. 内华达州(美国西部内陆州)"
+    ]
+  },
+  "nevar": {
+    "word": "nevar",
+    "phonetic": "",
+    "explains": [
+      "v. 下雪"
     ]
   },
   "never": {
@@ -132,11 +1315,67 @@
       "adv. 从未；绝不"
     ]
   },
+  "nevertheless": {
+    "word": "nevertheless",
+    "phonetic": "/ˌnevəðəˈles/",
+    "explains": [
+      "adv. 然而"
+    ]
+  },
+  "nevus": {
+    "word": "nevus",
+    "phonetic": "/'niːvəs/",
+    "explains": [
+      "n. [医]痣"
+    ]
+  },
   "new": {
     "word": "new",
     "phonetic": "/njuː/",
     "explains": [
       "adj. 新的；新鲜的"
+    ]
+  },
+  "newberry": {
+    "word": "newberry",
+    "phonetic": "",
+    "explains": [
+      "n. 纽伯里"
+    ]
+  },
+  "newborn": {
+    "word": "newborn",
+    "phonetic": "/njuː'bɔːn; 'njuːbɔːn/",
+    "explains": [
+      "n. 婴儿"
+    ]
+  },
+  "newcomer": {
+    "word": "newcomer",
+    "phonetic": "/ˈnjuːkʌmə/",
+    "explains": [
+      "n. 新来者"
+    ]
+  },
+  "newline": {
+    "word": "newline",
+    "phonetic": "",
+    "explains": [
+      "换行符"
+    ]
+  },
+  "newly": {
+    "word": "newly",
+    "phonetic": "/'njuːlɪ/",
+    "explains": [
+      "adv. 新近，最近"
+    ]
+  },
+  "newlywed": {
+    "word": "newlywed",
+    "phonetic": "/'njuːlɪwed/",
+    "explains": [
+      "adj. 新婚的；n. 新婚夫妇"
     ]
   },
   "news": {
@@ -146,11 +1385,46 @@
       "n. 新闻；消息"
     ]
   },
+  "newsagent": {
+    "word": "newsagent",
+    "phonetic": "/'njuːzˌeidʒənt/",
+    "explains": [
+      "n.  报纸、 杂志等的经销商"
+    ]
+  },
+  "newscast": {
+    "word": "newscast",
+    "phonetic": "/'njuːzkɑːst/",
+    "explains": [
+      "n. <美>新闻广播"
+    ]
+  },
+  "newsletter": {
+    "word": "newsletter",
+    "phonetic": "/'njuːzletə/",
+    "explains": [
+      "n. 时事通讯"
+    ]
+  },
   "newspaper": {
     "word": "newspaper",
     "phonetic": "/ˈnjuːzpeɪpə(r)/",
     "explains": [
       "n. 报纸"
+    ]
+  },
+  "newsreel": {
+    "word": "newsreel",
+    "phonetic": "/'njuːzriːl/",
+    "explains": [
+      "n. 新闻影片"
+    ]
+  },
+  "newsworthy": {
+    "word": "newsworthy",
+    "phonetic": "/'njuːzwɜːðɪ/",
+    "explains": [
+      "adj. 有报导价值的"
     ]
   },
   "next": {
@@ -160,6 +1434,27 @@
       "adj. 下一个；其次的"
     ]
   },
+  "nexus": {
+    "word": "nexus",
+    "phonetic": "/'neksəs/",
+    "explains": [
+      "n. 关系；连结，连系"
+    ]
+  },
+  "nib": {
+    "word": "nib",
+    "phonetic": "/nɪb/",
+    "explains": [
+      "n. 嘴, 鹅管笔的尖端, 钢笔尖"
+    ]
+  },
+  "nibble": {
+    "word": "nibble",
+    "phonetic": "/'nɪb(ə)l/",
+    "explains": [
+      "v. 啃，一点一点咬"
+    ]
+  },
   "nice": {
     "word": "nice",
     "phonetic": "/naɪs/",
@@ -167,11 +1462,228 @@
       "adj. 美好的；愉快的"
     ]
   },
+  "nicely": {
+    "word": "nicely",
+    "phonetic": "/'naɪslɪ/",
+    "explains": [
+      "adv. 漂亮地；恰好地；精细地；n. (Nicely)人名；(英)奈斯利"
+    ]
+  },
+  "nicety": {
+    "word": "nicety",
+    "phonetic": "/'naɪsɪtɪ/",
+    "explains": [
+      "n. 细微的区别及差异"
+    ]
+  },
+  "niche": {
+    "word": "niche",
+    "phonetic": "/nitʃ/",
+    "explains": [
+      "n.  合适的位置； 壁龛； 专门市场； 利基市场"
+    ]
+  },
+  "nick": {
+    "word": "nick",
+    "phonetic": "/nɪk/",
+    "explains": [
+      "n. 小伤口，刻痕"
+    ]
+  },
+  "nickel": {
+    "word": "nickel",
+    "phonetic": "/'nɪk(ə)l/",
+    "explains": [
+      "n. 镍；镍币"
+    ]
+  },
+  "nickname": {
+    "word": "nickname",
+    "phonetic": "/'nɪkneɪm/",
+    "explains": [
+      "n. 绰号，诨号"
+    ]
+  },
+  "nicotine": {
+    "word": "nicotine",
+    "phonetic": "/'nɪkətiːn/",
+    "explains": [
+      "n. 烟碱"
+    ]
+  },
+  "nido": {
+    "word": "nido",
+    "phonetic": "",
+    "explains": [
+      "n.m. 鸟巢"
+    ]
+  },
+  "nidus": {
+    "word": "nidus",
+    "phonetic": "/'naɪdəs/",
+    "explains": [
+      "n. 巢, 孵卵所"
+    ]
+  },
+  "niebla": {
+    "word": "niebla",
+    "phonetic": "",
+    "explains": [
+      "n.f. 雾"
+    ]
+  },
+  "niece": {
+    "word": "niece",
+    "phonetic": "/niːs/",
+    "explains": [
+      "n. 侄女，外甥女"
+    ]
+  },
+  "nieto": {
+    "word": "nieto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 孙子"
+    ]
+  },
+  "nieve": {
+    "word": "nieve",
+    "phonetic": "",
+    "explains": [
+      "n.f. 雪"
+    ]
+  },
+  "nifty": {
+    "word": "nifty",
+    "phonetic": "/'nɪftɪ/",
+    "explains": [
+      "adj. 俏皮的, 极好的"
+    ]
+  },
+  "niggard": {
+    "word": "niggard",
+    "phonetic": "/'nɪgəd/",
+    "explains": [
+      "n. 小气鬼"
+    ]
+  },
+  "niggardly": {
+    "word": "niggardly",
+    "phonetic": "/'nɪgədlɪ/",
+    "explains": [
+      "adj. 小气的；很少量的；adv. 小气地；很少量地"
+    ]
+  },
+  "nigger": {
+    "word": "nigger",
+    "phonetic": "/'nɪgə/",
+    "explains": [
+      "n. 黑鬼（蔑称）；社会地位低下的人"
+    ]
+  },
+  "niggle": {
+    "word": "niggle",
+    "phonetic": "/'nɪg(ə)l/",
+    "explains": [
+      "v. 为琐事费心, 拘泥小节"
+    ]
+  },
+  "niggling": {
+    "word": "niggling",
+    "phonetic": "/'nɪɡlɪŋ/",
+    "explains": [
+      "n. 过于琐碎的工作, 麻烦事"
+    ]
+  },
+  "nigh": {
+    "word": "nigh",
+    "phonetic": "/naɪ/",
+    "explains": [
+      "prep. 近于；adj. 在附近的；直接的；adv. 几乎；在附近地；n. (Nigh)人名；(英)奈伊"
+    ]
+  },
   "night": {
     "word": "night",
     "phonetic": "/naɪt/",
     "explains": [
       "n. 夜晚；晚上"
+    ]
+  },
+  "nightclub": {
+    "word": "nightclub",
+    "phonetic": "/'naɪtklʌb/",
+    "explains": [
+      "n. 夜总会；vi. 去夜总会"
+    ]
+  },
+  "nightgown": {
+    "word": "nightgown",
+    "phonetic": "/'naɪtgaʊn/",
+    "explains": [
+      "n. 睡衣（等于dressing gown或nightdress）"
+    ]
+  },
+  "nightingale": {
+    "word": "nightingale",
+    "phonetic": "/'naɪtɪŋ,geɪl/",
+    "explains": [
+      "n. 夜莺"
+    ]
+  },
+  "nightmare": {
+    "word": "nightmare",
+    "phonetic": "/ˈnaɪtmeə/",
+    "explains": [
+      "n. 噩梦"
+    ]
+  },
+  "nighttime": {
+    "word": "nighttime",
+    "phonetic": "/'naɪttaɪm/",
+    "explains": [
+      "n. 夜间"
+    ]
+  },
+  "nihilism": {
+    "word": "nihilism",
+    "phonetic": "/'naɪ(h)ɪlɪz(ə)m/",
+    "explains": [
+      "n. 虚无主义；无政府主义；恐怖行为"
+    ]
+  },
+  "nil": {
+    "word": "nil",
+    "phonetic": "/nil/",
+    "explains": [
+      "n.  无， 零"
+    ]
+  },
+  "nile": {
+    "word": "nile",
+    "phonetic": "/nail/",
+    "explains": [
+      "n. 尼罗河"
+    ]
+  },
+  "nimble": {
+    "word": "nimble",
+    "phonetic": "/'nimbl/",
+    "explains": [
+      "adj.  敏捷的； 机智的"
+    ]
+  },
+  "nimiety": {
+    "word": "nimiety",
+    "phonetic": "/nɪ'maɪətɪ/",
+    "explains": [
+      "n. 过多"
+    ]
+  },
+  "nincompoop": {
+    "word": "nincompoop",
+    "phonetic": "/'nɪŋkəmpuːp/",
+    "explains": [
+      "n. 傻子, 无用的人"
     ]
   },
   "nine": {
@@ -188,11 +1700,116 @@
       "num. 十九"
     ]
   },
+  "nineteenth": {
+    "word": "nineteenth",
+    "phonetic": "/'naɪn'tiːnθ/",
+    "explains": [
+      "num. 第十九；十九分之一"
+    ]
+  },
   "ninety": {
     "word": "ninety",
     "phonetic": "/ˈnaɪnti/",
     "explains": [
       "num. 九十"
+    ]
+  },
+  "ninguno": {
+    "word": "ninguno",
+    "phonetic": "",
+    "explains": [
+      "pron. 没有一个"
+    ]
+  },
+  "ninth": {
+    "word": "ninth",
+    "phonetic": "/'naɪnθ/",
+    "explains": [
+      "num. 第九；n. 九分之一"
+    ]
+  },
+  "nip": {
+    "word": "nip",
+    "phonetic": "/nɪp/",
+    "explains": [
+      "v. 夹；捏；剪断；冻伤；阻止；n. 夹；捏；刺骨；小饮"
+    ]
+  },
+  "nipping": {
+    "word": "nipping",
+    "phonetic": "/'nɪpɪŋ/",
+    "explains": [
+      "adj. 锋利的, 刺骨的, 讥刺的"
+    ]
+  },
+  "nipple": {
+    "word": "nipple",
+    "phonetic": "/'nɪp(ə)l/",
+    "explains": [
+      "n. 乳头，奶头；奶嘴"
+    ]
+  },
+  "nippy": {
+    "word": "nippy",
+    "phonetic": "/'nɪpɪ/",
+    "explains": [
+      "adj. 刺骨的, 凛冽的"
+    ]
+  },
+  "nirvana": {
+    "word": "nirvana",
+    "phonetic": "/nɪə'vɑːnə/",
+    "explains": [
+      "n. 涅盘, 天堂"
+    ]
+  },
+  "nisus": {
+    "word": "nisus",
+    "phonetic": "/'naɪsəs/",
+    "explains": [
+      "n. 努力, 为达成目标的冲劲"
+    ]
+  },
+  "nitinol": {
+    "word": "nitinol",
+    "phonetic": "",
+    "explains": [
+      "n. [冶]镍钛诺(镍和钛的非磁性合金)"
+    ]
+  },
+  "nitrate": {
+    "word": "nitrate",
+    "phonetic": "/'naɪtreɪt/",
+    "explains": [
+      "n. [化]硝酸盐, 硝酸钾"
+    ]
+  },
+  "nitric": {
+    "word": "nitric",
+    "phonetic": "/'naɪtrɪk/",
+    "explains": [
+      "adj. [化]氮的, 含氮的"
+    ]
+  },
+  "nitrogen": {
+    "word": "nitrogen",
+    "phonetic": "/'naɪtrədʒ(ə)n/",
+    "explains": [
+      "n. 氮"
+    ]
+  },
+  "niveau": {
+    "word": "niveau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 水平；等级"
+    ]
+  },
+  "nivel": {
+    "word": "nivel",
+    "phonetic": "",
+    "explains": [
+      "n.m. 水平；层级"
     ]
   },
   "no": {
@@ -202,11 +1819,60 @@
       "adv. 不；否 adj. 没有；不是"
     ]
   },
+  "nobility": {
+    "word": "nobility",
+    "phonetic": "/nə(ʊ)'bɪlɪtɪ/",
+    "explains": [
+      "n. 高贵,贵族"
+    ]
+  },
+  "noble": {
+    "word": "noble",
+    "phonetic": "/ˈnəʊb(ə)l/",
+    "explains": [
+      "adj. 高贵的"
+    ]
+  },
+  "nobleman": {
+    "word": "nobleman",
+    "phonetic": "/'nəʊb(ə)lmən/",
+    "explains": [
+      "n. 贵族"
+    ]
+  },
+  "noblesse": {
+    "word": "noblesse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 贵族；高贵"
+    ]
+  },
   "nobody": {
     "word": "nobody",
     "phonetic": "/ˈnəʊbədi/",
     "explains": [
       "pron. 没有人；无人"
+    ]
+  },
+  "noche": {
+    "word": "noche",
+    "phonetic": "",
+    "explains": [
+      "n.f. 夜晚"
+    ]
+  },
+  "nocturnal": {
+    "word": "nocturnal",
+    "phonetic": "/nɒk'tɜːn(ə)l/",
+    "explains": [
+      "adj. 夜的；夜曲的；夜间发生的"
+    ]
+  },
+  "nocturne": {
+    "word": "nocturne",
+    "phonetic": "/'nɒktɜːn/",
+    "explains": [
+      "n. 夜曲, 夜景"
     ]
   },
   "nod": {
@@ -216,11 +1882,67 @@
       "v./n. 点头；点头示意"
     ]
   },
+  "node": {
+    "word": "node",
+    "phonetic": "/nəʊd/",
+    "explains": [
+      "n. 节点；瘤；[数] 叉点"
+    ]
+  },
+  "nodule": {
+    "word": "nodule",
+    "phonetic": "/'nɒdjuːl/",
+    "explains": [
+      "n. 节结"
+    ]
+  },
+  "nodus": {
+    "word": "nodus",
+    "phonetic": "/'nəʊdəs/",
+    "explains": [
+      "n. 节, 结节, 难点"
+    ]
+  },
+  "noeud": {
+    "word": "noeud",
+    "phonetic": "",
+    "explains": [
+      "n.m. 结；节点"
+    ]
+  },
+  "noggin": {
+    "word": "noggin",
+    "phonetic": "/'nɒgɪn/",
+    "explains": [
+      "n. 小杯, 少量饮料(常指四分之一品脱)"
+    ]
+  },
+  "noir": {
+    "word": "noir",
+    "phonetic": "",
+    "explains": [
+      "adj. 黑色的"
+    ]
+  },
   "noise": {
     "word": "noise",
     "phonetic": "/nɔɪz/",
     "explains": [
       "n. 噪音；声响；杂音"
+    ]
+  },
+  "noisily": {
+    "word": "noisily",
+    "phonetic": "",
+    "explains": [
+      "adv. 吵闹地"
+    ]
+  },
+  "noisome": {
+    "word": "noisome",
+    "phonetic": "/'nɒɪs(ə)m/",
+    "explains": [
+      "adj. 恶臭的；有害的"
     ]
   },
   "noisy": {
@@ -230,11 +1952,396 @@
       "adj. 嘈杂的；喧闹的"
     ]
   },
+  "nom": {
+    "word": "nom",
+    "phonetic": "",
+    "explains": [
+      "n.m. 名字；姓"
+    ]
+  },
+  "nomad": {
+    "word": "nomad",
+    "phonetic": "/'nəʊmæd/",
+    "explains": [
+      "n. 游牧部落的人,流浪者；adj. 游牧的"
+    ]
+  },
+  "nomadic": {
+    "word": "nomadic",
+    "phonetic": "/nəʊ'mædɪk/",
+    "explains": [
+      "adj. 游牧的, 流浪的"
+    ]
+  },
+  "nomadism": {
+    "word": "nomadism",
+    "phonetic": "/'nəʊmædɪzəm/",
+    "explains": [
+      "n. 游牧,流浪"
+    ]
+  },
+  "nombre": {
+    "word": "nombre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 名字"
+    ]
+  },
+  "nombreux": {
+    "word": "nombreux",
+    "phonetic": "",
+    "explains": [
+      "adj. 众多的"
+    ]
+  },
+  "nomenclature": {
+    "word": "nomenclature",
+    "phonetic": "/nə(ʊ)'meŋklətʃə; 'nəʊmən,kleɪtʃə/",
+    "explains": [
+      "n. 命名法, 术语"
+    ]
+  },
+  "nominal": {
+    "word": "nominal",
+    "phonetic": "/'nɒmɪn(ə)l/",
+    "explains": [
+      "adj. 名义上的；有名无实的；[会计] 票面上的；n. [语] 名词性词"
+    ]
+  },
+  "nominate": {
+    "word": "nominate",
+    "phonetic": "/'nɒmɪneɪt/",
+    "explains": [
+      "v. 提名，推荐；任命"
+    ]
+  },
+  "nomination": {
+    "word": "nomination",
+    "phonetic": "/nɒmɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 任命"
+    ]
+  },
+  "nominee": {
+    "word": "nominee",
+    "phonetic": "/nɒmɪ'niː/",
+    "explains": [
+      "n. 被提名者，被任命者"
+    ]
+  },
+  "non": {
+    "word": "non",
+    "phonetic": "",
+    "explains": [
+      "adv. 不"
+    ]
+  },
+  "non-fatal": {
+    "word": "non-fatal",
+    "phonetic": "",
+    "explains": [
+      "非致命的"
+    ]
+  },
+  "non-negotiable": {
+    "word": "non-negotiable",
+    "phonetic": "/ˌnɔnni'gəuʃiəbl/",
+    "explains": [
+      "adj.  不可改变的， 不可商量的； 不可转让的"
+    ]
+  },
+  "non-retryable": {
+    "word": "non-retryable",
+    "phonetic": "",
+    "explains": [
+      "不可重试的"
+    ]
+  },
+  "nonage": {
+    "word": "nonage",
+    "phonetic": "/'nəʊnɪdʒ; 'nɒn-/",
+    "explains": [
+      "n. 青年时期, 早期, 未成熟, 未成年"
+    ]
+  },
+  "nonagon": {
+    "word": "nonagon",
+    "phonetic": "/'nɒnəg(ə)n/",
+    "explains": [
+      "n. [数] 九边形"
+    ]
+  },
+  "nonagricultural": {
+    "word": "nonagricultural",
+    "phonetic": "",
+    "explains": [
+      "adj. 非农业的"
+    ]
+  },
+  "nonbiodegradable": {
+    "word": "nonbiodegradable",
+    "phonetic": "",
+    "explains": [
+      "adj. 非生物降解的；不能生物降解的"
+    ]
+  },
+  "nonchalance": {
+    "word": "nonchalance",
+    "phonetic": "/'nɒnʃ(ə)l(ə)ns; 'nɒnʃəl(ə)ns/",
+    "explains": [
+      "n. 冷淡"
+    ]
+  },
+  "nonchalant": {
+    "word": "nonchalant",
+    "phonetic": "/'nɒnʃ(ə)l(ə)nt/",
+    "explains": [
+      "adj. 若无其事的, 不关心的, 冷淡的"
+    ]
+  },
+  "noncommercial": {
+    "word": "noncommercial",
+    "phonetic": "",
+    "explains": [
+      "adj. 非经营的"
+    ]
+  },
+  "noncommittal": {
+    "word": "noncommittal",
+    "phonetic": "/ˌnɔnkə'mitəl/",
+    "explains": [
+      "adj.  不明朗的； 不能退款的； 不可归还的； 不承担义务的"
+    ]
+  },
+  "nonconformist": {
+    "word": "nonconformist",
+    "phonetic": "/nɒnkən'fɔːmɪst/",
+    "explains": [
+      "adj. 不信奉英国国教的 n非国教徒"
+    ]
+  },
+  "nonconformity": {
+    "word": "nonconformity",
+    "phonetic": "/nɒnkən'fɔːmɪtɪ/",
+    "explains": [
+      "n. 不信奉国教"
+    ]
+  },
+  "nondescript": {
+    "word": "nondescript",
+    "phonetic": "/'nɒndɪskrɪpt/",
+    "explains": [
+      "adj. 平凡的，没有特色的；难以区别的；莫可名状的；n. 不属任何类型的人；难以形容的人或物"
+    ]
+  },
   "none": {
     "word": "none",
     "phonetic": "/nʌn/",
     "explains": [
       "pron. 没有一个；毫无"
+    ]
+  },
+  "nonelectronic": {
+    "word": "nonelectronic",
+    "phonetic": "",
+    "explains": [
+      "adj. 非电子的"
+    ]
+  },
+  "nonentity": {
+    "word": "nonentity",
+    "phonetic": "/nɒ'nentɪtɪ/",
+    "explains": [
+      "n. 不存在"
+    ]
+  },
+  "nonessential": {
+    "word": "nonessential",
+    "phonetic": "/,nɒnɪ'senʃəl/",
+    "explains": [
+      "adj. 非本质的"
+    ]
+  },
+  "nonesuch": {
+    "word": "nonesuch",
+    "phonetic": "/'nɒnsʌtʃ/",
+    "explains": [
+      "n. 无以匹敌的人, 典范"
+    ]
+  },
+  "nonetheless": {
+    "word": "nonetheless",
+    "phonetic": "/nʌnðə'les/",
+    "explains": [
+      "adv. 尽管如此，但是"
+    ]
+  },
+  "nonfiction": {
+    "word": "nonfiction",
+    "phonetic": "/nɒn'fɪkʃən/",
+    "explains": [
+      "n. 非小说的散文文学"
+    ]
+  },
+  "nonflammable": {
+    "word": "nonflammable",
+    "phonetic": "/nɒn'flæməbl/",
+    "explains": [
+      "adj. 不燃烧的"
+    ]
+  },
+  "nonfunctional": {
+    "word": "nonfunctional",
+    "phonetic": "",
+    "explains": [
+      "adj. 不运行的"
+    ]
+  },
+  "nonhuman": {
+    "word": "nonhuman",
+    "phonetic": "",
+    "explains": [
+      "adj. 非人类的"
+    ]
+  },
+  "nonliving": {
+    "word": "nonliving",
+    "phonetic": "/nɒn'lɪvɪŋ/",
+    "explains": [
+      "adj. 无生命的, 非活体的"
+    ]
+  },
+  "nonnative": {
+    "word": "nonnative",
+    "phonetic": "",
+    "explains": [
+      "n. 非本地的,  非本地人"
+    ]
+  },
+  "nonnegative": {
+    "word": "nonnegative",
+    "phonetic": "/nɒn'neɡətɪv/",
+    "explains": [
+      "adj. 正的，非负的"
+    ]
+  },
+  "nonobservance": {
+    "word": "nonobservance",
+    "phonetic": "/,nɒnəb'zɜːvəns/",
+    "explains": [
+      "n. (对法律, 习俗等的)不遵守, 违反"
+    ]
+  },
+  "nonpareil": {
+    "word": "nonpareil",
+    "phonetic": "/,nɒnpə'reɪl/",
+    "explains": [
+      "adj. 无比的"
+    ]
+  },
+  "nonplus": {
+    "word": "nonplus",
+    "phonetic": "/nɒn'plʌs/",
+    "explains": [
+      "n. 迷惑；困惑；v. 使困惑"
+    ]
+  },
+  "nonporous": {
+    "word": "nonporous",
+    "phonetic": "",
+    "explains": [
+      "adj. 无细孔的"
+    ]
+  },
+  "nonproductive": {
+    "word": "nonproductive",
+    "phonetic": "/,nɒnprə'dʌktɪv/",
+    "explains": [
+      "adj. 非生产性的"
+    ]
+  },
+  "nonself": {
+    "word": "nonself",
+    "phonetic": "",
+    "explains": [
+      "n. (有机体的)异物"
+    ]
+  },
+  "nonsense": {
+    "word": "nonsense",
+    "phonetic": "/ˈnɒns(ə)ns/",
+    "explains": [
+      "n. 胡说"
+    ]
+  },
+  "nonskid": {
+    "word": "nonskid",
+    "phonetic": "/'nɒn'skɪd/",
+    "explains": [
+      "adj. 不滑的"
+    ]
+  },
+  "nonstarter": {
+    "word": "nonstarter",
+    "phonetic": "",
+    "explains": [
+      "n. 早就无成功希望的人；弃权出赛的马"
+    ]
+  },
+  "nonstop": {
+    "word": "nonstop",
+    "phonetic": "/'nɔn'stɔp/",
+    "explains": [
+      "adj. 不断的,直达的；adv. 不休息地"
+    ]
+  },
+  "nonsuit": {
+    "word": "nonsuit",
+    "phonetic": "/nɒn's(j)uːt/",
+    "explains": [
+      "n. 诉讼驳回"
+    ]
+  },
+  "nonthreatening": {
+    "word": "nonthreatening",
+    "phonetic": "",
+    "explains": [
+      "adj. 非胁迫的"
+    ]
+  },
+  "nontraditional": {
+    "word": "nontraditional",
+    "phonetic": "/,nɒntrə'dɪʃənəl/",
+    "explains": [
+      "adj. 非传统的"
+    ]
+  },
+  "nonviolent": {
+    "word": "nonviolent",
+    "phonetic": "/,nɒn'vaɪələnt/",
+    "explains": [
+      "adj. 非暴力的"
+    ]
+  },
+  "nonzero": {
+    "word": "nonzero",
+    "phonetic": "/nɒn'zɪərəʊ/",
+    "explains": [
+      "adj. 非零的"
+    ]
+  },
+  "noodle": {
+    "word": "noodle",
+    "phonetic": "/ˈnuːd(ə)l/",
+    "explains": [
+      "n. 面条"
+    ]
+  },
+  "nook": {
+    "word": "nook",
+    "phonetic": "/nʊk/",
+    "explains": [
+      "n. 隐蔽处"
     ]
   },
   "noon": {
@@ -244,11 +2351,95 @@
       "n. 中午；正午"
     ]
   },
+  "noose": {
+    "word": "noose",
+    "phonetic": "/nuːs/",
+    "explains": [
+      "n. 套索, 束缚, 陷阱, (the noose)绞刑"
+    ]
+  },
   "nor": {
     "word": "nor",
     "phonetic": "/nɔː(r)/",
     "explains": [
       "conj. 也不；也没有"
+    ]
+  },
+  "nord": {
+    "word": "nord",
+    "phonetic": "",
+    "explains": [
+      "n.m. 北方"
+    ]
+  },
+  "nordic": {
+    "word": "nordic",
+    "phonetic": "/'nɔ:dik/",
+    "explains": [
+      "adj. 北欧人的；斯堪的纳维亚的；日耳曼民族的；n. 北欧人；日耳曼民族；斯堪的纳维亚人；具有北欧日尔曼民族外貌特征的人"
+    ]
+  },
+  "norm": {
+    "word": "norm",
+    "phonetic": "/nɔːm/",
+    "explains": [
+      "n. 标准，规范；平均数"
+    ]
+  },
+  "norma": {
+    "word": "norma",
+    "phonetic": "",
+    "explains": [
+      "n.f. 规则"
+    ]
+  },
+  "normal": {
+    "word": "normal",
+    "phonetic": "/ˈnɔːm(ə)l/",
+    "explains": [
+      "adj. 正常的"
+    ]
+  },
+  "normalization": {
+    "word": "normalization",
+    "phonetic": "/,nɔːməlaɪ'zeɪʃən/",
+    "explains": [
+      "n. 正常化，标准化"
+    ]
+  },
+  "normally": {
+    "word": "normally",
+    "phonetic": "/'nɔːm(ə)lɪ/",
+    "explains": [
+      "adv. 通常；正常地"
+    ]
+  },
+  "norman": {
+    "word": "norman",
+    "phonetic": "/'nɔ:mən/",
+    "explains": [
+      "n&a. 法国诺曼第人(的)"
+    ]
+  },
+  "normative": {
+    "word": "normative",
+    "phonetic": "/'nɔːmətɪv/",
+    "explains": [
+      "adj. 标准化的"
+    ]
+  },
+  "norme": {
+    "word": "norme",
+    "phonetic": "",
+    "explains": [
+      "n.f. 规范"
+    ]
+  },
+  "norte": {
+    "word": "norte",
+    "phonetic": "",
+    "explains": [
+      "n.m. 北方"
     ]
   },
   "north": {
@@ -258,11 +2449,60 @@
       "n. 北方；北部 adj. 北方的"
     ]
   },
+  "northeast": {
+    "word": "northeast",
+    "phonetic": "/ˌnɔːθˈiːst/",
+    "explains": [
+      "n. 东北"
+    ]
+  },
+  "northeastern": {
+    "word": "northeastern",
+    "phonetic": "/,nɔ:θ'i:stən/",
+    "explains": [
+      "adj. 东北方的, 在东北的"
+    ]
+  },
   "northern": {
     "word": "northern",
     "phonetic": "/ˈnɔːðən/",
     "explains": [
       "adj. 北方的；北部的"
+    ]
+  },
+  "northerner": {
+    "word": "northerner",
+    "phonetic": "/'nɔːð(ə)nə/",
+    "explains": [
+      "n. 北国人, 北方人"
+    ]
+  },
+  "northward": {
+    "word": "northward",
+    "phonetic": "/'nɔːθwəd/",
+    "explains": [
+      "adv. 向北；adj. 向北的"
+    ]
+  },
+  "northwest": {
+    "word": "northwest",
+    "phonetic": "/ˌnɔːθˈwest/",
+    "explains": [
+      "n. 西北"
+    ]
+  },
+  "norway": {
+    "word": "norway",
+    "phonetic": "/'nɔ:weɪ/",
+    "explains": [
+      "n. 挪威(北欧国家)"
+    ]
+  },
+  "norwegian": {
+    "word": "norwegian",
+    "phonetic": "/nɔ:'wi:dʒən/",
+    "explains": [
+      "adj. 挪威的 n挪威人, 挪威语"
     ]
   },
   "nose": {
@@ -272,11 +2512,116 @@
       "n. 鼻子；嗅觉"
     ]
   },
+  "nosedive": {
+    "word": "nosedive",
+    "phonetic": "/'nəuzdaiv/",
+    "explains": [
+      "n&vi.  猛跌； 俯冲"
+    ]
+  },
+  "nosegay": {
+    "word": "nosegay",
+    "phonetic": "/'nəʊzgeɪ/",
+    "explains": [
+      "n. (尤指有香味的)花束"
+    ]
+  },
+  "nostalgia": {
+    "word": "nostalgia",
+    "phonetic": "/nɒ'stældʒə/",
+    "explains": [
+      "n. 乡愁, 怀旧之情"
+    ]
+  },
+  "nostalgic": {
+    "word": "nostalgic",
+    "phonetic": "/nɒ'stældʒɪk/",
+    "explains": [
+      "adj. 乡愁的, 怀旧的"
+    ]
+  },
+  "nostril": {
+    "word": "nostril",
+    "phonetic": "/'nɒstr(ə)l/",
+    "explains": [
+      "n. 鼻孔"
+    ]
+  },
+  "nostrum": {
+    "word": "nostrum",
+    "phonetic": "/'nɒstrəm/",
+    "explains": [
+      "n. 秘方"
+    ]
+  },
   "not": {
     "word": "not",
     "phonetic": "/nɒt/",
     "explains": [
       "adv. 不；没有；不是"
+    ]
+  },
+  "nota": {
+    "word": "nota",
+    "phonetic": "",
+    "explains": [
+      "n.f. 笔记；分数"
+    ]
+  },
+  "notability": {
+    "word": "notability",
+    "phonetic": "/nəʊtə'bɪlɪtɪ/",
+    "explains": [
+      "n. 显要人物"
+    ]
+  },
+  "notable": {
+    "word": "notable",
+    "phonetic": "/'nəʊtəb(ə)l/",
+    "explains": [
+      "adj. 值得注意的；著名的"
+    ]
+  },
+  "notably": {
+    "word": "notably",
+    "phonetic": "/'nəʊtəblɪ/",
+    "explains": [
+      "adv. 显著地；著名地"
+    ]
+  },
+  "notar": {
+    "word": "notar",
+    "phonetic": "",
+    "explains": [
+      "v. 注意到"
+    ]
+  },
+  "notary": {
+    "word": "notary",
+    "phonetic": "/'nəʊt(ə)rɪ/",
+    "explains": [
+      "n. 公证人，公证员"
+    ]
+  },
+  "notation": {
+    "word": "notation",
+    "phonetic": "/nəʊ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 符号"
+    ]
+  },
+  "notch": {
+    "word": "notch",
+    "phonetic": "/nɒtʃ/",
+    "explains": [
+      "n. 槽口,刻痕；v. 刻凹痕"
+    ]
+  },
+  "notched": {
+    "word": "notched",
+    "phonetic": "",
+    "explains": [
+      "adj. 有凹口的, 有锯齿状的"
     ]
   },
   "note": {
@@ -293,6 +2638,20 @@
       "n. 笔记本；笔记簿"
     ]
   },
+  "noted": {
+    "word": "noted",
+    "phonetic": "/'nəʊtɪd/",
+    "explains": [
+      "adj. 著名的，知名的"
+    ]
+  },
+  "notepad": {
+    "word": "notepad",
+    "phonetic": "/'nəutˌpæd/",
+    "explains": [
+      "n.  笔记本"
+    ]
+  },
   "nothing": {
     "word": "nothing",
     "phonetic": "/ˈnʌθɪŋ/",
@@ -307,11 +2666,417 @@
       "v./n. 注意；通知；布告"
     ]
   },
+  "noticeable": {
+    "word": "noticeable",
+    "phonetic": "/'nəʊtɪsəb(ə)l/",
+    "explains": [
+      "adj. 显而易见的"
+    ]
+  },
+  "noticeably": {
+    "word": "noticeably",
+    "phonetic": "/'nəutisəbli/",
+    "explains": [
+      "adv. 显著地，显然"
+    ]
+  },
+  "noticia": {
+    "word": "noticia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 消息"
+    ]
+  },
+  "notification": {
+    "word": "notification",
+    "phonetic": "/,nəʊtɪfɪ'keɪʃn/",
+    "explains": [
+      "n. 通知；通告；[法] 告示"
+    ]
+  },
+  "notify": {
+    "word": "notify",
+    "phonetic": "/'nəʊtɪfaɪ/",
+    "explains": [
+      "v. 通知，告知；报告"
+    ]
+  },
+  "notion": {
+    "word": "notion",
+    "phonetic": "/'nəʊʃ(ə)n/",
+    "explains": [
+      "n. 概念；看法"
+    ]
+  },
+  "notoriety": {
+    "word": "notoriety",
+    "phonetic": "/nəʊtə'raɪɪtɪ/",
+    "explains": [
+      "n. 恶名, 丑名, 声名狼藉, 远扬的名声"
+    ]
+  },
+  "notorious": {
+    "word": "notorious",
+    "phonetic": "/nə(ʊ)'tɔːrɪəs/",
+    "explains": [
+      "adj. 臭名昭著的"
+    ]
+  },
+  "notoriously": {
+    "word": "notoriously",
+    "phonetic": "/nəu'tɔ:riəsli/",
+    "explains": [
+      "adv. 臭名昭著地, 众所周知地"
+    ]
+  },
+  "notwithstanding": {
+    "word": "notwithstanding",
+    "phonetic": "/nɒtwɪð'stændɪŋ; -wɪθ-/",
+    "explains": [
+      "prep. 尽管，虽然"
+    ]
+  },
+  "nought": {
+    "word": "nought",
+    "phonetic": "/nɔːt/",
+    "explains": [
+      "n. 无，零"
+    ]
+  },
+  "noun": {
+    "word": "noun",
+    "phonetic": "/naʊn/",
+    "explains": [
+      "n. 名词"
+    ]
+  },
+  "nourish": {
+    "word": "nourish",
+    "phonetic": "/'nʌrɪʃ/",
+    "explains": [
+      "v. 提供养分，养育"
+    ]
+  },
+  "nourishment": {
+    "word": "nourishment",
+    "phonetic": "/'nʌrɪʃm(ə)nt/",
+    "explains": [
+      "n. 食物；营养（情况）"
+    ]
+  },
+  "nouveau": {
+    "word": "nouveau",
+    "phonetic": "/'nuːvəʊ; nʊvo/",
+    "explains": [
+      "adj. 新近到达的,最近产生的"
+    ]
+  },
+  "nouvelle": {
+    "word": "nouvelle",
+    "phonetic": "",
+    "explains": [
+      "n.f. 消息；短篇小说；adj. 新的（阴性）"
+    ]
+  },
+  "novedad": {
+    "word": "novedad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 新事物"
+    ]
+  },
+  "novel": {
+    "word": "novel",
+    "phonetic": "/ˈnɒv(ə)l/",
+    "explains": [
+      "n. 小说　adj. 新奇的"
+    ]
+  },
+  "novela": {
+    "word": "novela",
+    "phonetic": "",
+    "explains": [
+      "n.f. 小说"
+    ]
+  },
+  "novelist": {
+    "word": "novelist",
+    "phonetic": "/'nɒv(ə)lɪst/",
+    "explains": [
+      "n. (长篇)小说家"
+    ]
+  },
+  "novelty": {
+    "word": "novelty",
+    "phonetic": "/'nɒv(ə)ltɪ/",
+    "explains": [
+      "n. 新颖；新奇的事物"
+    ]
+  },
+  "november": {
+    "word": "november",
+    "phonetic": "/nəʊˈvembə/",
+    "explains": [
+      "n. 十一月"
+    ]
+  },
+  "novembre": {
+    "word": "novembre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 十一月"
+    ]
+  },
+  "novice": {
+    "word": "novice",
+    "phonetic": "/'nɒvɪs/",
+    "explains": [
+      "n. 新手; 初学者"
+    ]
+  },
+  "noviembre": {
+    "word": "noviembre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 十一月"
+    ]
+  },
+  "novocaine": {
+    "word": "novocaine",
+    "phonetic": "",
+    "explains": [
+      "n. 奴佛卡因（一种麻醉药）"
+    ]
+  },
   "now": {
     "word": "now",
     "phonetic": "/naʊ/",
     "explains": [
       "adv. 现在；如今；立刻"
+    ]
+  },
+  "nowadays": {
+    "word": "nowadays",
+    "phonetic": "/ˈnaʊədeɪz/",
+    "explains": [
+      "adv. 如今"
+    ]
+  },
+  "nowcasting": {
+    "word": "nowcasting",
+    "phonetic": "",
+    "explains": [
+      "n. 预告"
+    ]
+  },
+  "nowhere": {
+    "word": "nowhere",
+    "phonetic": "/ˈnəʊweə/",
+    "explains": [
+      "adv. 无处"
+    ]
+  },
+  "noxious": {
+    "word": "noxious",
+    "phonetic": "/'nɒkʃəs/",
+    "explains": [
+      "adj. 有害的"
+    ]
+  },
+  "nozzle": {
+    "word": "nozzle",
+    "phonetic": "/'nɒz(ə)l/",
+    "explains": [
+      "n. 管口, 喷嘴"
+    ]
+  },
+  "nss": {
+    "word": "nss",
+    "phonetic": "",
+    "explains": [
+      "n. 卫星导航系统(供氮系统)"
+    ]
+  },
+  "nuage": {
+    "word": "nuage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 云"
+    ]
+  },
+  "nuance": {
+    "word": "nuance",
+    "phonetic": "/'njuːɑːns/",
+    "explains": [
+      "n. (意义、意见、颜色)细微差别"
+    ]
+  },
+  "nube": {
+    "word": "nube",
+    "phonetic": "",
+    "explains": [
+      "n.f. 云"
+    ]
+  },
+  "nubile": {
+    "word": "nubile",
+    "phonetic": "/'njuːbaɪl/",
+    "explains": [
+      "adj. 适婚的"
+    ]
+  },
+  "nuclear": {
+    "word": "nuclear",
+    "phonetic": "/ˈnjuːklɪə/",
+    "explains": [
+      "adj. 核能的"
+    ]
+  },
+  "nuclei": {
+    "word": "nuclei",
+    "phonetic": "/'njuːklɪaɪ/",
+    "explains": [
+      "n. 核心，核子；原子核（nucleus的复数形式）"
+    ]
+  },
+  "nucleic": {
+    "word": "nucleic",
+    "phonetic": "/njuː'kliːɪk/",
+    "explains": [
+      "adj. 核的"
+    ]
+  },
+  "nucleon": {
+    "word": "nucleon",
+    "phonetic": "/'njuːklɪɒn/",
+    "explains": [
+      "n. [高能] 核子"
+    ]
+  },
+  "nucleons": {
+    "word": "nucleons",
+    "phonetic": "/'njuːklɪɒn/",
+    "explains": [
+      "n. [高能] 核子"
+    ]
+  },
+  "nucleotide": {
+    "word": "nucleotide",
+    "phonetic": "/'njuːklɪətaɪd/",
+    "explains": [
+      "n. 核苷；核甘酸"
+    ]
+  },
+  "nucleus": {
+    "word": "nucleus",
+    "phonetic": "/'njuːklɪəs/",
+    "explains": [
+      "n. 核，（原子）核；核心"
+    ]
+  },
+  "nude": {
+    "word": "nude",
+    "phonetic": "/njuːd/",
+    "explains": [
+      "adj. 裸的，裸体的；无装饰的；与生俱有的；n. 裸体；裸体画"
+    ]
+  },
+  "nudge": {
+    "word": "nudge",
+    "phonetic": "/nʌdʒ/",
+    "explains": [
+      "n. 用肘轻推, 轻推为引起注意"
+    ]
+  },
+  "nudity": {
+    "word": "nudity",
+    "phonetic": "/'njuːdətɪ/",
+    "explains": [
+      "n. 裸体, 赤裸"
+    ]
+  },
+  "nudo": {
+    "word": "nudo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 结；难题"
+    ]
+  },
+  "nuera": {
+    "word": "nuera",
+    "phonetic": "",
+    "explains": [
+      "n.f. 儿媳"
+    ]
+  },
+  "nuestro": {
+    "word": "nuestro",
+    "phonetic": "",
+    "explains": [
+      "pron. 我们的"
+    ]
+  },
+  "nuevo": {
+    "word": "nuevo",
+    "phonetic": "",
+    "explains": [
+      "adj. 新的"
+    ]
+  },
+  "nugae": {
+    "word": "nugae",
+    "phonetic": "/'njuːdʒiː/",
+    "explains": [
+      "n. <拉>  无价值的事,无聊事,琐事"
+    ]
+  },
+  "nugatory": {
+    "word": "nugatory",
+    "phonetic": "/'njuːgət(ə)rɪ; 'nuː-/",
+    "explains": [
+      "adj. 无价值的；琐碎的；无效的；无法律效力的"
+    ]
+  },
+  "nuire": {
+    "word": "nuire",
+    "phonetic": "",
+    "explains": [
+      "v. 损害"
+    ]
+  },
+  "nuisance": {
+    "word": "nuisance",
+    "phonetic": "/'njuːs(ə)ns/",
+    "explains": [
+      "n. 讨厌的人（东西）"
+    ]
+  },
+  "null": {
+    "word": "null",
+    "phonetic": "/nʌl/",
+    "explains": [
+      "adj. 无效的，无意义的"
+    ]
+  },
+  "nullify": {
+    "word": "nullify",
+    "phonetic": "/'nʌlifai/",
+    "explains": [
+      "vt.  使无效"
+    ]
+  },
+  "nullity": {
+    "word": "nullity",
+    "phonetic": "/'nʌlɪtɪ/",
+    "explains": [
+      "n. (尤指法律上的)无效, 无效的行为, 无效的证书"
+    ]
+  },
+  "numb": {
+    "word": "numb",
+    "phonetic": "/nʌm/",
+    "explains": [
+      "v. 使麻木；使发愣；使失去感觉；adj. 麻木的；发愣的"
     ]
   },
   "number": {
@@ -321,11 +3086,235 @@
       "n. 数字；号码；数量"
     ]
   },
+  "numeral": {
+    "word": "numeral",
+    "phonetic": "/'njuːm(ə)r(ə)l/",
+    "explains": [
+      "n. 数字"
+    ]
+  },
+  "numerate": {
+    "word": "numerate",
+    "phonetic": "/'njuːm(ə)rət/",
+    "explains": [
+      "adj. 数学基础好的"
+    ]
+  },
+  "numeration": {
+    "word": "numeration",
+    "phonetic": "/njuːmə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 计算；数字的读法；[数] 命数法；编号"
+    ]
+  },
+  "numerator": {
+    "word": "numerator",
+    "phonetic": "/'njuːməreɪtə/",
+    "explains": [
+      "n. 分子；计算者；计算器"
+    ]
+  },
+  "numerical": {
+    "word": "numerical",
+    "phonetic": "/njuː'merɪk(ə)l/",
+    "explains": [
+      "adj. 数字的，数值的"
+    ]
+  },
+  "numerology": {
+    "word": "numerology",
+    "phonetic": "/,njuːmə'rɒlədʒɪ/",
+    "explains": [
+      "n. (根据出生日期等数字来解释人的性格或占卜祸福的)数字命理学"
+    ]
+  },
+  "numerous": {
+    "word": "numerous",
+    "phonetic": "/ˈnjuːm(ə)rəs/",
+    "explains": [
+      "adj. 许多的"
+    ]
+  },
+  "numinous": {
+    "word": "numinous",
+    "phonetic": "/'njuːmɪnəs/",
+    "explains": [
+      "adj. 精神上的, 超自然的"
+    ]
+  },
+  "numismatic": {
+    "word": "numismatic",
+    "phonetic": "/,njuːmɪz'mætɪk/",
+    "explains": [
+      "adj. 钱币的, 奖章的, 钱币学的"
+    ]
+  },
+  "numismatist": {
+    "word": "numismatist",
+    "phonetic": "/njuː'mɪzmətɪst/",
+    "explains": [
+      "n. 钱币奖章收藏家"
+    ]
+  },
+  "nun": {
+    "word": "nun",
+    "phonetic": "/nʌn/",
+    "explains": [
+      "n. 修女，尼姑"
+    ]
+  },
+  "nunca": {
+    "word": "nunca",
+    "phonetic": "",
+    "explains": [
+      "adv. 从不"
+    ]
+  },
+  "nuncupative": {
+    "word": "nuncupative",
+    "phonetic": "/'nʌŋkjʊ,pətɪv/",
+    "explains": [
+      "adj. 口述的"
+    ]
+  },
+  "nunnery": {
+    "word": "nunnery",
+    "phonetic": "/'nʌn(ə)rɪ/",
+    "explains": [
+      "n. 女修道院, 尼姑庵"
+    ]
+  },
+  "nuptial": {
+    "word": "nuptial",
+    "phonetic": "/'nʌpʃ(ə)l/",
+    "explains": [
+      "n. 婚礼"
+    ]
+  },
   "nurse": {
     "word": "nurse",
     "phonetic": "/nɜːs/",
     "explains": [
       "n. 护士；保姆 v. 护理；照料"
+    ]
+  },
+  "nursery": {
+    "word": "nursery",
+    "phonetic": "/ˈnɜːs(ə)rɪ/",
+    "explains": [
+      "n. 托儿所"
+    ]
+  },
+  "nursing": {
+    "word": "nursing",
+    "phonetic": "/'nɜːsɪŋ/",
+    "explains": [
+      "n. 看护, 养育"
+    ]
+  },
+  "nurture": {
+    "word": "nurture",
+    "phonetic": "/'nɜːtʃə/",
+    "explains": [
+      "v. 养育；鼓励；培植；n. 养育；教养；营养物"
+    ]
+  },
+  "nut": {
+    "word": "nut",
+    "phonetic": "/nʌt/",
+    "explains": [
+      "n. 坚果"
+    ]
+  },
+  "nutrient": {
+    "word": "nutrient",
+    "phonetic": "/'njuːtrɪənt/",
+    "explains": [
+      "n. 营养品；adj. 营养的"
+    ]
+  },
+  "nutriment": {
+    "word": "nutriment",
+    "phonetic": "/'njuːtrɪm(ə)nt/",
+    "explains": [
+      "n. 营养物；促进生长的东西"
+    ]
+  },
+  "nutrition": {
+    "word": "nutrition",
+    "phonetic": "/njuːˈtrɪʃ(ə)n/",
+    "explains": [
+      "n. 营养"
+    ]
+  },
+  "nutritional": {
+    "word": "nutritional",
+    "phonetic": "/njuː'trɪʃənəl/",
+    "explains": [
+      "adj. 营养的,滋养的"
+    ]
+  },
+  "nutritionally": {
+    "word": "nutritionally",
+    "phonetic": "",
+    "explains": [
+      "adv. 在营养上, 营养方面"
+    ]
+  },
+  "nutritionist": {
+    "word": "nutritionist",
+    "phonetic": "/njʊ'trɪʃ(ə)nɪst/",
+    "explains": [
+      "n. 营养学家"
+    ]
+  },
+  "nutritious": {
+    "word": "nutritious",
+    "phonetic": "/njʊ'trɪʃəs/",
+    "explains": [
+      "adj. 有营养的, 滋养的"
+    ]
+  },
+  "nutritive": {
+    "word": "nutritive",
+    "phonetic": "/'njuːtrɪtɪv/",
+    "explains": [
+      "adj. 营养的；n. 营养物"
+    ]
+  },
+  "nuzzle": {
+    "word": "nuzzle",
+    "phonetic": "/'nʌz(ə)l/",
+    "explains": [
+      "v. 将鼻插入, 用鼻掘, 用鼻爱抚"
+    ]
+  },
+  "nyctalopia": {
+    "word": "nyctalopia",
+    "phonetic": "/,nɪktə'ləʊpɪə/",
+    "explains": [
+      "n. 夜盲症"
+    ]
+  },
+  "nylon": {
+    "word": "nylon",
+    "phonetic": "/'naɪlɒn/",
+    "explains": [
+      "n. 尼龙，耐纶"
+    ]
+  },
+  "nymph": {
+    "word": "nymph",
+    "phonetic": "/nɪmf/",
+    "explains": [
+      "n. [希神][罗神]居于山林水泽的仙女, 美丽的少女"
+    ]
+  },
+  "nystatin": {
+    "word": "nystatin",
+    "phonetic": "",
+    "explains": [
+      "n. [微]制霉菌素"
     ]
   }
 }

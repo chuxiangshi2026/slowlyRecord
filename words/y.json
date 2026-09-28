@@ -1,4 +1,46 @@
 {
+  "yacht": {
+    "word": "yacht",
+    "phonetic": "/jɒt/",
+    "explains": [
+      "n. 游艇，快艇"
+    ]
+  },
+  "yahoo": {
+    "word": "yahoo",
+    "phonetic": "",
+    "explains": [
+      "n. 粗鲁的人"
+    ]
+  },
+  "yale": {
+    "word": "yale",
+    "phonetic": "",
+    "explains": [
+      "n. 耶鲁"
+    ]
+  },
+  "yam": {
+    "word": "yam",
+    "phonetic": "/jam/",
+    "explains": [
+      "n. 山药, 洋芋"
+    ]
+  },
+  "yank": {
+    "word": "yank",
+    "phonetic": "/jæŋk/",
+    "explains": [
+      "v. 猛地一拉；n. 突然的猛拉"
+    ]
+  },
+  "yankee": {
+    "word": "yankee",
+    "phonetic": "/'jæŋki/",
+    "explains": [
+      "n. 美国佬，美国人；洋基队（美国棒球队名）"
+    ]
+  },
   "yard": {
     "word": "yard",
     "phonetic": "/jɑːd/",
@@ -6,11 +48,81 @@
       "n. 院子；庭院；码（长度单位）；场地"
     ]
   },
+  "yardstick": {
+    "word": "yardstick",
+    "phonetic": "/'jɑːdstɪk/",
+    "explains": [
+      "n. <美> 码尺, 准绳"
+    ]
+  },
+  "yarn": {
+    "word": "yarn",
+    "phonetic": "/jɑːn/",
+    "explains": [
+      "n. 纱线；v. 讲故事"
+    ]
+  },
+  "yaw": {
+    "word": "yaw",
+    "phonetic": "/jɔː/",
+    "explains": [
+      "v. 偏航"
+    ]
+  },
+  "yawn": {
+    "word": "yawn",
+    "phonetic": "/jɔːn/",
+    "explains": [
+      "v. 打哈欠"
+    ]
+  },
+  "yean": {
+    "word": "yean",
+    "phonetic": "/jiːn/",
+    "explains": [
+      "v. 生产, 生育"
+    ]
+  },
+  "yeanling": {
+    "word": "yeanling",
+    "phonetic": "/'jiːnlɪŋ/",
+    "explains": [
+      "n. 小羊, 小山羊, 小绵羊"
+    ]
+  },
   "year": {
     "word": "year",
     "phonetic": "/jɪə(r)/",
     "explains": [
       "n. 年；年度；历年；年纪；一年的期间"
+    ]
+  },
+  "yearling": {
+    "word": "yearling",
+    "phonetic": "/'jɪəlɪŋ; 'jɜː-/",
+    "explains": [
+      "n. 一岁家畜；满一岁的动物；adj. 一岁的"
+    ]
+  },
+  "yearly": {
+    "word": "yearly",
+    "phonetic": "/ˈjɪəlɪ; ˈjɜːlɪ/",
+    "explains": [
+      "adj. 每年的"
+    ]
+  },
+  "yearn": {
+    "word": "yearn",
+    "phonetic": "/jɜːn/",
+    "explains": [
+      "v. 渴望，向往"
+    ]
+  },
+  "yeast": {
+    "word": "yeast",
+    "phonetic": "/jiːst/",
+    "explains": [
+      "n. 酵母"
     ]
   },
   "yell": {
@@ -27,6 +139,34 @@
       "adj. 黄色的；黄皮肤的；黄种人的 n. 黄色；黄颜色"
     ]
   },
+  "yellowstone": {
+    "word": "yellowstone",
+    "phonetic": "/'jeləustəun/",
+    "explains": [
+      "n. 黄石国家公园, 黄石河"
+    ]
+  },
+  "yelp": {
+    "word": "yelp",
+    "phonetic": "/jelp/",
+    "explains": [
+      "n. 咆哮"
+    ]
+  },
+  "yen": {
+    "word": "yen",
+    "phonetic": "/jen/",
+    "explains": [
+      "n.  日元"
+    ]
+  },
+  "yeoman": {
+    "word": "yeoman",
+    "phonetic": "/'jəʊmən/",
+    "explains": [
+      "n. 自耕农, 仆人"
+    ]
+  },
   "yes": {
     "word": "yes",
     "phonetic": "/jes/",
@@ -41,11 +181,32 @@
       "n./adv. 昨天；昨日；近来；往昔"
     ]
   },
+  "yesteryear": {
+    "word": "yesteryear",
+    "phonetic": "/'jestəjɪə; -jɜː/",
+    "explains": [
+      "n. 去年 ad过去不久的岁月"
+    ]
+  },
   "yet": {
     "word": "yet",
     "phonetic": "/jet/",
     "explains": [
       "adv. 还；仍然；已经；但是 conj. 然而；但是"
+    ]
+  },
+  "yeux": {
+    "word": "yeux",
+    "phonetic": "",
+    "explains": [
+      "n.m.pl. 眼睛"
+    ]
+  },
+  "yew": {
+    "word": "yew",
+    "phonetic": "/juː/",
+    "explains": [
+      "n. 紫杉, 紫杉木"
     ]
   },
   "yield": {
@@ -54,6 +215,69 @@
     "explains": [
       "v. 产生；屈服；让步；提供",
       "n. 产量；收益；利润"
+    ]
+  },
+  "yielding": {
+    "word": "yielding",
+    "phonetic": "/'jiːldɪŋ/",
+    "explains": [
+      "adj. 出产的, 易弯曲的, 柔顺的, 屈从的, 易受影响的"
+    ]
+  },
+  "yip": {
+    "word": "yip",
+    "phonetic": "/jɪp/",
+    "explains": [
+      "n. 叫喊声；v. 犬吠；尖叫"
+    ]
+  },
+  "yoga": {
+    "word": "yoga",
+    "phonetic": "/ˈjəʊgə/",
+    "explains": [
+      "n. 瑜伽"
+    ]
+  },
+  "yoghurt": {
+    "word": "yoghurt",
+    "phonetic": "/'jɒɡət/",
+    "explains": [
+      "n. 酸奶（等于yoghourt）；酸乳酪"
+    ]
+  },
+  "yogurt": {
+    "word": "yogurt",
+    "phonetic": "/ˈjɒgət; ˈjəʊgət/",
+    "explains": [
+      "n. 酸奶"
+    ]
+  },
+  "yoke": {
+    "word": "yoke",
+    "phonetic": "/jəʊk/",
+    "explains": [
+      "n. 轭，牛轭；枷锁"
+    ]
+  },
+  "yokel": {
+    "word": "yokel",
+    "phonetic": "/'jəʊk(ə)l/",
+    "explains": [
+      "n. 庄稼汉, 乡下人"
+    ]
+  },
+  "yolk": {
+    "word": "yolk",
+    "phonetic": "/jəʊk/",
+    "explains": [
+      "n. 蛋黄，卵黄"
+    ]
+  },
+  "yorkshire": {
+    "word": "yorkshire",
+    "phonetic": "/'jɔrkʃə/",
+    "explains": [
+      "n. 约克郡,约克夏(英国英格兰原郡名)"
     ]
   },
   "you": {
@@ -68,6 +292,13 @@
     "phonetic": "/jʌŋ/",
     "explains": [
       "adj. 年轻的；初期的；没有经验的 n. 年轻人；青年"
+    ]
+  },
+  "youngster": {
+    "word": "youngster",
+    "phonetic": "/ˈjʌŋstə/",
+    "explains": [
+      "n. 年轻人"
     ]
   },
   "your": {
@@ -103,6 +334,41 @@
     "phonetic": "/juːθ/",
     "explains": [
       "n. 青年；青春；年轻；青年时期"
+    ]
+  },
+  "youthful": {
+    "word": "youthful",
+    "phonetic": "/'juːθfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 年轻的；早期的"
+    ]
+  },
+  "yuan": {
+    "word": "yuan",
+    "phonetic": "",
+    "explains": [
+      "n. 元(中国货币单位)"
+    ]
+  },
+  "yucatan": {
+    "word": "yucatan",
+    "phonetic": "",
+    "explains": [
+      "n. 尤卡坦半岛"
+    ]
+  },
+  "yummy": {
+    "word": "yummy",
+    "phonetic": "/ˈjʌmɪ/",
+    "explains": [
+      "adj. 美味的"
+    ]
+  },
+  "yuppie": {
+    "word": "yuppie",
+    "phonetic": "/'jʌpɪ/",
+    "explains": [
+      "n. （美）雅皮士（属于中上阶层的年轻专业人士）"
     ]
   }
 }

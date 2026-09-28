@@ -1,9 +1,219 @@
 {
+  "t-shirt": {
+    "word": "t-shirt",
+    "phonetic": "/ˈtiːʃɜːt/",
+    "explains": [
+      "n. T恤衫"
+    ]
+  },
+  "tab": {
+    "word": "tab",
+    "phonetic": "/tæb/",
+    "explains": [
+      "n. 标签；制表；帐单；v. 给…贴标签"
+    ]
+  },
+  "tabac": {
+    "word": "tabac",
+    "phonetic": "",
+    "explains": [
+      "n.m. 烟草"
+    ]
+  },
+  "tabernacle": {
+    "word": "tabernacle",
+    "phonetic": "/'tæbə,næk(ə)l/",
+    "explains": [
+      "n. 临时房屋, 帐篷, 身体, 壁龛, 礼拜堂, 神龛"
+    ]
+  },
   "table": {
     "word": "table",
     "phonetic": "/ˈteɪbl/",
     "explains": [
       "n. 桌子；表格；平地层 v. 制表；搁置；嵌合"
+    ]
+  },
+  "tableau": {
+    "word": "tableau",
+    "phonetic": "/'tæbləʊ/",
+    "explains": [
+      "n. 生动的场面, 戏剧性局面"
+    ]
+  },
+  "tablecloth": {
+    "word": "tablecloth",
+    "phonetic": "/'teɪb(ə)lklɒθ/",
+    "explains": [
+      "n. 桌布；台布"
+    ]
+  },
+  "tableland": {
+    "word": "tableland",
+    "phonetic": "/'teɪb(ə)llænd/",
+    "explains": [
+      "n. 高原"
+    ]
+  },
+  "tablet": {
+    "word": "tablet",
+    "phonetic": "/'tæblɪt/",
+    "explains": [
+      "n. 碑；药片；写字板；小块；平板电脑；vt. 用碑牌纪念；将(备忘录等)写在板上；将…制成小片或小块"
+    ]
+  },
+  "tabloid": {
+    "word": "tabloid",
+    "phonetic": "",
+    "explains": [
+      "n. 小报, 药片"
+    ]
+  },
+  "taboo": {
+    "word": "taboo",
+    "phonetic": "/tə'buː/",
+    "explains": [
+      "n. (宗教迷信)禁忌；adj. 禁忌的，禁止的"
+    ]
+  },
+  "tabouret": {
+    "word": "tabouret",
+    "phonetic": "",
+    "explains": [
+      "n.m. 凳子"
+    ]
+  },
+  "tabulate": {
+    "word": "tabulate",
+    "phonetic": "/'tæbjʊleɪt/",
+    "explains": [
+      "v. 把…制成表"
+    ]
+  },
+  "tache": {
+    "word": "tache",
+    "phonetic": "",
+    "explains": [
+      "n. [画]色彩, 斑点, 搭扣, 钩扣, 纽带, 环节"
+    ]
+  },
+  "tacit": {
+    "word": "tacit",
+    "phonetic": "/'tæsɪt/",
+    "explains": [
+      "adj. 心照不宣的"
+    ]
+  },
+  "tacitly": {
+    "word": "tacitly",
+    "phonetic": "",
+    "explains": [
+      "adv. 肃静地；沉默地；心照不宣地"
+    ]
+  },
+  "taciturn": {
+    "word": "taciturn",
+    "phonetic": "/'tæsɪtɜːn/",
+    "explains": [
+      "adj. 沉默寡言的；无言的，不太说话的"
+    ]
+  },
+  "tack": {
+    "word": "tack",
+    "phonetic": "/tæk/",
+    "explains": [
+      "n. 平头钉；v. 钉住"
+    ]
+  },
+  "tackle": {
+    "word": "tackle",
+    "phonetic": "/'tæk(ə)l/",
+    "explains": [
+      "v. 解决，对付；n. 用具"
+    ]
+  },
+  "tacky": {
+    "word": "tacky",
+    "phonetic": "/'tækɪ/",
+    "explains": [
+      "adj. 有些粘的, 缺乏教养或风度的, 俗气的"
+    ]
+  },
+  "tact": {
+    "word": "tact",
+    "phonetic": "/tækt/",
+    "explains": [
+      "n. 机敏，圆滑，得体"
+    ]
+  },
+  "tactful": {
+    "word": "tactful",
+    "phonetic": "/'tæktfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 机智的, 得体的, 圆滑的"
+    ]
+  },
+  "tactic": {
+    "word": "tactic",
+    "phonetic": "/ˈtæktɪk/",
+    "explains": [
+      "n. 战术"
+    ]
+  },
+  "tactical": {
+    "word": "tactical",
+    "phonetic": "/'tæktɪk(ə)l/",
+    "explains": [
+      "adj. 战术的；策略的；善于策略的"
+    ]
+  },
+  "tactician": {
+    "word": "tactician",
+    "phonetic": "/tæk'tɪʃən/",
+    "explains": [
+      "n. 战术家；谋士"
+    ]
+  },
+  "tactics": {
+    "word": "tactics",
+    "phonetic": "/'tæktɪks/",
+    "explains": [
+      "n. 战术，兵法"
+    ]
+  },
+  "tactile": {
+    "word": "tactile",
+    "phonetic": "/'tæktaɪl/",
+    "explains": [
+      "adj. [生理] 触觉的，有触觉的；能触知的"
+    ]
+  },
+  "tad": {
+    "word": "tad",
+    "phonetic": "/tæd/",
+    "explains": [
+      "n. 小孩子(尤指男孩),微量,少量"
+    ]
+  },
+  "tadpole": {
+    "word": "tadpole",
+    "phonetic": "/'tædpəʊl/",
+    "explains": [
+      "n. [动]蝌蚪"
+    ]
+  },
+  "taffeta": {
+    "word": "taffeta",
+    "phonetic": "/'tæfɪtə/",
+    "explains": [
+      "n. 塔夫绸；平纹皱丝织品；adj. 似塔夫绸的；塔夫绸做的"
+    ]
+  },
+  "tag": {
+    "word": "tag",
+    "phonetic": "/tæg/",
+    "explains": [
+      "n. 标签；附加语"
     ]
   },
   "tail": {
@@ -13,11 +223,130 @@
       "n. 尾巴；踪迹；辫子；燕尾服 v. 尾随；跟踪；装上尾巴"
     ]
   },
+  "taille": {
+    "word": "taille",
+    "phonetic": "",
+    "explains": [
+      "n.f. 尺寸；身高"
+    ]
+  },
+  "tailleur": {
+    "word": "tailleur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 裁缝；套装"
+    ]
+  },
+  "tailor": {
+    "word": "tailor",
+    "phonetic": "/'teɪlə/",
+    "explains": [
+      "n. 裁缝；v. 专门制作；订做"
+    ]
+  },
+  "tailplane": {
+    "word": "tailplane",
+    "phonetic": "",
+    "explains": [
+      "n. 水平尾翼；水平安定面"
+    ]
+  },
+  "taint": {
+    "word": "taint",
+    "phonetic": "/teɪnt/",
+    "explains": [
+      "v. 感染 n污点"
+    ]
+  },
   "take": {
     "word": "take",
     "phonetic": "/teɪk/",
     "explains": [
       "v. 拿；取；采取；接受；耗费；获得"
+    ]
+  },
+  "take-over": {
+    "word": "take-over",
+    "phonetic": "/'teikˌəuvə/",
+    "explains": [
+      "n.  接管， 继承； 接收"
+    ]
+  },
+  "take-up": {
+    "word": "take-up",
+    "phonetic": "/'teikʌp/",
+    "explains": [
+      "n.  拉紧， 收缩； 拿起， 举起"
+    ]
+  },
+  "takeaway": {
+    "word": "takeaway",
+    "phonetic": "/'teɪkəweɪ/",
+    "explains": [
+      "adj. 外卖的；外吃的；n. 外卖食品；外卖餐馆"
+    ]
+  },
+  "takeover": {
+    "word": "takeover",
+    "phonetic": "/'teɪkəʊvə/",
+    "explains": [
+      "n. 接管；验收"
+    ]
+  },
+  "taking": {
+    "word": "taking",
+    "phonetic": "/'teɪkɪŋ/",
+    "explains": [
+      "n. (用复数)营业收入, 取得, 捕获"
+    ]
+  },
+  "takings": {
+    "word": "takings",
+    "phonetic": "/'teikiŋz/",
+    "explains": [
+      "n.  营业收入"
+    ]
+  },
+  "talbot": {
+    "word": "talbot",
+    "phonetic": "",
+    "explains": [
+      "n. [动]塔尔博特提猎狗"
+    ]
+  },
+  "tale": {
+    "word": "tale",
+    "phonetic": "/teɪl/",
+    "explains": [
+      "n. 故事"
+    ]
+  },
+  "talebearer": {
+    "word": "talebearer",
+    "phonetic": "/'teɪlbeərə/",
+    "explains": [
+      "n. 揭人隐私者, 搬弄是非者, 散播谣言者, 告密者"
+    ]
+  },
+  "talent": {
+    "word": "talent",
+    "phonetic": "/ˈtælənt/",
+    "explains": [
+      "n. 才华"
+    ]
+  },
+  "talented": {
+    "word": "talented",
+    "phonetic": "/'tæləntɪd/",
+    "explains": [
+      "adj. 有才能的"
+    ]
+  },
+  "talisman": {
+    "word": "talisman",
+    "phonetic": "/'tælɪzmən/",
+    "explains": [
+      "n. 护身符, 辟邪物, 能产生奇迹的东西, 法宝"
     ]
   },
   "talk": {
@@ -27,11 +356,221 @@
       "v./n. 说话；谈话；交谈；演讲"
     ]
   },
+  "talkathon": {
+    "word": "talkathon",
+    "phonetic": "/'tɔːkəθɒn/",
+    "explains": [
+      "n. 冗长的讨论, 冗长的演说"
+    ]
+  },
+  "talkative": {
+    "word": "talkative",
+    "phonetic": "/'tɔːkətɪv/",
+    "explains": [
+      "adj. 饶舌的；多话的；多嘴的；爱说话的"
+    ]
+  },
   "tall": {
     "word": "tall",
     "phonetic": "/tɔːl/",
     "explains": [
       "adj. 高的；长的；过分的；夸大的"
+    ]
+  },
+  "tally": {
+    "word": "tally",
+    "phonetic": "/'tælɪ/",
+    "explains": [
+      "n. 记分  vi符合"
+    ]
+  },
+  "talon": {
+    "word": "talon",
+    "phonetic": "/'tælən/",
+    "explains": [
+      "n. 爪, 魔爪"
+    ]
+  },
+  "tambourine": {
+    "word": "tambourine",
+    "phonetic": "/,tæmbə'riːn/",
+    "explains": [
+      "n. 小手鼓"
+    ]
+  },
+  "tame": {
+    "word": "tame",
+    "phonetic": "/teɪm/",
+    "explains": [
+      "adj. 驯服的"
+    ]
+  },
+  "tamp": {
+    "word": "tamp",
+    "phonetic": "/tæmp/",
+    "explains": [
+      "v. 填塞, 夯实"
+    ]
+  },
+  "tamper": {
+    "word": "tamper",
+    "phonetic": "/'tæmpə/",
+    "explains": [
+      "v. 干预，乱弄"
+    ]
+  },
+  "tampoco": {
+    "word": "tampoco",
+    "phonetic": "",
+    "explains": [
+      "adv. 也不"
+    ]
+  },
+  "tan": {
+    "word": "tan",
+    "phonetic": "/tæn/",
+    "explains": [
+      "n. （日晒后皮肤的）黝黑色；棕褐色；鞣料；马戏团；v. 鞣（革）；晒成褐色；adj. 黄褐色的；鞣皮的"
+    ]
+  },
+  "tang": {
+    "word": "tang",
+    "phonetic": "/tæŋ/",
+    "explains": [
+      "v. 有浓味 n特殊气味"
+    ]
+  },
+  "tangency": {
+    "word": "tangency",
+    "phonetic": "",
+    "explains": [
+      "n. 相切，接触"
+    ]
+  },
+  "tangent": {
+    "word": "tangent",
+    "phonetic": "/ˈtændʒənt/",
+    "explains": [
+      "adj. 切线的，相切的；接触的；离题的；n. [数] 切线，[数] 正切"
+    ]
+  },
+  "tangential": {
+    "word": "tangential",
+    "phonetic": "/tæn'dʒenʃ(ə)l/",
+    "explains": [
+      "adj. [数] 切线的，[数] 正切的；离题的，扯远的；n. 正切，切线"
+    ]
+  },
+  "tangerine": {
+    "word": "tangerine",
+    "phonetic": "/tæn(d)ʒə'riːn/",
+    "explains": [
+      "n. 橘子"
+    ]
+  },
+  "tangible": {
+    "word": "tangible",
+    "phonetic": "/'tændʒəbl/",
+    "explains": [
+      "adj.  明确的， 实际的； 可触摸的， 可触知的； 有形的"
+    ]
+  },
+  "tangle": {
+    "word": "tangle",
+    "phonetic": "/'tæŋg(ə)l/",
+    "explains": [
+      "v. 使缠结，使纠缠"
+    ]
+  },
+  "tango": {
+    "word": "tango",
+    "phonetic": "/'tæŋgəʊ/",
+    "explains": [
+      "n. 探戈"
+    ]
+  },
+  "tank": {
+    "word": "tank",
+    "phonetic": "/tæŋk/",
+    "explains": [
+      "n. 坦克；水箱"
+    ]
+  },
+  "tankard": {
+    "word": "tankard",
+    "phonetic": "/'tæŋkəd/",
+    "explains": [
+      "n. 大啤酒杯, 一大杯"
+    ]
+  },
+  "tanker": {
+    "word": "tanker",
+    "phonetic": "/'tæŋkə/",
+    "explains": [
+      "n. 油船；空中加油飞机"
+    ]
+  },
+  "tanner": {
+    "word": "tanner",
+    "phonetic": "/'tænə/",
+    "explains": [
+      "n. 制革工人, 六便士"
+    ]
+  },
+  "tannic": {
+    "word": "tannic",
+    "phonetic": "/'tænɪk/",
+    "explains": [
+      "adj. 单宁的；得自鞣革的"
+    ]
+  },
+  "tannin": {
+    "word": "tannin",
+    "phonetic": "/'tænɪn/",
+    "explains": [
+      "n. [化]丹宁酸"
+    ]
+  },
+  "tantalise": {
+    "word": "tantalise",
+    "phonetic": "",
+    "explains": [
+      "v. 使…干着急；逗弄（等于tantalize）"
+    ]
+  },
+  "tantalize": {
+    "word": "tantalize",
+    "phonetic": "/'tæntəlaiz/",
+    "explains": [
+      "v. 逗弄；使干着急"
+    ]
+  },
+  "tantamount": {
+    "word": "tantamount",
+    "phonetic": "/'tæntəmaʊnt/",
+    "explains": [
+      "adj. 同等的,相当于"
+    ]
+  },
+  "tante": {
+    "word": "tante",
+    "phonetic": "",
+    "explains": [
+      "n.f. 姑姑；阿姨"
+    ]
+  },
+  "tantrum": {
+    "word": "tantrum",
+    "phonetic": "/'tæntrəm/",
+    "explains": [
+      "n. 发脾气；发怒"
+    ]
+  },
+  "tap": {
+    "word": "tap",
+    "phonetic": "/tæp/",
+    "explains": [
+      "n. 轻叩；v. 轻叩"
     ]
   },
   "tape": {
@@ -41,11 +580,221 @@
       "n. 胶带；磁带；带子；卷尺 v. 录音；用带子捆扎；用胶布把… 封住"
     ]
   },
+  "taper": {
+    "word": "taper",
+    "phonetic": "/'teɪpə/",
+    "explains": [
+      "n. 细小的蜡烛；微光"
+    ]
+  },
+  "tapestry": {
+    "word": "tapestry",
+    "phonetic": "/'tæpɪstrɪ/",
+    "explains": [
+      "n. 挂毯"
+    ]
+  },
+  "tapeworm": {
+    "word": "tapeworm",
+    "phonetic": "/'teɪpwɜːm/",
+    "explains": [
+      "n. [动]绦虫"
+    ]
+  },
+  "tapir": {
+    "word": "tapir",
+    "phonetic": "/'teɪpə; -ɪə/",
+    "explains": [
+      "n. [动]貘"
+    ]
+  },
+  "tapis": {
+    "word": "tapis",
+    "phonetic": "",
+    "explains": [
+      "n.m. 地毯"
+    ]
+  },
+  "tapisserie": {
+    "word": "tapisserie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 挂毯"
+    ]
+  },
+  "taproot": {
+    "word": "taproot",
+    "phonetic": "/'tæpruːt/",
+    "explains": [
+      "n. [植]主根, 直根"
+    ]
+  },
+  "tar": {
+    "word": "tar",
+    "phonetic": "/tɑː/",
+    "explains": [
+      "n. 柏油；焦油"
+    ]
+  },
+  "tard": {
+    "word": "tard",
+    "phonetic": "",
+    "explains": [
+      "adv. 晚"
+    ]
+  },
+  "tarde": {
+    "word": "tarde",
+    "phonetic": "",
+    "explains": [
+      "n.f. 下午；adv. 晚"
+    ]
+  },
+  "tardiness": {
+    "word": "tardiness",
+    "phonetic": "/'tɑːdɪnɪs/",
+    "explains": [
+      "n. 缓慢"
+    ]
+  },
+  "tardy": {
+    "word": "tardy",
+    "phonetic": "/'tɑːdɪ/",
+    "explains": [
+      "adj. 拖拉非"
+    ]
+  },
+  "tare": {
+    "word": "tare",
+    "phonetic": "/teə/",
+    "explains": [
+      "n. [植]野碗豆, 毒麦, 皮重"
+    ]
+  },
+  "tarea": {
+    "word": "tarea",
+    "phonetic": "",
+    "explains": [
+      "n.f. 任务；作业"
+    ]
+  },
+  "target": {
+    "word": "target",
+    "phonetic": "/ˈtɑːgɪt/",
+    "explains": [
+      "n. 目标"
+    ]
+  },
+  "tarif": {
+    "word": "tarif",
+    "phonetic": "",
+    "explains": [
+      "n.m. 价目；费率"
+    ]
+  },
+  "tariff": {
+    "word": "tariff",
+    "phonetic": "/'tærɪf/",
+    "explains": [
+      "n. 关税表；收费表；v. 定税率；征收关税"
+    ]
+  },
+  "tarmac": {
+    "word": "tarmac",
+    "phonetic": "",
+    "explains": [
+      "n. 柏油碎石路面；铺有柏油碎石的飞机跑道"
+    ]
+  },
+  "tarn": {
+    "word": "tarn",
+    "phonetic": "/tɑːn/",
+    "explains": [
+      "n. 小湖"
+    ]
+  },
+  "tarnish": {
+    "word": "tarnish",
+    "phonetic": "/'tɑːnɪʃ/",
+    "explains": [
+      "vt&vi. (尤指金属表面)失去光泽；玷污"
+    ]
+  },
+  "taro": {
+    "word": "taro",
+    "phonetic": "/'tɑːrəʊ; 'tærəʊ/",
+    "explains": [
+      "n. 芋头"
+    ]
+  },
+  "tarpaulin": {
+    "word": "tarpaulin",
+    "phonetic": "/tɑː'pɔːlɪn/",
+    "explains": [
+      "n. 防水油布"
+    ]
+  },
+  "tarry": {
+    "word": "tarry",
+    "phonetic": "/'tɑːrɪ/",
+    "explains": [
+      "v. 等候"
+    ]
+  },
+  "tart": {
+    "word": "tart",
+    "phonetic": "/tɑːt/",
+    "explains": [
+      "adj. 酸的, 辛辣的, 尖酸的, 刻薄的"
+    ]
+  },
+  "tartan": {
+    "word": "tartan",
+    "phonetic": "/'tɑːt(ə)n/",
+    "explains": [
+      "n. 格子呢（苏格兰）；adj. 格子呢的"
+    ]
+  },
+  "tarte": {
+    "word": "tarte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 果馅饼"
+    ]
+  },
+  "tartly": {
+    "word": "tartly",
+    "phonetic": "",
+    "explains": [
+      "adv. 辛辣地；锋利地"
+    ]
+  },
   "task": {
     "word": "task",
     "phonetic": "/tɑːsk/",
     "explains": [
       "n. 任务；工作；作业；苦差事"
+    ]
+  },
+  "tasmania": {
+    "word": "tasmania",
+    "phonetic": "/tæz'meiniə; -njə/",
+    "explains": [
+      "n. 塔斯马尼亚岛, 塔斯马尼亚州(澳大利亚州名)"
+    ]
+  },
+  "tasse": {
+    "word": "tasse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 杯子"
+    ]
+  },
+  "tassel": {
+    "word": "tassel",
+    "phonetic": "/'tæs(ə)l/",
+    "explains": [
+      "n. 穗, 缨"
     ]
   },
   "taste": {
@@ -55,11 +804,151 @@
       "n. 味道；品味；审美 v. 尝；体验；品尝；味道"
     ]
   },
+  "tasty": {
+    "word": "tasty",
+    "phonetic": "/'teɪstɪ/",
+    "explains": [
+      "adj. 美味的；高雅的；有趣的；n. 可口的东西；引人入胜的东西"
+    ]
+  },
+  "tatter": {
+    "word": "tatter",
+    "phonetic": "/'tætə/",
+    "explains": [
+      "n. 碎布"
+    ]
+  },
+  "tattered": {
+    "word": "tattered",
+    "phonetic": "/'tætəd/",
+    "explains": [
+      "adj. 破烂的, 褴褛的"
+    ]
+  },
+  "tatters": {
+    "word": "tatters",
+    "phonetic": "",
+    "explains": [
+      "n. 破衣服；梭织者；碎片（tatter的复数）；v. 撕碎；把…穿破（tatter的三单形式）"
+    ]
+  },
+  "tattle": {
+    "word": "tattle",
+    "phonetic": "/'tæt(ə)l/",
+    "explains": [
+      "v. 闲谈"
+    ]
+  },
+  "tattoo": {
+    "word": "tattoo",
+    "phonetic": "/tæ'tuː/",
+    "explains": [
+      "n. 文身；v. 刺花纹于"
+    ]
+  },
+  "tattooist": {
+    "word": "tattooist",
+    "phonetic": "/tə'tuːɪst/",
+    "explains": [
+      "n. 文身的人"
+    ]
+  },
+  "tatty": {
+    "word": "tatty",
+    "phonetic": "/'tætɪ/",
+    "explains": [
+      "adj. 破旧的, 褴褛的, 不值钱的"
+    ]
+  },
+  "taunt": {
+    "word": "taunt",
+    "phonetic": "/tɔːnt/",
+    "explains": [
+      "n. 嘲弄；讥讽；v. 奚落；逗弄；adj. 很高的"
+    ]
+  },
+  "taut": {
+    "word": "taut",
+    "phonetic": "/tɔːt/",
+    "explains": [
+      "adj. (绳子)拉紧的,紧张的；vt. 使纠缠"
+    ]
+  },
+  "tavern": {
+    "word": "tavern",
+    "phonetic": "/'tæv(ə)n/",
+    "explains": [
+      "n. 酒馆, 客栈"
+    ]
+  },
+  "tavernkeeper": {
+    "word": "tavernkeeper",
+    "phonetic": "",
+    "explains": [
+      "n. 小餐馆老板"
+    ]
+  },
+  "tawdry": {
+    "word": "tawdry",
+    "phonetic": "/'tɔːdrɪ/",
+    "explains": [
+      "adj. 非常华丽的；廉价而俗丽的；n. 俗丽的东西；廉价而俗丽之物"
+    ]
+  },
+  "tax": {
+    "word": "tax",
+    "phonetic": "/tæks/",
+    "explains": [
+      "n. 税"
+    ]
+  },
+  "tax-deductible": {
+    "word": "tax-deductible",
+    "phonetic": "/'tæksdi'dʌktəbl/",
+    "explains": [
+      "adj.  可抵扣税的"
+    ]
+  },
+  "taxable": {
+    "word": "taxable",
+    "phonetic": "/'tæksəbl/",
+    "explains": [
+      "adj.  应征税的"
+    ]
+  },
+  "taxation": {
+    "word": "taxation",
+    "phonetic": "/tæk'seiʃən/",
+    "explains": [
+      "n.  税收"
+    ]
+  },
+  "taxes": {
+    "word": "taxes",
+    "phonetic": "/tæksiːz/",
+    "explains": [
+      "n. 赋税,  税收"
+    ]
+  },
   "taxi": {
     "word": "taxi",
     "phonetic": "/ˈtæksi/",
     "explains": [
       "n. 出租汽车 v. 乘出租车；滑行"
+    ]
+  },
+  "taxonomy": {
+    "word": "taxonomy",
+    "phonetic": "/tæk'sɒnəmɪ/",
+    "explains": [
+      "n. 分类法, 分类学"
+    ]
+  },
+  "taxpayer": {
+    "word": "taxpayer",
+    "phonetic": "/'tækspeɪə/",
+    "explains": [
+      "n. 纳税人；所收租金只够支付地产税的建筑物"
     ]
   },
   "tea": {
@@ -83,11 +972,291 @@
       "n. 教师；导师；老师"
     ]
   },
+  "teacup": {
+    "word": "teacup",
+    "phonetic": "/'tiːkʌp/",
+    "explains": [
+      "n. 茶杯"
+    ]
+  },
+  "teak": {
+    "word": "teak",
+    "phonetic": "/tiːk/",
+    "explains": [
+      "n. 柚木"
+    ]
+  },
   "team": {
     "word": "team",
     "phonetic": "/tiːm/",
     "explains": [
       "n. 团队；队；组 v. 合作；协作；结成一队"
+    ]
+  },
+  "teapot": {
+    "word": "teapot",
+    "phonetic": "/'tiːpɒt/",
+    "explains": [
+      "n. 茶壶"
+    ]
+  },
+  "tear": {
+    "word": "tear",
+    "phonetic": "/tɪə/",
+    "explains": [
+      "n. 眼泪"
+    ]
+  },
+  "tearful": {
+    "word": "tearful",
+    "phonetic": "/'tɪəfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 含泪的；令人伤心的"
+    ]
+  },
+  "tease": {
+    "word": "tease",
+    "phonetic": "/tiːz/",
+    "explains": [
+      "v. 逗乐，戏弄"
+    ]
+  },
+  "teaspoon": {
+    "word": "teaspoon",
+    "phonetic": "/'tiːspuːn/",
+    "explains": [
+      "n. 茶匙；一茶匙的量"
+    ]
+  },
+  "teat": {
+    "word": "teat",
+    "phonetic": "/tiːt/",
+    "explains": [
+      "n. 奶头"
+    ]
+  },
+  "teatro": {
+    "word": "teatro",
+    "phonetic": "",
+    "explains": [
+      "n.m. 剧院"
+    ]
+  },
+  "technical": {
+    "word": "technical",
+    "phonetic": "/ˈteknɪk(ə)l/",
+    "explains": [
+      "adj. 技术的"
+    ]
+  },
+  "technicality": {
+    "word": "technicality",
+    "phonetic": "/,teknɪ'kælɪtɪ/",
+    "explains": [
+      "n. 学术性；专门性；术语，专门语"
+    ]
+  },
+  "technician": {
+    "word": "technician",
+    "phonetic": "/tek'nɪʃ(ə)n/",
+    "explains": [
+      "n. 技术员，技师"
+    ]
+  },
+  "technique": {
+    "word": "technique",
+    "phonetic": "/tekˈniːk/",
+    "explains": [
+      "n. 技术"
+    ]
+  },
+  "technocracy": {
+    "word": "technocracy",
+    "phonetic": "/tek'nɒkrəsɪ/",
+    "explains": [
+      "n. 专家管理；专家政治论，技术统治论"
+    ]
+  },
+  "technocrat": {
+    "word": "technocrat",
+    "phonetic": "",
+    "explains": [
+      "n. 专家政治论者, 技术统治论者"
+    ]
+  },
+  "technological": {
+    "word": "technological",
+    "phonetic": "/teknə'lɒdʒɪk(ə)l/",
+    "explains": [
+      "adj. 科技的"
+    ]
+  },
+  "technologically": {
+    "word": "technologically",
+    "phonetic": "",
+    "explains": [
+      "adv. 科技地"
+    ]
+  },
+  "technologie": {
+    "word": "technologie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 科技"
+    ]
+  },
+  "technology": {
+    "word": "technology",
+    "phonetic": "/tekˈnɒlədʒɪ/",
+    "explains": [
+      "n. 技术"
+    ]
+  },
+  "tecnology": {
+    "word": "tecnology",
+    "phonetic": "",
+    "explains": [
+      "n. 儿童学(指对儿童性格、成长及发育的研究)"
+    ]
+  },
+  "tectonic": {
+    "word": "tectonic",
+    "phonetic": "/tek'tɒnɪk/",
+    "explains": [
+      "adj. 构造的, 建筑的"
+    ]
+  },
+  "tectonics": {
+    "word": "tectonics",
+    "phonetic": "/tek'tɒnɪks/",
+    "explains": [
+      "n. [建] 构造学，[地质] 构造地质学"
+    ]
+  },
+  "ted": {
+    "word": "ted",
+    "phonetic": "/ted/",
+    "explains": [
+      "vt. 翻晒；n. 泰德"
+    ]
+  },
+  "teddy": {
+    "word": "teddy",
+    "phonetic": "/'tedɪ/",
+    "explains": [
+      "n. 连衫衬裤；泰迪玩具熊"
+    ]
+  },
+  "tedious": {
+    "word": "tedious",
+    "phonetic": "/'tiːdɪəs/",
+    "explains": [
+      "adj. 冗长乏味的，沉闷的"
+    ]
+  },
+  "tedium": {
+    "word": "tedium",
+    "phonetic": "/'tiːdɪəm/",
+    "explains": [
+      "n. 厌烦, 沉闷"
+    ]
+  },
+  "teem": {
+    "word": "teem",
+    "phonetic": "/tiːm/",
+    "explains": [
+      "v. 大量出现"
+    ]
+  },
+  "teenager": {
+    "word": "teenager",
+    "phonetic": "/ˈtiːneɪdʒə/",
+    "explains": [
+      "n. 青少年"
+    ]
+  },
+  "teens": {
+    "word": "teens",
+    "phonetic": "/tiːnz/",
+    "explains": [
+      "n. 十多岁，十几岁；青少年"
+    ]
+  },
+  "teeter": {
+    "word": "teeter",
+    "phonetic": "/'tiːtə/",
+    "explains": [
+      "v. 摇晃；玩跷跷板；步履蹒跚；摇摇欲坠；岌岌可危；n. 跷跷板；摇摆"
+    ]
+  },
+  "teetotal": {
+    "word": "teetotal",
+    "phonetic": "/tiː'təʊt(ə)l/",
+    "explains": [
+      "adj. 绝对戒酒的, 完全的, 绝对的"
+    ]
+  },
+  "teinte": {
+    "word": "teinte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 色调"
+    ]
+  },
+  "tele": {
+    "word": "tele",
+    "phonetic": "/'telɪ/",
+    "explains": [
+      "n. 电视"
+    ]
+  },
+  "telecommunication": {
+    "word": "telecommunication",
+    "phonetic": "/,telɪkəmjuːnɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 电信，远程通信"
+    ]
+  },
+  "telecommunications": {
+    "word": "telecommunications",
+    "phonetic": "/'telɪkə,mjuːnɪ'keɪʃənz/",
+    "explains": [
+      "n. 通讯行业：服务类型变更，缴纳话费，账户总览等所有业务均可通过移动设备完成"
+    ]
+  },
+  "telecommuter": {
+    "word": "telecommuter",
+    "phonetic": "",
+    "explains": [
+      "n. 远程工作者"
+    ]
+  },
+  "telecommuting": {
+    "word": "telecommuting",
+    "phonetic": "/'telɪkə,mjuːtɪŋ/",
+    "explains": [
+      "n. 远程联机,  远程办公"
+    ]
+  },
+  "telegram": {
+    "word": "telegram",
+    "phonetic": "/ˈtelɪgræm/",
+    "explains": [
+      "n. 电报"
+    ]
+  },
+  "telegraph": {
+    "word": "telegraph",
+    "phonetic": "/ˈtelɪgrɑːf/",
+    "explains": [
+      "n. 电报"
+    ]
+  },
+  "telepathy": {
+    "word": "telepathy",
+    "phonetic": "/tɪ'lepəθɪ/",
+    "explains": [
+      "n. 心灵感应；传心术"
     ]
   },
   "telephone": {
@@ -97,11 +1266,60 @@
       "n. 电话；电话机；电话耳机 v. 打电话"
     ]
   },
+  "telephoto": {
+    "word": "telephoto",
+    "phonetic": "/'telɪfəʊtəʊ/",
+    "explains": [
+      "n. 传真照片；传真电报；摄远镜头；adj. 用远距镜头照相的；摄远的"
+    ]
+  },
+  "telesales": {
+    "word": "telesales",
+    "phonetic": "/'teliseilz/",
+    "explains": [
+      "n.  电话销售"
+    ]
+  },
+  "telescope": {
+    "word": "telescope",
+    "phonetic": "/'telɪskəʊp/",
+    "explains": [
+      "n. 望远镜"
+    ]
+  },
+  "telescopic": {
+    "word": "telescopic",
+    "phonetic": "/telɪ'skɒpɪk/",
+    "explains": [
+      "adj. 望远镜的,[眼科] 远视的"
+    ]
+  },
+  "televise": {
+    "word": "televise",
+    "phonetic": "/'telɪvaɪz/",
+    "explains": [
+      "v. 广播, 播映"
+    ]
+  },
   "television": {
     "word": "television",
     "phonetic": "/ˈtelɪvɪʒn/",
     "explains": [
       "n. 电视；电视机；电视节目"
+    ]
+  },
+  "televisual": {
+    "word": "televisual",
+    "phonetic": "/telɪ'vɪʒjʊəl; -zj-/",
+    "explains": [
+      "adj. 电视的"
+    ]
+  },
+  "telex": {
+    "word": "telex",
+    "phonetic": "/'teleks/",
+    "explains": [
+      "n. 电传，用户电报"
     ]
   },
   "tell": {
@@ -111,11 +1329,207 @@
       "v. 告诉；说；分辨；辨别；吩咐；断定"
     ]
   },
+  "teller": {
+    "word": "teller",
+    "phonetic": "/'telə/",
+    "explains": [
+      "n. 讲话的人, 告诉的人"
+    ]
+  },
+  "telling": {
+    "word": "telling",
+    "phonetic": "/'telɪŋ/",
+    "explains": [
+      "adj. 有效的；有力的"
+    ]
+  },
+  "telltale": {
+    "word": "telltale",
+    "phonetic": "/'telteɪl/",
+    "explains": [
+      "adj. 泄密的"
+    ]
+  },
+  "tellural": {
+    "word": "tellural",
+    "phonetic": "",
+    "explains": [
+      "adj. 地球的,地球上的,地球居民的"
+    ]
+  },
+  "tellurium": {
+    "word": "tellurium",
+    "phonetic": "/te'ljʊərɪəm/",
+    "explains": [
+      "n. 碲"
+    ]
+  },
+  "tema": {
+    "word": "tema",
+    "phonetic": "",
+    "explains": [
+      "n.m. 主题"
+    ]
+  },
+  "temblor": {
+    "word": "temblor",
+    "phonetic": "/tem'blɔː/",
+    "explains": [
+      "n. （美）地震"
+    ]
+  },
+  "temer": {
+    "word": "temer",
+    "phonetic": "",
+    "explains": [
+      "v. 害怕"
+    ]
+  },
+  "temerity": {
+    "word": "temerity",
+    "phonetic": "/tə'merəti/",
+    "explains": [
+      "n. 鲁莽，冒失；蛮勇"
+    ]
+  },
+  "temp": {
+    "word": "temp",
+    "phonetic": "/temp/",
+    "explains": [
+      "n.  临时雇员， 替班"
+    ]
+  },
+  "temper": {
+    "word": "temper",
+    "phonetic": "/ˈtempə/",
+    "explains": [
+      "n. 脾气"
+    ]
+  },
+  "tempera": {
+    "word": "tempera",
+    "phonetic": "/'temp(ə)rə/",
+    "explains": [
+      "n. 蛋彩画"
+    ]
+  },
+  "temperament": {
+    "word": "temperament",
+    "phonetic": "/'temp(ə)rəm(ə)nt/",
+    "explains": [
+      "n. 气质，性情，性格；急躁"
+    ]
+  },
+  "temperamental": {
+    "word": "temperamental",
+    "phonetic": "/,temp(ə)rə'ment(ə)l/",
+    "explains": [
+      "adj. 由气质引起的, 心情变化快的, 喜怒无常的"
+    ]
+  },
+  "temperance": {
+    "word": "temperance",
+    "phonetic": "/'temp(ə)r(ə)ns/",
+    "explains": [
+      "n. 戒酒；节欲；（气候等的）温和；adj. 温暖的；有节制的"
+    ]
+  },
+  "temperate": {
+    "word": "temperate",
+    "phonetic": "/'temp(ə)rət/",
+    "explains": [
+      "adj. 温和的,适度的,有节制的"
+    ]
+  },
   "temperature": {
     "word": "temperature",
     "phonetic": "/ˈtemprətʃə(r)/",
     "explains": [
       "n. 温度；体温；气温；发烧"
+    ]
+  },
+  "tempest": {
+    "word": "tempest",
+    "phonetic": "/'tempɪst/",
+    "explains": [
+      "n. 暴风雨, 骚乱, 动乱"
+    ]
+  },
+  "tempestuous": {
+    "word": "tempestuous",
+    "phonetic": "/tem'pestjʊəs/",
+    "explains": [
+      "adj. 有暴风雨的；暴乱的；剧烈的"
+    ]
+  },
+  "template": {
+    "word": "template",
+    "phonetic": "/'templit/",
+    "explains": [
+      "n.  模板"
+    ]
+  },
+  "temple": {
+    "word": "temple",
+    "phonetic": "/ˈtemp(ə)l/",
+    "explains": [
+      "n. 寺庙"
+    ]
+  },
+  "tempo": {
+    "word": "tempo",
+    "phonetic": "/'tempəʊ/",
+    "explains": [
+      "n. 速度，发展速度；拍子"
+    ]
+  },
+  "temporal": {
+    "word": "temporal",
+    "phonetic": "/'temp(ə)r(ə)l/",
+    "explains": [
+      "adj. 现世的, 暂时的"
+    ]
+  },
+  "temporarily": {
+    "word": "temporarily",
+    "phonetic": "/'tempərərili/",
+    "explains": [
+      "adv.  暂时地， 临时地"
+    ]
+  },
+  "temporary": {
+    "word": "temporary",
+    "phonetic": "/ˈtemp(ə)rərɪ/",
+    "explains": [
+      "adj. 暂时的"
+    ]
+  },
+  "temporize": {
+    "word": "temporize",
+    "phonetic": "/'tempəraɪz/",
+    "explains": [
+      "v. 见风驶舵"
+    ]
+  },
+  "temps": {
+    "word": "temps",
+    "phonetic": "",
+    "explains": [
+      "n.m. 时间；天气"
+    ]
+  },
+  "tempt": {
+    "word": "tempt",
+    "phonetic": "/tem(p)t/",
+    "explains": [
+      "v. 诱惑"
+    ]
+  },
+  "temptation": {
+    "word": "temptation",
+    "phonetic": "/tem(p)'teɪʃ(ə)n/",
+    "explains": [
+      "n. 诱惑，引诱"
     ]
   },
   "ten": {
@@ -125,11 +1539,172 @@
       "num. 十；十个"
     ]
   },
+  "tenable": {
+    "word": "tenable",
+    "phonetic": "/'tenəb(ə)l/",
+    "explains": [
+      "adj. 可防守的，守得住的；可保持的，可维持的"
+    ]
+  },
+  "tenacious": {
+    "word": "tenacious",
+    "phonetic": "/tɪ'neɪʃəs/",
+    "explains": [
+      "adj. 抓紧的，顽强的"
+    ]
+  },
+  "tenacity": {
+    "word": "tenacity",
+    "phonetic": "/tɪ'næsɪtɪ/",
+    "explains": [
+      "n. 韧性；固执；不屈不挠；黏性"
+    ]
+  },
+  "tenancy": {
+    "word": "tenancy",
+    "phonetic": "/'tenənsɪ/",
+    "explains": [
+      "n. 租赁；租期"
+    ]
+  },
+  "tenant": {
+    "word": "tenant",
+    "phonetic": "/'tenənt/",
+    "explains": [
+      "n. 承租人；房客；佃户；居住者；v. 租借（常用于被动语态）"
+    ]
+  },
+  "tend": {
+    "word": "tend",
+    "phonetic": "/tend/",
+    "explains": [
+      "v. 倾向"
+    ]
+  },
+  "tendency": {
+    "word": "tendency",
+    "phonetic": "/ˈtendənsɪ/",
+    "explains": [
+      "n. 倾向"
+    ]
+  },
+  "tendentious": {
+    "word": "tendentious",
+    "phonetic": "/ten'denʃəs/",
+    "explains": [
+      "adj. 有倾向的, 有偏见的"
+    ]
+  },
+  "tender": {
+    "word": "tender",
+    "phonetic": "/ˈtendə/",
+    "explains": [
+      "adj. 温柔的"
+    ]
+  },
+  "tenderfoot": {
+    "word": "tenderfoot",
+    "phonetic": "/'tendəfʊt/",
+    "explains": [
+      "n. 新手"
+    ]
+  },
+  "tendon": {
+    "word": "tendon",
+    "phonetic": "/'tendən/",
+    "explains": [
+      "n. [解]腱"
+    ]
+  },
+  "tendresse": {
+    "word": "tendresse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 温柔"
+    ]
+  },
+  "tenebrous": {
+    "word": "tenebrous",
+    "phonetic": "/'tenɪbrəs/",
+    "explains": [
+      "adj. 黑暗的, 晦涩的"
+    ]
+  },
+  "tenement": {
+    "word": "tenement",
+    "phonetic": "/'tenəm(ə)nt/",
+    "explains": [
+      "n. 公寓"
+    ]
+  },
+  "tenet": {
+    "word": "tenet",
+    "phonetic": "/'tenɪt; 'tiːnet/",
+    "explains": [
+      "n. 原则"
+    ]
+  },
+  "tenfold": {
+    "word": "tenfold",
+    "phonetic": "/'tenfəʊld/",
+    "explains": [
+      "adj. 十倍的 ad成十倍"
+    ]
+  },
+  "tennessee": {
+    "word": "tennessee",
+    "phonetic": "/ˌtenə'siː/",
+    "explains": [
+      "n. 田纳西州"
+    ]
+  },
   "tennis": {
     "word": "tennis",
     "phonetic": "/ˈtenɪs/",
     "explains": [
       "n. 网球；网球运动"
+    ]
+  },
+  "tenon": {
+    "word": "tenon",
+    "phonetic": "/'tenən/",
+    "explains": [
+      "n. [木工]榫；vt. 接榫, 造榫"
+    ]
+  },
+  "tenor": {
+    "word": "tenor",
+    "phonetic": "/'tenə/",
+    "explains": [
+      "n. 进程, 路程, 要旨, 大意, 男高音, 誊本"
+    ]
+  },
+  "tens": {
+    "word": "tens",
+    "phonetic": "",
+    "explains": [
+      "n. 十位"
+    ]
+  },
+  "tense": {
+    "word": "tense",
+    "phonetic": "/tens/",
+    "explains": [
+      "n. 时态，时"
+    ]
+  },
+  "tensile": {
+    "word": "tensile",
+    "phonetic": "/'tensaɪl/",
+    "explains": [
+      "adj. 张力的；能伸长的"
+    ]
+  },
+  "tension": {
+    "word": "tension",
+    "phonetic": "/'tenʃ(ə)n/",
+    "explains": [
+      "n. 紧张，不安；拉紧；张力"
     ]
   },
   "tent": {
@@ -139,11 +1714,228 @@
       "n. 帐篷；天幕 v. 住帐篷；宿营"
     ]
   },
+  "tentacle": {
+    "word": "tentacle",
+    "phonetic": "/'tentək(ə)l/",
+    "explains": [
+      "n. (动物)触角"
+    ]
+  },
+  "tentative": {
+    "word": "tentative",
+    "phonetic": "/'tentətɪv/",
+    "explains": [
+      "adj. 试验性的，暂定的；踌躇的；n. 假设，试验"
+    ]
+  },
+  "tentatively": {
+    "word": "tentatively",
+    "phonetic": "/'tentətivli/",
+    "explains": [
+      "adv. 试验性地,犹豫不决地"
+    ]
+  },
+  "tente": {
+    "word": "tente",
+    "phonetic": "",
+    "explains": [
+      "n.f. 帐篷"
+    ]
+  },
+  "tenth": {
+    "word": "tenth",
+    "phonetic": "/tenθ/",
+    "explains": [
+      "num. 第十, 十分之一"
+    ]
+  },
+  "tenths": {
+    "word": "tenths",
+    "phonetic": "",
+    "explains": [
+      "n. 十分位（tenth的复数形式）"
+    ]
+  },
+  "tenuous": {
+    "word": "tenuous",
+    "phonetic": "/'tenjʊəs/",
+    "explains": [
+      "adj. 纤细的,稀薄的"
+    ]
+  },
+  "tenure": {
+    "word": "tenure",
+    "phonetic": "/'tenjə/",
+    "explains": [
+      "n. 任期；占有；v. 授予…终身职位"
+    ]
+  },
+  "tepee": {
+    "word": "tepee",
+    "phonetic": "/'tiːpiː/",
+    "explains": [
+      "n. 美国印第安人的圆锥形帐篷"
+    ]
+  },
+  "tepefy": {
+    "word": "tepefy",
+    "phonetic": "/'tepəfaɪ/",
+    "explains": [
+      "vt. 使微热"
+    ]
+  },
+  "tepid": {
+    "word": "tepid",
+    "phonetic": "/'tepɪd/",
+    "explains": [
+      "adj. 微温的，温热的；不太热烈的；不热情的"
+    ]
+  },
+  "tergiversate": {
+    "word": "tergiversate",
+    "phonetic": "/'tɜːdʒɪvə,seɪt; -'vɜːseɪt/",
+    "explains": [
+      "v. 推托, 背叛, 自相矛盾"
+    ]
+  },
   "term": {
     "word": "term",
     "phonetic": "/tɜːm/",
     "explains": [
       "n. 术语；学期；期限；条款；名字 v. 把… 叫做"
+    ]
+  },
+  "termagant": {
+    "word": "termagant",
+    "phonetic": "",
+    "explains": [
+      "n. 泼妇, 好吵架的女人"
+    ]
+  },
+  "terminable": {
+    "word": "terminable",
+    "phonetic": "/'tɜːmɪnəb(ə)l/",
+    "explains": [
+      "adj. 可终止的, 有期限的"
+    ]
+  },
+  "terminaison": {
+    "word": "terminaison",
+    "phonetic": "",
+    "explains": [
+      "n.f. 结尾；词尾"
+    ]
+  },
+  "terminal": {
+    "word": "terminal",
+    "phonetic": "/ˈtɜːmɪn(ə)l/",
+    "explains": [
+      "n. 终端"
+    ]
+  },
+  "terminate": {
+    "word": "terminate",
+    "phonetic": "/'tɜːmɪneɪt/",
+    "explains": [
+      "v. 停止，终止"
+    ]
+  },
+  "termination": {
+    "word": "termination",
+    "phonetic": "/tɜːmɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 终止"
+    ]
+  },
+  "terminology": {
+    "word": "terminology",
+    "phonetic": "/,tɜːmɪ'nɒlədʒɪ/",
+    "explains": [
+      "n. 术语学，术语"
+    ]
+  },
+  "terminus": {
+    "word": "terminus",
+    "phonetic": "/'tɜːmɪnəs/",
+    "explains": [
+      "n. 终点；终点站；界标；界石"
+    ]
+  },
+  "termite": {
+    "word": "termite",
+    "phonetic": "/'tɜːmaɪt/",
+    "explains": [
+      "n. 白蚁"
+    ]
+  },
+  "terms": {
+    "word": "terms",
+    "phonetic": "/'təːmz/",
+    "explains": [
+      "n.  条件， 条款； 费用"
+    ]
+  },
+  "tern": {
+    "word": "tern",
+    "phonetic": "/tɜːn/",
+    "explains": [
+      "n. 三个一组, [鸟]燕鸥"
+    ]
+  },
+  "terpsichorean": {
+    "word": "terpsichorean",
+    "phonetic": "/,tɜːpsɪkə'riːən/",
+    "explains": [
+      "n. 舞蹈家"
+    ]
+  },
+  "terrace": {
+    "word": "terrace",
+    "phonetic": "/ˈterəs/",
+    "explains": [
+      "n. 露台"
+    ]
+  },
+  "terracotta": {
+    "word": "terracotta",
+    "phonetic": "/,terə'kɒtə/",
+    "explains": [
+      "n. 陶瓦；赤土陶器；赤土色"
+    ]
+  },
+  "terrain": {
+    "word": "terrain",
+    "phonetic": "/təˈreɪn/",
+    "explains": [
+      "n. 地形"
+    ]
+  },
+  "terrapin": {
+    "word": "terrapin",
+    "phonetic": "/'terəpɪn/",
+    "explains": [
+      "n. [动]龟鳖类"
+    ]
+  },
+  "terrasse": {
+    "word": "terrasse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 露台"
+    ]
+  },
+  "terre": {
+    "word": "terre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 地球；土地"
+    ]
+  },
+  "terrestrial": {
+    "word": "terrestrial",
+    "phonetic": "/tə'restrɪəl/",
+    "explains": [
+      "adj. 陆地的"
     ]
   },
   "terrible": {
@@ -153,11 +1945,242 @@
       "adj. 可怕的；很糟的；令人讨厌的；极度的"
     ]
   },
+  "terricolous": {
+    "word": "terricolous",
+    "phonetic": "/te'rɪkələs/",
+    "explains": [
+      "adj. [生]陆生的"
+    ]
+  },
+  "terrific": {
+    "word": "terrific",
+    "phonetic": "/təˈrɪfɪk/",
+    "explains": [
+      "adj. 极好的"
+    ]
+  },
+  "terrify": {
+    "word": "terrify",
+    "phonetic": "/'terɪfaɪ/",
+    "explains": [
+      "v. 使恐怖，使惊吓"
+    ]
+  },
+  "terrifyingly": {
+    "word": "terrifyingly",
+    "phonetic": "",
+    "explains": [
+      "adv. 恐怖地"
+    ]
+  },
+  "territorial": {
+    "word": "territorial",
+    "phonetic": "/,terɪ'tɔːrɪəl/",
+    "explains": [
+      "adj. 领土的"
+    ]
+  },
+  "territory": {
+    "word": "territory",
+    "phonetic": "/ˈterɪt(ə)rɪ/",
+    "explains": [
+      "n. 领土"
+    ]
+  },
+  "terror": {
+    "word": "terror",
+    "phonetic": "/ˈterə/",
+    "explains": [
+      "n. 恐怖"
+    ]
+  },
+  "terrorist": {
+    "word": "terrorist",
+    "phonetic": "/'terərɪst/",
+    "explains": [
+      "n. 恐怖分子"
+    ]
+  },
+  "terry": {
+    "word": "terry",
+    "phonetic": "/'terɪ/",
+    "explains": [
+      "n. 厚绒布；毛毛圈；adj. 起毛毛圈的"
+    ]
+  },
+  "terse": {
+    "word": "terse",
+    "phonetic": "/tɜːs/",
+    "explains": [
+      "adj. (说话，文笔)精炼的，简明的"
+    ]
+  },
+  "tertiary": {
+    "word": "tertiary",
+    "phonetic": "/'tɜːʃ(ə)rɪ/",
+    "explains": [
+      "adj. 第三的, 第三位的"
+    ]
+  },
+  "terylene": {
+    "word": "terylene",
+    "phonetic": "",
+    "explains": [
+      "n. 涤纶"
+    ]
+  },
+  "tessellation": {
+    "word": "tessellation",
+    "phonetic": "",
+    "explains": [
+      "n. 棋盘形嵌石饰"
+    ]
+  },
   "test": {
     "word": "test",
     "phonetic": "/test/",
     "explains": [
       "n./v. 测试；检验；测验；试验"
+    ]
+  },
+  "testament": {
+    "word": "testament",
+    "phonetic": "/'testəm(ə)nt/",
+    "explains": [
+      "n. [法] 遗嘱；圣约；确实的证明"
+    ]
+  },
+  "testator": {
+    "word": "testator",
+    "phonetic": "/te'steɪtə/",
+    "explains": [
+      "n. 立遗嘱者"
+    ]
+  },
+  "testify": {
+    "word": "testify",
+    "phonetic": "/'testɪfaɪ/",
+    "explains": [
+      "v. 作证；证明，证实"
+    ]
+  },
+  "testimonial": {
+    "word": "testimonial",
+    "phonetic": "/,testɪ'məʊnɪəl/",
+    "explains": [
+      "n. 证明书；推荐书；adj. 证明的；褒奖的；表扬的"
+    ]
+  },
+  "testimony": {
+    "word": "testimony",
+    "phonetic": "/'testɪmənɪ/",
+    "explains": [
+      "n. [法] 证词，证言；证据"
+    ]
+  },
+  "testy": {
+    "word": "testy",
+    "phonetic": "/'testɪ/",
+    "explains": [
+      "adj. 易怒的, 暴躁的"
+    ]
+  },
+  "tetchy": {
+    "word": "tetchy",
+    "phonetic": "/'tetʃɪ/",
+    "explains": [
+      "adj. 易暴怒的, 脾气怪的"
+    ]
+  },
+  "tether": {
+    "word": "tether",
+    "phonetic": "/'teðə/",
+    "explains": [
+      "n. 范围"
+    ]
+  },
+  "tethys": {
+    "word": "tethys",
+    "phonetic": "/'ti:θis/",
+    "explains": [
+      "n. 古地中海,  特提斯海"
+    ]
+  },
+  "texas": {
+    "word": "texas",
+    "phonetic": "/'teksəs/",
+    "explains": [
+      "n. 德克萨斯州(美国州名)"
+    ]
+  },
+  "text": {
+    "word": "text",
+    "phonetic": "/tekst/",
+    "explains": [
+      "n. 文本"
+    ]
+  },
+  "textbook": {
+    "word": "textbook",
+    "phonetic": "/ˈtek(s)tbʊk/",
+    "explains": [
+      "n. 教科书"
+    ]
+  },
+  "textile": {
+    "word": "textile",
+    "phonetic": "/ˈtekstaɪl/",
+    "explains": [
+      "n. 纺织品"
+    ]
+  },
+  "textual": {
+    "word": "textual",
+    "phonetic": "/'tekstjʊəl/",
+    "explains": [
+      "adj. 本文的；按原文的"
+    ]
+  },
+  "textural": {
+    "word": "textural",
+    "phonetic": "",
+    "explains": [
+      "adj. 组织的,结构的"
+    ]
+  },
+  "texture": {
+    "word": "texture",
+    "phonetic": "/'tekstʃə/",
+    "explains": [
+      "n. 质地；纹理；结构；本质，实质"
+    ]
+  },
+  "thai": {
+    "word": "thai",
+    "phonetic": "/taɪ/",
+    "explains": [
+      "n. 泰国人, 泰国语"
+    ]
+  },
+  "thailand": {
+    "word": "thailand",
+    "phonetic": "/'taɪlænd/",
+    "explains": [
+      "n. 泰国"
+    ]
+  },
+  "thalassic": {
+    "word": "thalassic",
+    "phonetic": "/θə'læsɪk/",
+    "explains": [
+      "adj. 海的, 内海的, 海湾的"
+    ]
+  },
+  "thames": {
+    "word": "thames",
+    "phonetic": "/temz/",
+    "explains": [
+      "n. 泰晤士河(流经牛津,伦敦等)"
     ]
   },
   "than": {
@@ -167,11 +2190,32 @@
       "conj. 比；超过；与其说；而不是"
     ]
   },
+  "thanatoid": {
+    "word": "thanatoid",
+    "phonetic": "",
+    "explains": [
+      "adj. 致命的, 象死的, 死了一般的"
+    ]
+  },
   "thank": {
     "word": "thank",
     "phonetic": "/θæŋk/",
     "explains": [
       "v./n. 感谢；谢谢；道谢"
+    ]
+  },
+  "thankful": {
+    "word": "thankful",
+    "phonetic": "/'θæŋkfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 感谢的；欣慰的"
+    ]
+  },
+  "thanksgiving": {
+    "word": "thanksgiving",
+    "phonetic": "",
+    "explains": [
+      "n. 感恩节"
     ]
   },
   "that": {
@@ -181,11 +2225,32 @@
       "pron. 那；那个；那种 conj. 因为；以至于"
     ]
   },
+  "thatch": {
+    "word": "thatch",
+    "phonetic": "/θætʃ/",
+    "explains": [
+      "n. 盖屋的材料, 茅草屋顶, 浓密的头发"
+    ]
+  },
+  "thaw": {
+    "word": "thaw",
+    "phonetic": "/θɔː/",
+    "explains": [
+      "n. 融化,解冻"
+    ]
+  },
   "the": {
     "word": "the",
     "phonetic": "/ðə/",
     "explains": [
       "art. 这；那；这些；那些"
+    ]
+  },
+  "theater": {
+    "word": "theater",
+    "phonetic": "/'θɪətə/",
+    "explains": [
+      "n. 电影院，戏院，剧场；戏剧；手术室"
     ]
   },
   "theatre": {
@@ -195,6 +2260,34 @@
       "n. 电影院；戏院；剧场；戏剧；手术室"
     ]
   },
+  "theatrical": {
+    "word": "theatrical",
+    "phonetic": "/θɪ'ætrɪk(ə)l/",
+    "explains": [
+      "adj. 戏剧性的"
+    ]
+  },
+  "theatrically": {
+    "word": "theatrically",
+    "phonetic": "",
+    "explains": [
+      "adv. 戏剧化地"
+    ]
+  },
+  "thee": {
+    "word": "thee",
+    "phonetic": "/ðiː/",
+    "explains": [
+      "pron. 你（古英语thou的宾格）；n. (Thee)人名；(德)特厄"
+    ]
+  },
+  "theft": {
+    "word": "theft",
+    "phonetic": "/θeft/",
+    "explains": [
+      "n. 盗窃"
+    ]
+  },
   "their": {
     "word": "their",
     "phonetic": "/ðeə(r)/",
@@ -202,11 +2295,39 @@
       "pron. 他们的；她们的；它们的"
     ]
   },
+  "theirs": {
+    "word": "theirs",
+    "phonetic": "/ðeəz/",
+    "explains": [
+      "pron. 他们的；她们的；它们的"
+    ]
+  },
+  "theism": {
+    "word": "theism",
+    "phonetic": "/'θiːɪz(ə)m/",
+    "explains": [
+      "n. 有神论, (基督教的)一神论, [医]茶中毒"
+    ]
+  },
   "them": {
     "word": "them",
     "phonetic": "/ðəm/",
     "explains": [
       "pron. 他们；她们；它们"
+    ]
+  },
+  "thematic": {
+    "word": "thematic",
+    "phonetic": "/θɪ'mætɪk/",
+    "explains": [
+      "adj. 主题的，主旋律的；题目的；语干的"
+    ]
+  },
+  "theme": {
+    "word": "theme",
+    "phonetic": "/θiːm/",
+    "explains": [
+      "n. 主题"
     ]
   },
   "themselves": {
@@ -223,6 +2344,97 @@
       "adv. 然后；那么；于是；当时；此外"
     ]
   },
+  "theocracy": {
+    "word": "theocracy",
+    "phonetic": "/θi'ɔkrəsi/",
+    "explains": [
+      "n.  神权政治； 僧侣政治"
+    ]
+  },
+  "theologian": {
+    "word": "theologian",
+    "phonetic": "/θɪə'ləʊdʒɪən; -dʒ(ə)n/",
+    "explains": [
+      "n. 神学者；空头理论家"
+    ]
+  },
+  "theological": {
+    "word": "theological",
+    "phonetic": "/θɪə'lɒdʒɪk(ə)l/",
+    "explains": [
+      "adj. 神学(上)的"
+    ]
+  },
+  "theology": {
+    "word": "theology",
+    "phonetic": "/θiː'ɒlədʒɪ/",
+    "explains": [
+      "n. 神学"
+    ]
+  },
+  "theophylline": {
+    "word": "theophylline",
+    "phonetic": "/θɪə'fɪliːn; -lɪn/",
+    "explains": [
+      "n. [有化] 茶碱"
+    ]
+  },
+  "theorem": {
+    "word": "theorem",
+    "phonetic": "/'θɪərəm/",
+    "explains": [
+      "n. 定理；原理，原则"
+    ]
+  },
+  "theoretical": {
+    "word": "theoretical",
+    "phonetic": "/θɪəˈretɪk(ə)l/",
+    "explains": [
+      "adj. 理论的"
+    ]
+  },
+  "theorist": {
+    "word": "theorist",
+    "phonetic": "/'θɪərɪst/",
+    "explains": [
+      "n. 理论家"
+    ]
+  },
+  "theorize": {
+    "word": "theorize",
+    "phonetic": "/'θɪəraɪz/",
+    "explains": [
+      "v. 建立理论, 理论化"
+    ]
+  },
+  "theory": {
+    "word": "theory",
+    "phonetic": "/ˈθɪərɪ/",
+    "explains": [
+      "n. 理论"
+    ]
+  },
+  "therapeutic": {
+    "word": "therapeutic",
+    "phonetic": "/,θerə'pjuːtɪk/",
+    "explains": [
+      "adj. 治疗的, 治疗学的 n治疗剂, 治疗学家"
+    ]
+  },
+  "therapist": {
+    "word": "therapist",
+    "phonetic": "/'θerəpɪst/",
+    "explains": [
+      "n. 临床医学家"
+    ]
+  },
+  "therapy": {
+    "word": "therapy",
+    "phonetic": "/ˈθerəpɪ/",
+    "explains": [
+      "n. 疗法"
+    ]
+  },
   "there": {
     "word": "there",
     "phonetic": "/ðeə(r)/",
@@ -230,11 +2442,172 @@
       "adv. 在那里；在那边；在那点上 int. 你瞧；好啦"
     ]
   },
+  "thereabout": {
+    "word": "thereabout",
+    "phonetic": "",
+    "explains": [
+      "adv. 在那附近；大约"
+    ]
+  },
+  "thereabouts": {
+    "word": "thereabouts",
+    "phonetic": "/'ðeərəbaʊts; -'baʊts/",
+    "explains": [
+      "adv. 大约；在那附近（等于thereabout）"
+    ]
+  },
+  "thereafter": {
+    "word": "thereafter",
+    "phonetic": "/ðeər'ɑːftə/",
+    "explains": [
+      "adv. 此后，以后"
+    ]
+  },
+  "thereby": {
+    "word": "thereby",
+    "phonetic": "/ðeə'baɪ/",
+    "explains": [
+      "adv. 因此，从而，由此"
+    ]
+  },
+  "therefore": {
+    "word": "therefore",
+    "phonetic": "/ˈðeəfɔː/",
+    "explains": [
+      "adv. 因此"
+    ]
+  },
+  "therein": {
+    "word": "therein",
+    "phonetic": "/ðeər'ɪn/",
+    "explains": [
+      "adv. 在那里"
+    ]
+  },
+  "thereof": {
+    "word": "thereof",
+    "phonetic": "/ðeər'ɒv/",
+    "explains": [
+      "adv. 它的，其；由此"
+    ]
+  },
+  "thereto": {
+    "word": "thereto",
+    "phonetic": "/ðeə'tuː/",
+    "explains": [
+      "adv. 另外；到那"
+    ]
+  },
+  "thereupon": {
+    "word": "thereupon",
+    "phonetic": "/ðeərə'pɒn/",
+    "explains": [
+      "adv. 于是；随即；关于那，在其上"
+    ]
+  },
+  "therewith": {
+    "word": "therewith",
+    "phonetic": "/ðeə'wɪð/",
+    "explains": [
+      "adv. 随其；于是；以其；与此"
+    ]
+  },
+  "thermal": {
+    "word": "thermal",
+    "phonetic": "/'θɜːm(ə)l/",
+    "explains": [
+      "adj. 热的；温热的"
+    ]
+  },
+  "thermocouple": {
+    "word": "thermocouple",
+    "phonetic": "/'θɜːməʊkʌp(ə)l/",
+    "explains": [
+      "n. [电] 热电偶"
+    ]
+  },
+  "thermodynamic": {
+    "word": "thermodynamic",
+    "phonetic": "/,θɜːməʊdaɪ'næmɪk/",
+    "explains": [
+      "adj. 热力学的, 使用热动力的"
+    ]
+  },
+  "thermodynamics": {
+    "word": "thermodynamics",
+    "phonetic": "/,θɜːmə(ʊ)daɪ'næmɪks/",
+    "explains": [
+      "n. 热力学"
+    ]
+  },
+  "thermometer": {
+    "word": "thermometer",
+    "phonetic": "/θə'mɒmɪtə/",
+    "explains": [
+      "n. 温度计，寒暑表"
+    ]
+  },
+  "thermonuclear": {
+    "word": "thermonuclear",
+    "phonetic": "/θɜːməʊ'njuːklɪə/",
+    "explains": [
+      "adj. [核] 热核的；高热原子核反应的"
+    ]
+  },
+  "thermoplastic": {
+    "word": "thermoplastic",
+    "phonetic": "/θɜːməʊ'plæstɪk/",
+    "explains": [
+      "adj. 热塑性的"
+    ]
+  },
+  "thermoset": {
+    "word": "thermoset",
+    "phonetic": "",
+    "explains": [
+      "n. 热固树脂,热固塑料"
+    ]
+  },
+  "thermostat": {
+    "word": "thermostat",
+    "phonetic": "/'θɜːməstæt/",
+    "explains": [
+      "n. 恒温器"
+    ]
+  },
+  "theropod": {
+    "word": "theropod",
+    "phonetic": "/'θɪərə(ʊ)pɒd/",
+    "explains": [
+      "adj. 兽性的，野兽般的"
+    ]
+  },
+  "thesaurus": {
+    "word": "thesaurus",
+    "phonetic": "/θɪ'sɔːrəs/",
+    "explains": [
+      "n. 词典，同类词汇编"
+    ]
+  },
   "these": {
     "word": "these",
     "phonetic": "/ðiːz/",
     "explains": [
       "pron. 这些 adj. 这些的"
+    ]
+  },
+  "thesis": {
+    "word": "thesis",
+    "phonetic": "/'θiːsɪs/",
+    "explains": [
+      "n. 论文；论题，论点"
+    ]
+  },
+  "thespian": {
+    "word": "thespian",
+    "phonetic": "/'θespɪən/",
+    "explains": [
+      "adj. (古希腊雅典诗人, 悲剧创始者)泰斯庇斯的, 悲剧的, 戏剧的, 悲剧性的"
     ]
   },
   "they": {
@@ -249,6 +2622,55 @@
     "phonetic": "/θɪk/",
     "explains": [
       "adj. 厚的；浓的；粗大的"
+    ]
+  },
+  "thicken": {
+    "word": "thicken",
+    "phonetic": "/'θɪk(ə)n/",
+    "explains": [
+      "v. 使变厚（或粗、密）"
+    ]
+  },
+  "thicket": {
+    "word": "thicket",
+    "phonetic": "/'θɪkɪt/",
+    "explains": [
+      "n. 灌木丛"
+    ]
+  },
+  "thickness": {
+    "word": "thickness",
+    "phonetic": "/'θɪknɪs/",
+    "explains": [
+      "n. 厚（度）；密（度）"
+    ]
+  },
+  "thief": {
+    "word": "thief",
+    "phonetic": "/θiːf/",
+    "explains": [
+      "n. 小偷，贼"
+    ]
+  },
+  "thigh": {
+    "word": "thigh",
+    "phonetic": "/θaɪ/",
+    "explains": [
+      "n. 股，大腿"
+    ]
+  },
+  "thimble": {
+    "word": "thimble",
+    "phonetic": "/'θɪmb(ə)l/",
+    "explains": [
+      "n. 顶针；嵌环"
+    ]
+  },
+  "thimbleful": {
+    "word": "thimbleful",
+    "phonetic": "/'θɪmb(ə)lfʊl; -f(ə)l/",
+    "explains": [
+      "n. (酒等的)极少量"
     ]
   },
   "thin": {
@@ -272,11 +2694,74 @@
       "v. 想；认为；思考；想起"
     ]
   },
+  "thinker": {
+    "word": "thinker",
+    "phonetic": "",
+    "explains": [
+      "n. 思想者, 思想家, 心智"
+    ]
+  },
+  "thinking": {
+    "word": "thinking",
+    "phonetic": "/θɪŋkɪŋ/",
+    "explains": [
+      "adj. 思考的；思想的；有理性的；好思考的；n. 思考；思想；想法；意见；见解；v. 思考（think的现在分词）"
+    ]
+  },
+  "thinly": {
+    "word": "thinly",
+    "phonetic": "",
+    "explains": [
+      "adv. 稀疏地,瘦"
+    ]
+  },
   "third": {
     "word": "third",
     "phonetic": "/θɜːd/",
     "explains": [
       "num. 第三；三分之一"
+    ]
+  },
+  "third-party": {
+    "word": "third-party",
+    "phonetic": "",
+    "explains": [
+      "第三方的"
+    ]
+  },
+  "thirst": {
+    "word": "thirst",
+    "phonetic": "/θɜːst/",
+    "explains": [
+      "n. 口渴,热望；v. 渴望"
+    ]
+  },
+  "thirsty": {
+    "word": "thirsty",
+    "phonetic": "/ˈθɜːstɪ/",
+    "explains": [
+      "adj. 口渴的"
+    ]
+  },
+  "thirteen": {
+    "word": "thirteen",
+    "phonetic": "/ˌθɜːˈtiːn; ˈθɜːtiːn/",
+    "explains": [
+      "num. 十三"
+    ]
+  },
+  "thirteenth": {
+    "word": "thirteenth",
+    "phonetic": "/'θɜːtiːnθ/",
+    "explains": [
+      "adj. 第十三的；十三分之一的；n. 第十三；十三分之一"
+    ]
+  },
+  "thirtieth": {
+    "word": "thirtieth",
+    "phonetic": "/'θɜːtɪɪθ/",
+    "explains": [
+      "num. 第三十；三十分之一；adj. 第三十个的；三十分之一的；n. 第三十；三十分之一"
     ]
   },
   "thirty": {
@@ -293,11 +2778,67 @@
       "pron. 这；这个 adj. 这；这个"
     ]
   },
+  "thistle": {
+    "word": "thistle",
+    "phonetic": "/'θɪs(ə)l/",
+    "explains": [
+      "n. [植] 蓟"
+    ]
+  },
+  "thorn": {
+    "word": "thorn",
+    "phonetic": "/θɔːn/",
+    "explains": [
+      "n. 刺；[植] 荆棘"
+    ]
+  },
+  "thorny": {
+    "word": "thorny",
+    "phonetic": "/'θɔːnɪ/",
+    "explains": [
+      "adj. 多刺的, 痛苦的"
+    ]
+  },
+  "thorough": {
+    "word": "thorough",
+    "phonetic": "/ˈθʌrə/",
+    "explains": [
+      "adj. 彻底的"
+    ]
+  },
+  "thoroughbred": {
+    "word": "thoroughbred",
+    "phonetic": "/'θʌrəbred/",
+    "explains": [
+      "n. 受过严格训练的人；良种动物；adj. 良种的；受过严格训练的；优秀的"
+    ]
+  },
+  "thoroughfare": {
+    "word": "thoroughfare",
+    "phonetic": "/'θʌrəfeə/",
+    "explains": [
+      "n. 大道，通路"
+    ]
+  },
+  "thoroughly": {
+    "word": "thoroughly",
+    "phonetic": "/ˈθʌrəli/",
+    "explains": [
+      "adv. 十分地, 彻底地"
+    ]
+  },
   "those": {
     "word": "those",
     "phonetic": "/ðəʊz/",
     "explains": [
       "pron. 那些 adj. 那些的"
+    ]
+  },
+  "thou": {
+    "word": "thou",
+    "phonetic": "/ðaʊ/",
+    "explains": [
+      "pron. 你；尔，汝（古时候的叫法）；n. (Thou)人名；(法、柬)图"
     ]
   },
   "though": {
@@ -307,11 +2848,116 @@
       "conj. 虽然；尽管 adv. 可是；然而"
     ]
   },
+  "thought": {
+    "word": "thought",
+    "phonetic": "/θɔːt/",
+    "explains": [
+      "n. 想法"
+    ]
+  },
+  "thoughtful": {
+    "word": "thoughtful",
+    "phonetic": "/'θɔːtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 体贴的；沉思的"
+    ]
+  },
+  "thoughtfully": {
+    "word": "thoughtfully",
+    "phonetic": "/'θɔ:tfəl/",
+    "explains": [
+      "adv. 思虑地, 仔细地"
+    ]
+  },
+  "thoughtless": {
+    "word": "thoughtless",
+    "phonetic": "/'θɔːtlɪs/",
+    "explains": [
+      "adj. 欠考虑的；自私的"
+    ]
+  },
+  "thoughtlessness": {
+    "word": "thoughtlessness",
+    "phonetic": "",
+    "explains": [
+      "n. 欠考虑；不体贴"
+    ]
+  },
+  "thousand": {
+    "word": "thousand",
+    "phonetic": "/ˈθaʊzənd/",
+    "explains": [
+      "num. 千"
+    ]
+  },
+  "thousandfold": {
+    "word": "thousandfold",
+    "phonetic": "/'θaʊzəndfəʊld/",
+    "explains": [
+      "adv. 千倍地；adj. 千倍的"
+    ]
+  },
+  "thousandth": {
+    "word": "thousandth",
+    "phonetic": "/'θaʊzəntθ/",
+    "explains": [
+      "adj. 第一千的, 千分之一的"
+    ]
+  },
+  "thrall": {
+    "word": "thrall",
+    "phonetic": "/θrɔːl/",
+    "explains": [
+      "n. 奴隶；束缚；adj. 受奴役的；vt. 使成为奴隶"
+    ]
+  },
+  "thrash": {
+    "word": "thrash",
+    "phonetic": "/θræʃ/",
+    "explains": [
+      "v. 痛打，鞭打，打"
+    ]
+  },
+  "thrasonical": {
+    "word": "thrasonical",
+    "phonetic": "/θrə'sɒnɪkəl/",
+    "explains": [
+      "adj. 自夸的, (打击等)沉重的, 吹牛的"
+    ]
+  },
   "thread": {
     "word": "thread",
     "phonetic": "/θred/",
     "explains": [
       "n. 线；线索；思路 v. 穿线；穿过"
+    ]
+  },
+  "threadbare": {
+    "word": "threadbare",
+    "phonetic": "/'θredbeə/",
+    "explains": [
+      "adj. 穿破旧衣服的, 俗套的"
+    ]
+  },
+  "threadlike": {
+    "word": "threadlike",
+    "phonetic": "",
+    "explains": [
+      "adj. 线状的"
+    ]
+  },
+  "threat": {
+    "word": "threat",
+    "phonetic": "/θret/",
+    "explains": [
+      "n. 威胁"
+    ]
+  },
+  "threaten": {
+    "word": "threaten",
+    "phonetic": "/ˈθret(ə)n/",
+    "explains": [
+      "v. 威胁"
     ]
   },
   "three": {
@@ -321,6 +2967,146 @@
       "num. 三；三个"
     ]
   },
+  "threnode": {
+    "word": "threnode",
+    "phonetic": "/'θriːnəʊd/",
+    "explains": [
+      "n. 哀歌, 葬歌, 挽歌"
+    ]
+  },
+  "threnody": {
+    "word": "threnody",
+    "phonetic": "/'θrenədɪ/",
+    "explains": [
+      "n. 悲歌, 哀歌"
+    ]
+  },
+  "thresh": {
+    "word": "thresh",
+    "phonetic": "/θreʃ/",
+    "explains": [
+      "v. 打谷，脱粒"
+    ]
+  },
+  "thresher": {
+    "word": "thresher",
+    "phonetic": "/'θreʃə/",
+    "explains": [
+      "n. 打谷者, 打谷机, [鱼]长尾鲨"
+    ]
+  },
+  "threshold": {
+    "word": "threshold",
+    "phonetic": "/'θreʃəʊld; 'θreʃ,həʊld/",
+    "explains": [
+      "n. 门槛；入门，开端"
+    ]
+  },
+  "thrice": {
+    "word": "thrice",
+    "phonetic": "/θraɪs/",
+    "explains": [
+      "adv. 三次；三倍地；非常，十分"
+    ]
+  },
+  "thrift": {
+    "word": "thrift",
+    "phonetic": "/θrɪft/",
+    "explains": [
+      "n. 节俭；节约；[植] 海石竹"
+    ]
+  },
+  "thrifty": {
+    "word": "thrifty",
+    "phonetic": "/'θrɪftɪ/",
+    "explains": [
+      "adj. 节俭的"
+    ]
+  },
+  "thrill": {
+    "word": "thrill",
+    "phonetic": "/θrɪl/",
+    "explains": [
+      "v. （使）激动"
+    ]
+  },
+  "thriller": {
+    "word": "thriller",
+    "phonetic": "/'θrɪlə/",
+    "explains": [
+      "n. 使人毛骨悚然的东西, 使人毛骨悚然的小说"
+    ]
+  },
+  "thrive": {
+    "word": "thrive",
+    "phonetic": "/θraɪv/",
+    "explains": [
+      "v. 繁荣"
+    ]
+  },
+  "throat": {
+    "word": "throat",
+    "phonetic": "/θrəʊt/",
+    "explains": [
+      "n. 喉咙"
+    ]
+  },
+  "throatily": {
+    "word": "throatily",
+    "phonetic": "",
+    "explains": [
+      "adv. 喉音地；嘶哑地"
+    ]
+  },
+  "throaty": {
+    "word": "throaty",
+    "phonetic": "/'θrəʊtɪ/",
+    "explains": [
+      "adj. 喉音的, 喉部发出声音的, 嘶哑的"
+    ]
+  },
+  "throb": {
+    "word": "throb",
+    "phonetic": "/θrɒb/",
+    "explains": [
+      "n. 悸动, 脉搏"
+    ]
+  },
+  "throbbing": {
+    "word": "throbbing",
+    "phonetic": "/'θrɒbɪŋ/",
+    "explains": [
+      "adj. 跳动的，悸动的"
+    ]
+  },
+  "throne": {
+    "word": "throne",
+    "phonetic": "/θrəʊn/",
+    "explains": [
+      "n. 王座；君主；王权；v. 登上王座"
+    ]
+  },
+  "throng": {
+    "word": "throng",
+    "phonetic": "/θrɒŋ/",
+    "explains": [
+      "n. 人群，群众；v. 拥挤，群集"
+    ]
+  },
+  "throttle": {
+    "word": "throttle",
+    "phonetic": "/'θrɒt(ə)l/",
+    "explains": [
+      "v. 扼杀"
+    ]
+  },
+  "throttled": {
+    "word": "throttled",
+    "phonetic": "",
+    "explains": [
+      "被限流的"
+    ]
+  },
   "through": {
     "word": "through",
     "phonetic": "/θruː/",
@@ -328,11 +3114,102 @@
       "prep. 通过；穿过；凭借 adv. 从头到尾"
     ]
   },
+  "throughout": {
+    "word": "throughout",
+    "phonetic": "/θruːˈaʊt/",
+    "explains": [
+      "prep. 贯穿"
+    ]
+  },
+  "throughput": {
+    "word": "throughput",
+    "phonetic": "/'θruːput/",
+    "explains": [
+      "n.  生产量； 生产能力"
+    ]
+  },
   "throw": {
     "word": "throw",
     "phonetic": "/θrəʊ/",
     "explains": [
       "v. 扔；投；抛；掷"
+    ]
+  },
+  "thrush": {
+    "word": "thrush",
+    "phonetic": "/θrʌʃ/",
+    "explains": [
+      "n. 画眉；[口腔] 鹅口疮；蹄叉腐疽"
+    ]
+  },
+  "thrust": {
+    "word": "thrust",
+    "phonetic": "/θrʌst/",
+    "explains": [
+      "v. 猛推"
+    ]
+  },
+  "thud": {
+    "word": "thud",
+    "phonetic": "/θʌd/",
+    "explains": [
+      "n. 砰的一声；重击；v. 砰的一声掉下；发出砰声"
+    ]
+  },
+  "thug": {
+    "word": "thug",
+    "phonetic": "/θʌg/",
+    "explains": [
+      "n. 暴徒；恶棍；刺客"
+    ]
+  },
+  "thumb": {
+    "word": "thumb",
+    "phonetic": "/θʌm/",
+    "explains": [
+      "v. 翻阅；以拇指拨弄；作搭车手势；笨拙地摆弄；n. 拇指"
+    ]
+  },
+  "thumbtack": {
+    "word": "thumbtack",
+    "phonetic": "/'θʌmtæk/",
+    "explains": [
+      "n. 图钉；v. 用图钉钉住"
+    ]
+  },
+  "thump": {
+    "word": "thump",
+    "phonetic": "/θʌmp/",
+    "explains": [
+      "v. 重击；用拳头打；砰地撞到；n. 重打；重击声"
+    ]
+  },
+  "thunder": {
+    "word": "thunder",
+    "phonetic": "/'θʌndə/",
+    "explains": [
+      "n. 雷；v. 打雷；吼出"
+    ]
+  },
+  "thunderclap": {
+    "word": "thunderclap",
+    "phonetic": "/'θʌndəklæp/",
+    "explains": [
+      "n. 霹雳；雷声；晴天霹雳似的消息"
+    ]
+  },
+  "thunderous": {
+    "word": "thunderous",
+    "phonetic": "/'θʌnd(ə)rəs/",
+    "explains": [
+      "adj. 打雷的, 雷鸣般的"
+    ]
+  },
+  "thunderstorm": {
+    "word": "thunderstorm",
+    "phonetic": "/'θʌndəstɔːm/",
+    "explains": [
+      "n. 雷暴雨"
     ]
   },
   "thursday": {
@@ -349,11 +3226,81 @@
       "adv. 因此；从而；这样；如此"
     ]
   },
+  "thwart": {
+    "word": "thwart",
+    "phonetic": "/θwɔːt/",
+    "explains": [
+      "v. 阻挠"
+    ]
+  },
+  "thy": {
+    "word": "thy",
+    "phonetic": "/ðaɪ/",
+    "explains": [
+      "pron. 你的；n. (Thy)人名；(柬)提"
+    ]
+  },
+  "thyroid": {
+    "word": "thyroid",
+    "phonetic": "/'θaɪrɒɪd/",
+    "explains": [
+      "n. 甲状腺；甲状软骨；甲状腺剂；adj. 甲状腺的；盾状的"
+    ]
+  },
+  "tiara": {
+    "word": "tiara",
+    "phonetic": "/tɪ'ɑːrə/",
+    "explains": [
+      "n. 女式冕状头饰；（罗马教皇的）三重冕"
+    ]
+  },
+  "tick": {
+    "word": "tick",
+    "phonetic": "/tɪk/",
+    "explains": [
+      "v. 打勾"
+    ]
+  },
   "ticket": {
     "word": "ticket",
     "phonetic": "/ˈtɪkɪt/",
     "explains": [
       "n. 票；入场券；标签；罚单"
+    ]
+  },
+  "tickle": {
+    "word": "tickle",
+    "phonetic": "/'tɪk(ə)l/",
+    "explains": [
+      "v. 挠，胳肢；逗乐"
+    ]
+  },
+  "tickler": {
+    "word": "tickler",
+    "phonetic": "/'tɪklə/",
+    "explains": [
+      "n. 记事本, 备忘录, 使人发痒的人"
+    ]
+  },
+  "ticklish": {
+    "word": "ticklish",
+    "phonetic": "/'tɪklɪʃ/",
+    "explains": [
+      "adj. 易痒的, 不稳定的, 难对付的, 忌讳的"
+    ]
+  },
+  "tidal": {
+    "word": "tidal",
+    "phonetic": "/'taɪd(ə)l/",
+    "explains": [
+      "adj. 潮汐的, 定时涨落的"
+    ]
+  },
+  "tide": {
+    "word": "tide",
+    "phonetic": "/taɪd/",
+    "explains": [
+      "n. 潮汐"
     ]
   },
   "tidy": {
@@ -370,6 +3317,55 @@
       "v. 系；捆；绑；拴 n. 领带；纽带；关系"
     ]
   },
+  "tieback": {
+    "word": "tieback",
+    "phonetic": "/'taɪbæk/",
+    "explains": [
+      "n. 牵索,  拉条"
+    ]
+  },
+  "tiempo": {
+    "word": "tiempo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 时间；天气"
+    ]
+  },
+  "tienda": {
+    "word": "tienda",
+    "phonetic": "",
+    "explains": [
+      "n.f. 商店"
+    ]
+  },
+  "tier": {
+    "word": "tier",
+    "phonetic": "/tɪə/",
+    "explains": [
+      "n. 层，排；行，列；等级；vt. 使层叠；vi. 成递升排列"
+    ]
+  },
+  "tierra": {
+    "word": "tierra",
+    "phonetic": "",
+    "explains": [
+      "n.f. 土地；地球"
+    ]
+  },
+  "tiff": {
+    "word": "tiff",
+    "phonetic": "/tɪf/",
+    "explains": [
+      "n. 一口淡酒, 小争吵, 小口角, 酒"
+    ]
+  },
+  "tiffany": {
+    "word": "tiffany",
+    "phonetic": "/'tɪf(ə)nɪ/",
+    "explains": [
+      "n. 纱的一种"
+    ]
+  },
   "tiger": {
     "word": "tiger",
     "phonetic": "/ˈtaɪɡə(r)/",
@@ -377,11 +3373,214 @@
       "n. 老虎；凶暴的人"
     ]
   },
+  "tight": {
+    "word": "tight",
+    "phonetic": "/taɪt/",
+    "explains": [
+      "adj. 紧的"
+    ]
+  },
+  "tighten": {
+    "word": "tighten",
+    "phonetic": "/'taɪt(ə)n/",
+    "explains": [
+      "v. （使）变紧"
+    ]
+  },
+  "tightly": {
+    "word": "tightly",
+    "phonetic": "/'taɪtlɪ/",
+    "explains": [
+      "adv. 紧地，牢固地"
+    ]
+  },
+  "tile": {
+    "word": "tile",
+    "phonetic": "/taɪl/",
+    "explains": [
+      "n. 瓷砖；贴砖；瓦片"
+    ]
+  },
+  "till": {
+    "word": "till",
+    "phonetic": "/tɪl/",
+    "explains": [
+      "prep. 直到"
+    ]
+  },
+  "tilt": {
+    "word": "tilt",
+    "phonetic": "/tɪlt/",
+    "explains": [
+      "v. （使）倾斜"
+    ]
+  },
+  "timber": {
+    "word": "timber",
+    "phonetic": "/ˈtɪmbə/",
+    "explains": [
+      "n. 木材"
+    ]
+  },
+  "timberline": {
+    "word": "timberline",
+    "phonetic": "/'tɪmbəlaɪn/",
+    "explains": [
+      "n. 树带界线"
+    ]
+  },
+  "timbre": {
+    "word": "timbre",
+    "phonetic": "/'tæmbə/",
+    "explains": [
+      "n. [声] 音色；音质；音品"
+    ]
+  },
   "time": {
     "word": "time",
     "phonetic": "/taɪm/",
     "explains": [
       "n. 时间；时刻；次数；时代 v. 计时；安排… 时间"
+    ]
+  },
+  "timely": {
+    "word": "timely",
+    "phonetic": "/'taɪmlɪ/",
+    "explains": [
+      "adj. 及时的；适时的"
+    ]
+  },
+  "timeout": {
+    "word": "timeout",
+    "phonetic": "",
+    "explains": [
+      "超时"
+    ]
+  },
+  "timer": {
+    "word": "timer",
+    "phonetic": "/'taɪmə/",
+    "explains": [
+      "n. 计时员, 定时器"
+    ]
+  },
+  "times": {
+    "word": "times",
+    "phonetic": "/taɪmz/",
+    "explains": [
+      "prep. 乘以；v. 使…相乘（time的第三人称单数）；n. 时代（time的复数）；[数] 次数"
+    ]
+  },
+  "timescale": {
+    "word": "timescale",
+    "phonetic": "/taimskeil/",
+    "explains": [
+      "n.  时标"
+    ]
+  },
+  "timetable": {
+    "word": "timetable",
+    "phonetic": "/ˈtaɪmteɪb(ə)l/",
+    "explains": [
+      "n. 时间表"
+    ]
+  },
+  "timid": {
+    "word": "timid",
+    "phonetic": "/'tɪmɪd/",
+    "explains": [
+      "adj. 胆小的；羞怯的"
+    ]
+  },
+  "timidity": {
+    "word": "timidity",
+    "phonetic": "/tɪ'mɪdətɪ/",
+    "explains": [
+      "n. 胆怯"
+    ]
+  },
+  "timorous": {
+    "word": "timorous",
+    "phonetic": "/'tɪm(ə)rəs/",
+    "explains": [
+      "adj. 胆怯的；胆小的；羞怯的"
+    ]
+  },
+  "tin": {
+    "word": "tin",
+    "phonetic": "/tɪn/",
+    "explains": [
+      "n. 锡；罐头"
+    ]
+  },
+  "tinder": {
+    "word": "tinder",
+    "phonetic": "/'tɪndə/",
+    "explains": [
+      "n. 易燃物, 火绒"
+    ]
+  },
+  "tine": {
+    "word": "tine",
+    "phonetic": "/taɪn/",
+    "explains": [
+      "n. (尖)齿, 叉"
+    ]
+  },
+  "tinge": {
+    "word": "tinge",
+    "phonetic": "/tɪn(d)ʒ/",
+    "explains": [
+      "n. (清淡的)色调 vt给…着色"
+    ]
+  },
+  "tingle": {
+    "word": "tingle",
+    "phonetic": "/'tɪŋg(ə)l/",
+    "explains": [
+      "v. 造成麻刺的感觉,使感刺痛"
+    ]
+  },
+  "tinker": {
+    "word": "tinker",
+    "phonetic": "/'tɪŋkə/",
+    "explains": [
+      "n. 补锅匠；修补匠；焊锅；（美）小鲭鱼；v. 做焊锅匠；焊补；笨手笨脚地做事"
+    ]
+  },
+  "tinkle": {
+    "word": "tinkle",
+    "phonetic": "/'tɪŋk(ə)l/",
+    "explains": [
+      "v. 使发清脆的声响；n. 叮当声"
+    ]
+  },
+  "tinny": {
+    "word": "tinny",
+    "phonetic": "/'tɪnɪ/",
+    "explains": [
+      "adj. 锡的；含锡的；像锡的；有锡味的；n. (Tinny)人名；(罗)廷尼"
+    ]
+  },
+  "tinplate": {
+    "word": "tinplate",
+    "phonetic": "",
+    "explains": [
+      "n. 镀锡铁皮, 马口铁"
+    ]
+  },
+  "tint": {
+    "word": "tint",
+    "phonetic": "/tɪnt/",
+    "explains": [
+      "n. 色彩"
+    ]
+  },
+  "tinta": {
+    "word": "tinta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 墨水"
     ]
   },
   "tiny": {
@@ -398,11 +3597,144 @@
       "n. 尖端；顶端；小费；建议 v. 倾斜；翻倒；给小费"
     ]
   },
+  "tip-top": {
+    "word": "tip-top",
+    "phonetic": "/'tip'tɔp/",
+    "explains": [
+      "adj.  第一流的； 顶点的；n. 顶点；极点；第一流"
+    ]
+  },
+  "tipo": {
+    "word": "tipo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 类型"
+    ]
+  },
+  "tipper": {
+    "word": "tipper",
+    "phonetic": "/'tɪpə/",
+    "explains": [
+      "n. 给小费的人；翻斗卡车；倾卸车之搬运夫"
+    ]
+  },
+  "tippy": {
+    "word": "tippy",
+    "phonetic": "/'tɪpɪ/",
+    "explains": [
+      "adj. 容易倾斜的, 不安定的, <英>头等的, 漂亮的, (毛织品)多绒尖的"
+    ]
+  },
+  "tipsy": {
+    "word": "tipsy",
+    "phonetic": "/'tɪpsɪ/",
+    "explains": [
+      "adj. 喝醉的；歪曲的；不稳的"
+    ]
+  },
+  "tiptoe": {
+    "word": "tiptoe",
+    "phonetic": "/'tɪptəʊ/",
+    "explains": [
+      "n. 脚尖；趾尖；v. 用脚尖走；adv. 用脚尖；adj. 踮着脚走的；偷偷摸摸的"
+    ]
+  },
+  "tiptop": {
+    "word": "tiptop",
+    "phonetic": "/'tip'tɔp/",
+    "explains": [
+      "adj.  第一流的； 顶点的；n. 顶点；极点；第一流"
+    ]
+  },
+  "tirade": {
+    "word": "tirade",
+    "phonetic": "/taɪ'reɪd; tɪ-/",
+    "explains": [
+      "n. 激烈的长篇演说"
+    ]
+  },
+  "tirar": {
+    "word": "tirar",
+    "phonetic": "",
+    "explains": [
+      "v. 扔；拉"
+    ]
+  },
+  "tire": {
+    "word": "tire",
+    "phonetic": "/taɪə/",
+    "explains": [
+      "v. 疲劳，累；厌倦"
+    ]
+  },
   "tired": {
     "word": "tired",
     "phonetic": "/ˈtaɪəd/",
     "explains": [
       "adj. 疲倦的；疲劳的；厌倦的"
+    ]
+  },
+  "tiredness": {
+    "word": "tiredness",
+    "phonetic": "",
+    "explains": [
+      "n. 疲劳,疲倦"
+    ]
+  },
+  "tiresome": {
+    "word": "tiresome",
+    "phonetic": "/'taɪəs(ə)m/",
+    "explains": [
+      "adj. 使人厌倦的，讨厌的"
+    ]
+  },
+  "tissu": {
+    "word": "tissu",
+    "phonetic": "",
+    "explains": [
+      "n.m. 布料"
+    ]
+  },
+  "tissue": {
+    "word": "tissue",
+    "phonetic": "/ˈtɪʃuː; ˈtɪsjuː/",
+    "explains": [
+      "n. 纸巾；组织"
+    ]
+  },
+  "titan": {
+    "word": "titan",
+    "phonetic": "/taɪtn/",
+    "explains": [
+      "n. 巨人；提坦；太阳神"
+    ]
+  },
+  "titanic": {
+    "word": "titanic",
+    "phonetic": "",
+    "explains": [
+      "adj. [化](含)钛的, 四价钛的"
+    ]
+  },
+  "titanium": {
+    "word": "titanium",
+    "phonetic": "/taɪ'teɪnɪəm; tɪ-/",
+    "explains": [
+      "n. [化]钛"
+    ]
+  },
+  "titillate": {
+    "word": "titillate",
+    "phonetic": "/'tɪtɪleɪt/",
+    "explains": [
+      "v. 搔痒, 使愉快"
+    ]
+  },
+  "titivate": {
+    "word": "titivate",
+    "phonetic": "/'tɪtɪveɪt/",
+    "explains": [
+      "v. 打扮, 装饰, 化妆"
     ]
   },
   "title": {
@@ -412,11 +3744,67 @@
       "n. 标题；头衔；称号；权利"
     ]
   },
+  "titre": {
+    "word": "titre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 标题；头衔"
+    ]
+  },
+  "titular": {
+    "word": "titular",
+    "phonetic": "/'tɪtjʊlə/",
+    "explains": [
+      "adj. 有名无实的, 有资格的, 有头衔的"
+    ]
+  },
   "to": {
     "word": "to",
     "phonetic": "/tuː/",
     "explains": [
       "prep. 向；朝；往；到；对于"
+    ]
+  },
+  "toad": {
+    "word": "toad",
+    "phonetic": "/təʊd/",
+    "explains": [
+      "n. 蟾蜍，癞蛤蟆"
+    ]
+  },
+  "toady": {
+    "word": "toady",
+    "phonetic": "/'təʊdɪ/",
+    "explains": [
+      "n. 谄媚者, 拍马屁的人"
+    ]
+  },
+  "toast": {
+    "word": "toast",
+    "phonetic": "/təʊst/",
+    "explains": [
+      "n. 烤面包"
+    ]
+  },
+  "tobacco": {
+    "word": "tobacco",
+    "phonetic": "/təˈbækəʊ/",
+    "explains": [
+      "n. 烟草"
+    ]
+  },
+  "tobacconist": {
+    "word": "tobacconist",
+    "phonetic": "/tə'bæk(ə)nɪst/",
+    "explains": [
+      "n. （主英）烟草商；烟草制品零售商"
+    ]
+  },
+  "tocsin": {
+    "word": "tocsin",
+    "phonetic": "/'tɒksɪn/",
+    "explains": [
+      "n. 警钟, 警报"
     ]
   },
   "today": {
@@ -426,11 +3814,193 @@
       "n./adv. 今天；现今；如今"
     ]
   },
+  "toddle": {
+    "word": "toddle",
+    "phonetic": "/'tɒd(ə)l/",
+    "explains": [
+      "v. (如小孩)蹒跚学步"
+    ]
+  },
+  "toddler": {
+    "word": "toddler",
+    "phonetic": "/'tɒdlə/",
+    "explains": [
+      "n. 初学走路的孩子"
+    ]
+  },
+  "todo": {
+    "word": "todo",
+    "phonetic": "",
+    "explains": [
+      "待办标记"
+    ]
+  },
+  "toe": {
+    "word": "toe",
+    "phonetic": "/təʊ/",
+    "explains": [
+      "n. 脚趾"
+    ]
+  },
+  "toehold": {
+    "word": "toehold",
+    "phonetic": "/'təʊhəʊld/",
+    "explains": [
+      "n. （攀岩时的）立足点,（发展的）起点"
+    ]
+  },
+  "toenail": {
+    "word": "toenail",
+    "phonetic": "/'təʊneɪl/",
+    "explains": [
+      "n. 脚趾甲；[木] 斜钉"
+    ]
+  },
+  "toffee": {
+    "word": "toffee",
+    "phonetic": "/'tɒfɪ/",
+    "explains": [
+      "n. 乳脂糖，太妃糖"
+    ]
+  },
+  "tofu": {
+    "word": "tofu",
+    "phonetic": "/ˈtəʊfuː/",
+    "explains": [
+      "n. 豆腐"
+    ]
+  },
   "together": {
     "word": "together",
     "phonetic": "/təˈɡeðə(r)/",
     "explains": [
       "adv. 一起；共同；同时；总共"
+    ]
+  },
+  "toi": {
+    "word": "toi",
+    "phonetic": "",
+    "explains": [
+      "pron. 你"
+    ]
+  },
+  "toil": {
+    "word": "toil",
+    "phonetic": "/tɒɪl/",
+    "explains": [
+      "n. 苦工, 圈套 v费力地做"
+    ]
+  },
+  "toile": {
+    "word": "toile",
+    "phonetic": "",
+    "explains": [
+      "n.f. 布；画布；网"
+    ]
+  },
+  "toilet": {
+    "word": "toilet",
+    "phonetic": "/ˈtɔɪlɪt/",
+    "explains": [
+      "n. 厕所"
+    ]
+  },
+  "toiletry": {
+    "word": "toiletry",
+    "phonetic": "/'tɔilitri/",
+    "explains": [
+      "n.  化妆品， 化妆用具"
+    ]
+  },
+  "toilette": {
+    "word": "toilette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 洗漱；卫生间"
+    ]
+  },
+  "toilsome": {
+    "word": "toilsome",
+    "phonetic": "/'tɒɪls(ə)m/",
+    "explains": [
+      "adj. 辛苦的；劳苦的；费力的"
+    ]
+  },
+  "token": {
+    "word": "token",
+    "phonetic": "/'təʊk(ə)n/",
+    "explains": [
+      "n. 辅币；象征"
+    ]
+  },
+  "tolerable": {
+    "word": "tolerable",
+    "phonetic": "/'tɒl(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 可忍受的，可容许的，尚好的"
+    ]
+  },
+  "tolerance": {
+    "word": "tolerance",
+    "phonetic": "/'tɒl(ə)r(ə)ns/",
+    "explains": [
+      "n. 忍受，容忍"
+    ]
+  },
+  "tolerant": {
+    "word": "tolerant",
+    "phonetic": "/'tɒl(ə)r(ə)nt/",
+    "explains": [
+      "adj. 容忍的；有耐力的"
+    ]
+  },
+  "tolerate": {
+    "word": "tolerate",
+    "phonetic": "/ˈtɒləreɪt/",
+    "explains": [
+      "v. 容忍"
+    ]
+  },
+  "toleration": {
+    "word": "toleration",
+    "phonetic": "/tɒlə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 宽容，忍受，默认；耐受性"
+    ]
+  },
+  "toll": {
+    "word": "toll",
+    "phonetic": "/təʊl/",
+    "explains": [
+      "n. 通行费；代价；钟声；伤亡人数；v. 征收；敲钟"
+    ]
+  },
+  "tollgate": {
+    "word": "tollgate",
+    "phonetic": "/'təʊlɡeɪt/",
+    "explains": [
+      "n. 征收通行税的关卡, 关门"
+    ]
+  },
+  "tom": {
+    "word": "tom",
+    "phonetic": "/tɒm/",
+    "explains": [
+      "n. 雄性动物（尤指雄猫）；汤姆（人名）；v. 〈美口〉(像汤姆叔一样)逆来顺受"
+    ]
+  },
+  "tomar": {
+    "word": "tomar",
+    "phonetic": "",
+    "explains": [
+      "v. 拿；服用"
+    ]
+  },
+  "tomate": {
+    "word": "tomate",
+    "phonetic": "",
+    "explains": [
+      "n.f. 西红柿"
     ]
   },
   "tomato": {
@@ -440,6 +4010,27 @@
       "n. 番茄；西红柿"
     ]
   },
+  "tomb": {
+    "word": "tomb",
+    "phonetic": "/tuːm/",
+    "explains": [
+      "n. 坟墓"
+    ]
+  },
+  "tombe": {
+    "word": "tombe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 坟墓"
+    ]
+  },
+  "tomfool": {
+    "word": "tomfool",
+    "phonetic": "/tɒm'fuːl/",
+    "explains": [
+      "n. 笨伯, 傻瓜"
+    ]
+  },
   "tomorrow": {
     "word": "tomorrow",
     "phonetic": "/təˈmɒrəʊ/",
@@ -447,11 +4038,95 @@
       "n./adv. 明天；明日；未来"
     ]
   },
+  "ton": {
+    "word": "ton",
+    "phonetic": "/tʌn/",
+    "explains": [
+      "n. 吨"
+    ]
+  },
+  "tonal": {
+    "word": "tonal",
+    "phonetic": "/'təʊn(ə)l/",
+    "explains": [
+      "adj. 音调的"
+    ]
+  },
+  "tonality": {
+    "word": "tonality",
+    "phonetic": "/tə(ʊ)'nælɪtɪ/",
+    "explains": [
+      "n. 音调, 色调"
+    ]
+  },
+  "tone": {
+    "word": "tone",
+    "phonetic": "/təʊn/",
+    "explains": [
+      "n. 语调"
+    ]
+  },
+  "toneless": {
+    "word": "toneless",
+    "phonetic": "/'təʊnlɪs/",
+    "explains": [
+      "adj. 单调的，沉闷的"
+    ]
+  },
+  "tongs": {
+    "word": "tongs",
+    "phonetic": "/tɒŋz/",
+    "explains": [
+      "n. 钳子, 夹具"
+    ]
+  },
+  "tongue": {
+    "word": "tongue",
+    "phonetic": "/tʌŋ/",
+    "explains": [
+      "n. 舌头"
+    ]
+  },
+  "tonic": {
+    "word": "tonic",
+    "phonetic": "/'tɒnɪk/",
+    "explains": [
+      "n&a. 滋补品，补药；强身的，健体的"
+    ]
+  },
+  "tonicity": {
+    "word": "tonicity",
+    "phonetic": "/tə(ʊ)'nɪsɪtɪ/",
+    "explains": [
+      "n. 强壮, 肌肉弹性"
+    ]
+  },
   "tonight": {
     "word": "tonight",
     "phonetic": "/təˈnaɪt/",
     "explains": [
       "n./adv. 今晚；今夜"
+    ]
+  },
+  "tonnage": {
+    "word": "tonnage",
+    "phonetic": "/'tʌnɪdʒ/",
+    "explains": [
+      "n. 登记吨位, 排水量"
+    ]
+  },
+  "tonneau": {
+    "word": "tonneau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 木桶"
+    ]
+  },
+  "tony": {
+    "word": "tony",
+    "phonetic": "/'təʊnɪ/",
+    "explains": [
+      "adj. 高贵的, 时髦的"
     ]
   },
   "too": {
@@ -468,11 +4143,60 @@
       "n. 工具；用具；手段；器械"
     ]
   },
+  "toolbar": {
+    "word": "toolbar",
+    "phonetic": "",
+    "explains": [
+      "工具栏"
+    ]
+  },
+  "toolmaker": {
+    "word": "toolmaker",
+    "phonetic": "/'tuːlmeɪkə/",
+    "explains": [
+      "n. 精密工具制造者"
+    ]
+  },
+  "toolmaking": {
+    "word": "toolmaking",
+    "phonetic": "",
+    "explains": [
+      "n. 工具(或刀具)制造,机床维修"
+    ]
+  },
+  "tooltip": {
+    "word": "tooltip",
+    "phonetic": "",
+    "explains": [
+      "悬浮提示"
+    ]
+  },
   "tooth": {
     "word": "tooth",
     "phonetic": "/tuːθ/",
     "explains": [
       "n. 牙齿；齿；牙状物；爱好"
+    ]
+  },
+  "toothache": {
+    "word": "toothache",
+    "phonetic": "/'tuːθeɪk/",
+    "explains": [
+      "n. [口腔] 牙痛"
+    ]
+  },
+  "toothbrush": {
+    "word": "toothbrush",
+    "phonetic": "/ˈtuːθbrʌʃ/",
+    "explains": [
+      "n. 牙刷"
+    ]
+  },
+  "toothpaste": {
+    "word": "toothpaste",
+    "phonetic": "/ˈtuːθpeɪst/",
+    "explains": [
+      "n. 牙膏"
     ]
   },
   "top": {
@@ -482,11 +4206,319 @@
       "n. 顶部；顶端；上部；首席 adj. 最高的；顶上的"
     ]
   },
+  "tope": {
+    "word": "tope",
+    "phonetic": "/təʊp/",
+    "explains": [
+      "n. 佛塔, [鱼]翅鲨"
+    ]
+  },
+  "topi": {
+    "word": "topi",
+    "phonetic": "/'təʊpɪ/",
+    "explains": [
+      "n. 遮阳帽,[动]转角牛羚"
+    ]
+  },
+  "topic": {
+    "word": "topic",
+    "phonetic": "/ˈtɒpɪk/",
+    "explains": [
+      "n. 话题"
+    ]
+  },
+  "topical": {
+    "word": "topical",
+    "phonetic": "/'tɒpɪk(ə)l/",
+    "explains": [
+      "adj. 有关时事的"
+    ]
+  },
+  "topographer": {
+    "word": "topographer",
+    "phonetic": "/tə'pɒɡrəfə/",
+    "explains": [
+      "n. 地形学者；地志学者"
+    ]
+  },
+  "topographical": {
+    "word": "topographical",
+    "phonetic": "",
+    "explains": [
+      "adj. 地志的,地形学的"
+    ]
+  },
+  "topographically": {
+    "word": "topographically",
+    "phonetic": "",
+    "explains": [
+      "adv. 地形地"
+    ]
+  },
+  "topography": {
+    "word": "topography",
+    "phonetic": "/tə'pɒgrəfɪ/",
+    "explains": [
+      "n. 地形学"
+    ]
+  },
+  "topple": {
+    "word": "topple",
+    "phonetic": "/'tɒp(ə)l/",
+    "explains": [
+      "v. 倾倒"
+    ]
+  },
+  "topsoil": {
+    "word": "topsoil",
+    "phonetic": "/'tɒpsɒɪl/",
+    "explains": [
+      "n. 表层土"
+    ]
+  },
+  "torch": {
+    "word": "torch",
+    "phonetic": "/tɔːtʃ/",
+    "explains": [
+      "n. 手电筒"
+    ]
+  },
+  "torche": {
+    "word": "torche",
+    "phonetic": "",
+    "explains": [
+      "n.f. 火炬；抹布"
+    ]
+  },
+  "tordre": {
+    "word": "tordre",
+    "phonetic": "",
+    "explains": [
+      "v. 扭曲"
+    ]
+  },
+  "torment": {
+    "word": "torment",
+    "phonetic": "/'tɔːment/",
+    "explains": [
+      "n. 痛苦；v. 折磨"
+    ]
+  },
+  "tornado": {
+    "word": "tornado",
+    "phonetic": "/tɔːˈneɪdəʊ/",
+    "explains": [
+      "n. 龙卷风"
+    ]
+  },
+  "toro": {
+    "word": "toro",
+    "phonetic": "",
+    "explains": [
+      "n.m. 公牛"
+    ]
+  },
+  "toronto": {
+    "word": "toronto",
+    "phonetic": "/təˈrɒntəʊ/",
+    "explains": [
+      "n. 多伦多（加拿大）"
+    ]
+  },
+  "torpedo": {
+    "word": "torpedo",
+    "phonetic": "/tɔː'piːdəʊ/",
+    "explains": [
+      "n. 鱼雷，水雷"
+    ]
+  },
+  "torpid": {
+    "word": "torpid",
+    "phonetic": "/'tɔːpɪd/",
+    "explains": [
+      "adj. 迟钝的，迟缓的；不活泼的；麻痹的；[生物] 蛰伏的"
+    ]
+  },
+  "torpor": {
+    "word": "torpor",
+    "phonetic": "/'tɔːpə/",
+    "explains": [
+      "n. 麻木,不活泼"
+    ]
+  },
+  "torque": {
+    "word": "torque",
+    "phonetic": "/tɔːk/",
+    "explains": [
+      "n. 转（力）矩，扭（力）矩"
+    ]
+  },
+  "torre": {
+    "word": "torre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 塔"
+    ]
+  },
+  "torrefy": {
+    "word": "torrefy",
+    "phonetic": "/'tɒrɪfaɪ/",
+    "explains": [
+      "vt. 焙, 烤"
+    ]
+  },
+  "torrent": {
+    "word": "torrent",
+    "phonetic": "/ˈtɒr(ə)nt/",
+    "explains": [
+      "n. 洪流"
+    ]
+  },
+  "torrential": {
+    "word": "torrential",
+    "phonetic": "/tə'renʃ(ə)l/",
+    "explains": [
+      "adj. 猛烈的,汹涌的"
+    ]
+  },
+  "torrid": {
+    "word": "torrid",
+    "phonetic": "/'tɒrɪd/",
+    "explains": [
+      "adj. 晒热的,热情的"
+    ]
+  },
+  "torse": {
+    "word": "torse",
+    "phonetic": "",
+    "explains": [
+      "n.m. 躯干"
+    ]
+  },
+  "torsion": {
+    "word": "torsion",
+    "phonetic": "/'tɔːʃ(ə)n/",
+    "explains": [
+      "n. 扭转，扭曲；转矩，[力] 扭力"
+    ]
+  },
+  "torso": {
+    "word": "torso",
+    "phonetic": "/'tɔːsəʊ/",
+    "explains": [
+      "n. 躯干；裸体躯干雕像；未完成的作品；残缺不全的东西"
+    ]
+  },
+  "tort": {
+    "word": "tort",
+    "phonetic": "",
+    "explains": [
+      "n.m. 过错；损害"
+    ]
+  },
+  "tortile": {
+    "word": "tortile",
+    "phonetic": "/'tɔːtaɪl/",
+    "explains": [
+      "adj. 扭转的, 弯曲的"
+    ]
+  },
+  "tortoise": {
+    "word": "tortoise",
+    "phonetic": "/ˈtɔːtəs/",
+    "explains": [
+      "n. 乌龟"
+    ]
+  },
+  "tortuous": {
+    "word": "tortuous",
+    "phonetic": "/'tɔːtʃʊəs; -jʊəs/",
+    "explains": [
+      "adj. 扭曲的，弯曲的；啰嗦的"
+    ]
+  },
+  "torture": {
+    "word": "torture",
+    "phonetic": "/'tɔːtʃə/",
+    "explains": [
+      "n. 拷问；折磨；v. 拷打"
+    ]
+  },
+  "torturous": {
+    "word": "torturous",
+    "phonetic": "",
+    "explains": [
+      "adj. 折磨人的，痛苦的"
+    ]
+  },
+  "tory": {
+    "word": "tory",
+    "phonetic": "/'tɔ:ri; 'təu-/",
+    "explains": [
+      "n. 保守党员；adj. 保守主义的"
+    ]
+  },
+  "toss": {
+    "word": "toss",
+    "phonetic": "/tɒs/",
+    "explains": [
+      "v. 翻来覆去"
+    ]
+  },
   "total": {
     "word": "total",
     "phonetic": "/ˈtəʊtl/",
     "explains": [
       "adj. 总的；全部的；整个的 n. 总数；合计"
+    ]
+  },
+  "totalitarian": {
+    "word": "totalitarian",
+    "phonetic": "/,təʊtælɪ'teərɪən; tə(ʊ),tælɪ-/",
+    "explains": [
+      "adj. 极权主义的"
+    ]
+  },
+  "totalitarianism": {
+    "word": "totalitarianism",
+    "phonetic": "/,təʊtælɪ'teərɪənɪzəm/",
+    "explains": [
+      "n. 极权主义"
+    ]
+  },
+  "totality": {
+    "word": "totality",
+    "phonetic": "/tə(ʊ)'tælɪtɪ/",
+    "explains": [
+      "n. 全部，总数"
+    ]
+  },
+  "totally": {
+    "word": "totally",
+    "phonetic": "/ˈtəʊt(ə)lɪ/",
+    "explains": [
+      "adv. 完全地"
+    ]
+  },
+  "totem": {
+    "word": "totem",
+    "phonetic": "/'təʊtəm/",
+    "explains": [
+      "n. 图腾, 标识, 徽章"
+    ]
+  },
+  "totemism": {
+    "word": "totemism",
+    "phonetic": "/'təʊtəmɪzəm/",
+    "explains": [
+      "n. 对图腾的信仰, 图腾制度"
+    ]
+  },
+  "totter": {
+    "word": "totter",
+    "phonetic": "/'tɒtə/",
+    "explains": [
+      "v. 蹒跚, 踉跄, 动摇, 摇摇欲坠"
     ]
   },
   "touch": {
@@ -496,11 +4528,123 @@
       "v./n. 接触；触摸；碰到；涉及"
     ]
   },
+  "touchdown": {
+    "word": "touchdown",
+    "phonetic": "/'tʌtʃdaʊn/",
+    "explains": [
+      "n. 着陆，降落；触地；触地得分"
+    ]
+  },
+  "touching": {
+    "word": "touching",
+    "phonetic": "/'tʌtʃɪŋ/",
+    "explains": [
+      "adj. 动人的，令人同情的；prep. 至于，关于；v. 接触；感动（touch的ing形式）"
+    ]
+  },
+  "touchy": {
+    "word": "touchy",
+    "phonetic": "/'tʌtʃɪ/",
+    "explains": [
+      "adj. 暴躁的；易怒的"
+    ]
+  },
+  "tough": {
+    "word": "tough",
+    "phonetic": "/tʌf/",
+    "explains": [
+      "adj. 坚韧的"
+    ]
+  },
+  "toujours": {
+    "word": "toujours",
+    "phonetic": "",
+    "explains": [
+      "adv. 总是"
+    ]
+  },
+  "toupee": {
+    "word": "toupee",
+    "phonetic": "/'tuːpeɪ/",
+    "explains": [
+      "n. 男子假发"
+    ]
+  },
   "tour": {
     "word": "tour",
     "phonetic": "/tʊə(r)/",
     "explains": [
       "n./v. 旅行；旅游；观光；巡回"
+    ]
+  },
+  "tourism": {
+    "word": "tourism",
+    "phonetic": "/ˈtʊərɪz(ə)m/",
+    "explains": [
+      "n. 旅游"
+    ]
+  },
+  "tourist": {
+    "word": "tourist",
+    "phonetic": "/ˈtʊərɪst/",
+    "explains": [
+      "n. 游客"
+    ]
+  },
+  "tournament": {
+    "word": "tournament",
+    "phonetic": "/'tuənəmənt/",
+    "explains": [
+      "n.  比赛， 锦标赛"
+    ]
+  },
+  "tourner": {
+    "word": "tourner",
+    "phonetic": "",
+    "explains": [
+      "v. 转动"
+    ]
+  },
+  "tourniquet": {
+    "word": "tourniquet",
+    "phonetic": "/'tʊənɪkeɪ; 'tɔː-/",
+    "explains": [
+      "n. 止血带, 压脉器"
+    ]
+  },
+  "tous": {
+    "word": "tous",
+    "phonetic": "",
+    "explains": [
+      "pron. 所有人"
+    ]
+  },
+  "tousle": {
+    "word": "tousle",
+    "phonetic": "/'taʊz(ə)l/",
+    "explains": [
+      "n. 乱七八糟的一团, 糟乱"
+    ]
+  },
+  "tousser": {
+    "word": "tousser",
+    "phonetic": "",
+    "explains": [
+      "v. 咳嗽"
+    ]
+  },
+  "tout": {
+    "word": "tout",
+    "phonetic": "/taʊt/",
+    "explains": [
+      "v. 兜售；招徕；刺探赛马情报；n. 侦查者；兜售者"
+    ]
+  },
+  "tow": {
+    "word": "tow",
+    "phonetic": "/təʊ/",
+    "explains": [
+      "v. 拖引，牵引；n. 拖引，牵引"
     ]
   },
   "toward": {
@@ -510,11 +4654,81 @@
       "prep. 向；朝；对于；接近；将近"
     ]
   },
+  "towards": {
+    "word": "towards",
+    "phonetic": "/tə'wɔːdz; twɔːdz; 'tɔːdz/",
+    "explains": [
+      "prep. 用于，有助于"
+    ]
+  },
+  "towel": {
+    "word": "towel",
+    "phonetic": "/ˈtaʊəl/",
+    "explains": [
+      "n. 毛巾"
+    ]
+  },
+  "tower": {
+    "word": "tower",
+    "phonetic": "/ˈtaʊə/",
+    "explains": [
+      "n. 塔"
+    ]
+  },
+  "towering": {
+    "word": "towering",
+    "phonetic": "/'taʊərɪŋ/",
+    "explains": [
+      "adj. 高耸的, 杰出的, 激烈的"
+    ]
+  },
   "town": {
     "word": "town",
     "phonetic": "/taʊn/",
     "explains": [
       "n. 城镇；市镇；城市；市区"
+    ]
+  },
+  "townsfolk": {
+    "word": "townsfolk",
+    "phonetic": "/'taʊnzfəʊk/",
+    "explains": [
+      "n. 市民；镇民"
+    ]
+  },
+  "township": {
+    "word": "township",
+    "phonetic": "/'taʊnʃɪp/",
+    "explains": [
+      "n. 镇区；小镇"
+    ]
+  },
+  "townsman": {
+    "word": "townsman",
+    "phonetic": "/'taʊnzmən/",
+    "explains": [
+      "n. 市民，镇民；同乡人"
+    ]
+  },
+  "townspeople": {
+    "word": "townspeople",
+    "phonetic": "/'taʊnzpiːp(ə)l/",
+    "explains": [
+      "n. 市民, 镇民"
+    ]
+  },
+  "toxic": {
+    "word": "toxic",
+    "phonetic": "/'tɒksɪk/",
+    "explains": [
+      "adj. 有毒的；中毒的"
+    ]
+  },
+  "toxin": {
+    "word": "toxin",
+    "phonetic": "/'tɒksɪn/",
+    "explains": [
+      "n. 毒素；毒质"
     ]
   },
   "toy": {
@@ -524,11 +4738,67 @@
       "n. 玩具；玩物；小装饰品"
     ]
   },
+  "trabajo": {
+    "word": "trabajo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 工作"
+    ]
+  },
+  "trace": {
+    "word": "trace",
+    "phonetic": "/treɪs/",
+    "explains": [
+      "v. 追踪　n. 痕迹"
+    ]
+  },
+  "traceback": {
+    "word": "traceback",
+    "phonetic": "",
+    "explains": [
+      "报错回溯信息"
+    ]
+  },
   "track": {
     "word": "track",
     "phonetic": "/træk/",
     "explains": [
       "n. 轨道；足迹；踪迹；小道 v. 追踪；跟踪"
+    ]
+  },
+  "tract": {
+    "word": "tract",
+    "phonetic": "/trækt/",
+    "explains": [
+      "n. 传单,小册子,大片(土地或森林)"
+    ]
+  },
+  "tractable": {
+    "word": "tractable",
+    "phonetic": "/'træktəb(ə)l/",
+    "explains": [
+      "adj. 易于管教的；易驾驭的；易处理的；驯良的"
+    ]
+  },
+  "tractate": {
+    "word": "tractate",
+    "phonetic": "/'trækteɪt/",
+    "explains": [
+      "n. 论文, 短文"
+    ]
+  },
+  "traction": {
+    "word": "traction",
+    "phonetic": "/'trækʃ(ə)n/",
+    "explains": [
+      "n. 牵引,牵引力"
+    ]
+  },
+  "tractor": {
+    "word": "tractor",
+    "phonetic": "/'træktə/",
+    "explains": [
+      "n. 拖拉机；牵引车"
     ]
   },
   "trade": {
@@ -538,11 +4808,487 @@
       "n. 贸易；交易；行业；职业 v. 交易；买卖；交换"
     ]
   },
+  "trade-off": {
+    "word": "trade-off",
+    "phonetic": "/'treidɔf/",
+    "explains": [
+      "n.  取舍； 权衡； 物物交换"
+    ]
+  },
+  "trademark": {
+    "word": "trademark",
+    "phonetic": "/'treɪdmɑːk/",
+    "explains": [
+      "n. 商标"
+    ]
+  },
+  "trader": {
+    "word": "trader",
+    "phonetic": "/'treɪdə/",
+    "explains": [
+      "n. 商人"
+    ]
+  },
+  "tradesman": {
+    "word": "tradesman",
+    "phonetic": "/'treɪdzmən/",
+    "explains": [
+      "n. 商人，店主；手艺人"
+    ]
+  },
+  "tradition": {
+    "word": "tradition",
+    "phonetic": "/trəˈdɪʃ(ə)n/",
+    "explains": [
+      "n. 传统"
+    ]
+  },
+  "traditional": {
+    "word": "traditional",
+    "phonetic": "/trəˈdɪʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 传统的"
+    ]
+  },
+  "traditionally": {
+    "word": "traditionally",
+    "phonetic": "",
+    "explains": [
+      "adv. 传统上, 照惯例"
+    ]
+  },
+  "traduce": {
+    "word": "traduce",
+    "phonetic": "/trə'djuːs/",
+    "explains": [
+      "v. 中伤"
+    ]
+  },
+  "traer": {
+    "word": "traer",
+    "phonetic": "",
+    "explains": [
+      "v. 带来"
+    ]
+  },
+  "traffic": {
+    "word": "traffic",
+    "phonetic": "/ˈtræfɪk/",
+    "explains": [
+      "n. 交通"
+    ]
+  },
+  "trafficker": {
+    "word": "trafficker",
+    "phonetic": "/'træfɪkə/",
+    "explains": [
+      "n. 贩子；商人；从事违法勾当者"
+    ]
+  },
+  "tragedian": {
+    "word": "tragedian",
+    "phonetic": "/trə'dʒiːdɪən/",
+    "explains": [
+      "n. 悲剧演员；悲剧作家"
+    ]
+  },
+  "tragedienne": {
+    "word": "tragedienne",
+    "phonetic": "/trə,dʒiːdɪ'en/",
+    "explains": [
+      "n. 悲剧女演员"
+    ]
+  },
+  "tragedy": {
+    "word": "tragedy",
+    "phonetic": "/ˈtrædʒɪdɪ/",
+    "explains": [
+      "n. 悲剧"
+    ]
+  },
+  "tragic": {
+    "word": "tragic",
+    "phonetic": "/'trædʒɪk/",
+    "explains": [
+      "adj. 悲惨的；悲剧的"
+    ]
+  },
+  "trail": {
+    "word": "trail",
+    "phonetic": "/treɪl/",
+    "explains": [
+      "n. 小径"
+    ]
+  },
+  "trailer": {
+    "word": "trailer",
+    "phonetic": "/'treɪlə/",
+    "explains": [
+      "n. 追踪者, 拖车"
+    ]
+  },
   "train": {
     "word": "train",
     "phonetic": "/treɪn/",
     "explains": [
       "n. 火车；列车；行列；长队 v. 训练；培养；锻炼"
+    ]
+  },
+  "trainee": {
+    "word": "trainee",
+    "phonetic": "/trei'niː/",
+    "explains": [
+      "n.  受训者"
+    ]
+  },
+  "trainer": {
+    "word": "trainer",
+    "phonetic": "/ˈtreɪnə/",
+    "explains": [
+      "n. 教练"
+    ]
+  },
+  "training": {
+    "word": "training",
+    "phonetic": "/ˈtreɪnɪŋ/",
+    "explains": [
+      "n. 训练"
+    ]
+  },
+  "trainload": {
+    "word": "trainload",
+    "phonetic": "/'treɪnləʊd/",
+    "explains": [
+      "n. 装载量, 列车载重"
+    ]
+  },
+  "traire": {
+    "word": "traire",
+    "phonetic": "",
+    "explains": [
+      "v. 挤奶"
+    ]
+  },
+  "trait": {
+    "word": "trait",
+    "phonetic": "/treɪt; treɪ/",
+    "explains": [
+      "n. 特性，特点；品质；少许"
+    ]
+  },
+  "traitement": {
+    "word": "traitement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 治疗；处理"
+    ]
+  },
+  "traitor": {
+    "word": "traitor",
+    "phonetic": "/'treɪtə/",
+    "explains": [
+      "n. 叛徒；卖国贼；背信弃义的人"
+    ]
+  },
+  "trajectoire": {
+    "word": "trajectoire",
+    "phonetic": "",
+    "explains": [
+      "n.f. 轨迹"
+    ]
+  },
+  "trajectory": {
+    "word": "trajectory",
+    "phonetic": "/trə'dʒekt(ə)rɪ; 'trædʒɪkt(ə)rɪ/",
+    "explains": [
+      "n. [物] 轨道，轨线；[航][军] 弹道"
+    ]
+  },
+  "tram": {
+    "word": "tram",
+    "phonetic": "/træm/",
+    "explains": [
+      "n. 电车轨道；煤车；v. 用煤车运载"
+    ]
+  },
+  "trammel": {
+    "word": "trammel",
+    "phonetic": "/'træm(ə)l/",
+    "explains": [
+      "v. 束缚；拘束；阻碍；n. 拘束；束缚；束缚物"
+    ]
+  },
+  "tramontane": {
+    "word": "tramontane",
+    "phonetic": "/trə'mɒnteɪn/",
+    "explains": [
+      "adj. 野蛮的, 来自群山彼边的"
+    ]
+  },
+  "tramp": {
+    "word": "tramp",
+    "phonetic": "/træmp/",
+    "explains": [
+      "v. 以沉重的脚步走（过）；n. 跋涉"
+    ]
+  },
+  "trample": {
+    "word": "trample",
+    "phonetic": "/'træmp(ə)l/",
+    "explains": [
+      "v. 践踏，蹂躏；n. 践踏，蹂躏"
+    ]
+  },
+  "trance": {
+    "word": "trance",
+    "phonetic": "/trɑːns/",
+    "explains": [
+      "n&v. 恍惚；出神"
+    ]
+  },
+  "tranquil": {
+    "word": "tranquil",
+    "phonetic": "/ˈtraŋkwɪl/",
+    "explains": [
+      "adj. 宁静的"
+    ]
+  },
+  "tranquility": {
+    "word": "tranquility",
+    "phonetic": "",
+    "explains": [
+      "n. 安静，平静"
+    ]
+  },
+  "tranquilizer": {
+    "word": "tranquilizer",
+    "phonetic": "/'træŋkwɪlaɪzə/",
+    "explains": [
+      "n. 镇定剂；使镇定的人或物"
+    ]
+  },
+  "tranquillity": {
+    "word": "tranquillity",
+    "phonetic": "",
+    "explains": [
+      "n. 宁静"
+    ]
+  },
+  "tranquillizer": {
+    "word": "tranquillizer",
+    "phonetic": "",
+    "explains": [
+      "n. [医]镇定剂, 使镇定的人或物"
+    ]
+  },
+  "tranquilo": {
+    "word": "tranquilo",
+    "phonetic": "",
+    "explains": [
+      "别紧张"
+    ]
+  },
+  "transact": {
+    "word": "transact",
+    "phonetic": "/træn'zækt/",
+    "explains": [
+      "v.  交易； 执行， 处理"
+    ]
+  },
+  "transaction": {
+    "word": "transaction",
+    "phonetic": "/træn'zækʃ(ə)n; trɑːn-; -'sæk-/",
+    "explains": [
+      "n. 交易；处理"
+    ]
+  },
+  "transatlantic": {
+    "word": "transatlantic",
+    "phonetic": "/trænzæt'læntɪk; trɑːnz-; -ns-/",
+    "explains": [
+      "adj. 大西洋彼岸的，横渡大西洋的；美国的"
+    ]
+  },
+  "transcend": {
+    "word": "transcend",
+    "phonetic": "/træn'send; trɑːn-/",
+    "explains": [
+      "v. 胜过，超越"
+    ]
+  },
+  "transcendence": {
+    "word": "transcendence",
+    "phonetic": "",
+    "explains": [
+      "n. 卓越, 出类拔萃"
+    ]
+  },
+  "transcendent": {
+    "word": "transcendent",
+    "phonetic": "/træn'send(ə)nt; trɑːn-/",
+    "explains": [
+      "adj. 卓越的；超常的；出类拔萃的；n. 卓越的人；超绝物"
+    ]
+  },
+  "transcendental": {
+    "word": "transcendental",
+    "phonetic": "/,trænsen'dent(ə)l; ,trɑːn-/",
+    "explains": [
+      "adj. 先验的, 超越的, 超出人类经验的"
+    ]
+  },
+  "transcendentalism": {
+    "word": "transcendentalism",
+    "phonetic": "/trænsen'dent(ə)lɪz(ə)m,; ,trɑːn-/",
+    "explains": [
+      "n. 超越论；先验论"
+    ]
+  },
+  "transcribe": {
+    "word": "transcribe",
+    "phonetic": "/træn'skraɪb; trɑːn-/",
+    "explains": [
+      "v. 转录；抄写"
+    ]
+  },
+  "transcript": {
+    "word": "transcript",
+    "phonetic": "/'trænskrɪpt; 'trɑːn-/",
+    "explains": [
+      "n. 抄本，副本"
+    ]
+  },
+  "transcription": {
+    "word": "transcription",
+    "phonetic": "/træn'skrɪpʃ(ə)n; trɑːn-/",
+    "explains": [
+      "n. 抄写；抄本；誊写"
+    ]
+  },
+  "transfer": {
+    "word": "transfer",
+    "phonetic": "/trænsˈfɜː; trænz-/",
+    "explains": [
+      "v. 转移"
+    ]
+  },
+  "transfigure": {
+    "word": "transfigure",
+    "phonetic": "/træns'fɪgə; trɑːns-; -nz-/",
+    "explains": [
+      "v. 使变形；使改观；美化；理想化"
+    ]
+  },
+  "transfix": {
+    "word": "transfix",
+    "phonetic": "/træns'fɪks; trɑːns-; -nz-/",
+    "explains": [
+      "v. 刺穿, 使呆住"
+    ]
+  },
+  "transform": {
+    "word": "transform",
+    "phonetic": "/trænsˈfɔːm; trænz-/",
+    "explains": [
+      "v. 转变"
+    ]
+  },
+  "transformation": {
+    "word": "transformation",
+    "phonetic": "/trænsfə'meɪʃ(ə)n; trɑːns-; -nz-/",
+    "explains": [
+      "n. 变化；改造；转变"
+    ]
+  },
+  "transformer": {
+    "word": "transformer",
+    "phonetic": "/træns'fɔːmə; trɑːns-; -nz-/",
+    "explains": [
+      "n. 变压器"
+    ]
+  },
+  "transfuse": {
+    "word": "transfuse",
+    "phonetic": "/træns'fjuːz; trɑːns-; -nz-/",
+    "explains": [
+      "v. 给输血"
+    ]
+  },
+  "transgress": {
+    "word": "transgress",
+    "phonetic": "/trænz'gres; trɑːnz-; -ns-/",
+    "explains": [
+      "vt&vi. 越越限度；违反(法律规则)"
+    ]
+  },
+  "transgression": {
+    "word": "transgression",
+    "phonetic": "/trɑːns'greʃn; trɑːnz'greʃn; træns'greʃn; trænz'greʃn/",
+    "explains": [
+      "n. [地质] 海侵；犯罪；违反；逸出"
+    ]
+  },
+  "transience": {
+    "word": "transience",
+    "phonetic": "",
+    "explains": [
+      "n. 短暂；无常；顷刻（等于transiency）"
+    ]
+  },
+  "transient": {
+    "word": "transient",
+    "phonetic": "/'trænzɪənt/",
+    "explains": [
+      "adj. 短暂的；路过的；n. 瞬变现象；过往旅客；候鸟"
+    ]
+  },
+  "transistor": {
+    "word": "transistor",
+    "phonetic": "/træn'zɪstə; trɑːn-; -'sɪ-/",
+    "explains": [
+      "n. 晶体管"
+    ]
+  },
+  "transit": {
+    "word": "transit",
+    "phonetic": "/'trænzit/",
+    "explains": [
+      "n.  运输， 载运"
+    ]
+  },
+  "transition": {
+    "word": "transition",
+    "phonetic": "/træn'zɪʃ(ə)n; trɑːn-; -'sɪʃ-/",
+    "explains": [
+      "n. 转变，变迁；过渡"
+    ]
+  },
+  "transitional": {
+    "word": "transitional",
+    "phonetic": "/træn'zɪʃ(ə)n(ə)l; -'sɪʃ-/",
+    "explains": [
+      "adj. 变迁的, 过渡期的"
+    ]
+  },
+  "transitive": {
+    "word": "transitive",
+    "phonetic": "/'trænsɪtɪv; 'trɑːns-; -nz-/",
+    "explains": [
+      "adj. 及物的；过渡的；可迁的；n. 传递；及物动词"
+    ]
+  },
+  "transitory": {
+    "word": "transitory",
+    "phonetic": "/'trænsɪt(ə)rɪ; 'trɑːns-; -nz-/",
+    "explains": [
+      "adj. 短暂的，暂时的；瞬息的"
+    ]
+  },
+  "translate": {
+    "word": "translate",
+    "phonetic": "/trænsˈleɪt; trænzˈleɪt/",
+    "explains": [
+      "v. 翻译"
     ]
   },
   "translation": {
@@ -552,11 +5298,389 @@
       "n. 翻译；译文；转化；调任"
     ]
   },
+  "translator": {
+    "word": "translator",
+    "phonetic": "/trænsˈleɪtə; trænz-/",
+    "explains": [
+      "n. 翻译者"
+    ]
+  },
+  "translucent": {
+    "word": "translucent",
+    "phonetic": "/træns'luːs(ə)nt; trɑːns-; -nz-/",
+    "explains": [
+      "adj. 半透明的"
+    ]
+  },
+  "transmission": {
+    "word": "transmission",
+    "phonetic": "/trænz'mɪʃ(ə)n; trɑːnz-; -ns-/",
+    "explains": [
+      "n. 传送；传动；发射"
+    ]
+  },
+  "transmit": {
+    "word": "transmit",
+    "phonetic": "/trænz'mɪt; trɑːnz-; -ns-/",
+    "explains": [
+      "v. 传送，传达；发射"
+    ]
+  },
+  "transmitter": {
+    "word": "transmitter",
+    "phonetic": "/trænz'mɪtə; trɑːnz-; -ns-/",
+    "explains": [
+      "n. 转送者,传导物,发射机"
+    ]
+  },
+  "transmogrify": {
+    "word": "transmogrify",
+    "phonetic": "/trænz'mɒgrɪfaɪ; trɑːnz-; -ns-/",
+    "explains": [
+      "v. 使变形, 使变成奇形怪状"
+    ]
+  },
+  "transmutation": {
+    "word": "transmutation",
+    "phonetic": "/trænzmjuː'teɪʃ(ə)n; trɑːnz-; -ns-/",
+    "explains": [
+      "n. 变形；变化；演变"
+    ]
+  },
+  "transmute": {
+    "word": "transmute",
+    "phonetic": "/trænz'mjuːt; trɑːnz-; -ns-/",
+    "explains": [
+      "v. 使变形；使变质"
+    ]
+  },
+  "transnational": {
+    "word": "transnational",
+    "phonetic": "/trænz'næʃ(ə)n(ə)l; trɑːnz-; -ns-/",
+    "explains": [
+      "adj. 跨国的；超越国界的"
+    ]
+  },
+  "transparency": {
+    "word": "transparency",
+    "phonetic": "/træn'spær(ə)nsɪ; trɑːn-; -'speə-/",
+    "explains": [
+      "n. 透明，透明度；幻灯片；有图案的玻璃"
+    ]
+  },
+  "transparent": {
+    "word": "transparent",
+    "phonetic": "/træn'spær(ə)nt; trɑːn-; -'speə-/",
+    "explains": [
+      "adj. 透明的；易识破的"
+    ]
+  },
+  "transpire": {
+    "word": "transpire",
+    "phonetic": "/træn'spaɪə; trɑːn-/",
+    "explains": [
+      "v. 发生；蒸发；泄露"
+    ]
+  },
+  "transplant": {
+    "word": "transplant",
+    "phonetic": "/træns'plɑːnt; trɑːns-; -nz-/",
+    "explains": [
+      "v. 移植（器官、皮肤等）；移植，移种（植物）"
+    ]
+  },
+  "transport": {
+    "word": "transport",
+    "phonetic": "/ˈtrænspɔːt; trænsˈpɔːt/",
+    "explains": [
+      "n. 交通　v. 运输"
+    ]
+  },
+  "transportation": {
+    "word": "transportation",
+    "phonetic": "/ˌtrænspɔːˈteɪʃ(ə)n; ˌtrænz-/",
+    "explains": [
+      "n. 运输"
+    ]
+  },
+  "transpose": {
+    "word": "transpose",
+    "phonetic": "/træns'pəʊz; trɑːns-; -nz-/",
+    "explains": [
+      "v. 调换, 颠倒顺序"
+    ]
+  },
+  "transposition": {
+    "word": "transposition",
+    "phonetic": "/trænspə'zɪʃ(ə)n; trɑːns-; -nz-/",
+    "explains": [
+      "n. [数] 移项；调换；换置；变调"
+    ]
+  },
+  "transshipment": {
+    "word": "transshipment",
+    "phonetic": "/træns'ʃipmənt/",
+    "explains": [
+      "n.  转运"
+    ]
+  },
+  "transude": {
+    "word": "transude",
+    "phonetic": "/træn'sjuːd; trɑːn-/",
+    "explains": [
+      "v. [医](使)渗出"
+    ]
+  },
+  "transversal": {
+    "word": "transversal",
+    "phonetic": "/trænz'vɜːs(ə)l; trɑːnz-; -ns-/",
+    "explains": [
+      "adj. 横向的；横断的；横断线的（等于transverse）；n. 横向；截线或贯线；横行肌"
+    ]
+  },
+  "transverse": {
+    "word": "transverse",
+    "phonetic": "/trænz'vɜːs; trɑːnz-; -ns-/",
+    "explains": [
+      "adj. 横的"
+    ]
+  },
+  "trap": {
+    "word": "trap",
+    "phonetic": "/træp/",
+    "explains": [
+      "n. 陷阱"
+    ]
+  },
+  "trapezium": {
+    "word": "trapezium",
+    "phonetic": "/trə'piːzɪəm/",
+    "explains": [
+      "n. [数]不等边四边形, 梯形"
+    ]
+  },
+  "trapezoid": {
+    "word": "trapezoid",
+    "phonetic": "/'træpɪzɒɪd; trə'piːzɒɪd/",
+    "explains": [
+      "n. [数] 梯形；[数] 不规则四边形；adj. 梯形的；[数] 不规则四边形的"
+    ]
+  },
+  "trapper": {
+    "word": "trapper",
+    "phonetic": "/'træpə/",
+    "explains": [
+      "n. 捕兽者, 捕捉器"
+    ]
+  },
+  "trash": {
+    "word": "trash",
+    "phonetic": "/træʃ/",
+    "explains": [
+      "n. 垃圾；废物；v. 丢弃；修剪树枝"
+    ]
+  },
+  "trashy": {
+    "word": "trashy",
+    "phonetic": "/'træʃɪ/",
+    "explains": [
+      "adj. 无价值的, 没有用的, 垃圾似的"
+    ]
+  },
+  "tratar": {
+    "word": "tratar",
+    "phonetic": "",
+    "explains": [
+      "v. 对待；试图"
+    ]
+  },
+  "trauma": {
+    "word": "trauma",
+    "phonetic": "/'trɔːmə; 'traʊmə/",
+    "explains": [
+      "n. 损伤，精神创伤"
+    ]
+  },
+  "traumatic": {
+    "word": "traumatic",
+    "phonetic": "/trɔː'mætɪk; traʊ-/",
+    "explains": [
+      "adj. 外伤的, 创伤的"
+    ]
+  },
+  "travail": {
+    "word": "travail",
+    "phonetic": "/'træveɪl/",
+    "explains": [
+      "n. 分娩的痛苦；艰苦劳动；v. 辛勤努力；经受分娩的阵痛"
+    ]
+  },
   "travel": {
     "word": "travel",
     "phonetic": "/ˈtrævl/",
     "explains": [
       "v./n. 旅行；游历；行进；传播"
+    ]
+  },
+  "traveller": {
+    "word": "traveller",
+    "phonetic": "/'træv(ə)lə/",
+    "explains": [
+      "n. 旅行者"
+    ]
+  },
+  "travelogue": {
+    "word": "travelogue",
+    "phonetic": "/'trævəlɒg/",
+    "explains": [
+      "n. 旅行见闻讲演"
+    ]
+  },
+  "traverse": {
+    "word": "traverse",
+    "phonetic": "/'trævəs; trə'vɜːs/",
+    "explains": [
+      "v. 横越"
+    ]
+  },
+  "traverser": {
+    "word": "traverser",
+    "phonetic": "",
+    "explains": [
+      "v. 穿过"
+    ]
+  },
+  "travesty": {
+    "word": "travesty",
+    "phonetic": "/'trævɪstɪ/",
+    "explains": [
+      "n. 歪曲；滑稽作品；拙劣的模仿作品；v. 歪曲；滑稽地模仿"
+    ]
+  },
+  "trawl": {
+    "word": "trawl",
+    "phonetic": "/trɔːl/",
+    "explains": [
+      "n. [渔] 拖网"
+    ]
+  },
+  "trawler": {
+    "word": "trawler",
+    "phonetic": "/'trɔːlə/",
+    "explains": [
+      "n. 拖网渔船；拖网捕鱼的人"
+    ]
+  },
+  "tray": {
+    "word": "tray",
+    "phonetic": "/treɪ/",
+    "explains": [
+      "n. 托盘，碟；（浅）盘"
+    ]
+  },
+  "treacherous": {
+    "word": "treacherous",
+    "phonetic": "/'tretʃ(ə)rəs/",
+    "explains": [
+      "adj. 奸诈的，叛逆的，背叛的；危险的；不牢靠的"
+    ]
+  },
+  "treachery": {
+    "word": "treachery",
+    "phonetic": "/'tretʃ(ə)rɪ/",
+    "explains": [
+      "n. 背叛；变节；背叛行为"
+    ]
+  },
+  "treacle": {
+    "word": "treacle",
+    "phonetic": "/'triːk(ə)l/",
+    "explains": [
+      "n. 糖蜜, 甜蜜, 过分甜蜜的声调"
+    ]
+  },
+  "tread": {
+    "word": "tread",
+    "phonetic": "/tred/",
+    "explains": [
+      "v. 踩，踏，践踏"
+    ]
+  },
+  "treadmill": {
+    "word": "treadmill",
+    "phonetic": "/'tredmɪl/",
+    "explains": [
+      "n. 踏车, 单调的工作"
+    ]
+  },
+  "treason": {
+    "word": "treason",
+    "phonetic": "/'triːz(ə)n/",
+    "explains": [
+      "n. [法] 叛国罪；不忠"
+    ]
+  },
+  "treasonable": {
+    "word": "treasonable",
+    "phonetic": "/'triːz(ə)nəb(ə)l/",
+    "explains": [
+      "adj. 不忠的；叛逆的，谋反的"
+    ]
+  },
+  "treasure": {
+    "word": "treasure",
+    "phonetic": "/ˈtreʒə/",
+    "explains": [
+      "n. 财宝"
+    ]
+  },
+  "treasurer": {
+    "word": "treasurer",
+    "phonetic": "/'treʒ(ə)rə/",
+    "explains": [
+      "n. 司库，财务主管"
+    ]
+  },
+  "treasury": {
+    "word": "treasury",
+    "phonetic": "/'treʒəri/",
+    "explains": [
+      "n. 〔城堡、教堂、宫殿等的〕金库，宝库"
+    ]
+  },
+  "treat": {
+    "word": "treat",
+    "phonetic": "/triːt/",
+    "explains": [
+      "v. 对待"
+    ]
+  },
+  "treatise": {
+    "word": "treatise",
+    "phonetic": "/'triːtɪs; -ɪz/",
+    "explains": [
+      "n. 专题论文"
+    ]
+  },
+  "treatment": {
+    "word": "treatment",
+    "phonetic": "/ˈtriːtmənt/",
+    "explains": [
+      "n. 治疗"
+    ]
+  },
+  "treaty": {
+    "word": "treaty",
+    "phonetic": "/ˈtriːtɪ/",
+    "explains": [
+      "n. 条约"
+    ]
+  },
+  "treble": {
+    "word": "treble",
+    "phonetic": "/'treb(ə)l/",
+    "explains": [
+      "adj. 三倍(重)的"
     ]
   },
   "tree": {
@@ -566,11 +5690,550 @@
       "n. 树；树木；树状物；木料"
     ]
   },
+  "tree-shaking": {
+    "word": "tree-shaking",
+    "phonetic": "",
+    "explains": [
+      "树摇（移除未使用的代码）"
+    ]
+  },
+  "treeless": {
+    "word": "treeless",
+    "phonetic": "",
+    "explains": [
+      "adj. 没有树木的"
+    ]
+  },
+  "treeline": {
+    "word": "treeline",
+    "phonetic": "",
+    "explains": [
+      "abstract:. 林木线（山顶上树木生长的上限）"
+    ]
+  },
+  "treetop": {
+    "word": "treetop",
+    "phonetic": "/'triːtɒp/",
+    "explains": [
+      "n. 树稍"
+    ]
+  },
+  "trek": {
+    "word": "trek",
+    "phonetic": "/trek/",
+    "explains": [
+      "v. 长途跋涉；旅行"
+    ]
+  },
+  "tremble": {
+    "word": "tremble",
+    "phonetic": "/ˈtremb(ə)l/",
+    "explains": [
+      "v. 颤抖"
+    ]
+  },
+  "tremendous": {
+    "word": "tremendous",
+    "phonetic": "/trɪˈmendəs/",
+    "explains": [
+      "adj. 巨大的"
+    ]
+  },
+  "tremendously": {
+    "word": "tremendously",
+    "phonetic": "/tri'mendəsli/",
+    "explains": [
+      "adv. 非常地,可怕地,惊人地"
+    ]
+  },
+  "tremor": {
+    "word": "tremor",
+    "phonetic": "/'tremə/",
+    "explains": [
+      "n. [医] 震颤；颤动"
+    ]
+  },
+  "tremulous": {
+    "word": "tremulous",
+    "phonetic": "/'tremjʊləs/",
+    "explains": [
+      "adj. 胆小的；战栗的；震颤的"
+    ]
+  },
+  "trench": {
+    "word": "trench",
+    "phonetic": "/tren(t)ʃ/",
+    "explains": [
+      "n. 深沟；壕沟，战壕"
+    ]
+  },
+  "trenchant": {
+    "word": "trenchant",
+    "phonetic": "/'tren(t)ʃ(ə)nt/",
+    "explains": [
+      "adj. 尖刻的；锐利的；苛刻的；锋利的（名词trenchancy，副词trenchantly）；n. (Trenchant)人名；(法)特朗尚"
+    ]
+  },
+  "trend": {
+    "word": "trend",
+    "phonetic": "/trend/",
+    "explains": [
+      "n. 趋势"
+    ]
+  },
+  "trepan": {
+    "word": "trepan",
+    "phonetic": "/trɪ'pæn/",
+    "explains": [
+      "n. 环锯, 钻孔机, 陷阱"
+    ]
+  },
+  "trepidation": {
+    "word": "trepidation",
+    "phonetic": "/,trepɪ'deɪʃ(ə)n/",
+    "explains": [
+      "n. 恐惧；惊恐；忧虑；颤抖"
+    ]
+  },
+  "tres": {
+    "word": "tres",
+    "phonetic": "",
+    "explains": [
+      "num. 三"
+    ]
+  },
+  "trespass": {
+    "word": "trespass",
+    "phonetic": "/'trespəs/",
+    "explains": [
+      "n&v. 侵犯，擅自进入"
+    ]
+  },
+  "trespasser": {
+    "word": "trespasser",
+    "phonetic": "",
+    "explains": [
+      "n. 侵入者, 侵犯者"
+    ]
+  },
+  "tressed": {
+    "word": "tressed",
+    "phonetic": "/trest/",
+    "explains": [
+      "adj. 有一绺绺长发的"
+    ]
+  },
+  "trestle": {
+    "word": "trestle",
+    "phonetic": "/'tres(ə)l/",
+    "explains": [
+      "n. 架柱, 支架"
+    ]
+  },
+  "trial": {
+    "word": "trial",
+    "phonetic": "/ˈtraɪəl/",
+    "explains": [
+      "n. 审判；试验"
+    ]
+  },
+  "triangle": {
+    "word": "triangle",
+    "phonetic": "/ˈtraɪæŋg(ə)l/",
+    "explains": [
+      "n. 三角形"
+    ]
+  },
+  "triangular": {
+    "word": "triangular",
+    "phonetic": "/traɪ'æŋgjʊlə/",
+    "explains": [
+      "adj. 三角的；三者间的"
+    ]
+  },
+  "triassic": {
+    "word": "triassic",
+    "phonetic": "/trai'æsik/",
+    "explains": [
+      "adj. [地]三叠纪的；n. 三叠纪"
+    ]
+  },
+  "tribal": {
+    "word": "tribal",
+    "phonetic": "/'traɪb(ə)l/",
+    "explains": [
+      "adj. 部落的,种族的"
+    ]
+  },
+  "tribe": {
+    "word": "tribe",
+    "phonetic": "/traɪb/",
+    "explains": [
+      "n. 部落；族；宗族；一伙"
+    ]
+  },
+  "tribespeople": {
+    "word": "tribespeople",
+    "phonetic": "/'traɪbzpiːp(ə)l/",
+    "explains": [
+      "[复]n. 部落(或宗族等)成员"
+    ]
+  },
+  "tribulation": {
+    "word": "tribulation",
+    "phonetic": "/,trɪbjʊ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 苦难；磨难；忧患"
+    ]
+  },
+  "tribunal": {
+    "word": "tribunal",
+    "phonetic": "/traɪ'bjuːn(ə)l; trɪ-/",
+    "explains": [
+      "n. 法官席, 审判员席, (特等)法庭"
+    ]
+  },
+  "tributary": {
+    "word": "tributary",
+    "phonetic": "/'trɪbjʊt(ə)rɪ/",
+    "explains": [
+      "a&n. 支流(的)，进贡(的)"
+    ]
+  },
+  "tribute": {
+    "word": "tribute",
+    "phonetic": "/ˈtrɪbjuːt/",
+    "explains": [
+      "n. 贡品"
+    ]
+  },
+  "trice": {
+    "word": "trice",
+    "phonetic": "/traɪs/",
+    "explains": [
+      "n. 一刹那"
+    ]
+  },
+  "trick": {
+    "word": "trick",
+    "phonetic": "/trɪk/",
+    "explains": [
+      "n. 戏法；诡计"
+    ]
+  },
+  "trickery": {
+    "word": "trickery",
+    "phonetic": "/'trɪk(ə)rɪ/",
+    "explains": [
+      "n. 欺骗；诡计；奸计"
+    ]
+  },
+  "trickle": {
+    "word": "trickle",
+    "phonetic": "/'trɪk(ə)l/",
+    "explains": [
+      "v. 滴流"
+    ]
+  },
+  "tricky": {
+    "word": "tricky",
+    "phonetic": "/'trɪkɪ/",
+    "explains": [
+      "adj. 狡猾的；机警的"
+    ]
+  },
+  "tricycle": {
+    "word": "tricycle",
+    "phonetic": "/'traɪsɪk(ə)l/",
+    "explains": [
+      "n. 三轮车"
+    ]
+  },
+  "triennial": {
+    "word": "triennial",
+    "phonetic": "/traɪ'enɪəl/",
+    "explains": [
+      "adj. 每三年的；连续三年的；n. 三年生植物"
+    ]
+  },
+  "trifle": {
+    "word": "trifle",
+    "phonetic": "/ˈtraɪf(ə)l/",
+    "explains": [
+      "n. 小事"
+    ]
+  },
+  "trig": {
+    "word": "trig",
+    "phonetic": "/trɪg/",
+    "explains": [
+      "adj. 潇洒的"
+    ]
+  },
+  "trigger": {
+    "word": "trigger",
+    "phonetic": "/'trɪgə/",
+    "explains": [
+      "n. 扳机；v. 触发，引起"
+    ]
+  },
+  "trigonometry": {
+    "word": "trigonometry",
+    "phonetic": "/,trɪgə'nɒmɪtrɪ/",
+    "explains": [
+      "n. 三角法"
+    ]
+  },
+  "trill": {
+    "word": "trill",
+    "phonetic": "/trɪl/",
+    "explains": [
+      "n. 颤音；啭声；颤声；v. 用颤音唱；用颤声说"
+    ]
+  },
+  "trillion": {
+    "word": "trillion",
+    "phonetic": "/'trɪljən/",
+    "explains": [
+      "num. 万亿"
+    ]
+  },
+  "trilobite": {
+    "word": "trilobite",
+    "phonetic": "/'traɪlə(ʊ)baɪt; 'trɪ-/",
+    "explains": [
+      "n. [古生]三叶虫"
+    ]
+  },
+  "trilogy": {
+    "word": "trilogy",
+    "phonetic": "/'trɪlədʒɪ/",
+    "explains": [
+      "n. 三部剧, 三部曲"
+    ]
+  },
+  "trim": {
+    "word": "trim",
+    "phonetic": "/trɪm/",
+    "explains": [
+      "adj. 整齐的；v. 使整齐"
+    ]
+  },
+  "trinity": {
+    "word": "trinity",
+    "phonetic": "/'trɪnɪtɪ/",
+    "explains": [
+      "n. 三位一体；三人一组；三个一组的东西；三倍"
+    ]
+  },
+  "trinket": {
+    "word": "trinket",
+    "phonetic": "/'trɪŋkɪt/",
+    "explains": [
+      "n. 小装饰品, 琐物,无关紧要的小事"
+    ]
+  },
+  "trinomial": {
+    "word": "trinomial",
+    "phonetic": "/traɪ'nəʊmɪəl/",
+    "explains": [
+      "n. [数] 三项式；[生物] 三名法；adj. 三项式的"
+    ]
+  },
+  "trio": {
+    "word": "trio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 三重奏；三人组"
+    ]
+  },
   "trip": {
     "word": "trip",
     "phonetic": "/trɪp/",
     "explains": [
       "n. 旅行；旅游；出行；摔倒 v. 绊倒；跌倒"
+    ]
+  },
+  "triple": {
+    "word": "triple",
+    "phonetic": "/'trɪp(ə)l/",
+    "explains": [
+      "adj. 三倍的；三方的；n. 三倍数；三个一组；v. 增至三倍"
+    ]
+  },
+  "triplicate": {
+    "word": "triplicate",
+    "phonetic": "/'triplikət/",
+    "explains": [
+      "adj. 一式三份的；n.  第三份； 第二副本"
+    ]
+  },
+  "tripod": {
+    "word": "tripod",
+    "phonetic": "/'traɪpɒd/",
+    "explains": [
+      "n. [摄] 三脚架；三脚桌"
+    ]
+  },
+  "tripper": {
+    "word": "tripper",
+    "phonetic": "/'trɪpə/",
+    "explains": [
+      "n. 远足者；旅行者；绊跌者"
+    ]
+  },
+  "triste": {
+    "word": "triste",
+    "phonetic": "/triːst/",
+    "explains": [
+      "adj. <法>悲哀的"
+    ]
+  },
+  "tristesse": {
+    "word": "tristesse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 悲伤"
+    ]
+  },
+  "trite": {
+    "word": "trite",
+    "phonetic": "/traɪt/",
+    "explains": [
+      "adj. 陈腐的；平庸的；老一套的"
+    ]
+  },
+  "triturate": {
+    "word": "triturate",
+    "phonetic": "/'trɪtjʊreɪt/",
+    "explains": [
+      "vt. 弄成粉, 粉碎, 磨碎, 捣碎"
+    ]
+  },
+  "triumph": {
+    "word": "triumph",
+    "phonetic": "/ˈtraɪəmf/",
+    "explains": [
+      "n. 胜利"
+    ]
+  },
+  "triumphant": {
+    "word": "triumphant",
+    "phonetic": "/traɪ'ʌmf(ə)nt/",
+    "explains": [
+      "adj. 得胜的；得意洋洋的"
+    ]
+  },
+  "trivia": {
+    "word": "trivia",
+    "phonetic": "/'trɪvɪə/",
+    "explains": [
+      "n. 琐事"
+    ]
+  },
+  "trivial": {
+    "word": "trivial",
+    "phonetic": "/'trɪvɪəl/",
+    "explains": [
+      "adj. 琐碎的；平常的"
+    ]
+  },
+  "troglodyte": {
+    "word": "troglodyte",
+    "phonetic": "/'trɒglədaɪt/",
+    "explains": [
+      "n. 穴居人, 隐居者,老顽固,类人猿"
+    ]
+  },
+  "trois": {
+    "word": "trois",
+    "phonetic": "",
+    "explains": [
+      "num. 三"
+    ]
+  },
+  "trolley": {
+    "word": "trolley",
+    "phonetic": "/ˈtrɒlɪ/",
+    "explains": [
+      "n. 手推车"
+    ]
+  },
+  "trombone": {
+    "word": "trombone",
+    "phonetic": "/trɒm'bəʊn/",
+    "explains": [
+      "n. 长号，伸缩喇叭"
+    ]
+  },
+  "trompette": {
+    "word": "trompette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 小号；喇叭"
+    ]
+  },
+  "tronc": {
+    "word": "tronc",
+    "phonetic": "",
+    "explains": [
+      "n.m. 树干；躯干"
+    ]
+  },
+  "troop": {
+    "word": "troop",
+    "phonetic": "/truːp/",
+    "explains": [
+      "n. 军队"
+    ]
+  },
+  "trophic": {
+    "word": "trophic",
+    "phonetic": "/'trəʊfɪk; 'trɒfɪk/",
+    "explains": [
+      "adj. 营养的, 有关营养的"
+    ]
+  },
+  "trophy": {
+    "word": "trophy",
+    "phonetic": "/'trəʊfɪ/",
+    "explains": [
+      "n. 战利品, 奖品"
+    ]
+  },
+  "tropic": {
+    "word": "tropic",
+    "phonetic": "/'trɒpɪk/",
+    "explains": [
+      "n. 回归线；热带地区"
+    ]
+  },
+  "tropical": {
+    "word": "tropical",
+    "phonetic": "/ˈtrɒpɪk(ə)l/",
+    "explains": [
+      "adj. 热带的"
+    ]
+  },
+  "trot": {
+    "word": "trot",
+    "phonetic": "/trɒt/",
+    "explains": [
+      "v. （马）小跑；n. （马）小跑；慢跑"
+    ]
+  },
+  "trottoir": {
+    "word": "trottoir",
+    "phonetic": "",
+    "explains": [
+      "n.m. 人行道"
+    ]
+  },
+  "troubadour": {
+    "word": "troubadour",
+    "phonetic": "/'truːbədɔː/",
+    "explains": [
+      "n. 行吟诗人；民谣歌手"
     ]
   },
   "trouble": {
@@ -580,11 +6243,165 @@
       "n. 麻烦；烦恼；故障；动乱 v. 麻烦；使烦恼；折磨"
     ]
   },
+  "troublemaker": {
+    "word": "troublemaker",
+    "phonetic": "/'trʌb(ə)lmeɪkə/",
+    "explains": [
+      "n. 捣乱者，闹事者；惹麻烦的人"
+    ]
+  },
+  "troubleshooter": {
+    "word": "troubleshooter",
+    "phonetic": "",
+    "explains": [
+      "n. 故障检修工；解决纠纷者；解决麻烦问题的能手"
+    ]
+  },
+  "troubleshooting": {
+    "word": "troubleshooting",
+    "phonetic": "",
+    "explains": [
+      "故障排查"
+    ]
+  },
+  "troublesome": {
+    "word": "troublesome",
+    "phonetic": "/ˈtrʌb(ə)lsəm/",
+    "explains": [
+      "adj. 令人烦恼的"
+    ]
+  },
+  "trough": {
+    "word": "trough",
+    "phonetic": "/trɔf/",
+    "explains": [
+      "n.  槽， 水槽； 低谷， 低潮"
+    ]
+  },
+  "trounce": {
+    "word": "trounce",
+    "phonetic": "/trauns/",
+    "explains": [
+      "vt.  痛击； 严责， 呵斥"
+    ]
+  },
+  "troupe": {
+    "word": "troupe",
+    "phonetic": "/truːp/",
+    "explains": [
+      "n. 剧团"
+    ]
+  },
+  "troupeau": {
+    "word": "troupeau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 畜群"
+    ]
+  },
+  "trousers": {
+    "word": "trousers",
+    "phonetic": "/ˈtraʊzəz/",
+    "explains": [
+      "n. 裤子"
+    ]
+  },
+  "trout": {
+    "word": "trout",
+    "phonetic": "/traʊt/",
+    "explains": [
+      "n. 鲑鱼"
+    ]
+  },
+  "trouvaille": {
+    "word": "trouvaille",
+    "phonetic": "",
+    "explains": [
+      "n. <法>意外收获"
+    ]
+  },
+  "trouver": {
+    "word": "trouver",
+    "phonetic": "",
+    "explains": [
+      "v. 找到；觉得"
+    ]
+  },
+  "trove": {
+    "word": "trove",
+    "phonetic": "/trəʊv/",
+    "explains": [
+      "n. 被发现的东西, 收藏的东西"
+    ]
+  },
+  "trowel": {
+    "word": "trowel",
+    "phonetic": "/'traʊəl/",
+    "explains": [
+      "n. 泥铲, 移植泥刀"
+    ]
+  },
+  "truancy": {
+    "word": "truancy",
+    "phonetic": "/'truːənsɪ/",
+    "explains": [
+      "n. 逃避"
+    ]
+  },
+  "truant": {
+    "word": "truant",
+    "phonetic": "/'truːənt/",
+    "explains": [
+      "n. 旷课者；逃学者"
+    ]
+  },
+  "truce": {
+    "word": "truce",
+    "phonetic": "/truːs/",
+    "explains": [
+      "n. 休战"
+    ]
+  },
   "truck": {
     "word": "truck",
     "phonetic": "/trʌk/",
     "explains": [
       "n. 卡车；货车；手推车"
+    ]
+  },
+  "truculence": {
+    "word": "truculence",
+    "phonetic": "",
+    "explains": [
+      "n. 野蛮, 粗野, 残酷, 好战, 致命性"
+    ]
+  },
+  "truculent": {
+    "word": "truculent",
+    "phonetic": "/'trʌkjʊl(ə)nt/",
+    "explains": [
+      "adj. 好斗的；野蛮的；言词刻毒的"
+    ]
+  },
+  "trudge": {
+    "word": "trudge",
+    "phonetic": "/trʌdʒ/",
+    "explains": [
+      "v. 跋涉；步履艰难地走，费力地走；n.  跋涉， 艰难的步行"
+    ]
+  },
+  "true": {
+    "word": "true",
+    "phonetic": "/truː/",
+    "explains": [
+      "adj. 真实的"
+    ]
+  },
+  "truism": {
+    "word": "truism",
+    "phonetic": "/'truːɪz(ə)m/",
+    "explains": [
+      "n. 自明之理；老生常谈；老套；众所周知；真实性"
     ]
   },
   "truly": {
@@ -594,11 +6411,88 @@
       "adv. 真实地；真诚地；正确地"
     ]
   },
+  "trump": {
+    "word": "trump",
+    "phonetic": "/trʌmp/",
+    "explains": [
+      "n. 王牌；法宝；喇叭；v. 胜过；打出王牌赢"
+    ]
+  },
+  "trumpery": {
+    "word": "trumpery",
+    "phonetic": "/'trʌmp(ə)rɪ/",
+    "explains": [
+      "n. 零星杂物,中看不中用的东西没有价值的东西"
+    ]
+  },
+  "trumpet": {
+    "word": "trumpet",
+    "phonetic": "/ˈtrʌmpɪt/",
+    "explains": [
+      "n. 喇叭"
+    ]
+  },
+  "trumpeter": {
+    "word": "trumpeter",
+    "phonetic": "/'trʌmpɪtə/",
+    "explains": [
+      "n. 喇叭手, 号兵"
+    ]
+  },
+  "truncate": {
+    "word": "truncate",
+    "phonetic": "",
+    "explains": [
+      "截断"
+    ]
+  },
+  "truncated": {
+    "word": "truncated",
+    "phonetic": "/trʌŋ'keɪtɪd/",
+    "explains": [
+      "adj. 缩短了的；被删节的；切去顶端的；v. 缩短（truncate的过去分词）；截去…的顶端"
+    ]
+  },
+  "truncation": {
+    "word": "truncation",
+    "phonetic": "",
+    "explains": [
+      "截断"
+    ]
+  },
+  "trundle": {
+    "word": "trundle",
+    "phonetic": "/'trʌnd(ə)l/",
+    "explains": [
+      "n. 滚动；小脚轮；v. 使滚动；运送"
+    ]
+  },
+  "trunk": {
+    "word": "trunk",
+    "phonetic": "/trʌŋk/",
+    "explains": [
+      "n. 树干；行李箱"
+    ]
+  },
   "trust": {
     "word": "trust",
     "phonetic": "/trʌst/",
     "explains": [
       "v./n. 信任；信赖；相信；依靠"
+    ]
+  },
+  "trustee": {
+    "word": "trustee",
+    "phonetic": "/trʌs'tiː/",
+    "explains": [
+      "n. 受托人；托管人；vt. 移交（财产或管理权）给受托人"
+    ]
+  },
+  "trustworthy": {
+    "word": "trustworthy",
+    "phonetic": "/'trʌs(t)wɜːðɪ/",
+    "explains": [
+      "adj. 可信赖的，可靠的"
     ]
   },
   "truth": {
@@ -608,11 +6502,116 @@
       "n. 真理；事实；真相；诚实"
     ]
   },
+  "truthful": {
+    "word": "truthful",
+    "phonetic": "/'truːθfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 真实的；诚实的"
+    ]
+  },
   "try": {
     "word": "try",
     "phonetic": "/traɪ/",
     "explains": [
       "v. 试图；努力；尝试；试验 n. 尝试；努力；试验"
+    ]
+  },
+  "trying": {
+    "word": "trying",
+    "phonetic": "/'traɪɪŋ/",
+    "explains": [
+      "adj. 难受的；难堪的；费劲的；令人厌烦的；v. 尝试（try的ing形式）；试验"
+    ]
+  },
+  "tryout": {
+    "word": "tryout",
+    "phonetic": "/'traɪaʊt/",
+    "explains": [
+      "n. 试验；选拔赛；预赛"
+    ]
+  },
+  "tryptophan": {
+    "word": "tryptophan",
+    "phonetic": "/'trɪptəfæn/",
+    "explains": [
+      "n. [生化] 色氨酸"
+    ]
+  },
+  "tsar": {
+    "word": "tsar",
+    "phonetic": "/zɑː; tsɑː/",
+    "explains": [
+      "n. 沙皇（大权独揽的人物）"
+    ]
+  },
+  "tt": {
+    "word": "tt",
+    "phonetic": "",
+    "explains": [
+      "abbr. 电汇（Telegraphic Transfer）；总时间（Total Time）；技术术语（Technical Term）；经结核菌素试验的（Tuberculin Tested）"
+    ]
+  },
+  "ttl": {
+    "word": "ttl",
+    "phonetic": "",
+    "explains": [
+      "存活时间"
+    ]
+  },
+  "tub": {
+    "word": "tub",
+    "phonetic": "/tʌb/",
+    "explains": [
+      "n. 浴盆；桶；vt. 把…装入桶；为…洗盆浴；vi. 洗盆浴；（衣服等）被放在桶里洗"
+    ]
+  },
+  "tuba": {
+    "word": "tuba",
+    "phonetic": "/'tjuːbə/",
+    "explains": [
+      "n. 大号，低音兼次中音大号；（管风琴的）簧管音栓"
+    ]
+  },
+  "tubbish": {
+    "word": "tubbish",
+    "phonetic": "",
+    "explains": [
+      "adj. 桶状的, 肥胖的"
+    ]
+  },
+  "tube": {
+    "word": "tube",
+    "phonetic": "/tjuːb/",
+    "explains": [
+      "n. 管子"
+    ]
+  },
+  "tuber": {
+    "word": "tuber",
+    "phonetic": "/'tjuːbə/",
+    "explains": [
+      "n. [植]块茎, 突起, [解]结节"
+    ]
+  },
+  "tuberculosis": {
+    "word": "tuberculosis",
+    "phonetic": "/tjʊ,bɜːkjʊ'ləʊsɪs/",
+    "explains": [
+      "n. 结核病，肺结核"
+    ]
+  },
+  "tubular": {
+    "word": "tubular",
+    "phonetic": "/'tjuːbjʊlə/",
+    "explains": [
+      "adj. 管状的"
+    ]
+  },
+  "tuck": {
+    "word": "tuck",
+    "phonetic": "/tʌk/",
+    "explains": [
+      "v. 塞"
     ]
   },
   "tuesday": {
@@ -622,11 +6621,347 @@
       "n. 星期二"
     ]
   },
+  "tuft": {
+    "word": "tuft",
+    "phonetic": "/tʌft/",
+    "explains": [
+      "n. 一簇；丛生植物；一丛；vt. 用丛毛装饰；vi. 丛生"
+    ]
+  },
+  "tug": {
+    "word": "tug",
+    "phonetic": "/tʌg/",
+    "explains": [
+      "v. 用力拖；n. 猛拉，拖"
+    ]
+  },
+  "tugboat": {
+    "word": "tugboat",
+    "phonetic": "/'tʌɡbəʊt/",
+    "explains": [
+      "n. 拖船, 拖轮"
+    ]
+  },
+  "tuition": {
+    "word": "tuition",
+    "phonetic": "/tjuːˈɪʃ(ə)n/",
+    "explains": [
+      "n. 学费"
+    ]
+  },
+  "tulip": {
+    "word": "tulip",
+    "phonetic": "/'tjuːlɪp/",
+    "explains": [
+      "n. 郁金香"
+    ]
+  },
+  "tulipe": {
+    "word": "tulipe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 郁金香"
+    ]
+  },
+  "tumble": {
+    "word": "tumble",
+    "phonetic": "/'tʌmb(ə)l/",
+    "explains": [
+      "v. 摔倒；倒塌；滚动；打滚；仓惶地行动；n. 跌倒；翻筋斗；跌跤"
+    ]
+  },
+  "tumid": {
+    "word": "tumid",
+    "phonetic": "/'tjuːmɪd/",
+    "explains": [
+      "adj. 肿胀的, 肿大的"
+    ]
+  },
+  "tummy": {
+    "word": "tummy",
+    "phonetic": "/'tʌmɪ/",
+    "explains": [
+      "n. 肚子；胃"
+    ]
+  },
+  "tumor": {
+    "word": "tumor",
+    "phonetic": "/'tju:mə(r)/",
+    "explains": [
+      "n. 肿瘤；肿块；赘生物"
+    ]
+  },
+  "tumour": {
+    "word": "tumour",
+    "phonetic": "",
+    "explains": [
+      "n. [肿瘤] 瘤；肿瘤；肿块"
+    ]
+  },
+  "tumult": {
+    "word": "tumult",
+    "phonetic": "/'tjuːmʌlt/",
+    "explains": [
+      "n. 喧哗；激动，混乱；吵闹"
+    ]
+  },
+  "tumultuous": {
+    "word": "tumultuous",
+    "phonetic": "/tjʊ'mʌltjʊəs/",
+    "explains": [
+      "adj. 吵闹的；骚乱的；狂暴的"
+    ]
+  },
+  "tuna": {
+    "word": "tuna",
+    "phonetic": "/'tjuːnə/",
+    "explains": [
+      "n. 金枪鱼"
+    ]
+  },
+  "tunable": {
+    "word": "tunable",
+    "phonetic": "/'tjuːnəbl/",
+    "explains": [
+      "adj. 可调的"
+    ]
+  },
+  "tundra": {
+    "word": "tundra",
+    "phonetic": "/'tʌndrə/",
+    "explains": [
+      "n. 苔原, 冻土地带"
+    ]
+  },
+  "tune": {
+    "word": "tune",
+    "phonetic": "/tjuːn/",
+    "explains": [
+      "n. 调子；v. 调音"
+    ]
+  },
+  "tunnel": {
+    "word": "tunnel",
+    "phonetic": "/ˈtʌn(ə)l/",
+    "explains": [
+      "n. 隧道"
+    ]
+  },
+  "turbid": {
+    "word": "turbid",
+    "phonetic": "/'tɜːbɪd/",
+    "explains": [
+      "adj. 混浊的, 不纯的, 脏的, 混乱的, 雾重的"
+    ]
+  },
+  "turbine": {
+    "word": "turbine",
+    "phonetic": "/ˈtɜːbaɪn/",
+    "explains": [
+      "n. 涡轮"
+    ]
+  },
+  "turbot": {
+    "word": "turbot",
+    "phonetic": "/'tɜːbət/",
+    "explains": [
+      "n. 大比目鱼"
+    ]
+  },
+  "turbulence": {
+    "word": "turbulence",
+    "phonetic": "/'tɜːbjʊl(ə)ns/",
+    "explains": [
+      "n. 骚乱, 动荡"
+    ]
+  },
+  "turbulent": {
+    "word": "turbulent",
+    "phonetic": "/'tɜːbjʊl(ə)nt/",
+    "explains": [
+      "adj. 骚乱的，混乱的；狂暴的；吵闹的；激流的，湍流的"
+    ]
+  },
+  "turf": {
+    "word": "turf",
+    "phonetic": "/təːf/",
+    "explains": [
+      "n.  草皮； 泥煤； 赛马； 地盘， 势力范围"
+    ]
+  },
+  "turgid": {
+    "word": "turgid",
+    "phonetic": "/'tɜːdʒɪd/",
+    "explains": [
+      "adj. 肿胀的；浮夸的；浮肿的"
+    ]
+  },
+  "turkey": {
+    "word": "turkey",
+    "phonetic": "/'tɜːkɪ/",
+    "explains": [
+      "n. 火鸡；笨蛋；失败之作"
+    ]
+  },
+  "turkic": {
+    "word": "turkic",
+    "phonetic": "/'tə:kik/",
+    "explains": [
+      "n. 土耳其语(的), 土耳其语系者(的)"
+    ]
+  },
+  "turmeric": {
+    "word": "turmeric",
+    "phonetic": "/'tɜːmərɪk/",
+    "explains": [
+      "n. [植]姜黄, 姜黄根, 姜黄根粉末"
+    ]
+  },
+  "turmoil": {
+    "word": "turmoil",
+    "phonetic": "/'tɜːmɒɪl/",
+    "explains": [
+      "n. 骚动，骚乱"
+    ]
+  },
   "turn": {
     "word": "turn",
     "phonetic": "/tɜːn/",
     "explains": [
       "v. 转动；旋转；转向；转变 n. 转弯；变化；(依次轮到的) 机会"
+    ]
+  },
+  "turner": {
+    "word": "turner",
+    "phonetic": "/'tɜːnə/",
+    "explains": [
+      "n. 特纳（姓氏）"
+    ]
+  },
+  "turning": {
+    "word": "turning",
+    "phonetic": "/ˈtɜːnɪŋ/",
+    "explains": [
+      "n. 转弯处"
+    ]
+  },
+  "turnip": {
+    "word": "turnip",
+    "phonetic": "/'tɜːnɪp/",
+    "explains": [
+      "n. [植]芜箐(甘蓝)"
+    ]
+  },
+  "turnout": {
+    "word": "turnout",
+    "phonetic": "/'tɜːnaʊt/",
+    "explains": [
+      "n. 产量；出席者；参加人数；出动；清除；[公路] 岔道"
+    ]
+  },
+  "turnover": {
+    "word": "turnover",
+    "phonetic": "/'tɜːnəʊvə/",
+    "explains": [
+      "n. 翻覆；[贸易] 营业额；流通量；半圆卷饼；失误；adj. 翻过来的；可翻转的"
+    ]
+  },
+  "turnpike": {
+    "word": "turnpike",
+    "phonetic": "/'tɜːnpaɪk/",
+    "explains": [
+      "n. 收费公路"
+    ]
+  },
+  "turpitude": {
+    "word": "turpitude",
+    "phonetic": "/'tɜːpɪtjuːd/",
+    "explains": [
+      "n. 卑鄙；奸恶"
+    ]
+  },
+  "turquoise": {
+    "word": "turquoise",
+    "phonetic": "/'tɜːkwɒɪz; -kwɑːz/",
+    "explains": [
+      "n. [矿]绿宝石, 绿松石色, 青绿色"
+    ]
+  },
+  "turret": {
+    "word": "turret",
+    "phonetic": "/'tʌrɪt/",
+    "explains": [
+      "n. 小塔, 塔楼, 炮塔"
+    ]
+  },
+  "turtle": {
+    "word": "turtle",
+    "phonetic": "/'tɜːt(ə)l/",
+    "explains": [
+      "n. 海龟，玳瑁"
+    ]
+  },
+  "turtleneck": {
+    "word": "turtleneck",
+    "phonetic": "/'tɜːt(ə)lnek/",
+    "explains": [
+      "n. 圆翻领；高翻领毛衣；adj. 圆翻领的"
+    ]
+  },
+  "tusk": {
+    "word": "tusk",
+    "phonetic": "/tʌsk/",
+    "explains": [
+      "n. 长牙；v. 以牙刺戳"
+    ]
+  },
+  "tussle": {
+    "word": "tussle",
+    "phonetic": "/'tʌs(ə)l/",
+    "explains": [
+      "n. 格斗, 斗争, 争斗"
+    ]
+  },
+  "tutelage": {
+    "word": "tutelage",
+    "phonetic": "/'tjuːtɪlɪdʒ/",
+    "explains": [
+      "n. 监护"
+    ]
+  },
+  "tutelary": {
+    "word": "tutelary",
+    "phonetic": "/'tjuːtɪlərɪ/",
+    "explains": [
+      "n. 守护神, 守护圣徒"
+    ]
+  },
+  "tutor": {
+    "word": "tutor",
+    "phonetic": "/ˈtjuːtə/",
+    "explains": [
+      "n. 导师"
+    ]
+  },
+  "tutorial": {
+    "word": "tutorial",
+    "phonetic": "/tjuː'tɔːrɪəl/",
+    "explains": [
+      "adj. 辅导的；家庭教师的，个别指导的；n. 个别指导"
+    ]
+  },
+  "tutorship": {
+    "word": "tutorship",
+    "phonetic": "",
+    "explains": [
+      "n. 辅导；教师职位"
+    ]
+  },
+  "tuxedo": {
+    "word": "tuxedo",
+    "phonetic": "/tʌk'siːdəʊ/",
+    "explains": [
+      "n. 男士无尾半正式晚礼服"
     ]
   },
   "tv": {
@@ -636,6 +6971,69 @@
       "n. 电视；电视机；电视节目"
     ]
   },
+  "twaddle": {
+    "word": "twaddle",
+    "phonetic": "/'twɒd(ə)l/",
+    "explains": [
+      "n. 废话, 闲聊"
+    ]
+  },
+  "twain": {
+    "word": "twain",
+    "phonetic": "/tweɪn/",
+    "explains": [
+      "n. 两, 双, 二"
+    ]
+  },
+  "twee": {
+    "word": "twee",
+    "phonetic": "/twiː/",
+    "explains": [
+      "adj. 矫饰的, 可爱的"
+    ]
+  },
+  "tweed": {
+    "word": "tweed",
+    "phonetic": "/twiːd/",
+    "explains": [
+      "n. 花呢；花呢服装"
+    ]
+  },
+  "tweezers": {
+    "word": "tweezers",
+    "phonetic": "/'twiːzəz/",
+    "explains": [
+      "n. 镊子"
+    ]
+  },
+  "twelfth": {
+    "word": "twelfth",
+    "phonetic": "/twelfθ/",
+    "explains": [
+      "adj. 第十二的，第十二个的；十二分之一的；n. 第十二；月的第十二日"
+    ]
+  },
+  "twelve": {
+    "word": "twelve",
+    "phonetic": "/twelv/",
+    "explains": [
+      "num. 十二"
+    ]
+  },
+  "twentieth": {
+    "word": "twentieth",
+    "phonetic": "/ˈtwentiəθ/",
+    "explains": [
+      "num. 第二十,二十分之一"
+    ]
+  },
+  "twenty": {
+    "word": "twenty",
+    "phonetic": "/ˈtwentɪ/",
+    "explains": [
+      "num. 二十"
+    ]
+  },
   "twice": {
     "word": "twice",
     "phonetic": "/twaɪs/",
@@ -643,11 +7041,214 @@
       "adv. 两次；两倍"
     ]
   },
+  "twig": {
+    "word": "twig",
+    "phonetic": "/twɪg/",
+    "explains": [
+      "n. 嫩枝"
+    ]
+  },
+  "twilight": {
+    "word": "twilight",
+    "phonetic": "/'twaɪlaɪt/",
+    "explains": [
+      "n. 黄昏"
+    ]
+  },
+  "twin": {
+    "word": "twin",
+    "phonetic": "/twɪn/",
+    "explains": [
+      "n. 双胞胎"
+    ]
+  },
+  "twine": {
+    "word": "twine",
+    "phonetic": "/twaɪn/",
+    "explains": [
+      "n. 合股线 v织, (使)缠绕"
+    ]
+  },
+  "twinge": {
+    "word": "twinge",
+    "phonetic": "/twɪn(d)ʒ/",
+    "explains": [
+      "n. 阵痛；悔恨；v. 使刺痛；使感到剧痛"
+    ]
+  },
+  "twinkle": {
+    "word": "twinkle",
+    "phonetic": "/'twɪŋk(ə)l/",
+    "explains": [
+      "v. 闪烁；发亮；n. 闪烁"
+    ]
+  },
+  "twirl": {
+    "word": "twirl",
+    "phonetic": "/twɜːl/",
+    "explains": [
+      "v. (使)快速转动, 捻弄"
+    ]
+  },
+  "twist": {
+    "word": "twist",
+    "phonetic": "/twɪst/",
+    "explains": [
+      "v. 扭"
+    ]
+  },
+  "twit": {
+    "word": "twit",
+    "phonetic": "/twɪt/",
+    "explains": [
+      "v. 嘲笑"
+    ]
+  },
+  "twitch": {
+    "word": "twitch",
+    "phonetic": "/twɪtʃ/",
+    "explains": [
+      "n. 抽搐；抽动；痉挛；阵痛；v. 抽搐；抽动；阵痛"
+    ]
+  },
   "two": {
     "word": "two",
     "phonetic": "/tuː/",
     "explains": [
       "num. 二；两个"
+    ]
+  },
+  "tycoon": {
+    "word": "tycoon",
+    "phonetic": "/tai'kuːn/",
+    "explains": [
+      "n.  商业巨头， 大亨"
+    ]
+  },
+  "type": {
+    "word": "type",
+    "phonetic": "/taɪp/",
+    "explains": [
+      "v. 打字　n. 类型"
+    ]
+  },
+  "type-check": {
+    "word": "type-check",
+    "phonetic": "",
+    "explains": [
+      "类型检查"
+    ]
+  },
+  "typewriter": {
+    "word": "typewriter",
+    "phonetic": "/ˈtaɪpraɪtə/",
+    "explains": [
+      "n. 打字机"
+    ]
+  },
+  "typhoid": {
+    "word": "typhoid",
+    "phonetic": "/'taɪfɒɪd/",
+    "explains": [
+      "adj. 伤寒的；斑疹伤寒症的；n. 伤寒"
+    ]
+  },
+  "typhoon": {
+    "word": "typhoon",
+    "phonetic": "/taɪ'fuːn/",
+    "explains": [
+      "n. [气象] 台风"
+    ]
+  },
+  "typical": {
+    "word": "typical",
+    "phonetic": "/ˈtɪpɪk(ə)l/",
+    "explains": [
+      "adj. 典型的"
+    ]
+  },
+  "typify": {
+    "word": "typify",
+    "phonetic": "/'tɪpɪfaɪ/",
+    "explains": [
+      "v. 代表"
+    ]
+  },
+  "typist": {
+    "word": "typist",
+    "phonetic": "/'taɪpɪst/",
+    "explains": [
+      "n. 打字员"
+    ]
+  },
+  "typographical": {
+    "word": "typographical",
+    "phonetic": "/'taipə'græfikəl/",
+    "explains": [
+      "adj. 印刷上的；排字上的"
+    ]
+  },
+  "typography": {
+    "word": "typography",
+    "phonetic": "/taɪ'pɒgrəfɪ/",
+    "explains": [
+      "n. 排印；[印刷] 活版印刷术；印刷格式"
+    ]
+  },
+  "tyrannical": {
+    "word": "tyrannical",
+    "phonetic": "/tɪ'rænɪk(ə)l; taɪ-/",
+    "explains": [
+      "adj. 暴虐的, 压制的, 残暴的"
+    ]
+  },
+  "tyrannize": {
+    "word": "tyrannize",
+    "phonetic": "/'tɪrənaɪz/",
+    "explains": [
+      "v. 施行暴政；欺压"
+    ]
+  },
+  "tyrannosaurus": {
+    "word": "tyrannosaurus",
+    "phonetic": "/tɪˌrænə'sɔ:rəs/",
+    "explains": [
+      "n. 暴龙"
+    ]
+  },
+  "tyranny": {
+    "word": "tyranny",
+    "phonetic": "/'tɪr(ə)nɪ/",
+    "explains": [
+      "n. 暴政，专制；残暴"
+    ]
+  },
+  "tyrant": {
+    "word": "tyrant",
+    "phonetic": "/'taɪr(ə)nt/",
+    "explains": [
+      "n. 暴君；专制君主"
+    ]
+  },
+  "tyre": {
+    "word": "tyre",
+    "phonetic": "/ˈtaɪə/",
+    "explains": [
+      "n. 轮胎"
+    ]
+  },
+  "tyro": {
+    "word": "tyro",
+    "phonetic": "/'taɪrəʊ/",
+    "explains": [
+      "n. 新手，生手；初学者"
+    ]
+  },
+  "tyrosine": {
+    "word": "tyrosine",
+    "phonetic": "/'taɪrəsiːn/",
+    "explains": [
+      "n. [生化] 酪氨酸"
     ]
   }
 }

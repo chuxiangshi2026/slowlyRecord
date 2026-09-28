@@ -1,9 +1,51 @@
 {
+  "la": {
+    "word": "la",
+    "phonetic": "",
+    "explains": [
+      "art. 阴性定冠词"
+    ]
+  },
   "lab": {
     "word": "lab",
     "phonetic": "/læb/",
     "explains": [
       "n. 实验室；研究室"
+    ]
+  },
+  "label": {
+    "word": "label",
+    "phonetic": "/ˈleɪb(ə)l/",
+    "explains": [
+      "n. 标签"
+    ]
+  },
+  "labellum": {
+    "word": "labellum",
+    "phonetic": "/lə'beləm/",
+    "explains": [
+      "n. （兰花的） 唇瓣"
+    ]
+  },
+  "labile": {
+    "word": "labile",
+    "phonetic": "/'leɪbɪl; -aɪl/",
+    "explains": [
+      "adj. 不安定的, 易发生变化的"
+    ]
+  },
+  "labio": {
+    "word": "labio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 嘴唇"
+    ]
+  },
+  "labor": {
+    "word": "labor",
+    "phonetic": "/'leɪbə(r)/",
+    "explains": [
+      "n. 劳动；工作；劳工；分娩；v. 劳动；努力；苦干"
     ]
   },
   "laboratory": {
@@ -13,11 +55,214 @@
       "n. 实验室；实验课"
     ]
   },
+  "laborer": {
+    "word": "laborer",
+    "phonetic": "/'leibərə/",
+    "explains": [
+      "n.  体力劳动者"
+    ]
+  },
+  "laborious": {
+    "word": "laborious",
+    "phonetic": "/lə'bɔːrɪəs/",
+    "explains": [
+      "adj. 艰苦的, 费劲的"
+    ]
+  },
+  "laboriously": {
+    "word": "laboriously",
+    "phonetic": "",
+    "explains": [
+      "adv. 艰难地,  辛勤地"
+    ]
+  },
+  "laborsaving": {
+    "word": "laborsaving",
+    "phonetic": "",
+    "explains": [
+      "adj. 节省劳力的;省力气的"
+    ]
+  },
+  "labour": {
+    "word": "labour",
+    "phonetic": "/ˈleɪbə/",
+    "explains": [
+      "n. 劳动"
+    ]
+  },
+  "laboured": {
+    "word": "laboured",
+    "phonetic": "/'lebɚd/",
+    "explains": [
+      "adj. 吃力的, 谨慎的"
+    ]
+  },
+  "labourer": {
+    "word": "labourer",
+    "phonetic": "/'leibərə/",
+    "explains": [
+      "n.  体力劳动者"
+    ]
+  },
+  "labyrinth": {
+    "word": "labyrinth",
+    "phonetic": "/'læb(ə)rɪnθ/",
+    "explains": [
+      "n. 迷路, 迷宫, 难解的事物"
+    ]
+  },
+  "lac": {
+    "word": "lac",
+    "phonetic": "",
+    "explains": [
+      "n.m. 湖"
+    ]
+  },
+  "lace": {
+    "word": "lace",
+    "phonetic": "/leɪs/",
+    "explains": [
+      "n. 鞋带，系带；花边"
+    ]
+  },
+  "lacerate": {
+    "word": "lacerate",
+    "phonetic": "/'læsəreɪt/",
+    "explains": [
+      "v. 伤害，使…痛心；割裂；撕碎；adj. 受折磨的；撕碎的"
+    ]
+  },
+  "laceration": {
+    "word": "laceration",
+    "phonetic": "/læsə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 破口"
+    ]
+  },
+  "lacework": {
+    "word": "lacework",
+    "phonetic": "/'leɪswɜːk/",
+    "explains": [
+      "n. 花边, 花边般的透花工艺品"
+    ]
+  },
+  "lachrymose": {
+    "word": "lachrymose",
+    "phonetic": "/'lækrɪməʊs; -z/",
+    "explains": [
+      "adj. 爱哭的, 悲哀的"
+    ]
+  },
   "lack": {
     "word": "lack",
     "phonetic": "/læk/",
     "explains": [
       "v./n. 缺乏；不足；没有"
+    ]
+  },
+  "lackadaisical": {
+    "word": "lackadaisical",
+    "phonetic": "/,lækə'deɪzɪk(ə)l/",
+    "explains": [
+      "adj. 懒洋洋的；无精打采的；伤感的"
+    ]
+  },
+  "lackey": {
+    "word": "lackey",
+    "phonetic": "/'lækɪ/",
+    "explains": [
+      "n. (穿制服的) 男仆, 侍从, 马屁精"
+    ]
+  },
+  "lackluster": {
+    "word": "lackluster",
+    "phonetic": "/'læk,lʌstə/",
+    "explains": [
+      "n. 无光泽, 暗淡"
+    ]
+  },
+  "laconic": {
+    "word": "laconic",
+    "phonetic": "/lə'kɒnɪk/",
+    "explains": [
+      "adj. 简洁的，简明的"
+    ]
+  },
+  "lacquer": {
+    "word": "lacquer",
+    "phonetic": "/'lækə/",
+    "explains": [
+      "n. 漆, 漆器"
+    ]
+  },
+  "lactation": {
+    "word": "lactation",
+    "phonetic": "/læk'teɪʃ(ə)n/",
+    "explains": [
+      "n. 哺乳；哺乳期；授乳（形容词lactational）；分泌乳汁"
+    ]
+  },
+  "lactic": {
+    "word": "lactic",
+    "phonetic": "/'læktɪk/",
+    "explains": [
+      "adj. 乳的；乳汁的"
+    ]
+  },
+  "lactose": {
+    "word": "lactose",
+    "phonetic": "/'læktəʊz; -s/",
+    "explains": [
+      "n. [有化] 乳糖"
+    ]
+  },
+  "lacuna": {
+    "word": "lacuna",
+    "phonetic": "/lə'kjuːnə/",
+    "explains": [
+      "n. 空白, 空隙"
+    ]
+  },
+  "lad": {
+    "word": "lad",
+    "phonetic": "/læd/",
+    "explains": [
+      "n. 少年，小伙子；家伙"
+    ]
+  },
+  "ladder": {
+    "word": "ladder",
+    "phonetic": "/ˈlædə/",
+    "explains": [
+      "n. 梯子"
+    ]
+  },
+  "lade": {
+    "word": "lade",
+    "phonetic": "/leɪd/",
+    "explains": [
+      "v. 装载,装货"
+    ]
+  },
+  "laden": {
+    "word": "laden",
+    "phonetic": "/'leɪd(ə)n/",
+    "explains": [
+      "adj. 装满的，载满的"
+    ]
+  },
+  "ladle": {
+    "word": "ladle",
+    "phonetic": "/'leɪd(ə)l/",
+    "explains": [
+      "v. 不分对象予以赠送；以杓舀取；n. 钢水包；杓子；长柄杓"
+    ]
+  },
+  "ladrillo": {
+    "word": "ladrillo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 砖"
     ]
   },
   "lady": {
@@ -27,11 +272,144 @@
       "n. 女士；夫人；小姐"
     ]
   },
+  "ladybird": {
+    "word": "ladybird",
+    "phonetic": "/'ledɪbɝd/",
+    "explains": [
+      "n. 瓢虫"
+    ]
+  },
+  "lag": {
+    "word": "lag",
+    "phonetic": "/læg/",
+    "explains": [
+      "v. 落后；走得慢"
+    ]
+  },
+  "lager": {
+    "word": "lager",
+    "phonetic": "/'lɑːgə/",
+    "explains": [
+      "n. （美）贮藏啤酒（等于lager beer）"
+    ]
+  },
+  "laggard": {
+    "word": "laggard",
+    "phonetic": "/'lægəd/",
+    "explains": [
+      "adj. 落后的；迟钝的；迟缓的；n. 落后者；迟钝者"
+    ]
+  },
+  "lago": {
+    "word": "lago",
+    "phonetic": "",
+    "explains": [
+      "n.m. 湖"
+    ]
+  },
+  "lagoon": {
+    "word": "lagoon",
+    "phonetic": "/lə'guːn/",
+    "explains": [
+      "n. 泻湖 礁湖"
+    ]
+  },
+  "laine": {
+    "word": "laine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 羊毛"
+    ]
+  },
+  "lair": {
+    "word": "lair",
+    "phonetic": "/leə/",
+    "explains": [
+      "n. 窝"
+    ]
+  },
+  "lait": {
+    "word": "lait",
+    "phonetic": "",
+    "explains": [
+      "n.m. 牛奶"
+    ]
+  },
+  "laity": {
+    "word": "laity",
+    "phonetic": "/'leɪɪtɪ/",
+    "explains": [
+      "n. 俗人, 外行"
+    ]
+  },
   "lake": {
     "word": "lake",
     "phonetic": "/leɪk/",
     "explains": [
       "n. 湖；湖泊"
+    ]
+  },
+  "lamb": {
+    "word": "lamb",
+    "phonetic": "/læm/",
+    "explains": [
+      "n. 羊羔"
+    ]
+  },
+  "lambaste": {
+    "word": "lambaste",
+    "phonetic": "/læm'beɪst/",
+    "explains": [
+      "v. 痛打；严责；鞭打"
+    ]
+  },
+  "lame": {
+    "word": "lame",
+    "phonetic": "/leɪm/",
+    "explains": [
+      "adj. 跛的；瘸的，残废的"
+    ]
+  },
+  "lamella": {
+    "word": "lamella",
+    "phonetic": "/lə'melə/",
+    "explains": [
+      "n. 薄片薄层, 薄片,[动]瓣,鳃,壳层,[植]菌褶"
+    ]
+  },
+  "lamellar": {
+    "word": "lamellar",
+    "phonetic": "",
+    "explains": [
+      "adj. 薄片状的；薄层状的"
+    ]
+  },
+  "lament": {
+    "word": "lament",
+    "phonetic": "/lə'ment/",
+    "explains": [
+      "n. 悲伤v哀悼"
+    ]
+  },
+  "lamentable": {
+    "word": "lamentable",
+    "phonetic": "/'læməntəb(ə)l/",
+    "explains": [
+      "adj. 不快的"
+    ]
+  },
+  "lamina": {
+    "word": "lamina",
+    "phonetic": "/'læmɪnə/",
+    "explains": [
+      "n. 薄板, 薄层"
+    ]
+  },
+  "laminate": {
+    "word": "laminate",
+    "phonetic": "/'læmɪneɪt/",
+    "explains": [
+      "v. 碾压"
     ]
   },
   "lamp": {
@@ -41,11 +419,179 @@
       "n. 灯；照射器"
     ]
   },
+  "lampe": {
+    "word": "lampe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 灯"
+    ]
+  },
+  "lampoon": {
+    "word": "lampoon",
+    "phonetic": "/læm'puːn/",
+    "explains": [
+      "n. （嘲讽个人的）强烈讽刺文"
+    ]
+  },
+  "lampooner": {
+    "word": "lampooner",
+    "phonetic": "",
+    "explains": [
+      "n. 讽刺文作家, 冷嘲热讽者"
+    ]
+  },
+  "lance": {
+    "word": "lance",
+    "phonetic": "/lɑːns/",
+    "explains": [
+      "n. 标枪, 长矛, 矛状器具, 捕鲸枪"
+    ]
+  },
+  "lancinate": {
+    "word": "lancinate",
+    "phonetic": "",
+    "explains": [
+      "vt. （除医学外现罕用的）刺, 刺痛, 撕裂"
+    ]
+  },
   "land": {
     "word": "land",
     "phonetic": "/lænd/",
     "explains": [
       "n. 陆地；国土；土地 v. 登陆；到达"
+    ]
+  },
+  "landfill": {
+    "word": "landfill",
+    "phonetic": "/'læn(d)fɪl/",
+    "explains": [
+      "n. 垃圾填埋地；垃圾堆"
+    ]
+  },
+  "landform": {
+    "word": "landform",
+    "phonetic": "/'læn(d)fɔːm/",
+    "explains": [
+      "n. 地形, 地貌"
+    ]
+  },
+  "landholder": {
+    "word": "landholder",
+    "phonetic": "/'lændhəʊldə/",
+    "explains": [
+      "n. 地主, 土地拥有者"
+    ]
+  },
+  "landing": {
+    "word": "landing",
+    "phonetic": "/'lændɪŋ/",
+    "explains": [
+      "n. 上岸，登陆，着陆"
+    ]
+  },
+  "landlady": {
+    "word": "landlady",
+    "phonetic": "/ˈlæn(d)leɪdɪ/",
+    "explains": [
+      "n. 女房东"
+    ]
+  },
+  "landless": {
+    "word": "landless",
+    "phonetic": "/'lændlɪs/",
+    "explains": [
+      "adj. 无土地的，无陆地的"
+    ]
+  },
+  "landlocked": {
+    "word": "landlocked",
+    "phonetic": "/'lændlɒkt/",
+    "explains": [
+      "adj. 陆地包围的, 内陆水域的"
+    ]
+  },
+  "landlord": {
+    "word": "landlord",
+    "phonetic": "/ˈlæn(d)lɔːd/",
+    "explains": [
+      "n. 房东"
+    ]
+  },
+  "landmark": {
+    "word": "landmark",
+    "phonetic": "/'lændmɑːk/",
+    "explains": [
+      "n.  路标； 里程碑"
+    ]
+  },
+  "landmass": {
+    "word": "landmass",
+    "phonetic": "/'lændmæs/",
+    "explains": [
+      "n. 大陆"
+    ]
+  },
+  "landowner": {
+    "word": "landowner",
+    "phonetic": "/'lændəʊnə/",
+    "explains": [
+      "n. 土地所有者"
+    ]
+  },
+  "landownership": {
+    "word": "landownership",
+    "phonetic": "",
+    "explains": [
+      "n. 土地所有"
+    ]
+  },
+  "landscape": {
+    "word": "landscape",
+    "phonetic": "/ˈlæn(d)skeɪp/",
+    "explains": [
+      "n. 风景"
+    ]
+  },
+  "landscapist": {
+    "word": "landscapist",
+    "phonetic": "/'lænd,skeɪpɪst/",
+    "explains": [
+      "n. 风景画家"
+    ]
+  },
+  "landslide": {
+    "word": "landslide",
+    "phonetic": "/'læn(d)slaɪd/",
+    "explains": [
+      "n. [地]山崩, 滑坡"
+    ]
+  },
+  "landslip": {
+    "word": "landslip",
+    "phonetic": "/'læn(d)slɪp/",
+    "explains": [
+      "n. [地]山崩,塌方"
+    ]
+  },
+  "landsman": {
+    "word": "landsman",
+    "phonetic": "/'læn(d)zmən/",
+    "explains": [
+      "n. 同胞,同乡"
+    ]
+  },
+  "lane": {
+    "word": "lane",
+    "phonetic": "/leɪn/",
+    "explains": [
+      "n. （乡间）小路；跑道"
+    ]
+  },
+  "langage": {
+    "word": "langage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 语言"
     ]
   },
   "language": {
@@ -55,11 +601,214 @@
       "n. 语言；语言文字；表达能力"
     ]
   },
+  "languid": {
+    "word": "languid",
+    "phonetic": "/'læŋgwɪd/",
+    "explains": [
+      "adj. 没精打采的，倦怠的"
+    ]
+  },
+  "languish": {
+    "word": "languish",
+    "phonetic": "/'læŋgwɪʃ/",
+    "explains": [
+      "v. 憔悴, 凋萎"
+    ]
+  },
+  "languor": {
+    "word": "languor",
+    "phonetic": "/'læŋgə/",
+    "explains": [
+      "n. 疲倦；无精打采；柔情；呆滞；vi. 变得衰弱无力"
+    ]
+  },
+  "lank": {
+    "word": "lank",
+    "phonetic": "/læŋk/",
+    "explains": [
+      "adj. 瘦的, （树等）细长的, （草等）稀疏的, （头发）平直的"
+    ]
+  },
+  "lantern": {
+    "word": "lantern",
+    "phonetic": "/ˈlæntən/",
+    "explains": [
+      "n. 灯笼"
+    ]
+  },
+  "lanterne": {
+    "word": "lanterne",
+    "phonetic": "",
+    "explains": [
+      "n.f. 灯笼"
+    ]
+  },
+  "lap": {
+    "word": "lap",
+    "phonetic": "/læp/",
+    "explains": [
+      "n. 〔坐着时的〕大腿部；一圈"
+    ]
+  },
+  "lapidary": {
+    "word": "lapidary",
+    "phonetic": "/'læpɪd(ə)rɪ/",
+    "explains": [
+      "n. 宝石商"
+    ]
+  },
+  "lapis": {
+    "word": "lapis",
+    "phonetic": "/'læpɪs/",
+    "explains": [
+      "n. [化]天青石(常用于化学中的矿物命名)"
+    ]
+  },
+  "lapse": {
+    "word": "lapse",
+    "phonetic": "/læps/",
+    "explains": [
+      "n. (一时的) 走神，判断错误"
+    ]
+  },
+  "laptop": {
+    "word": "laptop",
+    "phonetic": "/ˈlæptɒp/",
+    "explains": [
+      "n. 笔记本电脑"
+    ]
+  },
+  "larceny": {
+    "word": "larceny",
+    "phonetic": "/'lɑːs(ə)nɪ/",
+    "explains": [
+      "n. 盗窃；盗窃罪"
+    ]
+  },
+  "larch": {
+    "word": "larch",
+    "phonetic": "/lɑːtʃ/",
+    "explains": [
+      "n. 落叶松属植物, 其木材"
+    ]
+  },
+  "lard": {
+    "word": "lard",
+    "phonetic": "/lɑːd/",
+    "explains": [
+      "n. 猪油"
+    ]
+  },
   "large": {
     "word": "large",
     "phonetic": "/lɑːdʒ/",
     "explains": [
       "adj. 大的；大规模的；大量的"
+    ]
+  },
+  "largely": {
+    "word": "largely",
+    "phonetic": "/'lɑːdʒlɪ/",
+    "explains": [
+      "adv. 大部分；大量地"
+    ]
+  },
+  "largesse": {
+    "word": "largesse",
+    "phonetic": "/lɑː'(d)ʒes/",
+    "explains": [
+      "n. 慷慨"
+    ]
+  },
+  "largeur": {
+    "word": "largeur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 宽度"
+    ]
+  },
+  "lark": {
+    "word": "lark",
+    "phonetic": "/lɑːk/",
+    "explains": [
+      "n. 云雀, 百灵鸟"
+    ]
+  },
+  "larme": {
+    "word": "larme",
+    "phonetic": "",
+    "explains": [
+      "n.f. 泪"
+    ]
+  },
+  "larva": {
+    "word": "larva",
+    "phonetic": "/'lɑːvə/",
+    "explains": [
+      "n. 幼虫"
+    ]
+  },
+  "larvae": {
+    "word": "larvae",
+    "phonetic": "/'la:vi:/",
+    "explains": [
+      "n. 幼虫；幼体（larva的复数形式）"
+    ]
+  },
+  "laryngitis": {
+    "word": "laryngitis",
+    "phonetic": "/,lærɪn'dʒaɪtɪs/",
+    "explains": [
+      "n. [医] 喉炎"
+    ]
+  },
+  "larynx": {
+    "word": "larynx",
+    "phonetic": "/'lærɪŋks/",
+    "explains": [
+      "n. [解] 喉"
+    ]
+  },
+  "lascivious": {
+    "word": "lascivious",
+    "phonetic": "/lə'sɪvɪəs/",
+    "explains": [
+      "adj. 好色的；淫荡的；挑动情欲的"
+    ]
+  },
+  "laser": {
+    "word": "laser",
+    "phonetic": "/'leɪzə/",
+    "explains": [
+      "n. 激光"
+    ]
+  },
+  "lash": {
+    "word": "lash",
+    "phonetic": "/læʃ/",
+    "explains": [
+      "v. 鞭打；冲击；摆动；扎捆；煽动；讽刺；n. 鞭打；睫毛；鞭子；责骂；讽刺"
+    ]
+  },
+  "lass": {
+    "word": "lass",
+    "phonetic": "/læs/",
+    "explains": [
+      "n. 小姑娘；情侣；（苏格兰）女佣"
+    ]
+  },
+  "lassitude": {
+    "word": "lassitude",
+    "phonetic": "/'læsɪtjuːd/",
+    "explains": [
+      "n. 疲乏；懒散；厌倦"
+    ]
+  },
+  "lasso": {
+    "word": "lasso",
+    "phonetic": "/lə'suː; 'læsəʊ/",
+    "explains": [
+      "n. (套捕牛、马等用的)套索"
     ]
   },
   "last": {
@@ -69,11 +818,67 @@
       "adj. 最后的；末尾的 v. 持续；维持"
     ]
   },
+  "lasting": {
+    "word": "lasting",
+    "phonetic": "/'lɑːstɪŋ/",
+    "explains": [
+      "adj. 持久的；永恒的；n. [纺] 厚实斜纹织物；v. 持续；维持（last的ing形式）"
+    ]
+  },
+  "lastly": {
+    "word": "lastly",
+    "phonetic": "/'lɑːstlɪ/",
+    "explains": [
+      "adv. 最后, 终于"
+    ]
+  },
+  "latch": {
+    "word": "latch",
+    "phonetic": "/lætʃ/",
+    "explains": [
+      "v. 占有，抓住；闭锁；n. 门闩"
+    ]
+  },
+  "latchet": {
+    "word": "latchet",
+    "phonetic": "/'lætʃɪt/",
+    "explains": [
+      "n. 鞋带"
+    ]
+  },
   "late": {
     "word": "late",
     "phonetic": "/leɪt/",
     "explains": [
       "adj. 晚的；迟的；已故的 adv. 晚；迟"
+    ]
+  },
+  "lately": {
+    "word": "lately",
+    "phonetic": "/ˈleɪtlɪ/",
+    "explains": [
+      "adv. 最近"
+    ]
+  },
+  "latency": {
+    "word": "latency",
+    "phonetic": "/'leɪtənsɪ/",
+    "explains": [
+      "n. 潜伏；潜在因素"
+    ]
+  },
+  "lateness": {
+    "word": "lateness",
+    "phonetic": "",
+    "explains": [
+      "n. 迟, 晚"
+    ]
+  },
+  "latent": {
+    "word": "latent",
+    "phonetic": "/'leɪt(ə)nt/",
+    "explains": [
+      "adj. 存在但看不见的"
     ]
   },
   "later": {
@@ -83,11 +888,200 @@
       "adv. 后来；稍后；随后 adj. 更迟的；更后的"
     ]
   },
+  "lateral": {
+    "word": "lateral",
+    "phonetic": "/'læt(ə)r(ə)l/",
+    "explains": [
+      "adj. 侧面的，横向的；n. 侧部；[语] 边音；vt. 横向传球"
+    ]
+  },
+  "latest": {
+    "word": "latest",
+    "phonetic": "/'leitist/",
+    "explains": [
+      "adj.  最近的， 最新的"
+    ]
+  },
+  "lathe": {
+    "word": "lathe",
+    "phonetic": "/leɪð/",
+    "explains": [
+      "n. 车床；v. 用车床加工"
+    ]
+  },
+  "latifundium": {
+    "word": "latifundium",
+    "phonetic": "/,lɑːtɪ'fʌndɪəm; ,lætɪ-/",
+    "explains": [
+      "n. 大农场主"
+    ]
+  },
+  "latin": {
+    "word": "latin",
+    "phonetic": "/'lætɪn/",
+    "explains": [
+      "adj. 拉丁的；n. 拉丁语"
+    ]
+  },
+  "latitude": {
+    "word": "latitude",
+    "phonetic": "/'lætɪtjuːd/",
+    "explains": [
+      "n. 纬度；黄纬"
+    ]
+  },
+  "latter": {
+    "word": "latter",
+    "phonetic": "/ˈlætə/",
+    "explains": [
+      "adj. 后者的"
+    ]
+  },
+  "lattice": {
+    "word": "lattice",
+    "phonetic": "/'lætɪs/",
+    "explains": [
+      "n. 格子结构"
+    ]
+  },
+  "laud": {
+    "word": "laud",
+    "phonetic": "/lɔːd/",
+    "explains": [
+      "v. 赞美；称赞；n. 赞美；称赞；颂歌"
+    ]
+  },
+  "laudable": {
+    "word": "laudable",
+    "phonetic": "/'lɔːdəb(ə)l/",
+    "explains": [
+      "adj. 值得称赞的"
+    ]
+  },
+  "laudation": {
+    "word": "laudation",
+    "phonetic": "/lɔː'deɪʃ(ə)n/",
+    "explains": [
+      "n. 赞美；颂词；称赞"
+    ]
+  },
+  "laudatory": {
+    "word": "laudatory",
+    "phonetic": "/'lɔːdət(ə)rɪ/",
+    "explains": [
+      "adj. 赞美的；赞赏的；称赞的"
+    ]
+  },
   "laugh": {
     "word": "laugh",
     "phonetic": "/lɑːf/",
     "explains": [
       "v./n. 笑；发笑；嘲笑"
+    ]
+  },
+  "laughter": {
+    "word": "laughter",
+    "phonetic": "/ˈlɑːftə/",
+    "explains": [
+      "n. 笑声"
+    ]
+  },
+  "launch": {
+    "word": "launch",
+    "phonetic": "/lɔːn(t)ʃ/",
+    "explains": [
+      "v. 发射；发起"
+    ]
+  },
+  "launder": {
+    "word": "launder",
+    "phonetic": "/'lɔːndə/",
+    "explains": [
+      "v.  洗涤"
+    ]
+  },
+  "launderette": {
+    "word": "launderette",
+    "phonetic": "",
+    "explains": [
+      "n. 自助洗衣店"
+    ]
+  },
+  "laundry": {
+    "word": "laundry",
+    "phonetic": "/ˈlɔːndrɪ/",
+    "explains": [
+      "n. 洗衣店"
+    ]
+  },
+  "laurasia": {
+    "word": "laurasia",
+    "phonetic": "/lɔ:'reiʃə/",
+    "explains": [
+      "n. [地质] 劳亚古大陆"
+    ]
+  },
+  "laureate": {
+    "word": "laureate",
+    "phonetic": "/'lɒrɪət; 'lɔː-/",
+    "explains": [
+      "adj. 戴桂冠的；荣誉的；n. 桂冠诗人；得奖者；vt. 使戴桂冠"
+    ]
+  },
+  "laurel": {
+    "word": "laurel",
+    "phonetic": "/'lɒr(ə)l/",
+    "explains": [
+      "n. 桂冠，殊荣；月桂树；vt. 授予荣誉，使戴桂冠"
+    ]
+  },
+  "lava": {
+    "word": "lava",
+    "phonetic": "/'lɑːvə/",
+    "explains": [
+      "n. 熔岩, 火山岩"
+    ]
+  },
+  "lavage": {
+    "word": "lavage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 洗涤"
+    ]
+  },
+  "lavar": {
+    "word": "lavar",
+    "phonetic": "",
+    "explains": [
+      "v. 洗"
+    ]
+  },
+  "lavatory": {
+    "word": "lavatory",
+    "phonetic": "/ˈlævət(ə)rɪ; -trɪ/",
+    "explains": [
+      "n. 盥洗室"
+    ]
+  },
+  "lave": {
+    "word": "lave",
+    "phonetic": "/leɪv/",
+    "explains": [
+      "v. 洗；沐浴；冲刷；n. 剩余物"
+    ]
+  },
+  "lavender": {
+    "word": "lavender",
+    "phonetic": "/'lævəndə/",
+    "explains": [
+      "n. [植]熏衣草属, 熏衣草花, 淡紫色"
+    ]
+  },
+  "lavish": {
+    "word": "lavish",
+    "phonetic": "/'læviʃ/",
+    "explains": [
+      "adj. 过分丰富的，无节制的；过分慷慨的，浪费的；vt.  慷慨地给予； 挥霍"
     ]
   },
   "law": {
@@ -97,11 +1091,144 @@
       "n. 法律；法规；法学；规律"
     ]
   },
+  "lawful": {
+    "word": "lawful",
+    "phonetic": "/'lɔːfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 合法的；法定的；法律许可的"
+    ]
+  },
+  "lawlike": {
+    "word": "lawlike",
+    "phonetic": "",
+    "explains": [
+      "adj. 似法律的"
+    ]
+  },
+  "lawn": {
+    "word": "lawn",
+    "phonetic": "/lɔːn/",
+    "explains": [
+      "n. 草坪"
+    ]
+  },
+  "lawsuit": {
+    "word": "lawsuit",
+    "phonetic": "/'lɔːsuːt; -sjuːt/",
+    "explains": [
+      "n. 诉讼（尤指非刑事案件）；诉讼案件"
+    ]
+  },
+  "lawyer": {
+    "word": "lawyer",
+    "phonetic": "/ˈlɔːjə; ˈlɔːɪə/",
+    "explains": [
+      "n. 律师"
+    ]
+  },
+  "lax": {
+    "word": "lax",
+    "phonetic": "/læks/",
+    "explains": [
+      "adj. 疏忽的，不严格的"
+    ]
+  },
+  "laxative": {
+    "word": "laxative",
+    "phonetic": "/'læksətɪv/",
+    "explains": [
+      "n. 泻药；[药] 缓泻药；adj. 通便的"
+    ]
+  },
+  "laxity": {
+    "word": "laxity",
+    "phonetic": "/'læksətɪ/",
+    "explains": [
+      "n. 松驰；放纵"
+    ]
+  },
   "lay": {
     "word": "lay",
     "phonetic": "/leɪ/",
     "explains": [
       "v. 放置；铺设；下蛋"
+    ]
+  },
+  "lay-off": {
+    "word": "lay-off",
+    "phonetic": "/'leiɔf/",
+    "explains": [
+      "n.  临时解雇"
+    ]
+  },
+  "layabout": {
+    "word": "layabout",
+    "phonetic": "/'leɪəbaʊt/",
+    "explains": [
+      "n. 懒惰者"
+    ]
+  },
+  "layer": {
+    "word": "layer",
+    "phonetic": "/ˈleɪə/",
+    "explains": [
+      "n. 层"
+    ]
+  },
+  "layman": {
+    "word": "layman",
+    "phonetic": "/'leɪmən/",
+    "explains": [
+      "n. 外行；门外汉；俗人；一般信徒"
+    ]
+  },
+  "layoff": {
+    "word": "layoff",
+    "phonetic": "/'leɪɒf/",
+    "explains": [
+      "n. 活动停止期间；临时解雇；操作停止；失业期"
+    ]
+  },
+  "layout": {
+    "word": "layout",
+    "phonetic": "/ˈleɪaʊt/",
+    "explains": [
+      "n. 布局"
+    ]
+  },
+  "lazily": {
+    "word": "lazily",
+    "phonetic": "",
+    "explains": [
+      "adv. 懒洋洋地"
+    ]
+  },
+  "lazuli": {
+    "word": "lazuli",
+    "phonetic": "",
+    "explains": [
+      "n. 天青石"
+    ]
+  },
+  "lazy": {
+    "word": "lazy",
+    "phonetic": "/ˈleɪzɪ/",
+    "explains": [
+      "adj. 懒惰的"
+    ]
+  },
+  "lb": {
+    "word": "lb",
+    "phonetic": "",
+    "explains": [
+      "abbr. 救生船（Lifeboat）"
+    ]
+  },
+  "leach": {
+    "word": "leach",
+    "phonetic": "/liːtʃ/",
+    "explains": [
+      "n. 过滤；过滤器；v. 过滤；萃取"
     ]
   },
   "lead": {
@@ -111,11 +1238,102 @@
       "v. 领导；引导；指挥 n. 领导；铅；导线"
     ]
   },
+  "leader": {
+    "word": "leader",
+    "phonetic": "/ˈliːdə/",
+    "explains": [
+      "n. 领导者"
+    ]
+  },
+  "leadership": {
+    "word": "leadership",
+    "phonetic": "/ˈliːdəʃɪp/",
+    "explains": [
+      "n. 领导力"
+    ]
+  },
+  "leading": {
+    "word": "leading",
+    "phonetic": "/ˈliːdɪŋ/",
+    "explains": [
+      "adj. 领先的"
+    ]
+  },
   "leaf": {
     "word": "leaf",
     "phonetic": "/liːf/",
     "explains": [
       "n. 叶子；叶片；花瓣"
+    ]
+  },
+  "leafcutter": {
+    "word": "leafcutter",
+    "phonetic": "",
+    "explains": [
+      "n. [昆]南美切叶蚁"
+    ]
+  },
+  "leaflet": {
+    "word": "leaflet",
+    "phonetic": "/ˈliːflət/",
+    "explains": [
+      "n. 传单"
+    ]
+  },
+  "leafy": {
+    "word": "leafy",
+    "phonetic": "/'liːfɪ/",
+    "explains": [
+      "adj. 叶状的；叶茂的"
+    ]
+  },
+  "league": {
+    "word": "league",
+    "phonetic": "/liːg/",
+    "explains": [
+      "n. 联盟"
+    ]
+  },
+  "leak": {
+    "word": "leak",
+    "phonetic": "/liːk/",
+    "explains": [
+      "v. 泄漏"
+    ]
+  },
+  "leakage": {
+    "word": "leakage",
+    "phonetic": "/'liːkɪdʒ/",
+    "explains": [
+      "n. 漏，泄漏；漏出物"
+    ]
+  },
+  "leaky": {
+    "word": "leaky",
+    "phonetic": "/'liːkɪ/",
+    "explains": [
+      "adj. 漏的"
+    ]
+  },
+  "lean": {
+    "word": "lean",
+    "phonetic": "/liːn/",
+    "explains": [
+      "v. 倾斜"
+    ]
+  },
+  "leaning": {
+    "word": "leaning",
+    "phonetic": "/'liːnɪŋ/",
+    "explains": [
+      "n. 倾斜, 倾向"
+    ]
+  },
+  "leap": {
+    "word": "leap",
+    "phonetic": "/liːp/",
+    "explains": [
+      "v. 跳"
     ]
   },
   "learn": {
@@ -125,11 +1343,60 @@
       "v. 学习；学会；得知；认识到"
     ]
   },
+  "learned": {
+    "word": "learned",
+    "phonetic": "/'lɜːnd; ˈlɜ:nɪd/",
+    "explains": [
+      "adj. 有学问的；学术上的"
+    ]
+  },
+  "learner": {
+    "word": "learner",
+    "phonetic": "/'lɜːnə/",
+    "explains": [
+      "n. 学习者, 初学者"
+    ]
+  },
+  "learning": {
+    "word": "learning",
+    "phonetic": "/ˈlɜːnɪŋ/",
+    "explains": [
+      "n. 学习"
+    ]
+  },
+  "lease": {
+    "word": "lease",
+    "phonetic": "/liːs/",
+    "explains": [
+      "n. 租约"
+    ]
+  },
+  "leasehold": {
+    "word": "leasehold",
+    "phonetic": "/'liːshəuld/",
+    "explains": [
+      "n.  通过租契获得的财产； 租期； 租借权， 租赁权"
+    ]
+  },
   "least": {
     "word": "least",
     "phonetic": "/liːst/",
     "explains": [
       "adj. 最小的；最少的 adv. 最小；最少"
+    ]
+  },
+  "leather": {
+    "word": "leather",
+    "phonetic": "/ˈleðə/",
+    "explains": [
+      "n. 皮革"
+    ]
+  },
+  "leatherback": {
+    "word": "leatherback",
+    "phonetic": "/'leðəbæk/",
+    "explains": [
+      "n. 棱龟(大海龟之一种)"
     ]
   },
   "leave": {
@@ -139,11 +1406,144 @@
       "v. 离开；留下；遗忘；委托 n. 许可；同意；休假"
     ]
   },
+  "leaven": {
+    "word": "leaven",
+    "phonetic": "/'lev(ə)n/",
+    "explains": [
+      "v. 使发酵；影响；n. 酵母；酵素；潜移默化的影响"
+    ]
+  },
+  "leaver": {
+    "word": "leaver",
+    "phonetic": "/'liːvə/",
+    "explains": [
+      "n.  离职者"
+    ]
+  },
+  "leche": {
+    "word": "leche",
+    "phonetic": "",
+    "explains": [
+      "n.f. 牛奶"
+    ]
+  },
+  "lecherous": {
+    "word": "lecherous",
+    "phonetic": "/'letʃ(ə)rəs/",
+    "explains": [
+      "adj. 好色的；淫荡的；引起淫欲的"
+    ]
+  },
+  "lechery": {
+    "word": "lechery",
+    "phonetic": "/'letʃ(ə)rɪ/",
+    "explains": [
+      "n. 好色, 淫荡, 纵欲"
+    ]
+  },
+  "lechuga": {
+    "word": "lechuga",
+    "phonetic": "",
+    "explains": [
+      "n.f. 生菜"
+    ]
+  },
+  "lecteur": {
+    "word": "lecteur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 读者；播放器"
+    ]
+  },
+  "lecture": {
+    "word": "lecture",
+    "phonetic": "/ˈlektʃə/",
+    "explains": [
+      "n. 讲座"
+    ]
+  },
+  "lecturer": {
+    "word": "lecturer",
+    "phonetic": "/'lektʃ(ə)rə/",
+    "explains": [
+      "n. 讲师，演讲者"
+    ]
+  },
+  "ledge": {
+    "word": "ledge",
+    "phonetic": "/ledʒ/",
+    "explains": [
+      "n. 岩架,岩石突出部"
+    ]
+  },
+  "ledger": {
+    "word": "ledger",
+    "phonetic": "/'ledʒə/",
+    "explains": [
+      "n.  分类账； 分账户"
+    ]
+  },
+  "lee": {
+    "word": "lee",
+    "phonetic": "/liː/",
+    "explains": [
+      "n. 保护；背风处；adj. 保护的；庇荫的；避风的"
+    ]
+  },
+  "leek": {
+    "word": "leek",
+    "phonetic": "/liːk/",
+    "explains": [
+      "n. 韭；[园艺] 韭葱"
+    ]
+  },
+  "leer": {
+    "word": "leer",
+    "phonetic": "/lɪə/",
+    "explains": [
+      "n. 淫荡的目光, 恶意的目光"
+    ]
+  },
+  "leery": {
+    "word": "leery",
+    "phonetic": "/'lɪərɪ/",
+    "explains": [
+      "adj. 机敏的；狡猾的；猜疑的；送秋波的"
+    ]
+  },
+  "lees": {
+    "word": "lees",
+    "phonetic": "/liːz/",
+    "explains": [
+      "n. 酒糟, 渣滓"
+    ]
+  },
+  "leeward": {
+    "word": "leeward",
+    "phonetic": "/'liːwəd; 'luːəd/",
+    "explains": [
+      "adj. 在下风方向的"
+    ]
+  },
+  "leeway": {
+    "word": "leeway",
+    "phonetic": "/'liːweɪ/",
+    "explains": [
+      "n. 余地；风压差；偏航；落后"
+    ]
+  },
   "left": {
     "word": "left",
     "phonetic": "/left/",
     "explains": [
       "adj. 左边的；左派的 adv. 在左面 n. 左边；左派"
+    ]
+  },
+  "leftovers": {
+    "word": "leftovers",
+    "phonetic": "",
+    "explains": [
+      "n. 遗留；剩余物；吃剩的食物（leftover的复数形式）"
     ]
   },
   "leg": {
@@ -153,11 +1553,361 @@
       "n. 腿；支柱"
     ]
   },
+  "legacy": {
+    "word": "legacy",
+    "phonetic": "/'legəsɪ/",
+    "explains": [
+      "n. 遗赠，遗产"
+    ]
+  },
+  "legal": {
+    "word": "legal",
+    "phonetic": "/ˈliːg(ə)l/",
+    "explains": [
+      "adj. 法律的"
+    ]
+  },
+  "legalise": {
+    "word": "legalise",
+    "phonetic": "",
+    "explains": [
+      "v. 使合法化（等于legalize）"
+    ]
+  },
+  "legally": {
+    "word": "legally",
+    "phonetic": "/'li:gəli/",
+    "explains": [
+      "adv. 法律上, 合法地"
+    ]
+  },
+  "legend": {
+    "word": "legend",
+    "phonetic": "/'ledʒ(ə)nd/",
+    "explains": [
+      "n. 传说，传奇"
+    ]
+  },
+  "legendary": {
+    "word": "legendary",
+    "phonetic": "/'ledʒ(ə)nd(ə)rɪ/",
+    "explains": [
+      "adj. 闻名的；传说的"
+    ]
+  },
+  "legerdemain": {
+    "word": "legerdemain",
+    "phonetic": "/,ledʒədɪ'meɪn/",
+    "explains": [
+      "n. 戏法, 骗术, 诡辩, 巧妙的花招"
+    ]
+  },
+  "legible": {
+    "word": "legible",
+    "phonetic": "/'ledʒɪb(ə)l/",
+    "explains": [
+      "adj. 清晰的；易读的；易辨认的"
+    ]
+  },
+  "legion": {
+    "word": "legion",
+    "phonetic": "/'liːdʒ(ə)n/",
+    "explains": [
+      "n. 古罗马军团(约有3000至6000步兵,辅以数百名骑兵), <书>众多, 大批"
+    ]
+  },
+  "legislate": {
+    "word": "legislate",
+    "phonetic": "/'ledʒɪsleɪt/",
+    "explains": [
+      "v. 立法"
+    ]
+  },
+  "legislation": {
+    "word": "legislation",
+    "phonetic": "/ledʒɪs'leɪʃ(ə)n/",
+    "explains": [
+      "n. 立法；法规"
+    ]
+  },
+  "legislative": {
+    "word": "legislative",
+    "phonetic": "/'ledʒislətiv/",
+    "explains": [
+      "adj. 立法的，有立法权的；根据法律执行的；立法机关的，由立法机关成员组成的；n.  立法机关"
+    ]
+  },
+  "legislator": {
+    "word": "legislator",
+    "phonetic": "/'ledʒɪsleɪtə/",
+    "explains": [
+      "n. 立法者"
+    ]
+  },
+  "legislature": {
+    "word": "legislature",
+    "phonetic": "/'ledʒɪslətʃə/",
+    "explains": [
+      "n. 立法机关"
+    ]
+  },
+  "legitimate": {
+    "word": "legitimate",
+    "phonetic": "/lɪ'dʒɪtɪmət/",
+    "explains": [
+      "adj. 合法的；正当的；合理的；正统的；v. 使合法；认为正当（等于legitimize）"
+    ]
+  },
+  "legitimately": {
+    "word": "legitimately",
+    "phonetic": "/li'dʒitimitli/",
+    "explains": [
+      "adv. 正当地, 合理地"
+    ]
+  },
+  "legitimation": {
+    "word": "legitimation",
+    "phonetic": "",
+    "explains": [
+      "n. 合法化；承认为嫡出"
+    ]
+  },
+  "legitimize": {
+    "word": "legitimize",
+    "phonetic": "/lɪ'dʒɪtɪmaɪz/",
+    "explains": [
+      "v. 使…合法；立为嫡嗣"
+    ]
+  },
+  "legume": {
+    "word": "legume",
+    "phonetic": "/'legjuːm/",
+    "explains": [
+      "n. 豆类, 豆荚"
+    ]
+  },
+  "leisure": {
+    "word": "leisure",
+    "phonetic": "/ˈleʒə/",
+    "explains": [
+      "n. 休闲"
+    ]
+  },
+  "leisurely": {
+    "word": "leisurely",
+    "phonetic": "/'leʒəlɪ/",
+    "explains": [
+      "adj. 从容地，慢慢地"
+    ]
+  },
+  "lejos": {
+    "word": "lejos",
+    "phonetic": "",
+    "explains": [
+      "adv. 远处"
+    ]
+  },
+  "lemon": {
+    "word": "lemon",
+    "phonetic": "/ˈlemən/",
+    "explains": [
+      "n. 柠檬"
+    ]
+  },
+  "lemonade": {
+    "word": "lemonade",
+    "phonetic": "/ˌleməˈneɪd/",
+    "explains": [
+      "n. 柠檬水"
+    ]
+  },
   "lend": {
     "word": "lend",
     "phonetic": "/lend/",
     "explains": [
       "v. 借给；借出；贷与"
+    ]
+  },
+  "lender": {
+    "word": "lender",
+    "phonetic": "/'lendə/",
+    "explains": [
+      "n.  贷方"
+    ]
+  },
+  "length": {
+    "word": "length",
+    "phonetic": "/leŋ(k)θ; leŋθ/",
+    "explains": [
+      "n. 长度"
+    ]
+  },
+  "lengthen": {
+    "word": "lengthen",
+    "phonetic": "/'leŋθ(ə)n; -ŋkθ-/",
+    "explains": [
+      "v. 使延长，变长"
+    ]
+  },
+  "lengthwise": {
+    "word": "lengthwise",
+    "phonetic": "/'leŋθwaɪz; -ŋkθ-/",
+    "explains": [
+      "adj. 纵长的；adv. 纵长地"
+    ]
+  },
+  "lengthy": {
+    "word": "lengthy",
+    "phonetic": "/'leŋθɪ; 'leŋkθɪ/",
+    "explains": [
+      "adj. 冗长的"
+    ]
+  },
+  "lengua": {
+    "word": "lengua",
+    "phonetic": "",
+    "explains": [
+      "n.f. 舌头；语言"
+    ]
+  },
+  "lenience": {
+    "word": "lenience",
+    "phonetic": "",
+    "explains": [
+      "n. 宽厚, 仁慈"
+    ]
+  },
+  "leniency": {
+    "word": "leniency",
+    "phonetic": "/'liːnɪənsɪ/",
+    "explains": [
+      "n. 宽大，仁慈；温和"
+    ]
+  },
+  "lenient": {
+    "word": "lenient",
+    "phonetic": "/'liːnɪənt/",
+    "explains": [
+      "adj. 宽大的，宽厚的"
+    ]
+  },
+  "lens": {
+    "word": "lens",
+    "phonetic": "/lenz/",
+    "explains": [
+      "n. 透镜"
+    ]
+  },
+  "lentil": {
+    "word": "lentil",
+    "phonetic": "/'lent(ə)l/",
+    "explains": [
+      "n. [作物] 兵豆，[作物] 小扁豆"
+    ]
+  },
+  "lentitud": {
+    "word": "lentitud",
+    "phonetic": "",
+    "explains": [
+      "n.f. 缓慢"
+    ]
+  },
+  "lentitude": {
+    "word": "lentitude",
+    "phonetic": "",
+    "explains": [
+      "n. <古> 缓慢, 懒散"
+    ]
+  },
+  "lento": {
+    "word": "lento",
+    "phonetic": "",
+    "explains": [
+      "adj. 慢的"
+    ]
+  },
+  "leo": {
+    "word": "leo",
+    "phonetic": "",
+    "explains": [
+      "n. [天]狮子座，狮子宫"
+    ]
+  },
+  "leonine": {
+    "word": "leonine",
+    "phonetic": "/'liːənaɪn/",
+    "explains": [
+      "adj. 狮子的, 狮子般的"
+    ]
+  },
+  "leopard": {
+    "word": "leopard",
+    "phonetic": "/'lepəd/",
+    "explains": [
+      "n. 豹"
+    ]
+  },
+  "lepidoptera": {
+    "word": "lepidoptera",
+    "phonetic": "",
+    "explains": [
+      "n. 鳞翅目；鳞翅类"
+    ]
+  },
+  "leprosy": {
+    "word": "leprosy",
+    "phonetic": "/'leprəsɪ/",
+    "explains": [
+      "n. [医] 麻疯病, 腐败"
+    ]
+  },
+  "lesbian": {
+    "word": "lesbian",
+    "phonetic": "/'lezbɪən/",
+    "explains": [
+      "adj. [心理] 女同性恋的；n. 女同性恋者"
+    ]
+  },
+  "lesion": {
+    "word": "lesion",
+    "phonetic": "/'liːʒ(ə)n/",
+    "explains": [
+      "n. 损害, 身体上的伤害"
+    ]
+  },
+  "lesley": {
+    "word": "lesley",
+    "phonetic": "",
+    "explains": [
+      "n. 莱斯利（女子名）"
+    ]
+  },
+  "less": {
+    "word": "less",
+    "phonetic": "/les/",
+    "explains": [
+      "adj. 较少的"
+    ]
+  },
+  "lessee": {
+    "word": "lessee",
+    "phonetic": "/le'siː/",
+    "explains": [
+      "n.  承租人"
+    ]
+  },
+  "lessen": {
+    "word": "lessen",
+    "phonetic": "/'les(ə)n/",
+    "explains": [
+      "v. 减少，减轻；缩小"
+    ]
+  },
+  "lessive": {
+    "word": "lessive",
+    "phonetic": "",
+    "explains": [
+      "n.f. 洗衣；洗涤剂"
     ]
   },
   "lesson": {
@@ -167,11 +1917,53 @@
       "n. 教训；课；课程"
     ]
   },
+  "lessor": {
+    "word": "lessor",
+    "phonetic": "/le'sɔː/",
+    "explains": [
+      "n.  出租人"
+    ]
+  },
+  "lest": {
+    "word": "lest",
+    "phonetic": "/lest/",
+    "explains": [
+      "conj. 以免；惟恐"
+    ]
+  },
   "let": {
     "word": "let",
     "phonetic": "/let/",
     "explains": [
       "v. 允许；让；出租；假设"
+    ]
+  },
+  "lethal": {
+    "word": "lethal",
+    "phonetic": "/'liːθ(ə)l/",
+    "explains": [
+      "adj. 致命的 n致死因子"
+    ]
+  },
+  "lethargic": {
+    "word": "lethargic",
+    "phonetic": "/lɪ'θɑːdʒɪk/",
+    "explains": [
+      "adj. 昏睡的"
+    ]
+  },
+  "lethargy": {
+    "word": "lethargy",
+    "phonetic": "/'leθədʒɪ/",
+    "explains": [
+      "n. 无生气"
+    ]
+  },
+  "letra": {
+    "word": "letra",
+    "phonetic": "",
+    "explains": [
+      "n.f. 字母；歌词"
     ]
   },
   "letter": {
@@ -181,11 +1973,333 @@
       "n. 信；字母；文字；证书"
     ]
   },
+  "letterhead": {
+    "word": "letterhead",
+    "phonetic": "/'letəhed/",
+    "explains": [
+      "n.  信的抬头， 信头"
+    ]
+  },
+  "lettre": {
+    "word": "lettre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 信；字母"
+    ]
+  },
+  "lettuce": {
+    "word": "lettuce",
+    "phonetic": "/'letɪs/",
+    "explains": [
+      "n. [园艺] 生菜；莴苣；（美）纸币"
+    ]
+  },
+  "letup": {
+    "word": "letup",
+    "phonetic": "/'letʌp/",
+    "explains": [
+      "n. 停止，中止；松懈"
+    ]
+  },
+  "leucocyte": {
+    "word": "leucocyte",
+    "phonetic": "/'luːkə(ʊ)saɪt/",
+    "explains": [
+      "n. [解]白细胞, 白血球"
+    ]
+  },
+  "leukemia": {
+    "word": "leukemia",
+    "phonetic": "/lju'ki:miə/",
+    "explains": [
+      "n. [内科][肿瘤] 白血病"
+    ]
+  },
+  "levantar": {
+    "word": "levantar",
+    "phonetic": "",
+    "explains": [
+      "v. 举起"
+    ]
+  },
+  "levantarse": {
+    "word": "levantarse",
+    "phonetic": "",
+    "explains": [
+      "v. 起床"
+    ]
+  },
+  "levee": {
+    "word": "levee",
+    "phonetic": "/'levɪ; lɪ'viː/",
+    "explains": [
+      "n. 堤坝（码头）；（旧时君主或显贵的）早晨接见；vt. 为…筑堤"
+    ]
+  },
   "level": {
     "word": "level",
     "phonetic": "/ˈlevl/",
     "explains": [
       "n. 水平；标准；水平面 adj. 水平的；平坦的"
+    ]
+  },
+  "lever": {
+    "word": "lever",
+    "phonetic": "/'liːvə/",
+    "explains": [
+      "n. 控制杆；杆，杠杆"
+    ]
+  },
+  "leverage": {
+    "word": "leverage",
+    "phonetic": "/'liːvəridʒ; 'levəridʒ/",
+    "explains": [
+      "n.  力量， 影响； 杠杆作用， 杠杆的力量； 财务杠杆"
+    ]
+  },
+  "leviathan": {
+    "word": "leviathan",
+    "phonetic": "/lɪ'vaɪəθ(ə)n/",
+    "explains": [
+      "n. (《圣经》中象征邪恶的)海中怪兽, 巨物"
+    ]
+  },
+  "levitate": {
+    "word": "levitate",
+    "phonetic": "/'levɪteɪt/",
+    "explains": [
+      "v. (使)轻轻浮起, (使)飘浮空中"
+    ]
+  },
+  "levity": {
+    "word": "levity",
+    "phonetic": "/'levɪtɪ/",
+    "explains": [
+      "n. 多变；轻浮；轻率；不稳定"
+    ]
+  },
+  "levy": {
+    "word": "levy",
+    "phonetic": "/'levɪ/",
+    "explains": [
+      "n. 征收；征兵，征税；v. 征收（税等）；征集（兵等）"
+    ]
+  },
+  "lewd": {
+    "word": "lewd",
+    "phonetic": "/l(j)uːd/",
+    "explains": [
+      "adj. 淫荡的；猥亵的；下流的"
+    ]
+  },
+  "lewis": {
+    "word": "lewis",
+    "phonetic": "/'luːɪs/",
+    "explains": [
+      "n. [机] 吊楔,起重爪"
+    ]
+  },
+  "lexical": {
+    "word": "lexical",
+    "phonetic": "/'leksɪk(ə)l/",
+    "explains": [
+      "adj. 词汇的"
+    ]
+  },
+  "lexicographer": {
+    "word": "lexicographer",
+    "phonetic": "/,leksɪ'kɒgrəfə/",
+    "explains": [
+      "n. 词典编纂者"
+    ]
+  },
+  "lexicography": {
+    "word": "lexicography",
+    "phonetic": "/,leksɪ'kɒgrəfɪ/",
+    "explains": [
+      "n. 词典编纂"
+    ]
+  },
+  "lexicon": {
+    "word": "lexicon",
+    "phonetic": "/'leksɪk(ə)n/",
+    "explains": [
+      "n. 词典，辞典"
+    ]
+  },
+  "lexis": {
+    "word": "lexis",
+    "phonetic": "/'leksɪs/",
+    "explains": [
+      "n. 词汇；词语"
+    ]
+  },
+  "ley": {
+    "word": "ley",
+    "phonetic": "",
+    "explains": [
+      "n.f. 法律"
+    ]
+  },
+  "lf": {
+    "word": "lf",
+    "phonetic": "",
+    "explains": [
+      "Unix 换行符"
+    ]
+  },
+  "lgtm": {
+    "word": "lgtm",
+    "phonetic": "",
+    "explains": [
+      "我这边没问题（Looks good to me）"
+    ]
+  },
+  "liability": {
+    "word": "liability",
+    "phonetic": "/laɪə'bɪlɪtɪ/",
+    "explains": [
+      "n. 责任；债务"
+    ]
+  },
+  "liable": {
+    "word": "liable",
+    "phonetic": "/ˈlaɪəb(ə)l/",
+    "explains": [
+      "adj. 有责任的"
+    ]
+  },
+  "liaison": {
+    "word": "liaison",
+    "phonetic": "/lɪ'eɪz(ə)n; -zɒn/",
+    "explains": [
+      "n. 联络"
+    ]
+  },
+  "liar": {
+    "word": "liar",
+    "phonetic": "/'laɪə/",
+    "explains": [
+      "n. 说谎的人"
+    ]
+  },
+  "libation": {
+    "word": "libation",
+    "phonetic": "/laɪ'beɪʃ(ə)n/",
+    "explains": [
+      "n. 奠酒祭神仪式, 饮酒"
+    ]
+  },
+  "libel": {
+    "word": "libel",
+    "phonetic": "/'laɪb(ə)l/",
+    "explains": [
+      "n. 诽谤罪；诋毁；毁坏名誉的东西；控诉书；v. 中伤；控告；对…进行诽谤"
+    ]
+  },
+  "libellous": {
+    "word": "libellous",
+    "phonetic": "/'laɪbələs/",
+    "explains": [
+      "adj. 损害名誉的, 用言语中伤他人的"
+    ]
+  },
+  "libelous": {
+    "word": "libelous",
+    "phonetic": "/'laibələs/",
+    "explains": [
+      "adj. 诽谤的,损害名誉的"
+    ]
+  },
+  "liberal": {
+    "word": "liberal",
+    "phonetic": "/ˈlɪb(ə)r(ə)l/",
+    "explains": [
+      "adj. 自由的"
+    ]
+  },
+  "liberalism": {
+    "word": "liberalism",
+    "phonetic": "/'lɪbərəlɪzəm/",
+    "explains": [
+      "n. 自由主义；开明的思想或见解"
+    ]
+  },
+  "liberality": {
+    "word": "liberality",
+    "phonetic": "/lɪbə'rælɪtɪ/",
+    "explains": [
+      "n. 宽大, 磊落"
+    ]
+  },
+  "liberalization": {
+    "word": "liberalization",
+    "phonetic": "/ˌlibərəlai'zeiʃən/",
+    "explains": [
+      "n.  自由主义化"
+    ]
+  },
+  "liberalize": {
+    "word": "liberalize",
+    "phonetic": "/'libərəlaiz/",
+    "explains": [
+      "v. 使自由化；宽大"
+    ]
+  },
+  "liberate": {
+    "word": "liberate",
+    "phonetic": "/'lɪbəreɪt/",
+    "explains": [
+      "v. 解放；释放"
+    ]
+  },
+  "liberation": {
+    "word": "liberation",
+    "phonetic": "/lɪbə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 解放"
+    ]
+  },
+  "libertad": {
+    "word": "libertad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 自由"
+    ]
+  },
+  "libertine": {
+    "word": "libertine",
+    "phonetic": "/'lɪbətiːn; -tɪn; -taɪn/",
+    "explains": [
+      "n. 放荡不羁者, 玩乐者, 浪子, 自由思想家"
+    ]
+  },
+  "liberty": {
+    "word": "liberty",
+    "phonetic": "/ˈlɪbətɪ/",
+    "explains": [
+      "n. 自由"
+    ]
+  },
+  "libidinous": {
+    "word": "libidinous",
+    "phonetic": "/lɪ'bɪdɪnəs/",
+    "explains": [
+      "adj. 好色的, 淫荡的, 性欲的"
+    ]
+  },
+  "libido": {
+    "word": "libido",
+    "phonetic": "/lɪ'biːdəʊ; lɪ'baɪdəʊ/",
+    "explains": [
+      "n. 性欲, 性的冲动, 生命力"
+    ]
+  },
+  "librarian": {
+    "word": "librarian",
+    "phonetic": "/laɪˈbreərɪən/",
+    "explains": [
+      "n. 图书管理员"
     ]
   },
   "library": {
@@ -195,11 +2309,137 @@
       "n. 图书馆；藏书楼；藏书"
     ]
   },
+  "libre": {
+    "word": "libre",
+    "phonetic": "",
+    "explains": [
+      "adj. 自由的；空闲的"
+    ]
+  },
+  "libreta": {
+    "word": "libreta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 笔记本"
+    ]
+  },
+  "libretto": {
+    "word": "libretto",
+    "phonetic": "/lɪ'bretəʊ/",
+    "explains": [
+      "n. (歌剧、音乐剧等的)歌词（或剧本）"
+    ]
+  },
+  "libro": {
+    "word": "libro",
+    "phonetic": "",
+    "explains": [
+      "n.m. 书"
+    ]
+  },
+  "licence": {
+    "word": "licence",
+    "phonetic": "/ˈlaɪs(ə)ns/",
+    "explains": [
+      "n. 执照"
+    ]
+  },
+  "licenciement": {
+    "word": "licenciement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 解雇"
+    ]
+  },
+  "license": {
+    "word": "license",
+    "phonetic": "/'laɪsns/",
+    "explains": [
+      "n. 许可；执照；v. 准许"
+    ]
+  },
+  "licensee": {
+    "word": "licensee",
+    "phonetic": "/ˌlaisən'siː/",
+    "explains": [
+      "n.  获许可的人"
+    ]
+  },
+  "licensor": {
+    "word": "licensor",
+    "phonetic": "/'laisənsə/",
+    "explains": [
+      "n.  许可者， 认可者"
+    ]
+  },
+  "licentious": {
+    "word": "licentious",
+    "phonetic": "/laɪ'senʃəs/",
+    "explains": [
+      "adj. 放肆的；放纵的"
+    ]
+  },
+  "lichen": {
+    "word": "lichen",
+    "phonetic": "/'laɪk(ə)n; 'lɪtʃ(ə)n/",
+    "explains": [
+      "n. 青苔,苔藓"
+    ]
+  },
+  "licit": {
+    "word": "licit",
+    "phonetic": "/'lɪsɪt/",
+    "explains": [
+      "adj. 正当的，合法的"
+    ]
+  },
+  "lick": {
+    "word": "lick",
+    "phonetic": "/lɪk/",
+    "explains": [
+      "v. 舔；舔吃"
+    ]
+  },
+  "lid": {
+    "word": "lid",
+    "phonetic": "/lɪd/",
+    "explains": [
+      "n. 盖子"
+    ]
+  },
+  "lido": {
+    "word": "lido",
+    "phonetic": "/'liːdəʊ; 'laɪ-/",
+    "explains": [
+      "n. 海滨浴场,海滨游乐场(尤指远洋客轮上的),露天游泳池"
+    ]
+  },
   "lie": {
     "word": "lie",
     "phonetic": "/laɪ/",
     "explains": [
       "v. 躺；平躺；位于；说谎 n. 谎言；位置"
+    ]
+  },
+  "lien": {
+    "word": "lien",
+    "phonetic": "/liːn; 'liːən/",
+    "explains": [
+      "n. 留置权,抵押品所产生的利息"
+    ]
+  },
+  "lieu": {
+    "word": "lieu",
+    "phonetic": "/ljuː; luː/",
+    "explains": [
+      "n. 场所"
+    ]
+  },
+  "lieutenant": {
+    "word": "lieutenant",
+    "phonetic": "/lefˈtenənt; ləˈtenənt/",
+    "explains": [
+      "n. 中尉"
     ]
   },
   "life": {
@@ -209,11 +2449,81 @@
       "n. 生活；生存；寿命；一生"
     ]
   },
+  "lifeblood": {
+    "word": "lifeblood",
+    "phonetic": "/'laɪfblʌd/",
+    "explains": [
+      "n. 生命必须的血液, 活力的源泉"
+    ]
+  },
+  "lifeboat": {
+    "word": "lifeboat",
+    "phonetic": "/ˈlaɪfbəʊt/",
+    "explains": [
+      "n. 救生艇"
+    ]
+  },
+  "lifelike": {
+    "word": "lifelike",
+    "phonetic": "/'laɪflaɪk/",
+    "explains": [
+      "adj. 栩栩如生的,逼真的"
+    ]
+  },
+  "lifelong": {
+    "word": "lifelong",
+    "phonetic": "/'laɪflɒŋ/",
+    "explains": [
+      "adj. 终生的"
+    ]
+  },
+  "lifestyle": {
+    "word": "lifestyle",
+    "phonetic": "/ˈlaɪfstaɪl/",
+    "explains": [
+      "n. 生活方式"
+    ]
+  },
+  "lifetime": {
+    "word": "lifetime",
+    "phonetic": "/ˈlaɪftaɪm/",
+    "explains": [
+      "n. 一生"
+    ]
+  },
+  "lifeway": {
+    "word": "lifeway",
+    "phonetic": "/'laɪfweɪ/",
+    "explains": [
+      "n. 生活方式, 生活"
+    ]
+  },
   "lift": {
     "word": "lift",
     "phonetic": "/lɪft/",
     "explains": [
       "v. 举起；抬起；提升 n. 电梯；举起；搭车"
+    ]
+  },
+  "ligament": {
+    "word": "ligament",
+    "phonetic": "/'lɪgəm(ə)nt/",
+    "explains": [
+      "n. 韧带；纽带，系带"
+    ]
+  },
+  "ligature": {
+    "word": "ligature",
+    "phonetic": "/'lɪgətʃə/",
+    "explains": [
+      "n. 绷带"
+    ]
+  },
+  "ligero": {
+    "word": "ligero",
+    "phonetic": "",
+    "explains": [
+      "adj. 轻的；淡的"
     ]
   },
   "light": {
@@ -223,11 +2533,193 @@
       "n. 光；光线；灯 adj. 轻的；浅色的 v. 点燃；照亮"
     ]
   },
+  "lighten": {
+    "word": "lighten",
+    "phonetic": "/'laɪt(ə)n/",
+    "explains": [
+      "v. 照亮，使明亮"
+    ]
+  },
+  "lighter": {
+    "word": "lighter",
+    "phonetic": "/'laɪtə/",
+    "explains": [
+      "n. 打火机，引燃器"
+    ]
+  },
+  "lighthouse": {
+    "word": "lighthouse",
+    "phonetic": "/'laɪthaʊs/",
+    "explains": [
+      "n. 灯塔"
+    ]
+  },
+  "lightly": {
+    "word": "lightly",
+    "phonetic": "/'laɪtlɪ/",
+    "explains": [
+      "adv. 轻轻地，轻松地"
+    ]
+  },
+  "lightness": {
+    "word": "lightness",
+    "phonetic": "/'laitnis/",
+    "explains": [
+      "n. 轻盈, 灵活"
+    ]
+  },
+  "lightning": {
+    "word": "lightning",
+    "phonetic": "/ˈlaɪtnɪŋ/",
+    "explains": [
+      "n. 闪电"
+    ]
+  },
+  "lightweight": {
+    "word": "lightweight",
+    "phonetic": "/'laɪtweɪt/",
+    "explains": [
+      "n. 轻量级选手, 不能胜任者"
+    ]
+  },
+  "ligne": {
+    "word": "ligne",
+    "phonetic": "",
+    "explains": [
+      "n.f. 线；线路"
+    ]
+  },
+  "ligneous": {
+    "word": "ligneous",
+    "phonetic": "/'lɪgnɪəs/",
+    "explains": [
+      "adj. 木质的"
+    ]
+  },
   "like": {
     "word": "like",
     "phonetic": "/laɪk/",
     "explains": [
       "v. 喜欢；想；愿意 prep. 像；如同"
+    ]
+  },
+  "likelihood": {
+    "word": "likelihood",
+    "phonetic": "/'laɪklɪhʊd/",
+    "explains": [
+      "n. 可能（性）"
+    ]
+  },
+  "likely": {
+    "word": "likely",
+    "phonetic": "/ˈlaɪklɪ/",
+    "explains": [
+      "adv. 可能"
+    ]
+  },
+  "liken": {
+    "word": "liken",
+    "phonetic": "/'laɪk(ə)n/",
+    "explains": [
+      "v. 比拟；把…比作"
+    ]
+  },
+  "likeness": {
+    "word": "likeness",
+    "phonetic": "/'laɪknɪs/",
+    "explains": [
+      "n. 同样；类似，相似"
+    ]
+  },
+  "likewise": {
+    "word": "likewise",
+    "phonetic": "/'laɪkwaɪz/",
+    "explains": [
+      "adv. 同样地；也，又"
+    ]
+  },
+  "liking": {
+    "word": "liking",
+    "phonetic": "/'laɪkɪŋ/",
+    "explains": [
+      "n. 嗜好，爱好"
+    ]
+  },
+  "lilac": {
+    "word": "lilac",
+    "phonetic": "/'laɪlək/",
+    "explains": [
+      "n. 淡紫色；丁香花；[植] 紫丁香；adj. 淡紫色的"
+    ]
+  },
+  "lilliputian": {
+    "word": "lilliputian",
+    "phonetic": "",
+    "explains": [
+      "adj. 小人国居民的"
+    ]
+  },
+  "lily": {
+    "word": "lily",
+    "phonetic": "/'lɪlɪ/",
+    "explains": [
+      "n. 百合，百合花"
+    ]
+  },
+  "liman": {
+    "word": "liman",
+    "phonetic": "",
+    "explains": [
+      "n. [地]漓漫,大河口湾,泻湖"
+    ]
+  },
+  "limb": {
+    "word": "limb",
+    "phonetic": "/lɪm/",
+    "explains": [
+      "n. 肢，臂，翼；树枝"
+    ]
+  },
+  "limber": {
+    "word": "limber",
+    "phonetic": "/'lɪmbə/",
+    "explains": [
+      "adj. 可塑的"
+    ]
+  },
+  "limbo": {
+    "word": "limbo",
+    "phonetic": "/'lɪmbəʊ/",
+    "explains": [
+      "n. 地狱的边境, 监狱"
+    ]
+  },
+  "lime": {
+    "word": "lime",
+    "phonetic": "/laɪm/",
+    "explains": [
+      "n. 石灰"
+    ]
+  },
+  "limelight": {
+    "word": "limelight",
+    "phonetic": "/'laɪmlaɪt/",
+    "explains": [
+      "n. 石灰光，石灰光灯；众人注目的中心；vt. 使显露头角，使受到注目"
+    ]
+  },
+  "limerick": {
+    "word": "limerick",
+    "phonetic": "",
+    "explains": [
+      "n. 五行打油诗（一种通俗幽默短诗，有五行组成，韵式为aabba）"
+    ]
+  },
+  "limestone": {
+    "word": "limestone",
+    "phonetic": "/'laɪmstəʊn/",
+    "explains": [
+      "n. 石灰石"
     ]
   },
   "limit": {
@@ -237,11 +2729,270 @@
       "n. 限制；限度；界线 v. 限制；限定"
     ]
   },
+  "limitar": {
+    "word": "limitar",
+    "phonetic": "",
+    "explains": [
+      "v. 限制"
+    ]
+  },
+  "limitation": {
+    "word": "limitation",
+    "phonetic": "/ˌlɪmɪˈteɪʃ(ə)n/",
+    "explains": [
+      "n. 限制"
+    ]
+  },
+  "limited": {
+    "word": "limited",
+    "phonetic": "/ˈlɪmɪtɪd/",
+    "explains": [
+      "adj. 有限的"
+    ]
+  },
+  "limitrophe": {
+    "word": "limitrophe",
+    "phonetic": "/'lɪmɪtrəʊf/",
+    "explains": [
+      "adj. 位于边界上的"
+    ]
+  },
+  "limn": {
+    "word": "limn",
+    "phonetic": "/lɪm/",
+    "explains": [
+      "v. 描写, 描绘"
+    ]
+  },
+  "limner": {
+    "word": "limner",
+    "phonetic": "",
+    "explains": [
+      "n. 素描者"
+    ]
+  },
+  "limnetic": {
+    "word": "limnetic",
+    "phonetic": "/lɪm'netɪk/",
+    "explains": [
+      "adj. 淡水的"
+    ]
+  },
+  "limonada": {
+    "word": "limonada",
+    "phonetic": "",
+    "explains": [
+      "n.f. 柠檬水"
+    ]
+  },
+  "limousine": {
+    "word": "limousine",
+    "phonetic": "/'lɪməziːn; ,lɪmə'ziːn/",
+    "explains": [
+      "n. 豪华轿车"
+    ]
+  },
+  "limp": {
+    "word": "limp",
+    "phonetic": "/lɪmp/",
+    "explains": [
+      "v. 跛行　adj. 柔软的"
+    ]
+  },
+  "limpiar": {
+    "word": "limpiar",
+    "phonetic": "",
+    "explains": [
+      "v. 清洁"
+    ]
+  },
+  "limpid": {
+    "word": "limpid",
+    "phonetic": "/'lɪmpɪd/",
+    "explains": [
+      "adj. 清澈的"
+    ]
+  },
+  "limpio": {
+    "word": "limpio",
+    "phonetic": "",
+    "explains": [
+      "adj. 干净的"
+    ]
+  },
+  "limy": {
+    "word": "limy",
+    "phonetic": "/'laimi/",
+    "explains": [
+      "adj. 含石灰的, 石灰似的"
+    ]
+  },
+  "linchpin": {
+    "word": "linchpin",
+    "phonetic": "/'lɪn(t)ʃpɪn/",
+    "explains": [
+      "n. 关键（等于lynchpin）；制轮楔；轮辖"
+    ]
+  },
   "line": {
     "word": "line",
     "phonetic": "/laɪn/",
     "explains": [
       "n. 路线；线；排；绳 v. 排队；画线"
+    ]
+  },
+  "lineage": {
+    "word": "lineage",
+    "phonetic": "/'lɪnɪɪdʒ/",
+    "explains": [
+      "n. 血统, 世系"
+    ]
+  },
+  "lineal": {
+    "word": "lineal",
+    "phonetic": "/'lɪnɪəl/",
+    "explains": [
+      "adj. 直系的, 正统的"
+    ]
+  },
+  "lineament": {
+    "word": "lineament",
+    "phonetic": "/'lɪnɪəm(ə)nt/",
+    "explains": [
+      "n. 面部轮廓"
+    ]
+  },
+  "linear": {
+    "word": "linear",
+    "phonetic": "/ˈlɪnɪə/",
+    "explains": [
+      "adj. 线性的"
+    ]
+  },
+  "linen": {
+    "word": "linen",
+    "phonetic": "/'lɪnɪn/",
+    "explains": [
+      "n. 亚麻布；亚麻织物"
+    ]
+  },
+  "liner": {
+    "word": "liner",
+    "phonetic": "/'laɪnə/",
+    "explains": [
+      "n. 班船，班机"
+    ]
+  },
+  "lineskipper": {
+    "word": "lineskipper",
+    "phonetic": "/'lainˌskipə/",
+    "explains": [
+      "n.  抢先者； 加塞者"
+    ]
+  },
+  "linesman": {
+    "word": "linesman",
+    "phonetic": "/'laɪnzmən/",
+    "explains": [
+      "n. 巡线工人；前锋；架线工，线条员；巡边员"
+    ]
+  },
+  "ling": {
+    "word": "ling",
+    "phonetic": "/lɪŋ/",
+    "explains": [
+      "n. 鳕鱼, 石南之一种"
+    ]
+  },
+  "linger": {
+    "word": "linger",
+    "phonetic": "/'lɪŋgə/",
+    "explains": [
+      "v. 逗留，徘徊；拖延"
+    ]
+  },
+  "lingering": {
+    "word": "lingering",
+    "phonetic": "/'lɪŋgərɪŋ/",
+    "explains": [
+      "adj. 延迟的, 逗留不去的"
+    ]
+  },
+  "lingo": {
+    "word": "lingo",
+    "phonetic": "/'lɪŋgəʊ/",
+    "explains": [
+      "n. （尤指）方言, 行话, 隐语"
+    ]
+  },
+  "lingual": {
+    "word": "lingual",
+    "phonetic": "/'lɪŋgw(ə)l/",
+    "explains": [
+      "adj. 语言的；舌的，舌音的；n. 舌音，舌音字"
+    ]
+  },
+  "linguist": {
+    "word": "linguist",
+    "phonetic": "/'lɪŋgwɪst/",
+    "explains": [
+      "n. 语言学家"
+    ]
+  },
+  "linguistic": {
+    "word": "linguistic",
+    "phonetic": "/lɪŋ'gwɪstɪk/",
+    "explains": [
+      "adj. 语言的；语言学的"
+    ]
+  },
+  "linguistics": {
+    "word": "linguistics",
+    "phonetic": "/lɪŋ'gwɪstɪks/",
+    "explains": [
+      "n. 语言学"
+    ]
+  },
+  "lining": {
+    "word": "lining",
+    "phonetic": "/'laɪnɪŋ/",
+    "explains": [
+      "n. （衣服里的）衬里"
+    ]
+  },
+  "link": {
+    "word": "link",
+    "phonetic": "/lɪŋk/",
+    "explains": [
+      "v. 连接　n. 联系"
+    ]
+  },
+  "linkage": {
+    "word": "linkage",
+    "phonetic": "/'lɪŋkɪdʒ/",
+    "explains": [
+      "n. 联接"
+    ]
+  },
+  "linoleum": {
+    "word": "linoleum",
+    "phonetic": "/lɪ'nəʊlɪəm/",
+    "explains": [
+      "n. 油布, 油毯"
+    ]
+  },
+  "lint": {
+    "word": "lint",
+    "phonetic": "/lɪnt/",
+    "explains": [
+      "n. 绷带用麻布"
+    ]
+  },
+  "lintel": {
+    "word": "lintel",
+    "phonetic": "/'lɪnt(ə)l/",
+    "explains": [
+      "n. [建]楣, 过梁"
     ]
   },
   "lion": {
@@ -251,11 +3002,137 @@
       "n. 狮子；名人；勇猛的人"
     ]
   },
+  "lioness": {
+    "word": "lioness",
+    "phonetic": "/'laɪənɛs/",
+    "explains": [
+      "n. 母狮子；雌狮"
+    ]
+  },
+  "lip": {
+    "word": "lip",
+    "phonetic": "/lɪp/",
+    "explains": [
+      "n. 嘴唇"
+    ]
+  },
+  "lipid": {
+    "word": "lipid",
+    "phonetic": "/'lɪpɪd/",
+    "explains": [
+      "n. 脂质, 油脂"
+    ]
+  },
+  "lipoprotein": {
+    "word": "lipoprotein",
+    "phonetic": "/'lɪpə(ʊ),prəʊtiːn; 'laɪ-/",
+    "explains": [
+      "n. [生化] 脂蛋白"
+    ]
+  },
+  "lipstick": {
+    "word": "lipstick",
+    "phonetic": "/'lɪpstɪk/",
+    "explains": [
+      "n. 唇膏，口红"
+    ]
+  },
+  "liquefy": {
+    "word": "liquefy",
+    "phonetic": "/'lɪkwɪfaɪ/",
+    "explains": [
+      "v. 液化；溶解"
+    ]
+  },
+  "liquid": {
+    "word": "liquid",
+    "phonetic": "/ˈlɪkwɪd/",
+    "explains": [
+      "n. 液体"
+    ]
+  },
+  "liquidate": {
+    "word": "liquidate",
+    "phonetic": "/'likwideit/",
+    "explains": [
+      "v.  清偿， 清算； 清理"
+    ]
+  },
+  "liquidation": {
+    "word": "liquidation",
+    "phonetic": "/ˌlikwi'deiʃən/",
+    "explains": [
+      "n.  清偿， 清算； 肃清； 消灭"
+    ]
+  },
+  "liquidator": {
+    "word": "liquidator",
+    "phonetic": "/'likwideitə/",
+    "explains": [
+      "n.  清算人"
+    ]
+  },
+  "liquidity": {
+    "word": "liquidity",
+    "phonetic": "/li'kwidəti/",
+    "explains": [
+      "n.  流动性； 资产折现力"
+    ]
+  },
+  "liquor": {
+    "word": "liquor",
+    "phonetic": "/ˈlɪkə/",
+    "explains": [
+      "n. 烈酒"
+    ]
+  },
+  "lira": {
+    "word": "lira",
+    "phonetic": "/'lɪərə/",
+    "explains": [
+      "n. 里拉（意大利货币单位）"
+    ]
+  },
+  "liso": {
+    "word": "liso",
+    "phonetic": "",
+    "explains": [
+      "adj. 平滑的；直发的"
+    ]
+  },
+  "lisseur": {
+    "word": "lisseur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 直发器"
+    ]
+  },
+  "lissom": {
+    "word": "lissom",
+    "phonetic": "",
+    "explains": [
+      "adj. 柔软的（人体）"
+    ]
+  },
   "list": {
     "word": "list",
     "phonetic": "/lɪst/",
     "explains": [
       "n. 列表；清单；目录 v. 列清单；列举"
+    ]
+  },
+  "lista": {
+    "word": "lista",
+    "phonetic": "",
+    "explains": [
+      "n.f. 名单"
+    ]
+  },
+  "listed": {
+    "word": "listed",
+    "phonetic": "/'listid/",
+    "explains": [
+      "adj.  列出的； 上市的"
     ]
   },
   "listen": {
@@ -265,11 +3142,242 @@
       "v. 听；倾听；听从"
     ]
   },
+  "listener": {
+    "word": "listener",
+    "phonetic": "/'lɪs(ə)nə/",
+    "explains": [
+      "n. 听众之一；听者"
+    ]
+  },
+  "listing": {
+    "word": "listing",
+    "phonetic": "/'listiŋ/",
+    "explains": [
+      "n.  列表"
+    ]
+  },
+  "listless": {
+    "word": "listless",
+    "phonetic": "/'lɪs(t)lɪs/",
+    "explains": [
+      "adj. 倦怠的, 冷漠的"
+    ]
+  },
+  "listlessness": {
+    "word": "listlessness",
+    "phonetic": "",
+    "explains": [
+      "n. 无精打采；精神萎靡"
+    ]
+  },
+  "listo": {
+    "word": "listo",
+    "phonetic": "",
+    "explains": [
+      "adj. 聪明的；准备好的"
+    ]
+  },
+  "lite": {
+    "word": "lite",
+    "phonetic": "",
+    "explains": [
+      "精简版"
+    ]
+  },
+  "liter": {
+    "word": "liter",
+    "phonetic": "/ˈli:tə(r)/",
+    "explains": [
+      "n. 升（容量单位）"
+    ]
+  },
+  "literacy": {
+    "word": "literacy",
+    "phonetic": "/'lɪt(ə)rəsɪ/",
+    "explains": [
+      "n. 读写能力；精通文学"
+    ]
+  },
+  "literal": {
+    "word": "literal",
+    "phonetic": "/'lɪt(ə)r(ə)l/",
+    "explains": [
+      "adj. 文字（上）的；字面的"
+    ]
+  },
+  "literally": {
+    "word": "literally",
+    "phonetic": "/'lɪt(ə)rəlɪ/",
+    "explains": [
+      "adv. 照字义，逐字地"
+    ]
+  },
+  "literalness": {
+    "word": "literalness",
+    "phonetic": "",
+    "explains": [
+      "n. 文字的,表面意义上的"
+    ]
+  },
+  "literary": {
+    "word": "literary",
+    "phonetic": "/ˈlɪt(ə)rərɪ/",
+    "explains": [
+      "adj. 文学的"
+    ]
+  },
+  "literate": {
+    "word": "literate",
+    "phonetic": "/'lɪt(ə)rət/",
+    "explains": [
+      "adj. 有读写能力的；有文化修养的"
+    ]
+  },
+  "literati": {
+    "word": "literati",
+    "phonetic": "/,lɪtə'rɑːtɪ/",
+    "explains": [
+      "n. 文人, 文学界"
+    ]
+  },
+  "literature": {
+    "word": "literature",
+    "phonetic": "/ˈlɪt(ə)rətʃə/",
+    "explains": [
+      "n. 文学"
+    ]
+  },
+  "lithe": {
+    "word": "lithe",
+    "phonetic": "/laɪð/",
+    "explains": [
+      "adj. 轻盈的（等于lithesome）；柔软的；易弯曲的"
+    ]
+  },
+  "lithograph": {
+    "word": "lithograph",
+    "phonetic": "/'lɪθəgrɑːf; 'laɪ-/",
+    "explains": [
+      "n. 石版画, 平版印刷"
+    ]
+  },
+  "lithographic": {
+    "word": "lithographic",
+    "phonetic": "/,lɪθə'græfɪk/",
+    "explains": [
+      "adj. 石版印刷的, 石版的"
+    ]
+  },
+  "lithography": {
+    "word": "lithography",
+    "phonetic": "/lɪ'θɒgrəfɪ/",
+    "explains": [
+      "n. 平版印刷术"
+    ]
+  },
+  "lithosphere": {
+    "word": "lithosphere",
+    "phonetic": "/'lɪθəsfɪə/",
+    "explains": [
+      "n. [地]岩石圈"
+    ]
+  },
+  "lithospheric": {
+    "word": "lithospheric",
+    "phonetic": "",
+    "explains": [
+      "adj. 岩石圈的; 陆界的"
+    ]
+  },
+  "litigant": {
+    "word": "litigant",
+    "phonetic": "/'lɪtɪg(ə)nt/",
+    "explains": [
+      "n. 诉讼当事人；adj. 诉讼的"
+    ]
+  },
+  "litigate": {
+    "word": "litigate",
+    "phonetic": "/'litigeit/",
+    "explains": [
+      "v.  提起诉讼"
+    ]
+  },
+  "litigation": {
+    "word": "litigation",
+    "phonetic": "/ˌliti'geiʃən/",
+    "explains": [
+      "n.  诉讼"
+    ]
+  },
+  "litigious": {
+    "word": "litigious",
+    "phonetic": "/lɪ'tɪdʒəs/",
+    "explains": [
+      "adj. 好诉讼的；好争论的"
+    ]
+  },
+  "litmus": {
+    "word": "litmus",
+    "phonetic": "/'lɪtməs/",
+    "explains": [
+      "n. [试剂] 石蕊"
+    ]
+  },
+  "litre": {
+    "word": "litre",
+    "phonetic": "/'liːtə/",
+    "explains": [
+      "n. [计量] 公升（米制容量单位）"
+    ]
+  },
+  "litter": {
+    "word": "litter",
+    "phonetic": "/ˈlɪtə/",
+    "explains": [
+      "n. 垃圾　v. 乱丢"
+    ]
+  },
+  "litterbin": {
+    "word": "litterbin",
+    "phonetic": "/'lɪtəbɪn/",
+    "explains": [
+      "n. <英>(公共场所的)废物箱"
+    ]
+  },
   "little": {
     "word": "little",
     "phonetic": "/ˈlɪtl/",
     "explains": [
       "adj. 小的；很少的；短暂的 adv. 完全不"
+    ]
+  },
+  "littoral": {
+    "word": "littoral",
+    "phonetic": "/'lɪt(ə)r(ə)l/",
+    "explains": [
+      "adj. 沿海的；海滨的；n. 沿海地区（等于litora）"
+    ]
+  },
+  "liturgical": {
+    "word": "liturgical",
+    "phonetic": "/lɪ'tɜːdʒɪk(ə)l/",
+    "explains": [
+      "adj. 礼拜式的"
+    ]
+  },
+  "liturgy": {
+    "word": "liturgy",
+    "phonetic": "/'lɪtədʒɪ/",
+    "explains": [
+      "n. 圣餐仪式, 礼拜仪式"
+    ]
+  },
+  "livable": {
+    "word": "livable",
+    "phonetic": "/'lɪvəbl/",
+    "explains": [
+      "adj. 适于居住的"
     ]
   },
   "live": {
@@ -279,11 +3387,277 @@
       "v. 居住；生存；生活 adj. 活的；直播的"
     ]
   },
+  "livelihood": {
+    "word": "livelihood",
+    "phonetic": "/'laɪvlɪhʊd/",
+    "explains": [
+      "n. 生计,谋生"
+    ]
+  },
+  "liveliness": {
+    "word": "liveliness",
+    "phonetic": "/'laɪvlɪnɪs/",
+    "explains": [
+      "n. 活泼"
+    ]
+  },
+  "lively": {
+    "word": "lively",
+    "phonetic": "/ˈlaɪvlɪ/",
+    "explains": [
+      "adj. 活泼的"
+    ]
+  },
+  "liven": {
+    "word": "liven",
+    "phonetic": "/'laɪv(ə)n/",
+    "explains": [
+      "v. 使高兴，使快活；n. (Liven)人名；(俄、英)利文"
+    ]
+  },
+  "liver": {
+    "word": "liver",
+    "phonetic": "/'lɪvə/",
+    "explains": [
+      "n. 肝；肝脏"
+    ]
+  },
+  "liverish": {
+    "word": "liverish",
+    "phonetic": "/'lɪv(ə)rɪʃ/",
+    "explains": [
+      "adj. <口>患肝病的, 坏脾气的"
+    ]
+  },
+  "livestock": {
+    "word": "livestock",
+    "phonetic": "/'laɪvstɒk/",
+    "explains": [
+      "n. 家畜"
+    ]
+  },
+  "livid": {
+    "word": "livid",
+    "phonetic": "/'lɪvɪd/",
+    "explains": [
+      "adj. 铅色的, （被打得）青紫色的"
+    ]
+  },
   "living": {
     "word": "living",
     "phonetic": "/ˈlɪvɪŋ/",
     "explains": [
       "adj. 活的；现存的；活跃的 n. 生计；生活"
+    ]
+  },
+  "livraison": {
+    "word": "livraison",
+    "phonetic": "",
+    "explains": [
+      "n.f. 送货"
+    ]
+  },
+  "lizard": {
+    "word": "lizard",
+    "phonetic": "/'lɪzəd/",
+    "explains": [
+      "n. [动]蜥蜴"
+    ]
+  },
+  "llave": {
+    "word": "llave",
+    "phonetic": "",
+    "explains": [
+      "n.f. 钥匙"
+    ]
+  },
+  "llegar": {
+    "word": "llegar",
+    "phonetic": "",
+    "explains": [
+      "v. 到达"
+    ]
+  },
+  "llenar": {
+    "word": "llenar",
+    "phonetic": "",
+    "explains": [
+      "v. 填满"
+    ]
+  },
+  "lleno": {
+    "word": "lleno",
+    "phonetic": "",
+    "explains": [
+      "adj. 满的"
+    ]
+  },
+  "llevar": {
+    "word": "llevar",
+    "phonetic": "",
+    "explains": [
+      "v. 携带；穿"
+    ]
+  },
+  "llover": {
+    "word": "llover",
+    "phonetic": "",
+    "explains": [
+      "v. 下雨"
+    ]
+  },
+  "lluvia": {
+    "word": "lluvia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 雨"
+    ]
+  },
+  "load": {
+    "word": "load",
+    "phonetic": "/ləʊd/",
+    "explains": [
+      "n. 负载　v. 装载"
+    ]
+  },
+  "loaded": {
+    "word": "loaded",
+    "phonetic": "/'ləʊdɪd/",
+    "explains": [
+      "adj. 负荷的；装填子弹的；装好胶卷的；喝醉了的（美国俚语）；阔绰的（美国俚语）；v. 装载（load的变形）"
+    ]
+  },
+  "loaf": {
+    "word": "loaf",
+    "phonetic": "/ləʊf/",
+    "explains": [
+      "n. 一条面包，一个面包"
+    ]
+  },
+  "loam": {
+    "word": "loam",
+    "phonetic": "/ləʊm/",
+    "explains": [
+      "n. 肥土"
+    ]
+  },
+  "loan": {
+    "word": "loan",
+    "phonetic": "/ləʊn/",
+    "explains": [
+      "n. 贷款"
+    ]
+  },
+  "loath": {
+    "word": "loath",
+    "phonetic": "/ləʊθ/",
+    "explains": [
+      "adj. 不愿意的"
+    ]
+  },
+  "loathe": {
+    "word": "loathe",
+    "phonetic": "/ləʊð/",
+    "explains": [
+      "v. 讨厌，厌恶"
+    ]
+  },
+  "loathsome": {
+    "word": "loathsome",
+    "phonetic": "/'ləʊðs(ə)m/",
+    "explains": [
+      "adj. 讨厌的"
+    ]
+  },
+  "lobby": {
+    "word": "lobby",
+    "phonetic": "/ˈlɒbɪ/",
+    "explains": [
+      "n. 大厅"
+    ]
+  },
+  "lobe": {
+    "word": "lobe",
+    "phonetic": "/ləʊb/",
+    "explains": [
+      "n. 耳垂，(肺，肝等的)叶"
+    ]
+  },
+  "lobster": {
+    "word": "lobster",
+    "phonetic": "/'lɒbstə/",
+    "explains": [
+      "n. 龙虾"
+    ]
+  },
+  "local": {
+    "word": "local",
+    "phonetic": "/ˈləʊk(ə)l/",
+    "explains": [
+      "adj. 当地的"
+    ]
+  },
+  "locale": {
+    "word": "locale",
+    "phonetic": "/ləʊ'kɑːl/",
+    "explains": [
+      "n. 现场, 场所"
+    ]
+  },
+  "locality": {
+    "word": "locality",
+    "phonetic": "/lə(ʊ)'kælɪtɪ/",
+    "explains": [
+      "n. 位置，地点，发生地"
+    ]
+  },
+  "localization": {
+    "word": "localization",
+    "phonetic": "/,ləʊkəlaɪ'zeɪʃən/",
+    "explains": [
+      "n. 地方化, 局限, 定位"
+    ]
+  },
+  "localize": {
+    "word": "localize",
+    "phonetic": "/'ləʊk(ə)laɪz/",
+    "explains": [
+      "v. 集中,局部化"
+    ]
+  },
+  "locally": {
+    "word": "locally",
+    "phonetic": "/'ləʊkəlɪ/",
+    "explains": [
+      "adv. 在本地, 地方性地, 局部地"
+    ]
+  },
+  "locataire": {
+    "word": "locataire",
+    "phonetic": "",
+    "explains": [
+      "n. 房客"
+    ]
+  },
+  "locate": {
+    "word": "locate",
+    "phonetic": "/ləʊˈkeɪt; lə(ʊ)ˈkeɪt/",
+    "explains": [
+      "v. 位于"
+    ]
+  },
+  "location": {
+    "word": "location",
+    "phonetic": "/lə(ʊ)ˈkeɪʃ(ə)n/",
+    "explains": [
+      "n. 位置"
+    ]
+  },
+  "loch": {
+    "word": "loch",
+    "phonetic": "/lɒk/",
+    "explains": [
+      "n. 湖；海湾（狭长的）"
     ]
   },
   "lock": {
@@ -293,11 +3667,291 @@
       "n. 锁；水闸；刹车 v. 锁；锁上；卡住"
     ]
   },
+  "locker": {
+    "word": "locker",
+    "phonetic": "/'lɒkə/",
+    "explains": [
+      "n. 柜，箱；上锁的人；有锁的橱柜；锁扣装置；有锁的存物柜"
+    ]
+  },
+  "loco": {
+    "word": "loco",
+    "phonetic": "/'ləʊkəʊ/",
+    "explains": [
+      "n. 疯草病, 疯子, 火车头"
+    ]
+  },
+  "locomote": {
+    "word": "locomote",
+    "phonetic": "",
+    "explains": [
+      "v. 移动, 行动"
+    ]
+  },
+  "locomotion": {
+    "word": "locomotion",
+    "phonetic": "/ləʊkə'məʊʃ(ə)n/",
+    "explains": [
+      "n. 运动, 移动"
+    ]
+  },
+  "locomotive": {
+    "word": "locomotive",
+    "phonetic": "/ləʊkə'məʊtɪv/",
+    "explains": [
+      "n. 火车头，机车"
+    ]
+  },
+  "locomotor": {
+    "word": "locomotor",
+    "phonetic": "/ləʊkə(ʊ)'məʊtə/",
+    "explains": [
+      "adj. 运动的"
+    ]
+  },
+  "locus": {
+    "word": "locus",
+    "phonetic": "/'ləʊkəs/",
+    "explains": [
+      "n. [数] 轨迹；地点，所在地"
+    ]
+  },
+  "locust": {
+    "word": "locust",
+    "phonetic": "/'ləʊkəst/",
+    "explains": [
+      "n. 蝗虫"
+    ]
+  },
+  "locution": {
+    "word": "locution",
+    "phonetic": "/lə'kjuːʃ(ə)n/",
+    "explains": [
+      "n. 独特的措辞，惯用语，说话风格"
+    ]
+  },
+  "loder": {
+    "word": "loder",
+    "phonetic": "",
+    "explains": [
+      "n. [计]装填器"
+    ]
+  },
+  "lodestone": {
+    "word": "lodestone",
+    "phonetic": "/'ləʊdstəʊn/",
+    "explains": [
+      "n. 天然磁石, 吸引人的东西"
+    ]
+  },
+  "lodge": {
+    "word": "lodge",
+    "phonetic": "/lɒdʒ/",
+    "explains": [
+      "v. 借宿"
+    ]
+  },
+  "lodger": {
+    "word": "lodger",
+    "phonetic": "/'lɒdʒə/",
+    "explains": [
+      "n. 寄宿者, 投宿者"
+    ]
+  },
+  "lodging": {
+    "word": "lodging",
+    "phonetic": "/'lɒdʒɪŋ/",
+    "explains": [
+      "n. 寄宿，住宿；住所"
+    ]
+  },
+  "loess": {
+    "word": "loess",
+    "phonetic": "/'ləʊɪs; lɜːs/",
+    "explains": [
+      "n. 黄土"
+    ]
+  },
+  "loft": {
+    "word": "loft",
+    "phonetic": "/lɒft/",
+    "explains": [
+      "n. 阁楼"
+    ]
+  },
+  "lofty": {
+    "word": "lofty",
+    "phonetic": "/'lɒftɪ/",
+    "explains": [
+      "adj. 高耸的；高尚的"
+    ]
+  },
+  "log": {
+    "word": "log",
+    "phonetic": "/lɒg/",
+    "explains": [
+      "n. 圆木"
+    ]
+  },
+  "logarithm": {
+    "word": "logarithm",
+    "phonetic": "/'lɒgərɪð(ə)m; -rɪθ-/",
+    "explains": [
+      "n. [数] 对数"
+    ]
+  },
+  "logement": {
+    "word": "logement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 住房"
+    ]
+  },
+  "logged": {
+    "word": "logged",
+    "phonetic": "/'lɒɡd/",
+    "explains": [
+      "adj. 笨拙的, （树）劈成木材的"
+    ]
+  },
+  "logger": {
+    "word": "logger",
+    "phonetic": "/'lɒgə/",
+    "explains": [
+      "n. 樵夫, 圆木装车机"
+    ]
+  },
+  "loggerhead": {
+    "word": "loggerhead",
+    "phonetic": "/'lɒgəhed/",
+    "explains": [
+      "n. 傻子,铁球棒"
+    ]
+  },
+  "logic": {
+    "word": "logic",
+    "phonetic": "/ˈlɒdʒɪk/",
+    "explains": [
+      "n. 逻辑"
+    ]
+  },
+  "logical": {
+    "word": "logical",
+    "phonetic": "/ˈlɒdʒɪk(ə)l/",
+    "explains": [
+      "adj. 合逻辑的"
+    ]
+  },
+  "logically": {
+    "word": "logically",
+    "phonetic": "/'lɔdʒikli/",
+    "explains": [
+      "adv. 符合逻辑地, 逻辑上地"
+    ]
+  },
+  "logistics": {
+    "word": "logistics",
+    "phonetic": "/lə'dʒistiks/",
+    "explains": [
+      "n.  物流； 后勤"
+    ]
+  },
+  "logjam": {
+    "word": "logjam",
+    "phonetic": "/'lɒgdʒæm/",
+    "explains": [
+      "n. <美>（水道）受圆木阻塞, 停滞状态, 僵局"
+    ]
+  },
+  "logo": {
+    "word": "logo",
+    "phonetic": "/'ləugəu/",
+    "explains": [
+      "n.  徽标， 标志； 企业标志； 商标"
+    ]
+  },
+  "logotype": {
+    "word": "logotype",
+    "phonetic": "/'lɒgə(ʊ)taɪp/",
+    "explains": [
+      "n. 连合活字；标识；商标"
+    ]
+  },
+  "lograr": {
+    "word": "lograr",
+    "phonetic": "",
+    "explains": [
+      "v. 达到；获得"
+    ]
+  },
+  "loin": {
+    "word": "loin",
+    "phonetic": "/lɒɪn/",
+    "explains": [
+      "n. 腰；腰部；腰肉"
+    ]
+  },
+  "loiter": {
+    "word": "loiter",
+    "phonetic": "/'lɒɪtə/",
+    "explains": [
+      "v. 闲荡, 虚度, 徘徊"
+    ]
+  },
+  "loll": {
+    "word": "loll",
+    "phonetic": "/lɒl/",
+    "explains": [
+      "v. 懒洋洋地倚靠,(头等)垂下n游手好闲的人\""
+    ]
+  },
+  "lomas": {
+    "word": "lomas",
+    "phonetic": "",
+    "explains": [
+      "n. 洛马斯(阿根廷东部的一城镇)"
+    ]
+  },
+  "london": {
+    "word": "london",
+    "phonetic": "/ˈlʌndən/",
+    "explains": [
+      "n. 伦敦"
+    ]
+  },
+  "londoner": {
+    "word": "londoner",
+    "phonetic": "",
+    "explains": [
+      "n. 伦敦人"
+    ]
+  },
+  "lone": {
+    "word": "lone",
+    "phonetic": "/ləʊn/",
+    "explains": [
+      "adj. 孤独的，寂寞的"
+    ]
+  },
+  "loneliness": {
+    "word": "loneliness",
+    "phonetic": "/'ləʊnlɪnɪs/",
+    "explains": [
+      "n. 孤独, 寂寞"
+    ]
+  },
   "lonely": {
     "word": "lonely",
     "phonetic": "/ˈləʊnli/",
     "explains": [
       "adj. 寂寞的；偏僻的；孤单的"
+    ]
+  },
+  "lonesome": {
+    "word": "lonesome",
+    "phonetic": "/'ləʊns(ə)m/",
+    "explains": [
+      "adj. 寂寞的；人迹稀少的；n. 自己"
     ]
   },
   "long": {
@@ -307,11 +3961,193 @@
       "adj. 长的；长时间的 adv. 长期地；长久地"
     ]
   },
+  "long-term": {
+    "word": "long-term",
+    "phonetic": "/ˈlɒŋtɜːm/",
+    "explains": [
+      "adj. 长期的"
+    ]
+  },
+  "longer": {
+    "word": "longer",
+    "phonetic": "/'lɒŋɡə/",
+    "explains": [
+      "ad&a. 比较久(的)"
+    ]
+  },
+  "longevity": {
+    "word": "longevity",
+    "phonetic": "/lɒn'dʒevɪtɪ/",
+    "explains": [
+      "n. 长命, 寿命"
+    ]
+  },
+  "longing": {
+    "word": "longing",
+    "phonetic": "/'lɒŋɪŋ/",
+    "explains": [
+      "n. 渴望；adj. 显示渴望的"
+    ]
+  },
+  "longitude": {
+    "word": "longitude",
+    "phonetic": "/'lɒn(d)ʒɪtjuːd; 'lɒŋgɪ-/",
+    "explains": [
+      "n. 经线，经度"
+    ]
+  },
+  "longitudinal": {
+    "word": "longitudinal",
+    "phonetic": "/,lɒn(d)ʒɪ'tjuːdɪn(ə)l; ,lɒŋgɪ-/",
+    "explains": [
+      "adj. 长度的，纵向的；经线的"
+    ]
+  },
+  "longtime": {
+    "word": "longtime",
+    "phonetic": "/'lɒŋtaɪm/",
+    "explains": [
+      "adj. (已持续)长时间的；adv. 长久地"
+    ]
+  },
+  "longueur": {
+    "word": "longueur",
+    "phonetic": "/lɒŋ'ɡɜːr/",
+    "explains": [
+      "n. 小说,剧本或乐谱等冗长而枯燥无味的章节"
+    ]
+  },
   "look": {
     "word": "look",
     "phonetic": "/lʊk/",
     "explains": [
       "v. 看；看起来；注意；面向 n. 看；样子；面容"
+    ]
+  },
+  "lookout": {
+    "word": "lookout",
+    "phonetic": "/'lʊkaʊt/",
+    "explains": [
+      "n. 监视；监视哨；警戒；守望者；担心的事；前景"
+    ]
+  },
+  "loom": {
+    "word": "loom",
+    "phonetic": "/luːm/",
+    "explains": [
+      "n. 织布机；若隐若现的景象；v. 可怕地出现；朦胧地出现；隐约可见"
+    ]
+  },
+  "loon": {
+    "word": "loon",
+    "phonetic": "/luːn/",
+    "explains": [
+      "n. 懒人, 笨蛋, [动物]潜鸟"
+    ]
+  },
+  "loop": {
+    "word": "loop",
+    "phonetic": "/luːp/",
+    "explains": [
+      "n. 圈，环，环孔"
+    ]
+  },
+  "loophole": {
+    "word": "loophole",
+    "phonetic": "/'luːphəʊl/",
+    "explains": [
+      "n. 漏洞；枪眼；换气孔；射弹孔"
+    ]
+  },
+  "loose": {
+    "word": "loose",
+    "phonetic": "/luːs/",
+    "explains": [
+      "adj. 松的"
+    ]
+  },
+  "loosely": {
+    "word": "loosely",
+    "phonetic": "/'lu:slɪ/",
+    "explains": [
+      "adv. 松松地，松散地"
+    ]
+  },
+  "loosen": {
+    "word": "loosen",
+    "phonetic": "/'luːs(ə)n/",
+    "explains": [
+      "v. 解开；使松驰"
+    ]
+  },
+  "looseness": {
+    "word": "looseness",
+    "phonetic": "",
+    "explains": [
+      "n. 松开, 解除"
+    ]
+  },
+  "loot": {
+    "word": "loot",
+    "phonetic": "/luːt/",
+    "explains": [
+      "n. 战利品；抢劫；掠夺品；v. 抢劫，洗劫；强夺"
+    ]
+  },
+  "lop": {
+    "word": "lop",
+    "phonetic": "/lɒp/",
+    "explains": [
+      "v. 剪去, 砍掉"
+    ]
+  },
+  "lope": {
+    "word": "lope",
+    "phonetic": "/ləʊp/",
+    "explains": [
+      "v. (使)大步慢跑"
+    ]
+  },
+  "lopsided": {
+    "word": "lopsided",
+    "phonetic": "/lɒp'saɪdɪd/",
+    "explains": [
+      "adj. 倾向一方的, 不平衡的"
+    ]
+  },
+  "loquacious": {
+    "word": "loquacious",
+    "phonetic": "/lə'kweɪʃəs/",
+    "explains": [
+      "adj. 饶舌的，多话的"
+    ]
+  },
+  "lord": {
+    "word": "lord",
+    "phonetic": "/lɔːd/",
+    "explains": [
+      "n. 勋爵"
+    ]
+  },
+  "lordly": {
+    "word": "lordly",
+    "phonetic": "/'lɔːdlɪ/",
+    "explains": [
+      "adj. 高贵的；高傲的"
+    ]
+  },
+  "lore": {
+    "word": "lore",
+    "phonetic": "/lɔː/",
+    "explains": [
+      "n. 学问,（动物的）眼光知识"
+    ]
+  },
+  "lorry": {
+    "word": "lorry",
+    "phonetic": "/ˈlɒrɪ/",
+    "explains": [
+      "n. 卡车"
     ]
   },
   "lose": {
@@ -328,6 +4164,13 @@
       "n. 减少；亏损；失败；遗失"
     ]
   },
+  "lost": {
+    "word": "lost",
+    "phonetic": "/lɒst/",
+    "explains": [
+      "adj. 失去的；丧失的；迷惑的；v. 遗失（lose的过去分词）；失败"
+    ]
+  },
   "lot": {
     "word": "lot",
     "phonetic": "/lɒt/",
@@ -335,11 +4178,95 @@
       "n. 份额；许多；命运；阄 adv. 很；非常"
     ]
   },
+  "lotion": {
+    "word": "lotion",
+    "phonetic": "/'ləʊʃ(ə)n/",
+    "explains": [
+      "n. 洗液；洗涤剂"
+    ]
+  },
+  "lottery": {
+    "word": "lottery",
+    "phonetic": "/ˈlɒt(ə)rɪ/",
+    "explains": [
+      "n. 彩票"
+    ]
+  },
+  "lotus": {
+    "word": "lotus",
+    "phonetic": "/'ləʊtəs/",
+    "explains": [
+      "n. [植] 莲(花)；adj. 贪图安乐的"
+    ]
+  },
   "loud": {
     "word": "loud",
     "phonetic": "/laʊd/",
     "explains": [
       "adj. 大声的；响亮的；吵闹的 adv. 大声地；响亮地"
+    ]
+  },
+  "loudness": {
+    "word": "loudness",
+    "phonetic": "",
+    "explains": [
+      "n. 大声, 喧闹"
+    ]
+  },
+  "loudspeaker": {
+    "word": "loudspeaker",
+    "phonetic": "/ˌlaʊdˈspiːkə/",
+    "explains": [
+      "n. 扬声器"
+    ]
+  },
+  "lounge": {
+    "word": "lounge",
+    "phonetic": "/laʊn(d)ʒ/",
+    "explains": [
+      "n. 休息室"
+    ]
+  },
+  "lounger": {
+    "word": "lounger",
+    "phonetic": "",
+    "explains": [
+      "n. 漫步的人, 懒人"
+    ]
+  },
+  "louse": {
+    "word": "louse",
+    "phonetic": "/laʊs/",
+    "explains": [
+      "n. 虱子；寄生虫；卑鄙的家伙；v. 搞糟；清除（虱子）"
+    ]
+  },
+  "lousy": {
+    "word": "lousy",
+    "phonetic": "/'laʊzɪ/",
+    "explains": [
+      "adj. 讨厌的；多虱的；污秽的；极坏的"
+    ]
+  },
+  "lout": {
+    "word": "lout",
+    "phonetic": "/laʊt/",
+    "explains": [
+      "n. 笨人"
+    ]
+  },
+  "loutish": {
+    "word": "loutish",
+    "phonetic": "/'lautiʃ/",
+    "explains": [
+      "adj. 粗野的, 无礼的"
+    ]
+  },
+  "lovable": {
+    "word": "lovable",
+    "phonetic": "/'lʌvəb(ə)l/",
+    "explains": [
+      "adj. 可爱的，讨人喜欢的；n. (Lovable)人名；(西)洛瓦夫莱"
     ]
   },
   "love": {
@@ -356,11 +4283,144 @@
       "adj. 可爱的；令人愉快的；好看的"
     ]
   },
+  "lover": {
+    "word": "lover",
+    "phonetic": "/'lʌvə/",
+    "explains": [
+      "n. 情人；情侣；爱好者"
+    ]
+  },
+  "loving": {
+    "word": "loving",
+    "phonetic": "/'lʌvɪŋ/",
+    "explains": [
+      "adj. 亲爱的；钟情的；忠诚的；n. (Loving)人名；(英、瑞典)洛文"
+    ]
+  },
   "low": {
     "word": "low",
     "phonetic": "/ləʊ/",
     "explains": [
       "adj. 低的；浅的；消沉的 adv. 低；低声地"
+    ]
+  },
+  "lowa": {
+    "word": "lowa",
+    "phonetic": "/'ləuwə/",
+    "explains": [
+      "n. 爱荷华州(美国中西部的一州)"
+    ]
+  },
+  "lowbred": {
+    "word": "lowbred",
+    "phonetic": "/'ləʊ'bred/",
+    "explains": [
+      "adj. 未受过好教育的"
+    ]
+  },
+  "lower": {
+    "word": "lower",
+    "phonetic": "/'ləʊə/",
+    "explains": [
+      "adj. 较低的；v. 放下"
+    ]
+  },
+  "lowland": {
+    "word": "lowland",
+    "phonetic": "/'ləʊlənd/",
+    "explains": [
+      "n. 低地"
+    ]
+  },
+  "loyal": {
+    "word": "loyal",
+    "phonetic": "/ˈlɒɪəl/",
+    "explains": [
+      "adj. 忠诚的"
+    ]
+  },
+  "loyalist": {
+    "word": "loyalist",
+    "phonetic": "/'lɒɪəlɪst/",
+    "explains": [
+      "n. 忠诚的人, 反对独立者"
+    ]
+  },
+  "loyally": {
+    "word": "loyally",
+    "phonetic": "",
+    "explains": [
+      "adv. 忠诚"
+    ]
+  },
+  "loyalty": {
+    "word": "loyalty",
+    "phonetic": "/ˈlɒɪəltɪ/",
+    "explains": [
+      "n. 忠诚"
+    ]
+  },
+  "loyer": {
+    "word": "loyer",
+    "phonetic": "",
+    "explains": [
+      "n.m. 房租"
+    ]
+  },
+  "lubber": {
+    "word": "lubber",
+    "phonetic": "/'lʌbə/",
+    "explains": [
+      "adj. 粗笨的, 笨拙的"
+    ]
+  },
+  "lubricant": {
+    "word": "lubricant",
+    "phonetic": "/'luːbrɪk(ə)nt/",
+    "explains": [
+      "n. 滑润剂"
+    ]
+  },
+  "lubricate": {
+    "word": "lubricate",
+    "phonetic": "/'luːbrɪkeɪt/",
+    "explains": [
+      "v. 使润滑，加润滑油"
+    ]
+  },
+  "lubricious": {
+    "word": "lubricious",
+    "phonetic": "",
+    "explains": [
+      "adj. 滑的, 淫荡的, 光滑的, 不稳定的"
+    ]
+  },
+  "luce": {
+    "word": "luce",
+    "phonetic": "/luːs/",
+    "explains": [
+      "n. 一种成鱼"
+    ]
+  },
+  "lucha": {
+    "word": "lucha",
+    "phonetic": "",
+    "explains": [
+      "n.f. 斗争"
+    ]
+  },
+  "luchar": {
+    "word": "luchar",
+    "phonetic": "",
+    "explains": [
+      "v. 斗争"
+    ]
+  },
+  "lucid": {
+    "word": "lucid",
+    "phonetic": "/'luːsɪd/",
+    "explains": [
+      "adj. 清楚的，易懂的，神智清醒的"
     ]
   },
   "luck": {
@@ -370,11 +4430,207 @@
       "n. 运气；幸运；带来好运的东西"
     ]
   },
+  "luckily": {
+    "word": "luckily",
+    "phonetic": "/'lʌkɪlɪ/",
+    "explains": [
+      "adv. 幸运地"
+    ]
+  },
   "lucky": {
     "word": "lucky",
     "phonetic": "/ˈlʌki/",
     "explains": [
       "adj. 幸运的；侥幸的"
+    ]
+  },
+  "lucrative": {
+    "word": "lucrative",
+    "phonetic": "/'luːkrətiv/",
+    "explains": [
+      "adj.  有利可图的， 赚钱的"
+    ]
+  },
+  "lucre": {
+    "word": "lucre",
+    "phonetic": "/'luːkə/",
+    "explains": [
+      "n. 收益, 钱财"
+    ]
+  },
+  "lucubrate": {
+    "word": "lucubrate",
+    "phonetic": "/'luːkjʊbreɪt/",
+    "explains": [
+      "v. (在灯下)用功, 深入研究, 专心著作"
+    ]
+  },
+  "lucubration": {
+    "word": "lucubration",
+    "phonetic": "/,luːkjʊ'breɪʃ(ə)n; ,ljuː-/",
+    "explains": [
+      "n. 刻苦钻研；苦心而成的著作"
+    ]
+  },
+  "ludicrous": {
+    "word": "ludicrous",
+    "phonetic": "/'luːdɪkrəs; 'ljuː-/",
+    "explains": [
+      "adj. 荒谬的，可笑的"
+    ]
+  },
+  "luego": {
+    "word": "luego",
+    "phonetic": "",
+    "explains": [
+      "adv. 然后"
+    ]
+  },
+  "lug": {
+    "word": "lug",
+    "phonetic": "/lʌg/",
+    "explains": [
+      "v. (用力)拖拉"
+    ]
+  },
+  "lugar": {
+    "word": "lugar",
+    "phonetic": "",
+    "explains": [
+      "n.m. 地方"
+    ]
+  },
+  "luggage": {
+    "word": "luggage",
+    "phonetic": "/ˈlʌgɪdʒ/",
+    "explains": [
+      "n. 行李"
+    ]
+  },
+  "lugubrious": {
+    "word": "lugubrious",
+    "phonetic": "/lʊ'guːbrɪəs/",
+    "explains": [
+      "adj. 悲哀的，悲惨的"
+    ]
+  },
+  "lujo": {
+    "word": "lujo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 奢侈"
+    ]
+  },
+  "lukewarm": {
+    "word": "lukewarm",
+    "phonetic": "/'luːkwɔːm; luːk'wɔːm; lj-/",
+    "explains": [
+      "adj. 冷淡的"
+    ]
+  },
+  "lull": {
+    "word": "lull",
+    "phonetic": "/lʌl/",
+    "explains": [
+      "v. 缓和 n暂时的平息"
+    ]
+  },
+  "lullaby": {
+    "word": "lullaby",
+    "phonetic": "/'lʌləbaɪ/",
+    "explains": [
+      "n. 催眠曲, 摇篮曲, 轻柔的声音"
+    ]
+  },
+  "lulu": {
+    "word": "lulu",
+    "phonetic": "",
+    "explains": [
+      "n. 卓越的人, 俊秀"
+    ]
+  },
+  "lumber": {
+    "word": "lumber",
+    "phonetic": "/'lʌmbə/",
+    "explains": [
+      "n. 木材；木料；制材"
+    ]
+  },
+  "lumiere": {
+    "word": "lumiere",
+    "phonetic": "",
+    "explains": [
+      "n. 彩色照相术"
+    ]
+  },
+  "luminary": {
+    "word": "luminary",
+    "phonetic": "/'ljuːminəri/",
+    "explains": [
+      "n.  名人； 杰出人物； 发光体"
+    ]
+  },
+  "luminescent": {
+    "word": "luminescent",
+    "phonetic": "/,ljuːmɪ'nesənt/",
+    "explains": [
+      "adj. 发冷光的，冷光的"
+    ]
+  },
+  "luminosity": {
+    "word": "luminosity",
+    "phonetic": "/luːmɪ'nɒsətɪ/",
+    "explains": [
+      "n. [光][天] 光度；光明；光辉"
+    ]
+  },
+  "luminous": {
+    "word": "luminous",
+    "phonetic": "/'luːmɪnəs/",
+    "explains": [
+      "adj. 发光的；夜明的"
+    ]
+  },
+  "lump": {
+    "word": "lump",
+    "phonetic": "/lʌmp/",
+    "explains": [
+      "n. 块"
+    ]
+  },
+  "lumpish": {
+    "word": "lumpish",
+    "phonetic": "/'lʌmpɪʃ/",
+    "explains": [
+      "adj. 团状的, 笨重的, 不管用的"
+    ]
+  },
+  "luna": {
+    "word": "luna",
+    "phonetic": "",
+    "explains": [
+      "n.f. 月亮"
+    ]
+  },
+  "lunacy": {
+    "word": "lunacy",
+    "phonetic": "/'luːnəsɪ/",
+    "explains": [
+      "n. 精神失常, 精神病"
+    ]
+  },
+  "lunar": {
+    "word": "lunar",
+    "phonetic": "/ˈluːnə/",
+    "explains": [
+      "adj. 月亮的"
+    ]
+  },
+  "lunatic": {
+    "word": "lunatic",
+    "phonetic": "/'luːnətɪk/",
+    "explains": [
+      "adj. 疯狂的；精神错乱的；愚蠢的；n. 疯子；疯人"
     ]
   },
   "lunch": {
@@ -384,11 +4640,228 @@
       "n. 午餐；午饭 v. 吃午餐；供给午餐"
     ]
   },
+  "luncheon": {
+    "word": "luncheon",
+    "phonetic": "/'lʌn(t)ʃ(ə)n/",
+    "explains": [
+      "n. 午宴，午餐，便宴"
+    ]
+  },
+  "lundi": {
+    "word": "lundi",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期一"
+    ]
+  },
+  "lune": {
+    "word": "lune",
+    "phonetic": "",
+    "explains": [
+      "n.f. 月亮"
+    ]
+  },
+  "lunes": {
+    "word": "lunes",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期一"
+    ]
+  },
   "lung": {
     "word": "lung",
     "phonetic": "/lʌŋ/",
     "explains": [
       "n. 肺；呼吸器"
+    ]
+  },
+  "lunge": {
+    "word": "lunge",
+    "phonetic": "/lʌn(d)ʒ/",
+    "explains": [
+      "n. 刺；跃进；刺进；套马索；v. 刺；戳；使前冲"
+    ]
+  },
+  "lupine": {
+    "word": "lupine",
+    "phonetic": "/'lju:pin/",
+    "explains": [
+      "adj. 狼的, 凶猛的"
+    ]
+  },
+  "lurch": {
+    "word": "lurch",
+    "phonetic": "/lɜːtʃ/",
+    "explains": [
+      "n. 突然倾斜, 挫折, 举步蹒跚, 徘徊, 困境"
+    ]
+  },
+  "lure": {
+    "word": "lure",
+    "phonetic": "/l(j)ʊə/",
+    "explains": [
+      "n. 诱惑；饵；诱惑物；v. 诱惑；引诱"
+    ]
+  },
+  "lurid": {
+    "word": "lurid",
+    "phonetic": "/'l(j)ʊərɪd/",
+    "explains": [
+      "adj. 可怕的，耸人听闻的；火烧似的；苍白的；血红的；华丽而庸俗的"
+    ]
+  },
+  "lurk": {
+    "word": "lurk",
+    "phonetic": "/lɜːk/",
+    "explains": [
+      "v. 埋伏，潜伏"
+    ]
+  },
+  "luscious": {
+    "word": "luscious",
+    "phonetic": "/'lʌʃəs/",
+    "explains": [
+      "adj. 甘美的"
+    ]
+  },
+  "lush": {
+    "word": "lush",
+    "phonetic": "/lʌʃ/",
+    "explains": [
+      "adj. 茂盛的, 丰富的"
+    ]
+  },
+  "lust": {
+    "word": "lust",
+    "phonetic": "/lʌst/",
+    "explains": [
+      "n. 繁殖力, 强烈的性欲；v. 强烈欲望"
+    ]
+  },
+  "luster": {
+    "word": "luster",
+    "phonetic": "/'lʌstə/",
+    "explains": [
+      "n. 光彩, 光泽"
+    ]
+  },
+  "lustre": {
+    "word": "lustre",
+    "phonetic": "/'lʌstə/",
+    "explains": [
+      "n. 光彩, 光泽"
+    ]
+  },
+  "lustrous": {
+    "word": "lustrous",
+    "phonetic": "/'lʌstrəs/",
+    "explains": [
+      "adj. 有光泽的, 光辉的"
+    ]
+  },
+  "lusty": {
+    "word": "lusty",
+    "phonetic": "/'lʌstɪ/",
+    "explains": [
+      "adj. 健壮的, 精力充沛的"
+    ]
+  },
+  "lute": {
+    "word": "lute",
+    "phonetic": "/luːt; ljuːt/",
+    "explains": [
+      "n. 琵琶；vi. 弹诗琴；vt. 弹诗琴表达；用封泥封"
+    ]
+  },
+  "luxuriant": {
+    "word": "luxuriant",
+    "phonetic": "/lʌg'ʒʊərɪənt; lʌg'zjʊə-; lʌk'sjʊə-/",
+    "explains": [
+      "adj. 繁茂的；丰富的；奢华的；肥沃的"
+    ]
+  },
+  "luxurious": {
+    "word": "luxurious",
+    "phonetic": "/lʌg'ʒʊərɪəs; lʌg'zjʊə-; lʌk'sjʊə-/",
+    "explains": [
+      "adj. 爱好奢侈的，豪华的"
+    ]
+  },
+  "luxury": {
+    "word": "luxury",
+    "phonetic": "/ˈlʌkʃərɪ/",
+    "explains": [
+      "n. 奢侈"
+    ]
+  },
+  "lvory": {
+    "word": "lvory",
+    "phonetic": "",
+    "explains": [
+      "n. 象牙"
+    ]
+  },
+  "lychee": {
+    "word": "lychee",
+    "phonetic": "/'laɪtʃiː; 'lɪ-/",
+    "explains": [
+      "n. [园艺] 荔枝（等于litchi）"
+    ]
+  },
+  "lymph": {
+    "word": "lymph",
+    "phonetic": "/lɪmf/",
+    "explains": [
+      "n. [解剖] 淋巴，淋巴液；血清"
+    ]
+  },
+  "lymphocyte": {
+    "word": "lymphocyte",
+    "phonetic": "/'lɪmfə(ʊ)saɪt/",
+    "explains": [
+      "n. [免疫] 淋巴细胞；淋巴球"
+    ]
+  },
+  "lynch": {
+    "word": "lynch",
+    "phonetic": "/lɪn(t)ʃ/",
+    "explains": [
+      "n. 私刑, 诽谤"
+    ]
+  },
+  "lyric": {
+    "word": "lyric",
+    "phonetic": "/'lɪrɪk/",
+    "explains": [
+      "n. 抒情诗, 歌词"
+    ]
+  },
+  "lyrical": {
+    "word": "lyrical",
+    "phonetic": "/'lɪrɪk(ə)l/",
+    "explains": [
+      "adj. 抒情诗调的, 充满感情的"
+    ]
+  },
+  "lyrically": {
+    "word": "lyrically",
+    "phonetic": "",
+    "explains": [
+      "adv. 抒情地,  狂热地"
+    ]
+  },
+  "lys": {
+    "word": "lys",
+    "phonetic": "",
+    "explains": [
+      "n. [化]赖氨酸"
+    ]
+  },
+  "lysis": {
+    "word": "lysis",
+    "phonetic": "/'laɪsɪs/",
+    "explains": [
+      "n. 细胞溶解；病势减退；消散"
     ]
   }
 }

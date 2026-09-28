@@ -1,4 +1,39 @@
 {
+  "vacaciones": {
+    "word": "vacaciones",
+    "phonetic": "",
+    "explains": [
+      "n.f.pl. 假期"
+    ]
+  },
+  "vacances": {
+    "word": "vacances",
+    "phonetic": "",
+    "explains": [
+      "n.f.pl. 假期"
+    ]
+  },
+  "vacancy": {
+    "word": "vacancy",
+    "phonetic": "/'veikənsi/",
+    "explains": [
+      "n.  空缺， 空位； 空额"
+    ]
+  },
+  "vacant": {
+    "word": "vacant",
+    "phonetic": "/ˈveɪk(ə)nt/",
+    "explains": [
+      "adj. 空的"
+    ]
+  },
+  "vacate": {
+    "word": "vacate",
+    "phonetic": "/veɪ'keɪt; və'keɪt/",
+    "explains": [
+      "v. 腾出, 空出,离(职),退(位)"
+    ]
+  },
   "vacation": {
     "word": "vacation",
     "phonetic": "/vəˈkeɪʃn/",
@@ -7,11 +42,249 @@
       "v. 度假"
     ]
   },
+  "vaccinate": {
+    "word": "vaccinate",
+    "phonetic": "/'væksɪneɪt/",
+    "explains": [
+      "v. 给…接种疫苗"
+    ]
+  },
+  "vaccination": {
+    "word": "vaccination",
+    "phonetic": "/,væksɪ'neɪʃən/",
+    "explains": [
+      "n. 接种疫苗；种痘"
+    ]
+  },
+  "vaccine": {
+    "word": "vaccine",
+    "phonetic": "/'væksiːn; -ɪn/",
+    "explains": [
+      "n. 疫苗；牛痘苗；adj. 疫苗的；牛痘的"
+    ]
+  },
+  "vache": {
+    "word": "vache",
+    "phonetic": "",
+    "explains": [
+      "n.f. 奶牛"
+    ]
+  },
+  "vacillate": {
+    "word": "vacillate",
+    "phonetic": "/'væsɪleɪt/",
+    "explains": [
+      "v. 犹豫；踌躇；摇摆"
+    ]
+  },
+  "vacuity": {
+    "word": "vacuity",
+    "phonetic": "/və'kjuːɪtɪ/",
+    "explains": [
+      "n. 空虚；空白；思想贫乏；无聊之事"
+    ]
+  },
+  "vacuous": {
+    "word": "vacuous",
+    "phonetic": "/'vækjʊəs/",
+    "explains": [
+      "adj. 空的；空虚的；空洞的；无意义的"
+    ]
+  },
+  "vacuum": {
+    "word": "vacuum",
+    "phonetic": "/ˈvækjʊəm/",
+    "explains": [
+      "n. 真空"
+    ]
+  },
+  "vagabond": {
+    "word": "vagabond",
+    "phonetic": "/'vægəbɒnd/",
+    "explains": [
+      "adj. 流浪的；流浪者的；浪荡的；漂泊的；n. 流浪者；浪子；流氓；懒汉；v. 到处流浪"
+    ]
+  },
+  "vagary": {
+    "word": "vagary",
+    "phonetic": "/'veɪg(ə)rɪ/",
+    "explains": [
+      "n. 奇特行为, 奇想"
+    ]
+  },
+  "vagrant": {
+    "word": "vagrant",
+    "phonetic": "/'veɪgr(ə)nt/",
+    "explains": [
+      "adj. 流浪的；漂泊的；游荡的；n. 游民；流浪者；无赖；漂泊者"
+    ]
+  },
+  "vague": {
+    "word": "vague",
+    "phonetic": "/veɪg/",
+    "explains": [
+      "adj. 模糊的"
+    ]
+  },
+  "vaguely": {
+    "word": "vaguely",
+    "phonetic": "/'veɪglɪ/",
+    "explains": [
+      "adv. 含糊地, 暧昧地"
+    ]
+  },
+  "vagueness": {
+    "word": "vagueness",
+    "phonetic": "/veɪɡnəs/",
+    "explains": [
+      "n. 暧昧, 含糊"
+    ]
+  },
+  "vaguest": {
+    "word": "vaguest",
+    "phonetic": "",
+    "explains": [
+      "adj. 含糊的，不明确的"
+    ]
+  },
+  "vain": {
+    "word": "vain",
+    "phonetic": "/veɪn/",
+    "explains": [
+      "adj. 徒劳的"
+    ]
+  },
+  "vainglorious": {
+    "word": "vainglorious",
+    "phonetic": "/,veɪn'ɡlɔːrɪəs/",
+    "explains": [
+      "adj. 虚荣心强的；非常自负的"
+    ]
+  },
+  "vaisselle": {
+    "word": "vaisselle",
+    "phonetic": "",
+    "explains": [
+      "n.f. 餐具；洗碗"
+    ]
+  },
+  "vale": {
+    "word": "vale",
+    "phonetic": "",
+    "explains": [
+      "interj. 好的"
+    ]
+  },
+  "valediction": {
+    "word": "valediction",
+    "phonetic": "/,vælɪ'dɪkʃən/",
+    "explains": [
+      "n. 告别演说；告别词"
+    ]
+  },
+  "valedictory": {
+    "word": "valedictory",
+    "phonetic": "/,vælɪ'dɪkt(ə)rɪ/",
+    "explains": [
+      "adj. 告别的；n. 告别辞"
+    ]
+  },
+  "valentine": {
+    "word": "valentine",
+    "phonetic": "/'væləntaɪn/",
+    "explains": [
+      "n. 情人；情人节礼物"
+    ]
+  },
+  "valetudinarian": {
+    "word": "valetudinarian",
+    "phonetic": "/,vælɪtjuːdɪ'neərɪən/",
+    "explains": [
+      "adj. 有病的, 虚弱的"
+    ]
+  },
+  "valeur": {
+    "word": "valeur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 价值；价值观"
+    ]
+  },
+  "valiant": {
+    "word": "valiant",
+    "phonetic": "/'vælɪənt/",
+    "explains": [
+      "adj. 勇敢的, 英勇的"
+    ]
+  },
+  "valid": {
+    "word": "valid",
+    "phonetic": "/ˈvælɪd/",
+    "explains": [
+      "adj. 有效的"
+    ]
+  },
+  "validate": {
+    "word": "validate",
+    "phonetic": "/'vælideit/",
+    "explains": [
+      "vt.  使生效， 使合法化"
+    ]
+  },
+  "validation": {
+    "word": "validation",
+    "phonetic": "",
+    "explains": [
+      "校验"
+    ]
+  },
+  "validity": {
+    "word": "validity",
+    "phonetic": "/və'lɪdɪtɪ/",
+    "explains": [
+      "n. （法律上的）有效；符合逻辑，正确"
+    ]
+  },
+  "valise": {
+    "word": "valise",
+    "phonetic": "/və'liːz/",
+    "explains": [
+      "n. 小提箱"
+    ]
+  },
   "valley": {
     "word": "valley",
     "phonetic": "/ˈvæli/",
     "explains": [
       "n. 山谷；溪谷；流域"
+    ]
+  },
+  "valor": {
+    "word": "valor",
+    "phonetic": "/'vælə/",
+    "explains": [
+      "n. 英勇；勇猛（等于valour）"
+    ]
+  },
+  "valorous": {
+    "word": "valorous",
+    "phonetic": "/'vælərəs/",
+    "explains": [
+      "adj. 勇敢的；勇武的"
+    ]
+  },
+  "valour": {
+    "word": "valour",
+    "phonetic": "",
+    "explains": [
+      "n. 英勇, 勇猛"
+    ]
+  },
+  "valse": {
+    "word": "valse",
+    "phonetic": "",
+    "explains": [
+      "v. 轻轻地走；n. 华尔兹"
     ]
   },
   "valuable": {
@@ -22,11 +295,60 @@
       "n. 贵重物品"
     ]
   },
+  "valuation": {
+    "word": "valuation",
+    "phonetic": "/ˌvælju'eiʃən/",
+    "explains": [
+      "n.  估价"
+    ]
+  },
   "value": {
     "word": "value",
     "phonetic": "/ˈvæljuː/",
     "explains": [
       "n. 价值；价格；重要性；益处 v. 重视；珍视；给… 估价"
+    ]
+  },
+  "value-added": {
+    "word": "value-added",
+    "phonetic": "/'vælju'ædid/",
+    "explains": [
+      "n.  增值"
+    ]
+  },
+  "values": {
+    "word": "values",
+    "phonetic": "/'væljʊz/",
+    "explains": [
+      "n. 价值观念；价值标准"
+    ]
+  },
+  "valve": {
+    "word": "valve",
+    "phonetic": "",
+    "explains": [
+      "n. 阀，阀门；电子管"
+    ]
+  },
+  "vamoose": {
+    "word": "vamoose",
+    "phonetic": "/və'muːs/",
+    "explains": [
+      "v. 匆匆离开, 跑掉"
+    ]
+  },
+  "vamp": {
+    "word": "vamp",
+    "phonetic": "/væmp/",
+    "explains": [
+      "n. 鞋面, 荡妇"
+    ]
+  },
+  "vampire": {
+    "word": "vampire",
+    "phonetic": "/'væmpaɪə/",
+    "explains": [
+      "n. 吸血鬼"
     ]
   },
   "van": {
@@ -36,11 +358,193 @@
       "n. 厢式货车；面包车；先锋"
     ]
   },
+  "vancouver": {
+    "word": "vancouver",
+    "phonetic": "/væn'ku:və/",
+    "explains": [
+      "n. 温哥华（城市名)"
+    ]
+  },
+  "vandal": {
+    "word": "vandal",
+    "phonetic": "",
+    "explains": [
+      "n. 文化艺术的破坏者；蓄意破坏者；adj. 破坏文化艺术的"
+    ]
+  },
+  "vandalism": {
+    "word": "vandalism",
+    "phonetic": "/'vænd(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 故意破坏艺术的行为"
+    ]
+  },
+  "vandalize": {
+    "word": "vandalize",
+    "phonetic": "/'vændəlaiz/",
+    "explains": [
+      "v. 摧残, 破坏"
+    ]
+  },
+  "vanguard": {
+    "word": "vanguard",
+    "phonetic": "/'vængɑːd/",
+    "explains": [
+      "n. 前锋, 先锋, 领导者"
+    ]
+  },
+  "vanilla": {
+    "word": "vanilla",
+    "phonetic": "/və'nɪlə/",
+    "explains": [
+      "n. [植]香草, 香子兰"
+    ]
+  },
+  "vanish": {
+    "word": "vanish",
+    "phonetic": "/ˈvænɪʃ/",
+    "explains": [
+      "v. 消失"
+    ]
+  },
+  "vanity": {
+    "word": "vanity",
+    "phonetic": "/ˈvænəti/",
+    "explains": [
+      "n. 虚荣心；空虚；浮华；无价值的东西"
+    ]
+  },
+  "vanquish": {
+    "word": "vanquish",
+    "phonetic": "/'væŋkwɪʃ/",
+    "explains": [
+      "v. 征服，击败"
+    ]
+  },
+  "vantage": {
+    "word": "vantage",
+    "phonetic": "/'vɑːntɪdʒ/",
+    "explains": [
+      "n. 优势,有利情况"
+    ]
+  },
+  "vapeur": {
+    "word": "vapeur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 蒸汽"
+    ]
+  },
+  "vapid": {
+    "word": "vapid",
+    "phonetic": "/'væpɪd/",
+    "explains": [
+      "adj. 无趣味的；无生气的；索然乏味的"
+    ]
+  },
+  "vapor": {
+    "word": "vapor",
+    "phonetic": "/ˈveɪpə(r)/",
+    "explains": [
+      "n. 水蒸气"
+    ]
+  },
+  "vaporization": {
+    "word": "vaporization",
+    "phonetic": "",
+    "explains": [
+      "n. 蒸发；喷雾器；蒸馏器"
+    ]
+  },
+  "vaporize": {
+    "word": "vaporize",
+    "phonetic": "/'veɪpəraɪz/",
+    "explains": [
+      "v. 蒸发"
+    ]
+  },
+  "vapour": {
+    "word": "vapour",
+    "phonetic": "/'veɪpə/",
+    "explains": [
+      "n. 汽，蒸气"
+    ]
+  },
+  "variability": {
+    "word": "variability",
+    "phonetic": "/,veərɪə'bɪlətɪ/",
+    "explains": [
+      "n. 可变性"
+    ]
+  },
+  "variable": {
+    "word": "variable",
+    "phonetic": "/ˈveərɪəb(ə)l/",
+    "explains": [
+      "adj. 可变的"
+    ]
+  },
+  "variance": {
+    "word": "variance",
+    "phonetic": "/'veərɪəns/",
+    "explains": [
+      "n. 不一致, 变化,"
+    ]
+  },
+  "variant": {
+    "word": "variant",
+    "phonetic": "/'veərɪənt/",
+    "explains": [
+      "adj. 不同的，变异的；n. 变体，异体"
+    ]
+  },
+  "variation": {
+    "word": "variation",
+    "phonetic": "/ˌveərɪˈeɪʃ(ə)n/",
+    "explains": [
+      "n. 变化"
+    ]
+  },
+  "varicolored": {
+    "word": "varicolored",
+    "phonetic": "/'vɛəri,kʌləd/",
+    "explains": [
+      "adj. 杂色的,  多色的"
+    ]
+  },
+  "varicose": {
+    "word": "varicose",
+    "phonetic": "/'værɪkəʊs; -kəs; -z/",
+    "explains": [
+      "adj. 静脉曲张的；曲张的，肿胀的"
+    ]
+  },
+  "varied": {
+    "word": "varied",
+    "phonetic": "/'veərɪd/",
+    "explains": [
+      "adj. 各种各样的"
+    ]
+  },
+  "variegated": {
+    "word": "variegated",
+    "phonetic": "/'veərɪgeɪtɪd; 'veərɪə-/",
+    "explains": [
+      "adj. 杂色的；斑驳的；富于变化的；v. 成为杂色（variegate的过去式）"
+    ]
+  },
   "variety": {
     "word": "variety",
     "phonetic": "/vəˈraɪəti/",
     "explains": [
       "n. 多样；种类；变化；品种"
+    ]
+  },
+  "varios": {
+    "word": "varios",
+    "phonetic": "",
+    "explains": [
+      "adj. 几个的"
     ]
   },
   "various": {
@@ -50,11 +554,221 @@
       "adj. 各种各样的；不同的；多方面的"
     ]
   },
+  "variously": {
+    "word": "variously",
+    "phonetic": "",
+    "explains": [
+      "adv. 不同地, 各种各样地"
+    ]
+  },
+  "varnish": {
+    "word": "varnish",
+    "phonetic": "/'vɑːnɪʃ/",
+    "explains": [
+      "n. 清漆；光泽；v. 涂清漆，使光亮"
+    ]
+  },
+  "varsity": {
+    "word": "varsity",
+    "phonetic": "/'vɑːsɪtɪ/",
+    "explains": [
+      "n. 大学；大学运动代表队；adj. 大学代表队的"
+    ]
+  },
+  "varve": {
+    "word": "varve",
+    "phonetic": "/vɑːv/",
+    "explains": [
+      "n. [地质]纹泥"
+    ]
+  },
+  "vary": {
+    "word": "vary",
+    "phonetic": "/ˈveərɪ/",
+    "explains": [
+      "v. 变化"
+    ]
+  },
+  "vas": {
+    "word": "vas",
+    "phonetic": "/væs/",
+    "explains": [
+      "n. 血管, 脉管"
+    ]
+  },
+  "vascular": {
+    "word": "vascular",
+    "phonetic": "/'væskjʊlə/",
+    "explains": [
+      "adj. 血管的,  脉管的"
+    ]
+  },
+  "vase": {
+    "word": "vase",
+    "phonetic": "/vɑːz/",
+    "explains": [
+      "n. 瓶；花瓶"
+    ]
+  },
+  "vaso": {
+    "word": "vaso",
+    "phonetic": "",
+    "explains": [
+      "n.m. 玻璃杯"
+    ]
+  },
+  "vassal": {
+    "word": "vassal",
+    "phonetic": "/'væs(ə)l/",
+    "explains": [
+      "n. 诸侯, 封臣, 附庸, 诸侯"
+    ]
+  },
+  "vast": {
+    "word": "vast",
+    "phonetic": "/vɑːst; væst/",
+    "explains": [
+      "adj. 巨大的"
+    ]
+  },
+  "vaste": {
+    "word": "vaste",
+    "phonetic": "",
+    "explains": [
+      "adj. 辽阔的"
+    ]
+  },
+  "vastly": {
+    "word": "vastly",
+    "phonetic": "/'vɑːstli/",
+    "explains": [
+      "adv.  广大地； 许多， 巨大"
+    ]
+  },
+  "vat": {
+    "word": "vat",
+    "phonetic": "",
+    "explains": [
+      "n. 增值税〔英国和欧盟附加在商品价格和服务费上的税〕"
+    ]
+  },
+  "vaticinate": {
+    "word": "vaticinate",
+    "phonetic": "/væ'tɪsɪneɪt/",
+    "explains": [
+      "v. 预言, 预告"
+    ]
+  },
+  "vaudeville": {
+    "word": "vaudeville",
+    "phonetic": "/'vɔːdəvɪl; 'vəʊd-/",
+    "explains": [
+      "n. 歌舞杂耍"
+    ]
+  },
+  "vault": {
+    "word": "vault",
+    "phonetic": "/vɔːlt/",
+    "explains": [
+      "n. 拱顶；（教堂的）地下墓室"
+    ]
+  },
+  "vaunt": {
+    "word": "vaunt",
+    "phonetic": "/vɔːnt/",
+    "explains": [
+      "v. 自夸"
+    ]
+  },
+  "vdom": {
+    "word": "vdom",
+    "phonetic": "",
+    "explains": [
+      "虚拟 DOM"
+    ]
+  },
+  "veal": {
+    "word": "veal",
+    "phonetic": "/viːl/",
+    "explains": [
+      "n. 小牛肉, 幼小的菜牛"
+    ]
+  },
+  "veau": {
+    "word": "veau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 小牛"
+    ]
+  },
+  "vecino": {
+    "word": "vecino",
+    "phonetic": "",
+    "explains": [
+      "n.m. 邻居"
+    ]
+  },
+  "vector": {
+    "word": "vector",
+    "phonetic": "/'vektə/",
+    "explains": [
+      "n. 矢量；飞机航线"
+    ]
+  },
+  "veer": {
+    "word": "veer",
+    "phonetic": "/vɪə/",
+    "explains": [
+      "v. 转向, (风向)顺(时针)转"
+    ]
+  },
   "vegetable": {
     "word": "vegetable",
     "phonetic": "/ˈvedʒtəbl/",
     "explains": [
       "n. 蔬菜；植物；植物人 adj. 蔬菜的；植物的"
+    ]
+  },
+  "vegetal": {
+    "word": "vegetal",
+    "phonetic": "/'vedʒɪt(ə)l/",
+    "explains": [
+      "adj. 植物的，植物性的；生长的；n. 植物；蔬菜"
+    ]
+  },
+  "vegetarian": {
+    "word": "vegetarian",
+    "phonetic": "/vɛdʒɪˈtɛːrɪən/",
+    "explains": [
+      "n. 素食者；食草动物；adj. 素食的"
+    ]
+  },
+  "vegetate": {
+    "word": "vegetate",
+    "phonetic": "/'vedʒɪteɪt/",
+    "explains": [
+      "v. 过单调呆板的生活"
+    ]
+  },
+  "vegetation": {
+    "word": "vegetation",
+    "phonetic": "/vedʒɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 植被；植物，草木；呆板单调的生活"
+    ]
+  },
+  "vegetative": {
+    "word": "vegetative",
+    "phonetic": "/'vedʒɪtətɪv; -teɪtɪv/",
+    "explains": [
+      "adj. 植物生长的,植物人状态的"
+    ]
+  },
+  "vehement": {
+    "word": "vehement",
+    "phonetic": "/ˈvi:əmənt/",
+    "explains": [
+      "adj. 感情强烈的；热烈的；(人)有强烈感情的"
     ]
   },
   "vehicle": {
@@ -64,11 +778,669 @@
       "n. 车辆；交通工具；媒介物；传达手段"
     ]
   },
+  "veil": {
+    "word": "veil",
+    "phonetic": "/veɪl/",
+    "explains": [
+      "v. 以面纱遮掩；遮盖"
+    ]
+  },
+  "vein": {
+    "word": "vein",
+    "phonetic": "/veɪn/",
+    "explains": [
+      "n. 静脉，血管；矿脉"
+    ]
+  },
+  "velo": {
+    "word": "velo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 自行车"
+    ]
+  },
+  "velocity": {
+    "word": "velocity",
+    "phonetic": "/vəˈlɒsəti/",
+    "explains": [
+      "n. 速度"
+    ]
+  },
+  "velours": {
+    "word": "velours",
+    "phonetic": "",
+    "explains": [
+      "n.m. 天鹅绒"
+    ]
+  },
+  "velvet": {
+    "word": "velvet",
+    "phonetic": "/ˈvɛlvɪt/",
+    "explains": [
+      "adj. 丝绒制的；柔软光滑的"
+    ]
+  },
+  "velvety": {
+    "word": "velvety",
+    "phonetic": "/'velvɪtɪ/",
+    "explains": [
+      "adj. 天鹅绒般柔软的；醇和的，可口的"
+    ]
+  },
+  "venal": {
+    "word": "venal",
+    "phonetic": "/'viːn(ə)l/",
+    "explains": [
+      "adj. 贪污的；用金钱买得的；贿赂的；贪赃枉法的；n. (Venal)人名；(英)维纳尔"
+    ]
+  },
+  "venality": {
+    "word": "venality",
+    "phonetic": "/viː'nælətɪ/",
+    "explains": [
+      "n. 受贿"
+    ]
+  },
+  "vendange": {
+    "word": "vendange",
+    "phonetic": "",
+    "explains": [
+      "n.f. 葡萄收获"
+    ]
+  },
+  "vendetta": {
+    "word": "vendetta",
+    "phonetic": "/ven'detə/",
+    "explains": [
+      "n. 族间仇杀, 深仇"
+    ]
+  },
+  "vendeur": {
+    "word": "vendeur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 售货员"
+    ]
+  },
+  "vendor": {
+    "word": "vendor",
+    "phonetic": "/'vendə/",
+    "explains": [
+      "n.  卖方"
+    ]
+  },
+  "veneer": {
+    "word": "veneer",
+    "phonetic": "/vɪ'nɪə/",
+    "explains": [
+      "n. 外表；虚饰；饰面；胶合板的一层；薄木片；v. 胶合；虚饰；给…镶以饰片"
+    ]
+  },
+  "venenous": {
+    "word": "venenous",
+    "phonetic": "",
+    "explains": [
+      "adj. 有毒的"
+    ]
+  },
+  "venerable": {
+    "word": "venerable",
+    "phonetic": "/'ven(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 值得尊敬的, 庄严的"
+    ]
+  },
+  "venerate": {
+    "word": "venerate",
+    "phonetic": "/'venəreɪt/",
+    "explains": [
+      "v. 崇敬，崇拜"
+    ]
+  },
+  "venereal": {
+    "word": "venereal",
+    "phonetic": "/vəˈnɪəriəl/",
+    "explains": [
+      "adj. 性病的；性交的；由性交传染的"
+    ]
+  },
+  "vengeance": {
+    "word": "vengeance",
+    "phonetic": "/'ven(d)ʒ(ə)ns/",
+    "explains": [
+      "n. 报复，报仇，复仇"
+    ]
+  },
+  "vengeful": {
+    "word": "vengeful",
+    "phonetic": "/'ven(d)ʒfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 复仇的，报复的；复仇心重的"
+    ]
+  },
+  "venial": {
+    "word": "venial",
+    "phonetic": "/'viːnɪəl/",
+    "explains": [
+      "adj. 可原谅的；（罪过）轻微的；可宽恕的"
+    ]
+  },
+  "venice": {
+    "word": "venice",
+    "phonetic": "/ˈvɛnɪs/",
+    "explains": [
+      "n. 威尼斯(意大利港市)"
+    ]
+  },
+  "venison": {
+    "word": "venison",
+    "phonetic": "/'venɪs(ə)n; 'venɪz(ə)n/",
+    "explains": [
+      "n. 野味, 鹿肉"
+    ]
+  },
+  "venom": {
+    "word": "venom",
+    "phonetic": "/'venəm/",
+    "explains": [
+      "n. (蛇的)毒液, 恶意 vt放毒, 使恶毒"
+    ]
+  },
+  "venomous": {
+    "word": "venomous",
+    "phonetic": "/'venəməs/",
+    "explains": [
+      "adj. 有毒的；恶毒的；分泌毒液的；怨恨的"
+    ]
+  },
+  "venous": {
+    "word": "venous",
+    "phonetic": "/'viːnəs/",
+    "explains": [
+      "adj. 静脉的；有脉纹的"
+    ]
+  },
+  "vent": {
+    "word": "vent",
+    "phonetic": "/vent/",
+    "explains": [
+      "n. 出口；v. 排出,发泄"
+    ]
+  },
+  "vente": {
+    "word": "vente",
+    "phonetic": "",
+    "explains": [
+      "n.f. 销售"
+    ]
+  },
+  "ventilate": {
+    "word": "ventilate",
+    "phonetic": "/'ventɪleɪt/",
+    "explains": [
+      "v. 使通风，使换气"
+    ]
+  },
+  "ventilateur": {
+    "word": "ventilateur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 风扇"
+    ]
+  },
+  "ventilation": {
+    "word": "ventilation",
+    "phonetic": "/,ventɪ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 通风, 流通空气"
+    ]
+  },
+  "ventilator": {
+    "word": "ventilator",
+    "phonetic": "/'ventɪleɪtə/",
+    "explains": [
+      "n. 通风设备；换气扇；【医】呼吸机"
+    ]
+  },
+  "ventral": {
+    "word": "ventral",
+    "phonetic": "/'ventr(ə)l/",
+    "explains": [
+      "adj. 腹侧的；[解剖] 腹部的；n. 腹鳍"
+    ]
+  },
+  "ventricle": {
+    "word": "ventricle",
+    "phonetic": "/'ventrɪk(ə)l/",
+    "explains": [
+      "n. 室；心室；脑室"
+    ]
+  },
+  "ventricular": {
+    "word": "ventricular",
+    "phonetic": "/ven'trɪkjʊlə/",
+    "explains": [
+      "adj. 心室的；脑室的；膨胀的；腹部的"
+    ]
+  },
+  "venture": {
+    "word": "venture",
+    "phonetic": "/ˈventʃə/",
+    "explains": [
+      "n. 冒险"
+    ]
+  },
+  "venturesome": {
+    "word": "venturesome",
+    "phonetic": "/'ventʃəs(ə)m/",
+    "explains": [
+      "adj. 危险的,冒险的"
+    ]
+  },
+  "venue": {
+    "word": "venue",
+    "phonetic": "/'venjuː/",
+    "explains": [
+      "n.  地点"
+    ]
+  },
+  "venus": {
+    "word": "venus",
+    "phonetic": "/'viːnəs/",
+    "explains": [
+      "n. 维纳斯；美人"
+    ]
+  },
+  "ver": {
+    "word": "ver",
+    "phonetic": "",
+    "explains": [
+      "v. 看见"
+    ]
+  },
+  "veracious": {
+    "word": "veracious",
+    "phonetic": "/və'reɪʃəs/",
+    "explains": [
+      "adj. 诚实的；真实的"
+    ]
+  },
+  "veracity": {
+    "word": "veracity",
+    "phonetic": "/vəˈræsəti/",
+    "explains": [
+      "n. 诚实；精确性；老实；说真实话"
+    ]
+  },
+  "veranda": {
+    "word": "veranda",
+    "phonetic": "/və'rændə/",
+    "explains": [
+      "n. 走廊，游廊；阳台"
+    ]
+  },
+  "verano": {
+    "word": "verano",
+    "phonetic": "",
+    "explains": [
+      "n.m. 夏天"
+    ]
+  },
+  "verb": {
+    "word": "verb",
+    "phonetic": "/vɜːb/",
+    "explains": [
+      "n. 动词；动词词性；动词性短语或从句；adj. 动词的；有动词性质的；起动词作用的"
+    ]
+  },
+  "verbal": {
+    "word": "verbal",
+    "phonetic": "/'vɜːb(ə)l/",
+    "explains": [
+      "adj. 口头的；言语的；动词的；照字面的；n. 动词的非谓语形式"
+    ]
+  },
+  "verbalizable": {
+    "word": "verbalizable",
+    "phonetic": "",
+    "explains": [
+      "adj. 可用言辞表达的"
+    ]
+  },
+  "verbalize": {
+    "word": "verbalize",
+    "phonetic": "/'vəːbəlaiz/",
+    "explains": [
+      "v.  描述"
+    ]
+  },
+  "verbally": {
+    "word": "verbally",
+    "phonetic": "/'və:bəli/",
+    "explains": [
+      "adv. 用言辞地, 口头地"
+    ]
+  },
+  "verbatim": {
+    "word": "verbatim",
+    "phonetic": "/vɜː'beɪtɪm/",
+    "explains": [
+      "adv. 逐字地；adj. 逐字的"
+    ]
+  },
+  "verbiage": {
+    "word": "verbiage",
+    "phonetic": "/'vɜːbɪɪdʒ/",
+    "explains": [
+      "n. 空话"
+    ]
+  },
+  "verbose": {
+    "word": "verbose",
+    "phonetic": "/vɜː'bəʊs/",
+    "explains": [
+      "adj. 冗长的；啰嗦的"
+    ]
+  },
+  "verbosity": {
+    "word": "verbosity",
+    "phonetic": "",
+    "explains": [
+      "n. 冗长"
+    ]
+  },
+  "verboten": {
+    "word": "verboten",
+    "phonetic": "/vɜː'bəʊtən/",
+    "explains": [
+      "adj. 禁止的"
+    ]
+  },
+  "verdant": {
+    "word": "verdant",
+    "phonetic": "/'vɜːd(ə)nt/",
+    "explains": [
+      "adj. 青翠的；翠绿的；没有经验的；不老练的；n. (Verdant)人名；(法)韦尔当"
+    ]
+  },
+  "verde": {
+    "word": "verde",
+    "phonetic": "",
+    "explains": [
+      "adj. 绿色的"
+    ]
+  },
+  "verdict": {
+    "word": "verdict",
+    "phonetic": "/ˈvɜːdɪkt/",
+    "explains": [
+      "n. 裁决"
+    ]
+  },
+  "verdigris": {
+    "word": "verdigris",
+    "phonetic": "/'vɜːdɪgriː; -griːs/",
+    "explains": [
+      "n. 铜绿, 碱性碳酸铜, 碱性醋酸铜"
+    ]
+  },
+  "verdure": {
+    "word": "verdure",
+    "phonetic": "/'vɜːdjə; -jʊə/",
+    "explains": [
+      "n. 碧绿"
+    ]
+  },
+  "verge": {
+    "word": "verge",
+    "phonetic": "/vɜːdʒ/",
+    "explains": [
+      "n. 边缘，边界"
+    ]
+  },
+  "verger": {
+    "word": "verger",
+    "phonetic": "",
+    "explains": [
+      "n.m. 果园"
+    ]
+  },
+  "veridical": {
+    "word": "veridical",
+    "phonetic": "/vɪ'rɪdɪk(ə)l/",
+    "explains": [
+      "adj. 诚实的"
+    ]
+  },
+  "verifiable": {
+    "word": "verifiable",
+    "phonetic": "/'veri,faiəbl/",
+    "explains": [
+      "adj. 可证实的；能作证的；可检验的"
+    ]
+  },
+  "verification": {
+    "word": "verification",
+    "phonetic": "/,verɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 确认，查证；核实"
+    ]
+  },
+  "verified": {
+    "word": "verified",
+    "phonetic": "",
+    "explains": [
+      "已验证"
+    ]
+  },
+  "verify": {
+    "word": "verify",
+    "phonetic": "/'verɪfaɪ/",
+    "explains": [
+      "v. 证实，查证；证明"
+    ]
+  },
+  "verisimilar": {
+    "word": "verisimilar",
+    "phonetic": "/,verɪ'sɪmɪlə/",
+    "explains": [
+      "adj. 好像是真的"
+    ]
+  },
+  "verisimilitude": {
+    "word": "verisimilitude",
+    "phonetic": "/,verɪsɪ'mɪlɪtjuːd/",
+    "explains": [
+      "n. 逼真，貌似真实；逼真的事物"
+    ]
+  },
+  "veritable": {
+    "word": "veritable",
+    "phonetic": "/'verɪtəb(ə)l/",
+    "explains": [
+      "adj. 真正的，名副其实的"
+    ]
+  },
+  "verity": {
+    "word": "verity",
+    "phonetic": "/'verɪtɪ/",
+    "explains": [
+      "n. 真实；真理；事实；真实性"
+    ]
+  },
+  "vermeil": {
+    "word": "vermeil",
+    "phonetic": "",
+    "explains": [
+      "adj. 银镀金的"
+    ]
+  },
+  "vermicide": {
+    "word": "vermicide",
+    "phonetic": "/'vɜːmɪsaɪd/",
+    "explains": [
+      "n. 杀蠕虫药；打虫药"
+    ]
+  },
+  "vermin": {
+    "word": "vermin",
+    "phonetic": "/'vɜːmɪn/",
+    "explains": [
+      "n. 害虫；寄生虫；歹徒"
+    ]
+  },
+  "vernacular": {
+    "word": "vernacular",
+    "phonetic": "/və'nækjʊlə/",
+    "explains": [
+      "adj. 本国的；地方的；用本地语写成的；n. 本地话，方言；动植物的俗名"
+    ]
+  },
+  "vernal": {
+    "word": "vernal",
+    "phonetic": "/'vɜːn(ə)l/",
+    "explains": [
+      "adj. 春天的；和煦的；青春的"
+    ]
+  },
+  "vernissage": {
+    "word": "vernissage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 上漆；预展"
+    ]
+  },
+  "verre": {
+    "word": "verre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 玻璃杯；玻璃"
+    ]
+  },
+  "versant": {
+    "word": "versant",
+    "phonetic": "/'vɜːs(ə)nt/",
+    "explains": [
+      "adj. 熟悉的"
+    ]
+  },
+  "versatile": {
+    "word": "versatile",
+    "phonetic": "/'vɜːsətaɪl/",
+    "explains": [
+      "adj. 多方面的；通用的"
+    ]
+  },
+  "versatility": {
+    "word": "versatility",
+    "phonetic": "/,vɜːsə'tɪləti:/",
+    "explains": [
+      "n. 多功能性"
+    ]
+  },
+  "verse": {
+    "word": "verse",
+    "phonetic": "/vɜːs/",
+    "explains": [
+      "n. 诗，韵文；诗节"
+    ]
+  },
+  "verseau": {
+    "word": "verseau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 大水罐；宝瓶座"
+    ]
+  },
+  "versed": {
+    "word": "versed",
+    "phonetic": "/vɜːst/",
+    "explains": [
+      "adj. 精通的"
+    ]
+  },
+  "versement": {
+    "word": "versement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 缴款"
+    ]
+  },
   "version": {
     "word": "version",
     "phonetic": "/ˈvɜːʃn/",
     "explains": [
       "n. 版本；说法；译本；形式"
+    ]
+  },
+  "versus": {
+    "word": "versus",
+    "phonetic": "/'vɜːsəs/",
+    "explains": [
+      "prep. （比赛等中）对"
+    ]
+  },
+  "vertebrate": {
+    "word": "vertebrate",
+    "phonetic": "/'vɜːtɪbrət/",
+    "explains": [
+      "n. 脊椎动物"
+    ]
+  },
+  "vertex": {
+    "word": "vertex",
+    "phonetic": "/'vɜːteks/",
+    "explains": [
+      "n. 顶点；[昆] 头顶；[天] 天顶"
+    ]
+  },
+  "vertical": {
+    "word": "vertical",
+    "phonetic": "/ˈvɜːtɪk(ə)l/",
+    "explains": [
+      "adj. 垂直的"
+    ]
+  },
+  "vertically": {
+    "word": "vertically",
+    "phonetic": "/'və:tikəli/",
+    "explains": [
+      "adv. 垂直地"
+    ]
+  },
+  "vertice": {
+    "word": "vertice",
+    "phonetic": "",
+    "explains": [
+      "n. 顶点"
+    ]
+  },
+  "vertige": {
+    "word": "vertige",
+    "phonetic": "",
+    "explains": [
+      "n.m. 眩晕"
+    ]
+  },
+  "vertiginous": {
+    "word": "vertiginous",
+    "phonetic": "/vɜː'tɪdʒɪnəs/",
+    "explains": [
+      "adj. 旋转的, 眩晕的, 眼花的, 迅速变化的, 不稳定的"
+    ]
+  },
+  "vertigo": {
+    "word": "vertigo",
+    "phonetic": "/'vɜːtɪgəʊ/",
+    "explains": [
+      "n. 晕头转向，[临床] 眩晕"
+    ]
+  },
+  "verve": {
+    "word": "verve",
+    "phonetic": "/vɜːv/",
+    "explains": [
+      "n. 气魄, 神韵, 活力, 热情"
     ]
   },
   "very": {
@@ -78,6 +1450,314 @@
       "adv. 非常；很；十分；极 adj. 恰好的；正是的；十足的"
     ]
   },
+  "vessel": {
+    "word": "vessel",
+    "phonetic": "/ˈves(ə)l/",
+    "explains": [
+      "n. 船；容器"
+    ]
+  },
+  "vessie": {
+    "word": "vessie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 膀胱"
+    ]
+  },
+  "vest": {
+    "word": "vest",
+    "phonetic": "/vest/",
+    "explains": [
+      "n. 背心；汗衫；v. 授予；使穿衣"
+    ]
+  },
+  "veste": {
+    "word": "veste",
+    "phonetic": "",
+    "explains": [
+      "n.f. 上衣，外套"
+    ]
+  },
+  "vestido": {
+    "word": "vestido",
+    "phonetic": "",
+    "explains": [
+      "n.m. 连衣裙；服装"
+    ]
+  },
+  "vestige": {
+    "word": "vestige",
+    "phonetic": "/'vestɪdʒ/",
+    "explains": [
+      "n. 痕迹"
+    ]
+  },
+  "vestigial": {
+    "word": "vestigial",
+    "phonetic": "/ve'stɪdʒɪəl; -dʒ(ə)l/",
+    "explains": [
+      "adj. 退化的,发育不全的"
+    ]
+  },
+  "vestment": {
+    "word": "vestment",
+    "phonetic": "/'ves(t)m(ə)nt/",
+    "explains": [
+      "n. 外衣, 制服, 衣服, 法衣, 祭坛布"
+    ]
+  },
+  "vesture": {
+    "word": "vesture",
+    "phonetic": "/'vestʃə/",
+    "explains": [
+      "n. 衣服, 罩袍, 覆盖"
+    ]
+  },
+  "vet": {
+    "word": "vet",
+    "phonetic": "/vet/",
+    "explains": [
+      "v. 审查；诊疗；n. 兽医"
+    ]
+  },
+  "veteran": {
+    "word": "veteran",
+    "phonetic": "/ˈvet(ə)r(ə)n/",
+    "explains": [
+      "n. 老兵"
+    ]
+  },
+  "veterinary": {
+    "word": "veterinary",
+    "phonetic": "/'vet(ə)rɪn(ə)rɪ; 'vet(ə)nrɪ/",
+    "explains": [
+      "n. 兽医"
+    ]
+  },
+  "veto": {
+    "word": "veto",
+    "phonetic": "/'viːtəʊ/",
+    "explains": [
+      "n. 否决，否决权；禁止"
+    ]
+  },
+  "veuve": {
+    "word": "veuve",
+    "phonetic": "",
+    "explains": [
+      "n.f. 寡妇"
+    ]
+  },
+  "vex": {
+    "word": "vex",
+    "phonetic": "/veks/",
+    "explains": [
+      "v. 使烦恼，使苦恼"
+    ]
+  },
+  "vexation": {
+    "word": "vexation",
+    "phonetic": "/vek'seɪʃ(ə)n/",
+    "explains": [
+      "n. 苦恼；恼怒；令人烦恼的事"
+    ]
+  },
+  "vexatious": {
+    "word": "vexatious",
+    "phonetic": "/vek'seɪʃəs/",
+    "explains": [
+      "adj. 令人烦恼的；麻烦的；无理纠缠的"
+    ]
+  },
+  "vez": {
+    "word": "vez",
+    "phonetic": "",
+    "explains": [
+      "n.f. 次"
+    ]
+  },
+  "via": {
+    "word": "via",
+    "phonetic": "/ˈvaɪə/",
+    "explains": [
+      "prep. 通过"
+    ]
+  },
+  "viability": {
+    "word": "viability",
+    "phonetic": "/ˌvaiə'biləti/",
+    "explains": [
+      "n.  盈利能力"
+    ]
+  },
+  "viable": {
+    "word": "viable",
+    "phonetic": "/'vaiəbl/",
+    "explains": [
+      "adj.  可行的； 能养活的； 有利可图的， 可盈利的"
+    ]
+  },
+  "viaduct": {
+    "word": "viaduct",
+    "phonetic": "/'vaɪədʌkt/",
+    "explains": [
+      "n. 高架桥, 高架铁路, 间道"
+    ]
+  },
+  "viajar": {
+    "word": "viajar",
+    "phonetic": "",
+    "explains": [
+      "v. 旅行"
+    ]
+  },
+  "viaje": {
+    "word": "viaje",
+    "phonetic": "",
+    "explains": [
+      "n.m. 旅行"
+    ]
+  },
+  "vial": {
+    "word": "vial",
+    "phonetic": "/'vaɪəl/",
+    "explains": [
+      "n. 小瓶；药水瓶；vt. 装入小瓶"
+    ]
+  },
+  "viande": {
+    "word": "viande",
+    "phonetic": "",
+    "explains": [
+      "n.f. 肉"
+    ]
+  },
+  "vibe": {
+    "word": "vibe",
+    "phonetic": "/vaɪb/",
+    "explains": [
+      "n. 气氛，氛围"
+    ]
+  },
+  "vibrancy": {
+    "word": "vibrancy",
+    "phonetic": "/'vaibrənsi/",
+    "explains": [
+      "n. 振动, 振动性, 活跃, 响亮"
+    ]
+  },
+  "vibrant": {
+    "word": "vibrant",
+    "phonetic": "/'vaɪbrənt/",
+    "explains": [
+      "adj. 震动的；明亮的"
+    ]
+  },
+  "vibrate": {
+    "word": "vibrate",
+    "phonetic": "/vaɪ'breɪt/",
+    "explains": [
+      "v. 使颤动"
+    ]
+  },
+  "vibration": {
+    "word": "vibration",
+    "phonetic": "/vaɪ'breɪʃ(ə)n/",
+    "explains": [
+      "n. 振动,颤动"
+    ]
+  },
+  "vibrato": {
+    "word": "vibrato",
+    "phonetic": "/vɪ'brɑːtəʊ/",
+    "explains": [
+      "n. 颤音, 振动"
+    ]
+  },
+  "vicar": {
+    "word": "vicar",
+    "phonetic": "/'vɪkə/",
+    "explains": [
+      "n. 教区牧师，教堂牧师；传教牧师；代理人"
+    ]
+  },
+  "vicarage": {
+    "word": "vicarage",
+    "phonetic": "/'vɪk(ə)rɪdʒ/",
+    "explains": [
+      "n. 教区牧师的住宅"
+    ]
+  },
+  "vicarious": {
+    "word": "vicarious",
+    "phonetic": "/vɪ'keərɪəs; vaɪ-/",
+    "explains": [
+      "adj. 替代的；代理的；发同感的"
+    ]
+  },
+  "vicariously": {
+    "word": "vicariously",
+    "phonetic": "/vai'kɛəriəsli/",
+    "explains": [
+      "adv. 代理地，担任代理者地；间接感受到地"
+    ]
+  },
+  "vice": {
+    "word": "vice",
+    "phonetic": "/vaɪs/",
+    "explains": [
+      "n. 恶习"
+    ]
+  },
+  "viceroy": {
+    "word": "viceroy",
+    "phonetic": "/'vaɪsrɒɪ/",
+    "explains": [
+      "n. 总督；（北美）一种黑色蝴蝶"
+    ]
+  },
+  "vicinal": {
+    "word": "vicinal",
+    "phonetic": "/'vɪsɪn(ə)l; vɪ'saɪn(ə)l/",
+    "explains": [
+      "adj. 邻近的"
+    ]
+  },
+  "vicinity": {
+    "word": "vicinity",
+    "phonetic": "/vɪ'sɪnɪtɪ/",
+    "explains": [
+      "n. 邻近；附近地区"
+    ]
+  },
+  "vicious": {
+    "word": "vicious",
+    "phonetic": "/'vɪʃəs/",
+    "explains": [
+      "adj. 邪恶的；恶性的"
+    ]
+  },
+  "viciousness": {
+    "word": "viciousness",
+    "phonetic": "",
+    "explains": [
+      "n. 邪恶；恶意"
+    ]
+  },
+  "vicissitude": {
+    "word": "vicissitude",
+    "phonetic": "/vɪ'sɪsɪtjuːd; vaɪ-/",
+    "explains": [
+      "n. 变迁兴衰"
+    ]
+  },
+  "vicissitudes": {
+    "word": "vicissitudes",
+    "phonetic": "/vi'sisitju:dz/",
+    "explains": [
+      "n. 兴衰；枯荣；变迁"
+    ]
+  },
   "victim": {
     "word": "victim",
     "phonetic": "/ˈvɪktɪm/",
@@ -85,11 +1765,116 @@
       "n. 受害者；牺牲品；受骗者"
     ]
   },
+  "victime": {
+    "word": "victime",
+    "phonetic": "",
+    "explains": [
+      "n.f. 受害者"
+    ]
+  },
+  "victimize": {
+    "word": "victimize",
+    "phonetic": "/'viktimaiz/",
+    "explains": [
+      "v. 使牺牲,使受害"
+    ]
+  },
+  "victoire": {
+    "word": "victoire",
+    "phonetic": "",
+    "explains": [
+      "n.f. 胜利"
+    ]
+  },
+  "victor": {
+    "word": "victor",
+    "phonetic": "/'vɪktə/",
+    "explains": [
+      "n. 胜利者"
+    ]
+  },
+  "victorian": {
+    "word": "victorian",
+    "phonetic": "/vik'tɔ:riən/",
+    "explains": [
+      "adj. 维多利亚女王时代的"
+    ]
+  },
+  "victorious": {
+    "word": "victorious",
+    "phonetic": "/vɪk'tɔːrɪəs/",
+    "explains": [
+      "adj. 胜利的；凯旋的"
+    ]
+  },
   "victory": {
     "word": "victory",
     "phonetic": "/ˈvɪktəri/",
     "explains": [
       "n. 胜利；成功；克服"
+    ]
+  },
+  "vida": {
+    "word": "vida",
+    "phonetic": "",
+    "explains": [
+      "n.f. 生命；生活"
+    ]
+  },
+  "video": {
+    "word": "video",
+    "phonetic": "/ˈvɪdɪəʊ/",
+    "explains": [
+      "n. 录像"
+    ]
+  },
+  "videophone": {
+    "word": "videophone",
+    "phonetic": "/'vɪdɪə(ʊ)fəʊn/",
+    "explains": [
+      "n. 电视电话"
+    ]
+  },
+  "vie": {
+    "word": "vie",
+    "phonetic": "/vaɪ/",
+    "explains": [
+      "v. 竞争"
+    ]
+  },
+  "vieillesse": {
+    "word": "vieillesse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 老年"
+    ]
+  },
+  "viejo": {
+    "word": "viejo",
+    "phonetic": "",
+    "explains": [
+      "adj. 旧的；年老的"
+    ]
+  },
+  "viennese": {
+    "word": "viennese",
+    "phonetic": "/,viə'ni:z/",
+    "explains": [
+      "n&a. 维也纳人（语）(的)"
+    ]
+  },
+  "viernes": {
+    "word": "viernes",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期五"
+    ]
+  },
+  "vieux": {
+    "word": "vieux",
+    "phonetic": "",
+    "explains": [
+      "adj. 旧的；年老的"
     ]
   },
   "view": {
@@ -100,11 +1885,277 @@
       "v. 看待；观看；查看"
     ]
   },
+  "viewer": {
+    "word": "viewer",
+    "phonetic": "/'vjuːə/",
+    "explains": [
+      "n. 电视观众,阅读器"
+    ]
+  },
+  "viewfinder": {
+    "word": "viewfinder",
+    "phonetic": "/'vjuːfaɪndə/",
+    "explains": [
+      "n. 取景器；反光镜；检像器"
+    ]
+  },
+  "viewpoint": {
+    "word": "viewpoint",
+    "phonetic": "/ˈvjuːpɔɪnt/",
+    "explains": [
+      "n. 观点"
+    ]
+  },
+  "vigil": {
+    "word": "vigil",
+    "phonetic": "/'vɪdʒɪl/",
+    "explains": [
+      "n. 守夜；监视；不眠；警戒"
+    ]
+  },
+  "vigilance": {
+    "word": "vigilance",
+    "phonetic": "/'vɪdʒɪl(ə)ns/",
+    "explains": [
+      "n. 警戒, 警惕"
+    ]
+  },
+  "vigilant": {
+    "word": "vigilant",
+    "phonetic": "/'vɪdʒɪl(ə)nt/",
+    "explains": [
+      "adj. 警戒的；警惕的"
+    ]
+  },
+  "vignette": {
+    "word": "vignette",
+    "phonetic": "/viː'njet; vɪ-/",
+    "explains": [
+      "n. 装饰图案；小插图；vt. 把……印放为虚光照，晕映"
+    ]
+  },
+  "vignoble": {
+    "word": "vignoble",
+    "phonetic": "",
+    "explains": [
+      "n.m. 葡萄园"
+    ]
+  },
+  "vigor": {
+    "word": "vigor",
+    "phonetic": "/'viɡə/",
+    "explains": [
+      "n. 精力, 活力"
+    ]
+  },
+  "vigorous": {
+    "word": "vigorous",
+    "phonetic": "/ˈvɪg(ə)rəs/",
+    "explains": [
+      "adj. 精力充沛的"
+    ]
+  },
+  "vigorously": {
+    "word": "vigorously",
+    "phonetic": "/'vɪg(ə)rəslɪ/",
+    "explains": [
+      "adv. 精力旺盛地；健壮地"
+    ]
+  },
+  "vigour": {
+    "word": "vigour",
+    "phonetic": "/'vɪgə/",
+    "explains": [
+      "n. 活力，精力；元气"
+    ]
+  },
+  "vigueur": {
+    "word": "vigueur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 活力；效力"
+    ]
+  },
+  "vile": {
+    "word": "vile",
+    "phonetic": "/vaɪl/",
+    "explains": [
+      "adj. 卑鄙的；邪恶的；低廉的；肮脏的；n. (Vile)人名；(英)瓦伊尔；(芬)维莱"
+    ]
+  },
+  "vilify": {
+    "word": "vilify",
+    "phonetic": "/'vɪlɪfaɪ/",
+    "explains": [
+      "v. 诽谤；中伤；轻视；贬低"
+    ]
+  },
+  "villa": {
+    "word": "villa",
+    "phonetic": "/'vɪlə/",
+    "explains": [
+      "n. 别墅"
+    ]
+  },
   "village": {
     "word": "village",
     "phonetic": "/ˈvɪlɪdʒ/",
     "explains": [
       "n. 村庄；村镇；乡村；村民"
+    ]
+  },
+  "villager": {
+    "word": "villager",
+    "phonetic": "/'vɪlɪdʒə/",
+    "explains": [
+      "n. 村民"
+    ]
+  },
+  "villain": {
+    "word": "villain",
+    "phonetic": "/'vɪlən/",
+    "explains": [
+      "n. 坏人，恶棍；戏剧、小说中的反派角色；顽童；罪犯"
+    ]
+  },
+  "villainous": {
+    "word": "villainous",
+    "phonetic": "/'vɪlənəs/",
+    "explains": [
+      "adj. 罪恶的；恶棍的；恶毒的；坏透的"
+    ]
+  },
+  "villein": {
+    "word": "villein",
+    "phonetic": "/'vɪlən; -eɪn/",
+    "explains": [
+      "n. [史]农奴, 佃农"
+    ]
+  },
+  "vim": {
+    "word": "vim",
+    "phonetic": "/vɪm/",
+    "explains": [
+      "n. 活力, 精力"
+    ]
+  },
+  "vin": {
+    "word": "vin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 葡萄酒"
+    ]
+  },
+  "vinaigre": {
+    "word": "vinaigre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 醋"
+    ]
+  },
+  "vinaigrette": {
+    "word": "vinaigrette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 调味汁"
+    ]
+  },
+  "vinculum": {
+    "word": "vinculum",
+    "phonetic": "/'vɪŋkjʊləm/",
+    "explains": [
+      "n. 联结"
+    ]
+  },
+  "vindicate": {
+    "word": "vindicate",
+    "phonetic": "/'vɪndɪkeɪt/",
+    "explains": [
+      "v. 为辩白；证明正确"
+    ]
+  },
+  "vindication": {
+    "word": "vindication",
+    "phonetic": "/,vɪndɪ'keɪʃən/",
+    "explains": [
+      "n. 辩护, 辩明, 拥护"
+    ]
+  },
+  "vindictive": {
+    "word": "vindictive",
+    "phonetic": "/vɪn'dɪktɪv/",
+    "explains": [
+      "adj. 怀恨的；有报仇心的；惩罚的"
+    ]
+  },
+  "vine": {
+    "word": "vine",
+    "phonetic": "/vaɪn/",
+    "explains": [
+      "n. 蔓，藤，藤本植物"
+    ]
+  },
+  "vinegar": {
+    "word": "vinegar",
+    "phonetic": "/'vɪnɪgə/",
+    "explains": [
+      "n. 醋"
+    ]
+  },
+  "vinery": {
+    "word": "vinery",
+    "phonetic": "/'vaɪn(ə)rɪ/",
+    "explains": [
+      "n. 葡萄园，葡萄温室"
+    ]
+  },
+  "vineyard": {
+    "word": "vineyard",
+    "phonetic": "/'vɪnjɑːd; -jəd/",
+    "explains": [
+      "n. 葡萄园"
+    ]
+  },
+  "vino": {
+    "word": "vino",
+    "phonetic": "",
+    "explains": [
+      "n.m. 葡萄酒"
+    ]
+  },
+  "vintage": {
+    "word": "vintage",
+    "phonetic": "/'vintidʒ/",
+    "explains": [
+      "adj.  古老的； 最佳的； 上等的；n. 制造年期；葡萄收获期；葡萄酒；酿酒，酿造年份"
+    ]
+  },
+  "vintner": {
+    "word": "vintner",
+    "phonetic": "/'vɪntnə/",
+    "explains": [
+      "n. 葡萄酒商"
+    ]
+  },
+  "viola": {
+    "word": "viola",
+    "phonetic": "/vaɪ'əʊlə/",
+    "explains": [
+      "n. 中提琴，中提琴演奏者"
+    ]
+  },
+  "violate": {
+    "word": "violate",
+    "phonetic": "/'vaɪəleɪt/",
+    "explains": [
+      "v. 违犯，违背；侵犯"
+    ]
+  },
+  "violation": {
+    "word": "violation",
+    "phonetic": "/vaɪə'leɪʃn/",
+    "explains": [
+      "n. 违犯；侵犯，妨碍"
     ]
   },
   "violence": {
@@ -121,11 +2172,172 @@
       "adj. 暴力的；猛烈的；剧烈的；强烈的"
     ]
   },
+  "violently": {
+    "word": "violently",
+    "phonetic": "/ˈvaɪələntli/",
+    "explains": [
+      "adv. 猛烈地, 激烈地"
+    ]
+  },
+  "violet": {
+    "word": "violet",
+    "phonetic": "/'vaɪələt/",
+    "explains": [
+      "n. 紫罗兰"
+    ]
+  },
+  "violette": {
+    "word": "violette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 紫罗兰"
+    ]
+  },
+  "violin": {
+    "word": "violin",
+    "phonetic": "/ˌvaɪəˈlɪn/",
+    "explains": [
+      "n. 小提琴"
+    ]
+  },
+  "violinist": {
+    "word": "violinist",
+    "phonetic": "/,vaɪə'lɪnɪst/",
+    "explains": [
+      "n. 小提琴演奏者, 小提琴家"
+    ]
+  },
+  "vip": {
+    "word": "vip",
+    "phonetic": "",
+    "explains": [
+      "abbr. 大人物，贵宾（Very Important Person）；视频接口处理器（Video Interface Processor）；可变信息处理（Variable Information Processing）"
+    ]
+  },
+  "viperous": {
+    "word": "viperous",
+    "phonetic": "",
+    "explains": [
+      "adj. 有毒的, 阴险的"
+    ]
+  },
+  "virage": {
+    "word": "virage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 转弯"
+    ]
+  },
+  "viral": {
+    "word": "viral",
+    "phonetic": "/'vaɪr(ə)l/",
+    "explains": [
+      "adj. 滤过性毒菌的"
+    ]
+  },
+  "virement": {
+    "word": "virement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 转账"
+    ]
+  },
+  "virgin": {
+    "word": "virgin",
+    "phonetic": "/'vɜːdʒɪn/",
+    "explains": [
+      "n. 处女；adj. 处女的"
+    ]
+  },
+  "virginal": {
+    "word": "virginal",
+    "phonetic": "/'vɜːdʒɪn(ə)l/",
+    "explains": [
+      "adj. 处女的, 无瑕的"
+    ]
+  },
+  "virginian": {
+    "word": "virginian",
+    "phonetic": "",
+    "explains": [
+      "n. 弗吉尼亚州的人"
+    ]
+  },
+  "virgo": {
+    "word": "virgo",
+    "phonetic": "",
+    "explains": [
+      "n. 室女宫,室女(星)座"
+    ]
+  },
+  "virile": {
+    "word": "virile",
+    "phonetic": "/'vɪraɪl/",
+    "explains": [
+      "adj. 男性的；有男子气概的；刚健的；n. (Virile)人名；(意)维里莱"
+    ]
+  },
+  "virility": {
+    "word": "virility",
+    "phonetic": "",
+    "explains": [
+      "n. 男子气, 生殖力,男子特点,刚强有力"
+    ]
+  },
+  "virtu": {
+    "word": "virtu",
+    "phonetic": "/vɜː't(j)uː/",
+    "explains": [
+      "n. 古董；艺术品爱好"
+    ]
+  },
+  "virtual": {
+    "word": "virtual",
+    "phonetic": "/ˈvɜːtʃʊəl/",
+    "explains": [
+      "adj. 虚拟的"
+    ]
+  },
+  "virtually": {
+    "word": "virtually",
+    "phonetic": "/ˈvəːtʃʊəli/",
+    "explains": [
+      "adv. 实际上，事实上"
+    ]
+  },
   "virtue": {
     "word": "virtue",
     "phonetic": "/ˈvɜːtʃuː/",
     "explains": [
       "n. 美德；优点；德行；贞操"
+    ]
+  },
+  "virtuosity": {
+    "word": "virtuosity",
+    "phonetic": "/,vɜːtʃʊ'ɒsɪtɪ/",
+    "explains": [
+      "n. 艺术鉴别力"
+    ]
+  },
+  "virtuoso": {
+    "word": "virtuoso",
+    "phonetic": "/,vɜːtjʊ'əʊzəʊ; -səʊ/",
+    "explains": [
+      "n. 艺术品鉴赏家；古董收藏家；艺术大师；adj. 行家里手的；艺术爱好者的"
+    ]
+  },
+  "virtuous": {
+    "word": "virtuous",
+    "phonetic": "/'vɜːtjʊəs; -tʃʊəs/",
+    "explains": [
+      "adj. 有德行的; 善良的"
+    ]
+  },
+  "virulent": {
+    "word": "virulent",
+    "phonetic": "/'vɪrʊl(ə)nt; 'vɪrjʊ-/",
+    "explains": [
+      "adj. 剧毒的；恶性的；有恶意的"
     ]
   },
   "virus": {
@@ -135,11 +2347,116 @@
       "n. 病毒；病原体；恶意软件"
     ]
   },
+  "visa": {
+    "word": "visa",
+    "phonetic": "/'viːzə/",
+    "explains": [
+      "n. 签证"
+    ]
+  },
+  "visage": {
+    "word": "visage",
+    "phonetic": "/'vɪzɪdʒ/",
+    "explains": [
+      "n. 面貌，容貌；外表"
+    ]
+  },
+  "viscera": {
+    "word": "viscera",
+    "phonetic": "/'vɪs(ə)rə/",
+    "explains": [
+      "n. 内脏,内部的东西"
+    ]
+  },
+  "visceral": {
+    "word": "visceral",
+    "phonetic": "/'vɪs(ə)r(ə)l/",
+    "explains": [
+      "adj. 内脏的；出于本能的；发自肺腑的；粗俗的"
+    ]
+  },
+  "viscosity": {
+    "word": "viscosity",
+    "phonetic": "/vɪ'skɒsɪtɪ/",
+    "explains": [
+      "n. 粘质, 粘性"
+    ]
+  },
+  "viscount": {
+    "word": "viscount",
+    "phonetic": "/'vaɪkaʊnt/",
+    "explains": [
+      "n. （英国的）子爵"
+    ]
+  },
+  "viscous": {
+    "word": "viscous",
+    "phonetic": "/'vɪskəs/",
+    "explains": [
+      "adj. 粘滞的，粘性的"
+    ]
+  },
+  "visibility": {
+    "word": "visibility",
+    "phonetic": "/vɪzɪ'bɪlɪtɪ/",
+    "explains": [
+      "n. 可见度"
+    ]
+  },
+  "visible": {
+    "word": "visible",
+    "phonetic": "/ˈvɪzɪb(ə)l/",
+    "explains": [
+      "adj. 可见的"
+    ]
+  },
+  "vision": {
+    "word": "vision",
+    "phonetic": "/ˈvɪʒ(ə)n/",
+    "explains": [
+      "n. 视力；愿景"
+    ]
+  },
+  "visionary": {
+    "word": "visionary",
+    "phonetic": "/'viʒənəri/",
+    "explains": [
+      "adj.  有远见卓识的； 梦幻的， 耽于幻想的"
+    ]
+  },
   "visit": {
     "word": "visit",
     "phonetic": "/ˈvɪzɪt/",
     "explains": [
       "v./n. 访问；参观；拜访；看望；游览"
+    ]
+  },
+  "visita": {
+    "word": "visita",
+    "phonetic": "",
+    "explains": [
+      "n.f. 参观；访问"
+    ]
+  },
+  "visitation": {
+    "word": "visitation",
+    "phonetic": "/vɪzɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 访问；探视；视察；正式访问"
+    ]
+  },
+  "visite": {
+    "word": "visite",
+    "phonetic": "",
+    "explains": [
+      "n.f. 参观；就诊"
+    ]
+  },
+  "visiteur": {
+    "word": "visiteur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 参观者"
     ]
   },
   "visitor": {
@@ -149,11 +2466,417 @@
       "n. 访问者；游客；参观者"
     ]
   },
+  "vista": {
+    "word": "vista",
+    "phonetic": "/'vɪstə/",
+    "explains": [
+      "n. 远景，狭长的街景；展望；回顾"
+    ]
+  },
+  "visual": {
+    "word": "visual",
+    "phonetic": "/'vɪʒjʊəl; -zj-/",
+    "explains": [
+      "adj. 视觉的，视力的"
+    ]
+  },
+  "visualize": {
+    "word": "visualize",
+    "phonetic": "/'vizjuəlaiz/",
+    "explains": [
+      "v. 想象，设想"
+    ]
+  },
+  "visually": {
+    "word": "visually",
+    "phonetic": "/ˈvɪʒʊəli/",
+    "explains": [
+      "adv. 在视觉上地, 真实地"
+    ]
+  },
+  "vital": {
+    "word": "vital",
+    "phonetic": "/ˈvaɪt(ə)l/",
+    "explains": [
+      "adj. 至关重要的"
+    ]
+  },
+  "vitality": {
+    "word": "vitality",
+    "phonetic": "/vai'tæləti/",
+    "explains": [
+      "n.  生命力， 活力"
+    ]
+  },
+  "vitalize": {
+    "word": "vitalize",
+    "phonetic": "/'vaɪt(ə)laɪz/",
+    "explains": [
+      "v. 赋予…生命；激发；使有生气"
+    ]
+  },
+  "vitamin": {
+    "word": "vitamin",
+    "phonetic": "/ˈvɪtəmɪn; ˈvaɪ-/",
+    "explains": [
+      "n. 维生素"
+    ]
+  },
+  "vitascope": {
+    "word": "vitascope",
+    "phonetic": "",
+    "explains": [
+      "n. 老式放映机"
+    ]
+  },
+  "vitesse": {
+    "word": "vitesse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 速度"
+    ]
+  },
+  "vitiate": {
+    "word": "vitiate",
+    "phonetic": "/'vɪʃɪeɪt/",
+    "explains": [
+      "v. 损害，弄坏；使无效；污染"
+    ]
+  },
+  "vitrail": {
+    "word": "vitrail",
+    "phonetic": "",
+    "explains": [
+      "n.m. 彩绘玻璃"
+    ]
+  },
+  "vitre": {
+    "word": "vitre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 玻璃窗"
+    ]
+  },
+  "vitriolic": {
+    "word": "vitriolic",
+    "phonetic": "/,vɪtrɪ'ɒlɪk/",
+    "explains": [
+      "adj. 硫酸的, 象硫酸的, 刻薄的, 讽刺的"
+    ]
+  },
+  "vituperate": {
+    "word": "vituperate",
+    "phonetic": "/vɪ'tjuːpəreɪt; vaɪ-/",
+    "explains": [
+      "v. 谩骂, 责骂"
+    ]
+  },
+  "vituperative": {
+    "word": "vituperative",
+    "phonetic": "",
+    "explains": [
+      "adj. 责骂的"
+    ]
+  },
+  "vivacious": {
+    "word": "vivacious",
+    "phonetic": "/vɪ'veɪʃəs; vaɪ-/",
+    "explains": [
+      "adj. 活泼的；快活的；有生气的"
+    ]
+  },
+  "vivacity": {
+    "word": "vivacity",
+    "phonetic": "/vɪ'væsɪtɪ/",
+    "explains": [
+      "n. 活泼；快活；精神充沛"
+    ]
+  },
+  "vivid": {
+    "word": "vivid",
+    "phonetic": "/ˈvɪvɪd/",
+    "explains": [
+      "adj. 生动的"
+    ]
+  },
+  "vivify": {
+    "word": "vivify",
+    "phonetic": "/'vɪvɪfaɪ/",
+    "explains": [
+      "v. 使生动；使活跃；给与生气"
+    ]
+  },
+  "vivir": {
+    "word": "vivir",
+    "phonetic": "",
+    "explains": [
+      "v. 居住；生活"
+    ]
+  },
+  "vixen": {
+    "word": "vixen",
+    "phonetic": "/'vɪks(ə)n/",
+    "explains": [
+      "n. 雌狐, 唠叨的女人, 坏心眼的女人, 刁妇, 泼妇"
+    ]
+  },
+  "vocabulary": {
+    "word": "vocabulary",
+    "phonetic": "/vəˈkæbjʊlərɪ/",
+    "explains": [
+      "n. 词汇"
+    ]
+  },
+  "vocal": {
+    "word": "vocal",
+    "phonetic": "/'vəʊk(ə)l/",
+    "explains": [
+      "adj. 歌唱的；声音的，有声的；n. 声乐作品；元音"
+    ]
+  },
+  "vocalist": {
+    "word": "vocalist",
+    "phonetic": "/'vəʊk(ə)lɪst/",
+    "explains": [
+      "n. 声乐家, 歌手"
+    ]
+  },
+  "vocalization": {
+    "word": "vocalization",
+    "phonetic": "/,vəʊkəlaɪzeɪʃən/",
+    "explains": [
+      "n. 发声，发音；发声法"
+    ]
+  },
+  "vocally": {
+    "word": "vocally",
+    "phonetic": "",
+    "explains": [
+      "adv. 用声音；口头地"
+    ]
+  },
+  "vocation": {
+    "word": "vocation",
+    "phonetic": "/və(ʊ)'keɪʃ(ə)n/",
+    "explains": [
+      "n. 职业，行业"
+    ]
+  },
+  "vocational": {
+    "word": "vocational",
+    "phonetic": "/vəu'keiʃənəl/",
+    "explains": [
+      "adj.  职业的， 业务的"
+    ]
+  },
+  "vocative": {
+    "word": "vocative",
+    "phonetic": "/'vɒkətɪv/",
+    "explains": [
+      "adj. 呼格的；称呼的；n. 呼格"
+    ]
+  },
+  "vociferate": {
+    "word": "vociferate",
+    "phonetic": "/və(ʊ)'sɪfəreɪt/",
+    "explains": [
+      "v. 喊叫；大叫"
+    ]
+  },
+  "vociferous": {
+    "word": "vociferous",
+    "phonetic": "/və(ʊ)'sɪf(ə)rəs/",
+    "explains": [
+      "adj. 大声叫的；喊叫的，喧嚷的"
+    ]
+  },
+  "vodka": {
+    "word": "vodka",
+    "phonetic": "/'vɒdkə/",
+    "explains": [
+      "n. 伏特加酒"
+    ]
+  },
+  "voeu": {
+    "word": "voeu",
+    "phonetic": "",
+    "explains": [
+      "n.m. 愿望；誓言"
+    ]
+  },
+  "vogue": {
+    "word": "vogue",
+    "phonetic": "/vəʊg/",
+    "explains": [
+      "n. 、a流行（的）, 时髦（的）"
+    ]
+  },
   "voice": {
     "word": "voice",
     "phonetic": "/vɔɪs/",
     "explains": [
       "n. 嗓音；声音；发言权；意见 v. 表达；吐露"
+    ]
+  },
+  "void": {
+    "word": "void",
+    "phonetic": "/vɒɪd/",
+    "explains": [
+      "adj. 无效的；空的"
+    ]
+  },
+  "voile": {
+    "word": "voile",
+    "phonetic": "",
+    "explains": [
+      "n.f. 面纱；帆"
+    ]
+  },
+  "voisin": {
+    "word": "voisin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 邻居；adj. 邻近的"
+    ]
+  },
+  "voiture": {
+    "word": "voiture",
+    "phonetic": "",
+    "explains": [
+      "n.f. 汽车"
+    ]
+  },
+  "voix": {
+    "word": "voix",
+    "phonetic": "",
+    "explains": [
+      "n.f. 声音；投票"
+    ]
+  },
+  "vol": {
+    "word": "vol",
+    "phonetic": "",
+    "explains": [
+      "n.m. 飞行；航班；偷窃"
+    ]
+  },
+  "volaille": {
+    "word": "volaille",
+    "phonetic": "",
+    "explains": [
+      "n.f. 家禽"
+    ]
+  },
+  "volant": {
+    "word": "volant",
+    "phonetic": "/'vəʊlənt/",
+    "explains": [
+      "adj. 迅速的；会飞的；飞行的；n. (Volant)人名；(法)沃朗"
+    ]
+  },
+  "volatile": {
+    "word": "volatile",
+    "phonetic": "/'vɔlətail/",
+    "explains": [
+      "adj.  不稳定的； 反复无常的； 挥发性的"
+    ]
+  },
+  "volatility": {
+    "word": "volatility",
+    "phonetic": "/ˌvɔlə'tiləti/",
+    "explains": [
+      "n.  无常性； 不稳定； 挥发性"
+    ]
+  },
+  "volcan": {
+    "word": "volcan",
+    "phonetic": "",
+    "explains": [
+      "n.m. 火山"
+    ]
+  },
+  "volcanic": {
+    "word": "volcanic",
+    "phonetic": "/vɒl'kænɪk/",
+    "explains": [
+      "adj. 火山的,猛烈的"
+    ]
+  },
+  "volcanism": {
+    "word": "volcanism",
+    "phonetic": "/'vɒlkənɪz(ə)m/",
+    "explains": [
+      "n. 火山作用"
+    ]
+  },
+  "volcano": {
+    "word": "volcano",
+    "phonetic": "/vɒlˈkeɪnəʊ/",
+    "explains": [
+      "n. 火山"
+    ]
+  },
+  "vole": {
+    "word": "vole",
+    "phonetic": "/vəʊl/",
+    "explains": [
+      "n. 田鼠"
+    ]
+  },
+  "volition": {
+    "word": "volition",
+    "phonetic": "/vəˈlɪʃ(ə)n/",
+    "explains": [
+      "n. 意志，意志力；决断力"
+    ]
+  },
+  "volitional": {
+    "word": "volitional",
+    "phonetic": "",
+    "explains": [
+      "adj. 意志的；凭意志的"
+    ]
+  },
+  "volitive": {
+    "word": "volitive",
+    "phonetic": "/'vɒlɪtɪv/",
+    "explains": [
+      "adj. 意志的；表示意志的；发自意志的"
+    ]
+  },
+  "volleyball": {
+    "word": "volleyball",
+    "phonetic": "/ˈvɒlɪbɔːl/",
+    "explains": [
+      "n. 排球"
+    ]
+  },
+  "volt": {
+    "word": "volt",
+    "phonetic": "/vəʊlt; vɒlt/",
+    "explains": [
+      "n. 伏特，伏"
+    ]
+  },
+  "voltage": {
+    "word": "voltage",
+    "phonetic": "/'vəʊltɪdʒ; 'vɒltɪdʒ/",
+    "explains": [
+      "n. 电压"
+    ]
+  },
+  "volubility": {
+    "word": "volubility",
+    "phonetic": "",
+    "explains": [
+      "n. 流利"
+    ]
+  },
+  "voluble": {
+    "word": "voluble",
+    "phonetic": "/'vɒljʊb(ə)l/",
+    "explains": [
+      "adj. 健谈的；缠绕的；易旋转的"
     ]
   },
   "volume": {
@@ -163,12 +2886,236 @@
       "n. 体积；容积；音量；卷；册"
     ]
   },
+  "voluminous": {
+    "word": "voluminous",
+    "phonetic": "/və'ljuːmɪnəs/",
+    "explains": [
+      "adj. 卷数多的,大量的"
+    ]
+  },
+  "voluntary": {
+    "word": "voluntary",
+    "phonetic": "/ˈvɒlənt(ə)rɪ/",
+    "explains": [
+      "adj. 自愿的"
+    ]
+  },
+  "volunteer": {
+    "word": "volunteer",
+    "phonetic": "/ˌvɒlənˈtɪə/",
+    "explains": [
+      "n. 志愿者"
+    ]
+  },
+  "voluptuary": {
+    "word": "voluptuary",
+    "phonetic": "/və'lʌptjʊərɪ/",
+    "explains": [
+      "adj. 耽于酒色的"
+    ]
+  },
+  "voluptuous": {
+    "word": "voluptuous",
+    "phonetic": "/və'lʌptʃʊəs/",
+    "explains": [
+      "adj. 撩人的；骄奢淫逸的；沉溺酒色的"
+    ]
+  },
+  "vomit": {
+    "word": "vomit",
+    "phonetic": "/'vɒmɪt/",
+    "explains": [
+      "vt&vi. 呕吐；大量喷出"
+    ]
+  },
+  "voracious": {
+    "word": "voracious",
+    "phonetic": "/və'reɪʃəs/",
+    "explains": [
+      "adj. 狼吞虎咽的, 贪婪的"
+    ]
+  },
+  "voracity": {
+    "word": "voracity",
+    "phonetic": "",
+    "explains": [
+      "n. 贪食, 贪婪"
+    ]
+  },
+  "vortex": {
+    "word": "vortex",
+    "phonetic": "/'vɔːteks/",
+    "explains": [
+      "n. [航][流] 涡流；漩涡；（动乱，争论等的）中心；旋风"
+    ]
+  },
+  "vortices": {
+    "word": "vortices",
+    "phonetic": "",
+    "explains": [
+      "n. 旋涡；（指水或风形成的）涡流( vortex的名词复数 )"
+    ]
+  },
+  "votary": {
+    "word": "votary",
+    "phonetic": "/'vəʊt(ə)rɪ/",
+    "explains": [
+      "n. 崇拜者；出家人；adj. 立誓任圣职的；誓约的"
+    ]
+  },
   "vote": {
     "word": "vote",
     "phonetic": "/vəʊt/",
     "explains": [
       "n. 投票；选举；表决；选票",
       "v. 投票；表决；选举"
+    ]
+  },
+  "voter": {
+    "word": "voter",
+    "phonetic": "/'vəʊtə/",
+    "explains": [
+      "n. 投票者"
+    ]
+  },
+  "votive": {
+    "word": "votive",
+    "phonetic": "/'vəʊtɪv/",
+    "explains": [
+      "adj. 奉献的（副词votively）；献纳的；诚心祈求的"
+    ]
+  },
+  "votre": {
+    "word": "votre",
+    "phonetic": "",
+    "explains": [
+      "pron. 您的；你们的"
+    ]
+  },
+  "voucher": {
+    "word": "voucher",
+    "phonetic": "/'vautʃə/",
+    "explains": [
+      "n.  开支清单； 收据， 票券； 优惠券"
+    ]
+  },
+  "vouloir": {
+    "word": "vouloir",
+    "phonetic": "",
+    "explains": [
+      "v. 想要"
+    ]
+  },
+  "vow": {
+    "word": "vow",
+    "phonetic": "/vaʊ/",
+    "explains": [
+      "n. 誓言，誓约，许愿"
+    ]
+  },
+  "vowel": {
+    "word": "vowel",
+    "phonetic": "/'vaʊəl/",
+    "explains": [
+      "n. 元音；元音字母"
+    ]
+  },
+  "voyage": {
+    "word": "voyage",
+    "phonetic": "/ˈvɔɪɪdʒ/",
+    "explains": [
+      "n. 航行"
+    ]
+  },
+  "voyager": {
+    "word": "voyager",
+    "phonetic": "/'vɒɪɪdʒə/",
+    "explains": [
+      "n. 航行者, 航海者"
+    ]
+  },
+  "voyeur": {
+    "word": "voyeur",
+    "phonetic": "/vwʌ'jɜː; vɒɪ-/",
+    "explains": [
+      "n. <法>窥淫狂病人,偷看下流场面的人"
+    ]
+  },
+  "voz": {
+    "word": "voz",
+    "phonetic": "",
+    "explains": [
+      "n.f. 声音"
+    ]
+  },
+  "vrai": {
+    "word": "vrai",
+    "phonetic": "",
+    "explains": [
+      "adj. 真的"
+    ]
+  },
+  "vraiment": {
+    "word": "vraiment",
+    "phonetic": "",
+    "explains": [
+      "adv. 真正地"
+    ]
+  },
+  "vuelo": {
+    "word": "vuelo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 飞行；航班"
+    ]
+  },
+  "vulgar": {
+    "word": "vulgar",
+    "phonetic": "/'vʌlgə/",
+    "explains": [
+      "adj. 粗俗的，庸俗的"
+    ]
+  },
+  "vulgarity": {
+    "word": "vulgarity",
+    "phonetic": "/vʌl'gærɪtɪ/",
+    "explains": [
+      "n. 粗俗, 粗俗语, 粗野行为"
+    ]
+  },
+  "vulnerability": {
+    "word": "vulnerability",
+    "phonetic": "/,vʌlnərə'bɪlətɪ/",
+    "explains": [
+      "n. 弱点, 攻击"
+    ]
+  },
+  "vulnerable": {
+    "word": "vulnerable",
+    "phonetic": "/'vʌln(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 易受攻击的，易受…的攻击；易受伤害的；有弱点的"
+    ]
+  },
+  "vulpine": {
+    "word": "vulpine",
+    "phonetic": "/'vʌlpaɪn/",
+    "explains": [
+      "adj. 狡猾的"
+    ]
+  },
+  "vulture": {
+    "word": "vulture",
+    "phonetic": "/'vʌltʃə/",
+    "explains": [
+      "n. 秃鹰，秃鹫；贪婪的人"
+    ]
+  },
+  "vying": {
+    "word": "vying",
+    "phonetic": "/'vaɪɪŋ/",
+    "explains": [
+      "adj. 竞争的"
     ]
   }
 }

@@ -1,10 +1,30 @@
 {
-  "jam": {
-    "word": "jam",
-    "phonetic": "/dʒæm/",
+  "jab": {
+    "word": "jab",
+    "phonetic": "/dʒæb/",
     "explains": [
-      "n. 果酱；拥挤；堵塞",
-      "v. 堵塞；拥挤；卡住"
+      "v. 戳；猛击；用拨火棒等捅；n. 戳；猛击；注射"
+    ]
+  },
+  "jabber": {
+    "word": "jabber",
+    "phonetic": "/'dʒæbə/",
+    "explains": [
+      "v. 快而含糊地说, 吱吱喳喳地叫, 闲聊"
+    ]
+  },
+  "jacal": {
+    "word": "jacal",
+    "phonetic": "/hə'kɑːl/",
+    "explains": [
+      "n. <法>（墨西哥和美国西部的）小茅屋"
+    ]
+  },
+  "jack": {
+    "word": "jack",
+    "phonetic": "/dʒæk/",
+    "explains": [
+      "n. 起重器；传动装置"
     ]
   },
   "jacket": {
@@ -14,11 +34,117 @@
       "n. 夹克衫；短上衣"
     ]
   },
+  "jackpot": {
+    "word": "jackpot",
+    "phonetic": "/'dʒækpɔt/",
+    "explains": [
+      "n.  头奖； 累积赌注； 巨额奖金"
+    ]
+  },
+  "jade": {
+    "word": "jade",
+    "phonetic": "/dʒeɪd/",
+    "explains": [
+      "n. 玉，翡翠"
+    ]
+  },
+  "jaded": {
+    "word": "jaded",
+    "phonetic": "/'dʒeɪdɪd/",
+    "explains": [
+      "adj. 厌倦的；疲倦不堪的；v. 厌倦（jade的过去分词）；变得疲倦；精疲力竭"
+    ]
+  },
+  "jagged": {
+    "word": "jagged",
+    "phonetic": "/'dʒægɪd/",
+    "explains": [
+      "adj. 边缘不整齐的，参差不齐的"
+    ]
+  },
+  "jaguar": {
+    "word": "jaguar",
+    "phonetic": "/'dʒægjʊə/",
+    "explains": [
+      "n. 美洲虎[军] (“美洲虎”) 英、法合作研制的超音速攻击机"
+    ]
+  },
+  "jail": {
+    "word": "jail",
+    "phonetic": "/dʒeɪl/",
+    "explains": [
+      "n. 监狱"
+    ]
+  },
+  "jailer": {
+    "word": "jailer",
+    "phonetic": "/'dʒelɚ/",
+    "explains": [
+      "n. 狱卒，看守监狱的人"
+    ]
+  },
+  "jam": {
+    "word": "jam",
+    "phonetic": "/dʒæm/",
+    "explains": [
+      "n. 果酱；拥挤；堵塞",
+      "v. 堵塞；拥挤；卡住"
+    ]
+  },
+  "jamais": {
+    "word": "jamais",
+    "phonetic": "",
+    "explains": [
+      "从不"
+    ]
+  },
+  "jamb": {
+    "word": "jamb",
+    "phonetic": "/dʒæm/",
+    "explains": [
+      "n. 矿柱, 旁柱"
+    ]
+  },
+  "jambe": {
+    "word": "jambe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 腿"
+    ]
+  },
+  "jambon": {
+    "word": "jambon",
+    "phonetic": "",
+    "explains": [
+      "n.m. 火腿"
+    ]
+  },
+  "jamboree": {
+    "word": "jamboree",
+    "phonetic": "/,dʒæmbə'riː/",
+    "explains": [
+      "n. (尤指国际性或全国性的)少年团体大会,喧闹的娱乐会,狂欢活动"
+    ]
+  },
+  "janitor": {
+    "word": "janitor",
+    "phonetic": "/'dʒænɪtə/",
+    "explains": [
+      "n. 看门人，管门人"
+    ]
+  },
   "january": {
     "word": "January",
     "phonetic": "/ˈdʒænjuəri/",
     "explains": [
       "n. 一月"
+    ]
+  },
+  "janvier": {
+    "word": "janvier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 一月"
     ]
   },
   "japan": {
@@ -35,11 +161,396 @@
       "adj. 日本的；日本人的 n. 日本人；日语"
     ]
   },
+  "jar": {
+    "word": "jar",
+    "phonetic": "/dʒɑː/",
+    "explains": [
+      "n. 罐子"
+    ]
+  },
+  "jardin": {
+    "word": "jardin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 花园"
+    ]
+  },
+  "jargon": {
+    "word": "jargon",
+    "phonetic": "/'dʒɑːg(ə)n/",
+    "explains": [
+      "n. 行话，术语；黄锆石"
+    ]
+  },
+  "jasmine": {
+    "word": "jasmine",
+    "phonetic": "/'dʒæzmɪn; 'dʒæs-/",
+    "explains": [
+      "n. 茉莉；淡黄色"
+    ]
+  },
+  "jauge": {
+    "word": "jauge",
+    "phonetic": "",
+    "explains": [
+      "n.f. 计量器"
+    ]
+  },
+  "jaundiced": {
+    "word": "jaundiced",
+    "phonetic": "/'dʒɔndɪst/",
+    "explains": [
+      "adj. 患黄疸病的, 敌视的, 有偏见的"
+    ]
+  },
+  "jaune": {
+    "word": "jaune",
+    "phonetic": "",
+    "explains": [
+      "adj. 黄色的"
+    ]
+  },
+  "jaunisse": {
+    "word": "jaunisse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 黄疸"
+    ]
+  },
+  "jaunt": {
+    "word": "jaunt",
+    "phonetic": "/dʒɔːnt/",
+    "explains": [
+      "n. 远足, 短途旅游"
+    ]
+  },
+  "jaunty": {
+    "word": "jaunty",
+    "phonetic": "/'dʒɔːntɪ/",
+    "explains": [
+      "adj. 感到自信和自满的, 洋洋得意的"
+    ]
+  },
+  "javelin": {
+    "word": "javelin",
+    "phonetic": "/'dʒæv(ə)lɪn/",
+    "explains": [
+      "n. 标枪，投枪"
+    ]
+  },
+  "jaw": {
+    "word": "jaw",
+    "phonetic": "/dʒɔː/",
+    "explains": [
+      "n. 下巴"
+    ]
+  },
+  "jawbone": {
+    "word": "jawbone",
+    "phonetic": "/'dʒɔːbəʊn/",
+    "explains": [
+      "n. 颚骨, 下颚骨, 信用 v赊买"
+    ]
+  },
+  "jay": {
+    "word": "jay",
+    "phonetic": "/dʒeɪ/",
+    "explains": [
+      "n. 松鸡；鸟"
+    ]
+  },
+  "jaywalk": {
+    "word": "jaywalk",
+    "phonetic": "/'dʒeɪwɔːk/",
+    "explains": [
+      "v. 乱穿马路（不遵守交通规则）"
+    ]
+  },
+  "jazz": {
+    "word": "jazz",
+    "phonetic": "/dʒæz/",
+    "explains": [
+      "n. 爵士乐"
+    ]
+  },
   "jealous": {
     "word": "jealous",
     "phonetic": "/ˈdʒeləs/",
     "explains": [
       "adj. 嫉妒的；妒忌的；羡慕的"
+    ]
+  },
+  "jealousy": {
+    "word": "jealousy",
+    "phonetic": "/'dʒeləsɪ/",
+    "explains": [
+      "n. 妒忌，嫉妒，猜忌"
+    ]
+  },
+  "jean": {
+    "word": "jean",
+    "phonetic": "/dʒiːn/",
+    "explains": [
+      "n. 斜纹布；牛仔裤"
+    ]
+  },
+  "jeans": {
+    "word": "jeans",
+    "phonetic": "/dʒiːnz/",
+    "explains": [
+      "n. 牛仔裤"
+    ]
+  },
+  "jeep": {
+    "word": "jeep",
+    "phonetic": "/dʒiːp/",
+    "explains": [
+      "n. 吉普车"
+    ]
+  },
+  "jeer": {
+    "word": "jeer",
+    "phonetic": "/dʒɪə/",
+    "explains": [
+      "v. 嘲笑；n. 讥笑的言语"
+    ]
+  },
+  "jefe": {
+    "word": "jefe",
+    "phonetic": "",
+    "explains": [
+      "n.m. 老板；首领"
+    ]
+  },
+  "jejune": {
+    "word": "jejune",
+    "phonetic": "/dʒɪ'dʒuːn/",
+    "explains": [
+      "adj. 缺乏营养的, 贫瘠的, 无兴趣的, 不成熟的"
+    ]
+  },
+  "jelly": {
+    "word": "jelly",
+    "phonetic": "/'dʒelɪ/",
+    "explains": [
+      "n. 冻，果冻；胶状物"
+    ]
+  },
+  "jellyfish": {
+    "word": "jellyfish",
+    "phonetic": "/'dʒelɪfɪʃ/",
+    "explains": [
+      "n. 水母"
+    ]
+  },
+  "jeopardize": {
+    "word": "jeopardize",
+    "phonetic": "/'dʒepədaɪz/",
+    "explains": [
+      "v. 使受危害，使陷险境"
+    ]
+  },
+  "jeopardy": {
+    "word": "jeopardy",
+    "phonetic": "/'dʒepədɪ/",
+    "explains": [
+      "n. 危险, 危险"
+    ]
+  },
+  "jeremiad": {
+    "word": "jeremiad",
+    "phonetic": "/,dʒerɪ'maɪæd/",
+    "explains": [
+      "n. 悲叹, 悲痛, 悲哀的故事"
+    ]
+  },
+  "jerk": {
+    "word": "jerk",
+    "phonetic": "/dʒɜːk/",
+    "explains": [
+      "v. 猛地一拉，急拉"
+    ]
+  },
+  "jerky": {
+    "word": "jerky",
+    "phonetic": "/'dʒɜːkɪ/",
+    "explains": [
+      "adj. 抽筋的；急动的；不平稳的；n. 牛肉干"
+    ]
+  },
+  "jest": {
+    "word": "jest",
+    "phonetic": "/dʒest/",
+    "explains": [
+      "n. 笑话, 俏皮话"
+    ]
+  },
+  "jesting": {
+    "word": "jesting",
+    "phonetic": "",
+    "explains": [
+      "n. 笑话, 滑稽"
+    ]
+  },
+  "jesuitical": {
+    "word": "jesuitical",
+    "phonetic": "",
+    "explains": [
+      "adj. 阴险的；虚伪的"
+    ]
+  },
+  "jesus": {
+    "word": "jesus",
+    "phonetic": "/'dʒiːzəs/",
+    "explains": [
+      "n. 耶稣"
+    ]
+  },
+  "jet": {
+    "word": "jet",
+    "phonetic": "/jɛt/",
+    "explains": [
+      "n. 喷气式飞机；喷嘴"
+    ]
+  },
+  "jettison": {
+    "word": "jettison",
+    "phonetic": "/'dʒetɪs(ə)n; -z(ə)n/",
+    "explains": [
+      "n. 投弃, 投弃货物"
+    ]
+  },
+  "jetty": {
+    "word": "jetty",
+    "phonetic": "/'dʒetɪ/",
+    "explains": [
+      "n. 码头；防波堤；adj. 乌黑发亮的，煤玉似的；vi. 伸出"
+    ]
+  },
+  "jeu": {
+    "word": "jeu",
+    "phonetic": "",
+    "explains": [
+      "n.m. 游戏"
+    ]
+  },
+  "jeudi": {
+    "word": "jeudi",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期四"
+    ]
+  },
+  "jeune": {
+    "word": "jeune",
+    "phonetic": "",
+    "explains": [
+      "adj. 年轻的"
+    ]
+  },
+  "jew": {
+    "word": "jew",
+    "phonetic": "/dʒu:/",
+    "explains": [
+      "n. 犹太人；犹太教徒；守财奴；vt. 欺骗；杀价"
+    ]
+  },
+  "jewel": {
+    "word": "jewel",
+    "phonetic": "/ˈdʒuːəl/",
+    "explains": [
+      "n. 宝石"
+    ]
+  },
+  "jeweler": {
+    "word": "jeweler",
+    "phonetic": "/'dʒuələ/",
+    "explains": [
+      "n. 珠宝商；宝石匠；钟表匠；钟表商"
+    ]
+  },
+  "jeweller": {
+    "word": "jeweller",
+    "phonetic": "/'dʒuːələ/",
+    "explains": [
+      "n. 珠宝商；钟表匠，宝石匠"
+    ]
+  },
+  "jewellery": {
+    "word": "jewellery",
+    "phonetic": "/'dʒuːəlrɪ/",
+    "explains": [
+      "n. 珠宝，珠宝饰物"
+    ]
+  },
+  "jewelry": {
+    "word": "jewelry",
+    "phonetic": "/'dʒuːəlrɪ/",
+    "explains": [
+      "n. 珠宝；珠宝类"
+    ]
+  },
+  "jewett": {
+    "word": "jewett",
+    "phonetic": "/'dʒu:it/",
+    "explains": [
+      "n. 朱厄特（姓氏）"
+    ]
+  },
+  "jewish": {
+    "word": "jewish",
+    "phonetic": "/'dʒuːɪʃ/",
+    "explains": [
+      "adj. 犹太人的"
+    ]
+  },
+  "jib": {
+    "word": "jib",
+    "phonetic": "/dʒɪb/",
+    "explains": [
+      "n. 船首三角帆, 起重机的臂, 挺杆"
+    ]
+  },
+  "jibe": {
+    "word": "jibe",
+    "phonetic": "/dʒaɪb/",
+    "explains": [
+      "v. 嘲笑, 与一致, 使转向"
+    ]
+  },
+  "jigsaw": {
+    "word": "jigsaw",
+    "phonetic": "/'dʒɪgsɔː/",
+    "explains": [
+      "n. 竖锯"
+    ]
+  },
+  "jilt": {
+    "word": "jilt",
+    "phonetic": "/dʒilt/",
+    "explains": [
+      "vt.  抛弃"
+    ]
+  },
+  "jingle": {
+    "word": "jingle",
+    "phonetic": "/'dʒɪŋg(ə)l/",
+    "explains": [
+      "v. （使）丁当响"
+    ]
+  },
+  "jingoism": {
+    "word": "jingoism",
+    "phonetic": "/'dʒɪŋɡoɪzəm/",
+    "explains": [
+      "n. 侵略主义；沙文主义；武力外交政策"
+    ]
+  },
+  "jink": {
+    "word": "jink",
+    "phonetic": "/dʒɪŋk/",
+    "explains": [
+      "v. 闪身, 急转, 逃走"
     ]
   },
   "job": {
@@ -49,11 +560,88 @@
       "n. 工作；职业；职位"
     ]
   },
+  "jobber": {
+    "word": "jobber",
+    "phonetic": "/'dʒɒbə/",
+    "explains": [
+      "n. 临时工, 批发商"
+    ]
+  },
+  "jobbery": {
+    "word": "jobbery",
+    "phonetic": "/'dʒɒb(ə)rɪ/",
+    "explains": [
+      "n. 假公济私"
+    ]
+  },
+  "jobbing": {
+    "word": "jobbing",
+    "phonetic": "/'dʒɔbiŋ/",
+    "explains": [
+      "adj.  做零活的"
+    ]
+  },
+  "jocose": {
+    "word": "jocose",
+    "phonetic": "/dʒə'kəʊs/",
+    "explains": [
+      "adj. 诙谐的；开玩笑的"
+    ]
+  },
+  "jocular": {
+    "word": "jocular",
+    "phonetic": "/'dʒɒkjʊlə/",
+    "explains": [
+      "adj. 爱开玩笑的；打趣的；滑稽的"
+    ]
+  },
+  "jocund": {
+    "word": "jocund",
+    "phonetic": "/'dʒɒk(ə)nd; 'dʒəʊk-/",
+    "explains": [
+      "adj. 快活的；高兴的"
+    ]
+  },
+  "jog": {
+    "word": "jog",
+    "phonetic": "/dʒɒg/",
+    "explains": [
+      "v. 慢跑（尤作为锻炼）"
+    ]
+  },
+  "joggle": {
+    "word": "joggle",
+    "phonetic": "/'dʒɒg(ə)l/",
+    "explains": [
+      "v. 啮合；摇动，摇曳；轻摇；n. 啮合；轻摇，摇动；榫接"
+    ]
+  },
   "join": {
     "word": "join",
     "phonetic": "/dʒɔɪn/",
     "explains": [
       "v. 参加；加入；连接；联合"
+    ]
+  },
+  "joiner": {
+    "word": "joiner",
+    "phonetic": "/'dʒɒɪnə/",
+    "explains": [
+      "n. 工匠"
+    ]
+  },
+  "joinery": {
+    "word": "joinery",
+    "phonetic": "/'dʒɒɪnərɪ/",
+    "explains": [
+      "n. 木工职业"
+    ]
+  },
+  "joint": {
+    "word": "joint",
+    "phonetic": "/dʒɒɪnt/",
+    "explains": [
+      "n. 关节；接头，接缝"
     ]
   },
   "joke": {
@@ -63,11 +651,67 @@
       "n. 笑话；玩笑 v. 开玩笑"
     ]
   },
-  "joyful": {
-    "word": "joyful",
-    "phonetic": "/ˈdʒɔɪfl/",
+  "jollity": {
+    "word": "jollity",
+    "phonetic": "/'dʒɒlɪtɪ/",
     "explains": [
-      "adj. 快乐的；高兴的；令人愉快的"
+      "n. 高兴, 酒宴"
+    ]
+  },
+  "jolly": {
+    "word": "jolly",
+    "phonetic": "/'dʒɒlɪ/",
+    "explains": [
+      "adj. 快活的；令人高兴的"
+    ]
+  },
+  "jolt": {
+    "word": "jolt",
+    "phonetic": "/dʒəʊlt; dʒɒlt/",
+    "explains": [
+      "v& n. (使)颠簸；震动"
+    ]
+  },
+  "jostle": {
+    "word": "jostle",
+    "phonetic": "/'dʒɒs(ə)l/",
+    "explains": [
+      "v. 推挤，撞；争夺；n. 推撞，挤拥"
+    ]
+  },
+  "jot": {
+    "word": "jot",
+    "phonetic": "/dʒɒt/",
+    "explains": [
+      "v. 略记；摘要记载下来；n. 少量；稍许"
+    ]
+  },
+  "jouer": {
+    "word": "jouer",
+    "phonetic": "",
+    "explains": [
+      "v. 玩；演奏"
+    ]
+  },
+  "journal": {
+    "word": "journal",
+    "phonetic": "/ˈdʒɜːn(ə)l/",
+    "explains": [
+      "n. 日记；期刊"
+    ]
+  },
+  "journalism": {
+    "word": "journalism",
+    "phonetic": "/'dʒɜːn(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 新闻业；新闻工作"
+    ]
+  },
+  "journalist": {
+    "word": "journalist",
+    "phonetic": "/ˈdʒɜːn(ə)lɪst/",
+    "explains": [
+      "n. 记者"
     ]
   },
   "journey": {
@@ -77,6 +721,20 @@
       "n. 旅行；行程 v. 旅行"
     ]
   },
+  "journeyman": {
+    "word": "journeyman",
+    "phonetic": "/'dʒɜːnɪmən/",
+    "explains": [
+      "n. 熟练工人"
+    ]
+  },
+  "jovial": {
+    "word": "jovial",
+    "phonetic": "/'dʒəʊvɪəl; -vj(ə)l/",
+    "explains": [
+      "adj. 天性快活的；主神朱庇特的"
+    ]
+  },
   "joy": {
     "word": "joy",
     "phonetic": "/dʒɔɪ/",
@@ -84,11 +742,165 @@
       "n. 欢乐；喜悦；乐趣"
     ]
   },
+  "joya": {
+    "word": "joya",
+    "phonetic": "",
+    "explains": [
+      "n.f. 珠宝"
+    ]
+  },
+  "joyeux": {
+    "word": "joyeux",
+    "phonetic": "",
+    "explains": [
+      "adj. 快乐的"
+    ]
+  },
+  "joyful": {
+    "word": "joyful",
+    "phonetic": "/ˈdʒɔɪfl/",
+    "explains": [
+      "adj. 快乐的；高兴的；令人愉快的"
+    ]
+  },
+  "joyous": {
+    "word": "joyous",
+    "phonetic": "/'dʒɒɪəs/",
+    "explains": [
+      "adj. 快乐的, 高兴的"
+    ]
+  },
+  "joystick": {
+    "word": "joystick",
+    "phonetic": "/'dʒɔɪstɪk/",
+    "explains": [
+      "n. 操纵杆，[机] 控制杆"
+    ]
+  },
+  "jubilant": {
+    "word": "jubilant",
+    "phonetic": "/'dʒuːbɪl(ə)nt/",
+    "explains": [
+      "adj. 欢呼的；喜洋洋的"
+    ]
+  },
+  "jubilation": {
+    "word": "jubilation",
+    "phonetic": "/dʒuːbɪ'leɪʃn/",
+    "explains": [
+      "n. 喜欢；庆祝；欢呼"
+    ]
+  },
   "judge": {
     "word": "judge",
     "phonetic": "/dʒʌdʒ/",
     "explains": [
       "n. 法官；裁判员 v. 判断；审判"
+    ]
+  },
+  "judgement": {
+    "word": "judgement",
+    "phonetic": "/'dʒʌdʒm(ə)nt/",
+    "explains": [
+      "n. 判断；意见；审判"
+    ]
+  },
+  "judgment": {
+    "word": "judgment",
+    "phonetic": "/ˈdʒʌdʒmənt/",
+    "explains": [
+      "n. 判断"
+    ]
+  },
+  "judicature": {
+    "word": "judicature",
+    "phonetic": "/'dʒuːdɪkə,tʃə; dʒʊ'dɪk-/",
+    "explains": [
+      "n. 司法；法官；司法权；法官的职位"
+    ]
+  },
+  "judicial": {
+    "word": "judicial",
+    "phonetic": "/dʒuː'dɪʃ(ə)l/",
+    "explains": [
+      "adj. 公正的，明断的；法庭的；审判上的"
+    ]
+  },
+  "judicious": {
+    "word": "judicious",
+    "phonetic": "/dʒʊ'dɪʃəs/",
+    "explains": [
+      "adj. 明智的；头脑精明的；判断正确的"
+    ]
+  },
+  "juego": {
+    "word": "juego",
+    "phonetic": "",
+    "explains": [
+      "n.m. 游戏"
+    ]
+  },
+  "jueves": {
+    "word": "jueves",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期四"
+    ]
+  },
+  "juez": {
+    "word": "juez",
+    "phonetic": "",
+    "explains": [
+      "n.m. 法官"
+    ]
+  },
+  "jug": {
+    "word": "jug",
+    "phonetic": "/dʒʌg/",
+    "explains": [
+      "n. 带柄水罐，大壶"
+    ]
+  },
+  "jugador": {
+    "word": "jugador",
+    "phonetic": "",
+    "explains": [
+      "n.m. 运动员；玩家"
+    ]
+  },
+  "jugar": {
+    "word": "jugar",
+    "phonetic": "",
+    "explains": [
+      "v. 玩"
+    ]
+  },
+  "juggernaut": {
+    "word": "juggernaut",
+    "phonetic": "",
+    "explains": [
+      "n. 使人盲目崇"
+    ]
+  },
+  "juggle": {
+    "word": "juggle",
+    "phonetic": "/'dʒʌg(ə)l/",
+    "explains": [
+      "v&n. 玩杂耍"
+    ]
+  },
+  "juguete": {
+    "word": "juguete",
+    "phonetic": "",
+    "explains": [
+      "n.m. 玩具"
+    ]
+  },
+  "jugulate": {
+    "word": "jugulate",
+    "phonetic": "/'dʒʌgjʊleɪt/",
+    "explains": [
+      "vt. [现罕] 刎颈自尽, 扼杀, [医]顿挫"
     ]
   },
   "juice": {
@@ -99,6 +911,62 @@
       "v. 榨取果汁"
     ]
   },
+  "juicy": {
+    "word": "juicy",
+    "phonetic": "/'dʒuːsɪ/",
+    "explains": [
+      "adj. 多汁(液)的"
+    ]
+  },
+  "juillet": {
+    "word": "juillet",
+    "phonetic": "",
+    "explains": [
+      "n.m. 七月"
+    ]
+  },
+  "jules": {
+    "word": "jules",
+    "phonetic": "/dʒu:lz/",
+    "explains": [
+      "n. 朱尔斯（男子名）"
+    ]
+  },
+  "julio": {
+    "word": "julio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 七月"
+    ]
+  },
+  "july": {
+    "word": "july",
+    "phonetic": "/dʒʊˈlaɪ/",
+    "explains": [
+      "n. 七月"
+    ]
+  },
+  "jumble": {
+    "word": "jumble",
+    "phonetic": "/'dʒʌmb(ə)l/",
+    "explains": [
+      "v. 混杂, 搞乱 n混乱"
+    ]
+  },
+  "jumbo": {
+    "word": "jumbo",
+    "phonetic": "/'dʒʌmbəʊ/",
+    "explains": [
+      "adj. 巨大的；特大的；n. 庞然大物；巨型喷气式飞机；体大而笨拙的人或物"
+    ]
+  },
+  "jumelle": {
+    "word": "jumelle",
+    "phonetic": "",
+    "explains": [
+      "n.f.pl. 双筒望远镜"
+    ]
+  },
   "jump": {
     "word": "jump",
     "phonetic": "/dʒʌmp/",
@@ -106,11 +974,39 @@
       "v./n. 跳跃；跳动；暴涨"
     ]
   },
+  "junction": {
+    "word": "junction",
+    "phonetic": "/'dʒʌŋ(k)ʃ(ə)n/",
+    "explains": [
+      "n. 连接点，汇合处"
+    ]
+  },
+  "juncture": {
+    "word": "juncture",
+    "phonetic": "/'dʒʌŋ(k)tʃə/",
+    "explains": [
+      "n. 接缝；连接；接合"
+    ]
+  },
+  "june": {
+    "word": "june",
+    "phonetic": "/dʒuːn/",
+    "explains": [
+      "n. 六月"
+    ]
+  },
   "jungle": {
     "word": "jungle",
     "phonetic": "/ˈdʒʌŋɡl/",
     "explains": [
       "n. 丛林；密林；危险地带"
+    ]
+  },
+  "junio": {
+    "word": "junio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 六月"
     ]
   },
   "junior": {
@@ -121,6 +1017,90 @@
       "n. 晚辈；三年级生"
     ]
   },
+  "juniper": {
+    "word": "juniper",
+    "phonetic": "/'dʒuːnɪpə/",
+    "explains": [
+      "n. [植]刺柏属丛木或树木"
+    ]
+  },
+  "junk": {
+    "word": "junk",
+    "phonetic": "/dʒʌŋk/",
+    "explains": [
+      "n. 垃圾，废物；舢板"
+    ]
+  },
+  "junto": {
+    "word": "junto",
+    "phonetic": "",
+    "explains": [
+      "adj. 一起的"
+    ]
+  },
+  "jupe": {
+    "word": "jupe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 裙子"
+    ]
+  },
+  "jupiter": {
+    "word": "jupiter",
+    "phonetic": "/'dʒuːpɪtə/",
+    "explains": [
+      "n. 木星；丘庇特"
+    ]
+  },
+  "jurassic": {
+    "word": "jurassic",
+    "phonetic": "",
+    "explains": [
+      "adj. 侏罗纪的"
+    ]
+  },
+  "juridical": {
+    "word": "juridical",
+    "phonetic": "/dʒʊ'rɪdɪk(ə)l/",
+    "explains": [
+      "adj. 司法的；法院的；裁判上的"
+    ]
+  },
+  "jurisdiction": {
+    "word": "jurisdiction",
+    "phonetic": "/ˌdʒuəris'dikʃən/",
+    "explains": [
+      "n.  权限； 司法权， 审判权， 裁判权"
+    ]
+  },
+  "jurisprudence": {
+    "word": "jurisprudence",
+    "phonetic": "/,dʒʊərɪs'pruːd(ə)ns/",
+    "explains": [
+      "n. 法律体系；法学及其分支；法律知识；法院审判规程"
+    ]
+  },
+  "juror": {
+    "word": "juror",
+    "phonetic": "/'dʒʊərə/",
+    "explains": [
+      "n. 审查委员，陪审员"
+    ]
+  },
+  "jury": {
+    "word": "jury",
+    "phonetic": "/'dʒʊərɪ/",
+    "explains": [
+      "n. 陪审团；评奖团"
+    ]
+  },
+  "jus": {
+    "word": "jus",
+    "phonetic": "",
+    "explains": [
+      "n.m. 果汁"
+    ]
+  },
   "just": {
     "word": "just",
     "phonetic": "/dʒʌst/",
@@ -128,11 +1108,74 @@
       "adv. 只是；正好；恰好 adj. 公正的；合理的"
     ]
   },
+  "just-in-time": {
+    "word": "just-in-time",
+    "phonetic": "/'dʒʌstɪntaɪm/",
+    "explains": [
+      "n.  准时制生产"
+    ]
+  },
+  "juste": {
+    "word": "juste",
+    "phonetic": "",
+    "explains": [
+      "adj. 公正的；准确的"
+    ]
+  },
   "justice": {
     "word": "justice",
     "phonetic": "/ˈdʒʌstɪs/",
     "explains": [
       "n. 正义；公正；司法；法官"
+    ]
+  },
+  "justifiable": {
+    "word": "justifiable",
+    "phonetic": "/'dʒʌstɪ,faɪəb(ə)l/",
+    "explains": [
+      "adj. 可辩解的，有道理的；可证明为正当的"
+    ]
+  },
+  "justification": {
+    "word": "justification",
+    "phonetic": "/dʒʌstɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 理由"
+    ]
+  },
+  "justify": {
+    "word": "justify",
+    "phonetic": "/ˈdʒʌstɪfaɪ/",
+    "explains": [
+      "v. 证明……正当"
+    ]
+  },
+  "jut": {
+    "word": "jut",
+    "phonetic": "/dʒʌt/",
+    "explains": [
+      "v. (使)突出, (使)伸出, 突击"
+    ]
+  },
+  "juvenile": {
+    "word": "juvenile",
+    "phonetic": "/'dʒuːvənaɪl/",
+    "explains": [
+      "adj. 青少年的；幼稚的；n. 青少年；少年读物"
+    ]
+  },
+  "juxtapose": {
+    "word": "juxtapose",
+    "phonetic": "/,dʒʌkstə'pəʊz/",
+    "explains": [
+      "v. 并列；并置"
+    ]
+  },
+  "juxtaposition": {
+    "word": "juxtaposition",
+    "phonetic": "/,dʒʌkstəpə'zɪʃ(ə)n/",
+    "explains": [
+      "n. 毗邻, 并置"
     ]
   }
 }

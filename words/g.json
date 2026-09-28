@@ -1,4 +1,284 @@
 {
+  "gabble": {
+    "word": "gabble",
+    "phonetic": "/'gæb(ə)l/",
+    "explains": [
+      "v. 急促而不清楚地说话, 七嘴八嘴地说, 喋喋不休地说"
+    ]
+  },
+  "gable": {
+    "word": "gable",
+    "phonetic": "/'geɪb(ə)l/",
+    "explains": [
+      "n. 山形墙；三角形饰物；vt. 在…上砌三角墙；在…安装三角形饰物；vi. 形成三角墙；形成三角形饰物"
+    ]
+  },
+  "gadfly": {
+    "word": "gadfly",
+    "phonetic": "/'gædflaɪ/",
+    "explains": [
+      "n. 牛蝇, 形似苍蝇, 讨厌的人"
+    ]
+  },
+  "gadget": {
+    "word": "gadget",
+    "phonetic": "/'gædʒit/",
+    "explains": [
+      "n.  小玩意儿； 精巧的装置； 小巧的机械"
+    ]
+  },
+  "gadgeteering": {
+    "word": "gadgeteering",
+    "phonetic": "",
+    "explains": [
+      "n. 精巧装置的发明；小巧机械的发明"
+    ]
+  },
+  "gafas": {
+    "word": "gafas",
+    "phonetic": "",
+    "explains": [
+      "n.f.pl. 眼镜"
+    ]
+  },
+  "gaffe": {
+    "word": "gaffe",
+    "phonetic": "/gæf/",
+    "explains": [
+      "n. 过失, 出丑, 失态"
+    ]
+  },
+  "gag": {
+    "word": "gag",
+    "phonetic": "/gæg/",
+    "explains": [
+      "v. 塞住…的口；钳制…的言论；使窒息；n. 塞口物；讨论终结；箝制言论"
+    ]
+  },
+  "gaggle": {
+    "word": "gaggle",
+    "phonetic": "/'gæg(ə)l/",
+    "explains": [
+      "n. 鹅群, 一群"
+    ]
+  },
+  "gagner": {
+    "word": "gagner",
+    "phonetic": "",
+    "explains": [
+      "v. 赢得；挣钱"
+    ]
+  },
+  "gaiety": {
+    "word": "gaiety",
+    "phonetic": "/'geɪətɪ/",
+    "explains": [
+      "n. 快乐，兴高采烈；庆祝活动，喜庆；（服饰）华丽，艳丽"
+    ]
+  },
+  "gaily": {
+    "word": "gaily",
+    "phonetic": "/'geɪlɪ/",
+    "explains": [
+      "adv. 快乐地，娱乐地"
+    ]
+  },
+  "gain": {
+    "word": "gain",
+    "phonetic": "/geɪn/",
+    "explains": [
+      "v. 获得；增加；n. 增进"
+    ]
+  },
+  "gainsay": {
+    "word": "gainsay",
+    "phonetic": "/geɪn'seɪ/",
+    "explains": [
+      "v. 反驳；否定；n. 否认；反对"
+    ]
+  },
+  "gala": {
+    "word": "gala",
+    "phonetic": "/'gɑːlə; 'geɪlə/",
+    "explains": [
+      "n. 祝贺，庆祝；节日，特别娱乐；adj. 节日的，欢庆的；欢乐的"
+    ]
+  },
+  "galactic": {
+    "word": "galactic",
+    "phonetic": "/gə'læktɪk/",
+    "explains": [
+      "adj. 银河的；乳汁的"
+    ]
+  },
+  "galaxy": {
+    "word": "galaxy",
+    "phonetic": "/'gæləksɪ/",
+    "explains": [
+      "n. 银河；[天] 星系；银河系；一群显赫的人"
+    ]
+  },
+  "gale": {
+    "word": "gale",
+    "phonetic": "/geɪl/",
+    "explains": [
+      "n. 大风，一阵喧闹"
+    ]
+  },
+  "galerie": {
+    "word": "galerie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 画廊；走廊"
+    ]
+  },
+  "galette": {
+    "word": "galette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 饼"
+    ]
+  },
+  "galilean": {
+    "word": "galilean",
+    "phonetic": "/,gæli'li(:)ən/",
+    "explains": [
+      "adj. 伽利略的, 加利利的（位于巴基斯坦北部）"
+    ]
+  },
+  "gall": {
+    "word": "gall",
+    "phonetic": "/gɔːl/",
+    "explains": [
+      "n. 胆汁；五倍子；怨恨；苦味；v. 烦恼；屈辱；磨伤"
+    ]
+  },
+  "gallant": {
+    "word": "gallant",
+    "phonetic": "/'gæl(ə)nt; gə'lænt/",
+    "explains": [
+      "adj. 英勇的，勇敢的；华丽的；雄伟的；n. (Gallant)人名；(法)加朗；(英)加伦特"
+    ]
+  },
+  "gallantry": {
+    "word": "gallantry",
+    "phonetic": "/'gæləntrɪ/",
+    "explains": [
+      "n. 勇敢"
+    ]
+  },
+  "galleon": {
+    "word": "galleon",
+    "phonetic": "/'gælɪən/",
+    "explains": [
+      "n. 大型帆船"
+    ]
+  },
+  "gallery": {
+    "word": "gallery",
+    "phonetic": "/ˈɡælərɪ/",
+    "explains": [
+      "n. 画廊"
+    ]
+  },
+  "galleta": {
+    "word": "galleta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 饼干"
+    ]
+  },
+  "galley": {
+    "word": "galley",
+    "phonetic": "/'gælɪ/",
+    "explains": [
+      "n. 狭长船, 大型划船, 船上厨房, (印刷用的)长方活字盘, 军舰"
+    ]
+  },
+  "gallina": {
+    "word": "gallina",
+    "phonetic": "",
+    "explains": [
+      "n.f. 母鸡"
+    ]
+  },
+  "gallium": {
+    "word": "gallium",
+    "phonetic": "/'gælɪəm/",
+    "explains": [
+      "n. 镓"
+    ]
+  },
+  "gallon": {
+    "word": "gallon",
+    "phonetic": "/'gælən/",
+    "explains": [
+      "n. 加仑"
+    ]
+  },
+  "gallop": {
+    "word": "gallop",
+    "phonetic": "/'gæləp/",
+    "explains": [
+      "n. 疾驰；飞奔；v. 飞驰；急速进行；急急忙忙地说"
+    ]
+  },
+  "gallows": {
+    "word": "gallows",
+    "phonetic": "/'gæləʊz/",
+    "explains": [
+      "n. 绞架, 绞刑"
+    ]
+  },
+  "gally": {
+    "word": "gally",
+    "phonetic": "/'ɡælɪ/",
+    "explains": [
+      "vt. 吓唬"
+    ]
+  },
+  "galore": {
+    "word": "galore",
+    "phonetic": "/gə'lɔː/",
+    "explains": [
+      "adv. 丰富地；adj. 丰富的；大量的"
+    ]
+  },
+  "galvanize": {
+    "word": "galvanize",
+    "phonetic": "/'ɡælvənaiz/",
+    "explains": [
+      "v. 通电流于, 电镀"
+    ]
+  },
+  "gambit": {
+    "word": "gambit",
+    "phonetic": "/'gæmbɪt/",
+    "explains": [
+      "n. 话题；开始；以取得优势的开局棋法；开场白"
+    ]
+  },
+  "gamble": {
+    "word": "gamble",
+    "phonetic": "/ˈɡæmb(ə)l/",
+    "explains": [
+      "v. 赌博"
+    ]
+  },
+  "gambler": {
+    "word": "gambler",
+    "phonetic": "/'gæmblə(r)/",
+    "explains": [
+      "n. 赌徒；投机商人"
+    ]
+  },
+  "gambol": {
+    "word": "gambol",
+    "phonetic": "/'gæmb(ə)l/",
+    "explains": [
+      "v. 雀跃；耍闹；n. 雀跃；嬉戏"
+    ]
+  },
   "game": {
     "word": "game",
     "phonetic": "/ɡeɪm/",
@@ -7,11 +287,158 @@
       "adj. 勇敢的"
     ]
   },
+  "gamma": {
+    "word": "gamma",
+    "phonetic": "/'gæmə/",
+    "explains": [
+      "n. 100万分之1克, 微克"
+    ]
+  },
+  "gamut": {
+    "word": "gamut",
+    "phonetic": "/'gæmət/",
+    "explains": [
+      "n. [音乐]全音阶, 长音阶, 全音域"
+    ]
+  },
+  "ganado": {
+    "word": "ganado",
+    "phonetic": "",
+    "explains": [
+      "n.m. 牲畜"
+    ]
+  },
+  "ganar": {
+    "word": "ganar",
+    "phonetic": "",
+    "explains": [
+      "v. 赢得；赚取"
+    ]
+  },
+  "gander": {
+    "word": "gander",
+    "phonetic": "/'gændə/",
+    "explains": [
+      "n. 雄鹅, 呆子, 笨蛋"
+    ]
+  },
+  "gang": {
+    "word": "gang",
+    "phonetic": "/ɡæŋ/",
+    "explains": [
+      "n. 帮派"
+    ]
+  },
+  "gangling": {
+    "word": "gangling",
+    "phonetic": "/'gæŋglɪŋ/",
+    "explains": [
+      "adj. (身体)瘦长的"
+    ]
+  },
+  "gangster": {
+    "word": "gangster",
+    "phonetic": "/'gæŋstə/",
+    "explains": [
+      "n. 匪徒，歹徒，暴徒"
+    ]
+  },
+  "gangway": {
+    "word": "gangway",
+    "phonetic": "/'gæŋweɪ/",
+    "explains": [
+      "n. 过道, (剧场, 火车等)座间通道, (美国作aisle)舷侧门, 舷梯, 通路, 跳板"
+    ]
+  },
+  "gannet": {
+    "word": "gannet",
+    "phonetic": "/'gænɪt/",
+    "explains": [
+      "n. 塘鹅"
+    ]
+  },
+  "gant": {
+    "word": "gant",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手套"
+    ]
+  },
+  "gaol": {
+    "word": "gaol",
+    "phonetic": "/dʒeɪl/",
+    "explains": [
+      "v. 监禁；n. 监狱"
+    ]
+  },
+  "gaoler": {
+    "word": "gaoler",
+    "phonetic": "/'dʒeɪlə/",
+    "explains": [
+      "n. 监狱看守；监狱长"
+    ]
+  },
+  "gap": {
+    "word": "gap",
+    "phonetic": "/ɡæp/",
+    "explains": [
+      "n. 间隙"
+    ]
+  },
+  "gape": {
+    "word": "gape",
+    "phonetic": "/geɪp/",
+    "explains": [
+      "v. 张口，张开，裂开；n. 目瞪口呆"
+    ]
+  },
+  "gar": {
+    "word": "gar",
+    "phonetic": "/gɑː/",
+    "explains": [
+      "n. 雀鳝属鱼, 雀鳝"
+    ]
+  },
   "garage": {
     "word": "garage",
     "phonetic": "/ɡəˈrɑːʒ/",
     "explains": [
       "n. 车库；修车厂"
+    ]
+  },
+  "garaje": {
+    "word": "garaje",
+    "phonetic": "",
+    "explains": [
+      "n.m. 车库"
+    ]
+  },
+  "garb": {
+    "word": "garb",
+    "phonetic": "/gɑːb/",
+    "explains": [
+      "n. 服装；v. 装扮"
+    ]
+  },
+  "garbage": {
+    "word": "garbage",
+    "phonetic": "/ˈɡɑːbɪdʒ/",
+    "explains": [
+      "n. 垃圾"
+    ]
+  },
+  "garble": {
+    "word": "garble",
+    "phonetic": "/'gɑːb(ə)l/",
+    "explains": [
+      "v. 断章取义；歪曲；混淆；n. 断章取义；混淆；篡改"
+    ]
+  },
+  "garde": {
+    "word": "garde",
+    "phonetic": "",
+    "explains": [
+      "n.f. 保管；看守"
     ]
   },
   "garden": {
@@ -22,12 +449,215 @@
       "v. 种花；园艺"
     ]
   },
+  "gardener": {
+    "word": "gardener",
+    "phonetic": "/'ɡɑːdənə/",
+    "explains": [
+      "n. 园丁，花匠"
+    ]
+  },
+  "gardenia": {
+    "word": "gardenia",
+    "phonetic": "/gɑː'diːnɪə/",
+    "explains": [
+      "n. 〈植〉栀子栀子花"
+    ]
+  },
+  "gardening": {
+    "word": "gardening",
+    "phonetic": "/'gɑːd(ə)nɪŋ/",
+    "explains": [
+      "n. 园艺"
+    ]
+  },
+  "garder": {
+    "word": "garder",
+    "phonetic": "",
+    "explains": [
+      "v. 保存；看管"
+    ]
+  },
+  "garganta": {
+    "word": "garganta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 喉咙"
+    ]
+  },
+  "gargantuan": {
+    "word": "gargantuan",
+    "phonetic": "/gɑː'gæntjʊən/",
+    "explains": [
+      "adj. 庞大的，巨大的"
+    ]
+  },
+  "gargoyle": {
+    "word": "gargoyle",
+    "phonetic": "/'gɑːgɒɪl/",
+    "explains": [
+      "n. [建]怪兽状滴水嘴,(突出的)怪兽饰"
+    ]
+  },
+  "garish": {
+    "word": "garish",
+    "phonetic": "/'geərɪʃ/",
+    "explains": [
+      "adj. 炫耀的, 过分装饰的, (色彩、装饰、打扮等)俗气的"
+    ]
+  },
+  "garland": {
+    "word": "garland",
+    "phonetic": "/'gɑːlənd/",
+    "explains": [
+      "n. 花环 vt戴花环"
+    ]
+  },
+  "garlic": {
+    "word": "garlic",
+    "phonetic": "/ˈɡɑːlɪk/",
+    "explains": [
+      "n. 大蒜"
+    ]
+  },
+  "garment": {
+    "word": "garment",
+    "phonetic": "/'gɑːm(ə)nt/",
+    "explains": [
+      "n. 衣服；服装，衣着"
+    ]
+  },
+  "garner": {
+    "word": "garner",
+    "phonetic": "/'gɑːnə/",
+    "explains": [
+      "v. 获得；储存；把…储入谷仓；n. 谷仓"
+    ]
+  },
+  "garnish": {
+    "word": "garnish",
+    "phonetic": "/'gɑːnɪʃ/",
+    "explains": [
+      "v. 装饰；n. 为增加色香味而添加的配菜；装饰品"
+    ]
+  },
+  "garret": {
+    "word": "garret",
+    "phonetic": "/'gærət; -ɪt/",
+    "explains": [
+      "n. 顶楼"
+    ]
+  },
+  "garrison": {
+    "word": "garrison",
+    "phonetic": "/'gærɪs(ə)n/",
+    "explains": [
+      "n. 守备队, 驻地"
+    ]
+  },
+  "garrulity": {
+    "word": "garrulity",
+    "phonetic": "",
+    "explains": [
+      "n. 饶舌, 多嘴"
+    ]
+  },
+  "garrulous": {
+    "word": "garrulous",
+    "phonetic": "/'gær(j)ʊləs/",
+    "explains": [
+      "adj. 唠叨的；喋喋不休的；多嘴的"
+    ]
+  },
   "gas": {
     "word": "gas",
     "phonetic": "/ɡæs/",
     "explains": [
       "n. 气体；汽油",
       "v. 加油；毒气"
+    ]
+  },
+  "gasconade": {
+    "word": "gasconade",
+    "phonetic": "/,gæskə'neɪd/",
+    "explains": [
+      "n. 吹牛"
+    ]
+  },
+  "gaseous": {
+    "word": "gaseous",
+    "phonetic": "/'gæsɪəs; 'geɪsɪəs/",
+    "explains": [
+      "adj. 气体的，气态的"
+    ]
+  },
+  "gash": {
+    "word": "gash",
+    "phonetic": "/gæʃ/",
+    "explains": [
+      "n. 砍得很深的伤口, 很深的裂缝"
+    ]
+  },
+  "gaslit": {
+    "word": "gaslit",
+    "phonetic": "",
+    "explains": [
+      "adj. 以煤气灯照明的"
+    ]
+  },
+  "gasoline": {
+    "word": "gasoline",
+    "phonetic": "/'gæsəliːn/",
+    "explains": [
+      "n. （美）汽油"
+    ]
+  },
+  "gasp": {
+    "word": "gasp",
+    "phonetic": "/gɑːsp/",
+    "explains": [
+      "v. 气喘，喘息"
+    ]
+  },
+  "gaspiller": {
+    "word": "gaspiller",
+    "phonetic": "",
+    "explains": [
+      "v. 浪费"
+    ]
+  },
+  "gastar": {
+    "word": "gastar",
+    "phonetic": "",
+    "explains": [
+      "v. 花费；磨损"
+    ]
+  },
+  "gasto": {
+    "word": "gasto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 开支"
+    ]
+  },
+  "gastric": {
+    "word": "gastric",
+    "phonetic": "/'gæstrɪk/",
+    "explains": [
+      "adj. 胃的"
+    ]
+  },
+  "gastritis": {
+    "word": "gastritis",
+    "phonetic": "/gæ'straɪtɪs/",
+    "explains": [
+      "n. [医]胃炎"
+    ]
+  },
+  "gastronomy": {
+    "word": "gastronomy",
+    "phonetic": "/gæ'strɒnəmɪ/",
+    "explains": [
+      "n. 烹饪法，美食法；享乐主义"
     ]
   },
   "gate": {
@@ -37,11 +667,207 @@
       "n. 大门；入口"
     ]
   },
+  "gateway": {
+    "word": "gateway",
+    "phonetic": "/'geɪtweɪ/",
+    "explains": [
+      "n. 入口；通道"
+    ]
+  },
   "gather": {
     "word": "gather",
     "phonetic": "/ˈɡæðər/",
     "explains": [
       "v. 聚集；收集；推测"
+    ]
+  },
+  "gatherer": {
+    "word": "gatherer",
+    "phonetic": "/'ɡæðərɚ/",
+    "explains": [
+      "n. 收集者, 收集器"
+    ]
+  },
+  "gathering": {
+    "word": "gathering",
+    "phonetic": "/'gæð(ə)rɪŋ/",
+    "explains": [
+      "n. 集会，聚会，聚集"
+    ]
+  },
+  "gato": {
+    "word": "gato",
+    "phonetic": "",
+    "explains": [
+      "n.m. 猫"
+    ]
+  },
+  "gauche": {
+    "word": "gauche",
+    "phonetic": "/gəʊʃ/",
+    "explains": [
+      "adj. 笨拙的, 粗鲁的, 偏转的, 无礼的"
+    ]
+  },
+  "gaucherie": {
+    "word": "gaucherie",
+    "phonetic": "",
+    "explains": [
+      "n. 笨拙；无礼"
+    ]
+  },
+  "gaudy": {
+    "word": "gaudy",
+    "phonetic": "/'gɔːdɪ/",
+    "explains": [
+      "adj. 绚丽的"
+    ]
+  },
+  "gauge": {
+    "word": "gauge",
+    "phonetic": "/geɪdʒ/",
+    "explains": [
+      "v. 量，测量；n. 量器"
+    ]
+  },
+  "gaunt": {
+    "word": "gaunt",
+    "phonetic": "/gɔːnt/",
+    "explains": [
+      "adj. 憔悴的，瘦弱的；荒凉的"
+    ]
+  },
+  "gauze": {
+    "word": "gauze",
+    "phonetic": "/gɔːz/",
+    "explains": [
+      "n. 薄纱, [医]纱布, 薄雾"
+    ]
+  },
+  "gavel": {
+    "word": "gavel",
+    "phonetic": "/'gæv(ə)l/",
+    "explains": [
+      "n. 槌"
+    ]
+  },
+  "gaviota": {
+    "word": "gaviota",
+    "phonetic": "",
+    "explains": [
+      "n.f. 海鸥"
+    ]
+  },
+  "gay": {
+    "word": "gay",
+    "phonetic": "/geɪ/",
+    "explains": [
+      "adj. 快乐的；鲜明的"
+    ]
+  },
+  "gaze": {
+    "word": "gaze",
+    "phonetic": "/ɡeɪz/",
+    "explains": [
+      "v. 凝视"
+    ]
+  },
+  "gazelle": {
+    "word": "gazelle",
+    "phonetic": "/gə'zel/",
+    "explains": [
+      "n. 瞪羚,小羚羊"
+    ]
+  },
+  "gazette": {
+    "word": "gazette",
+    "phonetic": "/gə'zet/",
+    "explains": [
+      "n. 报纸, 政府的公报"
+    ]
+  },
+  "gazetteer": {
+    "word": "gazetteer",
+    "phonetic": "/,ɡæzə'tɪr/",
+    "explains": [
+      "n. 地名辞典, 记者, 公报记者"
+    ]
+  },
+  "gazump": {
+    "word": "gazump",
+    "phonetic": "/gə'zʌmp/",
+    "explains": [
+      "v.  抬价敲诈； 欺诈"
+    ]
+  },
+  "gdpr": {
+    "word": "gdpr",
+    "phonetic": "",
+    "explains": [
+      "通用数据保护条例"
+    ]
+  },
+  "gear": {
+    "word": "gear",
+    "phonetic": "/gɪə/",
+    "explains": [
+      "n. 齿轮"
+    ]
+  },
+  "gearbox": {
+    "word": "gearbox",
+    "phonetic": "/'gɪəbɒks/",
+    "explains": [
+      "n. 变速箱；齿轮箱"
+    ]
+  },
+  "gearing": {
+    "word": "gearing",
+    "phonetic": "/'giəriŋ/",
+    "explains": [
+      "n.  联动比率， 资本与负债比率"
+    ]
+  },
+  "gecko": {
+    "word": "gecko",
+    "phonetic": "/'gekəʊ/",
+    "explains": [
+      "n. [脊椎] 壁虎"
+    ]
+  },
+  "gel": {
+    "word": "gel",
+    "phonetic": "/dʒel/",
+    "explains": [
+      "n. 凝胶体 v成冻胶"
+    ]
+  },
+  "gem": {
+    "word": "gem",
+    "phonetic": "/dʒem/",
+    "explains": [
+      "n. 宝石, 珍宝"
+    ]
+  },
+  "gemmate": {
+    "word": "gemmate",
+    "phonetic": "/'dʒemeɪt/",
+    "explains": [
+      "adj. 有芽的"
+    ]
+  },
+  "gender": {
+    "word": "gender",
+    "phonetic": "/ˈdʒendə/",
+    "explains": [
+      "n. 性别"
+    ]
+  },
+  "gene": {
+    "word": "gene",
+    "phonetic": "/dʒiːn/",
+    "explains": [
+      "n. 基因"
     ]
   },
   "general": {
@@ -52,6 +878,48 @@
       "n. 将军"
     ]
   },
+  "generalise": {
+    "word": "generalise",
+    "phonetic": "/'dʒenərəlaɪz/",
+    "explains": [
+      "v. 概括；归纳；普及"
+    ]
+  },
+  "generalist": {
+    "word": "generalist",
+    "phonetic": "/'dʒen(ə)rəlɪst/",
+    "explains": [
+      "n. 多面手,通才"
+    ]
+  },
+  "generalization": {
+    "word": "generalization",
+    "phonetic": "/,dʒenrələ'zeɪʃən/",
+    "explains": [
+      "n. 一般化；概括，综合"
+    ]
+  },
+  "generalize": {
+    "word": "generalize",
+    "phonetic": "/ˈdʒɛnrəˌlaɪz/",
+    "explains": [
+      "v. 概括出"
+    ]
+  },
+  "generally": {
+    "word": "generally",
+    "phonetic": "/'dʒen(ə)rəlɪ/",
+    "explains": [
+      "adv. 一般地；通常地"
+    ]
+  },
+  "generate": {
+    "word": "generate",
+    "phonetic": "/'dʒenəreɪt/",
+    "explains": [
+      "v. 发生；引起"
+    ]
+  },
   "generation": {
     "word": "generation",
     "phonetic": "/ˌdʒenəˈreɪʃn/",
@@ -59,11 +927,193 @@
       "n. 一代；产生"
     ]
   },
+  "generational": {
+    "word": "generational",
+    "phonetic": "/,dʒɛnə'reʃənl/",
+    "explains": [
+      "adj. 一代的；生育的"
+    ]
+  },
+  "generative": {
+    "word": "generative",
+    "phonetic": "/'dʒen(ə)rətɪv/",
+    "explains": [
+      "adj. 生殖的；生产的；有生殖力的；有生产力的"
+    ]
+  },
   "generator": {
     "word": "generator",
     "phonetic": "/ˈdʒenəreɪtər/",
     "explains": [
       "n. 发电机；创造者"
+    ]
+  },
+  "generic": {
+    "word": "generic",
+    "phonetic": "/dʒɪ'nerɪk/",
+    "explains": [
+      "adj. 种类的，类属的"
+    ]
+  },
+  "generically": {
+    "word": "generically",
+    "phonetic": "",
+    "explains": [
+      "adv. 属类地, 属类上"
+    ]
+  },
+  "generosity": {
+    "word": "generosity",
+    "phonetic": "/dʒenə'rɒsətɪ/",
+    "explains": [
+      "n. 慷慨，宽宏大量"
+    ]
+  },
+  "generoso": {
+    "word": "generoso",
+    "phonetic": "",
+    "explains": [
+      "adj. 慷慨的"
+    ]
+  },
+  "generous": {
+    "word": "generous",
+    "phonetic": "/ˈdʒen(ə)rəs/",
+    "explains": [
+      "adj. 慷慨的"
+    ]
+  },
+  "genesis": {
+    "word": "genesis",
+    "phonetic": "/'dʒenɪsɪs/",
+    "explains": [
+      "n. 起源"
+    ]
+  },
+  "genetic": {
+    "word": "genetic",
+    "phonetic": "/dʒɪˈnetɪk/",
+    "explains": [
+      "adj. 遗传的"
+    ]
+  },
+  "genetically": {
+    "word": "genetically",
+    "phonetic": "/dʒe'netikəli/",
+    "explains": [
+      "adv. 遗传(基因)方面"
+    ]
+  },
+  "genetics": {
+    "word": "genetics",
+    "phonetic": "/dʒɪ'netɪks/",
+    "explains": [
+      "n. 遗传学"
+    ]
+  },
+  "genial": {
+    "word": "genial",
+    "phonetic": "/'dʒiːnɪəl/",
+    "explains": [
+      "adj. 亲切的"
+    ]
+  },
+  "geniality": {
+    "word": "geniality",
+    "phonetic": "",
+    "explains": [
+      "n. 亲切"
+    ]
+  },
+  "genio": {
+    "word": "genio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 天才；脾气"
+    ]
+  },
+  "genius": {
+    "word": "genius",
+    "phonetic": "/'dʒiːnɪəs/",
+    "explains": [
+      "n. 天才，天赋，天资"
+    ]
+  },
+  "genocide": {
+    "word": "genocide",
+    "phonetic": "/'dʒenəsaɪd/",
+    "explains": [
+      "n. 种族灭绝；灭绝整个种族的大屠杀"
+    ]
+  },
+  "genome": {
+    "word": "genome",
+    "phonetic": "/'dʒiːnəʊm/",
+    "explains": [
+      "n. 基因组；染色体组"
+    ]
+  },
+  "genotype": {
+    "word": "genotype",
+    "phonetic": "/'dʒenətaɪp; 'dʒiːn-/",
+    "explains": [
+      "n. 基因型"
+    ]
+  },
+  "genou": {
+    "word": "genou",
+    "phonetic": "",
+    "explains": [
+      "n.m. 膝盖"
+    ]
+  },
+  "genre": {
+    "word": "genre",
+    "phonetic": "/ˈʒɒnrə/",
+    "explains": [
+      "n. 类型, 流派"
+    ]
+  },
+  "gens": {
+    "word": "gens",
+    "phonetic": "",
+    "explains": [
+      "n.m.pl. 人们"
+    ]
+  },
+  "gente": {
+    "word": "gente",
+    "phonetic": "",
+    "explains": [
+      "n.f. 人们"
+    ]
+  },
+  "genteel": {
+    "word": "genteel",
+    "phonetic": "/dʒen'tiːl/",
+    "explains": [
+      "adj. 有教养的，文雅的；上流社会的"
+    ]
+  },
+  "gentil": {
+    "word": "gentil",
+    "phonetic": "",
+    "explains": [
+      "adj. 和蔼的"
+    ]
+  },
+  "gentility": {
+    "word": "gentility",
+    "phonetic": "/dʒen'tɪlɪtɪ/",
+    "explains": [
+      "n. 文雅, 出身高贵, 有教养"
+    ]
+  },
+  "gentillesse": {
+    "word": "gentillesse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 和蔼"
     ]
   },
   "gentle": {
@@ -80,6 +1130,321 @@
       "n. 绅士；有教养的人"
     ]
   },
+  "gentlemanly": {
+    "word": "gentlemanly",
+    "phonetic": "/'dʒent(ə)lmənlɪ/",
+    "explains": [
+      "adj. 绅士派头的"
+    ]
+  },
+  "gently": {
+    "word": "gently",
+    "phonetic": "/'dʒentlɪ/",
+    "explains": [
+      "adv. 有礼貌地；柔和地"
+    ]
+  },
+  "gentry": {
+    "word": "gentry",
+    "phonetic": "/'dʒentrɪ/",
+    "explains": [
+      "n. 人们（多用贬义）；贵族们；（英）上流社会人士"
+    ]
+  },
+  "genu": {
+    "word": "genu",
+    "phonetic": "/'dʒenjuː/",
+    "explains": [
+      "n. 膝"
+    ]
+  },
+  "genuflect": {
+    "word": "genuflect",
+    "phonetic": "/'dʒenjʊflekt/",
+    "explains": [
+      "v. 屈服"
+    ]
+  },
+  "genuine": {
+    "word": "genuine",
+    "phonetic": "/ˈdʒenjʊɪn/",
+    "explains": [
+      "adj. 真正的"
+    ]
+  },
+  "genuinely": {
+    "word": "genuinely",
+    "phonetic": "/'dʒenjuinli/",
+    "explains": [
+      "adv. 真正地,  由衷地"
+    ]
+  },
+  "geochemical": {
+    "word": "geochemical",
+    "phonetic": "",
+    "explains": [
+      "adj. 地球化学的"
+    ]
+  },
+  "geographer": {
+    "word": "geographer",
+    "phonetic": "/dʒɪ'ɒɡrəfə/",
+    "explains": [
+      "n. 地理学者"
+    ]
+  },
+  "geographic": {
+    "word": "geographic",
+    "phonetic": "/,dʒɪə'græfɪk/",
+    "explains": [
+      "adj. 地理(学)的"
+    ]
+  },
+  "geographical": {
+    "word": "geographical",
+    "phonetic": "/dʒɪə'græfɪk(ə)l/",
+    "explains": [
+      "adj. 地理的；地区（性）的"
+    ]
+  },
+  "geography": {
+    "word": "geography",
+    "phonetic": "/dʒɪˈɒɡrəfɪ/",
+    "explains": [
+      "n. 地理"
+    ]
+  },
+  "geologic": {
+    "word": "geologic",
+    "phonetic": "/,dʒɪəʊ'lɒdʒɪk/",
+    "explains": [
+      "adj. 地质的"
+    ]
+  },
+  "geological": {
+    "word": "geological",
+    "phonetic": "/dʒɪə'lɒdʒɪkl/",
+    "explains": [
+      "adj. 地质学的"
+    ]
+  },
+  "geologically": {
+    "word": "geologically",
+    "phonetic": "/,dʒiə'lɔdʒikəli/",
+    "explains": [
+      "adv. 地质学上"
+    ]
+  },
+  "geologist": {
+    "word": "geologist",
+    "phonetic": "/dʒɪ'ɒlədʒɪst/",
+    "explains": [
+      "n. 地质学者"
+    ]
+  },
+  "geology": {
+    "word": "geology",
+    "phonetic": "/dʒɪ'ɒlədʒɪ/",
+    "explains": [
+      "n. 地质学；（某地）地质"
+    ]
+  },
+  "geomagnetic": {
+    "word": "geomagnetic",
+    "phonetic": "/,dʒɪ(ː)əʊmæɡ'netɪk/",
+    "explains": [
+      "adj. 地磁的,地磁气的"
+    ]
+  },
+  "geometric": {
+    "word": "geometric",
+    "phonetic": "/,dʒɪə'metrɪk/",
+    "explains": [
+      "adj. 几何(学)的"
+    ]
+  },
+  "geometrical": {
+    "word": "geometrical",
+    "phonetic": "/dʒɪə'metrɪkl/",
+    "explains": [
+      "adj. 几何学的"
+    ]
+  },
+  "geometrically": {
+    "word": "geometrically",
+    "phonetic": "",
+    "explains": [
+      "adv. 成几何级数(图形)地"
+    ]
+  },
+  "geometry": {
+    "word": "geometry",
+    "phonetic": "/dʒɪˈɒmɪtrɪ/",
+    "explains": [
+      "n. 几何"
+    ]
+  },
+  "geophysical": {
+    "word": "geophysical",
+    "phonetic": "/,dʒio'fɪzɪkl/",
+    "explains": [
+      "adj. 地球物理学的"
+    ]
+  },
+  "geopolitics": {
+    "word": "geopolitics",
+    "phonetic": "/,dʒɪ（ː）əʊ'pɒlɪtɪks/",
+    "explains": [
+      "n. 地缘政治学；地理政治论"
+    ]
+  },
+  "georgia": {
+    "word": "georgia",
+    "phonetic": "/'dʒɔ:dʒjə/",
+    "explains": [
+      "n. (美)乔治亚州"
+    ]
+  },
+  "geothermal": {
+    "word": "geothermal",
+    "phonetic": "/dʒiːə(ʊ)'θɜːm(ə)l/",
+    "explains": [
+      "adj. 地热的"
+    ]
+  },
+  "geothermally": {
+    "word": "geothermally",
+    "phonetic": "",
+    "explains": [
+      "adj. 地热的"
+    ]
+  },
+  "germ": {
+    "word": "germ",
+    "phonetic": "/dʒɜːm/",
+    "explains": [
+      "n. 细菌"
+    ]
+  },
+  "german": {
+    "word": "german",
+    "phonetic": "/ˈdʒɜːmən/",
+    "explains": [
+      "adj. 德国的　n. 德国人"
+    ]
+  },
+  "germane": {
+    "word": "germane",
+    "phonetic": "/dʒɜː'meɪn/",
+    "explains": [
+      "adj. 有密切关系的；贴切的；恰当的；n. (Germane)人名；(英)杰曼"
+    ]
+  },
+  "germanium": {
+    "word": "germanium",
+    "phonetic": "/dʒɜː'meɪnɪəm/",
+    "explains": [
+      "n. 锗"
+    ]
+  },
+  "germany": {
+    "word": "germany",
+    "phonetic": "/ˈdʒɜːmənɪ/",
+    "explains": [
+      "n. 德国"
+    ]
+  },
+  "germen": {
+    "word": "germen",
+    "phonetic": "/'dʒɜːmɪn/",
+    "explains": [
+      "n. 子房, 生殖腺"
+    ]
+  },
+  "germinate": {
+    "word": "germinate",
+    "phonetic": "/'dʒɜːmɪneɪt/",
+    "explains": [
+      "v. 发芽,使生长"
+    ]
+  },
+  "germination": {
+    "word": "germination",
+    "phonetic": "/,dʒɝmə'neʃən/",
+    "explains": [
+      "n. 萌芽, 发生"
+    ]
+  },
+  "gerontology": {
+    "word": "gerontology",
+    "phonetic": "/,dʒerən'tɒlədʒɪ/",
+    "explains": [
+      "n. 老人医学"
+    ]
+  },
+  "gerund": {
+    "word": "gerund",
+    "phonetic": "/'dʒerʌnd/",
+    "explains": [
+      "n. 动名词"
+    ]
+  },
+  "gesso": {
+    "word": "gesso",
+    "phonetic": "/'dʒesəʊ/",
+    "explains": [
+      "n. (雕刻、绘画用的)石膏, 石膏粉"
+    ]
+  },
+  "gestate": {
+    "word": "gestate",
+    "phonetic": "/dʒe'steɪt/",
+    "explains": [
+      "v. 使怀孕"
+    ]
+  },
+  "gestation": {
+    "word": "gestation",
+    "phonetic": "/dʒe'steɪʃ(ə)n/",
+    "explains": [
+      "n. 怀孕, 酝酿, 妊娠"
+    ]
+  },
+  "geste": {
+    "word": "geste",
+    "phonetic": "",
+    "explains": [
+      "n.m. 动作；手势"
+    ]
+  },
+  "gesticulate": {
+    "word": "gesticulate",
+    "phonetic": "/dʒe'stɪkjʊleɪt/",
+    "explains": [
+      "v. 做姿势表达, 用手势谈话"
+    ]
+  },
+  "gesticulation": {
+    "word": "gesticulation",
+    "phonetic": "/dʒə,stɪkjʊ'leɪʃ(ə)n; dʒe,stɪkjʊ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 手势；姿势；示意动作"
+    ]
+  },
+  "gesto": {
+    "word": "gesto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手势；表情"
+    ]
+  },
+  "gesture": {
+    "word": "gesture",
+    "phonetic": "/ˈdʒestʃə/",
+    "explains": [
+      "n. 手势"
+    ]
+  },
   "get": {
     "word": "get",
     "phonetic": "/ɡet/",
@@ -87,11 +1452,46 @@
       "v. 获得；变得；理解"
     ]
   },
+  "getatable": {
+    "word": "getatable",
+    "phonetic": "/'ɡetætəbl/",
+    "explains": [
+      "adj. 可接近的"
+    ]
+  },
+  "geyser": {
+    "word": "geyser",
+    "phonetic": "/'giːzə; 'gaɪ-/",
+    "explains": [
+      "n. 天然热喷泉"
+    ]
+  },
+  "ghastly": {
+    "word": "ghastly",
+    "phonetic": "/gɑːs(t)lɪ/",
+    "explains": [
+      "adj. 苍白的；可怕的；令人不快的"
+    ]
+  },
+  "ghetto": {
+    "word": "ghetto",
+    "phonetic": "/'getəʊ/",
+    "explains": [
+      "n. 犹太人区；贫民区；vt. 使集中居住"
+    ]
+  },
   "ghost": {
     "word": "ghost",
     "phonetic": "/ɡoʊst/",
     "explains": [
       "n. 鬼魂；幽灵"
+    ]
+  },
+  "ghostly": {
+    "word": "ghostly",
+    "phonetic": "/'gəʊs(t)lɪ/",
+    "explains": [
+      "adj. 可怕的"
     ]
   },
   "giant": {
@@ -102,11 +1502,207 @@
       "n. 巨人"
     ]
   },
+  "gibber": {
+    "word": "gibber",
+    "phonetic": "/'dʒɪbə/",
+    "explains": [
+      "v. 喋喋而言；胡扯；n. 三棱石；无法听懂的话"
+    ]
+  },
+  "gibberish": {
+    "word": "gibberish",
+    "phonetic": "/'dʒɪb(ə)rɪʃ/",
+    "explains": [
+      "n. 乱语；快速而不清楚的言语"
+    ]
+  },
+  "gibbon": {
+    "word": "gibbon",
+    "phonetic": "/'gɪb(ə)n/",
+    "explains": [
+      "n. 长臂猿"
+    ]
+  },
+  "gibbous": {
+    "word": "gibbous",
+    "phonetic": "/'gɪbəs/",
+    "explains": [
+      "adj. 突起的"
+    ]
+  },
+  "gibe": {
+    "word": "gibe",
+    "phonetic": "/dʒaib/",
+    "explains": [
+      "v. 嘲笑,讥笑；n. 嘲笑"
+    ]
+  },
+  "gibraltar": {
+    "word": "gibraltar",
+    "phonetic": "/dʒi'brɔ:ltə/",
+    "explains": [
+      "n. 直布罗陀(海峡)"
+    ]
+  },
+  "giddy": {
+    "word": "giddy",
+    "phonetic": "/'gɪdɪ/",
+    "explains": [
+      "adj. 头晕的；眼花的；令人眼花缭乱的；轻浮的；vt. 使晕眩；使眼花缭乱；vi. 眼花；眩晕；n. (Giddy)人名；(英)吉迪"
+    ]
+  },
   "gift": {
     "word": "gift",
     "phonetic": "/ɡɪft/",
     "explains": [
       "n. 礼物；天赋"
+    ]
+  },
+  "gifted": {
+    "word": "gifted",
+    "phonetic": "/'gɪftɪd/",
+    "explains": [
+      "adj. 有天赋的；有才华的；v. 给予（gift的过去分词）"
+    ]
+  },
+  "gigante": {
+    "word": "gigante",
+    "phonetic": "",
+    "explains": [
+      "adj. 巨大的；n.m. 巨人"
+    ]
+  },
+  "gigantic": {
+    "word": "gigantic",
+    "phonetic": "/dʒaɪ'gæntɪk/",
+    "explains": [
+      "adj. 巨大的；巨人似的"
+    ]
+  },
+  "giggle": {
+    "word": "giggle",
+    "phonetic": "/'gɪg(ə)l/",
+    "explains": [
+      "v. 傻笑；咯咯地笑；n. 吃吃的笑"
+    ]
+  },
+  "gigmanity": {
+    "word": "gigmanity",
+    "phonetic": "",
+    "explains": [
+      "n. 市侩阶层, 庸夫俗子"
+    ]
+  },
+  "gild": {
+    "word": "gild",
+    "phonetic": "/gɪld/",
+    "explains": [
+      "v. 镀金"
+    ]
+  },
+  "gilded": {
+    "word": "gilded",
+    "phonetic": "/'ɡɪldɪd/",
+    "explains": [
+      "adj. 镀金的"
+    ]
+  },
+  "gill": {
+    "word": "gill",
+    "phonetic": "/gɪl/",
+    "explains": [
+      "n. 鳃,及耳[液量单位]"
+    ]
+  },
+  "gilt": {
+    "word": "gilt",
+    "phonetic": "/gilt/",
+    "explains": [
+      "n. 金色涂层，镀金材料；adj. 镀金的"
+    ]
+  },
+  "gilt-edged": {
+    "word": "gilt-edged",
+    "phonetic": "/'gilt'edʒd/",
+    "explains": [
+      "adj.  金边的； 最上等的"
+    ]
+  },
+  "gimcrack": {
+    "word": "gimcrack",
+    "phonetic": "/'dʒɪmkræk/",
+    "explains": [
+      "adj. 华而不实的"
+    ]
+  },
+  "gimmick": {
+    "word": "gimmick",
+    "phonetic": "/'gimik/",
+    "explains": [
+      "n.  花招， 诀窍； 吸引人的噱头"
+    ]
+  },
+  "gimnasio": {
+    "word": "gimnasio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 健身房"
+    ]
+  },
+  "gin": {
+    "word": "gin",
+    "phonetic": "/dʒɪn/",
+    "explains": [
+      "n. 杜松烧酒  v开始"
+    ]
+  },
+  "ginger": {
+    "word": "ginger",
+    "phonetic": "/'dʒɪndʒə/",
+    "explains": [
+      "n. 姜，生姜"
+    ]
+  },
+  "gingham": {
+    "word": "gingham",
+    "phonetic": "/'gɪŋəm/",
+    "explains": [
+      "n. 条纹棉布"
+    ]
+  },
+  "gipsy": {
+    "word": "gipsy",
+    "phonetic": "/'dʒipsi/",
+    "explains": [
+      "vi. 流浪；n. 吉普赛人（等于gypsy）；流浪汉"
+    ]
+  },
+  "girafe": {
+    "word": "girafe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 长颈鹿"
+    ]
+  },
+  "giraffe": {
+    "word": "giraffe",
+    "phonetic": "/dʒɪˈrɑːf; dʒəˈrɑːf/",
+    "explains": [
+      "n. 长颈鹿"
+    ]
+  },
+  "girder": {
+    "word": "girder",
+    "phonetic": "/'gɜːdə/",
+    "explains": [
+      "n. 梁"
+    ]
+  },
+  "girdle": {
+    "word": "girdle",
+    "phonetic": "/'gɜːd(ə)l/",
+    "explains": [
+      "n. 带, 腰带, 带状物, 浅锅"
     ]
   },
   "girl": {
@@ -116,6 +1712,20 @@
       "n. 女孩；姑娘"
     ]
   },
+  "girlfriend": {
+    "word": "girlfriend",
+    "phonetic": "/'gɜːlfrend/",
+    "explains": [
+      "n. 女朋友"
+    ]
+  },
+  "gist": {
+    "word": "gist",
+    "phonetic": "/dʒɪst/",
+    "explains": [
+      "n. 要点, 要旨"
+    ]
+  },
   "give": {
     "word": "give",
     "phonetic": "/ɡɪv/",
@@ -123,11 +1733,144 @@
       "v. 给；提供；捐赠"
     ]
   },
+  "given": {
+    "word": "given",
+    "phonetic": "/'gɪv(ə)n/",
+    "explains": [
+      "adj. 假设的；约定的；同意的"
+    ]
+  },
+  "glabrous": {
+    "word": "glabrous",
+    "phonetic": "/'gleɪbrəs/",
+    "explains": [
+      "adj. [生物]无毛的, 光洁的"
+    ]
+  },
+  "glace": {
+    "word": "glace",
+    "phonetic": "",
+    "explains": [
+      "n.f. 冰；冰淇淋；镜子"
+    ]
+  },
+  "glacial": {
+    "word": "glacial",
+    "phonetic": "/'gleɪsɪəl; -ʃ(ə)l/",
+    "explains": [
+      "adj. 冰川(期)的,非常冷的"
+    ]
+  },
+  "glaciate": {
+    "word": "glaciate",
+    "phonetic": "/'ɡleɪsɪeɪt/",
+    "explains": [
+      "v. 使结冰, 以冰(或冰河)覆盖"
+    ]
+  },
+  "glaciation": {
+    "word": "glaciation",
+    "phonetic": "/'glesɪ'eʃən/",
+    "explains": [
+      "n. 冻结成冰,冰河作用"
+    ]
+  },
+  "glacier": {
+    "word": "glacier",
+    "phonetic": "/'glæsɪə; 'gleɪsɪə/",
+    "explains": [
+      "n. 冰河，冰川"
+    ]
+  },
   "glad": {
     "word": "glad",
     "phonetic": "/ɡlæd/",
     "explains": [
       "adj. 高兴的；乐意的"
+    ]
+  },
+  "glade": {
+    "word": "glade",
+    "phonetic": "/gleɪd/",
+    "explains": [
+      "n. 林间空地, 一片表面有草的沼泽低地"
+    ]
+  },
+  "gladiator": {
+    "word": "gladiator",
+    "phonetic": "/'glædɪeɪtə/",
+    "explains": [
+      "n. 古罗马公开表演的格斗者(通常都是奴隶和俘虏), 精于辩论和格斗的人, 职业拳击者"
+    ]
+  },
+  "glamor": {
+    "word": "glamor",
+    "phonetic": "/'ɡlæmə/",
+    "explains": [
+      "n. 魅力；魔法；迷人的美（等于glamour）；vt. 迷惑；使有魅力（等于glamour）"
+    ]
+  },
+  "glamorize": {
+    "word": "glamorize",
+    "phonetic": "/'glæməraɪz/",
+    "explains": [
+      "v. 美化；使有魅力"
+    ]
+  },
+  "glamorous": {
+    "word": "glamorous",
+    "phonetic": "/'glæmərəs/",
+    "explains": [
+      "adj. 富有魅力的, 迷人的"
+    ]
+  },
+  "glamour": {
+    "word": "glamour",
+    "phonetic": "/'ɡlæmə/",
+    "explains": [
+      "n. 魔力，魅力；v. 迷住"
+    ]
+  },
+  "glamourous": {
+    "word": "glamourous",
+    "phonetic": "",
+    "explains": [
+      "adj. 富有魅力的；迷人的"
+    ]
+  },
+  "glance": {
+    "word": "glance",
+    "phonetic": "/glɑːns; glæns/",
+    "explains": [
+      "v. 扫视　n. 一瞥"
+    ]
+  },
+  "gland": {
+    "word": "gland",
+    "phonetic": "/glænd/",
+    "explains": [
+      "n. 腺"
+    ]
+  },
+  "glandular": {
+    "word": "glandular",
+    "phonetic": "/'glændjʊlə; 'glæn(d)ʒʊlə/",
+    "explains": [
+      "adj. 腺的,腺状的"
+    ]
+  },
+  "glare": {
+    "word": "glare",
+    "phonetic": "/gleə/",
+    "explains": [
+      "v. 怒视"
+    ]
+  },
+  "glaring": {
+    "word": "glaring",
+    "phonetic": "/'gleərɪŋ/",
+    "explains": [
+      "adj. 耀眼的"
     ]
   },
   "glass": {
@@ -138,11 +1881,284 @@
       "v. 给…装玻璃"
     ]
   },
+  "glasses": {
+    "word": "glasses",
+    "phonetic": "/ˈɡlɑːsɪz; ˈɡlæsɪz/",
+    "explains": [
+      "n. 眼镜"
+    ]
+  },
+  "glasshouse": {
+    "word": "glasshouse",
+    "phonetic": "/'glɑːshaʊs/",
+    "explains": [
+      "n. 温室；暖房"
+    ]
+  },
+  "glasslike": {
+    "word": "glasslike",
+    "phonetic": "",
+    "explains": [
+      "adj. 玻璃状的"
+    ]
+  },
+  "glassmaker": {
+    "word": "glassmaker",
+    "phonetic": "/'ɡlɑːs,meɪkə/",
+    "explains": [
+      "n. 玻璃工人"
+    ]
+  },
+  "glassmaking": {
+    "word": "glassmaking",
+    "phonetic": "",
+    "explains": [
+      "n. 玻璃(或玻璃器皿等)制造(术)"
+    ]
+  },
+  "glassware": {
+    "word": "glassware",
+    "phonetic": "/'glɑːsweə/",
+    "explains": [
+      "n. 玻璃器具类"
+    ]
+  },
+  "glasswork": {
+    "word": "glasswork",
+    "phonetic": "/'glæs,wərk/",
+    "explains": [
+      "n. 玻璃制品；v. 制成玻璃状的"
+    ]
+  },
+  "glassy": {
+    "word": "glassy",
+    "phonetic": "/'glɑːsɪ/",
+    "explains": [
+      "adj. 象玻璃的"
+    ]
+  },
+  "glaze": {
+    "word": "glaze",
+    "phonetic": "/gleɪz/",
+    "explains": [
+      "v. 变呆滞；v. 上釉；n. 釉(料)"
+    ]
+  },
+  "gleam": {
+    "word": "gleam",
+    "phonetic": "/gliːm/",
+    "explains": [
+      "n. 微光；v. 发微光"
+    ]
+  },
+  "glean": {
+    "word": "glean",
+    "phonetic": "/gliːn/",
+    "explains": [
+      "v. 拾落穗, 收集"
+    ]
+  },
+  "gleaner": {
+    "word": "gleaner",
+    "phonetic": "",
+    "explains": [
+      "n. 拾穗的人"
+    ]
+  },
+  "gleanings": {
+    "word": "gleanings",
+    "phonetic": "/'gliːnɪŋz/",
+    "explains": [
+      "n. 所拾得的落穗搜集到的情报或新闻"
+    ]
+  },
+  "glee": {
+    "word": "glee",
+    "phonetic": "/gliː/",
+    "explains": [
+      "n. 欢乐, 高兴"
+    ]
+  },
+  "gleeful": {
+    "word": "gleeful",
+    "phonetic": "/'gliːfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 愉快的"
+    ]
+  },
+  "glen": {
+    "word": "glen",
+    "phonetic": "/glen/",
+    "explains": [
+      "n. 峡谷, 溪谷"
+    ]
+  },
+  "glial": {
+    "word": "glial",
+    "phonetic": "/'ɡlaɪəl/",
+    "explains": [
+      "adj. 神经胶质的"
+    ]
+  },
+  "glib": {
+    "word": "glib",
+    "phonetic": "/glɪb/",
+    "explains": [
+      "adj. 口齿伶俐的, 油腔滑调的"
+    ]
+  },
+  "glide": {
+    "word": "glide",
+    "phonetic": "/glaɪd/",
+    "explains": [
+      "v. 滑动；n. 滑行"
+    ]
+  },
+  "glider": {
+    "word": "glider",
+    "phonetic": "/'glaɪdə/",
+    "explains": [
+      "n. 滑翔机；滑翔导弹"
+    ]
+  },
+  "glimmer": {
+    "word": "glimmer",
+    "phonetic": "/'glɪmə/",
+    "explains": [
+      "vi&n. (发)微光；少许，微量"
+    ]
+  },
+  "glimpse": {
+    "word": "glimpse",
+    "phonetic": "/glɪm(p)s/",
+    "explains": [
+      "n. 一瞥"
+    ]
+  },
+  "glint": {
+    "word": "glint",
+    "phonetic": "/glɪnt/",
+    "explains": [
+      "n. 闪烁；闪光；v. 闪烁；（光线）反射；闪闪发光"
+    ]
+  },
+  "glissant": {
+    "word": "glissant",
+    "phonetic": "",
+    "explains": [
+      "adj. 滑的"
+    ]
+  },
+  "glisten": {
+    "word": "glisten",
+    "phonetic": "/'glɪs(ə)n/",
+    "explains": [
+      "v. 闪光"
+    ]
+  },
+  "glitter": {
+    "word": "glitter",
+    "phonetic": "/ˈglɪtə/",
+    "explains": [
+      "v. 闪烁"
+    ]
+  },
+  "gloaming": {
+    "word": "gloaming",
+    "phonetic": "/'gləʊmɪŋ/",
+    "explains": [
+      "n. 黄昏；夕幕；v. 日落；天变黑（gloam的现在分词）"
+    ]
+  },
+  "gloat": {
+    "word": "gloat",
+    "phonetic": "/gləʊt/",
+    "explains": [
+      "v. 幸灾乐祸；心满意足地注视；n. 幸灾乐祸；贪婪的盯视；洋洋得意"
+    ]
+  },
   "global": {
     "word": "global",
     "phonetic": "/ˈɡloʊbl/",
     "explains": [
       "adj. 全球的；整体的"
+    ]
+  },
+  "globalization": {
+    "word": "globalization",
+    "phonetic": "/ˌgləubəlai'zeiʃən/",
+    "explains": [
+      "n.  全球化"
+    ]
+  },
+  "globally": {
+    "word": "globally",
+    "phonetic": "",
+    "explains": [
+      "adv. 世界上, 全世界"
+    ]
+  },
+  "globe": {
+    "word": "globe",
+    "phonetic": "/gləʊb/",
+    "explains": [
+      "n. 地球仪"
+    ]
+  },
+  "gloom": {
+    "word": "gloom",
+    "phonetic": "/gluːm/",
+    "explains": [
+      "n. 阴暗, 阴沉"
+    ]
+  },
+  "gloomy": {
+    "word": "gloomy",
+    "phonetic": "/ˈgluːmɪ/",
+    "explains": [
+      "adj. 阴暗的"
+    ]
+  },
+  "glorify": {
+    "word": "glorify",
+    "phonetic": "/'glɔːrɪfaɪ/",
+    "explains": [
+      "v. 赞美；颂扬（上帝）"
+    ]
+  },
+  "glorious": {
+    "word": "glorious",
+    "phonetic": "/'glɔːrɪəs/",
+    "explains": [
+      "adj. 光荣的；壮丽的"
+    ]
+  },
+  "glory": {
+    "word": "glory",
+    "phonetic": "/ˈglɔːrɪ/",
+    "explains": [
+      "n. 荣耀"
+    ]
+  },
+  "gloss": {
+    "word": "gloss",
+    "phonetic": "/glɒs/",
+    "explains": [
+      "n. 光泽，注解"
+    ]
+  },
+  "glossary": {
+    "word": "glossary",
+    "phonetic": "/'glɒs(ə)rɪ/",
+    "explains": [
+      "n. 词汇表；术语汇编"
+    ]
+  },
+  "glossy": {
+    "word": "glossy",
+    "phonetic": "/'glɒsɪ/",
+    "explains": [
+      "adj. 平滑的, 有光泽的"
     ]
   },
   "glove": {
@@ -152,11 +2168,186 @@
       "n. 手套"
     ]
   },
+  "glow": {
+    "word": "glow",
+    "phonetic": "/gləʊ/",
+    "explains": [
+      "n. 白热光；v. 发白热光"
+    ]
+  },
+  "glower": {
+    "word": "glower",
+    "phonetic": "/'glaʊə/",
+    "explains": [
+      "v. 怒目而视"
+    ]
+  },
+  "glucose": {
+    "word": "glucose",
+    "phonetic": "/'gluːkəʊs; -z/",
+    "explains": [
+      "n. 葡萄糖；葡糖（等于dextrose）"
+    ]
+  },
+  "glue": {
+    "word": "glue",
+    "phonetic": "/gluː/",
+    "explains": [
+      "n. 胶，胶水；v. 胶合"
+    ]
+  },
+  "glum": {
+    "word": "glum",
+    "phonetic": "/glʌm/",
+    "explains": [
+      "adj. 阴郁的, 阴沉的"
+    ]
+  },
+  "glut": {
+    "word": "glut",
+    "phonetic": "/glʌt/",
+    "explains": [
+      "v. 充斥"
+    ]
+  },
+  "glutinous": {
+    "word": "glutinous",
+    "phonetic": "/'gluːtɪnəs/",
+    "explains": [
+      "adj. 粘的；粘性的；胶状的"
+    ]
+  },
+  "glutton": {
+    "word": "glutton",
+    "phonetic": "/'glʌt(ə)n/",
+    "explains": [
+      "n. 酷爱…的人；贪吃的人"
+    ]
+  },
+  "gluttonous": {
+    "word": "gluttonous",
+    "phonetic": "/'glʌt(ə)nəs; 'glʌtənəs/",
+    "explains": [
+      "adj. 贪吃的，暴食的；饕餮的"
+    ]
+  },
+  "gluttony": {
+    "word": "gluttony",
+    "phonetic": "/'glʌt(ə)nɪ/",
+    "explains": [
+      "n. 暴食, 贪食"
+    ]
+  },
+  "glycerol": {
+    "word": "glycerol",
+    "phonetic": "/'glɪs(ə)rɒl/",
+    "explains": [
+      "n. [有化] 甘油；丙三醇"
+    ]
+  },
+  "glycogen": {
+    "word": "glycogen",
+    "phonetic": "/'glaɪkədʒ(ə)n/",
+    "explains": [
+      "n. 糖原；动物淀粉"
+    ]
+  },
+  "glycoprotein": {
+    "word": "glycoprotein",
+    "phonetic": "/,glaɪkə(ʊ)'prəʊtiːn/",
+    "explains": [
+      "n. [化]糖蛋白类, 醣蛋白"
+    ]
+  },
+  "glycoside": {
+    "word": "glycoside",
+    "phonetic": "/'glaɪkə(ʊ)saɪd/",
+    "explains": [
+      "n. [化]配醣, 配糖类"
+    ]
+  },
+  "glyptography": {
+    "word": "glyptography",
+    "phonetic": "",
+    "explains": [
+      "n. 宝石雕刻术"
+    ]
+  },
+  "gnarled": {
+    "word": "gnarled",
+    "phonetic": "/nɑːld/",
+    "explains": [
+      "adj. 多瘤的, 粗糙的"
+    ]
+  },
+  "gnash": {
+    "word": "gnash",
+    "phonetic": "/næʃ/",
+    "explains": [
+      "v. 咬牙切齿；n. 咬"
+    ]
+  },
+  "gnat": {
+    "word": "gnat",
+    "phonetic": "/næt/",
+    "explains": [
+      "n. 小昆虫, 小烦扰"
+    ]
+  },
+  "gnaw": {
+    "word": "gnaw",
+    "phonetic": "/nɔː/",
+    "explains": [
+      "v. 啃，咬断，啮"
+    ]
+  },
+  "gnawing": {
+    "word": "gnawing",
+    "phonetic": "/'nɔː(r)ɪŋ/",
+    "explains": [
+      "n. 咬, 苛责, 不断的苦痛"
+    ]
+  },
+  "gneiss": {
+    "word": "gneiss",
+    "phonetic": "/naɪs/",
+    "explains": [
+      "n. [地质]片麻岩"
+    ]
+  },
+  "gnome": {
+    "word": "gnome",
+    "phonetic": "/nəʊm/",
+    "explains": [
+      "n. 格言, 箴言, 土地神, 侏儒"
+    ]
+  },
+  "gnomic": {
+    "word": "gnomic",
+    "phonetic": "/'nəʊmɪk/",
+    "explains": [
+      "adj. 格言的, 含格言的"
+    ]
+  },
   "go": {
     "word": "go",
     "phonetic": "/ɡoʊ/",
     "explains": [
       "v. 去；走；进行"
+    ]
+  },
+  "go-slow": {
+    "word": "go-slow",
+    "phonetic": "/ˌgəu'sləu/",
+    "explains": [
+      "n.  怠工"
+    ]
+  },
+  "goad": {
+    "word": "goad",
+    "phonetic": "/gəʊd/",
+    "explains": [
+      "n. 刺棒，刺痛物；激励；v. 激励，刺激"
     ]
   },
   "goal": {
@@ -166,11 +2357,88 @@
       "n. 目标；进球"
     ]
   },
+  "goalkeeper": {
+    "word": "goalkeeper",
+    "phonetic": "/'gəʊlkiːpə/",
+    "explains": [
+      "n. 守门员"
+    ]
+  },
+  "goat": {
+    "word": "goat",
+    "phonetic": "/ɡəʊt/",
+    "explains": [
+      "n. 山羊"
+    ]
+  },
+  "gobble": {
+    "word": "gobble",
+    "phonetic": "/'gɒb(ə)l/",
+    "explains": [
+      "n. 火鸡叫声"
+    ]
+  },
+  "gobi": {
+    "word": "gobi",
+    "phonetic": "",
+    "explains": [
+      "n. 戈壁"
+    ]
+  },
+  "gobierno": {
+    "word": "gobierno",
+    "phonetic": "",
+    "explains": [
+      "n.m. 政府"
+    ]
+  },
+  "goblet": {
+    "word": "goblet",
+    "phonetic": "/'gɒblɪt/",
+    "explains": [
+      "n. 高脚玻璃杯, 酒杯"
+    ]
+  },
   "god": {
     "word": "god",
     "phonetic": "/ɡɑːd/",
     "explains": [
       "n. 神；上帝"
+    ]
+  },
+  "goddess": {
+    "word": "goddess",
+    "phonetic": "/ˈgɒdɪs/",
+    "explains": [
+      "n. 女神"
+    ]
+  },
+  "godfather": {
+    "word": "godfather",
+    "phonetic": "/'gɒdfɑːθə/",
+    "explains": [
+      "n. 教父；vt. 当…的教父"
+    ]
+  },
+  "godmother": {
+    "word": "godmother",
+    "phonetic": "/'gɒdmʌθə/",
+    "explains": [
+      "n. 教母；vt. 当…的教母；作…的女监护人"
+    ]
+  },
+  "goggle": {
+    "word": "goggle",
+    "phonetic": "/'gɒg(ə)l/",
+    "explains": [
+      "v. 眼珠转动；瞪眼看；n. 护目镜，风镜；眼睛睁视；adj. 瞪眼的，睁眼的"
+    ]
+  },
+  "going": {
+    "word": "going",
+    "phonetic": "/'gəuiŋ/",
+    "explains": [
+      "adj.  现有的； 工作中的， 运转中的"
     ]
   },
   "gold": {
@@ -188,11 +2456,431 @@
       "adj. 金色的；极好的"
     ]
   },
+  "goldfish": {
+    "word": "goldfish",
+    "phonetic": "/'gəʊl(d)fɪʃ/",
+    "explains": [
+      "n. 金鱼"
+    ]
+  },
+  "goldsmith": {
+    "word": "goldsmith",
+    "phonetic": "/'gəʊl(d)smɪθ/",
+    "explains": [
+      "n. 金匠"
+    ]
+  },
+  "golf": {
+    "word": "golf",
+    "phonetic": "/ɡɒlf; ɡɒːlf/",
+    "explains": [
+      "n. 高尔夫"
+    ]
+  },
+  "golfer": {
+    "word": "golfer",
+    "phonetic": "/'gɒlfə/",
+    "explains": [
+      "n. 高尔夫球手"
+    ]
+  },
+  "goluptious": {
+    "word": "goluptious",
+    "phonetic": "/ɡə'lʌpʃəs/",
+    "explains": [
+      "adj. 可口的, 香喷喷的, 好吃的"
+    ]
+  },
+  "goma": {
+    "word": "goma",
+    "phonetic": "",
+    "explains": [
+      "n.f. 橡皮；橡胶"
+    ]
+  },
+  "gomme": {
+    "word": "gomme",
+    "phonetic": "",
+    "explains": [
+      "n.f. 橡皮"
+    ]
+  },
+  "gondwanaland": {
+    "word": "gondwanaland",
+    "phonetic": "/ɡɔnd'wɑ:nəlænd/",
+    "explains": [
+      "n. [地]冈瓦纳大陆"
+    ]
+  },
+  "gong": {
+    "word": "gong",
+    "phonetic": "/gɒŋ/",
+    "explains": [
+      "n. 锣；钟状物；奖章；v. 鸣锣传唤；鸣锣命令驾车者停驶"
+    ]
+  },
+  "gonorrhea": {
+    "word": "gonorrhea",
+    "phonetic": "/,ɡɒnə'rɪə/",
+    "explains": [
+      "n. [性病] 淋病"
+    ]
+  },
   "good": {
     "word": "good",
     "phonetic": "/ɡʊd/",
     "explains": [
       "adj. 好的；优秀的"
+    ]
+  },
+  "goodby": {
+    "word": "goodby",
+    "phonetic": "",
+    "explains": [
+      "int. 再见（等于goodbye）；n. (Goodby)人名；(英)古德拜"
+    ]
+  },
+  "goodbye": {
+    "word": "goodbye",
+    "phonetic": "/ˌɡʊdˈbaɪ/",
+    "explains": [
+      "int. 再见"
+    ]
+  },
+  "goodness": {
+    "word": "goodness",
+    "phonetic": "/'gʊdnɪs/",
+    "explains": [
+      "n. 优良，德性，仁慈"
+    ]
+  },
+  "goods": {
+    "word": "goods",
+    "phonetic": "/ɡʊdz/",
+    "explains": [
+      "n. 货物；商品"
+    ]
+  },
+  "goodwill": {
+    "word": "goodwill",
+    "phonetic": "/gʊd'wɪl/",
+    "explains": [
+      "n. [贸易] 商誉；友好；好意"
+    ]
+  },
+  "goody": {
+    "word": "goody",
+    "phonetic": "/'gʊdɪ/",
+    "explains": [
+      "n. 糖果；身份低微之老妇；吸引人的东西；伪君子；adj. 感伤的；伪善的；假正经的；int. 太好啦"
+    ]
+  },
+  "goose": {
+    "word": "goose",
+    "phonetic": "/guːs/",
+    "explains": [
+      "n. 鹅；雌鹅"
+    ]
+  },
+  "gordo": {
+    "word": "gordo",
+    "phonetic": "",
+    "explains": [
+      "adj. 胖的"
+    ]
+  },
+  "gore": {
+    "word": "gore",
+    "phonetic": "/gɔː/",
+    "explains": [
+      "n. 血块, 淤血, (帆或裙上缝的)三角形布"
+    ]
+  },
+  "gorge": {
+    "word": "gorge",
+    "phonetic": "/gɔːdʒ/",
+    "explains": [
+      "n. 咽喉, 胃, 暴食, 山峡, 峡谷, 障碍物"
+    ]
+  },
+  "gorgeous": {
+    "word": "gorgeous",
+    "phonetic": "/ˈgɔːdʒəs/",
+    "explains": [
+      "adj. 华丽的"
+    ]
+  },
+  "gorgon": {
+    "word": "gorgon",
+    "phonetic": "",
+    "explains": [
+      "n. 丑陋可怕的女人"
+    ]
+  },
+  "gorilla": {
+    "word": "gorilla",
+    "phonetic": "/gə'rɪlə/",
+    "explains": [
+      "n. 大猩猩"
+    ]
+  },
+  "gormandize": {
+    "word": "gormandize",
+    "phonetic": "/'ɡɔːməndaɪz/",
+    "explains": [
+      "v. 狼吞虎咽"
+    ]
+  },
+  "goroutine": {
+    "word": "goroutine",
+    "phonetic": "",
+    "explains": [
+      "协程"
+    ]
+  },
+  "gorro": {
+    "word": "gorro",
+    "phonetic": "",
+    "explains": [
+      "n.m. 帽子"
+    ]
+  },
+  "gory": {
+    "word": "gory",
+    "phonetic": "/'gɔːrɪ/",
+    "explains": [
+      "adj. 血淋淋的, 血污的, 满是血的"
+    ]
+  },
+  "gosh": {
+    "word": "gosh",
+    "phonetic": "/gɒʃ/",
+    "explains": [
+      "int. 天啊；唉；糟了；必定"
+    ]
+  },
+  "gosling": {
+    "word": "gosling",
+    "phonetic": "/'gɒzlɪŋ/",
+    "explains": [
+      "n. 小鹅，年轻无知的人"
+    ]
+  },
+  "gospel": {
+    "word": "gospel",
+    "phonetic": "/'gɒsp(ə)l/",
+    "explains": [
+      "n. 〈圣经·新约〉福音书"
+    ]
+  },
+  "gossamer": {
+    "word": "gossamer",
+    "phonetic": "/'gɒsəmə/",
+    "explains": [
+      "n. 蛛丝，薄纱  a轻而薄的"
+    ]
+  },
+  "gossip": {
+    "word": "gossip",
+    "phonetic": "/'gɒsɪp/",
+    "explains": [
+      "n. 闲谈；碎嘴子；漫笔"
+    ]
+  },
+  "gotchas": {
+    "word": "gotchas",
+    "phonetic": "",
+    "explains": [
+      "坑点"
+    ]
+  },
+  "gothic": {
+    "word": "gothic",
+    "phonetic": "",
+    "explains": [
+      "n. 哥特式；adj. 哥特式的,野蛮的"
+    ]
+  },
+  "gouache": {
+    "word": "gouache",
+    "phonetic": "/guː'ɑːʃ; gwɑːʃ/",
+    "explains": [
+      "n. 树胶水彩画"
+    ]
+  },
+  "gouge": {
+    "word": "gouge",
+    "phonetic": "/gaʊdʒ; guːdʒ/",
+    "explains": [
+      "n. 圆凿, 沟, 以圆凿刨"
+    ]
+  },
+  "gourd": {
+    "word": "gourd",
+    "phonetic": "/gʊəd; gɔːd/",
+    "explains": [
+      "n. 葫芦"
+    ]
+  },
+  "gourmand": {
+    "word": "gourmand",
+    "phonetic": "/'gʊəmənd; 'gɔː-/",
+    "explains": [
+      "n. 美食者"
+    ]
+  },
+  "gourmet": {
+    "word": "gourmet",
+    "phonetic": "/'gʊəmeɪ; 'gɔː-/",
+    "explains": [
+      "n. 美食家"
+    ]
+  },
+  "goutte": {
+    "word": "goutte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 滴"
+    ]
+  },
+  "govern": {
+    "word": "govern",
+    "phonetic": "/ˈgʌv(ə)n/",
+    "explains": [
+      "v. 统治"
+    ]
+  },
+  "governance": {
+    "word": "governance",
+    "phonetic": "/'gʌv(ə)nəns/",
+    "explains": [
+      "n. 统治, 管理"
+    ]
+  },
+  "governess": {
+    "word": "governess",
+    "phonetic": "/'gʌv(ə)nɪs/",
+    "explains": [
+      "n. 女家庭教师"
+    ]
+  },
+  "government": {
+    "word": "government",
+    "phonetic": "/ˈgʌv(ə)nmənt; ˈgʌvəmənt/",
+    "explains": [
+      "n. 政府"
+    ]
+  },
+  "governmental": {
+    "word": "governmental",
+    "phonetic": "/,ɡʌvɚn'mɛntl/",
+    "explains": [
+      "adj. 政府的"
+    ]
+  },
+  "governor": {
+    "word": "governor",
+    "phonetic": "/ˈgʌv(ə)nə/",
+    "explains": [
+      "n. 州长"
+    ]
+  },
+  "gown": {
+    "word": "gown",
+    "phonetic": "/gaʊn/",
+    "explains": [
+      "n. 长袍，长外衣"
+    ]
+  },
+  "gozar": {
+    "word": "gozar",
+    "phonetic": "",
+    "explains": [
+      "v. 享受"
+    ]
+  },
+  "grab": {
+    "word": "grab",
+    "phonetic": "/græb/",
+    "explains": [
+      "v. 攫取，抓取"
+    ]
+  },
+  "grace": {
+    "word": "grace",
+    "phonetic": "/greɪs/",
+    "explains": [
+      "n. 优雅"
+    ]
+  },
+  "graceful": {
+    "word": "graceful",
+    "phonetic": "/'greɪsfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 优美的，优雅的"
+    ]
+  },
+  "gracias": {
+    "word": "gracias",
+    "phonetic": "",
+    "explains": [
+      "interj. 谢谢"
+    ]
+  },
+  "gracile": {
+    "word": "gracile",
+    "phonetic": "/'græsɪl; 'græsaɪl/",
+    "explains": [
+      "adj. 细长的, 纤弱的"
+    ]
+  },
+  "gracioso": {
+    "word": "gracioso",
+    "phonetic": "",
+    "explains": [
+      "adj. 有趣的"
+    ]
+  },
+  "gracious": {
+    "word": "gracious",
+    "phonetic": "/'greɪʃəs/",
+    "explains": [
+      "adj. 有礼貌的；仁慈的"
+    ]
+  },
+  "grade": {
+    "word": "grade",
+    "phonetic": "/ɡreɪd/",
+    "explains": [
+      "n. 年级；分数"
+    ]
+  },
+  "gradient": {
+    "word": "gradient",
+    "phonetic": "/'greɪdɪənt/",
+    "explains": [
+      "n. 斜坡"
+    ]
+  },
+  "gradual": {
+    "word": "gradual",
+    "phonetic": "/ˈgrædʒʊəl/",
+    "explains": [
+      "adj. 逐渐的"
+    ]
+  },
+  "gradually": {
+    "word": "gradually",
+    "phonetic": "/ˈgrædʒʊəlɪ/",
+    "explains": [
+      "adv. 逐渐地"
+    ]
+  },
+  "graduarse": {
+    "word": "graduarse",
+    "phonetic": "",
+    "explains": [
+      "v. 毕业"
     ]
   },
   "graduate": {
@@ -210,11 +2898,235 @@
       "n. 毕业；毕业典礼"
     ]
   },
+  "graffiti": {
+    "word": "graffiti",
+    "phonetic": "/grə'fiːtɪ/",
+    "explains": [
+      "n. 墙上乱写乱画的东西（graffito的复数形式）"
+    ]
+  },
+  "graft": {
+    "word": "graft",
+    "phonetic": "/grɑːft/",
+    "explains": [
+      "n. 嫁接, (接技用的)嫩枝, (皮肤等的)移植, 赎职"
+    ]
+  },
+  "graham": {
+    "word": "graham",
+    "phonetic": "/'greɪəm/",
+    "explains": [
+      "adj. 全麦(面粉)的"
+    ]
+  },
+  "grain": {
+    "word": "grain",
+    "phonetic": "/greɪn/",
+    "explains": [
+      "n. 谷物"
+    ]
+  },
+  "graine": {
+    "word": "graine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 种子"
+    ]
+  },
+  "grainy": {
+    "word": "grainy",
+    "phonetic": "/'greɪnɪ/",
+    "explains": [
+      "adj. 粒状的, 木纹状的"
+    ]
+  },
+  "graisse": {
+    "word": "graisse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 脂肪"
+    ]
+  },
+  "gram": {
+    "word": "gram",
+    "phonetic": "/ɡræm/",
+    "explains": [
+      "n. 克"
+    ]
+  },
+  "grama": {
+    "word": "grama",
+    "phonetic": "/'ɡrɑːmə/",
+    "explains": [
+      "n. 美国西部产的一种牧草"
+    ]
+  },
+  "graminaceous": {
+    "word": "graminaceous",
+    "phonetic": "",
+    "explains": [
+      "adj. 草(似),[植] 禾本的"
+    ]
+  },
+  "grammar": {
+    "word": "grammar",
+    "phonetic": "/ˈɡræmə/",
+    "explains": [
+      "n. 语法"
+    ]
+  },
+  "grammatical": {
+    "word": "grammatical",
+    "phonetic": "/grə'mætɪk(ə)l/",
+    "explains": [
+      "adj. 语法上的"
+    ]
+  },
+  "gramme": {
+    "word": "gramme",
+    "phonetic": "/ɡræm/",
+    "explains": [
+      "n. 克（重量单位）"
+    ]
+  },
+  "gramophone": {
+    "word": "gramophone",
+    "phonetic": "/'græməfəʊn/",
+    "explains": [
+      "n. 留声机"
+    ]
+  },
+  "granary": {
+    "word": "granary",
+    "phonetic": "/'græn(ə)rɪ/",
+    "explains": [
+      "n. 谷仓，粮仓"
+    ]
+  },
   "grand": {
     "word": "grand",
     "phonetic": "/ɡrænd/",
     "explains": [
       "adj. 宏伟的；重大的"
+    ]
+  },
+  "grandchild": {
+    "word": "grandchild",
+    "phonetic": "/ˈɡræn(d)ˌtʃaɪld/",
+    "explains": [
+      "n. 孙辈"
+    ]
+  },
+  "granddaughter": {
+    "word": "granddaughter",
+    "phonetic": "/ˈɡrænˌdɔːtə/",
+    "explains": [
+      "n. 孙女"
+    ]
+  },
+  "grande": {
+    "word": "grande",
+    "phonetic": "/gra:nd/",
+    "explains": [
+      "adj. 重大的，显要的"
+    ]
+  },
+  "grandeur": {
+    "word": "grandeur",
+    "phonetic": "/'grændjə; -(d)ʒə/",
+    "explains": [
+      "n. 庄严, 伟大"
+    ]
+  },
+  "grandfather": {
+    "word": "grandfather",
+    "phonetic": "/ˈɡræn(d)ˌfɑːðə/",
+    "explains": [
+      "n. 祖父"
+    ]
+  },
+  "grandiloquent": {
+    "word": "grandiloquent",
+    "phonetic": "/græn'dɪləkwənt/",
+    "explains": [
+      "adj. 夸张的；夸大的；大言不惭的"
+    ]
+  },
+  "grandiose": {
+    "word": "grandiose",
+    "phonetic": "/'grændɪəʊs/",
+    "explains": [
+      "adj. 宏伟的,堂皇的"
+    ]
+  },
+  "grandma": {
+    "word": "grandma",
+    "phonetic": "/'græn(d)mɑː/",
+    "explains": [
+      "n. 奶奶"
+    ]
+  },
+  "grandmother": {
+    "word": "grandmother",
+    "phonetic": "/ˈɡræn(d)ˌmʌðə/",
+    "explains": [
+      "n. 祖母"
+    ]
+  },
+  "grandparent": {
+    "word": "grandparent",
+    "phonetic": "/ˈɡræn(d)ˌpeərənt/",
+    "explains": [
+      "n. 祖父母"
+    ]
+  },
+  "grandparents": {
+    "word": "grandparents",
+    "phonetic": "/'græn(d)peər(ə)nts/",
+    "explains": [
+      "n. 外祖父母, 祖父母"
+    ]
+  },
+  "grandson": {
+    "word": "grandson",
+    "phonetic": "/ˈɡræn(d)sʌn/",
+    "explains": [
+      "n. 孙子"
+    ]
+  },
+  "grandstand": {
+    "word": "grandstand",
+    "phonetic": "/'græn(d)stænd/",
+    "explains": [
+      "n. 正面看台"
+    ]
+  },
+  "grange": {
+    "word": "grange",
+    "phonetic": "",
+    "explains": [
+      "n.f. 谷仓"
+    ]
+  },
+  "granite": {
+    "word": "granite",
+    "phonetic": "/'grænɪt/",
+    "explains": [
+      "adj. 花岗岩，花岗石"
+    ]
+  },
+  "granny": {
+    "word": "granny",
+    "phonetic": "/ˈɡrænɪ/",
+    "explains": [
+      "n. 奶奶；外婆"
+    ]
+  },
+  "grano": {
+    "word": "grano",
+    "phonetic": "",
+    "explains": [
+      "n.m. 谷物；颗粒"
     ]
   },
   "grant": {
@@ -225,6 +3137,90 @@
       "n. 津贴；拨款"
     ]
   },
+  "granular": {
+    "word": "granular",
+    "phonetic": "/'grænjʊlə/",
+    "explains": [
+      "adj. 由小粒而成的,粒状的"
+    ]
+  },
+  "granulate": {
+    "word": "granulate",
+    "phonetic": "/'grænjʊleɪt/",
+    "explains": [
+      "v. 成为粒状"
+    ]
+  },
+  "granule": {
+    "word": "granule",
+    "phonetic": "/'grænjuːl/",
+    "explains": [
+      "n. 小粒，微粒"
+    ]
+  },
+  "grape": {
+    "word": "grape",
+    "phonetic": "/ɡreɪp/",
+    "explains": [
+      "n. 葡萄"
+    ]
+  },
+  "grapevine": {
+    "word": "grapevine",
+    "phonetic": "/'greɪpvaɪn/",
+    "explains": [
+      "n. 葡萄树；葡萄藤；小道消息；秘密情报网"
+    ]
+  },
+  "graph": {
+    "word": "graph",
+    "phonetic": "/grɑːf; græf/",
+    "explains": [
+      "n. 图表"
+    ]
+  },
+  "graphic": {
+    "word": "graphic",
+    "phonetic": "/'græfɪk/",
+    "explains": [
+      "adj. 形象的；图表的；绘画似的"
+    ]
+  },
+  "graphics": {
+    "word": "graphics",
+    "phonetic": "/'græfɪks/",
+    "explains": [
+      "n. [测] 制图学；制图法；图表算法"
+    ]
+  },
+  "graphite": {
+    "word": "graphite",
+    "phonetic": "/'græfaɪt/",
+    "explains": [
+      "n. 石墨，石墨电极"
+    ]
+  },
+  "grapple": {
+    "word": "grapple",
+    "phonetic": "/'græp(ə)l/",
+    "explains": [
+      "v. 格斗,抓住；n. 格斗"
+    ]
+  },
+  "grasp": {
+    "word": "grasp",
+    "phonetic": "/grɑːsp; græsp/",
+    "explains": [
+      "v. 抓住；理解"
+    ]
+  },
+  "grasping": {
+    "word": "grasping",
+    "phonetic": "/'grɑːspɪŋ/",
+    "explains": [
+      "adj. 抓的, 贪婪的, 握的"
+    ]
+  },
   "grass": {
     "word": "grass",
     "phonetic": "/ɡræs/",
@@ -232,11 +3228,242 @@
       "n. 草；草地"
     ]
   },
+  "grasshopper": {
+    "word": "grasshopper",
+    "phonetic": "/'grɑːshɒpə/",
+    "explains": [
+      "n. 蚱蜢，蝗虫，蚂蚱"
+    ]
+  },
+  "grassland": {
+    "word": "grassland",
+    "phonetic": "/'grɑːslænd/",
+    "explains": [
+      "n. 牧草地, 草原"
+    ]
+  },
+  "grassroots": {
+    "word": "grassroots",
+    "phonetic": "/'gra:s,ru:ts/",
+    "explains": [
+      "adj. 基层的；草根的；乡村的；n. 草根；基础"
+    ]
+  },
+  "grassy": {
+    "word": "grassy",
+    "phonetic": "/'grɑːsɪ/",
+    "explains": [
+      "adj. 草多的"
+    ]
+  },
+  "grate": {
+    "word": "grate",
+    "phonetic": "/greɪt/",
+    "explains": [
+      "n. 火炉，炉格；v. 擦碎，磨碎；擦响"
+    ]
+  },
+  "grateful": {
+    "word": "grateful",
+    "phonetic": "/ˈgreɪtfʊl; ˈgreɪtf(ə)l/",
+    "explains": [
+      "adj. 感激的"
+    ]
+  },
+  "gratification": {
+    "word": "gratification",
+    "phonetic": "/ɡrætɪfɪ'keɪʃn/",
+    "explains": [
+      "n. 满意"
+    ]
+  },
+  "gratify": {
+    "word": "gratify",
+    "phonetic": "/'grætɪfaɪ/",
+    "explains": [
+      "v. 使满足"
+    ]
+  },
+  "grating": {
+    "word": "grating",
+    "phonetic": "/'greɪtɪŋ/",
+    "explains": [
+      "n. 门窗的栅栏, [物理]光栅, 摩擦, 摩擦声"
+    ]
+  },
+  "gratis": {
+    "word": "gratis",
+    "phonetic": "/'grætɪs; 'grɑː-; 'greɪ-/",
+    "explains": [
+      "adv. 免费, 白送"
+    ]
+  },
+  "gratitude": {
+    "word": "gratitude",
+    "phonetic": "/'grætɪtjuːd/",
+    "explains": [
+      "n. 感激，感谢，感恩"
+    ]
+  },
+  "gratte-ciel": {
+    "word": "gratte-ciel",
+    "phonetic": "",
+    "explains": [
+      "n.m. 摩天大楼"
+    ]
+  },
+  "gratuitous": {
+    "word": "gratuitous",
+    "phonetic": "/grə'tjuːɪtəs/",
+    "explains": [
+      "adj. 无缘无故的；免费的"
+    ]
+  },
+  "gratuity": {
+    "word": "gratuity",
+    "phonetic": "/grə'tjuːɪtɪ/",
+    "explains": [
+      "n. 退职金；小账，小费"
+    ]
+  },
+  "gravamen": {
+    "word": "gravamen",
+    "phonetic": "/grə'veɪmen/",
+    "explains": [
+      "n. 不平, 苦诉, [律]控诉要旨"
+    ]
+  },
+  "grave": {
+    "word": "grave",
+    "phonetic": "/greɪv/",
+    "explains": [
+      "n. 坟墓；adj. 严重的"
+    ]
+  },
+  "gravedad": {
+    "word": "gravedad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 重力；严重性"
+    ]
+  },
+  "gravel": {
+    "word": "gravel",
+    "phonetic": "/'græv(ə)l/",
+    "explains": [
+      "n. 砂跞；砂砾层；结石"
+    ]
+  },
+  "graveyard": {
+    "word": "graveyard",
+    "phonetic": "/'greɪvjɑːd/",
+    "explains": [
+      "n. 墓地"
+    ]
+  },
+  "gravitas": {
+    "word": "gravitas",
+    "phonetic": "/'grævɪtæs; -tɑːs/",
+    "explains": [
+      "n. 庄严(举止)"
+    ]
+  },
+  "gravitate": {
+    "word": "gravitate",
+    "phonetic": "/'græviteit/",
+    "explains": [
+      "vi.  下跌， 下降； 受…吸引"
+    ]
+  },
+  "gravitation": {
+    "word": "gravitation",
+    "phonetic": "/grævɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 地心吸力, 引力作用"
+    ]
+  },
+  "gravitational": {
+    "word": "gravitational",
+    "phonetic": "/,ɡrævɪ'teɪʃənəl/",
+    "explains": [
+      "adj. 重力的, 引力作用的"
+    ]
+  },
+  "gravity": {
+    "word": "gravity",
+    "phonetic": "/ˈgrævɪtɪ/",
+    "explains": [
+      "n. 重力"
+    ]
+  },
+  "gray": {
+    "word": "gray",
+    "phonetic": "/greɪ/",
+    "explains": [
+      "adj. 灰色的"
+    ]
+  },
+  "graze": {
+    "word": "graze",
+    "phonetic": "/greɪz/",
+    "explains": [
+      "v. 喂草；放牧（牲畜）"
+    ]
+  },
+  "grease": {
+    "word": "grease",
+    "phonetic": "/griːs/",
+    "explains": [
+      "n. 动物脂，脂肪"
+    ]
+  },
   "great": {
     "word": "great",
     "phonetic": "/ɡreɪt/",
     "explains": [
       "adj. 伟大的；极好的"
+    ]
+  },
+  "greatly": {
+    "word": "greatly",
+    "phonetic": "/'greɪtlɪ/",
+    "explains": [
+      "adv. 大大地，非常"
+    ]
+  },
+  "grecian": {
+    "word": "grecian",
+    "phonetic": "/'ɡri:ʃən/",
+    "explains": [
+      "adj. 希腊的, 希腊式的 n希腊学家"
+    ]
+  },
+  "greece": {
+    "word": "greece",
+    "phonetic": "/ɡriːs/",
+    "explains": [
+      "n. 希腊"
+    ]
+  },
+  "greed": {
+    "word": "greed",
+    "phonetic": "/griːd/",
+    "explains": [
+      "n. 贪心，贪婪"
+    ]
+  },
+  "greedy": {
+    "word": "greedy",
+    "phonetic": "/ˈgriːdɪ/",
+    "explains": [
+      "adj. 贪婪的"
+    ]
+  },
+  "greek": {
+    "word": "greek",
+    "phonetic": "/griːk/",
+    "explains": [
+      "adj. 希腊的；n. 希腊人"
     ]
   },
   "green": {
@@ -247,11 +3474,431 @@
       "n. 绿色"
     ]
   },
+  "greener": {
+    "word": "greener",
+    "phonetic": "/'ɡriːnə/",
+    "explains": [
+      "n. 生手"
+    ]
+  },
+  "greengrocer": {
+    "word": "greengrocer",
+    "phonetic": "/'griːngrəʊsə/",
+    "explains": [
+      "n. 蔬菜水果商；菜贩"
+    ]
+  },
+  "greenhorn": {
+    "word": "greenhorn",
+    "phonetic": "/'griːnhɔːn/",
+    "explains": [
+      "n. 生手, 缺乏经验的人, 不懂世故的人"
+    ]
+  },
+  "greenhouse": {
+    "word": "greenhouse",
+    "phonetic": "/'griːnhaʊs/",
+    "explains": [
+      "n. 温室，玻璃暖房"
+    ]
+  },
+  "greenish": {
+    "word": "greenish",
+    "phonetic": "/'ɡrinɪʃ/",
+    "explains": [
+      "adj. 呈绿色的"
+    ]
+  },
+  "greet": {
+    "word": "greet",
+    "phonetic": "/griːt/",
+    "explains": [
+      "v. 问候，招呼；反应"
+    ]
+  },
+  "greeting": {
+    "word": "greeting",
+    "phonetic": "/ˈgriːtɪŋ/",
+    "explains": [
+      "n. 问候"
+    ]
+  },
+  "gregarious": {
+    "word": "gregarious",
+    "phonetic": "/grɪ'geərɪəs/",
+    "explains": [
+      "adj. 社交的,群居的"
+    ]
+  },
+  "grenade": {
+    "word": "grenade",
+    "phonetic": "/grə'neɪd/",
+    "explains": [
+      "n. 手榴弹；灭火弹；vt. 扔手榴弹；用催泪弹攻击"
+    ]
+  },
+  "grey": {
+    "word": "grey",
+    "phonetic": "/ɡreɪ/",
+    "explains": [
+      "adj. 灰色的"
+    ]
+  },
+  "greyhound": {
+    "word": "greyhound",
+    "phonetic": "",
+    "explains": [
+      "n. 灰狗（一种猎犬）；快速船"
+    ]
+  },
+  "grid": {
+    "word": "grid",
+    "phonetic": "/grɪd/",
+    "explains": [
+      "n. 格子, 栅格"
+    ]
+  },
+  "griddle": {
+    "word": "griddle",
+    "phonetic": "/'grɪd(ə)l/",
+    "explains": [
+      "n. 煎饼用浅锅, 矿筛"
+    ]
+  },
+  "gridiron": {
+    "word": "gridiron",
+    "phonetic": "/'grɪdaɪən/",
+    "explains": [
+      "n. 烤架, 格状物"
+    ]
+  },
+  "grief": {
+    "word": "grief",
+    "phonetic": "/griːf/",
+    "explains": [
+      "n. 悲伤"
+    ]
+  },
+  "griego": {
+    "word": "griego",
+    "phonetic": "",
+    "explains": [
+      "adj. 希腊的；n.m. 希腊人"
+    ]
+  },
+  "grievance": {
+    "word": "grievance",
+    "phonetic": "/'griːvəns/",
+    "explains": [
+      "n.  牢骚"
+    ]
+  },
+  "grieve": {
+    "word": "grieve",
+    "phonetic": "/griːv/",
+    "explains": [
+      "v. 悲痛；使悲痛"
+    ]
+  },
+  "grievous": {
+    "word": "grievous",
+    "phonetic": "/'griːvəs/",
+    "explains": [
+      "adj. 痛苦的；剧烈的"
+    ]
+  },
+  "grig": {
+    "word": "grig",
+    "phonetic": "/grɪg/",
+    "explains": [
+      "n. 爽朗的人, 轻松愉快的人"
+    ]
+  },
+  "grill": {
+    "word": "grill",
+    "phonetic": "/grɪl/",
+    "explains": [
+      "v. 烤"
+    ]
+  },
+  "grille": {
+    "word": "grille",
+    "phonetic": "/grɪl/",
+    "explains": [
+      "n. 格子, 格子窗, 铁格子"
+    ]
+  },
+  "grim": {
+    "word": "grim",
+    "phonetic": "/grɪm/",
+    "explains": [
+      "adj. 严厉的"
+    ]
+  },
+  "grimace": {
+    "word": "grimace",
+    "phonetic": "/'grɪməs; grɪ'meɪs/",
+    "explains": [
+      "v. 扮鬼脸；作怪相；作苦相；n. 鬼脸；怪相；痛苦的表情"
+    ]
+  },
+  "grime": {
+    "word": "grime",
+    "phonetic": "/graɪm/",
+    "explains": [
+      "n. 尘垢；污点；煤尘；v. 使污秽；使…弄脏"
+    ]
+  },
+  "grimly": {
+    "word": "grimly",
+    "phonetic": "/'grɪmlɪ/",
+    "explains": [
+      "adv. 严格地,冷酷地"
+    ]
+  },
+  "grimper": {
+    "word": "grimper",
+    "phonetic": "",
+    "explains": [
+      "v. 攀登"
+    ]
+  },
+  "grimy": {
+    "word": "grimy",
+    "phonetic": "/'graɪmɪ/",
+    "explains": [
+      "adj. 肮脏的，污秽的"
+    ]
+  },
+  "grin": {
+    "word": "grin",
+    "phonetic": "/grɪn/",
+    "explains": [
+      "v. 露齿笑"
+    ]
+  },
+  "grind": {
+    "word": "grind",
+    "phonetic": "/graɪnd/",
+    "explains": [
+      "v. 磨（碎）；磨利"
+    ]
+  },
+  "grinder": {
+    "word": "grinder",
+    "phonetic": "/'graɪndə/",
+    "explains": [
+      "n. 磨工, 研磨者"
+    ]
+  },
+  "grindstone": {
+    "word": "grindstone",
+    "phonetic": "/'graɪn(d)stəʊn/",
+    "explains": [
+      "n. 旋转磨石, 旋转研磨机"
+    ]
+  },
+  "grip": {
+    "word": "grip",
+    "phonetic": "/grɪp/",
+    "explains": [
+      "v. 握紧，抓牢；n. 紧握"
+    ]
+  },
+  "gripe": {
+    "word": "gripe",
+    "phonetic": "/graɪp/",
+    "explains": [
+      "n. 紧握, 柄；v. 握紧"
+    ]
+  },
+  "gripping": {
+    "word": "gripping",
+    "phonetic": "",
+    "explains": [
+      "adj. 引起人注意的；吸引人的"
+    ]
+  },
+  "gris": {
+    "word": "gris",
+    "phonetic": "",
+    "explains": [
+      "adj. 灰色的"
+    ]
+  },
+  "grisly": {
+    "word": "grisly",
+    "phonetic": "/'grɪzlɪ/",
+    "explains": [
+      "adj. 可怕的；厉害的；严重的"
+    ]
+  },
+  "gristle": {
+    "word": "gristle",
+    "phonetic": "/'grɪs(ə)l/",
+    "explains": [
+      "n. 软骨"
+    ]
+  },
+  "grit": {
+    "word": "grit",
+    "phonetic": "/grɪt/",
+    "explains": [
+      "n. 粗砂 v研磨"
+    ]
+  },
+  "gritar": {
+    "word": "gritar",
+    "phonetic": "",
+    "explains": [
+      "v. 喊叫"
+    ]
+  },
+  "grizzly": {
+    "word": "grizzly",
+    "phonetic": "/'grɪzlɪ/",
+    "explains": [
+      "adj. 灰(白)色的"
+    ]
+  },
+  "groa": {
+    "word": "groa",
+    "phonetic": "",
+    "explains": [
+      "n v&n. 呻吟，呻吟着表示;承受重压发出的声音"
+    ]
+  },
+  "groan": {
+    "word": "groan",
+    "phonetic": "/grəʊn/",
+    "explains": [
+      "v. 哼，呻吟；n. 呻吟"
+    ]
+  },
+  "grocer": {
+    "word": "grocer",
+    "phonetic": "/'grəʊsə/",
+    "explains": [
+      "n. 食品商；杂货商"
+    ]
+  },
+  "grocery": {
+    "word": "grocery",
+    "phonetic": "/ˈgrəʊs(ə)rɪ/",
+    "explains": [
+      "n. 食品杂货店"
+    ]
+  },
+  "groggy": {
+    "word": "groggy",
+    "phonetic": "/'grɒgɪ/",
+    "explains": [
+      "adj. 酒醉的, 东歪西倒的, 摇摇晃晃的, 头昏眼花的"
+    ]
+  },
+  "groom": {
+    "word": "groom",
+    "phonetic": "/gruːm/",
+    "explains": [
+      "v. 刷洗 n新郎；马夫"
+    ]
+  },
+  "groove": {
+    "word": "groove",
+    "phonetic": "/gruːv/",
+    "explains": [
+      "n. 槽"
+    ]
+  },
+  "grope": {
+    "word": "grope",
+    "phonetic": "/grəʊp/",
+    "explains": [
+      "v. （暗中）摸索，探索"
+    ]
+  },
+  "gropingly": {
+    "word": "gropingly",
+    "phonetic": "",
+    "explains": [
+      "adv. 摸索着, 暗中摸索地"
+    ]
+  },
+  "gros": {
+    "word": "gros",
+    "phonetic": "",
+    "explains": [
+      "adj. 胖的；粗的"
+    ]
+  },
+  "grosero": {
+    "word": "grosero",
+    "phonetic": "",
+    "explains": [
+      "adj. 粗鲁的"
+    ]
+  },
+  "gross": {
+    "word": "gross",
+    "phonetic": "/grəʊs/",
+    "explains": [
+      "adj. 总的；严重的"
+    ]
+  },
+  "grotesque": {
+    "word": "grotesque",
+    "phonetic": "/grə(ʊ)'tesk/",
+    "explains": [
+      "adj. 奇形怪状的, 奇异"
+    ]
+  },
+  "grotte": {
+    "word": "grotte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 洞穴"
+    ]
+  },
+  "grotto": {
+    "word": "grotto",
+    "phonetic": "/'grɒtəʊ/",
+    "explains": [
+      "n. 洞穴,人工洞室"
+    ]
+  },
+  "grouch": {
+    "word": "grouch",
+    "phonetic": "/graʊtʃ/",
+    "explains": [
+      "n. 不高兴的人, 心怀不满"
+    ]
+  },
   "ground": {
     "word": "ground",
     "phonetic": "/ɡraʊnd/",
     "explains": [
       "n. 地面；土地；理由"
+    ]
+  },
+  "grounding": {
+    "word": "grounding",
+    "phonetic": "/'graʊndɪŋ/",
+    "explains": [
+      "n. 基础训练, 染色的底色, [电]接地"
+    ]
+  },
+  "groundwater": {
+    "word": "groundwater",
+    "phonetic": "/'graʊnd'wɔtɚ/",
+    "explains": [
+      "n. 地下水"
+    ]
+  },
+  "groundwork": {
+    "word": "groundwork",
+    "phonetic": "/'graʊn(d)wɜːk/",
+    "explains": [
+      "n. 基础；地基，根基"
     ]
   },
   "group": {
@@ -262,6 +3909,48 @@
       "v. 分组"
     ]
   },
+  "groupe": {
+    "word": "groupe",
+    "phonetic": "",
+    "explains": [
+      "n.m. 小组；乐队"
+    ]
+  },
+  "grouped": {
+    "word": "grouped",
+    "phonetic": "",
+    "explains": [
+      "已聚合的（相似报错归组）"
+    ]
+  },
+  "grouse": {
+    "word": "grouse",
+    "phonetic": "/graʊs/",
+    "explains": [
+      "n. 松鸡, 牢骚"
+    ]
+  },
+  "grove": {
+    "word": "grove",
+    "phonetic": "/grəʊv/",
+    "explains": [
+      "n. 林子，小树林，园林"
+    ]
+  },
+  "grovel": {
+    "word": "grovel",
+    "phonetic": "/'ɡrɔvəl/",
+    "explains": [
+      "v. 趴, 匍匐, 卑躬屈膝, 五体投地的"
+    ]
+  },
+  "groveler": {
+    "word": "groveler",
+    "phonetic": "",
+    "explains": [
+      "n. 五体投地的人, 卑恭屈节的人"
+    ]
+  },
   "grow": {
     "word": "grow",
     "phonetic": "/ɡroʊ/",
@@ -269,11 +3958,606 @@
       "v. 生长；增长；种植"
     ]
   },
+  "grower": {
+    "word": "grower",
+    "phonetic": "/'grəʊə/",
+    "explains": [
+      "n. 种植者，栽培者"
+    ]
+  },
+  "growl": {
+    "word": "growl",
+    "phonetic": "/graʊl/",
+    "explains": [
+      "v. （狗等）嗥叫；咆哮"
+    ]
+  },
   "growth": {
     "word": "growth",
     "phonetic": "/ɡroʊθ/",
     "explains": [
       "n. 生长；发展；增长"
+    ]
+  },
+  "grudge": {
+    "word": "grudge",
+    "phonetic": "/grʌdʒ/",
+    "explains": [
+      "v. 吝惜，不愿给；n. 恶意，怨恨，忌妒"
+    ]
+  },
+  "grudging": {
+    "word": "grudging",
+    "phonetic": "/'grʌdʒɪŋ/",
+    "explains": [
+      "adj. 不愿的, 勉强的, 吝啬的"
+    ]
+  },
+  "grueling": {
+    "word": "grueling",
+    "phonetic": "/'ɡruəliŋ/",
+    "explains": [
+      "n. 重罚, 严惩"
+    ]
+  },
+  "gruesome": {
+    "word": "gruesome",
+    "phonetic": "/'gruːs(ə)m/",
+    "explains": [
+      "adj. 可怕的；阴森的"
+    ]
+  },
+  "gruff": {
+    "word": "gruff",
+    "phonetic": "/grʌf/",
+    "explains": [
+      "adj. 粗暴的；粗哑的；脾气坏的；vt. 粗鲁地说；生硬地说；vi. 粗鲁地说；生硬地说话；n. 格拉夫（英国珠宝品牌）"
+    ]
+  },
+  "grumble": {
+    "word": "grumble",
+    "phonetic": "/'grʌmb(ə)l/",
+    "explains": [
+      "v. 抱怨，发牢骚"
+    ]
+  },
+  "grumpy": {
+    "word": "grumpy",
+    "phonetic": "/'grʌmpɪ/",
+    "explains": [
+      "adj. 脾气坏的, 性情乖戾的, 脾气暴躁的"
+    ]
+  },
+  "grunt": {
+    "word": "grunt",
+    "phonetic": "/grʌnt/",
+    "explains": [
+      "v. 作呼噜声；咕哝"
+    ]
+  },
+  "gruntling": {
+    "word": "gruntling",
+    "phonetic": "",
+    "explains": [
+      "n. 小猪"
+    ]
+  },
+  "grupo": {
+    "word": "grupo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 小组"
+    ]
+  },
+  "guante": {
+    "word": "guante",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手套"
+    ]
+  },
+  "guapo": {
+    "word": "guapo",
+    "phonetic": "",
+    "explains": [
+      "adj. 英俊的"
+    ]
+  },
+  "guarantee": {
+    "word": "guarantee",
+    "phonetic": "/ˌgær(ə)nˈtiː; ˌgærənˈtiː/",
+    "explains": [
+      "v. 保证　n. 保证"
+    ]
+  },
+  "guarantor": {
+    "word": "guarantor",
+    "phonetic": "/,gær(ə)n'tɔː/",
+    "explains": [
+      "n. [律]保证人"
+    ]
+  },
+  "guard": {
+    "word": "guard",
+    "phonetic": "/ɡɑːd/",
+    "explains": [
+      "n. 卫兵　v. 守卫"
+    ]
+  },
+  "guardar": {
+    "word": "guardar",
+    "phonetic": "",
+    "explains": [
+      "v. 保存；存放"
+    ]
+  },
+  "guarded": {
+    "word": "guarded",
+    "phonetic": "/'gɑːdɪd/",
+    "explains": [
+      "adj. 被防护者的, 被看守着的, 被监视着的, 警戒着的"
+    ]
+  },
+  "guardian": {
+    "word": "guardian",
+    "phonetic": "/'gɑːdɪən/",
+    "explains": [
+      "n. 监护人; 保护人"
+    ]
+  },
+  "gudgeon": {
+    "word": "gudgeon",
+    "phonetic": "/'gʌdʒ(ə)n/",
+    "explains": [
+      "n. 易骗的人"
+    ]
+  },
+  "guerra": {
+    "word": "guerra",
+    "phonetic": "",
+    "explains": [
+      "n.f. 战争"
+    ]
+  },
+  "guerre": {
+    "word": "guerre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 战争"
+    ]
+  },
+  "guerrilla": {
+    "word": "guerrilla",
+    "phonetic": "/gə'rɪlə/",
+    "explains": [
+      "n. 游击战；游击队"
+    ]
+  },
+  "guess": {
+    "word": "guess",
+    "phonetic": "/ɡes/",
+    "explains": [
+      "v. 猜"
+    ]
+  },
+  "guest": {
+    "word": "guest",
+    "phonetic": "/ɡest/",
+    "explains": [
+      "n. 客人"
+    ]
+  },
+  "guffaw": {
+    "word": "guffaw",
+    "phonetic": "/gə'fɔː/",
+    "explains": [
+      "v. 哄笑, 狂笑"
+    ]
+  },
+  "guichet": {
+    "word": "guichet",
+    "phonetic": "",
+    "explains": [
+      "n.m. 售票窗口"
+    ]
+  },
+  "guidance": {
+    "word": "guidance",
+    "phonetic": "/ˈgaɪd(ə)ns/",
+    "explains": [
+      "n. 指导"
+    ]
+  },
+  "guide": {
+    "word": "guide",
+    "phonetic": "/ɡaɪd/",
+    "explains": [
+      "n. 向导　v. 引导"
+    ]
+  },
+  "guideline": {
+    "word": "guideline",
+    "phonetic": "/ˈgaɪdlaɪn/",
+    "explains": [
+      "n. 指南"
+    ]
+  },
+  "guidon": {
+    "word": "guidon",
+    "phonetic": "",
+    "explains": [
+      "n.m. 车把手"
+    ]
+  },
+  "guild": {
+    "word": "guild",
+    "phonetic": "/gɪld/",
+    "explains": [
+      "n. 行会,协会"
+    ]
+  },
+  "guilde": {
+    "word": "guilde",
+    "phonetic": "",
+    "explains": [
+      "n. 行会, 协会"
+    ]
+  },
+  "guile": {
+    "word": "guile",
+    "phonetic": "/gaɪl/",
+    "explains": [
+      "n. 狡猾；诡计；欺诈"
+    ]
+  },
+  "guileless": {
+    "word": "guileless",
+    "phonetic": "/'gaɪllɪs/",
+    "explains": [
+      "adj. 诚实的"
+    ]
+  },
+  "guillotine": {
+    "word": "guillotine",
+    "phonetic": "/'gɪlətiːn; ,gɪlə'tiːn/",
+    "explains": [
+      "n. 断头台, (切纸的)闸刀"
+    ]
+  },
+  "guilt": {
+    "word": "guilt",
+    "phonetic": "/gɪlt/",
+    "explains": [
+      "n. 内疚；有罪，犯罪"
+    ]
+  },
+  "guilty": {
+    "word": "guilty",
+    "phonetic": "/ˈgɪltɪ/",
+    "explains": [
+      "adj. 有罪的"
+    ]
+  },
+  "guinea": {
+    "word": "guinea",
+    "phonetic": "/'gɪnɪ/",
+    "explains": [
+      "n. 几内亚"
+    ]
+  },
+  "guise": {
+    "word": "guise",
+    "phonetic": "/gaɪz/",
+    "explains": [
+      "n. 伪装；装束；外观；vt. 使化装；vi. 伪装"
+    ]
+  },
+  "guitar": {
+    "word": "guitar",
+    "phonetic": "",
+    "explains": [
+      "n. 吉他，六弦琴"
+    ]
+  },
+  "guitarra": {
+    "word": "guitarra",
+    "phonetic": "",
+    "explains": [
+      "n.f. 吉他"
+    ]
+  },
+  "gulch": {
+    "word": "gulch",
+    "phonetic": "/gʌltʃ/",
+    "explains": [
+      "n. <美>干谷峡谷, 冲沟(尤指产金地的急流峡谷)"
+    ]
+  },
+  "gulf": {
+    "word": "gulf",
+    "phonetic": "/gʌlf/",
+    "explains": [
+      "n. 海湾"
+    ]
+  },
+  "gull": {
+    "word": "gull",
+    "phonetic": "/gʌl/",
+    "explains": [
+      "n. 海鸥；v. 欺骗"
+    ]
+  },
+  "gullible": {
+    "word": "gullible",
+    "phonetic": "/'gʌlɪb(ə)l/",
+    "explains": [
+      "adj. 易受骗的；轻信的"
+    ]
+  },
+  "gully": {
+    "word": "gully",
+    "phonetic": "/'gʌlɪ/",
+    "explains": [
+      "n. 小峡谷, 排水沟"
+    ]
+  },
+  "gulp": {
+    "word": "gulp",
+    "phonetic": "/gʌlp/",
+    "explains": [
+      "v. 吞, 一口吞(下), 忍住, 抑制"
+    ]
+  },
+  "gum": {
+    "word": "gum",
+    "phonetic": "/gʌm/",
+    "explains": [
+      "n. 口香糖"
+    ]
+  },
+  "gumption": {
+    "word": "gumption",
+    "phonetic": "/'gʌm(p)ʃ(ə)n/",
+    "explains": [
+      "n. 进取心, 气概"
+    ]
+  },
+  "gun": {
+    "word": "gun",
+    "phonetic": "/ɡʌn/",
+    "explains": [
+      "n. 枪"
+    ]
+  },
+  "guncotton": {
+    "word": "guncotton",
+    "phonetic": "/'ɡʌn,kɒtən/",
+    "explains": [
+      "n. [军]强棉药"
+    ]
+  },
+  "gunfire": {
+    "word": "gunfire",
+    "phonetic": "/'gʌnfaɪə/",
+    "explains": [
+      "n. 炮火"
+    ]
+  },
+  "gunpowder": {
+    "word": "gunpowder",
+    "phonetic": "/'gʌnpaʊdə/",
+    "explains": [
+      "n. 黑色火药；有烟火药"
+    ]
+  },
+  "gurgle": {
+    "word": "gurgle",
+    "phonetic": "/'gɜːg(ə)l/",
+    "explains": [
+      "n. 咯咯声；汩汩声；v. 作汩汩声；作咯咯声"
+    ]
+  },
+  "guru": {
+    "word": "guru",
+    "phonetic": "/'guruː/",
+    "explains": [
+      "n.  领袖， 巨头"
+    ]
+  },
+  "gush": {
+    "word": "gush",
+    "phonetic": "/gʌʃ/",
+    "explains": [
+      "v. 涌出,滔滔不绝；n. 迸发"
+    ]
+  },
+  "gusher": {
+    "word": "gusher",
+    "phonetic": "/'gʌʃə/",
+    "explains": [
+      "n. 喷出物, 喷油井"
+    ]
+  },
+  "gust": {
+    "word": "gust",
+    "phonetic": "/gʌst/",
+    "explains": [
+      "n. 阵风，一阵狂风"
+    ]
+  },
+  "gustar": {
+    "word": "gustar",
+    "phonetic": "",
+    "explains": [
+      "v. 使喜欢"
+    ]
+  },
+  "gustation": {
+    "word": "gustation",
+    "phonetic": "/gʌ'steɪʃ(ə)n/",
+    "explains": [
+      "n. 尝味, 味觉"
+    ]
+  },
+  "gusto": {
+    "word": "gusto",
+    "phonetic": "/'gʌstəʊ/",
+    "explains": [
+      "n. 爱好；由衷的高兴；嗜好"
+    ]
+  },
+  "gut": {
+    "word": "gut",
+    "phonetic": "/gʌt/",
+    "explains": [
+      "n. 内脏；肠子；剧情；胆量；海峡；勇气；直觉；肠；v. 取出内脏；摧毁（建筑物等）的内部；adj. 简单的；本质的，根本的；本能的，直觉的"
+    ]
+  },
+  "gutless": {
+    "word": "gutless",
+    "phonetic": "/'gʌtlɪs/",
+    "explains": [
+      "adj. 无胆量的, 没勇气的, 没有生气的"
+    ]
+  },
+  "gutter": {
+    "word": "gutter",
+    "phonetic": "/'gʌtə/",
+    "explains": [
+      "n. 沟，边沟；檐槽"
+    ]
+  },
+  "guttle": {
+    "word": "guttle",
+    "phonetic": "/'ɡʌtl/",
+    "explains": [
+      "v. 贪婪且出声响地吃喝"
+    ]
+  },
+  "guttural": {
+    "word": "guttural",
+    "phonetic": "/'gʌt(ə)r(ə)l/",
+    "explains": [
+      "adj. 喉咙的, 喉音的, 咽喉的"
+    ]
+  },
+  "guy": {
+    "word": "guy",
+    "phonetic": "/gaɪ/",
+    "explains": [
+      "n. 家伙"
+    ]
+  },
+  "guzzle": {
+    "word": "guzzle",
+    "phonetic": "/'gʌz(ə)l/",
+    "explains": [
+      "v. 狂饮；暴食；n. 狂饮；豪饮作乐"
+    ]
+  },
+  "gym": {
+    "word": "gym",
+    "phonetic": "/dʒɪm/",
+    "explains": [
+      "n. 健身房；体育；体育馆"
+    ]
+  },
+  "gymnasium": {
+    "word": "gymnasium",
+    "phonetic": "/dʒɪmˈneɪzɪəm/",
+    "explains": [
+      "n. 体育馆"
+    ]
+  },
+  "gymnast": {
+    "word": "gymnast",
+    "phonetic": "/'dʒɪmnæst/",
+    "explains": [
+      "n. 体操运动员"
+    ]
+  },
+  "gymnastic": {
+    "word": "gymnastic",
+    "phonetic": "/dʒɪm'næstɪk/",
+    "explains": [
+      "adj. 体操的,体育的；n. 训练课程"
+    ]
+  },
+  "gymnastics": {
+    "word": "gymnastics",
+    "phonetic": "/dʒɪm'næstɪks/",
+    "explains": [
+      "n. 体操；体育；体操运动"
+    ]
+  },
+  "gymnastique": {
+    "word": "gymnastique",
+    "phonetic": "",
+    "explains": [
+      "n.f. 体操"
+    ]
+  },
+  "gynaecocracy": {
+    "word": "gynaecocracy",
+    "phonetic": "",
+    "explains": [
+      "n. 妇女当政, 女权政治"
+    ]
+  },
+  "gynaecology": {
+    "word": "gynaecology",
+    "phonetic": "/,gaɪnɪ'kɒlədʒɪ; dʒ-/",
+    "explains": [
+      "n. 妇科医学"
+    ]
+  },
+  "gynecoid": {
+    "word": "gynecoid",
+    "phonetic": "/'ɡaɪnɪkɒɪd/",
+    "explains": [
+      "adj. <美>= gynaecoid"
+    ]
+  },
+  "gypsum": {
+    "word": "gypsum",
+    "phonetic": "/'dʒɪpsəm/",
+    "explains": [
+      "n. 石膏,"
+    ]
+  },
+  "gypsy": {
+    "word": "gypsy",
+    "phonetic": "",
+    "explains": [
+      "n&a. 吉普赛人(的),吉普赛语（的）"
+    ]
+  },
+  "gyrate": {
+    "word": "gyrate",
+    "phonetic": "/dʒaɪ'rəɪt/",
+    "explains": [
+      "v. 旋转；adj. 旋涡状的"
+    ]
+  },
+  "gyration": {
+    "word": "gyration",
+    "phonetic": "/dʒaɪ'reɪʃ(ə)n/",
+    "explains": [
+      "n. 旋回, 回转"
+    ]
+  },
+  "gyroscope": {
+    "word": "gyroscope",
+    "phonetic": "/'dʒaɪrəskəʊp/",
+    "explains": [
+      "n. 陀螺仪；[航] 回转仪"
+    ]
+  },
+  "gzip": {
+    "word": "gzip",
+    "phonetic": "",
+    "explains": [
+      "压缩格式"
     ]
   }
 }

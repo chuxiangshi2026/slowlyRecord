@@ -1,9 +1,163 @@
 {
+  "wacky": {
+    "word": "wacky",
+    "phonetic": "/'wækɪ/",
+    "explains": [
+      "adj. <美俚>古怪的, 乖僻的, 疯疯癫癫的"
+    ]
+  },
+  "wad": {
+    "word": "wad",
+    "phonetic": "/wɒd/",
+    "explains": [
+      "n. 填料 vt填塞"
+    ]
+  },
+  "waddle": {
+    "word": "waddle",
+    "phonetic": "/'wɒd(ə)l/",
+    "explains": [
+      "n. 蹒跚；摇摆的步子；v. 摇摇摆摆地走；蹒跚而行"
+    ]
+  },
+  "wade": {
+    "word": "wade",
+    "phonetic": "/weɪd/",
+    "explains": [
+      "v. 趟（河），跋涉"
+    ]
+  },
+  "wafer": {
+    "word": "wafer",
+    "phonetic": "/'weɪfə/",
+    "explains": [
+      "n. 圆片，晶片；薄片，干胶片；薄饼；圣饼；vt. 用干胶片封"
+    ]
+  },
+  "waffle": {
+    "word": "waffle",
+    "phonetic": "/'wɒf(ə)l/",
+    "explains": [
+      "v. 闲聊, 胡扯"
+    ]
+  },
+  "waft": {
+    "word": "waft",
+    "phonetic": "/wɒft; wɑːft/",
+    "explains": [
+      "v. 吹送, 飘荡"
+    ]
+  },
+  "wag": {
+    "word": "wag",
+    "phonetic": "/wæg/",
+    "explains": [
+      "v. （狗） 摇摆 （尾巴）；摇晃 （手指）"
+    ]
+  },
+  "wage": {
+    "word": "wage",
+    "phonetic": "/weɪdʒ/",
+    "explains": [
+      "n. 工资"
+    ]
+  },
+  "wager": {
+    "word": "wager",
+    "phonetic": "/'weɪdʒə/",
+    "explains": [
+      "n. 赌注；v. 押注，打赌"
+    ]
+  },
+  "waggish": {
+    "word": "waggish",
+    "phonetic": "/'wægɪʃ/",
+    "explains": [
+      "adj. 爱开玩笑的, 滑稽的"
+    ]
+  },
+  "waggon": {
+    "word": "waggon",
+    "phonetic": "/'wæɡən/",
+    "explains": [
+      "n. 四轮运货马车"
+    ]
+  },
+  "wagon": {
+    "word": "wagon",
+    "phonetic": "/'wæg(ə)n/",
+    "explains": [
+      "n. 货车，四轮马车；vt. 用运货马车运输货物"
+    ]
+  },
+  "waif": {
+    "word": "waif",
+    "phonetic": "/weɪf/",
+    "explains": [
+      "n. 流浪者；流浪儿；飘流物；无主物；信号旗"
+    ]
+  },
+  "wail": {
+    "word": "wail",
+    "phonetic": "/weɪl/",
+    "explains": [
+      "v. vi大声哀号，恸哭；呼啸，尖啸"
+    ]
+  },
+  "wainscot": {
+    "word": "wainscot",
+    "phonetic": "/'weɪnskət; -kɒt/",
+    "explains": [
+      "n. 壁板, 装饰墙壁的材料(如瓷砖等)"
+    ]
+  },
+  "waist": {
+    "word": "waist",
+    "phonetic": "/weɪst/",
+    "explains": [
+      "n. 腰"
+    ]
+  },
+  "waistcoat": {
+    "word": "waistcoat",
+    "phonetic": "/'weɪs(t)kəʊt; 'weskɪt/",
+    "explains": [
+      "n. 背心；[服装] 马甲"
+    ]
+  },
   "wait": {
     "word": "wait",
     "phonetic": "/weɪt/",
     "explains": [
       "v./n. 等待；等候；期待；推迟"
+    ]
+  },
+  "waiter": {
+    "word": "waiter",
+    "phonetic": "/ˈweɪtə/",
+    "explains": [
+      "n. 男服务员"
+    ]
+  },
+  "waitress": {
+    "word": "waitress",
+    "phonetic": "/ˈweɪtrɪs/",
+    "explains": [
+      "n. 女服务员"
+    ]
+  },
+  "waive": {
+    "word": "waive",
+    "phonetic": "/weɪv/",
+    "explains": [
+      "v. 放弃；搁置"
+    ]
+  },
+  "waiver": {
+    "word": "waiver",
+    "phonetic": "/'weivə/",
+    "explains": [
+      "n.  放弃"
     ]
   },
   "wake": {
@@ -13,11 +167,53 @@
       "v. 醒来；唤醒；唤起；激发 n. 尾迹；痕迹"
     ]
   },
+  "waken": {
+    "word": "waken",
+    "phonetic": "/'weɪk(ə)n/",
+    "explains": [
+      "v. 醒来；弄醒"
+    ]
+  },
+  "wale": {
+    "word": "wale",
+    "phonetic": "/weɪl/",
+    "explains": [
+      "n. 条痕"
+    ]
+  },
+  "waling": {
+    "word": "waling",
+    "phonetic": "",
+    "explains": [
+      "n. 横撑"
+    ]
+  },
   "walk": {
     "word": "walk",
     "phonetic": "/wɔːk/",
     "explains": [
       "v./n. 走；步行；散步；行走"
+    ]
+  },
+  "walk-out": {
+    "word": "walk-out",
+    "phonetic": "/'wɔːk'aut/",
+    "explains": [
+      "n.  罢工"
+    ]
+  },
+  "walker": {
+    "word": "walker",
+    "phonetic": "/'wɔːkə/",
+    "explains": [
+      "n. 徒步者, 参加竞走者"
+    ]
+  },
+  "walkway": {
+    "word": "walkway",
+    "phonetic": "/'wɔːkweɪ/",
+    "explains": [
+      "n. 通道，[建] 走道"
     ]
   },
   "wall": {
@@ -27,11 +223,116 @@
       "n. 墙；墙壁；围墙；城墙"
     ]
   },
+  "wallet": {
+    "word": "wallet",
+    "phonetic": "/ˈwɒlɪt/",
+    "explains": [
+      "n. 钱包"
+    ]
+  },
+  "wallop": {
+    "word": "wallop",
+    "phonetic": "/'wɒləp/",
+    "explains": [
+      "v. 乱窜, 猛冲, (车等)颠簸, 沸腾作用"
+    ]
+  },
+  "wallow": {
+    "word": "wallow",
+    "phonetic": "/'wɒləʊ/",
+    "explains": [
+      "v. 打滚, <喻>沉迷, 颠簸"
+    ]
+  },
+  "wallpaper": {
+    "word": "wallpaper",
+    "phonetic": "/'wɔːlpeɪpə/",
+    "explains": [
+      "n. 墙纸"
+    ]
+  },
+  "walnut": {
+    "word": "walnut",
+    "phonetic": "/'wɔːlnʌt/",
+    "explains": [
+      "n. 核桃；胡桃树"
+    ]
+  },
+  "walrus": {
+    "word": "walrus",
+    "phonetic": "/'wɔːlrəs; 'wɒl-/",
+    "explains": [
+      "n. [动]海象, 海象胡须"
+    ]
+  },
+  "waltz": {
+    "word": "waltz",
+    "phonetic": "/wɔːl(t)s; wɒl-/",
+    "explains": [
+      "v. 跳华尔兹舞；旋转；轻快地走动；adj. 圆舞曲的；华尔兹舞的；n. 华尔兹舞；华尔兹舞曲"
+    ]
+  },
+  "wan": {
+    "word": "wan",
+    "phonetic": "/wɒn/",
+    "explains": [
+      "adj. 苍白的,病态的；v. (使)变苍白"
+    ]
+  },
+  "wand": {
+    "word": "wand",
+    "phonetic": "/wɒnd/",
+    "explains": [
+      "n. 魔杖；[乐]指挥棒"
+    ]
+  },
+  "wander": {
+    "word": "wander",
+    "phonetic": "/ˈwɒndə/",
+    "explains": [
+      "v. 漫游"
+    ]
+  },
+  "wanderer": {
+    "word": "wanderer",
+    "phonetic": "/'wɒnd(ə)rə(r)/",
+    "explains": [
+      "n. 流浪者, 徘徊者, 迷路的动物"
+    ]
+  },
+  "wanderlust": {
+    "word": "wanderlust",
+    "phonetic": "/'wɒndəlʌst/",
+    "explains": [
+      "n. 旅行癖, 流浪癖"
+    ]
+  },
+  "wane": {
+    "word": "wane",
+    "phonetic": "/wein/",
+    "explains": [
+      "n&v.  减少， 衰退； 亏"
+    ]
+  },
+  "wangle": {
+    "word": "wangle",
+    "phonetic": "/'wæŋg(ə)l/",
+    "explains": [
+      "v. 骗取"
+    ]
+  },
   "want": {
     "word": "want",
     "phonetic": "/wɒnt/",
     "explains": [
       "v. 需要；想要；希望；缺少 n. 需要；缺乏；贫困；必需品"
+    ]
+  },
+  "wanton": {
+    "word": "wanton",
+    "phonetic": "/'wɒntən/",
+    "explains": [
+      "adj. 嬉戏的；繁茂的；荒唐的；无节制的；放纵的；n. 荡妇；水性杨花的女人；v. 放肆；嬉戏；闲荡"
     ]
   },
   "war": {
@@ -41,11 +342,193 @@
       "n. 战争；斗争；军事；竞争 v. 打仗；作战；对抗"
     ]
   },
+  "warble": {
+    "word": "warble",
+    "phonetic": "/'wɔːb(ə)l/",
+    "explains": [
+      "v. 鸟鸣, 用柔和的颤声唱"
+    ]
+  },
+  "warbler": {
+    "word": "warbler",
+    "phonetic": "/'wɔːblə/",
+    "explains": [
+      "n. 鸣鸟"
+    ]
+  },
+  "ward": {
+    "word": "ward",
+    "phonetic": "/wɔːd/",
+    "explains": [
+      "n. 病房"
+    ]
+  },
+  "warden": {
+    "word": "warden",
+    "phonetic": "/'wɔːd(ə)n/",
+    "explains": [
+      "n. 管理员，监护人"
+    ]
+  },
+  "wardrobe": {
+    "word": "wardrobe",
+    "phonetic": "/'wɔːdrəʊb/",
+    "explains": [
+      "n. 衣柜，衣橱，藏衣室"
+    ]
+  },
+  "ware": {
+    "word": "ware",
+    "phonetic": "/weə(r)/",
+    "explains": [
+      "n. 物品；商品，货物"
+    ]
+  },
+  "warehouse": {
+    "word": "warehouse",
+    "phonetic": "/'weəhaʊs/",
+    "explains": [
+      "n. 仓库，货栈"
+    ]
+  },
+  "wares": {
+    "word": "wares",
+    "phonetic": "/wɛəz/",
+    "explains": [
+      "n. [贸易] 商品；货物"
+    ]
+  },
+  "warfare": {
+    "word": "warfare",
+    "phonetic": "/'wɔːfeə/",
+    "explains": [
+      "n. 战争，战争状态"
+    ]
+  },
+  "warhead": {
+    "word": "warhead",
+    "phonetic": "/'wɔːhed/",
+    "explains": [
+      "n. 弹头"
+    ]
+  },
+  "warlike": {
+    "word": "warlike",
+    "phonetic": "/'wɔːlaɪk/",
+    "explains": [
+      "adj. 战争的；好战的；有战争危险的"
+    ]
+  },
+  "warlord": {
+    "word": "warlord",
+    "phonetic": "/'wɔːlɔːd/",
+    "explains": [
+      "n. 军阀"
+    ]
+  },
   "warm": {
     "word": "warm",
     "phonetic": "/wɔːm/",
     "explains": [
       "adj. 温暖的；暖和的；热情的 v. 变暖；被暖和起来"
+    ]
+  },
+  "warmer": {
+    "word": "warmer",
+    "phonetic": "/'wɔːmə/",
+    "explains": [
+      "n. 使热的人,温热装置"
+    ]
+  },
+  "warmonger": {
+    "word": "warmonger",
+    "phonetic": "",
+    "explains": [
+      "n. 好战者, 主战论者"
+    ]
+  },
+  "warmth": {
+    "word": "warmth",
+    "phonetic": "/wɔːmθ/",
+    "explains": [
+      "n. 温暖"
+    ]
+  },
+  "warn": {
+    "word": "warn",
+    "phonetic": "/wɔːn/",
+    "explains": [
+      "v. 警告"
+    ]
+  },
+  "warning": {
+    "word": "warning",
+    "phonetic": "/ˈwɔːnɪŋ/",
+    "explains": [
+      "n. 警告"
+    ]
+  },
+  "warp": {
+    "word": "warp",
+    "phonetic": "/wɔːp/",
+    "explains": [
+      "v. 弯曲,歪曲"
+    ]
+  },
+  "warrant": {
+    "word": "warrant",
+    "phonetic": "/'wɒr(ə)nt/",
+    "explains": [
+      "n. （法院授权警方采取行动的）令状；许可证"
+    ]
+  },
+  "warrantee": {
+    "word": "warrantee",
+    "phonetic": "/ˌwɔrən'tiː/",
+    "explains": [
+      "n.  被保证人"
+    ]
+  },
+  "warranty": {
+    "word": "warranty",
+    "phonetic": "/'wɔrənti/",
+    "explains": [
+      "n.  担保书， 证书， 保单； 保修单； 保证， 担保； 担保条款"
+    ]
+  },
+  "warren": {
+    "word": "warren",
+    "phonetic": "/'wɒr(ə)n/",
+    "explains": [
+      "n. 养兔场,大杂院"
+    ]
+  },
+  "warrior": {
+    "word": "warrior",
+    "phonetic": "/'wɒrɪə/",
+    "explains": [
+      "n. 勇士，武士"
+    ]
+  },
+  "warship": {
+    "word": "warship",
+    "phonetic": "/'wɔːʃɪp/",
+    "explains": [
+      "n. 战船，[军] 军舰"
+    ]
+  },
+  "wartime": {
+    "word": "wartime",
+    "phonetic": "/'wɔːtaɪm/",
+    "explains": [
+      "n. 战时"
+    ]
+  },
+  "wary": {
+    "word": "wary",
+    "phonetic": "/'weərɪ/",
+    "explains": [
+      "adj. 机警的"
     ]
   },
   "wash": {
@@ -55,11 +538,81 @@
       "v./n. 洗；洗涤；洗澡；冲洗；冲刷"
     ]
   },
+  "washing": {
+    "word": "washing",
+    "phonetic": "/'wɒʃɪŋ/",
+    "explains": [
+      "n. 洗涤；洗涤剂；要洗的衣物；adj. 洗涤用的，清洗用的；v. 洗；使受洗礼（wash的ing形式）"
+    ]
+  },
+  "washington": {
+    "word": "washington",
+    "phonetic": "/ˈwɒʃɪŋtən/",
+    "explains": [
+      "n. 华盛顿"
+    ]
+  },
+  "washingtonian": {
+    "word": "washingtonian",
+    "phonetic": "/,wɔʃiŋ'təuniən; ,wɔ:ʃ-/",
+    "explains": [
+      "n. /a(美国)华盛顿市(或州)人"
+    ]
+  },
+  "washout": {
+    "word": "washout",
+    "phonetic": "/'wɒʃaʊt/",
+    "explains": [
+      "n. 冲刷；失败者"
+    ]
+  },
+  "wasp": {
+    "word": "wasp",
+    "phonetic": "/wɒsp/",
+    "explains": [
+      "n. 黄蜂"
+    ]
+  },
+  "waspish": {
+    "word": "waspish",
+    "phonetic": "/'wɒspɪʃ/",
+    "explains": [
+      "adj. 如黄蜂的, 腰细的, 易怒的, 尖刻的"
+    ]
+  },
+  "wastage": {
+    "word": "wastage",
+    "phonetic": "/'weistidʒ/",
+    "explains": [
+      "n.  废物； 消耗； 商品损耗率； 人员浪费"
+    ]
+  },
   "waste": {
     "word": "waste",
     "phonetic": "/weɪst/",
     "explains": [
       "v. 浪费；滥用；消耗 n. 浪费；废物；荒地；损耗"
+    ]
+  },
+  "wasteful": {
+    "word": "wasteful",
+    "phonetic": "/'weɪstfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 浪费的"
+    ]
+  },
+  "waster": {
+    "word": "waster",
+    "phonetic": "/'weɪstə/",
+    "explains": [
+      "n. 挥霍者, 废品"
+    ]
+  },
+  "wastrel": {
+    "word": "wastrel",
+    "phonetic": "/'weɪstr(ə)l/",
+    "explains": [
+      "n. 废物"
     ]
   },
   "watch": {
@@ -69,11 +622,158 @@
       "v. 观看；注视；看守；监视 n. 手表；监视；守护；值班人"
     ]
   },
+  "watcher": {
+    "word": "watcher",
+    "phonetic": "/'wɒtʃə(r)/",
+    "explains": [
+      "n. 监票员, 看守人"
+    ]
+  },
+  "watchful": {
+    "word": "watchful",
+    "phonetic": "",
+    "explains": [
+      "adj. 注意的，警惕的"
+    ]
+  },
   "water": {
     "word": "water",
     "phonetic": "/ˈwɔːtə(r)/",
     "explains": [
       "n. 水；海水；雨水；海域 v. 浇水；灌溉；流口水"
+    ]
+  },
+  "waterborne": {
+    "word": "waterborne",
+    "phonetic": "/'wɔːtəbɔːn/",
+    "explains": [
+      "adv. 水上的,  水运的"
+    ]
+  },
+  "watercolor": {
+    "word": "watercolor",
+    "phonetic": "/'wɔ:tə,kʌlə, 'wɔ-/",
+    "explains": [
+      "n. 水彩颜料,水彩画(法)"
+    ]
+  },
+  "watercourses": {
+    "word": "watercourses",
+    "phonetic": "/'wɔːtəkɔːs/",
+    "explains": [
+      "n. 水流, 河道"
+    ]
+  },
+  "watercraft": {
+    "word": "watercraft",
+    "phonetic": "/'wɒtəkræːft/",
+    "explains": [
+      "n. 船只"
+    ]
+  },
+  "watered": {
+    "word": "watered",
+    "phonetic": "/'wɔːtəd/",
+    "explains": [
+      "adj.  空头发行的； 掺水的； 虚增的"
+    ]
+  },
+  "waterfall": {
+    "word": "waterfall",
+    "phonetic": "/ˈwɔːtəfɔːl/",
+    "explains": [
+      "n. 瀑布"
+    ]
+  },
+  "waterfowl": {
+    "word": "waterfowl",
+    "phonetic": "/'wɔːtəfaʊl/",
+    "explains": [
+      "n. 水鸟, 水禽"
+    ]
+  },
+  "waterfront": {
+    "word": "waterfront",
+    "phonetic": "/'wɔːtəfrʌnt/",
+    "explains": [
+      "n. 水边地码头区, 滨水地区"
+    ]
+  },
+  "watermark": {
+    "word": "watermark",
+    "phonetic": "/'wɔːtəmɑːk/",
+    "explains": [
+      "n. 水印；水位标志；vt. 在…上印水印（图案）"
+    ]
+  },
+  "watermelon": {
+    "word": "watermelon",
+    "phonetic": "/ˈwɔːtəˌmelən/",
+    "explains": [
+      "n. 西瓜"
+    ]
+  },
+  "waterpower": {
+    "word": "waterpower",
+    "phonetic": "",
+    "explains": [
+      "n. 水力(水力发电)"
+    ]
+  },
+  "waterproof": {
+    "word": "waterproof",
+    "phonetic": "/ˈwɔːtəpruːf/",
+    "explains": [
+      "adj. 防水的"
+    ]
+  },
+  "watershed": {
+    "word": "watershed",
+    "phonetic": "/'wɔːtəʃed/",
+    "explains": [
+      "n. 分水岭"
+    ]
+  },
+  "waterside": {
+    "word": "waterside",
+    "phonetic": "/'wɔːtəsaɪd/",
+    "explains": [
+      "n. n&；adj. 水边(的),湖畔(的)"
+    ]
+  },
+  "watertight": {
+    "word": "watertight",
+    "phonetic": "/'wɔːtətaɪt/",
+    "explains": [
+      "adj. 不漏水的，防水的"
+    ]
+  },
+  "waterway": {
+    "word": "waterway",
+    "phonetic": "/'wɔːtəweɪ/",
+    "explains": [
+      "n. 水路, 排水沟"
+    ]
+  },
+  "waterworks": {
+    "word": "waterworks",
+    "phonetic": "/'wɔːtəwɜːks/",
+    "explains": [
+      "n. 自来水厂,供水系统"
+    ]
+  },
+  "watery": {
+    "word": "watery",
+    "phonetic": "/'wɔːt(ə)rɪ/",
+    "explains": [
+      "adj. 充满水的；与水有关的；湿的；（食物、饮料等）味淡的"
+    ]
+  },
+  "watt": {
+    "word": "watt",
+    "phonetic": "/wɒt/",
+    "explains": [
+      "n. 瓦（特）"
     ]
   },
   "wave": {
@@ -83,11 +783,67 @@
       "n. 波浪；海浪；波动；波纹 v. 挥手；招手；摆动；起伏"
     ]
   },
+  "wavelength": {
+    "word": "wavelength",
+    "phonetic": "/'weɪvleŋθ; -leŋkθ/",
+    "explains": [
+      "n. 波长"
+    ]
+  },
+  "wavelet": {
+    "word": "wavelet",
+    "phonetic": "/'weɪvlɪt/",
+    "explains": [
+      "n. 微波，小浪"
+    ]
+  },
+  "waver": {
+    "word": "waver",
+    "phonetic": "/'weɪvə/",
+    "explains": [
+      "v. 犹豫不决；摇摆"
+    ]
+  },
+  "wavy": {
+    "word": "wavy",
+    "phonetic": "/'weɪvɪ/",
+    "explains": [
+      "adj. 波状的,不稳的"
+    ]
+  },
+  "wax": {
+    "word": "wax",
+    "phonetic": "/waks/",
+    "explains": [
+      "n. 蜡，蜂蜡"
+    ]
+  },
+  "waxes": {
+    "word": "waxes",
+    "phonetic": "",
+    "explains": [
+      "n. 蜡，蜂蜡 vt给…上蜡"
+    ]
+  },
+  "waxy": {
+    "word": "waxy",
+    "phonetic": "/'wæksɪ/",
+    "explains": [
+      "adj. 象蜡的,苍白的, 柔软的,"
+    ]
+  },
   "way": {
     "word": "way",
     "phonetic": "/weɪ/",
     "explains": [
       "n. 道路；方法；方向；方面；习惯 adv. 大大地；非常"
+    ]
+  },
+  "wayward": {
+    "word": "wayward",
+    "phonetic": "/'weɪwəd/",
+    "explains": [
+      "adj. 任性的；不规则的；刚愎的"
     ]
   },
   "we": {
@@ -104,11 +860,67 @@
       "adj. 虚弱的；无力的；软弱的；差的"
     ]
   },
+  "weaken": {
+    "word": "weaken",
+    "phonetic": "/'wiːk(ə)n/",
+    "explains": [
+      "v. 削弱"
+    ]
+  },
+  "weakly": {
+    "word": "weakly",
+    "phonetic": "/'wiːklɪ/",
+    "explains": [
+      "a&ad. 虚弱地, 软弱地"
+    ]
+  },
+  "weakness": {
+    "word": "weakness",
+    "phonetic": "/ˈwiːknɪs/",
+    "explains": [
+      "n. 弱点"
+    ]
+  },
+  "weal": {
+    "word": "weal",
+    "phonetic": "/wiːl/",
+    "explains": [
+      "n. <书>福利, 幸福, 鞭痕, 杖痕"
+    ]
+  },
   "wealth": {
     "word": "wealth",
     "phonetic": "/welθ/",
     "explains": [
       "n. 财富；大量；富有；资源"
+    ]
+  },
+  "wealthy": {
+    "word": "wealthy",
+    "phonetic": "/ˈwelθɪ/",
+    "explains": [
+      "adj. 富有的"
+    ]
+  },
+  "wean": {
+    "word": "wean",
+    "phonetic": "/wiːn/",
+    "explains": [
+      "v. 使断奶；使断念；使放弃；n. （苏格兰）幼儿"
+    ]
+  },
+  "weapon": {
+    "word": "weapon",
+    "phonetic": "/ˈwepən/",
+    "explains": [
+      "n. 武器"
+    ]
+  },
+  "weaponry": {
+    "word": "weaponry",
+    "phonetic": "/'wep(ə)nrɪ/",
+    "explains": [
+      "n. 兵器，武器（总称）"
     ]
   },
   "wear": {
@@ -118,11 +930,102 @@
       "v. 穿；戴；佩戴；穿着；磨损"
     ]
   },
+  "wearability": {
+    "word": "wearability",
+    "phonetic": "",
+    "explains": [
+      "n. 耐磨性, 磨损性"
+    ]
+  },
+  "wearer": {
+    "word": "wearer",
+    "phonetic": "/'weərə/",
+    "explains": [
+      "n. 穿用者, 佩带者"
+    ]
+  },
+  "wearisome": {
+    "word": "wearisome",
+    "phonetic": "/'wɪərɪs(ə)m/",
+    "explains": [
+      "adj. 使疲倦的；使厌倦的；乏味的"
+    ]
+  },
+  "weary": {
+    "word": "weary",
+    "phonetic": "/ˈwɪərɪ/",
+    "explains": [
+      "adj. 疲倦的"
+    ]
+  },
+  "weasel": {
+    "word": "weasel",
+    "phonetic": "/'wiːz(ə)l/",
+    "explains": [
+      "n. [动]鼬鼠, 黄鼠狼, 狡猾的人, 告密者, 含糊话"
+    ]
+  },
   "weather": {
     "word": "weather",
     "phonetic": "/ˈweðə(r)/",
     "explains": [
       "n. 天气；气象；气候；处境 v. 经受住；使风化"
+    ]
+  },
+  "weave": {
+    "word": "weave",
+    "phonetic": "/wiːv/",
+    "explains": [
+      "v. 编织"
+    ]
+  },
+  "weaver": {
+    "word": "weaver",
+    "phonetic": "/'wiːvə/",
+    "explains": [
+      "n. 织布工，编织者"
+    ]
+  },
+  "web": {
+    "word": "web",
+    "phonetic": "/web/",
+    "explains": [
+      "n. 网络"
+    ]
+  },
+  "website": {
+    "word": "website",
+    "phonetic": "/ˈwebsaɪt/",
+    "explains": [
+      "n. 网站"
+    ]
+  },
+  "websocket": {
+    "word": "websocket",
+    "phonetic": "",
+    "explains": [
+      "全双工长连接"
+    ]
+  },
+  "wed": {
+    "word": "wed",
+    "phonetic": "/wed/",
+    "explains": [
+      "v. 娶, 嫁, 结婚"
+    ]
+  },
+  "wedding": {
+    "word": "wedding",
+    "phonetic": "/ˈwedɪŋ/",
+    "explains": [
+      "n. 婚礼"
+    ]
+  },
+  "wedge": {
+    "word": "wedge",
+    "phonetic": "/wedʒ/",
+    "explains": [
+      "n. 楔子"
     ]
   },
   "wednesday": {
@@ -132,11 +1035,39 @@
       "n. 星期三"
     ]
   },
+  "wee": {
+    "word": "wee",
+    "phonetic": "/wiː/",
+    "explains": [
+      "adj. 很少的, 微小的"
+    ]
+  },
+  "weed": {
+    "word": "weed",
+    "phonetic": "/wiːd/",
+    "explains": [
+      "n. 杂草"
+    ]
+  },
+  "weedy": {
+    "word": "weedy",
+    "phonetic": "/'wiːdɪ/",
+    "explains": [
+      "adj. 杂草多的"
+    ]
+  },
   "week": {
     "word": "week",
     "phonetic": "/wiːk/",
     "explains": [
       "n. 周；星期；礼拜；工作周"
+    ]
+  },
+  "weekday": {
+    "word": "weekday",
+    "phonetic": "/ˈwiːkdeɪ/",
+    "explains": [
+      "n. 工作日"
     ]
   },
   "weekend": {
@@ -146,11 +1077,74 @@
       "n. 周末；星期六和星期日；周末休假"
     ]
   },
+  "weekly": {
+    "word": "weekly",
+    "phonetic": "/ˈwiːklɪ/",
+    "explains": [
+      "adj. 每周的"
+    ]
+  },
+  "weep": {
+    "word": "weep",
+    "phonetic": "/wiːp/",
+    "explains": [
+      "v. 哭泣"
+    ]
+  },
+  "weft": {
+    "word": "weft",
+    "phonetic": "/weft/",
+    "explains": [
+      "n. [纺]织物,信号旗"
+    ]
+  },
   "weigh": {
     "word": "weigh",
     "phonetic": "/weɪ/",
     "explains": [
       "v. 称… 重量；权衡；考虑；重达"
+    ]
+  },
+  "weight": {
+    "word": "weight",
+    "phonetic": "/weɪt/",
+    "explains": [
+      "n. 重量"
+    ]
+  },
+  "weightily": {
+    "word": "weightily",
+    "phonetic": "/'weɪtɪlɪ/",
+    "explains": [
+      "adv. 沉重地, 重要地"
+    ]
+  },
+  "weighting": {
+    "word": "weighting",
+    "phonetic": "/'weitiŋ/",
+    "explains": [
+      "n.  额外津贴"
+    ]
+  },
+  "weightlessness": {
+    "word": "weightlessness",
+    "phonetic": "",
+    "explains": [
+      "n. 无重状态"
+    ]
+  },
+  "weighty": {
+    "word": "weighty",
+    "phonetic": "/'weɪtɪ/",
+    "explains": [
+      "adj. 重的；重大的；严肃的"
+    ]
+  },
+  "weird": {
+    "word": "weird",
+    "phonetic": "/wɪəd/",
+    "explains": [
+      "adj. 怪异的；不可思议的；超自然的；n. （苏格兰）命运；预言"
     ]
   },
   "welcome": {
@@ -160,11 +1154,60 @@
       "v./n./adj. 欢迎；乐意接受；受欢迎的"
     ]
   },
+  "weld": {
+    "word": "weld",
+    "phonetic": "/weld/",
+    "explains": [
+      "v. 焊接，熔接；n. 焊接点"
+    ]
+  },
+  "weldon": {
+    "word": "weldon",
+    "phonetic": "",
+    "explains": [
+      "n. 韦尔登（男子名）"
+    ]
+  },
+  "welfare": {
+    "word": "welfare",
+    "phonetic": "/ˈwelfeə/",
+    "explains": [
+      "n. 福利"
+    ]
+  },
   "well": {
     "word": "well",
     "phonetic": "/wel/",
     "explains": [
       "adv. 很好地；充分地；满意地；适当地 adj. 健康的；良好的；适宜的"
+    ]
+  },
+  "well-known": {
+    "word": "well-known",
+    "phonetic": "/ˈwelˈnəʊn/",
+    "explains": [
+      "adj. 著名的"
+    ]
+  },
+  "welland": {
+    "word": "welland",
+    "phonetic": "/'welənd/",
+    "explains": [
+      "n. 韦兰（加拿大东南部港口城市）"
+    ]
+  },
+  "welsh": {
+    "word": "welsh",
+    "phonetic": "/welʃ/",
+    "explains": [
+      "v. 不付赌金而溜掉, 逃避履行义务, 食言"
+    ]
+  },
+  "welt": {
+    "word": "welt",
+    "phonetic": "/welt/",
+    "explains": [
+      "n. 鞭痕, 贴边vt贴边于"
     ]
   },
   "west": {
@@ -181,11 +1224,46 @@
       "adj. 西方的；西部的；欧美的"
     ]
   },
+  "westerner": {
+    "word": "westerner",
+    "phonetic": "",
+    "explains": [
+      "n. 美国之西部的人"
+    ]
+  },
+  "westward": {
+    "word": "westward",
+    "phonetic": "/'westwəd/",
+    "explains": [
+      "n. 西方a&ad西方的, 向西"
+    ]
+  },
   "wet": {
     "word": "wet",
     "phonetic": "/wet/",
     "explains": [
       "adj. 潮湿的；有雨的；未干的；湿的"
+    ]
+  },
+  "wetland": {
+    "word": "wetland",
+    "phonetic": "/'wetlənd/",
+    "explains": [
+      "n. 潮湿的土壤, 沼泽地"
+    ]
+  },
+  "whack": {
+    "word": "whack",
+    "phonetic": "/wæk/",
+    "explains": [
+      "v. 重打；猛击；击败；削减；n. 重击；尝试；份儿；机会"
+    ]
+  },
+  "whacked": {
+    "word": "whacked",
+    "phonetic": "/wækt/",
+    "explains": [
+      "adj. 疲惫不堪的, 困乏的"
     ]
   },
   "whale": {
@@ -195,11 +1273,32 @@
       "n. 鲸；鲸鱼；巨大的事物"
     ]
   },
+  "wharf": {
+    "word": "wharf",
+    "phonetic": "/wɔːf/",
+    "explains": [
+      "n. 码头，停泊所"
+    ]
+  },
   "what": {
     "word": "what",
     "phonetic": "/wɒt/",
     "explains": [
       "pron. 什么；多么；多少 adj. 什么；多么；何等"
+    ]
+  },
+  "whatever": {
+    "word": "whatever",
+    "phonetic": "/wɒtˈevə/",
+    "explains": [
+      "pron. 无论什么"
+    ]
+  },
+  "whatsoever": {
+    "word": "whatsoever",
+    "phonetic": "/wɒtsəʊˈevə/",
+    "explains": [
+      "adv. 丝毫"
     ]
   },
   "wheat": {
@@ -209,11 +1308,32 @@
       "n. 小麦；小麦色；麦子"
     ]
   },
+  "wheedle": {
+    "word": "wheedle",
+    "phonetic": "/'wiːd(ə)l/",
+    "explains": [
+      "v. 诱骗, 哄骗, 骗得"
+    ]
+  },
   "wheel": {
     "word": "wheel",
     "phonetic": "/wiːl/",
     "explains": [
       "n. 轮子；车轮；旋转；机轮 v. 转动；推动；盘旋"
+    ]
+  },
+  "wheelchair": {
+    "word": "wheelchair",
+    "phonetic": "/ˈwiːltʃeə/",
+    "explains": [
+      "n. 轮椅"
+    ]
+  },
+  "whelm": {
+    "word": "whelm",
+    "phonetic": "/welm/",
+    "explains": [
+      "v. 淹没"
     ]
   },
   "when": {
@@ -223,11 +1343,67 @@
       "adv. 什么时候；何时 conj. 在… 时候；既然；如果"
     ]
   },
+  "whence": {
+    "word": "whence",
+    "phonetic": "/wens/",
+    "explains": [
+      "adv. 从何处；从那里"
+    ]
+  },
+  "whenever": {
+    "word": "whenever",
+    "phonetic": "/wen'evə/",
+    "explains": [
+      "conj. 无论何时，随时"
+    ]
+  },
   "where": {
     "word": "where",
     "phonetic": "/weə(r)/",
     "explains": [
       "adv. 在哪里；在… 地方 conj. 在… 的地方；到… 的地方"
+    ]
+  },
+  "whereabouts": {
+    "word": "whereabouts",
+    "phonetic": "/weərə'baʊts/",
+    "explains": [
+      "n. 下落；行踪；去向；所在之处；adv. 在何处；靠近什么地方"
+    ]
+  },
+  "whereas": {
+    "word": "whereas",
+    "phonetic": "/weərˈæz/",
+    "explains": [
+      "conj. 然而"
+    ]
+  },
+  "whereby": {
+    "word": "whereby",
+    "phonetic": "/weə'baɪ/",
+    "explains": [
+      "adv. 靠什么；靠那个"
+    ]
+  },
+  "wherever": {
+    "word": "wherever",
+    "phonetic": "/weərˈevə/",
+    "explains": [
+      "adv. 无论哪里"
+    ]
+  },
+  "wherry": {
+    "word": "wherry",
+    "phonetic": "/'werɪ/",
+    "explains": [
+      "n. 小舟摆渡船, 单人乘的小舟, 划艇, 平底货船"
+    ]
+  },
+  "whet": {
+    "word": "whet",
+    "phonetic": "/wet/",
+    "explains": [
+      "v. 刺激；磨快；促进；n. 磨；开胃物；刺激物"
     ]
   },
   "whether": {
@@ -244,11 +1420,151 @@
       "pron./adj. 哪一个；哪一些；那一个；那一些"
     ]
   },
+  "whichever": {
+    "word": "whichever",
+    "phonetic": "/wɪtʃˈevə/",
+    "explains": [
+      "pron. 无论哪个"
+    ]
+  },
+  "whiff": {
+    "word": "whiff",
+    "phonetic": "/wɪf/",
+    "explains": [
+      "v. 吸；喷出；n. 一点点；单人小划艇；琴鲆属鱼；吸气或吹气"
+    ]
+  },
+  "whig": {
+    "word": "whig",
+    "phonetic": "/hwiɡ/",
+    "explains": [
+      "n. 辉格党"
+    ]
+  },
   "while": {
     "word": "while",
     "phonetic": "/waɪl/",
     "explains": [
       "conj. 当… 的时候；虽然；尽管 n. 一会儿；一段时间"
+    ]
+  },
+  "whilst": {
+    "word": "whilst",
+    "phonetic": "/waɪlst/",
+    "explains": [
+      "conj. 当…的时候"
+    ]
+  },
+  "whim": {
+    "word": "whim",
+    "phonetic": "/wɪm/",
+    "explains": [
+      "n. 一时的兴致, 奇想"
+    ]
+  },
+  "whimper": {
+    "word": "whimper",
+    "phonetic": "/'wɪmpə/",
+    "explains": [
+      "v. 呜咽, 哀诉"
+    ]
+  },
+  "whimsical": {
+    "word": "whimsical",
+    "phonetic": "/'wɪmzɪk(ə)l/",
+    "explains": [
+      "adj. 古怪的；异想天开的；反复无常的"
+    ]
+  },
+  "whimsy": {
+    "word": "whimsy",
+    "phonetic": "/'wɪmzɪ/",
+    "explains": [
+      "n. 怪念头, 奇想, 任意"
+    ]
+  },
+  "whine": {
+    "word": "whine",
+    "phonetic": "/waɪn/",
+    "explains": [
+      "v. 发牢骚；哭诉；嘎嘎响；发呜呜声；n. 抱怨；牢骚；哀鸣"
+    ]
+  },
+  "whip": {
+    "word": "whip",
+    "phonetic": "/wɪp/",
+    "explains": [
+      "v. 鞭笞；搅打；n. 鞭子"
+    ]
+  },
+  "whiplash": {
+    "word": "whiplash",
+    "phonetic": "/'wɪplæʃ/",
+    "explains": [
+      "n. 鞭绳；鞭子的顶端；鞭打"
+    ]
+  },
+  "whirl": {
+    "word": "whirl",
+    "phonetic": "/wɜːl/",
+    "explains": [
+      "n. 旋转，回旋；昏乱；一连串的事；短暂的旅行；v. 旋转，回旋；急走；头晕眼花"
+    ]
+  },
+  "whirlwind": {
+    "word": "whirlwind",
+    "phonetic": "/'wɜːlwɪnd/",
+    "explains": [
+      "n. 旋风；旋风般的快速行动；adj. 旋风般的"
+    ]
+  },
+  "whisk": {
+    "word": "whisk",
+    "phonetic": "/wɪsk/",
+    "explains": [
+      "v. 拂，掸；搅拌；挥动；n. 搅拌器；扫帚；毛掸子"
+    ]
+  },
+  "whisker": {
+    "word": "whisker",
+    "phonetic": "/'wɪskə/",
+    "explains": [
+      "n. 髯，连鬓胡子"
+    ]
+  },
+  "whiskey": {
+    "word": "whiskey",
+    "phonetic": "/'hwiski/",
+    "explains": [
+      "n. 威士忌酒；adj. 威士忌酒的"
+    ]
+  },
+  "whisky": {
+    "word": "whisky",
+    "phonetic": "/'wɪskɪ/",
+    "explains": [
+      "n. 威士忌酒；adj. 威士忌酒的"
+    ]
+  },
+  "whisper": {
+    "word": "whisper",
+    "phonetic": "/ˈwɪspə/",
+    "explains": [
+      "v. 耳语"
+    ]
+  },
+  "whistle": {
+    "word": "whistle",
+    "phonetic": "/ˈwɪs(ə)l/",
+    "explains": [
+      "n. 哨子　v. 吹口哨"
+    ]
+  },
+  "whit": {
+    "word": "whit",
+    "phonetic": "/wɪt/",
+    "explains": [
+      "n. 些微, 一点点"
     ]
   },
   "white": {
@@ -258,11 +1574,60 @@
       "adj. 白色的；白种的；纯洁的 n. 白色；洁白；白种人"
     ]
   },
+  "white-collar": {
+    "word": "white-collar",
+    "phonetic": "/'wait'kɔlə/",
+    "explains": [
+      "adj.  白领的； 脑力劳动的"
+    ]
+  },
+  "whiten": {
+    "word": "whiten",
+    "phonetic": "/'waɪt(ə)n/",
+    "explains": [
+      "v. 漂白；刷白；n. (Whiten)人名；(英)怀滕"
+    ]
+  },
+  "whitespace": {
+    "word": "whitespace",
+    "phonetic": "",
+    "explains": [
+      "空白字符"
+    ]
+  },
+  "whitewash": {
+    "word": "whitewash",
+    "phonetic": "/'waɪtwɒʃ/",
+    "explains": [
+      "n. 石灰水；v. 粉饰"
+    ]
+  },
+  "whittle": {
+    "word": "whittle",
+    "phonetic": "/'wɪt(ə)l/",
+    "explains": [
+      "v. 切, 削；n. 屠刀"
+    ]
+  },
+  "whizz": {
+    "word": "whizz",
+    "phonetic": "",
+    "explains": [
+      "n. 专家；精明的人；子弹等在空中掠过的声音（等于whiz）；v. 飕飕作声（等于whiz）"
+    ]
+  },
   "who": {
     "word": "who",
     "phonetic": "/huː/",
     "explains": [
       "pron. 谁；什么人；… 的人"
+    ]
+  },
+  "whoever": {
+    "word": "whoever",
+    "phonetic": "/huːˈɛvə/",
+    "explains": [
+      "pron. 究竟是谁"
     ]
   },
   "whole": {
@@ -272,11 +1637,60 @@
       "adj. 完整的；全部的；整个的 n. 整体；全部；完整"
     ]
   },
+  "wholesale": {
+    "word": "wholesale",
+    "phonetic": "/'həulseil/",
+    "explains": [
+      "n. 批发，趸售；adj. 批发的，整批卖的"
+    ]
+  },
+  "wholesaler": {
+    "word": "wholesaler",
+    "phonetic": "/'həulˌseilə/",
+    "explains": [
+      "n.  批发商"
+    ]
+  },
+  "wholesome": {
+    "word": "wholesome",
+    "phonetic": "/'həʊls(ə)m/",
+    "explains": [
+      "adj. 对健康有益的"
+    ]
+  },
+  "wholly": {
+    "word": "wholly",
+    "phonetic": "/'həʊllɪ; 'həʊlɪ/",
+    "explains": [
+      "adv. 完全地，全部"
+    ]
+  },
+  "wholly-owned": {
+    "word": "wholly-owned",
+    "phonetic": "/'həuli'əund/",
+    "explains": [
+      "adj.  全资的"
+    ]
+  },
   "whom": {
     "word": "whom",
     "phonetic": "/huːm/",
     "explains": [
       "pron. 谁（who 的宾格）"
+    ]
+  },
+  "whoop": {
+    "word": "whoop",
+    "phonetic": "/wuːp/",
+    "explains": [
+      "n. 大叫；哮喘声；呐喊；一点点；v. 高声说；唤起"
+    ]
+  },
+  "whoosh": {
+    "word": "whoosh",
+    "phonetic": "/wʊʃ; wuːʃ/",
+    "explains": [
+      "n. 飞快的移动"
     ]
   },
   "whose": {
@@ -293,11 +1707,81 @@
       "adv. 为什么；为何 conj. 为什么；… 的理由"
     ]
   },
+  "wick": {
+    "word": "wick",
+    "phonetic": "/wɪk/",
+    "explains": [
+      "n. 蜡烛心, 灯芯"
+    ]
+  },
+  "wicked": {
+    "word": "wicked",
+    "phonetic": "/ˈwɪkɪd/",
+    "explains": [
+      "adj. 邪恶的"
+    ]
+  },
+  "wicker": {
+    "word": "wicker",
+    "phonetic": "/'wɪkə/",
+    "explains": [
+      "n. 柳条 a柳条制的"
+    ]
+  },
   "wide": {
     "word": "wide",
     "phonetic": "/waɪd/",
     "explains": [
       "adj. 宽的；宽阔的；广泛的；广阔的 adv. 广泛地；充分地；广阔地"
+    ]
+  },
+  "widely": {
+    "word": "widely",
+    "phonetic": "/'waɪdlɪ/",
+    "explains": [
+      "adv. 大大地"
+    ]
+  },
+  "widen": {
+    "word": "widen",
+    "phonetic": "/ˈwaɪd(ə)n/",
+    "explains": [
+      "v. 加宽"
+    ]
+  },
+  "widespread": {
+    "word": "widespread",
+    "phonetic": "/ˈwaɪdspred; -ˌspred/",
+    "explains": [
+      "adj. 普遍的"
+    ]
+  },
+  "widget": {
+    "word": "widget",
+    "phonetic": "/'widʒit/",
+    "explains": [
+      "n.  小装置， 小器械； 装饰品"
+    ]
+  },
+  "widow": {
+    "word": "widow",
+    "phonetic": "/'wɪdəʊ/",
+    "explains": [
+      "n. 寡妇"
+    ]
+  },
+  "width": {
+    "word": "width",
+    "phonetic": "/wɪdθ; wɪtθ/",
+    "explains": [
+      "n. 宽度"
+    ]
+  },
+  "wield": {
+    "word": "wield",
+    "phonetic": "/wiːld/",
+    "explains": [
+      "v. 挥（剑）；行使"
     ]
   },
   "wife": {
@@ -307,11 +1791,88 @@
       "n. 妻子；太太；夫人；老婆"
     ]
   },
+  "wig": {
+    "word": "wig",
+    "phonetic": "/wɪg/",
+    "explains": [
+      "n. 假发；要人；头脑；v. 使戴假发；斥责"
+    ]
+  },
+  "wiggle": {
+    "word": "wiggle",
+    "phonetic": "/'wɪg(ə)l/",
+    "explains": [
+      "v. (使)踌躇, 摆动"
+    ]
+  },
   "wild": {
     "word": "wild",
     "phonetic": "/waɪld/",
     "explains": [
       "adj. 野生的；野蛮的；狂热的；荒凉的"
+    ]
+  },
+  "wildcard": {
+    "word": "wildcard",
+    "phonetic": "",
+    "explains": [
+      "通配符"
+    ]
+  },
+  "wildcat": {
+    "word": "wildcat",
+    "phonetic": "/'waildkæt/",
+    "explains": [
+      "adj.  高风险的"
+    ]
+  },
+  "wildcatter": {
+    "word": "wildcatter",
+    "phonetic": "",
+    "explains": [
+      "n. 投机份子"
+    ]
+  },
+  "wildebeest": {
+    "word": "wildebeest",
+    "phonetic": "/'wɪldəbiːst; 'vɪ-/",
+    "explains": [
+      "n. 羚羊(其中一种)"
+    ]
+  },
+  "wilderness": {
+    "word": "wilderness",
+    "phonetic": "/'wɪldənɪs/",
+    "explains": [
+      "n. 荒野"
+    ]
+  },
+  "wildflower": {
+    "word": "wildflower",
+    "phonetic": "/'waɪld,flaʊə/",
+    "explains": [
+      "n. 野花"
+    ]
+  },
+  "wildlife": {
+    "word": "wildlife",
+    "phonetic": "/ˈwaɪldlaɪf/",
+    "explains": [
+      "n. 野生动物"
+    ]
+  },
+  "wile": {
+    "word": "wile",
+    "phonetic": "/waɪl/",
+    "explains": [
+      "vt. 欺骗，诱骗；消遣；n. 诡计，阴谋"
+    ]
+  },
+  "wiliness": {
+    "word": "wiliness",
+    "phonetic": "/'wailinis/",
+    "explains": [
+      "n. 狡猾"
     ]
   },
   "will": {
@@ -321,11 +1882,95 @@
       "modal v. 将；会；愿意；要 n. 意志；决心；愿望；遗嘱"
     ]
   },
+  "willful": {
+    "word": "willful",
+    "phonetic": "/'wɪlfʊl/",
+    "explains": [
+      "adj. 任性的, 故意的"
+    ]
+  },
+  "willing": {
+    "word": "willing",
+    "phonetic": "/ˈwɪlɪŋ/",
+    "explains": [
+      "adj. 愿意的"
+    ]
+  },
+  "willingly": {
+    "word": "willingly",
+    "phonetic": "/'wɪlɪŋlɪ/",
+    "explains": [
+      "adv. 自动地, 欣然地"
+    ]
+  },
+  "willingness": {
+    "word": "willingness",
+    "phonetic": "/ˈwɪlɪŋnɪs/",
+    "explains": [
+      "n. 意愿"
+    ]
+  },
+  "willow": {
+    "word": "willow",
+    "phonetic": "/'wɪləʊ/",
+    "explains": [
+      "n. 柳树，柳木"
+    ]
+  },
+  "willowy": {
+    "word": "willowy",
+    "phonetic": "/'wɪləʊɪ/",
+    "explains": [
+      "adj. 有弹性的, 多柳树的,苗条的,易弯曲的"
+    ]
+  },
+  "willpower": {
+    "word": "willpower",
+    "phonetic": "/'wɪlpaʊə/",
+    "explains": [
+      "n. 意志力；毅力"
+    ]
+  },
+  "wilt": {
+    "word": "wilt",
+    "phonetic": "/wɪlt/",
+    "explains": [
+      "v. (使)枯萎, (使)憔悴, (使)畏缩"
+    ]
+  },
+  "wily": {
+    "word": "wily",
+    "phonetic": "/'waɪlɪ/",
+    "explains": [
+      "adj. 狡猾的；诡计多端的；n. (Wily)人名；(英)威利"
+    ]
+  },
+  "wimple": {
+    "word": "wimple",
+    "phonetic": "/'wɪmp(ə)l/",
+    "explains": [
+      "vt. 用头巾遮, 使折叠"
+    ]
+  },
   "win": {
     "word": "win",
     "phonetic": "/wɪn/",
     "explains": [
       "v. 赢；获胜；赢得；获得 n. 胜利；赢；收益"
+    ]
+  },
+  "win-back": {
+    "word": "win-back",
+    "phonetic": "",
+    "explains": [
+      "召回（流失用户）"
+    ]
+  },
+  "wince": {
+    "word": "wince",
+    "phonetic": "/wɪns/",
+    "explains": [
+      "v. 退缩"
     ]
   },
   "wind": {
@@ -335,11 +1980,53 @@
       "n. 风；气流；呼吸；气味 v. 缠绕；蜿蜒；吹号角"
     ]
   },
+  "windfall": {
+    "word": "windfall",
+    "phonetic": "/'windfɔːl/",
+    "explains": [
+      "n.  意外之财"
+    ]
+  },
+  "winding": {
+    "word": "winding",
+    "phonetic": "/'waɪndɪŋ/",
+    "explains": [
+      "n. 蜿蜒曲折的路径；adj. 蜿蜒曲折的"
+    ]
+  },
+  "windmill": {
+    "word": "windmill",
+    "phonetic": "/'wɪn(d)mɪl/",
+    "explains": [
+      "n. 风车"
+    ]
+  },
   "window": {
     "word": "window",
     "phonetic": "/ˈwɪndəʊ/",
     "explains": [
       "n. 窗户；窗口；窗；窗户玻璃"
+    ]
+  },
+  "windscreen": {
+    "word": "windscreen",
+    "phonetic": "/'wɪn(d)skriːn/",
+    "explains": [
+      "n. 汽车挡风玻璃"
+    ]
+  },
+  "windswept": {
+    "word": "windswept",
+    "phonetic": "",
+    "explains": [
+      "adj. 风刮的, 被风吹扫的"
+    ]
+  },
+  "windy": {
+    "word": "windy",
+    "phonetic": "/ˈwɪndɪ/",
+    "explains": [
+      "adj. 有风的"
     ]
   },
   "wine": {
@@ -349,6 +2036,55 @@
       "n. 葡萄酒；酒；果酒；紫红色"
     ]
   },
+  "wing": {
+    "word": "wing",
+    "phonetic": "/wɪŋ/",
+    "explains": [
+      "n. 翅膀"
+    ]
+  },
+  "wingless": {
+    "word": "wingless",
+    "phonetic": "",
+    "explains": [
+      "adj. 无翼的, 没有翅膀的"
+    ]
+  },
+  "wingspan": {
+    "word": "wingspan",
+    "phonetic": "/'wɪŋspæn/",
+    "explains": [
+      "n. [空]翼展"
+    ]
+  },
+  "wink": {
+    "word": "wink",
+    "phonetic": "/wɪŋk/",
+    "explains": [
+      "v. 眨眼；使眼色"
+    ]
+  },
+  "winner": {
+    "word": "winner",
+    "phonetic": "/ˈwɪnə/",
+    "explains": [
+      "n. 获胜者"
+    ]
+  },
+  "winnow": {
+    "word": "winnow",
+    "phonetic": "/'wɪnəʊ/",
+    "explains": [
+      "v. 簸, 扬(谷), 吹开糠皮, 吹掉, 精选"
+    ]
+  },
+  "winsome": {
+    "word": "winsome",
+    "phonetic": "/'wɪns(ə)m/",
+    "explains": [
+      "adj. 迷人的；可爱的；引人注目的"
+    ]
+  },
   "winter": {
     "word": "winter",
     "phonetic": "/ˈwɪntə(r)/",
@@ -356,11 +2092,67 @@
       "n. 冬季；冬天；年岁；萧条期"
     ]
   },
+  "wintertime": {
+    "word": "wintertime",
+    "phonetic": "/'wɪntətaɪm/",
+    "explains": [
+      "n. 冬, 冬季"
+    ]
+  },
+  "wintry": {
+    "word": "wintry",
+    "phonetic": "/'wɪntrɪ/",
+    "explains": [
+      "adj. 寒冷的，冬天的；冷淡的"
+    ]
+  },
+  "wipe": {
+    "word": "wipe",
+    "phonetic": "/waɪp/",
+    "explains": [
+      "v. 擦"
+    ]
+  },
   "wire": {
     "word": "wire",
     "phonetic": "/ˈwaɪə(r)/",
     "explains": [
       "n. 电线；金属丝；电报；铁丝网 v. 给… 装电线；打电报"
+    ]
+  },
+  "wireframe": {
+    "word": "wireframe",
+    "phonetic": "",
+    "explains": [
+      "线框图"
+    ]
+  },
+  "wireless": {
+    "word": "wireless",
+    "phonetic": "/'waiəlis/",
+    "explains": [
+      "adj.  无线的"
+    ]
+  },
+  "wirephoto": {
+    "word": "wirephoto",
+    "phonetic": "",
+    "explains": [
+      "n. 有线传真"
+    ]
+  },
+  "wiry": {
+    "word": "wiry",
+    "phonetic": "/'waɪərɪ/",
+    "explains": [
+      "adj. 金属线制的；金属丝般的；坚硬的；瘦长结实的；（噪音）尖细的"
+    ]
+  },
+  "wisdom": {
+    "word": "wisdom",
+    "phonetic": "/ˈwɪzdəm/",
+    "explains": [
+      "n. 智慧"
     ]
   },
   "wise": {
@@ -377,11 +2169,88 @@
       "v./n. 希望；愿望；祝愿；想要；渴望"
     ]
   },
+  "wisp": {
+    "word": "wisp",
+    "phonetic": "/wɪsp/",
+    "explains": [
+      "n. 小捆；小束；vt. 把…卷成一捆；vi. 卷成一捆"
+    ]
+  },
+  "wispy": {
+    "word": "wispy",
+    "phonetic": "",
+    "explains": [
+      "adj. 纤细的, 脆弱的"
+    ]
+  },
+  "wistful": {
+    "word": "wistful",
+    "phonetic": "/'wɪs(t)fʊl; -f(ə)l/",
+    "explains": [
+      "adj. 渴望的；沉思的，默想的；引起怀念的；不满足似的"
+    ]
+  },
+  "wit": {
+    "word": "wit",
+    "phonetic": "/wɪt/",
+    "explains": [
+      "n. 机智"
+    ]
+  },
+  "witch": {
+    "word": "witch",
+    "phonetic": "/wɪtʃ/",
+    "explains": [
+      "n. 巫婆，女巫；v. 迷惑；施巫术"
+    ]
+  },
+  "witchcraft": {
+    "word": "witchcraft",
+    "phonetic": "/'wɪtʃkrɑːft/",
+    "explains": [
+      "n. 巫术；魔法"
+    ]
+  },
   "with": {
     "word": "with",
     "phonetic": "/wɪð/",
     "explains": [
       "prep. 和… 在一起；具有；用；反对；关于；包括；随着；由于"
+    ]
+  },
+  "withdraw": {
+    "word": "withdraw",
+    "phonetic": "/wɪðˈdrɔː/",
+    "explains": [
+      "v. 撤退"
+    ]
+  },
+  "withdrawal": {
+    "word": "withdrawal",
+    "phonetic": "/wið'drɔːəl/",
+    "explains": [
+      "n.  取回， 提款； 撤退， 撤军； 收回， 撤回， 撤销"
+    ]
+  },
+  "withdrawn": {
+    "word": "withdrawn",
+    "phonetic": "/wɪð'drɔːn/",
+    "explains": [
+      "adj. 性格内向的,偏僻的, 孤独的"
+    ]
+  },
+  "wither": {
+    "word": "wither",
+    "phonetic": "/'wɪðə/",
+    "explains": [
+      "v. 枯萎；使衰弱"
+    ]
+  },
+  "withhold": {
+    "word": "withhold",
+    "phonetic": "/wɪð'həʊld/",
+    "explains": [
+      "v. 保留，不给；隐瞒；抑制"
     ]
   },
   "within": {
@@ -398,11 +2267,172 @@
       "prep. 没有；缺乏；不和… 在一起；不（做某事）"
     ]
   },
+  "withstand": {
+    "word": "withstand",
+    "phonetic": "/wɪð'stænd/",
+    "explains": [
+      "v. 抵挡，反抗"
+    ]
+  },
+  "witling": {
+    "word": "witling",
+    "phonetic": "/'wɪtlɪŋ/",
+    "explains": [
+      "n. 玩弄小聪明的人"
+    ]
+  },
+  "witness": {
+    "word": "witness",
+    "phonetic": "/ˈwɪtnɪs/",
+    "explains": [
+      "n. 目击者　v. 目击"
+    ]
+  },
+  "witticism": {
+    "word": "witticism",
+    "phonetic": "/'wɪtɪsɪz(ə)m/",
+    "explains": [
+      "n. 妙语；名言；俏皮话"
+    ]
+  },
+  "wittingly": {
+    "word": "wittingly",
+    "phonetic": "/'wɪtɪŋlɪ/",
+    "explains": [
+      "adv. 有意地，存心地"
+    ]
+  },
+  "witty": {
+    "word": "witty",
+    "phonetic": "/'wɪtɪ/",
+    "explains": [
+      "adj. 机智的；风趣的"
+    ]
+  },
+  "wizard": {
+    "word": "wizard",
+    "phonetic": "/'wɪzəd/",
+    "explains": [
+      "n. 男巫；术士；奇才；向导程序；adj. 男巫的；巫术的"
+    ]
+  },
+  "wizen": {
+    "word": "wizen",
+    "phonetic": "/'wɪz(ə)n/",
+    "explains": [
+      "vi. 枯萎；凋谢；干瘪；vt. 使凋谢；使枯萎；使干瘪；adj. 凋谢的；枯萎的"
+    ]
+  },
+  "wizened": {
+    "word": "wizened",
+    "phonetic": "/'wɪz(ə)nd/",
+    "explains": [
+      "adj. 枯萎的, 消瘦的"
+    ]
+  },
+  "woad": {
+    "word": "woad",
+    "phonetic": "/wəʊd/",
+    "explains": [
+      "n. [植]菘蓝"
+    ]
+  },
+  "wobble": {
+    "word": "wobble",
+    "phonetic": "/'wɒb(ə)l/",
+    "explains": [
+      "v. 摇晃；摇摆；游移不定；n. 摆动；摇晃；不稳定"
+    ]
+  },
+  "woe": {
+    "word": "woe",
+    "phonetic": "/wəʊ/",
+    "explains": [
+      "n. 悲哀，悲痛，苦恼"
+    ]
+  },
+  "woeful": {
+    "word": "woeful",
+    "phonetic": "/'wəʊfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 悲伤的, 悲哀的, 可怜的, 遗憾的"
+    ]
+  },
+  "wok": {
+    "word": "wok",
+    "phonetic": "/wɒk/",
+    "explains": [
+      "n. 锅，炒菜锅"
+    ]
+  },
+  "wold": {
+    "word": "wold",
+    "phonetic": "/wəʊld/",
+    "explains": [
+      "n. 无树木的山地, 荒野"
+    ]
+  },
+  "wolf": {
+    "word": "wolf",
+    "phonetic": "/wʊlf/",
+    "explains": [
+      "n. 狼；色狼；残忍贪婪之人；v. 大吃；狼吞虎咽地吃"
+    ]
+  },
   "woman": {
     "word": "woman",
     "phonetic": "/ˈwʊmən/",
     "explains": [
       "n. 妇女；女性；成年女子"
+    ]
+  },
+  "womanhood": {
+    "word": "womanhood",
+    "phonetic": "/'wʊmənhʊd/",
+    "explains": [
+      "n. 女人,女人气质"
+    ]
+  },
+  "womanly": {
+    "word": "womanly",
+    "phonetic": "/'wʊmənlɪ/",
+    "explains": [
+      "adj. 像女人的；有女子气质的；adv. 像女人地；适合于妇女地"
+    ]
+  },
+  "womb": {
+    "word": "womb",
+    "phonetic": "/wuːm/",
+    "explains": [
+      "n. [解剖] 子宫；发源地；vt. 容纳"
+    ]
+  },
+  "wonder": {
+    "word": "wonder",
+    "phonetic": "/ˈwʌndə/",
+    "explains": [
+      "v. 想知道　n. 惊奇"
+    ]
+  },
+  "wonderful": {
+    "word": "wonderful",
+    "phonetic": "/ˈwʌndəfʊl; ˈwʌndəf(ə)l/",
+    "explains": [
+      "adj. 极好的"
+    ]
+  },
+  "wonderfully": {
+    "word": "wonderfully",
+    "phonetic": "/'wʌndɚfəli/",
+    "explains": [
+      "adv. 令人惊讶地；奇妙地"
+    ]
+  },
+  "woo": {
+    "word": "woo",
+    "phonetic": "/wuː/",
+    "explains": [
+      "v. 求爱, 追求, 恳求, 招致"
     ]
   },
   "wood": {
@@ -412,11 +2442,123 @@
       "n. 木材；木头；树林；木料"
     ]
   },
+  "woodblock": {
+    "word": "woodblock",
+    "phonetic": "",
+    "explains": [
+      "n. 木板 〈印〉木版"
+    ]
+  },
+  "woodcarving": {
+    "word": "woodcarving",
+    "phonetic": "/'wʊdkɑːvɪŋ/",
+    "explains": [
+      "n. 木雕, 木刻"
+    ]
+  },
+  "woodcut": {
+    "word": "woodcut",
+    "phonetic": "/'wʊdkʌt/",
+    "explains": [
+      "n. 木刻"
+    ]
+  },
+  "woodcutting": {
+    "word": "woodcutting",
+    "phonetic": "",
+    "explains": [
+      "adj. 木雕的；n. 伐木, 木刻"
+    ]
+  },
+  "wooden": {
+    "word": "wooden",
+    "phonetic": "/ˈwʊd(ə)n/",
+    "explains": [
+      "adj. 木制的"
+    ]
+  },
+  "woodlot": {
+    "word": "woodlot",
+    "phonetic": "",
+    "explains": [
+      "n. 植林地(尤指附属林场地)"
+    ]
+  },
+  "woodpecker": {
+    "word": "woodpecker",
+    "phonetic": "/'wʊdpekə/",
+    "explains": [
+      "n. 啄木鸟"
+    ]
+  },
+  "woodwind": {
+    "word": "woodwind",
+    "phonetic": "/'wʊdwɪnd/",
+    "explains": [
+      "n. 木管乐器"
+    ]
+  },
+  "woodworker": {
+    "word": "woodworker",
+    "phonetic": "/'wʊd,wɜːkə/",
+    "explains": [
+      "n. 木工"
+    ]
+  },
+  "woodworking": {
+    "word": "woodworking",
+    "phonetic": "/'wʊd,wɜːkɪŋ/",
+    "explains": [
+      "n. 木工艺, 木工行业；adj. 干木工活的"
+    ]
+  },
+  "woody": {
+    "word": "woody",
+    "phonetic": "/'wʊdɪ/",
+    "explains": [
+      "adj. 多树木的,木质的"
+    ]
+  },
+  "wool": {
+    "word": "wool",
+    "phonetic": "/wʊl/",
+    "explains": [
+      "n. 羊毛"
+    ]
+  },
+  "woolen": {
+    "word": "woolen",
+    "phonetic": "/'wulən/",
+    "explains": [
+      "adj. 毛线的；n. 毛制品"
+    ]
+  },
+  "woollen": {
+    "word": "woollen",
+    "phonetic": "/'wʊlən/",
+    "explains": [
+      "adj. 羊毛制的；n. 毛织品"
+    ]
+  },
+  "woozy": {
+    "word": "woozy",
+    "phonetic": "/'wuːzɪ/",
+    "explains": [
+      "adj. 糊涂的, 虚弱的"
+    ]
+  },
   "word": {
     "word": "word",
     "phonetic": "/wɜːd/",
     "explains": [
       "n. 单词；话语；消息；诺言；命令 v. 用言辞表达"
+    ]
+  },
+  "wording": {
+    "word": "wording",
+    "phonetic": "/'wɜːdɪŋ/",
+    "explains": [
+      "n. 措辞"
     ]
   },
   "work": {
@@ -426,11 +2568,179 @@
       "v./n. 工作；劳动；干活；使工作；运转；职业"
     ]
   },
+  "workable": {
+    "word": "workable",
+    "phonetic": "/'wɜːkəb(ə)l/",
+    "explains": [
+      "adj. 可经营的, 可使用的"
+    ]
+  },
+  "workaholic": {
+    "word": "workaholic",
+    "phonetic": "/ˌwəːkə'hɔlik/",
+    "explains": [
+      "n.  工作狂"
+    ]
+  },
+  "workarounds": {
+    "word": "workarounds",
+    "phonetic": "",
+    "explains": [
+      "变通方案"
+    ]
+  },
+  "workbook": {
+    "word": "workbook",
+    "phonetic": "/'wɜːkbʊk/",
+    "explains": [
+      "n. 工作手册；练习簿"
+    ]
+  },
+  "workday": {
+    "word": "workday",
+    "phonetic": "/'wɜːkdeɪ/",
+    "explains": [
+      "n. 工作日"
+    ]
+  },
+  "worker": {
+    "word": "worker",
+    "phonetic": "/ˈwɜːkə/",
+    "explains": [
+      "n. 工人"
+    ]
+  },
+  "workfare": {
+    "word": "workfare",
+    "phonetic": "/'wəːkfeə/",
+    "explains": [
+      "n.  工作福利， 工作福利制"
+    ]
+  },
+  "workforce": {
+    "word": "workforce",
+    "phonetic": "/'wəːkfɔːs/",
+    "explains": [
+      "n.  职工总人数， 劳动力"
+    ]
+  },
+  "working": {
+    "word": "working",
+    "phonetic": "/'wəːkiŋ/",
+    "explains": [
+      "adj.  实用的； 工作的； 有职业"
+    ]
+  },
+  "workload": {
+    "word": "workload",
+    "phonetic": "/'wəːkləud/",
+    "explains": [
+      "n.  工作量"
+    ]
+  },
+  "workman": {
+    "word": "workman",
+    "phonetic": "/'wɜːkmən/",
+    "explains": [
+      "n. 工人，劳动者，工匠"
+    ]
+  },
+  "workmanlike": {
+    "word": "workmanlike",
+    "phonetic": "/'wɜːkmənlaɪk/",
+    "explains": [
+      "adj. 技术熟练的；精工细作的"
+    ]
+  },
+  "workmanship": {
+    "word": "workmanship",
+    "phonetic": "/'wɜːkmənʃɪp/",
+    "explains": [
+      "n. 手艺, 技艺"
+    ]
+  },
+  "workpiece": {
+    "word": "workpiece",
+    "phonetic": "",
+    "explains": [
+      "n. 工（作）件"
+    ]
+  },
+  "workplace": {
+    "word": "workplace",
+    "phonetic": "/'wəːkpleis/",
+    "explains": [
+      "n.  工作场所， 车间"
+    ]
+  },
+  "works": {
+    "word": "works",
+    "phonetic": "/'wɜːks/",
+    "explains": [
+      "n. 作品；工厂；工程结构"
+    ]
+  },
+  "worksheet": {
+    "word": "worksheet",
+    "phonetic": "/'wəːkʃiːt/",
+    "explains": [
+      "n.  工作单"
+    ]
+  },
+  "workshop": {
+    "word": "workshop",
+    "phonetic": "/ˈwɜːkʃɒp/",
+    "explains": [
+      "n. 车间"
+    ]
+  },
+  "workweek": {
+    "word": "workweek",
+    "phonetic": "/'wɜːkwiːk/",
+    "explains": [
+      "n. 一星期工作时间"
+    ]
+  },
   "world": {
     "word": "world",
     "phonetic": "/wɜːld/",
     "explains": [
       "n. 世界；地球；领域；尘世；全人类"
+    ]
+  },
+  "world-class": {
+    "word": "world-class",
+    "phonetic": "/'wəːldklɑːs/",
+    "explains": [
+      "adj.  世界级的"
+    ]
+  },
+  "world-wide": {
+    "word": "world-wide",
+    "phonetic": "/'wəːldˌwaid/",
+    "explains": [
+      "adj.  遍及地球的， 世界范围的"
+    ]
+  },
+  "worldwide": {
+    "word": "worldwide",
+    "phonetic": "/ˌwɜːldˈwaɪd; -ˈwaɪd/",
+    "explains": [
+      "adj. 全世界的"
+    ]
+  },
+  "worm": {
+    "word": "worm",
+    "phonetic": "/wɜːm/",
+    "explains": [
+      "n. 虫"
+    ]
+  },
+  "worried": {
+    "word": "worried",
+    "phonetic": "/ˈwʌrɪd/",
+    "explains": [
+      "adj. 担心的"
     ]
   },
   "worry": {
@@ -440,11 +2750,74 @@
       "v./n. 担心；担忧；发愁；烦恼；困扰"
     ]
   },
+  "worse": {
+    "word": "worse",
+    "phonetic": "/wɜːs/",
+    "explains": [
+      "adj. 更坏的"
+    ]
+  },
+  "worsen": {
+    "word": "worsen",
+    "phonetic": "/'wɜːs(ə)n/",
+    "explains": [
+      "v. 恶化"
+    ]
+  },
+  "worship": {
+    "word": "worship",
+    "phonetic": "/ˈwɜːʃɪp/",
+    "explains": [
+      "n. 崇拜"
+    ]
+  },
+  "worshipper": {
+    "word": "worshipper",
+    "phonetic": "/'wɜːʃɪpə/",
+    "explains": [
+      "n. 礼拜者"
+    ]
+  },
+  "worst": {
+    "word": "worst",
+    "phonetic": "/wɜːst/",
+    "explains": [
+      "adj. 最坏的"
+    ]
+  },
   "worth": {
     "word": "worth",
     "phonetic": "/wɜːθ/",
     "explains": [
       "adj. 值… 的；有… 价值的；值得的 n. 价值；财富；财产"
+    ]
+  },
+  "worthiness": {
+    "word": "worthiness",
+    "phonetic": "",
+    "explains": [
+      "n. 价值,值得"
+    ]
+  },
+  "worthless": {
+    "word": "worthless",
+    "phonetic": "/ˈwəːθlɪs/",
+    "explains": [
+      "adj. 无价值的，无用的"
+    ]
+  },
+  "worthwhile": {
+    "word": "worthwhile",
+    "phonetic": "/ˌwɜːθˈwaɪl/",
+    "explains": [
+      "adj. 值得的"
+    ]
+  },
+  "worthy": {
+    "word": "worthy",
+    "phonetic": "/ˈwɜːðɪ/",
+    "explains": [
+      "adj. 值得的"
     ]
   },
   "would": {
@@ -454,6 +2827,181 @@
       "modal v. 将；将会；愿意；总是；就；大概"
     ]
   },
+  "wound": {
+    "word": "wound",
+    "phonetic": "/wuːnd/",
+    "explains": [
+      "n. 伤口"
+    ]
+  },
+  "woven": {
+    "word": "woven",
+    "phonetic": "/'wəʊvn/",
+    "explains": [
+      "v. 编织；交织（weave的过去分词）；编造；adj. 织物的；n. 机织织物"
+    ]
+  },
+  "wraith": {
+    "word": "wraith",
+    "phonetic": "/reɪθ/",
+    "explains": [
+      "n. 鬼魂"
+    ]
+  },
+  "wrangle": {
+    "word": "wrangle",
+    "phonetic": "/ˈræŋgl/",
+    "explains": [
+      "n. 争论；吵嘴；v. 争论；争吵"
+    ]
+  },
+  "wrap": {
+    "word": "wrap",
+    "phonetic": "/ræp/",
+    "explains": [
+      "v. 包"
+    ]
+  },
+  "wrapper": {
+    "word": "wrapper",
+    "phonetic": "/'ræpə/",
+    "explains": [
+      "n. 包装材料,包装纸"
+    ]
+  },
+  "wrath": {
+    "word": "wrath",
+    "phonetic": "/rɒθ; rɔːθ/",
+    "explains": [
+      "n. 暴怒，狂怒，愤慨"
+    ]
+  },
+  "wreak": {
+    "word": "wreak",
+    "phonetic": "/riːk/",
+    "explains": [
+      "v. 发泄；报仇；造成（巨大的破坏或伤害）"
+    ]
+  },
+  "wreath": {
+    "word": "wreath",
+    "phonetic": "/riːθ/",
+    "explains": [
+      "n. 花冠；圈状物；v. 环绕（等于wreathe）"
+    ]
+  },
+  "wreathe": {
+    "word": "wreathe",
+    "phonetic": "/riːð/",
+    "explains": [
+      "vt&vi. 覆盖，包围"
+    ]
+  },
+  "wreck": {
+    "word": "wreck",
+    "phonetic": "/rek/",
+    "explains": [
+      "n. 沉船，失事船；v. 破坏"
+    ]
+  },
+  "wreckage": {
+    "word": "wreckage",
+    "phonetic": "/'rekidʒ/",
+    "explains": [
+      "n.  残骸； 遭难"
+    ]
+  },
+  "wren": {
+    "word": "wren",
+    "phonetic": "/ren/",
+    "explains": [
+      "n. [动] 鹪鹩"
+    ]
+  },
+  "wrench": {
+    "word": "wrench",
+    "phonetic": "/ren(t)ʃ/",
+    "explains": [
+      "v. 拧，扭伤；n. 拧"
+    ]
+  },
+  "wrest": {
+    "word": "wrest",
+    "phonetic": "/rest/",
+    "explains": [
+      "v. 用力拧；抢夺；歪曲；n. 扭，拧"
+    ]
+  },
+  "wrestle": {
+    "word": "wrestle",
+    "phonetic": "/'res(ə)l/",
+    "explains": [
+      "n. 摔交；斗争，搏斗"
+    ]
+  },
+  "wrestling": {
+    "word": "wrestling",
+    "phonetic": "/'reslɪŋ/",
+    "explains": [
+      "n. 摔跤；扭斗；v. 摔跤；格斗（wrestle的ing形式）；与…摔跤；使劲移动"
+    ]
+  },
+  "wretch": {
+    "word": "wretch",
+    "phonetic": "/retʃ/",
+    "explains": [
+      "n. 可怜的人，不幸的人；卑鄙的人"
+    ]
+  },
+  "wretched": {
+    "word": "wretched",
+    "phonetic": "/'retʃɪd/",
+    "explains": [
+      "adj. 不幸的"
+    ]
+  },
+  "wrick": {
+    "word": "wrick",
+    "phonetic": "/rɪk/",
+    "explains": [
+      "v. 扭伤"
+    ]
+  },
+  "wriggle": {
+    "word": "wriggle",
+    "phonetic": "/'rɪg(ə)l/",
+    "explains": [
+      "v. 蠕动；蜿蜒而行；n. 蠕动；扭动"
+    ]
+  },
+  "wring": {
+    "word": "wring",
+    "phonetic": "/rɪŋ/",
+    "explains": [
+      "v. 拧，挤，扭，榨"
+    ]
+  },
+  "wrinkle": {
+    "word": "wrinkle",
+    "phonetic": "/'rɪŋkl/",
+    "explains": [
+      "n. 皱纹；vt. 使起皱纹"
+    ]
+  },
+  "wrist": {
+    "word": "wrist",
+    "phonetic": "/rɪst/",
+    "explains": [
+      "n. 手腕"
+    ]
+  },
+  "writ": {
+    "word": "writ",
+    "phonetic": "/rit/",
+    "explains": [
+      "n.  令状； 传票； 公文"
+    ]
+  },
   "write": {
     "word": "write",
     "phonetic": "/raɪt/",
@@ -461,11 +3009,53 @@
       "v. 写；书写；写作；写信；编写；记录"
     ]
   },
+  "write-off": {
+    "word": "write-off",
+    "phonetic": "/'raitɔf/",
+    "explains": [
+      "n.  注销"
+    ]
+  },
+  "writer": {
+    "word": "writer",
+    "phonetic": "/ˈraɪtə/",
+    "explains": [
+      "n. 作家"
+    ]
+  },
+  "writhe": {
+    "word": "writhe",
+    "phonetic": "/raɪð/",
+    "explains": [
+      "v. 翻滚，扭动"
+    ]
+  },
+  "writing": {
+    "word": "writing",
+    "phonetic": "/'raɪtɪŋ/",
+    "explains": [
+      "n. 书写；作品；著作；[法] 笔迹；v. 书写（write的ing形式）"
+    ]
+  },
   "wrong": {
     "word": "wrong",
     "phonetic": "/rɒŋ/",
     "explains": [
       "adj. 错误的；不对的；不正确的；失常的 adv. 错误地；不正当地"
+    ]
+  },
+  "wrought": {
+    "word": "wrought",
+    "phonetic": "/rɔːt/",
+    "explains": [
+      "adj. 锤炼的"
+    ]
+  },
+  "wry": {
+    "word": "wry",
+    "phonetic": "/raɪ/",
+    "explains": [
+      "adj. 歪斜的，扭歪的；歪曲的；用反语表达幽默的；揶揄的；vt. 扭曲；扭歪；vi. 扭曲；扭歪"
     ]
   }
 }

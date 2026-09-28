@@ -1,9 +1,79 @@
 {
+  "d'accord": {
+    "word": "d'accord",
+    "phonetic": "",
+    "explains": [
+      "同意"
+    ]
+  },
+  "dab": {
+    "word": "dab",
+    "phonetic": "/dæb/",
+    "explains": [
+      "n. 轻拍；少量；熟手；比目鱼；v. 轻拍；涂；轻擦；轻敷（过去式dabbed，过去分词dabbed，现在分词dabbing，第三人称单数dabs）"
+    ]
+  },
+  "dabble": {
+    "word": "dabble",
+    "phonetic": "/'dæb(ə)l/",
+    "explains": [
+      "v. 弄湿, 弄水, 涉足"
+    ]
+  },
+  "dacron": {
+    "word": "dacron",
+    "phonetic": "",
+    "explains": [
+      "n. 涤纶；的确良"
+    ]
+  },
   "dad": {
     "word": "dad",
     "phonetic": "/dæd/",
     "explains": [
       "n. 爸爸（口语）"
+    ]
+  },
+  "daddy": {
+    "word": "daddy",
+    "phonetic": "/'dædɪ/",
+    "explains": [
+      "n. 爸爸"
+    ]
+  },
+  "daemon": {
+    "word": "daemon",
+    "phonetic": "",
+    "explains": [
+      "守护进程"
+    ]
+  },
+  "daffodil": {
+    "word": "daffodil",
+    "phonetic": "/'dæfədɪl/",
+    "explains": [
+      "n. 水仙花；adj. 水仙花色的"
+    ]
+  },
+  "daft": {
+    "word": "daft",
+    "phonetic": "/dɑːft/",
+    "explains": [
+      "adj. 愚蠢的"
+    ]
+  },
+  "dagger": {
+    "word": "dagger",
+    "phonetic": "/'dægə/",
+    "explains": [
+      "n. 匕首，短剑；vt. 用剑刺"
+    ]
+  },
+  "daguerreotype": {
+    "word": "daguerreotype",
+    "phonetic": "/də'gerətaɪp/",
+    "explains": [
+      "n. (早期)银板照相"
     ]
   },
   "daily": {
@@ -15,6 +85,69 @@
       "n. 日报"
     ]
   },
+  "dainty": {
+    "word": "dainty",
+    "phonetic": "/'deɪntɪ/",
+    "explains": [
+      "n. 适口的食物, 美味"
+    ]
+  },
+  "dairy": {
+    "word": "dairy",
+    "phonetic": "/ˈdeərɪ/",
+    "explains": [
+      "n. 乳制品"
+    ]
+  },
+  "dais": {
+    "word": "dais",
+    "phonetic": "/'deɪɪs; deɪs/",
+    "explains": [
+      "n. 讲台"
+    ]
+  },
+  "daisy": {
+    "word": "daisy",
+    "phonetic": "/'deɪzɪ/",
+    "explains": [
+      "n. 雏菊；菊科植物；极好的东西；adj. 极好的；上等的"
+    ]
+  },
+  "dale": {
+    "word": "dale",
+    "phonetic": "/deɪl/",
+    "explains": [
+      "n. 宽谷, 溪谷"
+    ]
+  },
+  "dalliance": {
+    "word": "dalliance",
+    "phonetic": "/'dælɪəns/",
+    "explains": [
+      "n. 调戏, 调情"
+    ]
+  },
+  "dally": {
+    "word": "dally",
+    "phonetic": "/'dælɪ/",
+    "explains": [
+      "v. 玩弄, 戏弄, 延误"
+    ]
+  },
+  "daltonism": {
+    "word": "daltonism",
+    "phonetic": "",
+    "explains": [
+      "n. [医]色盲(=color blindness)"
+    ]
+  },
+  "dam": {
+    "word": "dam",
+    "phonetic": "/dæm/",
+    "explains": [
+      "n. 水坝"
+    ]
+  },
   "damage": {
     "word": "damage",
     "phonetic": "/ˈdæmɪdʒ/",
@@ -23,12 +156,96 @@
       "v. 损坏；毁坏"
     ]
   },
+  "damages": {
+    "word": "damages",
+    "phonetic": "/'dæmidʒis/",
+    "explains": [
+      "n.  损害赔偿金"
+    ]
+  },
+  "dame": {
+    "word": "dame",
+    "phonetic": "",
+    "explains": [
+      "n.f. 女士"
+    ]
+  },
+  "damn": {
+    "word": "damn",
+    "phonetic": "/dæm/",
+    "explains": [
+      "v. 谴责"
+    ]
+  },
+  "damned": {
+    "word": "damned",
+    "phonetic": "/dæmd/",
+    "explains": [
+      "adj. 该死的；可恶的；糟透的；adv. 极；非常；v. 咒骂；诅咒…下地狱（damn的过去式）"
+    ]
+  },
+  "damp": {
+    "word": "damp",
+    "phonetic": "/dæmp/",
+    "explains": [
+      "adj. 潮湿的"
+    ]
+  },
+  "dampen": {
+    "word": "dampen",
+    "phonetic": "/'dæmp(ə)n/",
+    "explains": [
+      "v. 使潮湿,沮丧"
+    ]
+  },
+  "damper": {
+    "word": "damper",
+    "phonetic": "/'dæmpə/",
+    "explains": [
+      "n. 风阀, 减音器"
+    ]
+  },
+  "damsel": {
+    "word": "damsel",
+    "phonetic": "/'dæmz(ə)l/",
+    "explains": [
+      "n. 年轻女人, 闺女, 处女"
+    ]
+  },
   "dance": {
     "word": "dance",
     "phonetic": "/dɑːns/",
     "explains": [
       "v. 跳舞",
       "n. 舞蹈；舞会"
+    ]
+  },
+  "dancer": {
+    "word": "dancer",
+    "phonetic": "/'dɑːnsə/",
+    "explains": [
+      "n. 舞蹈家；舞蹈演员；舞女；跳舞者"
+    ]
+  },
+  "dandelion": {
+    "word": "dandelion",
+    "phonetic": "/'dændɪlaɪən/",
+    "explains": [
+      "n. 蒲公英"
+    ]
+  },
+  "dandified": {
+    "word": "dandified",
+    "phonetic": "",
+    "explains": [
+      "adj. 打扮得华丽的"
+    ]
+  },
+  "dandy": {
+    "word": "dandy",
+    "phonetic": "/'dændɪ/",
+    "explains": [
+      "n. 花花公子"
     ]
   },
   "danger": {
@@ -45,6 +262,69 @@
       "adj. 危险的；不安全的"
     ]
   },
+  "dangle": {
+    "word": "dangle",
+    "phonetic": "/'dæŋg(ə)l/",
+    "explains": [
+      "v. 摇摆"
+    ]
+  },
+  "danish": {
+    "word": "danish",
+    "phonetic": "/'deɪnɪʃ/",
+    "explains": [
+      "adj. 丹麦的；丹麦人的；丹麦语（文）的；n. 丹麦语"
+    ]
+  },
+  "dank": {
+    "word": "dank",
+    "phonetic": "/dæŋk/",
+    "explains": [
+      "adj. 透水的, 潮湿的, 阴湿寒冷的"
+    ]
+  },
+  "danse": {
+    "word": "danse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 舞蹈"
+    ]
+  },
+  "danser": {
+    "word": "danser",
+    "phonetic": "",
+    "explains": [
+      "v. 跳舞"
+    ]
+  },
+  "danseuse": {
+    "word": "danseuse",
+    "phonetic": "/dɒŋ'sɜːz/",
+    "explains": [
+      "n. 女芭蕾舞演员"
+    ]
+  },
+  "dapper": {
+    "word": "dapper",
+    "phonetic": "/'dæpə/",
+    "explains": [
+      "adj. 整洁的, 整齐的, 短小精悍的, 小巧玲珑的, 潇洒的, 衣冠楚楚的"
+    ]
+  },
+  "dapple": {
+    "word": "dapple",
+    "phonetic": "/'dæp(ə)l/",
+    "explains": [
+      "n. 斑纹, 斑点；v. (使）有斑纹"
+    ]
+  },
+  "dappled": {
+    "word": "dappled",
+    "phonetic": "/'dæpld/",
+    "explains": [
+      "adj. 有斑点的"
+    ]
+  },
   "dare": {
     "word": "dare",
     "phonetic": "/deər/",
@@ -53,12 +333,89 @@
       "modal. 胆敢"
     ]
   },
+  "daredevil": {
+    "word": "daredevil",
+    "phonetic": "/'deədev(ə)l/",
+    "explains": [
+      "n. 铤而走险的人, 蛮勇的人"
+    ]
+  },
+  "daring": {
+    "word": "daring",
+    "phonetic": "/'deərɪŋ/",
+    "explains": [
+      "adj. 大胆的，勇敢的"
+    ]
+  },
   "dark": {
     "word": "dark",
     "phonetic": "/dɑːk/",
     "explains": [
       "adj. 黑暗的；深色的",
       "n. 黑暗"
+    ]
+  },
+  "darken": {
+    "word": "darken",
+    "phonetic": "/'dɑːk(ə)n/",
+    "explains": [
+      "v. (使)变暗"
+    ]
+  },
+  "darkness": {
+    "word": "darkness",
+    "phonetic": "/'dɑrknəs/",
+    "explains": [
+      "n. 黑暗,漆黑"
+    ]
+  },
+  "darling": {
+    "word": "darling",
+    "phonetic": "/'dɑːlɪŋ/",
+    "explains": [
+      "n. 亲爱的人；宠儿"
+    ]
+  },
+  "darn": {
+    "word": "darn",
+    "phonetic": "/dɑːn/",
+    "explains": [
+      "v. 缝补，补缀"
+    ]
+  },
+  "dart": {
+    "word": "dart",
+    "phonetic": "/dɑːt/",
+    "explains": [
+      "n. 标枪, 镖；v. 投掷"
+    ]
+  },
+  "dash": {
+    "word": "dash",
+    "phonetic": "/dæʃ/",
+    "explains": [
+      "v. 使猛撞；溅；n. 猛冲"
+    ]
+  },
+  "dashboard": {
+    "word": "dashboard",
+    "phonetic": "",
+    "explains": [
+      "仪表盘"
+    ]
+  },
+  "dashing": {
+    "word": "dashing",
+    "phonetic": "/'dæʃɪŋ/",
+    "explains": [
+      "adj. 活跃的, 浮华的"
+    ]
+  },
+  "dastard": {
+    "word": "dastard",
+    "phonetic": "/'dæstəd; 'dɑː-/",
+    "explains": [
+      "n. 懦夫, 胆小的人"
     ]
   },
   "data": {
@@ -83,11 +440,88 @@
       "v. 注明日期；约会"
     ]
   },
+  "datebase": {
+    "word": "datebase",
+    "phonetic": "",
+    "explains": [
+      "n. 数据库, 资料库"
+    ]
+  },
+  "dated": {
+    "word": "dated",
+    "phonetic": "/'deɪtɪd/",
+    "explains": [
+      "adj. 陈旧的；过时的；有日期的；v. 注有日期（date的过去式和过去分词）"
+    ]
+  },
+  "dating": {
+    "word": "dating",
+    "phonetic": "/'deɪtɪŋ/",
+    "explains": [
+      "n. 约会；v. 约会"
+    ]
+  },
+  "datum": {
+    "word": "datum",
+    "phonetic": "/ˈdeɪtəm ; ˈdɑːtəm/",
+    "explains": [
+      "n. 资料；数据；已知数"
+    ]
+  },
+  "dau": {
+    "word": "dau",
+    "phonetic": "",
+    "explains": [
+      "日活跃用户数"
+    ]
+  },
+  "daub": {
+    "word": "daub",
+    "phonetic": "/dɔːb/",
+    "explains": [
+      "v. 涂抹"
+    ]
+  },
+  "daubster": {
+    "word": "daubster",
+    "phonetic": "",
+    "explains": [
+      "n. 笨画匠"
+    ]
+  },
   "daughter": {
     "word": "daughter",
     "phonetic": "/ˈdɔːtər/",
     "explains": [
       "n. 女儿"
+    ]
+  },
+  "daunt": {
+    "word": "daunt",
+    "phonetic": "/dɔːnt/",
+    "explains": [
+      "v. 沮丧"
+    ]
+  },
+  "dauntless": {
+    "word": "dauntless",
+    "phonetic": "/'dɔːntlɪs/",
+    "explains": [
+      "adj. 无畏的；勇敢的；不屈不挠的"
+    ]
+  },
+  "dawdle": {
+    "word": "dawdle",
+    "phonetic": "/'dɔːd(ə)l/",
+    "explains": [
+      "v. 游手好闲, 混日子"
+    ]
+  },
+  "dawn": {
+    "word": "dawn",
+    "phonetic": "/dɔːn/",
+    "explains": [
+      "n. 黎明"
     ]
   },
   "day": {
@@ -97,6 +531,69 @@
       "n. 白天；一天；时期"
     ]
   },
+  "daybreak": {
+    "word": "daybreak",
+    "phonetic": "/'deɪbreɪk/",
+    "explains": [
+      "n. 黎明；破晓"
+    ]
+  },
+  "daydream": {
+    "word": "daydream",
+    "phonetic": "/'deɪdriːm/",
+    "explains": [
+      "v. 做白日梦；n. 白日梦"
+    ]
+  },
+  "daylight": {
+    "word": "daylight",
+    "phonetic": "/'deɪlaɪt/",
+    "explains": [
+      "n. 白昼，日光；黎明"
+    ]
+  },
+  "daytime": {
+    "word": "daytime",
+    "phonetic": "/'deɪtaɪm/",
+    "explains": [
+      "n. 日间，白天"
+    ]
+  },
+  "daze": {
+    "word": "daze",
+    "phonetic": "/deɪz/",
+    "explains": [
+      "v. 使茫然；使眼花缭乱；使晕眩；n. 迷乱，眼花缭乱"
+    ]
+  },
+  "dazzle": {
+    "word": "dazzle",
+    "phonetic": "/'dæz(ə)l/",
+    "explains": [
+      "v. 使目眩；使倾倒"
+    ]
+  },
+  "dazzlingly": {
+    "word": "dazzlingly",
+    "phonetic": "",
+    "explains": [
+      "adv. 灿烂地, 耀眼地"
+    ]
+  },
+  "de": {
+    "word": "de",
+    "phonetic": "",
+    "explains": [
+      "prep. 的；从"
+    ]
+  },
+  "deacon": {
+    "word": "deacon",
+    "phonetic": "/'diːk(ə)n/",
+    "explains": [
+      "n. 执事；助祭；vt. 朗读；搞欺骗"
+    ]
+  },
   "dead": {
     "word": "dead",
     "phonetic": "/ded/",
@@ -104,11 +601,60 @@
       "adj. 死的；无生命的；完全的"
     ]
   },
+  "deaden": {
+    "word": "deaden",
+    "phonetic": "/'ded(ə)n/",
+    "explains": [
+      "v. 使减弱；使麻木；隔阻"
+    ]
+  },
   "deadline": {
     "word": "deadline",
     "phonetic": "/ˈdedlaɪn/",
     "explains": [
       "n. 截止日期"
+    ]
+  },
+  "deadlock": {
+    "word": "deadlock",
+    "phonetic": "/'dedlɒk/",
+    "explains": [
+      "n. 僵局，僵局"
+    ]
+  },
+  "deadly": {
+    "word": "deadly",
+    "phonetic": "/'dedlɪ/",
+    "explains": [
+      "adj. 致命的；死一般的"
+    ]
+  },
+  "deadweight": {
+    "word": "deadweight",
+    "phonetic": "",
+    "explains": [
+      "n. 自重；载重量；重负"
+    ]
+  },
+  "deaerate": {
+    "word": "deaerate",
+    "phonetic": "",
+    "explains": [
+      "v. 使除去空气, 从(液体)中除去气泡"
+    ]
+  },
+  "deaf": {
+    "word": "deaf",
+    "phonetic": "/def/",
+    "explains": [
+      "adj. 聋的"
+    ]
+  },
+  "deafen": {
+    "word": "deafen",
+    "phonetic": "/'def(ə)n/",
+    "explains": [
+      "v. 使聋"
     ]
   },
   "deal": {
@@ -126,6 +672,27 @@
       "n. 商人；经销商"
     ]
   },
+  "dealership": {
+    "word": "dealership",
+    "phonetic": "/'diːləʃɪp/",
+    "explains": [
+      "n. 代理权；代理商；经销权"
+    ]
+  },
+  "dealing": {
+    "word": "dealing",
+    "phonetic": "/'diːlɪŋ/",
+    "explains": [
+      "n. 行为, 交易"
+    ]
+  },
+  "dean": {
+    "word": "dean",
+    "phonetic": "/diːn/",
+    "explains": [
+      "n. （大学）院长，系主任"
+    ]
+  },
   "dear": {
     "word": "dear",
     "phonetic": "/dɪər/",
@@ -134,11 +701,53 @@
       "int. 哎呀（表示惊讶）"
     ]
   },
+  "dearth": {
+    "word": "dearth",
+    "phonetic": "/dɜːθ/",
+    "explains": [
+      "n. 缺乏，供应不足"
+    ]
+  },
   "death": {
     "word": "death",
     "phonetic": "/deθ/",
     "explains": [
       "n. 死亡；消亡"
+    ]
+  },
+  "deathly": {
+    "word": "deathly",
+    "phonetic": "/'deθlɪ/",
+    "explains": [
+      "adj. 死一般的；致命的；adv. 死了一样地；非常"
+    ]
+  },
+  "debacle": {
+    "word": "debacle",
+    "phonetic": "/dɪˈbɑːkəl/",
+    "explains": [
+      "n. 崩溃；灾害；解冻"
+    ]
+  },
+  "debase": {
+    "word": "debase",
+    "phonetic": "/dɪ'beɪs/",
+    "explains": [
+      "v. 降低；使…贬值；掺杂；n. (Debase)人名；(意)德巴塞"
+    ]
+  },
+  "debasement": {
+    "word": "debasement",
+    "phonetic": "/di'beisment/",
+    "explains": [
+      "n.  降低； 贬值"
+    ]
+  },
+  "debatable": {
+    "word": "debatable",
+    "phonetic": "/dɪ'beɪtəb(ə)l/",
+    "explains": [
+      "adj. 成问题的,未决定的"
     ]
   },
   "debate": {
@@ -149,11 +758,151 @@
       "v. 辩论；争论"
     ]
   },
+  "debauch": {
+    "word": "debauch",
+    "phonetic": "/dɪ'bɔːtʃ/",
+    "explains": [
+      "v. 使堕落"
+    ]
+  },
+  "debauchery": {
+    "word": "debauchery",
+    "phonetic": "/dɪ'bɔːtʃ(ə)rɪ/",
+    "explains": [
+      "n. 放荡, 游荡"
+    ]
+  },
+  "debenture": {
+    "word": "debenture",
+    "phonetic": "/di'bentʃə/",
+    "explains": [
+      "n.  借方； 计入借方的款项； 公司债券"
+    ]
+  },
+  "deber": {
+    "word": "deber",
+    "phonetic": "",
+    "explains": [
+      "v. 应该；n.m. 义务"
+    ]
+  },
+  "deberes": {
+    "word": "deberes",
+    "phonetic": "",
+    "explains": [
+      "n.m.pl. 作业"
+    ]
+  },
+  "debilidad": {
+    "word": "debilidad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 虚弱；弱点"
+    ]
+  },
+  "debilitate": {
+    "word": "debilitate",
+    "phonetic": "/dɪ'bɪlɪteɪt/",
+    "explains": [
+      "v. 使衰弱；使虚弱"
+    ]
+  },
+  "debility": {
+    "word": "debility",
+    "phonetic": "/dɪ'bɪlɪtɪ/",
+    "explains": [
+      "n. 衰弱, 无活力"
+    ]
+  },
+  "debit": {
+    "word": "debit",
+    "phonetic": "/'debit/",
+    "explains": [
+      "n. 借方；vt.  把…记入借方"
+    ]
+  },
+  "debonair": {
+    "word": "debonair",
+    "phonetic": "/,debə'neə/",
+    "explains": [
+      "adj. 殷勤的, 高兴的, 快活的, 温文尔雅的"
+    ]
+  },
+  "debouch": {
+    "word": "debouch",
+    "phonetic": "/dɪ'baʊtʃ; -'buːʃ/",
+    "explains": [
+      "v. 溢出, 流出"
+    ]
+  },
+  "debounce": {
+    "word": "debounce",
+    "phonetic": "",
+    "explains": [
+      "防抖"
+    ]
+  },
+  "debrief": {
+    "word": "debrief",
+    "phonetic": "/diː'briːf/",
+    "explains": [
+      "v. 听取报告, 听取汇报"
+    ]
+  },
+  "debris": {
+    "word": "debris",
+    "phonetic": "/'debriː; 'deɪbriː/",
+    "explains": [
+      "n. 碎片,残骸"
+    ]
+  },
   "debt": {
     "word": "debt",
     "phonetic": "/det/",
     "explains": [
       "n. 债务；欠款"
+    ]
+  },
+  "debtee": {
+    "word": "debtee",
+    "phonetic": "/de'tiː/",
+    "explains": [
+      "n.  债权人"
+    ]
+  },
+  "debtor": {
+    "word": "debtor",
+    "phonetic": "/'detə/",
+    "explains": [
+      "n.  债务人； 借方"
+    ]
+  },
+  "debug": {
+    "word": "debug",
+    "phonetic": "/diː'bʌg/",
+    "explains": [
+      "v. 调试；除错，改正有毛病部分；[军] 除去窃听器"
+    ]
+  },
+  "debunk": {
+    "word": "debunk",
+    "phonetic": "/diː'bʌŋk/",
+    "explains": [
+      "v. 揭穿；拆穿…的假面具；暴露"
+    ]
+  },
+  "debut": {
+    "word": "debut",
+    "phonetic": "/'deɪbjuː; -buː/",
+    "explains": [
+      "n. 首次演出，初次露面"
+    ]
+  },
+  "debutante": {
+    "word": "debutante",
+    "phonetic": "/'debjʊtɑːnt; 'deɪ-/",
+    "explains": [
+      "n. 初次参加社交活动的"
     ]
   },
   "decade": {
@@ -163,11 +912,137 @@
       "n. 十年"
     ]
   },
+  "decadence": {
+    "word": "decadence",
+    "phonetic": "/'dekəd(ə)ns/",
+    "explains": [
+      "n. 颓废"
+    ]
+  },
+  "decadent": {
+    "word": "decadent",
+    "phonetic": "/'dekəd(ə)nt/",
+    "explains": [
+      "adj. 颓废的"
+    ]
+  },
+  "decagon": {
+    "word": "decagon",
+    "phonetic": "/'dekəg(ə)n/",
+    "explains": [
+      "n. [数] 十角形；[数] 十边形"
+    ]
+  },
+  "decamp": {
+    "word": "decamp",
+    "phonetic": "/dɪ'kæmp/",
+    "explains": [
+      "v. 秘密而匆忙地移居, 撤营, 逃走, 逃亡"
+    ]
+  },
   "decay": {
     "word": "decay",
     "phonetic": "/dɪˈkeɪ/",
     "explains": [
       "v./n. 腐烂；衰退"
+    ]
+  },
+  "decease": {
+    "word": "decease",
+    "phonetic": "/dɪ'siːs/",
+    "explains": [
+      "n. 死亡；v. 死"
+    ]
+  },
+  "deceased": {
+    "word": "deceased",
+    "phonetic": "/dɪ'siːst/",
+    "explains": [
+      "adj. 已故的；n. 死者；[法] 被继承人；vi. 死亡（decease的过去式）"
+    ]
+  },
+  "deceit": {
+    "word": "deceit",
+    "phonetic": "/dɪ'siːt/",
+    "explains": [
+      "n. 欺骗，欺诈"
+    ]
+  },
+  "deceitful": {
+    "word": "deceitful",
+    "phonetic": "/dɪ'siːtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 欺骗的；欺诈的；谎言的；虚伪的"
+    ]
+  },
+  "deceive": {
+    "word": "deceive",
+    "phonetic": "/dɪˈsiːv/",
+    "explains": [
+      "v. 欺骗；蒙蔽"
+    ]
+  },
+  "decelerate": {
+    "word": "decelerate",
+    "phonetic": "/diː'seləreɪt/",
+    "explains": [
+      "v. (使)减速"
+    ]
+  },
+  "december": {
+    "word": "december",
+    "phonetic": "/dɪˈsembə/",
+    "explains": [
+      "n. 十二月"
+    ]
+  },
+  "decency": {
+    "word": "decency",
+    "phonetic": "/'diːs(ə)nsɪ/",
+    "explains": [
+      "n. 正派；体面；庄重；合乎礼仪；礼貌"
+    ]
+  },
+  "decent": {
+    "word": "decent",
+    "phonetic": "/ˈdiːsnt/",
+    "explains": [
+      "adj. 体面的；正派的"
+    ]
+  },
+  "decentralization": {
+    "word": "decentralization",
+    "phonetic": "/diːˌsentrəlai'zeiʃən/",
+    "explains": [
+      "n.  权力下放； 分散经营； 分权"
+    ]
+  },
+  "deception": {
+    "word": "deception",
+    "phonetic": "/dɪ'sepʃ(ə)n/",
+    "explains": [
+      "n. 欺骗, 诡计"
+    ]
+  },
+  "deceptive": {
+    "word": "deceptive",
+    "phonetic": "/dɪ'septɪv/",
+    "explains": [
+      "adj. 骗人的，造成假象的"
+    ]
+  },
+  "decertify": {
+    "word": "decertify",
+    "phonetic": "/diː'səːtifai/",
+    "explains": [
+      "v.  收回证件"
+    ]
+  },
+  "decibel": {
+    "word": "decibel",
+    "phonetic": "/'desɪbel/",
+    "explains": [
+      "n. 分贝"
     ]
   },
   "decide": {
@@ -177,6 +1052,48 @@
       "v. 决定；裁决"
     ]
   },
+  "decidedly": {
+    "word": "decidedly",
+    "phonetic": "/dɪ'saɪdɪdlɪ/",
+    "explains": [
+      "adv. 明确地，坚决地"
+    ]
+  },
+  "deciduous": {
+    "word": "deciduous",
+    "phonetic": "/dɪ'sɪdjʊəs/",
+    "explains": [
+      "adj. 每年落叶的, 非永久性的"
+    ]
+  },
+  "decimal": {
+    "word": "decimal",
+    "phonetic": "/'desɪm(ə)l/",
+    "explains": [
+      "adj. 小数的，十进制的"
+    ]
+  },
+  "decimate": {
+    "word": "decimate",
+    "phonetic": "/'desɪmeɪt/",
+    "explains": [
+      "v. 十中抽一，取十分之一；大批杀害"
+    ]
+  },
+  "decipher": {
+    "word": "decipher",
+    "phonetic": "/di'saifə/",
+    "explains": [
+      "v.  破解"
+    ]
+  },
+  "decir": {
+    "word": "decir",
+    "phonetic": "",
+    "explains": [
+      "v. 说"
+    ]
+  },
   "decision": {
     "word": "decision",
     "phonetic": "/dɪˈsɪʒn/",
@@ -184,11 +1101,88 @@
       "n. 决定；决议"
     ]
   },
+  "decision-making": {
+    "word": "decision-making",
+    "phonetic": "/di'siʒənˌmeikiŋ/",
+    "explains": [
+      "n.  决策； 拍板"
+    ]
+  },
+  "decisive": {
+    "word": "decisive",
+    "phonetic": "/dɪ'saɪsɪv/",
+    "explains": [
+      "adj. 决定性的；果断的"
+    ]
+  },
+  "deck": {
+    "word": "deck",
+    "phonetic": "/dek/",
+    "explains": [
+      "n. 甲板；舱面；层面"
+    ]
+  },
+  "deckhand": {
+    "word": "deckhand",
+    "phonetic": "/'dekhænd/",
+    "explains": [
+      "n. 甲板水手，普通水手；下级水手"
+    ]
+  },
+  "declaim": {
+    "word": "declaim",
+    "phonetic": "/dɪ'kleɪm/",
+    "explains": [
+      "v. 慷慨陈词；演讲；朗读"
+    ]
+  },
+  "declamation": {
+    "word": "declamation",
+    "phonetic": "/deklə'meɪʃ(ə)n/",
+    "explains": [
+      "n. 雄辨"
+    ]
+  },
+  "declarar": {
+    "word": "declarar",
+    "phonetic": "",
+    "explains": [
+      "v. 声明；申报"
+    ]
+  },
+  "declaration": {
+    "word": "declaration",
+    "phonetic": "/deklə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 宣布，宣言"
+    ]
+  },
   "declare": {
     "word": "declare",
     "phonetic": "/dɪˈkleər/",
     "explains": [
       "v. 宣布；声明；申报"
+    ]
+  },
+  "declassify": {
+    "word": "declassify",
+    "phonetic": "/diː'klæsɪfaɪ/",
+    "explains": [
+      "v. 不再当机密文件处理, 从机密表删除"
+    ]
+  },
+  "declension": {
+    "word": "declension",
+    "phonetic": "/dɪ'klenʃ(ə)n/",
+    "explains": [
+      "n. 词尾变化；变格；倾斜；衰退"
+    ]
+  },
+  "declination": {
+    "word": "declination",
+    "phonetic": "/,deklɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 偏差"
     ]
   },
   "decline": {
@@ -199,11 +1193,123 @@
       "n. 下降；衰退"
     ]
   },
+  "declined": {
+    "word": "declined",
+    "phonetic": "",
+    "explains": [
+      "已婉拒"
+    ]
+  },
+  "declivity": {
+    "word": "declivity",
+    "phonetic": "/dɪ'klɪvɪtɪ/",
+    "explains": [
+      "n. 倾斜, 下坡"
+    ]
+  },
+  "deco": {
+    "word": "deco",
+    "phonetic": "",
+    "explains": [
+      "n. 装饰派艺术"
+    ]
+  },
+  "decode": {
+    "word": "decode",
+    "phonetic": "",
+    "explains": [
+      "v. 解码, 译解"
+    ]
+  },
+  "decoding": {
+    "word": "decoding",
+    "phonetic": "",
+    "explains": [
+      "解码"
+    ]
+  },
+  "decollate": {
+    "word": "decollate",
+    "phonetic": "/dɪ'kɒleɪt; 'dekəleɪt/",
+    "explains": [
+      "v. 斩首, 杀头"
+    ]
+  },
+  "decompose": {
+    "word": "decompose",
+    "phonetic": "/diːkəm'pəʊz/",
+    "explains": [
+      "v. 腐败；分解"
+    ]
+  },
+  "decomposition": {
+    "word": "decomposition",
+    "phonetic": "/,diːkɒmpə'zɪʃn/",
+    "explains": [
+      "n. 分解, 腐烂"
+    ]
+  },
+  "decor": {
+    "word": "decor",
+    "phonetic": "/'deɪkɔː; 'de-/",
+    "explains": [
+      "n. 舞台装饰"
+    ]
+  },
   "decorate": {
     "word": "decorate",
     "phonetic": "/ˈdekəreɪt/",
     "explains": [
       "v. 装饰；装修"
+    ]
+  },
+  "decoration": {
+    "word": "decoration",
+    "phonetic": "/ˌdekəˈreɪʃ(ə)n/",
+    "explains": [
+      "n. 装饰"
+    ]
+  },
+  "decorative": {
+    "word": "decorative",
+    "phonetic": "/'dek(ə)rətɪv/",
+    "explains": [
+      "adj. 装饰的；可作装饰的"
+    ]
+  },
+  "decorator": {
+    "word": "decorator",
+    "phonetic": "/'dekəreɪtə/",
+    "explains": [
+      "n. 油漆工"
+    ]
+  },
+  "decorous": {
+    "word": "decorous",
+    "phonetic": "/'dek(ə)rəs/",
+    "explains": [
+      "adj. 有礼貌的，高雅的；端正的"
+    ]
+  },
+  "decorticate": {
+    "word": "decorticate",
+    "phonetic": "/diː'kɔːtɪkeɪt/",
+    "explains": [
+      "v. 剥皮"
+    ]
+  },
+  "decorum": {
+    "word": "decorum",
+    "phonetic": "/dɪ'kɔːrəm/",
+    "explains": [
+      "n. 礼貌"
+    ]
+  },
+  "decoy": {
+    "word": "decoy",
+    "phonetic": "/'diːkɒɪ; dɪ'kɒɪ/",
+    "explains": [
+      "n. 诱饵；诱骗；v. 诱骗"
     ]
   },
   "decrease": {
@@ -214,11 +1320,123 @@
       "n. 减少"
     ]
   },
+  "decree": {
+    "word": "decree",
+    "phonetic": "/dɪ'kriː/",
+    "explains": [
+      "n. 法令，政令"
+    ]
+  },
+  "decrepit": {
+    "word": "decrepit",
+    "phonetic": "/dɪ'krepɪt/",
+    "explains": [
+      "adj. 老弱的，衰老的"
+    ]
+  },
+  "decrepitude": {
+    "word": "decrepitude",
+    "phonetic": "/dɪ'krepɪtʃuːd; dɪ'krepɪtjuːd/",
+    "explains": [
+      "n. 衰老, 老朽, 老耄"
+    ]
+  },
+  "decry": {
+    "word": "decry",
+    "phonetic": "/dɪ'kraɪ/",
+    "explains": [
+      "v. 责难，谴责；诽谤"
+    ]
+  },
+  "decrypt": {
+    "word": "decrypt",
+    "phonetic": "",
+    "explains": [
+      "解密"
+    ]
+  },
+  "decumbence": {
+    "word": "decumbence",
+    "phonetic": "",
+    "explains": [
+      "n. 横卧"
+    ]
+  },
+  "dedicar": {
+    "word": "dedicar",
+    "phonetic": "",
+    "explains": [
+      "v. 献给；从事"
+    ]
+  },
   "dedicate": {
     "word": "dedicate",
     "phonetic": "/ˈdedɪkeɪt/",
     "explains": [
       "v. 奉献；致力于"
+    ]
+  },
+  "dedicated": {
+    "word": "dedicated",
+    "phonetic": "/'dedɪkeɪtɪd/",
+    "explains": [
+      "adj. 献身的，一心一意的，热诚的"
+    ]
+  },
+  "dedication": {
+    "word": "dedication",
+    "phonetic": "/dedɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 贡献, 奉献"
+    ]
+  },
+  "dedo": {
+    "word": "dedo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手指"
+    ]
+  },
+  "deduce": {
+    "word": "deduce",
+    "phonetic": "/dɪ'djuːs/",
+    "explains": [
+      "v. 演绎，推论，推断"
+    ]
+  },
+  "deduct": {
+    "word": "deduct",
+    "phonetic": "/dɪ'dʌkt/",
+    "explains": [
+      "v. 扣除，减去；演绎"
+    ]
+  },
+  "deductible": {
+    "word": "deductible",
+    "phonetic": "/di'dʌktəbl/",
+    "explains": [
+      "adj. 可扣除的；n.  免赔率； 免赔额； 扣除额"
+    ]
+  },
+  "deduction": {
+    "word": "deduction",
+    "phonetic": "/di'dʌkʃən/",
+    "explains": [
+      "n.  扣除， 减除"
+    ]
+  },
+  "deed": {
+    "word": "deed",
+    "phonetic": "/diːd/",
+    "explains": [
+      "n. 行为"
+    ]
+  },
+  "deem": {
+    "word": "deem",
+    "phonetic": "/diːm/",
+    "explains": [
+      "v. 认为，相信，想"
     ]
   },
   "deep": {
@@ -229,11 +1447,67 @@
       "adv. 深入地"
     ]
   },
+  "deepen": {
+    "word": "deepen",
+    "phonetic": "",
+    "explains": [
+      "v. 加深；深化"
+    ]
+  },
   "deeply": {
     "word": "deeply",
     "phonetic": "/ˈdiːpli/",
     "explains": [
       "adv. 深深地；强烈地"
+    ]
+  },
+  "deer": {
+    "word": "deer",
+    "phonetic": "/dɪə/",
+    "explains": [
+      "n. 鹿"
+    ]
+  },
+  "deface": {
+    "word": "deface",
+    "phonetic": "/dɪ'feɪs/",
+    "explains": [
+      "v. 损伤外观，丑化"
+    ]
+  },
+  "defalcate": {
+    "word": "defalcate",
+    "phonetic": "/'diːfælkeɪt/",
+    "explains": [
+      "v. 盗用公款, 挪用公款, 贪污"
+    ]
+  },
+  "defamatory": {
+    "word": "defamatory",
+    "phonetic": "/dɪ'fæmət(ə)rɪ/",
+    "explains": [
+      "adj. 破坏名誉的, 诽谤的"
+    ]
+  },
+  "defame": {
+    "word": "defame",
+    "phonetic": "/dɪ'feɪm/",
+    "explains": [
+      "v. 诽谤"
+    ]
+  },
+  "default": {
+    "word": "default",
+    "phonetic": "/dɪ'fɔːlt; 'diːfɔːlt/",
+    "explains": [
+      "n. 不履行义务；v. 不履行义务"
+    ]
+  },
+  "defeasible": {
+    "word": "defeasible",
+    "phonetic": "/dɪ'fiːzɪb(ə)l/",
+    "explains": [
+      "adj. 可废止的"
     ]
   },
   "defeat": {
@@ -242,6 +1516,41 @@
     "explains": [
       "v. 击败；战胜",
       "n. 失败；击败"
+    ]
+  },
+  "defecate": {
+    "word": "defecate",
+    "phonetic": "/'defɪkeɪt; 'diːf-/",
+    "explains": [
+      "v. 澄清"
+    ]
+  },
+  "defect": {
+    "word": "defect",
+    "phonetic": "/'diːfekt; dɪ'fekt/",
+    "explains": [
+      "n. 缺点，缺陷，欠缺"
+    ]
+  },
+  "defection": {
+    "word": "defection",
+    "phonetic": "/dɪ'fekʃn/",
+    "explains": [
+      "n. 缺点, 背信, 背叛, 变节"
+    ]
+  },
+  "defective": {
+    "word": "defective",
+    "phonetic": "/di'fektiv/",
+    "explains": [
+      "adj.  有缺陷的"
+    ]
+  },
+  "defence": {
+    "word": "defence",
+    "phonetic": "/dɪˈfens/",
+    "explains": [
+      "n. 防御；防守；辩护（英式拼写）"
     ]
   },
   "defend": {
@@ -258,6 +1567,13 @@
       "n. 被告"
     ]
   },
+  "defender": {
+    "word": "defender",
+    "phonetic": "/dɪ'fendə(r)/",
+    "explains": [
+      "n. 防卫者, 拥护者"
+    ]
+  },
   "defense": {
     "word": "defense",
     "phonetic": "/dɪˈfens/",
@@ -265,11 +1581,74 @@
       "n. 防御；防守；辩护（美式拼写）"
     ]
   },
-  "defence": {
-    "word": "defence",
-    "phonetic": "/dɪˈfens/",
+  "defenseless": {
+    "word": "defenseless",
+    "phonetic": "/di'fenslis/",
     "explains": [
-      "n. 防御；防守；辩护（英式拼写）"
+      "adj. 无防备的"
+    ]
+  },
+  "defensible": {
+    "word": "defensible",
+    "phonetic": "/dɪ'fensɪb(ə)l/",
+    "explains": [
+      "adj. 可防御的"
+    ]
+  },
+  "defensive": {
+    "word": "defensive",
+    "phonetic": "/dɪ'fensɪv/",
+    "explains": [
+      "n&a. 防御(的)"
+    ]
+  },
+  "defer": {
+    "word": "defer",
+    "phonetic": "/di'fəː/",
+    "explains": [
+      "vi.  遵从， 听从， 服从；vt. 推迟，拖延；把…委托给"
+    ]
+  },
+  "deference": {
+    "word": "deference",
+    "phonetic": "/'def(ə)r(ə)ns/",
+    "explains": [
+      "n. 顺从, 尊重"
+    ]
+  },
+  "deferential": {
+    "word": "deferential",
+    "phonetic": "/defə'renʃ(ə)l/",
+    "explains": [
+      "adj. 恭敬的, 顺从的"
+    ]
+  },
+  "defiance": {
+    "word": "defiance",
+    "phonetic": "/dɪ'faɪəns/",
+    "explains": [
+      "n. 挑战，挑衅；违抗；蔑视"
+    ]
+  },
+  "defiant": {
+    "word": "defiant",
+    "phonetic": "/dɪ'faɪənt/",
+    "explains": [
+      "adj. 挑衅的；目中无人的，蔑视的；挑战的"
+    ]
+  },
+  "deficiency": {
+    "word": "deficiency",
+    "phonetic": "/dɪ'fɪʃ(ə)nsɪ/",
+    "explains": [
+      "n. 缺乏；不足"
+    ]
+  },
+  "deficient": {
+    "word": "deficient",
+    "phonetic": "/dɪ'fɪʃ(ə)nt/",
+    "explains": [
+      "adj. 缺乏的；欠缺的"
     ]
   },
   "deficit": {
@@ -279,11 +1658,32 @@
       "n. 赤字；不足"
     ]
   },
+  "defilade": {
+    "word": "defilade",
+    "phonetic": "/,defɪ'leɪd/",
+    "explains": [
+      "vt. 遮蔽"
+    ]
+  },
+  "defile": {
+    "word": "defile",
+    "phonetic": "/dɪ'faɪl/",
+    "explains": [
+      "v. 弄脏，污损"
+    ]
+  },
   "define": {
     "word": "define",
     "phonetic": "/dɪˈfaɪn/",
     "explains": [
       "v. 定义；解释；明确"
+    ]
+  },
+  "definir": {
+    "word": "definir",
+    "phonetic": "",
+    "explains": [
+      "v. 定义"
     ]
   },
   "definite": {
@@ -307,11 +1707,249 @@
       "n. 定义；释义"
     ]
   },
+  "definitive": {
+    "word": "definitive",
+    "phonetic": "/dɪ'fɪnɪtɪv/",
+    "explains": [
+      "adj. 最后的,确定的"
+    ]
+  },
+  "definitively": {
+    "word": "definitively",
+    "phonetic": "",
+    "explains": [
+      "adv. 决定性地, 最后地"
+    ]
+  },
+  "deflate": {
+    "word": "deflate",
+    "phonetic": "/dɪ'fleɪt/",
+    "explains": [
+      "v. 使(轮胎)瘪下去 降低重要性"
+    ]
+  },
+  "deflation": {
+    "word": "deflation",
+    "phonetic": "/di'fleiʃən/",
+    "explains": [
+      "n.  通货紧缩"
+    ]
+  },
+  "deflect": {
+    "word": "deflect",
+    "phonetic": "/dɪ'flekt/",
+    "explains": [
+      "v. （使）偏斜"
+    ]
+  },
+  "deflection": {
+    "word": "deflection",
+    "phonetic": "/dɪ'flekʃ(ə)n/",
+    "explains": [
+      "n. 偏斜，歪斜；偏差"
+    ]
+  },
+  "defoliate": {
+    "word": "defoliate",
+    "phonetic": "/diː'fəʊlɪeɪt/",
+    "explains": [
+      "v. 使落叶"
+    ]
+  },
+  "deform": {
+    "word": "deform",
+    "phonetic": "/dɪ'fɔːm/",
+    "explains": [
+      "v. 损坏…的形状"
+    ]
+  },
+  "deformation": {
+    "word": "deformation",
+    "phonetic": "/,diːfɔː'meɪʃ(ə)n/",
+    "explains": [
+      "n. 损坏；变形；畸形"
+    ]
+  },
+  "deformity": {
+    "word": "deformity",
+    "phonetic": "/dɪ'fɔːmɪtɪ/",
+    "explains": [
+      "n. 残缺, 畸形"
+    ]
+  },
+  "defraud": {
+    "word": "defraud",
+    "phonetic": "/dɪ'frɔːd/",
+    "explains": [
+      "v. 欺骗，欺诈"
+    ]
+  },
+  "defray": {
+    "word": "defray",
+    "phonetic": "/dɪ'freɪ/",
+    "explains": [
+      "v. 支付, 支出"
+    ]
+  },
+  "defrost": {
+    "word": "defrost",
+    "phonetic": "/diː'frɒst/",
+    "explains": [
+      "v. 除霜"
+    ]
+  },
+  "deft": {
+    "word": "deft",
+    "phonetic": "/deft/",
+    "explains": [
+      "adj. 敏捷熟练的, 灵巧的"
+    ]
+  },
+  "defunct": {
+    "word": "defunct",
+    "phonetic": "/dɪ'fʌŋ(k)t/",
+    "explains": [
+      "adj. 死了的"
+    ]
+  },
+  "defuse": {
+    "word": "defuse",
+    "phonetic": "/diː'fjuːz/",
+    "explains": [
+      "v. 平息；去掉…的雷管；使除去危险性"
+    ]
+  },
+  "defy": {
+    "word": "defy",
+    "phonetic": "/dɪ'faɪ/",
+    "explains": [
+      "v. 向…挑战；蔑视"
+    ]
+  },
+  "degas": {
+    "word": "degas",
+    "phonetic": "/diː'gæs/",
+    "explains": [
+      "v. 除去瓦斯"
+    ]
+  },
+  "degenerate": {
+    "word": "degenerate",
+    "phonetic": "/dɪ'dʒen(ə)rət/",
+    "explains": [
+      "v. 使退化；恶化；adj. 退化的；堕落的；n. 堕落的人"
+    ]
+  },
+  "deglaciation": {
+    "word": "deglaciation",
+    "phonetic": "",
+    "explains": [
+      "n. 冰消作用"
+    ]
+  },
+  "degradation": {
+    "word": "degradation",
+    "phonetic": "/,degrə'deɪʃ(ə)n/",
+    "explains": [
+      "n. 降级；退化；衰变"
+    ]
+  },
+  "degrade": {
+    "word": "degrade",
+    "phonetic": "/dɪ'greɪd/",
+    "explains": [
+      "v. 使降低；使堕落"
+    ]
+  },
   "degree": {
     "word": "degree",
     "phonetic": "/dɪˈɡriː/",
     "explains": [
       "n. 学位；程度；度数"
+    ]
+  },
+  "dehumanize": {
+    "word": "dehumanize",
+    "phonetic": "/diː'hjuːmənaɪz/",
+    "explains": [
+      "v. 使失掉人性, 使成兽性"
+    ]
+  },
+  "dehydrate": {
+    "word": "dehydrate",
+    "phonetic": "/diːhaɪ'dreɪt; diː'haɪdreɪt/",
+    "explains": [
+      "v. (使)脱水"
+    ]
+  },
+  "dehydration": {
+    "word": "dehydration",
+    "phonetic": "/,diːhaɪ'dreɪʃən/",
+    "explains": [
+      "n. 脱水"
+    ]
+  },
+  "deice": {
+    "word": "deice",
+    "phonetic": "",
+    "explains": [
+      "v. 防止结冰, 装以除冰装置, 除冰"
+    ]
+  },
+  "deification": {
+    "word": "deification",
+    "phonetic": "/,diːɪfɪ'keɪʃən/",
+    "explains": [
+      "n. 祀为神, 神格化, 奉若神明"
+    ]
+  },
+  "deify": {
+    "word": "deify",
+    "phonetic": "/'deɪɪfaɪ; 'diːɪ-/",
+    "explains": [
+      "v. 神化"
+    ]
+  },
+  "deign": {
+    "word": "deign",
+    "phonetic": "/deɪn/",
+    "explains": [
+      "v. 屈尊"
+    ]
+  },
+  "deity": {
+    "word": "deity",
+    "phonetic": "/'deɪɪtɪ; 'diːɪ-/",
+    "explains": [
+      "n. 神, 神性"
+    ]
+  },
+  "dejar": {
+    "word": "dejar",
+    "phonetic": "",
+    "explains": [
+      "v. 放下；离开；让"
+    ]
+  },
+  "dejected": {
+    "word": "dejected",
+    "phonetic": "/dɪ'dʒektɪd/",
+    "explains": [
+      "adj. 沮丧的，灰心的"
+    ]
+  },
+  "dejection": {
+    "word": "dejection",
+    "phonetic": "/dɪ'dʒekʃ(ə)n/",
+    "explains": [
+      "n. 沮丧, 粪便"
+    ]
+  },
+  "delante": {
+    "word": "delante",
+    "phonetic": "",
+    "explains": [
+      "adv. 在前面"
     ]
   },
   "delay": {
@@ -322,6 +1960,69 @@
       "n. 延误；延迟"
     ]
   },
+  "delectable": {
+    "word": "delectable",
+    "phonetic": "/dɪ'lektəb(ə)l/",
+    "explains": [
+      "adj. 使人愉快的"
+    ]
+  },
+  "delectation": {
+    "word": "delectation",
+    "phonetic": "/,diːlek'teɪʃ(ə)n/",
+    "explains": [
+      "n. 愉快, 款待"
+    ]
+  },
+  "delegate": {
+    "word": "delegate",
+    "phonetic": "/ˈdelɪɡət/",
+    "explains": [
+      "n. 代表；v. 委派"
+    ]
+  },
+  "delegation": {
+    "word": "delegation",
+    "phonetic": "/delɪ'geɪʃ(ə)n/",
+    "explains": [
+      "n. 代表团"
+    ]
+  },
+  "delete": {
+    "word": "delete",
+    "phonetic": "/dɪˈliːt/",
+    "explains": [
+      "v. 删除"
+    ]
+  },
+  "deleterious": {
+    "word": "deleterious",
+    "phonetic": "/,delɪ'tɪərɪəs/",
+    "explains": [
+      "adj. 有毒的，有害的"
+    ]
+  },
+  "delft": {
+    "word": "delft",
+    "phonetic": "",
+    "explains": [
+      "n. 代夫特(荷兰城市)陶器"
+    ]
+  },
+  "delgado": {
+    "word": "delgado",
+    "phonetic": "",
+    "explains": [
+      "adj. 瘦的；细的"
+    ]
+  },
+  "deli": {
+    "word": "deli",
+    "phonetic": "/'delɪ/",
+    "explains": [
+      "n. 熟食店；[食品] 熟食品（等于delicatessen）"
+    ]
+  },
   "deliberate": {
     "word": "deliberate",
     "phonetic": "/dɪˈlɪbərət/",
@@ -329,11 +2030,39 @@
       "adj. 故意的；蓄意的"
     ]
   },
+  "deliberately": {
+    "word": "deliberately",
+    "phonetic": "/dɪˈlɪb(ə)rətlɪ/",
+    "explains": [
+      "adv. 故意地"
+    ]
+  },
+  "deliberation": {
+    "word": "deliberation",
+    "phonetic": "/dɪ,lɪbə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 仔细考虑；商量"
+    ]
+  },
+  "delicacy": {
+    "word": "delicacy",
+    "phonetic": "/'delɪkəsɪ/",
+    "explains": [
+      "n. 美味；佳肴；微妙；精密；精美；敏锐，敏感；世故，圆滑"
+    ]
+  },
   "delicate": {
     "word": "delicate",
     "phonetic": "/ˈdelɪkət/",
     "explains": [
       "adj. 精致的；脆弱的；微妙的"
+    ]
+  },
+  "delicatessen": {
+    "word": "delicatessen",
+    "phonetic": "/,delɪkə'tes(ə)n/",
+    "explains": [
+      "n. 熟食；现成的食品"
     ]
   },
   "delicious": {
@@ -351,6 +2080,62 @@
       "v. 使高兴"
     ]
   },
+  "delightful": {
+    "word": "delightful",
+    "phonetic": "/dɪ'laɪtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 令人愉快的,  可喜的"
+    ]
+  },
+  "delimit": {
+    "word": "delimit",
+    "phonetic": "/dɪ'lɪmɪt/",
+    "explains": [
+      "v. 定界限, 划界"
+    ]
+  },
+  "delineate": {
+    "word": "delineate",
+    "phonetic": "/dɪ'lɪnɪeɪt/",
+    "explains": [
+      "v. 描绘"
+    ]
+  },
+  "delinquency": {
+    "word": "delinquency",
+    "phonetic": "/dɪ'lɪŋkw(ə)nsɪ/",
+    "explains": [
+      "n. 过失，为非作歹，失职"
+    ]
+  },
+  "delinquent": {
+    "word": "delinquent",
+    "phonetic": "/dɪ'lɪŋkw(ə)nt/",
+    "explains": [
+      "adj. 有过失的；怠忽的；拖欠债务的；n. 流氓；行为不良的人；失职者"
+    ]
+  },
+  "delirious": {
+    "word": "delirious",
+    "phonetic": "/dɪ'lɪrɪəs/",
+    "explains": [
+      "adj. 神志昏迷的, 不省人事的, 发狂的"
+    ]
+  },
+  "delirium": {
+    "word": "delirium",
+    "phonetic": "/dɪ'lɪrɪəm/",
+    "explains": [
+      "n. 神智昏迷，说胡话；极度兴奋"
+    ]
+  },
+  "delitescence": {
+    "word": "delitescence",
+    "phonetic": "",
+    "explains": [
+      "n. 潜伏期"
+    ]
+  },
   "deliver": {
     "word": "deliver",
     "phonetic": "/dɪˈlɪvər/",
@@ -358,11 +2143,102 @@
       "v. 递送；发表；接生"
     ]
   },
+  "deliverable": {
+    "word": "deliverable",
+    "phonetic": "",
+    "explains": [
+      "交付物"
+    ]
+  },
+  "deliverance": {
+    "word": "deliverance",
+    "phonetic": "/dɪ'lɪv(ə)r(ə)ns/",
+    "explains": [
+      "n. 释放，解救；救助；判决"
+    ]
+  },
+  "deliverer": {
+    "word": "deliverer",
+    "phonetic": "",
+    "explains": [
+      "n. 拯救者；交付者；投递者"
+    ]
+  },
   "delivery": {
     "word": "delivery",
     "phonetic": "/dɪˈlɪvəri/",
     "explains": [
       "n. 投递；分娩；演讲方式"
+    ]
+  },
+  "delta": {
+    "word": "delta",
+    "phonetic": "/'deltə/",
+    "explains": [
+      "n. 三角州"
+    ]
+  },
+  "delude": {
+    "word": "delude",
+    "phonetic": "/dɪ'l(j)uːd/",
+    "explains": [
+      "v. 欺骗；哄骗"
+    ]
+  },
+  "deluge": {
+    "word": "deluge",
+    "phonetic": "/'deljuːdʒ/",
+    "explains": [
+      "n. 洪水, 豪雨"
+    ]
+  },
+  "delusion": {
+    "word": "delusion",
+    "phonetic": "/dɪ'l(j)uːʒ(ə)n/",
+    "explains": [
+      "n. 迷惑，欺骗；错觉；幻想"
+    ]
+  },
+  "deluxe": {
+    "word": "deluxe",
+    "phonetic": "/də'luks, də'lʌks/",
+    "explains": [
+      "adj. 高级的；豪华的，奢华的；adv. 豪华地"
+    ]
+  },
+  "delve": {
+    "word": "delve",
+    "phonetic": "/delv/",
+    "explains": [
+      "v. 钻研；探究；挖；n. 穴；洞"
+    ]
+  },
+  "demagogue": {
+    "word": "demagogue",
+    "phonetic": "/'deməgɒg/",
+    "explains": [
+      "n. 煽动者；煽动家；煽动政治家"
+    ]
+  },
+  "demagoguery": {
+    "word": "demagoguery",
+    "phonetic": "",
+    "explains": [
+      "n. 散布谣言；煽动行为；群众煽动"
+    ]
+  },
+  "demagogy": {
+    "word": "demagogy",
+    "phonetic": "/'deməɡɒɡɪ/",
+    "explains": [
+      "n. 煽动家的方法与行为"
+    ]
+  },
+  "demain": {
+    "word": "demain",
+    "phonetic": "",
+    "explains": [
+      "adv. 明天"
     ]
   },
   "demand": {
@@ -373,11 +2249,144 @@
       "n. 需求；要求"
     ]
   },
+  "demande": {
+    "word": "demande",
+    "phonetic": "",
+    "explains": [
+      "n.f. 请求；需求"
+    ]
+  },
+  "demander": {
+    "word": "demander",
+    "phonetic": "",
+    "explains": [
+      "v. 请求；问"
+    ]
+  },
+  "demanding": {
+    "word": "demanding",
+    "phonetic": "/di'mɑːndiŋ/",
+    "explains": [
+      "adj.  过分要求的， 苛求的"
+    ]
+  },
+  "demarcate": {
+    "word": "demarcate",
+    "phonetic": "/'diːmɑːkeɪt/",
+    "explains": [
+      "v. 划分界线"
+    ]
+  },
+  "demasiado": {
+    "word": "demasiado",
+    "phonetic": "",
+    "explains": [
+      "adv. 太，过分"
+    ]
+  },
+  "demean": {
+    "word": "demean",
+    "phonetic": "/dɪ'miːn/",
+    "explains": [
+      "v. 举止, 贬低身份"
+    ]
+  },
+  "demeanor": {
+    "word": "demeanor",
+    "phonetic": "/di'mi:nə/",
+    "explains": [
+      "n. 风度；举止；行为"
+    ]
+  },
+  "demeanour": {
+    "word": "demeanour",
+    "phonetic": "/dɪ'miːnə/",
+    "explains": [
+      "n. 行为"
+    ]
+  },
+  "demented": {
+    "word": "demented",
+    "phonetic": "/dɪ'mentɪd/",
+    "explains": [
+      "adj. 发狂的，疯狂的；精神错乱的；v. 精神错乱；变得痴呆（dement的过去分词）"
+    ]
+  },
+  "demerit": {
+    "word": "demerit",
+    "phonetic": "/diː'merɪt/",
+    "explains": [
+      "n. 缺点,过失"
+    ]
+  },
+  "demesne": {
+    "word": "demesne",
+    "phonetic": "/dɪ'meɪn; dɪ'miːn/",
+    "explains": [
+      "n. 土地之所有, 领地, 私有地"
+    ]
+  },
+  "demeure": {
+    "word": "demeure",
+    "phonetic": "",
+    "explains": [
+      "n.f. 住所"
+    ]
+  },
+  "demi": {
+    "word": "demi",
+    "phonetic": "",
+    "explains": [
+      "adj. 一半的"
+    ]
+  },
+  "demise": {
+    "word": "demise",
+    "phonetic": "/dɪ'maɪz/",
+    "explains": [
+      "n. 死亡,让位"
+    ]
+  },
+  "demo": {
+    "word": "demo",
+    "phonetic": "/'deməʊ/",
+    "explains": [
+      "n. 演示；样本唱片；示威；民主党员"
+    ]
+  },
+  "demobilization": {
+    "word": "demobilization",
+    "phonetic": "",
+    "explains": [
+      "n. 复员；遣散（demobilize的名词）"
+    ]
+  },
+  "demobilize": {
+    "word": "demobilize",
+    "phonetic": "/di:'məubilaiz/",
+    "explains": [
+      "v. 使复员, 使退伍, 遣散"
+    ]
+  },
+  "democracia": {
+    "word": "democracia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 民主"
+    ]
+  },
   "democracy": {
     "word": "democracy",
     "phonetic": "/dɪˈmɒkrəsi/",
     "explains": [
       "n. 民主；民主制度"
+    ]
+  },
+  "democrat": {
+    "word": "democrat",
+    "phonetic": "/'deməkræt/",
+    "explains": [
+      "n. 民主主义者,美国民主党人"
     ]
   },
   "democratic": {
@@ -387,11 +2396,165 @@
       "adj. 民主的"
     ]
   },
+  "democratization": {
+    "word": "democratization",
+    "phonetic": "/dɪ,mɒkrətaɪ'zeɪʃən/",
+    "explains": [
+      "n. 民主化"
+    ]
+  },
+  "demographer": {
+    "word": "demographer",
+    "phonetic": "/diː'mɒɡrəfə/",
+    "explains": [
+      "n. [统计] 人口统计学家，人口学家"
+    ]
+  },
+  "demographic": {
+    "word": "demographic",
+    "phonetic": "/,demə'græfɪk/",
+    "explains": [
+      "adj. 人口统计学的"
+    ]
+  },
+  "demography": {
+    "word": "demography",
+    "phonetic": "/dɪ'mɒgrəfɪ/",
+    "explains": [
+      "n. 人口统计学"
+    ]
+  },
+  "demolish": {
+    "word": "demolish",
+    "phonetic": "/dɪ'mɒlɪʃ/",
+    "explains": [
+      "v. 毁坏, 推翻, 粉碎"
+    ]
+  },
+  "demolition": {
+    "word": "demolition",
+    "phonetic": "/demə'lɪʃn/",
+    "explains": [
+      "n. 毁坏, 毁坏之遗迹"
+    ]
+  },
+  "demon": {
+    "word": "demon",
+    "phonetic": "/'diːmən/",
+    "explains": [
+      "n. 恶魔；魔鬼；精力充沛的人；邪恶的事物"
+    ]
+  },
+  "demonic": {
+    "word": "demonic",
+    "phonetic": "/dɪ'mɑnɪk/",
+    "explains": [
+      "adj. 有魔力的，恶魔的"
+    ]
+  },
+  "demonstrable": {
+    "word": "demonstrable",
+    "phonetic": "/dɪ'mɒnstrəb(ə)l; 'demən-/",
+    "explains": [
+      "adj. 可论证的；显而易见的"
+    ]
+  },
+  "demonstrably": {
+    "word": "demonstrably",
+    "phonetic": "/'demənstrəbli/",
+    "explains": [
+      "adv. 可论证地；明确地"
+    ]
+  },
   "demonstrate": {
     "word": "demonstrate",
     "phonetic": "/ˈdemənstreɪt/",
     "explains": [
       "v. 证明；演示；示威"
+    ]
+  },
+  "demonstration": {
+    "word": "demonstration",
+    "phonetic": "/demən'streɪʃ(ə)n/",
+    "explains": [
+      "n. 示范, 实证"
+    ]
+  },
+  "demonstrative": {
+    "word": "demonstrative",
+    "phonetic": "/dɪ'mɒnstrətɪv/",
+    "explains": [
+      "adj. 说明的；证明的；公开表露感情的；n. 指示词"
+    ]
+  },
+  "demoralize": {
+    "word": "demoralize",
+    "phonetic": "/di'mɔrəlaiz/",
+    "explains": [
+      "v. 使道德败坏；使堕落；使士气低落"
+    ]
+  },
+  "demote": {
+    "word": "demote",
+    "phonetic": "/diː'məʊt/",
+    "explains": [
+      "v. 使降级, 使降职"
+    ]
+  },
+  "demotivated": {
+    "word": "demotivated",
+    "phonetic": "/diː'məutiveitid/",
+    "explains": [
+      "adj.  失去动力的"
+    ]
+  },
+  "demulcent": {
+    "word": "demulcent",
+    "phonetic": "/dɪ'mʌls(ə)nt/",
+    "explains": [
+      "adj. 缓和的, 镇痛的"
+    ]
+  },
+  "demur": {
+    "word": "demur",
+    "phonetic": "/dɪ'mɜː/",
+    "explains": [
+      "v. 反对；抗辩；提出异议；n. 异议；反对"
+    ]
+  },
+  "demure": {
+    "word": "demure",
+    "phonetic": "/dɪ'mjʊə; dɪ'mjɔː/",
+    "explains": [
+      "adj. 端庄的；娴静的；严肃的；假装正直的；n. (Demure)人名；(法)德米尔"
+    ]
+  },
+  "den": {
+    "word": "den",
+    "phonetic": "/den/",
+    "explains": [
+      "n. 贼窝，私室；兽穴，窝巢；小房间；vi. 藏到洞里；住在肮脏简陋的小房间里；vt. 把……赶进洞穴"
+    ]
+  },
+  "denationalize": {
+    "word": "denationalize",
+    "phonetic": "/ˌdiː'næʃənəlaiz/",
+    "explains": [
+      "vt.  私营化， 使非国有化， 去国有化； 开除…国籍"
+    ]
+  },
+  "dendrology": {
+    "word": "dendrology",
+    "phonetic": "/den'drɒlədʒɪ/",
+    "explains": [
+      "n. 树木学"
+    ]
+  },
+  "dengue": {
+    "word": "dengue",
+    "phonetic": "/'deŋgɪ/",
+    "explains": [
+      "n. [内科] 登革热"
     ]
   },
   "denial": {
@@ -401,11 +2564,81 @@
       "n. 否认；拒绝"
     ]
   },
+  "denied": {
+    "word": "denied",
+    "phonetic": "",
+    "explains": [
+      "已驳回"
+    ]
+  },
+  "denigrate": {
+    "word": "denigrate",
+    "phonetic": "/'denɪgreɪt/",
+    "explains": [
+      "v. 诋毁；使变黑；玷污"
+    ]
+  },
+  "denim": {
+    "word": "denim",
+    "phonetic": "/'denɪm/",
+    "explains": [
+      "n. 斜纹粗棉布，丁尼布；劳动布"
+    ]
+  },
+  "denizen": {
+    "word": "denizen",
+    "phonetic": "/'denɪz(ə)n/",
+    "explains": [
+      "n. 居民"
+    ]
+  },
+  "denmark": {
+    "word": "denmark",
+    "phonetic": "/'denma:k/",
+    "explains": [
+      "n. 丹麦"
+    ]
+  },
+  "denominate": {
+    "word": "denominate",
+    "phonetic": "/dɪ'nɒmɪneɪt/",
+    "explains": [
+      "v. 为…命名；把…称作…；adj. 有特定名称的"
+    ]
+  },
+  "denomination": {
+    "word": "denomination",
+    "phonetic": "/dɪ,nɒmɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 面额,名称,教派"
+    ]
+  },
+  "denominator": {
+    "word": "denominator",
+    "phonetic": "/dɪ'nɒmɪneɪtə/",
+    "explains": [
+      "n. [数] 分母；命名者；共同特征或共同性质；平均水平或标准"
+    ]
+  },
   "denote": {
     "word": "denote",
     "phonetic": "/dɪˈnəʊt/",
     "explains": [
       "v. 表示；意味着"
+    ]
+  },
+  "denouement": {
+    "word": "denouement",
+    "phonetic": "/deɪnuː'mɒŋ/",
+    "explains": [
+      "n. 结局"
+    ]
+  },
+  "denounce": {
+    "word": "denounce",
+    "phonetic": "/dɪ'naʊns/",
+    "explains": [
+      "v. 谴责，声讨；告发"
     ]
   },
   "dense": {
@@ -415,6 +2648,13 @@
       "adj. 密集的；浓密的；愚钝的"
     ]
   },
+  "densely": {
+    "word": "densely",
+    "phonetic": "/'densli/",
+    "explains": [
+      "adv. 浓密地"
+    ]
+  },
   "density": {
     "word": "density",
     "phonetic": "/ˈdensəti/",
@@ -422,11 +2662,81 @@
       "n. 密度；稠密"
     ]
   },
+  "denso": {
+    "word": "denso",
+    "phonetic": "",
+    "explains": [
+      "adj. 浓密的"
+    ]
+  },
+  "dent": {
+    "word": "dent",
+    "phonetic": "/dent/",
+    "explains": [
+      "n. 凹, 凹痕, (齿轮的)齿, 弱点"
+    ]
+  },
+  "dental": {
+    "word": "dental",
+    "phonetic": "/ˈdent(ə)l/",
+    "explains": [
+      "adj. 牙齿的"
+    ]
+  },
+  "dentist": {
+    "word": "dentist",
+    "phonetic": "/'dentɪst/",
+    "explains": [
+      "n. 牙科医生"
+    ]
+  },
+  "dentiste": {
+    "word": "dentiste",
+    "phonetic": "",
+    "explains": [
+      "n.m. 牙医"
+    ]
+  },
+  "dentistry": {
+    "word": "dentistry",
+    "phonetic": "/'dentɪstrɪ/",
+    "explains": [
+      "n. 牙科学；牙医业"
+    ]
+  },
+  "denture": {
+    "word": "denture",
+    "phonetic": "/'dentʃə/",
+    "explains": [
+      "n. 一副假牙, 一副牙齿"
+    ]
+  },
+  "denude": {
+    "word": "denude",
+    "phonetic": "/dɪ'njuːd/",
+    "explains": [
+      "v. 剥夺；使裸露"
+    ]
+  },
+  "denunciatory": {
+    "word": "denunciatory",
+    "phonetic": "",
+    "explains": [
+      "adj. 指责的；攻击的；非难的"
+    ]
+  },
   "deny": {
     "word": "deny",
     "phonetic": "/dɪˈnaɪ/",
     "explains": [
       "v. 否认；拒绝给予"
+    ]
+  },
+  "deodorant": {
+    "word": "deodorant",
+    "phonetic": "/dɪ'əʊd(ə)r(ə)nt/",
+    "explains": [
+      "n. 除臭剂"
     ]
   },
   "depart": {
@@ -443,11 +2753,53 @@
       "n. 部门；系；商店部"
     ]
   },
+  "departure": {
+    "word": "departure",
+    "phonetic": "/dɪˈpɑːtʃə/",
+    "explains": [
+      "n. 离开"
+    ]
+  },
   "depend": {
     "word": "depend",
     "phonetic": "/dɪˈpend/",
     "explains": [
       "v. 依赖；取决于"
+    ]
+  },
+  "dependable": {
+    "word": "dependable",
+    "phonetic": "/dɪ'pendəb(ə)l/",
+    "explains": [
+      "adj. 可靠的, 可信赖的"
+    ]
+  },
+  "dependably": {
+    "word": "dependably",
+    "phonetic": "",
+    "explains": [
+      "adv. 可信任地"
+    ]
+  },
+  "dependant": {
+    "word": "dependant",
+    "phonetic": "/dɪ'pend(ə)nt/",
+    "explains": [
+      "n. 受赡养者"
+    ]
+  },
+  "dependence": {
+    "word": "dependence",
+    "phonetic": "/dɪ'pend(ə)ns/",
+    "explains": [
+      "n. 依靠,信任"
+    ]
+  },
+  "dependency": {
+    "word": "dependency",
+    "phonetic": "",
+    "explains": [
+      "依赖"
     ]
   },
   "dependent": {
@@ -464,11 +2816,74 @@
       "v. 描绘；描述"
     ]
   },
+  "depiction": {
+    "word": "depiction",
+    "phonetic": "/dɪ'pɪkʃn/",
+    "explains": [
+      "n. 描写, 叙述"
+    ]
+  },
+  "deplete": {
+    "word": "deplete",
+    "phonetic": "/dɪ'pliːt/",
+    "explains": [
+      "v. 耗尽, 使衰竭"
+    ]
+  },
+  "depletion": {
+    "word": "depletion",
+    "phonetic": "/dɪ'pliːʃn/",
+    "explains": [
+      "n. 损耗"
+    ]
+  },
+  "deplorable": {
+    "word": "deplorable",
+    "phonetic": "/dɪ'plɔːrəb(ə)l/",
+    "explains": [
+      "adj. 可叹的,凄惨的"
+    ]
+  },
+  "deplore": {
+    "word": "deplore",
+    "phonetic": "/dɪ'plɔː/",
+    "explains": [
+      "\"vt. 哀悼, 非难\""
+    ]
+  },
   "deploy": {
     "word": "deploy",
     "phonetic": "/dɪˈplɔɪ/",
     "explains": [
       "v. 部署；调动；有效利用"
+    ]
+  },
+  "depopulate": {
+    "word": "depopulate",
+    "phonetic": "/diː'pɒpjʊleɪt/",
+    "explains": [
+      "v. 使人口减少"
+    ]
+  },
+  "deport": {
+    "word": "deport",
+    "phonetic": "/dɪ'pɔːt/",
+    "explains": [
+      "v. 驱逐出境；举止；放逐；n. (Deport)人名；(捷)德波特；(法)德波尔"
+    ]
+  },
+  "deportment": {
+    "word": "deportment",
+    "phonetic": "/dɪ'pɔːtm(ə)nt/",
+    "explains": [
+      "n. 举止；行为；态度"
+    ]
+  },
+  "depose": {
+    "word": "depose",
+    "phonetic": "/dɪ'pəʊz/",
+    "explains": [
+      "v. 免职, 废(王位), 作证"
     ]
   },
   "deposit": {
@@ -479,11 +2894,123 @@
       "n. 存款；沉积物"
     ]
   },
+  "deposition": {
+    "word": "deposition",
+    "phonetic": "/,depə'zɪʃ(ə)n; diː-/",
+    "explains": [
+      "n. 免职，罢免"
+    ]
+  },
+  "depositor": {
+    "word": "depositor",
+    "phonetic": "/di'pɔzitə/",
+    "explains": [
+      "n.  存款者， 储户"
+    ]
+  },
+  "depository": {
+    "word": "depository",
+    "phonetic": "/dɪ'pɒzɪt(ə)rɪ/",
+    "explains": [
+      "n. 贮藏所；受托者；存储处；adj. 保管的；存储的"
+    ]
+  },
+  "depot": {
+    "word": "depot",
+    "phonetic": "/'depəu; 'diːpəu/",
+    "explains": [
+      "n.  仓库， 栈房； 火车站， 公共汽车站"
+    ]
+  },
+  "depraved": {
+    "word": "depraved",
+    "phonetic": "/dɪ'preɪvd/",
+    "explains": [
+      "adj. 堕落的；腐化的；卑鄙的；v. 使腐化（deprave的过去式和过去分词）"
+    ]
+  },
+  "depravity": {
+    "word": "depravity",
+    "phonetic": "/dɪ'prævɪtɪ/",
+    "explains": [
+      "n. 堕落"
+    ]
+  },
+  "deprecate": {
+    "word": "deprecate",
+    "phonetic": "/'deprɪkeɪt/",
+    "explains": [
+      "v. 抨击, 反对"
+    ]
+  },
+  "deprecated": {
+    "word": "deprecated",
+    "phonetic": "",
+    "explains": [
+      "已弃用的"
+    ]
+  },
+  "depreciate": {
+    "word": "depreciate",
+    "phonetic": "/di'priːʃieit/",
+    "explains": [
+      "v.  贬值； 折旧"
+    ]
+  },
+  "depreciation": {
+    "word": "depreciation",
+    "phonetic": "/diˌpriːʃi'eiʃən/",
+    "explains": [
+      "n.  折旧； 贬值"
+    ]
+  },
+  "depredation": {
+    "word": "depredation",
+    "phonetic": "/,deprɪ'deɪʃ(ə)n/",
+    "explains": [
+      "n. 掠夺, 破坏痕迹"
+    ]
+  },
   "depress": {
     "word": "depress",
     "phonetic": "/dɪˈpres/",
     "explains": [
       "v. 使沮丧；压下；降低"
+    ]
+  },
+  "depressed": {
+    "word": "depressed",
+    "phonetic": "/dɪ'prest/",
+    "explains": [
+      "adj. 沮丧的；萧条的；压低的；v. 使沮丧；使萧条（depress的过去式和过去分词形式）；压低"
+    ]
+  },
+  "depressing": {
+    "word": "depressing",
+    "phonetic": "/dɪ'presɪŋ/",
+    "explains": [
+      "adj. 压抑的；使人沮丧的"
+    ]
+  },
+  "depression": {
+    "word": "depression",
+    "phonetic": "/dɪˈpreʃ(ə)n/",
+    "explains": [
+      "n. 抑郁；萧条"
+    ]
+  },
+  "deprivation": {
+    "word": "deprivation",
+    "phonetic": "/deprɪ'veɪʃ(ə)n/",
+    "explains": [
+      "n. 剥夺"
+    ]
+  },
+  "deprive": {
+    "word": "deprive",
+    "phonetic": "/dɪˈpraɪv/",
+    "explains": [
+      "v. 剥夺；使丧失"
     ]
   },
   "depth": {
@@ -493,11 +3020,256 @@
       "n. 深度；深奥"
     ]
   },
+  "depuis": {
+    "word": "depuis",
+    "phonetic": "",
+    "explains": [
+      "prep. 自从"
+    ]
+  },
+  "deputation": {
+    "word": "deputation",
+    "phonetic": "/depjʊ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 代表团，代表；委任代理"
+    ]
+  },
+  "depute": {
+    "word": "depute",
+    "phonetic": "/dɪ'pjuːt/",
+    "explains": [
+      "v. 委托"
+    ]
+  },
+  "deputy": {
+    "word": "deputy",
+    "phonetic": "/'depjʊtɪ/",
+    "explains": [
+      "n. 代理人；adj. 副的"
+    ]
+  },
+  "derail": {
+    "word": "derail",
+    "phonetic": "/dɪ'reɪl/",
+    "explains": [
+      "v. 使出轨；n. 脱轨；[铁路] 脱轨器"
+    ]
+  },
+  "derange": {
+    "word": "derange",
+    "phonetic": "/dɪ'reɪn(d)ʒ/",
+    "explains": [
+      "v. 扰乱；使错乱；使发狂"
+    ]
+  },
+  "derangement": {
+    "word": "derangement",
+    "phonetic": "/dɪ'rendʒmənt/",
+    "explains": [
+      "n. 扰乱, 发狂"
+    ]
+  },
+  "derby": {
+    "word": "derby",
+    "phonetic": "/'da:bi/",
+    "explains": [
+      "n. 德比（英国中部的都市）；德比赛马；大赛马"
+    ]
+  },
+  "derecho": {
+    "word": "derecho",
+    "phonetic": "",
+    "explains": [
+      "n.m. 权利；法律；adj. 右边的；直的"
+    ]
+  },
+  "deregister": {
+    "word": "deregister",
+    "phonetic": "",
+    "explains": [
+      "注销（服务实例下线）"
+    ]
+  },
+  "deregulate": {
+    "word": "deregulate",
+    "phonetic": "/ˌdiː'regjuleit/",
+    "explains": [
+      "vt.  撤销管制"
+    ]
+  },
+  "deregulation": {
+    "word": "deregulation",
+    "phonetic": "/diːˌregju'leiʃən/",
+    "explains": [
+      "n.  撤销管理规定， 解除控制， 解除管制"
+    ]
+  },
+  "derelict": {
+    "word": "derelict",
+    "phonetic": "/'derəlɪkt/",
+    "explains": [
+      "adj. 被抛弃的"
+    ]
+  },
+  "deride": {
+    "word": "deride",
+    "phonetic": "/dɪ'raɪd/",
+    "explains": [
+      "v. 嘲笑；嘲弄"
+    ]
+  },
+  "derision": {
+    "word": "derision",
+    "phonetic": "/dɪ'rɪʒ(ə)n/",
+    "explains": [
+      "n. 嘲笑；嘲笑的对象"
+    ]
+  },
+  "derisive": {
+    "word": "derisive",
+    "phonetic": "/dɪ'raɪsɪv; -z-/",
+    "explains": [
+      "adj. 嘲笑的"
+    ]
+  },
+  "derivation": {
+    "word": "derivation",
+    "phonetic": "/derɪ'veɪʃ(ə)n/",
+    "explains": [
+      "n. 引出；起源；衍生"
+    ]
+  },
+  "derivative": {
+    "word": "derivative",
+    "phonetic": "/dɪ'rɪvətɪv/",
+    "explains": [
+      "n. [化学] 衍生物，派生物；导数；adj. 派生的；引出的"
+    ]
+  },
   "derive": {
     "word": "derive",
     "phonetic": "/dɪˈraɪv/",
     "explains": [
       "v. 源于；获得"
+    ]
+  },
+  "dermatology": {
+    "word": "dermatology",
+    "phonetic": "/,dɜːmə'tɒlədʒɪ/",
+    "explains": [
+      "n. 皮肤医学, 皮肤病学"
+    ]
+  },
+  "dernier": {
+    "word": "dernier",
+    "phonetic": "",
+    "explains": [
+      "adj. 最后的"
+    ]
+  },
+  "derogate": {
+    "word": "derogate",
+    "phonetic": "/'derəgeɪt/",
+    "explains": [
+      "v. 减损；贬损"
+    ]
+  },
+  "derogatory": {
+    "word": "derogatory",
+    "phonetic": "/dɪ'rɒgət(ə)rɪ/",
+    "explains": [
+      "adj. 贬损的"
+    ]
+  },
+  "derrick": {
+    "word": "derrick",
+    "phonetic": "/'derɪk/",
+    "explains": [
+      "n. 起重机, (钻井)井口上的铁架塔"
+    ]
+  },
+  "des": {
+    "word": "des",
+    "phonetic": "",
+    "explains": [
+      "art. 一些"
+    ]
+  },
+  "desalination": {
+    "word": "desalination",
+    "phonetic": "/diː,sælɪ'neɪʃən/",
+    "explains": [
+      "n. 减少盐分, 脱盐作用"
+    ]
+  },
+  "desalinize": {
+    "word": "desalinize",
+    "phonetic": "/diː'sælɪnaɪz/",
+    "explains": [
+      "v. 除去盐分, 淡化海水"
+    ]
+  },
+  "desayunar": {
+    "word": "desayunar",
+    "phonetic": "",
+    "explains": [
+      "v. 吃早饭"
+    ]
+  },
+  "desayuno": {
+    "word": "desayuno",
+    "phonetic": "",
+    "explains": [
+      "n.m. 早饭"
+    ]
+  },
+  "descanso": {
+    "word": "descanso",
+    "phonetic": "",
+    "explains": [
+      "n.m. 休息"
+    ]
+  },
+  "descant": {
+    "word": "descant",
+    "phonetic": "/'deskænt/",
+    "explains": [
+      "v. 详论"
+    ]
+  },
+  "descend": {
+    "word": "descend",
+    "phonetic": "/dɪˈsend/",
+    "explains": [
+      "v. 下降"
+    ]
+  },
+  "descendant": {
+    "word": "descendant",
+    "phonetic": "/dɪ'send(ə)nt/",
+    "explains": [
+      "n. 子孙，后裔"
+    ]
+  },
+  "descendent": {
+    "word": "descendent",
+    "phonetic": "/dɪ'sendənt/",
+    "explains": [
+      "adj. 派生的；降落的；世袭的；n. 后裔；派生物"
+    ]
+  },
+  "descendre": {
+    "word": "descendre",
+    "phonetic": "",
+    "explains": [
+      "v. 下去"
+    ]
+  },
+  "descent": {
+    "word": "descent",
+    "phonetic": "/dɪ'sent/",
+    "explains": [
+      "n. 下降；出身；斜坡"
     ]
   },
   "describe": {
@@ -507,11 +3279,81 @@
       "v. 描述；形容"
     ]
   },
+  "describir": {
+    "word": "describir",
+    "phonetic": "",
+    "explains": [
+      "v. 描述"
+    ]
+  },
   "description": {
     "word": "description",
     "phonetic": "/dɪˈskrɪpʃn/",
     "explains": [
       "n. 描述；描写"
+    ]
+  },
+  "descriptive": {
+    "word": "descriptive",
+    "phonetic": "/dɪ'skrɪptɪv/",
+    "explains": [
+      "adj. 描述的, 叙述的"
+    ]
+  },
+  "descry": {
+    "word": "descry",
+    "phonetic": "/dɪ'skraɪ/",
+    "explains": [
+      "v. 看见；发现；察看"
+    ]
+  },
+  "descubrir": {
+    "word": "descubrir",
+    "phonetic": "",
+    "explains": [
+      "v. 发现"
+    ]
+  },
+  "desde": {
+    "word": "desde",
+    "phonetic": "",
+    "explains": [
+      "prep. 从"
+    ]
+  },
+  "desecrate": {
+    "word": "desecrate",
+    "phonetic": "/'desɪkreɪt/",
+    "explains": [
+      "v. 亵渎, 污辱, 把(神物)供俗用"
+    ]
+  },
+  "desegregate": {
+    "word": "desegregate",
+    "phonetic": "/diː'segrɪgeɪt/",
+    "explains": [
+      "v. 使…废止种族隔离"
+    ]
+  },
+  "desegregation": {
+    "word": "desegregation",
+    "phonetic": "",
+    "explains": [
+      "n. 废止种族歧视"
+    ]
+  },
+  "desensitize": {
+    "word": "desensitize",
+    "phonetic": "",
+    "explains": [
+      "脱敏"
+    ]
+  },
+  "deserialization": {
+    "word": "deserialization",
+    "phonetic": "",
+    "explains": [
+      "反序列化"
     ]
   },
   "desert": {
@@ -521,11 +3363,53 @@
       "v. 遗弃；开小差"
     ]
   },
+  "deserted": {
+    "word": "deserted",
+    "phonetic": "/dɪ'zɜːtɪd/",
+    "explains": [
+      "adj. 荒芜的；被遗弃的；v. 遗弃（desert的过去式和过去分词）"
+    ]
+  },
+  "desertification": {
+    "word": "desertification",
+    "phonetic": "/dɪˌzɜ:tɪfɪˈkeɪʃn/",
+    "explains": [
+      "n. 荒漠化,沙漠化"
+    ]
+  },
   "deserve": {
     "word": "deserve",
     "phonetic": "/dɪˈzɜːv/",
     "explains": [
       "v. 应得；值得"
+    ]
+  },
+  "desiccant": {
+    "word": "desiccant",
+    "phonetic": "/'desɪk(ə)nt/",
+    "explains": [
+      "adj. 去湿的，使干燥的；n. [助剂] 干燥剂"
+    ]
+  },
+  "desiccate": {
+    "word": "desiccate",
+    "phonetic": "/'desɪkeɪt/",
+    "explains": [
+      "v. 变干"
+    ]
+  },
+  "desiccation": {
+    "word": "desiccation",
+    "phonetic": "/,dɛsɪ'keʃən/",
+    "explains": [
+      "n. 干燥"
+    ]
+  },
+  "desideratum": {
+    "word": "desideratum",
+    "phonetic": "/dɪ,zɪdə'rɑːtəm; -'reɪtəm; -,sɪd-/",
+    "explains": [
+      "n. 所愿望之物, 迫切需要之物"
     ]
   },
   "design": {
@@ -536,11 +3420,39 @@
       "n. 设计；图案"
     ]
   },
+  "designate": {
+    "word": "designate",
+    "phonetic": "/'dezɪgneɪt/",
+    "explains": [
+      "v. 指定；指示；指明"
+    ]
+  },
+  "designation": {
+    "word": "designation",
+    "phonetic": "/ˌdezig'neiʃən/",
+    "explains": [
+      "n.  指明； 标示； 指定； 称号"
+    ]
+  },
   "designer": {
     "word": "designer",
     "phonetic": "/dɪˈzaɪnər/",
     "explains": [
       "n. 设计师"
+    ]
+  },
+  "desirability": {
+    "word": "desirability",
+    "phonetic": "/dɪ,zaɪərə'bɪlɪtɪ/",
+    "explains": [
+      "n. 愿望, 希求"
+    ]
+  },
+  "desirable": {
+    "word": "desirable",
+    "phonetic": "/dɪˈzaɪərəbl/",
+    "explains": [
+      "adj. 值得拥有的；合意的"
     ]
   },
   "desire": {
@@ -551,11 +3463,74 @@
       "n. 欲望；愿望"
     ]
   },
+  "desirous": {
+    "word": "desirous",
+    "phonetic": "/dɪ'zaɪərəs/",
+    "explains": [
+      "adj. 渴望的；想要的"
+    ]
+  },
+  "desist": {
+    "word": "desist",
+    "phonetic": "/dɪ'zɪst; dɪ'sɪst/",
+    "explains": [
+      "v. 终止"
+    ]
+  },
   "desk": {
     "word": "desk",
     "phonetic": "/desk/",
     "explains": [
       "n. 书桌；办公桌"
+    ]
+  },
+  "deskill": {
+    "word": "deskill",
+    "phonetic": "/di'skil/",
+    "explains": [
+      "vt.  使非技能化"
+    ]
+  },
+  "desktop": {
+    "word": "desktop",
+    "phonetic": "/'desktɔp/",
+    "explains": [
+      "n.  台式电脑； 桌面"
+    ]
+  },
+  "desolate": {
+    "word": "desolate",
+    "phonetic": "/'des(ə)lət/",
+    "explains": [
+      "adj. 荒芜的；孤独的"
+    ]
+  },
+  "desolation": {
+    "word": "desolation",
+    "phonetic": "/desə'leɪʃ(ə)n/",
+    "explains": [
+      "n. 荒芜；忧伤；孤寂；废墟"
+    ]
+  },
+  "despair": {
+    "word": "despair",
+    "phonetic": "/dɪ'speə/",
+    "explains": [
+      "n. 绝望；v. 绝望"
+    ]
+  },
+  "despatch": {
+    "word": "despatch",
+    "phonetic": "/dɪ'spætʃ/",
+    "explains": [
+      "v. 派遣；发送；匆匆吃下；n. 派遣；发送（等于dispatch）"
+    ]
+  },
+  "despedida": {
+    "word": "despedida",
+    "phonetic": "",
+    "explains": [
+      "n.f. 告别"
     ]
   },
   "desperate": {
@@ -565,11 +3540,88 @@
       "adj. 绝望的；极度渴望的；孤注一掷的"
     ]
   },
+  "desperately": {
+    "word": "desperately",
+    "phonetic": "/'despərətlɪ/",
+    "explains": [
+      "adv. 拼命地；绝望地；极度地"
+    ]
+  },
+  "desperation": {
+    "word": "desperation",
+    "phonetic": "/despə'reɪʃn/",
+    "explains": [
+      "n. 绝望的境地；不顾一切拼命"
+    ]
+  },
+  "despertador": {
+    "word": "despertador",
+    "phonetic": "",
+    "explains": [
+      "n.m. 闹钟"
+    ]
+  },
+  "despicable": {
+    "word": "despicable",
+    "phonetic": "/dɪ'spɪkəb(ə)l; 'despɪk-/",
+    "explains": [
+      "adj. 卑劣的；可鄙的"
+    ]
+  },
+  "despise": {
+    "word": "despise",
+    "phonetic": "/dɪ'spaɪz/",
+    "explains": [
+      "v. 鄙视，蔑视"
+    ]
+  },
   "despite": {
     "word": "despite",
     "phonetic": "/dɪˈspaɪt/",
     "explains": [
       "prep. 尽管；不管"
+    ]
+  },
+  "despoil": {
+    "word": "despoil",
+    "phonetic": "/dɪ'spɒɪl/",
+    "explains": [
+      "v. 掠夺，剥夺；夺取"
+    ]
+  },
+  "despondent": {
+    "word": "despondent",
+    "phonetic": "/dɪ'spɒnd(ə)nt/",
+    "explains": [
+      "adj. 失望的, 沮丧的"
+    ]
+  },
+  "despot": {
+    "word": "despot",
+    "phonetic": "/'despɒt/",
+    "explains": [
+      "n. 专制君主，暴君；独裁者"
+    ]
+  },
+  "despotic": {
+    "word": "despotic",
+    "phonetic": "/dɪ'spɒtɪk/",
+    "explains": [
+      "adj. 暴虐的，暴君的；专横的"
+    ]
+  },
+  "despotism": {
+    "word": "despotism",
+    "phonetic": "/'despətɪz(ə)m/",
+    "explains": [
+      "n. 专制"
+    ]
+  },
+  "dessert": {
+    "word": "dessert",
+    "phonetic": "/dɪˈzɜːt/",
+    "explains": [
+      "n. 甜点"
     ]
   },
   "destination": {
@@ -579,6 +3631,48 @@
       "n. 目的地；终点"
     ]
   },
+  "destine": {
+    "word": "destine",
+    "phonetic": "/'destɪn/",
+    "explains": [
+      "v. 命定，注定；预定"
+    ]
+  },
+  "destined": {
+    "word": "destined",
+    "phonetic": "/'destɪnd/",
+    "explains": [
+      "adj. 注定的；命定的；去往…的；v. 注定（destine的过去式和过去分词）"
+    ]
+  },
+  "destino": {
+    "word": "destino",
+    "phonetic": "",
+    "explains": [
+      "n.m. 目的地；命运"
+    ]
+  },
+  "destiny": {
+    "word": "destiny",
+    "phonetic": "/ˈdestɪnɪ/",
+    "explains": [
+      "n. 命运"
+    ]
+  },
+  "destitute": {
+    "word": "destitute",
+    "phonetic": "/'destɪtjuːt/",
+    "explains": [
+      "adj. 困穷的, 缺乏的"
+    ]
+  },
+  "destitution": {
+    "word": "destitution",
+    "phonetic": "/,destɪ'tʃuːʃn; ,destɪ'tjuːʃn/",
+    "explains": [
+      "n. 穷困；缺乏"
+    ]
+  },
   "destroy": {
     "word": "destroy",
     "phonetic": "/dɪˈstrɔɪ/",
@@ -586,11 +3680,67 @@
       "v. 毁灭；摧毁"
     ]
   },
+  "destroyer": {
+    "word": "destroyer",
+    "phonetic": "/dɪ'strɒɪə/",
+    "explains": [
+      "n. 驱逐舰；破坏者；起破坏作用的事物"
+    ]
+  },
   "destruction": {
     "word": "destruction",
     "phonetic": "/dɪˈstrʌkʃn/",
     "explains": [
       "n. 破坏；毁灭"
+    ]
+  },
+  "destructive": {
+    "word": "destructive",
+    "phonetic": "/dɪ'strʌktɪv/",
+    "explains": [
+      "adj. 破坏（性）的，危害的"
+    ]
+  },
+  "desuetude": {
+    "word": "desuetude",
+    "phonetic": "/'deswɪtjuːd; də'sjuːətjuːd/",
+    "explains": [
+      "n. 废止, 不用"
+    ]
+  },
+  "desultory": {
+    "word": "desultory",
+    "phonetic": "/'des(ə)lt(ə)rɪ; -z-/",
+    "explains": [
+      "adj. 断断续续的；散漫的；不连贯的，无条理的"
+    ]
+  },
+  "detach": {
+    "word": "detach",
+    "phonetic": "/dɪ'tætʃ/",
+    "explains": [
+      "v. 分开；派遣（军队）"
+    ]
+  },
+  "detachable": {
+    "word": "detachable",
+    "phonetic": "/dɪ'tætʃəbl/",
+    "explains": [
+      "adj. 可分开的；可拆开的；可分遣的"
+    ]
+  },
+  "detached": {
+    "word": "detached",
+    "phonetic": "/dɪ'tætʃt/",
+    "explains": [
+      "adj. 分离的，分开的；超然的；v. 分离"
+    ]
+  },
+  "detachment": {
+    "word": "detachment",
+    "phonetic": "/dɪ'tætʃm(ə)nt/",
+    "explains": [
+      "n. 冷漠, 脱离"
     ]
   },
   "detail": {
@@ -608,11 +3758,123 @@
       "adj. 详细的；细致的"
     ]
   },
+  "detain": {
+    "word": "detain",
+    "phonetic": "/dɪ'teɪn/",
+    "explains": [
+      "v. 扣押，拘留；耽搁"
+    ]
+  },
   "detect": {
     "word": "detect",
     "phonetic": "/dɪˈtekt/",
     "explains": [
       "v. 发现；察觉；侦查"
+    ]
+  },
+  "detectable": {
+    "word": "detectable",
+    "phonetic": "/dɪ'tɛktəbl/",
+    "explains": [
+      "adj. 可发现的,可察觉的"
+    ]
+  },
+  "detection": {
+    "word": "detection",
+    "phonetic": "",
+    "explains": [
+      "n. 察觉，发觉；侦察"
+    ]
+  },
+  "detective": {
+    "word": "detective",
+    "phonetic": "/dɪˈtektɪv/",
+    "explains": [
+      "n. 侦探"
+    ]
+  },
+  "detector": {
+    "word": "detector",
+    "phonetic": "/dɪ'tektə/",
+    "explains": [
+      "n. 发觉者，探测器"
+    ]
+  },
+  "detener": {
+    "word": "detener",
+    "phonetic": "",
+    "explains": [
+      "v. 停止；逮捕"
+    ]
+  },
+  "detente": {
+    "word": "detente",
+    "phonetic": "/de'tɑnt/",
+    "explains": [
+      "n. （国际关系等的）缓和"
+    ]
+  },
+  "detention": {
+    "word": "detention",
+    "phonetic": "/dɪ'tenʃ(ə)n/",
+    "explains": [
+      "n. 拘留；延迟；挽留"
+    ]
+  },
+  "deter": {
+    "word": "deter",
+    "phonetic": "/dɪ'tɜː/",
+    "explains": [
+      "v. 阻止"
+    ]
+  },
+  "detergent": {
+    "word": "detergent",
+    "phonetic": "/dɪ'tɜːdʒ(ə)nt/",
+    "explains": [
+      "n. 去垢剂，清洁剂"
+    ]
+  },
+  "deteriorate": {
+    "word": "deteriorate",
+    "phonetic": "/dɪ'tɪərɪəreɪt/",
+    "explains": [
+      "v. 恶化，变坏"
+    ]
+  },
+  "deteriorates": {
+    "word": "deteriorates",
+    "phonetic": "/dɪ'tɪərɪəreɪt/",
+    "explains": [
+      "v. 恶化，变坏"
+    ]
+  },
+  "deterioration": {
+    "word": "deterioration",
+    "phonetic": "/dɪ,tɪərɪə'reɪʃn/",
+    "explains": [
+      "n. 变坏, 退化"
+    ]
+  },
+  "determinant": {
+    "word": "determinant",
+    "phonetic": "/dɪ'tɜːmɪnənt/",
+    "explains": [
+      "adj. 决定性的；n. 决定因素"
+    ]
+  },
+  "determinate": {
+    "word": "determinate",
+    "phonetic": "/dɪ'tɜːmɪnət/",
+    "explains": [
+      "adj. 确定的；决定的；vt. 确定；弄清楚"
+    ]
+  },
+  "determination": {
+    "word": "determination",
+    "phonetic": "/dɪˌtɜːmɪˈneɪʃ(ə)n/",
+    "explains": [
+      "n. 决心"
     ]
   },
   "determine": {
@@ -629,11 +3891,172 @@
       "adj. 坚定的；坚决的"
     ]
   },
+  "determinedly": {
+    "word": "determinedly",
+    "phonetic": "",
+    "explains": [
+      "adv. 决然地,断然地"
+    ]
+  },
+  "determiner": {
+    "word": "determiner",
+    "phonetic": "/dɪ'tɜːmɪnə/",
+    "explains": [
+      "n. [语] 限定词；决定因素"
+    ]
+  },
+  "determinism": {
+    "word": "determinism",
+    "phonetic": "/dɪ'tɜːmɪnɪz(ə)m/",
+    "explains": [
+      "n. [力] 决定论"
+    ]
+  },
+  "deterrent": {
+    "word": "deterrent",
+    "phonetic": "/dɪ'ter(ə)nt/",
+    "explains": [
+      "n. 威慑 a遏制的"
+    ]
+  },
+  "detest": {
+    "word": "detest",
+    "phonetic": "/dɪ'test/",
+    "explains": [
+      "v. 痛恨, 憎恶\""
+    ]
+  },
+  "detonate": {
+    "word": "detonate",
+    "phonetic": "/'detəneɪt/",
+    "explains": [
+      "v. 使爆炸"
+    ]
+  },
+  "detonation": {
+    "word": "detonation",
+    "phonetic": "/detə'neɪʃ(ə)n/",
+    "explains": [
+      "n. 爆炸, 爆炸声, 爆裂"
+    ]
+  },
+  "detour": {
+    "word": "detour",
+    "phonetic": "/'diːtʊə/",
+    "explains": [
+      "n. 便道, 绕路"
+    ]
+  },
+  "detoxicate": {
+    "word": "detoxicate",
+    "phonetic": "/diː'tɒksɪkeɪt/",
+    "explains": [
+      "v. 使解毒"
+    ]
+  },
+  "detract": {
+    "word": "detract",
+    "phonetic": "/dɪ'trækt/",
+    "explains": [
+      "v. 转移"
+    ]
+  },
+  "detractor": {
+    "word": "detractor",
+    "phonetic": "/dɪ'træktɚ/",
+    "explains": [
+      "n. 诽谤者"
+    ]
+  },
+  "detriment": {
+    "word": "detriment",
+    "phonetic": "/'detrɪm(ə)nt/",
+    "explains": [
+      "n. 损害，损伤"
+    ]
+  },
+  "detrimental": {
+    "word": "detrimental",
+    "phonetic": "/ˌdetri'mentəl/",
+    "explains": [
+      "adj. 损害的，有害的，不利的，伤害的；n.  有害的人"
+    ]
+  },
+  "detritus": {
+    "word": "detritus",
+    "phonetic": "/dɪ'traɪtəs/",
+    "explains": [
+      "n. 碎石"
+    ]
+  },
+  "detrude": {
+    "word": "detrude",
+    "phonetic": "/dɪ'truːd/",
+    "explains": [
+      "vt. 推倒, 扔掉"
+    ]
+  },
+  "deux": {
+    "word": "deux",
+    "phonetic": "",
+    "explains": [
+      "num. 二"
+    ]
+  },
+  "devaluation": {
+    "word": "devaluation",
+    "phonetic": "/ˌdiːvælju'eiʃən/",
+    "explains": [
+      "n.  贬值"
+    ]
+  },
+  "devalue": {
+    "word": "devalue",
+    "phonetic": "/ˌdiː'væljuː/",
+    "explains": [
+      "v.  贬值"
+    ]
+  },
+  "devant": {
+    "word": "devant",
+    "phonetic": "",
+    "explains": [
+      "prep. 在…前面"
+    ]
+  },
+  "devastate": {
+    "word": "devastate",
+    "phonetic": "/'devəsteɪt/",
+    "explains": [
+      "v. 毁坏"
+    ]
+  },
+  "devastating": {
+    "word": "devastating",
+    "phonetic": "/'devəsteitiŋ/",
+    "explains": [
+      "adj. 破坏性的，毁灭性的"
+    ]
+  },
+  "devastation": {
+    "word": "devastation",
+    "phonetic": "/,devə'steɪʃn/",
+    "explains": [
+      "n. 毁坏,荒废"
+    ]
+  },
   "develop": {
     "word": "develop",
     "phonetic": "/dɪˈveləp/",
     "explains": [
       "v. 发展；开发；培养；冲洗（照片）"
+    ]
+  },
+  "developer": {
+    "word": "developer",
+    "phonetic": "/dɪ'veləpə(r)/",
+    "explains": [
+      "n. 开发者"
     ]
   },
   "development": {
@@ -643,11 +4066,109 @@
       "n. 发展；开发；成长"
     ]
   },
+  "developmental": {
+    "word": "developmental",
+    "phonetic": "/dɪ,veləp'ment(ə)l/",
+    "explains": [
+      "adj. 发展的, 进化的"
+    ]
+  },
+  "devenir": {
+    "word": "devenir",
+    "phonetic": "",
+    "explains": [
+      "v. 变成"
+    ]
+  },
+  "deviant": {
+    "word": "deviant",
+    "phonetic": "/'diːvɪənt/",
+    "explains": [
+      "adj. 不正常的"
+    ]
+  },
+  "deviate": {
+    "word": "deviate",
+    "phonetic": "/'diːvɪeɪt/",
+    "explains": [
+      "v. （使）背离，偏离"
+    ]
+  },
+  "deviation": {
+    "word": "deviation",
+    "phonetic": "/diːvɪ'eɪʃ(ə)n/",
+    "explains": [
+      "n. 背离，偏离；偏差"
+    ]
+  },
   "device": {
     "word": "device",
     "phonetic": "/dɪˈvaɪs/",
     "explains": [
       "n. 装置；设备；手段"
+    ]
+  },
+  "devil": {
+    "word": "devil",
+    "phonetic": "/'dev(ə)l/",
+    "explains": [
+      "n. 魔鬼，恶魔"
+    ]
+  },
+  "devilish": {
+    "word": "devilish",
+    "phonetic": "/'dev(ə)lɪʃ/",
+    "explains": [
+      "adj. 邪恶的；精力旺盛的；魔鬼似的；adv. 非常；极度地"
+    ]
+  },
+  "devious": {
+    "word": "devious",
+    "phonetic": "/'diːvɪəs/",
+    "explains": [
+      "adj. 偏僻的；弯曲的；不光明正大的"
+    ]
+  },
+  "devise": {
+    "word": "devise",
+    "phonetic": "/dɪ'vaɪz/",
+    "explains": [
+      "v. 设计，发明"
+    ]
+  },
+  "devoid": {
+    "word": "devoid",
+    "phonetic": "/dɪ'vɒɪd/",
+    "explains": [
+      "adj. 全无的, 缺乏的"
+    ]
+  },
+  "devoir": {
+    "word": "devoir",
+    "phonetic": "",
+    "explains": [
+      "v. 应该；n.m. 作业"
+    ]
+  },
+  "devolution": {
+    "word": "devolution",
+    "phonetic": "/,diːvə'luːʃ(ə)n; ,dev-/",
+    "explains": [
+      "n. 滚下, 落下, 依次, 相传, 转移, 委付"
+    ]
+  },
+  "devolve": {
+    "word": "devolve",
+    "phonetic": "/dɪ'vɒlv/",
+    "explains": [
+      "v. 被移交；转让"
+    ]
+  },
+  "devolver": {
+    "word": "devolver",
+    "phonetic": "",
+    "explains": [
+      "v. 归还"
     ]
   },
   "devote": {
@@ -657,11 +4178,102 @@
       "v. 奉献；致力于"
     ]
   },
+  "devotion": {
+    "word": "devotion",
+    "phonetic": "/dɪ'vəʊʃ(ə)n/",
+    "explains": [
+      "n. 献身，热诚，专心"
+    ]
+  },
+  "devour": {
+    "word": "devour",
+    "phonetic": "/dɪ'vaʊə/",
+    "explains": [
+      "v. 吞食；吞灭，毁灭"
+    ]
+  },
+  "devout": {
+    "word": "devout",
+    "phonetic": "/dɪ'vaʊt/",
+    "explains": [
+      "adj. 虔诚的；衷心的"
+    ]
+  },
+  "dew": {
+    "word": "dew",
+    "phonetic": "/'djuː/",
+    "explains": [
+      "n. 露，露水"
+    ]
+  },
+  "dewdrop": {
+    "word": "dewdrop",
+    "phonetic": "/'djuːdrɒp/",
+    "explains": [
+      "n. 露珠；露滴"
+    ]
+  },
+  "dexterity": {
+    "word": "dexterity",
+    "phonetic": "/dek'sterəti/",
+    "explains": [
+      "n.  纯熟， 灵巧"
+    ]
+  },
+  "dexterous": {
+    "word": "dexterous",
+    "phonetic": "/'dekst(ə)rəs/",
+    "explains": [
+      "adj. 灵巧的, 惯用右手的"
+    ]
+  },
+  "diabetes": {
+    "word": "diabetes",
+    "phonetic": "/,daɪə'biːtiːz/",
+    "explains": [
+      "n. [医] 糖尿病, 多尿症"
+    ]
+  },
+  "diabolical": {
+    "word": "diabolical",
+    "phonetic": "/daɪə'bɒlɪk(ə)l/",
+    "explains": [
+      "adj. 恶魔的"
+    ]
+  },
   "diagnose": {
     "word": "diagnose",
     "phonetic": "/ˈdaɪəɡnəʊz/",
     "explains": [
       "v. 诊断"
+    ]
+  },
+  "diagnosis": {
+    "word": "diagnosis",
+    "phonetic": "/ˌdaɪəgˈnəʊsɪs/",
+    "explains": [
+      "n. 诊断"
+    ]
+  },
+  "diagnostic": {
+    "word": "diagnostic",
+    "phonetic": "/daɪəg'nɒstɪk/",
+    "explains": [
+      "adj. 诊断的；特征的；n. 诊断法；诊断结论"
+    ]
+  },
+  "diagonal": {
+    "word": "diagonal",
+    "phonetic": "/daɪ'æg(ə)n(ə)l/",
+    "explains": [
+      "n&a. 对角线(的)"
+    ]
+  },
+  "diagonally": {
+    "word": "diagonally",
+    "phonetic": "/daɪ'æg(ə)nəlɪ; daɪ'ægən(ə)lɪ/",
+    "explains": [
+      "adv. 斜对地,  对角地"
     ]
   },
   "diagram": {
@@ -671,11 +4283,53 @@
       "n. 图表；图解"
     ]
   },
+  "dial": {
+    "word": "dial",
+    "phonetic": "/'daɪəl/",
+    "explains": [
+      "n. 钟面；拨号盘；v. 拨"
+    ]
+  },
+  "dialect": {
+    "word": "dialect",
+    "phonetic": "/ˈdaɪəlekt/",
+    "explains": [
+      "n. 方言"
+    ]
+  },
+  "dialectic": {
+    "word": "dialectic",
+    "phonetic": "/,daɪə'lektɪk/",
+    "explains": [
+      "n. 辩证法；逻辑论证；adj. 辩证的；辩证法的；方言的"
+    ]
+  },
+  "dialog": {
+    "word": "dialog",
+    "phonetic": "/'daɪəlɒɡ/",
+    "explains": [
+      "n. 对话，对白"
+    ]
+  },
   "dialogue": {
     "word": "dialogue",
     "phonetic": "/ˈdaɪəlɒɡ/",
     "explains": [
       "n. 对话；对白"
+    ]
+  },
+  "diameter": {
+    "word": "diameter",
+    "phonetic": "/daɪ'æmɪtə/",
+    "explains": [
+      "n. 直径"
+    ]
+  },
+  "diametrically": {
+    "word": "diametrically",
+    "phonetic": "/,daɪə'mɛtrɪkli/",
+    "explains": [
+      "adv. 完全地；作为直径地；直接地；正好相反地"
     ]
   },
   "diamond": {
@@ -685,11 +4339,95 @@
       "n. 钻石；金刚石"
     ]
   },
+  "diaper": {
+    "word": "diaper",
+    "phonetic": "/'daɪəpə/",
+    "explains": [
+      "n. 尿布；vt. 给孩子换尿布"
+    ]
+  },
+  "diaphanous": {
+    "word": "diaphanous",
+    "phonetic": "/daɪ'æf(ə)nəs/",
+    "explains": [
+      "adj. 透明的；精致的；模糊的"
+    ]
+  },
+  "diaphoresis": {
+    "word": "diaphoresis",
+    "phonetic": "/,daɪəfə'riːsɪs/",
+    "explains": [
+      "n. 发汗"
+    ]
+  },
+  "diario": {
+    "word": "diario",
+    "phonetic": "",
+    "explains": [
+      "n.m. 日记；adj. 每日的"
+    ]
+  },
+  "diarrhoea": {
+    "word": "diarrhoea",
+    "phonetic": "/,daɪə'rɪə/",
+    "explains": [
+      "n. 腹泻"
+    ]
+  },
   "diary": {
     "word": "diary",
     "phonetic": "/ˈdaɪəri/",
     "explains": [
       "n. 日记；日记本"
+    ]
+  },
+  "diatom": {
+    "word": "diatom",
+    "phonetic": "/'daɪətəm/",
+    "explains": [
+      "n. [植] 硅藻"
+    ]
+  },
+  "diatribe": {
+    "word": "diatribe",
+    "phonetic": "/'daɪətraɪb/",
+    "explains": [
+      "n. 恶骂, 诽谤"
+    ]
+  },
+  "dibujar": {
+    "word": "dibujar",
+    "phonetic": "",
+    "explains": [
+      "v. 画"
+    ]
+  },
+  "dice": {
+    "word": "dice",
+    "phonetic": "/daɪs/",
+    "explains": [
+      "v. 切成方块；n. 骰子"
+    ]
+  },
+  "dichotomy": {
+    "word": "dichotomy",
+    "phonetic": "/daɪ'kɒtəmɪ; dɪ-/",
+    "explains": [
+      "n. 两分, 二分法"
+    ]
+  },
+  "diciembre": {
+    "word": "diciembre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 十二月"
+    ]
+  },
+  "dictaphone": {
+    "word": "dictaphone",
+    "phonetic": "/'diktəfəun/",
+    "explains": [
+      "n.  录音电话机"
     ]
   },
   "dictate": {
@@ -699,11 +4437,81 @@
       "v. 口述；命令；支配"
     ]
   },
+  "dictation": {
+    "word": "dictation",
+    "phonetic": "/dɪkˈteɪʃ(ə)n/",
+    "explains": [
+      "n. 听写"
+    ]
+  },
+  "dictator": {
+    "word": "dictator",
+    "phonetic": "/dɪk'teɪtə/",
+    "explains": [
+      "n. 独裁者，专政者"
+    ]
+  },
+  "dictatorial": {
+    "word": "dictatorial",
+    "phonetic": "/dɪktə'tɔːrɪəl/",
+    "explains": [
+      "adj. 独裁的，专政的；专横傲慢的"
+    ]
+  },
+  "dictatorship": {
+    "word": "dictatorship",
+    "phonetic": "/dɪk'teɪtəʃɪp/",
+    "explains": [
+      "n. 专政；独裁权；独裁者职位"
+    ]
+  },
+  "diction": {
+    "word": "diction",
+    "phonetic": "/'dɪkʃ(ə)n/",
+    "explains": [
+      "n. 措辞, 用语, 言语"
+    ]
+  },
   "dictionary": {
     "word": "dictionary",
     "phonetic": "/ˈdɪkʃənəri/",
     "explains": [
       "n. 词典；字典"
+    ]
+  },
+  "dictionnaire": {
+    "word": "dictionnaire",
+    "phonetic": "",
+    "explains": [
+      "n.m. 词典"
+    ]
+  },
+  "dictum": {
+    "word": "dictum",
+    "phonetic": "/'dɪktəm/",
+    "explains": [
+      "n. 格言, [律] 法官的附带意见"
+    ]
+  },
+  "didactic": {
+    "word": "didactic",
+    "phonetic": "/dɪ'dæktɪk; daɪ-/",
+    "explains": [
+      "adj. 说教的；教诲的"
+    ]
+  },
+  "didactics": {
+    "word": "didactics",
+    "phonetic": "/dɪ'dæktɪks/",
+    "explains": [
+      "n. 教授法"
+    ]
+  },
+  "diddle": {
+    "word": "diddle",
+    "phonetic": "/'dɪd(ə)l/",
+    "explains": [
+      "v. 骗取；欺骗；浪费"
     ]
   },
   "die": {
@@ -713,12 +4521,89 @@
       "v. 死亡；消失；熄灭"
     ]
   },
+  "diehard": {
+    "word": "diehard",
+    "phonetic": "/'daɪhɑːd/",
+    "explains": [
+      "n. 顽固分子；死不屈从者；倔强的人"
+    ]
+  },
+  "dielectric": {
+    "word": "dielectric",
+    "phonetic": "/,daɪɪ'lektrɪk/",
+    "explains": [
+      "adj. 非传导性的；诱电性的；n. 电介质；绝缘体"
+    ]
+  },
+  "diente": {
+    "word": "diente",
+    "phonetic": "",
+    "explains": [
+      "n.m. 牙齿"
+    ]
+  },
+  "diesel": {
+    "word": "diesel",
+    "phonetic": "/'diːz(ə)l/",
+    "explains": [
+      "n. 柴油发动机，内燃机"
+    ]
+  },
   "diet": {
     "word": "diet",
     "phonetic": "/ˈdaɪət/",
     "explains": [
       "n. 饮食；节食",
       "v. 节食"
+    ]
+  },
+  "dietary": {
+    "word": "dietary",
+    "phonetic": "/'daɪət(ə)rɪ/",
+    "explains": [
+      "adj. 饮食的；n. 规定的食物"
+    ]
+  },
+  "dietetics": {
+    "word": "dietetics",
+    "phonetic": "/daɪə'tetɪks/",
+    "explains": [
+      "n. 营养学"
+    ]
+  },
+  "dietician": {
+    "word": "dietician",
+    "phonetic": "",
+    "explains": [
+      "n. 营养学家；膳食学家（等于dietitian）"
+    ]
+  },
+  "dietitian": {
+    "word": "dietitian",
+    "phonetic": "/daɪə'tɪʃ(ə)n/",
+    "explains": [
+      "n. <美>营养学家, 营养学家"
+    ]
+  },
+  "dieu": {
+    "word": "dieu",
+    "phonetic": "",
+    "explains": [
+      "n.m. 神；上帝"
+    ]
+  },
+  "diez": {
+    "word": "diez",
+    "phonetic": "",
+    "explains": [
+      "num. 十"
+    ]
+  },
+  "diff": {
+    "word": "diff",
+    "phonetic": "",
+    "explains": [
+      "差异对比"
     ]
   },
   "differ": {
@@ -742,6 +4627,41 @@
       "adj. 不同的；各种的"
     ]
   },
+  "differential": {
+    "word": "differential",
+    "phonetic": "/ˌdifə'renʃəl/",
+    "explains": [
+      "n.  差价"
+    ]
+  },
+  "differentiate": {
+    "word": "differentiate",
+    "phonetic": "/,dɪfə'renʃɪeɪt/",
+    "explains": [
+      "v. 区分，区别"
+    ]
+  },
+  "differentiating": {
+    "word": "differentiating",
+    "phonetic": "/,dɪfə'renʃɪ,eɪtɪŋ/",
+    "explains": [
+      "adj. 微分的"
+    ]
+  },
+  "differentiation": {
+    "word": "differentiation",
+    "phonetic": "/ˌdifərenʃi'eiʃən/",
+    "explains": [
+      "n.  区别"
+    ]
+  },
+  "differently": {
+    "word": "differently",
+    "phonetic": "/'dɪfərəntlɪ/",
+    "explains": [
+      "adv. 不同地，有差别地"
+    ]
+  },
   "difficult": {
     "word": "difficult",
     "phonetic": "/ˈdɪfɪkəlt/",
@@ -756,11 +4676,102 @@
       "n. 困难；难题"
     ]
   },
+  "diffidence": {
+    "word": "diffidence",
+    "phonetic": "/'dɪfɪd(ə)ns/",
+    "explains": [
+      "n. 无自信；羞怯；内向"
+    ]
+  },
+  "diffident": {
+    "word": "diffident",
+    "phonetic": "/'dɪfɪd(ə)nt/",
+    "explains": [
+      "adj. 羞怯的；缺乏自信的；谦虚谨慎的"
+    ]
+  },
+  "diffuse": {
+    "word": "diffuse",
+    "phonetic": "/dɪ'fjuːz/",
+    "explains": [
+      "adj. 弥漫的；散开的；v. 扩散；传播；漫射"
+    ]
+  },
+  "diffusely": {
+    "word": "diffusely",
+    "phonetic": "",
+    "explains": [
+      "adv. 广泛地,扩散地"
+    ]
+  },
+  "diffuses": {
+    "word": "diffuses",
+    "phonetic": "/dɪ'fjuːz/",
+    "explains": [
+      "v. 扩散,弥漫"
+    ]
+  },
+  "diffusion": {
+    "word": "diffusion",
+    "phonetic": "/dɪ'fjuːʒ(ə)n/",
+    "explains": [
+      "n. 传播，散布"
+    ]
+  },
+  "difluoride": {
+    "word": "difluoride",
+    "phonetic": "",
+    "explains": [
+      "n. 二氟化物"
+    ]
+  },
   "dig": {
     "word": "dig",
     "phonetic": "/dɪɡ/",
     "explains": [
       "v. 挖；掘；刺入"
+    ]
+  },
+  "digamy": {
+    "word": "digamy",
+    "phonetic": "/'dɪɡəmɪ/",
+    "explains": [
+      "n. 再婚"
+    ]
+  },
+  "digest": {
+    "word": "digest",
+    "phonetic": "/daɪˈdʒest; ˈdaɪdʒest/",
+    "explains": [
+      "v. 消化"
+    ]
+  },
+  "digestible": {
+    "word": "digestible",
+    "phonetic": "/daɪ'dʒestəbl/",
+    "explains": [
+      "adj. 易消化的；可摘要的"
+    ]
+  },
+  "digestion": {
+    "word": "digestion",
+    "phonetic": "/daɪ'dʒestʃ(ə)n; dɪ-/",
+    "explains": [
+      "n. 消化力, 领悟"
+    ]
+  },
+  "digestive": {
+    "word": "digestive",
+    "phonetic": "/daɪ'dʒestɪv; dɪ-/",
+    "explains": [
+      "adj. 消化的"
+    ]
+  },
+  "digit": {
+    "word": "digit",
+    "phonetic": "/'dɪdʒɪt/",
+    "explains": [
+      "n. 数字；手指或足趾；一指宽"
     ]
   },
   "digital": {
@@ -770,6 +4781,167 @@
       "adj. 数字的；数码的"
     ]
   },
+  "digitize": {
+    "word": "digitize",
+    "phonetic": "/'dɪdʒɪtaɪz/",
+    "explains": [
+      "v. [计] 数字化"
+    ]
+  },
+  "dignified": {
+    "word": "dignified",
+    "phonetic": "/'dɪgnɪfaɪd/",
+    "explains": [
+      "adj. 庄严的；有尊严的；高贵的；v. 使高贵（dignify的过去式）"
+    ]
+  },
+  "dignify": {
+    "word": "dignify",
+    "phonetic": "/'dɪgnɪfaɪ/",
+    "explains": [
+      "v. 使高贵；增威严；授以荣誉"
+    ]
+  },
+  "dignitary": {
+    "word": "dignitary",
+    "phonetic": "/'dɪgnɪt(ə)rɪ/",
+    "explains": [
+      "n. 高官；高僧；显要人物；adj. 高位的；地位尊荣的"
+    ]
+  },
+  "dignity": {
+    "word": "dignity",
+    "phonetic": "/ˈdɪgnɪtɪ/",
+    "explains": [
+      "n. 尊严"
+    ]
+  },
+  "digno": {
+    "word": "digno",
+    "phonetic": "",
+    "explains": [
+      "adj. 值得的"
+    ]
+  },
+  "digress": {
+    "word": "digress",
+    "phonetic": "/daɪ'gres/",
+    "explains": [
+      "v. 离题"
+    ]
+  },
+  "digression": {
+    "word": "digression",
+    "phonetic": "/daɪ'greʃ(ə)n/",
+    "explains": [
+      "n. 离题；脱轨"
+    ]
+  },
+  "dike": {
+    "word": "dike",
+    "phonetic": "/daɪk/",
+    "explains": [
+      "n. 堤防；v. 筑堤提防"
+    ]
+  },
+  "dilapidate": {
+    "word": "dilapidate",
+    "phonetic": "/dɪ'læpɪdeɪt/",
+    "explains": [
+      "v. 毁坏；荒废；浪费"
+    ]
+  },
+  "dilapidated": {
+    "word": "dilapidated",
+    "phonetic": "/dɪ'læpɪdeɪtɪd/",
+    "explains": [
+      "adj. 破旧的，坍坏的"
+    ]
+  },
+  "dilapidation": {
+    "word": "dilapidation",
+    "phonetic": "/dɪ,læpɪ'deɪʃ(ə)n/",
+    "explains": [
+      "n. 荒废, 崩塌, 破损"
+    ]
+  },
+  "dilate": {
+    "word": "dilate",
+    "phonetic": "/daɪ'leɪt; dɪ-/",
+    "explains": [
+      "v. 使膨胀，扩大"
+    ]
+  },
+  "dilatory": {
+    "word": "dilatory",
+    "phonetic": "/'dɪlət(ə)rɪ/",
+    "explains": [
+      "adj. 拖拉的；缓慢的，不慌不忙的"
+    ]
+  },
+  "dilemma": {
+    "word": "dilemma",
+    "phonetic": "/dɪˈlemə/",
+    "explains": [
+      "n. 困境；进退两难"
+    ]
+  },
+  "dilettante": {
+    "word": "dilettante",
+    "phonetic": "/,dɪlɪ'tænteɪ; -tɪ/",
+    "explains": [
+      "n. 业余爱好者；一知半解者；adj. 浅薄的；业余艺术爱好的；vi. （在艺术、科学等方面）浅尝辄止"
+    ]
+  },
+  "diligence": {
+    "word": "diligence",
+    "phonetic": "/'dɪlɪdʒ(ə)ns/",
+    "explains": [
+      "n. 勤奋"
+    ]
+  },
+  "diligent": {
+    "word": "diligent",
+    "phonetic": "/'dɪlɪdʒ(ə)nt/",
+    "explains": [
+      "adj. 勤勉的，勤奋的"
+    ]
+  },
+  "dilute": {
+    "word": "dilute",
+    "phonetic": "/daɪ'l(j)uːt; dɪ-/",
+    "explains": [
+      "adj. 稀释的；淡的；v. 稀释；冲淡；削弱"
+    ]
+  },
+  "dilution": {
+    "word": "dilution",
+    "phonetic": "/dai'ljuːʃən/",
+    "explains": [
+      "n.  价值降低； 股本稀释； 产权削弱"
+    ]
+  },
+  "dim": {
+    "word": "dim",
+    "phonetic": "/dɪm/",
+    "explains": [
+      "adj. 昏暗的；朦胧的"
+    ]
+  },
+  "dimanche": {
+    "word": "dimanche",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期日"
+    ]
+  },
+  "dime": {
+    "word": "dime",
+    "phonetic": "/daɪm/",
+    "explains": [
+      "n. <美> 一角硬币"
+    ]
+  },
   "dimension": {
     "word": "dimension",
     "phonetic": "/daɪˈmenʃn/",
@@ -777,11 +4949,207 @@
       "n. 尺寸；维度；方面"
     ]
   },
+  "dimensional": {
+    "word": "dimensional",
+    "phonetic": "/daɪ'mɛnʃənl/",
+    "explains": [
+      "adj. 维度的, 空间的, 尺寸的"
+    ]
+  },
+  "diminish": {
+    "word": "diminish",
+    "phonetic": "/dɪˈmɪnɪʃ/",
+    "explains": [
+      "v. 减少；降低"
+    ]
+  },
+  "diminuendo": {
+    "word": "diminuendo",
+    "phonetic": "/dɪ,mɪnjʊ'endəʊ/",
+    "explains": [
+      "n. [乐]渐弱演奏(部分)"
+    ]
+  },
+  "diminution": {
+    "word": "diminution",
+    "phonetic": "/,dɪmɪ'njuːʃ(ə)n/",
+    "explains": [
+      "n. 减少，降低；缩小"
+    ]
+  },
+  "diminutive": {
+    "word": "diminutive",
+    "phonetic": "/dɪ'mɪnjʊtɪv/",
+    "explains": [
+      "adj. 小的，小型的，微小的；n. 爱称；指小词；身材极小的人"
+    ]
+  },
+  "dimly": {
+    "word": "dimly",
+    "phonetic": "/'dimli/",
+    "explains": [
+      "adv. 微暗, 朦胧"
+    ]
+  },
+  "dimple": {
+    "word": "dimple",
+    "phonetic": "/'dɪmp(ə)l/",
+    "explains": [
+      "n. 酒窝, 涟漪"
+    ]
+  },
+  "dimply": {
+    "word": "dimply",
+    "phonetic": "",
+    "explains": [
+      "adj. 有酒窝的, 有凹处的"
+    ]
+  },
+  "din": {
+    "word": "din",
+    "phonetic": "/dɪn/",
+    "explains": [
+      "n&v. 喧闹，嘈杂"
+    ]
+  },
+  "dine": {
+    "word": "dine",
+    "phonetic": "/daɪn/",
+    "explains": [
+      "v. 用餐"
+    ]
+  },
+  "diner": {
+    "word": "diner",
+    "phonetic": "/'daɪnə/",
+    "explains": [
+      "n. 用餐者；路边小饭店；餐车式简便餐厅"
+    ]
+  },
+  "dinero": {
+    "word": "dinero",
+    "phonetic": "",
+    "explains": [
+      "n.m. 钱"
+    ]
+  },
+  "dinghy": {
+    "word": "dinghy",
+    "phonetic": "/'dɪŋgɪ; 'dɪŋɪ/",
+    "explains": [
+      "n. 小舢板,小游艇"
+    ]
+  },
+  "dingy": {
+    "word": "dingy",
+    "phonetic": "/'dɪn(d)ʒɪ/",
+    "explains": [
+      "adj. 脏的，邋遢的"
+    ]
+  },
+  "dining": {
+    "word": "dining",
+    "phonetic": "/ˈdaɪnɪŋ/",
+    "explains": [
+      "n. 用餐"
+    ]
+  },
   "dinner": {
     "word": "dinner",
     "phonetic": "/ˈdɪnər/",
     "explains": [
       "n. 晚餐；正餐"
+    ]
+  },
+  "dinosaur": {
+    "word": "dinosaur",
+    "phonetic": "/'daɪnəsɔː/",
+    "explains": [
+      "n. 恐龙"
+    ]
+  },
+  "diocese": {
+    "word": "diocese",
+    "phonetic": "/'daɪəsɪs/",
+    "explains": [
+      "n. 主教教区"
+    ]
+  },
+  "diode": {
+    "word": "diode",
+    "phonetic": "/'daɪəʊd/",
+    "explains": [
+      "n. [电子] 二极管"
+    ]
+  },
+  "dioxide": {
+    "word": "dioxide",
+    "phonetic": "/daɪ'ɒksaɪd/",
+    "explains": [
+      "n. 二氧化物"
+    ]
+  },
+  "dip": {
+    "word": "dip",
+    "phonetic": "/dɪp/",
+    "explains": [
+      "v. 蘸"
+    ]
+  },
+  "diphthong": {
+    "word": "diphthong",
+    "phonetic": "/'dɪfθɒŋ; 'dɪp-/",
+    "explains": [
+      "n. 双元音；复合元音；元音连字"
+    ]
+  },
+  "diploma": {
+    "word": "diploma",
+    "phonetic": "/dɪˈpləʊmə/",
+    "explains": [
+      "n. 文凭"
+    ]
+  },
+  "diplomacy": {
+    "word": "diplomacy",
+    "phonetic": "/dɪ'pləʊməsɪ/",
+    "explains": [
+      "n. 外交；外交手腕；交际手段"
+    ]
+  },
+  "diplomat": {
+    "word": "diplomat",
+    "phonetic": "/'dɪpləmæt/",
+    "explains": [
+      "n. 外交家"
+    ]
+  },
+  "diplomatic": {
+    "word": "diplomatic",
+    "phonetic": "/ˌdɪpləˈmætɪk/",
+    "explains": [
+      "adj. 外交的；老练的"
+    ]
+  },
+  "dipper": {
+    "word": "dipper",
+    "phonetic": "/'dɪpə/",
+    "explains": [
+      "n. 长柄勺；浸染工；[鸟] 河鸟"
+    ]
+  },
+  "dipsomania": {
+    "word": "dipsomania",
+    "phonetic": "/,dɪpsə(ʊ)'meɪnɪə/",
+    "explains": [
+      "n. 耽酒症, 饮酒狂"
+    ]
+  },
+  "dire": {
+    "word": "dire",
+    "phonetic": "/'daɪə/",
+    "explains": [
+      "adj. 可怕的,极端的"
     ]
   },
   "direct": {
@@ -800,6 +5168,20 @@
       "n. 方向；指导；用法说明"
     ]
   },
+  "directional": {
+    "word": "directional",
+    "phonetic": "/dɪ'rekʃ(ə)n(ə)l; daɪ-/",
+    "explains": [
+      "adj. 方向的"
+    ]
+  },
+  "directive": {
+    "word": "directive",
+    "phonetic": "/dɪ'rektɪv; daɪ-/",
+    "explains": [
+      "n. 指示；adj. 指导的"
+    ]
+  },
   "directly": {
     "word": "directly",
     "phonetic": "/dɪˈrektli/",
@@ -814,11 +5196,39 @@
       "n. 主管；导演；理事"
     ]
   },
+  "directorship": {
+    "word": "directorship",
+    "phonetic": "/di'rektəʃip/",
+    "explains": [
+      "n.  董事职位； 董事任期"
+    ]
+  },
   "directory": {
     "word": "directory",
     "phonetic": "/dɪˈrektəri/",
     "explains": [
       "n. 名录；电话簿；目录"
+    ]
+  },
+  "direful": {
+    "word": "direful",
+    "phonetic": "/'daɪəfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 可怕的, 悲惨的"
+    ]
+  },
+  "dirge": {
+    "word": "dirge",
+    "phonetic": "/dɜːdʒ/",
+    "explains": [
+      "n. 挽歌, 哀悼歌"
+    ]
+  },
+  "dirk": {
+    "word": "dirk",
+    "phonetic": "/dɜːk/",
+    "explains": [
+      "n. 匕首"
     ]
   },
   "dirt": {
@@ -843,11 +5253,60 @@
       "n. 残疾；无能"
     ]
   },
+  "disable": {
+    "word": "disable",
+    "phonetic": "/dɪs'eɪb(ə)l/",
+    "explains": [
+      "v. 使无能，使伤残"
+    ]
+  },
   "disabled": {
     "word": "disabled",
     "phonetic": "/dɪsˈeɪbld/",
     "explains": [
       "adj. 残疾的；丧失能力的"
+    ]
+  },
+  "disabuse": {
+    "word": "disabuse",
+    "phonetic": "/,dɪsə'bjuːz/",
+    "explains": [
+      "v. 解惑, 释疑, 使省悟"
+    ]
+  },
+  "disadvantage": {
+    "word": "disadvantage",
+    "phonetic": "/ˌdɪsədˈvɑːntɪdʒ/",
+    "explains": [
+      "n. 劣势"
+    ]
+  },
+  "disadvantaged": {
+    "word": "disadvantaged",
+    "phonetic": "/dɪsəd'vɑːntɪdʒd/",
+    "explains": [
+      "adj. 贫困的；处于不利地位的；社会地位低下的；n. 弱势团体；不利条件；v. 使处于不利地位（disadvantage的过去式和过去分词）"
+    ]
+  },
+  "disadvantageous": {
+    "word": "disadvantageous",
+    "phonetic": "/,dɪsædv(ə)n'teɪdʒəs/",
+    "explains": [
+      "adj. 不利的"
+    ]
+  },
+  "disaffected": {
+    "word": "disaffected",
+    "phonetic": "/,dɪsə'fɛktɪd/",
+    "explains": [
+      "adj. 抱不平的, 有叛意的, 不服的"
+    ]
+  },
+  "disaffection": {
+    "word": "disaffection",
+    "phonetic": "/,dɪsə'fɛkʃən/",
+    "explains": [
+      "n. 不满"
     ]
   },
   "disagree": {
@@ -857,11 +5316,32 @@
       "v. 不同意；持不同意见"
     ]
   },
+  "disagreeable": {
+    "word": "disagreeable",
+    "phonetic": "/dɪsə'griːəb(ə)l/",
+    "explains": [
+      "adj. 不愉快的；厌恶的；不为人喜的；难相处的；脾气坏的"
+    ]
+  },
+  "disagreement": {
+    "word": "disagreement",
+    "phonetic": "/dɪsə'ɡriːmənt/",
+    "explains": [
+      "n. 争论；不一致"
+    ]
+  },
   "disappear": {
     "word": "disappear",
     "phonetic": "/ˌdɪsəˈpɪər/",
     "explains": [
       "v. 消失；失踪"
+    ]
+  },
+  "disappearance": {
+    "word": "disappearance",
+    "phonetic": "/dɪsə'pɪərəns/",
+    "explains": [
+      "n. 消失，消散；失踪"
     ]
   },
   "disappoint": {
@@ -871,11 +5351,214 @@
       "v. 使失望"
     ]
   },
+  "disappointed": {
+    "word": "disappointed",
+    "phonetic": "/dɪsə'pɒɪntɪd/",
+    "explains": [
+      "adj. 失望的，沮丧的；受挫折的"
+    ]
+  },
+  "disappointing": {
+    "word": "disappointing",
+    "phonetic": "/dɪsə'pɒɪntɪŋ/",
+    "explains": [
+      "adj. 令人失望的；令人扫兴的；v. 令人失望（disappoint的ing形式）；辜负…的期望"
+    ]
+  },
+  "disappointment": {
+    "word": "disappointment",
+    "phonetic": "/ˌdɪsəˈpɔɪntmənt/",
+    "explains": [
+      "n. 失望"
+    ]
+  },
+  "disapproval": {
+    "word": "disapproval",
+    "phonetic": "/dɪsə'pruːvl/",
+    "explains": [
+      "n. 不赞成"
+    ]
+  },
+  "disapprove": {
+    "word": "disapprove",
+    "phonetic": "/ˌdisə'pruːv/",
+    "explains": [
+      "v.  不赞成， 不同意"
+    ]
+  },
+  "disapproving": {
+    "word": "disapproving",
+    "phonetic": "/,disə'pru:viŋ/",
+    "explains": [
+      "adj. 反对的；不赞成的；v. 不赞成；不同意（disapprove的ing形式）"
+    ]
+  },
+  "disarm": {
+    "word": "disarm",
+    "phonetic": "/dɪs'ɑːm/",
+    "explains": [
+      "v. 解除武装；裁军；缓和"
+    ]
+  },
+  "disarmament": {
+    "word": "disarmament",
+    "phonetic": "/dɪs'ɑːməm(ə)nt/",
+    "explains": [
+      "n. 裁军"
+    ]
+  },
+  "disarray": {
+    "word": "disarray",
+    "phonetic": "/dɪsə'reɪ/",
+    "explains": [
+      "n&vt. 弄乱，扰乱"
+    ]
+  },
+  "disassociate": {
+    "word": "disassociate",
+    "phonetic": "/dɪsə'səʊʃɪeɪt; -sɪ-/",
+    "explains": [
+      "v. 使分离（过去式disassociated，过去分词disassociated，现在分词disassociating，第三人称单数disassociates，名词disassociation）"
+    ]
+  },
   "disaster": {
     "word": "disaster",
     "phonetic": "/dɪˈzɑːstər/",
     "explains": [
       "n. 灾难；灾祸；彻底失败"
+    ]
+  },
+  "disastrous": {
+    "word": "disastrous",
+    "phonetic": "/dɪ'zɑːstrəs/",
+    "explains": [
+      "adj. 灾难性的；悲惨的"
+    ]
+  },
+  "disavow": {
+    "word": "disavow",
+    "phonetic": "/dɪsə'vaʊ/",
+    "explains": [
+      "v. 否认，否定；抵赖；拒绝对…的责任"
+    ]
+  },
+  "disband": {
+    "word": "disband",
+    "phonetic": "/dɪs'bænd/",
+    "explains": [
+      "v. 解散, 裁减"
+    ]
+  },
+  "disbar": {
+    "word": "disbar",
+    "phonetic": "/dɪs'bɑː/",
+    "explains": [
+      "v. [律] 逐出法庭, 剥夺律师资格"
+    ]
+  },
+  "disbelief": {
+    "word": "disbelief",
+    "phonetic": "/dɪsbɪ'liːf/",
+    "explains": [
+      "n. 怀疑，不信"
+    ]
+  },
+  "disbelieve": {
+    "word": "disbelieve",
+    "phonetic": "/dɪsbɪ'liːv/",
+    "explains": [
+      "v. 不信；怀疑"
+    ]
+  },
+  "disburse": {
+    "word": "disburse",
+    "phonetic": "/dɪs'bɜːs/",
+    "explains": [
+      "v. 支付；支出"
+    ]
+  },
+  "disbursement": {
+    "word": "disbursement",
+    "phonetic": "/dɪs'bɜːsm(ə)nt/",
+    "explains": [
+      "n. 支付, 支出"
+    ]
+  },
+  "disc": {
+    "word": "disc",
+    "phonetic": "/dɪsk/",
+    "explains": [
+      "n. 圆盘，[电子] 唱片（等于disk）；vt. 灌唱片"
+    ]
+  },
+  "discalced": {
+    "word": "discalced",
+    "phonetic": "/dɪs'kælst/",
+    "explains": [
+      "adj. 赤脚的, 仅穿拖鞋的"
+    ]
+  },
+  "discard": {
+    "word": "discard",
+    "phonetic": "/dɪsˈkɑːd/",
+    "explains": [
+      "v. 丢弃"
+    ]
+  },
+  "discern": {
+    "word": "discern",
+    "phonetic": "/dɪˈsɜːn/",
+    "explains": [
+      "v. 辨别；识别"
+    ]
+  },
+  "discernible": {
+    "word": "discernible",
+    "phonetic": "/dɪ'sɜːnɪbl/",
+    "explains": [
+      "adj. 可辨别的"
+    ]
+  },
+  "discerning": {
+    "word": "discerning",
+    "phonetic": "/dɪ'sɜːnɪŋ/",
+    "explains": [
+      "adj. 有辨识能力的；眼光敏锐的；v. 辨别（discern的ing形式）"
+    ]
+  },
+  "discernment": {
+    "word": "discernment",
+    "phonetic": "/dɪ'sɜːnm(ə)nt/",
+    "explains": [
+      "n. 识别力, 眼力,洞察力"
+    ]
+  },
+  "discharge": {
+    "word": "discharge",
+    "phonetic": "/ˈdɪstʃɑːdʒ; dɪsˈtʃɑːdʒ/",
+    "explains": [
+      "v. 排出　n. 排出"
+    ]
+  },
+  "disciple": {
+    "word": "disciple",
+    "phonetic": "/dɪ'saɪp(ə)l/",
+    "explains": [
+      "n. 信徒, 弟子"
+    ]
+  },
+  "disciplinarian": {
+    "word": "disciplinarian",
+    "phonetic": "/,dɪsɪplɪ'neərɪən/",
+    "explains": [
+      "adj. 训练的, 规律的, 训育的"
+    ]
+  },
+  "disciplinary": {
+    "word": "disciplinary",
+    "phonetic": "/'dɪsɪplɪn(ə)rɪ; ,dɪsɪ'plɪn-/",
+    "explains": [
+      "adj. 规律的；训练的；训诫的"
     ]
   },
   "discipline": {
@@ -886,11 +5569,144 @@
       "v. 训练；惩罚"
     ]
   },
+  "disclaim": {
+    "word": "disclaim",
+    "phonetic": "/dɪs'kleɪm/",
+    "explains": [
+      "v. 否认，拒绝；放弃，弃权；拒绝承认"
+    ]
+  },
+  "disclaimer": {
+    "word": "disclaimer",
+    "phonetic": "/dɪs'kleɪmə/",
+    "explains": [
+      "n. 放弃, 弃权"
+    ]
+  },
   "disclose": {
     "word": "disclose",
     "phonetic": "/dɪsˈkləʊz/",
     "explains": [
       "v. 揭露；透露"
+    ]
+  },
+  "disclosure": {
+    "word": "disclosure",
+    "phonetic": "/dɪs'kləʊʒə/",
+    "explains": [
+      "n. [审计] 披露；揭发；被揭发出来的事情"
+    ]
+  },
+  "disco": {
+    "word": "disco",
+    "phonetic": "/'dɪskəʊ/",
+    "explains": [
+      "n. 迪斯科舞厅"
+    ]
+  },
+  "discography": {
+    "word": "discography",
+    "phonetic": "/dɪ'skɒgrəfɪ/",
+    "explains": [
+      "n. 音乐唱片分类目录, 音乐唱片分类学(法),录音作品目录"
+    ]
+  },
+  "discolor": {
+    "word": "discolor",
+    "phonetic": "/dis'kʌlə/",
+    "explains": [
+      "v. 使脱色, (使)变色,(使)退色"
+    ]
+  },
+  "discoloration": {
+    "word": "discoloration",
+    "phonetic": "/,dɪskʌlə'reɪʃn/",
+    "explains": [
+      "n. 变色, 污点"
+    ]
+  },
+  "discomfit": {
+    "word": "discomfit",
+    "phonetic": "/dɪs'kʌmfɪt/",
+    "explains": [
+      "v. 挫败；扰乱，破坏；使…为难；使…破灭"
+    ]
+  },
+  "discomfiture": {
+    "word": "discomfiture",
+    "phonetic": "/dɪs'kʌmfɪtʃə/",
+    "explains": [
+      "n. 挫折, 失败,崩溃,尴尬"
+    ]
+  },
+  "discommode": {
+    "word": "discommode",
+    "phonetic": "/,dɪskə'məʊd/",
+    "explains": [
+      "v. 使不方便, 使为难, 使不自由"
+    ]
+  },
+  "discompose": {
+    "word": "discompose",
+    "phonetic": "/dɪskəm'pəʊz/",
+    "explains": [
+      "v. 不安"
+    ]
+  },
+  "discomposure": {
+    "word": "discomposure",
+    "phonetic": "",
+    "explains": [
+      "n. 心乱, 狼狈, 不安"
+    ]
+  },
+  "disconcert": {
+    "word": "disconcert",
+    "phonetic": "/,dɪskən'sɜːt/",
+    "explains": [
+      "v. 使仓皇失措；使困惑；破坏"
+    ]
+  },
+  "discontent": {
+    "word": "discontent",
+    "phonetic": "/dɪskən'tent/",
+    "explains": [
+      "n. 不满a不满的vt使不满"
+    ]
+  },
+  "discontented": {
+    "word": "discontented",
+    "phonetic": "/dɪskən'tentɪd/",
+    "explains": [
+      "adj. 不满意的"
+    ]
+  },
+  "discontinue": {
+    "word": "discontinue",
+    "phonetic": "/dɪskən'tɪnjuː/",
+    "explains": [
+      "v. 停止；使中止"
+    ]
+  },
+  "discontinuity": {
+    "word": "discontinuity",
+    "phonetic": "/dɪs,kɒntɪ'njuːɪtɪ/",
+    "explains": [
+      "n. 不连续, 中断"
+    ]
+  },
+  "discord": {
+    "word": "discord",
+    "phonetic": "/'dɪskɔːd/",
+    "explains": [
+      "n. 不和，争吵，(声音)不和谐"
+    ]
+  },
+  "discordant": {
+    "word": "discordant",
+    "phonetic": "/dɪ'skɔːd(ə)nt/",
+    "explains": [
+      "adj. 不调和的, 不和的, [乐]不悦耳的, 不和谐的"
     ]
   },
   "discount": {
@@ -901,11 +5717,53 @@
       "v. 打折；忽视"
     ]
   },
+  "discountenance": {
+    "word": "discountenance",
+    "phonetic": "/dɪs'kaʊntɪnəns/",
+    "explains": [
+      "v. 使丢脸；不赞成；使慌张；n. 不赞成"
+    ]
+  },
+  "discourage": {
+    "word": "discourage",
+    "phonetic": "/dɪsˈkʌrɪdʒ/",
+    "explains": [
+      "v. 使气馁；阻止"
+    ]
+  },
+  "discours": {
+    "word": "discours",
+    "phonetic": "",
+    "explains": [
+      "n.m. 演讲"
+    ]
+  },
+  "discourse": {
+    "word": "discourse",
+    "phonetic": "/'dɪskɔːs; -'kɔːs/",
+    "explains": [
+      "n. 讲话，演说，讲道"
+    ]
+  },
+  "discourteous": {
+    "word": "discourteous",
+    "phonetic": "/dɪs'kɜːtjəs/",
+    "explains": [
+      "adj. 失礼的，无礼貌的；粗鲁的"
+    ]
+  },
   "discover": {
     "word": "discover",
     "phonetic": "/dɪˈskʌvər/",
     "explains": [
       "v. 发现；发觉"
+    ]
+  },
+  "discoverer": {
+    "word": "discoverer",
+    "phonetic": "/dis'kʌvərə/",
+    "explains": [
+      "n. 发现者"
     ]
   },
   "discovery": {
@@ -915,11 +5773,109 @@
       "n. 发现；被发现的事物"
     ]
   },
+  "discredit": {
+    "word": "discredit",
+    "phonetic": "/dɪs'kredɪt/",
+    "explains": [
+      "v. 怀疑  n丧失名誉"
+    ]
+  },
+  "discreet": {
+    "word": "discreet",
+    "phonetic": "/dɪ'skriːt/",
+    "explains": [
+      "adj. 谨慎的；小心的"
+    ]
+  },
+  "discrepancy": {
+    "word": "discrepancy",
+    "phonetic": "/dɪs'krep(ə)nsɪ/",
+    "explains": [
+      "n. 不符；矛盾；相差"
+    ]
+  },
+  "discrepant": {
+    "word": "discrepant",
+    "phonetic": "/dɪs'krepənt/",
+    "explains": [
+      "adj. 有差异的；相差的；矛盾的"
+    ]
+  },
+  "discrete": {
+    "word": "discrete",
+    "phonetic": "/dɪ'skriːt/",
+    "explains": [
+      "adj. 不连续的, 离散的"
+    ]
+  },
+  "discretion": {
+    "word": "discretion",
+    "phonetic": "/di'skreʃən/",
+    "explains": [
+      "n.  判断力； 谨慎， 慎重"
+    ]
+  },
+  "discretionary": {
+    "word": "discretionary",
+    "phonetic": "/dɪ'skreʃ(ə)n(ə)rɪ/",
+    "explains": [
+      "adj. 任意的；自由决定的"
+    ]
+  },
+  "discriminate": {
+    "word": "discriminate",
+    "phonetic": "/dɪˈskrɪmɪneɪt/",
+    "explains": [
+      "v. 歧视；区别"
+    ]
+  },
+  "discriminating": {
+    "word": "discriminating",
+    "phonetic": "/dɪ'skrɪmɪneɪtɪŋ/",
+    "explains": [
+      "adj. 识别的, 有差别的, 有识别力的"
+    ]
+  },
   "discrimination": {
     "word": "discrimination",
     "phonetic": "/dɪˌskrɪmɪˈneɪʃn/",
     "explains": [
       "n. 歧视；区别对待；辨别力"
+    ]
+  },
+  "discriminatory": {
+    "word": "discriminatory",
+    "phonetic": "/dɪ'skrɪmɪnɪ,t(ə)rɪ; dɪ,skrɪmɪ'neɪt(ə)rɪ/",
+    "explains": [
+      "adj. 有辨识力的, 有差别的"
+    ]
+  },
+  "disculpar": {
+    "word": "disculpar",
+    "phonetic": "",
+    "explains": [
+      "v. 原谅"
+    ]
+  },
+  "discursive": {
+    "word": "discursive",
+    "phonetic": "/dɪs'kɜːsɪv/",
+    "explains": [
+      "adj. 散漫的, 不得要领的"
+    ]
+  },
+  "discurso": {
+    "word": "discurso",
+    "phonetic": "",
+    "explains": [
+      "n.m. 演讲"
+    ]
+  },
+  "discus": {
+    "word": "discus",
+    "phonetic": "/'dɪskəs/",
+    "explains": [
+      "n. 铁饼；掷铁饼"
     ]
   },
   "discuss": {
@@ -936,11 +5892,186 @@
       "n. 讨论；谈论"
     ]
   },
+  "disdain": {
+    "word": "disdain",
+    "phonetic": "/dɪs'deɪn; -z-/",
+    "explains": [
+      "n. 轻蔑 v蔑视"
+    ]
+  },
+  "disdainful": {
+    "word": "disdainful",
+    "phonetic": "/dɪs'deɪnfʊl; -f(ə)l; -z-/",
+    "explains": [
+      "adj. 轻蔑的；倨傲的；鄙视的"
+    ]
+  },
   "disease": {
     "word": "disease",
     "phonetic": "/dɪˈziːz/",
     "explains": [
       "n. 疾病；弊端"
+    ]
+  },
+  "disembark": {
+    "word": "disembark",
+    "phonetic": "/dɪsɪm'bɑːk; dɪsem-/",
+    "explains": [
+      "v. 登陆，下车；上岸"
+    ]
+  },
+  "disembodied": {
+    "word": "disembodied",
+    "phonetic": "/,dɪsɪm'bɑdɪd/",
+    "explains": [
+      "adj. 无实质的, 无实体的"
+    ]
+  },
+  "disembosom": {
+    "word": "disembosom",
+    "phonetic": "/dɪsɪm'bʊzəm/",
+    "explains": [
+      "vt. 吐露, 泄露"
+    ]
+  },
+  "disenchant": {
+    "word": "disenchant",
+    "phonetic": "/dɪsɪn'tʃɑːnt; dɪsen-/",
+    "explains": [
+      "v. 使清醒；使不抱幻想"
+    ]
+  },
+  "disenchanted": {
+    "word": "disenchanted",
+    "phonetic": "/,dɪsɪn'tʃæntɪd/",
+    "explains": [
+      "adj. 不再着迷的；不再抱幻想的；感到幻灭的；v. 使不再着迷（disenchant的过去分词）"
+    ]
+  },
+  "disencumber": {
+    "word": "disencumber",
+    "phonetic": "/dɪsɪn'kʌmbə; dɪsen-/",
+    "explains": [
+      "v. 摆脱烦恼, 不受妨碍"
+    ]
+  },
+  "disenfranchise": {
+    "word": "disenfranchise",
+    "phonetic": "/,dɪsɪn'fræn(t)ʃaɪz; ,dɪsen-/",
+    "explains": [
+      "v. 剥夺…的公民权（等于disfranchise）"
+    ]
+  },
+  "disengage": {
+    "word": "disengage",
+    "phonetic": "/,dɪsɪn'geɪdʒ; ,dɪsen-/",
+    "explains": [
+      "v. 使脱离；解开；解除"
+    ]
+  },
+  "disengaged": {
+    "word": "disengaged",
+    "phonetic": "/dɪsɪn'ɡeɪdʒd/",
+    "explains": [
+      "adj. 自由的, 闲散的, 空闲的"
+    ]
+  },
+  "disentangle": {
+    "word": "disentangle",
+    "phonetic": "/dɪsɪn'tæŋg(ə)l; dɪsen-/",
+    "explains": [
+      "v. 解决；松开；解开纠结；解决（纠纷）"
+    ]
+  },
+  "disequilibrium": {
+    "word": "disequilibrium",
+    "phonetic": "/ˌdisikwi'libriəm/",
+    "explains": [
+      "n.  失去平衡， 不平衡"
+    ]
+  },
+  "disfavour": {
+    "word": "disfavour",
+    "phonetic": "/dɪs'fevɚ/",
+    "explains": [
+      "v. 不赞成；冷待；n. 不赞成；不喜欢"
+    ]
+  },
+  "disfigure": {
+    "word": "disfigure",
+    "phonetic": "/dɪs'fɪgə/",
+    "explains": [
+      "v. 使变丑；损毁…的外形；使大为减色"
+    ]
+  },
+  "disfranchise": {
+    "word": "disfranchise",
+    "phonetic": "/dɪs'fræn(t)ʃaɪz/",
+    "explains": [
+      "v. 剥夺公民权, 剥夺推举议员权, 剥夺权利"
+    ]
+  },
+  "disfrutar": {
+    "word": "disfrutar",
+    "phonetic": "",
+    "explains": [
+      "v. 享受"
+    ]
+  },
+  "disgorge": {
+    "word": "disgorge",
+    "phonetic": "/dɪs'gɔːdʒ/",
+    "explains": [
+      "v. 吐出"
+    ]
+  },
+  "disgrace": {
+    "word": "disgrace",
+    "phonetic": "/dɪsˈɡreɪs/",
+    "explains": [
+      "n. 耻辱"
+    ]
+  },
+  "disgraceful": {
+    "word": "disgraceful",
+    "phonetic": "/dɪs'greɪsfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 不名誉的，可耻的"
+    ]
+  },
+  "disgruntled": {
+    "word": "disgruntled",
+    "phonetic": "/dɪs'grʌnt(ə)ld/",
+    "explains": [
+      "adj. 不满的, 不高兴的"
+    ]
+  },
+  "disguise": {
+    "word": "disguise",
+    "phonetic": "/dɪsˈɡaɪz/",
+    "explains": [
+      "v. 伪装"
+    ]
+  },
+  "disgust": {
+    "word": "disgust",
+    "phonetic": "/dɪsˈɡʌst/",
+    "explains": [
+      "n. 厌恶"
+    ]
+  },
+  "disgusted": {
+    "word": "disgusted",
+    "phonetic": "/dɪs'ɡʌstɪd/",
+    "explains": [
+      "adj. 厌恶的；厌烦的；v. 使恶心；使讨厌（disgust的过去分词）"
+    ]
+  },
+  "disgusting": {
+    "word": "disgusting",
+    "phonetic": "/dɪs'gʌstɪŋ/",
+    "explains": [
+      "adj. 令人厌恶的"
     ]
   },
   "dish": {
@@ -950,6 +6081,223 @@
       "n. 盘子；菜肴"
     ]
   },
+  "dishabituate": {
+    "word": "dishabituate",
+    "phonetic": "/,dɪshə'bɪtjʊeɪt/",
+    "explains": [
+      "vt. 使戒除(或放弃)习惯,使不习惯"
+    ]
+  },
+  "dishevel": {
+    "word": "dishevel",
+    "phonetic": "/dɪ'ʃevl/",
+    "explains": [
+      "v. 使蓬乱；使头发凌乱；弄乱"
+    ]
+  },
+  "dishevelled": {
+    "word": "dishevelled",
+    "phonetic": "/di'ʃevəld/",
+    "explains": [
+      "adj. 散乱的, 蓬乱的"
+    ]
+  },
+  "dishonest": {
+    "word": "dishonest",
+    "phonetic": "/dɪsˈɒnɪst/",
+    "explains": [
+      "adj. 不诚实的"
+    ]
+  },
+  "dishonour": {
+    "word": "dishonour",
+    "phonetic": "/dɪs'ɑnɚ/",
+    "explains": [
+      "n. 不光彩；丢脸的人"
+    ]
+  },
+  "dishonourable": {
+    "word": "dishonourable",
+    "phonetic": "/dɪs'ɑnərəbl/",
+    "explains": [
+      "adj. 不名誉的；无耻的；不受尊重的（等于dishonorable）"
+    ]
+  },
+  "dishwasher": {
+    "word": "dishwasher",
+    "phonetic": "/'dɪʃwɒʃə/",
+    "explains": [
+      "n. 洗碗工；洗碟机"
+    ]
+  },
+  "disillusion": {
+    "word": "disillusion",
+    "phonetic": "/,dɪsɪ'l(j)uːʒ(ə)n/",
+    "explains": [
+      "v. 觉醒，使觉醒"
+    ]
+  },
+  "disillusioned": {
+    "word": "disillusioned",
+    "phonetic": "/dɪsɪ'luːʒ(ə)nd; -'ljuː-/",
+    "explains": [
+      "adj. 醒悟的；幻想破灭的；不抱幻想的；v. 使幻想破灭（disillusion的过去分词）；唤醒"
+    ]
+  },
+  "disinclined": {
+    "word": "disinclined",
+    "phonetic": "/dɪsɪn'klaɪnd/",
+    "explains": [
+      "adj. 不想的，不愿的；v. 使讨厌（disincline的过去分词）"
+    ]
+  },
+  "disinfect": {
+    "word": "disinfect",
+    "phonetic": "/dɪsɪn'fekt/",
+    "explains": [
+      "v. 将…消毒"
+    ]
+  },
+  "disinfectant": {
+    "word": "disinfectant",
+    "phonetic": "/dɪsɪn'fekt(ə)nt/",
+    "explains": [
+      "n. 消毒剂"
+    ]
+  },
+  "disingenuous": {
+    "word": "disingenuous",
+    "phonetic": "/,dɪsɪn'dʒenjʊəs/",
+    "explains": [
+      "adj. 虚伪的；不诚实的；不老实的；狡猾的"
+    ]
+  },
+  "disintegrate": {
+    "word": "disintegrate",
+    "phonetic": "/dɪs'ɪntɪgreɪt/",
+    "explains": [
+      "v. 分裂成小片，瓦解"
+    ]
+  },
+  "disintegration": {
+    "word": "disintegration",
+    "phonetic": "/disˌinti'greiʃən/",
+    "explains": [
+      "n.  分化； 企业解体， 分散经营； 碎裂； 崩溃"
+    ]
+  },
+  "disinter": {
+    "word": "disinter",
+    "phonetic": "/,dɪsɪn'tɜː/",
+    "explains": [
+      "v. 掘出"
+    ]
+  },
+  "disinterest": {
+    "word": "disinterest",
+    "phonetic": "/dɪs'ɪnt(ə)rɪst/",
+    "explains": [
+      "n. 无兴趣, 不关心"
+    ]
+  },
+  "disinterested": {
+    "word": "disinterested",
+    "phonetic": "/dɪs'ɪnt(ə)rɪstɪd/",
+    "explains": [
+      "adj. 无私的；公正的；冷漠的；廉洁的；v. 使不再有利害关系；使无兴趣（disinterest的过去分词）"
+    ]
+  },
+  "disjointed": {
+    "word": "disjointed",
+    "phonetic": "/dis'dʒɔintid/",
+    "explains": [
+      "adj.  脱节的； 杂乱的"
+    ]
+  },
+  "disjunctive": {
+    "word": "disjunctive",
+    "phonetic": "/dɪs'dʒʌŋ(k)tɪv/",
+    "explains": [
+      "adj. 分隔的；分离的；n. 反意连接词"
+    ]
+  },
+  "disk": {
+    "word": "disk",
+    "phonetic": "/dɪsk/",
+    "explains": [
+      "n. 磁盘"
+    ]
+  },
+  "dislike": {
+    "word": "dislike",
+    "phonetic": "/dɪs'laɪk/",
+    "explains": [
+      "v. 不喜爱，厌恶；n. 不喜爱，厌恶"
+    ]
+  },
+  "dislocate": {
+    "word": "dislocate",
+    "phonetic": "/'dɪsləkeɪt/",
+    "explains": [
+      "v. 使脱臼；使混乱"
+    ]
+  },
+  "dislocation": {
+    "word": "dislocation",
+    "phonetic": "/,dɪslə(ʊ)'keɪʃ(ə)n/",
+    "explains": [
+      "n. 转位；混乱；[医] 脱臼"
+    ]
+  },
+  "dislodge": {
+    "word": "dislodge",
+    "phonetic": "/dɪs'lɒdʒ/",
+    "explains": [
+      "v. 驱逐"
+    ]
+  },
+  "disloyal": {
+    "word": "disloyal",
+    "phonetic": "/dɪs'lɒɪ(ə)l/",
+    "explains": [
+      "adj. 不忠的；不忠诚的；背叛的"
+    ]
+  },
+  "disloyalty": {
+    "word": "disloyalty",
+    "phonetic": "/dɪs'lɒɪ(ə)ltɪ/",
+    "explains": [
+      "n. 不忠实"
+    ]
+  },
+  "dismal": {
+    "word": "dismal",
+    "phonetic": "/'dɪzm(ə)l/",
+    "explains": [
+      "adj. 阴沉的, 凄凉的n沼泽"
+    ]
+  },
+  "dismantle": {
+    "word": "dismantle",
+    "phonetic": "/dis'mæntl/",
+    "explains": [
+      "vt.  拆开， 拆卸； 废除， 取消"
+    ]
+  },
+  "dismay": {
+    "word": "dismay",
+    "phonetic": "/dɪs'meɪ/",
+    "explains": [
+      "n. 惊慌，沮丧，灰心"
+    ]
+  },
+  "dismember": {
+    "word": "dismember",
+    "phonetic": "/dɪs'membə/",
+    "explains": [
+      "v. 肢解,割断手足"
+    ]
+  },
   "dismiss": {
     "word": "dismiss",
     "phonetic": "/dɪsˈmɪs/",
@@ -957,11 +6305,158 @@
       "v. 解雇；解散；不予考虑"
     ]
   },
+  "dismissal": {
+    "word": "dismissal",
+    "phonetic": "/dɪs'mɪsl/",
+    "explains": [
+      "n. 解雇；免职"
+    ]
+  },
+  "disobedience": {
+    "word": "disobedience",
+    "phonetic": "/dɪsə'biːdɪəns/",
+    "explains": [
+      "n. 不服从；违反，违抗"
+    ]
+  },
+  "disobey": {
+    "word": "disobey",
+    "phonetic": "/dɪsə'beɪ/",
+    "explains": [
+      "v. 违反；不服从"
+    ]
+  },
   "disorder": {
     "word": "disorder",
     "phonetic": "/dɪsˈɔːdər/",
     "explains": [
       "n. 混乱；失调；疾病"
+    ]
+  },
+  "disorient": {
+    "word": "disorient",
+    "phonetic": "/dɪs'ɔ:rɪent/",
+    "explains": [
+      "v. 使失去方向感, 使迷惑"
+    ]
+  },
+  "disorientation": {
+    "word": "disorientation",
+    "phonetic": "",
+    "explains": [
+      "n. 迷失方向, 迷惑"
+    ]
+  },
+  "disparage": {
+    "word": "disparage",
+    "phonetic": "/dɪ'spærɪdʒ/",
+    "explains": [
+      "v. 蔑视；毁谤"
+    ]
+  },
+  "disparaging": {
+    "word": "disparaging",
+    "phonetic": "/dɪ'spærɪdʒɪŋ/",
+    "explains": [
+      "adj. 毁谤的；轻蔑的；v. 蔑视（disparage的ing形式）"
+    ]
+  },
+  "disparate": {
+    "word": "disparate",
+    "phonetic": "/'dispərət/",
+    "explains": [
+      "adj.  毫不相干的； 迥然不同的"
+    ]
+  },
+  "disparity": {
+    "word": "disparity",
+    "phonetic": "/dɪ'spærɪtɪ/",
+    "explains": [
+      "n. 不同；不一致；不等"
+    ]
+  },
+  "dispassionate": {
+    "word": "dispassionate",
+    "phonetic": "/dɪs'pæʃ(ə)nət/",
+    "explains": [
+      "adj. 冷静的, 不带感情的, 平心静气的"
+    ]
+  },
+  "dispatch": {
+    "word": "dispatch",
+    "phonetic": "/dɪˈspætʃ/",
+    "explains": [
+      "v. 派遣；发送"
+    ]
+  },
+  "dispel": {
+    "word": "dispel",
+    "phonetic": "/dɪ'spel/",
+    "explains": [
+      "v. 驱逐，消除"
+    ]
+  },
+  "dispensable": {
+    "word": "dispensable",
+    "phonetic": "/dɪs'pensəbl/",
+    "explains": [
+      "adj. 不是必要的, 可有可无的"
+    ]
+  },
+  "dispensary": {
+    "word": "dispensary",
+    "phonetic": "/dɪ'spens(ə)rɪ/",
+    "explains": [
+      "n. 药房；（学校、兵营或工厂的）诊疗所；防治站"
+    ]
+  },
+  "dispensation": {
+    "word": "dispensation",
+    "phonetic": "/dɪspen'seɪʃ(ə)n/",
+    "explains": [
+      "n. 分配；免除；豁免；天命"
+    ]
+  },
+  "dispense": {
+    "word": "dispense",
+    "phonetic": "/di'spens/",
+    "explains": [
+      "vt.  分配， 分发； 配， 发"
+    ]
+  },
+  "dispersal": {
+    "word": "dispersal",
+    "phonetic": "/dɪ'spɜːsl/",
+    "explains": [
+      "n. 散布,传播,分散"
+    ]
+  },
+  "disperse": {
+    "word": "disperse",
+    "phonetic": "/dɪˈspɜːs/",
+    "explains": [
+      "v. 分散；散开"
+    ]
+  },
+  "dispirited": {
+    "word": "dispirited",
+    "phonetic": "/dɪ'spɪrɪtɪd/",
+    "explains": [
+      "adj. 沮丧的；没有精神的；意气消沉的；v. 使…沮丧；使…气馁（dispirit的过去分词）"
+    ]
+  },
+  "displace": {
+    "word": "displace",
+    "phonetic": "/dɪsˈpleɪs/",
+    "explains": [
+      "v. 取代；移置"
+    ]
+  },
+  "displacement": {
+    "word": "displacement",
+    "phonetic": "/dɪs'pleɪsm(ə)nt/",
+    "explains": [
+      "n. 移置；免职；置换"
     ]
   },
   "display": {
@@ -972,11 +6467,102 @@
       "n. 展示；显示器"
     ]
   },
+  "displease": {
+    "word": "displease",
+    "phonetic": "/dɪs'pliːz/",
+    "explains": [
+      "v. 使不愉快，使生气"
+    ]
+  },
+  "displeasure": {
+    "word": "displeasure",
+    "phonetic": "/dɪs'pleʒə/",
+    "explains": [
+      "n. 不愉快；不满意；悲伤"
+    ]
+  },
+  "disponible": {
+    "word": "disponible",
+    "phonetic": "",
+    "explains": [
+      "adj. 可用的"
+    ]
+  },
+  "disport": {
+    "word": "disport",
+    "phonetic": "/dɪ'spɔːt/",
+    "explains": [
+      "v. 玩耍, 娱乐"
+    ]
+  },
+  "disposable": {
+    "word": "disposable",
+    "phonetic": "/di'spəuzəbl/",
+    "explains": [
+      "adj.  可任意使用的； 税后的； 用后即丢弃的"
+    ]
+  },
+  "disposal": {
+    "word": "disposal",
+    "phonetic": "/dɪ'spəʊz(ə)l/",
+    "explains": [
+      "n. 丢掉，处理，销毁"
+    ]
+  },
   "dispose": {
     "word": "dispose",
     "phonetic": "/dɪsˈpəʊz/",
     "explains": [
       "v. 处理；处置；安排"
+    ]
+  },
+  "disposed": {
+    "word": "disposed",
+    "phonetic": "/dɪ'spəʊzd/",
+    "explains": [
+      "adj. 有…倾向的；打算做…的；有某种健康状态的；v. 处理；配置；使适应（dispose的过去分词）；使有倾向"
+    ]
+  },
+  "disposition": {
+    "word": "disposition",
+    "phonetic": "/dɪspə'zɪʃ(ə)n/",
+    "explains": [
+      "n. 处置；[心理] 性情；[军] 部署；倾向"
+    ]
+  },
+  "dispossessed": {
+    "word": "dispossessed",
+    "phonetic": "",
+    "explains": [
+      "adj. 无依无靠的, 被逐出的"
+    ]
+  },
+  "disproportionate": {
+    "word": "disproportionate",
+    "phonetic": "/ˌdisprə'pɔːʃənət/",
+    "explains": [
+      "adj.  不相称的； 不均衡的"
+    ]
+  },
+  "disprove": {
+    "word": "disprove",
+    "phonetic": "/dɪs'pruːv/",
+    "explains": [
+      "v. 反驳,证明为误"
+    ]
+  },
+  "disputant": {
+    "word": "disputant",
+    "phonetic": "/dɪs'pjuːtənt/",
+    "explains": [
+      "n. 争论者"
+    ]
+  },
+  "disputatious": {
+    "word": "disputatious",
+    "phonetic": "/dɪspjuː'teɪʃəs; -pjʊ't-/",
+    "explains": [
+      "adj. 好争辩的"
     ]
   },
   "dispute": {
@@ -987,6 +6573,251 @@
       "n. 争论；纠纷"
     ]
   },
+  "disqualify": {
+    "word": "disqualify",
+    "phonetic": "/dɪs'kwɒlɪfaɪ/",
+    "explains": [
+      "v. 取消…的资格"
+    ]
+  },
+  "disquiet": {
+    "word": "disquiet",
+    "phonetic": "/dɪs'kwaɪət/",
+    "explains": [
+      "n. 忧虑, 不安"
+    ]
+  },
+  "disquisition": {
+    "word": "disquisition",
+    "phonetic": "/,dɪskwɪ'zɪʃ(ə)n/",
+    "explains": [
+      "n. 专题论文"
+    ]
+  },
+  "disregard": {
+    "word": "disregard",
+    "phonetic": "/dɪsrɪ'gɑːd/",
+    "explains": [
+      "v. 不管，不顾；n. 忽视"
+    ]
+  },
+  "disreputable": {
+    "word": "disreputable",
+    "phonetic": "/dɪs'repjʊtəb(ə)l/",
+    "explains": [
+      "adj. 声名狼藉的, 破烂不堪的"
+    ]
+  },
+  "disrepute": {
+    "word": "disrepute",
+    "phonetic": "/,dɪsrɪ'pjuːt/",
+    "explains": [
+      "n. 坏名声"
+    ]
+  },
+  "disrespect": {
+    "word": "disrespect",
+    "phonetic": "/dɪsrɪ'spekt/",
+    "explains": [
+      "n. 无礼，失礼，不敬"
+    ]
+  },
+  "disrupt": {
+    "word": "disrupt",
+    "phonetic": "/dɪsˈrʌpt/",
+    "explains": [
+      "v. 扰乱；破坏"
+    ]
+  },
+  "disruption": {
+    "word": "disruption",
+    "phonetic": "/dis'rʌpʃən/",
+    "explains": [
+      "n.  中断； 分裂； 破坏； 瓦解"
+    ]
+  },
+  "disruptive": {
+    "word": "disruptive",
+    "phonetic": "/dɪs'rʌptɪv/",
+    "explains": [
+      "adj. 使破裂的, 分裂性的"
+    ]
+  },
+  "dissatisfaction": {
+    "word": "dissatisfaction",
+    "phonetic": "/dɪssætɪs'fækʃn/",
+    "explains": [
+      "n. 不满，不平"
+    ]
+  },
+  "dissatisfy": {
+    "word": "dissatisfy",
+    "phonetic": "/dɪ(s)'sætɪsfaɪ/",
+    "explains": [
+      "v. 使不满，使不平"
+    ]
+  },
+  "dissect": {
+    "word": "dissect",
+    "phonetic": "/daɪ'sekt; dɪ-/",
+    "explains": [
+      "v. 切细；仔细分析"
+    ]
+  },
+  "dissemble": {
+    "word": "dissemble",
+    "phonetic": "/dɪ'semb(ə)l/",
+    "explains": [
+      "v. 掩饰，掩盖；假装"
+    ]
+  },
+  "disseminate": {
+    "word": "disseminate",
+    "phonetic": "/di'semineit/",
+    "explains": [
+      "vt.  散布， 传播"
+    ]
+  },
+  "dissension": {
+    "word": "dissension",
+    "phonetic": "/dɪ'senʃ(ə)n/",
+    "explains": [
+      "n. 意见不同, 纠纷"
+    ]
+  },
+  "dissent": {
+    "word": "dissent",
+    "phonetic": "/dɪ'sent/",
+    "explains": [
+      "v. 不同意；不信奉国教；n. 异议；（大写）不信奉国教"
+    ]
+  },
+  "dissenter": {
+    "word": "dissenter",
+    "phonetic": "/dɪ'sentə/",
+    "explains": [
+      "n. 持异议者"
+    ]
+  },
+  "dissentious": {
+    "word": "dissentious",
+    "phonetic": "/dɪ'senʃəs/",
+    "explains": [
+      "adj. 争吵的；好争论的"
+    ]
+  },
+  "dissertation": {
+    "word": "dissertation",
+    "phonetic": "/,dɪsə'teɪʃ(ə)n/",
+    "explains": [
+      "n. (博士学位)论文，学术演讲，专题论文"
+    ]
+  },
+  "disserve": {
+    "word": "disserve",
+    "phonetic": "/dɪs'sɜːv/",
+    "explains": [
+      "vt. 危害"
+    ]
+  },
+  "disservice": {
+    "word": "disservice",
+    "phonetic": "/dɪ(s)'sɜːvɪs/",
+    "explains": [
+      "n. 伤害；帮倒忙的行为；不亲切的行为；虐待"
+    ]
+  },
+  "dissever": {
+    "word": "dissever",
+    "phonetic": "/dɪ(s)'sevə/",
+    "explains": [
+      "v. 使分离；使分裂"
+    ]
+  },
+  "dissident": {
+    "word": "dissident",
+    "phonetic": "/'dɪsɪd(ə)nt/",
+    "explains": [
+      "n. 持不同政见者"
+    ]
+  },
+  "dissimilar": {
+    "word": "dissimilar",
+    "phonetic": "/dɪ'sɪmɪlə/",
+    "explains": [
+      "adj. 不同的"
+    ]
+  },
+  "dissimulate": {
+    "word": "dissimulate",
+    "phonetic": "/dɪ'sɪmjʊleɪt/",
+    "explains": [
+      "v. 掩饰, 假装, 装糊涂"
+    ]
+  },
+  "dissipate": {
+    "word": "dissipate",
+    "phonetic": "/'dɪsɪpeɪt/",
+    "explains": [
+      "v. 驱散；消散；浪费"
+    ]
+  },
+  "dissipated": {
+    "word": "dissipated",
+    "phonetic": "/'dɪsɪpeɪtɪd/",
+    "explains": [
+      "adj. 沉迷于酒色的, 消散的, 闲游浪荡的"
+    ]
+  },
+  "dissociate": {
+    "word": "dissociate",
+    "phonetic": "/dɪ'səʊʃɪeɪt; -sɪ-/",
+    "explains": [
+      "v. 游离；使分离；分裂"
+    ]
+  },
+  "dissolute": {
+    "word": "dissolute",
+    "phonetic": "/'dɪsəluːt/",
+    "explains": [
+      "adj. 放荡的, 风流的, 肆意挥霍的"
+    ]
+  },
+  "dissolution": {
+    "word": "dissolution",
+    "phonetic": "/dɪsə'luːʃ(ə)n/",
+    "explains": [
+      "n. 分解, 解散"
+    ]
+  },
+  "dissolve": {
+    "word": "dissolve",
+    "phonetic": "/dɪˈzɒlv/",
+    "explains": [
+      "v. 溶解"
+    ]
+  },
+  "dissonance": {
+    "word": "dissonance",
+    "phonetic": "/'dɪs(ə)nəns/",
+    "explains": [
+      "n. 不一致, 不调和, 不谐和音"
+    ]
+  },
+  "dissonant": {
+    "word": "dissonant",
+    "phonetic": "/'dɪs(ə)nənt/",
+    "explains": [
+      "adj. 刺耳的；不谐和的；不调和的"
+    ]
+  },
+  "dissuade": {
+    "word": "dissuade",
+    "phonetic": "/di'sweid/",
+    "explains": [
+      "vt.  劝阻"
+    ]
+  },
   "distance": {
     "word": "distance",
     "phonetic": "/ˈdɪstəns/",
@@ -995,11 +6826,74 @@
       "v. 使疏远"
     ]
   },
+  "distancia": {
+    "word": "distancia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 距离"
+    ]
+  },
   "distant": {
     "word": "distant",
     "phonetic": "/ˈdɪstənt/",
     "explains": [
       "adj. 遥远的；冷淡的"
+    ]
+  },
+  "distantly": {
+    "word": "distantly",
+    "phonetic": "/'distəntli/",
+    "explains": [
+      "adj. 疏远的, 遥远的"
+    ]
+  },
+  "distaste": {
+    "word": "distaste",
+    "phonetic": "/dɪs'teɪst/",
+    "explains": [
+      "n. 厌恶；讨厌；vt. 厌恶；不喜欢；vi. 不喜欢"
+    ]
+  },
+  "distasteful": {
+    "word": "distasteful",
+    "phonetic": "/dɪs'teɪstf(ʊ)l/",
+    "explains": [
+      "adj. 味道差的,反感的"
+    ]
+  },
+  "distend": {
+    "word": "distend",
+    "phonetic": "/dɪ'stend/",
+    "explains": [
+      "v. (使)扩大, (使)扩张"
+    ]
+  },
+  "distension": {
+    "word": "distension",
+    "phonetic": "/dɪ'stɛnʃən/",
+    "explains": [
+      "n. 膨胀, 延伸"
+    ]
+  },
+  "distil": {
+    "word": "distil",
+    "phonetic": "/dis'til/",
+    "explains": [
+      "v. 蒸馏"
+    ]
+  },
+  "distill": {
+    "word": "distill",
+    "phonetic": "/dis'til/",
+    "explains": [
+      "v. 提取；蒸馏；使滴下"
+    ]
+  },
+  "distillation": {
+    "word": "distillation",
+    "phonetic": "/,dɪstɪ'leɪʃn/",
+    "explains": [
+      "n. 精馏，蒸馏，净化；蒸馏法；精华，蒸馏物"
     ]
   },
   "distinct": {
@@ -1016,11 +6910,123 @@
       "n. 区别；优秀；荣誉"
     ]
   },
+  "distinctive": {
+    "word": "distinctive",
+    "phonetic": "/dɪ'stɪŋ(k)tɪv/",
+    "explains": [
+      "adj. 有区别的,独特的"
+    ]
+  },
+  "distinctively": {
+    "word": "distinctively",
+    "phonetic": "",
+    "explains": [
+      "adv. ad/ 区别地, 特殊地"
+    ]
+  },
+  "distinctly": {
+    "word": "distinctly",
+    "phonetic": "/dɪ'stɪŋ(k)tlɪ/",
+    "explains": [
+      "adv. 显然，清楚地"
+    ]
+  },
   "distinguish": {
     "word": "distinguish",
     "phonetic": "/dɪˈstɪŋɡwɪʃ/",
     "explains": [
       "v. 区分；辨别；使杰出"
+    ]
+  },
+  "distinguishable": {
+    "word": "distinguishable",
+    "phonetic": "/dɪ'stɪŋgwɪʃəbl/",
+    "explains": [
+      "adj. 可区别的, 可辨别的"
+    ]
+  },
+  "distinguished": {
+    "word": "distinguished",
+    "phonetic": "/dɪ'stɪŋgwɪʃt/",
+    "explains": [
+      "adj. 卓著的, 著名的, 高贵的"
+    ]
+  },
+  "distinto": {
+    "word": "distinto",
+    "phonetic": "",
+    "explains": [
+      "adj. 不同的"
+    ]
+  },
+  "distort": {
+    "word": "distort",
+    "phonetic": "/dɪˈstɔːt/",
+    "explains": [
+      "v. 歪曲；扭曲"
+    ]
+  },
+  "distortion": {
+    "word": "distortion",
+    "phonetic": "/dɪ'stɔːʃ(ə)n/",
+    "explains": [
+      "n. 歪曲；畸变"
+    ]
+  },
+  "distract": {
+    "word": "distract",
+    "phonetic": "/dɪˈstrækt/",
+    "explains": [
+      "v. 分心；转移注意力"
+    ]
+  },
+  "distracted": {
+    "word": "distracted",
+    "phonetic": "/dɪ'stræktɪd/",
+    "explains": [
+      "adj. 心烦意乱的"
+    ]
+  },
+  "distraction": {
+    "word": "distraction",
+    "phonetic": "/dɪ'strækʃ(ə)n/",
+    "explains": [
+      "n. 消遣，娱乐，精神涣散"
+    ]
+  },
+  "distraught": {
+    "word": "distraught",
+    "phonetic": "/dɪ'strɔːt/",
+    "explains": [
+      "adj. 发狂的；心烦意乱的"
+    ]
+  },
+  "distress": {
+    "word": "distress",
+    "phonetic": "/dɪˈstres/",
+    "explains": [
+      "n. 痛苦；危难"
+    ]
+  },
+  "distressed": {
+    "word": "distressed",
+    "phonetic": "/dɪ'strest/",
+    "explains": [
+      "adj. 痛苦的；忧虑的；贫困的；受损的；v. 使痛苦；使紧张；使困苦（distress的过去分词）"
+    ]
+  },
+  "distressing": {
+    "word": "distressing",
+    "phonetic": "/dɪ'stresɪŋ/",
+    "explains": [
+      "adj. 悲伤的, 使痛苦的, 使烦恼的"
+    ]
+  },
+  "distribuir": {
+    "word": "distribuir",
+    "phonetic": "",
+    "explains": [
+      "v. 分发"
     ]
   },
   "distribute": {
@@ -1037,11 +7043,165 @@
       "n. 分配；分布；分销"
     ]
   },
+  "distributor": {
+    "word": "distributor",
+    "phonetic": "/di'stribjutə/",
+    "explains": [
+      "n.  分配者； 批发商"
+    ]
+  },
+  "distributorship": {
+    "word": "distributorship",
+    "phonetic": "/di'stribjutəʃip/",
+    "explains": [
+      "n.  经销"
+    ]
+  },
   "district": {
     "word": "district",
     "phonetic": "/ˈdɪstrɪkt/",
     "explains": [
       "n. 地区；区域；行政区"
+    ]
+  },
+  "distrust": {
+    "word": "distrust",
+    "phonetic": "/dɪs'trʌst/",
+    "explains": [
+      "n&vt. 不信任，怀疑"
+    ]
+  },
+  "distrustful": {
+    "word": "distrustful",
+    "phonetic": "/dɪs'trʌstfl/",
+    "explains": [
+      "adj. 怀疑的；不信任的；可疑的"
+    ]
+  },
+  "disturb": {
+    "word": "disturb",
+    "phonetic": "/dɪˈstɜːb/",
+    "explains": [
+      "v. 打扰"
+    ]
+  },
+  "disturbance": {
+    "word": "disturbance",
+    "phonetic": "/dɪ'stɜːb(ə)ns/",
+    "explains": [
+      "n. 动乱；干扰"
+    ]
+  },
+  "disunite": {
+    "word": "disunite",
+    "phonetic": "/,dɪsjuː'naɪt/",
+    "explains": [
+      "v. 不和；使分离"
+    ]
+  },
+  "disuse": {
+    "word": "disuse",
+    "phonetic": "/dɪs'juːs/",
+    "explains": [
+      "n&v. 废弃, 废止"
+    ]
+  },
+  "ditch": {
+    "word": "ditch",
+    "phonetic": "/dɪtʃ/",
+    "explains": [
+      "n. 沟，沟渠，渠道"
+    ]
+  },
+  "dither": {
+    "word": "dither",
+    "phonetic": "/'dɪðə/",
+    "explains": [
+      "n. 发抖"
+    ]
+  },
+  "ditto": {
+    "word": "ditto",
+    "phonetic": "/'dɪtəʊ/",
+    "explains": [
+      "adv. 百变怪"
+    ]
+  },
+  "ditty": {
+    "word": "ditty",
+    "phonetic": "/'dɪtɪ/",
+    "explains": [
+      "n. 小曲；小调"
+    ]
+  },
+  "diurnal": {
+    "word": "diurnal",
+    "phonetic": "/daɪ'ɜːn(ə)l/",
+    "explains": [
+      "adj. 白天的；每日的，一日间的；n. 日记账；日报，日刊"
+    ]
+  },
+  "diva": {
+    "word": "diva",
+    "phonetic": "/'diːvə/",
+    "explains": [
+      "n. 歌剧中的首席女主角"
+    ]
+  },
+  "divagate": {
+    "word": "divagate",
+    "phonetic": "/'daɪvəgeɪt/",
+    "explains": [
+      "v. 流浪, 漫游,离题"
+    ]
+  },
+  "divaricate": {
+    "word": "divaricate",
+    "phonetic": "/daɪ'værɪkeɪt; dɪ-/",
+    "explains": [
+      "v. 分为两叉"
+    ]
+  },
+  "dive": {
+    "word": "dive",
+    "phonetic": "/daɪv/",
+    "explains": [
+      "v. 潜水"
+    ]
+  },
+  "diver": {
+    "word": "diver",
+    "phonetic": "/'daɪvə/",
+    "explains": [
+      "n. 潜水者"
+    ]
+  },
+  "diverge": {
+    "word": "diverge",
+    "phonetic": "/daɪ'vɜːdʒ; dɪ-/",
+    "explains": [
+      "v. 分岔；分歧"
+    ]
+  },
+  "divergence": {
+    "word": "divergence",
+    "phonetic": "/daɪ'vɜːdʒ(ə)ns/",
+    "explains": [
+      "n. 分歧"
+    ]
+  },
+  "divergent": {
+    "word": "divergent",
+    "phonetic": "/dai'vəːdʒənt/",
+    "explains": [
+      "adj.  分叉的； 有分歧的； 偏离的"
+    ]
+  },
+  "divers": {
+    "word": "divers",
+    "phonetic": "/'daɪvəz/",
+    "explains": [
+      "adj. 不同种类的，各式各样的；n. (Divers)人名；(英)戴弗斯；(法)迪韦尔"
     ]
   },
   "diverse": {
@@ -1051,11 +7211,60 @@
       "adj. 多样的；不同的"
     ]
   },
+  "diversification": {
+    "word": "diversification",
+    "phonetic": "/daiˌvəːsifi'keiʃən/",
+    "explains": [
+      "n.  多元化"
+    ]
+  },
+  "diversify": {
+    "word": "diversify",
+    "phonetic": "/dai'vəːsifai/",
+    "explains": [
+      "v.  不同； 变得多样化， 多元化"
+    ]
+  },
+  "diversion": {
+    "word": "diversion",
+    "phonetic": "/daɪ'vɜːʃ(ə)n; dɪ-/",
+    "explains": [
+      "n. 转移；改道；娱乐"
+    ]
+  },
   "diversity": {
     "word": "diversity",
     "phonetic": "/daɪˈvɜːsəti/",
     "explains": [
       "n. 多样性；多样性"
+    ]
+  },
+  "divert": {
+    "word": "divert",
+    "phonetic": "/daɪˈvɜːt/",
+    "explains": [
+      "v. 转移；使转向"
+    ]
+  },
+  "divertido": {
+    "word": "divertido",
+    "phonetic": "",
+    "explains": [
+      "adj. 有趣的"
+    ]
+  },
+  "divest": {
+    "word": "divest",
+    "phonetic": "/dai'vest/",
+    "explains": [
+      "vt.  出售； 剥夺"
+    ]
+  },
+  "divestiture": {
+    "word": "divestiture",
+    "phonetic": "/daɪ'vestɪtʃə; dɪ-/",
+    "explains": [
+      "n. (头衔,财产权利等的)剥夺, 脱衣"
     ]
   },
   "divide": {
@@ -1066,11 +7275,60 @@
       "n. 分歧"
     ]
   },
+  "dividend": {
+    "word": "dividend",
+    "phonetic": "/'dɪvɪdend/",
+    "explains": [
+      "n. 红利；股息；[数] 被除数；奖金"
+    ]
+  },
+  "divine": {
+    "word": "divine",
+    "phonetic": "/dɪˈvaɪn/",
+    "explains": [
+      "adj. 神圣的；神的"
+    ]
+  },
+  "diviner": {
+    "word": "diviner",
+    "phonetic": "",
+    "explains": [
+      "n. 占卜者, 占卦的人"
+    ]
+  },
+  "divinity": {
+    "word": "divinity",
+    "phonetic": "/dɪ'vɪnɪtɪ/",
+    "explains": [
+      "n. 神；神性；神学"
+    ]
+  },
+  "divisible": {
+    "word": "divisible",
+    "phonetic": "/dɪ'vɪzɪb(ə)l/",
+    "explains": [
+      "adj. 可分的；可分割的"
+    ]
+  },
   "division": {
     "word": "division",
     "phonetic": "/dɪˈvɪʒn/",
     "explains": [
       "n. 分割；部门；除法"
+    ]
+  },
+  "divisive": {
+    "word": "divisive",
+    "phonetic": "/dɪ'vaɪsɪv/",
+    "explains": [
+      "adj. 分裂的；区分的；造成不和的"
+    ]
+  },
+  "divisor": {
+    "word": "divisor",
+    "phonetic": "/dɪ'vaɪzə/",
+    "explains": [
+      "n. 除数；因子"
     ]
   },
   "divorce": {
@@ -1081,6 +7339,27 @@
       "v. 与…离婚；分离"
     ]
   },
+  "divulge": {
+    "word": "divulge",
+    "phonetic": "/dai'vʌldʒ/",
+    "explains": [
+      "vt.  泄露"
+    ]
+  },
+  "dizzy": {
+    "word": "dizzy",
+    "phonetic": "/'dɪzɪ/",
+    "explains": [
+      "adj. 头晕眼花的，眩晕的"
+    ]
+  },
+  "dna": {
+    "word": "dna",
+    "phonetic": "",
+    "explains": [
+      "abbr. [生化]脱氧核糖核酸(=deoxyribonucleic acid)"
+    ]
+  },
   "do": {
     "word": "do",
     "phonetic": "/duː/",
@@ -1089,11 +7368,81 @@
       "aux. 助动词"
     ]
   },
+  "doable": {
+    "word": "doable",
+    "phonetic": "/'duːəb(ə)l/",
+    "explains": [
+      "adj. 可做的, 可行的"
+    ]
+  },
+  "doble": {
+    "word": "doble",
+    "phonetic": "",
+    "explains": [
+      "adj. 双倍的；n.m. 两倍"
+    ]
+  },
+  "doce": {
+    "word": "doce",
+    "phonetic": "",
+    "explains": [
+      "num. 十二"
+    ]
+  },
+  "docile": {
+    "word": "docile",
+    "phonetic": "/'dəʊsaɪl/",
+    "explains": [
+      "adj. 温顺的，驯服的；容易教的"
+    ]
+  },
+  "dock": {
+    "word": "dock",
+    "phonetic": "/dɒk/",
+    "explains": [
+      "n. 船坞；码头"
+    ]
+  },
+  "dockyard": {
+    "word": "dockyard",
+    "phonetic": "/'dɒkjɑːd/",
+    "explains": [
+      "n. [船] 造船厂；海军工厂"
+    ]
+  },
+  "docteur": {
+    "word": "docteur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 医生；博士"
+    ]
+  },
   "doctor": {
     "word": "doctor",
     "phonetic": "/ˈdɒktər/",
     "explains": [
       "n. 医生；博士"
+    ]
+  },
+  "doctorate": {
+    "word": "doctorate",
+    "phonetic": "/'dɒkt(ə)rət/",
+    "explains": [
+      "n. 博士学位；博士头衔"
+    ]
+  },
+  "doctrinaire": {
+    "word": "doctrinaire",
+    "phonetic": "/,dɒktrɪ'neə/",
+    "explains": [
+      "adj. 教条主义的；空谈理论的；n. 教条主义者；空论家，纯理论家"
+    ]
+  },
+  "doctrine": {
+    "word": "doctrine",
+    "phonetic": "/ˈdɒktrɪn/",
+    "explains": [
+      "n. 教义；学说"
     ]
   },
   "document": {
@@ -1104,11 +7453,200 @@
       "v. 记录；用文件证明"
     ]
   },
+  "documentary": {
+    "word": "documentary",
+    "phonetic": "/dɒkjʊ'ment(ə)rɪ/",
+    "explains": [
+      "adj. 纪录的；文献的"
+    ]
+  },
+  "documentation": {
+    "word": "documentation",
+    "phonetic": "/ˌdɔkjumen'teiʃən/",
+    "explains": [
+      "n. 〔用于引证的〕文件资料，证明文件"
+    ]
+  },
+  "doddle": {
+    "word": "doddle",
+    "phonetic": "/'dɑdl/",
+    "explains": [
+      "n. 轻而易举的事；不费吹灰之力的事"
+    ]
+  },
+  "dodge": {
+    "word": "dodge",
+    "phonetic": "/dɒdʒ/",
+    "explains": [
+      "v. /n避开, 躲避"
+    ]
+  },
+  "doff": {
+    "word": "doff",
+    "phonetic": "/dɒf/",
+    "explains": [
+      "v. 脱, 废除, 丢弃"
+    ]
+  },
   "dog": {
     "word": "dog",
     "phonetic": "/dɒɡ/",
     "explains": [
       "n. 狗"
+    ]
+  },
+  "dogged": {
+    "word": "dogged",
+    "phonetic": "/'dɒgɪd/",
+    "explains": [
+      "adj. 顽强的；顽固的；vt. 跟踪；尾随（dog的过去式）"
+    ]
+  },
+  "doggedly": {
+    "word": "doggedly",
+    "phonetic": "",
+    "explains": [
+      "adv. 固执地, 顽强地"
+    ]
+  },
+  "doggerel": {
+    "word": "doggerel",
+    "phonetic": "/'dɒg(ə)r(ə)l/",
+    "explains": [
+      "n. 打油诗"
+    ]
+  },
+  "dogma": {
+    "word": "dogma",
+    "phonetic": "/'dɒgmə/",
+    "explains": [
+      "n. 教条，教理；武断的意见"
+    ]
+  },
+  "dogmatic": {
+    "word": "dogmatic",
+    "phonetic": "/dɒg'mætɪk/",
+    "explains": [
+      "adj. 教条的；武断的"
+    ]
+  },
+  "dogmatist": {
+    "word": "dogmatist",
+    "phonetic": "",
+    "explains": [
+      "n. 教条主义者；独断家；独断论者"
+    ]
+  },
+  "dogwood": {
+    "word": "dogwood",
+    "phonetic": "/'dɒgwʊd/",
+    "explains": [
+      "n. 山茱萸"
+    ]
+  },
+  "doit": {
+    "word": "doit",
+    "phonetic": "/dɒɪt/",
+    "explains": [
+      "n. 荷兰古代小铜币, 几文钱"
+    ]
+  },
+  "doldrums": {
+    "word": "doldrums",
+    "phonetic": "/'dɒldrəmz/",
+    "explains": [
+      "n. 忧郁, 赤道无风带"
+    ]
+  },
+  "dole": {
+    "word": "dole",
+    "phonetic": "/dəʊl/",
+    "explains": [
+      "n. 施舍，悲哀"
+    ]
+  },
+  "doleful": {
+    "word": "doleful",
+    "phonetic": "/'dəʊlfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 寂寞的；悲哀的；阴沉的；忧郁的"
+    ]
+  },
+  "doll": {
+    "word": "doll",
+    "phonetic": "/dɒl/",
+    "explains": [
+      "n. 洋娃娃, 玩偶"
+    ]
+  },
+  "dollar": {
+    "word": "dollar",
+    "phonetic": "/ˈdɒlə/",
+    "explains": [
+      "n. 美元"
+    ]
+  },
+  "dollop": {
+    "word": "dollop",
+    "phonetic": "/'dɒləp/",
+    "explains": [
+      "n. 团，块；vt. 厚厚地涂抹；vi. 啪地落下；噗通一声坠落"
+    ]
+  },
+  "dolor": {
+    "word": "dolor",
+    "phonetic": "",
+    "explains": [
+      "n.m. 疼痛；悲痛"
+    ]
+  },
+  "dolorous": {
+    "word": "dolorous",
+    "phonetic": "/'dɒl(ə)rəs/",
+    "explains": [
+      "adj. 忧伤的, 悲痛的"
+    ]
+  },
+  "dolphin": {
+    "word": "dolphin",
+    "phonetic": "/'dɒlfɪn/",
+    "explains": [
+      "n. 海豚"
+    ]
+  },
+  "dolt": {
+    "word": "dolt",
+    "phonetic": "/dəʊlt/",
+    "explains": [
+      "n. 呆子, 傻瓜, 笨蛋"
+    ]
+  },
+  "doltish": {
+    "word": "doltish",
+    "phonetic": "",
+    "explains": [
+      "adj. 愚蠢的, 愚钝的, 呆笨的"
+    ]
+  },
+  "domain": {
+    "word": "domain",
+    "phonetic": "/dəˈmeɪn/",
+    "explains": [
+      "n. 领域；范围"
+    ]
+  },
+  "dome": {
+    "word": "dome",
+    "phonetic": "/dəʊm/",
+    "explains": [
+      "n. 圆屋顶，拱顶"
+    ]
+  },
+  "domelike": {
+    "word": "domelike",
+    "phonetic": "",
+    "explains": [
+      "adj. 穹顶状的"
     ]
   },
   "domestic": {
@@ -1118,11 +7656,102 @@
       "adj. 国内的；家庭的；家用的"
     ]
   },
+  "domestically": {
+    "word": "domestically",
+    "phonetic": "/də'mestikəli/",
+    "explains": [
+      "adv. 家庭式地,国内地"
+    ]
+  },
+  "domesticate": {
+    "word": "domesticate",
+    "phonetic": "/də'mestɪkeɪt/",
+    "explains": [
+      "v. 驯养, 教化"
+    ]
+  },
+  "domestication": {
+    "word": "domestication",
+    "phonetic": "/dəʊ,mestɪkeɪʃən/",
+    "explains": [
+      "n. 驯养, 教化"
+    ]
+  },
+  "domesticity": {
+    "word": "domesticity",
+    "phonetic": "/,dɒme'stɪsɪtɪ; ,dəʊm-/",
+    "explains": [
+      "n. 家庭生活；专心于家务；对家庭的挚爱"
+    ]
+  },
+  "domicile": {
+    "word": "domicile",
+    "phonetic": "/'dɒmɪsaɪl; -sɪl/",
+    "explains": [
+      "n. 住宅；永久居住地；期票支付场所；v. 居住"
+    ]
+  },
+  "dominance": {
+    "word": "dominance",
+    "phonetic": "/'dɔminəns/",
+    "explains": [
+      "n.  绝对优势； 支配地位， 统治地位"
+    ]
+  },
   "dominant": {
     "word": "dominant",
     "phonetic": "/ˈdɒmɪnənt/",
     "explains": [
       "adj. 主导的；占优势的"
+    ]
+  },
+  "dominate": {
+    "word": "dominate",
+    "phonetic": "/ˈdɒmɪneɪt/",
+    "explains": [
+      "v. 统治"
+    ]
+  },
+  "domineer": {
+    "word": "domineer",
+    "phonetic": "/,dɒmɪ'nɪə/",
+    "explains": [
+      "v. 跋扈；作威作福"
+    ]
+  },
+  "domineering": {
+    "word": "domineering",
+    "phonetic": "/dɒmɪ'nɪərɪŋ/",
+    "explains": [
+      "adj. 跋扈的；专横的；盛气凌人的；v. 实行暴政；高耸；流行（domineer的ing形式）"
+    ]
+  },
+  "domingo": {
+    "word": "domingo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期日"
+    ]
+  },
+  "dominion": {
+    "word": "dominion",
+    "phonetic": "/də'mɪnjən/",
+    "explains": [
+      "n. 主权，统治权；支配；领土"
+    ]
+  },
+  "domino": {
+    "word": "domino",
+    "phonetic": "/'dɒmɪnəʊ/",
+    "explains": [
+      "n. 多米诺骨牌；面具；化装外衣"
+    ]
+  },
+  "don": {
+    "word": "don",
+    "phonetic": "/dɒn/",
+    "explains": [
+      "n. 先生,阁下"
     ]
   },
   "donate": {
@@ -1132,11 +7761,214 @@
       "v. 捐赠；捐献"
     ]
   },
+  "donation": {
+    "word": "donation",
+    "phonetic": "/dəʊˈneɪʃ(ə)n/",
+    "explains": [
+      "n. 捐赠"
+    ]
+  },
+  "donator": {
+    "word": "donator",
+    "phonetic": "",
+    "explains": [
+      "n. 捐赠者"
+    ]
+  },
+  "done": {
+    "word": "done",
+    "phonetic": "/dʌn/",
+    "explains": [
+      "adj. 已完成的；做好了的；煮熟的；合乎礼仪的；合乎规矩；int. 表示接受建议；v. 做（do的过去分词）；n. （西、罗）多内（人名）；（英）多恩（人名）"
+    ]
+  },
+  "donkey": {
+    "word": "donkey",
+    "phonetic": "/'dɒŋkɪ/",
+    "explains": [
+      "n. 驴"
+    ]
+  },
+  "donor": {
+    "word": "donor",
+    "phonetic": "/'dəʊnə; -nɔː/",
+    "explains": [
+      "n. 捐赠者；供者；赠送人；adj. 捐献的；经人工授精出生的"
+    ]
+  },
+  "donut": {
+    "word": "donut",
+    "phonetic": "/'dəʊnət/",
+    "explains": [
+      "n. 炸面圈；环状线圈（等于doughnut）"
+    ]
+  },
+  "doodad": {
+    "word": "doodad",
+    "phonetic": "/'duːdæd/",
+    "explains": [
+      "n. 便宜货, 新出品,小摆设"
+    ]
+  },
+  "doodle": {
+    "word": "doodle",
+    "phonetic": "/'duːd(ə)l/",
+    "explains": [
+      "v. 混时间, 闲荡, 涂鸦"
+    ]
+  },
+  "doom": {
+    "word": "doom",
+    "phonetic": "/duːm/",
+    "explains": [
+      "n. 厄运，毁灭；v. 注定"
+    ]
+  },
+  "doomed": {
+    "word": "doomed",
+    "phonetic": "/duːmd/",
+    "explains": [
+      "adj. 注定的；命定的；v. 注定；宣判（doom的过去分词）"
+    ]
+  },
+  "doomsday": {
+    "word": "doomsday",
+    "phonetic": "/'duːmzdeɪ/",
+    "explains": [
+      "n. 世界末日；最后的审判日"
+    ]
+  },
   "door": {
     "word": "door",
     "phonetic": "/dɔːr/",
     "explains": [
       "n. 门；门口"
+    ]
+  },
+  "doorknob": {
+    "word": "doorknob",
+    "phonetic": "/'dɔːnɒb/",
+    "explains": [
+      "n. 门把手"
+    ]
+  },
+  "doorway": {
+    "word": "doorway",
+    "phonetic": "/'dɔːweɪ/",
+    "explains": [
+      "n. 门口；途径"
+    ]
+  },
+  "dope": {
+    "word": "dope",
+    "phonetic": "/dəʊp/",
+    "explains": [
+      "n. 笨蛋；麻醉药物；涂料；v. 上涂料；服药"
+    ]
+  },
+  "dopey": {
+    "word": "dopey",
+    "phonetic": "/'dəʊpɪ/",
+    "explains": [
+      "adj. 被麻醉的, 笨的, 迟钝的"
+    ]
+  },
+  "dorm": {
+    "word": "dorm",
+    "phonetic": "/dɔːm/",
+    "explains": [
+      "n. 宿舍"
+    ]
+  },
+  "dormancy": {
+    "word": "dormancy",
+    "phonetic": "/'dɔːmənsɪ/",
+    "explains": [
+      "n. 休眠"
+    ]
+  },
+  "dormant": {
+    "word": "dormant",
+    "phonetic": "/'dɔːm(ə)nt/",
+    "explains": [
+      "adj. 冬眠的"
+    ]
+  },
+  "dormir": {
+    "word": "dormir",
+    "phonetic": "",
+    "explains": [
+      "v. 睡觉"
+    ]
+  },
+  "dormitory": {
+    "word": "dormitory",
+    "phonetic": "/ˈdɔːmɪt(ə)rɪ/",
+    "explains": [
+      "n. 宿舍"
+    ]
+  },
+  "dorsal": {
+    "word": "dorsal",
+    "phonetic": "/'dɔːs(ə)l/",
+    "explains": [
+      "adj. 背的, 脊的"
+    ]
+  },
+  "dos": {
+    "word": "dos",
+    "phonetic": "",
+    "explains": [
+      "num. 二"
+    ]
+  },
+  "dosage": {
+    "word": "dosage",
+    "phonetic": "/'dəʊsɪdʒ/",
+    "explains": [
+      "n. 剂量，用量"
+    ]
+  },
+  "dose": {
+    "word": "dose",
+    "phonetic": "/dəʊs/",
+    "explains": [
+      "n. 剂量"
+    ]
+  },
+  "dossier": {
+    "word": "dossier",
+    "phonetic": "/'dɔsiei/",
+    "explains": [
+      "n.  档案； 卷宗"
+    ]
+  },
+  "dot": {
+    "word": "dot",
+    "phonetic": "/dɒt/",
+    "explains": [
+      "n. 点，圆点；v. 打点于"
+    ]
+  },
+  "dotage": {
+    "word": "dotage",
+    "phonetic": "/'dəʊtɪdʒ/",
+    "explains": [
+      "n. 老朽, 老迷糊, 溺爱"
+    ]
+  },
+  "dote": {
+    "word": "dote",
+    "phonetic": "/dəʊt/",
+    "explains": [
+      "v. 昏聩, 溺爱"
+    ]
+  },
+  "doting": {
+    "word": "doting",
+    "phonetic": "/'dəʊtɪŋ/",
+    "explains": [
+      "adj. 沉溺于爱的, 溺爱的"
     ]
   },
   "double": {
@@ -1156,6 +7988,76 @@
       "n. 怀疑；疑问"
     ]
   },
+  "doubtful": {
+    "word": "doubtful",
+    "phonetic": "/'daʊtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 难以预测的；怀疑的"
+    ]
+  },
+  "doubtless": {
+    "word": "doubtless",
+    "phonetic": "/'daʊtlɪs/",
+    "explains": [
+      "adv. 无疑地；很可能"
+    ]
+  },
+  "dough": {
+    "word": "dough",
+    "phonetic": "/dəʊ/",
+    "explains": [
+      "n. 面团"
+    ]
+  },
+  "dour": {
+    "word": "dour",
+    "phonetic": "/'dʊə; 'daʊə/",
+    "explains": [
+      "adj. 严厉的；顽强的；阴沉的；不爱讲话的；n. (Dour)人名；(法)杜尔"
+    ]
+  },
+  "douse": {
+    "word": "douse",
+    "phonetic": "/daʊs/",
+    "explains": [
+      "v. 熄灭；浸，洒"
+    ]
+  },
+  "doux": {
+    "word": "doux",
+    "phonetic": "",
+    "explains": [
+      "adj. 温柔的；甜的"
+    ]
+  },
+  "douze": {
+    "word": "douze",
+    "phonetic": "",
+    "explains": [
+      "num. 十二"
+    ]
+  },
+  "dove": {
+    "word": "dove",
+    "phonetic": "/dʌv/",
+    "explains": [
+      "n. 鸽子，斑鸠"
+    ]
+  },
+  "dowager": {
+    "word": "dowager",
+    "phonetic": "/'daʊədʒə/",
+    "explains": [
+      "n. 贵妇；继承亡夫爵位的遗孀；老年贵妇人"
+    ]
+  },
+  "dowdy": {
+    "word": "dowdy",
+    "phonetic": "/'daʊdɪ/",
+    "explains": [
+      "adj. 衣衫褴褛的, 寒酸的, 懒散的"
+    ]
+  },
   "down": {
     "word": "down",
     "phonetic": "/daʊn/",
@@ -1163,6 +8065,41 @@
       "adv. 向下；下降",
       "prep. 沿着…向下",
       "adj. 沮丧的"
+    ]
+  },
+  "downcast": {
+    "word": "downcast",
+    "phonetic": "/'daʊnkɑːst/",
+    "explains": [
+      "adj. 气馁的, 悲哀的, 沮丧的, (眼睛)向下看的"
+    ]
+  },
+  "downfall": {
+    "word": "downfall",
+    "phonetic": "/'daʊnfɔːl/",
+    "explains": [
+      "n. 垮台；衰败；落下；大雨"
+    ]
+  },
+  "downgrade": {
+    "word": "downgrade",
+    "phonetic": "/'daʊngreɪd; daʊn'greɪd/",
+    "explains": [
+      "n. 退步；下坡；adj. 下坡的；adv. 下坡地；v. 使降级（过去式downgraded，过去分词downgraded，现在分词downgrading，第三人称单数downgrades）；小看"
+    ]
+  },
+  "downhearted": {
+    "word": "downhearted",
+    "phonetic": "/daʊn'hɑːtɪd/",
+    "explains": [
+      "adj. 无精打采的；垂头丧气的"
+    ]
+  },
+  "downhill": {
+    "word": "downhill",
+    "phonetic": "",
+    "explains": [
+      "adv. 下坡；向下"
     ]
   },
   "download": {
@@ -1173,11 +8110,67 @@
       "n. 下载的数据"
     ]
   },
+  "downplay": {
+    "word": "downplay",
+    "phonetic": "/daʊn'pleɪ/",
+    "explains": [
+      "v. 不予重视；将轻描淡写"
+    ]
+  },
+  "downpour": {
+    "word": "downpour",
+    "phonetic": "/'daʊnpɔː/",
+    "explains": [
+      "n. 倾盆大雨"
+    ]
+  },
+  "downright": {
+    "word": "downright",
+    "phonetic": "/'daʊnraɪt/",
+    "explains": [
+      "adj. 明白的；直率的；显明的；adv. 完全，彻底；全然"
+    ]
+  },
+  "downside": {
+    "word": "downside",
+    "phonetic": "/'daunsaid/",
+    "explains": [
+      "n.  底侧； 下降趋势； 不利方面"
+    ]
+  },
+  "downsize": {
+    "word": "downsize",
+    "phonetic": "/'daunsaiz/",
+    "explains": [
+      "vt.  缩小尺寸； 缩小规模"
+    ]
+  },
+  "downsizing": {
+    "word": "downsizing",
+    "phonetic": "/'daun,saiziŋ/",
+    "explains": [
+      "n. 精简，裁员；缩小规模"
+    ]
+  },
   "downstairs": {
     "word": "downstairs",
     "phonetic": "/ˌdaʊnˈsteəz/",
     "explains": [
       "adv. 在楼下；往楼下"
+    ]
+  },
+  "downstream": {
+    "word": "downstream",
+    "phonetic": "/'daʊn'striːm/",
+    "explains": [
+      "adv. 下游地；顺流而下；adj. 下游的；顺流的"
+    ]
+  },
+  "downtime": {
+    "word": "downtime",
+    "phonetic": "/'dauntaim/",
+    "explains": [
+      "n.  停工期"
     ]
   },
   "downtown": {
@@ -1188,11 +8181,67 @@
       "adj./adv. 市中心的（地）"
     ]
   },
+  "downtrodden": {
+    "word": "downtrodden",
+    "phonetic": "/'daʊntrɒd(ə)n/",
+    "explains": [
+      "adj. 被践踏的, 被蹂躏的,被压制的"
+    ]
+  },
+  "downturn": {
+    "word": "downturn",
+    "phonetic": "/'dauntəːn/",
+    "explains": [
+      "n.  低迷时期； 下降趋势"
+    ]
+  },
+  "downward": {
+    "word": "downward",
+    "phonetic": "/'daʊnwəd/",
+    "explains": [
+      "adj. 向下的；adv. 向下地"
+    ]
+  },
+  "dowry": {
+    "word": "dowry",
+    "phonetic": "/'daʊ(ə)rɪ/",
+    "explains": [
+      "n. 嫁妆；天资；亡夫遗产"
+    ]
+  },
+  "doze": {
+    "word": "doze",
+    "phonetic": "/dəʊz/",
+    "explains": [
+      "v. 打瞌睡；假寐；n. 瞌睡"
+    ]
+  },
   "dozen": {
     "word": "dozen",
     "phonetic": "/ˈdʌzn/",
     "explains": [
       "n. 一打（12个）"
+    ]
+  },
+  "dp": {
+    "word": "dp",
+    "phonetic": "",
+    "explains": [
+      "abbr. 防潮的（Damp Proofing）；民主党（Democratic Party）；露点（Dew Point）；数据处理（Data Processing）；难民（Displaced Person）；棒球双杀（Double Play）"
+    ]
+  },
+  "drab": {
+    "word": "drab",
+    "phonetic": "/dræb/",
+    "explains": [
+      "adj. 土褐色的, 单调的"
+    ]
+  },
+  "draconian": {
+    "word": "draconian",
+    "phonetic": "",
+    "explains": [
+      "adj. 严峻的；苛刻的"
     ]
   },
   "draft": {
@@ -1210,6 +8259,55 @@
       "v. 拖；拉；拖沓前进"
     ]
   },
+  "dragon": {
+    "word": "dragon",
+    "phonetic": "/'dræg(ə)n/",
+    "explains": [
+      "n. 龙"
+    ]
+  },
+  "dragonfly": {
+    "word": "dragonfly",
+    "phonetic": "/'dræg(ə)nflaɪ/",
+    "explains": [
+      "n. [昆] 蜻蜓"
+    ]
+  },
+  "drain": {
+    "word": "drain",
+    "phonetic": "/dreɪn/",
+    "explains": [
+      "v. 排水"
+    ]
+  },
+  "drainage": {
+    "word": "drainage",
+    "phonetic": "/'dreɪnɪdʒ/",
+    "explains": [
+      "n. 排水；下水道"
+    ]
+  },
+  "drainpipe": {
+    "word": "drainpipe",
+    "phonetic": "/'dreɪnpaɪp/",
+    "explains": [
+      "n. 排水管"
+    ]
+  },
+  "drake": {
+    "word": "drake",
+    "phonetic": "/dreɪk/",
+    "explains": [
+      "n. 公鸭, 蜉蝣类"
+    ]
+  },
+  "dram": {
+    "word": "dram",
+    "phonetic": "/dræm/",
+    "explains": [
+      "n. 液量特兰(药衡系统中的容量单位),  少量"
+    ]
+  },
   "drama": {
     "word": "drama",
     "phonetic": "/ˈdrɑːmə/",
@@ -1224,6 +8322,69 @@
       "adj. 戏剧性的；引人注目的；巨大的"
     ]
   },
+  "dramatically": {
+    "word": "dramatically",
+    "phonetic": "/drə'mætɪkəlɪ/",
+    "explains": [
+      "adv. 戏剧地,引人注目地"
+    ]
+  },
+  "dramatist": {
+    "word": "dramatist",
+    "phonetic": "/'dræmətɪst/",
+    "explains": [
+      "n. 剧作家，剧本作者"
+    ]
+  },
+  "dramatize": {
+    "word": "dramatize",
+    "phonetic": "/'dræmətaiz/",
+    "explains": [
+      "v. 编写剧本"
+    ]
+  },
+  "drape": {
+    "word": "drape",
+    "phonetic": "/dreɪp/",
+    "explains": [
+      "n. 窗帘；v. 使褶皱"
+    ]
+  },
+  "drapery": {
+    "word": "drapery",
+    "phonetic": "/'dreɪp(ə)rɪ/",
+    "explains": [
+      "n. 布业，布匹"
+    ]
+  },
+  "drastic": {
+    "word": "drastic",
+    "phonetic": "/'dræstɪk; 'drɑː-/",
+    "explains": [
+      "adj. 激烈的；严厉的"
+    ]
+  },
+  "drastically": {
+    "word": "drastically",
+    "phonetic": "/'dræstikəli/",
+    "explains": [
+      "adv. 大幅度地, 彻底地"
+    ]
+  },
+  "draught": {
+    "word": "draught",
+    "phonetic": "/drɑːft/",
+    "explains": [
+      "n. 气流；汇票；草稿（等于draft）；v. 起草；征兵；选派（等于draft）；adj. 汲出的；拖拉的（等于draft）"
+    ]
+  },
+  "draughty": {
+    "word": "draughty",
+    "phonetic": "/'drɑːftɪ/",
+    "explains": [
+      "adj. 通风良好的, 有隙缝风吹入的"
+    ]
+  },
   "draw": {
     "word": "draw",
     "phonetic": "/drɔː/",
@@ -1232,11 +8393,60 @@
       "n. 平局；抽彩"
     ]
   },
+  "drawback": {
+    "word": "drawback",
+    "phonetic": "/ˈdrɔːbæk/",
+    "explains": [
+      "n. 缺点"
+    ]
+  },
+  "drawbridge": {
+    "word": "drawbridge",
+    "phonetic": "/'drɔːbrɪdʒ/",
+    "explains": [
+      "n. 可开闭的吊桥"
+    ]
+  },
+  "drawee": {
+    "word": "drawee",
+    "phonetic": "/drɔː'iː/",
+    "explains": [
+      "n.  受票人"
+    ]
+  },
+  "drawer": {
+    "word": "drawer",
+    "phonetic": "/drɔːə/",
+    "explains": [
+      "n. 抽屉"
+    ]
+  },
   "drawing": {
     "word": "drawing",
     "phonetic": "/ˈdrɔːɪŋ/",
     "explains": [
       "n. 绘画；图画"
+    ]
+  },
+  "drawl": {
+    "word": "drawl",
+    "phonetic": "/drɔːl/",
+    "explains": [
+      "v. 懒洋洋地说, 做作而慢慢地说"
+    ]
+  },
+  "dread": {
+    "word": "dread",
+    "phonetic": "/dred/",
+    "explains": [
+      "v. 恐惧"
+    ]
+  },
+  "dreadful": {
+    "word": "dreadful",
+    "phonetic": "/ˈdredfl/",
+    "explains": [
+      "adj. 可怕的；糟糕的"
     ]
   },
   "dream": {
@@ -1247,6 +8457,41 @@
       "v. 做梦；梦想"
     ]
   },
+  "dreary": {
+    "word": "dreary",
+    "phonetic": "/'drɪərɪ/",
+    "explains": [
+      "adj. 沉闷的，阴沉的"
+    ]
+  },
+  "dredge": {
+    "word": "dredge",
+    "phonetic": "/dredʒ/",
+    "explains": [
+      "n. 挖泥机 v挖掘,"
+    ]
+  },
+  "dredger": {
+    "word": "dredger",
+    "phonetic": "/'drɛdʒɚ/",
+    "explains": [
+      "n. 挖泥机, 挖泥船, 捞网, 撒粉器"
+    ]
+  },
+  "dregs": {
+    "word": "dregs",
+    "phonetic": "/dregz/",
+    "explains": [
+      "n. 渣滓,糟粕"
+    ]
+  },
+  "drench": {
+    "word": "drench",
+    "phonetic": "/dren(t)ʃ/",
+    "explains": [
+      "v. 湿透"
+    ]
+  },
   "dress": {
     "word": "dress",
     "phonetic": "/dres/",
@@ -1255,12 +8500,96 @@
       "n. 连衣裙"
     ]
   },
+  "dresser": {
+    "word": "dresser",
+    "phonetic": "/'dresə/",
+    "explains": [
+      "n. 梳妆台；碗柜；化妆师；裹伤员"
+    ]
+  },
+  "dressing": {
+    "word": "dressing",
+    "phonetic": "/'dresɪŋ/",
+    "explains": [
+      "n. 穿衣；加工；调味品；装饰；梳理；v. 给…穿衣；为…打扮（dress的现在分词）"
+    ]
+  },
+  "dressy": {
+    "word": "dressy",
+    "phonetic": "/'dresɪ/",
+    "explains": [
+      "adj. 讲究服装的；n. (Dressy)人名；(法)德雷西"
+    ]
+  },
+  "drib": {
+    "word": "drib",
+    "phonetic": "/drɪb/",
+    "explains": [
+      "n. 点滴, 少量"
+    ]
+  },
+  "dribble": {
+    "word": "dribble",
+    "phonetic": "/'drɪb(ə)l/",
+    "explains": [
+      "v. 滴下"
+    ]
+  },
+  "drift": {
+    "word": "drift",
+    "phonetic": "/drɪft/",
+    "explains": [
+      "v. 漂流"
+    ]
+  },
+  "drill": {
+    "word": "drill",
+    "phonetic": "/drɪl/",
+    "explains": [
+      "v. 钻　n. 钻头；训练"
+    ]
+  },
+  "drilling": {
+    "word": "drilling",
+    "phonetic": "/'driliŋ/",
+    "explains": [
+      "n. 钻孔；训练，教练；演练；v. 钻孔；训练（drill的ing形式）"
+    ]
+  },
+  "drily": {
+    "word": "drily",
+    "phonetic": "/'draɪlɪ/",
+    "explains": [
+      "adv. 干燥地；冷淡地；讽刺地"
+    ]
+  },
   "drink": {
     "word": "drink",
     "phonetic": "/drɪŋk/",
     "explains": [
       "v. 喝；饮酒",
       "n. 饮料"
+    ]
+  },
+  "drip": {
+    "word": "drip",
+    "phonetic": "/drɪp/",
+    "explains": [
+      "v. 滴下；漏水；n. 水滴"
+    ]
+  },
+  "dripping": {
+    "word": "dripping",
+    "phonetic": "/'drɪpɪŋ/",
+    "explains": [
+      "n. 滴；水滴；滴下物；adj. 湿淋淋的；欲滴的；adv. 欲滴地；湿淋淋地；v. 滴下（drip的ing形式）"
+    ]
+  },
+  "dripstone": {
+    "word": "dripstone",
+    "phonetic": "/'drɪpstəʊn/",
+    "explains": [
+      "n. 滴水石"
     ]
   },
   "drive": {
@@ -1278,6 +8607,69 @@
       "n. 司机；驾驶员；驱动程序"
     ]
   },
+  "driveway": {
+    "word": "driveway",
+    "phonetic": "/'draɪvweɪ/",
+    "explains": [
+      "n. 车道"
+    ]
+  },
+  "drizzle": {
+    "word": "drizzle",
+    "phonetic": "/'drɪz(ə)l/",
+    "explains": [
+      "v. 下毛毛雨；n. 细雨，毛毛雨"
+    ]
+  },
+  "drizzly": {
+    "word": "drizzly",
+    "phonetic": "/'drɪzli/",
+    "explains": [
+      "adj. 下毛毛雨的"
+    ]
+  },
+  "droit": {
+    "word": "droit",
+    "phonetic": "",
+    "explains": [
+      "adj. 直的；右边的；n.m. 权利"
+    ]
+  },
+  "droll": {
+    "word": "droll",
+    "phonetic": "/drəʊl/",
+    "explains": [
+      "adj. 好笑的, 滑稽的, 逗趣的"
+    ]
+  },
+  "drollery": {
+    "word": "drollery",
+    "phonetic": "/'drəʊlərɪ/",
+    "explains": [
+      "n. 滑稽诙谐之事, 笑谈, 笑话"
+    ]
+  },
+  "drone": {
+    "word": "drone",
+    "phonetic": "/drəʊn/",
+    "explains": [
+      "n. 雄蜂, 嗡嗡的声音, 懒惰者, 靶标"
+    ]
+  },
+  "drool": {
+    "word": "drool",
+    "phonetic": "/druːl/",
+    "explains": [
+      "v. 流口水, 说昏话"
+    ]
+  },
+  "droop": {
+    "word": "droop",
+    "phonetic": "/druːp/",
+    "explains": [
+      "v. 低垂, 凋萎, 萎靡"
+    ]
+  },
   "drop": {
     "word": "drop",
     "phonetic": "/drɒp/",
@@ -1286,11 +8678,151 @@
       "n. 滴；下降"
     ]
   },
+  "droplet": {
+    "word": "droplet",
+    "phonetic": "/'drɒplɪt/",
+    "explains": [
+      "n. 小滴"
+    ]
+  },
+  "dropout": {
+    "word": "dropout",
+    "phonetic": "/'drɒpaʊt/",
+    "explains": [
+      "n. 中途退学；辍学学生"
+    ]
+  },
+  "dropstone": {
+    "word": "dropstone",
+    "phonetic": "",
+    "explains": [
+      "n. 滴石"
+    ]
+  },
+  "dross": {
+    "word": "dross",
+    "phonetic": "/drɒs/",
+    "explains": [
+      "n. (金属熔化时浮升至表面的)渣滓, 无用之物"
+    ]
+  },
+  "drought": {
+    "word": "drought",
+    "phonetic": "/draʊt/",
+    "explains": [
+      "n. 干旱"
+    ]
+  },
+  "drove": {
+    "word": "drove",
+    "phonetic": "/drəʊv/",
+    "explains": [
+      "vbl. drive的过去式"
+    ]
+  },
+  "drown": {
+    "word": "drown",
+    "phonetic": "/draʊn/",
+    "explains": [
+      "v. 淹死"
+    ]
+  },
+  "drowse": {
+    "word": "drowse",
+    "phonetic": "/draʊz/",
+    "explains": [
+      "v&n. 瞌睡"
+    ]
+  },
+  "drowsy": {
+    "word": "drowsy",
+    "phonetic": "/'draʊzɪ/",
+    "explains": [
+      "adj. 昏昏欲睡的；沉寂的；催眠的"
+    ]
+  },
+  "drub": {
+    "word": "drub",
+    "phonetic": "/drʌb/",
+    "explains": [
+      "v. 用棒打；硬灌；打击"
+    ]
+  },
+  "drudge": {
+    "word": "drudge",
+    "phonetic": "/drʌdʒ/",
+    "explains": [
+      "n. 做苦工的人"
+    ]
+  },
+  "drudgery": {
+    "word": "drudgery",
+    "phonetic": "/'drʌdʒərɪ/",
+    "explains": [
+      "n. 苦工，重活，单调乏味的工作"
+    ]
+  },
   "drug": {
     "word": "drug",
     "phonetic": "/drʌɡ/",
     "explains": [
       "n. 药物；毒品"
+    ]
+  },
+  "druggist": {
+    "word": "druggist",
+    "phonetic": "/'drʌgɪst/",
+    "explains": [
+      "n. 药剂师；药商；（美）药房老板（兼营化妆品、文具、牙膏、漱口剂、香烟等杂货的）"
+    ]
+  },
+  "drugstore": {
+    "word": "drugstore",
+    "phonetic": "/'drʌgstɔː/",
+    "explains": [
+      "n. 药房, 杂货店"
+    ]
+  },
+  "drum": {
+    "word": "drum",
+    "phonetic": "/drʌm/",
+    "explains": [
+      "n. 鼓"
+    ]
+  },
+  "drummer": {
+    "word": "drummer",
+    "phonetic": "/'drʌmə/",
+    "explains": [
+      "n. 鼓手；旅行推销员；跑街"
+    ]
+  },
+  "drumstick": {
+    "word": "drumstick",
+    "phonetic": "/'drʌmstɪk/",
+    "explains": [
+      "n. 鸡腿，家禽腿；鼓槌"
+    ]
+  },
+  "drunk": {
+    "word": "drunk",
+    "phonetic": "/drʌŋk/",
+    "explains": [
+      "adj. 醉的"
+    ]
+  },
+  "drunkard": {
+    "word": "drunkard",
+    "phonetic": "/'drʌŋkəd/",
+    "explains": [
+      "n. 酒鬼，醉汉"
+    ]
+  },
+  "drunken": {
+    "word": "drunken",
+    "phonetic": "/'drʌŋk(ə)n/",
+    "explains": [
+      "adj. 喝醉的；酒醉的；常醉的"
     ]
   },
   "dry": {
@@ -1301,11 +8833,172 @@
       "v. 使变干"
     ]
   },
+  "dryasdust": {
+    "word": "dryasdust",
+    "phonetic": "/'draɪəzdʌst/",
+    "explains": [
+      "n. 研究枯燥乏味问题的学者, 无趣而好卖弄学问的演讲人或作家"
+    ]
+  },
+  "dryer": {
+    "word": "dryer",
+    "phonetic": "/'draɪə/",
+    "explains": [
+      "n. 烘干机；[助剂] 干燥剂"
+    ]
+  },
+  "dryness": {
+    "word": "dryness",
+    "phonetic": "/'draɪnɪs/",
+    "explains": [
+      "n. 干燥"
+    ]
+  },
+  "dual": {
+    "word": "dual",
+    "phonetic": "/'djuːəl/",
+    "explains": [
+      "adj.  双重的"
+    ]
+  },
+  "dub": {
+    "word": "dub",
+    "phonetic": "/dʌb/",
+    "explains": [
+      "v. (以某种称号)授予；给起绰号；复制"
+    ]
+  },
+  "dubious": {
+    "word": "dubious",
+    "phonetic": "/ˈdjuːbiəs/",
+    "explains": [
+      "adj. 可疑的；不确定的"
+    ]
+  },
+  "duchenne": {
+    "word": "duchenne",
+    "phonetic": "",
+    "explains": [
+      "n. 杜氏营养不良症"
+    ]
+  },
+  "duchess": {
+    "word": "duchess",
+    "phonetic": "/'dʌtʃɪs; -es/",
+    "explains": [
+      "n. 公爵夫人；女公爵；雍容华贵的妇女；小老板娘；vt. （澳）盛情款待；讨好；vi. 热情款待；讨好"
+    ]
+  },
+  "duchy": {
+    "word": "duchy",
+    "phonetic": "/'dʌtʃɪ/",
+    "explains": [
+      "n. 公国；公爵领地；直辖领地"
+    ]
+  },
+  "duck": {
+    "word": "duck",
+    "phonetic": "/dʌk/",
+    "explains": [
+      "n. 鸭子"
+    ]
+  },
+  "duckling": {
+    "word": "duckling",
+    "phonetic": "/'dʌklɪŋ/",
+    "explains": [
+      "n. 小鸭子"
+    ]
+  },
+  "ducky": {
+    "word": "ducky",
+    "phonetic": "/'dʌkɪ/",
+    "explains": [
+      "adj. <俚> 极好的, 可喜的, 极为愉快的"
+    ]
+  },
+  "duct": {
+    "word": "duct",
+    "phonetic": "/dʌkt/",
+    "explains": [
+      "n. 管道, 导管；vt. 用导管输送"
+    ]
+  },
+  "ductile": {
+    "word": "ductile",
+    "phonetic": "/'dʌktaɪl/",
+    "explains": [
+      "adj. 易延展的, 易教导的"
+    ]
+  },
+  "ductless": {
+    "word": "ductless",
+    "phonetic": "",
+    "explains": [
+      "adj. 无导管的"
+    ]
+  },
   "due": {
     "word": "due",
     "phonetic": "/djuː/",
     "explains": [
       "adj. 到期的；应得的；预期的"
+    ]
+  },
+  "duel": {
+    "word": "duel",
+    "phonetic": "/'djuːəl/",
+    "explains": [
+      "n. 决斗"
+    ]
+  },
+  "duet": {
+    "word": "duet",
+    "phonetic": "/djuː'et/",
+    "explains": [
+      "n. 二重奏"
+    ]
+  },
+  "duff": {
+    "word": "duff",
+    "phonetic": "/dʌf/",
+    "explains": [
+      "n. 水果布丁；揉好的面团；笨拙的人；v. 把…改头换面；虚饰以欺骗人"
+    ]
+  },
+  "dugout": {
+    "word": "dugout",
+    "phonetic": "/'dʌgaʊt/",
+    "explains": [
+      "n. 防空洞, 独木舟"
+    ]
+  },
+  "duke": {
+    "word": "duke",
+    "phonetic": "/djuːk/",
+    "explains": [
+      "n. 公爵；君主"
+    ]
+  },
+  "dulcet": {
+    "word": "dulcet",
+    "phonetic": "/'dʌlsɪt/",
+    "explains": [
+      "adj. 愉快的, 美妙的, 悦耳的, <古> 美味的, 有香味的"
+    ]
+  },
+  "dulcify": {
+    "word": "dulcify",
+    "phonetic": "/'dʌlsɪfaɪ/",
+    "explains": [
+      "v. 使和好, 使愉快, 使柔和"
+    ]
+  },
+  "dulcimer": {
+    "word": "dulcimer",
+    "phonetic": "/'dʌlsɪmə/",
+    "explains": [
+      "n. [乐] 洋琴"
     ]
   },
   "dull": {
@@ -1315,11 +9008,221 @@
       "adj. 枯燥的；迟钝的；暗淡的"
     ]
   },
+  "dullard": {
+    "word": "dullard",
+    "phonetic": "/'dʌləd/",
+    "explains": [
+      "n. 笨蛋；愚人"
+    ]
+  },
+  "dullsville": {
+    "word": "dullsville",
+    "phonetic": "/'dʌlzvɪl/",
+    "explains": [
+      "n. 极度沉闷或单调, 非常无聊之事物"
+    ]
+  },
+  "duly": {
+    "word": "duly",
+    "phonetic": "/'djuːlɪ/",
+    "explains": [
+      "adv. 按时地，适当地"
+    ]
+  },
+  "dumb": {
+    "word": "dumb",
+    "phonetic": "/dʌm/",
+    "explains": [
+      "adj. 哑的；愚蠢的"
+    ]
+  },
+  "dumbfound": {
+    "word": "dumbfound",
+    "phonetic": "/dʌm'faʊnd/",
+    "explains": [
+      "v. 使惊呆；使人惊愕失声"
+    ]
+  },
+  "dummy": {
+    "word": "dummy",
+    "phonetic": "/'dʌmɪ/",
+    "explains": [
+      "adj. 虚拟的；假的；n. 傀儡；哑巴；仿制品"
+    ]
+  },
+  "dump": {
+    "word": "dump",
+    "phonetic": "/dʌmp/",
+    "explains": [
+      "v. 倾倒；丢弃"
+    ]
+  },
+  "dumping": {
+    "word": "dumping",
+    "phonetic": "/'dʌmpiŋ/",
+    "explains": [
+      "n.  倾销"
+    ]
+  },
+  "dumpling": {
+    "word": "dumpling",
+    "phonetic": "/'dʌmplɪŋ/",
+    "explains": [
+      "n. 饺子，汤团；面团布丁"
+    ]
+  },
+  "dumps": {
+    "word": "dumps",
+    "phonetic": "",
+    "explains": [
+      "n. 抑郁"
+    ]
+  },
+  "dumpster": {
+    "word": "dumpster",
+    "phonetic": "/'dʌmpstə/",
+    "explains": [
+      "n. 大型垃圾装卸卡车；垃圾大铁桶"
+    ]
+  },
+  "dumpy": {
+    "word": "dumpy",
+    "phonetic": "/'dʌmpɪ/",
+    "explains": [
+      "adj. 矮胖的，粗短的；忧郁的；n. 矮沙发；短雨伞"
+    ]
+  },
+  "dunce": {
+    "word": "dunce",
+    "phonetic": "/dʌns/",
+    "explains": [
+      "n. 劣学生, 傻瓜"
+    ]
+  },
+  "dune": {
+    "word": "dune",
+    "phonetic": "/djuːn/",
+    "explains": [
+      "n. 沙丘"
+    ]
+  },
+  "dung": {
+    "word": "dung",
+    "phonetic": "/dʌŋ/",
+    "explains": [
+      "n. 粪 vt施粪肥于"
+    ]
+  },
+  "dungarees": {
+    "word": "dungarees",
+    "phonetic": "/'dʌŋgə'riz/",
+    "explains": [
+      "n. 粗布工作服"
+    ]
+  },
+  "dungeon": {
+    "word": "dungeon",
+    "phonetic": "/'dʌn(d)ʒ(ə)n/",
+    "explains": [
+      "n. 地牢，土牢"
+    ]
+  },
+  "dunning": {
+    "word": "dunning",
+    "phonetic": "",
+    "explains": [
+      "催缴"
+    ]
+  },
+  "duo": {
+    "word": "duo",
+    "phonetic": "/'djuːəʊ/",
+    "explains": [
+      "n. 二重奏；二重唱；二人组"
+    ]
+  },
+  "dupe": {
+    "word": "dupe",
+    "phonetic": "/djuːp/",
+    "explains": [
+      "n. 易受骗的人, 易受愚弄的人"
+    ]
+  },
+  "duplicate": {
+    "word": "duplicate",
+    "phonetic": "/ˈdjuːplɪkeɪt/",
+    "explains": [
+      "n. 复制品；v. 复制"
+    ]
+  },
+  "duplication": {
+    "word": "duplication",
+    "phonetic": "/djuːplɪ'keɪʃn/",
+    "explains": [
+      "n. 复制；副本；成倍"
+    ]
+  },
+  "duplicity": {
+    "word": "duplicity",
+    "phonetic": "/djuː'plɪsɪtɪ; djʊ-/",
+    "explains": [
+      "n. 口是心非；表里不一；不诚实"
+    ]
+  },
+  "durability": {
+    "word": "durability",
+    "phonetic": "",
+    "explains": [
+      "n. 经久, 耐久力"
+    ]
+  },
+  "durable": {
+    "word": "durable",
+    "phonetic": "/ˈdjʊərəb(ə)l/",
+    "explains": [
+      "adj. 耐用的"
+    ]
+  },
+  "durante": {
+    "word": "durante",
+    "phonetic": "",
+    "explains": [
+      "prep. 在…期间"
+    ]
+  },
+  "duration": {
+    "word": "duration",
+    "phonetic": "/djʊˈreɪʃ(ə)n/",
+    "explains": [
+      "n. 持续时间"
+    ]
+  },
+  "duress": {
+    "word": "duress",
+    "phonetic": "/djʊ(ə)'res; 'djʊəres/",
+    "explains": [
+      "n. 强迫, 监禁"
+    ]
+  },
   "during": {
     "word": "during",
     "phonetic": "/ˈdjʊərɪŋ/",
     "explains": [
       "prep. 在…期间"
+    ]
+  },
+  "dusk": {
+    "word": "dusk",
+    "phonetic": "/dʌsk/",
+    "explains": [
+      "n. 薄暮，黄昏，幽暗"
+    ]
+  },
+  "dusky": {
+    "word": "dusky",
+    "phonetic": "/'dʌskɪ/",
+    "explains": [
+      "adj. 暗淡的；微暗的；忧郁的；朦胧的"
     ]
   },
   "dust": {
@@ -1329,11 +9232,214 @@
       "n. 灰尘；尘土"
     ]
   },
+  "dustbin": {
+    "word": "dustbin",
+    "phonetic": "/'dʌs(t)bɪn/",
+    "explains": [
+      "n. 垃圾箱；吃货"
+    ]
+  },
+  "dustcart": {
+    "word": "dustcart",
+    "phonetic": "/'dʌstka:t/",
+    "explains": [
+      "n. 垃圾车"
+    ]
+  },
+  "duster": {
+    "word": "duster",
+    "phonetic": "/'dʌstə/",
+    "explains": [
+      "n. 抹布，掸子；除尘器；打扫灰尘的人"
+    ]
+  },
+  "dustman": {
+    "word": "dustman",
+    "phonetic": "/'dʌs(t)mən/",
+    "explains": [
+      "n. 清洁工人"
+    ]
+  },
+  "dustpan": {
+    "word": "dustpan",
+    "phonetic": "/'dʌs(t)pæn/",
+    "explains": [
+      "n. 簸箕"
+    ]
+  },
+  "dusty": {
+    "word": "dusty",
+    "phonetic": "/'dʌsti/",
+    "explains": [
+      "adj.  满是灰尘的； 粉状的； 浅灰色的； 枯燥无味的"
+    ]
+  },
+  "dutch": {
+    "word": "dutch",
+    "phonetic": "/dʌtʃ/",
+    "explains": [
+      "n. 荷兰人；adj. 荷兰的"
+    ]
+  },
+  "dutchman": {
+    "word": "dutchman",
+    "phonetic": "/'dʌtʃmən/",
+    "explains": [
+      "n. 荷兰人"
+    ]
+  },
+  "dutiful": {
+    "word": "dutiful",
+    "phonetic": "/'djuːtɪfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 忠实的；顺从的；守本分的"
+    ]
+  },
   "duty": {
     "word": "duty",
     "phonetic": "/ˈdjuːti/",
     "explains": [
       "n. 责任；义务；税"
+    ]
+  },
+  "duty-free": {
+    "word": "duty-free",
+    "phonetic": "/'djuːti'friː/",
+    "explains": [
+      "adj.  免税的"
+    ]
+  },
+  "dwarf": {
+    "word": "dwarf",
+    "phonetic": "/dwɔːf/",
+    "explains": [
+      "n. 矮子"
+    ]
+  },
+  "dwell": {
+    "word": "dwell",
+    "phonetic": "/dwel/",
+    "explains": [
+      "v. 居住；凝思，细想"
+    ]
+  },
+  "dweller": {
+    "word": "dweller",
+    "phonetic": "/'dwɛlɚ/",
+    "explains": [
+      "n. 居住者,居民"
+    ]
+  },
+  "dwelling": {
+    "word": "dwelling",
+    "phonetic": "/'dwelɪŋ/",
+    "explains": [
+      "n. 住处，寓所"
+    ]
+  },
+  "dwindle": {
+    "word": "dwindle",
+    "phonetic": "/'dwɪnd(ə)l/",
+    "explains": [
+      "v. 缩小"
+    ]
+  },
+  "dy": {
+    "word": "dy",
+    "phonetic": "",
+    "explains": [
+      "n. [化]镝(=dysprosium)"
+    ]
+  },
+  "dye": {
+    "word": "dye",
+    "phonetic": "/daɪ/",
+    "explains": [
+      "v. 染；n. 染料；染色"
+    ]
+  },
+  "dyestuff": {
+    "word": "dyestuff",
+    "phonetic": "/'daɪstʌf/",
+    "explains": [
+      "n. 染料"
+    ]
+  },
+  "dying": {
+    "word": "dying",
+    "phonetic": "/'daɪɪŋ/",
+    "explains": [
+      "adj. 垂死的；临终的"
+    ]
+  },
+  "dynamic": {
+    "word": "dynamic",
+    "phonetic": "/daɪˈnæmɪk/",
+    "explains": [
+      "adj. 动态的"
+    ]
+  },
+  "dynamics": {
+    "word": "dynamics",
+    "phonetic": "/daɪ'næmɪks/",
+    "explains": [
+      "n. 动力学，力学"
+    ]
+  },
+  "dynamism": {
+    "word": "dynamism",
+    "phonetic": "/'daɪnəmɪz(ə)m/",
+    "explains": [
+      "n. 活力；动态；物力论；推动力；精神动力作用"
+    ]
+  },
+  "dynamite": {
+    "word": "dynamite",
+    "phonetic": "/'daɪnəmaɪt/",
+    "explains": [
+      "n. 炸药, <俚> 能产生不凡效果的人或物"
+    ]
+  },
+  "dynamo": {
+    "word": "dynamo",
+    "phonetic": "/'daɪnəməʊ/",
+    "explains": [
+      "n. 发电机"
+    ]
+  },
+  "dynasty": {
+    "word": "dynasty",
+    "phonetic": "/'dɪnəstɪ/",
+    "explains": [
+      "n. 王朝，朝代"
+    ]
+  },
+  "dyslexia": {
+    "word": "dyslexia",
+    "phonetic": "/dɪs'leksɪə/",
+    "explains": [
+      "n. [医] 诵读困难"
+    ]
+  },
+  "dyslogistic": {
+    "word": "dyslogistic",
+    "phonetic": "/,dɪslə'dʒɪstɪk/",
+    "explains": [
+      "adj. 责难的"
+    ]
+  },
+  "dyspepsia": {
+    "word": "dyspepsia",
+    "phonetic": "/dɪs'pepsɪə/",
+    "explains": [
+      "n. [医]消化不良, 胃弱"
+    ]
+  },
+  "dysphoria": {
+    "word": "dysphoria",
+    "phonetic": "/dɪs'fɔːrɪə/",
+    "explains": [
+      "n. 烦躁不安"
     ]
   }
 }

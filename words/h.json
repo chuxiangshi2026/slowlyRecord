@@ -1,9 +1,247 @@
 {
+  "ha": {
+    "word": "ha",
+    "phonetic": "/hɑː/",
+    "explains": [
+      "int. 哈！（表示惊异，愉快，怀疑，胜利等）；abbr. 一种元素(hahnium,原子序105)；n. (Ha)人名；(德)哈；(日)巴 (姓)"
+    ]
+  },
+  "habile": {
+    "word": "habile",
+    "phonetic": "/'hæbɪl/",
+    "explains": [
+      "adj. 熟练的, 灵巧的"
+    ]
+  },
   "habit": {
     "word": "habit",
     "phonetic": "/ˈhæbɪt/",
     "explains": [
       "n. 习惯；习性"
+    ]
+  },
+  "habitable": {
+    "word": "habitable",
+    "phonetic": "/'hæbɪtəb(ə)l/",
+    "explains": [
+      "adj. 可居住的；适于居住的"
+    ]
+  },
+  "habitant": {
+    "word": "habitant",
+    "phonetic": "",
+    "explains": [
+      "n.m. 居民"
+    ]
+  },
+  "habitat": {
+    "word": "habitat",
+    "phonetic": "/'hæbɪtæt/",
+    "explains": [
+      "n. 栖息地,住处"
+    ]
+  },
+  "habitation": {
+    "word": "habitation",
+    "phonetic": "/hæbɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 居住；住所"
+    ]
+  },
+  "habitual": {
+    "word": "habitual",
+    "phonetic": "/hə'bɪtʃʊəl; -tjʊəl/",
+    "explains": [
+      "adj. 习惯性的，惯常的"
+    ]
+  },
+  "habituate": {
+    "word": "habituate",
+    "phonetic": "/hə'bɪtʃʊeɪt; -tjʊ-/",
+    "explains": [
+      "v. 使习惯于，使熟悉于"
+    ]
+  },
+  "habituation": {
+    "word": "habituation",
+    "phonetic": "",
+    "explains": [
+      "n. 适应"
+    ]
+  },
+  "habitude": {
+    "word": "habitude",
+    "phonetic": "/'hæbɪtjuːd/",
+    "explains": [
+      "n. 习俗；习惯"
+    ]
+  },
+  "habitue": {
+    "word": "habitue",
+    "phonetic": "",
+    "explains": [
+      "n. 常客；有毒瘾的人"
+    ]
+  },
+  "hablar": {
+    "word": "hablar",
+    "phonetic": "",
+    "explains": [
+      "v. 说话"
+    ]
+  },
+  "hacer": {
+    "word": "hacer",
+    "phonetic": "",
+    "explains": [
+      "v. 做"
+    ]
+  },
+  "hacia": {
+    "word": "hacia",
+    "phonetic": "",
+    "explains": [
+      "prep. 向，朝"
+    ]
+  },
+  "hacienda": {
+    "word": "hacienda",
+    "phonetic": "/,hæsɪ'endə; æ'θjendæ; æ'sjendæ/",
+    "explains": [
+      "n. 庄园"
+    ]
+  },
+  "hack": {
+    "word": "hack",
+    "phonetic": "/hæk/",
+    "explains": [
+      "v. 砍"
+    ]
+  },
+  "hacked": {
+    "word": "hacked",
+    "phonetic": "",
+    "explains": [
+      "n. 生气"
+    ]
+  },
+  "hacker": {
+    "word": "hacker",
+    "phonetic": "/'hækə/",
+    "explains": [
+      "n. 电脑黑客，企图不法侵入他人电脑系统的人"
+    ]
+  },
+  "hackle": {
+    "word": "hackle",
+    "phonetic": "/'hæk(ə)l/",
+    "explains": [
+      "n. 针排；颈羽；手工梳麻台；v. 梳理；乱砍"
+    ]
+  },
+  "hackney": {
+    "word": "hackney",
+    "phonetic": "/'hæknɪ/",
+    "explains": [
+      "n. 乘用马；出租马车；出租汽车；操贱役的人；vt. 役使；出租；adj. 供出租的"
+    ]
+  },
+  "hackneyed": {
+    "word": "hackneyed",
+    "phonetic": "/'hæknɪd/",
+    "explains": [
+      "adj. 陈腐的；平庸的；v. 出租（马匹、马车等）；役使（hackney的过去式）"
+    ]
+  },
+  "hacksaw": {
+    "word": "hacksaw",
+    "phonetic": "/'hæksɔː/",
+    "explains": [
+      "n. 钢锯；可锯金属的弓形锯；vt. 用钢锯锯断"
+    ]
+  },
+  "haddock": {
+    "word": "haddock",
+    "phonetic": "/'hædək/",
+    "explains": [
+      "n. [鱼] 黑线鳕（鳕的一种）"
+    ]
+  },
+  "hadron": {
+    "word": "hadron",
+    "phonetic": "/'hædrɒn/",
+    "explains": [
+      "n. [高能] 强子（参与强相互作用的基本粒子）"
+    ]
+  },
+  "haematic": {
+    "word": "haematic",
+    "phonetic": "",
+    "explains": [
+      "adj. 血的"
+    ]
+  },
+  "haemophilia": {
+    "word": "haemophilia",
+    "phonetic": "/,hɛmo'fɪlɪr/",
+    "explains": [
+      "n. [医]血友病, 出血不止症"
+    ]
+  },
+  "haemorrhage": {
+    "word": "haemorrhage",
+    "phonetic": "/'hemərɪdʒ/",
+    "explains": [
+      "n. 出血(尤指大出血), 溢血"
+    ]
+  },
+  "haemostat": {
+    "word": "haemostat",
+    "phonetic": "",
+    "explains": [
+      "n. (=hemostat][医)止血器, 止血药"
+    ]
+  },
+  "haft": {
+    "word": "haft",
+    "phonetic": "/hɑːft/",
+    "explains": [
+      "n. 柄, 把手"
+    ]
+  },
+  "hag": {
+    "word": "hag",
+    "phonetic": "/hæg/",
+    "explains": [
+      "n. 女巫；丑老太婆"
+    ]
+  },
+  "haggard": {
+    "word": "haggard",
+    "phonetic": "/'hægəd/",
+    "explains": [
+      "adj. 憔悴的；野性的；n. 野鹰"
+    ]
+  },
+  "haggle": {
+    "word": "haggle",
+    "phonetic": "/'hægl/",
+    "explains": [
+      "v.  讨价还价"
+    ]
+  },
+  "hail": {
+    "word": "hail",
+    "phonetic": "/heɪl/",
+    "explains": [
+      "n. 冰雹　v. 欢呼"
+    ]
+  },
+  "haine": {
+    "word": "haine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 恨"
     ]
   },
   "hair": {
@@ -13,11 +251,109 @@
       "n. 头发；毛发"
     ]
   },
+  "haircut": {
+    "word": "haircut",
+    "phonetic": "/ˈheəkʌt/",
+    "explains": [
+      "n. 理发"
+    ]
+  },
+  "hairdo": {
+    "word": "hairdo",
+    "phonetic": "/'heəduː/",
+    "explains": [
+      "n. 发型"
+    ]
+  },
+  "hairdresser": {
+    "word": "hairdresser",
+    "phonetic": "/'heədresə(r)/",
+    "explains": [
+      "n. 美发师"
+    ]
+  },
+  "hairdryer": {
+    "word": "hairdryer",
+    "phonetic": "/ˈheədraɪə/",
+    "explains": [
+      "n. 吹风机"
+    ]
+  },
+  "hairlike": {
+    "word": "hairlike",
+    "phonetic": "",
+    "explains": [
+      "adj. 毛一般的, 细微的"
+    ]
+  },
+  "hairpiece": {
+    "word": "hairpiece",
+    "phonetic": "/'heəpiːs/",
+    "explains": [
+      "n. 假发"
+    ]
+  },
+  "hairpin": {
+    "word": "hairpin",
+    "phonetic": "/'heəpɪn/",
+    "explains": [
+      "n. 簪；束发夹；夹发针"
+    ]
+  },
+  "hairspray": {
+    "word": "hairspray",
+    "phonetic": "/'hɛrspre/",
+    "explains": [
+      "n. 头发定型剂"
+    ]
+  },
+  "hairy": {
+    "word": "hairy",
+    "phonetic": "/'heərɪ/",
+    "explains": [
+      "adj. 毛发的，多毛的"
+    ]
+  },
+  "haiti": {
+    "word": "haiti",
+    "phonetic": "/'heiti/",
+    "explains": [
+      "n. 海地"
+    ]
+  },
+  "halcyon": {
+    "word": "halcyon",
+    "phonetic": "/'hælsɪən; -ʃ(ə)n/",
+    "explains": [
+      "adj. 宁静的；平稳的；n. 翡翠鸟；神翠鸟"
+    ]
+  },
+  "hale": {
+    "word": "hale",
+    "phonetic": "/heɪl/",
+    "explains": [
+      "adj. 强壮的；v. 硬拖"
+    ]
+  },
   "half": {
     "word": "half",
     "phonetic": "/hɑːf/",
     "explains": [
       "n. 一半；半场 adj. 一半的"
+    ]
+  },
+  "halfway": {
+    "word": "halfway",
+    "phonetic": "/hɑːf'weɪ; 'hɑːfweɪ/",
+    "explains": [
+      "adj. 中途的ad半路地"
+    ]
+  },
+  "halite": {
+    "word": "halite",
+    "phonetic": "/'hælaɪt/",
+    "explains": [
+      "n. [化]岩盐"
     ]
   },
   "hall": {
@@ -27,11 +363,333 @@
       "n. 大厅；礼堂；走廊"
     ]
   },
+  "halle": {
+    "word": "halle",
+    "phonetic": "",
+    "explains": [
+      "n.f. 市场"
+    ]
+  },
+  "hallelujah": {
+    "word": "hallelujah",
+    "phonetic": "/,hælɪ'luːjə/",
+    "explains": [
+      "n. 赞美上帝的颂歌；int. 哈利路亚"
+    ]
+  },
+  "hallmark": {
+    "word": "hallmark",
+    "phonetic": "/'hɔːlmɑːk/",
+    "explains": [
+      "n. 特点"
+    ]
+  },
+  "hallo": {
+    "word": "hallo",
+    "phonetic": "",
+    "explains": [
+      "int. 喂，哈罗（等于hello）；n. (Hallo)人名；(法)阿洛；(荷)哈洛"
+    ]
+  },
+  "hallowed": {
+    "word": "hallowed",
+    "phonetic": "/'hæləʊd/",
+    "explains": [
+      "adj. 神圣的，神圣化的"
+    ]
+  },
+  "halloween": {
+    "word": "halloween",
+    "phonetic": "/ˌhæləʊ'iːn/",
+    "explains": [
+      "n. 万圣节前夕（指十月三十一日夜晚）"
+    ]
+  },
+  "hallucinate": {
+    "word": "hallucinate",
+    "phonetic": "/hə'luːsɪneɪt/",
+    "explains": [
+      "v. 使产生幻觉"
+    ]
+  },
+  "hallucination": {
+    "word": "hallucination",
+    "phonetic": "/hə,luːsɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 幻觉，幻想；错觉"
+    ]
+  },
+  "halo": {
+    "word": "halo",
+    "phonetic": "/'heɪləʊ/",
+    "explains": [
+      "n. 光环；荣光；vt. 使有晕轮；围以光环；vi. 成晕轮"
+    ]
+  },
+  "halt": {
+    "word": "halt",
+    "phonetic": "/hɔːlt; hɒlt/",
+    "explains": [
+      "v. 停止"
+    ]
+  },
+  "halter": {
+    "word": "halter",
+    "phonetic": "/'hɔːltə/",
+    "explains": [
+      "n. 缰绳；绞索；v. 给…套上缰绳；束缚"
+    ]
+  },
+  "halting": {
+    "word": "halting",
+    "phonetic": "/'hɔːltɪŋ/",
+    "explains": [
+      "adj. 跛的, 犹豫的, 蹒跚的"
+    ]
+  },
+  "halve": {
+    "word": "halve",
+    "phonetic": "/hɑːv/",
+    "explains": [
+      "v. 对分；平摊"
+    ]
+  },
+  "ham": {
+    "word": "ham",
+    "phonetic": "/hæm/",
+    "explains": [
+      "n. 火腿"
+    ]
+  },
+  "hambre": {
+    "word": "hambre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 饥饿"
+    ]
+  },
+  "hamburger": {
+    "word": "hamburger",
+    "phonetic": "/ˈhæmbɜːɡə/",
+    "explains": [
+      "n. 汉堡包"
+    ]
+  },
+  "hamlet": {
+    "word": "hamlet",
+    "phonetic": "/'hæmlɪt/",
+    "explains": [
+      "n. 小村庄"
+    ]
+  },
+  "hamlin": {
+    "word": "hamlin",
+    "phonetic": "/'hæmlin/",
+    "explains": [
+      "n. 哈姆林（姓氏）"
+    ]
+  },
+  "hammer": {
+    "word": "hammer",
+    "phonetic": "/'hæmə/",
+    "explains": [
+      "n. 锤，榔头；v. 锤击"
+    ]
+  },
+  "hammerhead": {
+    "word": "hammerhead",
+    "phonetic": "/'hæməhed/",
+    "explains": [
+      "n. 锤头 a锤头状的, 鲁钝的"
+    ]
+  },
+  "hammock": {
+    "word": "hammock",
+    "phonetic": "/'hæmək/",
+    "explains": [
+      "n. 吊床；吊铺；吊带；vt. 睡吊床"
+    ]
+  },
+  "hamper": {
+    "word": "hamper",
+    "phonetic": "/'hæmpə/",
+    "explains": [
+      "v. 妨碍，阻碍，牵制"
+    ]
+  },
+  "hampshire": {
+    "word": "hampshire",
+    "phonetic": "/'hæmpʃə/",
+    "explains": [
+      "n. 汉普郡(英国南部之一郡)"
+    ]
+  },
+  "hamstring": {
+    "word": "hamstring",
+    "phonetic": "/'hæmstrɪŋ/",
+    "explains": [
+      "n. 腿筋；v. 切断腿筋使成跛腿；使残废"
+    ]
+  },
   "hand": {
     "word": "hand",
     "phonetic": "/hænd/",
     "explains": [
       "n. 手；指针 v. 传递；交给"
+    ]
+  },
+  "handbag": {
+    "word": "handbag",
+    "phonetic": "/ˈhæn(d)bæɡ/",
+    "explains": [
+      "n. 手提包"
+    ]
+  },
+  "handbook": {
+    "word": "handbook",
+    "phonetic": "/'hæn(d)bʊk/",
+    "explains": [
+      "n. 手册，便览，指南"
+    ]
+  },
+  "handbrake": {
+    "word": "handbrake",
+    "phonetic": "/'hændbrek/",
+    "explains": [
+      "n. 手煞车；手闸"
+    ]
+  },
+  "handcraft": {
+    "word": "handcraft",
+    "phonetic": "/'hæn(d)krɑːft/",
+    "explains": [
+      "n. 手工, 手艺"
+    ]
+  },
+  "handcuff": {
+    "word": "handcuff",
+    "phonetic": "/'hæn(d)kʌf/",
+    "explains": [
+      "v. 给…戴上手铐；限制；n. 手铐；思想上的桎梏"
+    ]
+  },
+  "handedness": {
+    "word": "handedness",
+    "phonetic": "/'hændɪdnɪs/",
+    "explains": [
+      "n. 用右手或左手的习惯"
+    ]
+  },
+  "hander": {
+    "word": "hander",
+    "phonetic": "",
+    "explains": [
+      "n. 支持器,夹头"
+    ]
+  },
+  "handful": {
+    "word": "handful",
+    "phonetic": "/ˈhæn(d)fʊl/",
+    "explains": [
+      "n. 一把"
+    ]
+  },
+  "handgun": {
+    "word": "handgun",
+    "phonetic": "/'hæn(d)gʌn/",
+    "explains": [
+      "n. 手枪"
+    ]
+  },
+  "handicap": {
+    "word": "handicap",
+    "phonetic": "/'hændɪkæp/",
+    "explains": [
+      "v. 妨碍，使不利"
+    ]
+  },
+  "handicapped": {
+    "word": "handicapped",
+    "phonetic": "/'hændɪkæpt/",
+    "explains": [
+      "adj. 残废的；有生理缺陷的；n. 残疾人；缺陷者"
+    ]
+  },
+  "handicraft": {
+    "word": "handicraft",
+    "phonetic": "/'hændɪkrɑːft/",
+    "explains": [
+      "n. 手工艺(品)"
+    ]
+  },
+  "handiness": {
+    "word": "handiness",
+    "phonetic": "/'hændɪnɪs/",
+    "explains": [
+      "n. 轻便；灵巧；敏捷"
+    ]
+  },
+  "handiwork": {
+    "word": "handiwork",
+    "phonetic": "/'hændɪwɜːk/",
+    "explains": [
+      "n. 手工艺；[工经] 手工制品；行为后果"
+    ]
+  },
+  "handkerchief": {
+    "word": "handkerchief",
+    "phonetic": "/'hæŋkətʃɪf/",
+    "explains": [
+      "n. 手帕"
+    ]
+  },
+  "handle": {
+    "word": "handle",
+    "phonetic": "/ˈhænd(ə)l/",
+    "explains": [
+      "v. 处理　n. 把手"
+    ]
+  },
+  "handlebar": {
+    "word": "handlebar",
+    "phonetic": "/'hænd(ə)lbɑː/",
+    "explains": [
+      "n. 手把；（美）八字胡（等于handlebar mustache）"
+    ]
+  },
+  "handmade": {
+    "word": "handmade",
+    "phonetic": "/hæn(d)'meɪd/",
+    "explains": [
+      "adj. 手工的"
+    ]
+  },
+  "handout": {
+    "word": "handout",
+    "phonetic": "/'hændaʊt/",
+    "explains": [
+      "n. 施舍物，救济品"
+    ]
+  },
+  "handpicked": {
+    "word": "handpicked",
+    "phonetic": "/'hænd'pɪkt/",
+    "explains": [
+      "adj. 偏心挑选的，精心挑选出来的；用手挑选的；v. 用手采摘；仔细挑选（handpick的过去分词）"
+    ]
+  },
+  "handset": {
+    "word": "handset",
+    "phonetic": "/'hændset/",
+    "explains": [
+      "n.  无绳电话； 话筒"
+    ]
+  },
+  "handshake": {
+    "word": "handshake",
+    "phonetic": "/'hæn(d)ʃeɪk/",
+    "explains": [
+      "n. 握手"
     ]
   },
   "handsome": {
@@ -41,11 +699,151 @@
       "adj. 英俊的；可观的"
     ]
   },
+  "handsomely": {
+    "word": "handsomely",
+    "phonetic": "",
+    "explains": [
+      "adv. 漂亮地,慷慨地"
+    ]
+  },
+  "handstand": {
+    "word": "handstand",
+    "phonetic": "/'hæn(d)stænd/",
+    "explains": [
+      "n. 手倒立"
+    ]
+  },
+  "handwriting": {
+    "word": "handwriting",
+    "phonetic": "/ˈhændraɪtɪŋ/",
+    "explains": [
+      "n. 书法"
+    ]
+  },
+  "handy": {
+    "word": "handy",
+    "phonetic": "/ˈhændɪ/",
+    "explains": [
+      "adj. 方便的"
+    ]
+  },
+  "handyman": {
+    "word": "handyman",
+    "phonetic": "/'hændɪmæn/",
+    "explains": [
+      "n. 手巧的人；[劳经] 杂务工；水手"
+    ]
+  },
   "hang": {
     "word": "hang",
     "phonetic": "/hæŋ/",
     "explains": [
       "v. 悬挂；吊；垂下"
+    ]
+  },
+  "hangar": {
+    "word": "hangar",
+    "phonetic": "/'hæŋə/",
+    "explains": [
+      "n. 飞机修理库, 飞机棚"
+    ]
+  },
+  "hanger": {
+    "word": "hanger",
+    "phonetic": "/'hæŋə/",
+    "explains": [
+      "n. 绞刑执行者, 衣架"
+    ]
+  },
+  "hangings": {
+    "word": "hangings",
+    "phonetic": "/'hæŋɪŋ/",
+    "explains": [
+      "n. 门帘；脚手架；帘布（hanging的复数）"
+    ]
+  },
+  "hangman": {
+    "word": "hangman",
+    "phonetic": "/'hæŋmən/",
+    "explains": [
+      "n. 刽子手；绞刑吏；执行绞刑者"
+    ]
+  },
+  "hangnail": {
+    "word": "hangnail",
+    "phonetic": "/'hæŋneɪl/",
+    "explains": [
+      "n. 手指头的倒拉刺（指甲旁的逆刺皮）"
+    ]
+  },
+  "hangover": {
+    "word": "hangover",
+    "phonetic": "/'hæŋəʊvə/",
+    "explains": [
+      "n. 残留, 遗物, 宿醉"
+    ]
+  },
+  "hanker": {
+    "word": "hanker",
+    "phonetic": "/'hæŋkə/",
+    "explains": [
+      "v. 渴望, 追求"
+    ]
+  },
+  "hankie": {
+    "word": "hankie",
+    "phonetic": "/'hæŋkɪ/",
+    "explains": [
+      "n. 手帕（等于handkerchief）"
+    ]
+  },
+  "haphazard": {
+    "word": "haphazard",
+    "phonetic": "/hæp'hæzəd/",
+    "explains": [
+      "a&ad. 杂乱的(地)，任意的(地)"
+    ]
+  },
+  "haphazardly": {
+    "word": "haphazardly",
+    "phonetic": "",
+    "explains": [
+      "adv. 不规则地, 随意地"
+    ]
+  },
+  "hapless": {
+    "word": "hapless",
+    "phonetic": "/'hæplɪs/",
+    "explains": [
+      "adj. 倒霉的, 不幸的"
+    ]
+  },
+  "happen": {
+    "word": "happen",
+    "phonetic": "/ˈhæp(ə)n/",
+    "explains": [
+      "v. 发生"
+    ]
+  },
+  "happening": {
+    "word": "happening",
+    "phonetic": "/'hæp(ə)nɪŋ/",
+    "explains": [
+      "n. 事件；意外发生的事；v. 发生；碰巧（happen的ing形式）"
+    ]
+  },
+  "happily": {
+    "word": "happily",
+    "phonetic": "/'hæpɪlɪ/",
+    "explains": [
+      "adv. 幸福地, 愉快地"
+    ]
+  },
+  "happiness": {
+    "word": "happiness",
+    "phonetic": "/ˈhæpinəs/",
+    "explains": [
+      "n. 幸福，幸运；快乐"
     ]
   },
   "happy": {
@@ -55,11 +853,116 @@
       "adj. 幸福的；高兴的"
     ]
   },
+  "harangue": {
+    "word": "harangue",
+    "phonetic": "/hə'ræŋ/",
+    "explains": [
+      "n. 长篇大论；高谈阔论；热烈的演说；v. 向…滔滔不绝地演讲；大声训斥"
+    ]
+  },
+  "harass": {
+    "word": "harass",
+    "phonetic": "/'hærəs; hə'ræs/",
+    "explains": [
+      "v. 使烦恼, 折磨，骚扰\""
+    ]
+  },
+  "harassment": {
+    "word": "harassment",
+    "phonetic": "/'hærəsm(ə)nt; hə'ræsm(ə)nt/",
+    "explains": [
+      "n. 骚扰；烦恼"
+    ]
+  },
+  "harbinger": {
+    "word": "harbinger",
+    "phonetic": "/'hɑːbɪndʒə/",
+    "explains": [
+      "n. 先驱；前兆；预告者；v. 预告；充做…的前驱"
+    ]
+  },
+  "harbor": {
+    "word": "harbor",
+    "phonetic": "/ˈhɑːbə/",
+    "explains": [
+      "n. 港口"
+    ]
+  },
+  "harbour": {
+    "word": "harbour",
+    "phonetic": "/ˈhɑ:bə(r)/",
+    "explains": [
+      "n. 海港，港口；v. 庇护"
+    ]
+  },
   "hard": {
     "word": "hard",
     "phonetic": "/hɑːd/",
     "explains": [
       "adj. 硬的；困难的 adv. 努力地"
+    ]
+  },
+  "hardback": {
+    "word": "hardback",
+    "phonetic": "/'hɑːdbæk/",
+    "explains": [
+      "n. 精装本；[图情] 硬封面的书；adj. 精装的；硬封面的"
+    ]
+  },
+  "hardball": {
+    "word": "hardball",
+    "phonetic": "/'hɑːdbɔːl/",
+    "explains": [
+      "n. 硬式棒球（等于baseball）；（为达到某种目的而采取的）强硬手段；刀剑搏杀"
+    ]
+  },
+  "hardbitten": {
+    "word": "hardbitten",
+    "phonetic": "",
+    "explains": [
+      "adj. 顽强的；经过磨炼的"
+    ]
+  },
+  "hardboard": {
+    "word": "hardboard",
+    "phonetic": "/'hɑːdbɔːd/",
+    "explains": [
+      "n. 硬纸板"
+    ]
+  },
+  "hardcore": {
+    "word": "hardcore",
+    "phonetic": "/'hɑːdkɔː/",
+    "explains": [
+      "adj. 赤裸裸描写性行为的；n. 硬核；硬底层；碎砖垫层"
+    ]
+  },
+  "hardcover": {
+    "word": "hardcover",
+    "phonetic": "/'hɑrd'kʌvɚ/",
+    "explains": [
+      "adj. 精装的；硬书皮的；n. 精装书；硬封面的书"
+    ]
+  },
+  "harden": {
+    "word": "harden",
+    "phonetic": "/'hɑːd(ə)n/",
+    "explains": [
+      "v. 使变硬"
+    ]
+  },
+  "hardheaded": {
+    "word": "hardheaded",
+    "phonetic": "/'hɑːd'hedɪd/",
+    "explains": [
+      "adj. 冷静的, 脚踏实地的, 无懈可击的, 顽固的"
+    ]
+  },
+  "hardihood": {
+    "word": "hardihood",
+    "phonetic": "/'hɑːdɪhʊd/",
+    "explains": [
+      "n. 刚毅，大胆；厚颜；胆大无敌"
     ]
   },
   "hardly": {
@@ -69,11 +972,361 @@
       "adv. 几乎不；简直不"
     ]
   },
+  "hardness": {
+    "word": "hardness",
+    "phonetic": "/'hɑːdnəs/",
+    "explains": [
+      "n. 硬度"
+    ]
+  },
+  "hardship": {
+    "word": "hardship",
+    "phonetic": "/ˈhɑːdʃɪp/",
+    "explains": [
+      "n. 困难"
+    ]
+  },
+  "hardtop": {
+    "word": "hardtop",
+    "phonetic": "/'hɑːdtɒp/",
+    "explains": [
+      "n. 有金属顶盖的汽车；室内电影院；adj. 有金属顶盖的；vt. 给…铺硬质路面"
+    ]
+  },
+  "hardware": {
+    "word": "hardware",
+    "phonetic": "/ˈhɑːdweə/",
+    "explains": [
+      "n. 硬件"
+    ]
+  },
+  "hardwood": {
+    "word": "hardwood",
+    "phonetic": "/'hɑːdwʊd/",
+    "explains": [
+      "n. 硬木, 阔叶树"
+    ]
+  },
+  "hardworking": {
+    "word": "hardworking",
+    "phonetic": "/ˌhɑːdˈwɜːkɪŋ/",
+    "explains": [
+      "adj. 努力工作的"
+    ]
+  },
+  "hardy": {
+    "word": "hardy",
+    "phonetic": "/'hɑːdɪ/",
+    "explains": [
+      "adj. 强壮的，耐劳的"
+    ]
+  },
+  "hare": {
+    "word": "hare",
+    "phonetic": "/heə/",
+    "explains": [
+      "n. 野兔"
+    ]
+  },
+  "harebrained": {
+    "word": "harebrained",
+    "phonetic": "/'heəbreɪnd/",
+    "explains": [
+      "adj. 轻率的；粗心的"
+    ]
+  },
+  "harelip": {
+    "word": "harelip",
+    "phonetic": "/heə'lɪp/",
+    "explains": [
+      "n. 兔唇，[口腔] 唇裂"
+    ]
+  },
+  "harem": {
+    "word": "harem",
+    "phonetic": "/'hɑːriːm; hɑː'riːm; 'heərəm/",
+    "explains": [
+      "n. （伊斯兰教教徒之）闺房, 为一个雄性动物所控制的许多雌性动物"
+    ]
+  },
+  "haricot": {
+    "word": "haricot",
+    "phonetic": "",
+    "explains": [
+      "n.m. 菜豆"
+    ]
+  },
+  "harlem": {
+    "word": "harlem",
+    "phonetic": "/'hɑləm/",
+    "explains": [
+      "n. (纽约的）黑人住宅区"
+    ]
+  },
+  "harm": {
+    "word": "harm",
+    "phonetic": "/hɑːm/",
+    "explains": [
+      "n. 伤害　v. 伤害"
+    ]
+  },
+  "harmful": {
+    "word": "harmful",
+    "phonetic": "/ˈhɑːmfʊl; ˈhɑːmf(ə)l/",
+    "explains": [
+      "adj. 有害的"
+    ]
+  },
+  "harmfully": {
+    "word": "harmfully",
+    "phonetic": "",
+    "explains": [
+      "adv. 伤害地,有害地"
+    ]
+  },
+  "harmless": {
+    "word": "harmless",
+    "phonetic": "/'hɑ:mləs/",
+    "explains": [
+      "adj. 无害的"
+    ]
+  },
+  "harmonica": {
+    "word": "harmonica",
+    "phonetic": "/hɑː'mɒnɪkə/",
+    "explains": [
+      "n. 口琴（等于mouth organ）"
+    ]
+  },
+  "harmonious": {
+    "word": "harmonious",
+    "phonetic": "/hɑː'məʊnɪəs/",
+    "explains": [
+      "adj. 和谐的，协调的"
+    ]
+  },
+  "harmonise": {
+    "word": "harmonise",
+    "phonetic": "",
+    "explains": [
+      "v. 使和谐"
+    ]
+  },
+  "harmonium": {
+    "word": "harmonium",
+    "phonetic": "/hɑː'məʊnɪəm/",
+    "explains": [
+      "n. 脚踏式风琴；小风琴"
+    ]
+  },
+  "harmonize": {
+    "word": "harmonize",
+    "phonetic": "/'hɑːmənaɪz/",
+    "explains": [
+      "v. 使和谐；使一致；以和声唱"
+    ]
+  },
+  "harmony": {
+    "word": "harmony",
+    "phonetic": "/ˈhɑːmənɪ/",
+    "explains": [
+      "n. 和谐"
+    ]
+  },
+  "harness": {
+    "word": "harness",
+    "phonetic": "/'hɑːnɪs/",
+    "explains": [
+      "v. 控制[利用]〔自然力等〕；n. 马具，挽具"
+    ]
+  },
+  "harp": {
+    "word": "harp",
+    "phonetic": "/hɑːp/",
+    "explains": [
+      "n. 竖琴；天琴座"
+    ]
+  },
+  "harper": {
+    "word": "harper",
+    "phonetic": "",
+    "explains": [
+      "n. 弹竖琴者, 竖琴师"
+    ]
+  },
+  "harpoon": {
+    "word": "harpoon",
+    "phonetic": "/hɑː'puːn/",
+    "explains": [
+      "n. (捕鲸用)鱼叉"
+    ]
+  },
+  "harpsichord": {
+    "word": "harpsichord",
+    "phonetic": "/'hɑːpsɪkɔːd/",
+    "explains": [
+      "n. 大键琴"
+    ]
+  },
+  "harridan": {
+    "word": "harridan",
+    "phonetic": "/'hærɪd(ə)n/",
+    "explains": [
+      "n. 形容枯槁(或脾气暴躁)的老妇人,名声不好的老泼妇"
+    ]
+  },
+  "harrow": {
+    "word": "harrow",
+    "phonetic": "/'hærəʊ/",
+    "explains": [
+      "n. 耙(地), 使精神痛苦"
+    ]
+  },
+  "harrowing": {
+    "word": "harrowing",
+    "phonetic": "/'hærəʊɪŋ/",
+    "explains": [
+      "adj. 痛心的, 悲惨的"
+    ]
+  },
+  "harry": {
+    "word": "harry",
+    "phonetic": "/'hærɪ/",
+    "explains": [
+      "v. 掠夺, 折磨"
+    ]
+  },
+  "harsh": {
+    "word": "harsh",
+    "phonetic": "/hɑːʃ/",
+    "explains": [
+      "adj. 严厉的；刺耳的"
+    ]
+  },
+  "harshly": {
+    "word": "harshly",
+    "phonetic": "/'ha:ʃli/",
+    "explains": [
+      "adv. 严厉地, 苛刻地"
+    ]
+  },
+  "harshness": {
+    "word": "harshness",
+    "phonetic": "",
+    "explains": [
+      "n. 粗糙的事物, 严肃, 刺耳"
+    ]
+  },
+  "hart": {
+    "word": "hart",
+    "phonetic": "/hɑːt/",
+    "explains": [
+      "n. 雄赤鹿"
+    ]
+  },
+  "harvard": {
+    "word": "harvard",
+    "phonetic": "/'hɑ:vəd/",
+    "explains": [
+      "n. 哈佛大学(美国)"
+    ]
+  },
+  "harvest": {
+    "word": "harvest",
+    "phonetic": "/ˈhɑːvɪst/",
+    "explains": [
+      "n. 收获"
+    ]
+  },
+  "harvester": {
+    "word": "harvester",
+    "phonetic": "/'hɑːvɪstə/",
+    "explains": [
+      "n. 收割机"
+    ]
+  },
+  "hasard": {
+    "word": "hasard",
+    "phonetic": "",
+    "explains": [
+      "n.m. 偶然；运气"
+    ]
+  },
+  "hash": {
+    "word": "hash",
+    "phonetic": "/hæʃ/",
+    "explains": [
+      "n. 剁碎的食物；混杂，拼凑；重新表述；v. 搞糟，把…弄乱；切细；推敲"
+    ]
+  },
+  "hassle": {
+    "word": "hassle",
+    "phonetic": "/'hæs(ə)l/",
+    "explains": [
+      "n. 激战"
+    ]
+  },
+  "hasta": {
+    "word": "hasta",
+    "phonetic": "",
+    "explains": [
+      "prep. 直到"
+    ]
+  },
+  "haste": {
+    "word": "haste",
+    "phonetic": "/heɪst/",
+    "explains": [
+      "n. 匆忙"
+    ]
+  },
+  "hasten": {
+    "word": "hasten",
+    "phonetic": "/'heɪs(ə)n/",
+    "explains": [
+      "v. 催促；赶紧"
+    ]
+  },
+  "hasty": {
+    "word": "hasty",
+    "phonetic": "/'heɪstɪ/",
+    "explains": [
+      "adj. 急速的；仓促的"
+    ]
+  },
   "hat": {
     "word": "hat",
     "phonetic": "/hæt/",
     "explains": [
       "n. 帽子"
+    ]
+  },
+  "hatch": {
+    "word": "hatch",
+    "phonetic": "/hætʃ/",
+    "explains": [
+      "v. （蛋）孵化；孵出"
+    ]
+  },
+  "hatchery": {
+    "word": "hatchery",
+    "phonetic": "/'hætʃərɪ/",
+    "explains": [
+      "n. 孵卵所"
+    ]
+  },
+  "hatchet": {
+    "word": "hatchet",
+    "phonetic": "/'hætʃɪt/",
+    "explains": [
+      "n. 短柄斧"
+    ]
+  },
+  "hatchling": {
+    "word": "hatchling",
+    "phonetic": "",
+    "explains": [
+      "n. 人工孵化的鱼苗或小鸟"
     ]
   },
   "hate": {
@@ -83,11 +1336,179 @@
       "v. 憎恨；厌恶 n. 憎恨；反感"
     ]
   },
+  "hateful": {
+    "word": "hateful",
+    "phonetic": "/'heɪtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 可恨的，可恶的"
+    ]
+  },
+  "hatred": {
+    "word": "hatred",
+    "phonetic": "/'heɪtrɪd/",
+    "explains": [
+      "n. 憎恶，憎恨，仇恨"
+    ]
+  },
+  "haughtiness": {
+    "word": "haughtiness",
+    "phonetic": "",
+    "explains": [
+      "n. 傲慢, 不逊"
+    ]
+  },
+  "haughty": {
+    "word": "haughty",
+    "phonetic": "/'hɔːtɪ/",
+    "explains": [
+      "adj. 傲慢的，轻蔑的"
+    ]
+  },
+  "haul": {
+    "word": "haul",
+    "phonetic": "/hɔːl/",
+    "explains": [
+      "v. 拖曳；拖运"
+    ]
+  },
+  "haulage": {
+    "word": "haulage",
+    "phonetic": "/'hɔːlidʒ/",
+    "explains": [
+      "n.  托运； 路上运输； 路上运费"
+    ]
+  },
+  "haunch": {
+    "word": "haunch",
+    "phonetic": "/hɔːn(t)ʃ/",
+    "explains": [
+      "n. 腰部，腰；臀部"
+    ]
+  },
+  "haunt": {
+    "word": "haunt",
+    "phonetic": "/hɔːnt/",
+    "explains": [
+      "v. 出没"
+    ]
+  },
+  "haunting": {
+    "word": "haunting",
+    "phonetic": "/'hɔːntɪŋ/",
+    "explains": [
+      "adj. 常浮现于脑海中的, 不易忘怀的"
+    ]
+  },
+  "hauteur": {
+    "word": "hauteur",
+    "phonetic": "/əʊ'tɜː/",
+    "explains": [
+      "n. 傲慢, 自大"
+    ]
+  },
   "have": {
     "word": "have",
     "phonetic": "/hæv/",
     "explains": [
       "v. 有；持有；经历；吃"
+    ]
+  },
+  "haven": {
+    "word": "haven",
+    "phonetic": "/'heɪv(ə)n/",
+    "explains": [
+      "n. 港口, 避难所"
+    ]
+  },
+  "haversack": {
+    "word": "haversack",
+    "phonetic": "/'hævəsæk/",
+    "explains": [
+      "n. 干粮袋, 帆布背包"
+    ]
+  },
+  "havoc": {
+    "word": "havoc",
+    "phonetic": "/'hævək/",
+    "explains": [
+      "n. 大灾难，浩劫"
+    ]
+  },
+  "hawaii": {
+    "word": "hawaii",
+    "phonetic": "/hə'waii:/",
+    "explains": [
+      "n. 夏威夷"
+    ]
+  },
+  "hawk": {
+    "word": "hawk",
+    "phonetic": "/hɔːk/",
+    "explains": [
+      "n. 鹰，隼"
+    ]
+  },
+  "hawker": {
+    "word": "hawker",
+    "phonetic": "/'hɔːkə/",
+    "explains": [
+      "n. 携鹰打猎者, 叫卖小贩"
+    ]
+  },
+  "hawser": {
+    "word": "hawser",
+    "phonetic": "/'hɔːzə/",
+    "explains": [
+      "n. 大缆, 曳船索, 系船索"
+    ]
+  },
+  "hay": {
+    "word": "hay",
+    "phonetic": "/heɪ/",
+    "explains": [
+      "n. 干草"
+    ]
+  },
+  "haystack": {
+    "word": "haystack",
+    "phonetic": "/'heɪstæk/",
+    "explains": [
+      "n. 干草堆"
+    ]
+  },
+  "haywire": {
+    "word": "haywire",
+    "phonetic": "/'heɪwaɪə/",
+    "explains": [
+      "n. [电] 临时电线；捆干草用的铁丝；adj. 乱糟糟的，乱七八糟的；疯狂的"
+    ]
+  },
+  "hazard": {
+    "word": "hazard",
+    "phonetic": "/'hæzəd/",
+    "explains": [
+      "n. 危险；公害"
+    ]
+  },
+  "hazardous": {
+    "word": "hazardous",
+    "phonetic": "/'hæzədəs/",
+    "explains": [
+      "adj. 危险的, 冒险的"
+    ]
+  },
+  "haze": {
+    "word": "haze",
+    "phonetic": "/heɪz/",
+    "explains": [
+      "n. 阴霾；薄雾；疑惑；v. 使变朦胧；使变糊涂"
+    ]
+  },
+  "hazel": {
+    "word": "hazel",
+    "phonetic": "/'heɪz(ə)l/",
+    "explains": [
+      "n. 淡褐色；榛子；adj. 淡褐色的；榛树的"
     ]
   },
   "he": {
@@ -111,11 +1532,221 @@
       "n. 头痛"
     ]
   },
+  "headdress": {
+    "word": "headdress",
+    "phonetic": "/'heddres/",
+    "explains": [
+      "n. 头发编梳的式样；饰头巾"
+    ]
+  },
+  "header": {
+    "word": "header",
+    "phonetic": "",
+    "explains": [
+      "请求头"
+    ]
+  },
+  "headgear": {
+    "word": "headgear",
+    "phonetic": "/'hedgɪə/",
+    "explains": [
+      "n. 帽子；马首挽具；[矿业] 井架；牙齿矫正器"
+    ]
+  },
+  "headhunt": {
+    "word": "headhunt",
+    "phonetic": "/'hedhʌnt/",
+    "explains": [
+      "vt.  挖， 物色"
+    ]
+  },
+  "headhunter": {
+    "word": "headhunter",
+    "phonetic": "/'hedˌhʌntə/",
+    "explains": [
+      "n.  猎头公司； 物色人才者"
+    ]
+  },
+  "heading": {
+    "word": "heading",
+    "phonetic": "/'hedɪŋ/",
+    "explains": [
+      "n. 标题，题词，题名"
+    ]
+  },
+  "headlamp": {
+    "word": "headlamp",
+    "phonetic": "/'hedlæmp/",
+    "explains": [
+      "n. 照明灯；桅灯；车前灯"
+    ]
+  },
+  "headland": {
+    "word": "headland",
+    "phonetic": "/'hedlənd; -lænd/",
+    "explains": [
+      "n. 岬"
+    ]
+  },
+  "headlight": {
+    "word": "headlight",
+    "phonetic": "/'hedlaɪt/",
+    "explains": [
+      "n. 汽车等的前灯；船上的桅灯；矿工和医生用的帽灯"
+    ]
+  },
+  "headline": {
+    "word": "headline",
+    "phonetic": "/'hedlaɪn/",
+    "explains": [
+      "n. 大字标题；新闻提要"
+    ]
+  },
+  "headlong": {
+    "word": "headlong",
+    "phonetic": "/'hedlɒŋ/",
+    "explains": [
+      "adv. 头向前地；adj. 头向前的"
+    ]
+  },
+  "headman": {
+    "word": "headman",
+    "phonetic": "/'hedmən/",
+    "explains": [
+      "n. 首领；酋长；工头"
+    ]
+  },
+  "headmaster": {
+    "word": "headmaster",
+    "phonetic": "/hed'mɑːstə/",
+    "explains": [
+      "n. 校长"
+    ]
+  },
+  "headmistress": {
+    "word": "headmistress",
+    "phonetic": "/ˌhɛdˈmistrəs/",
+    "explains": [
+      "n. 女校长"
+    ]
+  },
+  "headphones": {
+    "word": "headphones",
+    "phonetic": "/'hɛdfonz/",
+    "explains": [
+      "n. [电讯] 耳机；听筒；[电子] 头戴式受话器（headphone的复数形式）"
+    ]
+  },
+  "headquarter": {
+    "word": "headquarter",
+    "phonetic": "/'hedkwɔːtə/",
+    "explains": [
+      "v. 将之总部设在"
+    ]
+  },
+  "headquarters": {
+    "word": "headquarters",
+    "phonetic": "/ˌhedˈkwɔːtəz/",
+    "explains": [
+      "n. 总部"
+    ]
+  },
+  "headrest": {
+    "word": "headrest",
+    "phonetic": "/'hedrest/",
+    "explains": [
+      "n. 头靠，弹性头垫；靠头之物"
+    ]
+  },
+  "headroom": {
+    "word": "headroom",
+    "phonetic": "/'hedruːm; -rʊm/",
+    "explains": [
+      "n. 净空；净空高度；头上空间"
+    ]
+  },
+  "headset": {
+    "word": "headset",
+    "phonetic": "/'hedset/",
+    "explains": [
+      "n. 耳机；头戴式受话器"
+    ]
+  },
+  "headship": {
+    "word": "headship",
+    "phonetic": "/'hedʃɪp/",
+    "explains": [
+      "n. 能力；领导者的职位；校长的职位；职务"
+    ]
+  },
+  "headstone": {
+    "word": "headstone",
+    "phonetic": "/'hedstəʊn/",
+    "explains": [
+      "n. 基石；墓石"
+    ]
+  },
+  "headstrong": {
+    "word": "headstrong",
+    "phonetic": "/'hedstrɒŋ/",
+    "explains": [
+      "adj. 任性的；顽固的"
+    ]
+  },
+  "headway": {
+    "word": "headway",
+    "phonetic": "/'hedweɪ/",
+    "explains": [
+      "n. 前进；进步；航行速度；间隔时间"
+    ]
+  },
+  "headwind": {
+    "word": "headwind",
+    "phonetic": "/'hɛdwɪnd/",
+    "explains": [
+      "n. 逆风；顶头风"
+    ]
+  },
+  "heady": {
+    "word": "heady",
+    "phonetic": "/'hedɪ/",
+    "explains": [
+      "adj. 兴奋的；任性的；性急的；顽固的；使人头晕的；令人陶醉的；n. (Heady)人名；(英)黑迪"
+    ]
+  },
+  "heal": {
+    "word": "heal",
+    "phonetic": "/hiːl/",
+    "explains": [
+      "v. 治愈"
+    ]
+  },
+  "healer": {
+    "word": "healer",
+    "phonetic": "/'hiːlə/",
+    "explains": [
+      "n. 医治者, 治病术士"
+    ]
+  },
   "health": {
     "word": "health",
     "phonetic": "/helθ/",
     "explains": [
       "n. 健康；卫生；保健"
+    ]
+  },
+  "healthcare": {
+    "word": "healthcare",
+    "phonetic": "/'helθ'keə/",
+    "explains": [
+      "n.  卫生保健"
+    ]
+  },
+  "healthful": {
+    "word": "healthful",
+    "phonetic": "/'helθfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 有益健康的"
     ]
   },
   "healthy": {
@@ -125,11 +1756,46 @@
       "adj. 健康的；健全的"
     ]
   },
+  "heap": {
+    "word": "heap",
+    "phonetic": "/hiːp/",
+    "explains": [
+      "n. 堆"
+    ]
+  },
   "hear": {
     "word": "hear",
     "phonetic": "/hɪə(r)/",
     "explains": [
       "v. 听见；听到；听说"
+    ]
+  },
+  "hearing": {
+    "word": "hearing",
+    "phonetic": "/ˈhɪərɪŋ/",
+    "explains": [
+      "n. 听力"
+    ]
+  },
+  "hearken": {
+    "word": "hearken",
+    "phonetic": "/'hɑːk(ə)n/",
+    "explains": [
+      "v. 倾听"
+    ]
+  },
+  "hearsay": {
+    "word": "hearsay",
+    "phonetic": "/'hɪəseɪ/",
+    "explains": [
+      "n. 谣言, 传闻, 道听途说"
+    ]
+  },
+  "hearse": {
+    "word": "hearse",
+    "phonetic": "/hɜːs/",
+    "explains": [
+      "n. 灵车；棺材"
     ]
   },
   "heart": {
@@ -139,11 +1805,158 @@
       "n. 心脏；内心；中心"
     ]
   },
+  "heartache": {
+    "word": "heartache",
+    "phonetic": "/'hɑːteɪk/",
+    "explains": [
+      "n. 心痛；悲叹"
+    ]
+  },
+  "heartbeat": {
+    "word": "heartbeat",
+    "phonetic": "/'hɑːtbiːt/",
+    "explains": [
+      "n. 心跳"
+    ]
+  },
+  "heartbreak": {
+    "word": "heartbreak",
+    "phonetic": "/'hɑːtbreɪk/",
+    "explains": [
+      "n. 心碎；伤心事"
+    ]
+  },
+  "heartbreaking": {
+    "word": "heartbreaking",
+    "phonetic": "/'hɑrt,brekɪŋ/",
+    "explains": [
+      "adj. 悲伤或失望到难忍程度的；令人悲伤的；v. 使…心碎（heartbreak的ing形式）"
+    ]
+  },
+  "heartbroken": {
+    "word": "heartbroken",
+    "phonetic": "/'hɑːtbrəʊkən/",
+    "explains": [
+      "adj. 悲伤的，伤心的"
+    ]
+  },
+  "hearten": {
+    "word": "hearten",
+    "phonetic": "/'hɑːt(ə)n/",
+    "explains": [
+      "v. 激励；鼓励；使振作"
+    ]
+  },
+  "heartfelt": {
+    "word": "heartfelt",
+    "phonetic": "/'hɑːtfelt/",
+    "explains": [
+      "adj. 衷心的；真诚的；真心真意的"
+    ]
+  },
+  "hearth": {
+    "word": "hearth",
+    "phonetic": "/hɑːθ/",
+    "explains": [
+      "n. 壁炉地面；炉边"
+    ]
+  },
+  "heartily": {
+    "word": "heartily",
+    "phonetic": "/'hɑːtɪlɪ/",
+    "explains": [
+      "adv. 衷心地；热忱地；痛快地"
+    ]
+  },
+  "heartland": {
+    "word": "heartland",
+    "phonetic": "/'hɑːtlænd/",
+    "explains": [
+      "n. 中心地带；心脏地区"
+    ]
+  },
+  "heartless": {
+    "word": "heartless",
+    "phonetic": "/'hɑːtlɪs/",
+    "explains": [
+      "adj. 无情的；无勇气的"
+    ]
+  },
+  "heartrending": {
+    "word": "heartrending",
+    "phonetic": "",
+    "explains": [
+      "adj. 悲惨的；令人心碎的"
+    ]
+  },
+  "heartstring": {
+    "word": "heartstring",
+    "phonetic": "",
+    "explains": [
+      "n. 心弦；内心深处的感情"
+    ]
+  },
+  "heartwarming": {
+    "word": "heartwarming",
+    "phonetic": "/'hɑːt,wɔːmɪŋ/",
+    "explains": [
+      "adj. 感人的；暖人心房的"
+    ]
+  },
+  "hearty": {
+    "word": "hearty",
+    "phonetic": "/'hɑːtɪ/",
+    "explains": [
+      "adj. 热情友好的；丰盛的"
+    ]
+  },
   "heat": {
     "word": "heat",
     "phonetic": "/hiːt/",
     "explains": [
       "n. 热度；高温 v. 加热；使变暖"
+    ]
+  },
+  "heater": {
+    "word": "heater",
+    "phonetic": "/'hiːtə/",
+    "explains": [
+      "n. 加热器"
+    ]
+  },
+  "heath": {
+    "word": "heath",
+    "phonetic": "/hiːθ/",
+    "explains": [
+      "n. [植]石南, 石南树丛"
+    ]
+  },
+  "heathen": {
+    "word": "heathen",
+    "phonetic": "/'hiːð(ə)n/",
+    "explains": [
+      "n. 不信上帝者, 异教徒, 野蛮人, 粗野的人"
+    ]
+  },
+  "heating": {
+    "word": "heating",
+    "phonetic": "/'hiːtɪŋ/",
+    "explains": [
+      "n. 加热，供暖"
+    ]
+  },
+  "heatstroke": {
+    "word": "heatstroke",
+    "phonetic": "/'hiːtstrəʊk/",
+    "explains": [
+      "n. [中医] 中暑"
+    ]
+  },
+  "heave": {
+    "word": "heave",
+    "phonetic": "/hiːv/",
+    "explains": [
+      "v. （用力地）举起；抛"
     ]
   },
   "heaven": {
@@ -153,11 +1966,179 @@
       "n. 天堂；天空；极乐"
     ]
   },
+  "heavily": {
+    "word": "heavily",
+    "phonetic": "/'hevɪlɪ/",
+    "explains": [
+      "adv. 重重地；大量地"
+    ]
+  },
   "heavy": {
     "word": "heavy",
     "phonetic": "/ˈhevi/",
     "explains": [
       "adj. 重的；沉重的；大量的"
+    ]
+  },
+  "heavyweight": {
+    "word": "heavyweight",
+    "phonetic": "/'hevɪweɪt/",
+    "explains": [
+      "n. 重量级拳击手；有影响的人物；聪明绝顶的人；adj. 重量级的；特别厚重的"
+    ]
+  },
+  "hebrew": {
+    "word": "hebrew",
+    "phonetic": "/'hi:bru:/",
+    "explains": [
+      "n. 希伯来人，犹太人；希伯来语；adj. 希伯来人的；希伯来语的"
+    ]
+  },
+  "hecatomb": {
+    "word": "hecatomb",
+    "phonetic": "/'hekətuːm/",
+    "explains": [
+      "n. (古希腊的)大祭,百牲祭, 大屠杀"
+    ]
+  },
+  "hecho": {
+    "word": "hecho",
+    "phonetic": "",
+    "explains": [
+      "n.m. 事实；adj. 做好的"
+    ]
+  },
+  "heck": {
+    "word": "heck",
+    "phonetic": "/hek/",
+    "explains": [
+      "int. 真见鬼（hell的委婉说法）；n. 饲草架"
+    ]
+  },
+  "heckle": {
+    "word": "heckle",
+    "phonetic": "/'hek(ə)l/",
+    "explains": [
+      "v. 以麻梳梳理, 激烈质问, 诘问, 集中质问"
+    ]
+  },
+  "heckler": {
+    "word": "heckler",
+    "phonetic": "",
+    "explains": [
+      "n. 激烈质问者"
+    ]
+  },
+  "hectare": {
+    "word": "hectare",
+    "phonetic": "/'hekteə; -ɑː/",
+    "explains": [
+      "n. 公顷（等于1万平方米）"
+    ]
+  },
+  "hectic": {
+    "word": "hectic",
+    "phonetic": "/'hektɪk/",
+    "explains": [
+      "adj. 闹哄哄的，兴奋的"
+    ]
+  },
+  "hector": {
+    "word": "hector",
+    "phonetic": "/'hektə/",
+    "explains": [
+      "n. 虚张声势的人,恃强凌弱的人"
+    ]
+  },
+  "hedge": {
+    "word": "hedge",
+    "phonetic": "/hedʒ/",
+    "explains": [
+      "n. 篱笆，树篱"
+    ]
+  },
+  "hedgehog": {
+    "word": "hedgehog",
+    "phonetic": "/'hedʒ(h)ɒg/",
+    "explains": [
+      "n. 刺猬"
+    ]
+  },
+  "hedgerow": {
+    "word": "hedgerow",
+    "phonetic": "/'hedʒrəʊ/",
+    "explains": [
+      "n. 灌木篱墙"
+    ]
+  },
+  "hedonism": {
+    "word": "hedonism",
+    "phonetic": "/'hiːd(ə)nɪz(ə)m; 'he-/",
+    "explains": [
+      "n. 快乐主义；快乐论"
+    ]
+  },
+  "hedonist": {
+    "word": "hedonist",
+    "phonetic": "/'hidənɪst/",
+    "explains": [
+      "n. 快乐主义者；享乐主义者；adj. 享乐主义者的"
+    ]
+  },
+  "hedonistic": {
+    "word": "hedonistic",
+    "phonetic": "/,hedə'nɪstɪk; ,hiːdə'nɪstɪk/",
+    "explains": [
+      "adj. 快乐主义者的, 快乐论的, 快乐主义的"
+    ]
+  },
+  "heed": {
+    "word": "heed",
+    "phonetic": "/hiːd/",
+    "explains": [
+      "n. 注意,留意；v. 注意,留意"
+    ]
+  },
+  "heedful": {
+    "word": "heedful",
+    "phonetic": "/'hiːdfʊl/",
+    "explains": [
+      "adj. 注意的；深切注意的；深切留心的"
+    ]
+  },
+  "heedless": {
+    "word": "heedless",
+    "phonetic": "/ˈhi:dləs/",
+    "explains": [
+      "adj. 不注意的；不留心的"
+    ]
+  },
+  "heel": {
+    "word": "heel",
+    "phonetic": "/hiːl/",
+    "explains": [
+      "n. 脚后跟"
+    ]
+  },
+  "hefty": {
+    "word": "hefty",
+    "phonetic": "/'heftɪ/",
+    "explains": [
+      "adj. 重的, 肌肉发达的"
+    ]
+  },
+  "hegemony": {
+    "word": "hegemony",
+    "phonetic": "/hɪ'dʒemənɪ; -'ge-/",
+    "explains": [
+      "n. 霸权"
+    ]
+  },
+  "heifer": {
+    "word": "heifer",
+    "phonetic": "/'hefə/",
+    "explains": [
+      "n. 小母牛"
     ]
   },
   "height": {
@@ -167,11 +2148,130 @@
       "n. 高度；身高；高地"
     ]
   },
+  "heighten": {
+    "word": "heighten",
+    "phonetic": "/'haɪt(ə)n/",
+    "explains": [
+      "v. 加高，提高；增加"
+    ]
+  },
+  "heinous": {
+    "word": "heinous",
+    "phonetic": "/'heɪnəs; 'hiːnəs/",
+    "explains": [
+      "adj. 可憎的；极凶恶的"
+    ]
+  },
+  "heir": {
+    "word": "heir",
+    "phonetic": "/eə/",
+    "explains": [
+      "n. 后嗣，继承人"
+    ]
+  },
+  "heiress": {
+    "word": "heiress",
+    "phonetic": "/'eərɪs; eə'res/",
+    "explains": [
+      "n. 女性继承人"
+    ]
+  },
+  "heirloom": {
+    "word": "heirloom",
+    "phonetic": "/'eəluːm/",
+    "explains": [
+      "n. 传家宝；祖传遗物"
+    ]
+  },
+  "heist": {
+    "word": "heist",
+    "phonetic": "/haɪst/",
+    "explains": [
+      "v. 抢劫，拦劫；强夺；n. 抢劫；强夺"
+    ]
+  },
+  "helado": {
+    "word": "helado",
+    "phonetic": "",
+    "explains": [
+      "n.m. 冰淇淋；adj. 冰冷的"
+    ]
+  },
+  "helical": {
+    "word": "helical",
+    "phonetic": "/'helɪk(ə)l; 'hiː-/",
+    "explains": [
+      "adj. 螺旋状的"
+    ]
+  },
+  "helicopter": {
+    "word": "helicopter",
+    "phonetic": "/ˈhelɪkɒptə/",
+    "explains": [
+      "n. 直升机"
+    ]
+  },
+  "heliotrope": {
+    "word": "heliotrope",
+    "phonetic": "/'hiːlɪətrəʊp; 'hel-/",
+    "explains": [
+      "n. [植] 向日葵, 天芥菜属植物, 该植物的花香, 淡紫色"
+    ]
+  },
+  "helium": {
+    "word": "helium",
+    "phonetic": "/'hiːlɪəm/",
+    "explains": [
+      "n. 氦"
+    ]
+  },
+  "helix": {
+    "word": "helix",
+    "phonetic": "/'hiːlɪks/",
+    "explains": [
+      "n. 螺旋，螺旋状物；[解剖] 耳轮"
+    ]
+  },
+  "hell": {
+    "word": "hell",
+    "phonetic": "/hel/",
+    "explains": [
+      "n. 地狱；极大的痛苦"
+    ]
+  },
   "hello": {
     "word": "hello",
     "phonetic": "/həˈləʊ/",
     "explains": [
       "int. 喂；你好"
+    ]
+  },
+  "helm": {
+    "word": "helm",
+    "phonetic": "/helm/",
+    "explains": [
+      "n. 舵"
+    ]
+  },
+  "helmet": {
+    "word": "helmet",
+    "phonetic": "/ˈhelmɪt/",
+    "explains": [
+      "n. 头盔"
+    ]
+  },
+  "helmsman": {
+    "word": "helmsman",
+    "phonetic": "/'helmzmən/",
+    "explains": [
+      "n. 舵手"
+    ]
+  },
+  "helot": {
+    "word": "helot",
+    "phonetic": "",
+    "explains": [
+      "n. （古希腊斯巴达的）奴隶"
     ]
   },
   "help": {
@@ -181,11 +2281,130 @@
       "v./n. 帮助；援助；帮忙"
     ]
   },
+  "helper": {
+    "word": "helper",
+    "phonetic": "/'helpə(r)/",
+    "explains": [
+      "n. 帮忙者, 助手"
+    ]
+  },
   "helpful": {
     "word": "helpful",
     "phonetic": "/ˈhelpfl/",
     "explains": [
       "adj. 有帮助的；有益的"
+    ]
+  },
+  "helping": {
+    "word": "helping",
+    "phonetic": "/'helpɪŋ/",
+    "explains": [
+      "n. 帮助, 协助, (食物)一份"
+    ]
+  },
+  "helpless": {
+    "word": "helpless",
+    "phonetic": "/'helplɪs/",
+    "explains": [
+      "adj. 无助的；无能的"
+    ]
+  },
+  "helplessly": {
+    "word": "helplessly",
+    "phonetic": "",
+    "explains": [
+      "adv. 无能为力地"
+    ]
+  },
+  "helplessness": {
+    "word": "helplessness",
+    "phonetic": "",
+    "explains": [
+      "n. 无能为力"
+    ]
+  },
+  "helve": {
+    "word": "helve",
+    "phonetic": "/helv/",
+    "explains": [
+      "n. 柄"
+    ]
+  },
+  "hem": {
+    "word": "hem",
+    "phonetic": "/hem/",
+    "explains": [
+      "n. 边,缘 v给缝边"
+    ]
+  },
+  "hemisphere": {
+    "word": "hemisphere",
+    "phonetic": "/'hemɪsfɪə/",
+    "explains": [
+      "n. 半球"
+    ]
+  },
+  "hemline": {
+    "word": "hemline",
+    "phonetic": "/'hemlaɪn/",
+    "explains": [
+      "n. 底边，底缘"
+    ]
+  },
+  "hemlock": {
+    "word": "hemlock",
+    "phonetic": "/'hemlɒk/",
+    "explains": [
+      "n. 铁杉,毒芹"
+    ]
+  },
+  "hemoglobin": {
+    "word": "hemoglobin",
+    "phonetic": "/,hiːməʊ'ɡləʊbɪn/",
+    "explains": [
+      "n. [生化] 血红蛋白（等于haemoglobin）；血红素"
+    ]
+  },
+  "hemolysis": {
+    "word": "hemolysis",
+    "phonetic": "/hɪ'mɒlɪsɪs/",
+    "explains": [
+      "n. [生理][免疫] 溶血（现象）；血细胞溶解"
+    ]
+  },
+  "hemolytic": {
+    "word": "hemolytic",
+    "phonetic": "",
+    "explains": [
+      "adj. [生理][免疫] 溶血的"
+    ]
+  },
+  "hemophilia": {
+    "word": "hemophilia",
+    "phonetic": "/,hiːmə'fɪlɪə/",
+    "explains": [
+      "n. [内科] 血友病（等于haemophilia）"
+    ]
+  },
+  "hemorrhage": {
+    "word": "hemorrhage",
+    "phonetic": "/'hemərɪdʒ/",
+    "explains": [
+      "n. [病理] 出血（等于haemorrhage）；番茄汁；v. [病理] 出血"
+    ]
+  },
+  "hemorrhoid": {
+    "word": "hemorrhoid",
+    "phonetic": "/'hemərɒɪd/",
+    "explains": [
+      "n. 痔疮（等于haemorrhoid）；很难相处的人"
+    ]
+  },
+  "hemp": {
+    "word": "hemp",
+    "phonetic": "/hemp/",
+    "explains": [
+      "n. 大麻；麻类植物；大麻烟卷；adj. 大麻类植物的"
     ]
   },
   "hen": {
@@ -195,11 +2414,130 @@
       "n. 母鸡；雌禽"
     ]
   },
+  "hence": {
+    "word": "hence",
+    "phonetic": "/hens/",
+    "explains": [
+      "adv. 因此，所以；今后；今后"
+    ]
+  },
+  "henceforth": {
+    "word": "henceforth",
+    "phonetic": "/hens'fɔːθ; 'hensfɔːθ/",
+    "explains": [
+      "adv. 今后，从今以后"
+    ]
+  },
+  "henchman": {
+    "word": "henchman",
+    "phonetic": "/'hen(t)ʃmən/",
+    "explains": [
+      "n. 忠实的追随者, 党羽, 跟随者"
+    ]
+  },
+  "henderson": {
+    "word": "henderson",
+    "phonetic": "",
+    "explains": [
+      "n. 亨德森（姓氏）"
+    ]
+  },
+  "henpecked": {
+    "word": "henpecked",
+    "phonetic": "",
+    "explains": [
+      "adj. 惧内的"
+    ]
+  },
+  "hepatic": {
+    "word": "hepatic",
+    "phonetic": "/hɪ'pætɪk/",
+    "explains": [
+      "adj. 肝的"
+    ]
+  },
+  "hepatitis": {
+    "word": "hepatitis",
+    "phonetic": "/,hepə'taɪtɪs/",
+    "explains": [
+      "n. [医]肝炎"
+    ]
+  },
+  "heptagon": {
+    "word": "heptagon",
+    "phonetic": "/'heptəg(ə)n/",
+    "explains": [
+      "n. 七角形；[数] 七边形"
+    ]
+  },
   "her": {
     "word": "her",
     "phonetic": "/hɜː(r)/",
     "explains": [
       "pron. 她；她的"
+    ]
+  },
+  "herald": {
+    "word": "herald",
+    "phonetic": "/'her(ə)ld/",
+    "explains": [
+      "n. 传令官；通报者"
+    ]
+  },
+  "herb": {
+    "word": "herb",
+    "phonetic": "/hɜːb/",
+    "explains": [
+      "n. 草药"
+    ]
+  },
+  "herbaceous": {
+    "word": "herbaceous",
+    "phonetic": "/hɜː'beɪʃəs/",
+    "explains": [
+      "adj. 草本植物的"
+    ]
+  },
+  "herbicide": {
+    "word": "herbicide",
+    "phonetic": "/'hɜːbɪsaɪd/",
+    "explains": [
+      "n. 除草剂"
+    ]
+  },
+  "herbivore": {
+    "word": "herbivore",
+    "phonetic": "/'hɜːbɪvɔː/",
+    "explains": [
+      "n. 草食动物"
+    ]
+  },
+  "herbivorous": {
+    "word": "herbivorous",
+    "phonetic": "/hɜː'bɪvərəs/",
+    "explains": [
+      "adj. [动] 食草的"
+    ]
+  },
+  "herculean": {
+    "word": "herculean",
+    "phonetic": "/,hə:kju'li:ən; hə'ku:liən/",
+    "explains": [
+      "adj. 极困难的,需要大力气的"
+    ]
+  },
+  "herd": {
+    "word": "herd",
+    "phonetic": "/hɜːd/",
+    "explains": [
+      "n. 兽群，牧群；v. 放牧"
+    ]
+  },
+  "herdsman": {
+    "word": "herdsman",
+    "phonetic": "/'hɜːdzmən/",
+    "explains": [
+      "n. 牧者, 牧人"
     ]
   },
   "here": {
@@ -209,11 +2547,207 @@
       "adv. 这里；在这里；这时"
     ]
   },
+  "hereabout": {
+    "word": "hereabout",
+    "phonetic": "/,hiərə'baut/",
+    "explains": [
+      "adv. 在这一带；在这附近（等于hereabouts）"
+    ]
+  },
+  "hereabouts": {
+    "word": "hereabouts",
+    "phonetic": "/,hɪrə'baʊts/",
+    "explains": [
+      "adv. 在这里附近；在这一带"
+    ]
+  },
+  "hereby": {
+    "word": "hereby",
+    "phonetic": "/hɪə'baɪ/",
+    "explains": [
+      "adv. 以此方式，据此；特此"
+    ]
+  },
+  "heredar": {
+    "word": "heredar",
+    "phonetic": "",
+    "explains": [
+      "v. 继承"
+    ]
+  },
+  "hereditary": {
+    "word": "hereditary",
+    "phonetic": "/hɪ'redɪt(ə)rɪ/",
+    "explains": [
+      "adj. 世袭的,遗传的"
+    ]
+  },
+  "heredity": {
+    "word": "heredity",
+    "phonetic": "/hɪ'redɪtɪ/",
+    "explains": [
+      "n. 遗传, 形质遗传"
+    ]
+  },
+  "herein": {
+    "word": "herein",
+    "phonetic": "/hɪər'ɪn/",
+    "explains": [
+      "adv. 在此处, 此中"
+    ]
+  },
+  "hereof": {
+    "word": "hereof",
+    "phonetic": "/hɪər'ɒv/",
+    "explains": [
+      "adv. 于此；关于此点"
+    ]
+  },
+  "heresy": {
+    "word": "heresy",
+    "phonetic": "/'herɪsɪ/",
+    "explains": [
+      "n. 异端, 异教"
+    ]
+  },
+  "heretic": {
+    "word": "heretic",
+    "phonetic": "/'herɪtɪk/",
+    "explains": [
+      "n. 异教徒, 异端者"
+    ]
+  },
+  "heretical": {
+    "word": "heretical",
+    "phonetic": "/hɪ'retɪk(ə)l/",
+    "explains": [
+      "adj. 异端的；异教的"
+    ]
+  },
+  "hereto": {
+    "word": "hereto",
+    "phonetic": "/hɪə'tuː/",
+    "explains": [
+      "adv. 到此为止；关于这个"
+    ]
+  },
+  "heretofore": {
+    "word": "heretofore",
+    "phonetic": "/hɪətʊ'fɔː/",
+    "explains": [
+      "adv. 直到此时，迄今为止；在这以前"
+    ]
+  },
+  "herewith": {
+    "word": "herewith",
+    "phonetic": "/hɪə'wɪð; -'wɪθ/",
+    "explains": [
+      "adv. 因此；同此；用此方法"
+    ]
+  },
+  "herida": {
+    "word": "herida",
+    "phonetic": "",
+    "explains": [
+      "n.f. 伤口"
+    ]
+  },
+  "heritage": {
+    "word": "heritage",
+    "phonetic": "/ˈherɪtɪdʒ/",
+    "explains": [
+      "n. 遗产"
+    ]
+  },
+  "hermana": {
+    "word": "hermana",
+    "phonetic": "",
+    "explains": [
+      "n.f. 姐妹"
+    ]
+  },
+  "hermano": {
+    "word": "hermano",
+    "phonetic": "",
+    "explains": [
+      "n.m. 兄弟"
+    ]
+  },
+  "hermetic": {
+    "word": "hermetic",
+    "phonetic": "/hɜː'metɪk/",
+    "explains": [
+      "adj. 密封的, 与外界隔绝的"
+    ]
+  },
+  "hermit": {
+    "word": "hermit",
+    "phonetic": "/'hɜːmɪt/",
+    "explains": [
+      "n. 隐士, 隐居者"
+    ]
+  },
+  "hermitage": {
+    "word": "hermitage",
+    "phonetic": "/'hɜːmɪtɪdʒ/",
+    "explains": [
+      "n. 偏僻的寺院"
+    ]
+  },
+  "hermoso": {
+    "word": "hermoso",
+    "phonetic": "",
+    "explains": [
+      "adj. 美丽的"
+    ]
+  },
   "hero": {
     "word": "hero",
     "phonetic": "/ˈhɪərəʊ/",
     "explains": [
       "n. 英雄；男主角"
+    ]
+  },
+  "heroic": {
+    "word": "heroic",
+    "phonetic": "/hɪˈrəʊɪk/",
+    "explains": [
+      "adj. 英勇的"
+    ]
+  },
+  "heroics": {
+    "word": "heroics",
+    "phonetic": "",
+    "explains": [
+      "n. 装腔作势的豪言壮语"
+    ]
+  },
+  "heroin": {
+    "word": "heroin",
+    "phonetic": "/'herəʊɪn/",
+    "explains": [
+      "n. [药][毒物] 海洛因，吗啡"
+    ]
+  },
+  "heroine": {
+    "word": "heroine",
+    "phonetic": "/'herəʊɪn/",
+    "explains": [
+      "n. 女英雄；女主角"
+    ]
+  },
+  "heroism": {
+    "word": "heroism",
+    "phonetic": "/'herəʊɪz(ə)m/",
+    "explains": [
+      "n. 英雄品质, 英雄主义"
+    ]
+  },
+  "herring": {
+    "word": "herring",
+    "phonetic": "/'herɪŋ/",
+    "explains": [
+      "n. 青鱼, 鲱"
     ]
   },
   "hers": {
@@ -223,11 +2757,186 @@
       "pron. 她的（东西）"
     ]
   },
+  "herse": {
+    "word": "herse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 耙；栅栏门"
+    ]
+  },
   "herself": {
     "word": "herself",
     "phonetic": "/hɜːˈself/",
     "explains": [
       "pron. 她自己；她亲自"
+    ]
+  },
+  "hesitance": {
+    "word": "hesitance",
+    "phonetic": "/'hezɪtəns/",
+    "explains": [
+      "n. 踌躇；犹豫"
+    ]
+  },
+  "hesitant": {
+    "word": "hesitant",
+    "phonetic": "/'hezɪt(ə)nt/",
+    "explains": [
+      "adj. 迟疑的, 犹豫不定的"
+    ]
+  },
+  "hesitate": {
+    "word": "hesitate",
+    "phonetic": "/ˈhezɪteɪt/",
+    "explains": [
+      "v. 犹豫"
+    ]
+  },
+  "hesitation": {
+    "word": "hesitation",
+    "phonetic": "/hezɪ'teɪʃn/",
+    "explains": [
+      "n. 犹豫"
+    ]
+  },
+  "heterodox": {
+    "word": "heterodox",
+    "phonetic": "/'het(ə)rə(ʊ)dɒks/",
+    "explains": [
+      "adj. 异端的；非正统的"
+    ]
+  },
+  "heterodoxy": {
+    "word": "heterodoxy",
+    "phonetic": "/'hetərəʊ,dɒksɪ/",
+    "explains": [
+      "n. 非正统, 异端, 异说"
+    ]
+  },
+  "heterogeneity": {
+    "word": "heterogeneity",
+    "phonetic": "",
+    "explains": [
+      "n. [生物] 异质性；[化学] 不均匀性；[化学] 多相性"
+    ]
+  },
+  "heterogeneous": {
+    "word": "heterogeneous",
+    "phonetic": "/,het(ə)rə(ʊ)'dʒiːnɪəs; -'dʒen-/",
+    "explains": [
+      "adj. 异种的, 异质的"
+    ]
+  },
+  "heteromorphic": {
+    "word": "heteromorphic",
+    "phonetic": "/,het(ə)rə(ʊ)'mɔːfɪk/",
+    "explains": [
+      "adj. [生物] 异形的，[生物] 异态的；[化学] 多晶型的"
+    ]
+  },
+  "heure": {
+    "word": "heure",
+    "phonetic": "",
+    "explains": [
+      "n.f. 小时；钟点"
+    ]
+  },
+  "heureux": {
+    "word": "heureux",
+    "phonetic": "",
+    "explains": [
+      "adj. 幸福的"
+    ]
+  },
+  "hew": {
+    "word": "hew",
+    "phonetic": "/hjuː/",
+    "explains": [
+      "v. 砍"
+    ]
+  },
+  "hexagon": {
+    "word": "hexagon",
+    "phonetic": "/'heksəg(ə)n/",
+    "explains": [
+      "n. 六角形, 六边形"
+    ]
+  },
+  "hexagonal": {
+    "word": "hexagonal",
+    "phonetic": "/hek'sæɡənəl/",
+    "explains": [
+      "adj. 六角形的,六边的"
+    ]
+  },
+  "hey": {
+    "word": "hey",
+    "phonetic": "/heɪ/",
+    "explains": [
+      "int. 喂！（引起注意等）；你好！（表示问候）；n. 干草（等于hay）"
+    ]
+  },
+  "heyday": {
+    "word": "heyday",
+    "phonetic": "/'heidei/",
+    "explains": [
+      "n.  全盛时期， 兴旺期"
+    ]
+  },
+  "hi": {
+    "word": "hi",
+    "phonetic": "/haɪ/",
+    "explains": [
+      "int. 嗨"
+    ]
+  },
+  "hiatus": {
+    "word": "hiatus",
+    "phonetic": "/haɪ'eɪtəs/",
+    "explains": [
+      "n. 裂缝，空隙；脱漏部分"
+    ]
+  },
+  "hibernate": {
+    "word": "hibernate",
+    "phonetic": "/'haɪbəneɪt/",
+    "explains": [
+      "v. 冬眠"
+    ]
+  },
+  "hibernation": {
+    "word": "hibernation",
+    "phonetic": "",
+    "explains": [
+      "n. 过冬, 冬眠, 避寒"
+    ]
+  },
+  "hibiscus": {
+    "word": "hibiscus",
+    "phonetic": "/hɪ'bɪskəs/",
+    "explains": [
+      "n. 芙蓉属的植物"
+    ]
+  },
+  "hibou": {
+    "word": "hibou",
+    "phonetic": "",
+    "explains": [
+      "n.m. 猫头鹰"
+    ]
+  },
+  "hiccup": {
+    "word": "hiccup",
+    "phonetic": "/'hɪkʌp/",
+    "explains": [
+      "n. 打嗝；v. 打嗝"
+    ]
+  },
+  "hidden": {
+    "word": "hidden",
+    "phonetic": "/'hidən/",
+    "explains": [
+      "adj.  隐藏的"
     ]
   },
   "hide": {
@@ -237,11 +2946,186 @@
       "v. 隐藏；隐瞒；躲藏"
     ]
   },
+  "hideaway": {
+    "word": "hideaway",
+    "phonetic": "/'haɪdəweɪ/",
+    "explains": [
+      "n. 潜伏处；隐匿处；退隐处"
+    ]
+  },
+  "hidebound": {
+    "word": "hidebound",
+    "phonetic": "/'haɪdbaʊnd/",
+    "explains": [
+      "adj. 营养不良的, 量小的, 死板的"
+    ]
+  },
+  "hideous": {
+    "word": "hideous",
+    "phonetic": "/'hɪdɪəs/",
+    "explains": [
+      "adj. 可怕的；丑恶的"
+    ]
+  },
+  "hiding": {
+    "word": "hiding",
+    "phonetic": "/'haɪdɪŋ/",
+    "explains": [
+      "n. 隐匿；躲藏处；殴打"
+    ]
+  },
+  "hier": {
+    "word": "hier",
+    "phonetic": "",
+    "explains": [
+      "adv. 昨天"
+    ]
+  },
+  "hierarchical": {
+    "word": "hierarchical",
+    "phonetic": "/haɪə'rɑːkɪk(ə)l/",
+    "explains": [
+      "adj. 分层的；等级体系的"
+    ]
+  },
+  "hierarchy": {
+    "word": "hierarchy",
+    "phonetic": "/'haɪərɑːkɪ/",
+    "explains": [
+      "n. 层级；等级制度"
+    ]
+  },
+  "hieratic": {
+    "word": "hieratic",
+    "phonetic": "/,haɪə'rætɪk/",
+    "explains": [
+      "adj. 僧侣的, 僧侣用的"
+    ]
+  },
+  "hieroglyph": {
+    "word": "hieroglyph",
+    "phonetic": "/'haɪ(ə)rəglɪf/",
+    "explains": [
+      "n. 象形文字, 图画文字"
+    ]
+  },
+  "hieroglyphic": {
+    "word": "hieroglyphic",
+    "phonetic": "/haɪrə'glɪfɪk/",
+    "explains": [
+      "n. 象形文字"
+    ]
+  },
+  "hieroglyphics": {
+    "word": "hieroglyphics",
+    "phonetic": "/,haɪərə'ɡlɪfɪks/",
+    "explains": [
+      "n. [语] 象形文字；难以辨认或理解的文字（hieroglyphic的复数形式）"
+    ]
+  },
   "high": {
     "word": "high",
     "phonetic": "/haɪ/",
     "explains": [
       "adj. 高的；高级的 adv. 高；高高地"
+    ]
+  },
+  "highbrow": {
+    "word": "highbrow",
+    "phonetic": "/'haɪbraʊ/",
+    "explains": [
+      "n. <美口>（自以为）有高度文化修养的人, 知识分子, 卖弄知识的人"
+    ]
+  },
+  "highchair": {
+    "word": "highchair",
+    "phonetic": "/'hai,tʃeə/",
+    "explains": [
+      "n. 小孩吃饭时用的高脚椅子"
+    ]
+  },
+  "highhanded": {
+    "word": "highhanded",
+    "phonetic": "/'haɪ'hændɪd/",
+    "explains": [
+      "adj. 专横的；高压的"
+    ]
+  },
+  "highland": {
+    "word": "highland",
+    "phonetic": "/'haɪlənd/",
+    "explains": [
+      "n. 高地；丘陵地带；adj. 高原的；高地的"
+    ]
+  },
+  "highlight": {
+    "word": "highlight",
+    "phonetic": "/ˈhaɪlaɪt/",
+    "explains": [
+      "v. 强调"
+    ]
+  },
+  "highly": {
+    "word": "highly",
+    "phonetic": "/'haɪlɪ/",
+    "explains": [
+      "adv. 很，非常；高度地"
+    ]
+  },
+  "highness": {
+    "word": "highness",
+    "phonetic": "/'haɪnɪs/",
+    "explains": [
+      "n. 殿下，阁下；高度，高位；高尚，高贵"
+    ]
+  },
+  "highway": {
+    "word": "highway",
+    "phonetic": "/ˈhaɪweɪ/",
+    "explains": [
+      "n. 公路"
+    ]
+  },
+  "hijack": {
+    "word": "hijack",
+    "phonetic": "/'haɪdʒæk/",
+    "explains": [
+      "v. 抢劫；揩油；n. 劫持；威逼；敲诈"
+    ]
+  },
+  "hijo": {
+    "word": "hijo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 儿子"
+    ]
+  },
+  "hike": {
+    "word": "hike",
+    "phonetic": "/haɪk/",
+    "explains": [
+      "v. 徒步旅行"
+    ]
+  },
+  "hiker": {
+    "word": "hiker",
+    "phonetic": "/'haɪkə/",
+    "explains": [
+      "n. 徒步旅行者"
+    ]
+  },
+  "hilarious": {
+    "word": "hilarious",
+    "phonetic": "/hɪ'leərɪəs/",
+    "explains": [
+      "adj. 狂欢的，热闹的"
+    ]
+  },
+  "hilarity": {
+    "word": "hilarity",
+    "phonetic": "/hɪ'lærɪtɪ/",
+    "explains": [
+      "n. 欢闹"
     ]
   },
   "hill": {
@@ -251,11 +3135,60 @@
       "n. 小山；丘陵；斜坡"
     ]
   },
+  "hillbilly": {
+    "word": "hillbilly",
+    "phonetic": "/'hɪlbɪlɪ/",
+    "explains": [
+      "n. 山地内部的贫农,乡下人"
+    ]
+  },
+  "hillock": {
+    "word": "hillock",
+    "phonetic": "/'hɪlək/",
+    "explains": [
+      "n. 小丘；小山似的一堆"
+    ]
+  },
+  "hillside": {
+    "word": "hillside",
+    "phonetic": "/ˈhɪlsaɪd/",
+    "explains": [
+      "n. 山坡"
+    ]
+  },
+  "hilly": {
+    "word": "hilly",
+    "phonetic": "/'hɪlɪ/",
+    "explains": [
+      "adj. 多小山的, 多坡的"
+    ]
+  },
+  "hilo": {
+    "word": "hilo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 线"
+    ]
+  },
+  "hilt": {
+    "word": "hilt",
+    "phonetic": "/hɪlt/",
+    "explains": [
+      "n. 柄, 刀把"
+    ]
+  },
   "him": {
     "word": "him",
     "phonetic": "/hɪm/",
     "explains": [
       "pron. 他（宾格）"
+    ]
+  },
+  "himalaya": {
+    "word": "himalaya",
+    "phonetic": "",
+    "explains": [
+      "n. 喜马拉雅山"
     ]
   },
   "himself": {
@@ -265,11 +3198,221 @@
       "pron. 他自己；他亲自"
     ]
   },
+  "hind": {
+    "word": "hind",
+    "phonetic": "/haɪnd/",
+    "explains": [
+      "adj. 后边的,后面的"
+    ]
+  },
+  "hinder": {
+    "word": "hinder",
+    "phonetic": "/'hɪndə/",
+    "explains": [
+      "v. 成为阻碍；adj. 后面的；n. (Hinder)人名；(芬)欣德"
+    ]
+  },
+  "hindi": {
+    "word": "hindi",
+    "phonetic": "/'hindi:/",
+    "explains": [
+      "n. 北印度语；adj. 北印度的"
+    ]
+  },
+  "hindmost": {
+    "word": "hindmost",
+    "phonetic": "/'haɪn(d)məʊst/",
+    "explains": [
+      "adj. 最后面的，最后部的"
+    ]
+  },
+  "hindquarters": {
+    "word": "hindquarters",
+    "phonetic": "/,haind'kwɔ:təz/",
+    "explains": [
+      "n. （动物的）尾部；两条后腿；半边胴体的后半部（hindquarter的复数）"
+    ]
+  },
+  "hindrance": {
+    "word": "hindrance",
+    "phonetic": "/'hɪndr(ə)ns/",
+    "explains": [
+      "n. 障碍，妨碍"
+    ]
+  },
+  "hindsight": {
+    "word": "hindsight",
+    "phonetic": "/'haɪn(d)saɪt/",
+    "explains": [
+      "n. 后见之明；枪的照门"
+    ]
+  },
+  "hindu": {
+    "word": "hindu",
+    "phonetic": "/'hindu:; 'hin'du:/",
+    "explains": [
+      "adj. 印度教的；印度的；n. 印度人；印度教教徒"
+    ]
+  },
+  "hinduism": {
+    "word": "hinduism",
+    "phonetic": "/'hinduizəm/",
+    "explains": [
+      "n. 印度教"
+    ]
+  },
+  "hinge": {
+    "word": "hinge",
+    "phonetic": "/hɪn(d)ʒ/",
+    "explains": [
+      "n. 合页，折叶，铰链"
+    ]
+  },
+  "hint": {
+    "word": "hint",
+    "phonetic": "/hɪnt/",
+    "explains": [
+      "n. 暗示"
+    ]
+  },
+  "hinterland": {
+    "word": "hinterland",
+    "phonetic": "/'hɪntəlænd/",
+    "explains": [
+      "n. 内地, 穷乡僻壤"
+    ]
+  },
+  "hip": {
+    "word": "hip",
+    "phonetic": "/hɪp/",
+    "explains": [
+      "n. 臀部"
+    ]
+  },
+  "hippie": {
+    "word": "hippie",
+    "phonetic": "/'hɪpɪ/",
+    "explains": [
+      "n. 嬉皮士；嬉皮模样的年青人；adj. 嬉皮的"
+    ]
+  },
+  "hippisme": {
+    "word": "hippisme",
+    "phonetic": "",
+    "explains": [
+      "n.m. 赛马运动"
+    ]
+  },
+  "hippo": {
+    "word": "hippo",
+    "phonetic": "/'hɪpəʊ/",
+    "explains": [
+      "n. 河马；吐根"
+    ]
+  },
+  "hippopotamus": {
+    "word": "hippopotamus",
+    "phonetic": "/ˌhɪpəˈpɒtəməs/",
+    "explains": [
+      "n. 河马"
+    ]
+  },
+  "hipster": {
+    "word": "hipster",
+    "phonetic": "/hɪpstə/",
+    "explains": [
+      "n. 世面灵通的人"
+    ]
+  },
+  "hire": {
+    "word": "hire",
+    "phonetic": "/ˈhaɪə/",
+    "explains": [
+      "v. 租用"
+    ]
+  },
+  "hirsute": {
+    "word": "hirsute",
+    "phonetic": "/'hɜːsjuːt/",
+    "explains": [
+      "adj. 多毛的；[昆] 有粗毛的"
+    ]
+  },
   "his": {
     "word": "his",
     "phonetic": "/hɪz/",
     "explains": [
       "pron. 他的"
+    ]
+  },
+  "hispanic": {
+    "word": "hispanic",
+    "phonetic": "/hi'spænik/",
+    "explains": [
+      "adj. 西班牙的"
+    ]
+  },
+  "hiss": {
+    "word": "hiss",
+    "phonetic": "/hɪs/",
+    "explains": [
+      "n. 嘶嘶声；v. 嘶嘶作声"
+    ]
+  },
+  "histidine": {
+    "word": "histidine",
+    "phonetic": "/'hɪstɪdiːn/",
+    "explains": [
+      "n. [生化] 组氨酸"
+    ]
+  },
+  "histogram": {
+    "word": "histogram",
+    "phonetic": "/'histəgræm/",
+    "explains": [
+      "n.  柱状图， 直方图"
+    ]
+  },
+  "histology": {
+    "word": "histology",
+    "phonetic": "/hɪ'stɒlədʒɪ/",
+    "explains": [
+      "n. [生物]组织学"
+    ]
+  },
+  "historia": {
+    "word": "historia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 历史；故事"
+    ]
+  },
+  "historian": {
+    "word": "historian",
+    "phonetic": "/hɪ'stɔːrɪən/",
+    "explains": [
+      "n. 历史学家；编史家"
+    ]
+  },
+  "historic": {
+    "word": "historic",
+    "phonetic": "/hɪˈstɒrɪk/",
+    "explains": [
+      "adj. 历史性的"
+    ]
+  },
+  "historical": {
+    "word": "historical",
+    "phonetic": "/hɪˈstɒrɪk(ə)l/",
+    "explains": [
+      "adj. 历史的"
+    ]
+  },
+  "historically": {
+    "word": "historically",
+    "phonetic": "/hɪ'stɒrɪklɪ/",
+    "explains": [
+      "adv. 历史上地"
     ]
   },
   "history": {
@@ -279,6 +3422,20 @@
       "n. 历史；历史学；经历"
     ]
   },
+  "histrionic": {
+    "word": "histrionic",
+    "phonetic": "/,hɪstrɪ'ɒnɪk/",
+    "explains": [
+      "adj. 戏剧的"
+    ]
+  },
+  "histrionics": {
+    "word": "histrionics",
+    "phonetic": "/,hɪstrɪ'ɒnɪks/",
+    "explains": [
+      "n. 演戏, 表演"
+    ]
+  },
   "hit": {
     "word": "hit",
     "phonetic": "/hɪt/",
@@ -286,11 +3443,263 @@
       "v. 打；打击；碰撞 n. 打击；碰撞"
     ]
   },
+  "hitch": {
+    "word": "hitch",
+    "phonetic": "/hɪtʃ/",
+    "explains": [
+      "n. 猛拉, 急推, 蹒跚, 故障"
+    ]
+  },
+  "hitchhike": {
+    "word": "hitchhike",
+    "phonetic": "/'hɪtʃhaɪk/",
+    "explains": [
+      "v. 免费搭乘他人便车"
+    ]
+  },
+  "hither": {
+    "word": "hither",
+    "phonetic": "/'hɪðə/",
+    "explains": [
+      "adj. 这边的；近这边的；adv. 到这里；在这里"
+    ]
+  },
+  "hitherto": {
+    "word": "hitherto",
+    "phonetic": "/hɪðə'tuː; 'hɪðətuː/",
+    "explains": [
+      "adv. 迄今，到目前为止"
+    ]
+  },
+  "hiv": {
+    "word": "hiv",
+    "phonetic": "",
+    "explains": [
+      "abbr. 艾滋病病毒（human immunodeficiency virus）"
+    ]
+  },
+  "hive": {
+    "word": "hive",
+    "phonetic": "/haɪv/",
+    "explains": [
+      "n. 蜂房；v. (使)入蜂箱, 群居"
+    ]
+  },
+  "hiver": {
+    "word": "hiver",
+    "phonetic": "",
+    "explains": [
+      "n.m. 冬天"
+    ]
+  },
+  "hoard": {
+    "word": "hoard",
+    "phonetic": "/hɔːd/",
+    "explains": [
+      "v.  贮藏， 囤积；n. 贮藏，聚藏"
+    ]
+  },
+  "hoarding": {
+    "word": "hoarding",
+    "phonetic": "/'hɔːdiŋ/",
+    "explains": [
+      "n.  囤积； 贮藏钱财； 现金贮藏论"
+    ]
+  },
+  "hoarse": {
+    "word": "hoarse",
+    "phonetic": "/hɔːs/",
+    "explains": [
+      "adj. （声音）嘶哑的"
+    ]
+  },
+  "hoary": {
+    "word": "hoary",
+    "phonetic": "/'hɔːrɪ/",
+    "explains": [
+      "adj. 久远的，古老的；灰白的"
+    ]
+  },
+  "hoax": {
+    "word": "hoax",
+    "phonetic": "/həʊks/",
+    "explains": [
+      "v. 愚弄"
+    ]
+  },
+  "hobble": {
+    "word": "hobble",
+    "phonetic": "/'hɒb(ə)l/",
+    "explains": [
+      "v. 蹒跚"
+    ]
+  },
+  "hobby": {
+    "word": "hobby",
+    "phonetic": "/ˈhɒbɪ/",
+    "explains": [
+      "n. 爱好"
+    ]
+  },
+  "hobbyhorse": {
+    "word": "hobbyhorse",
+    "phonetic": "/'hɒbɪhɔːs/",
+    "explains": [
+      "n. 木马；竹马；摇动木马"
+    ]
+  },
+  "hobbyist": {
+    "word": "hobbyist",
+    "phonetic": "/'hɒbɪɪst/",
+    "explains": [
+      "n. 业余爱好者；沉溺于某嗜好之人"
+    ]
+  },
+  "hobgoblin": {
+    "word": "hobgoblin",
+    "phonetic": "/'hɒbgɒblɪn/",
+    "explains": [
+      "n. 妖怪, 怪物"
+    ]
+  },
+  "hobnail": {
+    "word": "hobnail",
+    "phonetic": "/'hɒbneɪl/",
+    "explains": [
+      "n. 鞋钉，平头钉；乡下佬"
+    ]
+  },
+  "hobnob": {
+    "word": "hobnob",
+    "phonetic": "/'hɒbnɒb/",
+    "explains": [
+      "v. 对酌, 共饮, (亲切)交谈"
+    ]
+  },
+  "hockey": {
+    "word": "hockey",
+    "phonetic": "/'hɒkɪ/",
+    "explains": [
+      "n. 曲棍球；冰球"
+    ]
+  },
+  "hod": {
+    "word": "hod",
+    "phonetic": "/hɒd/",
+    "explains": [
+      "n. 煤斗；装木炭容器；木制容器；灰浆桶"
+    ]
+  },
+  "hodgepodge": {
+    "word": "hodgepodge",
+    "phonetic": "/'hɒdʒpɒdʒ/",
+    "explains": [
+      "n. 大杂烩；混煮；一团糟；vt. 使混乱"
+    ]
+  },
+  "hoe": {
+    "word": "hoe",
+    "phonetic": "/həʊ/",
+    "explains": [
+      "v. 锄地"
+    ]
+  },
+  "hog": {
+    "word": "hog",
+    "phonetic": "/hɒg/",
+    "explains": [
+      "n. 猪，象猪般的人；贪婪者；v. 使拱起"
+    ]
+  },
+  "hogar": {
+    "word": "hogar",
+    "phonetic": "",
+    "explains": [
+      "n.m. 家园；炉灶"
+    ]
+  },
+  "hoggish": {
+    "word": "hoggish",
+    "phonetic": "/'hɒɡɪʃ/",
+    "explains": [
+      "adj. 利己的；贪婪的；猪一般的"
+    ]
+  },
+  "hogshead": {
+    "word": "hogshead",
+    "phonetic": "/'hɒgz,hed/",
+    "explains": [
+      "n. 大桶；液量单位"
+    ]
+  },
+  "hohokam": {
+    "word": "hohokam",
+    "phonetic": "",
+    "explains": [
+      "adj. 霍霍坎文化的"
+    ]
+  },
+  "hoist": {
+    "word": "hoist",
+    "phonetic": "/hɒɪst/",
+    "explains": [
+      "v. 升起，扯起来"
+    ]
+  },
+  "hoisting": {
+    "word": "hoisting",
+    "phonetic": "",
+    "explains": [
+      "变量提升"
+    ]
+  },
+  "hoja": {
+    "word": "hoja",
+    "phonetic": "",
+    "explains": [
+      "n.f. 叶子；纸张"
+    ]
+  },
+  "hola": {
+    "word": "hola",
+    "phonetic": "",
+    "explains": [
+      "你好"
+    ]
+  },
   "hold": {
     "word": "hold",
     "phonetic": "/həʊld/",
     "explains": [
       "v. 持有；保存；举行；握住"
+    ]
+  },
+  "holdall": {
+    "word": "holdall",
+    "phonetic": "/'həʊldɔːl/",
+    "explains": [
+      "n. 手提旅行箱或手提旅行袋"
+    ]
+  },
+  "holder": {
+    "word": "holder",
+    "phonetic": "/'həʊldə/",
+    "explains": [
+      "n. 持有人；所有人；固定器；（台、架等）支持物"
+    ]
+  },
+  "holding": {
+    "word": "holding",
+    "phonetic": "/'həʊldɪŋ/",
+    "explains": [
+      "n. 保持，固定"
+    ]
+  },
+  "holdup": {
+    "word": "holdup",
+    "phonetic": "/'həʊldʌp/",
+    "explains": [
+      "n. 持枪抢劫；交通阻塞"
     ]
   },
   "hole": {
@@ -307,11 +3716,389 @@
       "n. 假日；节日；休息日"
     ]
   },
+  "holiness": {
+    "word": "holiness",
+    "phonetic": "/ˈhəʊlinəs/",
+    "explains": [
+      "n. 神圣；圣座（大写，对教宗等的尊称）"
+    ]
+  },
+  "holistic": {
+    "word": "holistic",
+    "phonetic": "/həu'listik/",
+    "explains": [
+      "adj.  整体的， 全盘的"
+    ]
+  },
+  "holland": {
+    "word": "holland",
+    "phonetic": "/'hɒlənd/",
+    "explains": [
+      "n. 荷兰"
+    ]
+  },
+  "hollow": {
+    "word": "hollow",
+    "phonetic": "/ˈhɒləʊ/",
+    "explains": [
+      "adj. 空心的"
+    ]
+  },
+  "holly": {
+    "word": "holly",
+    "phonetic": "/'hɒlɪ/",
+    "explains": [
+      "n. 冬青树（等于holm oak）；adj. 冬青属植物的"
+    ]
+  },
+  "hollywood": {
+    "word": "hollywood",
+    "phonetic": "/ˈhɒlɪˌwʊd/",
+    "explains": [
+      "n. 好莱坞"
+    ]
+  },
+  "holm": {
+    "word": "holm",
+    "phonetic": "/həʊm/",
+    "explains": [
+      "n. (河，湖中的)小岛"
+    ]
+  },
+  "holocaust": {
+    "word": "holocaust",
+    "phonetic": "/'hɒləkɔːst/",
+    "explains": [
+      "n. 大破坏"
+    ]
+  },
+  "holocene": {
+    "word": "holocene",
+    "phonetic": "/'hɔləsi:n/",
+    "explains": [
+      "n&a. [地]全新世(的)"
+    ]
+  },
+  "hologram": {
+    "word": "hologram",
+    "phonetic": "/'hɒləgræm/",
+    "explains": [
+      "n. [激光] 全息图；全息摄影，全息照相"
+    ]
+  },
+  "holograph": {
+    "word": "holograph",
+    "phonetic": "/'hɒləgrɑːf/",
+    "explains": [
+      "n. 亲笔文件, [律] 亲笔信, [物] 全息图"
+    ]
+  },
+  "holster": {
+    "word": "holster",
+    "phonetic": "/'həʊlstə; 'hɒl-/",
+    "explains": [
+      "n. 手枪用的皮套"
+    ]
+  },
+  "holy": {
+    "word": "holy",
+    "phonetic": "/ˈhəʊlɪ/",
+    "explains": [
+      "adj. 神圣的"
+    ]
+  },
+  "homage": {
+    "word": "homage",
+    "phonetic": "/'hɒmɪdʒ/",
+    "explains": [
+      "n. 敬意；尊敬；效忠"
+    ]
+  },
+  "hombre": {
+    "word": "hombre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 男人"
+    ]
+  },
   "home": {
     "word": "home",
     "phonetic": "/həʊm/",
     "explains": [
       "n. 家；家庭；家乡 adj. 家庭的；国内的"
+    ]
+  },
+  "homebound": {
+    "word": "homebound",
+    "phonetic": "/'həʊmbaʊnd/",
+    "explains": [
+      "adj. 回家的，回家乡的"
+    ]
+  },
+  "homecoming": {
+    "word": "homecoming",
+    "phonetic": "/'həʊmkʌmɪŋ/",
+    "explains": [
+      "n. 归国；同学会；省亲回家"
+    ]
+  },
+  "homeland": {
+    "word": "homeland",
+    "phonetic": "/'həʊmlænd/",
+    "explains": [
+      "n. 祖国,本国"
+    ]
+  },
+  "homeless": {
+    "word": "homeless",
+    "phonetic": "/'həʊmlɪs/",
+    "explains": [
+      "adj. 无家的, 无家可归的"
+    ]
+  },
+  "homely": {
+    "word": "homely",
+    "phonetic": "/'həʊmlɪ/",
+    "explains": [
+      "adj. 家常的"
+    ]
+  },
+  "homemaker": {
+    "word": "homemaker",
+    "phonetic": "/'həʊmmeɪkə(r)/",
+    "explains": [
+      "n. 主妇"
+    ]
+  },
+  "homemaking": {
+    "word": "homemaking",
+    "phonetic": "",
+    "explains": [
+      "n. 家政"
+    ]
+  },
+  "homeopath": {
+    "word": "homeopath",
+    "phonetic": "/'həʊmɪəpæθ; 'hɒm-/",
+    "explains": [
+      "n. 同种疗法医师；顺势医疗论者"
+    ]
+  },
+  "homeopathy": {
+    "word": "homeopathy",
+    "phonetic": "/,həʊmɪ'ɒpəθɪ; hɒm-/",
+    "explains": [
+      "n. 同种疗法"
+    ]
+  },
+  "homeostasis": {
+    "word": "homeostasis",
+    "phonetic": "/,hɒmɪə(ʊ)'steɪsɪs; ,həʊm-/",
+    "explains": [
+      "n. [生理] 体内平衡；[自] 内稳态"
+    ]
+  },
+  "homeotherm": {
+    "word": "homeotherm",
+    "phonetic": "",
+    "explains": [
+      "n. <主美>恒温动物"
+    ]
+  },
+  "homeownership": {
+    "word": "homeownership",
+    "phonetic": "",
+    "explains": [
+      "n. 房主"
+    ]
+  },
+  "homesick": {
+    "word": "homesick",
+    "phonetic": "/'həʊmsɪk/",
+    "explains": [
+      "adj. 想家的,思乡病的"
+    ]
+  },
+  "homespun": {
+    "word": "homespun",
+    "phonetic": "/'həʊmspʌn/",
+    "explains": [
+      "n. 手织物"
+    ]
+  },
+  "homestay": {
+    "word": "homestay",
+    "phonetic": "/'həʊmsteɪ/",
+    "explains": [
+      "n. 在当地居民家居住"
+    ]
+  },
+  "homestead": {
+    "word": "homestead",
+    "phonetic": "/'həʊmsted/",
+    "explains": [
+      "n. 家宅，宅基"
+    ]
+  },
+  "homesteader": {
+    "word": "homesteader",
+    "phonetic": "/'həʊm,stedə/",
+    "explains": [
+      "n. 农场所有权人, 自耕农"
+    ]
+  },
+  "hometown": {
+    "word": "hometown",
+    "phonetic": "/'həʊm'taʊn/",
+    "explains": [
+      "n. 故乡"
+    ]
+  },
+  "homeward": {
+    "word": "homeward",
+    "phonetic": "/'həʊmwəd/",
+    "explains": [
+      "adv. 在归途上，向家地；adj. 在归途上的，向家的"
+    ]
+  },
+  "homework": {
+    "word": "homework",
+    "phonetic": "/ˈhəʊmwɜːk/",
+    "explains": [
+      "n. 家庭作业"
+    ]
+  },
+  "homey": {
+    "word": "homey",
+    "phonetic": "/'həʊmɪ/",
+    "explains": [
+      "adj. 舒适的；家庭似的；自在的；n. (Homey)人名；(德)霍迈"
+    ]
+  },
+  "homicide": {
+    "word": "homicide",
+    "phonetic": "/'hɒmɪsaɪd/",
+    "explains": [
+      "n. 过失杀人；杀人犯"
+    ]
+  },
+  "homiletics": {
+    "word": "homiletics",
+    "phonetic": "/,hɒmɪ'letɪks/",
+    "explains": [
+      "n. 说教术"
+    ]
+  },
+  "homily": {
+    "word": "homily",
+    "phonetic": "/'hɒmɪlɪ/",
+    "explains": [
+      "n. 说教；训诫"
+    ]
+  },
+  "homing": {
+    "word": "homing",
+    "phonetic": "/'həʊmɪŋ/",
+    "explains": [
+      "adj. 回家的；自动导引的；有返回性的；n. 归航；动物的返回性；v. 回家（home的ing形式）"
+    ]
+  },
+  "hominid": {
+    "word": "hominid",
+    "phonetic": "/'hɒmɪnɪd/",
+    "explains": [
+      "n. 原始人类"
+    ]
+  },
+  "hommage": {
+    "word": "hommage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 致敬"
+    ]
+  },
+  "homme": {
+    "word": "homme",
+    "phonetic": "",
+    "explains": [
+      "n.m. 男人"
+    ]
+  },
+  "homo": {
+    "word": "homo",
+    "phonetic": "/'həʊməʊ/",
+    "explains": [
+      "n. 人, 同性恋者"
+    ]
+  },
+  "homogeneity": {
+    "word": "homogeneity",
+    "phonetic": "/,hɒmə(ʊ)dʒɪ'neɪɪtɪ; -dʒɪ'niːɪtɪ; ,həʊm-/",
+    "explains": [
+      "n. 同质；同种；同次性（等于homogeneousness）"
+    ]
+  },
+  "homogeneous": {
+    "word": "homogeneous",
+    "phonetic": "/,hɒmə(ʊ)'dʒiːnɪəs; -'dʒen-/",
+    "explains": [
+      "adj. 同类的"
+    ]
+  },
+  "homogenise": {
+    "word": "homogenise",
+    "phonetic": "",
+    "explains": [
+      "v. （英）使均匀（等于homogenize）"
+    ]
+  },
+  "homogenize": {
+    "word": "homogenize",
+    "phonetic": "/hə'mɒdʒənaɪz/",
+    "explains": [
+      "v. 均质化"
+    ]
+  },
+  "homograph": {
+    "word": "homograph",
+    "phonetic": "/'hɒməgrɑːf; 'həʊm-/",
+    "explains": [
+      "n. 同形异义字"
+    ]
+  },
+  "homologate": {
+    "word": "homologate",
+    "phonetic": "/hə'mɒləgeɪt/",
+    "explains": [
+      "v. 承认, 同意, [民法]确认, 批准"
+    ]
+  },
+  "homologous": {
+    "word": "homologous",
+    "phonetic": "/hɒ'mɒləgəs/",
+    "explains": [
+      "adj. 相应的；[生物] 同源的；类似的；一致的"
+    ]
+  },
+  "homonym": {
+    "word": "homonym",
+    "phonetic": "/'hɒmənɪm/",
+    "explains": [
+      "n. 同音异义词；同形异义词；同形同音异义词；同名异物"
+    ]
+  },
+  "homosexual": {
+    "word": "homosexual",
+    "phonetic": "/,hɒmə(ʊ)'sekʃʊəl; ,həʊm-; -sjʊəl/",
+    "explains": [
+      "n. 同性恋者；adj. 同性恋的"
+    ]
+  },
+  "hone": {
+    "word": "hone",
+    "phonetic": "/həʊn/",
+    "explains": [
+      "n. 磨（刀）石vt用磨刀石磨"
     ]
   },
   "honest": {
@@ -321,11 +4108,354 @@
       "adj. 诚实的；老实的"
     ]
   },
+  "honestly": {
+    "word": "honestly",
+    "phonetic": "/'ɒnɪstlɪ/",
+    "explains": [
+      "adv. 真诚地；公正地"
+    ]
+  },
+  "honesto": {
+    "word": "honesto",
+    "phonetic": "",
+    "explains": [
+      "adj. 诚实的"
+    ]
+  },
+  "honesty": {
+    "word": "honesty",
+    "phonetic": "/ˈɒnɪstɪ/",
+    "explains": [
+      "n. 诚实"
+    ]
+  },
+  "honey": {
+    "word": "honey",
+    "phonetic": "/ˈhʌnɪ/",
+    "explains": [
+      "n. 蜂蜜"
+    ]
+  },
+  "honeybee": {
+    "word": "honeybee",
+    "phonetic": "/'hʌnɪbiː/",
+    "explains": [
+      "n. 蜜蜂"
+    ]
+  },
+  "honeycomb": {
+    "word": "honeycomb",
+    "phonetic": "/'hʌnɪkəʊm/",
+    "explains": [
+      "n. 蜂房, 蜂巢"
+    ]
+  },
+  "honeymoon": {
+    "word": "honeymoon",
+    "phonetic": "/'hʌnɪmuːn/",
+    "explains": [
+      "n. 蜜月"
+    ]
+  },
+  "honk": {
+    "word": "honk",
+    "phonetic": "/'hɒŋk/",
+    "explains": [
+      "n. 雁叫声"
+    ]
+  },
+  "honor": {
+    "word": "honor",
+    "phonetic": "/ˈɒnə(r)/",
+    "explains": [
+      "n. 荣誉；信用；头衔；v. 尊敬（等于honour）；给…以荣誉"
+    ]
+  },
+  "honorable": {
+    "word": "honorable",
+    "phonetic": "/'ɒnərəbl/",
+    "explains": [
+      "adj. 光荣的；可敬的；高贵的"
+    ]
+  },
+  "honorarium": {
+    "word": "honorarium",
+    "phonetic": "/,ɒnə'reərɪəm/",
+    "explains": [
+      "n. （对习俗或法律上不应取酬的服务的）酬劳（或答谢）"
+    ]
+  },
+  "honorary": {
+    "word": "honorary",
+    "phonetic": "/'ɒn(ə)(rə)rɪ/",
+    "explains": [
+      "adj. 荣誉的；名誉的；道义上的；n. 名誉学位；获名誉学位者；名誉团体"
+    ]
+  },
+  "honorific": {
+    "word": "honorific",
+    "phonetic": "/ɒnə'rɪfɪk/",
+    "explains": [
+      "adj. 尊敬的；敬称的；n. 敬语"
+    ]
+  },
+  "honour": {
+    "word": "honour",
+    "phonetic": "/'ɒnə/",
+    "explains": [
+      "n. 光荣；尊敬，敬意"
+    ]
+  },
+  "honourable": {
+    "word": "honourable",
+    "phonetic": "/'ɒn(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 光荣的"
+    ]
+  },
+  "honte": {
+    "word": "honte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 羞耻"
+    ]
+  },
+  "hood": {
+    "word": "hood",
+    "phonetic": "/hʊd/",
+    "explains": [
+      "n. 头巾, 兜帽, 车蓬, 引擎罩"
+    ]
+  },
+  "hoodwink": {
+    "word": "hoodwink",
+    "phonetic": "/'hʊdwɪŋk/",
+    "explains": [
+      "v. 遮眼, 欺骗, 蒙蔽"
+    ]
+  },
+  "hoof": {
+    "word": "hoof",
+    "phonetic": "/huːf/",
+    "explains": [
+      "n. 蹄 v踢"
+    ]
+  },
+  "hook": {
+    "word": "hook",
+    "phonetic": "/hʊk/",
+    "explains": [
+      "n. 钩子"
+    ]
+  },
+  "hooked": {
+    "word": "hooked",
+    "phonetic": "/'hʊkt/",
+    "explains": [
+      "adj. 钩状的"
+    ]
+  },
+  "hooligan": {
+    "word": "hooligan",
+    "phonetic": "/'huːlɪg(ə)n/",
+    "explains": [
+      "n. 小流氓"
+    ]
+  },
+  "hoop": {
+    "word": "hoop",
+    "phonetic": "/huːp/",
+    "explains": [
+      "n. 箍, 铁环, 戒指, 篮"
+    ]
+  },
+  "hooray": {
+    "word": "hooray",
+    "phonetic": "/hʊ'reɪ/",
+    "explains": [
+      "vi. 呼万岁；vt. 呼万岁；n. 万岁；int. 万岁"
+    ]
+  },
+  "hoot": {
+    "word": "hoot",
+    "phonetic": "/huːt/",
+    "explains": [
+      "n. 鸣响；嘲骂声；汽笛响声；v. 鸣响；大声叫嚣"
+    ]
+  },
+  "hoover": {
+    "word": "hoover",
+    "phonetic": "/'huːvə/",
+    "explains": [
+      "n. 吸尘器；v. 用吸尘器打扫"
+    ]
+  },
+  "hop": {
+    "word": "hop",
+    "phonetic": "/hɒp/",
+    "explains": [
+      "v. （人）单足跳"
+    ]
+  },
   "hope": {
     "word": "hope",
     "phonetic": "/həʊp/",
     "explains": [
       "v./n. 希望；期望；盼望"
+    ]
+  },
+  "hopeful": {
+    "word": "hopeful",
+    "phonetic": "/'həʊpfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 有希望的"
+    ]
+  },
+  "hopeless": {
+    "word": "hopeless",
+    "phonetic": "/'həʊpləs/",
+    "explains": [
+      "adj. 没有希望的；绝望的"
+    ]
+  },
+  "hopewell": {
+    "word": "hopewell",
+    "phonetic": "",
+    "explains": [
+      "n. 霍普韦尔"
+    ]
+  },
+  "hopper": {
+    "word": "hopper",
+    "phonetic": "/'hɒpə/",
+    "explains": [
+      "n. 单足跳者"
+    ]
+  },
+  "horario": {
+    "word": "horario",
+    "phonetic": "",
+    "explains": [
+      "n.m. 时间表"
+    ]
+  },
+  "horde": {
+    "word": "horde",
+    "phonetic": "/hɔːd/",
+    "explains": [
+      "n. 游牧部落"
+    ]
+  },
+  "horizon": {
+    "word": "horizon",
+    "phonetic": "/həˈraɪz(ə)n/",
+    "explains": [
+      "n. 地平线"
+    ]
+  },
+  "horizontal": {
+    "word": "horizontal",
+    "phonetic": "/hɒrɪ'zɒnt(ə)l/",
+    "explains": [
+      "adj. 地平的；水平的"
+    ]
+  },
+  "horloge": {
+    "word": "horloge",
+    "phonetic": "",
+    "explains": [
+      "n.f. 钟"
+    ]
+  },
+  "hormonal": {
+    "word": "hormonal",
+    "phonetic": "/hɔː'məʊn(ə)l/",
+    "explains": [
+      "adj. 荷尔蒙的,激素的"
+    ]
+  },
+  "hormone": {
+    "word": "hormone",
+    "phonetic": "/'hɔːməʊn/",
+    "explains": [
+      "n. 荷尔蒙,激素"
+    ]
+  },
+  "horn": {
+    "word": "horn",
+    "phonetic": "/hɔːn/",
+    "explains": [
+      "n. 角；喇叭"
+    ]
+  },
+  "horned": {
+    "word": "horned",
+    "phonetic": "/hɔːnd/",
+    "explains": [
+      "adj. 有角的；角状的；v. 截短…的角（horn的过去式和过去分词）"
+    ]
+  },
+  "hornet": {
+    "word": "hornet",
+    "phonetic": "/'hɔːnɪt/",
+    "explains": [
+      "n. [昆] 大黄蜂"
+    ]
+  },
+  "horology": {
+    "word": "horology",
+    "phonetic": "/hɒ'rɒlədʒɪ/",
+    "explains": [
+      "n. 钟表学"
+    ]
+  },
+  "horoscope": {
+    "word": "horoscope",
+    "phonetic": "/'hɒrəskəʊp/",
+    "explains": [
+      "n. 占星术；星象；十二宫图"
+    ]
+  },
+  "horrendous": {
+    "word": "horrendous",
+    "phonetic": "/hɒ'rendəs/",
+    "explains": [
+      "adj. 可怕的"
+    ]
+  },
+  "horrible": {
+    "word": "horrible",
+    "phonetic": "/ˈhɒrɪb(ə)l/",
+    "explains": [
+      "adj. 可怕的"
+    ]
+  },
+  "horrid": {
+    "word": "horrid",
+    "phonetic": "/'hɒrɪd/",
+    "explains": [
+      "adj. 可怕的；恐怖的；极讨厌的"
+    ]
+  },
+  "horrific": {
+    "word": "horrific",
+    "phonetic": "/hɒ'rɪfɪk/",
+    "explains": [
+      "adj. 可怕的；令人毛骨悚然的"
+    ]
+  },
+  "horrify": {
+    "word": "horrify",
+    "phonetic": "/'hɒrɪfaɪ/",
+    "explains": [
+      "v. 使恐惧；惊骇；使极度厌恶"
+    ]
+  },
+  "horror": {
+    "word": "horror",
+    "phonetic": "/ˈhɒrə/",
+    "explains": [
+      "n. 恐怖"
     ]
   },
   "horse": {
@@ -335,11 +4465,207 @@
       "n. 马；骑兵"
     ]
   },
+  "horseback": {
+    "word": "horseback",
+    "phonetic": "/'hɔːsbæk/",
+    "explains": [
+      "n. 马背, 隆起的条状地带"
+    ]
+  },
+  "horsefly": {
+    "word": "horsefly",
+    "phonetic": "/'hɔːsflaɪ/",
+    "explains": [
+      "n. 马蝇"
+    ]
+  },
+  "horsehair": {
+    "word": "horsehair",
+    "phonetic": "/'hɔːsheə/",
+    "explains": [
+      "n. 马毛；马鬃"
+    ]
+  },
+  "horseman": {
+    "word": "horseman",
+    "phonetic": "/'hɔːsmən/",
+    "explains": [
+      "n. 骑马者；马术师"
+    ]
+  },
+  "horseplay": {
+    "word": "horseplay",
+    "phonetic": "/'hɔːspleɪ/",
+    "explains": [
+      "n. 动手脚和大声欢笑的玩闹；恶作剧"
+    ]
+  },
+  "horsepower": {
+    "word": "horsepower",
+    "phonetic": "/'hɔːspaʊə/",
+    "explains": [
+      "n. 马力"
+    ]
+  },
+  "horseracing": {
+    "word": "horseracing",
+    "phonetic": "",
+    "explains": [
+      "n. 赛马运动"
+    ]
+  },
+  "horseshoe": {
+    "word": "horseshoe",
+    "phonetic": "/'hɔːsʃuː; -ʃʃ-/",
+    "explains": [
+      "n. 马蹄铁"
+    ]
+  },
+  "horsewhip": {
+    "word": "horsewhip",
+    "phonetic": "/'hɔːswɪp/",
+    "explains": [
+      "n. 马鞭；v. 用马鞭抽打；惩罚"
+    ]
+  },
+  "horsey": {
+    "word": "horsey",
+    "phonetic": "/'hɔːsɪ/",
+    "explains": [
+      "adj. 马的；似马的（等于sorsy）"
+    ]
+  },
+  "hortative": {
+    "word": "hortative",
+    "phonetic": "/'hɔːtətɪv/",
+    "explains": [
+      "adj. 劝告的, 鼓励的, 忠告的, 奖励的"
+    ]
+  },
+  "horticultural": {
+    "word": "horticultural",
+    "phonetic": "/,hɔːtɪ'kʌltʃərəl/",
+    "explains": [
+      "adj. 园艺的"
+    ]
+  },
+  "horticulturalist": {
+    "word": "horticulturalist",
+    "phonetic": "",
+    "explains": [
+      "n. 园艺家"
+    ]
+  },
+  "horticulture": {
+    "word": "horticulture",
+    "phonetic": "/'hɔːtɪ,kʌltʃə/",
+    "explains": [
+      "n. 园艺"
+    ]
+  },
+  "hose": {
+    "word": "hose",
+    "phonetic": "/həʊz/",
+    "explains": [
+      "n. 软管；袜类（包括连裤袜、长筒袜、短袜）"
+    ]
+  },
+  "hosepipe": {
+    "word": "hosepipe",
+    "phonetic": "/'hozpaɪp/",
+    "explains": [
+      "n. 橡胶软管"
+    ]
+  },
+  "hosiery": {
+    "word": "hosiery",
+    "phonetic": "/'həʊzɪərɪ; -ʒərɪ/",
+    "explains": [
+      "n. 针织品；袜类"
+    ]
+  },
+  "hospice": {
+    "word": "hospice",
+    "phonetic": "/'hɒspɪs/",
+    "explains": [
+      "n. 收容所；旅客招待所；救济院"
+    ]
+  },
+  "hospitable": {
+    "word": "hospitable",
+    "phonetic": "/hɒ'spɪtəb(ə)l; 'hɒspɪt-/",
+    "explains": [
+      "adj. 好客的, 宜人的"
+    ]
+  },
   "hospital": {
     "word": "hospital",
     "phonetic": "/ˈhɒspɪtl/",
     "explains": [
       "n. 医院"
+    ]
+  },
+  "hospitality": {
+    "word": "hospitality",
+    "phonetic": "/hɒspɪ'tælɪtɪ/",
+    "explains": [
+      "n. 好客，殷勤"
+    ]
+  },
+  "hospitalize": {
+    "word": "hospitalize",
+    "phonetic": "/'hɒspɪt(ə)laɪz/",
+    "explains": [
+      "v. 就医,  使住院"
+    ]
+  },
+  "host": {
+    "word": "host",
+    "phonetic": "/həʊst/",
+    "explains": [
+      "n. 主人　v. 主办"
+    ]
+  },
+  "hostage": {
+    "word": "hostage",
+    "phonetic": "/'hɒstɪdʒ/",
+    "explains": [
+      "n. 人质"
+    ]
+  },
+  "hostal": {
+    "word": "hostal",
+    "phonetic": "",
+    "explains": [
+      "n.m. 青年旅舍"
+    ]
+  },
+  "hostel": {
+    "word": "hostel",
+    "phonetic": "/'hɔstl/",
+    "explains": [
+      "n.  青年旅舍； 招待所"
+    ]
+  },
+  "hostess": {
+    "word": "hostess",
+    "phonetic": "/ˈhəʊstɪs/",
+    "explains": [
+      "n. 女主人"
+    ]
+  },
+  "hostile": {
+    "word": "hostile",
+    "phonetic": "/'hɒstaɪl/",
+    "explains": [
+      "adj. 不友善的；敌方的"
+    ]
+  },
+  "hostility": {
+    "word": "hostility",
+    "phonetic": "/hɒ'stɪlɪtɪ/",
+    "explains": [
+      "n. 敌意, 不友善"
     ]
   },
   "hot": {
@@ -349,11 +4675,102 @@
       "adj. 热的；辣的；热情的"
     ]
   },
+  "hotbed": {
+    "word": "hotbed",
+    "phonetic": "/'hɒtbed/",
+    "explains": [
+      "n. 温床"
+    ]
+  },
+  "hotchpotch": {
+    "word": "hotchpotch",
+    "phonetic": "/'hɒtʃpɒtʃ/",
+    "explains": [
+      "n. 杂烩"
+    ]
+  },
   "hotel": {
     "word": "hotel",
     "phonetic": "/həʊˈtel/",
     "explains": [
       "n. 旅馆；饭店；宾馆"
+    ]
+  },
+  "hotelier": {
+    "word": "hotelier",
+    "phonetic": "/həʊ'telɪeɪ; -ɪə/",
+    "explains": [
+      "n. 旅馆老板"
+    ]
+  },
+  "hotelkeeper": {
+    "word": "hotelkeeper",
+    "phonetic": "/həʊ'tel,kiːpə/",
+    "explains": [
+      "n. 旅馆经营者"
+    ]
+  },
+  "hotfix": {
+    "word": "hotfix",
+    "phonetic": "",
+    "explains": [
+      "热修复（紧急修复上线）"
+    ]
+  },
+  "hotfoot": {
+    "word": "hotfoot",
+    "phonetic": "/'hɒtfʊt; hɒt'fʊt/",
+    "explains": [
+      "adv. 急忙地；火急地；v. 急行；n. 恶作剧"
+    ]
+  },
+  "hothead": {
+    "word": "hothead",
+    "phonetic": "/'hɒthed/",
+    "explains": [
+      "n. 性急的人；鲁莽的人"
+    ]
+  },
+  "hothouse": {
+    "word": "hothouse",
+    "phonetic": "/'hɒthaʊs/",
+    "explains": [
+      "n. 温室；温床；adj. 温室的；过分保护的；娇弱的"
+    ]
+  },
+  "hotline": {
+    "word": "hotline",
+    "phonetic": "/'hɑtlaɪn/",
+    "explains": [
+      "n. 热线；热线电话，咨询电话"
+    ]
+  },
+  "hotly": {
+    "word": "hotly",
+    "phonetic": "/'hɑtli/",
+    "explains": [
+      "adv. 激烈地；热心地；暑热地"
+    ]
+  },
+  "hotplate": {
+    "word": "hotplate",
+    "phonetic": "/'hɑtplet/",
+    "explains": [
+      "n. 电炉；扁平烤盘"
+    ]
+  },
+  "hotpot": {
+    "word": "hotpot",
+    "phonetic": "/'hɒtpɒt/",
+    "explains": [
+      "n. 火锅"
+    ]
+  },
+  "hound": {
+    "word": "hound",
+    "phonetic": "/haʊnd/",
+    "explains": [
+      "n. 猎犬"
     ]
   },
   "hour": {
@@ -370,6 +4787,139 @@
       "n. 房屋；房子；住宅；家庭"
     ]
   },
+  "houseboat": {
+    "word": "houseboat",
+    "phonetic": "/'haʊsbəʊt/",
+    "explains": [
+      "n. 游艇；居住船；vi. 居住在船上；乘居住船游览"
+    ]
+  },
+  "housebound": {
+    "word": "housebound",
+    "phonetic": "/'haʊsbaʊnd/",
+    "explains": [
+      "adj. 不能离家的，足不出户的"
+    ]
+  },
+  "housebreaker": {
+    "word": "housebreaker",
+    "phonetic": "/'haus,breikə/",
+    "explains": [
+      "n. 强盗，侵入家宅者；拆屋者"
+    ]
+  },
+  "housecoat": {
+    "word": "housecoat",
+    "phonetic": "/'haʊskəʊt/",
+    "explains": [
+      "n. 家常服；长且松宽的家居女服"
+    ]
+  },
+  "housecraft": {
+    "word": "housecraft",
+    "phonetic": "",
+    "explains": [
+      "n. 家政学；（英）管家的技能"
+    ]
+  },
+  "household": {
+    "word": "household",
+    "phonetic": "/ˈhaʊshəʊld/",
+    "explains": [
+      "n. 家庭"
+    ]
+  },
+  "householder": {
+    "word": "householder",
+    "phonetic": "/'haʊshəʊldə/",
+    "explains": [
+      "n. 户主，家长；房主"
+    ]
+  },
+  "housekeeper": {
+    "word": "housekeeper",
+    "phonetic": "/'haʊskiːpə/",
+    "explains": [
+      "n. 女管家；主妇"
+    ]
+  },
+  "housemaid": {
+    "word": "housemaid",
+    "phonetic": "/'haʊsmeɪd/",
+    "explains": [
+      "n. 女佣，女仆"
+    ]
+  },
+  "housemaster": {
+    "word": "housemaster",
+    "phonetic": "/'haʊsmɑːstə/",
+    "explains": [
+      "n. 男舍监；舍监"
+    ]
+  },
+  "housewares": {
+    "word": "housewares",
+    "phonetic": "/'haʊsweəz/",
+    "explains": [
+      "n. 家用器皿"
+    ]
+  },
+  "housewarming": {
+    "word": "housewarming",
+    "phonetic": "/'haʊs,wɔːmɪŋ/",
+    "explains": [
+      "n. 乔迁庆宴"
+    ]
+  },
+  "housewife": {
+    "word": "housewife",
+    "phonetic": "/ˈhaʊswaɪf/",
+    "explains": [
+      "n. 家庭主妇"
+    ]
+  },
+  "housewifery": {
+    "word": "housewifery",
+    "phonetic": "/'haʊswɪfərɪ/",
+    "explains": [
+      "n. 家事；家政"
+    ]
+  },
+  "housework": {
+    "word": "housework",
+    "phonetic": "/ˈhaʊswɜːk/",
+    "explains": [
+      "n. 家务"
+    ]
+  },
+  "housing": {
+    "word": "housing",
+    "phonetic": "/haʊzɪŋ/",
+    "explains": [
+      "n. 房屋；住房供给；[机] 外壳；遮盖物；机器等的防护外壳或外罩"
+    ]
+  },
+  "hovel": {
+    "word": "hovel",
+    "phonetic": "/'hɒv(ə)l/",
+    "explains": [
+      "n. (简陋而不适于居住的)小屋, 杂物间, 家畜小屋"
+    ]
+  },
+  "hover": {
+    "word": "hover",
+    "phonetic": "/'hɒvə/",
+    "explains": [
+      "v. 徘徊；傍徨；翱翔；盘旋"
+    ]
+  },
+  "hovercraft": {
+    "word": "hovercraft",
+    "phonetic": "",
+    "explains": [
+      "n. 气垫船"
+    ]
+  },
   "how": {
     "word": "how",
     "phonetic": "/haʊ/",
@@ -384,11 +4934,214 @@
       "adv. 然而；可是 conj. 无论如何"
     ]
   },
+  "howl": {
+    "word": "howl",
+    "phonetic": "/haʊl/",
+    "explains": [
+      "n. 嚎叫；哀号；吠"
+    ]
+  },
+  "howler": {
+    "word": "howler",
+    "phonetic": "/'haʊlə/",
+    "explains": [
+      "n. 大声叫喊者"
+    ]
+  },
+  "hoy": {
+    "word": "hoy",
+    "phonetic": "",
+    "explains": [
+      "adv. 今天"
+    ]
+  },
+  "hoyden": {
+    "word": "hoyden",
+    "phonetic": "/'hɒɪd(ə)n/",
+    "explains": [
+      "n. 爱喧闹的顽皮女孩"
+    ]
+  },
+  "hrd": {
+    "word": "hrd",
+    "phonetic": "",
+    "explains": [
+      "abbr. 高纤维素饮食（High Roughage Diet）；人力资源开发（human resource development）"
+    ]
+  },
+  "hrh": {
+    "word": "hrh",
+    "phonetic": "",
+    "explains": [
+      "abbr. 殿下（His/Her Royal Highness）"
+    ]
+  },
+  "hub": {
+    "word": "hub",
+    "phonetic": "/hʌb/",
+    "explains": [
+      "n. 中心,轮轴"
+    ]
+  },
+  "hubbub": {
+    "word": "hubbub",
+    "phonetic": "/'hʌbʌb/",
+    "explains": [
+      "n. 吵闹，喧哗"
+    ]
+  },
+  "hublot": {
+    "word": "hublot",
+    "phonetic": "",
+    "explains": [
+      "n.m. 舷窗"
+    ]
+  },
+  "hubris": {
+    "word": "hubris",
+    "phonetic": "/'hjuːbrɪs/",
+    "explains": [
+      "n. 骄傲 , 傲慢, （狂妄自大）"
+    ]
+  },
+  "huckleberry": {
+    "word": "huckleberry",
+    "phonetic": "/'hʌk(ə)lb(ə)rɪ/",
+    "explains": [
+      "n. 越橘类"
+    ]
+  },
+  "huckster": {
+    "word": "huckster",
+    "phonetic": "/'hʌkstə/",
+    "explains": [
+      "n. 小贩"
+    ]
+  },
+  "huddle": {
+    "word": "huddle",
+    "phonetic": "/'hʌd(ə)l/",
+    "explains": [
+      "v. 把挤在一起；使缩成一团；草率了事；n. 拥挤；混乱；杂乱一团"
+    ]
+  },
+  "hue": {
+    "word": "hue",
+    "phonetic": "/hjuː/",
+    "explains": [
+      "n. 色彩，色调"
+    ]
+  },
+  "huerto": {
+    "word": "huerto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 果园；菜园"
+    ]
+  },
+  "huevo": {
+    "word": "huevo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 鸡蛋"
+    ]
+  },
+  "huff": {
+    "word": "huff",
+    "phonetic": "/hʌf/",
+    "explains": [
+      "v. 把…吹胀；激怒；蔑视；n. 发怒"
+    ]
+  },
+  "huffish": {
+    "word": "huffish",
+    "phonetic": "/'hʌfɪʃ/",
+    "explains": [
+      "adj. 生气的, 不高兴的, 发怒的, 傲慢的"
+    ]
+  },
+  "huffy": {
+    "word": "huffy",
+    "phonetic": "/'hʌfɪ/",
+    "explains": [
+      "adj. 发怒的"
+    ]
+  },
+  "hug": {
+    "word": "hug",
+    "phonetic": "/hʌɡ/",
+    "explains": [
+      "v. 拥抱"
+    ]
+  },
   "huge": {
     "word": "huge",
     "phonetic": "/hjuːdʒ/",
     "explains": [
       "adj. 巨大的；庞大的；极大的"
+    ]
+  },
+  "hugely": {
+    "word": "hugely",
+    "phonetic": "",
+    "explains": [
+      "adv. 巨大地, 非常地"
+    ]
+  },
+  "hui": {
+    "word": "hui",
+    "phonetic": "",
+    "explains": [
+      "adv. （今日）"
+    ]
+  },
+  "huit": {
+    "word": "huit",
+    "phonetic": "",
+    "explains": [
+      "num. 八"
+    ]
+  },
+  "hulk": {
+    "word": "hulk",
+    "phonetic": "/hʌlk/",
+    "explains": [
+      "n. 笨重的船, 废船"
+    ]
+  },
+  "hulking": {
+    "word": "hulking",
+    "phonetic": "/'hʌlkɪŋ/",
+    "explains": [
+      "adj. 笨重的, 粗陋的"
+    ]
+  },
+  "hull": {
+    "word": "hull",
+    "phonetic": "/hʌl/",
+    "explains": [
+      "n. 外壳，豆荚；薄膜"
+    ]
+  },
+  "hullabaloo": {
+    "word": "hullabaloo",
+    "phonetic": "/,hʌləbə'luː/",
+    "explains": [
+      "n. 喧嚣, 喧哗, 吵闹（声）, （混乱, 骚动）声"
+    ]
+  },
+  "hum": {
+    "word": "hum",
+    "phonetic": "/hʌm/",
+    "explains": [
+      "n. 嗡嗡声；v. 哼曲子"
+    ]
+  },
+  "humain": {
+    "word": "humain",
+    "phonetic": "",
+    "explains": [
+      "adj. 人类的"
     ]
   },
   "human": {
@@ -398,6 +5151,244 @@
       "adj. 人的；人类的 n. 人；人类"
     ]
   },
+  "humane": {
+    "word": "humane",
+    "phonetic": "/hjʊ'meɪn/",
+    "explains": [
+      "adj. 仁慈的，人道的；高尚的"
+    ]
+  },
+  "humanism": {
+    "word": "humanism",
+    "phonetic": "/'hjuːmənɪz(ə)m/",
+    "explains": [
+      "n. 人道主义；adj. 人文主义的；人道主义的"
+    ]
+  },
+  "humanist": {
+    "word": "humanist",
+    "phonetic": "/'hjuːmənɪst/",
+    "explains": [
+      "n. 人道主义者, 人文主义者"
+    ]
+  },
+  "humanitarian": {
+    "word": "humanitarian",
+    "phonetic": "/hjʊ,mænɪ'teərɪən/",
+    "explains": [
+      "adj. 博爱的；n. 慈善家"
+    ]
+  },
+  "humanity": {
+    "word": "humanity",
+    "phonetic": "/hjʊ'mænɪtɪ/",
+    "explains": [
+      "n. 人类；人性，人情"
+    ]
+  },
+  "humankind": {
+    "word": "humankind",
+    "phonetic": "/hjuːmən'kaɪnd/",
+    "explains": [
+      "n. 人类（总称）"
+    ]
+  },
+  "humanlike": {
+    "word": "humanlike",
+    "phonetic": "",
+    "explains": [
+      "adj. 似人类的"
+    ]
+  },
+  "humanly": {
+    "word": "humanly",
+    "phonetic": "/'hjuːmənlɪ/",
+    "explains": [
+      "adv. 以人力；像人地；在人力所能及的范围"
+    ]
+  },
+  "humanness": {
+    "word": "humanness",
+    "phonetic": "",
+    "explains": [
+      "n. 为人,人性"
+    ]
+  },
+  "humble": {
+    "word": "humble",
+    "phonetic": "/ˈhʌmb(ə)l/",
+    "explains": [
+      "adj. 谦逊的"
+    ]
+  },
+  "humbug": {
+    "word": "humbug",
+    "phonetic": "/'hʌmbʌg/",
+    "explains": [
+      "n. 骗子；欺骗；谎话；v. 欺骗；哄骗"
+    ]
+  },
+  "humdrum": {
+    "word": "humdrum",
+    "phonetic": "/'hʌmdrʌm/",
+    "explains": [
+      "adj. 单调的，枯燥的"
+    ]
+  },
+  "humedad": {
+    "word": "humedad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 湿度"
+    ]
+  },
+  "humeur": {
+    "word": "humeur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 心情"
+    ]
+  },
+  "humid": {
+    "word": "humid",
+    "phonetic": "/'hjuːmɪd/",
+    "explains": [
+      "adj. 湿的，湿气重的"
+    ]
+  },
+  "humide": {
+    "word": "humide",
+    "phonetic": "",
+    "explains": [
+      "adj. 潮湿的"
+    ]
+  },
+  "humidify": {
+    "word": "humidify",
+    "phonetic": "/hjʊ'mɪdɪfaɪ/",
+    "explains": [
+      "v. 使潮湿；使湿润"
+    ]
+  },
+  "humidity": {
+    "word": "humidity",
+    "phonetic": "/hjʊ'mɪdɪtɪ/",
+    "explains": [
+      "n. 湿气；湿度"
+    ]
+  },
+  "humilde": {
+    "word": "humilde",
+    "phonetic": "",
+    "explains": [
+      "adj. 谦虚的"
+    ]
+  },
+  "humiliate": {
+    "word": "humiliate",
+    "phonetic": "/hjʊ'mɪlɪeɪt/",
+    "explains": [
+      "v. 羞辱；使…丢脸；耻辱"
+    ]
+  },
+  "humiliating": {
+    "word": "humiliating",
+    "phonetic": "/hjʊ'mɪlɪeɪtɪŋ/",
+    "explains": [
+      "adj. 丢脸的；羞辱性的；v. 使蒙耻（humiliate的ing形式）"
+    ]
+  },
+  "humility": {
+    "word": "humility",
+    "phonetic": "/hjʊ'mɪlɪtɪ/",
+    "explains": [
+      "n. 谦卑"
+    ]
+  },
+  "hummingbird": {
+    "word": "hummingbird",
+    "phonetic": "/'hʌmɪŋbɜːd/",
+    "explains": [
+      "n. 蜂雀"
+    ]
+  },
+  "hummock": {
+    "word": "hummock",
+    "phonetic": "/'hʌmək/",
+    "explains": [
+      "n. 圆丘, 小丘, 山岗, 冰群（冰原上的）, <美>沼泽中的肥沃高地"
+    ]
+  },
+  "humo": {
+    "word": "humo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 烟"
+    ]
+  },
+  "humor": {
+    "word": "humor",
+    "phonetic": "/ˈhjuːmə/",
+    "explains": [
+      "n. 幽默，诙谐；心情；v. 迎合，迁就；顺应"
+    ]
+  },
+  "humorous": {
+    "word": "humorous",
+    "phonetic": "/'hjuːm(ə)rəs/",
+    "explains": [
+      "adj. 富于幽默的，诙谐的"
+    ]
+  },
+  "humorously": {
+    "word": "humorously",
+    "phonetic": "",
+    "explains": [
+      "adv. 幽默地, 滑稽地"
+    ]
+  },
+  "humour": {
+    "word": "humour",
+    "phonetic": "/ˈhjuːmə/",
+    "explains": [
+      "n. 幽默"
+    ]
+  },
+  "hump": {
+    "word": "hump",
+    "phonetic": "/hʌmp/",
+    "explains": [
+      "n. 驼峰,峰丘；v. (使)隆起"
+    ]
+  },
+  "humpback": {
+    "word": "humpback",
+    "phonetic": "/'hʌm(p)bæk/",
+    "explains": [
+      "n. 驼背；座头鲸"
+    ]
+  },
+  "humus": {
+    "word": "humus",
+    "phonetic": "/'hjuːməs/",
+    "explains": [
+      "n. 腐殖质；腐植土"
+    ]
+  },
+  "hunch": {
+    "word": "hunch",
+    "phonetic": "/hʌn(t)ʃ/",
+    "explains": [
+      "n. 圆形之隆起物, 肉峰, 预感, 大块"
+    ]
+  },
+  "hunchback": {
+    "word": "hunchback",
+    "phonetic": "/'hʌn(t)ʃbæk/",
+    "explains": [
+      "n. 驼背"
+    ]
+  },
   "hundred": {
     "word": "hundred",
     "phonetic": "/ˈhʌndrəd/",
@@ -405,11 +5396,102 @@
       "num. 一百；许多"
     ]
   },
+  "hundredfold": {
+    "word": "hundredfold",
+    "phonetic": "/'hʌndrədfəʊld/",
+    "explains": [
+      "adj. 百倍的；n. 百倍, 百重"
+    ]
+  },
+  "hundredth": {
+    "word": "hundredth",
+    "phonetic": "/'hʌndrədθ/",
+    "explains": [
+      "adj. 第一百的；一百分之一的；n. 第一百，第一百个；百分之一"
+    ]
+  },
+  "hundredweight": {
+    "word": "hundredweight",
+    "phonetic": "/'hʌndrədweɪt/",
+    "explains": [
+      "n. 英担（重量单位）"
+    ]
+  },
+  "hunger": {
+    "word": "hunger",
+    "phonetic": "/ˈhʌŋgə/",
+    "explains": [
+      "n. 饥饿"
+    ]
+  },
   "hungry": {
     "word": "hungry",
     "phonetic": "/ˈhʌŋɡri/",
     "explains": [
       "adj. 饥饿的；渴望的"
+    ]
+  },
+  "hunk": {
+    "word": "hunk",
+    "phonetic": "/hʌŋk/",
+    "explains": [
+      "n. <俗>大块"
+    ]
+  },
+  "hunker": {
+    "word": "hunker",
+    "phonetic": "/'hʌŋkə/",
+    "explains": [
+      "v. 盘坐"
+    ]
+  },
+  "hunt": {
+    "word": "hunt",
+    "phonetic": "/hʌnt/",
+    "explains": [
+      "v. 打猎；搜寻"
+    ]
+  },
+  "hunter": {
+    "word": "hunter",
+    "phonetic": "/'hʌntə/",
+    "explains": [
+      "n. 猎人"
+    ]
+  },
+  "hurdle": {
+    "word": "hurdle",
+    "phonetic": "/'hɜːd(ə)l/",
+    "explains": [
+      "n. 篱笆, 栏, 障碍, 跨栏, 活动篱笆"
+    ]
+  },
+  "hurl": {
+    "word": "hurl",
+    "phonetic": "/hɜːl/",
+    "explains": [
+      "v. 猛投；猛冲"
+    ]
+  },
+  "hurrah": {
+    "word": "hurrah",
+    "phonetic": "/hʊ'rɑː/",
+    "explains": [
+      "int. 好哇，万岁，乌拉"
+    ]
+  },
+  "hurricane": {
+    "word": "hurricane",
+    "phonetic": "/ˈhʌrɪkən; -k(ə)n/",
+    "explains": [
+      "n. 飓风"
+    ]
+  },
+  "hurried": {
+    "word": "hurried",
+    "phonetic": "/'hʌrɪd/",
+    "explains": [
+      "adj. 匆忙的；草率的；v. 催促；匆忙进行；急派（hurry的过去分词）"
     ]
   },
   "hurry": {
@@ -426,11 +5508,508 @@
       "v. 使受伤；使疼痛；伤害"
     ]
   },
+  "hurtle": {
+    "word": "hurtle",
+    "phonetic": "/'hɜːt(ə)l/",
+    "explains": [
+      "v. 急飞"
+    ]
+  },
   "husband": {
     "word": "husband",
     "phonetic": "/ˈhʌzbənd/",
     "explains": [
       "n. 丈夫"
+    ]
+  },
+  "husbandry": {
+    "word": "husbandry",
+    "phonetic": "/'hʌzbəndrɪ/",
+    "explains": [
+      "n. 管理"
+    ]
+  },
+  "hush": {
+    "word": "hush",
+    "phonetic": "/hʌʃ/",
+    "explains": [
+      "n. 沉默；int. 嘘！"
+    ]
+  },
+  "husk": {
+    "word": "husk",
+    "phonetic": "/hʌsk/",
+    "explains": [
+      "n. 外壳；v剥壳,削皮"
+    ]
+  },
+  "husky": {
+    "word": "husky",
+    "phonetic": "/'hʌskɪ/",
+    "explains": [
+      "adj. 谷的, 像谷的, (声音)沙哑的, 嘶哑的"
+    ]
+  },
+  "hustings": {
+    "word": "hustings",
+    "phonetic": "/'hʌstɪŋz/",
+    "explains": [
+      "n. 议员竞选演说坛, 选举程序"
+    ]
+  },
+  "hustle": {
+    "word": "hustle",
+    "phonetic": "/'hʌs(ə)l/",
+    "explains": [
+      "v. 催促；猛推；强夺；n. 推；奔忙；拥挤喧嚷"
+    ]
+  },
+  "hustler": {
+    "word": "hustler",
+    "phonetic": "/'hʌslə/",
+    "explains": [
+      "n. 皮条客, 骗徒, 催促者"
+    ]
+  },
+  "hut": {
+    "word": "hut",
+    "phonetic": "/hʌt/",
+    "explains": [
+      "n. 小屋，棚屋"
+    ]
+  },
+  "hutch": {
+    "word": "hutch",
+    "phonetic": "/hʌtʃ/",
+    "explains": [
+      "n. 笼；小屋；贮藏箱；矿车；vt. 把…装箱"
+    ]
+  },
+  "hyaline": {
+    "word": "hyaline",
+    "phonetic": "/'haɪəlɪn; -iːn; -aɪn/",
+    "explains": [
+      "adj. 透明的"
+    ]
+  },
+  "hybrid": {
+    "word": "hybrid",
+    "phonetic": "/'haɪbrɪd/",
+    "explains": [
+      "n. 杂种，混血儿；混合物；adj. 混合的；杂种的"
+    ]
+  },
+  "hydra": {
+    "word": "hydra",
+    "phonetic": "",
+    "explains": [
+      "n. [希神]九头怪蛇, 难以根除之祸害, [动]水螅"
+    ]
+  },
+  "hydrant": {
+    "word": "hydrant",
+    "phonetic": "/'haɪdr(ə)nt/",
+    "explains": [
+      "n. 消防栓, 消防龙头"
+    ]
+  },
+  "hydrate": {
+    "word": "hydrate",
+    "phonetic": "/'haɪdreɪt/",
+    "explains": [
+      "n. 水合物；氢氧化物；v. 使成水化合物"
+    ]
+  },
+  "hydration": {
+    "word": "hydration",
+    "phonetic": "/haɪ'dreɪʃən/",
+    "explains": [
+      "n. 水合作用"
+    ]
+  },
+  "hydraulic": {
+    "word": "hydraulic",
+    "phonetic": "/haɪ'drɔːlɪk; haɪ'drɒlɪk/",
+    "explains": [
+      "adj. 水力的；水力学的"
+    ]
+  },
+  "hydrocarbon": {
+    "word": "hydrocarbon",
+    "phonetic": "/,haɪdrə(ʊ)'kɑːb(ə)n/",
+    "explains": [
+      "n. 烃，碳氢化合物"
+    ]
+  },
+  "hydrochloric": {
+    "word": "hydrochloric",
+    "phonetic": "/,haɪdrəʊ'klɒrɪk/",
+    "explains": [
+      "adj. 氯化氢的，盐酸的"
+    ]
+  },
+  "hydrodynamic": {
+    "word": "hydrodynamic",
+    "phonetic": "/,haɪdrəʊdaɪ'næmɪk/",
+    "explains": [
+      "adj. 水力的"
+    ]
+  },
+  "hydroelectric": {
+    "word": "hydroelectric",
+    "phonetic": "/haɪdrəʊɪ'lektrɪk/",
+    "explains": [
+      "adj. 水力电气的"
+    ]
+  },
+  "hydroelectricity": {
+    "word": "hydroelectricity",
+    "phonetic": "/,haɪdroɪ,lɛk'trɪsəti/",
+    "explains": [
+      "n. 水力电气"
+    ]
+  },
+  "hydrogen": {
+    "word": "hydrogen",
+    "phonetic": "/'haɪdrədʒ(ə)n/",
+    "explains": [
+      "n. 氢"
+    ]
+  },
+  "hydrographic": {
+    "word": "hydrographic",
+    "phonetic": "",
+    "explains": [
+      "adj. 水道测量数的,水道学的"
+    ]
+  },
+  "hydrologic": {
+    "word": "hydrologic",
+    "phonetic": "",
+    "explains": [
+      "adj. 水文的"
+    ]
+  },
+  "hydrological": {
+    "word": "hydrological",
+    "phonetic": "",
+    "explains": [
+      "adj. 水文学的"
+    ]
+  },
+  "hydrolysis": {
+    "word": "hydrolysis",
+    "phonetic": "/haɪ'drɒlɪsɪs/",
+    "explains": [
+      "n. 水解作用"
+    ]
+  },
+  "hydroponic": {
+    "word": "hydroponic",
+    "phonetic": "/,haɪdrə'pɑnɪk/",
+    "explains": [
+      "adj. 溶液培养的"
+    ]
+  },
+  "hydroponically": {
+    "word": "hydroponically",
+    "phonetic": "",
+    "explains": [
+      "n. 水耕法,  水栽培"
+    ]
+  },
+  "hydropower": {
+    "word": "hydropower",
+    "phonetic": "/'haɪdrə(ʊ)paʊə/",
+    "explains": [
+      "n. 水力发出的电力"
+    ]
+  },
+  "hydrosphere": {
+    "word": "hydrosphere",
+    "phonetic": "/'haɪdrəsfɪə/",
+    "explains": [
+      "n. 水圈, 水气"
+    ]
+  },
+  "hydroxide": {
+    "word": "hydroxide",
+    "phonetic": "/haɪ'drɒksaɪd/",
+    "explains": [
+      "n. [无化] 氢氧化物；羟化物"
+    ]
+  },
+  "hydroxyapatite": {
+    "word": "hydroxyapatite",
+    "phonetic": "",
+    "explains": [
+      "n. [矿]羟磷灰石"
+    ]
+  },
+  "hyena": {
+    "word": "hyena",
+    "phonetic": "/haɪ'iːnə/",
+    "explains": [
+      "n. [动]土狼, 鬣狗"
+    ]
+  },
+  "hygiene": {
+    "word": "hygiene",
+    "phonetic": "/'haɪdʒiːn/",
+    "explains": [
+      "n. 卫生, 卫生学"
+    ]
+  },
+  "hygrometer": {
+    "word": "hygrometer",
+    "phonetic": "/haɪ'grɒmɪtə/",
+    "explains": [
+      "n. 湿度计"
+    ]
+  },
+  "hygroscopic": {
+    "word": "hygroscopic",
+    "phonetic": "/haɪgrə(ʊ)'skɒpɪk/",
+    "explains": [
+      "adj. 吸湿的"
+    ]
+  },
+  "hyksos": {
+    "word": "hyksos",
+    "phonetic": "/'hiksɔs/",
+    "explains": [
+      "n. 希克索斯王朝(古埃及王朝之一)"
+    ]
+  },
+  "hymn": {
+    "word": "hymn",
+    "phonetic": "/hɪm/",
+    "explains": [
+      "n. 赞美诗，圣歌；赞歌"
+    ]
+  },
+  "hype": {
+    "word": "hype",
+    "phonetic": "/haip/",
+    "explains": [
+      "n.  大肆宣传"
+    ]
+  },
+  "hyper": {
+    "word": "hyper",
+    "phonetic": "/'haɪpə/",
+    "explains": [
+      "adj. 亢奋的,高度紧张的"
+    ]
+  },
+  "hyperactive": {
+    "word": "hyperactive",
+    "phonetic": "/haɪpər'æktɪv/",
+    "explains": [
+      "adj. 极度活跃的；活动过度的"
+    ]
+  },
+  "hyperbola": {
+    "word": "hyperbola",
+    "phonetic": "/haɪ'pɜːbələ/",
+    "explains": [
+      "n. [数] 双曲线"
+    ]
+  },
+  "hyperbole": {
+    "word": "hyperbole",
+    "phonetic": "/haɪ'pɜːbəlɪ/",
+    "explains": [
+      "n. [修辞]夸张法"
+    ]
+  },
+  "hyperbolic": {
+    "word": "hyperbolic",
+    "phonetic": "/,haɪpə'bɒlɪk/",
+    "explains": [
+      "adj. 双曲线的"
+    ]
+  },
+  "hypercritical": {
+    "word": "hypercritical",
+    "phonetic": "/haɪpə'krɪtɪk(ə)l/",
+    "explains": [
+      "adj. 吹毛求疵的，苛评的"
+    ]
+  },
+  "hypermarket": {
+    "word": "hypermarket",
+    "phonetic": "/'haipəˌmɑːkit/",
+    "explains": [
+      "n.  特大超市， 超大型自助商场"
+    ]
+  },
+  "hypersensitive": {
+    "word": "hypersensitive",
+    "phonetic": "/haɪpə'sensɪtɪv/",
+    "explains": [
+      "adj. 过份敏感的"
+    ]
+  },
+  "hypertension": {
+    "word": "hypertension",
+    "phonetic": "/haɪpə'tenʃ(ə)n/",
+    "explains": [
+      "n. 高血压；过度紧张"
+    ]
+  },
+  "hypertherm": {
+    "word": "hypertherm",
+    "phonetic": "",
+    "explains": [
+      "n. 人工发热机"
+    ]
+  },
+  "hypha": {
+    "word": "hypha",
+    "phonetic": "/'haɪfə/",
+    "explains": [
+      "n. [植]菌丝"
+    ]
+  },
+  "hyphen": {
+    "word": "hyphen",
+    "phonetic": "/'haɪf(ə)n/",
+    "explains": [
+      "n. 连字号"
+    ]
+  },
+  "hyphenate": {
+    "word": "hyphenate",
+    "phonetic": "/'haɪfəneɪt/",
+    "explains": [
+      "v. 用连字符号连接；n. 归化的美国公民"
+    ]
+  },
+  "hypnosis": {
+    "word": "hypnosis",
+    "phonetic": "/hɪp'nəʊsɪs/",
+    "explains": [
+      "n. 催眠状态, 催眠"
+    ]
+  },
+  "hypnotic": {
+    "word": "hypnotic",
+    "phonetic": "/hɪp'nɒtɪk/",
+    "explains": [
+      "adj. 催眠的，催眠术的；易于催眠的；n. 安眠药；催眠状态的人"
+    ]
+  },
+  "hypnotism": {
+    "word": "hypnotism",
+    "phonetic": "/'hɪpnətɪz(ə)m/",
+    "explains": [
+      "n. 催眠术；催眠状态"
+    ]
+  },
+  "hypnotize": {
+    "word": "hypnotize",
+    "phonetic": "/'hɪpnətaɪz/",
+    "explains": [
+      "v. 使着迷；对…施催眠术；使恍惚"
+    ]
+  },
+  "hypochondria": {
+    "word": "hypochondria",
+    "phonetic": "/,haɪpə'kɒndrɪə/",
+    "explains": [
+      "n. 忧郁症, 臆想病"
+    ]
+  },
+  "hypochondriac": {
+    "word": "hypochondriac",
+    "phonetic": "/ˌhaipəu'kɔndriæk/",
+    "explains": [
+      "adj.  患疑病症的；n. 疑病症患者"
+    ]
+  },
+  "hypocrisy": {
+    "word": "hypocrisy",
+    "phonetic": "/hɪ'pɒkrɪsɪ/",
+    "explains": [
+      "n. 虚伪；伪善"
+    ]
+  },
+  "hypocrite": {
+    "word": "hypocrite",
+    "phonetic": "/'hɪpəkrɪt/",
+    "explains": [
+      "n. 伪君子；伪善者"
+    ]
+  },
+  "hypocritical": {
+    "word": "hypocritical",
+    "phonetic": "/,hɪpə'krɪtɪkl/",
+    "explains": [
+      "adj. 虚伪的；伪善的"
+    ]
+  },
+  "hypodermic": {
+    "word": "hypodermic",
+    "phonetic": "/haɪpə(ʊ)'dɜːmɪk/",
+    "explains": [
+      "n. 皮下注射；皮下注射器；adj. 皮下的"
+    ]
+  },
+  "hypotenuse": {
+    "word": "hypotenuse",
+    "phonetic": "/haɪ'pɒtənjuːz; -s/",
+    "explains": [
+      "n. 直角三角形的斜边"
+    ]
+  },
+  "hypothalamus": {
+    "word": "hypothalamus",
+    "phonetic": "/,haɪpə(ʊ)'θæləməs/",
+    "explains": [
+      "n. [解剖]视丘下部"
+    ]
+  },
+  "hypothesis": {
+    "word": "hypothesis",
+    "phonetic": "/haɪ'pɒθɪsɪs/",
+    "explains": [
+      "n. 假设；前提"
+    ]
+  },
+  "hypothesize": {
+    "word": "hypothesize",
+    "phonetic": "/haɪ'pɒθɪsaɪz/",
+    "explains": [
+      "v. 假设,猜测"
+    ]
+  },
+  "hypothetical": {
+    "word": "hypothetical",
+    "phonetic": "/,haɪpə'θetɪk(ə)l/",
+    "explains": [
+      "adj. 假说的，臆说的"
+    ]
+  },
+  "hysteria": {
+    "word": "hysteria",
+    "phonetic": "/hɪ'stɪərɪə/",
+    "explains": [
+      "n. 歇斯底里, 不正常的兴奋, 癔病"
+    ]
+  },
+  "hysteric": {
+    "word": "hysteric",
+    "phonetic": "/hɪ'sterɪk/",
+    "explains": [
+      "n. 癔病患者；歇斯底里患者；adj. 歇斯底里的；癔病的；亢奋的"
+    ]
+  },
+  "hysterical": {
+    "word": "hysterical",
+    "phonetic": "/hɪ'sterɪk(ə)l/",
+    "explains": [
+      "adj. 歇斯底里的；异常兴奋的"
     ]
   }
 }

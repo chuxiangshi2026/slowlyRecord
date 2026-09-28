@@ -1,4 +1,25 @@
 {
+  "zagros": {
+    "word": "zagros",
+    "phonetic": "",
+    "explains": [
+      "n. 扎格罗斯山脉[伊朗西南部]"
+    ]
+  },
+  "zany": {
+    "word": "zany",
+    "phonetic": "/'zeɪnɪ/",
+    "explains": [
+      "adj. 滑稽的；古怪的；愚蠢的；n. 小丑；笨人；马屁精"
+    ]
+  },
+  "zapato": {
+    "word": "zapato",
+    "phonetic": "",
+    "explains": [
+      "n.m. 鞋"
+    ]
+  },
   "zeal": {
     "word": "zeal",
     "phonetic": "/ziːl/",
@@ -6,11 +27,53 @@
       "n. 热情；热忱（常用于 positive context，如：She works with great zeal.）"
     ]
   },
+  "zealand": {
+    "word": "zealand",
+    "phonetic": "/'zi:lənd/",
+    "explains": [
+      "n. 西兰岛(丹麦最大的岛)"
+    ]
+  },
+  "zealot": {
+    "word": "zealot",
+    "phonetic": "/'zelət/",
+    "explains": [
+      "n. 狂热者；犹太教狂热信徒"
+    ]
+  },
   "zealous": {
     "word": "zealous",
     "phonetic": "/ˈzeləs/",
     "explains": [
       "adj. 热情的；热心的（a zealous supporter / advocate）"
+    ]
+  },
+  "zebra": {
+    "word": "zebra",
+    "phonetic": "/ˈziːbrə; ˈzebrə/",
+    "explains": [
+      "n. 斑马"
+    ]
+  },
+  "zeitgeist": {
+    "word": "zeitgeist",
+    "phonetic": "/'zaɪtgaɪst/",
+    "explains": [
+      "n. 时代思潮，时代精神"
+    ]
+  },
+  "zenith": {
+    "word": "zenith",
+    "phonetic": "/'zenɪθ/",
+    "explains": [
+      "n. 顶峰；顶点；最高点"
+    ]
+  },
+  "zephyr": {
+    "word": "zephyr",
+    "phonetic": "/'zefə/",
+    "explains": [
+      "n. 和风；西风；轻薄织物"
     ]
   },
   "zero": {
@@ -22,12 +85,49 @@
       "v. （使）归零；对准目标（zero in on something）"
     ]
   },
-  "zone": {
-    "word": "zone",
-    "phonetic": "/zoʊn/",
+  "zest": {
+    "word": "zest",
+    "phonetic": "/zest/",
     "explains": [
-      "n. 区域；地带（time zone, danger zone, comfort zone）",
-      "v. 将…划分为区；集中注意力（zone in/out）"
+      "n. 热情；兴趣；柠檬皮（调味用）",
+      "v. 刮下柠檬皮"
+    ]
+  },
+  "ziggurat": {
+    "word": "ziggurat",
+    "phonetic": "/'zɪgʊræt/",
+    "explains": [
+      "n. 古代亚述及巴比伦之金字形神塔(顶上有神殿)"
+    ]
+  },
+  "zigzag": {
+    "word": "zigzag",
+    "phonetic": "/ˈzɪɡzæɡ/",
+    "explains": [
+      "n. 之字形；锯齿形",
+      "adj./adv. 之字形的/地",
+      "v. 呈之字形前进"
+    ]
+  },
+  "zilch": {
+    "word": "zilch",
+    "phonetic": "/zɪltʃ/",
+    "explains": [
+      "n. 微不足道的事物（或人）, 小人物, 无, 零, 无价值之物"
+    ]
+  },
+  "zinc": {
+    "word": "zinc",
+    "phonetic": "/zɪŋk/",
+    "explains": [
+      "n. 锌；v. 在…上镀锌"
+    ]
+  },
+  "zionism": {
+    "word": "zionism",
+    "phonetic": "/'zaiənizəm/",
+    "explains": [
+      "n. 犹太复国主义；锡安运动"
     ]
   },
   "zip": {
@@ -38,11 +138,25 @@
       "v. 拉上/拉开拉链；快速移动（The car zipped past.）"
     ]
   },
-  "zoo": {
-    "word": "zoo",
-    "phonetic": "/zuː/",
+  "zipper": {
+    "word": "zipper",
+    "phonetic": "/'zɪpə/",
     "explains": [
-      "n. 动物园（= zoological garden 的缩写）"
+      "n. 拉链；v. 拉上拉链"
+    ]
+  },
+  "zippy": {
+    "word": "zippy",
+    "phonetic": "/'zɪpɪ/",
+    "explains": [
+      "adj. 敏捷的, 活泼的"
+    ]
+  },
+  "zirconium": {
+    "word": "zirconium",
+    "phonetic": "/zɜː'kəʊnɪəm/",
+    "explains": [
+      "n. 锆"
     ]
   },
   "zombie": {
@@ -50,6 +164,42 @@
     "phonetic": "/ˈzɒmbi/",
     "explains": [
       "n. 僵尸；丧尸；行尸走肉"
+    ]
+  },
+  "zona": {
+    "word": "zona",
+    "phonetic": "",
+    "explains": [
+      "n.f. 区域"
+    ]
+  },
+  "zone": {
+    "word": "zone",
+    "phonetic": "/zoʊn/",
+    "explains": [
+      "n. 区域；地带（time zone, danger zone, comfort zone）",
+      "v. 将…划分为区；集中注意力（zone in/out）"
+    ]
+  },
+  "zoo": {
+    "word": "zoo",
+    "phonetic": "/zuː/",
+    "explains": [
+      "n. 动物园（= zoological garden 的缩写）"
+    ]
+  },
+  "zoologist": {
+    "word": "zoologist",
+    "phonetic": "/zəʊ'ɒlədʒɪst/",
+    "explains": [
+      "n. 动物学家"
+    ]
+  },
+  "zoology": {
+    "word": "zoology",
+    "phonetic": "/zuː'ɒlədʒɪ; zəʊ-/",
+    "explains": [
+      "n. 动物学, 生态"
     ]
   },
   "zoom": {
@@ -60,21 +210,39 @@
       "n. 变焦镜头；嗡嗡声；激增"
     ]
   },
-  "zest": {
-    "word": "zest",
-    "phonetic": "/zest/",
+  "zorro": {
+    "word": "zorro",
+    "phonetic": "",
     "explains": [
-      "n. 热情；兴趣；柠檬皮（调味用）",
-      "v. 刮下柠檬皮"
+      "n.m. 狐狸"
     ]
   },
-  "zigzag": {
-    "word": "zigzag",
-    "phonetic": "/ˈzɪɡzæɡ/",
+  "zoster": {
+    "word": "zoster",
+    "phonetic": "/'zɒstə/",
     "explains": [
-      "n. 之字形；锯齿形",
-      "adj./adv. 之字形的/地",
-      "v. 呈之字形前进"
+      "n. 带, 带状疹子"
+    ]
+  },
+  "zulu": {
+    "word": "zulu",
+    "phonetic": "/'zu:lu:/",
+    "explains": [
+      "n. 祖鲁语；祖鲁人；adj. 祖鲁人的"
+    ]
+  },
+  "zumo": {
+    "word": "zumo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 果汁"
+    ]
+  },
+  "zygote": {
+    "word": "zygote",
+    "phonetic": "/'zaɪgəʊt/",
+    "explains": [
+      "n. [生物] 受精卵, 接合子, 接合体"
     ]
   }
 }

@@ -1,4 +1,95 @@
 {
+  "kaleidoscope": {
+    "word": "kaleidoscope",
+    "phonetic": "/kə'laɪdəskəʊp/",
+    "explains": [
+      "n. 万花筒；千变万化"
+    ]
+  },
+  "kaleidoscopic": {
+    "word": "kaleidoscopic",
+    "phonetic": "/kəlaɪdə'skɒpɪk/",
+    "explains": [
+      "adj. 万花筒的, 五花八门的"
+    ]
+  },
+  "kangaroo": {
+    "word": "kangaroo",
+    "phonetic": "/,kæŋgə'ruː/",
+    "explains": [
+      "n. [动]袋鼠"
+    ]
+  },
+  "kaput": {
+    "word": "kaput",
+    "phonetic": "/kə'pʊt/",
+    "explains": [
+      "adj. 过时的, 故障的, 失败了的"
+    ]
+  },
+  "karaoke": {
+    "word": "karaoke",
+    "phonetic": "/,kærɪ'əʊkɪ/",
+    "explains": [
+      "n. 卡拉OK；卡拉OK录音，自动伴奏录音"
+    ]
+  },
+  "karat": {
+    "word": "karat",
+    "phonetic": "/'kærət/",
+    "explains": [
+      "n. 开（黄金成色单位）；克拉（宝石的重量单位，等于carat）"
+    ]
+  },
+  "karate": {
+    "word": "karate",
+    "phonetic": "",
+    "explains": [
+      "n. [日] 空手道(日本的一种徒手自卫武术)"
+    ]
+  },
+  "karst": {
+    "word": "karst",
+    "phonetic": "/kɑːst/",
+    "explains": [
+      "n. 石灰岩地区常见的地形"
+    ]
+  },
+  "katherine": {
+    "word": "katherine",
+    "phonetic": "/'kæθərin/",
+    "explains": [
+      "n. 凯瑟琳（女子名）"
+    ]
+  },
+  "kayak": {
+    "word": "kayak",
+    "phonetic": "/'kaɪæk/",
+    "explains": [
+      "n. 爱斯基摩人用的皮船, 皮船"
+    ]
+  },
+  "kea": {
+    "word": "kea",
+    "phonetic": "/'kiːə/",
+    "explains": [
+      "n. 食肉鹦鹉"
+    ]
+  },
+  "keel": {
+    "word": "keel",
+    "phonetic": "/kiːl/",
+    "explains": [
+      "n. 龙骨(船的脊骨),平底船；v. 装以龙骨,倾覆"
+    ]
+  },
+  "keelboat": {
+    "word": "keelboat",
+    "phonetic": "/'kiːlbəʊt/",
+    "explains": [
+      "n. 一种河船"
+    ]
+  },
   "keen": {
     "word": "keen",
     "phonetic": "/kiːn/",
@@ -6,11 +97,123 @@
       "adj. 热心的；敏锐的；强烈的；锋利的"
     ]
   },
+  "keenly": {
+    "word": "keenly",
+    "phonetic": "/'ki:nli/",
+    "explains": [
+      "adv. 敏锐地, 强烈地, 热心地"
+    ]
+  },
   "keep": {
     "word": "keep",
     "phonetic": "/kiːp/",
     "explains": [
       "v. 保持；保留；遵守；饲养；继续"
+    ]
+  },
+  "keeper": {
+    "word": "keeper",
+    "phonetic": "/'kiːpə/",
+    "explains": [
+      "n. 饲养员；看护人"
+    ]
+  },
+  "keepsake": {
+    "word": "keepsake",
+    "phonetic": "/'kiːpseɪk/",
+    "explains": [
+      "n. 纪念品"
+    ]
+  },
+  "kelvin": {
+    "word": "kelvin",
+    "phonetic": "/'kelvɪn/",
+    "explains": [
+      "n. 绝对温标；凯尔文（男子名）；[热] 开尔文（英国物理学家，数学家）；adj. 开氏度的（常作K-）"
+    ]
+  },
+  "ken": {
+    "word": "ken",
+    "phonetic": "/ken/",
+    "explains": [
+      "n. 视野范围，见地，知识范围"
+    ]
+  },
+  "kennel": {
+    "word": "kennel",
+    "phonetic": "/'ken(ə)l/",
+    "explains": [
+      "n. 狗窝；v. 置于狗窝,关进狗窝"
+    ]
+  },
+  "kenya": {
+    "word": "kenya",
+    "phonetic": "/ˈkɛnjə/",
+    "explains": [
+      "n. 肯尼亚"
+    ]
+  },
+  "keplerian": {
+    "word": "keplerian",
+    "phonetic": "",
+    "explains": [
+      "adj. 开普勒理论的,开普勒定律的"
+    ]
+  },
+  "keratitis": {
+    "word": "keratitis",
+    "phonetic": "/,kerə'taɪtɪs/",
+    "explains": [
+      "n. [眼科] 角膜炎"
+    ]
+  },
+  "kerfuffle": {
+    "word": "kerfuffle",
+    "phonetic": "/kə'fʌf(ə)l/",
+    "explains": [
+      "n. 混乱, 动乱"
+    ]
+  },
+  "kermis": {
+    "word": "kermis",
+    "phonetic": "/'kəːmis/",
+    "explains": [
+      "n.  义卖市场"
+    ]
+  },
+  "kernel": {
+    "word": "kernel",
+    "phonetic": "/'kɜːn(ə)l/",
+    "explains": [
+      "n. （果实的）核；谷粒"
+    ]
+  },
+  "kerosene": {
+    "word": "kerosene",
+    "phonetic": "/'kerəsiːn/",
+    "explains": [
+      "n. 煤油"
+    ]
+  },
+  "kestrel": {
+    "word": "kestrel",
+    "phonetic": "/'kestr(ə)l/",
+    "explains": [
+      "n. (一种)鹰"
+    ]
+  },
+  "ketchup": {
+    "word": "ketchup",
+    "phonetic": "/'ketʃəp; -ʌp/",
+    "explains": [
+      "n. 调味蕃茄酱"
+    ]
+  },
+  "kettle": {
+    "word": "kettle",
+    "phonetic": "/ˈket(ə)l/",
+    "explains": [
+      "n. 水壶"
     ]
   },
   "key": {
@@ -27,11 +230,46 @@
       "n. 键盘"
     ]
   },
+  "keyhole": {
+    "word": "keyhole",
+    "phonetic": "/'kiːhəʊl/",
+    "explains": [
+      "n. 锁眼；[建] 键孔；adj. 显示内情的"
+    ]
+  },
+  "keynote": {
+    "word": "keynote",
+    "phonetic": "/'kiːnəʊt/",
+    "explains": [
+      "n. 基调；主旨；主音；v. 给…定基调；说明基本政策"
+    ]
+  },
+  "khaki": {
+    "word": "khaki",
+    "phonetic": "/'kɑːkɪ/",
+    "explains": [
+      "n. 卡其色；卡其布；adj. 卡其色的；黄褐色的；卡其布做的"
+    ]
+  },
   "kick": {
     "word": "kick",
     "phonetic": "/kɪk/",
     "explains": [
       "v./n. 踢；踹；踢腿"
+    ]
+  },
+  "kickback": {
+    "word": "kickback",
+    "phonetic": "/'kikbæk/",
+    "explains": [
+      "n.  回扣； 佣金； 暗盘"
+    ]
+  },
+  "kickoff": {
+    "word": "kickoff",
+    "phonetic": "/'kikɔf/",
+    "explains": [
+      "n. 开始；开球"
     ]
   },
   "kid": {
@@ -41,11 +279,53 @@
       "n. 小孩；年轻人 v. 开玩笑；欺骗"
     ]
   },
+  "kidnap": {
+    "word": "kidnap",
+    "phonetic": "/'kɪdnæp/",
+    "explains": [
+      "v. 诱拐，绑架"
+    ]
+  },
+  "kidnapper": {
+    "word": "kidnapper",
+    "phonetic": "/'kidnæpə/",
+    "explains": [
+      "n. 绑匪；诱拐者"
+    ]
+  },
+  "kidney": {
+    "word": "kidney",
+    "phonetic": "/'kɪdnɪ/",
+    "explains": [
+      "n. 肾，腰子"
+    ]
+  },
+  "kier": {
+    "word": "kier",
+    "phonetic": "/kɪə/",
+    "explains": [
+      "n. 漂煮锅"
+    ]
+  },
   "kill": {
     "word": "kill",
     "phonetic": "/kɪl/",
     "explains": [
       "v. 杀死；弄死；使停止；破坏"
+    ]
+  },
+  "killer": {
+    "word": "killer",
+    "phonetic": "/'kɪlə/",
+    "explains": [
+      "n. 杀手；致死；止痛药；宰杀的器具；断路器"
+    ]
+  },
+  "kiln": {
+    "word": "kiln",
+    "phonetic": "/kɪln/",
+    "explains": [
+      "n. 窑,炉"
     ]
   },
   "kilo": {
@@ -55,11 +335,53 @@
       "n. 千克；公斤"
     ]
   },
+  "kilobyte": {
+    "word": "kilobyte",
+    "phonetic": "/'kɪləbaɪt/",
+    "explains": [
+      "n. [计] 千字节，1024字节"
+    ]
+  },
+  "kilogram": {
+    "word": "kilogram",
+    "phonetic": "/ˈkɪləɡræm/",
+    "explains": [
+      "n. 千克，公斤"
+    ]
+  },
+  "kilogramme": {
+    "word": "kilogramme",
+    "phonetic": "",
+    "explains": [
+      "n. 公斤；千克"
+    ]
+  },
+  "kilometer": {
+    "word": "kilometer",
+    "phonetic": "/'kɪlə,mitɚ/",
+    "explains": [
+      "n. 千米,公里"
+    ]
+  },
   "kilometre": {
     "word": "kilometre",
     "phonetic": "/ˈkɪləmiːtə(r)/",
     "explains": [
       "n. 千米；公里"
+    ]
+  },
+  "kilowatt": {
+    "word": "kilowatt",
+    "phonetic": "/'kɪləwɒt/",
+    "explains": [
+      "n. 千瓦（特）"
+    ]
+  },
+  "kin": {
+    "word": "kin",
+    "phonetic": "/kɪn/",
+    "explains": [
+      "n. 亲戚；家族；同族；adj. 同类的；有亲属关系的；性质类似的"
     ]
   },
   "kind": {
@@ -69,11 +391,144 @@
       "adj. 和蔼的；宽容的；令人感激的 n. 种类；性质"
     ]
   },
+  "kindergarten": {
+    "word": "kindergarten",
+    "phonetic": "/'kɪndə,gɑːt(ə)n/",
+    "explains": [
+      "n. 幼儿园；幼稚园"
+    ]
+  },
+  "kindhearted": {
+    "word": "kindhearted",
+    "phonetic": "/'kaɪnd'hɑːtɪd/",
+    "explains": [
+      "adj. 仁慈的，好心肠的"
+    ]
+  },
+  "kindle": {
+    "word": "kindle",
+    "phonetic": "/'kɪnd(ə)l/",
+    "explains": [
+      "v. 点燃，着火"
+    ]
+  },
+  "kindly": {
+    "word": "kindly",
+    "phonetic": "/'kaɪndlɪ/",
+    "explains": [
+      "adv. 亲切地；温和地；仁慈地；adj. 亲切的；和蔼的；体贴的；爽快的"
+    ]
+  },
+  "kindness": {
+    "word": "kindness",
+    "phonetic": "/ˈkaɪn(d)nɪs/",
+    "explains": [
+      "n. 善良"
+    ]
+  },
+  "kindred": {
+    "word": "kindred",
+    "phonetic": "/'kɪndrɪd/",
+    "explains": [
+      "adj. 同类的；血缘的；同族的；n. 家族；相似；亲属关系"
+    ]
+  },
+  "kinetic": {
+    "word": "kinetic",
+    "phonetic": "/kɪ'netɪk; kaɪ-/",
+    "explains": [
+      "adj. 动力（学）的；活动的"
+    ]
+  },
+  "kinetoscope": {
+    "word": "kinetoscope",
+    "phonetic": "",
+    "explains": [
+      "n. 活动电影放映机"
+    ]
+  },
+  "kinfolk": {
+    "word": "kinfolk",
+    "phonetic": "/'kɪnfəʊk/",
+    "explains": [
+      "n. 亲属"
+    ]
+  },
   "king": {
     "word": "king",
     "phonetic": "/kɪŋ/",
     "explains": [
       "n. 国王；君主；最有势力者"
+    ]
+  },
+  "kingdom": {
+    "word": "kingdom",
+    "phonetic": "/ˈkɪŋdəm/",
+    "explains": [
+      "n. 王国"
+    ]
+  },
+  "kinglet": {
+    "word": "kinglet",
+    "phonetic": "/'kɪŋlɪt/",
+    "explains": [
+      "n. <贬>懦弱的国王,小国君主"
+    ]
+  },
+  "kink": {
+    "word": "kink",
+    "phonetic": "/kɪŋk/",
+    "explains": [
+      "n. 结 v纠结,纽绞"
+    ]
+  },
+  "kinky": {
+    "word": "kinky",
+    "phonetic": "/'kɪŋkɪ/",
+    "explains": [
+      "adj. 卷曲的, 古怪的"
+    ]
+  },
+  "kinsfolk": {
+    "word": "kinsfolk",
+    "phonetic": "/'kɪnzfəʊk/",
+    "explains": [
+      "n. 亲属；家属"
+    ]
+  },
+  "kinship": {
+    "word": "kinship",
+    "phonetic": "/'kɪnʃɪp/",
+    "explains": [
+      "n. 血族关系"
+    ]
+  },
+  "kinsman": {
+    "word": "kinsman",
+    "phonetic": "/'kɪnzmən/",
+    "explains": [
+      "n. 男性亲戚, 同族者"
+    ]
+  },
+  "kiosk": {
+    "word": "kiosk",
+    "phonetic": "/'kiːɒsk/",
+    "explains": [
+      "n. 亭子"
+    ]
+  },
+  "kiosque": {
+    "word": "kiosque",
+    "phonetic": "",
+    "explains": [
+      "n.m. 报亭；凉亭"
+    ]
+  },
+  "kismet": {
+    "word": "kismet",
+    "phonetic": "/'kɪzmet; -mɪt; -s-/",
+    "explains": [
+      "n. 天命；命运"
     ]
   },
   "kiss": {
@@ -83,11 +538,25 @@
       "v./n. 亲吻；接吻；轻拂"
     ]
   },
+  "kit": {
+    "word": "kit",
+    "phonetic": "/kɪt/",
+    "explains": [
+      "n. 成套工具；用具包"
+    ]
+  },
   "kitchen": {
     "word": "kitchen",
     "phonetic": "/ˈkɪtʃɪn/",
     "explains": [
       "n. 厨房；炊具；炊事人员"
+    ]
+  },
+  "kitchenware": {
+    "word": "kitchenware",
+    "phonetic": "/'kɪtʃɪnweə; 'kɪtʃ(ə)n-/",
+    "explains": [
+      "n. 厨房用具"
     ]
   },
   "kite": {
@@ -97,11 +566,109 @@
       "n. 风筝"
     ]
   },
+  "kitsch": {
+    "word": "kitsch",
+    "phonetic": "/kɪtʃ/",
+    "explains": [
+      "n. 粗劣作品或工艺品"
+    ]
+  },
+  "kitten": {
+    "word": "kitten",
+    "phonetic": "/'kɪt(ə)n/",
+    "explains": [
+      "n. 小猫, 小动物"
+    ]
+  },
+  "kittiwake": {
+    "word": "kittiwake",
+    "phonetic": "/'kɪtɪweɪk/",
+    "explains": [
+      "n. 三趾鸥"
+    ]
+  },
+  "kiwi": {
+    "word": "kiwi",
+    "phonetic": "/'kiːwiː; -wɪ/",
+    "explains": [
+      "n. [鸟]几维(一种新西兰产的无翼鸟)"
+    ]
+  },
+  "kleptomania": {
+    "word": "kleptomania",
+    "phonetic": "/,kleptə(ʊ)'meɪnɪə/",
+    "explains": [
+      "n. 盗窃癖"
+    ]
+  },
+  "kleptomaniac": {
+    "word": "kleptomaniac",
+    "phonetic": "/,klɛptə'menɪæk/",
+    "explains": [
+      "n. 有窃盗癖的人"
+    ]
+  },
+  "knack": {
+    "word": "knack",
+    "phonetic": "/næk/",
+    "explains": [
+      "n. 诀窍"
+    ]
+  },
+  "knackered": {
+    "word": "knackered",
+    "phonetic": "/'nækɚd/",
+    "explains": [
+      "adj. 筋疲力尽的"
+    ]
+  },
+  "knap": {
+    "word": "knap",
+    "phonetic": "/næp/",
+    "explains": [
+      "v. 敲击"
+    ]
+  },
+  "knapsack": {
+    "word": "knapsack",
+    "phonetic": "/'næpsæk/",
+    "explains": [
+      "n. 背包"
+    ]
+  },
+  "knave": {
+    "word": "knave",
+    "phonetic": "/neɪv/",
+    "explains": [
+      "n. 无赖；流氓；（纸牌中的）杰克"
+    ]
+  },
+  "knavery": {
+    "word": "knavery",
+    "phonetic": "/'neɪvərɪ/",
+    "explains": [
+      "n. 恶行，欺诈；无赖行为"
+    ]
+  },
+  "knead": {
+    "word": "knead",
+    "phonetic": "/niːd/",
+    "explains": [
+      "v. 揉(面等)成团, 按摩"
+    ]
+  },
   "knee": {
     "word": "knee",
     "phonetic": "/niː/",
     "explains": [
       "n. 膝盖；膝关节"
+    ]
+  },
+  "kneel": {
+    "word": "kneel",
+    "phonetic": "/niːl/",
+    "explains": [
+      "v. 跪"
     ]
   },
   "knife": {
@@ -111,11 +678,74 @@
       "n. 刀；匕首 v. 用刀切割"
     ]
   },
+  "knight": {
+    "word": "knight",
+    "phonetic": "/naɪt/",
+    "explains": [
+      "n. 骑士，武士；爵士"
+    ]
+  },
+  "knighthood": {
+    "word": "knighthood",
+    "phonetic": "/'naɪthʊd/",
+    "explains": [
+      "n. 骑士；骑士身份"
+    ]
+  },
+  "knit": {
+    "word": "knit",
+    "phonetic": "/nɪt/",
+    "explains": [
+      "v. 编织"
+    ]
+  },
+  "knob": {
+    "word": "knob",
+    "phonetic": "/nɒb/",
+    "explains": [
+      "n. 把手"
+    ]
+  },
   "knock": {
     "word": "knock",
     "phonetic": "/nɒk/",
     "explains": [
       "v./n. 敲；击；打；碰撞"
+    ]
+  },
+  "knockdown": {
+    "word": "knockdown",
+    "phonetic": "/'nɔkdaun/",
+    "explains": [
+      "adj.  极低的"
+    ]
+  },
+  "knocker": {
+    "word": "knocker",
+    "phonetic": "/'nɒkə/",
+    "explains": [
+      "n. 门环"
+    ]
+  },
+  "knoll": {
+    "word": "knoll",
+    "phonetic": "/nəʊl/",
+    "explains": [
+      "n. 小山"
+    ]
+  },
+  "knot": {
+    "word": "knot",
+    "phonetic": "/nɒt/",
+    "explains": [
+      "n. （绳的）结；（树的）节"
+    ]
+  },
+  "knotty": {
+    "word": "knotty",
+    "phonetic": "/'nɒtɪ/",
+    "explains": [
+      "adj. (木材等)多结的, 多节的, 多瘤的, 棘手的, 困难多的"
     ]
   },
   "know": {
@@ -125,11 +755,109 @@
       "v. 知道；了解；认识；懂得"
     ]
   },
+  "know-how": {
+    "word": "know-how",
+    "phonetic": "/'nəuhau/",
+    "explains": [
+      "n.  实际知识； 技能； 窍门"
+    ]
+  },
+  "knowhow": {
+    "word": "knowhow",
+    "phonetic": "",
+    "explains": [
+      "n. 诀窍，技巧；情报；实际的能力；专门技术"
+    ]
+  },
   "knowledge": {
     "word": "knowledge",
     "phonetic": "/ˈnɒlɪdʒ/",
     "explains": [
       "n. 知识；学问；知道；认识"
+    ]
+  },
+  "knowledgeable": {
+    "word": "knowledgeable",
+    "phonetic": "/'nɒlɪdʒəb(ə)l/",
+    "explains": [
+      "adj. 知识渊博的, 有见识的"
+    ]
+  },
+  "known": {
+    "word": "known",
+    "phonetic": "/nəʊn/",
+    "explains": [
+      "adj. 已知的；知名的；大家知道的；v. 知道（know的过去分词）"
+    ]
+  },
+  "knuckle": {
+    "word": "knuckle",
+    "phonetic": "/'nʌk(ə)l/",
+    "explains": [
+      "n. 指节, 关节；v. 开始工作"
+    ]
+  },
+  "knurl": {
+    "word": "knurl",
+    "phonetic": "/nɜːl/",
+    "explains": [
+      "n. 硬节"
+    ]
+  },
+  "kohoutek": {
+    "word": "kohoutek",
+    "phonetic": "/kə'hu:tek/",
+    "explains": [
+      "n. [天]科胡特克彗星"
+    ]
+  },
+  "koran": {
+    "word": "koran",
+    "phonetic": "/kɔ'rɑ:n/",
+    "explains": [
+      "n. 《可兰经》，《古兰经》（伊斯兰教）"
+    ]
+  },
+  "korean": {
+    "word": "korean",
+    "phonetic": "/kə'riən/",
+    "explains": [
+      "n. 韩国人, 韩国语 a朝鲜人的, 朝鲜语的"
+    ]
+  },
+  "kowtow": {
+    "word": "kowtow",
+    "phonetic": "/kaʊ'taʊ/",
+    "explains": [
+      "v. 叩头；卑躬屈膝；n. 叩头"
+    ]
+  },
+  "krill": {
+    "word": "krill",
+    "phonetic": "/krɪl/",
+    "explains": [
+      "n. [动]磷虾(单复同)"
+    ]
+  },
+  "krona": {
+    "word": "krona",
+    "phonetic": "/'krəunə/",
+    "explains": [
+      "n.  克朗"
+    ]
+  },
+  "krypton": {
+    "word": "krypton",
+    "phonetic": "/'krɪptɒn/",
+    "explains": [
+      "n. [化] 氪"
+    ]
+  },
+  "kudos": {
+    "word": "kudos",
+    "phonetic": "/'kjuːdɔs/",
+    "explains": [
+      "n.  名望， 荣誉， 声誉"
     ]
   }
 }

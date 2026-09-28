@@ -1,4 +1,18 @@
 {
+  "e-commerce": {
+    "word": "e-commerce",
+    "phonetic": "/'ɪːˌkɔməːs/",
+    "explains": [
+      "n.  电子商务"
+    ]
+  },
+  "e-mail": {
+    "word": "e-mail",
+    "phonetic": "/'iːˌmeil/",
+    "explains": [
+      "n.  电子邮件"
+    ]
+  },
   "each": {
     "word": "each",
     "phonetic": "/iːtʃ/",
@@ -12,6 +26,20 @@
     "phonetic": "/ˈiːɡər/",
     "explains": [
       "adj. 渴望的；热切的"
+    ]
+  },
+  "eagerly": {
+    "word": "eagerly",
+    "phonetic": "/'i:gəlɪ/",
+    "explains": [
+      "adv. 热心地,急切地"
+    ]
+  },
+  "eagerness": {
+    "word": "eagerness",
+    "phonetic": "/'iːgənəs/",
+    "explains": [
+      "n. 渴望；热心"
     ]
   },
   "eagle": {
@@ -28,12 +56,40 @@
       "n. 耳朵；听力"
     ]
   },
+  "earache": {
+    "word": "earache",
+    "phonetic": "/'ɪəreɪk/",
+    "explains": [
+      "n. 耳朵痛，耳痛"
+    ]
+  },
+  "eardrum": {
+    "word": "eardrum",
+    "phonetic": "/'ɪədrʌm/",
+    "explains": [
+      "n. 鼓膜，耳膜；中耳"
+    ]
+  },
+  "earl": {
+    "word": "earl",
+    "phonetic": "/ɜːl/",
+    "explains": [
+      "n. （英）伯爵"
+    ]
+  },
   "early": {
     "word": "early",
     "phonetic": "/ˈɜːrli/",
     "explains": [
       "adj. 早的",
       "adv. 早地"
+    ]
+  },
+  "earmark": {
+    "word": "earmark",
+    "phonetic": "/'ɪəmɑːk/",
+    "explains": [
+      "v. 在耳朵上做记号；标记；n. 特征；耳上记号"
     ]
   },
   "earn": {
@@ -43,11 +99,116 @@
       "v. 赚取；获得"
     ]
   },
+  "earner": {
+    "word": "earner",
+    "phonetic": "/'ɜːnə/",
+    "explains": [
+      "n. 赚钱的人"
+    ]
+  },
+  "earnest": {
+    "word": "earnest",
+    "phonetic": "/ˈɜːnɪst/",
+    "explains": [
+      "adj. 认真的"
+    ]
+  },
+  "earnestness": {
+    "word": "earnestness",
+    "phonetic": "/'ə:nistnis/",
+    "explains": [
+      "n. 坚定, 认真"
+    ]
+  },
+  "earning": {
+    "word": "earning",
+    "phonetic": "/'ɜːnɪŋ/",
+    "explains": [
+      "n. 所得,收入"
+    ]
+  },
+  "earnings": {
+    "word": "earnings",
+    "phonetic": "/'ɜːnɪŋz/",
+    "explains": [
+      "n. 工资，收入；收益"
+    ]
+  },
+  "earplug": {
+    "word": "earplug",
+    "phonetic": "/'ɪəplʌg/",
+    "explains": [
+      "n. 耳栓"
+    ]
+  },
+  "earring": {
+    "word": "earring",
+    "phonetic": "/'ɪərɪŋ/",
+    "explains": [
+      "n. 耳环, 耳饰"
+    ]
+  },
   "earth": {
     "word": "earth",
     "phonetic": "/ɜːrθ/",
     "explains": [
       "n. 地球；土地"
+    ]
+  },
+  "earthen": {
+    "word": "earthen",
+    "phonetic": "/'ɜːθ(ə)n/",
+    "explains": [
+      "adj. 土制的, 陶制的"
+    ]
+  },
+  "earthenware": {
+    "word": "earthenware",
+    "phonetic": "/'ɜːθ(ə)nweə/",
+    "explains": [
+      "n. 陶器"
+    ]
+  },
+  "earthly": {
+    "word": "earthly",
+    "phonetic": "/'ɜːθlɪ/",
+    "explains": [
+      "adj. 地球的；尘世的；可能的"
+    ]
+  },
+  "earthquake": {
+    "word": "earthquake",
+    "phonetic": "/ˈɜːθkweɪk/",
+    "explains": [
+      "n. 地震"
+    ]
+  },
+  "earthward": {
+    "word": "earthward",
+    "phonetic": "/'ɜːθwəd/",
+    "explains": [
+      "adv. 向地球, 向地面"
+    ]
+  },
+  "earthwork": {
+    "word": "earthwork",
+    "phonetic": "/'ɜːθwɜːk/",
+    "explains": [
+      "n. [建] 土方工程；土木工事"
+    ]
+  },
+  "earthworm": {
+    "word": "earthworm",
+    "phonetic": "/'ɜːθwɜːm/",
+    "explains": [
+      "n. 蚯蚓"
+    ]
+  },
+  "earthy": {
+    "word": "earthy",
+    "phonetic": "/'ɜːθɪ/",
+    "explains": [
+      "adj. 土的；土质的；朴实的；粗俗的"
     ]
   },
   "ease": {
@@ -56,6 +217,13 @@
     "explains": [
       "n. 容易；轻松",
       "v. 减轻；缓解"
+    ]
+  },
+  "easel": {
+    "word": "easel",
+    "phonetic": "/'iːz(ə)l/",
+    "explains": [
+      "n. 画架, 黑板架"
     ]
   },
   "easily": {
@@ -74,11 +242,25 @@
       "adv. 向东方"
     ]
   },
+  "easter": {
+    "word": "easter",
+    "phonetic": "/'i:stə/",
+    "explains": [
+      "n. 复活节"
+    ]
+  },
   "eastern": {
     "word": "eastern",
     "phonetic": "/ˈiːstərn/",
     "explains": [
       "adj. 东部的；东方的"
+    ]
+  },
+  "eastward": {
+    "word": "eastward",
+    "phonetic": "/'iːstwəd/",
+    "explains": [
+      "adv. 向东"
     ]
   },
   "easy": {
@@ -88,11 +270,305 @@
       "adj. 容易的；舒适的"
     ]
   },
+  "easygoing": {
+    "word": "easygoing",
+    "phonetic": "/'i:zi,ɡəuiŋ/",
+    "explains": [
+      "adj. 悠闲的；逍遥自在的；脾气随和的；不严肃的"
+    ]
+  },
   "eat": {
     "word": "eat",
     "phonetic": "/iːt/",
     "explains": [
       "v. 吃"
+    ]
+  },
+  "eau": {
+    "word": "eau",
+    "phonetic": "",
+    "explains": [
+      "n.f. 水"
+    ]
+  },
+  "eaves": {
+    "word": "eaves",
+    "phonetic": "/iːvz/",
+    "explains": [
+      "n. 屋檐"
+    ]
+  },
+  "eavesdrop": {
+    "word": "eavesdrop",
+    "phonetic": "/'iːvzdrɒp/",
+    "explains": [
+      "v. 偷听"
+    ]
+  },
+  "ebb": {
+    "word": "ebb",
+    "phonetic": "/eb/",
+    "explains": [
+      "n. 衰退；退潮；衰落；v. 衰退；减少；衰落；潮退"
+    ]
+  },
+  "ebony": {
+    "word": "ebony",
+    "phonetic": "/'eb(ə)nɪ/",
+    "explains": [
+      "adj. 乌木制的，黑檀木制的；似木的，黑檀木色的；n. 乌木，黑檀"
+    ]
+  },
+  "ebullience": {
+    "word": "ebullience",
+    "phonetic": "",
+    "explains": [
+      "n. 奔放；兴高采烈；沸腾；冒泡"
+    ]
+  },
+  "ebullient": {
+    "word": "ebullient",
+    "phonetic": "/ɪ'bʌljənt; -'bʊl-/",
+    "explains": [
+      "adj. 热情洋溢的；沸腾的"
+    ]
+  },
+  "eburnated": {
+    "word": "eburnated",
+    "phonetic": "",
+    "explains": [
+      "adj. 似象牙般坚硬结实的"
+    ]
+  },
+  "eccentric": {
+    "word": "eccentric",
+    "phonetic": "/ɪk'sentrɪk; ek-/",
+    "explains": [
+      "adj. 古怪的，反常的；n. 古怪的人"
+    ]
+  },
+  "eccentricity": {
+    "word": "eccentricity",
+    "phonetic": "/,eksen'trɪsɪtɪ/",
+    "explains": [
+      "n. 反常，怪癖"
+    ]
+  },
+  "ecdysis": {
+    "word": "ecdysis",
+    "phonetic": "/'ekdɪsɪs; ek'daɪsɪs/",
+    "explains": [
+      "n. [动]蜕皮, 蜕化"
+    ]
+  },
+  "echar": {
+    "word": "echar",
+    "phonetic": "",
+    "explains": [
+      "v. 投掷；添加"
+    ]
+  },
+  "echelon": {
+    "word": "echelon",
+    "phonetic": "/'eʃəlɒn; 'eɪʃ-/",
+    "explains": [
+      "n. [军]梯形, 梯阵, 梯次编队"
+    ]
+  },
+  "echo": {
+    "word": "echo",
+    "phonetic": "/ˈekəʊ/",
+    "explains": [
+      "n. 回声"
+    ]
+  },
+  "echolocation": {
+    "word": "echolocation",
+    "phonetic": "/'ekə(ʊ)lə(ʊ),keɪʃ(ə)n/",
+    "explains": [
+      "n. 回波定位；回声测距；回声定位能力（鲸和蝙蝠等所具备得一种机能）"
+    ]
+  },
+  "eclectic": {
+    "word": "eclectic",
+    "phonetic": "/ɪ'klektɪk/",
+    "explains": [
+      "adj. 折衷的；n. 折衷主义者"
+    ]
+  },
+  "eclecticism": {
+    "word": "eclecticism",
+    "phonetic": "/ɪˈklektɪsɪzəm/",
+    "explains": [
+      "n. 折衷主义, 折衷主义的运动"
+    ]
+  },
+  "eclipse": {
+    "word": "eclipse",
+    "phonetic": "",
+    "explains": [
+      "n. （日，月）食"
+    ]
+  },
+  "eclogue": {
+    "word": "eclogue",
+    "phonetic": "/'eklɒg/",
+    "explains": [
+      "n. 牧歌, 田园诗"
+    ]
+  },
+  "ecological": {
+    "word": "ecological",
+    "phonetic": "/iːkə'lɒdʒɪk(ə)l; ek-/",
+    "explains": [
+      "adj. 生态学的"
+    ]
+  },
+  "ecologist": {
+    "word": "ecologist",
+    "phonetic": "/i:'kɔlədʒist/",
+    "explains": [
+      "n. 生态学者"
+    ]
+  },
+  "ecology": {
+    "word": "ecology",
+    "phonetic": "/ɪ'kɒlədʒɪ; e-/",
+    "explains": [
+      "n. 生态学；个体生态学"
+    ]
+  },
+  "economic": {
+    "word": "economic",
+    "phonetic": "/ˌiːkəˈnɒmɪk; ˌekəˈnɒmɪk/",
+    "explains": [
+      "adj. 经济的"
+    ]
+  },
+  "economical": {
+    "word": "economical",
+    "phonetic": "/ˌiːkəˈnɒmɪk(ə)l; ˌekəˈnɒmɪk(ə)l/",
+    "explains": [
+      "adj. 节约的"
+    ]
+  },
+  "economically": {
+    "word": "economically",
+    "phonetic": "/iːkə'nɒmɪklɪ/",
+    "explains": [
+      "adv. 在经济上；节约地"
+    ]
+  },
+  "economics": {
+    "word": "economics",
+    "phonetic": "/iːkə'nɒmɪks; ek-/",
+    "explains": [
+      "n. 经济学；经济"
+    ]
+  },
+  "economise": {
+    "word": "economise",
+    "phonetic": "",
+    "explains": [
+      "v. 节约，节省"
+    ]
+  },
+  "economist": {
+    "word": "economist",
+    "phonetic": "/i'kɔnəmist/",
+    "explains": [
+      "n.  经济学家"
+    ]
+  },
+  "economize": {
+    "word": "economize",
+    "phonetic": "/i'kɔnəmaiz/",
+    "explains": [
+      "v.  节约， 节省； 充分利用"
+    ]
+  },
+  "economy": {
+    "word": "economy",
+    "phonetic": "/ɪˈkɒnəmɪ/",
+    "explains": [
+      "n. 经济"
+    ]
+  },
+  "ecosystem": {
+    "word": "ecosystem",
+    "phonetic": "/'iːkəʊsɪstəm/",
+    "explains": [
+      "n. 生态系统"
+    ]
+  },
+  "ecstasy": {
+    "word": "ecstasy",
+    "phonetic": "/'ekstəsɪ/",
+    "explains": [
+      "n. 入迷"
+    ]
+  },
+  "ecstatic": {
+    "word": "ecstatic",
+    "phonetic": "/ɪk'stætɪk; ek-/",
+    "explains": [
+      "adj. 狂喜的；入迷的；n. 狂喜的人"
+    ]
+  },
+  "ectotherm": {
+    "word": "ectotherm",
+    "phonetic": "/'ektəʊθɜːm/",
+    "explains": [
+      "n. [动] 冷血动物,变温动物"
+    ]
+  },
+  "ectothermic": {
+    "word": "ectothermic",
+    "phonetic": "",
+    "explains": [
+      "n. 变温动物"
+    ]
+  },
+  "ectype": {
+    "word": "ectype",
+    "phonetic": "/'ektaɪp/",
+    "explains": [
+      "n. 复制品, 副本"
+    ]
+  },
+  "ecumenical": {
+    "word": "ecumenical",
+    "phonetic": "/,iːkjʊ'menɪk(ə)l; ek-/",
+    "explains": [
+      "adj. 一般的, 普通的"
+    ]
+  },
+  "eczema": {
+    "word": "eczema",
+    "phonetic": "/'eksɪmə; 'ekzɪmə/",
+    "explains": [
+      "n. [皮肤] 湿疹"
+    ]
+  },
+  "edad": {
+    "word": "edad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 年龄"
+    ]
+  },
+  "eddy": {
+    "word": "eddy",
+    "phonetic": "/'edɪ/",
+    "explains": [
+      "n. 旋转,漩涡"
+    ]
+  },
+  "edentulous": {
+    "word": "edentulous",
+    "phonetic": "/ɪ'dentjʊləs/",
+    "explains": [
+      "adj. 缺齿的"
     ]
   },
   "edge": {
@@ -101,6 +577,55 @@
     "explains": [
       "n. 边缘；优势",
       "v. 缓慢移动"
+    ]
+  },
+  "edgy": {
+    "word": "edgy",
+    "phonetic": "/'edʒɪ/",
+    "explains": [
+      "adj. 急躁的；尖利的；刀口锐利的"
+    ]
+  },
+  "edible": {
+    "word": "edible",
+    "phonetic": "/'edɪb(ə)l/",
+    "explains": [
+      "adj. 可食用的；n. 食品；食物"
+    ]
+  },
+  "edict": {
+    "word": "edict",
+    "phonetic": "/'iːdɪkt/",
+    "explains": [
+      "n. 布告, 法令"
+    ]
+  },
+  "edification": {
+    "word": "edification",
+    "phonetic": "/,edɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. (尤指道德或精神方面的)教诲, 启迪, 熏陶"
+    ]
+  },
+  "edifice": {
+    "word": "edifice",
+    "phonetic": "/'edɪfɪs/",
+    "explains": [
+      "n. 大厦, 大建筑物"
+    ]
+  },
+  "edificio": {
+    "word": "edificio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 建筑物"
+    ]
+  },
+  "edify": {
+    "word": "edify",
+    "phonetic": "/'edɪfaɪ/",
+    "explains": [
+      "v. 熏陶；启发；教诲"
     ]
   },
   "edit": {
@@ -124,6 +649,20 @@
       "n. 编辑；编者"
     ]
   },
+  "editorial": {
+    "word": "editorial",
+    "phonetic": "/edɪ'tɔːrɪəl/",
+    "explains": [
+      "n. 社论，期刊的社论"
+    ]
+  },
+  "educable": {
+    "word": "educable",
+    "phonetic": "/'edʒʊkəb(ə)l/",
+    "explains": [
+      "adj. 可教育的, 可培养的"
+    ]
+  },
   "educate": {
     "word": "educate",
     "phonetic": "/ˈedjuːkeɪt/",
@@ -145,6 +684,62 @@
       "adj. 教育的；有教育意义的"
     ]
   },
+  "educationally": {
+    "word": "educationally",
+    "phonetic": "",
+    "explains": [
+      "adv. 教育的, 有关教育的"
+    ]
+  },
+  "educationist": {
+    "word": "educationist",
+    "phonetic": "/,edjuː'keɪʃənɪst/",
+    "explains": [
+      "n. 教育家；教育理论家"
+    ]
+  },
+  "educator": {
+    "word": "educator",
+    "phonetic": "/'edʒʊkeɪtə/",
+    "explains": [
+      "n. 教育家"
+    ]
+  },
+  "educe": {
+    "word": "educe",
+    "phonetic": "/ɪ'djuːs/",
+    "explains": [
+      "v. 引出；演绎；使显出"
+    ]
+  },
+  "eel": {
+    "word": "eel",
+    "phonetic": "/iːl/",
+    "explains": [
+      "n. 鳗鱼"
+    ]
+  },
+  "eerie": {
+    "word": "eerie",
+    "phonetic": "/'ɪərɪ/",
+    "explains": [
+      "adj. 怪诞的, 可怕的, 不安的, 奇异的"
+    ]
+  },
+  "efectivo": {
+    "word": "efectivo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 现金；adj. 有效的"
+    ]
+  },
+  "efface": {
+    "word": "efface",
+    "phonetic": "/ɪ'feɪs/",
+    "explains": [
+      "v. 抹去，抹掉；使自己不受人注意"
+    ]
+  },
   "effect": {
     "word": "effect",
     "phonetic": "/ɪˈfekt/",
@@ -160,11 +755,102 @@
       "adj. 有效的；起作用的"
     ]
   },
+  "effectively": {
+    "word": "effectively",
+    "phonetic": "/ɪ'fektɪvlɪ/",
+    "explains": [
+      "adv. 有效地"
+    ]
+  },
+  "effectiveness": {
+    "word": "effectiveness",
+    "phonetic": "/i'fektivnis/",
+    "explains": [
+      "n.  效果； 效用； 有效性"
+    ]
+  },
+  "effectual": {
+    "word": "effectual",
+    "phonetic": "/ɪ'fektʃʊəl; -tjʊəl/",
+    "explains": [
+      "adj. 奏效的；会应验的；有法律效力的"
+    ]
+  },
+  "effeminate": {
+    "word": "effeminate",
+    "phonetic": "/ɪ'femɪnət/",
+    "explains": [
+      "adj. 柔弱的；女人气的；n. 女子气的男人；vt. 使柔弱；使无男子汉气概；vi. 变得无男子汉气概；变得柔弱"
+    ]
+  },
+  "effervesce": {
+    "word": "effervesce",
+    "phonetic": "/,efə'ves/",
+    "explains": [
+      "v. 冒泡, [化]泡腾, 兴奋"
+    ]
+  },
+  "effervescent": {
+    "word": "effervescent",
+    "phonetic": "/efə'vesənt/",
+    "explains": [
+      "adj. 冒泡的，沸腾的；兴奋的"
+    ]
+  },
+  "effete": {
+    "word": "effete",
+    "phonetic": "/ɪ'fiːt/",
+    "explains": [
+      "adj. 衰老的；疲惫的；（土地）贫瘠的；（动植物）不育的"
+    ]
+  },
+  "efficacious": {
+    "word": "efficacious",
+    "phonetic": "/,efɪ'keɪʃəs/",
+    "explains": [
+      "adj. 有效的,灵验的"
+    ]
+  },
+  "efficacy": {
+    "word": "efficacy",
+    "phonetic": "/'efɪkəsɪ/",
+    "explains": [
+      "n. 功效, 效验"
+    ]
+  },
+  "efficiency": {
+    "word": "efficiency",
+    "phonetic": "/ɪˈfɪʃnsi/",
+    "explains": [
+      "n. 效率，效能"
+    ]
+  },
   "efficient": {
     "word": "efficient",
     "phonetic": "/ɪˈfɪʃnt/",
     "explains": [
       "adj. 高效的；有效的"
+    ]
+  },
+  "efficiently": {
+    "word": "efficiently",
+    "phonetic": "/i'fiʃəntli/",
+    "explains": [
+      "adv. 有效地；能胜任地"
+    ]
+  },
+  "effigy": {
+    "word": "effigy",
+    "phonetic": "/'efɪdʒɪ/",
+    "explains": [
+      "n. 雕像，肖像"
+    ]
+  },
+  "effluent": {
+    "word": "effluent",
+    "phonetic": "/'eflʊənt/",
+    "explains": [
+      "n. 污水；流出物；废气；adj. 流出的，发出的"
     ]
   },
   "effort": {
@@ -174,11 +860,186 @@
       "n. 努力；成就"
     ]
   },
+  "effortless": {
+    "word": "effortless",
+    "phonetic": "/'efətlɪs/",
+    "explains": [
+      "adj. 容易的, 不费力气的"
+    ]
+  },
+  "effortlessly": {
+    "word": "effortlessly",
+    "phonetic": "/'efətlisli/",
+    "explains": [
+      "adv. 毫不费力地, 轻易地"
+    ]
+  },
+  "effrontery": {
+    "word": "effrontery",
+    "phonetic": "/ɪ'frʌnt(ə)rɪ/",
+    "explains": [
+      "n. 厚颜无耻"
+    ]
+  },
+  "effulgence": {
+    "word": "effulgence",
+    "phonetic": "/ɪ'fʌldʒəns/",
+    "explains": [
+      "n. 灿烂；光辉"
+    ]
+  },
+  "effulgent": {
+    "word": "effulgent",
+    "phonetic": "",
+    "explains": [
+      "adj. 光辉灿烂的"
+    ]
+  },
+  "effuse": {
+    "word": "effuse",
+    "phonetic": "/ɪ'fjuːz/",
+    "explains": [
+      "v. 流出；涌出；泻出；adj. [植] 疏展的"
+    ]
+  },
+  "effusion": {
+    "word": "effusion",
+    "phonetic": "/ɪ'fjuːʒ(ə)n/",
+    "explains": [
+      "n. 渗出；泻出；渗漏物"
+    ]
+  },
+  "effusive": {
+    "word": "effusive",
+    "phonetic": "/ɪ'fjuːsɪv/",
+    "explains": [
+      "adj. 流出的；感情横溢的"
+    ]
+  },
+  "egalitarian": {
+    "word": "egalitarian",
+    "phonetic": "/ɪ,gælɪ'teərɪən/",
+    "explains": [
+      "adj. 平等主义的"
+    ]
+  },
+  "egalitarianism": {
+    "word": "egalitarianism",
+    "phonetic": "/ɪ,ɡælɪ'teərɪənɪzəm/",
+    "explains": [
+      "n. 平等主义，[经] 平均主义"
+    ]
+  },
+  "egest": {
+    "word": "egest",
+    "phonetic": "/ɪ'dʒest/",
+    "explains": [
+      "v. 排泄"
+    ]
+  },
   "egg": {
     "word": "egg",
     "phonetic": "/eɡ/",
     "explains": [
       "n. 蛋；卵"
+    ]
+  },
+  "eggplant": {
+    "word": "eggplant",
+    "phonetic": "/'egplɑːnt/",
+    "explains": [
+      "n. 茄子"
+    ]
+  },
+  "eggshell": {
+    "word": "eggshell",
+    "phonetic": "/'egʃel/",
+    "explains": [
+      "n. 蛋壳, 易碎的东西"
+    ]
+  },
+  "ego": {
+    "word": "ego",
+    "phonetic": "/'iːgəʊ; 'e-/",
+    "explains": [
+      "n. 自我；自负；自我意识"
+    ]
+  },
+  "egocentric": {
+    "word": "egocentric",
+    "phonetic": "/,egə(ʊ)'sentrɪk; iː-/",
+    "explains": [
+      "adj. [心理] 自我中心的；利己主义的；n. 利己主义者"
+    ]
+  },
+  "egoism": {
+    "word": "egoism",
+    "phonetic": "/'egəʊɪz(ə)m; 'iː-/",
+    "explains": [
+      "n. 利己主义，自我主义"
+    ]
+  },
+  "egoist": {
+    "word": "egoist",
+    "phonetic": "/'iːɡəʊɪst/",
+    "explains": [
+      "n. 自我主义者；利己主义者"
+    ]
+  },
+  "egoistic": {
+    "word": "egoistic",
+    "phonetic": "/,iːɡəʊ'ɪstɪk/",
+    "explains": [
+      "adj. 自私自利的，自我中心的"
+    ]
+  },
+  "egotism": {
+    "word": "egotism",
+    "phonetic": "/'egətɪz(ə)m; 'iː-/",
+    "explains": [
+      "n. 自负；自我中心"
+    ]
+  },
+  "egregious": {
+    "word": "egregious",
+    "phonetic": "/ɪ'griːdʒəs/",
+    "explains": [
+      "adj. 惊人的；过分的；恶名昭彰的"
+    ]
+  },
+  "egress": {
+    "word": "egress",
+    "phonetic": "/'iːgres/",
+    "explains": [
+      "n. 出口, 外出"
+    ]
+  },
+  "egypt": {
+    "word": "egypt",
+    "phonetic": "/ˈiːdʒɪpt/",
+    "explains": [
+      "n. 埃及"
+    ]
+  },
+  "egyptian": {
+    "word": "egyptian",
+    "phonetic": "/ɪ'dʒɪpʃ(ə)n/",
+    "explains": [
+      "adj. 埃及的；n. 埃及人"
+    ]
+  },
+  "eh": {
+    "word": "eh",
+    "phonetic": "/eɪ/",
+    "explains": [
+      "int. 啊，嗯！（表示惊奇、疑问等）"
+    ]
+  },
+  "eidetic": {
+    "word": "eidetic",
+    "phonetic": "/aɪ'detɪk/",
+    "explains": [
+      "adj. (头脑中的印象)异常清晰的"
     ]
   },
   "eight": {
@@ -188,6 +1049,49 @@
       "num. 八"
     ]
   },
+  "eighteen": {
+    "word": "eighteen",
+    "phonetic": "/ˌeɪˈtiːn/",
+    "explains": [
+      "num. 十八"
+    ]
+  },
+  "eighteenth": {
+    "word": "eighteenth",
+    "phonetic": "/'eɪ'tiːnθ/",
+    "explains": [
+      "num. 第十八,十八分之一"
+    ]
+  },
+  "eighth": {
+    "word": "eighth",
+    "phonetic": "/eɪtθ/",
+    "explains": [
+      "num. 第八",
+      "n. 八分之一"
+    ]
+  },
+  "eightieth": {
+    "word": "eightieth",
+    "phonetic": "/'etɪɪθ/",
+    "explains": [
+      "n. 第八十；八十分之一；num. 第八十；八十分之一；adj. 第八十的；八十分之一的"
+    ]
+  },
+  "eighty": {
+    "word": "eighty",
+    "phonetic": "/ˈeɪti/",
+    "explains": [
+      "num. 八十"
+    ]
+  },
+  "einkorn": {
+    "word": "einkorn",
+    "phonetic": "/'aɪnkɔːn/",
+    "explains": [
+      "n. 单粒小麦"
+    ]
+  },
   "either": {
     "word": "either",
     "phonetic": "/ˈiːðər/",
@@ -195,6 +1099,97 @@
       "pron. 两者之一",
       "adj. 任一的",
       "adv. 也（用于否定句）"
+    ]
+  },
+  "ejaculate": {
+    "word": "ejaculate",
+    "phonetic": "/ɪ'dʒækjʊleɪt/",
+    "explains": [
+      "v. 突然说出, (从生物体中)射出"
+    ]
+  },
+  "ejaculation": {
+    "word": "ejaculation",
+    "phonetic": "/ɪ,dʒækjʊ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 突然说出, 射精, 射出"
+    ]
+  },
+  "eject": {
+    "word": "eject",
+    "phonetic": "/ɪ'dʒekt/",
+    "explains": [
+      "v. 逐出，排斥；喷射"
+    ]
+  },
+  "ejemplo": {
+    "word": "ejemplo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 例子"
+    ]
+  },
+  "eka": {
+    "word": "eka",
+    "phonetic": "",
+    "explains": [
+      "n. 准(第一)"
+    ]
+  },
+  "eke": {
+    "word": "eke",
+    "phonetic": "/iːk/",
+    "explains": [
+      "v. 补充, 增加"
+    ]
+  },
+  "elaborate": {
+    "word": "elaborate",
+    "phonetic": "/ɪˈlæb(ə)rət; ɪˈlæbəreɪt/",
+    "explains": [
+      "adj. 精心制作的　v. 详述"
+    ]
+  },
+  "elaboration": {
+    "word": "elaboration",
+    "phonetic": "/ɪ,læbə'reɪʃən/",
+    "explains": [
+      "n. 苦心经营, 详尽的细节"
+    ]
+  },
+  "elapse": {
+    "word": "elapse",
+    "phonetic": "/ɪ'læps/",
+    "explains": [
+      "v. （时间）过去，消逝"
+    ]
+  },
+  "elastic": {
+    "word": "elastic",
+    "phonetic": "/ɪˈlæstɪk/",
+    "explains": [
+      "adj. 有弹性的"
+    ]
+  },
+  "elasticity": {
+    "word": "elasticity",
+    "phonetic": "/elæ'stɪsɪtɪ; iː-; ɪ-/",
+    "explains": [
+      "n. 弹性；弹力；灵活性"
+    ]
+  },
+  "elated": {
+    "word": "elated",
+    "phonetic": "/ɪ'leɪtɪd/",
+    "explains": [
+      "adj. 欢欣鼓舞的"
+    ]
+  },
+  "elation": {
+    "word": "elation",
+    "phonetic": "/ɪ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 得意洋洋, 兴高采烈"
     ]
   },
   "elbow": {
@@ -213,6 +1208,20 @@
       "n. 长辈"
     ]
   },
+  "elderly": {
+    "word": "elderly",
+    "phonetic": "/'eldəlɪ/",
+    "explains": [
+      "adj. 上了年纪的；过了中年的；稍老的"
+    ]
+  },
+  "eldest": {
+    "word": "eldest",
+    "phonetic": "/'eldɪst/",
+    "explains": [
+      "adj. 最年长的；年事最高的（old的最高级）；n. 最年长者"
+    ]
+  },
   "elect": {
     "word": "elect",
     "phonetic": "/ɪˈlekt/",
@@ -227,11 +1236,151 @@
       "n. 选举；当选"
     ]
   },
+  "electioneering": {
+    "word": "electioneering",
+    "phonetic": "/ɪ,lɛkʃə'nɪrɪŋ/",
+    "explains": [
+      "n. 竞选活动；adj. 竞选活动的；v. 从事选举活动（electioneer的ing形式）"
+    ]
+  },
+  "elective": {
+    "word": "elective",
+    "phonetic": "/ɪ'lektɪv/",
+    "explains": [
+      "adj. 选举的,随意选择的"
+    ]
+  },
+  "elector": {
+    "word": "elector",
+    "phonetic": "/ɪ'lektə/",
+    "explains": [
+      "n. 选举人；有选举权的人；总统选举人"
+    ]
+  },
+  "electorate": {
+    "word": "electorate",
+    "phonetic": "/ɪ'lekt(ə)rət/",
+    "explains": [
+      "n. 选民；选区"
+    ]
+  },
   "electric": {
     "word": "electric",
     "phonetic": "/ɪˈlektrɪk/",
     "explains": [
       "adj. 电的；电动的"
+    ]
+  },
+  "electrical": {
+    "word": "electrical",
+    "phonetic": "/ɪˈlektrɪkl/",
+    "explains": [
+      "adj. 电的，与电有关的"
+    ]
+  },
+  "electrically": {
+    "word": "electrically",
+    "phonetic": "/ɪ'lektrɪkəlɪ/",
+    "explains": [
+      "adv. 用电力;有关电地"
+    ]
+  },
+  "electrician": {
+    "word": "electrician",
+    "phonetic": "/,ɪlek'trɪʃ(ə)n; ,el-; ,iːl-/",
+    "explains": [
+      "n. 电工，电气技师"
+    ]
+  },
+  "electricity": {
+    "word": "electricity",
+    "phonetic": "/ɪˌlekˈtrɪsəti/",
+    "explains": [
+      "n. 电，电流"
+    ]
+  },
+  "electrification": {
+    "word": "electrification",
+    "phonetic": "/ɪ,lɛktrɪfɪ'keʃən/",
+    "explains": [
+      "n. 电气化；带电；充电"
+    ]
+  },
+  "electrify": {
+    "word": "electrify",
+    "phonetic": "/ɪ'lektrɪfaɪ/",
+    "explains": [
+      "v. 使充电, 使通电"
+    ]
+  },
+  "electro": {
+    "word": "electro",
+    "phonetic": "/ɪ'lektrəʊ/",
+    "explains": [
+      "n. 电镀物品, 电版"
+    ]
+  },
+  "electrocardiogram": {
+    "word": "electrocardiogram",
+    "phonetic": "/ɪ,lektrəʊ'kɑːdɪəgræm/",
+    "explains": [
+      "n. [医]心电图"
+    ]
+  },
+  "electrocute": {
+    "word": "electrocute",
+    "phonetic": "/ɪ'lektrəkjuːt/",
+    "explains": [
+      "v. <美>处电刑, 触电致死"
+    ]
+  },
+  "electrode": {
+    "word": "electrode",
+    "phonetic": "/ɪ'lektrəʊd/",
+    "explains": [
+      "n. 电极；电焊条"
+    ]
+  },
+  "electroencephalogram": {
+    "word": "electroencephalogram",
+    "phonetic": "/ɪ,lektrəʊɪn'sef(ə)ləgræm; -'kef-/",
+    "explains": [
+      "n. [医]脑电图"
+    ]
+  },
+  "electrolysis": {
+    "word": "electrolysis",
+    "phonetic": "/,ɪlek'trɒlɪsɪs; ,el-/",
+    "explains": [
+      "n. [化学] 电解，[化学] 电解作用；以电针除痣"
+    ]
+  },
+  "electrolyte": {
+    "word": "electrolyte",
+    "phonetic": "/ɪ'lektrəlaɪt/",
+    "explains": [
+      "n. 电解液，电解质；电解"
+    ]
+  },
+  "electromagnet": {
+    "word": "electromagnet",
+    "phonetic": "/ɪ,lektrə(ʊ)'mægnɪt/",
+    "explains": [
+      "n. 电磁体，[电] 电磁铁；电磁石"
+    ]
+  },
+  "electromagnetic": {
+    "word": "electromagnetic",
+    "phonetic": "/ɪ,lektrə(ʊ)mæg'netɪk/",
+    "explains": [
+      "adj. 电磁的"
+    ]
+  },
+  "electron": {
+    "word": "electron",
+    "phonetic": "/ɪ'lektrɒn/",
+    "explains": [
+      "n. 电子"
     ]
   },
   "electronic": {
@@ -241,11 +1390,95 @@
       "adj. 电子的"
     ]
   },
+  "electronically": {
+    "word": "electronically",
+    "phonetic": "/,ɪlek'trɒnɪklɪ/",
+    "explains": [
+      "adv. 电子地, 通过电子手段"
+    ]
+  },
+  "electronics": {
+    "word": "electronics",
+    "phonetic": "/ɪlek'trɒnɪks; el-/",
+    "explains": [
+      "n. 电子学"
+    ]
+  },
+  "electroplate": {
+    "word": "electroplate",
+    "phonetic": "/ɪ'lektrə(ʊ)pleɪt; ɪ,lektrə(ʊ)'pleɪt/",
+    "explains": [
+      "v. 电镀；n. 电镀物品"
+    ]
+  },
+  "electroscope": {
+    "word": "electroscope",
+    "phonetic": "/ɪ'lektrəskəʊp/",
+    "explains": [
+      "n. [电] 验电器"
+    ]
+  },
+  "electrostatic": {
+    "word": "electrostatic",
+    "phonetic": "/ɪ,lektrə(ʊ)'stætɪk/",
+    "explains": [
+      "adj. 静电的；静电学的"
+    ]
+  },
+  "elefante": {
+    "word": "elefante",
+    "phonetic": "",
+    "explains": [
+      "n.m. 大象"
+    ]
+  },
+  "elegance": {
+    "word": "elegance",
+    "phonetic": "/'elɪg(ə)ns/",
+    "explains": [
+      "n. 高雅,典雅"
+    ]
+  },
+  "elegant": {
+    "word": "elegant",
+    "phonetic": "/ˈelɪg(ə)nt/",
+    "explains": [
+      "adj. 优雅的"
+    ]
+  },
+  "elegante": {
+    "word": "elegante",
+    "phonetic": "",
+    "explains": [
+      "adj. 优雅的"
+    ]
+  },
+  "elegir": {
+    "word": "elegir",
+    "phonetic": "",
+    "explains": [
+      "v. 选择"
+    ]
+  },
+  "elegy": {
+    "word": "elegy",
+    "phonetic": "/'elɪdʒɪ/",
+    "explains": [
+      "n. 悲歌, 挽歌"
+    ]
+  },
   "element": {
     "word": "element",
     "phonetic": "/ˈelɪmənt/",
     "explains": [
       "n. 元素；要素；自然环境"
+    ]
+  },
+  "elemental": {
+    "word": "elemental",
+    "phonetic": "/,elɪ'ment(ə)l/",
+    "explains": [
+      "adj. 基本的；自然力的"
     ]
   },
   "elementary": {
@@ -262,11 +1495,277 @@
       "n. 象"
     ]
   },
+  "elephantine": {
+    "word": "elephantine",
+    "phonetic": "/elɪ'fæntaɪn/",
+    "explains": [
+      "adj. 象的, 粗笨的, 巨大的"
+    ]
+  },
+  "eletricity": {
+    "word": "eletricity",
+    "phonetic": "",
+    "explains": [
+      "n. 电, 电学"
+    ]
+  },
+  "elevate": {
+    "word": "elevate",
+    "phonetic": "/'elɪveɪt/",
+    "explains": [
+      "v. 提拔；抬高"
+    ]
+  },
+  "elevated": {
+    "word": "elevated",
+    "phonetic": "/'elɪveɪtɪd/",
+    "explains": [
+      "adj. 提高的；高尚的；严肃的；欢欣的；v. 提高；抬起；振奋；提拔（elevate的过去分词）；n. 高架铁路"
+    ]
+  },
+  "elevation": {
+    "word": "elevation",
+    "phonetic": "/,elɪ'veɪʃ(ə)n/",
+    "explains": [
+      "n. 高度，海拔"
+    ]
+  },
+  "elevator": {
+    "word": "elevator",
+    "phonetic": "/ˈelɪveɪtə/",
+    "explains": [
+      "n. 电梯"
+    ]
+  },
+  "eleven": {
+    "word": "eleven",
+    "phonetic": "/ɪˈlevn/",
+    "explains": [
+      "num. 十一"
+    ]
+  },
+  "eleventh": {
+    "word": "eleventh",
+    "phonetic": "/ɪ'lev(ə)nθ/",
+    "explains": [
+      "adj. 第十一（个）"
+    ]
+  },
+  "elf": {
+    "word": "elf",
+    "phonetic": "/elf/",
+    "explains": [
+      "n. 小精灵, 矮人, 淘气鬼, 恶作剧的人, 恶人"
+    ]
+  },
+  "elicit": {
+    "word": "elicit",
+    "phonetic": "/ɪ'lɪsɪt/",
+    "explains": [
+      "v. 得出, 引出, 抽出, 引起"
+    ]
+  },
+  "elicitation": {
+    "word": "elicitation",
+    "phonetic": "/ɪ,lɪsɪ'teɪʃən/",
+    "explains": [
+      "n. 引出, 诱出, 抽出, 启发"
+    ]
+  },
+  "elide": {
+    "word": "elide",
+    "phonetic": "/ɪ'laɪd/",
+    "explains": [
+      "v. 取消, 省略, 省略发音, 不予考虑删节"
+    ]
+  },
+  "eligible": {
+    "word": "eligible",
+    "phonetic": "/'elɪdʒɪb(ə)l/",
+    "explains": [
+      "adj. 合格的，合适的；符合条件的；有资格当选的；n. 合格者；适任者；有资格者"
+    ]
+  },
+  "eliminate": {
+    "word": "eliminate",
+    "phonetic": "/ɪˈlɪmɪneɪt/",
+    "explains": [
+      "v. 消除"
+    ]
+  },
+  "elimination": {
+    "word": "elimination",
+    "phonetic": "/ɪ,lɪmɪ'neɪʃən/",
+    "explains": [
+      "n. 排除，消除；消灭"
+    ]
+  },
+  "elite": {
+    "word": "elite",
+    "phonetic": "/[eɪˈliːt]/",
+    "explains": [
+      "n. 精英；精华；中坚分子"
+    ]
+  },
+  "elitism": {
+    "word": "elitism",
+    "phonetic": "/eɪ'liːtɪz(ə)m; ɪ-/",
+    "explains": [
+      "n. 杰出人物统治论, 高人一等的优越感"
+    ]
+  },
+  "elixir": {
+    "word": "elixir",
+    "phonetic": "/ɪ'lɪksə; -sɪə/",
+    "explains": [
+      "n. 炼金药, 不老长寿药"
+    ]
+  },
+  "elk": {
+    "word": "elk",
+    "phonetic": "/elk/",
+    "explains": [
+      "n. 麋鹿"
+    ]
+  },
+  "elliot": {
+    "word": "elliot",
+    "phonetic": "",
+    "explains": [
+      "n. 埃利奥特(男子名)"
+    ]
+  },
+  "ellipse": {
+    "word": "ellipse",
+    "phonetic": "/ɪ'lɪps/",
+    "explains": [
+      "n. [数]椭圆, 椭圆形"
+    ]
+  },
+  "ellipsis": {
+    "word": "ellipsis",
+    "phonetic": "/ɪ'lɪpsɪs/",
+    "explains": [
+      "n. 省略, 省略符号"
+    ]
+  },
+  "elliptical": {
+    "word": "elliptical",
+    "phonetic": "/ɪ'lɪptɪk(ə)l/",
+    "explains": [
+      "adj. 椭圆的；省略的"
+    ]
+  },
+  "elm": {
+    "word": "elm",
+    "phonetic": "/elm/",
+    "explains": [
+      "n. [植]榆树"
+    ]
+  },
+  "elocution": {
+    "word": "elocution",
+    "phonetic": "/,elə'kjuːʃ(ə)n/",
+    "explains": [
+      "n. 朗诵法；演说法；雄辩术"
+    ]
+  },
+  "elocutionist": {
+    "word": "elocutionist",
+    "phonetic": "",
+    "explains": [
+      "n. 演说家；雄辩家；朗诵者"
+    ]
+  },
+  "elongate": {
+    "word": "elongate",
+    "phonetic": "/'iːlɒŋgeɪt/",
+    "explains": [
+      "v. 拉长, (使)伸长；adj. 伸长的"
+    ]
+  },
+  "elongation": {
+    "word": "elongation",
+    "phonetic": "/iːlɒŋ'geɪʃ(ə)n/",
+    "explains": [
+      "n. 延长"
+    ]
+  },
+  "elope": {
+    "word": "elope",
+    "phonetic": "/ɪ'ləʊp/",
+    "explains": [
+      "v. 私奔, 潜逃, 出走"
+    ]
+  },
+  "eloquence": {
+    "word": "eloquence",
+    "phonetic": "/'eləkwəns/",
+    "explains": [
+      "n. 雄辩；口才，修辞"
+    ]
+  },
+  "eloquent": {
+    "word": "eloquent",
+    "phonetic": "/'eləkwənt/",
+    "explains": [
+      "adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的"
+    ]
+  },
+  "eloquently": {
+    "word": "eloquently",
+    "phonetic": "/'eləkwəntli/",
+    "explains": [
+      "adv. 雄辩地, 有口才地"
+    ]
+  },
   "else": {
     "word": "else",
     "phonetic": "/els/",
     "explains": [
       "adv. 其他；否则"
+    ]
+  },
+  "elsewhere": {
+    "word": "elsewhere",
+    "phonetic": "/els'weə; 'elsweə/",
+    "explains": [
+      "adv. 在别处，向别处"
+    ]
+  },
+  "elucidate": {
+    "word": "elucidate",
+    "phonetic": "/ɪ'l(j)uːsɪdeɪt/",
+    "explains": [
+      "v. 阐明；说明"
+    ]
+  },
+  "elude": {
+    "word": "elude",
+    "phonetic": "/ɪ'l(j)uːd/",
+    "explains": [
+      "v. 逃避，躲避"
+    ]
+  },
+  "elusive": {
+    "word": "elusive",
+    "phonetic": "/ɪ'l(j)uːsɪv/",
+    "explains": [
+      "adj. 难懂的, 难捉摸的"
+    ]
+  },
+  "emaciate": {
+    "word": "emaciate",
+    "phonetic": "/ɪ'meɪsɪeɪt/",
+    "explains": [
+      "v. 使憔悴, 使消瘦"
+    ]
+  },
+  "emaciated": {
+    "word": "emaciated",
+    "phonetic": "/ɪ'meʃɪ'etɪd/",
+    "explains": [
+      "adj. 瘦弱的；憔悴的；v. 憔悴；消瘦下去（emaciate的过去分词）"
     ]
   },
   "email": {
@@ -277,11 +1776,305 @@
       "v. 发邮件"
     ]
   },
+  "emanate": {
+    "word": "emanate",
+    "phonetic": "/'eməneɪt/",
+    "explains": [
+      "v. 散发,发出"
+    ]
+  },
+  "emancipate": {
+    "word": "emancipate",
+    "phonetic": "/ɪ'mænsɪpeɪt/",
+    "explains": [
+      "v. 释放, 解放"
+    ]
+  },
+  "emancipation": {
+    "word": "emancipation",
+    "phonetic": "/ɪ,mænsɪ'peɪʃ(ə)n/",
+    "explains": [
+      "n. 解放；释放"
+    ]
+  },
+  "emasculate": {
+    "word": "emasculate",
+    "phonetic": "/ɪ'mæskjʊleɪt/",
+    "explains": [
+      "v. 阉割, 使柔弱, 删削, 使无力"
+    ]
+  },
+  "embajada": {
+    "word": "embajada",
+    "phonetic": "",
+    "explains": [
+      "n.f. 大使馆"
+    ]
+  },
+  "embalm": {
+    "word": "embalm",
+    "phonetic": "/ɪm'bɑːm; em-/",
+    "explains": [
+      "v. 铭记于心；使不朽；防腐；使充满香气"
+    ]
+  },
+  "embankment": {
+    "word": "embankment",
+    "phonetic": "/ɪm'bæŋkm(ə)nt; em-/",
+    "explains": [
+      "n. 堤防, 筑堤"
+    ]
+  },
+  "embarazada": {
+    "word": "embarazada",
+    "phonetic": "",
+    "explains": [
+      "adj. 怀孕的"
+    ]
+  },
+  "embargo": {
+    "word": "embargo",
+    "phonetic": "/im'bɑːgəu/",
+    "explains": [
+      "n. 禁止贸易令，禁运；vt.  禁止， 禁止出入港口"
+    ]
+  },
+  "embark": {
+    "word": "embark",
+    "phonetic": "/ɪm'bɑːk; em-/",
+    "explains": [
+      "v. 从事，着手；上船或飞机"
+    ]
+  },
+  "embarkation": {
+    "word": "embarkation",
+    "phonetic": "/ˌembɑː'keiʃən/",
+    "explains": [
+      "n.  上船； 登记； 从事， 开始"
+    ]
+  },
+  "embarquement": {
+    "word": "embarquement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 登机；装货"
+    ]
+  },
   "embarrass": {
     "word": "embarrass",
     "phonetic": "/ɪmˈbærəs/",
     "explains": [
       "v. 使尴尬；使难堪"
+    ]
+  },
+  "embarrassed": {
+    "word": "embarrassed",
+    "phonetic": "/im'bærəst/",
+    "explains": [
+      "adj.  窘的； 尴尬的； 局促不安的"
+    ]
+  },
+  "embarrassing": {
+    "word": "embarrassing",
+    "phonetic": "/im'bærəsiŋ/",
+    "explains": [
+      "adj.  令人难堪的"
+    ]
+  },
+  "embarrassment": {
+    "word": "embarrassment",
+    "phonetic": "/ɪm'bærəsmənt; em-/",
+    "explains": [
+      "n. 窘迫，难堪；使人为难的人或事物；拮据"
+    ]
+  },
+  "embassy": {
+    "word": "embassy",
+    "phonetic": "/ˈembəsɪ/",
+    "explains": [
+      "n. 大使馆"
+    ]
+  },
+  "embattle": {
+    "word": "embattle",
+    "phonetic": "/ɪm'bæt(ə)l; em-/",
+    "explains": [
+      "vt. 布阵；列阵；整军备战；严阵以待"
+    ]
+  },
+  "embattled": {
+    "word": "embattled",
+    "phonetic": "/ɪm'bætld/",
+    "explains": [
+      "adj. 严阵以待的；被敌人围困的；心烦意乱的；边缘呈雉形的；v. 列阵；筑垒于（embattle的过去式和过去分词）"
+    ]
+  },
+  "embed": {
+    "word": "embed",
+    "phonetic": "/ɪm'bed; em-/",
+    "explains": [
+      "v. 栽种；使嵌入，使插入；使深留脑中"
+    ]
+  },
+  "embedding": {
+    "word": "embedding",
+    "phonetic": "",
+    "explains": [
+      "向量嵌入"
+    ]
+  },
+  "embellish": {
+    "word": "embellish",
+    "phonetic": "/ɪm'belɪʃ; em-/",
+    "explains": [
+      "v. 修饰"
+    ]
+  },
+  "ember": {
+    "word": "ember",
+    "phonetic": "/'embə/",
+    "explains": [
+      "n. 灰烬, 余烬"
+    ]
+  },
+  "embezzle": {
+    "word": "embezzle",
+    "phonetic": "/im'bezl/",
+    "explains": [
+      "v.  挪用"
+    ]
+  },
+  "embezzlement": {
+    "word": "embezzlement",
+    "phonetic": "/em'bezlm(ə)nt/",
+    "explains": [
+      "n. 盗用, 侵占, 挪用"
+    ]
+  },
+  "embitter": {
+    "word": "embitter",
+    "phonetic": "/ɪm'bɪtə; em-/",
+    "explains": [
+      "v. 使怨恨；使难受；使受苦"
+    ]
+  },
+  "emblem": {
+    "word": "emblem",
+    "phonetic": "/'embləm/",
+    "explains": [
+      "n. 象征, 徽章；vt. 用象征表示"
+    ]
+  },
+  "emblematic": {
+    "word": "emblematic",
+    "phonetic": "/,emblə'mætɪk/",
+    "explains": [
+      "adj. 象征(性), 标记的"
+    ]
+  },
+  "embodiment": {
+    "word": "embodiment",
+    "phonetic": "/ɪm'bɒdɪmənt/",
+    "explains": [
+      "n. 体现, 具体化, 化身"
+    ]
+  },
+  "embody": {
+    "word": "embody",
+    "phonetic": "/ɪm'bɒdɪ; em-/",
+    "explains": [
+      "v. 体现；包含，收录"
+    ]
+  },
+  "embolden": {
+    "word": "embolden",
+    "phonetic": "/ɪm'bəʊld(ə)n; em-/",
+    "explains": [
+      "v. 使有胆量，使大胆"
+    ]
+  },
+  "embolism": {
+    "word": "embolism",
+    "phonetic": "/'embəlɪz(ə)m/",
+    "explains": [
+      "n. 加闰日, 栓塞"
+    ]
+  },
+  "emboss": {
+    "word": "emboss",
+    "phonetic": "/ɪm'bɒs; em-/",
+    "explains": [
+      "v. 饰以浮饰, 使浮雕出来"
+    ]
+  },
+  "embouteillage": {
+    "word": "embouteillage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 堵车"
+    ]
+  },
+  "embrace": {
+    "word": "embrace",
+    "phonetic": "/ɪmˈbreɪs/",
+    "explains": [
+      "v. 拥抱"
+    ]
+  },
+  "embroider": {
+    "word": "embroider",
+    "phonetic": "/ɪm'brɒɪdə; em-/",
+    "explains": [
+      "v. 刺绣，修饰"
+    ]
+  },
+  "embroidery": {
+    "word": "embroidery",
+    "phonetic": "/ɪm'brɒɪd(ə)rɪ; em-/",
+    "explains": [
+      "n. 绣花，刺绣；绣制品"
+    ]
+  },
+  "embroil": {
+    "word": "embroil",
+    "phonetic": "/ɪm'brɒɪl; em-/",
+    "explains": [
+      "v. 使卷入；使混乱"
+    ]
+  },
+  "embryo": {
+    "word": "embryo",
+    "phonetic": "/'embrɪəʊ/",
+    "explains": [
+      "n. 胚胎"
+    ]
+  },
+  "embryonic": {
+    "word": "embryonic",
+    "phonetic": "/,embrɪ'ɒnɪk/",
+    "explains": [
+      "adj. 胚胎的，萌芽期的"
+    ]
+  },
+  "emend": {
+    "word": "emend",
+    "phonetic": "/ɪ'mend/",
+    "explains": [
+      "v. 修订, 校勘"
+    ]
+  },
+  "emendation": {
+    "word": "emendation",
+    "phonetic": "/,iːmen'deɪʃ(ə)n/",
+    "explains": [
+      "n. 修订, 校正, 修正"
+    ]
+  },
+  "emerald": {
+    "word": "emerald",
+    "phonetic": "/'em(ə)r(ə)ld/",
+    "explains": [
+      "n. [矿]祖母绿, 翡翠, 绿宝石, 翠绿色"
     ]
   },
   "emerge": {
@@ -291,6 +2084,13 @@
       "v. 出现；浮现"
     ]
   },
+  "emergence": {
+    "word": "emergence",
+    "phonetic": "/ɪ'mɜːdʒ(ə)ns/",
+    "explains": [
+      "n. 浮现,露出"
+    ]
+  },
   "emergency": {
     "word": "emergency",
     "phonetic": "/ɪˈmɜːrdʒənsi/",
@@ -298,11 +2098,221 @@
       "n. 紧急情况；突发事件"
     ]
   },
+  "emergent": {
+    "word": "emergent",
+    "phonetic": "/ɪ'mɜːdʒ(ə)nt/",
+    "explains": [
+      "adj. 紧急的"
+    ]
+  },
+  "emetic": {
+    "word": "emetic",
+    "phonetic": "/ɪ'metɪk/",
+    "explains": [
+      "n. [医]催吐剂"
+    ]
+  },
+  "emigrant": {
+    "word": "emigrant",
+    "phonetic": "/'emɪgr(ə)nt/",
+    "explains": [
+      "n. 移居外国者, 移民"
+    ]
+  },
+  "emigrate": {
+    "word": "emigrate",
+    "phonetic": "/ˈemɪɡreɪt/",
+    "explains": [
+      "v. 移居国外"
+    ]
+  },
+  "emigration": {
+    "word": "emigration",
+    "phonetic": "/,emɪ'greɪʃn/",
+    "explains": [
+      "n. 移民出境, 侨居"
+    ]
+  },
+  "eminence": {
+    "word": "eminence",
+    "phonetic": "/'emɪnəns/",
+    "explains": [
+      "n. 出众, 显赫"
+    ]
+  },
+  "eminent": {
+    "word": "eminent",
+    "phonetic": "/'emɪnənt/",
+    "explains": [
+      "adj. 杰出的；有名的；明显的"
+    ]
+  },
+  "emir": {
+    "word": "emir",
+    "phonetic": "/e'miːə/",
+    "explains": [
+      "n. 埃米尔（穆斯林酋长等的称号）；穆罕默德后裔的尊称；土耳其高级官员的尊称（等于emeer，amir，ameer）"
+    ]
+  },
+  "emissary": {
+    "word": "emissary",
+    "phonetic": "/'emɪs(ə)rɪ/",
+    "explains": [
+      "n. 使者"
+    ]
+  },
+  "emission": {
+    "word": "emission",
+    "phonetic": "/ɪ'mɪʃ(ə)n/",
+    "explains": [
+      "n. 散发；传播；发出物"
+    ]
+  },
+  "emit": {
+    "word": "emit",
+    "phonetic": "/iˈmɪt/",
+    "explains": [
+      "v. 发出，发射；散发"
+    ]
+  },
+  "emollient": {
+    "word": "emollient",
+    "phonetic": "/ɪ'mɒlɪənt/",
+    "explains": [
+      "n. [药] 润肤剂；软化剂；adj. 使柔软的"
+    ]
+  },
+  "emolument": {
+    "word": "emolument",
+    "phonetic": "/ɪ'mɒljʊm(ə)nt; e-/",
+    "explains": [
+      "n. 薪水, 报酬"
+    ]
+  },
+  "emote": {
+    "word": "emote",
+    "phonetic": "/ɪ'məʊt/",
+    "explains": [
+      "v. <美口>夸张地作为, 表现感情"
+    ]
+  },
+  "emotion": {
+    "word": "emotion",
+    "phonetic": "/ɪˈmoʊʃn/",
+    "explains": [
+      "n. 情感，情绪"
+    ]
+  },
+  "emotional": {
+    "word": "emotional",
+    "phonetic": "/ɪˈmoʊʃənl/",
+    "explains": [
+      "adj. 情感的，情绪的；易动感情的"
+    ]
+  },
+  "emotionally": {
+    "word": "emotionally",
+    "phonetic": "/ɪˈməʊʃənəli/",
+    "explains": [
+      "adv. 感情上地, 冲动地"
+    ]
+  },
+  "emotive": {
+    "word": "emotive",
+    "phonetic": "/ɪ'məʊtɪv/",
+    "explains": [
+      "adj. 感情的, 引起强烈感情的"
+    ]
+  },
+  "empathetic": {
+    "word": "empathetic",
+    "phonetic": "/empə'θetɪk/",
+    "explains": [
+      "adj. 移情作用的；同感的（等于empathic）"
+    ]
+  },
+  "empathy": {
+    "word": "empathy",
+    "phonetic": "/'empəθɪ/",
+    "explains": [
+      "n. 移情作用, 共鸣"
+    ]
+  },
+  "emperor": {
+    "word": "emperor",
+    "phonetic": "/ˈempərər/",
+    "explains": [
+      "n. 皇帝"
+    ]
+  },
+  "empezar": {
+    "word": "empezar",
+    "phonetic": "",
+    "explains": [
+      "v. 开始"
+    ]
+  },
+  "emphasis": {
+    "word": "emphasis",
+    "phonetic": "/ˈemfəsɪs/",
+    "explains": [
+      "n. 强调"
+    ]
+  },
   "emphasize": {
     "word": "emphasize",
     "phonetic": "/ˈemfəsaɪz/",
     "explains": [
       "v. 强调；重视"
+    ]
+  },
+  "emphatic": {
+    "word": "emphatic",
+    "phonetic": "/ɪm'fætɪk; em-/",
+    "explains": [
+      "adj. 着重的；加强语气的；显著的"
+    ]
+  },
+  "empire": {
+    "word": "empire",
+    "phonetic": "/ˈempaɪər/",
+    "explains": [
+      "n. 帝国"
+    ]
+  },
+  "empirical": {
+    "word": "empirical",
+    "phonetic": "/em'pɪrɪk(ə)l; ɪm-/",
+    "explains": [
+      "adj. 经验主义的"
+    ]
+  },
+  "empiricism": {
+    "word": "empiricism",
+    "phonetic": "/em'pɪrɪsɪz(ə)m/",
+    "explains": [
+      "n. 经验主义；经验论"
+    ]
+  },
+  "empleado": {
+    "word": "empleado",
+    "phonetic": "",
+    "explains": [
+      "n.m. 雇员"
+    ]
+  },
+  "emplette": {
+    "word": "emplette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 购买"
+    ]
+  },
+  "emploi": {
+    "word": "emploi",
+    "phonetic": "",
+    "explains": [
+      "n.m. 职业；使用"
     ]
   },
   "employ": {
@@ -333,11 +2343,306 @@
       "n. 就业；雇佣"
     ]
   },
+  "emporium": {
+    "word": "emporium",
+    "phonetic": "/em'pɔːrɪəm; ɪm-/",
+    "explains": [
+      "n. 商场, 商业中心, 大百货商店"
+    ]
+  },
+  "emporter": {
+    "word": "emporter",
+    "phonetic": "",
+    "explains": [
+      "v. 带走"
+    ]
+  },
+  "empower": {
+    "word": "empower",
+    "phonetic": "/ɪm'paʊə; em-/",
+    "explains": [
+      "v. 授权，允许；使能够"
+    ]
+  },
+  "empreinte": {
+    "word": "empreinte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 印记；足迹"
+    ]
+  },
+  "empresa": {
+    "word": "empresa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 公司；事业"
+    ]
+  },
+  "empress": {
+    "word": "empress",
+    "phonetic": "/'emprɪs/",
+    "explains": [
+      "n. 皇后, 女皇帝, 皇太后, 极有权力的女人"
+    ]
+  },
+  "empty": {
+    "word": "empty",
+    "phonetic": "/ˈempti/",
+    "explains": [
+      "adj. 空的；空虚的",
+      "v. 倒空，腾出"
+    ]
+  },
+  "empyreal": {
+    "word": "empyreal",
+    "phonetic": "/,empaɪ'rɪ,əl/",
+    "explains": [
+      "adj. 最高天的, 苍天的, 九天的"
+    ]
+  },
+  "empyrean": {
+    "word": "empyrean",
+    "phonetic": "/,empaɪ'riːən; -pɪ-; em'pɪrɪən/",
+    "explains": [
+      "n. 最高天, 苍天, 九天"
+    ]
+  },
+  "emulate": {
+    "word": "emulate",
+    "phonetic": "/'emjʊleɪt/",
+    "explains": [
+      "v. 仿真；模仿；尽力赶上；同…竞争；n. 仿真；仿效"
+    ]
+  },
+  "emulation": {
+    "word": "emulation",
+    "phonetic": "/,emjʊ'leɪʃən/",
+    "explains": [
+      "n. 竞争, 效法"
+    ]
+  },
+  "emulsify": {
+    "word": "emulsify",
+    "phonetic": "/ɪ'mʌlsɪfaɪ/",
+    "explains": [
+      "v. 使乳化"
+    ]
+  },
+  "emulsion": {
+    "word": "emulsion",
+    "phonetic": "/ɪ'mʌlʃ(ə)n/",
+    "explains": [
+      "n. 乳状液"
+    ]
+  },
   "enable": {
     "word": "enable",
     "phonetic": "/ɪˈneɪbl/",
     "explains": [
       "v. 使能够；启用"
+    ]
+  },
+  "enact": {
+    "word": "enact",
+    "phonetic": "/ɪ'nækt; e-/",
+    "explains": [
+      "v. 颁布；制定法律；扮演；发生"
+    ]
+  },
+  "enactment": {
+    "word": "enactment",
+    "phonetic": "/ɪ'næktm(ə)nt; e-/",
+    "explains": [
+      "n. 设定,制定"
+    ]
+  },
+  "enamel": {
+    "word": "enamel",
+    "phonetic": "/ɪ'næm(ə)l/",
+    "explains": [
+      "n. 珐琅, 瓷釉"
+    ]
+  },
+  "enamor": {
+    "word": "enamor",
+    "phonetic": "/i'næmə/",
+    "explains": [
+      "v. 使迷恋，使倾心"
+    ]
+  },
+  "enamorarse": {
+    "word": "enamorarse",
+    "phonetic": "",
+    "explains": [
+      "v. 恋爱"
+    ]
+  },
+  "encampment": {
+    "word": "encampment",
+    "phonetic": "/ɪn'kæmpm(ə)nt; en-/",
+    "explains": [
+      "n. 营地；露营"
+    ]
+  },
+  "encantador": {
+    "word": "encantador",
+    "phonetic": "",
+    "explains": [
+      "adj. 迷人的"
+    ]
+  },
+  "encapsulate": {
+    "word": "encapsulate",
+    "phonetic": "/ɪn'kæpsjʊleɪt; en-/",
+    "explains": [
+      "v. 装入胶囊，压缩"
+    ]
+  },
+  "encase": {
+    "word": "encase",
+    "phonetic": "/ɪn'keɪs; en-/",
+    "explains": [
+      "v. 装入, 包住"
+    ]
+  },
+  "enceinte": {
+    "word": "enceinte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 音箱；adj. 怀孕的"
+    ]
+  },
+  "encender": {
+    "word": "encender",
+    "phonetic": "",
+    "explains": [
+      "v. 点燃；打开"
+    ]
+  },
+  "encephalitis": {
+    "word": "encephalitis",
+    "phonetic": "/en,sefə'laɪtɪs; -,kefə-/",
+    "explains": [
+      "n. [内科] 脑炎"
+    ]
+  },
+  "enchant": {
+    "word": "enchant",
+    "phonetic": "/ɪn'tʃɑːnt; en-/",
+    "explains": [
+      "v. 迷住；用魔法迷惑"
+    ]
+  },
+  "enchanting": {
+    "word": "enchanting",
+    "phonetic": "/ɪn'tʃɑːntɪŋ/",
+    "explains": [
+      "adj. 迷人的, 迷惑的, 妩媚的"
+    ]
+  },
+  "enchantment": {
+    "word": "enchantment",
+    "phonetic": "/ɪn'tʃɑːntm(ə)nt/",
+    "explains": [
+      "n. 迷惑, 着迷, 魔法, 妖术, 魅力"
+    ]
+  },
+  "encima": {
+    "word": "encima",
+    "phonetic": "",
+    "explains": [
+      "adv. 在上面"
+    ]
+  },
+  "encipher": {
+    "word": "encipher",
+    "phonetic": "/ɪn'saɪfə; en-/",
+    "explains": [
+      "v. 译成密码"
+    ]
+  },
+  "encircle": {
+    "word": "encircle",
+    "phonetic": "/ɪn'sɜːk(ə)l; en-/",
+    "explains": [
+      "v. 环绕, 围绕"
+    ]
+  },
+  "enclave": {
+    "word": "enclave",
+    "phonetic": "/'enkleɪv/",
+    "explains": [
+      "n. 飞地（指在本国境内的隶属另一国的一块领土）；被包围的领土；被包围物"
+    ]
+  },
+  "enclose": {
+    "word": "enclose",
+    "phonetic": "/ɪn'kləʊz; en-/",
+    "explains": [
+      "v. 附上；围住，圈起"
+    ]
+  },
+  "enclosure": {
+    "word": "enclosure",
+    "phonetic": "/ɪn'kləʊʒə; en-/",
+    "explains": [
+      "n. 围场，围栏；围绕"
+    ]
+  },
+  "encode": {
+    "word": "encode",
+    "phonetic": "/ɪn'kəʊd; en-/",
+    "explains": [
+      "v. 把编码"
+    ]
+  },
+  "encoding": {
+    "word": "encoding",
+    "phonetic": "",
+    "explains": [
+      "编码"
+    ]
+  },
+  "encomiast": {
+    "word": "encomiast",
+    "phonetic": "/en'kəʊmɪæst/",
+    "explains": [
+      "n. 宣读或写颂辞之人, 阿谀者, 赞美者"
+    ]
+  },
+  "encomium": {
+    "word": "encomium",
+    "phonetic": "/en'kəʊmɪəm/",
+    "explains": [
+      "n. 赞辞, 赞美, 称赞"
+    ]
+  },
+  "encompass": {
+    "word": "encompass",
+    "phonetic": "/ɪn'kʌmpəs; en-/",
+    "explains": [
+      "v. 包围,环绕"
+    ]
+  },
+  "encontrar": {
+    "word": "encontrar",
+    "phonetic": "",
+    "explains": [
+      "v. 找到；遇见"
+    ]
+  },
+  "encore": {
+    "word": "encore",
+    "phonetic": "/'ɒŋkɔː/",
+    "explains": [
+      "n. 再演唱的要求；经要求而再唱；v. 要求再演或唱；int. 再来一个"
+    ]
+  },
+  "encounter": {
+    "word": "encounter",
+    "phonetic": "/ɪnˈkaʊntə/",
+    "explains": [
+      "v. 遇到"
     ]
   },
   "encourage": {
@@ -347,12 +2652,145 @@
       "v. 鼓励；激励"
     ]
   },
+  "encouragement": {
+    "word": "encouragement",
+    "phonetic": "/ɪnˈkʌrɪdʒmənt/",
+    "explains": [
+      "n. 鼓励"
+    ]
+  },
+  "encre": {
+    "word": "encre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 墨水"
+    ]
+  },
+  "encroach": {
+    "word": "encroach",
+    "phonetic": "/ɪn'krəʊtʃ; en-/",
+    "explains": [
+      "v. 侵占,侵犯"
+    ]
+  },
+  "encroachment": {
+    "word": "encroachment",
+    "phonetic": "/eŋ'krəʊtʃm(ə)nt/",
+    "explains": [
+      "n. 侵蚀, 侵犯"
+    ]
+  },
+  "encrypt": {
+    "word": "encrypt",
+    "phonetic": "",
+    "explains": [
+      "加密"
+    ]
+  },
+  "encryption": {
+    "word": "encryption",
+    "phonetic": "/in'kripʃən/",
+    "explains": [
+      "n.  编码"
+    ]
+  },
+  "encumber": {
+    "word": "encumber",
+    "phonetic": "/ɪn'kʌmbə; en-/",
+    "explains": [
+      "v. 阻塞；妨害；拖累"
+    ]
+  },
+  "encumbrance": {
+    "word": "encumbrance",
+    "phonetic": "/ɪn'kʌmbr(ə)ns; en-/",
+    "explains": [
+      "n. 阻碍, 累赘, 妨害物"
+    ]
+  },
+  "encyclopaedia": {
+    "word": "encyclopaedia",
+    "phonetic": "/ɪn,saɪklə'pidɪə/",
+    "explains": [
+      "n. 百科全书"
+    ]
+  },
+  "encyclopedia": {
+    "word": "encyclopedia",
+    "phonetic": "/ɪnˌsaɪkləˈpiːdiə/",
+    "explains": [
+      "n. 百科全书（亦是encyclopaedia）"
+    ]
+  },
+  "encyclopedic": {
+    "word": "encyclopedic",
+    "phonetic": "/en,saɪklə(ʊ)'piːdɪk; ɪn-/",
+    "explains": [
+      "adj. 如百科辞典的, 百科全书式的"
+    ]
+  },
   "end": {
     "word": "end",
     "phonetic": "/end/",
     "explains": [
       "n. 结尾；末端",
       "v. 结束；终止"
+    ]
+  },
+  "end-product": {
+    "word": "end-product",
+    "phonetic": "/'end'prɔdʌkt/",
+    "explains": [
+      "n.  制成品， 最终产品"
+    ]
+  },
+  "end-user": {
+    "word": "end-user",
+    "phonetic": "/'3ndˌjʊːzə/",
+    "explains": [
+      "n.   最终用户"
+    ]
+  },
+  "endanger": {
+    "word": "endanger",
+    "phonetic": "/ɪn'deɪn(d)ʒə; en-/",
+    "explains": [
+      "v. 危及，危害"
+    ]
+  },
+  "endear": {
+    "word": "endear",
+    "phonetic": "/ɪn'dɪə; en-/",
+    "explains": [
+      "v. 使亲密"
+    ]
+  },
+  "endearment": {
+    "word": "endearment",
+    "phonetic": "/ɪn'dɪəm(ə)nt; en-/",
+    "explains": [
+      "n. 亲爱, 钟爱"
+    ]
+  },
+  "endeavor": {
+    "word": "endeavor",
+    "phonetic": "/ɪn'devə/",
+    "explains": [
+      "v. 努力，尽力；n. 努力，尝试"
+    ]
+  },
+  "endeavour": {
+    "word": "endeavour",
+    "phonetic": "/in'devə/",
+    "explains": [
+      "vi. 努力，尽力；尝试；n.  努力， 尽力"
+    ]
+  },
+  "endemic": {
+    "word": "endemic",
+    "phonetic": "/en'demɪk/",
+    "explains": [
+      "adj. 地方性的；风土的；n. 地方病"
     ]
   },
   "ending": {
@@ -369,11 +2807,200 @@
       "adj. 无止境的；连续的"
     ]
   },
+  "endocrine": {
+    "word": "endocrine",
+    "phonetic": "/'endə(ʊ)kraɪn; -krɪn/",
+    "explains": [
+      "n. 内分泌"
+    ]
+  },
+  "endocrinology": {
+    "word": "endocrinology",
+    "phonetic": "/,endəʊkrɪ'nɒlədʒɪ/",
+    "explains": [
+      "n. 内分泌学"
+    ]
+  },
+  "endogenous": {
+    "word": "endogenous",
+    "phonetic": "/en'dɒdʒɪnəs; ɪn-/",
+    "explains": [
+      "adj. 内生的, 内成的"
+    ]
+  },
+  "endorphin": {
+    "word": "endorphin",
+    "phonetic": "/en'dɔːfɪn/",
+    "explains": [
+      "n. 脑内啡"
+    ]
+  },
+  "endorse": {
+    "word": "endorse",
+    "phonetic": "/in'dɔːs/",
+    "explains": [
+      "vt.  背书； 赞同； 认可"
+    ]
+  },
+  "endorsement": {
+    "word": "endorsement",
+    "phonetic": "/in'dɔːsmənt/",
+    "explains": [
+      "n.  背书"
+    ]
+  },
+  "endothermic": {
+    "word": "endothermic",
+    "phonetic": "/,endəʊ'θɜːmɪk/",
+    "explains": [
+      "adj. [热] 吸热的；温血的"
+    ]
+  },
+  "endotherms": {
+    "word": "endotherms",
+    "phonetic": "",
+    "explains": [
+      "n. 温血动物, 恒温动物"
+    ]
+  },
+  "endow": {
+    "word": "endow",
+    "phonetic": "/ɪn'daʊ; en-/",
+    "explains": [
+      "v. 资助；赋予"
+    ]
+  },
+  "endowment": {
+    "word": "endowment",
+    "phonetic": "/ɪn'daʊm(ə)nt; en-/",
+    "explains": [
+      "n. 捐赠,天资,捐款"
+    ]
+  },
+  "endpoint": {
+    "word": "endpoint",
+    "phonetic": "/'end,pɒɪnt/",
+    "explains": [
+      "n. 端点"
+    ]
+  },
+  "endue": {
+    "word": "endue",
+    "phonetic": "/ɪn'djuː; en-/",
+    "explains": [
+      "v. 授予，赋予；穿上"
+    ]
+  },
+  "endurable": {
+    "word": "endurable",
+    "phonetic": "/ɪn'dʒʊərəb(ə)l; en-; -'djɔː-/",
+    "explains": [
+      "adj. 能忍耐的；可忍受的；能持久的"
+    ]
+  },
+  "endurance": {
+    "word": "endurance",
+    "phonetic": "/ɪn'djʊər(ə)ns; en-/",
+    "explains": [
+      "n. 耐久力，持久力"
+    ]
+  },
+  "endure": {
+    "word": "endure",
+    "phonetic": "/ɪnˈdjʊə; ɪnˈdʒʊə/",
+    "explains": [
+      "v. 忍受"
+    ]
+  },
+  "endways": {
+    "word": "endways",
+    "phonetic": "/'endweɪz/",
+    "explains": [
+      "adv. 末端朝上地；两端连接地"
+    ]
+  },
+  "enemigo": {
+    "word": "enemigo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 敌人"
+    ]
+  },
+  "enemy": {
+    "word": "enemy",
+    "phonetic": "/ˈenəmi/",
+    "explains": [
+      "n. 敌人，仇敌；敌军"
+    ]
+  },
+  "energetic": {
+    "word": "energetic",
+    "phonetic": "/ˌenəˈdʒetɪk/",
+    "explains": [
+      "adj. 精力充沛的"
+    ]
+  },
+  "energize": {
+    "word": "energize",
+    "phonetic": "/'enədʒaɪz/",
+    "explains": [
+      "v. 供给…能量"
+    ]
+  },
+  "energumen": {
+    "word": "energumen",
+    "phonetic": "/,enə'gjuːmən/",
+    "explains": [
+      "n. 被恶魔附者,狂热者"
+    ]
+  },
   "energy": {
     "word": "energy",
     "phonetic": "/ˈenərdʒi/",
     "explains": [
       "n. 能量；精力"
+    ]
+  },
+  "enero": {
+    "word": "enero",
+    "phonetic": "",
+    "explains": [
+      "n.m. 一月"
+    ]
+  },
+  "enervate": {
+    "word": "enervate",
+    "phonetic": "/'enəveɪt;ɪˈnɜːveɪt/",
+    "explains": [
+      "v. 使衰弱，使失去活力；adj. 衰弱的，无力的"
+    ]
+  },
+  "enfeeble": {
+    "word": "enfeeble",
+    "phonetic": "/ɪn'fiːb(ə)l; en-/",
+    "explains": [
+      "v. 使衰弱；使无力"
+    ]
+  },
+  "enfermo": {
+    "word": "enfermo",
+    "phonetic": "",
+    "explains": [
+      "adj. 生病的"
+    ]
+  },
+  "enfin": {
+    "word": "enfin",
+    "phonetic": "",
+    "explains": [
+      "最后；终于"
+    ]
+  },
+  "enfold": {
+    "word": "enfold",
+    "phonetic": "/ɪn'fəʊld; en-/",
+    "explains": [
+      "v. 拥抱；包裹；折叠；围绕"
     ]
   },
   "enforce": {
@@ -383,11 +3010,60 @@
       "v. 实施；强制执行"
     ]
   },
+  "enforcer": {
+    "word": "enforcer",
+    "phonetic": "",
+    "explains": [
+      "n. 实施者,强制执行者"
+    ]
+  },
+  "enfranchise": {
+    "word": "enfranchise",
+    "phonetic": "/ɪn'fræn(t)ʃaɪz; en-/",
+    "explains": [
+      "v. 给予选举权；给予自治权；解放，释放"
+    ]
+  },
+  "enfranchisement": {
+    "word": "enfranchisement",
+    "phonetic": "/in'fræntʃizmənt/",
+    "explains": [
+      "n. 解放，释放"
+    ]
+  },
   "engage": {
     "word": "engage",
     "phonetic": "/ɪnˈɡeɪdʒ/",
     "explains": [
       "v. 参与；吸引；订婚"
+    ]
+  },
+  "engaged": {
+    "word": "engaged",
+    "phonetic": "/ɪn'geɪdʒd; en-/",
+    "explains": [
+      "adj. 使用中的，忙碌的；v. 保证；约定；同…订婚（engage的过去分词）"
+    ]
+  },
+  "engagement": {
+    "word": "engagement",
+    "phonetic": "/ɪn'geɪdʒm(ə)nt; en-/",
+    "explains": [
+      "n. 婚约；约会"
+    ]
+  },
+  "engaging": {
+    "word": "engaging",
+    "phonetic": "/ɪn'geɪdʒɪŋ; en-/",
+    "explains": [
+      "adj. 动人的, 有魅力的, 迷人的"
+    ]
+  },
+  "engender": {
+    "word": "engender",
+    "phonetic": "/in'dʒendə/",
+    "explains": [
+      "v.  造成"
     ]
   },
   "engine": {
@@ -412,6 +3088,125 @@
       "n. 工程；工程技术"
     ]
   },
+  "engird": {
+    "word": "engird",
+    "phonetic": "/ɪn'ɡɜːd/",
+    "explains": [
+      "vt. 使佩带, 围绕"
+    ]
+  },
+  "england": {
+    "word": "england",
+    "phonetic": "/ˈɪŋɡlənd/",
+    "explains": [
+      "n. 英格兰"
+    ]
+  },
+  "english": {
+    "word": "english",
+    "phonetic": "/ˈɪŋɡlɪʃ/",
+    "explains": [
+      "n. 英语　adj. 英国的"
+    ]
+  },
+  "englishman": {
+    "word": "englishman",
+    "phonetic": "/'iŋɡliʃmən/",
+    "explains": [
+      "n. 英国男子"
+    ]
+  },
+  "englishwoman": {
+    "word": "englishwoman",
+    "phonetic": "/'iŋɡliʃ,wumən/",
+    "explains": [
+      "n. 英国女人；英格兰妇女"
+    ]
+  },
+  "engrave": {
+    "word": "engrave",
+    "phonetic": "/ɪn'greɪv; en-/",
+    "explains": [
+      "v. 雕刻,使铭记"
+    ]
+  },
+  "engraving": {
+    "word": "engraving",
+    "phonetic": "/ɪn'greɪvɪŋ; en-/",
+    "explains": [
+      "n. 雕刻术,雕版"
+    ]
+  },
+  "engross": {
+    "word": "engross",
+    "phonetic": "/ɪn'grəʊs; en-/",
+    "explains": [
+      "v. 占用；吸引"
+    ]
+  },
+  "engrossed": {
+    "word": "engrossed",
+    "phonetic": "/ɪn'ɡrəʊst/",
+    "explains": [
+      "adj. 全神贯注的；专心致志的；v. 全神贯注（engross的过去分词）"
+    ]
+  },
+  "engrossing": {
+    "word": "engrossing",
+    "phonetic": "/ɪn'ɡrəʊsɪŋ/",
+    "explains": [
+      "adj. 引人入胜的；v. 使全神贯注（engross的ing形式）"
+    ]
+  },
+  "engulf": {
+    "word": "engulf",
+    "phonetic": "/ɪn'gʌlf; en-/",
+    "explains": [
+      "v. 吞没"
+    ]
+  },
+  "enhance": {
+    "word": "enhance",
+    "phonetic": "/ɪnˈhæns/",
+    "explains": [
+      "v. 提高，增强；改进"
+    ]
+  },
+  "enhanced": {
+    "word": "enhanced",
+    "phonetic": "/ɪn'hɑːnst/",
+    "explains": [
+      "adj. 加强的；增大的；v. 提高；加强（enhance的过去分词）"
+    ]
+  },
+  "enhancement": {
+    "word": "enhancement",
+    "phonetic": "/ɪn'hɑːnsm(ə)nt; en-/",
+    "explains": [
+      "n. 增进, 增加"
+    ]
+  },
+  "enigma": {
+    "word": "enigma",
+    "phonetic": "/ɪ'nɪgmə/",
+    "explains": [
+      "n. 谜, 难以理解的事物"
+    ]
+  },
+  "enigmatic": {
+    "word": "enigmatic",
+    "phonetic": "/,enɪg'mætɪk/",
+    "explains": [
+      "adj. 谜的, 莫明其妙的"
+    ]
+  },
+  "enjoin": {
+    "word": "enjoin",
+    "phonetic": "/ɪn'dʒɒɪn; en-/",
+    "explains": [
+      "v. 吩咐, 命令, 嘱咐, <主美>禁止"
+    ]
+  },
   "enjoy": {
     "word": "enjoy",
     "phonetic": "/ɪnˈdʒɔɪ/",
@@ -426,6 +3221,139 @@
       "adj. 令人愉快的"
     ]
   },
+  "enjoyment": {
+    "word": "enjoyment",
+    "phonetic": "/ɪnˈdʒɔɪmənt/",
+    "explains": [
+      "n. 享受"
+    ]
+  },
+  "enkindle": {
+    "word": "enkindle",
+    "phonetic": "/ɪn'kɪnd(ə)l; en-/",
+    "explains": [
+      "v. 点燃, 使燃烧, 激起(热情等), 挑起(战争等)"
+    ]
+  },
+  "enlarge": {
+    "word": "enlarge",
+    "phonetic": "/ɪnˈlɑːrdʒ/",
+    "explains": [
+      "v. 扩大，扩展；放大"
+    ]
+  },
+  "enlargement": {
+    "word": "enlargement",
+    "phonetic": "/ɪn'lɑːdʒm(ə)nt; en-/",
+    "explains": [
+      "n. 放大"
+    ]
+  },
+  "enlighten": {
+    "word": "enlighten",
+    "phonetic": "/ɪn'laɪt(ə)n; en-/",
+    "explains": [
+      "v. 启发，开导；启蒙"
+    ]
+  },
+  "enlightened": {
+    "word": "enlightened",
+    "phonetic": "/ɪn'laɪt(ə)nd/",
+    "explains": [
+      "adj. 开明的；文明的；进步的；被启发的；v. 启迪（enlighten的过去式）"
+    ]
+  },
+  "enlightenment": {
+    "word": "enlightenment",
+    "phonetic": "/ɪn'laɪt(ə)nm(ə)nt; en-/",
+    "explains": [
+      "n. 启迪, 教化"
+    ]
+  },
+  "enlist": {
+    "word": "enlist",
+    "phonetic": "/ɪn'lɪst; en-/",
+    "explains": [
+      "v. 支持；从军；应募；赞助"
+    ]
+  },
+  "enlistment": {
+    "word": "enlistment",
+    "phonetic": "/ɪn'lɪstmənt/",
+    "explains": [
+      "n. 征募, 服役期间"
+    ]
+  },
+  "enliven": {
+    "word": "enliven",
+    "phonetic": "/ɪn'laɪv(ə)n; en-/",
+    "explains": [
+      "v. 使活泼；使生动；使有生气，使活跃"
+    ]
+  },
+  "enmesh": {
+    "word": "enmesh",
+    "phonetic": "/ɪn'meʃ; en-/",
+    "explains": [
+      "v. 使绊住, 使陷入"
+    ]
+  },
+  "enmity": {
+    "word": "enmity",
+    "phonetic": "/'enmɪtɪ/",
+    "explains": [
+      "n. 敌意；憎恨"
+    ]
+  },
+  "ennoble": {
+    "word": "ennoble",
+    "phonetic": "/ɪ'nəʊb(ə)l; en-/",
+    "explains": [
+      "v. 使…成为贵族；使…高贵；授予爵位"
+    ]
+  },
+  "ennui": {
+    "word": "ennui",
+    "phonetic": "",
+    "explains": [
+      "n.m. 烦恼；无聊"
+    ]
+  },
+  "ennuyeux": {
+    "word": "ennuyeux",
+    "phonetic": "",
+    "explains": [
+      "adj. 令人厌烦的"
+    ]
+  },
+  "enorme": {
+    "word": "enorme",
+    "phonetic": "",
+    "explains": [
+      "adj. 巨大的"
+    ]
+  },
+  "enormity": {
+    "word": "enormity",
+    "phonetic": "/ɪ'nɔːmɪtɪ/",
+    "explains": [
+      "n. 暴行, 巨大, 极恶"
+    ]
+  },
+  "enormous": {
+    "word": "enormous",
+    "phonetic": "/ɪˈnɔːrməs/",
+    "explains": [
+      "adj. 巨大的，庞大的"
+    ]
+  },
+  "enormously": {
+    "word": "enormously",
+    "phonetic": "/ɪ'nɔːməslɪ/",
+    "explains": [
+      "adv. 极度,大量"
+    ]
+  },
   "enough": {
     "word": "enough",
     "phonetic": "/ɪˈnʌf/",
@@ -435,11 +3363,172 @@
       "pron. 足够"
     ]
   },
+  "enquire": {
+    "word": "enquire",
+    "phonetic": "/ɪn'kwaɪə/",
+    "explains": [
+      "v. 询问；调查；问候（等于inquire）"
+    ]
+  },
+  "enquiry": {
+    "word": "enquiry",
+    "phonetic": "/in'kwaiəri/",
+    "explains": [
+      "n.  询问， 查询； 询盘， 询价"
+    ]
+  },
+  "enrage": {
+    "word": "enrage",
+    "phonetic": "/ɪn'reɪdʒ; en-/",
+    "explains": [
+      "v. 激怒；使暴怒"
+    ]
+  },
+  "enrapture": {
+    "word": "enrapture",
+    "phonetic": "/ɪn'ræptʃə; en-/",
+    "explains": [
+      "v. 使狂喜；使著迷"
+    ]
+  },
+  "enregistrement": {
+    "word": "enregistrement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 登记；录音"
+    ]
+  },
+  "enrich": {
+    "word": "enrich",
+    "phonetic": "/ɪnˈrɪtʃ/",
+    "explains": [
+      "v. 丰富"
+    ]
+  },
+  "enrichment": {
+    "word": "enrichment",
+    "phonetic": "/ɪn'rɪtʃmənt/",
+    "explains": [
+      "n. 发财致富, 丰富, 肥沃"
+    ]
+  },
+  "enrol": {
+    "word": "enrol",
+    "phonetic": "/ɪnˈrəʊl/",
+    "explains": [
+      "v. 注册"
+    ]
+  },
+  "enroll": {
+    "word": "enroll",
+    "phonetic": "/ɪn'rəʊl/",
+    "explains": [
+      "v. 登记，招收，参军"
+    ]
+  },
+  "enrolment": {
+    "word": "enrolment",
+    "phonetic": "/ɪn'rəʊlm(ə)nt/",
+    "explains": [
+      "n. 登记，入学"
+    ]
+  },
+  "ensalada": {
+    "word": "ensalada",
+    "phonetic": "",
+    "explains": [
+      "n.f. 沙拉"
+    ]
+  },
+  "ensconce": {
+    "word": "ensconce",
+    "phonetic": "/ɪn'skɒns; en-/",
+    "explains": [
+      "v. 安置；安顿下来；使…隐藏"
+    ]
+  },
+  "enseignant": {
+    "word": "enseignant",
+    "phonetic": "",
+    "explains": [
+      "n.m. 教师"
+    ]
+  },
+  "ensemble": {
+    "word": "ensemble",
+    "phonetic": "/ɒn'sɒmb(ə)l/",
+    "explains": [
+      "n. 全体；演唱组"
+    ]
+  },
+  "enshrine": {
+    "word": "enshrine",
+    "phonetic": "/ɪn'ʃraɪn; en-/",
+    "explains": [
+      "v. 铭记，珍藏；把…置于神龛内；把…奉为神圣"
+    ]
+  },
+  "ensign": {
+    "word": "ensign",
+    "phonetic": "/[ˈensən]/",
+    "explains": [
+      "n. 旗, 军舰旗, 军旗, 徽章, <美>海军少尉"
+    ]
+  },
+  "enslave": {
+    "word": "enslave",
+    "phonetic": "/ɪn'sleɪv; en-/",
+    "explains": [
+      "v. 束缚；征服；使某人成为奴隶"
+    ]
+  },
+  "ensnare": {
+    "word": "ensnare",
+    "phonetic": "/ɪn'sneə; en-/",
+    "explains": [
+      "v. 诱捕；诱入陷阱；进入罗网"
+    ]
+  },
+  "ensue": {
+    "word": "ensue",
+    "phonetic": "/ɪn'sjuː; en-/",
+    "explains": [
+      "v. 接着发生，接踵而来"
+    ]
+  },
+  "ensuite": {
+    "word": "ensuite",
+    "phonetic": "",
+    "explains": [
+      "adv. 然后"
+    ]
+  },
   "ensure": {
     "word": "ensure",
     "phonetic": "/ɪnˈʃʊr/",
     "explains": [
       "v. 确保；保证"
+    ]
+  },
+  "entail": {
+    "word": "entail",
+    "phonetic": "/ɪn'teɪl; en-/",
+    "explains": [
+      "v. 使需要，必需；承担；遗传给；蕴含；n. 引起；需要；继承"
+    ]
+  },
+  "entangle": {
+    "word": "entangle",
+    "phonetic": "/ɪn'tæŋg(ə)l; en-/",
+    "explains": [
+      "v. 缠住，套住"
+    ]
+  },
+  "entanglement": {
+    "word": "entanglement",
+    "phonetic": "/ɪn'tæŋg(ə)lm(ə)nt; en-/",
+    "explains": [
+      "n. 纠缠"
     ]
   },
   "enter": {
@@ -449,11 +3538,123 @@
       "v. 进入；参加"
     ]
   },
+  "entero": {
+    "word": "entero",
+    "phonetic": "",
+    "explains": [
+      "adj. 完整的"
+    ]
+  },
+  "enterprise": {
+    "word": "enterprise",
+    "phonetic": "/ˈentərpraɪz/",
+    "explains": [
+      "n. 企业，事业；进取心"
+    ]
+  },
+  "enterprising": {
+    "word": "enterprising",
+    "phonetic": "/'entəpraɪzɪŋ/",
+    "explains": [
+      "adj. 有事业心的, 有进取心的"
+    ]
+  },
   "entertain": {
     "word": "entertain",
     "phonetic": "/ˌentərˈteɪn/",
     "explains": [
       "v. 娱乐；招待"
+    ]
+  },
+  "entertainer": {
+    "word": "entertainer",
+    "phonetic": "/entə'teɪnə/",
+    "explains": [
+      "n. 款待者, 表演娱乐节目的人"
+    ]
+  },
+  "entertaining": {
+    "word": "entertaining",
+    "phonetic": "/entə'teɪnɪŋ/",
+    "explains": [
+      "adj. 令人愉快的；v. 款待（entertain的ing形式）"
+    ]
+  },
+  "entertainment": {
+    "word": "entertainment",
+    "phonetic": "/ˌentərˈteɪnmənt/",
+    "explains": [
+      "n. 娱乐，消遣"
+    ]
+  },
+  "enthral": {
+    "word": "enthral",
+    "phonetic": "/ɪn'θrɔl/",
+    "explains": [
+      "v. 奴役；使…做奴隶；迷惑（等于enthrall）"
+    ]
+  },
+  "enthrall": {
+    "word": "enthrall",
+    "phonetic": "/ɪn'θrɔːl/",
+    "explains": [
+      "v. 迷住，使着迷"
+    ]
+  },
+  "enthrone": {
+    "word": "enthrone",
+    "phonetic": "/ɪn'θrəʊn; en-/",
+    "explains": [
+      "v. 使登基；立…为王；任为主教；崇拜"
+    ]
+  },
+  "enthusiasm": {
+    "word": "enthusiasm",
+    "phonetic": "/ɪnˈθjuːzɪæz(ə)m/",
+    "explains": [
+      "n. 热情"
+    ]
+  },
+  "enthusiast": {
+    "word": "enthusiast",
+    "phonetic": "/ɪn'θjuːzɪæst; en-/",
+    "explains": [
+      "n. 热心家, 狂热者"
+    ]
+  },
+  "enthusiastic": {
+    "word": "enthusiastic",
+    "phonetic": "/ɪnˌθjuːzɪˈæstɪk/",
+    "explains": [
+      "adj. 热情的"
+    ]
+  },
+  "enthusiastically": {
+    "word": "enthusiastically",
+    "phonetic": "/in,θju:zi'æstikəli/",
+    "explains": [
+      "adv. 热心地,满腔热情地"
+    ]
+  },
+  "entice": {
+    "word": "entice",
+    "phonetic": "/ɪn'taɪs; en-/",
+    "explains": [
+      "v. 诱使；怂恿"
+    ]
+  },
+  "enticement": {
+    "word": "enticement",
+    "phonetic": "/ɪn'taɪsmənt/",
+    "explains": [
+      "n. 诱惑, 怂恿, 引诱"
+    ]
+  },
+  "entier": {
+    "word": "entier",
+    "phonetic": "",
+    "explains": [
+      "adj. 完整的"
     ]
   },
   "entire": {
@@ -463,11 +3664,81 @@
       "adj. 整个的；全部的"
     ]
   },
+  "entirely": {
+    "word": "entirely",
+    "phonetic": "/ɪnˈtaɪəlɪ/",
+    "explains": [
+      "adv. 完全地"
+    ]
+  },
+  "entirety": {
+    "word": "entirety",
+    "phonetic": "/ɪn'taɪərətɪ; -'taɪətɪ; en-/",
+    "explains": [
+      "n. 全部；完全"
+    ]
+  },
   "entitle": {
     "word": "entitle",
     "phonetic": "/ɪnˈtaɪtl/",
     "explains": [
       "v. 给…权利；给…命名"
+    ]
+  },
+  "entitlement": {
+    "word": "entitlement",
+    "phonetic": "/in'taitlmənt/",
+    "explains": [
+      "n.  应得的权利； 津贴"
+    ]
+  },
+  "entity": {
+    "word": "entity",
+    "phonetic": "/'entɪtɪ/",
+    "explains": [
+      "n. 实体；存在；本质"
+    ]
+  },
+  "entomb": {
+    "word": "entomb",
+    "phonetic": "/ɪn'tuːm; en-/",
+    "explains": [
+      "v. 埋葬, 成为的坟墓"
+    ]
+  },
+  "entomology": {
+    "word": "entomology",
+    "phonetic": "/,entə'mɒlədʒɪ/",
+    "explains": [
+      "n. 昆虫学"
+    ]
+  },
+  "entourage": {
+    "word": "entourage",
+    "phonetic": "/'ɒntʊrɑːʒ; ,ɒntʊ(ə)'rɑːʒ/",
+    "explains": [
+      "n. 随从；周围；环境"
+    ]
+  },
+  "entrada": {
+    "word": "entrada",
+    "phonetic": "",
+    "explains": [
+      "n.f. 入口；票"
+    ]
+  },
+  "entrails": {
+    "word": "entrails",
+    "phonetic": "/'entreɪlz/",
+    "explains": [
+      "n. 内脏, 肠, (物体的)内部"
+    ]
+  },
+  "entrammel": {
+    "word": "entrammel",
+    "phonetic": "/ɪn'træm(ə)l; en-/",
+    "explains": [
+      "vt. 束缚, 妨碍"
     ]
   },
   "entrance": {
@@ -477,6 +3748,104 @@
       "n. 入口；进入"
     ]
   },
+  "entrant": {
+    "word": "entrant",
+    "phonetic": "/'entrənt/",
+    "explains": [
+      "n.  进入者； 新学员， 新成员"
+    ]
+  },
+  "entrapment": {
+    "word": "entrapment",
+    "phonetic": "/ɪn'træpmənt/",
+    "explains": [
+      "n. 诱捕；圈套；截留"
+    ]
+  },
+  "entrar": {
+    "word": "entrar",
+    "phonetic": "",
+    "explains": [
+      "v. 进入"
+    ]
+  },
+  "entre": {
+    "word": "entre",
+    "phonetic": "",
+    "explains": [
+      "prep. 在…之间"
+    ]
+  },
+  "entreat": {
+    "word": "entreat",
+    "phonetic": "/ɪn'triːt; en-/",
+    "explains": [
+      "v. 恳求"
+    ]
+  },
+  "entreaty": {
+    "word": "entreaty",
+    "phonetic": "/ɪn'triːtɪ; en-/",
+    "explains": [
+      "n. 恳求；乞求"
+    ]
+  },
+  "entree": {
+    "word": "entree",
+    "phonetic": "/'ɔntrei/",
+    "explains": [
+      "n. （美）主菜；（法）入场许可"
+    ]
+  },
+  "entrench": {
+    "word": "entrench",
+    "phonetic": "/ɪn'tren(t)ʃ; en-/",
+    "explains": [
+      "v. 以壕沟防护,保护"
+    ]
+  },
+  "entrenched": {
+    "word": "entrenched",
+    "phonetic": "/ɪn'tren(t)ʃt; en-/",
+    "explains": [
+      "adj. 确立的，不容易改的（风俗习惯）"
+    ]
+  },
+  "entrepot": {
+    "word": "entrepot",
+    "phonetic": "",
+    "explains": [
+      "n. 贸易中心；（法）仓库"
+    ]
+  },
+  "entrepreneur": {
+    "word": "entrepreneur",
+    "phonetic": "/ˌɒntrəprəˈnɜː(r)/",
+    "explains": [
+      "n. 企业家；承包人；主办者"
+    ]
+  },
+  "entrepreneurial": {
+    "word": "entrepreneurial",
+    "phonetic": "/ˌɔntrəprə'nəːriəl/",
+    "explains": [
+      "adj.  企业家的"
+    ]
+  },
+  "entrepreneurship": {
+    "word": "entrepreneurship",
+    "phonetic": "/ˌɔntrəprə'nəːʃip/",
+    "explains": [
+      "n. 企业家精神"
+    ]
+  },
+  "entrust": {
+    "word": "entrust",
+    "phonetic": "/ɪn'trʌst; en-/",
+    "explains": [
+      "v. 委托"
+    ]
+  },
   "entry": {
     "word": "entry",
     "phonetic": "/ˈentri/",
@@ -484,11 +3853,369 @@
       "n. 进入；条目；参赛作品"
     ]
   },
+  "entwine": {
+    "word": "entwine",
+    "phonetic": "/ɪn'twaɪn; en-/",
+    "explains": [
+      "v. (使)缠住, (使)盘绕"
+    ]
+  },
+  "enumerate": {
+    "word": "enumerate",
+    "phonetic": "/ɪ'njuːməreɪt/",
+    "explains": [
+      "v. 列举；枚举；计算"
+    ]
+  },
+  "enunciate": {
+    "word": "enunciate",
+    "phonetic": "/ɪ'nʌnsɪeɪt/",
+    "explains": [
+      "v. 阐明, 清晰发言"
+    ]
+  },
+  "enunciation": {
+    "word": "enunciation",
+    "phonetic": "",
+    "explains": [
+      "n. 阐明"
+    ]
+  },
+  "enure": {
+    "word": "enure",
+    "phonetic": "/ɪ'njʊə; ɪ'njɔː/",
+    "explains": [
+      "v. 使习惯于；v. 变得更有利"
+    ]
+  },
+  "envelop": {
+    "word": "envelop",
+    "phonetic": "/ɪn'veləp; en-/",
+    "explains": [
+      "v. 包封, 遮盖"
+    ]
+  },
+  "envelope": {
+    "word": "envelope",
+    "phonetic": "/ˈenvəloʊp/",
+    "explains": [
+      "n. 信封"
+    ]
+  },
+  "enveloppe": {
+    "word": "enveloppe",
+    "phonetic": "",
+    "explains": [
+      "n.f. 信封"
+    ]
+  },
+  "enviable": {
+    "word": "enviable",
+    "phonetic": "/'envɪəb(ə)l/",
+    "explains": [
+      "adj. 值得羡慕的；引起忌妒的"
+    ]
+  },
+  "enviar": {
+    "word": "enviar",
+    "phonetic": "",
+    "explains": [
+      "v. 寄，发送"
+    ]
+  },
+  "envious": {
+    "word": "envious",
+    "phonetic": "/'envɪəs/",
+    "explains": [
+      "adj. 羡慕的；嫉妒的"
+    ]
+  },
   "environment": {
     "word": "environment",
     "phonetic": "/ɪnˈvaɪrənmənt/",
     "explains": [
       "n. 环境；周围状况"
+    ]
+  },
+  "environmental": {
+    "word": "environmental",
+    "phonetic": "/ɪnˌvaɪrənˈmentl/",
+    "explains": [
+      "adj. 环境的，有关环境的"
+    ]
+  },
+  "environmentalism": {
+    "word": "environmentalism",
+    "phonetic": "/ɪn,vaɪrən'mɛntlɪzəm/",
+    "explains": [
+      "n. 环境保护论"
+    ]
+  },
+  "environmentalist": {
+    "word": "environmentalist",
+    "phonetic": "/ɪn,vaɪrən'ment(ə)lɪst; en-/",
+    "explains": [
+      "n. 环境保护论者, 环境论者, 环境论信奉者"
+    ]
+  },
+  "environmentally": {
+    "word": "environmentally",
+    "phonetic": "/en,vairən'mentli/",
+    "explains": [
+      "adv. 在环境方面地"
+    ]
+  },
+  "environnement": {
+    "word": "environnement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 环境"
+    ]
+  },
+  "environs": {
+    "word": "environs",
+    "phonetic": "/ɪn'vaɪrənz; en-; 'envɪrənz/",
+    "explains": [
+      "n. 市郊, 郊外"
+    ]
+  },
+  "envisage": {
+    "word": "envisage",
+    "phonetic": "/ɪn'vɪzɪdʒ; en-/",
+    "explains": [
+      "v. 正视，面对；想像"
+    ]
+  },
+  "envision": {
+    "word": "envision",
+    "phonetic": "/ɪnˈvɪʒn/",
+    "explains": [
+      "v. 想象；预想"
+    ]
+  },
+  "envolver": {
+    "word": "envolver",
+    "phonetic": "",
+    "explains": [
+      "v. 包裹"
+    ]
+  },
+  "envoy": {
+    "word": "envoy",
+    "phonetic": "/'envɒɪ/",
+    "explains": [
+      "n. 外交使节, 特使"
+    ]
+  },
+  "envy": {
+    "word": "envy",
+    "phonetic": "/ˈenvi/",
+    "explains": [
+      "n. 妒忌，羡慕",
+      "v. 妒忌，羡慕"
+    ]
+  },
+  "enzyme": {
+    "word": "enzyme",
+    "phonetic": "/'enzaɪm/",
+    "explains": [
+      "n. [生化]酶"
+    ]
+  },
+  "eocene": {
+    "word": "eocene",
+    "phonetic": "/'i:əusi:n/",
+    "explains": [
+      "n&a. 始新世(的)"
+    ]
+  },
+  "eohippus": {
+    "word": "eohippus",
+    "phonetic": "/,iːəʊ'hɪpəs/",
+    "explains": [
+      "n. <古生>始祖马"
+    ]
+  },
+  "eon": {
+    "word": "eon",
+    "phonetic": "/'iːən/",
+    "explains": [
+      "n. 永世, 无数的年代"
+    ]
+  },
+  "epaulet": {
+    "word": "epaulet",
+    "phonetic": "/'epəlet/",
+    "explains": [
+      "n. [军]肩章, 肩饰"
+    ]
+  },
+  "ephemeral": {
+    "word": "ephemeral",
+    "phonetic": "/ɪ'fem(ə)r(ə)l; -'fiːm-/",
+    "explains": [
+      "adj. 朝生暮死的, 短暂的"
+    ]
+  },
+  "epic": {
+    "word": "epic",
+    "phonetic": "/'epɪk/",
+    "explains": [
+      "n. 史诗, 伟大事迹"
+    ]
+  },
+  "epicenter": {
+    "word": "epicenter",
+    "phonetic": "/'episentə/",
+    "explains": [
+      "n. 震中；中心"
+    ]
+  },
+  "epicure": {
+    "word": "epicure",
+    "phonetic": "/'epɪkjʊə; 'epɪkjɔː/",
+    "explains": [
+      "n. 老饕；美食家；享乐主义者"
+    ]
+  },
+  "epideictic": {
+    "word": "epideictic",
+    "phonetic": "/,epɪ'deɪktɪk; -'daɪktɪk/",
+    "explains": [
+      "adj. (文体、演讲等)意在表现词藻技巧的富于词藻的"
+    ]
+  },
+  "epidemic": {
+    "word": "epidemic",
+    "phonetic": "/epɪ'demɪk/",
+    "explains": [
+      "adj. 流行的；传染性的；n. 传染病；流行病；风尚等的流行"
+    ]
+  },
+  "epidermis": {
+    "word": "epidermis",
+    "phonetic": "/,epɪ'dɜːmɪs/",
+    "explains": [
+      "n. [生]表皮, 上皮"
+    ]
+  },
+  "epigone": {
+    "word": "epigone",
+    "phonetic": "/'epɪgəʊn/",
+    "explains": [
+      "n. 追随者, 模仿者"
+    ]
+  },
+  "epigram": {
+    "word": "epigram",
+    "phonetic": "/'epɪgræm/",
+    "explains": [
+      "n. 警句, 讽刺短诗"
+    ]
+  },
+  "epigrammatic": {
+    "word": "epigrammatic",
+    "phonetic": "/,epɪgrə'mætɪk/",
+    "explains": [
+      "adj. 警句的, 讽刺的"
+    ]
+  },
+  "epilogue": {
+    "word": "epilogue",
+    "phonetic": "/'epɪlɒg/",
+    "explains": [
+      "n. 结语, 尾声, [戏]收场白"
+    ]
+  },
+  "episode": {
+    "word": "episode",
+    "phonetic": "/ˈepɪsoʊd/",
+    "explains": [
+      "n. 插曲，片段；（电视连续剧）一集"
+    ]
+  },
+  "episodic": {
+    "word": "episodic",
+    "phonetic": "/,epɪ'sɒdɪk/",
+    "explains": [
+      "adj. 插曲式的,短暂的"
+    ]
+  },
+  "epistemology": {
+    "word": "epistemology",
+    "phonetic": "/ɪ,pɪstɪ'mɒlədʒɪ; e-/",
+    "explains": [
+      "n. [哲]认识论"
+    ]
+  },
+  "epistle": {
+    "word": "epistle",
+    "phonetic": "/ɪ'pɪs(ə)l/",
+    "explains": [
+      "n. 书信"
+    ]
+  },
+  "epistolary": {
+    "word": "epistolary",
+    "phonetic": "/ɪ'pɪst(ə),lərɪ/",
+    "explains": [
+      "adj. 书信的；书信体的；用书信的"
+    ]
+  },
+  "epitaph": {
+    "word": "epitaph",
+    "phonetic": "/'epɪtɑːf; -tæf/",
+    "explains": [
+      "n. 碑文，墓志铭"
+    ]
+  },
+  "epithet": {
+    "word": "epithet",
+    "phonetic": "/'epɪθet/",
+    "explains": [
+      "n. 绰号, 称号"
+    ]
+  },
+  "epitome": {
+    "word": "epitome",
+    "phonetic": "/ɪ'pɪtəmɪ; e-/",
+    "explains": [
+      "n. 摘要"
+    ]
+  },
+  "epitomise": {
+    "word": "epitomise",
+    "phonetic": "/ɪ'pɪtəmaɪz/",
+    "explains": [
+      "v. 象征；体现；代表（等于epitomize）"
+    ]
+  },
+  "epitomize": {
+    "word": "epitomize",
+    "phonetic": "/ɪ'pɪtəmaɪz; e-/",
+    "explains": [
+      "v. 摘要；概括；成为…的缩影"
+    ]
+  },
+  "epoch": {
+    "word": "epoch",
+    "phonetic": "/'iːpɒk; 'epɒk/",
+    "explains": [
+      "n. （新）时代；历元"
+    ]
+  },
+  "epochal": {
+    "word": "epochal",
+    "phonetic": "",
+    "explains": [
+      "adj. 划时代的；新纪元的"
+    ]
+  },
+  "equable": {
+    "word": "equable",
+    "phonetic": "/'ekwəb(ə)l/",
+    "explains": [
+      "adj. 变动小的, 平静的"
     ]
   },
   "equal": {
@@ -507,11 +4234,102 @@
       "n. 平等；相等"
     ]
   },
+  "equalize": {
+    "word": "equalize",
+    "phonetic": "/'iːkwəlaɪz/",
+    "explains": [
+      "v. 补偿；使相等"
+    ]
+  },
+  "equally": {
+    "word": "equally",
+    "phonetic": "/'iːkw(ə)lɪ/",
+    "explains": [
+      "adv. 同样地；相等地，平等地；公平地"
+    ]
+  },
+  "equanimity": {
+    "word": "equanimity",
+    "phonetic": "/,ekwə'nɪmɪtɪ; iː-/",
+    "explains": [
+      "n. 平静；镇定"
+    ]
+  },
+  "equate": {
+    "word": "equate",
+    "phonetic": "/ɪ'kweɪt/",
+    "explains": [
+      "v. 使相等；视为平等"
+    ]
+  },
   "equation": {
     "word": "equation",
     "phonetic": "/ɪˈkweɪʒn/",
     "explains": [
       "n. 方程；等式"
+    ]
+  },
+  "equator": {
+    "word": "equator",
+    "phonetic": "/ɪ'kweɪtə/",
+    "explains": [
+      "n. 赤道，天球赤道"
+    ]
+  },
+  "equatorial": {
+    "word": "equatorial",
+    "phonetic": "/,ekwə'tɔːrɪəl/",
+    "explains": [
+      "adj. (近)赤道的"
+    ]
+  },
+  "equestrian": {
+    "word": "equestrian",
+    "phonetic": "/ɪ'kwestrɪən; e-/",
+    "explains": [
+      "adj. 骑马的 n骑手"
+    ]
+  },
+  "equiangular": {
+    "word": "equiangular",
+    "phonetic": "/,iːkwɪ'æŋgjʊlə; e-/",
+    "explains": [
+      "adj. 等角的"
+    ]
+  },
+  "equidistant": {
+    "word": "equidistant",
+    "phonetic": "/,iːkwɪ'dɪst(ə)nt; e-/",
+    "explains": [
+      "adj. 等距的；距离相等的"
+    ]
+  },
+  "equilateral": {
+    "word": "equilateral",
+    "phonetic": "/,iːkwɪ'læt(ə)r(ə)l; ,ekwɪ-/",
+    "explains": [
+      "adj. 等边的 n等边形"
+    ]
+  },
+  "equilibrium": {
+    "word": "equilibrium",
+    "phonetic": "/,iːkwɪ'lɪbrɪəm; ,ekwɪ-/",
+    "explains": [
+      "n. 平衡，均衡；均衡论"
+    ]
+  },
+  "equine": {
+    "word": "equine",
+    "phonetic": "/'iːkwaɪn; 'e-/",
+    "explains": [
+      "adj. 马的, 象马的"
+    ]
+  },
+  "equinox": {
+    "word": "equinox",
+    "phonetic": "/'iːkwɪnɒks; 'ekwɪ-/",
+    "explains": [
+      "n. 春分；秋分；昼夜平分点"
     ]
   },
   "equip": {
@@ -528,204 +4346,53 @@
       "n. 装备；设备"
     ]
   },
-  "era": {
-    "word": "era",
-    "phonetic": "/ˈɪrə/",
+  "equipo": {
+    "word": "equipo",
+    "phonetic": "",
     "explains": [
-      "n. 时代；纪元"
+      "n.m. 队；设备"
     ]
   },
-  "error": {
-    "word": "error",
-    "phonetic": "/ˈerər/",
+  "equipoise": {
+    "word": "equipoise",
+    "phonetic": "/'ekwɪpɒɪz; 'iːkwɪ-/",
     "explains": [
-      "n. 错误；失误"
+      "n. 平衡；均势"
     ]
   },
-  "escape": {
-    "word": "escape",
-    "phonetic": "/ɪˈskeɪp/",
+  "equipped": {
+    "word": "equipped",
+    "phonetic": "/i'kwipt/",
     "explains": [
-      "v. 逃跑；逃避",
-      "n. 逃脱；逃路"
+      "v. 装备；预备（equip的过去分词）；整装"
     ]
   },
-  "especially": {
-    "word": "especially",
-    "phonetic": "/ɪˈspeʃəli/",
+  "equitable": {
+    "word": "equitable",
+    "phonetic": "/'ekwɪtəb(ə)l/",
     "explains": [
-      "adv. 尤其；特别"
+      "adj. 公平的, 公正的"
     ]
   },
-  "essay": {
-    "word": "essay",
-    "phonetic": "/ˈeseɪ/",
+  "equitation": {
+    "word": "equitation",
+    "phonetic": "/,ekwɪ'teɪʃ(ə)n/",
     "explains": [
-      "n. 论文；散文"
+      "n. 骑马, 骑术"
     ]
   },
-  "efficiency": {
-    "word": "efficiency",
-    "phonetic": "/ɪˈfɪʃnsi/",
+  "equity": {
+    "word": "equity",
+    "phonetic": "/'ekwiti/",
     "explains": [
-      "n. 效率，效能"
+      "n. 公平；公正"
     ]
   },
-  "eighteen": {
-    "word": "eighteen",
-    "phonetic": "/ˌeɪˈtiːn/",
+  "equivalence": {
+    "word": "equivalence",
+    "phonetic": "/ɪ'kwɪv(ə)l(ə)ns/",
     "explains": [
-      "num. 十八"
-    ]
-  },
-  "eighth": {
-    "word": "eighth",
-    "phonetic": "/eɪtθ/",
-    "explains": [
-      "num. 第八",
-      "n. 八分之一"
-    ]
-  },
-  "eighty": {
-    "word": "eighty",
-    "phonetic": "/ˈeɪti/",
-    "explains": [
-      "num. 八十"
-    ]
-  },
-  "electrical": {
-    "word": "electrical",
-    "phonetic": "/ɪˈlektrɪkl/",
-    "explains": [
-      "adj. 电的，与电有关的"
-    ]
-  },
-  "electricity": {
-    "word": "electricity",
-    "phonetic": "/ɪˌlekˈtrɪsəti/",
-    "explains": [
-      "n. 电，电流"
-    ]
-  },
-  "eleven": {
-    "word": "eleven",
-    "phonetic": "/ɪˈlevn/",
-    "explains": [
-      "num. 十一"
-    ]
-  },
-  "emit": {
-    "word": "emit",
-    "phonetic": "/iˈmɪt/",
-    "explains": [
-      "v. 发出，发射；散发"
-    ]
-  },
-  "emotion": {
-    "word": "emotion",
-    "phonetic": "/ɪˈmoʊʃn/",
-    "explains": [
-      "n. 情感，情绪"
-    ]
-  },
-  "emotional": {
-    "word": "emotional",
-    "phonetic": "/ɪˈmoʊʃənl/",
-    "explains": [
-      "adj. 情感的，情绪的；易动感情的"
-    ]
-  },
-  "emperor": {
-    "word": "emperor",
-    "phonetic": "/ˈempərər/",
-    "explains": [
-      "n. 皇帝"
-    ]
-  },
-  "empire": {
-    "word": "empire",
-    "phonetic": "/ˈempaɪər/",
-    "explains": [
-      "n. 帝国"
-    ]
-  },
-  "empty": {
-    "word": "empty",
-    "phonetic": "/ˈempti/",
-    "explains": [
-      "adj. 空的；空虚的",
-      "v. 倒空，腾出"
-    ]
-  },
-  "enemy": {
-    "word": "enemy",
-    "phonetic": "/ˈenəmi/",
-    "explains": [
-      "n. 敌人，仇敌；敌军"
-    ]
-  },
-  "enhance": {
-    "word": "enhance",
-    "phonetic": "/ɪnˈhæns/",
-    "explains": [
-      "v. 提高，增强；改进"
-    ]
-  },
-  "enlarge": {
-    "word": "enlarge",
-    "phonetic": "/ɪnˈlɑːrdʒ/",
-    "explains": [
-      "v. 扩大，扩展；放大"
-    ]
-  },
-  "enormous": {
-    "word": "enormous",
-    "phonetic": "/ɪˈnɔːrməs/",
-    "explains": [
-      "adj. 巨大的，庞大的"
-    ]
-  },
-  "enterprise": {
-    "word": "enterprise",
-    "phonetic": "/ˈentərpraɪz/",
-    "explains": [
-      "n. 企业，事业；进取心"
-    ]
-  },
-  "entertainment": {
-    "word": "entertainment",
-    "phonetic": "/ˌentərˈteɪnmənt/",
-    "explains": [
-      "n. 娱乐，消遣"
-    ]
-  },
-  "envelope": {
-    "word": "envelope",
-    "phonetic": "/ˈenvəloʊp/",
-    "explains": [
-      "n. 信封"
-    ]
-  },
-  "environmental": {
-    "word": "environmental",
-    "phonetic": "/ɪnˌvaɪrənˈmentl/",
-    "explains": [
-      "adj. 环境的，有关环境的"
-    ]
-  },
-  "envy": {
-    "word": "envy",
-    "phonetic": "/ˈenvi/",
-    "explains": [
-      "n. 妒忌，羡慕",
-      "v. 妒忌，羡慕"
-    ]
-  },
-  "episode": {
-    "word": "episode",
-    "phonetic": "/ˈepɪsoʊd/",
-    "explains": [
-      "n. 插曲，片段；（电视连续剧）一集"
+      "n. 同等, [化]等价, 等值"
     ]
   },
   "equivalent": {
@@ -736,12 +4403,545 @@
       "n. 等价物，相等物"
     ]
   },
+  "equivocal": {
+    "word": "equivocal",
+    "phonetic": "/ɪ'kwɪvək(ə)l/",
+    "explains": [
+      "adj. 暧昧的，可疑的"
+    ]
+  },
+  "equivocate": {
+    "word": "equivocate",
+    "phonetic": "/ɪ'kwɪvəkeɪt/",
+    "explains": [
+      "v. 说模棱两可的话；支吾， 躲闪；推诿；含糊其词"
+    ]
+  },
+  "era": {
+    "word": "era",
+    "phonetic": "/ˈɪrə/",
+    "explains": [
+      "n. 时代；纪元"
+    ]
+  },
+  "eradicate": {
+    "word": "eradicate",
+    "phonetic": "/ɪ'rædɪkeɪt/",
+    "explains": [
+      "v. 根除"
+    ]
+  },
+  "eradication": {
+    "word": "eradication",
+    "phonetic": "/ɪ,rædɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 连根拔除, 根除"
+    ]
+  },
+  "erase": {
+    "word": "erase",
+    "phonetic": "/ɪ'reɪz/",
+    "explains": [
+      "v. 抹去；擦除"
+    ]
+  },
+  "eraser": {
+    "word": "eraser",
+    "phonetic": "/ɪ'reɪzə/",
+    "explains": [
+      "n. 橡皮；擦除器；[计] 清除器"
+    ]
+  },
+  "erasure": {
+    "word": "erasure",
+    "phonetic": "/ɪ'reɪʒə(r)/",
+    "explains": [
+      "n. 消除；涂擦的痕迹；消磁"
+    ]
+  },
+  "ere": {
+    "word": "ere",
+    "phonetic": "/eə/",
+    "explains": [
+      "pron&conj. 在…之前"
+    ]
+  },
+  "erect": {
+    "word": "erect",
+    "phonetic": "/ɪ'rekt/",
+    "explains": [
+      "v. 建造；使竖立"
+    ]
+  },
+  "erection": {
+    "word": "erection",
+    "phonetic": "/ɪ'rekʃ(ə)n/",
+    "explains": [
+      "n. 勃起；建造；建筑物；直立"
+    ]
+  },
+  "erectus": {
+    "word": "erectus",
+    "phonetic": "",
+    "explains": [
+      "adj. [拉丁语]直立的"
+    ]
+  },
+  "eremite": {
+    "word": "eremite",
+    "phonetic": "/'erɪmaɪt/",
+    "explains": [
+      "n. 遁世修行的人, 隐士"
+    ]
+  },
+  "ergonomic": {
+    "word": "ergonomic",
+    "phonetic": "/,ɜːɡəʊ'nɒmɪk/",
+    "explains": [
+      "adj. 人类环境改造学的；人类工程学的"
+    ]
+  },
+  "erie": {
+    "word": "erie",
+    "phonetic": "/'iəri/",
+    "explains": [
+      "n. 伊利(人)"
+    ]
+  },
+  "eristic": {
+    "word": "eristic",
+    "phonetic": "/e'rɪstɪk/",
+    "explains": [
+      "adj. 争论的, 好争论的"
+    ]
+  },
+  "erode": {
+    "word": "erode",
+    "phonetic": "/ɪ'rəʊd/",
+    "explains": [
+      "v. 侵蚀,腐蚀"
+    ]
+  },
+  "erosion": {
+    "word": "erosion",
+    "phonetic": "/ɪ'rəʊʒ(ə)n/",
+    "explains": [
+      "n. 腐蚀，侵蚀；糜烂"
+    ]
+  },
+  "erotic": {
+    "word": "erotic",
+    "phonetic": "/ɪ'rɒtɪk/",
+    "explains": [
+      "adj. 性爱的, 性欲的, 色情的"
+    ]
+  },
+  "erp": {
+    "word": "erp",
+    "phonetic": "",
+    "explains": [
+      "abbr. 企业资源计划（Enterprise Resource Planning）；有效辐射功率（effective radiated power）"
+    ]
+  },
+  "err": {
+    "word": "err",
+    "phonetic": "/ɜː/",
+    "explains": [
+      "v. 犯错；做错；犯罪；走上歧途"
+    ]
+  },
+  "errand": {
+    "word": "errand",
+    "phonetic": "",
+    "explains": [
+      "n. 差使，差事"
+    ]
+  },
+  "errant": {
+    "word": "errant",
+    "phonetic": "/'er(ə)nt/",
+    "explains": [
+      "adj. 不定的；周游的；错误的；偏离正路的"
+    ]
+  },
+  "erratic": {
+    "word": "erratic",
+    "phonetic": "/ɪ'rætɪk/",
+    "explains": [
+      "adj. 古怪的，飘忽不定的"
+    ]
+  },
+  "erreur": {
+    "word": "erreur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 错误"
+    ]
+  },
+  "erroneous": {
+    "word": "erroneous",
+    "phonetic": "/ɪ'rəʊnɪəs; e-/",
+    "explains": [
+      "adj. 错误的；不正确的"
+    ]
+  },
+  "error": {
+    "word": "error",
+    "phonetic": "/ˈerər/",
+    "explains": [
+      "n. 错误；失误"
+    ]
+  },
+  "ersatz": {
+    "word": "ersatz",
+    "phonetic": "/'ɜːsæts; 'eə-/",
+    "explains": [
+      "adj. 代用的,合成的,假的,人造的"
+    ]
+  },
+  "erudite": {
+    "word": "erudite",
+    "phonetic": "/'erʊdaɪt/",
+    "explains": [
+      "adj. 博学的；有学问的；n. 饱学之士"
+    ]
+  },
+  "erudition": {
+    "word": "erudition",
+    "phonetic": "/,erʊ'dɪʃ(ə)n/",
+    "explains": [
+      "n. 博学"
+    ]
+  },
+  "erupt": {
+    "word": "erupt",
+    "phonetic": "/ɪ'rʌpt/",
+    "explains": [
+      "v. 爆发；喷出；发疹；长牙"
+    ]
+  },
+  "eruption": {
+    "word": "eruption",
+    "phonetic": "/ɪ'rʌpʃ(ə)n/",
+    "explains": [
+      "n. 爆发,火山灰"
+    ]
+  },
+  "escalate": {
+    "word": "escalate",
+    "phonetic": "/'eskəleɪt/",
+    "explains": [
+      "v. 逐步增强；逐步升高"
+    ]
+  },
+  "escalator": {
+    "word": "escalator",
+    "phonetic": "/'eskəleɪtə/",
+    "explains": [
+      "n. 电动扶梯"
+    ]
+  },
+  "escalier": {
+    "word": "escalier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 楼梯"
+    ]
+  },
+  "escape": {
+    "word": "escape",
+    "phonetic": "/ɪˈskeɪp/",
+    "explains": [
+      "v. 逃跑；逃避",
+      "n. 逃脱；逃路"
+    ]
+  },
+  "escapee": {
+    "word": "escapee",
+    "phonetic": "/,eskeɪ'piː; ɪ'skeɪpiː/",
+    "explains": [
+      "n. 逃避者；逃亡者"
+    ]
+  },
+  "escenario": {
+    "word": "escenario",
+    "phonetic": "",
+    "explains": [
+      "n.m. 舞台"
+    ]
+  },
+  "eschew": {
+    "word": "eschew",
+    "phonetic": "/ɪs'tʃuː; es-/",
+    "explains": [
+      "v. 避免；避开；远避"
+    ]
+  },
+  "esclave": {
+    "word": "esclave",
+    "phonetic": "",
+    "explains": [
+      "n. 奴隶"
+    ]
+  },
+  "esconder": {
+    "word": "esconder",
+    "phonetic": "",
+    "explains": [
+      "v. 藏"
+    ]
+  },
+  "escort": {
+    "word": "escort",
+    "phonetic": "/'eskɔːt/",
+    "explains": [
+      "v. 护卫，护送；n. 护卫者，护送车辆"
+    ]
+  },
+  "escribir": {
+    "word": "escribir",
+    "phonetic": "",
+    "explains": [
+      "v. 写"
+    ]
+  },
+  "escritor": {
+    "word": "escritor",
+    "phonetic": "",
+    "explains": [
+      "n.m. 作家"
+    ]
+  },
+  "escritorio": {
+    "word": "escritorio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 书桌"
+    ]
+  },
+  "escuchar": {
+    "word": "escuchar",
+    "phonetic": "",
+    "explains": [
+      "v. 听"
+    ]
+  },
+  "escuela": {
+    "word": "escuela",
+    "phonetic": "",
+    "explains": [
+      "n.f. 学校"
+    ]
+  },
+  "esculent": {
+    "word": "esculent",
+    "phonetic": "/'eskjʊlənt/",
+    "explains": [
+      "adj. 可食用的"
+    ]
+  },
+  "escutcheon": {
+    "word": "escutcheon",
+    "phonetic": "/ɪ'skʌtʃ(ə)n; e-/",
+    "explains": [
+      "n. 有花纹的盾, 锁眼盖, 孔罩"
+    ]
+  },
+  "eskimo": {
+    "word": "eskimo",
+    "phonetic": "/'eskiməu/",
+    "explains": [
+      "n. 爱斯基摩人；爱斯基摩语；adj. 爱斯基摩人的"
+    ]
+  },
+  "esophagus": {
+    "word": "esophagus",
+    "phonetic": "/iː'sɒfəɡəs/",
+    "explains": [
+      "n. [解剖] 食管；[解剖] 食道"
+    ]
+  },
+  "esoteric": {
+    "word": "esoteric",
+    "phonetic": "/,esə'terɪk; ,iːsə-/",
+    "explains": [
+      "adj. 秘传的,  神秘的,  难懂的"
+    ]
+  },
+  "espace": {
+    "word": "espace",
+    "phonetic": "",
+    "explains": [
+      "n.m. 空间"
+    ]
+  },
+  "espacio": {
+    "word": "espacio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 空间"
+    ]
+  },
+  "espalda": {
+    "word": "espalda",
+    "phonetic": "",
+    "explains": [
+      "n.f. 背部"
+    ]
+  },
+  "especial": {
+    "word": "especial",
+    "phonetic": "/ɪ'speʃ(ə)l; e-/",
+    "explains": [
+      "adj. 特殊的，特别的；n. (Especial)人名；(葡)埃斯佩西亚尔"
+    ]
+  },
+  "especially": {
+    "word": "especially",
+    "phonetic": "/ɪˈspeʃəli/",
+    "explains": [
+      "adv. 尤其；特别"
+    ]
+  },
+  "especie": {
+    "word": "especie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 种类"
+    ]
+  },
+  "espejo": {
+    "word": "espejo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 镜子"
+    ]
+  },
+  "esperanto": {
+    "word": "esperanto",
+    "phonetic": "/,espə'ræntəu/",
+    "explains": [
+      "n. 世界语"
+    ]
+  },
+  "esperanza": {
+    "word": "esperanza",
+    "phonetic": "",
+    "explains": [
+      "n.f. 希望"
+    ]
+  },
+  "esperar": {
+    "word": "esperar",
+    "phonetic": "",
+    "explains": [
+      "v. 等待；希望"
+    ]
+  },
+  "espionage": {
+    "word": "espionage",
+    "phonetic": "/'espɪənɑːʒ; -ɪdʒ/",
+    "explains": [
+      "n. 间谍, 侦探"
+    ]
+  },
+  "espoir": {
+    "word": "espoir",
+    "phonetic": "",
+    "explains": [
+      "n.m. 希望"
+    ]
+  },
+  "esposa": {
+    "word": "esposa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 妻子"
+    ]
+  },
+  "esposo": {
+    "word": "esposo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 丈夫"
+    ]
+  },
+  "espousal": {
+    "word": "espousal",
+    "phonetic": "/ɪ'spaʊz(ə)l; e-/",
+    "explains": [
+      "n. 订婚, 婚礼, 拥护"
+    ]
+  },
+  "espouse": {
+    "word": "espouse",
+    "phonetic": "/ɪ'spaʊz; e-/",
+    "explains": [
+      "v. 支持；嫁娶；赞成；信奉"
+    ]
+  },
+  "esprit": {
+    "word": "esprit",
+    "phonetic": "",
+    "explains": [
+      "n.m. 精神；头脑"
+    ]
+  },
+  "espy": {
+    "word": "espy",
+    "phonetic": "/ɪ'spaɪ; e-/",
+    "explains": [
+      "v. 看到；认出；发现；n. (Espy)人名；(英、法)埃斯皮"
+    ]
+  },
+  "essai": {
+    "word": "essai",
+    "phonetic": "",
+    "explains": [
+      "n.m. 尝试；散文"
+    ]
+  },
+  "essay": {
+    "word": "essay",
+    "phonetic": "/ˈeseɪ/",
+    "explains": [
+      "n. 论文；散文"
+    ]
+  },
+  "essayist": {
+    "word": "essayist",
+    "phonetic": "/'eseɪɪst/",
+    "explains": [
+      "n. 随笔作家，散文家；评论家"
+    ]
+  },
+  "essence": {
+    "word": "essence",
+    "phonetic": "/'es(ə)ns/",
+    "explains": [
+      "n. 本质，本体"
+    ]
+  },
   "essential": {
     "word": "essential",
     "phonetic": "/ɪˈsenʃl/",
     "explains": [
       "adj. 基本的，本质的；极其重要的",
       "n. 要素，必需品"
+    ]
+  },
+  "essuyer": {
+    "word": "essuyer",
+    "phonetic": "",
+    "explains": [
+      "v. 擦"
+    ]
+  },
+  "estable": {
+    "word": "estable",
+    "phonetic": "",
+    "explains": [
+      "adj. 稳定的"
     ]
   },
   "establish": {
@@ -758,11 +4958,53 @@
       "n. 建立，设立；机构，企业"
     ]
   },
+  "estancia": {
+    "word": "estancia",
+    "phonetic": "/e'stænsɪə/",
+    "explains": [
+      "n. 大牧场（拉丁美洲的）；大庄园（拉丁美洲的）"
+    ]
+  },
+  "estar": {
+    "word": "estar",
+    "phonetic": "",
+    "explains": [
+      "v. 处于；在"
+    ]
+  },
   "estate": {
     "word": "estate",
     "phonetic": "/ɪˈsteɪt/",
     "explains": [
       "n. 房地产，财产；庄园"
+    ]
+  },
+  "estatura": {
+    "word": "estatura",
+    "phonetic": "",
+    "explains": [
+      "n.f. 身高"
+    ]
+  },
+  "esteem": {
+    "word": "esteem",
+    "phonetic": "/ɪ'stiːm; e-/",
+    "explains": [
+      "v. 尊敬；认为；考虑；估价；n. 尊重；尊敬"
+    ]
+  },
+  "estilo": {
+    "word": "estilo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 风格"
+    ]
+  },
+  "estimable": {
+    "word": "estimable",
+    "phonetic": "/'estɪməb(ə)l/",
+    "explains": [
+      "adj. 可尊敬的, 可估计的, <古>可贵的, 有价值的"
     ]
   },
   "estimate": {
@@ -773,11 +5015,522 @@
       "n. 估计，估价"
     ]
   },
+  "estimation": {
+    "word": "estimation",
+    "phonetic": "/estɪ'meɪʃ(ə)n/",
+    "explains": [
+      "n. 估计；尊重"
+    ]
+  },
+  "estomac": {
+    "word": "estomac",
+    "phonetic": "",
+    "explains": [
+      "n.m. 胃"
+    ]
+  },
+  "estrange": {
+    "word": "estrange",
+    "phonetic": "/ɪ'streɪn(d)ʒ; e-/",
+    "explains": [
+      "v. 使疏远；离间"
+    ]
+  },
+  "estrangement": {
+    "word": "estrangement",
+    "phonetic": "/ɪ'streɪn(d)ʒm(ə)nt; e-/",
+    "explains": [
+      "n. 疏远"
+    ]
+  },
+  "estrategia": {
+    "word": "estrategia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 战略"
+    ]
+  },
+  "estrecho": {
+    "word": "estrecho",
+    "phonetic": "",
+    "explains": [
+      "adj. 狭窄的"
+    ]
+  },
+  "estrella": {
+    "word": "estrella",
+    "phonetic": "",
+    "explains": [
+      "n.f. 星星；明星"
+    ]
+  },
+  "estreno": {
+    "word": "estreno",
+    "phonetic": "",
+    "explains": [
+      "n.m. 首演"
+    ]
+  },
+  "estuarine": {
+    "word": "estuarine",
+    "phonetic": "/'estjʊəraɪn/",
+    "explains": [
+      "adj. 入海的, 在入海口形成的"
+    ]
+  },
+  "estuary": {
+    "word": "estuary",
+    "phonetic": "/'estjʊ(ə)rɪ/",
+    "explains": [
+      "n. 河口, 江口"
+    ]
+  },
+  "estudiante": {
+    "word": "estudiante",
+    "phonetic": "",
+    "explains": [
+      "n.m. 学生"
+    ]
+  },
+  "estudiar": {
+    "word": "estudiar",
+    "phonetic": "",
+    "explains": [
+      "v. 学习"
+    ]
+  },
+  "esurience": {
+    "word": "esurience",
+    "phonetic": "",
+    "explains": [
+      "n. 贪心,贪婪"
+    ]
+  },
+  "eta": {
+    "word": "eta",
+    "phonetic": "",
+    "explains": [
+      "n. 〔飞机、舰船等的〕估计到达时间"
+    ]
+  },
+  "etag": {
+    "word": "etag",
+    "phonetic": "",
+    "explains": [
+      "资源版本标识"
+    ]
+  },
+  "etapa": {
+    "word": "etapa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 阶段"
+    ]
+  },
+  "etc": {
+    "word": "etc",
+    "phonetic": "/ɪt'setərə, et-/",
+    "explains": [
+      "adv. 等等，及其他"
+    ]
+  },
+  "etceteras": {
+    "word": "etceteras",
+    "phonetic": "/ɪt'setərəz/",
+    "explains": [
+      "n. 附加项目；其余（etcetera的复数形式）"
+    ]
+  },
+  "etch": {
+    "word": "etch",
+    "phonetic": "/etʃ/",
+    "explains": [
+      "v. 蚀刻"
+    ]
+  },
+  "etched": {
+    "word": "etched",
+    "phonetic": "",
+    "explains": [
+      "adj. 被侵蚀的；风化的；v. [冶][印刷] 蚀刻（etch的过去分词）"
+    ]
+  },
+  "etching": {
+    "word": "etching",
+    "phonetic": "/'etʃɪŋ/",
+    "explains": [
+      "n. 蚀刻版画"
+    ]
+  },
+  "eternal": {
+    "word": "eternal",
+    "phonetic": "/ɪ'tɜːn(ə)l; iː-/",
+    "explains": [
+      "adj. 永久的；不朽的"
+    ]
+  },
+  "ethanol": {
+    "word": "ethanol",
+    "phonetic": "/'eθənɒl/",
+    "explains": [
+      "n. [有化] 乙醇，[有化] 酒精"
+    ]
+  },
+  "ether": {
+    "word": "ether",
+    "phonetic": "/'iːθə/",
+    "explains": [
+      "n. 天空醚, 大气"
+    ]
+  },
+  "ethereal": {
+    "word": "ethereal",
+    "phonetic": "/ɪ'θɪərɪəl/",
+    "explains": [
+      "adj. 优雅的；轻飘的；缥缈的；超凡的"
+    ]
+  },
+  "etherize": {
+    "word": "etherize",
+    "phonetic": "/'iːθ(ə)raɪz/",
+    "explains": [
+      "v. <美>[医]以醚麻醉, 化成为醚"
+    ]
+  },
+  "ethic": {
+    "word": "ethic",
+    "phonetic": "/'eθɪk/",
+    "explains": [
+      "n. 道德规范"
+    ]
+  },
+  "ethical": {
+    "word": "ethical",
+    "phonetic": "/'eθikəl/",
+    "explains": [
+      "adj.  道德的； 伦理的； 合乎职业道德标准的"
+    ]
+  },
+  "ethically": {
+    "word": "ethically",
+    "phonetic": "/'eθikli/",
+    "explains": [
+      "adv. 伦理(学)上"
+    ]
+  },
+  "ethics": {
+    "word": "ethics",
+    "phonetic": "/'eθɪks/",
+    "explains": [
+      "n. 伦理学；伦理观；道德标准"
+    ]
+  },
+  "ethnic": {
+    "word": "ethnic",
+    "phonetic": "/'eθnɪk/",
+    "explains": [
+      "adj. 种族的；人种的"
+    ]
+  },
+  "ethnographic": {
+    "word": "ethnographic",
+    "phonetic": "/,eθnə'ɡræfɪk/",
+    "explains": [
+      "adj. 民族志学的,  人种志学的"
+    ]
+  },
+  "ethnography": {
+    "word": "ethnography",
+    "phonetic": "/eθ'nɒgrəfɪ/",
+    "explains": [
+      "n. 民族志学, 人种学, 人种志"
+    ]
+  },
+  "ethnomusicology": {
+    "word": "ethnomusicology",
+    "phonetic": "/,eθnəʊmjuːzɪ'kɒlədʒɪ/",
+    "explains": [
+      "n. 人种音乐学"
+    ]
+  },
+  "ethological": {
+    "word": "ethological",
+    "phonetic": "",
+    "explains": [
+      "n. 行为性的,  行为学的"
+    ]
+  },
+  "ethology": {
+    "word": "ethology",
+    "phonetic": "/iː'θɒlədʒɪ/",
+    "explains": [
+      "n. 动物行动学, 人种学"
+    ]
+  },
+  "ethos": {
+    "word": "ethos",
+    "phonetic": "/'iːθɒs/",
+    "explains": [
+      "n. 气质, 道义, 民族精神, 社会思潮, 风气"
+    ]
+  },
+  "etiquette": {
+    "word": "etiquette",
+    "phonetic": "/'etɪket; etɪ'ket/",
+    "explains": [
+      "n. 礼仪, 礼节 \""
+    ]
+  },
+  "etymology": {
+    "word": "etymology",
+    "phonetic": "/,etɪ'mɒlədʒɪ/",
+    "explains": [
+      "n. 语源, 语源学"
+    ]
+  },
+  "eucalyptus": {
+    "word": "eucalyptus",
+    "phonetic": "/,juːkə'lɪptəs/",
+    "explains": [
+      "n. [植]桉树"
+    ]
+  },
+  "eugenic": {
+    "word": "eugenic",
+    "phonetic": "/juː'dʒenɪk/",
+    "explains": [
+      "adj. 优生的, 优生学的"
+    ]
+  },
+  "eukaryote": {
+    "word": "eukaryote",
+    "phonetic": "/juː'kærɪəʊt/",
+    "explains": [
+      "n. 〈生〉真核细胞"
+    ]
+  },
+  "eukaryotic": {
+    "word": "eukaryotic",
+    "phonetic": "/juː,kærɪ'ɒtɪk/",
+    "explains": [
+      "adj. 真核状态的"
+    ]
+  },
+  "eulogistic": {
+    "word": "eulogistic",
+    "phonetic": "/,juːlə'dʒɪstɪk/",
+    "explains": [
+      "adj. 颂扬的,歌功颂德"
+    ]
+  },
+  "eulogize": {
+    "word": "eulogize",
+    "phonetic": "/'juːlədʒaɪz/",
+    "explains": [
+      "v. 颂扬；称赞"
+    ]
+  },
+  "eulogy": {
+    "word": "eulogy",
+    "phonetic": "/'juːlədʒɪ/",
+    "explains": [
+      "n. 赞词, 颂词, 歌功颂德的话"
+    ]
+  },
+  "euphemism": {
+    "word": "euphemism",
+    "phonetic": "/'juːfəmɪz(ə)m/",
+    "explains": [
+      "n. 委婉语；委婉说法"
+    ]
+  },
+  "euphemistic": {
+    "word": "euphemistic",
+    "phonetic": "/juːfɪ'mɪstɪk/",
+    "explains": [
+      "adj. 委婉的；婉言的"
+    ]
+  },
+  "euphonious": {
+    "word": "euphonious",
+    "phonetic": "/juː'fəʊnɪəs/",
+    "explains": [
+      "adj. 悦耳的"
+    ]
+  },
+  "euphony": {
+    "word": "euphony",
+    "phonetic": "/'juːf(ə)nɪ/",
+    "explains": [
+      "n. 悦耳之音"
+    ]
+  },
+  "euphoria": {
+    "word": "euphoria",
+    "phonetic": "/juː'fɔːrɪə/",
+    "explains": [
+      "n. 精神欢快，[临床] 欣快；兴高采烈；欣快症；幸福愉快感"
+    ]
+  },
+  "euphrates": {
+    "word": "euphrates",
+    "phonetic": "/ju:'freiti:z/",
+    "explains": [
+      "n. 幼发拉底河"
+    ]
+  },
+  "eurasia": {
+    "word": "eurasia",
+    "phonetic": "/juə'reiʃə/",
+    "explains": [
+      "n. 欧亚大陆"
+    ]
+  },
+  "eurasian": {
+    "word": "eurasian",
+    "phonetic": "/juə'reiʃən/",
+    "explains": [
+      "adj. 欧亚的, 欧亚人的"
+    ]
+  },
+  "eurhythmic": {
+    "word": "eurhythmic",
+    "phonetic": "",
+    "explains": [
+      "adj. 音乐舞蹈体操的"
+    ]
+  },
+  "euro": {
+    "word": "euro",
+    "phonetic": "/'juərəu/",
+    "explains": [
+      "n.  欧元"
+    ]
+  },
+  "eurocurrency": {
+    "word": "eurocurrency",
+    "phonetic": "/'juərəuˌkʌrənsi/",
+    "explains": [
+      "n.  欧洲货币"
+    ]
+  },
+  "europe": {
+    "word": "europe",
+    "phonetic": "/ˈjʊərəp/",
+    "explains": [
+      "n. 欧洲"
+    ]
+  },
+  "european": {
+    "word": "european",
+    "phonetic": "/ˌjʊərəˈpiː(ə)n/",
+    "explains": [
+      "adj. 欧洲的　n. 欧洲人"
+    ]
+  },
+  "eusocial": {
+    "word": "eusocial",
+    "phonetic": "",
+    "explains": [
+      "adj. (昆虫)完全社会性的"
+    ]
+  },
+  "euthanasia": {
+    "word": "euthanasia",
+    "phonetic": "/,juːθə'neɪzɪə/",
+    "explains": [
+      "n. 安乐死；安乐死术"
+    ]
+  },
+  "evacuate": {
+    "word": "evacuate",
+    "phonetic": "/ɪ'vækjʊeɪt/",
+    "explains": [
+      "v. 疏散，撤退；排泄"
+    ]
+  },
+  "evacuation": {
+    "word": "evacuation",
+    "phonetic": "/ɪ,vækjʊ'eɪʃ(ə)n/",
+    "explains": [
+      "n. 疏散；撤离；排泄"
+    ]
+  },
+  "evade": {
+    "word": "evade",
+    "phonetic": "/ɪ'veɪd/",
+    "explains": [
+      "v. 逃避；规避；逃脱"
+    ]
+  },
   "evaluate": {
     "word": "evaluate",
     "phonetic": "/ɪˈvæljueɪt/",
     "explains": [
       "v. 评估，评价；估值"
+    ]
+  },
+  "evaluation": {
+    "word": "evaluation",
+    "phonetic": "/ɪˌvæljuˈeɪʃn/",
+    "explains": [
+      "n. 估价, 评价"
+    ]
+  },
+  "evaluator": {
+    "word": "evaluator",
+    "phonetic": "/i'væljueitə/",
+    "explains": [
+      "n.  估价者； 评价者"
+    ]
+  },
+  "evanescent": {
+    "word": "evanescent",
+    "phonetic": "/iːvə'nes(ə)nt; ev-/",
+    "explains": [
+      "adj. 迅速消失的, 短暂的"
+    ]
+  },
+  "evangelical": {
+    "word": "evangelical",
+    "phonetic": "/iːvæn'dʒelɪk(ə)l; ev-/",
+    "explains": [
+      "adj. 福音的；福音派教会的；新教会的；n. 福音派信徒"
+    ]
+  },
+  "evangelist": {
+    "word": "evangelist",
+    "phonetic": "/ɪ'væn(d)ʒ(ə)lɪst/",
+    "explains": [
+      "n. 福音传道者；圣经新约福音书的作者"
+    ]
+  },
+  "evaporate": {
+    "word": "evaporate",
+    "phonetic": "/ɪ'væpəreɪt/",
+    "explains": [
+      "v. 使蒸发"
+    ]
+  },
+  "evaporation": {
+    "word": "evaporation",
+    "phonetic": "/ɪ,væpə'reɪʃən/",
+    "explains": [
+      "n. 蒸发"
+    ]
+  },
+  "evasive": {
+    "word": "evasive",
+    "phonetic": "/ɪ'veɪsɪv/",
+    "explains": [
+      "adj. 逃避的, 推托的"
+    ]
+  },
+  "eve": {
+    "word": "eve",
+    "phonetic": "/iːv/",
+    "explains": [
+      "n. 前夜"
     ]
   },
   "even": {
@@ -795,11 +5548,46 @@
       "n. 晚上，傍晚"
     ]
   },
+  "evenly": {
+    "word": "evenly",
+    "phonetic": "/'i:vənlɪ/",
+    "explains": [
+      "adv. 一致地；平静地"
+    ]
+  },
+  "evenness": {
+    "word": "evenness",
+    "phonetic": "",
+    "explains": [
+      "n. 平均, 平等, 平坦"
+    ]
+  },
   "event": {
     "word": "event",
     "phonetic": "/ɪˈvent/",
     "explains": [
       "n. 事件，大事；比赛项目"
+    ]
+  },
+  "eventful": {
+    "word": "eventful",
+    "phonetic": "/ɪ'ventfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 多事的；重要的；多变故的；重大的"
+    ]
+  },
+  "eventual": {
+    "word": "eventual",
+    "phonetic": "/ɪ'ven(t)ʃʊəl/",
+    "explains": [
+      "adj. 最后的, 结局的"
+    ]
+  },
+  "eventuality": {
+    "word": "eventuality",
+    "phonetic": "/ɪ,ven(t)ʃʊ'ælɪtɪ/",
+    "explains": [
+      "n. 可能性；可能发生的事；不测的事"
     ]
   },
   "eventually": {
@@ -814,6 +5602,34 @@
     "phonetic": "/ˈevər/",
     "explains": [
       "adv. 在任何时候；曾经；究竟"
+    ]
+  },
+  "everest": {
+    "word": "everest",
+    "phonetic": "/'evərɪst/",
+    "explains": [
+      "n. 珠穆朗玛峰(世界最高峰)"
+    ]
+  },
+  "evergreen": {
+    "word": "evergreen",
+    "phonetic": "/'evəgriːn/",
+    "explains": [
+      "n. 常绿树；adj. 常绿的"
+    ]
+  },
+  "everlasting": {
+    "word": "everlasting",
+    "phonetic": "/evə'lɑːstɪŋ/",
+    "explains": [
+      "adj. 永久的；持久的"
+    ]
+  },
+  "evermore": {
+    "word": "evermore",
+    "phonetic": "/evə'mɔː/",
+    "explains": [
+      "adv. 永远，始终；今后"
     ]
   },
   "every": {
@@ -858,6 +5674,20 @@
       "adv. 到处，无论哪里"
     ]
   },
+  "evict": {
+    "word": "evict",
+    "phonetic": "/ɪ'vɪkt/",
+    "explains": [
+      "v. 驱逐"
+    ]
+  },
+  "eviction": {
+    "word": "eviction",
+    "phonetic": "/ɪ'vɪkʃ(ə)n/",
+    "explains": [
+      "n. 逐出；赶出；收回"
+    ]
+  },
   "evidence": {
     "word": "evidence",
     "phonetic": "/ˈevɪdəns/",
@@ -872,12 +5702,96 @@
       "adj. 明显的，明白的"
     ]
   },
+  "evidently": {
+    "word": "evidently",
+    "phonetic": "/'evɪd(ə)ntlɪ/",
+    "explains": [
+      "adv. 显然,清楚地"
+    ]
+  },
   "evil": {
     "word": "evil",
     "phonetic": "/ˈiːvl/",
     "explains": [
       "adj. 邪恶的，有害的",
       "n. 邪恶，罪恶"
+    ]
+  },
+  "evince": {
+    "word": "evince",
+    "phonetic": "/ɪ'vɪns/",
+    "explains": [
+      "v. 表明, 表示"
+    ]
+  },
+  "eviscerate": {
+    "word": "eviscerate",
+    "phonetic": "/ɪ'vɪsəreɪt/",
+    "explains": [
+      "v. 取出内脏, 除去精华"
+    ]
+  },
+  "evocative": {
+    "word": "evocative",
+    "phonetic": "/ɪ'vɒkətɪv/",
+    "explains": [
+      "adj. 唤出的, 唤起的"
+    ]
+  },
+  "evoke": {
+    "word": "evoke",
+    "phonetic": "/ɪ'vəʊk/",
+    "explains": [
+      "v. 引起，唤起；博得"
+    ]
+  },
+  "evolution": {
+    "word": "evolution",
+    "phonetic": "/ˌiːvəˈluːʃ(ə)n; ˌevəˈluːʃ(ə)n/",
+    "explains": [
+      "n. 进化"
+    ]
+  },
+  "evolutionary": {
+    "word": "evolutionary",
+    "phonetic": "/,iːvə'luːʃənərɪ/",
+    "explains": [
+      "adj. 进化的,发展的,演变的"
+    ]
+  },
+  "evolve": {
+    "word": "evolve",
+    "phonetic": "/ɪˈvɒlv/",
+    "explains": [
+      "v. 进化"
+    ]
+  },
+  "ewe": {
+    "word": "ewe",
+    "phonetic": "/juː/",
+    "explains": [
+      "n. [畜牧] 母羊"
+    ]
+  },
+  "ewer": {
+    "word": "ewer",
+    "phonetic": "/'juːə/",
+    "explains": [
+      "n. 大口水罐"
+    ]
+  },
+  "ex-dividend": {
+    "word": "ex-dividend",
+    "phonetic": "/eks'dividend/",
+    "explains": [
+      "n.  无息股"
+    ]
+  },
+  "exacerbate": {
+    "word": "exacerbate",
+    "phonetic": "/ɪg'zæsəbeɪt; ek'sæs-/",
+    "explains": [
+      "v. 加重；恶化"
     ]
   },
   "exact": {
@@ -888,11 +5802,81 @@
       "v. 强求，勒索"
     ]
   },
+  "exactement": {
+    "word": "exactement",
+    "phonetic": "",
+    "explains": [
+      "adv. 确切地"
+    ]
+  },
+  "exacting": {
+    "word": "exacting",
+    "phonetic": "/ɪg'zæktɪŋ; eg-/",
+    "explains": [
+      "adj. 严格的；苛求的；吃力的；v. 逼取；急需（exact的ing形式）"
+    ]
+  },
+  "exaction": {
+    "word": "exaction",
+    "phonetic": "/ɪg'zækʃ(ə)n; eg-/",
+    "explains": [
+      "n. 勒索, 苛求"
+    ]
+  },
+  "exactly": {
+    "word": "exactly",
+    "phonetic": "/ɪg'zæk(t)lɪ; eg-/",
+    "explains": [
+      "adv. 确切地；恰恰正是"
+    ]
+  },
+  "exaggerate": {
+    "word": "exaggerate",
+    "phonetic": "/ɪɡˈzædʒəreɪt/",
+    "explains": [
+      "v. 夸大"
+    ]
+  },
+  "exaggeration": {
+    "word": "exaggeration",
+    "phonetic": "/ɪg,zædʒə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 夸张"
+    ]
+  },
+  "exalt": {
+    "word": "exalt",
+    "phonetic": "/ɪg'zɔːlt; eg-/",
+    "explains": [
+      "v. 晋升"
+    ]
+  },
+  "exaltation": {
+    "word": "exaltation",
+    "phonetic": "/egzɔːl'teɪʃ(ə)n; eks-/",
+    "explains": [
+      "n. 提升, 提高, 兴奋, 得意洋洋"
+    ]
+  },
+  "exalted": {
+    "word": "exalted",
+    "phonetic": "/ɪg'zɔːltɪd/",
+    "explains": [
+      "adj. 高尚的；尊贵的；兴奋的；v. 高举；赞扬；使激动（exalt的过去分词）"
+    ]
+  },
   "exam": {
     "word": "exam",
     "phonetic": "/ɪɡˈzæm/",
     "explains": [
       "n. 考试；检查"
+    ]
+  },
+  "examen": {
+    "word": "examen",
+    "phonetic": "",
+    "explains": [
+      "n.m. 考试"
     ]
   },
   "examination": {
@@ -914,6 +5898,62 @@
     "phonetic": "/ɪɡˈzæmpl/",
     "explains": [
       "n. 例子，实例；榜样"
+    ]
+  },
+  "exasperate": {
+    "word": "exasperate",
+    "phonetic": "/ɪg'zæsp(ə)reɪt; eg-/",
+    "explains": [
+      "v. 激怒，使恼火"
+    ]
+  },
+  "exasperation": {
+    "word": "exasperation",
+    "phonetic": "/ɪg,zæspə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 恼怒"
+    ]
+  },
+  "excavate": {
+    "word": "excavate",
+    "phonetic": "/'ekskəveɪt/",
+    "explains": [
+      "v. 挖掘,开凿"
+    ]
+  },
+  "excavation": {
+    "word": "excavation",
+    "phonetic": "/ekskə'veɪʃ(ə)n/",
+    "explains": [
+      "n. 挖掘, 发掘"
+    ]
+  },
+  "exceed": {
+    "word": "exceed",
+    "phonetic": "/ɪkˈsiːd/",
+    "explains": [
+      "v. 超过"
+    ]
+  },
+  "exceedingly": {
+    "word": "exceedingly",
+    "phonetic": "/ɪk'siːdɪŋlɪ; ek-/",
+    "explains": [
+      "adv. 极端地，非常"
+    ]
+  },
+  "excel": {
+    "word": "excel",
+    "phonetic": "/ɪk'sel; ek-/",
+    "explains": [
+      "v. 胜过，杰出"
+    ]
+  },
+  "excellence": {
+    "word": "excellence",
+    "phonetic": "/'eks(ə)l(ə)ns/",
+    "explains": [
+      "n. 优秀, 卓越"
     ]
   },
   "excellent": {
@@ -938,12 +5978,103 @@
       "n. 例外，除外"
     ]
   },
+  "exceptionable": {
+    "word": "exceptionable",
+    "phonetic": "/ɪk'sepʃ(ə)nəb(ə)l; ek-/",
+    "explains": [
+      "adj. 可反对的, 可抗议的, 要不得的"
+    ]
+  },
+  "exceptional": {
+    "word": "exceptional",
+    "phonetic": "/ɪk'sepʃ(ə)n(ə)l; ek-/",
+    "explains": [
+      "adj. 优越的；例外的"
+    ]
+  },
+  "exceptionally": {
+    "word": "exceptionally",
+    "phonetic": "/ɪk'sepʃ(ə)nəlɪ/",
+    "explains": [
+      "adv. 格外地, 特别地"
+    ]
+  },
+  "excerpt": {
+    "word": "excerpt",
+    "phonetic": "/'eksɜːpt/",
+    "explains": [
+      "n. 摘录，引用；v. 引用，摘录"
+    ]
+  },
+  "excess": {
+    "word": "excess",
+    "phonetic": "/ɪkˈses; ˈekses/",
+    "explains": [
+      "n. 过量"
+    ]
+  },
+  "excessive": {
+    "word": "excessive",
+    "phonetic": "/ɪk'sesɪv; ek-/",
+    "explains": [
+      "adj. 过多的，极度的"
+    ]
+  },
+  "excessively": {
+    "word": "excessively",
+    "phonetic": "/ek'sesɪvlɪ/",
+    "explains": [
+      "adv. 过分，极端地"
+    ]
+  },
   "exchange": {
     "word": "exchange",
     "phonetic": "/ɪksˈtʃeɪndʒ/",
     "explains": [
       "v. 交换，互换；兑换",
       "n. 交换；交易所"
+    ]
+  },
+  "exchanger": {
+    "word": "exchanger",
+    "phonetic": "",
+    "explains": [
+      "n. 交换器, 换热器"
+    ]
+  },
+  "exchequer": {
+    "word": "exchequer",
+    "phonetic": "/ɪks'tʃekə; eks-/",
+    "explains": [
+      "n. [英史]财物署, 国库, 财源, 财政部"
+    ]
+  },
+  "excise": {
+    "word": "excise",
+    "phonetic": "/'eksaɪz/",
+    "explains": [
+      "n. 消费税, 货物税, 国产税"
+    ]
+  },
+  "excision": {
+    "word": "excision",
+    "phonetic": "/ɪk'sɪʒ(ə)n; ek-/",
+    "explains": [
+      "n. 切除, 删除, [医]切除(术), [宗]逐出教会"
+    ]
+  },
+  "excitable": {
+    "word": "excitable",
+    "phonetic": "/ɪk'saɪtəb(ə)l; ek-/",
+    "explains": [
+      "adj. 易激动的；易兴奋的；易怒的"
+    ]
+  },
+  "excitation": {
+    "word": "excitation",
+    "phonetic": "/,eksaɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 刺激,兴奋, 激动"
     ]
   },
   "excite": {
@@ -974,11 +6105,46 @@
       "adj. 令人兴奋的，刺激的"
     ]
   },
+  "exclaim": {
+    "word": "exclaim",
+    "phonetic": "/ɪkˈskleɪm; ekˈskleɪm/",
+    "explains": [
+      "v. 惊叫"
+    ]
+  },
+  "exclamation": {
+    "word": "exclamation",
+    "phonetic": "/,eksklə'meɪʃ(ə)n/",
+    "explains": [
+      "n. 呼喊，惊叫；感叹"
+    ]
+  },
   "exclude": {
     "word": "exclude",
     "phonetic": "/ɪkˈskluːd/",
     "explains": [
       "v. 排除，不包括；驱逐"
+    ]
+  },
+  "excluder": {
+    "word": "excluder",
+    "phonetic": "",
+    "explains": [
+      "n. 排除器（等于封隔器）"
+    ]
+  },
+  "excluding": {
+    "word": "excluding",
+    "phonetic": "/ɪk'skluːdɪŋ/",
+    "explains": [
+      "prep. 将……排除在外；不包括……；v. 排除；除外；拒绝（exclude的ing形式）"
+    ]
+  },
+  "exclusion": {
+    "word": "exclusion",
+    "phonetic": "/ɪk'skluːʒ(ə)n; ek-/",
+    "explains": [
+      "n. 排除, 除外"
     ]
   },
   "exclusive": {
@@ -989,12 +6155,96 @@
       "n. 独家新闻"
     ]
   },
+  "exclusively": {
+    "word": "exclusively",
+    "phonetic": "/ɪk'skluːsɪvlɪ/",
+    "explains": [
+      "adv. 专门地"
+    ]
+  },
+  "excogitate": {
+    "word": "excogitate",
+    "phonetic": "/ɪks'kɒdʒɪteɪt; eks-/",
+    "explains": [
+      "v. 想出, 研究出, 设计, 发明"
+    ]
+  },
+  "excoriate": {
+    "word": "excoriate",
+    "phonetic": "/ɪk'skɔːrɪeɪt; eks-/",
+    "explains": [
+      "v. 严厉的责难；擦破的皮肤"
+    ]
+  },
+  "excrement": {
+    "word": "excrement",
+    "phonetic": "/'ekskrɪm(ə)nt/",
+    "explains": [
+      "n. 排泄物，粪便"
+    ]
+  },
+  "excrete": {
+    "word": "excrete",
+    "phonetic": "/ɪk'skriːt; ek-/",
+    "explains": [
+      "v. 排泄, 分泌"
+    ]
+  },
+  "excruciating": {
+    "word": "excruciating",
+    "phonetic": "/ɪk'skruːʃɪeɪtɪŋ/",
+    "explains": [
+      "adj. 极痛苦的, 折磨人的"
+    ]
+  },
+  "exculpate": {
+    "word": "exculpate",
+    "phonetic": "/'ekskʌlpeɪt/",
+    "explains": [
+      "v. 开脱；使无罪"
+    ]
+  },
+  "excursion": {
+    "word": "excursion",
+    "phonetic": "/ɪk'skɜːʃ(ə)n; ek-/",
+    "explains": [
+      "n. 远足；短途旅行"
+    ]
+  },
+  "excusable": {
+    "word": "excusable",
+    "phonetic": "/ɪk'sjuːzəb(ə)l; ek-/",
+    "explains": [
+      "adj. 可原谅的；可辩解的；可免除的"
+    ]
+  },
   "excuse": {
     "word": "excuse",
     "phonetic": "/ɪkˈskjuːs/",
     "explains": [
       "v. 原谅；为……辩解",
       "n. 借口，理由"
+    ]
+  },
+  "excusez-moi": {
+    "word": "excusez-moi",
+    "phonetic": "",
+    "explains": [
+      "对不起；劳驾"
+    ]
+  },
+  "execrable": {
+    "word": "execrable",
+    "phonetic": "/'eksɪkrəb(ə)l/",
+    "explains": [
+      "adj. 该咒的, 可憎恨的, 讨厌的, 恶劣的, 坏透的"
+    ]
+  },
+  "execrate": {
+    "word": "execrate",
+    "phonetic": "/'eksɪkreɪt/",
+    "explains": [
+      "v. 痛骂, 憎恨, 憎恶, 诅咒"
     ]
   },
   "execute": {
@@ -1004,12 +6254,82 @@
       "v. 处决；执行，实施"
     ]
   },
+  "execution": {
+    "word": "execution",
+    "phonetic": "/,eksɪ'kjuːʃ(ə)n/",
+    "explains": [
+      "n. 实行，执行；处死刑"
+    ]
+  },
+  "executioner": {
+    "word": "executioner",
+    "phonetic": "/eksɪ'kjuːʃ(ə)nə/",
+    "explains": [
+      "n. 死刑执行人, 刽子手"
+    ]
+  },
   "executive": {
     "word": "executive",
     "phonetic": "/ɪɡˈzekjətɪv/",
     "explains": [
       "adj. 执行的，行政的",
       "n. 行政主管；高管"
+    ]
+  },
+  "executor": {
+    "word": "executor",
+    "phonetic": "/ɪg'zekjʊtə; eg-/",
+    "explains": [
+      "n. 被指定遗嘱执行者, 执行者"
+    ]
+  },
+  "exegesis": {
+    "word": "exegesis",
+    "phonetic": "/,eksɪ'dʒiːsɪs/",
+    "explains": [
+      "n. 注释, 解释"
+    ]
+  },
+  "exemplary": {
+    "word": "exemplary",
+    "phonetic": "/ɪg'zemplərɪ; eg-/",
+    "explains": [
+      "adj. 典范的,惩戒性的"
+    ]
+  },
+  "exemple": {
+    "word": "exemple",
+    "phonetic": "",
+    "explains": [
+      "n.m. 例子"
+    ]
+  },
+  "exemplify": {
+    "word": "exemplify",
+    "phonetic": "/ɪg'zemplɪfaɪ; eg-/",
+    "explains": [
+      "v. 举例证明（解释）"
+    ]
+  },
+  "exempt": {
+    "word": "exempt",
+    "phonetic": "/ig'zempt/",
+    "explains": [
+      "adj.  被免除的， 被豁免的；vt. 免除，豁免"
+    ]
+  },
+  "exemption": {
+    "word": "exemption",
+    "phonetic": "/ɪɡ'zempʃn/",
+    "explains": [
+      "n. 解除, 免除, 免税"
+    ]
+  },
+  "exercice": {
+    "word": "exercice",
+    "phonetic": "",
+    "explains": [
+      "n.m. 练习"
     ]
   },
   "exercise": {
@@ -1027,12 +6347,47 @@
       "v. 运用，施加；努力"
     ]
   },
+  "exertion": {
+    "word": "exertion",
+    "phonetic": "/ɪɡ'zɜːʃn/",
+    "explains": [
+      "n. 努力, 发挥,运用"
+    ]
+  },
+  "exhale": {
+    "word": "exhale",
+    "phonetic": "/ɪks'heɪl; eks-/",
+    "explains": [
+      "v. 呼气,发出"
+    ]
+  },
   "exhaust": {
     "word": "exhaust",
     "phonetic": "/ɪɡˈzɔːst/",
     "explains": [
       "v. 使精疲力尽；耗尽",
       "n. 排气装置；废气"
+    ]
+  },
+  "exhausted": {
+    "word": "exhausted",
+    "phonetic": "/ɪɡ'zɔːstɪd/",
+    "explains": [
+      "adj. 疲惫的；耗尽的；v. 耗尽；用尽；使…精疲力尽（exhaust的过去式）"
+    ]
+  },
+  "exhaustion": {
+    "word": "exhaustion",
+    "phonetic": "/ɪg'zɔːstʃ(ə)n; eg-/",
+    "explains": [
+      "n. 耗尽枯竭,疲惫,竭尽"
+    ]
+  },
+  "exhaustive": {
+    "word": "exhaustive",
+    "phonetic": "/ɪg'zɔːstɪv; eg-/",
+    "explains": [
+      "adj. 详尽的；彻底的；消耗的"
     ]
   },
   "exhibit": {
@@ -1050,6 +6405,90 @@
       "n. 展览，展出；表现"
     ]
   },
+  "exhibitionism": {
+    "word": "exhibitionism",
+    "phonetic": "/eksɪ'bɪʃ(ə)nɪz(ə)m/",
+    "explains": [
+      "n. 自我宣传癖, 喜出风头癖, 裸露癖"
+    ]
+  },
+  "exhibitionist": {
+    "word": "exhibitionist",
+    "phonetic": "/,ɛksɪ'bɪʃənɪst/",
+    "explains": [
+      "n. 倾向自我宣传的人, 裸露症患者"
+    ]
+  },
+  "exhibitor": {
+    "word": "exhibitor",
+    "phonetic": "/ɪg'zɪbɪtə; eg-/",
+    "explains": [
+      "n. 展出者,显示者"
+    ]
+  },
+  "exhilarate": {
+    "word": "exhilarate",
+    "phonetic": "/ɪg'zɪləreɪt; eg-/",
+    "explains": [
+      "v. 使高兴, 使愉快"
+    ]
+  },
+  "exhilarating": {
+    "word": "exhilarating",
+    "phonetic": "/ɪg'zɪləreɪtɪŋ; eg-/",
+    "explains": [
+      "adj. 令人喜欢的, 爽快的, 使人愉快的"
+    ]
+  },
+  "exhort": {
+    "word": "exhort",
+    "phonetic": "/ɪg'zɔːt; eg-/",
+    "explains": [
+      "v. 劝告"
+    ]
+  },
+  "exhortation": {
+    "word": "exhortation",
+    "phonetic": "/egzɔː'teɪʃ(ə)n/",
+    "explains": [
+      "n. 劝告, 讲道词, 训词"
+    ]
+  },
+  "exhume": {
+    "word": "exhume",
+    "phonetic": "/eks'(h)juːm; ɪg'zjuːm/",
+    "explains": [
+      "v. 发掘；掘出；n. (Exhume)人名；(法)埃克叙姆"
+    ]
+  },
+  "exigent": {
+    "word": "exigent",
+    "phonetic": "/'eksɪdʒ(ə)nt; 'egzɪ-/",
+    "explains": [
+      "adj. 迫切的；紧急的；苛求的"
+    ]
+  },
+  "exigir": {
+    "word": "exigir",
+    "phonetic": "",
+    "explains": [
+      "v. 要求"
+    ]
+  },
+  "exiguous": {
+    "word": "exiguous",
+    "phonetic": "/ɪg'zɪgjʊəs; eg-/",
+    "explains": [
+      "adj. 稀少的, 细小的, 些须的"
+    ]
+  },
+  "exile": {
+    "word": "exile",
+    "phonetic": "/'eksaɪl; 'egz-/",
+    "explains": [
+      "v. 流放；n. 被流放者"
+    ]
+  },
   "exist": {
     "word": "exist",
     "phonetic": "/ɪɡˈzɪst/",
@@ -1064,12 +6503,124 @@
       "n. 存在；生存，生活"
     ]
   },
+  "existent": {
+    "word": "existent",
+    "phonetic": "/ɪg'zɪst(ə)nt; eg-/",
+    "explains": [
+      "n. 生存者；存在的事物；adj. 存在的；生存的"
+    ]
+  },
+  "existential": {
+    "word": "existential",
+    "phonetic": "/,egzɪ'stenʃ(ə)l/",
+    "explains": [
+      "adj. 存在主义的；有关存在的；存在判断的"
+    ]
+  },
+  "existentialist": {
+    "word": "existentialist",
+    "phonetic": "/ɛgzɪs'tɛnʃəlɪst/",
+    "explains": [
+      "n. 存在主义者；adj. 存在主义的"
+    ]
+  },
+  "existir": {
+    "word": "existir",
+    "phonetic": "",
+    "explains": [
+      "v. 存在"
+    ]
+  },
   "exit": {
     "word": "exit",
     "phonetic": "/ˈeɡzɪt/",
     "explains": [
       "n. 出口，通道；退出",
       "v. 退出，离开"
+    ]
+  },
+  "exocrine": {
+    "word": "exocrine",
+    "phonetic": "/'eksə(ʊ)kraɪn; -krɪn/",
+    "explains": [
+      "adj. [医]外分泌的"
+    ]
+  },
+  "exodus": {
+    "word": "exodus",
+    "phonetic": "/'eksədəs/",
+    "explains": [
+      "n. 大批的离去"
+    ]
+  },
+  "exogamy": {
+    "word": "exogamy",
+    "phonetic": "/ɪk'sɒgəmɪ; ek-/",
+    "explains": [
+      "n. 异族结婚"
+    ]
+  },
+  "exogenous": {
+    "word": "exogenous",
+    "phonetic": "/ɪk'sɒdʒɪnəs; ek-/",
+    "explains": [
+      "adj. 外生的,外界产生的"
+    ]
+  },
+  "exonerate": {
+    "word": "exonerate",
+    "phonetic": "/ɪg'zɒnəreɪt; eg-/",
+    "explains": [
+      "v. 使免罪"
+    ]
+  },
+  "exorable": {
+    "word": "exorable",
+    "phonetic": "/'eksərəbl/",
+    "explains": [
+      "adj. 可说服的, 可用恳求打动的"
+    ]
+  },
+  "exorbitant": {
+    "word": "exorbitant",
+    "phonetic": "/ɪg'zɔːbɪt(ə)nt/",
+    "explains": [
+      "adj. （要价等）过高的,（性格等）过分的"
+    ]
+  },
+  "exorcise": {
+    "word": "exorcise",
+    "phonetic": "/'eksɔːsaɪz/",
+    "explains": [
+      "v. 驱邪；除怪"
+    ]
+  },
+  "exorcism": {
+    "word": "exorcism",
+    "phonetic": "/'eksɔːsɪzəm/",
+    "explains": [
+      "n. 驱魔, 驱邪所用的咒语"
+    ]
+  },
+  "exorcize": {
+    "word": "exorcize",
+    "phonetic": "/'ɛksɔrsaɪz/",
+    "explains": [
+      "v. 驱邪, 除怪"
+    ]
+  },
+  "exoskeleton": {
+    "word": "exoskeleton",
+    "phonetic": "/'eksəʊ,skelɪt(ə)n/",
+    "explains": [
+      "n. [动] 外骨骼"
+    ]
+  },
+  "exotic": {
+    "word": "exotic",
+    "phonetic": "/ɪg'zɒtɪk; eg-/",
+    "explains": [
+      "adj. 异国的；外来的；异国情调的"
     ]
   },
   "expand": {
@@ -1079,11 +6630,39 @@
       "v. 扩大，扩张；膨胀"
     ]
   },
+  "expanse": {
+    "word": "expanse",
+    "phonetic": "/ɪk'spæns; ek-/",
+    "explains": [
+      "n. 广阔；宽阔的区域"
+    ]
+  },
   "expansion": {
     "word": "expansion",
     "phonetic": "/ɪkˈspænʃn/",
     "explains": [
       "n. 扩大，扩张；膨胀"
+    ]
+  },
+  "expansionist": {
+    "word": "expansionist",
+    "phonetic": "/ɪk'spænʃənɪst/",
+    "explains": [
+      "n&a. 扩张主义(的)"
+    ]
+  },
+  "expansive": {
+    "word": "expansive",
+    "phonetic": "/ɪk'spænsɪv; ek-/",
+    "explains": [
+      "adj. 广阔的；扩张的；豪爽的"
+    ]
+  },
+  "expatriate": {
+    "word": "expatriate",
+    "phonetic": "/ɪks'pætrɪət; -'peɪtrɪət; eks-/",
+    "explains": [
+      "v. 使移居国外；流放，放逐；使放弃国籍；n. 被流放者；移居国外者；adj. 移居国外的；被流放的"
     ]
   },
   "expect": {
@@ -1093,11 +6672,88 @@
       "v. 预期，期待；指望"
     ]
   },
+  "expectancy": {
+    "word": "expectancy",
+    "phonetic": "/ɪk'spekt(ə)nsɪ; ek-/",
+    "explains": [
+      "n. 期望，期待"
+    ]
+  },
+  "expectant": {
+    "word": "expectant",
+    "phonetic": "/ɪk'spekt(ə)nt; ek-/",
+    "explains": [
+      "adj. 期待的；怀孕的；预期中的；n. 期待者；候选人"
+    ]
+  },
   "expectation": {
     "word": "expectation",
     "phonetic": "/ˌekspekˈteɪʃn/",
     "explains": [
       "n. 期待，预期；指望"
+    ]
+  },
+  "expediency": {
+    "word": "expediency",
+    "phonetic": "/ɪk'spiːdɪənsɪ; ek-/",
+    "explains": [
+      "n. 方便, 私利, 权宜"
+    ]
+  },
+  "expedient": {
+    "word": "expedient",
+    "phonetic": "/ɪk'spiːdɪənt; ek-/",
+    "explains": [
+      "adj. 有用的，有利的；n. 紧急的办法，权宜之计"
+    ]
+  },
+  "expedite": {
+    "word": "expedite",
+    "phonetic": "/'ekspɪdaɪt/",
+    "explains": [
+      "v. 加快；促进；发出；adj. 畅通的；迅速的；方便的"
+    ]
+  },
+  "expedition": {
+    "word": "expedition",
+    "phonetic": "/ekspɪ'dɪʃ(ə)n/",
+    "explains": [
+      "n. 探险；探险队"
+    ]
+  },
+  "expeditious": {
+    "word": "expeditious",
+    "phonetic": "/,ekspɪ'dɪʃəs/",
+    "explains": [
+      "adj. 迅速的, 敏捷的"
+    ]
+  },
+  "expel": {
+    "word": "expel",
+    "phonetic": "/ɪk'spel; ek-/",
+    "explains": [
+      "v. 开除；驱逐；排出"
+    ]
+  },
+  "expend": {
+    "word": "expend",
+    "phonetic": "/ɪk'spend; ek-/",
+    "explains": [
+      "v. 花费；消耗；用光；耗尽"
+    ]
+  },
+  "expendable": {
+    "word": "expendable",
+    "phonetic": "/ɪk'spendəb(ə)l; ek-/",
+    "explains": [
+      "n. 消耗品, 可牺牲的"
+    ]
+  },
+  "expenditure": {
+    "word": "expenditure",
+    "phonetic": "/ɪk'spendɪtʃə; ek-/",
+    "explains": [
+      "n. （时间等）支出，消费"
     ]
   },
   "expense": {
@@ -1122,6 +6778,20 @@
       "v. 体验，经历"
     ]
   },
+  "experienced": {
+    "word": "experienced",
+    "phonetic": "/ɪkˈspɪərɪənst/",
+    "explains": [
+      "adj. 有经验的"
+    ]
+  },
+  "experiencia": {
+    "word": "experiencia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 经验；经历"
+    ]
+  },
   "experiment": {
     "word": "experiment",
     "phonetic": "/ɪkˈsperɪment/",
@@ -1130,12 +6800,96 @@
       "v. 进行实验"
     ]
   },
+  "experimental": {
+    "word": "experimental",
+    "phonetic": "/ɪkˌsperɪˈment(ə)l/",
+    "explains": [
+      "adj. 实验的"
+    ]
+  },
+  "experimentally": {
+    "word": "experimentally",
+    "phonetic": "",
+    "explains": [
+      "adv. 实验上，实验性地"
+    ]
+  },
+  "experimentation": {
+    "word": "experimentation",
+    "phonetic": "/ɪk,sperɪmen'teɪʃən/",
+    "explains": [
+      "n. 实验；试验"
+    ]
+  },
+  "experimenter": {
+    "word": "experimenter",
+    "phonetic": "",
+    "explains": [
+      "n. 实验者"
+    ]
+  },
   "expert": {
     "word": "expert",
     "phonetic": "/ˈekspɜːrt/",
     "explains": [
       "n. 专家，行家",
       "adj. 专家的，内行的"
+    ]
+  },
+  "expertise": {
+    "word": "expertise",
+    "phonetic": "/ˌekspɜːˈtiːz/",
+    "explains": [
+      "n. 专业知识"
+    ]
+  },
+  "expertly": {
+    "word": "expertly",
+    "phonetic": "/'ɛkspɚtli/",
+    "explains": [
+      "adv. 熟练地"
+    ]
+  },
+  "expiate": {
+    "word": "expiate",
+    "phonetic": "/'ekspɪeɪt/",
+    "explains": [
+      "v. 赎罪；补偿"
+    ]
+  },
+  "expiration": {
+    "word": "expiration",
+    "phonetic": "/,ekspɪ'reɪʃ(ə)n/",
+    "explains": [
+      "n. 满期, 呼出, 呼气, <古>终止"
+    ]
+  },
+  "expire": {
+    "word": "expire",
+    "phonetic": "/ɪk'spaɪə; ek-/",
+    "explains": [
+      "v. 满期，到期；断气"
+    ]
+  },
+  "expired": {
+    "word": "expired",
+    "phonetic": "",
+    "explains": [
+      "已过期的"
+    ]
+  },
+  "expiry": {
+    "word": "expiry",
+    "phonetic": "/ik'spaiəri/",
+    "explains": [
+      "n.  满期， 到期"
+    ]
+  },
+  "expiscate": {
+    "word": "expiscate",
+    "phonetic": "",
+    "explains": [
+      "vt. <主苏格兰>查出,探明搜出"
     ]
   },
   "explain": {
@@ -1152,11 +6906,102 @@
       "n. 解释，说明"
     ]
   },
+  "explanatory": {
+    "word": "explanatory",
+    "phonetic": "/ɪk'splænə,t(ə)rɪ; ek-/",
+    "explains": [
+      "adj. 解释的；说明的"
+    ]
+  },
+  "explicable": {
+    "word": "explicable",
+    "phonetic": "/ɪk'splɪkəb(ə)l; ek-; 'eksplɪ,kəb(ə)l/",
+    "explains": [
+      "adj. 可说明的, 可解释的"
+    ]
+  },
+  "explicar": {
+    "word": "explicar",
+    "phonetic": "",
+    "explains": [
+      "v. 解释"
+    ]
+  },
+  "explicate": {
+    "word": "explicate",
+    "phonetic": "/'eksplɪkeɪt/",
+    "explains": [
+      "v. 说明，解释"
+    ]
+  },
+  "explicit": {
+    "word": "explicit",
+    "phonetic": "/ɪk'splɪsɪt; ek-/",
+    "explains": [
+      "adj. 明晰的；直率的"
+    ]
+  },
+  "expliquer": {
+    "word": "expliquer",
+    "phonetic": "",
+    "explains": [
+      "v. 解释"
+    ]
+  },
+  "explode": {
+    "word": "explode",
+    "phonetic": "/ɪkˈspləʊd/",
+    "explains": [
+      "v. 爆炸"
+    ]
+  },
+  "exploit": {
+    "word": "exploit",
+    "phonetic": "/ɪkˈsplɔɪt; ˈeksplɔɪt/",
+    "explains": [
+      "v. 开发；剥削"
+    ]
+  },
+  "exploitation": {
+    "word": "exploitation",
+    "phonetic": "/eksplɒɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 开发, 开采"
+    ]
+  },
+  "explorar": {
+    "word": "explorar",
+    "phonetic": "",
+    "explains": [
+      "v. 探索"
+    ]
+  },
+  "exploration": {
+    "word": "exploration",
+    "phonetic": "/eksplə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 考察；勘探；探查"
+    ]
+  },
+  "exploratory": {
+    "word": "exploratory",
+    "phonetic": "/ik'splɔrətəri/",
+    "explains": [
+      "adj.  探险的； 探测的"
+    ]
+  },
   "explore": {
     "word": "explore",
     "phonetic": "/ɪkˈsplɔːr/",
     "explains": [
       "v. 探索，探测；探究"
+    ]
+  },
+  "explorer": {
+    "word": "explorer",
+    "phonetic": "/ɪkˈsplɔːrə/",
+    "explains": [
+      "n. 探险家"
     ]
   },
   "explosion": {
@@ -1174,6 +7019,34 @@
       "n. 炸药"
     ]
   },
+  "explosively": {
+    "word": "explosively",
+    "phonetic": "",
+    "explains": [
+      "adv. 爆发地, 引起爆炸地"
+    ]
+  },
+  "expo": {
+    "word": "expo",
+    "phonetic": "/'ekspəʊ/",
+    "explains": [
+      "n. 博览会, 展览会"
+    ]
+  },
+  "exponent": {
+    "word": "exponent",
+    "phonetic": "/ɪk'spəʊnənt; ek-/",
+    "explains": [
+      "n. 阐述者,倡导者"
+    ]
+  },
+  "exponential": {
+    "word": "exponential",
+    "phonetic": "/,ekspə'nenʃ(ə)l/",
+    "explains": [
+      "n. 指数；adj. 指数的, 幂数的"
+    ]
+  },
   "export": {
     "word": "export",
     "phonetic": "/ɪkˈspɔːrt/",
@@ -1182,11 +7055,60 @@
       "n. 出口产品"
     ]
   },
+  "exportation": {
+    "word": "exportation",
+    "phonetic": "/,ekspɔː'teɪʃən/",
+    "explains": [
+      "n. 出口"
+    ]
+  },
+  "exporter": {
+    "word": "exporter",
+    "phonetic": "/ik'spɔːtə/",
+    "explains": [
+      "n.  出口商"
+    ]
+  },
   "expose": {
     "word": "expose",
     "phonetic": "/ɪkˈspoʊz/",
     "explains": [
       "v. 揭露，暴露；使曝光"
+    ]
+  },
+  "exposition": {
+    "word": "exposition",
+    "phonetic": "/ekspə'zɪʃ(ə)n/",
+    "explains": [
+      "n. 说明，解释；展览会，博览会"
+    ]
+  },
+  "expostulate": {
+    "word": "expostulate",
+    "phonetic": "/ɪk'spɒstjʊleɪt; ek-/",
+    "explains": [
+      "v. 劝诫, 忠告"
+    ]
+  },
+  "exposure": {
+    "word": "exposure",
+    "phonetic": "/ɪkˈspəʊʒə/",
+    "explains": [
+      "n. 暴露"
+    ]
+  },
+  "expound": {
+    "word": "expound",
+    "phonetic": "/ɪk'spaʊnd; ek-/",
+    "explains": [
+      "v. 解释；详细说明"
+    ]
+  },
+  "expresar": {
+    "word": "expresar",
+    "phonetic": "",
+    "explains": [
+      "v. 表达"
     ]
   },
   "express": {
@@ -1203,6 +7125,104 @@
     "phonetic": "/ɪkˈspreʃn/",
     "explains": [
       "n. 表达，表示；表情；措辞"
+    ]
+  },
+  "expressionless": {
+    "word": "expressionless",
+    "phonetic": "/ɪk'spreʃ(ə)nlɪs/",
+    "explains": [
+      "adj. 无表情的"
+    ]
+  },
+  "expressive": {
+    "word": "expressive",
+    "phonetic": "/ɪk'spresɪv; ek-/",
+    "explains": [
+      "adj. 表达的,意味深长的"
+    ]
+  },
+  "expressiveness": {
+    "word": "expressiveness",
+    "phonetic": "",
+    "explains": [
+      "n. 表现, 表示"
+    ]
+  },
+  "expressly": {
+    "word": "expressly",
+    "phonetic": "/ɪk'spreslɪ; ek-/",
+    "explains": [
+      "adv. 明白地, 特别地, 清楚地"
+    ]
+  },
+  "expressway": {
+    "word": "expressway",
+    "phonetic": "/ɪk'spresweɪ; ek-/",
+    "explains": [
+      "n. （美）高速公路"
+    ]
+  },
+  "expropriate": {
+    "word": "expropriate",
+    "phonetic": "/ɪks'prəʊprɪeɪt; eks-/",
+    "explains": [
+      "v. 没收, 征用, 剥夺"
+    ]
+  },
+  "expropriation": {
+    "word": "expropriation",
+    "phonetic": "/eksˌprəupri'eiʃən/",
+    "explains": [
+      "n.  没收； 征用"
+    ]
+  },
+  "expulsion": {
+    "word": "expulsion",
+    "phonetic": "/ɪk'spʌlʃ(ə)n; ek-/",
+    "explains": [
+      "n. 驱逐; 开除"
+    ]
+  },
+  "expunge": {
+    "word": "expunge",
+    "phonetic": "/ɪk'spʌn(d)ʒ; ek-/",
+    "explains": [
+      "v. 擦去"
+    ]
+  },
+  "expurgate": {
+    "word": "expurgate",
+    "phonetic": "/'ekspɜːgeɪt/",
+    "explains": [
+      "v. 删除，删去"
+    ]
+  },
+  "exquisite": {
+    "word": "exquisite",
+    "phonetic": "/'ekskwɪzɪt; ɪk'skwɪzɪt; ek-/",
+    "explains": [
+      "adj. 精致的；细腻的；优美的，高雅的；异常的；剧烈的；n. 服饰过于讲究的男子"
+    ]
+  },
+  "extant": {
+    "word": "extant",
+    "phonetic": "/ɪk'stænt; ek-; 'ekst(ə)nt/",
+    "explains": [
+      "adj. 现存的；显著的"
+    ]
+  },
+  "extemporaneous": {
+    "word": "extemporaneous",
+    "phonetic": "/ɪk,stempə'reɪnɪəs; ek-/",
+    "explains": [
+      "adj. 即席的，临时的；无准备的；不用讲稿的；善于即席讲话的"
+    ]
+  },
+  "extemporize": {
+    "word": "extemporize",
+    "phonetic": "/ɪk'stempəraɪz; ek-/",
+    "explains": [
+      "v. 即席演说, 即兴演奏, 当场作成"
     ]
   },
   "extend": {
@@ -1226,11 +7246,25 @@
       "adj. 广阔的，大量的；广泛的"
     ]
   },
+  "extensively": {
+    "word": "extensively",
+    "phonetic": "/ik'stensivli/",
+    "explains": [
+      "adv. 广泛地，彻底地"
+    ]
+  },
   "extent": {
     "word": "extent",
     "phonetic": "/ɪkˈstent/",
     "explains": [
       "n. 程度，范围；大小"
+    ]
+  },
+  "extenuate": {
+    "word": "extenuate",
+    "phonetic": "/ɪk'stenjʊeɪt; ek-/",
+    "explains": [
+      "v. 减轻；低估；为…找借口；使人原谅"
     ]
   },
   "exterior": {
@@ -1241,12 +7275,96 @@
       "n. 外部，外表"
     ]
   },
+  "exterminate": {
+    "word": "exterminate",
+    "phonetic": "/ɪk'stɜːmɪneɪt; ek-/",
+    "explains": [
+      "v. 灭绝，根除"
+    ]
+  },
+  "extermination": {
+    "word": "extermination",
+    "phonetic": "",
+    "explains": [
+      "n. 消灭, 根绝"
+    ]
+  },
   "external": {
     "word": "external",
     "phonetic": "/ɪkˈstɜːrnl/",
     "explains": [
       "adj. 外部的，对外的",
       "n. 外部，外貌"
+    ]
+  },
+  "externally": {
+    "word": "externally",
+    "phonetic": "/eks'tə:nəli/",
+    "explains": [
+      "adv. 外部地, 外面地"
+    ]
+  },
+  "extinct": {
+    "word": "extinct",
+    "phonetic": "/ɪk'stɪŋkt; ek-/",
+    "explains": [
+      "adj. 绝种的"
+    ]
+  },
+  "extinction": {
+    "word": "extinction",
+    "phonetic": "/ɪk'stɪŋ(k)ʃ(ə)n; ek-/",
+    "explains": [
+      "n. 灭绝；消失；消灭；废止"
+    ]
+  },
+  "extinguish": {
+    "word": "extinguish",
+    "phonetic": "/ɪk'stɪŋgwɪʃ; ek-/",
+    "explains": [
+      "v. 熄灭，扑灭；消灭"
+    ]
+  },
+  "extinguisher": {
+    "word": "extinguisher",
+    "phonetic": "/ɪk'stɪŋgwɪʃə; ek-/",
+    "explains": [
+      "n. 灭火器；消灭者；熄灭者"
+    ]
+  },
+  "extirpate": {
+    "word": "extirpate",
+    "phonetic": "/'ekstɜːpeɪt/",
+    "explains": [
+      "v. 消灭, 根除, 毁灭, [医]摘除(肿瘤等)"
+    ]
+  },
+  "extol": {
+    "word": "extol",
+    "phonetic": "/ɪk'stəʊl; ek-/",
+    "explains": [
+      "v. 赞美"
+    ]
+  },
+  "extort": {
+    "word": "extort",
+    "phonetic": "/ɪk'stɔːt; ek-/",
+    "explains": [
+      "v. 强取，勒索"
+    ]
+  },
+  "extortion": {
+    "word": "extortion",
+    "phonetic": "/ɪk'stɔːʃ(ə)n; ek-/",
+    "explains": [
+      "n. 勒索；敲诈；强夺；被勒索的财物"
+    ]
+  },
+  "extortionate": {
+    "word": "extortionate",
+    "phonetic": "/ɪk'stɔːʃ(ə)nət; ek-/",
+    "explains": [
+      "adj. 敲诈的；勒索的；过高的"
     ]
   },
   "extra": {
@@ -1258,11 +7376,116 @@
       "n. 额外的事物"
     ]
   },
+  "extract": {
+    "word": "extract",
+    "phonetic": "/ˈekstrækt/",
+    "explains": [
+      "v. 取出；提取；n. 摘录"
+    ]
+  },
+  "extraction": {
+    "word": "extraction",
+    "phonetic": "/ɪk'strækʃ(ə)n; ek-/",
+    "explains": [
+      "n. 抽出；提取法"
+    ]
+  },
+  "extractive": {
+    "word": "extractive",
+    "phonetic": "/ik'stræktiv/",
+    "explains": [
+      "adj.  提取的， 萃取的； 采掘的； 可榨取的"
+    ]
+  },
+  "extractor": {
+    "word": "extractor",
+    "phonetic": "/ɪk'stræktə; ek-/",
+    "explains": [
+      "n. 抽出器, 拔取的人, 抽出者 [计] 抽取字; 析取字 [化] 抽提塔; 浸取器; 萃取器 [医] 拔出器, 取出器, 提取器"
+    ]
+  },
+  "extracurricular": {
+    "word": "extracurricular",
+    "phonetic": "/ekstrəkə'rɪkjʊlə/",
+    "explains": [
+      "adj. 课外的, 业余的"
+    ]
+  },
+  "extradite": {
+    "word": "extradite",
+    "phonetic": "/'ekstrədaɪt/",
+    "explains": [
+      "v. 引渡；获取…的引渡"
+    ]
+  },
+  "extraneous": {
+    "word": "extraneous",
+    "phonetic": "/ɪk'streɪnɪəs; ek-/",
+    "explains": [
+      "adj. 外来的；没有关联的；来自体外的"
+    ]
+  },
+  "extraordinarily": {
+    "word": "extraordinarily",
+    "phonetic": "/ɪk'strɔːd(ə)n(ə)rəlɪ/",
+    "explains": [
+      "adv. 非常地，特别地"
+    ]
+  },
   "extraordinary": {
     "word": "extraordinary",
     "phonetic": "/ɪkˈstrɔːrdəneri/",
     "explains": [
       "adj. 非凡的，特别的；离奇的"
+    ]
+  },
+  "extrapolate": {
+    "word": "extrapolate",
+    "phonetic": "/ɪk'stræpəleɪt; ek-/",
+    "explains": [
+      "v. 推断, [数]外推"
+    ]
+  },
+  "extrapolation": {
+    "word": "extrapolation",
+    "phonetic": "/ek,stræpə'leɪʃən/",
+    "explains": [
+      "n. [数] 外推法；推断"
+    ]
+  },
+  "extraterrestrial": {
+    "word": "extraterrestrial",
+    "phonetic": "/,ekstrətə'restrɪəl/",
+    "explains": [
+      "adj. 地球外的；n. 天外来客"
+    ]
+  },
+  "extraterritoriality": {
+    "word": "extraterritoriality",
+    "phonetic": "/ˌ3kstrəˌt3rɪˌtɔːrɪ'ælətɪ/",
+    "explains": [
+      "n.  治外法权； 不受管辖"
+    ]
+  },
+  "extravagance": {
+    "word": "extravagance",
+    "phonetic": "/ɪk'strævəg(ə)ns; ek-/",
+    "explains": [
+      "n. 奢侈，浪费；过度；放肆的言行"
+    ]
+  },
+  "extravagant": {
+    "word": "extravagant",
+    "phonetic": "/ɪk'strævəg(ə)nt; ek-/",
+    "explains": [
+      "adj. 奢侈的；过度的"
+    ]
+  },
+  "extravagantly": {
+    "word": "extravagantly",
+    "phonetic": "/ik'strævəgəntli/",
+    "explains": [
+      "adv. 挥霍无度地"
     ]
   },
   "extreme": {
@@ -1280,11 +7503,193 @@
       "adv. 极其，非常"
     ]
   },
+  "extremism": {
+    "word": "extremism",
+    "phonetic": "/ɪk'striːmɪz(ə)m; ek-/",
+    "explains": [
+      "n. 极端主义（尤指政治上的极右或极左）；极端性；过激主义"
+    ]
+  },
+  "extremist": {
+    "word": "extremist",
+    "phonetic": "/ɪk'striːmɪst; ek-/",
+    "explains": [
+      "n. 极端主义者，过激分子"
+    ]
+  },
+  "extremities": {
+    "word": "extremities",
+    "phonetic": "",
+    "explains": [
+      "n. 四肢，骨端；末端，极限（extremity复数形式）；手足"
+    ]
+  },
+  "extremity": {
+    "word": "extremity",
+    "phonetic": "/ɪk'stremɪtɪ; ek-/",
+    "explains": [
+      "n. 极度，绝境"
+    ]
+  },
+  "extricate": {
+    "word": "extricate",
+    "phonetic": "/'ekstrɪkeɪt/",
+    "explains": [
+      "v. 使解脱；解救；使游离"
+    ]
+  },
+  "extrinsic": {
+    "word": "extrinsic",
+    "phonetic": "/ɪk'strɪnsɪk; ek-/",
+    "explains": [
+      "adj. 外在的, 外表的, 外来的"
+    ]
+  },
+  "extroversion": {
+    "word": "extroversion",
+    "phonetic": "/ˌekstrə'vəːʃən/",
+    "explains": [
+      "n.  外向； 外倾"
+    ]
+  },
+  "extrovert": {
+    "word": "extrovert",
+    "phonetic": "/'ekstrəvɜːt/",
+    "explains": [
+      "n. 外向；外倾者；性格外向者（等于extravert）"
+    ]
+  },
+  "extrude": {
+    "word": "extrude",
+    "phonetic": "/ɪk'struːd; ek-/",
+    "explains": [
+      "v. 挤出，压出；使突出；逐出"
+    ]
+  },
+  "exuberant": {
+    "word": "exuberant",
+    "phonetic": "/ɪg'z(j)uːb(ə)r(ə)nt; eg-/",
+    "explains": [
+      "adj. 繁茂的,生气勃勃的"
+    ]
+  },
+  "exude": {
+    "word": "exude",
+    "phonetic": "/ɪg'zjuːd; eg-/",
+    "explains": [
+      "v. (使)流出, (使)渗出, 发散开来"
+    ]
+  },
+  "exult": {
+    "word": "exult",
+    "phonetic": "/ɪg'zʌlt; eg-/",
+    "explains": [
+      "v. 非常高兴, 欢跃"
+    ]
+  },
+  "exultant": {
+    "word": "exultant",
+    "phonetic": "/ɪɡ'zʌltənt/",
+    "explains": [
+      "adj. 非常高兴的；欢跃的；狂喜的；欢欣鼓舞的"
+    ]
+  },
+  "exurban": {
+    "word": "exurban",
+    "phonetic": "",
+    "explains": [
+      "adj. 城市远郊的"
+    ]
+  },
+  "exuviae": {
+    "word": "exuviae",
+    "phonetic": "/ɪg'zjuːvɪiː; eg-/",
+    "explains": [
+      "n. [动]脱落的皮, 空壳"
+    ]
+  },
   "eye": {
     "word": "eye",
     "phonetic": "/aɪ/",
     "explains": [
       "n. 眼睛；视力；眼光"
+    ]
+  },
+  "eyeball": {
+    "word": "eyeball",
+    "phonetic": "/'aɪbɔːl/",
+    "explains": [
+      "n. 眼球, 眼珠子"
+    ]
+  },
+  "eyebrow": {
+    "word": "eyebrow",
+    "phonetic": "/'aɪbraʊ/",
+    "explains": [
+      "n. 眉毛；v. 为…描眉；用皱眉蹙额迫使"
+    ]
+  },
+  "eyeglass": {
+    "word": "eyeglass",
+    "phonetic": "/'aɪglɑːs/",
+    "explains": [
+      "n. 眼镜；镜片"
+    ]
+  },
+  "eyelash": {
+    "word": "eyelash",
+    "phonetic": "/'aɪlæʃ/",
+    "explains": [
+      "n. 睫毛"
+    ]
+  },
+  "eyeless": {
+    "word": "eyeless",
+    "phonetic": "/'aɪlɪs/",
+    "explains": [
+      "adj. 盲目的；无眼的；瞎的"
+    ]
+  },
+  "eyelid": {
+    "word": "eyelid",
+    "phonetic": "/'aɪlɪd/",
+    "explains": [
+      "n. 眼皮, 眼睑"
+    ]
+  },
+  "eyepiece": {
+    "word": "eyepiece",
+    "phonetic": "/'aɪpiːs/",
+    "explains": [
+      "n. [光] 目镜，[光] 接目镜"
+    ]
+  },
+  "eyesight": {
+    "word": "eyesight",
+    "phonetic": "/'aɪsaɪt/",
+    "explains": [
+      "n. 视力，目力"
+    ]
+  },
+  "eyesore": {
+    "word": "eyesore",
+    "phonetic": "/'aɪsɔː/",
+    "explains": [
+      "n. 眼中钉；难看的东西"
+    ]
+  },
+  "eyewash": {
+    "word": "eyewash",
+    "phonetic": "/'aɪwɒʃ/",
+    "explains": [
+      "n. 无稽之谈；骗局；洗眼水；表面文章"
+    ]
+  },
+  "eyewitness": {
+    "word": "eyewitness",
+    "phonetic": "/'aɪwɪtnɪs/",
+    "explains": [
+      "n. 目击者, 见证人"
     ]
   }
 }

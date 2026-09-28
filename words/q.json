@@ -1,4 +1,137 @@
 {
+  "qps": {
+    "word": "qps",
+    "phonetic": "",
+    "explains": [
+      "每秒请求数"
+    ]
+  },
+  "quack": {
+    "word": "quack",
+    "phonetic": "/kwæk/",
+    "explains": [
+      "v. (指鸭)呷呷地叫, 大声闲聊, 吹嘘"
+    ]
+  },
+  "quadrangle": {
+    "word": "quadrangle",
+    "phonetic": "/'kwɒdræŋg(ə)l/",
+    "explains": [
+      "n. 四角形, 四边形, 方院, 方庭(尤指牛津大学等学院中者)"
+    ]
+  },
+  "quadrant": {
+    "word": "quadrant",
+    "phonetic": "/'kwɒdr(ə)nt/",
+    "explains": [
+      "n. 象限；[海洋][天] 象限仪；四分之一圆"
+    ]
+  },
+  "quadratic": {
+    "word": "quadratic",
+    "phonetic": "/kwɒ'drætɪk/",
+    "explains": [
+      "adj. [数] 二次的；n. 二次方程式"
+    ]
+  },
+  "quadrilateral": {
+    "word": "quadrilateral",
+    "phonetic": "/,kwɒdrɪ'læt(ə)r(ə)l/",
+    "explains": [
+      "n. 四边形；adj. 四边形的"
+    ]
+  },
+  "quadruple": {
+    "word": "quadruple",
+    "phonetic": "/'kwɒdrʊp(ə)l; kwɒ'druːp(ə)l/",
+    "explains": [
+      "adj. 四倍的；四重的；v. 使…成四倍；n. 四倍"
+    ]
+  },
+  "quaff": {
+    "word": "quaff",
+    "phonetic": "/kwɒf; kwɑːf/",
+    "explains": [
+      "v. 一口气喝干, 大口地喝"
+    ]
+  },
+  "quagmire": {
+    "word": "quagmire",
+    "phonetic": "/'kwægmaɪə; 'kwɒg-/",
+    "explains": [
+      "n. 沼泽，沼泽地；无法脱身的困境"
+    ]
+  },
+  "quail": {
+    "word": "quail",
+    "phonetic": "/kweɪl/",
+    "explains": [
+      "v. 畏缩，胆怯；感到恐惧；n. 鹌鹑"
+    ]
+  },
+  "quaint": {
+    "word": "quaint",
+    "phonetic": "/kweɪnt/",
+    "explains": [
+      "adj. 离奇有趣的, 奇怪的"
+    ]
+  },
+  "quake": {
+    "word": "quake",
+    "phonetic": "/kweɪk/",
+    "explains": [
+      "v. 震动；颤抖；n. 地震；颤抖"
+    ]
+  },
+  "quaker": {
+    "word": "quaker",
+    "phonetic": "/'kweikə/",
+    "explains": [
+      "n. 教友派信徒, 贵格会会员"
+    ]
+  },
+  "qualification": {
+    "word": "qualification",
+    "phonetic": "/ˌkwɒlɪfɪˈkeɪʃ(ə)n/",
+    "explains": [
+      "n. 资格"
+    ]
+  },
+  "qualified": {
+    "word": "qualified",
+    "phonetic": "/'kwɔlifaid/",
+    "explains": [
+      "adj.  有保留的； 有资格的； 具备必要条件的， 合格的"
+    ]
+  },
+  "qualifier": {
+    "word": "qualifier",
+    "phonetic": "/'kwɒlɪfaɪə(r)/",
+    "explains": [
+      "n. [语] 修饰语"
+    ]
+  },
+  "qualify": {
+    "word": "qualify",
+    "phonetic": "/'kwɒlɪfaɪ/",
+    "explains": [
+      "v. 使具有资格"
+    ]
+  },
+  "qualitative": {
+    "word": "qualitative",
+    "phonetic": "/'kwɒlɪtətɪv/",
+    "explains": [
+      "adj. 质的；定性的"
+    ]
+  },
+  "qualitatively": {
+    "word": "qualitatively",
+    "phonetic": "/'kwɔliteitivli/",
+    "explains": [
+      "adv. 质量上"
+    ]
+  },
   "quality": {
     "word": "quality",
     "phonetic": "/ˈkwɒləti/",
@@ -7,11 +140,102 @@
       "adj. 优质的；高质量的"
     ]
   },
+  "qualm": {
+    "word": "qualm",
+    "phonetic": "/kwɑːm; kwɔːm/",
+    "explains": [
+      "n. 疑虑；不安"
+    ]
+  },
+  "quand": {
+    "word": "quand",
+    "phonetic": "",
+    "explains": [
+      "adv. 当…时"
+    ]
+  },
+  "quandary": {
+    "word": "quandary",
+    "phonetic": "/'kwɒnd(ə)rɪ/",
+    "explains": [
+      "n. 困惑；窘境；为难"
+    ]
+  },
+  "quantifiable": {
+    "word": "quantifiable",
+    "phonetic": "/'kwɔntəfaiəbl/",
+    "explains": [
+      "adj.  可以计量的"
+    ]
+  },
+  "quantifier": {
+    "word": "quantifier",
+    "phonetic": "/'kwɒntɪfaɪə/",
+    "explains": [
+      "n. [数][语] 量词；数量词；精于计算的人"
+    ]
+  },
+  "quantify": {
+    "word": "quantify",
+    "phonetic": "/'kwɒntɪfaɪ/",
+    "explains": [
+      "v. 确定…的数量"
+    ]
+  },
+  "quantitative": {
+    "word": "quantitative",
+    "phonetic": "/'kwɒntɪ,tətɪv; -,teɪtɪv/",
+    "explains": [
+      "adj. 量的；定量的"
+    ]
+  },
   "quantity": {
     "word": "quantity",
     "phonetic": "/ˈkwɒntəti/",
     "explains": [
       "n. 数量；大量；总量"
+    ]
+  },
+  "quantum": {
+    "word": "quantum",
+    "phonetic": "/'kwɔntəm/",
+    "explains": [
+      "n.  定额， 份额； 总量， 定量"
+    ]
+  },
+  "quarantine": {
+    "word": "quarantine",
+    "phonetic": "/'kwɔrəntiːn/",
+    "explains": [
+      "n.  检疫； 隔离； 封锁"
+    ]
+  },
+  "quarrel": {
+    "word": "quarrel",
+    "phonetic": "/'kwɒr(ə)l/",
+    "explains": [
+      "n. 争吵，吵架，口角"
+    ]
+  },
+  "quarrelsome": {
+    "word": "quarrelsome",
+    "phonetic": "/'kwɒr(ə)ls(ə)m/",
+    "explains": [
+      "adj. 喜欢吵架的,好争论的"
+    ]
+  },
+  "quarry": {
+    "word": "quarry",
+    "phonetic": "/'kwɒrɪ/",
+    "explains": [
+      "n. 采石场；v. 挖出"
+    ]
+  },
+  "quart": {
+    "word": "quart",
+    "phonetic": "/kwɔːt/",
+    "explains": [
+      "n. 夸脱（容量单位）；一夸脱的容器"
     ]
   },
   "quarter": {
@@ -22,11 +246,179 @@
       "v. 把…分成四部分；供…住宿"
     ]
   },
+  "quarterly": {
+    "word": "quarterly",
+    "phonetic": "/'kwɔːtəlɪ/",
+    "explains": [
+      "adj&adv. 季度的（地）"
+    ]
+  },
+  "quartet": {
+    "word": "quartet",
+    "phonetic": "/kwɔː'tet/",
+    "explains": [
+      "n. 四重奏, 四重唱, 四部合奏(唱)曲"
+    ]
+  },
+  "quartier": {
+    "word": "quartier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 街区"
+    ]
+  },
+  "quartz": {
+    "word": "quartz",
+    "phonetic": "/kwɔːts/",
+    "explains": [
+      "n. 石英"
+    ]
+  },
+  "quasar": {
+    "word": "quasar",
+    "phonetic": "/'kweɪzɑː; -sɑː/",
+    "explains": [
+      "n. 恒星状球体, 类星体"
+    ]
+  },
+  "quash": {
+    "word": "quash",
+    "phonetic": "/kwɒʃ/",
+    "explains": [
+      "v. 取消"
+    ]
+  },
+  "quatorze": {
+    "word": "quatorze",
+    "phonetic": "",
+    "explains": [
+      "num. 十四"
+    ]
+  },
+  "quaver": {
+    "word": "quaver",
+    "phonetic": "/'kweɪvə/",
+    "explains": [
+      "v. 颤抖；n. 颤抖；八分音符；颤音"
+    ]
+  },
+  "quay": {
+    "word": "quay",
+    "phonetic": "/kiː/",
+    "explains": [
+      "n.  装卸码头"
+    ]
+  },
+  "que": {
+    "word": "que",
+    "phonetic": "",
+    "explains": [
+      "conj./pron. 那；谁"
+    ]
+  },
+  "queasy": {
+    "word": "queasy",
+    "phonetic": "/'kwiːzɪ/",
+    "explains": [
+      "adj. 呕吐的；不稳定的；催吐的"
+    ]
+  },
+  "quedar": {
+    "word": "quedar",
+    "phonetic": "",
+    "explains": [
+      "v. 剩下；停留"
+    ]
+  },
   "queen": {
     "word": "queen",
     "phonetic": "/kwiːn/",
     "explains": [
       "n. 女王；王后；女神"
+    ]
+  },
+  "queer": {
+    "word": "queer",
+    "phonetic": "/kwɪə/",
+    "explains": [
+      "adj. 奇怪的；同性恋的；不舒服的；心智不平衡的；v. 搞糟；使陷于不利地位；n. 同性恋者；怪人；伪造的货币"
+    ]
+  },
+  "queja": {
+    "word": "queja",
+    "phonetic": "",
+    "explains": [
+      "n.f. 抱怨"
+    ]
+  },
+  "quejarse": {
+    "word": "quejarse",
+    "phonetic": "",
+    "explains": [
+      "v. 抱怨"
+    ]
+  },
+  "quell": {
+    "word": "quell",
+    "phonetic": "/kwel/",
+    "explains": [
+      "v. 镇压"
+    ]
+  },
+  "quemar": {
+    "word": "quemar",
+    "phonetic": "",
+    "explains": [
+      "v. 烧"
+    ]
+  },
+  "quench": {
+    "word": "quench",
+    "phonetic": "/kwen(t)ʃ/",
+    "explains": [
+      "v. 熄灭，扑灭；压制"
+    ]
+  },
+  "querer": {
+    "word": "querer",
+    "phonetic": "",
+    "explains": [
+      "v. 想要；爱"
+    ]
+  },
+  "querimonious": {
+    "word": "querimonious",
+    "phonetic": "",
+    "explains": [
+      "adj. 易发牢骚的"
+    ]
+  },
+  "querulous": {
+    "word": "querulous",
+    "phonetic": "/'kwerʊləs; 'kwerjʊləs/",
+    "explains": [
+      "adj. 易怒的，暴躁的；爱发牢骚的，抱怨的；爱挑剔的"
+    ]
+  },
+  "query": {
+    "word": "query",
+    "phonetic": "/'kwɪərɪ/",
+    "explains": [
+      "n&v. 质问,疑问"
+    ]
+  },
+  "queso": {
+    "word": "queso",
+    "phonetic": "",
+    "explains": [
+      "n.m. 奶酪"
+    ]
+  },
+  "quest": {
+    "word": "quest",
+    "phonetic": "/kwest/",
+    "explains": [
+      "v. 寻找，追求"
     ]
   },
   "question": {
@@ -36,11 +428,74 @@
       "n. 问题；疑问 v. 询问；怀疑"
     ]
   },
+  "questionable": {
+    "word": "questionable",
+    "phonetic": "/'kwestʃ(ə)nəb(ə)l/",
+    "explains": [
+      "adj. 可疑的，不可靠的"
+    ]
+  },
+  "questionnaire": {
+    "word": "questionnaire",
+    "phonetic": "/ˌkwestʃəˈneə(r)/",
+    "explains": [
+      "n. 调查表，征求意见表"
+    ]
+  },
+  "queue": {
+    "word": "queue",
+    "phonetic": "/kjuː/",
+    "explains": [
+      "n. 队列"
+    ]
+  },
+  "quibble": {
+    "word": "quibble",
+    "phonetic": "/'kwɪb(ə)l/",
+    "explains": [
+      "n. 谬论；双关语；遁辞；v. 诡辩；挑剔；说模棱两可的话"
+    ]
+  },
   "quick": {
     "word": "quick",
     "phonetic": "/kwɪk/",
     "explains": [
       "adj. 快的；迅速的；灵敏的"
+    ]
+  },
+  "quickest": {
+    "word": "quickest",
+    "phonetic": "",
+    "explains": [
+      "adj. 最快的"
+    ]
+  },
+  "quickie": {
+    "word": "quickie",
+    "phonetic": "/'kwɪkɪ/",
+    "explains": [
+      "n. <俚>匆匆做成的事, 快饮"
+    ]
+  },
+  "quickly": {
+    "word": "quickly",
+    "phonetic": "/'kwɪklɪ/",
+    "explains": [
+      "adv. 快速地"
+    ]
+  },
+  "quicksand": {
+    "word": "quicksand",
+    "phonetic": "/'kwɪksænd/",
+    "explains": [
+      "n. 流沙, 敏捷"
+    ]
+  },
+  "quiescent": {
+    "word": "quiescent",
+    "phonetic": "/kwɪ'es(ə)nt; kwaɪ-/",
+    "explains": [
+      "adj. 静止的"
     ]
   },
   "quiet": {
@@ -50,11 +505,172 @@
       "adj. 安静的；宁静的 v. 安静下来"
     ]
   },
+  "quietly": {
+    "word": "quietly",
+    "phonetic": "/ˈkwaɪətli/",
+    "explains": [
+      "adv. 平静地,寂静地"
+    ]
+  },
+  "quieto": {
+    "word": "quieto",
+    "phonetic": "",
+    "explains": [
+      "adj. 静止的"
+    ]
+  },
+  "quietus": {
+    "word": "quietus",
+    "phonetic": "/kwaɪ'iːtəs/",
+    "explains": [
+      "n. 解除；偿清；生命的终止；寂灭"
+    ]
+  },
+  "quill": {
+    "word": "quill",
+    "phonetic": "/kwɪl/",
+    "explains": [
+      "n. 羽茎,大翎毛；vt. 刺穿"
+    ]
+  },
+  "quilt": {
+    "word": "quilt",
+    "phonetic": "/kwɪlt/",
+    "explains": [
+      "n. 被子；棉被；v. 东拼西凑地编；加软衬料后缝制"
+    ]
+  },
+  "quina": {
+    "word": "quina",
+    "phonetic": "/'kiːnə/",
+    "explains": [
+      "n. [植]金鸡纳树皮, 奎宁"
+    ]
+  },
+  "quince": {
+    "word": "quince",
+    "phonetic": "",
+    "explains": [
+      "num. 十五"
+    ]
+  },
+  "quincy": {
+    "word": "quincy",
+    "phonetic": "/'kwinsi/",
+    "explains": [
+      "n. 昆西(美国伊利诺斯州西部一城市)"
+    ]
+  },
+  "quintessence": {
+    "word": "quintessence",
+    "phonetic": "/kwɪn'tes(ə)ns/",
+    "explains": [
+      "n. 精华；典范；第五元素（被视为地、水、火、风以外之构成宇宙的元素）"
+    ]
+  },
+  "quintet": {
+    "word": "quintet",
+    "phonetic": "/kwɪn'tet/",
+    "explains": [
+      "n. 五重奏，五重唱；男子篮球队；[计] 五位字节"
+    ]
+  },
+  "quinto": {
+    "word": "quinto",
+    "phonetic": "",
+    "explains": [
+      "adj. 第五的"
+    ]
+  },
+  "quinzaine": {
+    "word": "quinzaine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 十五天左右"
+    ]
+  },
+  "quinze": {
+    "word": "quinze",
+    "phonetic": "",
+    "explains": [
+      "num. 十五"
+    ]
+  },
+  "quip": {
+    "word": "quip",
+    "phonetic": "/kwɪp/",
+    "explains": [
+      "n. 妙语；嘲弄；讽刺语；v. 嘲弄；讥讽"
+    ]
+  },
+  "quirk": {
+    "word": "quirk",
+    "phonetic": "/kwɜːk/",
+    "explains": [
+      "n. 急转, 遁词, 怪癖"
+    ]
+  },
+  "quisling": {
+    "word": "quisling",
+    "phonetic": "/'kwɪzlɪŋ/",
+    "explains": [
+      "n. 卖国贼"
+    ]
+  },
+  "quit": {
+    "word": "quit",
+    "phonetic": "/kwɪt/",
+    "explains": [
+      "v. 放弃；辞职"
+    ]
+  },
+  "quitar": {
+    "word": "quitar",
+    "phonetic": "",
+    "explains": [
+      "v. 移开；去除"
+    ]
+  },
+  "quitarse": {
+    "word": "quitarse",
+    "phonetic": "",
+    "explains": [
+      "v. 脱掉"
+    ]
+  },
   "quite": {
     "word": "quite",
     "phonetic": "/kwaɪt/",
     "explains": [
       "adv. 很；相当；完全"
+    ]
+  },
+  "quittance": {
+    "word": "quittance",
+    "phonetic": "/'kwitəns/",
+    "explains": [
+      "n.  免除债务的证书、 收据； 解除； 赔偿， 补偿"
+    ]
+  },
+  "quitter": {
+    "word": "quitter",
+    "phonetic": "/'kwɪtə/",
+    "explains": [
+      "n. 轻易停止的人, 懦夫"
+    ]
+  },
+  "quiver": {
+    "word": "quiver",
+    "phonetic": "/'kwɪvə/",
+    "explains": [
+      "v. （轻微地）颤动"
+    ]
+  },
+  "quixotic": {
+    "word": "quixotic",
+    "phonetic": "/kwɪk'sɒtɪk/",
+    "explains": [
+      "adj. 唐吉诃德式的；狂想家的；愚侠的"
     ]
   },
   "quiz": {
@@ -65,12 +681,75 @@
       "v. 盘问；对…进行测验"
     ]
   },
+  "quizzable": {
+    "word": "quizzable",
+    "phonetic": "",
+    "explains": [
+      "adj. 可挖苦的"
+    ]
+  },
+  "quizzical": {
+    "word": "quizzical",
+    "phonetic": "/'kwɪzɪk(ə)l/",
+    "explains": [
+      "adj. 古怪的, 引人发笑的, 嘲弄的, 探询的"
+    ]
+  },
+  "quoi": {
+    "word": "quoi",
+    "phonetic": "",
+    "explains": [
+      "pron. 什么"
+    ]
+  },
+  "quorum": {
+    "word": "quorum",
+    "phonetic": "/'kwɔːrəm/",
+    "explains": [
+      "n. 法定人数"
+    ]
+  },
+  "quota": {
+    "word": "quota",
+    "phonetic": "/'kwəʊtə/",
+    "explains": [
+      "n. 配额；定额；限额"
+    ]
+  },
+  "quotation": {
+    "word": "quotation",
+    "phonetic": "/kwəʊˈteɪʃ(ə)n/",
+    "explains": [
+      "n. 引文"
+    ]
+  },
   "quote": {
     "word": "quote",
     "phonetic": "/kwəʊt/",
     "explains": [
       "v. 引用；引述；报价",
       "n. 引语；引号；报价"
+    ]
+  },
+  "quotidian": {
+    "word": "quotidian",
+    "phonetic": "/kwɒ'tɪdɪən; kwəʊ-/",
+    "explains": [
+      "adj. 每日的, 每日发作的, 平凡的, 日常的"
+    ]
+  },
+  "quotidien": {
+    "word": "quotidien",
+    "phonetic": "",
+    "explains": [
+      "adj. 每日的；n.m. 日报"
+    ]
+  },
+  "quotient": {
+    "word": "quotient",
+    "phonetic": "/'kwəʊʃ(ə)nt/",
+    "explains": [
+      "n. [数] 商；系数；份额"
     ]
   }
 }

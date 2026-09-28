@@ -6,11 +6,116 @@
       "pron. 我"
     ]
   },
+  "ibex": {
+    "word": "ibex",
+    "phonetic": "/'aɪbeks/",
+    "explains": [
+      "n. 野生山羊"
+    ]
+  },
+  "ibuprofen": {
+    "word": "ibuprofen",
+    "phonetic": "/,aɪbjuː'prəʊf(ə)n/",
+    "explains": [
+      "n. 布洛芬，异丁苯丙酸（抗炎，镇痛药）"
+    ]
+  },
   "ice": {
     "word": "ice",
     "phonetic": "/aɪs/",
     "explains": [
       "n. 冰；冰块 v. 结冰；冰镇"
+    ]
+  },
+  "iceberg": {
+    "word": "iceberg",
+    "phonetic": "/'aɪsbɜːg/",
+    "explains": [
+      "n. 冰山,冷若冰霜的人"
+    ]
+  },
+  "icebox": {
+    "word": "icebox",
+    "phonetic": "/'aɪsbɒks/",
+    "explains": [
+      "n. 冷藏库"
+    ]
+  },
+  "icebreaker": {
+    "word": "icebreaker",
+    "phonetic": "/'aɪsbreɪkə/",
+    "explains": [
+      "n. 碎冰船；破冰设备"
+    ]
+  },
+  "iceland": {
+    "word": "iceland",
+    "phonetic": "/'aislənd/",
+    "explains": [
+      "n. 冰岛(欧洲岛名,在大西洋北部,近北极圈)"
+    ]
+  },
+  "ichthyosaur": {
+    "word": "ichthyosaur",
+    "phonetic": "/'ɪkθɪəsɔː/",
+    "explains": [
+      "n. 鱼龙"
+    ]
+  },
+  "icicle": {
+    "word": "icicle",
+    "phonetic": "/'aɪsɪk(ə)l/",
+    "explains": [
+      "n. 冰柱"
+    ]
+  },
+  "icing": {
+    "word": "icing",
+    "phonetic": "/'aɪsɪŋ/",
+    "explains": [
+      "n. 糖衣, 结冰"
+    ]
+  },
+  "icon": {
+    "word": "icon",
+    "phonetic": "/'aɪkɒn; -k(ə)n/",
+    "explains": [
+      "n. 图标, 肖像"
+    ]
+  },
+  "iconoclast": {
+    "word": "iconoclast",
+    "phonetic": "/aɪ'kɒnəklæst/",
+    "explains": [
+      "n. 偶像破坏者；提倡打破旧习的人"
+    ]
+  },
+  "iconographic": {
+    "word": "iconographic",
+    "phonetic": "",
+    "explains": [
+      "adj. 肖像的, 图像材料的"
+    ]
+  },
+  "iconography": {
+    "word": "iconography",
+    "phonetic": "/,aɪkə'nɒgrəfɪ/",
+    "explains": [
+      "n. 肖像学, 肖像画法"
+    ]
+  },
+  "icy": {
+    "word": "icy",
+    "phonetic": "/'aɪsɪ/",
+    "explains": [
+      "adj. 冰冷的；冷冰冰的"
+    ]
+  },
+  "id": {
+    "word": "id",
+    "phonetic": "/ɪd/",
+    "explains": [
+      "abbr. 身份 (identification, identity)；n. 遗传素质"
     ]
   },
   "idea": {
@@ -20,11 +125,354 @@
       "n. 想法；主意；概念"
     ]
   },
+  "ideal": {
+    "word": "ideal",
+    "phonetic": "/aɪ'dɪəl; aɪ'diːəl/",
+    "explains": [
+      "adj. 理想的"
+    ]
+  },
+  "idealism": {
+    "word": "idealism",
+    "phonetic": "/aɪ'dɪəlɪz(ə)m; -'diːə-/",
+    "explains": [
+      "n. 唯心主义；理想主义"
+    ]
+  },
+  "idealist": {
+    "word": "idealist",
+    "phonetic": "/aɪ'dɪəlɪst/",
+    "explains": [
+      "n. 空想家，理想主义者；唯心主义者；adj. 理想主义的；唯心主义的"
+    ]
+  },
+  "idealistic": {
+    "word": "idealistic",
+    "phonetic": "/,aɪdɪə'lɪstɪk; aɪ,dɪə'lɪstɪk; aɪ,diːə'lɪstɪk/",
+    "explains": [
+      "adj. 理想主义的, 空想的"
+    ]
+  },
+  "idealization": {
+    "word": "idealization",
+    "phonetic": "",
+    "explains": [
+      "n. 理想化, 理想化的事物"
+    ]
+  },
+  "idealize": {
+    "word": "idealize",
+    "phonetic": "/ai'diəlaiz/",
+    "explains": [
+      "v.  理想化"
+    ]
+  },
+  "ideally": {
+    "word": "ideally",
+    "phonetic": "/aɪ'dɪəl(l)ɪ; aɪ'diːəl(l)ɪ/",
+    "explains": [
+      "adv. 理想地；理论上"
+    ]
+  },
+  "idempotent": {
+    "word": "idempotent",
+    "phonetic": "",
+    "explains": [
+      "幂等的（重复调用结果一致）"
+    ]
+  },
+  "identical": {
+    "word": "identical",
+    "phonetic": "/aɪ'dentɪk(ə)l/",
+    "explains": [
+      "adj. 完全相同的；同一的"
+    ]
+  },
+  "identifiable": {
+    "word": "identifiable",
+    "phonetic": "/aɪdentɪ'fæɪəb(ə)l/",
+    "explains": [
+      "adj. 可辨认的"
+    ]
+  },
+  "identification": {
+    "word": "identification",
+    "phonetic": "/aɪ,dentɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 身份证；认出，鉴定"
+    ]
+  },
+  "identify": {
+    "word": "identify",
+    "phonetic": "/aɪ'dentɪfaɪ/",
+    "explains": [
+      "v. 认出，识别，鉴定"
+    ]
+  },
+  "identity": {
+    "word": "identity",
+    "phonetic": "/aɪˈdentɪtɪ/",
+    "explains": [
+      "n. 身份"
+    ]
+  },
+  "ideographic": {
+    "word": "ideographic",
+    "phonetic": "/,ɪdɪəʊ'ɡræfɪk/",
+    "explains": [
+      "adj. 表意的；表意字构成的"
+    ]
+  },
+  "ideological": {
+    "word": "ideological",
+    "phonetic": "/,aɪdɪəʊ'lɒdʒɪkəl/",
+    "explains": [
+      "adj. 意识形态的"
+    ]
+  },
+  "ideologically": {
+    "word": "ideologically",
+    "phonetic": "/,aidiə'lɔdʒikali/",
+    "explains": [
+      "adv. 意识形态上地, 思想上地"
+    ]
+  },
+  "ideology": {
+    "word": "ideology",
+    "phonetic": "/,aɪdɪ'ɒlədʒɪ; ɪd-/",
+    "explains": [
+      "n. 意识形态；思想意识；观念学"
+    ]
+  },
+  "idiocy": {
+    "word": "idiocy",
+    "phonetic": "/'ɪdɪəsɪ/",
+    "explains": [
+      "n. 白痴, 白痴的行为"
+    ]
+  },
+  "idiom": {
+    "word": "idiom",
+    "phonetic": "/ˈɪdɪəm/",
+    "explains": [
+      "n. 习语"
+    ]
+  },
+  "idioma": {
+    "word": "idioma",
+    "phonetic": "",
+    "explains": [
+      "n.m. 语言"
+    ]
+  },
+  "idiomatic": {
+    "word": "idiomatic",
+    "phonetic": "/,ɪdɪə'mætɪk/",
+    "explains": [
+      "adj. 地道的 成语的"
+    ]
+  },
+  "idiosyncrasy": {
+    "word": "idiosyncrasy",
+    "phonetic": "/,ɪdɪə(ʊ)'sɪŋkrəsɪ/",
+    "explains": [
+      "n. （个人独有的）气质，性格，习惯，癖好"
+    ]
+  },
+  "idiot": {
+    "word": "idiot",
+    "phonetic": "/ˈɪdɪət/",
+    "explains": [
+      "n. 白痴"
+    ]
+  },
+  "idle": {
+    "word": "idle",
+    "phonetic": "/'aɪd(ə)l/",
+    "explains": [
+      "adj. 空闲的；懒散的"
+    ]
+  },
+  "idleness": {
+    "word": "idleness",
+    "phonetic": "/'aɪdlnəs/",
+    "explains": [
+      "n. 懒惰；赋闲无事"
+    ]
+  },
+  "idol": {
+    "word": "idol",
+    "phonetic": "/'aɪd(ə)l/",
+    "explains": [
+      "n. 偶像, 崇拜物, 幻象, [逻]谬论"
+    ]
+  },
+  "idolater": {
+    "word": "idolater",
+    "phonetic": "/aɪ'dɒlətə/",
+    "explains": [
+      "n. 偶像崇拜者, 崇拜者, 皈依者, 追星族"
+    ]
+  },
+  "idolatrous": {
+    "word": "idolatrous",
+    "phonetic": "/aɪ'dɒlətrəs/",
+    "explains": [
+      "adj. 崇拜偶像的, 盲目崇拜的"
+    ]
+  },
+  "idolatry": {
+    "word": "idolatry",
+    "phonetic": "/aɪ'dɒlətrɪ/",
+    "explains": [
+      "n. 偶像崇拜；盲目崇拜；邪神崇拜"
+    ]
+  },
+  "idolise": {
+    "word": "idolise",
+    "phonetic": "",
+    "explains": [
+      "v. 把…当偶像崇拜；偶像化"
+    ]
+  },
+  "idyll": {
+    "word": "idyll",
+    "phonetic": "/'aidil/",
+    "explains": [
+      "n. 田园诗, 牧歌"
+    ]
+  },
+  "idyllic": {
+    "word": "idyllic",
+    "phonetic": "/ɪ'dɪlɪk/",
+    "explains": [
+      "adj. 田园短诗的, 牧歌的"
+    ]
+  },
   "if": {
     "word": "if",
     "phonetic": "/ɪf/",
     "explains": [
       "conj. 如果；假如；是否"
+    ]
+  },
+  "iglesia": {
+    "word": "iglesia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 教堂"
+    ]
+  },
+  "igloo": {
+    "word": "igloo",
+    "phonetic": "/'ɪgluː/",
+    "explains": [
+      "n. 圆顶建筑"
+    ]
+  },
+  "igneous": {
+    "word": "igneous",
+    "phonetic": "/'ɪgnɪəs/",
+    "explains": [
+      "adj. (指岩石)火成的, 火的"
+    ]
+  },
+  "ignite": {
+    "word": "ignite",
+    "phonetic": "/ɪg'naɪt/",
+    "explains": [
+      "v. 引燃，着火"
+    ]
+  },
+  "ignition": {
+    "word": "ignition",
+    "phonetic": "/ɪg'nɪʃ(ə)n/",
+    "explains": [
+      "n. 点火, 点燃"
+    ]
+  },
+  "ignoble": {
+    "word": "ignoble",
+    "phonetic": "/ɪg'nəʊb(ə)l/",
+    "explains": [
+      "adj. 不光彩的；卑鄙的；卑贱的"
+    ]
+  },
+  "ignominious": {
+    "word": "ignominious",
+    "phonetic": "/,ɪgnə'mɪnɪəs/",
+    "explains": [
+      "adj. 可耻的；下流的"
+    ]
+  },
+  "ignominy": {
+    "word": "ignominy",
+    "phonetic": "/'ɪgnəmɪnɪ/",
+    "explains": [
+      "n. 耻辱"
+    ]
+  },
+  "ignoramus": {
+    "word": "ignoramus",
+    "phonetic": "/,ɪgnə'reɪməs/",
+    "explains": [
+      "n. 不学无术的人, 无知识的人"
+    ]
+  },
+  "ignorance": {
+    "word": "ignorance",
+    "phonetic": "/'ɪgn(ə)r(ə)ns/",
+    "explains": [
+      "n. 无知，无学，愚昧"
+    ]
+  },
+  "ignorant": {
+    "word": "ignorant",
+    "phonetic": "/ˈɪg(ə)r(ə)nt/",
+    "explains": [
+      "adj. 无知的"
+    ]
+  },
+  "ignore": {
+    "word": "ignore",
+    "phonetic": "/ɪgˈnɔː/",
+    "explains": [
+      "v. 忽视"
+    ]
+  },
+  "ignorer": {
+    "word": "ignorer",
+    "phonetic": "",
+    "explains": [
+      "v. 不知道；忽视"
+    ]
+  },
+  "igual": {
+    "word": "igual",
+    "phonetic": "",
+    "explains": [
+      "adj. 相同的"
+    ]
+  },
+  "iguana": {
+    "word": "iguana",
+    "phonetic": "/ɪ'gwɑːnə/",
+    "explains": [
+      "n. [动]鬣蜥(一种产于南美洲和西印度群岛的大蜥蜴)"
+    ]
+  },
+  "il": {
+    "word": "il",
+    "phonetic": "",
+    "explains": [
+      "pron. 他"
+    ]
+  },
+  "ilegal": {
+    "word": "ilegal",
+    "phonetic": "",
+    "explains": [
+      "adj. 非法的"
     ]
   },
   "ill": {
@@ -34,11 +482,214 @@
       "adj. 生病的；坏的；邪恶的"
     ]
   },
+  "ill-mannered": {
+    "word": "ill-mannered",
+    "phonetic": "/'il'mænəd/",
+    "explains": [
+      "adj.  态度恶劣的"
+    ]
+  },
+  "illegal": {
+    "word": "illegal",
+    "phonetic": "/ɪˈliːg(ə)l/",
+    "explains": [
+      "adj. 非法的"
+    ]
+  },
+  "illegality": {
+    "word": "illegality",
+    "phonetic": "/,ɪliː'ɡælətɪ/",
+    "explains": [
+      "n. 非法行为, 犯规"
+    ]
+  },
+  "illegible": {
+    "word": "illegible",
+    "phonetic": "/ɪ'ledʒɪb(ə)l/",
+    "explains": [
+      "adj. 难辨认的；字迹模糊的"
+    ]
+  },
+  "illegitimate": {
+    "word": "illegitimate",
+    "phonetic": "/,ɪlɪ'dʒɪtɪmət/",
+    "explains": [
+      "adj. 违法的, 非嫡出的, 庶生的, 私生的, 不合理的, 不合逻辑的"
+    ]
+  },
+  "illiberal": {
+    "word": "illiberal",
+    "phonetic": "/ɪ'lɪb(ə)r(ə)l/",
+    "explains": [
+      "adj. 狭碍的, 偏执的, 吝啬的, 缺乏文化素养的, 粗鄙的"
+    ]
+  },
+  "illicit": {
+    "word": "illicit",
+    "phonetic": "/ɪ'lɪsɪt/",
+    "explains": [
+      "adj. 违法的；不正当的"
+    ]
+  },
+  "illinois": {
+    "word": "illinois",
+    "phonetic": "/,ili'nɔi(z)/",
+    "explains": [
+      "n. 伊利诺斯州(美国州名)"
+    ]
+  },
+  "illiteracy": {
+    "word": "illiteracy",
+    "phonetic": "/ɪ'lɪt(ə)rəsɪ/",
+    "explains": [
+      "n. 文盲；无知"
+    ]
+  },
+  "illiterate": {
+    "word": "illiterate",
+    "phonetic": "/ɪ'lɪt(ə)rət/",
+    "explains": [
+      "adj. 文盲的；n. 文盲"
+    ]
+  },
+  "illness": {
+    "word": "illness",
+    "phonetic": "/ˈɪlnɪs/",
+    "explains": [
+      "n. 疾病"
+    ]
+  },
+  "illogical": {
+    "word": "illogical",
+    "phonetic": "/ɪ'lɒdʒɪk(ə)l/",
+    "explains": [
+      "adj. 不合逻辑的；不合常理的"
+    ]
+  },
+  "illuminate": {
+    "word": "illuminate",
+    "phonetic": "/ɪ'l(j)uːmɪneɪt/",
+    "explains": [
+      "v. 照明，照亮；阐明"
+    ]
+  },
+  "illuminating": {
+    "word": "illuminating",
+    "phonetic": "/ɪ'ljuːmɪneɪtɪŋ/",
+    "explains": [
+      "adj. 照亮的, 启蒙的, 照明的"
+    ]
+  },
+  "illumination": {
+    "word": "illumination",
+    "phonetic": "/ɪ,ljuːmɪ'neɪʃən/",
+    "explains": [
+      "n. 阐明, 启发"
+    ]
+  },
+  "illusion": {
+    "word": "illusion",
+    "phonetic": "/ɪ'l(j)uːʒ(ə)n/",
+    "explains": [
+      "n. 幻想；错觉；假象"
+    ]
+  },
+  "illusory": {
+    "word": "illusory",
+    "phonetic": "/ɪ'l(j)uːs(ə)rɪ/",
+    "explains": [
+      "adj. 虚幻的"
+    ]
+  },
+  "illustrate": {
+    "word": "illustrate",
+    "phonetic": "/'ɪləstreɪt/",
+    "explains": [
+      "v. （用图等）说明"
+    ]
+  },
+  "illustration": {
+    "word": "illustration",
+    "phonetic": "/ɪlə'streɪʃ(ə)n/",
+    "explains": [
+      "n. 说明，图解；例证"
+    ]
+  },
+  "illustrative": {
+    "word": "illustrative",
+    "phonetic": "/'ɪləstrətɪv; ɪ'lʌst-/",
+    "explains": [
+      "adj. 说明的；作例证的；解说的"
+    ]
+  },
+  "illustrator": {
+    "word": "illustrator",
+    "phonetic": "/'ɪləstreɪtə/",
+    "explains": [
+      "n. 插图画家,说明者"
+    ]
+  },
+  "illustrious": {
+    "word": "illustrious",
+    "phonetic": "/ɪ'lʌstrɪəs/",
+    "explains": [
+      "adj. 著名的，杰出的；辉煌的"
+    ]
+  },
+  "ilmenite": {
+    "word": "ilmenite",
+    "phonetic": "/'ɪlmənaɪt/",
+    "explains": [
+      "n. [矿物] 钛铁矿"
+    ]
+  },
   "image": {
     "word": "image",
     "phonetic": "/ˈɪmɪdʒ/",
     "explains": [
       "n. 影像；形象；图像"
+    ]
+  },
+  "imagen": {
+    "word": "imagen",
+    "phonetic": "",
+    "explains": [
+      "n.f. 形象；图像"
+    ]
+  },
+  "imagery": {
+    "word": "imagery",
+    "phonetic": "/'ɪmɪdʒ(ə)rɪ/",
+    "explains": [
+      "n. 意象, 肖像"
+    ]
+  },
+  "imaginable": {
+    "word": "imaginable",
+    "phonetic": "/ɪ'mædʒɪnəb(ə)l/",
+    "explains": [
+      "adj. 可能的；可想像的"
+    ]
+  },
+  "imaginary": {
+    "word": "imaginary",
+    "phonetic": "/ɪˈmædʒɪnərɪ/",
+    "explains": [
+      "adj. 想象的"
+    ]
+  },
+  "imagination": {
+    "word": "imagination",
+    "phonetic": "/ɪˌmædʒɪˈneɪʃ(ə)n/",
+    "explains": [
+      "n. 想象力"
+    ]
+  },
+  "imaginative": {
+    "word": "imaginative",
+    "phonetic": "/ɪ'mædʒɪnətɪv/",
+    "explains": [
+      "adj. 富于想象的；有创造力的"
     ]
   },
   "imagine": {
@@ -48,11 +699,788 @@
       "v. 想象；设想；猜想"
     ]
   },
+  "imagist": {
+    "word": "imagist",
+    "phonetic": "",
+    "explains": [
+      "n&a. 意像派者(的)"
+    ]
+  },
+  "imago": {
+    "word": "imago",
+    "phonetic": "/ɪ'meɪgəʊ/",
+    "explains": [
+      "n. 意象, 成虫"
+    ]
+  },
+  "imbalance": {
+    "word": "imbalance",
+    "phonetic": "/ɪm'bæl(ə)ns/",
+    "explains": [
+      "n. 不平衡,不均衡"
+    ]
+  },
+  "imbecile": {
+    "word": "imbecile",
+    "phonetic": "/'ɪmbɪsiːl/",
+    "explains": [
+      "adj. 低能的, 愚笨的, 虚弱的"
+    ]
+  },
+  "imbecility": {
+    "word": "imbecility",
+    "phonetic": "/,ɪmbɪ'sɪlətɪ/",
+    "explains": [
+      "n. 低能"
+    ]
+  },
+  "imbibe": {
+    "word": "imbibe",
+    "phonetic": "/ɪm'baɪb/",
+    "explains": [
+      "v. 吸收"
+    ]
+  },
+  "imbroglio": {
+    "word": "imbroglio",
+    "phonetic": "/ɪm'brəʊlɪəʊ/",
+    "explains": [
+      "n. 杂乱的一团, 纠葛, 纷扰, 误解"
+    ]
+  },
+  "imbue": {
+    "word": "imbue",
+    "phonetic": "/ɪm'bjuː/",
+    "explains": [
+      "v. 灌输；使感染；使渗透"
+    ]
+  },
+  "imitate": {
+    "word": "imitate",
+    "phonetic": "/ˈɪmɪteɪt/",
+    "explains": [
+      "v. 模仿"
+    ]
+  },
+  "imitation": {
+    "word": "imitation",
+    "phonetic": "/ɪmɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 仿制品，伪制物"
+    ]
+  },
+  "imitative": {
+    "word": "imitative",
+    "phonetic": "/'ɪmɪtətɪv/",
+    "explains": [
+      "adj. 仿制的,模仿的"
+    ]
+  },
+  "imitator": {
+    "word": "imitator",
+    "phonetic": "/'ɪmɪtetɚ/",
+    "explains": [
+      "n. 模仿者"
+    ]
+  },
+  "immaculate": {
+    "word": "immaculate",
+    "phonetic": "/i'mækjulət/",
+    "explains": [
+      "adj.  纯洁的； 无污迹的； 无过失的"
+    ]
+  },
+  "immanent": {
+    "word": "immanent",
+    "phonetic": "/'ɪmənənt/",
+    "explains": [
+      "adj. 内在的, 固有的, [宗](上帝)无所不在的"
+    ]
+  },
+  "immaterial": {
+    "word": "immaterial",
+    "phonetic": "/ɪmə'tɪərɪəl/",
+    "explains": [
+      "adj. 非实质的"
+    ]
+  },
+  "immature": {
+    "word": "immature",
+    "phonetic": "/,ɪmə'tjʊə; ,ɪmə'tjɔː/",
+    "explains": [
+      "adj. 不成熟的, 未完全发展的"
+    ]
+  },
+  "immaturity": {
+    "word": "immaturity",
+    "phonetic": "/,ɪmə'tʃɔːrɪtɪ; ,ɪmə'tʃʊərɪtɪ; ,ɪmə'tjɔːrɪtɪ; ,ɪmə'tjʊərɪtɪ/",
+    "explains": [
+      "n. 不成熟"
+    ]
+  },
+  "immeasurable": {
+    "word": "immeasurable",
+    "phonetic": "/ɪ'meʒ(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无限的；[数] 不可计量的；不能测量的"
+    ]
+  },
+  "immeasurably": {
+    "word": "immeasurably",
+    "phonetic": "/ɪ'mɛʒərəbli/",
+    "explains": [
+      "adv. 无法计量地, 无限地"
+    ]
+  },
+  "immediacy": {
+    "word": "immediacy",
+    "phonetic": "/ɪ'miːdɪəsɪ/",
+    "explains": [
+      "n. 直接"
+    ]
+  },
+  "immediate": {
+    "word": "immediate",
+    "phonetic": "/ɪˈmiːdɪət/",
+    "explains": [
+      "adj. 立即的"
+    ]
+  },
   "immediately": {
     "word": "immediately",
     "phonetic": "/ɪˈmiːdiətli/",
     "explains": [
       "adv. 立即；立刻；马上"
+    ]
+  },
+  "immemorial": {
+    "word": "immemorial",
+    "phonetic": "/ɪmɪ'mɔːrɪəl/",
+    "explains": [
+      "adj. 古老的, 远古的, 无法追忆的"
+    ]
+  },
+  "immense": {
+    "word": "immense",
+    "phonetic": "/ɪ'mens/",
+    "explains": [
+      "adj. 巨大的；极好的"
+    ]
+  },
+  "immensely": {
+    "word": "immensely",
+    "phonetic": "/ɪ'menslɪ/",
+    "explains": [
+      "adv. 极大地,无限地"
+    ]
+  },
+  "immensity": {
+    "word": "immensity",
+    "phonetic": "/ɪ'mensətɪ/",
+    "explains": [
+      "n. 广大, 巨大, 无限, 浩瀚"
+    ]
+  },
+  "immerse": {
+    "word": "immerse",
+    "phonetic": "/ɪ'mɜːs/",
+    "explains": [
+      "v. 沉浸；给…施洗礼"
+    ]
+  },
+  "immersion": {
+    "word": "immersion",
+    "phonetic": "/ɪ'mɜːʃ(ə)n/",
+    "explains": [
+      "n. 沉浸,专心"
+    ]
+  },
+  "immeuble": {
+    "word": "immeuble",
+    "phonetic": "",
+    "explains": [
+      "n.m. 楼房"
+    ]
+  },
+  "immigrant": {
+    "word": "immigrant",
+    "phonetic": "/ˈɪmɪɡrənt/",
+    "explains": [
+      "n. 移民"
+    ]
+  },
+  "immigrate": {
+    "word": "immigrate",
+    "phonetic": "/'ɪmɪgreɪt/",
+    "explains": [
+      "v. （使）移居入境"
+    ]
+  },
+  "immigration": {
+    "word": "immigration",
+    "phonetic": "/ˌimi'greiʃən/",
+    "explains": [
+      "n. 移民入境"
+    ]
+  },
+  "imminence": {
+    "word": "imminence",
+    "phonetic": "/'ɪmɪnəns/",
+    "explains": [
+      "n. 迫切, 急迫,迫近的危险(或祸患)"
+    ]
+  },
+  "imminent": {
+    "word": "imminent",
+    "phonetic": "/'ɪmɪnənt/",
+    "explains": [
+      "adj. 逼近的, 即将发生的"
+    ]
+  },
+  "immobile": {
+    "word": "immobile",
+    "phonetic": "/ɪ'məʊbaɪl/",
+    "explains": [
+      "adj. 不动的, 静止的"
+    ]
+  },
+  "immobilier": {
+    "word": "immobilier",
+    "phonetic": "",
+    "explains": [
+      "adj. 不动产的"
+    ]
+  },
+  "immobility": {
+    "word": "immobility",
+    "phonetic": "",
+    "explains": [
+      "n. 牢固,不动"
+    ]
+  },
+  "immobilize": {
+    "word": "immobilize",
+    "phonetic": "/ɪ'məʊbɪlaɪz/",
+    "explains": [
+      "v. 固定不动"
+    ]
+  },
+  "immoderate": {
+    "word": "immoderate",
+    "phonetic": "/ɪ'mɒd(ə)rət/",
+    "explains": [
+      "adj. 无节制的，过度的；不适中的"
+    ]
+  },
+  "immolate": {
+    "word": "immolate",
+    "phonetic": "/'ɪməleɪt/",
+    "explains": [
+      "v. 牺牲, 献出, 献祭"
+    ]
+  },
+  "immolation": {
+    "word": "immolation",
+    "phonetic": "",
+    "explains": [
+      "n. 宰杀, 祭物"
+    ]
+  },
+  "immoral": {
+    "word": "immoral",
+    "phonetic": "/ɪ'mɒr(ə)l/",
+    "explains": [
+      "adj. 不道德的；邪恶的；淫荡的"
+    ]
+  },
+  "immortal": {
+    "word": "immortal",
+    "phonetic": "/ɪ'mɔːt(ə)l/",
+    "explains": [
+      "adj. 不朽的；永生的"
+    ]
+  },
+  "immune": {
+    "word": "immune",
+    "phonetic": "/ɪ'mjuːn/",
+    "explains": [
+      "adj. 免疫的；免于……的，免除的；n. 免疫者；免除者"
+    ]
+  },
+  "immunity": {
+    "word": "immunity",
+    "phonetic": "/ɪ'mjuːnɪtɪ/",
+    "explains": [
+      "n. 免疫性"
+    ]
+  },
+  "immunize": {
+    "word": "immunize",
+    "phonetic": "/'imju:naiz/",
+    "explains": [
+      "v. 使免疫, 赋予免疫性, 使成为无害"
+    ]
+  },
+  "immutable": {
+    "word": "immutable",
+    "phonetic": "/ɪ'mjuːtəb(ə)l/",
+    "explains": [
+      "adj. 不变的,不可变的"
+    ]
+  },
+  "imp": {
+    "word": "imp",
+    "phonetic": "/ɪmp/",
+    "explains": [
+      "n. 小鬼, 小淘气, 顽童"
+    ]
+  },
+  "impact": {
+    "word": "impact",
+    "phonetic": "/ˈɪmpækt/",
+    "explains": [
+      "n. 影响"
+    ]
+  },
+  "impair": {
+    "word": "impair",
+    "phonetic": "/ɪm'peə/",
+    "explains": [
+      "v. 损害；削弱；减少"
+    ]
+  },
+  "impale": {
+    "word": "impale",
+    "phonetic": "/ɪm'peɪl/",
+    "explains": [
+      "v. 刺穿；钉住；使绝望"
+    ]
+  },
+  "impalpable": {
+    "word": "impalpable",
+    "phonetic": "/ɪm'pælpəb(ə)l/",
+    "explains": [
+      "adj. 感触不到的；难理解的；无形的"
+    ]
+  },
+  "impart": {
+    "word": "impart",
+    "phonetic": "/ɪm'pɑːt/",
+    "explains": [
+      "v. 给予；传递；告诉"
+    ]
+  },
+  "impartial": {
+    "word": "impartial",
+    "phonetic": "/ɪm'pɑːʃ(ə)l/",
+    "explains": [
+      "adj. 公正的，无偏见的"
+    ]
+  },
+  "impartially": {
+    "word": "impartially",
+    "phonetic": "",
+    "explains": [
+      "adv. 公平地,无私地"
+    ]
+  },
+  "impasse": {
+    "word": "impasse",
+    "phonetic": "/æm'pɑːs; 'æmpɑːs/",
+    "explains": [
+      "n. 僵局；死路"
+    ]
+  },
+  "impassioned": {
+    "word": "impassioned",
+    "phonetic": "/ɪm'pæʃ(ə)nd/",
+    "explains": [
+      "adj. 充满激情的；感激的；v. 使充满激情（impassion的过去式和过去分词）"
+    ]
+  },
+  "impassive": {
+    "word": "impassive",
+    "phonetic": "/ɪm'pæsɪv/",
+    "explains": [
+      "adj. 冷漠的；无感觉的"
+    ]
+  },
+  "impatience": {
+    "word": "impatience",
+    "phonetic": "/ɪm'peɪʃns/",
+    "explains": [
+      "n. 急躁；无耐心"
+    ]
+  },
+  "impatient": {
+    "word": "impatient",
+    "phonetic": "",
+    "explains": [
+      "adj. 不耐烦的，急躁的"
+    ]
+  },
+  "impayable": {
+    "word": "impayable",
+    "phonetic": "",
+    "explains": [
+      "adj. 无价的, 极贵重的, 无法清偿的, <口>无与伦比的, 极好的"
+    ]
+  },
+  "impeach": {
+    "word": "impeach",
+    "phonetic": "/ɪm'piːtʃ/",
+    "explains": [
+      "v. [律]控告, 检举, <主美>弹劾, 怀疑"
+    ]
+  },
+  "impeachment": {
+    "word": "impeachment",
+    "phonetic": "/ɪm'pi:tʃmənt/",
+    "explains": [
+      "n. 弹劾；控告；怀疑；指摘"
+    ]
+  },
+  "impeccable": {
+    "word": "impeccable",
+    "phonetic": "/im'pekəbl/",
+    "explains": [
+      "adj.  无瑕疵的， 没有缺点的"
+    ]
+  },
+  "impecunious": {
+    "word": "impecunious",
+    "phonetic": "/,ɪmpɪ'kjuːnɪəs/",
+    "explains": [
+      "adj. (经常)没有钱的, 身无分文的, 贫穷的"
+    ]
+  },
+  "impede": {
+    "word": "impede",
+    "phonetic": "/ɪm'piːd/",
+    "explains": [
+      "v. 妨碍；阻碍"
+    ]
+  },
+  "impediment": {
+    "word": "impediment",
+    "phonetic": "/ɪm'pedɪm(ə)nt/",
+    "explains": [
+      "n. 妨碍,口吃, 障碍物"
+    ]
+  },
+  "impedimenta": {
+    "word": "impedimenta",
+    "phonetic": "/ɪm,pedɪ'mentə/",
+    "explains": [
+      "n. 妨碍行进或运动的东西"
+    ]
+  },
+  "impel": {
+    "word": "impel",
+    "phonetic": "/ɪm'pel/",
+    "explains": [
+      "v. 推动, 推进, 激励, 驱使, 逼迫"
+    ]
+  },
+  "impend": {
+    "word": "impend",
+    "phonetic": "/ɪm'pend/",
+    "explains": [
+      "v. 迫近，逼近"
+    ]
+  },
+  "impending": {
+    "word": "impending",
+    "phonetic": "/im'pendiŋ/",
+    "explains": [
+      "adj.  即将发生的， 逼近的"
+    ]
+  },
+  "impenetrable": {
+    "word": "impenetrable",
+    "phonetic": "/ɪm'penɪtrəb(ə)l/",
+    "explains": [
+      "adj. 不能穿过的, 不可理喻的"
+    ]
+  },
+  "impenitent": {
+    "word": "impenitent",
+    "phonetic": "/ɪm'penɪt(ə)nt/",
+    "explains": [
+      "n. 顽固的人；不知悔改的人；adj. 顽固的；不知悔改的"
+    ]
+  },
+  "imperative": {
+    "word": "imperative",
+    "phonetic": "/ɪm'perətɪv/",
+    "explains": [
+      "adj. 必要的，不可避免的；紧急的；命令的，专横的；势在必行的；[语]祈使的；n. 必要的事；命令；需要；规则；[语]祈使语气"
+    ]
+  },
+  "imperceptible": {
+    "word": "imperceptible",
+    "phonetic": "/ɪmpə'septɪb(ə)l/",
+    "explains": [
+      "adj. 觉察不到的, 感觉不到的, 极细微的"
+    ]
+  },
+  "imperceptive": {
+    "word": "imperceptive",
+    "phonetic": "/ɪmpə'septɪv/",
+    "explains": [
+      "adj. 无感觉的；缺乏感知力的"
+    ]
+  },
+  "imperfect": {
+    "word": "imperfect",
+    "phonetic": "/ɪm'pɜːfɪkt/",
+    "explains": [
+      "adj. 有缺点的,未完成的；n. 未完成体"
+    ]
+  },
+  "imperial": {
+    "word": "imperial",
+    "phonetic": "/ɪmˈpɪərɪəl/",
+    "explains": [
+      "adj. 帝国的"
+    ]
+  },
+  "imperialism": {
+    "word": "imperialism",
+    "phonetic": "/ɪm'pɪərɪəlɪz(ə)m/",
+    "explains": [
+      "n. 帝国主义"
+    ]
+  },
+  "imperialist": {
+    "word": "imperialist",
+    "phonetic": "/ɪm'pɪərɪəlɪst/",
+    "explains": [
+      "n. 帝国主义者；adj. 帝国主义的"
+    ]
+  },
+  "imperil": {
+    "word": "imperil",
+    "phonetic": "/ɪm'perɪl; -r(ə)l/",
+    "explains": [
+      "v. 危及；使陷于危险"
+    ]
+  },
+  "imperious": {
+    "word": "imperious",
+    "phonetic": "/ɪm'pɪərɪəs/",
+    "explains": [
+      "adj. 专横的；迫切的；傲慢的"
+    ]
+  },
+  "impermanence": {
+    "word": "impermanence",
+    "phonetic": "",
+    "explains": [
+      "n. 暂时, 无常"
+    ]
+  },
+  "impermeable": {
+    "word": "impermeable",
+    "phonetic": "/ɪm'pɜːmɪəb(ə)l/",
+    "explains": [
+      "adj. 不能渗透的"
+    ]
+  },
+  "impersonal": {
+    "word": "impersonal",
+    "phonetic": "/ɪm'pɜːs(ə)n(ə)l/",
+    "explains": [
+      "adj. 客观的,没有人情味的"
+    ]
+  },
+  "impersonate": {
+    "word": "impersonate",
+    "phonetic": "/ɪm'pɜːs(ə)neɪt/",
+    "explains": [
+      "v. 模仿, 扮演, 人格化, 拟人"
+    ]
+  },
+  "impersonation": {
+    "word": "impersonation",
+    "phonetic": "",
+    "explains": [
+      "n. 扮演"
+    ]
+  },
+  "impertinent": {
+    "word": "impertinent",
+    "phonetic": "/ɪm'pɜːtɪnənt/",
+    "explains": [
+      "adj. 无关的, 鲁莽的, 不相干的"
+    ]
+  },
+  "imperturbable": {
+    "word": "imperturbable",
+    "phonetic": "/,ɪmpə'tɜːbəb(ə)l/",
+    "explains": [
+      "adj. 沉着的, 冷静的"
+    ]
+  },
+  "impervious": {
+    "word": "impervious",
+    "phonetic": "/ɪm'pɜːvɪəs/",
+    "explains": [
+      "adj. 不透的；不受影响的"
+    ]
+  },
+  "impetuous": {
+    "word": "impetuous",
+    "phonetic": "/ɪm'petjʊəs/",
+    "explains": [
+      "adj. 冲动的；鲁莽的；猛烈的"
+    ]
+  },
+  "impetus": {
+    "word": "impetus",
+    "phonetic": "/'ɪmpɪtəs/",
+    "explains": [
+      "n. 动力；促进；冲力"
+    ]
+  },
+  "impinge": {
+    "word": "impinge",
+    "phonetic": "/ɪm'pɪn(d)ʒ/",
+    "explains": [
+      "v. 撞击"
+    ]
+  },
+  "impious": {
+    "word": "impious",
+    "phonetic": "/'ɪmpɪəs; ɪm'paɪəs/",
+    "explains": [
+      "adj. 不虔诚的；不孝的；不敬的"
+    ]
+  },
+  "implacable": {
+    "word": "implacable",
+    "phonetic": "/ɪm'plækəb(ə)l/",
+    "explains": [
+      "adj. 不缓和的, 不安静的"
+    ]
+  },
+  "implant": {
+    "word": "implant",
+    "phonetic": "/ɪm'plɑːnt/",
+    "explains": [
+      "v. 灌输"
+    ]
+  },
+  "implausible": {
+    "word": "implausible",
+    "phonetic": "/ɪm'plɔːzɪb(ə)l/",
+    "explains": [
+      "adj. 难信的, 似乎不合情理的"
+    ]
+  },
+  "implement": {
+    "word": "implement",
+    "phonetic": "/ˈɪmplɪment/",
+    "explains": [
+      "v. 实施"
+    ]
+  },
+  "implementation": {
+    "word": "implementation",
+    "phonetic": "/ˌimplimen'teiʃən/",
+    "explains": [
+      "n.  执行； 贯彻"
+    ]
+  },
+  "implicate": {
+    "word": "implicate",
+    "phonetic": "/'ɪmplɪkeɪt/",
+    "explains": [
+      "v. 含意, 暗示"
+    ]
+  },
+  "implication": {
+    "word": "implication",
+    "phonetic": "/ˌɪmplɪˈkeɪʃ(ə)n/",
+    "explains": [
+      "n. 含义"
+    ]
+  },
+  "implicit": {
+    "word": "implicit",
+    "phonetic": "/ɪm'plɪsɪt/",
+    "explains": [
+      "adj. 含蓄的；暗示的；盲从的"
+    ]
+  },
+  "implicitly": {
+    "word": "implicitly",
+    "phonetic": "/ɪm'plɪsɪtlɪ/",
+    "explains": [
+      "adv. 含蓄地,  暗中地"
+    ]
+  },
+  "implode": {
+    "word": "implode",
+    "phonetic": "/ɪm'pləʊd/",
+    "explains": [
+      "v. 向内破裂, 爆炸"
+    ]
+  },
+  "implore": {
+    "word": "implore",
+    "phonetic": "/ɪm'plɔː/",
+    "explains": [
+      "v. 乞求，恳求，哀求"
+    ]
+  },
+  "implosion": {
+    "word": "implosion",
+    "phonetic": "/ɪm'pləʊʒən/",
+    "explains": [
+      "n. (音声)内破裂, 闭塞"
+    ]
+  },
+  "imply": {
+    "word": "imply",
+    "phonetic": "/ɪmˈplaɪ/",
+    "explains": [
+      "v. 暗示"
+    ]
+  },
+  "impolite": {
+    "word": "impolite",
+    "phonetic": "/ɪmpə'laɪt/",
+    "explains": [
+      "adj. 无礼的；粗鲁的"
+    ]
+  },
+  "impolitic": {
+    "word": "impolitic",
+    "phonetic": "/ɪm'pɒlɪtɪk/",
+    "explains": [
+      "adj. 失策的, 不得当的, 不审慎的, 没见识的"
+    ]
+  },
+  "imponderable": {
+    "word": "imponderable",
+    "phonetic": "/ɪm'pɒnd(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 不可估计的"
+    ]
+  },
+  "import": {
+    "word": "import",
+    "phonetic": "/ɪmˈpɔːt; ˈɪmpɔːt/",
+    "explains": [
+      "v. 进口　n. 进口"
+    ]
+  },
+  "importance": {
+    "word": "importance",
+    "phonetic": "/ɪm'pɔːt(ə)ns/",
+    "explains": [
+      "n. 重要；重要性"
     ]
   },
   "important": {
@@ -62,11 +1490,277 @@
       "adj. 重要的；重大的；地位高的"
     ]
   },
+  "importation": {
+    "word": "importation",
+    "phonetic": "/,ɪmpɔː'teɪʃən/",
+    "explains": [
+      "n. 进口, 输入品"
+    ]
+  },
+  "importer": {
+    "word": "importer",
+    "phonetic": "/ɪm'pɔrtɚ/",
+    "explains": [
+      "n. 输入者, 进口商"
+    ]
+  },
+  "importunate": {
+    "word": "importunate",
+    "phonetic": "/ɪm'pɔːtjʊnət/",
+    "explains": [
+      "adj. 强求的，纠缠不休的"
+    ]
+  },
+  "importune": {
+    "word": "importune",
+    "phonetic": "/,ɪmpɔː'tjuːn/",
+    "explains": [
+      "v. 强求"
+    ]
+  },
+  "impose": {
+    "word": "impose",
+    "phonetic": "/ɪmˈpəʊz/",
+    "explains": [
+      "v. 强加"
+    ]
+  },
+  "imposing": {
+    "word": "imposing",
+    "phonetic": "/ɪm'pəʊzɪŋ/",
+    "explains": [
+      "adj. 壮观的，气势雄伟的"
+    ]
+  },
+  "imposition": {
+    "word": "imposition",
+    "phonetic": "/ɪmpə'zɪʃ(ə)n/",
+    "explains": [
+      "n. 强迫接受"
+    ]
+  },
+  "impossibility": {
+    "word": "impossibility",
+    "phonetic": "/ɪm,pɒsɪ'bɪlɪtɪ/",
+    "explains": [
+      "n. 不可能；不可能的事"
+    ]
+  },
   "impossible": {
     "word": "impossible",
     "phonetic": "/ɪmˈpɒsəbl/",
     "explains": [
       "adj. 不可能的；做不到的"
+    ]
+  },
+  "impostor": {
+    "word": "impostor",
+    "phonetic": "/ɪm'pɒstə/",
+    "explains": [
+      "n. 冒名顶替者"
+    ]
+  },
+  "imposture": {
+    "word": "imposture",
+    "phonetic": "/ɪm'pɒstʃə/",
+    "explains": [
+      "n. 欺诈, 冒牌"
+    ]
+  },
+  "impotence": {
+    "word": "impotence",
+    "phonetic": "/'ɪmpətəns/",
+    "explains": [
+      "n. [泌尿][中医] 阳萎；虚弱；无效（等于impotency）"
+    ]
+  },
+  "impotent": {
+    "word": "impotent",
+    "phonetic": "/'ɪmpət(ə)nt/",
+    "explains": [
+      "adj. 无力的；无效的；虚弱的；阳萎的"
+    ]
+  },
+  "impound": {
+    "word": "impound",
+    "phonetic": "/ɪm'pəʊnd/",
+    "explains": [
+      "v. 关在栏中, 拘留, 扣押, 没收"
+    ]
+  },
+  "impoverish": {
+    "word": "impoverish",
+    "phonetic": "/ɪm'pɒv(ə)rɪʃ/",
+    "explains": [
+      "v. 使贫穷；使枯竭"
+    ]
+  },
+  "impoverished": {
+    "word": "impoverished",
+    "phonetic": "/ɪm'pɒvərɪʃt/",
+    "explains": [
+      "adj. 穷困的；用尽了的，无创造性的；v. 使贫困（impoverish的过去分词）"
+    ]
+  },
+  "impractical": {
+    "word": "impractical",
+    "phonetic": "/ɪm'præktɪk(ə)l/",
+    "explains": [
+      "adj. 不切实际的,不实用的"
+    ]
+  },
+  "imprecate": {
+    "word": "imprecate",
+    "phonetic": "/'ɪmprɪkeɪt/",
+    "explains": [
+      "v. 祈求, 诅咒"
+    ]
+  },
+  "imprecation": {
+    "word": "imprecation",
+    "phonetic": "/ɪmprɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 祈求, 诅咒"
+    ]
+  },
+  "imprecise": {
+    "word": "imprecise",
+    "phonetic": "/ɪmprɪ'saɪs/",
+    "explains": [
+      "adj. 不精确的"
+    ]
+  },
+  "impregnable": {
+    "word": "impregnable",
+    "phonetic": "/ɪm'pregnəb(ə)l/",
+    "explains": [
+      "adj. 无法攻取的；不受影响的；要塞坚固的；不可受孕的"
+    ]
+  },
+  "impregnate": {
+    "word": "impregnate",
+    "phonetic": "/'ɪmpregneɪt/",
+    "explains": [
+      "v. 使怀孕, 使受精 a怀孕的, 充满的"
+    ]
+  },
+  "impresario": {
+    "word": "impresario",
+    "phonetic": "/,ɪmprɪ'sɑːrɪəʊ/",
+    "explains": [
+      "n. (剧团)经理, 乐队指挥, 演出者, 舞台监督"
+    ]
+  },
+  "impress": {
+    "word": "impress",
+    "phonetic": "/ɪmˈpres/",
+    "explains": [
+      "v. 给……深刻印象"
+    ]
+  },
+  "impression": {
+    "word": "impression",
+    "phonetic": "/ɪmˈpreʃ(ə)n/",
+    "explains": [
+      "n. 印象"
+    ]
+  },
+  "impressionable": {
+    "word": "impressionable",
+    "phonetic": "/im'preʃənəbl/",
+    "explains": [
+      "adj.  容易受感动的； 敏感的"
+    ]
+  },
+  "impressionism": {
+    "word": "impressionism",
+    "phonetic": "/ɪm'preʃənɪzəm/",
+    "explains": [
+      "n. 印象派, 印象主义"
+    ]
+  },
+  "impressionist": {
+    "word": "impressionist",
+    "phonetic": "/ɪm'preʃənɪst/",
+    "explains": [
+      "n. 印象主义者"
+    ]
+  },
+  "impressionistic": {
+    "word": "impressionistic",
+    "phonetic": "/ɪm,preʃə'nɪstɪk/",
+    "explains": [
+      "adj. 印象派的,给人深刻印象的"
+    ]
+  },
+  "impressive": {
+    "word": "impressive",
+    "phonetic": "/ɪmˈpresɪv/",
+    "explains": [
+      "adj. 令人印象深刻的"
+    ]
+  },
+  "impressively": {
+    "word": "impressively",
+    "phonetic": "",
+    "explains": [
+      "adj. 令人难忘地,  令人印象深刻地"
+    ]
+  },
+  "imprimante": {
+    "word": "imprimante",
+    "phonetic": "",
+    "explains": [
+      "n.f. 打印机"
+    ]
+  },
+  "imprint": {
+    "word": "imprint",
+    "phonetic": "/ɪm'prɪnt/",
+    "explains": [
+      "v. 留下烙印"
+    ]
+  },
+  "imprison": {
+    "word": "imprison",
+    "phonetic": "/ɪm'prɪz(ə)n/",
+    "explains": [
+      "v. 关押，监禁；限制"
+    ]
+  },
+  "imprisonment": {
+    "word": "imprisonment",
+    "phonetic": "/ɪm'prɪz(ə)nm(ə)nt/",
+    "explains": [
+      "n. 关押,监禁"
+    ]
+  },
+  "improbable": {
+    "word": "improbable",
+    "phonetic": "/ɪm'prɒbəb(ə)l/",
+    "explains": [
+      "adj. 不大可能的, 不像会发生的, 似不可信的"
+    ]
+  },
+  "impromptu": {
+    "word": "impromptu",
+    "phonetic": "/ɪm'prɒm(p)tjuː/",
+    "explains": [
+      "a&ad. 无准备的(地)；即兴的(地)"
+    ]
+  },
+  "improper": {
+    "word": "improper",
+    "phonetic": "/ɪm'prɒpə/",
+    "explains": [
+      "adj. 不适当的；不合理的"
+    ]
+  },
+  "impropriety": {
+    "word": "impropriety",
+    "phonetic": "/,ɪmprə'praɪətɪ/",
+    "explains": [
+      "n. 不适当；不正确；用词错误；[审计] 不正当行为"
     ]
   },
   "improve": {
@@ -76,11 +1770,599 @@
       "v. 改善；增进；提高；改进"
     ]
   },
+  "improvement": {
+    "word": "improvement",
+    "phonetic": "/ɪm'pruːvm(ə)nt/",
+    "explains": [
+      "n. 改进，改善；改进之处"
+    ]
+  },
+  "improvident": {
+    "word": "improvident",
+    "phonetic": "/ɪm'prɒvɪd(ə)nt/",
+    "explains": [
+      "adj. 无远见的, 浪费的"
+    ]
+  },
+  "improvisation": {
+    "word": "improvisation",
+    "phonetic": "/ɪmprəvaɪ'zeɪʃn/",
+    "explains": [
+      "n. 即席创作"
+    ]
+  },
+  "improvise": {
+    "word": "improvise",
+    "phonetic": "/'ɪmprəvaɪz/",
+    "explains": [
+      "v. 即兴创作"
+    ]
+  },
+  "imprudent": {
+    "word": "imprudent",
+    "phonetic": "/ɪm'pruːd(ə)nt/",
+    "explains": [
+      "adj. 轻率的，鲁莽的；不小心的"
+    ]
+  },
+  "impudent": {
+    "word": "impudent",
+    "phonetic": "/'ɪmpjʊd(ə)nt/",
+    "explains": [
+      "adj. 放肆无礼的, ,厚颜无耻的"
+    ]
+  },
+  "impuesto": {
+    "word": "impuesto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 税"
+    ]
+  },
+  "impugn": {
+    "word": "impugn",
+    "phonetic": "/ɪm'pjuːn/",
+    "explains": [
+      "v. 指责，非难；抨击；反驳；对…表示怀疑"
+    ]
+  },
+  "impulse": {
+    "word": "impulse",
+    "phonetic": "/'ɪmpʌls/",
+    "explains": [
+      "n. 冲动；推动"
+    ]
+  },
+  "impulsive": {
+    "word": "impulsive",
+    "phonetic": "/im'pʌlsiv/",
+    "explains": [
+      "adj.  冲动的； 推动的"
+    ]
+  },
+  "impunity": {
+    "word": "impunity",
+    "phonetic": "/ɪm'pjuːnɪtɪ/",
+    "explains": [
+      "n. 不受惩罚；无患；[法] 免罚"
+    ]
+  },
+  "impure": {
+    "word": "impure",
+    "phonetic": "/ɪm'pjʊə; ɪm'pjɔː/",
+    "explains": [
+      "adj. 不纯的；肮脏的；道德败坏的"
+    ]
+  },
+  "impurity": {
+    "word": "impurity",
+    "phonetic": "/ɪm'pjʊərɪtɪ/",
+    "explains": [
+      "n. 杂质；不纯"
+    ]
+  },
+  "imputation": {
+    "word": "imputation",
+    "phonetic": "/,ɪmpjuː'teɪʃən/",
+    "explains": [
+      "n. 归罪, 归咎, 归因, 非难, 诋毁, 罪名, 污名"
+    ]
+  },
+  "impute": {
+    "word": "impute",
+    "phonetic": "/ɪm'pjuːt/",
+    "explains": [
+      "v. 归罪于，归咎于；嫁祸于"
+    ]
+  },
   "in": {
     "word": "in",
     "phonetic": "/ɪn/",
     "explains": [
       "prep. 在…… 内；进；在…… 期间"
+    ]
+  },
+  "in-memory": {
+    "word": "in-memory",
+    "phonetic": "",
+    "explains": [
+      "内存中的"
+    ]
+  },
+  "inability": {
+    "word": "inability",
+    "phonetic": "/ɪnə'bɪlɪtɪ/",
+    "explains": [
+      "n. 无能, 无力"
+    ]
+  },
+  "inaccessible": {
+    "word": "inaccessible",
+    "phonetic": "/ɪnək'sesɪb(ə)l/",
+    "explains": [
+      "adj. 达不到的，难接近的"
+    ]
+  },
+  "inaccurate": {
+    "word": "inaccurate",
+    "phonetic": "/ɪn'ækjʊrət/",
+    "explains": [
+      "adj. 不精密的，不准确的"
+    ]
+  },
+  "inaction": {
+    "word": "inaction",
+    "phonetic": "/ɪn'ækʃ(ə)n/",
+    "explains": [
+      "n. 不活动；迟钝"
+    ]
+  },
+  "inactivate": {
+    "word": "inactivate",
+    "phonetic": "/ɪn'æktɪveɪt/",
+    "explains": [
+      "v. 使不活泼, 阻止活动"
+    ]
+  },
+  "inactive": {
+    "word": "inactive",
+    "phonetic": "/ɪn'æktɪv/",
+    "explains": [
+      "adj. 不活动的, 怠惰的"
+    ]
+  },
+  "inactivity": {
+    "word": "inactivity",
+    "phonetic": "/,ɪnæk'tɪvɪtɪ/",
+    "explains": [
+      "n. 不活动, 迟钝"
+    ]
+  },
+  "inadequacy": {
+    "word": "inadequacy",
+    "phonetic": "/ɪn'ædɪkwəsɪ/",
+    "explains": [
+      "n. 不充分"
+    ]
+  },
+  "inadequate": {
+    "word": "inadequate",
+    "phonetic": "/ɪn'ædɪkwət/",
+    "explains": [
+      "adj. 不充足的，不适当的"
+    ]
+  },
+  "inadequately": {
+    "word": "inadequately",
+    "phonetic": "",
+    "explains": [
+      "adv. 不够地,  不够好"
+    ]
+  },
+  "inadvertent": {
+    "word": "inadvertent",
+    "phonetic": "/,ɪnəd'vɜːt(ə)nt/",
+    "explains": [
+      "adj. 疏忽的；不注意的（副词inadvertently）；无意中做的"
+    ]
+  },
+  "inadvertently": {
+    "word": "inadvertently",
+    "phonetic": "/,ɪnəd'vɜːt(ə)ntlɪ/",
+    "explains": [
+      "adv. 非故意地,不注意地"
+    ]
+  },
+  "inalienable": {
+    "word": "inalienable",
+    "phonetic": "/ɪn'eɪlɪənəb(ə)l/",
+    "explains": [
+      "adj. 不可分割的；不可剥夺的；不能让与的"
+    ]
+  },
+  "inalterable": {
+    "word": "inalterable",
+    "phonetic": "/ɪn'ɔːlt(ə)rəb(ə)l; -'ɒl-/",
+    "explains": [
+      "adj. 不变的；不能变更的"
+    ]
+  },
+  "inane": {
+    "word": "inane",
+    "phonetic": "/ɪ'neɪn/",
+    "explains": [
+      "adj. 空洞的"
+    ]
+  },
+  "inanimate": {
+    "word": "inanimate",
+    "phonetic": "/ɪn'ænɪmət/",
+    "explains": [
+      "adj. 无生命的"
+    ]
+  },
+  "inanition": {
+    "word": "inanition",
+    "phonetic": "/,ɪnə'nɪʃ(ə)n/",
+    "explains": [
+      "n. 空洞, 无意义, 浅薄, 愚蠢"
+    ]
+  },
+  "inanity": {
+    "word": "inanity",
+    "phonetic": "/ɪ'nænətɪ/",
+    "explains": [
+      "n. 空虚, 愚蠢"
+    ]
+  },
+  "inappropriate": {
+    "word": "inappropriate",
+    "phonetic": "/ɪnə'prəʊprɪət/",
+    "explains": [
+      "adj. 不适当的, 不合宜的"
+    ]
+  },
+  "inapt": {
+    "word": "inapt",
+    "phonetic": "/ɪn'æpt/",
+    "explains": [
+      "adj. 不适当的，不合适的"
+    ]
+  },
+  "inarticulate": {
+    "word": "inarticulate",
+    "phonetic": "/,ɪnɑː'tɪkjʊlət/",
+    "explains": [
+      "adj. 口齿不清的；说不出话的；[无脊椎] 无关节的"
+    ]
+  },
+  "inasmuch": {
+    "word": "inasmuch",
+    "phonetic": "/ɪnəz'mʌtʃ/",
+    "explains": [
+      "adv. 因为，由于"
+    ]
+  },
+  "inaugural": {
+    "word": "inaugural",
+    "phonetic": "/ɪ'nɔːgjʊr(ə)l/",
+    "explains": [
+      "adj. 开始的；开幕的；就任的，就职的；n. 就职演讲；开幕辞"
+    ]
+  },
+  "inaugurate": {
+    "word": "inaugurate",
+    "phonetic": "/ɪ'nɔːgjʊreɪt/",
+    "explains": [
+      "v. 使就职；开始"
+    ]
+  },
+  "inauguration": {
+    "word": "inauguration",
+    "phonetic": "",
+    "explains": [
+      "n.f. 落成典礼"
+    ]
+  },
+  "inborn": {
+    "word": "inborn",
+    "phonetic": "/'ɪnbɔːn; ɪn'bɔːn/",
+    "explains": [
+      "adj. 天生的,生来的"
+    ]
+  },
+  "inbound": {
+    "word": "inbound",
+    "phonetic": "/'ɪnbaʊnd/",
+    "explains": [
+      "adj. 内地的, 归航的"
+    ]
+  },
+  "inbuilt": {
+    "word": "inbuilt",
+    "phonetic": "/'ɪnbɪlt/",
+    "explains": [
+      "adj. 内置的；内藏的；嵌入的"
+    ]
+  },
+  "inca": {
+    "word": "inca",
+    "phonetic": "/'ɪŋkə/",
+    "explains": [
+      "n. 印加人(古代秘鲁土著人)"
+    ]
+  },
+  "incandescent": {
+    "word": "incandescent",
+    "phonetic": "/ɪnkæn'des(ə)nt/",
+    "explains": [
+      "adj. 遇热发光的, 白炽的"
+    ]
+  },
+  "incantation": {
+    "word": "incantation",
+    "phonetic": "/ɪnkæn'teɪʃ(ə)n/",
+    "explains": [
+      "n. 咒语"
+    ]
+  },
+  "incapable": {
+    "word": "incapable",
+    "phonetic": "/ɪn'keɪpəb(ə)l/",
+    "explains": [
+      "adj. 无能力的；无资格的"
+    ]
+  },
+  "incapacitate": {
+    "word": "incapacitate",
+    "phonetic": "/,ɪnkə'pæsɪteɪt/",
+    "explains": [
+      "v. 使无能力；使不能；使不适于"
+    ]
+  },
+  "incapacitated": {
+    "word": "incapacitated",
+    "phonetic": "",
+    "explains": [
+      "vt. 使不能"
+    ]
+  },
+  "incapacity": {
+    "word": "incapacity",
+    "phonetic": "/ɪnkə'pæsɪtɪ/",
+    "explains": [
+      "n. 无能力"
+    ]
+  },
+  "incarnate": {
+    "word": "incarnate",
+    "phonetic": "/ɪn'kɑːnət/",
+    "explains": [
+      "v. 体现, 使具体化, 使成化身"
+    ]
+  },
+  "incarnation": {
+    "word": "incarnation",
+    "phonetic": "/ɪnkɑː'neɪʃ(ə)n/",
+    "explains": [
+      "n. 赋予肉体, 具人形, 化身"
+    ]
+  },
+  "incendiary": {
+    "word": "incendiary",
+    "phonetic": "/ɪn'sendɪərɪ/",
+    "explains": [
+      "adj. 纵火的, 煽动的"
+    ]
+  },
+  "incendie": {
+    "word": "incendie",
+    "phonetic": "",
+    "explains": [
+      "n.m. 火灾"
+    ]
+  },
+  "incendio": {
+    "word": "incendio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 火灾"
+    ]
+  },
+  "incense": {
+    "word": "incense",
+    "phonetic": "/'ɪnsens/",
+    "explains": [
+      "n. 香，熏香；香气"
+    ]
+  },
+  "incensed": {
+    "word": "incensed",
+    "phonetic": "",
+    "explains": [
+      "adj. 愤怒的，激怒了的；v. 激怒（incense的过去分词）"
+    ]
+  },
+  "incentive": {
+    "word": "incentive",
+    "phonetic": "/ɪn'sentɪv/",
+    "explains": [
+      "n. 动机；刺激；adj. 激励的；刺激的"
+    ]
+  },
+  "inception": {
+    "word": "inception",
+    "phonetic": "/ɪn'sepʃ(ə)n/",
+    "explains": [
+      "n. 起初, 获得学位"
+    ]
+  },
+  "incertitude": {
+    "word": "incertitude",
+    "phonetic": "/ɪn'sɜːtɪtjuːd/",
+    "explains": [
+      "n. 不肯定, 不确定, 无把握"
+    ]
+  },
+  "incessant": {
+    "word": "incessant",
+    "phonetic": "/ɪn'ses(ə)nt/",
+    "explains": [
+      "adj. 不断的,  无尽的"
+    ]
+  },
+  "incessantly": {
+    "word": "incessantly",
+    "phonetic": "/ɪn'sesntlɪ/",
+    "explains": [
+      "adv. 不间断地"
+    ]
+  },
+  "incest": {
+    "word": "incest",
+    "phonetic": "/'ɪnsest/",
+    "explains": [
+      "n. 乱伦；近亲通婚"
+    ]
+  },
+  "inch": {
+    "word": "inch",
+    "phonetic": "/ɪn(t)ʃ/",
+    "explains": [
+      "n. 英寸"
+    ]
+  },
+  "inchoate": {
+    "word": "inchoate",
+    "phonetic": "/ɪn'kəʊeɪt; 'ɪnk-; -ət/",
+    "explains": [
+      "adj. 早期的；刚开始的；未充分发展的；vt. 开始；vi. 开始"
+    ]
+  },
+  "inchworm": {
+    "word": "inchworm",
+    "phonetic": "/'ɪn(t)ʃwɜːm/",
+    "explains": [
+      "n. [昆] 尺蠖"
+    ]
+  },
+  "incidence": {
+    "word": "incidence",
+    "phonetic": "/'ɪnsɪd(ə)ns/",
+    "explains": [
+      "n. 发生率，影响；入射"
+    ]
+  },
+  "incident": {
+    "word": "incident",
+    "phonetic": "/ˈɪnsɪd(ə)nt/",
+    "explains": [
+      "n. 事件"
+    ]
+  },
+  "incidental": {
+    "word": "incidental",
+    "phonetic": "/ɪnsɪ'dent(ə)l/",
+    "explains": [
+      "adj. 偶然的；附带的"
+    ]
+  },
+  "incidentally": {
+    "word": "incidentally",
+    "phonetic": "/ɪnsɪ'dent(ə)lɪ/",
+    "explains": [
+      "adv. 附带地；顺便提及"
+    ]
+  },
+  "incinerate": {
+    "word": "incinerate",
+    "phonetic": "/ɪn'sɪnəreɪt/",
+    "explains": [
+      "v. 把烧成灰,烧弃"
+    ]
+  },
+  "incineration": {
+    "word": "incineration",
+    "phonetic": "/ɪn,sɪnə'reɪʃn/",
+    "explains": [
+      "n. 焚化；烧成灰"
+    ]
+  },
+  "incipience": {
+    "word": "incipience",
+    "phonetic": "",
+    "explains": [
+      "n. 起初, 发端"
+    ]
+  },
+  "incipient": {
+    "word": "incipient",
+    "phonetic": "/ɪn'sɪpɪənt/",
+    "explains": [
+      "adj. 初期的,初始的"
+    ]
+  },
+  "incise": {
+    "word": "incise",
+    "phonetic": "/ɪn'saɪz/",
+    "explains": [
+      "v. 切入, 切割"
+    ]
+  },
+  "incision": {
+    "word": "incision",
+    "phonetic": "/ɪn'sɪʒ(ə)n/",
+    "explains": [
+      "n. 切割, 切开, 切口"
+    ]
+  },
+  "incisive": {
+    "word": "incisive",
+    "phonetic": "/ɪn'saɪsɪv/",
+    "explains": [
+      "adj. 深刻的；敏锐的；锋利的"
+    ]
+  },
+  "incisor": {
+    "word": "incisor",
+    "phonetic": "/ɪn'saɪzə/",
+    "explains": [
+      "n. 门牙"
+    ]
+  },
+  "incite": {
+    "word": "incite",
+    "phonetic": "/ɪn'saɪt/",
+    "explains": [
+      "v. 激励；煽动"
+    ]
+  },
+  "incivility": {
+    "word": "incivility",
+    "phonetic": "/ɪnsɪ'vɪlɪtɪ/",
+    "explains": [
+      "n. 粗野"
+    ]
+  },
+  "inclement": {
+    "word": "inclement",
+    "phonetic": "/ɪn'klem(ə)nt/",
+    "explains": [
+      "adj. 险恶的；气候严酷的；狂风暴雨的"
+    ]
+  },
+  "inclination": {
+    "word": "inclination",
+    "phonetic": "/ɪnklɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 倾斜，点头；斜坡"
+    ]
+  },
+  "incline": {
+    "word": "incline",
+    "phonetic": "/ɪnˈklaɪn/",
+    "explains": [
+      "v. 倾斜"
     ]
   },
   "include": {
@@ -90,11 +2372,592 @@
       "v. 包含；包括；计入"
     ]
   },
+  "including": {
+    "word": "including",
+    "phonetic": "/in'kluːdiŋ/",
+    "explains": [
+      "prep.  包括"
+    ]
+  },
+  "incluir": {
+    "word": "incluir",
+    "phonetic": "",
+    "explains": [
+      "v. 包括"
+    ]
+  },
+  "inclusion": {
+    "word": "inclusion",
+    "phonetic": "/ɪn'kluːʒ(ə)n/",
+    "explains": [
+      "n. 包含"
+    ]
+  },
+  "inclusive": {
+    "word": "inclusive",
+    "phonetic": "/ɪn'kluːsɪv/",
+    "explains": [
+      "adj. 包括的"
+    ]
+  },
+  "incognito": {
+    "word": "incognito",
+    "phonetic": "/,ɪnkɒg'niːtəʊ; ɪn'kɒgnɪtəʊ/",
+    "explains": [
+      "adj. 改名的；微行的；隐姓埋名的；adv. 隐姓埋名地；n. 匿名者；微行者"
+    ]
+  },
+  "incoherent": {
+    "word": "incoherent",
+    "phonetic": "/ɪnkə(ʊ)'hɪər(ə)nt/",
+    "explains": [
+      "adj. 不连贯的, 语无伦次的"
+    ]
+  },
+  "income": {
+    "word": "income",
+    "phonetic": "/ˈɪnkʌm/",
+    "explains": [
+      "n. 收入"
+    ]
+  },
+  "incoming": {
+    "word": "incoming",
+    "phonetic": "/'ɪnkʌmɪŋ/",
+    "explains": [
+      "adj. 引入的"
+    ]
+  },
+  "incommensurate": {
+    "word": "incommensurate",
+    "phonetic": "/,ɪnkə'menʃ(ə)rət; -sjə-/",
+    "explains": [
+      "adj. 不相称的, 不适应的"
+    ]
+  },
+  "incommode": {
+    "word": "incommode",
+    "phonetic": "/ɪnkə'məʊd/",
+    "explains": [
+      "v. 妨碍"
+    ]
+  },
+  "incommodious": {
+    "word": "incommodious",
+    "phonetic": "/,ɪnkə'məʊdɪəs/",
+    "explains": [
+      "adj. 不便的；狭窄的"
+    ]
+  },
+  "incommunicado": {
+    "word": "incommunicado",
+    "phonetic": "/,ɪnkəmjuːnɪ'kɑːdəʊ/",
+    "explains": [
+      "adj. 禁止通信的, 被单独囚禁的"
+    ]
+  },
+  "incommunicative": {
+    "word": "incommunicative",
+    "phonetic": "/ɪnkə'mjuːnɪkətɪv/",
+    "explains": [
+      "adj. 不爱说话的, 沉默寡言的"
+    ]
+  },
+  "incomparable": {
+    "word": "incomparable",
+    "phonetic": "/ɪn'kɒmp(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无比的；无可匹敌的；不能比较的；n. 盖世无双的人"
+    ]
+  },
+  "incompatibility": {
+    "word": "incompatibility",
+    "phonetic": "/'ɪnkəm,pætə'bɪlətɪ/",
+    "explains": [
+      "n. 不两立, 不相容"
+    ]
+  },
+  "incompatible": {
+    "word": "incompatible",
+    "phonetic": "/ɪnkəm'pætɪb(ə)l/",
+    "explains": [
+      "adj. 不相容的"
+    ]
+  },
+  "incompetent": {
+    "word": "incompetent",
+    "phonetic": "/ɪn'kɒmpɪt(ə)nt/",
+    "explains": [
+      "adj. 不合格的, 不胜任的"
+    ]
+  },
+  "incomplete": {
+    "word": "incomplete",
+    "phonetic": "/ɪnkəm'pliːt/",
+    "explains": [
+      "adj. 不完全的，未完成的"
+    ]
+  },
+  "incompletely": {
+    "word": "incompletely",
+    "phonetic": "",
+    "explains": [
+      "adv. 不完全地"
+    ]
+  },
+  "incomprehensible": {
+    "word": "incomprehensible",
+    "phonetic": "/,ɪnkɒmprɪ'hensɪb(ə)l/",
+    "explains": [
+      "adj. 费解的,不可思议的"
+    ]
+  },
+  "inconceivable": {
+    "word": "inconceivable",
+    "phonetic": "/ɪnkən'siːvəb(ə)l/",
+    "explains": [
+      "adj. 不能想像的, 难以相信的"
+    ]
+  },
+  "inconclusive": {
+    "word": "inconclusive",
+    "phonetic": "/ɪnkən'kluːsɪv/",
+    "explains": [
+      "adj. 非决定性的,不确定的"
+    ]
+  },
+  "incongruity": {
+    "word": "incongruity",
+    "phonetic": "/,ɪnkɒŋ'gruːɪtɪ/",
+    "explains": [
+      "n. 不调和的, 不适宜的"
+    ]
+  },
+  "incongruous": {
+    "word": "incongruous",
+    "phonetic": "/ɪn'kɒŋgrʊəs/",
+    "explains": [
+      "adj. 不协调的,不一致的"
+    ]
+  },
+  "inconnu": {
+    "word": "inconnu",
+    "phonetic": "",
+    "explains": [
+      "adj. 未知的；n.m. 陌生人"
+    ]
+  },
+  "inconsequential": {
+    "word": "inconsequential",
+    "phonetic": "/,ɪnkɒnsɪ'kwenʃ(ə)l/",
+    "explains": [
+      "adj. 不重要的；不合理的；不合逻辑的"
+    ]
+  },
+  "inconsiderable": {
+    "word": "inconsiderable",
+    "phonetic": "/ɪnkən'sɪd(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 不足取的；不值得考虑的；琐屑的"
+    ]
+  },
+  "inconsiderate": {
+    "word": "inconsiderate",
+    "phonetic": "/ˌinkən'sidərət/",
+    "explains": [
+      "adj.  轻率的； 不顾及别人的"
+    ]
+  },
+  "inconsistency": {
+    "word": "inconsistency",
+    "phonetic": "/ɪnkən'sɪst(ə)nsɪ/",
+    "explains": [
+      "n. 矛盾"
+    ]
+  },
+  "inconsistent": {
+    "word": "inconsistent",
+    "phonetic": "/ɪnkən'sɪst(ə)nt/",
+    "explains": [
+      "adj. 不一致的；前后矛盾的"
+    ]
+  },
+  "inconsolable": {
+    "word": "inconsolable",
+    "phonetic": "/ɪnkən'səʊləb(ə)l/",
+    "explains": [
+      "adj. 无法安慰的, 极为伤心的"
+    ]
+  },
+  "inconspicuous": {
+    "word": "inconspicuous",
+    "phonetic": "/ɪnkən'spɪkjʊəs/",
+    "explains": [
+      "adj. 不显眼的,不引人注意的"
+    ]
+  },
+  "inconspicuously": {
+    "word": "inconspicuously",
+    "phonetic": "",
+    "explains": [
+      "adv. 难以觉察地, 不显著地"
+    ]
+  },
+  "inconstant": {
+    "word": "inconstant",
+    "phonetic": "/ɪn'kɒnst(ə)nt/",
+    "explains": [
+      "adj. 变化无常的"
+    ]
+  },
+  "incontestable": {
+    "word": "incontestable",
+    "phonetic": "/ɪnkən'testəb(ə)l/",
+    "explains": [
+      "adj. 无可争辩的, 无可置疑的, 不可否认的"
+    ]
+  },
+  "incontinent": {
+    "word": "incontinent",
+    "phonetic": "/ɪn'kɒntɪnənt/",
+    "explains": [
+      "adj. 不能自制的, 无节制的, 荒淫的, [医]失禁的"
+    ]
+  },
+  "incontrovertible": {
+    "word": "incontrovertible",
+    "phonetic": "/,ɪnkɒntrə'vɜːtɪb(ə)l/",
+    "explains": [
+      "adj. 无可争议的；无疑的；明白的"
+    ]
+  },
+  "inconvenience": {
+    "word": "inconvenience",
+    "phonetic": "/ɪnkən'viːnɪəns/",
+    "explains": [
+      "n. 不便；麻烦；v. 麻烦；打扰"
+    ]
+  },
+  "inconvenient": {
+    "word": "inconvenient",
+    "phonetic": "/ɪnkən'viːnɪənt/",
+    "explains": [
+      "adj. 不便的,打扰的"
+    ]
+  },
+  "incorporate": {
+    "word": "incorporate",
+    "phonetic": "/ɪn'kɔːpəreɪt/",
+    "explains": [
+      "v. 结合，合并，收编"
+    ]
+  },
+  "incorporation": {
+    "word": "incorporation",
+    "phonetic": "/ɪn,kɔːpə'reɪʃən/",
+    "explains": [
+      "n. 合并；组建公司"
+    ]
+  },
+  "incorporeal": {
+    "word": "incorporeal",
+    "phonetic": "/,ɪnkɔː'pɔːrɪəl/",
+    "explains": [
+      "adj. 非物质的, 无实体的, 灵魂的, 无形体的"
+    ]
+  },
+  "incorrect": {
+    "word": "incorrect",
+    "phonetic": "/ˌɪnkəˈrekt/",
+    "explains": [
+      "adj. 不正确的"
+    ]
+  },
+  "incorrectly": {
+    "word": "incorrectly",
+    "phonetic": "/ˌɪnkə'rektlɪ/",
+    "explains": [
+      "adv. 错误地,不适当地"
+    ]
+  },
+  "incorrigible": {
+    "word": "incorrigible",
+    "phonetic": "/ɪn'kɒrɪdʒɪb(ə)l/",
+    "explains": [
+      "adj. 不可救药的；积习难改的；n. 不可救药的人"
+    ]
+  },
   "increase": {
     "word": "increase",
     "phonetic": "/ˈɪŋkriːs/",
     "explains": [
       "v./n. 增加；增大；增多"
+    ]
+  },
+  "increasingly": {
+    "word": "increasingly",
+    "phonetic": "/ɪn'kriːsɪŋlɪ/",
+    "explains": [
+      "adv. 日益，越来越多地"
+    ]
+  },
+  "incredible": {
+    "word": "incredible",
+    "phonetic": "/ɪnˈkredɪb(ə)l/",
+    "explains": [
+      "adj. 难以置信的"
+    ]
+  },
+  "incredibly": {
+    "word": "incredibly",
+    "phonetic": "/ɪn'kredɪblɪ/",
+    "explains": [
+      "adv. 难以置信地；非常地"
+    ]
+  },
+  "incredulous": {
+    "word": "incredulous",
+    "phonetic": "/ɪn'kredjʊləs/",
+    "explains": [
+      "adj. 怀疑的；不轻信的"
+    ]
+  },
+  "increment": {
+    "word": "increment",
+    "phonetic": "/'inkrimənt/",
+    "explains": [
+      "n.  增加； 增值， 增价； 提薪， 增加工资"
+    ]
+  },
+  "incriminate": {
+    "word": "incriminate",
+    "phonetic": "/ɪn'krɪmɪneɪt/",
+    "explains": [
+      "v. 控告；暗示有罪"
+    ]
+  },
+  "incrustation": {
+    "word": "incrustation",
+    "phonetic": "/,ɪnkrʌs'teɪʃən/",
+    "explains": [
+      "n. 结壳, 用覆盖物, 镶嵌, 硬壳"
+    ]
+  },
+  "incubate": {
+    "word": "incubate",
+    "phonetic": "/'ɪŋkjʊbeɪt/",
+    "explains": [
+      "v. 孵卵"
+    ]
+  },
+  "incubation": {
+    "word": "incubation",
+    "phonetic": "/ɪŋkjʊ'beɪʃ(ə)n/",
+    "explains": [
+      "n. 孵化, 熟虑"
+    ]
+  },
+  "incubator": {
+    "word": "incubator",
+    "phonetic": "/'ɪŋkjʊbeɪtə/",
+    "explains": [
+      "n. 培养的器具, 孵卵器"
+    ]
+  },
+  "incubus": {
+    "word": "incubus",
+    "phonetic": "/'ɪŋkjʊbəs/",
+    "explains": [
+      "n. 梦魇；沉重的负担"
+    ]
+  },
+  "inculcate": {
+    "word": "inculcate",
+    "phonetic": "/'ɪnkʌlkeɪt/",
+    "explains": [
+      "v. 谆谆劝导"
+    ]
+  },
+  "inculpable": {
+    "word": "inculpable",
+    "phonetic": "/ɪn'kʌlpəbl/",
+    "explains": [
+      "adj. 无辜的；无可非议的"
+    ]
+  },
+  "incult": {
+    "word": "incult",
+    "phonetic": "/ɪn'kʌlt/",
+    "explains": [
+      "adj. 没有开垦的, 没有耕种的, 没有教养的"
+    ]
+  },
+  "incumbency": {
+    "word": "incumbency",
+    "phonetic": "/ɪn'kʌmb(ə)nsɪ/",
+    "explains": [
+      "n. 责任, 义务, 任职, 压"
+    ]
+  },
+  "incumbent": {
+    "word": "incumbent",
+    "phonetic": "/ɪn'kʌmb(ə)nt/",
+    "explains": [
+      "adj. 现任的；依靠的；负有职责的；n. 在职者；现任者；领圣俸者"
+    ]
+  },
+  "incur": {
+    "word": "incur",
+    "phonetic": "/ɪn'kɜː/",
+    "explains": [
+      "v. 招致，引发；蒙受"
+    ]
+  },
+  "incurable": {
+    "word": "incurable",
+    "phonetic": "/ɪn'kjʊərəb(ə)l/",
+    "explains": [
+      "adj. 不能治愈的"
+    ]
+  },
+  "incursion": {
+    "word": "incursion",
+    "phonetic": "/ɪn'kɜːʃ(ə)n/",
+    "explains": [
+      "n. 侵犯，入侵"
+    ]
+  },
+  "indebted": {
+    "word": "indebted",
+    "phonetic": "/ɪn'detɪd/",
+    "explains": [
+      "adj. 受惠的, 负债的"
+    ]
+  },
+  "indecent": {
+    "word": "indecent",
+    "phonetic": "/ɪn'diːs(ə)nt/",
+    "explains": [
+      "adj. 下流的；不礼貌的；不得体的"
+    ]
+  },
+  "indecipherable": {
+    "word": "indecipherable",
+    "phonetic": "/,ɪndɪ'saɪf(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无法解释的,难辨认的"
+    ]
+  },
+  "indecision": {
+    "word": "indecision",
+    "phonetic": "/ɪndɪ'sɪʒ(ə)n/",
+    "explains": [
+      "n. 优柔寡断；犹豫不决"
+    ]
+  },
+  "indeed": {
+    "word": "indeed",
+    "phonetic": "/ɪnˈdiːd/",
+    "explains": [
+      "adv. 确实"
+    ]
+  },
+  "indefatigable": {
+    "word": "indefatigable",
+    "phonetic": "/,ɪndɪ'fætɪgəb(ə)l/",
+    "explains": [
+      "adj. 不知疲倦的"
+    ]
+  },
+  "indefensible": {
+    "word": "indefensible",
+    "phonetic": "/ɪndɪ'fensɪb(ə)l/",
+    "explains": [
+      "adj. 站不住脚的；不能防卫的；无辩护余地的"
+    ]
+  },
+  "indefinable": {
+    "word": "indefinable",
+    "phonetic": "/ɪndɪ'faɪnəb(ə)l/",
+    "explains": [
+      "adj. 难下定义的；难确定的；模糊不清的；n. 难下定义的事物；难以确切描述的事物"
+    ]
+  },
+  "indefinite": {
+    "word": "indefinite",
+    "phonetic": "/ɪn'defɪnɪt/",
+    "explains": [
+      "adj. 不明确的；不定的"
+    ]
+  },
+  "indefinitely": {
+    "word": "indefinitely",
+    "phonetic": "/ɪn'defɪnɪtlɪ/",
+    "explains": [
+      "adv. 不确定地"
+    ]
+  },
+  "indelible": {
+    "word": "indelible",
+    "phonetic": "/ɪn'delɪb(ə)l/",
+    "explains": [
+      "adj. 去不掉的，擦不掉的"
+    ]
+  },
+  "indemnification": {
+    "word": "indemnification",
+    "phonetic": "/inˌdemnifi'keiʃən/",
+    "explains": [
+      "n.  赔偿； 补偿金； 保障"
+    ]
+  },
+  "indemnify": {
+    "word": "indemnify",
+    "phonetic": "/ɪn'demnɪfaɪ/",
+    "explains": [
+      "v. 赔偿"
+    ]
+  },
+  "indemnity": {
+    "word": "indemnity",
+    "phonetic": "/in'demnəti/",
+    "explains": [
+      "n.  补偿， 赔偿"
+    ]
+  },
+  "indent": {
+    "word": "indent",
+    "phonetic": "/ɪn'dent/",
+    "explains": [
+      "n. 缩进, 契约, 订货单, 凹痕"
+    ]
+  },
+  "indentation": {
+    "word": "indentation",
+    "phonetic": "/ɪnden'teɪʃ(ə)n/",
+    "explains": [
+      "n. 缩排, 呈锯齿状, 缺口, 印凹痕"
+    ]
+  },
+  "indented": {
+    "word": "indented",
+    "phonetic": "/ɪn'dentɪd/",
+    "explains": [
+      "adj. 锯齿状的, 犬牙交错的"
+    ]
+  },
+  "indenture": {
+    "word": "indenture",
+    "phonetic": "/ɪn'dentʃə/",
+    "explains": [
+      "n. 契约；合同；v. 以契约约束"
+    ]
+  },
+  "independence": {
+    "word": "independence",
+    "phonetic": "/ɪndɪ'pend(ə)ns/",
+    "explains": [
+      "n. 独立；自主，自立"
     ]
   },
   "independent": {
@@ -104,11 +2967,1621 @@
       "adj. 独立的；自主的；单独的"
     ]
   },
+  "indescribable": {
+    "word": "indescribable",
+    "phonetic": "/ɪndɪ'skraɪbəb(ə)l/",
+    "explains": [
+      "adj. 难以形容的"
+    ]
+  },
+  "indeterminate": {
+    "word": "indeterminate",
+    "phonetic": "/,ɪndɪ'tɜːmɪnət/",
+    "explains": [
+      "adj. 不确定的, 含混的"
+    ]
+  },
+  "index": {
+    "word": "index",
+    "phonetic": "/ˈɪndeks/",
+    "explains": [
+      "n. 索引"
+    ]
+  },
+  "india": {
+    "word": "india",
+    "phonetic": "/ˈɪndɪə/",
+    "explains": [
+      "n. 印度"
+    ]
+  },
+  "indian": {
+    "word": "indian",
+    "phonetic": "/ˈɪndɪən/",
+    "explains": [
+      "adj. 印度的　n. 印度人"
+    ]
+  },
+  "indiana": {
+    "word": "indiana",
+    "phonetic": "/,indi'ænə/",
+    "explains": [
+      "n. 印地安那州"
+    ]
+  },
+  "indicant": {
+    "word": "indicant",
+    "phonetic": "/'ɪndɪk(ə)nt/",
+    "explains": [
+      "adj. 指示的；表示的；n. 指示物"
+    ]
+  },
+  "indicate": {
+    "word": "indicate",
+    "phonetic": "/ˈɪndɪkeɪt/",
+    "explains": [
+      "v. 表明"
+    ]
+  },
+  "indicatif": {
+    "word": "indicatif",
+    "phonetic": "",
+    "explains": [
+      "n.m. 区号；指示的"
+    ]
+  },
+  "indication": {
+    "word": "indication",
+    "phonetic": "/ɪndɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 指示；表示；表明"
+    ]
+  },
+  "indicative": {
+    "word": "indicative",
+    "phonetic": "/ɪn'dɪkətɪv/",
+    "explains": [
+      "adj. 指示的；陈述的"
+    ]
+  },
+  "indicator": {
+    "word": "indicator",
+    "phonetic": "/'indikeitə/",
+    "explains": [
+      "n.  指标"
+    ]
+  },
+  "indict": {
+    "word": "indict",
+    "phonetic": "/ɪn'daɪt/",
+    "explains": [
+      "v. 起诉, 控告, 指控, 告发"
+    ]
+  },
+  "indifference": {
+    "word": "indifference",
+    "phonetic": "/ɪn'dɪf(ə)r(ə)ns/",
+    "explains": [
+      "n. 不关心"
+    ]
+  },
+  "indifferent": {
+    "word": "indifferent",
+    "phonetic": "/ɪn'dɪf(ə)r(ə)nt/",
+    "explains": [
+      "adj. 冷漠的；不积极的"
+    ]
+  },
+  "indigence": {
+    "word": "indigence",
+    "phonetic": "/'ɪndɪdʒ(ə)ns/",
+    "explains": [
+      "n. 穷困；贫乏；贫穷"
+    ]
+  },
+  "indigenous": {
+    "word": "indigenous",
+    "phonetic": "/ɪn'dɪdʒɪnəs/",
+    "explains": [
+      "adj. 本地的, 天生的"
+    ]
+  },
+  "indigent": {
+    "word": "indigent",
+    "phonetic": "/'ɪndɪdʒ(ə)nt/",
+    "explains": [
+      "adj. 贫困的；贫穷的（副词indigently）"
+    ]
+  },
+  "indigestible": {
+    "word": "indigestible",
+    "phonetic": "/ɪndɪ'dʒestɪb(ə)l; -daɪ-/",
+    "explains": [
+      "adj. 不吸收的,难理解的"
+    ]
+  },
+  "indigestion": {
+    "word": "indigestion",
+    "phonetic": "/ɪndɪ'dʒestʃ(ə)n; -daɪ-/",
+    "explains": [
+      "n. 消化不良；不消化"
+    ]
+  },
+  "indignant": {
+    "word": "indignant",
+    "phonetic": "/ɪn'dɪgnənt/",
+    "explains": [
+      "adj. 愤慨的，义愤的"
+    ]
+  },
+  "indignation": {
+    "word": "indignation",
+    "phonetic": "/ɪndɪg'neɪʃ(ə)n/",
+    "explains": [
+      "n. 愤怒，愤慨，义愤"
+    ]
+  },
+  "indignity": {
+    "word": "indignity",
+    "phonetic": "/ɪn'dɪgnɪtɪ/",
+    "explains": [
+      "n. 侮辱；轻蔑；有伤尊严；无礼举动"
+    ]
+  },
+  "indigo": {
+    "word": "indigo",
+    "phonetic": "/'ɪndɪgəʊ/",
+    "explains": [
+      "n. 靛, 靛青"
+    ]
+  },
+  "indirect": {
+    "word": "indirect",
+    "phonetic": "/ɪndɪ'rekt; ɪndaɪ-/",
+    "explains": [
+      "adj. 间接的；不坦率的"
+    ]
+  },
+  "indirectly": {
+    "word": "indirectly",
+    "phonetic": "/,ɪndɪ'rek(t)lɪ/",
+    "explains": [
+      "adv. 间接地"
+    ]
+  },
+  "indiscernible": {
+    "word": "indiscernible",
+    "phonetic": "/,ɪndɪ'sɜːnɪb(ə)l/",
+    "explains": [
+      "adj. 看不清的"
+    ]
+  },
+  "indiscreet": {
+    "word": "indiscreet",
+    "phonetic": "/ɪndɪ'skriːt/",
+    "explains": [
+      "adj. 轻率的；不慎重的"
+    ]
+  },
+  "indiscretion": {
+    "word": "indiscretion",
+    "phonetic": "/ɪndɪ'skreʃ(ə)n/",
+    "explains": [
+      "n. 欠详虑, 不慎重, 轻率, 轻举妄动"
+    ]
+  },
+  "indiscriminate": {
+    "word": "indiscriminate",
+    "phonetic": "/,ɪndɪ'skrɪmɪnət/",
+    "explains": [
+      "adj. 任意的；无差别的；不分皂白的"
+    ]
+  },
+  "indispensable": {
+    "word": "indispensable",
+    "phonetic": "/ɪndɪ'spensəb(ə)l/",
+    "explains": [
+      "adj. 必不可少的，必需的"
+    ]
+  },
+  "indisposed": {
+    "word": "indisposed",
+    "phonetic": "/ɪndɪ'spəʊzd/",
+    "explains": [
+      "adj. 不舒服的, 不合适的"
+    ]
+  },
+  "indisputable": {
+    "word": "indisputable",
+    "phonetic": "/ɪndɪ'spjuːtəb(ə)l; ɪn'dɪspjʊtəb(ə)l/",
+    "explains": [
+      "adj. 明白的；无争论之余地的"
+    ]
+  },
+  "indistinct": {
+    "word": "indistinct",
+    "phonetic": "/ɪndɪ'stɪŋkt/",
+    "explains": [
+      "adj. 模糊的，不清楚的；朦胧的；难以清楚辨认的"
+    ]
+  },
+  "indistinguishable": {
+    "word": "indistinguishable",
+    "phonetic": "/ɪndɪ'stɪŋgwɪʃəb(ə)l/",
+    "explains": [
+      "adj. 不能区别的，不能辨别的；不易察觉的"
+    ]
+  },
+  "indite": {
+    "word": "indite",
+    "phonetic": "/ɪn'daɪt/",
+    "explains": [
+      "v. 写(文章,信等)创作, 赋诗, 创作"
+    ]
+  },
+  "indium": {
+    "word": "indium",
+    "phonetic": "/'ɪndɪəm/",
+    "explains": [
+      "n. [化]铟"
+    ]
+  },
+  "individual": {
+    "word": "individual",
+    "phonetic": "/ˌɪndɪˈvɪdjʊəl/",
+    "explains": [
+      "adj. 个人的　n. 个人"
+    ]
+  },
+  "individualism": {
+    "word": "individualism",
+    "phonetic": "/ɪndɪ'vɪdjʊ(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 个人主义, 利己主义"
+    ]
+  },
+  "individualistic": {
+    "word": "individualistic",
+    "phonetic": "/,ɪndɪvɪdjʊə'lɪstɪk/",
+    "explains": [
+      "adj. 个人主义的"
+    ]
+  },
+  "individuality": {
+    "word": "individuality",
+    "phonetic": "/,ɪndɪvɪdjʊ'ælɪtɪ/",
+    "explains": [
+      "n. 个性,(通常用复数)个人的嗜好"
+    ]
+  },
+  "individually": {
+    "word": "individually",
+    "phonetic": "/ɪndɪ'vɪdjʊ(ə)lɪ/",
+    "explains": [
+      "adv. 个别地,单独地"
+    ]
+  },
+  "indivisible": {
+    "word": "indivisible",
+    "phonetic": "/ɪndɪ'vɪzɪb(ə)l/",
+    "explains": [
+      "adj. 不能分割的, 除不尽的"
+    ]
+  },
+  "indocile": {
+    "word": "indocile",
+    "phonetic": "/ɪn'dəʊsaɪl/",
+    "explains": [
+      "adj. 难驯服的"
+    ]
+  },
+  "indoctrinate": {
+    "word": "indoctrinate",
+    "phonetic": "/ɪn'dɒktrɪneɪt/",
+    "explains": [
+      "v. 灌输"
+    ]
+  },
+  "indolence": {
+    "word": "indolence",
+    "phonetic": "/'ɪndələns/",
+    "explains": [
+      "n. 懒散，懒惰；无痛"
+    ]
+  },
+  "indolent": {
+    "word": "indolent",
+    "phonetic": "/'ɪnd(ə)l(ə)nt/",
+    "explains": [
+      "adj. 懒惰的；无痛的"
+    ]
+  },
+  "indomethacin": {
+    "word": "indomethacin",
+    "phonetic": "",
+    "explains": [
+      "n. [药] 消炎痛；茚甲新"
+    ]
+  },
+  "indomitable": {
+    "word": "indomitable",
+    "phonetic": "/ɪn'dɒmɪtəb(ə)l/",
+    "explains": [
+      "adj. 不屈不挠的；不服输的；不气馁的"
+    ]
+  },
+  "indonesia": {
+    "word": "indonesia",
+    "phonetic": "/'indəu'ni:zjə,-ʒə/",
+    "explains": [
+      "n. 印尼(东南亚岛国)"
+    ]
+  },
+  "indoor": {
+    "word": "indoor",
+    "phonetic": "/ˈɪndɔː/",
+    "explains": [
+      "adj. 室内的"
+    ]
+  },
+  "indoors": {
+    "word": "indoors",
+    "phonetic": "/ɪn'dɔːz/",
+    "explains": [
+      "adv. 在室内，在屋里"
+    ]
+  },
+  "indubitable": {
+    "word": "indubitable",
+    "phonetic": "/ɪn'djuːbɪtəb(ə)l/",
+    "explains": [
+      "adj. 不容置疑的；明确的"
+    ]
+  },
+  "induce": {
+    "word": "induce",
+    "phonetic": "/ɪn'djuːs/",
+    "explains": [
+      "v. 劝诱；引起"
+    ]
+  },
+  "inducement": {
+    "word": "inducement",
+    "phonetic": "/ɪn'djuːsm(ə)nt/",
+    "explains": [
+      "n. 诱因, 刺激物"
+    ]
+  },
+  "inducible": {
+    "word": "inducible",
+    "phonetic": "",
+    "explains": [
+      "adj. 可诱导的,可导致的"
+    ]
+  },
+  "induct": {
+    "word": "induct",
+    "phonetic": "/ɪn'dʌkt/",
+    "explains": [
+      "v. 感应,引导"
+    ]
+  },
+  "induction": {
+    "word": "induction",
+    "phonetic": "/ɪn'dʌkʃ(ə)n/",
+    "explains": [
+      "n. 就职；归纳推理"
+    ]
+  },
+  "indulge": {
+    "word": "indulge",
+    "phonetic": "/ɪn'dʌldʒ/",
+    "explains": [
+      "v. 放纵（感情），纵情"
+    ]
+  },
+  "indulgence": {
+    "word": "indulgence",
+    "phonetic": "/in'dʌldʒəns/",
+    "explains": [
+      "n.  放纵； 纵容； 迁就； 嗜好"
+    ]
+  },
+  "indulgent": {
+    "word": "indulgent",
+    "phonetic": "/ɪn'dʌldʒ(ə)nt/",
+    "explains": [
+      "adj. 放纵的；宽容的；任性的"
+    ]
+  },
+  "indus": {
+    "word": "indus",
+    "phonetic": "/'indəs/",
+    "explains": [
+      "n. 印度河（印度西北部的河流）"
+    ]
+  },
+  "industria": {
+    "word": "industria",
+    "phonetic": "",
+    "explains": [
+      "n.f. 工业"
+    ]
+  },
+  "industrial": {
+    "word": "industrial",
+    "phonetic": "/ɪnˈdʌstrɪəl/",
+    "explains": [
+      "adj. 工业的"
+    ]
+  },
+  "industrialise": {
+    "word": "industrialise",
+    "phonetic": "",
+    "explains": [
+      "v. 使工业化（等于industrialize）"
+    ]
+  },
+  "industrialism": {
+    "word": "industrialism",
+    "phonetic": "/ɪn'dʌstrɪəlɪz(ə)m/",
+    "explains": [
+      "n. 产业主义,工业制度"
+    ]
+  },
+  "industrialist": {
+    "word": "industrialist",
+    "phonetic": "/ɪn'dʌstrɪəlɪst/",
+    "explains": [
+      "n. 工业家, 实业家,"
+    ]
+  },
+  "industrialization": {
+    "word": "industrialization",
+    "phonetic": "",
+    "explains": [
+      "n. 工业化,产业化"
+    ]
+  },
+  "industrialize": {
+    "word": "industrialize",
+    "phonetic": "/ɪnˈdʌstrɪəlʌɪz/",
+    "explains": [
+      "v. 使工业化"
+    ]
+  },
+  "industrially": {
+    "word": "industrially",
+    "phonetic": "",
+    "explains": [
+      "adv. 企业[工业]地"
+    ]
+  },
+  "industrious": {
+    "word": "industrious",
+    "phonetic": "/ɪn'dʌstrɪəs/",
+    "explains": [
+      "adj. 勤劳的，勤奋的"
+    ]
+  },
+  "industry": {
+    "word": "industry",
+    "phonetic": "/ˈɪndəstrɪ/",
+    "explains": [
+      "n. 工业"
+    ]
+  },
+  "inebriate": {
+    "word": "inebriate",
+    "phonetic": "/ɪ'niːbrɪeɪt/",
+    "explains": [
+      "v. 灌醉；使陶醉；使兴奋；adj. 酒醉的；醉醺醺的；陶醉的；n. 酒鬼；醉汉"
+    ]
+  },
+  "inedible": {
+    "word": "inedible",
+    "phonetic": "/ɪn'edɪb(ə)l/",
+    "explains": [
+      "adj. 不能吃的，不宜食用的"
+    ]
+  },
+  "ineffable": {
+    "word": "ineffable",
+    "phonetic": "/ɪn'efəb(ə)l/",
+    "explains": [
+      "adj. 不能说的, 不应说出的, 避讳的"
+    ]
+  },
+  "ineffaceable": {
+    "word": "ineffaceable",
+    "phonetic": "/ɪnɪ'feɪsəb(ə)l/",
+    "explains": [
+      "adj. 不能除去的, 不能取消的"
+    ]
+  },
+  "ineffective": {
+    "word": "ineffective",
+    "phonetic": "/ɪnɪ'fektɪv/",
+    "explains": [
+      "adj. 无效的, (指人)工作效率低的"
+    ]
+  },
+  "ineffectual": {
+    "word": "ineffectual",
+    "phonetic": "/ɪnɪ'fektʃʊəl; -tjʊəl/",
+    "explains": [
+      "adj. 无效的，不起作用的；徒劳无益的；n. 无用的人；无一技之长者"
+    ]
+  },
+  "inefficacious": {
+    "word": "inefficacious",
+    "phonetic": "/,ɪnefɪ'keɪʃəs/",
+    "explains": [
+      "adj. 无用的；无效果的"
+    ]
+  },
+  "inefficiency": {
+    "word": "inefficiency",
+    "phonetic": "/ˌini'fiʃənsi/",
+    "explains": [
+      "n.  无效率； 无能"
+    ]
+  },
+  "inefficient": {
+    "word": "inefficient",
+    "phonetic": "/ɪnɪ'fɪʃ(ə)nt/",
+    "explains": [
+      "adj. 效率低的，无能的"
+    ]
+  },
+  "ineligible": {
+    "word": "ineligible",
+    "phonetic": "/ɪn'elɪdʒɪb(ə)l/",
+    "explains": [
+      "adj. 不合格的"
+    ]
+  },
+  "ineluctable": {
+    "word": "ineluctable",
+    "phonetic": "/,ɪnɪ'lʌktəb(ə)l/",
+    "explains": [
+      "adj. 不可避免的, 无法逃避的"
+    ]
+  },
+  "inept": {
+    "word": "inept",
+    "phonetic": "/ɪ'nept/",
+    "explains": [
+      "adj. 不适当的"
+    ]
+  },
+  "ineptitude": {
+    "word": "ineptitude",
+    "phonetic": "/i'neptitjuːd/",
+    "explains": [
+      "n.  不称职； 无能"
+    ]
+  },
+  "inequality": {
+    "word": "inequality",
+    "phonetic": "/ɪnɪ'kwɒlɪtɪ/",
+    "explains": [
+      "n. 不平等, 不平均"
+    ]
+  },
+  "inequity": {
+    "word": "inequity",
+    "phonetic": "/ɪn'ekwɪtɪ/",
+    "explains": [
+      "n. 不公平，不公正"
+    ]
+  },
+  "inert": {
+    "word": "inert",
+    "phonetic": "/ɪ'nɜːt/",
+    "explains": [
+      "adj. 无活动能力的；惰性的"
+    ]
+  },
+  "inertia": {
+    "word": "inertia",
+    "phonetic": "/ɪ'nɜːʃə/",
+    "explains": [
+      "n. 惯性；无力"
+    ]
+  },
+  "inescapable": {
+    "word": "inescapable",
+    "phonetic": "/ɪnɪ'skeɪpəb(ə)l; ɪne-/",
+    "explains": [
+      "adj. 不可避免的；逃脱不了的"
+    ]
+  },
+  "inestimable": {
+    "word": "inestimable",
+    "phonetic": "/ɪn'estɪməb(ə)l/",
+    "explains": [
+      "adj. 无价的；难以估计的"
+    ]
+  },
+  "inevitable": {
+    "word": "inevitable",
+    "phonetic": "/ɪnˈevɪtəb(ə)l/",
+    "explains": [
+      "adj. 不可避免的"
+    ]
+  },
+  "inevitably": {
+    "word": "inevitably",
+    "phonetic": "/ɪ'nevɪtəblɪ; ɪn'evɪtəblɪ/",
+    "explains": [
+      "adv. 不可避免地"
+    ]
+  },
+  "inexact": {
+    "word": "inexact",
+    "phonetic": "/,ɪnɪg'zækt; ,ɪneg-/",
+    "explains": [
+      "adj. 不精确的；不严格的；不正确的"
+    ]
+  },
+  "inexcusable": {
+    "word": "inexcusable",
+    "phonetic": "/ɪnɪk'skjuːzəb(ə)l; ɪnek-/",
+    "explains": [
+      "adj. 不可原谅的；没法辩解的；不可宽恕的"
+    ]
+  },
+  "inexhaustible": {
+    "word": "inexhaustible",
+    "phonetic": "/ɪnɪg'zɔːstɪb(ə)l; ɪneg-/",
+    "explains": [
+      "adj. 无穷无尽的"
+    ]
+  },
+  "inexorable": {
+    "word": "inexorable",
+    "phonetic": "/ɪn'eks(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无情的；不屈不挠的；不可阻挡的；无法改变的"
+    ]
+  },
+  "inexpedient": {
+    "word": "inexpedient",
+    "phonetic": "/ɪnɪk'spiːdɪənt; ɪnek-/",
+    "explains": [
+      "adj. 不适宜的"
+    ]
+  },
+  "inexpensive": {
+    "word": "inexpensive",
+    "phonetic": "/ɪnɪk'spensɪv; ɪnek-/",
+    "explains": [
+      "adj. 花费不多的，廉价的"
+    ]
+  },
+  "inexperienced": {
+    "word": "inexperienced",
+    "phonetic": "/,ɪnɪk'spɪrɪənst/",
+    "explains": [
+      "adj. 无经验的；不熟练的"
+    ]
+  },
+  "inexpiable": {
+    "word": "inexpiable",
+    "phonetic": "/ɪn'ekspɪəb(ə)l/",
+    "explains": [
+      "adj. 不能抵偿的, 不能平息的"
+    ]
+  },
+  "inexplicable": {
+    "word": "inexplicable",
+    "phonetic": "/,ɪnɪk'splɪkəb(ə)l; ,ɪnek-; ɪn'eksplɪ-/",
+    "explains": [
+      "adj. 无法解释的，难理解的"
+    ]
+  },
+  "inextricable": {
+    "word": "inextricable",
+    "phonetic": "/ɪn'ekstrɪkəb(ə)l; ,ɪnɪk'strɪk-; ,ɪnek-/",
+    "explains": [
+      "adj. 无法解脱的, 逃脱不掉的, 解不开的"
+    ]
+  },
+  "inextricably": {
+    "word": "inextricably",
+    "phonetic": "/ˌɪnɪkˈstrɪkəbli/",
+    "explains": [
+      "adv. 分不开地, 无法摆脱地"
+    ]
+  },
+  "infallibility": {
+    "word": "infallibility",
+    "phonetic": "",
+    "explains": [
+      "n. 绝无错误, 绝对可靠性"
+    ]
+  },
+  "infallible": {
+    "word": "infallible",
+    "phonetic": "/ɪn'fælɪb(ə)l/",
+    "explains": [
+      "adj. 没有错误的, 确实可靠的"
+    ]
+  },
+  "infamous": {
+    "word": "infamous",
+    "phonetic": "/'ɪnfəməs/",
+    "explains": [
+      "adj. 声名狼藉的；无耻的；邪恶的；不名誉的"
+    ]
+  },
+  "infamy": {
+    "word": "infamy",
+    "phonetic": "/'ɪnfəmɪ/",
+    "explains": [
+      "n. 声名狼藉, 丑名, 丑行"
+    ]
+  },
+  "infancia": {
+    "word": "infancia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 童年"
+    ]
+  },
+  "infancy": {
+    "word": "infancy",
+    "phonetic": "/'ɪnf(ə)nsɪ/",
+    "explains": [
+      "n. 幼年"
+    ]
+  },
+  "infant": {
+    "word": "infant",
+    "phonetic": "/'ɪnf(ə)nt/",
+    "explains": [
+      "n. 婴儿；adj. 婴儿的"
+    ]
+  },
+  "infantile": {
+    "word": "infantile",
+    "phonetic": "/'ɪnf(ə)ntaɪl/",
+    "explains": [
+      "adj. 幼稚的，幼儿的"
+    ]
+  },
+  "infantry": {
+    "word": "infantry",
+    "phonetic": "/'ɪnf(ə)ntrɪ/",
+    "explains": [
+      "n. 步兵, 步兵团"
+    ]
+  },
+  "infatuated": {
+    "word": "infatuated",
+    "phonetic": "/ɪn'fætjʊeɪtɪd/",
+    "explains": [
+      "adj. 昏头昏脑的, 入迷的"
+    ]
+  },
+  "infatuation": {
+    "word": "infatuation",
+    "phonetic": "/ɪn,fætʃʊ'eɪʃ(ə)n; -tjʊ-/",
+    "explains": [
+      "n. 愚蠢, 糊涂, 醉心"
+    ]
+  },
+  "infect": {
+    "word": "infect",
+    "phonetic": "/ɪn'fekt/",
+    "explains": [
+      "v. 传染；感染"
+    ]
+  },
+  "infected": {
+    "word": "infected",
+    "phonetic": "/ɪn'fektɪd/",
+    "explains": [
+      "adj. 被感染的；v. 传染（infect的过去分词）"
+    ]
+  },
+  "infection": {
+    "word": "infection",
+    "phonetic": "/ɪnˈfekʃ(ə)n/",
+    "explains": [
+      "n. 感染"
+    ]
+  },
+  "infectious": {
+    "word": "infectious",
+    "phonetic": "/ɪn'fekʃəs/",
+    "explains": [
+      "adj. 传染的；感染性的"
+    ]
+  },
+  "infelicitous": {
+    "word": "infelicitous",
+    "phonetic": "/ɪnfɪ'lɪsɪtəs/",
+    "explains": [
+      "adj. 不吉利的, 不幸的, 不合适的"
+    ]
+  },
+  "infer": {
+    "word": "infer",
+    "phonetic": "/ɪnˈfɜː/",
+    "explains": [
+      "v. 推断"
+    ]
+  },
+  "inference": {
+    "word": "inference",
+    "phonetic": "/'ɪnf(ə)r(ə)ns/",
+    "explains": [
+      "n. 推论；推断的结果"
+    ]
+  },
+  "inferential": {
+    "word": "inferential",
+    "phonetic": "/,ɪnfə'renʃəl/",
+    "explains": [
+      "adj. 推理的, 推论的"
+    ]
+  },
+  "inferior": {
+    "word": "inferior",
+    "phonetic": "/ɪn'fɪərɪə/",
+    "explains": [
+      "adj. 下等的；劣等的"
+    ]
+  },
+  "inferiority": {
+    "word": "inferiority",
+    "phonetic": "/ɪn,fɪərɪ'ɒrɪtɪ/",
+    "explains": [
+      "n. 自卑, 次等"
+    ]
+  },
+  "infernal": {
+    "word": "infernal",
+    "phonetic": "/ɪn'fɜːn(ə)l/",
+    "explains": [
+      "adj. 阴间的, 恶魔的"
+    ]
+  },
+  "inferno": {
+    "word": "inferno",
+    "phonetic": "/ɪn'fɜːnəʊ/",
+    "explains": [
+      "n. 阴间, 地狱"
+    ]
+  },
+  "infertile": {
+    "word": "infertile",
+    "phonetic": "/ɪn'fɜːtaɪl/",
+    "explains": [
+      "adj. 贫瘠的, 不能生育的"
+    ]
+  },
+  "infest": {
+    "word": "infest",
+    "phonetic": "/ɪn'fest/",
+    "explains": [
+      "v. 骚扰,大批滋生"
+    ]
+  },
+  "infidel": {
+    "word": "infidel",
+    "phonetic": "/'ɪnfɪd(ə)l/",
+    "explains": [
+      "adj. 不信宗教的, 异端的"
+    ]
+  },
+  "infidelity": {
+    "word": "infidelity",
+    "phonetic": "/ɪnfɪ'delɪtɪ/",
+    "explains": [
+      "n. 失真"
+    ]
+  },
+  "infighting": {
+    "word": "infighting",
+    "phonetic": "/'ɪnfaɪtɪŋ/",
+    "explains": [
+      "n. 暗斗；混战；接近战；v. 暗斗（infight的ing形式）；近击"
+    ]
+  },
+  "infiltrate": {
+    "word": "infiltrate",
+    "phonetic": "/'ɪnfɪltreɪt/",
+    "explains": [
+      "v. 渗透"
+    ]
+  },
+  "infiltration": {
+    "word": "infiltration",
+    "phonetic": "/,ɪnfɪl'treɪʃən/",
+    "explains": [
+      "n. 渗透"
+    ]
+  },
+  "infinite": {
+    "word": "infinite",
+    "phonetic": "/'ɪnfɪnət/",
+    "explains": [
+      "adj. 无限的；无数的"
+    ]
+  },
+  "infinitely": {
+    "word": "infinitely",
+    "phonetic": "/'ɪnfɪnɪtlɪ/",
+    "explains": [
+      "adv. 无限地，无边地"
+    ]
+  },
+  "infinitesimal": {
+    "word": "infinitesimal",
+    "phonetic": "/,ɪnfɪnɪ'tesɪm(ə)l/",
+    "explains": [
+      "adj. 无穷小的；无限小的；极小的；n. 无限小；极微量；极小量"
+    ]
+  },
+  "infinitesimally": {
+    "word": "infinitesimally",
+    "phonetic": "",
+    "explains": [
+      "adv. 极小地"
+    ]
+  },
+  "infinitive": {
+    "word": "infinitive",
+    "phonetic": "/ɪn'fɪnɪtɪv/",
+    "explains": [
+      "n. 原形，原形动词，不定式；adj. 原形的，不定式的"
+    ]
+  },
+  "infinity": {
+    "word": "infinity",
+    "phonetic": "/ɪn'fɪnɪtɪ/",
+    "explains": [
+      "n. 无穷大"
+    ]
+  },
+  "infirm": {
+    "word": "infirm",
+    "phonetic": "/ɪn'fɜːm/",
+    "explains": [
+      "adj. 衰弱的；意志薄弱的；不坚固的"
+    ]
+  },
+  "infirmary": {
+    "word": "infirmary",
+    "phonetic": "/ɪn'fɜːm(ə)rɪ/",
+    "explains": [
+      "n. 医务，医务室"
+    ]
+  },
+  "infirmity": {
+    "word": "infirmity",
+    "phonetic": "/ɪn'fɜːmətɪ/",
+    "explains": [
+      "n. 虚弱, 衰弱, 缺点"
+    ]
+  },
+  "inflame": {
+    "word": "inflame",
+    "phonetic": "/ɪn'fleɪm/",
+    "explains": [
+      "v. 燃烧"
+    ]
+  },
+  "inflamed": {
+    "word": "inflamed",
+    "phonetic": "/in'fleimd/",
+    "explains": [
+      "adj. 发炎的；红肿的"
+    ]
+  },
+  "inflammable": {
+    "word": "inflammable",
+    "phonetic": "/ɪn'flæməb(ə)l/",
+    "explains": [
+      "adj. 易燃的；易怒的；易激动的；n. 易燃物"
+    ]
+  },
+  "inflammation": {
+    "word": "inflammation",
+    "phonetic": "/ɪnflə'meɪʃ(ə)n/",
+    "explains": [
+      "n. [病理] 炎症；[医] 发炎；燃烧；发火"
+    ]
+  },
+  "inflammatory": {
+    "word": "inflammatory",
+    "phonetic": "/ɪn'flæmət(ə)rɪ/",
+    "explains": [
+      "adj. 炎症性的；煽动性的；激动的"
+    ]
+  },
+  "inflate": {
+    "word": "inflate",
+    "phonetic": "/in'fleit/",
+    "explains": [
+      "vt.  使充气； 使膨胀； 使得意， 使骄傲； 抬高； 使膨胀"
+    ]
+  },
+  "inflated": {
+    "word": "inflated",
+    "phonetic": "/ɪn'fleɪtɪd/",
+    "explains": [
+      "adj. 膨胀的, 夸张的, 通货膨胀的"
+    ]
+  },
+  "inflation": {
+    "word": "inflation",
+    "phonetic": "/ɪn'fleɪʃ(ə)n/",
+    "explains": [
+      "n. 通货膨胀，物价飞涨"
+    ]
+  },
+  "inflationary": {
+    "word": "inflationary",
+    "phonetic": "/in'fleiʃənəri/",
+    "explains": [
+      "adj.  通货膨胀的"
+    ]
+  },
+  "inflection": {
+    "word": "inflection",
+    "phonetic": "/ɪn'flekʃ(ə)n/",
+    "explains": [
+      "n. 变形"
+    ]
+  },
+  "inflexible": {
+    "word": "inflexible",
+    "phonetic": "/ɪn'fleksɪb(ə)l/",
+    "explains": [
+      "adj. 不可弯曲的, 僵硬的"
+    ]
+  },
+  "inflexibly": {
+    "word": "inflexibly",
+    "phonetic": "",
+    "explains": [
+      "adv. 不弯曲地, 不屈地"
+    ]
+  },
+  "inflict": {
+    "word": "inflict",
+    "phonetic": "/ɪn'flɪkt/",
+    "explains": [
+      "v. 使遭受，强加"
+    ]
+  },
+  "infliction": {
+    "word": "infliction",
+    "phonetic": "/ɪn'flɪkʃ(ə)n/",
+    "explains": [
+      "n. 施加, 使负担"
+    ]
+  },
+  "inflow": {
+    "word": "inflow",
+    "phonetic": "/'ɪnfləʊ/",
+    "explains": [
+      "n. 流入, 流入物"
+    ]
+  },
+  "influence": {
+    "word": "influence",
+    "phonetic": "/ˈɪnflʊəns/",
+    "explains": [
+      "n. 影响　v. 影响"
+    ]
+  },
+  "influential": {
+    "word": "influential",
+    "phonetic": "/,ɪnflʊ'enʃ(ə)l/",
+    "explains": [
+      "adj. 有影响的；有权势的"
+    ]
+  },
+  "influenza": {
+    "word": "influenza",
+    "phonetic": "/ɪnflʊ'enzə/",
+    "explains": [
+      "n. [内科] 流行性感冒（简写flu）；家畜流行性感冒"
+    ]
+  },
+  "influx": {
+    "word": "influx",
+    "phonetic": "/'inflʌks/",
+    "explains": [
+      "n.  流入； 注入； 汇集"
+    ]
+  },
+  "inform": {
+    "word": "inform",
+    "phonetic": "/ɪnˈfɔːm/",
+    "explains": [
+      "v. 告知"
+    ]
+  },
+  "informal": {
+    "word": "informal",
+    "phonetic": "/ɪnˈfɔːm(ə)l/",
+    "explains": [
+      "adj. 非正式的"
+    ]
+  },
+  "informant": {
+    "word": "informant",
+    "phonetic": "/ɪn'fɔːmənt/",
+    "explains": [
+      "n. 通知者, 告密者"
+    ]
+  },
   "information": {
     "word": "information",
     "phonetic": "/ˌɪnfəˈmeɪʃn/",
     "explains": [
       "n. 信息；资料；情报；通知"
+    ]
+  },
+  "informatique": {
+    "word": "informatique",
+    "phonetic": "",
+    "explains": [
+      "n.f. 信息技术；adj. 信息技术的"
+    ]
+  },
+  "informative": {
+    "word": "informative",
+    "phonetic": "/ɪn'fɔːmətɪv/",
+    "explains": [
+      "adj. 提供消息的, 情报的"
+    ]
+  },
+  "informe": {
+    "word": "informe",
+    "phonetic": "",
+    "explains": [
+      "n.m. 报告"
+    ]
+  },
+  "informed": {
+    "word": "informed",
+    "phonetic": "/ɪn'fɔːmd/",
+    "explains": [
+      "adj. 消息灵通的；见多识广的；v. 通知；使了解；提供资料（inform的过去分词）"
+    ]
+  },
+  "informer": {
+    "word": "informer",
+    "phonetic": "/ɪn'fɔːmə/",
+    "explains": [
+      "n. 密告者, 控告的人, 通知的人"
+    ]
+  },
+  "infraction": {
+    "word": "infraction",
+    "phonetic": "/ɪn'frækʃ(ə)n/",
+    "explains": [
+      "n. 违反, 侵害"
+    ]
+  },
+  "infrared": {
+    "word": "infrared",
+    "phonetic": "/ɪnfrə'red/",
+    "explains": [
+      "n. 红外线；adj. 红外线的"
+    ]
+  },
+  "infrastructure": {
+    "word": "infrastructure",
+    "phonetic": "/'ɪnfrəstrʌktʃə/",
+    "explains": [
+      "n. 基础设施；公共建设；下部构造"
+    ]
+  },
+  "infrequent": {
+    "word": "infrequent",
+    "phonetic": "/ɪn'friːkw(ə)nt/",
+    "explains": [
+      "adj. 不频发的,不常见的"
+    ]
+  },
+  "infrequently": {
+    "word": "infrequently",
+    "phonetic": "",
+    "explains": [
+      "adv. 罕见地, 稀少的"
+    ]
+  },
+  "infringe": {
+    "word": "infringe",
+    "phonetic": "/in'frindʒ/",
+    "explains": [
+      "v.  违反； 侵犯， 侵害"
+    ]
+  },
+  "infringement": {
+    "word": "infringement",
+    "phonetic": "/in'frindʒmənt/",
+    "explains": [
+      "n.  违反； 侵犯， 侵害"
+    ]
+  },
+  "infringer": {
+    "word": "infringer",
+    "phonetic": "",
+    "explains": [
+      "n. [法] 侵权人"
+    ]
+  },
+  "infuriate": {
+    "word": "infuriate",
+    "phonetic": "/ɪn'fjʊərɪeɪt/",
+    "explains": [
+      "v. 激怒；使大怒；adj. 狂怒的"
+    ]
+  },
+  "infuse": {
+    "word": "infuse",
+    "phonetic": "/ɪn'fjuːz/",
+    "explains": [
+      "v. 灌输；使充满；浸渍"
+    ]
+  },
+  "infusion": {
+    "word": "infusion",
+    "phonetic": "/ɪn'fjuːʒ(ə)n/",
+    "explains": [
+      "n. 灌输"
+    ]
+  },
+  "ingeniero": {
+    "word": "ingeniero",
+    "phonetic": "",
+    "explains": [
+      "n.m. 工程师"
+    ]
+  },
+  "ingenious": {
+    "word": "ingenious",
+    "phonetic": "/ɪn'dʒiːnɪəs/",
+    "explains": [
+      "adj. 精巧制成的；机灵的"
+    ]
+  },
+  "ingeniously": {
+    "word": "ingeniously",
+    "phonetic": "",
+    "explains": [
+      "adv. 贤明地,有才能地"
+    ]
+  },
+  "ingenuity": {
+    "word": "ingenuity",
+    "phonetic": "",
+    "explains": [
+      "n. 机灵；设计新颖"
+    ]
+  },
+  "ingenuous": {
+    "word": "ingenuous",
+    "phonetic": "/ɪn'dʒenjʊəs/",
+    "explains": [
+      "adj. 天真的；坦白的；正直的；朴实的"
+    ]
+  },
+  "ingest": {
+    "word": "ingest",
+    "phonetic": "/ɪn'dʒest/",
+    "explains": [
+      "v. 摄取；咽下；吸收；接待"
+    ]
+  },
+  "inglorious": {
+    "word": "inglorious",
+    "phonetic": "/ɪn'glɔːrɪəs/",
+    "explains": [
+      "adj. 可耻的；不名誉的；不体面的"
+    ]
+  },
+  "ingoing": {
+    "word": "ingoing",
+    "phonetic": "/'ɪngəʊɪŋ/",
+    "explains": [
+      "adj. 进入的；n. 进入,迁就"
+    ]
+  },
+  "ingot": {
+    "word": "ingot",
+    "phonetic": "/'ɪŋgət/",
+    "explains": [
+      "n. [冶]锭铁, 工业纯铁"
+    ]
+  },
+  "ingrained": {
+    "word": "ingrained",
+    "phonetic": "/ɪn'greɪnd/",
+    "explains": [
+      "adj. 根深蒂固的；彻头彻尾的；生染的；v. 使根深蒂固（ingrain的过去分词形式）；生染；就原料染色"
+    ]
+  },
+  "ingrate": {
+    "word": "ingrate",
+    "phonetic": "/'ɪngreɪt; ɪn'greɪt/",
+    "explains": [
+      "adj. 忘恩的；不知恩的；n. 忘恩负义的人"
+    ]
+  },
+  "ingratiate": {
+    "word": "ingratiate",
+    "phonetic": "/ɪn'greɪʃɪeɪt/",
+    "explains": [
+      "v. 使迎合；使讨好；使逢迎"
+    ]
+  },
+  "ingratiating": {
+    "word": "ingratiating",
+    "phonetic": "/ɪn'ɡreʃɪetɪŋ/",
+    "explains": [
+      "adj. 逢迎的, 迷人的"
+    ]
+  },
+  "ingratitude": {
+    "word": "ingratitude",
+    "phonetic": "/ɪn'grætɪtjuːd/",
+    "explains": [
+      "n. 忘恩, 不知恩"
+    ]
+  },
+  "ingredient": {
+    "word": "ingredient",
+    "phonetic": "/ɪnˈgriːdɪənt/",
+    "explains": [
+      "n. 原料"
+    ]
+  },
+  "ingress": {
+    "word": "ingress",
+    "phonetic": "/'ɪngres/",
+    "explains": [
+      "n. 进入, 入口处, 准许进入"
+    ]
+  },
+  "ingurgitate": {
+    "word": "ingurgitate",
+    "phonetic": "/ɪn'gɜːdʒɪteɪt/",
+    "explains": [
+      "v. 狼吞虎咽, 大吃大喝"
+    ]
+  },
+  "inhabit": {
+    "word": "inhabit",
+    "phonetic": "/ɪn'hæbɪt/",
+    "explains": [
+      "v. 居住于，栖息于"
+    ]
+  },
+  "inhabitable": {
+    "word": "inhabitable",
+    "phonetic": "/ɪn'hæbɪtəbl/",
+    "explains": [
+      "adj. 适于居住的；可居住的，可栖居的"
+    ]
+  },
+  "inhabitant": {
+    "word": "inhabitant",
+    "phonetic": "/ɪn'hæbɪt(ə)nt/",
+    "explains": [
+      "n. 居民，住户"
+    ]
+  },
+  "inhalation": {
+    "word": "inhalation",
+    "phonetic": "/ɪnhə'leɪʃ(ə)n/",
+    "explains": [
+      "n. 吸入；吸入药剂"
+    ]
+  },
+  "inhale": {
+    "word": "inhale",
+    "phonetic": "/ɪn'heɪl/",
+    "explains": [
+      "v. 吸入；猛吃猛喝"
+    ]
+  },
+  "inherent": {
+    "word": "inherent",
+    "phonetic": "/ɪn'hɪər(ə)nt; -'her(ə)nt/",
+    "explains": [
+      "adj. 固有的，生来的"
+    ]
+  },
+  "inherit": {
+    "word": "inherit",
+    "phonetic": "/ɪn'herɪt/",
+    "explains": [
+      "v. 继承（传统等）"
+    ]
+  },
+  "inheritance": {
+    "word": "inheritance",
+    "phonetic": "/ɪn'herɪt(ə)ns/",
+    "explains": [
+      "n. 继承；遗传；遗产"
+    ]
+  },
+  "inhibit": {
+    "word": "inhibit",
+    "phonetic": "/ɪn'hɪbɪt/",
+    "explains": [
+      "v. 抑制；禁止"
+    ]
+  },
+  "inhibited": {
+    "word": "inhibited",
+    "phonetic": "/ɪn'hɪbɪtɪd/",
+    "explains": [
+      "adj. 羞怯的, 内向的"
+    ]
+  },
+  "inhibition": {
+    "word": "inhibition",
+    "phonetic": "/ɪn(h)ɪ'bɪʃ(ə)n/",
+    "explains": [
+      "n. 禁止, 阻止"
+    ]
+  },
+  "inhospitable": {
+    "word": "inhospitable",
+    "phonetic": "/,ɪnhɒ'spɪtəb(ə)l; ɪn'hɒspɪt-/",
+    "explains": [
+      "adj. 不好客的,不适于居住的"
+    ]
+  },
+  "inhuman": {
+    "word": "inhuman",
+    "phonetic": "/ɪn'hjuːmən/",
+    "explains": [
+      "adj. 残忍的；野蛮的；无人性的"
+    ]
+  },
+  "inhumane": {
+    "word": "inhumane",
+    "phonetic": "/ɪnhjʊ'meɪn/",
+    "explains": [
+      "adj. 残忍的"
+    ]
+  },
+  "inhumanity": {
+    "word": "inhumanity",
+    "phonetic": "/ɪnhjʊ'mænɪtɪ/",
+    "explains": [
+      "n. 不人道，无人性；残暴"
+    ]
+  },
+  "inhume": {
+    "word": "inhume",
+    "phonetic": "/ɪn'hjuːm/",
+    "explains": [
+      "v. 埋葬；土葬"
+    ]
+  },
+  "inimical": {
+    "word": "inimical",
+    "phonetic": "/ɪ'nɪmɪk(ə)l/",
+    "explains": [
+      "adj. 敌意的；有害的"
+    ]
+  },
+  "inimitable": {
+    "word": "inimitable",
+    "phonetic": "/ɪ'nɪmɪtəb(ə)l/",
+    "explains": [
+      "adj. 无法模仿的, 独特的, 无比的"
+    ]
+  },
+  "iniquitous": {
+    "word": "iniquitous",
+    "phonetic": "/ɪ'nɪkwətəs/",
+    "explains": [
+      "adj. 不公正的"
+    ]
+  },
+  "iniquity": {
+    "word": "iniquity",
+    "phonetic": "/ɪ'nɪkwɪtɪ/",
+    "explains": [
+      "n. 不公正"
+    ]
+  },
+  "initial": {
+    "word": "initial",
+    "phonetic": "/ɪˈnɪʃ(ə)l/",
+    "explains": [
+      "adj. 最初的"
+    ]
+  },
+  "initially": {
+    "word": "initially",
+    "phonetic": "/ɪ'nɪʃ(ə)lɪ/",
+    "explains": [
+      "adv. 最初，开始"
+    ]
+  },
+  "initiate": {
+    "word": "initiate",
+    "phonetic": "/ɪ'nɪʃɪeɪt/",
+    "explains": [
+      "v. 开始，创始；启蒙"
+    ]
+  },
+  "initiative": {
+    "word": "initiative",
+    "phonetic": "/ɪˈnɪʃɪətɪv; ɪˈnɪʃətɪv/",
+    "explains": [
+      "n. 主动"
+    ]
+  },
+  "inject": {
+    "word": "inject",
+    "phonetic": "/ɪn'dʒekt/",
+    "explains": [
+      "v. 注射；注满；喷射"
+    ]
+  },
+  "injection": {
+    "word": "injection",
+    "phonetic": "/ɪn'dʒekʃ(ə)n/",
+    "explains": [
+      "n. 注射；注入"
+    ]
+  },
+  "injunction": {
+    "word": "injunction",
+    "phonetic": "/ɪn'dʒʌŋ(k)ʃ(ə)n/",
+    "explains": [
+      "n. 命令, 指令, [律]禁令(法院强制被告从事或不得从事某项行为的正式命令)"
+    ]
+  },
+  "injure": {
+    "word": "injure",
+    "phonetic": "/ˈɪndʒə/",
+    "explains": [
+      "v. 伤害"
+    ]
+  },
+  "injurious": {
+    "word": "injurious",
+    "phonetic": "/ɪn'dʒʊərɪəs/",
+    "explains": [
+      "adj. 有害的；诽谤的"
+    ]
+  },
+  "injury": {
+    "word": "injury",
+    "phonetic": "/ˈɪndʒ(ə)rɪ/",
+    "explains": [
+      "n. 伤害"
+    ]
+  },
+  "injuste": {
+    "word": "injuste",
+    "phonetic": "",
+    "explains": [
+      "adj. 不公正的"
+    ]
+  },
+  "injustice": {
+    "word": "injustice",
+    "phonetic": "/ɪn'dʒʌstɪs/",
+    "explains": [
+      "n. 不公正；不讲道义"
     ]
   },
   "ink": {
@@ -118,11 +4591,669 @@
       "n. 墨水；油墨"
     ]
   },
+  "inkling": {
+    "word": "inkling",
+    "phonetic": "/'ɪŋklɪŋ/",
+    "explains": [
+      "n. 暗示；略知；模糊概念；v. 暗示 （inkle的ing形式）；略知；低声说出"
+    ]
+  },
+  "inlaid": {
+    "word": "inlaid",
+    "phonetic": "/ɪn'leɪd/",
+    "explains": [
+      "adj. 镶嵌的；嵌入的；镶饰的；v. 把…镶入；用镶嵌物装饰（inlay的过去分词形式）"
+    ]
+  },
+  "inland": {
+    "word": "inland",
+    "phonetic": "/'ɪnlənd; -lænd/",
+    "explains": [
+      "adj. 国内的；内地的"
+    ]
+  },
+  "inlet": {
+    "word": "inlet",
+    "phonetic": "/'ɪnlet/",
+    "explains": [
+      "n. 水湾；进口"
+    ]
+  },
+  "inmate": {
+    "word": "inmate",
+    "phonetic": "/'inmeit/",
+    "explains": [
+      "n.  同住者"
+    ]
+  },
+  "inmost": {
+    "word": "inmost",
+    "phonetic": "/'ɪnməʊst/",
+    "explains": [
+      "adj. 心底的，内心深处的；最深的"
+    ]
+  },
+  "inn": {
+    "word": "inn",
+    "phonetic": "/ɪn/",
+    "explains": [
+      "n. 小旅店；小酒店"
+    ]
+  },
+  "innate": {
+    "word": "innate",
+    "phonetic": "/ɪ'neɪt; 'ɪneɪt/",
+    "explains": [
+      "adj. 先天的, 天生的"
+    ]
+  },
+  "inner": {
+    "word": "inner",
+    "phonetic": "/ˈɪnə/",
+    "explains": [
+      "adj. 内部的"
+    ]
+  },
+  "innermost": {
+    "word": "innermost",
+    "phonetic": "/'ɪnəməʊst/",
+    "explains": [
+      "adj. 最里面的, 内心的"
+    ]
+  },
+  "innkeeper": {
+    "word": "innkeeper",
+    "phonetic": "/'ɪnkiːpə/",
+    "explains": [
+      "n. 旅馆主人"
+    ]
+  },
+  "innocence": {
+    "word": "innocence",
+    "phonetic": "/'ɪnəsəns/",
+    "explains": [
+      "n. 清白"
+    ]
+  },
+  "innocent": {
+    "word": "innocent",
+    "phonetic": "/ˈɪnəs(ə)nt/",
+    "explains": [
+      "adj. 无辜的"
+    ]
+  },
+  "innocuous": {
+    "word": "innocuous",
+    "phonetic": "/ɪ'nɒkjʊəs/",
+    "explains": [
+      "adj. 无害的；无伤大雅的"
+    ]
+  },
+  "innovate": {
+    "word": "innovate",
+    "phonetic": "/'inəveit/",
+    "explains": [
+      "v.  创新， 革新"
+    ]
+  },
+  "innovation": {
+    "word": "innovation",
+    "phonetic": "/ˌɪnəˈveɪʃn/",
+    "explains": [
+      "n. 创新，改革；新设施"
+    ]
+  },
+  "innovative": {
+    "word": "innovative",
+    "phonetic": "/'inəuveitiv/",
+    "explains": [
+      "adj.  革新的， 新颖的， 创新的； 富有革新精神的"
+    ]
+  },
+  "innovator": {
+    "word": "innovator",
+    "phonetic": "/'ɪnəveɪtə(r)/",
+    "explains": [
+      "n. 改革者, 革新者"
+    ]
+  },
+  "innuendo": {
+    "word": "innuendo",
+    "phonetic": "/,ɪnjʊ'endəʊ/",
+    "explains": [
+      "n. 暗讽(的话), 影射(的话)"
+    ]
+  },
+  "innumerable": {
+    "word": "innumerable",
+    "phonetic": "/ɪ'njuːm(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无数的，数不清的"
+    ]
+  },
+  "inoculate": {
+    "word": "inoculate",
+    "phonetic": "/ɪ'nɒkjʊleɪt/",
+    "explains": [
+      "v. [医] 接种；嫁接；灌输"
+    ]
+  },
+  "inoculation": {
+    "word": "inoculation",
+    "phonetic": "/ɪ,nɒkjʊ'leɪʃn/",
+    "explains": [
+      "n. 接木, 接种, 接插芽"
+    ]
+  },
+  "inoffensive": {
+    "word": "inoffensive",
+    "phonetic": "/ɪnə'fensɪv/",
+    "explains": [
+      "adj. 不触犯人的,无害的"
+    ]
+  },
+  "inordinate": {
+    "word": "inordinate",
+    "phonetic": "/ɪ'nɔːdɪnət/",
+    "explains": [
+      "adj. 过度的；无节制的；紊乱的"
+    ]
+  },
+  "inorganic": {
+    "word": "inorganic",
+    "phonetic": "/ɪnɔː'gænɪk/",
+    "explains": [
+      "adj. 无生物的；无机的"
+    ]
+  },
+  "input": {
+    "word": "input",
+    "phonetic": "/'ɪnpʊt/",
+    "explains": [
+      "n. 输入；投入的资金"
+    ]
+  },
+  "inquest": {
+    "word": "inquest",
+    "phonetic": "/'ɪnkwest/",
+    "explains": [
+      "n. 审讯；验尸；讯问"
+    ]
+  },
+  "inquietude": {
+    "word": "inquietude",
+    "phonetic": "/ɪn'kwaɪətjuːd/",
+    "explains": [
+      "n. 不安"
+    ]
+  },
+  "inquire": {
+    "word": "inquire",
+    "phonetic": "/ɪnˈkwaɪə/",
+    "explains": [
+      "v. 询问"
+    ]
+  },
+  "inquiring": {
+    "word": "inquiring",
+    "phonetic": "/ɪn'kwaɪrɪŋ/",
+    "explains": [
+      "adj. 询问的；打听的；爱追究的；v. 调查（inquire的ing形式）；打听"
+    ]
+  },
+  "inquiry": {
+    "word": "inquiry",
+    "phonetic": "/ɪnˈkwaɪərɪ/",
+    "explains": [
+      "n. 询问"
+    ]
+  },
+  "inquisition": {
+    "word": "inquisition",
+    "phonetic": "/ɪŋkwɪ'zɪʃ(ə)n/",
+    "explains": [
+      "n. 调查；宗教法庭；审讯"
+    ]
+  },
+  "inquisitive": {
+    "word": "inquisitive",
+    "phonetic": "/ɪn'kwɪzɪtɪv/",
+    "explains": [
+      "adj. 好奇的；好问的，爱打听的"
+    ]
+  },
+  "inroad": {
+    "word": "inroad",
+    "phonetic": "/'ɪnrəʊd/",
+    "explains": [
+      "n. 袭击"
+    ]
+  },
+  "insane": {
+    "word": "insane",
+    "phonetic": "/ɪn'seɪn/",
+    "explains": [
+      "adj. 愚蠢的; 疯狂的"
+    ]
+  },
+  "insanity": {
+    "word": "insanity",
+    "phonetic": "/ɪn'sænətɪ/",
+    "explains": [
+      "n. 精神错乱, 疯狂, 愚顽"
+    ]
+  },
+  "insatiable": {
+    "word": "insatiable",
+    "phonetic": "/ɪn'seɪʃəb(ə)l/",
+    "explains": [
+      "adj. 不知足的, 贪求无厌的"
+    ]
+  },
+  "inscribe": {
+    "word": "inscribe",
+    "phonetic": "/ɪn'skraɪb/",
+    "explains": [
+      "v. 题写"
+    ]
+  },
+  "inscription": {
+    "word": "inscription",
+    "phonetic": "/ɪn'skrɪpʃ(ə)n/",
+    "explains": [
+      "n. 题字, 碑铭"
+    ]
+  },
+  "inscrutable": {
+    "word": "inscrutable",
+    "phonetic": "/in'skruːtəbl/",
+    "explains": [
+      "adj.  不能预测的； 难以理解的； 不可思议的"
+    ]
+  },
+  "insect": {
+    "word": "insect",
+    "phonetic": "/ˈɪnsekt/",
+    "explains": [
+      "n. 昆虫"
+    ]
+  },
+  "insecte": {
+    "word": "insecte",
+    "phonetic": "",
+    "explains": [
+      "n.m. 昆虫"
+    ]
+  },
+  "insecticide": {
+    "word": "insecticide",
+    "phonetic": "/ɪn'sektɪsaɪd/",
+    "explains": [
+      "n. 杀虫剂"
+    ]
+  },
+  "insecure": {
+    "word": "insecure",
+    "phonetic": "/ˌɪnsɪˈkjʊə(r)/",
+    "explains": [
+      "adj. 不安全的,不稳固的"
+    ]
+  },
+  "insensate": {
+    "word": "insensate",
+    "phonetic": "/ɪn'senseɪt; -sət/",
+    "explains": [
+      "adj. 无感觉的；无情的；无生命的"
+    ]
+  },
+  "insensibility": {
+    "word": "insensibility",
+    "phonetic": "",
+    "explains": [
+      "n. 不关心，不在乎；无感觉"
+    ]
+  },
+  "insensible": {
+    "word": "insensible",
+    "phonetic": "/ɪn'sensɪb(ə)l/",
+    "explains": [
+      "adj. 昏迷的；无知觉的；麻木不仁的"
+    ]
+  },
+  "insensitive": {
+    "word": "insensitive",
+    "phonetic": "/ɪn'sensɪtɪv/",
+    "explains": [
+      "adj. 感觉迟钝的，对…没有感觉的"
+    ]
+  },
+  "insensitivity": {
+    "word": "insensitivity",
+    "phonetic": "",
+    "explains": [
+      "n. 感觉迟钝,不灵敏性"
+    ]
+  },
+  "inseparable": {
+    "word": "inseparable",
+    "phonetic": "/ɪn'sep(ə)rəb(ə)l/",
+    "explains": [
+      "adj. [数] 不可分割的；不能分离的；n. 不可分离的事物；形影不离的朋友"
+    ]
+  },
+  "insert": {
+    "word": "insert",
+    "phonetic": "/ɪn'sɜːt/",
+    "explains": [
+      "v. 插入；嵌入；登载"
+    ]
+  },
+  "insertion": {
+    "word": "insertion",
+    "phonetic": "/ɪn'sɜːʃ(ə)n/",
+    "explains": [
+      "n. 插入"
+    ]
+  },
+  "inset": {
+    "word": "inset",
+    "phonetic": "/'ɪnset/",
+    "explains": [
+      "n. 插图，插页；插入物；v. 嵌入；插入"
+    ]
+  },
   "inside": {
     "word": "inside",
     "phonetic": "/ˌɪnˈsaɪd/",
     "explains": [
       "prep. 在…… 里面 adv. 在里面"
+    ]
+  },
+  "insider": {
+    "word": "insider",
+    "phonetic": "/in'saidə/",
+    "explains": [
+      "n.  业内人士， 内线"
+    ]
+  },
+  "insidious": {
+    "word": "insidious",
+    "phonetic": "/ɪn'sɪdɪəs/",
+    "explains": [
+      "adj. 阴险的；隐伏的；暗中为害的；狡猾的"
+    ]
+  },
+  "insight": {
+    "word": "insight",
+    "phonetic": "/'ɪnsaɪt/",
+    "explains": [
+      "n. 洞察力；洞悉，见识"
+    ]
+  },
+  "insightful": {
+    "word": "insightful",
+    "phonetic": "/'ɪnsaɪtf(ʊ)l/",
+    "explains": [
+      "adj. 有深刻见解的, 富有洞察力的"
+    ]
+  },
+  "insignia": {
+    "word": "insignia",
+    "phonetic": "/ɪn'sɪgnɪə/",
+    "explains": [
+      "n. 勋章, 徽章"
+    ]
+  },
+  "insignificant": {
+    "word": "insignificant",
+    "phonetic": "/ɪnsɪg'nɪfɪk(ə)nt/",
+    "explains": [
+      "adj. 无意义的；低微的"
+    ]
+  },
+  "insincere": {
+    "word": "insincere",
+    "phonetic": "/ɪnsɪn'sɪə/",
+    "explains": [
+      "adj. 不诚实的；虚假的"
+    ]
+  },
+  "insinuate": {
+    "word": "insinuate",
+    "phonetic": "/ɪn'sɪnjʊeɪt/",
+    "explains": [
+      "v. 暗示；使逐渐而巧妙地取得；使迂回地潜入"
+    ]
+  },
+  "insipid": {
+    "word": "insipid",
+    "phonetic": "/ɪn'sɪpɪd/",
+    "explains": [
+      "adj. 无味的，枯燥乏味的；单调的"
+    ]
+  },
+  "insist": {
+    "word": "insist",
+    "phonetic": "/ɪnˈsɪst/",
+    "explains": [
+      "v. 坚持"
+    ]
+  },
+  "insistence": {
+    "word": "insistence",
+    "phonetic": "/ɪn'sɪst(ə)ns/",
+    "explains": [
+      "n. 坚持, 坚决主张"
+    ]
+  },
+  "insistent": {
+    "word": "insistent",
+    "phonetic": "/ɪn'sɪst(ə)nt/",
+    "explains": [
+      "adj. 坚持的"
+    ]
+  },
+  "insofar": {
+    "word": "insofar",
+    "phonetic": "/ɪnsə(ʊ)'fɑː/",
+    "explains": [
+      "adv. 在…的范围；在…情况下"
+    ]
+  },
+  "insolate": {
+    "word": "insolate",
+    "phonetic": "/'ɪnsəʊleɪt/",
+    "explains": [
+      "v. 曝晒"
+    ]
+  },
+  "insolent": {
+    "word": "insolent",
+    "phonetic": "/'ɪns(ə)l(ə)nt/",
+    "explains": [
+      "adj. 蛮横的，粗鲁的"
+    ]
+  },
+  "insoluble": {
+    "word": "insoluble",
+    "phonetic": "/ɪn'sɒljʊb(ə)l/",
+    "explains": [
+      "adj. 不能溶解的, 不能解决的"
+    ]
+  },
+  "insolvency": {
+    "word": "insolvency",
+    "phonetic": "/in'sɔlvənsi/",
+    "explains": [
+      "n.  无力偿还； 破产"
+    ]
+  },
+  "insolvent": {
+    "word": "insolvent",
+    "phonetic": "/in'sɔlvənt/",
+    "explains": [
+      "adj.  破产的， 资不抵债的"
+    ]
+  },
+  "insomnia": {
+    "word": "insomnia",
+    "phonetic": "/ɪn'sɒmnɪə/",
+    "explains": [
+      "n. 失眠症，失眠"
+    ]
+  },
+  "insomniac": {
+    "word": "insomniac",
+    "phonetic": "/ɪn'sɒmnɪæk/",
+    "explains": [
+      "n. 失眠症患者"
+    ]
+  },
+  "insomuch": {
+    "word": "insomuch",
+    "phonetic": "/ɪnsə(ʊ)'mʌtʃ/",
+    "explains": [
+      "adv. 就此程度而言；由于"
+    ]
+  },
+  "insouciance": {
+    "word": "insouciance",
+    "phonetic": "/ɪn'susɪəns/",
+    "explains": [
+      "n. 无忧无虑；漫不经心；满不在乎"
+    ]
+  },
+  "inspect": {
+    "word": "inspect",
+    "phonetic": "/ɪn'spekt/",
+    "explains": [
+      "v. 检查，审查；检阅"
+    ]
+  },
+  "inspection": {
+    "word": "inspection",
+    "phonetic": "/ɪn'spekʃn/",
+    "explains": [
+      "n. 检阅；检查，审查"
+    ]
+  },
+  "inspector": {
+    "word": "inspector",
+    "phonetic": "/ɪn'spektə/",
+    "explains": [
+      "n. 检查员；巡官"
+    ]
+  },
+  "inspiration": {
+    "word": "inspiration",
+    "phonetic": "/ˌɪnspəˈreɪʃn/",
+    "explains": [
+      "n. 灵感；妙想；鼓舞"
+    ]
+  },
+  "inspire": {
+    "word": "inspire",
+    "phonetic": "/ɪnˈspaɪə/",
+    "explains": [
+      "v. 鼓舞"
+    ]
+  },
+  "inspired": {
+    "word": "inspired",
+    "phonetic": "/ɪn'spaɪəd/",
+    "explains": [
+      "adj. 得到灵感的, 有灵感的, 权威人士(或官方)授意的"
+    ]
+  },
+  "inspiring": {
+    "word": "inspiring",
+    "phonetic": "/ɪn'spaɪərɪŋ/",
+    "explains": [
+      "adj. 令人振奋的"
+    ]
+  },
+  "inspissate": {
+    "word": "inspissate",
+    "phonetic": "/ɪn'spɪseɪt/",
+    "explains": [
+      "v. 浓缩"
+    ]
+  },
+  "instability": {
+    "word": "instability",
+    "phonetic": "/ɪnstə'bɪlɪtɪ/",
+    "explains": [
+      "n. 不稳定性"
+    ]
+  },
+  "install": {
+    "word": "install",
+    "phonetic": "/ɪnˈstɔːl/",
+    "explains": [
+      "v. 安装"
+    ]
+  },
+  "installation": {
+    "word": "installation",
+    "phonetic": "/ɪnstə'leɪʃ(ə)n/",
+    "explains": [
+      "n. 安装；装置；设施"
+    ]
+  },
+  "installment": {
+    "word": "installment",
+    "phonetic": "/ɪn'stɔ:lmənt/",
+    "explains": [
+      "n. 分期付款"
+    ]
+  },
+  "instalment": {
+    "word": "instalment",
+    "phonetic": "/in'stɔːlmənt/",
+    "explains": [
+      "n.  分期付款"
+    ]
+  },
+  "instance": {
+    "word": "instance",
+    "phonetic": "/ˈɪnst(ə)ns/",
+    "explains": [
+      "n. 例子"
+    ]
+  },
+  "instant": {
+    "word": "instant",
+    "phonetic": "/ˈɪnst(ə)nt/",
+    "explains": [
+      "adj. 立即的"
+    ]
+  },
+  "instantaneous": {
+    "word": "instantaneous",
+    "phonetic": "/,ɪnst(ə)n'teɪnɪəs/",
+    "explains": [
+      "adj. 瞬间的，即刻的"
+    ]
+  },
+  "instantaneously": {
+    "word": "instantaneously",
+    "phonetic": "/,instən'teinjəsli/",
+    "explains": [
+      "adv. 即刻,突如其来地"
+    ]
+  },
+  "instantiate": {
+    "word": "instantiate",
+    "phonetic": "/ɪn'stænʃɪeɪt/",
+    "explains": [
+      "v. 例示"
+    ]
+  },
+  "instantly": {
+    "word": "instantly",
+    "phonetic": "/'ɪnst(ə)ntlɪ/",
+    "explains": [
+      "adv. 立即，即刻"
     ]
   },
   "instead": {
@@ -132,11 +5263,662 @@
       "adv. 代替；顶替；反而"
     ]
   },
+  "instep": {
+    "word": "instep",
+    "phonetic": "/'ɪnstep/",
+    "explains": [
+      "n. 脚背；背部；脚背形的东西"
+    ]
+  },
+  "instigate": {
+    "word": "instigate",
+    "phonetic": "/'ɪnstɪgeɪt/",
+    "explains": [
+      "v. 鼓动"
+    ]
+  },
+  "instigation": {
+    "word": "instigation",
+    "phonetic": "",
+    "explains": [
+      "n, 教唆,. 鼓动, 煽动"
+    ]
+  },
+  "instil": {
+    "word": "instil",
+    "phonetic": "/in'stil/",
+    "explains": [
+      "v. 逐渐灌输；使渗透；滴注"
+    ]
+  },
+  "instill": {
+    "word": "instill",
+    "phonetic": "/in'stil/",
+    "explains": [
+      "v. 徐徐滴入；逐渐灌输"
+    ]
+  },
+  "instinct": {
+    "word": "instinct",
+    "phonetic": "/ˈɪnstɪŋ(k)t/",
+    "explains": [
+      "n. 本能"
+    ]
+  },
+  "instinctive": {
+    "word": "instinctive",
+    "phonetic": "/in'stiŋktiv/",
+    "explains": [
+      "adj.  本能的， 直觉的"
+    ]
+  },
+  "instinctively": {
+    "word": "instinctively",
+    "phonetic": "/in'stiŋktivli/",
+    "explains": [
+      "adv. 本能地"
+    ]
+  },
+  "institut": {
+    "word": "institut",
+    "phonetic": "",
+    "explains": [
+      "n.m. 学院；研究所"
+    ]
+  },
+  "institute": {
+    "word": "institute",
+    "phonetic": "/ˈɪnstɪtjuːt/",
+    "explains": [
+      "n. 机构"
+    ]
+  },
+  "institution": {
+    "word": "institution",
+    "phonetic": "/ˌɪnstɪˈtjuːʃ(ə)n/",
+    "explains": [
+      "n. 机构"
+    ]
+  },
+  "institutional": {
+    "word": "institutional",
+    "phonetic": "/ɪnstɪ'tjuːʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 制度的；制度上的"
+    ]
+  },
+  "instituto": {
+    "word": "instituto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 中学；学院"
+    ]
+  },
+  "institutrice": {
+    "word": "institutrice",
+    "phonetic": "",
+    "explains": [
+      "n.f. 小学女教师"
+    ]
+  },
+  "instruct": {
+    "word": "instruct",
+    "phonetic": "/ɪnˈstrʌkt/",
+    "explains": [
+      "v. 指导"
+    ]
+  },
   "instruction": {
     "word": "instruction",
     "phonetic": "/ɪnˈstrʌkʃn/",
     "explains": [
       "n. 指令；命令；指示；教导"
+    ]
+  },
+  "instructive": {
+    "word": "instructive",
+    "phonetic": "/ɪn'strʌktɪv/",
+    "explains": [
+      "adj. 有益的, 教育性的"
+    ]
+  },
+  "instructor": {
+    "word": "instructor",
+    "phonetic": "/ɪn'strʌktə/",
+    "explains": [
+      "n. 指导者，教员"
+    ]
+  },
+  "instrument": {
+    "word": "instrument",
+    "phonetic": "/ˈɪnstrʊmənt/",
+    "explains": [
+      "n. 乐器；工具"
+    ]
+  },
+  "instrumental": {
+    "word": "instrumental",
+    "phonetic": "/ɪnstrʊ'ment(ə)l/",
+    "explains": [
+      "adj. 器乐的；有帮助的"
+    ]
+  },
+  "instrumentalist": {
+    "word": "instrumentalist",
+    "phonetic": "/ɪnstrə'ment(ə)lɪst/",
+    "explains": [
+      "n. 乐器演奏家"
+    ]
+  },
+  "instrumento": {
+    "word": "instrumento",
+    "phonetic": "",
+    "explains": [
+      "n.m. 乐器；工具"
+    ]
+  },
+  "insubordinate": {
+    "word": "insubordinate",
+    "phonetic": "/,ɪnsə'bɔːdɪnət/",
+    "explains": [
+      "adj. 不顺从的, 不听话的"
+    ]
+  },
+  "insufferable": {
+    "word": "insufferable",
+    "phonetic": "/ɪn'sʌf(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 难以忍受的"
+    ]
+  },
+  "insufficiency": {
+    "word": "insufficiency",
+    "phonetic": "/ɪnsə'fɪʃ(ə)nsɪ/",
+    "explains": [
+      "n. 不足"
+    ]
+  },
+  "insufficient": {
+    "word": "insufficient",
+    "phonetic": "/ɪnsə'fɪʃ(ə)nt/",
+    "explains": [
+      "adj. 不足的；不适当的"
+    ]
+  },
+  "insular": {
+    "word": "insular",
+    "phonetic": "/'ɪnsjʊlə/",
+    "explains": [
+      "adj. 海岛的, 岛民的, 岛特有的, 孤立的, 超然物外的"
+    ]
+  },
+  "insularity": {
+    "word": "insularity",
+    "phonetic": "",
+    "explains": [
+      "n. 岛国性质(或状态), 岛屿生活状况, 与外界隔绝的生活状况, (思想, 观点等的)偏狭, 性僵化"
+    ]
+  },
+  "insulate": {
+    "word": "insulate",
+    "phonetic": "/'ɪnsjʊleɪt/",
+    "explains": [
+      "v. 使绝缘，使绝热"
+    ]
+  },
+  "insulation": {
+    "word": "insulation",
+    "phonetic": "/ɪnsjʊ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 绝缘"
+    ]
+  },
+  "insulator": {
+    "word": "insulator",
+    "phonetic": "/'ɪnsjʊleɪtə/",
+    "explains": [
+      "n. 隔离者；绝缘体"
+    ]
+  },
+  "insulin": {
+    "word": "insulin",
+    "phonetic": "/'ɪnsjʊlɪn/",
+    "explains": [
+      "n. [生化][药] 胰岛素"
+    ]
+  },
+  "insult": {
+    "word": "insult",
+    "phonetic": "/ˈɪnsʌlt; ɪnˈsʌlt/",
+    "explains": [
+      "v. 侮辱　n. 侮辱"
+    ]
+  },
+  "insulter": {
+    "word": "insulter",
+    "phonetic": "",
+    "explains": [
+      "v. 辱骂"
+    ]
+  },
+  "insulting": {
+    "word": "insulting",
+    "phonetic": "/ɪn'sʌltɪŋ/",
+    "explains": [
+      "adj. 侮辱的，无礼的；污蔑的；损害人体的；v. 侮辱；损害（insult的ing形式）"
+    ]
+  },
+  "insuperable": {
+    "word": "insuperable",
+    "phonetic": "/ɪn'suːp(ə)rəb(ə)l; ɪn'sjuː/",
+    "explains": [
+      "adj. 不能克服的；无敌的"
+    ]
+  },
+  "insurance": {
+    "word": "insurance",
+    "phonetic": "/ɪnˈʃʊər(ə)ns/",
+    "explains": [
+      "n. 保险"
+    ]
+  },
+  "insure": {
+    "word": "insure",
+    "phonetic": "/ɪn'ʃɔː; ɪn'ʃʊə/",
+    "explains": [
+      "v. 给…保险；确保"
+    ]
+  },
+  "insured": {
+    "word": "insured",
+    "phonetic": "/ɪn'ʃʊəd/",
+    "explains": [
+      "n. 被保险人；adj. 已投保的；v. 确保；给…保险（insure的过去式和过去分词）"
+    ]
+  },
+  "insurer": {
+    "word": "insurer",
+    "phonetic": "/ɪn'ʃʊərə/",
+    "explains": [
+      "n. 保险公司；承保人"
+    ]
+  },
+  "insurgent": {
+    "word": "insurgent",
+    "phonetic": "/ɪn'sɜːdʒ(ə)nt/",
+    "explains": [
+      "adj. 叛乱的；起义的；n. 叛乱者；起义者"
+    ]
+  },
+  "insurmountable": {
+    "word": "insurmountable",
+    "phonetic": "/,ɪnsə'maʊntəb(ə)l/",
+    "explains": [
+      "adj. 不能克服的,不能超越的"
+    ]
+  },
+  "insurrection": {
+    "word": "insurrection",
+    "phonetic": "/,ɪnsə'rekʃ(ə)n/",
+    "explains": [
+      "n. 起义"
+    ]
+  },
+  "intact": {
+    "word": "intact",
+    "phonetic": "/ɪn'tækt/",
+    "explains": [
+      "adj. 完整的；原封不动的；未受损伤的"
+    ]
+  },
+  "intaglio": {
+    "word": "intaglio",
+    "phonetic": "/ɪn'tælɪəʊ; -'tɑːl-/",
+    "explains": [
+      "n. 凹雕, 阴雕vt凹雕"
+    ]
+  },
+  "intake": {
+    "word": "intake",
+    "phonetic": "/'ɪnteɪk/",
+    "explains": [
+      "n. 吸入；输入能量"
+    ]
+  },
+  "intangible": {
+    "word": "intangible",
+    "phonetic": "/in'tændʒəbl/",
+    "explains": [
+      "adj.  难以理解的； 无形的"
+    ]
+  },
+  "integer": {
+    "word": "integer",
+    "phonetic": "/'ɪntɪdʒə/",
+    "explains": [
+      "n. [数] 整数；整体；完整的事物"
+    ]
+  },
+  "integral": {
+    "word": "integral",
+    "phonetic": "/ˈɪntɪɡrəl/",
+    "explains": [
+      "adj. 作为组成部分的；内置的"
+    ]
+  },
+  "integrate": {
+    "word": "integrate",
+    "phonetic": "/'ɪntɪgreɪt/",
+    "explains": [
+      "v. 使结合，使并入"
+    ]
+  },
+  "integrated": {
+    "word": "integrated",
+    "phonetic": "/'ɪntɪgreɪtɪd/",
+    "explains": [
+      "adj. 综合的；完整的；互相协调的；v. 整合；使…成整体（integrate的过去分词）"
+    ]
+  },
+  "integration": {
+    "word": "integration",
+    "phonetic": "/ˌinti'greiʃən/",
+    "explains": [
+      "n.  结合， 综合"
+    ]
+  },
+  "integrative": {
+    "word": "integrative",
+    "phonetic": "/'ɪntɪɡreɪtɪv/",
+    "explains": [
+      "adj. 综合的, 一体化的"
+    ]
+  },
+  "integrity": {
+    "word": "integrity",
+    "phonetic": "/ɪn'tegrɪtɪ/",
+    "explains": [
+      "n. 诚实，正直"
+    ]
+  },
+  "integument": {
+    "word": "integument",
+    "phonetic": "/ɪn'tegjʊm(ə)nt/",
+    "explains": [
+      "n. 覆盖物"
+    ]
+  },
+  "intellect": {
+    "word": "intellect",
+    "phonetic": "/'ɪntəlekt/",
+    "explains": [
+      "n. 理智，智力，才智"
+    ]
+  },
+  "intellectual": {
+    "word": "intellectual",
+    "phonetic": "/ˌɪntɪˈlektʃʊəl/",
+    "explains": [
+      "adj. 智力的"
+    ]
+  },
+  "intellectually": {
+    "word": "intellectually",
+    "phonetic": "/ˌɪntɪˈlektʃʊəli/",
+    "explains": [
+      "adv. 理智地, 与智力(或思维)有关地"
+    ]
+  },
+  "intelligence": {
+    "word": "intelligence",
+    "phonetic": "/ɪnˈtelɪdʒ(ə)ns/",
+    "explains": [
+      "n. 智力"
+    ]
+  },
+  "intelligent": {
+    "word": "intelligent",
+    "phonetic": "/ɪnˈtelɪdʒ(ə)nt/",
+    "explains": [
+      "adj. 聪明的"
+    ]
+  },
+  "intelligently": {
+    "word": "intelligently",
+    "phonetic": "",
+    "explains": [
+      "adv. 聪明地；理智地"
+    ]
+  },
+  "intelligible": {
+    "word": "intelligible",
+    "phonetic": "/ɪn'telɪdʒɪb(ə)l/",
+    "explains": [
+      "adj. 可理解的；明了的；仅能用智力了解的"
+    ]
+  },
+  "intemperate": {
+    "word": "intemperate",
+    "phonetic": "/ɪn'temp(ə)rət/",
+    "explains": [
+      "adj. 放纵的"
+    ]
+  },
+  "intend": {
+    "word": "intend",
+    "phonetic": "/ɪnˈtend/",
+    "explains": [
+      "v. 打算"
+    ]
+  },
+  "intense": {
+    "word": "intense",
+    "phonetic": "/ɪnˈtens/",
+    "explains": [
+      "adj. 强烈的"
+    ]
+  },
+  "intensely": {
+    "word": "intensely",
+    "phonetic": "/in'tensli/",
+    "explains": [
+      "adv. 激烈地；热切地"
+    ]
+  },
+  "intensify": {
+    "word": "intensify",
+    "phonetic": "/ɪn'tensɪfaɪ/",
+    "explains": [
+      "v. 加强,强化"
+    ]
+  },
+  "intensity": {
+    "word": "intensity",
+    "phonetic": "/ɪn'tensɪtɪ/",
+    "explains": [
+      "n. 强烈，剧烈；〔光、声等的〕强度"
+    ]
+  },
+  "intensive": {
+    "word": "intensive",
+    "phonetic": "/ɪn'tensɪv/",
+    "explains": [
+      "adj. 加强的；精耕细作的"
+    ]
+  },
+  "intensively": {
+    "word": "intensively",
+    "phonetic": "/in'tensivli/",
+    "explains": [
+      "adv. 加强地, 集中地"
+    ]
+  },
+  "intent": {
+    "word": "intent",
+    "phonetic": "/ɪn'tent/",
+    "explains": [
+      "adj. 目不转睛的，热切的"
+    ]
+  },
+  "intention": {
+    "word": "intention",
+    "phonetic": "/ɪnˈtenʃ(ə)n/",
+    "explains": [
+      "n. 意图"
+    ]
+  },
+  "intentional": {
+    "word": "intentional",
+    "phonetic": "/ɪn'tenʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 故意的，有意识的"
+    ]
+  },
+  "intentionally": {
+    "word": "intentionally",
+    "phonetic": "",
+    "explains": [
+      "adv. 有意地,故意地"
+    ]
+  },
+  "intently": {
+    "word": "intently",
+    "phonetic": "/ɪn'tentlɪ/",
+    "explains": [
+      "adv. 专心地, 集中地"
+    ]
+  },
+  "inter": {
+    "word": "inter",
+    "phonetic": "/ɪn'tɜː/",
+    "explains": [
+      "v. 埋葬"
+    ]
+  },
+  "interact": {
+    "word": "interact",
+    "phonetic": "/ˌɪntərˈækt/",
+    "explains": [
+      "v. 互动"
+    ]
+  },
+  "interaction": {
+    "word": "interaction",
+    "phonetic": "/ˌɪntərˈækʃ(ə)n/",
+    "explains": [
+      "n. 互动"
+    ]
+  },
+  "interactive": {
+    "word": "interactive",
+    "phonetic": "/ˌintər'æktiv/",
+    "explains": [
+      "adj.  互动式的"
+    ]
+  },
+  "intercede": {
+    "word": "intercede",
+    "phonetic": "/,ɪntə'siːd/",
+    "explains": [
+      "v. 调解，调停；求情，说项"
+    ]
+  },
+  "intercept": {
+    "word": "intercept",
+    "phonetic": "/,ɪntə'sept/",
+    "explains": [
+      "v. 拦截；截断；窃听；n. 拦截；[数] 截距；截获的情报"
+    ]
+  },
+  "interceptor": {
+    "word": "interceptor",
+    "phonetic": "",
+    "explains": [
+      "拦截器"
+    ]
+  },
+  "intercession": {
+    "word": "intercession",
+    "phonetic": "/,ɪntə'seʃ(ə)n/",
+    "explains": [
+      "n. 调解；说情；仲裁"
+    ]
+  },
+  "interchange": {
+    "word": "interchange",
+    "phonetic": "/ɪntə'tʃeɪn(d)ʒ/",
+    "explains": [
+      "v. （指两人等）交换；互换；n. 互换；立体交叉道"
+    ]
+  },
+  "interchangeable": {
+    "word": "interchangeable",
+    "phonetic": "/ɪntə'tʃeɪn(d)ʒəbl/",
+    "explains": [
+      "adj. 可互换的,可交换的"
+    ]
+  },
+  "intercity": {
+    "word": "intercity",
+    "phonetic": "/ɪntə'sɪtɪ/",
+    "explains": [
+      "adj. 城市间的"
+    ]
+  },
+  "intercom": {
+    "word": "intercom",
+    "phonetic": "/'ɪntəkɒm/",
+    "explains": [
+      "n. 对讲机；内部通话装置"
+    ]
+  },
+  "intercommunity": {
+    "word": "intercommunity",
+    "phonetic": "/ɪntəkə'mjuːnɪtɪ/",
+    "explains": [
+      "n. 共同性, 共有"
+    ]
+  },
+  "interconnect": {
+    "word": "interconnect",
+    "phonetic": "/ɪntəkə'nekt/",
+    "explains": [
+      "v. 使互相联系"
+    ]
+  },
+  "intercontinental": {
+    "word": "intercontinental",
+    "phonetic": "/,ɪntəkɒntɪ'nent(ə)l/",
+    "explains": [
+      "adj. 洲际的；大陆间的"
+    ]
+  },
+  "intercourse": {
+    "word": "intercourse",
+    "phonetic": "/'ɪntəkɔːs/",
+    "explains": [
+      "n. 交际，往来，交流"
+    ]
+  },
+  "interdependence": {
+    "word": "interdependence",
+    "phonetic": "/,ɪntədɪ'pendəns/",
+    "explains": [
+      "n. 互相依赖"
+    ]
+  },
+  "interdependent": {
+    "word": "interdependent",
+    "phonetic": "/ɪntədɪ'pendənt/",
+    "explains": [
+      "adj. 相互依赖的,互助的"
+    ]
+  },
+  "interdict": {
+    "word": "interdict",
+    "phonetic": "/'ɪntədɪkt/",
+    "explains": [
+      "v. 阻断"
     ]
   },
   "interest": {
@@ -160,11 +5942,228 @@
       "adj. 有趣的；引起兴趣的"
     ]
   },
+  "interestingly": {
+    "word": "interestingly",
+    "phonetic": "/'ɪntrəstɪŋlɪ/",
+    "explains": [
+      "adv. 有趣地"
+    ]
+  },
+  "interface": {
+    "word": "interface",
+    "phonetic": "/ˈɪntəfeɪs/",
+    "explains": [
+      "n. 界面"
+    ]
+  },
+  "interfere": {
+    "word": "interfere",
+    "phonetic": "/ˌɪntəˈfɪə/",
+    "explains": [
+      "v. 干涉"
+    ]
+  },
+  "interference": {
+    "word": "interference",
+    "phonetic": "/ɪntə'fɪər(ə)ns/",
+    "explains": [
+      "n. 干涉，干预；阻碍"
+    ]
+  },
+  "interferometer": {
+    "word": "interferometer",
+    "phonetic": "/,ɪntəfə'rɒmɪtə/",
+    "explains": [
+      "n. 干涉计"
+    ]
+  },
+  "intergalactic": {
+    "word": "intergalactic",
+    "phonetic": "/,ɪntəgə'læktɪk/",
+    "explains": [
+      "adj. 银河间的, 星际间的"
+    ]
+  },
+  "interglacial": {
+    "word": "interglacial",
+    "phonetic": "/ɪntə'gleɪsɪəl; -ʃ(ə)l/",
+    "explains": [
+      "adj. 间冰期的"
+    ]
+  },
+  "interim": {
+    "word": "interim",
+    "phonetic": "/'ɪnt(ə)rɪm/",
+    "explains": [
+      "adj. 临时的，暂时的；中间的；间歇的；n. 过渡时期，中间时期；暂定"
+    ]
+  },
+  "interior": {
+    "word": "interior",
+    "phonetic": "/ɪn'tɪɜːrɪə/",
+    "explains": [
+      "adj. 内的；内地的内部；n. 内部"
+    ]
+  },
+  "interject": {
+    "word": "interject",
+    "phonetic": "/,ɪntə'dʒekt/",
+    "explains": [
+      "v. 插嘴, 突然插入"
+    ]
+  },
+  "interjection": {
+    "word": "interjection",
+    "phonetic": "/ɪntə'dʒekʃ(ə)n/",
+    "explains": [
+      "n. [语] 感叹词；插入语；突然的发声"
+    ]
+  },
+  "interlace": {
+    "word": "interlace",
+    "phonetic": "/ɪntə'leɪs/",
+    "explains": [
+      "v. 使交织, 使交错"
+    ]
+  },
+  "interlock": {
+    "word": "interlock",
+    "phonetic": "/ɪntə'lɒk/",
+    "explains": [
+      "v. 互锁"
+    ]
+  },
+  "interlocutor": {
+    "word": "interlocutor",
+    "phonetic": "/,ɪntə'lɒkjʊtə/",
+    "explains": [
+      "n. 对话者；谈话者"
+    ]
+  },
+  "interloper": {
+    "word": "interloper",
+    "phonetic": "/'ɪntələʊpə/",
+    "explains": [
+      "n. 闯入者；（为私利）干涉他人事务者；无执照营业者"
+    ]
+  },
+  "interlude": {
+    "word": "interlude",
+    "phonetic": "/'intəluːd/",
+    "explains": [
+      "n.  间隔的时间， 间歇"
+    ]
+  },
+  "intermediary": {
+    "word": "intermediary",
+    "phonetic": "/,ɪntə'miːdɪərɪ/",
+    "explains": [
+      "adj. 中间的；媒介的；中途的；n. 中间人；仲裁者；调解者；媒介物"
+    ]
+  },
+  "intermediate": {
+    "word": "intermediate",
+    "phonetic": "/ˌɪntəˈmiːdɪət/",
+    "explains": [
+      "adj. 中级的"
+    ]
+  },
+  "intermediation": {
+    "word": "intermediation",
+    "phonetic": "/ˌintəˌmiːdi'eiʃən/",
+    "explains": [
+      "n.  调停， 仲裁， 调解"
+    ]
+  },
+  "interment": {
+    "word": "interment",
+    "phonetic": "/ɪn'tɜːm(ə)nt/",
+    "explains": [
+      "n. 葬礼；埋葬"
+    ]
+  },
+  "interminable": {
+    "word": "interminable",
+    "phonetic": "/ɪn'tɜːmɪnəb(ə)l/",
+    "explains": [
+      "adj. 无限的, 冗长的"
+    ]
+  },
+  "intermingle": {
+    "word": "intermingle",
+    "phonetic": "/ɪntə'mɪŋg(ə)l/",
+    "explains": [
+      "n. 混合"
+    ]
+  },
+  "intermission": {
+    "word": "intermission",
+    "phonetic": "/ɪntə'mɪʃ(ə)n/",
+    "explains": [
+      "n. 间断"
+    ]
+  },
+  "intermit": {
+    "word": "intermit",
+    "phonetic": "/,ɪntə'mɪt/",
+    "explains": [
+      "v. 使中断"
+    ]
+  },
+  "intermittent": {
+    "word": "intermittent",
+    "phonetic": "/ɪntə'mɪt(ə)nt/",
+    "explains": [
+      "adj. 间歇的；断断续续的；间歇性"
+    ]
+  },
+  "intermittently": {
+    "word": "intermittently",
+    "phonetic": "/intə'mitəntli/",
+    "explains": [
+      "adv. 间歇地"
+    ]
+  },
+  "intern": {
+    "word": "intern",
+    "phonetic": "/'ɪntɜːn/",
+    "explains": [
+      "n. 实习医师, 被拘留者"
+    ]
+  },
+  "internal": {
+    "word": "internal",
+    "phonetic": "/ɪnˈtɜːn(ə)l/",
+    "explains": [
+      "adj. 内部的"
+    ]
+  },
+  "internally": {
+    "word": "internally",
+    "phonetic": "/in'tə:nəli/",
+    "explains": [
+      "adv. 内部地, 国内地"
+    ]
+  },
   "international": {
     "word": "international",
     "phonetic": "/ˌɪntəˈnæʃnəl/",
     "explains": [
       "adj. 国际的；两国或以上的"
+    ]
+  },
+  "internationally": {
+    "word": "internationally",
+    "phonetic": "",
+    "explains": [
+      "adv. 国际性地, 在国际间"
+    ]
+  },
+  "internecine": {
+    "word": "internecine",
+    "phonetic": "/,ɪntə'niːsaɪn/",
+    "explains": [
+      "adj. 互相残杀的, 两败俱伤的, 内部冲突的"
     ]
   },
   "internet": {
@@ -174,11 +6173,312 @@
       "n. 互联网；因特网"
     ]
   },
+  "internment": {
+    "word": "internment",
+    "phonetic": "/ɪn'tɜːnmənt/",
+    "explains": [
+      "n. 扣留, 收容"
+    ]
+  },
+  "interpersonal": {
+    "word": "interpersonal",
+    "phonetic": "/ɪntə'pɜːs(ə)n(ə)l/",
+    "explains": [
+      "adj. 人与人之间的, 人际关系的"
+    ]
+  },
+  "interplanetary": {
+    "word": "interplanetary",
+    "phonetic": "/ɪntə'plænɪt(ə)rɪ/",
+    "explains": [
+      "adj. 太阳系内的,行星间的"
+    ]
+  },
+  "interplay": {
+    "word": "interplay",
+    "phonetic": "/'ɪntəpleɪ/",
+    "explains": [
+      "n. 相互影响"
+    ]
+  },
+  "interpolate": {
+    "word": "interpolate",
+    "phonetic": "/ɪn'tɜːpəleɪt/",
+    "explains": [
+      "v. 篡改；插入新语句"
+    ]
+  },
+  "interpolation": {
+    "word": "interpolation",
+    "phonetic": "/ɪn,tɜːpəʊ'leɪʃən/",
+    "explains": [
+      "n. 插入；篡改；填写；插值"
+    ]
+  },
+  "interpose": {
+    "word": "interpose",
+    "phonetic": "/ɪntə'pəʊz/",
+    "explains": [
+      "v. 提出（异议等）；使插入；使干涉"
+    ]
+  },
+  "interposition": {
+    "word": "interposition",
+    "phonetic": "/ɪntəpə'zɪʃ(ə)n/",
+    "explains": [
+      "n. 干涉，介入；插入，放入"
+    ]
+  },
+  "interpret": {
+    "word": "interpret",
+    "phonetic": "/ɪnˈtɜːprɪt/",
+    "explains": [
+      "v. 解释；口译"
+    ]
+  },
+  "interpretation": {
+    "word": "interpretation",
+    "phonetic": "/ɪnˌtɜːprɪˈteɪʃ(ə)n/",
+    "explains": [
+      "n. 解释"
+    ]
+  },
+  "interpreter": {
+    "word": "interpreter",
+    "phonetic": "/ɪn'tɜːprɪtə/",
+    "explains": [
+      "n. 译员，口译者"
+    ]
+  },
+  "interregnum": {
+    "word": "interregnum",
+    "phonetic": "/,ɪntə'regnəm/",
+    "explains": [
+      "n. 空白期间, 空位期间, 中断"
+    ]
+  },
+  "interrelate": {
+    "word": "interrelate",
+    "phonetic": "/ɪntərɪ'leɪt/",
+    "explains": [
+      "v. (使)相互关连"
+    ]
+  },
+  "interrelationship": {
+    "word": "interrelationship",
+    "phonetic": "/,ɪntərɪ'leʃnʃɪp/",
+    "explains": [
+      "n. 相互关系"
+    ]
+  },
+  "interrogate": {
+    "word": "interrogate",
+    "phonetic": "/ɪn'terəgeɪt/",
+    "explains": [
+      "v. 询问，审问"
+    ]
+  },
+  "interrogative": {
+    "word": "interrogative",
+    "phonetic": "/,ɪntə'rɒgətɪv/",
+    "explains": [
+      "adj. 表示疑问的, 质问的"
+    ]
+  },
+  "interrumpir": {
+    "word": "interrumpir",
+    "phonetic": "",
+    "explains": [
+      "v. 打断"
+    ]
+  },
+  "interrupt": {
+    "word": "interrupt",
+    "phonetic": "/ˌɪntəˈrʌpt/",
+    "explains": [
+      "v. 打断"
+    ]
+  },
+  "interruption": {
+    "word": "interruption",
+    "phonetic": "/ɪntə'rʌpʃn/",
+    "explains": [
+      "n. 障碍物；中断，打断"
+    ]
+  },
+  "intersect": {
+    "word": "intersect",
+    "phonetic": "/ɪntə'sekt/",
+    "explains": [
+      "v. 贯穿, 交叉"
+    ]
+  },
+  "intersection": {
+    "word": "intersection",
+    "phonetic": "/ɪntə'sekʃ(ə)n/",
+    "explains": [
+      "n. 交叉；十字路口；交集；交叉点"
+    ]
+  },
+  "interservice": {
+    "word": "interservice",
+    "phonetic": "/,ɪntə'sɜːvɪs/",
+    "explains": [
+      "adj. 军种间的"
+    ]
+  },
+  "intersperse": {
+    "word": "intersperse",
+    "phonetic": "/ɪntə'spɜːs/",
+    "explains": [
+      "v. 点缀；散布"
+    ]
+  },
+  "interstate": {
+    "word": "interstate",
+    "phonetic": "/ɪntə'steɪt/",
+    "explains": [
+      "adj. 州际的"
+    ]
+  },
+  "interstellar": {
+    "word": "interstellar",
+    "phonetic": "/,ɪntə'stelə/",
+    "explains": [
+      "adj. 星际的"
+    ]
+  },
+  "interstice": {
+    "word": "interstice",
+    "phonetic": "/ɪn'tɜːstɪs/",
+    "explains": [
+      "n. 空隙, 裂缝"
+    ]
+  },
+  "interstitial": {
+    "word": "interstitial",
+    "phonetic": "/,ɪntə'stɪʃ(ə)l/",
+    "explains": [
+      "adj. 空隙的, 裂缝的,"
+    ]
+  },
+  "intertidal": {
+    "word": "intertidal",
+    "phonetic": "/ɪntə'taɪd(ə)l/",
+    "explains": [
+      "n&a. 潮间带(的)"
+    ]
+  },
+  "intertwine": {
+    "word": "intertwine",
+    "phonetic": "/ɪntə'twaɪn/",
+    "explains": [
+      "v. (使)纠缠,(使)缠绕"
+    ]
+  },
+  "interval": {
+    "word": "interval",
+    "phonetic": "/ˈɪntəv(ə)l/",
+    "explains": [
+      "n. 间隔"
+    ]
+  },
+  "intervene": {
+    "word": "intervene",
+    "phonetic": "/ɪntə'viːn/",
+    "explains": [
+      "v. 干涉，干预"
+    ]
+  },
+  "intervention": {
+    "word": "intervention",
+    "phonetic": "/ɪntə'venʃ(ə)n/",
+    "explains": [
+      "n. 干涉"
+    ]
+  },
+  "interventionist": {
+    "word": "interventionist",
+    "phonetic": "/ɪntə'venʃ(ə)nɪst/",
+    "explains": [
+      "adj. 干涉主义的；n. 干涉主义者"
+    ]
+  },
   "interview": {
     "word": "interview",
     "phonetic": "/ˈɪntəvjuː/",
     "explains": [
       "n./v. 采访；面试；接见"
+    ]
+  },
+  "interviewee": {
+    "word": "interviewee",
+    "phonetic": "/,ɪntəvjuː'iː/",
+    "explains": [
+      "n. 被接见者；被访问者"
+    ]
+  },
+  "interviewer": {
+    "word": "interviewer",
+    "phonetic": "/'ɪntɚvjuɚ/",
+    "explains": [
+      "n. 会见者"
+    ]
+  },
+  "interweave": {
+    "word": "interweave",
+    "phonetic": "/ɪntə'wiːv/",
+    "explains": [
+      "v. (使)交织, 织进, (使)混杂"
+    ]
+  },
+  "intestate": {
+    "word": "intestate",
+    "phonetic": "/ɪn'testeɪt/",
+    "explains": [
+      "adj. 没有立下遗嘱的, 不能根据遗嘱处分的"
+    ]
+  },
+  "intestinal": {
+    "word": "intestinal",
+    "phonetic": "/ɪnte'staɪn(ə)l; ɪn'testɪn(ə)l/",
+    "explains": [
+      "adj. 肠的"
+    ]
+  },
+  "intestine": {
+    "word": "intestine",
+    "phonetic": "/ɪn'testɪn/",
+    "explains": [
+      "adj. 内部的,国内的"
+    ]
+  },
+  "intimacy": {
+    "word": "intimacy",
+    "phonetic": "/'ɪntɪməsɪ/",
+    "explains": [
+      "n. 亲密, 隐私"
+    ]
+  },
+  "intimate": {
+    "word": "intimate",
+    "phonetic": "/ˈɪntɪmɪt/",
+    "explains": [
+      "adj. 亲密的"
+    ]
+  },
+  "intimately": {
+    "word": "intimately",
+    "phonetic": "/'intimitli/",
+    "explains": [
+      "adv. 密切地,  亲密地"
+    ]
+  },
+  "intimidate": {
+    "word": "intimidate",
+    "phonetic": "/ɪn'tɪmɪdeɪt/",
+    "explains": [
+      "v. 胁迫"
     ]
   },
   "into": {
@@ -188,11 +6488,368 @@
       "prep. 到…… 里面；进入；朝"
     ]
   },
+  "intolerable": {
+    "word": "intolerable",
+    "phonetic": "/ɪn'tɒl(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无法忍受的；难耐的"
+    ]
+  },
+  "intolerant": {
+    "word": "intolerant",
+    "phonetic": "/ɪn'tɒl(ə)r(ə)nt/",
+    "explains": [
+      "adj. 不宽容的, 偏狭的"
+    ]
+  },
+  "intonation": {
+    "word": "intonation",
+    "phonetic": "/ɪntə'neɪʃ(ə)n/",
+    "explains": [
+      "n. 语调，声调；发声"
+    ]
+  },
+  "intoxicant": {
+    "word": "intoxicant",
+    "phonetic": "/ɪn'tɒksɪk(ə)nt/",
+    "explains": [
+      "n. 使醉的东西"
+    ]
+  },
+  "intoxicate": {
+    "word": "intoxicate",
+    "phonetic": "/ɪn'tɒksɪkeɪt/",
+    "explains": [
+      "v. 使陶醉；使喝醉；使中毒"
+    ]
+  },
+  "intoxication": {
+    "word": "intoxication",
+    "phonetic": "/ɪn,tɒksɪ'keɪʃn/",
+    "explains": [
+      "n. 陶醉,中毒"
+    ]
+  },
+  "intracellular": {
+    "word": "intracellular",
+    "phonetic": "/,ɪntrə'seljʊlə/",
+    "explains": [
+      "adj. 细胞内的"
+    ]
+  },
+  "intractable": {
+    "word": "intractable",
+    "phonetic": "/ɪn'træktəb(ə)l/",
+    "explains": [
+      "adj. 难处理的"
+    ]
+  },
+  "intramural": {
+    "word": "intramural",
+    "phonetic": "/,ɪntrə'mjʊər(ə)l/",
+    "explains": [
+      "adj. 校内的, 内部的"
+    ]
+  },
+  "intransigence": {
+    "word": "intransigence",
+    "phonetic": "/in'trænsidʒəns,-dʒənsi/",
+    "explains": [
+      "n. 不妥协态度, 不让步,不调和"
+    ]
+  },
+  "intransigent": {
+    "word": "intransigent",
+    "phonetic": "/ɪn'trænsɪdʒ(ə)nt; -'trɑː-; -nz-/",
+    "explains": [
+      "adj. 不妥协的；不让步的；n. 不妥协的人"
+    ]
+  },
+  "intransitive": {
+    "word": "intransitive",
+    "phonetic": "/ɪn'trænsɪtɪv; -'trɑː-; -nz-/",
+    "explains": [
+      "adj. 不及物的；n. 不及物动词"
+    ]
+  },
+  "intrepid": {
+    "word": "intrepid",
+    "phonetic": "/ɪn'trepɪd/",
+    "explains": [
+      "adj. 无畏的；勇敢的；勇猛的"
+    ]
+  },
+  "intrepidity": {
+    "word": "intrepidity",
+    "phonetic": "",
+    "explains": [
+      "n. 无畏"
+    ]
+  },
+  "intricacy": {
+    "word": "intricacy",
+    "phonetic": "/'ɪntrɪkəsɪ/",
+    "explains": [
+      "n. 复杂, 错综"
+    ]
+  },
+  "intricate": {
+    "word": "intricate",
+    "phonetic": "/'ɪntrɪkət/",
+    "explains": [
+      "adj. 复杂的；错综的，缠结的"
+    ]
+  },
+  "intricately": {
+    "word": "intricately",
+    "phonetic": "/'ɪntrɪkətlɪ/",
+    "explains": [
+      "adv. 杂乱地,  复杂地"
+    ]
+  },
+  "intrigue": {
+    "word": "intrigue",
+    "phonetic": "/ɪn'triːg/",
+    "explains": [
+      "n. 阴谋；诡计；复杂的事；私通；v. 用诡计取得；激起的兴趣"
+    ]
+  },
+  "intriguing": {
+    "word": "intriguing",
+    "phonetic": "/'ɪntriːgɪŋ; ɪn'triːgɪŋ/",
+    "explains": [
+      "adj. 有趣的；迷人的；v. 引起…的兴趣；策划阴谋；私通（intrigue的ing形式）"
+    ]
+  },
+  "intrinsic": {
+    "word": "intrinsic",
+    "phonetic": "/ɪn'trɪnsɪk/",
+    "explains": [
+      "adj. 本质的，固有的"
+    ]
+  },
+  "intrinsically": {
+    "word": "intrinsically",
+    "phonetic": "/ɪn'trɪnsɪkəlɪ/",
+    "explains": [
+      "adv. 内在地, 固有地"
+    ]
+  },
   "introduce": {
     "word": "introduce",
     "phonetic": "/ˌɪntrəˈdjuːs/",
     "explains": [
       "v. 介绍；引进；提出；采用"
+    ]
+  },
+  "introduction": {
+    "word": "introduction",
+    "phonetic": "/ˌɪntrəˈdʌkʃ(ə)n/",
+    "explains": [
+      "n. 介绍"
+    ]
+  },
+  "introductory": {
+    "word": "introductory",
+    "phonetic": "/ɪntrə'dʌkt(ə)rɪ/",
+    "explains": [
+      "adj. 引导的,介绍的"
+    ]
+  },
+  "intromit": {
+    "word": "intromit",
+    "phonetic": "/,ɪntrəʊ'mɪt/",
+    "explains": [
+      "v. 使进入, 插入"
+    ]
+  },
+  "introspect": {
+    "word": "introspect",
+    "phonetic": "/,ɪntrə(ʊ)'spekt/",
+    "explains": [
+      "v. 反省；内省"
+    ]
+  },
+  "introspection": {
+    "word": "introspection",
+    "phonetic": "/ɪntrə(ʊ)'spekʃ(ə)n/",
+    "explains": [
+      "n. 内省, 反省, 自省"
+    ]
+  },
+  "introspective": {
+    "word": "introspective",
+    "phonetic": "/ɪntrə'spektɪv/",
+    "explains": [
+      "adj. 反省的"
+    ]
+  },
+  "introvert": {
+    "word": "introvert",
+    "phonetic": "/'ɪntrəvɜːt/",
+    "explains": [
+      "v. 使内向；使内倾；使内弯；n. 内向的人；内翻的东西"
+    ]
+  },
+  "intrude": {
+    "word": "intrude",
+    "phonetic": "/ɪn'truːd/",
+    "explains": [
+      "v. 把…强加；把…硬挤"
+    ]
+  },
+  "intruder": {
+    "word": "intruder",
+    "phonetic": "/ɪn'truːdə/",
+    "explains": [
+      "n. 入侵者"
+    ]
+  },
+  "intrusion": {
+    "word": "intrusion",
+    "phonetic": "/ɪn'truːʒ(ə)n/",
+    "explains": [
+      "n. 闯入, 侵扰"
+    ]
+  },
+  "intrusive": {
+    "word": "intrusive",
+    "phonetic": "/ɪn'truːsɪv/",
+    "explains": [
+      "adj. 侵入的；打扰的"
+    ]
+  },
+  "intuition": {
+    "word": "intuition",
+    "phonetic": "/ɪntjʊ'ɪʃ(ə)n/",
+    "explains": [
+      "n. 直觉；直觉力；直觉的知识"
+    ]
+  },
+  "intuitive": {
+    "word": "intuitive",
+    "phonetic": "/ɪn'tjuːɪtɪv/",
+    "explains": [
+      "adj. 有直觉力的，直觉到的"
+    ]
+  },
+  "intumescence": {
+    "word": "intumescence",
+    "phonetic": "/,ɪntjuː'mesəns/",
+    "explains": [
+      "n. 膨胀, 肿大"
+    ]
+  },
+  "inuit": {
+    "word": "inuit",
+    "phonetic": "/'injuit/",
+    "explains": [
+      "n. 因纽特人,  因纽特语"
+    ]
+  },
+  "inundate": {
+    "word": "inundate",
+    "phonetic": "/'ɪnʌndeɪt/",
+    "explains": [
+      "v. 淹没"
+    ]
+  },
+  "inundation": {
+    "word": "inundation",
+    "phonetic": "/,ɪnʌn'deɪʃn/",
+    "explains": [
+      "n. 洪水"
+    ]
+  },
+  "inure": {
+    "word": "inure",
+    "phonetic": "/ɪ'njʊə; ɪ'njɔː/",
+    "explains": [
+      "v. 使…习惯；使…适应"
+    ]
+  },
+  "invade": {
+    "word": "invade",
+    "phonetic": "/ɪnˈveɪd/",
+    "explains": [
+      "v. 侵略"
+    ]
+  },
+  "invader": {
+    "word": "invader",
+    "phonetic": "/ɪn'veɪdə(r)/",
+    "explains": [
+      "n. 侵略者"
+    ]
+  },
+  "invalid": {
+    "word": "invalid",
+    "phonetic": "/ˈɪnvəlɪd；ɪnˈvælɪd/",
+    "explains": [
+      "n. 病人"
+    ]
+  },
+  "invalidate": {
+    "word": "invalidate",
+    "phonetic": "/ɪn'vælɪdeɪt/",
+    "explains": [
+      "v. 使无效；使无价值"
+    ]
+  },
+  "invaluable": {
+    "word": "invaluable",
+    "phonetic": "/ɪn'væljʊ(ə)b(ə)l/",
+    "explains": [
+      "adj. 无价的；非常贵重的"
+    ]
+  },
+  "invariable": {
+    "word": "invariable",
+    "phonetic": "/ɪn'veərɪəb(ə)l/",
+    "explains": [
+      "n&a. 不变的, 永恒的"
+    ]
+  },
+  "invariably": {
+    "word": "invariably",
+    "phonetic": "/ɪn'veərɪəblɪ/",
+    "explains": [
+      "adv. 不变地，永恒地"
+    ]
+  },
+  "invariant": {
+    "word": "invariant",
+    "phonetic": "/ɪn'veərɪənt/",
+    "explains": [
+      "adj. 不变的；n. [数] 不变量；[计] 不变式"
+    ]
+  },
+  "invasion": {
+    "word": "invasion",
+    "phonetic": "/ɪn'veɪʒ(ə)n/",
+    "explains": [
+      "n. 入侵，侵略；侵犯"
+    ]
+  },
+  "invective": {
+    "word": "invective",
+    "phonetic": "/ɪn'vektɪv/",
+    "explains": [
+      "adj. 谩骂的；恶言的；n. 恶言漫骂"
+    ]
+  },
+  "inveigh": {
+    "word": "inveigh",
+    "phonetic": "/ɪn'veɪ/",
+    "explains": [
+      "v. 痛骂；漫骂；猛烈抨击"
+    ]
+  },
+  "inveigle": {
+    "word": "inveigle",
+    "phonetic": "/ɪn'viːg(ə)l; ɪn'veɪg(ə)l/",
+    "explains": [
+      "v. 诱骗"
     ]
   },
   "invent": {
@@ -202,11 +6859,690 @@
       "v. 发明；创造；虚构"
     ]
   },
+  "inventeur": {
+    "word": "inventeur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 发明家"
+    ]
+  },
+  "invention": {
+    "word": "invention",
+    "phonetic": "/ɪnˈvenʃ(ə)n/",
+    "explains": [
+      "n. 发明"
+    ]
+  },
+  "inventive": {
+    "word": "inventive",
+    "phonetic": "/ɪn'ventɪv/",
+    "explains": [
+      "adj. 发明的；有发明才能的；独出心裁的"
+    ]
+  },
+  "inventor": {
+    "word": "inventor",
+    "phonetic": "/ɪn'ventə/",
+    "explains": [
+      "n. 发明者；发明家"
+    ]
+  },
+  "inventory": {
+    "word": "inventory",
+    "phonetic": "/'ɪnv(ə)nt(ə)rɪ/",
+    "explains": [
+      "n. 存货，存货清单；详细目录；财产清册"
+    ]
+  },
+  "inverse": {
+    "word": "inverse",
+    "phonetic": "/'ɪnvɜːs; ɪn'vɜːs/",
+    "explains": [
+      "n. 相反；倒转；adj. 相反的；倒转的；vt. 使倒转；使颠倒"
+    ]
+  },
+  "inversely": {
+    "word": "inversely",
+    "phonetic": "/'ɪnvɜːslɪ/",
+    "explains": [
+      "adv. 相反地"
+    ]
+  },
+  "invert": {
+    "word": "invert",
+    "phonetic": "/ɪn'vɜːt/",
+    "explains": [
+      "v. 使…转化；使…颠倒；使…反转；使…前后倒置；n. 颠倒的事物；倒置物；倒悬者；adj. 转化的"
+    ]
+  },
+  "invertebrate": {
+    "word": "invertebrate",
+    "phonetic": "/ɪn'vɜːtɪbrət/",
+    "explains": [
+      "a&n. 无脊椎的,无骨气的人"
+    ]
+  },
+  "inverted": {
+    "word": "inverted",
+    "phonetic": "/ɪn'vɜːtɪd/",
+    "explains": [
+      "adj. 倒转的，反向的；v. 颠倒（invert的过去分词）；使…反向"
+    ]
+  },
+  "invest": {
+    "word": "invest",
+    "phonetic": "/ɪnˈvest/",
+    "explains": [
+      "v. 投资"
+    ]
+  },
+  "investigate": {
+    "word": "investigate",
+    "phonetic": "/ɪnˈvestɪgeɪt/",
+    "explains": [
+      "v. 调查"
+    ]
+  },
+  "investigation": {
+    "word": "investigation",
+    "phonetic": "/ɪnˌvestɪˈgeɪʃ(ə)n/",
+    "explains": [
+      "n. 调查"
+    ]
+  },
+  "investigator": {
+    "word": "investigator",
+    "phonetic": "/ɪn'vestɪgeɪtə(r)/",
+    "explains": [
+      "n. 调查人"
+    ]
+  },
+  "investiture": {
+    "word": "investiture",
+    "phonetic": "/ɪn'vestɪtjə; -tʃə/",
+    "explains": [
+      "n. 授职, 授权, 覆盖物"
+    ]
+  },
+  "investment": {
+    "word": "investment",
+    "phonetic": "/ɪn'ves(t)m(ə)nt/",
+    "explains": [
+      "n. 投资，投资额；投入"
+    ]
+  },
+  "investor": {
+    "word": "investor",
+    "phonetic": "/ɪn'vestə/",
+    "explains": [
+      "n. 投资者"
+    ]
+  },
+  "inveterate": {
+    "word": "inveterate",
+    "phonetic": "/ɪn'vet(ə)rət/",
+    "explains": [
+      "adj. 根深的；积习的；成癖的"
+    ]
+  },
+  "invidious": {
+    "word": "invidious",
+    "phonetic": "/ɪn'vɪdɪəs/",
+    "explains": [
+      "adj. 诽谤的；不公平的；引起反感的；易招嫉妒的"
+    ]
+  },
+  "invierno": {
+    "word": "invierno",
+    "phonetic": "",
+    "explains": [
+      "n.m. 冬天"
+    ]
+  },
+  "invigilate": {
+    "word": "invigilate",
+    "phonetic": "/ɪn'vɪdʒɪleɪt/",
+    "explains": [
+      "v. 监考"
+    ]
+  },
+  "invigilator": {
+    "word": "invigilator",
+    "phonetic": "/ɪn'vɪdʒɪleɪtə/",
+    "explains": [
+      "n. 监考人；[自] 监视器"
+    ]
+  },
+  "invigorate": {
+    "word": "invigorate",
+    "phonetic": "/ɪn'vɪgəreɪt/",
+    "explains": [
+      "v. 鼓舞"
+    ]
+  },
+  "invincible": {
+    "word": "invincible",
+    "phonetic": "/ɪn'vɪnsɪb(ə)l/",
+    "explains": [
+      "adj. 无敌的，不能征服的"
+    ]
+  },
+  "inviolable": {
+    "word": "inviolable",
+    "phonetic": "/ɪn'vaɪələb(ə)l/",
+    "explains": [
+      "adj. 不可侵犯的；神圣的；不可亵渎的"
+    ]
+  },
+  "inviolate": {
+    "word": "inviolate",
+    "phonetic": "/ɪn'vaɪələt/",
+    "explains": [
+      "adj. 未亵渎的, 无污点的, 未受侵犯的"
+    ]
+  },
+  "invisible": {
+    "word": "invisible",
+    "phonetic": "/ɪn'vɪzɪb(ə)l/",
+    "explains": [
+      "adj. 看不见的；无形的"
+    ]
+  },
+  "invisibly": {
+    "word": "invisibly",
+    "phonetic": "",
+    "explains": [
+      "adv. 看不见地, 看不出地"
+    ]
+  },
+  "invitar": {
+    "word": "invitar",
+    "phonetic": "",
+    "explains": [
+      "v. 邀请"
+    ]
+  },
+  "invitation": {
+    "word": "invitation",
+    "phonetic": "/ˌɪnvɪˈteɪʃ(ə)n/",
+    "explains": [
+      "n. 邀请"
+    ]
+  },
   "invite": {
     "word": "invite",
     "phonetic": "/ɪnˈvaɪt/",
     "explains": [
       "v. 邀请；招待；请求"
+    ]
+  },
+  "inviting": {
+    "word": "inviting",
+    "phonetic": "/ɪn'vaɪtɪŋ/",
+    "explains": [
+      "adj. 引人动心的, 有魅力的"
+    ]
+  },
+  "invocation": {
+    "word": "invocation",
+    "phonetic": "/,ɪnvə(ʊ)'keɪʃ(ə)n/",
+    "explains": [
+      "n. 祈祷, 符咒"
+    ]
+  },
+  "invoice": {
+    "word": "invoice",
+    "phonetic": "/'ɪnvɒɪs/",
+    "explains": [
+      "n. 发票，发货清单"
+    ]
+  },
+  "invoke": {
+    "word": "invoke",
+    "phonetic": "/ɪn'vəʊk/",
+    "explains": [
+      "v. 恳求"
+    ]
+  },
+  "involuntary": {
+    "word": "involuntary",
+    "phonetic": "/ɪn'vɒlənt(ə)rɪ/",
+    "explains": [
+      "adj. 自然而然的, 无意的, 不知不觉的, 偶然的, 不随意的"
+    ]
+  },
+  "involute": {
+    "word": "involute",
+    "phonetic": "/'ɪnvəl(j)uːt/",
+    "explains": [
+      "adj. 纷乱的, 复杂的"
+    ]
+  },
+  "involve": {
+    "word": "involve",
+    "phonetic": "/ɪnˈvɒlv/",
+    "explains": [
+      "v. 包含；卷入"
+    ]
+  },
+  "involved": {
+    "word": "involved",
+    "phonetic": "/ɪn'vɒlvd/",
+    "explains": [
+      "adj. 棘手的,有关的"
+    ]
+  },
+  "involvement": {
+    "word": "involvement",
+    "phonetic": "/ɪn'vɒlvm(ə)nt/",
+    "explains": [
+      "n. 连累, 包含"
+    ]
+  },
+  "invulnerable": {
+    "word": "invulnerable",
+    "phonetic": "/ɪn'vʌln(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 不会受伤害的, 无懈可击的"
+    ]
+  },
+  "inward": {
+    "word": "inward",
+    "phonetic": "/'ɪnwəd/",
+    "explains": [
+      "adj. 内心的；adv. 向内"
+    ]
+  },
+  "iodide": {
+    "word": "iodide",
+    "phonetic": "/'aɪədaɪd/",
+    "explains": [
+      "n. 碘负离子"
+    ]
+  },
+  "iodine": {
+    "word": "iodine",
+    "phonetic": "/'aɪədiːn; -aɪn; -ɪn/",
+    "explains": [
+      "n. 碘, 碘酒"
+    ]
+  },
+  "ion": {
+    "word": "ion",
+    "phonetic": "/'aɪən/",
+    "explains": [
+      "n. 离子"
+    ]
+  },
+  "ionize": {
+    "word": "ionize",
+    "phonetic": "/'aɪənaɪz/",
+    "explains": [
+      "v. 使离子化 ,电离"
+    ]
+  },
+  "iota": {
+    "word": "iota",
+    "phonetic": "/aɪ'əʊtə/",
+    "explains": [
+      "n. 希腊语字母第 9位, 极微小"
+    ]
+  },
+  "iraq": {
+    "word": "iraq",
+    "phonetic": "/ɪ'rɑ:k/",
+    "explains": [
+      "n. 伊拉克共和国"
+    ]
+  },
+  "irascible": {
+    "word": "irascible",
+    "phonetic": "/ɪ'ræsɪb(ə)l/",
+    "explains": [
+      "adj. 易怒的"
+    ]
+  },
+  "irate": {
+    "word": "irate",
+    "phonetic": "/aɪ'reɪt/",
+    "explains": [
+      "adj. 生气的；发怒的"
+    ]
+  },
+  "ire": {
+    "word": "ire",
+    "phonetic": "/'aɪə/",
+    "explains": [
+      "n. 忿怒；vt. 使发怒"
+    ]
+  },
+  "ireful": {
+    "word": "ireful",
+    "phonetic": "",
+    "explains": [
+      "adj. 忿怒的"
+    ]
+  },
+  "iridescence": {
+    "word": "iridescence",
+    "phonetic": "",
+    "explains": [
+      "n. 彩虹色"
+    ]
+  },
+  "iridescent": {
+    "word": "iridescent",
+    "phonetic": "/,ɪrɪ'des(ə)nt/",
+    "explains": [
+      "adj. 闪光的，现晕光的"
+    ]
+  },
+  "iridium": {
+    "word": "iridium",
+    "phonetic": "/ɪ'rɪdɪəm; aɪ-/",
+    "explains": [
+      "n. [化]铱"
+    ]
+  },
+  "iris": {
+    "word": "iris",
+    "phonetic": "/'aɪrɪs/",
+    "explains": [
+      "n. [解]虹膜, 鸢尾属植物, [希神]彩虹之女神, 虹, 虹彩"
+    ]
+  },
+  "irish": {
+    "word": "irish",
+    "phonetic": "/'aiəriʃ/",
+    "explains": [
+      "n&a. 爱尔兰人(的),爱尔兰语（的）"
+    ]
+  },
+  "irk": {
+    "word": "irk",
+    "phonetic": "/ɜːk/",
+    "explains": [
+      "v. 使烦恼；使厌倦"
+    ]
+  },
+  "irksome": {
+    "word": "irksome",
+    "phonetic": "/'ɜːks(ə)m/",
+    "explains": [
+      "adj. 令人厌烦的，讨厌的；令人厌恶的"
+    ]
+  },
+  "iron": {
+    "word": "iron",
+    "phonetic": "/ˈaɪən/",
+    "explains": [
+      "n. 铁"
+    ]
+  },
+  "ironclad": {
+    "word": "ironclad",
+    "phonetic": "/aɪən'klæd/",
+    "explains": [
+      "adj. 装甲的, 打不破的"
+    ]
+  },
+  "ironic": {
+    "word": "ironic",
+    "phonetic": "/aɪ'rɒnɪk/",
+    "explains": [
+      "adj. 讽刺的；反话的"
+    ]
+  },
+  "ironically": {
+    "word": "ironically",
+    "phonetic": "/aɪ'rɒnɪklɪ/",
+    "explains": [
+      "adv. 具有讽刺意味地；嘲讽地"
+    ]
+  },
+  "ironwork": {
+    "word": "ironwork",
+    "phonetic": "/'aɪənwɜːk/",
+    "explains": [
+      "n. 铁制品"
+    ]
+  },
+  "irony": {
+    "word": "irony",
+    "phonetic": "/'aɪrənɪ/",
+    "explains": [
+      "n. 讽刺；反语；具有讽刺意味的事；adj. 铁的；似铁的"
+    ]
+  },
+  "iroquois": {
+    "word": "iroquois",
+    "phonetic": "/'irəkwɔiz/",
+    "explains": [
+      "n. 易洛魁族人"
+    ]
+  },
+  "irradiate": {
+    "word": "irradiate",
+    "phonetic": "/ɪ'reɪdɪeɪt/",
+    "explains": [
+      "v. 照耀；使灿烂；启发；放射；使某物生辉；adj. 发光的"
+    ]
+  },
+  "irradiation": {
+    "word": "irradiation",
+    "phonetic": "/ɪ,reɪdɪ'eɪʃ(ə)n/",
+    "explains": [
+      "n. 照射；发光，放射"
+    ]
+  },
+  "irrational": {
+    "word": "irrational",
+    "phonetic": "/ɪ'ræʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 无理性的, 失去理性的；n. 无理数"
+    ]
+  },
+  "irrationally": {
+    "word": "irrationally",
+    "phonetic": "",
+    "explains": [
+      "adv. 无理性地,不合理地"
+    ]
+  },
+  "irreconcilable": {
+    "word": "irreconcilable",
+    "phonetic": "/ɪ,rek(ə)n'saɪləb(ə)l; ɪ'rek(ə)nsaɪləb(ə)l/",
+    "explains": [
+      "adj. 矛盾的；不能和解的；不能协调的"
+    ]
+  },
+  "irreducible": {
+    "word": "irreducible",
+    "phonetic": "/ɪrɪ'djuːsɪb(ə)l/",
+    "explains": [
+      "adj. [数] 不可约的；不能削减的；不能复归的"
+    ]
+  },
+  "irregular": {
+    "word": "irregular",
+    "phonetic": "/ɪ'regjʊlə/",
+    "explains": [
+      "adj. 不规则的；不整齐的"
+    ]
+  },
+  "irregularity": {
+    "word": "irregularity",
+    "phonetic": "/ɪ,regjʊ'lærɪtɪ/",
+    "explains": [
+      "n. 不规则；不整齐"
+    ]
+  },
+  "irregularly": {
+    "word": "irregularly",
+    "phonetic": "",
+    "explains": [
+      "adv. 不规则地,不整齐地"
+    ]
+  },
+  "irrelevant": {
+    "word": "irrelevant",
+    "phonetic": "/i'reləvənt/",
+    "explains": [
+      "adj.  无关的"
+    ]
+  },
+  "irreparable": {
+    "word": "irreparable",
+    "phonetic": "/ɪ'rep(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 无法修复的，不能挽回的"
+    ]
+  },
+  "irrepressible": {
+    "word": "irrepressible",
+    "phonetic": "/ɪrɪ'presɪb(ə)l/",
+    "explains": [
+      "adj. 抑制不住的；压服不了的"
+    ]
+  },
+  "irreproachable": {
+    "word": "irreproachable",
+    "phonetic": "/ɪrɪ'prəʊtʃəb(ə)l/",
+    "explains": [
+      "adj. 无可指责的, 不可非难的, 无缺点的, 无过失的"
+    ]
+  },
+  "irresistible": {
+    "word": "irresistible",
+    "phonetic": "/ɪrɪ'zɪstɪb(ə)l/",
+    "explains": [
+      "adj. 不可抵抗的,不能压制的"
+    ]
+  },
+  "irresolute": {
+    "word": "irresolute",
+    "phonetic": "/ɪ'rezəluːt/",
+    "explains": [
+      "adj. 优柔寡断的；踌躇不定的；无决断的"
+    ]
+  },
+  "irrespective": {
+    "word": "irrespective",
+    "phonetic": "/ɪrɪ'spektɪv/",
+    "explains": [
+      "adj. 不考虑的，不顾的"
+    ]
+  },
+  "irresponsible": {
+    "word": "irresponsible",
+    "phonetic": "/ˌɪrɪˈspɒnsəbl/",
+    "explains": [
+      "adj. 不负责任的, 不可靠的"
+    ]
+  },
+  "irresponsibly": {
+    "word": "irresponsibly",
+    "phonetic": "",
+    "explains": [
+      "adv. 不负责任地,不可靠地"
+    ]
+  },
+  "irretrievable": {
+    "word": "irretrievable",
+    "phonetic": "/ɪrɪ'triːvəb(ə)l/",
+    "explains": [
+      "adj. 不能弥补的；不能复原的；无法挽救的"
+    ]
+  },
+  "irreverence": {
+    "word": "irreverence",
+    "phonetic": "/ɪ'rev(ə)r(ə)ns/",
+    "explains": [
+      "adj. 不尊敬的"
+    ]
+  },
+  "irreverent": {
+    "word": "irreverent",
+    "phonetic": "/ɪ'rev(ə)r(ə)nt/",
+    "explains": [
+      "adj. 不敬的,  无礼的"
+    ]
+  },
+  "irreversible": {
+    "word": "irreversible",
+    "phonetic": "/ɪrɪ'vɜːsɪb(ə)l/",
+    "explains": [
+      "adj. 不可逆的,不能取消的"
+    ]
+  },
+  "irrevocable": {
+    "word": "irrevocable",
+    "phonetic": "/i'revəkəbl/",
+    "explains": [
+      "adj.  不可撤销的， 不可取消的"
+    ]
+  },
+  "irrigate": {
+    "word": "irrigate",
+    "phonetic": "/ˈɪrɪgeɪt/",
+    "explains": [
+      "v. 灌溉"
+    ]
+  },
+  "irrigation": {
+    "word": "irrigation",
+    "phonetic": "/ˌɪrɪˈɡeʃn/",
+    "explains": [
+      "n. 灌溉；（医）冲洗法"
+    ]
+  },
+  "irritability": {
+    "word": "irritability",
+    "phonetic": "/,ɪrɪtə'bɪlɪtɪ/",
+    "explains": [
+      "n. 过敏性, 兴奋性"
+    ]
+  },
+  "irritable": {
+    "word": "irritable",
+    "phonetic": "/'iritəbl/",
+    "explains": [
+      "adj.  易激怒的； 易过敏的"
+    ]
+  },
+  "irritant": {
+    "word": "irritant",
+    "phonetic": "/'ɪrɪt(ə)nt/",
+    "explains": [
+      "adj. 刺激的；刺激性的；n. [医] 刺激物，[医] 刺激剂"
+    ]
+  },
+  "irritate": {
+    "word": "irritate",
+    "phonetic": "/'ɪrɪteɪt/",
+    "explains": [
+      "v. 激怒；引起不愉快"
+    ]
+  },
+  "irritating": {
+    "word": "irritating",
+    "phonetic": "/'ɪrɪteɪtɪŋ/",
+    "explains": [
+      "adj. 刺激的；气人的；使愤怒的；v. 刺激（irritate的ing形式）；激怒"
+    ]
+  },
+  "irritation": {
+    "word": "irritation",
+    "phonetic": "/ɪrɪ'teɪʃn/",
+    "explains": [
+      "n. 刺激；激怒，恼怒，生气；兴奋；令人恼火的事"
+    ]
+  },
+  "irruption": {
+    "word": "irruption",
+    "phonetic": "",
+    "explains": [
+      "n. 闯入，侵入；激剧繁殖"
     ]
   },
   "is": {
@@ -216,11 +7552,207 @@
       "v. 是（be 动词）"
     ]
   },
+  "isla": {
+    "word": "isla",
+    "phonetic": "",
+    "explains": [
+      "n.f. 岛"
+    ]
+  },
+  "islam": {
+    "word": "islam",
+    "phonetic": "",
+    "explains": [
+      "n. 伊斯兰教，回教"
+    ]
+  },
+  "island": {
+    "word": "island",
+    "phonetic": "/ˈaɪlənd/",
+    "explains": [
+      "n. 岛屿"
+    ]
+  },
+  "islander": {
+    "word": "islander",
+    "phonetic": "/'aɪləndə/",
+    "explains": [
+      "n. 岛上居民"
+    ]
+  },
+  "isle": {
+    "word": "isle",
+    "phonetic": "/aɪl/",
+    "explains": [
+      "n. 岛；vt. 使成为岛屿；vi. 住在岛屿上"
+    ]
+  },
+  "islet": {
+    "word": "islet",
+    "phonetic": "/'aɪlɪt/",
+    "explains": [
+      "n. 小岛"
+    ]
+  },
+  "isochronous": {
+    "word": "isochronous",
+    "phonetic": "/aɪ'sɒkrənəs/",
+    "explains": [
+      "adj. [物] 等时的；等步的"
+    ]
+  },
+  "isolate": {
+    "word": "isolate",
+    "phonetic": "/'aɪsəleɪt/",
+    "explains": [
+      "v. 使隔离，使孤立"
+    ]
+  },
+  "isolation": {
+    "word": "isolation",
+    "phonetic": "/aɪsə'leɪʃ(ə)n/",
+    "explains": [
+      "n. 隔离，孤立"
+    ]
+  },
+  "isotherm": {
+    "word": "isotherm",
+    "phonetic": "/'aɪsə(ʊ)θɜːm/",
+    "explains": [
+      "n. [气象] 等温线"
+    ]
+  },
+  "isothermal": {
+    "word": "isothermal",
+    "phonetic": "/,aɪsəʊ'θɜːməl/",
+    "explains": [
+      "adj. 等温的；等温线的；n. 等温线"
+    ]
+  },
+  "isotope": {
+    "word": "isotope",
+    "phonetic": "/'aɪsətəʊp/",
+    "explains": [
+      "n. 同位素"
+    ]
+  },
+  "isotopic": {
+    "word": "isotopic",
+    "phonetic": "",
+    "explains": [
+      "adj. 同位素的,合痕的"
+    ]
+  },
+  "israel": {
+    "word": "israel",
+    "phonetic": "/ˈɪzreɪəl/",
+    "explains": [
+      "n. [地名] 以色列"
+    ]
+  },
+  "israeli": {
+    "word": "israeli",
+    "phonetic": "/iz'reili/",
+    "explains": [
+      "adj. 以色列的；以色列人的；n. 以色列人"
+    ]
+  },
+  "issuance": {
+    "word": "issuance",
+    "phonetic": "/'ɪʃjuːəns/",
+    "explains": [
+      "n. 发布，发行"
+    ]
+  },
+  "issue": {
+    "word": "issue",
+    "phonetic": "/ˈɪʃuː; ˈɪsjuː/",
+    "explains": [
+      "n. 问题　v. 发布"
+    ]
+  },
+  "isthmus": {
+    "word": "isthmus",
+    "phonetic": "/'ɪsθməs; 'ɪstməs; 'ɪsməs/",
+    "explains": [
+      "n. [地理]地峡, 峡部"
+    ]
+  },
   "it": {
     "word": "it",
     "phonetic": "/ɪt/",
     "explains": [
       "pron. 它；这；那"
+    ]
+  },
+  "italian": {
+    "word": "italian",
+    "phonetic": "/ɪˈtæljən/",
+    "explains": [
+      "adj. 意大利的　n. 意大利人"
+    ]
+  },
+  "italic": {
+    "word": "italic",
+    "phonetic": "/ɪ'tælɪk/",
+    "explains": [
+      "n. 斜体字（或字母、数码等）；adj. [印刷] 斜体的"
+    ]
+  },
+  "italy": {
+    "word": "italy",
+    "phonetic": "/ˈɪtəlɪ/",
+    "explains": [
+      "n. 意大利"
+    ]
+  },
+  "itch": {
+    "word": "itch",
+    "phonetic": "/ɪtʃ/",
+    "explains": [
+      "n. 痒；渴望；疥疮；v. 发痒；渴望"
+    ]
+  },
+  "item": {
+    "word": "item",
+    "phonetic": "/ˈaɪtəm/",
+    "explains": [
+      "n. 项目"
+    ]
+  },
+  "itemise": {
+    "word": "itemise",
+    "phonetic": "",
+    "explains": [
+      "v. 详细列明（等于itemize）"
+    ]
+  },
+  "iterate": {
+    "word": "iterate",
+    "phonetic": "/'ɪtəreɪt/",
+    "explains": [
+      "v. 反复说, 重申, 重述"
+    ]
+  },
+  "itinerant": {
+    "word": "itinerant",
+    "phonetic": "/ɪ'tɪn(ə)r(ə)nt; aɪ-/",
+    "explains": [
+      "adj. 巡回的"
+    ]
+  },
+  "itinerary": {
+    "word": "itinerary",
+    "phonetic": "/ai'tinərəri/",
+    "explains": [
+      "n.  旅程； 路线； 旅行记录； 旅行指南"
+    ]
+  },
+  "itinerate": {
+    "word": "itinerate",
+    "phonetic": "/ɪ'tɪnəreɪt; aɪ-/",
+    "explains": [
+      "v. 巡回；巡回传教"
     ]
   },
   "its": {
@@ -235,6 +7767,34 @@
     "phonetic": "/ɪtˈself/",
     "explains": [
       "pron. 它自己；它本身"
+    ]
+  },
+  "ivory": {
+    "word": "ivory",
+    "phonetic": "/'aɪv(ə)rɪ/",
+    "explains": [
+      "n. 象牙（质）；乳白色"
+    ]
+  },
+  "ivresse": {
+    "word": "ivresse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 醉；狂喜"
+    ]
+  },
+  "ivy": {
+    "word": "ivy",
+    "phonetic": "/'aɪvɪ/",
+    "explains": [
+      "adj. 常春藤联盟的；n. 常春藤"
+    ]
+  },
+  "izquierda": {
+    "word": "izquierda",
+    "phonetic": "",
+    "explains": [
+      "n.f. 左边"
     ]
   }
 }

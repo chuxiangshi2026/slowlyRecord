@@ -13,11 +13,130 @@
       "n. 织物；布料；结构"
     ]
   },
+  "fabricate": {
+    "word": "fabricate",
+    "phonetic": "/'fæbrɪkeɪt/",
+    "explains": [
+      "v. 捏造；制作"
+    ]
+  },
+  "fabrication": {
+    "word": "fabrication",
+    "phonetic": "/fæbrɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 捏造；制作"
+    ]
+  },
+  "fabrique": {
+    "word": "fabrique",
+    "phonetic": "",
+    "explains": [
+      "n.f. 工厂"
+    ]
+  },
+  "fabulous": {
+    "word": "fabulous",
+    "phonetic": "/ˈfæbjələs/",
+    "explains": [
+      "adj. 极好的；难以置信的"
+    ]
+  },
+  "facade": {
+    "word": "facade",
+    "phonetic": "/fə'sɑːd/",
+    "explains": [
+      "n. 正面"
+    ]
+  },
   "face": {
     "word": "face",
     "phonetic": "/feɪs/",
     "explains": [
       "n. 脸；面部 v. 面对；面向"
+    ]
+  },
+  "face-to-face": {
+    "word": "face-to-face",
+    "phonetic": "/'feis'tuː'feis/",
+    "explains": [
+      "a&ad.  面对面的"
+    ]
+  },
+  "facelift": {
+    "word": "facelift",
+    "phonetic": "/'feslɪft/",
+    "explains": [
+      "n. 整容手术（除去面部皱纹）"
+    ]
+  },
+  "facet": {
+    "word": "facet",
+    "phonetic": "/'fæsɪt; -et/",
+    "explains": [
+      "n. 小平面, 方面, 刻面"
+    ]
+  },
+  "facetious": {
+    "word": "facetious",
+    "phonetic": "/fə'siːʃəs/",
+    "explains": [
+      "adj. 诙谐的；爱开玩笑的；滑稽的；(尤指在不合适的时候)开玩笑的"
+    ]
+  },
+  "facial": {
+    "word": "facial",
+    "phonetic": "/'feɪʃ(ə)l/",
+    "explains": [
+      "adj. 脸部的,面部的"
+    ]
+  },
+  "facile": {
+    "word": "facile",
+    "phonetic": "/'fæsaɪl; -sɪl/",
+    "explains": [
+      "adj. （言语或理论）轻率的，未经深思熟虑的"
+    ]
+  },
+  "facilitate": {
+    "word": "facilitate",
+    "phonetic": "/fəˈsɪlɪteɪt/",
+    "explains": [
+      "v. 促进；使便利"
+    ]
+  },
+  "facilitation": {
+    "word": "facilitation",
+    "phonetic": "/fəsɪlɪ'teɪʃn/",
+    "explains": [
+      "n. 简易化, 助长"
+    ]
+  },
+  "facilities": {
+    "word": "facilities",
+    "phonetic": "/fə'silətiz/",
+    "explains": [
+      "n.  设备"
+    ]
+  },
+  "facility": {
+    "word": "facility",
+    "phonetic": "/fəˈsɪlɪtɪ/",
+    "explains": [
+      "n. 设施"
+    ]
+  },
+  "facing": {
+    "word": "facing",
+    "phonetic": "/'feɪsɪŋ/",
+    "explains": [
+      "n. 饰面；衣服等的贴边"
+    ]
+  },
+  "facsimile": {
+    "word": "facsimile",
+    "phonetic": "/fæk'sɪmɪlɪ/",
+    "explains": [
+      "n. 摹写, 传真"
     ]
   },
   "fact": {
@@ -27,11 +146,67 @@
       "n. 事实；真相"
     ]
   },
+  "faction": {
+    "word": "faction",
+    "phonetic": "/'fækʃ(ə)n/",
+    "explains": [
+      "n. 派别，宗派，小集团"
+    ]
+  },
+  "factious": {
+    "word": "factious",
+    "phonetic": "/'fækʃəs/",
+    "explains": [
+      "adj. 好捣乱的；好搞派系的；源于派别的"
+    ]
+  },
+  "factitious": {
+    "word": "factitious",
+    "phonetic": "/fæk'tɪʃəs/",
+    "explains": [
+      "adj. 人为的, 做作的, 不自然的"
+    ]
+  },
   "factor": {
     "word": "factor",
     "phonetic": "/ˈfæktə(r)/",
     "explains": [
       "n. 因素；因子；系数"
+    ]
+  },
+  "factorable": {
+    "word": "factorable",
+    "phonetic": "",
+    "explains": [
+      "adj. 可分解因子的"
+    ]
+  },
+  "factorage": {
+    "word": "factorage",
+    "phonetic": "/'fæktəridʒ/",
+    "explains": [
+      "n.  融资商佣金； 代理商佣金"
+    ]
+  },
+  "factorial": {
+    "word": "factorial",
+    "phonetic": "/fæk'tɔːrɪəl/",
+    "explains": [
+      "adj. 因子的，阶乘的；n. [数] 阶乘"
+    ]
+  },
+  "factoring": {
+    "word": "factoring",
+    "phonetic": "/'fæktəriŋ/",
+    "explains": [
+      "n.  贷款保收， 应收账款让售"
+    ]
+  },
+  "factorization": {
+    "word": "factorization",
+    "phonetic": "",
+    "explains": [
+      "n. [数] 因子分解；[数] 因式分解"
     ]
   },
   "factory": {
@@ -41,11 +216,81 @@
       "n. 工厂；制造厂"
     ]
   },
+  "factotum": {
+    "word": "factotum",
+    "phonetic": "/fæk'təʊtəm/",
+    "explains": [
+      "n. 家务总管, 杂役, 打杂的人, [印]特大型花体大写字母"
+    ]
+  },
+  "factual": {
+    "word": "factual",
+    "phonetic": "/'fæktʃʊəl; -tjʊəl/",
+    "explains": [
+      "adj. 事实的,实际的"
+    ]
+  },
+  "faculty": {
+    "word": "faculty",
+    "phonetic": "/ˈfæk(ə)ltɪ/",
+    "explains": [
+      "n. 才能；全体教员"
+    ]
+  },
+  "fad": {
+    "word": "fad",
+    "phonetic": "/fæd/",
+    "explains": [
+      "n. 时尚, 一时流行的狂热"
+    ]
+  },
+  "faddish": {
+    "word": "faddish",
+    "phonetic": "/'fædɪʃ/",
+    "explains": [
+      "adj. 趋于时尚的, 流行的, 风行的"
+    ]
+  },
+  "fade": {
+    "word": "fade",
+    "phonetic": "/feɪd/",
+    "explains": [
+      "v. 褪色；逐渐消失；变暗"
+    ]
+  },
+  "fag": {
+    "word": "fag",
+    "phonetic": "/fæg/",
+    "explains": [
+      "n. 吃力的工作, 疲劳, 苦工"
+    ]
+  },
+  "fahrenheit": {
+    "word": "fahrenheit",
+    "phonetic": "/'fær(ə)nhaɪt; 'fɑː-/",
+    "explains": [
+      "n. 华氏温度"
+    ]
+  },
+  "faiblesse": {
+    "word": "faiblesse",
+    "phonetic": "",
+    "explains": [
+      "n.f. 虚弱；弱点"
+    ]
+  },
   "fail": {
     "word": "fail",
     "phonetic": "/feɪl/",
     "explains": [
       "v. 失败；未能；不及格"
+    ]
+  },
+  "failing": {
+    "word": "failing",
+    "phonetic": "/'feɪlɪŋ/",
+    "explains": [
+      "n. 失败；缺点，过失；弱点；prep. 如果没有…；adj. 失败的；v. 失败；不及格（fail的ing形式）"
     ]
   },
   "failure": {
@@ -55,11 +300,88 @@
       "n. 失败；故障；失灵"
     ]
   },
+  "faim": {
+    "word": "faim",
+    "phonetic": "",
+    "explains": [
+      "n.f. 饥饿"
+    ]
+  },
+  "faint": {
+    "word": "faint",
+    "phonetic": "/feɪnt/",
+    "explains": [
+      "adj. 微弱的　v. 晕倒"
+    ]
+  },
+  "fainthearted": {
+    "word": "fainthearted",
+    "phonetic": "/'feɪnt'hɑːtɪd/",
+    "explains": [
+      "adj. 懦弱的，胆小的；无精神的"
+    ]
+  },
+  "faintly": {
+    "word": "faintly",
+    "phonetic": "/'feɪntlɪ/",
+    "explains": [
+      "adv. 微弱地, 朦胧地"
+    ]
+  },
   "fair": {
     "word": "fair",
     "phonetic": "/feə(r)/",
     "explains": [
       "adj. 公平的；晴朗的 n. 集市；博览会"
+    ]
+  },
+  "fairground": {
+    "word": "fairground",
+    "phonetic": "/'feəgraʊnd/",
+    "explains": [
+      "n. 游乐场, 集市"
+    ]
+  },
+  "fairly": {
+    "word": "fairly",
+    "phonetic": "/ˈfeəlɪ/",
+    "explains": [
+      "adv. 公正地；相当"
+    ]
+  },
+  "fairness": {
+    "word": "fairness",
+    "phonetic": "/'feənɪs/",
+    "explains": [
+      "n. 公平；美好；清晰；顺利性"
+    ]
+  },
+  "fairway": {
+    "word": "fairway",
+    "phonetic": "/'feəweɪ/",
+    "explains": [
+      "n. 航路；水上飞机升降用的水面跑道；（高尔夫球场上的）平坦球道"
+    ]
+  },
+  "fairy": {
+    "word": "fairy",
+    "phonetic": "/ˈfeərɪ/",
+    "explains": [
+      "n. 仙女"
+    ]
+  },
+  "fairyland": {
+    "word": "fairyland",
+    "phonetic": "/'feərɪlænd/",
+    "explains": [
+      "n. 仙境, 乐园, 奇境"
+    ]
+  },
+  "fait": {
+    "word": "fait",
+    "phonetic": "",
+    "explains": [
+      "n.m. 事实"
     ]
   },
   "faith": {
@@ -69,11 +391,102 @@
       "n. 信仰；信念；信任"
     ]
   },
+  "faithful": {
+    "word": "faithful",
+    "phonetic": "/ˈfeɪθfl/",
+    "explains": [
+      "adj. 忠实的；忠诚的"
+    ]
+  },
+  "faithfully": {
+    "word": "faithfully",
+    "phonetic": "/'feɪθfʊlɪ; -f(ə)lɪ/",
+    "explains": [
+      "adv. 忠实地；如实地；诚心诚意地；深信着地"
+    ]
+  },
+  "faitour": {
+    "word": "faitour",
+    "phonetic": "/'feɪtə/",
+    "explains": [
+      "n. 骗子；冒名顶替者"
+    ]
+  },
+  "fake": {
+    "word": "fake",
+    "phonetic": "/feɪk/",
+    "explains": [
+      "adj. 假的"
+    ]
+  },
+  "falaise": {
+    "word": "falaise",
+    "phonetic": "",
+    "explains": [
+      "n.f. 悬崖"
+    ]
+  },
+  "falcon": {
+    "word": "falcon",
+    "phonetic": "/'fɔː(l)k(ə)n; 'fɒlk(ə)n/",
+    "explains": [
+      "n. 猎鹰"
+    ]
+  },
+  "falconer": {
+    "word": "falconer",
+    "phonetic": "/'fɔː(l)k(ə)nə; 'fɒlk(ə)nə/",
+    "explains": [
+      "n. 以鹰狩猎者,养鹰者"
+    ]
+  },
   "fall": {
     "word": "fall",
     "phonetic": "/fɔːl/",
     "explains": [
       "v. 落下；跌倒；下降 n. 秋天；跌落"
+    ]
+  },
+  "fallacious": {
+    "word": "fallacious",
+    "phonetic": "/fə'leɪʃəs/",
+    "explains": [
+      "adj. 谬误的；骗人的；靠不住的；不合理的"
+    ]
+  },
+  "fallacy": {
+    "word": "fallacy",
+    "phonetic": "/'fæləsɪ/",
+    "explains": [
+      "n. 谬误, 谬论"
+    ]
+  },
+  "fallback": {
+    "word": "fallback",
+    "phonetic": "",
+    "explains": [
+      "兜底方案"
+    ]
+  },
+  "fallible": {
+    "word": "fallible",
+    "phonetic": "/'fælɪb(ə)l/",
+    "explains": [
+      "adj. 易犯错误的，错误难免的"
+    ]
+  },
+  "fallout": {
+    "word": "fallout",
+    "phonetic": "/'fɔːlaʊt/",
+    "explains": [
+      "n. 辐射微尘, 原子尘, 附带结果"
+    ]
+  },
+  "fallow": {
+    "word": "fallow",
+    "phonetic": "/'fæləʊ/",
+    "explains": [
+      "adj. 休耕的；不活跃的；n. 休耕地；休耕；vt. 使（土地）休闲；潜伏"
     ]
   },
   "false": {
@@ -83,11 +496,137 @@
       "adj. 错误的；假的；虚伪的"
     ]
   },
+  "falsehood": {
+    "word": "falsehood",
+    "phonetic": "/'fɔːlshʊd; 'fɒls-/",
+    "explains": [
+      "n. 说谎；假话；不真实；错误的信仰"
+    ]
+  },
+  "falsely": {
+    "word": "falsely",
+    "phonetic": "",
+    "explains": [
+      "adj. 虚伪地,  错误地"
+    ]
+  },
+  "falsetto": {
+    "word": "falsetto",
+    "phonetic": "/fɔːl'setəʊ; fɒl-/",
+    "explains": [
+      "n. 假音；假声歌手；[耳鼻喉] 男性女声；adj. 用假声的；adv. 用假声"
+    ]
+  },
+  "falsification": {
+    "word": "falsification",
+    "phonetic": "",
+    "explains": [
+      "n. 弄虚作假, 串改, 伪造, 歪曲"
+    ]
+  },
+  "falsify": {
+    "word": "falsify",
+    "phonetic": "/'fɔːlsɪfaɪ; 'fɒls-/",
+    "explains": [
+      "v. 伪造；篡改；歪曲；证明虚假"
+    ]
+  },
+  "falsity": {
+    "word": "falsity",
+    "phonetic": "/'fɔːlsɪtɪ; 'fɒlsɪtɪ/",
+    "explains": [
+      "n. 虚伪；错误；谎言；不真实"
+    ]
+  },
+  "faltar": {
+    "word": "faltar",
+    "phonetic": "",
+    "explains": [
+      "v. 缺少"
+    ]
+  },
+  "falter": {
+    "word": "falter",
+    "phonetic": "/'fɔːltə; 'fɒl-/",
+    "explains": [
+      "v. 蹒跚；声音发抖；支吾"
+    ]
+  },
   "fame": {
     "word": "fame",
     "phonetic": "/feɪm/",
     "explains": [
       "n. 名声；名誉"
+    ]
+  },
+  "famed": {
+    "word": "famed",
+    "phonetic": "/feɪmd/",
+    "explains": [
+      "adj. 著名的"
+    ]
+  },
+  "fameux": {
+    "word": "fameux",
+    "phonetic": "",
+    "explains": [
+      "adj. 著名的"
+    ]
+  },
+  "familia": {
+    "word": "familia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 家庭"
+    ]
+  },
+  "familial": {
+    "word": "familial",
+    "phonetic": "/fə'mɪljəl/",
+    "explains": [
+      "adj. 家族的；家庭的；遗传的"
+    ]
+  },
+  "familiar": {
+    "word": "familiar",
+    "phonetic": "/fəˈmɪliə(r)/",
+    "explains": [
+      "adj. 熟悉的；常见的"
+    ]
+  },
+  "familiarise": {
+    "word": "familiarise",
+    "phonetic": "",
+    "explains": [
+      "v. 使熟悉（等于familiarize）"
+    ]
+  },
+  "familiarity": {
+    "word": "familiarity",
+    "phonetic": "/fəmɪlɪ'ærɪtɪ/",
+    "explains": [
+      "n. 熟悉,通晓,精通"
+    ]
+  },
+  "familiarization": {
+    "word": "familiarization",
+    "phonetic": "",
+    "explains": [
+      "n. 亲密, 熟悉, 精通"
+    ]
+  },
+  "familiarize": {
+    "word": "familiarize",
+    "phonetic": "/fə'mɪlɪəraɪz/",
+    "explains": [
+      "v. 使熟悉"
+    ]
+  },
+  "famille": {
+    "word": "famille",
+    "phonetic": "",
+    "explains": [
+      "n.f. 家庭"
     ]
   },
   "family": {
@@ -97,11 +636,67 @@
       "n. 家庭；家族；家属"
     ]
   },
+  "famine": {
+    "word": "famine",
+    "phonetic": "/ˈfæmɪn/",
+    "explains": [
+      "n. 饥荒"
+    ]
+  },
+  "famish": {
+    "word": "famish",
+    "phonetic": "/'fæmɪʃ/",
+    "explains": [
+      "v. (常用被动语态)使挨饿, <古>使饿死"
+    ]
+  },
+  "famoso": {
+    "word": "famoso",
+    "phonetic": "",
+    "explains": [
+      "adj. 著名的"
+    ]
+  },
+  "famous": {
+    "word": "famous",
+    "phonetic": "/ˈfeɪməs/",
+    "explains": [
+      "adj. 著名的"
+    ]
+  },
   "fan": {
     "word": "fan",
     "phonetic": "/fæn/",
     "explains": [
       "n. 风扇；扇子；粉丝 v. 扇风"
+    ]
+  },
+  "fanatic": {
+    "word": "fanatic",
+    "phonetic": "/fə'nætɪk/",
+    "explains": [
+      "a&n. 狂热的，狂热者"
+    ]
+  },
+  "fanatical": {
+    "word": "fanatical",
+    "phonetic": "/fə'nætɪkəl/",
+    "explains": [
+      "adj. 狂热的, 入迷的"
+    ]
+  },
+  "fanaticism": {
+    "word": "fanaticism",
+    "phonetic": "/fə'nætɪsɪz(ə)m/",
+    "explains": [
+      "n. 狂热, 盲信"
+    ]
+  },
+  "fanciful": {
+    "word": "fanciful",
+    "phonetic": "/'fænsɪfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 想像的, 奇怪的"
     ]
   },
   "fancy": {
@@ -111,11 +706,137 @@
       "adj. 精致的；花哨的 v. 想象；喜欢"
     ]
   },
+  "fanfare": {
+    "word": "fanfare",
+    "phonetic": "/'fænfeə/",
+    "explains": [
+      "n. 吹牛，炫耀；喇叭或号角嘹亮的吹奏声；vt. 热热闹闹地宣布"
+    ]
+  },
+  "fang": {
+    "word": "fang",
+    "phonetic": "/fæŋ/",
+    "explains": [
+      "n. (犬, 狼等的)尖牙, 犬牙, (毒蛇的)毒牙, 牙根, 尖端"
+    ]
+  },
+  "fanner": {
+    "word": "fanner",
+    "phonetic": "/'fænə/",
+    "explains": [
+      "n. 通风机"
+    ]
+  },
+  "fanners": {
+    "word": "fanners",
+    "phonetic": "/'fænə/",
+    "explains": [
+      "n. 电风扇,通风机"
+    ]
+  },
+  "fantabulous": {
+    "word": "fantabulous",
+    "phonetic": "/fæn'tæbjʊləs/",
+    "explains": [
+      "adj. <美俚>极出色的, 极妙的"
+    ]
+  },
+  "fantaisie": {
+    "word": "fantaisie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 幻想"
+    ]
+  },
+  "fantasia": {
+    "word": "fantasia",
+    "phonetic": "/fæn'teɪzɪə; ,fæntə'ziːə/",
+    "explains": [
+      "n. 幻想曲"
+    ]
+  },
+  "fantasise": {
+    "word": "fantasise",
+    "phonetic": "",
+    "explains": [
+      "v. 耽于幻想"
+    ]
+  },
+  "fantastic": {
+    "word": "fantastic",
+    "phonetic": "/fænˈtæstɪk/",
+    "explains": [
+      "adj. 极好的"
+    ]
+  },
+  "fantasy": {
+    "word": "fantasy",
+    "phonetic": "/ˈfæntəsɪ/",
+    "explains": [
+      "n. 幻想"
+    ]
+  },
+  "fantod": {
+    "word": "fantod",
+    "phonetic": "/'fæntɒd/",
+    "explains": [
+      "n. 烦燥, 惊恐"
+    ]
+  },
+  "fanwise": {
+    "word": "fanwise",
+    "phonetic": "/'fænwaɪz/",
+    "explains": [
+      "adj. 呈扇形展开的"
+    ]
+  },
   "far": {
     "word": "far",
     "phonetic": "/fɑː(r)/",
     "explains": [
       "adv. 远；遥远地 adj. 远的"
+    ]
+  },
+  "faraway": {
+    "word": "faraway",
+    "phonetic": "/'fɑːrəweɪ; fɑːrə'weɪ/",
+    "explains": [
+      "adj. 遥远的"
+    ]
+  },
+  "farce": {
+    "word": "farce",
+    "phonetic": "/fɑːs/",
+    "explains": [
+      "n. 闹剧；荒唐可笑"
+    ]
+  },
+  "farcical": {
+    "word": "farcical",
+    "phonetic": "/'fɑːsɪk(ə)l/",
+    "explains": [
+      "adj. 滑稽的；闹剧的；引人发笑的"
+    ]
+  },
+  "fare": {
+    "word": "fare",
+    "phonetic": "/feə/",
+    "explains": [
+      "n. 车费"
+    ]
+  },
+  "farewell": {
+    "word": "farewell",
+    "phonetic": "/ˌfeəˈwel/",
+    "explains": [
+      "n. 告别"
+    ]
+  },
+  "farine": {
+    "word": "farine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 面粉"
     ]
   },
   "farm": {
@@ -125,11 +846,130 @@
       "n. 农场；农庄 v. 种田；务农"
     ]
   },
+  "farmacia": {
+    "word": "farmacia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 药店"
+    ]
+  },
   "farmer": {
     "word": "farmer",
     "phonetic": "/ˈfɑːmə(r)/",
     "explains": [
       "n. 农民；农场主"
+    ]
+  },
+  "farmhand": {
+    "word": "farmhand",
+    "phonetic": "/'fɑːmhænd/",
+    "explains": [
+      "n. 农业工人，农场工人"
+    ]
+  },
+  "farmhouse": {
+    "word": "farmhouse",
+    "phonetic": "/'fɑːmhaʊs/",
+    "explains": [
+      "n. 农家，[农工] 农舍"
+    ]
+  },
+  "farming": {
+    "word": "farming",
+    "phonetic": "/ˈfɑːmɪŋ/",
+    "explains": [
+      "n. 农业；务农"
+    ]
+  },
+  "farmland": {
+    "word": "farmland",
+    "phonetic": "/'fɑːmlænd/",
+    "explains": [
+      "n. 农田"
+    ]
+  },
+  "farmyard": {
+    "word": "farmyard",
+    "phonetic": "/'fɑːmjɑːd/",
+    "explains": [
+      "n. 农家庭院；农场；农家"
+    ]
+  },
+  "farrago": {
+    "word": "farrago",
+    "phonetic": "/fə'rɑːgəʊ/",
+    "explains": [
+      "n. 混杂, 混杂物"
+    ]
+  },
+  "farrow": {
+    "word": "farrow",
+    "phonetic": "/'færəʊ/",
+    "explains": [
+      "n. 一窝小猪, 猪的一胎, 下小猪"
+    ]
+  },
+  "farsighted": {
+    "word": "farsighted",
+    "phonetic": "/'fɑː'saɪtɪd/",
+    "explains": [
+      "adj. 有先见之明的, 远视的"
+    ]
+  },
+  "farther": {
+    "word": "farther",
+    "phonetic": "/'fɑːðə/",
+    "explains": [
+      "adv. 更远地；adj. 更远的"
+    ]
+  },
+  "fascia": {
+    "word": "fascia",
+    "phonetic": "/'feɪʃɪə; -ʃə/",
+    "explains": [
+      "n. 带, 饰带(店门面上的)招牌, <英>汽车仪表板, [医]绷带"
+    ]
+  },
+  "fascinar": {
+    "word": "fascinar",
+    "phonetic": "",
+    "explains": [
+      "v. 使着迷"
+    ]
+  },
+  "fascinate": {
+    "word": "fascinate",
+    "phonetic": "/ˈfæsɪneɪt/",
+    "explains": [
+      "v. 使着迷"
+    ]
+  },
+  "fascinating": {
+    "word": "fascinating",
+    "phonetic": "/'fæsineitiŋ/",
+    "explains": [
+      "adj.  迷人的； 有极大吸引力的"
+    ]
+  },
+  "fascination": {
+    "word": "fascination",
+    "phonetic": "/,fæsɪ'neɪʃ(ə)n/",
+    "explains": [
+      "n. 魔力,  魅力, 迷恋"
+    ]
+  },
+  "fascism": {
+    "word": "fascism",
+    "phonetic": "/'fæʃɪz(ə)m; -sɪz(ə)m/",
+    "explains": [
+      "n. 法西斯主义；极端国家主义"
+    ]
+  },
+  "fascist": {
+    "word": "fascist",
+    "phonetic": "/'fæʃɪst/",
+    "explains": [
+      "n. 法西斯主义者；法西斯党员；adj. 法西斯主义的，法西斯党的"
     ]
   },
   "fashion": {
@@ -139,11 +979,60 @@
       "n. 时尚；流行；方式"
     ]
   },
+  "fashionable": {
+    "word": "fashionable",
+    "phonetic": "/ˈfæʃnəb(ə)l/",
+    "explains": [
+      "adj. 时髦的"
+    ]
+  },
   "fast": {
     "word": "fast",
     "phonetic": "/fɑːst/",
     "explains": [
       "adj. 快的；迅速的 adv. 快速地"
+    ]
+  },
+  "fast-expanding": {
+    "word": "fast-expanding",
+    "phonetic": "/'fɑːstˌiks'pændiŋ/",
+    "explains": [
+      "adj.  快速扩张的"
+    ]
+  },
+  "fasten": {
+    "word": "fasten",
+    "phonetic": "/ˈfɑːs(ə)n; ˈfæs(ə)n/",
+    "explains": [
+      "v. 系紧"
+    ]
+  },
+  "fastener": {
+    "word": "fastener",
+    "phonetic": "/'fɑːsənə/",
+    "explains": [
+      "n. 扣件，钮扣，揿钮"
+    ]
+  },
+  "fastening": {
+    "word": "fastening",
+    "phonetic": "/'fɑːs(ə)nɪŋ/",
+    "explains": [
+      "n. 扣紧；系结物（fasten的现在分词）"
+    ]
+  },
+  "fastidious": {
+    "word": "fastidious",
+    "phonetic": "/fæ'stɪdɪəs/",
+    "explains": [
+      "adj. 过分讲究的, 挑剔的"
+    ]
+  },
+  "fastness": {
+    "word": "fastness",
+    "phonetic": "/'fɑːs(t)nɪs/",
+    "explains": [
+      "n. 牢固, 固定(性), 不褪色(性), 放荡, 僻静的处所, 抗(毒)性, 要塞, 巩固"
     ]
   },
   "fat": {
@@ -153,11 +1042,123 @@
       "adj. 胖的；肥的 n. 脂肪；肥肉"
     ]
   },
+  "fatal": {
+    "word": "fatal",
+    "phonetic": "/ˈfeɪt(ə)l/",
+    "explains": [
+      "adj. 致命的"
+    ]
+  },
+  "fatalism": {
+    "word": "fatalism",
+    "phonetic": "/'feɪt(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 宿命论"
+    ]
+  },
+  "fatality": {
+    "word": "fatality",
+    "phonetic": "/fə'tælɪtɪ; feɪ-/",
+    "explains": [
+      "n. 死亡；宿命；致命性；不幸；灾祸"
+    ]
+  },
+  "fate": {
+    "word": "fate",
+    "phonetic": "/feɪt/",
+    "explains": [
+      "n. 命运"
+    ]
+  },
+  "fated": {
+    "word": "fated",
+    "phonetic": "/'feɪtɪd/",
+    "explains": [
+      "adj. 命中注定的，宿命的；受命运支配的"
+    ]
+  },
+  "fateful": {
+    "word": "fateful",
+    "phonetic": "/'feɪtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 重大的；不幸的"
+    ]
+  },
   "father": {
     "word": "father",
     "phonetic": "/ˈfɑːðə(r)/",
     "explains": [
       "n. 父亲；爸爸；神父"
+    ]
+  },
+  "fatherland": {
+    "word": "fatherland",
+    "phonetic": "/'fɑːðəlænd/",
+    "explains": [
+      "n. 祖国"
+    ]
+  },
+  "fathom": {
+    "word": "fathom",
+    "phonetic": "/'fæð(ə)m/",
+    "explains": [
+      "n. 长度单位(6英尺)"
+    ]
+  },
+  "fathomless": {
+    "word": "fathomless",
+    "phonetic": "/'fæð(ə)mləs/",
+    "explains": [
+      "adj. 深不可测的, 无法计量, 无法了解的"
+    ]
+  },
+  "fatidic": {
+    "word": "fatidic",
+    "phonetic": "/fæ'tɪdɪk/",
+    "explains": [
+      "adj. (=prophetic)预言的, 预言性的"
+    ]
+  },
+  "fatigue": {
+    "word": "fatigue",
+    "phonetic": "/fəˈtiːg/",
+    "explains": [
+      "n. 疲劳"
+    ]
+  },
+  "fatten": {
+    "word": "fatten",
+    "phonetic": "/'fæt(ə)n/",
+    "explains": [
+      "v. 养肥；使肥沃"
+    ]
+  },
+  "fatty": {
+    "word": "fatty",
+    "phonetic": "/'fætɪ/",
+    "explains": [
+      "adj. 脂肪的"
+    ]
+  },
+  "fatuity": {
+    "word": "fatuity",
+    "phonetic": "/fə'tjʊ(ː)ɪtɪ/",
+    "explains": [
+      "n. 愚昧, 昏庸, 愚蠢的言行"
+    ]
+  },
+  "fatuous": {
+    "word": "fatuous",
+    "phonetic": "/'fætjʊəs/",
+    "explains": [
+      "adj. 愚昧的；蠢的"
+    ]
+  },
+  "faucet": {
+    "word": "faucet",
+    "phonetic": "/'fɔːsɪt/",
+    "explains": [
+      "n. 龙头, (连接管子的)插口"
     ]
   },
   "fault": {
@@ -167,11 +1168,172 @@
       "n. 过错；缺点；故障"
     ]
   },
+  "faultfinding": {
+    "word": "faultfinding",
+    "phonetic": "/'fɔːltfaɪndɪŋ/",
+    "explains": [
+      "n. 找茬,挑剔"
+    ]
+  },
+  "faultless": {
+    "word": "faultless",
+    "phonetic": "/'fɔːltlɪs; 'fɒlt-/",
+    "explains": [
+      "adj. 无过失的；无缺点的"
+    ]
+  },
+  "faulty": {
+    "word": "faulty",
+    "phonetic": "/'fɔːltɪ; 'fɒltɪ/",
+    "explains": [
+      "adj. 有缺点的；有错误的"
+    ]
+  },
+  "fauna": {
+    "word": "fauna",
+    "phonetic": "/'fɔːnə/",
+    "explains": [
+      "n. 动物群"
+    ]
+  },
+  "faunal": {
+    "word": "faunal",
+    "phonetic": "",
+    "explains": [
+      "adj. 动物区系的"
+    ]
+  },
+  "faute": {
+    "word": "faute",
+    "phonetic": "",
+    "explains": [
+      "n.f. 错误"
+    ]
+  },
+  "fauteuil": {
+    "word": "fauteuil",
+    "phonetic": "",
+    "explains": [
+      "n.m. 扶手椅"
+    ]
+  },
+  "faux": {
+    "word": "faux",
+    "phonetic": "",
+    "explains": [
+      "adj. 假的"
+    ]
+  },
+  "faveur": {
+    "word": "faveur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 恩惠"
+    ]
+  },
+  "favor": {
+    "word": "favor",
+    "phonetic": "/'feɪvə/",
+    "explains": [
+      "v. 赞成；喜欢；像；赐予；证实；n. 喜爱；欢心；好感"
+    ]
+  },
+  "favorable": {
+    "word": "favorable",
+    "phonetic": "/'feɪvərəbl/",
+    "explains": [
+      "adj. 有利的；良好的；赞成的，赞许的；讨人喜欢的"
+    ]
+  },
+  "favorably": {
+    "word": "favorably",
+    "phonetic": "/'feivərəbli/",
+    "explains": [
+      "adv. 赞同地, 亲切地"
+    ]
+  },
+  "favorite": {
+    "word": "favorite",
+    "phonetic": "/'feɪvərɪt/",
+    "explains": [
+      "adj. 喜爱的 n特别喜爱的人(或物)"
+    ]
+  },
+  "favoritism": {
+    "word": "favoritism",
+    "phonetic": "/'feivəritizəm/",
+    "explains": [
+      "n. 偏袒；得宠"
+    ]
+  },
+  "favorito": {
+    "word": "favorito",
+    "phonetic": "",
+    "explains": [
+      "adj. 最喜爱的"
+    ]
+  },
   "favour": {
     "word": "favour",
     "phonetic": "/ˈfeɪvə(r)/",
     "explains": [
       "n. 恩惠；赞同；帮助 v. 赞成；偏爱"
+    ]
+  },
+  "favourable": {
+    "word": "favourable",
+    "phonetic": "/'feɪv(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 赞成的；有利的"
+    ]
+  },
+  "favoured": {
+    "word": "favoured",
+    "phonetic": "/'feɪvəd/",
+    "explains": [
+      "adj. 喜爱的；受优惠的；有特权的"
+    ]
+  },
+  "favourite": {
+    "word": "favourite",
+    "phonetic": "/ˈfeɪvərɪt/",
+    "explains": [
+      "adj. 最喜欢的　n. 最爱"
+    ]
+  },
+  "fawn": {
+    "word": "fawn",
+    "phonetic": "/fɔːn/",
+    "explains": [
+      "v. 奉承；n. 小鹿；浅黄褐色；小动物；adj. 浅黄褐色的"
+    ]
+  },
+  "fawning": {
+    "word": "fawning",
+    "phonetic": "",
+    "explains": [
+      "adj. 奉承的"
+    ]
+  },
+  "fax": {
+    "word": "fax",
+    "phonetic": "/fæks/",
+    "explains": [
+      "v. 传真；n. 传真"
+    ]
+  },
+  "faze": {
+    "word": "faze",
+    "phonetic": "/feɪz/",
+    "explains": [
+      "v. 打扰, 折磨, 使狼狈, 使担忧"
+    ]
+  },
+  "fealty": {
+    "word": "fealty",
+    "phonetic": "/'fiːəltɪ/",
+    "explains": [
+      "n. (对封建主义的)效忠, 孝顺, 忠诚, 忠贞, 忠实"
     ]
   },
   "fear": {
@@ -181,11 +1343,53 @@
       "n. 害怕；恐惧 v. 害怕；畏惧"
     ]
   },
+  "fearful": {
+    "word": "fearful",
+    "phonetic": "/'fɪəfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 害怕的，可怕的"
+    ]
+  },
+  "fearless": {
+    "word": "fearless",
+    "phonetic": "/'fɪəlɪs/",
+    "explains": [
+      "adj. 无畏的，大胆的"
+    ]
+  },
+  "fearsome": {
+    "word": "fearsome",
+    "phonetic": "/'fɪəs(ə)m/",
+    "explains": [
+      "adj. 可怕的"
+    ]
+  },
+  "feasibility": {
+    "word": "feasibility",
+    "phonetic": "/fiːzɪ'bɪlɪtɪ/",
+    "explains": [
+      "n. 可行性, 可能性"
+    ]
+  },
+  "feasible": {
+    "word": "feasible",
+    "phonetic": "/'fiːzɪb(ə)l/",
+    "explains": [
+      "adj. 可行的；可能的"
+    ]
+  },
   "feast": {
     "word": "feast",
     "phonetic": "/fiːst/",
     "explains": [
       "n. 盛宴；节日 v. 尽情享用"
+    ]
+  },
+  "feat": {
+    "word": "feat",
+    "phonetic": "/fiːt/",
+    "explains": [
+      "n. 功绩，壮举；技艺表演；adj. 合适的；灵巧的"
     ]
   },
   "feather": {
@@ -195,11 +1399,46 @@
       "n. 羽毛"
     ]
   },
+  "featherbrained": {
+    "word": "featherbrained",
+    "phonetic": "",
+    "explains": [
+      "adj. 轻浮的；愚蠢的"
+    ]
+  },
+  "feathery": {
+    "word": "feathery",
+    "phonetic": "/'feð(ə)rɪ/",
+    "explains": [
+      "adj. 生有羽毛的,柔软如羽毛的"
+    ]
+  },
   "feature": {
     "word": "feature",
     "phonetic": "/ˈfiːtʃə(r)/",
     "explains": [
       "n. 特征；特色；特写 v. 以… 为特色"
+    ]
+  },
+  "featureless": {
+    "word": "featureless",
+    "phonetic": "/'fitʃɚləs/",
+    "explains": [
+      "adj. 无特色的, 平凡的"
+    ]
+  },
+  "febrero": {
+    "word": "febrero",
+    "phonetic": "",
+    "explains": [
+      "n.m. 二月"
+    ]
+  },
+  "febrile": {
+    "word": "febrile",
+    "phonetic": "/'fiːbraɪl/",
+    "explains": [
+      "adj. 发烧的,热病的"
     ]
   },
   "february": {
@@ -209,11 +1448,109 @@
       "n. 二月"
     ]
   },
+  "feckless": {
+    "word": "feckless",
+    "phonetic": "/'feklɪs/",
+    "explains": [
+      "adj. 无气力的, 没精神的, 软弱的, 无用的"
+    ]
+  },
+  "feculence": {
+    "word": "feculence",
+    "phonetic": "/'fekjʊləns/",
+    "explains": [
+      "n. 变浊, 渣滓, 污物"
+    ]
+  },
+  "fecund": {
+    "word": "fecund",
+    "phonetic": "/'fek(ə)nd; 'fiːk-/",
+    "explains": [
+      "adj. 生殖力旺盛的, 多产的"
+    ]
+  },
+  "fecundity": {
+    "word": "fecundity",
+    "phonetic": "/fi'kʌnditi/",
+    "explains": [
+      "n. [生物] 繁殖力；多产；肥沃"
+    ]
+  },
+  "federal": {
+    "word": "federal",
+    "phonetic": "/ˈfed(ə)r(ə)l/",
+    "explains": [
+      "adj. 联邦的"
+    ]
+  },
+  "federalism": {
+    "word": "federalism",
+    "phonetic": "/'fedərəlɪz(ə)m/",
+    "explains": [
+      "n. 联邦制；联邦主义"
+    ]
+  },
+  "federalist": {
+    "word": "federalist",
+    "phonetic": "/'fedərəlɪst/",
+    "explains": [
+      "n. 联邦党,联邦制拥护者"
+    ]
+  },
+  "federate": {
+    "word": "federate",
+    "phonetic": "/'fedəreɪt/",
+    "explains": [
+      "adj. 同盟的；联邦制度下的；联合的；v. 使结成同盟；使结成联邦"
+    ]
+  },
+  "federation": {
+    "word": "federation",
+    "phonetic": "/fedə'reɪʃ(ə)n/",
+    "explains": [
+      "n. 联合；联邦；联盟；联邦政府"
+    ]
+  },
+  "fee": {
+    "word": "fee",
+    "phonetic": "/fiː/",
+    "explains": [
+      "n. 费"
+    ]
+  },
+  "feeble": {
+    "word": "feeble",
+    "phonetic": "/'fiːb(ə)l/",
+    "explains": [
+      "adj. 虚弱的；微弱的"
+    ]
+  },
+  "feebleminded": {
+    "word": "feebleminded",
+    "phonetic": "/'fiːbl'maɪndɪd/",
+    "explains": [
+      "adj. 低能的；意志薄弱的；精神薄弱的"
+    ]
+  },
   "feed": {
     "word": "feed",
     "phonetic": "/fiːd/",
     "explains": [
       "v. 喂养；饲养；进食 n. 饲料"
+    ]
+  },
+  "feedback": {
+    "word": "feedback",
+    "phonetic": "/ˈfiːdbæk/",
+    "explains": [
+      "n. 反馈"
+    ]
+  },
+  "feeder": {
+    "word": "feeder",
+    "phonetic": "/'fiːdə/",
+    "explains": [
+      "n. 饲养员"
     ]
   },
   "feel": {
@@ -223,11 +1560,186 @@
       "v. 感觉；觉得；触摸 n. 感觉；触觉"
     ]
   },
+  "feeler": {
+    "word": "feeler",
+    "phonetic": "/'fiːlə/",
+    "explains": [
+      "n. [动] 触角；试探；试探者；厚薄规"
+    ]
+  },
+  "feeling": {
+    "word": "feeling",
+    "phonetic": "/ˈfiːlɪŋ/",
+    "explains": [
+      "n. 感觉"
+    ]
+  },
+  "feign": {
+    "word": "feign",
+    "phonetic": "/feɪn/",
+    "explains": [
+      "v. 假装；装作；捏造；想象"
+    ]
+  },
+  "feigned": {
+    "word": "feigned",
+    "phonetic": "/feɪnd/",
+    "explains": [
+      "adj. 假的, 伪装, 做作的, 捏造的"
+    ]
+  },
+  "feint": {
+    "word": "feint",
+    "phonetic": "/feɪnt/",
+    "explains": [
+      "n. 佯攻；伪装；v. 佯攻；假装；adj. 假的"
+    ]
+  },
+  "feisty": {
+    "word": "feisty",
+    "phonetic": "/'faɪstɪ/",
+    "explains": [
+      "adj. 易怒的, 活跃的"
+    ]
+  },
+  "feldspar": {
+    "word": "feldspar",
+    "phonetic": "/'feldspɑː/",
+    "explains": [
+      "n. [矿]长石"
+    ]
+  },
+  "felicitate": {
+    "word": "felicitate",
+    "phonetic": "/fɪ'lɪsɪteɪt/",
+    "explains": [
+      "v. 祝贺, 庆祝, 庆贺, 把某人看作有福, 庆幸"
+    ]
+  },
+  "felicitous": {
+    "word": "felicitous",
+    "phonetic": "/fɪ'lɪsɪtəs/",
+    "explains": [
+      "adj. 恰当的；善于措辞的；幸福的"
+    ]
+  },
+  "felicity": {
+    "word": "felicity",
+    "phonetic": "/fɪ'lɪsɪtɪ/",
+    "explains": [
+      "n. 幸福；快乐；幸运"
+    ]
+  },
+  "feline": {
+    "word": "feline",
+    "phonetic": "/'fiːlaɪn/",
+    "explains": [
+      "adj. 猫的, 猫科的, 猫一样的"
+    ]
+  },
+  "feliz": {
+    "word": "feliz",
+    "phonetic": "",
+    "explains": [
+      "adj. 幸福的"
+    ]
+  },
+  "fell": {
+    "word": "fell",
+    "phonetic": "/fel/",
+    "explains": [
+      "v. 砍倒（树等）；砍伐"
+    ]
+  },
+  "fellow": {
+    "word": "fellow",
+    "phonetic": "/ˈfeləʊ/",
+    "explains": [
+      "n. 伙伴"
+    ]
+  },
+  "fellowship": {
+    "word": "fellowship",
+    "phonetic": "/'felə(ʊ)ʃɪp/",
+    "explains": [
+      "n. 伙伴关系；联谊会"
+    ]
+  },
+  "felon": {
+    "word": "felon",
+    "phonetic": "/'felən/",
+    "explains": [
+      "n. 重罪人, 蛇头, 瘭疽"
+    ]
+  },
+  "felonious": {
+    "word": "felonious",
+    "phonetic": "/fe'ləʊnɪəs; fɪ-/",
+    "explains": [
+      "adj. 凶恶的；重罪的；极恶的"
+    ]
+  },
+  "felony": {
+    "word": "felony",
+    "phonetic": "/'felənɪ/",
+    "explains": [
+      "n. [律]重罪"
+    ]
+  },
+  "felt": {
+    "word": "felt",
+    "phonetic": "/felt/",
+    "explains": [
+      "n. 毡；毡制品；v. 粘结"
+    ]
+  },
   "female": {
     "word": "female",
     "phonetic": "/ˈfiːmeɪl/",
     "explains": [
       "adj. 女性的；雌性的 n. 女性；雌性动物"
+    ]
+  },
+  "feminine": {
+    "word": "feminine",
+    "phonetic": "/'femɪnɪn/",
+    "explains": [
+      "adj. 女性的；女子气的"
+    ]
+  },
+  "femininity": {
+    "word": "femininity",
+    "phonetic": "/,femɪ'nɪnɪtɪ/",
+    "explains": [
+      "n. 温柔；柔弱性；女子本性"
+    ]
+  },
+  "feminism": {
+    "word": "feminism",
+    "phonetic": "/'femɪnɪz(ə)m/",
+    "explains": [
+      "n. 女权主义；女权运动；男女平等主义"
+    ]
+  },
+  "feminisme": {
+    "word": "feminisme",
+    "phonetic": "",
+    "explains": [
+      "n.m. 女权主义"
+    ]
+  },
+  "feminist": {
+    "word": "feminist",
+    "phonetic": "/'femənɪst/",
+    "explains": [
+      "n. 男女平等主义者"
+    ]
+  },
+  "fen": {
+    "word": "fen",
+    "phonetic": "/fen/",
+    "explains": [
+      "n. 沼泽, 沼池"
     ]
   },
   "fence": {
@@ -237,11 +1749,235 @@
       "n. 栅栏；篱笆 v. 用栅栏围起"
     ]
   },
+  "fencer": {
+    "word": "fencer",
+    "phonetic": "/'fensə/",
+    "explains": [
+      "n. 击剑者, 剑术家, 篱笆匠"
+    ]
+  },
+  "fencing": {
+    "word": "fencing",
+    "phonetic": "/'fensɪŋ/",
+    "explains": [
+      "n. 栅栏, 篱笆, 围墙, 剑术, 辩论, 买卖"
+    ]
+  },
+  "fend": {
+    "word": "fend",
+    "phonetic": "/fend/",
+    "explains": [
+      "v. 保护, 供养"
+    ]
+  },
+  "fender": {
+    "word": "fender",
+    "phonetic": "/'fendə/",
+    "explains": [
+      "n. 防卫物, 挡泥板"
+    ]
+  },
+  "fente": {
+    "word": "fente",
+    "phonetic": "",
+    "explains": [
+      "n.f. 裂缝；投币口"
+    ]
+  },
+  "feo": {
+    "word": "feo",
+    "phonetic": "",
+    "explains": [
+      "adj. 丑的"
+    ]
+  },
+  "feral": {
+    "word": "feral",
+    "phonetic": "/'fer(ə)l; 'fɪə-/",
+    "explains": [
+      "adj. 野生的；凶猛的；阴郁的"
+    ]
+  },
+  "ferme": {
+    "word": "ferme",
+    "phonetic": "",
+    "explains": [
+      "n.f. 农场；adj. 坚固的"
+    ]
+  },
+  "ferment": {
+    "word": "ferment",
+    "phonetic": "/fə'ment/",
+    "explains": [
+      "n. 酵素, 发酵, 动乱"
+    ]
+  },
+  "fermentation": {
+    "word": "fermentation",
+    "phonetic": "/fɜːmen'teɪʃ(ə)n/",
+    "explains": [
+      "n. 发酵"
+    ]
+  },
+  "fermier": {
+    "word": "fermier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 农民"
+    ]
+  },
+  "fern": {
+    "word": "fern",
+    "phonetic": "/fɜːn/",
+    "explains": [
+      "n. 蕨类植物"
+    ]
+  },
+  "ferocious": {
+    "word": "ferocious",
+    "phonetic": "/fə'rəʊʃəs/",
+    "explains": [
+      "adj. 凶猛的，凶残的"
+    ]
+  },
+  "ferocity": {
+    "word": "ferocity",
+    "phonetic": "/fə'rɒsɪtɪ/",
+    "explains": [
+      "n. 凶猛, 残忍, 暴行"
+    ]
+  },
+  "ferret": {
+    "word": "ferret",
+    "phonetic": "/'ferɪt/",
+    "explains": [
+      "n. 白鼬, 雪貂, 侦探, 细带"
+    ]
+  },
+  "ferrocarril": {
+    "word": "ferrocarril",
+    "phonetic": "",
+    "explains": [
+      "n.m. 铁路"
+    ]
+  },
+  "ferromagnetic": {
+    "word": "ferromagnetic",
+    "phonetic": "/,ferə(ʊ)mæg'netɪk/",
+    "explains": [
+      "adj. 铁磁的"
+    ]
+  },
+  "ferrous": {
+    "word": "ferrous",
+    "phonetic": "/'ferəs/",
+    "explains": [
+      "adj. 铁的；亚铁的"
+    ]
+  },
   "ferry": {
     "word": "ferry",
     "phonetic": "/ˈferi/",
     "explains": [
       "n. 渡船；渡口 v. 渡运；运送"
+    ]
+  },
+  "ferryboat": {
+    "word": "ferryboat",
+    "phonetic": "/'ferɪbəʊt/",
+    "explains": [
+      "n. 渡船"
+    ]
+  },
+  "fertile": {
+    "word": "fertile",
+    "phonetic": "/'fɜːtaɪl/",
+    "explains": [
+      "adj. 肥沃的"
+    ]
+  },
+  "fertilise": {
+    "word": "fertilise",
+    "phonetic": "",
+    "explains": [
+      "v. 使受精；施肥于；使肥沃"
+    ]
+  },
+  "fertility": {
+    "word": "fertility",
+    "phonetic": "/fə'tɪlɪtɪ; fɜː'tɪlɪtɪ/",
+    "explains": [
+      "n. 肥沃, 多产"
+    ]
+  },
+  "fertilization": {
+    "word": "fertilization",
+    "phonetic": "/,fɜːtɪlaɪ'zeɪʃ(ə)n/",
+    "explains": [
+      "n. 肥沃, 施肥, 授精"
+    ]
+  },
+  "fertilize": {
+    "word": "fertilize",
+    "phonetic": "/'fɜːtɪlaɪz/",
+    "explains": [
+      "v. 使肥沃；使多产"
+    ]
+  },
+  "fertilized": {
+    "word": "fertilized",
+    "phonetic": "",
+    "explains": [
+      "adj. 已受精的"
+    ]
+  },
+  "fertilizer": {
+    "word": "fertilizer",
+    "phonetic": "/'fɜːtɪlaɪzə/",
+    "explains": [
+      "n. 肥料"
+    ]
+  },
+  "fervent": {
+    "word": "fervent",
+    "phonetic": "/'fɜːv(ə)nt/",
+    "explains": [
+      "adj. 热烈的；热情的"
+    ]
+  },
+  "fervid": {
+    "word": "fervid",
+    "phonetic": "/'fɜːvɪd/",
+    "explains": [
+      "adj. 热的；热心的"
+    ]
+  },
+  "fervor": {
+    "word": "fervor",
+    "phonetic": "/'fɜːvə/",
+    "explains": [
+      "n. 热情, 热烈"
+    ]
+  },
+  "fervour": {
+    "word": "fervour",
+    "phonetic": "/'fɜːvə/",
+    "explains": [
+      "n. 热情（等于fervor）"
+    ]
+  },
+  "festal": {
+    "word": "festal",
+    "phonetic": "/'fest(ə)l/",
+    "explains": [
+      "adj. 节日的, 欢乐的, 祭日的"
+    ]
+  },
+  "fester": {
+    "word": "fester",
+    "phonetic": "/'festə/",
+    "explains": [
+      "v. 脓疮，(怨恨等)郁积，恶化"
     ]
   },
   "festival": {
@@ -251,11 +1987,102 @@
       "n. 节日；庆典；音乐节"
     ]
   },
+  "festive": {
+    "word": "festive",
+    "phonetic": "/'festɪv/",
+    "explains": [
+      "adj. 庆祝的, 喜庆的"
+    ]
+  },
+  "festivity": {
+    "word": "festivity",
+    "phonetic": "/fe'stɪvɪtɪ/",
+    "explains": [
+      "n. 欢庆，欢宴；庆典；欢乐"
+    ]
+  },
+  "festoon": {
+    "word": "festoon",
+    "phonetic": "/fe'stuːn/",
+    "explains": [
+      "v. 结彩于；[建] 以花彩装饰；n. 花彩；[建] 花彩装饰物"
+    ]
+  },
+  "fetal": {
+    "word": "fetal",
+    "phonetic": "/'fiːt(ə)l/",
+    "explains": [
+      "adj. 胎的，胎儿的"
+    ]
+  },
   "fetch": {
     "word": "fetch",
     "phonetic": "/fetʃ/",
     "explains": [
       "v. 取来；拿来；售得"
+    ]
+  },
+  "fetching": {
+    "word": "fetching",
+    "phonetic": "/'fetʃɪŋ/",
+    "explains": [
+      "adj. 迷人的；动人的；吸引人的"
+    ]
+  },
+  "fete": {
+    "word": "fete",
+    "phonetic": "/feɪt/",
+    "explains": [
+      "n. 祭祀；庆祝；节日；游乐会；v. 宴请；招待"
+    ]
+  },
+  "fetid": {
+    "word": "fetid",
+    "phonetic": "/'fetɪd; 'fiːt-/",
+    "explains": [
+      "adj. 臭的；恶臭的；腐臭的"
+    ]
+  },
+  "fetish": {
+    "word": "fetish",
+    "phonetic": "/'fetɪʃ/",
+    "explains": [
+      "n. 物神, 迷信, 偶像"
+    ]
+  },
+  "fetter": {
+    "word": "fetter",
+    "phonetic": "/'fetə/",
+    "explains": [
+      "n&vt. 脚镣; 束缚"
+    ]
+  },
+  "fetus": {
+    "word": "fetus",
+    "phonetic": "/'fiːtəs/",
+    "explains": [
+      "n. 胎儿"
+    ]
+  },
+  "feud": {
+    "word": "feud",
+    "phonetic": "/fjuːd/",
+    "explains": [
+      "n. 不和,争执；v. 长期争斗"
+    ]
+  },
+  "feudal": {
+    "word": "feudal",
+    "phonetic": "/'fjuːd(ə)l/",
+    "explains": [
+      "adj. 封建制度的；领地的；世仇的"
+    ]
+  },
+  "feudalism": {
+    "word": "feudalism",
+    "phonetic": "/'fjuːdəlɪz(ə)m/",
+    "explains": [
+      "n. 封建主义；封建制度"
     ]
   },
   "fever": {
@@ -265,11 +2092,193 @@
       "n. 发烧；发热；狂热"
     ]
   },
+  "feverish": {
+    "word": "feverish",
+    "phonetic": "/'fiːv(ə)rɪʃ/",
+    "explains": [
+      "adj. 发热的；极度兴奋的"
+    ]
+  },
+  "feverishly": {
+    "word": "feverishly",
+    "phonetic": "",
+    "explains": [
+      "adv. 兴奋地, 发热地"
+    ]
+  },
   "few": {
     "word": "few",
     "phonetic": "/fjuː/",
     "explains": [
       "adj. 很少的；几乎没有的 pron. 很少"
+    ]
+  },
+  "fiance": {
+    "word": "fiance",
+    "phonetic": "/fɪˈɒnseɪ; fɪˈɑːnseɪ/",
+    "explains": [
+      "n. fiance"
+    ]
+  },
+  "fiasco": {
+    "word": "fiasco",
+    "phonetic": "/fɪ'æskəʊ/",
+    "explains": [
+      "n. 惨败, 大失败, 可耻的下场"
+    ]
+  },
+  "fiat": {
+    "word": "fiat",
+    "phonetic": "/'fiːæt; 'faɪæt/",
+    "explains": [
+      "n. 命令, 法令, 许可, 批准"
+    ]
+  },
+  "fiber": {
+    "word": "fiber",
+    "phonetic": "/'faibə/",
+    "explains": [
+      "n. 纤维；光纤（等于fibre）"
+    ]
+  },
+  "fiberglass": {
+    "word": "fiberglass",
+    "phonetic": "",
+    "explains": [
+      "n. 玻璃纤维；玻璃丝"
+    ]
+  },
+  "fibre": {
+    "word": "fibre",
+    "phonetic": "/'faɪbə/",
+    "explains": [
+      "n. 纤维质；纤维"
+    ]
+  },
+  "fibrosis": {
+    "word": "fibrosis",
+    "phonetic": "/faɪ'brəʊsɪs/",
+    "explains": [
+      "n. [医] 纤维化，[病理] 纤维变性"
+    ]
+  },
+  "fibrous": {
+    "word": "fibrous",
+    "phonetic": "/'faɪbrəs/",
+    "explains": [
+      "adj. 含纤维的, 纤维性的"
+    ]
+  },
+  "fickle": {
+    "word": "fickle",
+    "phonetic": "/'fɪk(ə)l/",
+    "explains": [
+      "adj. 感情易变的；无常的"
+    ]
+  },
+  "fiction": {
+    "word": "fiction",
+    "phonetic": "/ˈfɪkʃ(ə)n/",
+    "explains": [
+      "n. 小说"
+    ]
+  },
+  "fictional": {
+    "word": "fictional",
+    "phonetic": "/'fɪkʃənl/",
+    "explains": [
+      "adj. 虚构的,小说的"
+    ]
+  },
+  "fictitious": {
+    "word": "fictitious",
+    "phonetic": "/fɪk'tɪʃəs/",
+    "explains": [
+      "adj. 虚构的；假想的；编造的；假装的"
+    ]
+  },
+  "fictive": {
+    "word": "fictive",
+    "phonetic": "/'fɪktɪv/",
+    "explains": [
+      "adj. 虚构的, 想象上的"
+    ]
+  },
+  "fiddle": {
+    "word": "fiddle",
+    "phonetic": "/'fɪd(ə)l/",
+    "explains": [
+      "n. 小提琴；v. 瞎搞；拉小提琴"
+    ]
+  },
+  "fiddler": {
+    "word": "fiddler",
+    "phonetic": "/'fɪdlə/",
+    "explains": [
+      "n. 拉提琴的人,游手好闲的人"
+    ]
+  },
+  "fiddling": {
+    "word": "fiddling",
+    "phonetic": "/'fɪdlɪŋ/",
+    "explains": [
+      "adj. 无用的；无足轻重的；微不足道的（等于fiddly）；n. 诈骗；v. 拉小提琴；虚度时光（fiddle的ing形式）"
+    ]
+  },
+  "fiddly": {
+    "word": "fiddly",
+    "phonetic": "/'fɪdlɪ/",
+    "explains": [
+      "adj. 需要手巧的，要求高精度的"
+    ]
+  },
+  "fidelity": {
+    "word": "fidelity",
+    "phonetic": "/fɪ'delɪtɪ/",
+    "explains": [
+      "n. 忠实, 诚实, 忠诚, 保真度, (收音机, 录音设备等的)逼真度, 保真度, 重现精度"
+    ]
+  },
+  "fidget": {
+    "word": "fidget",
+    "phonetic": "/'fɪdʒɪt/",
+    "explains": [
+      "v. 坐立不安, 烦躁, 慌张, (不安地或心不在焉地)弄, 玩弄"
+    ]
+  },
+  "fidgety": {
+    "word": "fidgety",
+    "phonetic": "/'fɪdʒɪtɪ/",
+    "explains": [
+      "adj. 不安的, 不沉着的, 烦燥的, 难以取悦的"
+    ]
+  },
+  "fiduciary": {
+    "word": "fiduciary",
+    "phonetic": "/fi'djuːʃiəri/",
+    "explains": [
+      "adj.  信托的；n. 受托人"
+    ]
+  },
+  "fiebre": {
+    "word": "fiebre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 发烧"
+    ]
+  },
+  "fief": {
+    "word": "fief",
+    "phonetic": "/fiːf/",
+    "explains": [
+      "n. 封地, 采邑"
+    ]
+  },
+  "fiel": {
+    "word": "fiel",
+    "phonetic": "",
+    "explains": [
+      "adj. 忠实的"
     ]
   },
   "field": {
@@ -279,11 +2288,60 @@
       "n. 田地；田野；领域；场地"
     ]
   },
+  "fieldstone": {
+    "word": "fieldstone",
+    "phonetic": "",
+    "explains": [
+      "n. 散石,大卵石"
+    ]
+  },
+  "fieldwork": {
+    "word": "fieldwork",
+    "phonetic": "/'fiːldwɜːk/",
+    "explains": [
+      "n. 野外工作；现场工作；野战工事"
+    ]
+  },
+  "fiend": {
+    "word": "fiend",
+    "phonetic": "/fiːnd/",
+    "explains": [
+      "n. 魔鬼, 魔王, 撒旦, 邪神, 能手, 成癖者"
+    ]
+  },
+  "fiendish": {
+    "word": "fiendish",
+    "phonetic": "/'fiːndɪʃ/",
+    "explains": [
+      "adj. 恶魔似的, 残忍的, 极坏的"
+    ]
+  },
   "fierce": {
     "word": "fierce",
     "phonetic": "/fɪəs/",
     "explains": [
       "adj. 凶猛的；猛烈的；激烈的"
+    ]
+  },
+  "fiercely": {
+    "word": "fiercely",
+    "phonetic": "/'fɪəslɪ/",
+    "explains": [
+      "adv. 猛烈地, 厉害地"
+    ]
+  },
+  "fiery": {
+    "word": "fiery",
+    "phonetic": "/'faɪərɪ/",
+    "explains": [
+      "adj. 热烈的，炽烈的；暴躁的；燃烧般的"
+    ]
+  },
+  "fiesta": {
+    "word": "fiesta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 节日；聚会"
     ]
   },
   "fifteen": {
@@ -293,11 +2351,25 @@
       "num. 十五"
     ]
   },
+  "fifteenth": {
+    "word": "fifteenth",
+    "phonetic": "/fɪf'tiːnθ/",
+    "explains": [
+      "num. 第十五"
+    ]
+  },
   "fifth": {
     "word": "fifth",
     "phonetic": "/fɪfθ/",
     "explains": [
       "num. 第五 n. 五分之一"
+    ]
+  },
+  "fiftieth": {
+    "word": "fiftieth",
+    "phonetic": "/'fɪftɪɪθ/",
+    "explains": [
+      "num. 第五十；五十分之一；adj. 第五十的；五十分之一的"
     ]
   },
   "fifty": {
@@ -307,11 +2379,60 @@
       "num. 五十"
     ]
   },
+  "fig": {
+    "word": "fig",
+    "phonetic": "/fɪg/",
+    "explains": [
+      "n. [植]无花果, 无花果树, 无价值的东西, 少许, 一些, 服装"
+    ]
+  },
   "fight": {
     "word": "fight",
     "phonetic": "/faɪt/",
     "explains": [
       "v. 打架；战斗；斗争 n. 战斗；打架"
+    ]
+  },
+  "fighter": {
+    "word": "fighter",
+    "phonetic": "",
+    "explains": [
+      "n. 战斗机；斗争者"
+    ]
+  },
+  "fighting": {
+    "word": "fighting",
+    "phonetic": "/'faɪtɪŋ/",
+    "explains": [
+      "adj. 战斗的；好战的；适于格斗的；n. 战斗，搏斗；v. 奋斗（fight的ing形式）；打仗；与…进行拳击"
+    ]
+  },
+  "figment": {
+    "word": "figment",
+    "phonetic": "/'fɪgm(ə)nt/",
+    "explains": [
+      "n. 臆造的事物, 虚构的事"
+    ]
+  },
+  "figural": {
+    "word": "figural",
+    "phonetic": "/'fɪgjʊr(ə)l/",
+    "explains": [
+      "adj. 借喻的,比喻的"
+    ]
+  },
+  "figurative": {
+    "word": "figurative",
+    "phonetic": "/'fɪg(ə)rətɪv; -gjʊ-/",
+    "explains": [
+      "adj. 比喻的，借喻的"
+    ]
+  },
+  "figuratively": {
+    "word": "figuratively",
+    "phonetic": "/'figjurətivli/",
+    "explains": [
+      "adv. 比喻地"
     ]
   },
   "figure": {
@@ -321,11 +2442,74 @@
       "n. 数字；人物；图形 v. 计算；认为"
     ]
   },
+  "figurehead": {
+    "word": "figurehead",
+    "phonetic": "/'fɪgəhed/",
+    "explains": [
+      "n. 装饰船头的雕像, 破浪神"
+    ]
+  },
+  "figurine": {
+    "word": "figurine",
+    "phonetic": "/'fɪgəriːn; -gjʊ-/",
+    "explains": [
+      "n. 小雕像"
+    ]
+  },
+  "filament": {
+    "word": "filament",
+    "phonetic": "/'fɪləm(ə)nt/",
+    "explains": [
+      "n. 细丝；长丝；灯丝"
+    ]
+  },
+  "filch": {
+    "word": "filch",
+    "phonetic": "/fɪltʃ/",
+    "explains": [
+      "v. 窃取；偷窃"
+    ]
+  },
   "file": {
     "word": "file",
     "phonetic": "/faɪl/",
     "explains": [
       "n. 文件；档案；文件夹 v. 归档；提交"
+    ]
+  },
+  "filet": {
+    "word": "filet",
+    "phonetic": "/'fiːleɪ; 'fɪlɪt/",
+    "explains": [
+      "n. 肉片, 鱼片"
+    ]
+  },
+  "filial": {
+    "word": "filial",
+    "phonetic": "/'fɪlɪəl/",
+    "explains": [
+      "adj. 子女的, 孝顺的, 当做子女的"
+    ]
+  },
+  "filibuster": {
+    "word": "filibuster",
+    "phonetic": "/'fɪlɪbʌstə/",
+    "explains": [
+      "n. 海盗；暴兵，掠夺兵；阻挠议事的议员；阻挠议事的行动；v. 阻碍议案通过"
+    ]
+  },
+  "filigree": {
+    "word": "filigree",
+    "phonetic": "/'fɪlɪɡriː/",
+    "explains": [
+      "n. 金银丝细工, 易损之物"
+    ]
+  },
+  "filings": {
+    "word": "filings",
+    "phonetic": "/'faɪlɪŋz/",
+    "explains": [
+      "n. 锉屑, 锉末"
     ]
   },
   "fill": {
@@ -335,11 +2519,102 @@
       "v. 装满；充满；填充 n. 满足；填满"
     ]
   },
+  "fille": {
+    "word": "fille",
+    "phonetic": "",
+    "explains": [
+      "n.f. 女孩；女儿"
+    ]
+  },
+  "fillet": {
+    "word": "fillet",
+    "phonetic": "/'fɪlɪt/",
+    "explains": [
+      "n. 头带, 带子, 肉片, 鱼片"
+    ]
+  },
+  "filling": {
+    "word": "filling",
+    "phonetic": "/'fɪlɪŋ/",
+    "explains": [
+      "n. 填充；填料；v. 填满；遍及（fill的ing形式）"
+    ]
+  },
+  "filly": {
+    "word": "filly",
+    "phonetic": "/'fɪlɪ/",
+    "explains": [
+      "n. 小雌马(通常未满四岁), <俚>活泼的小姑娘, <俚>活泼的"
+    ]
+  },
   "film": {
     "word": "film",
     "phonetic": "/fɪlm/",
     "explains": [
       "n. 电影；影片；胶卷 v. 拍摄电影"
+    ]
+  },
+  "filmmaker": {
+    "word": "filmmaker",
+    "phonetic": "/'fɪlm,meɪkə/",
+    "explains": [
+      "n. 电影摄制者"
+    ]
+  },
+  "filmy": {
+    "word": "filmy",
+    "phonetic": "/'fɪlmɪ/",
+    "explains": [
+      "adj. 薄膜的, 朦胧的"
+    ]
+  },
+  "filosofie": {
+    "word": "filosofie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 哲学"
+    ]
+  },
+  "filter": {
+    "word": "filter",
+    "phonetic": "/'fɪltə/",
+    "explains": [
+      "v. 过滤；n. 过滤器"
+    ]
+  },
+  "filth": {
+    "word": "filth",
+    "phonetic": "/fɪlθ/",
+    "explains": [
+      "n. 污秽，污物；淫猥；淫猥"
+    ]
+  },
+  "filthy": {
+    "word": "filthy",
+    "phonetic": "/'fɪlθɪ/",
+    "explains": [
+      "adj. 不洁的, 污秽的, 丑恶的"
+    ]
+  },
+  "fin": {
+    "word": "fin",
+    "phonetic": "/fɪn/",
+    "explains": [
+      "n. 鳍, 鱼翅"
+    ]
+  },
+  "finable": {
+    "word": "finable",
+    "phonetic": "/'faɪnəbl/",
+    "explains": [
+      "adj. 应罚款的, 可精制的, 可提炼的"
+    ]
+  },
+  "finagle": {
+    "word": "finagle",
+    "phonetic": "/fɪ'neɪg(ə)l/",
+    "explains": [
+      "v. 欺骗, 哄骗, 欺瞒"
     ]
   },
   "final": {
@@ -349,11 +2624,95 @@
       "adj. 最终的；最后的 n. 决赛；期末考试"
     ]
   },
+  "finale": {
+    "word": "finale",
+    "phonetic": "/fɪ'nɑːlɪ; -leɪ/",
+    "explains": [
+      "n. (戏剧的)最后一场, 结局, 终了, 最后的一个乐章, 终曲"
+    ]
+  },
+  "finalist": {
+    "word": "finalist",
+    "phonetic": "/'faɪn(ə)lɪst/",
+    "explains": [
+      "n. 参加决赛的选手"
+    ]
+  },
+  "finalize": {
+    "word": "finalize",
+    "phonetic": "/'fainəlaiz/",
+    "explains": [
+      "vt.  完成， 结束； 最终确定"
+    ]
+  },
+  "finally": {
+    "word": "finally",
+    "phonetic": "/'faɪnəlɪ/",
+    "explains": [
+      "adv. 最后"
+    ]
+  },
+  "finance": {
+    "word": "finance",
+    "phonetic": "/ˈfaɪnæns; fɪˈnæns; ˈfɪnæns/",
+    "explains": [
+      "n. 金融"
+    ]
+  },
+  "finances": {
+    "word": "finances",
+    "phonetic": "/fai'nænsis/",
+    "explains": [
+      "n.  经费"
+    ]
+  },
+  "financial": {
+    "word": "financial",
+    "phonetic": "/faɪˈnænʃ(ə)l; fɪˈnænʃ(ə)l/",
+    "explains": [
+      "adj. 金融的"
+    ]
+  },
+  "financially": {
+    "word": "financially",
+    "phonetic": "/fai'nænʃəli/",
+    "explains": [
+      "adv.  财政上"
+    ]
+  },
+  "financier": {
+    "word": "financier",
+    "phonetic": "/faɪ'nænsɪə; fɪ-/",
+    "explains": [
+      "n. 财政家, 金融家"
+    ]
+  },
+  "financing": {
+    "word": "financing",
+    "phonetic": "/fai'nænsiŋ/",
+    "explains": [
+      "n.  融资"
+    ]
+  },
+  "finch": {
+    "word": "finch",
+    "phonetic": "/fɪn(t)ʃ/",
+    "explains": [
+      "n. 雀类"
+    ]
+  },
   "find": {
     "word": "find",
     "phonetic": "/faɪnd/",
     "explains": [
       "v. 找到；发现；认为 n. 发现物"
+    ]
+  },
+  "finding": {
+    "word": "finding",
+    "phonetic": "/ˈfaɪndɪŋ/",
+    "explains": [
+      "n. 发现"
     ]
   },
   "fine": {
@@ -363,11 +2722,67 @@
       "adj. 好的；优良的；精美的 adv. 很好 n. 罚款"
     ]
   },
+  "finely": {
+    "word": "finely",
+    "phonetic": "/'faɪnlɪ/",
+    "explains": [
+      "adv. 精细地；美好地"
+    ]
+  },
+  "finery": {
+    "word": "finery",
+    "phonetic": "/'faɪn(ə)rɪ/",
+    "explains": [
+      "n. 服饰；华丽的服饰，鲜艳服装；装饰"
+    ]
+  },
+  "finesse": {
+    "word": "finesse",
+    "phonetic": "/fɪ'nes/",
+    "explains": [
+      "n. 手腕, 精密技巧, 灵巧, 策略, 手段"
+    ]
+  },
   "finger": {
     "word": "finger",
     "phonetic": "/ˈfɪŋɡə(r)/",
     "explains": [
       "n. 手指"
+    ]
+  },
+  "fingerboard": {
+    "word": "fingerboard",
+    "phonetic": "/'fɪŋgəbɔːd/",
+    "explains": [
+      "n. 键盘"
+    ]
+  },
+  "fingernail": {
+    "word": "fingernail",
+    "phonetic": "/'fɪŋgəneɪl/",
+    "explains": [
+      "n. 手指甲"
+    ]
+  },
+  "fingerprint": {
+    "word": "fingerprint",
+    "phonetic": "/'fɪŋgəprɪnt/",
+    "explains": [
+      "n. 指纹；手印；v. 采指纹"
+    ]
+  },
+  "fingertip": {
+    "word": "fingertip",
+    "phonetic": "/'fɪŋgətɪp/",
+    "explains": [
+      "n. 指尖；指套"
+    ]
+  },
+  "finicky": {
+    "word": "finicky",
+    "phonetic": "/'fɪnɪkɪ/",
+    "explains": [
+      "adj. 过分注意的, 过分讲究的, 过分周到的"
     ]
   },
   "finish": {
@@ -377,11 +2792,165 @@
       "v. 完成；结束；终止 n. 结束；完成"
     ]
   },
+  "finished": {
+    "word": "finished",
+    "phonetic": "/'fɪnɪʃt/",
+    "explains": [
+      "adj. 完结的，完成的；精巧的；v. 完成；结束；毁掉（finish的过去分词形式）"
+    ]
+  },
+  "finite": {
+    "word": "finite",
+    "phonetic": "",
+    "explains": [
+      "adj. 有限的；有尽的"
+    ]
+  },
+  "fink": {
+    "word": "fink",
+    "phonetic": "/fɪŋk/",
+    "explains": [
+      "n. 破坏及反罢工的人, 告发人, 密告人, 乞丐"
+    ]
+  },
+  "finnish": {
+    "word": "finnish",
+    "phonetic": "/'finiʃ/",
+    "explains": [
+      "adj. 芬兰的"
+    ]
+  },
+  "fiord": {
+    "word": "fiord",
+    "phonetic": "/fjɔːd/",
+    "explains": [
+      "n. (尤指挪威的)海湾, 峡湾"
+    ]
+  },
+  "fir": {
+    "word": "fir",
+    "phonetic": "/fɜː/",
+    "explains": [
+      "n. [植]冷杉"
+    ]
+  },
   "fire": {
     "word": "fire",
     "phonetic": "/ˈfaɪə(r)/",
     "explains": [
       "n. 火；火焰；火灾 v. 开火；点燃；解雇"
+    ]
+  },
+  "firearm": {
+    "word": "firearm",
+    "phonetic": "/'faɪərɑːm/",
+    "explains": [
+      "n. 火器,枪炮"
+    ]
+  },
+  "fireball": {
+    "word": "fireball",
+    "phonetic": "/'faɪəbɔːl/",
+    "explains": [
+      "n. 火球, 大流星"
+    ]
+  },
+  "firebrand": {
+    "word": "firebrand",
+    "phonetic": "/'faɪəbrænd/",
+    "explains": [
+      "n. 火把；煽动叛乱者；放火者"
+    ]
+  },
+  "firebrick": {
+    "word": "firebrick",
+    "phonetic": "/'faɪəbrɪk/",
+    "explains": [
+      "n. 耐火砖"
+    ]
+  },
+  "firecracker": {
+    "word": "firecracker",
+    "phonetic": "/'faɪəkrækə/",
+    "explains": [
+      "n. 鞭炮，爆竹"
+    ]
+  },
+  "firedamp": {
+    "word": "firedamp",
+    "phonetic": "/'faɪədæmp/",
+    "explains": [
+      "n. 沼气；甲烷"
+    ]
+  },
+  "firefighter": {
+    "word": "firefighter",
+    "phonetic": "/'faɪəfaɪtə/",
+    "explains": [
+      "n. 消防队员"
+    ]
+  },
+  "firefly": {
+    "word": "firefly",
+    "phonetic": "/'faɪəflaɪ/",
+    "explains": [
+      "n. 萤火虫"
+    ]
+  },
+  "fireman": {
+    "word": "fireman",
+    "phonetic": "/ˈfaɪəmən/",
+    "explains": [
+      "n. 消防员"
+    ]
+  },
+  "fireplace": {
+    "word": "fireplace",
+    "phonetic": "/'faɪəpleɪs/",
+    "explains": [
+      "n. 壁炉"
+    ]
+  },
+  "firepower": {
+    "word": "firepower",
+    "phonetic": "/'faɪəpəʊə/",
+    "explains": [
+      "n. 火力"
+    ]
+  },
+  "fireproof": {
+    "word": "fireproof",
+    "phonetic": "/'faɪəpruːf/",
+    "explains": [
+      "adj. 防火的；耐火的；v. 使耐火；使防火"
+    ]
+  },
+  "fireside": {
+    "word": "fireside",
+    "phonetic": "/'faɪəsaɪd/",
+    "explains": [
+      "n. 炉边；家庭；adj. 炉边的；非正式的"
+    ]
+  },
+  "firewood": {
+    "word": "firewood",
+    "phonetic": "/'faɪəwʊd/",
+    "explains": [
+      "n. 木柴, 柴火"
+    ]
+  },
+  "firework": {
+    "word": "firework",
+    "phonetic": "/ˈfaɪəwɜːk/",
+    "explains": [
+      "n. 烟火"
+    ]
+  },
+  "firing": {
+    "word": "firing",
+    "phonetic": "/'faɪərɪŋ/",
+    "explains": [
+      "n. 开火, 生火；v. 开火,烧制"
     ]
   },
   "firm": {
@@ -391,11 +2960,60 @@
       "adj. 坚定的；牢固的 n. 公司；商行"
     ]
   },
+  "firmament": {
+    "word": "firmament",
+    "phonetic": "/'fɜːməm(ə)nt/",
+    "explains": [
+      "n. 天空, 太空, 苍天"
+    ]
+  },
+  "firmly": {
+    "word": "firmly",
+    "phonetic": "/fɜːmli/",
+    "explains": [
+      "adv. 坚固地，稳定地"
+    ]
+  },
+  "firmness": {
+    "word": "firmness",
+    "phonetic": "/'fɜ:mnɪs/",
+    "explains": [
+      "n. 坚固，坚定，稳固"
+    ]
+  },
+  "firn": {
+    "word": "firn",
+    "phonetic": "/'fɪən/",
+    "explains": [
+      "n. 粒雪, 积雪"
+    ]
+  },
   "first": {
     "word": "first",
     "phonetic": "/fɜːst/",
     "explains": [
       "num. 第一 adv. 首先；最初"
+    ]
+  },
+  "firstborn": {
+    "word": "firstborn",
+    "phonetic": "/'fɜːstbɔːn/",
+    "explains": [
+      "n. 长子；初生儿；长女；adj. 头生的；第一胎生的"
+    ]
+  },
+  "firsthand": {
+    "word": "firsthand",
+    "phonetic": "/'fɜːst'hænd/",
+    "explains": [
+      "adj. (来源, 资料等)直接的, 直接得来的, 直接采购的"
+    ]
+  },
+  "fiscal": {
+    "word": "fiscal",
+    "phonetic": "/'fiskəl/",
+    "explains": [
+      "adj.  国库的， 财政的"
     ]
   },
   "fish": {
@@ -405,11 +3023,95 @@
       "n. 鱼；鱼肉 v. 钓鱼；捕鱼"
     ]
   },
+  "fisherman": {
+    "word": "fisherman",
+    "phonetic": "/ˈfɪʃəmən/",
+    "explains": [
+      "n. 渔夫"
+    ]
+  },
+  "fishery": {
+    "word": "fishery",
+    "phonetic": "/'fɪʃ(ə)rɪ/",
+    "explains": [
+      "n. 渔业, 水产业"
+    ]
+  },
+  "fishing": {
+    "word": "fishing",
+    "phonetic": "/'fɪʃɪŋ/",
+    "explains": [
+      "n. 渔业；捕鱼（术）；试探；装配；adj. 钓鱼的；钓鱼用的；v. 捕鱼（fish的ing形式）"
+    ]
+  },
+  "fishmonger": {
+    "word": "fishmonger",
+    "phonetic": "/'fɪʃmʌŋgə/",
+    "explains": [
+      "n. 鱼贩；鱼商"
+    ]
+  },
+  "fissile": {
+    "word": "fissile",
+    "phonetic": "/'fɪsaɪl/",
+    "explains": [
+      "adj. 易分裂的, 易裂的, 分裂性的, 可分裂的, 裂变的"
+    ]
+  },
+  "fission": {
+    "word": "fission",
+    "phonetic": "/'fɪʃ(ə)n/",
+    "explains": [
+      "n. 裂开；分裂生殖"
+    ]
+  },
+  "fissure": {
+    "word": "fissure",
+    "phonetic": "/'fɪʃə/",
+    "explains": [
+      "n. 裂缝, 裂沟, (思想, 观点等的)分歧"
+    ]
+  },
+  "fist": {
+    "word": "fist",
+    "phonetic": "/fɪst/",
+    "explains": [
+      "n. 拳（头）"
+    ]
+  },
   "fit": {
     "word": "fit",
     "phonetic": "/fɪt/",
     "explains": [
       "adj. 健康的；合适的 v. 适合；合身"
+    ]
+  },
+  "fitful": {
+    "word": "fitful",
+    "phonetic": "/'fɪtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 断断续续的, 一阵阵的, 间歇的, 不定的, 不规则的"
+    ]
+  },
+  "fitness": {
+    "word": "fitness",
+    "phonetic": "/ˈfɪtnɪs/",
+    "explains": [
+      "n. 健康"
+    ]
+  },
+  "fitted": {
+    "word": "fitted",
+    "phonetic": "/'fɪtɪd/",
+    "explains": [
+      "adj. 合适的；订做的；有…设备的；v. 适应（fit的过去分词）；合适；为…提供设备"
+    ]
+  },
+  "fitting": {
+    "word": "fitting",
+    "phonetic": "/'fɪtɪŋ/",
+    "explains": [
+      "adj. 适当的；n. 配件"
     ]
   },
   "five": {
@@ -419,11 +3121,109 @@
       "num. 五"
     ]
   },
+  "fivefold": {
+    "word": "fivefold",
+    "phonetic": "/'faɪvfəʊld/",
+    "explains": [
+      "adv. 五倍地；五重地；adj. 五倍的；五重的"
+    ]
+  },
   "fix": {
     "word": "fix",
     "phonetic": "/fɪks/",
     "explains": [
       "v. 修理；固定；安装；解决"
+    ]
+  },
+  "fixable": {
+    "word": "fixable",
+    "phonetic": "/'fiksəbl/",
+    "explains": [
+      "adj.  可固定的； 可确定的"
+    ]
+  },
+  "fixation": {
+    "word": "fixation",
+    "phonetic": "/fɪk'seɪʃ(ə)n/",
+    "explains": [
+      "n. 固定, 注视"
+    ]
+  },
+  "fixed": {
+    "word": "fixed",
+    "phonetic": "/fɪkst/",
+    "explains": [
+      "adj. 确定的；固执的；<美口>处境的；准备好的；v. 修理（过去式）"
+    ]
+  },
+  "fixer": {
+    "word": "fixer",
+    "phonetic": "/'fɪksə/",
+    "explains": [
+      "n. 固定器；[摄] 定影剂；毒贩子；调停者"
+    ]
+  },
+  "fixture": {
+    "word": "fixture",
+    "phonetic": "/'fɪkstʃə; -tjə/",
+    "explains": [
+      "n. 固定设备"
+    ]
+  },
+  "fizz": {
+    "word": "fizz",
+    "phonetic": "/fɪz/",
+    "explains": [
+      "n. 兴奋，活力；嘶嘶声；充气饮料；v. 显示兴奋；发嘶嘶声；起泡沫"
+    ]
+  },
+  "fizzle": {
+    "word": "fizzle",
+    "phonetic": "/'fɪz(ə)l/",
+    "explains": [
+      "n. 嘶嘶声, 微弱地结束，失败"
+    ]
+  },
+  "fjord": {
+    "word": "fjord",
+    "phonetic": "/fjɔːd; 'fiːɔːrd/",
+    "explains": [
+      "n. [地理] 峡湾（等于fiord）"
+    ]
+  },
+  "flabbergast": {
+    "word": "flabbergast",
+    "phonetic": "/'flæbəgɑːst/",
+    "explains": [
+      "v. <口>使大吃一惊, 哑然失色, 使目瞪口呆"
+    ]
+  },
+  "flabby": {
+    "word": "flabby",
+    "phonetic": "/'flæbɪ/",
+    "explains": [
+      "adj. (肌肉)不结实的；软弱的"
+    ]
+  },
+  "flaccid": {
+    "word": "flaccid",
+    "phonetic": "/'flæsɪd; 'flæksɪd/",
+    "explains": [
+      "adj. 软弱的, 无活力的, 没气力的"
+    ]
+  },
+  "flaco": {
+    "word": "flaco",
+    "phonetic": "",
+    "explains": [
+      "adj. 瘦的"
+    ]
+  },
+  "flacon": {
+    "word": "flacon",
+    "phonetic": "",
+    "explains": [
+      "n.m. 小瓶"
     ]
   },
   "flag": {
@@ -433,11 +3233,186 @@
       "n. 旗帜；国旗"
     ]
   },
+  "flagella": {
+    "word": "flagella",
+    "phonetic": "",
+    "explains": [
+      "n. 鞭毛；鞭节（flagellum的复数）"
+    ]
+  },
+  "flagellate": {
+    "word": "flagellate",
+    "phonetic": "/'flædʒ(ə)leɪt/",
+    "explains": [
+      "v. 鞭打, 鞭挞"
+    ]
+  },
+  "flagellum": {
+    "word": "flagellum",
+    "phonetic": "/flə'dʒeləm/",
+    "explains": [
+      "n. [动]鞭毛"
+    ]
+  },
+  "flagged": {
+    "word": "flagged",
+    "phonetic": "",
+    "explains": [
+      "已被标记"
+    ]
+  },
+  "flaggy": {
+    "word": "flaggy",
+    "phonetic": "",
+    "explains": [
+      "adj. 多扁石的, 多菖蒲的"
+    ]
+  },
+  "flagpole": {
+    "word": "flagpole",
+    "phonetic": "/'flægpəʊl/",
+    "explains": [
+      "n. 旗杆"
+    ]
+  },
+  "flagrant": {
+    "word": "flagrant",
+    "phonetic": "/'fleɪgr(ə)nt/",
+    "explains": [
+      "adj. 非常的, 不能容忍的, 恶名昭著的, 公然的"
+    ]
+  },
+  "flagship": {
+    "word": "flagship",
+    "phonetic": "/'flægʃip/",
+    "explains": [
+      "n.  旗舰， 同类产品中的佼佼者"
+    ]
+  },
+  "flagstaff": {
+    "word": "flagstaff",
+    "phonetic": "/'flæɡstæf/",
+    "explains": [
+      "n. 旗杆"
+    ]
+  },
+  "flail": {
+    "word": "flail",
+    "phonetic": "/fleɪl/",
+    "explains": [
+      "n. 连枷"
+    ]
+  },
+  "flair": {
+    "word": "flair",
+    "phonetic": "/fleə/",
+    "explains": [
+      "n. 才能, 本领"
+    ]
+  },
+  "flak": {
+    "word": "flak",
+    "phonetic": "/flæk/",
+    "explains": [
+      "n. 高射炮火"
+    ]
+  },
+  "flake": {
+    "word": "flake",
+    "phonetic": "/fleɪk/",
+    "explains": [
+      "n. 片，薄片"
+    ]
+  },
+  "flamboyance": {
+    "word": "flamboyance",
+    "phonetic": "",
+    "explains": [
+      "n. 华丽, 火焰"
+    ]
+  },
+  "flamboyant": {
+    "word": "flamboyant",
+    "phonetic": "/flæm'bɒɪənt/",
+    "explains": [
+      "adj. 辉耀的,艳丽的"
+    ]
+  },
+  "flamdoodle": {
+    "word": "flamdoodle",
+    "phonetic": "",
+    "explains": [
+      "n. 吹牛"
+    ]
+  },
   "flame": {
     "word": "flame",
     "phonetic": "/fleɪm/",
     "explains": [
       "n. 火焰；热情 v. 燃烧；泛红"
+    ]
+  },
+  "flaming": {
+    "word": "flaming",
+    "phonetic": "/'fleɪmɪŋ/",
+    "explains": [
+      "adj. 熊熊燃烧的；热情的"
+    ]
+  },
+  "flammable": {
+    "word": "flammable",
+    "phonetic": "/'flæməb(ə)l/",
+    "explains": [
+      "adj. 易燃的, 可燃性的"
+    ]
+  },
+  "flan": {
+    "word": "flan",
+    "phonetic": "",
+    "explains": [
+      "n.m. 果馅饼"
+    ]
+  },
+  "flange": {
+    "word": "flange",
+    "phonetic": "/flæn(d)ʒ/",
+    "explains": [
+      "n. 边缘, 轮缘, 凸缘, 法兰"
+    ]
+  },
+  "flank": {
+    "word": "flank",
+    "phonetic": "/flæŋk/",
+    "explains": [
+      "n. 肋，肋腹；侧面"
+    ]
+  },
+  "flannel": {
+    "word": "flannel",
+    "phonetic": "/'flæn(ə)l/",
+    "explains": [
+      "n. 法兰绒"
+    ]
+  },
+  "flap": {
+    "word": "flap",
+    "phonetic": "/flæp/",
+    "explains": [
+      "v. 拍打；n. 拍打，拍动"
+    ]
+  },
+  "flare": {
+    "word": "flare",
+    "phonetic": "/fleə/",
+    "explains": [
+      "v. 闪耀"
+    ]
+  },
+  "flaring": {
+    "word": "flaring",
+    "phonetic": "/'fleərɪŋ/",
+    "explains": [
+      "adj. 发光的, 燃烧的, 引人注目的, 花哨的, 俗丽的"
     ]
   },
   "flash": {
@@ -447,11 +3422,151 @@
       "n. 闪光；闪现 v. 闪光；掠过"
     ]
   },
+  "flashback": {
+    "word": "flashback",
+    "phonetic": "/'flæʃbæk/",
+    "explains": [
+      "n. 倒叙；闪回；迷幻药效幻觉重现"
+    ]
+  },
+  "flashbulb": {
+    "word": "flashbulb",
+    "phonetic": "/'flæʃbʌlb/",
+    "explains": [
+      "n. [摄]闪光灯泡"
+    ]
+  },
+  "flashlight": {
+    "word": "flashlight",
+    "phonetic": "/'flæʃlaɪt/",
+    "explains": [
+      "n. 手电筒；闪光灯"
+    ]
+  },
+  "flashy": {
+    "word": "flashy",
+    "phonetic": "/'flæʃɪ/",
+    "explains": [
+      "adj. 浮华的"
+    ]
+  },
+  "flask": {
+    "word": "flask",
+    "phonetic": "/flɑːsk/",
+    "explains": [
+      "n. 瓶"
+    ]
+  },
+  "flasket": {
+    "word": "flasket",
+    "phonetic": "/'flɑːskɪt/",
+    "explains": [
+      "n. 小细颈瓶, 小烧瓶"
+    ]
+  },
   "flat": {
     "word": "flat",
     "phonetic": "/flæt/",
     "explains": [
       "adj. 平的；平坦的；单调的 n. 公寓；平地"
+    ]
+  },
+  "flatboat": {
+    "word": "flatboat",
+    "phonetic": "/'flætbəʊt/",
+    "explains": [
+      "n. (浅水)平底船"
+    ]
+  },
+  "flatcar": {
+    "word": "flatcar",
+    "phonetic": "/'flætkɑː/",
+    "explains": [
+      "n. 无盖货车, 平台货车"
+    ]
+  },
+  "flatfish": {
+    "word": "flatfish",
+    "phonetic": "/'flætfɪʃ/",
+    "explains": [
+      "n. 比目鱼"
+    ]
+  },
+  "flatten": {
+    "word": "flatten",
+    "phonetic": "/'flæt(ə)n/",
+    "explains": [
+      "v. 把…弄平；击倒"
+    ]
+  },
+  "flatter": {
+    "word": "flatter",
+    "phonetic": "/'flætə/",
+    "explains": [
+      "v. 奉承，阿谀，谄媚"
+    ]
+  },
+  "flattery": {
+    "word": "flattery",
+    "phonetic": "/'flæt(ə)rɪ/",
+    "explains": [
+      "n. 奉承；谄媚；恭维话"
+    ]
+  },
+  "flattish": {
+    "word": "flattish",
+    "phonetic": "/'flætɪʃ/",
+    "explains": [
+      "adj. 有点平凡的, 稍平的"
+    ]
+  },
+  "flatulence": {
+    "word": "flatulence",
+    "phonetic": "/'flætʃələns/",
+    "explains": [
+      "n. 肠胃气胀"
+    ]
+  },
+  "flaunt": {
+    "word": "flaunt",
+    "phonetic": "/flɔːnt/",
+    "explains": [
+      "v. 夸耀，夸饰"
+    ]
+  },
+  "flauta": {
+    "word": "flauta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 长笛"
+    ]
+  },
+  "flautist": {
+    "word": "flautist",
+    "phonetic": "/'flɔːtɪst/",
+    "explains": [
+      "n. 横笛吹奏者（等于flutist）"
+    ]
+  },
+  "flavin": {
+    "word": "flavin",
+    "phonetic": "/'fleɪvɪn/",
+    "explains": [
+      "n. [化]黄素, 四羟酮醇"
+    ]
+  },
+  "flavor": {
+    "word": "flavor",
+    "phonetic": "/'fleɪvə/",
+    "explains": [
+      "n. 情味，风味；香料；滋味；v. 加味于"
+    ]
+  },
+  "flavoring": {
+    "word": "flavoring",
+    "phonetic": "/'fleɪvərɪŋ/",
+    "explains": [
+      "n. 调味品（等于flavour）；v. 加味于…（flavor的ing形式）"
     ]
   },
   "flavour": {
@@ -461,11 +3576,116 @@
       "n. 味道；风味；情趣 v. 给… 调味"
     ]
   },
+  "flavouring": {
+    "word": "flavouring",
+    "phonetic": "/'fleivəriŋ/",
+    "explains": [
+      "n. 调味料"
+    ]
+  },
+  "flaw": {
+    "word": "flaw",
+    "phonetic": "/flɔː/",
+    "explains": [
+      "n. 缺点，瑕疵"
+    ]
+  },
+  "flawed": {
+    "word": "flawed",
+    "phonetic": "/flɔːd/",
+    "explains": [
+      "adj.  有瑕疵的"
+    ]
+  },
+  "flawless": {
+    "word": "flawless",
+    "phonetic": "/'flɔːləs/",
+    "explains": [
+      "adj. 无瑕疵的, 无缺点的, 无裂缝的"
+    ]
+  },
+  "flax": {
+    "word": "flax",
+    "phonetic": "/flæks/",
+    "explains": [
+      "n. 亚麻"
+    ]
+  },
+  "flaxen": {
+    "word": "flaxen",
+    "phonetic": "/'flæks(ə)n/",
+    "explains": [
+      "adj. 淡黄色的；亚麻的；亚麻色的"
+    ]
+  },
+  "flay": {
+    "word": "flay",
+    "phonetic": "/fleɪ/",
+    "explains": [
+      "v. 剥皮, 去皮, 抢夺, 严厉批评"
+    ]
+  },
+  "flea": {
+    "word": "flea",
+    "phonetic": "/fliː/",
+    "explains": [
+      "n. 跳蚤；低廉的旅馆；生蚤的动物"
+    ]
+  },
+  "flecha": {
+    "word": "flecha",
+    "phonetic": "",
+    "explains": [
+      "n.f. 箭"
+    ]
+  },
+  "fleck": {
+    "word": "fleck",
+    "phonetic": "/flek/",
+    "explains": [
+      "n. (皮肤的)斑点, 雀斑, 斑纹, 微粒"
+    ]
+  },
+  "fledged": {
+    "word": "fledged",
+    "phonetic": "/fledʒd/",
+    "explains": [
+      "adj. 羽毛丰满的, 快会飞的, 随时能飞的"
+    ]
+  },
+  "fledgling": {
+    "word": "fledgling",
+    "phonetic": "/'fledʒlɪŋ/",
+    "explains": [
+      "n. 无经验的人；刚会飞的幼鸟"
+    ]
+  },
+  "flee": {
+    "word": "flee",
+    "phonetic": "/fliː/",
+    "explains": [
+      "v. 逃走，逃避"
+    ]
+  },
+  "fleece": {
+    "word": "fleece",
+    "phonetic": "/fliːs/",
+    "explains": [
+      "n. 羊毛(尤指未剪下的), 羊毛状之物, 绒头织物, 羊毛大衣呢"
+    ]
+  },
   "fleet": {
     "word": "fleet",
     "phonetic": "/fliːt/",
     "explains": [
       "n. 舰队；船队；车队 adj. 快速的"
+    ]
+  },
+  "fleeting": {
+    "word": "fleeting",
+    "phonetic": "/'fliːtɪŋ/",
+    "explains": [
+      "adj. 飞逝的, 短暂的 \""
     ]
   },
   "flesh": {
@@ -475,11 +3695,88 @@
       "n. 肉；肉体；果肉"
     ]
   },
+  "fleshy": {
+    "word": "fleshy",
+    "phonetic": "/'fleʃɪ/",
+    "explains": [
+      "adj. 肉的, 多肉的"
+    ]
+  },
+  "fletcher": {
+    "word": "fletcher",
+    "phonetic": "/'fletʃə/",
+    "explains": [
+      "n. <古>造箭者,弗莱彻"
+    ]
+  },
+  "fleur": {
+    "word": "fleur",
+    "phonetic": "",
+    "explains": [
+      "n.f. 花"
+    ]
+  },
+  "fleuve": {
+    "word": "fleuve",
+    "phonetic": "",
+    "explains": [
+      "n.m. 江，河"
+    ]
+  },
+  "flex": {
+    "word": "flex",
+    "phonetic": "/fleks/",
+    "explains": [
+      "v. 弯曲(四肢), 伸缩, 折曲vi折曲, 弯曲"
+    ]
+  },
+  "flexibility": {
+    "word": "flexibility",
+    "phonetic": "/,fleksɪ'bɪlɪtɪ/",
+    "explains": [
+      "n. 灵活性, 弹性"
+    ]
+  },
   "flexible": {
     "word": "flexible",
     "phonetic": "/ˈfleksəbl/",
     "explains": [
       "adj. 灵活的；柔韧的；易弯曲的"
+    ]
+  },
+  "flexibly": {
+    "word": "flexibly",
+    "phonetic": "/'fleksəbli/",
+    "explains": [
+      "adv. 易曲地, 柔软地"
+    ]
+  },
+  "flexitime": {
+    "word": "flexitime",
+    "phonetic": "/'fleksiˌtaim/",
+    "explains": [
+      "n.  弹性上班制"
+    ]
+  },
+  "flick": {
+    "word": "flick",
+    "phonetic": "/flɪk/",
+    "explains": [
+      "n. (用鞭)快速的轻打, 轻打声, 弹开"
+    ]
+  },
+  "flicker": {
+    "word": "flicker",
+    "phonetic": "/'flɪkə/",
+    "explains": [
+      "n&v. 闪烁,摇曳"
+    ]
+  },
+  "flier": {
+    "word": "flier",
+    "phonetic": "/'flaiə/",
+    "explains": [
+      "n.  广告传单； 杰出的人"
     ]
   },
   "flight": {
@@ -489,11 +3786,165 @@
       "n. 飞行；航班；航程"
     ]
   },
+  "flighty": {
+    "word": "flighty",
+    "phonetic": "/'flaɪtɪ/",
+    "explains": [
+      "adj. 忽发奇想的, 反复无常的, 轻浮的, 轻狂的, 心情浮动的"
+    ]
+  },
+  "flimsy": {
+    "word": "flimsy",
+    "phonetic": "/'flɪmzɪ/",
+    "explains": [
+      "adj. 易坏的, 脆弱的, 浅薄的, 没有价值的, 不足信的, (人)浮夸的"
+    ]
+  },
+  "flinch": {
+    "word": "flinch",
+    "phonetic": "/'flɪn(t)ʃ/",
+    "explains": [
+      "v. 畏缩, 退缩, 畏首畏尾"
+    ]
+  },
+  "fling": {
+    "word": "fling",
+    "phonetic": "/flɪŋ/",
+    "explains": [
+      "v. （用力）扔，抛"
+    ]
+  },
+  "flint": {
+    "word": "flint",
+    "phonetic": "/flɪnt/",
+    "explains": [
+      "n. 打火石, 燧石"
+    ]
+  },
+  "flinty": {
+    "word": "flinty",
+    "phonetic": "/'flɪntɪ/",
+    "explains": [
+      "adj. 坚硬的, 冷酷的, 强硬的, 严峻的, 含燧石的, 强硬的, 严峻的, 燧石似的"
+    ]
+  },
+  "flip": {
+    "word": "flip",
+    "phonetic": "/flɪp/",
+    "explains": [
+      "v. 把往上抛，掷，抽打；v. 用指轻弹"
+    ]
+  },
+  "flippancy": {
+    "word": "flippancy",
+    "phonetic": "/'flɪp(ə)nsɪ/",
+    "explains": [
+      "adj. 无礼, 轻率, 浮躁"
+    ]
+  },
+  "flippant": {
+    "word": "flippant",
+    "phonetic": "/'flɪp(ə)nt/",
+    "explains": [
+      "adj. 轻率的；嘴碎的；没礼貌的"
+    ]
+  },
+  "flipper": {
+    "word": "flipper",
+    "phonetic": "/'flɪpə/",
+    "explains": [
+      "n. 鳍状肢"
+    ]
+  },
+  "flirt": {
+    "word": "flirt",
+    "phonetic": "/flɜːt/",
+    "explains": [
+      "v. 挥动，调情；n. 调情者；急动"
+    ]
+  },
+  "flirtatious": {
+    "word": "flirtatious",
+    "phonetic": "/flɜː'teɪʃəs/",
+    "explains": [
+      "adj. 爱调戏的, 轻浮的"
+    ]
+  },
+  "flit": {
+    "word": "flit",
+    "phonetic": "/flɪt/",
+    "explains": [
+      "v. 掠过；轻快地飞；移居；n. 轻快的飞行；搬家"
+    ]
+  },
   "float": {
     "word": "float",
     "phonetic": "/fləʊt/",
     "explains": [
       "v. 漂浮；浮动；飘动 n. 漂浮；浮标"
+    ]
+  },
+  "floatation": {
+    "word": "floatation",
+    "phonetic": "/fləu'teiʃən/",
+    "explains": [
+      "n.  以公开发行股票的方式开办公司； 发行， 发售"
+    ]
+  },
+  "flock": {
+    "word": "flock",
+    "phonetic": "/flɒk/",
+    "explains": [
+      "n. 群"
+    ]
+  },
+  "floe": {
+    "word": "floe",
+    "phonetic": "/fləʊ/",
+    "explains": [
+      "n. 大浮冰, 浮殡冰块"
+    ]
+  },
+  "flog": {
+    "word": "flog",
+    "phonetic": "/flɒg/",
+    "explains": [
+      "v. 鞭打，鞭策；迫使"
+    ]
+  },
+  "flojo": {
+    "word": "flojo",
+    "phonetic": "",
+    "explains": [
+      "adj. 松的；懒散的"
+    ]
+  },
+  "flood": {
+    "word": "flood",
+    "phonetic": "/flʌd/",
+    "explains": [
+      "n. 洪水　v. 淹没"
+    ]
+  },
+  "floodgate": {
+    "word": "floodgate",
+    "phonetic": "/'flʌdgeɪt/",
+    "explains": [
+      "n. 水闸；水门；防潮水闸；制约（怒气）"
+    ]
+  },
+  "floodlight": {
+    "word": "floodlight",
+    "phonetic": "/'flʌdlaɪt/",
+    "explains": [
+      "n. 照明灯；泛光灯；探照灯；v. 用泛光灯照亮"
+    ]
+  },
+  "floodplain": {
+    "word": "floodplain",
+    "phonetic": "",
+    "explains": [
+      "n. 泛洪平原, 漫滩"
     ]
   },
   "floor": {
@@ -503,11 +3954,144 @@
       "n. 地板；地面；楼层"
     ]
   },
+  "flop": {
+    "word": "flop",
+    "phonetic": "/flɔp/",
+    "explains": [
+      "n.  失败"
+    ]
+  },
+  "floppy": {
+    "word": "floppy",
+    "phonetic": "/'flɒpɪ/",
+    "explains": [
+      "adj. 懒散的, 邋遢的, 松软的"
+    ]
+  },
+  "flor": {
+    "word": "flor",
+    "phonetic": "",
+    "explains": [
+      "n.f. 花"
+    ]
+  },
+  "flora": {
+    "word": "flora",
+    "phonetic": "",
+    "explains": [
+      "n. [罗神]花神"
+    ]
+  },
+  "floral": {
+    "word": "floral",
+    "phonetic": "/'flɔːr(ə)l; 'flɒ-/",
+    "explains": [
+      "adj. 花的,像花的"
+    ]
+  },
+  "florid": {
+    "word": "florid",
+    "phonetic": "/'flɒrɪd/",
+    "explains": [
+      "adj. 绚丽的；气色好的"
+    ]
+  },
+  "florida": {
+    "word": "florida",
+    "phonetic": "/'flɔridə/",
+    "explains": [
+      "n. 佛罗里达(美国州名)"
+    ]
+  },
+  "florilegium": {
+    "word": "florilegium",
+    "phonetic": "",
+    "explains": [
+      "n. 选集, 作品集锦, 群芳谱"
+    ]
+  },
+  "florist": {
+    "word": "florist",
+    "phonetic": "/'flɒrɪst/",
+    "explains": [
+      "n. 种花人"
+    ]
+  },
+  "flotation": {
+    "word": "flotation",
+    "phonetic": "/fləʊ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 浮选"
+    ]
+  },
+  "flotte": {
+    "word": "flotte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 船队；舰队"
+    ]
+  },
+  "flounder": {
+    "word": "flounder",
+    "phonetic": "/'flaʊndə/",
+    "explains": [
+      "v. 挣扎，折腾；错乱地做事或说话；n. 挣扎，辗转；比目鱼"
+    ]
+  },
+  "flour": {
+    "word": "flour",
+    "phonetic": "/ˈflaʊə/",
+    "explains": [
+      "n. 面粉"
+    ]
+  },
+  "flourish": {
+    "word": "flourish",
+    "phonetic": "/'flʌrɪʃ/",
+    "explains": [
+      "v. 繁荣，茂盛，兴旺"
+    ]
+  },
+  "flout": {
+    "word": "flout",
+    "phonetic": "/flaʊt/",
+    "explains": [
+      "vt&n. 轻视, 嘲笑"
+    ]
+  },
+  "flow": {
+    "word": "flow",
+    "phonetic": "/fləʊ/",
+    "explains": [
+      "v. 流动；飘垂；涨潮"
+    ]
+  },
+  "flowchart": {
+    "word": "flowchart",
+    "phonetic": "",
+    "explains": [
+      "n. [工业] 流程图；作业图"
+    ]
+  },
   "flower": {
     "word": "flower",
     "phonetic": "/ˈflaʊə(r)/",
     "explains": [
       "n. 花；花卉 v. 开花；繁荣"
+    ]
+  },
+  "flowerbed": {
+    "word": "flowerbed",
+    "phonetic": "/'fləuəbed/",
+    "explains": [
+      "n. 花床,花圃"
+    ]
+  },
+  "flowerpot": {
+    "word": "flowerpot",
+    "phonetic": "/'flaʊəpɒt/",
+    "explains": [
+      "n. 花盆, 花钵"
     ]
   },
   "flu": {
@@ -517,6 +4101,55 @@
       "n. 流感"
     ]
   },
+  "fluctuate": {
+    "word": "fluctuate",
+    "phonetic": "/'flʌktʃʊeɪt; -tjʊ-/",
+    "explains": [
+      "v. 波动，使波动"
+    ]
+  },
+  "fluctuation": {
+    "word": "fluctuation",
+    "phonetic": "/,flʌktʃʊ'eɪʃ(ə)n; -tjʊ-/",
+    "explains": [
+      "n. 波动"
+    ]
+  },
+  "flue": {
+    "word": "flue",
+    "phonetic": "/fluː/",
+    "explains": [
+      "n. 烟道, 暖气管"
+    ]
+  },
+  "fluency": {
+    "word": "fluency",
+    "phonetic": "/'fluːənsɪ/",
+    "explains": [
+      "n. （语言、文章）流利；（技能）娴熟"
+    ]
+  },
+  "fluent": {
+    "word": "fluent",
+    "phonetic": "/'fluːənt/",
+    "explains": [
+      "adj. 流利的，流畅的"
+    ]
+  },
+  "fluff": {
+    "word": "fluff",
+    "phonetic": "/flʌf/",
+    "explains": [
+      "n. (织物上的)绒毛；v. 抖开，抖松"
+    ]
+  },
+  "fluffy": {
+    "word": "fluffy",
+    "phonetic": "/'flʌfɪ/",
+    "explains": [
+      "adj. 绒毛似的, 蓬松的"
+    ]
+  },
   "fluid": {
     "word": "fluid",
     "phonetic": "/ˈfluːɪd/",
@@ -524,11 +4157,137 @@
       "n. 流体；液体 adj. 流动的；流畅的"
     ]
   },
+  "fluidity": {
+    "word": "fluidity",
+    "phonetic": "/fluː'ɪdətɪ/",
+    "explains": [
+      "n. 流动性,变移性"
+    ]
+  },
+  "fluke": {
+    "word": "fluke",
+    "phonetic": "/fluːk/",
+    "explains": [
+      "n. 侥幸，偶然的机会"
+    ]
+  },
+  "flummox": {
+    "word": "flummox",
+    "phonetic": "/'flʌməks/",
+    "explains": [
+      "v. 使惶惑, 打乱, 使狼狈, 使混乱"
+    ]
+  },
+  "flunk": {
+    "word": "flunk",
+    "phonetic": "/flʌŋk/",
+    "explains": [
+      "n. 失败, 不及格"
+    ]
+  },
+  "fluorescent": {
+    "word": "fluorescent",
+    "phonetic": "/flʊə'res(ə)nt; flɔː-/",
+    "explains": [
+      "adj. 荧光的；萤光的；发亮的；n. 荧光；日光灯"
+    ]
+  },
+  "flurry": {
+    "word": "flurry",
+    "phonetic": "/'flʌrɪ/",
+    "explains": [
+      "n. 慌张；疾风；飓风；骚动；v. 使恐慌；使激动"
+    ]
+  },
+  "flush": {
+    "word": "flush",
+    "phonetic": "/flʌʃ/",
+    "explains": [
+      "v. （脸）发红"
+    ]
+  },
+  "fluster": {
+    "word": "fluster",
+    "phonetic": "/'flʌstə/",
+    "explains": [
+      "n. 慌乱, 狼狈, 混乱, 激动"
+    ]
+  },
+  "flute": {
+    "word": "flute",
+    "phonetic": "/fluːt/",
+    "explains": [
+      "n. 长笛；v. 吹长笛,刻槽"
+    ]
+  },
+  "flutter": {
+    "word": "flutter",
+    "phonetic": "/'flʌtə/",
+    "explains": [
+      "v. （鸟）振翼；飘动"
+    ]
+  },
+  "flux": {
+    "word": "flux",
+    "phonetic": "/flʌks/",
+    "explains": [
+      "n. 流；涨潮；流量"
+    ]
+  },
   "fly": {
     "word": "fly",
     "phonetic": "/flaɪ/",
     "explains": [
       "v. 飞；飞行；乘飞机 n. 苍蝇；飞行"
+    ]
+  },
+  "flyer": {
+    "word": "flyer",
+    "phonetic": "/'flaɪə/",
+    "explains": [
+      "n. 传单；飞鸟；飞行物；飞跳；孤注一掷"
+    ]
+  },
+  "flyleaf": {
+    "word": "flyleaf",
+    "phonetic": "/'flaɪliːf/",
+    "explains": [
+      "n. 飞页，章节后的空白"
+    ]
+  },
+  "flyover": {
+    "word": "flyover",
+    "phonetic": "/'flaɪəʊvə/",
+    "explains": [
+      "n. 公路上的陆桥"
+    ]
+  },
+  "flypast": {
+    "word": "flypast",
+    "phonetic": "/'flaɪpɑːst/",
+    "explains": [
+      "n. 空中分列"
+    ]
+  },
+  "flyspeck": {
+    "word": "flyspeck",
+    "phonetic": "/'flaɪspek/",
+    "explains": [
+      "n. 污点,小斑；v. 弄脏"
+    ]
+  },
+  "flyway": {
+    "word": "flyway",
+    "phonetic": "/'flaɪweɪ/",
+    "explains": [
+      "n. 候鸟迁徙所经的路径"
+    ]
+  },
+  "flywheel": {
+    "word": "flywheel",
+    "phonetic": "/'flaɪwiːl/",
+    "explains": [
+      "n. [机] 飞轮，惯性轮；调速轮"
     ]
   },
   "foam": {
@@ -545,11 +4304,95 @@
       "n. 焦点；中心 v. 集中；聚焦"
     ]
   },
+  "fodder": {
+    "word": "fodder",
+    "phonetic": "/'fɒdə/",
+    "explains": [
+      "n. 饲料, 草料"
+    ]
+  },
+  "foe": {
+    "word": "foe",
+    "phonetic": "/fəʊ/",
+    "explains": [
+      "n. 敌人,危害物"
+    ]
+  },
+  "foetus": {
+    "word": "foetus",
+    "phonetic": "/'fiːtəs/",
+    "explains": [
+      "n. 胎儿"
+    ]
+  },
   "fog": {
     "word": "fog",
     "phonetic": "/fɒɡ/",
     "explains": [
       "n. 雾；烟雾 v. 被雾笼罩；使模糊"
+    ]
+  },
+  "fogata": {
+    "word": "fogata",
+    "phonetic": "",
+    "explains": [
+      "n.f. 篝火"
+    ]
+  },
+  "foggy": {
+    "word": "foggy",
+    "phonetic": "/'fɒgɪ/",
+    "explains": [
+      "adj. 有雾的；模糊的，朦胧的"
+    ]
+  },
+  "foghorn": {
+    "word": "foghorn",
+    "phonetic": "/'fɒghɔːn/",
+    "explains": [
+      "n. [航海]雾角,尖而响的声音"
+    ]
+  },
+  "fogram": {
+    "word": "fogram",
+    "phonetic": "",
+    "explains": [
+      "n. 过时的人,守旧的人"
+    ]
+  },
+  "fogy": {
+    "word": "fogy",
+    "phonetic": "/'fəʊɡɪ/",
+    "explains": [
+      "n. 顽固守旧者；赶不上时代的人（等于fogey）"
+    ]
+  },
+  "foible": {
+    "word": "foible",
+    "phonetic": "/'fɒɪb(ə)l/",
+    "explains": [
+      "n. 弱点；小缺点；癖好"
+    ]
+  },
+  "foil": {
+    "word": "foil",
+    "phonetic": "/fɔɪl/",
+    "explains": [
+      "n. 箔, 金属薄片"
+    ]
+  },
+  "foin": {
+    "word": "foin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 干草"
+    ]
+  },
+  "foist": {
+    "word": "foist",
+    "phonetic": "/fɒɪst/",
+    "explains": [
+      "v. 偷偷插入；混入；蒙骗；硬卖给；采用欺骗手段出售；把…强加于"
     ]
   },
   "fold": {
@@ -559,11 +4402,74 @@
       "v. 折叠；合拢；抱住 n. 折痕；折叠"
     ]
   },
+  "folder": {
+    "word": "folder",
+    "phonetic": "/'fəʊldə/",
+    "explains": [
+      "n. 文件夹；折叠机；折叠式印刷品"
+    ]
+  },
+  "folderol": {
+    "word": "folderol",
+    "phonetic": "/'fɒldərɒl/",
+    "explains": [
+      "n. 废物, 废话, 不值钱的东西, 胡闹"
+    ]
+  },
+  "foliage": {
+    "word": "foliage",
+    "phonetic": "/'fəʊlɪɪdʒ/",
+    "explains": [
+      "n. 树叶,植物"
+    ]
+  },
+  "foliate": {
+    "word": "foliate",
+    "phonetic": "/'fəʊlɪət; -eɪt/",
+    "explains": [
+      "v. 把…打成箔；加叶饰；adj. 有叶的；叶状的；成薄片的"
+    ]
+  },
+  "folivore": {
+    "word": "folivore",
+    "phonetic": "",
+    "explains": [
+      "n. 食叶动物（尤指灵长目动物）"
+    ]
+  },
   "folk": {
     "word": "folk",
     "phonetic": "/fəʊk/",
     "explains": [
       "n. 人们；民间 adj. 民间的"
+    ]
+  },
+  "folklore": {
+    "word": "folklore",
+    "phonetic": "/'fəʊklɔː/",
+    "explains": [
+      "n. 民间传说, 民俗学"
+    ]
+  },
+  "folkloric": {
+    "word": "folkloric",
+    "phonetic": "",
+    "explains": [
+      "adj. 民间传说的, 民俗的"
+    ]
+  },
+  "folkway": {
+    "word": "folkway",
+    "phonetic": "/'fəʊkweɪ/",
+    "explains": [
+      "n. 民风；社会习俗；习惯"
+    ]
+  },
+  "follicle": {
+    "word": "follicle",
+    "phonetic": "/'fɒlɪk(ə)l/",
+    "explains": [
+      "n. 卵泡；滤泡；小囊"
     ]
   },
   "follow": {
@@ -573,11 +4479,109 @@
       "v. 跟随；遵循；接着；听从"
     ]
   },
+  "follow-up": {
+    "word": "follow-up",
+    "phonetic": "/'fɔləu'ʌp/",
+    "explains": [
+      "n.  后续； 后续行动"
+    ]
+  },
+  "follower": {
+    "word": "follower",
+    "phonetic": "/'fɒləʊə/",
+    "explains": [
+      "n. 信徒，追随者"
+    ]
+  },
+  "following": {
+    "word": "following",
+    "phonetic": "/ˈfɒləʊɪŋ/",
+    "explains": [
+      "adj. 接着的"
+    ]
+  },
+  "folly": {
+    "word": "folly",
+    "phonetic": "/'fɒlɪ/",
+    "explains": [
+      "n. 愚蠢, 荒唐事"
+    ]
+  },
+  "foment": {
+    "word": "foment",
+    "phonetic": "/fə(ʊ)'ment/",
+    "explains": [
+      "v. [医]热敷"
+    ]
+  },
+  "fomentation": {
+    "word": "fomentation",
+    "phonetic": "/,fəʊmen'teɪʃ(ə)n/",
+    "explains": [
+      "n. 煽动"
+    ]
+  },
+  "fonctionnaire": {
+    "word": "fonctionnaire",
+    "phonetic": "",
+    "explains": [
+      "n.m. 公务员"
+    ]
+  },
+  "fonctionnement": {
+    "word": "fonctionnement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 运转"
+    ]
+  },
+  "fond": {
+    "word": "fond",
+    "phonetic": "/fɒnd/",
+    "explains": [
+      "adj. 喜爱的"
+    ]
+  },
+  "fondle": {
+    "word": "fondle",
+    "phonetic": "/'fɒnd(ə)l/",
+    "explains": [
+      "v. 抚弄"
+    ]
+  },
+  "fondo": {
+    "word": "fondo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 底部；背景"
+    ]
+  },
+  "font": {
+    "word": "font",
+    "phonetic": "/fɒnt/",
+    "explains": [
+      "n. 字体；字形；泉；洗礼盘，圣水器"
+    ]
+  },
+  "fontaine": {
+    "word": "fontaine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 喷泉"
+    ]
+  },
   "food": {
     "word": "food",
     "phonetic": "/fuːd/",
     "explains": [
       "n. 食物；食品"
+    ]
+  },
+  "foodstuff": {
+    "word": "foodstuff",
+    "phonetic": "/'fuːdstʌf/",
+    "explains": [
+      "n.  食品； 粮食"
     ]
   },
   "fool": {
@@ -587,11 +4591,151 @@
       "n. 傻瓜；笨蛋 v. 愚弄；欺骗"
     ]
   },
+  "foolhardy": {
+    "word": "foolhardy",
+    "phonetic": "/'fuːlhɑːdɪ/",
+    "explains": [
+      "adj. 有勇无谋的；蛮干的"
+    ]
+  },
+  "foolish": {
+    "word": "foolish",
+    "phonetic": "/'fuːlɪʃ/",
+    "explains": [
+      "adj. 愚蠢的；鲁莽的"
+    ]
+  },
+  "foolproof": {
+    "word": "foolproof",
+    "phonetic": "/'fuːlpruːf/",
+    "explains": [
+      "adj.  连傻子都懂的； 连笨蛋都会用的； 肯定成功的， 万无一失的"
+    ]
+  },
   "foot": {
     "word": "foot",
     "phonetic": "/fʊt/",
     "explains": [
       "n. 脚；足；英尺；底部"
+    ]
+  },
+  "football": {
+    "word": "football",
+    "phonetic": "/ˈfʊtbɔːl/",
+    "explains": [
+      "n. 足球"
+    ]
+  },
+  "footballer": {
+    "word": "footballer",
+    "phonetic": "/'fʊt,bɔːlə/",
+    "explains": [
+      "n. 足球运动员；橄榄球运动员"
+    ]
+  },
+  "footbridge": {
+    "word": "footbridge",
+    "phonetic": "/'fʊtbrɪdʒ/",
+    "explains": [
+      "n. [交] 人行桥"
+    ]
+  },
+  "foothill": {
+    "word": "foothill",
+    "phonetic": "/'fʊthɪl/",
+    "explains": [
+      "n. 山麓小丘, 丘陵地带"
+    ]
+  },
+  "foothold": {
+    "word": "foothold",
+    "phonetic": "/'fʊthəʊld/",
+    "explains": [
+      "n. 立足处"
+    ]
+  },
+  "footle": {
+    "word": "footle",
+    "phonetic": "/'fuːt(ə)l/",
+    "explains": [
+      "n. 呆话, 傻事"
+    ]
+  },
+  "footloose": {
+    "word": "footloose",
+    "phonetic": "/'fʊtluːs/",
+    "explains": [
+      "adj. 自由自在的, 到处走动的"
+    ]
+  },
+  "footman": {
+    "word": "footman",
+    "phonetic": "/'fʊtmən/",
+    "explains": [
+      "n. 男仆，侍从；步兵"
+    ]
+  },
+  "footnote": {
+    "word": "footnote",
+    "phonetic": "/'futnəut/",
+    "explains": [
+      "n.  脚注"
+    ]
+  },
+  "footpath": {
+    "word": "footpath",
+    "phonetic": "/'fʊtpɑːθ/",
+    "explains": [
+      "n. 小路，人行道"
+    ]
+  },
+  "footprint": {
+    "word": "footprint",
+    "phonetic": "/'fʊtprɪnt/",
+    "explains": [
+      "n. 足迹"
+    ]
+  },
+  "footstep": {
+    "word": "footstep",
+    "phonetic": "/'fʊtstep/",
+    "explains": [
+      "n. 脚步；脚步声；足迹"
+    ]
+  },
+  "footwear": {
+    "word": "footwear",
+    "phonetic": "/'fʊtweə/",
+    "explains": [
+      "n. 鞋类"
+    ]
+  },
+  "footwork": {
+    "word": "footwork",
+    "phonetic": "/'fʊtwɜːk/",
+    "explains": [
+      "n. 步法；需跑腿的工作；策略"
+    ]
+  },
+  "foozle": {
+    "word": "foozle",
+    "phonetic": "/'fuːz(ə)l/",
+    "explains": [
+      "v. 笨拙地做"
+    ]
+  },
+  "fop": {
+    "word": "fop",
+    "phonetic": "/fɒp/",
+    "explains": [
+      "n. 过分讲究衣饰或举动的人, 花花公子"
+    ]
+  },
+  "foppish": {
+    "word": "foppish",
+    "phonetic": "/'fɑpɪʃ/",
+    "explains": [
+      "adj. 浮华的, 有纨绔习气的"
     ]
   },
   "for": {
@@ -601,11 +4745,256 @@
       "prep. 为了；给；对；供；关于 conj. 因为"
     ]
   },
+  "forage": {
+    "word": "forage",
+    "phonetic": "/'fɒrɪdʒ/",
+    "explains": [
+      "n. 草料"
+    ]
+  },
+  "forager": {
+    "word": "forager",
+    "phonetic": "",
+    "explains": [
+      "n. 强征(粮食)者"
+    ]
+  },
+  "foraging": {
+    "word": "foraging",
+    "phonetic": "/'fɔrɪdʒ/",
+    "explains": [
+      "n. 觅食（forage的ing形式）；觅食力"
+    ]
+  },
+  "foraminate": {
+    "word": "foraminate",
+    "phonetic": "",
+    "explains": [
+      "adj. 有小孔的"
+    ]
+  },
+  "foraminifera": {
+    "word": "foraminifera",
+    "phonetic": "",
+    "explains": [
+      "n. 有孔虫类"
+    ]
+  },
+  "foray": {
+    "word": "foray",
+    "phonetic": "/'fɒreɪ/",
+    "explains": [
+      "v&n. 突袭，偷袭"
+    ]
+  },
+  "forbear": {
+    "word": "forbear",
+    "phonetic": "/fɔː'beə/",
+    "explains": [
+      "v. 忍耐；克制；n. 祖先"
+    ]
+  },
+  "forbearance": {
+    "word": "forbearance",
+    "phonetic": "/fɔː'beər(ə)ns/",
+    "explains": [
+      "n. 自制，忍耐"
+    ]
+  },
+  "forbearing": {
+    "word": "forbearing",
+    "phonetic": "/fɔr'bɛrɪŋ/",
+    "explains": [
+      "adj. 忍耐的, 宽容的"
+    ]
+  },
+  "forbes": {
+    "word": "forbes",
+    "phonetic": "/'fɔ:bəz/",
+    "explains": [
+      "n. 福布斯（美国著名财经杂志）"
+    ]
+  },
+  "forbid": {
+    "word": "forbid",
+    "phonetic": "/fəˈbɪd/",
+    "explains": [
+      "v. 禁止"
+    ]
+  },
+  "forbidden": {
+    "word": "forbidden",
+    "phonetic": "/fə'bɪd(ə)n/",
+    "explains": [
+      "adj. 被禁止的；严禁的，禁用的"
+    ]
+  },
+  "forbidding": {
+    "word": "forbidding",
+    "phonetic": "/fə'bɪdɪŋ/",
+    "explains": [
+      "adj. 可怕的, 令人难亲近的"
+    ]
+  },
   "force": {
     "word": "force",
     "phonetic": "/fɔːs/",
     "explains": [
       "n. 力量；武力；军队 v. 强迫；迫使"
+    ]
+  },
+  "forceful": {
+    "word": "forceful",
+    "phonetic": "/'fɔːsfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 有力的, 强烈的"
+    ]
+  },
+  "forceps": {
+    "word": "forceps",
+    "phonetic": "/'fɔːseps; -sɪps/",
+    "explains": [
+      "n. [医] 钳子；医用镊子"
+    ]
+  },
+  "forcible": {
+    "word": "forcible",
+    "phonetic": "/'fɔːsɪb(ə)l/",
+    "explains": [
+      "adj. 强制的；暴力的；有说服力的；强有力的"
+    ]
+  },
+  "ford": {
+    "word": "ford",
+    "phonetic": "/fɔːd/",
+    "explains": [
+      "n. 浅滩 v徒涉"
+    ]
+  },
+  "fore": {
+    "word": "fore",
+    "phonetic": "/fɔː/",
+    "explains": [
+      "adv. 在（或向）船头；在（或向）飞行器头部"
+    ]
+  },
+  "forearm": {
+    "word": "forearm",
+    "phonetic": "/'fɔːrɑːm/",
+    "explains": [
+      "n. 前臂；v. 预先武装；准备"
+    ]
+  },
+  "forebear": {
+    "word": "forebear",
+    "phonetic": "/'fɔːbeə/",
+    "explains": [
+      "n. 祖先, 祖宗"
+    ]
+  },
+  "forebode": {
+    "word": "forebode",
+    "phonetic": "/fɔː'bəʊd/",
+    "explains": [
+      "v. 预示；预感；预兆"
+    ]
+  },
+  "foreboding": {
+    "word": "foreboding",
+    "phonetic": "/fɔː'bəʊdɪŋ/",
+    "explains": [
+      "n. 预感, 先兆, 预兆"
+    ]
+  },
+  "forecast": {
+    "word": "forecast",
+    "phonetic": "/ˈfɔːkɑːst/",
+    "explains": [
+      "v. 预测　n. 预报"
+    ]
+  },
+  "forecaster": {
+    "word": "forecaster",
+    "phonetic": "/'fɔːkɑːstə/",
+    "explains": [
+      "n. 预报员"
+    ]
+  },
+  "foreclose": {
+    "word": "foreclose",
+    "phonetic": "/fɔː'kləuz/",
+    "explains": [
+      "vi. 取消赎回权；vt.  排除， 排斥"
+    ]
+  },
+  "foreclosure": {
+    "word": "foreclosure",
+    "phonetic": "/fɔː'kləʊʒə/",
+    "explains": [
+      "n. 丧失抵押品赎回权"
+    ]
+  },
+  "forecourt": {
+    "word": "forecourt",
+    "phonetic": "/'fɔːkɔːt/",
+    "explains": [
+      "n. 前院；前场"
+    ]
+  },
+  "forefather": {
+    "word": "forefather",
+    "phonetic": "/'fɔːfɑːðə/",
+    "explains": [
+      "n. 祖先, 祖宗"
+    ]
+  },
+  "forefinger": {
+    "word": "forefinger",
+    "phonetic": "/'fɔːfɪŋgə/",
+    "explains": [
+      "n. 食指"
+    ]
+  },
+  "forefront": {
+    "word": "forefront",
+    "phonetic": "/'fɔːfrʌnt/",
+    "explains": [
+      "n. 最前部, 最前线"
+    ]
+  },
+  "forego": {
+    "word": "forego",
+    "phonetic": "/fɔ:,ɡəu/",
+    "explains": [
+      "v. 放弃；居先；在……之前"
+    ]
+  },
+  "foregoing": {
+    "word": "foregoing",
+    "phonetic": "/'fɔːgəʊɪŋ/",
+    "explains": [
+      "adj. 前述的；前面的；在前的；v. 发生在…之前；走在…之前（forego的ing形式）"
+    ]
+  },
+  "foregone": {
+    "word": "foregone",
+    "phonetic": "/'fɔː gɔn/",
+    "explains": [
+      "adj.  先前的， 过去的； 预知的"
+    ]
+  },
+  "foreground": {
+    "word": "foreground",
+    "phonetic": "/'fɔːgraʊnd/",
+    "explains": [
+      "n. 前景；最显著的位置"
+    ]
+  },
+  "forehead": {
+    "word": "forehead",
+    "phonetic": "/'fɔːhed; 'fɒrɪd/",
+    "explains": [
+      "n. 额头，前部"
     ]
   },
   "foreign": {
@@ -615,11 +5004,235 @@
       "adj. 外国的；对外的；陌生的"
     ]
   },
+  "foreigner": {
+    "word": "foreigner",
+    "phonetic": "/ˈfɒrɪnə; ˈfɒrənə/",
+    "explains": [
+      "n. 外国人"
+    ]
+  },
+  "foreknowledge": {
+    "word": "foreknowledge",
+    "phonetic": "/fɔː'nɒlɪdʒ/",
+    "explains": [
+      "n. 预知；先见之明"
+    ]
+  },
+  "foreland": {
+    "word": "foreland",
+    "phonetic": "/'fɔːlənd/",
+    "explains": [
+      "n. 沿海地区；前沿地；海角"
+    ]
+  },
+  "foreleg": {
+    "word": "foreleg",
+    "phonetic": "/'fɔːleg/",
+    "explains": [
+      "n. 前肢(指四肢或多肢动物的)前脚"
+    ]
+  },
+  "forelimb": {
+    "word": "forelimb",
+    "phonetic": "/'fɔːlɪm/",
+    "explains": [
+      "n. 前肢"
+    ]
+  },
+  "foreman": {
+    "word": "foreman",
+    "phonetic": "/'fɔːmən/",
+    "explains": [
+      "n. 领班；陪审团主席"
+    ]
+  },
+  "foremost": {
+    "word": "foremost",
+    "phonetic": "/'fɔːməʊst/",
+    "explains": [
+      "adj. 最初的；第一流的"
+    ]
+  },
+  "forename": {
+    "word": "forename",
+    "phonetic": "/'fɔːneɪm/",
+    "explains": [
+      "n. 在姓前面的名"
+    ]
+  },
+  "forensic": {
+    "word": "forensic",
+    "phonetic": "/fə'rensɪk/",
+    "explains": [
+      "adj. 法院的, 适于法庭的, 公开辩论的"
+    ]
+  },
+  "foreordain": {
+    "word": "foreordain",
+    "phonetic": "/,fɔːrɔː'deɪn/",
+    "explains": [
+      "v. 注定；预定命运"
+    ]
+  },
+  "forerun": {
+    "word": "forerun",
+    "phonetic": "/fɔː'rʌn/",
+    "explains": [
+      "vt. 预示；预告；走在…之前"
+    ]
+  },
+  "forerunner": {
+    "word": "forerunner",
+    "phonetic": "/'fɔːrʌnə/",
+    "explains": [
+      "n. 先驱(者)"
+    ]
+  },
+  "foresee": {
+    "word": "foresee",
+    "phonetic": "/fɔːˈsiː/",
+    "explains": [
+      "v. 预见"
+    ]
+  },
+  "foreseeable": {
+    "word": "foreseeable",
+    "phonetic": "/fɔː'siːəbl/",
+    "explains": [
+      "adj.  可预见的"
+    ]
+  },
+  "foreshadow": {
+    "word": "foreshadow",
+    "phonetic": "/fɔː'ʃædəʊ/",
+    "explains": [
+      "v. 预示"
+    ]
+  },
+  "foreshore": {
+    "word": "foreshore",
+    "phonetic": "/'fɔːʃɔː/",
+    "explains": [
+      "n. 海滩；前滩"
+    ]
+  },
+  "foresight": {
+    "word": "foresight",
+    "phonetic": "/'fɔːsaɪt/",
+    "explains": [
+      "n. 远见, 深谋远虑"
+    ]
+  },
+  "foresightedness": {
+    "word": "foresightedness",
+    "phonetic": "",
+    "explains": [
+      "n. 先见之明"
+    ]
+  },
   "forest": {
     "word": "forest",
     "phonetic": "/ˈfɒrɪst/",
     "explains": [
       "n. 森林；林区"
+    ]
+  },
+  "forestall": {
+    "word": "forestall",
+    "phonetic": "/fɔː'stɔːl/",
+    "explains": [
+      "v. 之前, 先(用先发制人的方法)预防, 阻止"
+    ]
+  },
+  "forester": {
+    "word": "forester",
+    "phonetic": "/'fɒrɪstə/",
+    "explains": [
+      "n. 林务官, 森林人"
+    ]
+  },
+  "forestry": {
+    "word": "forestry",
+    "phonetic": "/'fɒrɪstrɪ/",
+    "explains": [
+      "n. 林业；森林地；林学"
+    ]
+  },
+  "foretaste": {
+    "word": "foretaste",
+    "phonetic": "/'fɔːteɪst/",
+    "explains": [
+      "n. 预示"
+    ]
+  },
+  "foretell": {
+    "word": "foretell",
+    "phonetic": "/fɔː'tel/",
+    "explains": [
+      "v. 预言；预示；预告"
+    ]
+  },
+  "forethought": {
+    "word": "forethought",
+    "phonetic": "/'fɔːθɔːt/",
+    "explains": [
+      "n. 深谋远虑；先见；考虑将来；adj. 预先计划好的"
+    ]
+  },
+  "forever": {
+    "word": "forever",
+    "phonetic": "/fərˈevə/",
+    "explains": [
+      "adv. 永远"
+    ]
+  },
+  "forewarn": {
+    "word": "forewarn",
+    "phonetic": "/fɔː'wɔːn/",
+    "explains": [
+      "v. 预先警告"
+    ]
+  },
+  "foreword": {
+    "word": "foreword",
+    "phonetic": "/'fɔːwɜːd/",
+    "explains": [
+      "n. 序；前言"
+    ]
+  },
+  "forfeit": {
+    "word": "forfeit",
+    "phonetic": "/'fɔːfɪt/",
+    "explains": [
+      "vt&n. 没收，丧失(物)"
+    ]
+  },
+  "forfeiture": {
+    "word": "forfeiture",
+    "phonetic": "/'fɔːfɪtʃə(r)/",
+    "explains": [
+      "n. 丧失, 没收物, 罚款"
+    ]
+  },
+  "forge": {
+    "word": "forge",
+    "phonetic": "/fɔːdʒ/",
+    "explains": [
+      "v. 锻造"
+    ]
+  },
+  "forger": {
+    "word": "forger",
+    "phonetic": "/'fɔːdʒə(r)/",
+    "explains": [
+      "n. 伪造者, 铁匠, 赝造者"
+    ]
+  },
+  "forgery": {
+    "word": "forgery",
+    "phonetic": "/'fɔːdʒ(ə)rɪ/",
+    "explains": [
+      "n. 伪造；伪造罪；伪造物"
     ]
   },
   "forget": {
@@ -629,11 +5242,32 @@
       "v. 忘记；遗忘；忽略"
     ]
   },
+  "forgetful": {
+    "word": "forgetful",
+    "phonetic": "/fə'getfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 健忘的；不注意的；疏忽的；使遗忘的"
+    ]
+  },
   "forgive": {
     "word": "forgive",
     "phonetic": "/fəˈɡɪv/",
     "explains": [
       "v. 原谅；宽恕；免除"
+    ]
+  },
+  "forgiveness": {
+    "word": "forgiveness",
+    "phonetic": "/fə'gɪvnɪs/",
+    "explains": [
+      "n. 宽恕, 宽仁之心"
+    ]
+  },
+  "forgo": {
+    "word": "forgo",
+    "phonetic": "/fɔː'gəʊ; fə-/",
+    "explains": [
+      "v. 放弃；停止；对…断念"
     ]
   },
   "fork": {
@@ -643,11 +5277,25 @@
       "n. 叉；叉子；岔路口 v. 分叉"
     ]
   },
+  "forlorn": {
+    "word": "forlorn",
+    "phonetic": "/fə'lɔːn/",
+    "explains": [
+      "adj. 被遗弃的"
+    ]
+  },
   "form": {
     "word": "form",
     "phonetic": "/fɔːm/",
     "explains": [
       "n. 形式；形状；表格 v. 形成；构成"
+    ]
+  },
+  "forma": {
+    "word": "forma",
+    "phonetic": "",
+    "explains": [
+      "n.f. 形状；方式"
     ]
   },
   "formal": {
@@ -657,6 +5305,286 @@
       "adj. 正式的；正规的；拘谨的"
     ]
   },
+  "formaldehyde": {
+    "word": "formaldehyde",
+    "phonetic": "/fɔː'mældɪhaɪd/",
+    "explains": [
+      "n. 蚁醛，[有化] 甲醛"
+    ]
+  },
+  "formalise": {
+    "word": "formalise",
+    "phonetic": "",
+    "explains": [
+      "v. 使成为正式"
+    ]
+  },
+  "formality": {
+    "word": "formality",
+    "phonetic": "/fɔ'mæləti/",
+    "explains": [
+      "n. 礼节；拘谨；仪式；正式手续"
+    ]
+  },
+  "formalize": {
+    "word": "formalize",
+    "phonetic": "/'fɔːm(ə)laɪz/",
+    "explains": [
+      "v. 使正式, 形式化"
+    ]
+  },
+  "formally": {
+    "word": "formally",
+    "phonetic": "/'fɔːməlɪ/",
+    "explains": [
+      "adv. 正式地, 形式上"
+    ]
+  },
+  "format": {
+    "word": "format",
+    "phonetic": "/ˈfɔːmæt/",
+    "explains": [
+      "n. 格式"
+    ]
+  },
+  "formation": {
+    "word": "formation",
+    "phonetic": "/fɔː'meɪʃ(ə)n/",
+    "explains": [
+      "n. 形成；构成；形成物"
+    ]
+  },
+  "formative": {
+    "word": "formative",
+    "phonetic": "/'fɔːmətɪv/",
+    "explains": [
+      "adj. 格式化的"
+    ]
+  },
+  "formatter": {
+    "word": "formatter",
+    "phonetic": "",
+    "explains": [
+      "格式化器"
+    ]
+  },
+  "forme": {
+    "word": "forme",
+    "phonetic": "",
+    "explains": [
+      "n.f. 形状；健康"
+    ]
+  },
+  "former": {
+    "word": "former",
+    "phonetic": "/ˈfɔːmə/",
+    "explains": [
+      "adj. 前者的"
+    ]
+  },
+  "formerly": {
+    "word": "formerly",
+    "phonetic": "/'fɔːməlɪ/",
+    "explains": [
+      "adv. 以前，从前"
+    ]
+  },
+  "formidable": {
+    "word": "formidable",
+    "phonetic": "/'fɔːmɪdəb(ə)l; fɔː'mɪd-/",
+    "explains": [
+      "adj. 可怕的；难对付的"
+    ]
+  },
+  "formula": {
+    "word": "formula",
+    "phonetic": "/ˈfɔːmjʊlə/",
+    "explains": [
+      "n. 公式"
+    ]
+  },
+  "formulario": {
+    "word": "formulario",
+    "phonetic": "",
+    "explains": [
+      "n.m. 表格"
+    ]
+  },
+  "formulate": {
+    "word": "formulate",
+    "phonetic": "/'fɔːmjʊleɪt/",
+    "explains": [
+      "v. 规划；制定；准备"
+    ]
+  },
+  "formulation": {
+    "word": "formulation",
+    "phonetic": "/fɔːmjʊ'leɪʃn/",
+    "explains": [
+      "n. 表述方式"
+    ]
+  },
+  "fornicate": {
+    "word": "fornicate",
+    "phonetic": "/'fɔːnɪkeɪt/",
+    "explains": [
+      "v. 通奸"
+    ]
+  },
+  "forsake": {
+    "word": "forsake",
+    "phonetic": "/fə'seɪk/",
+    "explains": [
+      "v. 遗弃，抛弃；摒绝，摒弃"
+    ]
+  },
+  "forswear": {
+    "word": "forswear",
+    "phonetic": "/fɔː'sweə; fə-/",
+    "explains": [
+      "v. 幸运"
+    ]
+  },
+  "fort": {
+    "word": "fort",
+    "phonetic": "/fɔːt/",
+    "explains": [
+      "n. 要塞，堡垒"
+    ]
+  },
+  "fortaleza": {
+    "word": "fortaleza",
+    "phonetic": "",
+    "explains": [
+      "n.f. 要塞；坚强"
+    ]
+  },
+  "forte": {
+    "word": "forte",
+    "phonetic": "/'fɔːteɪ; 'fɔːtɪ; fɔːt/",
+    "explains": [
+      "n. 长处"
+    ]
+  },
+  "forth": {
+    "word": "forth",
+    "phonetic": "/fɔːθ/",
+    "explains": [
+      "adv. 向前"
+    ]
+  },
+  "forthcoming": {
+    "word": "forthcoming",
+    "phonetic": "/fɔːθ'kʌmɪŋ/",
+    "explains": [
+      "adj. 即将到来的；现成的"
+    ]
+  },
+  "forthright": {
+    "word": "forthright",
+    "phonetic": "/'fɔːθraɪt; fɔːθ'raɪt/",
+    "explains": [
+      "adj. 直率的；直截了当的；adv. 直率地；马上；立即；n. 直路"
+    ]
+  },
+  "forthwith": {
+    "word": "forthwith",
+    "phonetic": "/fɔːθ'wɪθ; -ð/",
+    "explains": [
+      "adv. 立刻，立即；不犹豫地"
+    ]
+  },
+  "fortieth": {
+    "word": "fortieth",
+    "phonetic": "/'fɔːtɪɪθ/",
+    "explains": [
+      "num. 第四十；四十分之一；adj. 第四十的；四十分之一的；n. 第四十；四十分之一"
+    ]
+  },
+  "fortification": {
+    "word": "fortification",
+    "phonetic": "/,fɔːtɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 防御工事"
+    ]
+  },
+  "fortify": {
+    "word": "fortify",
+    "phonetic": "/'fɔːtɪfaɪ/",
+    "explains": [
+      "v. 增强(体力,结构等)；v. 筑防御工事"
+    ]
+  },
+  "fortitude": {
+    "word": "fortitude",
+    "phonetic": "/'fɔːtɪtjuːd/",
+    "explains": [
+      "n. 刚毅；不屈不挠；勇气"
+    ]
+  },
+  "fortnight": {
+    "word": "fortnight",
+    "phonetic": "/'fɔːtnaɪt/",
+    "explains": [
+      "n. 两星期，十四天"
+    ]
+  },
+  "fortress": {
+    "word": "fortress",
+    "phonetic": "/'fɔːtrɪs/",
+    "explains": [
+      "n. 堡垒，要塞"
+    ]
+  },
+  "fortuitous": {
+    "word": "fortuitous",
+    "phonetic": "/fɔː'tjuːɪtəs/",
+    "explains": [
+      "adj. 偶然的, 幸运的"
+    ]
+  },
+  "fortuitously": {
+    "word": "fortuitously",
+    "phonetic": "",
+    "explains": [
+      "adv. 偶然地,意外地"
+    ]
+  },
+  "fortunate": {
+    "word": "fortunate",
+    "phonetic": "/'fɔːtʃ(ə)nət/",
+    "explains": [
+      "adj. 幸运的；侥幸的"
+    ]
+  },
+  "fortunately": {
+    "word": "fortunately",
+    "phonetic": "/ˈfɔːtʃ(ə)nətlɪ/",
+    "explains": [
+      "adv. 幸运地"
+    ]
+  },
+  "fortune": {
+    "word": "fortune",
+    "phonetic": "/ˈfɔːtʃuːn; ˈfɔːtʃ(ə)n/",
+    "explains": [
+      "n. 财富；运气"
+    ]
+  },
+  "forty": {
+    "word": "forty",
+    "phonetic": "/ˈfɔːtɪ/",
+    "explains": [
+      "num. 四十"
+    ]
+  },
+  "forum": {
+    "word": "forum",
+    "phonetic": "/'fɔːrəm/",
+    "explains": [
+      "n. 论坛，讨论会"
+    ]
+  },
   "forward": {
     "word": "forward",
     "phonetic": "/ˈfɔːwəd/",
@@ -664,11 +5592,123 @@
       "adv. 向前；提前 adj. 向前的；前部的 v. 转寄；发送"
     ]
   },
+  "forwarder": {
+    "word": "forwarder",
+    "phonetic": "/'fɔːwədə/",
+    "explains": [
+      "n.  转运商， 代运人"
+    ]
+  },
+  "forwardness": {
+    "word": "forwardness",
+    "phonetic": "",
+    "explains": [
+      "n. 卤莽, 早熟, 热心"
+    ]
+  },
+  "forwards": {
+    "word": "forwards",
+    "phonetic": "/'fɔːwədz/",
+    "explains": [
+      "adv. 向前；今后"
+    ]
+  },
+  "fossil": {
+    "word": "fossil",
+    "phonetic": "/'fɒs(ə)l; -sɪl/",
+    "explains": [
+      "n. 化石"
+    ]
+  },
+  "fossilization": {
+    "word": "fossilization",
+    "phonetic": "",
+    "explains": [
+      "n. 化石作用"
+    ]
+  },
+  "fossilize": {
+    "word": "fossilize",
+    "phonetic": "/'fɒs(ə)laɪz; 'fɒsɪlaɪz/",
+    "explains": [
+      "v. 成化石,陈腐"
+    ]
+  },
+  "foster": {
+    "word": "foster",
+    "phonetic": "/'fɒstə/",
+    "explains": [
+      "v. 培养；抚育，代养"
+    ]
+  },
+  "foto": {
+    "word": "foto",
+    "phonetic": "",
+    "explains": [
+      "n.f. 照片"
+    ]
+  },
+  "fou": {
+    "word": "fou",
+    "phonetic": "",
+    "explains": [
+      "adj. 疯的；n.m. 疯子"
+    ]
+  },
+  "foul": {
+    "word": "foul",
+    "phonetic": "/faʊl/",
+    "explains": [
+      "adj. 肮脏的；丑恶的"
+    ]
+  },
   "found": {
     "word": "found",
     "phonetic": "/faʊnd/",
     "explains": [
       "v. 创立；建立；创办；find 过去式 / 分词"
+    ]
+  },
+  "foundation": {
+    "word": "foundation",
+    "phonetic": "/faʊnˈdeɪʃ(ə)n/",
+    "explains": [
+      "n. 基础；基金会"
+    ]
+  },
+  "founder": {
+    "word": "founder",
+    "phonetic": "/ˈfaʊndə/",
+    "explains": [
+      "n. 创立者"
+    ]
+  },
+  "founding": {
+    "word": "founding",
+    "phonetic": "/'faʊndɪŋ/",
+    "explains": [
+      "adj. 创办的；n. 资金"
+    ]
+  },
+  "foundry": {
+    "word": "foundry",
+    "phonetic": "/'faʊndrɪ/",
+    "explains": [
+      "n. 铸造, 铸造场"
+    ]
+  },
+  "fount": {
+    "word": "fount",
+    "phonetic": "/faʊnt/",
+    "explains": [
+      "n. 泉；源泉；墨水缸"
+    ]
+  },
+  "fountain": {
+    "word": "fountain",
+    "phonetic": "/ˈfaʊntɪn; ˈfaʊnt(ə)n/",
+    "explains": [
+      "n. 喷泉"
     ]
   },
   "four": {
@@ -685,11 +5725,25 @@
       "num. 十四"
     ]
   },
+  "fourteenth": {
+    "word": "fourteenth",
+    "phonetic": "/'fɔː'tiːnθ/",
+    "explains": [
+      "adj. 第十四的；第十四个的；n. 第十四；月的第十四日；十四分之一；num. 第十四"
+    ]
+  },
   "fourth": {
     "word": "fourth",
     "phonetic": "/fɔːθ/",
     "explains": [
       "num. 第四 n. 四分之一"
+    ]
+  },
+  "fowl": {
+    "word": "fowl",
+    "phonetic": "/faʊl/",
+    "explains": [
+      "n. 家禽；禽肉"
     ]
   },
   "fox": {
@@ -699,11 +5753,249 @@
       "n. 狐狸；狡猾的人"
     ]
   },
+  "foyer": {
+    "word": "foyer",
+    "phonetic": "/ˈfɔɪeɪ/",
+    "explains": [
+      "n. 休息室, 大厅"
+    ]
+  },
+  "fracas": {
+    "word": "fracas",
+    "phonetic": "/'frækɑː/",
+    "explains": [
+      "n. 喧噪, 吵闹"
+    ]
+  },
+  "fraction": {
+    "word": "fraction",
+    "phonetic": "/'frækʃ(ə)n/",
+    "explains": [
+      "n. 小部分；片断；分数"
+    ]
+  },
+  "fractional": {
+    "word": "fractional",
+    "phonetic": "/'frækʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 部分的, 碎片的, 分数的, 小数的, 分馏的"
+    ]
+  },
+  "fractious": {
+    "word": "fractious",
+    "phonetic": "/'frækʃəs/",
+    "explains": [
+      "adj. 易怒的；倔强的，难以对待的"
+    ]
+  },
+  "fracture": {
+    "word": "fracture",
+    "phonetic": "/'fræktʃə/",
+    "explains": [
+      "n. 破裂；裂痕；v. 破裂"
+    ]
+  },
+  "fragile": {
+    "word": "fragile",
+    "phonetic": "/ˈfrædʒaɪl/",
+    "explains": [
+      "adj. 易碎的"
+    ]
+  },
+  "fragility": {
+    "word": "fragility",
+    "phonetic": "/frə'dʒɪlɪtɪ/",
+    "explains": [
+      "n. 脆弱, 虚弱"
+    ]
+  },
+  "fragment": {
+    "word": "fragment",
+    "phonetic": "/'frægm(ə)nt/",
+    "explains": [
+      "n. 碎片，破片，碎块"
+    ]
+  },
+  "fragmentary": {
+    "word": "fragmentary",
+    "phonetic": "/'frægm(ə)nt(ə)rɪ/",
+    "explains": [
+      "adj. 由碎片组成的"
+    ]
+  },
+  "fragrance": {
+    "word": "fragrance",
+    "phonetic": "/'freɪgr(ə)ns/",
+    "explains": [
+      "n. 芬芳, 香气"
+    ]
+  },
+  "fragrant": {
+    "word": "fragrant",
+    "phonetic": "/'freɪgr(ə)nt/",
+    "explains": [
+      "adj. 香的，芬芳的"
+    ]
+  },
+  "frail": {
+    "word": "frail",
+    "phonetic": "/freɪl/",
+    "explains": [
+      "adj. 脆弱的"
+    ]
+  },
+  "frailty": {
+    "word": "frailty",
+    "phonetic": "/'freɪltɪ/",
+    "explains": [
+      "n. 虚弱, 脆弱, 意志薄弱, 过失, 品德上的弱点"
+    ]
+  },
   "frame": {
     "word": "frame",
     "phonetic": "/freɪm/",
     "explains": [
       "n. 框架；结构；边框 v. 给… 装框；设计"
+    ]
+  },
+  "framework": {
+    "word": "framework",
+    "phonetic": "/ˈfreɪmwɜːk/",
+    "explains": [
+      "n. 框架"
+    ]
+  },
+  "franc": {
+    "word": "franc",
+    "phonetic": "",
+    "explains": [
+      "adj. 坦率的；n.m. 法郎"
+    ]
+  },
+  "france": {
+    "word": "france",
+    "phonetic": "/frɑːns/",
+    "explains": [
+      "n. 法国，法兰西"
+    ]
+  },
+  "franchise": {
+    "word": "franchise",
+    "phonetic": "/ˈfræn(t)ʃaɪz/",
+    "explains": [
+      "n. 特许经营权"
+    ]
+  },
+  "franchisee": {
+    "word": "franchisee",
+    "phonetic": "/ˌfræntʃai'ziː/",
+    "explains": [
+      "n.  特许经营人"
+    ]
+  },
+  "franchiser": {
+    "word": "franchiser",
+    "phonetic": "/'fræntʃaizə/",
+    "explains": [
+      "n.  特许； 经营授予人"
+    ]
+  },
+  "frank": {
+    "word": "frank",
+    "phonetic": "/fræŋk/",
+    "explains": [
+      "adj. 坦白的，直率的"
+    ]
+  },
+  "franklin": {
+    "word": "franklin",
+    "phonetic": "/'fræŋklɪn/",
+    "explains": [
+      "n. 小地主, 乡绅"
+    ]
+  },
+  "frankly": {
+    "word": "frankly",
+    "phonetic": "/'fræŋklɪ/",
+    "explains": [
+      "adv. 真诚地，坦白地"
+    ]
+  },
+  "frantic": {
+    "word": "frantic",
+    "phonetic": "/'fræntɪk/",
+    "explains": [
+      "adj. 激动得发狂似的；狂暴的"
+    ]
+  },
+  "frapper": {
+    "word": "frapper",
+    "phonetic": "",
+    "explains": [
+      "v. 敲；打"
+    ]
+  },
+  "fraternal": {
+    "word": "fraternal",
+    "phonetic": "/frə'tɜːn(ə)l/",
+    "explains": [
+      "adj. 兄弟般的；友好的"
+    ]
+  },
+  "fraternity": {
+    "word": "fraternity",
+    "phonetic": "/frə'tɜːnɪtɪ/",
+    "explains": [
+      "n. 兄弟关系, 友爱, 互助会, 兄弟会"
+    ]
+  },
+  "fraud": {
+    "word": "fraud",
+    "phonetic": "/frɔːd/",
+    "explains": [
+      "n. 欺诈"
+    ]
+  },
+  "fraudulent": {
+    "word": "fraudulent",
+    "phonetic": "/'frɔːdjʊl(ə)nt/",
+    "explains": [
+      "adj. 欺骗性的；不正的"
+    ]
+  },
+  "fraught": {
+    "word": "fraught",
+    "phonetic": "/frɔːt/",
+    "explains": [
+      "adj. 充满的；伴随的"
+    ]
+  },
+  "fray": {
+    "word": "fray",
+    "phonetic": "/freɪ/",
+    "explains": [
+      "n. 吵架；v. 磨破，恼火"
+    ]
+  },
+  "freak": {
+    "word": "freak",
+    "phonetic": "/friːk/",
+    "explains": [
+      "n. 怪诞的思想、行动或事件；畸形的"
+    ]
+  },
+  "freckle": {
+    "word": "freckle",
+    "phonetic": "/'frek(ə)l/",
+    "explains": [
+      "n. 雀斑, 斑点"
+    ]
+  },
+  "frecuente": {
+    "word": "frecuente",
+    "phonetic": "",
+    "explains": [
+      "adj. 经常的"
     ]
   },
   "free": {
@@ -713,11 +6005,60 @@
       "adj. 自由的；免费的；空闲的 v. 释放；使自由"
     ]
   },
+  "freebie": {
+    "word": "freebie",
+    "phonetic": "/'friːbi/",
+    "explains": [
+      "n.  赠品， 免费物"
+    ]
+  },
   "freedom": {
     "word": "freedom",
     "phonetic": "/ˈfriːdəm/",
     "explains": [
       "n. 自由；自主"
+    ]
+  },
+  "freehand": {
+    "word": "freehand",
+    "phonetic": "/'friːhænd/",
+    "explains": [
+      "adj. 徒手画的；不用仪器画的；adv. 徒手画地"
+    ]
+  },
+  "freehold": {
+    "word": "freehold",
+    "phonetic": "/'friːhəuld/",
+    "explains": [
+      "n.  享有全权的或可终身保有的不动产"
+    ]
+  },
+  "freelance": {
+    "word": "freelance",
+    "phonetic": "/'friːlɑːns/",
+    "explains": [
+      "vi.  当自由职业者；adj. 自由职业的"
+    ]
+  },
+  "freely": {
+    "word": "freely",
+    "phonetic": "/'friːlɪ/",
+    "explains": [
+      "adv. 自由地；直率地"
+    ]
+  },
+  "freeway": {
+    "word": "freeway",
+    "phonetic": "/'friːweɪ/",
+    "explains": [
+      "n. 高速公路"
+    ]
+  },
+  "freewheel": {
+    "word": "freewheel",
+    "phonetic": "/friː'wiːl/",
+    "explains": [
+      "v. 靠惯性滑行；随心所欲；n. 自由轮"
     ]
   },
   "freeze": {
@@ -727,11 +6068,214 @@
       "v. 结冰；冻结；冻僵 n. 冰冻；严寒期"
     ]
   },
+  "freezer": {
+    "word": "freezer",
+    "phonetic": "/'friːzə/",
+    "explains": [
+      "n. 冰箱；冷冻库；制冷工"
+    ]
+  },
+  "freezing": {
+    "word": "freezing",
+    "phonetic": "/'friːzɪŋ/",
+    "explains": [
+      "adj. 冰冻的,严寒的"
+    ]
+  },
+  "freight": {
+    "word": "freight",
+    "phonetic": "/freɪt/",
+    "explains": [
+      "n. 货运"
+    ]
+  },
+  "freighter": {
+    "word": "freighter",
+    "phonetic": "/'freɪtə/",
+    "explains": [
+      "n. 货船,承运人"
+    ]
+  },
+  "frelon": {
+    "word": "frelon",
+    "phonetic": "",
+    "explains": [
+      "n.m. 大黄蜂"
+    ]
+  },
+  "french": {
+    "word": "french",
+    "phonetic": "/fren(t)ʃ/",
+    "explains": [
+      "adj. 法国的　n. 法语"
+    ]
+  },
+  "frenchman": {
+    "word": "frenchman",
+    "phonetic": "/'frentʃmən/",
+    "explains": [
+      "n. 法国人"
+    ]
+  },
+  "frenetic": {
+    "word": "frenetic",
+    "phonetic": "/frə'netɪk/",
+    "explains": [
+      "adj. 发狂的, 狂热的"
+    ]
+  },
+  "freno": {
+    "word": "freno",
+    "phonetic": "",
+    "explains": [
+      "n.m. 刹车"
+    ]
+  },
+  "frente": {
+    "word": "frente",
+    "phonetic": "",
+    "explains": [
+      "n.f. 前额；前线；prep. 在…前面"
+    ]
+  },
+  "frenzied": {
+    "word": "frenzied",
+    "phonetic": "/'frenzɪd/",
+    "explains": [
+      "adj. 疯狂的；狂乱的；激怒的；v. 使狂乱（frenzy的过去式）"
+    ]
+  },
+  "frenzy": {
+    "word": "frenzy",
+    "phonetic": "/'frenzɪ/",
+    "explains": [
+      "n. 狂暴, 狂怒 vt使发狂"
+    ]
+  },
+  "frequency": {
+    "word": "frequency",
+    "phonetic": "/ˈfriːkwənsɪ/",
+    "explains": [
+      "n. 频率"
+    ]
+  },
+  "frequent": {
+    "word": "frequent",
+    "phonetic": "/ˈfriːkw(ə)nt/",
+    "explains": [
+      "adj. 频繁的"
+    ]
+  },
+  "frequently": {
+    "word": "frequently",
+    "phonetic": "/'friːkw(ə)ntlɪ/",
+    "explains": [
+      "adv. 时常，常常"
+    ]
+  },
+  "fresa": {
+    "word": "fresa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 草莓"
+    ]
+  },
+  "fresco": {
+    "word": "fresco",
+    "phonetic": "/'freskəʊ/",
+    "explains": [
+      "n. 壁画 vt作壁画于"
+    ]
+  },
   "fresh": {
     "word": "fresh",
     "phonetic": "/freʃ/",
     "explains": [
       "adj. 新鲜的；清新的；淡水的"
+    ]
+  },
+  "freshen": {
+    "word": "freshen",
+    "phonetic": "/'freʃ(ə)n/",
+    "explains": [
+      "v. 使显得新鲜"
+    ]
+  },
+  "fresher": {
+    "word": "fresher",
+    "phonetic": "/'frɛʃɚ/",
+    "explains": [
+      "n. 大学一年级新生, 新鲜人"
+    ]
+  },
+  "freshly": {
+    "word": "freshly",
+    "phonetic": "/'freʃlɪ/",
+    "explains": [
+      "adv. 新近，刚才"
+    ]
+  },
+  "freshman": {
+    "word": "freshman",
+    "phonetic": "/ˈfreʃmən/",
+    "explains": [
+      "n. 新生"
+    ]
+  },
+  "freshness": {
+    "word": "freshness",
+    "phonetic": "/'freʃnis/",
+    "explains": [
+      "n. 新鲜, 精神饱满"
+    ]
+  },
+  "freshwater": {
+    "word": "freshwater",
+    "phonetic": "/'freʃwɔːtə/",
+    "explains": [
+      "n. 淡水"
+    ]
+  },
+  "fret": {
+    "word": "fret",
+    "phonetic": "/fret/",
+    "explains": [
+      "v. （使）烦恼"
+    ]
+  },
+  "fretful": {
+    "word": "fretful",
+    "phonetic": "/'fretfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 焦躁的；烦燥的；起波纹的"
+    ]
+  },
+  "fretwork": {
+    "word": "fretwork",
+    "phonetic": "/'fretwɜːk/",
+    "explains": [
+      "n. [建]浮雕细工"
+    ]
+  },
+  "freudian": {
+    "word": "freudian",
+    "phonetic": "/'frɔidjən/",
+    "explains": [
+      "n. n&a,佛洛伊德学说(的)"
+    ]
+  },
+  "friable": {
+    "word": "friable",
+    "phonetic": "/'fraɪəb(ə)l/",
+    "explains": [
+      "adj. 易碎的, 脆的"
+    ]
+  },
+  "friction": {
+    "word": "friction",
+    "phonetic": "/ˈfrɪkʃ(ə)n/",
+    "explains": [
+      "n. 摩擦"
     ]
   },
   "friday": {
@@ -741,11 +6285,25 @@
       "n. 星期五"
     ]
   },
+  "fridge": {
+    "word": "fridge",
+    "phonetic": "/frɪdʒ/",
+    "explains": [
+      "n. 冰箱"
+    ]
+  },
   "friend": {
     "word": "friend",
     "phonetic": "/frend/",
     "explains": [
       "n. 朋友；友人；赞助者"
+    ]
+  },
+  "friendliness": {
+    "word": "friendliness",
+    "phonetic": "/'fren(d)lɪnɪs/",
+    "explains": [
+      "n. 友谊,友善"
     ]
   },
   "friendly": {
@@ -762,11 +6320,165 @@
       "n. 友谊；友情；友好关系"
     ]
   },
+  "frigate": {
+    "word": "frigate",
+    "phonetic": "/'frɪgət/",
+    "explains": [
+      "n. 三帆快速战舰, 护卫舰"
+    ]
+  },
   "fright": {
     "word": "fright",
     "phonetic": "/fraɪt/",
     "explains": [
       "n. 惊吓；恐怖；惊骇"
+    ]
+  },
+  "frighten": {
+    "word": "frighten",
+    "phonetic": "/ˈfraɪt(ə)n/",
+    "explains": [
+      "v. 使惊恐"
+    ]
+  },
+  "frightened": {
+    "word": "frightened",
+    "phonetic": "/'fraɪtnd/",
+    "explains": [
+      "adj. 害怕的；受惊的；受恐吓的；v. 害怕；使吃惊；吓走（frighten的过去分词）"
+    ]
+  },
+  "frightening": {
+    "word": "frightening",
+    "phonetic": "/'fraɪt(ə)nɪŋ; 'fraɪtnɪŋ/",
+    "explains": [
+      "adj. 令人恐惧的；引起突然惊恐的"
+    ]
+  },
+  "frightful": {
+    "word": "frightful",
+    "phonetic": "/'fraɪtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 可怕的；讨厌的"
+    ]
+  },
+  "frigid": {
+    "word": "frigid",
+    "phonetic": "/'frɪdʒɪd/",
+    "explains": [
+      "adj. 寒冷的"
+    ]
+  },
+  "frigidity": {
+    "word": "frigidity",
+    "phonetic": "",
+    "explains": [
+      "n. 寒冷, 冷淡, [医]性感缺失"
+    ]
+  },
+  "frigo": {
+    "word": "frigo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 冰箱（口语）"
+    ]
+  },
+  "frill": {
+    "word": "frill",
+    "phonetic": "/fril/",
+    "explains": [
+      "n.  无用的装饰"
+    ]
+  },
+  "fringe": {
+    "word": "fringe",
+    "phonetic": "/frɪn(d)ʒ/",
+    "explains": [
+      "n. 穗，毛边；边缘"
+    ]
+  },
+  "frippery": {
+    "word": "frippery",
+    "phonetic": "/'frɪp(ə)rɪ/",
+    "explains": [
+      "n. 便宜而俗艳的服装, 无用的东西"
+    ]
+  },
+  "frisk": {
+    "word": "frisk",
+    "phonetic": "/frɪsk/",
+    "explains": [
+      "n. 快乐, 快乐的时刻, 搜身"
+    ]
+  },
+  "frisky": {
+    "word": "frisky",
+    "phonetic": "/'frɪskɪ/",
+    "explains": [
+      "adj. 活泼的, 欢闹的"
+    ]
+  },
+  "frite": {
+    "word": "frite",
+    "phonetic": "",
+    "explains": [
+      "n.f. 炸薯条"
+    ]
+  },
+  "fritter": {
+    "word": "fritter",
+    "phonetic": "/'frɪtə/",
+    "explains": [
+      "v. 浪费；细切；剁碎；n. 细片；屑；带馅油炸面团"
+    ]
+  },
+  "frivolity": {
+    "word": "frivolity",
+    "phonetic": "/frɪ'vɒlɪtɪ/",
+    "explains": [
+      "n. 轻薄,轻浮"
+    ]
+  },
+  "frivolous": {
+    "word": "frivolous",
+    "phonetic": "/'frɪv(ə)ləs/",
+    "explains": [
+      "adj. 无聊的；轻佻的；琐碎的"
+    ]
+  },
+  "frizz": {
+    "word": "frizz",
+    "phonetic": "/frɪz/",
+    "explains": [
+      "n. 卷发, 卷毛, 吱吱响声"
+    ]
+  },
+  "frizzle": {
+    "word": "frizzle",
+    "phonetic": "/'frɪz(ə)l/",
+    "explains": [
+      "v. 使卷缩；使卷曲；n. 卷发；吱吱响声"
+    ]
+  },
+  "frizzy": {
+    "word": "frizzy",
+    "phonetic": "/'frɪzɪ/",
+    "explains": [
+      "adj. 卷曲的"
+    ]
+  },
+  "fro": {
+    "word": "fro",
+    "phonetic": "/frəʊ/",
+    "explains": [
+      "adv. 往，去，回，向后"
+    ]
+  },
+  "frock": {
+    "word": "frock",
+    "phonetic": "/frɒk/",
+    "explains": [
+      "n. （女）连衣裙"
     ]
   },
   "frog": {
@@ -776,11 +6488,39 @@
       "n. 青蛙"
     ]
   },
+  "frogman": {
+    "word": "frogman",
+    "phonetic": "/'frɒgmən/",
+    "explains": [
+      "n. 蛙人"
+    ]
+  },
+  "frolic": {
+    "word": "frolic",
+    "phonetic": "/'frɒlɪk/",
+    "explains": [
+      "n. 嬉闹"
+    ]
+  },
+  "frolicsome": {
+    "word": "frolicsome",
+    "phonetic": "/'frɒlɪks(ə)m/",
+    "explains": [
+      "adj. 嬉戏的，爱闹着玩的"
+    ]
+  },
   "from": {
     "word": "from",
     "phonetic": "/frəm/",
     "explains": [
       "prep. 从… 起；来自；由于"
+    ]
+  },
+  "frond": {
+    "word": "frond",
+    "phonetic": "/frɒnd/",
+    "explains": [
+      "n. 叶, 植物体"
     ]
   },
   "front": {
@@ -790,11 +6530,123 @@
       "n. 前面；正面；前线 adj. 前面的；前部的"
     ]
   },
+  "frontage": {
+    "word": "frontage",
+    "phonetic": "/'frʌntɪdʒ/",
+    "explains": [
+      "n. 前方；房子的正面；临街"
+    ]
+  },
+  "frontal": {
+    "word": "frontal",
+    "phonetic": "/'frʌnt(ə)l/",
+    "explains": [
+      "n. 前沿"
+    ]
+  },
+  "frontality": {
+    "word": "frontality",
+    "phonetic": "",
+    "explains": [
+      "n. 正面描绘"
+    ]
+  },
+  "frontera": {
+    "word": "frontera",
+    "phonetic": "",
+    "explains": [
+      "n.f. 边界"
+    ]
+  },
+  "frontier": {
+    "word": "frontier",
+    "phonetic": "/ˈfrʌntɪə/",
+    "explains": [
+      "n. 边疆"
+    ]
+  },
   "frost": {
     "word": "frost",
     "phonetic": "/frɒst/",
     "explains": [
       "n. 霜；霜冻；严寒 v. 结霜；冻坏"
+    ]
+  },
+  "frostbite": {
+    "word": "frostbite",
+    "phonetic": "/'frɒs(t)baɪt/",
+    "explains": [
+      "vt. 使冻伤；使受霜害；vi. 参加冬季帆船比赛；n. 冻伤；冻疮；霜寒"
+    ]
+  },
+  "frosting": {
+    "word": "frosting",
+    "phonetic": "/'frɒstɪŋ/",
+    "explains": [
+      "n. 结霜；霜状白糖；无光泽面；去光泽；v. 以霜覆盖；冻坏；起霜（frost的ing形式）；adj. 结霜的；磨砂的；消光的"
+    ]
+  },
+  "frosty": {
+    "word": "frosty",
+    "phonetic": "/'frɒstɪ/",
+    "explains": [
+      "adj. 结霜的，严寒的；冷淡的；灰白的"
+    ]
+  },
+  "froth": {
+    "word": "froth",
+    "phonetic": "/frɒθ/",
+    "explains": [
+      "n. 泡沫，泡；口沫；v. 吐白沫；起泡沫"
+    ]
+  },
+  "frotter": {
+    "word": "frotter",
+    "phonetic": "",
+    "explains": [
+      "v. 擦"
+    ]
+  },
+  "frown": {
+    "word": "frown",
+    "phonetic": "/fraʊn/",
+    "explains": [
+      "v. 皱眉，蹙额"
+    ]
+  },
+  "frowzy": {
+    "word": "frowzy",
+    "phonetic": "/'fraʊzɪ/",
+    "explains": [
+      "adj. 不整洁的（等于frowsy）；有臭味的；霉臭的"
+    ]
+  },
+  "frozen": {
+    "word": "frozen",
+    "phonetic": "/'frəʊzn/",
+    "explains": [
+      "adj. 冻结的；冷酷的；v. 结冰（freeze的过去分词）；凝固；变得刻板"
+    ]
+  },
+  "fructify": {
+    "word": "fructify",
+    "phonetic": "/'frʌktɪfaɪ/",
+    "explains": [
+      "v. 富有成果"
+    ]
+  },
+  "frugal": {
+    "word": "frugal",
+    "phonetic": "/'fruːg(ə)l/",
+    "explains": [
+      "adj. 俭朴的，花钱少的"
+    ]
+  },
+  "frugality": {
+    "word": "frugality",
+    "phonetic": "/fruː'gælɪtɪ/",
+    "explains": [
+      "n. 节俭, 俭省"
     ]
   },
   "fruit": {
@@ -804,11 +6656,186 @@
       "n. 水果；果实；成果"
     ]
   },
+  "fruiterer": {
+    "word": "fruiterer",
+    "phonetic": "/'fruːt(ə)rə/",
+    "explains": [
+      "n. 卖水果的人，水果商"
+    ]
+  },
+  "fruitful": {
+    "word": "fruitful",
+    "phonetic": "/'fruːtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 多产的；肥沃的"
+    ]
+  },
+  "fruitfulness": {
+    "word": "fruitfulness",
+    "phonetic": "",
+    "explains": [
+      "n. 多产, 肥沃"
+    ]
+  },
+  "fruition": {
+    "word": "fruition",
+    "phonetic": "/frʊ'ɪʃ(ə)n/",
+    "explains": [
+      "n. 实现；完成"
+    ]
+  },
+  "fruitless": {
+    "word": "fruitless",
+    "phonetic": "/'fruːtlɪs/",
+    "explains": [
+      "adj. 不结果实的"
+    ]
+  },
+  "frump": {
+    "word": "frump",
+    "phonetic": "/frʌmp/",
+    "explains": [
+      "n. 守旧者, 邋遢的女人"
+    ]
+  },
+  "frustrate": {
+    "word": "frustrate",
+    "phonetic": "/frʌ'streɪt; 'frʌs-/",
+    "explains": [
+      "v. 挫败"
+    ]
+  },
+  "frustrated": {
+    "word": "frustrated",
+    "phonetic": "/frʌ'streɪtɪd/",
+    "explains": [
+      "adj. 失意的，挫败的；泄气的；v. 挫败；阻挠（frustrate的过去式和过去分词形式）"
+    ]
+  },
+  "frustration": {
+    "word": "frustration",
+    "phonetic": "/frʌ'streɪʃn/",
+    "explains": [
+      "n. 挫败, 挫折"
+    ]
+  },
+  "fruta": {
+    "word": "fruta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 水果"
+    ]
+  },
+  "fry": {
+    "word": "fry",
+    "phonetic": "/fraɪ/",
+    "explains": [
+      "v. 油煎，油炸，油炒"
+    ]
+  },
+  "fubsy": {
+    "word": "fubsy",
+    "phonetic": "/'fʌbzɪ/",
+    "explains": [
+      "adj. 肥胖的, 矮胖的"
+    ]
+  },
+  "fuddle": {
+    "word": "fuddle",
+    "phonetic": "/'fʌd(ə)l/",
+    "explains": [
+      "v. 灌醉；使混乱；n. 混乱；酗酒"
+    ]
+  },
+  "fudge": {
+    "word": "fudge",
+    "phonetic": "/fʌdʒ/",
+    "explains": [
+      "n. 软糖；胡说；谎话；v. 捏造；粗制滥造；回避；int. 胡说八道！"
+    ]
+  },
+  "fuego": {
+    "word": "fuego",
+    "phonetic": "",
+    "explains": [
+      "n.m. 火"
+    ]
+  },
   "fuel": {
     "word": "fuel",
     "phonetic": "/ˈfjuːəl/",
     "explains": [
       "n. 燃料；刺激因素 v. 给… 加燃料；刺激"
+    ]
+  },
+  "fuente": {
+    "word": "fuente",
+    "phonetic": "",
+    "explains": [
+      "n.f. 泉水；喷泉；来源"
+    ]
+  },
+  "fuerte": {
+    "word": "fuerte",
+    "phonetic": "",
+    "explains": [
+      "adj. 强壮的"
+    ]
+  },
+  "fuerza": {
+    "word": "fuerza",
+    "phonetic": "",
+    "explains": [
+      "n.f. 力量"
+    ]
+  },
+  "fugacious": {
+    "word": "fugacious",
+    "phonetic": "/fjʊ'geɪʃəs/",
+    "explains": [
+      "adj. 无常的；短暂的；易逃逸的"
+    ]
+  },
+  "fugitive": {
+    "word": "fugitive",
+    "phonetic": "/'fjuːdʒɪtɪv/",
+    "explains": [
+      "adj. 逃亡的, 无常的, 易变的"
+    ]
+  },
+  "fugue": {
+    "word": "fugue",
+    "phonetic": "/fjuːg/",
+    "explains": [
+      "n. 赋格曲；神游症；vi. 作赋格曲；vt. 把…编成赋格曲"
+    ]
+  },
+  "fulcrum": {
+    "word": "fulcrum",
+    "phonetic": "/'fʊlkrəm; 'fʌl-/",
+    "explains": [
+      "n. 杠杆的支点, 支点, 叶附属物"
+    ]
+  },
+  "fulfil": {
+    "word": "fulfil",
+    "phonetic": "/fʊlˈfɪl/",
+    "explains": [
+      "v. 实现"
+    ]
+  },
+  "fulfill": {
+    "word": "fulfill",
+    "phonetic": "/ful'fil/",
+    "explains": [
+      "v. 履行；实现；满足；使结束（等于fulfil）"
+    ]
+  },
+  "fulfilment": {
+    "word": "fulfilment",
+    "phonetic": "/ful'filmənt/",
+    "explains": [
+      "n. 实现；成就"
     ]
   },
   "full": {
@@ -818,11 +6845,235 @@
       "adj. 满的；充满的；完全的 adv. 十分；非常"
     ]
   },
+  "fuller": {
+    "word": "fuller",
+    "phonetic": "/'fʊlə/",
+    "explains": [
+      "n. 漂洗工"
+    ]
+  },
+  "fullness": {
+    "word": "fullness",
+    "phonetic": "/'fʊlnɪs/",
+    "explains": [
+      "n. 满, 丰富, 成熟"
+    ]
+  },
+  "fully": {
+    "word": "fully",
+    "phonetic": "/'fʊlɪ/",
+    "explains": [
+      "adv. 充分地,完全地"
+    ]
+  },
+  "fulminate": {
+    "word": "fulminate",
+    "phonetic": "/'fʊlmɪneɪt; 'fʌl-/",
+    "explains": [
+      "v. 爆炸；电闪；怒喝；n. 雷酸盐；烈性炸药"
+    ]
+  },
+  "fulmination": {
+    "word": "fulmination",
+    "phonetic": "",
+    "explains": [
+      "n. 闪电, 爆发, 爆鸣"
+    ]
+  },
+  "fulsome": {
+    "word": "fulsome",
+    "phonetic": "/'fʊls(ə)m/",
+    "explains": [
+      "adj. 令人生厌的；过度的"
+    ]
+  },
+  "fumar": {
+    "word": "fumar",
+    "phonetic": "",
+    "explains": [
+      "v. 吸烟"
+    ]
+  },
+  "fumble": {
+    "word": "fumble",
+    "phonetic": "/'fʌmb(ə)l/",
+    "explains": [
+      "v. 摸索"
+    ]
+  },
+  "fume": {
+    "word": "fume",
+    "phonetic": "/fjuːm/",
+    "explains": [
+      "v. 冒烟；发怒；n. 烟；愤怒，烦恼"
+    ]
+  },
+  "fumeur": {
+    "word": "fumeur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 吸烟者"
+    ]
+  },
+  "fumigate": {
+    "word": "fumigate",
+    "phonetic": "/'fjuːmɪgeɪt/",
+    "explains": [
+      "v. 熏制, 以烟熏消毒"
+    ]
+  },
   "fun": {
     "word": "fun",
     "phonetic": "/fʌn/",
     "explains": [
       "n. 乐趣；玩笑；有趣的人或事 adj. 有趣的"
+    ]
+  },
+  "funcionar": {
+    "word": "funcionar",
+    "phonetic": "",
+    "explains": [
+      "v. 运转"
+    ]
+  },
+  "function": {
+    "word": "function",
+    "phonetic": "/ˈfʌŋkʃ(ə)n/",
+    "explains": [
+      "n. 功能"
+    ]
+  },
+  "functional": {
+    "word": "functional",
+    "phonetic": "/'fʌŋkʃənəl/",
+    "explains": [
+      "adj.  实用的； 有功能的"
+    ]
+  },
+  "functionalism": {
+    "word": "functionalism",
+    "phonetic": "/'fʌŋ(k)ʃ(ə)n(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 功能主义, 机能心理学"
+    ]
+  },
+  "functionary": {
+    "word": "functionary",
+    "phonetic": "/'fʌn(k)ʃ(ə)n(ə)rɪ/",
+    "explains": [
+      "n. 职员, 官员, 负责人员"
+    ]
+  },
+  "fund": {
+    "word": "fund",
+    "phonetic": "/fʌnd/",
+    "explains": [
+      "n. 资金"
+    ]
+  },
+  "fundamental": {
+    "word": "fundamental",
+    "phonetic": "/ˌfʌndəˈment(ə)l/",
+    "explains": [
+      "adj. 基本的"
+    ]
+  },
+  "fundamentally": {
+    "word": "fundamentally",
+    "phonetic": "/fʌndə'mentəlɪ/",
+    "explains": [
+      "adv. 从根本上, 基本地"
+    ]
+  },
+  "fundraise": {
+    "word": "fundraise",
+    "phonetic": "",
+    "explains": [
+      "n. 募捐"
+    ]
+  },
+  "fundraising": {
+    "word": "fundraising",
+    "phonetic": "/'fʌndˌreiziŋ/",
+    "explains": [
+      "n.  资金筹集； 募捐"
+    ]
+  },
+  "funeral": {
+    "word": "funeral",
+    "phonetic": "/ˈfjuːn(ə)r(ə)l/",
+    "explains": [
+      "n. 葬礼"
+    ]
+  },
+  "funfair": {
+    "word": "funfair",
+    "phonetic": "/'fʌnfɛr/",
+    "explains": [
+      "n. 游乐场；游艺集市"
+    ]
+  },
+  "fungal": {
+    "word": "fungal",
+    "phonetic": "/'fʌŋg(ə)l/",
+    "explains": [
+      "adj. 真菌的"
+    ]
+  },
+  "fungi": {
+    "word": "fungi",
+    "phonetic": "/ˈfʌŋɡaɪ; ˈfʌndʒaɪ; ˈfʌndʒɪ/",
+    "explains": [
+      "n. 真菌；菌类；蘑菇（fungus的复数）"
+    ]
+  },
+  "fungible": {
+    "word": "fungible",
+    "phonetic": "/'fʌndʒɪbl/",
+    "explains": [
+      "adj. 代替的；可取代的；n. 代替物"
+    ]
+  },
+  "fungicide": {
+    "word": "fungicide",
+    "phonetic": "/'fʌn(d)ʒɪsaɪd; 'fʌŋgɪ-/",
+    "explains": [
+      "n. 杀真菌剂"
+    ]
+  },
+  "fungus": {
+    "word": "fungus",
+    "phonetic": "/'fʌŋgəs/",
+    "explains": [
+      "n. 真菌,真菌类植物"
+    ]
+  },
+  "funicular": {
+    "word": "funicular",
+    "phonetic": "/fjʊ'nɪkjʊlə; fə'nɪk-/",
+    "explains": [
+      "n. 索道缆车；adj. 索状的；纤维的"
+    ]
+  },
+  "funk": {
+    "word": "funk",
+    "phonetic": "/fʌŋk/",
+    "explains": [
+      "n. 怯懦, 恐惧, 臭味, 恐怖"
+    ]
+  },
+  "funky": {
+    "word": "funky",
+    "phonetic": "/'fʌŋkɪ/",
+    "explains": [
+      "adj. 时髦的；畏缩的；恶臭的"
+    ]
+  },
+  "funnel": {
+    "word": "funnel",
+    "phonetic": "/'fʌn(ə)l/",
+    "explains": [
+      "n. 漏斗,烟囱"
     ]
   },
   "funny": {
@@ -839,11 +7090,60 @@
       "n. 毛皮；软毛；皮衣"
     ]
   },
+  "furbish": {
+    "word": "furbish",
+    "phonetic": "/'fɜːbɪʃ/",
+    "explains": [
+      "v. 磨光；恢复；更新"
+    ]
+  },
+  "furious": {
+    "word": "furious",
+    "phonetic": "/'fjʊərɪəs/",
+    "explains": [
+      "adj. 狂怒的；狂暴的"
+    ]
+  },
+  "furl": {
+    "word": "furl",
+    "phonetic": "/fɜːl/",
+    "explains": [
+      "v. 叠，卷收；收拢；n. 卷起，折叠；卷起之物"
+    ]
+  },
+  "furlough": {
+    "word": "furlough",
+    "phonetic": "/'fɜːləʊ/",
+    "explains": [
+      "n. 休假；暂时解雇；放假；v. 准假；暂时解雇"
+    ]
+  },
+  "furnace": {
+    "word": "furnace",
+    "phonetic": "/'fɜːnɪs/",
+    "explains": [
+      "n. 炉子，熔炉；鼓风炉"
+    ]
+  },
   "furnish": {
     "word": "furnish",
     "phonetic": "/ˈfɜːnɪʃ/",
     "explains": [
       "v. 供应；提供；装备；布置"
+    ]
+  },
+  "furnishing": {
+    "word": "furnishing",
+    "phonetic": "/'fɜːnɪʃɪŋ/",
+    "explains": [
+      "n. 供给(装备)"
+    ]
+  },
+  "furnishings": {
+    "word": "furnishings",
+    "phonetic": "/'fə:niʃiŋz/",
+    "explains": [
+      "n. 家具；供应；穿戴用品（furnishing的复数）"
     ]
   },
   "furniture": {
@@ -853,6 +7153,104 @@
       "n. 家具；设备；装置"
     ]
   },
+  "furrier": {
+    "word": "furrier",
+    "phonetic": "/'fʌrɪə/",
+    "explains": [
+      "n. 毛皮商；毛皮衣制作工"
+    ]
+  },
+  "furrow": {
+    "word": "furrow",
+    "phonetic": "/'fʌrəʊ/",
+    "explains": [
+      "n. 皱纹；犁沟；车辙；v. 犁；耕；弄绉"
+    ]
+  },
+  "further": {
+    "word": "further",
+    "phonetic": "/'fɜːðə/",
+    "explains": [
+      "adv. 更远地；adj. 更远的"
+    ]
+  },
+  "furthermore": {
+    "word": "furthermore",
+    "phonetic": "/fɜːðə'mɔː/",
+    "explains": [
+      "adv. 而且，此外"
+    ]
+  },
+  "furtive": {
+    "word": "furtive",
+    "phonetic": "/'fɜːtɪv/",
+    "explains": [
+      "adj. 鬼鬼祟祟的，秘密的"
+    ]
+  },
+  "fury": {
+    "word": "fury",
+    "phonetic": "/'fjʊərɪ/",
+    "explains": [
+      "n. 狂怒，暴怒；猛烈"
+    ]
+  },
+  "fuse": {
+    "word": "fuse",
+    "phonetic": "/fjuːz/",
+    "explains": [
+      "n. 保险丝；导火线"
+    ]
+  },
+  "fusillade": {
+    "word": "fusillade",
+    "phonetic": "/,fjuːzɪ'leɪd; -'lɑːd/",
+    "explains": [
+      "n. 枪炮的齐射, 猛射, 连续射击"
+    ]
+  },
+  "fusion": {
+    "word": "fusion",
+    "phonetic": "/'fjuːʒ(ə)n/",
+    "explains": [
+      "n. 熔化,融合"
+    ]
+  },
+  "fuss": {
+    "word": "fuss",
+    "phonetic": "/fʌs/",
+    "explains": [
+      "n. 大惊小怪；v. 忙乱"
+    ]
+  },
+  "fussy": {
+    "word": "fussy",
+    "phonetic": "/'fʌsɪ/",
+    "explains": [
+      "adj. 为琐事而担忧的, 过分装饰的, 繁琐的, 急躁, 爱挑剔的, 难取悦的"
+    ]
+  },
+  "fustian": {
+    "word": "fustian",
+    "phonetic": "/'fʌstɪən/",
+    "explains": [
+      "n. 粗斜条棉布, 夸大的话"
+    ]
+  },
+  "futile": {
+    "word": "futile",
+    "phonetic": "/'fjuːtaɪl/",
+    "explains": [
+      "adj. 无用的；无效的；没有出息的；琐细的；不重要的"
+    ]
+  },
+  "futility": {
+    "word": "futility",
+    "phonetic": "/fjʊ'tɪlɪtɪ; fjuː'tɪlɪtɪ/",
+    "explains": [
+      "n. 无益, 无用, 轻浮的言行"
+    ]
+  },
   "future": {
     "word": "future",
     "phonetic": "/ˈfjuːtʃə(r)/",
@@ -860,46 +7258,39 @@
       "n. 未来；将来；前途 adj. 将来的；未来的"
     ]
   },
-  "fabulous": {
-    "word": "fabulous",
-    "phonetic": "/ˈfæbjələs/",
+  "futures": {
+    "word": "futures",
+    "phonetic": "/'fjuːtʃəs/",
     "explains": [
-      "adj. 极好的；难以置信的"
+      "n.  期货； 期货交易； 期货合同"
     ]
   },
-  "facilitate": {
-    "word": "facilitate",
-    "phonetic": "/fəˈsɪlɪteɪt/",
+  "futuristic": {
+    "word": "futuristic",
+    "phonetic": "/fjuːtʃə'rɪstɪk/",
     "explains": [
-      "v. 促进；使便利"
+      "adj. 未来派的；未来主义的"
     ]
   },
-  "fade": {
-    "word": "fade",
-    "phonetic": "/feɪd/",
+  "futuro": {
+    "word": "futuro",
+    "phonetic": "",
     "explains": [
-      "v. 褪色；逐渐消失；变暗"
+      "n.m. 未来；adj. 未来的"
     ]
   },
-  "faithful": {
-    "word": "faithful",
-    "phonetic": "/ˈfeɪθfl/",
+  "fuzz": {
+    "word": "fuzz",
+    "phonetic": "/fʌz/",
     "explains": [
-      "adj. 忠实的；忠诚的"
+      "n. 绒毛；模糊；细毛；警员；vi. 作绒毛状飞散；变成绒毛状；变得模糊；vt. 使模糊；起毛"
     ]
   },
-  "familiar": {
-    "word": "familiar",
-    "phonetic": "/fəˈmɪliə(r)/",
+  "fuzzy": {
+    "word": "fuzzy",
+    "phonetic": "/'fʌzɪ/",
     "explains": [
-      "adj. 熟悉的；常见的"
-    ]
-  },
-  "farming": {
-    "word": "farming",
-    "phonetic": "/ˈfɑːmɪŋ/",
-    "explains": [
-      "n. 农业；务农"
+      "adj. 有绒毛的, 模糊的, 失真的"
     ]
   }
 }

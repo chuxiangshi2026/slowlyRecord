@@ -1,9 +1,128 @@
 {
+  "macabre": {
+    "word": "macabre",
+    "phonetic": "/mə'kɑːbr(ə)/",
+    "explains": [
+      "adj. 可怕的；以死亡为主题的；令人毛骨悚然的（等于macaber）"
+    ]
+  },
+  "macadam": {
+    "word": "macadam",
+    "phonetic": "/mə'kædəm/",
+    "explains": [
+      "n. 碎石, 碎石路"
+    ]
+  },
+  "macaque": {
+    "word": "macaque",
+    "phonetic": "/mə'kɑːk; -'kæk/",
+    "explains": [
+      "n. 短尾猿"
+    ]
+  },
+  "macaroni": {
+    "word": "macaroni",
+    "phonetic": "/,mækə'rəʊnɪ/",
+    "explains": [
+      "n. 通心粉；通心面条；纨绔子弟"
+    ]
+  },
+  "macdonald": {
+    "word": "macdonald",
+    "phonetic": "",
+    "explains": [
+      "n. 麦当劳快餐店"
+    ]
+  },
+  "mace": {
+    "word": "mace",
+    "phonetic": "/meɪs/",
+    "explains": [
+      "n. 钉头, 权杖, 肉豆蔻, 肉豆蔻树, 豆蔻香料, 催泪瓦斯, 肉豆蔻皮"
+    ]
+  },
+  "macerate": {
+    "word": "macerate",
+    "phonetic": "/'mæsəreɪt/",
+    "explains": [
+      "v. 浸软"
+    ]
+  },
+  "machination": {
+    "word": "machination",
+    "phonetic": "/,mæʃɪ'neɪʃn/",
+    "explains": [
+      "n. 阴谋；诡计"
+    ]
+  },
   "machine": {
     "word": "machine",
     "phonetic": "/məˈʃiːn/",
     "explains": [
       "n. 机械；机器；机械装置"
+    ]
+  },
+  "machinery": {
+    "word": "machinery",
+    "phonetic": "/mə'ʃiːn(ə)rɪ/",
+    "explains": [
+      "n. 机械；机器；机构；机械装置"
+    ]
+  },
+  "macho": {
+    "word": "macho",
+    "phonetic": "/'mætʃəʊ/",
+    "explains": [
+      "adj. 大男子气概的；n. 强壮男子；大丈夫"
+    ]
+  },
+  "mackerel": {
+    "word": "mackerel",
+    "phonetic": "/'mæk(ə)r(ə)l/",
+    "explains": [
+      "n. 鲭"
+    ]
+  },
+  "mackintosh": {
+    "word": "mackintosh",
+    "phonetic": "/'mækɪntɒʃ/",
+    "explains": [
+      "n. (英国英语)雨衣；苹果计算机的一种型号"
+    ]
+  },
+  "macrocosm": {
+    "word": "macrocosm",
+    "phonetic": "/'mækrə(ʊ)kɒz(ə)m/",
+    "explains": [
+      "n. 宏观世界"
+    ]
+  },
+  "macroeconomic": {
+    "word": "macroeconomic",
+    "phonetic": "/'mækrəʊ,iːkə'nɒmɪk/",
+    "explains": [
+      "adj. 宏观经济的，总体经济的；n. 整体经济"
+    ]
+  },
+  "macrophage": {
+    "word": "macrophage",
+    "phonetic": "/'mækrə(ʊ)feɪdʒ/",
+    "explains": [
+      "n. [组织] 巨噬细胞"
+    ]
+  },
+  "macrotask": {
+    "word": "macrotask",
+    "phonetic": "",
+    "explains": [
+      "宏任务"
+    ]
+  },
+  "macula": {
+    "word": "macula",
+    "phonetic": "/'mækjʊlə/",
+    "explains": [
+      "n. 斑点, 污点, 黑点, 斑疹, 太阳黑子"
     ]
   },
   "mad": {
@@ -13,11 +132,109 @@
       "adj. 疯狂的；发疯的；愚蠢的；着迷的"
     ]
   },
+  "madam": {
+    "word": "madam",
+    "phonetic": "/ˈmædəm/",
+    "explains": [
+      "n. 夫人"
+    ]
+  },
+  "madame": {
+    "word": "madame",
+    "phonetic": "/mɑː'dɑːm/",
+    "explains": [
+      "n. （法语）夫人；太太"
+    ]
+  },
+  "madden": {
+    "word": "madden",
+    "phonetic": "/'mæd(ə)n/",
+    "explains": [
+      "v. 使发疯，使发狂"
+    ]
+  },
+  "maddening": {
+    "word": "maddening",
+    "phonetic": "/'mædəniŋ/",
+    "explains": [
+      "v. 发狂"
+    ]
+  },
+  "madera": {
+    "word": "madera",
+    "phonetic": "",
+    "explains": [
+      "n.f. 木头"
+    ]
+  },
+  "madre": {
+    "word": "madre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 母亲"
+    ]
+  },
+  "madrigal": {
+    "word": "madrigal",
+    "phonetic": "/'mædrɪg(ə)l/",
+    "explains": [
+      "n. 小曲"
+    ]
+  },
+  "madurar": {
+    "word": "madurar",
+    "phonetic": "",
+    "explains": [
+      "v. 成熟"
+    ]
+  },
+  "maelstrom": {
+    "word": "maelstrom",
+    "phonetic": "",
+    "explains": [
+      "n. 大漩涡, 挪威近海的大漩涡, 猛烈的力量"
+    ]
+  },
+  "maestro": {
+    "word": "maestro",
+    "phonetic": "/'maɪstrəʊ/",
+    "explains": [
+      "n. 艺术大师, 名作曲家"
+    ]
+  },
+  "mafia": {
+    "word": "mafia",
+    "phonetic": "/'mæfiə; 'mɑ:fiɑ:/",
+    "explains": [
+      "n. （意）秘密政党；黑手党"
+    ]
+  },
   "magazine": {
     "word": "magazine",
     "phonetic": "/ˌmæɡəˈziːn/",
     "explains": [
       "n. 杂志；期刊；弹药库"
+    ]
+  },
+  "magenta": {
+    "word": "magenta",
+    "phonetic": "/mə'dʒentə/",
+    "explains": [
+      "n&a. 红紫色(的)"
+    ]
+  },
+  "maggot": {
+    "word": "maggot",
+    "phonetic": "/'mægət/",
+    "explains": [
+      "n. 空想, 蛆"
+    ]
+  },
+  "magia": {
+    "word": "magia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 魔法"
     ]
   },
   "magic": {
@@ -27,11 +244,221 @@
       "n. 巫术；魔法；戏法 adj. 不可思议的；有魔力的"
     ]
   },
+  "magical": {
+    "word": "magical",
+    "phonetic": "/'mædʒɪk(ə)l/",
+    "explains": [
+      "adj. 魔术的, 神奇的"
+    ]
+  },
+  "magician": {
+    "word": "magician",
+    "phonetic": "/mə'dʒɪʃ(ə)n/",
+    "explains": [
+      "n. 魔法师；变戏法的人"
+    ]
+  },
+  "magisterial": {
+    "word": "magisterial",
+    "phonetic": "/,mædʒɪ'stɪərɪəl/",
+    "explains": [
+      "adj. 官气十足的, 有权威的, 专横的"
+    ]
+  },
+  "magistracy": {
+    "word": "magistracy",
+    "phonetic": "/'mædʒɪstrəsɪ/",
+    "explains": [
+      "n. 长官的职位, 地方行政长官"
+    ]
+  },
+  "magistrate": {
+    "word": "magistrate",
+    "phonetic": "/'mædʒɪstrət; -streɪt/",
+    "explains": [
+      "n. 地方法官"
+    ]
+  },
+  "magma": {
+    "word": "magma",
+    "phonetic": "/'mægmə/",
+    "explains": [
+      "n. 岩浆, 糊剂"
+    ]
+  },
+  "magmatic": {
+    "word": "magmatic",
+    "phonetic": "",
+    "explains": [
+      "adj. 岩浆的"
+    ]
+  },
+  "magnanimous": {
+    "word": "magnanimous",
+    "phonetic": "/mæg'nænɪməs/",
+    "explains": [
+      "adj. 慷慨的，宽宏大量的"
+    ]
+  },
+  "magnate": {
+    "word": "magnate",
+    "phonetic": "/'mægneɪt/",
+    "explains": [
+      "n. 达官，显贵"
+    ]
+  },
+  "magnesium": {
+    "word": "magnesium",
+    "phonetic": "/mæg'niːzɪəm/",
+    "explains": [
+      "n. [化]镁"
+    ]
+  },
+  "magnet": {
+    "word": "magnet",
+    "phonetic": "/ˈmægnɪt/",
+    "explains": [
+      "n. 磁铁"
+    ]
+  },
+  "magnetic": {
+    "word": "magnetic",
+    "phonetic": "/mæg'netɪk/",
+    "explains": [
+      "adj. 磁的；有吸引力的"
+    ]
+  },
+  "magnetism": {
+    "word": "magnetism",
+    "phonetic": "/'mægnɪtɪz(ə)m/",
+    "explains": [
+      "n. 磁；魅力"
+    ]
+  },
+  "magnetize": {
+    "word": "magnetize",
+    "phonetic": "/'mægnɪtaɪz/",
+    "explains": [
+      "v. 使磁化, 吸引"
+    ]
+  },
+  "magnetosphere": {
+    "word": "magnetosphere",
+    "phonetic": "/mæg'niːtəsfɪə/",
+    "explains": [
+      "n. 磁气圈"
+    ]
+  },
+  "magnification": {
+    "word": "magnification",
+    "phonetic": "/,mægnɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 扩大, 放大倍率"
+    ]
+  },
+  "magnificent": {
+    "word": "magnificent",
+    "phonetic": "/mægˈnɪfɪs(ə)nt/",
+    "explains": [
+      "adj. 壮丽的"
+    ]
+  },
+  "magnifique": {
+    "word": "magnifique",
+    "phonetic": "",
+    "explains": [
+      "adj. 极好的"
+    ]
+  },
+  "magnify": {
+    "word": "magnify",
+    "phonetic": "/'mægnɪfaɪ/",
+    "explains": [
+      "v. 放大，扩大"
+    ]
+  },
+  "magniloquent": {
+    "word": "magniloquent",
+    "phonetic": "/mæg'nɪləkwənt/",
+    "explains": [
+      "adj. 使用夸张语言的, 华而不实的, 夸张的"
+    ]
+  },
+  "magnitude": {
+    "word": "magnitude",
+    "phonetic": "/'mægnɪtjuːd/",
+    "explains": [
+      "n. 重大；星等"
+    ]
+  },
+  "magnolia": {
+    "word": "magnolia",
+    "phonetic": "/mæg'nəʊlɪə/",
+    "explains": [
+      "n. [植] 木兰；玉兰类的植物；adj. 木兰科的"
+    ]
+  },
+  "magpie": {
+    "word": "magpie",
+    "phonetic": "/'mægpaɪ/",
+    "explains": [
+      "n. 鹊"
+    ]
+  },
+  "mahogany": {
+    "word": "mahogany",
+    "phonetic": "/mə'hɒgənɪ/",
+    "explains": [
+      "n. 桃花心木，红木；红褐色"
+    ]
+  },
+  "maid": {
+    "word": "maid",
+    "phonetic": "/meɪd/",
+    "explains": [
+      "n. 女仆"
+    ]
+  },
+  "maiden": {
+    "word": "maiden",
+    "phonetic": "/ˈmeɪd(ə)n/",
+    "explains": [
+      "n. 少女"
+    ]
+  },
   "mail": {
     "word": "mail",
     "phonetic": "/meɪl/",
     "explains": [
       "n. 邮件；邮政；盔甲 v. 邮寄；给…… 穿盔甲"
+    ]
+  },
+  "mailbox": {
+    "word": "mailbox",
+    "phonetic": "/'meilbɔks/",
+    "explains": [
+      "n.  邮筒， 邮箱"
+    ]
+  },
+  "maillot": {
+    "word": "maillot",
+    "phonetic": "",
+    "explains": [
+      "n.m. 汗衫；泳衣"
+    ]
+  },
+  "mailshot": {
+    "word": "mailshot",
+    "phonetic": "/'meilʃɔt/",
+    "explains": [
+      "n.  邮寄广告单"
+    ]
+  },
+  "maim": {
+    "word": "maim",
+    "phonetic": "/meɪm/",
+    "explains": [
+      "v. 残害，使残废"
     ]
   },
   "main": {
@@ -41,11 +468,466 @@
       "adj. 主要的；最重要的 n. 主要部分；要点"
     ]
   },
+  "maine": {
+    "word": "maine",
+    "phonetic": "/mein/",
+    "explains": [
+      "n. 缅因州(美国东北角的州)"
+    ]
+  },
+  "mainland": {
+    "word": "mainland",
+    "phonetic": "/ˈmeɪnlənd/",
+    "explains": [
+      "n. 大陆"
+    ]
+  },
+  "mainly": {
+    "word": "mainly",
+    "phonetic": "/ˈmeɪnlɪ/",
+    "explains": [
+      "adv. 主要地"
+    ]
+  },
+  "mainsheet": {
+    "word": "mainsheet",
+    "phonetic": "/'meɪnʃiːt/",
+    "explains": [
+      "n. 主桅帆操纵索"
+    ]
+  },
+  "mainspring": {
+    "word": "mainspring",
+    "phonetic": "/'meɪnsprɪŋ/",
+    "explains": [
+      "n. 主要动力；（钟表）主发条；主要原因；主要动机"
+    ]
+  },
+  "mainstay": {
+    "word": "mainstay",
+    "phonetic": "/'meɪnsteɪ/",
+    "explains": [
+      "n. 支柱;骨干"
+    ]
+  },
+  "mainstream": {
+    "word": "mainstream",
+    "phonetic": "/'meinstriːm/",
+    "explains": [
+      "n.  主流"
+    ]
+  },
+  "maintain": {
+    "word": "maintain",
+    "phonetic": "/meɪnˈteɪn; mənˈteɪn/",
+    "explains": [
+      "v. 维持"
+    ]
+  },
+  "maintenance": {
+    "word": "maintenance",
+    "phonetic": "/ˈmeɪntənəns/",
+    "explains": [
+      "n. 维护"
+    ]
+  },
+  "maintenant": {
+    "word": "maintenant",
+    "phonetic": "",
+    "explains": [
+      "adv. 现在"
+    ]
+  },
+  "mairie": {
+    "word": "mairie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 市政府"
+    ]
+  },
+  "maison": {
+    "word": "maison",
+    "phonetic": "",
+    "explains": [
+      "n.f. 房子"
+    ]
+  },
+  "maisonette": {
+    "word": "maisonette",
+    "phonetic": "/,meɪzə'net/",
+    "explains": [
+      "n. 小房屋, 出租房间"
+    ]
+  },
+  "maize": {
+    "word": "maize",
+    "phonetic": "/meɪz/",
+    "explains": [
+      "n. 玉米, 黄色；adj. 玉米色的"
+    ]
+  },
+  "majestic": {
+    "word": "majestic",
+    "phonetic": "/mə'dʒestɪk/",
+    "explains": [
+      "adj. 雄伟的，壮丽的"
+    ]
+  },
+  "majesty": {
+    "word": "majesty",
+    "phonetic": "/'mædʒɪstɪ/",
+    "explains": [
+      "n. 雄伟，威严，庄严；陛下"
+    ]
+  },
+  "major": {
+    "word": "major",
+    "phonetic": "/ˈmeɪdʒə/",
+    "explains": [
+      "adj. 主要的　v. 主修"
+    ]
+  },
+  "majority": {
+    "word": "majority",
+    "phonetic": "/məˈdʒɒrɪtɪ/",
+    "explains": [
+      "n. 多数"
+    ]
+  },
   "make": {
     "word": "make",
     "phonetic": "/meɪk/",
     "explains": [
       "v. 使得；进行；布置；制造；获得"
+    ]
+  },
+  "make-up": {
+    "word": "make-up",
+    "phonetic": "/ˈmeɪkʌp/",
+    "explains": [
+      "n. 化妆品"
+    ]
+  },
+  "maker": {
+    "word": "maker",
+    "phonetic": "/'meɪkə/",
+    "explains": [
+      "n. 制造者"
+    ]
+  },
+  "makeshift": {
+    "word": "makeshift",
+    "phonetic": "/'meɪkʃɪft/",
+    "explains": [
+      "adj. 临时的；n. 临时替代物"
+    ]
+  },
+  "makeup": {
+    "word": "makeup",
+    "phonetic": "/meɪkʌp/",
+    "explains": [
+      "n. 化妆品；性格；构造；组成"
+    ]
+  },
+  "making": {
+    "word": "making",
+    "phonetic": "/'meɪkɪŋ/",
+    "explains": [
+      "n. 制成"
+    ]
+  },
+  "maladie": {
+    "word": "maladie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 疾病"
+    ]
+  },
+  "maladjusted": {
+    "word": "maladjusted",
+    "phonetic": "/,mælə'dʒʌstɪd/",
+    "explains": [
+      "adj. 失调的；不适应环境的"
+    ]
+  },
+  "maladministration": {
+    "word": "maladministration",
+    "phonetic": "/,mæləd,mɪnɪ'streʃən/",
+    "explains": [
+      "n. 管理不善；弊政"
+    ]
+  },
+  "maladroit": {
+    "word": "maladroit",
+    "phonetic": "/,mælə'drɒɪt/",
+    "explains": [
+      "adj. 不灵巧的"
+    ]
+  },
+  "malady": {
+    "word": "malady",
+    "phonetic": "/'mælədɪ/",
+    "explains": [
+      "n. 弊病；疾病；腐败"
+    ]
+  },
+  "malaise": {
+    "word": "malaise",
+    "phonetic": "/mæ'leɪz/",
+    "explains": [
+      "n. 不舒服；心神不安"
+    ]
+  },
+  "malapropism": {
+    "word": "malapropism",
+    "phonetic": "/'mæləprɒ,pɪz(ə)m/",
+    "explains": [
+      "n. 词语误用, 用词错误可笑"
+    ]
+  },
+  "malaria": {
+    "word": "malaria",
+    "phonetic": "/mə'leərɪə/",
+    "explains": [
+      "n. [内科] 疟疾；瘴气"
+    ]
+  },
+  "malarial": {
+    "word": "malarial",
+    "phonetic": "/mə'lɛrɪəl/",
+    "explains": [
+      "adj. 患疟疾的；毒气的"
+    ]
+  },
+  "malcontent": {
+    "word": "malcontent",
+    "phonetic": "/'mælkəntent/",
+    "explains": [
+      "adj. 不满的"
+    ]
+  },
+  "maldistribution": {
+    "word": "maldistribution",
+    "phonetic": "/,mældɪstrɪ'bjuːʃ(ə)n/",
+    "explains": [
+      "n. 分布不均；分配不当，分配不公"
+    ]
+  },
+  "male": {
+    "word": "male",
+    "phonetic": "/meɪl/",
+    "explains": [
+      "adj. 男性的"
+    ]
+  },
+  "malediction": {
+    "word": "malediction",
+    "phonetic": "/,mælɪ'dɪkʃ(ə)n/",
+    "explains": [
+      "n. 坏话，诅咒"
+    ]
+  },
+  "maleta": {
+    "word": "maleta",
+    "phonetic": "",
+    "explains": [
+      "n.f. 手提箱"
+    ]
+  },
+  "malette": {
+    "word": "malette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 公文包"
+    ]
+  },
+  "malevolent": {
+    "word": "malevolent",
+    "phonetic": "/mə'lev(ə)l(ə)nt/",
+    "explains": [
+      "adj. 恶毒的；有恶意的；坏心肠的"
+    ]
+  },
+  "malfeasance": {
+    "word": "malfeasance",
+    "phonetic": "/mæl'fiːz(ə)ns/",
+    "explains": [
+      "n. 渎职，违法行为；不正当，坏事"
+    ]
+  },
+  "malformed": {
+    "word": "malformed",
+    "phonetic": "/,mæl'fɔrmd/",
+    "explains": [
+      "adj. 畸形的，难看的"
+    ]
+  },
+  "malfunction": {
+    "word": "malfunction",
+    "phonetic": "/mæl'fʌŋ(k)ʃ(ə)n/",
+    "explains": [
+      "n. 故障"
+    ]
+  },
+  "malheur": {
+    "word": "malheur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 不幸"
+    ]
+  },
+  "malice": {
+    "word": "malice",
+    "phonetic": "/'mælɪs/",
+    "explains": [
+      "n. 恶意；蓄意犯罪"
+    ]
+  },
+  "malicious": {
+    "word": "malicious",
+    "phonetic": "/mə'lɪʃəs/",
+    "explains": [
+      "adj. 恶意的；恶毒的；蓄意的；怀恨的"
+    ]
+  },
+  "malign": {
+    "word": "malign",
+    "phonetic": "/mə'laɪn/",
+    "explains": [
+      "v. 诽谤，污蔑；中伤，说坏话；adj. 恶意的，恶性的；有害的"
+    ]
+  },
+  "malignancy": {
+    "word": "malignancy",
+    "phonetic": "/mə'lɪgnənsɪ/",
+    "explains": [
+      "n. 恶性（肿瘤等）；恶意"
+    ]
+  },
+  "malignant": {
+    "word": "malignant",
+    "phonetic": "/mə'lɪgnənt/",
+    "explains": [
+      "adj. [医] 恶性的；有害的；有恶意的；n. 保王党员；怀恶意的人"
+    ]
+  },
+  "malignity": {
+    "word": "malignity",
+    "phonetic": "/mə'lɪɡnɪtɪ/",
+    "explains": [
+      "n. 狠毒"
+    ]
+  },
+  "malinger": {
+    "word": "malinger",
+    "phonetic": "/mə'lɪŋgə/",
+    "explains": [
+      "v. 装病以逃避职责"
+    ]
+  },
+  "malison": {
+    "word": "malison",
+    "phonetic": "/'mælɪz(ə)n; -s-/",
+    "explains": [
+      "n. 诅咒, 咒骂"
+    ]
+  },
+  "mall": {
+    "word": "mall",
+    "phonetic": "/mæl; mɔːl; mɒl/",
+    "explains": [
+      "n. 大型购物中心"
+    ]
+  },
+  "malleability": {
+    "word": "malleability",
+    "phonetic": "",
+    "explains": [
+      "n. 有延展性, 柔韧性"
+    ]
+  },
+  "malleable": {
+    "word": "malleable",
+    "phonetic": "/'mælɪəb(ə)l/",
+    "explains": [
+      "adj. 有延展性的, 可锻的"
+    ]
+  },
+  "mallet": {
+    "word": "mallet",
+    "phonetic": "/'mælɪt/",
+    "explains": [
+      "n. 槌棒"
+    ]
+  },
+  "malnutrition": {
+    "word": "malnutrition",
+    "phonetic": "/mælnjʊ'trɪʃ(ə)n/",
+    "explains": [
+      "n. 营养不良"
+    ]
+  },
+  "malodorous": {
+    "word": "malodorous",
+    "phonetic": "/mæl'əʊd(ə)rəs/",
+    "explains": [
+      "adj. 有恶臭的；令人极为反感的；不合法的"
+    ]
+  },
+  "malpractice": {
+    "word": "malpractice",
+    "phonetic": "/mæl'præktɪs/",
+    "explains": [
+      "n. 玩忽职守；不法行为；治疗不当"
+    ]
+  },
+  "malt": {
+    "word": "malt",
+    "phonetic": "/mɔːlt; mɒlt/",
+    "explains": [
+      "n. 麦芽；麦芽酒；adj. 麦芽的；含麦芽的，用麦芽作的；v. 用麦芽处理"
+    ]
+  },
+  "maltreat": {
+    "word": "maltreat",
+    "phonetic": "/mæl'triːt/",
+    "explains": [
+      "v. 虐待"
+    ]
+  },
+  "malversation": {
+    "word": "malversation",
+    "phonetic": "/,mælvə'seɪʃ(ə)n/",
+    "explains": [
+      "n. (政府机关等的)腐败行为, 渎职, 贪污, 盗用"
+    ]
+  },
+  "mammal": {
+    "word": "mammal",
+    "phonetic": "/'mæm(ə)l/",
+    "explains": [
+      "n. 哺乳动物"
+    ]
+  },
+  "mammalian": {
+    "word": "mammalian",
+    "phonetic": "/mæ'meɪlɪən/",
+    "explains": [
+      "n. 哺乳动物；adj. 哺乳动物的"
+    ]
+  },
+  "mammonism": {
+    "word": "mammonism",
+    "phonetic": "",
+    "explains": [
+      "n. 拜金主义, 贪财"
+    ]
+  },
+  "mammoth": {
+    "word": "mammoth",
+    "phonetic": "/'mæməθ/",
+    "explains": [
+      "n. 猛犸,长毛象；adj. 庞大的"
     ]
   },
   "man": {
@@ -55,11 +937,32 @@
       "n. 男人；人；人类"
     ]
   },
+  "manacle": {
+    "word": "manacle",
+    "phonetic": "/'mænək(ə)l/",
+    "explains": [
+      "n. 手铐；v. 上手铐，束缚"
+    ]
+  },
   "manage": {
     "word": "manage",
     "phonetic": "/ˈmænɪdʒ/",
     "explains": [
       "v. 管理；经营；控制；设法"
+    ]
+  },
+  "manageable": {
+    "word": "manageable",
+    "phonetic": "/'mænɪdʒəb(ə)l/",
+    "explains": [
+      "adj. 易处理的，易管理的"
+    ]
+  },
+  "management": {
+    "word": "management",
+    "phonetic": "/ˈmænɪdʒmənt/",
+    "explains": [
+      "n. 管理"
     ]
   },
   "manager": {
@@ -69,11 +972,445 @@
       "n. 经理；管理人员"
     ]
   },
+  "managerial": {
+    "word": "managerial",
+    "phonetic": "/ˌmæni'dʒiəriəl/",
+    "explains": [
+      "adj.   管理方面的"
+    ]
+  },
+  "manche": {
+    "word": "manche",
+    "phonetic": "",
+    "explains": [
+      "n.f. 袖子；n.m. 手柄"
+    ]
+  },
+  "mandan": {
+    "word": "mandan",
+    "phonetic": "/'mændæn/",
+    "explains": [
+      "n. 曼丹人, 曼丹语"
+    ]
+  },
+  "mandar": {
+    "word": "mandar",
+    "phonetic": "",
+    "explains": [
+      "v. 命令；寄送"
+    ]
+  },
+  "mandarin": {
+    "word": "mandarin",
+    "phonetic": "/'mænd(ə)rɪn/",
+    "explains": [
+      "n. 官话,普通话"
+    ]
+  },
+  "mandat": {
+    "word": "mandat",
+    "phonetic": "",
+    "explains": [
+      "n.m. 任期；汇票"
+    ]
+  },
+  "mandate": {
+    "word": "mandate",
+    "phonetic": "/'mændeɪt/",
+    "explains": [
+      "n. (书面)命令,训令；v. 委任统治"
+    ]
+  },
+  "mandatory": {
+    "word": "mandatory",
+    "phonetic": "/'mændətəri/",
+    "explains": [
+      "adj.  强制性的； 指令性的"
+    ]
+  },
+  "mandible": {
+    "word": "mandible",
+    "phonetic": "/'mændɪb(ə)l/",
+    "explains": [
+      "n. 下颚, 下颚骨"
+    ]
+  },
+  "mane": {
+    "word": "mane",
+    "phonetic": "/meɪn/",
+    "explains": [
+      "n. （马等的）鬃毛"
+    ]
+  },
+  "manejar": {
+    "word": "manejar",
+    "phonetic": "",
+    "explains": [
+      "v. 驾驶；处理"
+    ]
+  },
+  "maneuver": {
+    "word": "maneuver",
+    "phonetic": "/mə'nʊvə/",
+    "explains": [
+      "n. [军] 机动；演习；策略；调遣；v. [军] 机动；演习；调遣；用计谋"
+    ]
+  },
+  "maneuverable": {
+    "word": "maneuverable",
+    "phonetic": "",
+    "explains": [
+      "adj. 容易操作的, 有机动性的"
+    ]
+  },
+  "manful": {
+    "word": "manful",
+    "phonetic": "/'mænfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 勇敢的；果断的；有男子气概的"
+    ]
+  },
+  "manga": {
+    "word": "manga",
+    "phonetic": "",
+    "explains": [
+      "n.f. 袖子"
+    ]
+  },
+  "manganese": {
+    "word": "manganese",
+    "phonetic": "/'mæŋgəniːz/",
+    "explains": [
+      "n. n〈化〉锰"
+    ]
+  },
+  "manger": {
+    "word": "manger",
+    "phonetic": "/'meɪn(d)ʒə/",
+    "explains": [
+      "n. 马槽；牛槽；挡水板"
+    ]
+  },
+  "mangle": {
+    "word": "mangle",
+    "phonetic": "/'mæŋg(ə)l/",
+    "explains": [
+      "v. 乱砍, 撕裂, 破坏, 毁损, 损坏, 轧布"
+    ]
+  },
+  "mango": {
+    "word": "mango",
+    "phonetic": "/ˈmæŋgəʊ/",
+    "explains": [
+      "n. 芒果"
+    ]
+  },
+  "manhattan": {
+    "word": "manhattan",
+    "phonetic": "/mæn'hæt(ə)n/",
+    "explains": [
+      "n. 曼哈顿岛(美国纽约一区)"
+    ]
+  },
+  "manhood": {
+    "word": "manhood",
+    "phonetic": "/'mænhʊd/",
+    "explains": [
+      "n. 成年；男子；男子气概"
+    ]
+  },
+  "mania": {
+    "word": "mania",
+    "phonetic": "/'meɪnɪə/",
+    "explains": [
+      "n. [医]颠狂, 狂躁, 癖好, 狂热"
+    ]
+  },
+  "maniac": {
+    "word": "maniac",
+    "phonetic": "/'meɪnɪæk/",
+    "explains": [
+      "n. 疯子，躁狂者"
+    ]
+  },
+  "maniacal": {
+    "word": "maniacal",
+    "phonetic": "/mə'naɪəkəl/",
+    "explains": [
+      "adj. 发狂的, 狂乱的"
+    ]
+  },
+  "manic": {
+    "word": "manic",
+    "phonetic": "/'mænɪk/",
+    "explains": [
+      "adj. 躁狂的；狂热的；n. 躁狂症者"
+    ]
+  },
+  "manicure": {
+    "word": "manicure",
+    "phonetic": "/'mænɪkjʊə/",
+    "explains": [
+      "v. 修剪，美甲；n. 修指甲，美甲"
+    ]
+  },
+  "manifest": {
+    "word": "manifest",
+    "phonetic": "",
+    "explains": [
+      "v. 表明；adj. 明显的"
+    ]
+  },
+  "manifestation": {
+    "word": "manifestation",
+    "phonetic": "/,mænɪfe'steɪʃ(ə)n/",
+    "explains": [
+      "n. 显示, 表现"
+    ]
+  },
+  "manifesto": {
+    "word": "manifesto",
+    "phonetic": "/mænɪ'festəʊ/",
+    "explains": [
+      "n. 宣言, 声明"
+    ]
+  },
+  "manifold": {
+    "word": "manifold",
+    "phonetic": "/'mænɪfəʊld/",
+    "explains": [
+      "adj. 多样的；种种的"
+    ]
+  },
+  "manikin": {
+    "word": "manikin",
+    "phonetic": "/'mænɪkɪn/",
+    "explains": [
+      "n. 侏儒, 人体模型, 时装模特"
+    ]
+  },
+  "manipulate": {
+    "word": "manipulate",
+    "phonetic": "/mə'nɪpjʊleɪt/",
+    "explains": [
+      "v. 操作；操纵，控制"
+    ]
+  },
+  "manipulation": {
+    "word": "manipulation",
+    "phonetic": "/mə,nɪpjʊ'leɪʃ(ə)n/",
+    "explains": [
+      "n. 处理,操纵"
+    ]
+  },
+  "manipulative": {
+    "word": "manipulative",
+    "phonetic": "/mə'nɪpjʊlətɪv/",
+    "explains": [
+      "adj. 操作的, 操纵的, 控制的"
+    ]
+  },
+  "mankind": {
+    "word": "mankind",
+    "phonetic": "/,mæn'kaɪnd/",
+    "explains": [
+      "n. 人类"
+    ]
+  },
+  "manly": {
+    "word": "manly",
+    "phonetic": "/'mænlɪ/",
+    "explains": [
+      "adj. 男子气概的，果断的"
+    ]
+  },
+  "mannequin": {
+    "word": "mannequin",
+    "phonetic": "/'mænɪkɪn; -kwɪn/",
+    "explains": [
+      "n. 服装模特儿, 人体模型"
+    ]
+  },
+  "manner": {
+    "word": "manner",
+    "phonetic": "/ˈmænə/",
+    "explains": [
+      "n. 方式；礼貌"
+    ]
+  },
+  "mannerism": {
+    "word": "mannerism",
+    "phonetic": "/'mænərɪz(ə)m/",
+    "explains": [
+      "n. 特殊习惯；矫揉造作；怪癖"
+    ]
+  },
+  "manning": {
+    "word": "manning",
+    "phonetic": "/'mæniŋ/",
+    "explains": [
+      "n.  人员配备"
+    ]
+  },
+  "mano": {
+    "word": "mano",
+    "phonetic": "",
+    "explains": [
+      "n.f. 手"
+    ]
+  },
+  "manoeuvre": {
+    "word": "manoeuvre",
+    "phonetic": "/mə'nuːvə/",
+    "explains": [
+      "v. 调动；演习；用策略；n. 策略（等于maneuvre）"
+    ]
+  },
+  "manometer": {
+    "word": "manometer",
+    "phonetic": "/mə'nɒmɪtə/",
+    "explains": [
+      "n. 压力计；[流] 测压计；血压计"
+    ]
+  },
+  "manor": {
+    "word": "manor",
+    "phonetic": "/'mænə/",
+    "explains": [
+      "n. (封建领主的)领地, 庄园"
+    ]
+  },
+  "manpower": {
+    "word": "manpower",
+    "phonetic": "/'mænˌpauə/",
+    "explains": [
+      "n.  人力"
+    ]
+  },
+  "mansion": {
+    "word": "mansion",
+    "phonetic": "/'mænʃ(ə)n/",
+    "explains": [
+      "n. 大厦，大楼；宅第"
+    ]
+  },
+  "manslaughter": {
+    "word": "manslaughter",
+    "phonetic": "/'mænslɔːtə/",
+    "explains": [
+      "n. 杀人；过失杀人；一般杀人罪"
+    ]
+  },
+  "mansuetude": {
+    "word": "mansuetude",
+    "phonetic": "/'mænswɪtjuːd/",
+    "explains": [
+      "n. 温顺, 柔和"
+    ]
+  },
+  "mantel": {
+    "word": "mantel",
+    "phonetic": "/'mænt(ə)l/",
+    "explains": [
+      "n. 壁炉架"
+    ]
+  },
+  "mantelpiece": {
+    "word": "mantelpiece",
+    "phonetic": "/'mænt(ə)lpiːs/",
+    "explains": [
+      "n. 壁炉架；壁炉台"
+    ]
+  },
+  "mantequilla": {
+    "word": "mantequilla",
+    "phonetic": "",
+    "explains": [
+      "n.f. 黄油"
+    ]
+  },
+  "mantle": {
+    "word": "mantle",
+    "phonetic": "/'mænt(ə)l/",
+    "explains": [
+      "n. 斗蓬；v. 披风,覆盖"
+    ]
+  },
+  "manual": {
+    "word": "manual",
+    "phonetic": "/ˈmænjʊəl/",
+    "explains": [
+      "adj. 手工的　n. 手册"
+    ]
+  },
+  "manufacture": {
+    "word": "manufacture",
+    "phonetic": "/ˌmænjʊˈfæktʃə/",
+    "explains": [
+      "v. 制造"
+    ]
+  },
+  "manufacturer": {
+    "word": "manufacturer",
+    "phonetic": "/,mænjʊ'fæktʃ(ə)rə(r)/",
+    "explains": [
+      "n. 制造商；制造厂"
+    ]
+  },
+  "manufacturing": {
+    "word": "manufacturing",
+    "phonetic": "/ˌmænju'fæktʃəriŋ/",
+    "explains": [
+      "n.  制造业"
+    ]
+  },
+  "manumission": {
+    "word": "manumission",
+    "phonetic": "/,mænjʊ'mɪʃən/",
+    "explains": [
+      "n. （农奴，奴隶的）解放"
+    ]
+  },
+  "manumit": {
+    "word": "manumit",
+    "phonetic": "/,mænjʊ'mɪt/",
+    "explains": [
+      "v. 解放, 释放"
+    ]
+  },
+  "manure": {
+    "word": "manure",
+    "phonetic": "/mə'njʊə/",
+    "explains": [
+      "n. 肥料"
+    ]
+  },
+  "manuscript": {
+    "word": "manuscript",
+    "phonetic": "/ˈmænjʊskrɪpt/",
+    "explains": [
+      "n. 手稿"
+    ]
+  },
   "many": {
     "word": "many",
     "phonetic": "/ˈmeni/",
     "explains": [
       "adj. 许多的 pron. 许多；许多人"
+    ]
+  },
+  "manzana": {
+    "word": "manzana",
+    "phonetic": "",
+    "explains": [
+      "n.f. 苹果"
+    ]
+  },
+  "maori": {
+    "word": "maori",
+    "phonetic": "/'mauri/",
+    "explains": [
+      "adj. 毛利人的；毛利语的；n. 毛利人；毛利语"
     ]
   },
   "map": {
@@ -83,11 +1420,235 @@
       "n. 地图；示意图；染色体图"
     ]
   },
+  "mapa": {
+    "word": "mapa",
+    "phonetic": "",
+    "explains": [
+      "n.m. 地图"
+    ]
+  },
+  "maple": {
+    "word": "maple",
+    "phonetic": "/'meɪp(ə)l/",
+    "explains": [
+      "n. 槭树，枫树"
+    ]
+  },
+  "maquillaje": {
+    "word": "maquillaje",
+    "phonetic": "",
+    "explains": [
+      "n.m. 化妆"
+    ]
+  },
+  "mar": {
+    "word": "mar",
+    "phonetic": "/mɑː/",
+    "explains": [
+      "n. 污点,瑕疵；v. 破坏"
+    ]
+  },
+  "maraca": {
+    "word": "maraca",
+    "phonetic": "/mə'rɑ:kə/",
+    "explains": [
+      "n. [音]沙球"
+    ]
+  },
+  "marasmus": {
+    "word": "marasmus",
+    "phonetic": "/mə'ræzməs/",
+    "explains": [
+      "n. 消瘦, 衰弱"
+    ]
+  },
+  "marathon": {
+    "word": "marathon",
+    "phonetic": "/'mærəθ(ə)n/",
+    "explains": [
+      "n. 马拉松赛跑；耐力的考验；adj. 马拉松式的；有耐力的；vi. 参加马拉松赛跑"
+    ]
+  },
+  "maravilla": {
+    "word": "maravilla",
+    "phonetic": "",
+    "explains": [
+      "n.f. 奇迹"
+    ]
+  },
+  "marble": {
+    "word": "marble",
+    "phonetic": "/'mɑːb(ə)l/",
+    "explains": [
+      "n. 大理石"
+    ]
+  },
+  "marbre": {
+    "word": "marbre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 大理石"
+    ]
+  },
+  "marca": {
+    "word": "marca",
+    "phonetic": "",
+    "explains": [
+      "n.f. 品牌；标记"
+    ]
+  },
   "march": {
     "word": "March",
     "phonetic": "/mɑːtʃ/",
     "explains": [
       "n. 三月"
+    ]
+  },
+  "marchand": {
+    "word": "marchand",
+    "phonetic": "",
+    "explains": [
+      "n.m. 商人"
+    ]
+  },
+  "marcher": {
+    "word": "marcher",
+    "phonetic": "",
+    "explains": [
+      "v. 行走；运转"
+    ]
+  },
+  "marco": {
+    "word": "marco",
+    "phonetic": "",
+    "explains": [
+      "n.m. 框架；边界"
+    ]
+  },
+  "mardi": {
+    "word": "mardi",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期二"
+    ]
+  },
+  "mare": {
+    "word": "mare",
+    "phonetic": "/meə/",
+    "explains": [
+      "n. 母马, 母驴, 月球或火星等表面阴暗区"
+    ]
+  },
+  "marea": {
+    "word": "marea",
+    "phonetic": "",
+    "explains": [
+      "n.f. 潮汐"
+    ]
+  },
+  "margarine": {
+    "word": "margarine",
+    "phonetic": "/,mɑːdʒə'riːn; 'mɑːgəriːn/",
+    "explains": [
+      "n. 人造黄油"
+    ]
+  },
+  "margin": {
+    "word": "margin",
+    "phonetic": "/ˈmɑːdʒɪn/",
+    "explains": [
+      "n. 边缘"
+    ]
+  },
+  "marginal": {
+    "word": "marginal",
+    "phonetic": "/'mɑːdʒɪn(ə)l/",
+    "explains": [
+      "adj. 边缘的；记在页边的"
+    ]
+  },
+  "mari": {
+    "word": "mari",
+    "phonetic": "",
+    "explains": [
+      "n.m. 丈夫"
+    ]
+  },
+  "mariage": {
+    "word": "mariage",
+    "phonetic": "",
+    "explains": [
+      "n.m. 婚礼；结婚"
+    ]
+  },
+  "marido": {
+    "word": "marido",
+    "phonetic": "",
+    "explains": [
+      "n.m. 丈夫"
+    ]
+  },
+  "marie": {
+    "word": "marie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 结婚"
+    ]
+  },
+  "marijuana": {
+    "word": "marijuana",
+    "phonetic": "/,mærɪ'hwɑːnə/",
+    "explains": [
+      "n. 大麻；大麻毒品"
+    ]
+  },
+  "marin": {
+    "word": "marin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 水手；adj. 海的"
+    ]
+  },
+  "marine": {
+    "word": "marine",
+    "phonetic": "/məˈriːn/",
+    "explains": [
+      "adj. 海洋的"
+    ]
+  },
+  "mariner": {
+    "word": "mariner",
+    "phonetic": "/'mærɪnə/",
+    "explains": [
+      "n. 水手；船员"
+    ]
+  },
+  "marionette": {
+    "word": "marionette",
+    "phonetic": "/,mærɪə'net/",
+    "explains": [
+      "n. 牵线木偶"
+    ]
+  },
+  "mariposa": {
+    "word": "mariposa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 蝴蝶"
+    ]
+  },
+  "marital": {
+    "word": "marital",
+    "phonetic": "/'mærɪt(ə)l/",
+    "explains": [
+      "adj. 婚姻的；夫妇间的"
+    ]
+  },
+  "maritime": {
+    "word": "maritime",
+    "phonetic": "/'mærɪtaɪm/",
+    "explains": [
+      "adj. 海上的, 海事的"
     ]
   },
   "mark": {
@@ -97,11 +1658,158 @@
       "n. 标志；符号；痕迹；分数 v. 做标记；打分"
     ]
   },
+  "markdown": {
+    "word": "markdown",
+    "phonetic": "/'mɑːkdəʊn/",
+    "explains": [
+      "n. 标低价，[物价] 减价"
+    ]
+  },
+  "marked": {
+    "word": "marked",
+    "phonetic": "/mɑːkt/",
+    "explains": [
+      "adj. 显著的；有记号的；v. 表示（mark的过去分词）；作记号；打分数"
+    ]
+  },
+  "markedly": {
+    "word": "markedly",
+    "phonetic": "/'mɑːkɪdlɪ/",
+    "explains": [
+      "adv. 显著地,明显地"
+    ]
+  },
+  "marker": {
+    "word": "marker",
+    "phonetic": "/'mɑːkə/",
+    "explains": [
+      "n. 记分员；书签；标识物；作记号的人"
+    ]
+  },
   "market": {
     "word": "market",
     "phonetic": "/ˈmɑːkɪt/",
     "explains": [
       "n. 市场；行情；市场面 v. 做买卖"
+    ]
+  },
+  "marketable": {
+    "word": "marketable",
+    "phonetic": "/'mɑːkitəbl/",
+    "explains": [
+      "adj.  畅销的， 销路好的"
+    ]
+  },
+  "marketing": {
+    "word": "marketing",
+    "phonetic": "/'mɑːkitiŋ/",
+    "explains": [
+      "n.  行销； 在市场上买卖； 买东西"
+    ]
+  },
+  "marketplace": {
+    "word": "marketplace",
+    "phonetic": "/'mɑːkɪtpleɪs/",
+    "explains": [
+      "n. 集会场所, 市场"
+    ]
+  },
+  "marking": {
+    "word": "marking",
+    "phonetic": "/'mɑːkɪŋ/",
+    "explains": [
+      "n. 标志；打分；做记号；斑纹；v. 注意；作记号于；给…打分数（mark的ing形式）"
+    ]
+  },
+  "marksman": {
+    "word": "marksman",
+    "phonetic": "/'mɑːksmən/",
+    "explains": [
+      "n. 神射手；不能用笔署名者"
+    ]
+  },
+  "markup": {
+    "word": "markup",
+    "phonetic": "/'mɑːkʌp/",
+    "explains": [
+      "n.  标高价目； 涨价， 涨价幅度； 毛利"
+    ]
+  },
+  "marlin": {
+    "word": "marlin",
+    "phonetic": "/'mɑːlɪn/",
+    "explains": [
+      "n. 枪鱼"
+    ]
+  },
+  "marmalade": {
+    "word": "marmalade",
+    "phonetic": "/'mɑːməleɪd/",
+    "explains": [
+      "n. 橘子或柠檬等水果制成的果酱；vt. 涂橘子或柠檬酱于…；adj. 橘子酱色的"
+    ]
+  },
+  "marmoreal": {
+    "word": "marmoreal",
+    "phonetic": "/mɑː'mɔːrɪəl/",
+    "explains": [
+      "adj. (象)大理石的, 冰冷的"
+    ]
+  },
+  "maroon": {
+    "word": "maroon",
+    "phonetic": "/mə'ruːn/",
+    "explains": [
+      "n. 栗色 a栗色的"
+    ]
+  },
+  "marque": {
+    "word": "marque",
+    "phonetic": "",
+    "explains": [
+      "n.f. 品牌；记号"
+    ]
+  },
+  "marquee": {
+    "word": "marquee",
+    "phonetic": "/mɑː'kiː/",
+    "explains": [
+      "n. 选取框；大天幕；华盖"
+    ]
+  },
+  "marquetry": {
+    "word": "marquetry",
+    "phonetic": "/'mɑːkɪtrɪ/",
+    "explains": [
+      "n. 镶嵌细工"
+    ]
+  },
+  "marriage": {
+    "word": "marriage",
+    "phonetic": "/ˈmærɪdʒ/",
+    "explains": [
+      "n. 婚姻"
+    ]
+  },
+  "married": {
+    "word": "married",
+    "phonetic": "/ˈmærɪd/",
+    "explains": [
+      "adj. 已婚的"
+    ]
+  },
+  "marron": {
+    "word": "marron",
+    "phonetic": "",
+    "explains": [
+      "adj. 栗色的；n.m. 栗子"
+    ]
+  },
+  "marrow": {
+    "word": "marrow",
+    "phonetic": "/'mærəʊ/",
+    "explains": [
+      "n. 精华, 活力"
     ]
   },
   "marry": {
@@ -111,11 +1819,424 @@
       "v. 嫁；娶；与…… 结婚"
     ]
   },
+  "mars": {
+    "word": "mars",
+    "phonetic": "/mɑːz/",
+    "explains": [
+      "n. 火星"
+    ]
+  },
+  "marseille": {
+    "word": "marseille",
+    "phonetic": "/ma:'seil/",
+    "explains": [
+      "n. 马赛(法国港口城市)"
+    ]
+  },
+  "marsh": {
+    "word": "marsh",
+    "phonetic": "/mɑːʃ/",
+    "explains": [
+      "n. 沼泽地，湿地"
+    ]
+  },
+  "marshal": {
+    "word": "marshal",
+    "phonetic": "/'mɑːʃ(ə)l/",
+    "explains": [
+      "n. 元帅；陆军元帅"
+    ]
+  },
+  "marshland": {
+    "word": "marshland",
+    "phonetic": "/'mɑːʃlənd/",
+    "explains": [
+      "n. 沼泽地"
+    ]
+  },
+  "marshy": {
+    "word": "marshy",
+    "phonetic": "/'mɑːʃɪ/",
+    "explains": [
+      "adj. 沼泽般的,湿软的"
+    ]
+  },
+  "marsupial": {
+    "word": "marsupial",
+    "phonetic": "/mɑː'suːpɪəl/",
+    "explains": [
+      "n. 有袋动物 a有袋动物的"
+    ]
+  },
+  "mart": {
+    "word": "mart",
+    "phonetic": "/mɑːt/",
+    "explains": [
+      "n. 集市；商业中心"
+    ]
+  },
+  "martes": {
+    "word": "martes",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期二"
+    ]
+  },
+  "martial": {
+    "word": "martial",
+    "phonetic": "/'mɑːʃ(ə)l/",
+    "explains": [
+      "adj. 战争的；军事的"
+    ]
+  },
+  "martian": {
+    "word": "martian",
+    "phonetic": "/'mɑ:ʃən/",
+    "explains": [
+      "n&a. 火星人(的)"
+    ]
+  },
+  "martillo": {
+    "word": "martillo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 锤子"
+    ]
+  },
+  "martinet": {
+    "word": "martinet",
+    "phonetic": "/,mɑːtɪ'net/",
+    "explains": [
+      "n. 规律严肃的人, 严格的人"
+    ]
+  },
+  "martyr": {
+    "word": "martyr",
+    "phonetic": "/'mɑːtə/",
+    "explains": [
+      "n. 烈士，殉难者"
+    ]
+  },
+  "marvel": {
+    "word": "marvel",
+    "phonetic": "/'mɑːv(ə)l/",
+    "explains": [
+      "n. 奇迹；惊奇；v. 惊奇"
+    ]
+  },
+  "marvellous": {
+    "word": "marvellous",
+    "phonetic": "/'mɑːv(ə)ləs/",
+    "explains": [
+      "adj. 奇迹般的；了不起的"
+    ]
+  },
+  "marvelous": {
+    "word": "marvelous",
+    "phonetic": "/ˈmɑːvələs/",
+    "explains": [
+      "adj. 了不起的；非凡的；令人惊异的；不平常的"
+    ]
+  },
+  "marvelously": {
+    "word": "marvelously",
+    "phonetic": "",
+    "explains": [
+      "adv. 奇迹般地,奇异地"
+    ]
+  },
+  "marxism": {
+    "word": "marxism",
+    "phonetic": "/'ma:ksizəm/",
+    "explains": [
+      "n. 马克思主义"
+    ]
+  },
+  "marxist": {
+    "word": "marxist",
+    "phonetic": "/'mɑrksɪst/",
+    "explains": [
+      "adj. 马克思主义的"
+    ]
+  },
+  "marzo": {
+    "word": "marzo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 三月"
+    ]
+  },
+  "mascot": {
+    "word": "mascot",
+    "phonetic": "/'mæskɒt/",
+    "explains": [
+      "n. 福神, 吉祥的东西"
+    ]
+  },
+  "masculine": {
+    "word": "masculine",
+    "phonetic": "/'mæskjʊlɪn/",
+    "explains": [
+      "adj. 男性的"
+    ]
+  },
+  "masculinity": {
+    "word": "masculinity",
+    "phonetic": "/,mæskjʊ'lɪnɪtɪ/",
+    "explains": [
+      "n. 男性；男子气；刚毅"
+    ]
+  },
+  "maser": {
+    "word": "maser",
+    "phonetic": "/'meɪzə/",
+    "explains": [
+      "n. 微波激射器"
+    ]
+  },
+  "mash": {
+    "word": "mash",
+    "phonetic": "/mæʃ/",
+    "explains": [
+      "v. 捣碎"
+    ]
+  },
+  "mask": {
+    "word": "mask",
+    "phonetic": "/mɑːsk/",
+    "explains": [
+      "n. 面具"
+    ]
+  },
+  "masked": {
+    "word": "masked",
+    "phonetic": "/mɑːskt/",
+    "explains": [
+      "adj. 戴面具的；掩蔽的；v. 戴面具；掩饰；使模糊（mask的过去分词）"
+    ]
+  },
+  "mason": {
+    "word": "mason",
+    "phonetic": "/'meɪs(ə)n/",
+    "explains": [
+      "n. 泥瓦匠；vt. 用砖瓦砌成"
+    ]
+  },
+  "masonry": {
+    "word": "masonry",
+    "phonetic": "/'meɪs(ə)nrɪ/",
+    "explains": [
+      "n. 石工术, 石匠职业"
+    ]
+  },
+  "masquerade": {
+    "word": "masquerade",
+    "phonetic": "/,mɑːskə'reɪd; ,mæs-/",
+    "explains": [
+      "n. 化妆舞会"
+    ]
+  },
+  "mass": {
+    "word": "mass",
+    "phonetic": "/mæs/",
+    "explains": [
+      "n. 大量；质量"
+    ]
+  },
+  "massachusetts": {
+    "word": "massachusetts",
+    "phonetic": "",
+    "explains": [
+      "n. 马萨诸塞(美国州名)"
+    ]
+  },
+  "massacre": {
+    "word": "massacre",
+    "phonetic": "/'mæsəkə/",
+    "explains": [
+      "n. 大屠杀，残杀"
+    ]
+  },
+  "massage": {
+    "word": "massage",
+    "phonetic": "/'mæsɑːʒ; mə'sɑːʒ; -dʒ/",
+    "explains": [
+      "v. 按摩；揉；n. 按摩；揉"
+    ]
+  },
+  "massif": {
+    "word": "massif",
+    "phonetic": "/'mæsɪf; mæ'siːf/",
+    "explains": [
+      "n. 山丘"
+    ]
+  },
+  "massive": {
+    "word": "massive",
+    "phonetic": "/ˈmæsɪv/",
+    "explains": [
+      "adj. 大量的"
+    ]
+  },
+  "mast": {
+    "word": "mast",
+    "phonetic": "/mɑːst/",
+    "explains": [
+      "n. 桅杆"
+    ]
+  },
+  "master": {
+    "word": "master",
+    "phonetic": "/ˈmɑːstə/",
+    "explains": [
+      "n. 主人　v. 精通"
+    ]
+  },
+  "mastermind": {
+    "word": "mastermind",
+    "phonetic": "/'mɑːstəmaind/",
+    "explains": [
+      "n. 才华横溢的人，才子；出谋划策者；vt.  出谋划策； 幕后操纵"
+    ]
+  },
+  "masterpiece": {
+    "word": "masterpiece",
+    "phonetic": "/'mɑːstəpiːs/",
+    "explains": [
+      "n. 杰作，名著"
+    ]
+  },
+  "mastery": {
+    "word": "mastery",
+    "phonetic": "/'mɑːst(ə)rɪ/",
+    "explains": [
+      "n. 掌握；精通；优势；征服；统治权"
+    ]
+  },
+  "masthead": {
+    "word": "masthead",
+    "phonetic": "/'mɑːsthed/",
+    "explains": [
+      "n. 桅顶, 报头"
+    ]
+  },
+  "masticate": {
+    "word": "masticate",
+    "phonetic": "/'mæstɪkeɪt/",
+    "explains": [
+      "v. 咀嚼"
+    ]
+  },
+  "mastodon": {
+    "word": "mastodon",
+    "phonetic": "/'mæstədɒn/",
+    "explains": [
+      "n. [古生]乳齿象, 庞然大物"
+    ]
+  },
+  "mat": {
+    "word": "mat",
+    "phonetic": "/mæt/",
+    "explains": [
+      "n. 垫子"
+    ]
+  },
+  "matador": {
+    "word": "matador",
+    "phonetic": "/'mætədɔː/",
+    "explains": [
+      "n. 斗牛士"
+    ]
+  },
   "match": {
     "word": "match",
     "phonetic": "/mætʃ/",
     "explains": [
       "n. 比赛；竞赛；匹配；火柴 v. 使比赛；匹配"
+    ]
+  },
+  "mate": {
+    "word": "mate",
+    "phonetic": "/meɪt/",
+    "explains": [
+      "n. 伙伴，同事；配偶"
+    ]
+  },
+  "matelas": {
+    "word": "matelas",
+    "phonetic": "",
+    "explains": [
+      "n.m. 床垫"
+    ]
+  },
+  "materia": {
+    "word": "materia",
+    "phonetic": "",
+    "explains": [
+      "n.f. 物质；科目"
+    ]
+  },
+  "material": {
+    "word": "material",
+    "phonetic": "/məˈtɪərɪəl/",
+    "explains": [
+      "n. 材料"
+    ]
+  },
+  "materialise": {
+    "word": "materialise",
+    "phonetic": "",
+    "explains": [
+      "v. 物质化（等于materialize）"
+    ]
+  },
+  "materialism": {
+    "word": "materialism",
+    "phonetic": "/mə'tɪərɪəlɪz(ə)m/",
+    "explains": [
+      "n. 唯物主义"
+    ]
+  },
+  "materialist": {
+    "word": "materialist",
+    "phonetic": "/mə'tɪərɪəlɪst/",
+    "explains": [
+      "n. 唯物主义者；实利主义者"
+    ]
+  },
+  "materialistic": {
+    "word": "materialistic",
+    "phonetic": "/mə,tɪərɪə'lɪstɪk/",
+    "explains": [
+      "adj. 唯物主义的；唯物论的；金钱至上的"
+    ]
+  },
+  "materialize": {
+    "word": "materialize",
+    "phonetic": "/mə'tiəriəlaiz/",
+    "explains": [
+      "v. 物化"
+    ]
+  },
+  "maternal": {
+    "word": "maternal",
+    "phonetic": "/mə'tɜːn(ə)l/",
+    "explains": [
+      "adj. 母亲的, 母系的"
+    ]
+  },
+  "maternity": {
+    "word": "maternity",
+    "phonetic": "/mə'tɜːnɪtɪ/",
+    "explains": [
+      "n. 母性，母道；[妇产] 妇产科医院；adj. 产科的；产妇的，孕妇的"
+    ]
+  },
+  "matey": {
+    "word": "matey",
+    "phonetic": "/'meɪtɪ/",
+    "explains": [
+      "adj. 平易近人的, 友好的"
     ]
   },
   "math": {
@@ -125,11 +2246,214 @@
       "n. 数学"
     ]
   },
+  "mathematical": {
+    "word": "mathematical",
+    "phonetic": "/mæθ(ə)'mætɪk(ə)l/",
+    "explains": [
+      "adj. 数学的，数学上的"
+    ]
+  },
+  "mathematician": {
+    "word": "mathematician",
+    "phonetic": "/mæθəmə'tɪʃn/",
+    "explains": [
+      "n. 数学家"
+    ]
+  },
+  "mathematics": {
+    "word": "mathematics",
+    "phonetic": "/ˌmæθɪˈmætɪks/",
+    "explains": [
+      "n. 数学"
+    ]
+  },
+  "maths": {
+    "word": "maths",
+    "phonetic": "/mæθs/",
+    "explains": [
+      "n. 数学"
+    ]
+  },
+  "matin": {
+    "word": "matin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 早上"
+    ]
+  },
+  "matinee": {
+    "word": "matinee",
+    "phonetic": "/'mætɪneɪ/",
+    "explains": [
+      "n. 白天举行的音乐会；妇女便装之一种"
+    ]
+  },
+  "mating": {
+    "word": "mating",
+    "phonetic": "/'meɪtɪŋ/",
+    "explains": [
+      "n. （动物等的）交配，交尾；配套；（植物等的）杂交；v. 交配；使配对；使紧密配合（mate的现在分词）"
+    ]
+  },
+  "matriarch": {
+    "word": "matriarch",
+    "phonetic": "/'meɪtrɪɑːk/",
+    "explains": [
+      "n. 女家长；女统治者；女负责人；受人尊敬的妇女"
+    ]
+  },
+  "matriarchy": {
+    "word": "matriarchy",
+    "phonetic": "/'meɪtrɪɑːkɪ/",
+    "explains": [
+      "n. 母权制；女家长制；女族长制；母系氏族"
+    ]
+  },
+  "matriculate": {
+    "word": "matriculate",
+    "phonetic": "/mə'trɪkjʊleɪt/",
+    "explains": [
+      "v. 准许…入学；录取…入大学；n. 被录取者"
+    ]
+  },
+  "matrilinear": {
+    "word": "matrilinear",
+    "phonetic": "/,mætrɪ'lɪniːə/",
+    "explains": [
+      "adj. 母系的"
+    ]
+  },
+  "matrimony": {
+    "word": "matrimony",
+    "phonetic": "/'mætrɪmənɪ/",
+    "explains": [
+      "n. 婚姻，结婚，婚姻生活"
+    ]
+  },
+  "matrix": {
+    "word": "matrix",
+    "phonetic": "/'meɪtrɪks/",
+    "explains": [
+      "n. 矩阵"
+    ]
+  },
+  "matron": {
+    "word": "matron",
+    "phonetic": "/'meɪtr(ə)n/",
+    "explains": [
+      "n. 主妇；护士长"
+    ]
+  },
   "matter": {
     "word": "matter",
     "phonetic": "/ˈmætə(r)/",
     "explains": [
       "n. 物质；事件；问题；重要性 v. 要紧；有重大影响"
+    ]
+  },
+  "mattress": {
+    "word": "mattress",
+    "phonetic": "/'mætrɪs/",
+    "explains": [
+      "n. 床垫, 空气垫, (用以护堤等的)沉床"
+    ]
+  },
+  "maturation": {
+    "word": "maturation",
+    "phonetic": "/mætjʊ'reɪʃ(ə)n/",
+    "explains": [
+      "n. 化脓, 成熟"
+    ]
+  },
+  "mature": {
+    "word": "mature",
+    "phonetic": "/məˈtʃʊə/",
+    "explains": [
+      "adj. 成熟的"
+    ]
+  },
+  "maturity": {
+    "word": "maturity",
+    "phonetic": "/mə'tʃuərəti/",
+    "explains": [
+      "n.  到期日； 偿还期"
+    ]
+  },
+  "mau": {
+    "word": "mau",
+    "phonetic": "",
+    "explains": [
+      "月活跃用户数"
+    ]
+  },
+  "maudlin": {
+    "word": "maudlin",
+    "phonetic": "/'mɔːdlɪn/",
+    "explains": [
+      "adj. 感情脆弱的；容易流泪的；酒后伤感的；n. 伤感；易流泪"
+    ]
+  },
+  "maul": {
+    "word": "maul",
+    "phonetic": "/mɔːl/",
+    "explains": [
+      "n. 大槌"
+    ]
+  },
+  "mauvais": {
+    "word": "mauvais",
+    "phonetic": "",
+    "explains": [
+      "adj. 坏的"
+    ]
+  },
+  "mauve": {
+    "word": "mauve",
+    "phonetic": "/məʊv/",
+    "explains": [
+      "n. 淡紫色；苯胺紫；淡紫色染料；adj. 淡紫色的"
+    ]
+  },
+  "maverick": {
+    "word": "maverick",
+    "phonetic": "/'mæv(ə)rɪk/",
+    "explains": [
+      "adj. 标新立异的；持不同意见的"
+    ]
+  },
+  "maw": {
+    "word": "maw",
+    "phonetic": "/mɔː/",
+    "explains": [
+      "n. 动物的胃,口部"
+    ]
+  },
+  "mawkish": {
+    "word": "mawkish",
+    "phonetic": "/'mɔːkɪʃ/",
+    "explains": [
+      "adj. 令人作呕的，令人厌恶的；自作多情的；淡而无味的"
+    ]
+  },
+  "maxim": {
+    "word": "maxim",
+    "phonetic": "/'mæksɪm/",
+    "explains": [
+      "n. 格言；准则；座右铭"
+    ]
+  },
+  "maximize": {
+    "word": "maximize",
+    "phonetic": "/'mæksimaiz/",
+    "explains": [
+      "v.  最大化"
+    ]
+  },
+  "maximum": {
+    "word": "maximum",
+    "phonetic": "/ˈmæksɪməm/",
+    "explains": [
+      "adj. 最大的"
     ]
   },
   "may": {
@@ -139,6 +2463,13 @@
       "aux. 可以；能够；可能；也许"
     ]
   },
+  "maya": {
+    "word": "maya",
+    "phonetic": "/'mɑːjə/",
+    "explains": [
+      "n. 玛雅人,玛雅语"
+    ]
+  },
   "maybe": {
     "word": "maybe",
     "phonetic": "/ˈmeɪbi/",
@@ -146,11 +2477,67 @@
       "adv. 也许；可能；大概"
     ]
   },
+  "mayhem": {
+    "word": "mayhem",
+    "phonetic": "/'meɪhem/",
+    "explains": [
+      "n. 伤害罪之一种, 故意的伤害罪"
+    ]
+  },
+  "mayo": {
+    "word": "mayo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 五月"
+    ]
+  },
+  "mayor": {
+    "word": "mayor",
+    "phonetic": "/ˈmeɪə/",
+    "explains": [
+      "n. 市长"
+    ]
+  },
+  "maze": {
+    "word": "maze",
+    "phonetic": "/meɪz/",
+    "explains": [
+      "n. 曲径, 迷宫, 迷津, 迷惘, 迷惑, 糊涂"
+    ]
+  },
+  "mb": {
+    "word": "mb",
+    "phonetic": "",
+    "explains": [
+      "abbr. 兆位，兆字节（mega byte）"
+    ]
+  },
   "me": {
     "word": "me",
     "phonetic": "/miː/",
     "explains": [
       "pron. 我（宾格）"
+    ]
+  },
+  "meadow": {
+    "word": "meadow",
+    "phonetic": "/ˈmedəʊ/",
+    "explains": [
+      "n. 草地"
+    ]
+  },
+  "meager": {
+    "word": "meager",
+    "phonetic": "/'mi:ɡə/",
+    "explains": [
+      "n. 兆"
+    ]
+  },
+  "meagre": {
+    "word": "meagre",
+    "phonetic": "/'miːgə/",
+    "explains": [
+      "adj. 瘦的；贫弱的；贫乏的"
     ]
   },
   "meal": {
@@ -167,11 +2554,361 @@
       "v. 意味；想要；意欲 adj. 吝啬的；刻薄的"
     ]
   },
+  "meander": {
+    "word": "meander",
+    "phonetic": "/mɪ'ændə/",
+    "explains": [
+      "v. 蜿蜒而行"
+    ]
+  },
   "meaning": {
     "word": "meaning",
     "phonetic": "/ˈmiːnɪŋ/",
     "explains": [
       "n. 意义；含义；意图 adj. 意味深长的"
+    ]
+  },
+  "meaningful": {
+    "word": "meaningful",
+    "phonetic": "/'miːnɪŋfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 意味深长的"
+    ]
+  },
+  "meaningless": {
+    "word": "meaningless",
+    "phonetic": "/'miːnɪŋlɪs/",
+    "explains": [
+      "adj. 无意义的"
+    ]
+  },
+  "means": {
+    "word": "means",
+    "phonetic": "/miːnz/",
+    "explains": [
+      "n. 方法，手段，工具"
+    ]
+  },
+  "meant": {
+    "word": "meant",
+    "phonetic": "/ment/",
+    "explains": [
+      "v. 意味；打算（mean的过去式和过去分词）；表示…的意思"
+    ]
+  },
+  "meantime": {
+    "word": "meantime",
+    "phonetic": "/'miːntaɪm/",
+    "explains": [
+      "n. 其时，其间；adv. 当时"
+    ]
+  },
+  "meanwhile": {
+    "word": "meanwhile",
+    "phonetic": "/ˈmiːnwaɪl; -hwɪl/",
+    "explains": [
+      "adv. 同时"
+    ]
+  },
+  "measles": {
+    "word": "measles",
+    "phonetic": "/'miːz(ə)lz/",
+    "explains": [
+      "n. [内科] 麻疹；风疹"
+    ]
+  },
+  "measurable": {
+    "word": "measurable",
+    "phonetic": "/'meʒ(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 可测量的"
+    ]
+  },
+  "measure": {
+    "word": "measure",
+    "phonetic": "/ˈmeʒə/",
+    "explains": [
+      "v. 测量　n. 措施"
+    ]
+  },
+  "measured": {
+    "word": "measured",
+    "phonetic": "/'meʒəd/",
+    "explains": [
+      "adj. 标准的, 整齐的, 有规则的"
+    ]
+  },
+  "measurement": {
+    "word": "measurement",
+    "phonetic": "/ˈmeʒəmənt/",
+    "explains": [
+      "n. 测量"
+    ]
+  },
+  "meat": {
+    "word": "meat",
+    "phonetic": "/miːt/",
+    "explains": [
+      "n. 肉"
+    ]
+  },
+  "meaty": {
+    "word": "meaty",
+    "phonetic": "/'miːtɪ/",
+    "explains": [
+      "adj. 肉的,多肉的"
+    ]
+  },
+  "mecca": {
+    "word": "mecca",
+    "phonetic": "/'mekə/",
+    "explains": [
+      "n. 众人渴望去的地方"
+    ]
+  },
+  "mechanic": {
+    "word": "mechanic",
+    "phonetic": "/mɪˈkænɪk/",
+    "explains": [
+      "n. 技工"
+    ]
+  },
+  "mechanical": {
+    "word": "mechanical",
+    "phonetic": "/mɪˈkænɪk(ə)l/",
+    "explains": [
+      "adj. 机械的"
+    ]
+  },
+  "mechanically": {
+    "word": "mechanically",
+    "phonetic": "/mɪ'kænɪkəlɪ/",
+    "explains": [
+      "adv. 机械地"
+    ]
+  },
+  "mechanics": {
+    "word": "mechanics",
+    "phonetic": "/mɪ'kænɪks/",
+    "explains": [
+      "n. 力学"
+    ]
+  },
+  "mechanise": {
+    "word": "mechanise",
+    "phonetic": "",
+    "explains": [
+      "v. 使……用机械装置；使……机械化"
+    ]
+  },
+  "mechanism": {
+    "word": "mechanism",
+    "phonetic": "/'mek(ə)nɪz(ə)m/",
+    "explains": [
+      "n. 机械装置；机制"
+    ]
+  },
+  "mechanization": {
+    "word": "mechanization",
+    "phonetic": "/,mekənaɪ'zeɪʃən/",
+    "explains": [
+      "n. 机械化"
+    ]
+  },
+  "mechanize": {
+    "word": "mechanize",
+    "phonetic": "/'mɛkənaɪz/",
+    "explains": [
+      "v. 机械化"
+    ]
+  },
+  "medal": {
+    "word": "medal",
+    "phonetic": "/ˈmed(ə)l/",
+    "explains": [
+      "n. 奖牌"
+    ]
+  },
+  "meddle": {
+    "word": "meddle",
+    "phonetic": "/'med(ə)l/",
+    "explains": [
+      "v. 干涉(预)"
+    ]
+  },
+  "meddler": {
+    "word": "meddler",
+    "phonetic": "",
+    "explains": [
+      "n. 干涉者；爱管闲事的人"
+    ]
+  },
+  "meddlesome": {
+    "word": "meddlesome",
+    "phonetic": "/'med(ə)ls(ə)m/",
+    "explains": [
+      "adj. 爱管闲事的, 好干涉的"
+    ]
+  },
+  "media": {
+    "word": "media",
+    "phonetic": "/ˈmiːdɪə/",
+    "explains": [
+      "n. 媒体"
+    ]
+  },
+  "median": {
+    "word": "median",
+    "phonetic": "/'miːdɪən/",
+    "explains": [
+      "n. n中值，中位数；三角形中线；梯形中位线；adj. 中值的；中央的"
+    ]
+  },
+  "mediate": {
+    "word": "mediate",
+    "phonetic": "/'miːdɪeɪt/",
+    "explains": [
+      "v. 调停, 斡旋"
+    ]
+  },
+  "mediation": {
+    "word": "mediation",
+    "phonetic": "/ˌmiːdi'eiʃən/",
+    "explains": [
+      "n.  调解； 仲裁"
+    ]
+  },
+  "mediator": {
+    "word": "mediator",
+    "phonetic": "/'miːdɪeɪtə/",
+    "explains": [
+      "n. 调停者；传递者；中介物"
+    ]
+  },
+  "medicaid": {
+    "word": "medicaid",
+    "phonetic": "/'medi,keid/",
+    "explains": [
+      "n. （美）医疗补助计划"
+    ]
+  },
+  "medical": {
+    "word": "medical",
+    "phonetic": "/ˈmedɪk(ə)l/",
+    "explains": [
+      "adj. 医学的"
+    ]
+  },
+  "medication": {
+    "word": "medication",
+    "phonetic": "/medɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 药物；药物治疗；药物处理"
+    ]
+  },
+  "medicina": {
+    "word": "medicina",
+    "phonetic": "",
+    "explains": [
+      "n.f. 医学；药"
+    ]
+  },
+  "medicinal": {
+    "word": "medicinal",
+    "phonetic": "/mɪ'dɪsɪn(ə)l/",
+    "explains": [
+      "adj. 药物的，治疗的"
+    ]
+  },
+  "medicine": {
+    "word": "medicine",
+    "phonetic": "/ˈmeds(ə)n; ˈmedɪs(ə)n/",
+    "explains": [
+      "n. 药"
+    ]
+  },
+  "medida": {
+    "word": "medida",
+    "phonetic": "",
+    "explains": [
+      "n.f. 措施；尺寸"
+    ]
+  },
+  "medieval": {
+    "word": "medieval",
+    "phonetic": "/ˌmediˈi:vl/",
+    "explains": [
+      "adj. 中世纪的；原始的；仿中世纪的；老式的"
+    ]
+  },
+  "medio": {
+    "word": "medio",
+    "phonetic": "",
+    "explains": [
+      "adj. 一半的；n.m. 中间"
+    ]
+  },
+  "mediocre": {
+    "word": "mediocre",
+    "phonetic": "/,miːdɪ'əʊkə/",
+    "explains": [
+      "adj. 平庸的"
+    ]
+  },
+  "mediocrity": {
+    "word": "mediocrity",
+    "phonetic": "/miːdɪ'ɒkrɪtɪ/",
+    "explains": [
+      "n. 平庸之才；平常"
+    ]
+  },
+  "meditate": {
+    "word": "meditate",
+    "phonetic": "/'medɪteɪt/",
+    "explains": [
+      "v. 沉思；冥想"
+    ]
+  },
+  "meditation": {
+    "word": "meditation",
+    "phonetic": "/medɪ'teɪʃ(ə)n/",
+    "explains": [
+      "n. 冥想；沉思，深思"
+    ]
+  },
+  "meditative": {
+    "word": "meditative",
+    "phonetic": "/'medɪ,tətɪv; -,teɪtɪv/",
+    "explains": [
+      "adj. 沉思的, 爱思考的, 冥想的"
+    ]
+  },
+  "mediterranean": {
+    "word": "mediterranean",
+    "phonetic": "/,mɛdətə'renɪən/",
+    "explains": [
+      "n. 地中海；adj. 地中海的"
+    ]
+  },
+  "medium": {
+    "word": "medium",
+    "phonetic": "/ˈmiːdɪəm/",
+    "explains": [
+      "adj. 中等的　n. 媒介"
+    ]
+  },
+  "medley": {
+    "word": "medley",
+    "phonetic": "/'medlɪ/",
+    "explains": [
+      "n. 混合；混杂；混合物；adj. 混合的；拼凑的"
+    ]
+  },
+  "meek": {
+    "word": "meek",
+    "phonetic": "/miːk/",
+    "explains": [
+      "adj. 温顺的，谦逊的"
     ]
   },
   "meet": {
@@ -188,11 +2925,179 @@
       "n. 会议；会见；集会；汇合点"
     ]
   },
+  "megacity": {
+    "word": "megacity",
+    "phonetic": "/'megəsɪtɪ/",
+    "explains": [
+      "n. 大城市（人口超过1000万的）"
+    ]
+  },
+  "megafossil": {
+    "word": "megafossil",
+    "phonetic": "",
+    "explains": [
+      "n. 大化石"
+    ]
+  },
+  "megalith": {
+    "word": "megalith",
+    "phonetic": "/'megəlɪθ/",
+    "explains": [
+      "n. [考古](古建筑用的)巨石"
+    ]
+  },
+  "megalithic": {
+    "word": "megalithic",
+    "phonetic": "",
+    "explains": [
+      "adj. 使用巨石的，巨石造成的"
+    ]
+  },
+  "megalomania": {
+    "word": "megalomania",
+    "phonetic": "/,meg(ə)lə(ʊ)'meɪnɪə/",
+    "explains": [
+      "n. [医]夸大狂, 妄自尊大"
+    ]
+  },
+  "megalopolis": {
+    "word": "megalopolis",
+    "phonetic": "/,megə'lɒp(ə)lɪs/",
+    "explains": [
+      "n. 巨大都市, 人口稠密地带"
+    ]
+  },
+  "megaphone": {
+    "word": "megaphone",
+    "phonetic": "/'megəfəʊn/",
+    "explains": [
+      "n. 扩音器，喇叭筒；vt. 用扩音器对…讲话；vi. 用扩音器传达"
+    ]
+  },
+  "megawatt": {
+    "word": "megawatt",
+    "phonetic": "/'megəwɒt/",
+    "explains": [
+      "n. 兆瓦特"
+    ]
+  },
+  "mejilla": {
+    "word": "mejilla",
+    "phonetic": "",
+    "explains": [
+      "n.f. 脸颊"
+    ]
+  },
+  "mejor": {
+    "word": "mejor",
+    "phonetic": "",
+    "explains": [
+      "adj. 更好的"
+    ]
+  },
+  "melancholy": {
+    "word": "melancholy",
+    "phonetic": "/'melənkəlɪ/",
+    "explains": [
+      "n. 忧郁的；adj. 忧郁，悲伤"
+    ]
+  },
+  "melange": {
+    "word": "melange",
+    "phonetic": "",
+    "explains": [
+      "n. 混合物, 杂录"
+    ]
+  },
+  "melatonin": {
+    "word": "melatonin",
+    "phonetic": "/,melə'təʊnɪn/",
+    "explains": [
+      "n. 褪黑激素；N-乙酰-5-甲氧基色胺"
+    ]
+  },
+  "meld": {
+    "word": "meld",
+    "phonetic": "/meld/",
+    "explains": [
+      "v. 合并；混合；n. 结合；融合"
+    ]
+  },
+  "melee": {
+    "word": "melee",
+    "phonetic": "/'meleɪ/",
+    "explains": [
+      "n. 混战，格斗；互殴"
+    ]
+  },
+  "mellifluous": {
+    "word": "mellifluous",
+    "phonetic": "/me'lɪflʊəs/",
+    "explains": [
+      "adj. 流畅的；如蜜般的"
+    ]
+  },
+  "mellow": {
+    "word": "mellow",
+    "phonetic": "/'meləʊ/",
+    "explains": [
+      "adj. 圆润的，柔和的；成熟的；芳醇的；v. 使成熟；使柔和；n. (Mellow)人名；(英)梅洛"
+    ]
+  },
+  "melodic": {
+    "word": "melodic",
+    "phonetic": "/mɪ'lɒdɪk/",
+    "explains": [
+      "adj. 有旋律的,调子美妙的"
+    ]
+  },
+  "melodious": {
+    "word": "melodious",
+    "phonetic": "/mɪ'ləʊdɪəs/",
+    "explains": [
+      "adj. 音调悦耳的，旋律的"
+    ]
+  },
+  "melodrama": {
+    "word": "melodrama",
+    "phonetic": "/'melə(ʊ)drɑːmə/",
+    "explains": [
+      "n. 情节剧"
+    ]
+  },
+  "melody": {
+    "word": "melody",
+    "phonetic": "/ˈmelədɪ/",
+    "explains": [
+      "n. 旋律"
+    ]
+  },
   "melon": {
     "word": "melon",
     "phonetic": "/ˈmelən/",
     "explains": [
       "n. 瓜；甜瓜；西瓜"
+    ]
+  },
+  "melt": {
+    "word": "melt",
+    "phonetic": "",
+    "explains": [
+      "v. 融化"
+    ]
+  },
+  "meltdown": {
+    "word": "meltdown",
+    "phonetic": "/'meltdaʊn/",
+    "explains": [
+      "n. 彻底垮台"
+    ]
+  },
+  "meltwater": {
+    "word": "meltwater",
+    "phonetic": "/'meltwɔːtə(r)/",
+    "explains": [
+      "n. 冰雪融化成的水"
     ]
   },
   "member": {
@@ -202,11 +3107,242 @@
       "n. 成员；会员；议员"
     ]
   },
+  "membership": {
+    "word": "membership",
+    "phonetic": "/ˈmembəʃɪp/",
+    "explains": [
+      "n. 会员资格"
+    ]
+  },
+  "membrane": {
+    "word": "membrane",
+    "phonetic": "/'membreɪn/",
+    "explains": [
+      "n. 膜；薄膜；羊皮纸"
+    ]
+  },
+  "membre": {
+    "word": "membre",
+    "phonetic": "",
+    "explains": [
+      "n.m. 成员；肢体"
+    ]
+  },
+  "memento": {
+    "word": "memento",
+    "phonetic": "/mɪˈmentəʊ/",
+    "explains": [
+      "n. 纪念品"
+    ]
+  },
+  "memo": {
+    "word": "memo",
+    "phonetic": "/'meməʊ/",
+    "explains": [
+      "n. 备忘录"
+    ]
+  },
+  "memoir": {
+    "word": "memoir",
+    "phonetic": "/'memwɑː/",
+    "explains": [
+      "n. 回忆录；研究报告；自传；实录"
+    ]
+  },
+  "memorable": {
+    "word": "memorable",
+    "phonetic": "/'mem(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 难忘的,重大的"
+    ]
+  },
+  "memorandum": {
+    "word": "memorandum",
+    "phonetic": "/ˌmemə'rændəm/",
+    "explains": [
+      "n.  备忘录， 便笺"
+    ]
+  },
+  "memoria": {
+    "word": "memoria",
+    "phonetic": "",
+    "explains": [
+      "n.f. 记忆"
+    ]
+  },
+  "memorial": {
+    "word": "memorial",
+    "phonetic": "/mɪˈmɔːrɪəl/",
+    "explains": [
+      "n. 纪念碑"
+    ]
+  },
+  "memorise": {
+    "word": "memorise",
+    "phonetic": "/'meməraɪz/",
+    "explains": [
+      "v. （英）记忆；存储（等于memorize）"
+    ]
+  },
+  "memorize": {
+    "word": "memorize",
+    "phonetic": "/'meməraɪz/",
+    "explains": [
+      "v. 记住, 记忆"
+    ]
+  },
   "memory": {
     "word": "memory",
     "phonetic": "/ˈmeməri/",
     "explains": [
       "n. 记忆；记忆力；内存；回忆"
+    ]
+  },
+  "menace": {
+    "word": "menace",
+    "phonetic": "/'menəs/",
+    "explains": [
+      "n. 威胁；v. （进行）威胁"
+    ]
+  },
+  "menacing": {
+    "word": "menacing",
+    "phonetic": "/'menɪsɪŋ/",
+    "explains": [
+      "adj. 威胁的；险恶的；v. 威胁（menace的ing形式）；恐吓"
+    ]
+  },
+  "menagerie": {
+    "word": "menagerie",
+    "phonetic": "/mə'nædʒ(ə)rɪ/",
+    "explains": [
+      "n. 动物园, 动物展览"
+    ]
+  },
+  "mend": {
+    "word": "mend",
+    "phonetic": "/mend/",
+    "explains": [
+      "v. 修理"
+    ]
+  },
+  "mendacious": {
+    "word": "mendacious",
+    "phonetic": "/men'deɪʃəs/",
+    "explains": [
+      "adj. 虚假的；说谎的"
+    ]
+  },
+  "mendacity": {
+    "word": "mendacity",
+    "phonetic": "/men'dæsətɪ/",
+    "explains": [
+      "n. 撒谎癖, 虚假, 谎言"
+    ]
+  },
+  "mendiant": {
+    "word": "mendiant",
+    "phonetic": "",
+    "explains": [
+      "n.m. 乞丐"
+    ]
+  },
+  "mendicant": {
+    "word": "mendicant",
+    "phonetic": "/'mendɪk(ə)nt/",
+    "explains": [
+      "adj. 行乞的；托钵修道会的；n. 乞丐；托钵僧"
+    ]
+  },
+  "mener": {
+    "word": "mener",
+    "phonetic": "",
+    "explains": [
+      "v. 带领"
+    ]
+  },
+  "menial": {
+    "word": "menial",
+    "phonetic": "/'miːnɪəl/",
+    "explains": [
+      "adj. 仆人的"
+    ]
+  },
+  "meningitis": {
+    "word": "meningitis",
+    "phonetic": "/,menɪn'dʒaɪtɪs/",
+    "explains": [
+      "n. 脑膜炎"
+    ]
+  },
+  "mennonite": {
+    "word": "mennonite",
+    "phonetic": "/'menənait/",
+    "explains": [
+      "n. 门诺派教徒"
+    ]
+  },
+  "menopause": {
+    "word": "menopause",
+    "phonetic": "/'menəpɔːz/",
+    "explains": [
+      "n. 更年期；活动终止期"
+    ]
+  },
+  "menos": {
+    "word": "menos",
+    "phonetic": "",
+    "explains": [
+      "adv. 更少"
+    ]
+  },
+  "mensal": {
+    "word": "mensal",
+    "phonetic": "/'mensəl/",
+    "explains": [
+      "adj. <罕>每月一次的, 每月的, 餐桌的"
+    ]
+  },
+  "mensonge": {
+    "word": "mensonge",
+    "phonetic": "",
+    "explains": [
+      "n.m. 谎言"
+    ]
+  },
+  "menstrual": {
+    "word": "menstrual",
+    "phonetic": "/'menstrʊəl/",
+    "explains": [
+      "adj. 月经的；每月的；一月一次的"
+    ]
+  },
+  "menswear": {
+    "word": "menswear",
+    "phonetic": "/'menzweə/",
+    "explains": [
+      "n.  男装"
+    ]
+  },
+  "mental": {
+    "word": "mental",
+    "phonetic": "/ˈment(ə)l/",
+    "explains": [
+      "adj. 精神的"
+    ]
+  },
+  "mentality": {
+    "word": "mentality",
+    "phonetic": "/men'tælɪtɪ/",
+    "explains": [
+      "n. 智力，心理状态"
+    ]
+  },
+  "mentally": {
+    "word": "mentally",
+    "phonetic": "/'ment(ə)lɪ/",
+    "explains": [
+      "adv. 精神上, 智力上"
     ]
   },
   "mention": {
@@ -216,11 +3352,130 @@
       "v./n. 提到；谈到；提及；说起"
     ]
   },
+  "menton": {
+    "word": "menton",
+    "phonetic": "",
+    "explains": [
+      "n.m. 下巴"
+    ]
+  },
+  "mentor": {
+    "word": "mentor",
+    "phonetic": "",
+    "explains": [
+      "n. [希神]门特(良师益友), 贤明的顾问, 导师, 指导者"
+    ]
+  },
   "menu": {
     "word": "menu",
     "phonetic": "/ˈmenjuː/",
     "explains": [
       "n. 菜单；饭菜；菜肴"
+    ]
+  },
+  "mer": {
+    "word": "mer",
+    "phonetic": "",
+    "explains": [
+      "n.f. 海"
+    ]
+  },
+  "mercado": {
+    "word": "mercado",
+    "phonetic": "",
+    "explains": [
+      "n.m. 市场"
+    ]
+  },
+  "mercantile": {
+    "word": "mercantile",
+    "phonetic": "/'mɜːk(ə)ntaɪl/",
+    "explains": [
+      "adj. 贸易的,商业的"
+    ]
+  },
+  "mercantilism": {
+    "word": "mercantilism",
+    "phonetic": "/'məːkəntiˌlizəm/",
+    "explains": [
+      "n.  重商主义； 营利主义； 商人本性"
+    ]
+  },
+  "mercenary": {
+    "word": "mercenary",
+    "phonetic": "/'mɜːsɪn(ə)rɪ/",
+    "explains": [
+      "adj. 唯利是图的，为钱的"
+    ]
+  },
+  "merchandis": {
+    "word": "merchandis",
+    "phonetic": "",
+    "explains": [
+      "n. 商品,货物 v买卖"
+    ]
+  },
+  "merchandise": {
+    "word": "merchandise",
+    "phonetic": "/'mɜːtʃ(ə)ndaɪs; -z/",
+    "explains": [
+      "n. 商品，货物"
+    ]
+  },
+  "merchandising": {
+    "word": "merchandising",
+    "phonetic": "/'məːtʃəndaiziŋ/",
+    "explains": [
+      "n.  销售管理"
+    ]
+  },
+  "merchant": {
+    "word": "merchant",
+    "phonetic": "/ˈmɜːtʃənt/",
+    "explains": [
+      "n. 商人"
+    ]
+  },
+  "merci": {
+    "word": "merci",
+    "phonetic": "",
+    "explains": [
+      "interj. 谢谢"
+    ]
+  },
+  "merciful": {
+    "word": "merciful",
+    "phonetic": "/'mɜːsɪfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 仁慈的，宽大的"
+    ]
+  },
+  "merciless": {
+    "word": "merciless",
+    "phonetic": "/'mɜːsɪlɪs/",
+    "explains": [
+      "adj. 残忍的；无情的"
+    ]
+  },
+  "mercredi": {
+    "word": "mercredi",
+    "phonetic": "",
+    "explains": [
+      "n.m. 星期三"
+    ]
+  },
+  "mercurial": {
+    "word": "mercurial",
+    "phonetic": "/mɜː'kjʊərɪəl/",
+    "explains": [
+      "adj. 水银的；水星的；墨丘利神的；雄辩机智的；活泼善变的；n. 汞剂；水银剂"
+    ]
+  },
+  "mercury": {
+    "word": "mercury",
+    "phonetic": "",
+    "explains": [
+      "n. 水银，汞"
     ]
   },
   "mercy": {
@@ -230,11 +3485,228 @@
       "n. 仁慈；宽容；怜悯；恩惠"
     ]
   },
+  "mere": {
+    "word": "mere",
+    "phonetic": "/mɪə/",
+    "explains": [
+      "adj. 仅仅的"
+    ]
+  },
+  "merecer": {
+    "word": "merecer",
+    "phonetic": "",
+    "explains": [
+      "v. 值得"
+    ]
+  },
+  "merely": {
+    "word": "merely",
+    "phonetic": "/'mɪəlɪ/",
+    "explains": [
+      "adv. 仅仅，只不过"
+    ]
+  },
+  "meretricious": {
+    "word": "meretricious",
+    "phonetic": "/,merɪ'trɪʃəs/",
+    "explains": [
+      "adj. 华丽而庸俗的, 俗气的, 娼妓的, 适合娼妓的"
+    ]
+  },
+  "merge": {
+    "word": "merge",
+    "phonetic": "/mɜːdʒ/",
+    "explains": [
+      "v. 合并；使合并；吞没；n. (Merge)人名；(意)梅尔杰"
+    ]
+  },
+  "merged": {
+    "word": "merged",
+    "phonetic": "",
+    "explains": [
+      "已合并"
+    ]
+  },
+  "merger": {
+    "word": "merger",
+    "phonetic": "/'məːdʒə/",
+    "explains": [
+      "n.  合并， 兼并"
+    ]
+  },
+  "merit": {
+    "word": "merit",
+    "phonetic": "/ˈmerɪt/",
+    "explains": [
+      "n. 优点"
+    ]
+  },
+  "meritorious": {
+    "word": "meritorious",
+    "phonetic": "/,merɪ'tɔːrɪəs/",
+    "explains": [
+      "adj. 有功绩的；有价值的；值得称赞的"
+    ]
+  },
+  "mermaid": {
+    "word": "mermaid",
+    "phonetic": "/'mɜːmeɪd/",
+    "explains": [
+      "n. 美人鱼"
+    ]
+  },
+  "mermelada": {
+    "word": "mermelada",
+    "phonetic": "",
+    "explains": [
+      "n.f. 果酱"
+    ]
+  },
+  "merriment": {
+    "word": "merriment",
+    "phonetic": "/'merɪm(ə)nt/",
+    "explains": [
+      "n. 欢喜；嬉戏"
+    ]
+  },
+  "merry": {
+    "word": "merry",
+    "phonetic": "/ˈmerɪ/",
+    "explains": [
+      "adj. 欢乐的"
+    ]
+  },
+  "mes": {
+    "word": "mes",
+    "phonetic": "",
+    "explains": [
+      "n.m. 月份"
+    ]
+  },
+  "mesa": {
+    "word": "mesa",
+    "phonetic": "/'meɪsə/",
+    "explains": [
+      "n. [地]台地, 岩石台地, 平顶山"
+    ]
+  },
+  "mesh": {
+    "word": "mesh",
+    "phonetic": "/meʃ/",
+    "explains": [
+      "n. 网眼，筛孔，网络"
+    ]
+  },
+  "mesmerise": {
+    "word": "mesmerise",
+    "phonetic": "",
+    "explains": [
+      "v. 施以催眠术；使…入迷；使…目瞪口呆"
+    ]
+  },
+  "mesmerize": {
+    "word": "mesmerize",
+    "phonetic": "/'mezməraiz, 'mes-/",
+    "explains": [
+      "v. 施催眠术"
+    ]
+  },
+  "mesopotamian": {
+    "word": "mesopotamian",
+    "phonetic": "",
+    "explains": [
+      "n. 美索不达米亚（两河流域）"
+    ]
+  },
+  "mesothelioma": {
+    "word": "mesothelioma",
+    "phonetic": "",
+    "explains": [
+      "n. [肿瘤] 间皮瘤"
+    ]
+  },
+  "mesozoic": {
+    "word": "mesozoic",
+    "phonetic": "/,mesəu'zəuik; ,mez-/",
+    "explains": [
+      "n&a. 中生代(的)"
+    ]
+  },
+  "mesquite": {
+    "word": "mesquite",
+    "phonetic": "/'meskiːt; me'skiːt/",
+    "explains": [
+      "n. 豆科灌木"
+    ]
+  },
+  "mess": {
+    "word": "mess",
+    "phonetic": "/mes/",
+    "explains": [
+      "n. 混乱"
+    ]
+  },
   "message": {
     "word": "message",
     "phonetic": "/ˈmesɪdʒ/",
     "explains": [
       "n. 消息；信息；启示；预言 v. 报信；通知"
+    ]
+  },
+  "messenger": {
+    "word": "messenger",
+    "phonetic": "/'mesɪn(d)ʒə/",
+    "explains": [
+      "n. 送信者，信使"
+    ]
+  },
+  "messiah": {
+    "word": "messiah",
+    "phonetic": "",
+    "explains": [
+      "n. 弥赛亚（犹太人所期待的救世主）；救星，解放者"
+    ]
+  },
+  "messuage": {
+    "word": "messuage",
+    "phonetic": "/'meswɪdʒ/",
+    "explains": [
+      "n. 家宅"
+    ]
+  },
+  "messy": {
+    "word": "messy",
+    "phonetic": "/'mesɪ/",
+    "explains": [
+      "adj. 肮脏的, 凌乱的"
+    ]
+  },
+  "mesure": {
+    "word": "mesure",
+    "phonetic": "",
+    "explains": [
+      "n.f. 测量；措施"
+    ]
+  },
+  "metabolic": {
+    "word": "metabolic",
+    "phonetic": "/,metə'bɒlɪk/",
+    "explains": [
+      "adj. 新陈代谢的"
+    ]
+  },
+  "metabolism": {
+    "word": "metabolism",
+    "phonetic": "/mɪ'tæbəlɪz(ə)m/",
+    "explains": [
+      "n. 新陈代谢"
+    ]
+  },
+  "metabolize": {
+    "word": "metabolize",
+    "phonetic": "/mɪ'tæbəlaɪz/",
+    "explains": [
+      "v. 产生代谢变化"
     ]
   },
   "metal": {
@@ -244,11 +3716,501 @@
       "n. 金属；合金"
     ]
   },
+  "metallic": {
+    "word": "metallic",
+    "phonetic": "/mɪ'tælɪk/",
+    "explains": [
+      "adj. 金属的"
+    ]
+  },
+  "metallurgy": {
+    "word": "metallurgy",
+    "phonetic": "/mɪ'tælədʒɪ; 'met(ə),lɜːdʒɪ/",
+    "explains": [
+      "n. 冶金学，冶金术"
+    ]
+  },
+  "metalwork": {
+    "word": "metalwork",
+    "phonetic": "/'met(ə)lwɜːk/",
+    "explains": [
+      "n. 金属制品"
+    ]
+  },
+  "metalworker": {
+    "word": "metalworker",
+    "phonetic": "",
+    "explains": [
+      "n. 金工工人"
+    ]
+  },
+  "metamorphic": {
+    "word": "metamorphic",
+    "phonetic": "/metə'mɔːfɪk/",
+    "explains": [
+      "adj. 变质的,变性的"
+    ]
+  },
+  "metamorphosis": {
+    "word": "metamorphosis",
+    "phonetic": "/,metə'mɔːfəsɪs; ,metəmɔː'fəʊsɪs/",
+    "explains": [
+      "n. 变形"
+    ]
+  },
+  "metaphor": {
+    "word": "metaphor",
+    "phonetic": "/'metəfə; -fɔː/",
+    "explains": [
+      "n. 暗喻，隐喻；比喻说法"
+    ]
+  },
+  "metaphorical": {
+    "word": "metaphorical",
+    "phonetic": "/,metə'fɒrɪkl/",
+    "explains": [
+      "adj. 隐喻性的, 比喻性的"
+    ]
+  },
+  "metaphrase": {
+    "word": "metaphrase",
+    "phonetic": "/'metəfreɪz/",
+    "explains": [
+      "v. 直译"
+    ]
+  },
+  "metaphysical": {
+    "word": "metaphysical",
+    "phonetic": "/metə'fɪzɪk(ə)l/",
+    "explains": [
+      "adj. 形而上学的, 纯粹哲学的"
+    ]
+  },
+  "metaphysics": {
+    "word": "metaphysics",
+    "phonetic": "/metə'fɪzɪks/",
+    "explains": [
+      "n. 形而上学, 玄学, 纯粹哲学, 宇宙哲学"
+    ]
+  },
+  "metazoan": {
+    "word": "metazoan",
+    "phonetic": "/,metə'zəʊən/",
+    "explains": [
+      "n&a. [动]后生动物(的)"
+    ]
+  },
+  "meteor": {
+    "word": "meteor",
+    "phonetic": "/'miːtɪə; -tɪɔː/",
+    "explains": [
+      "n. 流星, 大气现象"
+    ]
+  },
+  "meteoric": {
+    "word": "meteoric",
+    "phonetic": "/,miːtɪ'ɒrɪk/",
+    "explains": [
+      "adj. 流星的,大气的"
+    ]
+  },
+  "meteorite": {
+    "word": "meteorite",
+    "phonetic": "/'miːtɪəraɪt/",
+    "explains": [
+      "n. 陨石, 流星"
+    ]
+  },
+  "meteoritic": {
+    "word": "meteoritic",
+    "phonetic": "",
+    "explains": [
+      "adj. 陨星的,陨石的"
+    ]
+  },
+  "meteoroid": {
+    "word": "meteoroid",
+    "phonetic": "/'miːtɪərɒɪd/",
+    "explains": [
+      "n. 流星体"
+    ]
+  },
+  "meteorological": {
+    "word": "meteorological",
+    "phonetic": "/,miːtɪərə'lɒdʒɪkəl/",
+    "explains": [
+      "adj. 气象的；气象学的"
+    ]
+  },
+  "meteorologist": {
+    "word": "meteorologist",
+    "phonetic": "/,miːtɪə'rɒlədʒɪst/",
+    "explains": [
+      "n. 气象学者"
+    ]
+  },
+  "meteorology": {
+    "word": "meteorology",
+    "phonetic": "/,miːtɪə'rɒlədʒɪ/",
+    "explains": [
+      "n. 气象学"
+    ]
+  },
+  "meter": {
+    "word": "meter",
+    "phonetic": "/'mitɚ/",
+    "explains": [
+      "n. 计量器；计，表"
+    ]
+  },
+  "methane": {
+    "word": "methane",
+    "phonetic": "/'miːθeɪn; 'meθeɪn/",
+    "explains": [
+      "n. 甲烷,沼气"
+    ]
+  },
   "method": {
     "word": "method",
     "phonetic": "/ˈmeθəd/",
     "explains": [
       "n. 方法；办法；条理"
+    ]
+  },
+  "methodical": {
+    "word": "methodical",
+    "phonetic": "/mɪ'θɒdɪk(ə)l/",
+    "explains": [
+      "adj. 有条理的，井然的"
+    ]
+  },
+  "methodically": {
+    "word": "methodically",
+    "phonetic": "/məˈθɒdɪkli/",
+    "explains": [
+      "adv. 有条不紊地, 有方法地"
+    ]
+  },
+  "methodism": {
+    "word": "methodism",
+    "phonetic": "",
+    "explains": [
+      "n. 美以美教派教会, 教义和礼拜的方式"
+    ]
+  },
+  "methodology": {
+    "word": "methodology",
+    "phonetic": "/meθə'dɒlədʒɪ/",
+    "explains": [
+      "n. 方法学，方法论"
+    ]
+  },
+  "methyl": {
+    "word": "methyl",
+    "phonetic": "/'miːθaɪl; 'meθ-; -θɪl/",
+    "explains": [
+      "n. 甲基, 木精"
+    ]
+  },
+  "meticulous": {
+    "word": "meticulous",
+    "phonetic": "/mə'tɪkjələs/",
+    "explains": [
+      "adj. 一丝不苟的, 缜密的"
+    ]
+  },
+  "meticulously": {
+    "word": "meticulously",
+    "phonetic": "/me'tikjuləsli/",
+    "explains": [
+      "adv. 仔细地,谨慎地"
+    ]
+  },
+  "metre": {
+    "word": "metre",
+    "phonetic": "/ˈmiːtə/",
+    "explains": [
+      "n. 米"
+    ]
+  },
+  "metric": {
+    "word": "metric",
+    "phonetic": "/'metrɪk/",
+    "explains": [
+      "adj. 公制的，米制的"
+    ]
+  },
+  "metro": {
+    "word": "metro",
+    "phonetic": "",
+    "explains": [
+      "n. 麦德龙"
+    ]
+  },
+  "metropolis": {
+    "word": "metropolis",
+    "phonetic": "/mɪ'trɒp(ə)lɪs/",
+    "explains": [
+      "n. 首都,大城市"
+    ]
+  },
+  "metropolitan": {
+    "word": "metropolitan",
+    "phonetic": "/metrə'pɒlɪt(ə)n/",
+    "explains": [
+      "adj. 主要都市的；n. （东正教和天主教的）大主教"
+    ]
+  },
+  "mettle": {
+    "word": "mettle",
+    "phonetic": "/'met(ə)l/",
+    "explains": [
+      "n. 勇气"
+    ]
+  },
+  "mettlesome": {
+    "word": "mettlesome",
+    "phonetic": "/'metls(ə)m/",
+    "explains": [
+      "adj. 精神饱满的, 勇敢的"
+    ]
+  },
+  "meuble": {
+    "word": "meuble",
+    "phonetic": "",
+    "explains": [
+      "n.m. 家具"
+    ]
+  },
+  "meunier": {
+    "word": "meunier",
+    "phonetic": "",
+    "explains": [
+      "n.m. 磨坊主"
+    ]
+  },
+  "mew": {
+    "word": "mew",
+    "phonetic": "/mjuː/",
+    "explains": [
+      "n. 厩舍, 海鸥"
+    ]
+  },
+  "mexican": {
+    "word": "mexican",
+    "phonetic": "/'meksɪkən/",
+    "explains": [
+      "n&a. 墨西哥(的)， 墨西哥人(的)"
+    ]
+  },
+  "mexico": {
+    "word": "mexico",
+    "phonetic": "/'meksɪkəʊ/",
+    "explains": [
+      "n. 墨西哥(拉丁美洲国家)"
+    ]
+  },
+  "mezclar": {
+    "word": "mezclar",
+    "phonetic": "",
+    "explains": [
+      "v. 混合"
+    ]
+  },
+  "miami": {
+    "word": "miami",
+    "phonetic": "",
+    "explains": [
+      "n. 迈阿密(美国佛罗里州达东南部港市)"
+    ]
+  },
+  "miasma": {
+    "word": "miasma",
+    "phonetic": "/mɪ'æzmə; maɪ-/",
+    "explains": [
+      "n. 瘴气；臭气；不良影响"
+    ]
+  },
+  "miasmic": {
+    "word": "miasmic",
+    "phonetic": "",
+    "explains": [
+      "adj. 毒气的, 瘴气的"
+    ]
+  },
+  "michigan": {
+    "word": "michigan",
+    "phonetic": "/'miʃigən/",
+    "explains": [
+      "n. 密歇根州(美国州名)"
+    ]
+  },
+  "microbe": {
+    "word": "microbe",
+    "phonetic": "/'maɪkrəʊb/",
+    "explains": [
+      "n. 微生物, 细菌"
+    ]
+  },
+  "microbial": {
+    "word": "microbial",
+    "phonetic": "/maɪ'krəʊbɪəl/",
+    "explains": [
+      "adj. 微生物的,  由细菌引起的"
+    ]
+  },
+  "microbiologist": {
+    "word": "microbiologist",
+    "phonetic": "",
+    "explains": [
+      "n. 微生物学家"
+    ]
+  },
+  "microbiology": {
+    "word": "microbiology",
+    "phonetic": "/,maɪkrə(ʊ)baɪ'ɒlədʒɪ/",
+    "explains": [
+      "n. 微生物学"
+    ]
+  },
+  "microchip": {
+    "word": "microchip",
+    "phonetic": "/'maɪkrə(ʊ)tʃɪp/",
+    "explains": [
+      "n. 微型集成电路片，微芯片"
+    ]
+  },
+  "microcomputer": {
+    "word": "microcomputer",
+    "phonetic": "/'maɪkrə(ʊ)kɒm,pjuːtə/",
+    "explains": [
+      "n. 微型计算机，微机"
+    ]
+  },
+  "microcosm": {
+    "word": "microcosm",
+    "phonetic": "/'maɪkrə(ʊ)kɒz(ə)m/",
+    "explains": [
+      "n. 微观世界"
+    ]
+  },
+  "microfilm": {
+    "word": "microfilm",
+    "phonetic": "/'maɪkrə(ʊ)fɪlm/",
+    "explains": [
+      "n. 微缩胶片"
+    ]
+  },
+  "microfossil": {
+    "word": "microfossil",
+    "phonetic": "",
+    "explains": [
+      "n. 微体化石,微化石"
+    ]
+  },
+  "micron": {
+    "word": "micron",
+    "phonetic": "/'maɪkrɒn/",
+    "explains": [
+      "n. 微米,百万分之一米"
+    ]
+  },
+  "micronesian": {
+    "word": "micronesian",
+    "phonetic": "/,maikrəu'ni:ziən; -ʒən/",
+    "explains": [
+      "n&a. 密克罗尼西亚人(的)"
+    ]
+  },
+  "micronutrient": {
+    "word": "micronutrient",
+    "phonetic": "/maɪkrə(ʊ)'njuːtrɪənt/",
+    "explains": [
+      "n. [生]微量营养素"
+    ]
+  },
+  "microorganism": {
+    "word": "microorganism",
+    "phonetic": "/maɪkrəʊ'ɔːg(ə)nɪz(ə)m/",
+    "explains": [
+      "n. 微生物"
+    ]
+  },
+  "microphone": {
+    "word": "microphone",
+    "phonetic": "/ˈmaɪkrəfəʊn/",
+    "explains": [
+      "n. 麦克风"
+    ]
+  },
+  "microprocessor": {
+    "word": "microprocessor",
+    "phonetic": "/maɪkrə(ʊ)'prəʊsesə/",
+    "explains": [
+      "n. 微信息处理机"
+    ]
+  },
+  "microscope": {
+    "word": "microscope",
+    "phonetic": "/ˈmaɪkrəskəʊp/",
+    "explains": [
+      "n. 显微镜"
+    ]
+  },
+  "microscopic": {
+    "word": "microscopic",
+    "phonetic": "/maɪkrə'skɒpɪk/",
+    "explains": [
+      "adj. 显微镜的；微观的，极小的"
+    ]
+  },
+  "microscopy": {
+    "word": "microscopy",
+    "phonetic": "/maɪ'krɒskəpɪ/",
+    "explains": [
+      "n. 显微镜检查,显微镜使用"
+    ]
+  },
+  "microtask": {
+    "word": "microtask",
+    "phonetic": "",
+    "explains": [
+      "微任务"
+    ]
+  },
+  "microwave": {
+    "word": "microwave",
+    "phonetic": "/ˈmaɪkrəweɪv/",
+    "explains": [
+      "n. 微波"
+    ]
+  },
+  "mid": {
+    "word": "mid",
+    "phonetic": "/mɪd/",
+    "explains": [
+      "adj. 中间的；中央的；prep. 在…之中；n. (Mid)人名；(柬)米"
+    ]
+  },
+  "midair": {
+    "word": "midair",
+    "phonetic": "/,mɪd'eə/",
+    "explains": [
+      "n. 半空中"
+    ]
+  },
+  "midcontinent": {
+    "word": "midcontinent",
+    "phonetic": "",
+    "explains": [
+      "n. 大陆中部"
+    ]
+  },
+  "midday": {
+    "word": "midday",
+    "phonetic": "/mɪd'deɪ/",
+    "explains": [
+      "n. 正午，中午"
     ]
   },
   "middle": {
@@ -258,11 +4220,221 @@
       "adj. 中间的；中部的；中级的 n. 中间；中央；中部"
     ]
   },
+  "middleman": {
+    "word": "middleman",
+    "phonetic": "/'midlmæn/",
+    "explains": [
+      "n.  中间人， 中间商， 经纪人"
+    ]
+  },
+  "middleware": {
+    "word": "middleware",
+    "phonetic": "",
+    "explains": [
+      "中间件"
+    ]
+  },
+  "midfield": {
+    "word": "midfield",
+    "phonetic": "/ˈmɪdfiːld/",
+    "explains": [
+      "n. 中场"
+    ]
+  },
+  "midget": {
+    "word": "midget",
+    "phonetic": "/'mɪdʒɪt/",
+    "explains": [
+      "n. 侏儒"
+    ]
+  },
+  "midlatitude": {
+    "word": "midlatitude",
+    "phonetic": "",
+    "explains": [
+      "n. 中间纬度"
+    ]
+  },
+  "midnight": {
+    "word": "midnight",
+    "phonetic": "/ˈmɪdnaɪt/",
+    "explains": [
+      "n. 午夜"
+    ]
+  },
+  "midocean": {
+    "word": "midocean",
+    "phonetic": "",
+    "explains": [
+      "n. 海洋中央"
+    ]
+  },
+  "midpoint": {
+    "word": "midpoint",
+    "phonetic": "/'mɪdpɒɪnt/",
+    "explains": [
+      "n. 中点；正中央"
+    ]
+  },
+  "midst": {
+    "word": "midst",
+    "phonetic": "/mɪdst/",
+    "explains": [
+      "n. 中部，中间，当中"
+    ]
+  },
+  "midway": {
+    "word": "midway",
+    "phonetic": "/'mɪdweɪ; mɪd'weɪ/",
+    "explains": [
+      "n. 中途,半路；adj. 中途的；adv. 在中途"
+    ]
+  },
+  "midwest": {
+    "word": "midwest",
+    "phonetic": "/,mid'west/",
+    "explains": [
+      "n. 中西部"
+    ]
+  },
+  "midwestern": {
+    "word": "midwestern",
+    "phonetic": "/ˌmɪd'wɛstən/",
+    "explains": [
+      "adj. 美国中西部的"
+    ]
+  },
+  "midwife": {
+    "word": "midwife",
+    "phonetic": "/'mɪdwaɪf/",
+    "explains": [
+      "n. 助产士；促成因素；vt. 助胎儿出生；促成"
+    ]
+  },
+  "miedo": {
+    "word": "miedo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 恐惧"
+    ]
+  },
+  "miel": {
+    "word": "miel",
+    "phonetic": "",
+    "explains": [
+      "n.f. 蜂蜜"
+    ]
+  },
+  "miembro": {
+    "word": "miembro",
+    "phonetic": "",
+    "explains": [
+      "n.m. 成员；肢体"
+    ]
+  },
+  "mien": {
+    "word": "mien",
+    "phonetic": "/miːn/",
+    "explains": [
+      "n. 风度"
+    ]
+  },
+  "miette": {
+    "word": "miette",
+    "phonetic": "",
+    "explains": [
+      "n.f. 面包屑"
+    ]
+  },
+  "miff": {
+    "word": "miff",
+    "phonetic": "/mɪf/",
+    "explains": [
+      "n. 微怒；小争执；v. 使……恼怒"
+    ]
+  },
   "might": {
     "word": "might",
     "phonetic": "/maɪt/",
     "explains": [
       "aux. 可能；也许；会 n. 力量；威力；势力"
+    ]
+  },
+  "mighty": {
+    "word": "mighty",
+    "phonetic": "/'maɪtɪ/",
+    "explains": [
+      "adj. 强大的；巨大的"
+    ]
+  },
+  "mignon": {
+    "word": "mignon",
+    "phonetic": "",
+    "explains": [
+      "adj. 可爱的"
+    ]
+  },
+  "migraine": {
+    "word": "migraine",
+    "phonetic": "/'miːgreɪn; 'maɪ-/",
+    "explains": [
+      "n. [内科] 偏头痛"
+    ]
+  },
+  "migrant": {
+    "word": "migrant",
+    "phonetic": "/'maɪgr(ə)nt/",
+    "explains": [
+      "n. 移居者, 候鸟"
+    ]
+  },
+  "migrate": {
+    "word": "migrate",
+    "phonetic": "/maɪ'greɪt; 'maɪgreɪt/",
+    "explains": [
+      "v. 迁移，移居"
+    ]
+  },
+  "migration": {
+    "word": "migration",
+    "phonetic": "/maɪ'greɪʃ(ə)n/",
+    "explains": [
+      "n. 移居,迁移"
+    ]
+  },
+  "migratory": {
+    "word": "migratory",
+    "phonetic": "/'maɪgrət(ə)rɪ; maɪ'greɪt(ə)rɪ/",
+    "explains": [
+      "adj. 迁移的,流浪的"
+    ]
+  },
+  "mil": {
+    "word": "mil",
+    "phonetic": "",
+    "explains": [
+      "num. 一千"
+    ]
+  },
+  "mild": {
+    "word": "mild",
+    "phonetic": "/maɪld/",
+    "explains": [
+      "adj. 温柔的；和缓的"
+    ]
+  },
+  "mildew": {
+    "word": "mildew",
+    "phonetic": "/'mɪldjuː/",
+    "explains": [
+      "n&v. 霉，发霉"
+    ]
+  },
+  "mildly": {
+    "word": "mildly",
+    "phonetic": "/'maɪldlɪ/",
+    "explains": [
+      "adv. 温和地, 适度地"
     ]
   },
   "mile": {
@@ -272,11 +4444,277 @@
       "n. 英里；一英里赛跑；较大的距离"
     ]
   },
+  "mileage": {
+    "word": "mileage",
+    "phonetic": "/'maɪlɪdʒ/",
+    "explains": [
+      "n. 英里数"
+    ]
+  },
+  "mileometer": {
+    "word": "mileometer",
+    "phonetic": "",
+    "explains": [
+      "n. 计程表"
+    ]
+  },
+  "milestone": {
+    "word": "milestone",
+    "phonetic": "/'maɪlstəʊn/",
+    "explains": [
+      "n. 里程碑，划时代的事件"
+    ]
+  },
+  "milieu": {
+    "word": "milieu",
+    "phonetic": "/'miːljɜː; mɪ'ljɜː/",
+    "explains": [
+      "n. 周围, 环境"
+    ]
+  },
+  "militaire": {
+    "word": "militaire",
+    "phonetic": "",
+    "explains": [
+      "adj. 军事的；n.m. 军人"
+    ]
+  },
+  "militancy": {
+    "word": "militancy",
+    "phonetic": "",
+    "explains": [
+      "n. 战斗性；交战状态"
+    ]
+  },
+  "militant": {
+    "word": "militant",
+    "phonetic": "/'mɪlɪt(ə)nt/",
+    "explains": [
+      "adj. 好战的；n. 富有战斗性的人；好斗者；激进分子"
+    ]
+  },
+  "militarily": {
+    "word": "militarily",
+    "phonetic": "",
+    "explains": [
+      "adv. 以武力, 以军事行动"
+    ]
+  },
+  "militarism": {
+    "word": "militarism",
+    "phonetic": "/'mɪlɪt(ə)rɪz(ə)m/",
+    "explains": [
+      "n. 军国主义；尚武精神，好战态度；职业军人的精神"
+    ]
+  },
+  "militaristic": {
+    "word": "militaristic",
+    "phonetic": "/,mɪlɪtə'rɪstɪk/",
+    "explains": [
+      "adj. 军国主义的"
+    ]
+  },
+  "military": {
+    "word": "military",
+    "phonetic": "/ˈmɪlɪt(ə)rɪ/",
+    "explains": [
+      "adj. 军事的"
+    ]
+  },
+  "militia": {
+    "word": "militia",
+    "phonetic": "/mɪ'lɪʃə/",
+    "explains": [
+      "n. 民兵组织；自卫队；义勇军；国民军"
+    ]
+  },
+  "militiaman": {
+    "word": "militiaman",
+    "phonetic": "/mɪ'lɪʃəmən/",
+    "explains": [
+      "n. 民兵；民兵组织"
+    ]
+  },
   "milk": {
     "word": "milk",
     "phonetic": "/mɪlk/",
     "explains": [
       "n. 牛奶；乳状物 v. 挤奶；榨取"
+    ]
+  },
+  "milkman": {
+    "word": "milkman",
+    "phonetic": "/'mɪlkmən/",
+    "explains": [
+      "n. 牛奶商；送奶工人；挤奶员工"
+    ]
+  },
+  "milkweed": {
+    "word": "milkweed",
+    "phonetic": "/'mɪlkwiːd/",
+    "explains": [
+      "n. 乳草属植物"
+    ]
+  },
+  "milky": {
+    "word": "milky",
+    "phonetic": "/'mɪlkɪ/",
+    "explains": [
+      "adj. 牛奶的；乳白色的"
+    ]
+  },
+  "mill": {
+    "word": "mill",
+    "phonetic": "/mɪl/",
+    "explains": [
+      "n. 磨坊；制造厂"
+    ]
+  },
+  "millennium": {
+    "word": "millennium",
+    "phonetic": "/mɪˈlɛnɪəm/",
+    "explains": [
+      "n. 太平盛世,一千年"
+    ]
+  },
+  "miller": {
+    "word": "miller",
+    "phonetic": "/'mɪlə/",
+    "explains": [
+      "n. 磨坊主, 面粉厂主, 碾磨工, 铣工, [昆]蛾"
+    ]
+  },
+  "millet": {
+    "word": "millet",
+    "phonetic": "/'mɪlɪt/",
+    "explains": [
+      "n. [植]稷, 粟"
+    ]
+  },
+  "milligram": {
+    "word": "milligram",
+    "phonetic": "/'miliɡræm/",
+    "explains": [
+      "n. 毫克"
+    ]
+  },
+  "milligramme": {
+    "word": "milligramme",
+    "phonetic": "",
+    "explains": [
+      "n. 毫克（等于milligram）；公厘"
+    ]
+  },
+  "milliliter": {
+    "word": "milliliter",
+    "phonetic": "/'mili,li:tə/",
+    "explains": [
+      "n. 毫升"
+    ]
+  },
+  "millimeter": {
+    "word": "millimeter",
+    "phonetic": "/'mɪlɪˌmi:tə/",
+    "explains": [
+      "n. [计量] 毫米"
+    ]
+  },
+  "millimetre": {
+    "word": "millimetre",
+    "phonetic": "/'mili,mi:tə/",
+    "explains": [
+      "n. 毫米"
+    ]
+  },
+  "millinery": {
+    "word": "millinery",
+    "phonetic": "/'mɪlɪnərɪ/",
+    "explains": [
+      "n. 女帽类"
+    ]
+  },
+  "million": {
+    "word": "million",
+    "phonetic": "/ˈmɪljən/",
+    "explains": [
+      "num. 百万"
+    ]
+  },
+  "millionaire": {
+    "word": "millionaire",
+    "phonetic": "/ˌmɪljəˈneə/",
+    "explains": [
+      "n. 百万富翁"
+    ]
+  },
+  "millipede": {
+    "word": "millipede",
+    "phonetic": "/'mɪlɪpiːd/",
+    "explains": [
+      "n. [无脊椎] 千足虫；倍足纲节动物（等于millepede）"
+    ]
+  },
+  "mime": {
+    "word": "mime",
+    "phonetic": "/maɪm/",
+    "explains": [
+      "n. 哑剧；v. 做哑剧表演"
+    ]
+  },
+  "mimetic": {
+    "word": "mimetic",
+    "phonetic": "/mɪ'metɪk; maɪ-/",
+    "explains": [
+      "adj. 模仿的,拟态的"
+    ]
+  },
+  "mimic": {
+    "word": "mimic",
+    "phonetic": "/'mɪmɪk/",
+    "explains": [
+      "v. 模仿, 模拟"
+    ]
+  },
+  "mimicry": {
+    "word": "mimicry",
+    "phonetic": "/'mɪmɪkrɪ/",
+    "explains": [
+      "n. 模仿"
+    ]
+  },
+  "mina": {
+    "word": "mina",
+    "phonetic": "",
+    "explains": [
+      "n.f. 矿；雷"
+    ]
+  },
+  "minacity": {
+    "word": "minacity",
+    "phonetic": "",
+    "explains": [
+      "n. 威吓性,威胁性"
+    ]
+  },
+  "minaret": {
+    "word": "minaret",
+    "phonetic": "/'mɪnəret; ,mɪnə'ret/",
+    "explains": [
+      "n. 尖塔"
+    ]
+  },
+  "minatory": {
+    "word": "minatory",
+    "phonetic": "/'mɪnə,t(ə)rɪ/",
+    "explains": [
+      "adj. 威胁的"
+    ]
+  },
+  "mince": {
+    "word": "mince",
+    "phonetic": "/mɪns/",
+    "explains": [
+      "v. 切碎"
     ]
   },
   "mind": {
@@ -293,11 +4731,620 @@
       "pron. 我的 n. 矿；矿藏；矿山 v. 开采；采矿"
     ]
   },
+  "minefield": {
+    "word": "minefield",
+    "phonetic": "/'maɪnfiːld/",
+    "explains": [
+      "n. 布雷区；充满隐伏危险的事物"
+    ]
+  },
+  "miner": {
+    "word": "miner",
+    "phonetic": "/'maɪnə/",
+    "explains": [
+      "n. 矿工"
+    ]
+  },
+  "mineral": {
+    "word": "mineral",
+    "phonetic": "/ˈmɪn(ə)r(ə)l/",
+    "explains": [
+      "n. 矿物　adj. 矿物的"
+    ]
+  },
+  "mineralization": {
+    "word": "mineralization",
+    "phonetic": "",
+    "explains": [
+      "n. 矿化作用,成矿作用"
+    ]
+  },
+  "mineralize": {
+    "word": "mineralize",
+    "phonetic": "/'mɪn(ə)rəlaɪz/",
+    "explains": [
+      "v. 使矿物化,采集矿物"
+    ]
+  },
+  "mingle": {
+    "word": "mingle",
+    "phonetic": "",
+    "explains": [
+      "vt. 使混合，混合起来"
+    ]
+  },
+  "mingy": {
+    "word": "mingy",
+    "phonetic": "/'mɪn(d)ʒɪ/",
+    "explains": [
+      "adj. 卑鄙的, 吝啬的"
+    ]
+  },
+  "miniature": {
+    "word": "miniature",
+    "phonetic": "/'mɪnɪtʃə/",
+    "explains": [
+      "n. 缩影；adj. 缩小的"
+    ]
+  },
+  "minibus": {
+    "word": "minibus",
+    "phonetic": "/'mɪnɪbʌs/",
+    "explains": [
+      "n. 面包车（等于microbus）；小型公共汽车；中客车；vi. 乘中客车"
+    ]
+  },
+  "minify": {
+    "word": "minify",
+    "phonetic": "",
+    "explains": [
+      "压缩混淆（代码体积优化）"
+    ]
+  },
+  "minimal": {
+    "word": "minimal",
+    "phonetic": "/'mɪnɪm(ə)l/",
+    "explains": [
+      "adj. 最小的, 最小限度的"
+    ]
+  },
+  "minimalist": {
+    "word": "minimalist",
+    "phonetic": "/'mɪnɪm(ə)lɪst/",
+    "explains": [
+      "n. 最低限要求者"
+    ]
+  },
+  "minimize": {
+    "word": "minimize",
+    "phonetic": "/ˈmɪnɪˌmaɪz/",
+    "explains": [
+      "v. 使减到最小"
+    ]
+  },
+  "minimum": {
+    "word": "minimum",
+    "phonetic": "/'mɪnɪməm/",
+    "explains": [
+      "n. 最小量；adj. 最小的"
+    ]
+  },
+  "minion": {
+    "word": "minion",
+    "phonetic": "/'mɪnjən/",
+    "explains": [
+      "n. 奴才, 宠臣"
+    ]
+  },
+  "minister": {
+    "word": "minister",
+    "phonetic": "/'mɪnɪstə/",
+    "explains": [
+      "n. 部长，大臣；公使"
+    ]
+  },
+  "ministry": {
+    "word": "ministry",
+    "phonetic": "/'mɪnɪstrɪ/",
+    "explains": [
+      "n. （政府的）部"
+    ]
+  },
+  "minivan": {
+    "word": "minivan",
+    "phonetic": "/'mɪnɪvæn/",
+    "explains": [
+      "n. 小型货车"
+    ]
+  },
+  "mink": {
+    "word": "mink",
+    "phonetic": "/mɪŋk/",
+    "explains": [
+      "n. 貂；貂皮衣；adj. 豪华的；富裕的"
+    ]
+  },
+  "minneapolis": {
+    "word": "minneapolis",
+    "phonetic": "/,mini'æpəlis/",
+    "explains": [
+      "n. 明尼苏达[美国州名]"
+    ]
+  },
+  "minnesota": {
+    "word": "minnesota",
+    "phonetic": "/,mini'səutə/",
+    "explains": [
+      "n. 明尼苏达州(美国州名)"
+    ]
+  },
+  "minnow": {
+    "word": "minnow",
+    "phonetic": "/'mɪnəʊ/",
+    "explains": [
+      "n. [鱼] 鲦鱼（一种小淡水鱼）"
+    ]
+  },
+  "minor": {
+    "word": "minor",
+    "phonetic": "/ˈmaɪnə/",
+    "explains": [
+      "adj. 较小的"
+    ]
+  },
+  "minority": {
+    "word": "minority",
+    "phonetic": "/maɪˈnɒrɪtɪ; mɪ-/",
+    "explains": [
+      "n. 少数"
+    ]
+  },
+  "minstrel": {
+    "word": "minstrel",
+    "phonetic": "/'mɪnstr(ə)l/",
+    "explains": [
+      "n. 吟游诗人(或歌手)"
+    ]
+  },
+  "mint": {
+    "word": "mint",
+    "phonetic": "/mɪnt/",
+    "explains": [
+      "n. 造币厂；巨额钱财"
+    ]
+  },
+  "minuend": {
+    "word": "minuend",
+    "phonetic": "/'mɪnjʊend/",
+    "explains": [
+      "n. [数] 被减数"
+    ]
+  },
+  "minuet": {
+    "word": "minuet",
+    "phonetic": "/mɪnjʊ'et/",
+    "explains": [
+      "n. 米奴哀小步舞, 米奴哀小步舞曲"
+    ]
+  },
+  "minus": {
+    "word": "minus",
+    "phonetic": "/'maɪnəs/",
+    "explains": [
+      "adj. 负面的；使显得有缺陷的；prep. 减（去）"
+    ]
+  },
+  "minuscule": {
+    "word": "minuscule",
+    "phonetic": "/'mɪnəskjuːl/",
+    "explains": [
+      "n&a. 草写小字(的)"
+    ]
+  },
   "minute": {
     "word": "minute",
     "phonetic": "/ˈmɪnɪt/",
     "explains": [
       "n. 分；分钟；片刻；笔记 adj. 微小的；详细的"
+    ]
+  },
+  "minutely": {
+    "word": "minutely",
+    "phonetic": "/maɪ'njuːtlɪ/",
+    "explains": [
+      "adj. 每分钟的,持续的"
+    ]
+  },
+  "minutes": {
+    "word": "minutes",
+    "phonetic": "/'minits/",
+    "explains": [
+      "n.  会议记录"
+    ]
+  },
+  "minutia": {
+    "word": "minutia",
+    "phonetic": "/mɪ'njuːʃɪə/",
+    "explains": [
+      "n. 细节, 琐事, 细目"
+    ]
+  },
+  "minuto": {
+    "word": "minuto",
+    "phonetic": "",
+    "explains": [
+      "n.m. 分钟"
+    ]
+  },
+  "miocene": {
+    "word": "miocene",
+    "phonetic": "/'maiəusi:n/",
+    "explains": [
+      "adj. 中新世的, 中新统的"
+    ]
+  },
+  "miracle": {
+    "word": "miracle",
+    "phonetic": "/ˈmɪrək(ə)l/",
+    "explains": [
+      "n. 奇迹"
+    ]
+  },
+  "miraculous": {
+    "word": "miraculous",
+    "phonetic": "/mɪ'rækjʊləs/",
+    "explains": [
+      "adj. 奇迹的,不可思议的"
+    ]
+  },
+  "mirada": {
+    "word": "mirada",
+    "phonetic": "",
+    "explains": [
+      "n.f. 目光"
+    ]
+  },
+  "mirage": {
+    "word": "mirage",
+    "phonetic": "/'mɪrɑːʒ; mɪ'rɑːʒ/",
+    "explains": [
+      "n. 海市蜃楼,幻想"
+    ]
+  },
+  "mirar": {
+    "word": "mirar",
+    "phonetic": "",
+    "explains": [
+      "v. 看"
+    ]
+  },
+  "mire": {
+    "word": "mire",
+    "phonetic": "/maɪə/",
+    "explains": [
+      "n. 泥泞，沼泽地"
+    ]
+  },
+  "miroir": {
+    "word": "miroir",
+    "phonetic": "",
+    "explains": [
+      "n.m. 镜子"
+    ]
+  },
+  "mirror": {
+    "word": "mirror",
+    "phonetic": "/ˈmɪrə/",
+    "explains": [
+      "n. 镜子"
+    ]
+  },
+  "mirth": {
+    "word": "mirth",
+    "phonetic": "/mɜːθ/",
+    "explains": [
+      "n. 欢笑, 高兴"
+    ]
+  },
+  "miry": {
+    "word": "miry",
+    "phonetic": "/'maɪrɪ/",
+    "explains": [
+      "adj. 泥泞的"
+    ]
+  },
+  "misadventure": {
+    "word": "misadventure",
+    "phonetic": "/mɪsəd'ventʃə/",
+    "explains": [
+      "n. 灾难；不幸遭遇"
+    ]
+  },
+  "misanthrope": {
+    "word": "misanthrope",
+    "phonetic": "/'mɪz(ə)nθrəʊp; mɪs-/",
+    "explains": [
+      "n. 厌恶人类的人, 不愿与人来往者"
+    ]
+  },
+  "misanthropy": {
+    "word": "misanthropy",
+    "phonetic": "/mɪ'zænθrəpɪ; mɪ'sæn-/",
+    "explains": [
+      "n. 厌恶人类；厌世，愤世嫉俗"
+    ]
+  },
+  "misapprehend": {
+    "word": "misapprehend",
+    "phonetic": "/,mɪsæprɪ'hend/",
+    "explains": [
+      "v. 误会，误解"
+    ]
+  },
+  "misapprehension": {
+    "word": "misapprehension",
+    "phonetic": "/'mis,æpri'henʃən/",
+    "explains": [
+      "n. 误解；误会"
+    ]
+  },
+  "misappropriate": {
+    "word": "misappropriate",
+    "phonetic": "/mɪsə'prəʊprɪeɪt/",
+    "explains": [
+      "v. 滥用，误用"
+    ]
+  },
+  "misbehave": {
+    "word": "misbehave",
+    "phonetic": "/mɪsbɪ'heɪv/",
+    "explains": [
+      "v. 作弊；行为不礼貌"
+    ]
+  },
+  "misbehavior": {
+    "word": "misbehavior",
+    "phonetic": "/,mɪsbɪ'hevjɚ/",
+    "explains": [
+      "n. 品行不端；不礼貌（等于misbehaviour）"
+    ]
+  },
+  "misbehaviour": {
+    "word": "misbehaviour",
+    "phonetic": "/,mɪsbɪ'hevjɚ/",
+    "explains": [
+      "n. 不正当举止；行为无礼貌"
+    ]
+  },
+  "miscalculate": {
+    "word": "miscalculate",
+    "phonetic": "/mɪs'kælkjʊleɪt/",
+    "explains": [
+      "v. 算错；估计错误"
+    ]
+  },
+  "miscarriage": {
+    "word": "miscarriage",
+    "phonetic": "/mɪs'kærɪdʒ; 'mɪskærɪdʒ/",
+    "explains": [
+      "n. 误判，误罚；流产；失败"
+    ]
+  },
+  "miscellaneous": {
+    "word": "miscellaneous",
+    "phonetic": "/ˌmisə'leiniəs/",
+    "explains": [
+      "adj.  混杂的； 多方面的； 多才多艺的"
+    ]
+  },
+  "miscellany": {
+    "word": "miscellany",
+    "phonetic": "/mɪ'selənɪ/",
+    "explains": [
+      "n. 杂物, (miscellanies)杂录, 杂记"
+    ]
+  },
+  "mischance": {
+    "word": "mischance",
+    "phonetic": "/mɪs'tʃɑːns/",
+    "explains": [
+      "n. 不幸，灾难"
+    ]
+  },
+  "mischief": {
+    "word": "mischief",
+    "phonetic": "/'mɪstʃɪf/",
+    "explains": [
+      "n. 调皮，捣蛋，胡闹"
+    ]
+  },
+  "mischievous": {
+    "word": "mischievous",
+    "phonetic": "/'mɪstʃɪvəs/",
+    "explains": [
+      "adj. 淘气的；（人、行为等）恶作剧的；有害的"
+    ]
+  },
+  "miscible": {
+    "word": "miscible",
+    "phonetic": "/'mɪsɪb(ə)l/",
+    "explains": [
+      "adj. 易混合的"
+    ]
+  },
+  "misconceive": {
+    "word": "misconceive",
+    "phonetic": "/mɪskən'siːv/",
+    "explains": [
+      "vt&vi. 误解"
+    ]
+  },
+  "misconception": {
+    "word": "misconception",
+    "phonetic": "/ˌmiskən'sepʃən/",
+    "explains": [
+      "n.  误解； 错误想法； 错误印象"
+    ]
+  },
+  "misconduct": {
+    "word": "misconduct",
+    "phonetic": "/mɪs'kɒndʌkt/",
+    "explains": [
+      "n. 不端行为；处理不当；v. 处理不当；行为不检"
+    ]
+  },
+  "misconstrue": {
+    "word": "misconstrue",
+    "phonetic": "/mɪskən'struː/",
+    "explains": [
+      "v. 误解, 曲解"
+    ]
+  },
+  "miscount": {
+    "word": "miscount",
+    "phonetic": "/mɪs'kaʊnt/",
+    "explains": [
+      "v. 数错；算错；n. 数错；误算"
+    ]
+  },
+  "miscreant": {
+    "word": "miscreant",
+    "phonetic": "/'mɪskrɪənt/",
+    "explains": [
+      "adj. 异端的；邪道的；极恶的；n. 异端；恶棍；罪大恶极之人"
+    ]
+  },
+  "misdeed": {
+    "word": "misdeed",
+    "phonetic": "/mɪs'diːd/",
+    "explains": [
+      "n. 罪行, 犯罪"
+    ]
+  },
+  "miser": {
+    "word": "miser",
+    "phonetic": "/'maɪzə/",
+    "explains": [
+      "n. 守财奴，吝啬鬼"
+    ]
+  },
+  "miserable": {
+    "word": "miserable",
+    "phonetic": "/ˈmɪz(ə)rəb(ə)l/",
+    "explains": [
+      "adj. 悲惨的"
+    ]
+  },
+  "miserly": {
+    "word": "miserly",
+    "phonetic": "/'maɪzəlɪ/",
+    "explains": [
+      "adj. 吝啬的；贪婪的"
+    ]
+  },
+  "misery": {
+    "word": "misery",
+    "phonetic": "/'mɪz(ə)rɪ/",
+    "explains": [
+      "n. 痛苦，悲惨，不幸"
+    ]
+  },
+  "misfit": {
+    "word": "misfit",
+    "phonetic": "/'mɪsfɪt/",
+    "explains": [
+      "n. 不适合；不适应环境的人；vt. 对…不适合"
+    ]
+  },
+  "misfortune": {
+    "word": "misfortune",
+    "phonetic": "/mɪs'fɔːtʃuːn; -tʃ(ə)n/",
+    "explains": [
+      "n. 不幸，灾祸，灾难"
+    ]
+  },
+  "misgiving": {
+    "word": "misgiving",
+    "phonetic": "/mɪs'gɪvɪŋ/",
+    "explains": [
+      "n. 怀疑，疑虑"
+    ]
+  },
+  "misguided": {
+    "word": "misguided",
+    "phonetic": "/,mɪs'ɡaɪdɪd/",
+    "explains": [
+      "adj. 误入歧途的"
+    ]
+  },
+  "mishap": {
+    "word": "mishap",
+    "phonetic": "/'mɪshæp/",
+    "explains": [
+      "n. 不幸的事，不幸；灾祸"
+    ]
+  },
+  "misinterpret": {
+    "word": "misinterpret",
+    "phonetic": "/mɪsɪn'tɜːprɪt/",
+    "explains": [
+      "v. 曲解"
+    ]
+  },
+  "misinterprete": {
+    "word": "misinterprete",
+    "phonetic": "",
+    "explains": [
+      "v. 误解"
+    ]
+  },
+  "mislead": {
+    "word": "mislead",
+    "phonetic": "/mɪsˈliːd/",
+    "explains": [
+      "v. 误导"
+    ]
+  },
+  "mismatch": {
+    "word": "mismatch",
+    "phonetic": "/'mɪsmætʃ/",
+    "explains": [
+      "n&v. 配错, 不相匹配"
+    ]
+  },
+  "misnomer": {
+    "word": "misnomer",
+    "phonetic": "/mɪs'nəʊmə/",
+    "explains": [
+      "n. 用词不当；误称；写错姓名"
+    ]
+  },
+  "misoneist": {
+    "word": "misoneist",
+    "phonetic": "",
+    "explains": [
+      "n. [心]厌新者"
+    ]
+  },
+  "misplace": {
+    "word": "misplace",
+    "phonetic": "/mɪs'pleɪs/",
+    "explains": [
+      "v. 放错地方；忘记把…放在什么地方；错误地信任某人"
+    ]
+  },
+  "misprision": {
+    "word": "misprision",
+    "phonetic": "/mɪs'prɪʒ(ə)n/",
+    "explains": [
+      "n. [律](公职人员的)玩忽职守, 渎职, 包庇罪行, 蔑视政府(或法庭)"
+    ]
+  },
+  "misrepresent": {
+    "word": "misrepresent",
+    "phonetic": "/,mɪsreprɪ'zent/",
+    "explains": [
+      "v. 误传，歪曲，曲解"
     ]
   },
   "miss": {
@@ -307,11 +5354,179 @@
       "v. 错过；想念；漏掉 n. 小姐；女士"
     ]
   },
+  "missile": {
+    "word": "missile",
+    "phonetic": "/ˈmɪsaɪl/",
+    "explains": [
+      "n. 导弹"
+    ]
+  },
+  "missing": {
+    "word": "missing",
+    "phonetic": "/ˈmɪsɪŋ/",
+    "explains": [
+      "adj. 缺失的"
+    ]
+  },
+  "mission": {
+    "word": "mission",
+    "phonetic": "/ˈmɪʃ(ə)n/",
+    "explains": [
+      "n. 任务"
+    ]
+  },
+  "missionary": {
+    "word": "missionary",
+    "phonetic": "/'mɪʃ(ə)n(ə)rɪ/",
+    "explains": [
+      "n. 传教士"
+    ]
+  },
+  "mississippi": {
+    "word": "mississippi",
+    "phonetic": "/ˌmisiˈsipi/",
+    "explains": [
+      "n. 密西西比河,密西西比州(美国州名)"
+    ]
+  },
+  "mississippian": {
+    "word": "mississippian",
+    "phonetic": "/,misi'sipiən/",
+    "explains": [
+      "adj. 密西西比河的 n密西西比州人"
+    ]
+  },
+  "missouri": {
+    "word": "missouri",
+    "phonetic": "/mi'zuəri/",
+    "explains": [
+      "n. 密苏里州(美国州名)"
+    ]
+  },
+  "misstate": {
+    "word": "misstate",
+    "phonetic": "/mɪs'steɪt/",
+    "explains": [
+      "v. 说错；作虚伪叙述，谎报"
+    ]
+  },
+  "misstep": {
+    "word": "misstep",
+    "phonetic": "/mɪs'step/",
+    "explains": [
+      "n. 失足；过失；踏错；失策；vi. 失足；走上歧途"
+    ]
+  },
+  "mist": {
+    "word": "mist",
+    "phonetic": "/mɪst/",
+    "explains": [
+      "n. 薄雾"
+    ]
+  },
   "mistake": {
     "word": "mistake",
     "phonetic": "/mɪˈsteɪk/",
     "explains": [
       "n. 错误；误会；过失 v. 弄错；误解"
+    ]
+  },
+  "mistaken": {
+    "word": "mistaken",
+    "phonetic": "/mɪ'steɪk(ə)n/",
+    "explains": [
+      "adj. 错误的；弄错的；被误解的；v. 弄错（mistake的过去分词）"
+    ]
+  },
+  "mister": {
+    "word": "mister",
+    "phonetic": "/ˈmɪstə/",
+    "explains": [
+      "n. 先生"
+    ]
+  },
+  "misterio": {
+    "word": "misterio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 神秘"
+    ]
+  },
+  "mistral": {
+    "word": "mistral",
+    "phonetic": "/'mɪstr(ə)l; mɪ'strɑːl/",
+    "explains": [
+      "n. 寒冷西北风"
+    ]
+  },
+  "mistress": {
+    "word": "mistress",
+    "phonetic": "/'mɪstrɪs/",
+    "explains": [
+      "n. 女主；夫人"
+    ]
+  },
+  "mistrust": {
+    "word": "mistrust",
+    "phonetic": "/mɪs'trʌst/",
+    "explains": [
+      "n&v. 不信任, 猜疑"
+    ]
+  },
+  "misty": {
+    "word": "misty",
+    "phonetic": "/'mɪstɪ/",
+    "explains": [
+      "adj. 有薄雾的"
+    ]
+  },
+  "misunderstand": {
+    "word": "misunderstand",
+    "phonetic": "/ˌmɪsʌndəˈstænd/",
+    "explains": [
+      "v. 误解"
+    ]
+  },
+  "misunderstanding": {
+    "word": "misunderstanding",
+    "phonetic": "/,mɪsʌndə'stændɪŋ/",
+    "explains": [
+      "n. 误会, 误解"
+    ]
+  },
+  "misuse": {
+    "word": "misuse",
+    "phonetic": "/ˌmis'juːz/",
+    "explains": [
+      "v.  滥用， 误用； 虐待"
+    ]
+  },
+  "mitad": {
+    "word": "mitad",
+    "phonetic": "",
+    "explains": [
+      "n.f. 一半"
+    ]
+  },
+  "mite": {
+    "word": "mite",
+    "phonetic": "/maɪt/",
+    "explains": [
+      "n. 微小的东西,"
+    ]
+  },
+  "mitigate": {
+    "word": "mitigate",
+    "phonetic": "/'mitigeit/",
+    "explains": [
+      "vt.  使缓和； 减轻"
+    ]
+  },
+  "mitten": {
+    "word": "mitten",
+    "phonetic": "/'mɪt(ə)n/",
+    "explains": [
+      "n. 连指手套"
     ]
   },
   "mix": {
@@ -321,11 +5536,172 @@
       "v. 混合；调配；混淆 n. 混合；混合物；混乱"
     ]
   },
+  "mixer": {
+    "word": "mixer",
+    "phonetic": "/'mɪksə/",
+    "explains": [
+      "n. 搅拌器"
+    ]
+  },
+  "mixture": {
+    "word": "mixture",
+    "phonetic": "/ˈmɪkstʃə/",
+    "explains": [
+      "n. 混合物"
+    ]
+  },
+  "mnemonics": {
+    "word": "mnemonics",
+    "phonetic": "/nɪ'mɒnɪks; niː-/",
+    "explains": [
+      "n. 记忆术"
+    ]
+  },
+  "moan": {
+    "word": "moan",
+    "phonetic": "/məʊn/",
+    "explains": [
+      "n. 呻吟声；v. 呻吟"
+    ]
+  },
+  "moat": {
+    "word": "moat",
+    "phonetic": "/məʊt/",
+    "explains": [
+      "n. 护城河, 城壕"
+    ]
+  },
+  "mob": {
+    "word": "mob",
+    "phonetic": "/mɒb/",
+    "explains": [
+      "v. 团团围住（名人等）"
+    ]
+  },
+  "mobile": {
+    "word": "mobile",
+    "phonetic": "/ˈməʊbaɪl/",
+    "explains": [
+      "adj. 移动的"
+    ]
+  },
+  "mobilise": {
+    "word": "mobilise",
+    "phonetic": "/'məʊbɪlaɪz/",
+    "explains": [
+      "v. 动员；调动；使流通"
+    ]
+  },
+  "mobility": {
+    "word": "mobility",
+    "phonetic": "/məʊ'bɪlətɪ/",
+    "explains": [
+      "n. 活动性, 灵活性"
+    ]
+  },
+  "mobilize": {
+    "word": "mobilize",
+    "phonetic": "/'məʊbəlaɪz/",
+    "explains": [
+      "v. 动员，动员起来"
+    ]
+  },
+  "moccasin": {
+    "word": "moccasin",
+    "phonetic": "/'mɒkəsɪn/",
+    "explains": [
+      "n. 鹿皮鞋, 软拖鞋"
+    ]
+  },
+  "mock": {
+    "word": "mock",
+    "phonetic": "/mɒk/",
+    "explains": [
+      "v. 嘲弄，挖苦"
+    ]
+  },
+  "mockery": {
+    "word": "mockery",
+    "phonetic": "/'mɒk(ə)rɪ/",
+    "explains": [
+      "n. 嘲弄；笑柄；徒劳无功；拙劣可笑的模仿或歪曲"
+    ]
+  },
+  "mockup": {
+    "word": "mockup",
+    "phonetic": "",
+    "explains": [
+      "视觉稿"
+    ]
+  },
+  "moda": {
+    "word": "moda",
+    "phonetic": "",
+    "explains": [
+      "n.f. 时尚"
+    ]
+  },
+  "modal": {
+    "word": "modal",
+    "phonetic": "/'məʊd(ə)l/",
+    "explains": [
+      "adj. 模态的, 形态上的"
+    ]
+  },
+  "mode": {
+    "word": "mode",
+    "phonetic": "/məʊd/",
+    "explains": [
+      "n. 方式；样式"
+    ]
+  },
   "model": {
     "word": "model",
     "phonetic": "/ˈmɒdl/",
     "explains": [
       "n. 模型；模范；模特儿；样式 adj. 模范的；作模型用的"
+    ]
+  },
+  "modelo": {
+    "word": "modelo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 模特；模型"
+    ]
+  },
+  "modem": {
+    "word": "modem",
+    "phonetic": "/'məʊdem/",
+    "explains": [
+      "n. [计]调制解调器"
+    ]
+  },
+  "moderate": {
+    "word": "moderate",
+    "phonetic": "/'mɒd(ə)rət/",
+    "explains": [
+      "adj. 温和的；有节制的"
+    ]
+  },
+  "moderately": {
+    "word": "moderately",
+    "phonetic": "/'mɒd(ə)rətlɪ/",
+    "explains": [
+      "adv. 适度地，适中"
+    ]
+  },
+  "moderato": {
+    "word": "moderato",
+    "phonetic": "/,mɒdə'rɑːtəʊ/",
+    "explains": [
+      "adj. 中板的"
+    ]
+  },
+  "moderator": {
+    "word": "moderator",
+    "phonetic": "/'mɒdəreɪtə/",
+    "explains": [
+      "n. 缓和剂"
     ]
   },
   "modern": {
@@ -335,11 +5711,431 @@
       "adj. 现代的；近代的；时髦的"
     ]
   },
+  "moderne": {
+    "word": "moderne",
+    "phonetic": "",
+    "explains": [
+      "adj. 现代的"
+    ]
+  },
+  "modernise": {
+    "word": "modernise",
+    "phonetic": "/'mɒdənaɪz/",
+    "explains": [
+      "v. 现代化（等于modernize）"
+    ]
+  },
+  "modernism": {
+    "word": "modernism",
+    "phonetic": "/'mɒd(ə)nɪz(ə)m/",
+    "explains": [
+      "n. 现代主义；现代思想；现代作风"
+    ]
+  },
+  "modernist": {
+    "word": "modernist",
+    "phonetic": "/'mɑdɚnɪst/",
+    "explains": [
+      "n. 现代主义者, 现代人"
+    ]
+  },
+  "modernistic": {
+    "word": "modernistic",
+    "phonetic": "/,mɒdə'nɪstɪk/",
+    "explains": [
+      "adj. 现代的, 现代主义的"
+    ]
+  },
+  "modernization": {
+    "word": "modernization",
+    "phonetic": "/,mɒdənaɪ'zeɪʃən/",
+    "explains": [
+      "n. 现代化"
+    ]
+  },
+  "modernize": {
+    "word": "modernize",
+    "phonetic": "/ˈmɒdənaɪz/",
+    "explains": [
+      "v. 使现代化"
+    ]
+  },
+  "moderno": {
+    "word": "moderno",
+    "phonetic": "",
+    "explains": [
+      "adj. 现代的"
+    ]
+  },
+  "modest": {
+    "word": "modest",
+    "phonetic": "/ˈmɒdɪst/",
+    "explains": [
+      "adj. 谦虚的"
+    ]
+  },
+  "modeste": {
+    "word": "modeste",
+    "phonetic": "",
+    "explains": [
+      "adj. 谦虚的；简朴的"
+    ]
+  },
+  "modestly": {
+    "word": "modestly",
+    "phonetic": "/ˈmɒdɪstlɪ/",
+    "explains": [
+      "adv. 谨慎地, 适当地"
+    ]
+  },
+  "modesty": {
+    "word": "modesty",
+    "phonetic": "/'mɒdɪstɪ/",
+    "explains": [
+      "n. 谦逊；端庄"
+    ]
+  },
+  "modicum": {
+    "word": "modicum",
+    "phonetic": "/'mɒdɪkəm/",
+    "explains": [
+      "n. 少量, 一点点"
+    ]
+  },
+  "modificar": {
+    "word": "modificar",
+    "phonetic": "",
+    "explains": [
+      "v. 修改"
+    ]
+  },
+  "modification": {
+    "word": "modification",
+    "phonetic": "/,mɒdɪfɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 修改"
+    ]
+  },
+  "modify": {
+    "word": "modify",
+    "phonetic": "/ˈmɒdɪfaɪ/",
+    "explains": [
+      "v. 修改"
+    ]
+  },
+  "modish": {
+    "word": "modish",
+    "phonetic": "/'məʊdɪʃ/",
+    "explains": [
+      "adj. 流行的, 时髦的"
+    ]
+  },
+  "modo": {
+    "word": "modo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 方式"
+    ]
+  },
+  "modular": {
+    "word": "modular",
+    "phonetic": "/'mɒdjʊlə/",
+    "explains": [
+      "adj. 模块化的；模数的；有标准组件的"
+    ]
+  },
+  "modulate": {
+    "word": "modulate",
+    "phonetic": "/'mɒdjʊleɪt/",
+    "explains": [
+      "v. 调整，调节（声音）"
+    ]
+  },
+  "modulation": {
+    "word": "modulation",
+    "phonetic": "/,mɒdjʊ'leɪʃən/",
+    "explains": [
+      "n. 调制"
+    ]
+  },
+  "module": {
+    "word": "module",
+    "phonetic": "/'mɒdjuːl/",
+    "explains": [
+      "n. 模块；组件"
+    ]
+  },
+  "modus": {
+    "word": "modus",
+    "phonetic": "",
+    "explains": [
+      "n. 方法, 形式"
+    ]
+  },
+  "mogul": {
+    "word": "mogul",
+    "phonetic": "/'məugl/",
+    "explains": [
+      "n.  巨头， 泰斗， 大人物， 巨擘"
+    ]
+  },
+  "moiety": {
+    "word": "moiety",
+    "phonetic": "/'mɒɪɪtɪ/",
+    "explains": [
+      "n. 二分之一, 一部分, 半族"
+    ]
+  },
+  "moineau": {
+    "word": "moineau",
+    "phonetic": "",
+    "explains": [
+      "n.m. 麻雀"
+    ]
+  },
+  "mois": {
+    "word": "mois",
+    "phonetic": "",
+    "explains": [
+      "n.m. 月"
+    ]
+  },
+  "moist": {
+    "word": "moist",
+    "phonetic": "/mɒɪst/",
+    "explains": [
+      "adj. 潮湿的"
+    ]
+  },
+  "moisten": {
+    "word": "moisten",
+    "phonetic": "/'mɒɪs(ə)n/",
+    "explains": [
+      "v. 弄湿 vi变潮湿"
+    ]
+  },
+  "moisture": {
+    "word": "moisture",
+    "phonetic": "/'mɒɪstʃə/",
+    "explains": [
+      "n. 潮湿，湿气"
+    ]
+  },
+  "moisturise": {
+    "word": "moisturise",
+    "phonetic": "",
+    "explains": [
+      "v. 给…增加水分"
+    ]
+  },
+  "mojado": {
+    "word": "mojado",
+    "phonetic": "",
+    "explains": [
+      "adj. 湿的"
+    ]
+  },
+  "mojibake": {
+    "word": "mojibake",
+    "phonetic": "",
+    "explains": [
+      "乱码"
+    ]
+  },
+  "molar": {
+    "word": "molar",
+    "phonetic": "/'məʊlə/",
+    "explains": [
+      "adj. 磨碎的, 臼齿的, 质量的, [化][物]摩尔的"
+    ]
+  },
+  "molasses": {
+    "word": "molasses",
+    "phonetic": "/mə'læsɪz/",
+    "explains": [
+      "n. <美>糖蜜"
+    ]
+  },
+  "mold": {
+    "word": "mold",
+    "phonetic": "/məʊld/",
+    "explains": [
+      "n. 模子vt浇铸, 塑造"
+    ]
+  },
+  "mole": {
+    "word": "mole",
+    "phonetic": "/məʊl/",
+    "explains": [
+      "n. 鼹鼠；痣；防波堤；胎块；间谍"
+    ]
+  },
+  "molecular": {
+    "word": "molecular",
+    "phonetic": "/mə'lekjʊlə/",
+    "explains": [
+      "adj. 分子的；克分子的"
+    ]
+  },
+  "molecule": {
+    "word": "molecule",
+    "phonetic": "/'mɒlɪkjuːl/",
+    "explains": [
+      "n. 分子，克分子"
+    ]
+  },
+  "molest": {
+    "word": "molest",
+    "phonetic": "/mə'lest/",
+    "explains": [
+      "v. 骚扰；干扰"
+    ]
+  },
+  "molino": {
+    "word": "molino",
+    "phonetic": "",
+    "explains": [
+      "n.m. 磨坊；风车"
+    ]
+  },
+  "mollify": {
+    "word": "mollify",
+    "phonetic": "/'mɒlɪfaɪ/",
+    "explains": [
+      "v. 平息，缓和；使…平静；使…变软"
+    ]
+  },
+  "mollusk": {
+    "word": "mollusk",
+    "phonetic": "/'mɒləsk/",
+    "explains": [
+      "n. [动]软体动物"
+    ]
+  },
+  "mollycoddle": {
+    "word": "mollycoddle",
+    "phonetic": "/'mɒlɪkɒd(ə)l/",
+    "explains": [
+      "n. 娇惯的男人, 懦夫"
+    ]
+  },
+  "molt": {
+    "word": "molt",
+    "phonetic": "/məʊlt/",
+    "explains": [
+      "vi&n. 脱毛,换毛"
+    ]
+  },
+  "molten": {
+    "word": "molten",
+    "phonetic": "/'məʊlt(ə)n/",
+    "explains": [
+      "adj. 熔化的；铸造的；炽热的；v. 换毛；脱毛（molt的过去分词）；n. (Molten)人名；(英)莫尔滕"
+    ]
+  },
   "moment": {
     "word": "moment",
     "phonetic": "/ˈməʊmənt/",
     "explains": [
       "n. 片刻；瞬间；重要时刻；指定时刻"
+    ]
+  },
+  "momentarily": {
+    "word": "momentarily",
+    "phonetic": "/'məʊm(ə)nt(ə)rɪlɪ; ,məʊm(ə)n'terɪlɪ/",
+    "explains": [
+      "adv. 暂时地, 立刻地"
+    ]
+  },
+  "momentary": {
+    "word": "momentary",
+    "phonetic": "/'məʊm(ə)nt(ə)rɪ/",
+    "explains": [
+      "adj. 瞬息间的，片刻的"
+    ]
+  },
+  "momento": {
+    "word": "momento",
+    "phonetic": "",
+    "explains": [
+      "n.m. 时刻"
+    ]
+  },
+  "momentous": {
+    "word": "momentous",
+    "phonetic": "/mə(ʊ)'mentəs/",
+    "explains": [
+      "adj. 重要的, 重大的"
+    ]
+  },
+  "momentum": {
+    "word": "momentum",
+    "phonetic": "/mə'mentəm/",
+    "explains": [
+      "n. 势头；[物] 动量；动力；冲力"
+    ]
+  },
+  "monarch": {
+    "word": "monarch",
+    "phonetic": "/'mɒnək/",
+    "explains": [
+      "n. 君主，最高统治者"
+    ]
+  },
+  "monarchy": {
+    "word": "monarchy",
+    "phonetic": "/'mɒnəkɪ/",
+    "explains": [
+      "n. 君主政体, 君主国"
+    ]
+  },
+  "monastery": {
+    "word": "monastery",
+    "phonetic": "/'mɒnəst(ə)rɪ/",
+    "explains": [
+      "n. 修道院, 僧侣"
+    ]
+  },
+  "monasticism": {
+    "word": "monasticism",
+    "phonetic": "/mə'næstɪsɪzəm/",
+    "explains": [
+      "n. 修道院生活, 修道院制度"
+    ]
+  },
+  "monaural": {
+    "word": "monaural",
+    "phonetic": "/mɒn'ɔːr(ə)l/",
+    "explains": [
+      "adj. 单耳(听觉)的, 非立体声的"
+    ]
+  },
+  "monday": {
+    "word": "monday",
+    "phonetic": "/ˈmʌndeɪ; ˈmʌndɪ/",
+    "explains": [
+      "n. 星期一"
+    ]
+  },
+  "monde": {
+    "word": "monde",
+    "phonetic": "",
+    "explains": [
+      "n.m. 世界；人们"
+    ]
+  },
+  "moneda": {
+    "word": "moneda",
+    "phonetic": "",
+    "explains": [
+      "n.f. 硬币"
+    ]
+  },
+  "monetary": {
+    "word": "monetary",
+    "phonetic": "/'mʌnɪt(ə)rɪ/",
+    "explains": [
+      "adj. 货币的；财政的"
     ]
   },
   "money": {
@@ -349,11 +6145,361 @@
       "n. 钱；货币；财富"
     ]
   },
+  "mongolia": {
+    "word": "mongolia",
+    "phonetic": "/mɔŋ'ɡəuliə; 'mɔn-/",
+    "explains": [
+      "n. 蒙古"
+    ]
+  },
+  "mongolian": {
+    "word": "mongolian",
+    "phonetic": "",
+    "explains": [
+      "n. 蒙古人；蒙古语；adj. 蒙古人的；蒙古语的"
+    ]
+  },
+  "mongolism": {
+    "word": "mongolism",
+    "phonetic": "/'mɒŋg(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 先天愚型病"
+    ]
+  },
+  "mongrel": {
+    "word": "mongrel",
+    "phonetic": "/'mʌŋgr(ə)l/",
+    "explains": [
+      "n. <贬>杂种(指人), 杂种狗, 混血儿"
+    ]
+  },
+  "monition": {
+    "word": "monition",
+    "phonetic": "/mə'nɪʃ(ə)n/",
+    "explains": [
+      "n. 忠告；法庭传票；宗教法庭的诫谕"
+    ]
+  },
+  "monitor": {
+    "word": "monitor",
+    "phonetic": "/ˈmɒnɪtə/",
+    "explains": [
+      "v. 监控　n. 显示器"
+    ]
+  },
+  "monje": {
+    "word": "monje",
+    "phonetic": "",
+    "explains": [
+      "n.m. 修道士"
+    ]
+  },
+  "monk": {
+    "word": "monk",
+    "phonetic": "/mʌŋk/",
+    "explains": [
+      "n. 和尚，僧侣，修道士"
+    ]
+  },
+  "monkey": {
+    "word": "monkey",
+    "phonetic": "/ˈmʌŋkɪ/",
+    "explains": [
+      "n. 猴子"
+    ]
+  },
+  "monnaie": {
+    "word": "monnaie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 零钱；货币"
+    ]
+  },
+  "monochromatic": {
+    "word": "monochromatic",
+    "phonetic": "/mɒnə(ʊ)krə'mætɪk/",
+    "explains": [
+      "adj. 单色的"
+    ]
+  },
+  "monochrome": {
+    "word": "monochrome",
+    "phonetic": "/'mɒnəkrəʊm; mɒnə(ʊ)'krəʊm/",
+    "explains": [
+      "n. 单色 单色的"
+    ]
+  },
+  "monocracy": {
+    "word": "monocracy",
+    "phonetic": "/mə'nɒkrəsɪ/",
+    "explains": [
+      "n. 独裁政治"
+    ]
+  },
+  "monogamous": {
+    "word": "monogamous",
+    "phonetic": "/mɒ'nɒɡəməs/",
+    "explains": [
+      "n. 一夫一妻的, 单配的"
+    ]
+  },
+  "monogamy": {
+    "word": "monogamy",
+    "phonetic": "/mə'nɒgəmɪ/",
+    "explains": [
+      "n. 一夫一妻制；[动] 单配偶，[动] 单配性"
+    ]
+  },
+  "monograph": {
+    "word": "monograph",
+    "phonetic": "/'mɒnəgrɑːf/",
+    "explains": [
+      "n. 专论"
+    ]
+  },
+  "monoid": {
+    "word": "monoid",
+    "phonetic": "",
+    "explains": [
+      "n. 独异点"
+    ]
+  },
+  "monolingual": {
+    "word": "monolingual",
+    "phonetic": "/mɒnə(ʊ)'lɪŋgw(ə)l/",
+    "explains": [
+      "adj. 单语的；仅用一种语言的；仅懂一种语言的；n. 只用一种语言的人"
+    ]
+  },
+  "monolith": {
+    "word": "monolith",
+    "phonetic": "/'mɒn(ə)lɪθ/",
+    "explains": [
+      "n. 整块石料；庞然大物"
+    ]
+  },
+  "monolithic": {
+    "word": "monolithic",
+    "phonetic": "/mɒnə'lɪθɪk/",
+    "explains": [
+      "n. 单片电路, 单块集成电路"
+    ]
+  },
+  "monologue": {
+    "word": "monologue",
+    "phonetic": "/'mɒn(ə)lɒg/",
+    "explains": [
+      "n. 戏剧的独白；滔滔不绝"
+    ]
+  },
+  "monomial": {
+    "word": "monomial",
+    "phonetic": "/mə'nəʊmɪəl/",
+    "explains": [
+      "adj. 单项的；单个词的；n. [数] 单项式；单名"
+    ]
+  },
+  "mononucleosis": {
+    "word": "mononucleosis",
+    "phonetic": "/,mɒnə(ʊ)njuːklɪ'əʊsɪs/",
+    "explains": [
+      "n. 单核细胞增多症；单核白血球增多症"
+    ]
+  },
+  "monopolise": {
+    "word": "monopolise",
+    "phonetic": "",
+    "explains": [
+      "v. 垄断，获得专卖权（等于monopolize）"
+    ]
+  },
+  "monopolistic": {
+    "word": "monopolistic",
+    "phonetic": "/mə,nɒpə'lɪstɪk/",
+    "explains": [
+      "adj. 垄断的；独占性的；专利的"
+    ]
+  },
+  "monopolize": {
+    "word": "monopolize",
+    "phonetic": "/mə'nɔpəlaiz/",
+    "explains": [
+      "vt.  垄断， 独占"
+    ]
+  },
+  "monopoly": {
+    "word": "monopoly",
+    "phonetic": "/mə'nɒp(ə)lɪ/",
+    "explains": [
+      "n. 垄断；独占，专利"
+    ]
+  },
+  "monotone": {
+    "word": "monotone",
+    "phonetic": "/'mɒnətəʊn/",
+    "explains": [
+      "n. 单调；单音调；adj. 单调的；vt. 单调地读"
+    ]
+  },
+  "monotonous": {
+    "word": "monotonous",
+    "phonetic": "/mə'nɒt(ə)nəs/",
+    "explains": [
+      "adj. 单调的，无抑扬顿挫的；无变化的"
+    ]
+  },
+  "monotony": {
+    "word": "monotony",
+    "phonetic": "/mə'nɒt(ə)nɪ/",
+    "explains": [
+      "n. 单调；千篇一律"
+    ]
+  },
+  "monoxide": {
+    "word": "monoxide",
+    "phonetic": "/mə'nɒksaɪd/",
+    "explains": [
+      "n. 一氧化物"
+    ]
+  },
+  "monroe": {
+    "word": "monroe",
+    "phonetic": "/mən'rəu/",
+    "explains": [
+      "n. 门罗(m)"
+    ]
+  },
+  "monsieur": {
+    "word": "monsieur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 先生"
+    ]
+  },
+  "monsoon": {
+    "word": "monsoon",
+    "phonetic": "/mɒn'suːn/",
+    "explains": [
+      "n. 季风，雨季"
+    ]
+  },
+  "monster": {
+    "word": "monster",
+    "phonetic": "/'mɒnstə/",
+    "explains": [
+      "n. 怪物；畸形的动植物"
+    ]
+  },
+  "monstrosity": {
+    "word": "monstrosity",
+    "phonetic": "/mɒn'strɒsɪtɪ/",
+    "explains": [
+      "n. 畸形"
+    ]
+  },
+  "monstrous": {
+    "word": "monstrous",
+    "phonetic": "/'mɒnstrəs/",
+    "explains": [
+      "adj. 极大的；可怕的"
+    ]
+  },
+  "monstruo": {
+    "word": "monstruo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 怪物"
+    ]
+  },
+  "montage": {
+    "word": "montage",
+    "phonetic": "/mɒn'tɑːʒ; 'mɒntɑːʒ/",
+    "explains": [
+      "n. 蒙太奇（电影的基本结构手段和叙事方式）；混合画，拼集的照片"
+    ]
+  },
+  "montagne": {
+    "word": "montagne",
+    "phonetic": "",
+    "explains": [
+      "n.f. 山"
+    ]
+  },
+  "montar": {
+    "word": "montar",
+    "phonetic": "",
+    "explains": [
+      "v. 骑；安装"
+    ]
+  },
   "month": {
     "word": "month",
     "phonetic": "/mʌnθ/",
     "explains": [
       "n. 月；月份；一个月的时间"
+    ]
+  },
+  "monthly": {
+    "word": "monthly",
+    "phonetic": "/'mʌnθlɪ/",
+    "explains": [
+      "adj. 每月的；adv. 每月"
+    ]
+  },
+  "montre": {
+    "word": "montre",
+    "phonetic": "",
+    "explains": [
+      "n.f. 手表"
+    ]
+  },
+  "monument": {
+    "word": "monument",
+    "phonetic": "/ˈmɒnjʊmənt/",
+    "explains": [
+      "n. 纪念碑"
+    ]
+  },
+  "monumental": {
+    "word": "monumental",
+    "phonetic": "/mɒnjʊ'ment(ə)l/",
+    "explains": [
+      "adj. 纪念碑的,不朽的"
+    ]
+  },
+  "monumento": {
+    "word": "monumento",
+    "phonetic": "",
+    "explains": [
+      "n.m. 纪念碑"
+    ]
+  },
+  "moo": {
+    "word": "moo",
+    "phonetic": "/muː/",
+    "explains": [
+      "v. 发出哞哞声；n. 牛叫声"
+    ]
+  },
+  "mooch": {
+    "word": "mooch",
+    "phonetic": "/muːtʃ/",
+    "explains": [
+      "v. 流浪, 缓行"
+    ]
+  },
+  "mood": {
+    "word": "mood",
+    "phonetic": "/muːd/",
+    "explains": [
+      "n. 心情"
+    ]
+  },
+  "moody": {
+    "word": "moody",
+    "phonetic": "/'muːdɪ/",
+    "explains": [
+      "adj. 易怒的, 情绪化的"
     ]
   },
   "moon": {
@@ -363,11 +6509,249 @@
       "n. 月亮；月球；月光；卫星"
     ]
   },
+  "moonlight": {
+    "word": "moonlight",
+    "phonetic": "/'muːnlaɪt/",
+    "explains": [
+      "adj. 月夜的；有月光的；n. 月光；v. 兼职，夜袭"
+    ]
+  },
+  "moonlighting": {
+    "word": "moonlighting",
+    "phonetic": "/'muːn,laɪtɪŋ/",
+    "explains": [
+      "n. 夜间活动；夜袭；（尤指夜间）从事第二职业"
+    ]
+  },
+  "moor": {
+    "word": "moor",
+    "phonetic": "/mɔː; mʊə/",
+    "explains": [
+      "v. 使停泊；使固定"
+    ]
+  },
+  "mooring": {
+    "word": "mooring",
+    "phonetic": "/'mɔːrɪŋ; 'mʊə-/",
+    "explains": [
+      "n. 下锚；停泊处；系船具；v. 停泊（moor的ing形式）"
+    ]
+  },
+  "moose": {
+    "word": "moose",
+    "phonetic": "/muːs/",
+    "explains": [
+      "n. [动] 驼鹿"
+    ]
+  },
+  "mop": {
+    "word": "mop",
+    "phonetic": "/mɒp/",
+    "explains": [
+      "n. 拖把，墩布；洗碗刷"
+    ]
+  },
+  "mope": {
+    "word": "mope",
+    "phonetic": "/məʊp/",
+    "explains": [
+      "v. 闷闷不乐"
+    ]
+  },
+  "moped": {
+    "word": "moped",
+    "phonetic": "/'məʊped/",
+    "explains": [
+      "n. 机动脚踏车"
+    ]
+  },
+  "mopery": {
+    "word": "mopery",
+    "phonetic": "/'məʊp(ə)rɪ/",
+    "explains": [
+      "n. 闲荡"
+    ]
+  },
+  "moppet": {
+    "word": "moppet",
+    "phonetic": "/'mɒpɪt/",
+    "explains": [
+      "n. 小孩, 娃娃, 宝宝"
+    ]
+  },
+  "morado": {
+    "word": "morado",
+    "phonetic": "",
+    "explains": [
+      "adj. 紫色的"
+    ]
+  },
+  "moraine": {
+    "word": "moraine",
+    "phonetic": "/mə'reɪn/",
+    "explains": [
+      "n. 冰碛"
+    ]
+  },
+  "moral": {
+    "word": "moral",
+    "phonetic": "/ˈmɒr(ə)l/",
+    "explains": [
+      "adj. 道德的"
+    ]
+  },
+  "morale": {
+    "word": "morale",
+    "phonetic": "/mɔ'rɑːl/",
+    "explains": [
+      "n.  道德； 士气； 民心； 信念"
+    ]
+  },
+  "moralism": {
+    "word": "moralism",
+    "phonetic": "/'mɒr(ə)lɪz(ə)m/",
+    "explains": [
+      "n. 道德主义, 说教"
+    ]
+  },
+  "moralist": {
+    "word": "moralist",
+    "phonetic": "/'mɒr(ə)lɪst/",
+    "explains": [
+      "n. 道德家, 有道德的人, 伦理学者"
+    ]
+  },
+  "moralistic": {
+    "word": "moralistic",
+    "phonetic": "/mɒrə'lɪstɪk/",
+    "explains": [
+      "adj. 狭隘道德观的, 说教的"
+    ]
+  },
+  "morality": {
+    "word": "morality",
+    "phonetic": "/məˈræləti/",
+    "explains": [
+      "n. 道德，美德，品行"
+    ]
+  },
+  "moralize": {
+    "word": "moralize",
+    "phonetic": "/'mɒr(ə)laɪz/",
+    "explains": [
+      "v. 教化 ,说教"
+    ]
+  },
+  "morally": {
+    "word": "morally",
+    "phonetic": "/'mɒrəlɪ/",
+    "explains": [
+      "adv. 道德上"
+    ]
+  },
+  "morass": {
+    "word": "morass",
+    "phonetic": "/mə'ræs/",
+    "explains": [
+      "n. 沼泽；困境；乱糟糟的一堆"
+    ]
+  },
+  "moratorium": {
+    "word": "moratorium",
+    "phonetic": "/ˌmɔrə'tɔːriəm/",
+    "explains": [
+      "n.  延期偿还"
+    ]
+  },
+  "morbid": {
+    "word": "morbid",
+    "phonetic": "/'mɔːbɪd/",
+    "explains": [
+      "adj. 疾病的，病态的"
+    ]
+  },
+  "morbidity": {
+    "word": "morbidity",
+    "phonetic": "/mɔː'bɪdətɪ/",
+    "explains": [
+      "n. 病态, 不健全, 发病率"
+    ]
+  },
+  "mordacious": {
+    "word": "mordacious",
+    "phonetic": "/mɔː'deɪʃəs/",
+    "explains": [
+      "adj. 锐利的；辛辣的"
+    ]
+  },
+  "mordant": {
+    "word": "mordant",
+    "phonetic": "/'mɔːd(ə)nt/",
+    "explains": [
+      "n. 媒染, 媒染剂, 金属腐蚀剂, 金属箔粘着剂"
+    ]
+  },
+  "mordent": {
+    "word": "mordent",
+    "phonetic": "/'mɔːd(ə)nt/",
+    "explains": [
+      "n. 涟音；波音"
+    ]
+  },
+  "morder": {
+    "word": "morder",
+    "phonetic": "",
+    "explains": [
+      "v. 咬"
+    ]
+  },
   "more": {
     "word": "more",
     "phonetic": "/mɔː(r)/",
     "explains": [
       "adv. 更多；此外；更大程度地 adj. 更多的；附加的"
+    ]
+  },
+  "moreno": {
+    "word": "moreno",
+    "phonetic": "",
+    "explains": [
+      "adj. 深色头发的；棕色皮肤"
+    ]
+  },
+  "moreover": {
+    "word": "moreover",
+    "phonetic": "/mɔːˈrəʊvə/",
+    "explains": [
+      "adv. 此外"
+    ]
+  },
+  "mores": {
+    "word": "mores",
+    "phonetic": "/'mɔːreɪz; -riːz/",
+    "explains": [
+      "n. 风俗, 习惯, 民德, 道德观念"
+    ]
+  },
+  "moribund": {
+    "word": "moribund",
+    "phonetic": "/'mɒrɪbʌnd/",
+    "explains": [
+      "adj. 垂死的；停滞不前的；n. 垂死的人"
+    ]
+  },
+  "morir": {
+    "word": "morir",
+    "phonetic": "",
+    "explains": [
+      "v. 死"
+    ]
+  },
+  "mormon": {
+    "word": "mormon",
+    "phonetic": "/'mɔ:mən/",
+    "explains": [
+      "n. 摩门教徒, 一夫多妻主义者"
     ]
   },
   "morning": {
@@ -377,11 +6761,326 @@
       "n. 早晨；黎明；上午"
     ]
   },
+  "moron": {
+    "word": "moron",
+    "phonetic": "/'mɔːrɒn/",
+    "explains": [
+      "n. <口>低能者, 笨人, [医]痴愚者(指智商在50-70之间的成年人), [心]性(欲)倒错者, 性反常者"
+    ]
+  },
+  "morose": {
+    "word": "morose",
+    "phonetic": "/mə'rəʊs/",
+    "explains": [
+      "adj. 郁闷的；孤僻的"
+    ]
+  },
+  "morphemics": {
+    "word": "morphemics",
+    "phonetic": "/mɔː'fiːmɪks/",
+    "explains": [
+      "[复]n. [用作单][语]语素学,词素学"
+    ]
+  },
+  "morphine": {
+    "word": "morphine",
+    "phonetic": "/'mɔːfiːn/",
+    "explains": [
+      "n. [毒物][药] 吗啡"
+    ]
+  },
+  "morphogenetic": {
+    "word": "morphogenetic",
+    "phonetic": "",
+    "explains": [
+      "adj. 有关形态发生的；地貌成因的"
+    ]
+  },
+  "morphological": {
+    "word": "morphological",
+    "phonetic": "/,mɔːfə'lɒdʒɪkəl/",
+    "explains": [
+      "adj. 形态学的"
+    ]
+  },
+  "morphology": {
+    "word": "morphology",
+    "phonetic": "/mɔː'fɒlədʒɪ/",
+    "explains": [
+      "n. [生物]形态学, [语法]词法"
+    ]
+  },
+  "morris": {
+    "word": "morris",
+    "phonetic": "/'mɒrɪs/",
+    "explains": [
+      "n. 莫理斯舞(英国传统民间舞蹈)"
+    ]
+  },
+  "morsel": {
+    "word": "morsel",
+    "phonetic": "/'mɔːs(ə)l/",
+    "explains": [
+      "n. (食物)一口, 少量"
+    ]
+  },
+  "mort": {
+    "word": "mort",
+    "phonetic": "/mɔːt/",
+    "explains": [
+      "n. 通知猎物已死的号角声, 大量, 许多"
+    ]
+  },
+  "mortal": {
+    "word": "mortal",
+    "phonetic": "/'mɔːt(ə)l/",
+    "explains": [
+      "adj. 终有一死的；致死的"
+    ]
+  },
+  "mortality": {
+    "word": "mortality",
+    "phonetic": "/mɔː'tælɪtɪ/",
+    "explains": [
+      "n. 死亡数，死亡率；必死性，必死的命运"
+    ]
+  },
+  "mortar": {
+    "word": "mortar",
+    "phonetic": "/'mɔːtə/",
+    "explains": [
+      "n. 灰泥,迫击炮 vt用灰泥结合"
+    ]
+  },
+  "morte": {
+    "word": "morte",
+    "phonetic": "",
+    "explains": [
+      "adj. 死的（阴性）"
+    ]
+  },
+  "mortgage": {
+    "word": "mortgage",
+    "phonetic": "/ˈmɔːgɪdʒ/",
+    "explains": [
+      "n. 抵押"
+    ]
+  },
+  "mortification": {
+    "word": "mortification",
+    "phonetic": "/,mɔːtɪfɪ'keɪʃn/",
+    "explains": [
+      "n. 羞辱, 禁欲, 动物体组织局部的坏死"
+    ]
+  },
+  "mortify": {
+    "word": "mortify",
+    "phonetic": "/'mɔːtɪfaɪ/",
+    "explains": [
+      "v. 克服, 苦修, 使苦恼"
+    ]
+  },
+  "mortise": {
+    "word": "mortise",
+    "phonetic": "/'mɔːtɪs/",
+    "explains": [
+      "n. 榫眼  v用榫接合"
+    ]
+  },
+  "mortuary": {
+    "word": "mortuary",
+    "phonetic": "/'mɔːtjʊərɪ; -tʃʊ-/",
+    "explains": [
+      "n. 停尸房, 太平间"
+    ]
+  },
+  "mosaic": {
+    "word": "mosaic",
+    "phonetic": "/mə(ʊ)'zeɪɪk/",
+    "explains": [
+      "adj. 摩西的；拼成的；嵌花式的；n. 马赛克；镶嵌；镶嵌细工"
+    ]
+  },
+  "mosaics": {
+    "word": "mosaics",
+    "phonetic": "",
+    "explains": [
+      "adj. 镶嵌细工的；用拼花方式制成的；v. 用拼花图案装饰；n. 马赛克；【植】花叶病；拼花图样；拼制图画"
+    ]
+  },
+  "moslem": {
+    "word": "moslem",
+    "phonetic": "/'mɒzləm/",
+    "explains": [
+      "n. 穆斯林；adj. 穆斯林的"
+    ]
+  },
+  "mosque": {
+    "word": "mosque",
+    "phonetic": "/mɒsk/",
+    "explains": [
+      "n. 清真寺"
+    ]
+  },
+  "mosquito": {
+    "word": "mosquito",
+    "phonetic": "/məˈskiːtəʊ/",
+    "explains": [
+      "n. 蚊子"
+    ]
+  },
+  "moss": {
+    "word": "moss",
+    "phonetic": "/mɒs/",
+    "explains": [
+      "n. 苔藓，地衣"
+    ]
+  },
+  "most": {
+    "word": "most",
+    "phonetic": "/məʊst/",
+    "explains": [
+      "adj. 最多的"
+    ]
+  },
+  "mostly": {
+    "word": "mostly",
+    "phonetic": "/ˈməʊstlɪ/",
+    "explains": [
+      "adv. 主要地"
+    ]
+  },
+  "mostrar": {
+    "word": "mostrar",
+    "phonetic": "",
+    "explains": [
+      "v. 展示"
+    ]
+  },
+  "mot": {
+    "word": "mot",
+    "phonetic": "",
+    "explains": [
+      "n.m. 单词；话语"
+    ]
+  },
+  "mote": {
+    "word": "mote",
+    "phonetic": "/məʊt/",
+    "explains": [
+      "n. 尘埃, 微粒"
+    ]
+  },
+  "motel": {
+    "word": "motel",
+    "phonetic": "/məʊ'tel/",
+    "explains": [
+      "n. 汽车游客旅馆"
+    ]
+  },
+  "motet": {
+    "word": "motet",
+    "phonetic": "/məʊ'tet/",
+    "explains": [
+      "n. 赞美诗, 圣歌, 赞歌"
+    ]
+  },
+  "moteur": {
+    "word": "moteur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 发动机；马达"
+    ]
+  },
+  "moth": {
+    "word": "moth",
+    "phonetic": "/mɒθ/",
+    "explains": [
+      "n. 蛾, 蛀虫"
+    ]
+  },
+  "mothball": {
+    "word": "mothball",
+    "phonetic": "/'mɒθbɔːl/",
+    "explains": [
+      "n. 卫生球, 樟脑球"
+    ]
+  },
   "mother": {
     "word": "mother",
     "phonetic": "/ˈmʌðə(r)/",
     "explains": [
       "n. 母亲；妈妈；大娘；女修道院院长"
+    ]
+  },
+  "motherland": {
+    "word": "motherland",
+    "phonetic": "/'mʌðəlænd/",
+    "explains": [
+      "n. 祖国；母国"
+    ]
+  },
+  "motif": {
+    "word": "motif",
+    "phonetic": "/məʊ'tiːf/",
+    "explains": [
+      "n. 主题,主旨"
+    ]
+  },
+  "motion": {
+    "word": "motion",
+    "phonetic": "/ˈməʊʃ(ə)n/",
+    "explains": [
+      "n. 运动"
+    ]
+  },
+  "motionless": {
+    "word": "motionless",
+    "phonetic": "/'məʊʃnləs/",
+    "explains": [
+      "adj. 不动的, 静止的"
+    ]
+  },
+  "motivate": {
+    "word": "motivate",
+    "phonetic": "/ˈməʊtɪveɪt/",
+    "explains": [
+      "v. 激励"
+    ]
+  },
+  "motivated": {
+    "word": "motivated",
+    "phonetic": "/'məutiveitid/",
+    "explains": [
+      "adj.  有动机的； 有积极性的"
+    ]
+  },
+  "motivation": {
+    "word": "motivation",
+    "phonetic": "/məʊtɪ'veɪʃ(ə)n/",
+    "explains": [
+      "n. 动机"
+    ]
+  },
+  "motive": {
+    "word": "motive",
+    "phonetic": "/ˈməʊtɪv/",
+    "explains": [
+      "n. 动机"
+    ]
+  },
+  "motivo": {
+    "word": "motivo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 原因；动机"
+    ]
+  },
+  "motley": {
+    "word": "motley",
+    "phonetic": "/'mɒtlɪ/",
+    "explains": [
+      "adj. 杂色的；混杂的；五颜六色的；n. 混杂；杂色衣服；小丑"
     ]
   },
   "motor": {
@@ -391,11 +7090,151 @@
       "n. 发动机；马达；汽车 adj. 汽车的；机动的"
     ]
   },
+  "motorcycle": {
+    "word": "motorcycle",
+    "phonetic": "/'məʊtəsaɪk(ə)l/",
+    "explains": [
+      "n. 摩托车, 机车"
+    ]
+  },
+  "motorist": {
+    "word": "motorist",
+    "phonetic": "/'məʊt(ə)rɪst/",
+    "explains": [
+      "n. 驾车旅行的人，开汽车的人"
+    ]
+  },
+  "motorway": {
+    "word": "motorway",
+    "phonetic": "/'məʊtəweɪ/",
+    "explains": [
+      "n. 汽车道，快车路"
+    ]
+  },
+  "mottle": {
+    "word": "mottle",
+    "phonetic": "/'mɒt(ə)l/",
+    "explains": [
+      "v. 使有斑点 n杂色, 斑点"
+    ]
+  },
+  "mottled": {
+    "word": "mottled",
+    "phonetic": "/'mɑtld/",
+    "explains": [
+      "adj. 杂色的, 斑驳的"
+    ]
+  },
+  "motto": {
+    "word": "motto",
+    "phonetic": "/'mɒtəʊ/",
+    "explains": [
+      "n. 座右铭，箴言"
+    ]
+  },
+  "mouchoir": {
+    "word": "mouchoir",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手帕"
+    ]
+  },
+  "mould": {
+    "word": "mould",
+    "phonetic": "/məʊld/",
+    "explains": [
+      "n. 模子，模型；v. 浇铸"
+    ]
+  },
+  "moulder": {
+    "word": "moulder",
+    "phonetic": "/'məʊldə/",
+    "explains": [
+      "n. 制模工, 铸工"
+    ]
+  },
+  "mouldy": {
+    "word": "mouldy",
+    "phonetic": "/'moldi/",
+    "explains": [
+      "adj. 发霉的, 腐朽的, 旧式的"
+    ]
+  },
+  "moule": {
+    "word": "moule",
+    "phonetic": "",
+    "explains": [
+      "n.f. 模子；贻贝"
+    ]
+  },
+  "moulin": {
+    "word": "moulin",
+    "phonetic": "",
+    "explains": [
+      "n.m. 磨坊"
+    ]
+  },
+  "moult": {
+    "word": "moult",
+    "phonetic": "/məʊlt/",
+    "explains": [
+      "n. 换毛, 脱毛"
+    ]
+  },
+  "mound": {
+    "word": "mound",
+    "phonetic": "/maʊnd/",
+    "explains": [
+      "n. 土墩，沙土堆"
+    ]
+  },
+  "mount": {
+    "word": "mount",
+    "phonetic": "/maʊnt/",
+    "explains": [
+      "v. 爬上"
+    ]
+  },
   "mountain": {
     "word": "mountain",
     "phonetic": "/ˈmaʊntən/",
     "explains": [
       "n. 山；山脉；大量；一大堆"
+    ]
+  },
+  "mountainous": {
+    "word": "mountainous",
+    "phonetic": "/'maʊntɪnəs/",
+    "explains": [
+      "adj. 多山的；山一般的"
+    ]
+  },
+  "mountainside": {
+    "word": "mountainside",
+    "phonetic": "/'maʊntɪnsaɪd/",
+    "explains": [
+      "n. 山腹, 山腰"
+    ]
+  },
+  "mountebank": {
+    "word": "mountebank",
+    "phonetic": "/'maʊntɪbæŋk/",
+    "explains": [
+      "n. 江湖郎中, 骗子"
+    ]
+  },
+  "mourn": {
+    "word": "mourn",
+    "phonetic": "/mɔːn/",
+    "explains": [
+      "v. 哀悼"
+    ]
+  },
+  "mournful": {
+    "word": "mournful",
+    "phonetic": "/'mɔːnfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 悲哀的"
     ]
   },
   "mouse": {
@@ -405,11 +7244,46 @@
       "n. 鼠标；老鼠；胆小羞怯的人"
     ]
   },
+  "mousse": {
+    "word": "mousse",
+    "phonetic": "/muːs/",
+    "explains": [
+      "n. 摩丝；奶油冻；v. 在…上抹摩丝"
+    ]
+  },
+  "moustache": {
+    "word": "moustache",
+    "phonetic": "/mə'stɑːʃ/",
+    "explains": [
+      "n. (嘴唇上面的)胡子"
+    ]
+  },
   "mouth": {
     "word": "mouth",
     "phonetic": "/maʊθ/",
     "explains": [
       "n. 口；嘴；开口；河口 v. 装腔作势说话"
+    ]
+  },
+  "mouthful": {
+    "word": "mouthful",
+    "phonetic": "/'maʊθfʊl; -f(ə)l/",
+    "explains": [
+      "n. 满口，一口"
+    ]
+  },
+  "mouvement": {
+    "word": "mouvement",
+    "phonetic": "",
+    "explains": [
+      "n.m. 运动；动作"
+    ]
+  },
+  "movable": {
+    "word": "movable",
+    "phonetic": "/'muːvəb(ə)l/",
+    "explains": [
+      "adj. 活动的，变动的"
     ]
   },
   "move": {
@@ -419,11 +7293,81 @@
       "v. 移动；改变；迁移；动摇 n. 移动；步骤；迁居"
     ]
   },
+  "movement": {
+    "word": "movement",
+    "phonetic": "/ˈmuːvmənt/",
+    "explains": [
+      "n. 运动"
+    ]
+  },
+  "mover": {
+    "word": "mover",
+    "phonetic": "",
+    "explains": [
+      "v. 移动"
+    ]
+  },
   "movie": {
     "word": "movie",
     "phonetic": "/ˈmuːvi/",
     "explains": [
       "n. 电影；影片；电影院"
+    ]
+  },
+  "movimiento": {
+    "word": "movimiento",
+    "phonetic": "",
+    "explains": [
+      "n.m. 运动；动作"
+    ]
+  },
+  "moving": {
+    "word": "moving",
+    "phonetic": "/'muːvɪŋ/",
+    "explains": [
+      "adj. 移动的；动人的；活动的；v. 移动（move的ing形式）"
+    ]
+  },
+  "mow": {
+    "word": "mow",
+    "phonetic": "/məʊ/",
+    "explains": [
+      "v. 割(草)"
+    ]
+  },
+  "moxie": {
+    "word": "moxie",
+    "phonetic": "/'mɒksɪ/",
+    "explains": [
+      "n. 精力, 勇气, 胆量"
+    ]
+  },
+  "moyen": {
+    "word": "moyen",
+    "phonetic": "",
+    "explains": [
+      "n.m. 方法；adj. 中等的"
+    ]
+  },
+  "moyenne": {
+    "word": "moyenne",
+    "phonetic": "",
+    "explains": [
+      "n.f. 平均数"
+    ]
+  },
+  "mr": {
+    "word": "mr",
+    "phonetic": "/ˈmɪstə/",
+    "explains": [
+      "n. 先生"
+    ]
+  },
+  "mrs": {
+    "word": "mrs",
+    "phonetic": "/ˈmɪsɪz/",
+    "explains": [
+      "n. 夫人"
     ]
   },
   "much": {
@@ -433,11 +7377,543 @@
       "adv. 非常；很 adj. 大量的 pron. 许多；大量"
     ]
   },
+  "mucho": {
+    "word": "mucho",
+    "phonetic": "",
+    "explains": [
+      "adv. 很多"
+    ]
+  },
+  "mucilage": {
+    "word": "mucilage",
+    "phonetic": "/'mjuːsɪlɪdʒ/",
+    "explains": [
+      "n. (植物的)黏液, 胶水"
+    ]
+  },
+  "muck": {
+    "word": "muck",
+    "phonetic": "/mʌk/",
+    "explains": [
+      "n. 粪肥, 垃圾, 肥料"
+    ]
+  },
+  "muckrake": {
+    "word": "muckrake",
+    "phonetic": "/'mʌkreɪk/",
+    "explains": [
+      "n. 揭开丑闻的文章"
+    ]
+  },
+  "mucous": {
+    "word": "mucous",
+    "phonetic": "/'mjuːkəs/",
+    "explains": [
+      "adj. 黏液的，似黏液的"
+    ]
+  },
+  "mud": {
+    "word": "mud",
+    "phonetic": "/mʌd/",
+    "explains": [
+      "n. 软泥，泥浆"
+    ]
+  },
+  "mudanza": {
+    "word": "mudanza",
+    "phonetic": "",
+    "explains": [
+      "n.f. 搬家"
+    ]
+  },
+  "muddle": {
+    "word": "muddle",
+    "phonetic": "/'mʌd(ə)l/",
+    "explains": [
+      "vt&vi. 使混乱；弄糟"
+    ]
+  },
+  "muddy": {
+    "word": "muddy",
+    "phonetic": "/'mʌdɪ/",
+    "explains": [
+      "adj. 多泥的，泥泞的"
+    ]
+  },
+  "mudflats": {
+    "word": "mudflats",
+    "phonetic": "",
+    "explains": [
+      "n. 泥滩"
+    ]
+  },
+  "mudstone": {
+    "word": "mudstone",
+    "phonetic": "/'mʌdstəʊn/",
+    "explains": [
+      "n. [地]泥岩"
+    ]
+  },
+  "mueble": {
+    "word": "mueble",
+    "phonetic": "",
+    "explains": [
+      "n.m. 家具"
+    ]
+  },
+  "muerte": {
+    "word": "muerte",
+    "phonetic": "",
+    "explains": [
+      "n.f. 死亡"
+    ]
+  },
+  "muerto": {
+    "word": "muerto",
+    "phonetic": "",
+    "explains": [
+      "adj. 死的；n.m. 死者"
+    ]
+  },
+  "muestra": {
+    "word": "muestra",
+    "phonetic": "",
+    "explains": [
+      "n.f. 样品；表示"
+    ]
+  },
+  "muet": {
+    "word": "muet",
+    "phonetic": "",
+    "explains": [
+      "adj. 哑的；沉默的"
+    ]
+  },
+  "muff": {
+    "word": "muff",
+    "phonetic": "/mʌf/",
+    "explains": [
+      "adj. 皮手笼, 保温的, 笨拙的人, 接球失败"
+    ]
+  },
+  "muffin": {
+    "word": "muffin",
+    "phonetic": "/'mʌfɪn/",
+    "explains": [
+      "n. （涂牛油趁热吃的）英格兰松饼，（常含小块水果等）杯状小松糕；玛芬"
+    ]
+  },
+  "muffle": {
+    "word": "muffle",
+    "phonetic": "/'mʌf(ə)l/",
+    "explains": [
+      "v. 蒙住；裹住；抑制；发低沉的声音；n. 低沉的声音；消声器；包裹物（如头巾，围巾等）；唇鼻部"
+    ]
+  },
+  "muffler": {
+    "word": "muffler",
+    "phonetic": "/'mʌflə/",
+    "explains": [
+      "n. 消声器"
+    ]
+  },
+  "mug": {
+    "word": "mug",
+    "phonetic": "/mʌg/",
+    "explains": [
+      "n. 大杯"
+    ]
+  },
+  "muggy": {
+    "word": "muggy",
+    "phonetic": "/'mʌgɪ/",
+    "explains": [
+      "adj. 闷热的"
+    ]
+  },
+  "mujer": {
+    "word": "mujer",
+    "phonetic": "",
+    "explains": [
+      "n.f. 女人；妻子"
+    ]
+  },
+  "mulberry": {
+    "word": "mulberry",
+    "phonetic": "/'mʌlb(ə)rɪ/",
+    "explains": [
+      "n. 桑树, 桑葚, 深紫红色"
+    ]
+  },
+  "mule": {
+    "word": "mule",
+    "phonetic": "/mjuːl/",
+    "explains": [
+      "n. 骡子,十分固执的人"
+    ]
+  },
+  "multi-brand": {
+    "word": "multi-brand",
+    "phonetic": "/'mʌltɪbrænd/",
+    "explains": [
+      "adj.  多品牌的"
+    ]
+  },
+  "multicellular": {
+    "word": "multicellular",
+    "phonetic": "/mʌltɪ'seljʊlə/",
+    "explains": [
+      "adj. 多细胞的"
+    ]
+  },
+  "multidirectional": {
+    "word": "multidirectional",
+    "phonetic": "/,mʌltɪdɪ'rekʃ(ə)n(ə)l; -daɪ-/",
+    "explains": [
+      "adj. 多方向的"
+    ]
+  },
+  "multifaceted": {
+    "word": "multifaceted",
+    "phonetic": "/mʌltɪ'fæsɪtɪd/",
+    "explains": [
+      "adj. 多层面的"
+    ]
+  },
+  "multifarious": {
+    "word": "multifarious",
+    "phonetic": "/,mʌltɪ'feərɪəs/",
+    "explains": [
+      "adj. 种种的, 各式各样的"
+    ]
+  },
+  "multiform": {
+    "word": "multiform",
+    "phonetic": "/'mʌltɪfɔːm/",
+    "explains": [
+      "adj. 多样的；多种形式的"
+    ]
+  },
+  "multifunctional": {
+    "word": "multifunctional",
+    "phonetic": "",
+    "explains": [
+      "adj. 多功能的"
+    ]
+  },
+  "multilateral": {
+    "word": "multilateral",
+    "phonetic": "/mʌltɪ'læt(ə)r(ə)l/",
+    "explains": [
+      "adj. 多边的；多国参加的"
+    ]
+  },
+  "multimedia": {
+    "word": "multimedia",
+    "phonetic": "/'mʌltɪmiːdɪə/",
+    "explains": [
+      "n. 多媒体；adj. 多媒体的"
+    ]
+  },
+  "multinational": {
+    "word": "multinational",
+    "phonetic": "/ˌmʌlti'næʃənəl/",
+    "explains": [
+      "adj.  多国的； 跨国公司的；n. 跨国公司"
+    ]
+  },
+  "multiple": {
+    "word": "multiple",
+    "phonetic": "/ˈmʌltɪp(ə)l/",
+    "explains": [
+      "adj. 多重的"
+    ]
+  },
+  "multiplicand": {
+    "word": "multiplicand",
+    "phonetic": "/,mʌltɪplɪ'kænd; 'mʌltɪplɪ,kænd/",
+    "explains": [
+      "n. [数] 被乘数"
+    ]
+  },
+  "multiplicar": {
+    "word": "multiplicar",
+    "phonetic": "",
+    "explains": [
+      "v. 乘"
+    ]
+  },
+  "multiplication": {
+    "word": "multiplication",
+    "phonetic": "/,mʌltɪplɪ'keɪʃ(ə)n/",
+    "explains": [
+      "n. 乘法；增加"
+    ]
+  },
+  "multiplicity": {
+    "word": "multiplicity",
+    "phonetic": "/,mʌltɪ'plɪsɪtɪ/",
+    "explains": [
+      "n. 多样性"
+    ]
+  },
+  "multiplier": {
+    "word": "multiplier",
+    "phonetic": "/'mʌltɪplaɪə/",
+    "explains": [
+      "n. [数] 乘数；[电子] 倍增器；增加者；繁殖者"
+    ]
+  },
+  "multiply": {
+    "word": "multiply",
+    "phonetic": "/ˈmʌltɪplaɪ/",
+    "explains": [
+      "v. 乘"
+    ]
+  },
+  "multipurpose": {
+    "word": "multipurpose",
+    "phonetic": "",
+    "explains": [
+      "adj. 多种用途的, 多目标的"
+    ]
+  },
+  "multistory": {
+    "word": "multistory",
+    "phonetic": "",
+    "explains": [
+      "adj. 多层的,有多层楼的"
+    ]
+  },
+  "multitude": {
+    "word": "multitude",
+    "phonetic": "/'mʌltɪtjuːd/",
+    "explains": [
+      "n. 大批，大群；大量"
+    ]
+  },
+  "multivolume": {
+    "word": "multivolume",
+    "phonetic": "",
+    "explains": [
+      "adj. 多卷的"
+    ]
+  },
+  "mum": {
+    "word": "mum",
+    "phonetic": "/mʌm/",
+    "explains": [
+      "n. [植](=chrysanthemum)菊花, 沉默"
+    ]
+  },
+  "mumble": {
+    "word": "mumble",
+    "phonetic": "/'mʌmb(ə)l/",
+    "explains": [
+      "v. 含糊地说；抿着嘴嚼；n. 含糊的话；咕噜"
+    ]
+  },
+  "mummy": {
+    "word": "mummy",
+    "phonetic": "/'mʌmɪ/",
+    "explains": [
+      "n. 妈妈；木乃伊；干瘪的人"
+    ]
+  },
+  "mumpish": {
+    "word": "mumpish",
+    "phonetic": "",
+    "explains": [
+      "adj. 愠怒的"
+    ]
+  },
+  "mumps": {
+    "word": "mumps",
+    "phonetic": "/mʌmps/",
+    "explains": [
+      "n. [内科] 流行性腮腺炎；愠怒；生气"
+    ]
+  },
+  "mundane": {
+    "word": "mundane",
+    "phonetic": "/'mʌndeɪn; mʌn'deɪn/",
+    "explains": [
+      "adj. 平凡的, 世俗的"
+    ]
+  },
+  "mundial": {
+    "word": "mundial",
+    "phonetic": "",
+    "explains": [
+      "adj. 世界的"
+    ]
+  },
+  "mundo": {
+    "word": "mundo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 世界"
+    ]
+  },
+  "municipal": {
+    "word": "municipal",
+    "phonetic": "/mjʊ'nɪsɪp(ə)l/",
+    "explains": [
+      "adj. 市的，市立的"
+    ]
+  },
+  "municipality": {
+    "word": "municipality",
+    "phonetic": "/mjʊ,nɪsɪ'pælɪtɪ/",
+    "explains": [
+      "n. 市民；市政当局；自治市或区"
+    ]
+  },
+  "munificence": {
+    "word": "munificence",
+    "phonetic": "",
+    "explains": [
+      "n. 慷慨给与；宽宏大量"
+    ]
+  },
+  "munificent": {
+    "word": "munificent",
+    "phonetic": "/mjuːˈnɪfɪsnt/",
+    "explains": [
+      "adj. 慷慨的；丰厚的；宽宏的"
+    ]
+  },
+  "munitions": {
+    "word": "munitions",
+    "phonetic": "/mju:'niʃnz/",
+    "explains": [
+      "n. 军需品(munition之复数)"
+    ]
+  },
+  "muon": {
+    "word": "muon",
+    "phonetic": "/'mjuːɒn/",
+    "explains": [
+      "n. [高能] μ介子"
+    ]
+  },
+  "mur": {
+    "word": "mur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 墙"
+    ]
+  },
+  "mural": {
+    "word": "mural",
+    "phonetic": "/'mjʊər(ə)l/",
+    "explains": [
+      "adj. 墙壁的  n壁画"
+    ]
+  },
+  "murder": {
+    "word": "murder",
+    "phonetic": "/'mɜːdə/",
+    "explains": [
+      "n. 谋杀，凶杀；v. 谋杀，凶杀"
+    ]
+  },
+  "murderer": {
+    "word": "murderer",
+    "phonetic": "/'mɜːd(ə)rə(r)/",
+    "explains": [
+      "n. 杀人犯，凶手"
+    ]
+  },
+  "murderous": {
+    "word": "murderous",
+    "phonetic": "/'mɜːd(ə)rəs/",
+    "explains": [
+      "adj. 杀人的，残忍的；凶残的；蓄意谋杀的"
+    ]
+  },
+  "murky": {
+    "word": "murky",
+    "phonetic": "/'mɜːkɪ/",
+    "explains": [
+      "adj. 黑暗的"
+    ]
+  },
+  "murmur": {
+    "word": "murmur",
+    "phonetic": "/'mɜːmə/",
+    "explains": [
+      "n. 低沉连续的声音"
+    ]
+  },
+  "muscle": {
+    "word": "muscle",
+    "phonetic": "/ˈmʌs(ə)l/",
+    "explains": [
+      "n. 肌肉"
+    ]
+  },
+  "muscology": {
+    "word": "muscology",
+    "phonetic": "",
+    "explains": [
+      "n. 苔藓植物学"
+    ]
+  },
+  "muscular": {
+    "word": "muscular",
+    "phonetic": "/'mʌskjʊlə/",
+    "explains": [
+      "adj. 肌肉发达的，强健的"
+    ]
+  },
+  "muscularly": {
+    "word": "muscularly",
+    "phonetic": "",
+    "explains": [
+      "adj. 肌肉的"
+    ]
+  },
+  "muse": {
+    "word": "muse",
+    "phonetic": "/mjuːz/",
+    "explains": [
+      "v. 沉思，默想，冥想"
+    ]
+  },
+  "museau": {
+    "word": "museau",
+    "phonetic": "",
+    "explains": [
+      "n.m. （动物的）口鼻"
+    ]
+  },
+  "museo": {
+    "word": "museo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 博物馆"
+    ]
+  },
   "museum": {
     "word": "museum",
     "phonetic": "/mjuˈziːəm/",
     "explains": [
       "n. 博物馆"
+    ]
+  },
+  "mushroom": {
+    "word": "mushroom",
+    "phonetic": "/ˈmʌʃruːm/",
+    "explains": [
+      "n. 蘑菇"
+    ]
+  },
+  "mushy": {
+    "word": "mushy",
+    "phonetic": "/'mʌʃɪ/",
+    "explains": [
+      "adj. 糊状的, 玉米粥状的"
     ]
   },
   "music": {
@@ -447,11 +7923,200 @@
       "n. 音乐；乐曲"
     ]
   },
+  "musical": {
+    "word": "musical",
+    "phonetic": "/ˈmjuːzɪk(ə)l/",
+    "explains": [
+      "adj. 音乐的"
+    ]
+  },
+  "musician": {
+    "word": "musician",
+    "phonetic": "/mjuːˈzɪʃ(ə)n/",
+    "explains": [
+      "n. 音乐家"
+    ]
+  },
+  "musicien": {
+    "word": "musicien",
+    "phonetic": "",
+    "explains": [
+      "n.m. 音乐家"
+    ]
+  },
+  "musicologist": {
+    "word": "musicologist",
+    "phonetic": "",
+    "explains": [
+      "n. 音乐学者"
+    ]
+  },
+  "musique": {
+    "word": "musique",
+    "phonetic": "",
+    "explains": [
+      "n.f. 音乐"
+    ]
+  },
+  "musk": {
+    "word": "musk",
+    "phonetic": "/mʌsk/",
+    "explains": [
+      "n. 麝香；麝香鹿；麝香香味"
+    ]
+  },
+  "muslim": {
+    "word": "muslim",
+    "phonetic": "/ˈmʊzlɪm;ˈmʌzlɪm;ˈmʊzləm;ˈmʌzləm/",
+    "explains": [
+      "n. 穆斯林；穆罕默德信徒；adj. 伊斯兰教的"
+    ]
+  },
+  "mussel": {
+    "word": "mussel",
+    "phonetic": "/'mʌsəl/",
+    "explains": [
+      "n. [动]贻贝, 蚌类"
+    ]
+  },
   "must": {
     "word": "must",
     "phonetic": "/mʌst/",
     "explains": [
       "aux. 必须；一定；可以；应当"
+    ]
+  },
+  "mustard": {
+    "word": "mustard",
+    "phonetic": "/'mʌstəd/",
+    "explains": [
+      "n. 芥子，芥末"
+    ]
+  },
+  "muster": {
+    "word": "muster",
+    "phonetic": "/'mʌstə/",
+    "explains": [
+      "v. 集合，检阅，集中"
+    ]
+  },
+  "mutable": {
+    "word": "mutable",
+    "phonetic": "",
+    "explains": [
+      "可变的"
+    ]
+  },
+  "mutant": {
+    "word": "mutant",
+    "phonetic": "/'mjuːt(ə)nt/",
+    "explains": [
+      "n. 突变体；突变异种；adj. 突变的"
+    ]
+  },
+  "mutation": {
+    "word": "mutation",
+    "phonetic": "/mjuː'teɪʃ(ə)n/",
+    "explains": [
+      "n. 变化，变异，转变"
+    ]
+  },
+  "mute": {
+    "word": "mute",
+    "phonetic": "/mjuːt/",
+    "explains": [
+      "adj. 缄默的；n. 哑巴"
+    ]
+  },
+  "mutilate": {
+    "word": "mutilate",
+    "phonetic": "/'mjuːtɪleɪt/",
+    "explains": [
+      "v. 切断，毁坏；使…残缺不全；使…支离破碎"
+    ]
+  },
+  "mutineer": {
+    "word": "mutineer",
+    "phonetic": "/mjuːtɪ'nɪə/",
+    "explains": [
+      "n. 叛徒, 反抗者"
+    ]
+  },
+  "mutinous": {
+    "word": "mutinous",
+    "phonetic": "/'mjuːtɪnəs/",
+    "explains": [
+      "adj. 暴动的, 反抗的"
+    ]
+  },
+  "mutoscope": {
+    "word": "mutoscope",
+    "phonetic": "",
+    "explains": [
+      "n. (早期的)电影放映机"
+    ]
+  },
+  "mutter": {
+    "word": "mutter",
+    "phonetic": "/'mʌtə/",
+    "explains": [
+      "v. 轻声低语；抱怨"
+    ]
+  },
+  "mutton": {
+    "word": "mutton",
+    "phonetic": "/'mʌt(ə)n/",
+    "explains": [
+      "n. 羊肉"
+    ]
+  },
+  "mutual": {
+    "word": "mutual",
+    "phonetic": "/ˈmjuːtʃʊəl; -tjʊəl/",
+    "explains": [
+      "adj. 相互的"
+    ]
+  },
+  "mutualism": {
+    "word": "mutualism",
+    "phonetic": "/'mjuːtʃʊəlɪz(ə)m; -tjʊə-/",
+    "explains": [
+      "n. 互助论,互利共生"
+    ]
+  },
+  "mutuality": {
+    "word": "mutuality",
+    "phonetic": "/'mjuːtʃʊ'ælətɪ/",
+    "explains": [
+      "n. 相互关系, 相关"
+    ]
+  },
+  "mutually": {
+    "word": "mutually",
+    "phonetic": "/ˈmjuːtʃuəli/",
+    "explains": [
+      "adv. 互相地, 互助"
+    ]
+  },
+  "muy": {
+    "word": "muy",
+    "phonetic": "",
+    "explains": [
+      "adv. 很"
+    ]
+  },
+  "muzzle": {
+    "word": "muzzle",
+    "phonetic": "/'mʌz(ə)l/",
+    "explains": [
+      "n. 枪口，炮口；口套，口络；动物的鼻口；v. 使…缄默；给…戴口套；封锁…的言论"
+    ]
+  },
+  "muzzy": {
+    "word": "muzzy",
+    "phonetic": "/'mʌzɪ/",
+    "explains": [
+      "adj. 头脑发昏的, 无精神的, 酩酊的"
     ]
   },
   "my": {
@@ -461,11 +8126,137 @@
       "pron. 我的"
     ]
   },
+  "myalgia": {
+    "word": "myalgia",
+    "phonetic": "/maɪ'ældʒə/",
+    "explains": [
+      "n. 肌痛"
+    ]
+  },
+  "mycology": {
+    "word": "mycology",
+    "phonetic": "/maɪ'kɒlədʒɪ/",
+    "explains": [
+      "n. [植]真菌学"
+    ]
+  },
+  "myopia": {
+    "word": "myopia",
+    "phonetic": "/maɪ'əʊpɪə/",
+    "explains": [
+      "n. [眼科] 近视；目光短浅，缺乏远见"
+    ]
+  },
+  "myriad": {
+    "word": "myriad",
+    "phonetic": "/'mɪrɪəd/",
+    "explains": [
+      "adj. 无数的 n无数"
+    ]
+  },
+  "myrmecophagous": {
+    "word": "myrmecophagous",
+    "phonetic": "/,mɜːmɪ'kɒfəɡəs/",
+    "explains": [
+      "adj. [动] 食蚁的"
+    ]
+  },
   "myself": {
     "word": "myself",
     "phonetic": "/maɪˈself/",
     "explains": [
       "pron. 我自己；我亲自；我的正常的健康状况和正常情绪"
+    ]
+  },
+  "mysterious": {
+    "word": "mysterious",
+    "phonetic": "/mɪ'stɪərɪəs/",
+    "explains": [
+      "adj. 神秘的；难以理解的"
+    ]
+  },
+  "mysteriously": {
+    "word": "mysteriously",
+    "phonetic": "/mis'tiəriəsli/",
+    "explains": [
+      "adv. 神秘地,  故弄玄虚地"
+    ]
+  },
+  "mystery": {
+    "word": "mystery",
+    "phonetic": "/ˈmɪst(ə)rɪ/",
+    "explains": [
+      "n. 神秘"
+    ]
+  },
+  "mystic": {
+    "word": "mystic",
+    "phonetic": "/'mɪstɪk/",
+    "explains": [
+      "adj. 神秘的；神秘主义的；n. 神秘主义者"
+    ]
+  },
+  "mystical": {
+    "word": "mystical",
+    "phonetic": "/'mɪstɪk(ə)l/",
+    "explains": [
+      "adj. 神秘的"
+    ]
+  },
+  "mystify": {
+    "word": "mystify",
+    "phonetic": "/'mɪstɪfaɪ/",
+    "explains": [
+      "v. 迷惑"
+    ]
+  },
+  "mystique": {
+    "word": "mystique",
+    "phonetic": "/mɪ'stiːk/",
+    "explains": [
+      "n. 神秘性,奥秘"
+    ]
+  },
+  "myth": {
+    "word": "myth",
+    "phonetic": "/mɪθ/",
+    "explains": [
+      "n. 神话"
+    ]
+  },
+  "mythic": {
+    "word": "mythic",
+    "phonetic": "/'miθik/",
+    "explains": [
+      "adj. 神话的；虚构的"
+    ]
+  },
+  "mythical": {
+    "word": "mythical",
+    "phonetic": "/'mɪθɪkəl/",
+    "explains": [
+      "adj. 神话的, 虚构的"
+    ]
+  },
+  "mythological": {
+    "word": "mythological",
+    "phonetic": "/mɪθə'lɒdʒɪk(ə)l/",
+    "explains": [
+      "adj. 神话(学)的"
+    ]
+  },
+  "mythology": {
+    "word": "mythology",
+    "phonetic": "/mɪ'θɒlədʒɪ/",
+    "explains": [
+      "n. 神话"
+    ]
+  },
+  "myxoma": {
+    "word": "myxoma",
+    "phonetic": "/mɪk'səʊmə/",
+    "explains": [
+      "n. [医]粘液瘤"
     ]
   }
 }

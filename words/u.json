@@ -1,9 +1,457 @@
 {
+  "ubiquitous": {
+    "word": "ubiquitous",
+    "phonetic": "/juː'bɪkwɪtəs/",
+    "explains": [
+      "adj. 到处存在的"
+    ]
+  },
   "ugly": {
     "word": "ugly",
     "phonetic": "/ˈʌɡli/",
     "explains": [
       "adj. 丑陋的；难看的；令人不愉快的"
+    ]
+  },
+  "ulcer": {
+    "word": "ulcer",
+    "phonetic": "/'ʌlsə/",
+    "explains": [
+      "n. 溃疡, 腐烂物"
+    ]
+  },
+  "ulcerate": {
+    "word": "ulcerate",
+    "phonetic": "/'ʌlsəreɪt/",
+    "explains": [
+      "v. 溃烂"
+    ]
+  },
+  "ulterior": {
+    "word": "ulterior",
+    "phonetic": "/ʌl'tɪərɪə/",
+    "explains": [
+      "adj. 将来的，较远的；在那边的；隐秘不明的"
+    ]
+  },
+  "ultimate": {
+    "word": "ultimate",
+    "phonetic": "/'ʌltɪmət/",
+    "explains": [
+      "adj. 最后的，最终的"
+    ]
+  },
+  "ultimately": {
+    "word": "ultimately",
+    "phonetic": "/'ʌltimətli/",
+    "explains": [
+      "adv.  最后， 终于； 根本， 基本上"
+    ]
+  },
+  "ultimatum": {
+    "word": "ultimatum",
+    "phonetic": "/ʌltɪ'meɪtəm/",
+    "explains": [
+      "n. 最后通牒"
+    ]
+  },
+  "ultramontane": {
+    "word": "ultramontane",
+    "phonetic": "/,ʌltrə'mɒnteɪn/",
+    "explains": [
+      "n. 山那边的人；教皇绝对权力主义者；adj. 山那边的"
+    ]
+  },
+  "ultramundane": {
+    "word": "ultramundane",
+    "phonetic": "/,ʌltrə'mʌndeɪn/",
+    "explains": [
+      "adj. 世界之外的,太阳系之外的,超俗的"
+    ]
+  },
+  "ultrasonic": {
+    "word": "ultrasonic",
+    "phonetic": "/ʌltrə'sɒnɪk/",
+    "explains": [
+      "adj. 超声的；n. 超声波"
+    ]
+  },
+  "ultrasound": {
+    "word": "ultrasound",
+    "phonetic": "/'ʌltrəsaʊnd/",
+    "explains": [
+      "n. 超声；超音波"
+    ]
+  },
+  "ultraviolet": {
+    "word": "ultraviolet",
+    "phonetic": "/ʌltrə'vaɪələt/",
+    "explains": [
+      "adj. 紫外（线）的"
+    ]
+  },
+  "umbrage": {
+    "word": "umbrage",
+    "phonetic": "/'ʌmbrɪdʒ/",
+    "explains": [
+      "n. 树荫, 不快"
+    ]
+  },
+  "umbrella": {
+    "word": "umbrella",
+    "phonetic": "/ʌmˈbrelə/",
+    "explains": [
+      "n. 雨伞"
+    ]
+  },
+  "umpire": {
+    "word": "umpire",
+    "phonetic": "/'ʌmpaiə/",
+    "explains": [
+      "v.  仲裁， 任裁判；n. 仲裁人，裁判员"
+    ]
+  },
+  "umpteen": {
+    "word": "umpteen",
+    "phonetic": "/ʌm(p)'tiːn; 'ʌm(p)tiːn/",
+    "explains": [
+      "adj. 无数的"
+    ]
+  },
+  "unabashed": {
+    "word": "unabashed",
+    "phonetic": "/ʌnə'bæʃt/",
+    "explains": [
+      "adj. 不害羞的"
+    ]
+  },
+  "unabated": {
+    "word": "unabated",
+    "phonetic": "/ʌnə'beɪtɪd/",
+    "explains": [
+      "adj. 不减弱的，不衰退的"
+    ]
+  },
+  "unable": {
+    "word": "unable",
+    "phonetic": "/ʌnˈeɪb(ə)l/",
+    "explains": [
+      "adj. 不能的"
+    ]
+  },
+  "unacceptable": {
+    "word": "unacceptable",
+    "phonetic": "/ʌnək'septəb(ə)l/",
+    "explains": [
+      "adj. 不能接受的, 不受欢迎的"
+    ]
+  },
+  "unaccepted": {
+    "word": "unaccepted",
+    "phonetic": "",
+    "explains": [
+      "adj. 未被接纳的；被拒绝的；不承担的"
+    ]
+  },
+  "unaccompanied": {
+    "word": "unaccompanied",
+    "phonetic": "/ʌnə'kʌmpənɪd/",
+    "explains": [
+      "adj. 无伴奏的；无伴侣的；无伴随的"
+    ]
+  },
+  "unaccountable": {
+    "word": "unaccountable",
+    "phonetic": "/ʌnə'kaʊntəb(ə)l/",
+    "explains": [
+      "adj. 无责任的；莫名其妙的；不可理解的"
+    ]
+  },
+  "unadorned": {
+    "word": "unadorned",
+    "phonetic": "/ʌnə'dɔːnd/",
+    "explains": [
+      "adj. 朴素的,未装饰的"
+    ]
+  },
+  "unadvised": {
+    "word": "unadvised",
+    "phonetic": "/,ʌnəd'vaɪzd/",
+    "explains": [
+      "adj. 欠思虑的, 轻率的, 未曾受到劝告的"
+    ]
+  },
+  "unaffected": {
+    "word": "unaffected",
+    "phonetic": "/ʌnə'fektɪd/",
+    "explains": [
+      "adj. 不受影响的；自然的；真挚的；不矫揉造作的"
+    ]
+  },
+  "unaided": {
+    "word": "unaided",
+    "phonetic": "/ʌn'eɪdɪd/",
+    "explains": [
+      "adj. 未受协助的, 独立的"
+    ]
+  },
+  "unalloyed": {
+    "word": "unalloyed",
+    "phonetic": "/ʌnə'lɒɪd/",
+    "explains": [
+      "adj. 纯粹的"
+    ]
+  },
+  "unaltered": {
+    "word": "unaltered",
+    "phonetic": "/ʌn'ɔːltəd; ʌn'ɒl-/",
+    "explains": [
+      "adj. 未被改变的"
+    ]
+  },
+  "unanimity": {
+    "word": "unanimity",
+    "phonetic": "/ˌju:nəˈnɪmətɪ/",
+    "explains": [
+      "n. 全体一致"
+    ]
+  },
+  "unanimous": {
+    "word": "unanimous",
+    "phonetic": "/juː'nænɪməs/",
+    "explains": [
+      "adj. （全体）一致的"
+    ]
+  },
+  "unanswered": {
+    "word": "unanswered",
+    "phonetic": "/ʌn'ɑːnsəd/",
+    "explains": [
+      "adj. 未答复的,无反应的"
+    ]
+  },
+  "unanticipated": {
+    "word": "unanticipated",
+    "phonetic": "",
+    "explains": [
+      "adj. 不曾预料到的"
+    ]
+  },
+  "unashamed": {
+    "word": "unashamed",
+    "phonetic": "/ʌnə'ʃeɪmd/",
+    "explains": [
+      "adj. 无耻的；恬不知耻的；问心无愧的"
+    ]
+  },
+  "unassuming": {
+    "word": "unassuming",
+    "phonetic": "/ʌnə'sjuːmɪŋ/",
+    "explains": [
+      "adj. 谦逊的；不装腔作势的；不出风头的"
+    ]
+  },
+  "unattractive": {
+    "word": "unattractive",
+    "phonetic": "/ʌnə'træktɪv/",
+    "explains": [
+      "adj. 无魅力的, 无吸引力的"
+    ]
+  },
+  "unavailable": {
+    "word": "unavailable",
+    "phonetic": "/ʌnə'veɪləb(ə)l/",
+    "explains": [
+      "adj. 难以获得的"
+    ]
+  },
+  "unavailing": {
+    "word": "unavailing",
+    "phonetic": "/ʌnə'veɪlɪŋ/",
+    "explains": [
+      "adj. 无效的"
+    ]
+  },
+  "unavoidable": {
+    "word": "unavoidable",
+    "phonetic": "/ʌnə'vɒɪdəb(ə)l/",
+    "explains": [
+      "adj. 不可避免的"
+    ]
+  },
+  "unavoidably": {
+    "word": "unavoidably",
+    "phonetic": "",
+    "explains": [
+      "adv. 不可避免地,不得已地"
+    ]
+  },
+  "unaware": {
+    "word": "unaware",
+    "phonetic": "/ʌnə'weə/",
+    "explains": [
+      "adj. 不知道的, 没觉察到的"
+    ]
+  },
+  "unawares": {
+    "word": "unawares",
+    "phonetic": "/ʌnə'weəz/",
+    "explains": [
+      "adv. 不知不觉地；出其不意地；不料"
+    ]
+  },
+  "unbalance": {
+    "word": "unbalance",
+    "phonetic": "/ʌn'bæl(ə)ns/",
+    "explains": [
+      "v. 使失衡,使精神紊乱n失衡"
+    ]
+  },
+  "unbearable": {
+    "word": "unbearable",
+    "phonetic": "/ʌnˈbeərəb(ə)l/",
+    "explains": [
+      "adj. 难以忍受的"
+    ]
+  },
+  "unbecoming": {
+    "word": "unbecoming",
+    "phonetic": "/ʌnbɪ'kʌmɪŋ/",
+    "explains": [
+      "adj. 不适当的，不相称的；不合身的，不得体的"
+    ]
+  },
+  "unbelievable": {
+    "word": "unbelievable",
+    "phonetic": "/ˌʌnbɪˈliːvəb(ə)l/",
+    "explains": [
+      "adj. 难以置信的"
+    ]
+  },
+  "unbiased": {
+    "word": "unbiased",
+    "phonetic": "/ʌn'baɪəst/",
+    "explains": [
+      "adj. 公正的"
+    ]
+  },
+  "unbidden": {
+    "word": "unbidden",
+    "phonetic": "/ʌn'bɪd(ə)n/",
+    "explains": [
+      "adj. 未受邀请的"
+    ]
+  },
+  "unbind": {
+    "word": "unbind",
+    "phonetic": "/ʌn'baɪnd/",
+    "explains": [
+      "v. 解开, 解放"
+    ]
+  },
+  "unbolted": {
+    "word": "unbolted",
+    "phonetic": "/ʌn'bəʊltɪd/",
+    "explains": [
+      "adj. 未上栓的"
+    ]
+  },
+  "unbreakable": {
+    "word": "unbreakable",
+    "phonetic": "/ʌn'breɪkəb(ə)l/",
+    "explains": [
+      "adj. 不易破碎的, 牢不可破的"
+    ]
+  },
+  "unbridgeable": {
+    "word": "unbridgeable",
+    "phonetic": "",
+    "explains": [
+      "adj. 不能架桥的,不能逾越的"
+    ]
+  },
+  "unbridled": {
+    "word": "unbridled",
+    "phonetic": "/ʌn'braɪd(ə)ld/",
+    "explains": [
+      "adj. 放肆的；无拘束的；激烈的；v. 放纵（unbridle的过去分词形式）；卸下马辔头"
+    ]
+  },
+  "unbroken": {
+    "word": "unbroken",
+    "phonetic": "/ʌn'brəʊk(ə)n/",
+    "explains": [
+      "adj. 不间断的"
+    ]
+  },
+  "uncanny": {
+    "word": "uncanny",
+    "phonetic": "/ʌn'kænɪ/",
+    "explains": [
+      "adj. 离奇的"
+    ]
+  },
+  "uncarved": {
+    "word": "uncarved",
+    "phonetic": "",
+    "explains": [
+      "adj. 没雕刻的"
+    ]
+  },
+  "unceremonious": {
+    "word": "unceremonious",
+    "phonetic": "/,ʌnserɪ'məʊnɪəs/",
+    "explains": [
+      "adj. 随便的，不拘礼节的；无礼貌的"
+    ]
+  },
+  "uncertain": {
+    "word": "uncertain",
+    "phonetic": "/ʌnˈsɜːt(ə)n/",
+    "explains": [
+      "adj. 不确定的"
+    ]
+  },
+  "uncertainty": {
+    "word": "uncertainty",
+    "phonetic": "/ʌn'sɜːt(ə)ntɪ; -tɪntɪ/",
+    "explains": [
+      "n. 无常, 不确定"
+    ]
+  },
+  "unchangeable": {
+    "word": "unchangeable",
+    "phonetic": "/ʌn'tʃeɪn(d)ʒəb(ə)l/",
+    "explains": [
+      "adj. 不变的,不能改变的"
+    ]
+  },
+  "unchanging": {
+    "word": "unchanging",
+    "phonetic": "/ʌn'tʃeɪn(d)ʒɪŋ/",
+    "explains": [
+      "adj. 不变的"
+    ]
+  },
+  "uncharitable": {
+    "word": "uncharitable",
+    "phonetic": "/ʌn'tʃærɪtəb(ə)l/",
+    "explains": [
+      "adj. 严厉的；无情的；不宽恕的；无慈悲心的"
+    ]
+  },
+  "uncharted": {
+    "word": "uncharted",
+    "phonetic": "/ʌn'tʃɑːtɪd/",
+    "explains": [
+      "adj. 地图上没标明的,未知的"
+    ]
+  },
+  "unclad": {
+    "word": "unclad",
+    "phonetic": "/ʌn'klæd/",
+    "explains": [
+      "adj. 赤裸裸的, 没穿衣服的"
     ]
   },
   "uncle": {
@@ -13,11 +461,480 @@
       "n. 叔叔；伯父；伯伯；舅父；姨丈；姑父"
     ]
   },
+  "unclear": {
+    "word": "unclear",
+    "phonetic": "/ʌn'klɪə/",
+    "explains": [
+      "adj. 不清楚的"
+    ]
+  },
+  "uncomfortable": {
+    "word": "uncomfortable",
+    "phonetic": "/ʌnˈkʌmf(ə)təb(ə)l/",
+    "explains": [
+      "adj. 不舒服的"
+    ]
+  },
+  "uncommon": {
+    "word": "uncommon",
+    "phonetic": "/ʌn'kɒmən/",
+    "explains": [
+      "adj. 不凡的, 难得的"
+    ]
+  },
+  "uncompetitive": {
+    "word": "uncompetitive",
+    "phonetic": "/ʌnkəm'petɪtɪv/",
+    "explains": [
+      "adj. 非竞争性的"
+    ]
+  },
+  "uncompromising": {
+    "word": "uncompromising",
+    "phonetic": "/ʌn'kɒmprəmaɪzɪŋ/",
+    "explains": [
+      "adj. 不妥协的，不让步的；坚定的"
+    ]
+  },
+  "unconcern": {
+    "word": "unconcern",
+    "phonetic": "/ʌnkən'sɜːn/",
+    "explains": [
+      "n. 不关心；不感兴趣；冷淡"
+    ]
+  },
+  "unconditional": {
+    "word": "unconditional",
+    "phonetic": "/ʌnkən'dɪʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 绝对的，无条件的"
+    ]
+  },
+  "unconfined": {
+    "word": "unconfined",
+    "phonetic": "/ʌnkən'faɪnd/",
+    "explains": [
+      "adj. 自由的；松散的；无拘束的"
+    ]
+  },
+  "unconscionable": {
+    "word": "unconscionable",
+    "phonetic": "/ʌn'kɒnʃ(ə)nəb(ə)l/",
+    "explains": [
+      "adj. 不合理的；昧着良心的；肆无忌惮的；过度的"
+    ]
+  },
+  "unconscious": {
+    "word": "unconscious",
+    "phonetic": "/ʌnˈkɒnʃəs/",
+    "explains": [
+      "adj. 无意识的"
+    ]
+  },
+  "unconsciously": {
+    "word": "unconsciously",
+    "phonetic": "/ʌn'kɔnʃəsli/",
+    "explains": [
+      "adv. 无意识地；不觉察地"
+    ]
+  },
+  "unconstitutional": {
+    "word": "unconstitutional",
+    "phonetic": "/,ʌnkɒnstɪ'tjuːʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 违反宪法的"
+    ]
+  },
+  "uncontested": {
+    "word": "uncontested",
+    "phonetic": "/ʌnkən'testɪd/",
+    "explains": [
+      "adj. 无争论的, 无异议的"
+    ]
+  },
+  "uncontrollable": {
+    "word": "uncontrollable",
+    "phonetic": "/ʌnkən'trəʊləb(ə)l/",
+    "explains": [
+      "adj. 无法控制的；无法管束的；难以驾驭的"
+    ]
+  },
+  "uncontrollably": {
+    "word": "uncontrollably",
+    "phonetic": "/,ʌnkən'trəuləbli/",
+    "explains": [
+      "adj. 无法管束的, 控制不住的"
+    ]
+  },
+  "unconventional": {
+    "word": "unconventional",
+    "phonetic": "/ʌnkən'venʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 非传统的, 不合惯例的"
+    ]
+  },
+  "uncooked": {
+    "word": "uncooked",
+    "phonetic": "/ʌn'kʊkt/",
+    "explains": [
+      "adj. 未煮过的"
+    ]
+  },
+  "uncooperative": {
+    "word": "uncooperative",
+    "phonetic": "/ʌnkəʊ'ɒp(ə)rətɪv/",
+    "explains": [
+      "adj. 不合作的, 不配合的"
+    ]
+  },
+  "uncorrupt": {
+    "word": "uncorrupt",
+    "phonetic": "/'ʌnkə'rʌpt/",
+    "explains": [
+      "adv. 不腐败的;廉洁的"
+    ]
+  },
+  "uncounted": {
+    "word": "uncounted",
+    "phonetic": "/ʌn'kaʊntɪd/",
+    "explains": [
+      "adj. 无数的,没有数过的"
+    ]
+  },
+  "uncouth": {
+    "word": "uncouth",
+    "phonetic": "/ʌn'kuːθ/",
+    "explains": [
+      "adj. 笨拙的, 粗俗的, 不舒适的"
+    ]
+  },
+  "uncover": {
+    "word": "uncover",
+    "phonetic": "/ʌn'kʌvə/",
+    "explains": [
+      "v. 揭开…的盖子"
+    ]
+  },
+  "uncritical": {
+    "word": "uncritical",
+    "phonetic": "/ʌn'krɪtɪk(ə)l/",
+    "explains": [
+      "adj. 无批判力的,不加批判的"
+    ]
+  },
+  "uncrumple": {
+    "word": "uncrumple",
+    "phonetic": "",
+    "explains": [
+      "vt. 去掉…的皱纹,使回复到平整状态"
+    ]
+  },
+  "unctuous": {
+    "word": "unctuous",
+    "phonetic": "/'ʌŋ(k)tjʊəs/",
+    "explains": [
+      "adj. 油质的；虚情假意的；油腔滑调的"
+    ]
+  },
+  "undaunted": {
+    "word": "undaunted",
+    "phonetic": "/ʌn'dɔːntɪd/",
+    "explains": [
+      "adj. 大无畏的, 勇敢的"
+    ]
+  },
+  "undecided": {
+    "word": "undecided",
+    "phonetic": "/ʌndɪ'saɪdɪd/",
+    "explains": [
+      "adj. 未定的, (天气等)不稳定的"
+    ]
+  },
+  "undefined": {
+    "word": "undefined",
+    "phonetic": "",
+    "explains": [
+      "未定义"
+    ]
+  },
+  "undeniable": {
+    "word": "undeniable",
+    "phonetic": "/ʌndɪ'naɪəb(ə)l/",
+    "explains": [
+      "adj. 不可否认的, 无可辩驳的"
+    ]
+  },
   "under": {
     "word": "under",
     "phonetic": "/ˈʌndə(r)/",
     "explains": [
       "prep. 在… 下面；低于；少于；在… 指导下"
+    ]
+  },
+  "underachieve": {
+    "word": "underachieve",
+    "phonetic": "/ʌndərə'tʃiːv/",
+    "explains": [
+      "v. 未能充分发挥学习潜力；学习成绩不良"
+    ]
+  },
+  "underage": {
+    "word": "underage",
+    "phonetic": "/'ʌndər,eɪdʒ/",
+    "explains": [
+      "n. 缺乏, 久缺"
+    ]
+  },
+  "underbelly": {
+    "word": "underbelly",
+    "phonetic": "/'ʌndəbelɪ/",
+    "explains": [
+      "n. 下腹部；薄弱部分；易受攻击的部位、区域等"
+    ]
+  },
+  "underbrush": {
+    "word": "underbrush",
+    "phonetic": "/'ʌndəbrʌʃ/",
+    "explains": [
+      "n. 林下灌木丛；矮树丛"
+    ]
+  },
+  "undercapitalize": {
+    "word": "undercapitalize",
+    "phonetic": "/ʌndə'kæpɪt(ə)laɪz/",
+    "explains": [
+      "vt. 投资不足（等于undercapitalise）；vi. 投资不足（等于undercapitalise）"
+    ]
+  },
+  "undercharge": {
+    "word": "undercharge",
+    "phonetic": "/ˌʌndə'tʃɑːdʒ/",
+    "explains": [
+      "v.  少算价钱， 低收费"
+    ]
+  },
+  "underclass": {
+    "word": "underclass",
+    "phonetic": "/'ʌndəklɑːs/",
+    "explains": [
+      "n. 下层阶级，下层社会；一、二年级学生"
+    ]
+  },
+  "undercover": {
+    "word": "undercover",
+    "phonetic": "/ʌndə'kʌvə; 'ʌndə-/",
+    "explains": [
+      "adj. 秘密的，秘密从事的；从事间谍活动的"
+    ]
+  },
+  "undercut": {
+    "word": "undercut",
+    "phonetic": "/'ʌndəkʌt/",
+    "explains": [
+      "v.  削价与…抢生意； 低报盘"
+    ]
+  },
+  "underdeveloped": {
+    "word": "underdeveloped",
+    "phonetic": "/ʌndədɪ'veləpt/",
+    "explains": [
+      "adj. 不发达的"
+    ]
+  },
+  "underdog": {
+    "word": "underdog",
+    "phonetic": "/'ʌndədɒg/",
+    "explains": [
+      "n. 比赛中不被看好者；失败者；受压迫者；斗败了的狗"
+    ]
+  },
+  "underdone": {
+    "word": "underdone",
+    "phonetic": "/ʌndə'dʌn; 'ʌndə-/",
+    "explains": [
+      "adj. 半生不熟的；未煮透的；v. 不尽全力做；使…不煮透（underdo的过去分词）"
+    ]
+  },
+  "underestimate": {
+    "word": "underestimate",
+    "phonetic": "/ʌndər'estɪmeɪt/",
+    "explains": [
+      "v. 低估，看轻"
+    ]
+  },
+  "underexposure": {
+    "word": "underexposure",
+    "phonetic": "",
+    "explains": [
+      "n. [摄] 曝光不足"
+    ]
+  },
+  "underfoot": {
+    "word": "underfoot",
+    "phonetic": "/ʌndə'fʊt/",
+    "explains": [
+      "adv. 在脚下面, 踩着地"
+    ]
+  },
+  "undergo": {
+    "word": "undergo",
+    "phonetic": "/ˌʌndəˈɡəʊ/",
+    "explains": [
+      "v. 经历"
+    ]
+  },
+  "undergraduate": {
+    "word": "undergraduate",
+    "phonetic": "/ʌndə'grædjʊət/",
+    "explains": [
+      "n. 大学在校生"
+    ]
+  },
+  "underground": {
+    "word": "underground",
+    "phonetic": "/ˈʌndəɡraʊnd/",
+    "explains": [
+      "adj. 地下的"
+    ]
+  },
+  "undergrowth": {
+    "word": "undergrowth",
+    "phonetic": "/'ʌndəgrəʊθ/",
+    "explains": [
+      "n. 发育不全；生长在大树下的灌木；动物身上长在长毛下面的浓密绒毛"
+    ]
+  },
+  "underhand": {
+    "word": "underhand",
+    "phonetic": "/'ʌndəhænd/",
+    "explains": [
+      "adj. （球赛时投球）下投的；阴险的；adv. 欺诈地；以下手投"
+    ]
+  },
+  "underhanded": {
+    "word": "underhanded",
+    "phonetic": "/ʌndə'hændɪd/",
+    "explains": [
+      "adj. 秘密的"
+    ]
+  },
+  "underinsured": {
+    "word": "underinsured",
+    "phonetic": "/ˌʌndərin'ʃuəd/",
+    "explains": [
+      "adj.  保险不足的"
+    ]
+  },
+  "underlie": {
+    "word": "underlie",
+    "phonetic": "/ʌndə'laɪ/",
+    "explains": [
+      "v. 成为……的基础；位于……之下"
+    ]
+  },
+  "underlies": {
+    "word": "underlies",
+    "phonetic": "/ʌndə'laɪ/",
+    "explains": [
+      "v. 位于之下, 成为的基础"
+    ]
+  },
+  "underline": {
+    "word": "underline",
+    "phonetic": "/ˌʌndəˈlaɪn/",
+    "explains": [
+      "v. 在… 下面划线；强调；突出"
+    ]
+  },
+  "underling": {
+    "word": "underling",
+    "phonetic": "/'ʌndəlɪŋ/",
+    "explains": [
+      "n. 下属，部下；走卒"
+    ]
+  },
+  "underlying": {
+    "word": "underlying",
+    "phonetic": "/ʌndə'laɪɪŋ/",
+    "explains": [
+      "adj. 潜在的；根本的；在下面的；优先的；v. 放在…的下面；为…的基础；优先于（underlie的ing形式）"
+    ]
+  },
+  "undermine": {
+    "word": "undermine",
+    "phonetic": "/ˌʌndəˈmaɪn/",
+    "explains": [
+      "v. 破坏"
+    ]
+  },
+  "underneath": {
+    "word": "underneath",
+    "phonetic": "/ʌndə'niːθ/",
+    "explains": [
+      "prep,adv. 在下面，在底下"
+    ]
+  },
+  "undernutrition": {
+    "word": "undernutrition",
+    "phonetic": "/,ʌndənjuː'trɪʃən/",
+    "explains": [
+      "n. 营养不良"
+    ]
+  },
+  "underpass": {
+    "word": "underpass",
+    "phonetic": "/'ʌndəpɑːs/",
+    "explains": [
+      "n. 地下通道；[交] 下穿交叉道"
+    ]
+  },
+  "underpin": {
+    "word": "underpin",
+    "phonetic": "/ˌʌndə'pin/",
+    "explains": [
+      "v.  加固…的基础； 巩固， 支撑"
+    ]
+  },
+  "underprivileged": {
+    "word": "underprivileged",
+    "phonetic": "/ʌndə'prɪvɪlɪdʒd/",
+    "explains": [
+      "adj. 贫困的；被剥夺基本权力的；社会地位低下的"
+    ]
+  },
+  "underscore": {
+    "word": "underscore",
+    "phonetic": "/ʌndə'skɔː/",
+    "explains": [
+      "v. 画底线"
+    ]
+  },
+  "undersell": {
+    "word": "undersell",
+    "phonetic": "/ʌndə'sel/",
+    "explains": [
+      "v. 抛售；以低于市价售出"
+    ]
+  },
+  "underside": {
+    "word": "underside",
+    "phonetic": "/'ʌndəsaɪd/",
+    "explains": [
+      "n. 下面；阴暗面"
+    ]
+  },
+  "undersize": {
+    "word": "undersize",
+    "phonetic": "/'ʌndə'saiz/",
+    "explains": [
+      "adj. 不够大的；小于一般尺寸的；n. 尺寸不足"
+    ]
+  },
+  "understaffed": {
+    "word": "understaffed",
+    "phonetic": "/ˌʌndə'stɑːft/",
+    "explains": [
+      "adj.  人手不足的"
     ]
   },
   "understand": {
@@ -27,11 +944,613 @@
       "v. 理解；懂得；明白；了解"
     ]
   },
-  "underline": {
-    "word": "underline",
-    "phonetic": "/ˌʌndəˈlaɪn/",
+  "understandable": {
+    "word": "understandable",
+    "phonetic": "/ʌndə'stændəbl/",
     "explains": [
-      "v. 在… 下面划线；强调；突出"
+      "adj. 可理解的,能够懂的"
+    ]
+  },
+  "understandably": {
+    "word": "understandably",
+    "phonetic": "",
+    "explains": [
+      "adv. 可理解地"
+    ]
+  },
+  "understanding": {
+    "word": "understanding",
+    "phonetic": "/ˌʌndəˈstændɪŋ/",
+    "explains": [
+      "n. 理解"
+    ]
+  },
+  "understate": {
+    "word": "understate",
+    "phonetic": "/ʌndə'steɪt/",
+    "explains": [
+      "v. 打着折扣说,有意轻描淡写"
+    ]
+  },
+  "understory": {
+    "word": "understory",
+    "phonetic": "/'ʌndə,stɔ:ri/",
+    "explains": [
+      "n. 林下叶层"
+    ]
+  },
+  "understudy": {
+    "word": "understudy",
+    "phonetic": "/'ʌndəstʌdɪ/",
+    "explains": [
+      "n. 候补演员；替工；v. 练习代演；当…的替手；实地演习"
+    ]
+  },
+  "undertake": {
+    "word": "undertake",
+    "phonetic": "/ˌʌndəˈteɪk/",
+    "explains": [
+      "v. 承担"
+    ]
+  },
+  "undertaker": {
+    "word": "undertaker",
+    "phonetic": "/'ʌndəteɪkə/",
+    "explains": [
+      "n. 承担者；承办人；殡仪业者"
+    ]
+  },
+  "undertaking": {
+    "word": "undertaking",
+    "phonetic": "/ʌndə'teɪkɪŋ/",
+    "explains": [
+      "n. 任务，事业；承诺"
+    ]
+  },
+  "underuse": {
+    "word": "underuse",
+    "phonetic": "/ˌʌndə'juːz/",
+    "explains": [
+      "vt.  未充分利用， 浪费地使用， 使用不当"
+    ]
+  },
+  "undervalue": {
+    "word": "undervalue",
+    "phonetic": "/ʌndə'væljuː/",
+    "explains": [
+      "v. 低估之价值；看轻"
+    ]
+  },
+  "underwater": {
+    "word": "underwater",
+    "phonetic": "/ʌndə'wɔːtə/",
+    "explains": [
+      "adj. 在水中生长的"
+    ]
+  },
+  "underwear": {
+    "word": "underwear",
+    "phonetic": "/'ʌndəweə/",
+    "explains": [
+      "n. 衫衣，内衣，贴身衣"
+    ]
+  },
+  "underwing": {
+    "word": "underwing",
+    "phonetic": "/'ʌndəwɪŋ/",
+    "explains": [
+      "n. 后翅, 后翅色彩瑰丽的蛾"
+    ]
+  },
+  "underworld": {
+    "word": "underworld",
+    "phonetic": "/'ʌndəwɜːld/",
+    "explains": [
+      "n. 黑社会"
+    ]
+  },
+  "underwrite": {
+    "word": "underwrite",
+    "phonetic": "/ʌndə'raɪt; 'ʌndəraɪt/",
+    "explains": [
+      "v. 给保险；同意赔款(海上保险)"
+    ]
+  },
+  "underwriter": {
+    "word": "underwriter",
+    "phonetic": "/'ʌndə,raɪtə/",
+    "explains": [
+      "n. 保险公司；保险业者；承诺支付者；担保人"
+    ]
+  },
+  "undesirable": {
+    "word": "undesirable",
+    "phonetic": "/ʌndɪ'zaɪərəb(ə)l/",
+    "explains": [
+      "adj. 不合需要的；讨厌的"
+    ]
+  },
+  "undeterred": {
+    "word": "undeterred",
+    "phonetic": "/ʌndɪ'tɜːd/",
+    "explains": [
+      "adj. 未受阻的；未被吓住的"
+    ]
+  },
+  "undeveloped": {
+    "word": "undeveloped",
+    "phonetic": "/ʌndɪ'veləpt/",
+    "explains": [
+      "adj. 不发达的, 未开发的"
+    ]
+  },
+  "undifferentiated": {
+    "word": "undifferentiated",
+    "phonetic": "/,ʌndɪfə'renʃɪeɪtɪd/",
+    "explains": [
+      "adj. 无差别的, 一致的"
+    ]
+  },
+  "undignified": {
+    "word": "undignified",
+    "phonetic": "/ʌn'dɪgnɪfaɪd/",
+    "explains": [
+      "adj. 不庄重的；无威严的"
+    ]
+  },
+  "undiscovered": {
+    "word": "undiscovered",
+    "phonetic": "/ʌndɪ'skʌvəd/",
+    "explains": [
+      "adj. 未被发现的"
+    ]
+  },
+  "undisputed": {
+    "word": "undisputed",
+    "phonetic": "/ʌndɪ'spjuːtɪd/",
+    "explains": [
+      "adj. 无可置辩的"
+    ]
+  },
+  "undisturbed": {
+    "word": "undisturbed",
+    "phonetic": "/ʌndɪ'stɜːbd/",
+    "explains": [
+      "adj. 未受干扰的"
+    ]
+  },
+  "undo": {
+    "word": "undo",
+    "phonetic": "/ʌn'duː/",
+    "explains": [
+      "v. 解开，打开；取消"
+    ]
+  },
+  "undoing": {
+    "word": "undoing",
+    "phonetic": "/ʌn'duːɪŋ/",
+    "explains": [
+      "n. 解开, 复旧, 毁灭, 取消"
+    ]
+  },
+  "undoubted": {
+    "word": "undoubted",
+    "phonetic": "/ʌn'daʊtɪd/",
+    "explains": [
+      "adj. 无疑的；确实的"
+    ]
+  },
+  "undoubtedly": {
+    "word": "undoubtedly",
+    "phonetic": "/ʌn'daʊtɪdlɪ/",
+    "explains": [
+      "adv. 无容置疑，肯定地"
+    ]
+  },
+  "undue": {
+    "word": "undue",
+    "phonetic": "/ˌʌn'djuː/",
+    "explains": [
+      "adj.  不适当的； 未到期的"
+    ]
+  },
+  "undulate": {
+    "word": "undulate",
+    "phonetic": "/'ʌndjʊleɪt/",
+    "explains": [
+      "v. 起伏，波动；震动；呈波浪形；adj. 波动的；起伏的；波浪形的"
+    ]
+  },
+  "unduly": {
+    "word": "unduly",
+    "phonetic": "/ʌn'djuːlɪ/",
+    "explains": [
+      "adv. 过度地；不适当地；不正当地"
+    ]
+  },
+  "unearned": {
+    "word": "unearned",
+    "phonetic": "/ʌn'ɜːnd/",
+    "explains": [
+      "adj. 不劳而获的"
+    ]
+  },
+  "unearth": {
+    "word": "unearth",
+    "phonetic": "/ʌn'ɜːθ/",
+    "explains": [
+      "v. 掘出"
+    ]
+  },
+  "uneasiness": {
+    "word": "uneasiness",
+    "phonetic": "",
+    "explains": [
+      "n. 不安；担忧；局促"
+    ]
+  },
+  "uneasy": {
+    "word": "uneasy",
+    "phonetic": "/ʌn'iːzɪ/",
+    "explains": [
+      "adj. 心神不安的，忧虑的"
+    ]
+  },
+  "uneatable": {
+    "word": "uneatable",
+    "phonetic": "/ʌn'iːtəb(ə)l/",
+    "explains": [
+      "adj. 不能吃的；不适合食用的"
+    ]
+  },
+  "uneconomic": {
+    "word": "uneconomic",
+    "phonetic": "/ʌnˌiːkə'nɔmik/",
+    "explains": [
+      "adj.  不经济的， 赚不到钱的"
+    ]
+  },
+  "uneconomical": {
+    "word": "uneconomical",
+    "phonetic": "/ˌʌnˌiːkə'nɔmikl/",
+    "explains": [
+      "adj.  不节俭的； 浪费的"
+    ]
+  },
+  "uneducated": {
+    "word": "uneducated",
+    "phonetic": "/ʌn'edjʊkeɪtɪd/",
+    "explains": [
+      "adj. 没受教育的；文盲的"
+    ]
+  },
+  "unemployed": {
+    "word": "unemployed",
+    "phonetic": "/ˌʌnim'plɔid/",
+    "explains": [
+      "adj.  失业的， 没有工作的； 未动用的， 闲置的"
+    ]
+  },
+  "unemployment": {
+    "word": "unemployment",
+    "phonetic": "/ʌnɪm'plɒɪm(ə)nt; -em-/",
+    "explains": [
+      "n. 失业；失业人数"
+    ]
+  },
+  "unending": {
+    "word": "unending",
+    "phonetic": "/ʌn'endɪŋ/",
+    "explains": [
+      "adj. 不断的, 不断重复的"
+    ]
+  },
+  "unequalled": {
+    "word": "unequalled",
+    "phonetic": "",
+    "explains": [
+      "adj. 无与伦比的；不等同的，不能比拟的"
+    ]
+  },
+  "unequivocal": {
+    "word": "unequivocal",
+    "phonetic": "/ʌnɪ'kwɪvək(ə)l/",
+    "explains": [
+      "adj. 明确的；不含糊的"
+    ]
+  },
+  "unequivocally": {
+    "word": "unequivocally",
+    "phonetic": "",
+    "explains": [
+      "adv. 明确地"
+    ]
+  },
+  "unethical": {
+    "word": "unethical",
+    "phonetic": "/ʌn'eθɪk(ə)l/",
+    "explains": [
+      "adj. 不道德的；缺乏职业道德的"
+    ]
+  },
+  "uneven": {
+    "word": "uneven",
+    "phonetic": "/ʌn'iːv(ə)n/",
+    "explains": [
+      "adj. 不平坦的,不均匀的"
+    ]
+  },
+  "unevenly": {
+    "word": "unevenly",
+    "phonetic": "/'ʌn'i:vənli/",
+    "explains": [
+      "adv. 不平坦地, 不均衡地"
+    ]
+  },
+  "unexampled": {
+    "word": "unexampled",
+    "phonetic": "/ʌnɪg'zɑːmp(ə)ld; ʌneg-/",
+    "explains": [
+      "adj. 无前例的, 无可比拟的"
+    ]
+  },
+  "unexpected": {
+    "word": "unexpected",
+    "phonetic": "/ʌnɪk'spektɪd; ʌnek-/",
+    "explains": [
+      "adj. 想不到的，意外的"
+    ]
+  },
+  "unexpectedly": {
+    "word": "unexpectedly",
+    "phonetic": "/'ʌnik'spektidli/",
+    "explains": [
+      "adv. 出乎意料地,意外地"
+    ]
+  },
+  "unexplored": {
+    "word": "unexplored",
+    "phonetic": "/ʌnɪk'splɔːd; ʌnek-/",
+    "explains": [
+      "adj. [地质] 未勘查过的"
+    ]
+  },
+  "unfailing": {
+    "word": "unfailing",
+    "phonetic": "/ʌn'feɪlɪŋ/",
+    "explains": [
+      "adj. 经久不衰的,无穷尽的, 可靠的"
+    ]
+  },
+  "unfailingly": {
+    "word": "unfailingly",
+    "phonetic": "",
+    "explains": [
+      "adv. 无穷尽地, 可靠地"
+    ]
+  },
+  "unfair": {
+    "word": "unfair",
+    "phonetic": "/ʌnˈfeə/",
+    "explains": [
+      "adj. 不公平的"
+    ]
+  },
+  "unfairly": {
+    "word": "unfairly",
+    "phonetic": "/ʌn'fɛəli/",
+    "explains": [
+      "adv. 不公平地,不正当地"
+    ]
+  },
+  "unfaithful": {
+    "word": "unfaithful",
+    "phonetic": "/ʌn'feɪθfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 不忠实的；不诚实的；不准确的"
+    ]
+  },
+  "unfamiliar": {
+    "word": "unfamiliar",
+    "phonetic": "/ʌnfə'mɪlɪə/",
+    "explains": [
+      "adj. 不熟悉的"
+    ]
+  },
+  "unfathomable": {
+    "word": "unfathomable",
+    "phonetic": "/ʌn'fæð(ə)məb(ə)l/",
+    "explains": [
+      "adj. 深不可测的；无底的；莫测高深的"
+    ]
+  },
+  "unfathomed": {
+    "word": "unfathomed",
+    "phonetic": "/ʌn'fæð(ə)md/",
+    "explains": [
+      "adj. 未探测深度的, 无法了解的, 未解决的"
+    ]
+  },
+  "unfavorable": {
+    "word": "unfavorable",
+    "phonetic": "/,ʌn'feivərəbl/",
+    "explains": [
+      "adj. 不宜的；令人不快的；不顺利的"
+    ]
+  },
+  "unfavorably": {
+    "word": "unfavorably",
+    "phonetic": "",
+    "explains": [
+      "adv. 不利地,不适宜地"
+    ]
+  },
+  "unfertilized": {
+    "word": "unfertilized",
+    "phonetic": "/ʌn'fɜːtɪlaɪzd/",
+    "explains": [
+      "adj. 未施肥的,  未受精的"
+    ]
+  },
+  "unfettered": {
+    "word": "unfettered",
+    "phonetic": "/ʌn'fetəd/",
+    "explains": [
+      "adj. 被除去脚镣的,无拘无束的"
+    ]
+  },
+  "unfit": {
+    "word": "unfit",
+    "phonetic": "/ʌn'fɪt/",
+    "explains": [
+      "adj. 不合适的；无能力的"
+    ]
+  },
+  "unflappable": {
+    "word": "unflappable",
+    "phonetic": "/ʌn'flæpəb(ə)l/",
+    "explains": [
+      "adj. 不易惊慌的, 镇定的"
+    ]
+  },
+  "unfocused": {
+    "word": "unfocused",
+    "phonetic": "",
+    "explains": [
+      "adj. 未聚焦的,无焦点的"
+    ]
+  },
+  "unfold": {
+    "word": "unfold",
+    "phonetic": "/ʌn'fəʊld/",
+    "explains": [
+      "v. 展开；展现，呈现"
+    ]
+  },
+  "unforeseen": {
+    "word": "unforeseen",
+    "phonetic": "/ʌnfɔː'siːn/",
+    "explains": [
+      "adj. 无法预料的"
+    ]
+  },
+  "unforgettable": {
+    "word": "unforgettable",
+    "phonetic": "/ʌnfə'getəb(ə)l/",
+    "explains": [
+      "adj. 难忘的"
+    ]
+  },
+  "unfortunate": {
+    "word": "unfortunate",
+    "phonetic": "/ʌn'fɔːtʃ(ə)nət/",
+    "explains": [
+      "adj. 不幸的"
+    ]
+  },
+  "unfortunately": {
+    "word": "unfortunately",
+    "phonetic": "/ʌnˈfɔːtʃ(ə)nətlɪ/",
+    "explains": [
+      "adv. 不幸地"
+    ]
+  },
+  "unfounded": {
+    "word": "unfounded",
+    "phonetic": "/ʌn'faʊndɪd/",
+    "explains": [
+      "adj. 没有理由的,未建立的"
+    ]
+  },
+  "unfrequented": {
+    "word": "unfrequented",
+    "phonetic": "/ʌnfrɪ'kwentɪd/",
+    "explains": [
+      "adj. 人迹罕到的"
+    ]
+  },
+  "unfurl": {
+    "word": "unfurl",
+    "phonetic": "/ʌn'fɜːl/",
+    "explains": [
+      "v. 展开, 展示, 公开, 使旗招展"
+    ]
+  },
+  "ungainly": {
+    "word": "ungainly",
+    "phonetic": "/ʌn'geɪnlɪ/",
+    "explains": [
+      "adj. 笨拙的，难看的"
+    ]
+  },
+  "ungeared": {
+    "word": "ungeared",
+    "phonetic": "/'ʌn'giəd/",
+    "explains": [
+      "adj.  无借贷的"
+    ]
+  },
+  "ungodly": {
+    "word": "ungodly",
+    "phonetic": "/ʌn'gɒdlɪ/",
+    "explains": [
+      "adj. 邪恶的；不敬畏神的；荒唐的"
+    ]
+  },
+  "ungracious": {
+    "word": "ungracious",
+    "phonetic": "/ʌn'greɪʃəs/",
+    "explains": [
+      "adj. 无礼貌的，没规矩的；没有教养的；讨厌的"
+    ]
+  },
+  "ungrateful": {
+    "word": "ungrateful",
+    "phonetic": "/ʌn'greɪtfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 忘恩负义的；不领情的；讨厌的；徒劳的"
+    ]
+  },
+  "unguarded": {
+    "word": "unguarded",
+    "phonetic": "/ʌn'gɑːdɪd/",
+    "explains": [
+      "adj. 没有防备的"
+    ]
+  },
+  "unguent": {
+    "word": "unguent",
+    "phonetic": "/'ʌŋgwənt/",
+    "explains": [
+      "n. 油膏"
+    ]
+  },
+  "unhappy": {
+    "word": "unhappy",
+    "phonetic": "/ʌnˈhæpɪ/",
+    "explains": [
+      "adj. 不开心的"
+    ]
+  },
+  "unhealthy": {
+    "word": "unhealthy",
+    "phonetic": "/ʌn'helθɪ/",
+    "explains": [
+      "adj. 不健康的；危险的；有害身心健康的"
+    ]
+  },
+  "unhindered": {
+    "word": "unhindered",
+    "phonetic": "/ʌn'hɪndəd/",
+    "explains": [
+      "adj. 无阻的, 不受阻碍的"
+    ]
+  },
+  "unicorn": {
+    "word": "unicorn",
+    "phonetic": "/'juːnɪkɔːn/",
+    "explains": [
+      "n. 独角兽, 麒麟"
     ]
   },
   "uniform": {
@@ -42,11 +1561,200 @@
       "adj. 统一的；一致的；均匀的"
     ]
   },
+  "uniformitarianism": {
+    "word": "uniformitarianism",
+    "phonetic": "/,juːnɪfɔːmɪ'teərɪənɪʒ(ə)m/",
+    "explains": [
+      "n. [地质]均变论"
+    ]
+  },
+  "uniformity": {
+    "word": "uniformity",
+    "phonetic": "/juːnɪ'fɔːmɪtɪ/",
+    "explains": [
+      "n. 一致,均匀"
+    ]
+  },
+  "uniformly": {
+    "word": "uniformly",
+    "phonetic": "/'ju:nɪfɔ:mlɪ/",
+    "explains": [
+      "adv. 相同地；一贯"
+    ]
+  },
+  "unify": {
+    "word": "unify",
+    "phonetic": "/'juːnɪfaɪ/",
+    "explains": [
+      "v. 统一；使相同，使一致"
+    ]
+  },
+  "unilateral": {
+    "word": "unilateral",
+    "phonetic": "/juːnɪ'læt(ə)r(ə)l/",
+    "explains": [
+      "adj. 单方面的；片面的"
+    ]
+  },
+  "unimaginable": {
+    "word": "unimaginable",
+    "phonetic": "/ʌnɪ'mædʒɪnəb(ə)l/",
+    "explains": [
+      "adj. 不能想象的, 想象不到的"
+    ]
+  },
+  "unimpeachable": {
+    "word": "unimpeachable",
+    "phonetic": "/ʌnɪm'piːtʃəb(ə)l/",
+    "explains": [
+      "adj. 无懈可击的, 无可指责的, 无过失的, 无可怀疑的"
+    ]
+  },
+  "unimportant": {
+    "word": "unimportant",
+    "phonetic": "/ʌnɪm'pɔːt(ə)nt/",
+    "explains": [
+      "adj. 不重要的"
+    ]
+  },
+  "unincorporated": {
+    "word": "unincorporated",
+    "phonetic": "/,ʌnɪn'kɔːpəreɪtɪd/",
+    "explains": [
+      "n. 未联合的,未合并的"
+    ]
+  },
+  "uninformative": {
+    "word": "uninformative",
+    "phonetic": "/ʌnɪn'fɔːmətɪv/",
+    "explains": [
+      "adj. 不提供信息的；不增长见闻的"
+    ]
+  },
+  "uninformed": {
+    "word": "uninformed",
+    "phonetic": "/ʌnɪn'fɔːmd/",
+    "explains": [
+      "adj. 无知的；未被通知的；未受教育的；不学无术的"
+    ]
+  },
+  "uninhabitable": {
+    "word": "uninhabitable",
+    "phonetic": "/ʌnɪn'hæbɪtəb(ə)l/",
+    "explains": [
+      "adj. 不适宜居住的"
+    ]
+  },
+  "uninhabited": {
+    "word": "uninhabited",
+    "phonetic": "/ʌnɪn'hæbɪtɪd/",
+    "explains": [
+      "adj. 无人居住的,杳无人迹的"
+    ]
+  },
+  "uninitiated": {
+    "word": "uninitiated",
+    "phonetic": "/ʌnɪ'nɪʃɪeɪtɪd/",
+    "explains": [
+      "adj. 不知情的；缺少经验的"
+    ]
+  },
+  "unintelligible": {
+    "word": "unintelligible",
+    "phonetic": "/ʌnɪn'telɪdʒɪb(ə)l/",
+    "explains": [
+      "adj. 莫名其妙的；无法了解的"
+    ]
+  },
+  "unintentionally": {
+    "word": "unintentionally",
+    "phonetic": "/ʌnɪnˈtɛnʃ(ə)n(ə)li/",
+    "explains": [
+      "adv. 无意地,非故意地"
+    ]
+  },
+  "uninteresting": {
+    "word": "uninteresting",
+    "phonetic": "/ʌn'ɪnt(ə)rɪstɪŋ/",
+    "explains": [
+      "adj. 无趣味的，乏味的"
+    ]
+  },
+  "uninterrupted": {
+    "word": "uninterrupted",
+    "phonetic": "/,ʌnɪntə'rʌptɪd/",
+    "explains": [
+      "adj. 不停的, 连续的"
+    ]
+  },
+  "uninviting": {
+    "word": "uninviting",
+    "phonetic": "/ʌnɪn'vaɪtɪŋ/",
+    "explains": [
+      "adj. 讨厌的，无吸引力的；无魅力的"
+    ]
+  },
+  "union": {
+    "word": "union",
+    "phonetic": "/ˈjuːnjən/",
+    "explains": [
+      "n. 联合；工会"
+    ]
+  },
+  "unionist": {
+    "word": "unionist",
+    "phonetic": "/'juːnjənɪst; -ɪən-/",
+    "explains": [
+      "n. 工会会员；联合主义者"
+    ]
+  },
+  "unionization": {
+    "word": "unionization",
+    "phonetic": "",
+    "explains": [
+      "n. 联合, 结合"
+    ]
+  },
   "unique": {
     "word": "unique",
     "phonetic": "/juˈniːk/",
     "explains": [
       "adj. 唯一的；独特的；独一无二的"
+    ]
+  },
+  "uniquely": {
+    "word": "uniquely",
+    "phonetic": "/ju:'ni:kli/",
+    "explains": [
+      "adv. adv独特地, 唯一地"
+    ]
+  },
+  "uniqueness": {
+    "word": "uniqueness",
+    "phonetic": "/ju:'ni:knis/",
+    "explains": [
+      "n. 唯一性, 独特性"
+    ]
+  },
+  "unisex": {
+    "word": "unisex",
+    "phonetic": "/'juːnɪseks/",
+    "explains": [
+      "adj. 男女皆宜的"
+    ]
+  },
+  "unison": {
+    "word": "unison",
+    "phonetic": "/'juːnɪs(ə)n/",
+    "explains": [
+      "n. 和谐；齐唱；同度；[声] 同音"
+    ]
+  },
+  "unisonous": {
+    "word": "unisonous",
+    "phonetic": "/juː'nɪsənəs/",
+    "explains": [
+      "adj. 同音的；和谐的"
     ]
   },
   "unit": {
@@ -63,11 +1771,123 @@
       "v. 联合；团结；统一；合并"
     ]
   },
+  "united": {
+    "word": "united",
+    "phonetic": "/jʊ'naɪtɪd/",
+    "explains": [
+      "adj. 一致的，统一的；团结的，和睦的"
+    ]
+  },
+  "units": {
+    "word": "units",
+    "phonetic": "/ˈjuːnɪts/",
+    "explains": [
+      "n. [计量] 单位"
+    ]
+  },
+  "unity": {
+    "word": "unity",
+    "phonetic": "/ˈjuːnɪtɪ/",
+    "explains": [
+      "n. 团结"
+    ]
+  },
+  "universal": {
+    "word": "universal",
+    "phonetic": "/ˌjuːnɪˈvɜːs(ə)l/",
+    "explains": [
+      "adj. 普遍的"
+    ]
+  },
+  "universality": {
+    "word": "universality",
+    "phonetic": "/,juːnɪvɜː'sælətɪ/",
+    "explains": [
+      "n. 普遍性, 一般性"
+    ]
+  },
+  "universally": {
+    "word": "universally",
+    "phonetic": "/juːnɪ'vɜːsəlɪ/",
+    "explains": [
+      "adv. 普遍地，一般地"
+    ]
+  },
+  "universe": {
+    "word": "universe",
+    "phonetic": "/ˈjuːnɪvɜːs/",
+    "explains": [
+      "n. 宇宙"
+    ]
+  },
   "university": {
     "word": "university",
     "phonetic": "/ˌjuːnɪˈvɜːsəti/",
     "explains": [
       "n. 大学；综合性大学；大学校舍"
+    ]
+  },
+  "unjust": {
+    "word": "unjust",
+    "phonetic": "/ˌʌnˈdʒʌst/",
+    "explains": [
+      "adj. 不公正的"
+    ]
+  },
+  "unjustified": {
+    "word": "unjustified",
+    "phonetic": "/ʌn'dʒʌstɪfaɪd/",
+    "explains": [
+      "adj. 不正当的；未被证明其正确的"
+    ]
+  },
+  "unkempt": {
+    "word": "unkempt",
+    "phonetic": "/ʌn'kem(p)t/",
+    "explains": [
+      "adj. 蓬乱的，不整洁的；（言语等）粗野的"
+    ]
+  },
+  "unkind": {
+    "word": "unkind",
+    "phonetic": "/ʌn'kaɪnd/",
+    "explains": [
+      "adj. 无情的；不仁慈的，不厚道的"
+    ]
+  },
+  "unknowing": {
+    "word": "unknowing",
+    "phonetic": "/ʌn'nəʊɪŋ/",
+    "explains": [
+      "adj. 没查觉的, 无知的"
+    ]
+  },
+  "unknown": {
+    "word": "unknown",
+    "phonetic": "/ˌʌnˈnəʊn/",
+    "explains": [
+      "adj. 未知的"
+    ]
+  },
+  "unlawful": {
+    "word": "unlawful",
+    "phonetic": "/ʌn'lɔːfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 非法的；私生的"
+    ]
+  },
+  "unleash": {
+    "word": "unleash",
+    "phonetic": "/ʌn'liːʃ/",
+    "explains": [
+      "v. 发动；解开…的皮带；解除…的束缚"
+    ]
+  },
+  "unleavened": {
+    "word": "unleavened",
+    "phonetic": "/ʌn'lev(ə)nd/",
+    "explains": [
+      "adj. 未发酵的；未受激发的"
     ]
   },
   "unless": {
@@ -77,11 +1897,963 @@
       "conj. 除非；如果不"
     ]
   },
+  "unlike": {
+    "word": "unlike",
+    "phonetic": "/ʌnˈlaɪk/",
+    "explains": [
+      "prep. 不像"
+    ]
+  },
+  "unlikely": {
+    "word": "unlikely",
+    "phonetic": "/ʌnˈlaɪklɪ/",
+    "explains": [
+      "adj. 不大可能的"
+    ]
+  },
+  "unlimited": {
+    "word": "unlimited",
+    "phonetic": "/ʌn'lɪmɪtɪd/",
+    "explains": [
+      "adj. 无限的；不定的"
+    ]
+  },
+  "unlisted": {
+    "word": "unlisted",
+    "phonetic": "/ʌn'lɪstɪd/",
+    "explains": [
+      "adj. 未上市的；未编入册的"
+    ]
+  },
+  "unload": {
+    "word": "unload",
+    "phonetic": "/ʌnˈləʊd/",
+    "explains": [
+      "v. 卸货"
+    ]
+  },
+  "unlock": {
+    "word": "unlock",
+    "phonetic": "/ʌn'lɒk/",
+    "explains": [
+      "v. 开…的锁；开启"
+    ]
+  },
+  "unmanageable": {
+    "word": "unmanageable",
+    "phonetic": "/ʌn'mænɪdʒəb(ə)l/",
+    "explains": [
+      "adj. 难处理的, 难控制的"
+    ]
+  },
+  "unmarried": {
+    "word": "unmarried",
+    "phonetic": "/ʌn'mærɪd/",
+    "explains": [
+      "adj. 未婚的, 单身的"
+    ]
+  },
+  "unmatched": {
+    "word": "unmatched",
+    "phonetic": "/ʌn'mætʃt/",
+    "explains": [
+      "adj. 无与伦比的,不相配的"
+    ]
+  },
+  "unmistakable": {
+    "word": "unmistakable",
+    "phonetic": "/ʌnmɪ'steɪkəb(ə)l/",
+    "explains": [
+      "adj. 明显的,不会弄错的"
+    ]
+  },
+  "unmount": {
+    "word": "unmount",
+    "phonetic": "",
+    "explains": [
+      "卸载组件"
+    ]
+  },
+  "unnatural": {
+    "word": "unnatural",
+    "phonetic": "/ʌn'nætʃ(ə)r(ə)l/",
+    "explains": [
+      "adj. 不自然的, 反常的"
+    ]
+  },
+  "unnecessarily": {
+    "word": "unnecessarily",
+    "phonetic": "",
+    "explains": [
+      "adv. 不必要地,  徒然"
+    ]
+  },
+  "unnecessary": {
+    "word": "unnecessary",
+    "phonetic": "/ʌnˈnesəs(ə)rɪ/",
+    "explains": [
+      "adj. 不必要的"
+    ]
+  },
+  "unnerve": {
+    "word": "unnerve",
+    "phonetic": "/ʌn'nɜːv/",
+    "explains": [
+      "v. 使失去勇气；使身心交疲；使焦躁；使失常"
+    ]
+  },
+  "unnoticeable": {
+    "word": "unnoticeable",
+    "phonetic": "/ʌn'nəʊtɪsəb(ə)l/",
+    "explains": [
+      "adj. 不引人注意的("
+    ]
+  },
+  "unnoticed": {
+    "word": "unnoticed",
+    "phonetic": "/ʌn'nəʊtɪst/",
+    "explains": [
+      "adj. 不被注意的, 被忽视的"
+    ]
+  },
+  "unobservable": {
+    "word": "unobservable",
+    "phonetic": "/ʌnəb'zɜːvəb(ə)l/",
+    "explains": [
+      "adj. 不可见的"
+    ]
+  },
+  "unobtainable": {
+    "word": "unobtainable",
+    "phonetic": "/ʌnəb'teɪnəb(ə)l/",
+    "explains": [
+      "adj. 无法得到的,难获得的"
+    ]
+  },
+  "unobtrusive": {
+    "word": "unobtrusive",
+    "phonetic": "/ʌnəb'truːsɪv/",
+    "explains": [
+      "adj. 不唐突的；谦虚的；不引人注目的"
+    ]
+  },
+  "unoccupied": {
+    "word": "unoccupied",
+    "phonetic": "/ʌn'ɒkjʊpaɪd/",
+    "explains": [
+      "adj. 空闲的,未占领的"
+    ]
+  },
+  "unofficial": {
+    "word": "unofficial",
+    "phonetic": "/,ʌnə'fiʃəl/",
+    "explains": [
+      "adj. 非官方的；非正式的"
+    ]
+  },
+  "unorthodox": {
+    "word": "unorthodox",
+    "phonetic": "/ʌn'ɔːθədɒks/",
+    "explains": [
+      "adj. 非正统的；异端的；异教的"
+    ]
+  },
+  "unpack": {
+    "word": "unpack",
+    "phonetic": "/ʌn'pæk/",
+    "explains": [
+      "v. 卸下…；解除…的负担"
+    ]
+  },
+  "unpaid": {
+    "word": "unpaid",
+    "phonetic": "/ʌn'peɪd/",
+    "explains": [
+      "adj. 未付的；无偿的"
+    ]
+  },
+  "unpalatable": {
+    "word": "unpalatable",
+    "phonetic": "/ʌn'pælətəb(ə)l/",
+    "explains": [
+      "adj. 味道差的,难吃的"
+    ]
+  },
+  "unparalleled": {
+    "word": "unparalleled",
+    "phonetic": "/ʌn'pærəleld/",
+    "explains": [
+      "adj.  无比的； 空前的"
+    ]
+  },
+  "unpatriotic": {
+    "word": "unpatriotic",
+    "phonetic": "/,ʌnpætrɪ'ɒtɪk; ,ʌnpeɪt-/",
+    "explains": [
+      "adj. 不爱国的；无爱国心的"
+    ]
+  },
+  "unplanned": {
+    "word": "unplanned",
+    "phonetic": "/,ʌn'plænd/",
+    "explains": [
+      "adj. 意外的,在计划外的"
+    ]
+  },
+  "unpleasant": {
+    "word": "unpleasant",
+    "phonetic": "/ʌnˈplez(ə)nt/",
+    "explains": [
+      "adj. 不愉快的"
+    ]
+  },
+  "unplug": {
+    "word": "unplug",
+    "phonetic": "/ʌn'plʌg/",
+    "explains": [
+      "v. 去掉…的障碍物；拔去…的塞子或插头"
+    ]
+  },
+  "unpopular": {
+    "word": "unpopular",
+    "phonetic": "/ʌnˈpɒpjʊlə/",
+    "explains": [
+      "adj. 不受欢迎的"
+    ]
+  },
+  "unprecedented": {
+    "word": "unprecedented",
+    "phonetic": "/ʌnˈpresɪdentɪd/",
+    "explains": [
+      "adj. 史无前例的"
+    ]
+  },
+  "unpredictability": {
+    "word": "unpredictability",
+    "phonetic": "/ˌʌnprɪˌdɪktə'bɪlətɪ/",
+    "explains": [
+      "n. 不可预测性"
+    ]
+  },
+  "unpredictable": {
+    "word": "unpredictable",
+    "phonetic": "/ʌnprɪ'dɪktəb(ə)l/",
+    "explains": [
+      "adj. 不可预知的"
+    ]
+  },
+  "unpredictably": {
+    "word": "unpredictably",
+    "phonetic": "/ˌʌnprɪˈdɪktəblɪ/",
+    "explains": [
+      "adv. 不可预见地,  不能预料地"
+    ]
+  },
+  "unprejudiced": {
+    "word": "unprejudiced",
+    "phonetic": "/ʌn'predʒʊdɪst/",
+    "explains": [
+      "adj. 没有成见的；公平的；无偏见的"
+    ]
+  },
+  "unpretentious": {
+    "word": "unpretentious",
+    "phonetic": "/ʌnprɪ'tenʃəs/",
+    "explains": [
+      "adj. 谦逊的；含蓄的；不炫耀的；不铺张的"
+    ]
+  },
+  "unprincipled": {
+    "word": "unprincipled",
+    "phonetic": "/ʌn'prɪnsɪp(ə)ld/",
+    "explains": [
+      "adj. 无原则的；不道德的，不正直的；不合人道的"
+    ]
+  },
+  "unprocessed": {
+    "word": "unprocessed",
+    "phonetic": "",
+    "explains": [
+      "adj. 未被加工的"
+    ]
+  },
+  "unproductive": {
+    "word": "unproductive",
+    "phonetic": "/ʌnprə'dʌktɪv/",
+    "explains": [
+      "adj. 不生产的, 徒劳的"
+    ]
+  },
+  "unprofessional": {
+    "word": "unprofessional",
+    "phonetic": "/ʌnprə'feʃ(ə)n(ə)l/",
+    "explains": [
+      "adj. 非职业性的，非专业的；外行的"
+    ]
+  },
+  "unprofitable": {
+    "word": "unprofitable",
+    "phonetic": "/ʌn'prɒfɪtəb(ə)l/",
+    "explains": [
+      "adj. 没有利润的, 无益的"
+    ]
+  },
+  "unpromising": {
+    "word": "unpromising",
+    "phonetic": "/ʌn'prɒmɪsɪŋ/",
+    "explains": [
+      "adj. 没有希望的(结果未必良好的)"
+    ]
+  },
+  "unprotected": {
+    "word": "unprotected",
+    "phonetic": "/ʌnprə'tektɪd/",
+    "explains": [
+      "adj. 无保护的, 未做防护措施的"
+    ]
+  },
+  "unproven": {
+    "word": "unproven",
+    "phonetic": "/ʌn'prʊvən/",
+    "explains": [
+      "adj. 未经证明的, 未经检验的"
+    ]
+  },
+  "unprovoked": {
+    "word": "unprovoked",
+    "phonetic": "/ʌnprə'vəʊkt/",
+    "explains": [
+      "adj. 非因触犯而发生的, 无缘无故的"
+    ]
+  },
+  "unpublished": {
+    "word": "unpublished",
+    "phonetic": "/ʌn'pʌblɪʃt/",
+    "explains": [
+      "adj. 未公开出版的,未发表过的"
+    ]
+  },
+  "unqualified": {
+    "word": "unqualified",
+    "phonetic": "/ʌn'kwɒlɪfaɪd/",
+    "explains": [
+      "adj. 不合格的；无资格的；不胜任的；不受限制的；无条件的；绝对的"
+    ]
+  },
+  "unquestionable": {
+    "word": "unquestionable",
+    "phonetic": "/ʌn'kwestʃ(ə)nəb(ə)l/",
+    "explains": [
+      "adj. 毫无疑问的；确实的；无可挑剔的"
+    ]
+  },
+  "unquestionably": {
+    "word": "unquestionably",
+    "phonetic": "/ʌn'kwɛstʃənəbli/",
+    "explains": [
+      "adv. 无可非议地,确凿地"
+    ]
+  },
+  "unquestioning": {
+    "word": "unquestioning",
+    "phonetic": "/ʌn'kwestʃ(ə)nɪŋ/",
+    "explains": [
+      "adj. 无条件的, 不犹豫的"
+    ]
+  },
+  "unravel": {
+    "word": "unravel",
+    "phonetic": "/,ʌn'rævəl/",
+    "explains": [
+      "v. 拆开,拆开"
+    ]
+  },
+  "unreachable": {
+    "word": "unreachable",
+    "phonetic": "",
+    "explains": [
+      "adj. 不能到达的,  不能得到的"
+    ]
+  },
+  "unread": {
+    "word": "unread",
+    "phonetic": "/ʌn'red/",
+    "explains": [
+      "adj. 没有人看的, 无学问的"
+    ]
+  },
+  "unreal": {
+    "word": "unreal",
+    "phonetic": "/ʌn'rɪəl/",
+    "explains": [
+      "adj. 不真实的, 虚幻的"
+    ]
+  },
+  "unrealistic": {
+    "word": "unrealistic",
+    "phonetic": "/,ʌnrɪə'lɪstɪk/",
+    "explains": [
+      "adj. 不切实际的；不实在的"
+    ]
+  },
+  "unreasonable": {
+    "word": "unreasonable",
+    "phonetic": "/ʌn'riːz(ə)nəb(ə)l/",
+    "explains": [
+      "adj. 不讲道理的；过高的"
+    ]
+  },
+  "unrecognizable": {
+    "word": "unrecognizable",
+    "phonetic": "/,ʌnrekəg'naizəbl/",
+    "explains": [
+      "adj. 未被承认的, 无法识别的"
+    ]
+  },
+  "unrefined": {
+    "word": "unrefined",
+    "phonetic": "/ʌnrɪ'faɪnd/",
+    "explains": [
+      "adj. 未提炼的"
+    ]
+  },
+  "unrelenting": {
+    "word": "unrelenting",
+    "phonetic": "/ʌnrɪ'lentɪŋ/",
+    "explains": [
+      "adj. 无情的；不屈不挠的；不松懈的"
+    ]
+  },
+  "unreliable": {
+    "word": "unreliable",
+    "phonetic": "/ʌnrɪ'laɪəb(ə)l/",
+    "explains": [
+      "adj. 不可靠的"
+    ]
+  },
+  "unremitting": {
+    "word": "unremitting",
+    "phonetic": "/ʌnrɪ'mɪtɪŋ/",
+    "explains": [
+      "adj. 不懈的"
+    ]
+  },
+  "unresolved": {
+    "word": "unresolved",
+    "phonetic": "/ʌnrɪ'zɒlvd/",
+    "explains": [
+      "adj. 未解决的，未决定的"
+    ]
+  },
+  "unrest": {
+    "word": "unrest",
+    "phonetic": "/ʌn'rest/",
+    "explains": [
+      "n. 不安；动荡"
+    ]
+  },
+  "unrestricted": {
+    "word": "unrestricted",
+    "phonetic": "/ʌnrɪ'strɪktɪd/",
+    "explains": [
+      "adj. 自由的,无限制的"
+    ]
+  },
+  "unruly": {
+    "word": "unruly",
+    "phonetic": "/ʌn'ruːlɪ/",
+    "explains": [
+      "adj. 不守规矩的；任性的；难驾驭的"
+    ]
+  },
+  "unsafe": {
+    "word": "unsafe",
+    "phonetic": "/ʌn'seɪf/",
+    "explains": [
+      "adj. 不安全的"
+    ]
+  },
+  "unsatisfactory": {
+    "word": "unsatisfactory",
+    "phonetic": "/'ʌnˌsætis'fæktəri/",
+    "explains": [
+      "adj.  不能令人满意的"
+    ]
+  },
+  "unsavory": {
+    "word": "unsavory",
+    "phonetic": "/,ʌn'seivəri/",
+    "explains": [
+      "adj. 难吃的；没有香味的；令人讨厌的"
+    ]
+  },
+  "unsavoury": {
+    "word": "unsavoury",
+    "phonetic": "",
+    "explains": [
+      "adj. 难吃的；令人讨厌的"
+    ]
+  },
+  "unscathed": {
+    "word": "unscathed",
+    "phonetic": "/ʌn'skeɪðd/",
+    "explains": [
+      "adj. 没有受伤的, 未受伤的"
+    ]
+  },
+  "unschooled": {
+    "word": "unschooled",
+    "phonetic": "/ʌn'skuːld/",
+    "explains": [
+      "adj. 天生的,未受学校教育的"
+    ]
+  },
+  "unscrew": {
+    "word": "unscrew",
+    "phonetic": "/ʌn'skruː/",
+    "explains": [
+      "v. 旋开；旋松；从旋出螺丝"
+    ]
+  },
+  "unscrupulous": {
+    "word": "unscrupulous",
+    "phonetic": "/ʌn'skruːpjʊləs/",
+    "explains": [
+      "adj. 肆无忌惮的；寡廉鲜耻的；不讲道德的"
+    ]
+  },
+  "unseemly": {
+    "word": "unseemly",
+    "phonetic": "/ʌn'siːmlɪ/",
+    "explains": [
+      "adj. 不体面的, 不适宜的, 不恰当的"
+    ]
+  },
+  "unseen": {
+    "word": "unseen",
+    "phonetic": "/ʌn'siːn/",
+    "explains": [
+      "adj. 未见过的"
+    ]
+  },
+  "unselective": {
+    "word": "unselective",
+    "phonetic": "",
+    "explains": [
+      "adj. 非选择性的"
+    ]
+  },
+  "unselfish": {
+    "word": "unselfish",
+    "phonetic": "/ʌn'selfɪʃ/",
+    "explains": [
+      "adj. 无私的,慷慨的"
+    ]
+  },
+  "unsettle": {
+    "word": "unsettle",
+    "phonetic": "/ʌn'set(ə)l/",
+    "explains": [
+      "v. 不安"
+    ]
+  },
+  "unsettled": {
+    "word": "unsettled",
+    "phonetic": "/ʌn'set(ə)ld/",
+    "explains": [
+      "adj. 未决定的；怀疑的；未处理的；不整齐的"
+    ]
+  },
+  "unsightly": {
+    "word": "unsightly",
+    "phonetic": "/ʌn'saɪtlɪ/",
+    "explains": [
+      "adj. 难看的；不雅观的"
+    ]
+  },
+  "unskilled": {
+    "word": "unskilled",
+    "phonetic": "/ʌn'skɪld/",
+    "explains": [
+      "adj. 不熟练的,拙劣的"
+    ]
+  },
+  "unsociable": {
+    "word": "unsociable",
+    "phonetic": "/ʌn'səʊʃəb(ə)l/",
+    "explains": [
+      "adj. 不爱交际的；不与人亲近的；不和气的"
+    ]
+  },
+  "unsophisticated": {
+    "word": "unsophisticated",
+    "phonetic": "/ʌnsə'fɪstɪkeɪtɪd/",
+    "explains": [
+      "adj. 不谙世故的, 不复杂的"
+    ]
+  },
+  "unspeakable": {
+    "word": "unspeakable",
+    "phonetic": "/ʌn'spiːkəb(ə)l/",
+    "explains": [
+      "adj. 无法形容的；不能以言语表达的；坏透了的"
+    ]
+  },
+  "unspecified": {
+    "word": "unspecified",
+    "phonetic": "/ʌn'spesɪfaɪd/",
+    "explains": [
+      "adj. 未详细说明的"
+    ]
+  },
+  "unspoiled": {
+    "word": "unspoiled",
+    "phonetic": "/,ʌn'spɔild/",
+    "explains": [
+      "adj. 未损坏的, 未宠坏的"
+    ]
+  },
+  "unspotted": {
+    "word": "unspotted",
+    "phonetic": "/ʌn'spɒtɪd/",
+    "explains": [
+      "adj. 清白的"
+    ]
+  },
+  "unstable": {
+    "word": "unstable",
+    "phonetic": "/ʌn'steɪb(ə)l/",
+    "explains": [
+      "adj. 不牢固的, 不稳定的"
+    ]
+  },
+  "unstudied": {
+    "word": "unstudied",
+    "phonetic": "/ʌn'stʌdɪd/",
+    "explains": [
+      "adj. 非娇揉造作的,未学过的,不懂的"
+    ]
+  },
+  "unsubstantiated": {
+    "word": "unsubstantiated",
+    "phonetic": "/ʌnsəb'stænʃɪeɪtɪd/",
+    "explains": [
+      "adj. 未经证实的,无事实根据的"
+    ]
+  },
+  "unsuccessful": {
+    "word": "unsuccessful",
+    "phonetic": "/ʌnsək'sesfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 不成功的,失败的"
+    ]
+  },
+  "unsuitable": {
+    "word": "unsuitable",
+    "phonetic": "/ʌn'suːtəb(ə)l; -'sjuːt-/",
+    "explains": [
+      "adj. 不适宜的, 不合适的"
+    ]
+  },
+  "unsung": {
+    "word": "unsung",
+    "phonetic": "/ʌn'sʌŋ/",
+    "explains": [
+      "adj. 未唱的,未赞颂的"
+    ]
+  },
+  "unsure": {
+    "word": "unsure",
+    "phonetic": "/ʌn'ʃʊə/",
+    "explains": [
+      "adj. 没有自信的, 不确定的"
+    ]
+  },
+  "unsureness": {
+    "word": "unsureness",
+    "phonetic": "",
+    "explains": [
+      "n. 不确定, 缺乏自信"
+    ]
+  },
+  "unsuspected": {
+    "word": "unsuspected",
+    "phonetic": "/ʌnsə'spektɪd/",
+    "explains": [
+      "adj. 未知的, 未被怀疑的"
+    ]
+  },
+  "unsuspecting": {
+    "word": "unsuspecting",
+    "phonetic": "/ʌnsə'spektɪŋ/",
+    "explains": [
+      "adj. 不怀疑的；未猜想到…的"
+    ]
+  },
+  "unswerving": {
+    "word": "unswerving",
+    "phonetic": "/ʌn'swɜːvɪŋ/",
+    "explains": [
+      "adj. 坚定的；始终不渝的；不歪的"
+    ]
+  },
+  "untainted": {
+    "word": "untainted",
+    "phonetic": "/ʌn'teɪntɪd/",
+    "explains": [
+      "adj. 无污点的；未染污的"
+    ]
+  },
+  "untapped": {
+    "word": "untapped",
+    "phonetic": "/ˌʌn'tæpt/",
+    "explains": [
+      "adj.  未开发利用的"
+    ]
+  },
+  "untenable": {
+    "word": "untenable",
+    "phonetic": "/ʌn'tenəb(ə)l/",
+    "explains": [
+      "adj. （论据等）站不住脚的；不能维持的；不能租赁的；难以防守的"
+    ]
+  },
+  "untidy": {
+    "word": "untidy",
+    "phonetic": "/ʌn'taɪdɪ/",
+    "explains": [
+      "adj. 不整洁的，凌乱的；懒散的；不干净利落的，不简练的；不适宜的；v. 使不整洁；使杂乱无章"
+    ]
+  },
+  "untie": {
+    "word": "untie",
+    "phonetic": "/ʌn'taɪ/",
+    "explains": [
+      "v. 解开，松开；解放"
+    ]
+  },
   "until": {
     "word": "until",
     "phonetic": "/ənˈtɪl/",
     "explains": [
       "prep./conj. 直到… 为止；在… 以前"
+    ]
+  },
+  "untimely": {
+    "word": "untimely",
+    "phonetic": "/ʌn'taɪmlɪ/",
+    "explains": [
+      "a&ad. 不适时的, 不合时宜的"
+    ]
+  },
+  "untiring": {
+    "word": "untiring",
+    "phonetic": "/ʌn'taɪərɪŋ/",
+    "explains": [
+      "adj. 不知疲倦的；不屈不挠的；坚持不懈的"
+    ]
+  },
+  "untold": {
+    "word": "untold",
+    "phonetic": "/ʌn'təʊld/",
+    "explains": [
+      "adj. 未说过的,未透露的"
+    ]
+  },
+  "untouchable": {
+    "word": "untouchable",
+    "phonetic": "/ʌn'tʌtʃəb(ə)l/",
+    "explains": [
+      "adj. 达不到的；不可批评的；不可捉摸的"
+    ]
+  },
+  "untouched": {
+    "word": "untouched",
+    "phonetic": "/ʌn'tʌtʃt/",
+    "explains": [
+      "adj. 未触及的, 未改变的"
+    ]
+  },
+  "untoward": {
+    "word": "untoward",
+    "phonetic": "/ʌntə'wɔːd; ʌn'təʊəd/",
+    "explains": [
+      "adj. 不幸的；麻烦的；倔强的；困难的"
+    ]
+  },
+  "untraditional": {
+    "word": "untraditional",
+    "phonetic": "",
+    "explains": [
+      "adj. 非传统的,不符合传统的"
+    ]
+  },
+  "untreated": {
+    "word": "untreated",
+    "phonetic": "/,ʌn'tritɪd/",
+    "explains": [
+      "adj. 未经处理的, 未经治疗的"
+    ]
+  },
+  "untrue": {
+    "word": "untrue",
+    "phonetic": "/ʌn'truː/",
+    "explains": [
+      "adj. 不真实的, 不正确的"
+    ]
+  },
+  "untruth": {
+    "word": "untruth",
+    "phonetic": "/ʌn'truːθ/",
+    "explains": [
+      "n. 虚假，不真实；谎言"
+    ]
+  },
+  "untwist": {
+    "word": "untwist",
+    "phonetic": "/ʌn'twɪst/",
+    "explains": [
+      "v. 拆开(搓合的绳,线等), 解开"
+    ]
+  },
+  "unusable": {
+    "word": "unusable",
+    "phonetic": "/,ʌn'juzəbl/",
+    "explains": [
+      "adj. 不能用的,与众不同的"
+    ]
+  },
+  "unused": {
+    "word": "unused",
+    "phonetic": "/,ʌn'juːzd/",
+    "explains": [
+      "adj. 不用的；未消耗的"
+    ]
+  },
+  "unusual": {
+    "word": "unusual",
+    "phonetic": "/ʌnˈjuːʒʊəl/",
+    "explains": [
+      "adj. 不寻常的"
+    ]
+  },
+  "unveil": {
+    "word": "unveil",
+    "phonetic": "/ʌn'veɪl/",
+    "explains": [
+      "v. 使公之于众，揭开；揭幕"
+    ]
+  },
+  "unverified": {
+    "word": "unverified",
+    "phonetic": "/ʌn'verɪfaɪd/",
+    "explains": [
+      "adj. 未经证实的,  未经核对的"
+    ]
+  },
+  "unversed": {
+    "word": "unversed",
+    "phonetic": "/ʌn'vɜːst/",
+    "explains": [
+      "adj. 不精通的, 不熟练的, 无知的, 无经验的"
+    ]
+  },
+  "unwarranted": {
+    "word": "unwarranted",
+    "phonetic": "/ʌn'wɒr(ə)ntɪd/",
+    "explains": [
+      "adj. 无根据的；无保证的"
+    ]
+  },
+  "unwary": {
+    "word": "unwary",
+    "phonetic": "/ʌn'weərɪ/",
+    "explains": [
+      "adj. 粗心的, 不警惕的"
+    ]
+  },
+  "unwelcome": {
+    "word": "unwelcome",
+    "phonetic": "/ʌn'welkəm/",
+    "explains": [
+      "adj. 不受欢迎的, 讨厌的"
+    ]
+  },
+  "unwell": {
+    "word": "unwell",
+    "phonetic": "/ʌn'wel/",
+    "explains": [
+      "adj. 不舒服的"
+    ]
+  },
+  "unwieldy": {
+    "word": "unwieldy",
+    "phonetic": "/ʌn'wiːldɪ/",
+    "explains": [
+      "adj. 笨重的，笨拙的"
+    ]
+  },
+  "unwilling": {
+    "word": "unwilling",
+    "phonetic": "/ʌnˈwɪlɪŋ/",
+    "explains": [
+      "adj. 不愿意的"
+    ]
+  },
+  "unwillingly": {
+    "word": "unwillingly",
+    "phonetic": "",
+    "explains": [
+      "adv. 不情愿地,勉强地"
+    ]
+  },
+  "unwillingness": {
+    "word": "unwillingness",
+    "phonetic": "",
+    "explains": [
+      "n. 不愿意, 不情愿"
+    ]
+  },
+  "unwind": {
+    "word": "unwind",
+    "phonetic": "/ʌn'waɪnd/",
+    "explains": [
+      "v. 放松；解开；[计] 展开"
+    ]
+  },
+  "unwise": {
+    "word": "unwise",
+    "phonetic": "/ʌn'waɪz/",
+    "explains": [
+      "adj. 不明智的；愚蠢的；轻率的"
+    ]
+  },
+  "unwitting": {
+    "word": "unwitting",
+    "phonetic": "/ʌn'wɪtɪŋ/",
+    "explains": [
+      "adj. 不知情的；不知不觉的，无意的；v. 使精神错乱；使丧失智能（unwit的ing形式）"
+    ]
+  },
+  "unworldly": {
+    "word": "unworldly",
+    "phonetic": "/ʌn'wɜːldlɪ/",
+    "explains": [
+      "adj. 非尘世的；精神上的，非物质的；天真的"
+    ]
+  },
+  "unworthy": {
+    "word": "unworthy",
+    "phonetic": "/ʌn'wɜːðɪ/",
+    "explains": [
+      "adj. 不值得的；无价值的；不相称的"
+    ]
+  },
+  "unyielding": {
+    "word": "unyielding",
+    "phonetic": "/ʌn'jiːldɪŋ/",
+    "explains": [
+      "adj. 不屈的；坚强的；[材] 不易弯曲的"
     ]
   },
   "up": {
@@ -91,11 +2863,480 @@
       "adv. 向上；朝上；向较高水平 prep. 向（较高位置）；沿着；顺着"
     ]
   },
+  "up-market": {
+    "word": "up-market",
+    "phonetic": "/'ʌpmɑːkit/",
+    "explains": [
+      "a&ad.  高端市场的"
+    ]
+  },
+  "up-to-date": {
+    "word": "up-to-date",
+    "phonetic": "/ˈʌptəˈdeɪt/",
+    "explains": [
+      "adj. 最新的"
+    ]
+  },
+  "upbeat": {
+    "word": "upbeat",
+    "phonetic": "/'ʌpbiːt/",
+    "explains": [
+      "adj.  乐观的， 欢乐的；n. 上升；向好的方向发展；兴旺，繁荣"
+    ]
+  },
+  "upbraid": {
+    "word": "upbraid",
+    "phonetic": "/ʌp'breɪd/",
+    "explains": [
+      "v. 责骂；训斥"
+    ]
+  },
+  "upbringing": {
+    "word": "upbringing",
+    "phonetic": "/'ʌpbrɪŋɪŋ/",
+    "explains": [
+      "n. 抚育，抚养；教养"
+    ]
+  },
+  "upcoming": {
+    "word": "upcoming",
+    "phonetic": "/ˈʌpkʌmɪŋ/",
+    "explains": [
+      "adj. 即将到来的"
+    ]
+  },
+  "update": {
+    "word": "update",
+    "phonetic": "/ʌpˈdeɪt/",
+    "explains": [
+      "v. 更新"
+    ]
+  },
+  "updraft": {
+    "word": "updraft",
+    "phonetic": "/'ʌpdrɑːft/",
+    "explains": [
+      "n. 上升气流"
+    ]
+  },
+  "upend": {
+    "word": "upend",
+    "phonetic": "/ʌp'end/",
+    "explains": [
+      "v. 颠倒, 倒放"
+    ]
+  },
+  "upfront": {
+    "word": "upfront",
+    "phonetic": "/ʌp'frʌnt; 'ʌp-/",
+    "explains": [
+      "adj. 预付的；在前面的；正直的，坦率的；adv. 在前面；提前支付（工资）"
+    ]
+  },
+  "upgrade": {
+    "word": "upgrade",
+    "phonetic": "/ʌp'greɪd/",
+    "explains": [
+      "v. 使升级；提升；改良品种；n. 升级；上升；上坡；adv. 往上；adj. 向上的"
+    ]
+  },
+  "upheaval": {
+    "word": "upheaval",
+    "phonetic": "/ʌp'hiːv(ə)l/",
+    "explains": [
+      "n. 剧变"
+    ]
+  },
+  "upheave": {
+    "word": "upheave",
+    "phonetic": "/ʌp'hiːv/",
+    "explains": [
+      "v. 鼓起；举起；使隆起"
+    ]
+  },
+  "uphold": {
+    "word": "uphold",
+    "phonetic": "/ʌpˈhəʊld/",
+    "explains": [
+      "v. 支持"
+    ]
+  },
+  "upholster": {
+    "word": "upholster",
+    "phonetic": "/ʌp'həʊlstə; -'hɒl-/",
+    "explains": [
+      "v. 装饰；用（挂毯、家具等）布置；为（沙发等）装上垫子"
+    ]
+  },
+  "upholstered": {
+    "word": "upholstered",
+    "phonetic": "/ʌp'həulstəd/",
+    "explains": [
+      "adj. 装上软垫的；经过布置的"
+    ]
+  },
+  "upholstery": {
+    "word": "upholstery",
+    "phonetic": "/ʌp'həʊlst(ə)rɪ; -'hɒl-/",
+    "explains": [
+      "n. 室内装潢, 室内装璜业"
+    ]
+  },
+  "upkeep": {
+    "word": "upkeep",
+    "phonetic": "/'ʌpkiːp/",
+    "explains": [
+      "n.  保养费"
+    ]
+  },
+  "upland": {
+    "word": "upland",
+    "phonetic": "/'ʌplənd/",
+    "explains": [
+      "n. 丘陵地, 高地；adj. 高地的,山地的"
+    ]
+  },
+  "uplift": {
+    "word": "uplift",
+    "phonetic": "/ʌp'lɪft/",
+    "explains": [
+      "v. 提高；振奋(精神)"
+    ]
+  },
+  "upload": {
+    "word": "upload",
+    "phonetic": "/ˌʌpˈləʊd/",
+    "explains": [
+      "v. 上传"
+    ]
+  },
+  "upmarket": {
+    "word": "upmarket",
+    "phonetic": "",
+    "explains": [
+      "adj. 质优价高的；高级的；adv. 在高档之列；n. 高档商品；vt. 使进入高消费者市场；vi. 进入高消费者市场"
+    ]
+  },
   "upon": {
     "word": "upon",
     "phonetic": "/əˈpɒn/",
     "explains": [
       "prep. 在… 之上；即将来临；接近"
+    ]
+  },
+  "upper": {
+    "word": "upper",
+    "phonetic": "/ˈʌpə/",
+    "explains": [
+      "adj. 上面的"
+    ]
+  },
+  "uppermost": {
+    "word": "uppermost",
+    "phonetic": "/'ʌpəməʊst/",
+    "explains": [
+      "a&ad. 至上的，最高的"
+    ]
+  },
+  "upright": {
+    "word": "upright",
+    "phonetic": "/ˈʌpraɪt/",
+    "explains": [
+      "adj. 直立的"
+    ]
+  },
+  "uprising": {
+    "word": "uprising",
+    "phonetic": "/'ʌpraɪzɪŋ/",
+    "explains": [
+      "n. 叛乱"
+    ]
+  },
+  "upriver": {
+    "word": "upriver",
+    "phonetic": "",
+    "explains": [
+      "adj. 上游的 ad在上游"
+    ]
+  },
+  "uproar": {
+    "word": "uproar",
+    "phonetic": "/'ʌprɔː/",
+    "explains": [
+      "n. 骚动，扰乱；喧嚣"
+    ]
+  },
+  "uproarious": {
+    "word": "uproarious",
+    "phonetic": "/ʌp'rɔːrɪəs/",
+    "explains": [
+      "adj. 骚动的；喧嚣的"
+    ]
+  },
+  "uproot": {
+    "word": "uproot",
+    "phonetic": "/ʌp'ruːt/",
+    "explains": [
+      "v. 连根拔起, 根除"
+    ]
+  },
+  "upscale": {
+    "word": "upscale",
+    "phonetic": "/'ʌpskeil/",
+    "explains": [
+      "adj.  质优价高的； 高消费层的； 有地位的； 有声望的"
+    ]
+  },
+  "upsell": {
+    "word": "upsell",
+    "phonetic": "",
+    "explains": [
+      "引导升级"
+    ]
+  },
+  "upset": {
+    "word": "upset",
+    "phonetic": "/ʌpˈset/",
+    "explains": [
+      "adj. 难过的"
+    ]
+  },
+  "upshift": {
+    "word": "upshift",
+    "phonetic": "",
+    "explains": [
+      "v. (将)(汽车)调高速挡,(使)加速"
+    ]
+  },
+  "upshot": {
+    "word": "upshot",
+    "phonetic": "/'ʌpʃɒt/",
+    "explains": [
+      "n. 结果，结局；要点"
+    ]
+  },
+  "upside": {
+    "word": "upside",
+    "phonetic": "/'ʌpsaɪd/",
+    "explains": [
+      "n. 上边,上部"
+    ]
+  },
+  "upstage": {
+    "word": "upstage",
+    "phonetic": "/ʌp'steɪdʒ/",
+    "explains": [
+      "adj. 自负的"
+    ]
+  },
+  "upstairs": {
+    "word": "upstairs",
+    "phonetic": "/ˌʌpˈsteəz/",
+    "explains": [
+      "adv. 楼上"
+    ]
+  },
+  "upstart": {
+    "word": "upstart",
+    "phonetic": "/'ʌpstɑːt/",
+    "explains": [
+      "n. 暴发户"
+    ]
+  },
+  "upstate": {
+    "word": "upstate",
+    "phonetic": "/'ʌpsteɪt/",
+    "explains": [
+      "adj. 北部的；偏僻的；n. 州的北部；adv. 在州的北部；在州内远离大城市地区"
+    ]
+  },
+  "upstream": {
+    "word": "upstream",
+    "phonetic": "/'ʌpstriːm/",
+    "explains": [
+      "adv. 逆流地；向上游；adj. 向上游的；逆流而上的；n. 上游部门"
+    ]
+  },
+  "upsurge": {
+    "word": "upsurge",
+    "phonetic": "/'ʌpsɜːdʒ/",
+    "explains": [
+      "n. 高潮 vi涌起"
+    ]
+  },
+  "upswing": {
+    "word": "upswing",
+    "phonetic": "/'ʌpswɪŋ/",
+    "explains": [
+      "n. 高涨, 向上摆动, 改进"
+    ]
+  },
+  "uptake": {
+    "word": "uptake",
+    "phonetic": "/'ʌpteɪk/",
+    "explains": [
+      "n. 举起"
+    ]
+  },
+  "uptight": {
+    "word": "uptight",
+    "phonetic": "/ʌp'taɪt; 'ʌptaɪt/",
+    "explains": [
+      "adj. 经济情况不妙的, 拮据的, 紧张的, 心情焦躁的, 极端保守的"
+    ]
+  },
+  "uptown": {
+    "word": "uptown",
+    "phonetic": "/'ʌptaʊn/",
+    "explains": [
+      "n. 住宅区；adj. 住宅区的；adv. （美）在住宅区；（美）在城镇非商业区"
+    ]
+  },
+  "upturn": {
+    "word": "upturn",
+    "phonetic": "/'ʌptəːn/",
+    "explains": [
+      "n.  好转"
+    ]
+  },
+  "upward": {
+    "word": "upward",
+    "phonetic": "/'ʌpwəd/",
+    "explains": [
+      "adj. 上升的；向上的"
+    ]
+  },
+  "upwind": {
+    "word": "upwind",
+    "phonetic": "/ʌp'wɪnd/",
+    "explains": [
+      "adj. 逆风的 ad逆风地"
+    ]
+  },
+  "uranium": {
+    "word": "uranium",
+    "phonetic": "/jʊ'reɪnɪəm/",
+    "explains": [
+      "n. 铀"
+    ]
+  },
+  "uranus": {
+    "word": "uranus",
+    "phonetic": "/ˈjʊərənəs;jʊˈreɪnəs/",
+    "explains": [
+      "n. 天王星"
+    ]
+  },
+  "urban": {
+    "word": "urban",
+    "phonetic": "/ˈɜːb(ə)n/",
+    "explains": [
+      "adj. 城市的"
+    ]
+  },
+  "urbane": {
+    "word": "urbane",
+    "phonetic": "/ɜː'beɪn/",
+    "explains": [
+      "adj. 彬彬有礼的，温文尔雅的；都市化的"
+    ]
+  },
+  "urbanism": {
+    "word": "urbanism",
+    "phonetic": "/'ɜːbənɪzəm/",
+    "explains": [
+      "n. 都市生活,都市化"
+    ]
+  },
+  "urbanity": {
+    "word": "urbanity",
+    "phonetic": "/ɜː'bænɪtɪ/",
+    "explains": [
+      "n. 有礼貌, 文雅"
+    ]
+  },
+  "urbanization": {
+    "word": "urbanization",
+    "phonetic": "/,ɜːbənaɪ'zeɪʃən/",
+    "explains": [
+      "n. 都市化"
+    ]
+  },
+  "urbanize": {
+    "word": "urbanize",
+    "phonetic": "/'ɜːb(ə)naɪz/",
+    "explains": [
+      "v. 使都市化, 使文雅"
+    ]
+  },
+  "urchin": {
+    "word": "urchin",
+    "phonetic": "/'ɜːtʃɪn/",
+    "explains": [
+      "n. 顽童, [动物]刺猥, [动物]海胆"
+    ]
+  },
+  "urea": {
+    "word": "urea",
+    "phonetic": "/jʊ'riːə; 'jʊərɪə/",
+    "explains": [
+      "n. [肥料] 尿素"
+    ]
+  },
+  "urge": {
+    "word": "urge",
+    "phonetic": "/ˈɜːdʒ/",
+    "explains": [
+      "v. 催促"
+    ]
+  },
+  "urgency": {
+    "word": "urgency",
+    "phonetic": "/'ɜːdʒ(ə)nsɪ/",
+    "explains": [
+      "n. 紧急, 紧急的事"
+    ]
+  },
+  "urgent": {
+    "word": "urgent",
+    "phonetic": "/ˈɜːdʒ(ə)nt/",
+    "explains": [
+      "adj. 紧急的"
+    ]
+  },
+  "urinate": {
+    "word": "urinate",
+    "phonetic": "/'jʊərɪneɪt/",
+    "explains": [
+      "v. 小便，撒尿"
+    ]
+  },
+  "urine": {
+    "word": "urine",
+    "phonetic": "/'jʊərɪn; -raɪn/",
+    "explains": [
+      "n. 尿"
+    ]
+  },
+  "url": {
+    "word": "url",
+    "phonetic": "",
+    "explains": [
+      "统一资源定位符"
+    ]
+  },
+  "urn": {
+    "word": "urn",
+    "phonetic": "/ɜːn/",
+    "explains": [
+      "n. 瓮, 缸"
+    ]
+  },
+  "ursine": {
+    "word": "ursine",
+    "phonetic": "/'ɜːsaɪn; -ɪn/",
+    "explains": [
+      "adj. 熊的, 象熊的"
     ]
   },
   "us": {
@@ -105,11 +3346,39 @@
       "pron. 我们（宾格）"
     ]
   },
+  "usa": {
+    "word": "usa",
+    "phonetic": "",
+    "explains": [
+      "abbr. 美国(美利坚合众国)"
+    ]
+  },
+  "usable": {
+    "word": "usable",
+    "phonetic": "/'juːzəb(ə)l/",
+    "explains": [
+      "adj. [亦作useable] 可用的, 合用的"
+    ]
+  },
+  "usage": {
+    "word": "usage",
+    "phonetic": "/ˈjuːzɪdʒ/",
+    "explains": [
+      "n. 用法"
+    ]
+  },
   "use": {
     "word": "use",
     "phonetic": "/juːz/",
     "explains": [
       "v. 使用；运用；利用；耗费 n. 使用；用途；发挥"
+    ]
+  },
+  "useable": {
+    "word": "useable",
+    "phonetic": "/'juːzəbl/",
+    "explains": [
+      "adj. 可用的, 有效的"
     ]
   },
   "used": {
@@ -126,6 +3395,20 @@
       "adj. 有用的；有益的；有帮助的"
     ]
   },
+  "usefully": {
+    "word": "usefully",
+    "phonetic": "",
+    "explains": [
+      "adv. 有用地"
+    ]
+  },
+  "usefulness": {
+    "word": "usefulness",
+    "phonetic": "/'juːsf(ʊ)lnəs/",
+    "explains": [
+      "n. 有用, 有效性"
+    ]
+  },
   "useless": {
     "word": "useless",
     "phonetic": "/ˈjuːsləs/",
@@ -140,6 +3423,27 @@
       "n. 用户；使用者；吸毒者"
     ]
   },
+  "usher": {
+    "word": "usher",
+    "phonetic": "/'ʌʃə/",
+    "explains": [
+      "v. 引，领，陪同"
+    ]
+  },
+  "usine": {
+    "word": "usine",
+    "phonetic": "",
+    "explains": [
+      "n.f. 工厂"
+    ]
+  },
+  "usted": {
+    "word": "usted",
+    "phonetic": "",
+    "explains": [
+      "pron. 您"
+    ]
+  },
   "usual": {
     "word": "usual",
     "phonetic": "/ˈjuːʒuəl/",
@@ -152,6 +3456,146 @@
     "phonetic": "/ˈjuːʒuəli/",
     "explains": [
       "adv. 通常；经常；平常"
+    ]
+  },
+  "usurer": {
+    "word": "usurer",
+    "phonetic": "/'juːʒ(ə)rə/",
+    "explains": [
+      "n. 高利贷者；贷款人"
+    ]
+  },
+  "usurious": {
+    "word": "usurious",
+    "phonetic": "/juː'ʒʊərɪəs; juː'zj-/",
+    "explains": [
+      "adj. 高利贷的"
+    ]
+  },
+  "usurp": {
+    "word": "usurp",
+    "phonetic": "/jʊ'zɜːp; jʊ'sɜːp/",
+    "explains": [
+      "v. 篡夺；夺取；侵占"
+    ]
+  },
+  "usury": {
+    "word": "usury",
+    "phonetic": "/'juːʒ(ə)rɪ/",
+    "explains": [
+      "n. 高利；高利贷；利益"
+    ]
+  },
+  "utah": {
+    "word": "utah",
+    "phonetic": "/'ju:tɑ:/",
+    "explains": [
+      "n. 犹他州(略作Ut,UT)"
+    ]
+  },
+  "ute": {
+    "word": "ute",
+    "phonetic": "/juːt/",
+    "explains": [
+      "n. 犹特人(美洲印第安人的一种), 犹特语"
+    ]
+  },
+  "utensil": {
+    "word": "utensil",
+    "phonetic": "/juː'tens(ə)l/",
+    "explains": [
+      "n. 器皿，用具"
+    ]
+  },
+  "utilisateur": {
+    "word": "utilisateur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 用户"
+    ]
+  },
+  "utilitarian": {
+    "word": "utilitarian",
+    "phonetic": "/jʊ,tɪlɪ'teərɪən/",
+    "explains": [
+      "adj. 功利的 n功利主义者"
+    ]
+  },
+  "utility": {
+    "word": "utility",
+    "phonetic": "/juːˈtɪlɪtɪ/",
+    "explains": [
+      "n. 效用"
+    ]
+  },
+  "utilization": {
+    "word": "utilization",
+    "phonetic": "/,juːtɪlaɪ'zeɪʃən/",
+    "explains": [
+      "n. 利用，效用"
+    ]
+  },
+  "utilize": {
+    "word": "utilize",
+    "phonetic": "/ˈjuːtɪˌlaɪz/",
+    "explains": [
+      "v. 利用"
+    ]
+  },
+  "utmost": {
+    "word": "utmost",
+    "phonetic": "/'ʌtməʊst/",
+    "explains": [
+      "adj. 最大的；n. 极限"
+    ]
+  },
+  "utopia": {
+    "word": "utopia",
+    "phonetic": "/ju:'təupiə/",
+    "explains": [
+      "n. 乌托邦（理想中最美好的社会）；理想国"
+    ]
+  },
+  "utopian": {
+    "word": "utopian",
+    "phonetic": "",
+    "explains": [
+      "adj. 乌托邦式的，梦想的"
+    ]
+  },
+  "utter": {
+    "word": "utter",
+    "phonetic": "/'ʌtə/",
+    "explains": [
+      "adj. 完全的，彻底的"
+    ]
+  },
+  "utterance": {
+    "word": "utterance",
+    "phonetic": "/'ʌt(ə)r(ə)ns/",
+    "explains": [
+      "n. 意见, 说话, 发表"
+    ]
+  },
+  "utterly": {
+    "word": "utterly",
+    "phonetic": "/'ʌtəlɪ /",
+    "explains": [
+      "adv. 完全地,绝对地"
+    ]
+  },
+  "uva": {
+    "word": "uva",
+    "phonetic": "",
+    "explains": [
+      "n.f. 葡萄"
+    ]
+  },
+  "uxorious": {
+    "word": "uxorious",
+    "phonetic": "/ʌk'sɔːrɪəs/",
+    "explains": [
+      "adj. 疼爱妻子的, 怕老婆的"
     ]
   }
 }

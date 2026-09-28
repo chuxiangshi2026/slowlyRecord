@@ -13,11 +13,39 @@
       "n. X 射线；X 光；X 光照片 v. 用 X 光检查；拍 X 光片"
     ]
   },
+  "xd": {
+    "word": "xd",
+    "phonetic": "/eks'dividend/",
+    "explains": [
+      "n.  无息股"
+    ]
+  },
+  "xenon": {
+    "word": "xenon",
+    "phonetic": "/'zenɒn; 'ziː-/",
+    "explains": [
+      "n. 氙(惰性气体的一种,元素符号Xe)"
+    ]
+  },
+  "xenophobe": {
+    "word": "xenophobe",
+    "phonetic": "",
+    "explains": [
+      "n. 仇外；害怕生人者；畏惧和憎恨外国人的人"
+    ]
+  },
   "xenophobia": {
     "word": "xenophobia",
     "phonetic": "/ˌzenəˈfəʊbiə/",
     "explains": [
       "n. 仇外；排外；对外国人的恐惧"
+    ]
+  },
+  "xerophyte": {
+    "word": "xerophyte",
+    "phonetic": "/'zɪərə(ʊ)faɪt; 'ze-/",
+    "explains": [
+      "n. 干燥地带植物"
     ]
   },
   "xerox": {
@@ -26,6 +54,13 @@
     "explains": [
       "n. 复印件；影印本；施乐复印机",
       "v. 复印；影印"
+    ]
+  },
+  "xss": {
+    "word": "xss",
+    "phonetic": "",
+    "explains": [
+      "跨站脚本攻击"
     ]
   },
   "xylophone": {

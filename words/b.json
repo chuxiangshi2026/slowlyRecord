@@ -1,9 +1,72 @@
 {
+  "b-school": {
+    "word": "b-school",
+    "phonetic": "",
+    "explains": [
+      "n. 商学院；商业学校（等于business-school）"
+    ]
+  },
+  "ba": {
+    "word": "ba",
+    "phonetic": "",
+    "explains": [
+      "n. 文学士"
+    ]
+  },
+  "babble": {
+    "word": "babble",
+    "phonetic": "/'bæb(ə)l/",
+    "explains": [
+      "v. 说蠢话，牙牙学语"
+    ]
+  },
+  "baboon": {
+    "word": "baboon",
+    "phonetic": "/bə'buːn/",
+    "explains": [
+      "n. [动]狒狒"
+    ]
+  },
   "baby": {
     "word": "baby",
     "phonetic": "/ˈbeɪbi/",
     "explains": [
       "n. 婴儿；宝宝"
+    ]
+  },
+  "babylonian": {
+    "word": "babylonian",
+    "phonetic": "/,bæbi'ləunjən/",
+    "explains": [
+      "n. 巴比伦人(的), 巴比伦语（的）"
+    ]
+  },
+  "bacchanal": {
+    "word": "bacchanal",
+    "phonetic": "/'bækən(ə)l; -næl/",
+    "explains": [
+      "adj. 酒神的, 酒神节的, 放纵的"
+    ]
+  },
+  "bacchanalia": {
+    "word": "bacchanalia",
+    "phonetic": "",
+    "explains": [
+      "n. （古罗马的）酒神节；大酒宴"
+    ]
+  },
+  "bacchanalian": {
+    "word": "bacchanalian",
+    "phonetic": "",
+    "explains": [
+      "adj. 酒神节的, 狂饮作乐的"
+    ]
+  },
+  "bachelor": {
+    "word": "bachelor",
+    "phonetic": "/ˈbætʃələ/",
+    "explains": [
+      "n. 学士；单身汉"
     ]
   },
   "back": {
@@ -15,11 +78,130 @@
       "v. 支持"
     ]
   },
+  "back-up": {
+    "word": "back-up",
+    "phonetic": "/'bækʌp/",
+    "explains": [
+      "n.  备份"
+    ]
+  },
+  "backbiting": {
+    "word": "backbiting",
+    "phonetic": "/'bæk,baitiŋ/",
+    "explains": [
+      "n. 诽谤；中伤；v. 背后诽谤；中伤（backbite的ing形式）"
+    ]
+  },
+  "backbone": {
+    "word": "backbone",
+    "phonetic": "/'bækbəʊn/",
+    "explains": [
+      "n. 脊梁骨；支柱"
+    ]
+  },
+  "backbreaking": {
+    "word": "backbreaking",
+    "phonetic": "/'bæk,breɪkɪŋ/",
+    "explains": [
+      "adj. 非常辛苦的,极累人的"
+    ]
+  },
+  "backdate": {
+    "word": "backdate",
+    "phonetic": "/ˌbæk'deit/",
+    "explains": [
+      "v.  倒填日期； 回溯"
+    ]
+  },
+  "backdrop": {
+    "word": "backdrop",
+    "phonetic": "/'bækdrɒp/",
+    "explains": [
+      "n. 背景幕, 背景"
+    ]
+  },
+  "backer": {
+    "word": "backer",
+    "phonetic": "/'bækə/",
+    "explains": [
+      "n.  资助者"
+    ]
+  },
+  "backfire": {
+    "word": "backfire",
+    "phonetic": "/bæk'faɪə/",
+    "explains": [
+      "v. 放出逆火；预先放火；产生出乎意料及事与愿违的结果；n. 逆火，回火"
+    ]
+  },
   "background": {
     "word": "background",
     "phonetic": "/ˈbækɡraʊnd/",
     "explains": [
       "n. 背景；出身；经历"
+    ]
+  },
+  "backhand": {
+    "word": "backhand",
+    "phonetic": "/'bækhænd/",
+    "explains": [
+      "n. 反手拍；反手抽击；v. 反手抽击；adv. 以反手；用手背；adj. 反手的（网球等运动中的动作）"
+    ]
+  },
+  "backhander": {
+    "word": "backhander",
+    "phonetic": "/'bækˌhændə/",
+    "explains": [
+      "n.  贿赂， 回扣"
+    ]
+  },
+  "backing": {
+    "word": "backing",
+    "phonetic": "/'bækiŋ/",
+    "explains": [
+      "n.  资助"
+    ]
+  },
+  "backlog": {
+    "word": "backlog",
+    "phonetic": "/'bæklɔg/",
+    "explains": [
+      "n.  订单积压， 未交订货； 积压未办之事"
+    ]
+  },
+  "backoff": {
+    "word": "backoff",
+    "phonetic": "",
+    "explains": [
+      "退避策略"
+    ]
+  },
+  "backpressure": {
+    "word": "backpressure",
+    "phonetic": "",
+    "explains": [
+      "背压（下游处理不过来）"
+    ]
+  },
+  "backside": {
+    "word": "backside",
+    "phonetic": "/bæk'saɪd; 'bæksaɪd/",
+    "explains": [
+      "n. 背部；后方；臀部"
+    ]
+  },
+  "backstage": {
+    "word": "backstage",
+    "phonetic": "/bæk'steɪdʒ/",
+    "explains": [
+      "adv. 在后台；向后台"
+    ]
+  },
+  "backup": {
+    "word": "backup",
+    "phonetic": "/'bækʌp/",
+    "explains": [
+      "n. 后援, 支持"
     ]
   },
   "backward": {
@@ -30,11 +212,53 @@
       "adj. 落后的"
     ]
   },
+  "backwards": {
+    "word": "backwards",
+    "phonetic": "/'bækwəd(z)/",
+    "explains": [
+      "adv.  向后， 倒， 逆；adj. 向后的，相反的；落后的；迟钝的"
+    ]
+  },
+  "backwater": {
+    "word": "backwater",
+    "phonetic": "/'bækwɔːtə/",
+    "explains": [
+      "n. 回水；死水；停滞不进的状态或地方"
+    ]
+  },
+  "backyard": {
+    "word": "backyard",
+    "phonetic": "/bæk'jɑːd/",
+    "explains": [
+      "n. 后院；后庭"
+    ]
+  },
   "bacon": {
     "word": "bacon",
     "phonetic": "/ˈbeɪkən/",
     "explains": [
       "n. 培根；咸肉"
+    ]
+  },
+  "bacteria": {
+    "word": "bacteria",
+    "phonetic": "/bækˈtɪəriə/",
+    "explains": [
+      "n. 细菌"
+    ]
+  },
+  "bacterial": {
+    "word": "bacterial",
+    "phonetic": "/bæk'tɪərɪəl/",
+    "explains": [
+      "adj. 细菌的"
+    ]
+  },
+  "bacterium": {
+    "word": "bacterium",
+    "phonetic": "/bæk'tɪərɪəm/",
+    "explains": [
+      "n. 细菌"
     ]
   },
   "bad": {
@@ -44,11 +268,60 @@
       "adj. 坏的；严重的；劣质的"
     ]
   },
+  "badge": {
+    "word": "badge",
+    "phonetic": "/bædʒ/",
+    "explains": [
+      "n. 徽章，像章；标志"
+    ]
+  },
+  "badger": {
+    "word": "badger",
+    "phonetic": "/'bædʒə/",
+    "explains": [
+      "n. 獾；獾皮；（大写）獾州人（美国威斯康星州人的别称）；<动><澳>毛鼻袋熊；v. 纠缠不休；吵着要；烦扰"
+    ]
+  },
+  "badinage": {
+    "word": "badinage",
+    "phonetic": "/'bædɪnɑːʒ/",
+    "explains": [
+      "n. 开玩笑, 揶揄"
+    ]
+  },
   "badly": {
     "word": "badly",
     "phonetic": "/ˈbædli/",
     "explains": [
       "adv. 严重地；非常；拙劣地"
+    ]
+  },
+  "badminton": {
+    "word": "badminton",
+    "phonetic": "/'bædmɪnt(ə)n/",
+    "explains": [
+      "n. 羽毛球"
+    ]
+  },
+  "baedeker": {
+    "word": "baedeker",
+    "phonetic": "",
+    "explains": [
+      "n. 旅行指南, 入门手册"
+    ]
+  },
+  "baffle": {
+    "word": "baffle",
+    "phonetic": "/'bæf(ə)l/",
+    "explains": [
+      "v. 使挫折；n. 迷惑"
+    ]
+  },
+  "baffling": {
+    "word": "baffling",
+    "phonetic": "/'bæf(ə)lɪŋ/",
+    "explains": [
+      "adj. 阻碍的, 令人丧气的, 使困惑的, 令人莫名其妙的, 变幻的, 不可理解的"
     ]
   },
   "bag": {
@@ -58,11 +331,102 @@
       "n. 袋子；包"
     ]
   },
+  "bagatelle": {
+    "word": "bagatelle",
+    "phonetic": "/,bægə'tel/",
+    "explains": [
+      "n. 微不足道的东西, 琐事, 小事, 弹子球戏的一种, (指钢琴的)小曲"
+    ]
+  },
+  "baggage": {
+    "word": "baggage",
+    "phonetic": "/ˈbæɡɪdʒ/",
+    "explains": [
+      "n. 行李"
+    ]
+  },
+  "baggy": {
+    "word": "baggy",
+    "phonetic": "/'bægɪ/",
+    "explains": [
+      "adj. 袋状的，膨胀的；宽松而下垂的"
+    ]
+  },
+  "bail": {
+    "word": "bail",
+    "phonetic": "/beil/",
+    "explains": [
+      "n. 保释金；准许保释；vt.  保释； 帮助脱离困境； 用桶舀水"
+    ]
+  },
+  "bailar": {
+    "word": "bailar",
+    "phonetic": "",
+    "explains": [
+      "v. 跳舞"
+    ]
+  },
+  "bailiff": {
+    "word": "bailiff",
+    "phonetic": "/'beɪlɪf/",
+    "explains": [
+      "n. 法警；执行官；区镇的地方长官"
+    ]
+  },
+  "bailment": {
+    "word": "bailment",
+    "phonetic": "/'beilmənt/",
+    "explains": [
+      "n.  委托， 寄托"
+    ]
+  },
+  "bain": {
+    "word": "bain",
+    "phonetic": "",
+    "explains": [
+      "n.m. 洗澡"
+    ]
+  },
+  "bait": {
+    "word": "bait",
+    "phonetic": "/beɪt/",
+    "explains": [
+      "n. 饵；引诱物"
+    ]
+  },
+  "bajar": {
+    "word": "bajar",
+    "phonetic": "",
+    "explains": [
+      "v. 下降；下车"
+    ]
+  },
+  "bajo": {
+    "word": "bajo",
+    "phonetic": "",
+    "explains": [
+      "adj. 低的；prep. 在…下"
+    ]
+  },
   "bake": {
     "word": "bake",
     "phonetic": "/beɪk/",
     "explains": [
       "v. 烘焙；烤"
+    ]
+  },
+  "baker": {
+    "word": "baker",
+    "phonetic": "/'beɪkə/",
+    "explains": [
+      "n. 面包师；面包工人；（便携式）烘炉"
+    ]
+  },
+  "bakery": {
+    "word": "bakery",
+    "phonetic": "/ˈbeɪkərɪ/",
+    "explains": [
+      "n. 面包店"
     ]
   },
   "balance": {
@@ -73,11 +437,193 @@
       "v. 使平衡"
     ]
   },
+  "balcony": {
+    "word": "balcony",
+    "phonetic": "/ˈbælkənɪ/",
+    "explains": [
+      "n. 阳台"
+    ]
+  },
+  "bald": {
+    "word": "bald",
+    "phonetic": "/bɔːld/",
+    "explains": [
+      "adj. 秃的"
+    ]
+  },
+  "balderdash": {
+    "word": "balderdash",
+    "phonetic": "/'bɔːldədæʃ/",
+    "explains": [
+      "n. 胡言乱语, 梦呓"
+    ]
+  },
+  "baldness": {
+    "word": "baldness",
+    "phonetic": "/bɔːldnɪs/",
+    "explains": [
+      "n. 光秃；率直；枯燥"
+    ]
+  },
+  "bale": {
+    "word": "bale",
+    "phonetic": "/beɪl/",
+    "explains": [
+      "n. 包；捆；灾祸；不幸；v. 将打包"
+    ]
+  },
+  "baleful": {
+    "word": "baleful",
+    "phonetic": "/'beɪlfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 恶意的；有害的"
+    ]
+  },
+  "balk": {
+    "word": "balk",
+    "phonetic": "/bɔːlk; bɔːk/",
+    "explains": [
+      "n. 障碍；错误；v. 阻止；推诿；错过"
+    ]
+  },
+  "balkan": {
+    "word": "balkan",
+    "phonetic": "/'bɔ:lkən/",
+    "explains": [
+      "n&a. 巴尔干半岛(的)"
+    ]
+  },
   "ball": {
     "word": "ball",
     "phonetic": "/bɔːl/",
     "explains": [
       "n. 球；舞会"
+    ]
+  },
+  "ballad": {
+    "word": "ballad",
+    "phonetic": "/'bæləd/",
+    "explains": [
+      "n. 民歌, 流行歌曲"
+    ]
+  },
+  "ballast": {
+    "word": "ballast",
+    "phonetic": "/'bæləst/",
+    "explains": [
+      "n. 压舱物, 沙囊"
+    ]
+  },
+  "ballerina": {
+    "word": "ballerina",
+    "phonetic": "/bælə'riːnə/",
+    "explains": [
+      "n. 芭蕾舞女"
+    ]
+  },
+  "ballet": {
+    "word": "ballet",
+    "phonetic": "/'bæleɪ; -lɪ/",
+    "explains": [
+      "n. 芭蕾舞；芭蕾舞剧"
+    ]
+  },
+  "ballistic": {
+    "word": "ballistic",
+    "phonetic": "/bə'lɪstɪk/",
+    "explains": [
+      "adj. 弹道的；射击的"
+    ]
+  },
+  "ballistics": {
+    "word": "ballistics",
+    "phonetic": "/bə'lɪstɪks/",
+    "explains": [
+      "n. 发射学，弹道学"
+    ]
+  },
+  "balloon": {
+    "word": "balloon",
+    "phonetic": "/bəˈluːn/",
+    "explains": [
+      "n. 气球"
+    ]
+  },
+  "ballooning": {
+    "word": "ballooning",
+    "phonetic": "/bə'luːniŋ/",
+    "explains": [
+      "n.  股票上涨； 非法操作价格"
+    ]
+  },
+  "ballot": {
+    "word": "ballot",
+    "phonetic": "/'bælət/",
+    "explains": [
+      "n. 投票；投票用纸；投票总数；v. 投票；抽签决定"
+    ]
+  },
+  "ballroom": {
+    "word": "ballroom",
+    "phonetic": "/'bɔːlruːm; -rʊm/",
+    "explains": [
+      "n. 舞厅, 跳舞场"
+    ]
+  },
+  "ballyhoo": {
+    "word": "ballyhoo",
+    "phonetic": "/ˌbæli'huː; 'bæliˌhuː/",
+    "explains": [
+      "n.  招揽生意的广告； 大吹大擂"
+    ]
+  },
+  "balm": {
+    "word": "balm",
+    "phonetic": "/bɑːm/",
+    "explains": [
+      "n. (止痛或疗伤的)香油, 香膏, 安慰物"
+    ]
+  },
+  "balmy": {
+    "word": "balmy",
+    "phonetic": "/'bɑːmɪ/",
+    "explains": [
+      "adj. 芳香的, 温和的"
+    ]
+  },
+  "balsam": {
+    "word": "balsam",
+    "phonetic": "/'bɔːlsəm; 'bɒl-/",
+    "explains": [
+      "n. 香液"
+    ]
+  },
+  "baltic": {
+    "word": "baltic",
+    "phonetic": "/'bɔ:ltik/",
+    "explains": [
+      "n. a波罗的海的, 波罗的语的"
+    ]
+  },
+  "balustrade": {
+    "word": "balustrade",
+    "phonetic": "/,bælə'streɪd/",
+    "explains": [
+      "n. 栏杆"
+    ]
+  },
+  "bamboo": {
+    "word": "bamboo",
+    "phonetic": "/bæmˈbuː/",
+    "explains": [
+      "n. 竹子"
+    ]
+  },
+  "bamboozle": {
+    "word": "bamboozle",
+    "phonetic": "/bæm'buːz(ə)l/",
+    "explains": [
+      "v. 欺骗, 迷惑"
     ]
   },
   "ban": {
@@ -88,11 +634,109 @@
       "n. 禁令"
     ]
   },
+  "banal": {
+    "word": "banal",
+    "phonetic": "/bə'nɑːl; -'næl/",
+    "explains": [
+      "adj. 陈腐的；平庸的；老一套的；n. (Banal)人名；(法、意)巴纳尔"
+    ]
+  },
+  "banality": {
+    "word": "banality",
+    "phonetic": "/bə'nælɪtɪ/",
+    "explains": [
+      "n. 平凡, 陈腐"
+    ]
+  },
+  "banana": {
+    "word": "banana",
+    "phonetic": "/bəˈnɑːnə/",
+    "explains": [
+      "n. 香蕉"
+    ]
+  },
   "band": {
     "word": "band",
     "phonetic": "/bænd/",
     "explains": [
       "n. 乐队；带；条纹"
+    ]
+  },
+  "bandage": {
+    "word": "bandage",
+    "phonetic": "/ˈbændɪdʒ/",
+    "explains": [
+      "n. 绷带"
+    ]
+  },
+  "bandanna": {
+    "word": "bandanna",
+    "phonetic": "/bæn'dænə/",
+    "explains": [
+      "n. 大手帕"
+    ]
+  },
+  "bandit": {
+    "word": "bandit",
+    "phonetic": "/'bændɪt/",
+    "explains": [
+      "n. 土匪，盗匪，歹徒"
+    ]
+  },
+  "bandleader": {
+    "word": "bandleader",
+    "phonetic": "/'bændliːdə/",
+    "explains": [
+      "n. 伴舞乐队的指挥"
+    ]
+  },
+  "bandwagon": {
+    "word": "bandwagon",
+    "phonetic": "/'bændwægən/",
+    "explains": [
+      "n. 流行，时尚；乐队花车"
+    ]
+  },
+  "bane": {
+    "word": "bane",
+    "phonetic": "/beɪn/",
+    "explains": [
+      "n. 毒药；祸害；灭亡的原因"
+    ]
+  },
+  "baneful": {
+    "word": "baneful",
+    "phonetic": "/beɪnfʊl/",
+    "explains": [
+      "adj. 有害的, 使人苦恼的"
+    ]
+  },
+  "bang": {
+    "word": "bang",
+    "phonetic": "/bæŋ/",
+    "explains": [
+      "n. 巨响，枪声；猛击"
+    ]
+  },
+  "banish": {
+    "word": "banish",
+    "phonetic": "/'bænɪʃ/",
+    "explains": [
+      "v. 流放, 驱逐, 消除"
+    ]
+  },
+  "banister": {
+    "word": "banister",
+    "phonetic": "/'bænɪstə/",
+    "explains": [
+      "n. 栏杆的支柱, 楼梯的扶栏"
+    ]
+  },
+  "banjo": {
+    "word": "banjo",
+    "phonetic": "/'bændʒəʊ/",
+    "explains": [
+      "n. 班卓琴；五弦琴"
     ]
   },
   "bank": {
@@ -102,12 +746,166 @@
       "n. 银行；河岸"
     ]
   },
+  "banker": {
+    "word": "banker",
+    "phonetic": "/'bæŋkə/",
+    "explains": [
+      "n. 银行家"
+    ]
+  },
+  "banking": {
+    "word": "banking",
+    "phonetic": "/'bæŋkiŋ/",
+    "explains": [
+      "n.  银行业务； 银行业"
+    ]
+  },
+  "banknote": {
+    "word": "banknote",
+    "phonetic": "/'bæŋknəut/",
+    "explains": [
+      "n.  银行券； 钞票"
+    ]
+  },
+  "bankrupt": {
+    "word": "bankrupt",
+    "phonetic": "/ˈbæŋkrʌpt/",
+    "explains": [
+      "adj. 破产的"
+    ]
+  },
+  "bankruptcy": {
+    "word": "bankruptcy",
+    "phonetic": "/'bæŋkrʌptsi/",
+    "explains": [
+      "n.  破产"
+    ]
+  },
+  "banner": {
+    "word": "banner",
+    "phonetic": "/ˈbænə/",
+    "explains": [
+      "n. 横幅"
+    ]
+  },
+  "banquet": {
+    "word": "banquet",
+    "phonetic": "/'bæŋkwɪt/",
+    "explains": [
+      "n. 宴会，盛会，酒席"
+    ]
+  },
+  "banter": {
+    "word": "banter",
+    "phonetic": "/'bæntə/",
+    "explains": [
+      "n. 善意地取笑, 逗弄"
+    ]
+  },
+  "bantu": {
+    "word": "bantu",
+    "phonetic": "/bæn'tu:/",
+    "explains": [
+      "n. 班图人, 班图语"
+    ]
+  },
+  "baptism": {
+    "word": "baptism",
+    "phonetic": "/'bæptɪz(ə)m/",
+    "explains": [
+      "n. 洗礼；严峻考验"
+    ]
+  },
+  "baptize": {
+    "word": "baptize",
+    "phonetic": "/bæp'taiz/",
+    "explains": [
+      "v. 给…施浸礼；命名；使经受考验（等于baptise）；n. (Baptize)人名；(法)巴蒂泽"
+    ]
+  },
   "bar": {
     "word": "bar",
     "phonetic": "/bɑːr/",
     "explains": [
       "n. 酒吧；条；障碍",
       "v. 阻挡"
+    ]
+  },
+  "barato": {
+    "word": "barato",
+    "phonetic": "",
+    "explains": [
+      "adj. 便宜的"
+    ]
+  },
+  "barb": {
+    "word": "barb",
+    "phonetic": "/bɑːb/",
+    "explains": [
+      "n. 鱼钩；v. 装倒钩于"
+    ]
+  },
+  "barbarian": {
+    "word": "barbarian",
+    "phonetic": "/bɑː'beərɪən/",
+    "explains": [
+      "adj. 野蛮的；未开化的；n. 野蛮人"
+    ]
+  },
+  "barbaric": {
+    "word": "barbaric",
+    "phonetic": "/bɑː'bærɪk/",
+    "explains": [
+      "adj. 野蛮的，粗野的；原始的"
+    ]
+  },
+  "barbarity": {
+    "word": "barbarity",
+    "phonetic": "/bɑː'bærɪtɪ/",
+    "explains": [
+      "n. 残暴的行为, 残忍"
+    ]
+  },
+  "barbarous": {
+    "word": "barbarous",
+    "phonetic": "/'bɑːb(ə)rəs/",
+    "explains": [
+      "adj. 野蛮的, 残暴的, 粗野的, (声音)刺耳的, 沙哑的"
+    ]
+  },
+  "barbecue": {
+    "word": "barbecue",
+    "phonetic": "/ˈbɑːbɪkjuː/",
+    "explains": [
+      "n. 烧烤"
+    ]
+  },
+  "barbed": {
+    "word": "barbed",
+    "phonetic": "/bɑːbd/",
+    "explains": [
+      "adj. 有刺的, 具侧刺毛的, (话语)尖刻的, 尖锐的, 讽刺的"
+    ]
+  },
+  "barber": {
+    "word": "barber",
+    "phonetic": "/ˈbɑːbə/",
+    "explains": [
+      "n. 理发师"
+    ]
+  },
+  "bard": {
+    "word": "bard",
+    "phonetic": "/bɑːd/",
+    "explains": [
+      "n. 吟游诗人"
+    ]
+  },
+  "bare": {
+    "word": "bare",
+    "phonetic": "/beər/",
+    "explains": [
+      "adj. 赤裸的；空的"
     ]
   },
   "barely": {
@@ -125,11 +923,193 @@
       "v. 讨价还价"
     ]
   },
+  "bargaining": {
+    "word": "bargaining",
+    "phonetic": "/'bɑːginiŋ/",
+    "explains": [
+      "n.  讨价还价"
+    ]
+  },
+  "barge": {
+    "word": "barge",
+    "phonetic": "/bɑːdʒ/",
+    "explains": [
+      "n. 驳船；大型游船"
+    ]
+  },
+  "baritone": {
+    "word": "baritone",
+    "phonetic": "/'bærɪtəʊn/",
+    "explains": [
+      "n. 男中音；男中音歌手；adj. 男中音的"
+    ]
+  },
+  "bark": {
+    "word": "bark",
+    "phonetic": "",
+    "explains": [
+      "n. 吠叫声；v. 吠，叫"
+    ]
+  },
+  "barley": {
+    "word": "barley",
+    "phonetic": "/'bɑːlɪ/",
+    "explains": [
+      "n. 大麦"
+    ]
+  },
+  "barn": {
+    "word": "barn",
+    "phonetic": "/bɑːn/",
+    "explains": [
+      "n. 谷仓"
+    ]
+  },
+  "barometer": {
+    "word": "barometer",
+    "phonetic": "/bə'rɒmɪtə/",
+    "explains": [
+      "n. 气压计，睛雨表"
+    ]
+  },
+  "barometre": {
+    "word": "barometre",
+    "phonetic": "",
+    "explains": [
+      "n. 气压表；晴雨表"
+    ]
+  },
+  "baron": {
+    "word": "baron",
+    "phonetic": "/'bær(ə)n/",
+    "explains": [
+      "n. 男爵；贵族；巨商"
+    ]
+  },
+  "baroque": {
+    "word": "baroque",
+    "phonetic": "",
+    "explains": [
+      "n. 巴洛克时期艺术和建筑风格的, 巴洛克式"
+    ]
+  },
+  "barque": {
+    "word": "barque",
+    "phonetic": "/bɑːk/",
+    "explains": [
+      "n. 三桅帆船, 船"
+    ]
+  },
+  "barracks": {
+    "word": "barracks",
+    "phonetic": "/'bærəks/",
+    "explains": [
+      "n. 兵营，营房；简陋的房子；警察所（barrack的复数）；v. 使驻扎军营里；住在工房、棚屋里；（澳）大声鼓噪（barrack的三单形式）"
+    ]
+  },
+  "barrage": {
+    "word": "barrage",
+    "phonetic": "/'bærɑːʒ/",
+    "explains": [
+      "n. 拦河坝, 堰, 阻塞, (敌军前进的)弹幕射击"
+    ]
+  },
+  "barranca": {
+    "word": "barranca",
+    "phonetic": "/bə'ræŋkə/",
+    "explains": [
+      "n. <美>美国西南部的峡谷, 悬崖, 峭壁, 陡岸"
+    ]
+  },
+  "barred": {
+    "word": "barred",
+    "phonetic": "/bɑːd/",
+    "explains": [
+      "adj. 有木栅的, 隔绝的, 被禁止的"
+    ]
+  },
   "barrel": {
     "word": "barrel",
     "phonetic": "/ˈbærəl/",
     "explains": [
       "n. 桶；枪管"
+    ]
+  },
+  "barrelful": {
+    "word": "barrelful",
+    "phonetic": "/'bærəfʊl/",
+    "explains": [
+      "n. 一桶之量, 大量"
+    ]
+  },
+  "barren": {
+    "word": "barren",
+    "phonetic": "/'bær(ə)n/",
+    "explains": [
+      "adj. 贫瘠的；不孕的"
+    ]
+  },
+  "barricade": {
+    "word": "barricade",
+    "phonetic": "/,bærɪ'keɪd/",
+    "explains": [
+      "v. 设路障"
+    ]
+  },
+  "barrier": {
+    "word": "barrier",
+    "phonetic": "/ˈbæriər/",
+    "explains": [
+      "n. 障碍；屏障"
+    ]
+  },
+  "barring": {
+    "word": "barring",
+    "phonetic": "/'bɑːrɪŋ/",
+    "explains": [
+      "prep. 除非；不包括；除…以外；v. 阻拦（bar的ing形式）；n. (Barring)人名；(德)巴林"
+    ]
+  },
+  "barrister": {
+    "word": "barrister",
+    "phonetic": "/'bæristə/",
+    "explains": [
+      "n.  律师"
+    ]
+  },
+  "barrow": {
+    "word": "barrow",
+    "phonetic": "/'bærəʊ/",
+    "explains": [
+      "n. 搬运架，手推车；弃矿；古坟"
+    ]
+  },
+  "barter": {
+    "word": "barter",
+    "phonetic": "/'bɑːtə/",
+    "explains": [
+      "v. 交易"
+    ]
+  },
+  "baryonic": {
+    "word": "baryonic",
+    "phonetic": "",
+    "explains": [
+      "adj. 重子的"
+    ]
+  },
+  "basalt": {
+    "word": "basalt",
+    "phonetic": "/'bæsɔːlt; -(ə)lt/",
+    "explains": [
+      "n. 玄武岩"
+    ]
+  },
+  "basaltic": {
+    "word": "basaltic",
+    "phonetic": "",
+    "explains": [
+      "adj. 玄武岩的"
     ]
   },
   "base": {
@@ -147,6 +1127,27 @@
       "n. 棒球"
     ]
   },
+  "basement": {
+    "word": "basement",
+    "phonetic": "/'beɪsm(ə)nt/",
+    "explains": [
+      "n. 地下室；地窖；底层"
+    ]
+  },
+  "bash": {
+    "word": "bash",
+    "phonetic": "/bæʃ/",
+    "explains": [
+      "v. 猛击，痛击；怒殴；n. 猛烈的一击，痛击"
+    ]
+  },
+  "bashful": {
+    "word": "bashful",
+    "phonetic": "/'bæʃfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 害羞的"
+    ]
+  },
   "basic": {
     "word": "basic",
     "phonetic": "/ˈbeɪsɪk/",
@@ -161,11 +1162,32 @@
       "adv. 基本上；从根本上"
     ]
   },
+  "basics": {
+    "word": "basics",
+    "phonetic": "/'beisiks/",
+    "explains": [
+      "n. 基础；基本要素（basic的复数）"
+    ]
+  },
+  "basin": {
+    "word": "basin",
+    "phonetic": "/ˈbeɪs(ə)n/",
+    "explains": [
+      "n. 盆；流域"
+    ]
+  },
   "basis": {
     "word": "basis",
     "phonetic": "/ˈbeɪsɪs/",
     "explains": [
       "n. 基础；根据（复数：bases）"
+    ]
+  },
+  "bask": {
+    "word": "bask",
+    "phonetic": "/bɑːsk/",
+    "explains": [
+      "v. 晒太阳"
     ]
   },
   "basket": {
@@ -182,11 +1204,81 @@
       "n. 篮球"
     ]
   },
+  "basketmaking": {
+    "word": "basketmaking",
+    "phonetic": "",
+    "explains": [
+      "n. 篮子编织"
+    ]
+  },
+  "basketry": {
+    "word": "basketry",
+    "phonetic": "/'bɑːskɪtrɪ/",
+    "explains": [
+      "n. 篓编织品"
+    ]
+  },
+  "basketwork": {
+    "word": "basketwork",
+    "phonetic": "/'bɑːskɪtwɜːk/",
+    "explains": [
+      "n. 编织物"
+    ]
+  },
+  "bass": {
+    "word": "bass",
+    "phonetic": "/beɪs/",
+    "explains": [
+      "n. 鲈鱼；男低音；低音部；椴树；adj. 低音的"
+    ]
+  },
+  "bassoon": {
+    "word": "bassoon",
+    "phonetic": "/bə'suːn/",
+    "explains": [
+      "n. 低音管, 巴颂管"
+    ]
+  },
+  "bastard": {
+    "word": "bastard",
+    "phonetic": "/'bɑːstəd; 'bæst-/",
+    "explains": [
+      "adj. 私生的；n. 私生子"
+    ]
+  },
+  "baste": {
+    "word": "baste",
+    "phonetic": "/beɪst/",
+    "explains": [
+      "v. 粗缝, 润以油脂, (在烤肉上)涂油, 狠揍, 大骂"
+    ]
+  },
+  "bastion": {
+    "word": "bastion",
+    "phonetic": "/'bæstɪən/",
+    "explains": [
+      "n. 堡垒；棱堡"
+    ]
+  },
   "bat": {
     "word": "bat",
     "phonetic": "/bæt/",
     "explains": [
       "n. 蝙蝠；球拍"
+    ]
+  },
+  "batch": {
+    "word": "batch",
+    "phonetic": "/bætʃ/",
+    "explains": [
+      "n. 一批；一炉；一次所制之量；v. 分批处理"
+    ]
+  },
+  "bate": {
+    "word": "bate",
+    "phonetic": "/beɪt/",
+    "explains": [
+      "v. 减弱, 减少, 抑制"
     ]
   },
   "bath": {
@@ -196,11 +1288,46 @@
       "n. 洗澡；浴室"
     ]
   },
+  "bathe": {
+    "word": "bathe",
+    "phonetic": "/beɪð/",
+    "explains": [
+      "v. 给…洗澡"
+    ]
+  },
+  "bathhouse": {
+    "word": "bathhouse",
+    "phonetic": "/'bɑːθhaʊs/",
+    "explains": [
+      "n. 公共浴室, 澡堂,"
+    ]
+  },
   "bathroom": {
     "word": "bathroom",
     "phonetic": "/ˈbɑːθruːm/",
     "explains": [
       "n. 浴室；厕所"
+    ]
+  },
+  "baton": {
+    "word": "baton",
+    "phonetic": "/bə'tɑ:n/",
+    "explains": [
+      "n. 指挥棒；接力棒；警棍；司令棒"
+    ]
+  },
+  "battalion": {
+    "word": "battalion",
+    "phonetic": "/bə'tælɪən/",
+    "explains": [
+      "n. 营，军营；军队，部队"
+    ]
+  },
+  "batter": {
+    "word": "batter",
+    "phonetic": "/'bætə/",
+    "explains": [
+      "n. 击球手；（用鸡蛋、牛奶、面粉等调成的）糊状物；墙面的倾斜；v. 猛击；打坏；使向上倾斜"
     ]
   },
   "battery": {
@@ -218,6 +1345,69 @@
       "v. 与…搏斗"
     ]
   },
+  "battlefield": {
+    "word": "battlefield",
+    "phonetic": "/'bæt(ə)lfiːld/",
+    "explains": [
+      "n. 战场, 沙场"
+    ]
+  },
+  "battleship": {
+    "word": "battleship",
+    "phonetic": "/'bæt(ə)lʃɪp/",
+    "explains": [
+      "n. 战舰"
+    ]
+  },
+  "bauble": {
+    "word": "bauble",
+    "phonetic": "/'bɔːb(ə)l/",
+    "explains": [
+      "n. 小玩意；美观而无价值的饰物"
+    ]
+  },
+  "bauxite": {
+    "word": "bauxite",
+    "phonetic": "/'bɔːksaɪt/",
+    "explains": [
+      "n. 矾土，[矿物] 铁铝氧石；[矿物] 铝土矿"
+    ]
+  },
+  "bawdy": {
+    "word": "bawdy",
+    "phonetic": "/'bɔːdɪ/",
+    "explains": [
+      "adj. 猥亵的；下流的；卖淫的"
+    ]
+  },
+  "bawl": {
+    "word": "bawl",
+    "phonetic": "/bɔːl/",
+    "explains": [
+      "v. 大叫；放声痛哭；n. 叫骂声"
+    ]
+  },
+  "bay": {
+    "word": "bay",
+    "phonetic": "/beɪ/",
+    "explains": [
+      "n. 海湾；湾"
+    ]
+  },
+  "bayonet": {
+    "word": "bayonet",
+    "phonetic": "/'beɪənɪt/",
+    "explains": [
+      "n. 刺刀；卡销；v. 用刺刀刺"
+    ]
+  },
+  "bazaar": {
+    "word": "bazaar",
+    "phonetic": "/bə'zɑː/",
+    "explains": [
+      "n. 集市，廉价商店"
+    ]
+  },
   "be": {
     "word": "be",
     "phonetic": "/biː/",
@@ -230,6 +1420,41 @@
     "phonetic": "/biːtʃ/",
     "explains": [
       "n. 海滩；沙滩"
+    ]
+  },
+  "beacon": {
+    "word": "beacon",
+    "phonetic": "/'biːk(ə)n/",
+    "explains": [
+      "n. 信号灯，闪光灯"
+    ]
+  },
+  "bead": {
+    "word": "bead",
+    "phonetic": "/biːd/",
+    "explains": [
+      "n. 有孔小珠；水珠；露珠"
+    ]
+  },
+  "beak": {
+    "word": "beak",
+    "phonetic": "/biːk/",
+    "explains": [
+      "n. 鸟嘴, 喙"
+    ]
+  },
+  "beaker": {
+    "word": "beaker",
+    "phonetic": "/'biːkə/",
+    "explains": [
+      "n. 烧杯；大口杯"
+    ]
+  },
+  "beam": {
+    "word": "beam",
+    "phonetic": "/biːm/",
+    "explains": [
+      "n. 梁；光束"
     ]
   },
   "bean": {
@@ -247,12 +1472,103 @@
       "n. 熊"
     ]
   },
+  "beard": {
+    "word": "beard",
+    "phonetic": "/bɪəd/",
+    "explains": [
+      "n. 胡须"
+    ]
+  },
+  "bearer": {
+    "word": "bearer",
+    "phonetic": "/'beərə/",
+    "explains": [
+      "n.  持有人， 持票人"
+    ]
+  },
+  "bearing": {
+    "word": "bearing",
+    "phonetic": "/'beərɪŋ/",
+    "explains": [
+      "n. 方位；（机器的）承座；轴承；忍受"
+    ]
+  },
+  "bearish": {
+    "word": "bearish",
+    "phonetic": "/'beəriʃ/",
+    "explains": [
+      "adj.  卖空的； 行情看跌的"
+    ]
+  },
+  "beast": {
+    "word": "beast",
+    "phonetic": "/biːst/",
+    "explains": [
+      "n. 兽，野兽"
+    ]
+  },
+  "beastly": {
+    "word": "beastly",
+    "phonetic": "/'biːstlɪ/",
+    "explains": [
+      "adj. 野蛮的；残忍的；可恶的；adv. 极，非常"
+    ]
+  },
   "beat": {
     "word": "beat",
     "phonetic": "/biːt/",
     "explains": [
       "v. 打；击败；跳动",
       "n. 节拍"
+    ]
+  },
+  "beater": {
+    "word": "beater",
+    "phonetic": "/'biːtə/",
+    "explains": [
+      "n. 搅拌器"
+    ]
+  },
+  "beatific": {
+    "word": "beatific",
+    "phonetic": "/biːə'tɪfɪk/",
+    "explains": [
+      "adj. 幸福的；祝福的；快乐的"
+    ]
+  },
+  "beatify": {
+    "word": "beatify",
+    "phonetic": "/bɪ'ætɪfaɪ/",
+    "explains": [
+      "v. 行宣福礼；使享福"
+    ]
+  },
+  "beating": {
+    "word": "beating",
+    "phonetic": "/'biːtɪŋ/",
+    "explains": [
+      "n. 打；[纸] 打浆；敲打；失败；v. 打（beat的ing形式）"
+    ]
+  },
+  "beatitude": {
+    "word": "beatitude",
+    "phonetic": "/bɪ'ætɪtjuːd/",
+    "explains": [
+      "n. 祝福；至福"
+    ]
+  },
+  "beau": {
+    "word": "beau",
+    "phonetic": "/bəʊ/",
+    "explains": [
+      "n. 花花公子"
+    ]
+  },
+  "beaucoup": {
+    "word": "beaucoup",
+    "phonetic": "",
+    "explains": [
+      "adv. 很多"
     ]
   },
   "beautiful": {
@@ -262,6 +1578,13 @@
       "adj. 美丽的；美好的"
     ]
   },
+  "beautify": {
+    "word": "beautify",
+    "phonetic": "/'bjuːtɪfaɪ/",
+    "explains": [
+      "v. 使美化，使变美"
+    ]
+  },
   "beauty": {
     "word": "beauty",
     "phonetic": "/ˈbjuːti/",
@@ -269,11 +1592,53 @@
       "n. 美；美人；美丽"
     ]
   },
+  "beaver": {
+    "word": "beaver",
+    "phonetic": "/'biːvə/",
+    "explains": [
+      "n. 海狸(毛皮)"
+    ]
+  },
+  "beber": {
+    "word": "beber",
+    "phonetic": "",
+    "explains": [
+      "v. 喝"
+    ]
+  },
+  "bebida": {
+    "word": "bebida",
+    "phonetic": "",
+    "explains": [
+      "n.f. 饮料"
+    ]
+  },
+  "becalm": {
+    "word": "becalm",
+    "phonetic": "/bɪ'kɑːm/",
+    "explains": [
+      "v. 使安静；使停滞；因无风而使停航"
+    ]
+  },
   "because": {
     "word": "because",
     "phonetic": "/bɪˈkɒz/",
     "explains": [
       "conj. 因为"
+    ]
+  },
+  "beck": {
+    "word": "beck",
+    "phonetic": "/bek/",
+    "explains": [
+      "n. 招手；点头；（英）小河"
+    ]
+  },
+  "beckon": {
+    "word": "beckon",
+    "phonetic": "/'bek(ə)n/",
+    "explains": [
+      "v. 召唤；吸引；n. 表召唤的点头；手势"
     ]
   },
   "become": {
@@ -290,11 +1655,67 @@
       "n. 床"
     ]
   },
+  "bedaub": {
+    "word": "bedaub",
+    "phonetic": "/bɪ'dɔːb/",
+    "explains": [
+      "v. 俗气地装饰；涂污"
+    ]
+  },
+  "bedcover": {
+    "word": "bedcover",
+    "phonetic": "/'bedkʌvə/",
+    "explains": [
+      "n. 被面"
+    ]
+  },
+  "bedding": {
+    "word": "bedding",
+    "phonetic": "/'bedɪŋ/",
+    "explains": [
+      "n. 寝具；（建筑）[建] 基床；（家畜）草垫；adj. 适于花坛种植的；vt. 把…栽入苗床（bed的ing形式）；vi. 睡（bed的ing形式）"
+    ]
+  },
+  "bedeck": {
+    "word": "bedeck",
+    "phonetic": "/bɪ'dek/",
+    "explains": [
+      "v. 装饰；修饰"
+    ]
+  },
+  "bedlam": {
+    "word": "bedlam",
+    "phonetic": "/'bedləm/",
+    "explains": [
+      "n. 混乱，骚乱；精神病院，疯人院"
+    ]
+  },
+  "bedpan": {
+    "word": "bedpan",
+    "phonetic": "/'bedpæn/",
+    "explains": [
+      "n. 便盆, 睡床用脚炉"
+    ]
+  },
+  "bedraggled": {
+    "word": "bedraggled",
+    "phonetic": "/bɪ'dræɡld/",
+    "explains": [
+      "adj. 全身泥污的, 湿透的, 荒废的"
+    ]
+  },
   "bedroom": {
     "word": "bedroom",
     "phonetic": "/ˈbedruːm/",
     "explains": [
       "n. 卧室"
+    ]
+  },
+  "bedtime": {
+    "word": "bedtime",
+    "phonetic": "/'bedtaɪm/",
+    "explains": [
+      "n. 就寝时间；adj. 适于睡前的"
     ]
   },
   "bee": {
@@ -311,11 +1732,67 @@
       "n. 牛肉"
     ]
   },
+  "beefy": {
+    "word": "beefy",
+    "phonetic": "/'biːfɪ/",
+    "explains": [
+      "adj. 象牛肉的, 健壮的, 结实的"
+    ]
+  },
+  "beehive": {
+    "word": "beehive",
+    "phonetic": "/'biːhaɪv/",
+    "explains": [
+      "n. 蜂窝；蜂箱"
+    ]
+  },
+  "beeper": {
+    "word": "beeper",
+    "phonetic": "/'bipɚ/",
+    "explains": [
+      "n. 能发出哔哔声音的仪器；导弹遥控员"
+    ]
+  },
   "beer": {
     "word": "beer",
     "phonetic": "/bɪər/",
     "explains": [
       "n. 啤酒"
+    ]
+  },
+  "beet": {
+    "word": "beet",
+    "phonetic": "/biːt/",
+    "explains": [
+      "n. 甜菜, 甜菜根"
+    ]
+  },
+  "beetle": {
+    "word": "beetle",
+    "phonetic": "/'biːt(ə)l/",
+    "explains": [
+      "n. 甲虫"
+    ]
+  },
+  "befall": {
+    "word": "befall",
+    "phonetic": "/bɪ'fɔːl/",
+    "explains": [
+      "v. 降临"
+    ]
+  },
+  "befit": {
+    "word": "befit",
+    "phonetic": "/bɪ'fɪt/",
+    "explains": [
+      "v. 适合"
+    ]
+  },
+  "befog": {
+    "word": "befog",
+    "phonetic": "/bɪ'fɒg/",
+    "explains": [
+      "v. 使困惑，使模糊；罩入雾中"
     ]
   },
   "before": {
@@ -327,11 +1804,60 @@
       "adv. 以前"
     ]
   },
+  "beforehand": {
+    "word": "beforehand",
+    "phonetic": "/bɪ'fɔːhænd/",
+    "explains": [
+      "adv. 预先；提前地"
+    ]
+  },
+  "befriend": {
+    "word": "befriend",
+    "phonetic": "/bɪ'frend/",
+    "explains": [
+      "v. 待人如友,帮助"
+    ]
+  },
+  "befuddle": {
+    "word": "befuddle",
+    "phonetic": "/bɪ'fʌd(ə)l/",
+    "explains": [
+      "v. 使迷惑；使昏沉"
+    ]
+  },
+  "beg": {
+    "word": "beg",
+    "phonetic": "/beɡ/",
+    "explains": [
+      "v. 乞求；乞讨"
+    ]
+  },
+  "beget": {
+    "word": "beget",
+    "phonetic": "/bɪ'get/",
+    "explains": [
+      "v. 产生；招致；引起；当…的父亲"
+    ]
+  },
+  "beggar": {
+    "word": "beggar",
+    "phonetic": "/'begə/",
+    "explains": [
+      "n. 乞丐，穷人"
+    ]
+  },
   "begin": {
     "word": "begin",
     "phonetic": "/bɪˈɡɪn/",
     "explains": [
       "v. 开始（过去式 began）"
+    ]
+  },
+  "beginner": {
+    "word": "beginner",
+    "phonetic": "/bɪ'gɪnə/",
+    "explains": [
+      "n. 初学者，生手"
     ]
   },
   "beginning": {
@@ -341,6 +1867,48 @@
       "n. 开始；起点"
     ]
   },
+  "begird": {
+    "word": "begird",
+    "phonetic": "/bɪ'gərd/",
+    "explains": [
+      "v. 围绕, 缚, 以带子缠绕"
+    ]
+  },
+  "begrudge": {
+    "word": "begrudge",
+    "phonetic": "/bɪ'grʌdʒ/",
+    "explains": [
+      "v. 羡慕，嫉妒；吝惜，舍不得给"
+    ]
+  },
+  "beguile": {
+    "word": "beguile",
+    "phonetic": "/bɪ'gaɪl/",
+    "explains": [
+      "v. 欺骗；使着迷；轻松地消磨"
+    ]
+  },
+  "beguiling": {
+    "word": "beguiling",
+    "phonetic": "/bi'ɡailiŋ/",
+    "explains": [
+      "adj. 欺骗的, 消遣的"
+    ]
+  },
+  "behalf": {
+    "word": "behalf",
+    "phonetic": "/bɪˈhɑːf/",
+    "explains": [
+      "n. 代表；利益"
+    ]
+  },
+  "behave": {
+    "word": "behave",
+    "phonetic": "/bɪˈheɪv/",
+    "explains": [
+      "v. 表现；举止"
+    ]
+  },
   "behavior": {
     "word": "behavior",
     "phonetic": "/bɪˈheɪvjər/",
@@ -348,11 +1916,39 @@
       "n. 行为；举止（美式拼写）"
     ]
   },
+  "behavioral": {
+    "word": "behavioral",
+    "phonetic": "/bi'heivjərəl/",
+    "explains": [
+      "adj. 行为的"
+    ]
+  },
+  "behaviorist": {
+    "word": "behaviorist",
+    "phonetic": "",
+    "explains": [
+      "n. 行为主义者, 行为科学家"
+    ]
+  },
   "behaviour": {
     "word": "behaviour",
     "phonetic": "/bɪˈheɪvjər/",
     "explains": [
       "n. 行为；举止（英式拼写）"
+    ]
+  },
+  "behead": {
+    "word": "behead",
+    "phonetic": "/bɪ'hed/",
+    "explains": [
+      "v. 砍头；使河流被夺流"
+    ]
+  },
+  "behest": {
+    "word": "behest",
+    "phonetic": "/bɪ'hest/",
+    "explains": [
+      "n. [诗]命令, 吩咐, 要求"
     ]
   },
   "behind": {
@@ -363,12 +1959,82 @@
       "adv. 在后面"
     ]
   },
+  "behold": {
+    "word": "behold",
+    "phonetic": "/bɪ'həʊld/",
+    "explains": [
+      "v. 看；注视；把视为；int. 瞧；看呀"
+    ]
+  },
+  "beholder": {
+    "word": "beholder",
+    "phonetic": "/bɪ'həʊldə/",
+    "explains": [
+      "n. 目睹者, 旁观者"
+    ]
+  },
+  "beige": {
+    "word": "beige",
+    "phonetic": "/beɪʒ; beɪdʒ/",
+    "explains": [
+      "n. 米黄色；adj. 浅褐色的；米黄色的；枯燥乏味的"
+    ]
+  },
   "being": {
     "word": "being",
     "phonetic": "/ˈbiːɪŋ/",
     "explains": [
       "n. 存在；生物",
       "v. be 的现在分词"
+    ]
+  },
+  "belabor": {
+    "word": "belabor",
+    "phonetic": "/bɪ'lebə/",
+    "explains": [
+      "v. 痛打；抨击；过度说明；反复讨论"
+    ]
+  },
+  "belated": {
+    "word": "belated",
+    "phonetic": "/bɪ'leɪtɪd/",
+    "explains": [
+      "adj. 迟来的；误期的"
+    ]
+  },
+  "belay": {
+    "word": "belay",
+    "phonetic": "/'biːleɪ; bɪ'leɪ/",
+    "explains": [
+      "v. 把缆绳拴在系索栓上；n. (Belay)人名；(法)贝莱"
+    ]
+  },
+  "belch": {
+    "word": "belch",
+    "phonetic": "/beltʃ/",
+    "explains": [
+      "v. 打嗝, (火山、炮等)冒烟、喷出"
+    ]
+  },
+  "beleaguer": {
+    "word": "beleaguer",
+    "phonetic": "/bɪ'liːgə/",
+    "explains": [
+      "v. 围攻；围"
+    ]
+  },
+  "belgium": {
+    "word": "belgium",
+    "phonetic": "/ˈbeldʒəm/",
+    "explains": [
+      "n. 比利时"
+    ]
+  },
+  "belie": {
+    "word": "belie",
+    "phonetic": "/bɪ'laɪ/",
+    "explains": [
+      "v. 掩饰"
     ]
   },
   "belief": {
@@ -378,11 +2044,25 @@
       "n. 相信；信念；信仰"
     ]
   },
+  "believable": {
+    "word": "believable",
+    "phonetic": "/bɪ'liːvəbl/",
+    "explains": [
+      "adj. 可信的"
+    ]
+  },
   "believe": {
     "word": "believe",
     "phonetic": "/bɪˈliːv/",
     "explains": [
       "v. 相信；认为"
+    ]
+  },
+  "belittle": {
+    "word": "belittle",
+    "phonetic": "/bɪ'lɪt(ə)l/",
+    "explains": [
+      "v. 轻视；贬低；使相形见小"
     ]
   },
   "bell": {
@@ -392,11 +2072,74 @@
       "n. 铃；钟"
     ]
   },
+  "belle": {
+    "word": "belle",
+    "phonetic": "/bel/",
+    "explains": [
+      "n. 美女"
+    ]
+  },
+  "belleza": {
+    "word": "belleza",
+    "phonetic": "",
+    "explains": [
+      "n.f. 美丽"
+    ]
+  },
+  "bellicose": {
+    "word": "bellicose",
+    "phonetic": "/'belɪkəʊs/",
+    "explains": [
+      "adj. 好战的；好斗的"
+    ]
+  },
+  "belligerent": {
+    "word": "belligerent",
+    "phonetic": "/bə'lɪdʒ(ə)r(ə)nt/",
+    "explains": [
+      "adj. 交战的；好战的；交战国的；n. 交战国；参加斗殴的人或集团"
+    ]
+  },
+  "bellow": {
+    "word": "bellow",
+    "phonetic": "/'beləʊ/",
+    "explains": [
+      "v. 怒吼, 咆哮"
+    ]
+  },
+  "bellows": {
+    "word": "bellows",
+    "phonetic": "/'beləʊz/",
+    "explains": [
+      "n. 波纹管；风箱；皮老虎"
+    ]
+  },
+  "belly": {
+    "word": "belly",
+    "phonetic": "/'belɪ/",
+    "explains": [
+      "n. 腹部；胃；食欲；v. 涨满；鼓起"
+    ]
+  },
   "belong": {
     "word": "belong",
     "phonetic": "/bɪˈlɒŋ/",
     "explains": [
       "v. 属于；应归入"
+    ]
+  },
+  "belongings": {
+    "word": "belongings",
+    "phonetic": "/bə'lɔŋɪŋz/",
+    "explains": [
+      "n. 财产, 所有物, 相关事物, 亲戚"
+    ]
+  },
+  "beloved": {
+    "word": "beloved",
+    "phonetic": "/bɪˈlʌvɪd/",
+    "explains": [
+      "adj. 心爱的；n. 爱人"
     ]
   },
   "below": {
@@ -406,6 +2149,13 @@
       "prep./adv. 在…下面"
     ]
   },
+  "below-the-line": {
+    "word": "below-the-line",
+    "phonetic": "/bi'ləʊð'laɪn/",
+    "explains": [
+      "n.  线下"
+    ]
+  },
   "belt": {
     "word": "belt",
     "phonetic": "/belt/",
@@ -413,11 +2163,53 @@
       "n. 腰带；地带"
     ]
   },
+  "belter": {
+    "word": "belter",
+    "phonetic": "",
+    "explains": [
+      "n. 非常好, 出色的例子"
+    ]
+  },
+  "beluga": {
+    "word": "beluga",
+    "phonetic": "/bə'luːgə/",
+    "explains": [
+      "n. (欧洲)白色大鳇鱼, 白鲸"
+    ]
+  },
+  "bemoan": {
+    "word": "bemoan",
+    "phonetic": "/bɪ'məʊn/",
+    "explains": [
+      "v. 哀叹"
+    ]
+  },
+  "bemused": {
+    "word": "bemused",
+    "phonetic": "/bɪ'mjuːzd/",
+    "explains": [
+      "adj. 困惑的；发呆的；v. 使发呆（bemuse的过去式和过去分词）"
+    ]
+  },
   "bench": {
     "word": "bench",
     "phonetic": "/bentʃ/",
     "explains": [
       "n. 长凳；工作台"
+    ]
+  },
+  "benchmark": {
+    "word": "benchmark",
+    "phonetic": "/'bentʃmɑːk/",
+    "explains": [
+      "n.  基准； 用于比较分析的基本性资料"
+    ]
+  },
+  "benchmarking": {
+    "word": "benchmarking",
+    "phonetic": "/'bentʃmɑːkiŋ/",
+    "explains": [
+      "n.  标杆分析法， 基准化分析法"
     ]
   },
   "bend": {
@@ -435,12 +2227,229 @@
       "prep. 在…下方（较正式）"
     ]
   },
+  "benediction": {
+    "word": "benediction",
+    "phonetic": "/,benɪ'dɪkʃ(ə)n/",
+    "explains": [
+      "n. 祝福；赐福；恩赐；祈求上帝赐福的仪式"
+    ]
+  },
+  "benefactor": {
+    "word": "benefactor",
+    "phonetic": "/'benɪfæktə/",
+    "explains": [
+      "n. 恩人；捐助者；施主"
+    ]
+  },
+  "beneficence": {
+    "word": "beneficence",
+    "phonetic": "/bɪ'nefɪsəns/",
+    "explains": [
+      "n. 慈善；善行；捐款"
+    ]
+  },
+  "beneficent": {
+    "word": "beneficent",
+    "phonetic": "/bɪ'nefɪs(ə)nt/",
+    "explains": [
+      "adj. 慈善的；善行的"
+    ]
+  },
+  "beneficial": {
+    "word": "beneficial",
+    "phonetic": "/ˌbenɪˈfɪʃl/",
+    "explains": [
+      "adj. 有益的；有利的"
+    ]
+  },
+  "beneficiary": {
+    "word": "beneficiary",
+    "phonetic": "/benɪ'fɪʃ(ə)rɪ/",
+    "explains": [
+      "n. 受惠者, 受益人"
+    ]
+  },
+  "beneficio": {
+    "word": "beneficio",
+    "phonetic": "",
+    "explains": [
+      "n.m. 利益；利润"
+    ]
+  },
   "benefit": {
     "word": "benefit",
     "phonetic": "/ˈbenɪfɪt/",
     "explains": [
       "n. 利益；好处",
       "v. 受益；得益"
+    ]
+  },
+  "benevolence": {
+    "word": "benevolence",
+    "phonetic": "/bi'nevələns/",
+    "explains": [
+      "n.  捐款， 捐助物； 善意， 善心"
+    ]
+  },
+  "benevolent": {
+    "word": "benevolent",
+    "phonetic": "/bɪ'nev(ə)l(ə)nt/",
+    "explains": [
+      "adj. 仁慈的；慈善的；亲切的"
+    ]
+  },
+  "beng": {
+    "word": "beng",
+    "phonetic": "",
+    "explains": [
+      "n. 大麻"
+    ]
+  },
+  "benighted": {
+    "word": "benighted",
+    "phonetic": "/bɪ'naɪtɪd/",
+    "explains": [
+      "adj. 赶路到天黑的, 愚昧的"
+    ]
+  },
+  "benign": {
+    "word": "benign",
+    "phonetic": "/bɪ'naɪn/",
+    "explains": [
+      "adj. 良性的；和蔼的，亲切的；吉利的；n. (Benign)人名；(俄)贝尼根"
+    ]
+  },
+  "benignant": {
+    "word": "benignant",
+    "phonetic": "/bɪ'nɪgnənt/",
+    "explains": [
+      "adj. 良性的；仁慈的；有益的；和蔼的"
+    ]
+  },
+  "benignity": {
+    "word": "benignity",
+    "phonetic": "/bɪ'nɪɡnətɪ/",
+    "explains": [
+      "n. 仁慈；善举"
+    ]
+  },
+  "benison": {
+    "word": "benison",
+    "phonetic": "/'benɪz(ə)n; -s-/",
+    "explains": [
+      "n. 祝福"
+    ]
+  },
+  "bent": {
+    "word": "bent",
+    "phonetic": "/bent/",
+    "explains": [
+      "n. 倾向, 爱好"
+    ]
+  },
+  "bequeath": {
+    "word": "bequeath",
+    "phonetic": "/bɪ'kwiːð/",
+    "explains": [
+      "v. 遗赠；把…遗赠给；把…传下去"
+    ]
+  },
+  "bequest": {
+    "word": "bequest",
+    "phonetic": "/bɪ'kwest/",
+    "explains": [
+      "n. 遗产, 遗赠"
+    ]
+  },
+  "berate": {
+    "word": "berate",
+    "phonetic": "/bɪ'reɪt/",
+    "explains": [
+      "v. 严责；申斥"
+    ]
+  },
+  "bereave": {
+    "word": "bereave",
+    "phonetic": "/bɪ'riːv/",
+    "explains": [
+      "v. 使……失去；使……孤寂"
+    ]
+  },
+  "bereaved": {
+    "word": "bereaved",
+    "phonetic": "/bɪ'rivd/",
+    "explains": [
+      "adj. 丧失的；死了…的；n. 丧失亲人的人；vt. 使丧失（bereave的过去式和过去分词）"
+    ]
+  },
+  "bereft": {
+    "word": "bereft",
+    "phonetic": "/bɪ'reft/",
+    "explains": [
+      "adj. 丧失的；被剥夺的；失去亲人的；v. 失去…的（bereave的过去式）"
+    ]
+  },
+  "berg": {
+    "word": "berg",
+    "phonetic": "/bɜːg/",
+    "explains": [
+      "n. 冰山"
+    ]
+  },
+  "bergere": {
+    "word": "bergere",
+    "phonetic": "",
+    "explains": [
+      "n. 围手椅"
+    ]
+  },
+  "beringia": {
+    "word": "beringia",
+    "phonetic": "",
+    "explains": [
+      "n. 白令海和楚可奇海海域"
+    ]
+  },
+  "berlin": {
+    "word": "berlin",
+    "phonetic": "/bə:'lin/",
+    "explains": [
+      "n. 柏林[德国]"
+    ]
+  },
+  "berry": {
+    "word": "berry",
+    "phonetic": "/'berɪ/",
+    "explains": [
+      "n. 浆果（如草莓等）"
+    ]
+  },
+  "berth": {
+    "word": "berth",
+    "phonetic": "/bɜːθ/",
+    "explains": [
+      "n. 卧铺；停泊处，锚位；差事；v. 使……停泊；为……提供铺位"
+    ]
+  },
+  "beseech": {
+    "word": "beseech",
+    "phonetic": "/bɪ'siːtʃ/",
+    "explains": [
+      "v. 恳求，哀求；乞求，急切地要求得到"
+    ]
+  },
+  "beset": {
+    "word": "beset",
+    "phonetic": "/bɪ'set/",
+    "explains": [
+      "v. 困扰；镶嵌；围绕"
+    ]
+  },
+  "beshrew": {
+    "word": "beshrew",
+    "phonetic": "/bɪ'ʃruː/",
+    "explains": [
+      "v. [古]诅咒(主要用于温和的诅咒), 该死!"
     ]
   },
   "beside": {
@@ -458,6 +2467,55 @@
       "adv. 此外"
     ]
   },
+  "besiege": {
+    "word": "besiege",
+    "phonetic": "/bɪ'siːdʒ/",
+    "explains": [
+      "v. 围困,围攻"
+    ]
+  },
+  "besmear": {
+    "word": "besmear",
+    "phonetic": "/bɪ'smɪə/",
+    "explains": [
+      "v. 弄脏，涂抹；玷污"
+    ]
+  },
+  "besmirch": {
+    "word": "besmirch",
+    "phonetic": "/bɪ'smɜːtʃ/",
+    "explains": [
+      "v. 弄污；损害；诽谤"
+    ]
+  },
+  "beso": {
+    "word": "beso",
+    "phonetic": "",
+    "explains": [
+      "n.m. 吻"
+    ]
+  },
+  "besot": {
+    "word": "besot",
+    "phonetic": "/bɪ'sɒt/",
+    "explains": [
+      "v. 使烂醉, 使迷糊, 使沉醉"
+    ]
+  },
+  "bespeak": {
+    "word": "bespeak",
+    "phonetic": "/bɪ'spiːk/",
+    "explains": [
+      "v. 预订"
+    ]
+  },
+  "bespoke": {
+    "word": "bespoke",
+    "phonetic": "/bi'spəuk/",
+    "explains": [
+      "adj.  订货的； 定做的； 预约的"
+    ]
+  },
   "best": {
     "word": "best",
     "phonetic": "/best/",
@@ -467,12 +2525,89 @@
       "n. 最佳"
     ]
   },
+  "bestial": {
+    "word": "bestial",
+    "phonetic": "/'bestɪəl/",
+    "explains": [
+      "adj. 兽性的，卑劣的；残忍的；野蛮的；n. 牛"
+    ]
+  },
+  "bestow": {
+    "word": "bestow",
+    "phonetic": "/bɪ'stəʊ/",
+    "explains": [
+      "v. 把…赠与"
+    ]
+  },
+  "bestrew": {
+    "word": "bestrew",
+    "phonetic": "/bɪ'struː/",
+    "explains": [
+      "v. 布满；散布"
+    ]
+  },
+  "bestride": {
+    "word": "bestride",
+    "phonetic": "/bɪ'straɪd/",
+    "explains": [
+      "v. 跨骑"
+    ]
+  },
+  "bestseller": {
+    "word": "bestseller",
+    "phonetic": "/best'selə(r)/",
+    "explains": [
+      "n. 畅销书；畅销书作者；畅销商品（等于best seller）"
+    ]
+  },
   "bet": {
     "word": "bet",
     "phonetic": "/bet/",
     "explains": [
       "v. 打赌",
       "n. 赌注"
+    ]
+  },
+  "bethink": {
+    "word": "bethink",
+    "phonetic": "/bɪ'θɪŋk/",
+    "explains": [
+      "v. 想起，忆起；使……思考；使……考虑"
+    ]
+  },
+  "betide": {
+    "word": "betide",
+    "phonetic": "/bɪ'taɪd/",
+    "explains": [
+      "v. 预示；降临于，发生于"
+    ]
+  },
+  "betimes": {
+    "word": "betimes",
+    "phonetic": "/bɪ'taɪmz/",
+    "explains": [
+      "adv. 及时，准时；早"
+    ]
+  },
+  "betray": {
+    "word": "betray",
+    "phonetic": "/bɪˈtreɪ/",
+    "explains": [
+      "v. 背叛；出卖"
+    ]
+  },
+  "betrayal": {
+    "word": "betrayal",
+    "phonetic": "/bɪ'treɪəl/",
+    "explains": [
+      "n. 背叛；辜负；暴露"
+    ]
+  },
+  "betrothal": {
+    "word": "betrothal",
+    "phonetic": "/bɪ'trəʊð(ə)l/",
+    "explains": [
+      "n. 订婚；婚约"
     ]
   },
   "better": {
@@ -491,11 +2626,116 @@
       "prep. 在…之间（两者）"
     ]
   },
+  "beverage": {
+    "word": "beverage",
+    "phonetic": "/ˈbev(ə)rɪdʒ/",
+    "explains": [
+      "n. 饮料"
+    ]
+  },
+  "bevy": {
+    "word": "bevy",
+    "phonetic": "/'bevɪ/",
+    "explains": [
+      "n. 一群鸟, 一群(少女或少妇), <俗>一堆东西, 一群人"
+    ]
+  },
+  "beware": {
+    "word": "beware",
+    "phonetic": "/bɪ'weə/",
+    "explains": [
+      "v. 谨防，当心"
+    ]
+  },
+  "bewilder": {
+    "word": "bewilder",
+    "phonetic": "/bɪ'wɪldə/",
+    "explains": [
+      "v. 迷惑，把…弄糊涂"
+    ]
+  },
+  "bewitch": {
+    "word": "bewitch",
+    "phonetic": "/bɪ'wɪtʃ/",
+    "explains": [
+      "v. 施魔法于，蛊惑；使着迷"
+    ]
+  },
+  "bewray": {
+    "word": "bewray",
+    "phonetic": "/bɪ'reɪ/",
+    "explains": [
+      "v. <古>泄露, 暴露, 显示"
+    ]
+  },
   "beyond": {
     "word": "beyond",
     "phonetic": "/bɪˈjɒnd/",
     "explains": [
       "prep. 超出；在…另一边"
+    ]
+  },
+  "bias": {
+    "word": "bias",
+    "phonetic": "/'baɪəs/",
+    "explains": [
+      "n. 偏见；偏爱；斜纹；乖离率；v. 使存偏见；adj. 偏斜的；adv. 偏斜地"
+    ]
+  },
+  "biased": {
+    "word": "biased",
+    "phonetic": "/'baɪəst/",
+    "explains": [
+      "adj. 有偏见的；结果偏倚的，有偏的"
+    ]
+  },
+  "bible": {
+    "word": "bible",
+    "phonetic": "/'baɪb(ə)l/",
+    "explains": [
+      "n. 基督教《圣经》"
+    ]
+  },
+  "bibliography": {
+    "word": "bibliography",
+    "phonetic": "/,bɪblɪ'ɒgrəfɪ/",
+    "explains": [
+      "n. 参考书目；文献目录"
+    ]
+  },
+  "bibliomania": {
+    "word": "bibliomania",
+    "phonetic": "/,bɪblɪə(ʊ)'meɪnɪə/",
+    "explains": [
+      "n. 藏书癖；（尤指珍本书）收藏狂"
+    ]
+  },
+  "bibliophile": {
+    "word": "bibliophile",
+    "phonetic": "/'bɪblɪə(ʊ)faɪl/",
+    "explains": [
+      "n. 藏书家；爱书的人"
+    ]
+  },
+  "biblioteca": {
+    "word": "biblioteca",
+    "phonetic": "",
+    "explains": [
+      "n.f. 图书馆"
+    ]
+  },
+  "bibulous": {
+    "word": "bibulous",
+    "phonetic": "/'bɪbjʊləs/",
+    "explains": [
+      "adj. 吸水的；嗜酒的"
+    ]
+  },
+  "bicker": {
+    "word": "bicker",
+    "phonetic": "/'bɪkə/",
+    "explains": [
+      "v. 闪动；斗嘴；潺潺而流；n. 吵嘴；口角；（水的）潺潺声"
     ]
   },
   "bicycle": {
@@ -514,11 +2754,123 @@
       "n. 出价"
     ]
   },
+  "biddable": {
+    "word": "biddable",
+    "phonetic": "/'bɪdəb(ə)l/",
+    "explains": [
+      "adj. 顺从的, 可叫牌的"
+    ]
+  },
+  "bidder": {
+    "word": "bidder",
+    "phonetic": "/'bidə/",
+    "explains": [
+      "n.  投标人"
+    ]
+  },
+  "bide": {
+    "word": "bide",
+    "phonetic": "/baɪd/",
+    "explains": [
+      "v. 等待；面临；禁得起"
+    ]
+  },
+  "bien": {
+    "word": "bien",
+    "phonetic": "",
+    "explains": [
+      "adv. 好"
+    ]
+  },
+  "biennial": {
+    "word": "biennial",
+    "phonetic": "/bai'eniəl/",
+    "explains": [
+      "adj.  两年一次的； 持续两年的"
+    ]
+  },
+  "bienvenue": {
+    "word": "bienvenue",
+    "phonetic": "",
+    "explains": [
+      "n.f. 欢迎"
+    ]
+  },
+  "bifleck": {
+    "word": "bifleck",
+    "phonetic": "",
+    "explains": [
+      "n.m. 电影院"
+    ]
+  },
+  "bifocal": {
+    "word": "bifocal",
+    "phonetic": "/baɪ'fəʊk(ə)l/",
+    "explains": [
+      "adj. 双焦点的"
+    ]
+  },
+  "bifocals": {
+    "word": "bifocals",
+    "phonetic": "/baɪ'fəʊkəlz/",
+    "explains": [
+      "n. 远视近视两用的眼镜"
+    ]
+  },
+  "bifurcate": {
+    "word": "bifurcate",
+    "phonetic": "/'baɪfəkeɪt/",
+    "explains": [
+      "v. (使)分叉"
+    ]
+  },
+  "bifurcation": {
+    "word": "bifurcation",
+    "phonetic": "/baɪfə'keɪʃ(ə)n/",
+    "explains": [
+      "n. 分歧，分叉；分歧点"
+    ]
+  },
   "big": {
     "word": "big",
     "phonetic": "/bɪɡ/",
     "explains": [
       "adj. 大的；重要的"
+    ]
+  },
+  "bigamist": {
+    "word": "bigamist",
+    "phonetic": "/'bɪɡəmɪst/",
+    "explains": [
+      "n. 重婚者"
+    ]
+  },
+  "bigamy": {
+    "word": "bigamy",
+    "phonetic": "/'bɪgəmɪ/",
+    "explains": [
+      "n. 重婚罪，重婚"
+    ]
+  },
+  "bight": {
+    "word": "bight",
+    "phonetic": "/baɪt/",
+    "explains": [
+      "n. 海湾，绳圈；曲线"
+    ]
+  },
+  "bigot": {
+    "word": "bigot",
+    "phonetic": "/'bɪgət/",
+    "explains": [
+      "n. 盲目信仰者, 顽固者"
+    ]
+  },
+  "bigotry": {
+    "word": "bigotry",
+    "phonetic": "/'bɪgətrɪ/",
+    "explains": [
+      "n. 固执, 顽固"
     ]
   },
   "bike": {
@@ -528,11 +2880,95 @@
       "n. 自行车（= bicycle）"
     ]
   },
+  "bikini": {
+    "word": "bikini",
+    "phonetic": "/bɪ'kiːnɪ/",
+    "explains": [
+      "n. 比基尼泳装；大爆炸"
+    ]
+  },
+  "bilateral": {
+    "word": "bilateral",
+    "phonetic": "/bai'lætərəl/",
+    "explains": [
+      "adj.  双边的， 双方的"
+    ]
+  },
+  "bile": {
+    "word": "bile",
+    "phonetic": "/baɪl/",
+    "explains": [
+      "n. 胆汁；愤怒"
+    ]
+  },
+  "bilge": {
+    "word": "bilge",
+    "phonetic": "/bɪldʒ/",
+    "explains": [
+      "n. 舱底"
+    ]
+  },
+  "bilingual": {
+    "word": "bilingual",
+    "phonetic": "/bai'liŋgwəl/",
+    "explains": [
+      "adj.  双语的"
+    ]
+  },
+  "bilious": {
+    "word": "bilious",
+    "phonetic": "/'bɪlɪəs/",
+    "explains": [
+      "adj. 胆汁质的, 坏脾气的"
+    ]
+  },
+  "bilk": {
+    "word": "bilk",
+    "phonetic": "/bɪlk/",
+    "explains": [
+      "v. 欺骗，诈骗；使受挫折；赖帐；n. 诈骗；骗子；赖帐"
+    ]
+  },
   "bill": {
     "word": "bill",
     "phonetic": "/bɪl/",
     "explains": [
       "n. 账单；法案；钞票"
+    ]
+  },
+  "billboard": {
+    "word": "billboard",
+    "phonetic": "/'bilbɔːd/",
+    "explains": [
+      "vt. 宣传；n.  告示牌； 广告牌"
+    ]
+  },
+  "billetera": {
+    "word": "billetera",
+    "phonetic": "",
+    "explains": [
+      "n.f. 钱包"
+    ]
+  },
+  "billfish": {
+    "word": "billfish",
+    "phonetic": "/'bɪlfɪʃ/",
+    "explains": [
+      "n. 长嘴鱼,尖嘴鱼"
+    ]
+  },
+  "billiards": {
+    "word": "billiards",
+    "phonetic": "/'bɪljədz/",
+    "explains": [
+      "n. 台球，桌球；弹子戏"
+    ]
+  },
+  "billing": {
+    "word": "billing",
+    "phonetic": "/'biliŋ/",
+    "explains": [
+      "n.  开账单"
     ]
   },
   "billion": {
@@ -542,11 +2978,137 @@
       "num. 十亿（1,000,000,000）"
     ]
   },
+  "billow": {
+    "word": "billow",
+    "phonetic": "/'bɪləʊ/",
+    "explains": [
+      "n. 巨浪；v. 翻腾"
+    ]
+  },
+  "bin": {
+    "word": "bin",
+    "phonetic": "/bɪn/",
+    "explains": [
+      "n. 箱子，容器；二进制；v. 把…放入箱中"
+    ]
+  },
+  "binary": {
+    "word": "binary",
+    "phonetic": "/'baɪnərɪ/",
+    "explains": [
+      "adj. [数] 二进制的；二元的，二态的"
+    ]
+  },
   "bind": {
     "word": "bind",
     "phonetic": "/baɪnd/",
     "explains": [
       "v. 绑；装订；约束"
+    ]
+  },
+  "binder": {
+    "word": "binder",
+    "phonetic": "/'baində/",
+    "explains": [
+      "adj.  有约束力的；n. 临时契约；绑缚者"
+    ]
+  },
+  "binding": {
+    "word": "binding",
+    "phonetic": "/'baɪndɪŋ/",
+    "explains": [
+      "n. 装订；捆绑；粘合物；adj. 有约束力的；捆绑的；v. 捆绑（bind的ing形式）"
+    ]
+  },
+  "binge": {
+    "word": "binge",
+    "phonetic": "/bɪn(d)ʒ/",
+    "explains": [
+      "n. 狂闹, 狂欢"
+    ]
+  },
+  "bingo": {
+    "word": "bingo",
+    "phonetic": "/'bɪŋgəʊ/",
+    "explains": [
+      "n. 宾戈游戏"
+    ]
+  },
+  "binoculars": {
+    "word": "binoculars",
+    "phonetic": "/bɪ'nɒkjʊləz/",
+    "explains": [
+      "n. [光] 双筒望远镜；[光] 双筒镜，[光] 双目镜"
+    ]
+  },
+  "binomial": {
+    "word": "binomial",
+    "phonetic": "/baɪ'nəʊmɪəl/",
+    "explains": [
+      "adj. 二项式的；二种名称的；n. [数] 二项式；二种名称"
+    ]
+  },
+  "biochemistry": {
+    "word": "biochemistry",
+    "phonetic": "/baɪə(ʊ)'kemɪstrɪ/",
+    "explains": [
+      "n. 生物化学"
+    ]
+  },
+  "biodegradable": {
+    "word": "biodegradable",
+    "phonetic": "/,baɪə(ʊ)dɪ'greɪdəb(ə)l/",
+    "explains": [
+      "adj. 生物所能分解的，能进行生物降解的"
+    ]
+  },
+  "biodiversity": {
+    "word": "biodiversity",
+    "phonetic": "/,baɪə(ʊ)daɪ'vɜːsɪtɪ/",
+    "explains": [
+      "n. 生物多样性"
+    ]
+  },
+  "bioengineer": {
+    "word": "bioengineer",
+    "phonetic": "/'baɪəʊ,endʒɪ'nɪə/",
+    "explains": [
+      "n. 生物工程师"
+    ]
+  },
+  "biogeochemical": {
+    "word": "biogeochemical",
+    "phonetic": "",
+    "explains": [
+      "adj. 生物地球化学的"
+    ]
+  },
+  "biographer": {
+    "word": "biographer",
+    "phonetic": "/baɪˈɒɡrəfə(r)/",
+    "explains": [
+      "n. 传记作者"
+    ]
+  },
+  "biographic": {
+    "word": "biographic",
+    "phonetic": "",
+    "explains": [
+      "adj. 传记的；传记体的"
+    ]
+  },
+  "biographical": {
+    "word": "biographical",
+    "phonetic": "/baɪə'græfɪk(ə)l/",
+    "explains": [
+      "adj. 传记的,传记体的"
+    ]
+  },
+  "biography": {
+    "word": "biography",
+    "phonetic": "/baɪˈɒɡrəfɪ/",
+    "explains": [
+      "n. 传记"
     ]
   },
   "biological": {
@@ -556,11 +3118,109 @@
       "adj. 生物的；生物学的"
     ]
   },
+  "biologically": {
+    "word": "biologically",
+    "phonetic": "",
+    "explains": [
+      "adv. 生物学地"
+    ]
+  },
+  "biologist": {
+    "word": "biologist",
+    "phonetic": "/baɪ'ɒlədʒɪst/",
+    "explains": [
+      "n. 生物学家"
+    ]
+  },
+  "biology": {
+    "word": "biology",
+    "phonetic": "/baɪˈɒlədʒi/",
+    "explains": [
+      "n. 生物学"
+    ]
+  },
+  "biome": {
+    "word": "biome",
+    "phonetic": "/'baɪəʊm/",
+    "explains": [
+      "n. (生态)生物群系"
+    ]
+  },
+  "biomedical": {
+    "word": "biomedical",
+    "phonetic": "/baɪə(ʊ)'medɪk(ə)l/",
+    "explains": [
+      "adj. 生物医学的"
+    ]
+  },
+  "biophysicist": {
+    "word": "biophysicist",
+    "phonetic": "/,baɪo'fɪzəsɪst/",
+    "explains": [
+      "n. 生物物理学家"
+    ]
+  },
+  "biosphere": {
+    "word": "biosphere",
+    "phonetic": "/'baɪə(ʊ)sfɪə/",
+    "explains": [
+      "n. 生物圈"
+    ]
+  },
+  "biotechnology": {
+    "word": "biotechnology",
+    "phonetic": "/,baɪə(ʊ)tek'nɒlədʒɪ/",
+    "explains": [
+      "n. [生物] 生物技术；[生物] 生物工艺学"
+    ]
+  },
+  "biotic": {
+    "word": "biotic",
+    "phonetic": "/baɪ'ɒtɪk/",
+    "explains": [
+      "adj. 有关生命的,生物的"
+    ]
+  },
+  "bipartisan": {
+    "word": "bipartisan",
+    "phonetic": "/,baɪpɑːtɪ'zæn/",
+    "explains": [
+      "adj. 两党连立的；代表两党的"
+    ]
+  },
+  "biped": {
+    "word": "biped",
+    "phonetic": "/'baɪped/",
+    "explains": [
+      "adj. 有两足的；n. 两足动物"
+    ]
+  },
+  "bipedal": {
+    "word": "bipedal",
+    "phonetic": "/baɪ'piːd(ə)l/",
+    "explains": [
+      "adj. 两足动物的,两足的"
+    ]
+  },
+  "birch": {
+    "word": "birch",
+    "phonetic": "/bɜːtʃ/",
+    "explains": [
+      "n. 桦树, 白桦"
+    ]
+  },
   "bird": {
     "word": "bird",
     "phonetic": "/bɜːd/",
     "explains": [
       "n. 鸟"
+    ]
+  },
+  "birdlike": {
+    "word": "birdlike",
+    "phonetic": "/'bɜːd,laɪk/",
+    "explains": [
+      "adj. 敏捷轻快的,似鸟的"
     ]
   },
   "birth": {
@@ -577,11 +3237,81 @@
       "n. 生日"
     ]
   },
+  "birthplace": {
+    "word": "birthplace",
+    "phonetic": "/ˈbɜːθpleɪs/",
+    "explains": [
+      "n. 出生地"
+    ]
+  },
+  "birthrate": {
+    "word": "birthrate",
+    "phonetic": "",
+    "explains": [
+      "n. 出生率"
+    ]
+  },
+  "birthright": {
+    "word": "birthright",
+    "phonetic": "/'bɜːθraɪt/",
+    "explains": [
+      "n. 生来就有的权利, 长子继承权"
+    ]
+  },
+  "bis": {
+    "word": "bis",
+    "phonetic": "/bɪs/",
+    "explains": [
+      "adv. 二度, 二回"
+    ]
+  },
+  "biscuit": {
+    "word": "biscuit",
+    "phonetic": "/ˈbɪskɪt/",
+    "explains": [
+      "n. 饼干"
+    ]
+  },
+  "bisect": {
+    "word": "bisect",
+    "phonetic": "/baɪ'sekt/",
+    "explains": [
+      "v. 平分；二等分"
+    ]
+  },
+  "bisector": {
+    "word": "bisector",
+    "phonetic": "/baɪ'sektə/",
+    "explains": [
+      "n. [数] 二等分线；二等分物"
+    ]
+  },
+  "bishop": {
+    "word": "bishop",
+    "phonetic": "/'bɪʃəp/",
+    "explains": [
+      "n. （基督教的）主教"
+    ]
+  },
+  "bison": {
+    "word": "bison",
+    "phonetic": "/'baɪs(ə)n/",
+    "explains": [
+      "n. (美洲)野牛"
+    ]
+  },
   "bit": {
     "word": "bit",
     "phonetic": "/bɪt/",
     "explains": [
       "n. 一点；小块（a bit = 一点点）"
+    ]
+  },
+  "bitch": {
+    "word": "bitch",
+    "phonetic": "/bɪtʃ/",
+    "explains": [
+      "n. 母狗，母狼；泼妇；牢骚事；v. 糟蹋；弄糟"
     ]
   },
   "bite": {
@@ -592,11 +3322,60 @@
       "n. 咬；一口"
     ]
   },
+  "biter": {
+    "word": "biter",
+    "phonetic": "/'baɪtə/",
+    "explains": [
+      "n. 咬人的动物, 骗子"
+    ]
+  },
   "bitter": {
     "word": "bitter",
     "phonetic": "/ˈbɪtər/",
     "explains": [
       "adj. 苦的；痛苦的；激烈的"
+    ]
+  },
+  "bitterly": {
+    "word": "bitterly",
+    "phonetic": "/'bɪtəlɪ/",
+    "explains": [
+      "adv. 苦苦地；悲痛地"
+    ]
+  },
+  "bitterness": {
+    "word": "bitterness",
+    "phonetic": "/bɪtənəs/",
+    "explains": [
+      "n. 苦味，辛酸，苦难"
+    ]
+  },
+  "bituminous": {
+    "word": "bituminous",
+    "phonetic": "/bɪ'tjuːmɪnəs/",
+    "explains": [
+      "adj. 沥青的,含沥青的"
+    ]
+  },
+  "bivouac": {
+    "word": "bivouac",
+    "phonetic": "/'bɪvʊæk; 'bɪvwæk/",
+    "explains": [
+      "n. 露营, 野营, 露营地"
+    ]
+  },
+  "bizarre": {
+    "word": "bizarre",
+    "phonetic": "/bɪ'zɑː/",
+    "explains": [
+      "adj. 奇异的（指态度，容貌，款式等）"
+    ]
+  },
+  "blab": {
+    "word": "blab",
+    "phonetic": "/blæb/",
+    "explains": [
+      "v. 泄漏(秘密), 胡扯"
     ]
   },
   "black": {
@@ -605,6 +3384,55 @@
     "explains": [
       "adj. 黑色的",
       "n. 黑色"
+    ]
+  },
+  "blackbird": {
+    "word": "blackbird",
+    "phonetic": "/'blækbɜːd/",
+    "explains": [
+      "n. 山鸟类"
+    ]
+  },
+  "blackboard": {
+    "word": "blackboard",
+    "phonetic": "/ˈblækbɔːd/",
+    "explains": [
+      "n. 黑板"
+    ]
+  },
+  "blacken": {
+    "word": "blacken",
+    "phonetic": "/'blæk(ə)n/",
+    "explains": [
+      "v. 使变黑, 诽谤"
+    ]
+  },
+  "blackmail": {
+    "word": "blackmail",
+    "phonetic": "/'blækmeɪl/",
+    "explains": [
+      "n. 勒索，敲诈；勒索所得之款；v. 勒索，敲诈"
+    ]
+  },
+  "blackout": {
+    "word": "blackout",
+    "phonetic": "/'blækaut/",
+    "explains": [
+      "n.  灯火管制； 断电； 新闻封锁； 撤销保险单"
+    ]
+  },
+  "blacksmith": {
+    "word": "blacksmith",
+    "phonetic": "/'blæksmɪθ/",
+    "explains": [
+      "n. 铁匠，锻工"
+    ]
+  },
+  "bladder": {
+    "word": "bladder",
+    "phonetic": "/'blædə/",
+    "explains": [
+      "n. 膀胱, 气泡"
     ]
   },
   "blade": {
@@ -622,12 +3450,229 @@
       "n. 责任"
     ]
   },
+  "blanc": {
+    "word": "blanc",
+    "phonetic": "",
+    "explains": [
+      "adj. 白色的"
+    ]
+  },
+  "blanch": {
+    "word": "blanch",
+    "phonetic": "/blɑːn(t)ʃ/",
+    "explains": [
+      "v. 漂白, 使变白, 遮断阳光发白"
+    ]
+  },
+  "blanco": {
+    "word": "blanco",
+    "phonetic": "",
+    "explains": [
+      "adj. 白色的"
+    ]
+  },
+  "bland": {
+    "word": "bland",
+    "phonetic": "/blænd/",
+    "explains": [
+      "adj. 温和的,乏味的；v. 变得乏味"
+    ]
+  },
+  "blandishment": {
+    "word": "blandishment",
+    "phonetic": "/'blændɪʃm(ə)nt/",
+    "explains": [
+      "n. 奉承；谄媚；哄诱"
+    ]
+  },
+  "blandishments": {
+    "word": "blandishments",
+    "phonetic": "/'blændɪʃmənts/",
+    "explains": [
+      "n. 哄骗，劝诱"
+    ]
+  },
   "blank": {
     "word": "blank",
     "phonetic": "/blæŋk/",
     "explains": [
       "adj. 空白的",
       "n. 空白"
+    ]
+  },
+  "blanket": {
+    "word": "blanket",
+    "phonetic": "/ˈblæŋkɪt/",
+    "explains": [
+      "n. 毛毯"
+    ]
+  },
+  "blare": {
+    "word": "blare",
+    "phonetic": "/bleə/",
+    "explains": [
+      "n. 号声"
+    ]
+  },
+  "blarney": {
+    "word": "blarney",
+    "phonetic": "/'blɑːnɪ/",
+    "explains": [
+      "n. 谄媚, 奉承话"
+    ]
+  },
+  "blase": {
+    "word": "blase",
+    "phonetic": "",
+    "explains": [
+      "adj. 玩厌了的，厌烦于享乐的；n. (Blase)人名；(德)布拉泽；(法)布拉斯"
+    ]
+  },
+  "blaspheme": {
+    "word": "blaspheme",
+    "phonetic": "/blæs'fiːm/",
+    "explains": [
+      "v. 亵渎；咒骂，辱骂"
+    ]
+  },
+  "blasphemous": {
+    "word": "blasphemous",
+    "phonetic": "/'blæsfəməs/",
+    "explains": [
+      "adj. 亵渎神明的, 不敬神的"
+    ]
+  },
+  "blasphemy": {
+    "word": "blasphemy",
+    "phonetic": "/'blæsfəmɪ/",
+    "explains": [
+      "n. 亵渎(话)"
+    ]
+  },
+  "blast": {
+    "word": "blast",
+    "phonetic": "/blɑːst/",
+    "explains": [
+      "n. 爆炸，冲击波；v. 炸"
+    ]
+  },
+  "blatant": {
+    "word": "blatant",
+    "phonetic": "/'bleɪt(ə)nt/",
+    "explains": [
+      "adj. 喧嚣的；公然的；炫耀的；俗丽的"
+    ]
+  },
+  "blaze": {
+    "word": "blaze",
+    "phonetic": "/bleɪz/",
+    "explains": [
+      "n. 火；闪光；v. 燃烧"
+    ]
+  },
+  "blazon": {
+    "word": "blazon",
+    "phonetic": "/'bleɪz(ə)n/",
+    "explains": [
+      "v. 宣布；装饰；n. 纹章；描绘"
+    ]
+  },
+  "bleach": {
+    "word": "bleach",
+    "phonetic": "/bliːtʃ/",
+    "explains": [
+      "v. 漂白，变白"
+    ]
+  },
+  "bleachers": {
+    "word": "bleachers",
+    "phonetic": "/'bli:tʃəz/",
+    "explains": [
+      "n. <美>(运动场的)露天看台"
+    ]
+  },
+  "bleak": {
+    "word": "bleak",
+    "phonetic": "/bliːk/",
+    "explains": [
+      "adj. 阴冷的；荒凉的，无遮蔽的；黯淡的，无希望的；冷酷的；单调的"
+    ]
+  },
+  "bleat": {
+    "word": "bleat",
+    "phonetic": "/bliːt/",
+    "explains": [
+      "v. 咩咩叫；胡扯；抱怨；n. 咩咩叫声"
+    ]
+  },
+  "bleed": {
+    "word": "bleed",
+    "phonetic": "/bliːd/",
+    "explains": [
+      "v. 流血"
+    ]
+  },
+  "bleep": {
+    "word": "bleep",
+    "phonetic": "/bliːp/",
+    "explains": [
+      "v. 发出哔哔声；n. 哔哔声"
+    ]
+  },
+  "blemish": {
+    "word": "blemish",
+    "phonetic": "/'blemɪʃ/",
+    "explains": [
+      "n. 瑕疵；污点；缺点；v. 玷污；损害；弄脏"
+    ]
+  },
+  "blench": {
+    "word": "blench",
+    "phonetic": "/blen(t)ʃ/",
+    "explains": [
+      "v. 畏缩, 回避"
+    ]
+  },
+  "blend": {
+    "word": "blend",
+    "phonetic": "/blend/",
+    "explains": [
+      "v. 混和；n. 混和物"
+    ]
+  },
+  "bless": {
+    "word": "bless",
+    "phonetic": "/bles/",
+    "explains": [
+      "v. 祝福"
+    ]
+  },
+  "blessed": {
+    "word": "blessed",
+    "phonetic": "/'blesɪd; blest/",
+    "explains": [
+      "adj. 幸福的；受祝福的；神圣的；v. 祝福（bless的过去分词）"
+    ]
+  },
+  "blessing": {
+    "word": "blessing",
+    "phonetic": "/'blesɪŋ/",
+    "explains": [
+      "n. 祝福；赐福；祷告；v. 使幸福（bless的ing形式）；使神圣化；为…祈神赐福"
+    ]
+  },
+  "bleu": {
+    "word": "bleu",
+    "phonetic": "",
+    "explains": [
+      "adj. 蓝色的"
+    ]
+  },
+  "blight": {
+    "word": "blight",
+    "phonetic": "/blaɪt/",
+    "explains": [
+      "n. 枯萎病；荒芜；v. 破坏；使…枯萎"
     ]
   },
   "blind": {
@@ -638,6 +3683,83 @@
       "v. 使失明"
     ]
   },
+  "blink": {
+    "word": "blink",
+    "phonetic": "/blɪŋk/",
+    "explains": [
+      "v&n. 眨眼, 闪烁"
+    ]
+  },
+  "blip": {
+    "word": "blip",
+    "phonetic": "/blɪp/",
+    "explains": [
+      "n. （在雷达屏幕显示出的）物体光点, 尖音信号"
+    ]
+  },
+  "bliss": {
+    "word": "bliss",
+    "phonetic": "/blɪs/",
+    "explains": [
+      "n. 福佑, 天赐的福；v. 狂喜"
+    ]
+  },
+  "blister": {
+    "word": "blister",
+    "phonetic": "/'blɪstə/",
+    "explains": [
+      "n. 水泡"
+    ]
+  },
+  "blithe": {
+    "word": "blithe",
+    "phonetic": "/blaɪð/",
+    "explains": [
+      "adj. 愉快的；快乐无忧的"
+    ]
+  },
+  "blithesome": {
+    "word": "blithesome",
+    "phonetic": "/'blaɪðsəm/",
+    "explains": [
+      "adj. 愉快的"
+    ]
+  },
+  "blitz": {
+    "word": "blitz",
+    "phonetic": "/blɪts/",
+    "explains": [
+      "n. [军]闪电战"
+    ]
+  },
+  "blizzard": {
+    "word": "blizzard",
+    "phonetic": "/'blɪzəd/",
+    "explains": [
+      "n. 大风雪"
+    ]
+  },
+  "bloated": {
+    "word": "bloated",
+    "phonetic": "/'bləʊtɪd/",
+    "explains": [
+      "adj. 浮肿的, 发胀的, 傲慢的"
+    ]
+  },
+  "blob": {
+    "word": "blob",
+    "phonetic": "/blɒb/",
+    "explains": [
+      "n. 一滴；一抹；难以名状的一团；v. 弄脏；把…做错"
+    ]
+  },
+  "bloc": {
+    "word": "bloc",
+    "phonetic": "/blɒk/",
+    "explains": [
+      "n. 集团"
+    ]
+  },
   "block": {
     "word": "block",
     "phonetic": "/blɒk/",
@@ -646,11 +3768,109 @@
       "v. 阻塞；阻挡"
     ]
   },
+  "blockade": {
+    "word": "blockade",
+    "phonetic": "/blɒ'keɪd/",
+    "explains": [
+      "v. 封锁；n. 阻塞"
+    ]
+  },
+  "blockage": {
+    "word": "blockage",
+    "phonetic": "/'blɒkɪdʒ/",
+    "explains": [
+      "n. 封锁, 妨碍"
+    ]
+  },
+  "blockbuster": {
+    "word": "blockbuster",
+    "phonetic": "/'blɒkbʌstə/",
+    "explains": [
+      "n. 轰动；巨型炸弹；一鸣惊人者"
+    ]
+  },
+  "blocky": {
+    "word": "blocky",
+    "phonetic": "/'blɒkɪ/",
+    "explains": [
+      "adj. 短而结实的, 斑驳的"
+    ]
+  },
+  "blond": {
+    "word": "blond",
+    "phonetic": "/blɒnd/",
+    "explains": [
+      "n. 白肤金发碧眼的人"
+    ]
+  },
+  "blonde": {
+    "word": "blonde",
+    "phonetic": "/blɒnd/",
+    "explains": [
+      "adj. 亚麻色的；金色的；白皙的；白肤金发碧眼的；n. 白肤金发碧眼的女人"
+    ]
+  },
   "blood": {
     "word": "blood",
     "phonetic": "/blʌd/",
     "explains": [
       "n. 血；血统"
+    ]
+  },
+  "bloodhound": {
+    "word": "bloodhound",
+    "phonetic": "/'blʌdhaʊnd/",
+    "explains": [
+      "n. 一种大侦探犬"
+    ]
+  },
+  "bloodstream": {
+    "word": "bloodstream",
+    "phonetic": "/'blʌdstriːm/",
+    "explains": [
+      "n. 血流"
+    ]
+  },
+  "bloody": {
+    "word": "bloody",
+    "phonetic": "/'blʌdɪ/",
+    "explains": [
+      "adj. 血腥的；非常的；嗜杀的，残忍的；血色的；v. 使流血；adv. 很"
+    ]
+  },
+  "bloom": {
+    "word": "bloom",
+    "phonetic": "/bluːm/",
+    "explains": [
+      "n. 花；开花期"
+    ]
+  },
+  "blossom": {
+    "word": "blossom",
+    "phonetic": "/'blɒs(ə)m/",
+    "explains": [
+      "n. 花；开花；v. 开花"
+    ]
+  },
+  "blot": {
+    "word": "blot",
+    "phonetic": "/blɒt/",
+    "explains": [
+      "v. 吸墨水；弄上墨渍或污渍；n. 污点，污渍；墨水渍"
+    ]
+  },
+  "blotter": {
+    "word": "blotter",
+    "phonetic": "/'blɒtə/",
+    "explains": [
+      "n. 记事簿，[会计] 流水帐；吸墨纸"
+    ]
+  },
+  "blouse": {
+    "word": "blouse",
+    "phonetic": "/blaʊz; blaʊs/",
+    "explains": [
+      "n. 女衬衫"
     ]
   },
   "blow": {
@@ -661,12 +3881,159 @@
       "n. 打击；吹风"
     ]
   },
+  "blower": {
+    "word": "blower",
+    "phonetic": "/'bləʊə/",
+    "explains": [
+      "n. 吹制工, 送风机"
+    ]
+  },
+  "blowhard": {
+    "word": "blowhard",
+    "phonetic": "/'bləʊhɑːd/",
+    "explains": [
+      "n. <俚>吹牛大家"
+    ]
+  },
+  "blowhole": {
+    "word": "blowhole",
+    "phonetic": "/'bləʊhəʊl/",
+    "explains": [
+      "n. 喷水孔, 通风孔"
+    ]
+  },
+  "blubber": {
+    "word": "blubber",
+    "phonetic": "/'blʌbə/",
+    "explains": [
+      "n. 鲸脂,哭号v哭号"
+    ]
+  },
   "blue": {
     "word": "blue",
     "phonetic": "/bluː/",
     "explains": [
       "adj. 蓝色的",
       "n. 蓝色"
+    ]
+  },
+  "blue-collar": {
+    "word": "blue-collar",
+    "phonetic": "/'blʊː'kɔlə/",
+    "explains": [
+      "adj.  体力劳动的"
+    ]
+  },
+  "blue-green": {
+    "word": "blue-green",
+    "phonetic": "",
+    "explains": [
+      "蓝绿发布"
+    ]
+  },
+  "bluebird": {
+    "word": "bluebird",
+    "phonetic": "/'bluːbɜːd/",
+    "explains": [
+      "n. 北美产的蓝知更鸟"
+    ]
+  },
+  "bluefin": {
+    "word": "bluefin",
+    "phonetic": "",
+    "explains": [
+      "n. 金枪鱼"
+    ]
+  },
+  "bluegrass": {
+    "word": "bluegrass",
+    "phonetic": "/'bluːgrɑːs/",
+    "explains": [
+      "n. 莓系属的牧草；早熟禾属植物"
+    ]
+  },
+  "blueprint": {
+    "word": "blueprint",
+    "phonetic": "/'bluːprɪnt/",
+    "explains": [
+      "v. 计划；制成蓝图；n. 蓝图，设计图；计划"
+    ]
+  },
+  "blues": {
+    "word": "blues",
+    "phonetic": "/bluːz/",
+    "explains": [
+      "n. 忧郁布鲁斯歌曲；蓝色物（blue的复数）；v. 把…染成蓝色（blue的第三人称单数）"
+    ]
+  },
+  "bluff": {
+    "word": "bluff",
+    "phonetic": "/blʌf/",
+    "explains": [
+      "n. 断崖,诈骗；adj. 绝壁的；v. 诈骗"
+    ]
+  },
+  "bluish": {
+    "word": "bluish",
+    "phonetic": "/'bluːɪʃ/",
+    "explains": [
+      "adj. 带蓝色的"
+    ]
+  },
+  "blunder": {
+    "word": "blunder",
+    "phonetic": "/'blʌndə/",
+    "explains": [
+      "v. 犯大错；n. 大错"
+    ]
+  },
+  "blunt": {
+    "word": "blunt",
+    "phonetic": "/blʌnt/",
+    "explains": [
+      "adj. 钝的，不锋利的；生硬的；直率的；v. 使迟钝；n. (Blunt)人名；(英)布伦特"
+    ]
+  },
+  "bluntly": {
+    "word": "bluntly",
+    "phonetic": "/'blʌntli/",
+    "explains": [
+      "adv. 坦率地, 率直地"
+    ]
+  },
+  "blur": {
+    "word": "blur",
+    "phonetic": "/blɜː/",
+    "explains": [
+      "v. 涂污；使…模糊不清；使暗淡；玷污；n. 污迹；模糊不清的事物"
+    ]
+  },
+  "blurb": {
+    "word": "blurb",
+    "phonetic": "/blɜːb/",
+    "explains": [
+      "n. 大肆宣传；吹捧性广告；商品信息；vt. 夸大；大肆宣传"
+    ]
+  },
+  "blurt": {
+    "word": "blurt",
+    "phonetic": "/blɜːt/",
+    "explains": [
+      "v. 未加思索地冲口说出；突然说出"
+    ]
+  },
+  "blusa": {
+    "word": "blusa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 女衬衫"
+    ]
+  },
+  "blush": {
+    "word": "blush",
+    "phonetic": "/blʌʃ/",
+    "explains": [
+      "v. 脸红，害臊；n. 脸红"
     ]
   },
   "board": {
@@ -677,11 +4044,81 @@
       "v. 上船/飞机"
     ]
   },
+  "boarder": {
+    "word": "boarder",
+    "phonetic": "/'bɔːdə/",
+    "explains": [
+      "n. 寄膳者；寄膳宿者；寄宿生"
+    ]
+  },
+  "boardinghouse": {
+    "word": "boardinghouse",
+    "phonetic": "/'bɔ:diŋ,haus/",
+    "explains": [
+      "n. 公寓；供膳食的寄宿处"
+    ]
+  },
+  "boardroom": {
+    "word": "boardroom",
+    "phonetic": "/'bɔːdruːm; -rʊm/",
+    "explains": [
+      "n. 会议室；交换场所"
+    ]
+  },
+  "boast": {
+    "word": "boast",
+    "phonetic": "/bəʊst/",
+    "explains": [
+      "v. 自夸"
+    ]
+  },
   "boat": {
     "word": "boat",
     "phonetic": "/bəʊt/",
     "explains": [
       "n. 小船；轮船"
+    ]
+  },
+  "boatswain": {
+    "word": "boatswain",
+    "phonetic": "/'bəʊs(ə)n/",
+    "explains": [
+      "n. 水手长"
+    ]
+  },
+  "bobsleigh": {
+    "word": "bobsleigh",
+    "phonetic": "/'bɒbsleɪ/",
+    "explains": [
+      "n. 长橇，雪橇；vi. 乘大雪橇；滑大雪橇比赛"
+    ]
+  },
+  "bobtail": {
+    "word": "bobtail",
+    "phonetic": "/'bɒbteɪl/",
+    "explains": [
+      "n. 短尾, 截短的尾巴, 截尾的动物"
+    ]
+  },
+  "boca": {
+    "word": "boca",
+    "phonetic": "",
+    "explains": [
+      "n.f. 嘴"
+    ]
+  },
+  "bode": {
+    "word": "bode",
+    "phonetic": "/bəʊd/",
+    "explains": [
+      "v. 预示"
+    ]
+  },
+  "bodily": {
+    "word": "bodily",
+    "phonetic": "/'bɒdɪlɪ/",
+    "explains": [
+      "adv. 整体地；亲自地；以肉体形式；adj. 身体的；肉体的；n. (Bodily)人名；(英)博迪利"
     ]
   },
   "body": {
@@ -691,6 +4128,41 @@
       "n. 身体；主体；团体"
     ]
   },
+  "bodyguard": {
+    "word": "bodyguard",
+    "phonetic": "/'bɒdɪgɑːd/",
+    "explains": [
+      "n. 保镖, 护卫"
+    ]
+  },
+  "bodywork": {
+    "word": "bodywork",
+    "phonetic": "/'bɔdiwəːk/",
+    "explains": [
+      "n.  车身"
+    ]
+  },
+  "bog": {
+    "word": "bog",
+    "phonetic": "/bɒg/",
+    "explains": [
+      "n. 沼泽"
+    ]
+  },
+  "boggle": {
+    "word": "boggle",
+    "phonetic": "/'bɒg(ə)l/",
+    "explains": [
+      "v. 犹豫, 不知是否应"
+    ]
+  },
+  "bogus": {
+    "word": "bogus",
+    "phonetic": "/'bəʊgəs/",
+    "explains": [
+      "adj. <美>假的, 伪造的"
+    ]
+  },
   "boil": {
     "word": "boil",
     "phonetic": "/bɔɪl/",
@@ -698,11 +4170,109 @@
       "v. 煮沸；烧开"
     ]
   },
+  "boiler": {
+    "word": "boiler",
+    "phonetic": "/'bɒɪlə/",
+    "explains": [
+      "n. 锅炉"
+    ]
+  },
+  "boilerplate": {
+    "word": "boilerplate",
+    "phonetic": "",
+    "explains": [
+      "样板代码"
+    ]
+  },
+  "boiling": {
+    "word": "boiling",
+    "phonetic": "/'bɒɪlɪŋ/",
+    "explains": [
+      "adj. 沸腾的；激昂的；n. 沸腾；煮沸；起泡；adv. 沸腾"
+    ]
+  },
+  "boire": {
+    "word": "boire",
+    "phonetic": "",
+    "explains": [
+      "v. 喝"
+    ]
+  },
+  "bois": {
+    "word": "bois",
+    "phonetic": "",
+    "explains": [
+      "n.m. 树林；木头"
+    ]
+  },
+  "boisterous": {
+    "word": "boisterous",
+    "phonetic": "/'bɒɪst(ə)rəs/",
+    "explains": [
+      "adj. 喧闹的；狂暴的；猛烈的"
+    ]
+  },
   "bold": {
     "word": "bold",
     "phonetic": "/bəʊld/",
     "explains": [
       "adj. 大胆的；醒目的"
+    ]
+  },
+  "boldness": {
+    "word": "boldness",
+    "phonetic": "/'bəuldnis/",
+    "explains": [
+      "n. 大胆；冒失；显著"
+    ]
+  },
+  "bole": {
+    "word": "bole",
+    "phonetic": "/bəʊl/",
+    "explains": [
+      "n. [林] 树干；红玄武土"
+    ]
+  },
+  "boll": {
+    "word": "boll",
+    "phonetic": "/bəʊl/",
+    "explains": [
+      "n. [植] 圆荚；博耳（容量单位）"
+    ]
+  },
+  "bolsa": {
+    "word": "bolsa",
+    "phonetic": "",
+    "explains": [
+      "n.f. 袋子；股市"
+    ]
+  },
+  "bolsillo": {
+    "word": "bolsillo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 衣袋"
+    ]
+  },
+  "bolster": {
+    "word": "bolster",
+    "phonetic": "/'bəʊlstə/",
+    "explains": [
+      "n. 垫子；v. 支持"
+    ]
+  },
+  "bolt": {
+    "word": "bolt",
+    "phonetic": "/bəʊlt/",
+    "explains": [
+      "n. 插销；螺栓；v. 闩门"
+    ]
+  },
+  "bom": {
+    "word": "bom",
+    "phonetic": "",
+    "explains": [
+      "字节顺序标记"
     ]
   },
   "bomb": {
@@ -713,6 +4283,69 @@
       "v. 轰炸"
     ]
   },
+  "bombard": {
+    "word": "bombard",
+    "phonetic": "/bɒm'bɑːd/",
+    "explains": [
+      "v. 炮轰；轰击"
+    ]
+  },
+  "bombardier": {
+    "word": "bombardier",
+    "phonetic": "/,bɒmbə'dɪə/",
+    "explains": [
+      "n. 投弹手；炮兵下士"
+    ]
+  },
+  "bombardment": {
+    "word": "bombardment",
+    "phonetic": "/bɒm'bɑːdm(ə)nt/",
+    "explains": [
+      "n. 炮击, 轰击"
+    ]
+  },
+  "bombast": {
+    "word": "bombast",
+    "phonetic": "/'bɒmbæst/",
+    "explains": [
+      "n. 夸大的言辞；adj. 夸大的"
+    ]
+  },
+  "bombastic": {
+    "word": "bombastic",
+    "phonetic": "/bɒm'bæstɪk/",
+    "explains": [
+      "adj. 夸大的, 言过其实的"
+    ]
+  },
+  "bomber": {
+    "word": "bomber",
+    "phonetic": "/'bɒmə/",
+    "explains": [
+      "n. 轰炸机；投弹手"
+    ]
+  },
+  "bombshell": {
+    "word": "bombshell",
+    "phonetic": "/'bɒmʃel/",
+    "explains": [
+      "n. 炸弹；突发事件；引起震惊的人或事"
+    ]
+  },
+  "bonanza": {
+    "word": "bonanza",
+    "phonetic": "/bə'nænzə/",
+    "explains": [
+      "n. 走运，发财"
+    ]
+  },
+  "bonbon": {
+    "word": "bonbon",
+    "phonetic": "",
+    "explains": [
+      "n.m. 糖果"
+    ]
+  },
   "bond": {
     "word": "bond",
     "phonetic": "/bɒnd/",
@@ -720,11 +4353,102 @@
       "n. 纽带；债券；粘合剂"
     ]
   },
+  "bondage": {
+    "word": "bondage",
+    "phonetic": "/'bɒndɪdʒ/",
+    "explains": [
+      "n. 奴役，束缚；奴役身份"
+    ]
+  },
+  "bondholder": {
+    "word": "bondholder",
+    "phonetic": "/'bɔndˌhəuldə/",
+    "explains": [
+      "n.  债券持有人"
+    ]
+  },
   "bone": {
     "word": "bone",
     "phonetic": "/bəʊn/",
     "explains": [
       "n. 骨头"
+    ]
+  },
+  "bonfire": {
+    "word": "bonfire",
+    "phonetic": "/'bɒnfaɪə/",
+    "explains": [
+      "n. 篝火；营火"
+    ]
+  },
+  "bongo": {
+    "word": "bongo",
+    "phonetic": "/'bɒŋgəʊ/",
+    "explains": [
+      "n. 非洲产大羚羊, 一种用手指敲的小鼓"
+    ]
+  },
+  "bonheur": {
+    "word": "bonheur",
+    "phonetic": "",
+    "explains": [
+      "n.m. 幸福"
+    ]
+  },
+  "bonito": {
+    "word": "bonito",
+    "phonetic": "/bə'niːtəʊ/",
+    "explains": [
+      "n. 鲣"
+    ]
+  },
+  "bonjour": {
+    "word": "bonjour",
+    "phonetic": "",
+    "explains": [
+      "interj. 你好"
+    ]
+  },
+  "bonnet": {
+    "word": "bonnet",
+    "phonetic": "/'bɒnɪt/",
+    "explains": [
+      "n. 无边女帽, 童帽, 烟囱帽, 阀帽"
+    ]
+  },
+  "bonny": {
+    "word": "bonny",
+    "phonetic": "/'bɒnɪ/",
+    "explains": [
+      "adj. 漂亮的, 健美的"
+    ]
+  },
+  "bonsoir": {
+    "word": "bonsoir",
+    "phonetic": "",
+    "explains": [
+      "晚上好"
+    ]
+  },
+  "bonus": {
+    "word": "bonus",
+    "phonetic": "/ˈbəʊnəs/",
+    "explains": [
+      "n. 奖金；红利"
+    ]
+  },
+  "bony": {
+    "word": "bony",
+    "phonetic": "/'bəʊnɪ/",
+    "explains": [
+      "adj. 多骨的, 瘦骨嶙峋的"
+    ]
+  },
+  "boo": {
+    "word": "boo",
+    "phonetic": "/buː/",
+    "explains": [
+      "v. 嘘；向…喝倒采；int. （表示不满、轻蔑等）嘘；n. 嘘声"
     ]
   },
   "book": {
@@ -735,6 +4459,90 @@
       "v. 预订"
     ]
   },
+  "bookcase": {
+    "word": "bookcase",
+    "phonetic": "/'bʊkkeɪs/",
+    "explains": [
+      "n. [家具] 书柜，书架"
+    ]
+  },
+  "booking": {
+    "word": "booking",
+    "phonetic": "/'bukiŋ/",
+    "explains": [
+      "n. 预订，预约"
+    ]
+  },
+  "bookish": {
+    "word": "bookish",
+    "phonetic": "/'bʊkɪʃ/",
+    "explains": [
+      "adj. 书本上的；好读书的；书呆子气的"
+    ]
+  },
+  "bookkeeper": {
+    "word": "bookkeeper",
+    "phonetic": "/'bukˌkiːpə/",
+    "explains": [
+      "n.  记账人"
+    ]
+  },
+  "bookkeeping": {
+    "word": "bookkeeping",
+    "phonetic": "/'bukˌkiːpiŋ/",
+    "explains": [
+      "n.  簿记， 记账"
+    ]
+  },
+  "booklet": {
+    "word": "booklet",
+    "phonetic": "/ˈbʊklət/",
+    "explains": [
+      "n. 小册子"
+    ]
+  },
+  "bookmark": {
+    "word": "bookmark",
+    "phonetic": "/'bʊkmɑːk/",
+    "explains": [
+      "n. 书签（等于bookmarker）；标记"
+    ]
+  },
+  "bookseller": {
+    "word": "bookseller",
+    "phonetic": "/'bʊkselə(r)/",
+    "explains": [
+      "n. 书商；售书员"
+    ]
+  },
+  "bookshelf": {
+    "word": "bookshelf",
+    "phonetic": "/'bʊkʃelf/",
+    "explains": [
+      "n. 书架"
+    ]
+  },
+  "bookshop": {
+    "word": "bookshop",
+    "phonetic": "/ˈbʊkʃɒp/",
+    "explains": [
+      "n. 书店"
+    ]
+  },
+  "bookstall": {
+    "word": "bookstall",
+    "phonetic": "/'bʊkstɔːl/",
+    "explains": [
+      "n. 书报摊"
+    ]
+  },
+  "bookstore": {
+    "word": "bookstore",
+    "phonetic": "/'bʊkstɔː/",
+    "explains": [
+      "n. 书店（等于bookshop）"
+    ]
+  },
   "boom": {
     "word": "boom",
     "phonetic": "/buːm/",
@@ -743,11 +4551,88 @@
       "v. 迅速发展"
     ]
   },
+  "boomer": {
+    "word": "boomer",
+    "phonetic": "/'buːmə/",
+    "explains": [
+      "n. 生育高峰中出生的人"
+    ]
+  },
+  "boomerang": {
+    "word": "boomerang",
+    "phonetic": "/'buːməræŋ/",
+    "explains": [
+      "n. 飞去来器；自食其果的行为；回飞棒"
+    ]
+  },
+  "boon": {
+    "word": "boon",
+    "phonetic": "/buːn/",
+    "explains": [
+      "n. 恩惠, 福利"
+    ]
+  },
+  "boor": {
+    "word": "boor",
+    "phonetic": "/bɔː; bʊə/",
+    "explains": [
+      "n. 农民, 粗野的人, 不懂礼貌的人, (Boor)波尔人"
+    ]
+  },
+  "boorish": {
+    "word": "boorish",
+    "phonetic": "/'bɔːrɪʃ; 'bʊərɪʃ/",
+    "explains": [
+      "adj. 粗野的；粗鲁的；粗鄙的；笨拙的；乡土气的"
+    ]
+  },
+  "boost": {
+    "word": "boost",
+    "phonetic": "/buːst/",
+    "explains": [
+      "v. 推动"
+    ]
+  },
+  "booster": {
+    "word": "booster",
+    "phonetic": "/'buːstə/",
+    "explains": [
+      "n. <美俚>热心的拥护者, 后推的人, 支持者, 后援者, 调压器"
+    ]
+  },
   "boot": {
     "word": "boot",
     "phonetic": "/buːt/",
     "explains": [
       "n. 靴子；（英）汽车后备箱"
+    ]
+  },
+  "booth": {
+    "word": "booth",
+    "phonetic": "/buːð; buːθ/",
+    "explains": [
+      "n. 公用电话亭；货摊"
+    ]
+  },
+  "bootleg": {
+    "word": "bootleg",
+    "phonetic": "/'buːtleg/",
+    "explains": [
+      "v.  私自贩运， 非法酿酒"
+    ]
+  },
+  "booze": {
+    "word": "booze",
+    "phonetic": "/buːz/",
+    "explains": [
+      "v. <俗>豪饮"
+    ]
+  },
+  "bord": {
+    "word": "bord",
+    "phonetic": "",
+    "explains": [
+      "n.m. 边缘"
     ]
   },
   "border": {
@@ -758,11 +4643,46 @@
       "v. 与…接壤"
     ]
   },
+  "borderline": {
+    "word": "borderline",
+    "phonetic": "/'bɔːdəlaɪn/",
+    "explains": [
+      "n. 边界线，边界；界线；adj. 边界的；暧昧的"
+    ]
+  },
   "bore": {
     "word": "bore",
     "phonetic": "/bɔːr/",
     "explains": [
       "v. 使厌烦；钻孔"
+    ]
+  },
+  "boreal": {
+    "word": "boreal",
+    "phonetic": "/'bɔːrɪəl/",
+    "explains": [
+      "adj. 北的，北方的；北风的；n. (Boreal)人名；(法)博雷亚尔"
+    ]
+  },
+  "bored": {
+    "word": "bored",
+    "phonetic": "/bɔːd/",
+    "explains": [
+      "adj. 厌烦的"
+    ]
+  },
+  "boredom": {
+    "word": "boredom",
+    "phonetic": "/'bɔːdəm/",
+    "explains": [
+      "n. 厌倦"
+    ]
+  },
+  "boring": {
+    "word": "boring",
+    "phonetic": "/ˈbɔːrɪŋ/",
+    "explains": [
+      "adj. 令人厌烦的"
     ]
   },
   "born": {
@@ -772,6 +4692,20 @@
       "v. 出生（bear 的过去分词）"
     ]
   },
+  "boron": {
+    "word": "boron",
+    "phonetic": "/'bɔːrɒn/",
+    "explains": [
+      "n. [化]硼"
+    ]
+  },
+  "borough": {
+    "word": "borough",
+    "phonetic": "/'bʌrə/",
+    "explains": [
+      "n. 区；自治的市镇"
+    ]
+  },
   "borrow": {
     "word": "borrow",
     "phonetic": "/ˈbɒrəʊ/",
@@ -779,11 +4713,81 @@
       "v. 借入；借用"
     ]
   },
+  "bosk": {
+    "word": "bosk",
+    "phonetic": "/bɒsk/",
+    "explains": [
+      "n. 丛林,树丛,灌木丛"
+    ]
+  },
+  "bosom": {
+    "word": "bosom",
+    "phonetic": "/'bʊz(ə)m/",
+    "explains": [
+      "n. 胸，胸部；内心"
+    ]
+  },
+  "bosque": {
+    "word": "bosque",
+    "phonetic": "",
+    "explains": [
+      "n.m. 森林"
+    ]
+  },
   "boss": {
     "word": "boss",
     "phonetic": "/bɒs/",
     "explains": [
       "n. 老板；上司"
+    ]
+  },
+  "bossy": {
+    "word": "bossy",
+    "phonetic": "/'bɒsɪ/",
+    "explains": [
+      "adj. 专横的；浮雕装饰的；爱指挥他人的；n. 母牛；牛犊"
+    ]
+  },
+  "boston": {
+    "word": "boston",
+    "phonetic": "/'bɔstən/",
+    "explains": [
+      "n. 波士顿"
+    ]
+  },
+  "botanical": {
+    "word": "botanical",
+    "phonetic": "/bə'tænɪkl/",
+    "explains": [
+      "adj. 植物(学)的"
+    ]
+  },
+  "botanist": {
+    "word": "botanist",
+    "phonetic": "/'bɒtənɪst/",
+    "explains": [
+      "n. 植物学家"
+    ]
+  },
+  "botanize": {
+    "word": "botanize",
+    "phonetic": "/'bɒtənaɪz/",
+    "explains": [
+      "v. 研究植物；采集植物；n. 研究并采集植物"
+    ]
+  },
+  "botany": {
+    "word": "botany",
+    "phonetic": "/'bɒt(ə)nɪ/",
+    "explains": [
+      "n. 植物学"
+    ]
+  },
+  "botella": {
+    "word": "botella",
+    "phonetic": "",
+    "explains": [
+      "n.f. 瓶子"
     ]
   },
   "both": {
@@ -807,12 +4811,103 @@
       "n. 瓶子"
     ]
   },
+  "bottleneck": {
+    "word": "bottleneck",
+    "phonetic": "/'bɔtlnek/",
+    "explains": [
+      "n.  瓶颈， 障碍"
+    ]
+  },
   "bottom": {
     "word": "bottom",
     "phonetic": "/ˈbɒtəm/",
     "explains": [
       "n. 底部；末端",
       "adj. 最低的"
+    ]
+  },
+  "botulism": {
+    "word": "botulism",
+    "phonetic": "/'bɒtjʊlɪz(ə)m/",
+    "explains": [
+      "n. 波特淋菌中毒, 香肠中毒"
+    ]
+  },
+  "bouche": {
+    "word": "bouche",
+    "phonetic": "",
+    "explains": [
+      "n.f. 嘴"
+    ]
+  },
+  "boucherie": {
+    "word": "boucherie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 肉店"
+    ]
+  },
+  "boudoir": {
+    "word": "boudoir",
+    "phonetic": "/'buːdwɑː/",
+    "explains": [
+      "n. 女人的会客室或化妆室, 闺房"
+    ]
+  },
+  "bough": {
+    "word": "bough",
+    "phonetic": "/baʊ/",
+    "explains": [
+      "n. 树枝"
+    ]
+  },
+  "boulangerie": {
+    "word": "boulangerie",
+    "phonetic": "",
+    "explains": [
+      "n.f. 面包店"
+    ]
+  },
+  "boulder": {
+    "word": "boulder",
+    "phonetic": "/'bəʊldə/",
+    "explains": [
+      "n. 大石头"
+    ]
+  },
+  "boule": {
+    "word": "boule",
+    "phonetic": "/buːl/",
+    "explains": [
+      "n. 人造宝石，议会"
+    ]
+  },
+  "boulevard": {
+    "word": "boulevard",
+    "phonetic": "/'buːləvɑːd/",
+    "explains": [
+      "n. <美>林荫大道"
+    ]
+  },
+  "bounce": {
+    "word": "bounce",
+    "phonetic": "/baʊns/",
+    "explains": [
+      "v. 弹跳；反弹"
+    ]
+  },
+  "bouncy": {
+    "word": "bouncy",
+    "phonetic": "/'baʊnsɪ/",
+    "explains": [
+      "adj. 快活的, 精神的, 有弹性的, 自大的"
+    ]
+  },
+  "bound": {
+    "word": "bound",
+    "phonetic": "/baʊnd/",
+    "explains": [
+      "adj. 一定的；有义务的"
     ]
   },
   "boundary": {
@@ -822,11 +4917,151 @@
       "n. 边界；界限"
     ]
   },
+  "boundless": {
+    "word": "boundless",
+    "phonetic": "/'baʊndləs/",
+    "explains": [
+      "adj. 无限的；无边无际的"
+    ]
+  },
+  "bounteous": {
+    "word": "bounteous",
+    "phonetic": "/'baʊntɪəs/",
+    "explains": [
+      "adj. 宽宏大量的, 慷慨的"
+    ]
+  },
+  "bountiful": {
+    "word": "bountiful",
+    "phonetic": "/'baʊntɪfʊl; -f(ə)l/",
+    "explains": [
+      "adj. 丰富的；慷慨的；宽大的"
+    ]
+  },
+  "bounty": {
+    "word": "bounty",
+    "phonetic": "/'baʊntɪ/",
+    "explains": [
+      "n. 慷慨；丰富；奖励金；赠款；vt. 发给…奖金等；为…而发给赏金；vi. 以赏金等形式发放"
+    ]
+  },
+  "bouquet": {
+    "word": "bouquet",
+    "phonetic": "/bʊ'keɪ; bəʊ'keɪ; 'bʊkeɪ/",
+    "explains": [
+      "n. 花束"
+    ]
+  },
+  "bourgeois": {
+    "word": "bourgeois",
+    "phonetic": "/'bʊəʒwɑː/",
+    "explains": [
+      "adj. 中产阶级的；庸俗的；资产阶级的"
+    ]
+  },
+  "bourgeoisie": {
+    "word": "bourgeoisie",
+    "phonetic": "/,bʊəʒwɑː'ziː/",
+    "explains": [
+      "n. 资产阶级；中产阶级"
+    ]
+  },
+  "bourse": {
+    "word": "bourse",
+    "phonetic": "/'buəs/",
+    "explains": [
+      "n.  证券交易所"
+    ]
+  },
+  "bout": {
+    "word": "bout",
+    "phonetic": "/baʊt/",
+    "explains": [
+      "n. 一回, 一场, 回合, 较量"
+    ]
+  },
+  "bouteille": {
+    "word": "bouteille",
+    "phonetic": "",
+    "explains": [
+      "n.f. 瓶子"
+    ]
+  },
+  "boutique": {
+    "word": "boutique",
+    "phonetic": "/buː'tiːk/",
+    "explains": [
+      "n. 精品店；专卖流行衣服的小商店；adj. 精品屋的；小规模专售精品的"
+    ]
+  },
+  "bovine": {
+    "word": "bovine",
+    "phonetic": "/'bəʊvaɪn/",
+    "explains": [
+      "adj. (似)牛的，迟钝的"
+    ]
+  },
+  "bow": {
+    "word": "bow",
+    "phonetic": "/bəʊ; baʊ/",
+    "explains": [
+      "v. 鞠躬　n. 弓；蝴蝶结"
+    ]
+  },
+  "bowdlerize": {
+    "word": "bowdlerize",
+    "phonetic": "/'baʊdləraɪz/",
+    "explains": [
+      "v. 删改；删除不妥的文句"
+    ]
+  },
+  "bowel": {
+    "word": "bowel",
+    "phonetic": "/'baʊəl/",
+    "explains": [
+      "n. 肠；内部；同情；vt. 将……的肚肠取出"
+    ]
+  },
+  "bowels": {
+    "word": "bowels",
+    "phonetic": "/'bauəlz/",
+    "explains": [
+      "n. 内脏（尤指人的肠）；同情心；勇气（bowel的复数）；v. 取出…的肠子（bowel的第三人称单数）"
+    ]
+  },
+  "bower": {
+    "word": "bower",
+    "phonetic": "/'baʊə/",
+    "explains": [
+      "n. 凉亭；树阴处"
+    ]
+  },
+  "bowerbird": {
+    "word": "bowerbird",
+    "phonetic": "/'baʊəbɜːd/",
+    "explains": [
+      "n. [鸟] 园丁鸟；澳洲产的一种鸟"
+    ]
+  },
   "bowl": {
     "word": "bowl",
     "phonetic": "/bəʊl/",
     "explains": [
       "n. 碗；盆"
+    ]
+  },
+  "bowler": {
+    "word": "bowler",
+    "phonetic": "/'bəʊlə/",
+    "explains": [
+      "n. 圆顶礼帽；投球手；玩滚球的人"
+    ]
+  },
+  "bowling": {
+    "word": "bowling",
+    "phonetic": "/'bəʊlɪŋ/",
+    "explains": [
+      "n. 滚木球戏；保龄球戏；v. 打保龄球（bowl的现在分词）"
     ]
   },
   "box": {
@@ -836,11 +5071,123 @@
       "n. 盒子；箱子；包厢"
     ]
   },
+  "boxer": {
+    "word": "boxer",
+    "phonetic": "/'bɒksə/",
+    "explains": [
+      "n. 拳师，拳击手"
+    ]
+  },
+  "boxing": {
+    "word": "boxing",
+    "phonetic": "/'bɒksɪŋ/",
+    "explains": [
+      "n. 拳击；装箱；围模；做箱的材料；v. 将…装入盒中（box的ing形式）"
+    ]
+  },
+  "boxlike": {
+    "word": "boxlike",
+    "phonetic": "",
+    "explains": [
+      "adj. 象箱子一样的"
+    ]
+  },
   "boy": {
     "word": "boy",
     "phonetic": "/bɔɪ/",
     "explains": [
       "n. 男孩；小伙子"
+    ]
+  },
+  "boycott": {
+    "word": "boycott",
+    "phonetic": "/'bɒɪkɒt/",
+    "explains": [
+      "v. 联合抵制；n. 抵制行动，受抵制时期"
+    ]
+  },
+  "boyfriend": {
+    "word": "boyfriend",
+    "phonetic": "/'bɒɪfrend/",
+    "explains": [
+      "n. 男朋友，情郎"
+    ]
+  },
+  "bra": {
+    "word": "bra",
+    "phonetic": "/brɑː/",
+    "explains": [
+      "n. 胸罩"
+    ]
+  },
+  "brace": {
+    "word": "brace",
+    "phonetic": "",
+    "explains": [
+      "n. 支柱；v. 拉紧，撑牢"
+    ]
+  },
+  "bracelet": {
+    "word": "bracelet",
+    "phonetic": "/ˈbreɪslət/",
+    "explains": [
+      "n. 手镯；手链"
+    ]
+  },
+  "bracing": {
+    "word": "bracing",
+    "phonetic": "/'breɪsɪŋ/",
+    "explains": [
+      "n. 支撑, 支柱,裤吊带"
+    ]
+  },
+  "bracket": {
+    "word": "bracket",
+    "phonetic": "/'brækɪt/",
+    "explains": [
+      "n. 支架；括号；墙上凸出的托架；v. 括在一起；把…归入同一类；排除"
+    ]
+  },
+  "brae": {
+    "word": "brae",
+    "phonetic": "/breɪ/",
+    "explains": [
+      "n. 斜坡；山坡"
+    ]
+  },
+  "brag": {
+    "word": "brag",
+    "phonetic": "/bræg/",
+    "explains": [
+      "n. 吹牛，自夸；v. 吹牛，自夸"
+    ]
+  },
+  "braggadocio": {
+    "word": "braggadocio",
+    "phonetic": "/,brægə'dəʊtʃɪəʊ/",
+    "explains": [
+      "n. 自夸，吹牛；吹牛大王"
+    ]
+  },
+  "braggart": {
+    "word": "braggart",
+    "phonetic": "/'brægət; -ɑːt/",
+    "explains": [
+      "n. 吹嘘；好自夸者；大言者；adj. 吹牛的；自夸的"
+    ]
+  },
+  "braid": {
+    "word": "braid",
+    "phonetic": "/breɪd/",
+    "explains": [
+      "v. 编织；n. 辫子；穗带；发辫"
+    ]
+  },
+  "braille": {
+    "word": "braille",
+    "phonetic": "/breil/",
+    "explains": [
+      "v. 用盲字印；n. 布莱叶（法国盲人教育家）；盲人用点字法"
     ]
   },
   "brain": {
@@ -850,6 +5197,41 @@
       "n. 脑；智力；聪明人"
     ]
   },
+  "brainless": {
+    "word": "brainless",
+    "phonetic": "/'breɪnlɪs/",
+    "explains": [
+      "adj. 无头脑的，愚蠢的,脑残的"
+    ]
+  },
+  "brainstorm": {
+    "word": "brainstorm",
+    "phonetic": "/'breinstɔːm/",
+    "explains": [
+      "n&v.  集体讨论"
+    ]
+  },
+  "brainstorming": {
+    "word": "brainstorming",
+    "phonetic": "/'breɪn,stɔːmɪŋ/",
+    "explains": [
+      "n. 集体研讨；发表独创性意见；v. 集思广益以寻找；集体自由讨论（brainstorm的ing形式）"
+    ]
+  },
+  "brainwash": {
+    "word": "brainwash",
+    "phonetic": "/'breɪnwɒʃ/",
+    "explains": [
+      "v. 对人洗脑；以宣传说服；n. 洗脑"
+    ]
+  },
+  "brake": {
+    "word": "brake",
+    "phonetic": "/breɪk/",
+    "explains": [
+      "n. 刹车；制动器"
+    ]
+  },
   "branch": {
     "word": "branch",
     "phonetic": "/brɑːntʃ/",
@@ -857,11 +5239,74 @@
       "n. 树枝；分支；分部"
     ]
   },
+  "branchia": {
+    "word": "branchia",
+    "phonetic": "",
+    "explains": [
+      "n. 鳃"
+    ]
+  },
   "brand": {
     "word": "brand",
     "phonetic": "/brænd/",
     "explains": [
       "n. 品牌；商标"
+    ]
+  },
+  "branding": {
+    "word": "branding",
+    "phonetic": "/'brændiŋ/",
+    "explains": [
+      "n.  品牌命名"
+    ]
+  },
+  "brandish": {
+    "word": "brandish",
+    "phonetic": "/'brændɪʃ/",
+    "explains": [
+      "v. 挥舞；炫耀；n. 挥舞"
+    ]
+  },
+  "brandy": {
+    "word": "brandy",
+    "phonetic": "/'brændɪ/",
+    "explains": [
+      "n. 白兰地酒"
+    ]
+  },
+  "brant": {
+    "word": "brant",
+    "phonetic": "/brænt/",
+    "explains": [
+      "n. 黑雁"
+    ]
+  },
+  "bras": {
+    "word": "bras",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手臂"
+    ]
+  },
+  "brash": {
+    "word": "brash",
+    "phonetic": "/bræʃ/",
+    "explains": [
+      "adj. 仓促的, 无礼的, 性急的, 傲慢的"
+    ]
+  },
+  "brass": {
+    "word": "brass",
+    "phonetic": "/brɑːs/",
+    "explains": [
+      "n. 黄铜"
+    ]
+  },
+  "bravado": {
+    "word": "bravado",
+    "phonetic": "/brə'vɑːdəʊ/",
+    "explains": [
+      "n. 虚张声势；冒险"
     ]
   },
   "brave": {
@@ -872,11 +5317,137 @@
       "v. 冒（风险）"
     ]
   },
+  "bravely": {
+    "word": "bravely",
+    "phonetic": "/'breivli/",
+    "explains": [
+      "adv. 勇敢地"
+    ]
+  },
+  "bravery": {
+    "word": "bravery",
+    "phonetic": "/'breɪv(ə)rɪ/",
+    "explains": [
+      "n. 勇敢"
+    ]
+  },
+  "bravo": {
+    "word": "bravo",
+    "phonetic": "/brɑː'vəʊ; 'brɑːvəʊ/",
+    "explains": [
+      "n. 喝彩；亡命徒；v. 喝彩；int. 好极了"
+    ]
+  },
+  "bravura": {
+    "word": "bravura",
+    "phonetic": "/brə'v(j)ʊərə/",
+    "explains": [
+      "n. 大胜的尝试,勇气的举动(显示演奏家技艺的壮丽的乐段)"
+    ]
+  },
+  "brawl": {
+    "word": "brawl",
+    "phonetic": "/brɔːl/",
+    "explains": [
+      "v. 争吵, 怒骂"
+    ]
+  },
+  "brawny": {
+    "word": "brawny",
+    "phonetic": "/'brɔːnɪ/",
+    "explains": [
+      "adj. 肌肉结实的, 强壮的"
+    ]
+  },
+  "bray": {
+    "word": "bray",
+    "phonetic": "/breɪ/",
+    "explains": [
+      "v. 叫；捣碎；n. 驴叫声；喇叭声"
+    ]
+  },
+  "braze": {
+    "word": "braze",
+    "phonetic": "/breɪz/",
+    "explains": [
+      "v. 用黄铜制；使成黄铜色；n. 铜焊"
+    ]
+  },
+  "brazen": {
+    "word": "brazen",
+    "phonetic": "/'breɪz(ə)n/",
+    "explains": [
+      "adj. 黄铜制的, 厚颜无耻的"
+    ]
+  },
+  "brazier": {
+    "word": "brazier",
+    "phonetic": "/'breɪzɪə; -ʒə/",
+    "explains": [
+      "n. 火盆；铜匠（等于 brasier）"
+    ]
+  },
+  "brazilian": {
+    "word": "brazilian",
+    "phonetic": "/brəˈzɪliən/",
+    "explains": [
+      "adj. 巴西的；巴西人的；n. 巴西人"
+    ]
+  },
+  "brazo": {
+    "word": "brazo",
+    "phonetic": "",
+    "explains": [
+      "n.m. 手臂"
+    ]
+  },
+  "brea": {
+    "word": "brea",
+    "phonetic": "/'breiə/",
+    "explains": [
+      "n. 布雷亚(美国加州地名)"
+    ]
+  },
+  "breach": {
+    "word": "breach",
+    "phonetic": "/briːtʃ/",
+    "explains": [
+      "n. 违背，违反；缺口；v. 违反，破坏；打破"
+    ]
+  },
   "bread": {
     "word": "bread",
     "phonetic": "/bred/",
     "explains": [
       "n. 面包"
+    ]
+  },
+  "breadbasket": {
+    "word": "breadbasket",
+    "phonetic": "/'bredbɑːskɪt/",
+    "explains": [
+      "n. <俚>胃, 腹"
+    ]
+  },
+  "breadcrumb": {
+    "word": "breadcrumb",
+    "phonetic": "",
+    "explains": [
+      "面包屑"
+    ]
+  },
+  "breadfruit": {
+    "word": "breadfruit",
+    "phonetic": "/'bredfruːt/",
+    "explains": [
+      "n. 面包果树"
+    ]
+  },
+  "breadth": {
+    "word": "breadth",
+    "phonetic": "/bredθ/",
+    "explains": [
+      "n. 宽度；广度"
     ]
   },
   "break": {
@@ -887,12 +5458,40 @@
       "n. 休息；破裂"
     ]
   },
+  "breakage": {
+    "word": "breakage",
+    "phonetic": "/'breikidʒ/",
+    "explains": [
+      "n.  破损， 损耗量"
+    ]
+  },
+  "breakdown": {
+    "word": "breakdown",
+    "phonetic": "/'breɪkdaʊn/",
+    "explains": [
+      "n. 崩溃，倒塌，失败"
+    ]
+  },
   "breakfast": {
     "word": "breakfast",
     "phonetic": "/ˈbrekfəst/",
     "explains": [
       "n. 早餐",
       "v. 吃早餐"
+    ]
+  },
+  "breakthrough": {
+    "word": "breakthrough",
+    "phonetic": "/'breikθruː/",
+    "explains": [
+      "n.  突破， 突破性进展， 重要的新发现"
+    ]
+  },
+  "breakup": {
+    "word": "breakup",
+    "phonetic": "/'breɪkʌp/",
+    "explains": [
+      "n. 破裂, 崩溃"
     ]
   },
   "breast": {
@@ -916,6 +5515,90 @@
       "v. 呼吸"
     ]
   },
+  "breathless": {
+    "word": "breathless",
+    "phonetic": "/'breθlɪs/",
+    "explains": [
+      "adj. 无声息的, 喘不过气来的"
+    ]
+  },
+  "breathtaking": {
+    "word": "breathtaking",
+    "phonetic": "/'breθteɪkɪŋ/",
+    "explains": [
+      "adj. 令人赞叹的,  壮观的"
+    ]
+  },
+  "breech": {
+    "word": "breech",
+    "phonetic": "/briːtʃ/",
+    "explains": [
+      "n. 臀部,后膛；vt. 给…穿上裤子"
+    ]
+  },
+  "breed": {
+    "word": "breed",
+    "phonetic": "/briːd/",
+    "explains": [
+      "v. 繁殖；饲养"
+    ]
+  },
+  "breeze": {
+    "word": "breeze",
+    "phonetic": "/briːz/",
+    "explains": [
+      "n. 微风"
+    ]
+  },
+  "brethren": {
+    "word": "brethren",
+    "phonetic": "/'breðr(ɪ)n/",
+    "explains": [
+      "n. <旧>兄弟们，同胞；〈旧〉同党，会友"
+    ]
+  },
+  "brevity": {
+    "word": "brevity",
+    "phonetic": "/'brevɪtɪ/",
+    "explains": [
+      "n. 简洁，简短；短暂，短促"
+    ]
+  },
+  "brew": {
+    "word": "brew",
+    "phonetic": "/bruː/",
+    "explains": [
+      "v. 酿造"
+    ]
+  },
+  "brewery": {
+    "word": "brewery",
+    "phonetic": "/'brʊərɪ/",
+    "explains": [
+      "n. 啤酒厂"
+    ]
+  },
+  "brewster": {
+    "word": "brewster",
+    "phonetic": "",
+    "explains": [
+      "n. 酿造者"
+    ]
+  },
+  "bribe": {
+    "word": "bribe",
+    "phonetic": "/braɪb/",
+    "explains": [
+      "n. 贿赂；v. 向…行贿"
+    ]
+  },
+  "bribery": {
+    "word": "bribery",
+    "phonetic": "/'braibəri/",
+    "explains": [
+      "n.  行贿， 受贿"
+    ]
+  },
   "brick": {
     "word": "brick",
     "phonetic": "/brɪk/",
@@ -923,11 +5606,39 @@
       "n. 砖；砖块"
     ]
   },
+  "bridal": {
+    "word": "bridal",
+    "phonetic": "/'braɪd(ə)l/",
+    "explains": [
+      "adj. 新娘的；婚礼的；n. 婚礼"
+    ]
+  },
+  "bride": {
+    "word": "bride",
+    "phonetic": "/braɪd/",
+    "explains": [
+      "n. 新娘"
+    ]
+  },
+  "bridegroom": {
+    "word": "bridegroom",
+    "phonetic": "/'braɪdgruːm/",
+    "explains": [
+      "n. 新郎"
+    ]
+  },
   "bridge": {
     "word": "bridge",
     "phonetic": "/brɪdʒ/",
     "explains": [
       "n. 桥；桥牌"
+    ]
+  },
+  "bridle": {
+    "word": "bridle",
+    "phonetic": "/'braɪd(ə)l/",
+    "explains": [
+      "n. 马笼头；马勒；v. 束缚；抑制"
     ]
   },
   "brief": {
@@ -938,11 +5649,88 @@
       "n. 简报"
     ]
   },
+  "briefcase": {
+    "word": "briefcase",
+    "phonetic": "/'briːfkeɪs/",
+    "explains": [
+      "n. 公文包"
+    ]
+  },
+  "briefing": {
+    "word": "briefing",
+    "phonetic": "/'briːfɪŋ/",
+    "explains": [
+      "n. 简报；作战指示；v. 概述；作…的摘要（brief的现在分词）"
+    ]
+  },
+  "briefless": {
+    "word": "briefless",
+    "phonetic": "/'briːflɪs/",
+    "explains": [
+      "adj. (律师等)无人委托诉讼的"
+    ]
+  },
+  "briefly": {
+    "word": "briefly",
+    "phonetic": "/'briːflɪ/",
+    "explains": [
+      "adv. 简短地；简略地"
+    ]
+  },
+  "brigade": {
+    "word": "brigade",
+    "phonetic": "/brɪ'geɪd/",
+    "explains": [
+      "n. 旅；大部队；队列；v. 把…编成旅；把…编成队"
+    ]
+  },
+  "brigadier": {
+    "word": "brigadier",
+    "phonetic": "/brɪgə'dɪə/",
+    "explains": [
+      "n. 准将；陆军准将"
+    ]
+  },
+  "brigand": {
+    "word": "brigand",
+    "phonetic": "/'brɪg(ə)nd/",
+    "explains": [
+      "n. 强盗；土匪；盗贼"
+    ]
+  },
   "bright": {
     "word": "bright",
     "phonetic": "/braɪt/",
     "explains": [
       "adj. 明亮的；聪明的；鲜艳的"
+    ]
+  },
+  "brighten": {
+    "word": "brighten",
+    "phonetic": "/'braɪt(ə)n/",
+    "explains": [
+      "v. 使发光；使快活"
+    ]
+  },
+  "brightly": {
+    "word": "brightly",
+    "phonetic": "/'braɪtlɪ/",
+    "explains": [
+      "adv. 明亮地"
+    ]
+  },
+  "brightness": {
+    "word": "brightness",
+    "phonetic": "/'braɪtnɪs/",
+    "explains": [
+      "n. 明亮，辉煌，聪明"
+    ]
+  },
+  "brilliance": {
+    "word": "brilliance",
+    "phonetic": "/'brɪlj(ə)ns/",
+    "explains": [
+      "n. 光辉，辉煌"
     ]
   },
   "brilliant": {
@@ -952,11 +5740,109 @@
       "adj. 极好的；光辉的；才华横溢的"
     ]
   },
+  "brilliantly": {
+    "word": "brilliantly",
+    "phonetic": "",
+    "explains": [
+      "adv. 辉煌地,灿烂地"
+    ]
+  },
+  "brim": {
+    "word": "brim",
+    "phonetic": "/brɪm/",
+    "explains": [
+      "n. 边，边缘；帽沿"
+    ]
+  },
+  "brimful": {
+    "word": "brimful",
+    "phonetic": "/'brɪmfʊl/",
+    "explains": [
+      "adj. 盈满的, 满到边际的"
+    ]
+  },
+  "brindled": {
+    "word": "brindled",
+    "phonetic": "/'brɪndld/",
+    "explains": [
+      "adj. 有斑的, 有斑纹的"
+    ]
+  },
+  "brine": {
+    "word": "brine",
+    "phonetic": "/braɪn/",
+    "explains": [
+      "n. 盐水"
+    ]
+  },
   "bring": {
     "word": "bring",
     "phonetic": "/brɪŋ/",
     "explains": [
       "v. 带来；引起"
+    ]
+  },
+  "brink": {
+    "word": "brink",
+    "phonetic": "/brɪŋk/",
+    "explains": [
+      "n. (峭岸、崖的)边缘"
+    ]
+  },
+  "briny": {
+    "word": "briny",
+    "phonetic": "/'braɪnɪ/",
+    "explains": [
+      "adj. 盐水的, 咸的, 海水的"
+    ]
+  },
+  "brisk": {
+    "word": "brisk",
+    "phonetic": "/brɪsk/",
+    "explains": [
+      "adj. 活泼的；清新的"
+    ]
+  },
+  "briskness": {
+    "word": "briskness",
+    "phonetic": "",
+    "explains": [
+      "n. 敏捷, 活泼"
+    ]
+  },
+  "bristle": {
+    "word": "bristle",
+    "phonetic": "/'brɪs(ə)l/",
+    "explains": [
+      "n. 短而硬的毛；鬃毛"
+    ]
+  },
+  "britain": {
+    "word": "britain",
+    "phonetic": "/ˈbrɪtən/",
+    "explains": [
+      "n. 英国"
+    ]
+  },
+  "british": {
+    "word": "british",
+    "phonetic": "/ˈbrɪtɪʃ/",
+    "explains": [
+      "adj. 英国的"
+    ]
+  },
+  "briton": {
+    "word": "briton",
+    "phonetic": "/'britən/",
+    "explains": [
+      "n. 英国人；大不列颠人"
+    ]
+  },
+  "brittle": {
+    "word": "brittle",
+    "phonetic": "",
+    "explains": [
+      "adj. 脆的；易损坏的"
     ]
   },
   "broad": {
@@ -973,11 +5859,214 @@
       "v./n. 广播；播放"
     ]
   },
+  "broadcaster": {
+    "word": "broadcaster",
+    "phonetic": "/'brɔːd,kɑːstə/",
+    "explains": [
+      "n. 播送设备, 广播员"
+    ]
+  },
+  "broaden": {
+    "word": "broaden",
+    "phonetic": "/ˈbrɔːdən/",
+    "explains": [
+      "v. 拓宽"
+    ]
+  },
+  "broadleaf": {
+    "word": "broadleaf",
+    "phonetic": "/'brɔːdliːf/",
+    "explains": [
+      "n. 阔叶烟草,阔叶树"
+    ]
+  },
+  "broadly": {
+    "word": "broadly",
+    "phonetic": "/'brɔːdlɪ/",
+    "explains": [
+      "adv. 宽广地, 广泛"
+    ]
+  },
+  "broadside": {
+    "word": "broadside",
+    "phonetic": "/'brɔːdsaɪd/",
+    "explains": [
+      "n. (船)舷侧"
+    ]
+  },
+  "broadway": {
+    "word": "broadway",
+    "phonetic": "/'brɔːdweɪ/",
+    "explains": [
+      "n& a. 百老汇大街(的)"
+    ]
+  },
+  "broccoli": {
+    "word": "broccoli",
+    "phonetic": "/'brɒkəlɪ/",
+    "explains": [
+      "n. 花椰菜；西兰花"
+    ]
+  },
+  "brochure": {
+    "word": "brochure",
+    "phonetic": "/ˈbrəʊʃə/",
+    "explains": [
+      "n. 小册子"
+    ]
+  },
+  "broil": {
+    "word": "broil",
+    "phonetic": "/brɒɪl/",
+    "explains": [
+      "v. 烤(肉), 酷热"
+    ]
+  },
+  "broiling": {
+    "word": "broiling",
+    "phonetic": "/'brɔiliŋ/",
+    "explains": [
+      "adj. 酷热的, 炽热的, 似烧的"
+    ]
+  },
+  "broke": {
+    "word": "broke",
+    "phonetic": "/brəuk/",
+    "explains": [
+      "adj.  破产的， 一文不名的"
+    ]
+  },
+  "broken": {
+    "word": "broken",
+    "phonetic": "/'brəʊk(ə)n/",
+    "explains": [
+      "adj. 被打碎的；骨折的"
+    ]
+  },
+  "broker": {
+    "word": "broker",
+    "phonetic": "/'brəukə/",
+    "explains": [
+      "n.  经纪人， 代理人"
+    ]
+  },
+  "brokerage": {
+    "word": "brokerage",
+    "phonetic": "/'brəukəridʒ/",
+    "explains": [
+      "n.  经纪人佣金； 经纪人业务"
+    ]
+  },
+  "broma": {
+    "word": "broma",
+    "phonetic": "",
+    "explains": [
+      "n.f. 玩笑"
+    ]
+  },
+  "bromide": {
+    "word": "bromide",
+    "phonetic": "/'brəʊmaɪd/",
+    "explains": [
+      "n. [化]溴化物"
+    ]
+  },
+  "bromine": {
+    "word": "bromine",
+    "phonetic": "/'brəʊmiːn/",
+    "explains": [
+      "n. [化]溴"
+    ]
+  },
+  "bronchitis": {
+    "word": "bronchitis",
+    "phonetic": "/brɒŋ'kaɪtɪs/",
+    "explains": [
+      "n. [内科] 支气管炎"
+    ]
+  },
+  "bronchus": {
+    "word": "bronchus",
+    "phonetic": "/'brɒŋkəs/",
+    "explains": [
+      "n. 支气管"
+    ]
+  },
+  "bronze": {
+    "word": "bronze",
+    "phonetic": "/brɒnz/",
+    "explains": [
+      "n. 青铜"
+    ]
+  },
+  "brooch": {
+    "word": "brooch",
+    "phonetic": "/brəʊtʃ/",
+    "explains": [
+      "n. （女用的）胸针，领针"
+    ]
+  },
+  "brood": {
+    "word": "brood",
+    "phonetic": "/bruːd/",
+    "explains": [
+      "n. 同窝幼鸟；v. 孵（蛋）"
+    ]
+  },
+  "brook": {
+    "word": "brook",
+    "phonetic": "/brʊk/",
+    "explains": [
+      "n. 小河，溪流"
+    ]
+  },
+  "broom": {
+    "word": "broom",
+    "phonetic": "/bruːm/",
+    "explains": [
+      "n. 扫帚"
+    ]
+  },
+  "brothel": {
+    "word": "brothel",
+    "phonetic": "/'brɒθ(ə)l/",
+    "explains": [
+      "n. 妓院"
+    ]
+  },
   "brother": {
     "word": "brother",
     "phonetic": "/ˈbrʌðər/",
     "explains": [
       "n. 兄弟"
+    ]
+  },
+  "brotherhood": {
+    "word": "brotherhood",
+    "phonetic": "/ˈbrʌðəhʊd/",
+    "explains": [
+      "n. 兄弟情谊"
+    ]
+  },
+  "brotherly": {
+    "word": "brotherly",
+    "phonetic": "/'brʌðəlɪ/",
+    "explains": [
+      "adj. 兄弟的；兄弟般的；亲切的；adv. 兄弟般地；亲切地"
+    ]
+  },
+  "brow": {
+    "word": "brow",
+    "phonetic": "/braʊ/",
+    "explains": [
+      "n. 眉；眉毛"
+    ]
+  },
+  "browbeat": {
+    "word": "browbeat",
+    "phonetic": "/'braʊbiːt/",
+    "explains": [
+      "v. 恫吓，吓唬；欺侮"
     ]
   },
   "brown": {
@@ -988,12 +6077,117 @@
       "n. 棕色"
     ]
   },
+  "browse": {
+    "word": "browse",
+    "phonetic": "/braʊz/",
+    "explains": [
+      "v. 浏览"
+    ]
+  },
+  "browser": {
+    "word": "browser",
+    "phonetic": "/'braʊzə/",
+    "explains": [
+      "n. [计] 浏览器；吃嫩叶的动物；浏览书本的人"
+    ]
+  },
+  "bruise": {
+    "word": "bruise",
+    "phonetic": "/bruːz/",
+    "explains": [
+      "n. 青肿，伤痕；擦伤"
+    ]
+  },
+  "brume": {
+    "word": "brume",
+    "phonetic": "/bruːm/",
+    "explains": [
+      "n. 雾, 霭"
+    ]
+  },
+  "brunch": {
+    "word": "brunch",
+    "phonetic": "/brʌn(t)ʃ/",
+    "explains": [
+      "n. 早午餐"
+    ]
+  },
+  "brunette": {
+    "word": "brunette",
+    "phonetic": "/bruː'net; brʊ-/",
+    "explains": [
+      "n. 浅黑肤色的女人；adj. 深色的"
+    ]
+  },
+  "brunt": {
+    "word": "brunt",
+    "phonetic": "/brʌnt/",
+    "explains": [
+      "n. n冲击, 冲势"
+    ]
+  },
   "brush": {
     "word": "brush",
     "phonetic": "/brʌʃ/",
     "explains": [
       "n. 刷子",
       "v. 刷；擦"
+    ]
+  },
+  "brusque": {
+    "word": "brusque",
+    "phonetic": "/brʊsk; bruːsk/",
+    "explains": [
+      "adj. 唐突的；直率的；无礼的；n. (Brusque)人名；(法)布吕斯克"
+    ]
+  },
+  "brusquely": {
+    "word": "brusquely",
+    "phonetic": "",
+    "explains": [
+      "adv. 唐突地, 粗率地"
+    ]
+  },
+  "brutal": {
+    "word": "brutal",
+    "phonetic": "/ˈbruːt(ə)l/",
+    "explains": [
+      "adj. 残忍的"
+    ]
+  },
+  "brutality": {
+    "word": "brutality",
+    "phonetic": "/brʊ'tælɪtɪ/",
+    "explains": [
+      "n. 残忍, 野蛮的行为"
+    ]
+  },
+  "brute": {
+    "word": "brute",
+    "phonetic": "/bruːt/",
+    "explains": [
+      "n. 禽兽，畜生"
+    ]
+  },
+  "brutish": {
+    "word": "brutish",
+    "phonetic": "/'bruːtɪʃ/",
+    "explains": [
+      "adj. 粗野的；残忍的；野兽般的"
+    ]
+  },
+  "bryn": {
+    "word": "bryn",
+    "phonetic": "",
+    "explains": [
+      "n. 布琳"
+    ]
+  },
+  "btoa": {
+    "word": "btoa",
+    "phonetic": "",
+    "explains": [
+      "转 Base64"
     ]
   },
   "bubble": {
@@ -1004,12 +6198,194 @@
       "v. 冒泡"
     ]
   },
+  "bubbly": {
+    "word": "bubbly",
+    "phonetic": "/'bʌblɪ/",
+    "explains": [
+      "adj. 多泡的"
+    ]
+  },
+  "bubonic": {
+    "word": "bubonic",
+    "phonetic": "",
+    "explains": [
+      "adj. 腹股沟腺炎的"
+    ]
+  },
+  "buccal": {
+    "word": "buccal",
+    "phonetic": "/'bʌk(ə)l/",
+    "explains": [
+      "adj. (面)颊的, 口的, 口腔的"
+    ]
+  },
+  "buck": {
+    "word": "buck",
+    "phonetic": "/bʌk/",
+    "explains": [
+      "n. (一)美元；雄鹿(兔)"
+    ]
+  },
+  "bucket": {
+    "word": "bucket",
+    "phonetic": "/ˈbʌkɪt/",
+    "explains": [
+      "n. 水桶；铲斗"
+    ]
+  },
+  "buckle": {
+    "word": "buckle",
+    "phonetic": "/'bʌk(ə)l/",
+    "explains": [
+      "n. 带扣 v扣住, 变弯曲"
+    ]
+  },
+  "buckskin": {
+    "word": "buckskin",
+    "phonetic": "/'bʌkskɪn/",
+    "explains": [
+      "n. 鹿皮裤, 鹿皮"
+    ]
+  },
+  "bucolic": {
+    "word": "bucolic",
+    "phonetic": "/bjuː'kɒlɪk/",
+    "explains": [
+      "adj. 牧歌的；牧羊的；乡下风味的；n. 田园诗；农夫"
+    ]
+  },
+  "bud": {
+    "word": "bud",
+    "phonetic": "/bʌd/",
+    "explains": [
+      "n. 芽，萌芽；蓓蕾"
+    ]
+  },
+  "buddha": {
+    "word": "buddha",
+    "phonetic": "/'budə/",
+    "explains": [
+      "n. 佛陀；佛像"
+    ]
+  },
+  "buddhism": {
+    "word": "buddhism",
+    "phonetic": "/'bʊdɪz(ə)m/",
+    "explains": [
+      "n. 佛教，释教"
+    ]
+  },
+  "buddhist": {
+    "word": "buddhist",
+    "phonetic": "/'budist/",
+    "explains": [
+      "n. 佛教徒；adj. 佛教的"
+    ]
+  },
+  "buddy": {
+    "word": "buddy",
+    "phonetic": "/'bʌdɪ/",
+    "explains": [
+      "n. <美口>密友, 伙伴"
+    ]
+  },
+  "budge": {
+    "word": "budge",
+    "phonetic": "/bʌdʒ/",
+    "explains": [
+      "v. 移动"
+    ]
+  },
   "budget": {
     "word": "budget",
     "phonetic": "/ˈbʌdʒɪt/",
     "explains": [
       "n. 预算",
       "v. 编预算"
+    ]
+  },
+  "budgetary": {
+    "word": "budgetary",
+    "phonetic": "/'bʌdʒitəri/",
+    "explains": [
+      "adj.  预算的"
+    ]
+  },
+  "budworm": {
+    "word": "budworm",
+    "phonetic": "/'bʌdwɜːm/",
+    "explains": [
+      "n. 蚜虫"
+    ]
+  },
+  "bueno": {
+    "word": "bueno",
+    "phonetic": "",
+    "explains": [
+      "adj. 好的"
+    ]
+  },
+  "buff": {
+    "word": "buff",
+    "phonetic": "/bʌf/",
+    "explains": [
+      "n. 浅黄色, 软皮"
+    ]
+  },
+  "buffalo": {
+    "word": "buffalo",
+    "phonetic": "/'bʌfələʊ/",
+    "explains": [
+      "n. 水牛；水陆坦克"
+    ]
+  },
+  "buffer": {
+    "word": "buffer",
+    "phonetic": "/'bʌfə/",
+    "explains": [
+      "n. 缓冲器"
+    ]
+  },
+  "buffet": {
+    "word": "buffet",
+    "phonetic": "/ˈbʊfeɪ/",
+    "explains": [
+      "n. 自助餐"
+    ]
+  },
+  "buffoon": {
+    "word": "buffoon",
+    "phonetic": "/bə'fuːn/",
+    "explains": [
+      "n. 丑角；滑稽剧演员"
+    ]
+  },
+  "buffoonery": {
+    "word": "buffoonery",
+    "phonetic": "/bʌ'fʊnəri/",
+    "explains": [
+      "n. 滑稽；打诨"
+    ]
+  },
+  "bug": {
+    "word": "bug",
+    "phonetic": "/bʌɡ/",
+    "explains": [
+      "n. 虫子；漏洞"
+    ]
+  },
+  "buggy": {
+    "word": "buggy",
+    "phonetic": "/'bʌgɪ/",
+    "explains": [
+      "adj. 多虫的 n童车"
+    ]
+  },
+  "bugle": {
+    "word": "bugle",
+    "phonetic": "/'bjuːg(ə)l/",
+    "explains": [
+      "n. 军号，喇叭"
     ]
   },
   "build": {
@@ -1019,11 +6395,88 @@
       "v. 建造；建立"
     ]
   },
+  "builder": {
+    "word": "builder",
+    "phonetic": "/'bɪldə/",
+    "explains": [
+      "n. 建筑者；建立者"
+    ]
+  },
   "building": {
     "word": "building",
     "phonetic": "/ˈbɪldɪŋ/",
     "explains": [
       "n. 建筑物；建造"
+    ]
+  },
+  "buildup": {
+    "word": "buildup",
+    "phonetic": "/'bɪldʌp/",
+    "explains": [
+      "n. 集结, 增长"
+    ]
+  },
+  "bulb": {
+    "word": "bulb",
+    "phonetic": "/bʌlb/",
+    "explains": [
+      "n. 灯泡；球茎"
+    ]
+  },
+  "bulbous": {
+    "word": "bulbous",
+    "phonetic": "/'bʌlbəs/",
+    "explains": [
+      "adj. 球根的；球根状的；由球根生长的（等于bulbaceous）"
+    ]
+  },
+  "bulge": {
+    "word": "bulge",
+    "phonetic": "/bʌldʒ/",
+    "explains": [
+      "n&v. 膨胀，鼓起"
+    ]
+  },
+  "bulk": {
+    "word": "bulk",
+    "phonetic": "/bʌlk/",
+    "explains": [
+      "n. 体积；大部分"
+    ]
+  },
+  "bulky": {
+    "word": "bulky",
+    "phonetic": "/'bʌlkɪ/",
+    "explains": [
+      "adj. 体积大的；庞大的；笨重的"
+    ]
+  },
+  "bull": {
+    "word": "bull",
+    "phonetic": "/bʊl/",
+    "explains": [
+      "n. 公牛；雄的象"
+    ]
+  },
+  "bullate": {
+    "word": "bullate",
+    "phonetic": "/'bʊleɪt/",
+    "explains": [
+      "adj. 起水泡的, 肿胀的"
+    ]
+  },
+  "bulldoze": {
+    "word": "bulldoze",
+    "phonetic": "/'bʊldəʊz/",
+    "explains": [
+      "v. 威吓, 欺负"
+    ]
+  },
+  "bulldozer": {
+    "word": "bulldozer",
+    "phonetic": "/'bʊldəʊzə/",
+    "explains": [
+      "n. 推土机"
     ]
   },
   "bullet": {
@@ -1033,11 +6486,186 @@
       "n. 子弹"
     ]
   },
+  "bulletin": {
+    "word": "bulletin",
+    "phonetic": "/'bʊlɪtɪn/",
+    "explains": [
+      "n. 告示，公告，公报"
+    ]
+  },
+  "bullheaded": {
+    "word": "bullheaded",
+    "phonetic": "/bʊl'hedɪd/",
+    "explains": [
+      "adj. 顽固的；顽强的；愚笨的；莽撞的"
+    ]
+  },
+  "bullion": {
+    "word": "bullion",
+    "phonetic": "/'bʊlj(ə)n/",
+    "explains": [
+      "n. 金银, 银条, 金块"
+    ]
+  },
+  "bullish": {
+    "word": "bullish",
+    "phonetic": "/'bʊlɪʃ/",
+    "explains": [
+      "adj. 看涨的；上扬的；似公牛的"
+    ]
+  },
+  "bullock": {
+    "word": "bullock",
+    "phonetic": "/'bʊlək/",
+    "explains": [
+      "n. 小公牛；阉牛"
+    ]
+  },
+  "bullrush": {
+    "word": "bullrush",
+    "phonetic": "",
+    "explains": [
+      "n. 芦苇"
+    ]
+  },
+  "bully": {
+    "word": "bully",
+    "phonetic": "/'bʊlɪ/",
+    "explains": [
+      "n. 欺凌弱小者；土霸；adj. 第一流的；特好的；v. 欺负；威吓；adv. 很；十分；int. 好；妙"
+    ]
+  },
+  "bullyrag": {
+    "word": "bullyrag",
+    "phonetic": "/'bʊlɪræɡ/",
+    "explains": [
+      "v. <方或口>威吓, 欺凌"
+    ]
+  },
+  "bulwark": {
+    "word": "bulwark",
+    "phonetic": "/'bʊlwək/",
+    "explains": [
+      "n. 壁垒；保障；防波堤；v. 保护；筑垒保卫"
+    ]
+  },
+  "bum": {
+    "word": "bum",
+    "phonetic": "/bʌm/",
+    "explains": [
+      "n. 游荡者, 游民, 闹饮"
+    ]
+  },
+  "bumble": {
+    "word": "bumble",
+    "phonetic": "/'bʌmb(ə)l/",
+    "explains": [
+      "v. 拙劣地做, 弄糟"
+    ]
+  },
+  "bump": {
+    "word": "bump",
+    "phonetic": "/bʌmp/",
+    "explains": [
+      "v. 撞上"
+    ]
+  },
+  "bumper": {
+    "word": "bumper",
+    "phonetic": "/'bʌmpə/",
+    "explains": [
+      "adj. 丰盛的，丰富的；n. 缓冲器，保险杆，减震物；vt. 装满；为…祝酒；vi. 干杯"
+    ]
+  },
+  "bumpkin": {
+    "word": "bumpkin",
+    "phonetic": "/'bʌm(p)kɪn/",
+    "explains": [
+      "n. 土包子, 乡巴佬"
+    ]
+  },
+  "bumptious": {
+    "word": "bumptious",
+    "phonetic": "/'bʌm(p)ʃəs/",
+    "explains": [
+      "adj. 傲慢的；瞎自夸的"
+    ]
+  },
+  "bun": {
+    "word": "bun",
+    "phonetic": "/bʌn/",
+    "explains": [
+      "n. 小圆面包"
+    ]
+  },
   "bunch": {
     "word": "bunch",
     "phonetic": "/bʌntʃ/",
     "explains": [
       "n. 一束；一群"
+    ]
+  },
+  "bundle": {
+    "word": "bundle",
+    "phonetic": "/ˈbʌndl/",
+    "explains": [
+      "n. 捆；束"
+    ]
+  },
+  "bungalow": {
+    "word": "bungalow",
+    "phonetic": "/'bʌŋgələʊ/",
+    "explains": [
+      "n. 平房；小屋"
+    ]
+  },
+  "bungle": {
+    "word": "bungle",
+    "phonetic": "/'bʌŋg(ə)l/",
+    "explains": [
+      "v. 笨手笨脚地做；把…搞糟；n. 粗劣；失败；笨拙"
+    ]
+  },
+  "bunk": {
+    "word": "bunk",
+    "phonetic": "/bʌŋk/",
+    "explains": [
+      "n. 铺位；床铺；座床；v. 睡在铺上；逃跑"
+    ]
+  },
+  "bunker": {
+    "word": "bunker",
+    "phonetic": "/'bʌŋkə/",
+    "explains": [
+      "n. 沙坑；煤仓；燃料库；v. 使陷入困境；把球击入沙坑"
+    ]
+  },
+  "buoy": {
+    "word": "buoy",
+    "phonetic": "/bɒɪ/",
+    "explains": [
+      "n. (湖, 河等中的)浮标, 浮筒, 救生圈"
+    ]
+  },
+  "buoyancy": {
+    "word": "buoyancy",
+    "phonetic": "/'bɒɪənsɪ/",
+    "explains": [
+      "n. 浮力；轻快；轻松的心情；（股票）保持高价或回升"
+    ]
+  },
+  "buoyant": {
+    "word": "buoyant",
+    "phonetic": "/'bɔiənt/",
+    "explains": [
+      "adj.  漂浮的； 有浮力的； 看涨的"
+    ]
+  },
+  "bur": {
+    "word": "bur",
+    "phonetic": "/bə:/",
+    "explains": [
+      "n. 刺果"
     ]
   },
   "burden": {
@@ -1048,12 +6676,152 @@
       "v. 使负担"
     ]
   },
+  "burdensome": {
+    "word": "burdensome",
+    "phonetic": "/'bɜːdns(ə)m/",
+    "explains": [
+      "adj. 繁重的,难以承担的"
+    ]
+  },
+  "bureau": {
+    "word": "bureau",
+    "phonetic": "/ˈbjʊərəʊ/",
+    "explains": [
+      "n. 局"
+    ]
+  },
+  "bureaucracy": {
+    "word": "bureaucracy",
+    "phonetic": "/,bjʊ(ə)'rɒkrəsɪ/",
+    "explains": [
+      "n. 官僚主义；官僚机构"
+    ]
+  },
+  "bureaucrat": {
+    "word": "bureaucrat",
+    "phonetic": "/'bjʊərəkræt/",
+    "explains": [
+      "n. 官僚；官僚主义者"
+    ]
+  },
+  "bureaucratization": {
+    "word": "bureaucratization",
+    "phonetic": "",
+    "explains": [
+      "n. 官化"
+    ]
+  },
+  "burgeon": {
+    "word": "burgeon",
+    "phonetic": "/'bɜːdʒ(ə)n/",
+    "explains": [
+      "n. 嫩芽；v. 萌芽"
+    ]
+  },
+  "burgess": {
+    "word": "burgess",
+    "phonetic": "/'bɜːdʒɪs/",
+    "explains": [
+      "n. (英国)市民，镇民"
+    ]
+  },
+  "burgher": {
+    "word": "burgher",
+    "phonetic": "/'bɜːgə/",
+    "explains": [
+      "n. 公民, 市民"
+    ]
+  },
+  "burglar": {
+    "word": "burglar",
+    "phonetic": "/'bɜːglə/",
+    "explains": [
+      "n. 夜盗，窃贼"
+    ]
+  },
+  "burglarize": {
+    "word": "burglarize",
+    "phonetic": "/'bɜːgləraɪz/",
+    "explains": [
+      "v. 夜盗；行窃"
+    ]
+  },
+  "burglary": {
+    "word": "burglary",
+    "phonetic": "/'bɜːglərɪ/",
+    "explains": [
+      "n. 盗窃，夜盗；盗窃行为；v. 入室行窃"
+    ]
+  },
+  "burial": {
+    "word": "burial",
+    "phonetic": "/'berɪəl/",
+    "explains": [
+      "n. 安葬，埋葬；埋藏"
+    ]
+  },
+  "burin": {
+    "word": "burin",
+    "phonetic": "/'bjʊərɪn/",
+    "explains": [
+      "n. 冰凿,雕刻刀"
+    ]
+  },
+  "burlap": {
+    "word": "burlap",
+    "phonetic": "/'bɜːlæp/",
+    "explains": [
+      "n. (由黄麻制的做麻袋等用的)粗麻布"
+    ]
+  },
+  "burlesque": {
+    "word": "burlesque",
+    "phonetic": "/bɜː'lesk/",
+    "explains": [
+      "n. 作戏, 滑稽表演"
+    ]
+  },
   "burn": {
     "word": "burn",
     "phonetic": "/bɜːn/",
     "explains": [
       "v. 燃烧；烧伤",
       "n. 烧伤"
+    ]
+  },
+  "burner": {
+    "word": "burner",
+    "phonetic": "/'bɜːnə/",
+    "explains": [
+      "n. 煤气头"
+    ]
+  },
+  "burning": {
+    "word": "burning",
+    "phonetic": "/'bɜːnɪŋ/",
+    "explains": [
+      "adj. 燃烧的；强烈的；发热的；n. 燃烧；vi. 燃烧（burn的现在分词）"
+    ]
+  },
+  "burnish": {
+    "word": "burnish",
+    "phonetic": "/'bɜːnɪʃ/",
+    "explains": [
+      "v. 擦亮；使…光亮；将…打磨光亮；n. 光泽；抛光；闪闪发光"
+    ]
+  },
+  "burrow": {
+    "word": "burrow",
+    "phonetic": "/'bʌrəʊ/",
+    "explains": [
+      "n. 洞穴；v. 挖地洞"
+    ]
+  },
+  "bursar": {
+    "word": "bursar",
+    "phonetic": "/'bɜːsə/",
+    "explains": [
+      "n. 财务主管；会计员；领取奖学金的学生"
     ]
   },
   "burst": {
@@ -1078,6 +6846,13 @@
       "n. 公共汽车"
     ]
   },
+  "buscar": {
+    "word": "buscar",
+    "phonetic": "",
+    "explains": [
+      "v. 寻找"
+    ]
+  },
   "bush": {
     "word": "bush",
     "phonetic": "/bʊʃ/",
@@ -1085,11 +6860,74 @@
       "n. 灌木"
     ]
   },
+  "bushed": {
+    "word": "bushed",
+    "phonetic": "/bʊʃt/",
+    "explains": [
+      "adj. 被草丛笼罩的, 疲倦的"
+    ]
+  },
+  "bushel": {
+    "word": "bushel",
+    "phonetic": "/'bʊʃ(ə)l/",
+    "explains": [
+      "n. 蒲式耳（容量单位）"
+    ]
+  },
+  "bushman": {
+    "word": "bushman",
+    "phonetic": "/'buʃmən/",
+    "explains": [
+      "n. 丛林居民"
+    ]
+  },
+  "bushy": {
+    "word": "bushy",
+    "phonetic": "/'bʊʃɪ/",
+    "explains": [
+      "adj. 浓密的；灌木茂密的；多毛的"
+    ]
+  },
   "business": {
     "word": "business",
     "phonetic": "/ˈbɪznəs/",
     "explains": [
       "n. 商业；生意；事务"
+    ]
+  },
+  "businessman": {
+    "word": "businessman",
+    "phonetic": "/'bɪznɪsmən/",
+    "explains": [
+      "n. 商人"
+    ]
+  },
+  "businesswoman": {
+    "word": "businesswoman",
+    "phonetic": "/'bɪznɪs,wʊmən/",
+    "explains": [
+      "n. 妇女实业家"
+    ]
+  },
+  "bust": {
+    "word": "bust",
+    "phonetic": "/bʌst/",
+    "explains": [
+      "vi. 爆裂，坏掉；破产；vt. 打破，打碎；使破产；n.  胸像， 半身像； 胸部， 胸围； 破产； 爆裂"
+    ]
+  },
+  "bustle": {
+    "word": "bustle",
+    "phonetic": "/'bʌs(ə)l/",
+    "explains": [
+      "v. 匆匆忙忙"
+    ]
+  },
+  "bustling": {
+    "word": "bustling",
+    "phonetic": "/'bʌslɪŋ/",
+    "explains": [
+      "adj. 熙熙攘攘的, 忙乱的"
     ]
   },
   "busy": {
@@ -1107,6 +6945,41 @@
       "prep. 除了"
     ]
   },
+  "butane": {
+    "word": "butane",
+    "phonetic": "/'bjuːteɪn/",
+    "explains": [
+      "n. [有化] 丁烷"
+    ]
+  },
+  "butcher": {
+    "word": "butcher",
+    "phonetic": "/ˈbʊtʃə/",
+    "explains": [
+      "n. 屠夫"
+    ]
+  },
+  "butler": {
+    "word": "butler",
+    "phonetic": "/'bʌtlə/",
+    "explains": [
+      "n. 仆役长, 男管家"
+    ]
+  },
+  "butt": {
+    "word": "butt",
+    "phonetic": "/bʌt/",
+    "explains": [
+      "n. 大酒桶，桶"
+    ]
+  },
+  "butte": {
+    "word": "butte",
+    "phonetic": "/bjuːt/",
+    "explains": [
+      "n. 孤立的丘"
+    ]
+  },
   "butter": {
     "word": "butter",
     "phonetic": "/ˈbʌtər/",
@@ -1114,11 +6987,39 @@
       "n. 黄油"
     ]
   },
+  "butterfly": {
+    "word": "butterfly",
+    "phonetic": "/ˈbʌtəflaɪ/",
+    "explains": [
+      "n. 蝴蝶"
+    ]
+  },
+  "buttock": {
+    "word": "buttock",
+    "phonetic": "/'bʌtək/",
+    "explains": [
+      "n. 半边臀部；船尾；vt. 用腰摔"
+    ]
+  },
   "button": {
     "word": "button",
     "phonetic": "/ˈbʌtn/",
     "explains": [
       "n. 纽扣；按钮"
+    ]
+  },
+  "buttress": {
+    "word": "buttress",
+    "phonetic": "/'bʌtrɪs/",
+    "explains": [
+      "n. 扶壁；拱壁；支撑物；v. 支持；以扶壁支撑"
+    ]
+  },
+  "buxom": {
+    "word": "buxom",
+    "phonetic": "/'bʌks(ə)m/",
+    "explains": [
+      "adj. 体态丰满的"
     ]
   },
   "buy": {
@@ -1129,12 +7030,117 @@
       "n. 买入"
     ]
   },
+  "buyer": {
+    "word": "buyer",
+    "phonetic": "/'baɪə/",
+    "explains": [
+      "n. 买主, 顾客"
+    ]
+  },
+  "buyout": {
+    "word": "buyout",
+    "phonetic": "/'baiˌaut/",
+    "explains": [
+      "n.  全部买下， 买断"
+    ]
+  },
+  "buzz": {
+    "word": "buzz",
+    "phonetic": "/bʌz/",
+    "explains": [
+      "v. （蜂等）嗡嗡叫"
+    ]
+  },
+  "buzzard": {
+    "word": "buzzard",
+    "phonetic": "/'bʌzəd/",
+    "explains": [
+      "n. [动]秃鹰类, 贪婪的人"
+    ]
+  },
+  "buzzword": {
+    "word": "buzzword",
+    "phonetic": "/'bʌzwɜːd/",
+    "explains": [
+      "n. 流行词"
+    ]
+  },
   "by": {
     "word": "by",
     "phonetic": "/baɪ/",
     "explains": [
       "prep. 被；通过；在…旁",
       "adv. 经过"
+    ]
+  },
+  "by-product": {
+    "word": "by-product",
+    "phonetic": "/'baiˌprɔdʌkt/",
+    "explains": [
+      "n.  副产品"
+    ]
+  },
+  "bye": {
+    "word": "bye",
+    "phonetic": "/baɪ/",
+    "explains": [
+      "int. 再见"
+    ]
+  },
+  "bygone": {
+    "word": "bygone",
+    "phonetic": "/'baɪgɒn/",
+    "explains": [
+      "adj. 过去的；n. 过去的事"
+    ]
+  },
+  "bylaw": {
+    "word": "bylaw",
+    "phonetic": "/'baɪlɔː/",
+    "explains": [
+      "n. 附则, 法规"
+    ]
+  },
+  "byline": {
+    "word": "byline",
+    "phonetic": "/'baɪlaɪn/",
+    "explains": [
+      "n. 标题下署名之行"
+    ]
+  },
+  "bypass": {
+    "word": "bypass",
+    "phonetic": "/'baɪpɑːs/",
+    "explains": [
+      "n. 旁通管；v. 绕过"
+    ]
+  },
+  "byproduct": {
+    "word": "byproduct",
+    "phonetic": "/'baɪ,prɒdʌkt/",
+    "explains": [
+      "n. 副产品"
+    ]
+  },
+  "byre": {
+    "word": "byre",
+    "phonetic": "/'baɪə/",
+    "explains": [
+      "n. 牛栏"
+    ]
+  },
+  "byte": {
+    "word": "byte",
+    "phonetic": "/bait/",
+    "explains": [
+      "n.  字节"
+    ]
+  },
+  "byzantine": {
+    "word": "byzantine",
+    "phonetic": "/baɪ'zæntaɪn; 'baɪzəntaɪn/",
+    "explains": [
+      "adj. 东罗马帝国的, 拜占庭式的"
     ]
   }
 }
