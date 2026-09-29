@@ -1,12 +1,22 @@
 <template>
   <div class="scene-animation">
-    <canvas ref="canvasRef" class="scene-canvas" />
-    <div class="scene-caption">{{ config.caption }}</div>
+    <div v-if="steps.length" class="scene-steps">
+      <button
+        v-for="(step, i) in steps"
+        :key="i"
+        class="step-btn"
+        :class="{active: i === stepIndex}"
+        :title="step.caption"
+        @click="stepIndex = i"
+      >{{ i + 1 }}</button>
+    </div>
+    <canvas v-if="!config.textOnly" ref="canvasRef" class="scene-canvas" />
+    <div class="scene-caption">{{ steps.length ? steps[stepIndex].caption : config.caption }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, onBeforeUnmount} from 'vue';
+import {computed, ref, watch, onMounted, onBeforeUnmount} from 'vue';
 import type {SceneConfig} from '../scene-maps';
 
 /** 粒子：位置、速度、半径、剩余寿命（帧）、透明度 */
@@ -35,6 +45,30 @@ const props = defineProps<{
 }>();
 
 const canvasRef = ref<HTMLCanvasElement>();
+/** 当前分步演示的步骤下标（无 steps 时恒为 0） */
+const stepIndex = ref(0);
+/** 分步演示列表（无 steps 时为空） */
+const steps = computed(() => props.config.steps ?? []);
+
+/** 当前步的非 undefined 覆盖字段 */
+function pickDefined(step: Record<string, unknown>): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(step)) {
+    if (value !== undefined) result[key] = value;
+  }
+  return result;
+}
+
+/** 实际生效的场景配置：基础配置（去掉 steps/textOnly）叠加当前步覆盖（空串会关闭对应效果） */
+const effectiveConfig = computed<SceneConfig>(() => {
+  const base = {...props.config};
+  delete base.steps;
+  delete base.textOnly;
+  const step = steps.value[stepIndex.value];
+  if (!step) return base;
+  return {...base, ...pickDefined(step)} as SceneConfig;
+});
+
 let rafId = 0;
 let particles: Particle[] = [];
 let sediment = 0; // 沉淀层高度（像素）
@@ -44,6 +78,13 @@ let frame = 0; // 帧计数，驱动火焰闪烁
 
 function rand(min: number, max: number): number {
   return min + Math.random() * (max - min);
+}
+
+/** 重置动画状态（切步或换条目时清空粒子、沉淀与帧计数） */
+function reset() {
+  particles = [];
+  sediment = 0;
+  frame = 0;
 }
 
 /** 画布尺寸惰性初始化：对话框过渡动画期间 clientWidth 为 0，等首帧再量 */
@@ -66,11 +107,11 @@ function ensureSize(): boolean {
 
 /** 容器几何：试管细长圆底居中，烧杯矮宽居中 */
 function vesselRect(): VesselRect {
-  if (props.config.vessel === 'testTube') {
+  if (effectiveConfig.value.vessel === 'testTube') {
     const vw = w * 0.18;
     return {left: w / 2 - vw / 2, right: w / 2 + vw / 2, top: h * 0.08, bottom: h * 0.78};
   }
-  if (props.config.vessel === 'beaker') {
+  if (effectiveConfig.value.vessel === 'beaker') {
     return {left: w * 0.28, right: w * 0.72, top: h * 0.25, bottom: h * 0.88};
   }
   return {left: 0, right: w, top: 0, bottom: h};
@@ -78,13 +119,13 @@ function vesselRect(): VesselRect {
 
 /** 液面 y 坐标与液体内底部 y 坐标（沉淀堆积会抬高底面） */
 function liquidTop(v: VesselRect): number {
-  const level = props.config.liquidLevel ?? 0.65;
+  const level = effectiveConfig.value.liquidLevel ?? 0.65;
   return v.bottom - (v.bottom - v.top) * level;
 }
 
 /** 生成一个新粒子（按配置判断是气泡/沉淀/火星） */
 function spawn(v: VesselRect): Particle | null {
-  const c = props.config;
+  const c = effectiveConfig.value;
   const top = liquidTop(v);
   if (c.bubbleColor) {
     // 液体内底部冒泡，上升带摇摆
@@ -104,11 +145,11 @@ function spawn(v: VesselRect): Particle | null {
 
 /** 绘制容器轮廓（试管圆底 / 烧杯平底） */
 function drawVessel(ctx: CanvasRenderingContext2D, v: VesselRect) {
-  if (props.config.vessel === 'none') return;
+  if (effectiveConfig.value.vessel === 'none') return;
   ctx.strokeStyle = '#9db3b8';
   ctx.lineWidth = 2;
   ctx.beginPath();
-  if (props.config.vessel === 'testTube') {
+  if (effectiveConfig.value.vessel === 'testTube') {
     const r = (v.right - v.left) / 2;
     ctx.moveTo(v.left, v.top);
     ctx.lineTo(v.left, v.bottom - r);
@@ -126,7 +167,7 @@ function drawVessel(ctx: CanvasRenderingContext2D, v: VesselRect) {
 
 /** 绘制液体（容器内从底部到液面） */
 function drawLiquid(ctx: CanvasRenderingContext2D, v: VesselRect) {
-  const c = props.config;
+  const c = effectiveConfig.value;
   if (!c.liquidColor || c.vessel === 'none') return;
   const top = liquidTop(v);
   ctx.fillStyle = c.liquidColor;
@@ -150,7 +191,7 @@ function drawLiquid(ctx: CanvasRenderingContext2D, v: VesselRect) {
 
 /** 绘制火焰（heating：容器底部小火苗；燃烧类：画面中央主火焰），随帧闪烁 */
 function drawFlame(ctx: CanvasRenderingContext2D, v: VesselRect) {
-  const c = props.config;
+  const c = effectiveConfig.value;
   if (!c.flameColor) return;
   const flicker = 1 + Math.sin(frame / 4) * 0.15 + Math.sin(frame / 7) * 0.1;
   if (c.heating) {
@@ -191,7 +232,7 @@ function drawFlame(ctx: CanvasRenderingContext2D, v: VesselRect) {
 /** 单帧：更新粒子并绘制完整场景 */
 function tick() {
   const canvas = canvasRef.value;
-  if (!canvas) return;
+  if (!canvas) return; // 纯文字分步（textOnly）无 canvas，不继续调度
   if (!ensureSize()) {
     rafId = requestAnimationFrame(tick);
     return;
@@ -199,7 +240,7 @@ function tick() {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   frame++;
-  const c = props.config;
+  const c = effectiveConfig.value;
   const v = vesselRect();
 
   // 背景
@@ -277,9 +318,19 @@ function tick() {
   rafId = requestAnimationFrame(tick);
 }
 
+// 切换步骤：清空粒子、沉淀与帧计数，从当前步的画面重新开始
+watch(stepIndex, reset);
+
+// 切换条目：步骤归零并重置动画（textOnly 时 canvas 不存在，tick 自行停止）
+watch(() => props.config, () => {
+  stepIndex.value = 0;
+  reset();
+  cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(tick);
+});
+
 onMounted(() => {
-  particles = [];
-  sediment = 0;
+  reset();
   rafId = requestAnimationFrame(tick);
 });
 
@@ -291,6 +342,37 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .scene-animation {
   width: 100%;
+
+  .scene-steps {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    .step-btn {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid var(--utools-border-primary);
+      background: var(--utools-bg-card);
+      color: var(--utools-text-secondary);
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      transition: background-color 0.15s, color 0.15s;
+
+      &:hover {
+        border-color: var(--utools-primary);
+        color: var(--utools-primary);
+      }
+
+      &.active {
+        background: var(--utools-primary);
+        border-color: var(--utools-primary);
+        color: #ffffff;
+      }
+    }
+  }
 
   .scene-canvas {
     display: block;
