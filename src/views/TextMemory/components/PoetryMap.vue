@@ -236,11 +236,14 @@ const displayedArticles = computed(() => {
 const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
 const timelineCount = computed(() => props.articles.filter(a => a.geo && isTimelineArticle(a)).length);
 
-// 类型筛选同样作用于可导入图层：勾选可导入后，再选类型只显示对应类别的题库黄点
+// 类型与作者筛选同样作用于可导入图层：勾选可导入后，只显示对应类别/作者的题库黄点
+// （作者筛选下成语/时间线无作者字段自然隐藏，与已导入标记口径一致）
 const filteredLibraryItems = computed(() => {
+  let items = libraryItems.value;
   const cat = selectedCategory.value;
-  if (!cat) return libraryItems.value;
-  return libraryItems.value.filter(i => i.kind === cat);
+  if (cat) items = items.filter(i => i.kind === cat);
+  if (selectedAuthor.value) items = items.filter(i => i.article.author === selectedAuthor.value);
+  return items;
 });
 
 // 时间线事件年份展示（与 TimelineView 口径一致）
@@ -849,11 +852,12 @@ watch(showLibrary, async (on) => {
   }
 });
 
-// 切换作者：作者即筛选，重渲标记；路线显示重置，避免误读
+// 切换作者：作者即筛选，重渲已导入标记与可导入黄点（内部有 showLibrary 门控）；路线显示重置，避免误读
 watch(selectedAuthor, () => {
   showRoute.value = false;
   routeLayer?.clearLayers();
   renderMarkers();
+  renderLibraryMarkers();
 });
 
 // 监听激活状态，处理容器尺寸变化
