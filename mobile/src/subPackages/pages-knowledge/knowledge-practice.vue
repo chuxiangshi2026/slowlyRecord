@@ -386,6 +386,10 @@ onShow(() => {
   background: #f5f6fa;
   display: flex;
   flex-direction: column;
+  /* 底部安全区补偿：避免最底行被手势条遮挡 */
+  box-sizing: border-box;
+  padding-bottom: calc(24rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
 }
 
 .header {

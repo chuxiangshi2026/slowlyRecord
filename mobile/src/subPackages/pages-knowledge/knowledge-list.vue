@@ -116,7 +116,7 @@ const tabs = [
 type TabValue = (typeof tabs)[number]['value']
 const activeTab = ref<TabValue>('mine')
 
-// 内置知识库的分类筛选（全部/桩库/数理化/文史常识）
+// 内置知识库的分类筛选（全部/桩库/数理化/文史常识/地理）
 const categoryOptions = PACK_CATEGORY_OPTIONS
 const activeCategory = ref<(typeof PACK_CATEGORY_OPTIONS)[number]['value']>('all')
 
@@ -165,6 +165,7 @@ const builtinGroups = computed(() => {
     { label: '桩库', category: 'pegs' as const },
     { label: '数理化', category: 'science' as const },
     { label: '文史常识', category: 'liberal' as const },
+    { label: '地理', category: 'geo' as const },
   ]
   return groups
     .map(g => ({
@@ -227,6 +228,10 @@ onShow(() => {
   background: #f5f6fa;
   display: flex;
   flex-direction: column;
+  /* 底部安全区补偿：避免最底行被手势条遮挡 */
+  box-sizing: border-box;
+  padding-bottom: calc(24rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
 }
 
 .tabs {

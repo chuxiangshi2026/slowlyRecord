@@ -8,10 +8,22 @@
         周期表布局请用详情页的「完整表格」tab，本页为纯表格预览
       </view>
 
-      <!-- 记忆口诀 -->
+      <!-- 记忆口诀（与详情页同款拆段对齐；横屏地方小，超 4 行折叠） -->
       <view v-if="pack.mnemonics?.length" class="mnemonics-card">
         <text class="section-label">🧠 记忆口诀</text>
-        <text v-for="(m, i) in pack.mnemonics" :key="i" class="mnemonic-line">{{ m }}</text>
+        <view v-for="(row, i) in visibleMnemonicRows" :key="i" class="mnemonic-row">
+          <text
+            v-for="(seg, j) in row"
+            :key="j"
+            class="koujue"
+            :style="{ minWidth: mnemonicSegWidth * 28 + 16 + 'rpx' }"
+          >{{ seg }}</text>
+        </view>
+        <text
+          v-if="mnemonicRows.length > MNEMONIC_COLLAPSE_LINES"
+          class="mnemonic-toggle"
+          @click="mnemonicExpanded = !mnemonicExpanded"
+        >{{ mnemonicExpanded ? '收起' : `展开全部 ${mnemonicRows.length} 行` }}</text>
       </view>
 
       <!-- 操作区：保存为图片（表格 PNG，完整表 / 填空自测表） -->
@@ -76,6 +88,30 @@ const packId = ref('')
 const loading = ref(true)
 
 const pack = computed(() => (packId.value ? store.getPack(packId.value) : undefined))
+
+// ===== 记忆口诀：拆段对齐 + 超长折叠（与详情页同款） =====
+
+/** 口诀每行按全角空格（U+3000）拆成段（string[][]），空段丢弃 */
+const mnemonicRows = computed<string[][]>(() =>
+  (pack.value?.mnemonics ?? []).map(line => line.split(/　+/).filter(Boolean)),
+)
+
+/** 最长段的字符数：统一每段最小宽度，实现逐列阶梯对齐 */
+const mnemonicSegWidth = computed(() =>
+  Math.max(1, ...mnemonicRows.value.flat().map(s => s.length)),
+)
+
+/** 口诀超过该行数时默认折叠 */
+const MNEMONIC_COLLAPSE_LINES = 4
+
+// 口诀展开/收起状态（超 4 行时默认折叠为前 4 行）
+const mnemonicExpanded = ref(false)
+
+const visibleMnemonicRows = computed(() =>
+  mnemonicRows.value.length > MNEMONIC_COLLAPSE_LINES && !mnemonicExpanded.value
+    ? mnemonicRows.value.slice(0, MNEMONIC_COLLAPSE_LINES)
+    : mnemonicRows.value,
+)
 
 interface Column {
   key: string
@@ -297,11 +333,28 @@ function saveToAlbum(filePath: string): Promise<void> {
   display: block;
   margin-bottom: 12rpx;
 }
-.mnemonic-line {
+.mnemonic-row {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1.8;
+}
+
+/* 口诀段：min-width 按最长段绑定（rpx），逐列对齐；长行自动换行不溢出 */
+.koujue {
   font-size: 26rpx;
   color: #303030;
-  line-height: 1.8;
+  text-align: center;
+  padding: 0 8rpx;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.mnemonic-toggle {
   display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #52796f;
+  margin-top: 10rpx;
 }
 
 .action-bar {

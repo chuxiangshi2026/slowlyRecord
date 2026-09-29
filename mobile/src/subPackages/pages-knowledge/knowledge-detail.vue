@@ -46,14 +46,22 @@
         </view>
       </view>
 
-      <!-- 记忆口诀 -->
+      <!-- 记忆口诀（每行按全角空格拆段，统一段宽阶梯对齐；超 4 行可折叠） -->
       <view v-if="pack.mnemonics?.length && (detailView === 'list' || detailView === 'mnemonic')" class="mnemonics-card">
         <text class="section-label">🧠 记忆口诀</text>
+        <view v-for="(row, i) in visibleMnemonicRows" :key="i" class="mnemonic-row">
+          <text
+            v-for="(seg, j) in row"
+            :key="j"
+            class="koujue"
+            :style="{ minWidth: mnemonicSegWidth * 28 + 16 + 'rpx' }"
+          >{{ seg }}</text>
+        </view>
         <text
-          v-for="(m, i) in pack.mnemonics"
-          :key="i"
-          class="mnemonic-line"
-        >{{ m }}</text>
+          v-if="mnemonicRows.length > MNEMONIC_COLLAPSE_LINES"
+          class="mnemonic-toggle"
+          @click="mnemonicExpanded = !mnemonicExpanded"
+        >{{ mnemonicExpanded ? '收起' : `展开全部 ${mnemonicRows.length} 行` }}</text>
       </view>
 
       <!-- 周期表视图：按周期分组的列表（第 N 周期一行，行内按序数排列） -->
@@ -78,7 +86,7 @@
       <!-- 完整表格视图：18 列真实周期表布局，横向拖动 + 双指缩放 -->
       <view v-if="detailView === 'table'" class="periodic-full-card">
         <text class="section-label">完整周期表（双指缩放 · 拖动查看）</text>
-        <movable-area class="pt-area" scale-area>
+        <movable-area class="pt-area" scale-area :style="{ height: ptHeight + 20 + 'px' }">
           <movable-view
             class="pt-view"
             direction="all"
@@ -188,6 +196,30 @@ const viewTabs: { value: DetailView; label: string }[] = [
   { value: 'mnemonic', label: '口诀' },
 ]
 const detailView = ref<DetailView>('list')
+
+// ===== 记忆口诀：拆段对齐 + 超长折叠 =====
+
+/** 口诀每行按全角空格（U+3000）拆成段（string[][]），空段丢弃 */
+const mnemonicRows = computed<string[][]>(() =>
+  (pack.value?.mnemonics ?? []).map(line => line.split(/　+/).filter(Boolean)),
+)
+
+/** 最长段的字符数：统一每段最小宽度，实现逐列阶梯对齐 */
+const mnemonicSegWidth = computed(() =>
+  Math.max(1, ...mnemonicRows.value.flat().map(s => s.length)),
+)
+
+/** 口诀超过该行数时默认折叠 */
+const MNEMONIC_COLLAPSE_LINES = 4
+
+// 口诀展开/收起状态（超 4 行时默认折叠为前 4 行）
+const mnemonicExpanded = ref(false)
+
+const visibleMnemonicRows = computed(() =>
+  mnemonicRows.value.length > MNEMONIC_COLLAPSE_LINES && !mnemonicExpanded.value
+    ? mnemonicRows.value.slice(0, MNEMONIC_COLLAPSE_LINES)
+    : mnemonicRows.value,
+)
 
 // ===== 完整周期表网格（18 列真实布局） =====
 
@@ -380,6 +412,10 @@ onLoad(async (opt: any) => {
 .detail-page {
   min-height: 100vh;
   background: #f5f6fa;
+  /* 底部安全区补偿：避免最底行被手势条遮挡 */
+  box-sizing: border-box;
+  padding-bottom: calc(24rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
 }
 
 .content {
@@ -506,11 +542,28 @@ onLoad(async (opt: any) => {
   margin-bottom: 20rpx;
 }
 
-.mnemonic-line {
+.mnemonic-row {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1.8;
+}
+
+/* 口诀段：min-width 按最长段绑定（rpx），逐列对齐；长行自动换行不溢出 */
+.koujue {
   font-size: 26rpx;
   color: #8a6d1a;
-  line-height: 1.8;
+  text-align: center;
+  padding: 0 8rpx;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.mnemonic-toggle {
   display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #52796f;
+  margin-top: 12rpx;
 }
 
 /* 视图切换（仅元素周期表包） */
@@ -685,7 +738,7 @@ onLoad(async (opt: any) => {
 
 .pt-area {
   width: 100%;
-  height: 760rpx;
+  /* 高度跟随内容（ptHeight + 上下留白），避免写死 rpx 在窄屏上裁掉最后一行（锕系） */
   overflow: hidden;
   background: #f7faf8;
   border-radius: 12rpx;
