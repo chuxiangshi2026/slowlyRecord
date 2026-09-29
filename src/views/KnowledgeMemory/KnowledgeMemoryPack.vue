@@ -43,14 +43,23 @@
           </div>
         </div>
 
-        <!-- 记忆口诀：有口诀的包在表格上方展示，供对照背诵 -->
+        <!-- 记忆口诀：有口诀的包在表格上方展示，供对照背诵（超过 4 行默认折叠） -->
         <div v-if="mnemonics.length" class="mnemonics-block">
           <div class="mnemonics-header">
             <el-icon :size="14"><Memo /></el-icon>
             <span>记忆口诀</span>
+            <el-button
+              v-if="mnemonicRows.length > 4"
+              text
+              size="small"
+              type="primary"
+              @click="mnemonicExpanded = !mnemonicExpanded"
+            >{{ mnemonicExpanded ? '收起' : `展开全部 ${mnemonicRows.length} 行` }}</el-button>
           </div>
-          <div class="mnemonics-lines">
-            <p v-for="(line, idx) in mnemonics" :key="idx">{{ line }}</p>
+          <div class="mnemonics-lines" :style="{'--koujue-min': (mnemonicSegWidth + 0.6) + 'em'}">
+            <div v-for="(row, idx) in visibleMnemonicRows" :key="idx" class="mnemonic-row">
+              <span v-for="(seg, si) in row" :key="si" class="koujue">{{ seg }}</span>
+            </div>
           </div>
         </div>
 
@@ -94,26 +103,26 @@
           </template>
         </div>
 
-        <!-- 其余包：通用表格（题 + 答 + extras 附加列 + 函数图像入口） -->
-        <div v-else class="generic-table-wrap">
+        <!-- 常用计量单位包：内置换算器（与下方通用表格并存） -->
+        <UnitConverter v-if="packId === 'common-units'" />
+
+        <!-- 其余包：通用表格（题 + 答 + extras 附加列 + 函数图像/动画/推导图入口） -->
+        <div v-if="!multiplicationGrid && !periodicGrid" class="generic-table-wrap">
           <table class="preview-table">
             <thead>
               <tr>
                 <th>题目</th>
                 <th>答案</th>
                 <th v-for="key in extraKeys" :key="key">{{ key }}</th>
-                <th v-if="hasAnyPlot || hasAnyScene" class="plot-col">图像/动画</th>
+                <th v-if="hasAnyPlot || hasAnyScene || hasAnyImage" class="plot-col">图像/动画</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in sortedItems" :key="item.id">
                 <td><span class="item-emoji" v-if="item.imageUrl">{{ item.imageUrl }}</span>{{ item.question }}</td>
-                <td>
-                  {{ item.answer }}
-                  <img v-if="item.image" class="formula-img" :src="assetUrl(item.image)" :alt="item.question" />
-                </td>
+                <td>{{ item.answer }}</td>
                 <td v-for="key in extraKeys" :key="key">{{ item.extras?.[key] ?? '' }}</td>
-                <td v-if="hasAnyPlot || hasAnyScene" class="plot-col">
+                <td v-if="hasAnyPlot || hasAnyScene || hasAnyImage" class="plot-col">
                   <el-button
                     v-if="getMathFormulaPlot(item.id)"
                     text
@@ -127,8 +136,16 @@
                     text
                     size="small"
                     :icon="VideoPlay"
-                    title="查看现象动画"
+                    :title="getSceneAnimation(item.id)?.textOnly ? '查看分步演示' : '查看现象动画'"
                     @click="openSceneFor(item)"
+                  />
+                  <el-button
+                    v-if="item.image"
+                    text
+                    size="small"
+                    :icon="Picture"
+                    title="查看推导图"
+                    @click="openImageFor(item)"
                   />
                 </td>
               </tr>
@@ -186,14 +203,21 @@
             <div class="prompt-row">
               <div class="prompt-label">{{ currentMode === 'q2a' ? '问题' : '答案' }}</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
-              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">{{ currentScene?.textOnly ? '分步演示' : '现象动画' }}</el-button>
             </div>
             <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentMode === 'q2a' ? currentItem.question : currentItem.answer }}</div>
 
             <div v-if="showAnswer" class="answer-section">
               <div class="answer-label">{{ currentMode === 'q2a' ? '答案' : '问题' }}</div>
               <div class="answer-main">{{ currentMode === 'q2a' ? currentItem.answer : currentItem.question }}</div>
-              <img v-if="currentMode === 'q2a' && currentItem.image" class="formula-img" :src="assetUrl(currentItem.image)" :alt="currentItem.question" />
+              <img
+                v-if="currentMode === 'q2a' && currentItem.image"
+                class="formula-img"
+                :src="assetUrl(currentItem.image)"
+                :alt="currentItem.question"
+                title="点击查看推导图"
+                @click="openImageFor(currentItem)"
+              />
               <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
                 <el-tag v-for="(value, key) in currentItem.extras" :key="key" size="small" type="info">{{ key }}: {{ value }}</el-tag>
               </div>
@@ -214,7 +238,7 @@
             <div class="prompt-row">
               <div class="prompt-label">问题</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
-              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">{{ currentScene?.textOnly ? '分步演示' : '现象动画' }}</el-button>
             </div>
             <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
@@ -239,7 +263,7 @@
                 <template v-if="currentItem.order"> · 第 {{ currentItem.order }} 项</template>
               </div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
-              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">{{ currentScene?.textOnly ? '分步演示' : '现象动画' }}</el-button>
             </div>
             <div v-if="previousItem" class="ordered-prompt">
               前一项是 <strong>{{ previousItem.question }}</strong>，下一项是？
@@ -264,7 +288,7 @@
             <div class="prompt-row">
               <div class="prompt-label">问题</div>
               <el-button v-if="currentPlot" text size="small" :icon="TrendCharts" @click="openPlot">函数图像</el-button>
-              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">现象动画</el-button>
+              <el-button v-if="currentScene" text size="small" :icon="VideoPlay" @click="openScene">{{ currentScene?.textOnly ? '分步演示' : '现象动画' }}</el-button>
             </div>
             <div class="prompt-main"><span class="item-emoji" v-if="currentItem.imageUrl">{{ currentItem.imageUrl }}</span>{{ currentItem.question }}</div>
             <div v-if="currentItem.extras && Object.keys(currentItem.extras).length" class="extras-row">
@@ -311,8 +335,13 @@
     </el-dialog>
 
     <!-- 现象动画对话框（化学方程式等有宏观现象的条目） -->
-    <el-dialog v-model="sceneDialogVisible" title="现象动画" width="420px" append-to-body>
+    <el-dialog v-model="sceneDialogVisible" :title="sceneConfig?.textOnly ? '分步演示' : '现象动画'" width="420px" append-to-body>
       <SceneAnimation v-if="sceneConfig" :config="sceneConfig" />
+    </el-dialog>
+
+    <!-- 推导图查看对话框（如圆面积推导示意） -->
+    <el-dialog v-model="imageDialogVisible" :title="imageTitle" width="640px" append-to-body>
+      <img :src="imageSrc" style="max-width: 100%; display: block; margin: 0 auto" />
     </el-dialog>
 
     <!-- 函数图像汇总入口：列出本包全部可绘制函数，点击进入绘图 -->
@@ -382,6 +411,7 @@ import type {KnowledgeItem, KnowledgePracticeMode} from '@/types/knowledge-memor
 import { exportTableAsImage } from '@/utils/table-image-export';
 import type {TableImageData} from '@/utils/table-image-export';
 import FunctionPlot from './components/FunctionPlot.vue';
+import UnitConverter from './components/UnitConverter.vue';
 import {getMathFormulaPlot} from './function-maps';
 import type {ViewRange} from '@/utils/function-plot-util';
 import SceneAnimation from './components/SceneAnimation.vue';
@@ -404,6 +434,21 @@ const packId = computed<string>(() => {
 const pack = computed(() => store.getPack(packId.value));
 /** 记忆口诀（包级可选，每个元素一句/一行；有口诀时预览视图在表格上方展示） */
 const mnemonics = computed<string[]>(() => pack.value?.mnemonics ?? []);
+/** 口诀每行按全角空格拆成段，段内不再断行，保证列对齐 */
+const mnemonicRows = computed<string[][]>(() =>
+  mnemonics.value.map(line => line.split(/　+/).filter(seg => seg !== '')),
+);
+/** 所有口诀段的最大字符数，用于统一每段最小宽度（阶梯形列对齐） */
+const mnemonicSegWidth = computed(() =>
+  mnemonicRows.value.reduce((max, row) => Math.max(max, ...row.map(seg => seg.length)), 0),
+);
+/** 口诀超过 4 行时默认折叠 */
+const mnemonicExpanded = ref(false);
+const visibleMnemonicRows = computed(() =>
+  mnemonicRows.value.length > 4 && !mnemonicExpanded.value
+    ? mnemonicRows.value.slice(0, 4)
+    : mnemonicRows.value,
+);
 const masteredCount = computed(() => store.getMasteredCount(packId.value));
 const dueCount = computed(() => store.getDueCount(packId.value));
 const totalCount = computed(() => store.getTotalCount(packId.value));
@@ -501,6 +546,21 @@ const hasAnyScene = computed(() =>
 const currentScene = computed(() =>
     currentItem.value ? getSceneAnimation(currentItem.value.id) : null,
 );
+
+/** 本包中有推导图（image 字段）的条目 */
+const hasAnyImage = computed(() => sortedItems.value.some(i => !!i.image));
+/** 推导图查看对话框状态 */
+const imageDialogVisible = ref(false);
+const imageSrc = ref('');
+const imageTitle = ref('');
+
+/** 打开指定条目的推导图查看对话框 */
+function openImageFor(item: KnowledgeItem) {
+  if (!item.image) return;
+  imageSrc.value = assetUrl(item.image);
+  imageTitle.value = item.question;
+  imageDialogVisible.value = true;
+}
 
 /** 打开指定条目的现象动画对话框 */
 function openSceneFor(item: KnowledgeItem) {
@@ -765,6 +825,7 @@ async function handleResetProgress() {
   margin-top: 8px;
   background: #fff;
   border-radius: 4px;
+  cursor: zoom-in;
 }
 
 // 条目配图：emoji 字符大字渲染（知识包 JSON 里 imageUrl 存 emoji）
@@ -778,6 +839,9 @@ async function handleResetProgress() {
 .knowledge-pack-page {
   width: 100%;
   min-height: 100vh;
+  // 父容器 .home-main 是 column flex 滚动容器，默认 flex-shrink:1 会在内容超高时
+  // 把页根钳在 100vh，导致 padding-bottom 失效、末行被固定底栏遮住
+  flex-shrink: 0;
   background-color: var(--utools-bg-secondary);
   padding-bottom: 55px;
   box-sizing: border-box;
@@ -954,10 +1018,9 @@ async function handleResetProgress() {
 /* 记忆口诀：包级可选助记文本，位于预览表格上方 */
 .mnemonics-block {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 18px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   margin-bottom: 14px;
   padding: 8px 14px;
   border: 1px dashed var(--utools-border-primary);
@@ -965,29 +1028,41 @@ async function handleResetProgress() {
   background: var(--utools-bg-card);
 
   .mnemonics-header {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 5px;
     font-size: 12px;
     font-weight: 600;
     color: var(--utools-primary);
     white-space: nowrap;
+
+    .el-button {
+      margin-left: auto;
+    }
   }
 
   .mnemonics-lines {
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
 
-    p {
-      margin: 0;
+    .mnemonic-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2px 6px;
+    }
+
+    .koujue {
+      display: inline-block;
+      min-width: var(--koujue-min);
+      text-align: center;
       font-size: 16px;
       font-weight: 600;
       line-height: 1.6;
       color: var(--utools-text-primary);
-      letter-spacing: 3px;
-      /* 仅在空格处断行，避免生肖歌等长句从字间折断 */
+      letter-spacing: 1px;
       word-break: keep-all;
     }
   }
