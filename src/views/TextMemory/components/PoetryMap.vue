@@ -226,22 +226,32 @@ const categoryFiltered = computed(() => {
   return props.articles;
 });
 
-// 再叠加作者筛选，得到实际渲染标记的文章列表
+// 再叠加朝代与作者筛选，得到实际渲染标记的文章列表
+// （朝代经 getDynastyCodeByName 归一化为 code 比较；无朝代/作者字段的条目在对应筛选下隐藏）
 const displayedArticles = computed(() => {
-  if (!selectedAuthor.value) return categoryFiltered.value;
-  return categoryFiltered.value.filter(a => a.author === selectedAuthor.value);
+  let list = categoryFiltered.value;
+  if (selectedDynasty.value) {
+    list = list.filter(a => !!a.dynasty && getDynastyCodeByName(a.dynasty) === selectedDynasty.value);
+  }
+  if (selectedAuthor.value) {
+    list = list.filter(a => a.author === selectedAuthor.value);
+  }
+  return list;
 });
 
 // 计算属性
 const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
 const timelineCount = computed(() => props.articles.filter(a => a.geo && isTimelineArticle(a)).length);
 
-// 类型与作者筛选同样作用于可导入图层：勾选可导入后，只显示对应类别/作者的题库黄点
-// （作者筛选下成语/时间线无作者字段自然隐藏，与已导入标记口径一致）
+// 类型、朝代、作者筛选同样作用于可导入图层：勾选可导入后，只显示对应类别/朝代/作者的题库黄点
+// （作者筛选下成语/时间线无作者字段自然隐藏，与已导入标记口径一致；朝代同理归一化为 code 比较）
 const filteredLibraryItems = computed(() => {
   let items = libraryItems.value;
   const cat = selectedCategory.value;
   if (cat) items = items.filter(i => i.kind === cat);
+  if (selectedDynasty.value) {
+    items = items.filter(i => !!i.article.dynasty && getDynastyCodeByName(i.article.dynasty) === selectedDynasty.value);
+  }
   if (selectedAuthor.value) items = items.filter(i => i.article.author === selectedAuthor.value);
   return items;
 });
@@ -256,7 +266,8 @@ const dynastyOptions = computed(() => {
   return DYNASTY_LIST.map(d => ({ code: d.code, name: d.name }));
 });
 
-// 从当前类型筛选下有地理坐标的诗词中提取作者（不含作者筛选本身，避免选中后下拉坍缩）
+// 从当前类型筛选下有地理坐标的诗词中提取作者（不含作者筛选本身，避免选中后下拉坍缩）；
+// 勾选可导入后并入题库诗词作者，未导入的作者也能作为筛选条件（同样按类型过滤）
 const availableAuthors = computed(() => {
   const set = new Set<string>();
   categoryFiltered.value.forEach(a => {
@@ -264,6 +275,13 @@ const availableAuthors = computed(() => {
       set.add(a.author);
     }
   });
+  if (showLibrary.value) {
+    const cat = selectedCategory.value;
+    for (const i of libraryItems.value) {
+      if (cat && i.kind !== cat) continue;
+      if (i.article.author) set.add(i.article.author);
+    }
+  }
   return Array.from(set).sort();
 });
 
@@ -601,6 +619,9 @@ function addTerritoryLabel(
 }
 
 function handleDynastyChange() {
+  // 朝代同时作为筛选条件作用于已导入标记与可导入黄点（renderLibraryMarkers 内部有 showLibrary 门控）
+  renderMarkers();
+  renderLibraryMarkers();
   if (!territoryLayer || !map) return;
   territoryLayer.clearLayers();
 
@@ -691,7 +712,7 @@ function toggleRoute() {
   }
 }
 
-/** 绘制当前所选作者的生平路线：该作者有坐标的文章按年份排序连线（displayedArticles 已按作者过滤） */
+/** 绘制当前所选作者的生平路线：该作者有坐标的文章按年份排序连线（displayedArticles 已按朝代/作者过滤） */
 function renderRoute() {
   if (!routeLayer || !map) return;
   routeLayer.clearLayers();
