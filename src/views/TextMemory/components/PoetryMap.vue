@@ -95,6 +95,11 @@
           时间线 {{ timelineCount }} 事件
         </el-tag>
       </div>
+
+      <!-- 生平路线统计条：足迹分布 / 作品最多 / 停留最久 / 转折点 / 生卒年 -->
+      <div v-if="routeStatsInfo" class="control-group route-stats-bar">
+        {{ routeStatsInfo }}
+      </div>
     </div>
 
     <!-- 地图容器 -->
@@ -148,6 +153,7 @@ import type { LibraryTimelineEvent } from '@/utils/timeline-service';
 import { getTerritoryByDynasty, getDynastyCodeByName } from '@/utils/dynasty-territory';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import { buildLibraryMapItems, type LibraryMapItem } from './library-map';
+import { getAuthorBiography } from '@/utils/author-biography';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -285,6 +291,40 @@ const availableAuthors = computed(() => {
     }
   }
   return Array.from(set).sort();
+});
+
+// 生平路线统计条：足迹分布、作品最多/驻足最多/停留最久的地方、转折点与生卒年
+const routeStatsInfo = computed(() => {
+  if (!showRoute.value || !selectedAuthor.value) return '';
+  const stops = buildRouteStops();
+  if (stops.length === 0) return '';
+  const bio = getAuthorBiography(selectedAuthor.value);
+  const visitCount = new Map<string, number>();
+  const worksCount = new Map<string, number>();
+  for (const s of stops) {
+    const p = s.location || s.geo.name || '未知';
+    visitCount.set(p, (visitCount.get(p) || 0) + 1);
+    if (s.eventType === 'poem') worksCount.set(p, (worksCount.get(p) || 0) + 1);
+  }
+  const topEntry = (m: Map<string, number>) => [...m.entries()].sort((a, b) => b[1] - a[1])[0];
+  const parts: string[] = [`足迹 ${visitCount.size} 地`];
+  const mv = topEntry(visitCount);
+  if (mv && mv[1] > 1) parts.push(`记录最多 ${mv[0]}（${mv[1]} 条）`);
+  const mw = topEntry(worksCount);
+  if (mw) parts.push(`作品最多 ${mw[0]}（${mw[1]} 篇）`);
+  if (bio) {
+    const longest = bio.events
+      .filter(e => e.type === 'residence')
+      .map(e => ({ place: e.place, years: (e.endYear ?? e.year + 1) - e.year }))
+      .sort((a, b) => b.years - a.years)[0];
+    if (longest && longest.years >= 2) parts.push(`停留最久 ${longest.place}（约 ${longest.years} 年）`);
+    const turnings = bio.events.filter(e => e.type === 'turning');
+    if (turnings.length > 0) {
+      parts.push(`转折 ${turnings.map(e => `${e.place}·${e.event.split('，')[0]}`).slice(0, 3).join('；')}`);
+    }
+    parts.push(`生卒 ${bio.birthYear}–${bio.deathYear}（${bio.deathYear - bio.birthYear} 岁）`);
+  }
+  return parts.join(' ｜ ');
 });
 
 // ==================== 地图初始化 ====================
@@ -732,9 +772,67 @@ function toggleRoute() {
   }
 }
 
-/** 绘制当前所选作者的生平路线：站点按年份排序连线。
- *  站点来源 = 已导入文章（displayedArticles）+ 勾选可导入时题库中该作者的条目（filteredLibraryItems），
- *  两者均已按朝代/作者过滤；题库按标题去重不含已导入，不会产生重复站点。
+/** 路线站点类型标签（分类配色，与主色体系区分） */
+const ROUTE_EVENT_META = {
+  birth: { label: '出生', color: '#67c23a' },
+  residence: { label: '长居', color: '#52796f' },
+  turning: { label: '转折', color: '#f56c6c' },
+  travel: { label: '游历', color: '#E6A23C' },
+  death: { label: '逝世', color: '#909399' },
+  poem: { label: '作品', color: '#b88230' },
+} as const;
+
+interface RouteStop {
+  title: string;
+  location?: string;
+  year?: number;
+  endYear?: number;
+  geo: GeoLocation;
+  article?: TextArticle;
+  eventType: keyof typeof ROUTE_EVENT_META;
+  preview?: string;
+}
+
+/** 汇总路线站点：作者生平事件（有数据时提供真实生卒轨迹）+ 已导入作品 + 勾选可导入时题库作品，按年份排序。
+ *  作品均已按朝代/作者过滤；题库按标题去重不含已导入，不会重复。
+ *  无生卒数据时路线退化为仅作品年排序。 */
+function buildRouteStops(): RouteStop[] {
+  const bio = getAuthorBiography(selectedAuthor.value);
+  const stops: RouteStop[] = [];
+  if (bio) {
+    for (const e of bio.events) {
+      stops.push({ title: e.event, location: e.place, year: e.year, endYear: e.endYear, geo: { ...e.geo, name: e.place }, eventType: e.type });
+    }
+  }
+  for (const a of displayedArticles.value) {
+    if (!a.geo) continue;
+    stops.push({
+      title: a.title,
+      location: a.location,
+      year: a.year,
+      geo: a.geo,
+      article: a,
+      eventType: 'poem',
+      preview: !isIdiomArticle(a) && !isTimelineArticle(a) ? poemPreview(a.content) : '',
+    });
+  }
+  if (showLibrary.value) {
+    for (const i of filteredLibraryItems.value) {
+      stops.push({
+        title: i.title,
+        location: i.location,
+        year: i.year,
+        geo: i.geo,
+        eventType: 'poem',
+        preview: i.kind === 'poetry' ? poemPreview(i.article.content) : '',
+      });
+    }
+  }
+  stops.sort((a, b) => (a.year || 0) - (b.year || 0));
+  return stops;
+}
+
+/** 绘制当前所选作者的生平路线：站点按年份排序连线（站点由 buildRouteStops 汇总）。
  *  未导入的题库站点点击只弹概要，不开详情。 */
 function renderRoute() {
   if (!routeLayer || !map) return;
@@ -742,27 +840,13 @@ function renderRoute() {
 
   if (!selectedAuthor.value) return;
 
-  interface RouteStop {
-    title: string;
-    location?: string;
-    year?: number;
-    geo: GeoLocation;
-    article?: TextArticle;
-  }
-  const stops: RouteStop[] = displayedArticles.value
-    .filter(a => a.geo)
-    .map(a => ({ title: a.title, location: a.location, year: a.year, geo: a.geo!, article: a }));
-  if (showLibrary.value) {
-    for (const i of filteredLibraryItems.value) {
-      stops.push({ title: i.title, location: i.location, year: i.year, geo: i.geo });
-    }
-  }
-  stops.sort((a, b) => (a.year || 0) - (b.year || 0));
-
+  const stops = buildRouteStops();
   if (stops.length === 0) {
     return;
   }
 
+  const bio = getAuthorBiography(selectedAuthor.value);
+  const maxAge = bio ? bio.deathYear - bio.birthYear : 0;
   const coords: [number, number][] = stops.map(s => [s.geo.lat, s.geo.lng]);
 
   // 绘制路线（虚线流动动画，视觉上指示前进方向）
@@ -796,7 +880,8 @@ function renderRoute() {
     }
   }
 
-  // 绘制站点标记（起点绿色「始」、终点红色「终」，脉冲高亮；未导入的题库站点标注「未导入」且不开详情）
+  // 绘制站点标记（起点绿色「始」、终点红色「终」，脉冲高亮；
+  // 弹层含事件类型标签、年龄（有生平数据时）、诗词前两句预览；未导入的题库站点标注「未导入」且不开详情）
   stops.forEach((stop, index) => {
     const isStart = index === 0;
     const isEnd = index === stops.length - 1 && !isStart;
@@ -811,11 +896,22 @@ function renderRoute() {
 
     const marker = L.marker([stop.geo.lat, stop.geo.lng], { icon: routeIcon });
 
+    const meta = ROUTE_EVENT_META[stop.eventType];
+    const chip = `<span style="background:${meta.color}1a;color:${meta.color};padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${meta.label}</span>`;
+    const age = bio && stop.year ? stop.year - bio.birthYear : -1;
+    const ageText = age >= 0 && age <= maxAge ? ` · ${age} 岁` : '';
+    const yearText = stop.year
+      ? `<div style="font-size:12px;color:#999">约 ${stop.year}${stop.endYear ? `–${stop.endYear}` : ''} 年${ageText}</div>`
+      : '';
+    const notImported = stop.eventType === 'poem' && !stop.article
+      ? ' <span style="font-size:12px;color:#E6A23C">（未导入）</span>'
+      : '';
     const popupHtml = `
       <div style="min-width:180px">
-        <div style="font-weight:bold;margin-bottom:4px">${stop.title}${stop.article ? '' : ' <span style="font-size:12px;color:#E6A23C">（未导入）</span>'}</div>
+        <div style="font-weight:bold;margin-bottom:4px">${chip}${stop.title}${notImported}</div>
         <div style="font-size:12px;color:#666">${stop.location || stop.geo.name}</div>
-        ${stop.year ? `<div style="font-size:12px;color:#999">约 ${stop.year} 年</div>` : ''}
+        ${yearText}
+        ${stop.preview ? `<div style="font-size:12px;color:#8a6d3b;font-style:italic;margin-top:2px">${stop.preview}</div>` : ''}
       </div>
     `;
 
@@ -988,6 +1084,21 @@ onUnmounted(() => {
 .control-group {
   display: flex;
   align-items: center;
+}
+
+/* 生平路线统计条：绿色基底的单行概要，跟随主色变量 */
+.route-stats-bar {
+  width: 100%;
+  margin-top: 6px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: var(--utools-bg-2, #eaf1ea);
+  color: var(--utools-primary, #52796f);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-legend {
