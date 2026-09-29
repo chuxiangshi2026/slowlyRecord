@@ -433,7 +433,7 @@ function refreshLibraryItems() {
   );
 }
 
-/** 懒加载内置题库（诗词 + 成语 + 时间线事件），只在首次打开开关时执行 */
+/** 懒加载内置题库（诗词 + 成语 + 时间线事件），只在首次进入可导入模式时执行 */
 async function ensureLibraryLoaded() {
   if (libraryRaw || libraryLoading.value) return;
   // 地图未激活时不加载
@@ -786,6 +786,11 @@ watch(selectedCategory, async () => {
   renderMarkers();
   if (isLibraryMode.value) {
     await ensureLibraryLoaded();
+    // 视野联动到全部可导入条目：已导入标记被隐藏、其 fitBounds 不再生效，不调视野会看不到黄点
+    if (libraryItems.value.length > 0 && map) {
+      const bounds = L.latLngBounds(libraryItems.value.map(i => [i.geo.lat, i.geo.lng]));
+      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+    }
   }
   renderLibraryMarkers();
 });
