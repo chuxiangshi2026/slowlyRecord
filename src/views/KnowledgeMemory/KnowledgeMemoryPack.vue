@@ -444,9 +444,10 @@ const mnemonicSegWidth = computed(() =>
 );
 /** 口诀超过 4 行时默认折叠 */
 const mnemonicExpanded = ref(false);
+// 口诀过长（>4 行）时默认整卡折叠，只留标题栏与展开按钮
 const visibleMnemonicRows = computed(() =>
   mnemonicRows.value.length > 4 && !mnemonicExpanded.value
-    ? mnemonicRows.value.slice(0, 4)
+    ? []
     : mnemonicRows.value,
 );
 const masteredCount = computed(() => store.getMasteredCount(packId.value));

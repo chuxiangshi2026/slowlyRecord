@@ -212,12 +212,12 @@ const mnemonicSegWidth = computed(() =>
 /** 口诀超过该行数时默认折叠 */
 const MNEMONIC_COLLAPSE_LINES = 4
 
-// 口诀展开/收起状态（超 4 行时默认折叠为前 4 行）
+// 口诀展开/收起状态（超 4 行时默认整卡折叠，只留标题与展开按钮）
 const mnemonicExpanded = ref(false)
 
 const visibleMnemonicRows = computed(() =>
   mnemonicRows.value.length > MNEMONIC_COLLAPSE_LINES && !mnemonicExpanded.value
-    ? mnemonicRows.value.slice(0, MNEMONIC_COLLAPSE_LINES)
+    ? []
     : mnemonicRows.value,
 )
 
