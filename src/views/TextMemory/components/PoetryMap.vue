@@ -351,27 +351,36 @@ const routeStats = computed<RouteStats | null>(() => {
     return e && e[1] >= min ? { place: e[0], count: e[1] } : undefined;
   };
   // 作品名格式：《题一》《题二》，超 6 篇折叠为「等 N 篇」
-  const formatTitles = (place: string, max = 6): string => {
-    const titles = worksByPlace.get(place) || [];
+  const formatTitles = (titles: string[], max = 6): string => {
     const shown = titles.slice(0, max).map(t => `《${t}》`).join(' ');
     return titles.length > max ? `${shown} 等 ${titles.length} 篇` : shown;
   };
+  // 坐标就近找作品（约 15km）：生平事件用现代地名（黄冈），作品 location 是古名（黄州），
+  // 按字符串对不上，必须按坐标匹配（与路线聚合同尺度）
+  const worksNear = (geo: GeoLocation, tol = 0.15): string[] =>
+    stops
+      .filter(s => s.eventType === 'poem' && Math.abs(s.geo.lat - geo.lat) <= tol && Math.abs(s.geo.lng - geo.lng) <= tol)
+      .map(s => s.title);
   const mw = topEntry(worksCount, 1);
   const stats: RouteStats = {
     places: visitCount.size,
     stopCount: stops.length,
     mostVisited: topEntry(visitCount, 2),
-    mostWorks: mw ? { ...mw, worksText: formatTitles(mw.place) } : undefined,
+    mostWorks: mw ? { ...mw, worksText: formatTitles(worksByPlace.get(mw.place) || []) } : undefined,
     turnings: [],
   };
   if (bio) {
     stats.bio = { birthYear: bio.birthYear, deathYear: bio.deathYear };
-    const longest = bio.events
+    const longestEvent = bio.events
       .filter(e => e.type === 'residence')
-      .map(e => ({ place: e.place, years: (e.endYear ?? e.year + 1) - e.year }))
+      .map(e => ({ e, years: (e.endYear ?? e.year + 1) - e.year }))
       .sort((a, b) => b.years - a.years)[0];
-    if (longest && longest.years >= 2) {
-      stats.longestStay = { ...longest, worksText: formatTitles(longest.place) };
+    if (longestEvent && longestEvent.years >= 2) {
+      stats.longestStay = {
+        place: longestEvent.e.place,
+        years: longestEvent.years,
+        worksText: formatTitles(worksNear({ ...longestEvent.e.geo, name: longestEvent.e.place })),
+      };
     }
     stats.turnings = bio.events
       .filter(e => e.type === 'turning')
@@ -1185,7 +1194,7 @@ onUnmounted(() => {
   right: 10px;
   z-index: 650;
   max-width: 280px;
-  max-height: 60%;
+  max-height: 75%;
   overflow-y: auto;
   padding: 8px 12px;
   border-radius: 6px;
