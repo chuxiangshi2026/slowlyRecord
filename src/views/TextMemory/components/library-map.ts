@@ -28,7 +28,17 @@ export interface LibraryMapItem {
   subtitle: string;
   location?: string;
   geo: GeoLocation;
+  // 排序用年份（诗词 year 可能是「天宝元年」等文本，解析不出时为 undefined；时间线事件为数值）
+  year?: number;
   article: LibraryArticleInput;
+}
+
+/** 解析创作时间为数值年份（742、「公元742年」→ 742；「天宝元年」等无数字文本 → undefined） */
+function parseYear(year?: string | number): number | undefined {
+  if (year == null) return undefined;
+  if (typeof year === 'number') return year;
+  const m = year.match(/\d{1,4}/);
+  return m ? parseInt(m[0], 10) : undefined;
 }
 
 /** 格式化时间线年份（负数表示公元前） */
@@ -48,6 +58,7 @@ function poemToItem(poem: PoetryItem): LibraryMapItem | null {
     subtitle: [poem.dynasty, poem.author].filter(Boolean).join(' · '),
     location: poem.location,
     geo: { lng: coord.lng, lat: coord.lat, name: coord.name },
+    year: parseYear(poem.year),
     article: {
       title: poem.title,
       content: poem.content,
@@ -103,6 +114,7 @@ function eventToItem(ev: LibraryTimelineEvent, index: number): LibraryMapItem | 
     subtitle: [yearText, ev.era].filter(Boolean).join(' · '),
     location: ev.location,
     geo: { lng: coord.lng, lat: coord.lat, name: coord.name },
+    year: ev.year,
     article: mapLibraryEventToArticle(ev),
   };
 }

@@ -136,7 +136,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
-import type { TextArticle } from '@/types/text-memory';
+import type { TextArticle, GeoLocation } from '@/types/text-memory';
 import { Location } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { DYNASTY_LIST, fetchAllPoetry } from '@/utils/poetry-service';
@@ -226,34 +226,38 @@ const categoryFiltered = computed(() => {
   return props.articles;
 });
 
-// 再叠加朝代与作者筛选，得到实际渲染标记的文章列表
-// （朝代经 getDynastyCodeByName 归一化为 code 比较；无朝代/作者字段的条目在对应筛选下隐藏）
+// 类型 + 朝代筛选（不含作者：供作者下拉与渲染共用，避免选中后下拉坍缩；
+// 朝代经 getDynastyCodeByName 归一化为 code 比较，无朝代字段的条目在朝代筛选下隐藏）
+const dynastyFiltered = computed(() => {
+  if (!selectedDynasty.value) return categoryFiltered.value;
+  return categoryFiltered.value.filter(a => !!a.dynasty && getDynastyCodeByName(a.dynasty) === selectedDynasty.value);
+});
+
+// 再叠加作者筛选，得到实际渲染标记的文章列表
 const displayedArticles = computed(() => {
-  let list = categoryFiltered.value;
-  if (selectedDynasty.value) {
-    list = list.filter(a => !!a.dynasty && getDynastyCodeByName(a.dynasty) === selectedDynasty.value);
-  }
-  if (selectedAuthor.value) {
-    list = list.filter(a => a.author === selectedAuthor.value);
-  }
-  return list;
+  if (!selectedAuthor.value) return dynastyFiltered.value;
+  return dynastyFiltered.value.filter(a => a.author === selectedAuthor.value);
 });
 
 // 计算属性
 const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
 const timelineCount = computed(() => props.articles.filter(a => a.geo && isTimelineArticle(a)).length);
 
-// 类型、朝代、作者筛选同样作用于可导入图层：勾选可导入后，只显示对应类别/朝代/作者的题库黄点
-// （作者筛选下成语/时间线无作者字段自然隐藏，与已导入标记口径一致；朝代同理归一化为 code 比较）
-const filteredLibraryItems = computed(() => {
+// 可导入图层筛选：类型 + 朝代（不含作者，供作者下拉共用，同样避免坍缩）
+const libraryBaseItems = computed(() => {
   let items = libraryItems.value;
   const cat = selectedCategory.value;
   if (cat) items = items.filter(i => i.kind === cat);
   if (selectedDynasty.value) {
     items = items.filter(i => !!i.article.dynasty && getDynastyCodeByName(i.article.dynasty) === selectedDynasty.value);
   }
-  if (selectedAuthor.value) items = items.filter(i => i.article.author === selectedAuthor.value);
   return items;
+});
+
+// 再叠加作者筛选，得到实际渲染的题库黄点（作者筛选下成语/时间线无作者字段自然隐藏，与已导入标记口径一致）
+const filteredLibraryItems = computed(() => {
+  if (!selectedAuthor.value) return libraryBaseItems.value;
+  return libraryBaseItems.value.filter(i => i.article.author === selectedAuthor.value);
 });
 
 // 时间线事件年份展示（与 TimelineView 口径一致）
@@ -266,19 +270,17 @@ const dynastyOptions = computed(() => {
   return DYNASTY_LIST.map(d => ({ code: d.code, name: d.name }));
 });
 
-// 从当前类型筛选下有地理坐标的诗词中提取作者（不含作者筛选本身，避免选中后下拉坍缩）；
-// 勾选可导入后并入题库诗词作者，未导入的作者也能作为筛选条件（同样按类型过滤）
+// 从当前类型+朝代筛选下有地理坐标的诗词中提取作者（不含作者筛选本身，避免选中后下拉坍缩）；
+// 勾选可导入后并入题库诗词作者，未导入的作者也能作为筛选条件
 const availableAuthors = computed(() => {
   const set = new Set<string>();
-  categoryFiltered.value.forEach(a => {
+  dynastyFiltered.value.forEach(a => {
     if (a.author && a.geo) {
       set.add(a.author);
     }
   });
   if (showLibrary.value) {
-    const cat = selectedCategory.value;
-    for (const i of libraryItems.value) {
-      if (cat && i.kind !== cat) continue;
+    for (const i of libraryBaseItems.value) {
       if (i.article.author) set.add(i.article.author);
     }
   }
@@ -619,7 +621,13 @@ function addTerritoryLabel(
 }
 
 function handleDynastyChange() {
-  // 朝代同时作为筛选条件作用于已导入标记与可导入黄点（renderLibraryMarkers 内部有 showLibrary 门控）
+  // 朝代同时作为筛选条件作用于已导入标记与可导入黄点（renderLibraryMarkers 内部有 showLibrary 门控）；
+  // 与类型筛选同口径：路线重置，已选作者不在新范围内则清空
+  showRoute.value = false;
+  routeLayer?.clearLayers();
+  if (selectedAuthor.value && !availableAuthors.value.includes(selectedAuthor.value)) {
+    selectedAuthor.value = '';
+  }
   renderMarkers();
   renderLibraryMarkers();
   if (!territoryLayer || !map) return;
@@ -712,22 +720,38 @@ function toggleRoute() {
   }
 }
 
-/** 绘制当前所选作者的生平路线：该作者有坐标的文章按年份排序连线（displayedArticles 已按朝代/作者过滤） */
+/** 绘制当前所选作者的生平路线：站点按年份排序连线。
+ *  站点来源 = 已导入文章（displayedArticles）+ 勾选可导入时题库中该作者的条目（filteredLibraryItems），
+ *  两者均已按朝代/作者过滤；题库按标题去重不含已导入，不会产生重复站点。
+ *  未导入的题库站点点击只弹概要，不开详情。 */
 function renderRoute() {
   if (!routeLayer || !map) return;
   routeLayer.clearLayers();
 
   if (!selectedAuthor.value) return;
 
-  const authorArticles = displayedArticles.value
+  interface RouteStop {
+    title: string;
+    location?: string;
+    year?: number;
+    geo: GeoLocation;
+    article?: TextArticle;
+  }
+  const stops: RouteStop[] = displayedArticles.value
     .filter(a => a.geo)
-    .sort((a, b) => (a.year || 0) - (b.year || 0));
+    .map(a => ({ title: a.title, location: a.location, year: a.year, geo: a.geo!, article: a }));
+  if (showLibrary.value) {
+    for (const i of filteredLibraryItems.value) {
+      stops.push({ title: i.title, location: i.location, year: i.year, geo: i.geo });
+    }
+  }
+  stops.sort((a, b) => (a.year || 0) - (b.year || 0));
 
-  if (authorArticles.length === 0) {
+  if (stops.length === 0) {
     return;
   }
 
-  const coords: [number, number][] = authorArticles.map(a => [a.geo!.lat, a.geo!.lng]);
+  const coords: [number, number][] = stops.map(s => [s.geo.lat, s.geo.lng]);
 
   // 绘制路线（虚线流动动画，视觉上指示前进方向）
   if (coords.length >= 2) {
@@ -760,12 +784,10 @@ function renderRoute() {
     }
   }
 
-  // 绘制站点标记（起点绿色「始」、终点红色「终」，脉冲高亮）
-  authorArticles.forEach((article, index) => {
-    if (!article.geo) return;
-
+  // 绘制站点标记（起点绿色「始」、终点红色「终」，脉冲高亮；未导入的题库站点标注「未导入」且不开详情）
+  stops.forEach((stop, index) => {
     const isStart = index === 0;
-    const isEnd = index === authorArticles.length - 1 && !isStart;
+    const isEnd = index === stops.length - 1 && !isStart;
     const label = isStart ? '始' : isEnd ? '终' : String(index + 1);
     const extraCls = isStart ? ' is-start' : isEnd ? ' is-end' : '';
     const routeIcon = L.divIcon({
@@ -775,20 +797,22 @@ function renderRoute() {
       iconAnchor: [12, 12],
     });
 
-    const marker = L.marker([article.geo.lat, article.geo.lng], { icon: routeIcon });
+    const marker = L.marker([stop.geo.lat, stop.geo.lng], { icon: routeIcon });
 
     const popupHtml = `
       <div style="min-width:180px">
-        <div style="font-weight:bold;margin-bottom:4px">${article.title}</div>
-        <div style="font-size:12px;color:#666">${article.location || article.geo.name}</div>
-        ${article.year ? `<div style="font-size:12px;color:#999">约 ${article.year} 年</div>` : ''}
+        <div style="font-weight:bold;margin-bottom:4px">${stop.title}${stop.article ? '' : ' <span style="font-size:12px;color:#E6A23C">（未导入）</span>'}</div>
+        <div style="font-size:12px;color:#666">${stop.location || stop.geo.name}</div>
+        ${stop.year ? `<div style="font-size:12px;color:#999">约 ${stop.year} 年</div>` : ''}
       </div>
     `;
 
     marker.bindPopup(popupHtml);
-    marker.on('click', () => {
-      showPoetryDetail(article);
-    });
+    if (stop.article) {
+      marker.on('click', () => {
+        showPoetryDetail(stop.article!);
+      });
+    }
 
     routeLayer!.addLayer(marker);
   });
@@ -860,6 +884,12 @@ watch(selectedCategory, async () => {
 watch(showLibrary, async (on) => {
   if (!on) {
     libraryLayer?.clearLayers();
+    // 取消可导入后，仅存在于题库的作者选择失效，一并清掉（与类型/朝代筛选同口径）
+    if (selectedAuthor.value && !availableAuthors.value.includes(selectedAuthor.value)) {
+      selectedAuthor.value = '';
+    }
+    // 路线中的题库站点同步移除（作者被清空时其 watch 已重置路线，此处跳过）
+    if (showRoute.value) renderRoute();
     return;
   }
   await ensureLibraryLoaded();
