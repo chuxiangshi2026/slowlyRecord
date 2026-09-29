@@ -13,6 +13,7 @@
           <el-option label="诗词" value="poetry" />
           <el-option label="成语" value="idiom" />
           <el-option label="时间线" value="timeline" />
+          <el-option label="可导入" value="library" />
         </el-select>
 
         <el-select
@@ -31,13 +32,14 @@
           />
         </el-select>
 
+        <!-- 作者筛选：只过滤标记，画路线由「生平路线」按钮触发 -->
         <el-select
           v-model="selectedAuthor"
-          placeholder="选择作者显示路线"
+          placeholder="按作者筛选"
           clearable
           size="small"
-          style="width: 160px; margin-left: 8px"
-          @change="handleAuthorChange"
+          style="width: 140px; margin-left: 8px"
+          :disabled="isLibraryMode"
         >
           <el-option
             v-for="author in availableAuthors"
@@ -48,6 +50,16 @@
         </el-select>
 
         <el-button
+          v-if="selectedAuthor && !isLibraryMode"
+          size="small"
+          :type="showRoute ? 'primary' : 'default'"
+          style="margin-left: 8px"
+          @click="toggleRoute"
+        >
+          生平路线
+        </el-button>
+
+        <el-button
           size="small"
           style="margin-left: 8px"
           @click="clearAllOverlays"
@@ -55,14 +67,9 @@
           清除图层
         </el-button>
 
-        <el-checkbox
-          v-model="showLibraryItems"
-          size="small"
-          style="margin-left: 12px"
-          :disabled="libraryLoading"
-        >
-          {{ libraryLoading ? '库内容加载中…' : '显示可导入的库内容' }}
-        </el-checkbox>
+        <el-tag v-if="isLibraryMode" size="small" type="warning" style="margin-left: 8px">
+          {{ libraryLoading ? '库内容加载中…' : `可导入 ${libraryItems.length} 项` }}
+        </el-tag>
       </div>
 
       <div class="control-group map-legend">
@@ -75,7 +82,7 @@
         <span class="legend-item">
           <span class="legend-timeline"></span>时间线
         </span>
-        <span v-if="showLibraryItems" class="legend-item">
+        <span v-if="isLibraryMode" class="legend-item">
           <span class="legend-library"></span>可导入
         </span>
         <el-tag v-if="poetryCount > 0" size="small" type="info" style="margin-left: 8px">
@@ -168,21 +175,23 @@ let routeLayer: L.LayerGroup | null = null;
 let libraryLayer: L.LayerGroup | null = null;
 let markerMap: Map<string, L.Marker> = new Map();
 
-// 状态
-const selectedCategory = ref<'' | 'poetry' | 'idiom' | 'timeline'>('');
+// 状态（selectedCategory 取 'library' 时为可导入模式：只显示题库黄点，不显示已导入标记）
+const selectedCategory = ref<'' | 'poetry' | 'idiom' | 'timeline' | 'library'>('');
 const selectedDynasty = ref('');
 const selectedAuthor = ref('');
+// 是否绘制所选作者的生平路线（由「生平路线」按钮切换）
+const showRoute = ref(false);
 const detailVisible = ref(false);
 const selectedPoetry = ref<TextArticle | null>(null);
 
 // ==================== 可导入库内容图层 ====================
 const textStore = useTextMemoryStore();
-// 开关：是否显示内置题库中可导入的条目（默认关闭）
-const showLibraryItems = ref(false);
+// 可导入模式：类型筛选选中「可导入」
+const isLibraryMode = computed(() => selectedCategory.value === 'library');
 const libraryLoading = ref(false);
 // 当前可导入条目（已按文章标题去重、只含有坐标的）
 const libraryItems = ref<LibraryMapItem[]>([]);
-// 题库原始数据（首次打开开关时懒加载，之后复用）
+// 题库原始数据（首次进入可导入模式时懒加载，之后复用）
 let libraryRaw: { poems: PoetryItem[]; idioms: IdiomItem[]; events: LibraryTimelineEvent[] } | null = null;
 // 正在导入中的条目 key（防重复点击）
 const importingKeys = new Set<string>();
@@ -202,17 +211,25 @@ function isTimelineArticle(article: TextArticle): boolean {
   return !!article.category && TIMELINE_CATEGORY_SET.has(article.category);
 }
 
-// 当前类型筛选下生效的文章列表（用于渲染标记）
-const filteredArticles = computed(() => {
-  if (!selectedCategory.value) return props.articles;
+// 当前类型筛选下生效的文章列表（可导入模式按全部处理，该模式不渲染已导入标记）
+const categoryFiltered = computed(() => {
   if (selectedCategory.value === 'idiom') {
     return props.articles.filter(isIdiomArticle);
   }
   if (selectedCategory.value === 'timeline') {
     return props.articles.filter(isTimelineArticle);
   }
-  // 诗词：排除成语与时间线事件
-  return props.articles.filter(a => !isIdiomArticle(a) && !isTimelineArticle(a));
+  if (selectedCategory.value === 'poetry') {
+    // 诗词：排除成语与时间线事件
+    return props.articles.filter(a => !isIdiomArticle(a) && !isTimelineArticle(a));
+  }
+  return props.articles;
+});
+
+// 再叠加作者筛选，得到实际渲染标记的文章列表
+const displayedArticles = computed(() => {
+  if (!selectedAuthor.value) return categoryFiltered.value;
+  return categoryFiltered.value.filter(a => a.author === selectedAuthor.value);
 });
 
 // 计算属性
@@ -230,10 +247,10 @@ const dynastyOptions = computed(() => {
   return DYNASTY_LIST.map(d => ({ code: d.code, name: d.name }));
 });
 
-// 从当前有地理坐标的诗词中提取作者（过滤后实时更新；成语一般无作者，自动跳过）
+// 从当前类型筛选下有地理坐标的诗词中提取作者（不含作者筛选本身，避免选中后下拉坍缩）
 const availableAuthors = computed(() => {
   const set = new Set<string>();
-  filteredArticles.value.forEach(a => {
+  categoryFiltered.value.forEach(a => {
     if (a.author && a.geo) {
       set.add(a.author);
     }
@@ -284,7 +301,10 @@ function renderMarkers() {
   markerLayer.clearLayers();
   markerMap.clear();
 
-  const articlesWithGeo = filteredArticles.value.filter(a => a.geo);
+  // 可导入模式只显示题库黄点，已导入标记整层隐藏
+  if (isLibraryMode.value) return;
+
+  const articlesWithGeo = displayedArticles.value.filter(a => a.geo);
   if (articlesWithGeo.length === 0) return;
 
   // 按坐标聚合，同一地点的文章放在一起
@@ -443,7 +463,7 @@ async function ensureLibraryLoaded() {
 function renderLibraryMarkers() {
   if (!libraryLayer || !map) return;
   libraryLayer.clearLayers();
-  if (!showLibraryItems.value) return;
+  if (!isLibraryMode.value) return;
 
   const items = libraryItems.value;
   if (items.length === 0) return;
@@ -655,14 +675,25 @@ function getDynastyName(code: string): string {
 
 // ==================== 作者路线图 ====================
 
-function handleAuthorChange() {
+/** 切换生平路线显隐（按钮触发；切换作者/类型时会重置为隐藏） */
+function toggleRoute() {
+  showRoute.value = !showRoute.value;
+  if (showRoute.value) {
+    renderRoute();
+  } else {
+    routeLayer?.clearLayers();
+  }
+}
+
+/** 绘制当前所选作者的生平路线：该作者有坐标的文章按年份排序连线（displayedArticles 已按作者过滤） */
+function renderRoute() {
   if (!routeLayer || !map) return;
   routeLayer.clearLayers();
 
   if (!selectedAuthor.value) return;
 
-  const authorArticles = filteredArticles.value
-    .filter(a => a.author === selectedAuthor.value && a.geo)
+  const authorArticles = displayedArticles.value
+    .filter(a => a.geo)
     .sort((a, b) => (a.year || 0) - (b.year || 0));
 
   if (authorArticles.length === 0) {
@@ -724,10 +755,12 @@ function clearAllOverlays() {
   selectedCategory.value = '';
   selectedDynasty.value = '';
   selectedAuthor.value = '';
+  showRoute.value = false;
   territoryLayer?.clearLayers();
   routeLayer?.clearLayers();
-  // 重新显示所有标记并调整视野
+  // 重新显示所有标记并调整视野（库图层随类型重置自动清除）
   renderMarkers();
+  renderLibraryMarkers();
 }
 
 // ==================== 监听数据变化 ====================
@@ -735,30 +768,32 @@ function clearAllOverlays() {
 watch(() => props.articles, () => {
   renderMarkers();
   // 已导入列表变化时，同步从可导入图层中去掉同标题条目
-  if (libraryRaw && showLibraryItems.value) {
+  if (libraryRaw && isLibraryMode.value) {
     refreshLibraryItems();
     renderLibraryMarkers();
   }
 }, { deep: true });
 
-// 开关库内容图层：首次打开时懒加载题库，关闭时移除图层
-watch(showLibraryItems, async (on) => {
-  if (on) {
-    await ensureLibraryLoaded();
-    renderLibraryMarkers();
-  } else {
-    libraryLayer?.clearLayers();
-  }
-});
-
-// 切换类型筛选时，若已选作者已不在范围内则清空，并重渲路线
-watch(selectedCategory, () => {
+// 切换类型筛选：
+// - 进入可导入模式时懒加载题库并渲染黄点，退出时清空库图层
+// - 已选作者不在新范围内则清空；路线显示重置，避免误读
+watch(selectedCategory, async () => {
+  showRoute.value = false;
+  routeLayer?.clearLayers();
   if (selectedAuthor.value && !availableAuthors.value.includes(selectedAuthor.value)) {
     selectedAuthor.value = '';
-    routeLayer?.clearLayers();
-  } else if (selectedAuthor.value) {
-    handleAuthorChange();
   }
+  renderMarkers();
+  if (isLibraryMode.value) {
+    await ensureLibraryLoaded();
+  }
+  renderLibraryMarkers();
+});
+
+// 切换作者：作者即筛选，重渲标记；路线显示重置，避免误读
+watch(selectedAuthor, () => {
+  showRoute.value = false;
+  routeLayer?.clearLayers();
   renderMarkers();
 });
 
@@ -768,9 +803,10 @@ watch(() => props.active, (isActive) => {
     nextTick(() => {
       map?.invalidateSize();
       renderMarkers();
+      renderLibraryMarkers();
     });
-    // 重新激活时若开关仍开着但题库尚未加载（上次处于未激活状态），补加载
-    if (showLibraryItems.value && !libraryRaw) {
+    // 重新激活时若仍处于可导入模式但题库尚未加载（上次处于未激活状态），补加载
+    if (isLibraryMode.value && !libraryRaw) {
       ensureLibraryLoaded().then(() => renderLibraryMarkers());
     }
   }
