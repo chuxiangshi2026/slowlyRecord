@@ -1,0 +1,60 @@
+name: Android Offline Build (Verify)
+
+# 目的：验证 UniApp Android 端能在 CI 里跑通编译链路，产出 www/ 资源目录。
+# 阶段 1（当前）：只跑 npm build，验证 Vite + uni-app CLI 编译链完整，产物归档为 artifact。
+# 阶段 2（后续）：接入 DCloud Android 壳工程 + gradlew assembleRelease 出 APK。
+# 触发：手动 workflow_dispatch 或 mobile/** 或本 workflow 有变更时自动跑。
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/android-ci.yml'
+
+jobs:
+  build-app-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: npm ci
+
+      # UNI_APP_CODE_SPLITTING=1 是修复 uni-app alpha 版 App 编译链路的必需环境变量
+      # 详见 mobile/vite.config.ts 顶部注释
+      - name: Build for Android (UniApp)
+        working-directory: mobile
+        run: npm run build:app-android
+        env:
+          NODE_ENV: production
+
+      - name: List build output
+        working-directory: mobile
+        run: |
+          echo "=== dist/build/app 结构（顶层） ==="
+          ls -la dist/build/app/
+          echo "=== 分包目录 ==="
+          find dist/build/app/subPackages -maxdepth 2 -type d | head -30
+          echo "=== chunks 目录 ==="
+          ls -la dist/build/app/chunks/ 2>/dev/null | head -20
+          echo "=== 产物大小 ==="
+          du -sh dist/build/app/
+
+      - name: Archive www resources (给阶段 2 打包用)
+        uses: actions/upload-artifact@v4
+        with:
+          name: uniapp-android-www
+          path: mobile/dist/build/app/**
+          if-no-files-found: error
+          retention-days: 7
