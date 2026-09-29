@@ -13,7 +13,6 @@
           <el-option label="诗词" value="poetry" />
           <el-option label="成语" value="idiom" />
           <el-option label="时间线" value="timeline" />
-          <el-option label="可导入" value="library" />
         </el-select>
 
         <el-select
@@ -39,7 +38,6 @@
           clearable
           size="small"
           style="width: 140px; margin-left: 8px"
-          :disabled="isLibraryMode"
         >
           <el-option
             v-for="author in availableAuthors"
@@ -50,7 +48,7 @@
         </el-select>
 
         <el-button
-          v-if="selectedAuthor && !isLibraryMode"
+          v-if="selectedAuthor"
           size="small"
           :type="showRoute ? 'primary' : 'default'"
           style="margin-left: 8px"
@@ -59,16 +57,18 @@
           生平路线
         </el-button>
 
-        <el-button
-          size="small"
-          style="margin-left: 8px"
-          @click="clearAllOverlays"
-        >
-          清除图层
+        <el-button size="small" style="margin-left: 8px" @click="showDefaultLayers">
+          默认图层
         </el-button>
 
-        <el-tag v-if="isLibraryMode" size="small" type="warning" style="margin-left: 8px">
-          {{ libraryLoading ? '库内容加载中…' : `可导入 ${libraryItems.length} 项` }}
+        <el-button size="small" @click="clearAllOverlays">
+          清空图层
+        </el-button>
+
+        <!-- 可导入对钩：勾选显示题库黄点图层，类型筛选同样作用于该图层 -->
+        <el-checkbox v-model="showLibrary" size="small" style="margin-left: 8px">可导入</el-checkbox>
+        <el-tag v-if="showLibrary" size="small" type="warning" style="margin-left: 8px">
+          {{ libraryLoading ? '库内容加载中…' : `可导入 ${filteredLibraryItems.length} 项` }}
         </el-tag>
       </div>
 
@@ -82,7 +82,7 @@
         <span class="legend-item">
           <span class="legend-timeline"></span>时间线
         </span>
-        <span v-if="isLibraryMode" class="legend-item">
+        <span v-if="showLibrary" class="legend-item">
           <span class="legend-library"></span>可导入
         </span>
         <el-tag v-if="poetryCount > 0" size="small" type="info" style="margin-left: 8px">
@@ -175,19 +175,19 @@ let routeLayer: L.LayerGroup | null = null;
 let libraryLayer: L.LayerGroup | null = null;
 let markerMap: Map<string, L.Marker> = new Map();
 
-// 状态（selectedCategory 取 'library' 时为可导入模式：只显示题库黄点，不显示已导入标记）
-const selectedCategory = ref<'' | 'poetry' | 'idiom' | 'timeline' | 'library'>('');
+// 状态
+const selectedCategory = ref<'' | 'poetry' | 'idiom' | 'timeline'>('');
 const selectedDynasty = ref('');
 const selectedAuthor = ref('');
 // 是否绘制所选作者的生平路线（由「生平路线」按钮切换）
 const showRoute = ref(false);
+// 可导入图层对钩：与类型筛选叠加显示题库黄点
+const showLibrary = ref(false);
 const detailVisible = ref(false);
 const selectedPoetry = ref<TextArticle | null>(null);
 
 // ==================== 可导入库内容图层 ====================
 const textStore = useTextMemoryStore();
-// 可导入模式：类型筛选选中「可导入」
-const isLibraryMode = computed(() => selectedCategory.value === 'library');
 const libraryLoading = ref(false);
 // 当前可导入条目（已按文章标题去重、只含有坐标的）
 const libraryItems = ref<LibraryMapItem[]>([]);
@@ -211,7 +211,7 @@ function isTimelineArticle(article: TextArticle): boolean {
   return !!article.category && TIMELINE_CATEGORY_SET.has(article.category);
 }
 
-// 当前类型筛选下生效的文章列表（可导入模式按全部处理，该模式不渲染已导入标记）
+// 当前类型筛选下生效的文章列表
 const categoryFiltered = computed(() => {
   if (selectedCategory.value === 'idiom') {
     return props.articles.filter(isIdiomArticle);
@@ -233,9 +233,15 @@ const displayedArticles = computed(() => {
 });
 
 // 计算属性
-const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);
-const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
+const poetryCount = computed(() => props.articles.filter(a => a.geo && !isIdiomArticle(a) && !isTimelineArticle(a)).length);const idiomCount = computed(() => props.articles.filter(a => a.geo && isIdiomArticle(a)).length);
 const timelineCount = computed(() => props.articles.filter(a => a.geo && isTimelineArticle(a)).length);
+
+// 类型筛选同样作用于可导入图层：勾选可导入后，再选类型只显示对应类别的题库黄点
+const filteredLibraryItems = computed(() => {
+  const cat = selectedCategory.value;
+  if (!cat) return libraryItems.value;
+  return libraryItems.value.filter(i => i.kind === cat);
+});
 
 // 时间线事件年份展示（与 TimelineView 口径一致）
 function formatYear(year?: number): string {
@@ -300,9 +306,6 @@ function renderMarkers() {
   if (!markerLayer || !map) return;
   markerLayer.clearLayers();
   markerMap.clear();
-
-  // 可导入模式只显示题库黄点，已导入标记整层隐藏
-  if (isLibraryMode.value) return;
 
   const articlesWithGeo = displayedArticles.value.filter(a => a.geo);
   if (articlesWithGeo.length === 0) return;
@@ -459,13 +462,13 @@ async function ensureLibraryLoaded() {
   }
 }
 
-/** 渲染可导入条目标记（黄色圆点，与已导入文章样式区分） */
+/** 渲染可导入条目标记（黄色圆点，与已导入文章样式区分）；需勾选「可导入」对钩 */
 function renderLibraryMarkers() {
   if (!libraryLayer || !map) return;
   libraryLayer.clearLayers();
-  if (!isLibraryMode.value) return;
+  if (!showLibrary.value) return;
 
-  const items = libraryItems.value;
+  const items = filteredLibraryItems.value;
   if (items.length === 0) return;
 
   // 按坐标聚合，同一地点的条目放在一起
@@ -702,26 +705,48 @@ function renderRoute() {
 
   const coords: [number, number][] = authorArticles.map(a => [a.geo!.lat, a.geo!.lng]);
 
-  // 绘制路线
+  // 绘制路线（虚线流动动画，视觉上指示前进方向）
   if (coords.length >= 2) {
     const polyline = L.polyline(coords, {
       color: '#E6A23C',
       weight: 3,
-      opacity: 0.8,
-      dashArray: '10, 5',
+      opacity: 0.85,
+      dashArray: '10, 6',
       lineCap: 'round',
+      className: 'route-line-anim',
     });
     routeLayer.addLayer(polyline);
+
+    // 沿线段中点放置方向箭头（三角随线段方位旋转）
+    for (let i = 0; i < coords.length - 1; i++) {
+      const [lat1, lng1] = coords[i];
+      const [lat2, lng2] = coords[i + 1];
+      if (lat1 === lat2 && lng1 === lng2) continue;
+      const midLat = (lat1 + lat2) / 2;
+      const midLng = (lng1 + lng2) / 2;
+      // 以正北为 0°、顺时针的方位角（经度差按纬度做 cos 修正）
+      const angle = Math.atan2((lng2 - lng1) * Math.cos((midLat * Math.PI) / 180), lat2 - lat1) * (180 / Math.PI);
+      const arrowIcon = L.divIcon({
+        className: 'route-arrow',
+        html: `<div class="route-arrow-tri" style="transform:rotate(${angle.toFixed(1)}deg)"></div>`,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+      });
+      routeLayer.addLayer(L.marker([midLat, midLng], { icon: arrowIcon, interactive: false }));
+    }
   }
 
-  // 绘制站点标记
+  // 绘制站点标记（起点绿色「始」、终点红色「终」，脉冲高亮）
   authorArticles.forEach((article, index) => {
     if (!article.geo) return;
 
-    const label = String(index + 1);
+    const isStart = index === 0;
+    const isEnd = index === authorArticles.length - 1 && !isStart;
+    const label = isStart ? '始' : isEnd ? '终' : String(index + 1);
+    const extraCls = isStart ? ' is-start' : isEnd ? ' is-end' : '';
     const routeIcon = L.divIcon({
       className: 'route-marker',
-      html: `<div class="route-pin">${label}</div>`,
+      html: `<div class="route-pin${extraCls}">${label}</div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
@@ -749,18 +774,34 @@ function renderRoute() {
   map.fitBounds(bounds, { padding: [50, 50], maxZoom: 8 });
 }
 
-// ==================== 清除图层 ====================
+// ==================== 图层重置 / 清空 ====================
 
+/** 默认图层：恢复默认展示（已导入标记），清除疆域/路线/可导入图层与全部筛选 */
+function showDefaultLayers() {
+  selectedCategory.value = '';
+  selectedDynasty.value = '';
+  selectedAuthor.value = '';
+  showRoute.value = false;
+  showLibrary.value = false;
+  territoryLayer?.clearLayers();
+  routeLayer?.clearLayers();
+  libraryLayer?.clearLayers();
+  // 重新显示所有标记并调整视野
+  renderMarkers();
+}
+
+/** 清空图层：只保留底图，连已导入标记也一并清掉（点「默认图层」可恢复） */
 function clearAllOverlays() {
   selectedCategory.value = '';
   selectedDynasty.value = '';
   selectedAuthor.value = '';
   showRoute.value = false;
+  showLibrary.value = false;
+  markerLayer?.clearLayers();
+  markerMap.clear();
   territoryLayer?.clearLayers();
   routeLayer?.clearLayers();
-  // 重新显示所有标记并调整视野（库图层随类型重置自动清除）
-  renderMarkers();
-  renderLibraryMarkers();
+  libraryLayer?.clearLayers();
 }
 
 // ==================== 监听数据变化 ====================
@@ -768,14 +809,14 @@ function clearAllOverlays() {
 watch(() => props.articles, () => {
   renderMarkers();
   // 已导入列表变化时，同步从可导入图层中去掉同标题条目
-  if (libraryRaw && isLibraryMode.value) {
+  if (libraryRaw && showLibrary.value) {
     refreshLibraryItems();
     renderLibraryMarkers();
   }
 }, { deep: true });
 
 // 切换类型筛选：
-// - 进入可导入模式时懒加载题库并渲染黄点，退出时清空库图层
+// - 勾选「可导入」时按类型重渲黄点图层（筛选同样作用于可导入）
 // - 已选作者不在新范围内则清空；路线显示重置，避免误读
 watch(selectedCategory, async () => {
   showRoute.value = false;
@@ -784,15 +825,26 @@ watch(selectedCategory, async () => {
     selectedAuthor.value = '';
   }
   renderMarkers();
-  if (isLibraryMode.value) {
+  if (showLibrary.value) {
     await ensureLibraryLoaded();
-    // 视野联动到全部可导入条目：已导入标记被隐藏、其 fitBounds 不再生效，不调视野会看不到黄点
-    if (libraryItems.value.length > 0 && map) {
-      const bounds = L.latLngBounds(libraryItems.value.map(i => [i.geo.lat, i.geo.lng]));
-      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
-    }
+    refreshLibraryItems();
+    renderLibraryMarkers();
   }
+});
+
+// 勾选/取消「可导入」对钩：勾选时懒加载题库并渲染黄点，视野联动到全部可导入条目
+watch(showLibrary, async (on) => {
+  if (!on) {
+    libraryLayer?.clearLayers();
+    return;
+  }
+  await ensureLibraryLoaded();
+  refreshLibraryItems();
   renderLibraryMarkers();
+  if (filteredLibraryItems.value.length > 0 && map) {
+    const bounds = L.latLngBounds(filteredLibraryItems.value.map(i => [i.geo.lat, i.geo.lng]));
+    map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+  }
 });
 
 // 切换作者：作者即筛选，重渲标记；路线显示重置，避免误读
@@ -810,8 +862,8 @@ watch(() => props.active, (isActive) => {
       renderMarkers();
       renderLibraryMarkers();
     });
-    // 重新激活时若仍处于可导入模式但题库尚未加载（上次处于未激活状态），补加载
-    if (isLibraryMode.value && !libraryRaw) {
+    // 重新激活时若已勾选可导入但题库尚未加载（上次处于未激活状态），补加载
+    if (showLibrary.value && !libraryRaw) {
       ensureLibraryLoaded().then(() => renderLibraryMarkers());
     }
   }
@@ -1027,6 +1079,64 @@ onUnmounted(() => {
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     border: 2px solid #fff;
+  }
+
+  /* 起点绿色「始」、终点红色「终」，脉冲高亮 */
+  .route-pin.is-start {
+    background: #67c23a;
+    animation: route-pulse-g 1.6s ease-out infinite;
+  }
+
+  .route-pin.is-end {
+    background: #f56c6c;
+    animation: route-pulse-r 1.6s ease-out infinite;
+  }
+}
+
+/* 生平路线：虚线流动动画（stroke-dashoffset 前移，与 dashArray '10,6' 周期 16 匹配） */
+.route-line-anim {
+  animation: route-dash-move 0.9s linear infinite;
+}
+
+@keyframes route-dash-move {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+/* 路线方向箭头：线段中点放置、随方位角旋转的三角 */
+.route-arrow {
+  .route-arrow-tri {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 9px solid #e6a23c;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+  }
+}
+
+@keyframes route-pulse-g {
+  0% {
+    box-shadow: 0 0 0 0 rgba(103, 194, 58, 0.55), 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(103, 194, 58, 0), 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(103, 194, 58, 0), 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes route-pulse-r {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 108, 108, 0.55), 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(245, 108, 108, 0), 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 108, 108, 0), 0 2px 5px rgba(0, 0, 0, 0.3);
   }
 }
 
