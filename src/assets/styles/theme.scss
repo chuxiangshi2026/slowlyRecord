@@ -170,7 +170,8 @@ html.utools-dark,
 
 // 深色主题下主色为浅灰，叠加其上的文字/图标需反深色
 .utools-dark {
-  .el-button--primary {
+  // 仅实底主色按钮反深色文字；text/link 型按钮背景透明，文字须保持主色（否则深色下看不见）
+  .el-button--primary:not(.is-text):not(.is-link) {
     --el-button-text-color: #1e1e1e;
     --el-button-hover-text-color: #000000;
     --el-button-active-text-color: #000000;
