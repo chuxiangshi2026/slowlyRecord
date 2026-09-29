@@ -378,6 +378,9 @@ function goReview() {
 .palace-detail-page {
   width: 100%;
   min-height: 100vh;
+  // 父容器 .home-main 是 column flex 滚动容器，默认 flex-shrink:1 会在内容超高时
+  // 把页根钳在 100vh，导致 padding-bottom 失效、末行被固定底栏遮住
+  flex-shrink: 0;
   background-color: var(--utools-bg-secondary);
   padding-bottom: 55px;
   box-sizing: border-box;
