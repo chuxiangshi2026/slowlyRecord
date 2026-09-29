@@ -23,7 +23,7 @@ const memoryCache = new Map<string, KnowledgePack>()
  */
 export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math', version: 2},
-    {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'elements', name: '元素周期表', description: '元素周期表 118 号元素（氢到鿫）：符号、中文名、序数、拼音与类别，附经典记忆口诀', itemCount: 137, ordered: false, usableAsPeg: false, category: 'math', version: 5},
     {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 3},
     {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 3},
@@ -64,6 +64,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'chinese-classical-words', name: '文言文常见实词虚词', description: '中考高频文言虚词 8 个 + 古今异义实词 12 个', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
     {id: 'biology-basics', name: '初中生物核心概念', description: '初中生物核心概念 20 条（细胞、生理、遗传、生态）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'world-geography-records', name: '世界地理之最', description: '世界地理之最 20 条（山川、河湖、海陆、人文）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'geography-china', name: '中国地理常识', description: '中国地理常识 30 条（地形、山脉、河湖、海洋岛屿、气候与地理分界）', itemCount: 30, ordered: false, usableAsPeg: false, category: 'text', version: 1},
 ]
 
 interface CacheData {

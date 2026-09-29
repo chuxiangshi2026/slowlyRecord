@@ -53,10 +53,10 @@ export interface KnowledgePack {
 }
 
 /**
- * 知识包分类：peg 桩库（跨 math/text 大类，取 usableAsPeg 的包）、math 数理化、text 文史常识。
- * 注册表中 category 仍只存 math/text，peg 仅作界面筛选值。
+ * 知识包分类：peg 桩库（跨 math/text/geo 大类，取 usableAsPeg 的包）、math 数理化、text 文史常识、geo 地理。
+ * 注册表中 category 存 math/text/geo，peg 仅作界面筛选值。
  */
-export type KnowledgePackCategory = 'peg' | 'math' | 'text';
+export type KnowledgePackCategory = 'peg' | 'math' | 'text' | 'geo';
 
 /** 知识包在列表中的轻量信息 */
 export interface KnowledgePackInfo {
@@ -66,7 +66,7 @@ export interface KnowledgePackInfo {
     itemCount: number;
     ordered: boolean;
     usableAsPeg: boolean;
-    /** 宿主分类：数理化（数学/物理/化学/生物等）为 math，文史常识（语文/传统文化/地理等）为 text */
+    /** 宿主分类：数理化（数学/物理/化学/生物等）为 math，文史常识（语文/传统文化等）为 text，地理常识为 geo */
     category: KnowledgePackCategory;
     /**
      * 数据版本号（缺省视为 1）。包内容发生结构性变更时递增，

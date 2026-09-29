@@ -52,6 +52,7 @@ import englishRootsAffixes from './knowledgebanks/english-roots-affixes'
 import chineseClassicalWords from './knowledgebanks/chinese-classical-words'
 import biologyBasics from './knowledgebanks/biology-basics'
 import worldGeographyRecords from './knowledgebanks/world-geography-records'
+import geographyChina from './knowledgebanks/geography-china'
 
 const packDataLoaders: Record<string, () => KnowledgePack> = {
     'multiplication-9x9': () => multiplication9x9,
@@ -96,6 +97,7 @@ const packDataLoaders: Record<string, () => KnowledgePack> = {
     'chinese-classical-words': () => chineseClassicalWords,
     'biology-basics': () => biologyBasics,
     'world-geography-records': () => worldGeographyRecords,
+    'geography-china': () => geographyChina,
 }
 
 registerKnowledgePackData(packDataLoaders)

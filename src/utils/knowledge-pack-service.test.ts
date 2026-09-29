@@ -55,12 +55,13 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 35 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(42)
+    it('应包含 43 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(43)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'geography-concepts')).toBe(true)
+      expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'geography-china')).toBe(true)
     })
 
     it('listKnowledgePacks 应返回副本', () => {
@@ -82,7 +83,7 @@ describe('knowledge-pack-service', () => {
     })
 
     it('每个内置知识包都带有 category 分类', () => {
-      expect(KNOWLEDGE_PACK_LIST.every(p => p.category === 'math' || p.category === 'text')).toBe(true)
+      expect(KNOWLEDGE_PACK_LIST.every(p => p.category === 'math' || p.category === 'text' || p.category === 'geo')).toBe(true)
     })
 
     it('listKnowledgePacks 按 category 过滤', () => {
@@ -110,7 +111,7 @@ describe('knowledge-pack-service', () => {
         'squares-cubes-powers',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(23)
+      expect(text).toHaveLength(19)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'alphabet-pegs-26',
@@ -123,19 +124,26 @@ describe('knowledge-pack-service', () => {
         'earthly-branches-12',
         'english-roots-affixes',
         'ethnic-groups-56',
-        'geography-concepts',
         'history-mnemonics',
         'home-route-12',
         'musical-notes',
         'number-pegs-12',
         'poker-pegs-52',
-        'provinces-capitals',
         'room-pegs-12',
         'solar-terms-24',
         'thirty-six-stratagems',
+        'zodiac-12',
+      ])
+      // 2026-09-30 起地理类独立为 geo：4 个既有地理包从 text 迁入 + 新增中国地理常识
+      const geo = listKnowledgePacks('geo')
+      expect(geo).toHaveLength(5)
+      expect(geo.every(p => p.category === 'geo')).toBe(true)
+      expect(geo.map(p => p.id).sort()).toEqual([
+        'geography-china',
+        'geography-concepts',
+        'provinces-capitals',
         'world-capitals-40',
         'world-geography-records',
-        'zodiac-12',
       ])
     })
 
@@ -150,8 +158,8 @@ describe('knowledge-pack-service', () => {
       newPackIds.forEach(id => {
         const info = getKnowledgePackInfo(id)
         expect(info).toBeDefined()
-        // 分类归属：物理公式/定律/实验与生物实验归数理化（math），地理核心概念归文史常识（text）
-        expect(info!.category).toBe(id === 'geography-concepts' ? 'text' : 'math')
+        // 分类归属：物理公式/定律/实验与生物实验归数理化（math），地理核心概念归地理（geo）
+        expect(info!.category).toBe(id === 'geography-concepts' ? 'geo' : 'math')
         // 物理定律/实验与生物实验此前因归入数理化升到 2；地理概念因扩充到 41 条升到 2
         expect(info!.version ?? 1).toBe(2)
         // 相对本文件定位 public/knowledgebanks（src/utils → 项目根目录 → public/knowledgebanks）
@@ -278,6 +286,8 @@ describe('knowledge-pack-service', () => {
       expect(getPackVersion('math-probability')).toBe(2)
       // multiplication-9x9 追加小九九口诀 mnemonics → 2
       expect(getPackVersion('multiplication-9x9')).toBe(2)
+      // multiplication-19x19 追加大九九口诀 mnemonics → 2
+      expect(getPackVersion('multiplication-19x19')).toBe(2)
       // constellations-12 追加星座符号 emoji imageUrl → 2
       expect(getPackVersion('constellations-12')).toBe(2)
       // dynasties-china 史实修正 → 2
@@ -289,7 +299,8 @@ describe('knowledge-pack-service', () => {
         'squares-cubes-powers', 'primes-under-100', 'poker-pegs-52',
         'alphabet-pegs-26', 'thirty-six-stratagems',
         'physics-formulas-high', 'chemistry-valences', 'history-mnemonics',
-        'english-roots-affixes', 'chinese-classical-words', 'biology-basics', 'world-geography-records'].forEach(id => {
+        'english-roots-affixes', 'chinese-classical-words', 'biology-basics', 'world-geography-records',
+        'geography-china'].forEach(id => {
         expect(getKnowledgePackInfo(id)?.version).toBe(1)
         expect(getPackVersion(id)).toBe(1)
       })
@@ -298,13 +309,13 @@ describe('knowledge-pack-service', () => {
     })
 
     it('2026-09 新增 6 个知识包数据合法且条数与元数据一致', () => {
-      const newPacks: Array<[string, number, boolean, boolean, 'math' | 'text']> = [
+      const newPacks: Array<[string, number, boolean, boolean, 'math' | 'text' | 'geo']> = [
         ['squares-cubes-powers', 58, false, false, 'math'],
         ['primes-under-100', 25, true, false, 'math'],
         ['poker-pegs-52', 52, true, true, 'text'],
         ['alphabet-pegs-26', 26, true, true, 'text'],
         ['thirty-six-stratagems', 36, true, false, 'text'],
-        ['world-capitals-40', 100, false, false, 'text'],
+        ['world-capitals-40', 100, false, false, 'geo'],
       ]
       newPacks.forEach(([id, count, ordered, usableAsPeg, category]) => {
         const info = getKnowledgePackInfo(id)
@@ -336,15 +347,16 @@ describe('knowledge-pack-service', () => {
       })
     })
 
-    it('2026-09-30 新增 7 个知识包数据合法且条数与元数据一致', () => {
-      const newPacks: Array<[string, number, 'math' | 'text']> = [
+    it('2026-09-30 新增 8 个知识包数据合法且条数与元数据一致', () => {
+      const newPacks: Array<[string, number, 'math' | 'text' | 'geo']> = [
         ['physics-formulas-high', 28, 'math'],
         ['chemistry-valences', 28, 'math'],
         ['history-mnemonics', 10, 'text'],
         ['english-roots-affixes', 30, 'text'],
         ['chinese-classical-words', 20, 'text'],
         ['biology-basics', 20, 'math'],
-        ['world-geography-records', 20, 'text'],
+        ['world-geography-records', 20, 'geo'],
+        ['geography-china', 30, 'geo'],
       ]
       newPacks.forEach(([id, count, category]) => {
         const info = getKnowledgePackInfo(id)
@@ -361,6 +373,22 @@ describe('knowledge-pack-service', () => {
         // 条目 id 与文件内顺序一一对应
         pack.items.forEach((item, i) => expect(item.id).toBe(`${id}-${i + 1}`))
       })
+    })
+
+    it('大九九乘法表带 10-19 段阶梯口诀', () => {
+      const pack = readPackFile('multiplication-19x19')
+      expect(Array.isArray(pack.mnemonics)).toBe(true)
+      expect(pack.mnemonics!.length).toBe(10)
+      // 行 n 共 n 段，段内用全角空格分隔
+      pack.mnemonics!.forEach((line, i) => {
+        expect(line.split('　').length).toBe(i + 10)
+      })
+      // 首行（n=10）开头一十十、二十二十，结尾十十一百；末行（n=19）结尾十九十九三百六十一
+      expect(pack.mnemonics![0].startsWith('一十十　二十二十')).toBe(true)
+      expect(pack.mnemonics![0].endsWith('十十一百')).toBe(true)
+      expect(pack.mnemonics![9].endsWith('十九十九三百六十一')).toBe(true)
+      // 大九九结果均 ≥10，口诀一律不带「得」
+      expect(pack.mnemonics!.every(line => !line.includes('得'))).toBe(true)
     })
 
     it('三十六计带总诀口诀且按六套分组', () => {

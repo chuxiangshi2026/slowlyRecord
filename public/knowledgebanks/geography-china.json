@@ -1,0 +1,189 @@
+{
+  "id": "geography-china",
+  "name": "中国地理常识",
+  "description": "中国地理常识 30 条（地形、山脉、河湖、海洋岛屿、气候与地理分界）",
+  "ordered": false,
+  "usableAsPeg": false,
+  "items": [
+    {
+      "id": "geography-china-1",
+      "question": "我国地势三级阶梯中，第一级阶梯以什么高原为主体？",
+      "answer": "青藏高原",
+      "extras": {"类别": "地形"}
+    },
+    {
+      "id": "geography-china-2",
+      "question": "我国地势第二、三级阶梯的分界线是哪三座山？",
+      "answer": "大兴安岭—太行山—巫山（以及雪峰山）",
+      "extras": {"类别": "分界线"}
+    },
+    {
+      "id": "geography-china-3",
+      "question": "我国地势第一、二级阶梯的分界线是哪些山脉？",
+      "answer": "昆仑山—祁连山—横断山",
+      "extras": {"类别": "分界线"}
+    },
+    {
+      "id": "geography-china-4",
+      "question": "我国四大高原是哪四个？",
+      "answer": "青藏高原、内蒙古高原、黄土高原、云贵高原",
+      "extras": {"类别": "高原"}
+    },
+    {
+      "id": "geography-china-5",
+      "question": "世界上海拔最高的高原是什么？",
+      "answer": "青藏高原（平均海拔 4000 米以上，有「世界屋脊」之称）",
+      "extras": {"类别": "高原"}
+    },
+    {
+      "id": "geography-china-6",
+      "question": "我国四大盆地是哪四个？",
+      "answer": "塔里木盆地、准噶尔盆地、柴达木盆地、四川盆地",
+      "extras": {"类别": "盆地"}
+    },
+    {
+      "id": "geography-china-7",
+      "question": "我国面积最大的盆地是什么？",
+      "answer": "塔里木盆地（位于新疆，内有塔克拉玛干沙漠）",
+      "extras": {"类别": "盆地"}
+    },
+    {
+      "id": "geography-china-8",
+      "question": "我国海拔最高的盆地是什么？",
+      "answer": "柴达木盆地（位于青藏高原，有「聚宝盆」之称）",
+      "extras": {"类别": "盆地"}
+    },
+    {
+      "id": "geography-china-9",
+      "question": "我国三大平原是哪三个？",
+      "answer": "东北平原、华北平原、长江中下游平原",
+      "extras": {"类别": "平原"}
+    },
+    {
+      "id": "geography-china-10",
+      "question": "我国面积最大的平原是什么？",
+      "answer": "东北平原（黑土广布，由三江平原、松嫩平原、辽河平原组成）",
+      "extras": {"类别": "平原"}
+    },
+    {
+      "id": "geography-china-11",
+      "question": "我国东西走向的主要山脉有哪些？",
+      "answer": "天山—阴山、昆仑山—秦岭、南岭",
+      "extras": {"类别": "山脉"}
+    },
+    {
+      "id": "geography-china-12",
+      "question": "我国东北—西南走向的主要山脉有哪些？",
+      "answer": "大兴安岭—太行山—巫山—雪峰山、长白山—武夷山、台湾山脉",
+      "extras": {"类别": "山脉"}
+    },
+    {
+      "id": "geography-china-13",
+      "question": "我国南北走向的主要山脉有哪些？",
+      "answer": "贺兰山、六盘山、横断山",
+      "extras": {"类别": "山脉"}
+    },
+    {
+      "id": "geography-china-14",
+      "question": "我国最长的山脉是什么？",
+      "answer": "昆仑山（东西绵延约 2500 千米）",
+      "extras": {"类别": "山脉"}
+    },
+    {
+      "id": "geography-china-15",
+      "question": "我国最长的河流是哪条？",
+      "answer": "长江（约 6300 千米，我国第一大河，注入东海）",
+      "extras": {"类别": "河流"}
+    },
+    {
+      "id": "geography-china-16",
+      "question": "我国第二长河、含沙量最大的河流是哪条？",
+      "answer": "黄河（约 5464 千米，注入渤海）",
+      "extras": {"类别": "河流"}
+    },
+    {
+      "id": "geography-china-17",
+      "question": "我国汛期最长的大河是哪条？",
+      "answer": "珠江（西江为主干，注入南海）",
+      "extras": {"类别": "河流"}
+    },
+    {
+      "id": "geography-china-18",
+      "question": "世界开凿最早、最长的人工运河是哪条？",
+      "answer": "京杭大运河（北起北京、南至杭州，全长约 1794 千米）",
+      "extras": {"类别": "河流"}
+    },
+    {
+      "id": "geography-china-19",
+      "question": "我国五大淡水湖是哪五个？",
+      "answer": "鄱阳湖、洞庭湖、太湖、洪泽湖、巢湖",
+      "extras": {"类别": "湖泊"}
+    },
+    {
+      "id": "geography-china-20",
+      "question": "我国面积最大的淡水湖是什么？",
+      "answer": "鄱阳湖（位于江西省北部）",
+      "extras": {"类别": "湖泊"}
+    },
+    {
+      "id": "geography-china-21",
+      "question": "我国面积最大的湖泊是什么？",
+      "answer": "青海湖（咸水湖，位于青海省）",
+      "extras": {"类别": "湖泊"}
+    },
+    {
+      "id": "geography-china-22",
+      "question": "我国自北向南濒临的四个海是什么？",
+      "answer": "渤海、黄海、东海、南海",
+      "extras": {"类别": "海洋岛屿"}
+    },
+    {
+      "id": "geography-china-23",
+      "question": "我国最大的岛屿和第二大岛屿分别是什么？",
+      "answer": "台湾岛、海南岛",
+      "extras": {"类别": "海洋岛屿"}
+    },
+    {
+      "id": "geography-china-24",
+      "question": "我国最大的群岛是什么？",
+      "answer": "舟山群岛（位于浙江省东北部、杭州湾外东海海域）",
+      "extras": {"类别": "海洋岛屿"}
+    },
+    {
+      "id": "geography-china-25",
+      "question": "我国东部季风区以秦岭—淮河为界，南北两侧的气候类型分别是什么？",
+      "answer": "北侧为温带季风气候，南侧为亚热带季风气候",
+      "extras": {"类别": "气候"}
+    },
+    {
+      "id": "geography-china-26",
+      "question": "秦岭—淮河一线大致与哪些地理界线吻合？",
+      "answer": "1 月 0℃ 等温线、800 毫米年等降水量线、暖温带与亚热带分界线、湿润区与半湿润区分界线",
+      "extras": {"类别": "分界线"}
+    },
+    {
+      "id": "geography-china-27",
+      "question": "我国季风区与非季风区的分界线是哪几条线？",
+      "answer": "大兴安岭—阴山—贺兰山—巴颜喀拉山—冈底斯山一线",
+      "extras": {"类别": "分界线"}
+    },
+    {
+      "id": "geography-china-28",
+      "question": "我国人口地理分界线（胡焕庸线）连接哪两个地方？",
+      "answer": "黑河（黑龙江）—腾冲（云南）一线",
+      "extras": {"类别": "分界线"}
+    },
+    {
+      "id": "geography-china-29",
+      "question": "我国西北地区的主要气候类型是什么？",
+      "answer": "温带大陆性气候（干旱少雨、昼夜温差大）",
+      "extras": {"类别": "气候"}
+    },
+    {
+      "id": "geography-china-30",
+      "question": "青藏高原的主要气候类型是什么？",
+      "answer": "高原山地气候（海拔高、气温低）",
+      "extras": {"类别": "气候"}
+    }
+  ]
+}

@@ -2,15 +2,16 @@
  * 内置知识包的展示分类映射（供「内置知识库」tab 的分类筛选条使用）
  *
  * 注意：knowledgebanks/*.ts 数据文件由 public/knowledgebanks/*.json 生成、请勿手改，
- * 展示分类（桩库/数理化/文史常识）单独维护在本文件，与桌面端 KnowledgeMemory 的三个 tab 保持一致。
+ * 展示分类（桩库/数理化/文史常识/地理）单独维护在本文件，与桌面端 KnowledgeMemory 的四个 tab 保持一致。
  * 新增内置包时补充对应映射（缺省归入 liberal/文史常识）。
  */
 
 /** 展示分类值 */
 export type PackDisplayCategory =
-  | 'pegs'     // 桩库（usableAsPeg 的包，跨 math/text 大类）
+  | 'pegs'     // 桩库（usableAsPeg 的包，跨 math/text/geo 大类）
   | 'science'  // 数理化（数学/物理/化学/生物/计量单位）
-  | 'liberal'  // 文史常识（语文/传统文化/地理/百科常识）
+  | 'liberal'  // 文史常识（语文/传统文化/百科常识）
+  | 'geo'      // 地理（中国/世界地理常识、行政区与首都等）
 
 /** 分类筛选条选项（顺序即展示顺序） */
 export const PACK_CATEGORY_OPTIONS: { value: PackDisplayCategory | 'all'; label: string }[] = [
@@ -18,6 +19,7 @@ export const PACK_CATEGORY_OPTIONS: { value: PackDisplayCategory | 'all'; label:
   { value: 'pegs', label: '桩库' },
   { value: 'science', label: '数理化' },
   { value: 'liberal', label: '文史常识' },
+  { value: 'geo', label: '地理' },
 ]
 
 /** 包 id → 展示分类（未列出的 id 一律归入 liberal/文史常识） */
@@ -54,8 +56,15 @@ const PACK_CATEGORY_MAP: Record<string, PackDisplayCategory> = {
   'biology-experiments': 'science',
 
   // 其余全部归文史常识：constellations-12 星座、ethnic-groups-56 民族、cuisines-8 菜系、
-  //   provinces-capitals 省级行政区、geography-concepts 地理概念、colors-12 颜色、
-  //   thirty-six-stratagems 三十六计、world-capitals-40 世界首都
+  //   colors-12 颜色、thirty-six-stratagems 三十六计
+
+  // 地理：geography-concepts 地理概念、world-geography-records 世界地理之最、
+  //   provinces-capitals 省级行政区、world-capitals-40 世界首都、geography-china 中国地理常识
+  'geography-concepts': 'geo',
+  'world-geography-records': 'geo',
+  'provinces-capitals': 'geo',
+  'world-capitals-40': 'geo',
+  'geography-china': 'geo',
 }
 
 /** 查询包的展示分类（缺省 liberal/文史常识） */

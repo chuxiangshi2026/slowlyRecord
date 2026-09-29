@@ -1,6 +1,6 @@
 <template>
   <div class="knowledge-memory-page">
-    <!-- 分类切换：桩库 / 数理化 / 文史常识 -->
+    <!-- 分类切换：桩库 / 数理化 / 文史常识 / 地理 -->
     <div class="category-switch">
       <span
           v-for="tab in tabs"
@@ -31,9 +31,10 @@ const tabs: Array<{ label: string; value: KnowledgePackCategory }> = [
   {label: '桩库', value: 'peg'},
   {label: '数理化', value: 'math'},
   {label: '文史常识', value: 'text'},
+  {label: '地理', value: 'geo'},
 ];
 
-// 各 tab 计数：桩库 = 可用作桩的包（跨 math/text 大类）；数理化/文史常识 = 对应大类且非桩库（桩库已单列，不重复计数）
+// 各 tab 计数：桩库 = 可用作桩的包（跨 math/text/geo 大类）；数理化/文史常识/地理 = 对应大类且非桩库（桩库已单列，不重复计数）
 const countOf = (c: KnowledgePackCategory) =>
   store.importedIds.filter(id => {
     const info = store.packList.find(p => p.id === id);

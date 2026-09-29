@@ -71,6 +71,13 @@ describe('getPackVersion', () => {
     expect(getPackVersion('world-capitals-40')).toBe(2)
     expect(getPackVersion('geography-concepts')).toBe(2)
     expect(getPackVersion('common-units')).toBe(2)
+    // multiplication-19x19 追加大九九口诀 mnemonics → 2
+    expect(getPackVersion('multiplication-19x19')).toBe(2)
+  })
+
+  it('注册表显式声明 version=1 的新包取声明值', () => {
+    expect(getKnowledgePackInfo('geography-china')?.version).toBe(1)
+    expect(getPackVersion('geography-china')).toBe(1)
   })
 
   it('注册表未声明 version 的包为 1', () => {
@@ -113,8 +120,8 @@ describe('isCacheUsable', () => {
 })
 
 describe('注册表与内置数据（真实数据完整性）', () => {
-  it('35 个内置包全部可加载，结构合法且条数与元数据一致', async () => {
-    expect(KNOWLEDGE_PACK_LIST).toHaveLength(42)
+  it('43 个内置包全部可加载，结构合法且条数与元数据一致', async () => {
+    expect(KNOWLEDGE_PACK_LIST).toHaveLength(43)
     for (const info of KNOWLEDGE_PACK_LIST) {
       const pack = await fetchKnowledgePack(info.id)
       expect(validateKnowledgePack(pack).valid).toBe(true)
@@ -145,8 +152,10 @@ describe('注册表与内置数据（真实数据完整性）', () => {
     const math = listKnowledgePacks('math')
     expect(math).toHaveLength(19)
     expect(math.every(p => p.category === 'math')).toBe(true)
+    // 移动端注册表仍只存 math/text（展示层的「地理」分类由 pack-category.ts 维护映射）
     const text = listKnowledgePacks('text')
-    expect(text).toHaveLength(23)
+    expect(text).toHaveLength(24)
+    expect(text.some(p => p.id === 'geography-china')).toBe(true)
 
     math[0].name = 'modified'
     expect(getKnowledgePackInfo(math[0].id)?.name).not.toBe('modified')

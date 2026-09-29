@@ -29,10 +29,10 @@ export const DEFAULT_STRATEGY: LoadStrategy = {
 };
 
 // 内置知识包元数据（与 public/knowledgebanks/*.json 对应）
-// category: math 为数理化（数学/物理/化学/生物等），text 为文史常识；展示层再按 peg/math/text 三个 tab 过滤
+// category: math 为数理化（数学/物理/化学/生物等），text 为文史常识，geo 为地理；展示层再按 peg/math/text/geo 四个 tab 过滤
 export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'multiplication-9x9', name: '小九九乘法表', description: '1×1 到 9×9 的乘法口诀', itemCount: 81, ordered: false, usableAsPeg: false, category: 'math', version: 2},
-    {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math'},
+    {id: 'multiplication-19x19', name: '大九九乘法表', description: '1×1 到 19×19 的乘法口诀', itemCount: 100, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'elements', name: '元素周期表', description: '元素周期表 118 号元素（氢到鿫）：符号、中文名、序数、拼音与类别，附经典记忆口诀', itemCount: 137, ordered: false, usableAsPeg: false, category: 'math', version: 5},
     {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 3},
     {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 3},
@@ -41,7 +41,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: false, category: 'text', version: 2},
     {id: 'ethnic-groups-56', name: '五十六个民族', description: '中国 56 个民族名称', itemCount: 56, ordered: false, usableAsPeg: false, category: 'text'},
     {id: 'cuisines-8', name: '八大菜系', description: '中国八大菜系及其代表特点', itemCount: 8, ordered: false, usableAsPeg: false, category: 'text'},
-    {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false, category: 'text'},
+    {id: 'provinces-capitals', name: '中国省级行政区及省会', description: '34 个省级行政区及其省会、首府或政府驻地', itemCount: 34, ordered: false, usableAsPeg: false, category: 'geo'},
     {id: 'math-formulas', name: '常用数学公式', description: '小学到高中入门常用数学公式与函数', itemCount: 33, ordered: false, usableAsPeg: false, category: 'math', version: 5},
     {id: 'math-calculus', name: '高等数学·微积分基础', description: '极限、导数、微分、积分与级数入门 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'math-linalg', name: '高等数学·线性代数基础', description: '矩阵、行列式、向量与特征值入门 14 条', itemCount: 14, ordered: false, usableAsPeg: false, category: 'math', version: 2},
@@ -51,7 +51,7 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'physics-laws', name: '初中物理定律与原理', description: '初中物理常见定律与原理 15 条', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'physics-experiments', name: '初中物理实验', description: '初中常见物理实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
     {id: 'biology-experiments', name: '初中生物实验', description: '初中常见生物实验 15 个', itemCount: 15, ordered: false, usableAsPeg: false, category: 'math', version: 2},
-    {id: 'geography-concepts', name: '初中地理核心概念', description: '初中地理核心概念 41 条', itemCount: 41, ordered: false, usableAsPeg: false, category: 'text', version: 2},
+    {id: 'geography-concepts', name: '初中地理核心概念', description: '初中地理核心概念 41 条', itemCount: 41, ordered: false, usableAsPeg: false, category: 'geo', version: 2},
     {id: 'body-pegs-12', name: '身体桩', description: '从头顶到脚底 12 个身体部位，按从上到下的固定顺序用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'earthly-branches-12', name: '十二地支', description: '十二地支及其时辰时段、生肖、五行、阴阳与方位', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'room-pegs-12', name: '房间桩', description: '典型户型 12 个房间，按进出动线排列用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
@@ -65,14 +65,15 @@ export const KNOWLEDGE_PACK_LIST: KnowledgePackInfo[] = [
     {id: 'poker-pegs-52', name: '扑克牌桩（52 张）', description: '一副扑克 52 张牌的花色点数桩（黑桃/红桃/方块/梅花），按花色顺序用作记忆宫殿桩位', itemCount: 52, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'alphabet-pegs-26', name: '字母形象桩（A-Z）', description: 'A-Z 26 个字母的英文首词形象桩，按字母序用作记忆宫殿桩位', itemCount: 26, ordered: true, usableAsPeg: true, category: 'text', version: 1},
     {id: 'thirty-six-stratagems', name: '三十六计', description: '三十六计全目，按六套（胜战/敌战/攻战/混战/并战/败战）顺序排列，顺序本身是考点', itemCount: 36, ordered: true, usableAsPeg: false, category: 'text', version: 1},
-    {id: 'world-capitals-40', name: '世界国家与首都', description: '六大洲 100 个常见国家及其首都（南非为行政首都比勒陀利亚，玻利维亚为法定首都苏克雷，坦桑尼亚为法定首都多多马）', itemCount: 100, ordered: false, usableAsPeg: false, category: 'text', version: 2},
+    {id: 'world-capitals-40', name: '世界国家与首都', description: '六大洲 100 个常见国家及其首都（南非为行政首都比勒陀利亚，玻利维亚为法定首都苏克雷，坦桑尼亚为法定首都多多马）', itemCount: 100, ordered: false, usableAsPeg: false, category: 'geo', version: 2},
     {id: 'physics-formulas-high', name: '高中物理公式', description: '高中物理必修主干公式 28 条（直线运动、力学、电磁学）', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'chemistry-valences', name: '常见元素化合价', description: '常见元素与原子团化合价 28 条，含化合价口诀', itemCount: 28, ordered: false, usableAsPeg: false, category: 'math', version: 1},
     {id: 'history-mnemonics', name: '历史朝代口诀', description: '朝代歌与战国七雄、五代十国等历史速记口诀 10 条', itemCount: 10, ordered: false, usableAsPeg: false, category: 'text', version: 1},
     {id: 'english-roots-affixes', name: '英语常用词根词缀', description: '高频词根 14 个、前缀 9 个、后缀 7 个，附例词', itemCount: 30, ordered: false, usableAsPeg: false, category: 'text', version: 1},
     {id: 'chinese-classical-words', name: '文言文常见实词虚词', description: '中考高频文言虚词 8 个 + 古今异义实词 12 个', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
     {id: 'biology-basics', name: '初中生物核心概念', description: '初中生物核心概念 20 条（细胞、生理、遗传、生态）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'math', version: 1},
-    {id: 'world-geography-records', name: '世界地理之最', description: '世界地理之最 20 条（山川、河湖、海陆、人文）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'text', version: 1},
+    {id: 'world-geography-records', name: '世界地理之最', description: '世界地理之最 20 条（山川、河湖、海陆、人文）', itemCount: 20, ordered: false, usableAsPeg: false, category: 'geo', version: 1},
+    {id: 'geography-china', name: '中国地理常识', description: '中国地理常识 30 条（地形、山脉、河湖、海洋岛屿、气候与地理分界）', itemCount: 30, ordered: false, usableAsPeg: false, category: 'geo', version: 1},
 ];
 
 interface CacheData {
@@ -376,7 +377,7 @@ export function getKnowledgePackInfo(id: string): KnowledgePackInfo | undefined 
 }
 
 /**
- * 列出内置知识包元数据，可按 category 过滤（math → 数理化，text → 文史常识）
+ * 列出内置知识包元数据，可按 category 过滤（math → 数理化，text → 文史常识，geo → 地理）
  */
 export function listKnowledgePacks(category?: KnowledgePackCategory): KnowledgePackInfo[] {
     return KNOWLEDGE_PACK_LIST
