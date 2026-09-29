@@ -38,3 +38,7 @@ coverage
 _debug*.cjs
 .zcode/
 
+
+# 截图调试脚本与 codebuddy 工具目录
+_shoot.cjs
+.codebuddy/
