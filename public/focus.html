@@ -1844,8 +1844,8 @@
       if (wasReview) adjustPendingReviewCount(-1);
       word.learnDate = Date.now();
 
-      // 保存到旧数据库（兼容）
-      if (typeof utools !== 'undefined') utools.db.put(word);
+      // 保存到旧数据库（兼容；putWithRetry 处理父/子窗口并发写同一单词的 _rev 冲突）
+      if (typeof utools !== 'undefined') putWithRetry(word);
 
       // 同步更新到词库分片
       if (currentBankId) {
@@ -1896,8 +1896,8 @@
       // 原本不在待复习队列（如在"已复习"列表中答错），计数加一
       if (!wasReview) adjustPendingReviewCount(1);
 
-      // 保存到旧数据库（兼容）
-      if (typeof utools !== 'undefined') utools.db.put(word);
+      // 保存到旧数据库（兼容；putWithRetry 处理父/子窗口并发写同一单词的 _rev 冲突）
+      if (typeof utools !== 'undefined') putWithRetry(word);
 
       // 同步更新到词库分片
       if (currentBankId) {
@@ -2136,7 +2136,7 @@
             // 满级已记完的词答错重新进入复习，清掉已记完标记（对齐主窗口/听写页口径）
             w.remember = false;
             if (!wasReview) adjustPendingReviewCount(1);
-            if (typeof utools !== 'undefined') utools.db.put(w);
+            if (typeof utools !== 'undefined') putWithRetry(w);
             if (currentBankId) updateWordInBank(currentBankId, w);
             postWordChanged(w);
             if (!shouldKeepInList(w)) {
@@ -2903,7 +2903,7 @@
         if (words.length > 0 && currentIndex < words.length) {
           const currentWord = words[currentIndex];
           if (currentWord && currentWord._id) {
-            utools.db.put(currentWord);
+            putWithRetry(currentWord);
             // 同时保存到词库分片
             if (currentBankId) {
               updateWordInBank(currentBankId, currentWord);
