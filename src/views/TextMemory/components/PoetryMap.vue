@@ -99,20 +99,31 @@
 
     <!-- 地图容器 -->
     <div ref="mapContainer" class="map-container">
-      <!-- 生平轨迹统计面板：结构化分行展示，转折点全列出，可滚动 -->
+      <!-- 生平轨迹统计面板：可折叠，结构化分行展示，作品最多/停留最久附作品名，转折点含年龄，可滚动 -->
       <div v-if="routeStats" class="route-stats-panel">
-        <div class="stats-title">
-          生平轨迹<template v-if="routeStats.bio"> · {{ routeStats.bio.birthYear }}–{{ routeStats.bio.deathYear }}（{{ routeStats.bio.deathYear - routeStats.bio.birthYear }} 岁）</template>
+        <div class="stats-header" @click="statsCollapsed = !statsCollapsed">
+          <span class="stats-title">
+            生平轨迹<template v-if="routeStats.bio"> · {{ routeStats.bio.birthYear }}–{{ routeStats.bio.deathYear }}（{{ routeStats.bio.deathYear - routeStats.bio.birthYear }} 岁）</template>
+          </span>
+          <span class="stats-toggle">{{ statsCollapsed ? '展开 ▾' : '收起 ▴' }}</span>
         </div>
-        <div class="stats-row">足迹 {{ routeStats.places }} 地 · 记录 {{ routeStats.stopCount }} 条</div>
-        <div v-if="routeStats.mostWorks" class="stats-row">作品最多：{{ routeStats.mostWorks.place }}（{{ routeStats.mostWorks.count }} 篇）</div>
-        <div v-if="routeStats.mostVisited" class="stats-row">记录最多：{{ routeStats.mostVisited.place }}（{{ routeStats.mostVisited.count }} 条）</div>
-        <div v-if="routeStats.longestStay" class="stats-row">停留最久：{{ routeStats.longestStay.place }}（约 {{ routeStats.longestStay.years }} 年）</div>
-        <template v-if="routeStats.turnings.length > 0">
-          <div class="stats-row stats-subtitle">转折点</div>
-          <div v-for="(t, i) in routeStats.turnings" :key="i" class="stats-row stats-turning">
-            · {{ t.year }} {{ t.place }} — {{ t.text }}
+        <template v-if="!statsCollapsed">
+          <div class="stats-row">足迹 {{ routeStats.places }} 地 · 记录 {{ routeStats.stopCount }} 条</div>
+          <div v-if="routeStats.mostWorks" class="stats-row">
+            作品最多：{{ routeStats.mostWorks.place }}（{{ routeStats.mostWorks.count }} 篇）
+            <div v-if="routeStats.mostWorks.worksText" class="stats-works">{{ routeStats.mostWorks.worksText }}</div>
           </div>
+          <div v-if="routeStats.mostVisited" class="stats-row">记录最多：{{ routeStats.mostVisited.place }}（{{ routeStats.mostVisited.count }} 条）</div>
+          <div v-if="routeStats.longestStay" class="stats-row">
+            停留最久：{{ routeStats.longestStay.place }}（约 {{ routeStats.longestStay.years }} 年）
+            <div v-if="routeStats.longestStay.worksText" class="stats-works">{{ routeStats.longestStay.worksText }}</div>
+          </div>
+          <template v-if="routeStats.turnings.length > 0">
+            <div class="stats-row stats-subtitle">转折点</div>
+            <div v-for="(t, i) in routeStats.turnings" :key="i" class="stats-row stats-turning">
+              · {{ t.year }} {{ t.place }}<template v-if="t.age != null && t.age >= 0">（{{ t.age }} 岁）</template> — {{ t.text }}
+            </div>
+          </template>
         </template>
       </div>
     </div>
@@ -199,6 +210,8 @@ const selectedDynasty = ref('');
 const selectedAuthor = ref('');
 // 是否绘制所选作者的生平路线（由「生平路线」按钮切换）
 const showRoute = ref(false);
+// 生平轨迹统计面板折叠状态（仅本次会话内记忆，切换作者/路线不重置）
+const statsCollapsed = ref(false);
 // 可导入图层对钩：与类型筛选叠加显示题库黄点
 const showLibrary = ref(false);
 const detailVisible = ref(false);
@@ -305,15 +318,15 @@ const availableAuthors = computed(() => {
   return Array.from(set).sort();
 });
 
-// 生平路线统计数据（浮层面板）：足迹分布、作品最多/记录最多/停留最久、全部转折点与生卒年
+// 生平路线统计数据（浮层面板）：足迹分布、作品最多（附作品名）/记录最多/停留最久（附该地作品）、转折点（含年龄）与生卒年
 interface RouteStats {
   places: number;
   stopCount: number;
   bio?: { birthYear: number; deathYear: number };
   mostVisited?: { place: string; count: number };
-  mostWorks?: { place: string; count: number };
-  longestStay?: { place: string; years: number };
-  turnings: { year: number; place: string; text: string }[];
+  mostWorks?: { place: string; count: number; worksText: string };
+  longestStay?: { place: string; years: number; worksText: string };
+  turnings: { year: number; place: string; text: string; age?: number }[];
 }
 const routeStats = computed<RouteStats | null>(() => {
   if (!showRoute.value || !selectedAuthor.value) return null;
@@ -322,20 +335,33 @@ const routeStats = computed<RouteStats | null>(() => {
   const bio = getAuthorBiography(selectedAuthor.value);
   const visitCount = new Map<string, number>();
   const worksCount = new Map<string, number>();
+  const worksByPlace = new Map<string, string[]>();
   for (const s of stops) {
     const p = s.location || s.geo.name || '未知';
     visitCount.set(p, (visitCount.get(p) || 0) + 1);
-    if (s.eventType === 'poem') worksCount.set(p, (worksCount.get(p) || 0) + 1);
+    if (s.eventType === 'poem') {
+      worksCount.set(p, (worksCount.get(p) || 0) + 1);
+      const arr = worksByPlace.get(p) || [];
+      arr.push(s.title);
+      worksByPlace.set(p, arr);
+    }
   }
   const topEntry = (m: Map<string, number>, min: number) => {
     const e = [...m.entries()].sort((a, b) => b[1] - a[1])[0];
     return e && e[1] >= min ? { place: e[0], count: e[1] } : undefined;
   };
+  // 作品名格式：《题一》《题二》，超 6 篇折叠为「等 N 篇」
+  const formatTitles = (place: string, max = 6): string => {
+    const titles = worksByPlace.get(place) || [];
+    const shown = titles.slice(0, max).map(t => `《${t}》`).join(' ');
+    return titles.length > max ? `${shown} 等 ${titles.length} 篇` : shown;
+  };
+  const mw = topEntry(worksCount, 1);
   const stats: RouteStats = {
     places: visitCount.size,
     stopCount: stops.length,
     mostVisited: topEntry(visitCount, 2),
-    mostWorks: topEntry(worksCount, 1),
+    mostWorks: mw ? { ...mw, worksText: formatTitles(mw.place) } : undefined,
     turnings: [],
   };
   if (bio) {
@@ -344,10 +370,12 @@ const routeStats = computed<RouteStats | null>(() => {
       .filter(e => e.type === 'residence')
       .map(e => ({ place: e.place, years: (e.endYear ?? e.year + 1) - e.year }))
       .sort((a, b) => b.years - a.years)[0];
-    if (longest && longest.years >= 2) stats.longestStay = longest;
+    if (longest && longest.years >= 2) {
+      stats.longestStay = { ...longest, worksText: formatTitles(longest.place) };
+    }
     stats.turnings = bio.events
       .filter(e => e.type === 'turning')
-      .map(e => ({ year: e.year, place: e.place, text: e.event.split('，')[0] }));
+      .map(e => ({ year: e.year, place: e.place, text: e.event.split('，')[0], age: e.year - bio.birthYear }));
   }
   return stats;
 });
@@ -1170,7 +1198,28 @@ onUnmounted(() => {
   .stats-title {
     font-weight: bold;
     color: var(--utools-primary, #52796f);
+  }
+
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
     margin-bottom: 2px;
+  }
+
+  .stats-toggle {
+    color: #999;
+    font-size: 11px;
+    margin-left: 12px;
+    flex-shrink: 0;
+  }
+
+  .stats-works {
+    color: #8a6d3b;
+    font-size: 11px;
+    line-height: 1.6;
+    margin: 1px 0 2px 8px;
   }
 
   .stats-row {
