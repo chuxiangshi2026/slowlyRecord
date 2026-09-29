@@ -119,8 +119,8 @@ export const useWordsStore =
             const currentTranslationPlatform = ref<TranslationPlatform>('spark'); // 默认使用讯飞星火翻译
             const currentOcrPlatform = ref<OcrPlatform>('local'); // 默认使用离线识图
             const memoryFirmness = ref<MemoryFirmnessType>('正常');
-            // 用户翻译api密钥
-            const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref({
+            // 用户翻译api密钥（工厂函数：初始化与持久化恢复后的补齐共用同一份平台清单）
+            const createUserApiKeys = (): Record<TranslationPlatform, { appkey: string, key: string }> => ({
                 glm: {appkey: '', key: ''},
                 tencent: {appkey: '', key: ''},
                 ali: {appkey: '', key: ''},
@@ -142,7 +142,8 @@ export const useWordsStore =
                 xftrans: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
-            const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref({
+            const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref(createUserApiKeys());
+            const createUserOcrApiKeys = (): Record<OcrPlatform, { appkey: string, key: string }> => ({
                 tencent: {appkey: '', key: ''},
                 ali: {appkey: '', key: ''},
                 youdao: {appkey: '', key: ''},
@@ -151,6 +152,24 @@ export const useWordsStore =
                 glm: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
+            const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref(createUserOcrApiKeys());
+            // 旧版本持久化的 userApiKeys/userOcrApiKeys 缺少后新增平台键时，恢复会整体覆盖默认值，
+            // 使该平台条目缺失，后续读取/赋值命中 undefined（升级后设置页崩溃）；恢复后统一补齐
+            function normalizeUserApiKeys() {
+                const defaults = createUserApiKeys();
+                (Object.keys(defaults) as TranslationPlatform[]).forEach((p) => {
+                    userApiKeys.value[p] ??= { ...defaults[p] };
+                });
+                const ocrDefaults = createUserOcrApiKeys();
+                (Object.keys(ocrDefaults) as OcrPlatform[]).forEach((p) => {
+                    userOcrApiKeys.value[p] ??= { ...ocrDefaults[p] };
+                });
+            }
+            // 持久化恢复后统一兜底：补齐缺失的平台密钥键，并为 focusMode 补齐后新增字段
+            function restoreDefaultsAfterHydrate() {
+                normalizeUserApiKeys();
+                focusMode.value = {...defaultFocusMode, ...focusMode.value};
+            }
             // 添加单词后自动退出插件
             const pluginStatus = ref(false);
             // 默认关闭快捷键
@@ -284,6 +303,7 @@ export const useWordsStore =
 
             function setUserApiKeys(userKeys: Record<TranslationPlatform, { appkey: string, key: string }>) {
                 userApiKeys.value = userKeys;
+                normalizeUserApiKeys();
             }
 
 
@@ -481,6 +501,7 @@ export const useWordsStore =
                 addAndUpdateSetDb(userSet);
             }
             function setApiKey(provider: TranslationPlatform, appkey: string, key: string) {
+                userApiKeys.value[provider] ??= { appkey: '', key: '' };
                 userApiKeys.value[provider].appkey = appkey;
                 userApiKeys.value[provider].key = key;
 
@@ -502,6 +523,7 @@ export const useWordsStore =
 
             function setOcrApiKey(provider: OcrPlatform, appkey: string, key: string) {
                 log.i('设置OCR密钥', provider, appkey, key)
+                userOcrApiKeys.value[provider] ??= { appkey: '', key: '' };
                 userOcrApiKeys.value[provider].appkey = appkey;
                 userOcrApiKeys.value[provider].key = key;
 
@@ -980,7 +1002,9 @@ export const useWordsStore =
                 deleteWord,
                 listWords,
                 upReview,
-                switchWordBank
+                switchWordBank,
+                // persist.afterHydrate 定义在 setup 作用域外，恢复逻辑经 store 实例转发
+                restoreDefaultsAfterHydrate
             }
         }, {
             persist: {
@@ -1003,6 +1027,12 @@ export const useWordsStore =
                     'lastVisitedPage',
                     'hiddenExplain'
                 ] // 不持久化 words 数组，因为单词数据存储在词库中
+                ,
+                // 持久化恢复后补齐旧版本数据缺失的字段（新增平台键、focusMode 新增项），
+                // 否则旧 localStorage 数据会整体覆盖带新键的默认值
+                afterHydrate: (ctx) => {
+                    (ctx.store as { restoreDefaultsAfterHydrate?: () => void }).restoreDefaultsAfterHydrate?.();
+                }
             },
         }
     )
