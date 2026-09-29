@@ -839,6 +839,8 @@ watch(showLibrary, async (on) => {
     return;
   }
   await ensureLibraryLoaded();
+  // 加载期间用户可能已取消勾选，直接退出，避免误渲染/误缩放视野
+  if (!showLibrary.value) return;
   refreshLibraryItems();
   renderLibraryMarkers();
   if (filteredLibraryItems.value.length > 0 && map) {
@@ -1104,8 +1106,12 @@ onUnmounted(() => {
   }
 }
 
-/* 路线方向箭头：线段中点放置、随方位角旋转的三角 */
+/* 路线方向箭头：线段中点放置、随方位角旋转的三角（flex 居中使旋转中心与锚点重合） */
 .route-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   .route-arrow-tri {
     width: 0;
     height: 0;
