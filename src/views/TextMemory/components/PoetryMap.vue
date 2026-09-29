@@ -485,6 +485,16 @@ async function ensureLibraryLoaded() {
   }
 }
 
+/** 诗词弹层预览：取前两句（按 。！？断句；首句过短则并入次句，适配词的短句），超 26 字截断 */
+function poemPreview(content: string): string {
+  const text = content.replace(/\s+/g, '');
+  if (!text) return '';
+  const segs = text.match(/[^。！？]+[。！？]?/g) || [];
+  let preview = segs[0] || '';
+  if (preview.length < 8 && segs[1]) preview += segs[1];
+  return preview.length > 26 ? preview.slice(0, 26) + '…' : preview;
+}
+
 /** 渲染可导入条目标记（黄色圆点，与已导入文章样式区分）；需勾选「可导入」对钩 */
 function renderLibraryMarkers() {
   if (!libraryLayer || !map) return;
@@ -522,10 +532,12 @@ function renderLibraryMarkers() {
     };
     const popupContent = group.map((item, idx) => {
       const title = item.title.length > 14 ? item.title.substring(0, 14) + '...' : item.title;
+      const preview = item.kind === 'poetry' ? poemPreview(item.article.content) : '';
       return `<div class="lib-popup-item" style="padding:6px 0;border-bottom:${idx < group.length - 1 ? '1px solid #eee' : 'none'};display:flex;align-items:center;gap:8px">
         <div style="flex:1;min-width:0">
           <span style="background:#fdf6ec;color:#b88230;padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${kindLabel[item.kind]}</span><strong>${title}</strong>
           ${item.subtitle ? `<div style="color:#666;font-size:12px;margin-top:2px">${item.subtitle}</div>` : ''}
+          ${preview ? `<div style="color:#8a6d3b;font-size:12px;margin-top:2px;font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${preview}</div>` : ''}
           ${item.location ? `<div style="color:#999;font-size:11px;margin-top:1px">📍 ${item.location}</div>` : ''}
         </div>
         <button class="lib-import-btn" data-key="${item.key}">导入</button>
