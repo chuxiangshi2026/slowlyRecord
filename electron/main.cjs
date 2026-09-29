@@ -212,22 +212,62 @@ app.on('will-quit', () => {
 // 文件选择对话框
 ipcMain.handle('showOpenDialog', async (_event, options) => {
   const result = await dialog.showOpenDialog(mainWindow, options)
+  if (!result.canceled) {
+    for (const p of result.filePaths || []) grantPath(p)
+  }
   return result
 })
 
 // 文件保存对话框
 ipcMain.handle('showSaveDialog', async (_event, options) => {
   const result = await dialog.showSaveDialog(mainWindow, options)
+  if (!result.canceled && result.filePath) grantPath(result.filePath)
   return result
 })
 
+// ---------- 文件读写路径白名单 ----------
+// readFile/writeFile 只允许：用户刚通过系统对话框选择/保存的路径、userData 与 temp 目录。
+// 防止渲染层被注入后借助这两个 IPC 任意读写本机文件。
+
+// 对话框授予的路径（渲染层选择/保存后立即读写，用量极小，超限直接清空即可）
+const grantedPaths = new Set()
+const GRANTED_PATHS_MAX = 500
+
+function grantPath(target) {
+  try {
+    if (grantedPaths.size >= GRANTED_PATHS_MAX) grantedPaths.clear()
+    grantedPaths.add(path.resolve(String(target)))
+  } catch { /* 非法路径直接忽略 */ }
+}
+
+function isPathAllowed(target) {
+  let resolved
+  try {
+    resolved = path.resolve(String(target))
+  } catch {
+    return false
+  }
+  if (grantedPaths.has(resolved)) return true
+  const allowedRoots = [app.getPath('userData'), app.getPath('temp')]
+  return allowedRoots.some((root) => {
+    const rel = path.relative(path.resolve(root), resolved)
+    return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel))
+  })
+}
+
 // 读取文件
 ipcMain.handle('readFile', async (_event, filePath) => {
+  if (!isPathAllowed(filePath)) {
+    throw new Error(`readFile 路径不在允许范围内: ${filePath}`)
+  }
   return fs.readFileSync(filePath, 'utf-8')
 })
 
 // 写入文件
 ipcMain.handle('writeFile', async (_event, filePath, content) => {
+  if (!isPathAllowed(filePath)) {
+    throw new Error(`writeFile 路径不在允许范围内: ${filePath}`)
+  }
   fs.writeFileSync(filePath, content, 'utf-8')
   return true
 })
