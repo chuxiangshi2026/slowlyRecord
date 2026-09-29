@@ -388,12 +388,12 @@ onMounted(startSession);
   transition: all 0.2s;
 
   &:hover {
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
     transform: scale(1.02);
   }
 
   .speaker {
-    color: var(--utools-primary, #409eff);
+    color: var(--utools-primary, #52796f);
   }
 }
 
@@ -439,7 +439,7 @@ onMounted(startSession);
   position: relative;
 
   &:hover:not(.correct):not(.wrong):not(.disabled) {
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
     transform: translateY(-1px);
   }
 
@@ -563,7 +563,7 @@ onMounted(startSession);
   .num {
     font-size: 36px;
     font-weight: 700;
-    color: var(--utools-primary, #409eff);
+    color: var(--utools-primary, #52796f);
     line-height: 1.1;
   }
 

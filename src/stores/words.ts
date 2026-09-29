@@ -44,49 +44,6 @@ const defaultFocusMode: FocusModeSettings = {
     backgroundImageOpacity: 0.35,
 };
 
-
-// 添加 API 密钥相关的响应式变量
-// const userApiKeys = ref({
-//     ali: {
-//         // || AppInfo.ali.appkey
-//         appkey: (localStorage.getItem('api_key_ali_appkey') || '').trim() ,
-//         // || AppInfo.ali.key
-//         key: (localStorage.getItem('api_key_ali_key') || '').trim()
-//     },
-//     youdao: {
-//         // || AppInfo.youdao.appkey
-//         appkey: (localStorage.getItem('api_key_youdao_appkey') || '').trim() ,
-//         // || AppInfo.youdao.key
-//         key: (localStorage.getItem('api_key_youdao_key') || '').trim()
-//     },
-//     baidu: {
-//         // || AppInfo.baidu.appkey
-//         appkey: (localStorage.getItem('api_key_baidu_appkey') || '').trim() ,
-//         // || AppInfo.baidu.key
-//         key: (localStorage.getItem('api_key_baidu_key') || '').trim()
-//     },
-//     utoolsai: {
-//         appkey: (localStorage.getItem('api_key_utoolsai_appkey') || '').trim(),
-//         key: (localStorage.getItem('api_key_utoolsai_key') || '').trim()
-//     },
-//     ollama: {
-//         appkey: (localStorage.getItem('api_key_ollama_appkey') || '').trim(),
-//         key: (localStorage.getItem('api_key_ollama_key') || '').trim()
-//     },
-//     deepseek: {
-//         appkey: (localStorage.getItem('api_key_deepseek_appkey') || '').trim(),
-//         key: (localStorage.getItem('api_key_deepseek_key') || '').trim()
-//     },
-//     qwen: {
-//         appkey: (localStorage.getItem('api_key_qwen_appkey') || '').trim(),
-//         key: (localStorage.getItem('api_key_qwen_key') || '').trim()
-//     },
-//     kimi: {
-//         appkey: (localStorage.getItem('api_key_kimi_appkey') || '').trim(),
-//         key: (localStorage.getItem('api_key_kimi_key') || '').trim()
-//     }
-// })
-
 export const useWordsStore =
     defineStore('words',
         () => {

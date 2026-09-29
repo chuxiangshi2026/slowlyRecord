@@ -3,7 +3,7 @@ import axios from 'axios'
 import type {AxiosRequestConfig, AxiosResponse} from 'axios'
 // import store from "@/store";
 // import type {StateAll} from "@/store";
-import {ElMessage} from "element-plus";
+// import {ElMessage} from "element-plus";
 // import {truncate} from "lodash";
 
 // 定义baseUrl
@@ -16,20 +16,6 @@ const instance = axios.create({
     baseURL: baseURL,
     // 翻译类请求：AI 引擎首响应可能 3-8s，普通翻译通常 <1s，统一 12s 足够覆盖且不会让用户等太久
     timeout: 12000
-});
-// 请求拦截器
-instance.interceptors.request.use(function (config) {
-    if (config.headers) {
-        // 使用类型断言解决类型不匹配问题
-        config.headers = {...config.headers} as any;
-    } else {
-        config.headers = {'Access-Control-Allow-Origin': 'https://openapi.youdao.com/api'} as any;
-    }
-
-    return config;
-}, function (error) {
-// 对请求错误做些什么
-    return Promise.reject(error);
 });
 // 响应拦截器
 /*instance.interceptors.response.use(function (response) {

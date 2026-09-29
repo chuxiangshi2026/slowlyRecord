@@ -630,13 +630,13 @@ async function handleConfirmRestore() {
 }
 
 .webdav-dir-flag.is-ok {
-  background: #e8f3ec;
-  color: #52796f;
+  background: var(--utools-bg-primary, #eaf1ea);
+  color: var(--utools-primary, #52796f);
 }
 
 .webdav-dir-flag.is-bad {
-  background: #fbeeee;
-  color: #d9534f;
+  background: var(--el-color-danger-light-9, #fef0f0);
+  color: var(--el-color-danger, #f56c6c);
 }
 
 .webdav-diag-candidates {

@@ -404,7 +404,7 @@ onMounted(startSession);
   transition: all 0.15s;
 
   &:hover {
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
   }
 
   .word-text {
@@ -415,7 +415,7 @@ onMounted(startSession);
   }
 
   .speaker {
-    color: var(--utools-primary, #409eff);
+    color: var(--utools-primary, #52796f);
   }
 }
 
@@ -461,7 +461,7 @@ onMounted(startSession);
 
   &.filled {
     border-style: solid;
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
 
     &:hover {
       background: #fef2f2;
@@ -470,7 +470,7 @@ onMounted(startSession);
   }
 
   &.current {
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--utools-primary) 18%, transparent);
   }
 
@@ -520,7 +520,7 @@ onMounted(startSession);
   user-select: none;
 
   &:hover:not(.used) {
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   }
@@ -626,7 +626,7 @@ onMounted(startSession);
   .num {
     font-size: 36px;
     font-weight: 700;
-    color: var(--utools-primary, #409eff);
+    color: var(--utools-primary, #52796f);
     line-height: 1.1;
   }
 

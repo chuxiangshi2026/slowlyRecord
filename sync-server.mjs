@@ -3,17 +3,14 @@
  *
  * 部署方式（3 选 1）：
  *
- * 1. CloudBase 云函数：
- *    - 将此文件上传为云函数 sync
- *    - 无需额外配置
+ * 1. 独立 Node 服务：
+ *    - node sync-server.mjs 启动（仅直接运行时启动，被 import 不会监听端口）
+ *    - 默认监听 3000 端口（PORT 环境变量可改）
  *
- * 2. Vercel Serverless：
- *    - 改文件名为 api/sync.ts，加 export default
- *    - vercel deploy 即可
- *
- * 3. 独立 Node 服务：
- *    - node sync-server.mjs 启动
- *    - 默认监听 3000 端口
+ * 2. CloudBase 云函数 / Vercel Serverless：
+ *    - import { main } from './sync-server.mjs' 作为云函数入口
+ *    - Vercel：改文件名为 api/sync.ts（本文件为合法 ESM JS，天然是合法 TS），
+ *      用 handleRequest 包一层 export default 即可（见文件末尾注释样例）
  *
  * API：
  *   POST   /sync       → 上传加密数据，返回 { code }（一次性，阅后即焚）
@@ -26,13 +23,12 @@
 
 // ============ 存储层（可替换为 Redis/SQLite/MySQL） ============
 
-interface SyncRecord {
-  e: string          // 加密数据
-  createdAt: number  // 创建时间
-}
+/**
+ * @typedef {{ e: string, createdAt: number }} SyncRecord
+ */
 
-/** 内存存储（重启丢失，适合临时同步） */
-const store = new Map<string, SyncRecord>()
+/** 内存存储（重启丢失，适合临时同步） @type {Map<string, SyncRecord>} */
+const store = new Map()
 
 /** 数据过期时间（毫秒），默认 24 小时 */
 const TTL = 24 * 60 * 60 * 1000
@@ -53,7 +49,7 @@ setInterval(cleanup, 10 * 60 * 1000)
 
 // ============ 生成同步码 ============
 
-function generateCode(): string {
+function generateCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
   let code = ''
   const arr = new Uint8Array(8)
@@ -70,10 +66,11 @@ function generateCode(): string {
 
 // ============ HTTP 处理 ============
 
-function jsonBody(req: any): Promise<any> {
+/** @param {any} req */
+function jsonBody(req) {
   return new Promise((resolve, reject) => {
     let body = ''
-    req.on('data', (chunk: Buffer) => { body += chunk.toString() })
+    req.on('data', (/** @type {Buffer} */ chunk) => { body += chunk.toString() })
     req.on('end', () => {
       try { resolve(body ? JSON.parse(body) : {}) }
       catch { reject(new Error('Invalid JSON')) }
@@ -88,7 +85,8 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-function jsonResponse(res: any, statusCode: number, data: any) {
+/** @param {any} res @param {number} statusCode @param {any} data */
+function jsonResponse(res, statusCode, data) {
   res.writeHead(statusCode, {
     'Content-Type': 'application/json',
     ...CORS_HEADERS,
@@ -98,8 +96,12 @@ function jsonResponse(res: any, statusCode: number, data: any) {
 
 /**
  * 处理 HTTP 请求（与框架无关）
+ * @param {string} method
+ * @param {string} path
+ * @param {any} [body]
+ * @returns {Promise<{ status: number, data: any }>}
  */
-export async function handleRequest(method: string, path: string, body?: any): Promise<{ status: number; data: any }> {
+export async function handleRequest(method, path, body) {
   // CORS preflight
   if (method === 'OPTIONS') {
     return { status: 204, data: null }
@@ -152,44 +154,41 @@ export async function handleRequest(method: string, path: string, body?: any): P
   return { status: 404, data: { error: 'Not found' } }
 }
 
-// ============ CloudBase 云函数入口 ============
+// ============ 云函数入口（CloudBase 等） ============
 
-exports.main = async (event: any) => {
-  const { method, path, body } = event
+export const main = async (/** @type {any} */ event) => {
+  const { method, path, body } = event || {}
   const result = await handleRequest(method || 'GET', path || '/', body)
   return result.data
 }
 
-// ============ Vercel Serverless 入口 ============
+// ============ 独立 Node 服务（node sync-server.mjs 直接运行时启动） ============
 
-// export default async function handler(req: any, res: any) {
-//   const result = await handleRequest(req.method, req.url?.split('?')[0] || '/', req.body)
-//   res.status(result.status).json(result.data)
-// }
-
-// ============ 独立 Node 服务 ============
-
-// 取消注释以下代码即可用 node sync-server.mjs 启动
-
-/*
 import { createServer } from 'http'
+import { pathToFileURL } from 'url'
 
-const PORT = process.env.PORT || 3000
+async function startServer() {
+  const PORT = process.env.PORT || 3000
 
-const server = createServer(async (req, res) => {
-  try {
-    const url = new URL(req.url!, `http://localhost:${PORT}`)
-    const body = req.method === 'POST' ? await jsonBody(req) : undefined
-    const result = await handleRequest(req.method!, url.pathname, body)
-    jsonResponse(res, result.status, result.data)
-  } catch (e) {
-    console.error('[sync] error', e)
-    jsonResponse(res, 500, { error: 'Internal error' })
-  }
-})
+  const server = createServer(async (req, res) => {
+    try {
+      const url = new URL(req.url || '/', `http://localhost:${PORT}`)
+      const body = req.method === 'POST' ? await jsonBody(req) : undefined
+      const result = await handleRequest(req.method || 'GET', url.pathname, body)
+      jsonResponse(res, result.status, result.data)
+    } catch (e) {
+      console.error('[sync] error', e)
+      jsonResponse(res, 500, { error: 'Internal error' })
+    }
+  })
 
-server.listen(PORT, () => {
-  console.log(`[sync] server listening on http://localhost:${PORT}`)
-  console.log(`[sync] TTL = ${TTL / 1000 / 60 / 60} hours`)
-})
-*/
+  server.listen(PORT, () => {
+    console.log(`[sync] server listening on http://localhost:${PORT}`)
+    console.log(`[sync] TTL = ${TTL / 1000 / 60 / 60} hours`)
+  })
+}
+
+// 仅直接运行时启动（node sync-server.mjs）；被 import 作为模块时只暴露入口
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  startServer()
+}

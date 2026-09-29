@@ -300,7 +300,7 @@ function goBreakdown() {
     line-height: 1;
 
     &.active {
-      color: var(--utools-primary, #409eff);
+      color: var(--utools-primary, #52796f);
     }
   }
 
@@ -335,7 +335,7 @@ function goBreakdown() {
 
   &:hover {
     transform: translateY(-2px);
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   }
 
@@ -439,11 +439,11 @@ function goBreakdown() {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
   }
 
   &.active {
-    border-color: var(--utools-primary, #409eff);
+    border-color: var(--utools-primary, #52796f);
     box-shadow: 0 0 0 2px var(--utools-primary-light, rgba(64, 158, 255, 0.2));
   }
 
@@ -517,7 +517,7 @@ function goBreakdown() {
   }
 
   .detail-speaker {
-    color: var(--utools-primary, #409eff);
+    color: var(--utools-primary, #52796f);
   }
 }
 

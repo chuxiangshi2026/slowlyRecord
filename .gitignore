@@ -15,7 +15,6 @@ dist-web
 release
 coverage
 *.local
-*.py
 
 
 /cypress/videos/
