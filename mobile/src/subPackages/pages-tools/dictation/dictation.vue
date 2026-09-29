@@ -204,9 +204,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, watch } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
-import { speakWord } from '@/utils/word-audio'
+import { speakWord, stopSpeaking } from '@/utils/word-audio'
 import { buildFragmentTiles, type AnswerTile } from '@/utils/answer-tokens'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
@@ -763,6 +763,12 @@ onMounted(async () => {
 watch(() => wordsStore.currentBankId, async () => {
   await loadWords()
   if (wordList.value.length > 0) prepareWord()
+})
+
+// 退出页面停止发音并清掉升级飘字定时器（对齐 review.vue 的清理口径，避免退出后音频继续播完）
+onUnmounted(() => {
+  stopSpeaking()
+  if (levelUpTimer) clearTimeout(levelUpTimer)
 })
 </script>
 
