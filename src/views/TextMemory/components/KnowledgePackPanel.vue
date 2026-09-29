@@ -134,7 +134,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import {useRouter} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {useKnowledgeMemoryStore} from '@/stores/knowledgeMemory';
 import {Search} from '@element-plus/icons-vue';
@@ -154,6 +154,7 @@ const emit = defineEmits<{
   (e: 'openImport'): void;
 }>();
 
+const route = useRoute();
 const router = useRouter();
 const store = useKnowledgeMemoryStore();
 
@@ -250,7 +251,8 @@ function getProgressPercent(packId: string): number {
 }
 
 function goPack(packId: string) {
-  router.push(`/knowledge-memory/${packId}`);
+  // 带上来处，知识包页头部「返回」优先回到这里（否则默认回单词页）
+  router.push({path: `/knowledge-memory/${packId}`, query: {from: route.fullPath}});
 }
 
 // 点击「导入」：外部模式通知父级，否则打开内置导入对话框并顺带加载缩略预览

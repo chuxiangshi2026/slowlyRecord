@@ -78,8 +78,10 @@
             <div v-if="ri >= F_BLOCK_ROW_START" class="f-row-label">
               {{ ri === F_BLOCK_ROW_START ? '镧系' : '锕系' }}
             </div>
+            <!-- f 区行：行首 2 个空位由「镧系/锕系」标签顶替（label span 2 + 16 格 = 18 列），
+                 否则 18 格 + 标签会溢出换行，把行末元素（Lu 71 / Lr 103）挤到下一行 -->
             <div
-              v-for="(cell, ci) in row"
+              v-for="(cell, ci) in ri >= F_BLOCK_ROW_START ? row.slice(2) : row"
               :key="ci"
               :class="['element-cell', {empty: !cell}]"
             >
@@ -612,8 +614,8 @@ function generateCurrentOptions() {
 }
 
 function goBack() {
-  // 统一回到知识库主页
-  router.push({ path: '/knowledge-memory', query: { from: route.fullPath } });
+  // 统一回到知识库主页（不带 from，否则主页头部「返回」又会跳回本包造成回环）
+  router.push('/knowledge-memory');
 }
 
 function isCorrectOption(opt: string): boolean {
