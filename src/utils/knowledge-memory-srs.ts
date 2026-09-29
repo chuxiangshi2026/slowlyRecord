@@ -100,7 +100,7 @@ export function markCorrect(
 
 /**
  * 答错后更新进度
- * 12 级答错直接重置为 1 级，否则降级
+ * 降级封顶 -4、下限 1 级（与 srs.ts 的 computeLevelDown 同口径）
  */
 export function markWrong(
     progress: KnowledgeItemProgress,

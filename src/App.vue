@@ -91,7 +91,10 @@ let reviewReminderNotified = false;
 
 ;(window as any).utools?.onPluginEnter?.(async (action: any) => {
   console.log('[onPluginEnter] 回调已触发, code=', action?.code, '时间=', new Date().toISOString());
-  handleUtoolsEnter(action)
+  handleUtoolsEnter(action).catch((e: any) => {
+    debugLog('onPluginEnter 处理失败:', e);
+    ElMessage.warning('操作执行失败，请重试');
+  })
 })
 
 // uTools enter 事件统一处理：兼容 preload 阶段缓存的事件
@@ -265,7 +268,14 @@ async function handleUtoolsEnter(action: any) {
   if (action.code === 'huaci' && action.from === 'hotkey') {
     // action.type =='over'
     // console.log('我是快捷键进来的')
-    const selectedText = await navigator.clipboard.readText();
+    let selectedText = '';
+    try {
+      selectedText = await navigator.clipboard.readText();
+    } catch (e) {
+      debugLog('读取剪贴板失败:', e);
+      ElMessage.error('读取剪贴板失败，请重试');
+      return;
+    }
     checkShearBoardAddWork(selectedText);
   }
 
@@ -276,7 +286,10 @@ async function handleUtoolsEnter(action: any) {
     getSelectedTextFromSystem().then(text => {
           checkShearBoardAddWork(text);
         }
-    );
+    ).catch(e => {
+      debugLog('划词获取选中文本失败:', e);
+      ElMessage.error('划词失败，请重试');
+    });
   }
 
   if (action.code === 'jietu') {
@@ -705,7 +718,13 @@ async function getSelectedTextFromSystem(): Promise<string> {
   await new Promise(resolve => setTimeout(resolve, 200));
 
   // 读取剪贴板
-  const selectedText = await navigator.clipboard.readText();
+  let selectedText = '';
+  try {
+    selectedText = await navigator.clipboard.readText();
+  } catch (e) {
+    debugLog('读取剪贴板失败:', e);
+    // 按未获取到处理：走下方恢复备份剪贴板并提示的分支
+  }
 
   debugLog('[划段添加] 获取到的文本:', selectedText);
 
@@ -873,71 +892,6 @@ onMounted(async () => {
     }
     // uTools 端：主窗口 iframe 背景不受内部 CSS 控制，跳过 applyRgbaOpacity
   }
-
-  // 添加调试面板快捷键 Ctrl+Shift+D
-/*  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-      showDebugPanel.value = !showDebugPanel.value;
-      e.preventDefault();
-    }
-  };
-  window.addEventListener('keydown', handleKeyDown);*/
-
-  // 清理函数
-  // onUnmounted(() => {
-  //   window.removeEventListener('keydown', handleKeyDown);
-  // });
-
-  // window.addEventListener('selected-text', handleSelectedText as EventListener);
-
-
-  // 进入插件
-
-
-  /*  const initUtoolSetting = () => {
-      return new Promise((resolve) => {
-        let setting = window.services.wordModel.getUtoolsSetting()
-        if (!setting) {
-          setting = initialUtoolState
-          window.services.wordModel.setUtoolsSetting(setting)
-        }
-        // dispatch(setUtoolSetting(setting)) // 同步到redux
-        console.log('UtoolSetting', setting)
-        utoolsSettingRef.current = setting
-        resolve(setting)
-      })
-    }*/
-  /*utools.onPluginEnter((action) => {
-  //用户进入插件应用
-    console.log(JSON.stringify(action))
-    route.value = action.code
-    enterAction.value = action
-    // { code, type, payload, option, from }
-
-
-    // app版本
-    // const currentVerson = window.services.getAppVerson()
-    // 数据库版本
-    // const previousVerson = window.services.wordModel.getAppVersionFromDb()
-
-    // 添加单词
-    if (action.code === 'add vocabulary') {
-      // addWord(action.payload)
-
-    }
-    // 复习单词
-
-    // if (action.code === 'review') {
-    //   getWordList()
-    // }
-  })*/
-
-
-  // 退出插件时触发
-  //   window.utools.onPluginOut((isKill) => {
-  //     route.value = ''
-  //   }
-
 
 });
 

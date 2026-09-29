@@ -612,8 +612,15 @@ async function savePracticeRecord() {
     date: Date.now()
   };
 
-  // 从 localStorage 读取历史记录
-  const history = JSON.parse(localStorage.getItem('typing_practice_history') || '[]');
+  // 从 localStorage 读取历史记录（损坏时按空数组处理，避免本次成绩保存中断）
+  let history: any[] = [];
+  try {
+    const stored = localStorage.getItem('typing_practice_history');
+    if (stored) history = JSON.parse(stored);
+  } catch (e) {
+    console.warn('打字练习历史记录损坏，已重置', e);
+  }
+  if (!Array.isArray(history)) history = [];
   history.unshift(record);
   // 只保留最近 50 条记录
   if (history.length > 50) {

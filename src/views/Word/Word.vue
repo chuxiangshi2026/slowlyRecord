@@ -2026,7 +2026,6 @@ const handleChildMessage = (message: any) => {
 };
 
 
-let messageListenerReady = false;
 
 // Electron 子窗口 ipc 监听：幂等绑定（页面重挂载/重复开窗不叠加监听器），
 // 事件按当前专注窗口 _winId 路由；childDbPut 持久化所有子窗口写入
@@ -2067,18 +2066,22 @@ function bindElectronFocusListenersOnce() {
 // 全局设置 uTools 消息监听
 // @ts-ignore
 function setupMessageListener() {
-  if (messageListenerReady) {
+  // uTools onMessage 无退订能力：window 级只绑定一次，实际处理转发给
+  // 当前挂载实例的 handleChildMessage，避免页面重挂载后旧闭包仍重复处理消息
+  const w = window as any;
+  w.__wordChildMessageDelegate = (message: any) => {
+    handleChildMessage(message);
+  };
+  if (w.__wordUtoolsMessageBound) {
     return;
   }
-
   // @ts-ignore
-  if (isUtools() && (window as any).utools?.onMessage) {
-    // @ts-ignore
-    (window as any).utools.onMessage((message: any) => {
+  if (isUtools() && w.utools?.onMessage) {
+    w.__wordUtoolsMessageBound = true;
+    w.utools.onMessage((message: any) => {
       console.log('【全局】父窗口 utools.onMessage 收到:', message);
-      handleChildMessage(message);
+      w.__wordChildMessageDelegate?.(message);
     });
-    messageListenerReady = true;
     console.log('【全局】父窗口 utools.onMessage 监听已设置');
   } else {
     console.log('【全局】utools.onMessage 不可用');

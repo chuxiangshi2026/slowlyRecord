@@ -1818,6 +1818,18 @@
       return !!word.isReview;  // 默认0：待复习
     }
 
+    // 记忆牢固度升级幅度：与主列表 MyListItem/听写页一致（正常 +1 / 较强 +2 / 极强 +3）
+    // 设置读取主窗口 pinia persist 到 localStorage 的 words-store（与主窗口同源共享）
+    function getLevelIncrement() {
+      try {
+        var raw = localStorage.getItem('words-store');
+        var firmness = raw ? (JSON.parse(raw).memoryFirmness || '正常') : '正常';
+        if (firmness === '较强') return 2;
+        if (firmness === '极强') return 3;
+      } catch (e) { /* 设置读取失败按默认处理 */ }
+      return 1;
+    }
+
     // 标记认识
     function markRemembered(forever) {
       cancelAutoNext();
@@ -1834,8 +1846,8 @@
         word.remember = true;
         word.isReview = false;
       } else {
-        // 与 srs.ts 统一：封顶 12 级，12 级才视为已记住（原来是 7 级，口径不一致）
-        word.level = Math.min(12, (word.level || 1) + 1);
+        // 与主列表/听写页统一：按记忆牢固度设置升级（正常 +1 / 较强 +2 / 极强 +3），封顶 12 级
+        word.level = Math.min(12, (word.level || 1) + getLevelIncrement());
         // 答对后设为不需要复习（刚复习过），等 upReview 根据间隔时间重新计算
         word.isReview = false;
         if (word.level >= 12) word.remember = true;
