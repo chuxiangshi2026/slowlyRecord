@@ -64,6 +64,8 @@ export interface SyncTextMemory {
   articles: TextArticle[]
   notes: TextNote[]
   prompts: TextPrompt[]
+  /** 学习进度（键 = articleId_exerciseType，含 lastAccessTime）；可选，旧版本备份无此字段 */
+  progress?: Record<string, Record<string, any>>
 }
 
 /** 数字记忆同步数据 */

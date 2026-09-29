@@ -14,6 +14,7 @@ import { NUTSTORE_WEBDAV_URL, checkDirWritable, diagnoseWebDav, normalizeWebDavU
 import type { WebDavDiagnosis } from '@/utils/sync-webdav'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
+import { isElectron } from '@/adapters/platform'
 import { markSynced } from '@/utils/sync-dirty'
 
 // 持久化键
@@ -62,9 +63,60 @@ export const useSyncStore = defineStore('sync', () => {
   const LS_WEBDAV_USERNAME = 'sync_webdav_username'
   const LS_WEBDAV_PASSWORD = 'sync_webdav_password'
 
+  // 密码静态加密：Electron 下走 OS 级 safeStorage（Windows DPAPI / macOS Keychain），
+  // 密文以 enc:v1: 前缀标识；加密不可用（uTools/Web 等）回退明文，与历史行为兼容
+  const PWD_ENC_PREFIX = 'enc:v1:'
+
+  function getElectronApi() {
+    return isElectron() ? (window as any).electronAPI : null
+  }
+
+  async function encryptStoredPassword(plain: string): Promise<string> {
+    const api = getElectronApi()?.safeStorageEncrypt
+    if (!plain || !api) return plain
+    try {
+      const enc = await api(plain)
+      return enc ? PWD_ENC_PREFIX + enc : plain
+    } catch {
+      return plain
+    }
+  }
+
+  async function decryptStoredPassword(stored: string): Promise<string> {
+    if (!stored || !stored.startsWith(PWD_ENC_PREFIX)) return stored
+    const api = getElectronApi()?.safeStorageDecrypt
+    // 密文存在但解密不可用（如换到无 safeStorage 的环境）：返回空，避免误用
+    if (!api) return ''
+    try {
+      return (await api(stored.slice(PWD_ENC_PREFIX.length))) || ''
+    } catch {
+      return ''
+    }
+  }
+
+  /** 密码落盘：能加密则存密文，失败回退明文（不因加密链路问题丢配置） */
+  async function persistWebDavPassword(plain: string) {
+    try {
+      _storage.setItem(LS_WEBDAV_PASSWORD, await encryptStoredPassword(plain))
+    } catch (e) {
+      log.w('WebDAV 密码加密落盘失败，回退明文', e)
+      _storage.setItem(LS_WEBDAV_PASSWORD, plain)
+    }
+  }
+
   const webdavUrl = ref((_storage.getItem(LS_WEBDAV_URL) as string) || NUTSTORE_WEBDAV_URL)
   const webdavUsername = ref((_storage.getItem(LS_WEBDAV_USERNAME) as string) || '')
-  const webdavPassword = ref((_storage.getItem(LS_WEBDAV_PASSWORD) as string) || '')
+  const webdavPassword = ref('')
+  // 恢复保存的密码：兼容旧明文；Electron 下检测到旧明文顺手迁移为密文
+  ;(async () => {
+    const stored = (_storage.getItem(LS_WEBDAV_PASSWORD) as string) || ''
+    if (!stored) return
+    const plain = await decryptStoredPassword(stored)
+    if (!webdavPassword.value && plain) webdavPassword.value = plain
+    if (!stored.startsWith(PWD_ENC_PREFIX) && plain) {
+      persistWebDavPassword(plain)
+    }
+  })()
 
   /** 是否已填写完整凭据 */
   const webdavConfigured = computed(() => !!(webdavUrl.value.trim() && webdavUsername.value.trim() && webdavPassword.value.trim()))
@@ -323,13 +375,13 @@ export const useSyncStore = defineStore('sync', () => {
   }
 
   /** 保存 WebDAV 凭据到本地（与应用内 API key 同级存储，不上传）；地址顺手规范化并存回输入框 */
-  function saveWebDavConfig() {
+  async function saveWebDavConfig() {
     const cfg = currentWebDavConfig()
     const normalizedUrl = normalizeWebDavUrl(cfg.url)
     webdavUrl.value = normalizedUrl
     _storage.setItem(LS_WEBDAV_URL, normalizedUrl)
     _storage.setItem(LS_WEBDAV_USERNAME, cfg.username)
-    _storage.setItem(LS_WEBDAV_PASSWORD, cfg.password)
+    await persistWebDavPassword(cfg.password)
   }
 
   async function testWebDav(): Promise<{ ok: boolean; message: string }> {
@@ -350,7 +402,7 @@ export const useSyncStore = defineStore('sync', () => {
 
   /** 诊断 WebDAV：逐步执行并返回结构化结果（UI 据此着色与给出修复入口） */
   async function webdavDiagnose(): Promise<WebDavDiagnosis> {
-    saveWebDavConfig()
+    await saveWebDavConfig()
     const diagnosis = await diagnoseWebDav(currentWebDavConfig())
     resultMessage.value = diagnosis.verdict
     return diagnosis
@@ -363,12 +415,12 @@ export const useSyncStore = defineStore('sync', () => {
     status.value = 'uploading'
     resultMessage.value = ''
     try {
-      saveWebDavConfig()
+      await saveWebDavConfig()
       const result = await uploadToWebDav(currentWebDavConfig())
       if (result.success && result.resolvedDir) {
         // 坚果云根目录不允许直接创建文件，已自动改用可写子目录：记住它，后续备份/恢复直连该目录
         webdavUrl.value = result.resolvedDir
-        saveWebDavConfig()
+        await saveWebDavConfig()
         webdavDirWritable.value = true
         resultMessage.value = `已备份到 ${result.resolvedDir}（已自动改用可写目录，并记入地址栏）`
       } else {
@@ -394,7 +446,7 @@ export const useSyncStore = defineStore('sync', () => {
     status.value = 'downloading'
     resultMessage.value = ''
     try {
-      saveWebDavConfig()
+      await saveWebDavConfig()
       const result = await downloadFromWebDav(currentWebDavConfig(), options)
       lastRestoreResult.value = result
       if (result.success) {

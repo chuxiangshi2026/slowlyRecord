@@ -145,10 +145,17 @@ async function collectTextMemory(): Promise<SyncTextMemory | null> {
     const db = getDbAdapter()
     const doc = db.get('slowlyrecord-textmemory-data') as any
     if (!doc || !doc.articles) return null
+    // 学习进度存 localStorage（与文章数据不同源），随包携带避免换设备丢进度；
+    // 键与 textMemory store 的 TEXTMEMORY_PROGRESS_KEY 一致
+    let progress: Record<string, Record<string, any>> = {}
+    try {
+      progress = JSON.parse(localStorage.getItem('slowlyrecord-textmemory-progress') || '{}')
+    } catch { /* 进度损坏按空处理 */ }
     return {
       articles: doc.articles || [],
       notes: doc.notes || [],
       prompts: doc.prompts || [],
+      progress,
     }
   } catch {
     return null
@@ -645,6 +652,27 @@ async function restoreTextMemory(data: SyncTextMemory, tombstones: Record<string
       notes: mergeById(existingDoc?.notes, data.notes),
       prompts: mergeById(existingDoc?.prompts, data.prompts),
       updatedAt: Date.now(),
+    }
+
+    // 合并学习进度：按条目 lastAccessTime 取新，旧备份无 progress 字段时跳过
+    if (data.progress && typeof data.progress === 'object') {
+      try {
+        const KEY = 'slowlyrecord-textmemory-progress'
+        let local: Record<string, any> = {}
+        try { local = JSON.parse(localStorage.getItem(KEY) || '{}') } catch { local = {} }
+        let changed = false
+        for (const [k, remoteItem] of Object.entries(data.progress)) {
+          if (!remoteItem || typeof remoteItem !== 'object') continue
+          const localItem = local[k]
+          if (!localItem || ((remoteItem.lastAccessTime || 0) > (localItem.lastAccessTime || 0))) {
+            local[k] = remoteItem
+            changed = true
+          }
+        }
+        if (changed) localStorage.setItem(KEY, JSON.stringify(local))
+      } catch (e) {
+        log.w('合并学习进度失败', e)
+      }
     }
 
     if (existingDoc?._rev) {

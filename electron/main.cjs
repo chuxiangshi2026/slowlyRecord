@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog, clipboard, Tray, Menu, globalShortcut, screen } from 'electron'
+import { app, BrowserWindow, ipcMain, dialog, clipboard, Tray, Menu, globalShortcut, screen, safeStorage } from 'electron'
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
@@ -277,6 +277,33 @@ ipcMain.handle('getPath', (_event, name) => {
   return app.getPath(name)
 })
 
+// ---------- 打包资源读取 ----------
+// file:// 协议下渲染层 fetch 拿不到本地打包资源（Chromium 禁止 fetch file: URL），
+// preload 的 fetch 拦截改走本 IPC；仅允许打包目录内白名单前缀、禁目录穿越。
+// 注意：不能用 app:// 自定义协议替代——换源会孤立既有用户 file:// 源下的
+// localStorage/IndexedDB 数据，代价远大于收益。
+const RESOURCE_PREFIXES = ['/wordbanks/', '/knowledgebanks/', '/datafile/', '/tessdata/']
+const RESOURCE_MIME = {
+  '.json': 'application/json',
+  '.gz': 'application/gzip',
+  '.traineddata': 'application/octet-stream',
+  '.png': 'image/png',
+  '.svg': 'image/svg+xml',
+}
+
+ipcMain.handle('readResource', (_event, relPath) => {
+  try {
+    let rel = '/' + String(relPath).replace(/^\.\//, '').replace(/^\/+/, '')
+    if (rel.includes('..') || !RESOURCE_PREFIXES.some((p) => rel.startsWith(p))) return null
+    // fs 对 app.asar 内文件透明可读
+    const data = fs.readFileSync(path.join(__dirname, rel))
+    const mime = RESOURCE_MIME[path.extname(rel).toLowerCase()] || 'application/octet-stream'
+    return { data, mime }
+  } catch {
+    return null
+  }
+})
+
 // 剪贴板：读取
 ipcMain.handle('clipboardReadText', () => {
   return clipboard.readText()
@@ -285,6 +312,26 @@ ipcMain.handle('clipboardReadText', () => {
 // 剪贴板：写入
 ipcMain.handle('clipboardWriteText', (_event, text) => {
   clipboard.writeText(text)
+})
+
+// 凭据静态加密：基于 OS 级密钥（Windows DPAPI / macOS Keychain / libsecret），
+// 供渲染层加密存储 WebDAV 密码等敏感配置；加密不可用时返回 null 由渲染层回退
+ipcMain.handle('safeStorageEncrypt', (_event, plain) => {
+  try {
+    if (!safeStorage.isEncryptionAvailable()) return null
+    return safeStorage.encryptString(String(plain)).toString('base64')
+  } catch {
+    return null
+  }
+})
+
+ipcMain.handle('safeStorageDecrypt', (_event, b64) => {
+  try {
+    if (!b64) return null
+    return safeStorage.decryptString(Buffer.from(String(b64), 'base64'))
+  } catch {
+    return null
+  }
 })
 
 // 窗口透明度：获取
