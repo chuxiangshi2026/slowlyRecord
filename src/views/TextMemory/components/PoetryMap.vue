@@ -95,15 +95,27 @@
           时间线 {{ timelineCount }} 事件
         </el-tag>
       </div>
-
-      <!-- 生平路线统计条：足迹分布 / 作品最多 / 停留最久 / 转折点 / 生卒年 -->
-      <div v-if="routeStatsInfo" class="control-group route-stats-bar">
-        {{ routeStatsInfo }}
-      </div>
     </div>
 
     <!-- 地图容器 -->
-    <div ref="mapContainer" class="map-container"></div>
+    <div ref="mapContainer" class="map-container">
+      <!-- 生平轨迹统计面板：结构化分行展示，转折点全列出，可滚动 -->
+      <div v-if="routeStats" class="route-stats-panel">
+        <div class="stats-title">
+          生平轨迹<template v-if="routeStats.bio"> · {{ routeStats.bio.birthYear }}–{{ routeStats.bio.deathYear }}（{{ routeStats.bio.deathYear - routeStats.bio.birthYear }} 岁）</template>
+        </div>
+        <div class="stats-row">足迹 {{ routeStats.places }} 地 · 记录 {{ routeStats.stopCount }} 条</div>
+        <div v-if="routeStats.mostWorks" class="stats-row">作品最多：{{ routeStats.mostWorks.place }}（{{ routeStats.mostWorks.count }} 篇）</div>
+        <div v-if="routeStats.mostVisited" class="stats-row">记录最多：{{ routeStats.mostVisited.place }}（{{ routeStats.mostVisited.count }} 条）</div>
+        <div v-if="routeStats.longestStay" class="stats-row">停留最久：{{ routeStats.longestStay.place }}（约 {{ routeStats.longestStay.years }} 年）</div>
+        <template v-if="routeStats.turnings.length > 0">
+          <div class="stats-row stats-subtitle">转折点</div>
+          <div v-for="(t, i) in routeStats.turnings" :key="i" class="stats-row stats-turning">
+            · {{ t.year }} {{ t.place }} — {{ t.text }}
+          </div>
+        </template>
+      </div>
+    </div>
 
     <!-- 详情弹窗 -->
     <el-dialog
@@ -293,11 +305,20 @@ const availableAuthors = computed(() => {
   return Array.from(set).sort();
 });
 
-// 生平路线统计条：足迹分布、作品最多/驻足最多/停留最久的地方、转折点与生卒年
-const routeStatsInfo = computed(() => {
-  if (!showRoute.value || !selectedAuthor.value) return '';
+// 生平路线统计数据（浮层面板）：足迹分布、作品最多/记录最多/停留最久、全部转折点与生卒年
+interface RouteStats {
+  places: number;
+  stopCount: number;
+  bio?: { birthYear: number; deathYear: number };
+  mostVisited?: { place: string; count: number };
+  mostWorks?: { place: string; count: number };
+  longestStay?: { place: string; years: number };
+  turnings: { year: number; place: string; text: string }[];
+}
+const routeStats = computed<RouteStats | null>(() => {
+  if (!showRoute.value || !selectedAuthor.value) return null;
   const stops = buildRouteStops();
-  if (stops.length === 0) return '';
+  if (stops.length === 0) return null;
   const bio = getAuthorBiography(selectedAuthor.value);
   const visitCount = new Map<string, number>();
   const worksCount = new Map<string, number>();
@@ -306,25 +327,29 @@ const routeStatsInfo = computed(() => {
     visitCount.set(p, (visitCount.get(p) || 0) + 1);
     if (s.eventType === 'poem') worksCount.set(p, (worksCount.get(p) || 0) + 1);
   }
-  const topEntry = (m: Map<string, number>) => [...m.entries()].sort((a, b) => b[1] - a[1])[0];
-  const parts: string[] = [`足迹 ${visitCount.size} 地`];
-  const mv = topEntry(visitCount);
-  if (mv && mv[1] > 1) parts.push(`记录最多 ${mv[0]}（${mv[1]} 条）`);
-  const mw = topEntry(worksCount);
-  if (mw) parts.push(`作品最多 ${mw[0]}（${mw[1]} 篇）`);
+  const topEntry = (m: Map<string, number>, min: number) => {
+    const e = [...m.entries()].sort((a, b) => b[1] - a[1])[0];
+    return e && e[1] >= min ? { place: e[0], count: e[1] } : undefined;
+  };
+  const stats: RouteStats = {
+    places: visitCount.size,
+    stopCount: stops.length,
+    mostVisited: topEntry(visitCount, 2),
+    mostWorks: topEntry(worksCount, 1),
+    turnings: [],
+  };
   if (bio) {
+    stats.bio = { birthYear: bio.birthYear, deathYear: bio.deathYear };
     const longest = bio.events
       .filter(e => e.type === 'residence')
       .map(e => ({ place: e.place, years: (e.endYear ?? e.year + 1) - e.year }))
       .sort((a, b) => b.years - a.years)[0];
-    if (longest && longest.years >= 2) parts.push(`停留最久 ${longest.place}（约 ${longest.years} 年）`);
-    const turnings = bio.events.filter(e => e.type === 'turning');
-    if (turnings.length > 0) {
-      parts.push(`转折 ${turnings.map(e => `${e.place}·${e.event.split('，')[0]}`).slice(0, 3).join('；')}`);
-    }
-    parts.push(`生卒 ${bio.birthYear}–${bio.deathYear}（${bio.deathYear - bio.birthYear} 岁）`);
+    if (longest && longest.years >= 2) stats.longestStay = longest;
+    stats.turnings = bio.events
+      .filter(e => e.type === 'turning')
+      .map(e => ({ year: e.year, place: e.place, text: e.event.split('，')[0] }));
   }
-  return parts.join(' ｜ ');
+  return stats;
 });
 
 // ==================== 地图初始化 ====================
@@ -832,8 +857,32 @@ function buildRouteStops(): RouteStop[] {
   return stops;
 }
 
-/** 绘制当前所选作者的生平路线：站点按年份排序连线（站点由 buildRouteStops 汇总）。
- *  未导入的题库站点点击只弹概要，不开详情。 */
+/** 路线聚合节点：相近时期（同地间隔 ≤10 年，或任一站无年份）且相近地点（约 10km 网格）的连续站点合并 */
+interface RouteCluster {
+  stops: RouteStop[];
+  geo: GeoLocation;
+}
+
+function clusterRouteStops(stops: RouteStop[]): RouteCluster[] {
+  const clusters: RouteCluster[] = [];
+  for (const s of stops) {
+    const last = clusters[clusters.length - 1];
+    if (last) {
+      const samePlace = last.geo.lat.toFixed(1) === s.geo.lat.toFixed(1) && last.geo.lng.toFixed(1) === s.geo.lng.toFixed(1);
+      const lastYear = last.stops[last.stops.length - 1].year;
+      const nearTime = s.year == null || lastYear == null || Math.abs(s.year - lastYear) <= 10;
+      if (samePlace && nearTime) {
+        last.stops.push(s);
+        continue;
+      }
+    }
+    clusters.push({ stops: [s], geo: s.geo });
+  }
+  return clusters;
+}
+
+/** 绘制当前所选作者的生平路线：相近时期+相近地点的站点聚合成一个大标记，弹层列表展示全部条目，
+ *  路线只连聚合节点（避免同地多作品导致线条密集杂乱）。已导入作品行可点击开详情，未导入只读。 */
 function renderRoute() {
   if (!routeLayer || !map) return;
   routeLayer.clearLayers();
@@ -847,7 +896,15 @@ function renderRoute() {
 
   const bio = getAuthorBiography(selectedAuthor.value);
   const maxAge = bio ? bio.deathYear - bio.birthYear : 0;
-  const coords: [number, number][] = stops.map(s => [s.geo.lat, s.geo.lng]);
+  const clusters = clusterRouteStops(stops);
+  // 路线只串聚合节点，连续同坐标去重
+  const coords: [number, number][] = [];
+  for (const c of clusters) {
+    const prev = coords[coords.length - 1];
+    if (!prev || prev[0] !== c.geo.lat || prev[1] !== c.geo.lng) {
+      coords.push([c.geo.lat, c.geo.lng]);
+    }
+  }
 
   // 绘制路线（虚线流动动画，视觉上指示前进方向）
   if (coords.length >= 2) {
@@ -880,47 +937,54 @@ function renderRoute() {
     }
   }
 
-  // 绘制站点标记（起点绿色「始」、终点红色「终」，脉冲高亮；
-  // 弹层含事件类型标签、年龄（有生平数据时）、诗词前两句预览；未导入的题库站点标注「未导入」且不开详情）
-  stops.forEach((stop, index) => {
+  // 绘制聚合标记（起点绿「始」、终点红「终」；多站点标记放大显示条目数，单站点显示行程序号）
+  clusters.forEach((cluster, index) => {
     const isStart = index === 0;
-    const isEnd = index === stops.length - 1 && !isStart;
-    const label = isStart ? '始' : isEnd ? '终' : String(index + 1);
-    const extraCls = isStart ? ' is-start' : isEnd ? ' is-end' : '';
+    const isEnd = index === clusters.length - 1 && !isStart;
+    const n = cluster.stops.length;
+    const label = isStart ? '始' : isEnd ? '终' : n > 1 ? String(n) : String(index + 1);
+    const extraCls = (isStart ? ' is-start' : isEnd ? ' is-end' : '') + (n > 1 ? ' is-cluster' : '');
+    const size = n > 1 ? 30 : 24;
     const routeIcon = L.divIcon({
       className: 'route-marker',
       html: `<div class="route-pin${extraCls}">${label}</div>`,
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
     });
 
-    const marker = L.marker([stop.geo.lat, stop.geo.lng], { icon: routeIcon });
+    const marker = L.marker([cluster.geo.lat, cluster.geo.lng], { icon: routeIcon });
 
-    const meta = ROUTE_EVENT_META[stop.eventType];
-    const chip = `<span style="background:${meta.color}1a;color:${meta.color};padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${meta.label}</span>`;
-    const age = bio && stop.year ? stop.year - bio.birthYear : -1;
-    const ageText = age >= 0 && age <= maxAge ? ` · ${age} 岁` : '';
-    const yearText = stop.year
-      ? `<div style="font-size:12px;color:#999">约 ${stop.year}${stop.endYear ? `–${stop.endYear}` : ''} 年${ageText}</div>`
-      : '';
-    const notImported = stop.eventType === 'poem' && !stop.article
-      ? ' <span style="font-size:12px;color:#E6A23C">（未导入）</span>'
-      : '';
-    const popupHtml = `
-      <div style="min-width:180px">
-        <div style="font-weight:bold;margin-bottom:4px">${chip}${stop.title}${notImported}</div>
-        <div style="font-size:12px;color:#666">${stop.location || stop.geo.name}</div>
-        ${yearText}
-        ${stop.preview ? `<div style="font-size:12px;color:#8a6d3b;font-style:italic;margin-top:2px">${stop.preview}</div>` : ''}
-      </div>
-    `;
+    // 弹层统一为行列表（单站点即一行）：类型标签 + 标题 + 地点·年份·年龄 + 前两句预览
+    const rows = cluster.stops.map((s, i) => {
+      const meta = ROUTE_EVENT_META[s.eventType];
+      const chip = `<span style="background:${meta.color}1a;color:${meta.color};padding:1px 6px;border-radius:3px;font-size:11px;margin-right:4px">${meta.label}</span>`;
+      const age = bio && s.year ? s.year - bio.birthYear : -1;
+      const ageText = age >= 0 && age <= maxAge ? ` · ${age} 岁` : '';
+      const yearText = s.year ? `约 ${s.year}${s.endYear ? `–${s.endYear}` : ''} 年${ageText}` : '';
+      const notImported = s.eventType === 'poem' && !s.article
+        ? ' <span style="font-size:12px;color:#E6A23C">（未导入）</span>'
+        : '';
+      return `<div class="route-stop-item${s.article ? ' is-clickable' : ''}" data-idx="${i}" style="padding:6px 0;border-bottom:${i < n - 1 ? '1px solid #eee' : 'none'}${s.article ? ';cursor:pointer' : ''}">
+        <div>${chip}<strong>${s.title}</strong>${notImported}</div>
+        <div style="color:#666;font-size:12px;margin-top:2px">${s.location || s.geo.name}${yearText ? ` · ${yearText}` : ''}</div>
+        ${s.preview ? `<div style="color:#8a6d3b;font-size:12px;margin-top:2px;font-style:italic">${s.preview}</div>` : ''}
+      </div>`;
+    }).join('');
+    marker.bindPopup(`<div class="poetry-popup route-cluster-popup" style="min-width:200px">${rows}</div>`, { maxWidth: 320 });
 
-    marker.bindPopup(popupHtml);
-    if (stop.article) {
-      marker.on('click', () => {
-        showPoetryDetail(stop.article!);
+    // 行点击委托：已导入作品打开详情
+    marker.on('popupopen', () => {
+      nextTick(() => {
+        document.querySelectorAll('.route-stop-item.is-clickable').forEach(el => {
+          el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const idx = Number(el.getAttribute('data-idx'));
+            const article = cluster.stops[idx]?.article;
+            if (article) showPoetryDetail(article);
+          });
+        });
       });
-    }
+    });
 
     routeLayer!.addLayer(marker);
   });
@@ -1086,19 +1150,42 @@ onUnmounted(() => {
   align-items: center;
 }
 
-/* 生平路线统计条：绿色基底的单行概要，跟随主色变量 */
-.route-stats-bar {
-  width: 100%;
-  margin-top: 6px;
-  padding: 5px 10px;
-  border-radius: 4px;
-  background: var(--utools-bg-2, #eaf1ea);
-  color: var(--utools-primary, #52796f);
+/* 生平轨迹统计浮层：地图右上角结构化面板，超出可滚动（z-index 低于弹层 700，避免遮挡路线弹窗） */
+.route-stats-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 650;
+  max-width: 280px;
+  max-height: 60%;
+  overflow-y: auto;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--utools-primary, #52796f);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   font-size: 12px;
-  line-height: 1.6;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.7;
+
+  .stats-title {
+    font-weight: bold;
+    color: var(--utools-primary, #52796f);
+    margin-bottom: 2px;
+  }
+
+  .stats-row {
+    color: #555;
+  }
+
+  .stats-subtitle {
+    font-weight: bold;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  .stats-turning {
+    color: #888;
+  }
 }
 
 .map-legend {
@@ -1155,6 +1242,7 @@ onUnmounted(() => {
   flex: 1;
   min-height: 400px;
   background: #f0f0f0;
+  position: relative;
 }
 
 .poetry-detail {
@@ -1259,6 +1347,13 @@ onUnmounted(() => {
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     border: 2px solid #fff;
+  }
+
+  /* 多站点聚合标记：放大显示条目数 */
+  .route-pin.is-cluster {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
   }
 
   /* 起点绿色「始」、终点红色「终」，脉冲高亮 */
