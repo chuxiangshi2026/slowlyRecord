@@ -20,6 +20,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 仓库依赖 git-crypt：src/config.ts 与 mobile/src/config.ts 在库中是密文，
+      # 不解锁则 uni 编译 import '@/config' 直接语法错误。
+      # 密钥由仓库 secrets.GIT_CRYPT_KEY_BASE64 提供，
+      # 导出方式：在已解锁的本地仓库执行 `git crypt export-key /tmp/key && base64 -w0 /tmp/key`。
+      - name: Unlock git-crypt
+        env:
+          GIT_CRYPT_KEY_BASE64: ${{ secrets.GIT_CRYPT_KEY_BASE64 }}
+        run: |
+          if ! command -v git-crypt >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq git-crypt
+          fi
+          if [ -z "$GIT_CRYPT_KEY_BASE64" ]; then
+            echo "::error::未配置 secrets.GIT_CRYPT_KEY_BASE64，无法解密 config.ts（导出方式见本步骤注释）"
+            exit 1
+          fi
+          echo "$GIT_CRYPT_KEY_BASE64" | base64 -d > /tmp/git-crypt.key
+          git-crypt unlock /tmp/git-crypt.key
+          rm -f /tmp/git-crypt.key
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
