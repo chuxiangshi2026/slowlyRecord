@@ -5,7 +5,7 @@
 
 import type { MobileItemType, WordBankType, WordBankInfo, Word, LoadStrategy } from './types'
 import { inferMobileItemType, normalizeMobileItemText } from './text'
-import { downloadWordBank as fetchRemoteWordBank } from '@/utils/remote-wordbank'
+import { downloadWordBank as fetchRemoteWordBank, getCachedBankIds, loadCachedWordBank } from '@/utils/remote-wordbank'
 
 export type { WordBankType, WordBankInfo, Word, LoadStrategy }
 
@@ -198,6 +198,16 @@ export function queryPhoneticFromWordBankCache(word: string): string | null {
       const cache: CacheData = JSON.parse(cacheStr)
       if (Date.now() - cache.timestamp > CACHE_EXPIRY) continue
       const found = cache.words.find(w => w.word.toLowerCase() === normalized)
+      if (found?.phonetic) return found.phonetic
+    } catch { continue }
+  }
+  // 词库下载现走 remote-wordbank（slowlyrecord_remote_wordbank_ 前缀，旧前缀已无写入方），
+  // 兼容旧缓存之外还需扫远程缓存，否则全新安装后离线音标兜底永远查不到
+  for (const id of getCachedBankIds()) {
+    try {
+      const words = loadCachedWordBank(id)
+      if (!words) continue
+      const found = words.find((w: any) => typeof w?.word === 'string' && w.word.toLowerCase() === normalized)
       if (found?.phonetic) return found.phonetic
     } catch { continue }
   }
