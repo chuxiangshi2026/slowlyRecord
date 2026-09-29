@@ -10,8 +10,10 @@
       "question": "圆的面积",
       "answer": "S=πr²",
       "extras": {
-        "说明": "r 为半径"
-      }
+        "说明": "r 为半径",
+        "推导": "把圆平均切成偶数份小扇形，交错拼成近似长方形：长≈圆周的一半 πr、宽≈半径 r，所以 S=πr×r=πr²"
+      },
+      "image": "knowledgebanks/images/geo-circle-area.png"
     },
     {
       "id": "math-formulas-2",
@@ -26,72 +28,90 @@
       "question": "长方形面积",
       "answer": "S=ab",
       "extras": {
-        "说明": "a、b 为长和宽"
-      }
+        "说明": "a、b 为长和宽",
+        "推导": "用边长为 1 的单位方格铺满：每行 a 个、共 b 行，合计 a×b 个方格，所以 S=ab"
+      },
+      "image": "knowledgebanks/images/geo-rect-area.png"
     },
     {
       "id": "math-formulas-4",
       "question": "正方形面积",
       "answer": "S=a²",
       "extras": {
-        "说明": "a 为边长"
-      }
+        "说明": "a 为边长",
+        "推导": "长方形面积的特例（长=宽=a）：每行 a 个单位方格、共 a 行，所以 S=a²"
+      },
+      "image": "knowledgebanks/images/geo-square-area.png"
     },
     {
       "id": "math-formulas-5",
       "question": "三角形面积",
       "answer": "S=½ah",
       "extras": {
-        "说明": "a 为底，h 为高"
-      }
+        "说明": "a 为底，h 为高",
+        "推导": "两个完全一样的三角形可拼成底 a、高 h 的平行四边形，所以 S△=ah÷2"
+      },
+      "image": "knowledgebanks/images/geo-triangle-area.png"
     },
     {
       "id": "math-formulas-6",
       "question": "平行四边形面积",
       "answer": "S=ah",
       "extras": {
-        "说明": "a 为底，h 为高"
-      }
+        "说明": "a 为底，h 为高",
+        "推导": "沿高剪下左侧的三角形，平移到右侧正好拼成长方形（长 a、宽 h），所以 S=ah"
+      },
+      "image": "knowledgebanks/images/geo-parallelogram-area.png"
     },
     {
       "id": "math-formulas-7",
       "question": "梯形面积",
       "answer": "S=½(a+b)h",
       "extras": {
-        "说明": "a、b 为上底和下底，h 为高"
-      }
+        "说明": "a、b 为上底和下底，h 为高",
+        "推导": "两个完全一样的梯形（其中一个旋转 180°）可拼成底 (a+b)、高 h 的平行四边形，所以 S=(a+b)h÷2"
+      },
+      "image": "knowledgebanks/images/geo-trapezoid-area.png"
     },
     {
       "id": "math-formulas-8",
       "question": "长方体体积",
       "answer": "V=abc",
       "extras": {
-        "说明": "a、b、c 为长、宽、高"
-      }
+        "说明": "a、b、c 为长、宽、高",
+        "推导": "用棱长为 1 的单位正方体堆满：每层 a×b 个、共 c 层，合计 a×b×c 个，所以 V=abc"
+      },
+      "image": "knowledgebanks/images/geo-cuboid-volume.png"
     },
     {
       "id": "math-formulas-9",
       "question": "正方体体积",
       "answer": "V=a³",
       "extras": {
-        "说明": "a 为棱长"
-      }
+        "说明": "a 为棱长",
+        "推导": "长方体体积的特例（a=b=c）：每层 a² 个单位正方体、共 a 层，所以 V=a³"
+      },
+      "image": "knowledgebanks/images/geo-cube-volume.png"
     },
     {
       "id": "math-formulas-10",
       "question": "圆柱体积",
       "answer": "V=πr²h",
       "extras": {
-        "说明": "r 为底面半径，h 为高"
-      }
+        "说明": "r 为底面半径，h 为高",
+        "推导": "沿高切成许多相同的薄圆片叠放，每片体积≈底面积×厚度，合起来 V=底面积×高=πr²h"
+      },
+      "image": "knowledgebanks/images/geo-cylinder-volume.png"
     },
     {
       "id": "math-formulas-11",
       "question": "圆锥体积",
       "answer": "V=⅓πr²h",
       "extras": {
-        "说明": "r 为底面半径，h 为高"
-      }
+        "说明": "r 为底面半径，h 为高",
+        "推导": "等底等高的圆锥装满水倒入圆柱，恰好倒 3 次倒满，所以 V=⅓πr²h"
+      },
+      "image": "knowledgebanks/images/geo-cone-volume.png"
     },
     {
       "id": "math-formulas-12",

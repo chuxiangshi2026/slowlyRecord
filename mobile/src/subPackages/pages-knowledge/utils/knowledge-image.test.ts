@@ -40,15 +40,20 @@ describe('formulaImageSrc', () => {
 })
 
 describe('公式图片数据链路', () => {
-  it('带 image 的条目都有 latex，且路径与条目 id 一致', () => {
+  it('带 image 的条目路径规范：公式图与条目 id 同名，推导图为 geo-* 命名', () => {
     const packs = readAllPacks()
     let count = 0
     for (const pack of packs) {
       for (const item of pack.items ?? []) {
         if (!item.image) continue
         count++
-        expect(item.latex, `${item.id} 缺少 latex`).toBeTruthy()
-        expect(item.image).toBe(`knowledgebanks/images/${item.id}.png`)
+        if (item.latex) {
+          // MathJax 公式图：一条目一图，文件名即条目 id
+          expect(item.image).toBe(`knowledgebanks/images/${item.id}.png`)
+        } else {
+          // 几何推导图（面积/体积公式）：手绘 SVG 产物，与条目 id 无同名约束
+          expect(item.image).toMatch(/^knowledgebanks\/images\/geo-[a-z-]+\.png$/)
+        }
       }
     }
     expect(count).toBeGreaterThan(0)

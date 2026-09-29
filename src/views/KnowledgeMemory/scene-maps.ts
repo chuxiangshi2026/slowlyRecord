@@ -95,6 +95,29 @@ export const SCENE_ANIMATIONS: Record<string, SceneConfig> = {
         sedimentColor: '#ffffff',
         caption: '现象：澄清石灰水变浑浊，白色碳酸钙沉淀逐渐沉降到杯底',
     },
+    // 探究唾液对淀粉的消化作用：37℃ 水浴加热
+    'biology-experiments-4': {
+        vessel: 'testTube',
+        liquidColor: '#f3ead3',
+        heating: true,
+        flameColor: '#ff9c6e',
+        caption: '现象：37℃ 温水水浴约 10 分钟；取出滴加碘液后，加唾液的 A 管不变蓝（淀粉被分解），加清水的 B 管变蓝',
+    },
+    // 验证光合作用产生氧气：阳光下金鱼藻不断冒气泡
+    'biology-experiments-5': {
+        vessel: 'beaker',
+        liquidColor: '#dceee2',
+        bubbleColor: '#7fb8a4',
+        caption: '现象：阳光下金鱼藻不断冒出气泡，试管内气体逐渐增多，取出后能使带火星的卫生香复燃',
+    },
+    // 探究馒头在口腔中的变化：37℃ 水浴加热
+    'biology-experiments-10': {
+        vessel: 'testTube',
+        liquidColor: '#f3ead3',
+        heating: true,
+        flameColor: '#ff9c6e',
+        caption: '现象：37℃ 水浴后滴加碘液：1 号（碎屑+唾液）不变蓝，2 号（碎屑+清水）变蓝，3 号（整块+唾液）表层变浅',
+    },
 };
 
 /**

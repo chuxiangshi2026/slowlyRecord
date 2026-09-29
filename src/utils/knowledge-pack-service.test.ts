@@ -269,15 +269,15 @@ describe('knowledge-pack-service', () => {
       // 从未声明过 version 的包，追加 imageUrl 后升到 2
       expect(getPackVersion('number-pegs-12')).toBe(2)
       expect(getPackVersion('home-route-12')).toBe(2)
-      // math-formulas 追加函数/方程条目与图像映射 → 4
-      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(4)
-      expect(getPackVersion('math-formulas')).toBe(4)
+      // math-formulas 追加函数/方程条目与图像映射 → 4；追加面积体积推导图与推导文字 → 5
+      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(5)
+      expect(getPackVersion('math-formulas')).toBe(5)
       // 微积分/线代/概率三包补 latex 源码 + 预渲染公式图 → 2
       expect(getPackVersion('math-calculus')).toBe(2)
       expect(getPackVersion('math-linalg')).toBe(2)
       expect(getPackVersion('math-probability')).toBe(2)
-      // 其余包（未加口诀等结构变更）仍为 1
-      expect(getPackVersion('multiplication-9x9')).toBe(1)
+      // multiplication-9x9 追加小九九口诀 mnemonics → 2
+      expect(getPackVersion('multiplication-9x9')).toBe(2)
       // constellations-12 追加星座符号 emoji imageUrl → 2
       expect(getPackVersion('constellations-12')).toBe(2)
       // dynasties-china 史实修正 → 2
@@ -485,9 +485,9 @@ describe('knowledge-pack-service', () => {
       const result = await fetchKnowledgePack('math-formulas')
       expect(fetchMock).toHaveBeenCalled()
       expect(result.items).toHaveLength(24)
-      // 新缓存写入 version 4
+      // 新缓存写入 version 5
       const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-math-formulas')!)
-      expect(cached.version).toBe(4)
+      expect(cached.version).toBe(5)
     })
 
     it('无 version 字段的老缓存在包升级后同样失效', async () => {

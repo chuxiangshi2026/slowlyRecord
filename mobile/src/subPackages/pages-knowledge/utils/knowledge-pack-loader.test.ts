@@ -65,7 +65,8 @@ describe('getPackVersion', () => {
   it('注册表显式声明 version 的包取声明值', () => {
     expect(getPackVersion('elements')).toBe(5)
     expect(getPackVersion('solar-terms-24')).toBe(3)
-    expect(getPackVersion('math-formulas')).toBe(4)
+    expect(getPackVersion('math-formulas')).toBe(5)
+    expect(getPackVersion('multiplication-9x9')).toBe(2)
     expect(getPackVersion('dynasties-china')).toBe(2)
     expect(getPackVersion('world-capitals-40')).toBe(2)
     expect(getPackVersion('geography-concepts')).toBe(2)
@@ -73,10 +74,9 @@ describe('getPackVersion', () => {
   })
 
   it('注册表未声明 version 的包为 1', () => {
-    expect(getPackVersion('multiplication-9x9')).toBe(1)
-    expect(getPackVersion('body-pegs-12')).toBe(1)
+    expect(getPackVersion('ethnic-groups-56')).toBe(1)
     expect(getPackVersion('colors-12')).toBe(1)
-    expect(getKnowledgePackInfo('multiplication-9x9')?.version).toBeUndefined()
+    expect(getKnowledgePackInfo('ethnic-groups-56')?.version).toBeUndefined()
   })
 
   it('未知包兜底为 1', () => {
