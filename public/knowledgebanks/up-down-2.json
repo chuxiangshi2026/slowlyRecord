@@ -1,0 +1,23 @@
+{
+  "id": "up-down-2",
+  "name": "上下（2 桩）",
+  "description": "上与下，垂直方向的天然顺序",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "up-down-2-1",
+      "question": "上",
+      "answer": "第 1 桩：上方、高处",
+      "order": 1,
+      "imageUrl": "⬆️"
+    },
+    {
+      "id": "up-down-2-2",
+      "question": "下",
+      "answer": "第 2 桩：下方、低处",
+      "order": 2,
+      "imageUrl": "⬇️"
+    }
+  ]
+}

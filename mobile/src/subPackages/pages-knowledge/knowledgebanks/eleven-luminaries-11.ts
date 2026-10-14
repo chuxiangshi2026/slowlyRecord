@@ -1,0 +1,102 @@
+/**
+ * 内置知识包：十一曜（11 桩）（由 public/knowledgebanks/eleven-luminaries-11.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "eleven-luminaries-11",
+  "name": "十一曜（11 桩）",
+  "description": "七曜（日月五星）加四余（罗睺、计都、紫炁、月孛），古代星命学十一大曜",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "eleven-luminaries-11-1",
+      "question": "日",
+      "answer": "第 1 桩：太阳星君：十一曜之首，主光明",
+      "order": 1,
+      "imageUrl": "☀️"
+    },
+    {
+      "id": "eleven-luminaries-11-2",
+      "question": "月",
+      "answer": "第 2 桩：太阴星君：主阴柔",
+      "order": 2,
+      "imageUrl": "🌙"
+    },
+    {
+      "id": "eleven-luminaries-11-3",
+      "question": "荧惑（火）",
+      "answer": "第 3 桩：火星：主礼，性刚烈",
+      "order": 3,
+      "imageUrl": "🔥"
+    },
+    {
+      "id": "eleven-luminaries-11-4",
+      "question": "辰星（水）",
+      "answer": "第 4 桩：水星：主智，性流动",
+      "order": 4,
+      "imageUrl": "💧"
+    },
+    {
+      "id": "eleven-luminaries-11-5",
+      "question": "岁星（木）",
+      "answer": "第 5 桩：木星：主仁，性生发",
+      "order": 5,
+      "imageUrl": "🌳"
+    },
+    {
+      "id": "eleven-luminaries-11-6",
+      "question": "太白（金）",
+      "answer": "第 6 桩：金星：主义，性肃杀",
+      "order": 6,
+      "imageUrl": "🪙"
+    },
+    {
+      "id": "eleven-luminaries-11-7",
+      "question": "镇星（土）",
+      "answer": "第 7 桩：土星：主信，性敦厚",
+      "order": 7,
+      "imageUrl": "⛰️"
+    },
+    {
+      "id": "eleven-luminaries-11-8",
+      "question": "罗睺",
+      "answer": "第 8 桩：四余之首：蚀神之首，逢之则掩",
+      "order": 8,
+      "imageUrl": "🌑",
+      "alternates": [
+        "罗喉"
+      ]
+    },
+    {
+      "id": "eleven-luminaries-11-9",
+      "question": "计都",
+      "answer": "第 9 桩：四余之二：豹尾之星，读 jì dū",
+      "order": 9,
+      "imageUrl": "☄️"
+    },
+    {
+      "id": "eleven-luminaries-11-10",
+      "question": "紫炁",
+      "answer": "第 10 桩：四余之三：景星，主祥瑞，读 zǐ qì",
+      "order": 10,
+      "imageUrl": "💜",
+      "alternates": [
+        "紫气"
+      ]
+    },
+    {
+      "id": "eleven-luminaries-11-11",
+      "question": "月孛",
+      "answer": "第 11 桩：四余之四：彗星之余，读 yuè bèi",
+      "order": 11,
+      "imageUrl": "🌚",
+      "alternates": [
+        "月勃"
+      ]
+    }
+  ]
+}
+
+export default pack

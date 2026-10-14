@@ -1,0 +1,37 @@
+{
+  "id": "four-symbols-4",
+  "name": "四象神兽（4 桩）",
+  "description": "青龙、白虎、朱雀、玄武，分镇东南西北",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "four-symbols-4-1",
+      "question": "青龙",
+      "answer": "第 1 桩：东方之神兽，属木，对应春季",
+      "order": 1,
+      "imageUrl": "🐉"
+    },
+    {
+      "id": "four-symbols-4-2",
+      "question": "白虎",
+      "answer": "第 2 桩：西方之神兽，属金，对应秋季",
+      "order": 2,
+      "imageUrl": "🐯"
+    },
+    {
+      "id": "four-symbols-4-3",
+      "question": "朱雀",
+      "answer": "第 3 桩：南方之神兽，属火，对应夏季",
+      "order": 3,
+      "imageUrl": "🦅"
+    },
+    {
+      "id": "four-symbols-4-4",
+      "question": "玄武",
+      "answer": "第 4 桩：北方之神兽（龟蛇合体），属水，对应冬季",
+      "order": 4,
+      "imageUrl": "🐢"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+/**
+ * 内置知识包：八音（8 桩）（由 public/knowledgebanks/ba-yin-8.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "ba-yin-8",
+  "name": "八音（8 桩）",
+  "description": "金、石、丝、竹、匏、土、革、木，周代按材质的乐器分类",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "ba-yin-8-1",
+      "question": "金",
+      "answer": "第 1 桩：金属乐器：钟、镈",
+      "order": 1,
+      "imageUrl": "🔔"
+    },
+    {
+      "id": "ba-yin-8-2",
+      "question": "石",
+      "answer": "第 2 桩：石质乐器：磬",
+      "order": 2,
+      "imageUrl": "🪨"
+    },
+    {
+      "id": "ba-yin-8-3",
+      "question": "丝",
+      "answer": "第 3 桩：丝弦乐器：琴、瑟",
+      "order": 3,
+      "imageUrl": "🎻"
+    },
+    {
+      "id": "ba-yin-8-4",
+      "question": "竹",
+      "answer": "第 4 桩：竹管乐器：箫、笛",
+      "order": 4,
+      "imageUrl": "🎋"
+    },
+    {
+      "id": "ba-yin-8-5",
+      "question": "匏",
+      "answer": "第 5 桩：匏类乐器（葫芦制）：笙、竽",
+      "order": 5,
+      "imageUrl": "🎃"
+    },
+    {
+      "id": "ba-yin-8-6",
+      "question": "土",
+      "answer": "第 6 桩：陶土乐器：埙、缶",
+      "order": 6,
+      "imageUrl": "🏺"
+    },
+    {
+      "id": "ba-yin-8-7",
+      "question": "革",
+      "answer": "第 7 桩：皮革乐器：鼓、鼗",
+      "order": 7,
+      "imageUrl": "🥁"
+    },
+    {
+      "id": "ba-yin-8-8",
+      "question": "木",
+      "answer": "第 8 桩：木质乐器：柷、敔",
+      "order": 8,
+      "imageUrl": "🪵"
+    }
+  ]
+}
+
+export default pack

@@ -55,13 +55,20 @@ describe('knowledge-pack-service', () => {
   })
 
   describe('常量与元数据', () => {
-    it('应包含 43 个内置知识包', () => {
-      expect(KNOWLEDGE_PACK_LIST).toHaveLength(43)
+    it('应包含 93 个内置知识包', () => {
+      expect(KNOWLEDGE_PACK_LIST).toHaveLength(93)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'multiplication-9x9')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'solar-terms-24')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'physics-formulas')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'geography-concepts')).toBe(true)
       expect(KNOWLEDGE_PACK_LIST.some(p => p.id === 'geography-china')).toBe(true)
+    })
+
+    it('2-12 各记忆条数均有至少 2 个有序桩库可选', () => {
+      for (let n = 2; n <= 12; n++) {
+        const pegs = KNOWLEDGE_PACK_LIST.filter(p => p.usableAsPeg && p.ordered && p.itemCount === n)
+        expect(pegs.length, `${n} 桩`).toBeGreaterThanOrEqual(2)
+      }
     })
 
     it('listKnowledgePacks 应返回副本', () => {
@@ -111,27 +118,77 @@ describe('knowledge-pack-service', () => {
         'squares-cubes-powers',
       ])
       const text = listKnowledgePacks('text')
-      expect(text).toHaveLength(19)
+      expect(text).toHaveLength(69)
       expect(text.every(p => p.category === 'text')).toBe(true)
       expect(text.map(p => p.id).sort()).toEqual([
         'alphabet-pegs-26',
+        'ba-yin-8',
+        'bagua-8',
+        'big-dipper-7',
         'body-pegs-12',
         'chinese-classical-words',
         'colors-12',
         'constellations-12',
         'cuisines-8',
+        'day-night-2',
         'dynasties-china',
         'earthly-branches-12',
+        'eight-directions-8',
+        'eight-immortals-8',
+        'eight-solar-nodes-8',
+        'eleven-luminaries-11',
         'english-roots-affixes',
         'ethnic-groups-56',
+        'five-colors-5',
+        'five-directions-5',
+        'five-flavors-5',
+        'five-tones-5',
+        'five-virtues-5',
+        'football-xi-11',
+        'four-arts-4',
+        'four-directions-4',
+        'four-elements-4',
+        'four-gentlemen-4',
+        'four-seasons-4',
+        'four-symbols-4',
+        'heavenly-stems-10',
         'history-mnemonics',
         'home-route-12',
+        'jianpu-7',
+        'left-right-2',
+        'liu-he-6',
+        'liu-lv-6',
+        'liu-shu-6',
+        'luo-shu-9',
+        'meng-zhong-ji-3',
         'musical-notes',
+        'nine-heavens-9',
+        'nine-planets-9',
+        'nine-stars-9',
+        'nine-zhou-9',
         'number-pegs-12',
         'poker-pegs-52',
+        'qi-yao-7',
+        'rainbow-7',
         'room-pegs-12',
+        'san-cai-3',
+        'san-guang-3',
+        'seven-emotions-7',
+        'six-arts-6',
+        'six-fu-6',
+        'six-roots-6',
         'solar-terms-24',
+        'ten-directions-10',
+        'ten-fingers-10',
+        'ten-marshals-10',
+        'ten-yama-10',
         'thirty-six-stratagems',
+        'three-primary-colors-3',
+        'three-tenses-3',
+        'tian-di-2',
+        'up-down-2',
+        'wuxing-5',
+        'yin-yang-2',
         'zodiac-12',
       ])
       // 2026-09-30 起地理类独立为 geo：4 个既有地理包从 text 迁入 + 新增中国地理常识

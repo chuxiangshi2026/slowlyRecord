@@ -1,0 +1,51 @@
+/**
+ * 内置知识包：五方（5 桩）（由 public/knowledgebanks/five-directions-5.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "five-directions-5",
+  "name": "五方（5 桩）",
+  "description": "东、南、西、北、中五方",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "five-directions-5-1",
+      "question": "东",
+      "answer": "第 1 桩：东方，日出之方，五行属木",
+      "order": 1,
+      "imageUrl": "🌅"
+    },
+    {
+      "id": "five-directions-5-2",
+      "question": "南",
+      "answer": "第 2 桩：南方，向阳之方，五行属火",
+      "order": 2,
+      "imageUrl": "☀️"
+    },
+    {
+      "id": "five-directions-5-3",
+      "question": "西",
+      "answer": "第 3 桩：西方，日落之方，五行属金",
+      "order": 3,
+      "imageUrl": "🌇"
+    },
+    {
+      "id": "five-directions-5-4",
+      "question": "北",
+      "answer": "第 4 桩：北方，背阴之方，五行属水",
+      "order": 4,
+      "imageUrl": "❄️"
+    },
+    {
+      "id": "five-directions-5-5",
+      "question": "中",
+      "answer": "第 5 桩：中央，四方之中，五行属土",
+      "order": 5,
+      "imageUrl": "🏯"
+    }
+  ]
+}
+
+export default pack

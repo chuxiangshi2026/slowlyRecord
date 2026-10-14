@@ -1,0 +1,51 @@
+/**
+ * 内置知识包：五色（5 桩）（由 public/knowledgebanks/five-colors-5.json 转换生成，请勿手改）
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "five-colors-5",
+  "name": "五色（5 桩）",
+  "description": "青、赤、黄、白、黑五正色",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "five-colors-5-1",
+      "question": "青",
+      "answer": "第 1 桩：五色之一，对应东方、木（青出于蓝）",
+      "order": 1,
+      "imageUrl": "🟢"
+    },
+    {
+      "id": "five-colors-5-2",
+      "question": "赤",
+      "answer": "第 2 桩：五色之一，对应南方、火（赤即大红）",
+      "order": 2,
+      "imageUrl": "🔴"
+    },
+    {
+      "id": "five-colors-5-3",
+      "question": "黄",
+      "answer": "第 3 桩：五色之一，对应中央、土",
+      "order": 3,
+      "imageUrl": "🟡"
+    },
+    {
+      "id": "five-colors-5-4",
+      "question": "白",
+      "answer": "第 4 桩：五色之一，对应西方、金",
+      "order": 4,
+      "imageUrl": "⚪"
+    },
+    {
+      "id": "five-colors-5-5",
+      "question": "黑",
+      "answer": "第 5 桩：五色之一，对应北方、水",
+      "order": 5,
+      "imageUrl": "⚫"
+    }
+  ]
+}
+
+export default pack

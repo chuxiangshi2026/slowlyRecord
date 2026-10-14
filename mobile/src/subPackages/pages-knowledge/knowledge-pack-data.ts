@@ -53,6 +53,57 @@ import chineseClassicalWords from './knowledgebanks/chinese-classical-words'
 import biologyBasics from './knowledgebanks/biology-basics'
 import worldGeographyRecords from './knowledgebanks/world-geography-records'
 import geographyChina from './knowledgebanks/geography-china'
+// ===== 小容量桩库（2-11 桩）=====
+import yinYang2 from './knowledgebanks/yin-yang-2'
+import tianDi2 from './knowledgebanks/tian-di-2'
+import dayNight2 from './knowledgebanks/day-night-2'
+import leftRight2 from './knowledgebanks/left-right-2'
+import upDown2 from './knowledgebanks/up-down-2'
+import sanCai3 from './knowledgebanks/san-cai-3'
+import sanGuang3 from './knowledgebanks/san-guang-3'
+import threeTenses3 from './knowledgebanks/three-tenses-3'
+import threePrimaryColors3 from './knowledgebanks/three-primary-colors-3'
+import mengZhongJi3 from './knowledgebanks/meng-zhong-ji-3'
+import fourSeasons4 from './knowledgebanks/four-seasons-4'
+import fourDirections4 from './knowledgebanks/four-directions-4'
+import fourSymbols4 from './knowledgebanks/four-symbols-4'
+import fourGentlemen4 from './knowledgebanks/four-gentlemen-4'
+import fourArts4 from './knowledgebanks/four-arts-4'
+import fourElements4 from './knowledgebanks/four-elements-4'
+import wuxing5 from './knowledgebanks/wuxing-5'
+import fiveDirections5 from './knowledgebanks/five-directions-5'
+import fiveColors5 from './knowledgebanks/five-colors-5'
+import fiveFlavors5 from './knowledgebanks/five-flavors-5'
+import fiveVirtues5 from './knowledgebanks/five-virtues-5'
+import fiveTones5 from './knowledgebanks/five-tones-5'
+import sixArts6 from './knowledgebanks/six-arts-6'
+import liuShu6 from './knowledgebanks/liu-shu-6'
+import sixRoots6 from './knowledgebanks/six-roots-6'
+import liuHe6 from './knowledgebanks/liu-he-6'
+import sixFu6 from './knowledgebanks/six-fu-6'
+import liuLv6 from './knowledgebanks/liu-lv-6'
+import qiYao7 from './knowledgebanks/qi-yao-7'
+import bigDipper7 from './knowledgebanks/big-dipper-7'
+import rainbow7 from './knowledgebanks/rainbow-7'
+import jianpu7 from './knowledgebanks/jianpu-7'
+import sevenEmotions7 from './knowledgebanks/seven-emotions-7'
+import bagua8 from './knowledgebanks/bagua-8'
+import eightImmortals8 from './knowledgebanks/eight-immortals-8'
+import eightDirections8 from './knowledgebanks/eight-directions-8'
+import eightSolarNodes8 from './knowledgebanks/eight-solar-nodes-8'
+import baYin8 from './knowledgebanks/ba-yin-8'
+import ninePlanets9 from './knowledgebanks/nine-planets-9'
+import nineZhou9 from './knowledgebanks/nine-zhou-9'
+import luoShu9 from './knowledgebanks/luo-shu-9'
+import nineStars9 from './knowledgebanks/nine-stars-9'
+import nineHeavens9 from './knowledgebanks/nine-heavens-9'
+import heavenlyStems10 from './knowledgebanks/heavenly-stems-10'
+import tenDirections10 from './knowledgebanks/ten-directions-10'
+import tenFingers10 from './knowledgebanks/ten-fingers-10'
+import tenMarshals10 from './knowledgebanks/ten-marshals-10'
+import tenYama10 from './knowledgebanks/ten-yama-10'
+import elevenLuminaries11 from './knowledgebanks/eleven-luminaries-11'
+import footballXi11 from './knowledgebanks/football-xi-11'
 
 const packDataLoaders: Record<string, () => KnowledgePack> = {
     'multiplication-9x9': () => multiplication9x9,
@@ -98,6 +149,57 @@ const packDataLoaders: Record<string, () => KnowledgePack> = {
     'biology-basics': () => biologyBasics,
     'world-geography-records': () => worldGeographyRecords,
     'geography-china': () => geographyChina,
+    // 小容量桩库（2-11 桩）
+    'yin-yang-2': () => yinYang2,
+    'tian-di-2': () => tianDi2,
+    'day-night-2': () => dayNight2,
+    'left-right-2': () => leftRight2,
+    'up-down-2': () => upDown2,
+    'san-cai-3': () => sanCai3,
+    'san-guang-3': () => sanGuang3,
+    'three-tenses-3': () => threeTenses3,
+    'three-primary-colors-3': () => threePrimaryColors3,
+    'meng-zhong-ji-3': () => mengZhongJi3,
+    'four-seasons-4': () => fourSeasons4,
+    'four-directions-4': () => fourDirections4,
+    'four-symbols-4': () => fourSymbols4,
+    'four-gentlemen-4': () => fourGentlemen4,
+    'four-arts-4': () => fourArts4,
+    'four-elements-4': () => fourElements4,
+    'wuxing-5': () => wuxing5,
+    'five-directions-5': () => fiveDirections5,
+    'five-colors-5': () => fiveColors5,
+    'five-flavors-5': () => fiveFlavors5,
+    'five-virtues-5': () => fiveVirtues5,
+    'five-tones-5': () => fiveTones5,
+    'six-arts-6': () => sixArts6,
+    'liu-shu-6': () => liuShu6,
+    'six-roots-6': () => sixRoots6,
+    'liu-he-6': () => liuHe6,
+    'six-fu-6': () => sixFu6,
+    'liu-lv-6': () => liuLv6,
+    'qi-yao-7': () => qiYao7,
+    'big-dipper-7': () => bigDipper7,
+    'rainbow-7': () => rainbow7,
+    'jianpu-7': () => jianpu7,
+    'seven-emotions-7': () => sevenEmotions7,
+    'bagua-8': () => bagua8,
+    'eight-immortals-8': () => eightImmortals8,
+    'eight-directions-8': () => eightDirections8,
+    'eight-solar-nodes-8': () => eightSolarNodes8,
+    'ba-yin-8': () => baYin8,
+    'nine-planets-9': () => ninePlanets9,
+    'nine-zhou-9': () => nineZhou9,
+    'luo-shu-9': () => luoShu9,
+    'nine-stars-9': () => nineStars9,
+    'nine-heavens-9': () => nineHeavens9,
+    'heavenly-stems-10': () => heavenlyStems10,
+    'ten-directions-10': () => tenDirections10,
+    'ten-fingers-10': () => tenFingers10,
+    'ten-marshals-10': () => tenMarshals10,
+    'ten-yama-10': () => tenYama10,
+    'eleven-luminaries-11': () => elevenLuminaries11,
+    'football-xi-11': () => footballXi11,
 }
 
 registerKnowledgePackData(packDataLoaders)

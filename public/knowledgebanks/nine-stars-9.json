@@ -1,0 +1,93 @@
+{
+  "id": "nine-stars-9",
+  "name": "北斗九星（9 桩）",
+  "description": "北斗七星加左辅、右弼两颗隐星，合称九星",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "nine-stars-9-1",
+      "question": "天枢",
+      "answer": "第 1 桩：九星之一（北斗一）",
+      "order": 1,
+      "imageUrl": "⭐",
+      "alternates": [
+        "贪狼星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-2",
+      "question": "天璇",
+      "answer": "第 2 桩：九星之二（北斗二）",
+      "order": 2,
+      "imageUrl": "🌟",
+      "alternates": [
+        "巨门星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-3",
+      "question": "天玑",
+      "answer": "第 3 桩：九星之三（北斗三）",
+      "order": 3,
+      "imageUrl": "✨",
+      "alternates": [
+        "禄存星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-4",
+      "question": "天权",
+      "answer": "第 4 桩：九星之四（北斗四）",
+      "order": 4,
+      "imageUrl": "💫",
+      "alternates": [
+        "文曲星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-5",
+      "question": "玉衡",
+      "answer": "第 5 桩：九星之五（北斗五）",
+      "order": 5,
+      "imageUrl": "🌠",
+      "alternates": [
+        "廉贞星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-6",
+      "question": "开阳",
+      "answer": "第 6 桩：九星之六（北斗六）",
+      "order": 6,
+      "imageUrl": "🔆",
+      "alternates": [
+        "武曲星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-7",
+      "question": "摇光",
+      "answer": "第 7 桩：九星之七（北斗七）",
+      "order": 7,
+      "imageUrl": "🌟",
+      "alternates": [
+        "破军星"
+      ]
+    },
+    {
+      "id": "nine-stars-9-8",
+      "question": "左辅",
+      "answer": "第 8 桩：九星之八：开阳的伴星，又称洞明星",
+      "order": 8,
+      "imageUrl": "🌥️"
+    },
+    {
+      "id": "nine-stars-9-9",
+      "question": "右弼",
+      "answer": "第 9 桩：九星之九：隐星，又称隐元星",
+      "order": 9,
+      "imageUrl": "🌫️"
+    }
+  ]
+}

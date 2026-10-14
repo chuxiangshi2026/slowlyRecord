@@ -1,0 +1,58 @@
+{
+  "id": "rainbow-7",
+  "name": "七彩（7 桩）",
+  "description": "红、橙、黄、绿、青、蓝、紫，彩虹七色由外到内",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "rainbow-7-1",
+      "question": "红",
+      "answer": "第 1 桩：彩虹最外层，波长最长",
+      "order": 1,
+      "imageUrl": "🔴"
+    },
+    {
+      "id": "rainbow-7-2",
+      "question": "橙",
+      "answer": "第 2 桩：彩虹第二色",
+      "order": 2,
+      "imageUrl": "🟠"
+    },
+    {
+      "id": "rainbow-7-3",
+      "question": "黄",
+      "answer": "第 3 桩：彩虹第三色",
+      "order": 3,
+      "imageUrl": "🟡"
+    },
+    {
+      "id": "rainbow-7-4",
+      "question": "绿",
+      "answer": "第 4 桩：彩虹中间色",
+      "order": 4,
+      "imageUrl": "🟢"
+    },
+    {
+      "id": "rainbow-7-5",
+      "question": "青",
+      "answer": "第 5 桩：彩虹第五色（蓝绿之间）",
+      "order": 5,
+      "imageUrl": "🩵"
+    },
+    {
+      "id": "rainbow-7-6",
+      "question": "蓝",
+      "answer": "第 6 桩：彩虹第六色",
+      "order": 6,
+      "imageUrl": "🔵"
+    },
+    {
+      "id": "rainbow-7-7",
+      "question": "紫",
+      "answer": "第 7 桩：彩虹最内层，波长最短",
+      "order": 7,
+      "imageUrl": "🟣"
+    }
+  ]
+}

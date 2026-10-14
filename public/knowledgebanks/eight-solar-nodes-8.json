@@ -1,0 +1,65 @@
+{
+  "id": "eight-solar-nodes-8",
+  "name": "八节（8 桩）",
+  "description": "立春、春分、立夏、夏至、立秋、秋分、立冬、冬至，二十四节气中最重要的八个节点",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "eight-solar-nodes-8-1",
+      "question": "立春",
+      "answer": "第 1 桩：春季开始（2 月 4 日前后）",
+      "order": 1,
+      "imageUrl": "🌱"
+    },
+    {
+      "id": "eight-solar-nodes-8-2",
+      "question": "春分",
+      "answer": "第 2 桩：昼夜平分，春季中点（3 月 21 日前后）",
+      "order": 2,
+      "imageUrl": "🌗"
+    },
+    {
+      "id": "eight-solar-nodes-8-3",
+      "question": "立夏",
+      "answer": "第 3 桩：夏季开始（5 月 5 日前后）",
+      "order": 3,
+      "imageUrl": "☀️"
+    },
+    {
+      "id": "eight-solar-nodes-8-4",
+      "question": "夏至",
+      "answer": "第 4 桩：白昼最长（6 月 21 日前后）",
+      "order": 4,
+      "imageUrl": "🌞"
+    },
+    {
+      "id": "eight-solar-nodes-8-5",
+      "question": "立秋",
+      "answer": "第 5 桩：秋季开始（8 月 7 日前后）",
+      "order": 5,
+      "imageUrl": "🍁"
+    },
+    {
+      "id": "eight-solar-nodes-8-6",
+      "question": "秋分",
+      "answer": "第 6 桩：昼夜平分，秋季中点（9 月 23 日前后）",
+      "order": 6,
+      "imageUrl": "🌘"
+    },
+    {
+      "id": "eight-solar-nodes-8-7",
+      "question": "立冬",
+      "answer": "第 7 桩：冬季开始（11 月 7 日前后）",
+      "order": 7,
+      "imageUrl": "🌬️"
+    },
+    {
+      "id": "eight-solar-nodes-8-8",
+      "question": "冬至",
+      "answer": "第 8 桩：白昼最短（12 月 22 日前后）",
+      "order": 8,
+      "imageUrl": "❄️"
+    }
+  ]
+}

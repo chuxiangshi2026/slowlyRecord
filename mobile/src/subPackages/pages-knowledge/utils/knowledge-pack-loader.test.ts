@@ -120,8 +120,8 @@ describe('isCacheUsable', () => {
 })
 
 describe('注册表与内置数据（真实数据完整性）', () => {
-  it('43 个内置包全部可加载，结构合法且条数与元数据一致', async () => {
-    expect(KNOWLEDGE_PACK_LIST).toHaveLength(43)
+  it('93 个内置包全部可加载，结构合法且条数与元数据一致', async () => {
+    expect(KNOWLEDGE_PACK_LIST).toHaveLength(93)
     for (const info of KNOWLEDGE_PACK_LIST) {
       const pack = await fetchKnowledgePack(info.id)
       expect(validateKnowledgePack(pack).valid).toBe(true)
@@ -154,7 +154,7 @@ describe('注册表与内置数据（真实数据完整性）', () => {
     expect(math.every(p => p.category === 'math')).toBe(true)
     // 移动端注册表仍只存 math/text（展示层的「地理」分类由 pack-category.ts 维护映射）
     const text = listKnowledgePacks('text')
-    expect(text).toHaveLength(24)
+    expect(text).toHaveLength(74)
     expect(text.some(p => p.id === 'geography-china')).toBe(true)
 
     math[0].name = 'modified'
