@@ -179,9 +179,18 @@ function registerGlobalShortcuts() {
     mainWindow?.focus()
   })
 
-  // Ctrl/Cmd + Shift + T: 打开快速翻译
+  // Ctrl/Cmd + Shift + T: 划词快速翻译（读取剪贴板文本一并下发，渲染进程复用 uTools 划词流）
   globalShortcut.register('CommandOrControl+Shift+T', () => {
-    mainWindow?.webContents.send('global-shortcut', 'quick-translate')
+    const text = clipboard.readText() || ''
+    mainWindow?.webContents.send('global-shortcut', 'quick-translate', text)
+    mainWindow?.show()
+    mainWindow?.focus()
+  })
+
+  // Ctrl/Cmd + Shift + A: 划词添加（剪贴板内容收进单词/句子库）
+  globalShortcut.register('CommandOrControl+Shift+A', () => {
+    const text = clipboard.readText() || ''
+    mainWindow?.webContents.send('global-shortcut', 'word-select', text)
     mainWindow?.show()
     mainWindow?.focus()
   })

@@ -15,7 +15,7 @@ interface Window {
         clipboardReadText: () => Promise<string>
         clipboardWriteText: (text: string) => Promise<void>
         platform: string
-        onGlobalShortcut: (callback: (action: string) => void) => void
+        onGlobalShortcut: (callback: (action: string, text?: string) => void) => void
         setWindowOpacity: (opacity: number) => Promise<void>
         getWindowOpacity: () => Promise<number>
         getCursorScreenPoint?: () => Promise<{ x: number; y: number } | null>

@@ -52,7 +52,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 全局快捷键监听
   onGlobalShortcut: (callback) => {
-    ipcRenderer.on('global-shortcut', (_event, action) => callback(action))
+    ipcRenderer.on('global-shortcut', (_event, action, text) => callback(action, text))
   },
 
   // ===== 子窗口管理（专注模式 / 输入法键盘悬浮窗） =====

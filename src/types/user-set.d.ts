@@ -90,6 +90,25 @@ export type UserSetType = DbDoc<{
     autoSpeak: boolean;
     /** 护眼模式（浅绿背景基底），默认开启 */
     eyeCare?: boolean;
+    /** 新词加入目标词库：current=当前词库（缺省），default=默认词库 */
+    addWordTarget?: 'current' | 'default';
+    /**
+     * 定时任务（uTools 8.0+，低版本自动降级不显示）：
+     * review=定时复习提醒，signin=防断签提醒，sync=WebDAV 定时自动备份（默认关，依赖 WebDAV 配置）；
+     * reviewTimes=复习提醒时间点（缺省 ['09:00','21:00']），signinTimes=防断签时间点（缺省 ['05:30','06:30','08:30','09:30','22:30']，signinTime 为旧版单时间点字段仅作读取兜底）；
+     * reviewRequested/signinRequested/syncRequested=对应任务已发起过系统创建请求（用户拒绝后不再重复弹窗骚扰）
+     */
+    scheduleReminder?: {
+        review: boolean;
+        signin: boolean;
+        sync?: boolean;
+        reviewTimes?: string[];
+        signinTimes?: string[];
+        signinTime?: string;
+        reviewRequested?: boolean;
+        signinRequested?: boolean;
+        syncRequested?: boolean;
+    };
 }>;
 
 
