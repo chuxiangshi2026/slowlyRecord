@@ -54,3 +54,10 @@ export function daysSinceLastSync(): number {
   if (lastSync <= 0) return -1
   return Math.floor((Date.now() - lastSync) / 86400000)
 }
+
+/** 是否存在未同步的本地改动（供定时自动备份判断；从未同步过视为有改动，保证首次备份能发生） */
+export function hasUnsyncedChanges(): boolean {
+  const lastSync = readTs(LAST_SYNC_KEY)
+  if (lastSync <= 0) return true
+  return readTs(LAST_CHANGE_KEY) > lastSync
+}

@@ -64,7 +64,7 @@ interface YdParams {
 /**
  * 翻译平台枚举 | 'google'
  */
-export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 'glm' | 'local';
+export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 'glm' | 'utoolsai' | 'local';
 export type MemoryFirmnessType = '正常' | '较强' | '极强';
 
 

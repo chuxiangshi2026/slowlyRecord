@@ -76,11 +76,11 @@
           key-field="_id"
 
           :min-item-size="185"
-          :item-secondary-size="390"
+          :item-secondary-size="itemSecondarySize"
           v-slot="{ item, index }"
           :dynamic-size="true"
           :max-item-size="195"
-          :grid-items="2"
+          :grid-items="gridItems"
       >
         <!--      <div class="grid-item">-->
         <MyListItem
@@ -390,7 +390,6 @@
 
 
 import {ElMessage, ElLoading, ElMessageBox} from "element-plus";
-import {testData} from "@/testData";
 import type {Word} from "@/types/words";
 
 import {useWordsStore} from "@/stores/words.ts";
@@ -433,9 +432,10 @@ import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb, putSetDbWithRetry} from '@/utils/user-set-db-util.ts';
-import {FeatureEvents} from '@/utils/baidu-stats';
+import {FeatureEvents} from '@/utils/stats';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron} from '@/adapters/platform';
+import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut} from '@/adapters/window';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount} from '@/utils/focus-lock';
 import {
   fetchWordBank,
@@ -707,24 +707,11 @@ let focusWindowState = {
 
 
 const applyFocusWindowAlwaysOnTop = (targetWindow: any, alwaysOnTop: boolean, source: string) => {
-  if (!targetWindow || typeof targetWindow.setAlwaysOnTop !== 'function') {
-    return false;
+  const applied = applyChildWindowAlwaysOnTop(targetWindow, alwaysOnTop, source);
+  if (applied) {
+    console.log(`[${source}] 专注窗口置顶状态已应用:`, alwaysOnTop);
   }
-
-  try {
-    targetWindow.setAlwaysOnTop(alwaysOnTop);
-    if (alwaysOnTop && typeof targetWindow.moveTop === 'function') {
-      targetWindow.moveTop();
-    }
-    const appliedState = typeof targetWindow.isAlwaysOnTop === 'function'
-        ? targetWindow.isAlwaysOnTop()
-        : alwaysOnTop;
-    console.log(`[${source}] 专注窗口置顶状态已应用:`, alwaysOnTop, '当前实际状态:', appliedState);
-    return appliedState === alwaysOnTop;
-  } catch (e) {
-    console.error(`[${source}] 应用置顶状态失败:`, e);
-    return false;
-  }
+  return applied;
 };
 
 
@@ -737,31 +724,7 @@ const clearFocusModeSync = () => {
 };
 
 // ========== Electron 分支：子窗口代理 + ipc 通信 ==========
-function createElectronWindowProxy(winId: number, alwaysOnTop: boolean = true): any {
-  const api = (window as any).electronAPI;
-  const proxy: any = {
-    _winId: winId,
-    _destroyed: false,
-    _focused: false,
-    _alwaysOnTop: alwaysOnTop,
-    isDestroyed: () => proxy._destroyed,
-    isFocused: () => proxy._focused,
-    isAlwaysOnTop: () => proxy._alwaysOnTop,
-    setIgnoreMouseEvents: (ignore: boolean, opts?: any) => { api.focusWindowInvoke(winId, 'setIgnoreMouseEvents', [ignore, opts]); },
-    setAlwaysOnTop: (v: boolean) => { proxy._alwaysOnTop = v; api.focusWindowInvoke(winId, 'setAlwaysOnTop', [v]); },
-    setResizable: (v: boolean) => { api.focusWindowInvoke(winId, 'setResizable', [v]); },
-    setBounds: (bounds: any) => { api.focusWindowInvoke(winId, 'setBounds', [bounds]); },
-    moveTop: () => { api.focusWindowInvoke(winId, 'moveTop', []); },
-    focus: () => { api.focusWindowInvoke(winId, 'focus', []); },
-    show: () => { api.focusWindowInvoke(winId, 'show', []); },
-    close: () => { api.focusWindowInvoke(winId, 'close', []); },
-    getBounds: () => api.focusWindowInvoke(winId, 'getBounds', []),
-    webContents: {
-      executeJavaScript: (js: string) => api.focusWindowExecuteJS(winId, js),
-    },
-  };
-  return proxy;
-}
+// createElectronWindowProxy 统一在 @/adapters/window
 
 // 收集单词分片 + user-set，供子窗口 utools shim 同步读取
 function collectFocusDocsForChild(bankId: string): Record<string, any> {
@@ -785,40 +748,10 @@ function collectFocusDocsForChild(bankId: string): Record<string, any> {
 
 // 子窗口 db.put 转发 -> 父持久化（冲突时读最新 _rev 重试一次）
 async function handleFocusChildDbPut(doc: any) {
-  try {
-    const adapter: any = getDbAdapter();
-    let res = await adapter.put(doc);
-    if (res && res.ok) return;
-    const fresh = await adapter.get(doc._id);
-    if (fresh) {
-      doc._rev = fresh._rev;
-      await adapter.put(doc);
-    }
-  } catch (e) {
-    console.error('[focusMode] 父窗口持久化子窗口 db.put 失败:', e);
-  }
+  await persistChildDbPut(doc, 'focusMode');
 }
 
-const getCursorPointCandidates = async () => {
-  try {
-    if (isUtools() && (window as any).utools?.getCursorScreenPoint) {
-      const point = (window as any).utools.getCursorScreenPoint();
-      const candidates = [point];
-      if ((window as any).utools.screenToDipPoint) {
-        const dipPoint = (window as any).utools.screenToDipPoint(point);
-        candidates.push(dipPoint);
-      }
-      return candidates;
-    }
-    if (window.electronAPI?.getCursorScreenPoint) {
-      const point = await window.electronAPI.getCursorScreenPoint();
-      return point ? [point] : [];
-    }
-  } catch (e) {
-    console.error('[focusLock] 获取鼠标屏幕坐标失败:', e);
-  }
-  return [];
-};
+// getCursorPointCandidates 统一在 @/adapters/window（uTools 同步 + DIP / Electron IPC）
 
 const setFocusWindowMouseIgnore = (shouldIgnore: boolean) => {
   if (!focusWindow || focusWindow.isDestroyed?.()) {
@@ -1111,8 +1044,8 @@ const handleRecreateWindow = (state: any) => {
         height: 100,
         minWidth: 200,
         minHeight: 80,
-        maxWidth: 400,
-        maxHeight: 150,
+        maxWidth: 560,
+        maxHeight: 320,
         alwaysOnTop: newAlwaysOnTop,
         frame: false,
         transparent: true,
@@ -1120,6 +1053,11 @@ const handleRecreateWindow = (state: any) => {
         resizable: true,
         modal: false,
         closable: true,
+        // 创建时不显示，回调里再 show，避免页面未加载完先闪空白窗
+        show: false,
+        // 挂件不进任务栏、透明窗不带系统阴影
+        skipTaskbar: true,
+        hasShadow: false,
       }, () => {
         console.log('[handleRecreateWindow] 新专注窗口已创建，置顶状态:', newAlwaysOnTop);
         applyFocusWindowAlwaysOnTop(focusWindow, newAlwaysOnTop, 'handleRecreateWindow');
@@ -1132,24 +1070,8 @@ const handleRecreateWindow = (state: any) => {
       });
 
 
-      // 窗口关闭时清理
-      const recreatedWindow = focusWindow;
-      recreatedWindow?.on?.('closed', () => {
-        console.log('[handleRecreateWindow] 窗口 closed 事件');
-        consumeLatestFocusModePendingAction('closed');
-
-        if (focusWindow === recreatedWindow) {
-          focusWindow = null;
-          focusWindowClosed('word');
-          clearFocusModeSync();
-          clearEdgeStickResources();
-          isEdgeHidden = false;
-          savedBounds = null;
-          edgeHiddenSide = null;
-          edgeRestoreSuspendedUntil = 0;
-          isExpandedFromEdge = false;
-        }
-      });
+      // 注意：uTools 子窗口不支持实例事件监听（原 on('closed') 从未生效，已移除）；
+      // 关闭清理由子窗口消息与 pendingAction 兜底通道完成
 
       startFocusModeSync(newAlwaysOnTop, newEdgeStickEnabled);
 
@@ -1185,6 +1107,21 @@ const clearEdgeExpandCollapseTimer = () => {
 };
 
 const getFocusWindowScreenBounds = (referenceBounds?: any) => {
+  // 优先官方 API：取窗口所在显示器的真实工作区（多显示器下准确，uTools 专属）
+  const utoolsApi: any = (window as any).utools;
+  if (isUtools() && typeof utoolsApi?.getDisplayMatching === 'function') {
+    try {
+      const ref = referenceBounds ?? focusWindow?.getBounds?.();
+      const wa = ref ? utoolsApi.getDisplayMatching(ref)?.workArea : null;
+      if (wa && Number(wa.width) > 0 && Number(wa.height) > 0) {
+        const left = Number(wa.x) || 0;
+        const top = Number(wa.y) || 0;
+        const width = Number(wa.width) || 0;
+        const height = Number(wa.height) || 0;
+        return { left, top, width, height, right: left + width, bottom: top + height };
+      }
+    } catch { /* 失败走下方降级链 */ }
+  }
   const windowScreen: any = focusWindow?.screen || {};
   const browserScreen: any = typeof screen !== 'undefined' ? screen : {};
 
@@ -2158,9 +2095,11 @@ const openFocusMode = async (mode = '') => {
       const modeParam = mode ? `&mode=${mode}` : '';
       const eUrl = `focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}`;
       const winId = await api.createBrowserWindow(eUrl, {
-        width: 320, height: 100, minWidth: 200, minHeight: 80, maxWidth: 400, maxHeight: 150,
+        width: 320, height: 100, minWidth: 200, minHeight: 80, maxWidth: 560, maxHeight: 320,
         alwaysOnTop: initAlwaysOnTop, frame: false, transparent: true, backgroundColor: '#00000000',
         resizable: true, modal: false, closable: true,
+        // 创建时不显示（数据推送后统一 show），挂件不进任务栏、透明窗不带系统阴影
+        show: false, skipTaskbar: true, hasShadow: false,
       });
       focusWindow = createElectronWindowProxy(winId, initAlwaysOnTop);
       focusWindowOpened('word');
@@ -2170,14 +2109,19 @@ const openFocusMode = async (mode = '') => {
       setupMessageListener();
       // 推送单词分片 + user-set 快照给子窗口 utools shim，然后显示
       setTimeout(async () => {
-        if (!focusWindow || focusWindow.isDestroyed?.()) return;
-        const docs = collectFocusDocsForChild(wordsStore.currentWordBankId || '');
-        await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
-        // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
-        await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
-        applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
-        api.focusWindowInvoke(winId, 'show', []);
-        setTimeout(pushFocusStyleToChild, 500);
+        try {
+          if (!focusWindow || focusWindow.isDestroyed?.()) return;
+          const docs = collectFocusDocsForChild(wordsStore.currentWordBankId || '');
+          await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+          // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
+          await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
+          applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
+          api.focusWindowInvoke(winId, 'show', []);
+          setTimeout(pushFocusStyleToChild, 500);
+        } catch (e) {
+          // 延迟期间子窗口被关闭会导致 executeJS reject，静默忽略
+          console.warn('[openFocusMode] 子窗口初始化推送失败（窗口可能已关闭）', e);
+        }
       }, 500);
       return;
     }
@@ -2200,8 +2144,8 @@ const openFocusMode = async (mode = '') => {
         height: 100,
         minWidth: 200,
         minHeight: 80,
-        maxWidth: 400,
-        maxHeight: 150,
+        maxWidth: 560,
+        maxHeight: 320,
         alwaysOnTop: initAlwaysOnTop,
         frame: false,
         transparent: true,
@@ -2211,6 +2155,11 @@ const openFocusMode = async (mode = '') => {
         modal: false,
         // 允许关闭窗口
         closable: true,
+        // 创建时不显示，回调里再 show，避免页面未加载完先闪空白窗
+        show: false,
+        // 挂件不进任务栏、透明窗不带系统阴影
+        skipTaskbar: true,
+        hasShadow: false,
       }, () => {
         console.log('[openFocusMode] 窗口创建回调执行，focusWindow:', focusWindow, '主题:', themeParam);
         applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
@@ -2224,23 +2173,8 @@ const openFocusMode = async (mode = '') => {
       });
 
 
-      // 窗口关闭时清理引用
-      const createdFocusWindow = focusWindow;
-      createdFocusWindow?.on?.('closed', () => {
-        consumeLatestFocusModePendingAction('closed');
-
-        if (focusWindow === createdFocusWindow) {
-          focusWindow = null;
-          focusWindowClosed('word');
-          clearFocusModeSync();
-          clearEdgeStickResources();
-          isEdgeHidden = false;
-          savedBounds = null;
-          edgeHiddenSide = null;
-          edgeRestoreSuspendedUntil = 0;
-          isExpandedFromEdge = false;
-        }
-      });
+      // 注意：uTools 子窗口不支持实例事件监听（原 on('closed') 从未生效，已移除）；
+      // 关闭清理由子窗口消息与 pendingAction 兜底通道完成
 
       startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
 
@@ -2327,7 +2261,7 @@ const handleEmptyAdd = async () => {
     // 部分分支（如补充释义）addWord 内部已有成功提示，这里仅清空输入
     emptyAddText.value = ''
     if (result.message === '更新成功') return
-    ElMessage.success(`已加入 ${wordsStore.currentWordBank?.name || '默认词库'} · 今日待复习 +1`)
+    ElMessage.success(`已加入 ${wordsStore.addWordTarget === 'default' ? '默认词库' : (wordsStore.currentWordBank?.name || '默认词库')} · 今日待复习 +1`)
   } else if (result.message && result.message.includes('已存在')) {
     ElMessage.info('单词已存在')
   } else {
@@ -2539,6 +2473,35 @@ const scrollContainer = ref<HTMLElement | null>(null)
 const scrollerRef = ref<any>(null)
 const itemRefs = ref<HTMLElement[]>([])
 
+// 列表列数随容器宽度自适应：uTools 小窗 2 列，桌面端宽窗升到 3~4 列
+// （vue-virtual-scroller 内部 watch gridItems/itemSecondarySize，变更会自动重排）
+const scrollerWidth = ref(0)
+const gridItems = computed(() => {
+  if (scrollerWidth.value >= 1560) return 4
+  if (scrollerWidth.value >= 1170) return 3
+  return 2
+})
+const itemSecondarySize = computed(() => {
+  // 单列宽 = 容器宽 / 列数（留 8px 间隙）；未测得宽度前回退原固定值 390
+  return scrollerWidth.value ? Math.floor((scrollerWidth.value - 8) / gridItems.value) : 390
+})
+
+let gridResizeObserver: ResizeObserver | null = null
+onMounted(() => {
+  if (scrollContainer.value && typeof ResizeObserver !== 'undefined') {
+    scrollerWidth.value = scrollContainer.value.clientWidth
+    gridResizeObserver = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width
+      if (w) scrollerWidth.value = w
+    })
+    gridResizeObserver.observe(scrollContainer.value)
+  }
+})
+onUnmounted(() => {
+  gridResizeObserver?.disconnect()
+  gridResizeObserver = null
+})
+
 // 监听过滤列表变化，强制 RecycleScroller 刷新布局
 // 解决 dynamic-size 模式下项目减少时出现空白占位的问题
 watch(() => showFilteredWords.value.length, () => {
@@ -2581,7 +2544,7 @@ const scrollToWord = (index: number) => {
     const scroller = document.querySelector('.scroller');
     if (scroller) {
       // 计算目标项的位置（考虑网格布局）
-      const itemsPerRow = 2; // 从模板中的 :grid-items="2" 得知
+      const itemsPerRow = gridItems.value; // 与模板 :grid-items 同源（随宽度自适应）
       const rowIndex = Math.floor(index / itemsPerRow);
       const itemHeight = 185; // 与模板中的 :item-size="185" 保持一致
 
@@ -2821,32 +2784,24 @@ const handleExportCommand = (command: string) => {
 
 
 /**
- * 清空单词库
- * @since 2025/11/5
+ * 删除单词（二次确认，删除后记忆等级一并清除不可恢复）
  */
-const clearWord = () => {
-  wordsStore.removeWords()
-  ElMessage.success('清除成功');
-}
-/**
- * 初始化单词库
- * @since 2025/11/5
- */
-const initWord = () => {
-  clearWord()
-  wordsStore.addAndUpdateWords(testData)
-  ElMessage.success('初始化成功');
-}
-
-/**
- * 删除单词
- */
-const deleteWord = (index: number) => {
+const deleteWord = async (index: number) => {
   if (index < 0) {
     console.error('删除单词失败：无效的索引', index);
     return;
   }
-  wordsStore.deleteWord(index)
+  const text = wordsStore.words[index]?.text || '';
+  try {
+    await ElMessageBox.confirm(
+      `确定删除「${text}」吗？其记忆等级将一并清除。`,
+      '删除确认',
+      {confirmButtonText: '删除', cancelButtonText: '取消', type: 'warning'}
+    );
+  } catch {
+    return; // 用户取消
+  }
+  await wordsStore.deleteWord(index)
 }
 
 /**

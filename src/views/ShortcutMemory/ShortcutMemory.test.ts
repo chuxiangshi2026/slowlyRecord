@@ -249,6 +249,23 @@ describe('ShortcutMemory 主页面', () => {
         expect(screen.queryByText(/快捷键列表/)).not.toBeInTheDocument()
       })
     })
+
+    it('进入训练时携带 from 参数（头部返回回列表页而非单词页）', async () => {
+      hoisted.store.currentShortcutCount = 5
+      const { user, router } = setup()
+      await user.click(screen.getByText('系统'))
+      await waitFor(() => expect(screen.getByText('Windows')).toBeInTheDocument())
+      await user.click(screen.getByText('Windows'))
+      await waitFor(() => expect(screen.getByText(/快捷键列表/)).toBeInTheDocument())
+      await user.click(screen.getByRole('button', { name: /按键训练/ }))
+      await waitFor(() => {
+        expect(router.currentRoute.value.path).toBe('/shortcut-memory/training')
+      })
+      const from = router.currentRoute.value.query.from as string
+      expect(from).toContain('/shortcut-memory')
+      expect(from).toContain('group=')
+      expect(from).toContain('category=Windows')
+    })
   })
 
   describe('训练历史弹窗', () => {

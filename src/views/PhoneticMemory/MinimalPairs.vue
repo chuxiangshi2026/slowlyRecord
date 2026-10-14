@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from 'vue';
+import {ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {useRouter} from 'vue-router';
 import {ArrowLeft, VideoPlay, Right, CircleCheckFilled, CircleCloseFilled, RefreshRight, Timer} from '@element-plus/icons-vue';
 import {type MinimalPair} from '@/utils/phoneme-data';
@@ -137,6 +137,17 @@ const finished = ref(false);
 
 const currentQ = computed<Question | null>(() => questions.value[currentIndex.value] || null);
 
+// 延迟发声定时器：切题/重开/离开时统一清理，避免旧题语音打断新题或卸载后发声
+let speakTimers: ReturnType<typeof setTimeout>[] = [];
+function clearSpeakTimers() {
+    speakTimers.forEach(clearTimeout);
+    speakTimers = [];
+}
+onBeforeUnmount(() => {
+    clearSpeakTimers();
+    window.speechSynthesis.cancel();
+});
+
 const progressPercent = computed(() =>
     Math.round(((currentIndex.value + (answered.value ? 1 : 0)) / TOTAL) * 100),
 );
@@ -156,6 +167,7 @@ function generateQuestions() {
 }
 
 async function startSession() {
+    clearSpeakTimers();
     await phoneticStore.ensureLoaded();
     generateQuestions();
     currentIndex.value = 0;
@@ -164,7 +176,7 @@ async function startSession() {
     picked.value = null;
     answered.value = false;
     finished.value = false;
-    setTimeout(playTarget, 350);
+    speakTimers.push(setTimeout(playTarget, 350));
 }
 
 function choose(option: 'a' | 'b') {
@@ -177,8 +189,8 @@ function choose(option: 'a' | 'b') {
     } else {
         wrongCount.value++;
         // 答错时自动对比朗读两个词,帮助辨别
-        setTimeout(() => speak(currentQ.value!.pair.a), 200);
-        setTimeout(() => speak(currentQ.value!.pair.b), 1300);
+        speakTimers.push(setTimeout(() => speak(currentQ.value!.pair.a), 200));
+        speakTimers.push(setTimeout(() => speak(currentQ.value!.pair.b), 1300));
     }
     phoneticStore.markPair(currentQ.value.pair.a, currentQ.value.pair.b, isCorrect);
 }
@@ -192,6 +204,7 @@ function optionClass(option: 'a' | 'b') {
 }
 
 function nextQuestion() {
+    clearSpeakTimers();
     if (currentIndex.value + 1 >= TOTAL) {
         finished.value = true;
         return;
@@ -199,7 +212,7 @@ function nextQuestion() {
     currentIndex.value++;
     picked.value = null;
     answered.value = false;
-    setTimeout(playTarget, 300);
+    speakTimers.push(setTimeout(playTarget, 300));
 }
 
 function playTarget() {

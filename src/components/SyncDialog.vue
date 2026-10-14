@@ -351,6 +351,7 @@ import type { RestoreOptions } from '@/utils/sync-manager'
 import { DEFAULT_RESTORE_OPTIONS } from '@/utils/sync-manager'
 import { NUTSTORE_WEBDAV_URL, formatWebDavDiagnosis } from '@/utils/sync-webdav'
 import { daysSinceLastSync } from '@/utils/sync-dirty'
+import { getClipboardAdapter } from '@/adapters/clipboard'
 import { isWeb } from '@/adapters/platform'
 
 const isWebPlatform = isWeb()
@@ -519,10 +520,10 @@ function shortenDir(dir: string) {
   return dir.replace(/^https?:\/\/[^/]+/i, '')
 }
 
-function copyWebdavDiag() {
-  navigator.clipboard?.writeText(webdavDiagText.value)
-    .then(() => ElMessage.success('诊断结果已复制'))
-    .catch(() => ElMessage.warning('复制失败，请手动选中文本复制'))
+async function copyWebdavDiag() {
+  const ok = await getClipboardAdapter().copyText(webdavDiagText.value)
+  if (ok) ElMessage.success('诊断结果已复制')
+  else ElMessage.warning('复制失败，请手动选中文本复制')
 }
 
 async function handleWebDavUpload() {

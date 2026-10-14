@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
+import { readFileSync } from 'node:fs'
 
 // mock db 层，避免测试环境无 utools/IndexedDB 时 getHiddenCategories 等报错
 vi.mock('@/utils/shortcut-memory-db', () => ({
@@ -18,6 +19,7 @@ import {
   buildShuangpinMap,
   pinyinToShuangpin,
   generateShuangpinPracticeItems,
+  parseShuangpinIdiomPool,
   filterByTags,
   isZoneTag,
   ZONE_TAGS,
@@ -321,7 +323,74 @@ describe('双拼编码生成（单元）', () => {
       const ids = items.map(i => i.id)
       expect(new Set(ids).size).toBe(ids.length)
     })
+
+    it('题量充足：常用字/词组池已扩充', () => {
+      const count = (tag: string) => items.filter(i => i.tags?.includes(tag)).length
+      expect(count('常用字')).toBeGreaterThan(150)
+      expect(count('词组')).toBeGreaterThan(100)
+    })
   })
+})
+
+describe('parseShuangpinIdiomPool 成语扩充池', () => {
+  it('剥离声调、仅收音节对齐的 4 字成语、按标题去重', () => {
+    const pool = parseShuangpinIdiomPool({ idioms: [
+      { title: '守株待兔', pinyin: 'shǒu zhū dài tù' },
+      { title: '不守时', pinyin: 'bù shǒu shí' }, // 3 字跳过
+      { title: '守株待兔', pinyin: 'shǒu zhū dài tù' }, // 重复标题跳过
+      { title: '略见一斑', pinyin: 'lüè jiàn yī bān' }, // ü -> v 保留，生成时按方案映射跳过
+    ] })
+    expect(pool).toEqual([
+      ['守株待兔', 'shou', 'zhu', 'dai', 'tu'],
+      ['略见一斑', 'lve', 'jian', 'yi', 'ban'],
+    ])
+  })
+
+  it('非法数据返回空数组', () => {
+    expect(parseShuangpinIdiomPool({})).toEqual([])
+    expect(parseShuangpinIdiomPool({ idioms: [{ title: '', pinyin: '' }] })).toEqual([])
+  })
+
+  it('自定义成语池参与生成，ü 类读音映射不到被跳过', () => {
+    const items = generateShuangpinPracticeItems('双拼 · 小鹤', XIAOHE_KEY_ITEMS, [
+      ['守株待兔', 'shou', 'zhu', 'dai', 'tu'],
+      ['略见一斑', 'lve', 'jian', 'yi', 'ban'],
+    ])
+    const shou = items.find(i => i.functionName === '守株待兔')
+    // sh=U ou=Z / zh=V u=U / d=D ai=D / t=T u=U
+    expect(shou?.keys).toEqual(['U', 'Z', 'V', 'U', 'D', 'D', 'T', 'U'])
+    expect(items.some(i => i.functionName === '略见一斑')).toBe(false)
+  })
+
+  it('扩充池与内置表同标题时 id 不重复', () => {
+    const items = generateShuangpinPracticeItems('双拼 · 小鹤', XIAOHE_KEY_ITEMS, [
+      ['守株待兔', 'shou', 'zhu', 'dai', 'tu'], // 内置表已有
+      ['一心一意', 'yi', 'xin', 'yi', 'yi'], // 内置表已有
+    ])
+    const ids = items.map(i => i.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+})
+
+// PRESET 兜底与 public/shortcuts/*.json 必须一致（JSON 加载失败时回退到 PRESET，
+// 两处漂移会导致线上键位错误；改一边必须同步另一边）
+describe('双拼 PRESET 兜底与 JSON 一致', () => {
+  const schemes: Array<[string, string]> = [
+    ['双拼 · 小鹤', 'shuangpin-xiaohe.json'],
+    ['双拼 · 自然码', 'shuangpin-ziranma.json'],
+    ['双拼 · 微软', 'shuangpin-weiruan.json'],
+    ['双拼 · 搜狗', 'shuangpin-sogou.json'],
+  ]
+  for (const [category, file] of schemes) {
+    it(`${category} 26 键位与 ${file} 一致`, () => {
+      const url = new URL(`../../public/shortcuts/${file}`, import.meta.url)
+      const json = JSON.parse(readFileSync(url, 'utf-8')) as ShortcutItem[]
+      const pick = (list: ShortcutItem[]) => list
+        .filter(s => s.category === category && /^[A-Z]键$/.test(s.functionName))
+        .map(s => [s.keys, s.description])
+      expect(pick(PRESET_SHORTCUTS)).toEqual(pick(json))
+    })
+  }
 })
 
 describe('extractYunmu 韵母提取', () => {

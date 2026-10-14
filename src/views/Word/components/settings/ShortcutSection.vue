@@ -20,11 +20,10 @@
     <div class="titles">
       <div class="setting-item">
         <el-button type="info" @click="kuaijiejian(1)">划词快捷键</el-button>
-        <el-button type="info" @click="kuaijiejian(2)">划段快捷键</el-button>
         <el-button type="info" @click="kuaijiejian(3)">截图快捷键</el-button>
       </div>
     </div>
-    <p class="scope-note">为 uTools 全局功能「划词添加 / 划段添加 / 截图添加」设置唤起快捷键（需在 uTools 中使用）。</p>
+    <p class="scope-note">为 uTools 全局功能「划词添加 / 截图添加」设置唤起快捷键（需在 uTools 中使用）。</p>
 
     <!-- 快捷键一览 -->
     <el-collapse class="shortcut-collapse">
@@ -83,9 +82,6 @@ const kuaijiejian = (type: number) => {
   if (!isUtools() || !utoolsApi?.redirectHotKeySetting) return;
   if (type == 1) {
     utoolsApi.redirectHotKeySetting("划词添加", true);
-  }
-  if (type == 2) {
-    utoolsApi.redirectHotKeySetting("划段添加", true)
   }
   if (type == 3) {
     utoolsApi.redirectHotKeySetting("截图添加", true)

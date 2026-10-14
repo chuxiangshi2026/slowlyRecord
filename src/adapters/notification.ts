@@ -6,9 +6,10 @@ import { getPlatform } from './platform'
 export interface NotificationAdapter {
   /**
    * 显示通知
-   * @param onClick 点击回调（仅 Web Notification 等支持点击的平台会触发；uTools/小程序忽略）
+   * @param onClick 点击回调（仅 Web Notification 等支持点击回调的平台触发）
+   * @param featureCode 点击后进入的功能编码（仅 uTools 支持，对应 plugin.json 的 feature.code）
    */
-  show(title: string, body?: string, onClick?: () => void): void
+  show(title: string, body?: string, onClick?: () => void, featureCode?: string): void
   /** 显示成功提示 */
   success(message: string): void
   /** 显示警告提示 */
@@ -18,9 +19,11 @@ export interface NotificationAdapter {
 }
 
 class UtoolsNotification implements NotificationAdapter {
-  // uTools 的 showNotification 暂不支持点击回调，仅展示
-  show(title: string, body?: string): void {
-    ;(window as any).utools?.showNotification?.(body || title)
+  // uTools 通知点击不支持回调，但支持 clickFeatureCode 直达插件功能
+  show(title: string, body?: string, _onClick?: () => void, featureCode?: string): void {
+    const u = (window as any).utools
+    if (featureCode) u?.showNotification?.(body || title, featureCode)
+    else u?.showNotification?.(body || title)
   }
   success(message: string): void {
     ;(window as any).utools?.showNotification?.(message)

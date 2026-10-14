@@ -14,6 +14,7 @@ import { NUTSTORE_WEBDAV_URL, checkDirWritable, diagnoseWebDav, normalizeWebDavU
 import type { WebDavDiagnosis } from '@/utils/sync-webdav'
 import { log } from '@/utils/logger'
 import { getDbStorage } from '@/adapters/db'
+import { getClipboardAdapter } from '@/adapters/clipboard'
 import { isElectron } from '@/adapters/platform'
 import { markSynced } from '@/utils/sync-dirty'
 
@@ -107,8 +108,9 @@ export const useSyncStore = defineStore('sync', () => {
   const webdavUrl = ref((_storage.getItem(LS_WEBDAV_URL) as string) || NUTSTORE_WEBDAV_URL)
   const webdavUsername = ref((_storage.getItem(LS_WEBDAV_USERNAME) as string) || '')
   const webdavPassword = ref('')
-  // 恢复保存的密码：兼容旧明文；Electron 下检测到旧明文顺手迁移为密文
-  ;(async () => {
+  // 恢复保存的密码：兼容旧明文；Electron 下检测到旧明文顺手迁移为密文。
+  // webdavReady 供定时自动备份等冷启动场景等待密码就绪后再判断 webdavConfigured
+  const webdavReady: Promise<void> = (async () => {
     const stored = (_storage.getItem(LS_WEBDAV_PASSWORD) as string) || ''
     if (!stored) return
     const plain = await decryptStoredPassword(stored)
@@ -334,20 +336,8 @@ export const useSyncStore = defineStore('sync', () => {
    */
   async function copySyncCode() {
     if (!syncCode.value) return
-    try {
-      await navigator.clipboard.writeText(syncCode.value)
-      resultMessage.value = '同步码已复制到剪贴板'
-    } catch {
-      const textarea = document.createElement('textarea')
-      textarea.value = syncCode.value
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      resultMessage.value = '同步码已复制到剪贴板'
-    }
+    const ok = await getClipboardAdapter().copyText(syncCode.value)
+    resultMessage.value = ok ? '同步码已复制到剪贴板' : '复制失败，请手动复制'
   }
 
   /**
@@ -519,6 +509,7 @@ export const useSyncStore = defineStore('sync', () => {
     webdavUsername,
     webdavPassword,
     webdavConfigured,
+    webdavReady,
     saveWebDavConfig,
     testWebDav,
     webdavDiagnose,

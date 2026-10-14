@@ -26,7 +26,7 @@ describe('clipboard adapter', () => {
   describe('setClipboardAdapter / getClipboardAdapter', () => {
     it('应该允许手动设置适配器', () => {
       const mockAdapter: ClipboardAdapter = {
-        copyText: (text: string) => {},
+        copyText: async () => true,
         readText: async () => 'mocked text',
       }
       setClipboardAdapter(mockAdapter)
@@ -36,7 +36,7 @@ describe('clipboard adapter', () => {
 
     it('手动设置后 getClipboardAdapter 返回相同实例', () => {
       const mockAdapter: ClipboardAdapter = {
-        copyText: () => {},
+        copyText: async () => true,
         readText: async () => '',
       }
       setClipboardAdapter(mockAdapter)
@@ -63,9 +63,28 @@ describe('clipboard adapter', () => {
     it('copyText 应该调用 navigator.clipboard.writeText', async () => {
       const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue()
       const adapter = getClipboardAdapter()
-      adapter.copyText('hello')
+      await expect(adapter.copyText('hello')).resolves.toBe(true)
       expect(writeTextSpy).toHaveBeenCalledWith('hello')
       writeTextSpy.mockRestore()
+    })
+
+    it('copyText 在 Clipboard API 失败时回退 execCommand', async () => {
+      const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(new Error('denied'))
+      ;(document as any).execCommand = vi.fn().mockReturnValue(true)
+      const adapter = getClipboardAdapter()
+      await expect(adapter.copyText('hello')).resolves.toBe(true)
+      expect((document as any).execCommand).toHaveBeenCalledWith('copy')
+      writeTextSpy.mockRestore()
+      delete (document as any).execCommand
+    })
+
+    it('copyText 两条链路都失败时返回 false', async () => {
+      const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(new Error('denied'))
+      ;(document as any).execCommand = vi.fn().mockReturnValue(false)
+      const adapter = getClipboardAdapter()
+      await expect(adapter.copyText('hello')).resolves.toBe(false)
+      writeTextSpy.mockRestore()
+      delete (document as any).execCommand
     })
 
     it('readText 应该调用 navigator.clipboard.readText', async () => {
@@ -75,6 +94,11 @@ describe('clipboard adapter', () => {
       expect(result).toBe('world')
       expect(readTextSpy).toHaveBeenCalled()
       readTextSpy.mockRestore()
+    })
+
+    it('web 平台不提供 pasteTextAndHide 能力', () => {
+      const adapter = getClipboardAdapter()
+      expect(adapter.pasteTextAndHide).toBeUndefined()
     })
   })
 
@@ -96,10 +120,37 @@ describe('clipboard adapter', () => {
       expect(typeof adapter.readText).toBe('function')
     })
 
-    it('copyText 应该调用 utools.copyText', () => {
+    it('copyText 应该调用 utools.copyText', async () => {
       const adapter = getClipboardAdapter()
-      adapter.copyText('test text')
+      ;((window as any).utools.copyText as any).mockReturnValue(true)
+      await expect(adapter.copyText('test text')).resolves.toBe(true)
       expect((window as any).utools.copyText).toHaveBeenCalledWith('test text')
+    })
+
+    it('pasteTextAndHide 应该调用 utools.hideMainWindowPasteText', async () => {
+      const adapter = getClipboardAdapter()
+      ;(window as any).utools.hideMainWindowPasteText = vi.fn().mockReturnValue(true)
+      await expect(adapter.pasteTextAndHide?.('粘贴文本')).resolves.toBe(true)
+      expect((window as any).utools.hideMainWindowPasteText).toHaveBeenCalledWith('粘贴文本')
+    })
+
+    it('pasteTextAndHide 在 API 不存在、返回 false 或抛异常时返回 false', async () => {
+      const adapter = getClipboardAdapter()
+      // API 不存在
+      await expect(adapter.pasteTextAndHide?.('x')).resolves.toBe(false)
+      // 执行失败返回 false
+      ;(window as any).utools.hideMainWindowPasteText = vi.fn().mockReturnValue(false)
+      await expect(adapter.pasteTextAndHide?.('x')).resolves.toBe(false)
+      // 抛异常
+      ;(window as any).utools.hideMainWindowPasteText = vi.fn(() => { throw new Error('boom') })
+      await expect(adapter.pasteTextAndHide?.('x')).resolves.toBe(false)
+    })
+
+    it('pasteTextAndHide 空文本返回 false', async () => {
+      const adapter = getClipboardAdapter()
+      ;(window as any).utools.hideMainWindowPasteText = vi.fn().mockReturnValue(true)
+      await expect(adapter.pasteTextAndHide?.('')).resolves.toBe(false)
+      expect((window as any).utools.hideMainWindowPasteText).not.toHaveBeenCalled()
     })
   })
 
@@ -127,7 +178,7 @@ describe('clipboard adapter', () => {
     it('copyText 应该调用 wx.setClipboardData', () => {
       const adapter = getClipboardAdapter()
       adapter.copyText('wx text')
-      expect((window as any).wx.setClipboardData).toHaveBeenCalledWith({ data: 'wx text' })
+      expect((window as any).wx.setClipboardData).toHaveBeenCalledWith(expect.objectContaining({ data: 'wx text' }))
     })
 
     it('readText 应该调用 wx.getClipboardData 并返回数据', async () => {
@@ -161,7 +212,7 @@ describe('clipboard adapter', () => {
     it('copyText 应该调用 tt.setClipboardData', () => {
       const adapter = getClipboardAdapter()
       adapter.copyText('tt text')
-      expect((window as any).tt.setClipboardData).toHaveBeenCalledWith({ data: 'tt text' })
+      expect((window as any).tt.setClipboardData).toHaveBeenCalledWith(expect.objectContaining({ data: 'tt text' }))
     })
 
     it('readText 应该调用 tt.getClipboardData 并返回数据', async () => {
@@ -186,7 +237,7 @@ describe('clipboard adapter', () => {
       const autoAdapter = getClipboardAdapter()
 
       const mockAdapter: ClipboardAdapter = {
-        copyText: () => {},
+        copyText: async () => true,
         readText: async () => '',
       }
       setClipboardAdapter(mockAdapter)

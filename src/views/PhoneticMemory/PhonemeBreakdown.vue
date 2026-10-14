@@ -119,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from 'vue';
+import {ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {useRouter} from 'vue-router';
 import {ArrowLeft, VideoPlay, Right, RefreshLeft, Check} from '@element-plus/icons-vue';
 import {BREAKDOWN_WORDS, breakdownPhonetic, type BreakdownWord} from '@/utils/phoneme-breakdown';
@@ -164,6 +164,17 @@ const finished = ref(false);
 const shaking = ref(false);
 
 const currentQ = computed<BreakdownQuestion | null>(() => questions.value[currentIndex.value] || null);
+
+// 延迟发声定时器：切题/重开/离开时统一清理，避免旧题语音打断新题或卸载后发声
+let speakTimers: ReturnType<typeof setTimeout>[] = [];
+function clearSpeakTimers() {
+    speakTimers.forEach(clearTimeout);
+    speakTimers = [];
+}
+onBeforeUnmount(() => {
+    clearSpeakTimers();
+    window.speechSynthesis.cancel();
+});
 
 const progressPercent = computed(() =>
     Math.round(((currentIndex.value + (answered.value ? 1 : 0)) / TOTAL) * 100),
@@ -233,6 +244,7 @@ function setupQuiz() {
 }
 
 async function startSession() {
+    clearSpeakTimers();
     await phoneticStore.ensureLoaded();
     generateQuestions();
     currentIndex.value = 0;
@@ -240,7 +252,7 @@ async function startSession() {
     wrongCount.value = 0;
     finished.value = false;
     setupQuiz();
-    setTimeout(speakTarget, 300);
+    speakTimers.push(setTimeout(speakTarget, 300));
 }
 
 function onPoolClick(item: PoolItem) {
@@ -297,13 +309,14 @@ function checkAnswer() {
 }
 
 function nextQuestion() {
+    clearSpeakTimers();
     if (currentIndex.value + 1 >= TOTAL) {
         finished.value = true;
         return;
     }
     currentIndex.value++;
     setupQuiz();
-    setTimeout(speakTarget, 250);
+    speakTimers.push(setTimeout(speakTarget, 250));
 }
 
 function speakTarget() {

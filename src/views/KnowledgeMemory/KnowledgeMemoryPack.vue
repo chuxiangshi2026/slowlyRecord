@@ -392,7 +392,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {
@@ -703,7 +703,7 @@ async function handleChoice(opt: string) {
   showFeedback(isCorrect, isCorrect ? '回答正确' : `正确答案是：${item.answer}`);
   if (isCorrect) summaryCorrect.value++;
   else summaryWrong.value++;
-  setTimeout(nextItem, 1200);
+  scheduleNextItem();
 }
 
 async function handleInputSubmit() {
@@ -717,12 +717,28 @@ async function handleInputSubmit() {
   showFeedback(isCorrect, isCorrect ? '回答正确' : `正确答案是：${correctText}`);
   if (isCorrect) summaryCorrect.value++;
   else summaryWrong.value++;
-  setTimeout(nextItem, 1200);
+  scheduleNextItem();
 }
 
 function showFeedback(correct: boolean, message: string) {
   feedback.value = {show: true, correct, message};
 }
+
+// 答题后延迟推进定时器：离开页面时清除，避免卸载后继续改状态
+let nextItemTimer: ReturnType<typeof setTimeout> | null = null;
+function scheduleNextItem() {
+  if (nextItemTimer) clearTimeout(nextItemTimer);
+  nextItemTimer = setTimeout(() => {
+    nextItemTimer = null;
+    nextItem();
+  }, 1200);
+}
+onBeforeUnmount(() => {
+  if (nextItemTimer) {
+    clearTimeout(nextItemTimer);
+    nextItemTimer = null;
+  }
+});
 
 function nextItem() {
   feedback.value = {show: false, correct: false, message: ''};

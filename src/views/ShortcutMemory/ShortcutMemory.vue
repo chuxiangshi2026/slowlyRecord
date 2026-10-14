@@ -756,6 +756,14 @@ function buildTrainingQuery(mode: string) {
   const query: Record<string, string> = { mode };
   if (currentTypeTag.value) query.type = currentTypeTag.value;
   if (currentZoneTag.value) query.zone = currentZoneTag.value;
+  // 头部「返回」按 query.from 回列表页；带上域/分类/标签以便返回后恢复当前选择
+  const back = new URLSearchParams();
+  if (selectedGroup.value) back.set('group', selectedGroup.value);
+  if (selectedCategory.value) back.set('category', selectedCategory.value);
+  if (currentTypeTag.value) back.set('type', currentTypeTag.value);
+  if (currentZoneTag.value) back.set('zone', currentZoneTag.value);
+  const qs = back.toString();
+  query.from = qs ? `/shortcut-memory?${qs}` : '/shortcut-memory';
   return query;
 }
 
@@ -797,7 +805,7 @@ function startWrongItemsTraining() {
     return;
   }
   store.selectCategory(selectedCategory.value);
-  router.push('/shortcut-memory/training?mode=wrongItems');
+  router.push({ path: '/shortcut-memory/training', query: buildTrainingQuery('wrongItems') });
 }
 
 async function clearWrongItems() {

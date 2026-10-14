@@ -312,7 +312,7 @@ function drawArea(ctx: CanvasRenderingContext2D, r: ViewRange, rect: {x: number;
   ctx.lineTo(dataToPixel(xb, 0, r, rect).x, y0Px);
   ctx.closePath();
   ctx.globalAlpha = 0.12;
-  ctx.fillStyle = cssVar('--utools-primary', '#409eff');
+  ctx.fillStyle = cssVar('--utools-primary', '#52796f');
   ctx.fill();
   ctx.globalAlpha = 1;
 }
@@ -392,7 +392,7 @@ function drawGeometry() {
     ctx.fillText(`${props.xLabel} 需为正数`, w / 2, h / 2);
     return;
   }
-  const primary = cssVar('--utools-primary', '#409eff');
+  const primary = cssVar('--utools-primary', '#52796f');
   const size = (v / vMax) * (Math.min(w, h) / 2 - 28); // 图形尺寸（半径/半边长，像素）
   ctx.strokeStyle = primary;
   ctx.lineWidth = 2;
@@ -437,7 +437,7 @@ function draw() {
   ctx.fillRect(0, 0, w, h);
   drawGrid(ctx, r, w, h, rect);
   drawArea(ctx, r, rect);
-  drawCurve(ctx, r, rect, props.fn, cssVar('--utools-primary', '#409eff'));
+  drawCurve(ctx, r, rect, props.fn, cssVar('--utools-primary', '#52796f'));
   if (props.fn2) drawCurve(ctx, r, rect, props.fn2, cssVar('--el-color-danger', '#f56c6c'));
   drawExtrema(ctx, r, rect);
   drawIntersections(ctx, r, rect);
@@ -458,7 +458,7 @@ function draw() {
     ctx.moveTo(0, p.y); ctx.lineTo(w, p.y);
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = cssVar('--utools-primary', '#409eff');
+    ctx.fillStyle = cssVar('--utools-primary', '#52796f');
     ctx.beginPath();
     ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
     ctx.fill();

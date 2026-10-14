@@ -513,7 +513,8 @@ function checkRandomSequence() {
     if (randomSequenceLength.value < randomSequenceMax) {
       randomSequenceLength.value++;
       randomSequenceRound.value++;
-      setTimeout(() => {
+      // 复用 randomSequenceTimer 槽位，卸载时 stopRandomSequenceTimer 会一并清掉
+      randomSequenceTimer = window.setTimeout(() => {
         startRandomSequenceRound();
       }, 800);
     } else {

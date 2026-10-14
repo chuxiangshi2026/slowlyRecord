@@ -66,6 +66,7 @@ import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import { getActiveProfile, getActiveLanguage, isWordText } from '@/utils/language';
 import { isSentenceLike } from '@/utils/text-utils';
+import { reconcileSchedules } from '@/utils/schedule-reminder';
 
 const wordsStore = useWordsStore();
 const router = useRouter();
@@ -96,6 +97,27 @@ let reviewReminderNotified = false;
     ElMessage.warning('操作执行失败，请重试');
   })
 })
+
+// Electron 全局快捷键：主进程已读剪贴板文本一并下发，这里复用 uTools 划词/截图/翻译的既有处理流
+// （Ctrl+Shift+S 截图翻译 / Ctrl+Shift+T 划词翻译 / Ctrl+Shift+A 划词添加）
+if ((window as any).electronAPI?.onGlobalShortcut) {
+  (window as any).electronAPI.onGlobalShortcut((action: string, text?: string) => {
+    const trimmed = (text || '').trim();
+    if (action === 'quick-translate') {
+      router.push(trimmed ? { path: '/translate', query: { text: trimmed } } : { path: '/translate' });
+    } else if (action === 'word-select') {
+      if (trimmed) {
+        checkShearBoardAddWork(trimmed);
+      } else {
+        ElMessage.warning('剪贴板为空，请先复制要收录的文本');
+      }
+    } else if (action === 'screen-capture') {
+      handleUtoolsEnter({ code: 'jietu' }).catch((e: any) => {
+        debugLog('截图翻译快捷键处理失败:', e);
+      });
+    }
+  });
+}
 
 // uTools enter 事件统一处理：兼容 preload 阶段缓存的事件
 // （preload/services.js 已提前注册 onPluginEnter，防止 Vite 冷启动慢时事件丢失）
@@ -199,8 +221,10 @@ async function handleUtoolsEnter(action: any) {
   // 延迟调用，避免初始化时重复计算
   setTimeout(async () => {
     await updateReview();
+    // uTools 8.0+ 定时任务对账：让系统侧任务与设置意向一致（低版本内部静默跳过）
+    void reconcileSchedules();
     // 到期复习提醒：仅在「待复习较多且非复习入口」时提醒一次，避免与头部「待复习 N」重复触达；
-    // 支持点击的平台（Web Notification）点击后直达待复习列表
+    // 点击直达复习：Web 走 onClick 回调，uTools 走 featureCode（点击后以 review 功能进入插件）
     try {
       const isReviewEntry = action?.code === 'review';
       if (checkIsUtools() && !reviewReminderNotified && !isReviewEntry && wordsStore.forgetCount >= 5) {
@@ -208,7 +232,7 @@ async function handleUtoolsEnter(action: any) {
         getNotificationAdapter().show('慢记复习提醒', `今日还有 ${wordsStore.forgetCount} 个单词/句子待复习`, () => {
           if (checkIsUtools()) (window as any).utools?.showMainWindow?.();
           router.push('/word');
-        });
+        }, 'review');
       }
     } catch (e) {
       console.error('[复习提醒] 发送通知失败:', e);
@@ -266,15 +290,17 @@ async function handleUtoolsEnter(action: any) {
 
 
   if (action.code === 'huaci' && action.from === 'hotkey') {
-    // action.type =='over'
-    // console.log('我是快捷键进来的')
-    let selectedText = '';
-    try {
-      selectedText = await navigator.clipboard.readText();
-    } catch (e) {
-      debugLog('读取剪贴板失败:', e);
-      ElMessage.error('读取剪贴板失败，请重试');
-      return;
+    // autocopy 模式下 uTools 会把选中内容作为 payload 传入，优先使用，避免再读一次剪贴板（受权限/时序影响）；
+    // 无 payload（手动配置的非 autocopy 快捷键）时回退读剪贴板
+    let selectedText = typeof action.payload === 'string' ? action.payload.trim() : '';
+    if (!selectedText) {
+      try {
+        selectedText = await navigator.clipboard.readText();
+      } catch (e) {
+        debugLog('读取剪贴板失败:', e);
+        ElMessage.error('读取剪贴板失败，请重试');
+        return;
+      }
     }
     checkShearBoardAddWork(selectedText);
   }

@@ -617,11 +617,16 @@ async function openTextFocusMode(article: TextArticle) {
       focusWindowOpened('text');
       // 推送文章 + user-set 快照给子窗口 utools shim，然后显示
       setTimeout(async () => {
-        const docs = collectTextFocusDocsForChild();
-        await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
-        // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
-        await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
-        api.focusWindowInvoke(winId, 'show', []);
+        try {
+          const docs = collectTextFocusDocsForChild();
+          await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+          // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
+          await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
+          api.focusWindowInvoke(winId, 'show', []);
+        } catch (e) {
+          // 延迟期间子窗口被关闭会导致 executeJS reject，静默忽略
+          console.warn('[openTextFocusMode] 子窗口初始化推送失败（窗口可能已关闭）', e);
+        }
       }, 500);
       return;
     }

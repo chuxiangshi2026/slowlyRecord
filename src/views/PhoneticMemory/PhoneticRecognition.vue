@@ -112,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from 'vue';
+import {ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {useRouter, useRoute} from 'vue-router';
 import {ArrowLeft, VideoPlay, Right, CircleCheckFilled, CircleCloseFilled} from '@element-plus/icons-vue';
 import type {Phoneme} from '@/utils/phoneme-data';
@@ -145,6 +145,17 @@ const answered = ref(false);
 const finished = ref(false);
 
 const currentQ = computed<Question | null>(() => questions.value[currentIndex.value] || null);
+
+// 延迟发声定时器：切题/重开/离开时统一清理，避免旧题语音打断新题或卸载后发声
+let speakTimers: ReturnType<typeof setTimeout>[] = [];
+function clearSpeakTimers() {
+    speakTimers.forEach(clearTimeout);
+    speakTimers = [];
+}
+onBeforeUnmount(() => {
+    clearSpeakTimers();
+    window.speechSynthesis.cancel();
+});
 
 const progressPercent = computed(() =>
     Math.round(((currentIndex.value + (answered.value ? 1 : 0)) / TOTAL) * 100),
@@ -216,6 +227,7 @@ function generateQuestions() {
 }
 
 async function startSession() {
+    clearSpeakTimers();
     await phoneticStore.ensureLoaded();
     generateQuestions();
     currentIndex.value = 0;
@@ -224,7 +236,7 @@ async function startSession() {
     pickedIdx.value = null;
     answered.value = false;
     finished.value = false;
-    setTimeout(autoSpeakPrompt, 250);
+    speakTimers.push(setTimeout(autoSpeakPrompt, 250));
 }
 
 function choose(idx: number) {
@@ -252,6 +264,7 @@ function optionClass(idx: number) {
 }
 
 function nextQuestion() {
+    clearSpeakTimers();
     if (currentIndex.value + 1 >= TOTAL) {
         finished.value = true;
         return;
@@ -259,7 +272,7 @@ function nextQuestion() {
     currentIndex.value++;
     pickedIdx.value = null;
     answered.value = false;
-    setTimeout(autoSpeakPrompt, 200);
+    speakTimers.push(setTimeout(autoSpeakPrompt, 200));
 }
 
 /** 进入每题时自动播放题干提示音 */

@@ -821,28 +821,28 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'sp-xh-Q', category: '双拼 · 小鹤', functionName: 'Q键', description: '韵母：iu', keys: ['Q'], platform: 'common' },
   { id: 'sp-xh-W', category: '双拼 · 小鹤', functionName: 'W键', description: '韵母：ei', keys: ['W'], platform: 'common' },
   { id: 'sp-xh-E', category: '双拼 · 小鹤', functionName: 'E键', description: '零声母：e', keys: ['E'], platform: 'common' },
-  { id: 'sp-xh-R', category: '双拼 · 小鹤', functionName: 'R键', description: '韵母：uan', keys: ['R'], platform: 'common' },
-  { id: 'sp-xh-T', category: '双拼 · 小鹤', functionName: 'T键', description: '韵母：ue / ve', keys: ['T'], platform: 'common' },
-  { id: 'sp-xh-Y', category: '双拼 · 小鹤', functionName: 'Y键', description: '韵母：un', keys: ['Y'], platform: 'common' },
-  { id: 'sp-xh-U', category: '双拼 · 小鹤', functionName: 'U键', description: '声母：sh', keys: ['U'], platform: 'common' },
-  { id: 'sp-xh-I', category: '双拼 · 小鹤', functionName: 'I键', description: '声母：ch', keys: ['I'], platform: 'common' },
+  { id: 'sp-xh-R', category: '双拼 · 小鹤', functionName: 'R键', description: '韵母：uan / üan', keys: ['R'], platform: 'common' },
+  { id: 'sp-xh-T', category: '双拼 · 小鹤', functionName: 'T键', description: '韵母：ue / üe', keys: ['T'], platform: 'common' },
+  { id: 'sp-xh-Y', category: '双拼 · 小鹤', functionName: 'Y键', description: '韵母：un / ün', keys: ['Y'], platform: 'common' },
+  { id: 'sp-xh-U', category: '双拼 · 小鹤', functionName: 'U键', description: '声母：sh / 韵母：u', keys: ['U'], platform: 'common' },
+  { id: 'sp-xh-I', category: '双拼 · 小鹤', functionName: 'I键', description: '声母：ch / 韵母：i', keys: ['I'], platform: 'common' },
   { id: 'sp-xh-O', category: '双拼 · 小鹤', functionName: 'O键', description: '韵母：uo / o', keys: ['O'], platform: 'common' },
   { id: 'sp-xh-P', category: '双拼 · 小鹤', functionName: 'P键', description: '韵母：ie', keys: ['P'], platform: 'common' },
   { id: 'sp-xh-A', category: '双拼 · 小鹤', functionName: 'A键', description: '零声母：a', keys: ['A'], platform: 'common' },
   { id: 'sp-xh-S', category: '双拼 · 小鹤', functionName: 'S键', description: '韵母：ong / iong', keys: ['S'], platform: 'common' },
-  { id: 'sp-xh-D', category: '双拼 · 小鹤', functionName: 'D键', description: '韵母：iang / uang', keys: ['D'], platform: 'common' },
+  { id: 'sp-xh-D', category: '双拼 · 小鹤', functionName: 'D键', description: '韵母：ai', keys: ['D'], platform: 'common' },
   { id: 'sp-xh-F', category: '双拼 · 小鹤', functionName: 'F键', description: '韵母：en', keys: ['F'], platform: 'common' },
   { id: 'sp-xh-G', category: '双拼 · 小鹤', functionName: 'G键', description: '韵母：eng', keys: ['G'], platform: 'common' },
   { id: 'sp-xh-H', category: '双拼 · 小鹤', functionName: 'H键', description: '韵母：ang', keys: ['H'], platform: 'common' },
   { id: 'sp-xh-J', category: '双拼 · 小鹤', functionName: 'J键', description: '韵母：an', keys: ['J'], platform: 'common' },
-  { id: 'sp-xh-K', category: '双拼 · 小鹤', functionName: 'K键', description: '韵母：ao', keys: ['K'], platform: 'common' },
-  { id: 'sp-xh-L', category: '双拼 · 小鹤', functionName: 'L键', description: '韵母：ai', keys: ['L'], platform: 'common' },
+  { id: 'sp-xh-K', category: '双拼 · 小鹤', functionName: 'K键', description: '韵母：ing / 韵母：uai', keys: ['K'], platform: 'common' },
+  { id: 'sp-xh-L', category: '双拼 · 小鹤', functionName: 'L键', description: '韵母：iang / uang', keys: ['L'], platform: 'common' },
   { id: 'sp-xh-Z', category: '双拼 · 小鹤', functionName: 'Z键', description: '韵母：ou', keys: ['Z'], platform: 'common' },
   { id: 'sp-xh-X', category: '双拼 · 小鹤', functionName: 'X键', description: '韵母：ia / ua', keys: ['X'], platform: 'common' },
-  { id: 'sp-xh-C', category: '双拼 · 小鹤', functionName: 'C键', description: '韵母：iao', keys: ['C'], platform: 'common' },
-  { id: 'sp-xh-V', category: '双拼 · 小鹤', functionName: 'V键', description: '声母：zh / 韵母：ui', keys: ['V'], platform: 'common' },
+  { id: 'sp-xh-C', category: '双拼 · 小鹤', functionName: 'C键', description: '韵母：ao', keys: ['C'], platform: 'common' },
+  { id: 'sp-xh-V', category: '双拼 · 小鹤', functionName: 'V键', description: '声母：zh / 韵母：ui / 韵母：ü', keys: ['V'], platform: 'common' },
   { id: 'sp-xh-B', category: '双拼 · 小鹤', functionName: 'B键', description: '韵母：in', keys: ['B'], platform: 'common' },
-  { id: 'sp-xh-N', category: '双拼 · 小鹤', functionName: 'N键', description: '韵母：ing', keys: ['N'], platform: 'common' },
+  { id: 'sp-xh-N', category: '双拼 · 小鹤', functionName: 'N键', description: '韵母：iao', keys: ['N'], platform: 'common' },
   { id: 'sp-xh-M', category: '双拼 · 小鹤', functionName: 'M键', description: '韵母：ian', keys: ['M'], platform: 'common' },
 
   // 自然码双拼快捷键（键位为主）
@@ -850,10 +850,10 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'sp-zrm-W', category: '双拼 · 自然码', functionName: 'W键', description: '韵母：ua / ia', keys: ['W'], platform: 'common' },
   { id: 'sp-zrm-E', category: '双拼 · 自然码', functionName: 'E键', description: '零声母：e', keys: ['E'], platform: 'common' },
   { id: 'sp-zrm-R', category: '双拼 · 自然码', functionName: 'R键', description: '韵母：uan / üan', keys: ['R'], platform: 'common' },
-  { id: 'sp-zrm-T', category: '双拼 · 自然码', functionName: 'T键', description: '韵母：ue / ve', keys: ['T'], platform: 'common' },
+  { id: 'sp-zrm-T', category: '双拼 · 自然码', functionName: 'T键', description: '韵母：ue / üe', keys: ['T'], platform: 'common' },
   { id: 'sp-zrm-Y', category: '双拼 · 自然码', functionName: 'Y键', description: '韵母：uai / ing', keys: ['Y'], platform: 'common' },
-  { id: 'sp-zrm-U', category: '双拼 · 自然码', functionName: 'U键', description: '声母：sh', keys: ['U'], platform: 'common' },
-  { id: 'sp-zrm-I', category: '双拼 · 自然码', functionName: 'I键', description: '声母：ch', keys: ['I'], platform: 'common' },
+  { id: 'sp-zrm-U', category: '双拼 · 自然码', functionName: 'U键', description: '声母：sh / 韵母：u', keys: ['U'], platform: 'common' },
+  { id: 'sp-zrm-I', category: '双拼 · 自然码', functionName: 'I键', description: '声母：ch / 韵母：i', keys: ['I'], platform: 'common' },
   { id: 'sp-zrm-O', category: '双拼 · 自然码', functionName: 'O键', description: '韵母：uo / o', keys: ['O'], platform: 'common' },
   { id: 'sp-zrm-P', category: '双拼 · 自然码', functionName: 'P键', description: '韵母：un', keys: ['P'], platform: 'common' },
   { id: 'sp-zrm-A', category: '双拼 · 自然码', functionName: 'A键', description: '零声母：a', keys: ['A'], platform: 'common' },
@@ -879,9 +879,9 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'sp-ms-E', category: '双拼 · 微软', functionName: 'E键', description: '零声母：e', keys: ['E'], platform: 'common' },
   { id: 'sp-ms-R', category: '双拼 · 微软', functionName: 'R键', description: '韵母：uan / er', keys: ['R'], platform: 'common' },
   { id: 'sp-ms-T', category: '双拼 · 微软', functionName: 'T键', description: '韵母：ue', keys: ['T'], platform: 'common' },
-  { id: 'sp-ms-Y', category: '双拼 · 微软', functionName: 'Y键', description: '韵母：uai / v', keys: ['Y'], platform: 'common' },
-  { id: 'sp-ms-U', category: '双拼 · 微软', functionName: 'U键', description: '声母：sh', keys: ['U'], platform: 'common' },
-  { id: 'sp-ms-I', category: '双拼 · 微软', functionName: 'I键', description: '声母：ch', keys: ['I'], platform: 'common' },
+  { id: 'sp-ms-Y', category: '双拼 · 微软', functionName: 'Y键', description: '韵母：uai / ü', keys: ['Y'], platform: 'common' },
+  { id: 'sp-ms-U', category: '双拼 · 微软', functionName: 'U键', description: '声母：sh / 韵母：u', keys: ['U'], platform: 'common' },
+  { id: 'sp-ms-I', category: '双拼 · 微软', functionName: 'I键', description: '声母：ch / 韵母：i', keys: ['I'], platform: 'common' },
   { id: 'sp-ms-O', category: '双拼 · 微软', functionName: 'O键', description: '韵母：uo / o', keys: ['O'], platform: 'common' },
   { id: 'sp-ms-P', category: '双拼 · 微软', functionName: 'P键', description: '韵母：un', keys: ['P'], platform: 'common' },
   { id: 'sp-ms-A', category: '双拼 · 微软', functionName: 'A键', description: '零声母：a', keys: ['A'], platform: 'common' },
@@ -906,10 +906,10 @@ export const PRESET_SHORTCUTS: ShortcutItem[] = [
   { id: 'sp-sg-W', category: '双拼 · 搜狗', functionName: 'W键', description: '韵母：ei', keys: ['W'], platform: 'common' },
   { id: 'sp-sg-E', category: '双拼 · 搜狗', functionName: 'E键', description: '零声母：e', keys: ['E'], platform: 'common' },
   { id: 'sp-sg-R', category: '双拼 · 搜狗', functionName: 'R键', description: '韵母：uan / er', keys: ['R'], platform: 'common' },
-  { id: 'sp-sg-T', category: '双拼 · 搜狗', functionName: 'T键', description: '韵母：ue / ve', keys: ['T'], platform: 'common' },
-  { id: 'sp-sg-Y', category: '双拼 · 搜狗', functionName: 'Y键', description: '韵母：uai / v', keys: ['Y'], platform: 'common' },
-  { id: 'sp-sg-U', category: '双拼 · 搜狗', functionName: 'U键', description: '声母：sh', keys: ['U'], platform: 'common' },
-  { id: 'sp-sg-I', category: '双拼 · 搜狗', functionName: 'I键', description: '声母：ch', keys: ['I'], platform: 'common' },
+  { id: 'sp-sg-T', category: '双拼 · 搜狗', functionName: 'T键', description: '韵母：ue / üe', keys: ['T'], platform: 'common' },
+  { id: 'sp-sg-Y', category: '双拼 · 搜狗', functionName: 'Y键', description: '韵母：uai / ü', keys: ['Y'], platform: 'common' },
+  { id: 'sp-sg-U', category: '双拼 · 搜狗', functionName: 'U键', description: '声母：sh / 韵母：u', keys: ['U'], platform: 'common' },
+  { id: 'sp-sg-I', category: '双拼 · 搜狗', functionName: 'I键', description: '声母：ch / 韵母：i', keys: ['I'], platform: 'common' },
   { id: 'sp-sg-O', category: '双拼 · 搜狗', functionName: 'O键', description: '韵母：uo / o', keys: ['O'], platform: 'common' },
   { id: 'sp-sg-P', category: '双拼 · 搜狗', functionName: 'P键', description: '韵母：un', keys: ['P'], platform: 'common' },
   { id: 'sp-sg-A', category: '双拼 · 搜狗', functionName: 'A键', description: '零声母：a', keys: ['A'], platform: 'common' },
@@ -973,6 +973,33 @@ const SHUANGPIN_COMMON_CHARS: Array<[string, string]> = [
   ['想', 'xiang'], ['起', 'qi'], ['过', 'guo'], ['发', 'fa'], ['成', 'cheng'], ['都', 'dou'],
   ['这', 'zhe'], ['看', 'kan'], ['好', 'hao'], ['大', 'da'], ['学', 'xue'], ['生', 'sheng'],
   ['工', 'gong'], ['作', 'zuo'], ['家', 'jia'], ['为', 'wei'], ['道', 'dao'], ['一', 'yi'],
+  ['天', 'tian'], ['山', 'shan'], ['水', 'shui'], ['火', 'huo'], ['木', 'mu'], ['金', 'jin'],
+  ['土', 'tu'], ['日', 'ri'], ['月', 'yue'], ['星', 'xing'], ['云', 'yun'], ['风', 'feng'],
+  ['雨', 'yu'], ['雪', 'xue'], ['电', 'dian'], ['光', 'guang'], ['声', 'sheng'], ['花', 'hua'],
+  ['草', 'cao'], ['树', 'shu'], ['鸟', 'niao'], ['鱼', 'yu'], ['虫', 'chong'], ['马', 'ma'],
+  ['牛', 'niu'], ['羊', 'yang'], ['狗', 'gou'], ['猫', 'mao'], ['鸡', 'ji'], ['鸭', 'ya'],
+  ['心', 'xin'], ['手', 'shou'], ['口', 'kou'], ['目', 'mu'], ['头', 'tou'], ['身', 'shen'],
+  ['足', 'zu'], ['门', 'men'], ['窗', 'chuang'], ['房', 'fang'], ['楼', 'lou'], ['桥', 'qiao'],
+  ['路', 'lu'], ['车', 'che'], ['船', 'chuan'], ['书', 'shu'], ['笔', 'bi'], ['纸', 'zhi'],
+  ['画', 'hua'], ['歌', 'ge'], ['舞', 'wu'], ['诗', 'shi'], ['茶', 'cha'], ['饭', 'fan'],
+  ['菜', 'cai'], ['米', 'mi'], ['面', 'mian'], ['肉', 'rou'], ['蛋', 'dan'], ['奶', 'nai'],
+  ['汤', 'tang'], ['酒', 'jiu'], ['糖', 'tang'], ['盐', 'yan'], ['油', 'you'], ['果', 'guo'],
+  ['瓜', 'gua'], ['桃', 'tao'], ['李', 'li'], ['豆', 'dou'], ['麦', 'mai'], ['衣', 'yi'],
+  ['裤', 'ku'], ['鞋', 'xie'], ['帽', 'mao'], ['袜', 'wa'], ['被', 'bei'], ['枕', 'zhen'],
+  ['桌', 'zhuo'], ['椅', 'yi'], ['床', 'chuang'], ['灯', 'deng'], ['钟', 'zhong'], ['镜', 'jing'],
+  ['刀', 'dao'], ['剑', 'jian'], ['弓', 'gong'], ['箭', 'jian'], ['兵', 'bing'], ['王', 'wang'],
+  ['将', 'jiang'], ['帅', 'shuai'], ['军', 'jun'], ['民', 'min'], ['农', 'nong'], ['商', 'shang'],
+  ['医', 'yi'], ['师', 'shi'], ['友', 'you'], ['朋', 'peng'], ['亲', 'qin'], ['父', 'fu'],
+  ['母', 'mu'], ['兄', 'xiong'], ['弟', 'di'], ['姐', 'jie'], ['妹', 'mei'], ['孙', 'sun'],
+  ['祖', 'zu'], ['伯', 'bo'], ['叔', 'shu'], ['姨', 'yi'], ['龙', 'long'], ['虎', 'hu'],
+  ['狼', 'lang'], ['鹿', 'lu'], ['兔', 'tu'], ['鼠', 'shu'], ['蛇', 'she'], ['蜂', 'feng'],
+  ['蝶', 'die'], ['蚁', 'yi'], ['鸽', 'ge'], ['燕', 'yan'], ['鹰', 'ying'], ['猴', 'hou'],
+  ['象', 'xiang'], ['狮', 'shi'], ['熊', 'xiong'], ['虾', 'xia'], ['蟹', 'xie'], ['贝', 'bei'],
+  ['竹', 'zhu'], ['梅', 'mei'], ['兰', 'lan'], ['菊', 'ju'], ['松', 'song'], ['柏', 'bai'],
+  ['柳', 'liu'], ['桐', 'tong'], ['禾', 'he'], ['苗', 'miao'], ['谷', 'gu'], ['棉', 'mian'],
+  ['丝', 'si'], ['毛', 'mao'], ['皮', 'pi'], ['羽', 'yu'], ['角', 'jiao'], ['牙', 'ya'],
+  ['骨', 'gu'], ['脑', 'nao'], ['腰', 'yao'], ['腿', 'tui'], ['脚', 'jiao'], ['指', 'zhi'],
+  ['鼻', 'bi'], ['齿', 'chi'], ['舌', 'she'], ['眼', 'yan'], ['眉', 'mei'], ['须', 'xu'],
 ];
 // 生僻字练习表（字 + 拼音），避开 ü 类各方案映射不一致的读音
 export const SHUANGPIN_RARE_CHARS: [string, string][] = [
@@ -1005,6 +1032,36 @@ const SHUANGPIN_COMMON_WORDS: Array<[string, ...string[]]> = [
   ['工作', 'gong', 'zuo'], ['学生', 'xue', 'sheng'], ['朋友', 'peng', 'you'], ['时间', 'shi', 'jian'],
   ['国家', 'guo', 'jia'], ['自己', 'zi', 'ji'], ['还有', 'hai', 'you'], ['已经', 'yi', 'jing'],
   ['起来', 'qi', 'lai'],
+  ['今天', 'jin', 'tian'], ['明天', 'ming', 'tian'], ['昨天', 'zuo', 'tian'], ['天气', 'tian', 'qi'],
+  ['太阳', 'tai', 'yang'], ['月亮', 'yue', 'liang'], ['星星', 'xing', 'xing'], ['天空', 'tian', 'kong'],
+  ['大海', 'da', 'hai'], ['山林', 'shan', 'lin'], ['树木', 'shu', 'mu'], ['昆虫', 'kun', 'chong'],
+  ['蜜蜂', 'mi', 'feng'], ['蝴蝶', 'hu', 'die'], ['蚂蚁', 'ma', 'yi'], ['狮子', 'shi', 'zi'],
+  ['老虎', 'lao', 'hu'], ['大象', 'da', 'xiang'], ['熊猫', 'xiong', 'mao'], ['孔雀', 'kong', 'que'],
+  ['汽车', 'qi', 'che'], ['火车', 'huo', 'che'], ['飞机', 'fei', 'ji'], ['轮船', 'lun', 'chuan'],
+  ['道路', 'dao', 'lu'], ['桥梁', 'qiao', 'liang'], ['城市', 'cheng', 'shi'], ['乡村', 'xiang', 'cun'],
+  ['学校', 'xue', 'xiao'], ['医院', 'yi', 'yuan'], ['银行', 'yin', 'hang'], ['商店', 'shang', 'dian'],
+  ['公园', 'gong', 'yuan'], ['花园', 'hua', 'yuan'], ['报纸', 'bao', 'zhi'], ['杂志', 'za', 'zhi'],
+  ['电视', 'dian', 'shi'], ['电影', 'dian', 'ying'], ['音乐', 'yin', 'yue'], ['歌曲', 'ge', 'qu'],
+  ['舞蹈', 'wu', 'dao'], ['绘画', 'hui', 'hua'], ['书法', 'shu', 'fa'], ['诗歌', 'shi', 'ge'],
+  ['小说', 'xiao', 'shuo'], ['故事', 'gu', 'shi'], ['笑话', 'xiao', 'hua'], ['谜语', 'mi', 'yu'],
+  ['游戏', 'you', 'xi'], ['运动', 'yun', 'dong'], ['篮球', 'lan', 'qiu'], ['足球', 'zu', 'qiu'],
+  ['游泳', 'you', 'yong'], ['跑步', 'pao', 'bu'], ['登山', 'deng', 'shan'], ['钓鱼', 'diao', 'yu'],
+  ['下棋', 'xia', 'qi'], ['唱歌', 'chang', 'ge'], ['跳舞', 'tiao', 'wu'], ['做饭', 'zuo', 'fan'],
+  ['洗衣', 'xi', 'yi'], ['扫地', 'sao', 'di'], ['读书', 'du', 'shu'], ['写字', 'xie', 'zi'],
+  ['听课', 'ting', 'ke'], ['考试', 'kao', 'shi'], ['成绩', 'cheng', 'ji'], ['进步', 'jin', 'bu'],
+  ['成功', 'cheng', 'gong'], ['失败', 'shi', 'bai'], ['努力', 'nu', 'li'], ['坚持', 'jian', 'chi'],
+  ['放弃', 'fang', 'qi'], ['勇敢', 'yong', 'gan'], ['聪明', 'cong', 'ming'], ['勤奋', 'qin', 'fen'],
+  ['懒惰', 'lan', 'duo'], ['节约', 'jie', 'yue'], ['浪费', 'lang', 'fei'], ['诚实', 'cheng', 'shi'],
+  ['谦虚', 'qian', 'xu'], ['骄傲', 'jiao', 'ao'], ['温柔', 'wen', 'rou'], ['高兴', 'gao', 'xing'],
+  ['难过', 'nan', 'guo'], ['生气', 'sheng', 'qi'], ['害怕', 'hai', 'pa'], ['担心', 'dan', 'xin'],
+  ['放心', 'fang', 'xin'], ['紧张', 'jin', 'zhang'], ['满意', 'man', 'yi'], ['失望', 'shi', 'wang'],
+  ['希望', 'xi', 'wang'], ['梦想', 'meng', 'xiang'], ['理想', 'li', 'xiang'], ['目标', 'mu', 'biao'],
+  ['方向', 'fang', 'xiang'], ['方法', 'fang', 'fa'], ['问题', 'wen', 'ti'], ['答案', 'da', 'an'],
+  ['原因', 'yuan', 'yin'], ['结果', 'jie', 'guo'], ['开始', 'kai', 'shi'], ['结束', 'jie', 'shu'],
+  ['过程', 'guo', 'cheng'], ['知识', 'zhi', 'shi'], ['文化', 'wen', 'hua'], ['科学', 'ke', 'xue'],
+  ['技术', 'ji', 'shu'], ['艺术', 'yi', 'shu'], ['历史', 'li', 'shi'], ['数学', 'shu', 'xue'],
+  ['化学', 'hua', 'xue'], ['生物', 'sheng', 'wu'], ['军事', 'jun', 'shi'], ['外交', 'wai', 'jiao'],
+  ['贸易', 'mao', 'yi'], ['市场', 'shi', 'chang'], ['价格', 'jia', 'ge'], ['质量', 'zhi', 'liang'],
 ];
 // 成语练习表（成语 + 每字拼音），避开 ü/er 等双拼映射易歧义的读音
 const SHUANGPIN_IDIOMS: Array<[string, ...string[]]> = [
@@ -1029,6 +1086,32 @@ const SHUANGPIN_IDIOMS: Array<[string, ...string[]]> = [
   ['自由自在', 'zi', 'you', 'zi', 'zai'], ['自作自受', 'zi', 'zuo', 'zi', 'shou'],
   ['人山人海', 'ren', 'shan', 'ren', 'hai'], ['天长地久', 'tian', 'chang', 'di', 'jiu'],
 ];
+
+// 拼音声调符号 -> 无声调字母；ü 系列映射为 v（各方案 ü 键位不一，生成时会因映射不到而跳过）
+const PINYIN_TONE_MAP: Record<string, string> = {
+  ā: 'a', á: 'a', ǎ: 'a', à: 'a', ē: 'e', é: 'e', ě: 'e', è: 'e',
+  ī: 'i', í: 'i', ǐ: 'i', ì: 'i', ō: 'o', ó: 'o', ǒ: 'o', ò: 'o',
+  ū: 'u', ú: 'u', ǔ: 'u', ù: 'u', ǖ: 'v', ǘ: 'v', ǚ: 'v', ǜ: 'v',
+  ü: 'v', ń: 'n', ň: 'n', ǹ: 'n',
+};
+/**
+ * 把成语库 JSON（标题 + 带调拼音）解析为 [成语, ...无声调拼音] 练习池。
+ * 仅收 4 字且音节数对齐的条目，按标题去重；多音字读音以成语语境为准。
+ */
+export function parseShuangpinIdiomPool(data: { idioms?: Array<{ title?: string; pinyin?: string }> }): Array<[string, ...string[]]> {
+  const result: Array<[string, ...string[]]> = [];
+  const seen = new Set<string>();
+  for (const it of data?.idioms || []) {
+    const title = (it.title || '').trim();
+    if (!/^[\u4e00-\u9fff]{4}$/.test(title) || seen.has(title)) continue;
+    const pys = (it.pinyin || '').trim().toLowerCase().split(/\s+/)
+      .map(s => [...s].map(c => PINYIN_TONE_MAP[c] || c).join(''));
+    if (pys.length !== 4 || pys.some(s => !/^[a-z]+$/.test(s))) continue;
+    seen.add(title);
+    result.push([title, ...pys]);
+  }
+  return result;
+}
 // 一级简码（单键高频字，非方案标准定义，需校对）
 const SHUANGPIN_LEVEL1: Record<string, string> = {
   A: '啊', B: '不', C: '才', D: '的', E: '额', F: '发', G: '个', H: '好',
@@ -1102,7 +1185,7 @@ export function pinyinToShuangpin(pinyin: string, map: ShuangpinMap): string[] |
   return [zeroKey, ymKey];
 }
 // 为一个双拼分类生成常用字/生僻字/易错字/词组/一级简码练习条目
-export function generateShuangpinPracticeItems(category: string, keyItems: ShortcutItem[]): ShortcutItem[] {
+export function generateShuangpinPracticeItems(category: string, keyItems: ShortcutItem[], idiomPool: Array<[string, ...string[]]> = SHUANGPIN_IDIOMS): ShortcutItem[] {
   const map = buildShuangpinMap(keyItems);
   const prefix = SHUANGPIN_SCHEME_PREFIX[category] || 'sp';
   const result: ShortcutItem[] = [];
@@ -1162,7 +1245,7 @@ export function generateShuangpinPracticeItems(category: string, keyItems: Short
       keys: [key], platform: 'common', tags: ['一级简码'],
     });
   }
-  for (const entry of SHUANGPIN_IDIOMS) {
+  for (const entry of idiomPool) {
     const idiom = entry[0];
     const pinyins = entry.slice(1) as string[];
     const allKeys: string[] = [];
@@ -1180,7 +1263,9 @@ export function generateShuangpinPracticeItems(category: string, keyItems: Short
       keys: allKeys, platform: 'common', tags: ['成语'],
     });
   }
-  return result;
+  // 兜底去重：内置表之间出现重复条目时 id 相同会撞键
+  const seenIds = new Set<string>();
+  return result.filter(i => seenIds.has(i.id) ? false : (seenIds.add(i.id), true));
 }
 
 // 运行时缓存，优先从 JSON 文件加载
@@ -1296,11 +1381,26 @@ export async function loadAllShortcuts(force: boolean = false): Promise<Shortcut
     allShortcuts.push(...missingBuiltin);
   }
 
+  // 成语练习池扩充：拉取内置成语库（带拼音），失败退回内置小表
+  let idiomPool: Array<[string, ...string[]]> = SHUANGPIN_IDIOMS;
+  try {
+    const res = await fetch('/datafile/idioms/idioms.json');
+    if (res.ok) {
+      const derived = parseShuangpinIdiomPool(await res.json());
+      if (derived.length > 0) {
+        const builtin = new Set(SHUANGPIN_IDIOMS.map(e => e[0]));
+        idiomPool = [...SHUANGPIN_IDIOMS, ...derived.filter(e => !builtin.has(e[0]))];
+      }
+    }
+  } catch (e) {
+    console.warn('加载成语扩充池失败，使用内置表', e);
+  }
+
   // 为双拼分类生成常用字/词组/一级简码练习条目（按各方案声韵母映射，运行时生成）
   for (const cat of SHUANGPIN_CATEGORIES) {
     const keyItems = allShortcuts.filter(s => s.category === cat && /^[A-Za-z]键$/.test(s.functionName || ''));
     if (keyItems.length === 0) continue;
-    allShortcuts.push(...generateShuangpinPracticeItems(cat, keyItems));
+    allShortcuts.push(...generateShuangpinPracticeItems(cat, keyItems, idiomPool));
   }
 
   // 统一为缺少 group 的 item 补 group（兜底数据/动态分类/自定义分类）

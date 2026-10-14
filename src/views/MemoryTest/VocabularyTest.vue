@@ -896,7 +896,7 @@ onMounted(() => {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--utools-primary) 0%, var(--utools-primary-light, #409EFF) 100%);
+  background: linear-gradient(135deg, var(--utools-primary) 0%, var(--utools-primary-light, #edf3f1) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;

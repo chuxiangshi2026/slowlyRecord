@@ -269,7 +269,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, watch, shallowRef } from 'vue';
+import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch, shallowRef } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage, ElMessageBox, ElLoading } from 'element-plus';
 import { CircleCheck, Right, QuestionFilled, CircleClose, Delete, Plus, View, Microphone, Edit } from '@element-plus/icons-vue';
@@ -1107,10 +1107,19 @@ function setSlotRef(el: any, index: number) {
   if (el) slotRefs.value[index] = el;
 }
 
+// 组件卸载后禁止再发声（自动播放等延迟定时器可能在卸载后触发）
+let speechDead = false;
+onBeforeUnmount(() => {
+  speechDead = true;
+  window.speechSynthesis.cancel();
+});
+
 function playWord() {
   const word = currentWord.value;
-  if (!word?.text) return;
+  if (!word?.text || speechDead) return;
 
+  // 先停掉队列里未播完的，避免连点重播时多段语音叠加
+  window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(word.text);
   utterance.lang = getActiveProfile().ttsLang;
   utterance.rate = 0.8;

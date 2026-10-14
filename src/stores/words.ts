@@ -107,6 +107,7 @@ export const useWordsStore =
                 baidu: {appkey: '', key: ''},
                 deepseek: {appkey: '', key: ''},
                 glm: {appkey: '', key: ''},
+                utoolsai: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref(createUserOcrApiKeys());
@@ -126,6 +127,8 @@ export const useWordsStore =
             function restoreDefaultsAfterHydrate() {
                 normalizeUserApiKeys();
                 focusMode.value = {...defaultFocusMode, ...focusMode.value};
+                // 旧版本持久化数据无 scheduleReminder 字段，合并默认值补齐
+                scheduleReminder.value = {...defaultScheduleReminder(), ...scheduleReminder.value};
             }
             // 添加单词后自动退出插件
             const pluginStatus = ref(false);
@@ -137,6 +140,12 @@ export const useWordsStore =
             const autoSpeak = ref(false);
             // 护眼模式（浅绿背景基底），默认开启
             const eyeCare = ref(true);
+            // 新词加入目标词库：current=当前词库（缺省），default=默认词库
+            const addWordTarget = ref<'current' | 'default'>('current');
+            // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
+            // review/signin 默认开（升级后首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
+            const defaultScheduleReminder = () => ({ review: true, signin: true, sync: false });
+            const scheduleReminder = ref<{ review: boolean; signin: boolean; sync?: boolean; reviewTimes?: string[]; signinTimes?: string[]; signinTime?: string; reviewRequested?: boolean; signinRequested?: boolean; syncRequested?: boolean }>(defaultScheduleReminder());
             // 专注模式设置
             const focusMode = ref<FocusModeSettings>({...defaultFocusMode});
 
@@ -283,6 +292,8 @@ export const useWordsStore =
                     "mainWindowOpacity": 1.0,
                     "autoSpeak": false,
                     "eyeCare": true,
+                    "addWordTarget": 'current',
+                    "scheduleReminder": { review: true, signin: true, sync: false },
                 };
                 return userSet;
             }
@@ -455,6 +466,36 @@ export const useWordsStore =
                     userSet = initUserSet();
                     userSet.eyeCare = enabled;
                 }
+                addAndUpdateSetDb(userSet);
+            }
+
+            /**
+             * 设置新词加入目标词库（current=当前词库 / default=默认词库）
+             */
+            function setAddWordTarget(target: 'current' | 'default') {
+                addWordTarget.value = target;
+
+                let userSet = getSetDb()
+                if (userSet) {
+                    userSet.addWordTarget = target;
+                } else {
+                    userSet = initUserSet();
+                    userSet.addWordTarget = target;
+                }
+                addAndUpdateSetDb(userSet);
+            }
+
+            /**
+             * 更新定时任务设置（部分字段合并；任务的实际创建/删除由 schedule-reminder 模块负责）
+             */
+            function setScheduleReminder(patch: Partial<{ review: boolean; signin: boolean; sync: boolean; reviewTimes: string[]; signinTimes: string[]; signinTime: string; reviewRequested: boolean; signinRequested: boolean; syncRequested: boolean }>) {
+                scheduleReminder.value = { ...scheduleReminder.value, ...patch };
+
+                let userSet = getSetDb()
+                if (!userSet) {
+                    userSet = initUserSet();
+                }
+                userSet.scheduleReminder = { ...scheduleReminder.value };
                 addAndUpdateSetDb(userSet);
             }
             function setApiKey(provider: TranslationPlatform, appkey: string, key: string) {
@@ -777,8 +818,11 @@ export const useWordsStore =
                 try {
                     // 规范化文本：保留词组空格，只折叠多余空白
                     const cleanedPayload = payload.map(w => ({ ...w, text: normalizeItemText(w.text) }))
-                    // 保存到当前词库
-                    const bank = await getWordBank(currentWordBankId.value)
+                    // 新词落库目标按设置解析（默认词库 id 固定为 'default'，见 wordbank-manager.createDefaultWordBank）
+                    const targetBankId = addWordTarget.value === 'default' ? 'default' : currentWordBankId.value
+                    const isCurrentBank = targetBankId === currentWordBankId.value
+                    // 保存到目标词库
+                    const bank = await getWordBank(targetBankId)
                     if (bank) {
                         // 规范化词库中的文本，防止去重不匹配
                         bank.words.forEach(w => { w.text = normalizeItemText(w.text) })
@@ -795,21 +839,25 @@ export const useWordsStore =
                             }
                         }
                         await saveWordBank(bank)
-                        currentWordBank.value = bank
+                        if (isCurrentBank) {
+                            currentWordBank.value = bank
+                        }
                     }
 
-                    // 更新内存列表：已有 _id 直接替换，新词再追加
-                    const memoryNewWords: Word[] = []
-                    cleanedPayload.forEach(word => {
-                        const index = words.value.findIndex(w => w._id === word._id)
-                        if (index !== -1) {
-                            words.value.splice(index, 1, word)
-                        } else {
-                            memoryNewWords.push(word)
+                    // 更新内存列表（内存列表始终是当前词库的视图；写入其他词库时不污染当前视图）
+                    if (isCurrentBank) {
+                        const memoryNewWords: Word[] = []
+                        cleanedPayload.forEach(word => {
+                            const index = words.value.findIndex(w => w._id === word._id)
+                            if (index !== -1) {
+                                words.value.splice(index, 1, word)
+                            } else {
+                                memoryNewWords.push(word)
+                            }
+                        })
+                        if (memoryNewWords.length > 0) {
+                            pushWords(memoryNewWords)
                         }
-                    })
-                    if (memoryNewWords.length > 0) {
-                        pushWords(memoryNewWords)
                     }
 
                     log.i('批量更新成功');
@@ -919,6 +967,8 @@ export const useWordsStore =
                 mainWindowOpacity,
                 autoSpeak,
                 eyeCare,
+                addWordTarget,
+                scheduleReminder,
                 focusMode,
                 currentWordBankId,
                 currentWordBank,
@@ -936,6 +986,8 @@ export const useWordsStore =
                 applyRgbaOpacity,
                 setAutoSpeak,
                 setEyeCare,
+                setAddWordTarget,
+                setScheduleReminder,
                 applyEyeCareTheme,
                 setApiKey, // 导出设置API密钥方法
                 setOcrApiKey,
@@ -978,6 +1030,8 @@ export const useWordsStore =
                     'mainWindowOpacity',
                     'autoSpeak',
                     'eyeCare',
+                    'addWordTarget',
+                    'scheduleReminder',
                     'focusMode',
                     'userApiKeys',
                     'userOcrApiKeys',

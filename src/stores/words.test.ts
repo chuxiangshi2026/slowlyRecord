@@ -293,6 +293,49 @@ describe('useWordsStore', () => {
       expect(mockBank.words.length).toBe(2)
     })
 
+    it('设置新词加入默认词库时，应写入默认库且不污染当前词库视图', async () => {
+      const store = useWordsStore()
+      store.currentWordBankId = 'custom-bank'
+      store.addWordTarget = 'default'
+      const customBank = createWordBank({ id: 'custom-bank', name: '自定义词库', words: [] })
+      store.currentWordBank = customBank
+      store.words = []
+
+      const defaultBank = createWordBank({ id: 'default', words: [] })
+      vi.mocked(getWordBank).mockResolvedValue(defaultBank)
+      vi.mocked(saveWordBank).mockResolvedValue(true)
+
+      const words: Word[] = [createWord({ _id: '1', text: 'hello' })]
+      const result = await store.addAndUpdateWords(words)
+
+      expect(result).toBe(true)
+      expect(getWordBank).toHaveBeenCalledWith('default')
+      expect(saveWordBank).toHaveBeenCalledWith(defaultBank)
+      expect(defaultBank.words.length).toBe(1)
+      // 内存列表与当前词库引用保持不动（词不属于当前视图）
+      expect(store.words.length).toBe(0)
+      expect(store.currentWordBank).toEqual(customBank)
+    })
+
+    it('新词目标为当前词库时，保持原有写库与内存更新行为', async () => {
+      const store = useWordsStore()
+      store.currentWordBankId = 'custom-bank'
+      store.addWordTarget = 'current'
+
+      const customBank = createWordBank({ id: 'custom-bank', name: '自定义词库', words: [] })
+      vi.mocked(getWordBank).mockResolvedValue(customBank)
+      vi.mocked(saveWordBank).mockResolvedValue(true)
+
+      const words: Word[] = [createWord({ _id: '1', text: 'hello' })]
+      const result = await store.addAndUpdateWords(words)
+
+      expect(result).toBe(true)
+      expect(getWordBank).toHaveBeenCalledWith('custom-bank')
+      expect(customBank.words.length).toBe(1)
+      expect(store.words.length).toBe(1)
+      expect(store.currentWordBank).toEqual(customBank)
+    })
+
     // === 词组批量添加测试 ===
     it('批量添加词组时应保留空格', async () => {
       const store = useWordsStore()

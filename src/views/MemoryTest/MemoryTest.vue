@@ -228,6 +228,8 @@ const showingWords = ref(false);
 const showingPattern = ref(false);
 const displayTime = ref(0);
 let timerInterval: number | null = null;
+// submitPattern 的延迟回调（1.5s 后进入下一阶段/结束测试），卸载时需清除，否则会把计时器重新拉起
+let stageTimeout: ReturnType<typeof setTimeout> | null = null;
 
 // 数字记忆
 const currentNumber = ref('');
@@ -427,7 +429,8 @@ function submitPattern() {
   wrongCells.value = userSelectedCells.value.filter(idx => !activeCells.value.includes(idx));
   correctCells.value = activeCells.value;
 
-  setTimeout(() => {
+  stageTimeout = setTimeout(() => {
+    stageTimeout = null;
     if (correct) {
       maxStage.value = currentStage.value;
       currentStage.value++;
@@ -551,6 +554,10 @@ onMounted(() => {
 onUnmounted(() => {
   if (timerInterval) {
     clearInterval(timerInterval);
+  }
+  if (stageTimeout) {
+    clearTimeout(stageTimeout);
+    stageTimeout = null;
   }
 });
 </script>

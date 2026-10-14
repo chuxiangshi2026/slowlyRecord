@@ -103,6 +103,12 @@ describe('notification adapter', () => {
       expect(mockShowNotification).toHaveBeenCalledWith('内容')
     })
 
+    it('show 传 featureCode 时透传给 utools.showNotification（点击直达功能）', () => {
+      const adapter = getNotificationAdapter()
+      adapter.show('标题', '内容', () => {}, 'review')
+      expect(mockShowNotification).toHaveBeenCalledWith('内容', 'review')
+    })
+
     it('show 无 body 时使用 title', () => {
       const adapter = getNotificationAdapter()
       adapter.show('仅标题')
