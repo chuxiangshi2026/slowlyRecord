@@ -12,6 +12,13 @@
   --utools-bg-active: #d3e0d3;
   --utools-bg-card: #f6faf6;
   --utools-bg-input: #ffffff;
+  // RGB 通道别名：开启自定义背景图后（body.has-app-bg）用 rgba(通道, 浓度) 重定义上方变量，
+  // 比 color-mix 兼容更老的 Chromium 内核（与 transparent 混合等价于调 alpha）
+  --utools-bg-primary-rgb: 234, 241, 234;
+  --utools-bg-secondary-rgb: 226, 235, 226;
+  --utools-bg-tertiary-rgb: 242, 246, 242;
+  --utools-bg-card-rgb: 246, 250, 246;
+  --utools-border-primary-rgb: 217, 217, 217;
   --utools-bg-overlay: rgba(0, 0, 0, 0.45);
   
   // 文字颜色
@@ -88,6 +95,10 @@ html.no-eye-care:not(.utools-dark),
   --utools-bg-hover: #f0f0f0;
   --utools-bg-active: #e6e6e6;
   --utools-bg-card: #ffffff;
+  --utools-bg-primary-rgb: 245, 245, 245;
+  --utools-bg-secondary-rgb: 238, 238, 238;
+  --utools-bg-tertiary-rgb: 250, 250, 250;
+  --utools-bg-card-rgb: 255, 255, 255;
 }
 
 // ===== 暗黑主题 =====
@@ -102,6 +113,11 @@ html.utools-dark,
   --utools-bg-card: #2d2d30;
   --utools-bg-input: #3c3c3c;
   --utools-bg-overlay: rgba(0, 0, 0, 0.65);
+  --utools-bg-primary-rgb: 30, 30, 30;
+  --utools-bg-secondary-rgb: 37, 37, 38;
+  --utools-bg-tertiary-rgb: 45, 45, 48;
+  --utools-bg-card-rgb: 45, 45, 48;
+  --utools-border-primary-rgb: 62, 62, 66;
   
   // 文字颜色
   --utools-text-primary: #e0e0e0;
@@ -497,5 +513,59 @@ html.utools-dark,
   // 后缀 - 亮绿色
   .word-suffix {
     color: #69db7c;
+  }
+}
+
+// ===== 自定义界面背景与亚克力（设置页开启；CSS 变量与 body class 由 words store 的 applyAppBg 写入）=====
+// 层级：body 底色（护眼绿，兜底）→ body::before 背景图片层 → #app 放开透明 →
+//       框架件与卡片表面按 --app-bg-scrim 浓度罩住，保证可读性的同时透出背景
+@keyframes app-bg-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body.has-app-bg {
+  // 卡片/次级表面按遮罩浓度罩住：重定义变量，全站所有引用点（词卡、侧栏、面板等）自动变半透明。
+  // 用 rgba + RGB 通道别名而非 color-mix——与 transparent 混合等价于调 alpha，且兼容老 Chromium 内核
+  // （color-mix 在不支持的内核里会解析失败导致背景变透明，透出近黑底色表现为「列表全黑」）。
+  // 只罩色不挂 blur——长列表项挂 backdrop-filter 是滚动性能红线，blur 只给框架件（见下方 acrylic 规则）
+  --utools-bg-card: rgba(var(--utools-bg-card-rgb), var(--app-bg-scrim, 0.6));
+  --utools-bg-tertiary: rgba(var(--utools-bg-tertiary-rgb), var(--app-bg-scrim, 0.6));
+  --utools-bg-secondary: rgba(var(--utools-bg-secondary-rgb), var(--app-bg-scrim, 0.6));
+  // 边框同步软化：半透明表面上的实色描边会显得生硬，降到 0.55 透明度让卡片融进背景
+  --utools-border-primary: rgba(var(--utools-border-primary-rgb), 0.55);
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--app-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    // 图片在 decode 完成后才挂载（见 applyAppBg），淡入避免突兀闪现
+    animation: app-bg-fade-in 0.4s ease-out;
+  }
+
+  // #app 默认实底（--utools-bg-primary），有背景图时放开让图片层透上来
+  #app {
+    background: transparent;
+  }
+
+  // 头部引用的是 --utools-bg-primary（body 底色需保持实底兜底，未纳入重定义），单独罩
+  .common-layout .el-header {
+    background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim, 0.6));
+  }
+
+  // 亚克力：只给头部细条挂毛玻璃（面积小、成本可忽略）。
+  // 不给 el-main 挂 blur：全屏滚动区的 backdrop-filter 每帧都要对整屏背景做模糊采样，
+  // 首屏内容合成被拖住（表现为先出背景图、列表内容延迟出现）；主区雾感由上方半透明罩色承担
+  &.app-bg-acrylic .common-layout {
+    .el-header {
+      backdrop-filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
+      -webkit-backdrop-filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
+    }
   }
 }

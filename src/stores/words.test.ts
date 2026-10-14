@@ -45,6 +45,13 @@ vi.mock('@/utils/user-set-db-util.ts', () => ({
   getSetDb: vi.fn(() => null)
 }))
 
+// Mock app-bg-db（图片存取层，隔离 db 适配器依赖）
+vi.mock('@/utils/app-bg-db.ts', () => ({
+  getAppBgImage: vi.fn(() => ''),
+  saveAppBgImage: vi.fn(() => Promise.resolve(true)),
+  removeAppBgImage: vi.fn()
+}))
+
 // Mock logger
 vi.mock('@/utils/logger.ts', () => ({
   log: {
@@ -147,6 +154,27 @@ describe('useWordsStore', () => {
       })
       expect(store.lastVisitedPage).toBe('')
       expect(store.hiddenExplain).toBe('')
+    })
+  })
+
+  describe('界面背景设置', () => {
+    it('默认值：无背景、遮罩 0.6、亚克力开、模糊半径 18', () => {
+      const store = useWordsStore()
+      expect(store.appBg).toEqual({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18 })
+    })
+
+    it('setAppBg 部分更新并持久化到 user-set（仅存轻量标志位，图片本体在独立文档）', async () => {
+      const store = useWordsStore()
+      await store.setAppBg({ preset: 'preset-mist', scrim: 0.6 })
+      expect(store.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18 })
+      expect(addAndUpdateSetDb).toHaveBeenCalled()
+      const saved = (addAndUpdateSetDb as any).mock.calls.at(-1)?.[0]
+      expect(saved.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18 })
+    })
+
+    it('Node 环境（无 document）下 applyAppBg 静默跳过不抛错', () => {
+      const store = useWordsStore()
+      expect(() => store.applyAppBg()).not.toThrow()
     })
   })
 

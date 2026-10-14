@@ -93,6 +93,13 @@ export type UserSetType = DbDoc<{
     /** 新词加入目标词库：current=当前词库（缺省），default=默认词库 */
     addWordTarget?: 'current' | 'default';
     /**
+     * 主界面背景（三端页内生效）：
+     * preset='' 无背景 / 'custom' 自定义图（图片本体存 app-bg-image 独立文档，不随 user-set 同步）/ 预设标识（对应 public/bg/<preset>.svg）；
+     * scrim=遮罩浓度 0~1（护眼绿罩住背景的程度，越高越接近纯色底）；
+     * acrylic=框架件（头部/主区）毛玻璃；acrylicBlur=毛玻璃模糊半径 px（默认 18）
+     */
+    appBg?: { preset?: string; scrim?: number; acrylic?: boolean; acrylicBlur?: number };
+    /**
      * 定时任务（uTools 8.0+，低版本自动降级不显示）：
      * review=定时复习提醒，signin=防断签提醒，sync=WebDAV 定时自动备份（默认关，依赖 WebDAV 配置）；
      * reviewTimes=复习提醒时间点（缺省 ['09:00','21:00']），signinTimes=防断签时间点（缺省 ['05:30','06:30','08:30','09:30','22:30']，signinTime 为旧版单时间点字段仅作读取兜底）；

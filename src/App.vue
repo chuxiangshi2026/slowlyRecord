@@ -159,6 +159,12 @@ async function handleUtoolsEnter(action: any) {
       }
     }
 
+    // 同步界面背景设置并应用（写 CSS 变量与 body class；图片本体在 app-bg-image 文档）
+    if (setDb.appBg) {
+      wordsStore.appBg = {...wordsStore.appBg, ...setDb.appBg};
+    }
+    wordsStore.applyAppBg();
+
     // 同步自动发音设置
     if (setDb.autoSpeak !== undefined) {
       wordsStore.autoSpeak = setDb.autoSpeak;

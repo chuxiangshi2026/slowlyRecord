@@ -26,6 +26,7 @@ import {AppInfo} from "@/config.ts";
 // 导入翻译服务 abandon
 import {translateWithPlatform as externalTranslateWithPlatform, translateBatchWithPlatform as externalTranslateBatchWithPlatform} from "@/utils/translation-api";
 import {addAndUpdateSetDb, getSetDb} from "@/utils/user-set-db-util.ts";
+import {getAppBgImage} from "@/utils/app-bg-db.ts";
 import type {UserSetType, FocusModeSettings} from "@/types/user-set";
 import {isUtools} from "@/adapters/platform";
 import {normalizeItemText, getItemKey} from "@/utils/text-utils";
@@ -129,6 +130,8 @@ export const useWordsStore =
                 focusMode.value = {...defaultFocusMode, ...focusMode.value};
                 // 旧版本持久化数据无 scheduleReminder 字段，合并默认值补齐
                 scheduleReminder.value = {...defaultScheduleReminder(), ...scheduleReminder.value};
+                // 同理补齐 appBg（旧数据无此字段）
+                appBg.value = {...defaultAppBg(), ...appBg.value};
             }
             // 添加单词后自动退出插件
             const pluginStatus = ref(false);
@@ -142,6 +145,11 @@ export const useWordsStore =
             const eyeCare = ref(true);
             // 新词加入目标词库：current=当前词库（缺省），default=默认词库
             const addWordTarget = ref<'current' | 'default'>('current');
+            // 主界面背景：preset='' 无 / 'custom' 自定义图 / 预设标识；scrim=遮罩浓度；acrylic=框架件毛玻璃；
+            // acrylicBlur=毛玻璃模糊半径 px。图片本体存 app-bg-image 独立文档（app-bg-db.ts），不进 user-set、不参与同步
+            // scrim 默认 0.6：亮/暗两个主题下背景都能明显透出（0.85 在暗色主题下近似全黑）
+            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18 });
+            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number }>(defaultAppBg());
             // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
             // review/signin 默认开（升级后首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
             const defaultScheduleReminder = () => ({ review: true, signin: true, sync: false });
@@ -425,6 +433,71 @@ export const useWordsStore =
                     console.log('[透明度] rgba 背景方案已应用:', validOpacity, '暗色:', isDark, 'app存在:', !!appEl);
                 } catch (e) {
                     console.error('[透明度] rgba 背景应用失败:', e);
+                }
+            }
+
+            // 应用序号：连点切换预设/自定义时丢弃过期的解码结果，避免旧背景盖掉新背景
+            let appBgApplySeq = 0;
+
+            /**
+             * 应用界面背景到 DOM：写 CSS 变量（--app-bg-image/--app-bg-scrim）与 body class
+             * （has-app-bg/app-bg-acrylic），样式规则见 theme.scss。
+             * custom 预设的图片从 app-bg-image 文档同步读取；图丢失（如换机未同步）时回退为无背景。
+             * 图片先 decode 再挂载：大图解码若与首屏争抢主线程，会出现「先出背景图、列表内容延迟」
+             */
+            async function applyAppBg() {
+                if (typeof document === 'undefined' || !document.body) return;
+                const seq = ++appBgApplySeq;
+                const {preset, scrim, acrylic, acrylicBlur} = appBg.value;
+                let url = '';
+                if (preset === 'custom') {
+                    url = getAppBgImage();
+                    if (!url) appBg.value.preset = ''; // 自定义图丢失，回退无背景
+                } else if (preset) {
+                    // 转成绝对 URL：CSS 变量里的相对 url() 会被浏览器按「样式表」所在目录解析
+                    // （main.css 在 assets/ 下，会错拼成 assets/bg/），按页面地址解析才稳
+                    url = new URL(`bg/${preset}.svg`, window.location.href).href;
+                }
+                const root = document.documentElement;
+                const body = document.body;
+                if (!url) {
+                    body.classList.remove('has-app-bg', 'app-bg-acrylic');
+                    root.style.removeProperty('--app-bg-image');
+                    root.style.removeProperty('--app-bg-scrim');
+                    root.style.removeProperty('--app-bg-acrylic-blur');
+                    return;
+                }
+                try {
+                    const img = new Image();
+                    img.src = url;
+                    await img.decode();
+                } catch { /* 解码失败也照常应用，交给浏览器兜底 */ }
+                if (seq !== appBgApplySeq) return; // 已有更新的应用请求，丢弃过期结果
+                root.style.setProperty('--app-bg-image', `url("${url}")`);
+                root.style.setProperty('--app-bg-scrim', String(Math.max(0, Math.min(1, scrim))));
+                root.style.setProperty('--app-bg-acrylic-blur', `${Math.max(0, Math.min(60, acrylicBlur || 18))}px`);
+                body.classList.add('has-app-bg');
+                body.classList.toggle('app-bg-acrylic', acrylic);
+            }
+
+            /**
+             * 设置界面背景（部分更新）：应用到 DOM 并把轻量标志位持久化到 user-set
+             * （图片本体不在此，见 app-bg-db.ts）
+             */
+            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number }>) {
+                appBg.value = {...appBg.value, ...partial};
+                applyAppBg();
+                try {
+                    let userSet = getSetDb();
+                    if (userSet) {
+                        userSet.appBg = {...appBg.value};
+                    } else {
+                        userSet = initUserSet();
+                        userSet.appBg = {...appBg.value};
+                    }
+                    await addAndUpdateSetDb(userSet);
+                } catch (e) {
+                    console.error('[背景图] 保存设置失败:', e);
                 }
             }
 
@@ -968,6 +1041,7 @@ export const useWordsStore =
                 autoSpeak,
                 eyeCare,
                 addWordTarget,
+                appBg,
                 scheduleReminder,
                 focusMode,
                 currentWordBankId,
@@ -987,6 +1061,8 @@ export const useWordsStore =
                 setAutoSpeak,
                 setEyeCare,
                 setAddWordTarget,
+                setAppBg,
+                applyAppBg,
                 setScheduleReminder,
                 applyEyeCareTheme,
                 setApiKey, // 导出设置API密钥方法
@@ -1031,6 +1107,7 @@ export const useWordsStore =
                     'autoSpeak',
                     'eyeCare',
                     'addWordTarget',
+                    'appBg',
                     'scheduleReminder',
                     'focusMode',
                     'userApiKeys',

@@ -156,4 +156,8 @@ getDbAdapterAsync().then(() => {
   console.error('[App] 数据库适配器初始化失败:', err);
   // 即使初始化失败也挂载应用，避免白屏
   app.mount('#app');
+}).finally(() => {
+  // 应用界面背景（CSS 变量 + body class）：pinia 从 localStorage 同步水合即可得设置，
+  // 自定义图片经 db 适配器读取（此时适配器已就绪或降级为无背景，不影响启动）
+  useWordsStore().applyAppBg();
 });
