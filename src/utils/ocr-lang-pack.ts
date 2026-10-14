@@ -8,6 +8,7 @@
  */
 import { getProfile } from '@/utils/language'
 import { getDbStorage } from '@/adapters/db'
+import { getKvCache } from '@/adapters/kv-cache'
 import type { LanguageCode } from '@/utils/language/types'
 
 /** CDN 地址（jsdelivr 的 tessdata_fast 镜像，.gz 压缩） */
@@ -37,50 +38,15 @@ async function gunzip(data: ArrayBuffer): Promise<Uint8Array | null> {
     }
 }
 
-function openDB(): Promise<IDBDatabase> {
-    return new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, 1)
-        req.onerror = () => reject(req.error)
-        req.onsuccess = () => resolve(req.result)
-        req.onupgradeneeded = (event) => {
-            const db = (event.target as IDBOpenDBRequest).result
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME)
-            }
-        }
-    })
-}
+// IndexedDB 存取统一走 kv-cache 适配层
+const idb = getKvCache(DB_NAME, STORE_NAME)
 
 async function idbGet(key: string): Promise<ArrayBuffer | null> {
-    let db: IDBDatabase | null = null
-    try {
-        db = await openDB()
-        return await new Promise((resolve, reject) => {
-            const req = db!.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(key)
-            req.onsuccess = () => resolve(req.result ?? null)
-            req.onerror = () => reject(req.error)
-        })
-    } catch {
-        return null
-    } finally {
-        db?.close()
-    }
+    return idb.get<ArrayBuffer>(key)
 }
 
 async function idbPut(key: string, data: ArrayBuffer): Promise<void> {
-    let db: IDBDatabase | null = null
-    try {
-        db = await openDB()
-        await new Promise((resolve, reject) => {
-            const req = db!.transaction(STORE_NAME, 'readwrite').objectStore(STORE_NAME).put(data, key)
-            req.onsuccess = () => resolve(undefined)
-            req.onerror = () => reject(req.error)
-        })
-    } catch (e) {
-        console.warn('[OCR语言包] IndexedDB 缓存写入失败:', e)
-    } finally {
-        db?.close()
-    }
+    return idb.put(key, data)
 }
 
 /** uTools 环境的 localStorage 兜底缓存 */

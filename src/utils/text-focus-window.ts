@@ -22,6 +22,7 @@ import { shouldIgnoreMouseInLockedFocusWindow, focusWindowClosed } from '@/utils
 import { isUtools } from '@/adapters/platform';
 import { getSetDb, putSetDbWithRetry } from '@/utils/user-set-db-util';
 import { getDbAdapter } from '@/adapters/db';
+import { getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut } from '@/adapters/window';
 import router from '@/router';
 import { useTextMemoryStore } from '@/stores/textMemory';
 
@@ -78,27 +79,8 @@ export function setTextFocusWindow(win: any) {
 }
 
 // ========== Electron 分支：子窗口代理 + ipc 通信 ==========
-export function createElectronWindowProxy(winId: number): any {
-  const api = (window as any).electronAPI;
-  const proxy: any = {
-    _winId: winId,
-    _destroyed: false,
-    isDestroyed: () => proxy._destroyed,
-    setIgnoreMouseEvents: (ignore: boolean, opts?: any) => { api.focusWindowInvoke(winId, 'setIgnoreMouseEvents', [ignore, opts]); },
-    setAlwaysOnTop: (v: boolean) => { api.focusWindowInvoke(winId, 'setAlwaysOnTop', [v]); },
-    setResizable: (v: boolean) => { api.focusWindowInvoke(winId, 'setResizable', [v]); },
-    moveTop: () => { api.focusWindowInvoke(winId, 'moveTop', []); },
-    focus: () => { api.focusWindowInvoke(winId, 'focus', []); },
-    show: () => { api.focusWindowInvoke(winId, 'show', []); },
-    close: () => { api.focusWindowInvoke(winId, 'close', []); },
-    getBounds: () => api.focusWindowInvoke(winId, 'getBounds', []),
-    isAlwaysOnTop: () => api.focusWindowInvoke(winId, 'isAlwaysOnTop', []),
-    webContents: {
-      executeJavaScript: (js: string) => api.focusWindowExecuteJS(winId, js),
-    },
-  };
-  return proxy;
-}
+// 代理实现统一在 @/adapters/window（re-export 兼容旧引用）
+export { createElectronWindowProxy } from '@/adapters/window';
 
 // 收集文章 doc + user-set，供子窗口 utools shim 同步读取
 export function collectTextFocusDocsForChild(): Record<string, any> {
@@ -153,18 +135,7 @@ function bindElectronListeners(winId: number) {
 }
 
 async function handleChildDbPut(doc: any) {
-  try {
-    const adapter: any = getDbAdapter();
-    let res = await adapter.put(doc);
-    if (res && res.ok) return;
-    const fresh = await adapter.get(doc._id);
-    if (fresh) {
-      doc._rev = fresh._rev;
-      await adapter.put(doc);
-    }
-  } catch (e) {
-    console.error('[textFocus] 父窗口持久化子窗口 db.put 失败:', e);
-  }
+  await persistChildDbPut(doc, 'textFocus');
 }
 
 /**
@@ -207,43 +178,10 @@ function returnToTextMemory() {
 }
 
 function applyAlwaysOnTop(targetWindow: any, alwaysOnTop: boolean): boolean {
-  if (!targetWindow || typeof targetWindow.setAlwaysOnTop !== 'function') {
-    return false;
-  }
-  try {
-    targetWindow.setAlwaysOnTop(alwaysOnTop);
-    if (alwaysOnTop && typeof targetWindow.moveTop === 'function') {
-      targetWindow.moveTop();
-    }
-    const applied = typeof targetWindow.isAlwaysOnTop === 'function'
-      ? targetWindow.isAlwaysOnTop()
-      : alwaysOnTop;
-    return applied === alwaysOnTop;
-  } catch (e) {
-    console.error('[textFocus] 应用置顶状态失败:', e);
-    return false;
-  }
+  return applyChildWindowAlwaysOnTop(targetWindow, alwaysOnTop, 'textFocus');
 }
 
-async function getCursorPointCandidates(): Promise<any[]> {
-  try {
-    if (isUtools() && (window as any).utools?.getCursorScreenPoint) {
-      const point = (window as any).utools.getCursorScreenPoint();
-      const candidates = [point];
-      if ((window as any).utools.screenToDipPoint) {
-        candidates.push((window as any).utools.screenToDipPoint(point));
-      }
-      return candidates;
-    }
-    if ((window as any).electronAPI?.getCursorScreenPoint) {
-      const point = await (window as any).electronAPI.getCursorScreenPoint();
-      return point ? [point] : [];
-    }
-  } catch (e) {
-    console.error('[textFocus] 获取鼠标屏幕坐标失败:', e);
-  }
-  return [];
-}
+// getCursorPointCandidates 统一在 @/adapters/window（uTools 同步 + DIP / Electron IPC）
 
 function setMouseIgnore(shouldIgnore: boolean) {
   if (!focusWindow || focusWindow.isDestroyed?.()) {

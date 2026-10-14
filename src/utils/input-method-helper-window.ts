@@ -13,6 +13,7 @@
 import { shouldIgnoreMouseInLockedFocusWindow } from '@/utils/focus-lock';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { getDbAdapter } from '@/adapters/db';
+import { createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut } from '@/adapters/window';
 
 const IGNORE_MOUSE_POLL_INTERVAL = 50;
 const DB_PENDING_POLL_INTERVAL = 300;
@@ -119,27 +120,7 @@ export async function openInputMethodHelper(scheme: string, schemeName: string, 
 }
 
 // ========== Electron 分支：子窗口代理 + ipc 通信 ==========
-function createElectronWindowProxy(winId: number): any {
-  const api = (window as any).electronAPI;
-  const proxy: any = {
-    _winId: winId,
-    _destroyed: false,
-    isDestroyed: () => proxy._destroyed,
-    setIgnoreMouseEvents: (ignore: boolean, opts?: any) => { api.focusWindowInvoke(winId, 'setIgnoreMouseEvents', [ignore, opts]); },
-    setAlwaysOnTop: (v: boolean) => { api.focusWindowInvoke(winId, 'setAlwaysOnTop', [v]); },
-    setResizable: (v: boolean) => { api.focusWindowInvoke(winId, 'setResizable', [v]); },
-    moveTop: () => { api.focusWindowInvoke(winId, 'moveTop', []); },
-    focus: () => { api.focusWindowInvoke(winId, 'focus', []); },
-    show: () => { api.focusWindowInvoke(winId, 'show', []); },
-    close: () => { api.focusWindowInvoke(winId, 'close', []); },
-    getBounds: () => api.focusWindowInvoke(winId, 'getBounds', []),
-    isAlwaysOnTop: () => api.focusWindowInvoke(winId, 'isAlwaysOnTop', []),
-    webContents: {
-      executeJavaScript: (js: string) => api.focusWindowExecuteJS(winId, js),
-    },
-  };
-  return proxy;
-}
+// createElectronWindowProxy 统一在 @/adapters/window
 
 // 收集 user-set 文档供子窗口 utools shim 的 db.get/allDocs 同步读取
 function collectUserSetDocsForChild(): Record<string, any> {
@@ -162,18 +143,7 @@ function handleChildMessageElectron(channel: string, payload: any) {
 
 // 子窗口 db.put 转发 -> 父持久化（冲突时读最新 _rev 重试一次）
 async function handleChildDbPut(doc: any) {
-  try {
-    const adapter: any = getDbAdapter();
-    let res = await adapter.put(doc);
-    if (res && res.ok) return;
-    const fresh = await adapter.get(doc._id);
-    if (fresh) {
-      doc._rev = fresh._rev;
-      await adapter.put(doc);
-    }
-  } catch (e) {
-    console.error('[输入法键盘] 父窗口持久化子窗口 db.put 失败:', e);
-  }
+  await persistChildDbPut(doc, '输入法键盘');
 }
 
 async function openInputMethodHelperElectron(scheme: string, schemeName: string, items: any[]): Promise<boolean> {
@@ -226,15 +196,20 @@ async function openInputMethodHelperElectron(scheme: string, schemeName: string,
   startDbPendingPoll();
 
   setTimeout(async () => {
-    if (!helperWindow || helperWindow.isDestroyed?.()) return;
-    // 推送 user-set 快照给子窗口 utools shim（db.get/allDocs 同步读）
-    const userSetDocs = collectUserSetDocsForChild();
-    await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs: userSetDocs })})`);
-    applyAlwaysOnTop(initAlwaysOnTop);
-    lastSyncedLocked = initLocked;
-    if (initLocked) startIgnoreMousePoll();
-    pushData(scheme, schemeName, items);
-    console.log('[输入法键盘] Electron 初始状态', { alwaysOnTop: initAlwaysOnTop, locked: initLocked });
+    try {
+      if (!helperWindow || helperWindow.isDestroyed?.()) return;
+      // 推送 user-set 快照给子窗口 utools shim（db.get/allDocs 同步读）
+      const userSetDocs = collectUserSetDocsForChild();
+      await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs: userSetDocs })})`);
+      applyAlwaysOnTop(initAlwaysOnTop);
+      lastSyncedLocked = initLocked;
+      if (initLocked) startIgnoreMousePoll();
+      pushData(scheme, schemeName, items);
+      console.log('[输入法键盘] Electron 初始状态', { alwaysOnTop: initAlwaysOnTop, locked: initLocked });
+    } catch (e) {
+      // 延迟期间子窗口被关闭会导致 executeJS reject，静默忽略
+      console.warn('[输入法键盘] 子窗口初始化推送失败（窗口可能已关闭）', e);
+    }
   }, 500);
   return true;
 }
@@ -273,39 +248,13 @@ function pushData(scheme: string, schemeName: string, items: any[]) {
 // ========== 置顶 ==========
 function applyAlwaysOnTop(value: boolean): boolean {
   if (!helperWindow || helperWindow.isDestroyed?.()) return false;
-  if (typeof helperWindow.setAlwaysOnTop !== 'function') {
-    console.warn('[输入法键盘] setAlwaysOnTop API 不可用');
-    return false;
-  }
-  try {
-    helperWindow.setAlwaysOnTop(value);
-    if (value && typeof helperWindow.moveTop === 'function') helperWindow.moveTop();
-    const applied = typeof helperWindow.isAlwaysOnTop === 'function'
-      ? helperWindow.isAlwaysOnTop()
-      : value;
-    console.log('[输入法键盘] setAlwaysOnTop', value, '实际生效', applied);
-    return applied === value;
-  } catch (e) {
-    console.error('[输入法键盘] 应用置顶失败:', e);
-    return false;
-  }
+  const applied = applyChildWindowAlwaysOnTop(helperWindow, value, '输入法键盘');
+  console.log('[输入法键盘] setAlwaysOnTop', value, '实际生效', applied);
+  return applied;
 }
 
 // ========== 鼠标穿透（锁定） ==========
-async function getCursorPointCandidates(): Promise<any[]> {
-  try {
-    const utools = getUtools();
-    if (isUtools() && utools?.getCursorScreenPoint) {
-      const point = utools.getCursorScreenPoint();
-      const candidates = [point];
-      if (utools.screenToDipPoint) candidates.push(utools.screenToDipPoint(point));
-      return candidates;
-    }
-  } catch (e) {
-    console.error('[输入法键盘] 获取鼠标坐标失败:', e);
-  }
-  return [];
-}
+// getCursorPointCandidates 统一在 @/adapters/window（uTools 同步 + DIP / Electron IPC）
 
 function setMouseIgnore(shouldIgnore: boolean) {
   if (!helperWindow || helperWindow.isDestroyed?.()) return;
