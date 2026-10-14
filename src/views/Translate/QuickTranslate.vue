@@ -95,6 +95,16 @@
                 <el-icon><CopyDocument /></el-icon>
                 复制
               </el-button>
+              <el-button
+                v-if="canPasteHide"
+                link
+                size="small"
+                @click="pasteResultAndHide"
+                title="隐藏窗口并把译文粘贴回原应用"
+              >
+                <el-icon><Position /></el-icon>
+                粘贴
+              </el-button>
             </div>
           </div>
           
@@ -252,12 +262,14 @@ import {
   Refresh,
   Picture,
   Plus,
-  Close
+  Close,
+  Position
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
 import { addWord } from '@/utils/str-util';
 import { isSentenceLike } from '@/utils/text-utils';
 import { useWordsStore } from '@/stores/words';
+import { getClipboardAdapter } from '@/adapters/clipboard';
 import { useSentencesStore } from '@/stores/sentences';
 import type { TranslationPlatform, TranslationResult, ExampleSentence, LanguageOption } from '@/types/words';
 
@@ -395,14 +407,24 @@ function playPronunciation() {
 }
 
 // 复制结果
-function copyResult() {
-  if (result.value?.explains) {
-    navigator.clipboard.writeText(result.value.explains).then(() => {
-      ElMessage.success('已复制到剪贴板');
-    }).catch(() => {
-      ElMessage.error('复制失败');
-    });
+async function copyResult() {
+  if (!result.value?.explains) return;
+  const ok = await getClipboardAdapter().copyText(result.value.explains);
+  if (ok) {
+    ElMessage.success('已复制到剪贴板');
+  } else {
+    ElMessage.error('复制失败');
   }
+}
+
+// uTools 环境支持「粘贴并隐藏」（hideMainWindowPasteText），其他平台不显示该入口
+const canPasteHide = typeof getClipboardAdapter().pasteTextAndHide === 'function';
+
+// 隐藏主窗口并把译文粘贴回原应用；失败时回退为仅复制
+async function pasteResultAndHide() {
+  if (!result.value?.explains) return;
+  const ok = await getClipboardAdapter().pasteTextAndHide!(result.value.explains);
+  if (!ok) await copyResult();
 }
 
 // 截断文本

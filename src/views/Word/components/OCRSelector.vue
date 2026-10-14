@@ -8,6 +8,7 @@
           <div class="header-buttons">
             <button @click="copyAllOriginal" class="header-copy-btn" title="复制全部原文">复制全部原文</button>
             <button @click="copyAllTranslation" class="header-copy-btn" title="复制全部译文">复制全部译文</button>
+            <button v-if="canPasteHide" @click="pasteAllTranslationAndHide" class="header-copy-btn" title="隐藏窗口并把全部译文粘贴回原应用">粘贴译文</button>
             <button @click="closePanel" class="close-btn">×</button>
           </div>
         </div>
@@ -87,6 +88,7 @@ import { useWordsStore } from '@/stores/words.ts';
 import { extractWordAndPhraseCandidates } from '@/utils/text-candidates';
 import { loadLocalPhraseSources } from '@/utils/phrase-sources';
 import { getActiveProfile, isWordText } from '@/utils/language';
+import { getClipboardAdapter } from '@/adapters/clipboard';
 
 // 定义props和emits
 interface Props {
@@ -324,33 +326,10 @@ const copyText = async (text: string, type: string) => {
     return;
   }
 
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      // 使用现代 Clipboard API
-      await navigator.clipboard.writeText(text);
-      ElMessage.success(`${type}已复制到剪贴板`);
-    } else {
-      // 降级方案：使用传统的复制方法
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      const successful = document.execCommand('copy');
-      document.body.removeChild(textArea);
-
-      if (successful) {
-        ElMessage.success(`${type}已复制到剪贴板`);
-      } else {
-        ElMessage.error('复制失败，请手动复制');
-      }
-    }
-  } catch (err) {
-    console.error('复制失败:', err);
+  const ok = await getClipboardAdapter().copyText(text);
+  if (ok) {
+    ElMessage.success(`${type}已复制到剪贴板`);
+  } else {
     ElMessage.error('复制失败，请手动复制');
   }
 };
@@ -393,6 +372,34 @@ const copyAllTranslation = async () => {
   }
 
   await copyText(allTranslationText, '全部译文');
+};
+
+// uTools 环境支持「粘贴并隐藏」（hideMainWindowPasteText），其他平台不显示该入口
+const canPasteHide = typeof getClipboardAdapter().pasteTextAndHide === 'function';
+
+// 隐藏主窗口并把全部译文粘贴回原应用；失败时回退为复制到剪贴板
+const pasteAllTranslationAndHide = async () => {
+  if (!props.ocrResults || props.ocrResults.length === 0) {
+    ElMessage.warning('没有译文可粘贴');
+    return;
+  }
+
+  const allTranslationText = props.ocrResults
+    .map(region => region.tranContent)
+    .filter(text => text && text.trim())
+    .join('\n');
+
+  if (!allTranslationText) {
+    ElMessage.warning('译文内容为空');
+    return;
+  }
+
+  const ok = await getClipboardAdapter().pasteTextAndHide!(allTranslationText);
+  if (ok) {
+    closePanel();
+  } else {
+    await copyText(allTranslationText, '全部译文');
+  }
 };
 </script>
 

@@ -69,6 +69,7 @@ import type { TranslationPlatform } from '@/types/words';
 import { extractWordAndPhraseCandidates } from '@/utils/text-candidates';
 import { loadLocalPhraseSources } from '@/utils/phrase-sources';
 import { getActiveLanguage, getActiveProfile, isWordText } from '@/utils/language';
+import { getClipboardAdapter } from '@/adapters/clipboard';
 
 // 定义props和emits
 interface Props {
@@ -242,33 +243,10 @@ const copyToClipboard = async (text: string, type: string) => {
     return;
   }
 
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      // 使用现代 Clipboard API
-      await navigator.clipboard.writeText(text);
-      ElMessage.success(`${type}已复制到剪贴板`);
-    } else {
-      // 降级方案：使用传统的复制方法
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      const successful = document.execCommand('copy');
-      document.body.removeChild(textArea);
-
-      if (successful) {
-        ElMessage.success(`${type}已复制到剪贴板`);
-      } else {
-        ElMessage.error('复制失败，请手动复制');
-      }
-    }
-  } catch (err) {
-    console.error('复制失败:', err);
+  const ok = await getClipboardAdapter().copyText(text);
+  if (ok) {
+    ElMessage.success(`${type}已复制到剪贴板`);
+  } else {
     ElMessage.error('复制失败，请手动复制');
   }
 };

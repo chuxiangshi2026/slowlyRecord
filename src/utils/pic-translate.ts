@@ -11,6 +11,7 @@ import {log} from "@/utils/logger.ts";
 import {ElMessage} from "element-plus";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import {getDbStorage} from "@/adapters/db";
+import {getKvCache} from "@/adapters/kv-cache";
 import {toEngineLang} from "@/utils/translation-lang-map";
 import {getActiveProfile} from "@/utils/language";
 import {ensureTrainedData} from "@/utils/ocr-lang-pack";
@@ -117,87 +118,61 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
         throw new Error(`每日免费${ocrPlatform === 'tencent' ? '腾讯' : ''}截图翻译次数已达上限 (${usedCount}/${dailyLimit} 次)，请设置自定义API密钥以继续使用`);
     }
 
-    // const {appkey, key} = getTranslationApiKey(platform);
     const {appkey, key} = getOcrApiKey(ocrPlatform);
-    // console.log('[OCR] API密钥状态:', { appkey: appkey ? '已设置' : '未设置', key: key ? '已设置' : '未设置' });
-    let b = checkIsUtools() ? (window as any).utools?.hideMainWindow?.() : false;
-    if (!b && checkIsUtools()) {
-        // window.close()
-        (window as any).utools?.sendToParent?.('close')
-    }
-    // 将 utools.screenCapture 包装为 Promise
-    return new Promise((resolve, reject) => {
-        if (!checkIsUtools() || !(window as any).utools?.screenCapture) {
-            reject(new Error('截图功能仅在 uTools 环境中可用'));
-            return;
+
+    // 取图走截图适配器：uTools 调系统截图（先隐藏主窗口）；Electron/Web 降级为选择图片文件
+    if (checkIsUtools()) {
+        const hidden = (window as any).utools?.hideMainWindow?.();
+        if (!hidden) {
+            (window as any).utools?.sendToParent?.('close')
         }
-        (window as any).utools.screenCapture(async (image: string) => {
-            // console.log('[OCR] 截图回调触发，图片数据长度:', image ? image.length : 0);
-            if (!image) {
-                // 用户取消截图，由 App.vue 控制窗口显示
-                reject(new Error('截图取消'));
-                return;
-            }
-            // 截图成功才计次（用户取消不消耗免费额度）
-            if (isFreeOcr) {
-                incrementUsageCounter(counterKey);
-            }
-            // 截图成功，由 App.vue 控制窗口显示
+    }
+    const {getCaptureAdapterAsync} = await import('@/adapters/capture');
+    const shot = await (await getCaptureAdapterAsync()).capture();
+    // 截图/选图成功才计次（用户取消不消耗免费额度）
+    if (isFreeOcr) {
+        incrementUsageCounter(counterKey);
+    }
+    const base64 = shot.base64;
+    // base64 非法时直接失败，避免向各 OCR 引擎发出必然失败的请求
+    if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
+        throw new Error('截图数据格式异常，请重新截图');
+    }
 
-            try {
-                // 去除 data:image/png;base64, 前缀
-                const base64 = image.includes(',') ? image.split(',')[1] : image;
-                // base64 非法时直接失败，避免向各 OCR 引擎发出必然失败的请求
-                if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
-                    reject(new Error('截图数据格式异常，请重新截图'));
-                    return;
-                }
-                // console.log('[OCR] 开始调用平台:', ocrPlatform);
-
-                let result: OcrResult;
-                if (ocrPlatform === 'youdao') {
-                    {
-                    const from = toEngineLang('youdao', getActiveLanguage(), 'ocr');
-                    if (!from) throw new Error('有道OCR不支持当前语言');
-                    result = await ocrTranslate(base64, appkey, key, from, 'zh-CHS');
-                }
-                } else if (ocrPlatform === 'baidu') {
-                    result = await ocrTranslateBaidu(base64, appkey, key);
-                } else if (ocrPlatform === 'ali') {
-                    result = await ocrTranslateAli(base64, appkey, key);
-                } else if (ocrPlatform === 'tencent') {
-                    result = await ocrTranslateTencent(base64, appkey, key);
-                } else if (ocrPlatform === 'local') {
-                    // 本地OCR：使用 Tesseract.js
-                    const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
-                    result = await ocrTranslateLocal(base64, translatePlatform);
-                } else if (ocrPlatform === 'deepseek' || ocrPlatform === 'glm') {
-                    // 视觉大模型OCR：用视觉模型提取文本，再经当前翻译引擎翻译
-                    const text = ocrPlatform === 'deepseek'
-                        ? await extractTextUsingOpenAiVision(base64, 'deepseek', 'https://api.deepseek.com/v1/chat/completions', 'deepseek-v4-flash')
-                        : await extractTextUsingOpenAiVision(base64, 'glm', 'https://open.bigmodel.cn/api/paas/v4/chat/completions', 'glm-4.7-flash');
-                    let tranContent = text;
-                    try {
-                        const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
-                        const translationResult = await translateWithLargeModel(text, translatePlatform);
-                        tranContent = translationResult.explains || text;
-                    } catch {
-                        // 翻译失败时显示原文
-                    }
-                    result = {
-                        errorCode: '0',
-                        resRegions: [{boundingBox: '0,0,0,0', context: text, tranContent}]
-                    };
-                } else {
-                    result = {errorCode: '500', resRegions: []};
-                }
-                // console.log('[OCR] 平台返回结果:', { errorCode: result.errorCode, resRegionsCount: result.resRegions?.length || 0 });
-                resolve(result);
-            } catch (error) {
-                reject(error);
-            }
-        });
-    });
+    let result: OcrResult;
+    if (ocrPlatform === 'youdao') {
+        const from = toEngineLang('youdao', getActiveLanguage(), 'ocr');
+        if (!from) throw new Error('有道OCR不支持当前语言');
+        result = await ocrTranslate(base64, appkey, key, from, 'zh-CHS');
+    } else if (ocrPlatform === 'baidu') {
+        result = await ocrTranslateBaidu(base64, appkey, key);
+    } else if (ocrPlatform === 'ali') {
+        result = await ocrTranslateAli(base64, appkey, key);
+    } else if (ocrPlatform === 'tencent') {
+        result = await ocrTranslateTencent(base64, appkey, key);
+    } else if (ocrPlatform === 'local') {
+        // 本地OCR：使用 Tesseract.js
+        const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
+        result = await ocrTranslateLocal(base64, translatePlatform);
+    } else if (ocrPlatform === 'deepseek' || ocrPlatform === 'glm' || ocrPlatform === 'utoolsai') {
+        // 视觉大模型OCR：用视觉模型提取文本，再经当前翻译引擎翻译
+        const text = await extractTextByVisionBase64(base64, ocrPlatform);
+        let tranContent = text;
+        try {
+            const translatePlatform = wordsStore.currentTranslationPlatform || 'local';
+            const translationResult = await translateWithLargeModel(text, translatePlatform);
+            tranContent = translationResult.explains || text;
+        } catch {
+            // 翻译失败时显示原文
+        }
+        result = {
+            errorCode: '0',
+            resRegions: [{boundingBox: '0,0,0,0', context: text, tranContent}]
+        };
+    } else {
+        result = {errorCode: '500', resRegions: []};
+    }
+    return result;
 }
 
 // 百度OCR翻译实现
@@ -565,7 +540,7 @@ async function checkImageRatio(file: File): Promise<void> {
  */
 async function extractTextFromImage(file: File, platform?: TranslationPlatform): Promise<string> {
     // 如果指定了支持视觉识别的大模型，优先使用
-    if (platform && ['qwen', 'kimi', 'deepseek', 'glm'].includes(platform)) {
+    if (platform && ['qwen', 'kimi', 'deepseek', 'glm', 'utoolsai'].includes(platform)) {
         try {
             return await extractTextUsingVisionModel(file, platform);
         } catch (error) {
@@ -628,11 +603,14 @@ async function extractTextFromImage(file: File, platform?: TranslationPlatform):
  * 使用支持视觉的AI模型提取文本
  */
 async function extractTextUsingVisionModel(file: File, platform: TranslationPlatform): Promise<string> {
-    // 将文件转换为base64
-    const base64 = await fileToBase64(file);
+    return extractTextByVisionBase64(await fileToBase64(file), platform);
+}
 
-    // 根据不同的平台调用相应的视觉模型
-    if (platform === 'qwen') {
+/** 按平台分发的视觉模型文本提取（base64 入口，截图链路复用） */
+async function extractTextByVisionBase64(base64: string, platform: TranslationPlatform): Promise<string> {
+    if (platform === 'utoolsai') {
+        return await extractTextUsingUtoolsAiVision(base64);
+    } else if (platform === 'qwen') {
         return await extractTextUsingQwenVision(base64);
     } else if (platform === 'kimi') {
         return await extractTextUsingKimiVision(base64);
@@ -641,9 +619,44 @@ async function extractTextUsingVisionModel(file: File, platform: TranslationPlat
     } else if (platform === 'glm') {
         return await extractTextUsingOpenAiVision(base64, 'glm', 'https://open.bigmodel.cn/api/paas/v4/chat/completions', 'glm-4.7-flash');
     }
-    // 注意：gpt4v 需要额外的实现
-
     throw new Error(`不支持的视觉模型平台: ${platform}`);
+}
+
+/**
+ * 使用 uTools AI 视觉模型提取文本：无需用户配置 Key，但消耗用户 uTools AI 能量（可选引擎，非默认）
+ */
+async function extractTextUsingUtoolsAiVision(base64Image: string): Promise<string> {
+    const utoolsApi = (window as any).utools;
+    if (typeof utoolsApi?.ai !== 'function') {
+        throw new Error('uTools AI 不可用（需要 uTools 环境）');
+    }
+    // 优先选用支持视觉的模型；无模型列表能力（旧版本）时回落默认模型
+    let model: string | undefined;
+    if (typeof utoolsApi.allAiModels === 'function') {
+        const models = await utoolsApi.allAiModels();
+        model = models?.find((m: any) => m?.vision)?.id;
+        if (!model) throw new Error('当前 uTools 账号无可用视觉模型');
+    }
+    const option: any = {
+        messages: [{
+            role: 'user',
+            content: [
+                {
+                    type: 'text',
+                    text: '请识别并提取图片中的所有文本内容，只输出识别到的文本，不要有其他解释。'
+                },
+                {
+                    type: 'image_url',
+                    image_url: { url: `data:image/png;base64,${base64Image}` }
+                }
+            ]
+        }]
+    };
+    if (model) option.model = model;
+    const result: any = await utoolsApi.ai(option);
+    const text = typeof result === 'string' ? result : (result?.content || '');
+    if (!text.trim()) throw new Error('uTools AI 未识别到文本');
+    return text.trim();
 }
 
 /**
@@ -903,22 +916,8 @@ const CACHE_DB_NAME = 'SlowlyRecord_OCR_Cache';
 const CACHE_STORE_NAME = 'worker_scripts';
 const CACHE_KEY = 'worker_bundle';
 
-/**
- * 打开 IndexedDB
- */
-function openCacheDB(): Promise<IDBDatabase> {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(CACHE_DB_NAME, 1);
-        request.onerror = () => reject(request.error);
-        request.onsuccess = () => resolve(request.result);
-        request.onupgradeneeded = (event) => {
-            const db = (event.target as IDBOpenDBRequest).result;
-            if (!db.objectStoreNames.contains(CACHE_STORE_NAME)) {
-                db.createObjectStore(CACHE_STORE_NAME);
-            }
-        };
-    });
-}
+// IndexedDB 存取统一走 kv-cache 适配层
+const scriptCache = getKvCache(CACHE_DB_NAME, CACHE_STORE_NAME);
 
 /**
  * 检查 uTools 缓存标记
@@ -958,54 +957,25 @@ async function getCachedScripts(): Promise<{ worker: string, core: string, lang:
         return null;
     }
 
-    try {
-        const db = await openCacheDB();
-        const transaction = db.transaction(CACHE_STORE_NAME, 'readonly');
-        const store = transaction.objectStore(CACHE_STORE_NAME);
-        const request = store.get(CACHE_KEY);
-
-        return new Promise((resolve, reject) => {
-            request.onsuccess = () => {
-                const result = request.result;
-                if (result) {
-                    debugLog('[本地OCR] 从 IndexedDB 读取缓存成功');
-                    resolve(result);
-                } else {
-                    resolve(null);
-                }
-            };
-            request.onerror = () => reject(request.error);
-        });
-    } catch (e) {
-        debugLog('[本地OCR] 读取 IndexedDB 缓存失败:', e);
-        return null;
+    const result = await scriptCache.get<{ worker: string, core: string, lang: string, version: number }>(CACHE_KEY);
+    if (result) {
+        debugLog('[本地OCR] 从 IndexedDB 读取缓存成功');
     }
+    return result;
 }
 
 /**
  * 保存到 IndexedDB 缓存
  */
 async function saveCachedScripts(workerCode: string, coreCode: string, langDataBase64: string): Promise<void> {
-    try {
-        const db = await openCacheDB();
-        const transaction = db.transaction(CACHE_STORE_NAME, 'readwrite');
-        const store = transaction.objectStore(CACHE_STORE_NAME);
-        const data = {
-            worker: workerCode,
-            core: coreCode,
-            lang: langDataBase64,
-            version: 1,
-            timestamp: Date.now()
-        };
-        await new Promise((resolve, reject) => {
-            const request = store.put(data, CACHE_KEY);
-            request.onsuccess = () => resolve(undefined);
-            request.onerror = () => reject(request.error);
-        });
-        debugLog('[本地OCR] 保存到 IndexedDB 缓存成功');
-    } catch (e) {
-        debugLog('[本地OCR] 保存到 IndexedDB 缓存失败:', e);
-    }
+    await scriptCache.put(CACHE_KEY, {
+        worker: workerCode,
+        core: coreCode,
+        lang: langDataBase64,
+        version: 1,
+        timestamp: Date.now()
+    });
+    debugLog('[本地OCR] 保存到 IndexedDB 缓存完成');
 }
 
 /**

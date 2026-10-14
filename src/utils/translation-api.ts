@@ -30,7 +30,7 @@ const TRANSLATION_CACHE_PERSIST_DEBOUNCE_MS = 5000;
 // 内存缓存上限远高于持久化上限：命中率优先，持久化仅保留最近最热的一部分
 const TRANSLATION_CACHE_MAX = 5000;
 const TRANSLATION_CACHE_PERSIST_MAX = 1000;
-const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan', 'qiniu', 'spark'] as TranslationPlatform[]);
+const AI_BATCH_PLATFORMS = new Set<TranslationPlatform>(['glm', 'deepseek', 'qwen', 'kimi', 'ollama', 'minimax', 'hunyuan', 'qiniu', 'spark', 'utoolsai'] as TranslationPlatform[]);
 const AI_BATCH_SIZE = 20;
 // 非 AI 平台的并发限制；批量回退路径必须保留，否则百度免费版 QPS=1 会被立即触发限流（54003）
 const NON_AI_CONCURRENCY: Record<string, number> = {
@@ -289,6 +289,9 @@ function detectEnvironment(): { isUTools: boolean; isEdge: boolean; isChrome: bo
 export async function speakWithEdgeTTS(word: string, lang?: string): Promise<boolean> {
     try {
         console.log('尝试使用 Edge TTS:', word);
+
+        // 先停掉队列中未播完的语音，避免快速连点时多段叠加
+        window.speechSynthesis.cancel();
 
         const profile = lang ? getProfile(lang) : getActiveProfile();
         const langPrefix = profile.ttsLang.split('-')[0];
@@ -770,6 +773,22 @@ async function requestOpenAiCompatibleBatch(
     return normalizeBatchAiResults(queries, parseBatchAiContent(content), platform);
 }
 
+/**
+ * uTools AI 批量翻译：无需用户配置 Key（消耗用户 uTools AI 能量），一次调用翻译整批
+ */
+async function requestUtoolsAiBatch(queries: string[], from: string, to: string): Promise<TranslationResult[]> {
+    const utoolsApi = (window as any).utools;
+    if (typeof utoolsApi?.ai !== 'function') throw new Error('uTools AI 不可用（需要 uTools 环境）');
+    const result: any = await utoolsApi.ai({
+        messages: [
+            { role: 'system', content: '你是专业翻译助手，必须只返回有效 JSON 数组。' },
+            { role: 'user', content: buildBatchAiPrompt(queries, from, to) },
+        ],
+    });
+    const content = typeof result === 'string' ? result : (result?.content || '');
+    return normalizeBatchAiResults(queries, parseBatchAiContent(content), 'utoolsai');
+}
+
 async function requestOllamaBatch(queries: string[], from: string, to: string): Promise<TranslationResult[]> {
     const {appkey: baseUrl, key: modelName} = getTranslationApiKey('ollama');
     const ollamaUrl = baseUrl || 'http://localhost:11434';
@@ -794,6 +813,8 @@ async function requestOllamaBatch(queries: string[], from: string, to: string): 
 
 async function translateBatchWithAi(queries: string[], platform: TranslationPlatform, from: string, to: string): Promise<TranslationResult[]> {
     if (platform === 'ollama') return requestOllamaBatch(queries, from, to);
+    // uTools AI 无需用户配置 Key（消耗用户 uTools AI 能量），走独立通道
+    if (platform === 'utoolsai') return requestUtoolsAiBatch(queries, from, to);
 
     const {appkey: apiKey, key: modelName} = getTranslationApiKey(platform);
     if (!apiKey) throw new Error(`请先配置${platform} API Key`);

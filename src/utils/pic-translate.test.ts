@@ -4,7 +4,7 @@
  * 覆盖点：
  *  - 有道/百度/阿里/腾讯 四家 OCR 响应解析（以 testdata/ 真实接口样本为基准）
  *  - 各家签名/请求串构造（有道 v3 SHA256、百度 MD5、阿里 HMAC-SHA1、腾讯 TC3-HMAC-SHA256）
- *  - ocrTranslateMultiPlatform 的分支调度、每日次数限制、截图取消/环境错误
+ *  - ocrTranslateMultiPlatform 的分支调度、每日次数限制、截图取消/跨平台选图降级
  *  - ocrTranslateLocal 本地 Tesseract 识别 + 缓存 Worker 复用 + 各错误分支
  *
  * 所有网络（axios/fetch）、uTools API、IndexedDB（fake-indexeddb）、Tesseract Worker 均为 mock。
@@ -30,6 +30,7 @@ const {
   tessMock,
   translateMock,
   dictMock,
+  captureMock,
   storeState,
   platformState,
   langState,
@@ -40,6 +41,7 @@ const {
   tessMock: { createWorker: vi.fn() },
   translateMock: { translateWithPlatform: vi.fn() },
   dictMock: { translateWithLocalDictionaryAsync: vi.fn() },
+  captureMock: { capture: vi.fn() },
   storeState: {
     ocrPlatform: 'baidu' as string,
     translationPlatform: 'local' as string,
@@ -65,6 +67,9 @@ vi.mock('@/stores/words.ts', () => ({
   }),
 }))
 vi.mock('@/adapters/platform', () => ({ isUtools: () => platformState.isUtools }))
+vi.mock('@/adapters/capture', () => ({
+  getCaptureAdapterAsync: async () => captureMock,
+}))
 vi.mock('@/adapters/db', () => ({
   getDbStorage: () => ({
     getItem: (k: string) => (dbStorage.has(k) ? dbStorage.get(k) : null),
@@ -597,6 +602,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
     langState.active = 'en'
     platformState.isUtools = true
     vi.stubGlobal('fetch', fetchMock)
+    captureMock.capture.mockResolvedValue({ base64: HELLO_BASE64 })
     setupUtoolsWindow()
   })
 
@@ -639,7 +645,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
   it('local 平台不记次数：ocr 计数打满仍走到截图流程', async () => {
     storeState.ocrPlatform = 'local'
     localStorageMock.setItem('usage_ocr_counter', JSON.stringify({ date: todayStr(), count: 99 }))
-    setupUtoolsWindow((cb) => cb('')) // 用户取消截图
+    captureMock.capture.mockRejectedValue(new Error('截图取消')) // 用户取消截图
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图取消')
     expect(localStorageMock.getItem('usage_ocr_counter')).not.toBeNull()
@@ -647,7 +653,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
   })
 
   it('截图数据 base64 非法时直接 reject，不发请求也不计次', async () => {
-    setupUtoolsWindow((cb) => cb('data:image/png;base64,%%%不是base64%%%'))
+    captureMock.capture.mockResolvedValue({ base64: '%%%不是base64%%%' })
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图数据格式异常，请重新截图')
     expect(axiosMock.post).not.toHaveBeenCalled()
@@ -655,16 +661,26 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
   })
 
   it('用户取消截图时 reject「截图取消」，且不消耗免费次数', async () => {
-    setupUtoolsWindow((cb) => cb(''))
+    captureMock.capture.mockRejectedValue(new Error('截图取消'))
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图取消')
     expect(localStorageMock.getItem('usage_ocr_counter')).toBeNull() // 取消不计次
   })
 
-  it('非 uTools 环境 reject「截图功能仅在 uTools 环境中可用」', async () => {
+  it('非 uTools 环境走适配器选图降级（不再报环境错误），且不隐藏主窗口', async () => {
     platformState.isUtools = false
+    storeState.apiKeys.baidu = { appkey: 'my-ak', key: 'my-sk' }
+    axiosMock.post.mockResolvedValue({
+      data: {
+        data: { content: [{ rect: '0 0 1 1', src: 'hello', dst: '你好' }] },
+      },
+    })
 
-    await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图功能仅在 uTools 环境中可用')
+    const result = await ocrTranslateMultiPlatform()
+
+    expect(result.errorCode).toBe('0')
+    expect(captureMock.capture).toHaveBeenCalled()
+    expect(((globalThis as any).window.utools.hideMainWindow as any)).not.toHaveBeenCalled()
   })
 
   it('youdao 分支：走 axios 并原样返回响应', async () => {

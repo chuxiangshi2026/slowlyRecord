@@ -139,6 +139,10 @@
       text-align: center;
       user-select: none;
       transition: color 0.3s ease;
+      /* 长词换行而非溢出裁剪 */
+      max-width: 96%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     /* 音标显示（位于单词下方，听写模式不显示以免剧透） */
@@ -151,6 +155,7 @@
       margin-bottom: 2px;
       min-height: 14px;
       line-height: 14px;
+      overflow-wrap: anywhere;
     }
 
     .phonetic:empty {
@@ -312,6 +317,11 @@
       user-select: none;
       opacity: 0.86;
       transition: color 0.3s ease;
+      /* 长释义限高内部滚动，避免被窗口裁剪；no-drag 保证滚动条可拖 */
+      max-height: 45%;
+      overflow-y: auto;
+      padding: 0 4px;
+      -webkit-app-region: no-drag;
     }
 
     .actions {
@@ -1124,9 +1134,9 @@
       <span class="icon" id="btn-auto-pause" title="暂停自动播放" style="display:none">
         <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
       </span>
-      <!-- 忘记 -->
-      <span class="icon icon-forgot" id="btn-forgot" title="忘记">
-        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      <!-- 忘记（圆形箭头寓意重来，避免垃圾桶图标被误解为删除） -->
+      <span class="icon icon-forgot" id="btn-forgot" title="忘记（降 4 级重新复习）">
+        <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
       </span>
       <!-- 认识 -->
       <span class="icon icon-remember" id="btn-remember" title="认识">
@@ -1901,12 +1911,15 @@
       if (!word) return;
 
       var wasReview = !!word.isReview;
+      var oldLevel = word.level || 1;
       // 与 srs.ts computeLevelDown 统一：降级封顶 -4，下限 1（原来是固定 -1）
       word.level = Math.max(1, (word.level || 1) - 4);
       word.remember = false;
       word.isReview = true;
       // 原本不在待复习队列（如在"已复习"列表中答错），计数加一
       if (!wasReview) adjustPendingReviewCount(1);
+      // 操作可见性：词条可能因列表筛选从视图移除，提示其去向（等级变化）而非静默消失
+      showToast('已标记忘记，等级 ' + oldLevel + '→' + word.level);
 
       // 保存到旧数据库（兼容；putWithRetry 处理父/子窗口并发写同一单词的 _rev 冲突）
       if (typeof utools !== 'undefined') putWithRetry(word);
