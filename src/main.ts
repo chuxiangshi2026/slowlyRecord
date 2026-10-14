@@ -20,7 +20,9 @@ import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
-import { initBaiduStats, trackRouterPageView } from '@/utils/baidu-stats'
+import { initStats, trackRouterPageView, trackError, initErrorTracking } from '@/utils/stats'
+import { registerScheduleTriggerHandler } from '@/utils/schedule-reminder'
+import { useWordsStore } from '@/stores/words'
 import {getDbAdapterAsync} from '@/adapters/db'
 
 const app = createApp(App)
@@ -111,13 +113,33 @@ app.use(pinia)
 app.use(router)
 app.use(VueVirtualScroller)
 
-// 初始化百度统计
-console.log('[App] 准备初始化百度统计...');
-initBaiduStats().then(() => {
-  console.log('[App] 百度统计初始化流程完成');
-}).catch((err) => {
-  console.error('[App] 百度统计初始化失败:', err);
+// 初始化使用统计（umami，file:// 插件页可用）
+initStats().catch((err) => {
+  console.error('[App] 统计初始化失败:', err);
 });
+
+// 全局异常捕获 → umami bug.error 事件（去重、截断，不含用户数据；跟随统计开关）
+// catch 兜底：上报自身异常绝不外抛，避免被自己的全局监听器接住形成循环
+app.config.errorHandler = (err) => {
+  trackError('vue', err).catch(() => {});
+};
+initErrorTracking();
+
+// uTools 8.0+ 定时任务触发回调（定时复习/防断签提醒）：
+// 触发时插件可能未运行、由 Runtime 冷启动唤起，必须尽早注册；
+// 低版本无 API 时内部静默跳过
+registerScheduleTriggerHandler();
+
+// uTools 账号同步：其他设备的数据经云端拉取到本机后，刷新内存中的词列表（避免陈旧数据窗口）。
+// 非 uTools 环境无此 API，feature-detect 自然跳过；store 在回调触发时 Pinia 已就绪
+{
+  const utoolsApi = (window as any).utools;
+  if (typeof utoolsApi?.onDbPull === 'function') {
+    utoolsApi.onDbPull(() => {
+      useWordsStore().listWords().catch((e: unknown) => console.error('[数据同步] 拉取后刷新词列表失败:', e));
+    });
+  }
+}
 
 // 路由切换时追踪页面浏览
 router.afterEach((to) => {
