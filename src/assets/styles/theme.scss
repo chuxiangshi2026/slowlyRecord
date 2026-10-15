@@ -559,18 +559,12 @@ body.has-app-bg {
     background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim, 0.6));
   }
 
-  // 亚克力：头部细条 + 卡片表面挂毛玻璃（可感知的雾面主要落在卡片上，只挂头部几乎看不出）。
-  // 仍不给 el-main 滚动容器挂 blur：整屏区域的 backdrop-filter 每帧都要对全屏背景做模糊采样；
-  // 卡片粒度采样面积相近但 Chromium 可按屏外剔除，且背景图在列表就绪后才挂载（见 applyAppBg），
-  // 首屏渲染爆发期不背合成开销
-  &.app-bg-acrylic {
-    .common-layout .el-header {
-      backdrop-filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
-      -webkit-backdrop-filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
-    }
-    .card-page, .list-item, .setting {
-      backdrop-filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
-      -webkit-backdrop-filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
-    }
+  // 亚克力（整体磨砂）：直接模糊背景图片层本身，而不是给各表面挂 backdrop-filter——
+  // 图片层是静态层，blur 只在合成时算一次；卡片/头部/主区/底栏等所有半透明表面
+  // 透出的是同一张模糊图，观感天然一致（各挂 backdrop-filter 反而卡片糊、缝隙清晰，观感断裂，
+  // 且滚动时每帧都要重新采样）。放大 5% 避免模糊在视口边缘留出虚化白边
+  &.app-bg-acrylic::before {
+    filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
+    transform: scale(1.05);
   }
 }
