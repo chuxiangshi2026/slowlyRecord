@@ -1,4 +1,4 @@
-import {computed, type Ref, ref, watch} from "vue";
+import {computed, nextTick, type Ref, ref, watch} from "vue";
 import type {MemoryFirmnessType, OcrPlatform, TranslationPlatform, TranslationResult, Word} from "@/types/words";
 import {defineStore} from "pinia";
 // import {parse, stringify} from 'zipson'
@@ -443,7 +443,7 @@ export const useWordsStore =
              * 应用界面背景到 DOM：写 CSS 变量（--app-bg-image/--app-bg-scrim）与 body class
              * （has-app-bg/app-bg-acrylic），样式规则见 theme.scss。
              * custom 预设的图片从 app-bg-image 文档同步读取；图丢失（如换机未同步）时回退为无背景。
-             * 图片先 decode 再挂载：大图解码若与首屏争抢主线程，会出现「先出背景图、列表内容延迟」
+             * 首屏挂载推迟到列表首次就绪后（解码并行），避免「先出图片、后出列表」的空窗
              */
             async function applyAppBg() {
                 if (typeof document === 'undefined' || !document.body) return;
@@ -467,12 +467,21 @@ export const useWordsStore =
                     root.style.removeProperty('--app-bg-acrylic-blur');
                     return;
                 }
-                try {
-                    const img = new Image();
-                    img.src = url;
-                    await img.decode();
-                } catch { /* 解码失败也照常应用，交给浏览器兜底 */ }
+                // 解码与首屏并行：等「列表首次就绪」（超时兜底 1.5s）且图片解码完成后再挂载背景。
+                // 列表渲染爆发期不背全屏图片层的合成开销，也让列表先出来，避免「先出图片、后出列表」；
+                // 非首屏的后续调用信号早已 resolve，零延迟
+                const decoding = (async () => {
+                    try {
+                        const img = new Image();
+                        img.src = url;
+                        await img.decode();
+                    } catch { /* 解码失败也照常应用，交给浏览器兜底 */ }
+                })();
+                await Promise.race([_firstListReady, new Promise(r => setTimeout(r, 1500))]);
+                await nextTick(); // 等列表 DOM 提交
                 if (seq !== appBgApplySeq) return; // 已有更新的应用请求，丢弃过期结果
+                await decoding;
+                if (seq !== appBgApplySeq) return;
                 root.style.setProperty('--app-bg-image', `url("${url}")`);
                 root.style.setProperty('--app-bg-scrim', String(Math.max(0, Math.min(1, scrim))));
                 root.style.setProperty('--app-bg-acrylic-blur', `${Math.max(0, Math.min(60, acrylicBlur || 18))}px`);
@@ -661,6 +670,11 @@ export const useWordsStore =
 
             let _listWordsPromise: Promise<Word[]> | null = null;
 
+            // 首屏列表就绪信号：背景图等列表出来后再挂载（见 applyAppBg），成败都要 resolve 兜底
+            let _resolveFirstList: (() => void) | null = null;
+            const _firstListReady = new Promise<void>(r => { _resolveFirstList = r; });
+            const _markFirstListReady = () => { _resolveFirstList?.(); _resolveFirstList = null; };
+
             /**
              *获取全部单词
              * 并发去重：入口 updateReview 与页面 onMounted 常同时触发，
@@ -695,6 +709,7 @@ export const useWordsStore =
                     await upReview()
 
                     console.info(`[启动耗时] 单词列表就绪: ${performance.now().toFixed(0)}ms（${words.value.length} 词）`)
+                    _markFirstListReady();
 
                     // 后台清理旧的逐词遗留文档（不阻塞加载）
                     cleanupLegacyPerWordDocs().catch(e => log.e('清理遗留文档失败', e))
@@ -703,6 +718,7 @@ export const useWordsStore =
                   } catch (e) {
                     // 调用方（App.vue / Word.vue 多处）未接 catch，这里兜底返回现状
                     log.e('加载单词列表失败', e)
+                    _markFirstListReady();
                     return words.value
                   }
                 })();

@@ -36,10 +36,10 @@
         </div>
       </div>
       <div class="setting-item" v-if="wordsStore.appBg.preset">
-        <div class="content">背景浓度（越高越接近纯色底）</div>
+        <div class="content">背景浓度（越低越透，越高越接近纯色底）</div>
         <el-slider class="shorcut-desc" style="width: 140px;"
                    :model-value="Math.round(wordsStore.appBg.scrim * 100)"
-                   :min="30" :max="100" :step="5" :show-tooltip="false"
+                   :min="10" :max="90" :step="5" :show-tooltip="false"
                    @update:model-value="(v: number | number[]) => wordsStore.setAppBg({scrim: (Array.isArray(v) ? v[0] : v) / 100})"/>
       </div>
       <div class="setting-item" v-if="wordsStore.appBg.preset">
