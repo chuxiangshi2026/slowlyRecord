@@ -32,7 +32,7 @@ const mock = vi.hoisted(() => {
 vi.mock('@/adapters/db', () => ({ getDbAdapter: () => mock.db }))
 vi.mock('@/utils/logger', () => ({ log: { i: vi.fn(), w: vi.fn(), d: vi.fn(), e: vi.fn() } }))
 
-import { getAppBgImage, saveAppBgImage, removeAppBgImage, APP_BG_DOC_ID } from '@/utils/app-bg-db'
+import { getAppBgImage, saveAppBgImage, removeAppBgImage, invalidateAppBgImageCache, APP_BG_DOC_ID } from '@/utils/app-bg-db'
 
 describe('app-bg-db（界面背景图存取）', () => {
   beforeEach(() => {
@@ -61,5 +61,16 @@ describe('app-bg-db（界面背景图存取）', () => {
     removeAppBgImage()
     expect(getAppBgImage()).toBe('')
     expect(() => removeAppBgImage()).not.toThrow()
+  })
+
+  it('进程内缓存：重复读取不再查库，失效后重新查库', async () => {
+    await saveAppBgImage('data:image/jpeg;base64,a')
+    const spy = vi.spyOn(mock.db, 'allDocs')
+    getAppBgImage()
+    getAppBgImage()
+    expect(spy).not.toHaveBeenCalled()
+    invalidateAppBgImageCache()
+    expect(getAppBgImage()).toBe('data:image/jpeg;base64,a')
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 })

@@ -17,15 +17,26 @@ interface AppBgDoc {
   updatedAt: number;
 }
 
-/** 读取自定义背景图 dataURL（无图或读取失败返回空串） */
+// 进程内缓存：几百 KB 的 dataURL 每次经 utools.db 同步 IPC / IndexedDB 全量读都不划算，
+// 插件驻留期间多次进入只读一次；保存/删除时同步缓存，外部变更（云端拉取）经 invalidate 失效
+let _imageCache: string | null = null;
+
+/** 读取自定义背景图 dataURL（无图或读取失败返回空串；进程内缓存） */
 export function getAppBgImage(): string {
+  if (_imageCache !== null) return _imageCache;
   try {
     const docs = getDbAdapter().allDocs(APP_BG_DOC_ID) as unknown as AppBgDoc[]
-    return docs.find(d => d?._id === APP_BG_DOC_ID)?.image || ''
+    _imageCache = docs.find(d => d?._id === APP_BG_DOC_ID)?.image || ''
   } catch (e) {
     log.w('[背景图] 读取失败:', e)
     return ''
   }
+  return _imageCache
+}
+
+/** 缓存失效（uTools 账号同步从云端拉取到其他设备的变更后调用） */
+export function invalidateAppBgImageCache(): void {
+  _imageCache = null
 }
 
 /** 保存自定义背景图（固定 _id，带 _rev 冲突重试） */
@@ -41,7 +52,10 @@ export async function saveAppBgImage(image: string): Promise<boolean> {
         image,
         updatedAt: Date.now(),
       })
-      if (result?.ok) return true
+      if (result?.ok) {
+        _imageCache = image
+        return true
+      }
       log.e('[背景图] 保存失败:', result?.message)
     } catch (e) {
       log.e('[背景图] 保存异常:', e)
@@ -54,14 +68,15 @@ export async function saveAppBgImage(image: string): Promise<boolean> {
 export function removeAppBgImage(): void {
   try {
     getDbAdapter().remove(APP_BG_DOC_ID)
+    _imageCache = ''
   } catch (e) {
     log.w('[背景图] 删除失败:', e)
   }
 }
 
 /**
- * 把用户选择的图片文件压缩为 JPEG dataURL（最长边 1600px，质量 0.72，约 200~400KB）
- * 非图片或解码失败时 reject，由调用方提示
+ * 把用户选择的图片文件压缩为 WebP dataURL（最长边 1600px，质量 0.72，约 150~300KB；
+ * 个别老内核不支持 WebP 编码时回退 JPEG）。非图片或解码失败时 reject，由调用方提示
  */
 export function fileToCompressedDataUrl(file: File, maxEdge = 1600, quality = 0.72): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -83,7 +98,9 @@ export function fileToCompressedDataUrl(file: File, maxEdge = 1600, quality = 0.
         if (!ctx) throw new Error('canvas 2d context unavailable')
         ctx.drawImage(img, 0, 0, w, h)
         URL.revokeObjectURL(url)
-        resolve(canvas.toDataURL('image/jpeg', quality))
+        // 全目标平台均为 Chromium，WebP 编解码都可用；极少数老内核编码失败（返回 png/jpeg 兜底格式）时回退 JPEG
+        const webp = canvas.toDataURL('image/webp', quality)
+        resolve(webp.startsWith('data:image/webp') ? webp : canvas.toDataURL('image/jpeg', quality))
       } catch (e) {
         URL.revokeObjectURL(url)
         reject(e)

@@ -24,6 +24,7 @@ import { initStats, trackRouterPageView, trackError, initErrorTracking } from '@
 import { registerScheduleTriggerHandler } from '@/utils/schedule-reminder'
 import { useWordsStore } from '@/stores/words'
 import {getDbAdapterAsync} from '@/adapters/db'
+import {invalidateAppBgImageCache} from '@/utils/app-bg-db'
 
 const app = createApp(App)
 
@@ -136,6 +137,9 @@ registerScheduleTriggerHandler();
   const utoolsApi = (window as any).utools;
   if (typeof utoolsApi?.onDbPull === 'function') {
     utoolsApi.onDbPull(() => {
+      // 背景图进程内缓存同步失效并重应用（其他设备可能改了/删了自定义图）
+      invalidateAppBgImageCache();
+      void useWordsStore().applyAppBg();
       useWordsStore().listWords().catch((e: unknown) => console.error('[数据同步] 拉取后刷新词列表失败:', e));
     });
   }
