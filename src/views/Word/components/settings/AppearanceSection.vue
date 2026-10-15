@@ -53,11 +53,18 @@
                    @update:model-value="(v: string | number | boolean | undefined) => wordsStore.setAppBg({acrylic: !!v})"/>
       </div>
       <div class="setting-item" v-if="wordsStore.appBg.preset && wordsStore.appBg.acrylic">
-        <div class="content">亚克力强度（模糊半径）</div>
+        <div class="content">背景模糊（整张背景图）</div>
         <el-slider class="shorcut-desc" style="width: 140px;"
                    :model-value="wordsStore.appBg.acrylicBlur"
                    :min="0" :max="40" :step="2" :show-tooltip="false"
                    @update:model-value="(v: number | number[]) => wordsStore.setAppBg({acrylicBlur: Array.isArray(v) ? v[0] : v})"/>
+      </div>
+      <div class="setting-item" v-if="wordsStore.appBg.preset && wordsStore.appBg.acrylic">
+        <div class="content">列表模糊（卡片额外加深）</div>
+        <el-slider class="shorcut-desc" style="width: 140px;"
+                   :model-value="wordsStore.appBg.cardBlur"
+                   :min="0" :max="40" :step="2" :show-tooltip="false"
+                   @update:model-value="(v: number | number[]) => wordsStore.setAppBg({cardBlur: Array.isArray(v) ? v[0] : v})"/>
       </div>
     </div>
 

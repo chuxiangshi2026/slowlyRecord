@@ -567,4 +567,14 @@ body.has-app-bg {
     filter: blur(var(--app-bg-acrylic-blur, 18px)) saturate(1.3);
     transform: scale(1.05);
   }
+
+  // 列表/卡片额外模糊（在已模糊的背景图上再叠一层）：列表区域比缝隙更糊，层次更柔。
+  // 这是动态 backdrop-filter（滚动时每帧采样），成本随可见卡片数（虚拟滚动下仅十余张）；
+  // cardBlur 为 0 或亚克力关闭时 store 不挂此类，零开销
+  &.app-bg-card-blur .card-page,
+  &.app-bg-card-blur .list-item,
+  &.app-bg-card-blur .setting {
+    backdrop-filter: blur(var(--app-bg-card-blur, 12px));
+    -webkit-backdrop-filter: blur(var(--app-bg-card-blur, 12px));
+  }
 }

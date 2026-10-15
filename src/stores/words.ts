@@ -145,11 +145,12 @@ export const useWordsStore =
             const eyeCare = ref(true);
             // 新词加入目标词库：current=当前词库（缺省），default=默认词库
             const addWordTarget = ref<'current' | 'default'>('current');
-            // 主界面背景：preset='' 无 / 'custom' 自定义图 / 预设标识；scrim=遮罩浓度；acrylic=框架件毛玻璃；
-            // acrylicBlur=毛玻璃模糊半径 px。图片本体存 app-bg-image 独立文档（app-bg-db.ts），不进 user-set、不参与同步
+            // 主界面背景：preset='' 无 / 'custom' 自定义图 / 预设标识；scrim=遮罩浓度；acrylic=毛玻璃总开关；
+            // acrylicBlur=背景图片层模糊半径 px（整体磨砂）；cardBlur=卡片/列表叠加模糊半径 px（比背景更糊一层）。
+            // 图片本体存 app-bg-image 独立文档（app-bg-db.ts），不进 user-set、不参与同步
             // scrim 默认 0.6：亮/暗两个主题下背景都能明显透出（0.85 在暗色主题下近似全黑）
-            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18 });
-            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number }>(defaultAppBg());
+            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12 });
+            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number }>(defaultAppBg());
             // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
             // review/signin 默认开（升级后首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
             const defaultScheduleReminder = () => ({ review: true, signin: true, sync: false });
@@ -448,7 +449,7 @@ export const useWordsStore =
             async function applyAppBg() {
                 if (typeof document === 'undefined' || !document.body) return;
                 const seq = ++appBgApplySeq;
-                const {preset, scrim, acrylic, acrylicBlur} = appBg.value;
+                const {preset, scrim, acrylic, acrylicBlur, cardBlur} = appBg.value;
                 let url = '';
                 if (preset === 'custom') {
                     url = getAppBgImage();
@@ -461,10 +462,11 @@ export const useWordsStore =
                 const root = document.documentElement;
                 const body = document.body;
                 if (!url) {
-                    body.classList.remove('has-app-bg', 'app-bg-acrylic');
+                    body.classList.remove('has-app-bg', 'app-bg-acrylic', 'app-bg-card-blur');
                     root.style.removeProperty('--app-bg-image');
                     root.style.removeProperty('--app-bg-scrim');
                     root.style.removeProperty('--app-bg-acrylic-blur');
+                    root.style.removeProperty('--app-bg-card-blur');
                     return;
                 }
                 // 解码与首屏并行：等「列表首次就绪」（超时兜底 1.5s）且图片解码完成后再挂载背景。
@@ -484,16 +486,21 @@ export const useWordsStore =
                 if (seq !== appBgApplySeq) return;
                 root.style.setProperty('--app-bg-image', `url("${url}")`);
                 root.style.setProperty('--app-bg-scrim', String(Math.max(0, Math.min(1, scrim))));
-                root.style.setProperty('--app-bg-acrylic-blur', `${Math.max(0, Math.min(60, acrylicBlur || 18))}px`);
+                // 用 ?? 而非 ||：滑杆拉到 0 是合法值（关闭该层模糊），不能被默认值吞掉
+                root.style.setProperty('--app-bg-acrylic-blur', `${Math.max(0, Math.min(60, acrylicBlur ?? 18))}px`);
+                const cardBlurPx = Math.max(0, Math.min(60, cardBlur ?? 12));
+                root.style.setProperty('--app-bg-card-blur', `${cardBlurPx}px`);
                 body.classList.add('has-app-bg');
                 body.classList.toggle('app-bg-acrylic', acrylic);
+                // 卡片叠加模糊是动态 backdrop-filter（滚动时每帧采样），为 0 时不挂类，零开销
+                body.classList.toggle('app-bg-card-blur', acrylic && cardBlurPx > 0);
             }
 
             /**
              * 设置界面背景（部分更新）：应用到 DOM 并把轻量标志位持久化到 user-set
              * （图片本体不在此，见 app-bg-db.ts）
              */
-            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number }>) {
+            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number }>) {
                 appBg.value = {...appBg.value, ...partial};
                 applyAppBg();
                 try {
