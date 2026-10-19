@@ -76,6 +76,22 @@
               <span class="focus-style-value">{{ focusBackgroundOpacityPercent }}%</span>
             </div>
           </div>
+          <div class="focus-style-row">
+            <span class="focus-style-label">背景模糊</span>
+            <div class="focus-style-control">
+              <el-slider
+                  v-model="focusBackgroundBlur"
+                  :min="0"
+                  :max="40"
+                  :step="2"
+                  :show-tooltip="false"
+                  style="flex: 1;"
+                  :disabled="!wordsStore.focusMode.backgroundImage"
+                  @change="onFocusBackgroundBlurChange"
+              />
+              <span class="focus-style-value">{{ focusBackgroundBlur > 0 ? focusBackgroundBlur + 'px' : '关' }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -138,6 +154,17 @@ const onFocusExplainFontSizeChange = (val: number) => {
 
 const onFocusBackgroundOpacityChange = (val: number) => {
   wordsStore.setFocusMode({ backgroundImageOpacity: clampNumber(val / 100, 0, 1, 0.35) })
+}
+
+const focusBackgroundBlur = computed({
+  get: () => clampNumber(wordsStore.focusMode.backgroundImageBlur ?? 0, 0, 40, 0),
+  set: (val: number) => {
+    wordsStore.setFocusMode({ backgroundImageBlur: clampNumber(val, 0, 40, 0) })
+  }
+})
+
+const onFocusBackgroundBlurChange = (val: number) => {
+  wordsStore.setFocusMode({ backgroundImageBlur: clampNumber(val, 0, 40, 0) })
 }
 
 const triggerFocusBackgroundImport = () => {

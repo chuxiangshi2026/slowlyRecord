@@ -121,6 +121,13 @@
       opacity: 0;
     }
 
+    /* 背景模糊（亚克力）：静态背景图层整体模糊，只在光栅化时算一次，滚动零额外成本；
+       saturate 补偿模糊后的发灰，scale 放大 8% 吃掉模糊在窗口边缘留出的虚化边 */
+    .focus-container.bg-blur::before {
+      filter: blur(var(--focus-bg-blur, 0px)) saturate(1.25);
+      transform: scale(1.08);
+    }
+
     .focus-container > * {
       position: relative;
       z-index: 1;
@@ -780,11 +787,13 @@
     }
 
     /* 无背景图时禁用"图透明"滑条，避免与左下角窗口透明度混淆 */
-    .style-row input[type="range"]#style-bg-opacity:disabled {
+    .style-row input[type="range"]#style-bg-opacity:disabled,
+    .style-row input[type="range"]#style-bg-blur:disabled {
       opacity: 0.35;
       cursor: not-allowed;
     }
-    .style-row input[type="range"]#style-bg-opacity:disabled + .style-value {
+    .style-row input[type="range"]#style-bg-opacity:disabled + .style-value,
+    .style-row input[type="range"]#style-bg-blur:disabled + .style-value {
       opacity: 0.35;
     }
 
@@ -1220,6 +1229,11 @@
         <input type="range" id="style-bg-opacity" min="0" max="100" value="35">
         <span class="style-value" id="style-bg-opacity-value">35%</span>
       </div>
+      <div class="style-row">
+        <label>图模糊</label>
+        <input type="range" id="style-bg-blur" min="0" max="40" value="0">
+        <span class="style-value" id="style-bg-blur-value">关</span>
+      </div>
     </div>
 
     <!-- 返回列表 -->
@@ -1259,6 +1273,7 @@
       textFontSize: 16,
       backgroundImage: '',
       backgroundImageOpacity: 0.35,
+      backgroundImageBlur: 0,
     };
     let currentStyleSettings = { ...DEFAULT_FOCUS_STYLE };
 
@@ -3203,20 +3218,24 @@
       var explainFontSizeInput = document.getElementById('style-explain-font-size');
       var textFontSizeInput = document.getElementById('style-text-font-size');
       var bgOpacityInput = document.getElementById('style-bg-opacity');
+      var bgBlurInput = document.getElementById('style-bg-blur');
       var fontSizeValue = document.getElementById('style-font-size-value');
       var explainFontSizeValue = document.getElementById('style-explain-font-size-value');
       var textFontSizeValue = document.getElementById('style-text-font-size-value');
       var bgOpacityValue = document.getElementById('style-bg-opacity-value');
+      var bgBlurValue = document.getElementById('style-bg-blur-value');
 
       if (fontColorInput) fontColorInput.value = currentStyleSettings.fontColor || getThemeDefaultFontColor();
       if (fontSizeInput) fontSizeInput.value = String(currentStyleSettings.fontSize);
       if (explainFontSizeInput) explainFontSizeInput.value = String(currentStyleSettings.explainFontSize);
       if (textFontSizeInput) textFontSizeInput.value = String(currentStyleSettings.textFontSize);
       if (bgOpacityInput) bgOpacityInput.value = String(Math.round(currentStyleSettings.backgroundImageOpacity * 100));
+      if (bgBlurInput) bgBlurInput.value = String(currentStyleSettings.backgroundImageBlur || 0);
       if (fontSizeValue) fontSizeValue.textContent = currentStyleSettings.fontSize + 'px';
       if (explainFontSizeValue) explainFontSizeValue.textContent = currentStyleSettings.explainFontSize + 'px';
       if (textFontSizeValue) textFontSizeValue.textContent = currentStyleSettings.textFontSize + 'px';
       if (bgOpacityValue) bgOpacityValue.textContent = Math.round(currentStyleSettings.backgroundImageOpacity * 100) + '%';
+      if (bgBlurValue) bgBlurValue.textContent = currentStyleSettings.backgroundImageBlur > 0 ? currentStyleSettings.backgroundImageBlur + 'px' : '关';
     }
 
     function applyFocusStyleSettings(settings) {
@@ -3227,6 +3246,7 @@
         textFontSize: clampNumber(settings.textFontSize, 12, 32, DEFAULT_FOCUS_STYLE.textFontSize),
         backgroundImage: typeof settings.backgroundImage === 'string' ? settings.backgroundImage : DEFAULT_FOCUS_STYLE.backgroundImage,
         backgroundImageOpacity: clampNumber(settings.backgroundImageOpacity, 0, 1, DEFAULT_FOCUS_STYLE.backgroundImageOpacity),
+        backgroundImageBlur: clampNumber(settings.backgroundImageBlur, 0, 40, DEFAULT_FOCUS_STYLE.backgroundImageBlur),
       };
       currentStyleSettings = next;
 
@@ -3236,14 +3256,19 @@
       document.documentElement.style.setProperty('--focus-text-font-size', next.textFontSize + 'px');
       document.documentElement.style.setProperty('--focus-bg-image-opacity', String(next.backgroundImageOpacity));
       document.documentElement.style.setProperty('--focus-bg-image', next.backgroundImage ? 'url("' + escapeCssUrl(next.backgroundImage) + '")' : 'none');
+      document.documentElement.style.setProperty('--focus-bg-blur', next.backgroundImageBlur + 'px');
 
       var appContainer = document.getElementById('app');
       if (appContainer) {
         appContainer.dataset.hasBg = next.backgroundImage ? 'true' : 'false';
+        // 模糊半径 0 时不挂类，::before 保持无 filter，零合成开销
+        appContainer.classList.toggle('bg-blur', next.backgroundImageBlur > 0);
       }
-      // 无背景图时禁用"图透明"滑条（仅调背景图层透明度，与左下角窗口透明度区分）
+      // 无背景图时禁用"图透明/图模糊"滑条（仅调背景图层，与左下角窗口透明度区分）
       var bgOpacityInput = document.getElementById('style-bg-opacity');
       if (bgOpacityInput) bgOpacityInput.disabled = !next.backgroundImage;
+      var bgBlurInput = document.getElementById('style-bg-blur');
+      if (bgBlurInput) bgBlurInput.disabled = !next.backgroundImage;
       syncStyleControls();
     }
     // 暴露给父窗口直接调用（与 updateEdgeStuckState 同机制）
@@ -3322,6 +3347,12 @@
       if (bgOpacityInput) {
         bgOpacityInput.addEventListener('input', function(e) {
           updateFocusStyleSetting('backgroundImageOpacity', clampNumber(e.target.value, 0, 100, 35) / 100);
+        });
+      }
+      var bgBlurInput = document.getElementById('style-bg-blur');
+      if (bgBlurInput) {
+        bgBlurInput.addEventListener('input', function(e) {
+          updateFocusStyleSetting('backgroundImageBlur', clampNumber(e.target.value, 0, 40, 0));
         });
       }
       // 自动下一个开关 / 发音遍数

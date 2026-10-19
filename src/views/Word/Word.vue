@@ -1222,6 +1222,7 @@ function pushFocusStyleToChild() {
     explainFontSize: fm.explainFontSize,
     backgroundImage: fm.backgroundImage || '',
     backgroundImageOpacity: fm.backgroundImageOpacity,
+    backgroundImageBlur: fm.backgroundImageBlur ?? 0,
   });
 
   focusWindow.webContents.executeJavaScript(

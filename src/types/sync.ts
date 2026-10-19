@@ -50,6 +50,7 @@ export interface SyncUserSettings {
     explainFontSize?: number
     backgroundImage?: string
     backgroundImageOpacity?: number
+    backgroundImageBlur?: number
   }
   /** 以下为显示类设置，后补字段（旧端同步数据可能缺省） */
   autoSpeak?: boolean

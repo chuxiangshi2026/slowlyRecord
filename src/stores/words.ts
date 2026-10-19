@@ -43,6 +43,7 @@ const defaultFocusMode: FocusModeSettings = {
     explainFontSize: 11,
     backgroundImage: '',
     backgroundImageOpacity: 0.35,
+    backgroundImageBlur: 0,
 };
 
 export const useWordsStore =

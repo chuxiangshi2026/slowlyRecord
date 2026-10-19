@@ -150,7 +150,8 @@ describe('useWordsStore', () => {
         fontSize: 20,
         explainFontSize: 11,
         backgroundImage: '',
-        backgroundImageOpacity: 0.35
+        backgroundImageOpacity: 0.35,
+        backgroundImageBlur: 0
       })
       expect(store.lastVisitedPage).toBe('')
       expect(store.hiddenExplain).toBe('')
