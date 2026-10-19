@@ -146,11 +146,12 @@ export const useWordsStore =
             // 新词加入目标词库：current=当前词库（缺省），default=默认词库
             const addWordTarget = ref<'current' | 'default'>('current');
             // 主界面背景：preset='' 无 / 'custom' 自定义图 / 预设标识；scrim=遮罩浓度；acrylic=毛玻璃总开关；
-            // acrylicBlur=背景图片层模糊半径 px（整体磨砂）；cardBlur=卡片/列表叠加模糊半径 px（比背景更糊一层）。
+            // acrylicBlur=背景图片层模糊半径 px（整体磨砂）；cardBlur=卡片/列表叠加模糊半径 px（比背景更糊一层）；
+            // headerEffect/footerEffect=透明与亚克力是否作用于页头/底栏（默认开，关闭后对应区域回落实底色）。
             // 图片本体存 app-bg-image 独立文档（app-bg-db.ts），不进 user-set、不参与同步
             // scrim 默认 0.6：亮/暗两个主题下背景都能明显透出（0.85 在暗色主题下近似全黑）
-            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12 });
-            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number }>(defaultAppBg());
+            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true });
+            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean }>(defaultAppBg());
             // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
             // review/signin 默认开（升级后首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
             const defaultScheduleReminder = () => ({ review: true, signin: true, sync: false });
@@ -449,7 +450,7 @@ export const useWordsStore =
             async function applyAppBg() {
                 if (typeof document === 'undefined' || !document.body) return;
                 const seq = ++appBgApplySeq;
-                const {preset, scrim, acrylic, acrylicBlur, cardBlur} = appBg.value;
+                const {preset, scrim, acrylic, acrylicBlur, cardBlur, headerEffect, footerEffect} = appBg.value;
                 let url = '';
                 if (preset === 'custom') {
                     url = getAppBgImage();
@@ -462,7 +463,7 @@ export const useWordsStore =
                 const root = document.documentElement;
                 const body = document.body;
                 if (!url) {
-                    body.classList.remove('has-app-bg', 'app-bg-acrylic', 'app-bg-card-blur');
+                    body.classList.remove('has-app-bg', 'app-bg-acrylic', 'app-bg-card-blur', 'app-bg-header-off', 'app-bg-footer-off');
                     root.style.removeProperty('--app-bg-image');
                     root.style.removeProperty('--app-bg-scrim');
                     root.style.removeProperty('--app-bg-acrylic-blur');
@@ -494,13 +495,16 @@ export const useWordsStore =
                 body.classList.toggle('app-bg-acrylic', acrylic);
                 // 卡片叠加模糊是动态 backdrop-filter（滚动时每帧采样），为 0 时不挂类，零开销
                 body.classList.toggle('app-bg-card-blur', acrylic && cardBlurPx > 0);
+                // 页头/底栏效果开关：关闭时挂 off 类，theme.scss 对应区域回落实底色
+                body.classList.toggle('app-bg-header-off', !headerEffect);
+                body.classList.toggle('app-bg-footer-off', !footerEffect);
             }
 
             /**
              * 设置界面背景（部分更新）：应用到 DOM 并把轻量标志位持久化到 user-set
              * （图片本体不在此，见 app-bg-db.ts）
              */
-            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number }>) {
+            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean }>) {
                 appBg.value = {...appBg.value, ...partial};
                 applyAppBg();
                 try {

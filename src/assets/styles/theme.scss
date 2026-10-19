@@ -554,9 +554,20 @@ body.has-app-bg {
     background: transparent;
   }
 
-  // 头部引用的是 --utools-bg-primary（body 底色需保持实底兜底，未纳入重定义），单独罩
-  .common-layout .el-header {
-    background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim, 0.6));
+  // 头部引用的是 --utools-bg-primary（body 底色需保持实底兜底，未纳入重定义），单独罩；
+  // AppHeader 内层 .app-header 自带实底背景（scoped），同样按浓度放开——透明与亚克力随之生效。
+  // 「页头应用效果」关闭（app-bg-header-off）时不罩，保留原实底
+  &:not(.app-bg-header-off) {
+    .common-layout .el-header,
+    .app-header {
+      background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim, 0.6));
+    }
+  }
+
+  // 底栏（.home_footer）默认引用 --utools-bg-card，已随上方重定义变半透明；
+  // 「页尾应用效果」关闭（app-bg-footer-off）时回落实底卡片色
+  &.app-bg-footer-off .home_footer {
+    background-color: rgb(var(--utools-bg-card-rgb));
   }
 
   // 亚克力（整体磨砂）：直接模糊背景图片层本身，而不是给各表面挂 backdrop-filter——

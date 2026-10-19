@@ -66,6 +66,26 @@
                    :min="0" :max="40" :step="2" :show-tooltip="false"
                    @update:model-value="(v: number | number[]) => wordsStore.setAppBg({cardBlur: Array.isArray(v) ? v[0] : v})"/>
       </div>
+      <div class="setting-item" v-if="wordsStore.appBg.preset">
+        <div class="content">页头应用透明/亚克力</div>
+        <el-switch class="shorcut-desc"
+                   :model-value="wordsStore.appBg.headerEffect"
+                   inline-prompt
+                   size="large"
+                   active-text="开"
+                   inactive-text="关"
+                   @update:model-value="(v: string | number | boolean | undefined) => wordsStore.setAppBg({headerEffect: !!v})"/>
+      </div>
+      <div class="setting-item" v-if="wordsStore.appBg.preset">
+        <div class="content">底栏应用透明/亚克力</div>
+        <el-switch class="shorcut-desc"
+                   :model-value="wordsStore.appBg.footerEffect"
+                   inline-prompt
+                   size="large"
+                   active-text="开"
+                   inactive-text="关"
+                   @update:model-value="(v: string | number | boolean | undefined) => wordsStore.setAppBg({footerEffect: !!v})"/>
+      </div>
     </div>
 
     <!-- 主窗口透明度：窗口级透明，仅 Electron/Web 有效（uTools 主窗口 iframe 背景不受内部 CSS 控制） -->
