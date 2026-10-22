@@ -570,6 +570,36 @@ body.has-app-bg {
     background-color: rgb(var(--utools-bg-card-rgb));
   }
 
+  // 页头/页尾不开透明效果时，实底色块与背景图交界太生硬：
+  // 在交界外各挂一条同色→透明的渐变过渡带（伪元素，不占布局、不拦截事件），
+  // 列表内容滚动到边缘时像被头尾颜色轻轻「晕开」，而不是被一刀切
+  &.app-bg-header-off .common-layout .el-header {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 10px;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgb(var(--utools-bg-primary-rgb)), rgba(var(--utools-bg-primary-rgb), 0.35) 50%, rgba(var(--utools-bg-primary-rgb), 0));
+      pointer-events: none;
+    }
+  }
+
+  &.app-bg-footer-off .home_footer::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    height: 8px;
+    z-index: 10;
+    background: linear-gradient(to top, rgb(var(--utools-bg-card-rgb)), rgba(var(--utools-bg-card-rgb), 0.2) 50%, rgba(var(--utools-bg-card-rgb), 0));
+    pointer-events: none;
+  }
+
   // 亚克力（整体磨砂）：直接模糊背景图片层本身，而不是给各表面挂 backdrop-filter——
   // 图片层是静态层，blur 只在合成时算一次；卡片/头部/主区/底栏等所有半透明表面
   // 透出的是同一张模糊图，观感天然一致（各挂 backdrop-filter 反而卡片糊、缝隙清晰，观感断裂，
