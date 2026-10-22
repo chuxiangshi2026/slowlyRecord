@@ -1,5 +1,6 @@
 <template>
-  <view class="recall-page">
+  <view class="recall-page" :class="themeClass">
+    <InkBackground />
     <!-- 文章信息 -->
     <view class="article-head">
       <text class="article-title">{{ article?.title || '遮挡回忆' }}</text>
@@ -61,6 +62,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import { useTextMemory } from '@/stores/useTextMemory'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
 import { splitContentToBlocks } from './recall'
+import InkBackground from './components/InkBackground.vue'
 
 const store = useTextMemory()
 
@@ -112,9 +114,12 @@ function goBack() {
 <style scoped>
 .recall-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
+  /* 建立层叠上下文，让内部 z-index:-1 的水墨背景压在页面底色之上 */
+  position: relative;
+  z-index: 0;
 }
 
 .article-head {
@@ -139,20 +144,20 @@ function goBack() {
   align-items: center;
   gap: 16rpx;
   padding: 20rpx 24rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #eef0f2;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 .toolbar-btn {
   padding: 10rpx 26rpx;
-  background: #eef3f0;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   border-radius: 28rpx;
   font-size: 24rpx;
 }
 .progress-text {
   margin-left: auto;
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .content-scroll {
@@ -167,10 +172,10 @@ function goBack() {
 }
 .block-text {
   font-size: 30rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.9;
   display: block;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 20rpx 24rpx;
 }
@@ -183,9 +188,16 @@ function goBack() {
   align-items: center;
   justify-content: center;
 }
+.theme-dark .block-mask {
+  background: rgba(131, 197, 168, 0.15);
+  border-color: rgba(131, 197, 168, 0.35);
+}
 .block-mask-hint {
   font-size: 24rpx;
   color: rgba(82, 121, 111, 0.6);
+}
+.theme-dark .block-mask-hint {
+  color: rgba(131, 197, 168, 0.7);
 }
 .bottom-placeholder {
   height: 160rpx;
@@ -199,7 +211,7 @@ function goBack() {
   display: flex;
   gap: 20rpx;
   padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
-  background: #fff;
+  background: var(--sr-card);
   box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.06);
 }
 .rate-btn {
@@ -212,12 +224,12 @@ function goBack() {
   margin: 0;
 }
 .rate-btn.forgot {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .rate-btn.remembered {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .empty-state {
@@ -226,7 +238,7 @@ function goBack() {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -238,7 +250,7 @@ function goBack() {
 }
 .empty-title {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-bottom: 24rpx;
 }
 .empty-back {
@@ -246,8 +258,8 @@ function goBack() {
   height: 76rpx;
   line-height: 76rpx;
   border-radius: 38rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 28rpx;
   border: none;
 }

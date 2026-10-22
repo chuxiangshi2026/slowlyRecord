@@ -1,5 +1,6 @@
 <template>
-  <view class="text-memory-page">
+  <view class="text-memory-page" :class="themeClass">
+    <InkBackground />
     <!-- 头部 -->
     <view class="header">
       <text class="title">📜 文本记忆</text>
@@ -103,6 +104,7 @@
     <!-- 详情弹窗 -->
     <view v-if="detailArticle" class="detail-mask" @click="detailArticle = null">
       <view class="detail-card" @click.stop>
+        <image class="detail-ink" :src="detailInkSrc" mode="aspectFill" />
         <text class="detail-title">{{ detailArticle.title }}</text>
         <view class="detail-meta">
           <text v-if="detailArticle.category === 'idiom'" class="meta-tag idiom">成语</text>
@@ -128,7 +130,17 @@
 import { ref, computed, onMounted, onActivated } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useTextMemory } from '@/stores/useTextMemory'
+import { useTheme } from '@/stores/useTheme'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
+import InkBackground from './components/InkBackground.vue'
+
+const theme = useTheme()
+/** 详情弹窗内的淡墨背景图（跟随明暗主题） */
+const detailInkSrc = computed(() =>
+  theme.isDark
+    ? '/subPackages/pages-memory/static/text-memory/ink-bg-dark.png'
+    : '/subPackages/pages-memory/static/text-memory/ink-bg-light.png',
+)
 
 const store = useTextMemory()
 
@@ -230,8 +242,11 @@ function confirmDelete(article: MobileTextArticle) {
 <style scoped>
 .text-memory-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding-bottom: 40rpx;
+  /* 建立层叠上下文，让内部 z-index:-1 的水墨背景压在页面底色之上 */
+  position: relative;
+  z-index: 0;
 }
 
 .header {
@@ -260,7 +275,7 @@ function confirmDelete(article: MobileTextArticle) {
 }
 .search-box {
   flex: 1;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 32rpx;
   padding: 0 24rpx;
   height: 64rpx;
@@ -271,7 +286,7 @@ function confirmDelete(article: MobileTextArticle) {
 .search-input {
   flex: 1;
   font-size: 26rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 .action-btns {
   display: flex;
@@ -288,13 +303,13 @@ function confirmDelete(article: MobileTextArticle) {
   margin: 0;
 }
 .btn-add {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .btn-import {
-  background: #fff;
-  color: #52796f;
-  border: 1rpx solid #52796f;
+  background: var(--sr-card);
+  color: var(--sr-primary);
+  border: 1rpx solid var(--sr-primary);
 }
 
 .tag-bar {
@@ -304,17 +319,17 @@ function confirmDelete(article: MobileTextArticle) {
 .tag-chip {
   display: inline-block;
   padding: 8rpx 22rpx;
-  background: #fff;
-  color: #666;
+  background: var(--sr-card);
+  color: var(--sr-text-2);
   border-radius: 24rpx;
   font-size: 24rpx;
   margin-right: 12rpx;
   border: 1rpx solid transparent;
 }
 .tag-chip.active {
-  background: #eaf1ea;
-  color: #3d5a52;
-  border-color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 
 .stats-bar {
@@ -325,7 +340,7 @@ function confirmDelete(article: MobileTextArticle) {
 }
 .stat-text {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 .stat-divider {
   color: #ccc;
@@ -335,7 +350,7 @@ function confirmDelete(article: MobileTextArticle) {
   padding: 0 20rpx;
 }
 .article-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   margin-bottom: 16rpx;
@@ -350,7 +365,7 @@ function confirmDelete(article: MobileTextArticle) {
 .article-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: #303030;
+  color: var(--sr-text-strong);
   flex: 1;
   margin-right: 16rpx;
   overflow: hidden;
@@ -366,6 +381,10 @@ function confirmDelete(article: MobileTextArticle) {
   color: #d4564e;
   margin-right: 8rpx;
 }
+.theme-dark .due-badge {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
+}
 .more-btn {
   width: 60rpx;
   height: 60rpx;
@@ -376,7 +395,7 @@ function confirmDelete(article: MobileTextArticle) {
 }
 .more-icon {
   font-size: 36rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 .article-meta {
   display: flex;
@@ -396,18 +415,22 @@ function confirmDelete(article: MobileTextArticle) {
   background: #fef3e0;
   color: #e6a23c;
 }
+.theme-dark .meta-tag.idiom {
+  background: rgba(230, 162, 60, 0.16);
+  color: #f0b45f;
+}
 .meta-tag.dynasty,
 .meta-tag.poetry {
-  background: #f0f0f0;
-  color: #595959;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .meta-text {
   font-size: 22rpx;
-  color: #888;
+  color: var(--sr-text-2);
 }
 .article-preview {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -424,8 +447,8 @@ function confirmDelete(article: MobileTextArticle) {
   display: inline-block;
   font-size: 20rpx;
   padding: 2rpx 12rpx;
-  background: #f5f5f5;
-  color: #888;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 6rpx;
 }
 
@@ -440,13 +463,13 @@ function confirmDelete(article: MobileTextArticle) {
 }
 .empty-title {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   display: block;
   margin-bottom: 8rpx;
 }
 .empty-tip {
   font-size: 24rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   display: block;
 }
 
@@ -456,7 +479,7 @@ function confirmDelete(article: MobileTextArticle) {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--sr-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -466,16 +489,34 @@ function confirmDelete(article: MobileTextArticle) {
 .detail-card {
   width: 100%;
   max-height: 70vh;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 32rpx;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+/* 卡片内淡墨背景：压暗透明，不抢正文 */
+.detail-ink {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  pointer-events: none;
+}
+/* 内容提到背景图之上 */
+.detail-card > text,
+.detail-card > view,
+.detail-card > scroll-view {
+  position: relative;
 }
 .detail-title {
   font-size: 34rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   margin-bottom: 16rpx;
   display: block;
 }
@@ -492,14 +533,14 @@ function confirmDelete(article: MobileTextArticle) {
 }
 .detail-content {
   font-size: 28rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.9;
   white-space: pre-line;
   display: block;
 }
 .detail-source {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 16rpx;
   display: block;
 }
@@ -517,11 +558,11 @@ function confirmDelete(article: MobileTextArticle) {
   margin: 0;
 }
 .detail-btn.secondary {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .detail-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 </style>
