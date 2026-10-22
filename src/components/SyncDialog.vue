@@ -6,19 +6,113 @@
     :close-on-click-modal="false"
     class="sync-dialog"
   >
+    <!-- 备份时效提醒：超过 3 天未同步时显示（所有 tab 可见） -->
+    <el-alert
+      v-if="backupDays > 3"
+      :title="`距上次同步已 ${backupDays} 天，建议尽快备份`"
+      type="warning"
+      :closable="false"
+      show-icon
+      class="sync-alert"
+    />
     <el-tabs v-model="activeTab" class="sync-tabs">
-      <!-- 服务器同步 Tab -->
-      <el-tab-pane label="服务器同步" name="server">
-        <!-- 备份时效提醒：超过 3 天未同步时显示 -->
+      <!-- 云盘同步 Tab（坚果云等 WebDAV 网盘，长期备份；默认页，推荐首选） -->
+      <el-tab-pane label="云盘同步" name="webdav">
         <el-alert
-          v-if="backupDays > 3"
-          :title="backupDays === 0 ? '今日尚未同步' : `距上次同步已 ${backupDays} 天，建议尽快推送备份`"
+          title="坚果云等 WebDAV 网盘 · 长期备份（推荐）"
+          type="success"
+          :closable="false"
+          show-icon
+          class="sync-alert"
+        >
+          <template #default>
+            数据加密后存到<strong>你自己的网盘</strong>，长期保留、不限次数；两台设备填同样的账号和应用密码即可互相同步。
+          </template>
+        </el-alert>
+        <el-alert
+          v-if="isWebPlatform"
+          title="浏览器环境受跨域限制，WebDAV 直连可能失败，请使用 uTools / Electron / 小程序端"
           type="warning"
           :closable="false"
           show-icon
           class="sync-alert"
-          style="margin-bottom: 10px"
         />
+
+        <div class="sync-section">
+          <h4>网盘配置</h4>
+          <el-input v-model="syncStore.webdavUrl" placeholder="WebDAV 地址" class="webdav-field" />
+          <!-- 地址示例常驻可见：第一次配置最常卡在不知道填什么 -->
+          <p class="sync-desc webdav-url-hint">
+            坚果云不允许在根目录直接建文件，地址必须指到二级目录。默认的 <code>https://dav.jianguoyun.com/dav/我的坚果云/</code> 是账号自带文件夹、开箱即用；想单独放备份可先在坚果云新建 slowlyRecord 文件夹，再填 <code>https://dav.jianguoyun.com/dav/slowlyRecord/</code>
+          </p>
+          <!-- 同步目录常驻可见：让用户随时知道备份到底存在网盘哪里 -->
+          <div class="webdav-dir-status">
+            <span class="webdav-dir-label">同步目录：</span>
+            <span class="webdav-dir-path">{{ syncStore.webdavUrl || '未填写' }}</span>
+            <span
+              v-if="syncStore.webdavDirWritable !== null"
+              class="webdav-dir-flag"
+              :class="syncStore.webdavDirWritable ? 'is-ok' : 'is-bad'"
+            >
+              {{ syncStore.webdavDirWritable ? '可写' : '不可写' }}
+            </span>
+            <span class="webdav-dir-hint">备份文件 slowlyRecord-sync.enc 会存放于该目录</span>
+          </div>
+          <el-input v-model="syncStore.webdavUsername" placeholder="账号（坚果云注册邮箱）" class="webdav-field" />
+          <el-input v-model="syncStore.webdavPassword" type="password" show-password placeholder="应用密码（不是登录密码）" class="webdav-field" />
+
+          <el-collapse class="sync-advanced">
+            <el-collapse-item title="如何获取坚果云应用密码？" name="webdav-guide">
+              <ol class="webdav-guide">
+                <li>电脑浏览器登录坚果云官网（jianguoyun.com）</li>
+                <li>右上角头像 → 账户信息 → 安全选项 → 第三方应用管理</li>
+                <li>点击「添加应用密码」，名称随意（如「慢记」），生成后复制密码</li>
+                <li>把<strong>注册邮箱</strong>和<strong>应用密码</strong>填到上方</li>
+                <li>（可选）在坚果云里新建一个 <strong>slowlyRecord</strong> 文件夹，地址栏填 <code>https://dav.jianguoyun.com/dav/slowlyRecord/</code>，备份文件就会集中放在里面</li>
+              </ol>
+              <p class="sync-desc">免费版每月 1GB 上传 / 3GB 下载流量；同步包仅几十 KB，完全够用。</p>
+            </el-collapse-item>
+          </el-collapse>
+
+          <div class="sync-actions webdav-config-actions">
+            <el-button size="small" @click="handleWebDavSave">保存配置</el-button>
+            <el-button size="small" :loading="webdavTesting" :disabled="!syncStore.webdavConfigured" @click="handleWebDavTest">测试连接</el-button>
+            <el-button size="small" @click="handleWebDavUseDefaultUrl">恢复默认地址</el-button>
+          </div>
+        </div>
+
+        <el-divider />
+
+        <div class="sync-section">
+          <h4>备份与恢复</h4>
+          <p class="sync-desc">恢复时按 id 合并：本地已有的数据保留本地版本，不会被覆盖</p>
+          <div class="sync-actions">
+            <el-button
+              type="primary"
+              size="large"
+              :loading="syncStore.status === 'uploading'"
+              :disabled="!syncStore.webdavConfigured"
+              @click="handleWebDavUpload"
+            >
+              <el-icon style="margin-right: 4px;"><Upload /></el-icon>
+              备份到云盘
+            </el-button>
+            <el-button
+              type="success"
+              size="large"
+              :loading="syncStore.status === 'downloading'"
+              :disabled="!syncStore.webdavConfigured"
+              @click="handleWebDavDownload"
+            >
+              <el-icon style="margin-right: 4px;"><Download /></el-icon>
+              从云盘恢复
+            </el-button>
+          </div>
+        </div>
+      </el-tab-pane>
+
+      <!-- 服务器同步 Tab -->
+      <el-tab-pane label="服务器同步" name="server">
         <el-alert
           title="端到端加密 · 临时传输"
           type="success"
@@ -30,14 +124,6 @@
             数据在本地 AES-256 加密后才上传，服务器只存密文无法解读。推送后生成同步码，在另一台设备输入即可拉取。
           </template>
         </el-alert>
-
-        <div class="sync-miniprogram-card">
-          <div class="sync-miniprogram-info">
-            <h4>微信小程序</h4>
-            <p>使用微信扫码可在小程序继续学习，通过服务器同步码拉取或推送数据。</p>
-          </div>
-          <img class="sync-miniprogram-code" src="/static/minicode.png" alt="慢记u微信小程序码" />
-        </div>
 
         <!-- 服务器状态 -->
         <div class="sync-server-status">
@@ -134,96 +220,6 @@
             </div>
           </el-collapse-item>
         </el-collapse>
-      </el-tab-pane>
-
-      <!-- 云盘同步 Tab（坚果云等 WebDAV 网盘，长期备份） -->
-      <el-tab-pane label="云盘同步" name="webdav">
-        <el-alert
-          title="坚果云等 WebDAV 网盘 · 长期备份"
-          type="success"
-          :closable="false"
-          show-icon
-          class="sync-alert"
-        >
-          <template #default>
-            数据加密后存到<strong>你自己的网盘</strong>，长期保留、不限次数；两台设备填同样的账号和应用密码即可互相同步。
-          </template>
-        </el-alert>
-        <el-alert
-          v-if="isWebPlatform"
-          title="浏览器环境受跨域限制，WebDAV 直连可能失败，请使用 uTools / Electron / 小程序端"
-          type="warning"
-          :closable="false"
-          show-icon
-          class="sync-alert"
-        />
-
-        <div class="sync-section">
-          <h4>网盘配置</h4>
-          <el-input v-model="syncStore.webdavUrl" placeholder="WebDAV 地址" class="webdav-field" />
-          <!-- 同步目录常驻可见：让用户随时知道备份到底存在网盘哪里 -->
-          <div class="webdav-dir-status">
-            <span class="webdav-dir-label">同步目录：</span>
-            <span class="webdav-dir-path">{{ syncStore.webdavUrl || '未填写' }}</span>
-            <span
-              v-if="syncStore.webdavDirWritable !== null"
-              class="webdav-dir-flag"
-              :class="syncStore.webdavDirWritable ? 'is-ok' : 'is-bad'"
-            >
-              {{ syncStore.webdavDirWritable ? '可写' : '不可写' }}
-            </span>
-            <span class="webdav-dir-hint">备份文件 slowlyRecord-sync.enc 会存放于该目录</span>
-          </div>
-          <el-input v-model="syncStore.webdavUsername" placeholder="账号（坚果云注册邮箱）" class="webdav-field" />
-          <el-input v-model="syncStore.webdavPassword" type="password" show-password placeholder="应用密码（不是登录密码）" class="webdav-field" />
-
-          <el-collapse class="sync-advanced">
-            <el-collapse-item title="如何获取坚果云应用密码？" name="webdav-guide">
-              <ol class="webdav-guide">
-                <li>电脑浏览器登录坚果云官网（jianguoyun.com）</li>
-                <li>右上角头像 → 账户信息 → 安全选项 → 第三方应用管理</li>
-                <li>点击「添加应用密码」，名称随意（如「慢记」），生成后复制密码</li>
-                <li>把<strong>注册邮箱</strong>和<strong>应用密码</strong>填到上方</li>
-              </ol>
-              <p class="sync-desc">免费版每月 1GB 上传 / 3GB 下载流量；同步包仅几十 KB，完全够用。</p>
-            </el-collapse-item>
-          </el-collapse>
-
-          <div class="sync-actions webdav-config-actions">
-            <el-button size="small" @click="handleWebDavSave">保存配置</el-button>
-            <el-button size="small" :loading="webdavTesting" :disabled="!syncStore.webdavConfigured" @click="handleWebDavTest">测试连接</el-button>
-            <el-button size="small" @click="handleWebDavUseDefaultUrl">恢复默认地址</el-button>
-          </div>
-        </div>
-
-        <el-divider />
-
-        <div class="sync-section">
-          <h4>备份与恢复</h4>
-          <p class="sync-desc">恢复时按 id 合并：本地已有的数据保留本地版本，不会被覆盖</p>
-          <div class="sync-actions">
-            <el-button
-              type="primary"
-              size="large"
-              :loading="syncStore.status === 'uploading'"
-              :disabled="!syncStore.webdavConfigured"
-              @click="handleWebDavUpload"
-            >
-              <el-icon style="margin-right: 4px;"><Upload /></el-icon>
-              备份到云盘
-            </el-button>
-            <el-button
-              type="success"
-              size="large"
-              :loading="syncStore.status === 'downloading'"
-              :disabled="!syncStore.webdavConfigured"
-              @click="handleWebDavDownload"
-            >
-              <el-icon style="margin-right: 4px;"><Download /></el-icon>
-              从云盘恢复
-            </el-button>
-          </div>
-        </div>
       </el-tab-pane>
 
       <!-- 文件同步 Tab -->
@@ -376,7 +372,7 @@ const syncStore = useSyncStore()
 // 距上次同步天数（-1 表示从未同步）
 const backupDays = computed(() => daysSinceLastSync())
 
-const activeTab = ref('server')
+const activeTab = ref('webdav')
 const customServerUrl = ref(syncStore.savedServerUrl)
 const restoreOptions = ref<RestoreOptions>({ ...DEFAULT_RESTORE_OPTIONS })
 const qrCanvas = ref<HTMLCanvasElement | null>(null)
@@ -478,11 +474,11 @@ async function handleWebDavSave() {
   }
 }
 
-/** 一键恢复坚果云默认地址（用户填错地址导致 PUT 404/409 时的兜底） */
+/** 一键恢复坚果云默认地址（账号自带的「我的坚果云」文件夹） */
 function handleWebDavUseDefaultUrl() {
   syncStore.webdavUrl = NUTSTORE_WEBDAV_URL
   syncStore.saveWebDavConfig()
-  ElMessage.success('已恢复默认地址（dav.jianguoyun.com/dav/）')
+  ElMessage.success('已恢复默认地址（我的坚果云文件夹）')
 }
 
 async function handleWebDavTest() {
@@ -690,41 +686,14 @@ async function handleConfirmRestore() {
   margin-bottom: 16px;
 }
 
-.sync-miniprogram-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
-  padding: 12px 14px;
-  border: 1px solid var(--el-border-color-lighter);
-  border-radius: 8px;
-  background: var(--el-fill-color-extra-light);
-}
+.webdav-url-hint {
+  margin: -2px 0 8px;
 
-.sync-miniprogram-info {
-  min-width: 0;
-
-  h4 {
-    margin: 0 0 6px;
-    font-size: 14px;
-    color: var(--el-text-color-primary);
+  code {
+    font-family: monospace;
+    color: var(--utools-primary, #52796f);
+    user-select: all;
   }
-
-  p {
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.5;
-    color: var(--el-text-color-secondary);
-  }
-}
-
-.sync-miniprogram-code {
-  width: 92px;
-  height: 92px;
-  flex: none;
-  border-radius: 6px;
-  background: #fff;
 }
 
 .sync-server-status {

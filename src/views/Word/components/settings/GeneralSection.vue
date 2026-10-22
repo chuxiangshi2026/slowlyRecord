@@ -175,9 +175,20 @@
       </el-button>
     </div>
 
+    <!-- 微信小程序入口：放设置页而非同步弹窗，避免与「同步码」混淆 -->
+    <div class="miniprogram-card">
+      <div class="miniprogram-info">
+        <div class="miniprogram-title">微信小程序</div>
+        <div class="miniprogram-desc">微信扫码在小程序继续学习；与桌面端互传数据用「同步」功能</div>
+      </div>
+      <img class="miniprogram-code" src="/static/minicode.png" alt="慢记微信小程序码" />
+    </div>
+
     <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向） -->
     <div class="stats-optout">
-      <span class="stats-optout-text">匿名使用统计（仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进插件）</span>
+      <span class="stats-optout-text">匿名使用统计（仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进插件）
+        <span class="stats-status">当前：{{ statsStatusText }}</span>
+      </span>
       <el-checkbox class="stats-optout-check" :model-value="statsOptIn" size="small"
                    aria-label="匿名使用统计"
                    @update:model-value="onStatsOptInChange"/>
@@ -203,7 +214,8 @@ import {useUiStore} from "@/stores/ui.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {AppInfo} from "@/config.ts";
 import {isUtools} from "@/adapters/platform";
-import {isStatsExcluded, setStatsExcluded, submitFeedback} from "@/utils/stats.ts";
+import {isStatsExcluded, setStatsExcluded, submitFeedback, getStatsStatus} from "@/utils/stats.ts";
+import type {StatsStatus} from "@/utils/stats.ts";
 import {ElMessage} from 'element-plus'
 import {isScheduleSupported, applyScheduleSetting, applyScheduleTimes, REVIEW_TIME_OPTIONS, SIGNIN_TIME_OPTIONS} from "@/utils/schedule-reminder.ts";
 import type {ReminderKind} from "@/utils/schedule-reminder.ts";
@@ -259,6 +271,18 @@ const onStatsOptInChange = (v: string | number | boolean | undefined) => {
   setStatsExcluded(!on)
   statsOptIn.value = on
 }
+
+// 统计状态行：直接展示上报/停用原因（生产环境无控制台，排障就靠这行）
+const statsStatusText = computed(() => {
+  void statsOptIn.value // 开关切换时重算（getStatsStatus 直接读 localStorage）
+  return ({
+    enabled: '上报中',
+    excluded: '已手动关闭',
+    dev: '开发环境已停用',
+    localhost: '本地调试已停用',
+    'no-config': '未配置',
+  } as Record<StatsStatus, string>)[getStatsStatus()]
+})
 
 // 问题反馈：经 umami 事件通道提交（feedback.submit），用户主动动作不受统计开关限制
 const feedbackVisible = ref(false)
@@ -496,6 +520,43 @@ const currentEngineHint = computed(() => {
   }
 }
 
+.miniprogram-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 10px 20px 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--utools-bg-card);
+  border: 1px solid var(--utools-border-divider);
+
+  .miniprogram-info {
+    min-width: 0;
+  }
+
+  .miniprogram-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--utools-text-primary);
+  }
+
+  .miniprogram-desc {
+    font-size: 12px;
+    color: var(--utools-text-tertiary);
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  .miniprogram-code {
+    width: 72px;
+    height: 72px;
+    flex: none;
+    border-radius: 6px;
+    background: #fff;
+  }
+}
+
 .stats-optout {
   display: flex;
   align-items: center;
@@ -509,6 +570,13 @@ const currentEngineHint = computed(() => {
     font-size: 12px;
     line-height: 1.5;
     color: var(--utools-text-secondary);
+  }
+
+  // 统计状态行（当前：上报中/已停用原因）
+  .stats-status {
+    display: block;
+    font-size: 12px;
+    color: var(--utools-text-tertiary);
   }
 
   // 对钩固定在行末，不随文字换行收缩
