@@ -18,6 +18,7 @@ import {
   setStatsExcluded,
   trackError,
   submitFeedback,
+  getStatsStatus,
 } from '@/utils/stats'
 
 /** 取出 fetch 收到的全部 umami 报文（过滤 getPluginVersion 等无 body 的调用） */
@@ -100,6 +101,37 @@ describe('stats（umami）', () => {
       window.localStorage.setItem('sr_stats_force', '1')
       await initStats()
       expect(globalThis.fetch).toHaveBeenCalled()
+    })
+  })
+
+  describe('getStatsStatus', () => {
+    it('生产环境返回 enabled', () => {
+      expect(getStatsStatus()).toBe('enabled')
+    })
+
+    it('手动关闭返回 excluded，dev 环境返回 dev，localhost 返回 localhost', () => {
+      setStatsExcluded(true)
+      expect(getStatsStatus()).toBe('excluded')
+      setStatsExcluded(false)
+
+      ;(globalThis as any).window.utools.isDev = () => true
+      expect(getStatsStatus()).toBe('dev')
+
+      ;(globalThis as any).window.utools.isDev = () => false
+      delete (globalThis as any).window.utools
+      ;(globalThis as any).window.location.hostname = 'localhost'
+      expect(getStatsStatus()).toBe('localhost')
+    })
+
+    it('force 标记优先于排除规则返回 enabled；未配置 websiteId 返回 no-config', () => {
+      setStatsExcluded(true)
+      window.localStorage.setItem('sr_stats_force', '1')
+      expect(getStatsStatus()).toBe('enabled')
+      window.localStorage.removeItem('sr_stats_force')
+
+      config.UMAMI_STATS_CONFIG.websiteId = ''
+      expect(getStatsStatus()).toBe('no-config')
+      config.UMAMI_STATS_CONFIG.websiteId = 'test-website-id'
     })
   })
 

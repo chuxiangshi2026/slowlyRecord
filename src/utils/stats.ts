@@ -59,6 +59,26 @@ function shouldEnableStats(): boolean {
   return isUTools || !isLocalhost;
 }
 
+/** 统计状态：上报中 / 各停用原因（设置页状态行展示用，生产环境无控制台时的排障入口） */
+export type StatsStatus = 'enabled' | 'excluded' | 'dev' | 'localhost' | 'no-config';
+
+/** 当前统计状态及停用原因；判定顺序与上报路径一致（force 优先于一切排除规则） */
+export function getStatsStatus(): StatsStatus {
+  if (!UMAMI_STATS_CONFIG.websiteId) return 'no-config';
+  if (typeof window === 'undefined') return 'no-config';
+  if (getFlag(STATS_FORCE_KEY)) return 'enabled';
+  if (isStatsExcluded()) return 'excluded';
+
+  const isUTools = !!(window as any).utools;
+  try {
+    if (isUTools && (window as any).utools.isDev?.()) return 'dev';
+  } catch { /* 忽略 */ }
+
+  const hostname = window.location.hostname;
+  if (!isUTools && (hostname === 'localhost' || hostname === '127.0.0.1')) return 'localhost';
+  return 'enabled';
+}
+
 /**
  * 获取（或首次生成）匿名安装 ID
  * uTools 环境优先用 utools.getNativeId()（设备 ID，重装插件/清 localStorage 不变），
