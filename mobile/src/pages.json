@@ -249,16 +249,16 @@
     }
   },
   "globalStyle": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "@navTxtStyle",
     "navigationBarTitleText": "慢记",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarBackgroundColor": "@navBgColor",
+    "backgroundColor": "@bgColor"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#52796f",
-    "backgroundColor": "#FFFFFF",
-    "borderStyle": "black",
+    "color": "@tabColor",
+    "selectedColor": "@tabSelectedColor",
+    "backgroundColor": "@tabBgColor",
+    "borderStyle": "@tabBorderStyle",
     "list": [
       {
         "pagePath": "pages/index/index",

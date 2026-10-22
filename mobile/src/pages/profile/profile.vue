@@ -1,5 +1,5 @@
 <template>
-  <view class="profile-container">
+  <view class="profile-container" :class="themeClass">
     <view class="header">
       <view class="avatar">
         <text>{{ avatarText }}</text>
@@ -29,6 +29,13 @@
         <text class="menu-icon goal">G</text>
         <text class="menu-text">每日目标</text>
         <text class="menu-value">{{ dailyGoal }} 词</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <!-- 深色模式：跟随系统/浅色/深色 三档 -->
+      <view class="menu-item" @click="showThemePicker">
+        <text class="menu-icon theme">🌙</text>
+        <text class="menu-text">深色模式</text>
+        <text class="menu-value">{{ theme.modeText }}</text>
         <text class="menu-arrow">›</text>
       </view>
       <!-- 同步（跳转分包页面） -->
@@ -175,9 +182,23 @@ import { getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, s
 import type { TranslationPlatform } from '@/stores/useUtils/types'
 import { getSubscribeRecord, recordSubscribeOutcome, getSubscribeTemplateId, setSubscribeTemplateId, parseSubscribeResult, isSubscribeMessageSupported, type SubscribeRecord } from '@/utils/subscribe-remind'
 import { loadDailyGoal, saveDailyGoal, DAILY_GOAL_OPTIONS } from '@/utils/daily-goal'
+import { useTheme, type ThemeMode } from '@/stores/useTheme'
 
 const wordsStore = useMobileWords()
 const userProfile = useUserProfile()
+const theme = useTheme()
+
+// 深色模式：跟随系统/浅色/深色 三档
+const showThemePicker = () => {
+  const modes: ThemeMode[] = ['system', 'light', 'dark']
+  uni.showActionSheet({
+    itemList: ['跟随系统', '浅色', '深色'],
+    success: (res) => {
+      const m = modes[res.tapIndex]
+      if (m && m !== theme.mode) theme.setMode(m)
+    }
+  })
+}
 
 // 本地用户名：未设置时回退默认展示名；头像取用户名首字符（未设置用 U）
 const displayUsername = computed(() => userProfile.username || '慢记用户')
@@ -471,7 +492,7 @@ const showAbout = () => {
 <style scoped>
 .profile-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--sr-bg);
 }
 
 .header {
@@ -511,7 +532,7 @@ const showAbout = () => {
   display: flex;
   justify-content: space-around;
   padding: 30rpx 20rpx;
-  background: #fff;
+  background: var(--sr-card);
   margin: -30rpx 20rpx 20rpx;
   border-radius: 16rpx;
   box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
@@ -526,19 +547,19 @@ const showAbout = () => {
 .stat-num {
   font-size: 40rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
 }
 
 .stat-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
 }
 
 .menu-list {
-  background: #fff;
+  background: var(--sr-card);
   margin-top: 20rpx;
 }
 
@@ -546,7 +567,7 @@ const showAbout = () => {
   display: flex;
   align-items: center;
   padding: 30rpx 40rpx;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 /* button 版菜单项（意见反馈）：清除微信 button 默认样式，与其他菜单项对齐 */
@@ -554,7 +575,7 @@ button.menu-item.feedback-btn {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid var(--sr-border);
   border-radius: 0;
   font-size: inherit;
   line-height: normal;
@@ -569,20 +590,15 @@ button.menu-item.feedback-btn::after {
 .menu-icon {
   width: 48rpx;
   height: 48rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20rpx;
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
-}
-
-.menu-icon.sync {
-  background: #eaf1ea;
-  color: #52796f;
 }
 
 .menu-icon.danger {
@@ -590,39 +606,26 @@ button.menu-item.feedback-btn::after {
   color: #c0564f;
 }
 
-/* 复习提醒入口：主色 #52796f */
-.menu-icon.remind {
-  background: #e8f1ec;
-  color: #52796f;
-}
-
-/* 每日目标入口：同为 #52796f 主色 */
-.menu-icon.goal {
-  background: #e8f1ec;
-  color: #52796f;
-}
-
-/* 成就入口：主色 #52796f */
-.menu-icon.achievement {
-  background: #e8f1ec;
-  color: #52796f;
+.theme-dark .menu-icon.danger {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
 }
 
 .menu-text {
   flex: 1;
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .menu-value {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-right: 10rpx;
 }
 
 .menu-arrow {
   font-size: 36rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 /* 弹窗 */
@@ -632,7 +635,7 @@ button.menu-item.feedback-btn::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: var(--sr-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -640,7 +643,7 @@ button.menu-item.feedback-btn::after {
 }
 
 .popup-content {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 40rpx;
   width: 600rpx;
@@ -654,7 +657,7 @@ button.menu-item.feedback-btn::after {
 
 .translation-settings .section-label {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin: 16rpx 0 10rpx;
   display: flex;
   justify-content: space-between;
@@ -666,7 +669,7 @@ button.menu-item.feedback-btn::after {
   justify-content: space-between;
   align-items: center;
   padding: 16rpx 20rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   margin-bottom: 10rpx;
 }
@@ -674,12 +677,12 @@ button.menu-item.feedback-btn::after {
 .translation-settings .bank-picker-text {
   font-size: 30rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .translation-settings .bank-picker-arrow {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .translation-settings .api-key-section {
@@ -688,7 +691,8 @@ button.menu-item.feedback-btn::after {
 
 .translation-settings .dialog-input {
   height: 80rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   border-radius: 8rpx;
   padding: 0 20rpx;
   margin-bottom: 12rpx;
@@ -699,7 +703,7 @@ button.menu-item.feedback-btn::after {
 
 .translation-settings .link-text {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .translation-settings .popup-actions {
@@ -707,8 +711,8 @@ button.menu-item.feedback-btn::after {
 }
 
 .translation-settings .btn-secondary {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border: none;
   height: 80rpx;
   border-radius: 8rpx;
@@ -738,13 +742,13 @@ button.menu-item.feedback-btn::after {
 }
 
 .btn-cancel {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 
 .btn-confirm {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 /* 复习提醒弹窗 */
@@ -754,14 +758,14 @@ button.menu-item.feedback-btn::after {
 
 .remind-popup .remind-desc-item {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   line-height: 1.7;
   margin-bottom: 12rpx;
 }
 
 .remind-popup .btn-remind {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 /* 模板 ID 未配置时「开启提醒」置灰 */
@@ -776,7 +780,7 @@ button.menu-item.feedback-btn::after {
 
 .remind-popup .remind-template-label {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 10rpx;
 }
 
@@ -789,7 +793,8 @@ button.menu-item.feedback-btn::after {
 .remind-popup .template-input-row .dialog-input {
   flex: 1;
   height: 80rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   border-radius: 8rpx;
   padding: 0 20rpx;
   font-size: 26rpx;
@@ -799,8 +804,8 @@ button.menu-item.feedback-btn::after {
 .remind-popup .btn-save-template {
   height: 80rpx;
   line-height: 80rpx;
-  background: #eaf1ea;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   font-size: 26rpx;
   border: none;
   border-radius: 8rpx;
@@ -814,14 +819,14 @@ button.menu-item.feedback-btn::after {
 
 .remind-popup .remind-template-hint {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   line-height: 1.6;
   margin-top: 10rpx;
 }
 
 .remind-popup .remind-unsupported {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   text-align: center;
   margin-bottom: 20rpx;
 }

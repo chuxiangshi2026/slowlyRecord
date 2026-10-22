@@ -1,5 +1,5 @@
 <template>
-  <view class="translate-container">
+  <view class="translate-container" :class="themeClass">
     <view class="input-section">
       <textarea 
         class="input-area" 
@@ -14,8 +14,8 @@
       <button class="translate-btn" @click="translate" :disabled="isTranslating || !inputText">
         {{ isTranslating ? '翻译中...' : '翻译' }}
       </button>
-      <button class="camera-btn" @click="handleCapture">
-        📷 拍照
+      <button class="camera-btn" @click="handleCapture()">
+        📷 拍照/相册
       </button>
     </view>
 
@@ -46,6 +46,7 @@
           @click="toggleToken(token)"
         >
           <text class="token-word">{{ token }}</text>
+          <text v-if="ocrWordMap.get(getWordKey(token))?.meaning" class="token-meaning">{{ ocrWordMap.get(getWordKey(token))?.meaning }}</text>
           <button
             class="token-add-btn"
             :disabled="addingKey === getWordKey(token) || addedKeys.has(getWordKey(token))"
@@ -85,12 +86,14 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { onLoad, onUnload } from '@dcloudio/uni-app'
 import { translateText } from '../utils/translation'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { getWordKey } from '@/utils/text-utils'
 import { getCaptureAdapter } from '../utils/capture'
+import { recognizeImageWords, type OcrWordResult } from '../utils/ocr'
 import {
   defaultSelectedTokens,
   toggleTokenSelection,
@@ -105,6 +108,8 @@ const isTranslating = ref(false)
 const ocrResult = ref('')
 // OCR 文本分词后的词条列表
 const ocrTokens = ref<string[]>([])
+// OCR 识别出的词条详情（key 为 getWordKey 规范化小写），加入词库时复用释义/音标
+const ocrWordMap = ref<Map<string, OcrWordResult>>(new Map())
 // 词条选中态（key 为 getWordKey 规范化小写），新一次 OCR 识别后默认全选
 const selectedKeys = ref<Set<string>>(new Set())
 // 批量加入进行中，防止连点
@@ -136,21 +141,6 @@ const canAddInput = computed(() => {
   return !!result.value && !!text && text.length <= 100
 })
 
-/** 从 OCR 识别文本中提取英文词条（去重、过滤单字母、最多 60 个） */
-const extractWordTokens = (text: string): string[] => {
-  const matches = text.match(/[A-Za-z][A-Za-z'-]{1,}/g) || []
-  const seen = new Set<string>()
-  const tokens: string[] = []
-  for (const m of matches) {
-    const key = getWordKey(m)
-    if (seen.has(key)) continue
-    seen.add(key)
-    tokens.push(m)
-    if (tokens.length >= 60) break
-  }
-  return tokens
-}
-
 /**
  * 把词条加入当前激活词库（复用 add-word 页的添加流程）。
  * 已有释义则直接传入；否则尝试调用翻译引擎补全，拿不到就只存单词。
@@ -159,7 +149,8 @@ const extractWordTokens = (text: string): string[] => {
 const addWordToBank = async (
   rawText: string,
   presetMeaning = '',
-  silent = false
+  silent = false,
+  presetPhonetic = ''
 ): Promise<'added' | 'duplicate' | 'failed'> => {
   const wordText = normalizeMobileItemText(rawText)
   if (!wordText || addingKey.value === getWordKey(wordText)) return 'failed'
@@ -175,7 +166,7 @@ const addWordToBank = async (
   addingKey.value = key
   try {
     let meaning = presetMeaning.trim()
-    let phonetic = ''
+    let phonetic = presetPhonetic
     let example = ''
     if (!meaning) {
       // 尝试用当前翻译引擎补全释义；失败不阻断，只存单词
@@ -183,7 +174,7 @@ const addWordToBank = async (
         const res = await translateText(wordText, 'auto', 'zh')
         if (res.success && res.translatedText && res.translatedText !== wordText) {
           meaning = res.translatedText
-          phonetic = res.phonetic || ''
+          phonetic = phonetic || res.phonetic || ''
           if (res.examples && res.examples.length > 0) {
             const ex = res.examples[0]
             example = ex.english + (ex.chinese ? ' — ' + ex.chinese : '')
@@ -192,7 +183,7 @@ const addWordToBank = async (
       } catch { /* 拿不到释义就只存单词 */ }
     } else {
       // 整段加入时复用翻译结果里的音标
-      phonetic = result.value?.phonetic || ''
+      phonetic = phonetic || result.value?.phonetic || ''
     }
 
     await wordsStore.addWord({
@@ -216,8 +207,11 @@ const addWordToBank = async (
   }
 }
 
-// OCR 词条加入词库
-const addTokenToBank = (token: string) => addWordToBank(token)
+// OCR 词条加入词库（识别结果自带释义/音标，直接复用）
+const addTokenToBank = (token: string) => {
+  const detail = ocrWordMap.value.get(getWordKey(token))
+  return addWordToBank(token, detail?.meaning || '', false, detail?.phonetic || '')
+}
 
 /** 批量加入选中词条：逐条走单条加入逻辑（判重 + 释义补全），完成后统一汇总 toast */
 const batchAddToBank = async () => {
@@ -230,7 +224,8 @@ const batchAddToBank = async () => {
   let failed = 0
   try {
     for (const token of tokens) {
-      const status = await addWordToBank(token, '', true)
+      const detail = ocrWordMap.value.get(getWordKey(token))
+      const status = await addWordToBank(token, detail?.meaning || '', true, detail?.phonetic || '')
       if (status === 'added') added++
       else if (status === 'duplicate') duplicated++
       else failed++
@@ -279,49 +274,63 @@ const translate = async () => {
   }
 }
 
-const handleCapture = async () => {
+// 拍照/相册选图 → OCR 识别单词（腾讯云 OCR 或视觉大模型，密钥复用翻译设置）
+const handleCapture = async (sourceType?: 'album' | 'camera') => {
   try {
-    const adapter = getCaptureAdapter()
-    const capture = await adapter.capture()
-    uni.showToast({ title: '图片已获取', icon: 'success' })
-
-    // 尝试 OCR
+    const capture = await getCaptureAdapter().capture(sourceType ? [sourceType] : undefined)
+    uni.showLoading({ title: '识别中...', mask: true })
+    let words: OcrWordResult[] = []
     try {
-      const ocrRes = await adapter.ocr(capture.base64)
-      if (ocrRes.length > 0) {
-        ocrResult.value = ocrRes.map(r => r.text).join('\n')
-        // 识别结果分词为词条列表，供一键加入词库；新识别结果默认全选
-        ocrTokens.value = extractWordTokens(ocrResult.value)
-        selectedKeys.value = defaultSelectedTokens(ocrTokens.value)
-        addedKeys.value = new Set()
-        inputText.value = ocrResult.value
-        // 自动翻译
-        translate()
-      } else {
-        uni.showToast({ title: '未识别到文字', icon: 'none' })
-      }
-    } catch {
-      // OCR 不可用，仅显示提示
-      uni.showToast({ title: 'OCR 暂不可用', icon: 'none' })
+      words = await recognizeImageWords(capture.base64)
+    } catch (e: any) {
+      uni.showToast({ title: e.message || '识别失败', icon: 'none' })
+      return
+    } finally {
+      uni.hideLoading()
     }
+    if (!words.length) {
+      uni.showToast({ title: '未识别到单词', icon: 'none' })
+      return
+    }
+    ocrWordMap.value = new Map(words.map(w => [getWordKey(w.word), w]))
+    ocrTokens.value = words.map(w => w.word)
+    ocrResult.value = words.map(w => (w.meaning ? `${w.word}  ${w.meaning}` : w.word)).join('\n')
+    // 新识别结果默认全选
+    selectedKeys.value = defaultSelectedTokens(ocrTokens.value)
+    addedKeys.value = new Set()
   } catch (e: any) {
     if (e.message !== '截图取消' && e.message !== '未选择图片') {
       uni.showToast({ title: e.message || '获取图片失败', icon: 'none' })
     }
   }
 }
+
+// 外部入口：添加单词页/截屏引导跳转过来时自动拉起识别（autoCapture=all|album）
+onLoad((query) => {
+  const auto = query?.autoCapture
+  if (auto === 'album' || auto === 'camera') {
+    handleCapture(auto)
+  } else if (auto) {
+    handleCapture()
+  }
+  uni.$on('translate:autoCapture', handleCapture)
+})
+
+onUnload(() => {
+  uni.$off('translate:autoCapture', handleCapture)
+})
 </script>
 
 <style scoped>
 .translate-container {
   padding: 30rpx;
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--sr-bg);
 }
 
 .input-section {
   position: relative;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 20rpx;
   margin-bottom: 30rpx;
@@ -332,6 +341,7 @@ const handleCapture = async () => {
   height: 300rpx;
   font-size: 30rpx;
   line-height: 1.6;
+  color: var(--sr-text);
 }
 
 .char-count {
@@ -339,7 +349,7 @@ const handleCapture = async () => {
   bottom: 20rpx;
   right: 20rpx;
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .action-row {
@@ -351,8 +361,8 @@ const handleCapture = async () => {
 .translate-btn {
   flex: 1;
   height: 90rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 12rpx;
   font-size: 32rpx;
   border: none;
@@ -365,23 +375,23 @@ const handleCapture = async () => {
 .camera-btn {
   width: 200rpx;
   height: 90rpx;
-  background: #74937d;
-  color: #fff;
+  background: var(--sr-primary-2);
+  color: var(--sr-on-primary);
   border-radius: 12rpx;
   font-size: 28rpx;
   border: none;
 }
 
 .ocr-section {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 30rpx;
   margin-bottom: 30rpx;
-  border-left: 8rpx solid #52796f;
+  border-left: 8rpx solid var(--sr-primary);
 }
 
 .result-section {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 30rpx;
 }
@@ -395,17 +405,17 @@ const handleCapture = async () => {
 .result-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .result-lang {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .result-text {
   font-size: 34rpx;
-  color: #1a1a1a;
+  color: var(--sr-text-strong);
   line-height: 1.6;
   display: block;
   font-weight: 500;
@@ -414,9 +424,9 @@ const handleCapture = async () => {
 .phonetic {
   margin-top: 20rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #eee;
+  border-top: 1rpx solid var(--sr-border);
   font-size: 26rpx;
-  color: #444;
+  color: var(--sr-text-2);
 }
 
 .offline-tag {
@@ -428,10 +438,15 @@ const handleCapture = async () => {
   color: #c07a2b;
 }
 
+.theme-dark .offline-tag {
+  background: rgba(255, 183, 77, 0.12);
+  color: #e0a458;
+}
+
 .token-list {
   margin-top: 20rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #eee;
+  border-top: 1rpx solid var(--sr-border);
   display: flex;
   flex-direction: column;
   gap: 12rpx;
@@ -447,7 +462,7 @@ const handleCapture = async () => {
 
 .toolbar-action {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   padding: 8rpx 4rpx;
 }
 
@@ -459,8 +474,8 @@ const handleCapture = async () => {
   margin-left: auto;
   height: 60rpx;
   line-height: 60rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 30rpx;
   font-size: 24rpx;
   border: none;
@@ -483,18 +498,36 @@ const handleCapture = async () => {
 
 /* 选中态：主色边框高亮 */
 .token-item.selected {
-  border-color: #52796f;
+  border-color: var(--sr-primary);
   background: rgba(82, 121, 111, 0.08);
+}
+
+.theme-dark .token-item.selected {
+  background: rgba(131, 197, 168, 0.12);
 }
 
 .token-item:active {
   background: rgba(82, 121, 111, 0.05);
 }
 
+.theme-dark .token-item:active {
+  background: rgba(131, 197, 168, 0.08);
+}
+
 .token-word {
-  flex: 1;
   font-size: 28rpx;
-  color: #333;
+  color: var(--sr-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 40%;
+}
+
+.token-meaning {
+  flex: 1;
+  font-size: 24rpx;
+  color: var(--sr-text-3);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -504,8 +537,8 @@ const handleCapture = async () => {
   width: 150rpx;
   height: 56rpx;
   line-height: 56rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 28rpx;
   font-size: 24rpx;
   border: none;
@@ -521,8 +554,8 @@ const handleCapture = async () => {
 .result-add-btn {
   height: 56rpx;
   line-height: 56rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 28rpx;
   font-size: 24rpx;
   border: none;

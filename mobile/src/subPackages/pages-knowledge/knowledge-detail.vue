@@ -1,5 +1,5 @@
 <template>
-  <view class="detail-page">
+  <view class="detail-page" :class="themeClass">
     <view v-if="pack" class="content">
       <!-- 包信息 -->
       <view class="pack-header">
@@ -411,7 +411,7 @@ onLoad(async (opt: any) => {
 <style scoped>
 .detail-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   /* 底部安全区补偿：避免最底行被手势条遮挡 */
   box-sizing: border-box;
   padding-bottom: calc(24rpx + constant(safe-area-inset-bottom));
@@ -424,7 +424,7 @@ onLoad(async (opt: any) => {
 
 /* 包信息 */
 .pack-header {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
@@ -433,13 +433,13 @@ onLoad(async (opt: any) => {
 .pack-name {
   font-size: 36rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   display: block;
 }
 
 .pack-desc {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 10rpx;
   display: block;
   line-height: 1.6;
@@ -454,8 +454,8 @@ onLoad(async (opt: any) => {
 
 .stat-chip {
   font-size: 22rpx;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   padding: 6rpx 18rpx;
   border-radius: 22rpx;
 }
@@ -465,13 +465,23 @@ onLoad(async (opt: any) => {
   color: #e6a23c;
 }
 
+.theme-dark .stat-chip.ordered {
+  background: rgba(230, 162, 60, 0.15);
+  color: #e6a23c;
+}
+
 .stat-chip.mastered-chip {
-  background: #f4faf5;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 
 .stat-chip.due-chip {
   background: #fff7e6;
+  color: #e6a23c;
+}
+
+.theme-dark .stat-chip.due-chip {
+  background: rgba(230, 162, 60, 0.15);
   color: #e6a23c;
 }
 
@@ -504,19 +514,19 @@ onLoad(async (opt: any) => {
 }
 
 .btn-practice.flip {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .btn-practice.choice {
-  background: #fff;
-  color: #52796f;
-  border: 2rpx solid #52796f;
+  background: var(--sr-card);
+  color: var(--sr-primary);
+  border: 2rpx solid var(--sr-primary);
 }
 
 .btn-practice.spell {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 /* 横屏表格入口独占一行，避免四个按钮挤在一起 */
@@ -525,9 +535,9 @@ onLoad(async (opt: any) => {
   min-height: 72rpx;
   flex-direction: row;
   gap: 12rpx;
-  background: #fff;
-  color: #52796f;
-  border: 2rpx solid #52796f;
+  background: var(--sr-card);
+  color: var(--sr-primary);
+  border: 2rpx solid var(--sr-primary);
 }
 .btn-practice.table .btn-practice-sub {
   margin-top: 0;
@@ -540,6 +550,12 @@ onLoad(async (opt: any) => {
   border-radius: 16rpx;
   padding: 26rpx;
   margin-bottom: 20rpx;
+}
+
+/* 暗色下暖黄底刺眼：降饱和 */
+.theme-dark .mnemonics-card {
+  background: rgba(230, 162, 60, 0.12);
+  border-color: rgba(230, 162, 60, 0.3);
 }
 
 .mnemonic-row {
@@ -558,18 +574,23 @@ onLoad(async (opt: any) => {
   word-break: break-all;
 }
 
+/* 暗色下深金文字不可读：提亮 */
+.theme-dark .koujue {
+  color: #e6c07b;
+}
+
 .mnemonic-toggle {
   display: block;
   text-align: center;
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 12rpx;
 }
 
 /* 视图切换（仅元素周期表包） */
 .view-tabs {
   display: flex;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 8rpx;
   margin-bottom: 20rpx;
@@ -579,20 +600,20 @@ onLoad(async (opt: any) => {
   flex: 1;
   text-align: center;
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   padding: 14rpx 0;
   border-radius: 12rpx;
 }
 
 .view-tab.active {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-weight: 600;
 }
 
 /* 周期表视图 */
 .periodic-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 26rpx;
 }
@@ -607,7 +628,7 @@ onLoad(async (opt: any) => {
 
 .period-label {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: 600;
   display: block;
   margin-bottom: 12rpx;
@@ -622,7 +643,7 @@ onLoad(async (opt: any) => {
 .element-chip {
   width: 72rpx;
   padding: 10rpx 0 8rpx;
-  background: #f0f5f1;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   display: flex;
   flex-direction: column;
@@ -632,19 +653,19 @@ onLoad(async (opt: any) => {
 .element-symbol {
   font-size: 30rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.2;
 }
 
 .element-name {
   font-size: 18rpx;
-  color: #888;
+  color: var(--sr-text-2);
   margin-top: 2rpx;
 }
 
 /* 条目预览 */
 .items-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 26rpx;
 }
@@ -652,7 +673,7 @@ onLoad(async (opt: any) => {
 .section-label {
   font-size: 26rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   margin-bottom: 16rpx;
   display: block;
 }
@@ -660,7 +681,7 @@ onLoad(async (opt: any) => {
 .item-row {
   display: flex;
   padding: 18rpx 0;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid var(--sr-border);
   align-items: baseline;
 }
 
@@ -670,13 +691,13 @@ onLoad(async (opt: any) => {
 
 .item-row.head {
   padding-bottom: 10rpx;
-  border-bottom: 2rpx solid #f0f0f0;
+  border-bottom: 2rpx solid var(--sr-border);
 }
 
 .item-row.head .item-q,
 .item-row.head .item-a {
   font-size: 22rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   font-weight: normal;
 }
 
@@ -693,24 +714,24 @@ onLoad(async (opt: any) => {
 
 .q-text {
   font-size: 26rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   display: block;
 }
 
 .q-extras {
   font-size: 20rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 4rpx;
   display: block;
 }
 
 .cell {
   font-size: 26rpx;
-  color: #555;
+  color: var(--sr-text-2);
   word-break: break-all;
 }
 
-/* 复杂公式预渲染 PNG */
+/* 复杂公式预渲染 PNG（白底图片，保留白底衬底） */
 .formula-img {
   display: block;
   width: 100%;
@@ -719,7 +740,7 @@ onLoad(async (opt: any) => {
   background: #fff;
 }
 
-/* 函数图像 canvas（缓冲区按实际布局尺寸 × dpr 设置，见 renderPlot） */
+/* 函数图像 canvas（绘制内容自带白底，见 function-plot.ts；缓冲区按实际布局尺寸 × dpr 设置，见 renderPlot） */
 .plot-canvas {
   display: block;
   width: 100%;
@@ -731,7 +752,7 @@ onLoad(async (opt: any) => {
 
 /* 完整周期表网格 */
 .periodic-full-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 26rpx;
 }
@@ -740,7 +761,7 @@ onLoad(async (opt: any) => {
   width: 100%;
   /* 高度跟随内容（ptHeight + 上下留白），避免写死 rpx 在窄屏上裁掉最后一行（锕系） */
   overflow: hidden;
-  background: #f7faf8;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
 }
 
@@ -750,8 +771,8 @@ onLoad(async (opt: any) => {
 
 .pt-cell {
   position: absolute;
-  background: #eef4f0;
-  border: 1rpx solid #d5ddd8;
+  background: var(--sr-primary-bg);
+  border: 1rpx solid var(--sr-border);
   border-radius: 8rpx;
   display: flex;
   flex-direction: column;
@@ -761,8 +782,8 @@ onLoad(async (opt: any) => {
 }
 
 .pt-cell.fblock {
-  background: #eef4f0;
-  border-color: #c8d6cc;
+  background: var(--sr-primary-bg);
+  border-color: var(--sr-border);
 }
 
 .pt-cell:active {
@@ -771,20 +792,20 @@ onLoad(async (opt: any) => {
 
 .pt-num {
   font-size: 9px;
-  color: #999;
+  color: var(--sr-text-3);
   line-height: 1.1;
 }
 
 .pt-symbol {
   font-size: 15px;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.2;
 }
 
 .pt-tip {
   font-size: 20rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   margin-top: 14rpx;
   display: block;
   text-align: center;
@@ -801,13 +822,13 @@ onLoad(async (opt: any) => {
 
 .loading-text {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .btn-back {
   margin-top: 30rpx;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 40rpx;
   font-size: 28rpx;
   border: none;

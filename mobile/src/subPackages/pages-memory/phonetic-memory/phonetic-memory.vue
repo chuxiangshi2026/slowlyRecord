@@ -1,5 +1,5 @@
 <template>
-  <view class="phonetic-page">
+  <view class="phonetic-page" :class="themeClass">
     <!-- 进度统计 -->
     <view class="progress-row">
       <view class="progress-stat">
@@ -199,7 +199,7 @@ function goBreakdown() {
 <style scoped>
 .phonetic-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding: 20rpx 24rpx 60rpx;
 }
 
@@ -212,7 +212,7 @@ function goBreakdown() {
 
 .progress-stat {
   flex: 1;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   display: flex;
@@ -223,22 +223,22 @@ function goBreakdown() {
 .stat-num {
   font-size: 44rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
 }
 
 .stat-num.active {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .stat-total {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   font-weight: 400;
 }
 
 .stat-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 /* 练习入口 */
@@ -250,7 +250,7 @@ function goBreakdown() {
 }
 
 .practice-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx;
   text-align: center;
@@ -264,14 +264,14 @@ function goBreakdown() {
 .card-title {
   font-size: 28rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   margin-top: 8rpx;
   display: block;
 }
 
 .card-desc {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 4rpx;
   display: block;
 }
@@ -291,18 +291,18 @@ function goBreakdown() {
 }
 
 .group--vowel .group-header {
-  border-left-color: #52796f;
+  border-left-color: var(--sr-primary);
 }
 
 .group-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
 }
 
 .group-sub {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .section {
@@ -320,17 +320,17 @@ function goBreakdown() {
 .section-label .cn {
   font-size: 26rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
 }
 
 .section-label .en {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .section-label .count {
   font-size: 20rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
 }
 
 /* 音标卡网格 */
@@ -343,8 +343,8 @@ function goBreakdown() {
 .phoneme-card {
   position: relative;
   padding: 16rpx 6rpx 12rpx;
-  background: #fff;
-  border: 2rpx solid #eef0f4;
+  background: var(--sr-card);
+  border: 2rpx solid var(--sr-border);
   border-radius: 12rpx;
   text-align: center;
 }
@@ -354,15 +354,20 @@ function goBreakdown() {
   background: #fffaf2;
 }
 
+.theme-dark .phoneme-card.learning {
+  border-color: rgba(230, 162, 60, 0.35);
+  background: rgba(230, 162, 60, 0.1);
+}
+
 .phoneme-card.mastered {
-  border-color: #c8d6cc;
-  background: #f4faf5;
+  border-color: var(--sr-border);
+  background: var(--sr-primary-bg);
 }
 
 .ipa {
   font-size: 30rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   font-family: 'Times New Roman', serif;
   display: block;
 }
@@ -370,7 +375,7 @@ function goBreakdown() {
 .first-example {
   margin-top: 4rpx;
   font-size: 20rpx;
-  color: #999;
+  color: var(--sr-text-3);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -391,9 +396,19 @@ function goBreakdown() {
   color: #5daf34;
 }
 
+.theme-dark .badge.voiced {
+  background: rgba(93, 175, 52, 0.18);
+  color: #7fce5a;
+}
+
 .badge.voiceless {
   background: #e9e9eb;
   color: #909399;
+}
+
+.theme-dark .badge.voiceless {
+  background: rgba(144, 147, 153, 0.18);
+  color: #a8aeb4;
 }
 
 /* 详情弹层 */
@@ -403,7 +418,7 @@ function goBreakdown() {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--sr-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -411,7 +426,7 @@ function goBreakdown() {
 }
 
 .detail-content {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 40rpx;
   width: 620rpx;
@@ -429,7 +444,7 @@ function goBreakdown() {
 .detail-ipa {
   font-size: 56rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   font-family: 'Times New Roman', serif;
 }
 
@@ -443,22 +458,27 @@ function goBreakdown() {
   font-size: 20rpx;
   padding: 4rpx 14rpx;
   border-radius: 8rpx;
-  background: #eef4f0;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 
 .tag.plain {
-  background: #f5f5f5;
-  color: #888;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 
 .tag.vowel {
-  background: #eaf1ea;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 
 .tag.consonant {
   background: #fdf6ec;
+  color: #e6a23c;
+}
+
+.theme-dark .tag.consonant {
+  background: rgba(230, 162, 60, 0.15);
   color: #e6a23c;
 }
 
@@ -467,13 +487,18 @@ function goBreakdown() {
   color: #5daf34;
 }
 
+.theme-dark .tag.voiced-tag {
+  background: rgba(93, 175, 52, 0.18);
+  color: #7fce5a;
+}
+
 .detail-block {
   margin-bottom: 26rpx;
 }
 
 .block-label {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   font-weight: bold;
   margin-bottom: 10rpx;
   display: block;
@@ -481,7 +506,7 @@ function goBreakdown() {
 
 .tip {
   font-size: 28rpx;
-  color: #555;
+  color: var(--sr-text-2);
   line-height: 1.6;
 }
 
@@ -493,8 +518,8 @@ function goBreakdown() {
 
 .example-chip {
   font-size: 26rpx;
-  color: #52796f;
-  background: #eef4f0;
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
   padding: 12rpx 24rpx;
   border-radius: 12rpx;
 }
@@ -507,17 +532,17 @@ function goBreakdown() {
 
 .similar-tag {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-family: 'Times New Roman', serif;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
   padding: 8rpx 20rpx;
   border-radius: 10rpx;
 }
 
 .btn-close {
   margin-top: 10rpx;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 44rpx;
   height: 84rpx;
   font-size: 28rpx;

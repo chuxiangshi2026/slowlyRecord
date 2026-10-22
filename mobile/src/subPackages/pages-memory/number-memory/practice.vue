@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="themeClass">
     <!-- ===== 小结页 ===== -->
     <view v-if="showSummary" class="summary">
       <text class="summary-icon">🎯</text>
@@ -188,7 +188,7 @@ function formatNumbers(nums: string): string {
 <style scoped>
 .page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding-bottom: 40rpx;
 }
 
@@ -217,19 +217,19 @@ function formatNumbers(nums: string): string {
 }
 .range-chip {
   padding: 10rpx 30rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 28rpx;
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 .range-chip.active {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .quiz-card {
   margin: 12rpx 24rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 60rpx 32rpx;
   min-height: 420rpx;
@@ -242,7 +242,7 @@ function formatNumbers(nums: string): string {
 .peg-number {
   font-size: 100rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   font-family: 'Courier New', monospace;
 }
 .peg-cover {
@@ -256,30 +256,37 @@ function formatNumbers(nums: string): string {
   font-size: 26rpx;
   color: rgba(82, 121, 111, 0.75);
 }
+.theme-dark .peg-cover {
+  background: rgba(131, 197, 168, 0.12);
+  border-color: rgba(131, 197, 168, 0.4);
+}
+.theme-dark .peg-cover-hint {
+  color: rgba(131, 197, 168, 0.85);
+}
 .peg-image {
   width: 320rpx;
   height: 240rpx;
   margin-top: 24rpx;
   border-radius: 12rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
 }
 .peg-answer {
   margin-top: 32rpx;
   font-size: 32rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.7;
   text-align: center;
 }
 .entry-label {
   font-size: 36rpx;
   font-weight: 600;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 .entry-answer {
   margin-top: 40rpx;
   font-size: 56rpx;
   font-weight: 600;
-  color: #52796f;
+  color: var(--sr-primary);
   font-family: 'Courier New', monospace;
   letter-spacing: 6rpx;
   word-break: break-all;
@@ -295,13 +302,13 @@ function formatNumbers(nums: string): string {
 }
 .quiz-empty-title {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   display: block;
   margin-bottom: 8rpx;
 }
 .quiz-empty-tip {
   font-size: 24rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   display: block;
 }
 
@@ -323,20 +330,20 @@ function formatNumbers(nums: string): string {
   opacity: 0.4;
 }
 .rate-btn.forgot {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .rate-btn.remembered {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .back-btn {
   margin: 24rpx;
   height: 88rpx;
   line-height: 88rpx;
   border-radius: 44rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 28rpx;
   border: none;
 }
@@ -357,7 +364,7 @@ function formatNumbers(nums: string): string {
 .summary-title {
   font-size: 36rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   margin-bottom: 40rpx;
 }
 .summary-stats {
@@ -367,7 +374,7 @@ function formatNumbers(nums: string): string {
 }
 .summary-stat {
   width: 220rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 32rpx 0;
   display: flex;
@@ -379,14 +386,14 @@ function formatNumbers(nums: string): string {
   font-weight: bold;
 }
 .summary-stat.remembered .summary-num {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 .summary-stat.forgotten .summary-num {
   color: #d4564e;
 }
 .summary-label {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-2);
   margin-top: 8rpx;
 }
 .summary-btn {
@@ -399,11 +406,11 @@ function formatNumbers(nums: string): string {
   margin: 0 0 20rpx;
 }
 .summary-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .summary-btn.secondary {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 </style>

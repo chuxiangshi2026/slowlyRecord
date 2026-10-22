@@ -1,5 +1,5 @@
 <template>
-  <view class="graph-page">
+  <view class="graph-page" :class="themeClass">
     <!-- #ifdef H5 -->
     <view class="state-tip">函数图像功能请使用微信小程序、抖音小程序或 App 打开</view>
     <!-- #endif -->
@@ -254,7 +254,7 @@ onReady(async () => {
 <style scoped>
 .graph-page {
   min-height: 100vh;
-  background: #f5f7f5;
+  background: var(--sr-bg);
   padding: 20rpx;
   box-sizing: border-box;
 }
@@ -263,11 +263,11 @@ onReady(async () => {
   padding: 120rpx 40rpx;
   text-align: center;
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
   margin-bottom: 20rpx;
@@ -284,14 +284,14 @@ onReady(async () => {
 .fx-label {
   font-size: 30rpx;
   font-weight: 600;
-  color: #3d5a52;
+  color: var(--sr-primary);
   margin-right: 16rpx;
 }
 .expr-input {
   flex: 1;
   font-size: 30rpx;
-  color: #303030;
-  background: #f2f6f3;
+  color: var(--sr-text);
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 14rpx 20rpx;
 }
@@ -319,17 +319,17 @@ onReady(async () => {
   padding: 10rpx 28rpx;
   margin-right: 16rpx;
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   background: rgba(82, 121, 111, 0.1);
   border-radius: 28rpx;
 }
 .preset-chip.active {
-  color: #fff;
-  background: #52796f;
+  color: var(--sr-on-primary);
+  background: var(--sr-primary);
 }
 .preset-chip.ghost {
-  color: #999;
-  background: #f2f3f5;
+  color: var(--sr-text-3);
+  background: var(--sr-card-2);
 }
 .preset-chip:active {
   opacity: 0.85;
@@ -350,7 +350,7 @@ onReady(async () => {
   margin-top: 12rpx;
   text-align: center;
   font-size: 22rpx;
-  color: #b0b8b3;
+  color: var(--sr-text-3);
 }
 
 /* 参数滑条 */
@@ -365,7 +365,7 @@ onReady(async () => {
   width: 120rpx;
   flex-shrink: 0;
   font-size: 26rpx;
-  color: #3d5a52;
+  color: var(--sr-primary);
   font-family: monospace;
 }
 .param-slider {

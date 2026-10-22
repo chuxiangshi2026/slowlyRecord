@@ -1,5 +1,5 @@
 <template>
-  <view class="home-container">
+  <view class="home-container" :class="themeClass">
     <view class="header">
       <text class="title">慢记</text>
       <text class="subtitle">高效记忆，轻松学习</text>
@@ -274,7 +274,8 @@ const goToAllFeatures = () => {
 .home-container {
   padding: 20rpx;
   min-height: 100vh;
-  background: linear-gradient(180deg, #eaf1ea 0%, #f5f7f5 100%);
+  /* 护眼绿渐变底：亮色浅绿→浅灰绿，暗色深绿→深灰绿 */
+  background: linear-gradient(180deg, var(--sr-primary-bg) 0%, var(--sr-bg) 100%);
 }
 
 .header {
@@ -285,13 +286,13 @@ const goToAllFeatures = () => {
 .title {
   font-size: 48rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
 }
 
 .subtitle {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 10rpx;
   display: block;
 }
@@ -302,7 +303,7 @@ const goToAllFeatures = () => {
 }
 
 .task-main {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 40rpx;
   display: flex;
@@ -314,26 +315,26 @@ const goToAllFeatures = () => {
 
 /* 目标达成态：护眼绿底 */
 .task-main.done {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .task-main-title {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
   display: block;
 }
 
 .task-main-num {
   font-size: 56rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 10rpx;
   display: block;
 }
 
 .task-main-hint {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 16rpx;
   display: block;
 }
@@ -341,20 +342,20 @@ const goToAllFeatures = () => {
 /* 待复习数：主卡小字，保持可见但不抢进度环的视觉重心 */
 .task-main-due {
   font-size: 22rpx;
-  color: #a3b3ab;
+  color: var(--sr-text-3);
   margin-top: 12rpx;
   display: block;
 }
 
 /* ===== 目标进度环：双层半圆旋转方案 =====
-   外圈为轨道（#e8f1ec），左右两个半环各藏一个整圆色块（#52796f），
+   外圈为轨道（--sr-primary-bg），左右两个半环各藏一个整圆色块（--sr-primary），
    按进度角度旋转拼出圆环，兼容所有小程序基础库 */
 .goal-ring {
   position: relative;
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  background: #e8f1ec;
+  background: var(--sr-primary-bg);
   flex-shrink: 0;
 }
 
@@ -378,7 +379,7 @@ const goToAllFeatures = () => {
   width: 200%;
   height: 100%;
   border-radius: 50%;
-  background: #52796f;
+  background: var(--sr-primary);
 }
 
 .ring-half-right .ring-fill {
@@ -401,25 +402,25 @@ const goToAllFeatures = () => {
   width: 116rpx;
   height: 116rpx;
   border-radius: 50%;
-  background: #fff;
+  background: var(--sr-card);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .task-main.done .ring-hole {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .ring-num {
   font-size: 24rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .task-main-action {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 28rpx;
   font-weight: bold;
   padding: 20rpx 36rpx;
@@ -435,7 +436,7 @@ const goToAllFeatures = () => {
 
 .task-sub {
   flex: 1;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx 0;
   text-align: center;
@@ -445,13 +446,13 @@ const goToAllFeatures = () => {
 .task-sub-num {
   font-size: 40rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
 }
 
 .task-sub-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
 }
@@ -469,11 +470,11 @@ const goToAllFeatures = () => {
 
 .bank-name {
   font-size: 36rpx !important;
-  color: #52796f !important;
+  color: var(--sr-primary) !important;
 }
 
 .stat-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
   text-align: center;
@@ -483,19 +484,19 @@ const goToAllFeatures = () => {
 .stat-num {
   font-size: 48rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
 }
 
 .stat-label {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 10rpx;
   display: block;
 }
 
 .quick-actions {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
   margin-top: 20rpx;
@@ -505,7 +506,7 @@ const goToAllFeatures = () => {
 .action-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-bottom: 20rpx;
 }
 
@@ -533,17 +534,17 @@ const goToAllFeatures = () => {
   font-weight: bold;
 }
 
-/* 主色 #52796f 系列的低饱和同族色 */
+/* 主色 #52796f 系列的低饱和同族色（分类配色，暗色下保留） */
 .action-icon.dictation { background: #3d5a52; }
-.action-icon.translate { background: #74937d; }
+.action-icon.translate { background: var(--sr-primary-2); }
 .action-icon.text { background: #6f9a8d; }
 .action-icon.memory { background: #5c7a6b; }
-.action-icon.addword { background: #74937d; }
+.action-icon.addword { background: var(--sr-primary-2); }
 .action-icon.all { background: #97b1a6; }
 
 .action-text {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 10rpx;
   display: block;
 }

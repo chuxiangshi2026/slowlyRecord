@@ -1,5 +1,5 @@
 <template>
-  <view class="knowledge-page">
+  <view class="knowledge-page" :class="themeClass">
     <view class="tabs">
       <view
         v-for="t in tabs"
@@ -225,7 +225,7 @@ onShow(() => {
 <style scoped>
 .knowledge-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
   /* 底部安全区补偿：避免最底行被手势条遮挡 */
@@ -236,8 +236,8 @@ onShow(() => {
 
 .tabs {
   display: flex;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .tab {
@@ -245,12 +245,12 @@ onShow(() => {
   padding: 24rpx 0;
   text-align: center;
   font-size: 26rpx;
-  color: #888;
+  color: var(--sr-text-2);
   position: relative;
 }
 
 .tab.active {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: 600;
 }
 
@@ -261,7 +261,7 @@ onShow(() => {
   left: 30%;
   right: 30%;
   height: 4rpx;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 2rpx;
 }
 
@@ -284,21 +284,21 @@ onShow(() => {
 
 .empty-title {
   font-size: 32rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   font-weight: bold;
   margin-top: 24rpx;
 }
 
 .empty-tip {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 12rpx;
 }
 
 .btn-goto-builtin {
   margin-top: 40rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 40rpx;
   font-size: 28rpx;
   border: none;
@@ -316,18 +316,18 @@ onShow(() => {
 .category-chip {
   display: inline-block;
   font-size: 24rpx;
-  color: #666;
-  background: #fff;
+  color: var(--sr-text-2);
+  background: var(--sr-card);
   padding: 12rpx 30rpx;
   border-radius: 30rpx;
   margin-right: 16rpx;
-  border: 1rpx solid #e8e8e8;
+  border: 1rpx solid var(--sr-border);
 }
 
 .category-chip.active {
-  background: #52796f;
-  color: #fff;
-  border-color: #52796f;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
+  border-color: var(--sr-primary);
 }
 
 .empty-filter {
@@ -337,7 +337,7 @@ onShow(() => {
 
 .empty-filter-text {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 /* 分类组 */
@@ -355,17 +355,17 @@ onShow(() => {
 .category-title {
   font-size: 28rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .category-count {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 /* 包卡片 */
 .pack-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 26rpx;
   margin-bottom: 18rpx;
@@ -382,13 +382,13 @@ onShow(() => {
 .pack-name {
   font-size: 30rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   display: block;
 }
 
 .pack-desc {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 6rpx;
   display: block;
   overflow: hidden;
@@ -398,7 +398,7 @@ onShow(() => {
 
 .pack-meta {
   font-size: 22rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   margin-top: 6rpx;
   display: block;
 }
@@ -411,7 +411,7 @@ onShow(() => {
 
 .progress-text {
   font-size: 22rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .progress-due {
@@ -428,8 +428,8 @@ onShow(() => {
 }
 
 .import-btn {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border: none;
   border-radius: 30rpx;
   font-size: 24rpx;
@@ -441,8 +441,8 @@ onShow(() => {
 
 .imported-badge {
   font-size: 22rpx;
-  color: #52796f;
-  background: rgba(82, 121, 111, 0.1);
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
   padding: 8rpx 22rpx;
   border-radius: 26rpx;
 }
@@ -455,8 +455,14 @@ onShow(() => {
   border-radius: 26rpx;
 }
 
+/* 暗色下浅红底刺眼：降饱和 */
+.theme-dark .remove-btn {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
+}
+
 .arrow {
   font-size: 32rpx;
-  color: #ccc;
+  color: var(--sr-text-3);
 }
 </style>

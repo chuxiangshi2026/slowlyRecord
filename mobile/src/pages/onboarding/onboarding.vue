@@ -1,5 +1,5 @@
 <template>
-  <view class="onboarding-container">
+  <view class="onboarding-container" :class="themeClass">
     <!-- 前 two 屏右上角的跳过入口 -->
     <text v-if="current < TOTAL - 1" class="skip-link" @click="skip">跳过</text>
 
@@ -193,51 +193,52 @@ async function importBank(bank: RecommendedBank & { wordCount: number }) {
 </script>
 
 <style scoped>
-.onboarding-container { position: relative; min-height: 100vh; background: linear-gradient(180deg, #eaf1ea 0%, #f5f8f5 100%); }
-.skip-link { position: absolute; top: 40rpx; right: 40rpx; z-index: 10; font-size: 28rpx; color: #52796f; padding: 12rpx 24rpx; }
+.onboarding-container { position: relative; min-height: 100vh; background: linear-gradient(180deg, var(--sr-primary-bg) 0%, var(--sr-bg) 100%); }
+.skip-link { position: absolute; top: 40rpx; right: 40rpx; z-index: 10; font-size: 28rpx; color: var(--sr-primary); padding: 12rpx 24rpx; }
 .swiper { height: 100vh; }
 .screen { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80rpx 60rpx 160rpx; box-sizing: border-box; }
 
-.hero { width: 220rpx; height: 220rpx; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8rpx 32rpx rgba(82, 121, 111, 0.15); }
+.hero { width: 220rpx; height: 220rpx; border-radius: 50%; background: var(--sr-card); display: flex; align-items: center; justify-content: center; box-shadow: 0 8rpx 32rpx rgba(82, 121, 111, 0.15); }
 .hero-emoji { font-size: 110rpx; }
-.app-name { font-size: 64rpx; font-weight: bold; color: #52796f; margin-top: 50rpx; }
-.slogan { font-size: 34rpx; color: #333; margin-top: 24rpx; font-weight: bold; }
-.slogan-sub { font-size: 28rpx; color: #888; margin-top: 16rpx; }
-.next-hint { font-size: 24rpx; color: #a0b3ab; margin-top: 90rpx; }
+.app-name { font-size: 64rpx; font-weight: bold; color: var(--sr-primary); margin-top: 50rpx; }
+.slogan { font-size: 34rpx; color: var(--sr-text); margin-top: 24rpx; font-weight: bold; }
+.slogan-sub { font-size: 28rpx; color: var(--sr-text-2); margin-top: 16rpx; }
+.next-hint { font-size: 24rpx; color: var(--sr-text-3); margin-top: 90rpx; }
 
-.screen-title { font-size: 44rpx; font-weight: bold; color: #333; margin-bottom: 16rpx; }
-.screen-subtitle { font-size: 24rpx; color: #888; margin-bottom: 40rpx; text-align: center; }
+.screen-title { font-size: 44rpx; font-weight: bold; color: var(--sr-text); margin-bottom: 16rpx; }
+.screen-subtitle { font-size: 24rpx; color: var(--sr-text-2); margin-bottom: 40rpx; text-align: center; }
 .feature-list { width: 100%; margin-top: 30rpx; }
-.feature-item { display: flex; align-items: center; background: #fff; border-radius: 20rpx; padding: 30rpx; margin-bottom: 24rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
+.feature-item { display: flex; align-items: center; background: var(--sr-card); border-radius: 20rpx; padding: 30rpx; margin-bottom: 24rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
 .feature-emoji { font-size: 48rpx; margin-right: 24rpx; }
 .feature-info { flex: 1; }
-.feature-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
-.feature-desc { font-size: 26rpx; color: #888; margin-top: 6rpx; display: block; }
+.feature-name { font-size: 32rpx; font-weight: bold; color: var(--sr-text); display: block; }
+.feature-desc { font-size: 26rpx; color: var(--sr-text-2); margin-top: 6rpx; display: block; }
 
 .bank-list { width: 100%; }
-.bank-card { display: flex; align-items: center; background: #fff; border-radius: 20rpx; padding: 30rpx; margin-bottom: 24rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
+.bank-card { display: flex; align-items: center; background: var(--sr-card); border-radius: 20rpx; padding: 30rpx; margin-bottom: 24rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
 .bank-card.disabled { opacity: 0.6; }
 .bank-emoji { font-size: 48rpx; margin-right: 24rpx; }
 .bank-info { flex: 1; }
-.bank-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
-.bank-desc { font-size: 24rpx; color: #888; margin-top: 6rpx; display: block; }
-.bank-action { font-size: 26rpx; color: #fff; background: #52796f; border-radius: 32rpx; padding: 14rpx 28rpx; }
-.skip-btn { font-size: 28rpx; color: #a0b3ab; margin-top: 20rpx; padding: 16rpx 40rpx; }
+.bank-name { font-size: 32rpx; font-weight: bold; color: var(--sr-text); display: block; }
+.bank-desc { font-size: 24rpx; color: var(--sr-text-2); margin-top: 6rpx; display: block; }
+.bank-action { font-size: 26rpx; color: var(--sr-on-primary); background: var(--sr-primary); border-radius: 32rpx; padding: 14rpx 28rpx; }
+.skip-btn { font-size: 28rpx; color: var(--sr-text-3); margin-top: 20rpx; padding: 16rpx 40rpx; }
 
 /* 行动屏多模块起点 */
 .start-scroll { width: 100%; max-height: 55vh; }
 .start-section { margin-bottom: 28rpx; }
-.section-label { font-size: 26rpx; color: #74937d; font-weight: bold; margin-bottom: 12rpx; display: block; }
-.start-card { display: flex; align-items: center; background: #fff; border-radius: 20rpx; padding: 24rpx 30rpx; margin-bottom: 16rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
+.section-label { font-size: 26rpx; color: var(--sr-primary-2); font-weight: bold; margin-bottom: 12rpx; display: block; }
+.start-card { display: flex; align-items: center; background: var(--sr-card); border-radius: 20rpx; padding: 24rpx 30rpx; margin-bottom: 16rpx; box-shadow: 0 4rpx 16rpx rgba(82, 121, 111, 0.06); }
 .start-card.disabled { opacity: 0.6; }
 .start-emoji { font-size: 44rpx; margin-right: 20rpx; }
 .start-info { flex: 1; }
-.start-name { font-size: 30rpx; font-weight: bold; color: #333; display: block; }
-.start-desc { font-size: 24rpx; color: #888; margin-top: 4rpx; display: block; }
-.start-action { font-size: 24rpx; color: #fff; background: #52796f; border-radius: 28rpx; padding: 10rpx 24rpx; }
-.start-action.plain { background: #eaf1ea; color: #52796f; }
+.start-name { font-size: 30rpx; font-weight: bold; color: var(--sr-text); display: block; }
+.start-desc { font-size: 24rpx; color: var(--sr-text-2); margin-top: 4rpx; display: block; }
+.start-action { font-size: 24rpx; color: var(--sr-on-primary); background: var(--sr-primary); border-radius: 28rpx; padding: 10rpx 24rpx; }
+.start-action.plain { background: var(--sr-primary-bg); color: var(--sr-primary); }
 
 .dots { position: absolute; bottom: 60rpx; left: 0; right: 0; display: flex; justify-content: center; gap: 16rpx; }
 .dot { width: 16rpx; height: 16rpx; border-radius: 50%; background: #c8d6d0; }
-.dot.active { background: #52796f; width: 36rpx; border-radius: 8rpx; }
+.theme-dark .dot { background: #3d4a44; }
+.dot.active { background: var(--sr-primary); width: 36rpx; border-radius: 8rpx; }
 </style>

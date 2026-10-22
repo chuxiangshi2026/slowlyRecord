@@ -1,5 +1,5 @@
 <template>
-  <view class="review-container">
+  <view class="review-container" :class="themeClass">
     <view v-if="!currentWord" class="empty-state">
       <text class="empty-text">{{ emptyTitle }}</text>
       <text class="empty-hint">{{ emptyHint }}</text>
@@ -885,29 +885,29 @@ const goAfterReview = (url: string) => {
 .empty-state {
   text-align: center;
   padding: 60rpx;
-  background: rgba(255,255,255,0.95);
+  background: var(--sr-card);
   border-radius: 24rpx;
   margin: auto;
 }
 
 .empty-text {
   font-size: 40rpx;
-  color: #333;
+  color: var(--sr-text);
   display: block;
   font-weight: bold;
 }
 
 .empty-hint {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 20rpx;
   display: block;
 }
 
 .btn-start-review {
   margin-top: 40rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 50rpx;
   height: 90rpx;
   font-size: 32rpx;
@@ -1012,7 +1012,7 @@ const goAfterReview = (url: string) => {
 
 .hint-left { color: #e6a23c; }
 .hint-down { color: #83c5a8; }
-.hint-right { color: #52796f; }
+.hint-right { color: var(--sr-primary); }
 
 /* 卡片容器 */
 .card-wrapper {
@@ -1024,7 +1024,7 @@ const goAfterReview = (url: string) => {
 }
 
 .review-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   width: 100%;
   max-width: 600rpx;
@@ -1062,7 +1062,7 @@ const goAfterReview = (url: string) => {
 }
 
 .card-back {
-  background: #fff;
+  background: var(--sr-card);
 }
 
 /* 划动视觉反馈 */
@@ -1100,16 +1100,16 @@ const goAfterReview = (url: string) => {
 .swipe-text {
   font-size: 40rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 /* 离线词典释义 */
 .offline-meaning {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 20rpx;
   padding: 16rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   line-height: 1.5;
 }
@@ -1127,32 +1127,32 @@ const goAfterReview = (url: string) => {
 .word-text {
   font-size: 72rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .phonetic {
   font-size: 32rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 20rpx;
   font-family: 'Times New Roman', serif;
 }
 
 .flip-hint {
   font-size: 26rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   margin-top: 60rpx;
 }
 
 .word-meaning {
   font-size: 40rpx;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 40rpx;
   line-height: 1.6;
 }
 
 .word-example {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 30rpx;
   font-style: italic;
 }
@@ -1165,8 +1165,8 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-play {
-  background: #f0f0f0;
-  color: #52796f;
+  background: var(--sr-card-2);
+  color: var(--sr-primary);
   border-radius: 50rpx;
   padding: 16rpx 40rpx;
   font-size: 28rpx;
@@ -1180,7 +1180,7 @@ const goAfterReview = (url: string) => {
   justify-content: space-around;
   margin-top: 40rpx;
   padding-top: 40rpx;
-  border-top: 1rpx solid #eee;
+  border-top: 1rpx solid var(--sr-border);
   pointer-events: none; /* 让触摸事件穿透到卡片 */
 }
 
@@ -1197,12 +1197,12 @@ const goAfterReview = (url: string) => {
 
 .guide-label {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .guide-item.left .guide-arrow { color: #c0564f; }
-.guide-item.down .guide-arrow { color: #52796f; }
-.guide-item.right .guide-arrow { color: #52796f; }
+.guide-item.down .guide-arrow { color: var(--sr-primary); }
+.guide-item.right .guide-arrow { color: var(--sr-primary); }
 
 /* 底部操作按钮 */
 .action-buttons {
@@ -1235,8 +1235,8 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-remember {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .btn-label {
@@ -1251,7 +1251,7 @@ const goAfterReview = (url: string) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.6);
+  background: var(--sr-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1259,7 +1259,7 @@ const goAfterReview = (url: string) => {
 }
 
 .complete-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 60rpx;
   text-align: center;
@@ -1274,7 +1274,7 @@ const goAfterReview = (url: string) => {
 .complete-title {
   font-size: 40rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 20rpx;
   display: block;
 }
@@ -1293,12 +1293,12 @@ const goAfterReview = (url: string) => {
 .stat-value {
   font-size: 48rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   display: block;
 }
 
 .stat-value.success {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .stat-value.error {
@@ -1307,7 +1307,7 @@ const goAfterReview = (url: string) => {
 
 .stat-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
 }
@@ -1331,8 +1331,8 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-guide {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 50rpx;
   height: 84rpx;
   font-size: 30rpx;
@@ -1345,14 +1345,14 @@ const goAfterReview = (url: string) => {
 .delete-word {
   font-size: 36rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin: 20rpx 0;
   display: block;
 }
 
 .delete-hint {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 30rpx;
   display: block;
 }
@@ -1371,8 +1371,8 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-cancel {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 
 .btn-confirm-delete {
@@ -1412,10 +1412,10 @@ const goAfterReview = (url: string) => {
 .btn-secondary {
   margin-top: 24rpx;
   background: rgba(82, 121, 111, 0.12);
-  color: #52796f;
+  color: var(--sr-primary);
   border-radius: 50rpx;
   height: 84rpx;
   font-size: 30rpx;
-  border: 2rpx solid #52796f;
+  border: 2rpx solid var(--sr-primary);
 }
 </style>

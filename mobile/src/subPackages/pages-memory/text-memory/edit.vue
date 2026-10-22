@@ -1,5 +1,5 @@
 <template>
-  <view class="edit-page">
+  <view class="edit-page" :class="themeClass">
     <view class="form">
       <view class="form-row">
         <text class="form-label">标题 *</text>
@@ -198,12 +198,12 @@ function onCancel() {
 <style scoped>
 .edit-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding: 24rpx 24rpx 200rpx;
 }
 
 .form {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx;
 }
@@ -223,27 +223,27 @@ function onCancel() {
 
 .form-label {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-2);
   margin-bottom: 10rpx;
   display: block;
 }
 
 .form-input {
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 0 24rpx;
   height: 76rpx;
   line-height: 76rpx;
   font-size: 28rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .form-textarea {
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 20rpx 24rpx;
   font-size: 28rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   width: 100%;
   min-height: 240rpx;
   line-height: 1.8;
@@ -258,17 +258,17 @@ function onCancel() {
 
 .category-chip {
   padding: 12rpx 28rpx;
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border-radius: 30rpx;
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   border: 1rpx solid transparent;
 }
 
 .category-chip.active {
-  background: #eaf1ea;
-  color: #3d5a52;
-  border-color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 
 .actions {
@@ -279,7 +279,7 @@ function onCancel() {
   display: flex;
   gap: 16rpx;
   padding: 24rpx;
-  background: #fff;
+  background: var(--sr-card);
   box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 
@@ -293,16 +293,20 @@ function onCancel() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .action-btn.secondary {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .action-btn.danger {
   background: #fee;
   color: #e64340;
   flex: 0.6;
+}
+.theme-dark .action-btn.danger {
+  background: rgba(230, 67, 64, 0.15);
+  color: #ef5350;
 }
 </style>

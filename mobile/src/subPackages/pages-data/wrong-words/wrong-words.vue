@@ -1,5 +1,5 @@
 <template>
-  <view class="wrong-words-container">
+  <view class="wrong-words-container" :class="themeClass">
     <!-- 空态：无错题时给出口 -->
     <view v-if="!hasSession" class="empty-state">
       <text class="empty-icon">🎉</text>
@@ -204,7 +204,7 @@ const goHome = () => {
 
 .empty-state, .summary-state {
   text-align: center;
-  background: rgba(255,255,255,0.95);
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 80rpx 40rpx;
   display: flex;
@@ -219,13 +219,13 @@ const goHome = () => {
 .summary-title {
   font-size: 36rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 20rpx;
 }
 
 .summary-stats {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 24rpx;
 }
 
@@ -237,14 +237,14 @@ const goHome = () => {
 .empty-text {
   font-size: 36rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 20rpx;
   display: block;
 }
 
 .empty-hint {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 16rpx;
   display: block;
 }
@@ -266,21 +266,21 @@ const goHome = () => {
 }
 
 .empty-btn.primary {
-  background: #52796f;
+  background: var(--sr-primary);
 }
 
 .empty-btn.plain {
   background: transparent;
-  border: 2rpx solid #52796f;
+  border: 2rpx solid var(--sr-primary);
 }
 
 .empty-btn-text {
   font-size: 30rpx;
-  color: #fff;
+  color: var(--sr-on-primary);
 }
 
 .plain-text {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .progress-bar {
@@ -308,7 +308,7 @@ const goHome = () => {
 }
 
 .card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   min-height: 500rpx;
   position: relative;
@@ -336,7 +336,7 @@ const goHome = () => {
   right: 0;
   bottom: 0;
   transform: rotateY(180deg);
-  background: #fff;
+  background: var(--sr-card);
 }
 
 .card.flipped .card-front {
@@ -350,7 +350,7 @@ const goHome = () => {
 .word-text {
   font-size: 64rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .word-row {
@@ -370,20 +370,20 @@ const goHome = () => {
 
 .hint {
   font-size: 26rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   margin-top: 40rpx;
 }
 
 .word-meaning {
   font-size: 36rpx;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 30rpx;
   line-height: 1.6;
 }
 
 .phonetic {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 20rpx;
   font-family: 'Times New Roman', serif;
 }

@@ -1,5 +1,5 @@
 <template>
-  <view class="dictation-page">
+  <view class="dictation-page" :class="themeClass">
     <!-- 顶部进度栏 -->
     <view class="dictation-header">
       <view class="header-left">
@@ -775,7 +775,7 @@ onUnmounted(() => {
 <style scoped>
 .dictation-page {
   min-height: 100vh;
-  background: #f5f6f8;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
@@ -786,20 +786,20 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 24rpx 32rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .title {
   font-size: 36rpx;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--sr-text-strong);
 }
 
 .progress {
   font-size: 28rpx;
-  color: #888;
-  background: #f0f0f0;
+  color: var(--sr-text-3);
+  background: var(--sr-card-2);
   padding: 8rpx 20rpx;
   border-radius: 20rpx;
 }
@@ -810,8 +810,8 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 20rpx 32rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #f0f0f0;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .range-picker {
@@ -819,15 +819,15 @@ onUnmounted(() => {
   align-items: center;
   gap: 8rpx;
   padding: 12rpx 24rpx;
-  background: #f5f6f8;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   font-size: 26rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .arrow {
   font-size: 20rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .stats-mini {
@@ -837,7 +837,7 @@ onUnmounted(() => {
 }
 
 .stat-correct {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .stat-wrong {
@@ -866,19 +866,19 @@ onUnmounted(() => {
   gap: 16rpx;
   margin-bottom: 16rpx;
   padding: 20rpx 28rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
 }
 
 .hint-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   min-width: 60rpx;
 }
 
 .hint-content {
   font-size: 28rpx;
-  color: #333;
+  color: var(--sr-text);
   flex: 1;
 }
 
@@ -887,7 +887,7 @@ onUnmounted(() => {
 }
 
 .hint-dim {
-  color: #ccc;
+  color: var(--sr-text-3);
   text-align: center;
 }
 
@@ -908,8 +908,8 @@ onUnmounted(() => {
 
 .tap-fallback-text {
   font-size: 24rpx;
-  color: #52796f;
-  background: #eef4f0;
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
   padding: 8rpx 24rpx;
   border-radius: 20rpx;
 }
@@ -943,18 +943,18 @@ onUnmounted(() => {
 .input-slot {
   width: 72rpx;
   height: 88rpx;
-  border: 3rpx solid #ddd;
+  border: 3rpx solid var(--sr-border);
   border-radius: 12rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: var(--sr-card);
   transition: all 0.2s;
 }
 
 .input-slot.filled {
-  border-color: #52796f;
-  background: #eaf1ea;
+  border-color: var(--sr-primary);
+  background: var(--sr-primary-bg);
 }
 
 .input-slot.flashing {
@@ -971,7 +971,7 @@ onUnmounted(() => {
 .slot-text {
   font-size: 36rpx;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--sr-text-strong);
 }
 
 .hidden-input {
@@ -1000,29 +1000,29 @@ onUnmounted(() => {
 .letter-slot {
   width: 72rpx;
   height: 88rpx;
-  border: 3rpx solid #ddd;
+  border: 3rpx solid var(--sr-border);
   border-radius: 12rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: var(--sr-card);
   transition: all 0.2s;
 }
 
 .letter-slot.fixed {
   border-color: #c8d6cc;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .letter-slot.empty {
-  border-color: #bbb;
+  border-color: var(--sr-border);
   border-style: dashed;
 }
 
 .letter-slot.filled {
-  border-color: #52796f;
+  border-color: var(--sr-primary);
   border-style: solid;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .letter-slot.flashing {
@@ -1032,7 +1032,7 @@ onUnmounted(() => {
 }
 
 .fixed-text {
-  color: #3d5a52;
+  color: var(--sr-primary);
 }
 
 .letter-input {
@@ -1041,7 +1041,7 @@ onUnmounted(() => {
   text-align: center;
   font-size: 36rpx;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--sr-text-strong);
   background: transparent;
 }
 
@@ -1063,26 +1063,26 @@ onUnmounted(() => {
 .tap-slot {
   width: 72rpx;
   height: 88rpx;
-  border: 3rpx solid #ddd;
+  border: 3rpx solid var(--sr-border);
   border-style: dashed;
   border-radius: 12rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: var(--sr-card);
   transition: all 0.2s;
 }
 
 .tap-slot.filled {
-  border-color: #52796f;
+  border-color: var(--sr-primary);
   border-style: solid;
-  background: #eef4f0;
+  background: var(--sr-primary-bg);
 }
 
 .tap-slot-text {
   font-size: 36rpx;
   font-weight: 500;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .tap-pool {
@@ -1092,7 +1092,7 @@ onUnmounted(() => {
   gap: 16rpx;
   padding: 28rpx 20rpx;
   margin-top: 16rpx;
-  background: #eef0f2;
+  background: var(--sr-card-2);
   border-radius: 16rpx;
   width: 100%;
   box-sizing: border-box;
@@ -1102,8 +1102,8 @@ onUnmounted(() => {
   min-width: 80rpx;
   height: 92rpx;
   padding: 0 18rpx;
-  background: #fff;
-  border: 3rpx solid #c9d4cf;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-border);
   border-radius: 14rpx;
   display: flex;
   align-items: center;
@@ -1118,7 +1118,7 @@ onUnmounted(() => {
 .tap-tile-text {
   font-size: 38rpx;
   font-weight: bold;
-  color: #1a1a1a;
+  color: var(--sr-text-strong);
 }
 
 /* 错误提示区域 */
@@ -1129,14 +1129,14 @@ onUnmounted(() => {
 
 .full-hint {
   padding: 24rpx 32rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 16rpx;
   text-align: center;
 }
 
 .full-hint-text {
   font-size: 30rpx;
-  color: #3d5a52;
+  color: var(--sr-primary);
   font-weight: 500;
 }
 
@@ -1150,6 +1150,14 @@ onUnmounted(() => {
 .letter-hint-text {
   font-size: 28rpx;
   color: #c07a2b;
+}
+
+/* 警告浅橙底（#fdf6ec）：暗色下换为半透明橙，避免刺眼；亮色值保留在上面的基础规则里 */
+.theme-dark .input-slot.flashing,
+.theme-dark .letter-slot.flashing,
+.theme-dark .letter-hint-btn,
+.theme-dark .ctrl-btn.forget-btn {
+  background: rgba(230, 162, 60, 0.15);
 }
 
 /* 控制按钮 */
@@ -1169,7 +1177,7 @@ onUnmounted(() => {
   width: 96rpx;
   height: 96rpx;
   border-radius: 50%;
-  background: #fff;
+  background: var(--sr-card);
   box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
   transition: all 0.2s;
 }
@@ -1183,11 +1191,11 @@ onUnmounted(() => {
 }
 
 .ctrl-btn.play-btn {
-  background: #52796f;
+  background: var(--sr-primary);
 }
 
 .ctrl-btn.play-btn .ctrl-icon {
-  color: #fff;
+  color: var(--sr-on-primary);
 }
 
 .ctrl-btn.forget-btn {
@@ -1195,23 +1203,23 @@ onUnmounted(() => {
 }
 
 .ctrl-btn.skip-btn {
-  background: #f5f5f5;
+  background: var(--sr-card-2);
 }
 
 .ctrl-btn.hint-trigger {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   width: 80rpx;
   height: 80rpx;
 }
 
 .ctrl-icon {
   font-size: 32rpx;
-  color: #555;
+  color: var(--sr-text-2);
 }
 
 .ctrl-label {
   font-size: 18rpx;
-  color: #888;
+  color: var(--sr-text-3);
   margin-top: 2rpx;
 }
 
@@ -1227,19 +1235,19 @@ onUnmounted(() => {
 
 .empty-icon {
   font-size: 96rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-bottom: 24rpx;
 }
 
 .empty-text {
   font-size: 30rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 /* 空态补充说明（词组/句子被过滤） */
 .empty-sub {
   font-size: 26rpx;
-  color: #888;
+  color: var(--sr-text-3);
   margin-top: 16rpx;
   text-align: center;
   line-height: 1.6;
@@ -1250,7 +1258,7 @@ onUnmounted(() => {
 .empty-btn {
   margin-top: 40rpx;
   padding: 20rpx 64rpx;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 40rpx;
 }
 
@@ -1260,7 +1268,7 @@ onUnmounted(() => {
 
 .empty-btn-text {
   font-size: 30rpx;
-  color: #fff;
+  color: var(--sr-on-primary);
 }
 
 /* 底部操作栏 */
@@ -1270,8 +1278,8 @@ onUnmounted(() => {
   justify-content: space-between;
   padding: 16rpx 24rpx;
   padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-  background: #fff;
-  border-top: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-top: 1rpx solid var(--sr-border);
 }
 
 .footer-left {
@@ -1279,20 +1287,20 @@ onUnmounted(() => {
   align-items: center;
   gap: 12rpx;
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .bank-name {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: 500;
 }
 
 .divider {
-  color: #ddd;
+  color: var(--sr-border);
 }
 
 .stat-item {
-  color: #888;
+  color: var(--sr-text-3);
 }
 
 .footer-right {
@@ -1305,19 +1313,19 @@ onUnmounted(() => {
   padding: 8rpx 16rpx;
   border-radius: 8rpx;
   font-size: 22rpx;
-  color: #999;
-  background: #f5f5f5;
+  color: var(--sr-text-3);
+  background: var(--sr-card-2);
   transition: all 0.2s;
 }
 
 .toggle-btn.active {
-  color: #52796f;
-  background: #eaf1ea;
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
 }
 
 /* 点选拼写开关：主色 #52796f 系列 */
 .toggle-btn.tap-on {
-  color: #fff;
-  background: #52796f;
+  color: var(--sr-on-primary);
+  background: var(--sr-primary);
 }
 </style>

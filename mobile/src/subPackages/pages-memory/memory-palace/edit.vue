@@ -1,5 +1,5 @@
 <template>
-  <view class="edit-container">
+  <view class="edit-container" :class="themeClass">
     <view class="form-card">
       <text class="label">宫殿名称</text>
       <input v-model="name" class="input" placeholder="如：我的家" maxlength="20" />
@@ -251,13 +251,13 @@ function confirmImport() {
 <style scoped>
 .edit-container {
   min-height: 100vh;
-  background: #f5f7f5;
+  background: var(--sr-bg);
   padding: 20rpx;
   padding-bottom: 120rpx;
 }
 
 .form-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
@@ -265,35 +265,36 @@ function confirmImport() {
 
 .label {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-bottom: 12rpx;
   display: block;
 }
 
 .input {
-  border: 1rpx solid #e0e6e2;
+  border: 1rpx solid var(--sr-border);
   border-radius: 12rpx;
   padding: 16rpx 20rpx;
   font-size: 30rpx;
-  background: #fafcfa;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
 }
 
 .input.sub {
   margin-top: 12rpx;
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .section-title {
   font-size: 28rpx;
-  color: #333;
+  color: var(--sr-text);
   font-weight: bold;
   margin: 24rpx 0 12rpx;
 }
 
 .empty-loci {
   text-align: center;
-  color: #999;
+  color: var(--sr-text-3);
   font-size: 26rpx;
   padding: 40rpx 0;
 }
@@ -301,7 +302,7 @@ function confirmImport() {
 .locus-item {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 20rpx;
   margin-bottom: 16rpx;
@@ -311,8 +312,8 @@ function confirmImport() {
   width: 48rpx;
   height: 48rpx;
   border-radius: 50%;
-  background: #eaf1ea;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   font-size: 26rpx;
   display: flex;
   align-items: center;
@@ -334,7 +335,7 @@ function confirmImport() {
 
 .action-btn {
   font-size: 32rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   width: 48rpx;
   height: 48rpx;
   display: flex;
@@ -347,9 +348,9 @@ function confirmImport() {
 }
 
 .add-locus-btn {
-  background: #fff;
-  border: 2rpx dashed #52796f;
-  color: #52796f;
+  background: var(--sr-card);
+  border: 2rpx dashed var(--sr-primary);
+  color: var(--sr-primary);
   border-radius: 16rpx;
   font-size: 28rpx;
   margin-top: 8rpx;
@@ -363,22 +364,22 @@ function confirmImport() {
   display: flex;
   gap: 20rpx;
   padding: 20rpx;
-  background: #f5f7f5;
-  border-top: 1rpx solid #e8ede9;
+  background: var(--sr-bg);
+  border-top: 1rpx solid var(--sr-border);
 }
 
 .btn-cancel {
   flex: 1;
-  background: #fff;
-  color: #666;
+  background: var(--sr-card);
+  color: var(--sr-text-2);
   border-radius: 16rpx;
   font-size: 30rpx;
 }
 
 .btn-save {
   flex: 1;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 16rpx;
   font-size: 30rpx;
 }
@@ -394,7 +395,7 @@ function confirmImport() {
   width: 100rpx;
   height: 100rpx;
   border-radius: 12rpx;
-  border: 1rpx solid #e0e6e2;
+  border: 1rpx solid var(--sr-border);
 }
 
 .locus-thumb-placeholder {
@@ -402,7 +403,7 @@ function confirmImport() {
   height: 100rpx;
   border-radius: 12rpx;
   border: 2rpx dashed #b0c4b8;
-  background: #f5f7f5;
+  background: var(--sr-card-2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -418,7 +419,7 @@ function confirmImport() {
 
 .thumb-hint {
   font-size: 20rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .img-action {
@@ -434,7 +435,7 @@ function confirmImport() {
 .import-btn {
   margin-top: 16rpx;
   border-style: solid;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 /* ===== 导入桩库弹层 ===== */
@@ -442,7 +443,7 @@ function confirmImport() {
 .import-mask {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--sr-mask);
   z-index: 100;
   display: flex;
   align-items: flex-end;
@@ -451,7 +452,7 @@ function confirmImport() {
 .import-panel {
   width: 100%;
   max-height: 75vh;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx 24rpx 0 0;
   display: flex;
   flex-direction: column;
@@ -468,12 +469,12 @@ function confirmImport() {
 .panel-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .panel-close {
   font-size: 44rpx;
-  color: #999;
+  color: var(--sr-text-3);
   line-height: 1;
   padding: 0 8rpx;
 }
@@ -487,7 +488,7 @@ function confirmImport() {
 
 .pack-item {
   padding: 24rpx 0;
-  border-bottom: 1rpx solid #eef2ef;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .pack-item-head {
@@ -498,14 +499,14 @@ function confirmImport() {
 
 .pack-name {
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
   font-weight: bold;
 }
 
 .pack-count {
   font-size: 24rpx;
-  color: #52796f;
-  background: #eaf1ea;
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
   border-radius: 20rpx;
   padding: 4rpx 16rpx;
   flex-shrink: 0;
@@ -513,7 +514,7 @@ function confirmImport() {
 
 .pack-desc {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
 }
 
@@ -526,13 +527,13 @@ function confirmImport() {
 
 .tool-btn {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   padding: 8rpx 16rpx;
 }
 
 .panel-pack-name {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   max-width: 400rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -543,7 +544,7 @@ function confirmImport() {
   display: flex;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #eef2ef;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .pick-box {
@@ -558,19 +559,19 @@ function confirmImport() {
 }
 
 .pick-box.checked {
-  background: #52796f;
-  border-color: #52796f;
+  background: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 
 .pick-tick {
   font-size: 26rpx;
-  color: #fff;
+  color: var(--sr-on-primary);
 }
 
 .preview-order {
   width: 44rpx;
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   text-align: center;
   flex-shrink: 0;
 }
@@ -584,12 +585,12 @@ function confirmImport() {
 
 .preview-name {
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .preview-desc {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 4rpx;
 }
 
@@ -597,7 +598,7 @@ function confirmImport() {
   display: flex;
   gap: 20rpx;
   padding: 20rpx 30rpx calc(20rpx + env(safe-area-inset-bottom));
-  border-top: 1rpx solid #e8ede9;
+  border-top: 1rpx solid var(--sr-border);
 }
 
 .panel-btn {
@@ -607,14 +608,14 @@ function confirmImport() {
 }
 
 .panel-btn.cancel {
-  background: #fff;
-  color: #666;
-  border: 1rpx solid #e0e6e2;
+  background: var(--sr-card);
+  color: var(--sr-text-2);
+  border: 1rpx solid var(--sr-border);
 }
 
 .panel-btn.confirm {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .panel-btn.confirm[disabled] {

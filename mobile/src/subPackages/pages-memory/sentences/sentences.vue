@@ -1,5 +1,5 @@
 <template>
-  <view class="sentences-page">
+  <view class="sentences-page" :class="themeClass">
     <!-- 头部 -->
     <view class="header">
       <text class="title">💬 句子收藏</text>
@@ -141,7 +141,7 @@ function onAdd() {
 <style scoped>
 .sentences-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding-bottom: 40rpx;
 }
 
@@ -171,7 +171,7 @@ function onAdd() {
 }
 .search-box {
   flex: 1;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 32rpx;
   padding: 0 24rpx;
   height: 64rpx;
@@ -182,7 +182,7 @@ function onAdd() {
 .search-input {
   flex: 1;
   font-size: 26rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 .btn-add {
   height: 64rpx;
@@ -192,13 +192,13 @@ function onAdd() {
   border-radius: 32rpx;
   border: none;
   margin: 0;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .add-panel {
   margin: 0 24rpx 12rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 20rpx;
   box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
@@ -207,8 +207,8 @@ function onAdd() {
   width: 100%;
   min-height: 140rpx;
   font-size: 26rpx;
-  color: #333;
-  background: #f8f9fb;
+  color: var(--sr-text);
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 16rpx;
   box-sizing: border-box;
@@ -217,8 +217,8 @@ function onAdd() {
   width: 100%;
   height: 72rpx;
   font-size: 26rpx;
-  color: #333;
-  background: #f8f9fb;
+  color: var(--sr-text);
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 0 16rpx;
   margin-top: 16rpx;
@@ -231,8 +231,8 @@ function onAdd() {
   border-radius: 36rpx;
   font-size: 28rpx;
   border: none;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .btn-save[disabled] {
   background: #c8cfcb;
@@ -246,17 +246,17 @@ function onAdd() {
 .tag-chip {
   display: inline-block;
   padding: 8rpx 22rpx;
-  background: #fff;
-  color: #666;
+  background: var(--sr-card);
+  color: var(--sr-text-2);
   border-radius: 24rpx;
   font-size: 24rpx;
   margin-right: 12rpx;
   border: 1rpx solid transparent;
 }
 .tag-chip.active {
-  background: #eaf1ea;
-  color: #3d5a52;
-  border-color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 
 .stats-bar {
@@ -267,7 +267,7 @@ function onAdd() {
 }
 .stat-text {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 .stat-divider {
   color: #ccc;
@@ -277,7 +277,7 @@ function onAdd() {
   padding: 0 20rpx;
 }
 .sentence-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   margin-bottom: 16rpx;
@@ -289,12 +289,12 @@ function onAdd() {
 }
 .sentence-text {
   font-size: 28rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.7;
 }
 .sentence-translation {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-3);
   line-height: 1.6;
   margin-top: 10rpx;
 }
@@ -308,12 +308,12 @@ function onAdd() {
   font-size: 20rpx;
   padding: 2rpx 12rpx;
   border-radius: 8rpx;
-  background: #f0f0f0;
-  color: #595959;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .lang-tag.en {
-  background: #eaf1ea;
-  color: #3d5a52;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 .fav-btn {
   width: 60rpx;
@@ -342,13 +342,13 @@ function onAdd() {
 }
 .empty-title {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   display: block;
   margin-bottom: 8rpx;
 }
 .empty-tip {
   font-size: 24rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   display: block;
 }
 </style>

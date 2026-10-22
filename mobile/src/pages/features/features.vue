@@ -1,5 +1,5 @@
 <template>
-  <view class="features-container">
+  <view class="features-container" :class="themeClass">
     <view class="section-title">全部功能</view>
     <view class="menu-list">
       <view class="menu-item" v-for="item in features" :key="item.text" @click="item.action">
@@ -105,19 +105,19 @@ const features = [
 <style scoped>
 .features-container {
   min-height: 100vh;
-  background: #f5f7f5;
+  background: var(--sr-bg);
   padding: 20rpx;
 }
 
 .section-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   padding: 20rpx 10rpx;
 }
 
 .menu-list {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   overflow: hidden;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
@@ -127,7 +127,7 @@ const features = [
   display: flex;
   align-items: center;
   padding: 30rpx;
-  border-bottom: 1rpx solid #f0f2f0;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .menu-item:last-child {
@@ -163,13 +163,13 @@ const features = [
 
 .menu-text {
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
   display: block;
 }
 
 .menu-desc {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 6rpx;
   display: block;
 }
@@ -178,7 +178,7 @@ const features = [
   display: inline-block;
   margin-top: 8rpx;
   font-size: 22rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   background: rgba(82, 121, 111, 0.12);
   padding: 2rpx 14rpx;
   border-radius: 18rpx;
@@ -186,6 +186,6 @@ const features = [
 
 .menu-arrow {
   font-size: 36rpx;
-  color: #ccc;
+  color: var(--sr-text-3);
 }
 </style>

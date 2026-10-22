@@ -1,5 +1,5 @@
 <template>
-  <view class="recognition-page">
+  <view class="recognition-page" :class="themeClass">
     <!-- 顶部 -->
     <view class="header">
       <text class="title">{{ direction === 'forward' ? '音标识别' : '反向识别' }}</text>
@@ -236,7 +236,7 @@ onLoad((opt: any) => {
 <style scoped>
 .recognition-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
@@ -246,13 +246,13 @@ onLoad((opt: any) => {
   align-items: center;
   justify-content: space-between;
   padding: 24rpx 30rpx;
-  background: #fff;
+  background: var(--sr-card);
 }
 
 .title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
 }
 
 .stats {
@@ -262,7 +262,7 @@ onLoad((opt: any) => {
 }
 
 .stat.correct {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
 }
 
@@ -273,12 +273,12 @@ onLoad((opt: any) => {
 
 .progress-track {
   height: 8rpx;
-  background: #eef0f4;
+  background: var(--sr-border);
 }
 
 .progress-fill {
   height: 100%;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -293,7 +293,7 @@ onLoad((opt: any) => {
 
 .quiz-prompt {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 24rpx;
 }
 
@@ -302,8 +302,8 @@ onLoad((opt: any) => {
   flex-direction: column;
   align-items: center;
   padding: 40rpx 70rpx;
-  background: #fff;
-  border: 3rpx solid #eef0f4;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-border);
   border-radius: 24rpx;
   margin-bottom: 16rpx;
 }
@@ -311,7 +311,7 @@ onLoad((opt: any) => {
 .ipa-text {
   font-size: 88rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   font-family: 'Times New Roman', serif;
   line-height: 1.2;
 }
@@ -319,19 +319,19 @@ onLoad((opt: any) => {
 .word-text {
   font-size: 72rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   line-height: 1.2;
 }
 
 .prompt-play {
   font-size: 22rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 16rpx;
 }
 
 .ipa-tip {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 20rpx;
 }
 
@@ -344,21 +344,25 @@ onLoad((opt: any) => {
 }
 
 .option-card {
-  background: #fff;
-  border: 3rpx solid #eef0f4;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-border);
   border-radius: 16rpx;
   padding: 34rpx 20rpx;
   text-align: center;
 }
 
 .option-card.correct {
-  border-color: #52796f;
-  background: #f4faf5;
+  border-color: var(--sr-primary);
+  background: var(--sr-primary-bg);
 }
 
 .option-card.wrong {
   border-color: #e64340;
   background: #fef2f2;
+}
+
+.theme-dark .option-card.wrong {
+  background: rgba(230, 67, 64, 0.15);
 }
 
 .option-card.disabled {
@@ -368,20 +372,20 @@ onLoad((opt: any) => {
 .option-word {
   font-size: 36rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
 }
 
 .option-ipa {
   font-size: 40rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   font-family: 'Times New Roman', serif;
 }
 
 .btn-next {
   margin-top: 50rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -406,7 +410,7 @@ onLoad((opt: any) => {
 .result-title {
   font-size: 40rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   margin-top: 20rpx;
 }
 
@@ -423,7 +427,7 @@ onLoad((opt: any) => {
 }
 
 .result-num.correct {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .result-num.wrong {
@@ -432,19 +436,19 @@ onLoad((opt: any) => {
 
 .result-label {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-right: 20rpx;
 }
 
 .result-accuracy {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 16rpx;
 }
 
 .result-encourage {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 24rpx;
   text-align: center;
   line-height: 1.6;
@@ -453,8 +457,8 @@ onLoad((opt: any) => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -464,8 +468,8 @@ onLoad((opt: any) => {
 
 .btn-back {
   margin-top: 20rpx;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;

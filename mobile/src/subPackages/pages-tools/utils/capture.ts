@@ -8,23 +8,17 @@ export interface CaptureResult {
   path?: string
 }
 
-export interface OCRResult {
-  text: string
-  confidence: number
-}
-
 export interface CaptureAdapter {
-  capture(): Promise<CaptureResult>
-  ocr(imageData: string): Promise<OCRResult[]>
+  capture(sourceType?: Array<'album' | 'camera'>): Promise<CaptureResult>
 }
 
 class UniAppCaptureAdapter implements CaptureAdapter {
-  async capture(): Promise<CaptureResult> {
+  async capture(sourceType: Array<'album' | 'camera'> = ['album', 'camera']): Promise<CaptureResult> {
     return new Promise((resolve, reject) => {
       uni.chooseImage({
         count: 1,
         sizeType: ['compressed'],
-        sourceType: ['album', 'camera'],
+        sourceType,
         success: (res: any) => {
           const tempPath = res.tempFilePaths?.[0] || res.tempFiles?.[0]?.path
           if (!tempPath) {
@@ -35,7 +29,7 @@ class UniAppCaptureAdapter implements CaptureAdapter {
           // #ifdef MP-WEIXIN || MP-TOUTIAO
           try {
             const fs = uni.getFileSystemManager()
-            const base64 = fs.readFileSync(tempPath, 'base64')
+            const base64 = fs.readFileSync(tempPath, 'base64') as string
             resolve({ base64, path: tempPath })
           } catch (e) {
             reject(e)
@@ -60,11 +54,6 @@ class UniAppCaptureAdapter implements CaptureAdapter {
         fail: (err: any) => reject(err || new Error('选择图片失败')),
       })
     })
-  }
-
-  async ocr(_imageData: string): Promise<OCRResult[]> {
-    uni.showToast({ title: 'OCR 功能需配置云服务', icon: 'none' })
-    return []
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <view class="signin-container">
+  <view class="signin-container" :class="themeClass">
     <view class="header">
       <text class="title">📅 每日打卡</text>
       <text class="subtitle">坚持学习，每天进步一点点</text>
@@ -379,7 +379,7 @@ const nextMonth = () => {
 <style scoped>
 .signin-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--sr-bg);
   padding: 20rpx;
 }
 
@@ -391,19 +391,19 @@ const nextMonth = () => {
 .title {
   font-size: 40rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   display: block;
 }
 
 .subtitle {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 10rpx;
   display: block;
 }
 
 .calendar-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
@@ -418,14 +418,14 @@ const nextMonth = () => {
 
 .nav-btn {
   font-size: 40rpx;
-  color: #666;
+  color: var(--sr-text-2);
   padding: 0 20rpx;
 }
 
 .month-text {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .weekdays {
@@ -436,7 +436,7 @@ const nextMonth = () => {
 
 .weekday {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   width: 80rpx;
   text-align: center;
 }
@@ -462,21 +462,21 @@ const nextMonth = () => {
 }
 
 .day-cell.today {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .day-cell.signed {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .day-num {
   font-size: 28rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .sign-mark {
   font-size: 20rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   position: absolute;
   bottom: 4rpx;
 }
@@ -484,7 +484,7 @@ const nextMonth = () => {
 .stats-card {
   display: flex;
   justify-content: space-around;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
@@ -497,13 +497,13 @@ const nextMonth = () => {
 .stat-num {
   font-size: 40rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
 }
 
 .stat-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
 }
@@ -511,6 +511,7 @@ const nextMonth = () => {
 .sign-btn {
   width: 100%;
   height: 100rpx;
+  /* 品牌渐变保持亮色值（暗色下也不变），故文字保留白色 */
   background: linear-gradient(90deg, #52796f, #74937d);
   color: #fff;
   border-radius: 50rpx;
@@ -530,13 +531,13 @@ const nextMonth = () => {
 
 .reward-text {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .share-btn {
   margin-top: 20rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 30rpx;
   border-radius: 44rpx;
   border: none;
@@ -559,7 +560,7 @@ const nextMonth = () => {
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--sr-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -568,7 +569,7 @@ const nextMonth = () => {
 
 .share-dialog {
   width: 78%;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 30rpx;
 }
@@ -576,7 +577,7 @@ const nextMonth = () => {
 .share-preview {
   width: 100%;
   border-radius: 16rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .share-actions {
@@ -590,8 +591,8 @@ const nextMonth = () => {
   font-size: 30rpx;
   border-radius: 44rpx;
   border: none;
-  background: #f0f4f0;
-  color: #52796f;
+  background: var(--sr-card-2);
+  color: var(--sr-primary);
 }
 
 .share-action::after {
@@ -599,14 +600,14 @@ const nextMonth = () => {
 }
 
 .share-action.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 /* ===== 成就墙 ===== */
 
 .achievement-wall {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 30rpx;
   margin-top: 20rpx;
@@ -622,12 +623,12 @@ const nextMonth = () => {
 .wall-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .wall-progress {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
 }
 
@@ -643,15 +644,15 @@ const nextMonth = () => {
   align-items: center;
   padding: 24rpx 10rpx;
   border-radius: 16rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
   opacity: 0.55;
 }
 
 /* 已解锁：主色点亮 */
 .achievement-cell.unlocked {
-  background: #e8f1ec;
+  background: var(--sr-primary-bg);
   opacity: 1;
-  border: 1rpx solid #52796f;
+  border: 1rpx solid var(--sr-primary);
 }
 
 .achievement-icon {
@@ -664,21 +665,21 @@ const nextMonth = () => {
 
 .achievement-name {
   font-size: 24rpx;
-  color: #333;
+  color: var(--sr-text);
   font-weight: bold;
   margin-top: 10rpx;
 }
 
 .achievement-target {
   font-size: 20rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 6rpx;
   text-align: center;
 }
 
 .achievement-date {
   font-size: 20rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 6rpx;
 }
 
@@ -689,7 +690,7 @@ const nextMonth = () => {
   left: 40rpx;
   right: 40rpx;
   bottom: 80rpx;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 50rpx;
   padding: 24rpx 40rpx;
   display: flex;
@@ -706,7 +707,7 @@ const nextMonth = () => {
 
 .toast-text {
   font-size: 28rpx;
-  color: #fff;
+  color: var(--sr-on-primary);
   font-weight: bold;
 }
 </style>

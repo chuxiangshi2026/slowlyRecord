@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="themeClass">
     <view class="number-display">
       <text class="number-text">{{ pegNumber }}</text>
       <text class="number-hint">为这个数字编一个易记的桩</text>
@@ -251,7 +251,7 @@ function onCancel() {
 <style scoped>
 .page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding: 40rpx 24rpx 200rpx;
 }
 
@@ -262,35 +262,35 @@ function onCancel() {
 .number-text {
   font-size: 160rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   letter-spacing: 8rpx;
   font-family: 'Courier New', monospace;
   display: block;
 }
 .number-hint {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
 }
 
 .form-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 28rpx;
 }
 .form-label {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-2);
   margin-bottom: 12rpx;
   display: block;
 }
 .desc-input {
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 20rpx 24rpx;
   font-size: 30rpx;
-  color: #303030;
+  color: var(--sr-text);
   width: 100%;
   min-height: 140rpx;
   line-height: 1.6;
@@ -298,7 +298,7 @@ function onCancel() {
 }
 .form-tip {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   line-height: 1.6;
   display: block;
   margin-top: 20rpx;
@@ -317,13 +317,13 @@ function onCancel() {
   width: 200rpx;
   height: 200rpx;
   border-radius: 12rpx;
-  background: #f0f0f0;
+  background: var(--sr-card-2);
 }
 .image-add {
   width: 200rpx;
   height: 200rpx;
   border-radius: 12rpx;
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border: 2rpx dashed #c8d6cc;
   display: flex;
   flex-direction: column;
@@ -335,7 +335,7 @@ function onCancel() {
 }
 .image-add-text {
   font-size: 20rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
 }
 .image-actions {
@@ -345,14 +345,18 @@ function onCancel() {
 }
 .image-action-link {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   padding: 8rpx 20rpx;
-  background: #eef4f0;
+  background: var(--sr-primary-bg);
   border-radius: 20rpx;
 }
 .image-action-link.danger {
   color: #e64340;
   background: #fee;
+}
+.theme-dark .image-action-link.danger {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
 }
 .compress-canvas {
   position: fixed;
@@ -363,11 +367,11 @@ function onCancel() {
 .suggest-block {
   margin-top: 24rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #f0f0f0;
+  border-top: 1rpx solid var(--sr-border);
 }
 .suggest-title {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-2);
   margin-bottom: 12rpx;
   display: block;
 }
@@ -378,8 +382,8 @@ function onCancel() {
 }
 .suggest-chip {
   padding: 12rpx 20rpx;
-  background: #eef4f0;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   border-radius: 24rpx;
   font-size: 24rpx;
 }
@@ -392,7 +396,7 @@ function onCancel() {
   display: flex;
   gap: 16rpx;
   padding: 24rpx;
-  background: #fff;
+  background: var(--sr-card);
   box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 
@@ -406,16 +410,20 @@ function onCancel() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .action-btn.secondary {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .action-btn.danger {
   background: #fee;
   color: #e64340;
   flex: 0.6;
+}
+.theme-dark .action-btn.danger {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
 }
 </style>

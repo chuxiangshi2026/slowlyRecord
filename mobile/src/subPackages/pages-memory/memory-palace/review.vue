@@ -1,5 +1,5 @@
 <template>
-  <view class="palace-review-container">
+  <view class="palace-review-container" :class="themeClass">
     <!-- 顶部：进度 + 回忆模式开关 -->
     <view v-if="palace && !finished" class="review-header">
       <text class="header-exit" @click="goBack">‹ 退出</text>
@@ -246,7 +246,7 @@ watch(recallMode, () => {
 <style scoped>
 .palace-review-container {
   min-height: 100vh;
-  background: #f5f7f5;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
@@ -256,19 +256,19 @@ watch(recallMode, () => {
   align-items: center;
   justify-content: space-between;
   padding: 20rpx 24rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .header-exit {
   font-size: 30rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   width: 140rpx;
 }
 
 .header-progress {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .recall-switch {
@@ -283,13 +283,13 @@ watch(recallMode, () => {
   width: 56rpx;
   height: 32rpx;
   border-radius: 16rpx;
-  background: #ddd;
+  background: var(--sr-border);
   position: relative;
   transition: background 0.2s;
 }
 
 .recall-track.on {
-  background: #52796f;
+  background: var(--sr-primary);
 }
 
 .recall-thumb {
@@ -309,7 +309,7 @@ watch(recallMode, () => {
 
 .recall-label {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .review-body {
@@ -323,12 +323,12 @@ watch(recallMode, () => {
 
 .empty-text {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .locus-card {
   width: 100%;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 50rpx 40rpx;
   display: flex;
@@ -345,33 +345,33 @@ watch(recallMode, () => {
 
 .locus-order {
   font-size: 26rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
 }
 
 .locus-name {
   font-size: 44rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 8rpx;
 }
 
 .locus-desc {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 12rpx;
   text-align: center;
 }
 
 .reveal-tip {
   font-size: 26rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   margin-top: 40rpx;
 }
 
 .answer-area {
   margin-top: 30rpx;
   width: 100%;
-  background: #f0f5f1;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   padding: 24rpx;
   display: flex;
@@ -381,14 +381,14 @@ watch(recallMode, () => {
 
 .answer-text {
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
   text-align: center;
   line-height: 1.6;
 }
 
 .answer-source {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 12rpx;
 }
 
@@ -405,7 +405,7 @@ watch(recallMode, () => {
 
 .answer-none {
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .assess-actions {
@@ -424,8 +424,8 @@ watch(recallMode, () => {
 }
 
 .btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .btn.danger {
@@ -433,14 +433,20 @@ watch(recallMode, () => {
   color: #c0574b;
 }
 
+/* 浅粉底在暗色下刺眼：保留亮色值，追加暗色覆盖 */
+.theme-dark .btn.danger {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
+}
+
 .btn.plain {
-  background: #eee;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 
 .btn.guide {
-  background: #e8f0ec;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 
 .review-nav {
@@ -453,7 +459,7 @@ watch(recallMode, () => {
 
 .nav-btn {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .nav-btn.disabled {
@@ -461,7 +467,7 @@ watch(recallMode, () => {
 }
 
 .nav-btn.edit-content {
-  color: #74937d;
+  color: var(--sr-primary-2);
   font-size: 24rpx;
 }
 
@@ -472,7 +478,7 @@ watch(recallMode, () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: var(--sr-mask);
   z-index: 100;
   display: flex;
   align-items: flex-end;
@@ -480,7 +486,7 @@ watch(recallMode, () => {
 
 .peg-edit-sheet {
   width: 100%;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx 24rpx 0 0;
   padding: 40rpx 30rpx;
   padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
@@ -489,7 +495,7 @@ watch(recallMode, () => {
 .peg-edit-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-bottom: 20rpx;
   display: block;
 }
@@ -497,22 +503,24 @@ watch(recallMode, () => {
 .peg-edit-input {
   width: 100%;
   height: 160rpx;
-  border: 1rpx solid #e0e6e2;
+  border: 1rpx solid var(--sr-border);
   border-radius: 12rpx;
   padding: 20rpx;
   font-size: 28rpx;
-  background: #fafcfa;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   box-sizing: border-box;
 }
 
 .peg-edit-mnemonic {
   width: 100%;
   margin-top: 16rpx;
-  border: 1rpx solid #e0e6e2;
+  border: 1rpx solid var(--sr-border);
   border-radius: 12rpx;
   padding: 16rpx 20rpx;
   font-size: 26rpx;
-  background: #fafcfa;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   box-sizing: border-box;
 }
 
@@ -537,12 +545,12 @@ watch(recallMode, () => {
 .finished-title {
   font-size: 36rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .finished-stat {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .finished-actions {

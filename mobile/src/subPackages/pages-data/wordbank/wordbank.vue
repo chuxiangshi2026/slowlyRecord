@@ -1,5 +1,5 @@
 <template>
-  <view class="wordbank-container">
+  <view class="wordbank-container" :class="themeClass">
     <view class="header">
       <text class="title">我的词库</text>
       <text class="subtitle">管理你的词库，高效备考</text>
@@ -270,36 +270,36 @@ const goTo = (url: string) => {
 </script>
 
 <style scoped>
-.wordbank-container { min-height: 100vh; background: #f5f5f5; padding-bottom: 40rpx; }
+.wordbank-container { min-height: 100vh; background: var(--sr-bg); padding-bottom: 40rpx; }
 .header { background: linear-gradient(135deg, #52796f 0%, #74937d 100%); padding: 60rpx 40rpx; text-align: center; }
 .title { font-size: 40rpx; font-weight: bold; color: #fff; display: block; }
 .subtitle { font-size: 26rpx; color: rgba(255,255,255,0.8); margin-top: 10rpx; display: block; }
 
-.current-bank-section { margin: 20rpx; background: #fff; border-radius: 16rpx; padding: 30rpx; }
-.section-label { font-size: 26rpx; color: #999; margin-bottom: 16rpx; display: block; }
-.bank-picker { display: flex; justify-content: space-between; align-items: center; padding: 16rpx 20rpx; background: #eaf1ea; border-radius: 12rpx; }
-.bank-picker-text { font-size: 32rpx; font-weight: bold; color: #52796f; }
-.bank-picker-arrow { font-size: 24rpx; color: #52796f; }
+.current-bank-section { margin: 20rpx; background: var(--sr-card); border-radius: 16rpx; padding: 30rpx; }
+.section-label { font-size: 26rpx; color: var(--sr-text-3); margin-bottom: 16rpx; display: block; }
+.bank-picker { display: flex; justify-content: space-between; align-items: center; padding: 16rpx 20rpx; background: var(--sr-primary-bg); border-radius: 12rpx; }
+.bank-picker-text { font-size: 32rpx; font-weight: bold; color: var(--sr-primary); }
+.bank-picker-arrow { font-size: 24rpx; color: var(--sr-primary); }
 
 .section-header { display: flex; justify-content: space-between; align-items: center; padding: 20rpx 30rpx 10rpx; }
-.section-title { font-size: 30rpx; font-weight: bold; color: #333; }
-.section-add { font-size: 28rpx; color: #52796f; }
+.section-title { font-size: 30rpx; font-weight: bold; color: var(--sr-text); }
+.section-add { font-size: 28rpx; color: var(--sr-primary); }
 
 .bank-list { padding: 0 20rpx; }
-.bank-item { background: #fff; border-radius: 16rpx; padding: 24rpx 30rpx; margin-bottom: 12rpx; display: flex; justify-content: space-between; align-items: center; border-left: 16rpx solid transparent; box-sizing: border-box; }
-.bank-item.active { border-left-color: #52796f; background: #f2f6f3; }
+.bank-item { background: var(--sr-card); border-radius: 16rpx; padding: 24rpx 30rpx; margin-bottom: 12rpx; display: flex; justify-content: space-between; align-items: center; border-left: 16rpx solid transparent; box-sizing: border-box; }
+.bank-item.active { border-left-color: var(--sr-primary); background: var(--sr-primary-bg); }
 .bank-info { flex: 1; }
 .bank-name-row { display: flex; align-items: center; gap: 14rpx; }
-.bank-name { font-size: 30rpx; font-weight: bold; color: #333; }
-.current-badge { font-size: 20rpx; color: #fff; background: #52796f; border-radius: 20rpx; padding: 4rpx 16rpx; }
-.bank-count { font-size: 24rpx; color: #999; margin-top: 6rpx; display: block; }
+.bank-name { font-size: 30rpx; font-weight: bold; color: var(--sr-text); }
+.current-badge { font-size: 20rpx; color: var(--sr-on-primary); background: var(--sr-primary); border-radius: 20rpx; padding: 4rpx 16rpx; }
+.bank-count { font-size: 24rpx; color: var(--sr-text-3); margin-top: 6rpx; display: block; }
 .bank-actions { display: flex; gap: 20rpx; }
-.action-text { font-size: 24rpx; color: #52796f; }
+.action-text { font-size: 24rpx; color: var(--sr-primary); }
 .action-text.danger { color: #c0564f; }
 .action-text.muted { color: #ccc; }
 
 .mapping-item {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   padding: 20rpx 30rpx;
   margin: 0 20rpx 12rpx;
@@ -315,25 +315,25 @@ const goTo = (url: string) => {
 .mapping-source {
   font-size: 26rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 .mapping-arrow {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 .mapping-bank {
   font-size: 26rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 .mapping-count {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .remote-section { padding: 0 20rpx; }
-.remote-loading { text-align: center; color: #999; font-size: 26rpx; padding: 40rpx 0; }
+.remote-loading { text-align: center; color: var(--sr-text-3); font-size: 26rpx; padding: 40rpx 0; }
 .remote-item {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
   margin-bottom: 16rpx;
@@ -342,31 +342,31 @@ const goTo = (url: string) => {
   align-items: center;
 }
 .remote-info { flex: 1; }
-.remote-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
-.remote-desc { font-size: 24rpx; color: #999; margin-top: 6rpx; display: block; }
+.remote-name { font-size: 32rpx; font-weight: bold; color: var(--sr-text); display: block; }
+.remote-desc { font-size: 24rpx; color: var(--sr-text-3); margin-top: 6rpx; display: block; }
 .remote-status {
   font-size: 26rpx;
   padding: 10rpx 24rpx;
   border-radius: 28rpx;
   white-space: nowrap;
 }
-.remote-status .cached { color: #52796f; }
-.remote-status .not-cached { color: #fff; background: #52796f; }
-.remote-status .downloading { color: #74937d; }
+.remote-status .cached { color: var(--sr-primary); }
+.remote-status .not-cached { color: var(--sr-on-primary); background: var(--sr-primary); }
+.remote-status .downloading { color: var(--sr-primary-2); }
 
 .builtin-section { padding: 0 20rpx; }
-.section-item { background: #fff; border-radius: 16rpx; padding: 36rpx 30rpx; margin-bottom: 16rpx; display: flex; justify-content: space-between; align-items: center; }
+.section-item { background: var(--sr-card); border-radius: 16rpx; padding: 36rpx 30rpx; margin-bottom: 16rpx; display: flex; justify-content: space-between; align-items: center; }
 .section-info { flex: 1; }
-.section-name { font-size: 34rpx; font-weight: bold; color: #333; display: block; }
-.section-desc { font-size: 24rpx; color: #999; margin-top: 8rpx; display: block; }
-.arrow { font-size: 40rpx; color: #ccc; }
+.section-name { font-size: 34rpx; font-weight: bold; color: var(--sr-text); display: block; }
+.section-desc { font-size: 24rpx; color: var(--sr-text-3); margin-top: 8rpx; display: block; }
+.arrow { font-size: 40rpx; color: var(--sr-text-3); }
 
-.dialog-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 999; }
-.dialog { background: #fff; border-radius: 24rpx; padding: 40rpx; width: 80%; }
+.dialog-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--sr-mask); display: flex; align-items: center; justify-content: center; z-index: 999; }
+.dialog { background: var(--sr-card); border-radius: 24rpx; padding: 40rpx; width: 80%; }
 .dialog-title { font-size: 34rpx; font-weight: bold; text-align: center; display: block; margin-bottom: 30rpx; }
-.dialog-input { border: 2rpx solid #e0e0e0; border-radius: 12rpx; padding: 20rpx; font-size: 30rpx; width: 100%; box-sizing: border-box; height: 80rpx; line-height: 40rpx; }
+.dialog-input { border: 2rpx solid var(--sr-border); border-radius: 12rpx; padding: 20rpx; font-size: 30rpx; width: 100%; box-sizing: border-box; height: 80rpx; line-height: 40rpx; color: var(--sr-text); }
 .dialog-buttons { display: flex; justify-content: space-between; margin-top: 30rpx; gap: 20rpx; }
 .dialog-btn { flex: 1; text-align: center; padding: 20rpx; border-radius: 12rpx; font-size: 30rpx; }
-.dialog-btn.cancel { background: #f5f5f5; color: #666; }
-.dialog-btn.confirm { background: #52796f; color: #fff; }
+.dialog-btn.cancel { background: var(--sr-card-2); color: var(--sr-text-2); }
+.dialog-btn.confirm { background: var(--sr-primary); color: var(--sr-on-primary); }
 </style>

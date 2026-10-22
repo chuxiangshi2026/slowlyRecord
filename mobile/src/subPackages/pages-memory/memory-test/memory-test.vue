@@ -1,5 +1,5 @@
 <template>
-  <view class="memory-test-container">
+  <view class="memory-test-container" :class="themeClass">
     <view class="header">
       <text class="title">🧠 记忆力测试</text>
       <text class="subtitle">测试你的瞬时记忆能力</text>
@@ -306,7 +306,7 @@ onUnmounted(() => {
 }
 
 .option-card {
-  background: rgba(255,255,255,0.95);
+  background: var(--sr-card);
   border-radius: 20rpx;
   padding: 40rpx 20rpx;
   text-align: center;
@@ -320,14 +320,14 @@ onUnmounted(() => {
 .option-title {
   font-size: 30rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   margin-top: 16rpx;
   display: block;
 }
 
 .option-desc {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
 }
@@ -336,10 +336,14 @@ onUnmounted(() => {
   display: inline-block;
   margin-top: 14rpx;
   font-size: 22rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   background: rgba(82, 121, 111, 0.12);
   padding: 4rpx 16rpx;
   border-radius: 20rpx;
+}
+
+.theme-dark .option-best {
+  background: rgba(131, 197, 168, 0.15);
 }
 
 .color-test, .sequence-test {
@@ -366,7 +370,7 @@ onUnmounted(() => {
   width: 160rpx;
   height: 160rpx;
   border-radius: 16rpx;
-  background: #e0e0e0;
+  background: var(--sr-card-2);
   transition: all 0.3s;
 }
 
@@ -385,19 +389,19 @@ onUnmounted(() => {
 .number-cell {
   width: 120rpx;
   height: 120rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 36rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .number-cell.clicked {
-  background: #c8d6cc;
-  color: #3d5a52;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 
 .timer {
@@ -429,7 +433,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 60rpx 40rpx;
-  background: rgba(255,255,255,0.95);
+  background: var(--sr-card);
   border-radius: 24rpx;
   margin-top: 40rpx;
 }
@@ -440,7 +444,7 @@ onUnmounted(() => {
 
 .result-encourage {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 20rpx;
   text-align: center;
   line-height: 1.6;
@@ -461,12 +465,12 @@ onUnmounted(() => {
 .result-num {
   font-size: 56rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .result-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 6rpx;
 }
 
@@ -487,17 +491,17 @@ onUnmounted(() => {
 }
 
 .result-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .result-btn.guide {
-  background: #e8f0ec;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
 }
 
 .result-btn.plain {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 </style>

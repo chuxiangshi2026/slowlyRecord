@@ -1,5 +1,5 @@
 <template>
-  <view class="pairs-page">
+  <view class="pairs-page" :class="themeClass">
     <!-- 顶部 -->
     <view class="header">
       <text class="title">辨音练习</text>
@@ -216,7 +216,7 @@ onLoad(() => {
 <style scoped>
 .pairs-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
@@ -226,13 +226,13 @@ onLoad(() => {
   align-items: center;
   justify-content: space-between;
   padding: 24rpx 30rpx;
-  background: #fff;
+  background: var(--sr-card);
 }
 
 .title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
 }
 
 .stats {
@@ -242,7 +242,7 @@ onLoad(() => {
 }
 
 .stat.correct {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
 }
 
@@ -253,12 +253,12 @@ onLoad(() => {
 
 .progress-track {
   height: 8rpx;
-  background: #eef0f4;
+  background: var(--sr-border);
 }
 
 .progress-fill {
   height: 100%;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -273,7 +273,7 @@ onLoad(() => {
 
 .quiz-prompt {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 30rpx;
 }
 
@@ -287,8 +287,8 @@ onLoad(() => {
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -296,9 +296,9 @@ onLoad(() => {
 }
 
 .play-btn.slow {
-  background: #fff;
-  border: 3rpx solid #52796f;
-  color: #52796f;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-primary);
+  color: var(--sr-primary);
 }
 
 .play-icon {
@@ -319,21 +319,25 @@ onLoad(() => {
 }
 
 .pair-card {
-  background: #fff;
-  border: 3rpx solid #eef0f4;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-border);
   border-radius: 20rpx;
   padding: 34rpx;
   text-align: center;
 }
 
 .pair-card.correct {
-  border-color: #52796f;
-  background: #f4faf5;
+  border-color: var(--sr-primary);
+  background: var(--sr-primary-bg);
 }
 
 .pair-card.wrong {
   border-color: #e64340;
   background: #fef2f2;
+}
+
+.theme-dark .pair-card.wrong {
+  background: rgba(230, 67, 64, 0.15);
 }
 
 .pair-card.disabled {
@@ -343,13 +347,13 @@ onLoad(() => {
 .pair-word {
   font-size: 44rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   display: block;
 }
 
 .pair-phonetic {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 8rpx;
   display: block;
   font-family: 'Times New Roman', serif;
@@ -358,13 +362,13 @@ onLoad(() => {
 .pair-vs {
   text-align: center;
   font-size: 24rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   font-style: italic;
 }
 
 .contrast-block {
   margin-top: 36rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx;
   width: 100%;
@@ -374,7 +378,7 @@ onLoad(() => {
 
 .contrast-text {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-family: 'Times New Roman', serif;
 }
 
@@ -387,16 +391,16 @@ onLoad(() => {
 
 .contrast-play {
   font-size: 28rpx;
-  color: #303030;
-  background: #eef4f0;
+  color: var(--sr-text);
+  background: var(--sr-primary-bg);
   padding: 12rpx 28rpx;
   border-radius: 12rpx;
 }
 
 .btn-next {
   margin-top: 40rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -421,7 +425,7 @@ onLoad(() => {
 .result-title {
   font-size: 40rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text);
   margin-top: 20rpx;
 }
 
@@ -438,7 +442,7 @@ onLoad(() => {
 }
 
 .result-num.correct {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .result-num.wrong {
@@ -447,19 +451,19 @@ onLoad(() => {
 
 .result-label {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-right: 20rpx;
 }
 
 .result-accuracy {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 16rpx;
 }
 
 .result-encourage {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 24rpx;
   text-align: center;
   line-height: 1.6;
@@ -468,8 +472,8 @@ onLoad(() => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -479,8 +483,8 @@ onLoad(() => {
 
 .btn-back {
   margin-top: 20rpx;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;

@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="themeClass">
     <view class="form">
       <view class="form-row">
         <text class="form-label">标题 *</text>
@@ -155,12 +155,12 @@ function onCancel() {
 <style scoped>
 .page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding: 24rpx 24rpx 200rpx;
 }
 
 .form {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 28rpx;
 }
@@ -169,25 +169,25 @@ function onCancel() {
 }
 .form-label {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-2);
   margin-bottom: 10rpx;
   display: block;
 }
 .form-input {
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 0 24rpx;
   height: 76rpx;
   line-height: 76rpx;
   font-size: 28rpx;
-  color: #303030;
+  color: var(--sr-text);
 }
 .form-textarea {
-  background: #f7f8fa;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   padding: 20rpx 24rpx;
   font-size: 28rpx;
-  color: #303030;
+  color: var(--sr-text);
   width: 100%;
   min-height: 120rpx;
   line-height: 1.7;
@@ -200,7 +200,7 @@ function onCancel() {
 }
 .peg-hints {
   font-size: 22rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
   margin-top: 10rpx;
   line-height: 1.6;
@@ -214,7 +214,7 @@ function onCancel() {
   display: flex;
   gap: 16rpx;
   padding: 24rpx;
-  background: #fff;
+  background: var(--sr-card);
   box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 .action-btn {
@@ -227,16 +227,20 @@ function onCancel() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .action-btn.secondary {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .action-btn.danger {
   background: #fee;
   color: #e64340;
   flex: 0.6;
+}
+.theme-dark .action-btn.danger {
+  background: rgba(255, 82, 82, 0.15);
+  color: #e57373;
 }
 </style>

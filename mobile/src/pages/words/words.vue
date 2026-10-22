@@ -1,5 +1,5 @@
 <template>
-  <view class="words-container">
+  <view class="words-container" :class="themeClass">
     <view class="bank-selector" @click="goToWordBank" v-if="currentBankName">
       <text class="bank-label">当前词库：</text>
       <text class="bank-name-text">{{ currentBankName }}</text>
@@ -439,25 +439,25 @@ const formatDate = (timestamp: number): string => {
 <style scoped>
 .words-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--sr-bg);
 }
 
 .bank-selector {
   display: flex;
   align-items: center;
   padding: 16rpx 24rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .bank-label {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .bank-name-text {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
   margin: 0 8rpx;
 }
@@ -470,7 +470,7 @@ const formatDate = (timestamp: number): string => {
 .search-bar {
   display: flex;
   padding: 20rpx;
-  background: #fff;
+  background: var(--sr-card);
   gap: 16rpx;
   align-items: center;
 }
@@ -478,7 +478,8 @@ const formatDate = (timestamp: number): string => {
 .search-input {
   flex: 1;
   height: 72rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   border-radius: 36rpx;
   padding: 0 30rpx;
   font-size: 28rpx;
@@ -496,29 +497,29 @@ const formatDate = (timestamp: number): string => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 50%;
   transition: all 0.2s;
 }
 
 .filter-toggle.active {
-  background: #52796f;
+  background: var(--sr-primary);
 }
 
 .filter-toggle.active .filter-icon {
-  color: #fff;
+  color: var(--sr-on-primary);
 }
 
 .filter-icon {
   font-size: 32rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .add-btn {
   width: 72rpx;
   height: 72rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -528,16 +529,16 @@ const formatDate = (timestamp: number): string => {
 }
 
 .add-btn-text {
-  color: #fff;
+  color: var(--sr-on-primary);
   font-size: 40rpx;
   line-height: 72rpx;
 }
 
 /* 筛选面板 */
 .filter-panel {
-  background: #fff;
+  background: var(--sr-card);
   padding: 20rpx 24rpx;
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .filter-row {
@@ -553,7 +554,7 @@ const formatDate = (timestamp: number): string => {
 
 .filter-label {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   width: 80rpx;
   flex-shrink: 0;
 }
@@ -561,7 +562,8 @@ const formatDate = (timestamp: number): string => {
 .filter-input {
   width: 140rpx;
   height: 60rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   border-radius: 8rpx;
   padding: 0 16rpx;
   font-size: 26rpx;
@@ -574,7 +576,7 @@ const formatDate = (timestamp: number): string => {
 
 .filter-sep {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .sort-chips {
@@ -589,14 +591,14 @@ const formatDate = (timestamp: number): string => {
   align-items: center;
   padding: 8rpx 20rpx;
   border-radius: 24rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .sort-chip.on {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .sort-arrow {
@@ -615,6 +617,11 @@ const formatDate = (timestamp: number): string => {
   background: #fff0f0;
 }
 
+/* 浅红底暗色下刺眼，换深红半透明底（文字色 #c0564f 保留） */
+.theme-dark .wrong-words-entry {
+  background: rgba(255, 82, 82, 0.15);
+}
+
 .wrong-entry-text {
   font-size: 24rpx;
   color: #c0564f;
@@ -631,6 +638,11 @@ const formatDate = (timestamp: number): string => {
   background: #fff0f0;
 }
 
+/* 浅红底暗色下刺眼，换深红半透明底（文字色 #c0564f 保留） */
+.theme-dark .reset-btn {
+  background: rgba(255, 82, 82, 0.15);
+}
+
 .reset-text {
   font-size: 24rpx;
   color: #c0564f;
@@ -639,15 +651,15 @@ const formatDate = (timestamp: number): string => {
 /* 列表模式切换 */
 .mode-bar {
   display: flex;
-  background: #fff;
+  background: var(--sr-card);
   padding: 16rpx 0;
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .mode-item {
   flex: 1;
   text-align: center;
-  border-right: 1rpx solid #eee;
+  border-right: 1rpx solid var(--sr-border);
 }
 
 .mode-item:last-child {
@@ -655,30 +667,30 @@ const formatDate = (timestamp: number): string => {
 }
 
 .mode-item.active {
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
 }
 
 .mode-num {
   font-size: 32rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
   display: block;
 }
 
 .mode-item.active .mode-num {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .mode-label {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 4rpx;
   display: block;
 }
 
 .mode-action {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
   line-height: 80rpx;
 }
@@ -686,18 +698,18 @@ const formatDate = (timestamp: number): string => {
 /* 匹配数 */
 .match-info {
   padding: 12rpx 24rpx;
-  background: #fafafa;
+  background: var(--sr-card-2);
 }
 
 .match-text {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .btn-goto-bank {
   margin-top: 30rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 40rpx;
   font-size: 28rpx;
   border: none;
@@ -711,7 +723,7 @@ const formatDate = (timestamp: number): string => {
 }
 
 .word-item {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 24rpx;
   margin-bottom: 16rpx;
@@ -727,13 +739,13 @@ const formatDate = (timestamp: number): string => {
 .word-text {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   display: block;
 }
 
 .word-meaning {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 8rpx;
   display: block;
   overflow: hidden;
@@ -760,8 +772,8 @@ const formatDate = (timestamp: number): string => {
 }
 
 .reviewed-badge {
-  background: #eaf1ea;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   font-size: 20rpx;
   padding: 4rpx 12rpx;
   border-radius: 20rpx;
@@ -769,8 +781,8 @@ const formatDate = (timestamp: number): string => {
 }
 
 .remembered-badge {
-  background: #eaf1ea;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   font-size: 20rpx;
   padding: 4rpx 12rpx;
   border-radius: 20rpx;
@@ -779,7 +791,7 @@ const formatDate = (timestamp: number): string => {
 
 .word-level {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .empty-state {
@@ -791,18 +803,18 @@ const formatDate = (timestamp: number): string => {
   text-align: center;
   padding: 24rpx;
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .empty-text {
   font-size: 32rpx;
-  color: #999;
+  color: var(--sr-text-3);
   display: block;
 }
 
 .empty-hint {
   font-size: 26rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   margin-top: 20rpx;
   display: block;
 }
@@ -813,7 +825,7 @@ const formatDate = (timestamp: number): string => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: var(--sr-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -822,7 +834,7 @@ const formatDate = (timestamp: number): string => {
 
 /* 单词详情弹窗 */
 .detail-content {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 40rpx;
   width: 620rpx;
@@ -833,24 +845,24 @@ const formatDate = (timestamp: number): string => {
 .detail-word {
   font-size: 44rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
   text-align: center;
   margin-bottom: 8rpx;
 }
 
 .detail-phonetic {
   font-size: 28rpx;
-  color: #888;
+  color: var(--sr-text-2);
   text-align: center;
   margin-bottom: 24rpx;
 }
 
 .detail-meaning {
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
   line-height: 1.6;
   padding: 20rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
   border-radius: 12rpx;
   margin-bottom: 20rpx;
   word-break: break-all;
@@ -858,14 +870,14 @@ const formatDate = (timestamp: number): string => {
 
 .detail-example {
   padding: 20rpx;
-  background: #eaf1ea;
+  background: var(--sr-primary-bg);
   border-radius: 12rpx;
   margin-bottom: 20rpx;
 }
 
 .detail-example-label {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
   display: block;
   margin-bottom: 8rpx;
@@ -873,7 +885,7 @@ const formatDate = (timestamp: number): string => {
 
 .detail-example-text {
   font-size: 28rpx;
-  color: #333;
+  color: var(--sr-text);
   line-height: 1.6;
   word-break: break-all;
   display: block;
@@ -888,7 +900,7 @@ const formatDate = (timestamp: number): string => {
 
 .detail-meta-item {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .detail-actions {

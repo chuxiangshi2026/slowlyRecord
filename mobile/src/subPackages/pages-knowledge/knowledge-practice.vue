@@ -1,5 +1,5 @@
 <template>
-  <view class="practice-page">
+  <view class="practice-page" :class="themeClass">
     <!-- 顶部进度 -->
     <view class="header">
       <text class="title">{{ modeTitle }}</text>
@@ -383,7 +383,7 @@ onShow(() => {
 <style scoped>
 .practice-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
   /* 底部安全区补偿：避免最底行被手势条遮挡 */
@@ -397,13 +397,13 @@ onShow(() => {
   align-items: center;
   justify-content: space-between;
   padding: 24rpx 30rpx;
-  background: #fff;
+  background: var(--sr-card);
 }
 
 .title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .stats {
@@ -413,7 +413,7 @@ onShow(() => {
 }
 
 .stat.correct {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
 }
 
@@ -424,12 +424,12 @@ onShow(() => {
 
 .progress-track {
   height: 8rpx;
-  background: #eef0f4;
+  background: var(--sr-card-2);
 }
 
 .progress-fill {
   height: 100%;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -446,7 +446,7 @@ onShow(() => {
 .flip-card {
   width: 100%;
   min-height: 560rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 50rpx 40rpx;
   display: flex;
@@ -459,33 +459,33 @@ onShow(() => {
 
 .q-label {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 24rpx;
 }
 
 .q-text {
   font-size: 52rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.5;
   word-break: break-all;
 }
 
 .q-extras {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 16rpx;
 }
 
 .flip-hint {
   font-size: 24rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   margin-top: 70rpx;
 }
 
 .a-text {
   font-size: 48rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
   line-height: 1.5;
   word-break: break-all;
@@ -523,15 +523,20 @@ onShow(() => {
   border: 2rpx solid #e64340;
 }
 
+/* 暗色下浅红底刺眼：降饱和 */
+.theme-dark .btn-forget {
+  background: rgba(255, 82, 82, 0.12);
+}
+
 .btn-remember {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 /* 四选一 */
 .choice-prompt {
   width: 100%;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 40rpx;
   display: flex;
@@ -549,21 +554,26 @@ onShow(() => {
 }
 
 .choice-card {
-  background: #fff;
-  border: 3rpx solid #eef0f4;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-border);
   border-radius: 16rpx;
   padding: 34rpx 20rpx;
   text-align: center;
 }
 
 .choice-card.correct {
-  border-color: #52796f;
-  background: #f4faf5;
+  border-color: var(--sr-primary);
+  background: var(--sr-primary-bg);
 }
 
 .choice-card.wrong {
   border-color: #e64340;
   background: #fef2f2;
+}
+
+/* 暗色下浅红底刺眼：降饱和 */
+.theme-dark .choice-card.wrong {
+  background: rgba(255, 82, 82, 0.12);
 }
 
 .choice-card.disabled {
@@ -573,14 +583,14 @@ onShow(() => {
 .choice-text {
   font-size: 32rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   word-break: break-all;
 }
 
 .btn-next {
   margin-top: 40rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -592,8 +602,8 @@ onShow(() => {
 .spell-answer {
   width: 100%;
   min-height: 130rpx;
-  background: #fff;
-  border: 3rpx dashed #cfd8dc;
+  background: var(--sr-card);
+  border: 3rpx dashed var(--sr-border);
   border-radius: 20rpx;
   padding: 24rpx 20rpx;
   display: flex;
@@ -606,9 +616,9 @@ onShow(() => {
 }
 
 .spell-answer.correct {
-  border-color: #52796f;
+  border-color: var(--sr-primary);
   border-style: solid;
-  background: #f4faf5;
+  background: var(--sr-primary-bg);
 }
 
 .spell-answer.wrong {
@@ -617,9 +627,14 @@ onShow(() => {
   background: #fef2f2;
 }
 
+/* 暗色下浅红底刺眼：降饱和 */
+.theme-dark .spell-answer.wrong {
+  background: rgba(255, 82, 82, 0.12);
+}
+
 .spell-placeholder {
   font-size: 26rpx;
-  color: #bbb;
+  color: var(--sr-text-3);
   align-self: center;
 }
 
@@ -627,8 +642,8 @@ onShow(() => {
   min-width: 72rpx;
   height: 88rpx;
   padding: 0 16rpx;
-  background: #eef4f0;
-  border: 3rpx solid #52796f;
+  background: var(--sr-primary-bg);
+  border: 3rpx solid var(--sr-primary);
   border-radius: 14rpx;
   display: flex;
   align-items: center;
@@ -638,7 +653,7 @@ onShow(() => {
 .spell-placed-text {
   font-size: 38rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .spell-feedback {
@@ -653,7 +668,7 @@ onShow(() => {
 }
 
 .feedback-text.ok {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .feedback-text.bad {
@@ -667,7 +682,7 @@ onShow(() => {
   justify-content: center;
   gap: 18rpx;
   padding: 30rpx 10rpx;
-  background: #eef0f4;
+  background: var(--sr-card-2);
   border-radius: 20rpx;
 }
 
@@ -675,8 +690,8 @@ onShow(() => {
   min-width: 88rpx;
   height: 96rpx;
   padding: 0 20rpx;
-  background: #fff;
-  border: 3rpx solid #d5ddd8;
+  background: var(--sr-card);
+  border: 3rpx solid var(--sr-border);
   border-radius: 16rpx;
   display: flex;
   align-items: center;
@@ -691,12 +706,12 @@ onShow(() => {
 .spell-tile-text {
   font-size: 40rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .fallback-tip {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-top: 24rpx;
 }
 
@@ -717,7 +732,7 @@ onShow(() => {
 .result-title {
   font-size: 40rpx;
   font-weight: bold;
-  color: #303030;
+  color: var(--sr-text-strong);
   margin-top: 20rpx;
 }
 
@@ -734,7 +749,7 @@ onShow(() => {
 }
 
 .result-num.correct {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .result-num.wrong {
@@ -743,13 +758,13 @@ onShow(() => {
 
 .result-label {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-right: 20rpx;
 }
 
 .result-encourage {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 24rpx;
   text-align: center;
   line-height: 1.6;
@@ -765,8 +780,8 @@ onShow(() => {
   width: 100%;
   height: 88rpx;
   line-height: 88rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   border-radius: 44rpx;
   font-size: 30rpx;
   border: none;
@@ -774,8 +789,8 @@ onShow(() => {
 
 .btn-restart {
   margin-top: 60rpx;
-  background: #52796f;
-  color: #fff;  border-radius: 44rpx;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);  border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;
   border: none;
@@ -784,8 +799,8 @@ onShow(() => {
 
 .btn-back {
   margin-top: 20rpx;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 44rpx;
   height: 88rpx;
   font-size: 30rpx;

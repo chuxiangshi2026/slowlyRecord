@@ -1,5 +1,5 @@
 <template>
-  <view class="palace-list-container">
+  <view class="palace-list-container" :class="themeClass">
     <view v-if="!store.loaded" class="loading-tip">加载中...</view>
 
     <view v-else-if="sortedPalaces.length === 0" class="empty-state">
@@ -98,13 +98,13 @@ function confirmDelete(palaceId: string, name: string) {
 <style scoped>
 .palace-list-container {
   min-height: 100vh;
-  background: #f5f7f5;
+  background: var(--sr-bg);
   padding: 20rpx;
 }
 
 .loading-tip {
   text-align: center;
-  color: #999;
+  color: var(--sr-text-3);
   font-size: 28rpx;
   padding: 60rpx 0;
 }
@@ -123,21 +123,21 @@ function confirmDelete(palaceId: string, name: string) {
 
 .empty-text {
   font-size: 32rpx;
-  color: #333;
+  color: var(--sr-text);
   margin-bottom: 12rpx;
 }
 
 .empty-desc {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   text-align: center;
   line-height: 1.6;
 }
 
 .create-btn {
   margin-top: 40rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 30rpx;
   border-radius: 44rpx;
   padding: 0 60rpx;
@@ -169,7 +169,7 @@ function confirmDelete(palaceId: string, name: string) {
 .palace-card {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
@@ -184,18 +184,18 @@ function confirmDelete(palaceId: string, name: string) {
 .palace-name {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .palace-meta {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-top: 8rpx;
 }
 
 .palace-time {
   font-size: 24rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   margin-top: 6rpx;
 }
 
@@ -211,24 +211,33 @@ function confirmDelete(palaceId: string, name: string) {
   padding: 8rpx 20rpx;
 }
 
+/* 浅橙底在暗色下刺眼：保留亮色值，追加暗色覆盖 */
+.theme-dark .due-badge {
+  background: rgba(192, 122, 43, 0.18);
+}
+
 .due-badge text {
   font-size: 24rpx;
   color: #c07a2b;
 }
 
+.theme-dark .due-badge text {
+  color: #dba15c;
+}
+
 .due-clear text {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .palace-arrow {
   font-size: 36rpx;
-  color: #ccc;
+  color: var(--sr-text-3);
 }
 
 .edit-btn {
   font-size: 28rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   width: 44rpx;
   height: 44rpx;
   display: flex;

@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="themeClass">
     <view class="header">
       <text class="title">🔢 数字记忆</text>
       <text class="subtitle">为每个数字编一个记忆桩，长串数字也能轻松记住</text>
@@ -268,7 +268,7 @@ onShow(() => store.load())
 <style scoped>
 .page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   padding-bottom: 40rpx;
 }
 
@@ -292,7 +292,7 @@ onShow(() => store.load())
 
 .tabs {
   display: flex;
-  background: #fff;
+  background: var(--sr-card);
   margin: 0;
 }
 .tab {
@@ -300,11 +300,11 @@ onShow(() => store.load())
   padding: 24rpx 0;
   text-align: center;
   font-size: 26rpx;
-  color: #888;
+  color: var(--sr-text-2);
   position: relative;
 }
 .tab.active {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: 600;
 }
 .tab.active::after {
@@ -314,7 +314,7 @@ onShow(() => store.load())
   left: 30%;
   right: 30%;
   height: 4rpx;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 2rpx;
 }
 
@@ -331,7 +331,7 @@ onShow(() => store.load())
 }
 .peg-stat {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 .guide-bar {
   background: #fdf6ec;
@@ -342,9 +342,14 @@ onShow(() => store.load())
   color: #8a6d1a;
   margin-bottom: 16rpx;
 }
+.theme-dark .guide-bar {
+  background: rgba(230, 162, 60, 0.15);
+  border-color: rgba(230, 162, 60, 0.3);
+  color: #e0b563;
+}
 .fill-default-btn {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 22rpx;
   border-radius: 28rpx;
   padding: 0 20rpx;
@@ -354,19 +359,19 @@ onShow(() => store.load())
 }
 .range-toggle {
   display: flex;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 24rpx;
   padding: 4rpx;
 }
 .range-chip {
   padding: 6rpx 18rpx;
   font-size: 22rpx;
-  color: #888;
+  color: var(--sr-text-2);
   border-radius: 20rpx;
 }
 .range-chip.active {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .peg-grid {
@@ -375,7 +380,7 @@ onShow(() => store.load())
   gap: 12rpx;
 }
 .peg-cell {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   height: 130rpx;
   padding: 12rpx 8rpx;
@@ -386,13 +391,13 @@ onShow(() => store.load())
   border: 2rpx solid transparent;
 }
 .peg-cell.filled {
-  background: #eef4f0;
-  border-color: #52796f;
+  background: var(--sr-primary-bg);
+  border-color: var(--sr-primary);
 }
 .peg-number {
   font-size: 32rpx;
   font-weight: bold;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 .peg-number.small {
   font-size: 22rpx;
@@ -402,11 +407,11 @@ onShow(() => store.load())
   width: 100%;
   height: 84rpx;
   border-radius: 8rpx;
-  background: #f0f0f0;
+  background: var(--sr-card-2);
 }
 .peg-desc {
   font-size: 20rpx;
-  color: #555;
+  color: var(--sr-text-2);
   margin-top: 4rpx;
   text-align: center;
   line-height: 1.3;
@@ -414,7 +419,7 @@ onShow(() => store.load())
 
 .peg-footer-tip {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   text-align: center;
   margin-top: 24rpx;
   padding: 0 24rpx;
@@ -429,19 +434,20 @@ onShow(() => store.load())
 }
 .entry-search {
   flex: 1;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 0 24rpx;
   height: 76rpx;
   line-height: 76rpx;
   font-size: 26rpx;
+  color: var(--sr-text);
 }
 .entry-add-btn {
   height: 76rpx;
   line-height: 76rpx;
   padding: 0 28rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 26rpx;
   border-radius: 38rpx;
   border: none;
@@ -453,8 +459,8 @@ onShow(() => store.load())
   width: 100%;
   height: 84rpx;
   line-height: 84rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 26rpx;
   border-radius: 42rpx;
   border: none;
@@ -472,18 +478,18 @@ onShow(() => store.load())
 }
 .empty-title {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   display: block;
   margin-bottom: 8rpx;
 }
 .empty-tip {
   font-size: 24rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   display: block;
 }
 
 .entry-card {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 24rpx;
   margin-bottom: 16rpx;
@@ -498,7 +504,7 @@ onShow(() => store.load())
 .entry-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: #303030;
+  color: var(--sr-text-strong);
   flex: 1;
   margin-right: 16rpx;
   overflow: hidden;
@@ -515,12 +521,12 @@ onShow(() => store.load())
 }
 .more-icon {
   font-size: 36rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 .entry-numbers {
   font-size: 36rpx;
   font-weight: 500;
-  color: #52796f;
+  color: var(--sr-primary);
   font-family: 'Courier New', monospace;
   letter-spacing: 4rpx;
   display: block;
@@ -534,14 +540,14 @@ onShow(() => store.load())
 }
 .entry-tag {
   font-size: 20rpx;
-  background: #eef4f0;
-  color: #52796f;
+  background: var(--sr-primary-bg);
+  color: var(--sr-primary);
   border-radius: 4rpx;
   padding: 2rpx 12rpx;
 }
 .entry-desc {
   font-size: 22rpx;
-  color: #888;
+  color: var(--sr-text-2);
   line-height: 1.5;
 }
 </style>

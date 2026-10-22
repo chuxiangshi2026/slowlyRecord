@@ -1,9 +1,15 @@
 <template>
-  <view class="add-word-container">
+  <view class="add-word-container" :class="themeClass">
     <!-- 落点提示：告知词将加入哪个词库，可点击切换 -->
     <view class="bank-tip" @click="goToWordbank">
       <text class="bank-tip-text">添加到：{{ currentBankName }}</text>
       <text class="bank-tip-arrow">切换 ›</text>
+    </view>
+
+    <!-- 拍照/相册识别加词：跳翻译页自动拉起 OCR，识别后批量勾选加入 -->
+    <view class="bank-tip ocr-entry" @click="goOcrAdd">
+      <text class="bank-tip-text">📷 拍照/相册识别加词</text>
+      <text class="bank-tip-arrow">›</text>
     </view>
 
     <!-- 输入单词/词组/句子 -->
@@ -175,6 +181,11 @@ const goToWordbank = () => {
   uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
 }
 
+// 跳翻译页并自动拉起拍照/相册识别（识别结果在那边批量加入当前词库）
+const goOcrAdd = () => {
+  uni.navigateTo({ url: '/subPackages/pages-tools/translate/translate?autoCapture=all' })
+}
+
 const goBack = () => {
   uni.navigateBack()
 }
@@ -184,7 +195,7 @@ const goBack = () => {
 .add-word-container {
   padding: 30rpx;
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--sr-bg);
 }
 
 /* 落点提示条 */
@@ -192,7 +203,7 @@ const goBack = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 22rpx 24rpx;
   margin-bottom: 30rpx;
@@ -200,12 +211,12 @@ const goBack = () => {
 
 .bank-tip-text {
   font-size: 26rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .bank-tip-arrow {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .form-group {
@@ -214,14 +225,15 @@ const goBack = () => {
 
 .form-label {
   font-size: 28rpx;
-  color: #666;
+  color: var(--sr-text-2);
   margin-bottom: 12rpx;
   display: block;
 }
 
 .form-input {
   height: 80rpx;
-  background: #fff;
+  background: var(--sr-card);
+  color: var(--sr-text);
   border-radius: 12rpx;
   padding: 0 24rpx;
   font-size: 28rpx;
@@ -240,8 +252,8 @@ const goBack = () => {
 .btn-translate {
   width: 140rpx;
   height: 80rpx;
-  background: #74937d;
-  color: #fff;
+  background: var(--sr-primary-2);
+  color: var(--sr-on-primary);
   border-radius: 12rpx;
   font-size: 26rpx;
   border: none;
@@ -252,7 +264,8 @@ const goBack = () => {
 .form-textarea {
   width: 100%;
   min-height: 80rpx;
-  background: #fff;
+  background: var(--sr-card);
+  color: var(--sr-text);
   border-radius: 12rpx;
   padding: 20rpx 24rpx;
   font-size: 28rpx;
@@ -275,12 +288,12 @@ const goBack = () => {
 }
 
 .btn-cancel {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 
 .btn-confirm {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 </style>
