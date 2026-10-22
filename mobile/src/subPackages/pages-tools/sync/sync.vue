@@ -1,5 +1,5 @@
 <template>
-  <view class="sync-container">
+  <view class="sync-container" :class="themeClass">
     <!-- 推送结果 -->
     <view v-if="showPushResult" class="section">
       <view class="section-title">推送成功</view>
@@ -31,7 +31,7 @@
     <view v-if="showWebdav && !showPushResult && !showPullInput" class="section">
       <view class="section-title">坚果云备份</view>
       <input class="popup-input" v-model="webdavUrl" placeholder="WebDAV 地址" />
-      <view class="webdav-default-link" @click="useDefaultWebdavUrl">用默认地址（dav.jianguoyun.com/dav/）</view>
+      <view class="webdav-default-link" @click="useDefaultWebdavUrl">用默认地址（账号自带的「我的坚果云」文件夹）</view>
       <view class="webdav-target">备份文件将存放在：{{ webdavUrl || '（未填写地址）' }}slowlyRecord-sync.enc</view>
       <view v-if="diagVerdict" class="diag-banner" :class="diagLevel === 'ok' ? 'diag-ok' : 'diag-error'">
         <text class="diag-text">{{ diagVerdict }}</text>
@@ -512,12 +512,12 @@ const copySyncCode = () => {
 <style scoped>
 .sync-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--sr-bg);
   padding: 20rpx;
 }
 
 .section {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   padding: 40rpx;
 }
@@ -530,7 +530,7 @@ const copySyncCode = () => {
 }
 
 .menu-list {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   overflow: hidden;
 }
@@ -539,7 +539,7 @@ const copySyncCode = () => {
   display: flex;
   align-items: center;
   padding: 30rpx 40rpx;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .menu-icon {
@@ -554,22 +554,22 @@ const copySyncCode = () => {
   font-weight: bold;
 }
 
-.menu-icon.push { background: #eaf1ea; color: #52796f; }
-.menu-icon.pull { background: #e8f0ec; color: #3d5a52; }
-.menu-icon.scan { background: #eef4f0; color: #74937d; }
-.menu-icon.server { background: #f4faf5; color: #6f9a8d; }
-.menu-icon.webdav { background: #eaf3ee; color: #52796f; }
+.menu-icon.push { background: var(--sr-primary-bg); color: var(--sr-primary); }
+.menu-icon.pull { background: var(--sr-primary-bg); color: var(--sr-primary); }
+.menu-icon.scan { background: var(--sr-primary-bg); color: var(--sr-primary-2); }
+.menu-icon.server { background: var(--sr-primary-bg); color: var(--sr-primary-2); }
+.menu-icon.webdav { background: var(--sr-primary-bg); color: var(--sr-primary); }
 
 .webdav-guide {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
   line-height: 1.6;
   margin-bottom: 20rpx;
 }
 
 .webdav-target {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-bottom: 16rpx;
   word-break: break-all;
 }
@@ -581,8 +581,8 @@ const copySyncCode = () => {
 }
 
 .diag-ok {
-  background: #e8f3ec;
-  border-left: 6rpx solid #52796f;
+  background: var(--sr-primary-bg);
+  border-left: 6rpx solid var(--sr-primary);
 }
 
 .diag-error {
@@ -590,15 +590,19 @@ const copySyncCode = () => {
   border-left: 6rpx solid #d9534f;
 }
 
+.theme-dark .diag-error {
+  background: rgba(217, 83, 79, 0.15);
+}
+
 .diag-text {
   font-size: 24rpx;
   line-height: 1.6;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .webdav-default-link {
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-bottom: 16rpx;
   padding: 4rpx 0;
 }
@@ -606,22 +610,22 @@ const copySyncCode = () => {
 .menu-text {
   flex: 1;
   font-size: 30rpx;
-  color: #333;
+  color: var(--sr-text);
 }
 
 .menu-value {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sr-text-3);
   margin-right: 10rpx;
 }
 
 .menu-divider {
   height: 16rpx;
-  background: #f5f5f5;
+  background: var(--sr-border);
 }
 
 .sync-code-box {
-  background: #f5f5f5;
+  background: var(--sr-card-2);
   border-radius: 8rpx;
   padding: 20rpx;
   margin-bottom: 20rpx;
@@ -629,12 +633,12 @@ const copySyncCode = () => {
 
 .sync-code-label {
   font-size: 26rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .sync-code-value {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: bold;
   word-break: break-all;
 }
@@ -653,7 +657,7 @@ const copySyncCode = () => {
 
 .sync-qr-hint {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .btn-row {
@@ -671,18 +675,19 @@ const copySyncCode = () => {
 }
 
 .btn-cancel {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 
 .btn-confirm {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 
 .popup-input {
   height: 80rpx;
-  background: #f5f5f5;
+  background: var(--sr-card-2);
+  color: var(--sr-text);
   border-radius: 8rpx;
   padding: 0 20rpx;
   margin-bottom: 20rpx;

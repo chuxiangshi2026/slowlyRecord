@@ -29,6 +29,8 @@ import {
 } from './sync'
 
 const cfg = { url: NUTSTORE_WEBDAV_URL, username: 'user@example.com', password: 'app-password' }
+/** 根目录夹具：「/dav/ 根不可写、兜底到我的坚果云」场景专用（默认地址本身已是可写子目录） */
+const rootCfg = { ...cfg, url: 'https://dav.jianguoyun.com/dav/' }
 const key = `${cfg.username}:${cfg.password}`
 
 function createMockUni() {
@@ -203,7 +205,7 @@ describe('pushToWebDav', () => {
     const result = await pushToWebDav(cfg, payload)
     expect(result.success).toBe(true)
     expect(seen.method).toBe('PUT')
-    expect(seen.url).toBe(`${NUTSTORE_WEBDAV_URL}slowlyRecord-sync.enc`)
+    expect(seen.url).toBe(`${encodeURI(NUTSTORE_WEBDAV_URL)}slowlyRecord-sync.enc`)
     expect(String(seen.header.Authorization)).toMatch(/^Basic /)
 
     const decoded = JSON.parse(bytesToUtf8(pako.inflate(xorCrypt(base64ToUint8Array(String(seen.data)), key))))
@@ -246,10 +248,10 @@ describe('pushToWebDav', () => {
       opts.success({ statusCode: isFallback ? 201 : 404, data: '' })
     })
 
-    const result = await pushToWebDav(cfg, { banks: [] })
+    const result = await pushToWebDav(rootCfg, { banks: [] })
     expect(result.success).toBe(true)
     expect(seen.length).toBe(2)
-    expect(result.usedDir).toBe(`${NUTSTORE_WEBDAV_URL}我的坚果云/`)
+    expect(result.usedDir).toBe('https://dav.jianguoyun.com/dav/我的坚果云/')
   })
 
   it('根目录没有备份时自动到「我的坚果云」兜底拉取', async () => {
@@ -259,7 +261,7 @@ describe('pushToWebDav', () => {
       opts.success({ statusCode: isFallback ? 200 : 404, data: isFallback ? body : '' })
     })
 
-    const result = await pullFromWebDav(cfg)
+    const result = await pullFromWebDav(rootCfg)
     expect(result.success).toBe(true)
   })
 
@@ -296,7 +298,7 @@ describe('pullFromWebDav', () => {
     const result = await pullFromWebDav(cfg)
     expect(result.success).toBe(true)
     expect(seen.method).toBe('GET')
-    expect(seen.url).toBe(`${NUTSTORE_WEBDAV_URL}slowlyRecord-sync.enc`)
+    expect(seen.url).toBe(`${encodeURI(NUTSTORE_WEBDAV_URL)}slowlyRecord-sync.enc`)
     expect(String(seen.header.Authorization)).toMatch(/^Basic /)
     expect(result.banks?.[0].name).toBe('测试词库')
   })

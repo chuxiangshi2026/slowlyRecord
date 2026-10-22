@@ -48,8 +48,12 @@ export interface WebDavConfig {
   password: string
 }
 
-/** 坚果云 WebDAV 固定地址（预设值，用户可改成其他 WebDAV 服务） */
-export const NUTSTORE_WEBDAV_URL = 'https://dav.jianguoyun.com/dav/'
+/**
+ * 坚果云 WebDAV 默认同步目录（预设值，用户可改成其他 WebDAV 服务）。
+ * 默认指向账号自带的「我的坚果云」文件夹：坚果云不允许在 /dav/ 集合根直接创建文件
+ * （PUT 报 404 ObjectNotFound），必须落到二级目录，「我的坚果云」每个账号都有、开箱可写
+ */
+export const NUTSTORE_WEBDAV_URL = 'https://dav.jianguoyun.com/dav/我的坚果云/'
 
 /** 同步文件在 WebDAV 根目录下的固定文件名（不用子目录，避免 MKCOL 兼容问题） */
 const FILE_NAME = 'slowlyRecord-sync.enc'
@@ -78,7 +82,7 @@ export function normalizeWebDavUrl(raw: string): string {
   }
   // 折叠重复斜杠（协议后的 // 不处理）
   s = s.replace(/([^:]\/)\/+/g, '$1')
-  // 坚果云：只填主机或根路径都视为官方 DAV 根目录
+  // 坚果云：只填主机或根路径都归一到默认同步目录（我的坚果云）
   if (/^https?:\/\/dav\.jianguoyun\.com\/?$/i.test(s)) return NUTSTORE_WEBDAV_URL
   return s.endsWith('/') ? s : `${s}/`
 }
@@ -272,7 +276,7 @@ function explainHttpError(status: number): string {
  */
 function explainUploadError(status: number, url: string): string {
   if (status === 404 || status === 409) {
-    return `网盘目录不存在（HTTP ${status}）：实际请求 ${maskUrl(url)}。坚果云请填 https://dav.jianguoyun.com/dav/（可点「恢复默认地址」，同步文件会自动创建在根目录）；自建子文件夹需先在网盘中创建`
+    return `网盘目录不存在或不可写（HTTP ${status}）：实际请求 ${maskUrl(url)}。坚果云的 /dav/ 根目录不允许直接创建文件，请使用二级目录——默认地址就是账号自带的「我的坚果云」文件夹（可点「恢复默认地址」）；自建子文件夹需先在网盘中创建`
   }
   return explainHttpError(status)
 }

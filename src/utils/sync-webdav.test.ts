@@ -74,6 +74,8 @@ import {
 } from './sync-webdav'
 
 const cfg = { url: NUTSTORE_WEBDAV_URL, username: 'user@example.com', password: 'app-password' }
+/** 根目录夹具：「/dav/ 根不可写」场景专用（默认地址本身已是可写子目录） */
+const rootCfg = { ...cfg, url: 'https://dav.jianguoyun.com/dav/' }
 const key = `${cfg.username}:${cfg.password}`
 
 function mockFetchOnce(impl: (...args: unknown[]) => unknown) {
@@ -99,7 +101,7 @@ describe('WebDAV 文件加解密', () => {
 
 describe('webDavFileUrl', () => {
   it('规范化结尾斜杠并拼接固定文件名', () => {
-    expect(webDavFileUrl(cfg)).toBe(`${NUTSTORE_WEBDAV_URL}slowlyRecord-sync.enc`)
+    expect(webDavFileUrl(cfg)).toBe(`${encodeURI(NUTSTORE_WEBDAV_URL)}slowlyRecord-sync.enc`)
     expect(webDavFileUrl({ ...cfg, url: 'https://example.com/dav///' }))
       .toBe('https://example.com/dav/slowlyRecord-sync.enc')
   })
@@ -171,7 +173,7 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
       return { ok: true, status: 204, headers, text: async () => '' }
     }) as any
 
-    const d = await diagnoseWebDav(cfg)
+    const d = await diagnoseWebDav(rootCfg)
     expect(d.level).toBe('config')
     expect(d.resolvedDir).toBe('https://dav.jianguoyun.com/dav/我的坚果云/')
     expect(d.candidates).toEqual(['https://dav.jianguoyun.com/dav/我的坚果云/'])
@@ -232,7 +234,7 @@ describe('buildWebDavVerdict / diagnoseWebDav：能读不能写的诊断', () =>
       return { ok: true, status: 200, headers, text: async () => '' }
     }) as any
 
-    const d = await diagnoseWebDav(cfg)
+    const d = await diagnoseWebDav(rootCfg)
     expect(d.verdict).toContain('ObjectNotFound')
     expect(d.verdict).toContain('子目录')
     expect(formatWebDavDiagnosis(d)).toContain('可用子目录：https://dav.jianguoyun.com/dav/我的坚果云/')
@@ -277,13 +279,16 @@ const PROPFIND_XML = `<?xml version="1.0" encoding="UTF-8"?>
 </d:multistatus>`
 
 describe('parseChildCollections：从 PROPFIND 找可写目录', () => {
+  // 列目录固定从 /dav/ 根发起（与常量默认值无关）
+  const DAV_ROOT = 'https://dav.jianguoyun.com/dav/'
+
   it('取出子集合完整 URL（解码中文），排除根自身与文件', () => {
-    expect(parseChildCollections(PROPFIND_XML, NUTSTORE_WEBDAV_URL))
+    expect(parseChildCollections(PROPFIND_XML, DAV_ROOT))
       .toEqual(['https://dav.jianguoyun.com/dav/我的坚果云/'])
   })
 
   it('无子目录时返回空数组', () => {
-    expect(parseChildCollections('<d:multistatus><d:response><d:href>/dav/</d:href></d:response></d:multistatus>', NUTSTORE_WEBDAV_URL))
+    expect(parseChildCollections('<d:multistatus><d:response><d:href>/dav/</d:href></d:response></d:multistatus>', DAV_ROOT))
       .toEqual([])
   })
 })
@@ -305,7 +310,7 @@ describe('uploadToWebDav：根目录不可写时自动改用子目录', () => {
       return { ok: true, status: 200, headers, text: async () => '' }
     }) as any
 
-    const r = await uploadToWebDav(cfg)
+    const r = await uploadToWebDav(rootCfg)
     expect(r.success).toBe(true)
     expect(r.resolvedDir).toBe('https://dav.jianguoyun.com/dav/我的坚果云/')
     // 根目录正式上传 1 次 + 子目录探针 1 次 + 子目录正式上传 1 次
@@ -320,7 +325,7 @@ describe('uploadToWebDav：根目录不可写时自动改用子目录', () => {
       return { ok: true, status: 200, headers, text: async () => '' }
     }) as any
 
-    const r = await uploadToWebDav(cfg)
+    const r = await uploadToWebDav(rootCfg)
     expect(r.success).toBe(false)
     expect(r.error).toContain('HTTP 404')
   })
@@ -408,7 +413,7 @@ describe('uploadToWebDav', () => {
 
     const result = await uploadToWebDav(cfg)
     expect(result.success).toBe(true)
-    expect(seenUrl).toBe(`${NUTSTORE_WEBDAV_URL}slowlyRecord-sync.enc`)
+    expect(seenUrl).toBe(`${encodeURI(NUTSTORE_WEBDAV_URL)}slowlyRecord-sync.enc`)
     expect(seenInit?.method).toBe('PUT')
     expect(String((seenInit?.headers as Record<string, string>).Authorization)).toMatch(/^Basic /)
 
