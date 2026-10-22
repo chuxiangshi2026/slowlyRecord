@@ -145,6 +145,8 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   /** 点击标记时触发，父组件可弹出详情 sheet */
   (e: 'tapMarker', payload: MarkerTapPayload): void
+  /** 筛选条件变化时触发，父组件应关闭已打开的详情 sheet（内容已过期） */
+  (e: 'filterChange'): void
 }>()
 
 // ===== 数据加载 =====
@@ -242,6 +244,11 @@ function onDynastyChange(e: any) {
   dynastyIndex.value = Number(e.detail.value)
   // 朝代变化时作者列表会变，由 watch(availableAuthors) 兜底
 }
+
+// 筛选条件变化时通知父组件：已打开的 marker 详情 sheet 内容已过期，应关闭
+watch([categoryValue, dynastyCode, selectedAuthor], () => {
+  emit('filterChange')
+})
 
 // ===== 标记计算 =====
 
@@ -488,15 +495,16 @@ function extractSortYear(year?: string | number): number {
 }
 
 // ===== 地图视野 =====
-
-const centerLat = ref(35.0)
-const centerLng = ref(105.0)
-const mapScale = ref(4)
+// 初始定位西安（古都长安，诗词密度最高的区域），放大到能直接看到市内诗词点
+const centerLat = ref(34.3)
+const centerLng = ref(108.9)
+const mapScale = ref(8)
 
 /**
  * 自动框选视野的坐标列表：
- * - 路线显示时优先框选路线点（看完整路线）
- * - 否则框选所有标记
+ * 仅路线显示时框选路线点（看完整路线）；
+ * 其余情况返回空数组——框选所有标记会把初始视野强行拉到全国，
+ * 覆盖了上面的西安初始定位
  */
 const includePoints = computed(() => {
   if (routePoints.value.length > 0) {
@@ -505,11 +513,7 @@ const includePoints = computed(() => {
       longitude: p.longitude,
     }))
   }
-  if (locationGroups.value.length === 0) return []
-  return locationGroups.value.map((g) => ({
-    latitude: g.coord.lat,
-    longitude: g.coord.lng,
-  }))
+  return []
 })
 
 // ===== 地图尺寸同步 =====
@@ -684,7 +688,7 @@ const emptyHint = computed(() => {
   width: 100%;
   min-width: 0;
   height: 100%;
-  background: #f5f6fa;
+  background: var(--sr-bg);
 }
 
 /* 工具栏 */
@@ -693,8 +697,8 @@ const emptyHint = computed(() => {
   align-items: center;
   gap: 12rpx;
   padding: 16rpx 20rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .picker-chip {
@@ -702,7 +706,7 @@ const emptyHint = computed(() => {
   align-items: center;
   gap: 6rpx;
   padding: 10rpx 18rpx;
-  background: #f5f6fa;
+  background: var(--sr-card-2);
   border-radius: 30rpx;
   font-size: 24rpx;
 }
@@ -710,17 +714,17 @@ const emptyHint = computed(() => {
   opacity: 0.4;
 }
 .picker-label {
-  color: #999;
+  color: var(--sr-text-3);
 }
 .picker-value {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: 600;
 }
 
 .stat-info {
   margin-left: auto;
   font-size: 22rpx;
-  color: #888;
+  color: var(--sr-text-3);
 }
 .stat-text {
   font-variant-numeric: tabular-nums;
@@ -732,27 +736,27 @@ const emptyHint = computed(() => {
   align-items: center;
   gap: 12rpx;
   padding: 14rpx 24rpx;
-  background: #f4faf5;
-  border-bottom: 1rpx solid #eaf1ea;
+  background: var(--sr-primary-bg);
+  border-bottom: 1rpx solid var(--sr-border);
   font-size: 24rpx;
-  color: #3d5a52;
+  color: var(--sr-primary);
 }
 .route-checkbox {
   width: 30rpx;
   height: 30rpx;
-  border: 2rpx solid #83c5a8;
+  border: 2rpx solid var(--sr-primary);
   border-radius: 6rpx;
-  background: #fff;
+  background: var(--sr-card);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .route-checkbox.checked {
-  background: #52796f;
-  border-color: #52796f;
+  background: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 .route-checkbox .check-mark {
-  color: #fff;
+  color: var(--sr-on-primary);
   font-size: 20rpx;
   line-height: 1;
 }
@@ -760,7 +764,7 @@ const emptyHint = computed(() => {
   flex: 1;
 }
 .route-hint {
-  color: #83c5a8;
+  color: var(--sr-primary);
   font-size: 22rpx;
   font-variant-numeric: tabular-nums;
 }
@@ -785,7 +789,7 @@ const emptyHint = computed(() => {
   align-items: center;
   justify-content: center;
   font-size: 26rpx;
-  color: #888;
+  color: var(--sr-text-3);
 }
 
 /* 空状态 */
@@ -804,11 +808,11 @@ const emptyHint = computed(() => {
 }
 .empty-title {
   font-size: 28rpx;
-  color: #555;
+  color: var(--sr-text-2);
 }
 .empty-hint {
   font-size: 24rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   text-align: center;
   line-height: 1.6;
 }
@@ -819,10 +823,10 @@ const emptyHint = computed(() => {
   justify-content: center;
   gap: 28rpx;
   padding: 12rpx 20rpx 16rpx;
-  background: #fff;
-  border-top: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-top: 1rpx solid var(--sr-border);
   font-size: 22rpx;
-  color: #666;
+  color: var(--sr-text-2);
 }
 
 .legend-item {
@@ -835,7 +839,7 @@ const emptyHint = computed(() => {
   width: 18rpx;
   height: 18rpx;
   border-radius: 50%;
-  border: 2rpx solid #fff;
+  border: 2rpx solid var(--sr-card);
   box-shadow: 0 0 0 1rpx rgba(0, 0, 0, 0.1);
 }
 .legend-dot.poetry {

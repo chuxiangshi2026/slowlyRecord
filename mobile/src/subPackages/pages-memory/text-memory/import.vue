@@ -1,5 +1,5 @@
 <template>
-  <view class="import-page">
+  <view class="import-page" :class="themeClass">
     <!-- Tab 切换 -->
     <view class="tabs">
       <view
@@ -165,6 +165,7 @@
           :selected-idiom-ids="selectedIdiomIds"
           :resize-key="mapResizeKey"
           @tap-marker="onMapMarkerTap"
+          @filter-change="mapSheetVisible = false"
         />
       </view>
 
@@ -656,26 +657,26 @@ function handleImportFromMap() {
 .import-page {
   height: 100vh;
   overflow: hidden;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
 
 .tabs {
   display: flex;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-bottom: 1rpx solid var(--sr-border);
 }
 .tab {
   flex: 1;
   padding: 24rpx 0;
   text-align: center;
   font-size: 26rpx;
-  color: #888;
+  color: var(--sr-text-2);
   position: relative;
 }
 .tab.active {
-  color: #52796f;
+  color: var(--sr-primary);
   font-weight: 600;
 }
 .tab.active::after {
@@ -685,7 +686,7 @@ function handleImportFromMap() {
   left: 30%;
   right: 30%;
   height: 4rpx;
-  background: #52796f;
+  background: var(--sr-primary);
   border-radius: 2rpx;
 }
 
@@ -722,14 +723,14 @@ function handleImportFromMap() {
   max-height: 60vh;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--sr-card);
 }
 
 /* 底部导入栏 */
 .map-import-bar {
   padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
-  background: #fff;
-  border-top: 1rpx solid #eee;
+  background: var(--sr-card);
+  border-top: 1rpx solid var(--sr-border);
 }
 .map-import-bar .action-btn {
   width: 100%;
@@ -744,6 +745,10 @@ function handleImportFromMap() {
   padding: 20rpx;
   margin-bottom: 20rpx;
 }
+.theme-dark .hint-box {
+  background: rgba(230, 162, 60, 0.12);
+  border-color: rgba(230, 162, 60, 0.3);
+}
 .hint-title {
   font-size: 26rpx;
   font-weight: 600;
@@ -751,30 +756,33 @@ function handleImportFromMap() {
   display: block;
   margin-bottom: 8rpx;
 }
+.theme-dark .hint-title {
+  color: #f0b45f;
+}
 .hint-desc {
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-2);
   line-height: 1.6;
   display: block;
   margin-bottom: 12rpx;
 }
 .hint-example {
   font-size: 22rpx;
-  color: #666;
+  color: var(--sr-text-2);
   line-height: 1.6;
   white-space: pre-line;
   display: block;
-  background: #fff;
+  background: var(--sr-card-2);
   padding: 12rpx;
   border-radius: 8rpx;
   font-family: monospace;
 }
 .paste-area {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 20rpx;
   font-size: 26rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   width: 100%;
   min-height: 320rpx;
   line-height: 1.7;
@@ -789,24 +797,24 @@ function handleImportFromMap() {
   margin-bottom: 16rpx;
 }
 .picker-display {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 0 24rpx;
   height: 64rpx;
   line-height: 64rpx;
   font-size: 26rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   min-width: 200rpx;
 }
 .filter-input {
   flex: 1;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 0 24rpx;
   height: 64rpx;
   line-height: 64rpx;
   font-size: 26rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .loading {
@@ -815,7 +823,7 @@ function handleImportFromMap() {
   align-items: center;
   justify-content: center;
   font-size: 26rpx;
-  color: #888;
+  color: var(--sr-text-2);
 }
 
 .lib-toolbar {
@@ -826,10 +834,10 @@ function handleImportFromMap() {
   font-size: 24rpx;
 }
 .select-info {
-  color: #888;
+  color: var(--sr-text-2);
 }
 .select-all {
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .lib-scroll {
@@ -839,15 +847,15 @@ function handleImportFromMap() {
 }
 
 .lib-item {
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 12rpx;
   padding: 20rpx;
   margin-bottom: 12rpx;
   border: 2rpx solid transparent;
 }
 .lib-item.selected {
-  border-color: #52796f;
-  background: #f4faf5;
+  border-color: var(--sr-primary);
+  background: var(--sr-primary-bg);
 }
 .lib-item-header {
   display: flex;
@@ -858,15 +866,15 @@ function handleImportFromMap() {
 .lib-item-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 .lib-item-author {
   font-size: 22rpx;
-  color: #888;
+  color: var(--sr-text-2);
 }
 .lib-item-content {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -875,7 +883,7 @@ function handleImportFromMap() {
 }
 .lib-item-extra {
   font-size: 22rpx;
-  color: #aaa;
+  color: var(--sr-text-3);
   display: block;
   margin-top: 6rpx;
 }
@@ -886,8 +894,8 @@ function handleImportFromMap() {
 }
 .lib-mini-tag {
   font-size: 20rpx;
-  background: #f5f5f5;
-  color: #888;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
   border-radius: 4rpx;
   padding: 0 8rpx;
 }
@@ -901,8 +909,8 @@ function handleImportFromMap() {
   margin: 0;
 }
 .action-btn.primary {
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
 }
 .action-btn[disabled] {
   background: #e5e5e5;

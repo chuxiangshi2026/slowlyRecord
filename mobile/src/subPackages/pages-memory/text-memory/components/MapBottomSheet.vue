@@ -138,7 +138,7 @@ function previewContent(content: string): string {
 
 <style scoped>
 .bottom-sheet {
-  background: #fff;
+  background: var(--sr-card);
   border-top-left-radius: 24rpx;
   border-top-right-radius: 24rpx;
   box-shadow: 0 -6rpx 20rpx rgba(0, 0, 0, 0.08);
@@ -151,13 +151,13 @@ function previewContent(content: string): string {
 /* 顶部 */
 .sheet-header {
   padding: 16rpx 24rpx 12rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid var(--sr-border);
 }
 
 .handle-bar {
   width: 60rpx;
   height: 6rpx;
-  background: #ddd;
+  background: var(--sr-border);
   border-radius: 3rpx;
   margin: 0 auto 16rpx;
 }
@@ -171,13 +171,13 @@ function previewContent(content: string): string {
 .location-name {
   font-size: 30rpx;
   font-weight: 600;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .count-badge {
   font-size: 22rpx;
-  color: #888;
-  background: #f5f6fa;
+  color: var(--sr-text-3);
+  background: var(--sr-card-2);
   padding: 4rpx 14rpx;
   border-radius: 20rpx;
 }
@@ -190,9 +190,9 @@ function previewContent(content: string): string {
   align-items: center;
   justify-content: center;
   font-size: 40rpx;
-  color: #999;
+  color: var(--sr-text-3);
   border-radius: 50%;
-  background: #f5f6fa;
+  background: var(--sr-card-2);
 }
 
 /* 工具栏 */
@@ -200,8 +200,8 @@ function previewContent(content: string): string {
   display: flex;
   align-items: center;
   padding: 14rpx 24rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-  background: #fafbfc;
+  border-bottom: 1rpx solid var(--sr-border);
+  background: var(--sr-card-2);
 }
 
 .select-all {
@@ -212,13 +212,13 @@ function previewContent(content: string): string {
 
 .select-all-label {
   font-size: 26rpx;
-  color: #52796f;
+  color: var(--sr-primary);
 }
 
 .selected-info {
   margin-left: auto;
   font-size: 24rpx;
-  color: #888;
+  color: var(--sr-text-3);
   font-variant-numeric: tabular-nums;
 }
 
@@ -228,22 +228,22 @@ function previewContent(content: string): string {
   height: 36rpx;
   border: 2rpx solid #ccc;
   border-radius: 8rpx;
-  background: #fff;
+  background: var(--sr-card);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s;
 }
 .checkbox.checked {
-  background: #52796f;
-  border-color: #52796f;
+  background: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 .checkbox.indeterminate {
-  background: #52796f;
-  border-color: #52796f;
+  background: var(--sr-primary);
+  border-color: var(--sr-primary);
 }
 .check-mark {
-  color: #fff;
+  color: var(--sr-on-primary);
   font-size: 26rpx;
   line-height: 1;
 }
@@ -251,6 +251,7 @@ function previewContent(content: string): string {
 /* 列表 */
 .sheet-list {
   flex: 1;
+  height: 0; /* flex 子项 scroll-view 需要明确高度约束，否则长列表撑开容器无法滚动 */
   padding: 12rpx 0 24rpx;
 }
 
@@ -258,15 +259,15 @@ function previewContent(content: string): string {
   display: flex;
   gap: 16rpx;
   padding: 20rpx 24rpx;
-  border-bottom: 1rpx solid #f4f5f7;
-  background: #fff;
+  border-bottom: 1rpx solid var(--sr-border);
+  background: var(--sr-card);
   transition: background 0.15s;
 }
 .sheet-item.selected {
-  background: #f4faf5;
+  background: var(--sr-primary-bg);
 }
 .sheet-item:active {
-  background: #f0f0f0;
+  background: var(--sr-card-2);
 }
 
 .item-check {
@@ -289,12 +290,12 @@ function previewContent(content: string): string {
 .item-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: #303030;
+  color: var(--sr-text-strong);
 }
 
 .pinyin {
   font-size: 22rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .tag {
@@ -304,24 +305,30 @@ function previewContent(content: string): string {
   line-height: 1.6;
 }
 .tag-poetry {
-  background: #f0f0f0;
-  color: #595959;
+  background: var(--sr-card-2);
+  color: var(--sr-text-2);
 }
 .tag-idiom {
   background: #fdf6ec;
   color: #e6a23c;
 }
 
+/* 暗色下浅橙底刺眼，换半透明橙底 + 提亮文字 */
+.theme-dark .tag-idiom {
+  background: rgba(230, 162, 60, 0.18);
+  color: #f0b45e;
+}
+
 .item-meta {
   font-size: 22rpx;
-  color: #888;
+  color: var(--sr-text-3);
   display: block;
   margin-bottom: 6rpx;
 }
 
 .item-preview {
   font-size: 24rpx;
-  color: #666;
+  color: var(--sr-text-2);
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -329,7 +336,7 @@ function previewContent(content: string): string {
   overflow: hidden;
 }
 .item-preview.muted {
-  color: #999;
+  color: var(--sr-text-3);
   font-size: 22rpx;
   margin-top: 4rpx;
 }
