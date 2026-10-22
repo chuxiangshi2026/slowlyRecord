@@ -1,5 +1,5 @@
 <template>
-  <view class="table-page">
+  <view class="table-page" :class="themeClass">
     <view v-if="loading" class="state-tip">加载中…</view>
     <view v-else-if="!pack" class="state-tip">知识包不存在或加载失败</view>
     <template v-else>
@@ -33,8 +33,62 @@
       </view>
       <!-- #endif -->
 
+      <!-- 乘法类包：矩阵 / 列表切换（矩阵 = 元素周期表式格子铺开） -->
+      <view v-if="matrixData" class="view-toggle">
+        <text
+          class="toggle-chip"
+          :class="{ active: tableView === 'matrix' }"
+          @click="tableView = 'matrix'"
+        >矩阵</text>
+        <text
+          class="toggle-chip"
+          :class="{ active: tableView === 'list' }"
+          @click="tableView = 'list'"
+        >列表</text>
+      </view>
+
+      <!-- 矩阵视图：行 × 列铺开，双指缩放 + 拖动（与详情页完整周期表同交互） -->
+      <view v-if="showMatrix && matrixData" class="matrix-card">
+        <movable-area class="mx-area" scale-area :style="{ height: matrixAreaH + 'px' }">
+          <movable-view
+            class="mx-view"
+            direction="all"
+            scale
+            scale-min="0.4"
+            scale-max="3"
+            :style="{ width: matrixW + 'px', height: matrixH + 'px' }"
+          >
+            <!-- 行/列表头 -->
+            <view
+              v-for="(c, i) in matrixData.cols"
+              :key="`ch-${c}`"
+              class="mx-cell mx-head"
+              :style="mxCellStyle(0, i + 1)"
+            >{{ c }}</view>
+            <view
+              v-for="(r, i) in matrixData.rows"
+              :key="`rh-${r}`"
+              class="mx-cell mx-head"
+              :style="mxCellStyle(i + 1, 0)"
+            >{{ r }}</view>
+            <!-- 积格子 -->
+            <template v-for="(r, ri) in matrixData.rows">
+              <view
+                v-for="(c, ci) in matrixData.cols"
+                :key="`${r}x${c}`"
+                class="mx-cell"
+                :class="{ empty: !matrixData.cells.get(`${r}×${c}`) }"
+                :style="mxCellStyle(ri + 1, ci + 1)"
+                @click="onMatrixCellTap(r, c)"
+              >{{ matrixData.cells.get(`${r}×${c}`)?.answer || '' }}</view>
+            </template>
+          </movable-view>
+        </movable-area>
+        <text class="mx-tip">双指缩放 · 拖动查看；点击格子看完整算式</text>
+      </view>
+
       <!-- 横竖双向滚动表格 -->
-      <scroll-view scroll-x scroll-y enhanced class="table-scroll">
+      <scroll-view v-if="!showMatrix" scroll-x scroll-y enhanced class="table-scroll">
         <view class="table-inner">
           <view class="tr tr-head">
             <view v-for="col in columns" :key="col.key" class="td th" :style="colStyle(col)">
@@ -67,6 +121,7 @@ import { ref, computed, getCurrentInstance, nextTick } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useKnowledgeMemory } from './useKnowledgeMemory'
 import './knowledge-pack-data'
+import { detectMultiplicationMatrix } from './utils/matrix-table'
 import {
   buildTableImageData,
   computeTableLayout,
@@ -148,12 +203,51 @@ function cellText(item: KnowledgeItem, key: string): string {
   return item.extras?.[key] ?? ''
 }
 
+// ===== 乘法矩阵视图 =====
+// question 全部形如 "a×b" 的包（小九九 9×9、大九九 19×19 等）可按矩阵铺开：
+// 行 = 第一个乘数，列 = 第二个乘数，格子 = 积。交互与详情页完整周期表一致。
+
+const matrixData = computed(() => detectMultiplicationMatrix(pack.value?.items ?? []))
+
+const tableView = ref<'matrix' | 'list'>('matrix')
+const showMatrix = computed(() => !!matrixData.value && tableView.value === 'matrix')
+
+const matrixW = computed(() => matrixData.value ? (matrixData.value.cols.length + 1) * matrixData.value.cellSize : 0)
+const matrixH = computed(() => matrixData.value ? (matrixData.value.rows.length + 1) * matrixData.value.cellSize : 0)
+
+/** 可视区高度：横屏下窗口较矮，限制在窗口 55% 内，横竖都靠拖动查看 */
+const windowH = ref(400)
+const matrixAreaH = computed(() => Math.min(matrixH.value + 20, Math.round(windowH.value * 0.55)))
+
+function mxCellStyle(row: number, col: number) {
+  const s = matrixData.value?.cellSize ?? 40
+  const fs = Math.max(9, Math.round(s * 0.32))
+  return {
+    left: `${col * s}px`,
+    top: `${row * s}px`,
+    width: `${s}px`,
+    height: `${s}px`,
+    fontSize: `${fs}px`,
+  }
+}
+
+/** 点击格子弹出完整算式 */
+function onMatrixCellTap(r: number, c: number) {
+  const it = matrixData.value?.cells.get(`${r}×${c}`)
+  if (!it) return
+  uni.showToast({ title: `${it.question}=${it.answer}`, icon: 'none' })
+}
+
 onLoad(async (options) => {
   packId.value = options?.packId || ''
   if (!packId.value) {
     loading.value = false
     return
   }
+  try {
+    const info: any = (uni as any).getWindowInfo ? (uni as any).getWindowInfo() : uni.getSystemInfoSync()
+    if (info?.windowHeight) windowH.value = info.windowHeight
+  } catch { /* 用缺省 400 */ }
   try {
     if (!store.isPackLoaded(packId.value)) {
       await store.loadPack(packId.value)
@@ -298,7 +392,7 @@ function saveToAlbum(filePath: string): Promise<void> {
 <style scoped>
 .table-page {
   height: 100vh;
-  background: #f5f6fa;
+  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
@@ -307,7 +401,7 @@ function saveToAlbum(filePath: string): Promise<void> {
   padding: 120rpx 40rpx;
   text-align: center;
   font-size: 28rpx;
-  color: #999;
+  color: var(--sr-text-3);
 }
 
 .notice-bar {
@@ -319,17 +413,23 @@ function saveToAlbum(filePath: string): Promise<void> {
   border-radius: 12rpx;
 }
 
+/* 暗色下浅橙提示底刺眼：降饱和 */
+.theme-dark .notice-bar {
+  background: rgba(230, 162, 60, 0.15);
+  color: #e6a23c;
+}
+
 .mnemonics-card {
   margin: 16rpx 20rpx 0;
   padding: 20rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
 }
 .section-label {
   font-size: 26rpx;
   font-weight: 600;
-  color: #3d5a52;
+  color: var(--sr-primary);
   display: block;
   margin-bottom: 12rpx;
 }
@@ -342,7 +442,7 @@ function saveToAlbum(filePath: string): Promise<void> {
 /* 口诀段：min-width 按最长段绑定（rpx），逐列对齐；长行自动换行不溢出 */
 .koujue {
   font-size: 26rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   text-align: center;
   padding: 0 8rpx;
   box-sizing: border-box;
@@ -353,7 +453,7 @@ function saveToAlbum(filePath: string): Promise<void> {
   display: block;
   text-align: center;
   font-size: 24rpx;
-  color: #52796f;
+  color: var(--sr-primary);
   margin-top: 10rpx;
 }
 
@@ -364,13 +464,84 @@ function saveToAlbum(filePath: string): Promise<void> {
 }
 .action-btn {
   padding: 12rpx 32rpx;
-  background: #52796f;
-  color: #fff;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
   font-size: 26rpx;
   border-radius: 32rpx;
 }
 .action-btn:active {
   opacity: 0.85;
+}
+
+/* 矩阵 / 列表切换 */
+.view-toggle {
+  margin: 16rpx 20rpx 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12rpx;
+}
+.toggle-chip {
+  padding: 8rpx 28rpx;
+  font-size: 24rpx;
+  border-radius: 28rpx;
+  background: var(--sr-card);
+  color: var(--sr-text-2);
+  border: 1rpx solid var(--sr-border);
+}
+.toggle-chip.active {
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
+  border-color: var(--sr-primary);
+}
+
+/* 乘法矩阵（交互同详情页完整周期表） */
+.matrix-card {
+  flex: 1;
+  min-height: 0;
+  margin: 16rpx 20rpx 20rpx;
+  background: var(--sr-card);
+  border-radius: 16rpx;
+  box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
+  padding: 16rpx;
+  display: flex;
+  flex-direction: column;
+}
+.mx-area {
+  width: 100%;
+  overflow: hidden;
+  background: var(--sr-card-2);
+  border-radius: 12rpx;
+}
+.mx-view {
+  position: relative;
+}
+.mx-cell {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+  color: var(--sr-text-strong);
+  font-weight: 600;
+}
+.mx-cell.mx-head {
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
+}
+.mx-cell.empty {
+  background: transparent;
+  border-color: transparent;
+}
+.mx-cell:active {
+  opacity: 0.7;
+}
+.mx-tip {
+  font-size: 20rpx;
+  color: var(--sr-text-3);
+  margin-top: 12rpx;
+  text-align: center;
 }
 .export-canvas {
   position: fixed;
@@ -381,7 +552,7 @@ function saveToAlbum(filePath: string): Promise<void> {
 .table-scroll {
   flex: 1;
   margin: 16rpx 20rpx 20rpx;
-  background: #fff;
+  background: var(--sr-card);
   border-radius: 16rpx;
   box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
 }
@@ -396,22 +567,22 @@ function saveToAlbum(filePath: string): Promise<void> {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: #52796f;
+  background: var(--sr-primary);
 }
 .tr.zebra {
-  background: #f7f9f7;
+  background: var(--sr-primary-bg);
 }
 .td {
   flex-shrink: 0;
   padding: 16rpx 20rpx;
   font-size: 26rpx;
-  color: #303030;
+  color: var(--sr-text-strong);
   line-height: 1.5;
-  border-bottom: 1rpx solid #eef0ee;
+  border-bottom: 1rpx solid var(--sr-border);
   box-sizing: border-box;
 }
 .th {
-  color: #fff;
+  color: var(--sr-on-primary);
   font-weight: 600;
   border-bottom: none;
 }
