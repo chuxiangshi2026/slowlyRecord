@@ -63,6 +63,7 @@
         :total-count="wordsStore.count"
         @change="onFilterChange"
         @reset="onFilterReset"
+        @create-book="wordBookCreateVisible = true"
     />
     <div class="words-cards-wrapper" ref="scrollContainer">
       <!--      虚拟滚动,只加载真实dom-->
@@ -112,6 +113,13 @@
     <!-- 抽屉组件化   -->
     <DetailDrawer v-model="drawerVisible" :title="title" :detail-id="currentId"/>
   </div>
+
+  <WordBookCreateDialog
+      v-model="wordBookCreateVisible"
+      :words="showFilteredWords"
+      :default-name="wordBookDefaultName"
+      @created="goWordBook"
+  />
 
   <!-- 截图翻译结果预览对话框 -->
   <el-dialog
@@ -397,6 +405,7 @@ import DetailDrawer from "@/views/Word/components/DetailDrawer.vue";
 import MyListItem from "@/views/Word/components/MyListItem.vue";
 import WordFilter from "@/views/Word/components/WordFilter.vue";
 import type { FilterState } from "@/views/Word/components/WordFilter.vue";
+import WordBookCreateDialog from '@/views/WordBook/WordBookCreateDialog.vue';
 import OnboardingOverlay from "@/components/OnboardingOverlay.vue";
 import {useUiStore} from "@/stores/ui";
 import {computed, nextTick, onMounted, onUnmounted, ref, watch, shallowRef} from "vue";
@@ -409,6 +418,7 @@ import {
 
 import {log} from "@/utils/logger.ts";
 import {analyzeWord} from "@/utils/word-analysis.ts";
+import {getWordBookDefaultName} from '@/utils/word-book';
 import {isPhrase, getWordCount} from "@/utils/text-utils";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
@@ -2310,6 +2320,13 @@ const currentFilter = shallowRef<FilterState>({
   sortBy: '',
   sortAsc: true
 })
+
+const wordBookCreateVisible = ref(false)
+const wordBookDefaultName = computed(() => getWordBookDefaultName(currentFilter.value, wordsStore.currentWordBank?.name || '默认词库'))
+
+function goWordBook(chapterId: string) {
+  router.push(`/word-book/${chapterId}`)
+}
 
 const toggleFilterPanel = () => {
   filterPanelVisible.value = !filterPanelVisible.value

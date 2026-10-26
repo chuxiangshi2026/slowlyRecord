@@ -32,6 +32,9 @@ const MemoryPalace = () => import('@/views/MemoryPalace/MemoryPalace.vue');
 const MemoryPalaceEdit = () => import('@/views/MemoryPalace/MemoryPalaceEdit.vue');
 const MemoryPalaceDetail = () => import('@/views/MemoryPalace/MemoryPalaceDetail.vue');
 const MemoryPalaceReview = () => import('@/views/MemoryPalace/MemoryPalaceReview.vue');
+const WordBookChapters = () => import('@/views/WordBook/WordBookChapters.vue');
+const WordBookChapterDetail = () => import('@/views/WordBook/WordBookChapterDetail.vue');
+const WordBookPage = () => import('@/views/WordBook/WordBookPage.vue');
 // const Exception = () => import('@/views/Exception/Exception.vue');
 // const Apply = () => import('@/views/Apply/Apply.vue');
 // const Check = () => import('@/views/Check/Check.vue');
@@ -272,6 +275,24 @@ const routes: Array<RouteRecordRaw> = [
           menu: false,
           title: '过一遍宫殿',
         },
+      },
+      {
+        path: 'word-book',
+        name: 'wordBookChapters',
+        component: WordBookChapters,
+        meta: {menu: false, title: '词图闯关'},
+      },
+      {
+        path: 'word-book/:chapterId',
+        name: 'wordBookChapterDetail',
+        component: WordBookChapterDetail,
+        meta: {menu: false, title: '词图章节'},
+      },
+      {
+        path: 'word-book/:chapterId/page/:pageId',
+        name: 'wordBookPage',
+        component: WordBookPage,
+        meta: {menu: false, title: '词图学习页'},
       },
       ...(isDesktopEnv ? [
         {

@@ -185,6 +185,30 @@
           "style": {
             "navigationBarTitleText": "过一遍宫殿"
           }
+        },
+        {
+          "path": "word-book/list",
+          "style": {
+            "navigationBarTitleText": "词图闯关"
+          }
+        },
+        {
+          "path": "word-book/chapter",
+          "style": {
+            "navigationBarTitleText": "词图章节"
+          }
+        },
+        {
+          "path": "word-book/edit",
+          "style": {
+            "navigationBarTitleText": "生成学习页"
+          }
+        },
+        {
+          "path": "word-book/page",
+          "style": {
+            "navigationBarTitleText": "词图学习页"
+          }
         }
       ]
     },

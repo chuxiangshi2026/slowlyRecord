@@ -30,6 +30,14 @@
         <text class="filter-sep">~</text>
         <input class="filter-input" type="number" v-model.number="filterState.maxLength" placeholder="不限" />
       </view>
+      <!-- 词根词缀筛选 -->
+      <view class="filter-row">
+        <text class="filter-label">词根词缀</text>
+        <picker :range="affixTypeOptions" range-key="label" :value="affixTypeIndex" @change="selectAffixType">
+          <view class="affix-picker">{{ affixTypeLabel }}</view>
+        </picker>
+        <input class="filter-input wide" v-model="filterState.affixText" placeholder="如 spect, pre, tion" />
+      </view>
       <!-- 音标筛选 -->
       <view class="filter-row">
         <text class="filter-label">音标</text>
@@ -57,6 +65,14 @@
         <view class="wrong-words-entry" @click="goToWrongWords">
           <text class="wrong-entry-text">错题本（{{ wrongWordsCount }}）</text>
           <text class="wrong-entry-arrow">›</text>
+        </view>
+      </view>
+      <!-- 词图章节 -->
+      <view class="filter-row">
+        <text class="filter-label">词图</text>
+        <view class="word-book-actions">
+          <button class="word-book-btn" :disabled="filteredWords.length === 0" @click="goCreateWordBook">生成学习页</button>
+          <button class="word-book-btn plain" @click="goWordBooks">章节闯关</button>
         </view>
       </view>
       <!-- 重置 -->
@@ -152,8 +168,12 @@
 import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { onReachBottom, onHide } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { useWordBook } from '@/stores/useWordBook'
+import { analyzeWord } from '@/utils/word-analysis'
+import { getWordBookDefaultName } from '@/utils/word-book'
 
 const wordsStore = useMobileWords()
+const wordBookStore = useWordBook()
 
 // ========== 筛选状态持久化 ==========
 const FILTER_STORAGE_KEY = 'slowly-record-words-filter'
@@ -163,6 +183,8 @@ interface SavedFilterState {
   minLength: number
   maxLength: number
   pattern: string
+  affixType?: string
+  affixText?: string
   phonetic: string
   sortBy: string
   sortAsc: boolean
@@ -184,6 +206,8 @@ function saveFilterState() {
       minLength: filterState.minLength,
       maxLength: filterState.maxLength,
       pattern: filterState.pattern,
+      affixType: filterState.affixType,
+      affixText: filterState.affixText,
       phonetic: filterState.phonetic,
       sortBy: filterState.sortBy,
       sortAsc: filterState.sortAsc,
@@ -211,10 +235,27 @@ const filterState = reactive({
   minLength: savedFilter?.minLength ?? 0,
   maxLength: savedFilter?.maxLength ?? 0,
   pattern: savedFilter?.pattern ?? '',
+  affixType: savedFilter?.affixType ?? '',
+  affixText: savedFilter?.affixText ?? '',
   phonetic: savedFilter?.phonetic ?? '',
   sortBy: savedFilter?.sortBy ?? '',
   sortAsc: savedFilter?.sortAsc ?? true
 })
+
+const affixTypeOptions = [
+  {value: '', label: '全部'},
+  {value: 'root', label: '词根'},
+  {value: 'prefix', label: '前缀'},
+  {value: 'suffix', label: '后缀'},
+]
+const affixTypeIndex = computed(() => Math.max(0, affixTypeOptions.findIndex(option => option.value === filterState.affixType)))
+const affixTypeLabel = computed(() => affixTypeOptions[affixTypeIndex.value].label)
+const wordBookDefaultName = computed(() => getWordBookDefaultName(filterState, currentBankName.value))
+
+function selectAffixType(event: any) {
+  const option = affixTypeOptions[Number(event.detail.value)]
+  if (option) filterState.affixType = option.value
+}
 
 const showFilterPanel = ref(savedFilter?.showFilterPanel ?? false)
 
@@ -273,7 +314,8 @@ function patternToRegex(pattern: string): RegExp | null {
 
 const hasAnyFilter = computed(() =>
   filterState.minLength > 0 || filterState.maxLength > 0 ||
-  !!filterState.pattern || !!filterState.phonetic || !!filterState.sortBy
+  !!filterState.pattern || !!filterState.affixType || !!filterState.affixText ||
+  !!filterState.phonetic || !!filterState.sortBy
 )
 
 // 筛选/排序/模式变化时自动持久化
@@ -296,10 +338,23 @@ function resetFilter() {
   filterState.minLength = 0
   filterState.maxLength = 0
   filterState.pattern = ''
+  filterState.affixType = ''
+  filterState.affixText = ''
   filterState.phonetic = ''
   filterState.sortBy = ''
   filterState.sortAsc = true
   showFilterPanel.value = false
+}
+
+function matchesAffix(wordText: string, affixType: string, affixText: string): boolean {
+  const hasType = !!affixType
+  const hasText = !!affixText.trim()
+  if (!hasType && !hasText) return true
+  const lower = affixText.toLowerCase().trim()
+  const components = analyzeWord(wordText)
+  if (hasType && !hasText) return components.some(component => component.type === affixType)
+  if (!hasType) return components.some(component => component.text.toLowerCase().includes(lower))
+  return components.some(component => component.type === affixType && component.text.toLowerCase().includes(lower))
 }
 
 // ========== 核心：筛选+排序 computed ==========
@@ -346,13 +401,18 @@ const filteredWords = computed(() => {
     })
   }
 
-  // 第4步：音标筛选
+  // 第4步：词根词缀（跳过词组）
+  if (f.affixType || f.affixText.trim()) {
+    list = list.filter(w => /\s/.test(w.word.trim()) ? false : matchesAffix(w.word, f.affixType, f.affixText))
+  }
+
+  // 第5步：音标筛选
   if (f.phonetic.trim()) {
     const ph = f.phonetic.trim().toLowerCase()
     list = list.filter(w => w.phonetic && w.phonetic.toLowerCase().includes(ph))
   }
 
-  // 第5步：排序
+  // 第6步：排序
   if (f.sortBy) {
     const dir = f.sortAsc ? 1 : -1
     list = [...list].sort((a, b) => {
@@ -377,6 +437,24 @@ onMounted(() => {
 onHide(() => {
   wordsStore.flushDirtyBanks()
 })
+
+const goCreateWordBook = () => {
+  if (filteredWords.value.length === 0) {
+    uni.showToast({title: '当前筛选没有单词', icon: 'none'})
+    return
+  }
+  wordBookStore.setDraft(filteredWords.value.map(word => ({
+    sourceId: word.id,
+    text: word.word,
+    explains: word.meaning,
+    phonetic: word.phonetic,
+  })), wordBookDefaultName.value)
+  uni.navigateTo({url: '/subPackages/pages-memory/word-book/edit'})
+}
+
+const goWordBooks = () => {
+  uni.navigateTo({url: '/subPackages/pages-memory/word-book/list'})
+}
 
 const goToReview = () => {
   // 将当前筛选后的单词列表设为自定义复习列表
@@ -555,7 +633,7 @@ const formatDate = (timestamp: number): string => {
 .filter-label {
   font-size: 26rpx;
   color: var(--sr-text-2);
-  width: 80rpx;
+  width: 110rpx;
   flex-shrink: 0;
 }
 
@@ -572,6 +650,49 @@ const formatDate = (timestamp: number): string => {
 .filter-input.wide {
   flex: 1;
   width: auto;
+}
+
+.affix-picker {
+  width: 120rpx;
+  padding: 14rpx 12rpx;
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+.word-book-actions {
+  flex: 1;
+  display: flex;
+  gap: 12rpx;
+}
+
+.word-book-btn {
+  flex: 1;
+  height: 60rpx;
+  margin: 0;
+  padding: 0 12rpx;
+  color: var(--sr-on-primary);
+  background: var(--sr-primary);
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  line-height: 60rpx;
+}
+
+.word-book-btn.plain {
+  color: var(--sr-primary);
+  background: var(--sr-card-2);
+  border: 1rpx solid var(--sr-primary);
+  line-height: 58rpx;
+}
+
+.word-book-btn::after {
+  border: none;
+}
+
+.word-book-btn[disabled] {
+  opacity: 0.45;
 }
 
 .filter-sep {

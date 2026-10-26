@@ -150,6 +150,12 @@
         </span>
       </div>
 
+      <span
+        :class="['ftag', 'word-book-action', {disabled: matchCount === 0}]"
+        title="将当前筛选结果按 12 词一页生成词图章节"
+        @click="matchCount > 0 && emit('create-book')"
+      >生成学习页</span>
+
       <!-- 匹配数 / 总数 -->
       <span class="match-count">匹配 {{ matchCount }} / 共 {{ totalCount }}</span>
     </div>
@@ -186,6 +192,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'change', state: FilterState): void
   (e: 'reset'): void
+  (e: 'create-book'): void
 }>()
 
 const mainInputRef = ref<HTMLInputElement | null>(null)
@@ -412,6 +419,19 @@ defineExpose({ filterState })
     background: var(--utools-primary);
     color: #fff;
     border-color: var(--utools-primary);
+  }
+}
+
+.word-book-action {
+  margin-left: auto;
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  & + .match-count {
+    margin-left: 0;
   }
 }
 

@@ -79,6 +79,13 @@ const features = [
     action: () => navigate('/subPackages/pages-memory/memory-palace/list'),
   },
   {
+    icon: '🗺️',
+    cls: 'palace',
+    text: '词图闯关',
+    desc: '筛选建页 / 思维导图 / 章节练习',
+    action: () => navigate('/subPackages/pages-memory/word-book/list'),
+  },
+  {
     icon: '💬',
     cls: 'sentences',
     text: '句子收藏',
