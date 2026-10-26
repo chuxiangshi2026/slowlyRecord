@@ -63,6 +63,22 @@ describe('useMemoryPalace（查看版）', () => {
     expect(store.collectSync()).toBeNull()
   })
 
+  it('createPalace：案例初始桩一次落盘，并重排顺序、保留来源', () => {
+    const store = useMemoryPalace()
+    const palace = store.createPalace('家中路线', [
+      { order: 9, name: '大门', description: '进门第一站' },
+      { order: 99, name: '鞋柜' },
+    ], 'home-route-12')
+
+    expect(palace.loci.map(l => l.order)).toEqual([1, 2])
+    expect(palace.sourcePackId).toBe('home-route-12')
+    setActivePinia(createPinia())
+    const store2 = useMemoryPalace()
+    store2.load()
+    expect(store2.getPalace(palace._id)?.loci.map(l => l.name)).toEqual(['大门', '鞋柜'])
+    expect(store2.getPalace(palace._id)?.sourcePackId).toBe('home-route-12')
+  })
+
   it('restoreSync 写入宫殿与桩挂载，load 幂等可读回', () => {
     const store = useMemoryPalace()
     const count = store.restoreSync({

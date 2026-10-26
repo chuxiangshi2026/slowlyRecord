@@ -28,12 +28,49 @@
       <span class="match-count">{{ filteredPalaces.length }} 座</span>
     </div>
 
+    <section v-if="!searchKeyword.trim()" class="palace-examples">
+      <div class="examples-heading">
+        <div>
+          <h2>跟着图解案例，建第一座宫殿</h2>
+          <p>选一个熟悉场景，一桩挂一项；画面越夸张，回忆越清楚。</p>
+        </div>
+        <el-button text size="small" @click="examplesExpanded = !examplesExpanded">
+          {{ examplesExpanded ? '收起案例' : '查看案例' }}
+        </el-button>
+      </div>
+      <div v-show="examplesExpanded">
+        <div class="example-steps">
+          <span><b>1</b> 按顺序熟悉位置</span>
+          <span><b>2</b> 把内容放进夸张画面</span>
+          <span><b>3</b> 沿原路线取回内容</span>
+        </div>
+        <div class="example-grid">
+          <article v-for="example in PALACE_EXAMPLES" :key="example.id" class="example-card">
+            <img class="example-image" :src="exampleImage(example.image)" :alt="`${example.title}示意图`" />
+            <div class="example-content">
+              <h3>{{ example.title }}</h3>
+              <p class="example-description">{{ example.description }}</p>
+              <p class="example-usage">{{ example.usage }}</p>
+              <el-button
+                type="primary"
+                plain
+                size="small"
+                :loading="creatingExample === example.id"
+                :disabled="!!creatingExample"
+                @click="useExample(example)"
+              >用这个案例</el-button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- 宫殿卡片列表 -->
     <div class="palace-list-wrapper" v-loading="store.loading">
       <el-empty v-if="filteredPalaces.length === 0">
         <template #description>
           <p class="palace-empty-concept">记忆宫殿：把要记的内容「挂」到一组熟悉的空间位置（桩）上，回忆时按路线过一遍取回</p>
-          <p>暂无记忆宫殿，点击右下角新建或导入内置桩库</p>
+          <p>暂无记忆宫殿，可直接使用上方案例，或点击右下角新建</p>
         </template>
       </el-empty>
 
@@ -102,6 +139,7 @@ import {ElMessage, ElMessageBox} from 'element-plus';
 import {CircleClose, Delete, Download, Edit, Plus, Search, View} from '@element-plus/icons-vue';
 import {useMemoryPalaceStore} from '@/stores/memoryPalace';
 import type {Palace} from '@/types/memory-palace';
+import {PALACE_EXAMPLES, type PalaceExample} from './palace-examples';
 
 // 导入对话框体量大（含诗词/知识库等子模块），按需加载，首次点击导入时才拉取
 const TextImportDialog = defineAsyncComponent(() => import('@/views/TextMemory/components/TextImportDialog.vue'));
@@ -111,6 +149,8 @@ const store = useMemoryPalaceStore();
 
 // 桩库导入对话框可见性（组件内自弹，不依赖宿主页面）
 const showPegImport = ref(false);
+const examplesExpanded = ref(true);
+const creatingExample = ref('');
 
 const searchKeyword = ref('');
 const sortBy = ref<'time' | 'name' | 'loci'>('time');
@@ -181,6 +221,29 @@ function lociPreview(palace: Palace): string {
   return names.join(' → ') + suffix;
 }
 
+function exampleImage(path: string): string {
+  return import.meta.env.BASE_URL + path;
+}
+
+async function useExample(example: PalaceExample) {
+  if (creatingExample.value) return;
+  creatingExample.value = example.id;
+  try {
+    const {result, palace} = await store.importPackAsPalace(example.packId);
+    if (!result.ok) {
+      ElMessage.error(result.message || '案例创建失败，请重试');
+      return;
+    }
+    refreshMountedCounts();
+    ElMessage.success(`已创建「${palace.name}」，点击桩即可挂载要记的内容`);
+    router.push(`/memory-palace/${palace._id}`);
+  } catch {
+    ElMessage.error('案例创建失败，请重试');
+  } finally {
+    creatingExample.value = '';
+  }
+}
+
 function goDetail(id: string) {
   router.push(`/memory-palace/${id}`);
 }
@@ -220,6 +283,108 @@ async function handleDelete(palace: Palace) {
   width: 100%;
   background-color: var(--utools-bg-secondary);
   box-sizing: border-box;
+}
+
+.palace-examples {
+  width: 100%;
+  padding: 12px 4% 0;
+  box-sizing: border-box;
+
+  .examples-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    h2 {
+      margin: 0;
+      color: var(--utools-text-primary);
+      font-size: 15px;
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: var(--utools-text-tertiary);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  }
+
+  .example-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 10px 0;
+    color: var(--utools-text-secondary);
+    font-size: 12px;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    b {
+      color: var(--utools-primary);
+      font-size: 13px;
+    }
+  }
+
+  .example-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .example-card {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--utools-bg-card);
+    border: 1px solid var(--utools-border-divider);
+    border-radius: 8px;
+  }
+
+  .example-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2;
+    object-fit: contain;
+    background: var(--utools-bg-tertiary);
+  }
+
+  .example-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 12px 12px;
+
+    h3 {
+      margin: 0;
+      color: var(--utools-text-primary);
+      font-size: 15px;
+    }
+
+    .example-description,
+    .example-usage {
+      margin: 6px 0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .example-description {
+      color: var(--utools-text-secondary);
+    }
+
+    .example-usage {
+      flex: 1;
+      color: var(--utools-text-tertiary);
+    }
+  }
 }
 
 // ---- 筛选排序条（chip 风格，与 NumberMemoryEntries 一致） ----

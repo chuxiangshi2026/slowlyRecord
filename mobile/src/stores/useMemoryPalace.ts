@@ -135,14 +135,15 @@ export const useMemoryPalace = defineStore('mobileMemoryPalace', () => {
     return 'palace-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6)
   }
 
-  /** 创建宫殿（仅名称，桩位后续逐个添加） */
-  function createPalace(name: string): MobilePalace {
+  /** 创建宫殿，可一次带入案例桩位 */
+  function createPalace(name: string, initialLoci: MobilePalaceLocus[] = [], sourcePackId?: string): MobilePalace {
     load()
     const now = Date.now()
     const palace: MobilePalace = {
       _id: newPalaceId(),
       name,
-      loci: [],
+      loci: initialLoci.map((locus, index) => ({ ...locus, order: index + 1 })),
+      sourcePackId,
       ctime: now,
       utime: now,
     }

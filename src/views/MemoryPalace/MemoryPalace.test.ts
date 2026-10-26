@@ -113,22 +113,30 @@ async function setup() {
     routes: [
       {path: '/', component: {template: '<div />'}},
       {path: '/memory-palace', component: MemoryPalace},
+      {path: '/memory-palace/:id', component: {template: '<div />'}},
     ],
   })
   await router.push('/memory-palace')
   await router.isReady()
 
-  return render(MemoryPalace, {
-    global: {
-      plugins: [pinia, router],
-      stubs: {
-        TextImportDialog: {
-          props: ['modelValue'],
-          template: '<div class="peg-import-dialog" :data-visible="String(modelValue)" />',
+  return {
+    router,
+    ...render(MemoryPalace, {
+      global: {
+        plugins: [pinia, router],
+        stubs: {
+          ElButton: {
+            props: ['disabled', 'loading'],
+            template: '<button type="button" :disabled="disabled" @click="$emit(\'click\')"><slot /></button>',
+          },
+          TextImportDialog: {
+            props: ['modelValue'],
+            template: '<div class="peg-import-dialog" :data-visible="String(modelValue)" />',
+          },
         },
       },
-    },
-  })
+    }),
+  }
 }
 
 describe('MemoryPalace', () => {
@@ -144,6 +152,36 @@ describe('MemoryPalace', () => {
     expect(screen.getAllByText(/2 桩/)).toHaveLength(1)
     expect(screen.getAllByText(/1 桩/)).toHaveLength(1)
     expect(screen.getByText('内置桩库')).toBeInTheDocument()
+  })
+
+  it('默认展示图解案例，并按案例一键创建后进入详情', async () => {
+    const {router} = await setup()
+
+    expect(screen.getByText('跟着图解案例，建第一座宫殿')).toBeInTheDocument()
+    expect(document.querySelectorAll('.example-card')).toHaveLength(3)
+    const card = screen.getByText('家中路线').closest('.example-card') as HTMLElement
+    await fireEvent.click(within(card).getByRole('button', {name: '用这个案例'}))
+
+    await waitFor(() => {
+      expect(hoisted.store.importPackAsPalace).toHaveBeenCalledWith('home-route-12')
+      expect(router.currentRoute.value.path).toBe('/memory-palace/palace-import')
+    })
+  })
+
+  it('案例创建失败时提示并留在列表页', async () => {
+    const {ElMessage} = await import('element-plus')
+    const {router} = await setup()
+    hoisted.store.importPackAsPalace.mockResolvedValueOnce({
+      result: {ok: false, message: '存储空间不足'},
+      palace: null,
+    })
+    const card = screen.getByText('身体路线').closest('.example-card') as HTMLElement
+    await fireEvent.click(within(card).getByRole('button', {name: '用这个案例'}))
+
+    await waitFor(() => {
+      expect(ElMessage.error).toHaveBeenCalledWith('存储空间不足')
+    })
+    expect(router.currentRoute.value.path).toBe('/memory-palace')
   })
 
   it('删除宫殿时确认后调用 store.deletePalace 并从列表移除', async () => {
