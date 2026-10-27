@@ -54,7 +54,7 @@ function enqueueWrite<T>(fn: () => Promise<T>): Promise<T> {
 const defaultSettings: ExerciseSettings = {
   blankCount: 10,
   choiceCount: 5,
-  showPinyin: false,
+  showPinyin: true,
   highlightKeywords: true
 };
 

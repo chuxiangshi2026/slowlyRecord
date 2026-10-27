@@ -39,6 +39,13 @@
                 <el-icon><Refresh /></el-icon>
                 重新生成
               </el-button>
+              <el-button v-if="article.pinyin" @click="togglePinyin">
+                {{ showPinyin ? '隐藏拼音' : '拼音' }}
+              </el-button>
+              <el-button v-if="article.translation" @click="toggleTranslation">
+                {{ showTranslation ? '隐藏译文' : '译文' }}
+              </el-button>
+              <span v-if="article.category === 'poetry' && !article.translation" class="translation-empty">暂无人工英译</span>
             </el-form-item>
           </el-form>
         </div>
@@ -51,6 +58,18 @@
           :format="progressFormat"
           :status="progressStatus"
         />
+      </div>
+
+      <!-- 拼音（古诗词/中文文章） -->
+      <div v-if="showPinyin && article.pinyin" class="pinyin-panel">
+        <div class="pinyin-label">拼 音</div>
+        <PinyinLines :content="article.content" :pinyin="article.pinyin" mode="pinyin" />
+      </div>
+
+      <div v-if="showTranslation && article.translation" class="translation-panel">
+        <div class="translation-label">译 文</div>
+        <div class="translation-text">{{ article.translation }}</div>
+        <div v-if="article.translationSource" class="translation-source">来源：{{ article.translationSource }}</div>
       </div>
 
       <!-- 题目列表 -->
@@ -149,6 +168,7 @@ import type { TextArticle, ChoiceQuestion } from '@/types/text-memory';
 import { ElMessage } from 'element-plus';
 import { Refresh, Check, Close } from '@element-plus/icons-vue';
 import { getArticleLanguage } from '@/utils/text-memory-util';
+import PinyinLines from '@/components/PinyinLines.vue';
 
 // 中文专属题型（依赖中文近反义词库/错别字），非中文文章禁用
 const ZH_ONLY_TYPES = ['synonym', 'antonym', 'typo'];
@@ -185,6 +205,14 @@ const defaultSelectedTypes = computed(() =>
 const questionCount = ref(5);
 const selectedTypes = ref<string[]>(['synonym', 'antonym', 'typo', 'nonsense']);
 const generating = ref(false);
+const showPinyin = ref(textStore.exerciseSettings.showPinyin);
+function togglePinyin() {
+  showPinyin.value = !showPinyin.value;
+}
+const showTranslation = ref(false);
+function toggleTranslation() {
+  showTranslation.value = !showTranslation.value;
+}
 
 // 题目列表
 const questions = ref<ChoiceQuestion[]>([]);
@@ -412,6 +440,62 @@ function isSemanticQuestion(type: string): boolean {
 
 .progress-bar {
   padding: 0 12px;
+}
+
+.pinyin-panel {
+  margin: 8px 12px 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--utools-text-secondary);
+  background: color-mix(in srgb, var(--utools-text-secondary) 6%, transparent);
+  border-radius: 6px;
+  max-height: 22vh;
+  overflow-y: auto;
+
+  .pinyin-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--utools-text-secondary);
+  }
+}
+
+.translation-panel {
+  margin: 8px 12px 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--utools-primary);
+  background: color-mix(in srgb, var(--utools-primary) 6%, transparent);
+  border-radius: 6px;
+  max-height: 22vh;
+  overflow-y: auto;
+
+  .translation-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--utools-primary);
+  }
+
+  .translation-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--utools-text-secondary);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .translation-source {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--utools-text-secondary);
+    opacity: 0.75;
+  }
+}
+
+.translation-empty {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--utools-text-secondary);
+  opacity: 0.6;
 }
 
 .questions-area {

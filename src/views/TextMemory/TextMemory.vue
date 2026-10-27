@@ -75,6 +75,11 @@
             </el-button>
           </span>
         </el-tooltip>
+        <el-tooltip effect="dark" content="显示/隐藏拼音" placement="top" popper-class="small-tooltip">
+          <el-button size="small" :type="showPinyinPreview ? 'primary' : 'default'" @click="showPinyinPreview = !showPinyinPreview">
+            拼音
+          </el-button>
+        </el-tooltip>
         <el-radio-group v-model="currentView" size="small">
           <el-radio-button label="list">
             <el-tooltip effect="dark" content="列表视图" placement="top" popper-class="small-tooltip">
@@ -154,9 +159,16 @@
           <div class="article-content-preview">
             {{ article.content.substring(0, 150) }}{{ article.content.length > 150 ? '...' : '' }}
           </div>
+          <div v-if="showPinyinPreview && article.pinyin" class="article-pinyin-preview">
+            {{ firstPinyinLine(article) }}
+          </div>
+          <div v-if="article.category === 'poetry' && !article.translation" class="article-translation-empty">
+            暂无人工英译
+          </div>
           <div v-if="article.translation" class="article-translation-preview">
             <el-icon class="translation-icon"><View /></el-icon>
             {{ article.translation.substring(0, 150) }}{{ article.translation.length > 150 ? '...' : '' }}
+            <span v-if="article.translationSource" class="translation-source">· {{ article.translationSource }}</span>
           </div>
           <div class="article-footer">
             <div class="article-tags">
@@ -295,9 +307,17 @@
       <div v-for="article in printArticles" :key="article._id" class="print-article">
         <h2 class="print-article-title">{{ article.title }}</h2>
         <div v-if="articleMetaLine(article)" class="print-article-meta">{{ articleMetaLine(article) }}</div>
-        <p v-for="(para, pIdx) in splitParagraphs(article.content)" :key="pIdx" class="print-article-para">
-          {{ para }}
-        </p>
+        <div v-for="(para, pIdx) in splitAnnotatedParagraphs(article.content, article.pinyin)" :key="pIdx" class="print-article-para">
+          <div v-for="(line, lIdx) in para" :key="lIdx" class="print-article-line">
+            <div v-if="line.pinyin" class="print-article-pinyin">{{ line.pinyin }}</div>
+            <div class="print-article-text">{{ line.text }}</div>
+          </div>
+        </div>
+        <div v-if="article.translation" class="print-article-translation">
+          <div class="print-article-translation-label">译文</div>
+          <div class="print-article-translation-text">{{ article.translation }}</div>
+          <div v-if="article.translationSource" class="print-article-translation-source">来源：{{ article.translationSource }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -319,6 +339,7 @@ import PipIcon from '@/components/icons/PipIcon.vue';
 import KeyboardIcon from '@/components/icons/KeyboardIcon.vue';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { getArticleLanguage, getLanguageTag } from '@/utils/text-memory-util';
+import { splitAnnotatedParagraphs } from '@/utils/pinyin-util';
 import { log } from '@/utils/logger';
 import { exportArticlesAsImage } from '@/utils/article-image-export';
 import type { ArticleImageItem } from '@/utils/article-image-export';
@@ -368,6 +389,9 @@ const sortOptions = [
 // 当前视图：list | map | timeline
 type TextMemoryView = 'list' | 'map' | 'timeline';
 const currentView = ref<TextMemoryView>('list');
+
+// 列表卡片是否显示拼音（默认跟随练习设置）
+const showPinyinPreview = ref(textStore.exerciseSettings.showPinyin);
 
 // 支持通过 query 定位视图，如 /text-memory?view=map
 const VALID_VIEWS: TextMemoryView[] = ['list', 'map', 'timeline'];
@@ -475,10 +499,9 @@ function articleMetaLine(article: TextArticle): string {
   return [article.dynasty, article.author, article.source].filter(Boolean).join(' · ');
 }
 
-// 正文分段（按换行拆分，去掉空段；空内容兜底为一个空行）
-function splitParagraphs(content: string): string[] {
-  const paras = (content || '').split(/\n+/).map(p => p.trim()).filter(Boolean);
-  return paras.length > 0 ? paras : [''];
+// 列表卡片展示的首行拼音
+function firstPinyinLine(article: TextArticle): string {
+  return (article.pinyin || '').split('\n').find(line => line.trim()) || '';
 }
 
 // 当前日期，如「2026年9月3日」
@@ -499,11 +522,24 @@ async function handleBatchPrint() {
 // 批量存图：选中文章竖向拼接渲染为一张长 PNG 下载
 function handleBatchSaveImage() {
   if (selectedArticles.value.length === 0) return;
-  const items: ArticleImageItem[] = selectedArticles.value.map(article => ({
-    title: article.title,
-    authorLine: articleMetaLine(article),
-    paragraphs: splitParagraphs(article.content)
-  }));
+  const items: ArticleImageItem[] = selectedArticles.value.map(article => {
+    const paragraphs: string[] = [];
+    for (const para of splitAnnotatedParagraphs(article.content, article.pinyin)) {
+      for (const line of para) {
+        if (line.pinyin) paragraphs.push(line.pinyin);
+        paragraphs.push(line.text);
+      }
+    }
+    if (article.translation) {
+      paragraphs.push('', '译文', article.translation);
+      if (article.translationSource) paragraphs.push(`来源：${article.translationSource}`);
+    }
+    return {
+      title: article.title,
+      authorLine: articleMetaLine(article),
+      paragraphs
+    };
+  });
   try {
     exportArticlesAsImage(
       { title: '文本记忆', date: formatPrintDate(), articles: items },
@@ -615,19 +651,15 @@ async function openTextFocusMode(article: TextArticle) {
       const win = createElectronWindowProxy(winId);
       setTextFocusWindow(win);
       focusWindowOpened('text');
-      // 推送文章 + user-set 快照给子窗口 utools shim，然后显示
-      setTimeout(async () => {
-        try {
-          const docs = collectTextFocusDocsForChild();
-          await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
-          // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
-          await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
-          api.focusWindowInvoke(winId, 'show', []);
-        } catch (e) {
-          // 延迟期间子窗口被关闭会导致 executeJS reject，静默忽略
-          console.warn('[openTextFocusMode] 子窗口初始化推送失败（窗口可能已关闭）', e);
-        }
-      }, 500);
+      // 创建 IPC 在页面加载完成后才返回，可直接推送文章 + user-set 快照
+      try {
+        const docs = collectTextFocusDocsForChild();
+        await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+        await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
+        api.focusWindowInvoke(winId, 'show', []);
+      } catch (e) {
+        console.warn('[openTextFocusMode] 子窗口初始化推送失败', e);
+      }
       return;
     }
     // uTools 分支：createBrowserWindow 返回 BrowserWindow 实例（回调本身不传 win 参数）
@@ -1125,6 +1157,24 @@ watch(currentView, (v) => {
     overflow: hidden;
   }
 
+  .article-pinyin-preview {
+    color: var(--utools-text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+    opacity: 0.85;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .article-translation-empty {
+    color: var(--utools-text-secondary);
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
   .article-translation-preview {
     color: var(--utools-text-secondary);
     font-size: 12px;
@@ -1142,6 +1192,12 @@ watch(currentView, (v) => {
     flex-shrink: 0;
     margin-top: 2px;
     color: var(--utools-primary);
+  }
+
+  .article-translation-preview .translation-source {
+    flex-shrink: 0;
+    opacity: 0.7;
+    color: var(--utools-text-secondary);
   }
 
   .article-footer {
@@ -1333,6 +1389,46 @@ watch(currentView, (v) => {
         font-size: 14px;
         line-height: 1.8;
         margin: 0 0 8px;
+      }
+
+      .print-article-line + .print-article-line {
+        margin-top: 2px;
+      }
+
+      .print-article-pinyin {
+        font-size: 10px;
+        line-height: 1.4;
+        color: #777;
+      }
+
+      .print-article-text {
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .print-article-translation {
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px dashed #bbb;
+      }
+
+      .print-article-translation-label {
+        font-size: 11px;
+        color: #777;
+        margin-bottom: 2px;
+      }
+
+      .print-article-translation-text {
+        font-size: 12px;
+        line-height: 1.6;
+        color: #444;
+        white-space: pre-wrap;
+      }
+
+      .print-article-translation-source {
+        margin-top: 3px;
+        font-size: 10px;
+        color: #888;
       }
     }
   }

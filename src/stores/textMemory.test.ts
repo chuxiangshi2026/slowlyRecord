@@ -59,7 +59,7 @@ describe('useTextMemoryStore', () => {
       expect(store.exerciseSettings).toEqual({
         blankCount: 10,
         choiceCount: 5,
-        showPinyin: false,
+        showPinyin: true,
         highlightKeywords: true
       })
     })
@@ -597,12 +597,12 @@ describe('useTextMemoryStore', () => {
     it('resetSettings 应该重置为默认设置', () => {
       const store = useTextMemoryStore()
       store.exerciseSettings.blankCount = 20
-      store.exerciseSettings.showPinyin = true
+      store.exerciseSettings.showPinyin = false
 
       store.resetSettings()
 
       expect(store.exerciseSettings.blankCount).toBe(10)
-      expect(store.exerciseSettings.showPinyin).toBe(false)
+      expect(store.exerciseSettings.showPinyin).toBe(true)
       expect(store.exerciseSettings.highlightKeywords).toBe(true)
     })
   })

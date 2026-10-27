@@ -30,6 +30,7 @@ export interface PoetryItem {
   dynastyCode: PoetryDynasty;
   content: string;
   speechContent?: string;   // 朗读专用文本：与 content 等长同结构的同音字替换版（纠正机读误读），仅用于 TTS
+  pinyin?: string;          // 拼音：与 content 逐行对应，汉字一个带声调音节，标点原位
   contentType: ContentType;
   tags: string[];
   source?: string;
@@ -39,6 +40,7 @@ export interface PoetryItem {
   difficulty?: 'easy' | 'medium' | 'hard';  // 难度等级
   annotation?: string;      // 注释
   translation?: string;     // 译文
+  translationSource?: string; // 译文来源（如 chinese-poems.com/xxx）
   appreciation?: string;    // 赏析
   year?: string | number;   // 创作时间（如 742、"天宝元年"、"公元742年"）
 }

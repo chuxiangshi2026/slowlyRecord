@@ -26,7 +26,10 @@
       "year": 405,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 120
+      "wordCount": 120,
+      "pinyin": "shǎo wú shì sú yùn， xìng běn ài qiū shān。\nwù luò chén wǎng zhōng， yí qù sān shí nián。\njī niǎo liàn jiù lín， chí yú sī gù yuān。\nkāi huāng nán yě jì， shǒu zhuō guī yuán tián。\nfāng zhái shí yú mǔ， cǎo wū bā jiǔ jiān。\nyú liǔ yìn hòu yán， táo lǐ luó táng qián。\nài ài yuǎn rén cūn， yī yī xū lǐ yān。\ngǒu fèi shēn xiàng zhōng， jī míng sāng shù diān。\nhù tíng wú chén zá， xū shì yǒu yú xián。\njiǔ zài fán lóng lǐ， fù dé fǎn zì rán。",
+      "translation": "When young, I'd not enjoyed the common pleasures,\nMy nature's basic love was for the hills.\nMistakenly I fell into the worldly net,\nAnd thus remained for thirteen years.\nA bird once caged must yearn for its old forest,\nA fish in a pond will long to return to the lake.\nSo now I want to head to southern lands,\nReturning to my fields and orchards there.\nAbout ten acres of land is all I have,\nJust eight or nine rooms there in my thatched hut.\nThere's shade from elms and willows behind the eaves,\nBefore the hall are gathered peaches and plums.\nBeyond the dark and distance lies a village,\nThe smoke above reluctant to depart.\nA dog is barking somewhere down the lane,\nAnd chickens sit atop the mulberry tree.\nThe mundane world has no place in my home,\nMy modest rooms are for the most part vacant.\nAt last I feel released from my confinement,\nI set myself to rights again.",
+      "translationSource": "chinese-poems.com/young"
     },
     {
       "id": "weijin_002",
@@ -45,7 +48,10 @@
       "year": 400,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 60
+      "wordCount": 60,
+      "pinyin": "jié lú zài rén jìng， ér wú chē mǎ xuān。\nwèn jūn hé néng ěr？ xīn yuǎn dì zì piān。\ncǎi jú dōng lí xià， yōu rán jiàn nán shān。\nshān qì rì xī jiā， fēi niǎo xiāng yǔ hái。\ncǐ zhōng yǒu zhēn yì， yù biàn yǐ wàng yán。",
+      "translation": "I made my home amidst this human bustle,\nYet I hear no clamour from the carts and horses.\nMy friend, you ask me how this can be so?\nA distant heart will tend towards like places.\nFrom the eastern hedge, I pluck chrysanthemum flowers,\nAnd idly look towards the southern hills.\nThe mountain air is beautiful day and night,\nThe birds fly back to roost with one another.\nI know that this must have some deeper meaning,\nI try to explain, but cannot find the words.",
+      "translationSource": "chinese-poems.com/wine"
     },
     {
       "id": "weijin_003",
@@ -65,7 +71,9 @@
       "year": 421,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 393
+      "wordCount": 393,
+      "pinyin": "jìn tài yuán zhōng， wǔ líng rén bǔ yú wèi yè。 yuán xī xíng， wàng lù zhī yuǎn jìn。 hū féng táo huā lín， jiá àn shù bǎi bù， zhōng wú zá shù， fāng cǎo xiān měi， luò yīng bīn fēn。 yú rén shèn yì zhī， fù qián xíng， yù qióng qí lín。\nlín jìn shuǐ yuán， biàn dé yì shān， shān yǒu xiǎo kǒu， fǎng fú ruò yǒu guāng。 biàn shè chuán， cóng kǒu rù。 chū jí xiá， cái tōng rén。 fù xíng shù shí bù， huō rán kāi lǎng。 tǔ dì píng kuàng， wū shè yǎn rán， yǒu liáng tián měi chí sāng zhú zhī shǔ。 qiān mò jiāo tōng， jī quǎn xiāng wén。 qí zhōng wǎng lái zhǒng zuò， nán nǚ yī zhuó， xī rú wài rén。 huáng fà chuí tiáo， bìng yí rán zì lè。\njiàn yú rén， nǎi dà jīng， wèn suǒ cóng lái。 jù dá zhī。 biàn yào hái jiā， shè jiǔ shā jī zuò shí。 cūn zhōng wén yǒu cǐ rén， xián lái wèn xùn。 zì yún xiān shì bì qín shí luàn， lǜ qī zǐ yì rén lái cǐ jué jìng， bú fù chū yān， suì yǔ wài rén jiàn gé。 wèn jīn shì hé shì， nǎi bù zhī yǒu hàn， wú lùn wèi jìn。 cǐ rén yī yī wèi jù yán suǒ wén， jiē tàn wǎn。 yú rén gè fù yán zhì qí jiā， jiē chū jiǔ shí。 tíng shù rì， cí qù。 cǐ zhōng rén yǔ yún： bù zú wèi wài rén dào yě。\njì chū， dé qí chuán， biàn fú xiàng lù， chù chù zhì zhī。 jí jùn xià， yì tài shǒu， shuō rú cǐ。 tài shǒu jí qiǎn rén suí qí wǎng， xún xiàng suǒ zhì， suì mí， bú fù dé lù。\nnán yáng liú zǐ jì， gāo shàng shì yě， wén zhī， xīn rán guī wǎng。 wèi guǒ， xún bìng zhōng。 hòu suì wú wèn jīn zhě。",
+      "translation": null
     },
     {
       "id": "weijin_004",
@@ -84,7 +92,9 @@
       "year": 405,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 209
+      "wordCount": 209,
+      "pinyin": "xiān shēng bù zhī hé xǔ rén yě， yì bù xiáng qí xìng zì， zhái biān yǒu wǔ liǔ shù， yīn yǐ wéi hào yān。 xián jìng shǎo yán， bú mù róng lì。 hǎo dú shū， bù qiú shèn jiě； měi yǒu huì yì， biàn xīn rán wàng shí。 xìng shì jiǔ， jiā pín bù néng cháng dé。 qīn jiù zhī qí rú cǐ， huò zhì jiǔ ér zhāo zhī； zào yǐn zhé jìn， qī zài bì zuì。 jì zuì ér tuì， céng bú lìn qíng qù liú。 huán dǔ xiāo rán， bú bì fēng rì； duǎn hè chuān jié， dān piáo lǚ kōng， yàn rú yě。 cháng zhù wén zhāng zì yú， pō shì jǐ zhì。 wàng huái dé shī， yǐ cǐ zì zhōng。\nzàn yuē： qián lóu zhī qī yǒu yán： bù qī qī yú pín jiàn， bù jí jí yú fù guì。 qí yán zī ruò rén zhī chóu hū？ xián shāng fù shī， yǐ lè qí zhì， wú huái shì zhī mín yú？ gě tiān shì zhī mín yú？",
+      "translation": null
     },
     {
       "id": "weijin_005",
@@ -103,7 +113,9 @@
       "year": 405,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 208
+      "wordCount": 208,
+      "pinyin": "guī qù lái xī， tián yuán jiāng wú hú bù guī？ jì zì yǐ xīn wèi xíng yì， xī chóu chàng ér dú bēi？ wù yǐ wǎng zhī bú jiàn， zhī lái zhě zhī kě zhuī。 shí mí tú qí wèi yuǎn， jué jīn shì ér zuó fēi。\nzhōu yáo yáo yǐ qīng yáng， fēng piāo piāo ér chuī yī。 wèn zhēng fū yǐ qián lù， hèn chén guāng zhī xī wēi。 nǎi zhān héng yǔ， zǎi xīn zǎi bēn。 tóng pú huān yíng， zhì zǐ hòu mén。 sān jìng jiù huāng， sōng jú yóu cún。 xié yòu rù shì， yǒu jiǔ yíng zūn。\nyǐn hú shāng yǐ zì zhuó， miǎn tíng kē yǐ yí yán。 yǐ nán chuāng yǐ jì ào， shěn róng xī zhī yì ān。 yuán rì shè yǐ chéng qù， mén suī shè ér cháng guān。 cè fú lǎo yǐ liú qì， shí jiǎo shǒu ér xiá guān。 yún wú xīn yǐ chū xiù， niǎo juàn fēi ér zhī hái。 jǐng yì yì yǐ jiāng rù， fǔ gū sōng ér pán huán。",
+      "translation": null
     },
     {
       "id": "weijin_006",
@@ -123,7 +135,9 @@
       "year": 400,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 392
+      "wordCount": 392,
+      "pinyin": "jī jī fù jī jī， mù lán dāng hù zhī。 bù wén jī zhù shēng， wéi wén nǚ tàn xī。\nwèn nǚ hé suǒ sī， wèn nǚ hé suǒ yì。 nǚ yì wú suǒ sī， nǚ yì wú suǒ yì。\nzuó yè jiàn jūn tiē， kè hán dà diǎn bīng， jūn shū shí èr juàn， juàn juàn yǒu yé míng。\nā yé wú dà ér， mù lán wú zhǎng xiōng， yuàn wèi shì ān mǎ， cóng cǐ tì yé zhēng。\ndōng shì mǎi jùn mǎ， xī shì mǎi ān jiān， nán shì mǎi pèi tóu， běi shì mǎi cháng biān。\ndàn cí yé niáng qù， mù sù huáng hé biān， bù wén yé niáng huàn nǚ shēng， dàn wén huáng hé liú shuǐ míng jiàn jiàn。\ndàn cí huáng hé qù， mù zhì hēi shān tóu， bù wén yé niáng huàn nǚ shēng， dàn wén yān shān hú qí míng jiū jiū。\nwàn lǐ fù róng jī， guān shān dù ruò fēi。 shuò qì chuán jīn tuò， hán guāng zhào tiě yī。\njiāng jūn bǎi zhàn sǐ， zhuàng shì shí nián guī。\nguī lái jiàn tiān zǐ， tiān zǐ zuò míng táng。 cè xūn shí èr zhuǎn， shǎng cì bǎi qiān qiáng。\nkě hàn wèn suǒ yù， mù lán bú yòng shàng shū láng， yuàn chí qiān lǐ zú， sòng ér hái gù xiāng。\nyé niáng wén nǚ lái， chū guō xiāng fú jiāng； ā zǐ wén mèi lái， dāng hù lǐ hóng zhuāng；\nxiǎo dì wén zǐ lái， mó dāo huò huò xiàng zhū yáng。\nkāi wǒ dōng gé mén， zuò wǒ xī gé chuáng， tuō wǒ zhàn shí páo， zhù wǒ jiù shí shang。\ndāng chuāng lǐ yún bìn， duì jìng tiē huā huáng。 chū mén kàn huǒ bàn， huǒ bàn jiē jīng máng：\ntóng háng shí èr nián， bù zhī mù lán shì nǚ láng。\nxióng tù jiǎo pū shuò， cí tù yǎn mí lí； shuāng tù bàng dì zǒu， ān néng biàn wǒ shì xióng cí？",
+      "translation": null
     },
     {
       "id": "weijin_007",
@@ -143,7 +157,9 @@
       "year": 400,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 34
+      "wordCount": 34,
+      "pinyin": "chì lè chuān， yīn shān xià。\ntiān sì qióng lú， lóng gài sì yě。\ntiān cāng cāng， yě máng máng，\nfēng chuī cǎo dī xiàn niú yáng。",
+      "translation": null
     },
     {
       "id": "weijin_008",
@@ -163,7 +179,9 @@
       "year": 353,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 388
+      "wordCount": 388,
+      "pinyin": "yǒng hé jiǔ nián， suì zài guǐ chǒu， mù chūn zhī chū， huì yú huì jī shān yīn zhī lán tíng， xiū xì shì yě。 qún xián bì zhì， shǎo cháng xián jí。 cǐ dì yǒu chóng shān jùn lǐng， mào lín xiū zhú； yòu yǒu qīng liú jī tuān， yìng dài zuǒ yòu， yǐn yǐ wéi liú shāng qū shuǐ， liè zuò qí cì。 suī wú sī zhú guǎn xián zhī shèng， yì shāng yì yǒng， yì zú yǐ chàng xù yōu qíng。\nshì rì yě， tiān lǎng qì qīng， huì fēng hé chàng。 yǎng guān yǔ zhòu zhī dà， fǔ chá pǐn lèi zhī shèng， suǒ yǐ yóu mù chěng huái， zú yǐ jí shì tīng zhī yú， xìn kě lè yě。\nfū rén zhī xiāng yǔ， fǔ yǎng yí shì。 huò qǔ zhū huái bào， wù yán yí shì zhī nèi； huò yīn jì suǒ tuō， fàng làng xíng hái zhī wài。 suī qù shè wàn shū， jìng zào bù tóng， dāng qí xīn yú suǒ yù， zàn dé yú jǐ， kuài rán zì zú， bù zhī lǎo zhī jiāng zhì； jí qí suǒ zhī jì juàn， qíng suí shì qiān， gǎn kǎi xì zhī yǐ。 xiàng zhī suǒ xīn， fǔ yǎng zhī jiān， yǐ wèi chén jì， yóu bù néng bù yǐ zhī xīng huái。 kuàng xiū duǎn suí huà， zhōng qī yú jìn。 gǔ rén yún： sǐ shēng yì dà yǐ。 qǐ bú tòng zāi！\nměi lǎn xī rén xīng gǎn zhī yóu， ruò hé yī qì， wèi cháng bù lín wén jiē dào， bù néng yù zhī yú huái。 gù zhī yì sǐ shēng wèi xū dàn， qí péng shāng wèi wàng zuò。 hòu zhī shì jīn， yì yóu jīn zhī shì xī。 bēi fū！ gù liè xù shí rén， lù qí suǒ shù。 suī shì shū shì yì， suǒ yǐ xīng huái， qí zhì yī yě。 hòu zhī lǎn zhě， yì jiāng yǒu gǎn yú sī wén。",
+      "translation": null
     },
     {
       "id": "weijin_009",
@@ -183,7 +201,9 @@
       "year": 268,
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
-      "wordCount": 567
+      "wordCount": 567,
+      "pinyin": "chén yǐ xiǎn xìn， sù zāo mǐn xiōng。 shēng hái liù yuè， cí fù jiàn bèi； xíng nián sì suì， jiù duó mǔ zhì。 zǔ mǔ liú mǐn chén gū ruò， gōng qīn fǔ yǎng。 chén shǎo duō jí bìng， jiǔ suì bù xíng， líng dīng gū kǔ， zhì yú chéng lì。 jì wú bó shū， zhōng xiān xiōng dì， mén shuāi zuò báo， wǎn yǒu ér xī。 wài wú qī gōng qiáng jìn zhī qīn， nèi wú yìng mén wǔ chǐ zhī tóng， qióng qióng jié lì， xíng yǐng xiāng diào。 ér liú sù yīng jí bìng， cháng zài chuáng rù， chén shì tāng yào， wèi céng fèi lí。\ndǎi fèng shèng cháo， mù yù qīng huà。 qián tài shǒu chén kuí chá chén xiào lián， hòu cì shǐ chén róng jǔ chén xiù cái。 chén yǐ gòng yǎng wú zhǔ， cí bú fù mìng。 zhào shū tè xià， bài chén láng zhōng， xún méng guó ēn， chú chén xǐ mǎ。 wěi yǐ wēi jiàn， dāng shì dōng gōng， fēi chén yǔn shǒu suǒ néng shàng bào。 chén jù yǐ biǎo wén， cí bú jiù zhí。 zhào shū qiè jùn， zé chén bū màn。 jùn xiàn bī pò， cuī chén shàng dào； zhōu sī lín mén， jí yú xīng huǒ。 chén yù fèng zhào bēn chí， zé liú bìng rì dǔ； yù gǒu shùn sī qíng， zé gào sù bù xǔ。 chén zhī jìn tuì， shí wèi láng bèi。\nfú wéi shèng cháo yǐ xiào zhì tiān xià， fán zài gù lǎo， yóu méng jīn yù， kuàng chén gū kǔ， tè wèi yóu shèn。 qiě chén shǎo shì wěi cháo， lì zhí láng shǔ， běn tú huàn dá， bù jīn míng jié。 jīn chén wáng guó jiàn fú， zhì wēi zhì lòu， guò méng bá zhuó， chǒng mìng yōu wò， qǐ gǎn pán huán， yǒu suǒ xī jì。 dàn yǐ liú rì bó xī shān， qì xī yān yān， rén mìng wēi qiǎn， cháo bú lǜ xī。 chén wú zǔ mǔ， wú yǐ zhì jīn rì； zǔ mǔ wú chén， wú yǐ zhōng yú nián。 mǔ sūn èr rén， gèng xiāng wèi mìng， shì yǐ qū qū bù néng fèi yuǎn。\nchén mì jīn nián sì shí yǒu sì， zǔ mǔ liú jīn nián jiǔ shí yǒu liù， shì chén jìn jié yú bì xià zhī rì cháng， bào yǎng liú zhī rì duǎn yě。 wū niǎo sī qíng， yuàn qǐ zhōng yǎng。 chén zhī xīn kǔ， fēi dú shǔ zhī rén shì jí èr zhōu mù bó suǒ jiàn míng zhī， huáng tiān hòu tǔ shí suǒ gòng jiàn。 yuàn bì xià jīn mǐn yú chéng， tīng chén wēi zhì， shù liú jiǎo xìng， bǎo zú yú nián。 chén shēng dāng yǔn shǒu， sǐ dāng jié cǎo。 chén bú shèng quǎn mǎ bù jù zhī qíng， jǐn bài biǎo yǐ wén。",
+      "translation": null
     },
     {
       "id": "weijin_010",
@@ -202,7 +222,9 @@
       "source": "《曹子建集》",
       "location": "洛阳",
       "wordCount": 168,
-      "year": 210
+      "year": 210,
+      "pinyin": "bái mǎ shì jīn jī， lián piān xī běi chí。 jiè wèn shuí jiā zǐ， yōu bìng yóu xiá ér。 shǎo xiǎo qù xiāng yì， yáng shēng shā mò chuí。 sù xī bǐng liáng gōng， kǔ shǐ hé cēn cī。 kòng xián pò zuǒ de， yòu fā cuī yuè zhī。 yǎng shǒu jiē fēi náo， fǔ shēn sàn mǎ tí。 jiǎo jié guò hóu yuán， yǒng piāo ruò bào chī。 biān chéng duō jǐng jí， lǔ qí shù qiān yí。 yǔ xí cóng běi lái， lì mǎ dēng gāo dī。 cháng qū dǎo xiōng nú， zuǒ gù líng xiān bēi。 qì shēn fēng rèn duān， xìng mìng ān kě huái？ fù mǔ qiě bú gù， hé yán zǐ yǔ qī！ míng biān zhuàng shì jí， bù dé zhōng gù sī。 juān qū fù guó nán， shì sǐ hū rú guī！",
+      "translation": null
     },
     {
       "id": "weijin_011",
@@ -220,7 +242,10 @@
       "source": "《曹子建集》",
       "location": "洛阳",
       "wordCount": 24,
-      "year": 220
+      "year": 220,
+      "pinyin": "zhǔ dòu rán dòu qí， dòu zài fǔ zhōng qì。 běn shì tóng gēn shēng， xiāng jiān hé tài jí？",
+      "translation": "Boiling beans burns the beanstalk,\nBeans inside the pan cry:\nWe're both grown from one root,\nWhy so fast to boil each other?",
+      "translationSource": "chinese-poems.com/cz1"
     },
     {
       "id": "weijin_012",
@@ -238,7 +263,9 @@
       "source": "《陶渊明集》",
       "location": "浔阳",
       "wordCount": 180,
-      "year": 400
+      "year": 400,
+      "pinyin": "yàn dān shàn yǎng shì， zhì zài bào qiáng yíng。 zhāo jí bǎi fū liáng， suì mù dé jīng qīng。 jūn zǐ sǐ zhī jǐ， tí jiàn chū yān jīng。 sù jì míng guǎng mò， kāng kǎi sòng wǒ xíng。 xióng fā zhǐ wēi guān， měng qì chōng cháng yīng。 yǐn jiàn yì shuǐ shàng， sì zuò liè qún yīng。 jiàn lí jī bēi zhù， sòng yì chàng gāo shēng。 xiāo xiāo āi fēng shì， dàn dàn hán bō shēng。 shāng yīn gèng liú tì， yǔ zòu zhuàng shì jīng。 xīn zhī qù bù guī， qiě yǒu hòu shì míng。 dēng chē hé shí gù， fēi gài rù qín tíng。 líng lì yuè wàn lǐ， wēi yí guò qiān chéng。 tú qióng shì zì zhì， háo zhǔ zhèng zhēng yíng。 xī zāi jiàn shù shū， qí gōng suì bù chéng。 qí rén suī yǐ méi， qiān zǎi yǒu yú qíng。",
+      "translation": null
     },
     {
       "id": "weijin_013",
@@ -256,7 +283,9 @@
       "source": "《陶渊明集》",
       "location": "浔阳",
       "wordCount": 48,
-      "year": 410
+      "year": 410,
+      "pinyin": "jīng wèi xián wēi mù， jiāng yǐ tián cāng hǎi。 xíng tiān wǔ gān qī， měng zhì gù cháng zài。 tóng wù jì wú lǜ， huà qù bú fù huǐ。 tú shè zài xī xīn， liáng chén jù kě dài。",
+      "translation": null
     },
     {
       "id": "weijin_014",
@@ -275,7 +304,9 @@
       "source": "《乐府诗集》",
       "location": "江南",
       "wordCount": 192,
-      "year": 500
+      "year": 500,
+      "pinyin": "yì méi xià xī zhōu， zhé méi jì jiāng běi。 dān shān xìng zǐ hóng， shuāng bìn yā chú sè。 xī zhōu zài hé chù？ liǎng jiǎng qiáo tóu dù。 rì mù bó láo fēi， fēng chuī wū jiù shù。 shù xià jí mén qián， mén zhōng lù cuì diàn。 kāi mén láng bú zhì， chū mén cǎi hóng lián。 cǎi lián nán táng qiū， lián huā guò rén tóu。 dī tóu nòng lián zǐ， lián zǐ qīng rú shuǐ。 zhì lián huái xiù zhōng， lián xīn chè dǐ hóng。 yì láng láng bú zhì， yǎng shǒu wàng fēi hóng。 hóng fēi mǎn xī zhōu， wàng láng shàng qīng lóu。 lóu gāo wàng bú jiàn， jìn rì lán gān tóu。 lán gān shí èr qǔ， chuí shǒu míng rú yù。 juàn lián tiān zì gāo， hǎi shuǐ yáo kōng lǜ。 hǎi shuǐ mèng yōu yōu， jūn chóu wǒ yì chóu。 nán fēng zhī wǒ yì， chuī mèng dào xī zhōu。",
+      "translation": null
     },
     {
       "id": "weijin_015",
@@ -291,7 +322,9 @@
       ],
       "wordCount": 25,
       "source": "《艺文类聚》",
-      "year": 192
+      "year": 192,
+      "pinyin": "chū mén wú suǒ jiàn， bái gǔ bì píng yuán。\nlù yǒu jī fù rén， bào zǐ qiú suǒ shí。",
+      "translation": null
     },
     {
       "id": "weijin_016",
@@ -309,7 +342,9 @@
       ],
       "wordCount": 61,
       "source": "《乐府诗集》",
-      "year": 460
+      "year": 460,
+      "pinyin": "xiè shuǐ zhì píng dì， gè zì dōng xī nán běi liú。\nrén shēng yì yǒu mìng， ān néng xíng tàn fù zuò chóu？\nzhuó jiǔ yǐ zì kuān， jǔ bēi duàn jué gē lù nán。\nxīn fēi mù shí qǐ wú gǎn？ tūn shēng zhí zhú bù gǎn yán。",
+      "translation": null
     },
     {
       "id": "weijin_017",
@@ -327,7 +362,9 @@
       ],
       "wordCount": 103,
       "source": "《陶渊明集》",
-      "year": 405
+      "year": 405,
+      "pinyin": "mèng xià cǎo mù cháng， rào wū shù fú shū。\nzhòng niǎo xīn yǒu tuō， wú yì ài wú lú。\njì gēng yì yǐ zhǒng， shí hái dú wǒ shū。\nqióng xiàng gé shēn zhé， pō huí gù rén chē。\nhuān rán zhuó chūn jiǔ， zhāi wǒ yuán zhōng shū。\nwēi yǔ cóng dōng lái， hǎo fēng yǔ zhī jù。\nfàn lǎn zhōu wáng chuán， liú guān shān hǎi tú。\nfǔ yǎng zhōng yǔ zhòu， bú lè fù hé rú？",
+      "translation": null
     },
     {
       "id": "weijin_018",
@@ -345,7 +382,10 @@
       ],
       "wordCount": 51,
       "source": "《陶渊明集》",
-      "year": 405
+      "year": 405,
+      "pinyin": "zhòng dòu nán shān xià， cǎo shèng dòu miáo xī。\nchén xīng lǐ huāng huì， dài yuè hé chú guī。\ndào xiá cǎo mù cháng， xī lù zhān wǒ yī。\nyī zhān bù zú xī， dàn shǐ yuàn wú wéi。",
+      "translation": "I sow my beans below the southern hills,\nThough grasses flourish, the sprouting beans are scarce.\nI rise at dawn to clear the wasteland up,\nBeneath the moon I carry back my hoe.\nThe path is narrow, the trees and grass grown tall,\nMy clothes are dampened by the evening dew.\nYet dampened clothes are nothing to begrudge,\nIf only my desires can be fulfilled.",
+      "translationSource": "chinese-poems.com/young2"
     },
     {
       "id": "weijin_019",
@@ -362,7 +402,9 @@
       ],
       "wordCount": 64,
       "source": "《世说新语·方正》",
-      "year": 430
+      "year": 430,
+      "pinyin": "chén tài qiū yǔ yǒu qī xíng， qī rì zhōng。 rì zhōng bú zhì， tài qiū shè qù， qù hòu nǎi zhì。\nyuán fāng shí nián qī suì， mén wài xì。 kè wèn yuán fāng： 『 fù zài bù？ 』 dá yuē： 『 dài jūn jiǔ bú zhì， yǐ qù。 』",
+      "translation": null
     },
     {
       "id": "weijin_020",
@@ -380,7 +422,9 @@
       "wordCount": 102,
       "source": "《三国志·诸葛亮传》",
       "location": "成都",
-      "year": 227
+      "year": 227,
+      "pinyin": "chén běn bù yī， gōng gēng yú nán yáng， gǒu quán xìng mìng yú luàn shì， bù qiú wén dá yú zhū hóu。\nxiān dì bù yǐ chén bēi bǐ， wěi zì wǎng qū， sān gù chén yú cǎo lú zhī zhōng， zī chén yǐ dāng shì zhī shì， yóu shì gǎn jī， suì xǔ xiān dì yǐ qū chí。\nhòu zhí qīng fù， shòu rèn yú bài jūn zhī jì， fèng mìng yú wēi nàn zhī jiān， ěr lái èr shí yǒu yì nián yǐ。",
+      "translation": null
     },
     {
       "id": "weijin_021",
@@ -397,7 +441,9 @@
       ],
       "wordCount": 107,
       "source": "《诸葛亮集》",
-      "year": 234
+      "year": 234,
+      "pinyin": "fū jūn zǐ zhī xíng， jìng yǐ xiū shēn， jiǎn yǐ yǎng dé。\nfēi dàn bó wú yǐ míng zhì， fēi níng jìng wú yǐ zhì yuǎn。\nfū xué xū jìng yě， cái xū xué yě， fēi xué wú yǐ guǎng cái， fēi zhì wú yǐ chéng xué。\nyín màn zé bù néng lì jīng， xiǎn zào zé bù néng zhì xìng。\nnián yǔ shí chí， yì yǔ rì qù， suì chéng kū luò， duō bù jiē shì， bēi shǒu qióng lú， jiāng fù hé jí！",
+      "translation": null
     },
     {
       "id": "weijin_022",
@@ -414,7 +460,9 @@
       ],
       "wordCount": 53,
       "source": "《文选》",
-      "year": 222
+      "year": 222,
+      "pinyin": "yú gào zhī yuē： 『 qí xíng yě， piān ruò jīng hóng， wǎn ruò yóu lóng。\nróng yào qiū jú， huá mào chūn sōng。\nfǎng fú xī ruò qīng yún zhī bì yuè， piāo yáo xī ruò liú fēng zhī huí xuě。 』",
+      "translation": null
     }
   ]
 }

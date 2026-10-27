@@ -45,9 +45,13 @@
         <div class="section-title">
           原文
           <el-tag size="small" type="info" style="margin-left: 8px">第 {{ currentLine + 1 }} 行 / 共 {{ lineStartIndices.length }} 行</el-tag>
+          <el-button v-if="article.pinyin" size="small" text type="primary" style="margin-left: 8px" @click="togglePinyin">
+            {{ showPinyin ? '隐藏拼音' : '拼音' }}
+          </el-button>
           <el-button v-if="article.translation" size="small" text type="primary" style="margin-left: 8px" @click="toggleTranslation">
             {{ showTranslation ? '隐藏译文' : '译文' }}
           </el-button>
+          <span v-if="article.category === 'poetry' && !article.translation" class="translation-empty" style="margin-left: 8px">暂无人工英译</span>
         </div>
         <div ref="originalTextRef" class="original-text">
           <template v-for="(lineStart, lineIdx) in lineStartIndices" :key="lineIdx">
@@ -69,10 +73,17 @@
           </template>
         </div>
 
+        <!-- 拼音（古诗词/中文文章） -->
+        <div v-show="showPinyin && article.pinyin" class="pinyin-panel">
+          <div class="pinyin-label">拼 音</div>
+          <PinyinLines :content="article.content" :pinyin="article.pinyin" />
+        </div>
+
         <!-- 译文（中英对照素材） -->
         <div v-show="showTranslation && article.translation" class="translation-panel">
           <div class="translation-label">译 文</div>
           <div class="translation-text">{{ article.translation }}</div>
+          <div v-if="article.translationSource" class="translation-source">来源：{{ article.translationSource }}</div>
         </div>
       </div>
 
@@ -160,6 +171,7 @@ import { Refresh, VideoPause, VideoPlay, Check } from '@element-plus/icons-vue';
 import { useTextMemoryStore } from '@/stores/textMemory';
 import type { TextArticle } from '@/types/text-memory';
 import { getArticleLanguage } from '@/utils/text-memory-util';
+import PinyinLines from '@/components/PinyinLines.vue';
 
 const textStore = useTextMemoryStore();
 
@@ -201,6 +213,12 @@ const speedUnit = computed(() => (isZhArticle.value ? '字/分' : '词/分'));
 const showTranslation = ref(false);
 function toggleTranslation() {
   showTranslation.value = !showTranslation.value;
+}
+
+// 拼音：默认跟随练习设置
+const showPinyin = ref(textStore.exerciseSettings.showPinyin);
+function togglePinyin() {
+  showPinyin.value = !showPinyin.value;
 }
 
 // 中文输入法相关
@@ -768,6 +786,36 @@ function handleClose() {
       color: var(--utools-text-secondary);
       white-space: pre-wrap;
       word-break: break-word;
+    }
+
+    .translation-source {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--utools-text-secondary);
+      opacity: 0.75;
+    }
+  }
+
+  .translation-empty {
+    font-size: 12px;
+    color: var(--utools-text-secondary);
+    opacity: 0.6;
+  }
+
+  .pinyin-panel {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-left: 3px solid var(--utools-text-secondary);
+    background: color-mix(in srgb, var(--utools-text-secondary) 6%, transparent);
+    border-radius: 6px;
+    max-height: 22vh;
+    overflow-y: auto;
+
+    .pinyin-label {
+      font-size: 12px;
+      color: var(--utools-text-secondary);
+      font-weight: 600;
+      margin-bottom: 6px;
     }
   }
 

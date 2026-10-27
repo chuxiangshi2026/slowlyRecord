@@ -78,6 +78,8 @@ export interface TextArticle {
   title: string;
   // 内容
   content: string;
+  // 拼音（可选）：与 content 逐行对应，汉字一个带声调音节，标点原位
+  pinyin?: string;
   // 朗读专用文本（可选）：与 content 等长同结构的同音字替换版（纠正机读误读，如"衰"→"催"读 cuī）
   // 仅用于 TTS 朗读，展示/滚动跟随仍用 content；因滚动按 content 计算字符位置，两者必须逐字一一对应
   speechContent?: string;
@@ -95,6 +97,8 @@ export interface TextArticle {
   language?: string;
   // 中文译文/对照译文（中英对照素材用）
   translation?: string;
+  // 译文来源（如 chinese-poems.com/xxx）
+  translationSource?: string;
   // 地理坐标（解析后的）
   geo?: GeoLocation;
   // 创作年份（可选，用于时间线；负数=公元前）

@@ -123,6 +123,16 @@
       />
     </el-form-item>
 
+    <el-form-item label="拼音">
+      <el-input
+        v-model="formData.pinyin"
+        type="textarea"
+        :rows="4"
+        placeholder="可选：与内容逐行对应的带声调拼音，汉字一个音节，标点原位保留。内置诗词已自动生成"
+        maxlength="20000"
+      />
+    </el-form-item>
+
     <el-form-item label="译文">
       <el-input
         v-model="formData.translation"
@@ -130,6 +140,14 @@
         :rows="6"
         placeholder="请输入对照译文（可选）..."
         maxlength="20000"
+      />
+    </el-form-item>
+
+    <el-form-item label="译文来源">
+      <el-input
+        v-model="formData.translationSource"
+        placeholder="如 chinese-poems.com/xxx（可选）"
+        maxlength="200"
       />
     </el-form-item>
   </el-form>
@@ -171,8 +189,10 @@ const formData = ref({
   language: 'zh',
   tags: [] as string[],
   content: '',
+  pinyin: '',
   speechContent: '',
   translation: '',
+  translationSource: '',
   // 时间线字段
   category: '' as '' | 'politics' | 'literature' | 'science' | 'thought' | 'society',
   region: '' as '' | 'china' | 'west' | 'modern',
@@ -223,8 +243,10 @@ watch(() => props.article, (newArticle) => {
       language: normalizeArticleLanguage(newArticle.language),
       tags: [...newArticle.tags],
       content: newArticle.content,
+      pinyin: newArticle.pinyin || '',
       speechContent: newArticle.speechContent || '',
       translation: newArticle.translation || '',
+      translationSource: newArticle.translationSource || '',
       category: (newArticle.category as any) || '',
       region: newArticle.region || '',
       year: newArticle.year ?? '',
@@ -250,8 +272,10 @@ function resetForm() {
     language: 'zh',
     tags: [],
     content: '',
+    pinyin: '',
     speechContent: '',
     translation: '',
+    translationSource: '',
     category: '',
     region: '',
     year: '',
@@ -292,8 +316,10 @@ async function submit(): Promise<boolean> {
       language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
+      pinyin: formData.value.pinyin || undefined,
       speechContent: formData.value.speechContent || undefined,
       translation: formData.value.translation || undefined,
+      translationSource: formData.value.translationSource || undefined,
       ...timelineFields,
     };
     emit('submit', updatedArticle);
@@ -306,8 +332,10 @@ async function submit(): Promise<boolean> {
       language: formData.value.language,
       tags: formData.value.tags,
       content: formData.value.content,
+      pinyin: formData.value.pinyin || undefined,
       speechContent: formData.value.speechContent || undefined,
       translation: formData.value.translation || undefined,
+      translationSource: formData.value.translationSource || undefined,
       ...timelineFields,
     });
   }

@@ -26,7 +26,8 @@
       "source": "《龚自珍全集》",
       "location": "镇江/江苏",
       "wordCount": 56,
-      "year": 1839
+      "year": 1839,
+      "pinyin": "hào dàng lí chóu bái rì xié， yín biān dōng zhǐ jí tiān yá。\nluò hóng bú shì wú qíng wù， huà zuò chūn ní gèng hù huā。"
     },
     {
       "id": "qing_002",
@@ -46,7 +47,9 @@
       "source": "《纳兰词》",
       "location": "山海关/辽宁",
       "wordCount": 72,
-      "year": 1680
+      "year": 1680,
+      "pinyin": "shān yì chéng， shuǐ yì chéng，\nshēn xiàng yú guān nà pàn xíng， yè shēn qiān zhàng dēng。\n\nfēng yì gēng， xuě yì gēng，\nguō suì xiāng xīn mèng bù chéng， gù yuán wú cǐ shēng。",
+      "translation": null
     },
     {
       "id": "qing_003",
@@ -66,7 +69,9 @@
       "source": "《瓯北集》",
       "location": "常州/江苏",
       "wordCount": 56,
-      "year": 1780
+      "year": 1780,
+      "pinyin": "lǐ dù shī piān wàn kǒu chuán， zhì jīn yǐ jué bù xīn xiān。\njiāng shān dài yǒu cái rén chū， gè lǐng fēng sāo shù bǎi nián。",
+      "translation": null
     },
     {
       "id": "qing_004",
@@ -86,7 +91,8 @@
       "source": "《郑板桥集》",
       "location": "扬州/江苏",
       "wordCount": 56,
-      "year": 1750
+      "year": 1750,
+      "pinyin": "yǎo dìng qīng shān bú fàng sōng， lì gēn yuán zài pò yán zhōng。\nqiān mó wàn jī hái jiān jìn， rèn ěr dōng xī nán běi fēng。"
     },
     {
       "id": "qing_005",
@@ -105,7 +111,9 @@
       "source": "《拙吾诗稿》",
       "location": "杭州/浙江",
       "wordCount": 56,
-      "year": 1860
+      "year": 1860,
+      "pinyin": "cǎo zhǎng yīng fēi èr yuè tiān， fú dī yáng liǔ zuì chūn yān。\nér tóng sàn xué guī lái zǎo， máng chèn dōng fēng fàng zhǐ yuān。",
+      "translation": null
     },
     {
       "id": "qing_006",
@@ -124,7 +132,9 @@
       "source": "《阅微草堂笔记》",
       "location": "沧州/河北",
       "wordCount": 285,
-      "year": 1750
+      "year": 1750,
+      "pinyin": "cāng zhōu nán yí sì lín hé gān， shān mén pǐ yú hé， èr shí shòu bìng chén yān。 yuè shí yú suì， sēng mù jīn chóng xiū， qiú èr shí shòu yú shuǐ zhōng， jìng bù kě dé， yǐ wéi shùn liú xià yǐ。 zhào shù xiǎo zhōu， yè tiě bǎ， xún shí yú lǐ wú jì。\nyì jiǎng xué jiā shè zhàng sì zhōng， wén zhī xiào yuē：' ěr bèi bù néng jiū wù lǐ。 shì fēi mù bèi， qǐ néng wèi bào zhǎng xié zhī qù？ nǎi shí xìng jiān zhòng， shā xìng sōng fú， yān yú shā shàng， jiàn chén jiàn shēn ěr。 yán hé qiú zhī， bú yì diān hū？' zhòng fú wèi què lùn。\nyì lǎo hé bīng wén zhī， yòu xiào yuē：' fán hé zhōng shī shí， dāng qiú zhī yú shàng liú。 gài shí xìng jiān zhòng， shā xìng sōng fú， shuǐ bù néng chōng shí， qí fǎn jī zhī lì， bì yú shí xià yíng shuǐ chù niè shā wèi kǎn xué。 jiàn jī jiàn shēn， zhì shí zhī bàn， shí bì dǎo zhì kǎn xué zhōng。 rú shì zài niè， shí yòu zài zhuǎn。 zhuǎn zhuǎn bù yǐ， suì fǎn sù liú nì shàng yǐ。 qiú zhī xià liú， gù diān； qiú zhī dì zhōng， bú gèng diān hū？' rú qí yán， guǒ dé yú shù lǐ wài。 rán zé tiān xià zhī shì， dàn zhī qí yī， bù zhī qí èr zhě duō yǐ， kě jù lǐ yì duàn yú？",
+      "translation": null
     },
     {
       "id": "qing_007",
@@ -144,7 +154,9 @@
       "source": "《惜抱轩诗文集》",
       "location": "泰山/山东泰安",
       "wordCount": 457,
-      "year": 1775
+      "year": 1775,
+      "pinyin": "tài shān zhī yáng， wèn shuǐ xī liú； qí yīn， jì shuǐ dōng liú。 yáng gǔ jiē rù wèn， yīn gǔ jiē rù jì。 dāng qí nán běi fēn zhě， gǔ cháng chéng yě。 zuì gāo rì guān fēng， zài cháng chéng nán shí wǔ lǐ。\nyú yǐ qián lóng sān shí jiǔ nián shí èr yuè， zì jīng shī chéng fēng xuě， lì qí hé、 cháng qīng， chuān tài shān xī běi gǔ， yuè cháng chéng zhī xiàn， zhì yú tài ān。 shì yuè dīng wèi， yǔ zhī fǔ zhū xiào chún zǐ yǐng yóu nán lù dēng。 sì shí wǔ lǐ， dào jiē qì shí wèi dèng， qí jí qī qiān yǒu yú。 tài shān zhèng nán miàn yǒu sān gǔ。 zhōng gǔ rào tài ān chéng xià， lì dào yuán suǒ wèi huán shuǐ yě。 yú shǐ xún yǐ rù， dào shǎo bàn， yuè zhōng lǐng， fù xún xī gǔ， suì zhì qí diān。 gǔ shí dēng shān， xún dōng gǔ rù， dào yǒu tiān mén。 dōng gǔ zhě， gǔ wèi zhī tiān mén xī shuǐ， yú suǒ bú zhì yě。 jīn suǒ jīng zhōng lǐng jí shān diān yá xiàn dāng dào zhě， shì jiē wèi zhī tiān mén yún。 dào zhōng mí wù bīng huá， dèng jǐ bù kě dēng。 jí jì shàng， cāng shān fù xuě， míng zhú tiān nán。 wàng wǎn rì zhào chéng guō， wèn shuǐ、 cú lái rú huà， ér bàn shān jū wù ruò dài rán。\nwù shēn huì， wǔ gǔ， yǔ zǐ yǐng zuò rì guān tíng， dài rì chū。 dà fēng yáng jī xuě jī miàn。 tíng dōng zì zú xià jiē yún màn。 shāo jiàn yún zhōng bái ruò chū pú shù shí lì zhě， shān yě。 jí tiān yún yí xiàn yì sè， xū yú chéng wǔ cǎi。 rì shàng， zhèng chì rú dān， xià yǒu hóng guāng dòng yáo chéng zhī， huò yuē， cǐ dōng hǎi yě。 huí shì rì guān yǐ xī fēng， huò dé rì huò fǒu， jiàng hào bó sè， ér jiē ruò lǚ。\ntíng xī yǒu dài cí， yòu yǒu bì xiá yuán jūn cí。 huáng dì xíng gōng zài bì xiá yuán jūn cí dōng。 shì rì guān dào zhōng shí kè， zì táng xiǎn qìng yǐ lái； qí yuǎn gǔ kè jìn màn shī。 pì bù dāng dào zhě， jiē bù jí wǎng。\nshān duō shí， shǎo tǔ。 shí cāng hēi sè， duō píng fāng， shǎo huán。 shǎo zá shù， duō sōng， shēng shí xià， jiē píng dǐng。 bīng xuě， wú pù shuǐ， wú niǎo shòu yīn jì。 zhì rì guān shù lǐ nèi wú shù， ér xuě yǔ rén xī qí。\ntóng chéng yáo nài jì。",
+      "translation": null
     },
     {
       "id": "qing_008",
@@ -163,7 +175,9 @@
       "source": "《龚自珍全集》",
       "location": "江南",
       "wordCount": 301,
-      "year": 1839
+      "year": 1839,
+      "pinyin": "jiāng níng zhī lóng pán， sū zhōu zhī dèng wèi， háng zhōu zhī xī xī， jiē chǎn méi。 huò yuē： méi yǐ qǔ wèi měi， zhí zé wú zī； yǐ qī wèi měi， zhèng zé wú jǐng； yǐ shū wèi měi， mì zé wú tài。 gù yě。 cǐ wén rén huà shì xīn zhī qí yì， wèi kě míng zhào dà hào yǐ shéng tiān xià zhī méi yě； yòu bù kě yǐ shǐ tiān xià zhī mín zhuó zhí， shān mì， chú zhèng， yǐ yāo méi bìng méi wèi yè yǐ qiú qián yě。 méi zhī qī zhī shū zhī qǔ， yòu fēi chǔn chǔn qiú qián zhī mín néng yǐ qí zhì lì wèi yě。 yǒu yǐ wén rén huà shì gū pǐ zhī yǐn míng gào yù méi zhě， zhuó qí zhèng， yǎng qí páng tiáo， shān qí mì， yāo qí zhì zhī， chú qí zhí， è qí shēng qì， yǐ qiú zhòng jià， ér jiāng zhè zhī méi jiē bìng。 wén rén huà shì zhī huò zhī liè zhì cǐ zāi！\nyǔ gòu sān bǎi pén， jiē bìng zhě， wú yì wán zhě。 jì qì zhī sān rì， nǎi shì liáo zhī： zòng zhī shùn zhī， huǐ qí pén， xī mái yú dì， jiě qí zōng fù； yǐ wǔ nián wéi qī， bì fù zhī quán zhī。 gū zhī xián zhī， yǐ qiú qí fù yě。 wū hū！ ān dé shǐ yǔ duō xiá rì， yòu duō xián tián， yǐ guǎng zhù jiāng níng、 háng zhōu、 sū zhōu zhī bìng méi， qióng yǔ shēng zhī guāng yīn yǐ liáo méi yě zāi！",
+      "translation": null
     },
     {
       "id": "qing_009",
@@ -182,7 +196,9 @@
       "source": "《秋瑾集》",
       "location": "北京/绍兴",
       "wordCount": 158,
-      "year": 1900
+      "year": 1900,
+      "pinyin": "xiǎo zhù jīng huá， zǎo yòu shì， zhōng qiū jiā jié。 wèi lí xià， huáng huā kāi biàn， qiū róng rú shì。 sì miàn gē cán zhōng pò chǔ， bā nián fēng wèi tú sī zhè。 kǔ jiāng nóng， qiáng pài zuò é méi， shū wèi xiè！\nshēn bù dé， nán ér liè。 xīn què bǐ， nán ér liè！ suàn píng shēng gān dǎn， yīn rén cháng rè。 sú zǐ xiōng jīn shuí shí wǒ？ yīng xióng mò lù dāng mó zhé。 mǎng hóng chén， hé chù mì zhī yīn？ qīng shān shī！",
+      "translation": null
     },
     {
       "id": "qing_010",
@@ -201,7 +217,8 @@
       "source": "《龚自珍全集》",
       "location": "镇江/江苏",
       "wordCount": 56,
-      "year": 1839
+      "year": 1839,
+      "pinyin": "jiǔ zhōu shēng qì shì fēng léi， wàn mǎ qí yīn jiū kě āi。\nwǒ quàn tiān gōng zhòng dǒu sǒu， bù jū yì gé jiàng rén cái。"
     },
     {
       "id": "qing_011",
@@ -220,7 +237,9 @@
       "source": "《谭嗣同全集》",
       "location": "潼关/陕西",
       "wordCount": 56,
-      "year": 1880
+      "year": 1880,
+      "pinyin": "zhōng gǔ gāo yún cù cǐ chéng， qiū fēng chuī sàn mǎ tí shēng。\nhé liú dà yě yóu xián shù， shān rù tóng guān bù jiě píng。",
+      "translation": null
     },
     {
       "id": "qing_012",
@@ -239,7 +258,9 @@
       "source": "《谭嗣同全集》",
       "location": "北京/菜市口",
       "wordCount": 56,
-      "year": 1898
+      "year": 1898,
+      "pinyin": "wàng mén tóu zhǐ sī zhāng jiǎn， rěn sǐ xū yú dài dù gēn。\nwǒ zì héng dāo xiàng tiān xiào， qù liú gān dǎn liǎng kūn lún！",
+      "translation": null
     },
     {
       "id": "qing_013",
@@ -258,7 +279,9 @@
       "source": "《小仓山房诗文集》",
       "location": "江宁/南京",
       "wordCount": 40,
-      "year": 1780
+      "year": 1780,
+      "pinyin": "mù tóng qí huáng niú， gē shēng zhèn lín yuè。\nyì yù bǔ míng chán， hū rán bì kǒu lì。",
+      "translation": null
     },
     {
       "id": "qing_014",
@@ -277,7 +300,9 @@
       "source": "《小仓山房诗文集》",
       "location": "江宁/南京",
       "wordCount": 40,
-      "year": 1780
+      "year": 1780,
+      "pinyin": "bái rì bú dào chù， qīng chūn qià zì lái。\ntái huā rú mǐ xiǎo， yě xué mǔ dān kāi。",
+      "translation": null
     },
     {
       "id": "qing_015",
@@ -296,7 +321,9 @@
       "source": "《纳兰词》",
       "location": "北京",
       "wordCount": 84,
-      "year": 1680
+      "year": 1680,
+      "pinyin": "shuí niàn xī fēng dú zì liáng， xiāo xiāo huáng yè bì shū chuāng， chén sī wǎng shì lì cán yáng。\nbèi jiǔ mò jīng chūn shuì zhòng， dǔ shū xiāo dé pō chá xiāng， dāng shí zhī dào shì xún cháng。",
+      "translation": null
     },
     {
       "id": "qing_016",
@@ -315,7 +342,9 @@
       "source": "《纳兰词》",
       "location": "北京",
       "wordCount": 72,
-      "year": 1675
+      "year": 1675,
+      "pinyin": "rén shēng ruò zhī rú chū jiàn， hé shì qiū fēng bēi huà shàn。\nděng xián biàn què gù rén xīn， què dào gù rén xīn yì biàn。\n\nlí shān yǔ bà qīng xiāo bàn， lèi yǔ lín líng zhōng bú yuàn。\nhé rú bó xìng jǐn yī láng， bǐ yì lián zhī dāng rì yuàn。",
+      "translation": null
     },
     {
       "id": "qing_017",
@@ -334,7 +363,9 @@
       "source": "《纳兰词》",
       "location": "北京",
       "wordCount": 80,
-      "year": 1680
+      "year": 1680,
+      "pinyin": "xīn kǔ zuì lián tiān shàng yuè， yì xī rú huán， xī xī dōu chéng jué。 ruò sì yuè lún zhōng jiǎo jié， bù cí bīng xuě wèi qīng rè。\n\nwú nà chén yuán róng yì jué， yàn zi yī rán， ruǎn tà lián gōu shuō。 chàng bà qiū fén chóu wèi xiē， chūn cóng rèn qǔ shuāng qī dié。",
+      "translation": null
     },
     {
       "id": "qing_018",
@@ -353,7 +384,9 @@
       "source": "《郑板桥集》",
       "location": "潍县/山东潍坊",
       "wordCount": 28,
-      "year": 1750
+      "year": 1750,
+      "pinyin": "yá zhāi wò tīng xiāo xiāo zhú， yí shì mín jiān jí kǔ shēng。\nxiē xiǎo wú cáo zhōu xiàn lì， yì zhī yí yè zǒng guān qíng。",
+      "translation": null
     },
     {
       "id": "qing_019",
@@ -372,7 +405,9 @@
       "source": "《林则徐集》",
       "location": "西安/伊犁",
       "wordCount": 56,
-      "year": 1842
+      "year": 1842,
+      "pinyin": "lì wēi rèn zhòng jiǔ shén pí， zài jié shuāi yōng dìng bù zhī。\ngǒu lì guó jiā shēng sǐ yǐ， qǐ yīn huò fú bì qū zhī。\nzhé jū zhèng shì jūn ēn hòu， yǎng zhuō gāng yú shù zú yí。\nxì yǔ shān qī tán gù shì， shì yín duàn sòng lǎo tóu pí。",
+      "translation": null
     },
     {
       "id": "qing_020",
@@ -391,7 +426,9 @@
       "source": "《两当轩集》",
       "location": "北京",
       "wordCount": 56,
-      "year": 1770
+      "year": 1770,
+      "pinyin": "xiān fó máng máng liǎng wèi chéng， zhī zhī dú yè bù píng míng。\nfēng chén rěn rǎn yīn shū jué， guān sāi xiāo tiáo xíng lù nán。\nyǐ rěn líng pīng shí nián shì， xīn chí bàn jì wàn yuán kōng。\nshí yǒu jiǔ rén kān bái yǎn， bǎi wú yí yòng shì shū shēng。",
+      "translation": null
     },
     {
       "id": "qing_021",
@@ -410,7 +447,9 @@
       "source": "《瓯北集》",
       "location": "常州/江苏",
       "wordCount": 28,
-      "year": 1780
+      "year": 1780,
+      "pinyin": "qiào hán cuī huàn mù mián qiú， yǐ zhàng jiāo yuán zuò jìn yóu。\nzuì shì qiū fēng guǎn xián shì， hóng tā fēng yè bái rén tóu。",
+      "translation": null
     },
     {
       "id": "qing_022",
@@ -429,7 +468,9 @@
       "source": "《渔洋山人精华录》",
       "location": "江南",
       "wordCount": 28,
-      "year": 1660
+      "year": 1660,
+      "pinyin": "wú tóu chǔ wěi lù rú hé？ yān yǔ qiū shēn àn bái bō。\nwǎn chèn hán cháo dù jiāng qù， mǎn lín huáng yè yàn shēng duō。",
+      "translation": null
     },
     {
       "id": "qing_023",
@@ -448,7 +489,9 @@
       "source": "《人间词话》",
       "location": "北京",
       "wordCount": 80,
-      "year": 1905
+      "year": 1905,
+      "pinyin": "yuè jìn tiān yá lí bié kǔ， bú dào guī lái， líng luò huā rú xǔ。 huā dǐ xiāng kàn wú yì yǔ， lǜ chuāng chūn yǔ tiān jù mò。\n\ndài bǎ xiāng sī dēng xià sù， yì lǚ xīn huān， jiù hèn qiān qiān lǚ。 zuì shì rén jiān liú bú zhù， zhū yán cí jìng huā cí shù。",
+      "translation": null
     },
     {
       "id": "qing_024",
@@ -467,7 +510,9 @@
       "source": "《小仓山房诗文集》",
       "location": "杭州/西湖",
       "wordCount": 28,
-      "year": 1780
+      "year": 1780,
+      "pinyin": "gě lǐng huā kāi èr yuè tiān， yóu rén lái wǎng shuō shén xiān。\nlǎo fū xīn yǔ yóu rén yì， bú xiàn shén xiān xiàn shào nián。",
+      "translation": null
     },
     {
       "id": "qing_025",
@@ -486,7 +531,9 @@
       "source": "《秋瑾集》",
       "location": "北京",
       "wordCount": 28,
-      "year": 1905
+      "year": 1905,
+      "pinyin": "bù xī qiān jīn mǎi bǎo dāo， diāo qiú huàn jiǔ yě kān háo。\nyì qiāng rè xuè qín zhēn zhòng， sǎ qù yóu néng huà bì tāo。",
+      "translation": null
     },
     {
       "id": "qing_026",
@@ -505,7 +552,9 @@
       "year": 1680,
       "dynasty": "清",
       "dynastyCode": "qing",
-      "wordCount": 64
+      "wordCount": 64,
+      "pinyin": "rén shēng ruò zhī rú chū jiàn， hé shì qiū fēng bēi huà shàn。 děng xián biàn què gù rén xīn， què dào gù rén xīn yì biàn。 lí shān yǔ bà qīng xiāo bàn， lèi yǔ lín líng zhōng bú yuàn。 hé rú bó xìng jǐn yī láng， bǐ yì lián zhī dāng rì yuàn。",
+      "translation": null
     },
     {
       "id": "qing_027",
@@ -524,7 +573,9 @@
       "year": 1839,
       "dynasty": "清",
       "dynastyCode": "qing",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "jiǔ zhōu shēng qì shì fēng léi， wàn mǎ qí yīn jiū kě āi。 wǒ quàn tiān gōng zhòng dǒu sǒu， bù jū yì gé jiàng rén cái。",
+      "translation": null
     }
   ]
 }

@@ -32,9 +32,13 @@
               <el-button @click="toggleShowAnswers">
                 {{ showAnswers ? '隐藏答案' : '显示答案' }}
               </el-button>
+              <el-button v-if="article.pinyin" @click="toggleShowPinyin">
+                {{ showPinyin ? '隐藏拼音' : '显示拼音' }}
+              </el-button>
               <el-button v-if="article.translation" @click="toggleShowTranslation">
                 {{ showTranslation ? '隐藏译文' : '显示译文' }}
               </el-button>
+              <span v-if="article.category === 'poetry' && !article.translation" class="translation-empty">暂无人工英译</span>
             </el-form-item>
           </el-form>
         </div>
@@ -115,10 +119,17 @@
         <el-empty v-else description="点击「重新生成」开始练习" />
       </div>
 
+      <!-- 拼音（古诗词/中文文章） -->
+      <div v-if="showPinyin && article.pinyin" class="pinyin-panel">
+        <div class="pinyin-label">拼 音</div>
+        <PinyinLines :content="article.content" :pinyin="article.pinyin" mode="pinyin" />
+      </div>
+
       <!-- 显示译文（中英对照素材） -->
       <div v-if="showTranslation && article.translation" class="translation-panel">
         <div class="translation-label">译 文</div>
         <div class="translation-text">{{ article.translation }}</div>
+        <div v-if="article.translationSource" class="translation-source">来源：{{ article.translationSource }}</div>
       </div>
 
       <!-- 统计信息 -->
@@ -176,6 +187,7 @@ import { ElMessage } from 'element-plus';
 import { Refresh, Check, Close } from '@element-plus/icons-vue';
 import { getArticleLanguage, extractForeignKeywords } from '@/utils/text-memory-util';
 import type { ArticleKeyword } from '@/utils/text-memory-util';
+import PinyinLines from '@/components/PinyinLines.vue';
 
 interface Props {
   modelValue: boolean;
@@ -198,6 +210,7 @@ const blankCount = ref(10);
 const exerciseMode = ref<'random' | 'keyword' | 'sentence' | 'semantic'>('random');
 const showAnswers = ref(false);
 const showTranslation = ref(false);
+const showPinyin = ref(textStore.exerciseSettings.showPinyin);
 const generating = ref(false);
 const semanticType = ref<'synonym' | 'antonym'>('synonym'); // 语义填空类型
 
@@ -984,6 +997,10 @@ function toggleShowTranslation() {
   showTranslation.value = !showTranslation.value;
 }
 
+function toggleShowPinyin() {
+  showPinyin.value = !showPinyin.value;
+}
+
 // 检查所有答案
 function checkAllAnswers() {
   let correct = 0;
@@ -1190,6 +1207,37 @@ function loadProgress() {
   color: var(--utools-text-secondary);
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.translation-panel .translation-source {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--utools-text-secondary);
+  opacity: 0.75;
+}
+
+.translation-empty {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--utools-text-secondary);
+  opacity: 0.6;
+}
+
+.pinyin-panel {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--utools-text-secondary);
+  background: color-mix(in srgb, var(--utools-text-secondary) 6%, transparent);
+  border-radius: 6px;
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.pinyin-panel .pinyin-label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--utools-text-secondary);
 }
 
 .action-bar {

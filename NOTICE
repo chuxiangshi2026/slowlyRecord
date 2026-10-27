@@ -1,0 +1,51 @@
+slowlyRecord
+Copyright 2024-2026 slowlyRecord contributors
+
+This product includes third-party material listed below. The notices are
+provided for attribution and compliance; they do not re-license the
+third-party material under this project's Apache-2.0 license.
+
+--------------------------------------------------------------------------
+1. Chinese poem English translations
+--------------------------------------------------------------------------
+
+Source: chinese-poems.com
+Compiled via: https://github.com/BoogeeDoo/chinese-poetries-english-translation-json
+Used in: public/datafile/poetry/*.json (entries whose translationSource
+         starts with "chinese-poems.com/")
+Coverage: 64 poems
+
+The translations were compiled from the public chinese-poems.com website.
+The original pages do not name individual translators. The upstream JSON
+repository is MIT-licensed, but that license covers the repository
+compilation only; it does not grant rights to the underlying translations.
+This project therefore does not re-license these translations.
+
+If you are a rights holder and want a translation removed, please open an
+issue in this repository. Entries can be removed by deleting the affected
+poems' `translation` and `translationSource` fields in
+public/datafile/poetry/*.json.
+
+Upstream license notice:
+
+MIT License
+
+Copyright (c) 2020 BoogeeDoo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
