@@ -40,6 +40,8 @@ export type WordBankType =
   | 'dev-status'       // 开发状态短句
   | 'dev-debugging'    // 程序员排 bug 与性能问题
   | 'dev-reading'      // 程序员看文档/浏览技术站点
+  | 'dev-discussion'   // 程序员技术讨论/方案权衡
+  | 'sentence-patterns' // 英语典型句式与场景句型
   | 'shopping'         // 日常购物
   | 'transport'        // 日常交通出行
   | 'dining'           // 日常吃饭点餐
@@ -127,7 +129,9 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'dev-phrases', name: '程序员场景短句', description: '站会、PR 评审、沟通协作等真实工作场景常用英文短句', wordCount: 190, language: 'en' },
   { id: 'dev-status', name: '开发状态短句', description: 'CI、测试、构建、发布等开发状态常用英文表述', wordCount: 118, language: 'en' },
   { id: 'dev-debugging', name: '排 bug 与性能', description: '排查 bug、定位性能瓶颈、线上问题复盘的常用英文表达', wordCount: 193, language: 'en' },
-  { id: 'dev-reading', name: '看文档与查资料', description: '读 README、看 API 文档、逛 Stack Overflow 与 GitHub 的常用短句', wordCount: 104, language: 'en' },
+  { id: 'dev-reading', name: '看文档与查资料', description: '读 README、看 API 文档、逛 Stack Overflow 与 GitHub 的常用短句', wordCount: 164, language: 'en' },
+  { id: 'dev-discussion', name: '技术讨论与方案权衡', description: '提问求助、描述问题、方案取舍、代码评审、架构讨论与线上复盘的常用英文表达', wordCount: 119, language: 'en' },
+  { id: 'sentence-patterns', name: '典型句式与场景句型', description: '日常生活、旅行、购物、就医、职场等场景的高频句式，附中文翻译与句型说明', wordCount: 264, language: 'en' },
   { id: 'shopping', name: '日常购物', description: '结账、退换货、优惠券、快递与售后等购物场景常用英文短句', wordCount: 86, language: 'en' },
   { id: 'transport', name: '日常交通出行', description: '地铁公交、打车、坐飞机、读路牌等出行场景常用英文短句', wordCount: 105, language: 'en' },
   { id: 'dining', name: '日常吃饭点餐', description: '堂食点单、打包外带、过敏说明、结账等就餐场景常用英文短句', wordCount: 97, language: 'en' },
@@ -142,18 +146,18 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'es-a2', name: '西语 A2', description: '西班牙语 CEFR A2 级核心词汇（西班牙语）', wordCount: 749, language: 'es' },
   { id: 'fr-a1', name: '法语 A1', description: '法语 CEFR A1 级核心词汇（法语）', wordCount: 514, language: 'fr' },
   { id: 'fr-a2', name: '法语 A2', description: '法语 CEFR A2 级核心词汇（法语）', wordCount: 799, language: 'fr' },
-  { id: 'ja-common-phrases', name: '日语常用短语', description: '日语日常高频短语与寒暄表达（日语）', wordCount: 98, language: 'ja' },
-  { id: 'ja-collocations', name: '日语固定搭配', description: '日语常用句型与语法搭配（日语）', wordCount: 77, language: 'ja' },
-  { id: 'ja-sentences', name: '日语常用句子', description: '日语日常场景实用句子（日语）', wordCount: 71, language: 'ja' },
-  { id: 'ru-common-phrases', name: '俄语常用短语', description: '俄语日常高频短语与寒暄表达（俄语）', wordCount: 98, language: 'ru' },
-  { id: 'ru-collocations', name: '俄语固定搭配', description: '俄语常用动词短语与语法搭配（俄语）', wordCount: 86, language: 'ru' },
-  { id: 'ru-sentences', name: '俄语常用句子', description: '俄语日常场景实用句子（俄语）', wordCount: 56, language: 'ru' },
-  { id: 'es-common-phrases', name: '西语常用短语', description: '西班牙语日常高频短语与寒暄表达（西班牙语）', wordCount: 99, language: 'es' },
-  { id: 'es-collocations', name: '西语固定搭配', description: '西班牙语常用动词短语与语法搭配（西班牙语）', wordCount: 85, language: 'es' },
-  { id: 'es-sentences', name: '西语常用句子', description: '西班牙语日常场景实用句子（西班牙语）', wordCount: 58, language: 'es' },
-  { id: 'fr-common-phrases', name: '法语常用短语', description: '法语日常高频短语与寒暄表达（法语）', wordCount: 96, language: 'fr' },
-  { id: 'fr-collocations', name: '法语固定搭配', description: '法语常用动词短语与语法搭配（法语）', wordCount: 85, language: 'fr' },
-  { id: 'fr-sentences', name: '法语常用句子', description: '法语日常场景实用句子（法语）', wordCount: 58, language: 'fr' },
+  { id: 'ja-common-phrases', name: '日语常用短语', description: '日语日常高频短语、寒暄与生活场景表达（日语）', wordCount: 157, language: 'ja' },
+  { id: 'ja-collocations', name: '日语固定搭配', description: '日语常用句型、语法搭配与惯用表达（日语）', wordCount: 142, language: 'ja' },
+  { id: 'ja-sentences', name: '日语常用句子', description: '日语日常、旅行、就医、职场等场景实用句子（日语）', wordCount: 167, language: 'ja' },
+  { id: 'ru-common-phrases', name: '俄语常用短语', description: '俄语日常高频短语、寒暄与生活场景表达（俄语）', wordCount: 204, language: 'ru' },
+  { id: 'ru-collocations', name: '俄语固定搭配', description: '俄语常用动词短语、语法搭配与连接表达（俄语）', wordCount: 179, language: 'ru' },
+  { id: 'ru-sentences', name: '俄语常用句子', description: '俄语日常、旅行、就医、职场等场景实用句子（俄语）', wordCount: 135, language: 'ru' },
+  { id: 'es-common-phrases', name: '西语常用短语', description: '西班牙语日常高频短语、寒暄与生活场景表达（西班牙语）', wordCount: 220, language: 'es' },
+  { id: 'es-collocations', name: '西语固定搭配', description: '西班牙语常用动词短语、语法搭配与连接表达（西班牙语）', wordCount: 149, language: 'es' },
+  { id: 'es-sentences', name: '西语常用句子', description: '西班牙语日常、旅行、就医、职场等场景实用句子（西班牙语）', wordCount: 136, language: 'es' },
+  { id: 'fr-common-phrases', name: '法语常用短语', description: '法语日常高频短语、寒暄与生活场景表达（法语）', wordCount: 213, language: 'fr' },
+  { id: 'fr-collocations', name: '法语固定搭配', description: '法语常用动词短语、语法搭配与连接表达（法语）', wordCount: 166, language: 'fr' },
+  { id: 'fr-sentences', name: '法语常用句子', description: '法语日常、旅行、就医、职场等场景实用句子（法语）', wordCount: 135, language: 'fr' },
 ];
 
 // 远程词库 CDN（完整词库不进 public/，超大体量词库走远程按需下载；

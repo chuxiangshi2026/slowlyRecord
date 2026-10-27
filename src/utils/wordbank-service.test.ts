@@ -43,6 +43,7 @@ describe('wordbank-service', () => {
         'phrasal-verbs', 'collocations', 'idioms', 'common-phrases',
         'oral-basic', 'oral-intermediate', 'oral-advanced', 'movie-lines',
         'tech-vocab', 'dev-phrases', 'dev-status', 'dev-debugging', 'dev-reading',
+        'dev-discussion', 'sentence-patterns',
         'shopping', 'transport', 'dining', 'famous-quotes', 'jlpt-n5',
         'jlpt-n4', 'jlpt-n3', 'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
         'ja-common-phrases', 'ja-collocations', 'ja-sentences',

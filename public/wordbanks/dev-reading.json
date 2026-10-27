@@ -414,5 +414,245 @@
   {
     "word": "Rollback plan",
     "explains": "回滚方案"
+  },
+  {
+    "word": "This section explains how authentication works.",
+    "explains": "本节说明认证如何工作。"
+  },
+  {
+    "word": "The following example shows a basic request.",
+    "explains": "下面的示例展示一个基本请求。"
+  },
+  {
+    "word": "Replace the placeholder with your own key.",
+    "explains": "用你自己的 key 替换占位符。"
+  },
+  {
+    "word": "The parameter is optional and defaults to false.",
+    "explains": "该参数可选，默认 false。"
+  },
+  {
+    "word": "Pass the value as a string.",
+    "explains": "以字符串形式传值。"
+  },
+  {
+    "word": "The function returns a promise.",
+    "explains": "该函数返回 Promise。"
+  },
+  {
+    "word": "This method mutates the original array.",
+    "explains": "该方法会修改原数组。"
+  },
+  {
+    "word": "The callback is invoked once per item.",
+    "explains": "回调对每一项调用一次。"
+  },
+  {
+    "word": "This is only supported in modern browsers.",
+    "explains": "仅现代浏览器支持。"
+  },
+  {
+    "word": "The API is rate-limited.",
+    "explains": "该 API 有速率限制。"
+  },
+  {
+    "word": "Requests must include an auth header.",
+    "explains": "请求必须带认证头。"
+  },
+  {
+    "word": "The response is cached for 60 seconds.",
+    "explains": "响应缓存 60 秒。"
+  },
+  {
+    "word": "Errors are returned as JSON.",
+    "explains": "错误以 JSON 返回。"
+  },
+  {
+    "word": "See the example folder for a full setup.",
+    "explains": "完整配置见 example 目录。"
+  },
+  {
+    "word": "Check the troubleshooting section first.",
+    "explains": "先看故障排查章节。"
+  },
+  {
+    "word": "This guide assumes basic knowledge of Git.",
+    "explains": "本指南假定你懂 Git 基础。"
+  },
+  {
+    "word": "You can skip this step if…",
+    "explains": "如果……可以跳过这一步。"
+  },
+  {
+    "word": "Make sure the port is not in use.",
+    "explains": "确保端口没被占用。"
+  },
+  {
+    "word": "Restart the server after changing the config.",
+    "explains": "改配置后重启服务。"
+  },
+  {
+    "word": "The command prints the current version.",
+    "explains": "该命令打印当前版本。"
+  },
+  {
+    "word": "Run the tests before opening a PR.",
+    "explains": "开 PR 前先跑测试。"
+  },
+  {
+    "word": "The docs are generated from the source.",
+    "explains": "文档由源码生成。"
+  },
+  {
+    "word": "The comment above the function explains the logic.",
+    "explains": "函数上方的注释解释了逻辑。"
+  },
+  {
+    "word": "The inline comment marks a TODO.",
+    "explains": "行内注释标了 TODO。"
+  },
+  {
+    "word": "This snippet is copy-paste ready.",
+    "explains": "这段代码可直接复制使用。"
+  },
+  {
+    "word": "The code sample is out of date.",
+    "explains": "代码示例过时了。"
+  },
+  {
+    "word": "The example omits error handling.",
+    "explains": "示例省略了错误处理。"
+  },
+  {
+    "word": "This is a simplified version of the real code.",
+    "explains": "这是真实代码的简化版。"
+  },
+  {
+    "word": "The blog post walks through the design.",
+    "explains": "这篇博客讲解了设计。"
+  },
+  {
+    "word": "The author compares three approaches.",
+    "explains": "作者比较了三种方案。"
+  },
+  {
+    "word": "The benchmark results are at the bottom.",
+    "explains": "基准测试结果在文末。"
+  },
+  {
+    "word": "The article links to the original paper.",
+    "explains": "文章链接到原始论文。"
+  },
+  {
+    "word": "The newsletter covers weekly releases.",
+    "explains": "邮件简报汇总每周发布。"
+  },
+  {
+    "word": "I found this on Hacker News.",
+    "explains": "我在 Hacker News 上看到的。"
+  },
+  {
+    "word": "The discussion in the comments is worth reading.",
+    "explains": "评论区的讨论值得一看。"
+  },
+  {
+    "word": "The thread has some useful benchmarks.",
+    "explains": "这个帖子有些有用的基准数据。"
+  },
+  {
+    "word": "The video is a good introduction.",
+    "explains": "这个视频是很好的入门。"
+  },
+  {
+    "word": "Skip to 12:30 for the demo.",
+    "explains": "演示从 12:30 开始（可跳过前面）。"
+  },
+  {
+    "word": "The slides are available online.",
+    "explains": "幻灯片可以在线获取。"
+  },
+  {
+    "word": "Search the error message in quotes.",
+    "explains": "用引号搜索报错信息。"
+  },
+  {
+    "word": "Add the site name to narrow the results.",
+    "explains": "加上站点名缩小结果范围。"
+  },
+  {
+    "word": "The first result is usually the official docs.",
+    "explains": "第一个结果通常是官方文档。"
+  },
+  {
+    "word": "Check the date before trusting the answer.",
+    "explains": "采信答案前先看日期。"
+  },
+  {
+    "word": "This answer is outdated.",
+    "explains": "这个答案过时了。"
+  },
+  {
+    "word": "The accepted answer still works.",
+    "explains": "采纳的答案仍然有效。"
+  },
+  {
+    "word": "Read the comments for caveats.",
+    "explains": "看评论里的注意事项。"
+  },
+  {
+    "word": "The version matters here.",
+    "explains": "这里版本很关键。"
+  },
+  {
+    "word": "This applies to v2 and above.",
+    "explains": "适用于 v2 及以上。"
+  },
+  {
+    "word": "The behavior changed in v3.",
+    "explains": "行为在 v3 变了。"
+  },
+  {
+    "word": "The old API is still supported.",
+    "explains": "旧 API 仍受支持。"
+  },
+  {
+    "word": "Use the stable channel for production.",
+    "explains": "生产环境用稳定版通道。"
+  },
+  {
+    "word": "Nightly builds may be unstable.",
+    "explains": "每夜构建可能不稳定。"
+  },
+  {
+    "word": "Check the release channel before installing.",
+    "explains": "安装前确认发布通道。"
+  },
+  {
+    "word": "The issue tracker is the best place to ask.",
+    "explains": "issue 区最适合提问。"
+  },
+  {
+    "word": "Search before opening a new thread.",
+    "explains": "开新帖前先搜索。"
+  },
+  {
+    "word": "The wiki has a FAQ.",
+    "explains": "Wiki 有常见问题。"
+  },
+  {
+    "word": "The forum is more active than the mailing list.",
+    "explains": "论坛比邮件列表活跃。"
+  },
+  {
+    "word": "The maintainers respond quickly.",
+    "explains": "维护者回复很快。"
+  },
+  {
+    "word": "Star the repo if you find it useful.",
+    "explains": "觉得有用就点个 star。"
+  },
+  {
+    "word": "Watch releases to get notified.",
+    "explains": "关注 release 获取通知。"
   }
 ]

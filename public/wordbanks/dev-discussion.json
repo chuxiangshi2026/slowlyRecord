@@ -1,0 +1,478 @@
+[
+  {
+    "word": "I'm stuck on this error. Any ideas?",
+    "explains": "我卡在这个报错上了，有什么思路吗？【提问】"
+  },
+  {
+    "word": "Has anyone run into this before?",
+    "explains": "有人遇到过这个吗？【提问】run into 遇到"
+  },
+  {
+    "word": "I could use a second pair of eyes on this.",
+    "explains": "这个需要人帮我看一眼。【求助】a second pair of eyes 帮忙复核"
+  },
+  {
+    "word": "What am I missing here?",
+    "explains": "我漏了什么？【提问】"
+  },
+  {
+    "word": "Can someone point me in the right direction?",
+    "explains": "谁能给我指个方向？【求助】point sb in the right direction"
+  },
+  {
+    "word": "Is there a known workaround for this?",
+    "explains": "有已知的临时方案吗？【提问】workaround 临时绕过方案"
+  },
+  {
+    "word": "I've tried X and Y, but neither worked.",
+    "explains": "我试了 X 和 Y，都不行。【描述尝试】neither 两者都不"
+  },
+  {
+    "word": "Here's a minimal reproduction.",
+    "explains": "这是最小复现。【提交问题】minimal reproduction 最小复现"
+  },
+  {
+    "word": "I've attached the logs below.",
+    "explains": "日志见下。【提交问题】attach 附上"
+  },
+  {
+    "word": "Any pointers would be appreciated.",
+    "explains": "欢迎指点。【求助】pointer 提示/建议"
+  },
+  {
+    "word": "Would you mind taking a look when you get a chance?",
+    "explains": "有空能看一下吗？【请求】委婉请求"
+  },
+  {
+    "word": "Could you elaborate on that?",
+    "explains": "能详细说说吗？【澄清】elaborate on 详细说明"
+  },
+  {
+    "word": "What's the reasoning behind this approach?",
+    "explains": "这个方案背后的考虑是什么？【讨论】reasoning 思路"
+  },
+  {
+    "word": "Is this expected behavior or a bug?",
+    "explains": "这是预期行为还是 bug？【讨论】"
+  },
+  {
+    "word": "Am I using this API correctly?",
+    "explains": "我这个 API 用法对吗？【提问】"
+  },
+  {
+    "word": "It works locally but fails in CI.",
+    "explains": "本地正常，CI 失败。【描述问题】"
+  },
+  {
+    "word": "This only happens under load.",
+    "explains": "只在高负载时出现。【描述问题】under load 有负载时"
+  },
+  {
+    "word": "The issue is intermittent.",
+    "explains": "问题是间歇性的。【描述问题】intermittent 时有时无"
+  },
+  {
+    "word": "I can reproduce it every time.",
+    "explains": "我每次都能复现。【描述问题】reproduce 复现"
+  },
+  {
+    "word": "It started happening after the last deploy.",
+    "explains": "上次发布后开始出现。【描述问题】"
+  },
+  {
+    "word": "The error message is misleading.",
+    "explains": "报错信息有误导性。【描述问题】misleading 误导"
+  },
+  {
+    "word": "It fails silently.",
+    "explains": "它静默失败了。【描述问题】silently 没有任何提示"
+  },
+  {
+    "word": "The root cause is a race condition.",
+    "explains": "根因是竞态条件。【复盘】race condition"
+  },
+  {
+    "word": "It's a regression from the previous release.",
+    "explains": "这是上个版本的回归。【描述问题】regression 回归缺陷"
+  },
+  {
+    "word": "The behavior differs between platforms.",
+    "explains": "不同平台行为不一致。【描述问题】differ between"
+  },
+  {
+    "word": "Memory usage keeps climbing.",
+    "explains": "内存占用持续上涨。【描述问题】climb 攀升"
+  },
+  {
+    "word": "The request times out after 30 seconds.",
+    "explains": "请求 30 秒后超时。【描述问题】time out"
+  },
+  {
+    "word": "One option is to cache the result.",
+    "explains": "一个方案是缓存结果。【提方案】"
+  },
+  {
+    "word": "Alternatively, we could batch the requests.",
+    "explains": "或者，我们可以批量请求。【提方案】alternatively 另一种选择"
+  },
+  {
+    "word": "The trade-off is complexity versus performance.",
+    "explains": "权衡是复杂度与性能。【权衡】trade-off 取舍"
+  },
+  {
+    "word": "This approach scales better.",
+    "explains": "这个方案扩展性更好。【评价方案】scale 扩展"
+  },
+  {
+    "word": "It's simpler but less flexible.",
+    "explains": "更简单但不够灵活。【权衡】"
+  },
+  {
+    "word": "We could start with the simplest solution.",
+    "explains": "我们可以从最简单的方案开始。【提方案】"
+  },
+  {
+    "word": "Let's weigh the pros and cons.",
+    "explains": "我们权衡一下利弊。【讨论】weigh pros and cons"
+  },
+  {
+    "word": "The downside is the extra latency.",
+    "explains": "缺点是额外延迟。【权衡】downside 缺点"
+  },
+  {
+    "word": "It adds some overhead but improves reliability.",
+    "explains": "增加开销但提升可靠性。【权衡】overhead 额外开销"
+  },
+  {
+    "word": "I'd lean towards option B.",
+    "explains": "我倾向于方案 B。【表态】lean towards 倾向"
+  },
+  {
+    "word": "We should benchmark before deciding.",
+    "explains": "决定前应该做基准测试。【建议】benchmark 基准测试"
+  },
+  {
+    "word": "This keeps the door open for future changes.",
+    "explains": "这为将来改动留了余地。【评价方案】keep the door open"
+  },
+  {
+    "word": "Let's not over-engineer it.",
+    "explains": "别过度设计。【建议】over-engineer"
+  },
+  {
+    "word": "We can revisit this if it becomes a problem.",
+    "explains": "真成问题再回来看。【决策】revisit 之后再讨论"
+  },
+  {
+    "word": "LGTM, just a couple of nits.",
+    "explains": "我这边没问题，就几个小点。【评审】LGTM = Looks good to me；nit 小毛病"
+  },
+  {
+    "word": "Could you split this into smaller PRs?",
+    "explains": "能拆成更小的 PR 吗？【评审】split into"
+  },
+  {
+    "word": "This adds unnecessary complexity.",
+    "explains": "这增加了不必要的复杂度。【评审】"
+  },
+  {
+    "word": "We already have a helper for this.",
+    "explains": "我们已经有现成的工具函数了。【评审】helper 辅助函数"
+  },
+  {
+    "word": "Nit: this variable name is misleading.",
+    "explains": "小问题：这个变量名有误导性。【评审】nit 非阻塞小意见"
+  },
+  {
+    "word": "Should this be behind a feature flag?",
+    "explains": "这个应该放在功能开关后面吗？【评审】feature flag 功能开关"
+  },
+  {
+    "word": "What happens if the input is null?",
+    "explains": "输入为 null 会怎样？【评审】边界情况提问"
+  },
+  {
+    "word": "Could you add a test for the edge case?",
+    "explains": "能给边界情况补个测试吗？【评审】edge case 边界情况"
+  },
+  {
+    "word": "I'd rename this for clarity.",
+    "explains": "为了清晰我会改个名。【评审】for clarity 为了清楚"
+  },
+  {
+    "word": "This duplicates logic in another module.",
+    "explains": "这重复了另一个模块的逻辑。【评审】duplicate 重复"
+  },
+  {
+    "word": "Can we avoid the breaking change?",
+    "explains": "能避免破坏性变更吗？【评审】breaking change"
+  },
+  {
+    "word": "Please update the docs as well.",
+    "explains": "文档也请更新。【评审】"
+  },
+  {
+    "word": "Blocking on the failing test.",
+    "explains": "失败的测试是阻塞项。【评审】blocking 阻塞"
+  },
+  {
+    "word": "Approved with minor comments.",
+    "explains": "通过，有小意见。【评审】"
+  },
+  {
+    "word": "Just to make sure I understand…",
+    "explains": "确认一下我的理解……【对齐】"
+  },
+  {
+    "word": "So the plan is to…",
+    "explains": "所以计划是……【对齐】复述确认"
+  },
+  {
+    "word": "Let me restate that in my own words.",
+    "explains": "我用自己的话复述一下。【对齐】restate 重述"
+  },
+  {
+    "word": "Are we talking about the same thing?",
+    "explains": "我们说的是同一件事吗？【对齐】"
+  },
+  {
+    "word": "That's not quite what I meant.",
+    "explains": "我不是这个意思。【澄清】"
+  },
+  {
+    "word": "Can we clarify the scope first?",
+    "explains": "能先明确范围吗？【对齐】scope 范围"
+  },
+  {
+    "word": "What's out of scope here?",
+    "explains": "哪些不在范围内？【对齐】out of scope"
+  },
+  {
+    "word": "I want to make sure we're aligned.",
+    "explains": "我想确认我们达成一致。【对齐】aligned 对齐"
+  },
+  {
+    "word": "Could you give an example?",
+    "explains": "能举个例子吗？【澄清】"
+  },
+  {
+    "word": "Let's define the acceptance criteria.",
+    "explains": "我们定义一下验收标准。【对齐】acceptance criteria"
+  },
+  {
+    "word": "I see it differently.",
+    "explains": "我的看法不同。【分歧】"
+  },
+  {
+    "word": "I'm not convinced by that argument.",
+    "explains": "这个论点说服不了我。【分歧】convinced 被说服"
+  },
+  {
+    "word": "That assumes X, which may not hold.",
+    "explains": "那假设了 X，而 X 未必成立。【分歧】hold 成立"
+  },
+  {
+    "word": "With respect, I think that's risky.",
+    "explains": "恕我直言，我觉得这有风险。【分歧】with respect 礼貌开场"
+  },
+  {
+    "word": "Let's look at the data.",
+    "explains": "我们看数据吧。【讨论】"
+  },
+  {
+    "word": "Have we considered the edge cases?",
+    "explains": "考虑过边界情况吗？【讨论】"
+  },
+  {
+    "word": "I'd push back on that.",
+    "explains": "我对此有异议。【分歧】push back 反对"
+  },
+  {
+    "word": "We're optimizing the wrong thing.",
+    "explains": "我们在优化错误的东西。【分歧】optimize 优化"
+  },
+  {
+    "word": "The evidence doesn't support that.",
+    "explains": "证据不支持这个结论。【分歧】evidence 证据"
+  },
+  {
+    "word": "I'm open to being persuaded.",
+    "explains": "我愿意被说服。【分歧】persuade 说服"
+  },
+  {
+    "word": "Can we test that assumption?",
+    "explains": "能验证那个假设吗？【讨论】assumption 假设"
+  },
+  {
+    "word": "Let's agree on the goal first.",
+    "explains": "先就目标达成一致。【对齐】"
+  },
+  {
+    "word": "What problem are we actually solving?",
+    "explains": "我们到底在解决什么问题？【架构讨论】"
+  },
+  {
+    "word": "This creates tight coupling.",
+    "explains": "这造成了紧耦合。【架构讨论】tight coupling"
+  },
+  {
+    "word": "The abstraction leaks.",
+    "explains": "这个抽象有泄漏。【架构讨论】leaky abstraction"
+  },
+  {
+    "word": "We need to define clear boundaries.",
+    "explains": "需要定义清晰的边界。【架构讨论】boundary 边界"
+  },
+  {
+    "word": "It's a single point of failure.",
+    "explains": "这是单点故障。【架构讨论】single point of failure"
+  },
+  {
+    "word": "How does this affect backward compatibility?",
+    "explains": "这如何影响向后兼容？【架构讨论】backward compatibility"
+  },
+  {
+    "word": "The migration path needs to be planned.",
+    "explains": "迁移路径需要规划。【架构讨论】migration path"
+  },
+  {
+    "word": "Let's keep the interface stable.",
+    "explains": "保持接口稳定。【架构讨论】"
+  },
+  {
+    "word": "This belongs in the adapter layer.",
+    "explains": "这应该放在适配层。【架构讨论】adapter layer"
+  },
+  {
+    "word": "We should avoid premature optimization.",
+    "explains": "应避免过早优化。【架构讨论】premature optimization"
+  },
+  {
+    "word": "The dependency is unmaintained.",
+    "explains": "这个依赖没人维护了。【架构讨论】unmaintained"
+  },
+  {
+    "word": "Can we solve this without a new library?",
+    "explains": "能不用新库解决吗？【架构讨论】"
+  },
+  {
+    "word": "We're seeing elevated error rates.",
+    "explains": "错误率升高。【线上问题】elevated 偏高的"
+  },
+  {
+    "word": "The service is degraded.",
+    "explains": "服务降级了。【线上问题】degraded"
+  },
+  {
+    "word": "Let's roll back the last deploy.",
+    "explains": "回滚上次发布。【线上问题】roll back"
+  },
+  {
+    "word": "I'm investigating the root cause.",
+    "explains": "我在查根因。【线上问题】root cause"
+  },
+  {
+    "word": "The incident is contained.",
+    "explains": "事故已控制。【线上问题】contained 受控"
+  },
+  {
+    "word": "We need a postmortem.",
+    "explains": "需要复盘。【线上问题】postmortem 事后复盘"
+  },
+  {
+    "word": "This was caused by a config change.",
+    "explains": "是配置变更引起的。【线上问题】"
+  },
+  {
+    "word": "Let's add monitoring for this.",
+    "explains": "给这个加监控。【线上问题】monitoring"
+  },
+  {
+    "word": "It's a false alarm.",
+    "explains": "是误报。【线上问题】false alarm"
+  },
+  {
+    "word": "We're back to normal.",
+    "explains": "已恢复正常。【线上问题】"
+  },
+  {
+    "word": "Let's summarize the key points.",
+    "explains": "总结一下要点。【收尾】"
+  },
+  {
+    "word": "The next step is to write a proposal.",
+    "explains": "下一步是写方案。【收尾】proposal 提案"
+  },
+  {
+    "word": "I'll create a tracking issue.",
+    "explains": "我建个跟踪 issue。【收尾】tracking issue"
+  },
+  {
+    "word": "Who owns this?",
+    "explains": "谁负责？【收尾】own 负责"
+  },
+  {
+    "word": "What's the ETA?",
+    "explains": "预计什么时候完成？【收尾】ETA 预计完成时间"
+  },
+  {
+    "word": "Let's time-box this to one week.",
+    "explains": "这个限定一周。【收尾】time-box 限时"
+  },
+  {
+    "word": "We can defer this to the next cycle.",
+    "explains": "可以推到下个周期。【收尾】defer 推迟"
+  },
+  {
+    "word": "Any blockers?",
+    "explains": "有阻塞吗？【收尾】blocker 阻塞项"
+  },
+  {
+    "word": "Sounds like we have a plan.",
+    "explains": "看来我们有计划了。【收尾】"
+  },
+  {
+    "word": "Thanks, everyone — good discussion.",
+    "explains": "谢谢大家，讨论很有用。【收尾】"
+  },
+  {
+    "word": "Thanks for the detailed write-up.",
+    "explains": "谢谢详细的说明。【社区】write-up 书面总结"
+  },
+  {
+    "word": "Great find — that fixed it.",
+    "explains": "找到得好，问题解决了。【社区】"
+  },
+  {
+    "word": "Marking this as resolved.",
+    "explains": "标记为已解决。【社区】resolved"
+  },
+  {
+    "word": "Closing in favor of #123.",
+    "explains": "合并到 #123 关闭。【社区】in favor of 以……为准"
+  },
+  {
+    "word": "Sorry for the noise.",
+    "explains": "抱歉打扰。【社区】noise 干扰信息"
+  },
+  {
+    "word": "Please open a new issue for that.",
+    "explains": "请另开 issue。【社区】"
+  },
+  {
+    "word": "This is a duplicate of #456.",
+    "explains": "这跟 #456 重复。【社区】duplicate 重复项"
+  },
+  {
+    "word": "Happy to submit a PR.",
+    "explains": "我可以提 PR。【社区】"
+  },
+  {
+    "word": "I'll take a look this week.",
+    "explains": "我这周看看。【社区】"
+  },
+  {
+    "word": "Thanks for the quick turnaround.",
+    "explains": "谢谢这么快处理。【社区】turnaround 处理周期"
+  }
+]
