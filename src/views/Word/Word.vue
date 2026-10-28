@@ -6,27 +6,45 @@
     <template v-if="wordsStore.count === 0">
       <p class="empty-tip">还没有单词，从下面任意一种方式开始收集 👇</p>
       <div class="guide-cards">
-        <div class="guide-card" @click="showCollectTip('划词添加', '在任意应用选中文字后呼出 uTools，选择「划词添加」即可收入词库')">
-          <span class="g-icon">✍️</span>
-          <div>
-            <div class="g-title">划词添加</div>
-            <div class="g-desc">任意界面选中文字，呼出 uTools 一键收入词库</div>
+        <template v-if="isWebEnv">
+          <div class="guide-card" @click="emptyAddVisible = true">
+            <span class="g-icon">✍️</span>
+            <div>
+              <div class="g-title">输入或粘贴单词</div>
+              <div class="g-desc">自动翻译并加入词库，可一次粘贴多个</div>
+            </div>
           </div>
-        </div>
-        <div class="guide-card" @click="showCollectTip('截图添加', '截图或复制图片后呼出 uTools，选择「截图添加」，OCR 识别批量收入词库')">
-          <span class="g-icon">📷</span>
-          <div>
-            <div class="g-title">截图添加</div>
-            <div class="g-desc">截图后呼出 uTools「截图添加」，OCR 批量收入</div>
+          <div class="guide-card" @click="openImportFromWordBank">
+            <span class="g-icon">📚</span>
+            <div>
+              <div class="g-title">导入内置词库</div>
+              <div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div>
+            </div>
           </div>
-        </div>
-        <div class="guide-card" @click="openImportFromWordBank">
-          <span class="g-icon">📚</span>
-          <div>
-            <div class="g-title">导入内置词库</div>
-            <div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div>
+        </template>
+        <template v-else>
+          <div class="guide-card" @click="showCollectTip('划词添加', '在任意应用选中文字后呼出 uTools，选择「划词添加」即可收入词库')">
+            <span class="g-icon">✍️</span>
+            <div>
+              <div class="g-title">划词添加</div>
+              <div class="g-desc">任意界面选中文字，呼出 uTools 一键收入词库</div>
+            </div>
           </div>
-        </div>
+          <div class="guide-card" @click="showCollectTip('截图添加', '截图或复制图片后呼出 uTools，选择「截图添加」，OCR 识别批量收入词库')">
+            <span class="g-icon">📷</span>
+            <div>
+              <div class="g-title">截图添加</div>
+              <div class="g-desc">截图后呼出 uTools「截图添加」，OCR 批量收入</div>
+            </div>
+          </div>
+          <div class="guide-card" @click="openImportFromWordBank">
+            <span class="g-icon">📚</span>
+            <div>
+              <div class="g-title">导入内置词库</div>
+              <div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div>
+            </div>
+          </div>
+        </template>
       </div>
       <div class="empty-actions">
         <el-button size="small" @click="emptyAddVisible = !emptyAddVisible">手动添加</el-button>
@@ -272,6 +290,7 @@
           </el-icon>
           新建词库
         </el-button>
+        <el-button @click="openImportFromWordBank">导入词库</el-button>
       </div>
     </div>
   </el-dialog>
@@ -441,10 +460,10 @@ import {
 import FilterListIcon from '@/components/icons/FilterListIcon.vue';
 import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
-import {getSetDb, putSetDbWithRetry} from '@/utils/user-set-db-util.ts';
+import {getSetDb, updateSetDbWithRetry} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/stats';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
-import {isUtools, isElectron} from '@/adapters/platform';
+import {isUtools, isElectron, isWeb} from '@/adapters/platform';
 import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut} from '@/adapters/window';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount} from '@/utils/focus-lock';
 import {
@@ -478,6 +497,7 @@ const wordsStore = useWordsStore();
 const uiStore = useUiStore();
 const router = useRouter();
 const route = useRoute();
+const isWebEnv = isWeb();
 
 // 如果 URL 携带 openFocus=1 参数（从听写等其他页面跳转过来），自动打开专注模式
 const focusModeParam = ref(route.query.focusMode as string || '');
@@ -515,10 +535,31 @@ const filteredImportBankOptions = computed(() =>
 const filteredCreateBankOptions = computed(() =>
   wordBankOptions.filter(b => b.language === newWordBankForm.value.language)
 )
-// 切换语言时清空已选的待导入词库，避免跨语言残留
-watch(importLang, () => { selectedImportBank.value = '' })
+// 切换语言时清空不匹配的待导入词库（深链会先设语言再预选，同语言时保留）
+watch(importLang, (lang) => {
+  const selected = WORDBANK_LIST.find(wb => wb.id === selectedImportBank.value)
+  if (selected && selected.language !== lang) selectedImportBank.value = ''
+})
 
 const drawerVisible = ref(false)
+
+/**
+ * 静态词库页 CTA：/#/word?builtin=cet4&from=seo
+ * 只打开导入预览并预选词库，必须由用户点「确认导入」，不能访问链接就写库。
+ */
+const applyBuiltinDeepLink = (): boolean => {
+  const raw = Array.isArray(route.query.builtin) ? route.query.builtin[0] : route.query.builtin
+  if (!raw) return false
+  const info = WORDBANK_LIST.find(wb => wb.id === raw)
+  if (!info) return false
+  importLang.value = info.language
+  selectedImportBank.value = info.id as WordBankType
+  wordBankSelectVisible.value = true
+  const { builtin: _builtin, ...rest } = route.query
+  void router.replace({ query: rest })
+  return true
+}
+watch(() => route.query.builtin, () => applyBuiltinDeepLink())
 
 // 全局「更多」抽屉（头部 ☰）发出的导入/导出指令在此执行
 watch(() => uiStore.pendingImportCommand, (req) => {
@@ -837,25 +878,14 @@ const stopIgnoreMousePoll = () => {
 };
 
 const updateFocusModeDoc = (updater: (focusMode: any) => void) => {
-  try {
-    const userSetDoc = getSetDb(true);
-    if (!userSetDoc) {
-      return;
-    }
-
+  void updateSetDbWithRetry((userSetDoc) => {
     const nextFocusMode = mergeFocusModeSettings(wordsStore.focusMode, userSetDoc.focusMode);
-
     updater(nextFocusMode);
-
-    if (nextFocusMode.pendingAction == null) {
-      delete nextFocusMode.pendingAction;
-    }
-
+    if (nextFocusMode.pendingAction == null) delete nextFocusMode.pendingAction;
     userSetDoc.focusMode = nextFocusMode;
-    putSetDbWithRetry(userSetDoc);
-  } catch (e) {
-    console.error('[focusModeDoc] 更新专注模式文档失败:', e);
-  }
+  }).then((ok) => {
+    if (!ok) console.error('[focusModeDoc] 更新专注模式文档失败');
+  });
 };
 
 const saveFocusModePendingAction = (type: string, payload?: any, at = Date.now()) => {
@@ -2118,22 +2148,18 @@ const openFocusMode = async (mode = '') => {
       startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
       setTimeout(() => { setupEdgeStick(); }, 500);
       setupMessageListener();
-      // 推送单词分片 + user-set 快照给子窗口 utools shim，然后显示
-      setTimeout(async () => {
-        try {
-          if (!focusWindow || focusWindow.isDestroyed?.()) return;
-          const docs = collectFocusDocsForChild(wordsStore.currentWordBankId || '');
-          await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
-          // 子窗口初始化早于快照推送（读到空数据），推送后触发其重载钩子补齐
-          await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
-          applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
-          api.focusWindowInvoke(winId, 'show', []);
-          setTimeout(pushFocusStyleToChild, 500);
-        } catch (e) {
-          // 延迟期间子窗口被关闭会导致 executeJS reject，静默忽略
-          console.warn('[openFocusMode] 子窗口初始化推送失败（窗口可能已关闭）', e);
-        }
-      }, 500);
+      // 创建 IPC 在页面加载完成后才返回，可直接推送单词分片 + user-set 快照
+      try {
+        if (!focusWindow || focusWindow.isDestroyed?.()) return;
+        const docs = collectFocusDocsForChild(wordsStore.currentWordBankId || '');
+        await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
+        await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
+        applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
+        api.focusWindowInvoke(winId, 'show', []);
+        setTimeout(pushFocusStyleToChild, 500);
+      } catch (e) {
+        console.warn('[openFocusMode] 子窗口初始化推送失败', e);
+      }
       return;
     }
     if (isUtools() && (window as any).utools?.createBrowserWindow) {
@@ -2762,8 +2788,9 @@ const handleImportCommand = (command: string) => {
   }
 };
 
-// 打开内置词库导入选择对话框（空白态与导入下拉共用）
+// 打开内置词库导入选择对话框（空白态、词库管理与导入下拉共用）
 const openImportFromWordBank = () => {
+  wordBankManagerVisible.value = false;
   // 语言筛选跟随当前词库
   importLang.value = (wordsStore.currentWordBank?.language as LanguageCode) || 'en';
   wordBankSelectVisible.value = true;
@@ -3307,6 +3334,9 @@ const ONBOARDED_KEY = 'slowlyrecord-onboarded'
 const showOnboarding = ref(false)
 
 onMounted(async () => {
+  // 静态词库页深链：直接展示导入预览并预选词库，不显示首启引导
+  if (applyBuiltinDeepLink()) return
+
   // 已引导过或词库已有数据 → 不再显示引导
   try {
     if (localStorage.getItem(ONBOARDED_KEY) === '1') return

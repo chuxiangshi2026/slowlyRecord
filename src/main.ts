@@ -24,6 +24,7 @@ import { initStats, trackRouterPageView, trackError, initErrorTracking } from '@
 import { registerScheduleTriggerHandler } from '@/utils/schedule-reminder'
 import { useWordsStore } from '@/stores/words'
 import {getDbAdapterAsync} from '@/adapters/db'
+import {getPlatform} from '@/adapters/platform'
 import {invalidateAppBgImageCache} from '@/utils/app-bg-db'
 
 const app = createApp(App)
@@ -150,18 +151,85 @@ router.afterEach((to) => {
     trackRouterPageView(to.fullPath);
 });
 
+/**
+ * 本地存储不可用时的明确阻断页。
+ *
+ * 此时继续挂载应用会让界面看起来正常、写入却静默失败，用户以为进度已保存；
+ * 对本地优先的工具来说这是数据丢失风险，因此宁可停在可解释的错误页。
+ */
+function renderStorageError(err: unknown) {
+  const root = document.querySelector('#app')
+  if (!root) return
+  const platform = getPlatform()
+  const isBrowser = platform === 'web'
+  const reason = isBrowser
+    ? '浏览器可能处于隐私模式、禁用了网站数据，或本地存储空间已满。'
+    : '本地数据目录可能不可写，或磁盘空间不足。'
+
+  const wrap = document.createElement('div')
+  wrap.setAttribute('role', 'alert')
+  wrap.style.cssText = [
+    'max-width:560px',
+    'margin:12vh auto 0',
+    'padding:28px 26px',
+    'border:1px solid #dbe6df',
+    'border-radius:14px',
+    'background:#fff',
+    'color:#2f3e39',
+    'font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif',
+    'box-shadow:0 12px 40px rgba(0,0,0,.08)',
+  ].join(';')
+
+  const title = document.createElement('h1')
+  title.textContent = '无法打开本地数据库'
+  title.style.cssText = 'margin:0 0 8px;font-size:20px;color:#52796f'
+  wrap.appendChild(title)
+
+  const desc = document.createElement('p')
+  desc.textContent = `${reason} 为避免学习进度悄悄丢失，慢记没有继续进入主界面。`
+  desc.style.cssText = 'margin:0 0 8px'
+  wrap.appendChild(desc)
+
+  const hint = document.createElement('p')
+  hint.textContent = isBrowser
+    ? '请允许本站保存数据（地址栏左侧的站点设置），或清理出存储空间后重试。'
+    : '请检查数据目录权限和磁盘空间后重试。'
+  hint.style.cssText = 'margin:0 0 18px;color:#60716a'
+  wrap.appendChild(hint)
+
+  const retry = document.createElement('button')
+  retry.type = 'button'
+  retry.textContent = '重新加载'
+  retry.style.cssText = [
+    'padding:8px 18px',
+    'border:0',
+    'border-radius:8px',
+    'background:#52796f',
+    'color:#fff',
+    'font-size:14px',
+    'cursor:pointer',
+  ].join(';')
+  retry.addEventListener('click', () => location.reload())
+  wrap.appendChild(retry)
+
+  const detail = document.createElement('p')
+  detail.textContent = String(err instanceof Error ? err.message : err || '').slice(0, 300)
+  detail.style.cssText = 'margin:16px 0 0;color:#909399;font-size:12px;word-break:break-word'
+  wrap.appendChild(detail)
+
+  root.replaceChildren(wrap)
+}
+
 // 初始化数据库适配器（必须完成后再挂载应用，避免组件在初始化前调用 getDbAdapter()）
 getDbAdapterAsync().then(() => {
   // console.info 不在生产构建的 pure 抹除名单内，保证打点可存活到生产
   console.info(`[启动耗时] 数据库适配器就绪: ${performance.now().toFixed(0)}ms`);
   app.mount('#app');
   console.info(`[启动耗时] 应用挂载完成: ${performance.now().toFixed(0)}ms`);
+  // 应用界面背景（CSS 变量 + body class）：pinia 从 localStorage 同步水合即可得设置，
+  // 自定义图片经 db 适配器读取（此时适配器已就绪，读取失败只影响背景）
+  useWordsStore().applyAppBg();
 }).catch((err) => {
   console.error('[App] 数据库适配器初始化失败:', err);
-  // 即使初始化失败也挂载应用，避免白屏
-  app.mount('#app');
-}).finally(() => {
-  // 应用界面背景（CSS 变量 + body class）：pinia 从 localStorage 同步水合即可得设置，
-  // 自定义图片经 db 适配器读取（此时适配器已就绪或降级为无背景，不影响启动）
-  useWordsStore().applyAppBg();
+  renderStorageError(err);
 });

@@ -19,6 +19,8 @@ import {
   trackError,
   submitFeedback,
   getStatsStatus,
+  initAttribution,
+  getAttribution,
 } from '@/utils/stats'
 
 /** 取出 fetch 收到的全部 umami 报文（过滤 getPluginVersion 等无 body 的调用） */
@@ -132,6 +134,31 @@ describe('stats（umami）', () => {
       config.UMAMI_STATS_CONFIG.websiteId = ''
       expect(getStatsStatus()).toBe('no-config')
       config.UMAMI_STATS_CONFIG.websiteId = 'test-website-id'
+    })
+  })
+
+  describe('首次来源归因', () => {
+    it('从 hash 前的查询参数记录第一次来源，后续不覆盖', () => {
+      ;(globalThis as any).window.location.search = '?from=seo&page=cet4'
+      expect(initAttribution()).toMatchObject({ source: 'seo', page: 'cet4' })
+
+      ;(globalThis as any).window.location.search = '?from=wechat&page=cet6'
+      expect(initAttribution()).toMatchObject({ source: 'seo', page: 'cet4' })
+      expect(getAttribution()?.source).toBe('seo')
+    })
+
+    it('非法来源不落库；launch 与 source.landing 携带归因', async () => {
+      ;(globalThis as any).window.location.search = '?from=<script>'
+      expect(initAttribution()).toBeNull()
+
+      ;(globalThis as any).window.location.search = '?utm_source=github&page=poem-tang_001'
+      await initStats()
+      const payloads = sentPayloads()
+      const launch = payloads.find(p => p.payload.name === 'app.launch')
+      expect(launch.payload.data.source).toBe('github')
+      expect(launch.payload.data.landingPage).toBe('poem-tang_001')
+      const landing = payloads.find(p => p.payload.name === 'source.landing')
+      expect(landing.payload.data).toEqual({ source: 'github', page: 'poem-tang_001' })
     })
   })
 

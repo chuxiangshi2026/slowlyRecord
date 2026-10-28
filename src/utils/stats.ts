@@ -181,6 +181,69 @@ function currentUrl(): string {
   return (window.location.hash || window.location.pathname || '/').replace(/^#/, '') || '/';
 }
 
+// ===== 首次来源归因（SEO / 分享链接） =====
+//
+// 静态页 CTA 形如 /?from=seo&page=cet4#/word?...：来源参数在 hash 之前，
+// 而 currentUrl() 只读 hash，单靠页面浏览会丢失归因，故单独落本地首次来源。
+
+const ATTRIBUTION_KEY = 'sr_first_attribution';
+
+export interface Attribution {
+  source: string;
+  page: string;
+  at: number;
+}
+
+const SLUG_RE = /^[a-zA-Z0-9_-]{1,32}$/;
+
+/** 读取已记录的首次来源；没有或数据损坏时返回 null */
+export function getAttribution(): Attribution | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage?.getItem(ATTRIBUTION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Attribution;
+    if (!SLUG_RE.test(parsed?.source || '')) return null;
+    return {
+      source: parsed.source,
+      page: SLUG_RE.test(parsed.page || '') ? parsed.page : '',
+      at: Number(parsed.at) || 0,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * 从落地 URL 记录首次来源（只记第一次，后续不覆盖）。
+ * @returns 当前生效的首次来源
+ */
+export function initAttribution(): Attribution | null {
+  if (typeof window === 'undefined') return null;
+  const existing = getAttribution();
+  if (existing) return existing;
+
+  let params: URLSearchParams;
+  try {
+    params = new URLSearchParams(window.location.search || '');
+  } catch {
+    return null;
+  }
+  const source = (params.get('utm_source') || params.get('from') || '').trim();
+  const page = (params.get('page') || '').trim();
+  if (!SLUG_RE.test(source)) return null;
+
+  const attribution: Attribution = {
+    source,
+    page: SLUG_RE.test(page) ? page : '',
+    at: Date.now(),
+  };
+  try {
+    window.localStorage?.setItem(ATTRIBUTION_KEY, JSON.stringify(attribution));
+  } catch { /* localStorage 不可用时本次会话仍可上报，只是不持久化 */ }
+  return attribution;
+}
+
 /** 上报启动事件：平台、插件版本、uTools 客户端版本与匿名安装 ID */
 async function reportAppLaunch(): Promise<void> {
   const platform = getPlatform();
@@ -189,10 +252,17 @@ async function reportAppLaunch(): Promise<void> {
     if (platform === 'utools') clientVersion = (window as any).utools.getAppVersion?.() || '';
   } catch { /* 忽略 */ }
   const appVersion = await getPluginVersion();
+  const attribution = getAttribution();
   send({
     url: currentUrl(),
     name: 'app.launch',
-    data: { platform, appVersion, clientVersion, installId: getInstallId() },
+    data: {
+      platform,
+      appVersion,
+      clientVersion,
+      installId: getInstallId(),
+      ...(attribution ? { source: attribution.source, landingPage: attribution.page } : {}),
+    },
   });
 }
 
@@ -296,6 +366,8 @@ export function trackRouterPageView(path: string): void {
 
 /** 初始化统计：启动事件 + 首页浏览。应用启动时调用一次 */
 export async function initStats(): Promise<void> {
+  // 归因先于启用判定落库：用户本次关闭统计、日后开启时，首次来源仍可回溯
+  const attribution = initAttribution();
   if (!shouldEnableStats()) {
     console.log('[统计] 当前环境未启用统计，跳过初始化');
     return;
@@ -305,6 +377,14 @@ export async function initStats(): Promise<void> {
     return;
   }
   await reportAppLaunch();
+  // 首次来源单独成事件，便于在 umami 直接看各渠道落地量，不必解析 app.launch 的 data
+  if (attribution) {
+    send({
+      url: currentUrl(),
+      name: 'source.landing',
+      data: { source: attribution.source, page: attribution.page },
+    });
+  }
   // 首页浏览延迟发送，等路由就绪
   setTimeout(() => trackPageView(), 1000);
 }

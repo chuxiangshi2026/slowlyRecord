@@ -59,8 +59,8 @@
             <div class="feature-item">
               <span class="feature-emoji">📸</span>
               <div class="feature-info">
-                <div class="feature-name">截图取词</div>
-                <div class="feature-desc">划词/截图自动翻译收集</div>
+                <div class="feature-name">{{ captureFeatureName }}</div>
+                <div class="feature-desc">{{ captureFeatureDesc }}</div>
               </div>
             </div>
           </div>
@@ -78,7 +78,10 @@
           <p class="slogan">开始你的记忆之旅吧</p>
 
           <div class="tips">
-            <p>💡 提示：在 uTools 输入框输入「划词添加」「截图添加」可快速收集单词</p>
+            <p>💡 提示：{{ usageTip }}</p>
+            <p class="privacy-tip">
+              <a href="privacy.html" target="_blank" rel="noopener">查看隐私说明</a>
+            </p>
           </div>
 
           <div class="screen-footer">
@@ -106,6 +109,8 @@ import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { importFromBuiltinWordBank } from '@/utils/wordbank-manager'
 import { useWordsStore } from '@/stores/words'
+import { isUtools, isWeb } from '@/adapters/platform'
+import { trackEvent, getAttribution } from '@/utils/stats'
 
 const props = defineProps<{
   modelValue: boolean
@@ -119,6 +124,24 @@ const emit = defineEmits<{
 const wordsStore = useWordsStore()
 const currentScreen = ref(0)
 const importing = ref('')
+
+const isWebEnv = isWeb()
+
+const captureFeatureName = computed(() => (isWebEnv ? '翻译加词' : '截图取词'))
+const captureFeatureDesc = computed(() =>
+  isWebEnv
+    ? '手动输入或导入单词，自动翻译后加入词库'
+    : '划词/截图自动翻译收集'
+)
+const usageTip = computed(() => {
+  if (isWebEnv) {
+    return '学习进度保存在当前浏览器；换设备时用「同步」生成同步码即可带走数据'
+  }
+  if (isUtools()) {
+    return '在 uTools 输入框输入「划词添加」「截图添加」可快速收集单词'
+  }
+  return '选中单词或截图后可快速加入词库'
+})
 
 const visible = computed({
   get: () => props.modelValue,
@@ -174,6 +197,10 @@ async function importBank(bankId: string) {
     // 导入内置词库（全量；如需前 100 词可在导入后由用户自行管理）
     const result = await importFromBuiltinWordBank(currentBankId, bankId)
     if (result.success) {
+      // 导入直接写 DB，Store 内的 words 仍是导入前的快照；不刷新会显示“已导入”但总数仍为 0
+      await wordsStore.listWords()
+      const source = getAttribution()?.source || 'direct'
+      trackEvent('onboarding', 'bank_import', `${source}:${bankId}`, result.count)
       ElMessage.success(`已导入 ${result.count} 词，开始吧！`)
       close()
     } else {
@@ -383,6 +410,17 @@ h2 {
     color: var(--utools-text-secondary);
     line-height: 1.6;
     margin: 0;
+  }
+
+  .privacy-tip {
+    margin-top: 6px;
+
+    a {
+      color: var(--utools-primary);
+      font-size: 12px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
   }
 }
 
