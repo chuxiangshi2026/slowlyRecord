@@ -663,7 +663,7 @@ interface BatchAiItem {
  * examples 仍要求返回 english/chinese 键（语义=源文/译文），下游解析零迁移。
  */
 const AI_LANG_NAME_ZH: Record<string, string> = {
-    auto: '自动识别语言', en: '英语', ja: '日语', ru: '俄语', es: '西班牙语', fr: '法语', zh: '中文',
+    auto: '自动识别语言', en: '英语', ja: '日语', ko: '韩语', de: '德语', ru: '俄语', es: '西班牙语', fr: '法语', zh: '中文',
 };
 
 function aiLangNameZh(lang: string): string {
@@ -855,6 +855,117 @@ async function translateBatchWithAi(queries: string[], platform: TranslationPlat
     throw new Error(`Unsupported AI batch platform: ${platform}`);
 }
 
+const BILIBILI_TRANSLATE_API = 'https://index-translate.bilibili.com/v1/chat/completions';
+
+function stripBilibiliThink(content: string): string {
+    const end = content.indexOf('</think>');
+    const text = end >= 0 ? content.slice(end + 8) : content;
+    return text.replace(/^<think>/, '').trim();
+}
+
+/** B 站 Index-Translate 免费公网接口（OpenAI 兼容，无需密钥） */
+async function callBilibili(query: string, from: string, to: string): Promise<TranslationResult> {
+    const {key: configuredModel} = getTranslationApiKey('bilibili');
+    const targetName = aiLangNameZh(to);
+    const prompt = from === 'auto'
+        ? `请将以下文本翻译为${targetName}，直接输出翻译结果，不要进行任何解释。\n\n${query.trim()}`
+        : `请将以下${aiLangNameZh(from)}文本翻译为${targetName}，直接输出翻译结果，不要进行任何解释。\n\n${query.trim()}`;
+    const response = await fetch(BILIBILI_TRANSLATE_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'Index-Translate-Client/1.0',
+        },
+        body: JSON.stringify({
+            model: configuredModel || 'Index-Translate-35B-A3B',
+            messages: [{role: 'user', content: prompt}],
+            temperature: 0,
+            max_tokens: 1024,
+            stream: false,
+            chat_template_kwargs: {enable_thinking: false},
+        }),
+    });
+    if (response.status === 429) {
+        return {success: false, errorMsg: 'B站 Index-Translate 请求过于频繁（429），请稍后再试'};
+    }
+    if (!response.ok) {
+        return {success: false, errorMsg: `B站 Index-Translate 请求失败: ${response.status}`};
+    }
+    const data = await response.json();
+    const text = stripBilibiliThink(data.choices?.[0]?.message?.content || '');
+    if (!text) {
+        return {success: false, errorMsg: 'B站 Index-Translate 未返回译文'};
+    }
+    return {success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query)};
+}
+
+const SILICONFLOW_API = 'https://api.siliconflow.cn/v1/chat/completions';
+
+export async function fetchSiliconflowModels(apiKey: string): Promise<string[]> {
+    const trimmedKey = apiKey.trim();
+    if (!trimmedKey) throw new Error('请先填写硅基流动 API Key');
+    const response = await fetch('https://api.siliconflow.cn/v1/models?sub_type=chat', {
+        headers: {'Authorization': `Bearer ${trimmedKey}`},
+    });
+    if (response.status === 401 || response.status === 403) {
+        throw new Error('硅基流动 API Key 无效或已过期，请检查设置');
+    }
+    if (!response.ok) throw new Error(`硅基流动模型列表获取失败: ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data?.data)) throw new Error('硅基流动模型列表响应格式异常');
+    return [...new Set<string>(data.data.map((item: any) => item?.id).filter((id: any): id is string => typeof id === 'string' && !!id.trim()))].sort();
+}
+
+const HUNYUAN_LANG_NAMES_EN: Record<string, string> = {
+    zh: 'Chinese', en: 'English', ja: 'Japanese', ko: 'Korean', de: 'German',
+    ru: 'Russian', es: 'Spanish', fr: 'French',
+};
+
+/** 硅基流动 Hunyuan-MT 文本翻译 */
+async function callSiliconflow(query: string, from: string, to: string): Promise<TranslationResult> {
+    const {appkey: apiKey, key: configuredModel} = getTranslationApiKey('siliconflow');
+    if (!apiKey) {
+        return {success: false, errorMsg: '请先在设置中配置硅基流动 API Key'};
+    }
+    const useChinesePrompt = from === 'zh' || to === 'zh' || (from === 'auto' && /[一-龥]/.test(query));
+    const targetName = useChinesePrompt ? aiLangNameZh(to) : (HUNYUAN_LANG_NAMES_EN[to] || to);
+    const prompt = useChinesePrompt
+        ? `把下面的文本翻译成${targetName}，不要额外解释。\n\n${query.trim()}`
+        : `Translate the following segment into ${targetName}, without additional explanation.\n\n${query.trim()}`;
+    const response = await fetch(SILICONFLOW_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+            model: configuredModel || 'tencent/Hunyuan-MT-7B',
+            messages: [{role: 'user', content: prompt}],
+            temperature: 0.7,
+            top_p: 0.6,
+            top_k: 20,
+            repetition_penalty: 1.05,
+            max_tokens: 2048,
+            stream: false,
+        }),
+    });
+    if (response.status === 401 || response.status === 403) {
+        return {success: false, errorMsg: '硅基流动 API Key 无效或已过期，请检查设置'};
+    }
+    if (response.status === 429) {
+        return {success: false, errorMsg: '硅基流动请求过于频繁或限免额度已用完（429），请稍后再试'};
+    }
+    if (!response.ok) {
+        return {success: false, errorMsg: `硅基流动翻译请求失败: ${response.status}`};
+    }
+    const data = await response.json();
+    const text = (data.choices?.[0]?.message?.content || '').trim();
+    if (!text) {
+        return {success: false, errorMsg: '硅基流动未返回译文'};
+    }
+    return {success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query)};
+}
+
 // ============ DeepL / 微软(Azure) / Google 免费接口 / 超额停服 ============
 
 // 应用内部语言代码 -> 各引擎语言代码
@@ -959,12 +1070,9 @@ async function callAzure(query: string, from: string, to: string): Promise<Trans
 }
 
 /**
- * Google 免费网页接口（client=gtx）：无需密钥，但 Web 端受 CORS 限制不可用
+ * Google 免费网页接口（client=gtx）：无需密钥。Web 端实测返回 ACAO，可直连
  */
 async function callGoogleFree(query: string, from: string, to: string): Promise<TranslationResult> {
-    if (isWeb()) {
-        return { success: false, errorMsg: 'Google 免费接口在 Web 端受跨域限制不可用，请切换其他引擎' };
-    }
     const params = new URLSearchParams({
         client: 'gtx',
         sl: from === 'auto' ? 'auto' : (GOOGLE_LANG_MAP[from] || from),
@@ -1012,11 +1120,11 @@ async function getBingAuthToken(): Promise<string> {
 }
 
 /**
- * 微软网页免费接口（Edge 通道）：无需密钥，但 Web 端受 CORS 限制不可用
+ * 微软网页免费接口（Edge 通道）：桌面端保留；Web 端端点/预检未验证可用，暂不直连
  */
 async function callBingFree(query: string, from: string, to: string): Promise<TranslationResult> {
     if (isWeb()) {
-        return { success: false, errorMsg: '微软网页免费接口在 Web 端受跨域限制不可用，请切换其他引擎' };
+        return { success: false, errorMsg: '微软网页免费接口在 Web 端暂不可用，请切换其他引擎' };
     }
     const token = await getBingAuthToken();
     const params = new URLSearchParams({
@@ -1205,8 +1313,12 @@ export async function translateBatchWithPlatform(
 
 /**
  * 免费引擎自动降级链：额度耗尽 / 429 / 不可用时依次尝试
+ *
+ * Web 端只能用允许浏览器跨域直连的接口：B站 Index-Translate 与 Google 免费接口实测
+ * 返回 ACAO，Spark / GLM / 微软网页版预检不可用，因此单独给一份链。
  */
-const FREE_ENGINE_CHAIN: TranslationPlatform[] = ['spark', 'youdao', 'baidu', 'google', 'bing', 'glm'];
+const FREE_ENGINE_CHAIN: TranslationPlatform[] = ['spark', 'bilibili', 'youdao', 'baidu', 'google', 'bing', 'glm'];
+const WEB_FREE_ENGINE_CHAIN: TranslationPlatform[] = ['bilibili', 'google', 'glm'];
 
 function shouldFallback(result: TranslationResult): boolean {
     if (result.success) return false;
@@ -1221,7 +1333,8 @@ export async function translateWithPlatform(
     query: string,
     platform: TranslationPlatform = 'spark',
     from: string = 'auto',
-    to: string = 'zh'
+    to: string = 'zh',
+    options: { connectionTest?: boolean } = {}
 ): Promise<TranslationResult> {
     log.i('待翻译参数', query)
 
@@ -1229,9 +1342,13 @@ export async function translateWithPlatform(
     // 用户只要填写了任意 API 标识，就只尝试指定平台并返回其原生错误，避免跨引擎误降级。
     const userKeysForPlatform = useWordsStore().getApiKey(platform);
     const usingBuiltinKey = !userKeysForPlatform?.appkey?.trim();
-    const chain = usingBuiltinKey && FREE_ENGINE_CHAIN.includes(platform)
-        ? FREE_ENGINE_CHAIN.slice(FREE_ENGINE_CHAIN.indexOf(platform))
-        : [platform];
+    const freeChain = isWeb() ? WEB_FREE_ENGINE_CHAIN : FREE_ENGINE_CHAIN;
+    const chain = !options.connectionTest && usingBuiltinKey && freeChain.includes(platform)
+        ? freeChain.slice(freeChain.indexOf(platform))
+        : !options.connectionTest && usingBuiltinKey && isWeb() && FREE_ENGINE_CHAIN.includes(platform)
+            // Web 端选中的内置引擎不可跨域时，直接落到浏览器可用的免费链
+            ? freeChain
+            : [platform];
 
     let lastResult: TranslationResult = {
         success: false,
@@ -1239,8 +1356,8 @@ export async function translateWithPlatform(
     };
 
     for (const currentPlatform of chain) {
-        // 缓存优先：相同 (platform, from, to, query) 7 天内直接返回，避免重复打 API
-        const cached = getCachedTranslation(query, currentPlatform, from, to);
+        // 配置测试必须真实请求当前引擎，不能使用历史缓存结果
+        const cached = options.connectionTest ? null : getCachedTranslation(query, currentPlatform, from, to);
         if (cached) {
             log.i('翻译缓存命中', query, currentPlatform);
             return cached;
@@ -1249,14 +1366,14 @@ export async function translateWithPlatform(
         // 本地翻译不使用限制检查
         if (currentPlatform !== 'local') {
             // 内置共享 key 已被标记额度耗尽：跳过，触发降级
-            if (builtinQuotaExhausted.has(currentPlatform) && !hasCustomApiKey(currentPlatform)) {
+            if (!options.connectionTest && builtinQuotaExhausted.has(currentPlatform) && !hasCustomApiKey(currentPlatform)) {
                 const exhaustedMsg = '该引擎内置免费额度已用完，请在设置中填入自己的 API Key 或切换其他翻译引擎';
                 log.w(`平台 ${currentPlatform} ${exhaustedMsg}`);
                 lastResult = { success: false, errorMsg: exhaustedMsg };
                 continue;
             }
             // 超出每日免费额度：跳过，触发降级
-            if (!hasCustomApiKey(currentPlatform)) {
+            if (!options.connectionTest && !hasCustomApiKey(currentPlatform)) {
                 const featureType = 'translation'; // 普通翻译与批量翻译共用计数
                 if (isOverDailyLimit(featureType)) {
                     const usedCount = getCurrentUsageCount(featureType);
@@ -1411,6 +1528,20 @@ export async function translateWithPlatform(
                         setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
+                case 'bilibili':
+                    console.log('调用B站Index-Translate')
+                    {
+                        const r = await callBilibili(query, from, to);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
+                        return r;
+                    }
+                case 'siliconflow':
+                    console.log('调用硅基流动Hunyuan-MT')
+                    {
+                        const r = await callSiliconflow(query, from, to);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
+                        return r;
+                    }
                 case 'bing':
                     console.log('调用微软网页免费接口')
                     {
@@ -1464,7 +1595,7 @@ export async function translateWithPlatform(
 
             if (result.success) {
                 // 请求成功后才增加使用计数，失败不占用免费次数（本地词典与使用自定义密钥的平台不计数）
-                if (currentPlatform !== 'local' && !hasCustomApiKey(currentPlatform)) {
+                if (!options.connectionTest && currentPlatform !== 'local' && !hasCustomApiKey(currentPlatform)) {
                     const newCount = incrementUsageCounter('translation');
                     log.i(`翻译使用次数: ${newCount}/${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT}`);
                 }
@@ -1472,12 +1603,12 @@ export async function translateWithPlatform(
             }
 
             // 额度耗尽类错误，标记后降级
-            if (result.errorMsg?.includes('额度已用完') || result.errorMsg?.includes('456')) {
+            if (!options.connectionTest && (result.errorMsg?.includes('额度已用完') || result.errorMsg?.includes('456'))) {
                 markBuiltinQuotaExhausted(currentPlatform);
             }
 
-            if (!shouldFallback(result)) {
-                // 非可降级错误直接返回
+            if (options.connectionTest || !shouldFallback(result)) {
+                // 配置测试及非可降级错误都直接返回当前引擎结果
                 return result;
             }
             log.w(`平台 ${currentPlatform} 翻译失败，尝试降级`, result.errorMsg);

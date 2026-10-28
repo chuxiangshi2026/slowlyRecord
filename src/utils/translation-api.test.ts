@@ -22,7 +22,7 @@ vi.mock('@/utils/str-util.ts', () => ({ batchTranslateAndAddWords: vi.fn() }))
 vi.mock('@/utils/local-dictionary', () => ({ translateWithLocalDictionaryAsync: vi.fn() }))
 vi.mock('@/utils/http.ts', () => ({ default: { get: vi.fn() } }))
 
-import { translateWithPlatform, translateBatchWithPlatform } from '@/utils/translation-api'
+import { translateWithPlatform, translateBatchWithPlatform, fetchSiliconflowModels } from '@/utils/translation-api'
 import { RETIRED_MODEL_NAMES, AppInfo } from '@/config.ts'
 import http from '@/utils/http.ts'
 
@@ -70,6 +70,63 @@ describe('AI 翻译平台调用', () => {
     expect(req.url).toBe(url)
     expect(req.headers['Authorization']).toBe('Bearer test-api-key')
     expect(req.body.model).toBe(model)
+  })
+
+  it('bilibili 免费接口使用官方模型、关闭思考且无需鉴权', async () => {
+    mockChatResponse('<think>内部分析</think>你好，世界')
+
+    const result = await translateWithPlatform('hello-bilibili', 'bilibili', 'en', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(result.explains).toBe('你好，世界')
+    const req = lastRequest()
+    expect(req.url).toBe('https://index-translate.bilibili.com/v1/chat/completions')
+    expect(req.headers['Authorization']).toBeUndefined()
+    expect(req.headers['User-Agent']).toBe('Index-Translate-Client/1.0')
+    expect(req.body.model).toBe('Index-Translate-35B-A3B')
+    expect(req.body.chat_template_kwargs).toEqual({ enable_thinking: false })
+    expect(req.body.messages[0].content).toContain('英语文本翻译为中文')
+    expect(req.body.messages[0].content).toContain('hello-bilibili')
+  })
+
+  it('siliconflow 使用 Hunyuan-MT 默认模型、官方提示词和推理参数', async () => {
+    apiKeys.siliconflow = { appkey: 'sf-test-key', key: '' }
+    mockChatResponse('你好，世界')
+
+    const result = await translateWithPlatform('hello-siliconflow', 'siliconflow', 'en', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(result.explains).toBe('你好，世界')
+    const req = lastRequest()
+    expect(req.url).toBe('https://api.siliconflow.cn/v1/chat/completions')
+    expect(req.headers['Authorization']).toBe('Bearer sf-test-key')
+    expect(req.body.model).toBe('tencent/Hunyuan-MT-7B')
+    expect(req.body.messages).toEqual([{ role: 'user', content: '把下面的文本翻译成中文，不要额外解释。\n\nhello-siliconflow' }])
+    expect(req.body.temperature).toBe(0.7)
+    expect(req.body.top_p).toBe(0.6)
+    expect(req.body.top_k).toBe(20)
+    expect(req.body.repetition_penalty).toBe(1.05)
+  })
+
+  it('siliconflow 支持自定义模型和非中文语言组合提示词', async () => {
+    apiKeys.siliconflow = { appkey: 'sf-test-key', key: 'custom/translation-model' }
+    mockChatResponse('Bonjour')
+
+    await translateWithPlatform('hello-custom-siliconflow', 'siliconflow', 'en', 'fr')
+
+    const req = lastRequest()
+    expect(req.body.model).toBe('custom/translation-model')
+    expect(req.body.messages[0].content).toContain('Translate the following segment into French')
+  })
+
+  it('siliconflow 空译文返回明确错误', async () => {
+    apiKeys.siliconflow = { appkey: 'sf-test-key', key: '' }
+    mockChatResponse('')
+
+    const result = await translateWithPlatform('hello-empty-siliconflow', 'siliconflow', 'en', 'zh')
+
+    expect(result.success).toBe(false)
+    expect(result.errorMsg).toContain('硅基流动未返回译文')
   })
 
   it('用户自定义模型名优先于默认模型', async () => {
@@ -325,5 +382,58 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
     expect(decodeURIComponent((params as any).q as string)).toBe('hello world, 你好!')
     // 且 q 内不出现双重编码痕迹（%25）
     expect(String((params as any).q)).not.toContain('%25')
+  })
+})
+
+describe('配置测试与硅基流动模型列表', () => {
+  beforeEach(() => {
+    fetchMock.mockReset()
+    for (const k of Object.keys(apiKeys)) delete apiKeys[k]
+  })
+
+  it('配置测试绕过已有缓存，不自动降级且不增加使用计数', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify([
+      [['你好', 'hello', null, null, 10]], null, 'en'
+    ]), { status: 200 }))
+    const first = await translateWithPlatform('connection-cache-probe', 'google', 'auto', 'zh')
+    expect(first.success).toBe(true)
+    const countBefore = storage['usage_translation_counter']
+
+    fetchMock.mockResolvedValueOnce(new Response('rate limited', { status: 429 }))
+    const result = await translateWithPlatform('connection-cache-probe', 'google', 'auto', 'zh', { connectionTest: true })
+
+    expect(result.success).toBe(false)
+    expect(result.errorMsg).toContain('Google')
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+    expect(storage['usage_translation_counter']).toBe(countBefore)
+  })
+
+  it('配置测试使用当前硅基流动模型', async () => {
+    apiKeys.siliconflow = { appkey: 'sf-test-key', key: 'custom/test-model' }
+    mockChatResponse('你好')
+    const result = await translateWithPlatform('hello-test-model', 'siliconflow', 'en', 'zh', { connectionTest: true })
+    expect(result.success).toBe(true)
+    expect(lastRequest().body.model).toBe('custom/test-model')
+  })
+
+  it('模型列表使用 Bearer 鉴权、去重并排序', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      data: [{ id: 'z/model' }, { id: 'a/model' }, { id: 'z/model' }, {}]
+    }), { status: 200 }))
+    const models = await fetchSiliconflowModels(' sf-test-key ')
+    expect(models).toEqual(['a/model', 'z/model'])
+    const [url, init] = fetchMock.mock.calls[0]
+    expect(url).toBe('https://api.siliconflow.cn/v1/models?sub_type=chat')
+    expect(init.headers.Authorization).toBe('Bearer sf-test-key')
+  })
+
+  it('模型列表鉴权失败给出明确提示', async () => {
+    fetchMock.mockResolvedValueOnce(new Response('Unauthorized', { status: 401 }))
+    await expect(fetchSiliconflowModels('bad-key')).rejects.toThrow('API Key 无效或已过期')
+  })
+
+  it('模型列表响应格式异常时不返回伪数据', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({ message: 'unexpected' }), { status: 200 }))
+    await expect(fetchSiliconflowModels('sf-test-key')).rejects.toThrow('响应格式异常')
   })
 })

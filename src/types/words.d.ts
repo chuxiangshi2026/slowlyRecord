@@ -14,6 +14,10 @@ export interface Word extends DbDoc {
     ctime: Date
     // 上次复习时间 第一次创建生成
     learnDate: Date
+    // 内容或学习状态最后修改时间（毫秒；旧数据缺省）
+    updatedAt?: number
+    // 同一词条在其他设备使用过的稳定 ID，用于跨端墓碑匹配
+    aliases?: string[]
     // 更新时间
     // updateTime?: String
     // 中文解释
@@ -64,7 +68,7 @@ interface YdParams {
 /**
  * 翻译平台枚举 | 'google'
  */
-export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 'glm' | 'utoolsai' | 'local';
+export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 'glm' | 'utoolsai' | 'bilibili' | 'siliconflow' | 'local';
 export type MemoryFirmnessType = '正常' | '较强' | '极强';
 
 

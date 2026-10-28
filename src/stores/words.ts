@@ -3,10 +3,7 @@ import type {MemoryFirmnessType, OcrPlatform, TranslationPlatform, TranslationRe
 import {defineStore} from "pinia";
 // import {parse, stringify} from 'zipson'
 // import { serializer } from '@/utils/jsonSerializeUtil';
-import http from "@/utils/http.ts";
 import {log} from "@/utils/logger.ts"
-import type {AxiosResponse} from 'axios'
-import CryptoJS from "crypto-js";
 import {cleanDbWord} from "@/utils/db-util.ts";
 import {cleanupLegacyPerWordDocs} from "@/utils/db-util-cleanup";
 import {
@@ -18,10 +15,9 @@ import {
   updateWordInBankChunk,
   type WordBank
 } from "@/utils/wordbank-manager.ts";
-import {APP_KEY, DB_KEY, DB_KEY_USER_SET, DEFAULT_INTERVALS, FROM, KEY, TO} from "@/constants";
+import {DB_KEY_USER_SET, DEFAULT_INTERVALS} from "@/constants";
 import {setActiveLanguage, getActiveLanguage} from "@/utils/language";
-import {truncate} from "lodash";
-import {AppInfo} from "@/config.ts";
+
 // import {downloadAndStoreAudio} from "@/utils/audio-util.ts";
 // 导入翻译服务 abandon
 import {translateWithPlatform as externalTranslateWithPlatform, translateBatchWithPlatform as externalTranslateBatchWithPlatform} from "@/utils/translation-api";
@@ -75,8 +71,11 @@ export const useWordsStore =
             const lastFocusWordText = ref('')    //需光标定位单词
             const lastFocusWordIndex = ref(-1)   //需光标定位单词在过滤列表中的索引
 
-            const currentTranslationPlatform = ref<TranslationPlatform>('spark'); // 默认使用讯飞星火翻译
-            const currentOcrPlatform = ref<OcrPlatform>('local'); // 默认使用离线识图
+            // 新用户默认使用免 Key 的大模型引擎；已有持久化设置仍按原值恢复
+            const defaultTranslationPlatform: TranslationPlatform = 'bilibili'
+            const defaultOcrPlatform: OcrPlatform = 'bilibili'
+            const currentTranslationPlatform = ref<TranslationPlatform>(defaultTranslationPlatform);
+            const currentOcrPlatform = ref<OcrPlatform>(defaultOcrPlatform);
             const memoryFirmness = ref<MemoryFirmnessType>('正常');
             // 用户翻译api密钥（工厂函数：初始化与持久化恢复后的补齐共用同一份平台清单）
             const createUserApiKeys = (): Record<TranslationPlatform, { appkey: string, key: string }> => ({
@@ -99,6 +98,8 @@ export const useWordsStore =
                 spark: {appkey: '', key: ''},
                 bing: {appkey: '', key: ''},
                 xftrans: {appkey: '', key: ''},
+                bilibili: {appkey: '', key: ''},
+                siliconflow: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref(createUserApiKeys());
@@ -110,6 +111,8 @@ export const useWordsStore =
                 deepseek: {appkey: '', key: ''},
                 glm: {appkey: '', key: ''},
                 utoolsai: {appkey: '', key: ''},
+                bilibili: {appkey: '', key: ''},
+                siliconflow: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
             const userOcrApiKeys: Ref<Record<OcrPlatform, { appkey: string, key: string }>> = ref(createUserOcrApiKeys());
@@ -148,11 +151,12 @@ export const useWordsStore =
             const addWordTarget = ref<'current' | 'default'>('current');
             // 主界面背景：preset='' 无 / 'custom' 自定义图 / 预设标识；scrim=遮罩浓度；acrylic=毛玻璃总开关；
             // acrylicBlur=背景图片层模糊半径 px（整体磨砂）；cardBlur=卡片/列表叠加模糊半径 px（比背景更糊一层）；
-            // headerEffect/footerEffect=透明与亚克力是否作用于页头/底栏（默认开，关闭后对应区域回落实底色）。
+            // headerEffect/footerEffect=透明与亚克力是否作用于页头/底栏（默认开，关闭后对应区域回落实底色）；
+            // brightness=整体明亮度（0.5-1.5，默认 1），独立于背景图生效。
             // 图片本体存 app-bg-image 独立文档（app-bg-db.ts），不进 user-set、不参与同步
             // scrim 默认 0.6：亮/暗两个主题下背景都能明显透出（0.85 在暗色主题下近似全黑）
-            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true });
-            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean }>(defaultAppBg());
+            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 });
+            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number }>(defaultAppBg());
             // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
             // review/signin 默认开（升级后首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
             const defaultScheduleReminder = () => ({ review: true, signin: true, sync: false });
@@ -236,12 +240,12 @@ export const useWordsStore =
 
             // 腾讯机器翻译已于 2026-09-30 停服：任何来源（localStorage/DB/同步导入）写入 tencent 一律回退默认引擎
             watch(currentTranslationPlatform, (platform) => {
-                if (platform === 'tencent') setTranslationPlatform('spark');
+                if (platform === 'tencent') setTranslationPlatform(defaultTranslationPlatform);
             }, {flush: 'sync'})
 
-            // 桌面端腾讯截图翻译实为 TMT 图片翻译（ImageTranslate），已停售进入退市周期：默认离线，存量 tencent 回退 local
+            // 桌面端腾讯截图翻译实为 TMT 图片翻译（ImageTranslate），已停售进入退市周期，存量 tencent 回退默认引擎
             watch(currentOcrPlatform, (platform) => {
-                if (platform === 'tencent') setOcrPlatform('local');
+                if (platform === 'tencent') setOcrPlatform(defaultOcrPlatform);
             }, {flush: 'sync'})
 
             /**
@@ -294,8 +298,8 @@ export const useWordsStore =
                     "_id": DB_KEY_USER_SET,
                     "pluginStatus": false,
                     "shortcutEnabled": false,
-                    "translationPlatform": 'spark',
-                    "ocrPlatform": 'local',
+                    "translationPlatform": defaultTranslationPlatform,
+                    "ocrPlatform": defaultOcrPlatform,
                     "memoryFirmness": '正常',
                     "keys": {},
                     "ocrKeys": {},
@@ -443,15 +447,15 @@ export const useWordsStore =
             let appBgApplySeq = 0;
 
             /**
-             * 应用界面背景到 DOM：写 CSS 变量（--app-bg-image/--app-bg-scrim）与 body class
-             * （has-app-bg/app-bg-acrylic），样式规则见 theme.scss。
+             * 应用整体明亮度与界面背景到 DOM：根节点 filter 覆盖主页面及 body 下的弹层；
+             * 背景写 CSS 变量（--app-bg-image/--app-bg-scrim）与 body class，样式规则见 theme.scss。
              * custom 预设的图片从 app-bg-image 文档同步读取；图丢失（如换机未同步）时回退为无背景。
              * 首屏挂载推迟到列表首次就绪后（解码并行），避免「先出图片、后出列表」的空窗
              */
             async function applyAppBg() {
                 if (typeof document === 'undefined' || !document.body) return;
                 const seq = ++appBgApplySeq;
-                const {preset, scrim, acrylic, acrylicBlur, cardBlur, headerEffect, footerEffect} = appBg.value;
+                const {preset, scrim, acrylic, acrylicBlur, cardBlur, headerEffect, footerEffect, brightness} = appBg.value;
                 let url = '';
                 if (preset === 'custom') {
                     url = getAppBgImage();
@@ -463,6 +467,7 @@ export const useWordsStore =
                 }
                 const root = document.documentElement;
                 const body = document.body;
+                root.style.filter = `brightness(${Math.max(0.5, Math.min(1.5, brightness ?? 1))})`;
                 if (!url) {
                     body.classList.remove('has-app-bg', 'app-bg-acrylic', 'app-bg-card-blur', 'app-bg-header-off', 'app-bg-footer-off');
                     root.style.removeProperty('--app-bg-image');
@@ -502,10 +507,10 @@ export const useWordsStore =
             }
 
             /**
-             * 设置界面背景（部分更新）：应用到 DOM 并把轻量标志位持久化到 user-set
+             * 设置整体明亮度/界面背景（部分更新）：应用到 DOM 并把轻量标志位持久化到 user-set
              * （图片本体不在此，见 app-bg-db.ts）
              */
-            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean }>) {
+            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number }>) {
                 appBg.value = {...appBg.value, ...partial};
                 applyAppBg();
                 try {
@@ -861,9 +866,9 @@ export const useWordsStore =
                 setWords([])
             }
 
-            function removeWords(): void {
+            async function removeWords(): Promise<void> {
                 clearWords()
-                cleanDbWord()
+                await cleanDbWord()
             }
 
             async function deleteWord(index: number): Promise<void> {
@@ -878,10 +883,9 @@ export const useWordsStore =
                     return;
                 }
 
-                // 同步墓碑：防止被删单词在另一台设备「删除复活」
-                if (word._id) {
-                    recordTombstone(word._id);
-                }
+                // 同步墓碑：主 ID 与跨端别名一起埋点，防止不同设备 ID 导致删除复活
+                if (word._id) recordTombstone(word._id);
+                for (const alias of word.aliases || []) recordTombstone(alias);
 
                 // 从当前词库删除 - 直接使用 currentWordBank.value 避免重新加载导致数据不一致
                 if (currentWordBank.value && currentWordBank.value.id === currentWordBankId.value) {
@@ -917,8 +921,9 @@ export const useWordsStore =
              */
             async function addAndUpdateWords(payload: Word[]): Promise<boolean> {
                 try {
+                    const now = Date.now()
                     // 规范化文本：保留词组空格，只折叠多余空白
-                    const cleanedPayload = payload.map(w => ({ ...w, text: normalizeItemText(w.text) }))
+                    const cleanedPayload = payload.map(w => ({ ...w, text: normalizeItemText(w.text), updatedAt: w.updatedAt ?? now }))
                     // 新词落库目标按设置解析（默认词库 id 固定为 'default'，见 wordbank-manager.createDefaultWordBank）
                     const targetBankId = addWordTarget.value === 'default' ? 'default' : currentWordBankId.value
                     const isCurrentBank = targetBankId === currentWordBankId.value
@@ -982,7 +987,7 @@ export const useWordsStore =
                 signinStore.loadRecords();
                 signinStore.signToday();
                 // 规范化文本：保留词组空格，只折叠多余空白
-                const cleanedWord = { ...word, text: normalizeItemText(word.text) }
+                const cleanedWord = { ...word, text: normalizeItemText(word.text), updatedAt: Date.now() }
                 // 使用 _id 查找索引，避免脏数据中的换行符导致 text 不匹配
                 const index = words.value.findIndex(w => w._id === cleanedWord._id);
                 if (index !== -1) {

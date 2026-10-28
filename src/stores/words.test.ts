@@ -137,8 +137,8 @@ describe('useWordsStore', () => {
       expect(store.rememberCount).toBe(0)
       expect(store.reviewCount).toBe(0)
       expect(store.lastAddedWordText).toBe('')
-      expect(store.currentTranslationPlatform).toBe('spark')
-      expect(store.currentOcrPlatform).toBe('local')
+      expect(store.currentTranslationPlatform).toBe('bilibili')
+      expect(store.currentOcrPlatform).toBe('bilibili')
       expect(store.memoryFirmness).toBe('正常')
       expect(store.pluginStatus).toBe(false)
       expect(store.shortcutEnabled).toBe(false)
@@ -156,21 +156,41 @@ describe('useWordsStore', () => {
       expect(store.lastVisitedPage).toBe('')
       expect(store.hiddenExplain).toBe('')
     })
+
   })
 
-  describe('界面背景设置', () => {
-    it('默认值：无背景、遮罩 0.6、亚克力开、背景模糊 18、列表模糊 12、页头/底栏效果开', () => {
+  describe('外观设置', () => {
+    it('默认值：明亮度 1、无背景、遮罩 0.6、亚克力开、背景模糊 18、列表模糊 12、页头/底栏效果开', () => {
       const store = useWordsStore()
-      expect(store.appBg).toEqual({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true })
+      expect(store.appBg).toEqual({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 })
     })
 
     it('setAppBg 部分更新并持久化到 user-set（仅存轻量标志位，图片本体在独立文档）', async () => {
       const store = useWordsStore()
       await store.setAppBg({ preset: 'preset-mist', scrim: 0.6 })
-      expect(store.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true })
+      expect(store.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 })
       expect(addAndUpdateSetDb).toHaveBeenCalled()
       const saved = (addAndUpdateSetDb as any).mock.calls.at(-1)?.[0]
-      expect(saved.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true })
+      expect(saved.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 })
+    })
+
+    it('整体明亮度应用到根节点并限制在 50%-150%', async () => {
+      const store = useWordsStore()
+      const style = { filter: '', removeProperty: vi.fn() }
+      vi.stubGlobal('document', {
+        documentElement: { style },
+        body: { classList: { remove: vi.fn() } },
+      })
+      try {
+        await store.setAppBg({ brightness: 1.25 })
+        expect(style.filter).toBe('brightness(1.25)')
+        await store.setAppBg({ brightness: 0 })
+        expect(style.filter).toBe('brightness(0.5)')
+        await store.setAppBg({ brightness: 2 })
+        expect(style.filter).toBe('brightness(1.5)')
+      } finally {
+        vi.unstubAllGlobals()
+      }
     })
 
     it('Node 环境（无 document）下 applyAppBg 静默跳过不抛错', () => {
@@ -652,6 +672,9 @@ describe('useWordsStore', () => {
 
       expect(store.pluginStatus).toBe(true)
       expect(addAndUpdateSetDb).toHaveBeenCalled()
+      const savedSettings = vi.mocked(addAndUpdateSetDb).mock.calls[0][0]
+      expect(savedSettings.translationPlatform).toBe('bilibili')
+      expect(savedSettings.ocrPlatform).toBe('bilibili')
     })
   })
 
@@ -681,7 +704,7 @@ describe('useWordsStore', () => {
     it('腾讯翻译已停服，设置 tencent 应回退默认引擎', () => {
       const store = useWordsStore()
       store.setTranslationPlatform('tencent')
-      expect(store.currentTranslationPlatform).toBe('spark')
+      expect(store.currentTranslationPlatform).toBe('bilibili')
     })
   })
 
@@ -698,10 +721,10 @@ describe('useWordsStore', () => {
       expect(addAndUpdateSetDb).toHaveBeenCalled()
     })
 
-    it('腾讯图片翻译已停售退市，设置 tencent 应回退离线', () => {
+    it('腾讯图片翻译已停售退市，设置 tencent 应回退默认引擎', () => {
       const store = useWordsStore()
       store.setOcrPlatform('tencent')
-      expect(store.currentOcrPlatform).toBe('local')
+      expect(store.currentOcrPlatform).toBe('bilibili')
     })
   })
 

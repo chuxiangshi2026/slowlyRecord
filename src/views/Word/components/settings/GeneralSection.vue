@@ -23,7 +23,7 @@
       </div>
     </div>
     <div>
-      <!-- 当前翻译引擎卡片：第一屏只呈现当前引擎与免配置状态，切换走右侧下拉 -->
+      <!-- 当前翻译引擎卡片：第一屏只呈现当前引擎与配置状态，切换走右侧下拉 -->
       <div class="engine-card">
         <div class="engine-card-main">
           <span class="engine-card-name">{{ currentEngineLabel }}</span>
@@ -33,29 +33,42 @@
                    @update:model-value="(val: TranslationPlatform) => wordsStore.setTranslationPlatform(val)"
                    placeholder="切换引擎"
                    style="width:150px">
-          <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="translationOptionLabel(item.value, item.label)"
-              :value="item.value"
-          />
+          <el-option-group v-for="group in translationEngineGroups" :key="group.label" :label="group.label">
+            <el-option
+                v-for="item in group.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-option-group>
         </el-select>
       </div>
+      <el-button v-if="canConfigureCurrentTranslation" class="engine-config-link" link type="primary" @click="openApiKeySettings">
+        配置当前引擎 Key / 模型
+      </el-button>
+      <p v-if="isWebEnv" class="engine-web-hint">
+        Web 端建议使用 B站 Index-Translate、Google 或本地词典；其他引擎可能受浏览器跨域限制。
+      </p>
     </div>
     <div>
       <div class="setting-item">
-        <div class="content">ocr图片识别引擎</div>
-        <el-select class="shorcut-desc" :model-value="wordsStore.currentOcrPlatform"
-                   @update:model-value="(val: OcrPlatform) => wordsStore.setOcrPlatform(val)"
-                   placeholder="选择"
-                   style="width:100px">
-          <el-option
-              v-for="item in ocrOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-          />
-        </el-select>
+        <div class="content">OCR 图片识别引擎</div>
+        <div class="engine-setting-actions">
+          <el-button v-if="canConfigureCurrentOcr" link type="primary" @click="openApiKeySettings">配置 Key / 模型</el-button>
+          <el-select class="shorcut-desc" :model-value="wordsStore.currentOcrPlatform"
+                     @update:model-value="(val: OcrPlatform) => wordsStore.setOcrPlatform(val)"
+                     placeholder="选择"
+                     style="width:150px">
+            <el-option-group v-for="group in ocrEngineGroups" :key="group.label" :label="group.label">
+              <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              />
+            </el-option-group>
+          </el-select>
+        </div>
       </div>
     </div>
 
@@ -194,6 +207,10 @@
                    @update:model-value="onStatsOptInChange"/>
     </div>
 
+    <div class="legal-links">
+      <a href="privacy.html" target="_blank" rel="noopener">隐私说明</a>
+    </div>
+
     <el-dialog v-model="feedbackVisible" title="问题反馈" width="420px" append-to-body>
       <el-input v-model="feedbackText" type="textarea" :rows="4" maxlength="500" show-word-limit
                 placeholder="描述遇到的问题或建议（500 字以内）"/>
@@ -212,8 +229,8 @@ import {computed, ref} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
 import {useUiStore} from "@/stores/ui.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
-import {AppInfo} from "@/config.ts";
-import {isUtools} from "@/adapters/platform";
+import {isUtools, isWeb} from "@/adapters/platform";
+import {engineRequiresKey, getOcrEngineGroups, getTranslationEngine, getTranslationEngineGroups, OCR_KEY_PLATFORMS, TRANSLATION_KEY_PLATFORMS} from "@/utils/engine-options";
 import {isStatsExcluded, setStatsExcluded, submitFeedback, getStatsStatus} from "@/utils/stats.ts";
 import type {StatsStatus} from "@/utils/stats.ts";
 import {ElMessage} from 'element-plus'
@@ -313,116 +330,39 @@ const onSubmitFeedback = async () => {
 // 记忆牢固度选项
 const memoryFirmnessOptions = ['正常' , '较强' , '极强'];
 
-const ocrOptions = [
-  // uTools AI 视觉 OCR：零配置但消耗用户 AI 能量，仅 uTools 环境且 AI 可用时提供（非默认选项）
-  ...(isUtools() && typeof (window as any).utools?.ai === 'function'
-    ? [{value: 'utoolsai', label: 'uToolsAI(视觉)'}]
-    : []),
-  {
-    value: 'local',
-    label: '本地词典(离线)',
-  },
-  {
-    value: 'baidu',
-    label: '百度',
-  },
-  {
-    value: 'youdao',
-    label: '有道',
-  }, {
-    value: 'ali',
-    label: '阿里',
-  }, {
-    value: 'deepseek',
-    label: '深度求索(视觉)',
-  }, {
-    value: 'glm',
-    label: '智谱GLM(视觉)',
-  }]
-const options = [
-  {
-    value: 'utoolsai',
-    label: 'utoolsAI',
-  },
-  {
-    value: 'local',
-    label: '本地词典(离线)',
-  },
-  {
-    value: 'baidu',
-    label: '百度',
-  },
-  {
-    value: 'youdao',
-    label: '有道',
-  }, {
-    value: 'ali',
-    label: '阿里',
-  }, {
-    value: 'ollama',
-    label: 'ollama',
-  }, {
-    value: 'deepseek',
-    label: 'deepseek',
-  }, {
-    value: 'qwen',
-    label: '千问',
-  }, {
-    value: 'kimi',
-    label: 'kimi',
-  }, {
-    value: 'glm',
-    label: '智谱GLM',
-  }, {
-    value: 'minimax',
-    label: 'MiniMax',
-  }, {
-    value: 'deepl',
-    label: 'DeepL',
-  }, {
-    value: 'azure',
-    label: '微软翻译',
-  }, {
-    value: 'qiniu',
-    label: '七牛AI',
-  }, {
-    value: 'google',
-    label: 'Google',
-  }, {
-    value: 'spark',
-    label: '讯飞星火',
-  }, {
-    value: 'xftrans',
-    label: '讯飞机器翻译',
-  }, {
-    value: 'bing',
-    label: '微软网页版',
-  }
-]
+const isWebEnv = isWeb()
+const translationEngineGroups = getTranslationEngineGroups()
+  .map(group => ({
+    ...group,
+    options: group.options.filter(option =>
+      (option.value !== 'utoolsai' || isUtools()) && (option.value !== 'bing' || !isWebEnv)
+    ),
+  }))
+  .filter(group => group.options.length > 0)
+const ocrEngineGroups = getOcrEngineGroups()
+  .map(group => ({
+    ...group,
+    options: group.options.filter(option => option.value !== 'utoolsai' || (isUtools() && typeof (window as any).utools?.ai === 'function')),
+  }))
+  .filter(group => group.options.length > 0)
 
-// 免配置标签：内置 key 非空的引擎零配置可用；google/bing 走免费网页接口免 key
-const translationOptionLabel = (value: string, label: string) => {
-  let suffix = ''
-  if (value === 'google' || value === 'bing') {
-    suffix = '（免费免key）'
-  } else if ((AppInfo as Record<string, { appkey?: string }>)[value]?.appkey) {
-    suffix = '（免配置）'
-  }
-  // 默认引擎 spark 额外标注推荐
-  return value === 'spark' ? `${label}${suffix}·推荐` : `${label}${suffix}`
-}
-
-const engineLabel = (list: { value: string; label: string }[], value: string) =>
-  list.find(o => o.value === value)?.label || value
-
-// 当前引擎卡片文案：免配置引擎标出免费额度，其余提示需配置
-const currentEngineLabel = computed(() => engineLabel(options, wordsStore.currentTranslationPlatform))
+const currentEngineLabel = computed(() =>
+  getTranslationEngine(wordsStore.currentTranslationPlatform)?.label || wordsStore.currentTranslationPlatform
+)
 const currentEngineHint = computed(() => {
-  const p = wordsStore.currentTranslationPlatform
-  if (p === 'google' || p === 'bing') return '免配置'
-  if ((AppInfo as Record<string, { appkey?: string }>)[p]?.appkey) return '免配置 · 每日 500 次'
-  return '需配置 API Key'
+  const option = getTranslationEngine(wordsStore.currentTranslationPlatform)
+  if (!option) return '需 Key'
+  return `${option.kind === 'llm' ? '大模型' : '传统 API'} · ${engineRequiresKey(option) ? '需 Key' : '免配置'}`
 })
+
+const emit = defineEmits<{(event: 'open-api-key'): void}>()
+const openApiKeySettings = () => emit('open-api-key')
+const canConfigureCurrentTranslation = computed(() =>
+  (TRANSLATION_KEY_PLATFORMS as string[]).includes(wordsStore.currentTranslationPlatform)
+)
+const canConfigureCurrentOcr = computed(() =>
+  (OCR_KEY_PLATFORMS as string[]).includes(wordsStore.currentOcrPlatform)
+)
 </script>
 
 <style scoped lang="scss">
@@ -443,6 +383,24 @@ const currentEngineHint = computed(() => {
 .content {
   color: var(--utools-text-secondary);
   font-size: 12px;
+}
+
+.engine-web-hint {
+  margin: 6px 20px 0;
+  color: var(--utools-text-tertiary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.engine-config-link {
+  margin: 0 20px 4px;
+  font-size: 12px;
+}
+
+.engine-setting-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .schedule-times {
@@ -589,5 +547,20 @@ const currentEngineHint = computed(() => {
 .el-switch {
   --el-switch-on-color: var(--utools-primary);
   --el-switch-off-color: var(--utools-text-tertiary);
+}
+
+.legal-links {
+  margin: 4px 20px 12px;
+  font-size: 12px;
+
+  a {
+    color: var(--utools-text-tertiary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--utools-primary);
+    }
+  }
 }
 </style>
