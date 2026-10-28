@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { parseFileContent, filterWordsForJsonExport, filterWordsForTextExport, validateImportedWords } from './word-util'
+import { parseFileContent, filterWordsForJsonExport, filterWordsForTextExport, filterWordsForAnkiCsv, validateImportedWords } from './word-util'
 import type { Word } from '@/types/words'
 
 // 模拟 uuid
@@ -250,6 +250,43 @@ describe('parseFileContent', () => {
     expect(result[0].text).toBe('hello')
     expect(result[0].explains).toBe('你好')
   })
+
+  it('应支持带引号的字段内换行', () => {
+    const content = 'hello,"第一行\n第二行"\nworld,世界'
+    const result = parseFileContent(content)
+
+    expect(result).toHaveLength(2)
+    expect(result[0].text).toBe('hello')
+    expect(result[0].explains).toBe('第一行\n第二行')
+    expect(result[1].text).toBe('world')
+  })
+
+  it('应解析 Anki 的 tab 分隔、HTML 与音标列', () => {
+    const content = '#separator:tab\n#html:true\n#columns:Front\tBack\tPhonetic\n' +
+      'take off\t<span>起飞</span><br>脱下\t/teɪk ɒf/'
+    const result = parseFileContent(content)
+
+    expect(result).toHaveLength(1)
+    expect(result[0].text).toBe('take off')
+    expect(result[0].explains).toBe('起飞\n脱下')
+    expect(result[0].phonetic).toBe('/teɪk ɒf/')
+  })
+
+  it('应跳过 word/translation 表头', () => {
+    const content = 'word,translation\nhello,你好'
+    const result = parseFileContent(content)
+
+    expect(result).toHaveLength(1)
+    expect(result[0].text).toBe('hello')
+  })
+
+  it('Anki 的标签列不应被误判为隐藏释义', () => {
+    const content = '#separator:tab\nhello\t你好\tnoun'
+    const result = parseFileContent(content)
+
+    expect(result[0].explainedHidden).toBe(false)
+    expect(result[0].phonetic).toBe('')
+  })
 })
 
 describe('filterWordsForJsonExport', () => {
@@ -412,6 +449,35 @@ describe('filterWordsForTextExport', () => {
     const result = filterWordsForTextExport(words)
 
     expect(result).toContain('"say ""hello"""')
+  })
+})
+
+describe('filterWordsForAnkiCsv', () => {
+  it('导出两列 Front/Back，并转义逗号、引号和换行', () => {
+    const words: Word[] = [
+      createWord({ text: 'look, look', explains: '第一行\n第二行' }),
+      createWord({ text: 'say "hello"', explains: '说你好' })
+    ]
+
+    const result = filterWordsForAnkiCsv(words)
+
+    expect(result).toBe('"look, look","第一行\n第二行"\n"say ""hello""",说你好')
+  })
+
+  it('导出的 CSV 能被自身解析回来', () => {
+    const words: Word[] = [
+      createWord({ text: 'take off', explains: '起飞；脱下' }),
+      createWord({ text: 'look, look', explains: '仔细看' })
+    ]
+
+    const parsed = parseFileContent(filterWordsForAnkiCsv(words))
+
+    expect(parsed.map(w => w.text)).toEqual(['take off', 'look, look'])
+    expect(parsed.map(w => w.explains)).toEqual(['起飞；脱下', '仔细看'])
+  })
+
+  it('空数组导出为空字符串', () => {
+    expect(filterWordsForAnkiCsv([])).toBe('')
   })
 })
 

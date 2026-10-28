@@ -431,6 +431,7 @@ import {computed, nextTick, onMounted, onUnmounted, ref, watch, shallowRef} from
 import {
   filterWordsForJsonExport,
   filterWordsForTextExport,
+  filterWordsForAnkiCsv,
   parseFileContent,
   validateImportedWords
 } from "@/utils/word-util.ts";
@@ -2824,6 +2825,9 @@ const handleExportCommand = (command: string) => {
     case 'exportText':
       exportTextWords();
       break;
+    case 'exportAnki':
+      exportAnkiWords();
+      break;
   }
 };
 
@@ -3140,6 +3144,31 @@ const exportTextWords = () => {
   document.body.removeChild(link);
 
   ElMessage.success('导出成功');
+}
+
+
+/**
+ * 导出为 Anki 可导入的两列 CSV（Front / Back）
+ */
+const exportAnkiWords = () => {
+  if (wordsStore.count === 0) {
+    ElMessage.warning('没有单词可导出');
+    return;
+  }
+
+  const content = filterWordsForAnkiCsv(showFilteredWords.value);
+  const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
+
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'words_anki.csv';
+  link.style.display = 'none';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  ElMessage.success('已导出，可在 Anki 中按 Front / Back 两列导入');
 }
 
 

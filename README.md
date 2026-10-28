@@ -956,7 +956,7 @@ npm run build:app-ios
 ### 导出单词
 
 1. 进入单词列表界面，点击底部工具栏的"**导出**"图标
-2. 选择导出格式：**导出 JSON** / **导出 TXT**
+2. 选择导出格式：**导出 JSON** / **导出 TXT** / **导出 Anki CSV**
 3. 保存文件到本地
 
 ### 导入单词
@@ -964,6 +964,11 @@ npm run build:app-ios
 1. 进入单词列表界面，点击底部工具栏的"**导入**"图标
 2. 选择导入方式：**JSON 导入** / **TXT/CSV 导入** / **从词库导入**（内置词库）
 3. 选择对应文件，系统自动解析并导入
+
+### Anki 互通
+
+- **慢记 → Anki**：使用「导出 Anki CSV」，在 Anki 的「导入文件」中选择该 CSV，字段分别映射为 **Front** 和 **Back**。
+- **Anki → 慢记**：在 Anki 中导出「Notes in Plain Text」，保留 `#separator:tab`、`#html:true` 等文件头，直接在「TXT / CSV 导入」中选择即可。tab 分隔、HTML 标签、`<br>` 换行、引号内换行和 `word/translation` 表头均已兼容。
 
 ### 文件格式说明
 

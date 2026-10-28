@@ -26,6 +26,7 @@
       </div>
       <div class="d-item" @click="onExportCommand('exportJson')"><span>导出 JSON</span></div>
       <div class="d-item" @click="onExportCommand('exportText')"><span>导出 TXT</span></div>
+      <div class="d-item" @click="onExportCommand('exportAnki')"><span>导出 Anki CSV</span></div>
     </template>
 
     <!-- 主面板 -->
