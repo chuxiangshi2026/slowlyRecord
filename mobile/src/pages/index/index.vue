@@ -69,6 +69,13 @@
       </view>
     </view>
 
+    <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
+    <view class="share-entry" @click="handleShare">
+      <text class="share-entry-icon">📤</text>
+      <text class="share-entry-text">分享今日进度</text>
+    </view>
+    <!-- #endif -->
+
     <view class="quick-actions">
       <view class="action-title">快速入口</view>
       <view class="action-list">
@@ -99,22 +106,45 @@
         </view>
       </view>
     </view>
+
+    <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
+    <canvas
+      type="2d"
+      id="homeShareCanvas"
+      class="share-canvas"
+      :style="{ width: REVIEW_CARD_WIDTH + 'px', height: REVIEW_CARD_HEIGHT + 'px' }"
+    />
+    <SharePreview v-model="sharePreviewVisible" :image="shareImage" />
+    <!-- #endif -->
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
-import { onShow, onLoad } from '@dcloudio/uni-app'
+import { ref, computed, onMounted, watch, getCurrentInstance } from 'vue'
+import { onShow, onLoad, onShareAppMessage } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { useTextMemory } from '@/stores/useTextMemory'
 import { useSignin } from '@/stores/useSignin'
 import { loadDailyGoal, countReviewedToday, getGoalProgress } from '@/utils/daily-goal'
 import { loadOnboarded } from '@/utils/onboarding'
 import { getEncourageText } from '@/utils/encourage'
+import SharePreview from '@/components/SharePreview.vue'
+import { renderCanvasCard } from '@/utils/share-card-canvas'
+import {
+  buildReviewShareInfo,
+  drawReviewCard,
+  REVIEW_CARD_WIDTH,
+  REVIEW_CARD_HEIGHT,
+} from '@/utils/review-share-card'
 
+const instance = getCurrentInstance()
 const wordsStore = useMobileWords()
 const textStore = useTextMemory()
 const signinStore = useSignin()
+
+const shareImage = ref('')
+const sharePreviewVisible = ref(false)
+const sharing = ref(false)
 
 const wordCount = ref(0)
 const reviewCount = ref(0)
@@ -206,7 +236,51 @@ onLoad(() => {
 // tab 页切回时刷新目标值（「我的」页修改后返回即生效）；复习进度本身由 store 响应式驱动
 onShow(() => {
   dailyGoal.value = loadDailyGoal()
+  shareImage.value = ''
+  sharePreviewVisible.value = false
 })
+
+/** 首页分享：生成今日复习卡并预览 */
+async function handleShare() {
+  if (isLibraryEmpty.value || todayReviewed.value <= 0) {
+    uni.showToast({ title: '先复习几个词再分享吧', icon: 'none' })
+    return
+  }
+  if (sharing.value) return
+  sharing.value = true
+  uni.showLoading({ title: '生成中' })
+  try {
+    shareImage.value = await renderCanvasCard(
+      instance,
+      'homeShareCanvas',
+      REVIEW_CARD_WIDTH,
+      REVIEW_CARD_HEIGHT,
+      ctx => drawReviewCard(
+        ctx,
+        buildReviewShareInfo(
+          new Date(),
+          todayReviewed.value,
+          streakDays.value,
+          dailyGoal.value,
+          wordsStore.wordCount
+        )
+      )
+    )
+    sharePreviewVisible.value = true
+  } catch (e) {
+    console.error('分享卡生成失败:', e)
+    uni.showToast({ title: '分享图生成失败', icon: 'none' })
+  } finally {
+    uni.hideLoading()
+    sharing.value = false
+  }
+}
+
+onShareAppMessage(() => ({
+  title: `我今天在慢记复习了 ${todayReviewed.value} 词，连续打卡 ${streakDays.value} 天`,
+  path: '/pages/index/index',
+  imageUrl: shareImage.value || '',
+}))
 
 // 数据加载完成后自动更新统计
 watch(() => wordsStore.wordCount, (count) => {
@@ -547,5 +621,34 @@ const goToAllFeatures = () => {
   color: var(--sr-text-2);
   margin-top: 10rpx;
   display: block;
+}
+
+/* 分享入口：弱化于主任务卡，只作为传播动作 */
+.share-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  margin-top: 24rpx;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+}
+
+.share-entry-icon {
+  font-size: 28rpx;
+}
+
+.share-entry-text {
+  font-size: 26rpx;
+  color: var(--sr-primary);
+}
+
+/* 离屏画布：只用于生成分享图，不占布局 */
+.share-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
 }
 </style>

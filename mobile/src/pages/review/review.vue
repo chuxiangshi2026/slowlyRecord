@@ -177,6 +177,11 @@
           >
             📅 去打卡
           </button>
+          <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
+          <button class="btn-guide" @click="handleShareResult">
+            📤 分享战绩
+          </button>
+          <!-- #endif -->
         </view>
         <button class="btn-done" @click="finishReview">完成</button>
       </view>
@@ -194,21 +199,40 @@
         </view>
       </view>
     </view>
+
+    <!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
+    <canvas
+      type="2d"
+      id="reviewShareCanvas"
+      class="share-canvas"
+      :style="{ width: REVIEW_CARD_WIDTH + 'px', height: REVIEW_CARD_HEIGHT + 'px' }"
+    />
+    <SharePreview v-model="sharePreviewVisible" :image="shareImage" />
+    <!-- #endif -->
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { onShow } from '@dcloudio/uni-app'
+import { ref, computed, onMounted, onUnmounted, watch, getCurrentInstance } from 'vue'
+import { onShow, onShareAppMessage } from '@dcloudio/uni-app'
 import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewState } from '@/stores/useMobileWords'
 import { useSignin } from '@/stores/useSignin'
 import { speakWord, stopSpeaking } from '@/utils/word-audio'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
+import SharePreview from '@/components/SharePreview.vue'
+import { renderCanvasCard } from '@/utils/share-card-canvas'
+import {
+  buildReviewShareInfo,
+  drawReviewCard,
+  REVIEW_CARD_WIDTH,
+  REVIEW_CARD_HEIGHT,
+} from '@/utils/review-share-card'
 import { loadDailyGoal, countReviewedToday, checkGoalJustAchieved, DEFAULT_DAILY_GOAL } from '@/utils/daily-goal'
 import { useAchievements } from '@/stores/useAchievements'
 
+const instance = getCurrentInstance()
 const wordsStore = useMobileWords()
 const signinStore = useSignin()
 const currentIndex = ref(0)
@@ -217,6 +241,9 @@ const showComplete = ref(false)
 const showDeleteConfirm = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
+const shareImage = ref('')
+const sharePreviewVisible = ref(false)
+const sharing = ref(false)
 
 // 每日目标：判定后据此给出"目标达成"轻反馈，进入页面时读取
 const dailyGoal = ref(DEFAULT_DAILY_GOAL)
@@ -858,6 +885,8 @@ const finishReview = () => {
   rememberCount.value = 0
   forgetCount.value = 0
   sessionWords.value = []
+  shareImage.value = ''
+  sharePreviewVisible.value = false
   clearSession()
   // 清除自定义复习列表，下次进入时恢复默认
   wordsStore.setCustomReviewWords(null)
@@ -865,6 +894,45 @@ const finishReview = () => {
   // 复习完成后检查成就（累计复习词次、词库学完、错题清零等）
   useAchievements().checkNow()
 }
+
+/** 复习完成页分享：生成今日战绩卡并预览 */
+async function handleShareResult() {
+  if (sharing.value) return
+  sharing.value = true
+  uni.showLoading({ title: '生成中' })
+  try {
+    const reviewed = countReviewedToday(wordsStore.allWords) || sessionWords.value.length
+    shareImage.value = await renderCanvasCard(
+      instance,
+      'reviewShareCanvas',
+      REVIEW_CARD_WIDTH,
+      REVIEW_CARD_HEIGHT,
+      ctx => drawReviewCard(
+        ctx,
+        buildReviewShareInfo(
+          new Date(),
+          reviewed,
+          signinStore.streakDays,
+          dailyGoal.value,
+          wordsStore.words.length
+        )
+      )
+    )
+    sharePreviewVisible.value = true
+  } catch (e) {
+    console.error('分享卡生成失败:', e)
+    uni.showToast({ title: '分享图生成失败', icon: 'none' })
+  } finally {
+    uni.hideLoading()
+    sharing.value = false
+  }
+}
+
+onShareAppMessage(() => ({
+  title: `今天我复习了 ${countReviewedToday(wordsStore.allWords) || sessionWords.value.length} 词，连续打卡 ${signinStore.streakDays} 天`,
+  path: '/pages/index/index',
+  imageUrl: shareImage.value || '',
+}))
 
 // 完成页引导：先收尾本次会话，再跳转到对应模块
 const goAfterReview = (url: string) => {
@@ -1417,5 +1485,12 @@ const goAfterReview = (url: string) => {
   height: 84rpx;
   font-size: 30rpx;
   border: 2rpx solid var(--sr-primary);
+}
+
+/* 离屏画布：只用于生成分享图，不占布局 */
+.share-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
 }
 </style>
