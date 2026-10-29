@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "慢记移动端 - UniApp 跨平台应用",
   "scripts": {
+    "type-check": "vue-tsc --noEmit -p tsconfig.json",
+    "type-check:test": "vue-tsc --noEmit -p tsconfig.test.json",
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:mp-weixin": "uni build -p mp-weixin --minify",
+    "gen:ai-poetry": "node scripts/gen-ai-poetry-data.cjs",
+    "build:mp-weixin:ai": "npm run gen:ai-poetry && MP_AI_SKILL=1 uni build -p mp-weixin --minify && MP_AI_SKILL=1 node scripts/inject-ai-skill.cjs",
     "dev:mp-toutiao": "uni -p mp-toutiao",
     "build:mp-toutiao": "uni build -p mp-toutiao --minify",
     "dev:app": "uni -p app",
