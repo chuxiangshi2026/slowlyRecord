@@ -1,4 +1,4 @@
-# 增长路线图（2026-10-28 制定，2026-10-29 复核修订）
+# 增长路线图（2026-10-28 制定，2026-10-29 复核，2026-10-30 更新实施状态）
 
 > 工作量均为开发估算，不含域名备案、商店审核和第三方平台审批时间。
 
@@ -32,6 +32,23 @@
 | 暂缓 | 翻译代理、自定义快照协议、订阅消息服务端 | — | 等真实需求 |
 
 P2 可随时穿插。P3 比扩展更便宜且渠道现成，优先于 P4。
+
+---
+
+## 实施状态（2026-10-30）
+
+| 优先级 | 状态 | 说明 |
+|---|---|---|
+| P0a | 代码完成，待部署 | Web 首启、免 Key 翻译、隐私页、存储异常、来源归因已落地；缺托管账号与环境 ID |
+| P0b | 完成 | PWA 可安装；断网刷新、数据保留、隐私页离线已验证 |
+| P1 | 试点完成，待部署/扩量 | 12 个考试词库页、22 个公版诗词页、索引页、sitemap/robots 已生成 |
+| P2 | 完成 | Anki TSV/HTML 导入、两列 CSV 导出、README 说明与测试已完成 |
+| P3 | 代码完成，待真机验收 | 首页/复习完成页分享卡、预览/保存/分享组件、构建均通过 |
+| P4 | 未启动 | 按计划等 Web 观察数据后再决定 |
+
+对应提交（本地 `master`）：`851516f`、`974173b`、`b8ef2d9`、`416003e`、`984e20c`。
+正式 Web 部署需使用 `SITE_ORIGIN=https://你的域名 npm run build:web`，否则 canonical
+与 sitemap 会使用相对路径。
 
 ---
 
@@ -108,6 +125,16 @@ npm run build:web && npm run type-check && npm run test:run
 
 ## P1：静态内容页小批量试点（1–2 天）
 
+### 试点结果（2026-10-30）
+
+已由 `scripts/gen-seo-pages.cjs` 生成并接入 `npm run build:web`：
+
+- 12 个考试词库页（中考/高考/四六级/商务英语/专四/专八/SAT/考研/雅思/托福/GRE）
+- 22 个公版诗词页（含原文、拼音、标签；不含第三方英译）
+- 1 个内容索引页 `/library.html`
+- `sitemap.xml`、`robots.txt`、canonical、JSON-LD、页面间内链
+- 词库 CTA 深链打开导入预览并预选词库，必须用户确认后才写入
+
 ### 范围
 
 先做 10–20 个核心词库页和代表性诗词页，验证收录与点击，再全量生成。全量上限约：
@@ -149,30 +176,40 @@ npm run build:web && npm run type-check && npm run test:run
 
 ---
 
-## P2：第三方导入导出兼容性验证（0.5 天验证，修补另估）
+## P2：第三方导入导出兼容性（0.5 天验证，修补另估）
 
-现有代码已经支持 CSV，不新增一套重复实现：
+### 实施结果（2026-10-30）
 
-- `filterWordsForTextExport()`（`src/utils/word-util.ts`）输出带引号转义的 CSV 字段；
-- `parseFileContent()` 能解析含逗号和双引号的 CSV 行。
+- `parseFileContent()` 已支持 Anki 的 `#separator`/`#html` 文件头、tab/分号/逗号分隔、
+  引号字段内换行、HTML 标签与实体、`word/translation` 表头。
+- Anki 三列文件的第三列会识别常见音标格式；标签列不会误判为隐藏释义。
+- 新增 `filterWordsForAnkiCsv()` 与「导出 Anki CSV」，输出两列 Front/Back。
+- README 已补「Anki 互通」步骤；`word-util.test.ts` 69 项通过，浏览器实测导入/导出通过。
 
-先用 Anki、欧路等真实导入流程验证现有 TXT/CSV 能否直接使用，再决定是否需要“Anki 预设”。
-当前已知边界：解析按行切分，不支持引号内换行；未处理 Anki 的 `#separator`、`#html` 等指令、
-TSV 和 HTML 字段。不要把“支持 CSV”写成“完整支持 Anki”。
+### 范围与边界
 
-验收样本至少包含：中文、逗号、双引号、换行、标签、重复词条和空释义；验证导出 → 第三方
-导入 → 再导出 → 慢记导入的往返结果。若做通用表格 CSV，还需处理公式注入风险。
+- `filterWordsForTextExport()` 继续保留慢记自身的完整 CSV（含等级/时间），供备份往返。
+- 不实现 Anki `.apkg` 打包；Anki 侧使用 CSV/纯文本导入即可。
+- 欧路、不背单词等仍建议用 CSV/TXT；新增格式前先补真实样本测试。
+- 若做通用表格 CSV，还需处理公式注入风险。
 
 ---
 
 ## P3：小程序分享卡片（1–2 天）
 
-- 复用 `mobile/src/subPackages/pages-data/signin/signin.vue` 的 canvas 2D 分享图和
-  `onShareAppMessage` 实现，不重写分享框架。
-- 首页/复习完成页分享今日复习数、连续天数；`path` 直达对应小程序页面。
-- 小程序分享和 Web 静态页是两条独立链路，不要求共用 URL 协议；微信 `web-view` 域名限制
-  另行评估。
-- 真机验收：卡片图生成成功/失败降级、冷启动分享路径、未导入词库时的落地体验。
+### 实施结果（2026-10-30）
+
+- 新增纯逻辑 `mobile/src/utils/review-share-card.ts`：今日复习数、连续打卡、目标进度、
+  鼓励文案与 canvas 绘制；7 项单测通过。
+- 新增 `mobile/src/components/SharePreview.vue`：预览、保存到相册、分享给好友。
+- 新增 `mobile/src/utils/share-card-canvas.ts`：统一 canvas 节点查询、dpr 缩放与临时图导出。
+- 首页「分享今日进度」与复习完成页「分享战绩」均已接入，分享落地页指向首页。
+- `type-check:mobile`、`build:mp-weixin` 通过。
+
+### 待验收
+
+- 微信开发者工具/真机检查卡片图生成、保存相册、分享落地与冷启动路径。
+- 抖音端 canvas/分享能力需单独确认（当前按钮已按 MP-WEIXIN/MP-TOUTIAO 条件编译）。
 
 ---
 
