@@ -1126,6 +1126,35 @@ async function callBingFree(query: string, from: string, to: string): Promise<Tr
     if (isWeb()) {
         return { success: false, errorMsg: '微软网页免费接口在 Web 端暂不可用，请切换其他引擎' };
     }
+
+    // 桌面端优先走 preload 的 Node 请求：Bing 翻译页 token 流程没有 CORS 头，
+    // 渲染进程直接 fetch 会被跨域拦截。
+    const bingBridge = typeof window !== 'undefined'
+        ? ((window as any).services?.bingTranslate || (window as any).electronAPI?.bingTranslate)
+        : null;
+    if (typeof bingBridge === 'function') {
+        try {
+            const fromCode = from === 'auto' ? 'auto-detect' : (AZURE_LANG_MAP[from] || from);
+            const toCode = AZURE_LANG_MAP[to] || to;
+            const bridgeResult = await bingBridge(query, fromCode, toCode);
+            if (bridgeResult?.status === 429) {
+                return { success: false, errorMsg: '微软网页免费接口被限流（429），请稍后再试' };
+            }
+            if (bridgeResult?.status < 200 || bridgeResult?.status >= 300) {
+                return { success: false, errorMsg: `微软网页翻译请求失败: ${bridgeResult?.status}` };
+            }
+            const data = JSON.parse(bridgeResult.body || '[]');
+            const text = data?.[0]?.translations?.[0]?.text || '';
+            if (!text) {
+                return { success: false, errorMsg: '微软网页接口未返回译文' };
+            }
+            return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+        } catch (error) {
+            const msg = (error as Error)?.message || '未知错误';
+            return { success: false, errorMsg: `微软网页翻译失败: ${msg}` };
+        }
+    }
+
     const token = await getBingAuthToken();
     const params = new URLSearchParams({
         'api-version': '3.0',
@@ -1323,7 +1352,7 @@ const WEB_FREE_ENGINE_CHAIN: TranslationPlatform[] = ['bilibili', 'google', 'glm
 function shouldFallback(result: TranslationResult): boolean {
     if (result.success) return false;
     const msg = result.errorMsg || '';
-    return /额度已用完|每日免费.*已达上限|429|限流|暂不可用|受跨域限制|API Key|请先配置|服务错误|Translation failed/i.test(msg);
+    return /额度已用完|每日免费.*已达上限|429|限流|暂不可用|受跨域限制|API Key|请先配置|服务错误|翻译失败|请求失败|未返回|Translation failed/i.test(msg);
 }
 
 /**
