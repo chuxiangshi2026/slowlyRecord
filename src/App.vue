@@ -324,6 +324,22 @@ async function handleUtoolsEnter(action: any) {
     });
   }
 
+  // 划词翻译：读取系统选中文本，直接进入翻译页
+  if (action.code === 'huaciTranslate') {
+    try {
+      const selected = (await getSelectedTextFromSystem()).trim();
+      if (!selected) return;
+      if (selected === '使用此功能，请先关闭自动分离') {
+        ElMessage.error(selected);
+        return;
+      }
+      router.push({ path: '/translate', query: { text: selected } });
+    } catch (e) {
+      debugLog('划词翻译获取选中文本失败:', e);
+      ElMessage.error('划词翻译失败，请重试');
+    }
+  }
+
   if (action.code === 'jietu') {
     try {
       let result: OcrResult;
@@ -391,6 +407,37 @@ async function handleUtoolsEnter(action: any) {
   // }
 
 
+  // 截图翻译：截图/OCR 后把原文送入翻译页，由当前翻译引擎处理
+  if (action.code === 'jietuTranslate') {
+    try {
+      const result = await ocrTranslateMultiPlatform();
+      if (result.errorCode !== '0' && (!result.resRegions || result.resRegions.length === 0)) {
+        if (result.errorCode === 'LOCAL_OCR_NO_TEXT') {
+          ElMessage.warning('本地OCR未能识别到文字，请尝试使用云端OCR');
+        } else if (result.errorCode === 'LOCAL_OCR_FAILED') {
+          ElMessage.error('本地 OCR 识别失败，可在设置中切换云端 OCR 引擎');
+        } else if (result.errorCode !== 'SCREEN_CAPTURE_CANCEL') {
+          ElMessage.error(`OCR 识别失败，请稍后重试或切换 OCR 引擎（错误码: ${result.errorCode}）`);
+        }
+        return;
+      }
+      const text = (result.resRegions || [])
+        .map(region => region.context)
+        .filter(Boolean)
+        .join('\n')
+        .trim();
+      if (!text) {
+        ElMessage.warning('未识别到可翻译的原文');
+        return;
+      }
+      router.push({ path: '/translate', query: { text } });
+    } catch (e: any) {
+      debugLog('截图翻译失败:', e);
+      if (e?.message?.includes('截图取消')) return;
+      ElMessage.error(e?.message || '截图翻译失败，请重试');
+    }
+  }
+
   if (action.code === 'review') {
     handlePluginReview()
   }
@@ -427,7 +474,7 @@ async function handleUtoolsEnter(action: any) {
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
   const addWordActions = ['over', 'huaci', 'jietu', 'paste', 'selection']
-  if (!['review', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', 'palace', 'knowledge', ...addWordActions].includes(action.code)) {
+  if (!['review', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', 'palace', 'knowledge', 'huaciTranslate', 'jietuTranslate', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
   // 文本记忆 - 通过 文本记忆/诗词记忆 关键字进入

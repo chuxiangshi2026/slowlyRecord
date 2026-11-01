@@ -1,4 +1,5 @@
 import type {OcrPlatform, TranslationPlatform} from '@/types/words'
+import {isUtools, isWeb} from '@/adapters/platform'
 import {AppInfo, OcrKeyInfo} from '../config'
 
 export type EngineKind = 'traditional' | 'llm'
@@ -83,6 +84,22 @@ function groupEngines<T extends string>(options: EngineOption<T>[], ocr: boolean
 }
 
 export const getTranslationEngineGroups = () => groupEngines(TRANSLATION_ENGINE_OPTIONS, false)
+
+/**
+ * 设置页与翻译页共用的引擎列表：过滤当前平台不可用的引擎。
+ * 必须在两端共用，否则两处下拉会逐渐漂移。
+ */
+export const getAvailableTranslationEngineGroups = () => {
+  const web = isWeb()
+  return getTranslationEngineGroups()
+    .map(group => ({
+      ...group,
+      options: group.options.filter(option =>
+        (option.value !== 'utoolsai' || isUtools()) && (option.value !== 'bing' || !web)
+      ),
+    }))
+    .filter(group => group.options.length > 0)
+}
 export const getOcrEngineGroups = () => groupEngines(OCR_ENGINE_OPTIONS, true)
 
 export const getTranslationEngine = (platform: string) =>

@@ -230,7 +230,7 @@ import {useWordsStore} from "@/stores/words.ts";
 import {useUiStore} from "@/stores/ui.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools, isWeb} from "@/adapters/platform";
-import {engineRequiresKey, getOcrEngineGroups, getTranslationEngine, getTranslationEngineGroups, OCR_KEY_PLATFORMS, TRANSLATION_KEY_PLATFORMS} from "@/utils/engine-options";
+import {engineRequiresKey, getOcrEngineGroups, getTranslationEngine, getAvailableTranslationEngineGroups, OCR_KEY_PLATFORMS, TRANSLATION_KEY_PLATFORMS} from "@/utils/engine-options";
 import {isStatsExcluded, setStatsExcluded, submitFeedback, getStatsStatus} from "@/utils/stats.ts";
 import type {StatsStatus} from "@/utils/stats.ts";
 import {ElMessage} from 'element-plus'
@@ -331,14 +331,7 @@ const onSubmitFeedback = async () => {
 const memoryFirmnessOptions = ['正常' , '较强' , '极强'];
 
 const isWebEnv = isWeb()
-const translationEngineGroups = getTranslationEngineGroups()
-  .map(group => ({
-    ...group,
-    options: group.options.filter(option =>
-      (option.value !== 'utoolsai' || isUtools()) && (option.value !== 'bing' || !isWebEnv)
-    ),
-  }))
-  .filter(group => group.options.length > 0)
+const translationEngineGroups = getAvailableTranslationEngineGroups()
 const ocrEngineGroups = getOcrEngineGroups()
   .map(group => ({
     ...group,

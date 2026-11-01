@@ -36,6 +36,13 @@
       ]
     },
     {
+      "code": "huaciTranslate",
+      "explain": "划词翻译",
+      "cmds": [
+        "划词翻译"
+      ]
+    },
+    {
       "code": "jietu",
       "explain": "截图添加",
       "cmds": [
@@ -44,6 +51,13 @@
           "label": "截图添加"
         },
         "截图添加"
+      ]
+    },
+    {
+      "code": "jietuTranslate",
+      "explain": "截图翻译",
+      "cmds": [
+        "截图翻译"
       ]
     },
     {

@@ -268,7 +268,7 @@ import {
   Position
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
-import { getTranslationEngineGroups } from '@/utils/engine-options';
+import { getAvailableTranslationEngineGroups } from '@/utils/engine-options';
 import { addWord } from '@/utils/str-util';
 import { isSentenceLike } from '@/utils/text-utils';
 import { useWordsStore } from '@/stores/words';
@@ -318,7 +318,7 @@ const targetLanguageOptions = computed(() =>
 );
 
 // 翻译平台选项（hunyuan 旧平台与腾讯机器翻译已于 2026-09-30 停服，不再展示）
-const platformGroups = getTranslationEngineGroups();
+const platformGroups = getAvailableTranslationEngineGroups();
 
 // 交换语言
 function swapLanguages() {
