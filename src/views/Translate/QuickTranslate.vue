@@ -48,12 +48,14 @@
         />
         <div class="input-actions">
           <el-select v-model="selectedPlatform" size="small" class="platform-select">
-            <el-option
-              v-for="item in platformOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option-group v-for="group in platformGroups" :key="group.label" :label="group.label">
+              <el-option
+                v-for="item in group.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-option-group>
           </el-select>
           <el-button
             type="primary"
@@ -266,6 +268,7 @@ import {
   Position
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
+import { getTranslationEngineGroups } from '@/utils/engine-options';
 import { addWord } from '@/utils/str-util';
 import { isSentenceLike } from '@/utils/text-utils';
 import { useWordsStore } from '@/stores/words';
@@ -280,7 +283,15 @@ const route = useRoute();
 const inputText = ref('');
 const loading = ref(false);
 const result = ref<TranslationResult | null>(null);
-const selectedPlatform = ref<TranslationPlatform>('glm');
+// 直接读写设置里的当前引擎：翻译页切换会持久化，设置页修改后这里也会即时跟随
+const selectedPlatform = computed<TranslationPlatform>({
+  get: () => wordsStore.currentTranslationPlatform,
+  set: (platform) => {
+    if (platform !== wordsStore.currentTranslationPlatform) {
+      wordsStore.setTranslationPlatform(platform);
+    }
+  },
+});
 const history = ref<{source: string, target: string, platform: TranslationPlatform, from: string, to: string}[]>([]);
 const imageLoading = ref(false);
 
@@ -307,26 +318,7 @@ const targetLanguageOptions = computed(() =>
 );
 
 // 翻译平台选项（hunyuan 旧平台与腾讯机器翻译已于 2026-09-30 停服，不再展示）
-const platformOptions = [
-  { label: '智谱 GLM', value: 'glm' },
-  { label: '讯飞星火', value: 'spark' },
-  { label: '讯飞机器翻译', value: 'xftrans' },
-  { label: '七牛AI', value: 'qiniu' },
-  { label: 'DeepSeek', value: 'deepseek' },
-  { label: '通义千问', value: 'qwen' },
-  { label: 'Kimi', value: 'kimi' },
-  { label: 'MiniMax', value: 'minimax' },
-  { label: '有道翻译', value: 'youdao' },
-  { label: '百度翻译', value: 'baidu' },
-  { label: '阿里翻译', value: 'ali' },
-  { label: 'DeepL', value: 'deepl' },
-  { label: '微软翻译', value: 'azure' },
-  { label: 'Google(免Key)', value: 'google' },
-  { label: '微软网页版(免Key)', value: 'bing' },
-  { label: 'uTools AI', value: 'utoolsai' },
-  { label: 'Ollama', value: 'ollama' },
-  { label: '本地词典', value: 'local' },
-];
+const platformGroups = getTranslationEngineGroups();
 
 // 交换语言
 function swapLanguages() {
@@ -341,7 +333,6 @@ function swapLanguages() {
 
 // 从 store 获取默认平台
 onMounted(() => {
-  selectedPlatform.value = wordsStore.currentTranslationPlatform;
   loadHistory();
 
   // 检查路由参数中是否有文本

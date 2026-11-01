@@ -378,6 +378,22 @@
     </div>
     <div>
 
+      <!-- 快速添加：任意列表状态下都能直接输入单词/句子 -->
+      <el-popover placement="top" :width="360" trigger="click" popper-class="quick-add-popper">
+        <template #reference>
+          <el-icon class="footer-icon" :size="18" title="快速添加单词"><Plus /></el-icon>
+        </template>
+        <div class="quick-add-body">
+          <el-input
+              v-model="emptyAddText"
+              size="small"
+              placeholder="输入单词或句子，回车添加"
+              @keyup.enter="handleEmptyAdd"
+          />
+          <el-button type="primary" size="small" @click="handleEmptyAdd">添加</el-button>
+        </div>
+      </el-popover>
+
       <!-- 置顶/置底合并：按滚动位置智能切换 -->
       <el-tooltip class="box-item" effect="dark" content="置顶/置底" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="scrollTopOrBottom"><Sort /></el-icon>
@@ -3400,6 +3416,12 @@ function onOnboardingFinish() {
   .el-select-dropdown__list {
     max-height: 200px !important;
   }
+}
+
+/* 底部「快速添加」气泡：内容 teleport 到 body，需用全局样式 */
+.quick-add-body {
+  display: flex;
+  gap: 8px;
 }
 </style>
 

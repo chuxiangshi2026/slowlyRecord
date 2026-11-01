@@ -23,7 +23,7 @@
       "cmds": [
         {
           "type": "over",
-          "label": "收进单词/句子库",
+          "label": "直接加入单词列表",
           "minLength": 1
         }
       ]
@@ -32,11 +32,6 @@
       "code": "huaci",
       "explain": "划词/划段添加",
       "cmds": [
-        {
-          "type": "over",
-          "label": "划词添加",
-          "minLength": 1
-        },
         "划词添加"
       ]
     },
@@ -44,11 +39,6 @@
       "code": "jietu",
       "explain": "截图添加",
       "cmds": [
-        {
-          "type": "over",
-          "label": "截图添加",
-          "minLength": 1
-        },
         {
           "type": "img",
           "label": "截图添加"
