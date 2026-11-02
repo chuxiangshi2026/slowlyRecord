@@ -3,6 +3,8 @@
  * 主包/分包均可安全引用，不增加包体积
  */
 
+import type { LanguageCode } from '@/utils/language'
+
 export type TranslationPlatform = 'youdao' | 'baidu' | 'ali' | 'tencent' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local'
 
 export interface TranslationResult {
@@ -70,6 +72,8 @@ export interface Word {
   example?: string
   explains?: string
   itemType?: MobileItemType
+  /** 词频排名（内置词库预置，1 = 最常用；缺失表示无数据） */
+  freq?: number
 }
 
 export interface LoadStrategy {
@@ -88,6 +92,10 @@ export interface MobileSyncBank {
   id: string
   name: string
   words: any[]
+  createdAt?: number
+  updatedAt?: number
+  isDefault?: boolean
+  language?: LanguageCode
 }
 
 export interface MobileUserSettings {
@@ -284,6 +292,7 @@ export interface MobileSentenceItem {
   source?: string
   favorite: boolean
   createdAt: number
+  updatedAt?: number
 }
 
 // ==================== 记忆宫殿（查看版） ====================
@@ -355,6 +364,7 @@ export interface SyncResult {
 export interface RestoreResult {
   success: boolean
   banks?: MobileSyncBank[]
+  tombstones?: Record<string, number>
   count?: number
   textMemory?: MobileTextMemory
   numberMemory?: MobileNumberMemory

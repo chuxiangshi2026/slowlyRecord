@@ -1,346 +1,432 @@
 [
   {
     "word": "Do you have it in stock?",
-    "explains": "有货吗？"
+    "explains": "有货吗？",
+    "freq": 2602
   },
   {
     "word": "Is this in store?",
-    "explains": "实体店有吗？"
+    "explains": "实体店有吗？",
+    "freq": 1034
   },
   {
     "word": "This is on sale.",
-    "explains": "这个打折"
+    "explains": "这个打折",
+    "freq": 2419
   },
   {
     "word": "What's the price?",
-    "explains": "多少钱？"
+    "explains": "多少钱？",
+    "freq": 1179
   },
   {
     "word": "How much is this?",
-    "explains": "这个多少钱？"
+    "explains": "这个多少钱？",
+    "freq": 135
   },
   {
     "word": "Does it come in other colors?",
-    "explains": "有其他颜色吗？"
+    "explains": "有其他颜色吗？",
+    "freq": 3987
   },
   {
     "word": "What sizes do you have?",
-    "explains": "有哪些尺码？"
+    "explains": "有哪些尺码？",
+    "freq": 11620
   },
   {
     "word": "I'm just looking.",
-    "explains": "随便看看（先别打扰）"
+    "explains": "随便看看（先别打扰）",
+    "freq": 250
   },
   {
     "word": "I'm not ready to buy yet.",
-    "explains": "还没打算买"
+    "explains": "还没打算买",
+    "freq": 511
   },
   {
     "word": "I'm looking for something to gift her.",
-    "explains": "想给她买个礼物"
+    "explains": "想给她买个礼物",
+    "freq": 1074
   },
   {
     "word": "Do you accept credit cards?",
-    "explains": "收信用卡吗？"
+    "explains": "收信用卡吗？",
+    "freq": 1624
   },
   {
     "word": "Can I pay with WeChat Pay?",
-    "explains": "能微信付款吗？"
+    "explains": "能微信付款吗？",
+    "freq": 388
   },
   {
     "word": "Cash only here.",
-    "explains": "这里只收现金"
+    "explains": "这里只收现金",
+    "freq": 1059
   },
   {
     "word": "Do you take Apple Pay?",
-    "explains": "支持 Apple Pay 吗？"
+    "explains": "支持 Apple Pay 吗？",
+    "freq": 2628
   },
   {
     "word": "Can I use this coupon?",
-    "explains": "这张优惠券能用吗？"
+    "explains": "这张优惠券能用吗？",
+    "freq": 15072
   },
   {
     "word": "What's the promotion?",
-    "explains": "有什么优惠？"
+    "explains": "有什么优惠？",
+    "freq": 4339
   },
   {
     "word": "Buy two get one free.",
-    "explains": "买二送一"
+    "explains": "买二送一",
+    "freq": 511
   },
   {
     "word": "50% off today only.",
-    "explains": "今天五折"
+    "explains": "今天五折",
+    "freq": 232
   },
   {
     "word": "Last chance for clearance.",
-    "explains": "清仓最后一天"
+    "explains": "清仓最后一天",
+    "freq": 7366
   },
   {
     "word": "It's out of stock.",
-    "explains": "没货了"
+    "explains": "没货了",
+    "freq": 2602
   },
   {
     "word": "We can special order it.",
-    "explains": "可以代订"
+    "explains": "可以代订",
+    "freq": 581
   },
   {
     "word": "When will it be restocked?",
-    "explains": "什么时候补货？"
+    "explains": "什么时候补货？",
+    "freq": 78
   },
   {
     "word": "Can you reserve it for me?",
-    "explains": "能给我留一个吗？"
+    "explains": "能给我留一个吗？",
+    "freq": 5824
   },
   {
     "word": "I'd like to place an order.",
-    "explains": "我想下单"
+    "explains": "我想下单",
+    "freq": 541
   },
   {
     "word": "Can I pick this up tomorrow?",
-    "explains": "明天能取货吗？"
+    "explains": "明天能取货吗？",
+    "freq": 552
   },
   {
     "word": "Is it eligible for home delivery?",
-    "explains": "可以送货上门吗？"
+    "explains": "可以送货上门吗？",
+    "freq": 12267
   },
   {
     "word": "How much is shipping?",
-    "explains": "运费多少？"
+    "explains": "运费多少？",
+    "freq": 6966
   },
   {
     "word": "Free shipping over $50.",
-    "explains": "满 50 美元包邮"
+    "explains": "满 50 美元包邮",
+    "freq": 6966
   },
   {
     "word": "How long does delivery take?",
-    "explains": "配送要多久？"
+    "explains": "配送要多久？",
+    "freq": 2747
   },
   {
     "word": "I'd like to return this.",
-    "explains": "我想退这个"
+    "explains": "我想退这个",
+    "freq": 667
   },
   {
     "word": "Can I get a refund?",
-    "explains": "能退款吗？"
+    "explains": "能退款吗？",
+    "freq": 12458
   },
   {
     "word": "The item arrived damaged.",
-    "explains": "到货时坏了"
+    "explains": "到货时坏了",
+    "freq": 4202
   },
   {
     "word": "I ordered the wrong size.",
-    "explains": "我尺码选错了"
+    "explains": "我尺码选错了",
+    "freq": 1749
   },
   {
     "word": "It doesn't fit.",
-    "explains": "不合适"
+    "explains": "不合适",
+    "freq": 1184
   },
   {
     "word": "Wrong item was shipped.",
-    "explains": "发错货了"
+    "explains": "发错货了",
+    "freq": 8754
   },
   {
     "word": "Missing pieces.",
-    "explains": "少件"
+    "explains": "少件",
+    "freq": 1615
   },
   {
     "word": "Do you have a receipt?",
-    "explains": "有收据吗？"
+    "explains": "有收据吗？",
+    "freq": 5728
   },
   {
     "word": "I lost the receipt.",
-    "explains": "收据丢了"
+    "explains": "收据丢了",
+    "freq": 5728
   },
   {
     "word": "It's within the return window.",
-    "explains": "还在退货期内"
+    "explains": "还在退货期内",
+    "freq": 982
   },
   {
     "word": "Store credit or full refund?",
-    "explains": "换店卡还是全额退款？"
+    "explains": "换店卡还是全额退款？",
+    "freq": 12458
   },
   {
     "word": "Can I exchange it for another size?",
-    "explains": "能换个尺码吗？"
+    "explains": "能换个尺码吗？",
+    "freq": 2372
   },
   {
     "word": "There's a defect.",
-    "explains": "有瑕疵"
+    "explains": "有瑕疵",
+    "freq": 11909
   },
   {
     "word": "The material feels cheap.",
-    "explains": "料子手感很差"
+    "explains": "料子手感很差",
+    "freq": 2366
   },
   {
     "word": "The color is different from the photo.",
-    "explains": "颜色跟图片不一样"
+    "explains": "颜色跟图片不一样",
+    "freq": 1515
   },
   {
     "word": "It doesn't match the description.",
-    "explains": "跟描述不符"
+    "explains": "跟描述不符",
+    "freq": 4058
   },
   {
     "word": "Where's my order?",
-    "explains": "我的订单到哪了？"
+    "explains": "我的订单到哪了？",
+    "freq": 541
   },
   {
     "word": "I haven't received my package yet.",
-    "explains": "包裹还没到"
+    "explains": "包裹还没到",
+    "freq": 2875
   },
   {
     "word": "The tracking number isn't updating.",
-    "explains": "运单号一直不动"
+    "explains": "运单号一直不动",
+    "freq": 25708
   },
   {
     "word": "It's been stuck in transit for days.",
-    "explains": "物流卡好几天了"
+    "explains": "物流卡好几天了",
+    "freq": 11756
   },
   {
     "word": "The package was delivered to the wrong address.",
-    "explains": "送到错误地址了"
+    "explains": "送到错误地址了",
+    "freq": 3136
   },
   {
     "word": "It was left at my door.",
-    "explains": "放门口了"
+    "explains": "放门口了",
+    "freq": 297
   },
   {
     "word": "Someone stole my package.",
-    "explains": "我的包裹被偷了"
+    "explains": "我的包裹被偷了",
+    "freq": 2875
   },
   {
     "word": "I'd like to file a claim.",
-    "explains": "我要发起理赔"
+    "explains": "我要发起理赔",
+    "freq": 2302
   },
   {
     "word": "Do you offer gift wrapping?",
-    "explains": "提供包装吗？"
+    "explains": "提供包装吗？",
+    "freq": 11519
   },
   {
     "word": "A birthday card would be nice.",
-    "explains": "能配张生日贺卡吗？"
+    "explains": "能配张生日贺卡吗？",
+    "freq": 963
   },
   {
     "word": "Make it a gift.",
-    "explains": "作为礼物处理（不要小票）"
+    "explains": "作为礼物处理（不要小票）",
+    "freq": 1074
   },
   {
     "word": "Do you have a loyalty program?",
-    "explains": "有会员积分吗？"
+    "explains": "有会员积分吗？",
+    "freq": 3678
   },
   {
     "word": "Any points to redeem?",
-    "explains": "能兑换积分吗？"
+    "explains": "能兑换积分吗？",
+    "freq": 12628
   },
   {
     "word": "I'd like to join the rewards program.",
-    "explains": "我想加入会员计划"
+    "explains": "我想加入会员计划",
+    "freq": 12603
   },
   {
     "word": "Sign up for our newsletter.",
-    "explains": "订阅我们的邮件"
+    "explains": "订阅我们的邮件",
+    "freq": 23950
   },
   {
     "word": "I'd like to cancel my subscription.",
-    "explains": "我要取消订阅"
+    "explains": "我要取消订阅",
+    "freq": 19649
   },
   {
     "word": "How do I unsubscribe?",
-    "explains": "怎么退订？"
+    "explains": "怎么退订？",
+    "freq": 61
   },
   {
     "word": "I want to see your warranty policy.",
-    "explains": "看下保修条款"
+    "explains": "看下保修条款",
+    "freq": 22129
   },
   {
     "word": "What does the warranty cover?",
-    "explains": "保修包含什么？"
+    "explains": "保修包含什么？",
+    "freq": 22129
   },
   {
     "word": "Is it covered by warranty?",
-    "explains": "这算保修范围吗？"
+    "explains": "这算保修范围吗？",
+    "freq": 22129
   },
   {
     "word": "The seller shipped counterfeit goods.",
-    "explains": "卖家卖假货"
+    "explains": "卖家卖假货",
+    "freq": 11088
   },
   {
     "word": "I want a dispute opened.",
-    "explains": "我要发起争议"
+    "explains": "我要发起争议",
+    "freq": 9277
   },
   {
     "word": "Buyer protection applies.",
-    "explains": "适用买家保障"
+    "explains": "适用买家保障",
+    "freq": 11352
   },
   {
     "word": "The checkout process timed out.",
-    "explains": "结账时超时了"
+    "explains": "结账时超时了",
+    "freq": 21844
   },
   {
     "word": "The promo code isn't working.",
-    "explains": "优惠码不生效"
+    "explains": "优惠码不生效",
+    "freq": 29909
   },
   {
     "word": "Address not supported.",
-    "explains": "该地址不配送"
+    "explains": "该地址不配送",
+    "freq": 7143
   },
   {
     "word": "Order minimum not met.",
-    "explains": "没到起送金额"
+    "explains": "没到起送金额",
+    "freq": 5392
   },
   {
     "word": "Payment method declined.",
-    "explains": "支付方式被拒"
+    "explains": "支付方式被拒",
+    "freq": 12561
   },
   {
     "word": "Out of delivery zone.",
-    "explains": "不在配送范围"
+    "explains": "不在配送范围",
+    "freq": 2747
   },
   {
     "word": "Please provide a pickup time.",
-    "explains": "请提供自提时间"
+    "explains": "请提供自提时间",
+    "freq": 7745
   },
   {
     "word": "Same-day delivery available.",
-    "explains": "当日达可选"
+    "explains": "当日达可选",
+    "freq": 2747
   },
   {
     "word": "Free returns within 30 days.",
-    "explains": "30 天内免费退货"
+    "explains": "30 天内免费退货",
+    "freq": 4133
   },
   {
     "word": "Cash on delivery.",
-    "explains": "货到付款"
+    "explains": "货到付款",
+    "freq": 2747
   },
   {
     "word": "Signature required.",
-    "explains": "需要签收"
+    "explains": "需要签收",
+    "freq": 3799
   },
   {
     "word": "Please leave at the door.",
-    "explains": "请放门口"
+    "explains": "请放门口",
+    "freq": 297
   },
   {
     "word": "Deliver during business hours.",
-    "explains": "工作时段配送"
+    "explains": "工作时段配送",
+    "freq": 2066
   },
   {
     "word": "Do you sell gift cards?",
-    "explains": "卖礼品卡吗？"
+    "explains": "卖礼品卡吗？",
+    "freq": 1624
   },
   {
     "word": "Any last-minute gift ideas?",
-    "explains": "有临时抱佛脚的礼物吗？"
+    "explains": "有临时抱佛脚的礼物吗？",
+    "freq": 1533
   },
   {
     "word": "How much is the wrapping fee?",
-    "explains": "包装费多少？"
+    "explains": "包装费多少？",
+    "freq": 11519
   },
   {
     "word": "Do you offer personalization?",
-    "explains": "可以定制刻字吗？"
+    "explains": "可以定制刻字吗？",
+    "freq": 909
   },
   {
     "word": "I need it by Friday.",
-    "explains": "周五之前要"
+    "explains": "周五之前要",
+    "freq": 1725
   }
 ]

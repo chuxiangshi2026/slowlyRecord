@@ -48,7 +48,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568 },
 ]
 
-const CACHE_KEY_PREFIX = 'wordbank_cache_v2_'
+const CACHE_KEY_PREFIX = 'wordbank_cache_v3_' // v3：词库新增词频字段
 const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000
 
 function getBuiltinItemType(type: WordBankType, text: string): MobileItemType {
@@ -124,6 +124,7 @@ export async function loadWordBank(
         phonetic: w.phonetic,
         example: w.example,
         itemType: w.itemType || getBuiltinItemType(type, wordText),
+        freq: typeof w.freq === 'number' && w.freq > 0 ? w.freq : undefined,
       }
     })
     if (strategy.useCache) saveWordBankCache(type, words)

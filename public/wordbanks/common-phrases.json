@@ -1,1230 +1,1537 @@
 [
   {
     "word": "Good morning",
-    "explains": "早上好"
+    "explains": "早上好",
+    "freq": 264
   },
   {
     "word": "Good afternoon",
-    "explains": "下午好"
+    "explains": "下午好",
+    "freq": 923
   },
   {
     "word": "Good evening",
-    "explains": "晚上好"
+    "explains": "晚上好",
+    "freq": 641
   },
   {
     "word": "Good night",
-    "explains": "晚安"
+    "explains": "晚安",
+    "freq": 169
   },
   {
     "word": "How are you?",
-    "explains": "你好吗"
+    "explains": "你好吗",
+    "freq": 61
   },
   {
     "word": "Pretty good",
-    "explains": "挺好的"
+    "explains": "挺好的",
+    "freq": 302
   },
   {
     "word": "Thank you",
-    "explains": "谢谢你"
+    "explains": "谢谢你",
+    "freq": 131
   },
   {
     "word": "I really appreciate it",
-    "explains": "非常感谢"
+    "explains": "非常感谢",
+    "freq": 1040
   },
   {
     "word": "You're welcome",
-    "explains": "不客气"
+    "explains": "不客气",
+    "freq": 498
   },
   {
     "word": "Goodbye",
-    "explains": "再见"
+    "explains": "再见",
+    "freq": 728
   },
   {
     "word": "See you tomorrow",
-    "explains": "明天见"
+    "explains": "明天见",
+    "freq": 316
   },
   {
     "word": "See you soon",
-    "explains": "很快再见"
+    "explains": "很快再见",
+    "freq": 360
   },
   {
     "word": "Have a nice day",
-    "explains": "祝你今天愉快"
+    "explains": "祝你今天愉快",
+    "freq": 204
   },
   {
     "word": "Take care",
-    "explains": "保重"
+    "explains": "保重",
+    "freq": 248
   },
   {
     "word": "How have you been?",
-    "explains": "最近过得怎么样"
+    "explains": "最近过得怎么样",
+    "freq": 94
   },
   {
     "word": "What's your name?",
-    "explains": "你叫什么名字"
+    "explains": "你叫什么名字",
+    "freq": 189
   },
   {
     "word": "It's very kind of you",
-    "explains": "你真好"
+    "explains": "你真好",
+    "freq": 211
   },
   {
     "word": "Not at all",
-    "explains": "一点也不；别客气"
+    "explains": "一点也不；别客气",
+    "freq": 53
   },
   {
     "word": "Long time no see",
-    "explains": "好久不见"
+    "explains": "好久不见",
+    "freq": 182
   },
   {
     "word": "What's up?",
-    "explains": "怎么了；最近好吗"
+    "explains": "怎么了；最近好吗",
+    "freq": 52
   },
   {
     "word": "How's it going?",
-    "explains": "最近怎么样"
+    "explains": "最近怎么样",
+    "freq": 79
   },
   {
     "word": "Take your time",
-    "explains": "慢慢来；别急"
+    "explains": "慢慢来；别急",
+    "freq": 90
   },
   {
     "word": "Take it easy",
-    "explains": "放轻松；别紧张"
+    "explains": "放轻松；别紧张",
+    "freq": 408
   },
   {
     "word": "No worries",
-    "explains": "别担心；没问题"
+    "explains": "别担心；没问题",
+    "freq": 3214
   },
   {
     "word": "It's up to you",
-    "explains": "由你决定"
+    "explains": "由你决定",
+    "freq": 52
   },
   {
     "word": "I'm on my way",
-    "explains": "我马上就到"
+    "explains": "我马上就到",
+    "freq": 112
   },
   {
     "word": "Let me think about it",
-    "explains": "让我想想"
+    "explains": "让我想想",
+    "freq": 75
   },
   {
     "word": "Sounds good",
-    "explains": "听起来不错"
+    "explains": "听起来不错",
+    "freq": 587
   },
   {
     "word": "That's a good idea",
-    "explains": "好主意"
+    "explains": "好主意",
+    "freq": 293
   },
   {
     "word": "I have no idea",
-    "explains": "我不知道"
+    "explains": "我不知道",
+    "freq": 293
   },
   {
     "word": "You're right",
-    "explains": "你说得对"
+    "explains": "你说得对",
+    "freq": 49
   },
   {
     "word": "I'm not sure",
-    "explains": "我不确定"
+    "explains": "我不确定",
+    "freq": 137
   },
   {
     "word": "It doesn't matter",
-    "explains": "没关系；无所谓"
+    "explains": "没关系；无所谓",
+    "freq": 317
   },
   {
     "word": "Never mind",
-    "explains": "别介意"
+    "explains": "别介意",
+    "freq": 258
   },
   {
     "word": "Wait a moment",
-    "explains": "等一下"
+    "explains": "等一下",
+    "freq": 448
   },
   {
     "word": "Excuse me",
-    "explains": "打扰一下；请问"
+    "explains": "打扰一下；请问",
+    "freq": 351
   },
   {
     "word": "I see",
-    "explains": "我明白了"
+    "explains": "我明白了",
+    "freq": 69
   },
   {
     "word": "I don't know",
-    "explains": "我不知道"
+    "explains": "我不知道",
+    "freq": 33
   },
   {
     "word": "I understand",
-    "explains": "我理解"
+    "explains": "我理解",
+    "freq": 235
   },
   {
     "word": "My pleasure",
-    "explains": "我的荣幸；不客气"
+    "explains": "我的荣幸；不客气",
+    "freq": 1000
   },
   {
     "word": "It's my treat",
-    "explains": "我请客"
+    "explains": "我请客",
+    "freq": 1293
   },
   {
     "word": "Let's call it a day",
-    "explains": "今天就到这里吧"
+    "explains": "今天就到这里吧",
+    "freq": 161
   },
   {
     "word": "Keep in touch",
-    "explains": "保持联系"
+    "explains": "保持联系",
+    "freq": 600
   },
   {
     "word": "See you later",
-    "explains": "回头见"
+    "explains": "回头见",
+    "freq": 363
   },
   {
     "word": "Let's hang out",
-    "explains": "我们聚聚吧"
+    "explains": "我们聚聚吧",
+    "freq": 631
   },
   {
     "word": "What a coincidence!",
-    "explains": "真巧"
+    "explains": "真巧",
+    "freq": 2732
   },
   {
     "word": "You bet",
-    "explains": "当然；没错"
+    "explains": "当然；没错",
+    "freq": 654
   },
   {
     "word": "No problem",
-    "explains": "没问题"
+    "explains": "没问题",
+    "freq": 338
   },
   {
     "word": "Absolutely!",
-    "explains": "当然；完全同意"
+    "explains": "当然；完全同意",
+    "freq": 693
   },
   {
     "word": "I'm afraid not",
-    "explains": "恐怕不行"
+    "explains": "恐怕不行",
+    "freq": 424
   },
   {
     "word": "I hope so",
-    "explains": "希望如此"
+    "explains": "希望如此",
+    "freq": 346
   },
   {
     "word": "I doubt it",
-    "explains": "我表示怀疑"
+    "explains": "我表示怀疑",
+    "freq": 1038
   },
   {
     "word": "You never know",
-    "explains": "说不准；谁知道呢"
+    "explains": "说不准；谁知道呢",
+    "freq": 116
   },
   {
     "word": "So far so good",
-    "explains": "到目前为止还不错"
+    "explains": "到目前为止还不错",
+    "freq": 399
   },
   {
     "word": "It's a long story",
-    "explains": "说来话长"
+    "explains": "说来话长",
+    "freq": 441
   },
   {
     "word": "That makes sense",
-    "explains": "有道理"
+    "explains": "有道理",
+    "freq": 638
   },
   {
     "word": "It depends",
-    "explains": "看情况"
+    "explains": "看情况",
+    "freq": 2048
   },
   {
     "word": "Let's get started",
-    "explains": "我们开始吧"
+    "explains": "我们开始吧",
+    "freq": 465
   },
   {
     "word": "Let me see",
-    "explains": "让我看看"
+    "explains": "让我看看",
+    "freq": 75
   },
   {
     "word": "Give me a minute",
-    "explains": "给我一点时间"
+    "explains": "给我一点时间",
+    "freq": 387
   },
   {
     "word": "Hang in there",
-    "explains": "坚持住"
+    "explains": "坚持住",
+    "freq": 631
   },
   {
     "word": "Cheer up!",
-    "explains": "振作起来"
+    "explains": "振作起来",
+    "freq": 2824
   },
   {
     "word": "That's too bad",
-    "explains": "那太糟糕了"
+    "explains": "那太糟糕了",
+    "freq": 229
   },
   {
     "word": "I'll be right back",
-    "explains": "我马上回来"
+    "explains": "我马上回来",
+    "freq": 83
   },
   {
     "word": "Make yourself at home",
-    "explains": "别拘束；当自己家"
+    "explains": "别拘束；当自己家",
+    "freq": 268
   },
   {
     "word": "What do you mean?",
-    "explains": "你是什么意思"
+    "explains": "你是什么意思",
+    "freq": 125
   },
   {
     "word": "Same here",
-    "explains": "我也一样"
+    "explains": "我也一样",
+    "freq": 240
   },
   {
     "word": "Good for you!",
-    "explains": "为你高兴；真棒"
+    "explains": "为你高兴；真棒",
+    "freq": 71
   },
   {
     "word": "Better late than never",
-    "explains": "迟到总比不到好"
+    "explains": "迟到总比不到好",
+    "freq": 382
   },
   {
     "word": "Practice makes perfect",
-    "explains": "熟能生巧"
+    "explains": "熟能生巧",
+    "freq": 1476
   },
   {
     "word": "It's worth a try",
-    "explains": "值得一试"
+    "explains": "值得一试",
+    "freq": 706
   },
   {
     "word": "Don't give up",
-    "explains": "别放弃"
+    "explains": "别放弃",
+    "freq": 128
   },
   {
     "word": "Good luck!",
-    "explains": "祝你好运"
+    "explains": "祝你好运",
+    "freq": 616
   },
   {
     "word": "Congratulations!",
-    "explains": "恭喜"
+    "explains": "恭喜",
+    "freq": 1044
   },
   {
     "word": "Happy birthday!",
-    "explains": "生日快乐"
+    "explains": "生日快乐",
+    "freq": 773
   },
   {
     "word": "Thank you anyway",
-    "explains": "无论如何都谢谢你"
+    "explains": "无论如何都谢谢你",
+    "freq": 430
   },
   {
     "word": "Actions speak louder than words",
-    "explains": "行动胜于言语"
+    "explains": "行动胜于言语",
+    "freq": 4619
   },
   {
     "word": "Let's keep in touch",
-    "explains": "我们保持联系"
+    "explains": "我们保持联系",
+    "freq": 600
   },
   {
     "word": "That's great!",
-    "explains": "太好了"
+    "explains": "太好了",
+    "freq": 171
   },
   {
     "word": "Really?",
-    "explains": "真的吗"
+    "explains": "真的吗",
+    "freq": 98
   },
   {
     "word": "Exactly!",
-    "explains": "没错；正是"
+    "explains": "没错；正是",
+    "freq": 384
   },
   {
     "word": "Of course",
-    "explains": "当然"
+    "explains": "当然",
+    "freq": 218
   },
   {
     "word": "Why not?",
-    "explains": "有什么不可以；好啊"
+    "explains": "有什么不可以；好啊",
+    "freq": 73
   },
   {
     "word": "I don't think so",
-    "explains": "我不这么认为"
+    "explains": "我不这么认为",
+    "freq": 67
   },
   {
     "word": "No way!",
-    "explains": "不可能；没门"
+    "explains": "不可能；没门",
+    "freq": 112
   },
   {
     "word": "Fair enough",
-    "explains": "有道理；说得过去"
+    "explains": "有道理；说得过去",
+    "freq": 841
   },
   {
     "word": "Good point",
-    "explains": "说得有道理"
+    "explains": "说得有道理",
+    "freq": 416
   },
   {
     "word": "I don't care",
-    "explains": "我不在乎"
+    "explains": "我不在乎",
+    "freq": 248
   },
   {
     "word": "No big deal",
-    "explains": "没什么大不了"
+    "explains": "没什么大不了",
+    "freq": 413
   },
   {
     "word": "I changed my mind",
-    "explains": "我改主意了"
+    "explains": "我改主意了",
+    "freq": 683
   },
   {
     "word": "I mean it",
-    "explains": "我是认真的"
+    "explains": "我是认真的",
+    "freq": 125
   },
   {
     "word": "Are you kidding me?",
-    "explains": "你在开玩笑吧"
+    "explains": "你在开玩笑吧",
+    "freq": 738
   },
   {
     "word": "Just kidding",
-    "explains": "开玩笑的"
+    "explains": "开玩笑的",
+    "freq": 738
   },
   {
     "word": "Oh my goodness!",
-    "explains": "我的天哪"
+    "explains": "我的天哪",
+    "freq": 1925
   },
   {
     "word": "Unbelievable!",
-    "explains": "难以置信"
+    "explains": "难以置信",
+    "freq": 2268
   },
   {
     "word": "What a pity!",
-    "explains": "真遗憾"
+    "explains": "真遗憾",
+    "freq": 2035
   },
   {
     "word": "Guess what!",
-    "explains": "你猜怎么着"
+    "explains": "你猜怎么着",
+    "freq": 315
   },
   {
     "word": "Believe it or not",
-    "explains": "信不信由你"
+    "explains": "信不信由你",
+    "freq": 205
   },
   {
     "word": "To be honest",
-    "explains": "说实话"
+    "explains": "说实话",
+    "freq": 971
   },
   {
     "word": "By the way",
-    "explains": "顺便说一下"
+    "explains": "顺便说一下",
+    "freq": 112
   },
   {
     "word": "What's the matter?",
-    "explains": "怎么了；出什么事了"
+    "explains": "怎么了；出什么事了",
+    "freq": 317
   },
   {
     "word": "What's wrong?",
-    "explains": "怎么了"
+    "explains": "怎么了",
+    "freq": 227
   },
   {
     "word": "What happened?",
-    "explains": "发生什么事了"
+    "explains": "发生什么事了",
+    "freq": 223
   },
   {
     "word": "Are you OK?",
-    "explains": "你还好吗"
+    "explains": "你还好吗",
+    "freq": 215
   },
   {
     "word": "Calm down",
-    "explains": "冷静点"
+    "explains": "冷静点",
+    "freq": 685
   },
   {
     "word": "Don't worry about it",
-    "explains": "别放在心上"
+    "explains": "别放在心上",
+    "freq": 362
   },
   {
     "word": "I'm so sorry",
-    "explains": "非常抱歉"
+    "explains": "非常抱歉",
+    "freq": 127
   },
   {
     "word": "My bad",
-    "explains": "是我的错"
+    "explains": "是我的错",
+    "freq": 229
   },
   {
     "word": "That's all right",
-    "explains": "没关系"
+    "explains": "没关系",
+    "freq": 49
   },
   {
     "word": "Could you do me a favor?",
-    "explains": "能帮我个忙吗"
+    "explains": "能帮我个忙吗",
+    "freq": 1186
   },
   {
     "word": "Could you give me a hand?",
-    "explains": "能帮我搭把手吗"
+    "explains": "能帮我搭把手吗",
+    "freq": 367
   },
   {
     "word": "Would you mind...?",
-    "explains": "你介意……吗"
+    "explains": "你介意……吗",
+    "freq": 258
   },
   {
     "word": "Do you need any help?",
-    "explains": "需要帮忙吗"
+    "explains": "需要帮忙吗",
+    "freq": 140
   },
   {
     "word": "Let me help you",
-    "explains": "让我来帮你"
+    "explains": "让我来帮你",
+    "freq": 140
   },
   {
     "word": "After you",
-    "explains": "您先请"
+    "explains": "您先请",
+    "freq": 162
   },
   {
     "word": "Help yourself",
-    "explains": "请自便"
+    "explains": "请自便",
+    "freq": 268
   },
   {
     "word": "Here you are",
-    "explains": "给你"
+    "explains": "给你",
+    "freq": 41
   },
   {
     "word": "Anything else?",
-    "explains": "还要别的吗"
+    "explains": "还要别的吗",
+    "freq": 242
   },
   {
     "word": "That's all",
-    "explains": "就这些了"
+    "explains": "就这些了",
+    "freq": 37
   },
   {
     "word": "I have a question",
-    "explains": "我有个问题"
+    "explains": "我有个问题",
+    "freq": 495
   },
   {
     "word": "What did you say?",
-    "explains": "你刚才说什么"
+    "explains": "你刚才说什么",
+    "freq": 101
   },
   {
     "word": "How do you say this in English?",
-    "explains": "这个用英语怎么说"
+    "explains": "这个用英语怎么说",
+    "freq": 978
   },
   {
     "word": "How do you spell it?",
-    "explains": "怎么拼写"
+    "explains": "怎么拼写",
+    "freq": 2176
   },
   {
     "word": "What do you think?",
-    "explains": "你觉得呢"
+    "explains": "你觉得呢",
+    "freq": 67
   },
   {
     "word": "How about you?",
-    "explains": "你呢"
+    "explains": "你呢",
+    "freq": 61
   },
   {
     "word": "What are you up to?",
-    "explains": "你在忙什么呢"
+    "explains": "你在忙什么呢",
+    "freq": 52
   },
   {
     "word": "Are you free tomorrow?",
-    "explains": "你明天有空吗"
+    "explains": "你明天有空吗",
+    "freq": 505
   },
   {
     "word": "Do you have any plans this weekend?",
-    "explains": "周末有什么安排"
+    "explains": "周末有什么安排",
+    "freq": 1368
   },
   {
     "word": "Count me in",
-    "explains": "算我一个"
+    "explains": "算我一个",
+    "freq": 872
   },
   {
     "word": "That works for me",
-    "explains": "我这边没问题"
+    "explains": "我这边没问题",
+    "freq": 721
   },
   {
     "word": "What time works for you?",
-    "explains": "你什么时间方便"
+    "explains": "你什么时间方便",
+    "freq": 721
   },
   {
     "word": "Where shall we meet?",
-    "explains": "我们在哪儿见"
+    "explains": "我们在哪儿见",
+    "freq": 440
   },
   {
     "word": "It's a deal",
-    "explains": "一言为定"
+    "explains": "一言为定",
+    "freq": 413
   },
   {
     "word": "I'm running late",
-    "explains": "我快迟到了"
+    "explains": "我快迟到了",
+    "freq": 565
   },
   {
     "word": "I'm stuck in traffic",
-    "explains": "我堵在路上了"
+    "explains": "我堵在路上了",
+    "freq": 2130
   },
   {
     "word": "Something came up",
-    "explains": "临时有点事"
+    "explains": "临时有点事",
+    "freq": 224
   },
   {
     "word": "Let's take a break",
-    "explains": "我们休息一下吧"
+    "explains": "我们休息一下吧",
+    "freq": 486
   },
   {
     "word": "I'm starving",
-    "explains": "我饿死了"
+    "explains": "我饿死了",
+    "freq": 3272
   },
   {
     "word": "I'm full",
-    "explains": "我吃饱了"
+    "explains": "我吃饱了",
+    "freq": 526
   },
   {
     "word": "I'm exhausted",
-    "explains": "我累坏了"
+    "explains": "我累坏了",
+    "freq": 3666
   },
   {
     "word": "I'm freezing",
-    "explains": "我快冻僵了"
+    "explains": "我快冻僵了",
+    "freq": 4018
   },
   {
     "word": "I can't stand it",
-    "explains": "我受不了了"
+    "explains": "我受不了了",
+    "freq": 461
   },
   {
     "word": "I've had enough",
-    "explains": "我受够了"
+    "explains": "我受够了",
+    "freq": 222
   },
   {
     "word": "I don't feel well",
-    "explains": "我不太舒服"
+    "explains": "我不太舒服",
+    "freq": 192
   },
   {
     "word": "I have a headache",
-    "explains": "我有点头疼"
+    "explains": "我有点头疼",
+    "freq": 3756
   },
   {
     "word": "Get well soon",
-    "explains": "早日康复"
+    "explains": "早日康复",
+    "freq": 360
   },
   {
     "word": "I overslept",
-    "explains": "我睡过头了"
+    "explains": "我睡过头了",
+    "freq": 17849
   },
   {
     "word": "I'm home",
-    "explains": "我回来了"
+    "explains": "我回来了",
+    "freq": 168
   },
   {
     "word": "Welcome back",
-    "explains": "欢迎回来"
+    "explains": "欢迎回来",
+    "freq": 498
   },
   {
     "word": "Dinner is ready",
-    "explains": "吃饭啦"
+    "explains": "吃饭啦",
+    "freq": 560
   },
   {
     "word": "Time for bed",
-    "explains": "该睡觉了"
+    "explains": "该睡觉了",
+    "freq": 524
   },
   {
     "word": "Sweet dreams",
-    "explains": "做个好梦"
+    "explains": "做个好梦",
+    "freq": 1108
   },
   {
     "word": "Hurry up",
-    "explains": "快点"
+    "explains": "快点",
+    "freq": 525
   },
   {
     "word": "Slow down",
-    "explains": "慢一点"
+    "explains": "慢一点",
+    "freq": 1054
   },
   {
     "word": "Be careful",
-    "explains": "小心点"
+    "explains": "小心点",
+    "freq": 665
   },
   {
     "word": "Watch out",
-    "explains": "当心"
+    "explains": "当心",
+    "freq": 365
   },
   {
     "word": "Good job!",
-    "explains": "干得好"
+    "explains": "干得好",
+    "freq": 269
   },
   {
     "word": "Well done",
-    "explains": "做得漂亮"
+    "explains": "做得漂亮",
+    "freq": 202
   },
   {
     "word": "You can do it",
-    "explains": "你能做到的"
+    "explains": "你能做到的",
+    "freq": 34
   },
   {
     "word": "You made it",
-    "explains": "你做到了"
+    "explains": "你做到了",
+    "freq": 196
   },
   {
     "word": "You deserve it",
-    "explains": "这是你应得的"
+    "explains": "这是你应得的",
+    "freq": 1362
   },
   {
     "word": "I'm proud of you",
-    "explains": "我为你骄傲"
+    "explains": "我为你骄傲",
+    "freq": 927
   },
   {
     "word": "Keep up the good work",
-    "explains": "再接再厉"
+    "explains": "再接再厉",
+    "freq": 181
   },
   {
     "word": "It's a piece of cake",
-    "explains": "小菜一碟"
+    "explains": "小菜一碟",
+    "freq": 1494
   },
   {
     "word": "It's worth it",
-    "explains": "很值得"
+    "explains": "很值得",
+    "freq": 706
   },
   {
     "word": "I can't afford it",
-    "explains": "我买不起"
+    "explains": "我买不起",
+    "freq": 1656
   },
   {
     "word": "What time is it?",
-    "explains": "现在几点了"
+    "explains": "现在几点了",
+    "freq": 80
   },
   {
     "word": "What day is it today?",
-    "explains": "今天星期几"
+    "explains": "今天星期几",
+    "freq": 232
   },
   {
     "word": "Time flies",
-    "explains": "时光飞逝"
+    "explains": "时光飞逝",
+    "freq": 3491
   },
   {
     "word": "As soon as possible",
-    "explains": "尽快"
+    "explains": "尽快",
+    "freq": 598
   },
   {
     "word": "It's a nice day today",
-    "explains": "今天天气不错"
+    "explains": "今天天气不错",
+    "freq": 232
   },
   {
     "word": "How much is it?",
-    "explains": "多少钱"
+    "explains": "多少钱",
+    "freq": 135
   },
   {
     "word": "Can I have the menu?",
-    "explains": "能给我菜单吗"
+    "explains": "能给我菜单吗",
+    "freq": 4328
   },
   {
     "word": "I'd like to order...",
-    "explains": "我想点……"
+    "explains": "我想点……",
+    "freq": 541
   },
   {
     "word": "Can I get the bill, please?",
-    "explains": "请给我结账"
+    "explains": "请给我结账",
+    "freq": 835
   },
   {
     "word": "Where is the restroom?",
-    "explains": "洗手间在哪里"
+    "explains": "洗手间在哪里",
+    "freq": 9827
   },
   {
     "word": "How do I get to the station?",
-    "explains": "去车站怎么走"
+    "explains": "去车站怎么走",
+    "freq": 806
   },
   {
     "word": "Is it far from here?",
-    "explains": "离这里远吗"
+    "explains": "离这里远吗",
+    "freq": 399
   },
   {
     "word": "Can you help me, please?",
-    "explains": "你能帮帮我吗"
+    "explains": "你能帮帮我吗",
+    "freq": 140
   },
   {
     "word": "I'm looking for the bank",
-    "explains": "我在找银行"
+    "explains": "我在找银行",
+    "freq": 917
   },
   {
     "word": "What time does it open?",
-    "explains": "几点开门"
+    "explains": "几点开门",
+    "freq": 343
   },
   {
     "word": "What time does it close?",
-    "explains": "几点关门"
+    "explains": "几点关门",
+    "freq": 431
   },
   {
     "word": "I'd like a ticket to Beijing",
-    "explains": "我想买一张去北京的票"
+    "explains": "我想买一张去北京的票",
+    "freq": 9580
   },
   {
     "word": "When does the train leave?",
-    "explains": "火车什么时候开"
+    "explains": "火车什么时候开",
+    "freq": 787
   },
   {
     "word": "How long does it take?",
-    "explains": "需要多长时间"
+    "explains": "需要多长时间",
+    "freq": 185
   },
   {
     "word": "Can I take a photo?",
-    "explains": "我可以拍照吗"
+    "explains": "我可以拍照吗",
+    "freq": 1515
   },
   {
     "word": "Where can I find a taxi?",
-    "explains": "哪里能打车"
+    "explains": "哪里能打车",
+    "freq": 2211
   },
   {
     "word": "Please stop here",
-    "explains": "请在这里停"
+    "explains": "请在这里停",
+    "freq": 160
   },
   {
     "word": "Keep the change",
-    "explains": "不用找零了"
+    "explains": "不用找零了",
+    "freq": 393
   },
   {
     "word": "Do you speak English?",
-    "explains": "你会说英语吗"
+    "explains": "你会说英语吗",
+    "freq": 978
   },
   {
     "word": "I don't understand",
-    "explains": "我不明白"
+    "explains": "我不明白",
+    "freq": 235
   },
   {
     "word": "Please say it again",
-    "explains": "请再说一遍"
+    "explains": "请再说一遍",
+    "freq": 154
   },
   {
     "word": "Could you speak more slowly?",
-    "explains": "能说慢一点吗"
+    "explains": "能说慢一点吗",
+    "freq": 1750
   },
   {
     "word": "What does this word mean?",
-    "explains": "这个单词什么意思"
+    "explains": "这个单词什么意思",
+    "freq": 436
   },
   {
     "word": "Call the police!",
-    "explains": "报警"
+    "explains": "报警",
+    "freq": 350
   },
   {
     "word": "Call an ambulance!",
-    "explains": "叫救护车"
+    "explains": "叫救护车",
+    "freq": 2454
   },
   {
     "word": "I'm lost",
-    "explains": "我迷路了"
+    "explains": "我迷路了",
+    "freq": 349
   },
   {
     "word": "I need to see a doctor",
-    "explains": "我需要看医生"
+    "explains": "我需要看医生",
+    "freq": 371
   },
   {
     "word": "Where can I find the hotel?",
-    "explains": "酒店在哪里"
+    "explains": "酒店在哪里",
+    "freq": 792
   },
   {
     "word": "I have a reservation",
-    "explains": "我有预订"
+    "explains": "我有预订",
+    "freq": 5703
   },
   {
     "word": "Check-in, please",
-    "explains": "请办理入住"
+    "explains": "请办理入住",
+    "freq": 410
   },
   {
     "word": "Check-out, please",
-    "explains": "请办理退房"
+    "explains": "请办理退房",
+    "freq": 410
   },
   {
     "word": "What's the weather like today?",
-    "explains": "今天天气怎么样"
+    "explains": "今天天气怎么样",
+    "freq": 1773
   },
   {
     "word": "It's going to rain",
-    "explains": "要下雨了"
+    "explains": "要下雨了",
+    "freq": 1358
   },
   {
     "word": "Let me get this",
-    "explains": "这顿我来付"
+    "explains": "这顿我来付",
+    "freq": 75
   },
   {
     "word": "Is there a discount?",
-    "explains": "有折扣吗"
+    "explains": "有折扣吗",
+    "freq": 6438
   },
   {
     "word": "Can I pay by credit card?",
-    "explains": "可以刷卡吗"
+    "explains": "可以刷卡吗",
+    "freq": 1583
   },
   {
     "word": "I'd like a refund",
-    "explains": "我想退款"
+    "explains": "我想退款",
+    "freq": 12458
   },
   {
     "word": "Where is the nearest hospital?",
-    "explains": "最近的医院在哪里"
+    "explains": "最近的医院在哪里",
+    "freq": 5690
   },
   {
     "word": "Does this bus go to downtown?",
-    "explains": "这趟车去市中心吗"
+    "explains": "这趟车去市中心吗",
+    "freq": 3362
   },
   {
     "word": "One ticket, please",
-    "explains": "请给我一张票"
+    "explains": "请给我一张票",
+    "freq": 1639
   },
   {
     "word": "Where's the luggage claim?",
-    "explains": "行李提取处在哪里"
+    "explains": "行李提取处在哪里",
+    "freq": 4518
   },
   {
     "word": "Could you recommend a restaurant?",
-    "explains": "能推荐一家餐厅吗"
+    "explains": "能推荐一家餐厅吗",
+    "freq": 4040
   },
   {
     "word": "It tastes delicious",
-    "explains": "味道好极了"
+    "explains": "味道好极了",
+    "freq": 3605
   },
   {
     "word": "I'm allergic to peanuts",
-    "explains": "我对花生过敏"
+    "explains": "我对花生过敏",
+    "freq": 7565
   },
   {
     "word": "Do you have anything cheaper?",
-    "explains": "有更便宜的吗"
+    "explains": "有更便宜的吗",
+    "freq": 6814
   },
   {
     "word": "Can I try it on?",
-    "explains": "我可以试穿吗"
+    "explains": "我可以试穿吗",
+    "freq": 252
   },
   {
     "word": "What size do you take?",
-    "explains": "你穿什么尺码"
+    "explains": "你穿什么尺码",
+    "freq": 1510
   },
   {
     "word": "I'll take it",
-    "explains": "我买了"
+    "explains": "我买了",
+    "freq": 90
   },
   {
     "word": "Could you wrap it as a gift?",
-    "explains": "能包成礼物吗"
+    "explains": "能包成礼物吗",
+    "freq": 3309
   },
   {
     "word": "Where's the elevator?",
-    "explains": "电梯在哪里"
+    "explains": "电梯在哪里",
+    "freq": 2518
   },
   {
     "word": "How can I get to the airport?",
-    "explains": "怎么去机场"
+    "explains": "怎么去机场",
+    "freq": 1993
   },
   {
     "word": "Is this seat taken?",
-    "explains": "这个座位有人吗"
+    "explains": "这个座位有人吗",
+    "freq": 990
   },
   {
     "word": "Could you take a photo for me?",
-    "explains": "能帮我拍张照吗"
+    "explains": "能帮我拍张照吗",
+    "freq": 1515
   },
   {
     "word": "May I speak to...?",
-    "explains": "请问……在吗"
+    "explains": "请问……在吗",
+    "freq": 472
   },
   {
     "word": "Hold on, please",
-    "explains": "请稍等，别挂断"
+    "explains": "请稍等，别挂断",
+    "freq": 295
   },
   {
     "word": "Can I take a message?",
-    "explains": "要留言吗"
+    "explains": "要留言吗",
+    "freq": 813
   },
   {
     "word": "You've got the wrong number",
-    "explains": "你打错电话了"
+    "explains": "你打错电话了",
+    "freq": 442
   },
   {
     "word": "I'll call you back",
-    "explains": "我待会儿回你电话"
+    "explains": "我待会儿回你电话",
+    "freq": 161
   },
   {
     "word": "Talk to you later",
-    "explains": "回头再聊"
+    "explains": "回头再聊",
+    "freq": 363
   },
   {
     "word": "Text me",
-    "explains": "给我发消息"
+    "explains": "给我发消息",
+    "freq": 2253
   },
   {
     "word": "I'm just browsing",
-    "explains": "我只是随便看看"
+    "explains": "我只是随便看看",
+    "freq": 25164
   },
   {
     "word": "It's on sale",
-    "explains": "在打折"
+    "explains": "在打折",
+    "freq": 2419
   },
   {
     "word": "It's sold out",
-    "explains": "卖完了"
+    "explains": "卖完了",
+    "freq": 1261
   },
   {
     "word": "For here or to go?",
-    "explains": "在这儿吃还是带走"
+    "explains": "在这儿吃还是带走",
+    "freq": 93
   },
   {
     "word": "To go, please",
-    "explains": "麻烦带走"
+    "explains": "麻烦带走",
+    "freq": 122
   },
   {
     "word": "Where are you from?",
-    "explains": "你来自哪里"
+    "explains": "你来自哪里",
+    "freq": 88
   },
   {
     "word": "I'm from China",
-    "explains": "我来自中国"
+    "explains": "我来自中国",
+    "freq": 2016
   },
   {
     "word": "What do you do for a living?",
-    "explains": "你做什么工作"
+    "explains": "你做什么工作",
+    "freq": 554
   },
   {
     "word": "Nice to meet you",
-    "explains": "很高兴认识你"
+    "explains": "很高兴认识你",
+    "freq": 318
   },
   {
     "word": "Pleased to meet you too",
-    "explains": "我也很高兴认识你"
+    "explains": "我也很高兴认识你",
+    "freq": 2003
   },
   {
     "word": "Could you write it down?",
-    "explains": "能写下来吗"
+    "explains": "能写下来吗",
+    "freq": 645
   },
   {
     "word": "I'm sorry to trouble you",
-    "explains": "抱歉打扰你了"
+    "explains": "抱歉打扰你了",
+    "freq": 485
   },
   {
     "word": "In my opinion",
-    "explains": "在我看来"
+    "explains": "在我看来",
+    "freq": 1632
   },
   {
     "word": "From my point of view",
-    "explains": "从我的角度看"
+    "explains": "从我的角度看",
+    "freq": 1589
   },
   {
     "word": "As far as I'm concerned",
-    "explains": "就我而言"
+    "explains": "就我而言",
+    "freq": 1582
   },
   {
     "word": "It is universally acknowledged that",
-    "explains": "众所周知"
+    "explains": "众所周知",
+    "freq": 31966
   },
   {
     "word": "There is no denying that",
-    "explains": "不可否认"
+    "explains": "不可否认",
+    "freq": 8380
   },
   {
     "word": "First and foremost",
-    "explains": "首先；最重要的是"
+    "explains": "首先；最重要的是",
+    "freq": 12792
   },
   {
     "word": "To begin with",
-    "explains": "首先"
+    "explains": "首先",
+    "freq": 1193
   },
   {
     "word": "Last but not least",
-    "explains": "最后但同样重要的是"
+    "explains": "最后但同样重要的是",
+    "freq": 444
   },
   {
     "word": "In addition",
-    "explains": "此外"
+    "explains": "此外",
+    "freq": 4999
   },
   {
     "word": "Moreover",
-    "explains": "而且；此外"
+    "explains": "而且；此外",
+    "freq": 9193
   },
   {
     "word": "Furthermore",
-    "explains": "此外；再者"
+    "explains": "此外；再者",
+    "freq": 10190
   },
   {
     "word": "What's more",
-    "explains": "更重要的是"
+    "explains": "更重要的是",
+    "freq": 111
   },
   {
     "word": "On the one hand",
-    "explains": "一方面"
+    "explains": "一方面",
+    "freq": 367
   },
   {
     "word": "On the other hand",
-    "explains": "另一方面"
+    "explains": "另一方面",
+    "freq": 367
   },
   {
     "word": "However",
-    "explains": "然而"
+    "explains": "然而",
+    "freq": 1282
   },
   {
     "word": "Nevertheless",
-    "explains": "尽管如此"
+    "explains": "尽管如此",
+    "freq": 6875
   },
   {
     "word": "Nonetheless",
-    "explains": "尽管如此"
+    "explains": "尽管如此",
+    "freq": 10782
   },
   {
     "word": "In contrast",
-    "explains": "相比之下"
+    "explains": "相比之下",
+    "freq": 11123
   },
   {
     "word": "On the contrary",
-    "explains": "相反"
+    "explains": "相反",
+    "freq": 4239
   },
   {
     "word": "As a result",
-    "explains": "因此；结果"
+    "explains": "因此；结果",
+    "freq": 2246
   },
   {
     "word": "Therefore",
-    "explains": "因此"
+    "explains": "因此",
+    "freq": 2349
   },
   {
     "word": "Consequently",
-    "explains": "因此；结果是"
+    "explains": "因此；结果是",
+    "freq": 20178
   },
   {
     "word": "Thus",
-    "explains": "因而；于是"
+    "explains": "因而；于是",
+    "freq": 3345
   },
   {
     "word": "In short",
-    "explains": "简而言之"
+    "explains": "简而言之",
+    "freq": 862
   },
   {
     "word": "In conclusion",
-    "explains": "总而言之"
+    "explains": "总而言之",
+    "freq": 4969
   },
   {
     "word": "To sum up",
-    "explains": "总结来说"
+    "explains": "总结来说",
+    "freq": 4831
   },
   {
     "word": "In a word",
-    "explains": "总之"
+    "explains": "总之",
+    "freq": 436
   },
   {
     "word": "All in all",
-    "explains": "总的来说"
+    "explains": "总的来说",
+    "freq": 37
   },
   {
     "word": "Above all",
-    "explains": "最重要的是"
+    "explains": "最重要的是",
+    "freq": 1272
   },
   {
     "word": "For example",
-    "explains": "例如"
+    "explains": "例如",
+    "freq": 1543
   },
   {
     "word": "For instance",
-    "explains": "比如"
+    "explains": "比如",
+    "freq": 3663
   },
   {
     "word": "Such as",
-    "explains": "例如"
+    "explains": "例如",
+    "freq": 298
   },
   {
     "word": "Take... for example",
-    "explains": "以……为例"
+    "explains": "以……为例",
+    "freq": 1543
   },
   {
     "word": "That is to say",
-    "explains": "也就是说"
+    "explains": "也就是说",
+    "freq": 101
   },
   {
     "word": "In other words",
-    "explains": "换句话说"
+    "explains": "换句话说",
+    "freq": 628
   },
   {
     "word": "It is worth noting that",
-    "explains": "值得注意的是"
+    "explains": "值得注意的是",
+    "freq": 31436
   },
   {
     "word": "It goes without saying that",
-    "explains": "不言而喻"
+    "explains": "不言而喻",
+    "freq": 470
   },
   {
     "word": "As is known to all",
-    "explains": "众所周知"
+    "explains": "众所周知",
+    "freq": 643
   },
   {
     "word": "As far as we know",
-    "explains": "据我们所知"
+    "explains": "据我们所知",
+    "freq": 399
   },
   {
     "word": "To a large extent",
-    "explains": "在很大程度上"
+    "explains": "在很大程度上",
+    "freq": 6962
   },
   {
     "word": "To some extent",
-    "explains": "在某种程度上"
+    "explains": "在某种程度上",
+    "freq": 6962
   },
   {
     "word": "Generally speaking",
-    "explains": "一般来说"
+    "explains": "一般来说",
+    "freq": 5279
   },
   {
     "word": "Frankly speaking",
-    "explains": "坦白说"
+    "explains": "坦白说",
+    "freq": 3145
   },
   {
     "word": "Needless to say",
-    "explains": "不用说"
+    "explains": "不用说",
+    "freq": 14099
   },
   {
     "word": "It's no wonder that",
-    "explains": "难怪"
+    "explains": "难怪",
+    "freq": 703
   },
   {
     "word": "It's not surprising that",
-    "explains": "不足为奇"
+    "explains": "不足为奇",
+    "freq": 4848
   },
   {
     "word": "Compared with",
-    "explains": "与……相比"
+    "explains": "与……相比",
+    "freq": 3714
   },
   {
     "word": "In terms of",
-    "explains": "就……而言"
+    "explains": "就……而言",
+    "freq": 2135
   },
   {
     "word": "With regard to",
-    "explains": "关于"
+    "explains": "关于",
+    "freq": 6018
   },
   {
     "word": "According to",
-    "explains": "根据"
+    "explains": "根据",
+    "freq": 1223
   },
   {
     "word": "Based on",
-    "explains": "基于"
+    "explains": "基于",
+    "freq": 1769
   },
   {
     "word": "Not only... but also...",
-    "explains": "不仅……而且……"
+    "explains": "不仅……而且……",
+    "freq": 301
   },
   {
     "word": "No matter what",
-    "explains": "无论什么"
+    "explains": "无论什么",
+    "freq": 317
   },
   {
     "word": "No matter how",
-    "explains": "无论如何"
+    "explains": "无论如何",
+    "freq": 317
   },
   {
     "word": "The more..., the more...",
-    "explains": "越……越……"
+    "explains": "越……越……",
+    "freq": 111
   },
   {
     "word": "It is high time that we",
-    "explains": "正是……的时候"
+    "explains": "正是……的时候",
+    "freq": 499
   },
   {
     "word": "We should take measures to",
-    "explains": "我们应采取行动"
+    "explains": "我们应采取行动",
+    "freq": 6062
   },
   {
     "word": "Play an important role in",
-    "explains": "在……中起重要作用"
+    "explains": "在……中起重要作用",
+    "freq": 2080
   },
   {
     "word": "There is no doubt that",
-    "explains": "毫无疑问"
+    "explains": "毫无疑问",
+    "freq": 1038
   },
   {
     "word": "It must be pointed out that",
-    "explains": "必须指出"
+    "explains": "必须指出",
+    "freq": 5287
   },
   {
     "word": "It is generally believed that",
-    "explains": "人们普遍认为"
+    "explains": "人们普遍认为",
+    "freq": 5279
   },
   {
     "word": "Make full use of",
-    "explains": "充分利用"
+    "explains": "充分利用",
+    "freq": 526
   },
   {
     "word": "Attach great importance to",
-    "explains": "非常重视"
+    "explains": "非常重视",
+    "freq": 10621
   },
   {
     "word": "Undoubtedly",
-    "explains": "毫无疑问"
+    "explains": "毫无疑问",
+    "freq": 10658
   }
 ]

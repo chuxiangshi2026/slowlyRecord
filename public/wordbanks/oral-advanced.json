@@ -1,422 +1,527 @@
 [
   {
     "word": "It's not rocket science",
-    "explains": "这又不是什么高深的事"
+    "explains": "这又不是什么高深的事",
+    "freq": 3571
   },
   {
     "word": "It's a no-brainer",
-    "explains": "这根本不用想"
+    "explains": "这根本不用想",
+    "freq": 27
   },
   {
     "word": "It's a win-win",
-    "explains": "这是双赢"
+    "explains": "这是双赢",
+    "freq": 607
   },
   {
     "word": "It's a steal",
-    "explains": "这价格跟白捡一样"
+    "explains": "这价格跟白捡一样",
+    "freq": 1235
   },
   {
     "word": "It's a rip-off",
-    "explains": "这也太坑人了"
+    "explains": "这也太坑人了",
+    "freq": 2967
   },
   {
     "word": "It's a bargain",
-    "explains": "真划算"
+    "explains": "真划算",
+    "freq": 4796
   },
   {
     "word": "It costs a fortune",
-    "explains": "花了一大笔钱"
+    "explains": "花了一大笔钱",
+    "freq": 2979
   },
   {
     "word": "I'm broke",
-    "explains": "我身无分文"
+    "explains": "我身无分文",
+    "freq": 805
   },
   {
     "word": "It's a long shot",
-    "explains": "成功希望很渺茫"
+    "explains": "成功希望很渺茫",
+    "freq": 483
   },
   {
     "word": "It's a toss-up",
-    "explains": "两边难分高下"
+    "explains": "两边难分高下",
+    "freq": 4681
   },
   {
     "word": "It's a grey area",
-    "explains": "这属于灰色地带"
+    "explains": "这属于灰色地带",
+    "freq": 3578
   },
   {
     "word": "It's a double-edged sword",
-    "explains": "这是把双刃剑"
+    "explains": "这是把双刃剑",
+    "freq": 43760
   },
   {
     "word": "Every coin has two sides",
-    "explains": "凡事都有两面"
+    "explains": "凡事都有两面",
+    "freq": 4167
   },
   {
     "word": "Small world!",
-    "explains": "世界真小"
+    "explains": "世界真小",
+    "freq": 577
   },
   {
     "word": "Here we go again",
-    "explains": "又来了"
+    "explains": "又来了",
+    "freq": 154
   },
   {
     "word": "That's the last straw",
-    "explains": "忍无可忍了"
+    "explains": "忍无可忍了",
+    "freq": 6162
   },
   {
     "word": "Get off my back",
-    "explains": "别再烦我了"
+    "explains": "别再烦我了",
+    "freq": 129
   },
   {
     "word": "Give me a break",
-    "explains": "饶了我吧"
+    "explains": "饶了我吧",
+    "freq": 486
   },
   {
     "word": "Cut me some slack",
-    "explains": "别对我太苛刻"
+    "explains": "别对我太苛刻",
+    "freq": 8004
   },
   {
     "word": "Get real",
-    "explains": "清醒一点吧"
+    "explains": "清醒一点吧",
+    "freq": 272
   },
   {
     "word": "Get a grip",
-    "explains": "冷静一点"
+    "explains": "冷静一点",
+    "freq": 4887
   },
   {
     "word": "Leave me alone",
-    "explains": "让我一个人待着"
+    "explains": "让我一个人待着",
+    "freq": 326
   },
   {
     "word": "Don't dwell on it",
-    "explains": "别再纠结这事了"
+    "explains": "别再纠结这事了",
+    "freq": 10250
   },
   {
     "word": "It's ancient history",
-    "explains": "都是老黄历了"
+    "explains": "都是老黄历了",
+    "freq": 1734
   },
   {
     "word": "It is what it is",
-    "explains": "事情就是这样，接受吧"
+    "explains": "事情就是这样，接受吧",
+    "freq": 14
   },
   {
     "word": "That's life",
-    "explains": "生活就是这样"
+    "explains": "生活就是这样",
+    "freq": 146
   },
   {
     "word": "It happens",
-    "explains": "谁都会碰上"
+    "explains": "谁都会碰上",
+    "freq": 618
   },
   {
     "word": "Don't beat yourself up",
-    "explains": "别太自责了"
+    "explains": "别太自责了",
+    "freq": 664
   },
   {
     "word": "Look on the bright side",
-    "explains": "往好处想想"
+    "explains": "往好处想想",
+    "freq": 1795
   },
   {
     "word": "It's not the end of the world",
-    "explains": "没那么严重"
+    "explains": "没那么严重",
+    "freq": 331
   },
   {
     "word": "Everything will work out",
-    "explains": "一切都会好起来的"
+    "explains": "一切都会好起来的",
+    "freq": 175
   },
   {
     "word": "Better safe than sorry",
-    "explains": "稳妥点总没坏处"
+    "explains": "稳妥点总没坏处",
+    "freq": 570
   },
   {
     "word": "Just in case",
-    "explains": "以防万一"
+    "explains": "以防万一",
+    "freq": 354
   },
   {
     "word": "I'll play it safe",
-    "explains": "我还是稳妥点"
+    "explains": "我还是稳妥点",
+    "freq": 570
   },
   {
     "word": "Better luck next time",
-    "explains": "下次运气会好的"
+    "explains": "下次运气会好的",
+    "freq": 616
   },
   {
     "word": "It's now or never",
-    "explains": "要做就趁现在"
+    "explains": "要做就趁现在",
+    "freq": 116
   },
   {
     "word": "One step at a time",
-    "explains": "一步一步来"
+    "explains": "一步一步来",
+    "freq": 692
   },
   {
     "word": "We're back to square one",
-    "explains": "又回到原点了"
+    "explains": "又回到原点了",
+    "freq": 1929
   },
   {
     "word": "Start from scratch",
-    "explains": "从零开始"
+    "explains": "从零开始",
+    "freq": 3107
   },
   {
     "word": "I should have seen it coming",
-    "explains": "我早该料到"
+    "explains": "我早该料到",
+    "freq": 280
   },
   {
     "word": "It slipped my mind",
-    "explains": "我一不留神忘了"
+    "explains": "我一不留神忘了",
+    "freq": 3535
   },
   {
     "word": "Off the top of my head",
-    "explains": "不查资料随口一说"
+    "explains": "不查资料随口一说",
+    "freq": 602
   },
   {
     "word": "If my memory serves me right",
-    "explains": "如果我没记错"
+    "explains": "如果我没记错",
+    "freq": 5878
   },
   {
     "word": "For what it's worth",
-    "explains": "仅供你参考"
+    "explains": "仅供你参考",
+    "freq": 706
   },
   {
     "word": "If you ask me",
-    "explains": "要我说"
+    "explains": "要我说",
+    "freq": 238
   },
   {
     "word": "If I were you, I'd wait",
-    "explains": "我要是你就会再等等"
+    "explains": "我要是你就会再等等",
+    "freq": 159
   },
   {
     "word": "I wouldn't count on it",
-    "explains": "别太指望"
+    "explains": "别太指望",
+    "freq": 872
   },
   {
     "word": "Don't hold your breath",
-    "explains": "别抱太大希望"
+    "explains": "别抱太大希望",
+    "freq": 1497
   },
   {
     "word": "It remains to be seen",
-    "explains": "还得再看看"
+    "explains": "还得再看看",
+    "freq": 2294
   },
   {
     "word": "Time will tell",
-    "explains": "时间会证明一切"
+    "explains": "时间会证明一切",
+    "freq": 97
   },
   {
     "word": "It's anyone's guess",
-    "explains": "谁也说不准"
+    "explains": "谁也说不准",
+    "freq": 315
   },
   {
     "word": "Your guess is as good as mine",
-    "explains": "我跟你一样没底"
+    "explains": "我跟你一样没底",
+    "freq": 421
   },
   {
     "word": "It boggles my mind",
-    "explains": "让我百思不得其解"
+    "explains": "让我百思不得其解",
+    "freq": 46077
   },
   {
     "word": "It blew me away",
-    "explains": "真让我大开眼界"
+    "explains": "真让我大开眼界",
+    "freq": 2437
   },
   {
     "word": "It's beyond me",
-    "explains": "这我实在搞不懂"
+    "explains": "这我实在搞不懂",
+    "freq": 1454
   },
   {
     "word": "It's out of my hands",
-    "explains": "这我管不了了"
+    "explains": "这我管不了了",
+    "freq": 411
   },
   {
     "word": "It's out of the question",
-    "explains": "想都别想"
+    "explains": "想都别想",
+    "freq": 495
   },
   {
     "word": "It's not worth it",
-    "explains": "这不值得"
+    "explains": "这不值得",
+    "freq": 706
   },
   {
     "word": "It's a waste of time",
-    "explains": "纯属浪费时间"
+    "explains": "纯属浪费时间",
+    "freq": 1247
   },
   {
     "word": "It's getting out of hand",
-    "explains": "有点收不住场了"
+    "explains": "有点收不住场了",
+    "freq": 367
   },
   {
     "word": "It's a mess",
-    "explains": "乱成一团了"
+    "explains": "乱成一团了",
+    "freq": 952
   },
   {
     "word": "It's a tough call",
-    "explains": "这个决定很难做"
+    "explains": "这个决定很难做",
+    "freq": 953
   },
   {
     "word": "It's a close call",
-    "explains": "真是好险"
+    "explains": "真是好险",
+    "freq": 431
   },
   {
     "word": "I'm on the fence",
-    "explains": "我还在犹豫"
+    "explains": "我还在犹豫",
+    "freq": 3418
   },
   {
     "word": "I have my reservations",
-    "explains": "我有些保留意见"
+    "explains": "我有些保留意见",
+    "freq": 8800
   },
   {
     "word": "That's debatable",
-    "explains": "这可不好说"
+    "explains": "这可不好说",
+    "freq": 29428
   },
   {
     "word": "Not necessarily",
-    "explains": "不一定"
+    "explains": "不一定",
+    "freq": 4129
   },
   {
     "word": "Not exactly",
-    "explains": "不完全是"
+    "explains": "不完全是",
+    "freq": 384
   },
   {
     "word": "Sort of",
-    "explains": "算是吧"
+    "explains": "算是吧",
+    "freq": 562
   },
   {
     "word": "To each their own",
-    "explains": "各有所好"
+    "explains": "各有所好",
+    "freq": 361
   },
   {
     "word": "It's only a matter of time",
-    "explains": "只是时间问题"
+    "explains": "只是时间问题",
+    "freq": 317
   },
   {
     "word": "All things considered",
-    "explains": "综合来看"
+    "explains": "综合来看",
+    "freq": 2370
   },
   {
     "word": "That said",
-    "explains": "话虽这么说"
+    "explains": "话虽这么说",
+    "freq": 126
   },
   {
     "word": "Mind you",
-    "explains": "话说回来"
+    "explains": "话说回来",
+    "freq": 258
   },
   {
     "word": "No offense",
-    "explains": "无意冒犯"
+    "explains": "无意冒犯",
+    "freq": 3539
   },
   {
     "word": "With all due respect",
-    "explains": "恕我直言"
+    "explains": "恕我直言",
+    "freq": 1417
   },
   {
     "word": "To put it mildly",
-    "explains": "说得客气点"
+    "explains": "说得客气点",
+    "freq": 17737
   },
   {
     "word": "So to speak",
-    "explains": "可以这么讲"
+    "explains": "可以这么讲",
+    "freq": 472
   },
   {
     "word": "The thing is",
-    "explains": "问题是这样的"
+    "explains": "问题是这样的",
+    "freq": 138
   },
   {
     "word": "The catch is",
-    "explains": "但麻烦在于"
+    "explains": "但麻烦在于",
+    "freq": 636
   },
   {
     "word": "Here's the thing",
-    "explains": "是这么回事"
+    "explains": "是这么回事",
+    "freq": 138
   },
   {
     "word": "You're missing the point",
-    "explains": "你没抓到重点"
+    "explains": "你没抓到重点",
+    "freq": 729
   },
   {
     "word": "Get to the point",
-    "explains": "说重点吧"
+    "explains": "说重点吧",
+    "freq": 416
   },
   {
     "word": "You lost me",
-    "explains": "我被你说糊涂了"
+    "explains": "我被你说糊涂了",
+    "freq": 349
   },
   {
     "word": "I don't buy it",
-    "explains": "我可不信"
+    "explains": "我可不信",
+    "freq": 511
   },
   {
     "word": "That's ridiculous",
-    "explains": "太离谱了"
+    "explains": "太离谱了",
+    "freq": 1336
   },
   {
     "word": "I can't argue with that",
-    "explains": "这话我反驳不了"
+    "explains": "这话我反驳不了",
+    "freq": 2897
   },
   {
     "word": "Now you're talking",
-    "explains": "这才像话嘛"
+    "explains": "这才像话嘛",
+    "freq": 244
   },
   {
     "word": "I'm all ears",
-    "explains": "我洗耳恭听"
+    "explains": "我洗耳恭听",
+    "freq": 1861
   },
   {
     "word": "You read my mind",
-    "explains": "你说到我心坎里了"
+    "explains": "你说到我心坎里了",
+    "freq": 462
   },
   {
     "word": "We're on the same page",
-    "explains": "我们想一块儿去了"
+    "explains": "我们想一块儿去了",
+    "freq": 1860
   },
   {
     "word": "My lips are sealed",
-    "explains": "我一定守口如瓶"
+    "explains": "我一定守口如瓶",
+    "freq": 4325
   },
   {
     "word": "Keep it to yourself",
-    "explains": "你自己知道就行"
+    "explains": "你自己知道就行",
+    "freq": 268
   },
   {
     "word": "I pulled an all-nighter",
-    "explains": "我熬了个通宵"
+    "explains": "我熬了个通宵",
+    "freq": 1445
   },
   {
     "word": "I stayed up all night",
-    "explains": "我一夜没睡"
+    "explains": "我一夜没睡",
+    "freq": 1695
   },
   {
     "word": "It's been a long day",
-    "explains": "今天真是漫长的一天"
+    "explains": "今天真是漫长的一天",
+    "freq": 182
   },
   {
     "word": "I could use a break",
-    "explains": "我真该歇歇了"
+    "explains": "我真该歇歇了",
+    "freq": 486
   },
   {
     "word": "Consider it done",
-    "explains": "包在我身上"
+    "explains": "包在我身上",
+    "freq": 1367
   },
   {
     "word": "That'll do",
-    "explains": "这样就可以了"
+    "explains": "这样就可以了",
+    "freq": 24
   },
   {
     "word": "Close enough",
-    "explains": "差不多了"
+    "explains": "差不多了",
+    "freq": 431
   },
   {
     "word": "Good enough",
-    "explains": "够用了"
+    "explains": "够用了",
+    "freq": 222
   },
   {
     "word": "It can wait",
-    "explains": "这事不急"
+    "explains": "这事不急",
+    "freq": 159
   },
   {
     "word": "Down to the wire",
-    "explains": "到最后关头了"
+    "explains": "到最后关头了",
+    "freq": 2598
   },
   {
     "word": "It's in the bag",
-    "explains": "十拿九稳了"
+    "explains": "十拿九稳了",
+    "freq": 801
   },
   {
     "word": "It's a long way to go",
-    "explains": "还有很长的路要走"
+    "explains": "还有很长的路要走",
+    "freq": 182
   }
 ]

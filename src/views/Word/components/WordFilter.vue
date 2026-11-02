@@ -151,6 +151,7 @@
       </div>
 
       <span
+        v-if="WORD_BOOK_ENABLED"
         :class="['ftag', 'word-book-action', {disabled: matchCount === 0}]"
         title="将当前筛选结果按 12 词一页生成词图章节"
         @click="matchCount > 0 && emit('create-book')"
@@ -165,6 +166,7 @@
 <script setup lang="ts">
 import { reactive, ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { Search, CircleClose } from '@element-plus/icons-vue'
+import { WORD_BOOK_ENABLED } from '@/constants'
 
 export interface FilterState {
   minLength: number  // 0 = 不限
@@ -214,7 +216,8 @@ const sortOptions = [
   { key: 'alpha', label: 'A-Z' },
   { key: 'length', label: '长度' },
   { key: 'time', label: '时间' },
-  { key: 'level', label: '等级' }
+  { key: 'level', label: '等级' },
+  { key: 'freq', label: '词频' }
 ]
 
 const isLengthActive = computed(() => filterState.minLength > 0 || filterState.maxLength > 0)
@@ -276,7 +279,7 @@ const toggleSort = (key: string) => {
     filterState.sortAsc = !filterState.sortAsc
   } else {
     filterState.sortBy = key
-    filterState.sortAsc = key === 'alpha' || key === 'level'
+    filterState.sortAsc = key === 'alpha' || key === 'level' || key === 'freq'
   }
   emitChange()
 }

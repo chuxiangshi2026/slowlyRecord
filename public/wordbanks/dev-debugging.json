@@ -1,774 +1,967 @@
 [
   {
     "word": "I'm stuck on this bug",
-    "explains": "我卡在这个 bug 上了"
+    "explains": "我卡在这个 bug 上了",
+    "freq": 3206
   },
   {
     "word": "This bug is hard to reproduce",
-    "explains": "这个 bug 很难复现"
+    "explains": "这个 bug 很难复现",
+    "freq": 14976
   },
   {
     "word": "This bug only shows up on my machine",
-    "explains": "这个 bug 只在我机器上出现"
+    "explains": "这个 bug 只在我机器上出现",
+    "freq": 3206
   },
   {
     "word": "It only happens on Safari",
-    "explains": "只在 Safari 上出现"
+    "explains": "只在 Safari 上出现",
+    "freq": 15060
   },
   {
     "word": "It only happens on Firefox",
-    "explains": "只在 Firefox 上出现"
+    "explains": "只在 Firefox 上出现",
+    "freq": 618
   },
   {
     "word": "It only happens on Chrome",
-    "explains": "只在 Chrome 上出现"
+    "explains": "只在 Chrome 上出现",
+    "freq": 20492
   },
   {
     "word": "It only happens on mobile",
-    "explains": "只在移动端出现"
+    "explains": "只在移动端出现",
+    "freq": 2910
   },
   {
     "word": "It only happens on production",
-    "explains": "只在生产环境出现"
+    "explains": "只在生产环境出现",
+    "freq": 2779
   },
   {
     "word": "It only happens in production",
-    "explains": "只在生产环境出现"
+    "explains": "只在生产环境出现",
+    "freq": 2779
   },
   {
     "word": "It only happens at night",
-    "explains": "只在晚上出现"
+    "explains": "只在晚上出现",
+    "freq": 618
   },
   {
     "word": "It only happens after login",
-    "explains": "只在登录后出现"
+    "explains": "只在登录后出现",
+    "freq": 41262
   },
   {
     "word": "It only happens on the first load",
-    "explains": "只在首次加载时出现"
+    "explains": "只在首次加载时出现",
+    "freq": 2278
   },
   {
     "word": "It only happens on cold start",
-    "explains": "只在冷启动时出现"
+    "explains": "只在冷启动时出现",
+    "freq": 625
   },
   {
     "word": "It only happens on a slow network",
-    "explains": "只在弱网下出现"
+    "explains": "只在弱网下出现",
+    "freq": 2935
   },
   {
     "word": "It only happens when offline",
-    "explains": "只在离线时出现"
+    "explains": "只在离线时出现",
+    "freq": 18595
   },
   {
     "word": "It only happens on click",
-    "explains": "只在点击时出现"
+    "explains": "只在点击时出现",
+    "freq": 4340
   },
   {
     "word": "It only happens on scroll",
-    "explains": "只在滚动时出现"
+    "explains": "只在滚动时出现",
+    "freq": 10960
   },
   {
     "word": "It only happens on resize",
-    "explains": "只在窗口缩放时出现"
+    "explains": "只在窗口缩放时出现",
+    "freq": 618
   },
   {
     "word": "It's a flaky bug",
-    "explains": "这是个偶发的 bug"
+    "explains": "这是个偶发的 bug",
+    "freq": 25328
   },
   {
     "word": "It's a race condition",
-    "explains": "这是竞态问题"
+    "explains": "这是竞态问题",
+    "freq": 1595
   },
   {
     "word": "It's a timing issue",
-    "explains": "这是时序问题"
+    "explains": "这是时序问题",
+    "freq": 3283
   },
   {
     "word": "It's a state leak",
-    "explains": "这是状态泄漏"
+    "explains": "这是状态泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a memory leak",
-    "explains": "这是内存泄漏"
+    "explains": "这是内存泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a null pointer",
-    "explains": "这是空指针"
+    "explains": "这是空指针",
+    "freq": 25903
   },
   {
     "word": "It's an off-by-one",
-    "explains": "这是差一错误"
+    "explains": "这是差一错误",
+    "freq": 129
   },
   {
     "word": "It's a typo",
-    "explains": "这是拼写错误"
+    "explains": "这是拼写错误",
+    "freq": 30636
   },
   {
     "word": "It's a copy-paste error",
-    "explains": "这是复制粘贴出错"
+    "explains": "这是复制粘贴出错",
+    "freq": 10642
   },
   {
     "word": "It's a config issue",
-    "explains": "这是配置问题"
+    "explains": "这是配置问题",
+    "freq": 1704
   },
   {
     "word": "It's a dependency issue",
-    "explains": "这是依赖问题"
+    "explains": "这是依赖问题",
+    "freq": 33130
   },
   {
     "word": "It's a cache issue",
-    "explains": "这是缓存问题"
+    "explains": "这是缓存问题",
+    "freq": 20171
   },
   {
     "word": "It's a stale cache",
-    "explains": "这是缓存过期"
+    "explains": "这是缓存过期",
+    "freq": 20171
   },
   {
     "word": "It's an encoding issue",
-    "explains": "这是编码问题"
+    "explains": "这是编码问题",
+    "freq": 1704
   },
   {
     "word": "It's a timezone issue",
-    "explains": "这是时区问题"
+    "explains": "这是时区问题",
+    "freq": 1704
   },
   {
     "word": "It's a race",
-    "explains": "这是竞态"
+    "explains": "这是竞态",
+    "freq": 1170
   },
   {
     "word": "It's a deadlock",
-    "explains": "这是死锁"
+    "explains": "这是死锁",
+    "freq": 35867
   },
   {
     "word": "It's a livelock",
-    "explains": "这是活锁"
+    "explains": "这是活锁",
+    "freq": 5
   },
   {
     "word": "It's an infinite loop",
-    "explains": "这是死循环"
+    "explains": "这是死循环",
+    "freq": 7620
   },
   {
     "word": "It's a recursion bug",
-    "explains": "这是递归问题"
+    "explains": "这是递归问题",
+    "freq": 3206
   },
   {
     "word": "It's a stack overflow",
-    "explains": "这是栈溢出"
+    "explains": "这是栈溢出",
+    "freq": 21941
   },
   {
     "word": "It's a heap overflow",
-    "explains": "这是堆溢出"
+    "explains": "这是堆溢出",
+    "freq": 21941
   },
   {
     "word": "It's a buffer overflow",
-    "explains": "这是缓冲区溢出"
+    "explains": "这是缓冲区溢出",
+    "freq": 21941
   },
   {
     "word": "It's a type error",
-    "explains": "这是类型错误"
+    "explains": "这是类型错误",
+    "freq": 4694
   },
   {
     "word": "It's a runtime error",
-    "explains": "这是运行时错误"
+    "explains": "这是运行时错误",
+    "freq": 4694
   },
   {
     "word": "It's a compile error",
-    "explains": "这是编译错误"
+    "explains": "这是编译错误",
+    "freq": 31317
   },
   {
     "word": "It's a lint error",
-    "explains": "这是 lint 报错"
+    "explains": "这是 lint 报错",
+    "freq": 25212
   },
   {
     "word": "It's a test failure",
-    "explains": "这是测试失败"
+    "explains": "这是测试失败",
+    "freq": 2620
   },
   {
     "word": "It's a crash",
-    "explains": "这是崩溃"
+    "explains": "这是崩溃",
+    "freq": 1964
   },
   {
     "word": "It's an exception",
-    "explains": "这是异常"
+    "explains": "这是异常",
+    "freq": 5578
   },
   {
     "word": "It's an unhandled promise rejection",
-    "explains": "这是未处理的 Promise 拒绝"
+    "explains": "这是未处理的 Promise 拒绝",
+    "freq": 10560
   },
   {
     "word": "It's a 500 error",
-    "explains": "这是 500 错误"
+    "explains": "这是 500 错误",
+    "freq": 4694
   },
   {
     "word": "It's a 502 error",
-    "explains": "这是 502 错误"
+    "explains": "这是 502 错误",
+    "freq": 4694
   },
   {
     "word": "It's a 504 error",
-    "explains": "这是 504 错误"
+    "explains": "这是 504 错误",
+    "freq": 4694
   },
   {
     "word": "It's a network error",
-    "explains": "这是网络错误"
+    "explains": "这是网络错误",
+    "freq": 4694
   },
   {
     "word": "It's a CORS error",
-    "explains": "这是跨域错误"
+    "explains": "这是跨域错误",
+    "freq": 4694
   },
   {
     "word": "It's an auth error",
-    "explains": "这是鉴权错误"
+    "explains": "这是鉴权错误",
+    "freq": 4694
   },
   {
     "word": "It's a permission error",
-    "explains": "这是权限错误"
+    "explains": "这是权限错误",
+    "freq": 4694
   },
   {
     "word": "It's a path error",
-    "explains": "这是路径错误"
+    "explains": "这是路径错误",
+    "freq": 4694
   },
   {
     "word": "It's an import error",
-    "explains": "这是导入错误"
+    "explains": "这是导入错误",
+    "freq": 12676
   },
   {
     "word": "It's a missing module",
-    "explains": "这是缺模块"
+    "explains": "这是缺模块",
+    "freq": 12587
   },
   {
     "word": "It's a version mismatch",
-    "explains": "这是版本不一致"
+    "explains": "这是版本不一致",
+    "freq": 2937
   },
   {
     "word": "It's an API change",
-    "explains": "这是接口变更"
+    "explains": "这是接口变更",
+    "freq": 393
   },
   {
     "word": "It's a breaking change",
-    "explains": "这是破坏性变更"
+    "explains": "这是破坏性变更",
+    "freq": 1528
   },
   {
     "word": "It's a typo in the key",
-    "explains": "这是 key 拼错"
+    "explains": "这是 key 拼错",
+    "freq": 30636
   },
   {
     "word": "It's a typo in the URL",
-    "explains": "这是 URL 拼错"
+    "explains": "这是 URL 拼错",
+    "freq": 30636
   },
   {
     "word": "It's a trailing slash issue",
-    "explains": "这是尾斜杠问题"
+    "explains": "这是尾斜杠问题",
+    "freq": 17485
   },
   {
     "word": "It's a capitalization issue",
-    "explains": "这是大小写问题"
+    "explains": "这是大小写问题",
+    "freq": 1704
   },
   {
     "word": "It's a casing issue",
-    "explains": "这是大小写问题"
+    "explains": "这是大小写问题",
+    "freq": 13218
   },
   {
     "word": "It's a newline issue",
-    "explains": "这是换行符问题"
+    "explains": "这是换行符问题",
+    "freq": 1704
   },
   {
     "word": "It's a BOM issue",
-    "explains": "这是 BOM 问题"
+    "explains": "这是 BOM 问题",
+    "freq": 16777
   },
   {
     "word": "It's a whitespace issue",
-    "explains": "这是空白字符问题"
+    "explains": "这是空白字符问题",
+    "freq": 1704
   },
   {
     "word": "It's a quoting issue",
-    "explains": "这是引号问题"
+    "explains": "这是引号问题",
+    "freq": 15042
   },
   {
     "word": "It's an escaping issue",
-    "explains": "这是转义问题"
+    "explains": "这是转义问题",
+    "freq": 7503
   },
   {
     "word": "It's a formatting issue",
-    "explains": "这是格式化问题"
+    "explains": "这是格式化问题",
+    "freq": 1704
   },
   {
     "word": "It's a locale issue",
-    "explains": "这是本地化问题"
+    "explains": "这是本地化问题",
+    "freq": 45021
   },
   {
     "word": "It's a date format issue",
-    "explains": "这是日期格式问题"
+    "explains": "这是日期格式问题",
+    "freq": 19370
   },
   {
     "word": "It's a number format issue",
-    "explains": "这是数字格式问题"
+    "explains": "这是数字格式问题",
+    "freq": 19370
   },
   {
     "word": "It's a decimal point issue",
-    "explains": "这是小数点问题"
+    "explains": "这是小数点问题",
+    "freq": 29692
   },
   {
     "word": "It's a thousand separator issue",
-    "explains": "这是千分位问题"
+    "explains": "这是千分位问题",
+    "freq": 1704
   },
   {
     "word": "It's a currency issue",
-    "explains": "这是货币问题"
+    "explains": "这是货币问题",
+    "freq": 8343
   },
   {
     "word": "It's an offset issue",
-    "explains": "这是偏移量问题"
+    "explains": "这是偏移量问题",
+    "freq": 27046
   },
   {
     "word": "It's a UTC issue",
-    "explains": "这是 UTC 问题"
+    "explains": "这是 UTC 问题",
+    "freq": 1704
   },
   {
     "word": "It's an ISO 8601 issue",
-    "explains": "这是 ISO 8601 问题"
+    "explains": "这是 ISO 8601 问题",
+    "freq": 42188
   },
   {
     "word": "It's a leap year issue",
-    "explains": "这是闰年问题"
+    "explains": "这是闰年问题",
+    "freq": 5732
   },
   {
     "word": "It's a DST issue",
-    "explains": "这是夏令时问题"
+    "explains": "这是夏令时问题",
+    "freq": 1704
   },
   {
     "word": "It's a rounding issue",
-    "explains": "这是四舍五入问题"
+    "explains": "这是四舍五入问题",
+    "freq": 17971
   },
   {
     "word": "It's a precision issue",
-    "explains": "这是精度问题"
+    "explains": "这是精度问题",
+    "freq": 10009
   },
   {
     "word": "It's a float issue",
-    "explains": "这是浮点数问题"
+    "explains": "这是浮点数问题",
+    "freq": 5679
   },
   {
     "word": "It's a NaN issue",
-    "explains": "这是 NaN 问题"
+    "explains": "这是 NaN 问题",
+    "freq": 7582
   },
   {
     "word": "It's an Infinity issue",
-    "explains": "这是 Infinity 问题"
+    "explains": "这是 Infinity 问题",
+    "freq": 13025
   },
   {
     "word": "It's an empty string issue",
-    "explains": "这是空字符串问题"
+    "explains": "这是空字符串问题",
+    "freq": 3820
   },
   {
     "word": "It's an empty array issue",
-    "explains": "这是空数组问题"
+    "explains": "这是空数组问题",
+    "freq": 11876
   },
   {
     "word": "It's an undefined issue",
-    "explains": "这是 undefined 问题"
+    "explains": "这是 undefined 问题",
+    "freq": 1704
   },
   {
     "word": "It's a null issue",
-    "explains": "这是 null 问题"
+    "explains": "这是 null 问题",
+    "freq": 25903
   },
   {
     "word": "It's a falsy value",
-    "explains": "这是假值"
+    "explains": "这是假值",
+    "freq": 2205
   },
   {
     "word": "It's a truthy value",
-    "explains": "这是真值"
+    "explains": "这是真值",
+    "freq": 2205
   },
   {
     "word": "It's a type coercion bug",
-    "explains": "这是类型强转问题"
+    "explains": "这是类型强转问题",
+    "freq": 28121
   },
   {
     "word": "It's a string comparison bug",
-    "explains": "这是字符串比较问题"
+    "explains": "这是字符串比较问题",
+    "freq": 8639
   },
   {
     "word": "It's a reference bug",
-    "explains": "这是引用问题"
+    "explains": "这是引用问题",
+    "freq": 5385
   },
   {
     "word": "It's a mutation bug",
-    "explains": "这是意外变更问题"
+    "explains": "这是意外变更问题",
+    "freq": 14439
   },
   {
     "word": "It's a shallow copy bug",
-    "explains": "这是浅拷贝问题"
+    "explains": "这是浅拷贝问题",
+    "freq": 6999
   },
   {
     "word": "It's a deep copy bug",
-    "explains": "这是深拷贝问题"
+    "explains": "这是深拷贝问题",
+    "freq": 3206
   },
   {
     "word": "It's a closure bug",
-    "explains": "这是闭包问题"
+    "explains": "这是闭包问题",
+    "freq": 9715
   },
   {
     "word": "It's a scope bug",
-    "explains": "这是作用域问题"
+    "explains": "这是作用域问题",
+    "freq": 9019
   },
   {
     "word": "It's a this binding bug",
-    "explains": "这是 this 绑定问题"
+    "explains": "这是 this 绑定问题",
+    "freq": 13428
   },
   {
     "word": "It's an async bug",
-    "explains": "这是异步问题"
+    "explains": "这是异步问题",
+    "freq": 3206
   },
   {
     "word": "It's a callback bug",
-    "explains": "这是回调问题"
+    "explains": "这是回调问题",
+    "freq": 32253
   },
   {
     "word": "It's a promise bug",
-    "explains": "这是 Promise 问题"
+    "explains": "这是 Promise 问题",
+    "freq": 3206
   },
   {
     "word": "It's a microtask bug",
-    "explains": "这是微任务问题"
+    "explains": "这是微任务问题",
+    "freq": 3206
   },
   {
     "word": "It's a macrotask bug",
-    "explains": "这是宏任务问题"
+    "explains": "这是宏任务问题",
+    "freq": 3206
   },
   {
     "word": "It's a render bug",
-    "explains": "这是渲染问题"
+    "explains": "这是渲染问题",
+    "freq": 13074
   },
   {
     "word": "It's a re-render bug",
-    "explains": "这是重复渲染问题"
+    "explains": "这是重复渲染问题",
+    "freq": 13074
   },
   {
     "word": "It's a hydration bug",
-    "explains": "这是水合问题"
+    "explains": "这是水合问题",
+    "freq": 46297
   },
   {
     "word": "It's a key bug",
-    "explains": "这是 key 问题（列表 key）"
+    "explains": "这是 key 问题（列表 key）",
+    "freq": 3206
   },
   {
     "word": "It's a lifecycle bug",
-    "explains": "这是生命周期问题"
+    "explains": "这是生命周期问题",
+    "freq": 3206
   },
   {
     "word": "It's a mount bug",
-    "explains": "这是挂载问题"
+    "explains": "这是挂载问题",
+    "freq": 4021
   },
   {
     "word": "It's an unmount bug",
-    "explains": "这是卸载问题"
+    "explains": "这是卸载问题",
+    "freq": 3206
   },
   {
     "word": "It's a teardown bug",
-    "explains": "这是销毁问题"
+    "explains": "这是销毁问题",
+    "freq": 3206
   },
   {
     "word": "It's a cleanup bug",
-    "explains": "这是清理问题"
+    "explains": "这是清理问题",
+    "freq": 15494
   },
   {
     "word": "It's a subscription leak",
-    "explains": "这是订阅泄漏"
+    "explains": "这是订阅泄漏",
+    "freq": 19649
   },
   {
     "word": "It's a listener leak",
-    "explains": "这是监听器泄漏"
+    "explains": "这是监听器泄漏",
+    "freq": 14631
   },
   {
     "word": "It's a timer leak",
-    "explains": "这是定时器泄漏"
+    "explains": "这是定时器泄漏",
+    "freq": 8098
   },
   {
     "word": "It's a worker leak",
-    "explains": "这是 worker 泄漏"
+    "explains": "这是 worker 泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a handle leak",
-    "explains": "这是句柄泄漏"
+    "explains": "这是句柄泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a connection leak",
-    "explains": "这是连接泄漏"
+    "explains": "这是连接泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a socket leak",
-    "explains": "这是 socket 泄漏"
+    "explains": "这是 socket 泄漏",
+    "freq": 16714
   },
   {
     "word": "It's a file descriptor leak",
-    "explains": "这是文件描述符泄漏"
+    "explains": "这是文件描述符泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a thread leak",
-    "explains": "这是线程泄漏"
+    "explains": "这是线程泄漏",
+    "freq": 6362
   },
   {
     "word": "It's a goroutine leak",
-    "explains": "这是 goroutine 泄漏"
+    "explains": "这是 goroutine 泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a process leak",
-    "explains": "这是进程泄漏"
+    "explains": "这是进程泄漏",
+    "freq": 4117
   },
   {
     "word": "It's a disk leak",
-    "explains": "这是磁盘泄漏"
+    "explains": "这是磁盘泄漏",
+    "freq": 9242
   },
   {
     "word": "It's a disk quota issue",
-    "explains": "这是磁盘配额问题"
+    "explains": "这是磁盘配额问题",
+    "freq": 14776
   },
   {
     "word": "It's a memory pressure issue",
-    "explains": "这是内存压力问题"
+    "explains": "这是内存压力问题",
+    "freq": 1704
   },
   {
     "word": "It's a CPU spike",
-    "explains": "这是 CPU 飙升"
+    "explains": "这是 CPU 飙升",
+    "freq": 40189
   },
   {
     "word": "It's a memory spike",
-    "explains": "这是内存飙升"
+    "explains": "这是内存飙升",
+    "freq": 4901
   },
   {
     "word": "It's a latency spike",
-    "explains": "这是延迟飙升"
+    "explains": "这是延迟飙升",
+    "freq": 4901
   },
   {
     "word": "It's a throughput drop",
-    "explains": "这是吞吐量下降"
+    "explains": "这是吞吐量下降",
+    "freq": 689
   },
   {
     "word": "It's a GC pause",
-    "explains": "这是 GC 停顿"
+    "explains": "这是 GC 停顿",
+    "freq": 7663
   },
   {
     "word": "It's a reflow",
-    "explains": "这是回流"
+    "explains": "这是回流",
+    "freq": 5
   },
   {
     "word": "It's a repaint",
-    "explains": "这是重绘"
+    "explains": "这是重绘",
+    "freq": 33535
   },
   {
     "word": "It's a layout thrashing",
-    "explains": "这是布局抖动"
+    "explains": "这是布局抖动",
+    "freq": 17316
   },
   {
     "word": "It's a forced sync layout",
-    "explains": "这是强制同步布局"
+    "explains": "这是强制同步布局",
+    "freq": 11622
   },
   {
     "word": "It's a main thread block",
-    "explains": "这是主线程阻塞"
+    "explains": "这是主线程阻塞",
+    "freq": 6362
   },
   {
     "word": "It's a blocking call",
-    "explains": "这是阻塞调用"
+    "explains": "这是阻塞调用",
+    "freq": 6971
   },
   {
     "word": "It's a long task",
-    "explains": "这是长任务"
+    "explains": "这是长任务",
+    "freq": 2698
   },
   {
     "word": "It's a dropped frame",
-    "explains": "这是丢帧"
+    "explains": "这是丢帧",
+    "freq": 3378
   },
   {
     "word": "It's a jank",
-    "explains": "这是卡顿"
+    "explains": "这是卡顿",
+    "freq": 5
   },
   {
     "word": "It's a lag",
-    "explains": "这是卡顿/延迟"
+    "explains": "这是卡顿/延迟",
+    "freq": 17831
   },
   {
     "word": "It's a freeze",
-    "explains": "这是冻结"
+    "explains": "这是冻结",
+    "freq": 2493
   },
   {
     "word": "It's a hang",
-    "explains": "这是挂起"
+    "explains": "这是挂起",
+    "freq": 631
   },
   {
     "word": "It's a timeout",
-    "explains": "这是超时"
+    "explains": "这是超时",
+    "freq": 34848
   },
   {
     "word": "It's a retry storm",
-    "explains": "这是重试风暴"
+    "explains": "这是重试风暴",
+    "freq": 1865
   },
   {
     "word": "It's a thundering herd",
-    "explains": "这是惊群"
+    "explains": "这是惊群",
+    "freq": 20750
   },
   {
     "word": "It's a hot loop",
-    "explains": "这是热循环"
+    "explains": "这是热循环",
+    "freq": 6197
   },
   {
     "word": "It's a busy wait",
-    "explains": "这是忙等"
+    "explains": "这是忙等",
+    "freq": 748
   },
   {
     "word": "It's a spin lock",
-    "explains": "这是自旋锁"
+    "explains": "这是自旋锁",
+    "freq": 3517
   },
   {
     "word": "It's a context switch overhead",
-    "explains": "这是上下文切换开销"
+    "explains": "这是上下文切换开销",
+    "freq": 9425
   },
   {
     "word": "It's an IO wait",
-    "explains": "这是 IO 等待"
+    "explains": "这是 IO 等待",
+    "freq": 14719
   },
   {
     "word": "It's an IO bound",
-    "explains": "这是 IO 密集型"
+    "explains": "这是 IO 密集型",
+    "freq": 14719
   },
   {
     "word": "It's a CPU bound",
-    "explains": "这是 CPU 密集型"
+    "explains": "这是 CPU 密集型",
+    "freq": 40189
   },
   {
     "word": "It's a network bound",
-    "explains": "这是网络密集型"
+    "explains": "这是网络密集型",
+    "freq": 2935
   },
   {
     "word": "It's a memory bound",
-    "explains": "这是内存密集型"
+    "explains": "这是内存密集型",
+    "freq": 2811
   },
   {
     "word": "It's a disk bound",
-    "explains": "这是磁盘密集型"
+    "explains": "这是磁盘密集型",
+    "freq": 9242
   },
   {
     "word": "It's a slow query",
-    "explains": "这是慢查询"
+    "explains": "这是慢查询",
+    "freq": 27622
   },
   {
     "word": "It's an N+1 query",
-    "explains": "这是 N+1 查询"
+    "explains": "这是 N+1 查询",
+    "freq": 27622
   },
   {
     "word": "It's a full table scan",
-    "explains": "这是全表扫描"
+    "explains": "这是全表扫描",
+    "freq": 4569
   },
   {
     "word": "It's a missing index",
-    "explains": "这是缺索引"
+    "explains": "这是缺索引",
+    "freq": 11844
   },
   {
     "word": "It's a wrong index",
-    "explains": "这是索引没生效"
+    "explains": "这是索引没生效",
+    "freq": 11844
   },
   {
     "word": "It's an implicit cast",
-    "explains": "这是隐式类型转换"
+    "explains": "这是隐式类型转换",
+    "freq": 39879
   },
   {
     "word": "It's an implicit conversion",
-    "explains": "这是隐式转换"
+    "explains": "这是隐式转换",
+    "freq": 39879
   },
   {
     "word": "It's an implicit coercion",
-    "explains": "这是隐式强转"
+    "explains": "这是隐式强转",
+    "freq": 39879
   },
   {
     "word": "It's a SQL injection",
-    "explains": "这是 SQL 注入"
+    "explains": "这是 SQL 注入",
+    "freq": 7489
   },
   {
     "word": "It's an XSS",
-    "explains": "这是跨站脚本攻击"
+    "explains": "这是跨站脚本攻击",
+    "freq": 81
   },
   {
     "word": "It's a CSRF",
-    "explains": "这是跨站请求伪造"
+    "explains": "这是跨站请求伪造",
+    "freq": 5
   },
   {
     "word": "It's a SSRF",
-    "explains": "这是服务端请求伪造"
+    "explains": "这是服务端请求伪造",
+    "freq": 5
   },
   {
     "word": "It's a path traversal",
-    "explains": "这是路径穿越"
+    "explains": "这是路径穿越",
+    "freq": 1777
   },
   {
     "word": "It's a command injection",
-    "explains": "这是命令注入"
+    "explains": "这是命令注入",
+    "freq": 7489
   },
   {
     "word": "It's a deserialization vuln",
-    "explains": "这是反序列化漏洞"
+    "explains": "这是反序列化漏洞",
+    "freq": 5
   },
   {
     "word": "It's a dependency vuln",
-    "explains": "这是依赖漏洞"
+    "explains": "这是依赖漏洞",
+    "freq": 33130
   },
   {
     "word": "It's a CVE",
-    "explains": "这是个已知漏洞编号"
+    "explains": "这是个已知漏洞编号",
+    "freq": 5
   },
   {
     "word": "It's a critical CVE",
-    "explains": "这是个严重漏洞"
+    "explains": "这是个严重漏洞",
+    "freq": 3891
   },
   {
     "word": "It's a high severity CVE",
-    "explains": "这是个高危漏洞"
+    "explains": "这是个高危漏洞",
+    "freq": 22473
   },
   {
     "word": "It's a medium severity CVE",
-    "explains": "这是个中危漏洞"
+    "explains": "这是个中危漏洞",
+    "freq": 22473
   },
   {
     "word": "It's a low severity CVE",
-    "explains": "这是个低危漏洞"
+    "explains": "这是个低危漏洞",
+    "freq": 22473
   },
   {
     "word": "It's a false positive",
-    "explains": "这是误报"
+    "explains": "这是误报",
+    "freq": 2317
   },
   {
     "word": "It's a false negative",
-    "explains": "这是漏报"
+    "explains": "这是漏报",
+    "freq": 2532
   },
   {
     "word": "It's a false alarm",
-    "explains": "这是误报"
+    "explains": "这是误报",
+    "freq": 2317
   },
   {
     "word": "It's a real regression",
-    "explains": "这是真回归"
+    "explains": "这是真回归",
+    "freq": 21076
   },
   {
     "word": "It's a real bug",
-    "explains": "这是真 bug"
+    "explains": "这是真 bug",
+    "freq": 3206
   },
   {
     "word": "It's not a bug, it's a feature",
-    "explains": "这不是 bug，是特性（经典推诿）"
+    "explains": "这不是 bug，是特性（经典推诿）",
+    "freq": 6389
   },
   {
     "word": "It's by design",
-    "explains": "这是设计如此"
+    "explains": "这是设计如此",
+    "freq": 2568
   },
   {
     "word": "It's expected behavior",
-    "explains": "这是预期行为"
+    "explains": "这是预期行为",
+    "freq": 2767
   },
   {
     "word": "It's documented behavior",
-    "explains": "这是文档定义的行为"
+    "explains": "这是文档定义的行为",
+    "freq": 14855
   },
   {
     "word": "It's documented",
-    "explains": "文档里有写"
+    "explains": "文档里有写",
+    "freq": 14855
   }
 ]

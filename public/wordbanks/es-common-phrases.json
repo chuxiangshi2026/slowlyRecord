@@ -1,222 +1,1102 @@
 [
-  {"word": "Hola", "explains": "你好"},
-  {"word": "Buenos días", "explains": "早上好"},
-  {"word": "Buenas tardes", "explains": "下午好"},
-  {"word": "Buenas noches", "explains": "晚上好；晚安"},
-  {"word": "Adiós", "explains": "再见"},
-  {"word": "Hasta luego", "explains": "回头见"},
-  {"word": "Hasta mañana", "explains": "明天见"},
-  {"word": "Por favor", "explains": "请"},
-  {"word": "Gracias", "explains": "谢谢"},
-  {"word": "Muchas gracias", "explains": "非常感谢"},
-  {"word": "De nada", "explains": "不客气"},
-  {"word": "Perdón", "explains": "对不起"},
-  {"word": "Lo siento", "explains": "很抱歉"},
-  {"word": "No pasa nada", "explains": "没关系"},
-  {"word": "¿Cómo estás?", "explains": "你好吗（熟人）"},
-  {"word": "¿Cómo está usted?", "explains": "您好吗（正式）"},
-  {"word": "Muy bien, gracias", "explains": "很好，谢谢"},
-  {"word": "¿Y tú?", "explains": "你呢"},
-  {"word": "Me llamo…", "explains": "我叫……"},
-  {"word": "¿Cómo te llamas?", "explains": "你叫什么名字"},
-  {"word": "Mucho gusto", "explains": "很高兴认识你"},
-  {"word": "¿De dónde eres?", "explains": "你来自哪里"},
-  {"word": "Soy de China", "explains": "我来自中国"},
-  {"word": "¿Hablas español?", "explains": "你说西班牙语吗"},
-  {"word": "Hablo un poco de español", "explains": "我会说一点西班牙语"},
-  {"word": "No entiendo", "explains": "我不明白"},
-  {"word": "¿Puede repetir, por favor?", "explains": "请再说一遍好吗"},
-  {"word": "Más despacio, por favor", "explains": "请说慢一点"},
-  {"word": "¿Qué significa…?", "explains": "……是什么意思"},
-  {"word": "¿Cómo se dice… en español?", "explains": "……用西班牙语怎么说"},
-  {"word": "¿Cuánto cuesta?", "explains": "多少钱"},
-  {"word": "Es muy caro", "explains": "太贵了"},
-  {"word": "¿Tiene…?", "explains": "有……吗"},
-  {"word": "Quiero…", "explains": "我想要……"},
-  {"word": "Necesito…", "explains": "我需要……"},
-  {"word": "¿Dónde está…?", "explains": "……在哪里"},
-  {"word": "¿Dónde está el baño?", "explains": "厕所在哪里"},
-  {"word": "¿Dónde está la estación?", "explains": "车站在哪里"},
-  {"word": "Estoy perdido", "explains": "我迷路了"},
-  {"word": "Ayúdeme, por favor", "explains": "请帮帮我"},
-  {"word": "Agua, por favor", "explains": "请给我水"},
-  {"word": "La cuenta, por favor", "explains": "请结账"},
-  {"word": "La carta, por favor", "explains": "请给我菜单"},
-  {"word": "¿Qué me recomienda?", "explains": "您推荐什么"},
-  {"word": "Está delicioso", "explains": "很好吃"},
-  {"word": "Soy alérgico a…", "explains": "我对……过敏"},
-  {"word": "Soy vegetariano", "explains": "我是素食者"},
-  {"word": "¿Tienen mesa para dos?", "explains": "有两人桌吗"},
-  {"word": "Tengo una reserva", "explains": "我有预约"},
-  {"word": "¿A qué hora abre?", "explains": "几点开门"},
-  {"word": "¿A qué hora cierra?", "explains": "几点关门"},
-  {"word": "¿Puedo pagar con tarjeta?", "explains": "可以刷卡吗"},
-  {"word": "En efectivo", "explains": "用现金"},
-  {"word": "¿Me da una bolsa, por favor?", "explains": "请给我一个袋子"},
-  {"word": "Solo estoy mirando", "explains": "我只是看看"},
-  {"word": "Voy a llevármelo", "explains": "我要买下它"},
-  {"word": "¿Tiene una talla más grande?", "explains": "有大一号的吗"},
-  {"word": "¿Puedo probármelo?", "explains": "可以试穿吗"},
-  {"word": "Estoy cansado", "explains": "我累了"},
-  {"word": "Tengo hambre", "explains": "我饿了"},
-  {"word": "Tengo sed", "explains": "我渴了"},
-  {"word": "Tengo sueño", "explains": "我困了"},
-  {"word": "Tengo frío", "explains": "我很冷"},
-  {"word": "Tengo calor", "explains": "我很热"},
-  {"word": "Hace buen tiempo", "explains": "天气很好"},
-  {"word": "Hace mal tiempo", "explains": "天气不好"},
-  {"word": "Está lloviendo", "explains": "在下雨"},
-  {"word": "Está nevando", "explains": "在下雪"},
-  {"word": "¿Qué hora es?", "explains": "几点了"},
-  {"word": "Es la una", "explains": "一点了"},
-  {"word": "Son las tres", "explains": "三点了"},
-  {"word": "A las ocho", "explains": "八点"},
-  {"word": "¡Feliz cumpleaños!", "explains": "生日快乐"},
-  {"word": "¡Feliz Año Nuevo!", "explains": "新年快乐"},
-  {"word": "¡Felicidades!", "explains": "祝贺"},
-  {"word": "¡Buena suerte!", "explains": "祝好运"},
-  {"word": "¡Salud!", "explains": "干杯；保重"},
-  {"word": "Cuídate", "explains": "照顾好自己"},
-  {"word": "Que te mejores", "explains": "早日康复"},
-  {"word": "No te preocupes", "explains": "别担心"},
-  {"word": "Tranquilo", "explains": "别紧张"},
-  {"word": "Claro que sí", "explains": "当然可以"},
-  {"word": "Tal vez", "explains": "也许"},
-  {"word": "Por supuesto", "explains": "当然"},
-  {"word": "De acuerdo", "explains": "同意"},
-  {"word": "No estoy de acuerdo", "explains": "我不同意"},
-  {"word": "Creo que sí", "explains": "我觉得是的"},
-  {"word": "Creo que no", "explains": "我觉得不是"},
-  {"word": "¿Verdad?", "explains": "对吧"},
-  {"word": "En serio", "explains": "真的"},
-  {"word": "¡Qué bien!", "explains": "太好了"},
-  {"word": "¡Qué lástima!", "explains": "真遗憾"},
-  {"word": "Un momento", "explains": "等一下"},
-  {"word": "¿Tienes un momento?", "explains": "你有时间吗"},
-  {"word": "Vamos juntos", "explains": "我们一起去"},
-  {"word": "Me gusta…", "explains": "我喜欢……"},
-  {"word": "Me encanta…", "explains": "我非常喜欢……"},
-  {"word": "Me gustaría…", "explains": "我想要……"},
-  {"word": "Tengo que…", "explains": "我必须……"},
-  {"word": "¿Qué tal?", "explains": "怎么样？"},
-  {"word": "¿Cómo te va?", "explains": "你最近怎么样？"},
-  {"word": "Bien, ¿y tú?", "explains": "很好，你呢？"},
-  {"word": "Nos vemos.", "explains": "回头见。"},
-  {"word": "Hasta pronto.", "explains": "回头见。"},
-  {"word": "Encantado de conocerte.", "explains": "很高兴认识你。"},
-  {"word": "Que tengas un buen día.", "explains": "祝你今天愉快。"},
-  {"word": "Igualmente.", "explains": "你也是。"},
-  {"word": "No hay de qué.", "explains": "不客气。"},
-  {"word": "Con gusto.", "explains": "乐意效劳。"},
-  {"word": "Disculpe.", "explains": "打扰一下。"},
-  {"word": "Perdone.", "explains": "请原谅。"},
-  {"word": "Lo siento mucho.", "explains": "非常抱歉。"},
-  {"word": "Fue culpa mía.", "explains": "是我的错。"},
-  {"word": "Vale.", "explains": "行。（西班牙口语）"},
-  {"word": "Bien hecho.", "explains": "干得好。"},
-  {"word": "¿Puedes ayudarme?", "explains": "你能帮我吗？"},
-  {"word": "¿Me puedes hacer un favor?", "explains": "能帮我个忙吗？"},
-  {"word": "¿Podrías repetirlo?", "explains": "你能重复一下吗？"},
-  {"word": "¿Puedes hablar más despacio?", "explains": "你能说慢点吗？"},
-  {"word": "No sé.", "explains": "我不知道。"},
-  {"word": "No estoy seguro.", "explains": "我不确定。"},
-  {"word": "Más o menos.", "explains": "差不多。"},
-  {"word": "¿Me trae…?", "explains": "能给我拿……吗？"},
-  {"word": "Quisiera…", "explains": "我想要……"},
-  {"word": "¿Dónde puedo comprar…?", "explains": "我在哪能买……？"},
-  {"word": "¿Hay… cerca?", "explains": "附近有……吗？"},
-  {"word": "¿A cuánto está?", "explains": "多少钱？"},
-  {"word": "¿Me lo puede envolver?", "explains": "能帮我包起来吗？"},
-  {"word": "¿Puedo pagar con el móvil?", "explains": "可以手机支付吗？"},
-  {"word": "Quédese con el cambio.", "explains": "不用找了。"},
-  {"word": "¿Tiene cambio?", "explains": "您有零钱吗？"},
-  {"word": "Necesito una factura.", "explains": "我需要发票。"},
-  {"word": "¿Puedo devolverlo?", "explains": "可以退吗？"},
-  {"word": "¿Se puede probar?", "explains": "可以试吗？"},
-  {"word": "Me queda bien.", "explains": "我穿着合适。"},
-  {"word": "¿Qué talla usa?", "explains": "您穿多大码？"},
-  {"word": "Para llevar.", "explains": "带走。"},
-  {"word": "Sin hielo.", "explains": "不加冰。"},
-  {"word": "Sin azúcar.", "explains": "不加糖。"},
-  {"word": "¿Nos trae la carta?", "explains": "能给我们菜单吗？"},
-  {"word": "¿Cuál es la especialidad?", "explains": "招牌菜是什么？"},
-  {"word": "Quiero reservar una mesa.", "explains": "我想订位。"},
-  {"word": "Para dos personas.", "explains": "两位。"},
-  {"word": "¿Tienen menú en inglés?", "explains": "有英文菜单吗？"},
-  {"word": "¿Está incluido el servicio?", "explains": "含服务费吗？"},
-  {"word": "¡Que aproveche!", "explains": "请慢用。"},
-  {"word": "¿Cuánto tarda?", "explains": "要多久？"},
-  {"word": "Todo recto.", "explains": "一直走。"},
-  {"word": "Gire a la derecha.", "explains": "右转。"},
-  {"word": "Gire a la izquierda.", "explains": "左转。"},
-  {"word": "Al lado de…", "explains": "在……旁边。"},
-  {"word": "Enfrente de…", "explains": "在……对面。"},
-  {"word": "¿Puede llevarme a…?", "explains": "能带我去……吗？"},
-  {"word": "Pare aquí, por favor.", "explains": "请在这儿停。"},
-  {"word": "¿Dónde está la parada?", "explains": "车站在哪？"},
-  {"word": "¿Cuál es la próxima parada?", "explains": "下一站是哪？"},
-  {"word": "Tengo que bajar aquí.", "explains": "我要在这下车。"},
-  {"word": "Un billete de ida.", "explains": "单程票。"},
-  {"word": "Un billete de ida y vuelta.", "explains": "往返票。"},
-  {"word": "¿A qué hora sale el tren?", "explains": "火车几点出发？"},
-  {"word": "He perdido mi equipaje.", "explains": "我行李丢了。"},
-  {"word": "¿Dónde recojo el equipaje?", "explains": "在哪取行李？"},
-  {"word": "Necesito un médico.", "explains": "我需要医生。"},
-  {"word": "Llame a una ambulancia.", "explains": "叫救护车。"},
-  {"word": "Es una emergencia.", "explains": "这是紧急情况。"},
-  {"word": "Me duele aquí.", "explains": "我这里疼。"},
-  {"word": "¿Tiene algo para el dolor?", "explains": "有止痛药吗？"},
-  {"word": "¿Cada cuánto lo tomo?", "explains": "多久吃一次？"},
-  {"word": "¿Tiene receta?", "explains": "需要处方吗？"},
-  {"word": "Estoy mejor.", "explains": "我好多了。"},
-  {"word": "¡Socorro!", "explains": "救命！"},
-  {"word": "Me han robado.", "explains": "我被偷了。"},
-  {"word": "Llame a la policía.", "explains": "请报警。"},
-  {"word": "¿Puedo usar el baño?", "explains": "可以用洗手间吗？"},
-  {"word": "¿Hay wifi?", "explains": "有 Wi-Fi 吗？"},
-  {"word": "¿Cuál es la contraseña?", "explains": "密码是多少？"},
-  {"word": "No hay señal.", "explains": "没信号。"},
-  {"word": "Se me ha cortado.", "explains": "断线了。"},
-  {"word": "¿Me lo manda por correo?", "explains": "能邮件发给我吗？"},
-  {"word": "¿Puede hablar más alto?", "explains": "能大声点吗？"},
-  {"word": "Estoy de vacaciones.", "explains": "我在度假。"},
-  {"word": "Estoy aquí por trabajo.", "explains": "我来出差。"},
-  {"word": "Me quedo tres días.", "explains": "我待三天。"},
-  {"word": "¿Se puede visitar?", "explains": "可以参观吗？"},
-  {"word": "¿Hay visita guiada?", "explains": "有导览吗？"},
-  {"word": "Es impresionante.", "explains": "太震撼了。"},
-  {"word": "Vale la pena.", "explains": "值得。"},
-  {"word": "¡Que tengas buen viaje!", "explains": "旅途愉快！"},
-  {"word": "Que descanses.", "explains": "好好休息。"},
-  {"word": "Que tengas suerte.", "explains": "祝你好运。"},
-  {"word": "Enhorabuena.", "explains": "恭喜。"},
-  {"word": "Cuenta conmigo.", "explains": "算我一个。"},
-  {"word": "Yo invito.", "explains": "我请客。"},
-  {"word": "Vamos a medias.", "explains": "AA 制。"},
-  {"word": "¿Te apetece…?", "explains": "你想……吗？"},
-  {"word": "Me apetece…", "explains": "我想……"},
-  {"word": "Prefiero…", "explains": "我更喜欢……"},
-  {"word": "No me importa.", "explains": "我不介意。"},
-  {"word": "Da igual.", "explains": "都行。"},
-  {"word": "Como quieras.", "explains": "随你。"},
-  {"word": "¡Vamos!", "explains": "走吧！"},
-  {"word": "Espera un momento.", "explains": "等一下。"},
-  {"word": "Ya voy.", "explains": "我这就来。"},
-  {"word": "Ya está.", "explains": "好了。"},
-  {"word": "No hace falta.", "explains": "不用了。"},
-  {"word": "No sé qué hacer.", "explains": "我不知道怎么办。"},
-  {"word": "No te rindas.", "explains": "别放弃。"},
-  {"word": "Ánimo.", "explains": "振作点。"},
-  {"word": "Es una pena.", "explains": "真遗憾。"},
-  {"word": "No me lo puedo creer.", "explains": "真不敢相信。"},
-  {"word": "¡No me digas!", "explains": "不会吧！"},
-  {"word": "¡Qué guay!", "explains": "真酷！"},
-  {"word": "Es genial.", "explains": "太棒了。"},
-  {"word": "No me gusta nada.", "explains": "我一点也不喜欢。"},
-  {"word": "Estoy harto.", "explains": "我受够了。"},
-  {"word": "Tienes razón.", "explains": "你说得对。"},
-  {"word": "Depende.", "explains": "看情况。"},
-  {"word": "Puede ser.", "explains": "可能吧。"},
-  {"word": "Sin duda.", "explains": "毫无疑问。"},
-  {"word": "Desde luego.", "explains": "当然。"}
+  {
+    "word": "Hola",
+    "explains": "你好",
+    "freq": 88
+  },
+  {
+    "word": "Buenos días",
+    "explains": "早上好",
+    "freq": 363
+  },
+  {
+    "word": "Buenas tardes",
+    "explains": "下午好",
+    "freq": 1769
+  },
+  {
+    "word": "Buenas noches",
+    "explains": "晚上好；晚安",
+    "freq": 384
+  },
+  {
+    "word": "Adiós",
+    "explains": "再见",
+    "freq": 297
+  },
+  {
+    "word": "Hasta luego",
+    "explains": "回头见",
+    "freq": 197
+  },
+  {
+    "word": "Hasta mañana",
+    "explains": "明天见",
+    "freq": 173
+  },
+  {
+    "word": "Por favor",
+    "explains": "请",
+    "freq": 102
+  },
+  {
+    "word": "Gracias",
+    "explains": "谢谢",
+    "freq": 70
+  },
+  {
+    "word": "Muchas gracias",
+    "explains": "非常感谢",
+    "freq": 298
+  },
+  {
+    "word": "De nada",
+    "explains": "不客气",
+    "freq": 58
+  },
+  {
+    "word": "Perdón",
+    "explains": "对不起",
+    "freq": 586
+  },
+  {
+    "word": "Lo siento",
+    "explains": "很抱歉",
+    "freq": 106
+  },
+  {
+    "word": "No pasa nada",
+    "explains": "没关系",
+    "freq": 159
+  },
+  {
+    "word": "¿Cómo estás?",
+    "explains": "你好吗（熟人）",
+    "freq": 59
+  },
+  {
+    "word": "¿Cómo está usted?",
+    "explains": "您好吗（正式）",
+    "freq": 86
+  },
+  {
+    "word": "Muy bien, gracias",
+    "explains": "很好，谢谢",
+    "freq": 70
+  },
+  {
+    "word": "¿Y tú?",
+    "explains": "你呢",
+    "freq": 56
+  },
+  {
+    "word": "Me llamo…",
+    "explains": "我叫……",
+    "freq": 777
+  },
+  {
+    "word": "¿Cómo te llamas?",
+    "explains": "你叫什么名字",
+    "freq": 1010
+  },
+  {
+    "word": "Mucho gusto",
+    "explains": "很高兴认识你",
+    "freq": 755
+  },
+  {
+    "word": "¿De dónde eres?",
+    "explains": "你来自哪里",
+    "freq": 99
+  },
+  {
+    "word": "Soy de China",
+    "explains": "我来自中国",
+    "freq": 1873
+  },
+  {
+    "word": "¿Hablas español?",
+    "explains": "你说西班牙语吗",
+    "freq": 3233
+  },
+  {
+    "word": "Hablo un poco de español",
+    "explains": "我会说一点西班牙语",
+    "freq": 3233
+  },
+  {
+    "word": "No entiendo",
+    "explains": "我不明白",
+    "freq": 318
+  },
+  {
+    "word": "¿Puede repetir, por favor?",
+    "explains": "请再说一遍好吗",
+    "freq": 5482
+  },
+  {
+    "word": "Más despacio, por favor",
+    "explains": "请说慢一点",
+    "freq": 1760
+  },
+  {
+    "word": "¿Qué significa…?",
+    "explains": "……是什么意思",
+    "freq": 325
+  },
+  {
+    "word": "¿Cómo se dice… en español?",
+    "explains": "……用西班牙语怎么说",
+    "freq": 3233
+  },
+  {
+    "word": "¿Cuánto cuesta?",
+    "explains": "多少钱",
+    "freq": 1832
+  },
+  {
+    "word": "Es muy caro",
+    "explains": "太贵了",
+    "freq": 3034
+  },
+  {
+    "word": "¿Tiene…?",
+    "explains": "有……吗",
+    "freq": 64
+  },
+  {
+    "word": "Quiero…",
+    "explains": "我想要……",
+    "freq": 67
+  },
+  {
+    "word": "Necesito…",
+    "explains": "我需要……",
+    "freq": 204
+  },
+  {
+    "word": "¿Dónde está…?",
+    "explains": "……在哪里",
+    "freq": 99
+  },
+  {
+    "word": "¿Dónde está el baño?",
+    "explains": "厕所在哪里",
+    "freq": 715
+  },
+  {
+    "word": "¿Dónde está la estación?",
+    "explains": "车站在哪里",
+    "freq": 1179
+  },
+  {
+    "word": "Estoy perdido",
+    "explains": "我迷路了",
+    "freq": 591
+  },
+  {
+    "word": "Ayúdeme, por favor",
+    "explains": "请帮帮我",
+    "freq": 5998
+  },
+  {
+    "word": "Agua, por favor",
+    "explains": "请给我水",
+    "freq": 358
+  },
+  {
+    "word": "La cuenta, por favor",
+    "explains": "请结账",
+    "freq": 262
+  },
+  {
+    "word": "La carta, por favor",
+    "explains": "请给我菜单",
+    "freq": 832
+  },
+  {
+    "word": "¿Qué me recomienda?",
+    "explains": "您推荐什么",
+    "freq": 17262
+  },
+  {
+    "word": "Está delicioso",
+    "explains": "很好吃",
+    "freq": 3133
+  },
+  {
+    "word": "Soy alérgico a…",
+    "explains": "我对……过敏",
+    "freq": 11407
+  },
+  {
+    "word": "Soy vegetariano",
+    "explains": "我是素食者",
+    "freq": 14503
+  },
+  {
+    "word": "¿Tienen mesa para dos?",
+    "explains": "有两人桌吗",
+    "freq": 828
+  },
+  {
+    "word": "Tengo una reserva",
+    "explains": "我有预约",
+    "freq": 3405
+  },
+  {
+    "word": "¿A qué hora abre?",
+    "explains": "几点开门",
+    "freq": 1011
+  },
+  {
+    "word": "¿A qué hora cierra?",
+    "explains": "几点关门",
+    "freq": 1354
+  },
+  {
+    "word": "¿Puedo pagar con tarjeta?",
+    "explains": "可以刷卡吗",
+    "freq": 1336
+  },
+  {
+    "word": "En efectivo",
+    "explains": "用现金",
+    "freq": 2203
+  },
+  {
+    "word": "¿Me da una bolsa, por favor?",
+    "explains": "请给我一个袋子",
+    "freq": 1216
+  },
+  {
+    "word": "Solo estoy mirando",
+    "explains": "我只是看看",
+    "freq": 982
+  },
+  {
+    "word": "Voy a llevármelo",
+    "explains": "我要买下它",
+    "freq": 24631
+  },
+  {
+    "word": "¿Tiene una talla más grande?",
+    "explains": "有大一号的吗",
+    "freq": 5623
+  },
+  {
+    "word": "¿Puedo probármelo?",
+    "explains": "可以试穿吗",
+    "freq": 65
+  },
+  {
+    "word": "Estoy cansado",
+    "explains": "我累了",
+    "freq": 1469
+  },
+  {
+    "word": "Tengo hambre",
+    "explains": "我饿了",
+    "freq": 826
+  },
+  {
+    "word": "Tengo sed",
+    "explains": "我渴了",
+    "freq": 3476
+  },
+  {
+    "word": "Tengo sueño",
+    "explains": "我困了",
+    "freq": 722
+  },
+  {
+    "word": "Tengo frío",
+    "explains": "我很冷",
+    "freq": 1044
+  },
+  {
+    "word": "Tengo calor",
+    "explains": "我很热",
+    "freq": 1369
+  },
+  {
+    "word": "Hace buen tiempo",
+    "explains": "天气很好",
+    "freq": 214
+  },
+  {
+    "word": "Hace mal tiempo",
+    "explains": "天气不好",
+    "freq": 219
+  },
+  {
+    "word": "Está lloviendo",
+    "explains": "在下雨",
+    "freq": 8547
+  },
+  {
+    "word": "Está nevando",
+    "explains": "在下雪",
+    "freq": 19749
+  },
+  {
+    "word": "¿Qué hora es?",
+    "explains": "几点了",
+    "freq": 245
+  },
+  {
+    "word": "Es la una",
+    "explains": "一点了",
+    "freq": 15
+  },
+  {
+    "word": "Son las tres",
+    "explains": "三点了",
+    "freq": 202
+  },
+  {
+    "word": "A las ocho",
+    "explains": "八点",
+    "freq": 928
+  },
+  {
+    "word": "¡Feliz cumpleaños!",
+    "explains": "生日快乐",
+    "freq": 863
+  },
+  {
+    "word": "¡Feliz Año Nuevo!",
+    "explains": "新年快乐",
+    "freq": 338
+  },
+  {
+    "word": "¡Felicidades!",
+    "explains": "祝贺",
+    "freq": 2232
+  },
+  {
+    "word": "¡Buena suerte!",
+    "explains": "祝好运",
+    "freq": 335
+  },
+  {
+    "word": "¡Salud!",
+    "explains": "干杯；保重",
+    "freq": 983
+  },
+  {
+    "word": "Cuídate",
+    "explains": "照顾好自己",
+    "freq": 3291
+  },
+  {
+    "word": "Que te mejores",
+    "explains": "早日康复",
+    "freq": 795
+  },
+  {
+    "word": "No te preocupes",
+    "explains": "别担心",
+    "freq": 533
+  },
+  {
+    "word": "Tranquilo",
+    "explains": "别紧张",
+    "freq": 804
+  },
+  {
+    "word": "Claro que sí",
+    "explains": "当然可以",
+    "freq": 166
+  },
+  {
+    "word": "Tal vez",
+    "explains": "也许",
+    "freq": 158
+  },
+  {
+    "word": "Por supuesto",
+    "explains": "当然",
+    "freq": 294
+  },
+  {
+    "word": "De acuerdo",
+    "explains": "同意",
+    "freq": 141
+  },
+  {
+    "word": "No estoy de acuerdo",
+    "explains": "我不同意",
+    "freq": 141
+  },
+  {
+    "word": "Creo que sí",
+    "explains": "我觉得是的",
+    "freq": 79
+  },
+  {
+    "word": "Creo que no",
+    "explains": "我觉得不是",
+    "freq": 79
+  },
+  {
+    "word": "¿Verdad?",
+    "explains": "对吧",
+    "freq": 90
+  },
+  {
+    "word": "En serio",
+    "explains": "真的",
+    "freq": 239
+  },
+  {
+    "word": "¡Qué bien!",
+    "explains": "太好了",
+    "freq": 26
+  },
+  {
+    "word": "¡Qué lástima!",
+    "explains": "真遗憾",
+    "freq": 1884
+  },
+  {
+    "word": "Un momento",
+    "explains": "等一下",
+    "freq": 167
+  },
+  {
+    "word": "¿Tienes un momento?",
+    "explains": "你有时间吗",
+    "freq": 167
+  },
+  {
+    "word": "Vamos juntos",
+    "explains": "我们一起去",
+    "freq": 330
+  },
+  {
+    "word": "Me gusta…",
+    "explains": "我喜欢……",
+    "freq": 207
+  },
+  {
+    "word": "Me encanta…",
+    "explains": "我非常喜欢……",
+    "freq": 735
+  },
+  {
+    "word": "Me gustaría…",
+    "explains": "我想要……",
+    "freq": 341
+  },
+  {
+    "word": "Tengo que…",
+    "explains": "我必须……",
+    "freq": 51
+  },
+  {
+    "word": "¿Qué tal?",
+    "explains": "怎么样？",
+    "freq": 158
+  },
+  {
+    "word": "¿Cómo te va?",
+    "explains": "你最近怎么样？",
+    "freq": 100
+  },
+  {
+    "word": "Bien, ¿y tú?",
+    "explains": "很好，你呢？",
+    "freq": 56
+  },
+  {
+    "word": "Nos vemos.",
+    "explains": "回头见。",
+    "freq": 646
+  },
+  {
+    "word": "Hasta pronto.",
+    "explains": "回头见。",
+    "freq": 333
+  },
+  {
+    "word": "Encantado de conocerte.",
+    "explains": "很高兴认识你。",
+    "freq": 1653
+  },
+  {
+    "word": "Que tengas un buen día.",
+    "explains": "祝你今天愉快。",
+    "freq": 872
+  },
+  {
+    "word": "Igualmente.",
+    "explains": "你也是。",
+    "freq": 3328
+  },
+  {
+    "word": "No hay de qué.",
+    "explains": "不客气。",
+    "freq": 49
+  },
+  {
+    "word": "Con gusto.",
+    "explains": "乐意效劳。",
+    "freq": 755
+  },
+  {
+    "word": "Disculpe.",
+    "explains": "打扰一下。",
+    "freq": 749
+  },
+  {
+    "word": "Perdone.",
+    "explains": "请原谅。",
+    "freq": 1656
+  },
+  {
+    "word": "Lo siento mucho.",
+    "explains": "非常抱歉。",
+    "freq": 106
+  },
+  {
+    "word": "Fue culpa mía.",
+    "explains": "是我的错。",
+    "freq": 616
+  },
+  {
+    "word": "Vale.",
+    "explains": "行。（西班牙口语）",
+    "freq": 176
+  },
+  {
+    "word": "Bien hecho.",
+    "explains": "干得好。",
+    "freq": 137
+  },
+  {
+    "word": "¿Puedes ayudarme?",
+    "explains": "你能帮我吗？",
+    "freq": 1348
+  },
+  {
+    "word": "¿Me puedes hacer un favor?",
+    "explains": "能帮我个忙吗？",
+    "freq": 119
+  },
+  {
+    "word": "¿Podrías repetirlo?",
+    "explains": "你能重复一下吗？",
+    "freq": 10843
+  },
+  {
+    "word": "¿Puedes hablar más despacio?",
+    "explains": "你能说慢点吗？",
+    "freq": 1760
+  },
+  {
+    "word": "No sé.",
+    "explains": "我不知道。",
+    "freq": 55
+  },
+  {
+    "word": "No estoy seguro.",
+    "explains": "我不确定。",
+    "freq": 180
+  },
+  {
+    "word": "Más o menos.",
+    "explains": "差不多。",
+    "freq": 190
+  },
+  {
+    "word": "¿Me trae…?",
+    "explains": "能给我拿……吗？",
+    "freq": 1068
+  },
+  {
+    "word": "Quisiera…",
+    "explains": "我想要……",
+    "freq": 858
+  },
+  {
+    "word": "¿Dónde puedo comprar…?",
+    "explains": "我在哪能买……？",
+    "freq": 818
+  },
+  {
+    "word": "¿Hay… cerca?",
+    "explains": "附近有……吗？",
+    "freq": 381
+  },
+  {
+    "word": "¿A cuánto está?",
+    "explains": "多少钱？",
+    "freq": 343
+  },
+  {
+    "word": "¿Me lo puede envolver?",
+    "explains": "能帮我包起来吗？",
+    "freq": 18690
+  },
+  {
+    "word": "¿Puedo pagar con el móvil?",
+    "explains": "可以手机支付吗？",
+    "freq": 2244
+  },
+  {
+    "word": "Quédese con el cambio.",
+    "explains": "不用找了。",
+    "freq": 3892
+  },
+  {
+    "word": "¿Tiene cambio?",
+    "explains": "您有零钱吗？",
+    "freq": 640
+  },
+  {
+    "word": "Necesito una factura.",
+    "explains": "我需要发票。",
+    "freq": 6141
+  },
+  {
+    "word": "¿Puedo devolverlo?",
+    "explains": "可以退吗？",
+    "freq": 11057
+  },
+  {
+    "word": "¿Se puede probar?",
+    "explains": "可以试吗？",
+    "freq": 1295
+  },
+  {
+    "word": "Me queda bien.",
+    "explains": "我穿着合适。",
+    "freq": 536
+  },
+  {
+    "word": "¿Qué talla usa?",
+    "explains": "您穿多大码？",
+    "freq": 5623
+  },
+  {
+    "word": "Para llevar.",
+    "explains": "带走。",
+    "freq": 602
+  },
+  {
+    "word": "Sin hielo.",
+    "explains": "不加冰。",
+    "freq": 1553
+  },
+  {
+    "word": "Sin azúcar.",
+    "explains": "不加糖。",
+    "freq": 2630
+  },
+  {
+    "word": "¿Nos trae la carta?",
+    "explains": "能给我们菜单吗？",
+    "freq": 1068
+  },
+  {
+    "word": "¿Cuál es la especialidad?",
+    "explains": "招牌菜是什么？",
+    "freq": 6770
+  },
+  {
+    "word": "Quiero reservar una mesa.",
+    "explains": "我想订位。",
+    "freq": 13900
+  },
+  {
+    "word": "Para dos personas.",
+    "explains": "两位。",
+    "freq": 299
+  },
+  {
+    "word": "¿Tienen menú en inglés?",
+    "explains": "有英文菜单吗？",
+    "freq": 5786
+  },
+  {
+    "word": "¿Está incluido el servicio?",
+    "explains": "含服务费吗？",
+    "freq": 7833
+  },
+  {
+    "word": "¡Que aproveche!",
+    "explains": "请慢用。",
+    "freq": 16556
+  },
+  {
+    "word": "¿Cuánto tarda?",
+    "explains": "要多久？",
+    "freq": 7205
+  },
+  {
+    "word": "Todo recto.",
+    "explains": "一直走。",
+    "freq": 7106
+  },
+  {
+    "word": "Gire a la derecha.",
+    "explains": "右转。",
+    "freq": 10854
+  },
+  {
+    "word": "Gire a la izquierda.",
+    "explains": "左转。",
+    "freq": 10854
+  },
+  {
+    "word": "Al lado de…",
+    "explains": "在……旁边。",
+    "freq": 285
+  },
+  {
+    "word": "Enfrente de…",
+    "explains": "在……对面。",
+    "freq": 3355
+  },
+  {
+    "word": "¿Puede llevarme a…?",
+    "explains": "能带我去……吗？",
+    "freq": 2886
+  },
+  {
+    "word": "Pare aquí, por favor.",
+    "explains": "请在这儿停。",
+    "freq": 3089
+  },
+  {
+    "word": "¿Dónde está la parada?",
+    "explains": "车站在哪？",
+    "freq": 2567
+  },
+  {
+    "word": "¿Cuál es la próxima parada?",
+    "explains": "下一站是哪？",
+    "freq": 2567
+  },
+  {
+    "word": "Tengo que bajar aquí.",
+    "explains": "我要在这下车。",
+    "freq": 1612
+  },
+  {
+    "word": "Un billete de ida.",
+    "explains": "单程票。",
+    "freq": 6048
+  },
+  {
+    "word": "Un billete de ida y vuelta.",
+    "explains": "往返票。",
+    "freq": 6048
+  },
+  {
+    "word": "¿A qué hora sale el tren?",
+    "explains": "火车几点出发？",
+    "freq": 951
+  },
+  {
+    "word": "He perdido mi equipaje.",
+    "explains": "我行李丢了。",
+    "freq": 3930
+  },
+  {
+    "word": "¿Dónde recojo el equipaje?",
+    "explains": "在哪取行李？",
+    "freq": 12732
+  },
+  {
+    "word": "Necesito un médico.",
+    "explains": "我需要医生。",
+    "freq": 704
+  },
+  {
+    "word": "Llame a una ambulancia.",
+    "explains": "叫救护车。",
+    "freq": 2580
+  },
+  {
+    "word": "Es una emergencia.",
+    "explains": "这是紧急情况。",
+    "freq": 1637
+  },
+  {
+    "word": "Me duele aquí.",
+    "explains": "我这里疼。",
+    "freq": 1185
+  },
+  {
+    "word": "¿Tiene algo para el dolor?",
+    "explains": "有止痛药吗？",
+    "freq": 733
+  },
+  {
+    "word": "¿Cada cuánto lo tomo?",
+    "explains": "多久吃一次？",
+    "freq": 2157
+  },
+  {
+    "word": "¿Tiene receta?",
+    "explains": "需要处方吗？",
+    "freq": 4599
+  },
+  {
+    "word": "Estoy mejor.",
+    "explains": "我好多了。",
+    "freq": 108
+  },
+  {
+    "word": "¡Socorro!",
+    "explains": "救命！",
+    "freq": 2915
+  },
+  {
+    "word": "Me han robado.",
+    "explains": "我被偷了。",
+    "freq": 1983
+  },
+  {
+    "word": "Llame a la policía.",
+    "explains": "请报警。",
+    "freq": 1523
+  },
+  {
+    "word": "¿Puedo usar el baño?",
+    "explains": "可以用洗手间吗？",
+    "freq": 715
+  },
+  {
+    "word": "¿Hay wifi?",
+    "explains": "有 Wi-Fi 吗？",
+    "freq": 32655
+  },
+  {
+    "word": "¿Cuál es la contraseña?",
+    "explains": "密码是多少？",
+    "freq": 6125
+  },
+  {
+    "word": "No hay señal.",
+    "explains": "没信号。",
+    "freq": 1008
+  },
+  {
+    "word": "Se me ha cortado.",
+    "explains": "断线了。",
+    "freq": 4622
+  },
+  {
+    "word": "¿Me lo manda por correo?",
+    "explains": "能邮件发给我吗？",
+    "freq": 3314
+  },
+  {
+    "word": "¿Puede hablar más alto?",
+    "explains": "能大声点吗？",
+    "freq": 525
+  },
+  {
+    "word": "Estoy de vacaciones.",
+    "explains": "我在度假。",
+    "freq": 1400
+  },
+  {
+    "word": "Estoy aquí por trabajo.",
+    "explains": "我来出差。",
+    "freq": 142
+  },
+  {
+    "word": "Me quedo tres días.",
+    "explains": "我待三天。",
+    "freq": 1923
+  },
+  {
+    "word": "¿Se puede visitar?",
+    "explains": "可以参观吗？",
+    "freq": 2994
+  },
+  {
+    "word": "¿Hay visita guiada?",
+    "explains": "有导览吗？",
+    "freq": 28262
+  },
+  {
+    "word": "Es impresionante.",
+    "explains": "太震撼了。",
+    "freq": 1943
+  },
+  {
+    "word": "Vale la pena.",
+    "explains": "值得。",
+    "freq": 710
+  },
+  {
+    "word": "¡Que tengas buen viaje!",
+    "explains": "旅途愉快！",
+    "freq": 872
+  },
+  {
+    "word": "Que descanses.",
+    "explains": "好好休息。",
+    "freq": 20292
+  },
+  {
+    "word": "Que tengas suerte.",
+    "explains": "祝你好运。",
+    "freq": 872
+  },
+  {
+    "word": "Enhorabuena.",
+    "explains": "恭喜。",
+    "freq": 3789
+  },
+  {
+    "word": "Cuenta conmigo.",
+    "explains": "算我一个。",
+    "freq": 262
+  },
+  {
+    "word": "Yo invito.",
+    "explains": "我请客。",
+    "freq": 4617
+  },
+  {
+    "word": "Vamos a medias.",
+    "explains": "AA 制。",
+    "freq": 4180
+  },
+  {
+    "word": "¿Te apetece…?",
+    "explains": "你想……吗？",
+    "freq": 3621
+  },
+  {
+    "word": "Me apetece…",
+    "explains": "我想……",
+    "freq": 3621
+  },
+  {
+    "word": "Prefiero…",
+    "explains": "我更喜欢……",
+    "freq": 1497
+  },
+  {
+    "word": "No me importa.",
+    "explains": "我不介意。",
+    "freq": 229
+  },
+  {
+    "word": "Da igual.",
+    "explains": "都行。",
+    "freq": 425
+  },
+  {
+    "word": "Como quieras.",
+    "explains": "随你。",
+    "freq": 673
+  },
+  {
+    "word": "¡Vamos!",
+    "explains": "走吧！",
+    "freq": 47
+  },
+  {
+    "word": "Espera un momento.",
+    "explains": "等一下。",
+    "freq": 184
+  },
+  {
+    "word": "Ya voy.",
+    "explains": "我这就来。",
+    "freq": 80
+  },
+  {
+    "word": "Ya está.",
+    "explains": "好了。",
+    "freq": 40
+  },
+  {
+    "word": "No hace falta.",
+    "explains": "不用了。",
+    "freq": 588
+  },
+  {
+    "word": "No sé qué hacer.",
+    "explains": "我不知道怎么办。",
+    "freq": 68
+  },
+  {
+    "word": "No te rindas.",
+    "explains": "别放弃。",
+    "freq": 10885
+  },
+  {
+    "word": "Ánimo.",
+    "explains": "振作点。",
+    "freq": 3792
+  },
+  {
+    "word": "Es una pena.",
+    "explains": "真遗憾。",
+    "freq": 710
+  },
+  {
+    "word": "No me lo puedo creer.",
+    "explains": "真不敢相信。",
+    "freq": 497
+  },
+  {
+    "word": "¡No me digas!",
+    "explains": "不会吧！",
+    "freq": 584
+  },
+  {
+    "word": "¡Qué guay!",
+    "explains": "真酷！",
+    "freq": 3914
+  },
+  {
+    "word": "Es genial.",
+    "explains": "太棒了。",
+    "freq": 292
+  },
+  {
+    "word": "No me gusta nada.",
+    "explains": "我一点也不喜欢。",
+    "freq": 207
+  },
+  {
+    "word": "Estoy harto.",
+    "explains": "我受够了。",
+    "freq": 3239
+  },
+  {
+    "word": "Tienes razón.",
+    "explains": "你说得对。",
+    "freq": 233
+  },
+  {
+    "word": "Depende.",
+    "explains": "看情况。",
+    "freq": 1430
+  },
+  {
+    "word": "Puede ser.",
+    "explains": "可能吧。",
+    "freq": 83
+  },
+  {
+    "word": "Sin duda.",
+    "explains": "毫无疑问。",
+    "freq": 1037
+  },
+  {
+    "word": "Desde luego.",
+    "explains": "当然。",
+    "freq": 197
+  }
 ]

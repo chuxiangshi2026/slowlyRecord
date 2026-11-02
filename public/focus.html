@@ -3772,6 +3772,14 @@
               return dir * (new Date(a.ctime || 0).getTime() - new Date(b.ctime || 0).getTime());
             case 'level':
               return dir * ((a.level || 0) - (b.level || 0));
+            case 'freq': {
+              const fa = typeof a.freq === 'number' ? a.freq : null;
+              const fb = typeof b.freq === 'number' ? b.freq : null;
+              if (fa === null && fb === null) return 0;
+              if (fa === null) return 1;
+              if (fb === null) return -1;
+              return dir * (fa - fb);
+            }
             default:
               return 0;
           }

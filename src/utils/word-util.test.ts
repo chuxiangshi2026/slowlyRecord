@@ -317,6 +317,11 @@ describe('filterWordsForJsonExport', () => {
     })
   })
 
+  it('词频字段随 JSON 导出（导出再导入不丢词频）', () => {
+    const words: Word[] = [createWord({ text: 'fold', explains: '折叠', freq: 4321 })]
+    expect(filterWordsForJsonExport(words)[0].freq).toBe(4321)
+  })
+
   it('应该正确处理多个单词', () => {
     const words: Word[] = [
       createWord({ text: 'hello', explains: '你好', level: 1 }),

@@ -17,6 +17,7 @@
         </span>
       </span>
       <span class="phonetic">{{ displayPhonetic }}</span>
+      <span v-if="word.freq" class="word-freq" :title="`词频排名 ${word.freq}（数字越小越常用）`">#{{ word.freq }}</span>
     </p>
     <div class="level">
       <el-tooltip class="box-item" effect="dark" :content="levelTooltip" placement="top" popper-class="small-tooltip">
@@ -39,7 +40,7 @@
         <el-tooltip class="box-item" effect="dark" content="认识（答对，按记忆牢固度升级）" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-check iconHover" @click="remember" :class="{ disabled: disableActions!=0 }"></i>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="dark" content="忘记（答错，等级降一级）" placement="top" popper-class="small-tooltip">
+        <el-tooltip class="box-item" effect="dark" content="忘记（答错，等级降 4 级，最低 1 级）" placement="top" popper-class="small-tooltip">
           <i class="iconfont icon-close iconHover" @click="forget"
              :class="{ disabled: disableActions==1||disableActions==3}"></i>
         </el-tooltip>
@@ -787,6 +788,14 @@ const deleteWord = () => {
 /* 第一个元素的样式 */
 .list-item.first-item {
   border-color: var(--utools-primary);
+}
+
+/* 词频排名标记：内置词库才有，弱化展示 */
+.word-freq {
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--utools-text-tertiary);
+  cursor: help;
 }
 
 /* ===== 字号档位密度适配 ===== */

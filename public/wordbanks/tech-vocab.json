@@ -1,7 +1,8 @@
 [
   {
     "word": "deploy",
-    "explains": "部署（把代码发布到服务器）"
+    "explains": "部署（把代码发布到服务器）",
+    "freq": 12028
   },
   {
     "word": "rollback",
@@ -13,23 +14,28 @@
   },
   {
     "word": "release",
-    "explains": "发布、版本"
+    "explains": "发布、版本",
+    "freq": 1622
   },
   {
     "word": "patch",
-    "explains": "补丁"
+    "explains": "补丁",
+    "freq": 4127
   },
   {
     "word": "build",
-    "explains": "构建、编译"
+    "explains": "构建、编译",
+    "freq": 1264
   },
   {
     "word": "compile",
-    "explains": "编译"
+    "explains": "编译",
+    "freq": 31317
   },
   {
     "word": "bundle",
-    "explains": "打包、包体"
+    "explains": "打包、包体",
+    "freq": 9292
   },
   {
     "word": "minify",
@@ -37,15 +43,18 @@
   },
   {
     "word": "tree-shaking",
-    "explains": "树摇（移除未使用的代码）"
+    "explains": "树摇（移除未使用的代码）",
+    "freq": 3930
   },
   {
     "word": "lint",
-    "explains": "静态检查代码规范"
+    "explains": "静态检查代码规范",
+    "freq": 25212
   },
   {
     "word": "type-check",
-    "explains": "类型检查"
+    "explains": "类型检查",
+    "freq": 1162
   },
   {
     "word": "refactor",
@@ -53,15 +62,18 @@
   },
   {
     "word": "rename",
-    "explains": "重命名"
+    "explains": "重命名",
+    "freq": 39890
   },
   {
     "word": "scope",
-    "explains": "作用域、范围"
+    "explains": "作用域、范围",
+    "freq": 9019
   },
   {
     "word": "closure",
-    "explains": "闭包"
+    "explains": "闭包",
+    "freq": 9715
   },
   {
     "word": "hoisting",
@@ -73,15 +85,18 @@
   },
   {
     "word": "null",
-    "explains": "空值"
+    "explains": "空值",
+    "freq": 25903
   },
   {
     "word": "type",
-    "explains": "类型"
+    "explains": "类型",
+    "freq": 1162
   },
   {
     "word": "interface",
-    "explains": "接口"
+    "explains": "接口",
+    "freq": 15088
   },
   {
     "word": "namespace",
@@ -89,11 +104,13 @@
   },
   {
     "word": "generic",
-    "explains": "泛型"
+    "explains": "泛型",
+    "freq": 20232
   },
   {
     "word": "overload",
-    "explains": "重载"
+    "explains": "重载",
+    "freq": 14494
   },
   {
     "word": "async",
@@ -101,19 +118,23 @@
   },
   {
     "word": "await",
-    "explains": "等待异步结果"
+    "explains": "等待异步结果",
+    "freq": 8206
   },
   {
     "word": "promise",
-    "explains": "承诺对象（异步结果占位）"
+    "explains": "承诺对象（异步结果占位）",
+    "freq": 568
   },
   {
     "word": "callback",
-    "explains": "回调函数"
+    "explains": "回调函数",
+    "freq": 32253
   },
   {
     "word": "event loop",
-    "explains": "事件循环"
+    "explains": "事件循环",
+    "freq": 6197
   },
   {
     "word": "microtask",
@@ -125,11 +146,13 @@
   },
   {
     "word": "render",
-    "explains": "渲染"
+    "explains": "渲染",
+    "freq": 13074
   },
   {
     "word": "mount",
-    "explains": "挂载组件"
+    "explains": "挂载组件",
+    "freq": 4021
   },
   {
     "word": "unmount",
@@ -137,31 +160,38 @@
   },
   {
     "word": "reactive",
-    "explains": "响应式的"
+    "explains": "响应式的",
+    "freq": 28154
   },
   {
     "word": "computed",
-    "explains": "计算属性"
+    "explains": "计算属性",
+    "freq": 42395
   },
   {
     "word": "watch",
-    "explains": "侦听变化"
+    "explains": "侦听变化",
+    "freq": 365
   },
   {
     "word": "props",
-    "explains": "父传子的属性"
+    "explains": "父传子的属性",
+    "freq": 11011
   },
   {
     "word": "slot",
-    "explains": "插槽"
+    "explains": "插槽",
+    "freq": 8926
   },
   {
     "word": "directive",
-    "explains": "指令"
+    "explains": "指令",
+    "freq": 16472
   },
   {
     "word": "hydration",
-    "explains": "水合（SSR 接管页面）"
+    "explains": "水合（SSR 接管页面）",
+    "freq": 46297
   },
   {
     "word": "SSR",
@@ -173,11 +203,13 @@
   },
   {
     "word": "cache",
-    "explains": "缓存"
+    "explains": "缓存",
+    "freq": 20171
   },
   {
     "word": "stale",
-    "explains": "过期的、陈旧的"
+    "explains": "过期的、陈旧的",
+    "freq": 12719
   },
   {
     "word": "ttl",
@@ -185,23 +217,28 @@
   },
   {
     "word": "in-memory",
-    "explains": "内存中的"
+    "explains": "内存中的",
+    "freq": 1301
   },
   {
     "word": "persist",
-    "explains": "持久化"
+    "explains": "持久化",
+    "freq": 17799
   },
   {
     "word": "hydration mismatch",
-    "explains": "水合不一致"
+    "explains": "水合不一致",
+    "freq": 46297
   },
   {
     "word": "re-render",
-    "explains": "重复渲染"
+    "explains": "重复渲染",
+    "freq": 13074
   },
   {
     "word": "diff",
-    "explains": "差异对比"
+    "explains": "差异对比",
+    "freq": 27094
   },
   {
     "word": "vdom",
@@ -209,7 +246,8 @@
   },
   {
     "word": "state",
-    "explains": "状态"
+    "explains": "状态",
+    "freq": 715
   },
   {
     "word": "reducer",
@@ -217,7 +255,8 @@
   },
   {
     "word": "action",
-    "explains": "动作"
+    "explains": "动作",
+    "freq": 1175
   },
   {
     "word": "middleware",
@@ -225,7 +264,8 @@
   },
   {
     "word": "interceptor",
-    "explains": "拦截器"
+    "explains": "拦截器",
+    "freq": 33709
   },
   {
     "word": "polyfill",
@@ -233,31 +273,38 @@
   },
   {
     "word": "feature detect",
-    "explains": "特性检测"
+    "explains": "特性检测",
+    "freq": 7228
   },
   {
     "word": "fallback",
-    "explains": "兜底方案"
+    "explains": "兜底方案",
+    "freq": 39000
   },
   {
     "word": "degrade",
-    "explains": "降级"
+    "explains": "降级",
+    "freq": 28639
   },
   {
     "word": "guard",
-    "explains": "守卫（拦截保护）"
+    "explains": "守卫（拦截保护）",
+    "freq": 1192
   },
   {
     "word": "permission",
-    "explains": "权限"
+    "explains": "权限",
+    "freq": 1871
   },
   {
     "word": "token",
-    "explains": "令牌"
+    "explains": "令牌",
+    "freq": 7914
   },
   {
     "word": "refresh",
-    "explains": "刷新"
+    "explains": "刷新",
+    "freq": 13955
   },
   {
     "word": "oauth",
@@ -277,11 +324,13 @@
   },
   {
     "word": "cookie",
-    "explains": "浏览器存储的键值对"
+    "explains": "浏览器存储的键值对",
+    "freq": 4160
   },
   {
     "word": "session",
-    "explains": "会话"
+    "explains": "会话",
+    "freq": 3592
   },
   {
     "word": "endpoint",
@@ -289,7 +338,8 @@
   },
   {
     "word": "payload",
-    "explains": "请求负载数据"
+    "explains": "请求负载数据",
+    "freq": 25719
   },
   {
     "word": "schema",
@@ -297,7 +347,8 @@
   },
   {
     "word": "validation",
-    "explains": "校验"
+    "explains": "校验",
+    "freq": 26101
   },
   {
     "word": "serialization",
@@ -313,7 +364,8 @@
   },
   {
     "word": "decoding",
-    "explains": "解码"
+    "explains": "解码",
+    "freq": 32448
   },
   {
     "word": "url",
@@ -321,27 +373,33 @@
   },
   {
     "word": "path",
-    "explains": "路径"
+    "explains": "路径",
+    "freq": 1777
   },
   {
     "word": "route",
-    "explains": "路由"
+    "explains": "路由",
+    "freq": 2475
   },
   {
     "word": "query",
-    "explains": "查询参数"
+    "explains": "查询参数",
+    "freq": 27622
   },
   {
     "word": "header",
-    "explains": "请求头"
+    "explains": "请求头",
+    "freq": 24839
   },
   {
     "word": "body",
-    "explains": "请求体"
+    "explains": "请求体",
+    "freq": 423
   },
   {
     "word": "content-type",
-    "explains": "内容类型"
+    "explains": "内容类型",
+    "freq": 4744
   },
   {
     "word": "gzip",
@@ -353,7 +411,8 @@
   },
   {
     "word": "timeout",
-    "explains": "超时"
+    "explains": "超时",
+    "freq": 34848
   },
   {
     "word": "retry",
@@ -365,11 +424,13 @@
   },
   {
     "word": "rate limit",
-    "explains": "限流"
+    "explains": "限流",
+    "freq": 3424
   },
   {
     "word": "throttle",
-    "explains": "节流"
+    "explains": "节流",
+    "freq": 12654
   },
   {
     "word": "debounce",
@@ -381,15 +442,18 @@
   },
   {
     "word": "lock",
-    "explains": "锁"
+    "explains": "锁",
+    "freq": 1270
   },
   {
     "word": "deadlock",
-    "explains": "死锁"
+    "explains": "死锁",
+    "freq": 35867
   },
   {
     "word": "race condition",
-    "explains": "竞态条件"
+    "explains": "竞态条件",
+    "freq": 1595
   },
   {
     "word": "idempotent",
@@ -397,27 +461,33 @@
   },
   {
     "word": "atomic",
-    "explains": "原子的"
+    "explains": "原子的",
+    "freq": 7333
   },
   {
     "word": "transaction",
-    "explains": "事务"
+    "explains": "事务",
+    "freq": 10266
   },
   {
     "word": "commit",
-    "explains": "提交"
+    "explains": "提交",
+    "freq": 2659
   },
   {
     "word": "abort",
-    "explains": "中止"
+    "explains": "中止",
+    "freq": 9168
   },
   {
     "word": "crash",
-    "explains": "崩溃"
+    "explains": "崩溃",
+    "freq": 1964
   },
   {
     "word": "stack trace",
-    "explains": "堆栈跟踪"
+    "explains": "堆栈跟踪",
+    "freq": 6964
   },
   {
     "word": "traceback",
@@ -425,43 +495,53 @@
   },
   {
     "word": "assertion",
-    "explains": "断言"
+    "explains": "断言",
+    "freq": 37171
   },
   {
     "word": "assertion failed",
-    "explains": "断言失败"
+    "explains": "断言失败",
+    "freq": 37171
   },
   {
     "word": "exception",
-    "explains": "异常"
+    "explains": "异常",
+    "freq": 5578
   },
   {
     "word": "stack overflow",
-    "explains": "栈溢出"
+    "explains": "栈溢出",
+    "freq": 21941
   },
   {
     "word": "memory leak",
-    "explains": "内存泄漏"
+    "explains": "内存泄漏",
+    "freq": 4117
   },
   {
     "word": "out of memory",
-    "explains": "内存耗尽"
+    "explains": "内存耗尽",
+    "freq": 1301
   },
   {
     "word": "garbage collection",
-    "explains": "垃圾回收"
+    "explains": "垃圾回收",
+    "freq": 2903
   },
   {
     "word": "benchmark",
-    "explains": "性能基准测试"
+    "explains": "性能基准测试",
+    "freq": 44747
   },
   {
     "word": "profiler",
-    "explains": "性能剖析工具"
+    "explains": "性能剖析工具",
+    "freq": 28112
   },
   {
     "word": "bottleneck",
-    "explains": "瓶颈"
+    "explains": "瓶颈",
+    "freq": 43542
   },
   {
     "word": "throughput",
@@ -469,91 +549,113 @@
   },
   {
     "word": "warm up",
-    "explains": "预热"
+    "explains": "预热",
+    "freq": 1328
   },
   {
     "word": "cold start",
-    "explains": "冷启动"
+    "explains": "冷启动",
+    "freq": 625
   },
   {
     "word": "index",
-    "explains": "索引"
+    "explains": "索引",
+    "freq": 11844
   },
   {
     "word": "query plan",
-    "explains": "查询执行计划"
+    "explains": "查询执行计划",
+    "freq": 27622
   },
   {
     "word": "n+1 query",
-    "explains": "逐条查询的低效模式"
+    "explains": "逐条查询的低效模式",
+    "freq": 27622
   },
   {
     "word": "shard",
-    "explains": "分片"
+    "explains": "分片",
+    "freq": 22866
   },
   {
     "word": "replica",
-    "explains": "副本"
+    "explains": "副本",
+    "freq": 14863
   },
   {
     "word": "replicate",
-    "explains": "复制"
+    "explains": "复制",
+    "freq": 17207
   },
   {
     "word": "consistency",
-    "explains": "一致性"
+    "explains": "一致性",
+    "freq": 18685
   },
   {
     "word": "availability",
-    "explains": "可用性"
+    "explains": "可用性",
+    "freq": 29896
   },
   {
     "word": "partition",
-    "explains": "分区"
+    "explains": "分区",
+    "freq": 23697
   },
   {
     "word": "circuit breaker",
-    "explains": "熔断器"
+    "explains": "熔断器",
+    "freq": 12423
   },
   {
     "word": "retry policy",
-    "explains": "重试策略"
+    "explains": "重试策略",
+    "freq": 2716
   },
   {
     "word": "graceful shutdown",
-    "explains": "优雅停机"
+    "explains": "优雅停机",
+    "freq": 19811
   },
   {
     "word": "health check",
-    "explains": "健康检查"
+    "explains": "健康检查",
+    "freq": 1449
   },
   {
     "word": "log",
-    "explains": "日志"
+    "explains": "日志",
+    "freq": 4072
   },
   {
     "word": "trace id",
-    "explains": "链路追踪标识"
+    "explains": "链路追踪标识",
+    "freq": 2557
   },
   {
     "word": "metric",
-    "explains": "指标"
+    "explains": "指标",
+    "freq": 26202
   },
   {
     "word": "dashboard",
-    "explains": "仪表盘"
+    "explains": "仪表盘",
+    "freq": 21484
   },
   {
     "word": "alarm",
-    "explains": "告警"
+    "explains": "告警",
+    "freq": 1751
   },
   {
     "word": "incident",
-    "explains": "线上事故"
+    "explains": "线上事故",
+    "freq": 2495
   },
   {
     "word": "postmortem",
-    "explains": "事故复盘"
+    "explains": "事故复盘",
+    "freq": 14003
   },
   {
     "word": "sla",
@@ -561,23 +663,28 @@
   },
   {
     "word": "downtime",
-    "explains": "停机时间"
+    "explains": "停机时间",
+    "freq": 33785
   },
   {
     "word": "on-call",
-    "explains": "值班"
+    "explains": "值班",
+    "freq": 161
   },
   {
     "word": "monitor",
-    "explains": "监控"
+    "explains": "监控",
+    "freq": 3488
   },
   {
     "word": "audit",
-    "explains": "审计"
+    "explains": "审计",
+    "freq": 15172
   },
   {
     "word": "sensitive",
-    "explains": "敏感的（数据）"
+    "explains": "敏感的（数据）",
+    "freq": 2846
   },
   {
     "word": "desensitize",
@@ -589,15 +696,18 @@
   },
   {
     "word": "decrypt",
-    "explains": "解密"
+    "explains": "解密",
+    "freq": 39255
   },
   {
     "word": "hash",
-    "explains": "哈希"
+    "explains": "哈希",
+    "freq": 10093
   },
   {
     "word": "salt",
-    "explains": "加盐"
+    "explains": "加盐",
+    "freq": 2641
   },
   {
     "word": "credential",
@@ -605,7 +715,8 @@
   },
   {
     "word": "leak",
-    "explains": "泄漏"
+    "explains": "泄漏",
+    "freq": 4117
   },
   {
     "word": "xss",
@@ -617,99 +728,123 @@
   },
   {
     "word": "upload",
-    "explains": "上传"
+    "explains": "上传",
+    "freq": 14028
   },
   {
     "word": "download",
-    "explains": "下载"
+    "explains": "下载",
+    "freq": 9306
   },
   {
     "word": "import",
-    "explains": "导入"
+    "explains": "导入",
+    "freq": 12676
   },
   {
     "word": "export",
-    "explains": "导出"
+    "explains": "导出",
+    "freq": 14152
   },
   {
     "word": "migrate",
-    "explains": "迁移"
+    "explains": "迁移",
+    "freq": 26099
   },
   {
     "word": "seed",
-    "explains": "初始化数据"
+    "explains": "初始化数据",
+    "freq": 5314
   },
   {
     "word": "fixture",
-    "explains": "测试固定数据"
+    "explains": "测试固定数据",
+    "freq": 30313
   },
   {
     "word": "mock",
-    "explains": "模拟"
+    "explains": "模拟",
+    "freq": 7233
   },
   {
     "word": "stub",
-    "explains": "桩函数"
+    "explains": "桩函数",
+    "freq": 22060
   },
   {
     "word": "spy",
-    "explains": "监听（函数调用）"
+    "explains": "监听（函数调用）",
+    "freq": 2514
   },
   {
     "word": "coverage",
-    "explains": "覆盖率"
+    "explains": "覆盖率",
+    "freq": 8141
   },
   {
     "word": "e2e test",
-    "explains": "端到端测试"
+    "explains": "端到端测试",
+    "freq": 1565
   },
   {
     "word": "unit test",
-    "explains": "单元测试"
+    "explains": "单元测试",
+    "freq": 1740
   },
   {
     "word": "integration test",
-    "explains": "集成测试"
+    "explains": "集成测试",
+    "freq": 20592
   },
   {
     "word": "regression",
-    "explains": "回归"
+    "explains": "回归",
+    "freq": 21076
   },
   {
     "word": "flaky test",
-    "explains": "不稳定的测试"
+    "explains": "不稳定的测试",
+    "freq": 25328
   },
   {
     "word": "snapshot",
-    "explains": "快照"
+    "explains": "快照",
+    "freq": 23725
   },
   {
     "word": "ci",
-    "explains": "持续集成"
+    "explains": "持续集成",
+    "freq": 16883
   },
   {
     "word": "cd",
-    "explains": "持续交付"
+    "explains": "持续交付",
+    "freq": 6219
   },
   {
     "word": "pipeline",
-    "explains": "流水线"
+    "explains": "流水线",
+    "freq": 12753
   },
   {
     "word": "artifact",
-    "explains": "构建产物"
+    "explains": "构建产物",
+    "freq": 13420
   },
   {
     "word": "tag",
-    "explains": "标签、版本标记"
+    "explains": "标签、版本标记",
+    "freq": 4380
   },
   {
     "word": "branch",
-    "explains": "分支"
+    "explains": "分支",
+    "freq": 3905
   },
   {
     "word": "merge",
-    "explains": "合并"
+    "explains": "合并",
+    "freq": 11637
   },
   {
     "word": "rebase",
@@ -717,27 +852,33 @@
   },
   {
     "word": "conflict",
-    "explains": "冲突"
+    "explains": "冲突",
+    "freq": 4433
   },
   {
     "word": "cherry-pick",
-    "explains": "摘取单个提交"
+    "explains": "摘取单个提交",
+    "freq": 4436
   },
   {
     "word": "stash",
-    "explains": "暂存当前改动"
+    "explains": "暂存当前改动",
+    "freq": 7302
   },
   {
     "word": "commit message",
-    "explains": "提交说明"
+    "explains": "提交说明",
+    "freq": 2659
   },
   {
     "word": "pull request",
-    "explains": "合并请求"
+    "explains": "合并请求",
+    "freq": 2042
   },
   {
     "word": "code review",
-    "explains": "代码评审"
+    "explains": "代码评审",
+    "freq": 3845
   },
   {
     "word": "approver",
@@ -745,43 +886,53 @@
   },
   {
     "word": "sign-off",
-    "explains": "签字确认"
+    "explains": "签字确认",
+    "freq": 651
   },
   {
     "word": "scope creep",
-    "explains": "范围蔓延"
+    "explains": "范围蔓延",
+    "freq": 9019
   },
   {
     "word": "deadline",
-    "explains": "截止日期"
+    "explains": "截止日期",
+    "freq": 7055
   },
   {
     "word": "milestone",
-    "explains": "里程碑"
+    "explains": "里程碑",
+    "freq": 22873
   },
   {
     "word": "backlog",
-    "explains": "待办池"
+    "explains": "待办池",
+    "freq": 37831
   },
   {
     "word": "sprint",
-    "explains": "迭代"
+    "explains": "迭代",
+    "freq": 17079
   },
   {
     "word": "retro",
-    "explains": "回顾会"
+    "explains": "回顾会",
+    "freq": 16265
   },
   {
     "word": "standup",
-    "explains": "站会"
+    "explains": "站会",
+    "freq": 33753
   },
   {
     "word": "demo",
-    "explains": "演示"
+    "explains": "演示",
+    "freq": 9851
   },
   {
     "word": "acceptance criteria",
-    "explains": "验收标准"
+    "explains": "验收标准",
+    "freq": 15208
   },
   {
     "word": "deliverable",
@@ -789,7 +940,8 @@
   },
   {
     "word": "spec",
-    "explains": "规格说明"
+    "explains": "规格说明",
+    "freq": 21741
   },
   {
     "word": "wireframe",
@@ -801,7 +953,8 @@
   },
   {
     "word": "responsive",
-    "explains": "响应式的（适配多端）"
+    "explains": "响应式的（适配多端）",
+    "freq": 24672
   },
   {
     "word": "accessibility",
@@ -821,11 +974,13 @@
   },
   {
     "word": "legacy",
-    "explains": "遗留的（旧代码）"
+    "explains": "遗留的（旧代码）",
+    "freq": 5920
   },
   {
     "word": "tech debt",
-    "explains": "技术债"
+    "explains": "技术债",
+    "freq": 4952
   },
   {
     "word": "boilerplate",
@@ -833,35 +988,43 @@
   },
   {
     "word": "scaffolding",
-    "explains": "脚手架"
+    "explains": "脚手架",
+    "freq": 24061
   },
   {
     "word": "template",
-    "explains": "模板"
+    "explains": "模板",
+    "freq": 30665
   },
   {
     "word": "abstraction",
-    "explains": "抽象"
+    "explains": "抽象",
+    "freq": 48877
   },
   {
     "word": "coupling",
-    "explains": "耦合"
+    "explains": "耦合",
+    "freq": 30446
   },
   {
     "word": "dependency",
-    "explains": "依赖"
+    "explains": "依赖",
+    "freq": 33130
   },
   {
     "word": "injection",
-    "explains": "注入"
+    "explains": "注入",
+    "freq": 7489
   },
   {
     "word": "singleton",
-    "explains": "单例"
+    "explains": "单例",
+    "freq": 33168
   },
   {
     "word": "factory",
-    "explains": "工厂"
+    "explains": "工厂",
+    "freq": 2203
   },
   {
     "word": "adapter",
@@ -869,11 +1032,13 @@
   },
   {
     "word": "wrapper",
-    "explains": "封装层"
+    "explains": "封装层",
+    "freq": 20076
   },
   {
     "word": "hook",
-    "explains": "钩子"
+    "explains": "钩子",
+    "freq": 2231
   },
   {
     "word": "plugin",
@@ -893,7 +1058,8 @@
   },
   {
     "word": "env variable",
-    "explains": "环境变量"
+    "explains": "环境变量",
+    "freq": 20380
   },
   {
     "word": "placeholder",
@@ -901,15 +1067,18 @@
   },
   {
     "word": "magic number",
-    "explains": "硬编码的魔法数字"
+    "explains": "硬编码的魔法数字",
+    "freq": 1082
   },
   {
     "word": "dead code",
-    "explains": "死代码"
+    "explains": "死代码",
+    "freq": 1414
   },
   {
     "word": "TODO",
-    "explains": "待办标记"
+    "explains": "待办标记",
+    "freq": 25269
   },
   {
     "word": "deprecated",
@@ -917,23 +1086,28 @@
   },
   {
     "word": "breaking change",
-    "explains": "破坏性变更"
+    "explains": "破坏性变更",
+    "freq": 1528
   },
   {
     "word": "backward compatible",
-    "explains": "向后兼容"
+    "explains": "向后兼容",
+    "freq": 13982
   },
   {
     "word": "upstream",
-    "explains": "上游"
+    "explains": "上游",
+    "freq": 21289
   },
   {
     "word": "downstream",
-    "explains": "下游"
+    "explains": "下游",
+    "freq": 21482
   },
   {
     "word": "third-party",
-    "explains": "第三方的"
+    "explains": "第三方的",
+    "freq": 977
   },
   {
     "word": "opensource",
@@ -941,27 +1115,33 @@
   },
   {
     "word": "license",
-    "explains": "许可协议"
+    "explains": "许可协议",
+    "freq": 2197
   },
   {
     "word": "convention",
-    "explains": "约定"
+    "explains": "约定",
+    "freq": 5619
   },
   {
     "word": "idempotent cleanup",
-    "explains": "幂等清理"
+    "explains": "幂等清理",
+    "freq": 15494
   },
   {
     "word": "side effect",
-    "explains": "副作用"
+    "explains": "副作用",
+    "freq": 2175
   },
   {
     "word": "pure function",
-    "explains": "纯函数"
+    "explains": "纯函数",
+    "freq": 4062
   },
   {
     "word": "immutable",
-    "explains": "不可变的"
+    "explains": "不可变的",
+    "freq": 49392
   },
   {
     "word": "mutable",
@@ -969,23 +1149,28 @@
   },
   {
     "word": "reference",
-    "explains": "引用"
+    "explains": "引用",
+    "freq": 5385
   },
   {
     "word": "shallow copy",
-    "explains": "浅拷贝"
+    "explains": "浅拷贝",
+    "freq": 6999
   },
   {
     "word": "deep copy",
-    "explains": "深拷贝"
+    "explains": "深拷贝",
+    "freq": 1491
   },
   {
     "word": "clone",
-    "explains": "克隆"
+    "explains": "克隆",
+    "freq": 9646
   },
   {
     "word": "merge conflict",
-    "explains": "合并冲突"
+    "explains": "合并冲突",
+    "freq": 11637
   },
   {
     "word": "overwrite",
@@ -997,7 +1182,8 @@
   },
   {
     "word": "escape",
-    "explains": "转义"
+    "explains": "转义",
+    "freq": 1136
   },
   {
     "word": "interpolate",
@@ -1017,11 +1203,13 @@
   },
   {
     "word": "i18n",
-    "explains": "国际化"
+    "explains": "国际化",
+    "freq": 2001
   },
   {
     "word": "fallback language",
-    "explains": "兜底语言"
+    "explains": "兜底语言",
+    "freq": 39000
   },
   {
     "word": "pagination",
@@ -1029,15 +1217,18 @@
   },
   {
     "word": "infinite scroll",
-    "explains": "无限滚动"
+    "explains": "无限滚动",
+    "freq": 10960
   },
   {
     "word": "virtual list",
-    "explains": "虚拟列表"
+    "explains": "虚拟列表",
+    "freq": 9795
   },
   {
     "word": "lazy load",
-    "explains": "懒加载"
+    "explains": "懒加载",
+    "freq": 4004
   },
   {
     "word": "preconnect",
@@ -1053,7 +1244,8 @@
   },
   {
     "word": "cache-bust",
-    "explains": "破坏缓存"
+    "explains": "破坏缓存",
+    "freq": 20171
   },
   {
     "word": "etag",
@@ -1069,15 +1261,18 @@
   },
   {
     "word": "non-retryable",
-    "explains": "不可重试的"
+    "explains": "不可重试的",
+    "freq": 6842
   },
   {
     "word": "best effort",
-    "explains": "尽力而为"
+    "explains": "尽力而为",
+    "freq": 2446
   },
   {
     "word": "attempts",
-    "explains": "尝试次数"
+    "explains": "尝试次数",
+    "freq": 7859
   },
   {
     "word": "backpressure",
@@ -1085,19 +1280,23 @@
   },
   {
     "word": "buffer",
-    "explains": "缓冲"
+    "explains": "缓冲",
+    "freq": 14974
   },
   {
     "word": "queue",
-    "explains": "队列"
+    "explains": "队列",
+    "freq": 9907
   },
   {
     "word": "worker",
-    "explains": "工作线程"
+    "explains": "工作线程",
+    "freq": 3449
   },
   {
     "word": "thread pool",
-    "explains": "线程池"
+    "explains": "线程池",
+    "freq": 6362
   },
   {
     "word": "goroutine",
@@ -1113,11 +1312,13 @@
   },
   {
     "word": "heartbeat",
-    "explains": "心跳"
+    "explains": "心跳",
+    "freq": 6279
   },
   {
     "word": "polling",
-    "explains": "轮询"
+    "explains": "轮询",
+    "freq": 21759
   },
   {
     "word": "websocket",
@@ -1125,19 +1326,23 @@
   },
   {
     "word": "stream",
-    "explains": "流"
+    "explains": "流",
+    "freq": 5120
   },
   {
     "word": "chunk",
-    "explains": "分块"
+    "explains": "分块",
+    "freq": 10909
   },
   {
     "word": "streaming response",
-    "explains": "流式响应"
+    "explains": "流式响应",
+    "freq": 15739
   },
   {
     "word": "starvation",
-    "explains": "饥饿（任务长期得不到执行）"
+    "explains": "饥饿（任务长期得不到执行）",
+    "freq": 13308
   },
   {
     "word": "throttled",
@@ -1169,31 +1374,38 @@
   },
   {
     "word": "http status code",
-    "explains": "HTTP 状态码"
+    "explains": "HTTP 状态码",
+    "freq": 3130
   },
   {
     "word": "payload too large",
-    "explains": "请求体过大"
+    "explains": "请求体过大",
+    "freq": 25719
   },
   {
     "word": "connection refused",
-    "explains": "连接被拒绝"
+    "explains": "连接被拒绝",
+    "freq": 2891
   },
   {
     "word": "connection reset",
-    "explains": "连接被重置"
+    "explains": "连接被重置",
+    "freq": 10328
   },
   {
     "word": "dns resolve failed",
-    "explains": "域名解析失败"
+    "explains": "域名解析失败",
+    "freq": 6778
   },
   {
     "word": "tls handshake",
-    "explains": "TLS 握手"
+    "explains": "TLS 握手",
+    "freq": 12033
   },
   {
     "word": "cert expired",
-    "explains": "证书过期"
+    "explains": "证书过期",
+    "freq": 45622
   },
   {
     "word": "ssl",
@@ -1205,23 +1417,28 @@
   },
   {
     "word": "origin server",
-    "explains": "源站服务器"
+    "explains": "源站服务器",
+    "freq": 8513
   },
   {
     "word": "load balancer",
-    "explains": "负载均衡器"
+    "explains": "负载均衡器",
+    "freq": 2278
   },
   {
     "word": "reverse proxy",
-    "explains": "反向代理"
+    "explains": "反向代理",
+    "freq": 15667
   },
   {
     "word": "orchestration",
-    "explains": "编排"
+    "explains": "编排",
+    "freq": 47103
   },
   {
     "word": "provision",
-    "explains": "资源开通"
+    "explains": "资源开通",
+    "freq": 21590
   },
   {
     "word": "provisioned",
@@ -1229,11 +1446,13 @@
   },
   {
     "word": "quota",
-    "explains": "配额"
+    "explains": "配额",
+    "freq": 14776
   },
   {
     "word": "billing",
-    "explains": "计费"
+    "explains": "计费",
+    "freq": 16869
   },
   {
     "word": "overage",
@@ -1241,31 +1460,38 @@
   },
   {
     "word": "sandbox",
-    "explains": "沙箱环境"
+    "explains": "沙箱环境",
+    "freq": 25369
   },
   {
     "word": "staging",
-    "explains": "预发布环境"
+    "explains": "预发布环境",
+    "freq": 14599
   },
   {
     "word": "staging env",
-    "explains": "预发布环境"
+    "explains": "预发布环境",
+    "freq": 14599
   },
   {
     "word": "prod",
-    "explains": "生产环境"
+    "explains": "生产环境",
+    "freq": 25478
   },
   {
     "word": "pre-prod",
-    "explains": "准生产环境"
+    "explains": "准生产环境",
+    "freq": 25478
   },
   {
     "word": "local dev",
-    "explains": "本地开发环境"
+    "explains": "本地开发环境",
+    "freq": 8968
   },
   {
     "word": "ci env",
-    "explains": "流水线环境"
+    "explains": "流水线环境",
+    "freq": 16883
   },
   {
     "word": "env parity",
@@ -1273,51 +1499,63 @@
   },
   {
     "word": "drift",
-    "explains": "配置漂移（环境间不一致）"
+    "explains": "配置漂移（环境间不一致）",
+    "freq": 7431
   },
   {
     "word": "blue-green",
-    "explains": "蓝绿发布"
+    "explains": "蓝绿发布",
+    "freq": 1023
   },
   {
     "word": "canary",
-    "explains": "灰度"
+    "explains": "灰度",
+    "freq": 12562
   },
   {
     "word": "feature flag",
-    "explains": "功能开关"
+    "explains": "功能开关",
+    "freq": 6389
   },
   {
     "word": "kill switch",
-    "explains": "一键关停开关"
+    "explains": "一键关停开关",
+    "freq": 2077
   },
   {
     "word": "gray release",
-    "explains": "灰度发布"
+    "explains": "灰度发布",
+    "freq": 3350
   },
   {
     "word": "staged rollout",
-    "explains": "分批放量"
+    "explains": "分批放量",
+    "freq": 10947
   },
   {
     "word": "rollback window",
-    "explains": "回滚窗口期"
+    "explains": "回滚窗口期",
+    "freq": 982
   },
   {
     "word": "smoke test",
-    "explains": "冒烟测试"
+    "explains": "冒烟测试",
+    "freq": 1185
   },
   {
     "word": "canary deploy",
-    "explains": "灰度部署"
+    "explains": "灰度部署",
+    "freq": 12562
   },
   {
     "word": "hot deploy",
-    "explains": "热部署"
+    "explains": "热部署",
+    "freq": 12028
   },
   {
     "word": "zero downtime",
-    "explains": "零停机"
+    "explains": "零停机",
+    "freq": 33785
   },
   {
     "word": "deregister",
@@ -1325,43 +1563,53 @@
   },
   {
     "word": "register",
-    "explains": "注册（服务实例上线）"
+    "explains": "注册（服务实例上线）",
+    "freq": 4453
   },
   {
     "word": "health probe",
-    "explains": "健康探针"
+    "explains": "健康探针",
+    "freq": 7575
   },
   {
     "word": "resource limit",
-    "explains": "资源限制"
+    "explains": "资源限制",
+    "freq": 13273
   },
   {
     "word": "oom",
-    "explains": "内存溢出"
+    "explains": "内存溢出",
+    "freq": 47737
   },
   {
     "word": "cpu spike",
-    "explains": "CPU 飙升"
+    "explains": "CPU 飙升",
+    "freq": 40189
   },
   {
     "word": "memory spike",
-    "explains": "内存飙升"
+    "explains": "内存飙升",
+    "freq": 4901
   },
   {
     "word": "latency spike",
-    "explains": "延迟飙升"
+    "explains": "延迟飙升",
+    "freq": 4901
   },
   {
     "word": "error rate",
-    "explains": "错误率"
+    "explains": "错误率",
+    "freq": 4694
   },
   {
     "word": "p99",
-    "explains": "99 分位延迟"
+    "explains": "99 分位延迟",
+    "freq": 3337
   },
   {
     "word": "rt",
-    "explains": "响应时间"
+    "explains": "响应时间",
+    "freq": 28311
   },
   {
     "word": "qps",
@@ -1369,31 +1617,38 @@
   },
   {
     "word": "traffic",
-    "explains": "流量"
+    "explains": "流量",
+    "freq": 2130
   },
   {
     "word": "peak hour",
-    "explains": "高峰时段"
+    "explains": "高峰时段",
+    "freq": 6568
   },
   {
     "word": "cold pool",
-    "explains": "冷池（未预热实例）"
+    "explains": "冷池（未预热实例）",
+    "freq": 1716
   },
   {
     "word": "warm pool",
-    "explains": "热池（已预热实例）"
+    "explains": "热池（已预热实例）",
+    "freq": 1716
   },
   {
     "word": "scaling",
-    "explains": "伸缩"
+    "explains": "伸缩",
+    "freq": 34350
   },
   {
     "word": "scale up",
-    "explains": "扩容"
+    "explains": "扩容",
+    "freq": 3625
   },
   {
     "word": "scale down",
-    "explains": "缩容"
+    "explains": "缩容",
+    "freq": 3625
   },
   {
     "word": "autoscale",
@@ -1409,35 +1664,43 @@
   },
   {
     "word": "persistence",
-    "explains": "持久化"
+    "explains": "持久化",
+    "freq": 22571
   },
   {
     "word": "ttl cleanup",
-    "explains": "过期清理"
+    "explains": "过期清理",
+    "freq": 15494
   },
   {
     "word": "eviction",
-    "explains": "逐出（缓存淘汰）"
+    "explains": "逐出（缓存淘汰）",
+    "freq": 17860
   },
   {
     "word": "ttl expired",
-    "explains": "已过期"
+    "explains": "已过期",
+    "freq": 10411
   },
   {
     "word": "orphan",
-    "explains": "孤儿数据（无主残留）"
+    "explains": "孤儿数据（无主残留）",
+    "freq": 5956
   },
   {
     "word": "orphan process",
-    "explains": "孤儿进程"
+    "explains": "孤儿进程",
+    "freq": 5956
   },
   {
     "word": "zombie",
-    "explains": "僵尸进程"
+    "explains": "僵尸进程",
+    "freq": 5018
   },
   {
     "word": "daemon",
-    "explains": "守护进程"
+    "explains": "守护进程",
+    "freq": 45352
   },
   {
     "word": "pid",
@@ -1457,7 +1720,8 @@
   },
   {
     "word": "pipe",
-    "explains": "管道"
+    "explains": "管道",
+    "freq": 3349
   },
   {
     "word": "redirection",
@@ -1465,15 +1729,18 @@
   },
   {
     "word": "shell",
-    "explains": "命令行外壳"
+    "explains": "命令行外壳",
+    "freq": 3658
   },
   {
     "word": "script",
-    "explains": "脚本"
+    "explains": "脚本",
+    "freq": 3070
   },
   {
     "word": "one-liner",
-    "explains": "单行命令"
+    "explains": "单行命令",
+    "freq": 18887
   },
   {
     "word": "wildcard",
@@ -1485,27 +1752,33 @@
   },
   {
     "word": "anchor",
-    "explains": "锚点"
+    "explains": "锚点",
+    "freq": 6643
   },
   {
     "word": "capture group",
-    "explains": "捕获组"
+    "explains": "捕获组",
+    "freq": 3593
   },
   {
     "word": "lazy match",
-    "explains": "非贪婪匹配"
+    "explains": "非贪婪匹配",
+    "freq": 4004
   },
   {
     "word": "greedy match",
-    "explains": "贪婪匹配"
+    "explains": "贪婪匹配",
+    "freq": 5698
   },
   {
     "word": "case sensitive",
-    "explains": "区分大小写"
+    "explains": "区分大小写",
+    "freq": 2846
   },
   {
     "word": "trim",
-    "explains": "去除首尾空白"
+    "explains": "去除首尾空白",
+    "freq": 9790
   },
   {
     "word": "whitespace",
@@ -1521,11 +1794,13 @@
   },
   {
     "word": "lf",
-    "explains": "Unix 换行符"
+    "explains": "Unix 换行符",
+    "freq": 2397
   },
   {
     "word": "bom",
-    "explains": "字节顺序标记"
+    "explains": "字节顺序标记",
+    "freq": 16777
   },
   {
     "word": "utf-8",
@@ -1549,19 +1824,23 @@
   },
   {
     "word": "null byte",
-    "explains": "空字节"
+    "explains": "空字节",
+    "freq": 25903
   },
   {
     "word": "binary",
-    "explains": "二进制"
+    "explains": "二进制",
+    "freq": 20541
   },
   {
     "word": "text mode",
-    "explains": "文本模式"
+    "explains": "文本模式",
+    "freq": 5952
   },
   {
     "word": "base64",
-    "explains": "Base64 编码"
+    "explains": "Base64 编码",
+    "freq": 1645
   },
   {
     "word": "btoa",
@@ -1573,31 +1852,38 @@
   },
   {
     "word": "uri encode",
-    "explains": "URL 编码"
+    "explains": "URL 编码",
+    "freq": 27014
   },
   {
     "word": "uri decode",
-    "explains": "URL 解码"
+    "explains": "URL 解码",
+    "freq": 27014
   },
   {
     "word": "query string",
-    "explains": "查询字符串"
+    "explains": "查询字符串",
+    "freq": 27622
   },
   {
     "word": "hash route",
-    "explains": "hash 路由"
+    "explains": "hash 路由",
+    "freq": 10093
   },
   {
     "word": "history mode",
-    "explains": "history 路由模式"
+    "explains": "history 路由模式",
+    "freq": 5952
   },
   {
     "word": "navigation guard",
-    "explains": "导航守卫"
+    "explains": "导航守卫",
+    "freq": 12204
   },
   {
     "word": "lazy route",
-    "explains": "懒加载路由"
+    "explains": "懒加载路由",
+    "freq": 4004
   },
   {
     "word": "breadcrumb",
@@ -1605,7 +1891,8 @@
   },
   {
     "word": "sidebar",
-    "explains": "侧边栏"
+    "explains": "侧边栏",
+    "freq": 31545
   },
   {
     "word": "toolbar",
@@ -1613,15 +1900,18 @@
   },
   {
     "word": "breadcrumb nav",
-    "explains": "面包屑导航"
+    "explains": "面包屑导航",
+    "freq": 19642
   },
   {
     "word": "tab bar",
-    "explains": "标签栏"
+    "explains": "标签栏",
+    "freq": 7715
   },
   {
     "word": "drawer",
-    "explains": "抽屉面板"
+    "explains": "抽屉面板",
+    "freq": 4496
   },
   {
     "word": "popover",
@@ -1633,7 +1923,8 @@
   },
   {
     "word": "toast",
-    "explains": "轻提示"
+    "explains": "轻提示",
+    "freq": 2352
   },
   {
     "word": "modal",
@@ -1641,75 +1932,93 @@
   },
   {
     "word": "dialog",
-    "explains": "对话框"
+    "explains": "对话框",
+    "freq": 30421
   },
   {
     "word": "confirm",
-    "explains": "确认框"
+    "explains": "确认框",
+    "freq": 3103
   },
   {
     "word": "alert",
-    "explains": "警告提示"
+    "explains": "警告提示",
+    "freq": 2677
   },
   {
     "word": "loading state",
-    "explains": "加载中状态"
+    "explains": "加载中状态",
+    "freq": 8055
   },
   {
     "word": "skeleton",
-    "explains": "骨架屏"
+    "explains": "骨架屏",
+    "freq": 7947
   },
   {
     "word": "empty state",
-    "explains": "空状态"
+    "explains": "空状态",
+    "freq": 1299
   },
   {
     "word": "error state",
-    "explains": "错误状态"
+    "explains": "错误状态",
+    "freq": 4694
   },
   {
     "word": "boundary",
-    "explains": "边界（错误边界）"
+    "explains": "边界（错误边界）",
+    "freq": 11945
   },
   {
     "word": "error boundary",
-    "explains": "错误边界组件"
+    "explains": "错误边界组件",
+    "freq": 11945
   },
   {
     "word": "crash boundary",
-    "explains": "崩溃边界"
+    "explains": "崩溃边界",
+    "freq": 11945
   },
   {
     "word": "recovery",
-    "explains": "恢复"
+    "explains": "恢复",
+    "freq": 4950
   },
   {
     "word": "self-healing",
-    "explains": "自愈"
+    "explains": "自愈",
+    "freq": 5618
   },
   {
     "word": "retryable error",
-    "explains": "可重试错误"
+    "explains": "可重试错误",
+    "freq": 4694
   },
   {
     "word": "fatal error",
-    "explains": "致命错误"
+    "explains": "致命错误",
+    "freq": 5341
   },
   {
     "word": "non-fatal",
-    "explains": "非致命的"
+    "explains": "非致命的",
+    "freq": 6842
   },
   {
     "word": "warning",
-    "explains": "警告"
+    "explains": "警告",
+    "freq": 1961
   },
   {
     "word": "debug log",
-    "explains": "调试日志"
+    "explains": "调试日志",
+    "freq": 4072
   },
   {
     "word": "log level",
-    "explains": "日志级别"
+    "explains": "日志级别",
+    "freq": 4072
   },
   {
     "word": "verbose",
@@ -1717,43 +2026,53 @@
   },
   {
     "word": "trace level",
-    "explains": "追踪级别"
+    "explains": "追踪级别",
+    "freq": 2477
   },
   {
     "word": "silent mode",
-    "explains": "静默模式"
+    "explains": "静默模式",
+    "freq": 5952
   },
   {
     "word": "mute",
-    "explains": "静音（屏蔽输出）"
+    "explains": "静音（屏蔽输出）",
+    "freq": 8693
   },
   {
     "word": "noise",
-    "explains": "噪音（无关日志）"
+    "explains": "噪音（无关日志）",
+    "freq": 1666
   },
   {
     "word": "signal",
-    "explains": "信号（有价值的信息）"
+    "explains": "信号（有价值的信息）",
+    "freq": 1785
   },
   {
     "word": "signal-to-noise",
-    "explains": "信噪比"
+    "explains": "信噪比",
+    "freq": 1785
   },
   {
     "word": "context",
-    "explains": "上下文"
+    "explains": "上下文",
+    "freq": 8058
   },
   {
     "word": "context window",
-    "explains": "上下文窗口"
+    "explains": "上下文窗口",
+    "freq": 8058
   },
   {
     "word": "prompt",
-    "explains": "提示词"
+    "explains": "提示词",
+    "freq": 19139
   },
   {
     "word": "inference",
-    "explains": "推理"
+    "explains": "推理",
+    "freq": 41631
   },
   {
     "word": "embedding",
@@ -1761,7 +2080,8 @@
   },
   {
     "word": "token limit",
-    "explains": "Token 上限"
+    "explains": "Token 上限",
+    "freq": 7914
   },
   {
     "word": "truncation",
@@ -1769,7 +2089,8 @@
   },
   {
     "word": "rate limited",
-    "explains": "被限流"
+    "explains": "被限流",
+    "freq": 4264
   },
   {
     "word": "cooldown",
@@ -1777,55 +2098,68 @@
   },
   {
     "word": "quota exceeded",
-    "explains": "超出配额"
+    "explains": "超出配额",
+    "freq": 18294
   },
   {
     "word": "plan",
-    "explains": "套餐、计划"
+    "explains": "套餐、计划",
+    "freq": 559
   },
   {
     "word": "tier",
-    "explains": "等级、档位"
+    "explains": "等级、档位",
+    "freq": 22703
   },
   {
     "word": "subscription",
-    "explains": "订阅"
+    "explains": "订阅",
+    "freq": 19649
   },
   {
     "word": "trial",
-    "explains": "试用"
+    "explains": "试用",
+    "freq": 1460
   },
   {
     "word": "renew",
-    "explains": "续费"
+    "explains": "续费",
+    "freq": 13474
   },
   {
     "word": "cancel",
-    "explains": "取消"
+    "explains": "取消",
+    "freq": 3149
   },
   {
     "word": "refund",
-    "explains": "退款"
+    "explains": "退款",
+    "freq": 12458
   },
   {
     "word": "invoice",
-    "explains": "账单"
+    "explains": "账单",
+    "freq": 18302
   },
   {
     "word": "receipt",
-    "explains": "收据"
+    "explains": "收据",
+    "freq": 5728
   },
   {
     "word": "ledger",
-    "explains": "账本"
+    "explains": "账本",
+    "freq": 13436
   },
   {
     "word": "reconcile",
-    "explains": "对账"
+    "explains": "对账",
+    "freq": 16075
   },
   {
     "word": "statement",
-    "explains": "对账单"
+    "explains": "对账单",
+    "freq": 2013
   },
   {
     "word": "chargeback",
@@ -1833,19 +2167,23 @@
   },
   {
     "word": "fraud",
-    "explains": "欺诈"
+    "explains": "欺诈",
+    "freq": 3904
   },
   {
     "word": "fraud detection",
-    "explains": "欺诈检测"
+    "explains": "欺诈检测",
+    "freq": 14503
   },
   {
     "word": "risk control",
-    "explains": "风控"
+    "explains": "风控",
+    "freq": 1171
   },
   {
     "word": "compliance",
-    "explains": "合规"
+    "explains": "合规",
+    "freq": 22562
   },
   {
     "word": "gdpr",
@@ -1853,23 +2191,28 @@
   },
   {
     "word": "consent",
-    "explains": "同意、授权"
+    "explains": "同意、授权",
+    "freq": 5215
   },
   {
     "word": "opt-in",
-    "explains": "主动选择加入"
+    "explains": "主动选择加入",
+    "freq": 28961
   },
   {
     "word": "opt-out",
-    "explains": "主动选择退出"
+    "explains": "主动选择退出",
+    "freq": 28961
   },
   {
     "word": "retention",
-    "explains": "数据留存"
+    "explains": "数据留存",
+    "freq": 35134
   },
   {
     "word": "right to delete",
-    "explains": "删除权"
+    "explains": "删除权",
+    "freq": 8241
   },
   {
     "word": "pseudonymize",
@@ -1877,7 +2220,8 @@
   },
   {
     "word": "mask",
-    "explains": "遮盖、掩码"
+    "explains": "遮盖、掩码",
+    "freq": 2785
   },
   {
     "word": "redact",
@@ -1889,11 +2233,13 @@
   },
   {
     "word": "aggregate",
-    "explains": "聚合（统计汇总）"
+    "explains": "聚合（统计汇总）",
+    "freq": 46014
   },
   {
     "word": "sample",
-    "explains": "抽样、样本"
+    "explains": "抽样、样本",
+    "freq": 3392
   },
   {
     "word": "cohort",
@@ -1901,19 +2247,23 @@
   },
   {
     "word": "funnel",
-    "explains": "漏斗"
+    "explains": "漏斗",
+    "freq": 17368
   },
   {
     "word": "conversion",
-    "explains": "转化"
+    "explains": "转化",
+    "freq": 14572
   },
   {
     "word": "churn",
-    "explains": "流失"
+    "explains": "流失",
+    "freq": 28241
   },
   {
     "word": "activation",
-    "explains": "激活"
+    "explains": "激活",
+    "freq": 21757
   },
   {
     "word": "onboarding",
@@ -1921,7 +2271,8 @@
   },
   {
     "word": "activation rate",
-    "explains": "激活率"
+    "explains": "激活率",
+    "freq": 21757
   },
   {
     "word": "dau",
@@ -1929,51 +2280,63 @@
   },
   {
     "word": "mau",
-    "explains": "月活跃用户数"
+    "explains": "月活跃用户数",
+    "freq": 23066
   },
   {
     "word": "retention rate",
-    "explains": "留存率"
+    "explains": "留存率",
+    "freq": 35134
   },
   {
     "word": "new user",
-    "explains": "新用户"
+    "explains": "新用户",
+    "freq": 10655
   },
   {
     "word": "returning user",
-    "explains": "回访用户"
+    "explains": "回访用户",
+    "freq": 10655
   },
   {
     "word": "power user",
-    "explains": "重度用户"
+    "explains": "重度用户",
+    "freq": 10655
   },
   {
     "word": "free tier",
-    "explains": "免费版"
+    "explains": "免费版",
+    "freq": 22703
   },
   {
     "word": "paid tier",
-    "explains": "付费版"
+    "explains": "付费版",
+    "freq": 22703
   },
   {
     "word": "premium",
-    "explains": "高级版"
+    "explains": "高级版",
+    "freq": 13849
   },
   {
     "word": "lite",
-    "explains": "精简版"
+    "explains": "精简版",
+    "freq": 34908
   },
   {
     "word": "pro",
-    "explains": "专业版"
+    "explains": "专业版",
+    "freq": 3855
   },
   {
     "word": "enterprise",
-    "explains": "企业版"
+    "explains": "企业版",
+    "freq": 5351
   },
   {
     "word": "trial account",
-    "explains": "试用账号"
+    "explains": "试用账号",
+    "freq": 1467
   },
   {
     "word": "paywall",
@@ -1985,43 +2348,53 @@
   },
   {
     "word": "cross-sell",
-    "explains": "交叉销售"
+    "explains": "交叉销售",
+    "freq": 1239
   },
   {
     "word": "lifetime deal",
-    "explains": "终身买断"
+    "explains": "终身买断",
+    "freq": 3033
   },
   {
     "word": "seat",
-    "explains": "席位（按人授权）"
+    "explains": "席位（按人授权）",
+    "freq": 990
   },
   {
     "word": "per-seat",
-    "explains": "按席位计费"
+    "explains": "按席位计费",
+    "freq": 2047
   },
   {
     "word": "usage based",
-    "explains": "按用量计费"
+    "explains": "按用量计费",
+    "freq": 22839
   },
   {
     "word": "flat rate",
-    "explains": "固定费率"
+    "explains": "固定费率",
+    "freq": 2259
   },
   {
     "word": "tiered pricing",
-    "explains": "阶梯定价"
+    "explains": "阶梯定价",
+    "freq": 37051
   },
   {
     "word": "discount",
-    "explains": "折扣"
+    "explains": "折扣",
+    "freq": 6438
   },
   {
     "word": "coupon",
-    "explains": "优惠券"
+    "explains": "优惠券",
+    "freq": 15072
   },
   {
     "word": "voucher",
-    "explains": "代金券"
+    "explains": "代金券",
+    "freq": 24781
   },
   {
     "word": "promocode",
@@ -2029,31 +2402,38 @@
   },
   {
     "word": "redeem",
-    "explains": "兑换"
+    "explains": "兑换",
+    "freq": 12628
   },
   {
     "word": "expire",
-    "explains": "到期"
+    "explains": "到期",
+    "freq": 22490
   },
   {
     "word": "expired",
-    "explains": "已过期的"
+    "explains": "已过期的",
+    "freq": 10411
   },
   {
     "word": "renewal",
-    "explains": "续约"
+    "explains": "续约",
+    "freq": 19626
   },
   {
     "word": "grace period",
-    "explains": "宽限期"
+    "explains": "宽限期",
+    "freq": 2004
   },
   {
     "word": "dunning",
-    "explains": "催缴"
+    "explains": "催缴",
+    "freq": 42386
   },
   {
     "word": "churned",
-    "explains": "已流失的"
+    "explains": "已流失的",
+    "freq": 45867
   },
   {
     "word": "reactivation",
@@ -2061,51 +2441,63 @@
   },
   {
     "word": "win-back",
-    "explains": "召回（流失用户）"
+    "explains": "召回（流失用户）",
+    "freq": 607
   },
   {
     "word": "feedback",
-    "explains": "反馈"
+    "explains": "反馈",
+    "freq": 8806
   },
   {
     "word": "bug report",
-    "explains": "缺陷报告"
+    "explains": "缺陷报告",
+    "freq": 3206
   },
   {
     "word": "crash report",
-    "explains": "崩溃报告"
+    "explains": "崩溃报告",
+    "freq": 1964
   },
   {
     "word": "sentry",
-    "explains": "错误监控服务"
+    "explains": "错误监控服务",
+    "freq": 18932
   },
   {
     "word": "error tracking",
-    "explains": "错误追踪"
+    "explains": "错误追踪",
+    "freq": 4694
   },
   {
     "word": "grouped",
-    "explains": "已聚合的（相似报错归组）"
+    "explains": "已聚合的（相似报错归组）",
+    "freq": 41684
   },
   {
     "word": "fingerprint",
-    "explains": "指纹（报错指纹）"
+    "explains": "指纹（报错指纹）",
+    "freq": 10134
   },
   {
     "word": "occurrence",
-    "explains": "发生次数"
+    "explains": "发生次数",
+    "freq": 19206
   },
   {
     "word": "affected users",
-    "explains": "受影响用户"
+    "explains": "受影响用户",
+    "freq": 12606
   },
   {
     "word": "release health",
-    "explains": "版本健康度"
+    "explains": "版本健康度",
+    "freq": 1622
   },
   {
     "word": "adoption",
-    "explains": "采用率"
+    "explains": "采用率",
+    "freq": 7390
   },
   {
     "word": "stickiness",
@@ -2113,27 +2505,33 @@
   },
   {
     "word": "engagement",
-    "explains": "参与度"
+    "explains": "参与度",
+    "freq": 3621
   },
   {
     "word": "session duration",
-    "explains": "会话时长"
+    "explains": "会话时长",
+    "freq": 11702
   },
   {
     "word": "bounce",
-    "explains": "跳出"
+    "explains": "跳出",
+    "freq": 5747
   },
   {
     "word": "bounce rate",
-    "explains": "跳出率"
+    "explains": "跳出率",
+    "freq": 5747
   },
   {
     "word": "landing page",
-    "explains": "落地页"
+    "explains": "落地页",
+    "freq": 3220
   },
   {
     "word": "call to action",
-    "explains": "行动号召（CTA）"
+    "explains": "行动号召（CTA）",
+    "freq": 1175
   },
   {
     "word": "cta",
@@ -2141,31 +2539,38 @@
   },
   {
     "word": "align",
-    "explains": "对齐、达成一致"
+    "explains": "对齐、达成一致",
+    "freq": 20834
   },
   {
     "word": "sign off on",
-    "explains": "批准、签字"
+    "explains": "批准、签字",
+    "freq": 651
   },
   {
     "word": "get the green light",
-    "explains": "得到批准"
+    "explains": "得到批准",
+    "freq": 1023
   },
   {
     "word": "green light",
-    "explains": "绿灯放行"
+    "explains": "绿灯放行",
+    "freq": 1023
   },
   {
     "word": "flag something",
-    "explains": "标记出来"
+    "explains": "标记出来",
+    "freq": 2919
   },
   {
     "word": "flagged",
-    "explains": "已被标记"
+    "explains": "已被标记",
+    "freq": 19798
   },
   {
     "word": "sunset",
-    "explains": "下线（功能/服务）"
+    "explains": "下线（功能/服务）",
+    "freq": 5135
   },
   {
     "word": "sunsetted",
@@ -2181,162 +2586,202 @@
   },
   {
     "word": "phase out",
-    "explains": "逐步淘汰"
+    "explains": "逐步淘汰",
+    "freq": 4216
   },
   {
     "word": "phase in",
-    "explains": "逐步引入"
+    "explains": "逐步引入",
+    "freq": 4216
   },
   {
     "word": "roll out",
-    "explains": "发布、上线"
+    "explains": "发布、上线",
+    "freq": 1294
   },
   {
     "word": "rolled out",
-    "explains": "已发布的"
+    "explains": "已发布的",
+    "freq": 5676
   },
   {
     "word": "roll back",
-    "explains": "回退"
+    "explains": "回退",
+    "freq": 1294
   },
   {
     "word": "roll forward",
-    "explains": "向前修复（不回退）"
+    "explains": "向前修复（不回退）",
+    "freq": 1294
   },
   {
     "word": "spin up",
-    "explains": "快速启动"
+    "explains": "快速启动",
+    "freq": 3517
   },
   {
     "word": "spun up",
-    "explains": "已启动"
+    "explains": "已启动",
+    "freq": 14443
   },
   {
     "word": "spin down",
-    "explains": "关停缩减"
+    "explains": "关停缩减",
+    "freq": 3517
   },
   {
     "word": "scaled down",
-    "explains": "已缩容"
+    "explains": "已缩容",
+    "freq": 31569
   },
   {
     "word": "hand off",
-    "explains": "交接"
+    "explains": "交接",
+    "freq": 367
   },
   {
     "word": "handed over",
-    "explains": "已交接"
+    "explains": "已交接",
+    "freq": 4078
   },
   {
     "word": "hand over",
-    "explains": "移交"
+    "explains": "移交",
+    "freq": 367
   },
   {
     "word": "pass off",
-    "explains": "转手、推给"
+    "explains": "转手、推给",
+    "freq": 741
   },
   {
     "word": "get started",
-    "explains": "开始"
+    "explains": "开始",
+    "freq": 465
   },
   {
     "word": "catch up",
-    "explains": "补上（进度）；追赶"
+    "explains": "补上（进度）；追赶",
+    "freq": 636
   },
   {
     "word": "caught up",
-    "explains": "已追上；已被缠住"
+    "explains": "已追上；已被缠住",
+    "freq": 758
   },
   {
     "word": "acknowledge",
-    "explains": "确认收到"
+    "explains": "确认收到",
+    "freq": 7116
   },
   {
     "word": "acknowledged",
-    "explains": "已确认"
+    "explains": "已确认",
+    "freq": 11871
   },
   {
     "word": "confirmed",
-    "explains": "已确认"
+    "explains": "已确认",
+    "freq": 3141
   },
   {
     "word": "verified",
-    "explains": "已验证"
+    "explains": "已验证",
+    "freq": 15241
   },
   {
     "word": "approved",
-    "explains": "已批准"
+    "explains": "已批准",
+    "freq": 5904
   },
   {
     "word": "rejected",
-    "explains": "已拒绝"
+    "explains": "已拒绝",
+    "freq": 5177
   },
   {
     "word": "declined",
-    "explains": "已婉拒"
+    "explains": "已婉拒",
+    "freq": 12561
   },
   {
     "word": "denied",
-    "explains": "已驳回"
+    "explains": "已驳回",
+    "freq": 4526
   },
   {
     "word": "accepted",
-    "explains": "已接受"
+    "explains": "已接受",
+    "freq": 2681
   },
   {
     "word": "accepted for review",
-    "explains": "已进入评审"
+    "explains": "已进入评审",
+    "freq": 3845
   },
   {
     "word": "ready for review",
-    "explains": "待评审"
+    "explains": "待评审",
+    "freq": 3845
   },
   {
     "word": "under review",
-    "explains": "评审中"
+    "explains": "评审中",
+    "freq": 3845
   },
   {
     "word": "in review",
-    "explains": "评审中"
+    "explains": "评审中",
+    "freq": 3845
   },
   {
     "word": "pending review",
-    "explains": "待评审"
+    "explains": "待评审",
+    "freq": 9601
   },
   {
     "word": "review requested",
-    "explains": "请求评审"
+    "explains": "请求评审",
+    "freq": 4850
   },
   {
     "word": "review approved",
-    "explains": "评审通过"
+    "explains": "评审通过",
+    "freq": 5904
   },
   {
     "word": "approved and merged",
-    "explains": "已批准并合并"
+    "explains": "已批准并合并",
+    "freq": 21073
   },
   {
     "word": "merged",
-    "explains": "已合并"
+    "explains": "已合并",
+    "freq": 21073
   },
   {
     "word": "conflict resolved",
-    "explains": "冲突已解决"
+    "explains": "冲突已解决",
+    "freq": 8123
   },
   {
     "word": "resolve conflict",
-    "explains": "解决冲突"
+    "explains": "解决冲突",
+    "freq": 6778
   },
   {
     "word": "conflicted",
-    "explains": "存在冲突的"
+    "explains": "存在冲突的",
+    "freq": 22641
   },
   {
     "word": "conflicting",
-    "explains": "相互冲突的"
+    "explains": "相互冲突的",
+    "freq": 23926
   },
   {
     "word": "conflict of interest",
-    "explains": "利益冲突"
+    "explains": "利益冲突",
+    "freq": 4433
   }
 ]

@@ -2,7 +2,8 @@
   {
     "word": "生憎",
     "phonetic": "あいにく",
-    "explains": "不巧；遗憾"
+    "explains": "不巧；遗憾",
+    "freq": 9904
   },
   {
     "word": "曖昧",
@@ -27,7 +28,8 @@
   {
     "word": "あくまで",
     "phonetic": "あくまで",
-    "explains": "到底；彻底"
+    "explains": "到底；彻底",
+    "freq": 2928
   },
   {
     "word": "明ける",
@@ -87,7 +89,8 @@
   {
     "word": "有様",
     "phonetic": "ありさま",
-    "explains": "样子；情况"
+    "explains": "样子；情况",
+    "freq": 5529
   },
   {
     "word": "合わせる",
@@ -102,27 +105,32 @@
   {
     "word": "安易",
     "phonetic": "あんい",
-    "explains": "容易；马虎"
+    "explains": "容易；马虎",
+    "freq": 6173
   },
   {
     "word": "暗記",
     "phonetic": "あんき",
-    "explains": "背诵"
+    "explains": "背诵",
+    "freq": 6288
   },
   {
     "word": "暗殺",
     "phonetic": "あんさつ",
-    "explains": "暗杀"
+    "explains": "暗杀",
+    "freq": 970
   },
   {
     "word": "暗示",
     "phonetic": "あんじ",
-    "explains": "暗示"
+    "explains": "暗示",
+    "freq": 3354
   },
   {
     "word": "安定",
     "phonetic": "あんてい",
-    "explains": "安定；稳定"
+    "explains": "安定；稳定",
+    "freq": 762
   },
   {
     "word": "あっという間に",
@@ -167,7 +175,8 @@
   {
     "word": "言い値",
     "phonetic": "いいね",
-    "explains": "开价；定价"
+    "explains": "开价；定价",
+    "freq": 9668
   },
   {
     "word": "言い張る",
@@ -177,7 +186,8 @@
   {
     "word": "言い訳",
     "phonetic": "いいわけ",
-    "explains": "借口；分辩"
+    "explains": "借口；分辩",
+    "freq": 1356
   },
   {
     "word": "言い渡す",
@@ -192,12 +202,14 @@
   {
     "word": "何れ",
     "phonetic": "いずれ",
-    "explains": "哪个；不久"
+    "explains": "哪个；不久",
+    "freq": 8156
   },
   {
     "word": "依存",
     "phonetic": "いぞん",
-    "explains": "依存；依赖"
+    "explains": "依存；依赖",
+    "freq": 2631
   },
   {
     "word": "板",
@@ -217,27 +229,32 @@
   {
     "word": "一応",
     "phonetic": "いちおう",
-    "explains": "大致；暂且"
+    "explains": "大致；暂且",
+    "freq": 1889
   },
   {
     "word": "一瞬",
     "phonetic": "いちしゅん",
-    "explains": "一瞬"
+    "explains": "一瞬",
+    "freq": 1303
   },
   {
     "word": "一時",
     "phonetic": "いちじ",
-    "explains": "一时；暂时"
+    "explains": "一时；暂时",
+    "freq": 1384
   },
   {
     "word": "一堂",
     "phonetic": "いちどう",
-    "explains": "聚于一堂"
+    "explains": "聚于一堂",
+    "freq": 14289
   },
   {
     "word": "市場",
     "phonetic": "いちば",
-    "explains": "市场"
+    "explains": "市场",
+    "freq": 1125
   },
   {
     "word": "何時か",
@@ -287,7 +304,8 @@
   {
     "word": "一見",
     "phonetic": "いっけん",
-    "explains": "一看；乍看"
+    "explains": "一看；乍看",
+    "freq": 4120
   },
   {
     "word": "一向に",
@@ -297,7 +315,8 @@
   {
     "word": "一種",
     "phonetic": "いっしゅ",
-    "explains": "一种"
+    "explains": "一种",
+    "freq": 1998
   },
   {
     "word": "いっそ",
@@ -307,22 +326,26 @@
   {
     "word": "一層",
     "phonetic": "いっそう",
-    "explains": "更加"
+    "explains": "更加",
+    "freq": 5539
   },
   {
     "word": "一体",
     "phonetic": "いったい",
-    "explains": "究竟；到底"
+    "explains": "究竟；到底",
+    "freq": 229
   },
   {
     "word": "一旦",
     "phonetic": "いったん",
-    "explains": "一旦；既然"
+    "explains": "一旦；既然",
+    "freq": 2750
   },
   {
     "word": "一定",
     "phonetic": "いってい",
-    "explains": "一定"
+    "explains": "一定",
+    "freq": 3575
   },
   {
     "word": "伺う",
@@ -357,7 +380,8 @@
   {
     "word": "受付",
     "phonetic": "うけつけ",
-    "explains": "受理处"
+    "explains": "受理处",
+    "freq": 3184
   },
   {
     "word": "受け付ける",
@@ -372,17 +396,20 @@
   {
     "word": "動き",
     "phonetic": "うごき",
-    "explains": "动；活动；动向"
+    "explains": "动；活动；动向",
+    "freq": 625
   },
   {
     "word": "後ろ",
     "phonetic": "うしろ",
-    "explains": "后面"
+    "explains": "后面",
+    "freq": 318
   },
   {
     "word": "後ろ姿",
     "phonetic": "うしろすがた",
-    "explains": "背影"
+    "explains": "背影",
+    "freq": 10479
   },
   {
     "word": "氏",
@@ -462,7 +489,8 @@
   {
     "word": "内訳",
     "phonetic": "うちわけ",
-    "explains": "明细"
+    "explains": "明细",
+    "freq": 15538
   },
   {
     "word": "美しい",
@@ -472,7 +500,8 @@
   {
     "word": "移り変わり",
     "phonetic": "うつりかわり",
-    "explains": "变迁；转变"
+    "explains": "变迁；转变",
+    "freq": 31074
   },
   {
     "word": "腕",
@@ -487,7 +516,8 @@
   {
     "word": "有無",
     "phonetic": "うむ",
-    "explains": "有无"
+    "explains": "有无",
+    "freq": 5071
   },
   {
     "word": "売上高",
@@ -507,12 +537,14 @@
   {
     "word": "売主",
     "phonetic": "うりぬし",
-    "explains": "卖主"
+    "explains": "卖主",
+    "freq": 15231
   },
   {
     "word": "売場",
     "phonetic": "うりば",
-    "explains": "卖场"
+    "explains": "卖场",
+    "freq": 16219
   },
   {
     "word": "上回る",
@@ -567,12 +599,14 @@
   {
     "word": "各々",
     "phonetic": "おのおの",
-    "explains": "各自"
+    "explains": "各自",
+    "freq": 4964
   },
   {
     "word": "主な",
     "phonetic": "おもな",
-    "explains": "主要的"
+    "explains": "主要的",
+    "freq": 4072
   },
   {
     "word": "おもに",
@@ -582,7 +616,8 @@
   {
     "word": "親元",
     "phonetic": "おやもと",
-    "explains": "父母身边"
+    "explains": "父母身边",
+    "freq": 17043
   },
   {
     "word": "および",
@@ -592,87 +627,104 @@
   {
     "word": "会員",
     "phonetic": "かいいん",
-    "explains": "会员"
+    "explains": "会员",
+    "freq": 3182
   },
   {
     "word": "会見",
     "phonetic": "かいかい",
-    "explains": "会见"
+    "explains": "会见",
+    "freq": 1832
   },
   {
     "word": "開会",
     "phonetic": "かいかい",
-    "explains": "开会"
+    "explains": "开会",
+    "freq": 11743
   },
   {
     "word": "改革",
     "phonetic": "かいかく",
-    "explains": "改革"
+    "explains": "改革",
+    "freq": 3225
   },
   {
     "word": "会議",
     "phonetic": "かいぎ",
-    "explains": "会议"
+    "explains": "会议",
+    "freq": 617
   },
   {
     "word": "解決",
     "phonetic": "かいけつ",
-    "explains": "解决"
+    "explains": "解决",
+    "freq": 287
   },
   {
     "word": "会合",
     "phonetic": "かいごう",
-    "explains": "聚会"
+    "explains": "聚会",
+    "freq": 2640
   },
   {
     "word": "解散",
     "phonetic": "かいさん",
-    "explains": "解散"
+    "explains": "解散",
+    "freq": 2431
   },
   {
     "word": "開始",
     "phonetic": "かいし",
-    "explains": "开始"
+    "explains": "开始",
+    "freq": 544
   },
   {
     "word": "解釈",
     "phonetic": "かいしゃく",
-    "explains": "解释"
+    "explains": "解释",
+    "freq": 2608
   },
   {
     "word": "改修",
     "phonetic": "かいしゅう",
-    "explains": "改修"
+    "explains": "改修",
+    "freq": 7758
   },
   {
     "word": "解除",
     "phonetic": "かいじょ",
-    "explains": "解除"
+    "explains": "解除",
+    "freq": 1237
   },
   {
     "word": "改正",
     "phonetic": "かいせい",
-    "explains": "改正"
+    "explains": "改正",
+    "freq": 10489
   },
   {
     "word": "解説",
     "phonetic": "かいせつ",
-    "explains": "解说"
+    "explains": "解说",
+    "freq": 4979
   },
   {
     "word": "改善",
     "phonetic": "かいぜん",
-    "explains": "改善"
+    "explains": "改善",
+    "freq": 2251
   },
   {
     "word": "会長",
     "phonetic": "かいちょう",
-    "explains": "会长"
+    "explains": "会长",
+    "freq": 2451
   },
   {
     "word": "開通",
     "phonetic": "かいつう",
-    "explains": "开通"
+    "explains": "开通",
+    "freq": 12739
   },
   {
     "word": "買い付ける",
@@ -682,22 +734,26 @@
   {
     "word": "改定",
     "phonetic": "かいてい",
-    "explains": "改定"
+    "explains": "改定",
+    "freq": 32556
   },
   {
     "word": "開店",
     "phonetic": "かいてん",
-    "explains": "开店"
+    "explains": "开店",
+    "freq": 3851
   },
   {
     "word": "回答",
     "phonetic": "かいとう",
-    "explains": "回答"
+    "explains": "回答",
+    "freq": 3238
   },
   {
     "word": "開発",
     "phonetic": "かいはつ",
-    "explains": "开发"
+    "explains": "开发",
+    "freq": 902
   },
   {
     "word": "改版",
@@ -707,12 +763,14 @@
   {
     "word": "回避",
     "phonetic": "かいひ",
-    "explains": "回避"
+    "explains": "回避",
+    "freq": 1927
   },
   {
     "word": "回復",
     "phonetic": "かいふく",
-    "explains": "恢复"
+    "explains": "恢复",
+    "freq": 696
   },
   {
     "word": "改編",
@@ -722,12 +780,14 @@
   {
     "word": "会報",
     "phonetic": "かいほう",
-    "explains": "会报"
+    "explains": "会报",
+    "freq": 12905
   },
   {
     "word": "開放",
     "phonetic": "かいほう",
-    "explains": "开放"
+    "explains": "开放",
+    "freq": 1754
   },
   {
     "word": "買い求める",
@@ -737,7 +797,8 @@
   {
     "word": "会話",
     "phonetic": "かいわ",
-    "explains": "会话"
+    "explains": "会话",
+    "freq": 630
   },
   {
     "word": "かえって",
@@ -752,7 +813,8 @@
   {
     "word": "価格",
     "phonetic": "かかく",
-    "explains": "价格"
+    "explains": "价格",
+    "freq": 2384
   },
   {
     "word": "欠かせない",
@@ -762,7 +824,8 @@
   {
     "word": "係り",
     "phonetic": "かかり",
-    "explains": "主管人员；担任"
+    "explains": "主管人员；担任",
+    "freq": 5416
   },
   {
     "word": "係わる",
@@ -807,7 +870,8 @@
   {
     "word": "限り",
     "phonetic": "かぎり",
-    "explains": "限度；只要"
+    "explains": "限度；只要",
+    "freq": 336
   },
   {
     "word": "限る",
@@ -832,7 +896,8 @@
   {
     "word": "隔月",
     "phonetic": "かくげつ",
-    "explains": "隔月"
+    "explains": "隔月",
+    "freq": 19533
   },
   {
     "word": "隔週",
@@ -842,12 +907,14 @@
   {
     "word": "隠し事",
     "phonetic": "かくしごと",
-    "explains": "隐秘的事"
+    "explains": "隐秘的事",
+    "freq": 2200
   },
   {
     "word": "確信",
     "phonetic": "かくしん",
-    "explains": "确信"
+    "explains": "确信",
+    "freq": 648
   },
   {
     "word": "革新",
@@ -867,32 +934,38 @@
   {
     "word": "拡大",
     "phonetic": "かくだい",
-    "explains": "扩大"
+    "explains": "扩大",
+    "freq": 1685
   },
   {
     "word": "各地",
     "phonetic": "かくち",
-    "explains": "各地"
+    "explains": "各地",
+    "freq": 3404
   },
   {
     "word": "拡張",
     "phonetic": "かくちょう",
-    "explains": "扩充"
+    "explains": "扩充",
+    "freq": 3971
   },
   {
     "word": "確定",
     "phonetic": "かくてい",
-    "explains": "确定"
+    "explains": "确定",
+    "freq": 3210
   },
   {
     "word": "獲得",
     "phonetic": "かくとく",
-    "explains": "获得"
+    "explains": "获得",
+    "freq": 1940
   },
   {
     "word": "確認",
     "phonetic": "かくにん",
-    "explains": "确认"
+    "explains": "确认",
+    "freq": 154
   },
   {
     "word": "角張る",
@@ -902,12 +975,14 @@
   {
     "word": "革命",
     "phonetic": "かくめい",
-    "explains": "革命"
+    "explains": "革命",
+    "freq": 1285
   },
   {
     "word": "隔離",
     "phonetic": "かくり",
-    "explains": "隔离"
+    "explains": "隔离",
+    "freq": 1443
   },
   {
     "word": "確率",
@@ -917,7 +992,8 @@
   {
     "word": "確立",
     "phonetic": "かくりつ",
-    "explains": "确立"
+    "explains": "确立",
+    "freq": 3573
   },
   {
     "word": "隠れる",
@@ -947,12 +1023,14 @@
   {
     "word": "数々",
     "phonetic": "かずかず",
-    "explains": "种种；许多"
+    "explains": "种种；许多",
+    "freq": 4811
   },
   {
     "word": "過疎",
     "phonetic": "かそ",
-    "explains": "人口过稀"
+    "explains": "人口过稀",
+    "freq": 30118
   },
   {
     "word": "堅い",
@@ -992,22 +1070,26 @@
   {
     "word": "活字",
     "phonetic": "かつじ",
-    "explains": "铅字"
+    "explains": "铅字",
+    "freq": 13650
   },
   {
     "word": "活動",
     "phonetic": "かつどう",
-    "explains": "活动"
+    "explains": "活动",
+    "freq": 533
   },
   {
     "word": "活用",
     "phonetic": "かつよう",
-    "explains": "活用"
+    "explains": "活用",
+    "freq": 4475
   },
   {
     "word": "過程",
     "phonetic": "かてい",
-    "explains": "过程"
+    "explains": "过程",
+    "freq": 2700
   },
   {
     "word": "彼方",
@@ -1017,7 +1099,8 @@
   {
     "word": "構う",
     "phonetic": "かまう",
-    "explains": "介意；照顾"
+    "explains": "介意；照顾",
+    "freq": 8595
   },
   {
     "word": "構える",
@@ -1042,7 +1125,8 @@
   {
     "word": "過密",
     "phonetic": "かみつ",
-    "explains": "过密"
+    "explains": "过密",
+    "freq": 12411
   },
   {
     "word": "革",
@@ -1052,32 +1136,38 @@
   {
     "word": "感覚",
     "phonetic": "かんかく",
-    "explains": "感觉"
+    "explains": "感觉",
+    "freq": 1141
   },
   {
     "word": "換算",
     "phonetic": "かんさん",
-    "explains": "换算"
+    "explains": "换算",
+    "freq": 12629
   },
   {
     "word": "観衆",
     "phonetic": "かんしゅう",
-    "explains": "观众"
+    "explains": "观众",
+    "freq": 4792
   },
   {
     "word": "鑑賞",
     "phonetic": "かんしょう",
-    "explains": "鉴赏"
+    "explains": "鉴赏",
+    "freq": 6089
   },
   {
     "word": "関心",
     "phonetic": "かんしん",
-    "explains": "关心；兴趣"
+    "explains": "关心；兴趣",
+    "freq": 942
   },
   {
     "word": "感情",
     "phonetic": "かんじょう",
-    "explains": "感情"
+    "explains": "感情",
+    "freq": 510
   },
   {
     "word": "関する",
@@ -1087,32 +1177,38 @@
   {
     "word": "感染",
     "phonetic": "かんせん",
-    "explains": "感染"
+    "explains": "感染",
+    "freq": 670
   },
   {
     "word": "観戦",
     "phonetic": "かんせん",
-    "explains": "观战"
+    "explains": "观战",
+    "freq": 8023
   },
   {
     "word": "観測",
     "phonetic": "かんそく",
-    "explains": "观测"
+    "explains": "观测",
+    "freq": 3991
   },
   {
     "word": "鑑定",
     "phonetic": "かんてい",
-    "explains": "鉴定"
+    "explains": "鉴定",
+    "freq": 2857
   },
   {
     "word": "観点",
     "phonetic": "かんてん",
-    "explains": "观点"
+    "explains": "观点",
+    "freq": 4861
   },
   {
     "word": "関東",
     "phonetic": "かんとう",
-    "explains": "关东"
+    "explains": "关东",
+    "freq": 6853
   },
   {
     "word": "勧誘",
@@ -1122,27 +1218,32 @@
   {
     "word": "関与",
     "phonetic": "かんよ",
-    "explains": "参与"
+    "explains": "参与",
+    "freq": 1254
   },
   {
     "word": "観覧",
     "phonetic": "かんらん",
-    "explains": "观览"
+    "explains": "观览",
+    "freq": 6951
   },
   {
     "word": "関連",
     "phonetic": "かんれん",
-    "explains": "关联"
+    "explains": "关联",
+    "freq": 927
   },
   {
     "word": "活気",
     "phonetic": "かっき",
-    "explains": "活力；生气"
+    "explains": "活力；生气",
+    "freq": 6655
   },
   {
     "word": "活発",
     "phonetic": "かっぱつ",
-    "explains": "活泼"
+    "explains": "活泼",
+    "freq": 3459
   },
   {
     "word": "割賦",
@@ -1157,17 +1258,20 @@
   {
     "word": "概算",
     "phonetic": "がいさん",
-    "explains": "概算"
+    "explains": "概算",
+    "freq": 10472
   },
   {
     "word": "外出",
     "phonetic": "がいしゅつ",
-    "explains": "外出"
+    "explains": "外出",
+    "freq": 1197
   },
   {
     "word": "概説",
     "phonetic": "がいせつ",
-    "explains": "概述"
+    "explains": "概述",
+    "freq": 28845
   },
   {
     "word": "額",
@@ -1177,87 +1281,104 @@
   {
     "word": "学位",
     "phonetic": "がくい",
-    "explains": "学位"
+    "explains": "学位",
+    "freq": 4049
   },
   {
     "word": "学者",
     "phonetic": "がくしゃ",
-    "explains": "学者"
+    "explains": "学者",
+    "freq": 2611
   },
   {
     "word": "学部",
     "phonetic": "がくぶ",
-    "explains": "院系"
+    "explains": "院系",
+    "freq": 7161
   },
   {
     "word": "学問",
     "phonetic": "がくもん",
-    "explains": "学问"
+    "explains": "学问",
+    "freq": 6629
   },
   {
     "word": "楽器",
     "phonetic": "がっき",
-    "explains": "乐器"
+    "explains": "乐器",
+    "freq": 2973
   },
   {
     "word": "客観",
     "phonetic": "きゃっかん",
-    "explains": "客观"
+    "explains": "客观",
+    "freq": 4168
   },
   {
     "word": "教員",
     "phonetic": "きょういん",
-    "explains": "教员"
+    "explains": "教员",
+    "freq": 5434
   },
   {
     "word": "強化",
     "phonetic": "きょうか",
-    "explains": "强化"
+    "explains": "强化",
+    "freq": 1677
   },
   {
     "word": "協会",
     "phonetic": "きょうかい",
-    "explains": "协会"
+    "explains": "协会",
+    "freq": 2855
   },
   {
     "word": "教会",
     "phonetic": "きょうかい",
-    "explains": "教会"
+    "explains": "教会",
+    "freq": 581
   },
   {
     "word": "供給",
     "phonetic": "きょうきゅう",
-    "explains": "供给"
+    "explains": "供给",
+    "freq": 1481
   },
   {
     "word": "競技",
     "phonetic": "きょうぎ",
-    "explains": "竞技"
+    "explains": "竞技",
+    "freq": 2257
   },
   {
     "word": "協議",
     "phonetic": "きょうぎ",
-    "explains": "协议"
+    "explains": "协议",
+    "freq": 3626
   },
   {
     "word": "協賛",
     "phonetic": "きょうさん",
-    "explains": "赞助"
+    "explains": "赞助",
+    "freq": 26246
   },
   {
     "word": "教授",
     "phonetic": "きょうじゅ",
-    "explains": "教授"
+    "explains": "教授",
+    "freq": 579
   },
   {
     "word": "強制",
     "phonetic": "きょうせい",
-    "explains": "强制"
+    "explains": "强制",
+    "freq": 1284
   },
   {
     "word": "競争",
     "phonetic": "きょうそう",
-    "explains": "竞争"
+    "explains": "竞争",
+    "freq": 1686
   },
   {
     "word": "競争力",
@@ -1267,12 +1388,14 @@
   {
     "word": "強調",
     "phonetic": "きょうちょう",
-    "explains": "强调"
+    "explains": "强调",
+    "freq": 4576
   },
   {
     "word": "共通",
     "phonetic": "きょうつう",
-    "explains": "共同"
+    "explains": "共同",
+    "freq": 1275
   },
   {
     "word": "教程",
@@ -1282,27 +1405,32 @@
   {
     "word": "郷土",
     "phonetic": "きょうど",
-    "explains": "乡土"
+    "explains": "乡土",
+    "freq": 15798
   },
   {
     "word": "教本",
     "phonetic": "きょうほん",
-    "explains": "教科书"
+    "explains": "教科书",
+    "freq": 20573
   },
   {
     "word": "共有",
     "phonetic": "きょうゆう",
-    "explains": "共有"
+    "explains": "共有",
+    "freq": 1205
   },
   {
     "word": "協力",
     "phonetic": "きょうりょく",
-    "explains": "协力；合作"
+    "explains": "协力；合作",
+    "freq": 279
   },
   {
     "word": "強烈",
     "phonetic": "きょうれつ",
-    "explains": "强烈"
+    "explains": "强烈",
+    "freq": 2420
   },
   {
     "word": "極端",
@@ -1312,17 +1440,20 @@
   {
     "word": "極力",
     "phonetic": "きょくりょく",
-    "explains": "极力"
+    "explains": "极力",
+    "freq": 10963
   },
   {
     "word": "規格",
     "phonetic": "きかく",
-    "explains": "规格"
+    "explains": "规格",
+    "freq": 7881
   },
   {
     "word": "機関",
     "phonetic": "きかん",
-    "explains": "机关；机构"
+    "explains": "机关；机构",
+    "freq": 908
   },
   {
     "word": "着替える",
@@ -1332,97 +1463,116 @@
   {
     "word": "期限",
     "phonetic": "きげん",
-    "explains": "期限"
+    "explains": "期限",
+    "freq": 1828
   },
   {
     "word": "起源",
     "phonetic": "きげん",
-    "explains": "起源"
+    "explains": "起源",
+    "freq": 4467
   },
   {
     "word": "気候",
     "phonetic": "きこう",
-    "explains": "气候"
+    "explains": "气候",
+    "freq": 4239
   },
   {
     "word": "記号",
     "phonetic": "きごう",
-    "explains": "记号"
+    "explains": "记号",
+    "freq": 4980
   },
   {
     "word": "記載",
     "phonetic": "きさい",
-    "explains": "记载"
+    "explains": "记载",
+    "freq": 4224
   },
   {
     "word": "記者",
     "phonetic": "きしゃ",
-    "explains": "记者"
+    "explains": "记者",
+    "freq": 1001
   },
   {
     "word": "気性",
     "phonetic": "きしょう",
-    "explains": "性情"
+    "explains": "性情",
+    "freq": 6524
   },
   {
     "word": "記事",
     "phonetic": "きじ",
-    "explains": "报道；文章"
+    "explains": "报道；文章",
+    "freq": 735
   },
   {
     "word": "規制",
     "phonetic": "きせい",
-    "explains": "规制；限制"
+    "explains": "规制；限制",
+    "freq": 2960
   },
   {
     "word": "既定",
     "phonetic": "きてい",
-    "explains": "既定"
+    "explains": "既定",
+    "freq": 13399
   },
   {
     "word": "規定",
     "phonetic": "きてい",
-    "explains": "规定"
+    "explains": "规定",
+    "freq": 3037
   },
   {
     "word": "着払い",
     "phonetic": "きばらい",
-    "explains": "到付"
+    "explains": "到付",
+    "freq": 31460
   },
   {
     "word": "寄付",
     "phonetic": "きふ",
-    "explains": "捐赠"
+    "explains": "捐赠",
+    "freq": 1688
   },
   {
     "word": "決まり",
     "phonetic": "きまり",
-    "explains": "规定；惯例"
+    "explains": "规定；惯例",
+    "freq": 1420
   },
   {
     "word": "着物",
     "phonetic": "きもの",
-    "explains": "和服"
+    "explains": "和服",
+    "freq": 9506
   },
   {
     "word": "規約",
     "phonetic": "きやく",
-    "explains": "规章"
+    "explains": "规章",
+    "freq": 5762
   },
   {
     "word": "寄与",
     "phonetic": "きよ",
-    "explains": "贡献"
+    "explains": "贡献",
+    "freq": 11902
   },
   {
     "word": "気力",
     "phonetic": "きりょく",
-    "explains": "气力；毅力"
+    "explains": "气力；毅力",
+    "freq": 5683
   },
   {
     "word": "規律",
     "phonetic": "きりつ",
-    "explains": "纪律"
+    "explains": "纪律",
+    "freq": 3355
   },
   {
     "word": "きわめて",
@@ -1432,22 +1582,26 @@
   {
     "word": "緊急",
     "phonetic": "きんきゅう",
-    "explains": "紧急"
+    "explains": "紧急",
+    "freq": 487
   },
   {
     "word": "禁止",
     "phonetic": "きんし",
-    "explains": "禁止"
+    "explains": "禁止",
+    "freq": 667
   },
   {
     "word": "緊張",
     "phonetic": "きんちょう",
-    "explains": "紧张"
+    "explains": "紧张",
+    "freq": 951
   },
   {
     "word": "近年",
     "phonetic": "きんねん",
-    "explains": "近年"
+    "explains": "近年",
+    "freq": 8214
   },
   {
     "word": "緊迫",
@@ -1472,67 +1626,80 @@
   {
     "word": "議案",
     "phonetic": "ぎあん",
-    "explains": "议案"
+    "explains": "议案",
+    "freq": 10379
   },
   {
     "word": "業界",
     "phonetic": "ぎょうかい",
-    "explains": "业界"
+    "explains": "业界",
+    "freq": 1937
   },
   {
     "word": "業績",
     "phonetic": "ぎょうせき",
-    "explains": "业绩"
+    "explains": "业绩",
+    "freq": 3504
   },
   {
     "word": "業務",
     "phonetic": "ぎょうむ",
-    "explains": "业务"
+    "explains": "业务",
+    "freq": 2383
   },
   {
     "word": "議員",
     "phonetic": "ぎいん",
-    "explains": "议员"
+    "explains": "议员",
+    "freq": 545
   },
   {
     "word": "議会",
     "phonetic": "ぎかい",
-    "explains": "议会"
+    "explains": "议会",
+    "freq": 1516
   },
   {
     "word": "議決",
     "phonetic": "ぎけつ",
-    "explains": "议决"
+    "explains": "议决",
+    "freq": 14521
   },
   {
     "word": "議事",
     "phonetic": "ぎじ",
-    "explains": "议事"
+    "explains": "议事",
+    "freq": 4138
   },
   {
     "word": "偽造",
     "phonetic": "ぎぞう",
-    "explains": "伪造"
+    "explains": "伪造",
+    "freq": 2093
   },
   {
     "word": "議題",
     "phonetic": "ぎだい",
-    "explains": "议题"
+    "explains": "议题",
+    "freq": 5235
   },
   {
     "word": "議長",
     "phonetic": "ぎちょう",
-    "explains": "议长"
+    "explains": "议长",
+    "freq": 1575
   },
   {
     "word": "義務",
     "phonetic": "ぎむ",
-    "explains": "义务"
+    "explains": "义务",
+    "freq": 962
   },
   {
     "word": "議論",
     "phonetic": "ぎろん",
-    "explains": "议论"
+    "explains": "议论",
+    "freq": 1017
   },
   {
     "word": "ぎっしり",
@@ -1552,7 +1719,8 @@
   {
     "word": "気高",
     "phonetic": "けだか",
-    "explains": "气高"
+    "explains": "气高",
+    "freq": 4331
   },
   {
     "word": "血圧",
@@ -1562,17 +1730,20 @@
   {
     "word": "決意",
     "phonetic": "けつい",
-    "explains": "决心"
+    "explains": "决心",
+    "freq": 2154
   },
   {
     "word": "欠場",
     "phonetic": "けつじょう",
-    "explains": "缺席"
+    "explains": "缺席",
+    "freq": 8707
   },
   {
     "word": "決断",
     "phonetic": "けつだん",
-    "explains": "决断"
+    "explains": "决断",
+    "freq": 1031
   },
   {
     "word": "欠落",
@@ -1587,7 +1758,8 @@
   {
     "word": "気配",
     "phonetic": "けはい",
-    "explains": "迹象；行情"
+    "explains": "迹象；行情",
+    "freq": 2816
   },
   {
     "word": "けれども",
@@ -1597,57 +1769,68 @@
   {
     "word": "権威",
     "phonetic": "けんい",
-    "explains": "权威"
+    "explains": "权威",
+    "freq": 3088
   },
   {
     "word": "検挙",
     "phonetic": "けんきょ",
-    "explains": "拘捕"
+    "explains": "拘捕",
+    "freq": 5406
   },
   {
     "word": "権限",
     "phonetic": "けんげん",
-    "explains": "权限"
+    "explains": "权限",
+    "freq": 1219
   },
   {
     "word": "検査",
     "phonetic": "けんさ",
-    "explains": "检查"
+    "explains": "检查",
+    "freq": 475
   },
   {
     "word": "検索",
     "phonetic": "けんさく",
-    "explains": "检索"
+    "explains": "检索",
+    "freq": 1526
   },
   {
     "word": "見地",
     "phonetic": "けんち",
-    "explains": "立场"
+    "explains": "立场",
+    "freq": 7298
   },
   {
     "word": "検定",
     "phonetic": "けんてい",
-    "explains": "审定"
+    "explains": "审定",
+    "freq": 22054
   },
   {
     "word": "検討",
     "phonetic": "けんとう",
-    "explains": "研讨"
+    "explains": "研讨",
+    "freq": 1411
   },
   {
     "word": "見当",
     "phonetic": "けんとう",
-    "explains": "估计；方向"
+    "explains": "估计；方向",
+    "freq": 1486
   },
   {
     "word": "権利",
     "phonetic": "けんり",
-    "explains": "权利"
+    "explains": "权利",
+    "freq": 551
   },
   {
     "word": "結核",
     "phonetic": "けっかく",
-    "explains": "结核"
+    "explains": "结核",
+    "freq": 6057
   },
   {
     "word": "血管",
@@ -1657,7 +1840,8 @@
   {
     "word": "結局",
     "phonetic": "けっきょく",
-    "explains": "结果；到底"
+    "explains": "结果；到底",
+    "freq": 571
   },
   {
     "word": "欠勤",
@@ -1667,122 +1851,146 @@
   {
     "word": "決済",
     "phonetic": "けっさい",
-    "explains": "结算"
+    "explains": "结算",
+    "freq": 7785
   },
   {
     "word": "決算",
     "phonetic": "けっさん",
-    "explains": "决算"
+    "explains": "决算",
+    "freq": 8627
   },
   {
     "word": "決勝",
     "phonetic": "けっしょう",
-    "explains": "决赛"
+    "explains": "决赛",
+    "freq": 2781
   },
   {
     "word": "結成",
     "phonetic": "けっせい",
-    "explains": "结成"
+    "explains": "结成",
+    "freq": 3516
   },
   {
     "word": "決定",
     "phonetic": "けってい",
-    "explains": "决定"
+    "explains": "决定",
+    "freq": 708
   },
   {
     "word": "欠点",
     "phonetic": "けってん",
-    "explains": "缺点"
+    "explains": "缺点",
+    "freq": 2568
   },
   {
     "word": "決闘",
     "phonetic": "けっとう",
-    "explains": "决斗"
+    "explains": "决斗",
+    "freq": 3371
   },
   {
     "word": "外科",
     "phonetic": "げか",
-    "explains": "外科"
+    "explains": "外科",
+    "freq": 1429
   },
   {
     "word": "原価",
     "phonetic": "げんか",
-    "explains": "原价；成本"
+    "explains": "原价；成本",
+    "freq": 11929
   },
   {
     "word": "限界",
     "phonetic": "げんかい",
-    "explains": "界限"
+    "explains": "界限",
+    "freq": 1227
   },
   {
     "word": "現金",
     "phonetic": "げんきん",
-    "explains": "现金"
+    "explains": "现金",
+    "freq": 922
   },
   {
     "word": "原作",
     "phonetic": "げんさく",
-    "explains": "原作"
+    "explains": "原作",
+    "freq": 6274
   },
   {
     "word": "現在",
     "phonetic": "げんざい",
-    "explains": "现在"
+    "explains": "现在",
+    "freq": 503
   },
   {
     "word": "原始",
     "phonetic": "げんし",
-    "explains": "原始"
+    "explains": "原始",
+    "freq": 3215
   },
   {
     "word": "原子",
     "phonetic": "げんし",
-    "explains": "原子"
+    "explains": "原子",
+    "freq": 1853
   },
   {
     "word": "原色",
     "phonetic": "げんしょく",
-    "explains": "原色"
+    "explains": "原色",
+    "freq": 22188
   },
   {
     "word": "現実",
     "phonetic": "げんじつ",
-    "explains": "现实"
+    "explains": "现实",
+    "freq": 430
   },
   {
     "word": "原則",
     "phonetic": "げんそく",
-    "explains": "原则"
+    "explains": "原则",
+    "freq": 4242
   },
   {
     "word": "現像",
     "phonetic": "げんぞう",
-    "explains": "显影"
+    "explains": "显影",
+    "freq": 6865
   },
   {
     "word": "現代",
     "phonetic": "げんだい",
-    "explains": "现代"
+    "explains": "现代",
+    "freq": 2254
   },
   {
     "word": "現地",
     "phonetic": "げんち",
-    "explains": "当地"
+    "explains": "当地",
+    "freq": 2094
   },
   {
     "word": "原油",
     "phonetic": "げんゆ",
-    "explains": "原油"
+    "explains": "原油",
+    "freq": 8249
   },
   {
     "word": "月刊",
     "phonetic": "げっかん",
-    "explains": "月刊"
+    "explains": "月刊",
+    "freq": 9885
   },
   {
     "word": "月給",
     "phonetic": "げっきゅう",
-    "explains": "月薪"
+    "explains": "月薪",
+    "freq": 9380
   },
   {
     "word": "請う",
@@ -1792,7 +2000,8 @@
   {
     "word": "事柄",
     "phonetic": "ことがら",
-    "explains": "事情"
+    "explains": "事情",
+    "freq": 5368
   },
   {
     "word": "滑稽",
@@ -1807,22 +2016,26 @@
   {
     "word": "最悪",
     "phonetic": "さいあく",
-    "explains": "最坏"
+    "explains": "最坏",
+    "freq": 409
   },
   {
     "word": "際限",
     "phonetic": "さいげん",
-    "explains": "限度"
+    "explains": "限度",
+    "freq": 8594
   },
   {
     "word": "催告",
     "phonetic": "さいこく",
-    "explains": "催告"
+    "explains": "催告",
+    "freq": 30926
   },
   {
     "word": "最終",
     "phonetic": "さいしゅう",
-    "explains": "最终"
+    "explains": "最终",
+    "freq": 678
   },
   {
     "word": "採集",
@@ -1832,12 +2045,14 @@
   {
     "word": "最新",
     "phonetic": "さいしん",
-    "explains": "最新"
+    "explains": "最新",
+    "freq": 1249
   },
   {
     "word": "最善",
     "phonetic": "さいぜん",
-    "explains": "最好"
+    "explains": "最好",
+    "freq": 1074
   },
   {
     "word": "最前線",
@@ -1847,7 +2062,8 @@
   {
     "word": "最多",
     "phonetic": "さいた",
-    "explains": "最多"
+    "explains": "最多",
+    "freq": 11767
   },
   {
     "word": "採択",
@@ -1862,12 +2078,14 @@
   {
     "word": "採点",
     "phonetic": "さいてん",
-    "explains": "评分"
+    "explains": "评分",
+    "freq": 7188
   },
   {
     "word": "採用",
     "phonetic": "さいよう",
-    "explains": "采用"
+    "explains": "采用",
+    "freq": 2062
   },
   {
     "word": "差額",
@@ -1887,7 +2105,8 @@
   {
     "word": "先物",
     "phonetic": "さきもの",
-    "explains": "期货"
+    "explains": "期货",
+    "freq": 8849
   },
   {
     "word": "削減",
@@ -1902,7 +2121,8 @@
   {
     "word": "作者",
     "phonetic": "さくしゃ",
-    "explains": "作者"
+    "explains": "作者",
+    "freq": 4923
   },
   {
     "word": "作図",
@@ -1912,37 +2132,44 @@
   {
     "word": "作成",
     "phonetic": "さくせい",
-    "explains": "制作"
+    "explains": "制作",
+    "freq": 2089
   },
   {
     "word": "作戦",
     "phonetic": "さくせん",
-    "explains": "作战"
+    "explains": "作战",
+    "freq": 414
   },
   {
     "word": "策定",
     "phonetic": "さくてい",
-    "explains": "制定"
+    "explains": "制定",
+    "freq": 17552
   },
   {
     "word": "昨年",
     "phonetic": "さくねん",
-    "explains": "去年"
+    "explains": "去年",
+    "freq": 2303
   },
   {
     "word": "作品",
     "phonetic": "さくひん",
-    "explains": "作品"
+    "explains": "作品",
+    "freq": 1092
   },
   {
     "word": "作風",
     "phonetic": "さくふう",
-    "explains": "风格"
+    "explains": "风格",
+    "freq": 14388
   },
   {
     "word": "作物",
     "phonetic": "さくもつ",
-    "explains": "作物"
+    "explains": "作物",
+    "freq": 4091
   },
   {
     "word": "昨夜",
@@ -1952,7 +2179,8 @@
   {
     "word": "さしあたり",
     "phonetic": "さしあたり",
-    "explains": "目前；暂且"
+    "explains": "目前；暂且",
+    "freq": 9003
   },
   {
     "word": "差入",
@@ -2007,7 +2235,8 @@
   {
     "word": "作動",
     "phonetic": "さどう",
-    "explains": "动作"
+    "explains": "动作",
+    "freq": 1519
   },
   {
     "word": "茶道",
@@ -2017,7 +2246,8 @@
   {
     "word": "差別",
     "phonetic": "さべつ",
-    "explains": "差别；歧视"
+    "explains": "差别；歧视",
+    "freq": 2049
   },
   {
     "word": "左右",
@@ -2042,7 +2272,8 @@
   {
     "word": "参加",
     "phonetic": "さんか",
-    "explains": "参加"
+    "explains": "参加",
+    "freq": 597
   },
   {
     "word": "参加する",
@@ -2052,7 +2283,8 @@
   {
     "word": "散乱",
     "phonetic": "さんらん",
-    "explains": "散乱"
+    "explains": "散乱",
+    "freq": 8251
   },
   {
     "word": "さっき",
@@ -2062,7 +2294,8 @@
   {
     "word": "作曲",
     "phonetic": "さっきょく",
-    "explains": "作曲"
+    "explains": "作曲",
+    "freq": 3815
   },
   {
     "word": "昨今",
@@ -2082,32 +2315,38 @@
   {
     "word": "在庫",
     "phonetic": "ざいこ",
-    "explains": "库存"
+    "explains": "库存",
+    "freq": 3524
   },
   {
     "word": "在住",
     "phonetic": "ざいじゅう",
-    "explains": "居住"
+    "explains": "居住",
+    "freq": 3910
   },
   {
     "word": "在宅",
     "phonetic": "ざいたく",
-    "explains": "在家"
+    "explains": "在家",
+    "freq": 6284
   },
   {
     "word": "在日",
     "phonetic": "ざいにち",
-    "explains": "在日"
+    "explains": "在日",
+    "freq": 12882
   },
   {
     "word": "在留",
     "phonetic": "ざいりゅう",
-    "explains": "居留"
+    "explains": "居留",
+    "freq": 20020
   },
   {
     "word": "仕上がり",
     "phonetic": "しあがり",
-    "explains": "完成情况"
+    "explains": "完成情况",
+    "freq": 9675
   },
   {
     "word": "仕上げる",
@@ -2117,7 +2356,8 @@
   {
     "word": "社員",
     "phonetic": "しゃいん",
-    "explains": "职员"
+    "explains": "职员",
+    "freq": 1617
   },
   {
     "word": "社屋",
@@ -2142,17 +2382,20 @@
   {
     "word": "社宅",
     "phonetic": "しゃたく",
-    "explains": "公司宿舍"
+    "explains": "公司宿舍",
+    "freq": 11627
   },
   {
     "word": "社内",
     "phonetic": "しゃない",
-    "explains": "公司内部"
+    "explains": "公司内部",
+    "freq": 6300
   },
   {
     "word": "社名",
     "phonetic": "しゃめい",
-    "explains": "公司名称"
+    "explains": "公司名称",
+    "freq": 8203
   },
   {
     "word": "週",
@@ -2177,27 +2420,32 @@
   {
     "word": "週間",
     "phonetic": "しゅうかん",
-    "explains": "周（期间）"
+    "explains": "周（期间）",
+    "freq": 209
   },
   {
     "word": "就学",
     "phonetic": "しゅうがく",
-    "explains": "就学"
+    "explains": "就学",
+    "freq": 22196
   },
   {
     "word": "修学",
     "phonetic": "しゅうがく",
-    "explains": "修学"
+    "explains": "修学",
+    "freq": 13265
   },
   {
     "word": "宗教",
     "phonetic": "しゅうきょう",
-    "explains": "宗教"
+    "explains": "宗教",
+    "freq": 1607
   },
   {
     "word": "集合",
     "phonetic": "しゅうごう",
-    "explains": "集合"
+    "explains": "集合",
+    "freq": 1915
   },
   {
     "word": "収拾",
@@ -2222,32 +2470,38 @@
   {
     "word": "集団",
     "phonetic": "しゅうだん",
-    "explains": "集团"
+    "explains": "集团",
+    "freq": 1224
   },
   {
     "word": "集中",
     "phonetic": "しゅうちゅう",
-    "explains": "集中"
+    "explains": "集中",
+    "freq": 587
   },
   {
     "word": "収入",
     "phonetic": "しゅうにゅう",
-    "explains": "收入"
+    "explains": "收入",
+    "freq": 2784
   },
   {
     "word": "就任",
     "phonetic": "しゅうにん",
-    "explains": "就任"
+    "explains": "就任",
+    "freq": 3831
   },
   {
     "word": "宗派",
     "phonetic": "しゅうは",
-    "explains": "宗派"
+    "explains": "宗派",
+    "freq": 9887
   },
   {
     "word": "週報",
     "phonetic": "しゅうほう",
-    "explains": "周报"
+    "explains": "周报",
+    "freq": 32361
   },
   {
     "word": "週末",
@@ -2262,7 +2516,8 @@
   {
     "word": "修理",
     "phonetic": "しゅうり",
-    "explains": "修理"
+    "explains": "修理",
+    "freq": 753
   },
   {
     "word": "修了",
@@ -2272,17 +2527,20 @@
   {
     "word": "主観",
     "phonetic": "しゅかん",
-    "explains": "主观"
+    "explains": "主观",
+    "freq": 7071
   },
   {
     "word": "主義",
     "phonetic": "しゅぎ",
-    "explains": "主义"
+    "explains": "主义",
+    "freq": 639
   },
   {
     "word": "縮小",
     "phonetic": "しゅくしょう",
-    "explains": "缩小"
+    "explains": "缩小",
+    "freq": 4918
   },
   {
     "word": "宿泊",
@@ -2292,27 +2550,32 @@
   {
     "word": "主語",
     "phonetic": "しゅご",
-    "explains": "主语"
+    "explains": "主语",
+    "freq": 20042
   },
   {
     "word": "主催",
     "phonetic": "しゅさい",
-    "explains": "主办"
+    "explains": "主办",
+    "freq": 3229
   },
   {
     "word": "取材",
     "phonetic": "しゅざい",
-    "explains": "采访"
+    "explains": "采访",
+    "freq": 2074
   },
   {
     "word": "主旨",
     "phonetic": "しゅし",
-    "explains": "主旨"
+    "explains": "主旨",
+    "freq": 10876
   },
   {
     "word": "主食",
     "phonetic": "しゅしょく",
-    "explains": "主食"
+    "explains": "主食",
+    "freq": 15699
   },
   {
     "word": "主人公",
@@ -2322,32 +2585,38 @@
   {
     "word": "主体",
     "phonetic": "しゅたい",
-    "explains": "主体"
+    "explains": "主体",
+    "freq": 12897
   },
   {
     "word": "主題",
     "phonetic": "しゅだい",
-    "explains": "主题"
+    "explains": "主题",
+    "freq": 5375
   },
   {
     "word": "主張",
     "phonetic": "しゅちょう",
-    "explains": "主张"
+    "explains": "主张",
+    "freq": 1005
   },
   {
     "word": "取得",
     "phonetic": "しゅとく",
-    "explains": "取得"
+    "explains": "取得",
+    "freq": 1170
   },
   {
     "word": "主任",
     "phonetic": "しゅにん",
-    "explains": "主任"
+    "explains": "主任",
+    "freq": 1638
   },
   {
     "word": "主役",
     "phonetic": "しゅやく",
-    "explains": "主角"
+    "explains": "主角",
+    "freq": 2988
   },
   {
     "word": "出版",
@@ -2357,137 +2626,164 @@
   {
     "word": "消去",
     "phonetic": "しょうきょ",
-    "explains": "消去"
+    "explains": "消去",
+    "freq": 2239
   },
   {
     "word": "消極",
     "phonetic": "しょうきょく",
-    "explains": "消极"
+    "explains": "消极",
+    "freq": 7703
   },
   {
     "word": "消毒",
     "phonetic": "しょうどく",
-    "explains": "消毒"
+    "explains": "消毒",
+    "freq": 3540
   },
   {
     "word": "消費",
     "phonetic": "しょうひ",
-    "explains": "消费"
+    "explains": "消费",
+    "freq": 3348
   },
   {
     "word": "職員",
     "phonetic": "しょくいん",
-    "explains": "职员"
+    "explains": "职员",
+    "freq": 1487
   },
   {
     "word": "食塩",
     "phonetic": "しょくえん",
-    "explains": "食盐"
+    "explains": "食盐",
+    "freq": 9063
   },
   {
     "word": "職業",
     "phonetic": "しょくぎょう",
-    "explains": "职业"
+    "explains": "职业",
+    "freq": 1805
   },
   {
     "word": "食前",
     "phonetic": "しょくぜん",
-    "explains": "饭前"
+    "explains": "饭前",
+    "freq": 14599
   },
   {
     "word": "食堂",
     "phonetic": "しょくどう",
-    "explains": "食堂"
+    "explains": "食堂",
+    "freq": 2175
   },
   {
     "word": "職人",
     "phonetic": "しょくにん",
-    "explains": "手艺人"
+    "explains": "手艺人",
+    "freq": 2841
   },
   {
     "word": "職場",
     "phonetic": "しょくば",
-    "explains": "职场"
+    "explains": "职场",
+    "freq": 1566
   },
   {
     "word": "食費",
     "phonetic": "しょくひ",
-    "explains": "伙食费"
+    "explains": "伙食费",
+    "freq": 10387
   },
   {
     "word": "食品",
     "phonetic": "しょくひん",
-    "explains": "食品"
+    "explains": "食品",
+    "freq": 2737
   },
   {
     "word": "職務",
     "phonetic": "しょくむ",
-    "explains": "职务"
+    "explains": "职务",
+    "freq": 2071
   },
   {
     "word": "食用",
     "phonetic": "しょくよう",
-    "explains": "食用"
+    "explains": "食用",
+    "freq": 10282
   },
   {
     "word": "食欲",
     "phonetic": "しょくよく",
-    "explains": "食欲"
+    "explains": "食欲",
+    "freq": 2557
   },
   {
     "word": "食糧",
     "phonetic": "しょくりょう",
-    "explains": "粮食"
+    "explains": "粮食",
+    "freq": 3232
   },
   {
     "word": "植林",
     "phonetic": "しょくりん",
-    "explains": "植树造林"
+    "explains": "植树造林",
+    "freq": 31936
   },
   {
     "word": "処置",
     "phonetic": "しょち",
-    "explains": "处理；措施"
+    "explains": "处理；措施",
+    "freq": 1657
   },
   {
     "word": "初版",
     "phonetic": "しょはん",
-    "explains": "初版"
+    "explains": "初版",
+    "freq": 6563
   },
   {
     "word": "処罰",
     "phonetic": "しょばつ",
-    "explains": "处罚"
+    "explains": "处罚",
+    "freq": 3415
   },
   {
     "word": "処分",
     "phonetic": "しょぶん",
-    "explains": "处分"
+    "explains": "处分",
+    "freq": 1198
   },
   {
     "word": "処方",
     "phonetic": "しょほう",
-    "explains": "处方"
+    "explains": "处方",
+    "freq": 2081
   },
   {
     "word": "処理",
     "phonetic": "しょり",
-    "explains": "处理"
+    "explains": "处理",
+    "freq": 705
   },
   {
     "word": "使役",
     "phonetic": "しえき",
-    "explains": "使役"
+    "explains": "使役",
+    "freq": 18542
   },
   {
     "word": "支援",
     "phonetic": "しえん",
-    "explains": "支援"
+    "explains": "支援",
+    "freq": 685
   },
   {
     "word": "資格",
     "phonetic": "しかく",
-    "explains": "资格"
+    "explains": "资格",
+    "freq": 1317
   },
   {
     "word": "仕掛ける",
@@ -2512,22 +2808,26 @@
   {
     "word": "指揮",
     "phonetic": "しき",
-    "explains": "指挥"
+    "explains": "指挥",
+    "freq": 732
   },
   {
     "word": "色彩",
     "phonetic": "しきさい",
-    "explains": "色彩"
+    "explains": "色彩",
+    "freq": 13536
   },
   {
     "word": "色調",
     "phonetic": "しきちょう",
-    "explains": "色调"
+    "explains": "色调",
+    "freq": 27733
   },
   {
     "word": "色盲",
     "phonetic": "しきもう",
-    "explains": "色盲"
+    "explains": "色盲",
+    "freq": 21867
   },
   {
     "word": "しきりに",
@@ -2537,67 +2837,80 @@
   {
     "word": "資金",
     "phonetic": "しきん",
-    "explains": "资金"
+    "explains": "资金",
+    "freq": 756
   },
   {
     "word": "仕組み",
     "phonetic": "しくみ",
-    "explains": "构造；机制"
+    "explains": "构造；机制",
+    "freq": 3609
   },
   {
     "word": "資源",
     "phonetic": "しげん",
-    "explains": "资源"
+    "explains": "资源",
+    "freq": 2802
   },
   {
     "word": "視察",
     "phonetic": "しさつ",
-    "explains": "视察"
+    "explains": "视察",
+    "freq": 6051
   },
   {
     "word": "資産",
     "phonetic": "しさん",
-    "explains": "资产"
+    "explains": "资产",
+    "freq": 1582
   },
   {
     "word": "支出",
     "phonetic": "ししゅつ",
-    "explains": "支出"
+    "explains": "支出",
+    "freq": 7738
   },
   {
     "word": "資質",
     "phonetic": "ししつ",
-    "explains": "资质"
+    "explains": "资质",
+    "freq": 4546
   },
   {
     "word": "指示",
     "phonetic": "しじ",
-    "explains": "指示"
+    "explains": "指示",
+    "freq": 537
   },
   {
     "word": "支持",
     "phonetic": "しじ",
-    "explains": "支持"
+    "explains": "支持",
+    "freq": 1146
   },
   {
     "word": "私事",
     "phonetic": "しじ",
-    "explains": "私事"
+    "explains": "私事",
+    "freq": 12689
   },
   {
     "word": "子女",
     "phonetic": "しじょ",
-    "explains": "子女"
+    "explains": "子女",
+    "freq": 20319
   },
   {
     "word": "自然",
     "phonetic": "しぜん",
-    "explains": "自然"
+    "explains": "自然",
+    "freq": 601
   },
   {
     "word": "子孫",
     "phonetic": "しそん",
-    "explains": "子孙"
+    "explains": "子孙",
+    "freq": 2983
   },
   {
     "word": "従う",
@@ -2627,7 +2940,8 @@
   {
     "word": "次第",
     "phonetic": "しだい",
-    "explains": "顺序；取决于"
+    "explains": "顺序；取决于",
+    "freq": 669
   },
   {
     "word": "しだいに",
@@ -2642,22 +2956,26 @@
   {
     "word": "質",
     "phonetic": "しつ",
-    "explains": "质量；性质"
+    "explains": "质量；性质",
+    "freq": 1404
   },
   {
     "word": "失業",
     "phonetic": "しつぎょう",
-    "explains": "失业"
+    "explains": "失业",
+    "freq": 2601
   },
   {
     "word": "湿度",
     "phonetic": "しつど",
-    "explains": "湿度"
+    "explains": "湿度",
+    "freq": 7132
   },
   {
     "word": "室内",
     "phonetic": "しつない",
-    "explains": "室内"
+    "explains": "室内",
+    "freq": 4460
   },
   {
     "word": "失望",
@@ -2667,22 +2985,26 @@
   {
     "word": "指定",
     "phonetic": "してい",
-    "explains": "指定"
+    "explains": "指定",
+    "freq": 2821
   },
   {
     "word": "私的",
     "phonetic": "してき",
-    "explains": "私人的"
+    "explains": "私人的",
+    "freq": 4897
   },
   {
     "word": "視点",
     "phonetic": "してん",
-    "explains": "视点"
+    "explains": "视点",
+    "freq": 3252
   },
   {
     "word": "指導",
     "phonetic": "しどう",
-    "explains": "指导"
+    "explains": "指导",
+    "freq": 1068
   },
   {
     "word": "指導者",
@@ -2702,7 +3024,8 @@
   {
     "word": "指標",
     "phonetic": "しひょう",
-    "explains": "指标"
+    "explains": "指标",
+    "freq": 9341
   },
   {
     "word": "紙幣",
@@ -2717,7 +3040,8 @@
   {
     "word": "資本",
     "phonetic": "しほん",
-    "explains": "资本"
+    "explains": "资本",
+    "freq": 4101
   },
   {
     "word": "資本家",
@@ -2737,22 +3061,26 @@
   {
     "word": "市民",
     "phonetic": "しみん",
-    "explains": "市民"
+    "explains": "市民",
+    "freq": 654
   },
   {
     "word": "使命",
     "phonetic": "しめい",
-    "explains": "使命"
+    "explains": "使命",
+    "freq": 1177
   },
   {
     "word": "指名",
     "phonetic": "しめい",
-    "explains": "指名"
+    "explains": "指名",
+    "freq": 1550
   },
   {
     "word": "氏名",
     "phonetic": "しめい",
-    "explains": "姓名"
+    "explains": "姓名",
+    "freq": 4854
   },
   {
     "word": "使命感",
@@ -2762,12 +3090,14 @@
   {
     "word": "指紋",
     "phonetic": "しもん",
-    "explains": "指纹"
+    "explains": "指纹",
+    "freq": 763
   },
   {
     "word": "視野",
     "phonetic": "しや",
-    "explains": "视野"
+    "explains": "视野",
+    "freq": 4159
   },
   {
     "word": "市役所",
@@ -2777,17 +3107,20 @@
   {
     "word": "私用",
     "phonetic": "しよう",
-    "explains": "私用；私事"
+    "explains": "私用；私事",
+    "freq": 6072
   },
   {
     "word": "資料",
     "phonetic": "しりょう",
-    "explains": "资料"
+    "explains": "资料",
+    "freq": 1134
   },
   {
     "word": "視力",
     "phonetic": "しりょく",
-    "explains": "视力"
+    "explains": "视力",
+    "freq": 4210
   },
   {
     "word": "真",
@@ -2797,22 +3130,26 @@
   {
     "word": "進化",
     "phonetic": "しんか",
-    "explains": "进化"
+    "explains": "进化",
+    "freq": 1504
   },
   {
     "word": "新規",
     "phonetic": "しんき",
-    "explains": "新；新办"
+    "explains": "新；新办",
+    "freq": 4656
   },
   {
     "word": "新旧",
     "phonetic": "しんきゅう",
-    "explains": "新旧"
+    "explains": "新旧",
+    "freq": 14106
   },
   {
     "word": "真空",
     "phonetic": "しんくう",
-    "explains": "真空"
+    "explains": "真空",
+    "freq": 6652
   },
   {
     "word": "真剣",
@@ -2822,12 +3159,14 @@
   {
     "word": "新興",
     "phonetic": "しんこう",
-    "explains": "新兴"
+    "explains": "新兴",
+    "freq": 12189
   },
   {
     "word": "進行",
     "phonetic": "しんこう",
-    "explains": "进行"
+    "explains": "进行",
+    "freq": 1267
   },
   {
     "word": "新婚",
@@ -2837,62 +3176,74 @@
   {
     "word": "進出",
     "phonetic": "しんしゅつ",
-    "explains": "进入"
+    "explains": "进入",
+    "freq": 5190
   },
   {
     "word": "信者",
     "phonetic": "しんじゃ",
-    "explains": "信徒"
+    "explains": "信徒",
+    "freq": 2465
   },
   {
     "word": "心中",
     "phonetic": "しんじゅう",
-    "explains": "殉情"
+    "explains": "殉情",
+    "freq": 5239
   },
   {
     "word": "信条",
     "phonetic": "しんじょう",
-    "explains": "信条"
+    "explains": "信条",
+    "freq": 4194
   },
   {
     "word": "真実",
     "phonetic": "しんじつ",
-    "explains": "真实；真相"
+    "explains": "真实；真相",
+    "freq": 247
   },
   {
     "word": "信じる",
     "phonetic": "しんじる",
-    "explains": "相信"
+    "explains": "相信",
+    "freq": 31964
   },
   {
     "word": "新生",
     "phonetic": "しんせい",
-    "explains": "新生"
+    "explains": "新生",
+    "freq": 5975
   },
   {
     "word": "親戚",
     "phonetic": "しんせき",
-    "explains": "亲戚"
+    "explains": "亲戚",
+    "freq": 2210
   },
   {
     "word": "信託",
     "phonetic": "しんたく",
-    "explains": "信托"
+    "explains": "信托",
+    "freq": 4158
   },
   {
     "word": "新着",
     "phonetic": "しんちゃく",
-    "explains": "新到"
+    "explains": "新到",
+    "freq": 10866
   },
   {
     "word": "進呈",
     "phonetic": "しんてい",
-    "explains": "赠送"
+    "explains": "赠送",
+    "freq": 11710
   },
   {
     "word": "進展",
     "phonetic": "しんてん",
-    "explains": "进展"
+    "explains": "进展",
+    "freq": 1632
   },
   {
     "word": "真に",
@@ -2902,7 +3253,8 @@
   {
     "word": "信念",
     "phonetic": "しんねん",
-    "explains": "信念"
+    "explains": "信念",
+    "freq": 1576
   },
   {
     "word": "侵犯",
@@ -2917,22 +3269,26 @@
   {
     "word": "親友",
     "phonetic": "しんゆう",
-    "explains": "挚友"
+    "explains": "挚友",
+    "freq": 715
   },
   {
     "word": "信用",
     "phonetic": "しんよう",
-    "explains": "信用"
+    "explains": "信用",
+    "freq": 337
   },
   {
     "word": "信頼",
     "phonetic": "しんらい",
-    "explains": "信赖"
+    "explains": "信赖",
+    "freq": 354
   },
   {
     "word": "進路",
     "phonetic": "しんろ",
-    "explains": "出路"
+    "explains": "出路",
+    "freq": 2615
   },
   {
     "word": "しっかり",
@@ -2942,7 +3298,8 @@
   {
     "word": "失神",
     "phonetic": "しっしん",
-    "explains": "失神"
+    "explains": "失神",
+    "freq": 4621
   },
   {
     "word": "失踪",
@@ -2952,12 +3309,14 @@
   {
     "word": "自愛",
     "phonetic": "じあい",
-    "explains": "自爱"
+    "explains": "自爱",
+    "freq": 21454
   },
   {
     "word": "事案",
     "phonetic": "じあん",
-    "explains": "案件"
+    "explains": "案件",
+    "freq": 5728
   },
   {
     "word": "従業員",
@@ -2967,42 +3326,50 @@
   {
     "word": "重厚",
     "phonetic": "じゅうこう",
-    "explains": "厚重"
+    "explains": "厚重",
+    "freq": 16053
   },
   {
     "word": "重視",
     "phonetic": "じゅうし",
-    "explains": "重视"
+    "explains": "重视",
+    "freq": 5785
   },
   {
     "word": "重傷",
     "phonetic": "じゅうしょう",
-    "explains": "重伤"
+    "explains": "重伤",
+    "freq": 3688
   },
   {
     "word": "従事",
     "phonetic": "じゅうじ",
-    "explains": "从事"
+    "explains": "从事",
+    "freq": 5244
   },
   {
     "word": "重複",
     "phonetic": "じゅうふく",
-    "explains": "重复"
+    "explains": "重复",
+    "freq": 7166
   },
   {
     "word": "十分",
     "phonetic": "じゅうぶん",
-    "explains": "十分"
+    "explains": "十分",
+    "freq": 208
   },
   {
     "word": "重役",
     "phonetic": "じゅうやく",
-    "explains": "董事"
+    "explains": "董事",
+    "freq": 4051
   },
   {
     "word": "重量",
     "phonetic": "じゅうりょう",
-    "explains": "重量"
+    "explains": "重量",
+    "freq": 4385
   },
   {
     "word": "受験生",
@@ -3012,52 +3379,62 @@
   {
     "word": "受信",
     "phonetic": "じゅしん",
-    "explains": "接收"
+    "explains": "接收",
+    "freq": 1633
   },
   {
     "word": "受動",
     "phonetic": "じゅどう",
-    "explains": "被动"
+    "explains": "被动",
+    "freq": 9440
   },
   {
     "word": "受理",
     "phonetic": "じゅり",
-    "explains": "受理"
+    "explains": "受理",
+    "freq": 7094
   },
   {
     "word": "受領",
     "phonetic": "じゅりょう",
-    "explains": "领受"
+    "explains": "领受",
+    "freq": 8025
   },
   {
     "word": "助言",
     "phonetic": "じょげん",
-    "explains": "建议；忠告"
+    "explains": "建议；忠告",
+    "freq": 1427
   },
   {
     "word": "助手",
     "phonetic": "じょしゅ",
-    "explains": "助手"
+    "explains": "助手",
+    "freq": 1264
   },
   {
     "word": "助成",
     "phonetic": "じょせい",
-    "explains": "资助"
+    "explains": "资助",
+    "freq": 7473
   },
   {
     "word": "自家",
     "phonetic": "じか",
-    "explains": "自家"
+    "explains": "自家",
+    "freq": 3800
   },
   {
     "word": "自覚",
     "phonetic": "じかく",
-    "explains": "自觉"
+    "explains": "自觉",
+    "freq": 2809
   },
   {
     "word": "自活",
     "phonetic": "じかつ",
-    "explains": "自立谋生"
+    "explains": "自立谋生",
+    "freq": 11814
   },
   {
     "word": "自家用",
@@ -3072,27 +3449,32 @@
   {
     "word": "自我",
     "phonetic": "じが",
-    "explains": "自我"
+    "explains": "自我",
+    "freq": 5146
   },
   {
     "word": "時期",
     "phonetic": "じき",
-    "explains": "时期；时候"
+    "explains": "时期；时候",
+    "freq": 943
   },
   {
     "word": "磁気",
     "phonetic": "じき",
-    "explains": "磁性"
+    "explains": "磁性",
+    "freq": 3748
   },
   {
     "word": "自給",
     "phonetic": "じきゅう",
-    "explains": "自给"
+    "explains": "自给",
+    "freq": 8223
   },
   {
     "word": "自供",
     "phonetic": "じきょう",
-    "explains": "自供"
+    "explains": "自供",
+    "freq": 3798
   },
   {
     "word": "じきに",
@@ -3102,102 +3484,122 @@
   {
     "word": "事業",
     "phonetic": "じぎょう",
-    "explains": "事业"
+    "explains": "事业",
+    "freq": 1280
   },
   {
     "word": "自決",
     "phonetic": "じけつ",
-    "explains": "自决"
+    "explains": "自决",
+    "freq": 16618
   },
   {
     "word": "時限",
     "phonetic": "じげん",
-    "explains": "时限"
+    "explains": "时限",
+    "freq": 4880
   },
   {
     "word": "自己",
     "phonetic": "じこ",
-    "explains": "自己"
+    "explains": "自己",
+    "freq": 791
   },
   {
     "word": "事項",
     "phonetic": "じこう",
-    "explains": "事项"
+    "explains": "事项",
+    "freq": 1655
   },
   {
     "word": "時刻",
     "phonetic": "じこく",
-    "explains": "时刻"
+    "explains": "时刻",
+    "freq": 1642
   },
   {
     "word": "自国",
     "phonetic": "じこく",
-    "explains": "本国"
+    "explains": "本国",
+    "freq": 5166
   },
   {
     "word": "事後",
     "phonetic": "じご",
-    "explains": "事后"
+    "explains": "事后",
+    "freq": 6735
   },
   {
     "word": "持参",
     "phonetic": "じさん",
-    "explains": "带来"
+    "explains": "带来",
+    "freq": 4040
   },
   {
     "word": "自社",
     "phonetic": "じしゃ",
-    "explains": "本公司"
+    "explains": "本公司",
+    "freq": 8357
   },
   {
     "word": "磁石",
     "phonetic": "じしゃく",
-    "explains": "磁石"
+    "explains": "磁石",
+    "freq": 4058
   },
   {
     "word": "自主",
     "phonetic": "じしゅ",
-    "explains": "自主"
+    "explains": "自主",
+    "freq": 4647
   },
   {
     "word": "自首",
     "phonetic": "じしゅ",
-    "explains": "自首"
+    "explains": "自首",
+    "freq": 2998
   },
   {
     "word": "自習",
     "phonetic": "じしゅう",
-    "explains": "自习"
+    "explains": "自习",
+    "freq": 8903
   },
   {
     "word": "事象",
     "phonetic": "じしょう",
-    "explains": "事象"
+    "explains": "事象",
+    "freq": 5751
   },
   {
     "word": "自身",
     "phonetic": "じしん",
-    "explains": "自身"
+    "explains": "自身",
+    "freq": 227
   },
   {
     "word": "事情",
     "phonetic": "じじょう",
-    "explains": "情况"
+    "explains": "情况",
+    "freq": 903
   },
   {
     "word": "事実",
     "phonetic": "じじつ",
-    "explains": "事实"
+    "explains": "事实",
+    "freq": 424
   },
   {
     "word": "自炊",
     "phonetic": "じすい",
-    "explains": "自炊"
+    "explains": "自炊",
+    "freq": 28205
   },
   {
     "word": "時制",
     "phonetic": "じせい",
-    "explains": "时态"
+    "explains": "时态",
+    "freq": 20571
   },
   {
     "word": "自薦",
@@ -3207,27 +3609,32 @@
   {
     "word": "事前",
     "phonetic": "じぜん",
-    "explains": "事前"
+    "explains": "事前",
+    "freq": 2437
   },
   {
     "word": "自尊",
     "phonetic": "じそん",
-    "explains": "自尊"
+    "explains": "自尊",
+    "freq": 3863
   },
   {
     "word": "持続",
     "phonetic": "じぞく",
-    "explains": "持续"
+    "explains": "持续",
+    "freq": 4327
   },
   {
     "word": "自他",
     "phonetic": "じた",
-    "explains": "自他"
+    "explains": "自他",
+    "freq": 22249
   },
   {
     "word": "自体",
     "phonetic": "じたい",
-    "explains": "自身"
+    "explains": "自身",
+    "freq": 1711
   },
   {
     "word": "辞退",
@@ -3237,12 +3644,14 @@
   {
     "word": "自宅",
     "phonetic": "じたく",
-    "explains": "自家"
+    "explains": "自家",
+    "freq": 1120
   },
   {
     "word": "時代",
     "phonetic": "じだい",
-    "explains": "时代"
+    "explains": "时代",
+    "freq": 436
   },
   {
     "word": "次代",
@@ -3257,47 +3666,56 @@
   {
     "word": "実現",
     "phonetic": "じつげん",
-    "explains": "实现"
+    "explains": "实现",
+    "freq": 1390
   },
   {
     "word": "実物",
     "phonetic": "じつぶつ",
-    "explains": "实物"
+    "explains": "实物",
+    "freq": 6313
   },
   {
     "word": "実用",
     "phonetic": "じつよう",
-    "explains": "实用"
+    "explains": "实用",
+    "freq": 5045
   },
   {
     "word": "実力",
     "phonetic": "じつりょく",
-    "explains": "实力"
+    "explains": "实力",
+    "freq": 2933
   },
   {
     "word": "実例",
     "phonetic": "じつれい",
-    "explains": "实例"
+    "explains": "实例",
+    "freq": 8772
   },
   {
     "word": "時点",
     "phonetic": "じてん",
-    "explains": "时候；时间点"
+    "explains": "时候；时间点",
+    "freq": 1393
   },
   {
     "word": "次点",
     "phonetic": "じてん",
-    "explains": "次点"
+    "explains": "次点",
+    "freq": 26791
   },
   {
     "word": "自転",
     "phonetic": "じてん",
-    "explains": "自转"
+    "explains": "自转",
+    "freq": 1496
   },
   {
     "word": "自動",
     "phonetic": "じどう",
-    "explains": "自动"
+    "explains": "自动",
+    "freq": 1080
   },
   {
     "word": "自任",
@@ -3307,37 +3725,44 @@
   {
     "word": "自白",
     "phonetic": "じはく",
-    "explains": "自白"
+    "explains": "自白",
+    "freq": 1831
   },
   {
     "word": "自腹",
     "phonetic": "じはら",
-    "explains": "自费"
+    "explains": "自费",
+    "freq": 10810
   },
   {
     "word": "自費",
     "phonetic": "じひ",
-    "explains": "自费"
+    "explains": "自费",
+    "freq": 13732
   },
   {
     "word": "辞表",
     "phonetic": "じひょう",
-    "explains": "辞呈"
+    "explains": "辞呈",
+    "freq": 5672
   },
   {
     "word": "自負",
     "phonetic": "じふ",
-    "explains": "自负"
+    "explains": "自负",
+    "freq": 8912
   },
   {
     "word": "自慢",
     "phonetic": "じまん",
-    "explains": "自满"
+    "explains": "自满",
+    "freq": 1401
   },
   {
     "word": "事務",
     "phonetic": "じむ",
-    "explains": "事务"
+    "explains": "事务",
+    "freq": 577
   },
   {
     "word": "事務所",
@@ -3347,122 +3772,146 @@
   {
     "word": "自滅",
     "phonetic": "じめつ",
-    "explains": "自灭"
+    "explains": "自灭",
+    "freq": 4592
   },
   {
     "word": "自問",
     "phonetic": "じもん",
-    "explains": "自问"
+    "explains": "自问",
+    "freq": 5084
   },
   {
     "word": "自由",
     "phonetic": "じゆう",
-    "explains": "自由"
+    "explains": "自由",
+    "freq": 226
   },
   {
     "word": "自立",
     "phonetic": "じりつ",
-    "explains": "自立"
+    "explains": "自立",
+    "freq": 4162
   },
   {
     "word": "辞令",
     "phonetic": "じれい",
-    "explains": "辞令"
+    "explains": "辞令",
+    "freq": 7790
   },
   {
     "word": "人口",
     "phonetic": "じんこう",
-    "explains": "人口"
+    "explains": "人口",
+    "freq": 2170
   },
   {
     "word": "人工",
     "phonetic": "じんこう",
-    "explains": "人工"
+    "explains": "人工",
+    "freq": 1748
   },
   {
     "word": "人材",
     "phonetic": "じんざい",
-    "explains": "人才"
+    "explains": "人才",
+    "freq": 2687
   },
   {
     "word": "人種",
     "phonetic": "じんしゅ",
-    "explains": "人种"
+    "explains": "人种",
+    "freq": 1901
   },
   {
     "word": "人事",
     "phonetic": "じんじ",
-    "explains": "人事"
+    "explains": "人事",
+    "freq": 3199
   },
   {
     "word": "迅速",
     "phonetic": "じんそく",
-    "explains": "迅速"
+    "explains": "迅速",
+    "freq": 2332
   },
   {
     "word": "人望",
     "phonetic": "じんぼう",
-    "explains": "人望"
+    "explains": "人望",
+    "freq": 14059
   },
   {
     "word": "人脈",
     "phonetic": "じんみゃく",
-    "explains": "人脉"
+    "explains": "人脉",
+    "freq": 7317
   },
   {
     "word": "人民",
     "phonetic": "じんみん",
-    "explains": "人民"
+    "explains": "人民",
+    "freq": 3074
   },
   {
     "word": "人名",
     "phonetic": "じんめい",
-    "explains": "人名"
+    "explains": "人名",
+    "freq": 13431
   },
   {
     "word": "人命",
     "phonetic": "じんめい",
-    "explains": "人命"
+    "explains": "人命",
+    "freq": 4029
   },
   {
     "word": "人力",
     "phonetic": "じんりき",
-    "explains": "人力"
+    "explains": "人力",
+    "freq": 12590
   },
   {
     "word": "実家",
     "phonetic": "じっか",
-    "explains": "娘家"
+    "explains": "娘家",
+    "freq": 3235
   },
   {
     "word": "実感",
     "phonetic": "じっかん",
-    "explains": "实感"
+    "explains": "实感",
+    "freq": 3637
   },
   {
     "word": "実験",
     "phonetic": "じっけん",
-    "explains": "实验"
+    "explains": "实验",
+    "freq": 658
   },
   {
     "word": "実行",
     "phonetic": "じっこう",
-    "explains": "执行"
+    "explains": "执行",
+    "freq": 662
   },
   {
     "word": "実施",
     "phonetic": "じっし",
-    "explains": "实施"
+    "explains": "实施",
+    "freq": 3555
   },
   {
     "word": "実績",
     "phonetic": "じっせき",
-    "explains": "实际业绩"
+    "explains": "实际业绩",
+    "freq": 3898
   },
   {
     "word": "実践",
     "phonetic": "じっせん",
-    "explains": "实践"
+    "explains": "实践",
+    "freq": 4363
   },
   {
     "word": "数詞",
@@ -3472,7 +3921,8 @@
   {
     "word": "数値",
     "phonetic": "すうち",
-    "explains": "数值"
+    "explains": "数值",
+    "freq": 4238
   },
   {
     "word": "過ぎ去る",
@@ -3502,7 +3952,8 @@
   {
     "word": "滑り台",
     "phonetic": "すべりだい",
-    "explains": "滑梯"
+    "explains": "滑梯",
+    "freq": 10429
   },
   {
     "word": "すんなり",
@@ -3527,32 +3978,38 @@
   {
     "word": "先月",
     "phonetic": "せんげつ",
-    "explains": "上月"
+    "explains": "上月",
+    "freq": 2127
   },
   {
     "word": "先週",
     "phonetic": "せんしゅう",
-    "explains": "上周"
+    "explains": "上周",
+    "freq": 1019
   },
   {
     "word": "先日",
     "phonetic": "せんじつ",
-    "explains": "前几天"
+    "explains": "前几天",
+    "freq": 1784
   },
   {
     "word": "先祖",
     "phonetic": "せんぞ",
-    "explains": "祖先"
+    "explains": "祖先",
+    "freq": 2314
   },
   {
     "word": "先端",
     "phonetic": "せんたん",
-    "explains": "尖端"
+    "explains": "尖端",
+    "freq": 2436
   },
   {
     "word": "先手",
     "phonetic": "せんて",
-    "explains": "先手"
+    "explains": "先手",
+    "freq": 4104
   },
   {
     "word": "絶望",
@@ -3572,7 +4029,8 @@
   {
     "word": "前科",
     "phonetic": "ぜんか",
-    "explains": "前科"
+    "explains": "前科",
+    "freq": 2051
   },
   {
     "word": "前景",
@@ -3582,27 +4040,32 @@
   {
     "word": "全権",
     "phonetic": "ぜんけん",
-    "explains": "全权"
+    "explains": "全权",
+    "freq": 7541
   },
   {
     "word": "前後",
     "phonetic": "ぜんご",
-    "explains": "前后；左右"
+    "explains": "前后；左右",
+    "freq": 3852
   },
   {
     "word": "前作",
     "phonetic": "ぜんさく",
-    "explains": "前作"
+    "explains": "前作",
+    "freq": 13151
   },
   {
     "word": "前者",
     "phonetic": "ぜんしゃ",
-    "explains": "前者"
+    "explains": "前者",
+    "freq": 8002
   },
   {
     "word": "全集",
     "phonetic": "ぜんしゅう",
-    "explains": "全集"
+    "explains": "全集",
+    "freq": 28449
   },
   {
     "word": "全書",
@@ -3612,27 +4075,32 @@
   {
     "word": "前進",
     "phonetic": "ぜんしん",
-    "explains": "前进"
+    "explains": "前进",
+    "freq": 1419
   },
   {
     "word": "前日",
     "phonetic": "ぜんじつ",
-    "explains": "前天"
+    "explains": "前天",
+    "freq": 3933
   },
   {
     "word": "前線",
     "phonetic": "ぜんせん",
-    "explains": "前线"
+    "explains": "前线",
+    "freq": 2320
   },
   {
     "word": "前提",
     "phonetic": "ぜんてい",
-    "explains": "前提"
+    "explains": "前提",
+    "freq": 4989
   },
   {
     "word": "前途",
     "phonetic": "ぜんと",
-    "explains": "前途"
+    "explains": "前途",
+    "freq": 8378
   },
   {
     "word": "前年度",
@@ -3642,37 +4110,44 @@
   {
     "word": "前半",
     "phonetic": "ぜんはん",
-    "explains": "上半场"
+    "explains": "上半场",
+    "freq": 5163
   },
   {
     "word": "全般",
     "phonetic": "ぜんぱん",
-    "explains": "全般"
+    "explains": "全般",
+    "freq": 6467
   },
   {
     "word": "前編",
     "phonetic": "ぜんぺん",
-    "explains": "上篇"
+    "explains": "上篇",
+    "freq": 19729
   },
   {
     "word": "全滅",
     "phonetic": "ぜんめつ",
-    "explains": "全灭"
+    "explains": "全灭",
+    "freq": 2258
   },
   {
     "word": "前夜",
     "phonetic": "ぜんや",
-    "explains": "前夜；前夕"
+    "explains": "前夜；前夕",
+    "freq": 4789
   },
   {
     "word": "前例",
     "phonetic": "ぜんれい",
-    "explains": "先例"
+    "explains": "先例",
+    "freq": 3693
   },
   {
     "word": "絶対",
     "phonetic": "ぜったい",
-    "explains": "绝对"
+    "explains": "绝对",
+    "freq": 194
   },
   {
     "word": "絶頂",
@@ -3697,7 +4172,8 @@
   {
     "word": "素材",
     "phonetic": "そざい",
-    "explains": "素材"
+    "explains": "素材",
+    "freq": 3640
   },
   {
     "word": "そのうち",
@@ -3727,7 +4203,8 @@
   {
     "word": "存続",
     "phonetic": "そんぞく",
-    "explains": "存续"
+    "explains": "存续",
+    "freq": 3565
   },
   {
     "word": "そっと",
@@ -3737,32 +4214,38 @@
   {
     "word": "退院",
     "phonetic": "たいいん",
-    "explains": "出院"
+    "explains": "出院",
+    "freq": 2248
   },
   {
     "word": "体温",
     "phonetic": "たいおん",
-    "explains": "体温"
+    "explains": "体温",
+    "freq": 3172
   },
   {
     "word": "体格",
     "phonetic": "たいかく",
-    "explains": "体格"
+    "explains": "体格",
+    "freq": 4900
   },
   {
     "word": "退学",
     "phonetic": "たいがく",
-    "explains": "退学"
+    "explains": "退学",
+    "freq": 2046
   },
   {
     "word": "待機",
     "phonetic": "たいき",
-    "explains": "待机"
+    "explains": "待机",
+    "freq": 894
   },
   {
     "word": "耐久",
     "phonetic": "たいきゅう",
-    "explains": "耐久"
+    "explains": "耐久",
+    "freq": 7472
   },
   {
     "word": "退去",
@@ -3777,12 +4260,14 @@
   {
     "word": "体験",
     "phonetic": "たいけん",
-    "explains": "体验"
+    "explains": "体验",
+    "freq": 1306
   },
   {
     "word": "退社",
     "phonetic": "たいしゃ",
-    "explains": "下班"
+    "explains": "下班",
+    "freq": 10030
   },
   {
     "word": "退職",
@@ -3792,22 +4277,26 @@
   {
     "word": "体重",
     "phonetic": "たいじゅう",
-    "explains": "体重"
+    "explains": "体重",
+    "freq": 1991
   },
   {
     "word": "体制",
     "phonetic": "たいせい",
-    "explains": "体制"
+    "explains": "体制",
+    "freq": 1890
   },
   {
     "word": "退治",
     "phonetic": "たいち",
-    "explains": "消灭"
+    "explains": "消灭",
+    "freq": 2275
   },
   {
     "word": "体得",
     "phonetic": "たいとく",
-    "explains": "掌握"
+    "explains": "掌握",
+    "freq": 15267
   },
   {
     "word": "待望",
@@ -3817,12 +4306,14 @@
   {
     "word": "体面",
     "phonetic": "たいめん",
-    "explains": "体面"
+    "explains": "体面",
+    "freq": 8154
   },
   {
     "word": "体力",
     "phonetic": "たいりょく",
-    "explains": "体力"
+    "explains": "体力",
+    "freq": 3409
   },
   {
     "word": "絶えず",
@@ -3832,7 +4323,8 @@
   {
     "word": "絶え間",
     "phonetic": "たえま",
-    "explains": "间隔"
+    "explains": "间隔",
+    "freq": 6601
   },
   {
     "word": "絶え間ない",
@@ -3857,7 +4349,8 @@
   {
     "word": "多額",
     "phonetic": "たがく",
-    "explains": "巨额"
+    "explains": "巨额",
+    "freq": 4845
   },
   {
     "word": "巧",
@@ -3892,12 +4385,14 @@
   {
     "word": "多種",
     "phonetic": "たしゅ",
-    "explains": "多种"
+    "explains": "多种",
+    "freq": 10001
   },
   {
     "word": "多少",
     "phonetic": "たしょう",
-    "explains": "多少"
+    "explains": "多少",
+    "freq": 1764
   },
   {
     "word": "たしかに",
@@ -3907,7 +4402,8 @@
   {
     "word": "多重",
     "phonetic": "たじゅう",
-    "explains": "多重"
+    "explains": "多重",
+    "freq": 8785
   },
   {
     "word": "助かる",
@@ -3932,7 +4428,8 @@
   {
     "word": "立ち上がり",
     "phonetic": "たちあがり",
-    "explains": "起立；上升"
+    "explains": "起立；上升",
+    "freq": 7825
   },
   {
     "word": "立ち上がる",
@@ -3947,12 +4444,14 @@
   {
     "word": "立ち往生",
     "phonetic": "たちおうじょう",
-    "explains": "进退两难"
+    "explains": "进退两难",
+    "freq": 18185
   },
   {
     "word": "立ち聞き",
     "phonetic": "たちぎき",
-    "explains": "偷听"
+    "explains": "偷听",
+    "freq": 11020
   },
   {
     "word": "立て込む",
@@ -3982,7 +4481,8 @@
   {
     "word": "立場",
     "phonetic": "たちば",
-    "explains": "立场"
+    "explains": "立场",
+    "freq": 778
   },
   {
     "word": "立ち振る舞い",
@@ -4012,7 +4512,8 @@
   {
     "word": "達人",
     "phonetic": "たつじん",
-    "explains": "达人"
+    "explains": "达人",
+    "freq": 3511
   },
   {
     "word": "立て替える",
@@ -4052,77 +4553,92 @@
   {
     "word": "他人",
     "phonetic": "たにん",
-    "explains": "外人；陌生人"
+    "explains": "外人；陌生人",
+    "freq": 725
   },
   {
     "word": "楽しみ",
     "phonetic": "たのしみ",
-    "explains": "乐趣；期待"
+    "explains": "乐趣；期待",
+    "freq": 561
   },
   {
     "word": "多発",
     "phonetic": "たはつ",
-    "explains": "多发"
+    "explains": "多发",
+    "freq": 8006
   },
   {
     "word": "旅",
     "phonetic": "たび",
-    "explains": "旅行"
+    "explains": "旅行",
+    "freq": 598
   },
   {
     "word": "旅先",
     "phonetic": "たびさき",
-    "explains": "旅行地"
+    "explains": "旅行地",
+    "freq": 10163
   },
   {
     "word": "旅路",
     "phonetic": "たびじ",
-    "explains": "旅途"
+    "explains": "旅途",
+    "freq": 9996
   },
   {
     "word": "旅人",
     "phonetic": "たびびと",
-    "explains": "旅人"
+    "explains": "旅人",
+    "freq": 6403
   },
   {
     "word": "多分",
     "phonetic": "たぶん",
-    "explains": "大概"
+    "explains": "大概",
+    "freq": 280
   },
   {
     "word": "多忙",
     "phonetic": "たぼう",
-    "explains": "繁忙"
+    "explains": "繁忙",
+    "freq": 5356
   },
   {
     "word": "多様",
     "phonetic": "たよう",
-    "explains": "多样"
+    "explains": "多样",
+    "freq": 4905
   },
   {
     "word": "多量",
     "phonetic": "たりょう",
-    "explains": "大量"
+    "explains": "大量",
+    "freq": 4382
   },
   {
     "word": "単位",
     "phonetic": "たんい",
-    "explains": "单位"
+    "explains": "单位",
+    "freq": 3385
   },
   {
     "word": "単価",
     "phonetic": "たんか",
-    "explains": "单价"
+    "explains": "单价",
+    "freq": 22145
   },
   {
     "word": "短歌",
     "phonetic": "たんか",
-    "explains": "短歌"
+    "explains": "短歌",
+    "freq": 12597
   },
   {
     "word": "短期",
     "phonetic": "たんき",
-    "explains": "短期"
+    "explains": "短期",
+    "freq": 5328
   },
   {
     "word": "短距離",
@@ -4132,7 +4648,8 @@
   {
     "word": "探検",
     "phonetic": "たんけん",
-    "explains": "探险"
+    "explains": "探险",
+    "freq": 2424
   },
   {
     "word": "単行",
@@ -4142,7 +4659,8 @@
   {
     "word": "単語",
     "phonetic": "たんご",
-    "explains": "单词"
+    "explains": "单词",
+    "freq": 2705
   },
   {
     "word": "単作",
@@ -4162,12 +4680,14 @@
   {
     "word": "短所",
     "phonetic": "たんしょ",
-    "explains": "短处"
+    "explains": "短处",
+    "freq": 9644
   },
   {
     "word": "単純",
     "phonetic": "たんじゅん",
-    "explains": "单纯"
+    "explains": "单纯",
+    "freq": 931
   },
   {
     "word": "短時間",
@@ -4177,7 +4697,8 @@
   {
     "word": "淡水",
     "phonetic": "たんすい",
-    "explains": "淡水"
+    "explains": "淡水",
+    "freq": 11581
   },
   {
     "word": "探偵",
@@ -4187,12 +4708,14 @@
   {
     "word": "端的",
     "phonetic": "たんてき",
-    "explains": "明显的"
+    "explains": "明显的",
+    "freq": 12634
   },
   {
     "word": "担当",
     "phonetic": "たんとう",
-    "explains": "担当"
+    "explains": "担当",
+    "freq": 564
   },
   {
     "word": "たんに",
@@ -4202,12 +4725,14 @@
   {
     "word": "担任",
     "phonetic": "たんにん",
-    "explains": "班主任"
+    "explains": "班主任",
+    "freq": 6132
   },
   {
     "word": "短編",
     "phonetic": "たんぺん",
-    "explains": "短篇"
+    "explains": "短篇",
+    "freq": 9648
   },
   {
     "word": "端末",
@@ -4217,7 +4742,8 @@
   {
     "word": "達観",
     "phonetic": "たっかん",
-    "explains": "达观"
+    "explains": "达观",
+    "freq": 15039
   },
   {
     "word": "達する",
@@ -4227,7 +4753,8 @@
   {
     "word": "達成",
     "phonetic": "たっせい",
-    "explains": "达成"
+    "explains": "达成",
+    "freq": 1626
   },
   {
     "word": "たっぷり",
@@ -4242,42 +4769,50 @@
   {
     "word": "団結",
     "phonetic": "だんけつ",
-    "explains": "团结"
+    "explains": "团结",
+    "freq": 2440
   },
   {
     "word": "団子",
     "phonetic": "だんご",
-    "explains": "团子"
+    "explains": "团子",
+    "freq": 6027
   },
   {
     "word": "男子",
     "phonetic": "だんし",
-    "explains": "男子"
+    "explains": "男子",
+    "freq": 2309
   },
   {
     "word": "男女",
     "phonetic": "だんじょ",
-    "explains": "男女"
+    "explains": "男女",
+    "freq": 2232
   },
   {
     "word": "団体",
     "phonetic": "だんたい",
-    "explains": "团体"
+    "explains": "团体",
+    "freq": 2006
   },
   {
     "word": "団地",
     "phonetic": "だんち",
-    "explains": "住宅小区"
+    "explains": "住宅小区",
+    "freq": 5640
   },
   {
     "word": "断定",
     "phonetic": "だんてい",
-    "explains": "断定"
+    "explains": "断定",
+    "freq": 5369
   },
   {
     "word": "断念",
     "phonetic": "だんねん",
-    "explains": "断念"
+    "explains": "断念",
+    "freq": 4799
   },
   {
     "word": "暖房",
@@ -4302,37 +4837,44 @@
   {
     "word": "着手",
     "phonetic": "ちゃくしゅ",
-    "explains": "着手"
+    "explains": "着手",
+    "freq": 4899
   },
   {
     "word": "着色",
     "phonetic": "ちゃくしょく",
-    "explains": "着色"
+    "explains": "着色",
+    "freq": 10307
   },
   {
     "word": "着席",
     "phonetic": "ちゃくせき",
-    "explains": "就座"
+    "explains": "就座",
+    "freq": 4956
   },
   {
     "word": "着脱",
     "phonetic": "ちゃくだつ",
-    "explains": "穿脱"
+    "explains": "穿脱",
+    "freq": 26492
   },
   {
     "word": "着地",
     "phonetic": "ちゃくち",
-    "explains": "着地"
+    "explains": "着地",
+    "freq": 4401
   },
   {
     "word": "着目",
     "phonetic": "ちゃくもく",
-    "explains": "着眼"
+    "explains": "着眼",
+    "freq": 11305
   },
   {
     "word": "着陸",
     "phonetic": "ちゃくりく",
-    "explains": "着陆"
+    "explains": "着陆",
+    "freq": 987
   },
   {
     "word": "茶室",
@@ -4352,17 +4894,20 @@
   {
     "word": "着工",
     "phonetic": "ちゃっこう",
-    "explains": "开工"
+    "explains": "开工",
+    "freq": 11646
   },
   {
     "word": "中核",
     "phonetic": "ちゅうかく",
-    "explains": "核心"
+    "explains": "核心",
+    "freq": 8959
   },
   {
     "word": "中継",
     "phonetic": "ちゅうけい",
-    "explains": "转播"
+    "explains": "转播",
+    "freq": 1852
   },
   {
     "word": "忠告",
@@ -4372,7 +4917,8 @@
   {
     "word": "中止",
     "phonetic": "ちゅうし",
-    "explains": "中止"
+    "explains": "中止",
+    "freq": 920
   },
   {
     "word": "注釈",
@@ -4387,22 +4933,26 @@
   {
     "word": "中心",
     "phonetic": "ちゅうしん",
-    "explains": "中心"
+    "explains": "中心",
+    "freq": 1167
   },
   {
     "word": "忠実",
     "phonetic": "ちゅうじつ",
-    "explains": "忠实"
+    "explains": "忠实",
+    "freq": 1730
   },
   {
     "word": "注水",
     "phonetic": "ちゅうすい",
-    "explains": "注水"
+    "explains": "注水",
+    "freq": 15229
   },
   {
     "word": "中世",
     "phonetic": "ちゅうせい",
-    "explains": "中世纪"
+    "explains": "中世纪",
+    "freq": 4346
   },
   {
     "word": "忠誠",
@@ -4412,7 +4962,8 @@
   {
     "word": "中断",
     "phonetic": "ちゅうだん",
-    "explains": "中断"
+    "explains": "中断",
+    "freq": 2048
   },
   {
     "word": "注定",
@@ -4422,17 +4973,20 @@
   {
     "word": "中毒",
     "phonetic": "ちゅうどく",
-    "explains": "中毒"
+    "explains": "中毒",
+    "freq": 1121
   },
   {
     "word": "注入",
     "phonetic": "ちゅうにゅう",
-    "explains": "注入"
+    "explains": "注入",
+    "freq": 3169
   },
   {
     "word": "注目",
     "phonetic": "ちゅうもく",
-    "explains": "注目"
+    "explains": "注目",
+    "freq": 971
   },
   {
     "word": "長距離",
@@ -4447,12 +5001,14 @@
   {
     "word": "長女",
     "phonetic": "ちょうじょ",
-    "explains": "长女"
+    "explains": "长女",
+    "freq": 6898
   },
   {
     "word": "頂上",
     "phonetic": "ちょうじょう",
-    "explains": "山顶"
+    "explains": "山顶",
+    "freq": 3883
   },
   {
     "word": "長時間",
@@ -4467,7 +5023,8 @@
   {
     "word": "頂点",
     "phonetic": "ちょうてん",
-    "explains": "顶点"
+    "explains": "顶点",
+    "freq": 3940
   },
   {
     "word": "長男",
@@ -4482,17 +5039,20 @@
   {
     "word": "直射",
     "phonetic": "ちょくしゃ",
-    "explains": "直射"
+    "explains": "直射",
+    "freq": 10224
   },
   {
     "word": "直進",
     "phonetic": "ちょくしん",
-    "explains": "直行"
+    "explains": "直行",
+    "freq": 5593
   },
   {
     "word": "直接",
     "phonetic": "ちょくせつ",
-    "explains": "直接"
+    "explains": "直接",
+    "freq": 659
   },
   {
     "word": "直接的",
@@ -4502,17 +5062,20 @@
   {
     "word": "直通",
     "phonetic": "ちょくつう",
-    "explains": "直达"
+    "explains": "直达",
+    "freq": 11237
   },
   {
     "word": "直径",
     "phonetic": "ちょっけい",
-    "explains": "直径"
+    "explains": "直径",
+    "freq": 7287
   },
   {
     "word": "直結",
     "phonetic": "ちょっけつ",
-    "explains": "直接相连"
+    "explains": "直接相连",
+    "freq": 7575
   },
   {
     "word": "ちかぢか",
@@ -4557,47 +5120,56 @@
   {
     "word": "通院",
     "phonetic": "つういん",
-    "explains": "上医院"
+    "explains": "上医院",
+    "freq": 14403
   },
   {
     "word": "通貨",
     "phonetic": "つうか",
-    "explains": "通货"
+    "explains": "通货",
+    "freq": 4468
   },
   {
     "word": "通過",
     "phonetic": "つうか",
-    "explains": "通过"
+    "explains": "通过",
+    "freq": 1328
   },
   {
     "word": "通学",
     "phonetic": "つうがく",
-    "explains": "走读；上学"
+    "explains": "走读；上学",
+    "freq": 11095
   },
   {
     "word": "通算",
     "phonetic": "つうさん",
-    "explains": "通算"
+    "explains": "通算",
+    "freq": 17439
   },
   {
     "word": "通帳",
     "phonetic": "つうちょう",
-    "explains": "存折"
+    "explains": "存折",
+    "freq": 8681
   },
   {
     "word": "通例",
     "phonetic": "つうれい",
-    "explains": "通例；通常"
+    "explains": "通例；通常",
+    "freq": 15657
   },
   {
     "word": "月日",
     "phonetic": "つきひ",
-    "explains": "岁月"
+    "explains": "岁月",
+    "freq": 8332
   },
   {
     "word": "次々",
     "phonetic": "つぎつぎ",
-    "explains": "接连不断"
+    "explains": "接连不断",
+    "freq": 2881
   },
   {
     "word": "つねに",
@@ -4622,7 +5194,8 @@
   {
     "word": "体裁",
     "phonetic": "ていさい",
-    "explains": "体面"
+    "explains": "体面",
+    "freq": 7791
   },
   {
     "word": "てきとう",
@@ -4677,12 +5250,14 @@
   {
     "word": "とりあえず",
     "phonetic": "とりあえず",
-    "explains": "暂且；先"
+    "explains": "暂且；先",
+    "freq": 1251
   },
   {
     "word": "取引",
     "phonetic": "とりひき",
-    "explains": "交易；买卖"
+    "explains": "交易；买卖",
+    "freq": 344
   },
   {
     "word": "取引先",
@@ -4732,57 +5307,68 @@
   {
     "word": "内閣",
     "phonetic": "ないかく",
-    "explains": "内阁"
+    "explains": "内阁",
+    "freq": 6635
   },
   {
     "word": "内緒",
     "phonetic": "ないしょ",
-    "explains": "秘密；私下"
+    "explains": "秘密；私下",
+    "freq": 1850
   },
   {
     "word": "内情",
     "phonetic": "ないじょう",
-    "explains": "内情"
+    "explains": "内情",
+    "freq": 8811
   },
   {
     "word": "内線",
     "phonetic": "ないせん",
-    "explains": "内线电话"
+    "explains": "内线电话",
+    "freq": 9061
   },
   {
     "word": "内蔵",
     "phonetic": "ないぞう",
-    "explains": "内置"
+    "explains": "内置",
+    "freq": 4148
   },
   {
     "word": "内定",
     "phonetic": "ないてい",
-    "explains": "内定"
+    "explains": "内定",
+    "freq": 9525
   },
   {
     "word": "内部",
     "phonetic": "ないぶ",
-    "explains": "内部"
+    "explains": "内部",
+    "freq": 872
   },
   {
     "word": "内密",
     "phonetic": "ないみつ",
-    "explains": "秘密"
+    "explains": "秘密",
+    "freq": 3007
   },
   {
     "word": "内面",
     "phonetic": "ないめん",
-    "explains": "内心"
+    "explains": "内心",
+    "freq": 4776
   },
   {
     "word": "内容",
     "phonetic": "ないよう",
-    "explains": "内容"
+    "explains": "内容",
+    "freq": 959
   },
   {
     "word": "内陸",
     "phonetic": "ないりく",
-    "explains": "内陆"
+    "explains": "内陆",
+    "freq": 8293
   },
   {
     "word": "なお",
@@ -4792,7 +5378,8 @@
   {
     "word": "仲直り",
     "phonetic": "なかなおり",
-    "explains": "和好"
+    "explains": "和好",
+    "freq": 2625
   },
   {
     "word": "なかなか",
@@ -4802,12 +5389,14 @@
   {
     "word": "仲間",
     "phonetic": "なかま",
-    "explains": "伙伴"
+    "explains": "伙伴",
+    "freq": 146
   },
   {
     "word": "中身",
     "phonetic": "なかみ",
-    "explains": "内容物"
+    "explains": "内容物",
+    "freq": 1181
   },
   {
     "word": "仲良し",
@@ -4837,17 +5426,20 @@
   {
     "word": "泣き声",
     "phonetic": "なきごえ",
-    "explains": "哭声"
+    "explains": "哭声",
+    "freq": 3745
   },
   {
     "word": "鳴き声",
     "phonetic": "なきごえ",
-    "explains": "鸣声"
+    "explains": "鸣声",
+    "freq": 3420
   },
   {
     "word": "泣き言",
     "phonetic": "なきごと",
-    "explains": "诉苦"
+    "explains": "诉苦",
+    "freq": 4666
   },
   {
     "word": "泣き出す",
@@ -4862,17 +5454,20 @@
   {
     "word": "仲人",
     "phonetic": "なこうど",
-    "explains": "媒人"
+    "explains": "媒人",
+    "freq": 16803
   },
   {
     "word": "和やか",
     "phonetic": "なごやか",
-    "explains": "和睦"
+    "explains": "和睦",
+    "freq": 17764
   },
   {
     "word": "名残",
     "phonetic": "なごり",
-    "explains": "留恋；余迹"
+    "explains": "留恋；余迹",
+    "freq": 8893
   },
   {
     "word": "名残惜しい",
@@ -4902,7 +5497,8 @@
   {
     "word": "何故",
     "phonetic": "なぜ",
-    "explains": "为什么"
+    "explains": "为什么",
+    "freq": 356
   },
   {
     "word": "なぜなら",
@@ -4972,7 +5568,8 @@
   {
     "word": "軟化",
     "phonetic": "なんか",
-    "explains": "软化"
+    "explains": "软化",
+    "freq": 13153
   },
   {
     "word": "軟弱",
@@ -5012,7 +5609,8 @@
   {
     "word": "偽物",
     "phonetic": "にせもの",
-    "explains": "赝品"
+    "explains": "赝品",
+    "freq": 1684
   },
   {
     "word": "にわかに",
@@ -5022,27 +5620,32 @@
   {
     "word": "任",
     "phonetic": "にん",
-    "explains": "责任"
+    "explains": "责任",
+    "freq": 1881
   },
   {
     "word": "人間",
     "phonetic": "にんげん",
-    "explains": "人类"
+    "explains": "人类",
+    "freq": 80
   },
   {
     "word": "人称",
     "phonetic": "にんしょう",
-    "explains": "人称"
+    "explains": "人称",
+    "freq": 12925
   },
   {
     "word": "任地",
     "phonetic": "にんち",
-    "explains": "任地"
+    "explains": "任地",
+    "freq": 17184
   },
   {
     "word": "任務",
     "phonetic": "にんむ",
-    "explains": "任务"
+    "explains": "任务",
+    "freq": 412
   },
   {
     "word": "にっこり",
@@ -5057,7 +5660,8 @@
   {
     "word": "眠気",
     "phonetic": "ねむけ",
-    "explains": "睡意"
+    "explains": "睡意",
+    "freq": 9893
   },
   {
     "word": "眠り",
@@ -5087,7 +5691,8 @@
   {
     "word": "派",
     "phonetic": "は",
-    "explains": "派；派别"
+    "explains": "派；派别",
+    "freq": 1290
   },
   {
     "word": "把握",
@@ -5097,7 +5702,8 @@
   {
     "word": "敗因",
     "phonetic": "はいいん",
-    "explains": "败因"
+    "explains": "败因",
+    "freq": 20558
   },
   {
     "word": "廃棄",
@@ -5107,7 +5713,8 @@
   {
     "word": "配給",
     "phonetic": "はいきゅう",
-    "explains": "配给"
+    "explains": "配给",
+    "freq": 4121
   },
   {
     "word": "廃墟",
@@ -5122,7 +5729,8 @@
   {
     "word": "配偶",
     "phonetic": "はいぐう",
-    "explains": "配偶"
+    "explains": "配偶",
+    "freq": 5650
   },
   {
     "word": "背景",
@@ -5132,22 +5740,26 @@
   {
     "word": "背後",
     "phonetic": "はいご",
-    "explains": "背后"
+    "explains": "背后",
+    "freq": 1433
   },
   {
     "word": "配合",
     "phonetic": "はいごう",
-    "explains": "配合"
+    "explains": "配合",
+    "freq": 9088
   },
   {
     "word": "廃止",
     "phonetic": "はいし",
-    "explains": "废止"
+    "explains": "废止",
+    "freq": 3955
   },
   {
     "word": "敗者",
     "phonetic": "はいしゃ",
-    "explains": "败者"
+    "explains": "败者",
+    "freq": 3663
   },
   {
     "word": "排除",
@@ -5157,37 +5769,44 @@
   {
     "word": "敗戦",
     "phonetic": "はいせん",
-    "explains": "战败"
+    "explains": "战败",
+    "freq": 8931
   },
   {
     "word": "配線",
     "phonetic": "はいせん",
-    "explains": "布线"
+    "explains": "布线",
+    "freq": 3201
   },
   {
     "word": "配送",
     "phonetic": "はいそう",
-    "explains": "配送"
+    "explains": "配送",
+    "freq": 4195
   },
   {
     "word": "配属",
     "phonetic": "はいぞく",
-    "explains": "配属"
+    "explains": "配属",
+    "freq": 3729
   },
   {
     "word": "配置",
     "phonetic": "はいち",
-    "explains": "配置"
+    "explains": "配置",
+    "freq": 1145
   },
   {
     "word": "配当",
     "phonetic": "はいとう",
-    "explains": "分红"
+    "explains": "分红",
+    "freq": 11270
   },
   {
     "word": "背任",
     "phonetic": "はいにん",
-    "explains": "渎职"
+    "explains": "渎职",
+    "freq": 11931
   },
   {
     "word": "背反",
@@ -5197,7 +5816,8 @@
   {
     "word": "配布",
     "phonetic": "はいふ",
-    "explains": "分发"
+    "explains": "分发",
+    "freq": 6080
   },
   {
     "word": "敗北",
@@ -5207,17 +5827,20 @@
   {
     "word": "俳優",
     "phonetic": "はいゆう",
-    "explains": "演员"
+    "explains": "演员",
+    "freq": 2189
   },
   {
     "word": "配慮",
     "phonetic": "はいりょ",
-    "explains": "关怀"
+    "explains": "关怀",
+    "freq": 3484
   },
   {
     "word": "配列",
     "phonetic": "はいれつ",
-    "explains": "排列"
+    "explains": "排列",
+    "freq": 5341
   },
   {
     "word": "端",
@@ -5227,7 +5850,8 @@
   {
     "word": "端数",
     "phonetic": "はすう",
-    "explains": "零头"
+    "explains": "零头",
+    "freq": 18140
   },
   {
     "word": "はたして",
@@ -5237,12 +5861,14 @@
   {
     "word": "派手",
     "phonetic": "はで",
-    "explains": "花哨"
+    "explains": "花哨",
+    "freq": 2149
   },
   {
     "word": "花火",
     "phonetic": "はなび",
-    "explains": "烟花"
+    "explains": "烟花",
+    "freq": 2188
   },
   {
     "word": "巾",
@@ -5262,42 +5888,50 @@
   {
     "word": "半期",
     "phonetic": "はんき",
-    "explains": "半期"
+    "explains": "半期",
+    "freq": 21588
   },
   {
     "word": "半径",
     "phonetic": "はんけい",
-    "explains": "半径"
+    "explains": "半径",
+    "freq": 3263
   },
   {
     "word": "判決",
     "phonetic": "はんけつ",
-    "explains": "判决"
+    "explains": "判决",
+    "freq": 1919
   },
   {
     "word": "版権",
     "phonetic": "はんけん",
-    "explains": "版权"
+    "explains": "版权",
+    "freq": 15966
   },
   {
     "word": "半月",
     "phonetic": "はんげつ",
-    "explains": "半月"
+    "explains": "半月",
+    "freq": 9547
   },
   {
     "word": "半減",
     "phonetic": "はんげん",
-    "explains": "减半"
+    "explains": "减半",
+    "freq": 11661
   },
   {
     "word": "反抗",
     "phonetic": "はんこう",
-    "explains": "反抗"
+    "explains": "反抗",
+    "freq": 2214
   },
   {
     "word": "犯行",
     "phonetic": "はんこう",
-    "explains": "犯罪行为"
+    "explains": "犯罪行为",
+    "freq": 1099
   },
   {
     "word": "犯罪",
@@ -5312,22 +5946,26 @@
   {
     "word": "反射",
     "phonetic": "はんしゃ",
-    "explains": "反射"
+    "explains": "反射",
+    "freq": 3059
   },
   {
     "word": "判事",
     "phonetic": "はんじ",
-    "explains": "审判员"
+    "explains": "审判员",
+    "freq": 1318
   },
   {
     "word": "半数",
     "phonetic": "はんすう",
-    "explains": "半数"
+    "explains": "半数",
+    "freq": 3805
   },
   {
     "word": "反省",
     "phonetic": "はんせい",
-    "explains": "反省"
+    "explains": "反省",
+    "freq": 2598
   },
   {
     "word": "半世紀",
@@ -5337,7 +5975,8 @@
   {
     "word": "反則",
     "phonetic": "はんそく",
-    "explains": "犯规"
+    "explains": "犯规",
+    "freq": 5994
   },
   {
     "word": "判断",
@@ -5347,27 +5986,32 @@
   {
     "word": "判定",
     "phonetic": "はんてい",
-    "explains": "判定"
+    "explains": "判定",
+    "freq": 4012
   },
   {
     "word": "反転",
     "phonetic": "はんてん",
-    "explains": "反转"
+    "explains": "反转",
+    "freq": 6498
   },
   {
     "word": "半島",
     "phonetic": "はんとう",
-    "explains": "半岛"
+    "explains": "半岛",
+    "freq": 6106
   },
   {
     "word": "半年",
     "phonetic": "はんとし",
-    "explains": "半年"
+    "explains": "半年",
+    "freq": 1621
   },
   {
     "word": "反動",
     "phonetic": "はんどう",
-    "explains": "反动"
+    "explains": "反动",
+    "freq": 5669
   },
   {
     "word": "半導体",
@@ -5377,27 +6021,32 @@
   {
     "word": "半日",
     "phonetic": "はんにち",
-    "explains": "半天"
+    "explains": "半天",
+    "freq": 5454
   },
   {
     "word": "犯人",
     "phonetic": "はんにん",
-    "explains": "犯人"
+    "explains": "犯人",
+    "freq": 173
   },
   {
     "word": "反応",
     "phonetic": "はんのう",
-    "explains": "反应"
+    "explains": "反应",
+    "freq": 549
   },
   {
     "word": "半端",
     "phonetic": "はんぱ",
-    "explains": "半拉子"
+    "explains": "半拉子",
+    "freq": 3646
   },
   {
     "word": "反発",
     "phonetic": "はんぱつ",
-    "explains": "反感；回升"
+    "explains": "反感；回升",
+    "freq": 6478
   },
   {
     "word": "反比例",
@@ -5407,7 +6056,8 @@
   {
     "word": "反復",
     "phonetic": "はんぷく",
-    "explains": "反复"
+    "explains": "反复",
+    "freq": 6241
   },
   {
     "word": "判明",
@@ -5417,7 +6067,8 @@
   {
     "word": "半面",
     "phonetic": "はんめん",
-    "explains": "反面"
+    "explains": "反面",
+    "freq": 21587
   },
   {
     "word": "範例",
@@ -5432,12 +6083,14 @@
   {
     "word": "売価",
     "phonetic": "ばいか",
-    "explains": "售价"
+    "explains": "售价",
+    "freq": 24726
   },
   {
     "word": "売却",
     "phonetic": "ばいきゃく",
-    "explains": "卖掉"
+    "explains": "卖掉",
+    "freq": 2948
   },
   {
     "word": "買収",
@@ -5447,7 +6100,8 @@
   {
     "word": "倍数",
     "phonetic": "ばいすう",
-    "explains": "倍数"
+    "explains": "倍数",
+    "freq": 18602
   },
   {
     "word": "倍増",
@@ -5457,7 +6111,8 @@
   {
     "word": "売買",
     "phonetic": "ばいばい",
-    "explains": "买卖"
+    "explains": "买卖",
+    "freq": 1981
   },
   {
     "word": "倍率",
@@ -5492,7 +6147,8 @@
   {
     "word": "悲観",
     "phonetic": "ひかん",
-    "explains": "悲观"
+    "explains": "悲观",
+    "freq": 4369
   },
   {
     "word": "悲願",
@@ -5507,17 +6163,20 @@
   {
     "word": "悲劇",
     "phonetic": "ひげき",
-    "explains": "悲剧"
+    "explains": "悲剧",
+    "freq": 1271
   },
   {
     "word": "非行",
     "phonetic": "ひこう",
-    "explains": "不良行为"
+    "explains": "不良行为",
+    "freq": 8245
   },
   {
     "word": "飛行",
     "phonetic": "ひこう",
-    "explains": "飞行"
+    "explains": "飞行",
+    "freq": 315
   },
   {
     "word": "非公式",
@@ -5542,7 +6201,8 @@
   {
     "word": "非常",
     "phonetic": "ひじょう",
-    "explains": "非常"
+    "explains": "非常",
+    "freq": 370
   },
   {
     "word": "非常識",
@@ -5562,22 +6222,26 @@
   {
     "word": "必然",
     "phonetic": "ひつぜん",
-    "explains": "必然"
+    "explains": "必然",
+    "freq": 3987
   },
   {
     "word": "否定",
     "phonetic": "ひてい",
-    "explains": "否定"
+    "explains": "否定",
+    "freq": 1047
   },
   {
     "word": "人影",
     "phonetic": "ひとかげ",
-    "explains": "人影"
+    "explains": "人影",
+    "freq": 5425
   },
   {
     "word": "人柄",
     "phonetic": "ひとがら",
-    "explains": "人品"
+    "explains": "人品",
+    "freq": 7164
   },
   {
     "word": "人差指",
@@ -5587,7 +6251,8 @@
   {
     "word": "人質",
     "phonetic": "ひとじち",
-    "explains": "人质"
+    "explains": "人质",
+    "freq": 917
   },
   {
     "word": "ひととおり",
@@ -5597,7 +6262,8 @@
   {
     "word": "人通",
     "phonetic": "ひとどおり",
-    "explains": "人流量"
+    "explains": "人流量",
+    "freq": 28331
   },
   {
     "word": "人並み",
@@ -5607,7 +6273,8 @@
   {
     "word": "人前",
     "phonetic": "ひとまえ",
-    "explains": "人前"
+    "explains": "人前",
+    "freq": 3701
   },
   {
     "word": "ひとまず",
@@ -5617,12 +6284,14 @@
   {
     "word": "一目",
     "phonetic": "ひとめ",
-    "explains": "一眼"
+    "explains": "一眼",
+    "freq": 2975
   },
   {
     "word": "非難",
     "phonetic": "ひなん",
-    "explains": "非难"
+    "explains": "非难",
+    "freq": 1058
   },
   {
     "word": "悲憤",
@@ -5637,7 +6306,8 @@
   {
     "word": "悲報",
     "phonetic": "ひほう",
-    "explains": "噩耗"
+    "explains": "噩耗",
+    "freq": 15376
   },
   {
     "word": "暇",
@@ -5667,17 +6337,20 @@
   {
     "word": "費用",
     "phonetic": "ひよう",
-    "explains": "费用"
+    "explains": "费用",
+    "freq": 1834
   },
   {
     "word": "比率",
     "phonetic": "ひりつ",
-    "explains": "比率"
+    "explains": "比率",
+    "freq": 7329
   },
   {
     "word": "比例",
     "phonetic": "ひれい",
-    "explains": "比例；成正比"
+    "explains": "比例；成正比",
+    "freq": 8656
   },
   {
     "word": "疲労",
@@ -5687,7 +6360,8 @@
   {
     "word": "必死",
     "phonetic": "ひっし",
-    "explains": "拼命"
+    "explains": "拼命",
+    "freq": 1345
   },
   {
     "word": "必至",
@@ -5757,7 +6431,8 @@
   {
     "word": "保全",
     "phonetic": "ほぜん",
-    "explains": "保全"
+    "explains": "保全",
+    "freq": 5336
   },
   {
     "word": "ほとんど",
@@ -5772,12 +6447,14 @@
   {
     "word": "毎朝",
     "phonetic": "まいあさ",
-    "explains": "每天早晨"
+    "explains": "每天早晨",
+    "freq": 2412
   },
   {
     "word": "毎回",
     "phonetic": "まいかい",
-    "explains": "每次"
+    "explains": "每次",
+    "freq": 2162
   },
   {
     "word": "枚挙",
@@ -5787,47 +6464,56 @@
   {
     "word": "毎週",
     "phonetic": "まいしゅう",
-    "explains": "每周"
+    "explains": "每周",
+    "freq": 2207
   },
   {
     "word": "毎時",
     "phonetic": "まいじ",
-    "explains": "每小时"
+    "explains": "每小时",
+    "freq": 13354
   },
   {
     "word": "毎月",
     "phonetic": "まいつき",
-    "explains": "每月"
+    "explains": "每月",
+    "freq": 3376
   },
   {
     "word": "毎年",
     "phonetic": "まいとし",
-    "explains": "每年"
+    "explains": "每年",
+    "freq": 1762
   },
   {
     "word": "毎度",
     "phonetic": "まいど",
-    "explains": "每次"
+    "explains": "每次",
+    "freq": 4724
   },
   {
     "word": "毎晩",
     "phonetic": "まいばん",
-    "explains": "每晚"
+    "explains": "每晚",
+    "freq": 1483
   },
   {
     "word": "毎々",
     "phonetic": "まいまい",
-    "explains": "每每"
+    "explains": "每每",
+    "freq": 26400
   },
   {
     "word": "前売り",
     "phonetic": "まえうり",
-    "explains": "预售"
+    "explains": "预售",
+    "freq": 16645
   },
   {
     "word": "前置き",
     "phonetic": "まえおき",
-    "explains": "前言"
+    "explains": "前言",
+    "freq": 8527
   },
   {
     "word": "前書",
@@ -5837,12 +6523,14 @@
   {
     "word": "前払い",
     "phonetic": "まえばらい",
-    "explains": "预付"
+    "explains": "预付",
+    "freq": 5422
   },
   {
     "word": "前向き",
     "phonetic": "まえむき",
-    "explains": "向前看"
+    "explains": "向前看",
+    "freq": 2678
   },
   {
     "word": "任す",
@@ -5852,7 +6540,8 @@
   {
     "word": "任せ",
     "phonetic": "まかせ",
-    "explains": "交给"
+    "explains": "交给",
+    "freq": 285
   },
   {
     "word": "任せる",
@@ -5882,7 +6571,8 @@
   {
     "word": "真面目",
     "phonetic": "まじめ",
-    "explains": "认真的"
+    "explains": "认真的",
+    "freq": 1380
   },
   {
     "word": "または",
@@ -5892,7 +6582,8 @@
   {
     "word": "待合",
     "phonetic": "まちあい",
-    "explains": "候车室"
+    "explains": "候车室",
+    "freq": 6010
   },
   {
     "word": "待合室",
@@ -5932,7 +6623,8 @@
   {
     "word": "実",
     "phonetic": "み",
-    "explains": "果实"
+    "explains": "果实",
+    "freq": 269
   },
   {
     "word": "見上げる",
@@ -5977,17 +6669,20 @@
   {
     "word": "自ら",
     "phonetic": "みずから",
-    "explains": "自己；亲自"
+    "explains": "自己；亲自",
+    "freq": 1007
   },
   {
     "word": "源",
     "phonetic": "みなもと",
-    "explains": "源头"
+    "explains": "源头",
+    "freq": 1052
   },
   {
     "word": "見習い",
     "phonetic": "みならい",
-    "explains": "见习"
+    "explains": "见习",
+    "freq": 4564
   },
   {
     "word": "見習う",
@@ -6002,7 +6697,8 @@
   {
     "word": "見本",
     "phonetic": "みほん",
-    "explains": "样本"
+    "explains": "样本",
+    "freq": 4380
   },
   {
     "word": "見守る",
@@ -6047,82 +6743,98 @@
   {
     "word": "名画",
     "phonetic": "めいが",
-    "explains": "名画"
+    "explains": "名画",
+    "freq": 11424
   },
   {
     "word": "名曲",
     "phonetic": "めいきょく",
-    "explains": "名曲"
+    "explains": "名曲",
+    "freq": 9994
   },
   {
     "word": "名言",
     "phonetic": "めいげん",
-    "explains": "名言"
+    "explains": "名言",
+    "freq": 6142
   },
   {
     "word": "名作",
     "phonetic": "めいさく",
-    "explains": "名作"
+    "explains": "名作",
+    "freq": 8663
   },
   {
     "word": "名刺",
     "phonetic": "めいし",
-    "explains": "名片"
+    "explains": "名片",
+    "freq": 2765
   },
   {
     "word": "名手",
     "phonetic": "めいしゅ",
-    "explains": "名手"
+    "explains": "名手",
+    "freq": 7063
   },
   {
     "word": "名称",
     "phonetic": "めいしょう",
-    "explains": "名称"
+    "explains": "名称",
+    "freq": 5970
   },
   {
     "word": "名物",
     "phonetic": "めいぶつ",
-    "explains": "名产"
+    "explains": "名产",
+    "freq": 10470
   },
   {
     "word": "名簿",
     "phonetic": "めいぼ",
-    "explains": "名簿"
+    "explains": "名簿",
+    "freq": 2313
   },
   {
     "word": "名門",
     "phonetic": "めいもん",
-    "explains": "名门"
+    "explains": "名门",
+    "freq": 7786
   },
   {
     "word": "名誉",
     "phonetic": "めいよ",
-    "explains": "名誉"
+    "explains": "名誉",
+    "freq": 809
   },
   {
     "word": "目安",
     "phonetic": "めやす",
-    "explains": "目标；大致"
+    "explains": "目标；大致",
+    "freq": 13347
   },
   {
     "word": "面目",
     "phonetic": "めんもく",
-    "explains": "面子"
+    "explains": "面子",
+    "freq": 5715
   },
   {
     "word": "目撃",
     "phonetic": "もくげき",
-    "explains": "目击"
+    "explains": "目击",
+    "freq": 624
   },
   {
     "word": "目前",
     "phonetic": "もくぜん",
-    "explains": "眼前"
+    "explains": "眼前",
+    "freq": 4867
   },
   {
     "word": "目標",
     "phonetic": "もくひょう",
-    "explains": "目标"
+    "explains": "目标",
+    "freq": 643
   },
   {
     "word": "もしかしたら",
@@ -6167,27 +6879,32 @@
   {
     "word": "役",
     "phonetic": "やく",
-    "explains": "职务；作用"
+    "explains": "职务；作用",
+    "freq": 270
   },
   {
     "word": "約",
     "phonetic": "やく",
-    "explains": "约；大约"
+    "explains": "约；大约",
+    "freq": 919
   },
   {
     "word": "訳者",
     "phonetic": "やくしゃ",
-    "explains": "译者"
+    "explains": "译者",
+    "freq": 24182
   },
   {
     "word": "役所",
     "phonetic": "やくしょ",
-    "explains": "政府机关"
+    "explains": "政府机关",
+    "freq": 3054
   },
   {
     "word": "躍進",
     "phonetic": "やくしん",
-    "explains": "跃进"
+    "explains": "跃进",
+    "freq": 10057
   },
   {
     "word": "役立つ",
@@ -6197,12 +6914,14 @@
   {
     "word": "躍動",
     "phonetic": "やくどう",
-    "explains": "跃动"
+    "explains": "跃动",
+    "freq": 13267
   },
   {
     "word": "役人",
     "phonetic": "やくにん",
-    "explains": "公务员"
+    "explains": "公务员",
+    "freq": 2911
   },
   {
     "word": "約半分",
@@ -6212,12 +6931,14 @@
   {
     "word": "訳文",
     "phonetic": "やくぶん",
-    "explains": "译文"
+    "explains": "译文",
+    "freq": 20869
   },
   {
     "word": "役割",
     "phonetic": "やくわり",
-    "explains": "作用；角色"
+    "explains": "作用；角色",
+    "freq": 1374
   },
   {
     "word": "やたら",
@@ -6232,12 +6953,14 @@
   {
     "word": "宿主",
     "phonetic": "やどぬし",
-    "explains": "房东"
+    "explains": "房东",
+    "freq": 7146
   },
   {
     "word": "宿屋",
     "phonetic": "やどや",
-    "explains": "旅馆"
+    "explains": "旅馆",
+    "freq": 6174
   },
   {
     "word": "宿る",
@@ -6252,12 +6975,14 @@
   {
     "word": "由緒",
     "phonetic": "ゆいしょ",
-    "explains": "来由"
+    "explains": "来由",
+    "freq": 11215
   },
   {
     "word": "優越",
     "phonetic": "ゆうえつ",
-    "explains": "优越"
+    "explains": "优越",
+    "freq": 11144
   },
   {
     "word": "遊園地",
@@ -6272,17 +6997,20 @@
   {
     "word": "優雅",
     "phonetic": "ゆうが",
-    "explains": "优雅"
+    "explains": "优雅",
+    "freq": 4211
   },
   {
     "word": "有害",
     "phonetic": "ゆうがい",
-    "explains": "有害"
+    "explains": "有害",
+    "freq": 3629
   },
   {
     "word": "勇気",
     "phonetic": "ゆうき",
-    "explains": "勇气"
+    "explains": "勇气",
+    "freq": 408
   },
   {
     "word": "遊戯",
@@ -6292,32 +7020,38 @@
   {
     "word": "有限",
     "phonetic": "ゆうげん",
-    "explains": "有限"
+    "explains": "有限",
+    "freq": 11267
   },
   {
     "word": "有効",
     "phonetic": "ゆうこう",
-    "explains": "有效"
+    "explains": "有效",
+    "freq": 1913
   },
   {
     "word": "勇者",
     "phonetic": "ゆうしゃ",
-    "explains": "勇者"
+    "explains": "勇者",
+    "freq": 3727
   },
   {
     "word": "優秀",
     "phonetic": "ゆうしゅう",
-    "explains": "优秀"
+    "explains": "优秀",
+    "freq": 774
   },
   {
     "word": "優勝",
     "phonetic": "ゆうしょう",
-    "explains": "冠军"
+    "explains": "冠军",
+    "freq": 1728
   },
   {
     "word": "有事",
     "phonetic": "ゆうじ",
-    "explains": "有事"
+    "explains": "有事",
+    "freq": 16979
   },
   {
     "word": "優柔不断",
@@ -6327,22 +7061,26 @@
   {
     "word": "有数",
     "phonetic": "ゆうすう",
-    "explains": "有数"
+    "explains": "有数",
+    "freq": 10435
   },
   {
     "word": "優勢",
     "phonetic": "ゆうせい",
-    "explains": "优势"
+    "explains": "优势",
+    "freq": 5168
   },
   {
     "word": "優先",
     "phonetic": "ゆうせん",
-    "explains": "优先"
+    "explains": "优先",
+    "freq": 952
   },
   {
     "word": "優待",
     "phonetic": "ゆうたい",
-    "explains": "优待"
+    "explains": "优待",
+    "freq": 23448
   },
   {
     "word": "誘致",
@@ -6352,12 +7090,14 @@
   {
     "word": "誘導",
     "phonetic": "ゆうどう",
-    "explains": "诱导"
+    "explains": "诱导",
+    "freq": 1705
   },
   {
     "word": "優美",
     "phonetic": "ゆうび",
-    "explains": "优美"
+    "explains": "优美",
+    "freq": 7327
   },
   {
     "word": "郵便",
@@ -6372,37 +7112,44 @@
   {
     "word": "有望",
     "phonetic": "ゆうぼう",
-    "explains": "有希望"
+    "explains": "有希望",
+    "freq": 3739
   },
   {
     "word": "有名",
     "phonetic": "ゆうめい",
-    "explains": "有名"
+    "explains": "有名",
+    "freq": 672
   },
   {
     "word": "有用",
     "phonetic": "ゆうよう",
-    "explains": "有用"
+    "explains": "有用",
+    "freq": 5113
   },
   {
     "word": "有利",
     "phonetic": "ゆうり",
-    "explains": "有利"
+    "explains": "有利",
+    "freq": 2015
   },
   {
     "word": "有料",
     "phonetic": "ゆうりょう",
-    "explains": "收费"
+    "explains": "收费",
+    "freq": 8225
   },
   {
     "word": "有力",
     "phonetic": "ゆうりょく",
-    "explains": "有力"
+    "explains": "有力",
+    "freq": 2927
   },
   {
     "word": "優劣",
     "phonetic": "ゆうれつ",
-    "explains": "优劣"
+    "explains": "优劣",
+    "freq": 27475
   },
   {
     "word": "誘惑",
@@ -6427,17 +7174,20 @@
   {
     "word": "輸送",
     "phonetic": "ゆそう",
-    "explains": "运输"
+    "explains": "运输",
+    "freq": 1221
   },
   {
     "word": "輸入",
     "phonetic": "ゆにゅう",
-    "explains": "进口；输入"
+    "explains": "进口；输入",
+    "freq": 4026
   },
   {
     "word": "由来",
     "phonetic": "ゆらい",
-    "explains": "由来"
+    "explains": "由来",
+    "freq": 4314
   },
   {
     "word": "由来する",
@@ -6467,22 +7217,26 @@
   {
     "word": "要",
     "phonetic": "よう",
-    "explains": "要件"
+    "explains": "要件",
+    "freq": 251
   },
   {
     "word": "要員",
     "phonetic": "よういん",
-    "explains": "所需人员"
+    "explains": "所需人员",
+    "freq": 2964
   },
   {
     "word": "要因",
     "phonetic": "よういん",
-    "explains": "主因"
+    "explains": "主因",
+    "freq": 3995
   },
   {
     "word": "要我",
     "phonetic": "ようが",
-    "explains": "要求我"
+    "explains": "要求我",
+    "freq": 14249
   },
   {
     "word": "要害",
@@ -6492,17 +7246,20 @@
   {
     "word": "要件",
     "phonetic": "ようけん",
-    "explains": "必要条件"
+    "explains": "必要条件",
+    "freq": 6060
   },
   {
     "word": "要塞",
     "phonetic": "ようさい",
-    "explains": "要塞"
+    "explains": "要塞",
+    "freq": 3005
   },
   {
     "word": "要旨",
     "phonetic": "ようし",
-    "explains": "要旨"
+    "explains": "要旨",
+    "freq": 17772
   },
   {
     "word": "要する",
@@ -6512,22 +7269,26 @@
   {
     "word": "要請",
     "phonetic": "ようせい",
-    "explains": "请求"
+    "explains": "请求",
+    "freq": 1000
   },
   {
     "word": "要望",
     "phonetic": "ようぼう",
-    "explains": "要求"
+    "explains": "要求",
+    "freq": 2817
   },
   {
     "word": "要約",
     "phonetic": "ようやく",
-    "explains": "要约"
+    "explains": "要约",
+    "freq": 7585
   },
   {
     "word": "要領",
     "phonetic": "ようりょう",
-    "explains": "要领"
+    "explains": "要领",
+    "freq": 6320
   },
   {
     "word": "欲",
@@ -6552,7 +7313,8 @@
   {
     "word": "由",
     "phonetic": "よし",
-    "explains": "理由"
+    "explains": "理由",
+    "freq": 5312
   },
   {
     "word": "由ない",
@@ -6577,57 +7339,68 @@
   {
     "word": "来",
     "phonetic": "らい",
-    "explains": "来（同 来）"
+    "explains": "来（同 来）",
+    "freq": 16
   },
   {
     "word": "来月",
     "phonetic": "らいげつ",
-    "explains": "下月"
+    "explains": "下月",
+    "freq": 3112
   },
   {
     "word": "来週",
     "phonetic": "らいしゅう",
-    "explains": "下周"
+    "explains": "下周",
+    "freq": 1201
   },
   {
     "word": "来場",
     "phonetic": "らいじょう",
-    "explains": "到场"
+    "explains": "到场",
+    "freq": 5260
   },
   {
     "word": "来店",
     "phonetic": "らいてん",
-    "explains": "光顾"
+    "explains": "光顾",
+    "freq": 9246
   },
   {
     "word": "来日",
     "phonetic": "らいにち",
-    "explains": "来日本"
+    "explains": "来日本",
+    "freq": 16656
   },
   {
     "word": "来年",
     "phonetic": "らいねん",
-    "explains": "明年"
+    "explains": "明年",
+    "freq": 2489
   },
   {
     "word": "来賓",
     "phonetic": "らいひん",
-    "explains": "来宾"
+    "explains": "来宾",
+    "freq": 11557
   },
   {
     "word": "来訪",
     "phonetic": "らいほう",
-    "explains": "来访"
+    "explains": "来访",
+    "freq": 6000
   },
   {
     "word": "楽",
     "phonetic": "らく",
-    "explains": "轻松"
+    "explains": "轻松",
+    "freq": 750
   },
   {
     "word": "落語",
     "phonetic": "らくご",
-    "explains": "落语"
+    "explains": "落语",
+    "freq": 33969
   },
   {
     "word": "落差",
@@ -6642,12 +7415,14 @@
   {
     "word": "落選",
     "phonetic": "らくせん",
-    "explains": "落选"
+    "explains": "落选",
+    "freq": 11129
   },
   {
     "word": "落第",
     "phonetic": "らくだい",
-    "explains": "留级"
+    "explains": "留级",
+    "freq": 4261
   },
   {
     "word": "楽に",
@@ -6657,7 +7432,8 @@
   {
     "word": "落馬",
     "phonetic": "らくば",
-    "explains": "落马"
+    "explains": "落马",
+    "freq": 11076
   },
   {
     "word": "落雷",
@@ -6667,42 +7443,50 @@
   {
     "word": "落下",
     "phonetic": "らっか",
-    "explains": "落下"
+    "explains": "落下",
+    "freq": 2877
   },
   {
     "word": "楽観",
     "phonetic": "らっかん",
-    "explains": "乐观"
+    "explains": "乐观",
+    "freq": 3832
   },
   {
     "word": "理",
     "phonetic": "り",
-    "explains": "理"
+    "explains": "理",
+    "freq": 2992
   },
   {
     "word": "略",
     "phonetic": "りゃく",
-    "explains": "略"
+    "explains": "略",
+    "freq": 4750
   },
   {
     "word": "略語",
     "phonetic": "りゃくご",
-    "explains": "略语"
+    "explains": "略语",
+    "freq": 11329
   },
   {
     "word": "略称",
     "phonetic": "りゃくしょう",
-    "explains": "简称"
+    "explains": "简称",
+    "freq": 14737
   },
   {
     "word": "略図",
     "phonetic": "りゃくず",
-    "explains": "简图"
+    "explains": "简图",
+    "freq": 29852
   },
   {
     "word": "略奪",
     "phonetic": "りゃくだつ",
-    "explains": "掠夺"
+    "explains": "掠夺",
+    "freq": 2532
   },
   {
     "word": "留意",
@@ -6712,47 +7496,56 @@
   {
     "word": "流行",
     "phonetic": "りゅうこう",
-    "explains": "流行"
+    "explains": "流行",
+    "freq": 2319
   },
   {
     "word": "流産",
     "phonetic": "りゅうざん",
-    "explains": "流产"
+    "explains": "流产",
+    "freq": 5783
   },
   {
     "word": "流星",
     "phonetic": "りゅうせい",
-    "explains": "流星"
+    "explains": "流星",
+    "freq": 5184
   },
   {
     "word": "流暢",
     "phonetic": "りゅうちょう",
-    "explains": "流畅"
+    "explains": "流畅",
+    "freq": 11780
   },
   {
     "word": "流用",
     "phonetic": "りゅうよう",
-    "explains": "挪用"
+    "explains": "挪用",
+    "freq": 8411
   },
   {
     "word": "両",
     "phonetic": "りょう",
-    "explains": "两；双"
+    "explains": "两；双",
+    "freq": 2761
   },
   {
     "word": "領域",
     "phonetic": "りょういき",
-    "explains": "领域"
+    "explains": "领域",
+    "freq": 1611
   },
   {
     "word": "領海",
     "phonetic": "りょうかい",
-    "explains": "领海"
+    "explains": "领海",
+    "freq": 17666
   },
   {
     "word": "両側",
     "phonetic": "りょうがわ",
-    "explains": "两侧"
+    "explains": "两侧",
+    "freq": 4411
   },
   {
     "word": "両極端",
@@ -6762,12 +7555,14 @@
   {
     "word": "料金",
     "phonetic": "りょうきん",
-    "explains": "费用"
+    "explains": "费用",
+    "freq": 2144
   },
   {
     "word": "両親",
     "phonetic": "りょうしん",
-    "explains": "父母"
+    "explains": "父母",
+    "freq": 373
   },
   {
     "word": "良心",
@@ -6777,27 +7572,32 @@
   {
     "word": "領事",
     "phonetic": "りょうじ",
-    "explains": "领事"
+    "explains": "领事",
+    "freq": 3351
   },
   {
     "word": "両手",
     "phonetic": "りょうて",
-    "explains": "双手"
+    "explains": "双手",
+    "freq": 1203
   },
   {
     "word": "領土",
     "phonetic": "りょうど",
-    "explains": "领土"
+    "explains": "领土",
+    "freq": 3441
   },
   {
     "word": "両方",
     "phonetic": "りょうほう",
-    "explains": "双方"
+    "explains": "双方",
+    "freq": 726
   },
   {
     "word": "両立",
     "phonetic": "りょうりつ",
-    "explains": "两立"
+    "explains": "两立",
+    "freq": 6399
   },
   {
     "word": "力的",
@@ -6807,47 +7607,56 @@
   {
     "word": "旅券",
     "phonetic": "りょけん",
-    "explains": "护照"
+    "explains": "护照",
+    "freq": 10253
   },
   {
     "word": "旅行",
     "phonetic": "りょこう",
-    "explains": "旅行"
+    "explains": "旅行",
+    "freq": 640
   },
   {
     "word": "旅程",
     "phonetic": "りょてい",
-    "explains": "旅程"
+    "explains": "旅程",
+    "freq": 7268
   },
   {
     "word": "旅費",
     "phonetic": "りょひ",
-    "explains": "旅费"
+    "explains": "旅费",
+    "freq": 7908
   },
   {
     "word": "利益",
     "phonetic": "りえき",
-    "explains": "利益"
+    "explains": "利益",
+    "freq": 1154
   },
   {
     "word": "理科",
     "phonetic": "りか",
-    "explains": "理科"
+    "explains": "理科",
+    "freq": 9499
   },
   {
     "word": "理解",
     "phonetic": "りかい",
-    "explains": "理解"
+    "explains": "理解",
+    "freq": 160
   },
   {
     "word": "利害",
     "phonetic": "りがい",
-    "explains": "利害"
+    "explains": "利害",
+    "freq": 5496
   },
   {
     "word": "力学",
     "phonetic": "りきがく",
-    "explains": "力学"
+    "explains": "力学",
+    "freq": 5306
   },
   {
     "word": "力学的",
@@ -6862,57 +7671,68 @@
   {
     "word": "利己",
     "phonetic": "りこ",
-    "explains": "利己"
+    "explains": "利己",
+    "freq": 3841
   },
   {
     "word": "利子",
     "phonetic": "りし",
-    "explains": "利息"
+    "explains": "利息",
+    "freq": 7126
   },
   {
     "word": "理事",
     "phonetic": "りじ",
-    "explains": "理事"
+    "explains": "理事",
+    "freq": 4673
   },
   {
     "word": "理性",
     "phonetic": "りせい",
-    "explains": "理性"
+    "explains": "理性",
+    "freq": 2567
   },
   {
     "word": "理想",
     "phonetic": "りそう",
-    "explains": "理想"
+    "explains": "理想",
+    "freq": 1444
   },
   {
     "word": "利息",
     "phonetic": "りそく",
-    "explains": "利息"
+    "explains": "利息",
+    "freq": 13364
   },
   {
     "word": "立案",
     "phonetic": "りつあん",
-    "explains": "立案"
+    "explains": "立案",
+    "freq": 7574
   },
   {
     "word": "利点",
     "phonetic": "りてん",
-    "explains": "长处"
+    "explains": "长处",
+    "freq": 3950
   },
   {
     "word": "理念",
     "phonetic": "りねん",
-    "explains": "理念"
+    "explains": "理念",
+    "freq": 7117
   },
   {
     "word": "理由",
     "phonetic": "りゆう",
-    "explains": "理由"
+    "explains": "理由",
+    "freq": 114
   },
   {
     "word": "利用",
     "phonetic": "りよう",
-    "explains": "利用"
+    "explains": "利用",
+    "freq": 450
   },
   {
     "word": "利用者",
@@ -6922,32 +7742,38 @@
   {
     "word": "理論",
     "phonetic": "りろん",
-    "explains": "理论"
+    "explains": "理论",
+    "freq": 1189
   },
   {
     "word": "立候補",
     "phonetic": "りっこうほ",
-    "explains": "竞选"
+    "explains": "竞选",
+    "freq": 25180
   },
   {
     "word": "立証",
     "phonetic": "りっしょう",
-    "explains": "作证"
+    "explains": "作证",
+    "freq": 2548
   },
   {
     "word": "立地",
     "phonetic": "りっち",
-    "explains": "地理位置"
+    "explains": "地理位置",
+    "freq": 10339
   },
   {
     "word": "立派",
     "phonetic": "りっぱ",
-    "explains": "优秀"
+    "explains": "优秀",
+    "freq": 795
   },
   {
     "word": "立法",
     "phonetic": "りっぽう",
-    "explains": "立法"
+    "explains": "立法",
+    "freq": 8185
   },
   {
     "word": "留守",
@@ -6967,7 +7793,8 @@
   {
     "word": "流浪",
     "phonetic": "るろう",
-    "explains": "流浪"
+    "explains": "流浪",
+    "freq": 9846
   },
   {
     "word": "例会",
@@ -6977,7 +7804,8 @@
   {
     "word": "例外",
     "phonetic": "れいがい",
-    "explains": "例外"
+    "explains": "例外",
+    "freq": 1967
   },
   {
     "word": "例題",
@@ -6987,47 +7815,56 @@
   {
     "word": "例年",
     "phonetic": "れいねん",
-    "explains": "往年"
+    "explains": "往年",
+    "freq": 13798
   },
   {
     "word": "連休",
     "phonetic": "れんきゅう",
-    "explains": "连休"
+    "explains": "连休",
+    "freq": 17651
   },
   {
     "word": "連合",
     "phonetic": "れんごう",
-    "explains": "联合"
+    "explains": "联合",
+    "freq": 2017
   },
   {
     "word": "連載",
     "phonetic": "れんさい",
-    "explains": "连载"
+    "explains": "连载",
+    "freq": 13046
   },
   {
     "word": "連日",
     "phonetic": "れんじつ",
-    "explains": "连日"
+    "explains": "连日",
+    "freq": 13413
   },
   {
     "word": "連想",
     "phonetic": "れんそう",
-    "explains": "联想"
+    "explains": "联想",
+    "freq": 5740
   },
   {
     "word": "連続",
     "phonetic": "れんぞく",
-    "explains": "连续"
+    "explains": "连续",
+    "freq": 1247
   },
   {
     "word": "連中",
     "phonetic": "れんちゅう",
-    "explains": "一伙人"
+    "explains": "一伙人",
+    "freq": 348
   },
   {
     "word": "連動",
     "phonetic": "れんどう",
-    "explains": "联动"
+    "explains": "联动",
+    "freq": 7320
   },
   {
     "word": "連年",
@@ -7037,32 +7874,38 @@
   {
     "word": "連発",
     "phonetic": "れんぱつ",
-    "explains": "接连发生"
+    "explains": "接连发生",
+    "freq": 9630
   },
   {
     "word": "連邦",
     "phonetic": "れんぽう",
-    "explains": "联邦"
+    "explains": "联邦",
+    "freq": 785
   },
   {
     "word": "連盟",
     "phonetic": "れんめい",
-    "explains": "联盟"
+    "explains": "联盟",
+    "freq": 3766
   },
   {
     "word": "連絡",
     "phonetic": "れんらく",
-    "explains": "联络"
+    "explains": "联络",
+    "freq": 127
   },
   {
     "word": "連立",
     "phonetic": "れんりつ",
-    "explains": "联合"
+    "explains": "联合",
+    "freq": 30710
   },
   {
     "word": "劣等",
     "phonetic": "れっとう",
-    "explains": "劣等"
+    "explains": "劣等",
+    "freq": 12218
   },
   {
     "word": "ろくに",
@@ -7072,7 +7915,8 @@
   {
     "word": "和",
     "phonetic": "わ",
-    "explains": "和"
+    "explains": "和",
+    "freq": 4898
   },
   {
     "word": "和英",
@@ -7087,12 +7931,14 @@
   {
     "word": "和解",
     "phonetic": "わかい",
-    "explains": "和解"
+    "explains": "和解",
+    "freq": 2095
   },
   {
     "word": "別れ",
     "phonetic": "わかれ",
-    "explains": "分别；离别"
+    "explains": "分别；离别",
+    "freq": 435
   },
   {
     "word": "和菓子",
@@ -7112,12 +7958,14 @@
   {
     "word": "話者",
     "phonetic": "わしゃ",
-    "explains": "说话者"
+    "explains": "说话者",
+    "freq": 15418
   },
   {
     "word": "話術",
     "phonetic": "わじゅつ",
-    "explains": "话术"
+    "explains": "话术",
+    "freq": 19347
   },
   {
     "word": "わずか",
@@ -7132,12 +7980,14 @@
   {
     "word": "和平",
     "phonetic": "わへい",
-    "explains": "和平"
+    "explains": "和平",
+    "freq": 3462
   },
   {
     "word": "和訳",
     "phonetic": "わやく",
-    "explains": "译成日语"
+    "explains": "译成日语",
+    "freq": 34359
   },
   {
     "word": "割",
@@ -7152,7 +8002,8 @@
   {
     "word": "割高",
     "phonetic": "わりだか",
-    "explains": "比较贵"
+    "explains": "比较贵",
+    "freq": 22952
   },
   {
     "word": "わりと",
@@ -7167,12 +8018,14 @@
   {
     "word": "割安",
     "phonetic": "わりやす",
-    "explains": "比较便宜"
+    "explains": "比较便宜",
+    "freq": 27546
   },
   {
     "word": "悪口",
     "phonetic": "わるぐち",
-    "explains": "骂人"
+    "explains": "骂人",
+    "freq": 3090
   },
   {
     "word": "涙",
@@ -7202,6 +8055,7 @@
   {
     "word": "怠け者",
     "phonetic": "なまけもの",
-    "explains": "懒人"
+    "explains": "懒人",
+    "freq": 4228
   }
 ]

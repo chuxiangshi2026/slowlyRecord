@@ -24,6 +24,8 @@ export interface Word extends DbDoc {
     explains: string
     // 是否隐藏中文   true不显示
     explainedHidden: boolean
+    // 词频排名（内置词库预置，1 = 最常用；缺失表示无数据，排序时置底）
+    freq?: number
     // 等级
     level: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
     // 图片

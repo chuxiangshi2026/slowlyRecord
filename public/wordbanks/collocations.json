@@ -1,1110 +1,1387 @@
 [
   {
     "word": "according to",
-    "explains": "根据；按照"
+    "explains": "根据；按照",
+    "freq": 1223
   },
   {
     "word": "account for",
-    "explains": "解释；占（比例）"
+    "explains": "解释；占（比例）",
+    "freq": 1467
   },
   {
     "word": "add up",
-    "explains": "加起来；合情合理"
+    "explains": "加起来；合情合理",
+    "freq": 1748
   },
   {
     "word": "all of a sudden",
-    "explains": "突然地；出乎意料地"
+    "explains": "突然地；出乎意料地",
+    "freq": 1854
   },
   {
     "word": "apply for",
-    "explains": "申请"
+    "explains": "申请",
+    "freq": 3520
   },
   {
     "word": "as a matter of fact",
-    "explains": "事实上；实际上"
+    "explains": "事实上；实际上",
+    "freq": 543
   },
   {
     "word": "as a result",
-    "explains": "因此；结果"
+    "explains": "因此；结果",
+    "freq": 2246
   },
   {
     "word": "as a result of",
-    "explains": "由于…的结果"
+    "explains": "由于…的结果",
+    "freq": 2246
   },
   {
     "word": "as far as",
-    "explains": "就…而言；直到"
+    "explains": "就…而言；直到",
+    "freq": 399
   },
   {
     "word": "as for",
-    "explains": "至于；关于"
+    "explains": "至于；关于",
+    "freq": 68
   },
   {
     "word": "as long as",
-    "explains": "只要；长达"
+    "explains": "只要；长达",
+    "freq": 182
   },
   {
     "word": "as soon as",
-    "explains": "一…就…"
+    "explains": "一…就…",
+    "freq": 360
   },
   {
     "word": "as well",
-    "explains": "也；同样地"
+    "explains": "也；同样地",
+    "freq": 68
   },
   {
     "word": "as well as",
-    "explains": "和…一样；也"
+    "explains": "和…一样；也",
+    "freq": 68
   },
   {
     "word": "at all",
-    "explains": "根本；完全（用于否定句）"
+    "explains": "根本；完全（用于否定句）",
+    "freq": 53
   },
   {
     "word": "at first",
-    "explains": "起初；一开始"
+    "explains": "起初；一开始",
+    "freq": 141
   },
   {
     "word": "at last",
-    "explains": "终于；最后"
+    "explains": "终于；最后",
+    "freq": 173
   },
   {
     "word": "at least",
-    "explains": "至少；起码"
+    "explains": "至少；起码",
+    "freq": 444
   },
   {
     "word": "at once",
-    "explains": "立刻；马上"
+    "explains": "立刻；马上",
+    "freq": 288
   },
   {
     "word": "at the same time",
-    "explains": "同时；然而"
+    "explains": "同时；然而",
+    "freq": 240
   },
   {
     "word": "at times",
-    "explains": "有时；间或"
+    "explains": "有时；间或",
+    "freq": 409
   },
   {
     "word": "based on",
-    "explains": "基于；以…为基础"
+    "explains": "基于；以…为基础",
+    "freq": 1769
   },
   {
     "word": "be about to",
-    "explains": "即将；正要"
+    "explains": "即将；正要",
+    "freq": 51
   },
   {
     "word": "be aware of",
-    "explains": "意识到；知道"
+    "explains": "意识到；知道",
+    "freq": 1642
   },
   {
     "word": "be capable of",
-    "explains": "有能力做…"
+    "explains": "有能力做…",
+    "freq": 2243
   },
   {
     "word": "be concerned about",
-    "explains": "关心；担心"
+    "explains": "关心；担心",
+    "freq": 1582
   },
   {
     "word": "be crazy about",
-    "explains": "对…着迷；狂热"
+    "explains": "对…着迷；狂热",
+    "freq": 389
   },
   {
     "word": "be famous for",
-    "explains": "因…而著名"
+    "explains": "因…而著名",
+    "freq": 1353
   },
   {
     "word": "be fond of",
-    "explains": "喜欢；爱好"
+    "explains": "喜欢；爱好",
+    "freq": 4029
   },
   {
     "word": "be good at",
-    "explains": "擅长"
+    "explains": "擅长",
+    "freq": 71
   },
   {
     "word": "be interested in",
-    "explains": "对…感兴趣"
+    "explains": "对…感兴趣",
+    "freq": 899
   },
   {
     "word": "be known as",
-    "explains": "被称为；作为…而闻名"
+    "explains": "被称为；作为…而闻名",
+    "freq": 643
   },
   {
     "word": "be known for",
-    "explains": "因…而闻名"
+    "explains": "因…而闻名",
+    "freq": 643
   },
   {
     "word": "be located in",
-    "explains": "位于；坐落于"
+    "explains": "位于；坐落于",
+    "freq": 4666
   },
   {
     "word": "be made of",
-    "explains": "由…制成（可见原材料）"
+    "explains": "由…制成（可见原材料）",
+    "freq": 196
   },
   {
     "word": "be made from",
-    "explains": "由…制成（不可见原材料）"
+    "explains": "由…制成（不可见原材料）",
+    "freq": 196
   },
   {
     "word": "be proud of",
-    "explains": "以…为傲"
+    "explains": "以…为傲",
+    "freq": 927
   },
   {
     "word": "be related to",
-    "explains": "与…有关"
+    "explains": "与…有关",
+    "freq": 3199
   },
   {
     "word": "be responsible for",
-    "explains": "对…负责；是…的原因"
+    "explains": "对…负责；是…的原因",
+    "freq": 1383
   },
   {
     "word": "be similar to",
-    "explains": "与…相似"
+    "explains": "与…相似",
+    "freq": 2537
   },
   {
     "word": "be supposed to",
-    "explains": "应该；理应"
+    "explains": "应该；理应",
+    "freq": 467
   },
   {
     "word": "be tired of",
-    "explains": "厌倦；厌烦"
+    "explains": "厌倦；厌烦",
+    "freq": 742
   },
   {
     "word": "be used to",
-    "explains": "习惯于"
+    "explains": "习惯于",
+    "freq": 292
   },
   {
     "word": "belong to",
-    "explains": "属于"
+    "explains": "属于",
+    "freq": 1573
   },
   {
     "word": "benefit from",
-    "explains": "从…中受益"
+    "explains": "从…中受益",
+    "freq": 3335
   },
   {
     "word": "both and",
-    "explains": "两者都；既…又…"
+    "explains": "两者都；既…又…",
+    "freq": 286
   },
   {
     "word": "by accident",
-    "explains": "偶然地；意外地"
+    "explains": "偶然地；意外地",
+    "freq": 893
   },
   {
     "word": "by all means",
-    "explains": "当然可以；务必"
+    "explains": "当然可以；务必",
+    "freq": 415
   },
   {
     "word": "by means of",
-    "explains": "通过…方式；借助于"
+    "explains": "通过…方式；借助于",
+    "freq": 415
   },
   {
     "word": "by no means",
-    "explains": "绝不；决不"
+    "explains": "绝不；决不",
+    "freq": 415
   },
   {
     "word": "by the way",
-    "explains": "顺便说一下"
+    "explains": "顺便说一下",
+    "freq": 112
   },
   {
     "word": "can't help doing",
-    "explains": "忍不住做；情不自禁"
+    "explains": "忍不住做；情不自禁",
+    "freq": 140
   },
   {
     "word": "carry on",
-    "explains": "继续；坚持"
+    "explains": "继续；坚持",
+    "freq": 1019
   },
   {
     "word": "catch up",
-    "explains": "赶上；追上"
+    "explains": "赶上；追上",
+    "freq": 636
   },
   {
     "word": "compare to",
-    "explains": "把…比作"
+    "explains": "把…比作",
+    "freq": 4799
   },
   {
     "word": "compare with",
-    "explains": "与…比较"
+    "explains": "与…比较",
+    "freq": 4799
   },
   {
     "word": "complain about",
-    "explains": "抱怨"
+    "explains": "抱怨",
+    "freq": 3486
   },
   {
     "word": "concentrate on",
-    "explains": "集中精力于"
+    "explains": "集中精力于",
+    "freq": 3249
   },
   {
     "word": "connect with",
-    "explains": "与…连接；联系"
+    "explains": "与…连接；联系",
+    "freq": 3846
   },
   {
     "word": "consist of",
-    "explains": "由…组成"
+    "explains": "由…组成",
+    "freq": 25619
   },
   {
     "word": "contribute to",
-    "explains": "为…做贡献；导致"
+    "explains": "为…做贡献；导致",
+    "freq": 9233
   },
   {
     "word": "cope with",
-    "explains": "应对；处理"
+    "explains": "应对；处理",
+    "freq": 6390
   },
   {
     "word": "deal with",
-    "explains": "处理；应对"
+    "explains": "处理；应对",
+    "freq": 413
   },
   {
     "word": "decide on",
-    "explains": "决定"
+    "explains": "决定",
+    "freq": 1152
   },
   {
     "word": "depend on",
-    "explains": "依赖；取决于"
+    "explains": "依赖；取决于",
+    "freq": 5028
   },
   {
     "word": "devote to",
-    "explains": "致力于；奉献于"
+    "explains": "致力于；奉献于",
+    "freq": 12860
   },
   {
     "word": "distinguish from",
-    "explains": "区分；辨别"
+    "explains": "区分；辨别",
+    "freq": 13511
   },
   {
     "word": "divide into",
-    "explains": "把…分成"
+    "explains": "把…分成",
+    "freq": 6436
   },
   {
     "word": "due to",
-    "explains": "由于；因为"
+    "explains": "由于；因为",
+    "freq": 1417
   },
   {
     "word": "each other",
-    "explains": "互相；彼此"
+    "explains": "互相；彼此",
+    "freq": 361
   },
   {
     "word": "either or",
-    "explains": "要么…要么…"
+    "explains": "要么…要么…",
+    "freq": 506
   },
   {
     "word": "engage in",
-    "explains": "从事于；参与"
+    "explains": "从事于；参与",
+    "freq": 5767
   },
   {
     "word": "even if",
-    "explains": "即使；虽然"
+    "explains": "即使；虽然",
+    "freq": 134
   },
   {
     "word": "even though",
-    "explains": "即使；尽管"
+    "explains": "即使；尽管",
+    "freq": 463
   },
   {
     "word": "ever since",
-    "explains": "自从；自…以来"
+    "explains": "自从；自…以来",
+    "freq": 312
   },
   {
     "word": "every now and then",
-    "explains": "偶尔；时常"
+    "explains": "偶尔；时常",
+    "freq": 214
   },
   {
     "word": "except for",
-    "explains": "除了…以外"
+    "explains": "除了…以外",
+    "freq": 811
   },
   {
     "word": "experiment with",
-    "explains": "用…做实验"
+    "explains": "用…做实验",
+    "freq": 3039
   },
   {
     "word": "face to face",
-    "explains": "面对面"
+    "explains": "面对面",
+    "freq": 347
   },
   {
     "word": "fall in love with",
-    "explains": "爱上"
+    "explains": "爱上",
+    "freq": 673
   },
   {
     "word": "far from",
-    "explains": "远非；远离"
+    "explains": "远非；远离",
+    "freq": 399
   },
   {
     "word": "find it adj to do",
-    "explains": "发现做…是…的"
+    "explains": "发现做…是…的",
+    "freq": 145
   },
   {
     "word": "first of all",
-    "explains": "首先"
+    "explains": "首先",
+    "freq": 141
   },
   {
     "word": "focus on",
-    "explains": "集中注意力于"
+    "explains": "集中注意力于",
+    "freq": 1681
   },
   {
     "word": "for ever",
-    "explains": "永远"
+    "explains": "永远",
+    "freq": 191
   },
   {
     "word": "for example",
-    "explains": "例如"
+    "explains": "例如",
+    "freq": 1543
   },
   {
     "word": "for instance",
-    "explains": "例如；比如"
+    "explains": "例如；比如",
+    "freq": 3663
   },
   {
     "word": "from time to time",
-    "explains": "有时；不时"
+    "explains": "有时；不时",
+    "freq": 80
   },
   {
     "word": "get used to",
-    "explains": "习惯于"
+    "explains": "习惯于",
+    "freq": 292
   },
   {
     "word": "had better do",
-    "explains": "最好做…"
+    "explains": "最好做…",
+    "freq": 174
   },
   {
     "word": "hand in hand",
-    "explains": "手拉手；密切关联地"
+    "explains": "手拉手；密切关联地",
+    "freq": 367
   },
   {
     "word": "hardly when",
-    "explains": "刚…就…"
+    "explains": "刚…就…",
+    "freq": 1456
   },
   {
     "word": "have access to",
-    "explains": "可以使用；有权使用"
+    "explains": "可以使用；有权使用",
+    "freq": 1764
   },
   {
     "word": "have an effect on",
-    "explains": "对…有影响"
+    "explains": "对…有影响",
+    "freq": 2175
   },
   {
     "word": "have difficulty doing",
-    "explains": "做…有困难"
+    "explains": "做…有困难",
+    "freq": 6340
   },
   {
     "word": "have nothing to do with",
-    "explains": "与…无关"
+    "explains": "与…无关",
+    "freq": 147
   },
   {
     "word": "have sth done",
-    "explains": "让某事被做"
+    "explains": "让某事被做",
+    "freq": 202
   },
   {
     "word": "have trouble doing",
-    "explains": "做…有困难"
+    "explains": "做…有困难",
+    "freq": 485
   },
   {
     "word": "how about doing",
-    "explains": "做…怎么样"
+    "explains": "做…怎么样",
+    "freq": 136
   },
   {
     "word": "in a hurry",
-    "explains": "匆忙地"
+    "explains": "匆忙地",
+    "freq": 525
   },
   {
     "word": "in a word",
-    "explains": "总之；简言之"
+    "explains": "总之；简言之",
+    "freq": 436
   },
   {
     "word": "in addition",
-    "explains": "此外"
+    "explains": "此外",
+    "freq": 4999
   },
   {
     "word": "in addition to",
-    "explains": "除…之外"
+    "explains": "除…之外",
+    "freq": 4999
   },
   {
     "word": "in advance",
-    "explains": "提前；预先"
+    "explains": "提前；预先",
+    "freq": 2748
   },
   {
     "word": "in case",
-    "explains": "以防；万一"
+    "explains": "以防；万一",
+    "freq": 354
   },
   {
     "word": "in charge of",
-    "explains": "负责；掌管"
+    "explains": "负责；掌管",
+    "freq": 874
   },
   {
     "word": "in common",
-    "explains": "共同点；共有"
+    "explains": "共同点；共有",
+    "freq": 1387
   },
   {
     "word": "in conclusion",
-    "explains": "总之；最后"
+    "explains": "总之；最后",
+    "freq": 4969
   },
   {
     "word": "in consequence",
-    "explains": "因此；结果"
+    "explains": "因此；结果",
+    "freq": 9812
   },
   {
     "word": "in contrast",
-    "explains": "相比之下"
+    "explains": "相比之下",
+    "freq": 11123
   },
   {
     "word": "in danger",
-    "explains": "处于危险中"
+    "explains": "处于危险中",
+    "freq": 1297
   },
   {
     "word": "in detail",
-    "explains": "详细地"
+    "explains": "详细地",
+    "freq": 2678
   },
   {
     "word": "in fact",
-    "explains": "事实上"
+    "explains": "事实上",
+    "freq": 543
   },
   {
     "word": "in favour of",
-    "explains": "支持；赞成"
+    "explains": "支持；赞成",
+    "freq": 2933
   },
   {
     "word": "in front of",
-    "explains": "在…前面"
+    "explains": "在…前面",
+    "freq": 515
   },
   {
     "word": "in general",
-    "explains": "一般来说；总体上"
+    "explains": "一般来说；总体上",
+    "freq": 735
   },
   {
     "word": "in honour of",
-    "explains": "为纪念；为庆祝"
+    "explains": "为纪念；为庆祝",
+    "freq": 2199
   },
   {
     "word": "in memory of",
-    "explains": "为纪念"
+    "explains": "为纪念",
+    "freq": 1301
   },
   {
     "word": "in need of",
-    "explains": "需要"
+    "explains": "需要",
+    "freq": 107
   },
   {
     "word": "in order",
-    "explains": "整齐地；按顺序"
+    "explains": "整齐地；按顺序",
+    "freq": 541
   },
   {
     "word": "in order to",
-    "explains": "为了"
+    "explains": "为了",
+    "freq": 541
   },
   {
     "word": "in other words",
-    "explains": "换句话说"
+    "explains": "换句话说",
+    "freq": 628
   },
   {
     "word": "in particular",
-    "explains": "特别是；尤其"
+    "explains": "特别是；尤其",
+    "freq": 2019
   },
   {
     "word": "in person",
-    "explains": "亲自；本人"
+    "explains": "亲自；本人",
+    "freq": 379
   },
   {
     "word": "in public",
-    "explains": "公开地；当众"
+    "explains": "公开地；当众",
+    "freq": 921
   },
   {
     "word": "in return",
-    "explains": "作为回报"
+    "explains": "作为回报",
+    "freq": 667
   },
   {
     "word": "in short",
-    "explains": "简而言之"
+    "explains": "简而言之",
+    "freq": 862
   },
   {
     "word": "in spite of",
-    "explains": "尽管；虽然"
+    "explains": "尽管；虽然",
+    "freq": 5456
   },
   {
     "word": "in terms of",
-    "explains": "就…而言；在…方面"
+    "explains": "就…而言；在…方面",
+    "freq": 2135
   },
   {
     "word": "in the end",
-    "explains": "最终；结果"
+    "explains": "最终；结果",
+    "freq": 331
   },
   {
     "word": "in the way",
-    "explains": "挡路；妨碍"
+    "explains": "挡路；妨碍",
+    "freq": 112
   },
   {
     "word": "in time",
-    "explains": "及时；迟早"
+    "explains": "及时；迟早",
+    "freq": 80
   },
   {
     "word": "in touch",
-    "explains": "联系；接触"
+    "explains": "联系；接触",
+    "freq": 600
   },
   {
     "word": "in vain",
-    "explains": "徒劳地；无效地"
+    "explains": "徒劳地；无效地",
+    "freq": 5061
   },
   {
     "word": "insist on",
-    "explains": "坚持"
+    "explains": "坚持",
+    "freq": 3020
   },
   {
     "word": "instead of",
-    "explains": "代替；而不是"
+    "explains": "代替；而不是",
+    "freq": 779
   },
   {
     "word": "integrate into",
-    "explains": "融入；整合到"
+    "explains": "融入；整合到",
+    "freq": 23757
   },
   {
     "word": "interfere with",
-    "explains": "干扰；妨碍"
+    "explains": "干扰；妨碍",
+    "freq": 4344
   },
   {
     "word": "it is no use doing",
-    "explains": "做…是没用的"
+    "explains": "做…是没用的",
+    "freq": 310
   },
   {
     "word": "it is said that",
-    "explains": "据说"
+    "explains": "据说",
+    "freq": 126
   },
   {
     "word": "it is worth doing",
-    "explains": "值得做…"
+    "explains": "值得做…",
+    "freq": 706
   },
   {
     "word": "it takes sb time to do",
-    "explains": "花某人时间做…"
+    "explains": "花某人时间做…",
+    "freq": 678
   },
   {
     "word": "just now",
-    "explains": "刚才；现在"
+    "explains": "刚才；现在",
+    "freq": 55
   },
   {
     "word": "lead to",
-    "explains": "导致；通向"
+    "explains": "导致；通向",
+    "freq": 838
   },
   {
     "word": "less than",
-    "explains": "少于；不到"
+    "explains": "少于；不到",
+    "freq": 662
   },
   {
     "word": "make sb do",
-    "explains": "让某人做…"
+    "explains": "让某人做…",
+    "freq": 114
   },
   {
     "word": "more or less",
-    "explains": "或多或少；差不多"
+    "explains": "或多或少；差不多",
+    "freq": 662
   },
   {
     "word": "neither nor",
-    "explains": "既不…也不…"
+    "explains": "既不…也不…",
+    "freq": 1444
   },
   {
     "word": "next to",
-    "explains": "紧挨着；仅次于"
+    "explains": "紧挨着；仅次于",
+    "freq": 246
   },
   {
     "word": "no longer",
-    "explains": "不再"
+    "explains": "不再",
+    "freq": 657
   },
   {
     "word": "no matter",
-    "explains": "无论；不管"
+    "explains": "无论；不管",
+    "freq": 317
   },
   {
     "word": "no sooner than",
-    "explains": "刚…就…"
+    "explains": "刚…就…",
+    "freq": 1856
   },
   {
     "word": "no wonder",
-    "explains": "难怪；不足为奇"
+    "explains": "难怪；不足为奇",
+    "freq": 703
   },
   {
     "word": "not only but also",
-    "explains": "不仅…而且…"
+    "explains": "不仅…而且…",
+    "freq": 301
   },
   {
     "word": "not until",
-    "explains": "直到…才"
+    "explains": "直到…才",
+    "freq": 348
   },
   {
     "word": "now that",
-    "explains": "既然；因为"
+    "explains": "既然；因为",
+    "freq": 55
   },
   {
     "word": "on account of",
-    "explains": "由于；因为"
+    "explains": "由于；因为",
+    "freq": 1467
   },
   {
     "word": "on behalf of",
-    "explains": "代表"
+    "explains": "代表",
+    "freq": 3311
   },
   {
     "word": "on board",
-    "explains": "在船上/飞机上/火车上"
+    "explains": "在船上/飞机上/火车上",
+    "freq": 1078
   },
   {
     "word": "on business",
-    "explains": "出差"
+    "explains": "出差",
+    "freq": 353
   },
   {
     "word": "on condition that",
-    "explains": "在…条件下"
+    "explains": "在…条件下",
+    "freq": 1595
   },
   {
     "word": "on duty",
-    "explains": "值班；执勤"
+    "explains": "值班；执勤",
+    "freq": 1213
   },
   {
     "word": "on foot",
-    "explains": "步行"
+    "explains": "步行",
+    "freq": 1157
   },
   {
     "word": "on purpose",
-    "explains": "故意地"
+    "explains": "故意地",
+    "freq": 1688
   },
   {
     "word": "on the contrary",
-    "explains": "相反地"
+    "explains": "相反地",
+    "freq": 4239
   },
   {
     "word": "on the one hand",
-    "explains": "一方面"
+    "explains": "一方面",
+    "freq": 367
   },
   {
     "word": "on the other hand",
-    "explains": "另一方面"
+    "explains": "另一方面",
+    "freq": 367
   },
   {
     "word": "on the whole",
-    "explains": "总的来说"
+    "explains": "总的来说",
+    "freq": 308
   },
   {
     "word": "on time",
-    "explains": "准时"
+    "explains": "准时",
+    "freq": 80
   },
   {
     "word": "once again",
-    "explains": "再一次"
+    "explains": "再一次",
+    "freq": 288
   },
   {
     "word": "once in a while",
-    "explains": "偶尔"
+    "explains": "偶尔",
+    "freq": 311
   },
   {
     "word": "one another",
-    "explains": "互相（三者以上）"
+    "explains": "互相（三者以上）",
+    "freq": 234
   },
   {
     "word": "or so",
-    "explains": "大约；左右"
+    "explains": "大约；左右",
+    "freq": 93
   },
   {
     "word": "other than",
-    "explains": "除了；不同于"
+    "explains": "除了；不同于",
+    "freq": 166
   },
   {
     "word": "out of",
-    "explains": "从…中；出于；缺乏"
+    "explains": "从…中；出于；缺乏",
+    "freq": 50
   },
   {
     "word": "out of date",
-    "explains": "过时的"
+    "explains": "过时的",
+    "freq": 671
   },
   {
     "word": "out of order",
-    "explains": "出故障的；混乱的"
+    "explains": "出故障的；混乱的",
+    "freq": 541
   },
   {
     "word": "out of the question",
-    "explains": "不可能"
+    "explains": "不可能",
+    "freq": 495
   },
   {
     "word": "owing to",
-    "explains": "由于；因为"
+    "explains": "由于；因为",
+    "freq": 17778
   },
   {
     "word": "part of",
-    "explains": "…的一部分"
+    "explains": "…的一部分",
+    "freq": 380
   },
   {
     "word": "participate in",
-    "explains": "参加；参与"
+    "explains": "参加；参与",
+    "freq": 6660
   },
   {
     "word": "play a role in",
-    "explains": "在…中起作用"
+    "explains": "在…中起作用",
+    "freq": 2080
   },
   {
     "word": "prefer doing to doing",
-    "explains": "宁愿做…而不愿做…"
+    "explains": "宁愿做…而不愿做…",
+    "freq": 1641
   },
   {
     "word": "prefer to do rather than do",
-    "explains": "宁愿做…而不愿做…"
+    "explains": "宁愿做…而不愿做…",
+    "freq": 1641
   },
   {
     "word": "prepare for",
-    "explains": "为…做准备"
+    "explains": "为…做准备",
+    "freq": 1631
   },
   {
     "word": "prevent from",
-    "explains": "阻止；防止"
+    "explains": "阻止；防止",
+    "freq": 3386
   },
   {
     "word": "prior to",
-    "explains": "在…之前"
+    "explains": "在…之前",
+    "freq": 5119
   },
   {
     "word": "protect from",
-    "explains": "保护…免受"
+    "explains": "保护…免受",
+    "freq": 825
   },
   {
     "word": "provide with",
-    "explains": "提供"
+    "explains": "提供",
+    "freq": 2581
   },
   {
     "word": "rather than",
-    "explains": "而不是"
+    "explains": "而不是",
+    "freq": 649
   },
   {
     "word": "react to",
-    "explains": "对…做出反应"
+    "explains": "对…做出反应",
+    "freq": 4710
   },
   {
     "word": "recover from",
-    "explains": "从…中恢复"
+    "explains": "从…中恢复",
+    "freq": 4114
   },
   {
     "word": "refer to",
-    "explains": "指的是；参考；查阅"
+    "explains": "指的是；参考；查阅",
+    "freq": 6756
   },
   {
     "word": "regardless of",
-    "explains": "不管；不顾"
+    "explains": "不管；不顾",
+    "freq": 6133
   },
   {
     "word": "rely on",
-    "explains": "依赖；依靠"
+    "explains": "依赖；依靠",
+    "freq": 4670
   },
   {
     "word": "respond to",
-    "explains": "回应；响应"
+    "explains": "回应；响应",
+    "freq": 3585
   },
   {
     "word": "result from",
-    "explains": "由…引起"
+    "explains": "由…引起",
+    "freq": 2246
   },
   {
     "word": "result in",
-    "explains": "导致；造成"
+    "explains": "导致；造成",
+    "freq": 2246
   },
   {
     "word": "right away",
-    "explains": "立刻；马上"
+    "explains": "立刻；马上",
+    "freq": 165
   },
   {
     "word": "search for",
-    "explains": "寻找"
+    "explains": "寻找",
+    "freq": 1106
   },
   {
     "word": "separate from",
-    "explains": "与…分离"
+    "explains": "与…分离",
+    "freq": 2394
   },
   {
     "word": "so as to",
-    "explains": "为了；以便"
+    "explains": "为了；以便",
+    "freq": 68
   },
   {
     "word": "so far",
-    "explains": "到目前为止"
+    "explains": "到目前为止",
+    "freq": 399
   },
   {
     "word": "so that",
-    "explains": "以便；结果"
+    "explains": "以便；结果",
+    "freq": 38
   },
   {
     "word": "so that such that",
-    "explains": "如此…以致"
+    "explains": "如此…以致",
+    "freq": 298
   },
   {
     "word": "sooner or later",
-    "explains": "迟早"
+    "explains": "迟早",
+    "freq": 1856
   },
   {
     "word": "specialize in",
-    "explains": "专攻；专门从事"
+    "explains": "专攻；专门从事",
+    "freq": 17984
   },
   {
     "word": "spend time doing",
-    "explains": "花时间做…"
+    "explains": "花时间做…",
+    "freq": 830
   },
   {
     "word": "spend time on",
-    "explains": "在…上花时间"
+    "explains": "在…上花时间",
+    "freq": 830
   },
   {
     "word": "succeed in",
-    "explains": "在…方面成功"
+    "explains": "在…方面成功",
+    "freq": 3646
   },
   {
     "word": "suffer from",
-    "explains": "遭受；患（病）"
+    "explains": "遭受；患（病）",
+    "freq": 2102
   },
   {
     "word": "such as",
-    "explains": "例如；比如"
+    "explains": "例如；比如",
+    "freq": 298
   },
   {
     "word": "take advantage of",
-    "explains": "利用；占便宜"
+    "explains": "利用；占便宜",
+    "freq": 2168
   },
   {
     "word": "take sth for granted",
-    "explains": "认为…理所当然"
+    "explains": "认为…理所当然",
+    "freq": 3693
   },
   {
     "word": "thanks to",
-    "explains": "多亏；由于"
+    "explains": "多亏；由于",
+    "freq": 209
   },
   {
     "word": "that is to say",
-    "explains": "也就是说"
+    "explains": "也就是说",
+    "freq": 101
   },
   {
     "word": "the more the more",
-    "explains": "越…越…"
+    "explains": "越…越…",
+    "freq": 111
   },
   {
     "word": "there is no doubt that",
-    "explains": "毫无疑问…"
+    "explains": "毫无疑问…",
+    "freq": 1038
   },
   {
     "word": "there is no point in",
-    "explains": "做…没有意义"
+    "explains": "做…没有意义",
+    "freq": 416
   },
   {
     "word": "to be honest",
-    "explains": "说实话"
+    "explains": "说实话",
+    "freq": 971
   },
   {
     "word": "to some extent",
-    "explains": "在某种程度上"
+    "explains": "在某种程度上",
+    "freq": 6962
   },
   {
     "word": "too to",
-    "explains": "太…而不能…"
+    "explains": "太…而不能…",
+    "freq": 110
   },
   {
     "word": "turn into",
-    "explains": "变成；转变为"
+    "explains": "变成；转变为",
+    "freq": 352
   },
   {
     "word": "up to",
-    "explains": "多达；直到；取决于"
+    "explains": "多达；直到；取决于",
+    "freq": 52
   },
   {
     "word": "used to do",
-    "explains": "过去常常做…"
+    "explains": "过去常常做…",
+    "freq": 292
   },
   {
     "word": "vote against",
-    "explains": "投票反对"
+    "explains": "投票反对",
+    "freq": 1479
   },
   {
     "word": "vote for",
-    "explains": "投票赞成"
+    "explains": "投票赞成",
+    "freq": 1479
   },
   {
     "word": "what about",
-    "explains": "…怎么样"
+    "explains": "…怎么样",
+    "freq": 51
   },
   {
     "word": "what do you think of",
-    "explains": "你认为…怎么样"
+    "explains": "你认为…怎么样",
+    "freq": 67
   },
   {
     "word": "whether or not",
-    "explains": "是否"
+    "explains": "是否",
+    "freq": 916
   },
   {
     "word": "why don't you",
-    "explains": "为什么不…"
+    "explains": "为什么不…",
+    "freq": 73
   },
   {
     "word": "with regard to",
-    "explains": "关于；至于"
+    "explains": "关于；至于",
+    "freq": 6018
   },
   {
     "word": "with respect to",
-    "explains": "关于；就…而言"
+    "explains": "关于；就…而言",
+    "freq": 949
   },
   {
     "word": "worry about",
-    "explains": "担心"
+    "explains": "担心",
+    "freq": 362
   },
   {
     "word": "would like to",
-    "explains": "想要；愿意"
+    "explains": "想要；愿意",
+    "freq": 86
   },
   {
     "word": "would rather do than do",
-    "explains": "宁愿…而不愿…"
+    "explains": "宁愿…而不愿…",
+    "freq": 649
   },
   {
     "word": "a piece of cake",
-    "explains": "小菜一碟；轻而易举的事"
+    "explains": "小菜一碟；轻而易举的事",
+    "freq": 1494
   },
   {
     "word": "a couple of",
-    "explains": "几个；两三个"
+    "explains": "几个；两三个",
+    "freq": 501
   },
   {
     "word": "a great deal of",
-    "explains": "大量；许多"
+    "explains": "大量；许多",
+    "freq": 413
   },
   {
     "word": "a variety of",
-    "explains": "各种各样的"
+    "explains": "各种各样的",
+    "freq": 6450
   },
   {
     "word": "plenty of",
-    "explains": "大量；充足的"
+    "explains": "大量；充足的",
+    "freq": 1371
   },
   {
     "word": "the majority of",
-    "explains": "大多数"
+    "explains": "大多数",
+    "freq": 5582
   },
   {
     "word": "be able to",
-    "explains": "能够；有能力"
+    "explains": "能够；有能力",
+    "freq": 478
   },
   {
     "word": "be likely to",
-    "explains": "很可能"
+    "explains": "很可能",
+    "freq": 1899
   },
   {
     "word": "be willing to",
-    "explains": "愿意；乐意"
+    "explains": "愿意；乐意",
+    "freq": 1372
   },
   {
     "word": "be familiar with",
-    "explains": "熟悉；通晓"
+    "explains": "熟悉；通晓",
+    "freq": 1987
   },
   {
     "word": "be fed up with",
-    "explains": "受够了；厌倦"
+    "explains": "受够了；厌倦",
+    "freq": 2655
   },
   {
     "word": "be full of",
-    "explains": "充满；装满"
+    "explains": "充满；装满",
+    "freq": 526
   },
   {
     "word": "be satisfied with",
-    "explains": "对…满意"
+    "explains": "对…满意",
+    "freq": 3270
   },
   {
     "word": "be strict with",
-    "explains": "对…严格"
+    "explains": "对…严格",
+    "freq": 5089
   },
   {
     "word": "be popular with",
-    "explains": "受…欢迎"
+    "explains": "受…欢迎",
+    "freq": 2332
   },
   {
     "word": "be bound to",
-    "explains": "一定；必然"
+    "explains": "一定；必然",
+    "freq": 2811
   },
   {
     "word": "be faced with",
-    "explains": "面临；面对"
+    "explains": "面临；面对",
+    "freq": 4960
   },
   {
     "word": "in any case",
-    "explains": "无论如何；总之"
+    "explains": "无论如何；总之",
+    "freq": 354
   },
   {
     "word": "in the long run",
-    "explains": "从长远来看"
+    "explains": "从长远来看",
+    "freq": 322
   },
   {
     "word": "in the meantime",
-    "explains": "在此期间；同时"
+    "explains": "在此期间；同时",
+    "freq": 3368
   },
   {
     "word": "in practice",
-    "explains": "实际上；在实践中"
+    "explains": "实际上；在实践中",
+    "freq": 1476
   },
   {
     "word": "in response to",
-    "explains": "回应；响应"
+    "explains": "回应；响应",
+    "freq": 3148
   },
   {
     "word": "at first sight",
-    "explains": "乍一看；一见（钟情）"
+    "explains": "乍一看；一见（钟情）",
+    "freq": 1518
   },
   {
     "word": "at present",
-    "explains": "目前；现在"
+    "explains": "目前；现在",
+    "freq": 865
   },
   {
     "word": "by chance",
-    "explains": "偶然；碰巧"
+    "explains": "偶然；碰巧",
+    "freq": 426
   },
   {
     "word": "by mistake",
-    "explains": "错误地；无意中"
+    "explains": "错误地；无意中",
+    "freq": 750
   },
   {
     "word": "for good",
-    "explains": "永久地；一劳永逸地"
+    "explains": "永久地；一劳永逸地",
+    "freq": 71
   },
   {
     "word": "for the sake of",
-    "explains": "为了；为了…的利益"
+    "explains": "为了；为了…的利益",
+    "freq": 1017
   },
   {
     "word": "for the time being",
-    "explains": "暂时；目前"
+    "explains": "暂时；目前",
+    "freq": 217
   },
   {
     "word": "on average",
-    "explains": "平均；一般来说"
+    "explains": "平均；一般来说",
+    "freq": 3265
   },
   {
     "word": "on the way",
-    "explains": "在路上；即将到来"
+    "explains": "在路上；即将到来",
+    "freq": 112
   },
   {
     "word": "above all",
-    "explains": "首先；最重要的是"
+    "explains": "首先；最重要的是",
+    "freq": 1272
   },
   {
     "word": "after all",
-    "explains": "毕竟；终究"
+    "explains": "毕竟；终究",
+    "freq": 162
   },
   {
     "word": "apart from",
-    "explains": "除了；除…之外"
+    "explains": "除了；除…之外",
+    "freq": 1211
   },
   {
     "word": "as usual",
-    "explains": "像往常一样"
+    "explains": "像往常一样",
+    "freq": 1638
   },
   {
     "word": "back and forth",
-    "explains": "来回地；反复地"
+    "explains": "来回地；反复地",
+    "freq": 3279
   },
   {
     "word": "from now on",
-    "explains": "从现在开始"
+    "explains": "从现在开始",
+    "freq": 74
   },
   {
     "word": "little by little",
-    "explains": "逐渐地；一点一点地"
+    "explains": "逐渐地；一点一点地",
+    "freq": 121
   },
   {
     "word": "nothing but",
-    "explains": "只不过；仅仅"
+    "explains": "只不过；仅仅",
+    "freq": 147
   },
   {
     "word": "step by step",
-    "explains": "逐步地；循序渐进地"
+    "explains": "逐步地；循序渐进地",
+    "freq": 692
   },
   {
     "word": "ahead of",
-    "explains": "在…之前；提前"
+    "explains": "在…之前；提前",
+    "freq": 556
   }
 ]

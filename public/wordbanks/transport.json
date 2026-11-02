@@ -1,422 +1,527 @@
 [
   {
     "word": "Where is the nearest station?",
-    "explains": "最近的站在哪？"
+    "explains": "最近的站在哪？",
+    "freq": 5690
   },
   {
     "word": "Which line goes to the airport?",
-    "explains": "哪条线去机场？"
+    "explains": "哪条线去机场？",
+    "freq": 1993
   },
   {
     "word": "At which stop should I get off?",
-    "explains": "在哪站下车？"
+    "explains": "在哪站下车？",
+    "freq": 199
   },
   {
     "word": "Is this the last train?",
-    "explains": "这是末班车吗？"
+    "explains": "这是末班车吗？",
+    "freq": 787
   },
   {
     "word": "What time is the first train?",
-    "explains": "首班车几点？"
+    "explains": "首班车几点？",
+    "freq": 787
   },
   {
     "word": "How often do buses run?",
-    "explains": "公交车多久一班？"
+    "explains": "公交车多久一班？",
+    "freq": 9131
   },
   {
     "word": "Peak hours only.",
-    "explains": "仅高峰期运行"
+    "explains": "仅高峰期运行",
+    "freq": 6568
   },
   {
     "word": "Next train in 5 minutes.",
-    "explains": "5 分钟后下一班"
+    "explains": "5 分钟后下一班",
+    "freq": 787
   },
   {
     "word": "The train is delayed.",
-    "explains": "火车延误了"
+    "explains": "火车延误了",
+    "freq": 6777
   },
   {
     "word": "What's the reason for the delay?",
-    "explains": "为什么延误？"
+    "explains": "为什么延误？",
+    "freq": 4046
   },
   {
     "word": "Signal failure ahead.",
-    "explains": "前方信号故障"
+    "explains": "前方信号故障",
+    "freq": 2620
   },
   {
     "word": "Track works in progress.",
-    "explains": "线路施工"
+    "explains": "线路施工",
+    "freq": 2460
   },
   {
     "word": "Service suspended between X and Y.",
-    "explains": "X 到 Y 段停运"
+    "explains": "X 到 Y 段停运",
+    "freq": 4927
   },
   {
     "word": "Shuttle bus provided.",
-    "explains": "提供摆渡车"
+    "explains": "提供摆渡车",
+    "freq": 6040
   },
   {
     "word": "Please stand clear of the doors.",
-    "explains": "请离车门远一点"
+    "explains": "请离车门远一点",
+    "freq": 1809
   },
   {
     "word": "Mind the gap.",
-    "explains": "注意车缝"
+    "explains": "注意车缝",
+    "freq": 6365
   },
   {
     "word": "Last stop ahead.",
-    "explains": "下一站是终点"
+    "explains": "下一站是终点",
+    "freq": 556
   },
   {
     "word": "This is a smoking car.",
-    "explains": "吸烟车厢"
+    "explains": "吸烟车厢",
+    "freq": 2357
   },
   {
     "word": "Quiet carriage.",
-    "explains": "静音车厢"
+    "explains": "静音车厢",
+    "freq": 5293
   },
   {
     "word": "Priority seating.",
-    "explains": "优先座位（老幼病残孕）"
+    "explains": "优先座位（老幼病残孕）",
+    "freq": 16363
   },
   {
     "word": "Reserved seating only.",
-    "explains": "仅限有票乘客"
+    "explains": "仅限有票乘客",
+    "freq": 16363
   },
   {
     "word": "Standee zone.",
-    "explains": "站立区"
+    "explains": "站立区",
+    "freq": 2490
   },
   {
     "word": "Watch your belongings.",
-    "explains": "保管好随身物品"
+    "explains": "保管好随身物品",
+    "freq": 8798
   },
   {
     "word": "Watch out for pickpockets.",
-    "explains": "当心扒手"
+    "explains": "当心扒手",
+    "freq": 38665
   },
   {
     "word": "Lost and found.",
-    "explains": "失物招领"
+    "explains": "失物招领",
+    "freq": 349
   },
   {
     "word": "I left my bag on the train.",
-    "explains": "我包落车上了"
+    "explains": "我包落车上了",
+    "freq": 801
   },
   {
     "word": "Do you have a transit pass?",
-    "explains": "你有交通卡吗？"
+    "explains": "你有交通卡吗？",
+    "freq": 11756
   },
   {
     "word": "Single ride or day pass?",
-    "explains": "单次还是日票？"
+    "explains": "单次还是日票？",
+    "freq": 853
   },
   {
     "word": "How much is a one-way ticket?",
-    "explains": "单程票多少钱？"
+    "explains": "单程票多少钱？",
+    "freq": 1639
   },
   {
     "word": "Do you sell student fares?",
-    "explains": "有学生票吗？"
+    "explains": "有学生票吗？",
+    "freq": 21967
   },
   {
     "word": "Senior discount available.",
-    "explains": "有老年优惠"
+    "explains": "有老年优惠",
+    "freq": 6438
   },
   {
     "word": "You're going the wrong way.",
-    "explains": "你坐反了"
+    "explains": "你坐反了",
+    "freq": 227
   },
   {
     "word": "Transfer here for Line 2.",
-    "explains": "在这里换乘 2 号线"
+    "explains": "在这里换乘 2 号线",
+    "freq": 2816
   },
   {
     "word": "Follow the exit signs.",
-    "explains": "跟着出口指示牌走"
+    "explains": "跟着出口指示牌走",
+    "freq": 3147
   },
   {
     "word": "Take the escalator.",
-    "explains": "走扶梯"
+    "explains": "走扶梯",
+    "freq": 24860
   },
   {
     "word": "Use the lift instead.",
-    "explains": "坐电梯（无障碍）"
+    "explains": "坐电梯（无障碍）",
+    "freq": 1647
   },
   {
     "word": "Elevator is out of order.",
-    "explains": "电梯坏了"
+    "explains": "电梯坏了",
+    "freq": 2518
   },
   {
     "word": "This station is under construction.",
-    "explains": "这个站在施工"
+    "explains": "这个站在施工",
+    "freq": 3140
   },
   {
     "word": "Platform 7.",
-    "explains": "7 号站台"
+    "explains": "7 号站台",
+    "freq": 5327
   },
   {
     "word": "Track 2, gate B.",
-    "explains": "2 号检票口 B"
+    "explains": "2 号检票口 B",
+    "freq": 2028
   },
   {
     "word": "Mind the step.",
-    "explains": "注意台阶"
+    "explains": "注意台阶",
+    "freq": 692
   },
   {
     "word": "Boarding now.",
-    "explains": "正在检票上车"
+    "explains": "正在检票上车",
+    "freq": 4908
   },
   {
     "word": "All aboard.",
-    "explains": "全体上车"
+    "explains": "全体上车",
+    "freq": 2974
   },
   {
     "word": "Train is about to depart.",
-    "explains": "火车即将出发"
+    "explains": "火车即将出发",
+    "freq": 9664
   },
   {
     "word": "Departures board.",
-    "explains": "出发信息板"
+    "explains": "出发信息板",
+    "freq": 38260
   },
   {
     "word": "Arrivals board.",
-    "explains": "到达信息板"
+    "explains": "到达信息板",
+    "freq": 21524
   },
   {
     "word": "Flight delayed.",
-    "explains": "航班延误"
+    "explains": "航班延误",
+    "freq": 6777
   },
   {
     "word": "Flight cancelled.",
-    "explains": "航班取消"
+    "explains": "航班取消",
+    "freq": 5837
   },
   {
     "word": "Gate has changed to D12.",
-    "explains": "登机口改到 D12"
+    "explains": "登机口改到 D12",
+    "freq": 1849
   },
   {
     "word": "Last call for boarding.",
-    "explains": "最后一次登机呼叫"
+    "explains": "最后一次登机呼叫",
+    "freq": 4908
   },
   {
     "word": "Please have your passport ready.",
-    "explains": "准备好护照"
+    "explains": "准备好护照",
+    "freq": 3506
   },
   {
     "word": "Empty your pockets.",
-    "explains": "把口袋清空（安检）"
+    "explains": "把口袋清空（安检）",
+    "freq": 4263
   },
   {
     "word": "Remove your laptop from the bag.",
-    "explains": "把笔记本电脑拿出来"
+    "explains": "把笔记本电脑拿出来",
+    "freq": 5310
   },
   {
     "word": "Liquids over 100ml are not allowed.",
-    "explains": "液体超过 100 毫升不能带"
+    "explains": "液体超过 100 毫升不能带",
+    "freq": 31526
   },
   {
     "word": "Sharp objects must go in checked baggage.",
-    "explains": "利器需托运"
+    "explains": "利器需托运",
+    "freq": 7958
   },
   {
     "word": "You can check in online.",
-    "explains": "可以网上值机"
+    "explains": "可以网上值机",
+    "freq": 2728
   },
   {
     "word": "Boarding pass ready?",
-    "explains": "登机牌好了吗？"
+    "explains": "登机牌好了吗？",
+    "freq": 4908
   },
   {
     "word": "Window or aisle?",
-    "explains": "靠窗还是靠过道？"
+    "explains": "靠窗还是靠过道？",
+    "freq": 7445
   },
   {
     "word": "Seat 14A.",
-    "explains": "14A 座位"
+    "explains": "14A 座位",
+    "freq": 990
   },
   {
     "word": "I'd like to upgrade to first class.",
-    "explains": "我想升头等舱"
+    "explains": "我想升头等舱",
+    "freq": 11747
   },
   {
     "word": "Can I carry this item on board?",
-    "explains": "这个能带上飞机吗？"
+    "explains": "这个能带上飞机吗？",
+    "freq": 4118
   },
   {
     "word": "Extra baggage fee.",
-    "explains": "超重行李费"
+    "explains": "超重行李费",
+    "freq": 7958
   },
   {
     "word": "Luggage is oversized.",
-    "explains": "行李超规"
+    "explains": "行李超规",
+    "freq": 23894
   },
   {
     "word": "Customs declaration.",
-    "explains": "海关申报"
+    "explains": "海关申报",
+    "freq": 9794
   },
   {
     "word": "Do you have anything to declare?",
-    "explains": "有物品要申报吗？"
+    "explains": "有物品要申报吗？",
+    "freq": 5282
   },
   {
     "word": "Immigration checkpoint.",
-    "explains": "移民局关口"
+    "explains": "移民局关口",
+    "freq": 14483
   },
   {
     "word": "Have a nice stay!",
-    "explains": "祝停留愉快（边检）"
+    "explains": "祝停留愉快（边检）",
+    "freq": 219
   },
   {
     "word": "Where's the baggage claim?",
-    "explains": "行李提取处在哪？"
+    "explains": "行李提取处在哪？",
+    "freq": 7958
   },
   {
     "word": "My suitcase is missing.",
-    "explains": "我的行李箱丢了"
+    "explains": "我的行李箱丢了",
+    "freq": 4208
   },
   {
     "word": "I'd like to file a baggage report.",
-    "explains": "我要报失行李"
+    "explains": "我要报失行李",
+    "freq": 7958
   },
   {
     "word": "Where do I rent a car?",
-    "explains": "在哪租车？"
+    "explains": "在哪租车？",
+    "freq": 1900
   },
   {
     "word": "Do you need an international driving permit?",
-    "explains": "需要国际驾照吗？"
+    "explains": "需要国际驾照吗？",
+    "freq": 4296
   },
   {
     "word": "Full tank on return.",
-    "explains": "还车需加满"
+    "explains": "还车需加满",
+    "freq": 2616
   },
   {
     "word": "I'd like to call an Uber.",
-    "explains": "我想叫个 Uber"
+    "explains": "我想叫个 Uber",
+    "freq": 18389
   },
   {
     "word": "Can I cancel the ride?",
-    "explains": "能取消订单吗？"
+    "explains": "能取消订单吗？",
+    "freq": 3149
   },
   {
     "word": "The driver can't find me.",
-    "explains": "司机找不到我"
+    "explains": "司机找不到我",
+    "freq": 1356
   },
   {
     "word": "I'm at the north exit.",
-    "explains": "我在北出口"
+    "explains": "我在北出口",
+    "freq": 3147
   },
   {
     "word": "How do I rate the driver?",
-    "explains": "怎么给司机评分？"
+    "explains": "怎么给司机评分？",
+    "freq": 2259
   },
   {
     "word": "That was a smooth ride.",
-    "explains": "这趟开得很稳"
+    "explains": "这趟开得很稳",
+    "freq": 3502
   },
   {
     "word": "The driver took a shortcut.",
-    "explains": "司机抄了近道"
+    "explains": "司机抄了近道",
+    "freq": 9684
   },
   {
     "word": "Turn left at the next intersection.",
-    "explains": "下个路口左转"
+    "explains": "下个路口左转",
+    "freq": 12501
   },
   {
     "word": "Take the second exit on the highway.",
-    "explains": "高速走第二个出口"
+    "explains": "高速走第二个出口",
+    "freq": 3733
   },
   {
     "word": "Merge into the left lane.",
-    "explains": "并入左车道"
+    "explains": "并入左车道",
+    "freq": 11637
   },
   {
     "word": "Keep to the right.",
-    "explains": "靠右行驶"
+    "explains": "靠右行驶",
+    "freq": 181
   },
   {
     "word": "Slow down, speed camera ahead.",
-    "explains": "减速，前方有测速"
+    "explains": "减速，前方有测速",
+    "freq": 1447
   },
   {
     "word": "No parking here.",
-    "explains": "此处禁停"
+    "explains": "此处禁停",
+    "freq": 2453
   },
   {
     "word": "One-way street.",
-    "explains": "单行道"
+    "explains": "单行道",
+    "freq": 630
   },
   {
     "word": "Roundabout ahead.",
-    "explains": "前方环岛"
+    "explains": "前方环岛",
+    "freq": 21272
   },
   {
     "word": "Traffic jam.",
-    "explains": "堵车"
+    "explains": "堵车",
+    "freq": 3782
   },
   {
     "word": "The roads are clear.",
-    "explains": "路况畅通"
+    "explains": "路况畅通",
+    "freq": 4012
   },
   {
     "word": "Road closed for maintenance.",
-    "explains": "道路维修封闭"
+    "explains": "道路维修封闭",
+    "freq": 6433
   },
   {
     "word": "Diversion in place.",
-    "explains": "有绕行方案"
+    "explains": "有绕行方案",
+    "freq": 10022
   },
   {
     "word": "Heavy snowfall.",
-    "explains": "大雪"
+    "explains": "大雪",
+    "freq": 33143
   },
   {
     "word": "Fog is reducing visibility.",
-    "explains": "雾大能见度低"
+    "explains": "雾大能见度低",
+    "freq": 17099
   },
   {
     "word": "Bike lane.",
-    "explains": "自行车道"
+    "explains": "自行车道",
+    "freq": 2944
   },
   {
     "word": "Walkway closed.",
-    "explains": "人行道封闭"
+    "explains": "人行道封闭",
+    "freq": 33704
   },
   {
     "word": "Crosswalk ahead.",
-    "explains": "前方斑马线"
+    "explains": "前方斑马线",
+    "freq": 39888
   },
   {
     "word": "Pedestrians have right of way.",
-    "explains": "行人优先"
+    "explains": "行人优先",
+    "freq": 28080
   },
   {
     "word": "Yield to oncoming traffic.",
-    "explains": "让对面来车"
+    "explains": "让对面来车",
+    "freq": 31917
   },
   {
     "word": "I'm stranded.",
-    "explains": "我被困住了（打不到车/车坏了）"
+    "explains": "我被困住了（打不到车/车坏了）",
+    "freq": 9876
   },
   {
     "word": "Can you give me a lift?",
-    "explains": "能捎我一程吗？"
+    "explains": "能捎我一程吗？",
+    "freq": 1647
   },
   {
     "word": "Let me walk, it's close.",
-    "explains": "我自己走，不远"
+    "explains": "我自己走，不远",
+    "freq": 489
   },
   {
     "word": "I missed my flight.",
-    "explains": "我错过航班了"
+    "explains": "我错过航班了",
+    "freq": 1320
   },
   {
     "word": "Rearrange my booking.",
-    "explains": "帮我改签"
+    "explains": "帮我改签",
+    "freq": 19053
   },
   {
     "word": "Get a refund for the unused ticket.",
-    "explains": "退未使用的票款"
+    "explains": "退未使用的票款",
+    "freq": 25077
   }
 ]

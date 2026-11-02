@@ -180,7 +180,7 @@ const REMOTE_ENABLED_TYPES = new Set<WordBankType>([
 ]);
 
 // 缓存管理
-const CACHE_KEY_PREFIX = 'wordbank_cache_v2_';  // 更新版本号使旧缓存失效
+const CACHE_KEY_PREFIX = 'wordbank_cache_v3_';  // 更新版本号使旧缓存失效（v3：词库新增词频字段）
 const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7天过期
 const MIN_WORDBANK_SIZE = 20; // 最小有效词库大小，小于此值认为缓存无效
 
@@ -417,6 +417,7 @@ function normalizeWords(data: any[]): Word[] {
       ? item.explains.join('; ')
       : (item.translation || item.meaning || item.explains || ''),
     itemType: item.itemType || inferItemType(item.word || item.text || ''),
+    freq: typeof item.freq === 'number' && item.freq > 0 ? item.freq : undefined,
     isReview: true,  // 新导入的词默认为待复习状态
     ctime: new Date(),
     learnDate: new Date(),

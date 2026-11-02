@@ -1,19 +1,23 @@
 [
   {
     "word": "Let me check the docs.",
-    "explains": "我查下文档"
+    "explains": "我查下文档",
+    "freq": 25355
   },
   {
     "word": "How to use this API?",
-    "explains": "这个 API 怎么用？"
+    "explains": "这个 API 怎么用？",
+    "freq": 310
   },
   {
     "word": "See the README for details.",
-    "explains": "详见 README"
+    "explains": "详见 README",
+    "freq": 1839
   },
   {
     "word": "Follow the steps below.",
-    "explains": "按以下步骤操作"
+    "explains": "按以下步骤操作",
+    "freq": 2373
   },
   {
     "word": "Prerequisites:",
@@ -21,111 +25,138 @@
   },
   {
     "word": "Installation:",
-    "explains": "安装："
+    "explains": "安装：",
+    "freq": 15086
   },
   {
     "word": "Quick start",
-    "explains": "快速开始"
+    "explains": "快速开始",
+    "freq": 712
   },
   {
     "word": "Get started in 5 minutes.",
-    "explains": "5 分钟上手"
+    "explains": "5 分钟上手",
+    "freq": 465
   },
   {
     "word": "Configuration options",
-    "explains": "配置项"
+    "explains": "配置项",
+    "freq": 23893
   },
   {
     "word": "Default values",
-    "explains": "默认值"
+    "explains": "默认值",
+    "freq": 10880
   },
   {
     "word": "Environment variables",
-    "explains": "环境变量"
+    "explains": "环境变量",
+    "freq": 19298
   },
   {
     "word": "See also",
-    "explains": "参见"
+    "explains": "参见",
+    "freq": 301
   },
   {
     "word": "Related topics",
-    "explains": "相关主题"
+    "explains": "相关主题",
+    "freq": 18039
   },
   {
     "word": "Full API reference",
-    "explains": "完整 API 参考"
+    "explains": "完整 API 参考",
+    "freq": 5385
   },
   {
     "word": "Method signature",
-    "explains": "方法签名"
+    "explains": "方法签名",
+    "freq": 4293
   },
   {
     "word": "Parameters",
-    "explains": "参数"
+    "explains": "参数",
+    "freq": 13297
   },
   {
     "word": "Return value",
-    "explains": "返回值"
+    "explains": "返回值",
+    "freq": 2205
   },
   {
     "word": "Arguments",
-    "explains": "参数（函数入参）"
+    "explains": "参数（函数入参）",
+    "freq": 7435
   },
   {
     "word": "Optional parameter",
-    "explains": "可选参数"
+    "explains": "可选参数",
+    "freq": 31345
   },
   {
     "word": "Required parameter",
-    "explains": "必填参数"
+    "explains": "必填参数",
+    "freq": 31345
   },
   {
     "word": "Side effects",
-    "explains": "副作用"
+    "explains": "副作用",
+    "freq": 3332
   },
   {
     "word": "Raises",
-    "explains": "抛出的异常"
+    "explains": "抛出的异常",
+    "freq": 10265
   },
   {
     "word": "Raises an exception when ...",
-    "explains": "当...时抛出异常"
+    "explains": "当...时抛出异常",
+    "freq": 10265
   },
   {
     "word": "Throws if the input is null.",
-    "explains": "输入为 null 时抛错"
+    "explains": "输入为 null 时抛错",
+    "freq": 25903
   },
   {
     "word": "Supported platforms",
-    "explains": "支持平台"
+    "explains": "支持平台",
+    "freq": 22674
   },
   {
     "word": "Browser compatibility",
-    "explains": "浏览器兼容性"
+    "explains": "浏览器兼容性",
+    "freq": 33072
   },
   {
     "word": "Requires Node 18+.",
-    "explains": "需要 Node 18 及以上"
+    "explains": "需要 Node 18 及以上",
+    "freq": 27351
   },
   {
     "word": "Compatible with ...",
-    "explains": "兼容..."
+    "explains": "兼容...",
+    "freq": 13982
   },
   {
     "word": "Deprecation notice",
-    "explains": "弃用公告"
+    "explains": "弃用公告",
+    "freq": 1188
   },
   {
     "word": "Deprecated since v2.0.",
-    "explains": "自 v2.0 起弃用"
+    "explains": "自 v2.0 起弃用",
+    "freq": 5132
   },
   {
     "word": "Use X instead of Y.",
-    "explains": "用 X 代替 Y"
+    "explains": "用 X 代替 Y",
+    "freq": 3459
   },
   {
     "word": "Breaking changes",
-    "explains": "破坏性变更"
+    "explains": "破坏性变更",
+    "freq": 1838
   },
   {
     "word": "Changelog",
@@ -133,11 +164,13 @@
   },
   {
     "word": "Release notes",
-    "explains": "发布说明"
+    "explains": "发布说明",
+    "freq": 2356
   },
   {
     "word": "Known issues",
-    "explains": "已知问题"
+    "explains": "已知问题",
+    "freq": 2296
   },
   {
     "word": "Workarounds",
@@ -145,7 +178,8 @@
   },
   {
     "word": "Frequently asked questions",
-    "explains": "常见问题"
+    "explains": "常见问题",
+    "freq": 9581
   },
   {
     "word": "Troubleshooting",
@@ -153,55 +187,68 @@
   },
   {
     "word": "How to fix ...",
-    "explains": "如何修复..."
+    "explains": "如何修复...",
+    "freq": 925
   },
   {
     "word": "Common errors",
-    "explains": "常见错误"
+    "explains": "常见错误",
+    "freq": 12917
   },
   {
     "word": "Search the docs.",
-    "explains": "搜索文档"
+    "explains": "搜索文档",
+    "freq": 25355
   },
   {
     "word": "Full-text search",
-    "explains": "全文搜索"
+    "explains": "全文搜索",
+    "freq": 2253
   },
   {
     "word": "The docs are outdated.",
-    "explains": "文档过时了"
+    "explains": "文档过时了",
+    "freq": 25355
   },
   {
     "word": "Docs don't match the code.",
-    "explains": "文档和代码不一致"
+    "explains": "文档和代码不一致",
+    "freq": 25355
   },
   {
     "word": "The example doesn't work.",
-    "explains": "示例跑不通"
+    "explains": "示例跑不通",
+    "freq": 1543
   },
   {
     "word": "I couldn't find it in the docs.",
-    "explains": "文档里没找到"
+    "explains": "文档里没找到",
+    "freq": 25355
   },
   {
     "word": "Is this still supported?",
-    "explains": "这个还支持吗？"
+    "explains": "这个还支持吗？",
+    "freq": 7143
   },
   {
     "word": "How do I get this working?",
-    "explains": "怎么让它跑起来？"
+    "explains": "怎么让它跑起来？",
+    "freq": 377
   },
   {
     "word": "What's the recommended approach?",
-    "explains": "推荐做法是什么？"
+    "explains": "推荐做法是什么？",
+    "freq": 6904
   },
   {
     "word": "Best practices for ...",
-    "explains": "…的最佳实践"
+    "explains": "…的最佳实践",
+    "freq": 11174
   },
   {
     "word": "Anti-patterns",
-    "explains": "反模式"
+    "explains": "反模式",
+    "freq": 19748
   },
   {
     "word": "Gotchas",
@@ -213,446 +260,557 @@
   },
   {
     "word": "Performance tips",
-    "explains": "性能优化提示"
+    "explains": "性能优化提示",
+    "freq": 5304
   },
   {
     "word": "Memory usage",
-    "explains": "内存占用"
+    "explains": "内存占用",
+    "freq": 22839
   },
   {
     "word": "Security considerations",
-    "explains": "安全注意事项"
+    "explains": "安全注意事项",
+    "freq": 24843
   },
   {
     "word": "License",
-    "explains": "许可证"
+    "explains": "许可证",
+    "freq": 2197
   },
   {
     "word": "MIT licensed.",
-    "explains": "MIT 许可"
+    "explains": "MIT 许可",
+    "freq": 13614
   },
   {
     "word": "Contributing guide",
-    "explains": "贡献指南"
+    "explains": "贡献指南",
+    "freq": 19243
   },
   {
     "word": "Code of conduct",
-    "explains": "行为准则"
+    "explains": "行为准则",
+    "freq": 4361
   },
   {
     "word": "How to contribute",
-    "explains": "如何贡献"
+    "explains": "如何贡献",
+    "freq": 9233
   },
   {
     "word": "Pull requests welcome.",
-    "explains": "欢迎提交 PR"
+    "explains": "欢迎提交 PR",
+    "freq": 7654
   },
   {
     "word": "Good first issue",
-    "explains": "适合新手入门的 issue"
+    "explains": "适合新手入门的 issue",
+    "freq": 1704
   },
   {
     "word": "Help wanted",
-    "explains": "求助中"
+    "explains": "求助中",
+    "freq": 210
   },
   {
     "word": "Open a new issue",
-    "explains": "提一个新 issue"
+    "explains": "提一个新 issue",
+    "freq": 1704
   },
   {
     "word": "Please provide a minimal repro.",
-    "explains": "请提供最小复现"
+    "explains": "请提供最小复现",
+    "freq": 12802
   },
   {
     "word": "Steps to reproduce",
-    "explains": "复现步骤"
+    "explains": "复现步骤",
+    "freq": 14976
   },
   {
     "word": "Expected behavior",
-    "explains": "期望行为"
+    "explains": "期望行为",
+    "freq": 2767
   },
   {
     "word": "Actual behavior",
-    "explains": "实际行为"
+    "explains": "实际行为",
+    "freq": 2767
   },
   {
     "word": "Environment",
-    "explains": "环境（issue 模板字段）"
+    "explains": "环境（issue 模板字段）",
+    "freq": 3263
   },
   {
     "word": "Stack trace",
-    "explains": "堆栈"
+    "explains": "堆栈",
+    "freq": 6964
   },
   {
     "word": "Console output",
-    "explains": "控制台输出"
+    "explains": "控制台输出",
+    "freq": 12706
   },
   {
     "word": "Screenshot attached.",
-    "explains": "已附截图"
+    "explains": "已附截图",
+    "freq": 3792
   },
   {
     "word": "Video walkthrough",
-    "explains": "视频演示"
+    "explains": "视频演示",
+    "freq": 1280
   },
   {
     "word": "Reproduced locally.",
-    "explains": "本地复现成功"
+    "explains": "本地复现成功",
+    "freq": 35527
   },
   {
     "word": "Cannot reproduce.",
-    "explains": "无法复现"
+    "explains": "无法复现",
+    "freq": 14976
   },
   {
     "word": "Works on my machine.",
-    "explains": "我机器上正常（潜台词：你的机器有问题）"
+    "explains": "我机器上正常（潜台词：你的机器有问题）",
+    "freq": 997
   },
   {
     "word": "Search GitHub issues first.",
-    "explains": "先搜一下 GitHub issues"
+    "explains": "先搜一下 GitHub issues",
+    "freq": 2296
   },
   {
     "word": "Duplicate of #123.",
-    "explains": "和 #123 重复"
+    "explains": "和 #123 重复",
+    "freq": 12565
   },
   {
     "word": "Fixed in #456.",
-    "explains": "在 #456 修复"
+    "explains": "在 #456 修复",
+    "freq": 2041
   },
   {
     "word": "Closed as stale.",
-    "explains": "因长期无响应关闭"
+    "explains": "因长期无响应关闭",
+    "freq": 12719
   },
   {
     "word": "Pinned comment",
-    "explains": "置顶评论"
+    "explains": "置顶评论",
+    "freq": 9600
   },
   {
     "word": "The maintainer replied.",
-    "explains": "维护者回复了"
+    "explains": "维护者回复了",
+    "freq": 10540
   },
   {
     "word": "Upvote this issue.",
-    "explains": "给这个 issue 顶一下"
+    "explains": "给这个 issue 顶一下",
+    "freq": 1704
   },
   {
     "word": "Star this repo.",
-    "explains": "给这个仓库点个星"
+    "explains": "给这个仓库点个星",
+    "freq": 29430
   },
   {
     "word": "Fork me on GitHub.",
-    "explains": "在 GitHub 上 fork 我"
+    "explains": "在 GitHub 上 fork 我",
+    "freq": 6308
   },
   {
     "word": "Run the benchmark.",
-    "explains": "跑一下压测"
+    "explains": "跑一下压测",
+    "freq": 44747
   },
   {
     "word": "Read the release notes.",
-    "explains": "读一下发布说明"
+    "explains": "读一下发布说明",
+    "freq": 2356
   },
   {
     "word": "Check the migration guide.",
-    "explains": "看下迁移指南"
+    "explains": "看下迁移指南",
+    "freq": 16892
   },
   {
     "word": "Follow the upgrade path.",
-    "explains": "按升级路径操作"
+    "explains": "按升级路径操作",
+    "freq": 11747
   },
   {
     "word": "Skip a major version.",
-    "explains": "跳过一个大版本"
+    "explains": "跳过一个大版本",
+    "freq": 3289
   },
   {
     "word": "Long-term support (LTS)",
-    "explains": "长期支持版"
+    "explains": "长期支持版",
+    "freq": 32425
   },
   {
     "word": "End of life (EOL)",
-    "explains": "停止维护"
+    "explains": "停止维护",
+    "freq": 331
   },
   {
     "word": "Community edition",
-    "explains": "社区版"
+    "explains": "社区版",
+    "freq": 7447
   },
   {
     "word": "Enterprise edition",
-    "explains": "企业版"
+    "explains": "企业版",
+    "freq": 7447
   },
   {
     "word": "Trial available",
-    "explains": "提供试用"
+    "explains": "提供试用",
+    "freq": 2202
   },
   {
     "word": "Self-hosted option",
-    "explains": "支持自托管"
+    "explains": "支持自托管",
+    "freq": 20203
   },
   {
     "word": "Managed service",
-    "explains": "托管服务"
+    "explains": "托管服务",
+    "freq": 2140
   },
   {
     "word": "Cloud-hosted",
-    "explains": "云端托管"
+    "explains": "云端托管",
+    "freq": 20203
   },
   {
     "word": "Deploy to production",
-    "explains": "部署到生产环境"
+    "explains": "部署到生产环境",
+    "freq": 12028
   },
   {
     "word": "Sandbox environment",
-    "explains": "沙箱环境"
+    "explains": "沙箱环境",
+    "freq": 25369
   },
   {
     "word": "Mock server",
-    "explains": "模拟服务"
+    "explains": "模拟服务",
+    "freq": 8513
   },
   {
     "word": "Staging environment",
-    "explains": "预发布环境"
+    "explains": "预发布环境",
+    "freq": 14599
   },
   {
     "word": "Rollback plan",
-    "explains": "回滚方案"
+    "explains": "回滚方案",
+    "freq": 559
   },
   {
     "word": "This section explains how authentication works.",
-    "explains": "本节说明认证如何工作。"
+    "explains": "本节说明认证如何工作。",
+    "freq": 42569
   },
   {
     "word": "The following example shows a basic request.",
-    "explains": "下面的示例展示一个基本请求。"
+    "explains": "下面的示例展示一个基本请求。",
+    "freq": 3257
   },
   {
     "word": "Replace the placeholder with your own key.",
-    "explains": "用你自己的 key 替换占位符。"
+    "explains": "用你自己的 key 替换占位符。",
+    "freq": 3287
   },
   {
     "word": "The parameter is optional and defaults to false.",
-    "explains": "该参数可选，默认 false。"
+    "explains": "该参数可选，默认 false。",
+    "freq": 31345
   },
   {
     "word": "Pass the value as a string.",
-    "explains": "以字符串形式传值。"
+    "explains": "以字符串形式传值。",
+    "freq": 3820
   },
   {
     "word": "The function returns a promise.",
-    "explains": "该函数返回 Promise。"
+    "explains": "该函数返回 Promise。",
+    "freq": 4133
   },
   {
     "word": "This method mutates the original array.",
-    "explains": "该方法会修改原数组。"
+    "explains": "该方法会修改原数组。",
+    "freq": 11876
   },
   {
     "word": "The callback is invoked once per item.",
-    "explains": "回调对每一项调用一次。"
+    "explains": "回调对每一项调用一次。",
+    "freq": 32253
   },
   {
     "word": "This is only supported in modern browsers.",
-    "explains": "仅现代浏览器支持。"
+    "explains": "仅现代浏览器支持。",
+    "freq": 7143
   },
   {
     "word": "The API is rate-limited.",
-    "explains": "该 API 有速率限制。"
+    "explains": "该 API 有速率限制。",
+    "freq": 4264
   },
   {
     "word": "Requests must include an auth header.",
-    "explains": "请求必须带认证头。"
+    "explains": "请求必须带认证头。",
+    "freq": 24839
   },
   {
     "word": "The response is cached for 60 seconds.",
-    "explains": "响应缓存 60 秒。"
+    "explains": "响应缓存 60 秒。",
+    "freq": 3148
   },
   {
     "word": "Errors are returned as JSON.",
-    "explains": "错误以 JSON 返回。"
+    "explains": "错误以 JSON 返回。",
+    "freq": 12917
   },
   {
     "word": "See the example folder for a full setup.",
-    "explains": "完整配置见 example 目录。"
+    "explains": "完整配置见 example 目录。",
+    "freq": 12882
   },
   {
     "word": "Check the troubleshooting section first.",
-    "explains": "先看故障排查章节。"
+    "explains": "先看故障排查章节。",
+    "freq": 2414
   },
   {
     "word": "This guide assumes basic knowledge of Git.",
-    "explains": "本指南假定你懂 Git 基础。"
+    "explains": "本指南假定你懂 Git 基础。",
+    "freq": 19945
   },
   {
     "word": "You can skip this step if…",
-    "explains": "如果……可以跳过这一步。"
+    "explains": "如果……可以跳过这一步。",
+    "freq": 3289
   },
   {
     "word": "Make sure the port is not in use.",
-    "explains": "确保端口没被占用。"
+    "explains": "确保端口没被占用。",
+    "freq": 3212
   },
   {
     "word": "Restart the server after changing the config.",
-    "explains": "改配置后重启服务。"
+    "explains": "改配置后重启服务。",
+    "freq": 18004
   },
   {
     "word": "The command prints the current version.",
-    "explains": "该命令打印当前版本。"
+    "explains": "该命令打印当前版本。",
+    "freq": 3132
   },
   {
     "word": "Run the tests before opening a PR.",
-    "explains": "开 PR 前先跑测试。"
+    "explains": "开 PR 前先跑测试。",
+    "freq": 8218
   },
   {
     "word": "The docs are generated from the source.",
-    "explains": "文档由源码生成。"
+    "explains": "文档由源码生成。",
+    "freq": 25355
   },
   {
     "word": "The comment above the function explains the logic.",
-    "explains": "函数上方的注释解释了逻辑。"
+    "explains": "函数上方的注释解释了逻辑。",
+    "freq": 5575
   },
   {
     "word": "The inline comment marks a TODO.",
-    "explains": "行内注释标了 TODO。"
+    "explains": "行内注释标了 TODO。",
+    "freq": 25269
   },
   {
     "word": "This snippet is copy-paste ready.",
-    "explains": "这段代码可直接复制使用。"
+    "explains": "这段代码可直接复制使用。",
+    "freq": 10642
   },
   {
     "word": "The code sample is out of date.",
-    "explains": "代码示例过时了。"
+    "explains": "代码示例过时了。",
+    "freq": 3392
   },
   {
     "word": "The example omits error handling.",
-    "explains": "示例省略了错误处理。"
+    "explains": "示例省略了错误处理。",
+    "freq": 4966
   },
   {
     "word": "This is a simplified version of the real code.",
-    "explains": "这是真实代码的简化版。"
+    "explains": "这是真实代码的简化版。",
+    "freq": 35976
   },
   {
     "word": "The blog post walks through the design.",
-    "explains": "这篇博客讲解了设计。"
+    "explains": "这篇博客讲解了设计。",
+    "freq": 8496
   },
   {
     "word": "The author compares three approaches.",
-    "explains": "作者比较了三种方案。"
+    "explains": "作者比较了三种方案。",
+    "freq": 23817
   },
   {
     "word": "The benchmark results are at the bottom.",
-    "explains": "基准测试结果在文末。"
+    "explains": "基准测试结果在文末。",
+    "freq": 44747
   },
   {
     "word": "The article links to the original paper.",
-    "explains": "文章链接到原始论文。"
+    "explains": "文章链接到原始论文。",
+    "freq": 8379
   },
   {
     "word": "The newsletter covers weekly releases.",
-    "explains": "邮件简报汇总每周发布。"
+    "explains": "邮件简报汇总每周发布。",
+    "freq": 23950
   },
   {
     "word": "I found this on Hacker News.",
-    "explains": "我在 Hacker News 上看到的。"
+    "explains": "我在 Hacker News 上看到的。",
+    "freq": 10325
   },
   {
     "word": "The discussion in the comments is worth reading.",
-    "explains": "评论区的讨论值得一看。"
+    "explains": "评论区的讨论值得一看。",
+    "freq": 6683
   },
   {
     "word": "The thread has some useful benchmarks.",
-    "explains": "这个帖子有些有用的基准数据。"
+    "explains": "这个帖子有些有用的基准数据。",
+    "freq": 6362
   },
   {
     "word": "The video is a good introduction.",
-    "explains": "这个视频是很好的入门。"
+    "explains": "这个视频是很好的入门。",
+    "freq": 8529
   },
   {
     "word": "Skip to 12:30 for the demo.",
-    "explains": "演示从 12:30 开始（可跳过前面）。"
+    "explains": "演示从 12:30 开始（可跳过前面）。",
+    "freq": 9851
   },
   {
     "word": "The slides are available online.",
-    "explains": "幻灯片可以在线获取。"
+    "explains": "幻灯片可以在线获取。",
+    "freq": 11811
   },
   {
     "word": "Search the error message in quotes.",
-    "explains": "用引号搜索报错信息。"
+    "explains": "用引号搜索报错信息。",
+    "freq": 15676
   },
   {
     "word": "Add the site name to narrow the results.",
-    "explains": "加上站点名缩小结果范围。"
+    "explains": "加上站点名缩小结果范围。",
+    "freq": 4956
   },
   {
     "word": "The first result is usually the official docs.",
-    "explains": "第一个结果通常是官方文档。"
+    "explains": "第一个结果通常是官方文档。",
+    "freq": 25355
   },
   {
     "word": "Check the date before trusting the answer.",
-    "explains": "采信答案前先看日期。"
+    "explains": "采信答案前先看日期。",
+    "freq": 6829
   },
   {
     "word": "This answer is outdated.",
-    "explains": "这个答案过时了。"
+    "explains": "这个答案过时了。",
+    "freq": 16875
   },
   {
     "word": "The accepted answer still works.",
-    "explains": "采纳的答案仍然有效。"
+    "explains": "采纳的答案仍然有效。",
+    "freq": 2681
   },
   {
     "word": "Read the comments for caveats.",
-    "explains": "看评论里的注意事项。"
+    "explains": "看评论里的注意事项。",
+    "freq": 6683
   },
   {
     "word": "The version matters here.",
-    "explains": "这里版本很关键。"
+    "explains": "这里版本很关键。",
+    "freq": 2937
   },
   {
     "word": "This applies to v2 and above.",
-    "explains": "适用于 v2 及以上。"
+    "explains": "适用于 v2 及以上。",
+    "freq": 11352
   },
   {
     "word": "The behavior changed in v3.",
-    "explains": "行为在 v3 变了。"
+    "explains": "行为在 v3 变了。",
+    "freq": 5132
   },
   {
     "word": "The old API is still supported.",
-    "explains": "旧 API 仍受支持。"
+    "explains": "旧 API 仍受支持。",
+    "freq": 7143
   },
   {
     "word": "Use the stable channel for production.",
-    "explains": "生产环境用稳定版通道。"
+    "explains": "生产环境用稳定版通道。",
+    "freq": 3591
   },
   {
     "word": "Nightly builds may be unstable.",
-    "explains": "每夜构建可能不稳定。"
+    "explains": "每夜构建可能不稳定。",
+    "freq": 18470
   },
   {
     "word": "Check the release channel before installing.",
-    "explains": "安装前确认发布通道。"
+    "explains": "安装前确认发布通道。",
+    "freq": 20621
   },
   {
     "word": "The issue tracker is the best place to ask.",
-    "explains": "issue 区最适合提问。"
+    "explains": "issue 区最适合提问。",
+    "freq": 11282
   },
   {
     "word": "Search before opening a new thread.",
-    "explains": "开新帖前先搜索。"
+    "explains": "开新帖前先搜索。",
+    "freq": 6362
   },
   {
     "word": "The wiki has a FAQ.",
-    "explains": "Wiki 有常见问题。"
+    "explains": "Wiki 有常见问题。",
+    "freq": 48232
   },
   {
     "word": "The forum is more active than the mailing list.",
-    "explains": "论坛比邮件列表活跃。"
+    "explains": "论坛比邮件列表活跃。",
+    "freq": 22768
   },
   {
     "word": "The maintainers respond quickly.",
-    "explains": "维护者回复很快。"
+    "explains": "维护者回复很快。",
+    "freq": 3585
   },
   {
     "word": "Star the repo if you find it useful.",
-    "explains": "觉得有用就点个 star。"
+    "explains": "觉得有用就点个 star。",
+    "freq": 29430
   },
   {
     "word": "Watch releases to get notified.",
-    "explains": "关注 release 获取通知。"
+    "explains": "关注 release 获取通知。",
+    "freq": 13223
   }
 ]

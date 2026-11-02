@@ -26,6 +26,7 @@
         <view class="bank-info">
           <view class="bank-name-row">
             <text class="bank-name">{{ bank.name }}</text>
+            <text class="language-badge">{{ getProfile(bank.language).nameZh }}</text>
             <text v-if="bank.id === wordsStore.currentBankId" class="current-badge">当前</text>
           </view>
           <text class="bank-count">{{ getBankCount(bank.id) }} 个单词</text>
@@ -70,7 +71,7 @@
       >
         <view class="remote-info">
           <text class="remote-name">{{ bank.name }}</text>
-          <text class="remote-desc">{{ bank.wordCount }} 词 · {{ bank.sizeKB }}KB</text>
+          <text class="remote-desc">{{ getProfile(bank.language).nameZh }} · {{ bank.wordCount }} 词 · {{ bank.sizeKB }}KB</text>
         </view>
         <view class="remote-status">
           <text v-if="downloadingId === bank.id" class="downloading">{{ downloadProgress }}%</text>
@@ -85,6 +86,9 @@
       <view class="dialog" @click.stop>
         <text class="dialog-title">新建词库</text>
         <input class="dialog-input" v-model="newBankName" placeholder="请输入词库名称" :focus="createDialogVisible" />
+        <picker :range="languageOptions" range-key="nameZh" :value="languageIndex" @change="onLanguageChange">
+          <view class="dialog-language">学习语言：{{ languageOptions[languageIndex].nameZh }}</view>
+        </picker>
         <view class="dialog-buttons">
           <text class="dialog-btn cancel" @click="createDialogVisible = false">取消</text>
           <text class="dialog-btn confirm" @click="doCreateBank">创建</text>
@@ -99,10 +103,14 @@ import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
 import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
 import { askImportTargetBank } from '@/utils/wordbank-import-target'
+import { getProfile, listLanguages } from '@/utils/language'
+import { inferMobileItemType } from '@/stores/useUtils/text'
 
 const wordsStore = useMobileWords()
 const createDialogVisible = ref(false)
 const newBankName = ref('')
+const languageOptions = listLanguages()
+const languageIndex = ref(0)
 
 // 远程词库下载
 const remoteList = ref<RemoteWordBankInfo[]>([])
@@ -138,7 +146,7 @@ async function onRemoteBankTap(bank: RemoteWordBankInfo) {
     const rawWords = await getWordBank(bank.id, (p) => { downloadProgress.value = p })
     cachedIds.value = getCachedBankIds()
     // 询问目标词库：导入当前 / 新建并导入 / 选择其他已有词库；取消则保留下载缓存（显示"已下载"）
-    const targetBankId = await askImportTargetBank(bank.name)
+    const targetBankId = await askImportTargetBank(bank.name, bank.language || 'en')
     if (!targetBankId) return
     await importToBank(bank, rawWords, targetBankId)
     // 导入成功后缓存已删（见 importToBank），刷新缓存标记
@@ -154,6 +162,7 @@ async function onRemoteBankTap(bank: RemoteWordBankInfo) {
 // 把远程词库导入指定词库（与词库管理页导入内置词库同一口径）
 async function importToBank(bank: RemoteWordBankInfo, rawWords: any[], bankId: string) {
   const now = Date.now()
+  const targetLanguage = wordsStore.getBankById(bankId)?.language || 'en'
   const mobileWords = rawWords.map(w => {
     const wordText = w.word || ''
     return {
@@ -162,7 +171,8 @@ async function importToBank(bank: RemoteWordBankInfo, rawWords: any[], bankId: s
       meaning: w.meaning || w.explains || '',
       phonetic: w.phonetic || undefined,
       example: w.example || undefined,
-      itemType: wordText.includes(' ') ? 'phrase' : 'word',
+      itemType: inferMobileItemType(wordText, targetLanguage),
+      freq: typeof w.freq === 'number' && w.freq > 0 ? w.freq : undefined,
       addTime: now,
       reviewCount: 0,
       nextReviewTime: now,
@@ -210,7 +220,12 @@ function onBankTap(bank: WordBankMeta) {
 
 function showCreateDialog() {
   newBankName.value = ''
+  languageIndex.value = 0
   createDialogVisible.value = true
+}
+
+function onLanguageChange(e: any) {
+  languageIndex.value = Number(e.detail.value)
 }
 
 function doCreateBank() {
@@ -224,7 +239,7 @@ function doCreateBank() {
     uni.showToast({ title: '词库名称已存在', icon: 'none' })
     return
   }
-  const bank = wordsStore.createBank(name)
+  const bank = wordsStore.createBank(name, { language: languageOptions[languageIndex.value].code })
   wordsStore.switchBank(bank.id)
   createDialogVisible.value = false
   uni.showToast({ title: '创建成功', icon: 'success' })
@@ -291,6 +306,7 @@ const goTo = (url: string) => {
 .bank-info { flex: 1; }
 .bank-name-row { display: flex; align-items: center; gap: 14rpx; }
 .bank-name { font-size: 30rpx; font-weight: bold; color: var(--sr-text); }
+.language-badge { font-size: 20rpx; color: var(--sr-primary); background: var(--sr-primary-bg); border-radius: 20rpx; padding: 4rpx 12rpx; }
 .current-badge { font-size: 20rpx; color: var(--sr-on-primary); background: var(--sr-primary); border-radius: 20rpx; padding: 4rpx 16rpx; }
 .bank-count { font-size: 24rpx; color: var(--sr-text-3); margin-top: 6rpx; display: block; }
 .bank-actions { display: flex; gap: 20rpx; }
@@ -365,6 +381,7 @@ const goTo = (url: string) => {
 .dialog { background: var(--sr-card); border-radius: 24rpx; padding: 40rpx; width: 80%; }
 .dialog-title { font-size: 34rpx; font-weight: bold; text-align: center; display: block; margin-bottom: 30rpx; }
 .dialog-input { border: 2rpx solid var(--sr-border); border-radius: 12rpx; padding: 20rpx; font-size: 30rpx; width: 100%; box-sizing: border-box; height: 80rpx; line-height: 40rpx; color: var(--sr-text); }
+.dialog-language { margin-top: 20rpx; padding: 20rpx; border: 2rpx solid var(--sr-border); border-radius: 12rpx; color: var(--sr-text); font-size: 28rpx; }
 .dialog-buttons { display: flex; justify-content: space-between; margin-top: 30rpx; gap: 20rpx; }
 .dialog-btn { flex: 1; text-align: center; padding: 20rpx; border-radius: 12rpx; font-size: 30rpx; }
 .dialog-btn.cancel { background: var(--sr-card-2); color: var(--sr-text-2); }

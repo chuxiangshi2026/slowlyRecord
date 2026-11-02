@@ -1,151 +1,746 @@
 [
-  {"word": "tener ganas de…", "explains": "想要……"},
-  {"word": "tener que…", "explains": "必须……"},
-  {"word": "tener que ver con…", "explains": "与……有关"},
-  {"word": "hacer falta…", "explains": "需要……"},
-  {"word": "echar de menos a…", "explains": "想念……"},
-  {"word": "darse cuenta de…", "explains": "意识到……"},
-  {"word": "acordarse de…", "explains": "记得……"},
-  {"word": "olvidarse de…", "explains": "忘了……"},
-  {"word": "atreverse a…", "explains": "敢于……"},
-  {"word": "empezar a…", "explains": "开始……"},
-  {"word": "terminar de…", "explains": "结束……"},
-  {"word": "volver a…", "explains": "再次……"},
-  {"word": "ponerse a…", "explains": "开始着手……"},
-  {"word": "dejar de…", "explains": "停止……"},
-  {"word": "tratar de…", "explains": "试图……"},
-  {"word": "lograr…", "explains": "达成……"},
-  {"word": "depender de…", "explains": "取决于……"},
-  {"word": "encargarse de…", "explains": "负责……"},
-  {"word": "ocuparse de…", "explains": "处理……"},
-  {"word": "preocuparse por…", "explains": "担心……"},
-  {"word": "interesar por…", "explains": "对……感兴趣"},
-  {"word": "enamorarse de…", "explains": "爱上……"},
-  {"word": "casarse con…", "explains": "与……结婚"},
-  {"word": "encontrarse con…", "explains": "遇见……"},
-  {"word": "reunirse con…", "explains": "与……会面"},
-  {"word": "contar con…", "explains": "拥有；指望……"},
-  {"word": "confiar en…", "explains": "信任……"},
-  {"word": "fiarse de…", "explains": "相信……"},
-  {"word": "burlarse de…", "explains": "嘲笑……"},
-  {"word": "quejarse de…", "explains": "抱怨……"},
-  {"word": "arrepentirse de…", "explains": "后悔……"},
-  {"word": "alegrarse de…", "explains": "为……高兴"},
-  {"word": "enfadarse con…", "explains": "生……的气"},
-  {"word": "enorgullecerse de…", "explains": "为……自豪"},
-  {"word": "a pesar de…", "explains": "尽管……"},
-  {"word": "por lo menos", "explains": "至少"},
-  {"word": "por supuesto", "explains": "当然"},
-  {"word": "por ejemplo", "explains": "例如"},
-  {"word": "por fin", "explains": "最后"},
-  {"word": "por eso", "explains": "因此"},
-  {"word": "por si acaso", "explains": "以防万一"},
-  {"word": "de vez en cuando", "explains": "偶尔"},
-  {"word": "en general", "explains": "总的来说"},
-  {"word": "en cuanto a…", "explains": "关于……"},
-  {"word": "de acuerdo con…", "explains": "根据……"},
-  {"word": "a menudo", "explains": "经常"},
-  {"word": "a veces", "explains": "有时"},
-  {"word": "siempre", "explains": "总是"},
-  {"word": "nunca", "explains": "从不"},
-  {"word": "ya que…", "explains": "既然……"},
-  {"word": "así que…", "explains": "所以……"},
-  {"word": "no solo… sino también…", "explains": "不仅……而且……"},
-  {"word": "ni… ni…", "explains": "既不……也不……"},
-  {"word": "o… o…", "explains": "要么……要么……"},
-  {"word": "cuanto más… más…", "explains": "越……越……"},
-  {"word": "tan… como…", "explains": "和……一样……"},
-  {"word": "más… que…", "explains": "比……更……"},
-  {"word": "menos… que…", "explains": "不如……"},
-  {"word": "el mejor de…", "explains": "……中最好的"},
-  {"word": "igual que…", "explains": "和……一样"},
-  {"word": "diferente de…", "explains": "和……不同"},
-  {"word": "al mismo tiempo", "explains": "同时"},
-  {"word": "en cuanto…", "explains": "一……就……"},
-  {"word": "desde entonces", "explains": "从那时起"},
-  {"word": "hace… años", "explains": "……年前"},
-  {"word": "dentro de…", "explains": "在……之后"},
-  {"word": "hasta que…", "explains": "直到……"},
-  {"word": "antes de…", "explains": "在……之前"},
-  {"word": "después de…", "explains": "在……之后"},
-  {"word": "mientras…", "explains": "当……的时候"},
-  {"word": "aunque…", "explains": "虽然……"},
-  {"word": "porque…", "explains": "因为……"},
-  {"word": "para que…", "explains": "为了……"},
-  {"word": "sin embargo", "explains": "然而"},
-  {"word": "es decir", "explains": "也就是说"},
-  {"word": "o sea", "explains": "也就是说"},
-  {"word": "por cierto", "explains": "顺便说"},
-  {"word": "en resumen", "explains": "总之"},
-  {"word": "al final", "explains": "最终"},
-  {"word": "de repente", "explains": "突然"},
-  {"word": "poco a poco", "explains": "逐渐地"},
-  {"word": "de nuevo", "explains": "再次"},
-  {"word": "en seguida", "explains": "马上"},
-  {"word": "más tarde", "explains": "稍后"},
-  {"word": "hace poco", "explains": "不久前"},
-  {"word": "acabar de + infinitivo", "explains": "刚刚……"},
-  {"word": "ir a + infinitivo", "explains": "将要……"},
-  {"word": "estar a punto de + infinitivo", "explains": "即将……"},
-  {"word": "llegar a + infinitivo", "explains": "达到／终于……"},
-  {"word": "soler + infinitivo", "explains": "通常……"},
-  {"word": "deber de + infinitivo", "explains": "想必……（推测）"},
-  {"word": "hay que + infinitivo", "explains": "必须……（无人称）"},
-  {"word": "dar un paseo", "explains": "散步"},
-  {"word": "dar las gracias", "explains": "道谢"},
-  {"word": "dar una vuelta", "explains": "转一圈"},
-  {"word": "tomar una decisión", "explains": "做决定"},
-  {"word": "tomar el sol", "explains": "晒太阳"},
-  {"word": "tomar algo", "explains": "喝点东西"},
-  {"word": "hacer la compra", "explains": "采购"},
-  {"word": "hacer deporte", "explains": "运动"},
-  {"word": "hacer caso a", "explains": "听……的话"},
-  {"word": "hacer una pregunta", "explains": "提一个问题"},
-  {"word": "poner atención", "explains": "注意"},
-  {"word": "poner en marcha", "explains": "启动"},
-  {"word": "echar un vistazo", "explains": "看一眼"},
-  {"word": "echar una mano", "explains": "帮一把"},
-  {"word": "llevar + tiempo + gerundio", "explains": "做……已经多久"},
-  {"word": "hace + tiempo + que", "explains": "自从……已经多久"},
-  {"word": "desde hace", "explains": "自从……以来"},
-  {"word": "a partir de", "explains": "从……起"},
-  {"word": "en vez de", "explains": "代替／而不是"},
-  {"word": "por miedo a", "explains": "因为害怕……"},
-  {"word": "con tal de que", "explains": "只要……"},
-  {"word": "a menos que", "explains": "除非……"},
-  {"word": "en caso de que", "explains": "万一……"},
-  {"word": "siempre que", "explains": "只要……"},
-  {"word": "antes de que", "explains": "在……之前"},
-  {"word": "después de que", "explains": "在……之后"},
-  {"word": "por lo tanto", "explains": "因此"},
-  {"word": "puesto que", "explains": "既然"},
-  {"word": "como si", "explains": "好像……"},
-  {"word": "tal como", "explains": "正如……"},
-  {"word": "respecto a", "explains": "关于……"},
-  {"word": "en relación con", "explains": "与……有关"},
-  {"word": "gracias a", "explains": "多亏……"},
-  {"word": "debido a", "explains": "由于……"},
-  {"word": "a causa de", "explains": "因为……"},
-  {"word": "en lugar de", "explains": "而不是……"},
-  {"word": "además de", "explains": "除……之外"},
-  {"word": "salvo que", "explains": "除非……"},
-  {"word": "por muy + 形容词 + que", "explains": "无论多么……"},
-  {"word": "por más que", "explains": "无论怎么……"},
-  {"word": "a lo mejor", "explains": "也许"},
-  {"word": "tal vez", "explains": "也许"},
-  {"word": "de todos modos", "explains": "无论如何"},
-  {"word": "en cualquier caso", "explains": "无论如何"},
-  {"word": "por lo visto", "explains": "看来"},
-  {"word": "de ahora en adelante", "explains": "从今以后"},
-  {"word": "hasta ahora", "explains": "到目前为止"},
-  {"word": "por primera vez", "explains": "第一次"},
-  {"word": "por última vez", "explains": "最后一次"},
-  {"word": "cada vez más", "explains": "越来越……"},
-  {"word": "cada vez menos", "explains": "越来越少……"},
-  {"word": "de momento", "explains": "目前"},
-  {"word": "en realidad", "explains": "实际上"},
-  {"word": "en serio", "explains": "认真地／真的"},
-  {"word": "sin duda", "explains": "无疑"},
-  {"word": "en cambio", "explains": "相反"},
-  {"word": "por el contrario", "explains": "恰恰相反"}
+  {
+    "word": "tener ganas de…",
+    "explains": "想要……",
+    "freq": 1234
+  },
+  {
+    "word": "tener que…",
+    "explains": "必须……",
+    "freq": 169
+  },
+  {
+    "word": "tener que ver con…",
+    "explains": "与……有关",
+    "freq": 169
+  },
+  {
+    "word": "hacer falta…",
+    "explains": "需要……",
+    "freq": 588
+  },
+  {
+    "word": "echar de menos a…",
+    "explains": "想念……",
+    "freq": 1677
+  },
+  {
+    "word": "darse cuenta de…",
+    "explains": "意识到……",
+    "freq": 4030
+  },
+  {
+    "word": "acordarse de…",
+    "explains": "记得……",
+    "freq": 29916
+  },
+  {
+    "word": "olvidarse de…",
+    "explains": "忘了……",
+    "freq": 14653
+  },
+  {
+    "word": "atreverse a…",
+    "explains": "敢于……",
+    "freq": 36622
+  },
+  {
+    "word": "empezar a…",
+    "explains": "开始……",
+    "freq": 619
+  },
+  {
+    "word": "terminar de…",
+    "explains": "结束……",
+    "freq": 909
+  },
+  {
+    "word": "volver a…",
+    "explains": "再次……",
+    "freq": 301
+  },
+  {
+    "word": "ponerse a…",
+    "explains": "开始着手……",
+    "freq": 2768
+  },
+  {
+    "word": "dejar de…",
+    "explains": "停止……",
+    "freq": 347
+  },
+  {
+    "word": "tratar de…",
+    "explains": "试图……",
+    "freq": 1210
+  },
+  {
+    "word": "lograr…",
+    "explains": "达成……",
+    "freq": 2958
+  },
+  {
+    "word": "depender de…",
+    "explains": "取决于……",
+    "freq": 13037
+  },
+  {
+    "word": "encargarse de…",
+    "explains": "负责……",
+    "freq": 11368
+  },
+  {
+    "word": "ocuparse de…",
+    "explains": "处理……",
+    "freq": 9747
+  },
+  {
+    "word": "preocuparse por…",
+    "explains": "担心……",
+    "freq": 2905
+  },
+  {
+    "word": "interesar por…",
+    "explains": "对……感兴趣",
+    "freq": 20674
+  },
+  {
+    "word": "enamorarse de…",
+    "explains": "爱上……",
+    "freq": 12379
+  },
+  {
+    "word": "casarse con…",
+    "explains": "与……结婚",
+    "freq": 2168
+  },
+  {
+    "word": "encontrarse con…",
+    "explains": "遇见……",
+    "freq": 6594
+  },
+  {
+    "word": "reunirse con…",
+    "explains": "与……会面",
+    "freq": 6069
+  },
+  {
+    "word": "contar con…",
+    "explains": "拥有；指望……",
+    "freq": 1264
+  },
+  {
+    "word": "confiar en…",
+    "explains": "信任……",
+    "freq": 1202
+  },
+  {
+    "word": "fiarse de…",
+    "explains": "相信……",
+    "freq": 38234
+  },
+  {
+    "word": "burlarse de…",
+    "explains": "嘲笑……",
+    "freq": 15098
+  },
+  {
+    "word": "quejarse de…",
+    "explains": "抱怨……",
+    "freq": 10878
+  },
+  {
+    "word": "arrepentirse de…",
+    "explains": "后悔……",
+    "freq": 23080
+  },
+  {
+    "word": "alegrarse de…",
+    "explains": "为……高兴",
+    "freq": 36641
+  },
+  {
+    "word": "enfadarse con…",
+    "explains": "生……的气",
+    "freq": 26400
+  },
+  {
+    "word": "enorgullecerse de…",
+    "explains": "为……自豪",
+    "freq": 1
+  },
+  {
+    "word": "a pesar de…",
+    "explains": "尽管……",
+    "freq": 1398
+  },
+  {
+    "word": "por lo menos",
+    "explains": "至少",
+    "freq": 190
+  },
+  {
+    "word": "por supuesto",
+    "explains": "当然",
+    "freq": 294
+  },
+  {
+    "word": "por ejemplo",
+    "explains": "例如",
+    "freq": 1149
+  },
+  {
+    "word": "por fin",
+    "explains": "最后",
+    "freq": 386
+  },
+  {
+    "word": "por eso",
+    "explains": "因此",
+    "freq": 27
+  },
+  {
+    "word": "por si acaso",
+    "explains": "以防万一",
+    "freq": 1328
+  },
+  {
+    "word": "de vez en cuando",
+    "explains": "偶尔",
+    "freq": 71
+  },
+  {
+    "word": "en general",
+    "explains": "总的来说",
+    "freq": 664
+  },
+  {
+    "word": "en cuanto a…",
+    "explains": "关于……",
+    "freq": 567
+  },
+  {
+    "word": "de acuerdo con…",
+    "explains": "根据……",
+    "freq": 141
+  },
+  {
+    "word": "a menudo",
+    "explains": "经常",
+    "freq": 1462
+  },
+  {
+    "word": "a veces",
+    "explains": "有时",
+    "freq": 238
+  },
+  {
+    "word": "siempre",
+    "explains": "总是",
+    "freq": 125
+  },
+  {
+    "word": "nunca",
+    "explains": "从不",
+    "freq": 98
+  },
+  {
+    "word": "ya que…",
+    "explains": "既然……",
+    "freq": 40
+  },
+  {
+    "word": "así que…",
+    "explains": "所以……",
+    "freq": 46
+  },
+  {
+    "word": "no solo… sino también…",
+    "explains": "不仅……而且……",
+    "freq": 701
+  },
+  {
+    "word": "ni… ni…",
+    "explains": "既不……也不……",
+    "freq": 132
+  },
+  {
+    "word": "o… o…",
+    "explains": "要么……要么……",
+    "freq": 61
+  },
+  {
+    "word": "cuanto más… más…",
+    "explains": "越……越……",
+    "freq": 567
+  },
+  {
+    "word": "tan… como…",
+    "explains": "和……一样……",
+    "freq": 92
+  },
+  {
+    "word": "más… que…",
+    "explains": "比……更……",
+    "freq": 36
+  },
+  {
+    "word": "menos… que…",
+    "explains": "不如……",
+    "freq": 190
+  },
+  {
+    "word": "el mejor de…",
+    "explains": "……中最好的",
+    "freq": 108
+  },
+  {
+    "word": "igual que…",
+    "explains": "和……一样",
+    "freq": 425
+  },
+  {
+    "word": "diferente de…",
+    "explains": "和……不同",
+    "freq": 694
+  },
+  {
+    "word": "al mismo tiempo",
+    "explains": "同时",
+    "freq": 149
+  },
+  {
+    "word": "en cuanto…",
+    "explains": "一……就……",
+    "freq": 567
+  },
+  {
+    "word": "desde entonces",
+    "explains": "从那时起",
+    "freq": 163
+  },
+  {
+    "word": "hace… años",
+    "explains": "……年前",
+    "freq": 129
+  },
+  {
+    "word": "dentro de…",
+    "explains": "在……之后",
+    "freq": 319
+  },
+  {
+    "word": "hasta que…",
+    "explains": "直到……",
+    "freq": 126
+  },
+  {
+    "word": "antes de…",
+    "explains": "在……之前",
+    "freq": 130
+  },
+  {
+    "word": "después de…",
+    "explains": "在……之后",
+    "freq": 161
+  },
+  {
+    "word": "mientras…",
+    "explains": "当……的时候",
+    "freq": 284
+  },
+  {
+    "word": "aunque…",
+    "explains": "虽然……",
+    "freq": 405
+  },
+  {
+    "word": "porque…",
+    "explains": "因为……",
+    "freq": 76
+  },
+  {
+    "word": "para que…",
+    "explains": "为了……",
+    "freq": 20
+  },
+  {
+    "word": "sin embargo",
+    "explains": "然而",
+    "freq": 885
+  },
+  {
+    "word": "es decir",
+    "explains": "也就是说",
+    "freq": 111
+  },
+  {
+    "word": "o sea",
+    "explains": "也就是说",
+    "freq": 146
+  },
+  {
+    "word": "por cierto",
+    "explains": "顺便说",
+    "freq": 246
+  },
+  {
+    "word": "en resumen",
+    "explains": "总之",
+    "freq": 7644
+  },
+  {
+    "word": "al final",
+    "explains": "最终",
+    "freq": 445
+  },
+  {
+    "word": "de repente",
+    "explains": "突然",
+    "freq": 1311
+  },
+  {
+    "word": "poco a poco",
+    "explains": "逐渐地",
+    "freq": 133
+  },
+  {
+    "word": "de nuevo",
+    "explains": "再次",
+    "freq": 185
+  },
+  {
+    "word": "en seguida",
+    "explains": "马上",
+    "freq": 5550
+  },
+  {
+    "word": "más tarde",
+    "explains": "稍后",
+    "freq": 243
+  },
+  {
+    "word": "hace poco",
+    "explains": "不久前",
+    "freq": 133
+  },
+  {
+    "word": "acabar de + infinitivo",
+    "explains": "刚刚……",
+    "freq": 1435
+  },
+  {
+    "word": "ir a + infinitivo",
+    "explains": "将要……",
+    "freq": 128
+  },
+  {
+    "word": "estar a punto de + infinitivo",
+    "explains": "即将……",
+    "freq": 393
+  },
+  {
+    "word": "llegar a + infinitivo",
+    "explains": "达到／终于……",
+    "freq": 400
+  },
+  {
+    "word": "soler + infinitivo",
+    "explains": "通常……"
+  },
+  {
+    "word": "deber de + infinitivo",
+    "explains": "想必……（推测）",
+    "freq": 1969
+  },
+  {
+    "word": "hay que + infinitivo",
+    "explains": "必须……（无人称）",
+    "freq": 49
+  },
+  {
+    "word": "dar un paseo",
+    "explains": "散步",
+    "freq": 1709
+  },
+  {
+    "word": "dar las gracias",
+    "explains": "道谢",
+    "freq": 453
+  },
+  {
+    "word": "dar una vuelta",
+    "explains": "转一圈",
+    "freq": 453
+  },
+  {
+    "word": "tomar una decisión",
+    "explains": "做决定",
+    "freq": 877
+  },
+  {
+    "word": "tomar el sol",
+    "explains": "晒太阳",
+    "freq": 824
+  },
+  {
+    "word": "tomar algo",
+    "explains": "喝点东西",
+    "freq": 387
+  },
+  {
+    "word": "hacer la compra",
+    "explains": "采购",
+    "freq": 2593
+  },
+  {
+    "word": "hacer deporte",
+    "explains": "运动",
+    "freq": 4299
+  },
+  {
+    "word": "hacer caso a",
+    "explains": "听……的话",
+    "freq": 288
+  },
+  {
+    "word": "hacer una pregunta",
+    "explains": "提一个问题",
+    "freq": 470
+  },
+  {
+    "word": "poner atención",
+    "explains": "注意",
+    "freq": 693
+  },
+  {
+    "word": "poner en marcha",
+    "explains": "启动",
+    "freq": 1298
+  },
+  {
+    "word": "echar un vistazo",
+    "explains": "看一眼",
+    "freq": 1677
+  },
+  {
+    "word": "echar una mano",
+    "explains": "帮一把",
+    "freq": 1677
+  },
+  {
+    "word": "llevar + tiempo + gerundio",
+    "explains": "做……已经多久",
+    "freq": 602
+  },
+  {
+    "word": "hace + tiempo + que",
+    "explains": "自从……已经多久",
+    "freq": 109
+  },
+  {
+    "word": "desde hace",
+    "explains": "自从……以来",
+    "freq": 163
+  },
+  {
+    "word": "a partir de",
+    "explains": "从……起",
+    "freq": 1444
+  },
+  {
+    "word": "en vez de",
+    "explains": "代替／而不是",
+    "freq": 71
+  },
+  {
+    "word": "por miedo a",
+    "explains": "因为害怕……",
+    "freq": 356
+  },
+  {
+    "word": "con tal de que",
+    "explains": "只要……",
+    "freq": 158
+  },
+  {
+    "word": "a menos que",
+    "explains": "除非……",
+    "freq": 190
+  },
+  {
+    "word": "en caso de que",
+    "explains": "万一……",
+    "freq": 288
+  },
+  {
+    "word": "siempre que",
+    "explains": "只要……",
+    "freq": 125
+  },
+  {
+    "word": "antes de que",
+    "explains": "在……之前",
+    "freq": 130
+  },
+  {
+    "word": "después de que",
+    "explains": "在……之后",
+    "freq": 161
+  },
+  {
+    "word": "por lo tanto",
+    "explains": "因此",
+    "freq": 235
+  },
+  {
+    "word": "puesto que",
+    "explains": "既然",
+    "freq": 625
+  },
+  {
+    "word": "como si",
+    "explains": "好像……",
+    "freq": 32
+  },
+  {
+    "word": "tal como",
+    "explains": "正如……",
+    "freq": 158
+  },
+  {
+    "word": "respecto a",
+    "explains": "关于……",
+    "freq": 1166
+  },
+  {
+    "word": "en relación con",
+    "explains": "与……有关",
+    "freq": 791
+  },
+  {
+    "word": "gracias a",
+    "explains": "多亏……",
+    "freq": 70
+  },
+  {
+    "word": "debido a",
+    "explains": "由于……",
+    "freq": 1168
+  },
+  {
+    "word": "a causa de",
+    "explains": "因为……",
+    "freq": 1097
+  },
+  {
+    "word": "en lugar de",
+    "explains": "而不是……",
+    "freq": 177
+  },
+  {
+    "word": "además de",
+    "explains": "除……之外",
+    "freq": 541
+  },
+  {
+    "word": "salvo que",
+    "explains": "除非……",
+    "freq": 821
+  },
+  {
+    "word": "por muy + 形容词 + que",
+    "explains": "无论多么……",
+    "freq": 43
+  },
+  {
+    "word": "por más que",
+    "explains": "无论怎么……",
+    "freq": 36
+  },
+  {
+    "word": "a lo mejor",
+    "explains": "也许",
+    "freq": 108
+  },
+  {
+    "word": "tal vez",
+    "explains": "也许",
+    "freq": 158
+  },
+  {
+    "word": "de todos modos",
+    "explains": "无论如何",
+    "freq": 1139
+  },
+  {
+    "word": "en cualquier caso",
+    "explains": "无论如何",
+    "freq": 288
+  },
+  {
+    "word": "por lo visto",
+    "explains": "看来",
+    "freq": 228
+  },
+  {
+    "word": "de ahora en adelante",
+    "explains": "从今以后",
+    "freq": 371
+  },
+  {
+    "word": "hasta ahora",
+    "explains": "到目前为止",
+    "freq": 126
+  },
+  {
+    "word": "por primera vez",
+    "explains": "第一次",
+    "freq": 291
+  },
+  {
+    "word": "por última vez",
+    "explains": "最后一次",
+    "freq": 419
+  },
+  {
+    "word": "cada vez más",
+    "explains": "越来越……",
+    "freq": 227
+  },
+  {
+    "word": "cada vez menos",
+    "explains": "越来越少……",
+    "freq": 227
+  },
+  {
+    "word": "de momento",
+    "explains": "目前",
+    "freq": 167
+  },
+  {
+    "word": "en realidad",
+    "explains": "实际上",
+    "freq": 348
+  },
+  {
+    "word": "en serio",
+    "explains": "认真地／真的",
+    "freq": 239
+  },
+  {
+    "word": "sin duda",
+    "explains": "无疑",
+    "freq": 1037
+  },
+  {
+    "word": "en cambio",
+    "explains": "相反",
+    "freq": 640
+  },
+  {
+    "word": "por el contrario",
+    "explains": "恰恰相反",
+    "freq": 1482
+  }
 ]

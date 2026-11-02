@@ -2,37 +2,44 @@
   {
     "word": "あい",
     "phonetic": "",
-    "explains": "爱；恋爱"
+    "explains": "爱；恋爱",
+    "freq": 3557
   },
   {
     "word": "あいさつ",
     "phonetic": "あいさつ",
-    "explains": "寒暄；问候"
+    "explains": "寒暄；问候",
+    "freq": 3879
   },
   {
     "word": "あいだ",
     "phonetic": "",
-    "explains": "之间"
+    "explains": "之间",
+    "freq": 5177
   },
   {
     "word": "あう",
     "phonetic": "",
-    "explains": "见面；合适"
+    "explains": "见面；合适",
+    "freq": 8116
   },
   {
     "word": "あお",
     "phonetic": "",
-    "explains": "蓝色"
+    "explains": "蓝色",
+    "freq": 5810
   },
   {
     "word": "あおい",
     "phonetic": "あおい",
-    "explains": "蓝色的"
+    "explains": "蓝色的",
+    "freq": 22012
   },
   {
     "word": "あか",
     "phonetic": "",
-    "explains": "红色"
+    "explains": "红色",
+    "freq": 9817
   },
   {
     "word": "あかい",
@@ -42,7 +49,8 @@
   {
     "word": "あかちゃん",
     "phonetic": "",
-    "explains": "婴儿"
+    "explains": "婴儿",
+    "freq": 23211
   },
   {
     "word": "あかるい",
@@ -62,7 +70,8 @@
   {
     "word": "あき",
     "phonetic": "",
-    "explains": "秋天"
+    "explains": "秋天",
+    "freq": 12490
   },
   {
     "word": "あきらめる",
@@ -77,12 +86,14 @@
   {
     "word": "あく",
     "phonetic": "",
-    "explains": "开；变坏"
+    "explains": "开；变坏",
+    "freq": 10950
   },
   {
     "word": "あくび",
     "phonetic": "あくび",
-    "explains": "哈欠"
+    "explains": "哈欠",
+    "freq": 9013
   },
   {
     "word": "あける",
@@ -97,7 +108,8 @@
   {
     "word": "あさ",
     "phonetic": "",
-    "explains": "早晨"
+    "explains": "早晨",
+    "freq": 13887
   },
   {
     "word": "あさごはん",
@@ -107,17 +119,20 @@
   {
     "word": "あさって",
     "phonetic": "",
-    "explains": "后天"
+    "explains": "后天",
+    "freq": 4853
   },
   {
     "word": "あし",
     "phonetic": "あし",
-    "explains": "脚；腿"
+    "explains": "脚；腿",
+    "freq": 9087
   },
   {
     "word": "あした",
     "phonetic": "",
-    "explains": "明天"
+    "explains": "明天",
+    "freq": 4711
   },
   {
     "word": "あじわう",
@@ -137,17 +152,20 @@
   {
     "word": "あそこ",
     "phonetic": "",
-    "explains": "那里"
+    "explains": "那里",
+    "freq": 255
   },
   {
     "word": "あそぶ",
     "phonetic": "あそぶ",
-    "explains": "玩"
+    "explains": "玩",
+    "freq": 16488
   },
   {
     "word": "あたい",
     "phonetic": "あたい",
-    "explains": "价值"
+    "explains": "价值",
+    "freq": 8536
   },
   {
     "word": "あたえる",
@@ -172,7 +190,8 @@
   {
     "word": "あたま",
     "phonetic": "",
-    "explains": "头"
+    "explains": "头",
+    "freq": 16734
   },
   {
     "word": "あたらしい",
@@ -182,22 +201,26 @@
   {
     "word": "あたり",
     "phonetic": "",
-    "explains": "附近；周围"
+    "explains": "附近；周围",
+    "freq": 1623
   },
   {
     "word": "あちこち",
     "phonetic": "",
-    "explains": "到处"
+    "explains": "到处",
+    "freq": 1641
   },
   {
     "word": "あちら",
     "phonetic": "",
-    "explains": "那边（敬）"
+    "explains": "那边（敬）",
+    "freq": 2349
   },
   {
     "word": "あつい",
     "phonetic": "",
-    "explains": "热的；厚的"
+    "explains": "热的；厚的",
+    "freq": 21669
   },
   {
     "word": "あつかう",
@@ -227,42 +250,50 @@
   {
     "word": "あと",
     "phonetic": "",
-    "explains": "后；之后"
+    "explains": "后；之后",
+    "freq": 150
   },
   {
     "word": "あな",
     "phonetic": "",
-    "explains": "洞；孔"
+    "explains": "洞；孔",
+    "freq": 10463
   },
   {
     "word": "あなた",
     "phonetic": "",
-    "explains": "你"
+    "explains": "你",
+    "freq": 5
   },
   {
     "word": "あに",
     "phonetic": "",
-    "explains": "哥哥"
+    "explains": "哥哥",
+    "freq": 13739
   },
   {
     "word": "あにき",
     "phonetic": "",
-    "explains": "大哥"
+    "explains": "大哥",
+    "freq": 16752
   },
   {
     "word": "あね",
     "phonetic": "",
-    "explains": "姐姐"
+    "explains": "姐姐",
+    "freq": 20957
   },
   {
     "word": "あの",
     "phonetic": "",
-    "explains": "那个；嗯"
+    "explains": "那个；嗯",
+    "freq": 28
   },
   {
     "word": "あびる",
     "phonetic": "",
-    "explains": "淋；洗"
+    "explains": "淋；洗",
+    "freq": 14018
   },
   {
     "word": "あぶない",
@@ -272,22 +303,26 @@
   {
     "word": "あぶら",
     "phonetic": "",
-    "explains": "油"
+    "explains": "油",
+    "freq": 17955
   },
   {
     "word": "あまい",
     "phonetic": "",
-    "explains": "甜的"
+    "explains": "甜的",
+    "freq": 25426
   },
   {
     "word": "あまり",
     "phonetic": "あまり",
-    "explains": "太；过于"
+    "explains": "太；过于",
+    "freq": 316
   },
   {
     "word": "あめ",
     "phonetic": "",
-    "explains": "雨"
+    "explains": "雨",
+    "freq": 13570
   },
   {
     "word": "あやまる",
@@ -307,12 +342,14 @@
   {
     "word": "あらし",
     "phonetic": "",
-    "explains": "暴风雨"
+    "explains": "暴风雨",
+    "freq": 23242
   },
   {
     "word": "あらそう",
     "phonetic": "",
-    "explains": "竞争"
+    "explains": "竞争",
+    "freq": 5805
   },
   {
     "word": "あらためる",
@@ -322,7 +359,8 @@
   {
     "word": "あらゆる",
     "phonetic": "",
-    "explains": "所有的"
+    "explains": "所有的",
+    "freq": 827
   },
   {
     "word": "あらわす",
@@ -332,12 +370,14 @@
   {
     "word": "ある",
     "phonetic": "",
-    "explains": "有（物）"
+    "explains": "有（物）",
+    "freq": 199
   },
   {
     "word": "あるいは",
     "phonetic": "",
-    "explains": "或者"
+    "explains": "或者",
+    "freq": 867
   },
   {
     "word": "あるく",
@@ -347,17 +387,20 @@
   {
     "word": "あれ",
     "phonetic": "",
-    "explains": "那个（远）"
+    "explains": "那个（远）",
+    "freq": 87
   },
   {
     "word": "あれこれ",
     "phonetic": "あれこれ",
-    "explains": "这个那个"
+    "explains": "这个那个",
+    "freq": 3765
   },
   {
     "word": "あわ",
     "phonetic": "あわ",
-    "explains": "泡"
+    "explains": "泡",
+    "freq": 9081
   },
   {
     "word": "あわてる",
@@ -367,7 +410,8 @@
   {
     "word": "あんしん",
     "phonetic": "あんしん",
-    "explains": "安心"
+    "explains": "安心",
+    "freq": 13568
   },
   {
     "word": "あんせい",
@@ -377,7 +421,8 @@
   {
     "word": "あんぜん",
     "phonetic": "あんぜん",
-    "explains": "安全"
+    "explains": "安全",
+    "freq": 22067
   },
   {
     "word": "あんてい",
@@ -387,17 +432,20 @@
   {
     "word": "あんな",
     "phonetic": "",
-    "explains": "那样的"
+    "explains": "那样的",
+    "freq": 334
   },
   {
     "word": "あんない",
     "phonetic": "あんない",
-    "explains": "介绍；向导"
+    "explains": "介绍；向导",
+    "freq": 33695
   },
   {
     "word": "あんまり",
     "phonetic": "",
-    "explains": "太；非常"
+    "explains": "太；非常",
+    "freq": 1223
   },
   {
     "word": "いい",
@@ -702,7 +750,8 @@
   {
     "word": "アパート",
     "phonetic": "",
-    "explains": "公寓"
+    "explains": "公寓",
+    "freq": 700
   },
   {
     "word": "か",
@@ -1542,7 +1591,8 @@
   {
     "word": "さあ",
     "phonetic": "さあ",
-    "explains": "来吧"
+    "explains": "来吧",
+    "freq": 70
   },
   {
     "word": "さい",
@@ -2497,7 +2547,8 @@
   {
     "word": "はあ",
     "phonetic": "はあ",
-    "explains": "哈（叹）"
+    "explains": "哈（叹）",
+    "freq": 10406
   },
   {
     "word": "はい",

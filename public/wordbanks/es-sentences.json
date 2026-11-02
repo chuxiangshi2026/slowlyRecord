@@ -1,138 +1,682 @@
 [
-  {"word": "Me llamo Ana y tengo veinticinco años.", "explains": "我叫安娜，今年二十五岁。"},
-  {"word": "Vivo en Beijing con mi familia.", "explains": "我和家人住在北京。"},
-  {"word": "Trabajo en una empresa de tecnología.", "explains": "我在一家科技公司工作。"},
-  {"word": "Todos los días me levanto a las siete.", "explains": "我每天七点起床。"},
-  {"word": "Después del desayuno voy al trabajo en metro.", "explains": "早饭后我坐地铁去上班。"},
-  {"word": "Normalmente almuerzo en un restaurante cerca de la oficina.", "explains": "我通常在办公室附近的餐馆吃午饭。"},
-  {"word": "Por la tarde tengo muchas reuniones.", "explains": "下午我有很多会。"},
-  {"word": "Vuelvo a casa alrededor de las siete.", "explains": "我七点左右回家。"},
-  {"word": "Por la noche estudio español una hora.", "explains": "晚上我学一小时西班牙语。"},
-  {"word": "Estoy aprendiendo español desde hace dos años.", "explains": "我学西班牙语两年了。"},
-  {"word": "Al principio era muy difícil, pero ahora es más fácil.", "explains": "一开始很难，但现在容易多了。"},
-  {"word": "Cada día aprendo diez palabras nuevas.", "explains": "我每天学十个新单词。"},
-  {"word": "La gramática es más difícil que el vocabulario.", "explains": "语法比词汇难。"},
-  {"word": "Quiero hablar español con fluidez.", "explains": "我想流利地说西班牙语。"},
-  {"word": "El verano que viene quiero viajar a España.", "explains": "明年夏天我想去西班牙。"},
-  {"word": "Quiero visitar Madrid y Barcelona.", "explains": "我想去马德里和巴塞罗那。"},
-  {"word": "Dicen que Barcelona es una ciudad muy bonita.", "explains": "据说巴塞罗那是一座很美的城市。"},
-  {"word": "Ya compré los billetes de avión.", "explains": "我已经买了机票。"},
-  {"word": "También reservé el hotel por internet.", "explains": "我还在网上订了酒店。"},
-  {"word": "El año pasado viajé a México.", "explains": "去年我去了墨西哥。"},
-  {"word": "La comida mexicana es muy sabrosa.", "explains": "墨西哥菜很好吃。"},
-  {"word": "Mi comida favorita es la paella.", "explains": "我最喜欢的菜是海鲜饭。"},
-  {"word": "En mi tiempo libre hago deporte.", "explains": "空闲时我做运动。"},
-  {"word": "Voy al gimnasio tres veces por semana.", "explains": "我每周去三次健身房。"},
-  {"word": "Antes jugaba al fútbol, pero ahora corro.", "explains": "以前我踢足球，现在跑步。"},
-  {"word": "El deporte me ayuda a estar sano.", "explains": "运动帮助我保持健康。"},
-  {"word": "Últimamente tengo mucho trabajo.", "explains": "最近我工作很多。"},
-  {"word": "Todos los días vuelvo a casa tarde.", "explains": "我每天回家都很晚。"},
-  {"word": "Por eso tengo poco tiempo libre.", "explains": "所以我的空闲时间很少。"},
-  {"word": "Pero los fines de semana intento descansar.", "explains": "但周末我尽量休息。"},
-  {"word": "Me gusta pasar tiempo con mis amigos.", "explains": "我喜欢和朋友一起度过时光。"},
-  {"word": "A menudo vamos al cine o a un café.", "explains": "我们常去看电影或去咖啡馆。"},
-  {"word": "A veces cocinamos juntos.", "explains": "有时我们一起做饭。"},
-  {"word": "Siempre es divertido.", "explains": "总是很开心。"},
-  {"word": "Ayer fui de compras.", "explains": "昨天我去购物了。"},
-  {"word": "Quería comprar unos zapatos nuevos.", "explains": "我想买双新鞋。"},
-  {"word": "Pero eran demasiado caros.", "explains": "但是太贵了。"},
-  {"word": "Así que decidí esperar.", "explains": "所以我决定等等。"},
-  {"word": "Ayer llovió todo el día.", "explains": "昨天下了一天雨。"},
-  {"word": "Olvidé el paraguas en casa.", "explains": "我把伞忘在家里了。"},
-  {"word": "Me empapé por completo.", "explains": "我全身都湿透了。"},
-  {"word": "El invierno en el norte de China es muy frío.", "explains": "中国北方的冬天很冷。"},
-  {"word": "La temperatura baja a menos diez grados.", "explains": "气温能降到零下十度。"},
-  {"word": "Pero yo estoy acostumbrado al frío.", "explains": "但我习惯了寒冷。"},
-  {"word": "La primavera es mi estación favorita.", "explains": "春天是我最喜欢的季节。"},
-  {"word": "Cuando llega la primavera, hace buen tiempo.", "explains": "春天来了，天气就好了。"},
-  {"word": "Empecé a estudiar español en la universidad.", "explains": "我在大学开始学西班牙语。"},
-  {"word": "Al principio era solo un pasatiempo.", "explains": "一开始只是个爱好。"},
-  {"word": "Luego se convirtió en mi profesión.", "explains": "后来成了我的职业。"},
-  {"word": "Trabajo como traductor.", "explains": "我做翻译工作。"},
-  {"word": "Me gusta mucho mi trabajo.", "explains": "我非常喜欢我的工作。"},
-  {"word": "Cada día aprendo algo nuevo.", "explains": "每天我都能学到新东西。"},
-  {"word": "Les recomiendo a todos aprender idiomas.", "explains": "我建议大家都学外语。"},
-  {"word": "Abre muchas puertas y oportunidades.", "explains": "它会带来很多机会。"},
-  {"word": "Lo más importante es no tener miedo de equivocarse.", "explains": "最重要的是不怕犯错。"},
-  {"word": "Los errores son parte del aprendizaje.", "explains": "错误是学习的一部分。"},
-  {"word": "Si estudias cada día, verás resultados.", "explains": "每天学习，就会有结果。"},
-  {"word": "¡Mucha suerte con el español!", "explains": "祝西班牙语学习顺利！"},
-  {"word": "¿Dónde está la estación de tren?", "explains": "火车站在哪？"},
-  {"word": "Un billete de ida a Madrid, por favor.", "explains": "一张去马德里的单程票。"},
-  {"word": "¿A qué hora sale el próximo tren?", "explains": "下一班火车几点出发？"},
-  {"word": "¿De qué andén sale?", "explains": "从哪个站台发车？"},
-  {"word": "¿Este tren para en Sevilla?", "explains": "这趟车停塞维利亚吗？"},
-  {"word": "¿Cuántas paradas quedan?", "explains": "还有几站？"},
-  {"word": "¿Tengo que hacer transbordo?", "explains": "我需要换乘吗？"},
-  {"word": "¿Dónde puedo coger un taxi?", "explains": "我在哪能打到车？"},
-  {"word": "Lléveme a esta dirección, por favor.", "explains": "请带我去这个地址。"},
-  {"word": "Pare aquí, por favor.", "explains": "请在这儿停。"},
-  {"word": "¿Cuánto cuesta hasta el centro?", "explains": "到市中心多少钱？"},
-  {"word": "¿Se puede pagar con tarjeta?", "explains": "可以刷卡吗？"},
-  {"word": "Quisiera reservar una habitación doble.", "explains": "我想订一间双人房。"},
-  {"word": "Tengo una reserva a nombre de Li.", "explains": "我有预订，姓李。"},
-  {"word": "¿A qué hora es el desayuno?", "explains": "早餐几点？"},
-  {"word": "La habitación no tiene agua caliente.", "explains": "房间没有热水。"},
-  {"word": "¿Puedo dejar el equipaje aquí?", "explains": "我可以把行李放这儿吗？"},
-  {"word": "¿Hay wifi en la habitación?", "explains": "房间有 Wi-Fi 吗？"},
-  {"word": "¿Dónde está la oficina de turismo?", "explains": "旅游咨询处在哪？"},
-  {"word": "¿Me puede hacer una foto?", "explains": "能帮我拍张照吗？"},
-  {"word": "¿Cuánto cuesta la entrada?", "explains": "门票多少钱？"},
-  {"word": "¿Hay visita guiada en inglés?", "explains": "有英文导览吗？"},
-  {"word": "¿Qué lugares me recomienda?", "explains": "你推荐哪些地方？"},
-  {"word": "¿Está lejos de aquí?", "explains": "离这儿远吗？"},
-  {"word": "¿Se puede llegar andando?", "explains": "能走过去吗？"},
-  {"word": "¿Tiene una talla más pequeña?", "explains": "有小一号的吗？"},
-  {"word": "¿Me lo puedo probar?", "explains": "我可以试穿吗？"},
-  {"word": "¿Dónde está el probador?", "explains": "试衣间在哪？"},
-  {"word": "Me lo llevo.", "explains": "我要了。"},
-  {"word": "¿Me lo puede envolver para regalo?", "explains": "能帮我包成礼物吗？"},
-  {"word": "¿Puedo devolverlo mañana?", "explains": "我明天能退吗？"},
-  {"word": "No me queda bien.", "explains": "我穿着不合适。"},
-  {"word": "¿Tienen menú del día?", "explains": "有今日套餐吗？"},
-  {"word": "Para mí, una sopa y una ensalada.", "explains": "我要一个汤和一份沙拉。"},
-  {"word": "Sin cebolla, por favor.", "explains": "请不要洋葱。"},
-  {"word": "Soy alérgico a los frutos secos.", "explains": "我对坚果过敏。"},
-  {"word": "Está muy rico, gracias.", "explains": "很好吃，谢谢。"},
-  {"word": "¿Nos trae la cuenta?", "explains": "能给我们账单吗？"},
-  {"word": "¿Podemos pagar por separado?", "explains": "我们可以分开付吗？"},
-  {"word": "¿Me lo pone para llevar?", "explains": "能给我打包吗？"},
-  {"word": "No me siento bien.", "explains": "我不舒服。"},
-  {"word": "Me duele la cabeza.", "explains": "我头疼。"},
-  {"word": "Tengo fiebre.", "explains": "我发烧。"},
-  {"word": "¿Hay una farmacia cerca?", "explains": "附近有药店吗？"},
-  {"word": "Necesito ver a un médico.", "explains": "我需要看医生。"},
-  {"word": "Llame a una ambulancia, por favor.", "explains": "请叫救护车。"},
-  {"word": "He perdido mi pasaporte.", "explains": "我护照丢了。"},
-  {"word": "Me han robado la cartera.", "explains": "我钱包被偷了。"},
-  {"word": "¿Puede llamar a la policía?", "explains": "能报警吗？"},
-  {"word": "¿Puedo usar su teléfono?", "explains": "我可以用您的电话吗？"},
-  {"word": "La reunión empieza a las diez.", "explains": "会议十点开始。"},
-  {"word": "¿Puedes enviarme el documento?", "explains": "你能把文件发给我吗？"},
-  {"word": "No te oigo bien.", "explains": "我听不清你。"},
-  {"word": "¿Puedes hablar más alto?", "explains": "你能大声点吗？"},
-  {"word": "Lo siento, llego tarde.", "explains": "抱歉，我迟到了。"},
-  {"word": "Me voy primero.", "explains": "我先走了。"},
-  {"word": "¿Qué planes tienes para el fin de semana?", "explains": "周末有什么计划？"},
-  {"word": "¿Te apetece tomar algo?", "explains": "想去喝点什么吗？"},
-  {"word": "Me encantaría, gracias.", "explains": "我很乐意，谢谢。"},
-  {"word": "Lo siento, no puedo.", "explains": "抱歉，我去不了。"},
-  {"word": "¿Nos vemos mañana?", "explains": "明天见？"},
-  {"word": "¿Puedes explicarlo otra vez?", "explains": "你能再解释一遍吗？"},
-  {"word": "No entiendo esta palabra.", "explains": "我不懂这个词。"},
-  {"word": "¿Cómo se pronuncia?", "explains": "怎么发音？"},
-  {"word": "Estoy estudiando español desde hace un año.", "explains": "我学西语一年了。"},
-  {"word": "Cada día practico media hora.", "explains": "我每天练半小时。"},
-  {"word": "¿Me corriges los errores?", "explains": "你能帮我纠正错误吗？"},
-  {"word": "¡Mucho ánimo!", "explains": "加油！"},
-  {"word": "Que tengas suerte en el examen.", "explains": "祝你考试顺利。"},
-  {"word": "¿Qué tal el examen?", "explains": "考试怎么样？"},
-  {"word": "Va a llover esta tarde.", "explains": "下午要下雨。"},
-  {"word": "Hace mucho frío hoy.", "explains": "今天很冷。"},
-  {"word": "¿Qué tiempo hace mañana?", "explains": "明天天气怎么样？"},
-  {"word": "¿Tienes hora?", "explains": "现在几点？"},
-  {"word": "Llego en diez minutos.", "explains": "我十分钟后到。"},
-  {"word": "¿A qué hora quedamos?", "explains": "我们几点见？"},
-  {"word": "Sobre las siete.", "explains": "大约七点。"},
-  {"word": "Ya es tarde, me voy.", "explains": "很晚了，我走了。"}
+  {
+    "word": "Me llamo Ana y tengo veinticinco años.",
+    "explains": "我叫安娜，今年二十五岁。",
+    "freq": 11456
+  },
+  {
+    "word": "Vivo en Beijing con mi familia.",
+    "explains": "我和家人住在北京。",
+    "freq": 20214
+  },
+  {
+    "word": "Trabajo en una empresa de tecnología.",
+    "explains": "我在一家科技公司工作。",
+    "freq": 2262
+  },
+  {
+    "word": "Todos los días me levanto a las siete.",
+    "explains": "我每天七点起床。",
+    "freq": 8627
+  },
+  {
+    "word": "Después del desayuno voy al trabajo en metro.",
+    "explains": "早饭后我坐地铁去上班。",
+    "freq": 3230
+  },
+  {
+    "word": "Normalmente almuerzo en un restaurante cerca de la oficina.",
+    "explains": "我通常在办公室附近的餐馆吃午饭。",
+    "freq": 1903
+  },
+  {
+    "word": "Por la tarde tengo muchas reuniones.",
+    "explains": "下午我有很多会。",
+    "freq": 4071
+  },
+  {
+    "word": "Vuelvo a casa alrededor de las siete.",
+    "explains": "我七点左右回家。",
+    "freq": 1282
+  },
+  {
+    "word": "Por la noche estudio español una hora.",
+    "explains": "晚上我学一小时西班牙语。",
+    "freq": 3233
+  },
+  {
+    "word": "Estoy aprendiendo español desde hace dos años.",
+    "explains": "我学西班牙语两年了。",
+    "freq": 5996
+  },
+  {
+    "word": "Al principio era muy difícil, pero ahora es más fácil.",
+    "explains": "一开始很难，但现在容易多了。",
+    "freq": 940
+  },
+  {
+    "word": "Cada día aprendo diez palabras nuevas.",
+    "explains": "我每天学十个新单词。",
+    "freq": 16475
+  },
+  {
+    "word": "La gramática es más difícil que el vocabulario.",
+    "explains": "语法比词汇难。",
+    "freq": 22459
+  },
+  {
+    "word": "Quiero hablar español con fluidez.",
+    "explains": "我想流利地说西班牙语。",
+    "freq": 34389
+  },
+  {
+    "word": "El verano que viene quiero viajar a España.",
+    "explains": "明年夏天我想去西班牙。",
+    "freq": 3406
+  },
+  {
+    "word": "Quiero visitar Madrid y Barcelona.",
+    "explains": "我想去马德里和巴塞罗那。",
+    "freq": 11831
+  },
+  {
+    "word": "Dicen que Barcelona es una ciudad muy bonita.",
+    "explains": "据说巴塞罗那是一座很美的城市。",
+    "freq": 11831
+  },
+  {
+    "word": "Ya compré los billetes de avión.",
+    "explains": "我已经买了机票。",
+    "freq": 3971
+  },
+  {
+    "word": "También reservé el hotel por internet.",
+    "explains": "我还在网上订了酒店。",
+    "freq": 18730
+  },
+  {
+    "word": "El año pasado viajé a México.",
+    "explains": "去年我去了墨西哥。",
+    "freq": 20853
+  },
+  {
+    "word": "La comida mexicana es muy sabrosa.",
+    "explains": "墨西哥菜很好吃。",
+    "freq": 20517
+  },
+  {
+    "word": "Mi comida favorita es la paella.",
+    "explains": "我最喜欢的菜是海鲜饭。",
+    "freq": 32914
+  },
+  {
+    "word": "En mi tiempo libre hago deporte.",
+    "explains": "空闲时我做运动。",
+    "freq": 4299
+  },
+  {
+    "word": "Voy al gimnasio tres veces por semana.",
+    "explains": "我每周去三次健身房。",
+    "freq": 3596
+  },
+  {
+    "word": "Antes jugaba al fútbol, pero ahora corro.",
+    "explains": "以前我踢足球，现在跑步。",
+    "freq": 10767
+  },
+  {
+    "word": "El deporte me ayuda a estar sano.",
+    "explains": "运动帮助我保持健康。",
+    "freq": 4299
+  },
+  {
+    "word": "Últimamente tengo mucho trabajo.",
+    "explains": "最近我工作很多。",
+    "freq": 1780
+  },
+  {
+    "word": "Todos los días vuelvo a casa tarde.",
+    "explains": "我每天回家都很晚。",
+    "freq": 1282
+  },
+  {
+    "word": "Por eso tengo poco tiempo libre.",
+    "explains": "所以我的空闲时间很少。",
+    "freq": 634
+  },
+  {
+    "word": "Pero los fines de semana intento descansar.",
+    "explains": "但周末我尽量休息。",
+    "freq": 4744
+  },
+  {
+    "word": "Me gusta pasar tiempo con mis amigos.",
+    "explains": "我喜欢和朋友一起度过时光。",
+    "freq": 323
+  },
+  {
+    "word": "A menudo vamos al cine o a un café.",
+    "explains": "我们常去看电影或去咖啡馆。",
+    "freq": 1462
+  },
+  {
+    "word": "A veces cocinamos juntos.",
+    "explains": "有时我们一起做饭。",
+    "freq": 37911
+  },
+  {
+    "word": "Siempre es divertido.",
+    "explains": "总是很开心。",
+    "freq": 684
+  },
+  {
+    "word": "Ayer fui de compras.",
+    "explains": "昨天我去购物了。",
+    "freq": 2427
+  },
+  {
+    "word": "Quería comprar unos zapatos nuevos.",
+    "explains": "我想买双新鞋。",
+    "freq": 1365
+  },
+  {
+    "word": "Pero eran demasiado caros.",
+    "explains": "但是太贵了。",
+    "freq": 9869
+  },
+  {
+    "word": "Así que decidí esperar.",
+    "explains": "所以我决定等等。",
+    "freq": 2844
+  },
+  {
+    "word": "Ayer llovió todo el día.",
+    "explains": "昨天下了一天雨。",
+    "freq": 25072
+  },
+  {
+    "word": "Olvidé el paraguas en casa.",
+    "explains": "我把伞忘在家里了。",
+    "freq": 8706
+  },
+  {
+    "word": "Me empapé por completo.",
+    "explains": "我全身都湿透了。",
+    "freq": 1231
+  },
+  {
+    "word": "El invierno en el norte de China es muy frío.",
+    "explains": "中国北方的冬天很冷。",
+    "freq": 2609
+  },
+  {
+    "word": "La temperatura baja a menos diez grados.",
+    "explains": "气温能降到零下十度。",
+    "freq": 3569
+  },
+  {
+    "word": "Pero yo estoy acostumbrado al frío.",
+    "explains": "但我习惯了寒冷。",
+    "freq": 4721
+  },
+  {
+    "word": "La primavera es mi estación favorita.",
+    "explains": "春天是我最喜欢的季节。",
+    "freq": 2962
+  },
+  {
+    "word": "Cuando llega la primavera, hace buen tiempo.",
+    "explains": "春天来了，天气就好了。",
+    "freq": 2900
+  },
+  {
+    "word": "Empecé a estudiar español en la universidad.",
+    "explains": "我在大学开始学西班牙语。",
+    "freq": 3233
+  },
+  {
+    "word": "Al principio era solo un pasatiempo.",
+    "explains": "一开始只是个爱好。",
+    "freq": 11650
+  },
+  {
+    "word": "Luego se convirtió en mi profesión.",
+    "explains": "后来成了我的职业。",
+    "freq": 4783
+  },
+  {
+    "word": "Trabajo como traductor.",
+    "explains": "我做翻译工作。",
+    "freq": 17248
+  },
+  {
+    "word": "Me gusta mucho mi trabajo.",
+    "explains": "我非常喜欢我的工作。",
+    "freq": 207
+  },
+  {
+    "word": "Cada día aprendo algo nuevo.",
+    "explains": "每天我都能学到新东西。",
+    "freq": 16475
+  },
+  {
+    "word": "Les recomiendo a todos aprender idiomas.",
+    "explains": "我建议大家都学外语。",
+    "freq": 11620
+  },
+  {
+    "word": "Abre muchas puertas y oportunidades.",
+    "explains": "它会带来很多机会。",
+    "freq": 4189
+  },
+  {
+    "word": "Lo más importante es no tener miedo de equivocarse.",
+    "explains": "最重要的是不怕犯错。",
+    "freq": 20147
+  },
+  {
+    "word": "Los errores son parte del aprendizaje.",
+    "explains": "错误是学习的一部分。",
+    "freq": 11832
+  },
+  {
+    "word": "Si estudias cada día, verás resultados.",
+    "explains": "每天学习，就会有结果。",
+    "freq": 16229
+  },
+  {
+    "word": "¡Mucha suerte con el español!",
+    "explains": "祝西班牙语学习顺利！",
+    "freq": 3233
+  },
+  {
+    "word": "¿Dónde está la estación de tren?",
+    "explains": "火车站在哪？",
+    "freq": 1179
+  },
+  {
+    "word": "Un billete de ida a Madrid, por favor.",
+    "explains": "一张去马德里的单程票。",
+    "freq": 6986
+  },
+  {
+    "word": "¿A qué hora sale el próximo tren?",
+    "explains": "下一班火车几点出发？",
+    "freq": 1213
+  },
+  {
+    "word": "¿De qué andén sale?",
+    "explains": "从哪个站台发车？",
+    "freq": 19071
+  },
+  {
+    "word": "¿Este tren para en Sevilla?",
+    "explains": "这趟车停塞维利亚吗？",
+    "freq": 20203
+  },
+  {
+    "word": "¿Cuántas paradas quedan?",
+    "explains": "还有几站？",
+    "freq": 13385
+  },
+  {
+    "word": "¿Tengo que hacer transbordo?",
+    "explains": "我需要换乘吗？",
+    "freq": 68
+  },
+  {
+    "word": "¿Dónde puedo coger un taxi?",
+    "explains": "我在哪能打到车？",
+    "freq": 1564
+  },
+  {
+    "word": "Lléveme a esta dirección, por favor.",
+    "explains": "请带我去这个地址。",
+    "freq": 15172
+  },
+  {
+    "word": "Pare aquí, por favor.",
+    "explains": "请在这儿停。",
+    "freq": 3089
+  },
+  {
+    "word": "¿Cuánto cuesta hasta el centro?",
+    "explains": "到市中心多少钱？",
+    "freq": 1832
+  },
+  {
+    "word": "¿Se puede pagar con tarjeta?",
+    "explains": "可以刷卡吗？",
+    "freq": 1336
+  },
+  {
+    "word": "Quisiera reservar una habitación doble.",
+    "explains": "我想订一间双人房。",
+    "freq": 13900
+  },
+  {
+    "word": "Tengo una reserva a nombre de Li.",
+    "explains": "我有预订，姓李。",
+    "freq": 7086
+  },
+  {
+    "word": "¿A qué hora es el desayuno?",
+    "explains": "早餐几点？",
+    "freq": 1953
+  },
+  {
+    "word": "La habitación no tiene agua caliente.",
+    "explains": "房间没有热水。",
+    "freq": 1098
+  },
+  {
+    "word": "¿Puedo dejar el equipaje aquí?",
+    "explains": "我可以把行李放这儿吗？",
+    "freq": 3930
+  },
+  {
+    "word": "¿Hay wifi en la habitación?",
+    "explains": "房间有 Wi-Fi 吗？",
+    "freq": 32655
+  },
+  {
+    "word": "¿Dónde está la oficina de turismo?",
+    "explains": "旅游咨询处在哪？",
+    "freq": 13734
+  },
+  {
+    "word": "¿Me puede hacer una foto?",
+    "explains": "能帮我拍张照吗？",
+    "freq": 767
+  },
+  {
+    "word": "¿Cuánto cuesta la entrada?",
+    "explains": "门票多少钱？",
+    "freq": 1832
+  },
+  {
+    "word": "¿Hay visita guiada en inglés?",
+    "explains": "有英文导览吗？",
+    "freq": 28262
+  },
+  {
+    "word": "¿Qué lugares me recomienda?",
+    "explains": "你推荐哪些地方？",
+    "freq": 17262
+  },
+  {
+    "word": "¿Está lejos de aquí?",
+    "explains": "离这儿远吗？",
+    "freq": 523
+  },
+  {
+    "word": "¿Se puede llegar andando?",
+    "explains": "能走过去吗？",
+    "freq": 2495
+  },
+  {
+    "word": "¿Tiene una talla más pequeña?",
+    "explains": "有小一号的吗？",
+    "freq": 5623
+  },
+  {
+    "word": "¿Me lo puedo probar?",
+    "explains": "我可以试穿吗？",
+    "freq": 1295
+  },
+  {
+    "word": "¿Dónde está el probador?",
+    "explains": "试衣间在哪？",
+    "freq": 40602
+  },
+  {
+    "word": "Me lo llevo.",
+    "explains": "我要了。",
+    "freq": 876
+  },
+  {
+    "word": "¿Me lo puede envolver para regalo?",
+    "explains": "能帮我包成礼物吗？",
+    "freq": 18690
+  },
+  {
+    "word": "¿Puedo devolverlo mañana?",
+    "explains": "我明天能退吗？",
+    "freq": 11057
+  },
+  {
+    "word": "No me queda bien.",
+    "explains": "我穿着不合适。",
+    "freq": 536
+  },
+  {
+    "word": "¿Tienen menú del día?",
+    "explains": "有今日套餐吗？",
+    "freq": 5786
+  },
+  {
+    "word": "Para mí, una sopa y una ensalada.",
+    "explains": "我要一个汤和一份沙拉。",
+    "freq": 4192
+  },
+  {
+    "word": "Sin cebolla, por favor.",
+    "explains": "请不要洋葱。",
+    "freq": 8939
+  },
+  {
+    "word": "Soy alérgico a los frutos secos.",
+    "explains": "我对坚果过敏。",
+    "freq": 11499
+  },
+  {
+    "word": "Está muy rico, gracias.",
+    "explains": "很好吃，谢谢。",
+    "freq": 1396
+  },
+  {
+    "word": "¿Nos trae la cuenta?",
+    "explains": "能给我们账单吗？",
+    "freq": 1068
+  },
+  {
+    "word": "¿Podemos pagar por separado?",
+    "explains": "我们可以分开付吗？",
+    "freq": 6045
+  },
+  {
+    "word": "¿Me lo pone para llevar?",
+    "explains": "能给我打包吗？",
+    "freq": 1015
+  },
+  {
+    "word": "No me siento bien.",
+    "explains": "我不舒服。",
+    "freq": 106
+  },
+  {
+    "word": "Me duele la cabeza.",
+    "explains": "我头疼。",
+    "freq": 1185
+  },
+  {
+    "word": "Tengo fiebre.",
+    "explains": "我发烧。",
+    "freq": 3120
+  },
+  {
+    "word": "¿Hay una farmacia cerca?",
+    "explains": "附近有药店吗？",
+    "freq": 6877
+  },
+  {
+    "word": "Necesito ver a un médico.",
+    "explains": "我需要看医生。",
+    "freq": 704
+  },
+  {
+    "word": "Llame a una ambulancia, por favor.",
+    "explains": "请叫救护车。",
+    "freq": 2580
+  },
+  {
+    "word": "He perdido mi pasaporte.",
+    "explains": "我护照丢了。",
+    "freq": 4119
+  },
+  {
+    "word": "Me han robado la cartera.",
+    "explains": "我钱包被偷了。",
+    "freq": 3517
+  },
+  {
+    "word": "¿Puede llamar a la policía?",
+    "explains": "能报警吗？",
+    "freq": 581
+  },
+  {
+    "word": "¿Puedo usar su teléfono?",
+    "explains": "我可以用您的电话吗？",
+    "freq": 666
+  },
+  {
+    "word": "La reunión empieza a las diez.",
+    "explains": "会议十点开始。",
+    "freq": 1274
+  },
+  {
+    "word": "¿Puedes enviarme el documento?",
+    "explains": "你能把文件发给我吗？",
+    "freq": 11181
+  },
+  {
+    "word": "No te oigo bien.",
+    "explains": "我听不清你。",
+    "freq": 2510
+  },
+  {
+    "word": "¿Puedes hablar más alto?",
+    "explains": "你能大声点吗？",
+    "freq": 525
+  },
+  {
+    "word": "Lo siento, llego tarde.",
+    "explains": "抱歉，我迟到了。",
+    "freq": 2181
+  },
+  {
+    "word": "Me voy primero.",
+    "explains": "我先走了。",
+    "freq": 324
+  },
+  {
+    "word": "¿Qué planes tienes para el fin de semana?",
+    "explains": "周末有什么计划？",
+    "freq": 1405
+  },
+  {
+    "word": "¿Te apetece tomar algo?",
+    "explains": "想去喝点什么吗？",
+    "freq": 3621
+  },
+  {
+    "word": "Me encantaría, gracias.",
+    "explains": "我很乐意，谢谢。",
+    "freq": 1486
+  },
+  {
+    "word": "Lo siento, no puedo.",
+    "explains": "抱歉，我去不了。",
+    "freq": 106
+  },
+  {
+    "word": "¿Nos vemos mañana?",
+    "explains": "明天见？",
+    "freq": 646
+  },
+  {
+    "word": "¿Puedes explicarlo otra vez?",
+    "explains": "你能再解释一遍吗？",
+    "freq": 4849
+  },
+  {
+    "word": "No entiendo esta palabra.",
+    "explains": "我不懂这个词。",
+    "freq": 534
+  },
+  {
+    "word": "¿Cómo se pronuncia?",
+    "explains": "怎么发音？",
+    "freq": 16416
+  },
+  {
+    "word": "Estoy estudiando español desde hace un año.",
+    "explains": "我学西语一年了。",
+    "freq": 4494
+  },
+  {
+    "word": "Cada día practico media hora.",
+    "explains": "我每天练半小时。",
+    "freq": 19755
+  },
+  {
+    "word": "¿Me corriges los errores?",
+    "explains": "你能帮我纠正错误吗？",
+    "freq": 2285
+  },
+  {
+    "word": "¡Mucho ánimo!",
+    "explains": "加油！",
+    "freq": 3792
+  },
+  {
+    "word": "Que tengas suerte en el examen.",
+    "explains": "祝你考试顺利。",
+    "freq": 2024
+  },
+  {
+    "word": "¿Qué tal el examen?",
+    "explains": "考试怎么样？",
+    "freq": 2024
+  },
+  {
+    "word": "Va a llover esta tarde.",
+    "explains": "下午要下雨。",
+    "freq": 7868
+  },
+  {
+    "word": "Hace mucho frío hoy.",
+    "explains": "今天很冷。",
+    "freq": 1044
+  },
+  {
+    "word": "¿Qué tiempo hace mañana?",
+    "explains": "明天天气怎么样？",
+    "freq": 173
+  },
+  {
+    "word": "¿Tienes hora?",
+    "explains": "现在几点？",
+    "freq": 245
+  },
+  {
+    "word": "Llego en diez minutos.",
+    "explains": "我十分钟后到。",
+    "freq": 2181
+  },
+  {
+    "word": "¿A qué hora quedamos?",
+    "explains": "我们几点见？",
+    "freq": 2597
+  },
+  {
+    "word": "Sobre las siete.",
+    "explains": "大约七点。",
+    "freq": 844
+  },
+  {
+    "word": "Ya es tarde, me voy.",
+    "explains": "很晚了，我走了。",
+    "freq": 243
+  }
 ]

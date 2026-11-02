@@ -204,7 +204,8 @@ export const filterWordsForJsonExport = (words: Word[]): any[] => {
         isReview: word.isReview,
         ctime: formatDateTime(word.ctime),
         learnDate: formatDateTime(word.learnDate),
-        level: word.level
+        level: word.level,
+        freq: word.freq
     }));
 };
 

@@ -1,1058 +1,1322 @@
 [
   {
     "word": "How's it going?",
-    "explains": "【寒暄】最近怎么样？｜句型：How's it going? 比 How are you? 更随意"
+    "explains": "【寒暄】最近怎么样？｜句型：How's it going? 比 How are you? 更随意",
+    "freq": 79
   },
   {
     "word": "Long time no see!",
-    "explains": "【寒暄】好久不见！｜口语固定说法，不用于正式场合"
+    "explains": "【寒暄】好久不见！｜口语固定说法，不用于正式场合",
+    "freq": 182
   },
   {
     "word": "What have you been up to?",
-    "explains": "【寒暄】你最近在忙什么？｜句型：have been up to 最近在做"
+    "explains": "【寒暄】你最近在忙什么？｜句型：have been up to 最近在做",
+    "freq": 94
   },
   {
     "word": "Not much, just busy with work.",
-    "explains": "【寒暄】没什么，就是忙工作。｜回答 What have you been up to?"
+    "explains": "【寒暄】没什么，就是忙工作。｜回答 What have you been up to?",
+    "freq": 748
   },
   {
     "word": "Say hi to your family for me.",
-    "explains": "【寒暄】替我向家人问好。｜句型：say hi to sb for me"
+    "explains": "【寒暄】替我向家人问好。｜句型：say hi to sb for me",
+    "freq": 271
   },
   {
     "word": "Have a good one!",
-    "explains": "【告别】祝你今天顺利！｜口语告别，等于 Have a good day"
+    "explains": "【告别】祝你今天顺利！｜口语告别，等于 Have a good day",
+    "freq": 71
   },
   {
     "word": "Take care!",
-    "explains": "【告别】保重！｜最常用的轻松告别"
+    "explains": "【告别】保重！｜最常用的轻松告别",
+    "freq": 248
   },
   {
     "word": "Catch you later.",
-    "explains": "【告别】回头聊。｜口语告别，熟人之间用"
+    "explains": "【告别】回头聊。｜口语告别，熟人之间用",
+    "freq": 636
   },
   {
     "word": "I'd better get going.",
-    "explains": "【结束对话】我得走了。｜句型：had better + 动词原形"
+    "explains": "【结束对话】我得走了。｜句型：had better + 动词原形",
+    "freq": 174
   },
   {
     "word": "It was nice talking to you.",
-    "explains": "【结束对话】跟你聊得很开心。｜句型：It was nice doing sth"
+    "explains": "【结束对话】跟你聊得很开心。｜句型：It was nice doing sth",
+    "freq": 244
   },
   {
     "word": "Could you give me a hand with this?",
-    "explains": "【请求】能帮我弄一下这个吗？｜句型：give sb a hand with sth"
+    "explains": "【请求】能帮我弄一下这个吗？｜句型：give sb a hand with sth",
+    "freq": 367
   },
   {
     "word": "Would you mind opening the window?",
-    "explains": "【委婉请求】你介意开一下窗吗？｜句型：Would you mind + doing?"
+    "explains": "【委婉请求】你介意开一下窗吗？｜句型：Would you mind + doing?",
+    "freq": 1691
   },
   {
     "word": "Do you think you could help me move this?",
-    "explains": "【委婉请求】你能帮我搬一下这个吗？｜句型：Do you think you could + 动词原形?"
+    "explains": "【委婉请求】你能帮我搬一下这个吗？｜句型：Do you think you could + 动词原形?",
+    "freq": 278
   },
   {
     "word": "I was wondering if you could help me.",
-    "explains": "【极委婉请求】我在想你能不能帮我一下。｜句型：I was wondering if..."
+    "explains": "【极委婉请求】我在想你能不能帮我一下。｜句型：I was wondering if...",
+    "freq": 1369
   },
   {
     "word": "Can I ask you a favor?",
-    "explains": "【请求】能请你帮个忙吗？｜搭配：ask sb a favor"
+    "explains": "【请求】能请你帮个忙吗？｜搭配：ask sb a favor",
+    "freq": 1186
   },
   {
     "word": "Could I borrow your charger for a minute?",
-    "explains": "【借物】能借你的充电器用一下吗？｜句型：borrow sth for a minute"
+    "explains": "【借物】能借你的充电器用一下吗？｜句型：borrow sth for a minute",
+    "freq": 15131
   },
   {
     "word": "Would it be OK if I sat here?",
-    "explains": "【许可】我坐这儿可以吗？｜句型：Would it be OK if + 过去式?"
+    "explains": "【许可】我坐这儿可以吗？｜句型：Would it be OK if + 过去式?",
+    "freq": 2128
   },
   {
     "word": "Is it all right if I open the window?",
-    "explains": "【许可】我开窗可以吗？｜句型：Is it all right if...?"
+    "explains": "【许可】我开窗可以吗？｜句型：Is it all right if...?",
+    "freq": 982
   },
   {
     "word": "I'd appreciate it if you could send it by Friday.",
-    "explains": "【正式请求】如果能在周五前发给我，我会很感激。｜句型：I'd appreciate it if + 过去式"
+    "explains": "【正式请求】如果能在周五前发给我，我会很感激。｜句型：I'd appreciate it if + 过去式",
+    "freq": 1725
   },
   {
     "word": "Please let me know if you need anything.",
-    "explains": "【提供帮助】需要什么请告诉我。｜句型：let sb know"
+    "explains": "【提供帮助】需要什么请告诉我。｜句型：let sb know",
+    "freq": 143
   },
   {
     "word": "Let me know if there's anything I can do.",
-    "explains": "【提供帮助】有我能帮上忙的就说。｜句型：if there's anything I can do"
+    "explains": "【提供帮助】有我能帮上忙的就说。｜句型：if there's anything I can do",
+    "freq": 143
   },
   {
     "word": "No rush, whenever you have time.",
-    "explains": "【减轻压力】不着急，你有空再说。｜口语：no rush"
+    "explains": "【减轻压力】不着急，你有空再说。｜口语：no rush",
+    "freq": 1908
   },
   {
     "word": "Thanks a lot for your help.",
-    "explains": "【感谢】非常感谢你的帮助。｜句型：thanks for + 名词/doing"
+    "explains": "【感谢】非常感谢你的帮助。｜句型：thanks for + 名词/doing",
+    "freq": 209
   },
   {
     "word": "I really appreciate it.",
-    "explains": "【感谢】我真的很感激。｜搭配：appreciate it"
+    "explains": "【感谢】我真的很感激。｜搭配：appreciate it",
+    "freq": 1040
   },
   {
     "word": "That's very kind of you.",
-    "explains": "【感谢】你人真好。｜句型：That's kind of you."
+    "explains": "【感谢】你人真好。｜句型：That's kind of you.",
+    "freq": 211
   },
   {
     "word": "I couldn't have done it without you.",
-    "explains": "【感谢】没有你我做不到。｜句型：couldn't have done（对过去的虚拟）"
+    "explains": "【感谢】没有你我做不到。｜句型：couldn't have done（对过去的虚拟）",
+    "freq": 273
   },
   {
     "word": "Don't mention it.",
-    "explains": "【回应感谢】别客气。｜固定回应"
+    "explains": "【回应感谢】别客气。｜固定回应",
+    "freq": 1263
   },
   {
     "word": "No problem at all.",
-    "explains": "【回应感谢】完全没问题。｜固定回应"
+    "explains": "【回应感谢】完全没问题。｜固定回应",
+    "freq": 338
   },
   {
     "word": "Anytime.",
-    "explains": "【回应感谢】随时（愿意帮忙）。｜固定回应"
+    "explains": "【回应感谢】随时（愿意帮忙）。｜固定回应",
+    "freq": 2947
   },
   {
     "word": "It was the least I could do.",
-    "explains": "【回应感谢】这是我应该做的。｜句型：the least I could do"
+    "explains": "【回应感谢】这是我应该做的。｜句型：the least I could do",
+    "freq": 444
   },
   {
     "word": "I'm really sorry about that.",
-    "explains": "【道歉】那件事我真的很抱歉。｜句型：be sorry about sth"
+    "explains": "【道歉】那件事我真的很抱歉。｜句型：be sorry about sth",
+    "freq": 127
   },
   {
     "word": "I apologize for the delay.",
-    "explains": "【正式道歉】抱歉耽误了。｜句型：apologize for + 名词/doing"
+    "explains": "【正式道歉】抱歉耽误了。｜句型：apologize for + 名词/doing",
+    "freq": 4046
   },
   {
     "word": "It won't happen again.",
-    "explains": "【道歉】不会再发生了。｜保证句式"
+    "explains": "【道歉】不会再发生了。｜保证句式",
+    "freq": 395
   },
   {
     "word": "That was my fault.",
-    "explains": "【担责】是我的错。｜口语担责"
+    "explains": "【担责】是我的错。｜口语担责",
+    "freq": 676
   },
   {
     "word": "No worries.",
-    "explains": "【回应道歉】没事。｜口语固定回应"
+    "explains": "【回应道歉】没事。｜口语固定回应",
+    "freq": 3214
   },
   {
     "word": "Don't worry about it.",
-    "explains": "【回应道歉】别放在心上。｜句型：worry about sth"
+    "explains": "【回应道歉】别放在心上。｜句型：worry about sth",
+    "freq": 362
   },
   {
     "word": "It's totally fine.",
-    "explains": "【回应道歉】完全没关系。｜口语回应"
+    "explains": "【回应道歉】完全没关系。｜口语回应",
+    "freq": 772
   },
   {
     "word": "I understand — these things happen.",
-    "explains": "【回应道歉】我理解，这种事难免。｜安慰式回应"
+    "explains": "【回应道歉】我理解，这种事难免。｜安慰式回应",
+    "freq": 395
   },
   {
     "word": "Do you feel like grabbing a coffee?",
-    "explains": "【邀请】想去喝杯咖啡吗？｜句型：feel like + doing"
+    "explains": "【邀请】想去喝杯咖啡吗？｜句型：feel like + doing",
+    "freq": 8603
   },
   {
     "word": "Are you free this Friday?",
-    "explains": "【邀请】这周五你有空吗？｜搭配：be free"
+    "explains": "【邀请】这周五你有空吗？｜搭配：be free",
+    "freq": 1725
   },
   {
     "word": "We'd love to have you over for dinner.",
-    "explains": "【邀请】我们很想请你来家里吃饭。｜句型：have sb over"
+    "explains": "【邀请】我们很想请你来家里吃饭。｜句型：have sb over",
+    "freq": 560
   },
   {
     "word": "I'd love to, thanks!",
-    "explains": "【接受邀请】我很乐意，谢谢！｜句型：I'd love to."
+    "explains": "【接受邀请】我很乐意，谢谢！｜句型：I'd love to.",
+    "freq": 209
   },
   {
     "word": "That sounds great.",
-    "explains": "【接受邀请】听起来不错。｜口语接受"
+    "explains": "【接受邀请】听起来不错。｜口语接受",
+    "freq": 587
   },
   {
     "word": "I'd love to, but I'm tied up that day.",
-    "explains": "【委婉拒绝】我很想去，但那天有事。｜搭配：be tied up 忙得脱不开身"
+    "explains": "【委婉拒绝】我很想去，但那天有事。｜搭配：be tied up 忙得脱不开身",
+    "freq": 2276
   },
   {
     "word": "Maybe another time.",
-    "explains": "【拒绝】改天吧。｜委婉拒绝"
+    "explains": "【拒绝】改天吧。｜委婉拒绝",
+    "freq": 234
   },
   {
     "word": "I'll have to take a rain check.",
-    "explains": "【委婉拒绝】我得改天了。｜习语：take a rain check"
+    "explains": "【委婉拒绝】我得改天了。｜习语：take a rain check",
+    "freq": 1358
   },
   {
     "word": "Thanks for the invite, but I can't make it.",
-    "explains": "【拒绝】谢谢邀请，但我来不了。｜搭配：make it 赶得上/能到场"
+    "explains": "【拒绝】谢谢邀请，但我来不了。｜搭配：make it 赶得上/能到场",
+    "freq": 1981
   },
   {
     "word": "Count me in.",
-    "explains": "【接受】算我一个。｜口语固定说法"
+    "explains": "【接受】算我一个。｜口语固定说法",
+    "freq": 872
   },
   {
     "word": "You should probably get some rest.",
-    "explains": "【建议】你最好休息一下。｜句型：should + 动词原形"
+    "explains": "【建议】你最好休息一下。｜句型：should + 动词原形",
+    "freq": 453
   },
   {
     "word": "Why don't you try again tomorrow?",
-    "explains": "【建议】你何不明天再试一次？｜句型：Why don't you...?"
+    "explains": "【建议】你何不明天再试一次？｜句型：Why don't you...?",
+    "freq": 316
   },
   {
     "word": "How about taking a taxi?",
-    "explains": "【建议】打车怎么样？｜句型：How about + doing?"
+    "explains": "【建议】打车怎么样？｜句型：How about + doing?",
+    "freq": 2211
   },
   {
     "word": "I'd suggest booking in advance.",
-    "explains": "【建议】我建议提前预订。｜句型：suggest + doing"
+    "explains": "【建议】我建议提前预订。｜句型：suggest + doing",
+    "freq": 10447
   },
   {
     "word": "It might be worth checking online.",
-    "explains": "【委婉建议】也许值得上网查一下。｜句型：be worth doing"
+    "explains": "【委婉建议】也许值得上网查一下。｜句型：be worth doing",
+    "freq": 2728
   },
   {
     "word": "You'd better not miss the last train.",
-    "explains": "【劝告】你最好不要错过末班车。｜句型：had better not do"
+    "explains": "【劝告】你最好不要错过末班车。｜句型：had better not do",
+    "freq": 787
   },
   {
     "word": "If I were you, I'd wait a bit.",
-    "explains": "【虚拟建议】如果我是你，我会再等等。｜句型：If I were you, I'd..."
+    "explains": "【虚拟建议】如果我是你，我会再等等。｜句型：If I were you, I'd...",
+    "freq": 303
   },
   {
     "word": "Make sure you keep the receipt.",
-    "explains": "【提醒】记得保留收据。｜句型：make sure + 从句"
+    "explains": "【提醒】记得保留收据。｜句型：make sure + 从句",
+    "freq": 5728
   },
   {
     "word": "Don't forget to lock the door.",
-    "explains": "【提醒】别忘了锁门。｜句型：forget to do 别忘了做"
+    "explains": "【提醒】别忘了锁门。｜句型：forget to do 别忘了做",
+    "freq": 1270
   },
   {
     "word": "It's up to you.",
-    "explains": "【决定】由你决定。｜句型：be up to sb"
+    "explains": "【决定】由你决定。｜句型：be up to sb",
+    "freq": 52
   },
   {
     "word": "In my opinion, it's worth the money.",
-    "explains": "【观点】在我看来，这钱花得值。｜句型：In my opinion, ..."
+    "explains": "【观点】在我看来，这钱花得值。｜句型：In my opinion, ...",
+    "freq": 1632
   },
   {
     "word": "As far as I'm concerned, it's not a big deal.",
-    "explains": "【观点】就我而言，这没什么大不了的。｜句型：as far as I'm concerned"
+    "explains": "【观点】就我而言，这没什么大不了的。｜句型：as far as I'm concerned",
+    "freq": 1582
   },
   {
     "word": "I see your point, but I don't quite agree.",
-    "explains": "【委婉反对】我明白你的意思，但我不太同意。｜句型：see sb's point"
+    "explains": "【委婉反对】我明白你的意思，但我不太同意。｜句型：see sb's point",
+    "freq": 903
   },
   {
     "word": "That's a fair point.",
-    "explains": "【认可观点】说得有道理。｜搭配：a fair point"
+    "explains": "【认可观点】说得有道理。｜搭配：a fair point",
+    "freq": 841
   },
   {
     "word": "I couldn't agree more.",
-    "explains": "【强烈同意】我完全同意。｜句型：couldn't agree more"
+    "explains": "【强烈同意】我完全同意。｜句型：couldn't agree more",
+    "freq": 903
   },
   {
     "word": "I'm not sure about that.",
-    "explains": "【委婉反对】我不太确定。｜礼貌表达异议"
+    "explains": "【委婉反对】我不太确定。｜礼貌表达异议",
+    "freq": 137
   },
   {
     "word": "It depends.",
-    "explains": "【谨慎回答】看情况。｜句型：depend on..."
+    "explains": "【谨慎回答】看情况。｜句型：depend on...",
+    "freq": 2048
   },
   {
     "word": "There's something in what you say.",
-    "explains": "【部分同意】你说的有一定道理。｜句型：there's something in..."
+    "explains": "【部分同意】你说的有一定道理。｜句型：there's something in...",
+    "freq": 108
   },
   {
     "word": "Let's agree to disagree.",
-    "explains": "【保留分歧】咱们求同存异吧。｜固定说法"
+    "explains": "【保留分歧】咱们求同存异吧。｜固定说法",
+    "freq": 5217
   },
   {
     "word": "To be honest, I have mixed feelings about it.",
-    "explains": "【表达感受】说实话，我对此感觉复杂。｜搭配：mixed feelings"
+    "explains": "【表达感受】说实话，我对此感觉复杂。｜搭配：mixed feelings",
+    "freq": 2769
   },
   {
     "word": "I'm leaning towards the first option.",
-    "explains": "【倾向】我倾向于第一个方案。｜句型：lean towards"
+    "explains": "【倾向】我倾向于第一个方案。｜句型：lean towards",
+    "freq": 9225
   },
   {
     "word": "On the whole, I think it's a good idea.",
-    "explains": "【总结观点】总的来说，我觉得这是个好主意。｜句型：on the whole"
+    "explains": "【总结观点】总的来说，我觉得这是个好主意。｜句型：on the whole",
+    "freq": 308
   },
   {
     "word": "That makes sense to me.",
-    "explains": "【同意】我觉得这说得通。｜搭配：make sense"
+    "explains": "【同意】我觉得这说得通。｜搭配：make sense",
+    "freq": 638
   },
   {
     "word": "I beg to differ.",
-    "explains": "【正式反对】恕我不同意。｜正式场合的反对"
+    "explains": "【正式反对】恕我不同意。｜正式场合的反对",
+    "freq": 12573
   },
   {
     "word": "Could you tell me where the nearest bank is?",
-    "explains": "【问路】能告诉我最近的银行在哪吗？｜句型：Could you tell me + 宾语从句?"
+    "explains": "【问路】能告诉我最近的银行在哪吗？｜句型：Could you tell me + 宾语从句?",
+    "freq": 5690
   },
   {
     "word": "Do you happen to know if this bus goes downtown?",
-    "explains": "【询问】你知道这趟公交去市中心吗？｜句型：happen to know"
+    "explains": "【询问】你知道这趟公交去市中心吗？｜句型：happen to know",
+    "freq": 3362
   },
   {
     "word": "I'm not sure I follow you.",
-    "explains": "【澄清】我不太明白你的意思。｜搭配：follow sb 听懂某人"
+    "explains": "【澄清】我不太明白你的意思。｜搭配：follow sb 听懂某人",
+    "freq": 637
   },
   {
     "word": "What exactly do you mean by that?",
-    "explains": "【澄清】你具体是什么意思？｜句型：What do you mean by...?"
+    "explains": "【澄清】你具体是什么意思？｜句型：What do you mean by...?",
+    "freq": 384
   },
   {
     "word": "Could you say that again, please?",
-    "explains": "【没听清】请再说一遍好吗？｜礼貌请求"
+    "explains": "【没听清】请再说一遍好吗？｜礼貌请求",
+    "freq": 154
   },
   {
     "word": "Sorry, I didn't catch that.",
-    "explains": "【没听清】抱歉，我没听清。｜搭配：catch 听清"
+    "explains": "【没听清】抱歉，我没听清。｜搭配：catch 听清",
+    "freq": 636
   },
   {
     "word": "Just to confirm, the meeting is at three, right?",
-    "explains": "【确认】确认一下，会议是三点，对吧？｜句型：just to confirm"
+    "explains": "【确认】确认一下，会议是三点，对吧？｜句型：just to confirm",
+    "freq": 3103
   },
   {
     "word": "Let me get this straight.",
-    "explains": "【确认理解】我把这事弄清楚。｜习语：get sth straight"
+    "explains": "【确认理解】我把这事弄清楚。｜习语：get sth straight",
+    "freq": 677
   },
   {
     "word": "So what you're saying is…",
-    "explains": "【复述确认】所以你的意思是……｜句型：what you're saying is..."
+    "explains": "【复述确认】所以你的意思是……｜句型：what you're saying is...",
+    "freq": 332
   },
   {
     "word": "Correct me if I'm wrong.",
-    "explains": "【确认】如果我说错了请纠正。｜固定说法"
+    "explains": "【确认】如果我说错了请纠正。｜固定说法",
+    "freq": 1418
   },
   {
     "word": "Does that make sense?",
-    "explains": "【确认对方理解】这样说你能理解吗？｜搭配：make sense"
+    "explains": "【确认对方理解】这样说你能理解吗？｜搭配：make sense",
+    "freq": 638
   },
   {
     "word": "Am I making myself clear?",
-    "explains": "【确认】我说明白了吗？｜句型：make oneself clear"
+    "explains": "【确认】我说明白了吗？｜句型：make oneself clear",
+    "freq": 540
   },
   {
     "word": "I'm just looking, thanks.",
-    "explains": "【购物】我先看看，谢谢。｜固定说法：just looking"
+    "explains": "【购物】我先看看，谢谢。｜固定说法：just looking",
+    "freq": 250
   },
   {
     "word": "How much is this?",
-    "explains": "【询价】这个多少钱？｜最基础的询价句"
+    "explains": "【询价】这个多少钱？｜最基础的询价句",
+    "freq": 135
   },
   {
     "word": "Do you have this in a smaller size?",
-    "explains": "【尺码】这个有小一号的吗？｜句型：have sth in a size"
+    "explains": "【尺码】这个有小一号的吗？｜句型：have sth in a size",
+    "freq": 3299
   },
   {
     "word": "Can I try this on?",
-    "explains": "【试穿】我可以试穿吗？｜短语动词：try on"
+    "explains": "【试穿】我可以试穿吗？｜短语动词：try on",
+    "freq": 252
   },
   {
     "word": "Where's the fitting room?",
-    "explains": "【购物】试衣间在哪？｜固定说法"
+    "explains": "【购物】试衣间在哪？｜固定说法",
+    "freq": 6714
   },
   {
     "word": "Is this on sale?",
-    "explains": "【折扣】这个打折吗？｜搭配：on sale"
+    "explains": "【折扣】这个打折吗？｜搭配：on sale",
+    "freq": 2419
   },
   {
     "word": "Can I get a discount?",
-    "explains": "【讲价】能便宜点吗？｜搭配：get a discount"
+    "explains": "【讲价】能便宜点吗？｜搭配：get a discount",
+    "freq": 6438
   },
   {
     "word": "I'll take it.",
-    "explains": "【购买】我要了。｜购物固定说法"
+    "explains": "【购买】我要了。｜购物固定说法",
+    "freq": 90
   },
   {
     "word": "Can I pay by card?",
-    "explains": "【支付】可以刷卡吗？｜句型：pay by + 支付方式"
+    "explains": "【支付】可以刷卡吗？｜句型：pay by + 支付方式",
+    "freq": 963
   },
   {
     "word": "Could I have a receipt?",
-    "explains": "【收据】能给我收据吗？｜句型：Could I have...?"
+    "explains": "【收据】能给我收据吗？｜句型：Could I have...?",
+    "freq": 5728
   },
   {
     "word": "I'd like to return this.",
-    "explains": "【退货】我想退这个。｜句型：I'd like to + 动词原形"
+    "explains": "【退货】我想退这个。｜句型：I'd like to + 动词原形",
+    "freq": 667
   },
   {
     "word": "It doesn't fit. Can I exchange it?",
-    "explains": "【换货】不合身，能换吗？｜搭配：fit / exchange"
+    "explains": "【换货】不合身，能换吗？｜搭配：fit / exchange",
+    "freq": 2372
   },
   {
     "word": "A table for two, please.",
-    "explains": "【餐厅】两位。｜句型：a table for + 人数"
+    "explains": "【餐厅】两位。｜句型：a table for + 人数",
+    "freq": 816
   },
   {
     "word": "Could I see the menu?",
-    "explains": "【餐厅】能看下菜单吗？｜句型：Could I see...?"
+    "explains": "【餐厅】能看下菜单吗？｜句型：Could I see...?",
+    "freq": 4328
   },
   {
     "word": "What do you recommend?",
-    "explains": "【点餐】你推荐什么？｜搭配：recommend"
+    "explains": "【点餐】你推荐什么？｜搭配：recommend",
+    "freq": 4040
   },
   {
     "word": "I'll have the chicken, please.",
-    "explains": "【点餐】我要鸡肉。｜句型：I'll have + 菜名"
+    "explains": "【点餐】我要鸡肉。｜句型：I'll have + 菜名",
+    "freq": 1224
   },
   {
     "word": "Could I get that without onions?",
-    "explains": "【特殊要求】那个不要洋葱可以吗？｜句型：without + 名词"
+    "explains": "【特殊要求】那个不要洋葱可以吗？｜句型：without + 名词",
+    "freq": 7593
   },
   {
     "word": "I'm allergic to nuts.",
-    "explains": "【过敏】我对坚果过敏。｜句型：be allergic to"
+    "explains": "【过敏】我对坚果过敏。｜句型：be allergic to",
+    "freq": 5567
   },
   {
     "word": "Could we get some more water?",
-    "explains": "【加菜】能再给点水吗？｜句型：get some more..."
+    "explains": "【加菜】能再给点水吗？｜句型：get some more...",
+    "freq": 378
   },
   {
     "word": "This isn't what I ordered.",
-    "explains": "【上错菜】这不是我点的。｜句型：what I ordered"
+    "explains": "【上错菜】这不是我点的。｜句型：what I ordered",
+    "freq": 1749
   },
   {
     "word": "Could we have the bill, please?",
-    "explains": "【结账】请结账。｜英式 bill，美式 check"
+    "explains": "【结账】请结账。｜英式 bill，美式 check",
+    "freq": 835
   },
   {
     "word": "Is service included?",
-    "explains": "【结账】含服务费吗？｜句型：be included"
+    "explains": "【结账】含服务费吗？｜句型：be included",
+    "freq": 5397
   },
   {
     "word": "Can I get this to go?",
-    "explains": "【外带】这个能打包吗？｜美式 to go，英式 takeaway"
+    "explains": "【外带】这个能打包吗？｜美式 to go，英式 takeaway",
+    "freq": 47
   },
   {
     "word": "It was delicious, thank you.",
-    "explains": "【用餐评价】很好吃，谢谢。｜简单评价"
+    "explains": "【用餐评价】很好吃，谢谢。｜简单评价",
+    "freq": 2018
   },
   {
     "word": "I have a reservation under the name Li.",
-    "explains": "【入住】我有预订，姓李。｜句型：under the name + 姓氏"
+    "explains": "【入住】我有预订，姓李。｜句型：under the name + 姓氏",
+    "freq": 5703
   },
   {
     "word": "I'd like to check in.",
-    "explains": "【入住】我想办入住。｜短语动词：check in"
+    "explains": "【入住】我想办入住。｜短语动词：check in",
+    "freq": 410
   },
   {
     "word": "What time is check-out?",
-    "explains": "【退房】几点退房？｜固定说法"
+    "explains": "【退房】几点退房？｜固定说法",
+    "freq": 410
   },
   {
     "word": "Could I have a late check-out?",
-    "explains": "【请求】能延迟退房吗？｜搭配：late check-out"
+    "explains": "【请求】能延迟退房吗？｜搭配：late check-out",
+    "freq": 410
   },
   {
     "word": "Is breakfast included?",
-    "explains": "【酒店】含早餐吗？｜句型：be included"
+    "explains": "【酒店】含早餐吗？｜句型：be included",
+    "freq": 5397
   },
   {
     "word": "The air conditioner isn't working.",
-    "explains": "【投诉】空调坏了。｜句型：sth isn't working"
+    "explains": "【投诉】空调坏了。｜句型：sth isn't working",
+    "freq": 15041
   },
   {
     "word": "Could you send someone up to fix it?",
-    "explains": "【请求】能派人上来修吗？｜句型：send sb up to do"
+    "explains": "【请求】能派人上来修吗？｜句型：send sb up to do",
+    "freq": 925
   },
   {
     "word": "Could I get an extra towel?",
-    "explains": "【请求】能多给一条毛巾吗？｜句型：an extra + 名词"
+    "explains": "【请求】能多给一条毛巾吗？｜句型：an extra + 名词",
+    "freq": 4297
   },
   {
     "word": "Could I leave my luggage here until noon?",
-    "explains": "【寄存】我能把行李寄存到中午吗？｜句型：leave sth here until..."
+    "explains": "【寄存】我能把行李寄存到中午吗？｜句型：leave sth here until...",
+    "freq": 4518
   },
   {
     "word": "I'd like to check out.",
-    "explains": "【退房】我要退房。｜短语动词：check out"
+    "explains": "【退房】我要退房。｜短语动词：check out",
+    "freq": 410
   },
   {
     "word": "Excuse me, how do I get to the station?",
-    "explains": "【问路】请问去车站怎么走？｜句型：How do I get to...?"
+    "explains": "【问路】请问去车站怎么走？｜句型：How do I get to...?",
+    "freq": 806
   },
   {
     "word": "Is it within walking distance?",
-    "explains": "【距离】走路能到吗？｜搭配：within walking distance"
+    "explains": "【距离】走路能到吗？｜搭配：within walking distance",
+    "freq": 1701
   },
   {
     "word": "Which way is the exit?",
-    "explains": "【方向】出口在哪边？｜句型：Which way is...?"
+    "explains": "【方向】出口在哪边？｜句型：Which way is...?",
+    "freq": 3147
   },
   {
     "word": "Go straight and turn left at the corner.",
-    "explains": "【指路】直走，在拐角左转。｜祈使句指路"
+    "explains": "【指路】直走，在拐角左转。｜祈使句指路",
+    "freq": 1413
   },
   {
     "word": "It's about a ten-minute walk.",
-    "explains": "【距离】大约走十分钟。｜复合形容词：a ten-minute walk"
+    "explains": "【距离】大约走十分钟。｜复合形容词：a ten-minute walk",
+    "freq": 620
   },
   {
     "word": "Does this bus go to the city center?",
-    "explains": "【公交】这趟车去市中心吗？｜句型：Does this bus go to...?"
+    "explains": "【公交】这趟车去市中心吗？｜句型：Does this bus go to...?",
+    "freq": 1535
   },
   {
     "word": "How many stops is it?",
-    "explains": "【公交】有几站？｜句型：How many stops...?"
+    "explains": "【公交】有几站？｜句型：How many stops...?",
+    "freq": 2007
   },
   {
     "word": "Where do I transfer?",
-    "explains": "【换乘】我在哪换乘？｜动词：transfer"
+    "explains": "【换乘】我在哪换乘？｜动词：transfer",
+    "freq": 2816
   },
   {
     "word": "I'd like to go to this address.",
-    "explains": "【打车】我想去这个地址。｜句型：I'd like to go to..."
+    "explains": "【打车】我想去这个地址。｜句型：I'd like to go to...",
+    "freq": 1141
   },
   {
     "word": "Could you drop me off here?",
-    "explains": "【打车】能在这儿让我下车吗？｜短语动词：drop sb off"
+    "explains": "【打车】能在这儿让我下车吗？｜短语动词：drop sb off",
+    "freq": 689
   },
   {
     "word": "How long will it take?",
-    "explains": "【时间】要多久？｜句型：How long will it take?"
+    "explains": "【时间】要多久？｜句型：How long will it take?",
+    "freq": 182
   },
   {
     "word": "I think I'm lost.",
-    "explains": "【迷路】我好像迷路了。｜搭配：be lost"
+    "explains": "【迷路】我好像迷路了。｜搭配：be lost",
+    "freq": 349
   },
   {
     "word": "Where is the check-in counter?",
-    "explains": "【机场】值机柜台在哪？｜固定说法"
+    "explains": "【机场】值机柜台在哪？｜固定说法",
+    "freq": 4165
   },
   {
     "word": "I'd like a window seat, please.",
-    "explains": "【值机】我想要靠窗座位。｜搭配：a window seat"
+    "explains": "【值机】我想要靠窗座位。｜搭配：a window seat",
+    "freq": 990
   },
   {
     "word": "Is this flight on time?",
-    "explains": "【航班】这班飞机准点吗？｜搭配：on time"
+    "explains": "【航班】这班飞机准点吗？｜搭配：on time",
+    "freq": 1320
   },
   {
     "word": "My flight has been delayed.",
-    "explains": "【航班】我的航班延误了。｜被动完成时"
+    "explains": "【航班】我的航班延误了。｜被动完成时",
+    "freq": 6777
   },
   {
     "word": "I've missed my connecting flight.",
-    "explains": "【航班】我错过转机了。｜搭配：connecting flight"
+    "explains": "【航班】我错过转机了。｜搭配：connecting flight",
+    "freq": 8903
   },
   {
     "word": "Where can I pick up my luggage?",
-    "explains": "【行李】在哪取行李？｜短语动词：pick up"
+    "explains": "【行李】在哪取行李？｜短语动词：pick up",
+    "freq": 4518
   },
   {
     "word": "My suitcase hasn't arrived.",
-    "explains": "【行李】我的行李箱没到。｜现在完成时否定"
+    "explains": "【行李】我的行李箱没到。｜现在完成时否定",
+    "freq": 4208
   },
   {
     "word": "I'm here on vacation.",
-    "explains": "【海关】我来度假。｜搭配：on vacation"
+    "explains": "【海关】我来度假。｜搭配：on vacation",
+    "freq": 2184
   },
   {
     "word": "I have nothing to declare.",
-    "explains": "【海关】我没有需要申报的。｜句型：have nothing to + 动词"
+    "explains": "【海关】我没有需要申报的。｜句型：have nothing to + 动词",
+    "freq": 5282
   },
   {
     "word": "Do I need to fill out this form?",
-    "explains": "【表格】需要填这张表吗？｜短语动词：fill out"
+    "explains": "【表格】需要填这张表吗？｜短语动词：fill out",
+    "freq": 1594
   },
   {
     "word": "Help!",
-    "explains": "【紧急】救命！｜最直接的求救"
+    "explains": "【紧急】救命！｜最直接的求救",
+    "freq": 140
   },
   {
     "word": "Call an ambulance, please!",
-    "explains": "【紧急】请叫救护车！｜搭配：call an ambulance"
+    "explains": "【紧急】请叫救护车！｜搭配：call an ambulance",
+    "freq": 2454
   },
   {
     "word": "There's been an accident.",
-    "explains": "【紧急】出事故了。｜句型：There's been + 名词"
+    "explains": "【紧急】出事故了。｜句型：There's been + 名词",
+    "freq": 893
   },
   {
     "word": "I need a doctor.",
-    "explains": "【就医】我需要医生。｜简单求助"
+    "explains": "【就医】我需要医生。｜简单求助",
+    "freq": 371
   },
   {
     "word": "I've lost my passport.",
-    "explains": "【丢失】我护照丢了。｜现在完成时表结果"
+    "explains": "【丢失】我护照丢了。｜现在完成时表结果",
+    "freq": 3506
   },
   {
     "word": "My wallet was stolen.",
-    "explains": "【被盗】我钱包被偷了。｜被动语态"
+    "explains": "【被盗】我钱包被偷了。｜被动语态",
+    "freq": 2925
   },
   {
     "word": "Could you call the police?",
-    "explains": "【报警】能报警吗？｜句型：Could you...?"
+    "explains": "【报警】能报警吗？｜句型：Could you...?",
+    "freq": 350
   },
   {
     "word": "Is there a pharmacy nearby?",
-    "explains": "【药店】附近有药店吗？｜句型：Is there... nearby?"
+    "explains": "【药店】附近有药店吗？｜句型：Is there... nearby?",
+    "freq": 8679
   },
   {
     "word": "I'm having chest pain.",
-    "explains": "【就医】我胸口疼。｜句型：have + 症状"
+    "explains": "【就医】我胸口疼。｜句型：have + 症状",
+    "freq": 1829
   },
   {
     "word": "I'm allergic to penicillin.",
-    "explains": "【就医】我对青霉素过敏。｜句型：be allergic to"
+    "explains": "【就医】我对青霉素过敏。｜句型：be allergic to",
+    "freq": 16741
   },
   {
     "word": "I don't feel well.",
-    "explains": "【就医】我不舒服。｜句型：feel well"
+    "explains": "【就医】我不舒服。｜句型：feel well",
+    "freq": 192
   },
   {
     "word": "I have a headache and a sore throat.",
-    "explains": "【症状】我头疼、嗓子疼。｜句型：have a + 症状"
+    "explains": "【症状】我头疼、嗓子疼。｜句型：have a + 症状",
+    "freq": 4440
   },
   {
     "word": "It hurts when I move my arm.",
-    "explains": "【症状】我动胳膊就疼。｜句型：It hurts when..."
+    "explains": "【症状】我动胳膊就疼。｜句型：It hurts when...",
+    "freq": 1591
   },
   {
     "word": "I've had a fever since yesterday.",
-    "explains": "【症状】我从昨天开始发烧。｜句型：have had + since"
+    "explains": "【症状】我从昨天开始发烧。｜句型：have had + since",
+    "freq": 2835
   },
   {
     "word": "How often should I take this medicine?",
-    "explains": "【用药】这药多久吃一次？｜句型：How often should I...?"
+    "explains": "【用药】这药多久吃一次？｜句型：How often should I...?",
+    "freq": 1763
   },
   {
     "word": "Are there any side effects?",
-    "explains": "【用药】有副作用吗？｜搭配：side effects"
+    "explains": "【用药】有副作用吗？｜搭配：side effects",
+    "freq": 3332
   },
   {
     "word": "Do I need a prescription?",
-    "explains": "【药店】需要处方吗？｜名词：prescription"
+    "explains": "【药店】需要处方吗？｜名词：prescription",
+    "freq": 6124
   },
   {
     "word": "Can I take this with food?",
-    "explains": "【用药】这个可以随餐吃吗？｜句型：take sth with food"
+    "explains": "【用药】这个可以随餐吃吗？｜句型：take sth with food",
+    "freq": 533
   },
   {
     "word": "I'm feeling much better now.",
-    "explains": "【恢复】我现在好多了。｜比较级 better"
+    "explains": "【恢复】我现在好多了。｜比较级 better",
+    "freq": 553
   },
   {
     "word": "Take care of yourself.",
-    "explains": "【关心】照顾好自己。｜固定说法"
+    "explains": "【关心】照顾好自己。｜固定说法",
+    "freq": 268
   },
   {
     "word": "I'd like to open an account.",
-    "explains": "【银行】我想开个账户。｜搭配：open an account"
+    "explains": "【银行】我想开个账户。｜搭配：open an account",
+    "freq": 1467
   },
   {
     "word": "I'd like to withdraw some cash.",
-    "explains": "【银行】我想取点现金。｜搭配：withdraw cash"
+    "explains": "【银行】我想取点现金。｜搭配：withdraw cash",
+    "freq": 5694
   },
   {
     "word": "What's the exchange rate today?",
-    "explains": "【换汇】今天汇率多少？｜搭配：exchange rate"
+    "explains": "【换汇】今天汇率多少？｜搭配：exchange rate",
+    "freq": 2372
   },
   {
     "word": "Could you break this bill?",
-    "explains": "【换零钱】能把这个钱破开吗？｜搭配：break a bill"
+    "explains": "【换零钱】能把这个钱破开吗？｜搭配：break a bill",
+    "freq": 835
   },
   {
     "word": "My card was declined.",
-    "explains": "【支付】我的卡被拒了。｜搭配：be declined"
+    "explains": "【支付】我的卡被拒了。｜搭配：be declined",
+    "freq": 12561
   },
   {
     "word": "Could you speak up a little?",
-    "explains": "【电话】能大声一点吗？｜短语动词：speak up"
+    "explains": "【电话】能大声一点吗？｜短语动词：speak up",
+    "freq": 472
   },
   {
     "word": "The line is breaking up.",
-    "explains": "【电话】信号断断续续。｜短语动词：break up"
+    "explains": "【电话】信号断断续续。｜短语动词：break up",
+    "freq": 1528
   },
   {
     "word": "I'll call you back in a minute.",
-    "explains": "【电话】我一会儿回你电话。｜短语动词：call sb back"
+    "explains": "【电话】我一会儿回你电话。｜短语动词：call sb back",
+    "freq": 387
   },
   {
     "word": "Could you send me the address by text?",
-    "explains": "【短信】能把地址发短信给我吗？｜句型：by text"
+    "explains": "【短信】能把地址发短信给我吗？｜句型：by text",
+    "freq": 2253
   },
   {
     "word": "What's the Wi-Fi password?",
-    "explains": "【网络】Wi-Fi 密码是多少？｜日常必问句"
+    "explains": "【网络】Wi-Fi 密码是多少？｜日常必问句",
+    "freq": 11544
   },
   {
     "word": "The internet isn't working.",
-    "explains": "【网络】网连不上。｜句型：sth isn't working"
+    "explains": "【网络】网连不上。｜句型：sth isn't working",
+    "freq": 2347
   },
   {
     "word": "Could you help me set this up?",
-    "explains": "【服务】能帮我设置一下吗？｜短语动词：set up"
+    "explains": "【服务】能帮我设置一下吗？｜短语动词：set up",
+    "freq": 439
   },
   {
     "word": "Could you take a picture of us?",
-    "explains": "【拍照】能帮我们拍张照吗？｜句型：take a picture of sb"
+    "explains": "【拍照】能帮我们拍张照吗？｜句型：take a picture of sb",
+    "freq": 700
   },
   {
     "word": "Is photography allowed here?",
-    "explains": "【规定】这里可以拍照吗？｜句型：be allowed"
+    "explains": "【规定】这里可以拍照吗？｜句型：be allowed",
+    "freq": 6350
   },
   {
     "word": "What's the best time to visit?",
-    "explains": "【观光】什么时候去最好？｜句型：the best time to do"
+    "explains": "【观光】什么时候去最好？｜句型：the best time to do",
+    "freq": 979
   },
   {
     "word": "Is it worth visiting?",
-    "explains": "【观光】值得去吗？｜句型：be worth doing"
+    "explains": "【观光】值得去吗？｜句型：be worth doing",
+    "freq": 3246
   },
   {
     "word": "How much is admission?",
-    "explains": "【门票】门票多少钱？｜名词：admission"
+    "explains": "【门票】门票多少钱？｜名词：admission",
+    "freq": 8667
   },
   {
     "word": "Is there an English guide?",
-    "explains": "【观光】有英文导游吗？｜句型：Is there...?"
+    "explains": "【观光】有英文导游吗？｜句型：Is there...?",
+    "freq": 2814
   },
   {
     "word": "I'd like a one-day pass.",
-    "explains": "【票务】我想要一日通票。｜搭配：a one-day pass"
+    "explains": "【票务】我想要一日通票。｜搭配：a one-day pass",
+    "freq": 741
   },
   {
     "word": "Could you recommend a good local restaurant?",
-    "explains": "【推荐】能推荐一家好的本地餐厅吗？｜搭配：local restaurant"
+    "explains": "【推荐】能推荐一家好的本地餐厅吗？｜搭配：local restaurant",
+    "freq": 4040
   },
   {
     "word": "I'm here for three days.",
-    "explains": "【行程】我在这儿待三天。｜句型：for + 时间段"
+    "explains": "【行程】我在这儿待三天。｜句型：for + 时间段",
+    "freq": 314
   },
   {
     "word": "This place is breathtaking.",
-    "explains": "【感叹】这地方美得惊人。｜形容词：breathtaking"
+    "explains": "【感叹】这地方美得惊人。｜形容词：breathtaking",
+    "freq": 16588
   },
   {
     "word": "What time works for you?",
-    "explains": "【约时间】你什么时间方便？｜句型：work for sb"
+    "explains": "【约时间】你什么时间方便？｜句型：work for sb",
+    "freq": 721
   },
   {
     "word": "Let's meet at half past six.",
-    "explains": "【约时间】我们六点半见。｜时间表达：half past six"
+    "explains": "【约时间】我们六点半见。｜时间表达：half past six",
+    "freq": 596
   },
   {
     "word": "Sorry, I'm running late.",
-    "explains": "【迟到】抱歉，我要迟到了。｜句型：be running late"
+    "explains": "【迟到】抱歉，我要迟到了。｜句型：be running late",
+    "freq": 565
   },
   {
     "word": "I'll be there in ten minutes.",
-    "explains": "【时间】我十分钟后到。｜句型：in + 时间段（将来）"
+    "explains": "【时间】我十分钟后到。｜句型：in + 时间段（将来）",
+    "freq": 620
   },
   {
     "word": "It's freezing today, isn't it?",
-    "explains": "【天气】今天冷死了，是吧？｜反义疑问句拉近关系"
+    "explains": "【天气】今天冷死了，是吧？｜反义疑问句拉近关系",
+    "freq": 4018
   },
   {
     "word": "It looks like it's going to rain.",
-    "explains": "【天气】看样子要下雨了。｜句型：look like + 从句"
+    "explains": "【天气】看样子要下雨了。｜句型：look like + 从句",
+    "freq": 1358
   },
   {
     "word": "What's the weather like tomorrow?",
-    "explains": "【天气】明天天气怎么样？｜句型：What's ... like?"
+    "explains": "【天气】明天天气怎么样？｜句型：What's ... like?",
+    "freq": 1773
   },
   {
     "word": "We couldn't ask for better weather.",
-    "explains": "【天气】天气再好不过了。｜句型：couldn't ask for better"
+    "explains": "【天气】天气再好不过了。｜句型：couldn't ask for better",
+    "freq": 1773
   },
   {
     "word": "How was your weekend?",
-    "explains": "【闲聊】周末过得怎么样？｜寒暄常用"
+    "explains": "【闲聊】周末过得怎么样？｜寒暄常用",
+    "freq": 1368
   },
   {
     "word": "Same as usual.",
-    "explains": "【闲聊】老样子。｜口语回答"
+    "explains": "【闲聊】老样子。｜口语回答",
+    "freq": 1638
   },
   {
     "word": "I'm over the moon about it.",
-    "explains": "【情绪】我为此高兴坏了。｜习语：over the moon"
+    "explains": "【情绪】我为此高兴坏了。｜习语：over the moon",
+    "freq": 1138
   },
   {
     "word": "I'm a bit under the weather.",
-    "explains": "【状态】我有点不舒服。｜习语：under the weather"
+    "explains": "【状态】我有点不舒服。｜习语：under the weather",
+    "freq": 1773
   },
   {
     "word": "That's a relief.",
-    "explains": "【情绪】总算放心了。｜名词：relief"
+    "explains": "【情绪】总算放心了。｜名词：relief",
+    "freq": 3462
   },
   {
     "word": "I can't stand the noise.",
-    "explains": "【厌恶】我受不了这噪音。｜句型：can't stand sth"
+    "explains": "【厌恶】我受不了这噪音。｜句型：can't stand sth",
+    "freq": 1666
   },
   {
     "word": "I'm fed up with waiting.",
-    "explains": "【不满】我等烦了。｜句型：be fed up with"
+    "explains": "【不满】我等烦了。｜句型：be fed up with",
+    "freq": 2655
   },
   {
     "word": "It's not as bad as it looks.",
-    "explains": "【比较】没看上去那么糟。｜句型：not as + 形容词 + as"
+    "explains": "【比较】没看上去那么糟。｜句型：not as + 形容词 + as",
+    "freq": 335
   },
   {
     "word": "The more you practice, the better you get.",
-    "explains": "【比较】练得越多，进步越大。｜句型：the more..., the more..."
+    "explains": "【比较】练得越多，进步越大。｜句型：the more..., the more...",
+    "freq": 1476
   },
   {
     "word": "It's far more expensive than I expected.",
-    "explains": "【比较】比我想的贵多了。｜far + 比较级"
+    "explains": "【比较】比我想的贵多了。｜far + 比较级",
+    "freq": 1873
   },
   {
     "word": "This one is slightly cheaper.",
-    "explains": "【比较】这个稍微便宜点。｜slightly + 比较级"
+    "explains": "【比较】这个稍微便宜点。｜slightly + 比较级",
+    "freq": 6814
   },
   {
     "word": "Nothing beats a home-cooked meal.",
-    "explains": "【比较】什么都比不上家常菜。｜句型：nothing beats..."
+    "explains": "【比较】什么都比不上家常菜。｜句型：nothing beats...",
+    "freq": 3804
   },
   {
     "word": "If it rains, we'll stay home.",
-    "explains": "【条件】如果下雨，我们就待在家。｜主将从现：if + 一般现在时，主句用将来时"
+    "explains": "【条件】如果下雨，我们就待在家。｜主将从现：if + 一般现在时，主句用将来时",
+    "freq": 6675
   },
   {
     "word": "Unless you hurry, you'll miss the train.",
-    "explains": "【条件】除非你快点，否则赶不上火车。｜连词：unless = if not"
+    "explains": "【条件】除非你快点，否则赶不上火车。｜连词：unless = if not",
+    "freq": 787
   },
   {
     "word": "As long as you're happy, I'm happy.",
-    "explains": "【条件】只要你开心，我就开心。｜连词：as long as"
+    "explains": "【条件】只要你开心，我就开心。｜连词：as long as",
+    "freq": 296
   },
   {
     "word": "I stayed home because I felt sick.",
-    "explains": "【原因】我因为不舒服待在家。｜连词：because"
+    "explains": "【原因】我因为不舒服待在家。｜连词：because",
+    "freq": 1695
   },
   {
     "word": "Since you're here, let's start.",
-    "explains": "【原因】既然你来了，我们就开始吧。｜连词：since 既然"
+    "explains": "【原因】既然你来了，我们就开始吧。｜连词：since 既然",
+    "freq": 312
   },
   {
     "word": "Thanks to your help, we finished on time.",
-    "explains": "【原因】多亏你帮忙，我们按时完成了。｜短语：thanks to"
+    "explains": "【原因】多亏你帮忙，我们按时完成了。｜短语：thanks to",
+    "freq": 840
   },
   {
     "word": "Even though it was late, she kept working.",
-    "explains": "【让步】尽管很晚了，她还在工作。｜连词：even though"
+    "explains": "【让步】尽管很晚了，她还在工作。｜连词：even though",
+    "freq": 745
   },
   {
     "word": "No matter what happens, stay calm.",
-    "explains": "【让步】无论发生什么，保持冷静。｜句型：no matter what"
+    "explains": "【让步】无论发生什么，保持冷静。｜句型：no matter what",
+    "freq": 685
   },
   {
     "word": "Although it's expensive, it's worth it.",
-    "explains": "【让步】虽然贵，但值得。｜连词：although"
+    "explains": "【让步】虽然贵，但值得。｜连词：although",
+    "freq": 1873
   },
   {
     "word": "I came early so that I could get a good seat.",
-    "explains": "【目的】我早来是为了占个好座位。｜句型：so that + 从句"
+    "explains": "【目的】我早来是为了占个好座位。｜句型：so that + 从句",
+    "freq": 990
   },
   {
     "word": "In order to save time, we took a taxi.",
-    "explains": "【目的】为了省时间，我们打了车。｜短语：in order to + 动词"
+    "explains": "【目的】为了省时间，我们打了车。｜短语：in order to + 动词",
+    "freq": 2211
   },
   {
     "word": "It's too heavy for me to lift.",
-    "explains": "【结果】太重了，我搬不动。｜句型：too + 形容词 + for sb + to do"
+    "explains": "【结果】太重了，我搬不动。｜句型：too + 形容词 + for sb + to do",
+    "freq": 1647
   },
   {
     "word": "I've been to Japan twice.",
-    "explains": "【经历】我去过日本两次。｜句型：have been to（去过已回来）"
+    "explains": "【经历】我去过日本两次。｜句型：have been to（去过已回来）",
+    "freq": 2391
   },
   {
     "word": "I've never tried sushi before.",
-    "explains": "【经历】我以前没吃过寿司。｜句型：never ... before"
+    "explains": "【经历】我以前没吃过寿司。｜句型：never ... before",
+    "freq": 7210
   },
   {
     "word": "I used to live in Shanghai.",
-    "explains": "【过去习惯】我以前住在上海。｜句型：used to do（现在不再）"
+    "explains": "【过去习惯】我以前住在上海。｜句型：used to do（现在不再）",
+    "freq": 7025
   },
   {
     "word": "I'm used to getting up early.",
-    "explains": "【习惯】我习惯早起。｜句型：be used to + doing"
+    "explains": "【习惯】我习惯早起。｜句型：be used to + doing",
+    "freq": 694
   },
   {
     "word": "I was about to leave when you called.",
-    "explains": "【过去将来】你打电话时我正要走。｜句型：be about to do when..."
+    "explains": "【过去将来】你打电话时我正要走。｜句型：be about to do when...",
+    "freq": 291
   },
   {
     "word": "I've just finished the report.",
-    "explains": "【完成】我刚完成报告。｜just + 现在完成时"
+    "explains": "【完成】我刚完成报告。｜just + 现在完成时",
+    "freq": 840
   },
   {
     "word": "By the time I arrived, the meeting had ended.",
-    "explains": "【过去完成】我到的时候会议已经结束了。｜句型：by the time + 过去完成时"
+    "explains": "【过去完成】我到的时候会议已经结束了。｜句型：by the time + 过去完成时",
+    "freq": 1629
   },
   {
     "word": "I'll have finished it by Friday.",
-    "explains": "【将来完成】周五前我会完成。｜句型：will have done + by"
+    "explains": "【将来完成】周五前我会完成。｜句型：will have done + by",
+    "freq": 1725
   },
   {
     "word": "She's been working here for five years.",
-    "explains": "【持续】她在这儿工作五年了。｜句型：have been doing + for"
+    "explains": "【持续】她在这儿工作五年了。｜句型：have been doing + for",
+    "freq": 397
   },
   {
     "word": "It's the first time I've seen this.",
-    "explains": "【首次】这是我第一次见。｜句型：It's the first time + 现在完成时"
+    "explains": "【首次】这是我第一次见。｜句型：It's the first time + 现在完成时",
+    "freq": 280
   },
   {
     "word": "The package will be delivered tomorrow.",
-    "explains": "【被动】包裹明天送达。｜一般将来时被动：will be done"
+    "explains": "【被动】包裹明天送达。｜一般将来时被动：will be done",
+    "freq": 3136
   },
   {
     "word": "The road is being repaired.",
-    "explains": "【被动进行】路正在修。｜现在进行时被动：is being done"
+    "explains": "【被动进行】路正在修。｜现在进行时被动：is being done",
+    "freq": 9367
   },
   {
     "word": "It is said that the building is haunted.",
-    "explains": "【据说】据说这栋楼闹鬼。｜句型：It is said that..."
+    "explains": "【据说】据说这栋楼闹鬼。｜句型：It is said that...",
+    "freq": 5369
   },
   {
     "word": "Mistakes were made.",
-    "explains": "【被动/回避施事】犯了错误。｜不点明责任人的被动表达"
+    "explains": "【被动/回避施事】犯了错误。｜不点明责任人的被动表达",
+    "freq": 2387
   },
   {
     "word": "You're requested to arrive ten minutes early.",
-    "explains": "【正式通知】请提前十分钟到。｜句型：be requested to do"
+    "explains": "【正式通知】请提前十分钟到。｜句型：be requested to do",
+    "freq": 4850
   },
   {
     "word": "The results will be announced next week.",
-    "explains": "【被动】结果下周公布。｜一般将来时被动"
+    "explains": "【被动】结果下周公布。｜一般将来时被动",
+    "freq": 5604
   },
   {
     "word": "This needs to be handled carefully.",
-    "explains": "【被动/需要】这需要小心处理。｜句型：need to be done"
+    "explains": "【被动/需要】这需要小心处理。｜句型：need to be done",
+    "freq": 4620
   },
   {
     "word": "Nothing was damaged.",
-    "explains": "【被动否定】没有东西损坏。｜被动语态否定"
+    "explains": "【被动否定】没有东西损坏。｜被动语态否定",
+    "freq": 4202
   },
   {
     "word": "What a beautiful day!",
-    "explains": "【感叹】多美好的一天！｜句型：What a + 形容词 + 名词!"
+    "explains": "【感叹】多美好的一天！｜句型：What a + 形容词 + 名词!",
+    "freq": 370
   },
   {
     "word": "How kind of you!",
-    "explains": "【感叹】你真好！｜句型：How + 形容词!"
+    "explains": "【感叹】你真好！｜句型：How + 形容词!",
+    "freq": 211
   },
   {
     "word": "Never have I seen such a crowd.",
-    "explains": "【倒装】我从没见过这么多人。｜否定词置句首引起倒装"
+    "explains": "【倒装】我从没见过这么多人。｜否定词置句首引起倒装",
+    "freq": 1292
   },
   {
     "word": "Not only is he smart, but he's also kind.",
-    "explains": "【倒装】他不仅聪明，还很善良。｜句型：Not only is..., but also..."
+    "explains": "【倒装】他不仅聪明，还很善良。｜句型：Not only is..., but also...",
+    "freq": 911
   },
   {
     "word": "It was John who broke the window.",
-    "explains": "【强调】是约翰打碎了窗户。｜强调句：It was ... who..."
+    "explains": "【强调】是约翰打碎了窗户。｜强调句：It was ... who...",
+    "freq": 982
   },
   {
     "word": "What I need is a good sleep.",
-    "explains": "【强调】我需要的是好好睡一觉。｜句型：What I need is..."
+    "explains": "【强调】我需要的是好好睡一觉。｜句型：What I need is...",
+    "freq": 425
   },
   {
     "word": "There's no way I'm giving up.",
-    "explains": "【强调】我绝不会放弃。｜口语：no way"
+    "explains": "【强调】我绝不会放弃。｜口语：no way",
+    "freq": 709
   },
   {
     "word": "The sooner, the better.",
-    "explains": "【比较/省略】越早越好。｜句型：the + 比较级, the + 比较级"
+    "explains": "【比较/省略】越早越好。｜句型：the + 比较级, the + 比较级",
+    "freq": 1856
   },
   {
     "word": "Could we push the meeting to three?",
-    "explains": "【改期】会议能推到三点吗？｜搭配：push sth to"
+    "explains": "【改期】会议能推到三点吗？｜搭配：push sth to",
+    "freq": 1065
   },
   {
     "word": "I'm afraid I can't make it.",
-    "explains": "【缺席】恐怕我去不了。｜委婉：I'm afraid + 从句"
+    "explains": "【缺席】恐怕我去不了。｜委婉：I'm afraid + 从句",
+    "freq": 424
   },
   {
     "word": "Let's get started.",
-    "explains": "【会议】我们开始吧。｜口语开场"
+    "explains": "【会议】我们开始吧。｜口语开场",
+    "freq": 465
   },
   {
     "word": "Could you walk me through it?",
-    "explains": "【讲解】你能带我过一遍吗？｜短语动词：walk sb through"
+    "explains": "【讲解】你能带我过一遍吗？｜短语动词：walk sb through",
+    "freq": 489
   },
   {
     "word": "Let's circle back to that later.",
-    "explains": "【会议】那个我们稍后再谈。｜短语动词：circle back to"
+    "explains": "【会议】那个我们稍后再谈。｜短语动词：circle back to",
+    "freq": 2600
   },
   {
     "word": "Just to make sure we're on the same page…",
-    "explains": "【对齐】确认一下我们理解一致……｜习语：on the same page"
+    "explains": "【对齐】确认一下我们理解一致……｜习语：on the same page",
+    "freq": 1860
   },
   {
     "word": "I'll follow up by email.",
-    "explains": "【跟进】我会邮件跟进。｜短语动词：follow up"
+    "explains": "【跟进】我会邮件跟进。｜短语动词：follow up",
+    "freq": 5521
   },
   {
     "word": "Could you send over the details?",
-    "explains": "【请求】能把细节发给我吗？｜短语动词：send over"
+    "explains": "【请求】能把细节发给我吗？｜短语动词：send over",
+    "freq": 1839
   },
   {
     "word": "Let's take this offline.",
-    "explains": "【会议】这个我们私下再聊。｜习语：take sth offline"
+    "explains": "【会议】这个我们私下再聊。｜习语：take sth offline",
+    "freq": 18595
   },
   {
     "word": "Thanks everyone for your time.",
-    "explains": "【会议结束】谢谢大家的时间。｜会议收尾"
+    "explains": "【会议结束】谢谢大家的时间。｜会议收尾",
+    "freq": 321
   },
   {
     "word": "I'm majoring in computer science.",
-    "explains": "【学习】我主修计算机科学。｜搭配：major in"
+    "explains": "【学习】我主修计算机科学。｜搭配：major in",
+    "freq": 39111
   },
   {
     "word": "I'm preparing for an exam.",
-    "explains": "【学习】我在备考。｜搭配：prepare for"
+    "explains": "【学习】我在备考。｜搭配：prepare for",
+    "freq": 4210
   },
   {
     "word": "Could you explain this again?",
-    "explains": "【学习】能再讲一遍吗？｜请求解释"
+    "explains": "【学习】能再讲一遍吗？｜请求解释",
+    "freq": 695
   },
   {
     "word": "I didn't quite get the last part.",
-    "explains": "【学习】最后一部分我没太懂。｜搭配：get 理解"
+    "explains": "【学习】最后一部分我没太懂。｜搭配：get 理解",
+    "freq": 428
   },
   {
     "word": "Practice makes perfect.",
-    "explains": "【谚语】熟能生巧。｜固定谚语"
+    "explains": "【谚语】熟能生巧。｜固定谚语",
+    "freq": 1476
   },
   {
     "word": "I learn best by doing.",
-    "explains": "【学习方式】我通过动手学得最好。｜句型：by + doing"
+    "explains": "【学习方式】我通过动手学得最好。｜句型：by + doing",
+    "freq": 691
   },
   {
     "word": "I'm thinking of taking a course online.",
-    "explains": "【计划】我在考虑上网课。｜句型：think of + doing"
+    "explains": "【计划】我在考虑上网课。｜句型：think of + doing",
+    "freq": 2728
   },
   {
     "word": "How did you do on the test?",
-    "explains": "【考试】你考得怎么样？｜搭配：do on a test"
+    "explains": "【考试】你考得怎么样？｜搭配：do on a test",
+    "freq": 850
   },
   {
     "word": "Can you hear me now?",
-    "explains": "【视频通话】现在能听见吗？｜通话确认"
+    "explains": "【视频通话】现在能听见吗？｜通话确认",
+    "freq": 236
   },
   {
     "word": "You're on mute.",
-    "explains": "【视频通话】你静音了。｜搭配：on mute"
+    "explains": "【视频通话】你静音了。｜搭配：on mute",
+    "freq": 8693
   },
   {
     "word": "Sorry, my connection dropped.",
-    "explains": "【网络】抱歉，我掉线了。｜动词：drop 掉线"
+    "explains": "【网络】抱歉，我掉线了。｜动词：drop 掉线",
+    "freq": 1901
   },
   {
     "word": "Let me share my screen.",
-    "explains": "【会议】我共享一下屏幕。｜搭配：share screen"
+    "explains": "【会议】我共享一下屏幕。｜搭配：share screen",
+    "freq": 2533
   },
   {
     "word": "I'll send you the link.",
-    "explains": "【网络】我把链接发你。｜简单承诺"
+    "explains": "【网络】我把链接发你。｜简单承诺",
+    "freq": 3167
   },
   {
     "word": "Did you get my message?",
-    "explains": "【消息】你收到我的消息了吗？｜确认送达"
+    "explains": "【消息】你收到我的消息了吗？｜确认送达",
+    "freq": 813
   }
 ]

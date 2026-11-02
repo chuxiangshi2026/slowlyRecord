@@ -109,7 +109,7 @@ describe('wordbank-service', () => {
     })
 
     it('clearWordBankCache 应该清除指定词库的缓存', () => {
-      const cacheKey = 'wordbank_cache_v2_cet4'
+      const cacheKey = 'wordbank_cache_v3_cet4'
       const mockData = JSON.stringify({ words: Array(30).fill({ _id: '1', text: 'test' }), timestamp: Date.now() })
       localStorage.setItem(cacheKey, mockData)
       
@@ -120,21 +120,21 @@ describe('wordbank-service', () => {
 
     it('clearWordBankCache 不传参数应该清除所有词库缓存', () => {
       const mockData = JSON.stringify({ timestamp: Date.now(), words: Array(30).fill({ _id: '1', text: 'test' }) })
-      localStorage.setItem('wordbank_cache_v2_cet4', mockData)
-      localStorage.setItem('wordbank_cache_v2_cet6', mockData)
+      localStorage.setItem('wordbank_cache_v3_cet4', mockData)
+      localStorage.setItem('wordbank_cache_v3_cet6', mockData)
       localStorage.setItem('other_key', 'other')
       
       clearWordBankCache()
       
-      expect(localStorage.getItem('wordbank_cache_v2_cet4')).toBeNull()
-      expect(localStorage.getItem('wordbank_cache_v2_cet6')).toBeNull()
+      expect(localStorage.getItem('wordbank_cache_v3_cet4')).toBeNull()
+      expect(localStorage.getItem('wordbank_cache_v3_cet6')).toBeNull()
       expect(localStorage.getItem('other_key')).toBe('other')
     })
   })
 
   describe('isWordBankCached', () => {
     it('有有效缓存时应返回 true', () => {
-      const cacheKey = 'wordbank_cache_v2_cet4'
+      const cacheKey = 'wordbank_cache_v3_cet4'
       const mockData = JSON.stringify({ words: Array(30).fill({ _id: '1', text: 'test' }), timestamp: Date.now() })
       localStorage.setItem(cacheKey, mockData)
 
@@ -142,7 +142,7 @@ describe('wordbank-service', () => {
     })
 
     it('缓存数据过少时应返回 false', () => {
-      const cacheKey = 'wordbank_cache_v2_cet4'
+      const cacheKey = 'wordbank_cache_v3_cet4'
       const mockData = JSON.stringify({ words: Array(10).fill({ _id: '1', text: 'test' }), timestamp: Date.now() })
       localStorage.setItem(cacheKey, mockData)
 
@@ -150,7 +150,7 @@ describe('wordbank-service', () => {
     })
 
     it('缓存过期时应返回 false', () => {
-      const cacheKey = 'wordbank_cache_v2_cet4'
+      const cacheKey = 'wordbank_cache_v3_cet4'
       const expiredTimestamp = Date.now() - 8 * 24 * 60 * 60 * 1000 // 8天前
       const mockData = JSON.stringify({ words: Array(30).fill({ _id: '1', text: 'test' }), timestamp: expiredTimestamp })
       localStorage.setItem(cacheKey, mockData)
@@ -180,7 +180,7 @@ describe('wordbank-service', () => {
         isReview: true, ctime: new Date(), learnDate: new Date(), level: 1,
         explainedHidden: false, remember: false
       }))
-      const cacheKey = 'wordbank_cache_v2_cet4'
+      const cacheKey = 'wordbank_cache_v3_cet4'
       localStorage.setItem(cacheKey, JSON.stringify({ words: cachedWords, timestamp: Date.now() }))
 
       const result = await fetchWordBank('cet4', { useCache: true })
@@ -196,7 +196,7 @@ describe('wordbank-service', () => {
         isReview: true, ctime: new Date(), learnDate: new Date(), level: 1,
         explainedHidden: false, remember: false
       }))
-      const cacheKey = 'wordbank_cache_v2_cet4'
+      const cacheKey = 'wordbank_cache_v3_cet4'
       localStorage.setItem(cacheKey, JSON.stringify({ words: cachedWords, timestamp: Date.now() }))
 
       const mockWords = Array(50).fill(null).map((_, i) => ({ word: `new${i}`, explains: `新${i}` }))
@@ -267,7 +267,7 @@ describe('wordbank-service', () => {
 
       await fetchWordBank('ielts', { useCache: true })
 
-      const cacheKey = 'wordbank_cache_v2_ielts'
+      const cacheKey = 'wordbank_cache_v3_ielts'
       const cached = localStorage.getItem(cacheKey)
       expect(cached).not.toBeNull()
       const parsed = JSON.parse(cached!)
@@ -283,7 +283,7 @@ describe('wordbank-service', () => {
 
       await fetchWordBank('toefl', { useCache: false })
 
-      const cacheKey = 'wordbank_cache_v2_toefl'
+      const cacheKey = 'wordbank_cache_v3_toefl'
       const cached = localStorage.getItem(cacheKey)
       expect(cached).toBeNull()
     })
@@ -331,6 +331,24 @@ describe('wordbank-service', () => {
       expect(result[2].text).toBe('test3')
       expect(result[2].explains).toBe('释义3a; 释义3b')
     })
+
+    it('normalizeWords 保留词频字段，非法值丢弃', async () => {
+      const mockWords = [
+        { word: 'alpha', explains: '释义', freq: 1200 },
+        { word: 'beta', explains: '释义', freq: 0 },
+        { word: 'gamma', explains: '释义', freq: 'x' }
+      ]
+      fetchMock.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ words: mockWords })
+      })
+
+      const result = await fetchWordBank('cet4')
+
+      expect(result[0].freq).toBe(1200)
+      expect(result[1].freq).toBeUndefined()
+      expect(result[2].freq).toBeUndefined()
+    })
   })
 
   describe('fetchWordBankLegacy', () => {
@@ -352,7 +370,7 @@ describe('wordbank-service', () => {
         isReview: true, ctime: new Date(), learnDate: new Date(), level: 1,
         explainedHidden: false, remember: false
       }))
-      localStorage.setItem('wordbank_cache_v2_cet4', JSON.stringify({ words: mockWords, timestamp: Date.now() }))
+      localStorage.setItem('wordbank_cache_v3_cet4', JSON.stringify({ words: mockWords, timestamp: Date.now() }))
 
       const newWords = Array(50).fill(null).map((_, i) => ({ word: `new${i}`, explains: `新${i}` }))
       fetchMock.mockResolvedValueOnce({

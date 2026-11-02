@@ -1,1 +1,3080 @@
-[{"word": "a", "phonetic": "", "explains": "v. 有（avoir 变位）"}, {"word": "acheter", "phonetic": "", "explains": "v. 购买"}, {"word": "adresse", "phonetic": "", "explains": "n.f. 地址"}, {"word": "affaire", "phonetic": "", "explains": "n.f. 事务；生意"}, {"word": "aimer", "phonetic": "", "explains": "v. 爱；喜欢"}, {"word": "aller", "phonetic": "", "explains": "v. 去"}, {"word": "allemand", "phonetic": "", "explains": "adj. 德国的；n.m. 德语"}, {"word": "alors", "phonetic": "", "explains": "adv. 那么，当时"}, {"word": "ami", "phonetic": "", "explains": "n.m. 朋友"}, {"word": "an", "phonetic": "", "explains": "n.m. 年"}, {"word": "anglais", "phonetic": "", "explains": "adj. 英国的；n.m. 英语"}, {"word": "animal", "phonetic": "", "explains": "n.m. 动物"}, {"word": "anniversaire", "phonetic": "", "explains": "n.m. 生日；周年"}, {"word": "année", "phonetic": "", "explains": "n.f. 年；年度"}, {"word": "août", "phonetic": "", "explains": "n.m. 八月"}, {"word": "appel", "phonetic": "", "explains": "n.m. 电话；呼唤"}, {"word": "appeler", "phonetic": "", "explains": "v. 称呼；打电话"}, {"word": "apporter", "phonetic": "", "explains": "v. 带来"}, {"word": "apprendre", "phonetic": "", "explains": "v. 学习；得知"}, {"word": "après", "phonetic": "", "explains": "prep. 在…之后"}, {"word": "arbre", "phonetic": "", "explains": "n.m. 树"}, {"word": "argent", "phonetic": "", "explains": "n.m. 钱；银"}, {"word": "arriver", "phonetic": "", "explains": "v. 到达；发生"}, {"word": "assiette", "phonetic": "", "explains": "n.f. 盘子"}, {"word": "attenre", "phonetic": "", "explains": "v. 等待"}, {"word": "attention", "phonetic": "", "explains": "n.f. 注意"}, {"word": "au revoir", "phonetic": "", "explains": "interj. 再见"}, {"word": "aussi", "phonetic": "", "explains": "adv. 也"}, {"word": "automne", "phonetic": "", "explains": "n.m. 秋天"}, {"word": "autour", "phonetic": "", "explains": "adv. 周围"}, {"word": "autre", "phonetic": "", "explains": "adj. 其他的"}, {"word": "avion", "phonetic": "", "explains": "n.m. 飞机"}, {"word": "avoir", "phonetic": "", "explains": "v. 有"}, {"word": "bain", "phonetic": "", "explains": "n.m. 洗澡"}, {"word": "beau", "phonetic": "", "explains": "adj. 美丽的"}, {"word": "beaucoup", "phonetic": "", "explains": "adv. 很多"}, {"word": "bébé", "phonetic": "", "explains": "n.m. 婴儿"}, {"word": "bien", "phonetic": "", "explains": "adv. 好"}, {"word": "bienvenue", "phonetic": "", "explains": "n.f. 欢迎"}, {"word": "bière", "phonetic": "", "explains": "n.f. 啤酒"}, {"word": "bifleck", "phonetic": "", "explains": "n.m. 电影院"}, {"word": "blanc", "phonetic": "", "explains": "adj. 白色的"}, {"word": "bleu", "phonetic": "", "explains": "adj. 蓝色的"}, {"word": "boire", "phonetic": "", "explains": "v. 喝"}, {"word": "bois", "phonetic": "", "explains": "n.m. 树林；木头"}, {"word": "bonbon", "phonetic": "", "explains": "n.m. 糖果"}, {"word": "bonheur", "phonetic": "", "explains": "n.m. 幸福"}, {"word": "bonjour", "phonetic": "", "explains": "interj. 你好"}, {"word": "bord", "phonetic": "", "explains": "n.m. 边缘"}, {"word": "boucherie", "phonetic": "", "explains": "n.f. 肉店"}, {"word": "bouche", "phonetic": "", "explains": "n.f. 嘴"}, {"word": "boulangerie", "phonetic": "", "explains": "n.f. 面包店"}, {"word": "bouteille", "phonetic": "", "explains": "n.f. 瓶子"}, {"word": "boutique", "phonetic": "", "explains": "n.f. 小商店"}, {"word": "bras", "phonetic": "", "explains": "n.m. 手臂"}, {"word": "pain", "phonetic": "", "explains": "n.m. 面包"}, {"word": "céréale", "phonetic": "", "explains": "n.f. 谷物"}, {"word": "café", "phonetic": "", "explains": "n.m. 咖啡；咖啡馆"}, {"word": "cahier", "phonetic": "", "explains": "n.m. 练习本"}, {"word": "calculatrice", "phonetic": "", "explains": "n.f. 计算器"}, {"word": "calme", "phonetic": "", "explains": "adj. 平静的"}, {"word": "camarade", "phonetic": "", "explains": "n.m. 同学；同伴"}, {"word": "campagne", "phonetic": "", "explains": "n.f. 农村；运动"}, {"word": "canapé", "phonetic": "", "explains": "n.m. 长沙发"}, {"word": "car", "phonetic": "", "explains": "n.m. 大客车；conj. 因为"}, {"word": "carte", "phonetic": "", "explains": "n.f. 卡片；地图；菜单"}, {"word": "cartable", "phonetic": "", "explains": "n.m. 书包"}, {"word": "ce", "phonetic": "", "explains": "pron. 这"}, {"word": "céder", "phonetic": "", "explains": "v. 让步；转让"}, {"word": "cent", "phonetic": "", "explains": "num. 一百"}, {"word": "centre", "phonetic": "", "explains": "n.m. 中心"}, {"word": "cependant", "phonetic": "", "explains": "adv. 然而"}, {"word": "chaise", "phonetic": "", "explains": "n.f. 椅子"}, {"word": "chaleur", "phonetic": "", "explains": "n.f. 热量；炎热"}, {"word": "chambre", "phonetic": "", "explains": "n.f. 房间；卧室"}, {"word": "champ", "phonetic": "", "explains": "n.m. 田野"}, {"word": "chance", "phonetic": "", "explains": "n.f. 运气"}, {"word": "chandail", "phonetic": "", "explains": "n.m. 毛衣"}, {"word": "chanson", "phonetic": "", "explains": "n.f. 歌曲"}, {"word": "chapeau", "phonetic": "", "explains": "n.m. 帽子"}, {"word": "charpentier", "phonetic": "", "explains": "n.m. 木匠"}, {"word": "chat", "phonetic": "", "explains": "n.m. 猫"}, {"word": "chaud", "phonetic": "", "explains": "adj. 热的"}, {"word": "chaussure", "phonetic": "", "explains": "n.f. 鞋"}, {"word": "chef", "phonetic": "", "explains": "n.m. 首领；厨师"}, {"word": "chemise", "phonetic": "", "explains": "n.f. 衬衫"}, {"word": "cher", "phonetic": "", "explains": "adj. 昂贵的；亲爱的"}, {"word": "cheval", "phonetic": "", "explains": "n.m. 马"}, {"word": "chez", "phonetic": "", "explains": "prep. 在…家"}, {"word": "chien", "phonetic": "", "explains": "n.m. 狗"}, {"word": "ciel", "phonetic": "", "explains": "n.m. 天空"}, {"word": "cigare", "phonetic": "", "explains": "n.m. 雪茄"}, {"word": "cigarette", "phonetic": "", "explains": "n.f. 香烟"}, {"word": "ciment", "phonetic": "", "explains": "n.m. 水泥"}, {"word": "cinq", "phonetic": "", "explains": "num. 五"}, {"word": "cinéma", "phonetic": "", "explains": "n.m. 电影院；电影"}, {"word": "cire", "phonetic": "", "explains": "n.f. 蜡"}, {"word": "circuler", "phonetic": "", "explains": "v. 通行；流通"}, {"word": "citron", "phonetic": "", "explains": "n.m. 柠檬"}, {"word": "civilisation", "phonetic": "", "explains": "n.f. 文明"}, {"word": "clair", "phonetic": "", "explains": "adj. 明亮的；浅色的"}, {"word": "classe", "phonetic": "", "explains": "n.f. 班级；教室"}, {"word": "clé", "phonetic": "", "explains": "n.f. 钥匙"}, {"word": "client", "phonetic": "", "explains": "n.m. 客户"}, {"word": "climat", "phonetic": "", "explains": "n.m. 气候"}, {"word": "cloche", "phonetic": "", "explains": "n.f. 钟；铃"}, {"word": "coffre", "phonetic": "", "explains": "n.m. 箱子；后备箱"}, {"word": "coffre-fort", "phonetic": "", "explains": "n.m. 保险柜"}, {"word": "coin", "phonetic": "", "explains": "n.m. 角落；地区"}, {"word": "colis", "phonetic": "", "explains": "n.m. 包裹"}, {"word": "collège", "phonetic": "", "explains": "n.m. 初中"}, {"word": "coloriant", "phonetic": "", "explains": "n.m. 染料"}, {"word": "combien", "phonetic": "", "explains": "adv. 多少"}, {"word": "comme", "phonetic": "", "explains": "conj. 像；作为"}, {"word": "comment", "phonetic": "", "explains": "adv. 怎样"}, {"word": "commencer", "phonetic": "", "explains": "v. 开始"}, {"word": "commande", "phonetic": "", "explains": "n.f. 订购；命令"}, {"word": "commerçant", "phonetic": "", "explains": "n.m. 商人"}, {"word": "commentaire", "phonetic": "", "explains": "n.m. 评论"}, {"word": "complet", "phonetic": "", "explains": "adj. 完整的"}, {"word": "comprendre", "phonetic": "", "explains": "v. 理解；包括"}, {"word": "compte", "phonetic": "", "explains": "n.m. 账户；计算"}, {"word": "compter", "phonetic": "", "explains": "v. 数；打算"}, {"word": "connaître", "phonetic": "", "explains": "v. 认识；知道"}, {"word": "conseil", "phonetic": "", "explains": "n.m. 建议；理事会"}, {"word": "content", "phonetic": "", "explains": "adj. 高兴的"}, {"word": "continuer", "phonetic": "", "explains": "v. 继续"}, {"word": "contrat", "phonetic": "", "explains": "n.m. 合同"}, {"word": "coquille", "phonetic": "", "explains": "n.f. 贝壳；果壳"}, {"word": "corps", "phonetic": "", "explains": "n.m. 身体"}, {"word": "côte", "phonetic": "", "explains": "n.f. 海岸；肋骨"}, {"word": "côté", "phonetic": "", "explains": "n.m. 侧面；方面"}, {"word": "coton", "phonetic": "", "explains": "n.m. 棉花"}, {"word": "couleur", "phonetic": "", "explains": "n.f. 颜色"}, {"word": "coup", "phonetic": "", "explains": "n.m. 击；一次"}, {"word": "couper", "phonetic": "", "explains": "v. 切，剪"}, {"word": "cour", "phonetic": "", "explains": "n.f. 庭院；法院"}, {"word": "courrier", "phonetic": "", "explains": "n.m. 邮件"}, {"word": "cours", "phonetic": "", "explains": "n.m. 课程；水流"}, {"word": "course", "phonetic": "", "explains": "n.f. 购物；赛跑"}, {"word": "coureur", "phonetic": "", "explains": "n.m. 赛跑者"}, {"word": "courir", "phonetic": "", "explains": "v. 跑"}, {"word": "coussin", "phonetic": "", "explains": "n.m. 靠垫"}, {"word": "coutume", "phonetic": "", "explains": "n.f. 习俗"}, {"word": "cravate", "phonetic": "", "explains": "n.f. 领带"}, {"word": "crème", "phonetic": "", "explains": "n.f. 奶油；面霜"}, {"word": "créer", "phonetic": "", "explains": "v. 创造"}, {"word": "crier", "phonetic": "", "explains": "v. 喊叫"}, {"word": "cristal", "phonetic": "", "explains": "n.m. 水晶"}, {"word": "croissant", "phonetic": "", "explains": "n.m. 羊角面包"}, {"word": "cuillère", "phonetic": "", "explains": "n.f. 勺子"}, {"word": "cuisine", "phonetic": "", "explains": "n.f. 厨房；烹饪"}, {"word": "cuisinier", "phonetic": "", "explains": "n.m. 厨师"}, {"word": "culture", "phonetic": "", "explains": "n.f. 文化"}, {"word": "curieux", "phonetic": "", "explains": "adj. 好奇的；奇怪的"}, {"word": "cycliste", "phonetic": "", "explains": "n.m. 骑自行车的人"}, {"word": "dame", "phonetic": "", "explains": "n.f. 女士"}, {"word": "danse", "phonetic": "", "explains": "n.f. 舞蹈"}, {"word": "danser", "phonetic": "", "explains": "v. 跳舞"}, {"word": "date", "phonetic": "", "explains": "n.f. 日期"}, {"word": "de", "phonetic": "", "explains": "prep. 的；从"}, {"word": "débit", "phonetic": "", "explains": "n.m. 流量；借方"}, {"word": "débouter", "phonetic": "", "explains": "v. 驳回"}, {"word": "décaler", "phonetic": "", "explains": "v. 移动，错开"}, {"word": "décembre", "phonetic": "", "explains": "n.m. 十二月"}, {"word": "décider", "phonetic": "", "explains": "v. 决定"}, {"word": "déjeuner", "phonetic": "", "explains": "n.m. 午饭；v. 吃午饭"}, {"word": "délicieux", "phonetic": "", "explains": "adj. 美味的"}, {"word": "demain", "phonetic": "", "explains": "adv. 明天"}, {"word": "demande", "phonetic": "", "explains": "n.f. 请求；需求"}, {"word": "demander", "phonetic": "", "explains": "v. 请求；问"}, {"word": "demeure", "phonetic": "", "explains": "n.f. 住所"}, {"word": "demi", "phonetic": "", "explains": "adj. 一半的"}, {"word": "dent", "phonetic": "", "explains": "n.f. 牙齿"}, {"word": "dentiste", "phonetic": "", "explains": "n.m. 牙医"}, {"word": "départ", "phonetic": "", "explains": "n.m. 出发"}, {"word": "dépenaillé", "phonetic": "", "explains": "adj. 衣衫褴褛的"}, {"word": "dépenser", "phonetic": "", "explains": "v. 花费"}, {"word": "depuis", "phonetic": "", "explains": "prep. 自从"}, {"word": "dernier", "phonetic": "", "explains": "adj. 最后的"}, {"word": "derrière", "phonetic": "", "explains": "prep. 在…后面"}, {"word": "des", "phonetic": "", "explains": "art. 一些"}, {"word": "descendre", "phonetic": "", "explains": "v. 下去"}, {"word": "désert", "phonetic": "", "explains": "n.m. 沙漠"}, {"word": "deux", "phonetic": "", "explains": "num. 二"}, {"word": "devant", "phonetic": "", "explains": "prep. 在…前面"}, {"word": "devenir", "phonetic": "", "explains": "v. 变成"}, {"word": "dévaster", "phonetic": "", "explains": "v. 毁坏"}, {"word": "devoir", "phonetic": "", "explains": "v. 应该；n.m. 作业"}, {"word": "dictionnaire", "phonetic": "", "explains": "n.m. 词典"}, {"word": "dimanche", "phonetic": "", "explains": "n.m. 星期日"}, {"word": "diner", "phonetic": "", "explains": "n.m. 晚饭"}, {"word": "discours", "phonetic": "", "explains": "n.m. 演讲"}, {"word": "disponible", "phonetic": "", "explains": "adj. 可用的"}, {"word": "docteur", "phonetic": "", "explains": "n.m. 医生；博士"}, {"word": "dieu", "phonetic": "", "explains": "n.m. 神；上帝"}, {"word": "doré", "phonetic": "", "explains": "adj. 金色的，镀金的"}, {"word": "dormir", "phonetic": "", "explains": "v. 睡觉"}, {"word": "douze", "phonetic": "", "explains": "num. 十二"}, {"word": "doux", "phonetic": "", "explains": "adj. 温柔的；甜的"}, {"word": "droit", "phonetic": "", "explains": "adj. 直的；右边的；n.m. 权利"}, {"word": "eau", "phonetic": "", "explains": "n.f. 水"}, {"word": "écharpe", "phonetic": "", "explains": "n.f. 围巾"}, {"word": "école", "phonetic": "", "explains": "n.f. 学校"}, {"word": "écouter", "phonetic": "", "explains": "v. 听"}, {"word": "écran", "phonetic": "", "explains": "n.m. 屏幕"}, {"word": "écrire", "phonetic": "", "explains": "v. 写"}, {"word": "église", "phonetic": "", "explains": "n.f. 教堂"}, {"word": "égaler", "phonetic": "", "explains": "v. 使相等"}, {"word": "égalité", "phonetic": "", "explains": "n.f. 平等"}, {"word": "été", "phonetic": "", "explains": "n.m. 夏天"}, {"word": "être", "phonetic": "", "explains": "v. 是"}, {"word": "famille", "phonetic": "", "explains": "n.f. 家庭"}, {"word": "farine", "phonetic": "", "explains": "n.f. 面粉"}, {"word": "faute", "phonetic": "", "explains": "n.f. 错误"}, {"word": "fauteuil", "phonetic": "", "explains": "n.m. 扶手椅"}, {"word": "faux", "phonetic": "", "explains": "adj. 假的"}, {"word": "février", "phonetic": "", "explains": "n.m. 二月"}, {"word": "gagner", "phonetic": "", "explains": "v. 赢得；挣钱"}, {"word": "garçon", "phonetic": "", "explains": "n.m. 男孩；服务员"}, {"word": "gauche", "phonetic": "", "explains": "n.f. 左边"}, {"word": "gentil", "phonetic": "", "explains": "adj. 和蔼的"}, {"word": "glace", "phonetic": "", "explains": "n.f. 冰；冰淇淋；镜子"}, {"word": "gâteau", "phonetic": "", "explains": "n.m. 蛋糕"}, {"word": "grand", "phonetic": "", "explains": "adj. 大的；高的"}, {"word": "grande", "phonetic": "", "explains": "adj. 大的（阴性）"}, {"word": "guerre", "phonetic": "", "explains": "n.f. 战争"}, {"word": "habit", "phonetic": "", "explains": "n.m. 衣服"}, {"word": "hiver", "phonetic": "", "explains": "n.m. 冬天"}, {"word": "homme", "phonetic": "", "explains": "n.m. 男人"}, {"word": "hôtel", "phonetic": "", "explains": "n.m. 旅馆"}, {"word": "hui", "phonetic": "", "explains": "adv. （今日）"}, {"word": "huit", "phonetic": "", "explains": "num. 八"}, {"word": "humain", "phonetic": "", "explains": "adj. 人类的"}, {"word": "idée", "phonetic": "", "explains": "n.f. 主意"}, {"word": "il", "phonetic": "", "explains": "pron. 他"}, {"word": "image", "phonetic": "", "explains": "n.f. 图像"}, {"word": "immeuble", "phonetic": "", "explains": "n.m. 楼房"}, {"word": "important", "phonetic": "", "explains": "adj. 重要的"}, {"word": "impôt", "phonetic": "", "explains": "n.m. 税"}, {"word": "infirmière", "phonetic": "", "explains": "n.f. 护士"}, {"word": "informatique", "phonetic": "", "explains": "n.f. 信息技术；adj. 信息技术的"}, {"word": "institutrice", "phonetic": "", "explains": "n.f. 小学女教师"}, {"word": "invitation", "phonetic": "", "explains": "n.f. 邀请"}, {"word": "jambe", "phonetic": "", "explains": "n.f. 腿"}, {"word": "janvier", "phonetic": "", "explains": "n.m. 一月"}, {"word": "jardin", "phonetic": "", "explains": "n.m. 花园"}, {"word": "jaune", "phonetic": "", "explains": "adj. 黄色的"}, {"word": "jeu", "phonetic": "", "explains": "n.m. 游戏"}, {"word": "jeudi", "phonetic": "", "explains": "n.m. 星期四"}, {"word": "jeune", "phonetic": "", "explains": "adj. 年轻的"}, {"word": "jouer", "phonetic": "", "explains": "v. 玩；演奏"}, {"word": "journal", "phonetic": "", "explains": "n.m. 报纸；日记"}, {"word": "journée", "phonetic": "", "explains": "n.f. 一天"}, {"word": "joyeux", "phonetic": "", "explains": "adj. 快乐的"}, {"word": "juillet", "phonetic": "", "explains": "n.m. 七月"}, {"word": "jupe", "phonetic": "", "explains": "n.f. 裙子"}, {"word": "jus", "phonetic": "", "explains": "n.m. 果汁"}, {"word": "juste", "phonetic": "", "explains": "adj. 公正的；准确的"}, {"word": "kilomètre", "phonetic": "", "explains": "n.m. 千米"}, {"word": "la", "phonetic": "", "explains": "art. 阴性定冠词"}, {"word": "lait", "phonetic": "", "explains": "n.m. 牛奶"}, {"word": "lundi", "phonetic": "", "explains": "n.m. 星期一"}, {"word": "magnifique", "phonetic": "", "explains": "adj. 极好的"}, {"word": "maison", "phonetic": "", "explains": "n.f. 房子"}, {"word": "mairie", "phonetic": "", "explains": "n.f. 市政府"}, {"word": "manger", "phonetic": "", "explains": "v. 吃"}, {"word": "marché", "phonetic": "", "explains": "n.m. 市场"}, {"word": "mardi", "phonetic": "", "explains": "n.m. 星期二"}, {"word": "mari", "phonetic": "", "explains": "n.m. 丈夫"}, {"word": "marie", "phonetic": "", "explains": "n.f. 结婚"}, {"word": "matin", "phonetic": "", "explains": "n.m. 早上"}, {"word": "mauvais", "phonetic": "", "explains": "adj. 坏的"}, {"word": "mercredi", "phonetic": "", "explains": "n.m. 星期三"}, {"word": "mère", "phonetic": "", "explains": "n.f. 母亲"}, {"word": "merci", "phonetic": "", "explains": "interj. 谢谢"}, {"word": "médecin", "phonetic": "", "explains": "n.m. 医生"}, {"word": "montagne", "phonetic": "", "explains": "n.f. 山"}, {"word": "monde", "phonetic": "", "explains": "n.m. 世界；人们"}, {"word": "monsieur", "phonetic": "", "explains": "n.m. 先生"}, {"word": "moyen", "phonetic": "", "explains": "n.m. 方法；adj. 中等的"}, {"word": "musée", "phonetic": "", "explains": "n.m. 博物馆"}, {"word": "musique", "phonetic": "", "explains": "n.f. 音乐"}, {"word": "neuf", "phonetic": "", "explains": "adj. 新的；num. 九"}, {"word": "noir", "phonetic": "", "explains": "adj. 黑色的"}, {"word": "nombre", "phonetic": "", "explains": "n.m. 数目"}, {"word": "nom", "phonetic": "", "explains": "n.m. 名字；姓"}, {"word": "nombreux", "phonetic": "", "explains": "adj. 众多的"}, {"word": "non", "phonetic": "", "explains": "adv. 不"}, {"word": "nord", "phonetic": "", "explains": "n.m. 北方"}, {"word": "note", "phonetic": "", "explains": "n.f. 分数；笔记"}, {"word": "novembre", "phonetic": "", "explains": "n.m. 十一月"}, {"word": "objet", "phonetic": "", "explains": "n.m. 物体"}, {"word": "octobre", "phonetic": "", "explains": "n.m. 十月"}, {"word": "odeur", "phonetic": "", "explains": "n.f. 气味"}, {"word": "oiseau", "phonetic": "", "explains": "n.m. 鸟"}, {"word": "olive", "phonetic": "", "explains": "n.f. 橄榄"}, {"word": "ombre", "phonetic": "", "explains": "n.f. 阴影"}, {"word": "oncle", "phonetic": "", "explains": "n.m. 叔叔；舅舅"}, {"word": "orange", "phonetic": "", "explains": "n.f. 橙子；adj. 橙色的"}, {"word": "ordinateur", "phonetic": "", "explains": "n.m. 电脑"}, {"word": "ouest", "phonetic": "", "explains": "n.m. 西方"}, {"word": "oui", "phonetic": "", "explains": "adv. 是的"}, {"word": "ourson", "phonetic": "", "explains": "n.m. 小熊"}, {"word": "page", "phonetic": "", "explains": "n.f. 页"}, {"word": "paix", "phonetic": "", "explains": "n.f. 和平"}, {"word": "palais", "phonetic": "", "explains": "n.m. 宫殿"}, {"word": "pamplemousse", "phonetic": "", "explains": "n.m. 柚子"}, {"word": "pantalon", "phonetic": "", "explains": "n.m. 裤子"}, {"word": "papier", "phonetic": "", "explains": "n.m. 纸"}, {"word": "paquet", "phonetic": "", "explains": "n.m. 包裹"}, {"word": "parapluie", "phonetic": "", "explains": "n.m. 雨伞"}, {"word": "parc", "phonetic": "", "explains": "n.m. 公园"}, {"word": "pardon", "phonetic": "", "explains": "interj. 对不起"}, {"word": "pareil", "phonetic": "", "explains": "adj. 相同的"}, {"word": "parent", "phonetic": "", "explains": "n.m. 父母；亲戚"}, {"word": "parfois", "phonetic": "", "explains": "adv. 有时"}, {"word": "parler", "phonetic": "", "explains": "v. 说话"}, {"word": "partir", "phonetic": "", "explains": "v. 出发"}, {"word": "partout", "phonetic": "", "explains": "adv. 到处"}, {"word": "party", "phonetic": "", "explains": "n.f. 聚会"}, {"word": "passé", "phonetic": "", "explains": "n.m. 过去；adj. 过去的"}, {"word": "passeport", "phonetic": "", "explains": "n.m. 护照"}, {"word": "pâtes", "phonetic": "", "explains": "n.f.pl. 面条"}, {"word": "pâtisserie", "phonetic": "", "explains": "n.f. 糕点店；糕点"}, {"word": "pays", "phonetic": "", "explains": "n.m. 国家"}, {"word": "paysage", "phonetic": "", "explains": "n.m. 风景"}, {"word": "peau", "phonetic": "", "explains": "n.f. 皮肤"}, {"word": "pêche", "phonetic": "", "explains": "n.f. 桃子；捕鱼"}, {"word": "père", "phonetic": "", "explains": "n.m. 父亲"}, {"word": "période", "phonetic": "", "explains": "n.f. 时期"}, {"word": "permis", "phonetic": "", "explains": "n.m. 许可证"}, {"word": "personne", "phonetic": "", "explains": "n.f. 人；pron. 没有人"}, {"word": "petit", "phonetic": "", "explains": "adj. 小的"}, {"word": "peu", "phonetic": "", "explains": "adv. 少"}, {"word": "peur", "phonetic": "", "explains": "n.f. 害怕"}, {"word": "philosophie", "phonetic": "", "explains": "n.f. 哲学"}, {"word": "photo", "phonetic": "", "explains": "n.f. 照片"}, {"word": "phrase", "phonetic": "", "explains": "n.f. 句子"}, {"word": "piano", "phonetic": "", "explains": "n.m. 钢琴"}, {"word": "piece", "phonetic": "", "explains": "n.f. 房间；硬币"}, {"word": "pied", "phonetic": "", "explains": "n.m. 脚"}, {"word": "pierre", "phonetic": "", "explains": "n.f. 石头"}, {"word": "pilote", "phonetic": "", "explains": "n.m. 飞行员"}, {"word": "piscine", "phonetic": "", "explains": "n.f. 游泳池"}, {"word": "place", "phonetic": "", "explains": "n.f. 广场；位置"}, {"word": "plage", "phonetic": "", "explains": "n.f. 海滩"}, {"word": "plaisir", "phonetic": "", "explains": "n.m. 快乐"}, {"word": "plan", "phonetic": "", "explains": "n.m. 计划；平面图"}, {"word": "planète", "phonetic": "", "explains": "n.f. 行星"}, {"word": "plateau", "phonetic": "", "explains": "n.m. 托盘；高原"}, {"word": "poche", "phonetic": "", "explains": "n.f. 口袋"}, {"word": "poésie", "phonetic": "", "explains": "n.f. 诗歌"}, {"word": "poème", "phonetic": "", "explains": "n.m. 诗"}, {"word": "point", "phonetic": "", "explains": "n.m. 点；分数"}, {"word": "poire", "phonetic": "", "explains": "n.f. 梨"}, {"word": "poisson", "phonetic": "", "explains": "n.m. 鱼"}, {"word": "poivre", "phonetic": "", "explains": "n.m. 胡椒"}, {"word": "police", "phonetic": "", "explains": "n.f. 警察"}, {"word": "poli", "phonetic": "", "explains": "adj. 有礼貌的；抛光的"}, {"word": "pommes", "phonetic": "", "explains": "n.f.pl. 苹果"}, {"word": "pompe", "phonetic": "", "explains": "n.f. 泵"}, {"word": "pont", "phonetic": "", "explains": "n.m. 桥"}, {"word": "port", "phonetic": "", "explains": "n.m. 港口"}, {"word": "porte", "phonetic": "", "explains": "n.f. 门"}, {"word": "portefeuille", "phonetic": "", "explains": "n.m. 钱包"}, {"word": "portière", "phonetic": "", "explains": "n.f. 车门"}, {"word": "portrait", "phonetic": "", "explains": "n.m. 肖像"}, {"word": "pot", "phonetic": "", "explains": "n.m. 罐子"}, {"word": "pouce", "phonetic": "", "explains": "n.m. 拇指"}, {"word": "poulet", "phonetic": "", "explains": "n.m. 鸡肉"}, {"word": "pourquoi", "phonetic": "", "explains": "adv. 为什么"}, {"word": "près", "phonetic": "", "explains": "adv. 附近"}, {"word": "printemps", "phonetic": "", "explains": "n.m. 春天"}, {"word": "prix", "phonetic": "", "explains": "n.m. 价格；奖"}, {"word": "problème", "phonetic": "", "explains": "n.m. 问题"}, {"word": "produire", "phonetic": "", "explains": "v. 生产"}, {"word": "profil", "phonetic": "", "explains": "n.m. 侧面；简介"}, {"word": "professeur", "phonetic": "", "explains": "n.m. 教授；教师"}, {"word": "programmation", "phonetic": "", "explains": "n.f. 编程；日程"}, {"word": "projet", "phonetic": "", "explains": "n.m. 计划；项目"}, {"word": "promener", "phonetic": "", "explains": "v. 散步"}, {"word": "propre", "phonetic": "", "explains": "adj. 干净的；自己的"}, {"word": "prochain", "phonetic": "", "explains": "adj. 下一个的"}, {"word": "prune", "phonetic": "", "explains": "n.f. 李子"}, {"word": "public", "phonetic": "", "explains": "adj. 公共的"}, {"word": "pyjama", "phonetic": "", "explains": "n.m. 睡衣"}, {"word": "quand", "phonetic": "", "explains": "adv. 当…时"}, {"word": "quartier", "phonetic": "", "explains": "n.m. 街区"}, {"word": "quatorze", "phonetic": "", "explains": "num. 十四"}, {"word": "quinze", "phonetic": "", "explains": "num. 十五"}, {"word": "quoi", "phonetic": "", "explains": "pron. 什么"}, {"word": "raison", "phonetic": "", "explains": "n.f. 理由"}, {"word": "rapidement", "phonetic": "", "explains": "adv. 快速地"}, {"word": "ravioli", "phonetic": "", "explains": "n.m.pl. 馄饨"}, {"word": "recette", "phonetic": "", "explains": "n.f. 食谱；收入"}, {"word": "recherche", "phonetic": "", "explains": "n.f. 研究；寻找"}, {"word": "rectangle", "phonetic": "", "explains": "n.m. 长方形"}, {"word": "refus", "phonetic": "", "explains": "n.m. 拒绝"}, {"word": "regard", "phonetic": "", "explains": "n.m. 目光"}, {"word": "région", "phonetic": "", "explains": "n.f. 地区"}, {"word": "reine", "phonetic": "", "explains": "n.f. 女王；王后"}, {"word": "relation", "phonetic": "", "explains": "n.f. 关系"}, {"word": "religion", "phonetic": "", "explains": "n.f. 宗教"}, {"word": "renard", "phonetic": "", "explains": "n.m. 狐狸"}, {"word": "rencontre", "phonetic": "", "explains": "n.f. 相遇；会议"}, {"word": "rendez-vous", "phonetic": "", "explains": "n.m. 约会"}, {"word": "rentrer", "phonetic": "", "explains": "v. 回家；收进"}, {"word": "repasser", "phonetic": "", "explains": "v. 熨烫；再经过"}, {"word": "réponse", "phonetic": "", "explains": "n.f. 回答"}, {"word": "restaurant", "phonetic": "", "explains": "n.m. 餐馆"}, {"word": "retard", "phonetic": "", "explains": "n.m. 迟到"}, {"word": "retenir", "phonetic": "", "explains": "v. 记住；留住"}, {"word": "retour", "phonetic": "", "explains": "n.m. 返回"}, {"word": "réunion", "phonetic": "", "explains": "n.f. 会议"}, {"word": "réussir", "phonetic": "", "explains": "v. 成功"}, {"word": "réveil", "phonetic": "", "explains": "n.m. 闹钟；醒来"}, {"word": "riz", "phonetic": "", "explains": "n.m. 米"}, {"word": "robe", "phonetic": "", "explains": "n.f. 连衣裙"}, {"word": "rond", "phonetic": "", "explains": "adj. 圆的"}, {"word": "rouge", "phonetic": "", "explains": "adj. 红色的"}, {"word": "roue", "phonetic": "", "explains": "n.f. 轮子"}, {"word": "rue", "phonetic": "", "explains": "n.f. 街道"}, {"word": "sac", "phonetic": "", "explains": "n.m. 包"}, {"word": "sage", "phonetic": "", "explains": "adj. 乖的；明智的"}, {"word": "salade", "phonetic": "", "explains": "n.f. 沙拉"}, {"word": "sale", "phonetic": "", "explains": "adj. 脏的"}, {"word": "salle", "phonetic": "", "explains": "n.f. 房间；厅"}, {"word": "salon", "phonetic": "", "explains": "n.m. 客厅；沙龙"}, {"word": "salut", "phonetic": "", "explains": "interj. 你好；再见"}, {"word": "samedi", "phonetic": "", "explains": "n.m. 星期六"}, {"word": "sandwich", "phonetic": "", "explains": "n.m. 三明治"}, {"word": "santé", "phonetic": "", "explains": "n.f. 健康"}, {"word": "sapin", "phonetic": "", "explains": "n.m. 冷杉；圣诞树"}, {"word": "satisfaction", "phonetic": "", "explains": "n.f. 满意"}, {"word": "saucisse", "phonetic": "", "explains": "n.f. 香肠"}, {"word": "seau", "phonetic": "", "explains": "n.m. 桶"}, {"word": "second", "phonetic": "", "explains": "adj. 第二的"}, {"word": "semaine", "phonetic": "", "explains": "n.f. 星期"}, {"word": "septembre", "phonetic": "", "explains": "n.m. 九月"}, {"word": "serveur", "phonetic": "", "explains": "n.m. 服务员"}, {"word": "sieste", "phonetic": "", "explains": "n.f. 午睡"}, {"word": "soeur", "phonetic": "", "explains": "n.f. 姐妹"}, {"word": "soif", "phonetic": "", "explains": "n.f. 渴"}, {"word": "soleil", "phonetic": "", "explains": "n.m. 太阳"}, {"word": "souper", "phonetic": "", "explains": "n.m. 晚饭"}, {"word": "stylo", "phonetic": "", "explains": "n.m. 钢笔"}, {"word": "sucre", "phonetic": "", "explains": "n.m. 糖"}, {"word": "sujet", "phonetic": "", "explains": "n.m. 主题；主语"}, {"word": "table", "phonetic": "", "explains": "n.f. 桌子"}, {"word": "taille", "phonetic": "", "explains": "n.f. 尺寸；身高"}, {"word": "tante", "phonetic": "", "explains": "n.f. 姑姑；阿姨"}, {"word": "tapis", "phonetic": "", "explains": "n.m. 地毯"}, {"word": "tarte", "phonetic": "", "explains": "n.f. 果馅饼"}, {"word": "téléphone", "phonetic": "", "explains": "n.m. 电话"}, {"word": "télévision", "phonetic": "", "explains": "n.f. 电视"}, {"word": "temps", "phonetic": "", "explains": "n.m. 时间；天气"}, {"word": "tente", "phonetic": "", "explains": "n.f. 帐篷"}, {"word": "terrain", "phonetic": "", "explains": "n.m. 场地；土地"}, {"word": "terre", "phonetic": "", "explains": "n.f. 地球；土地"}, {"word": "thé", "phonetic": "", "explains": "n.m. 茶"}, {"word": "timbre", "phonetic": "", "explains": "n.m. 邮票"}, {"word": "tissu", "phonetic": "", "explains": "n.m. 布料"}, {"word": "toi", "phonetic": "", "explains": "pron. 你"}, {"word": "tomate", "phonetic": "", "explains": "n.f. 西红柿"}, {"word": "tombe", "phonetic": "", "explains": "n.f. 坟墓"}, {"word": "torche", "phonetic": "", "explains": "n.f. 火炬；抹布"}, {"word": "toujours", "phonetic": "", "explains": "adv. 总是"}, {"word": "tour", "phonetic": "", "explains": "n.f. 塔；轮次"}, {"word": "tourner", "phonetic": "", "explains": "v. 转动"}, {"word": "tous", "phonetic": "", "explains": "pron. 所有人"}, {"word": "tout", "phonetic": "", "explains": "adv. 全部；adj. 所有的"}, {"word": "train", "phonetic": "", "explains": "n.m. 火车"}, {"word": "traire", "phonetic": "", "explains": "v. 挤奶"}, {"word": "travail", "phonetic": "", "explains": "n.m. 工作"}, {"word": "traverser", "phonetic": "", "explains": "v. 穿过"}, {"word": "très", "phonetic": "", "explains": "adv. 非常"}, {"word": "tribunal", "phonetic": "", "explains": "n.m. 法院"}, {"word": "trio", "phonetic": "", "explains": "n.m. 三重奏；三人组"}, {"word": "trois", "phonetic": "", "explains": "num. 三"}, {"word": "trouver", "phonetic": "", "explains": "v. 找到；觉得"}, {"word": "tulipe", "phonetic": "", "explains": "n.f. 郁金香"}, {"word": "tunnel", "phonetic": "", "explains": "n.m. 隧道"}, {"word": "télé", "phonetic": "", "explains": "n.f. 电视（口语）"}, {"word": "usine", "phonetic": "", "explains": "n.f. 工厂"}, {"word": "vacances", "phonetic": "", "explains": "n.f.pl. 假期"}, {"word": "vague", "phonetic": "", "explains": "n.f. 浪；adj. 模糊的"}, {"word": "valise", "phonetic": "", "explains": "n.f. 行李箱"}, {"word": "vache", "phonetic": "", "explains": "n.f. 奶牛"}, {"word": "velo", "phonetic": "", "explains": "n.m. 自行车"}, {"word": "vent", "phonetic": "", "explains": "n.m. 风"}, {"word": "vente", "phonetic": "", "explains": "n.f. 销售"}, {"word": "verre", "phonetic": "", "explains": "n.m. 玻璃杯；玻璃"}, {"word": "version", "phonetic": "", "explains": "n.f. 版本"}, {"word": "veste", "phonetic": "", "explains": "n.f. 上衣，外套"}, {"word": "viande", "phonetic": "", "explains": "n.f. 肉"}, {"word": "victoire", "phonetic": "", "explains": "n.f. 胜利"}, {"word": "vie", "phonetic": "", "explains": "n.f. 生命；生活"}, {"word": "vieux", "phonetic": "", "explains": "adj. 旧的；年老的"}, {"word": "village", "phonetic": "", "explains": "n.m. 村庄"}, {"word": "vin", "phonetic": "", "explains": "n.m. 葡萄酒"}, {"word": "vinaigre", "phonetic": "", "explains": "n.m. 醋"}, {"word": "vitre", "phonetic": "", "explains": "n.f. 玻璃窗"}, {"word": "voiture", "phonetic": "", "explains": "n.f. 汽车"}, {"word": "voix", "phonetic": "", "explains": "n.f. 声音；投票"}, {"word": "volaille", "phonetic": "", "explains": "n.f. 家禽"}, {"word": "vouloir", "phonetic": "", "explains": "v. 想要"}, {"word": "voyage", "phonetic": "", "explains": "n.m. 旅行"}, {"word": "vrai", "phonetic": "", "explains": "adj. 真的"}, {"word": "weekend", "phonetic": "", "explains": "n.m. 周末"}, {"word": "yeux", "phonetic": "", "explains": "n.m.pl. 眼睛"}, {"word": "zéro", "phonetic": "", "explains": "num. 零"}, {"word": "zone", "phonetic": "", "explains": "n.f. 区域"}, {"word": "zoo", "phonetic": "", "explains": "n.m. 动物园"}]
+[
+  {
+    "word": "a",
+    "phonetic": "",
+    "explains": "v. 有（avoir 变位）",
+    "freq": 15
+  },
+  {
+    "word": "acheter",
+    "phonetic": "",
+    "explains": "v. 购买",
+    "freq": 733
+  },
+  {
+    "word": "adresse",
+    "phonetic": "",
+    "explains": "n.f. 地址",
+    "freq": 1097
+  },
+  {
+    "word": "affaire",
+    "phonetic": "",
+    "explains": "n.f. 事务；生意",
+    "freq": 352
+  },
+  {
+    "word": "aimer",
+    "phonetic": "",
+    "explains": "v. 爱；喜欢",
+    "freq": 976
+  },
+  {
+    "word": "aller",
+    "phonetic": "",
+    "explains": "v. 去",
+    "freq": 131
+  },
+  {
+    "word": "allemand",
+    "phonetic": "",
+    "explains": "adj. 德国的；n.m. 德语",
+    "freq": 3265
+  },
+  {
+    "word": "alors",
+    "phonetic": "",
+    "explains": "adv. 那么，当时",
+    "freq": 87
+  },
+  {
+    "word": "ami",
+    "phonetic": "",
+    "explains": "n.m. 朋友",
+    "freq": 273
+  },
+  {
+    "word": "an",
+    "phonetic": "",
+    "explains": "n.m. 年",
+    "freq": 708
+  },
+  {
+    "word": "anglais",
+    "phonetic": "",
+    "explains": "adj. 英国的；n.m. 英语",
+    "freq": 1218
+  },
+  {
+    "word": "animal",
+    "phonetic": "",
+    "explains": "n.m. 动物",
+    "freq": 1900
+  },
+  {
+    "word": "anniversaire",
+    "phonetic": "",
+    "explains": "n.m. 生日；周年",
+    "freq": 796
+  },
+  {
+    "word": "année",
+    "phonetic": "",
+    "explains": "n.f. 年；年度",
+    "freq": 559
+  },
+  {
+    "word": "août",
+    "phonetic": "",
+    "explains": "n.m. 八月",
+    "freq": 5396
+  },
+  {
+    "word": "appel",
+    "phonetic": "",
+    "explains": "n.m. 电话；呼唤",
+    "freq": 715
+  },
+  {
+    "word": "appeler",
+    "phonetic": "",
+    "explains": "v. 称呼；打电话",
+    "freq": 434
+  },
+  {
+    "word": "apporter",
+    "phonetic": "",
+    "explains": "v. 带来",
+    "freq": 1767
+  },
+  {
+    "word": "apprendre",
+    "phonetic": "",
+    "explains": "v. 学习；得知",
+    "freq": 748
+  },
+  {
+    "word": "après",
+    "phonetic": "",
+    "explains": "prep. 在…之后",
+    "freq": 148
+  },
+  {
+    "word": "arbre",
+    "phonetic": "",
+    "explains": "n.m. 树",
+    "freq": 1758
+  },
+  {
+    "word": "argent",
+    "phonetic": "",
+    "explains": "n.m. 钱；银",
+    "freq": 205
+  },
+  {
+    "word": "arriver",
+    "phonetic": "",
+    "explains": "v. 到达；发生",
+    "freq": 461
+  },
+  {
+    "word": "assiette",
+    "phonetic": "",
+    "explains": "n.f. 盘子",
+    "freq": 4974
+  },
+  {
+    "word": "attenre",
+    "phonetic": "",
+    "explains": "v. 等待"
+  },
+  {
+    "word": "attention",
+    "phonetic": "",
+    "explains": "n.f. 注意",
+    "freq": 350
+  },
+  {
+    "word": "au revoir",
+    "phonetic": "",
+    "explains": "interj. 再见",
+    "freq": 343
+  },
+  {
+    "word": "aussi",
+    "phonetic": "",
+    "explains": "adv. 也",
+    "freq": 100
+  },
+  {
+    "word": "automne",
+    "phonetic": "",
+    "explains": "n.m. 秋天",
+    "freq": 5159
+  },
+  {
+    "word": "autour",
+    "phonetic": "",
+    "explains": "adv. 周围",
+    "freq": 833
+  },
+  {
+    "word": "autre",
+    "phonetic": "",
+    "explains": "adj. 其他的",
+    "freq": 115
+  },
+  {
+    "word": "avion",
+    "phonetic": "",
+    "explains": "n.m. 飞机",
+    "freq": 821
+  },
+  {
+    "word": "avoir",
+    "phonetic": "",
+    "explains": "v. 有",
+    "freq": 101
+  },
+  {
+    "word": "bain",
+    "phonetic": "",
+    "explains": "n.m. 洗澡",
+    "freq": 1379
+  },
+  {
+    "word": "beau",
+    "phonetic": "",
+    "explains": "adj. 美丽的",
+    "freq": 427
+  },
+  {
+    "word": "beaucoup",
+    "phonetic": "",
+    "explains": "adv. 很多",
+    "freq": 170
+  },
+  {
+    "word": "bébé",
+    "phonetic": "",
+    "explains": "n.m. 婴儿",
+    "freq": 341
+  },
+  {
+    "word": "bien",
+    "phonetic": "",
+    "explains": "adv. 好",
+    "freq": 37
+  },
+  {
+    "word": "bienvenue",
+    "phonetic": "",
+    "explains": "n.f. 欢迎",
+    "freq": 772
+  },
+  {
+    "word": "bière",
+    "phonetic": "",
+    "explains": "n.f. 啤酒",
+    "freq": 1129
+  },
+  {
+    "word": "bifleck",
+    "phonetic": "",
+    "explains": "n.m. 电影院"
+  },
+  {
+    "word": "blanc",
+    "phonetic": "",
+    "explains": "adj. 白色的",
+    "freq": 1010
+  },
+  {
+    "word": "bleu",
+    "phonetic": "",
+    "explains": "adj. 蓝色的",
+    "freq": 1581
+  },
+  {
+    "word": "boire",
+    "phonetic": "",
+    "explains": "v. 喝",
+    "freq": 676
+  },
+  {
+    "word": "bois",
+    "phonetic": "",
+    "explains": "n.m. 树林；木头",
+    "freq": 680
+  },
+  {
+    "word": "bonbon",
+    "phonetic": "",
+    "explains": "n.m. 糖果",
+    "freq": 7610
+  },
+  {
+    "word": "bonheur",
+    "phonetic": "",
+    "explains": "n.m. 幸福",
+    "freq": 1483
+  },
+  {
+    "word": "bonjour",
+    "phonetic": "",
+    "explains": "interj. 你好",
+    "freq": 206
+  },
+  {
+    "word": "bord",
+    "phonetic": "",
+    "explains": "n.m. 边缘",
+    "freq": 966
+  },
+  {
+    "word": "boucherie",
+    "phonetic": "",
+    "explains": "n.f. 肉店",
+    "freq": 13448
+  },
+  {
+    "word": "bouche",
+    "phonetic": "",
+    "explains": "n.f. 嘴",
+    "freq": 1049
+  },
+  {
+    "word": "boulangerie",
+    "phonetic": "",
+    "explains": "n.f. 面包店",
+    "freq": 12751
+  },
+  {
+    "word": "bouteille",
+    "phonetic": "",
+    "explains": "n.f. 瓶子",
+    "freq": 1648
+  },
+  {
+    "word": "boutique",
+    "phonetic": "",
+    "explains": "n.f. 小商店",
+    "freq": 2603
+  },
+  {
+    "word": "bras",
+    "phonetic": "",
+    "explains": "n.m. 手臂",
+    "freq": 656
+  },
+  {
+    "word": "pain",
+    "phonetic": "",
+    "explains": "n.m. 面包",
+    "freq": 1741
+  },
+  {
+    "word": "céréale",
+    "phonetic": "",
+    "explains": "n.f. 谷物"
+  },
+  {
+    "word": "café",
+    "phonetic": "",
+    "explains": "n.m. 咖啡；咖啡馆",
+    "freq": 598
+  },
+  {
+    "word": "cahier",
+    "phonetic": "",
+    "explains": "n.m. 练习本",
+    "freq": 10237
+  },
+  {
+    "word": "calculatrice",
+    "phonetic": "",
+    "explains": "n.f. 计算器",
+    "freq": 26115
+  },
+  {
+    "word": "calme",
+    "phonetic": "",
+    "explains": "adj. 平静的",
+    "freq": 599
+  },
+  {
+    "word": "camarade",
+    "phonetic": "",
+    "explains": "n.m. 同学；同伴",
+    "freq": 3307
+  },
+  {
+    "word": "campagne",
+    "phonetic": "",
+    "explains": "n.f. 农村；运动",
+    "freq": 1664
+  },
+  {
+    "word": "canapé",
+    "phonetic": "",
+    "explains": "n.m. 长沙发",
+    "freq": 2854
+  },
+  {
+    "word": "car",
+    "phonetic": "",
+    "explains": "n.m. 大客车；conj. 因为",
+    "freq": 323
+  },
+  {
+    "word": "carte",
+    "phonetic": "",
+    "explains": "n.f. 卡片；地图；菜单",
+    "freq": 713
+  },
+  {
+    "word": "cartable",
+    "phonetic": "",
+    "explains": "n.m. 书包",
+    "freq": 25963
+  },
+  {
+    "word": "ce",
+    "phonetic": "",
+    "explains": "pron. 这",
+    "freq": 25
+  },
+  {
+    "word": "céder",
+    "phonetic": "",
+    "explains": "v. 让步；转让",
+    "freq": 7450
+  },
+  {
+    "word": "cent",
+    "phonetic": "",
+    "explains": "num. 一百",
+    "freq": 1886
+  },
+  {
+    "word": "centre",
+    "phonetic": "",
+    "explains": "n.m. 中心",
+    "freq": 1004
+  },
+  {
+    "word": "cependant",
+    "phonetic": "",
+    "explains": "adv. 然而",
+    "freq": 2359
+  },
+  {
+    "word": "chaise",
+    "phonetic": "",
+    "explains": "n.f. 椅子",
+    "freq": 2146
+  },
+  {
+    "word": "chaleur",
+    "phonetic": "",
+    "explains": "n.f. 热量；炎热",
+    "freq": 2390
+  },
+  {
+    "word": "chambre",
+    "phonetic": "",
+    "explains": "n.f. 房间；卧室",
+    "freq": 394
+  },
+  {
+    "word": "champ",
+    "phonetic": "",
+    "explains": "n.m. 田野",
+    "freq": 1769
+  },
+  {
+    "word": "chance",
+    "phonetic": "",
+    "explains": "n.f. 运气",
+    "freq": 264
+  },
+  {
+    "word": "chandail",
+    "phonetic": "",
+    "explains": "n.m. 毛衣",
+    "freq": 21019
+  },
+  {
+    "word": "chanson",
+    "phonetic": "",
+    "explains": "n.f. 歌曲",
+    "freq": 1007
+  },
+  {
+    "word": "chapeau",
+    "phonetic": "",
+    "explains": "n.m. 帽子",
+    "freq": 1723
+  },
+  {
+    "word": "charpentier",
+    "phonetic": "",
+    "explains": "n.m. 木匠",
+    "freq": 17040
+  },
+  {
+    "word": "chat",
+    "phonetic": "",
+    "explains": "n.m. 猫",
+    "freq": 1442
+  },
+  {
+    "word": "chaud",
+    "phonetic": "",
+    "explains": "adj. 热的",
+    "freq": 922
+  },
+  {
+    "word": "chaussure",
+    "phonetic": "",
+    "explains": "n.f. 鞋",
+    "freq": 5030
+  },
+  {
+    "word": "chef",
+    "phonetic": "",
+    "explains": "n.m. 首领；厨师",
+    "freq": 438
+  },
+  {
+    "word": "chemise",
+    "phonetic": "",
+    "explains": "n.f. 衬衫",
+    "freq": 2125
+  },
+  {
+    "word": "cher",
+    "phonetic": "",
+    "explains": "adj. 昂贵的；亲爱的",
+    "freq": 727
+  },
+  {
+    "word": "cheval",
+    "phonetic": "",
+    "explains": "n.m. 马",
+    "freq": 1070
+  },
+  {
+    "word": "chez",
+    "phonetic": "",
+    "explains": "prep. 在…家",
+    "freq": 167
+  },
+  {
+    "word": "chien",
+    "phonetic": "",
+    "explains": "n.m. 狗",
+    "freq": 594
+  },
+  {
+    "word": "ciel",
+    "phonetic": "",
+    "explains": "n.m. 天空",
+    "freq": 973
+  },
+  {
+    "word": "cigare",
+    "phonetic": "",
+    "explains": "n.m. 雪茄",
+    "freq": 6905
+  },
+  {
+    "word": "cigarette",
+    "phonetic": "",
+    "explains": "n.f. 香烟",
+    "freq": 2972
+  },
+  {
+    "word": "ciment",
+    "phonetic": "",
+    "explains": "n.m. 水泥",
+    "freq": 11003
+  },
+  {
+    "word": "cinq",
+    "phonetic": "",
+    "explains": "num. 五",
+    "freq": 501
+  },
+  {
+    "word": "cinéma",
+    "phonetic": "",
+    "explains": "n.m. 电影院；电影",
+    "freq": 1711
+  },
+  {
+    "word": "cire",
+    "phonetic": "",
+    "explains": "n.f. 蜡",
+    "freq": 8878
+  },
+  {
+    "word": "circuler",
+    "phonetic": "",
+    "explains": "v. 通行；流通",
+    "freq": 11050
+  },
+  {
+    "word": "citron",
+    "phonetic": "",
+    "explains": "n.m. 柠檬",
+    "freq": 5719
+  },
+  {
+    "word": "civilisation",
+    "phonetic": "",
+    "explains": "n.f. 文明",
+    "freq": 5982
+  },
+  {
+    "word": "clair",
+    "phonetic": "",
+    "explains": "adj. 明亮的；浅色的",
+    "freq": 842
+  },
+  {
+    "word": "classe",
+    "phonetic": "",
+    "explains": "n.f. 班级；教室",
+    "freq": 955
+  },
+  {
+    "word": "clé",
+    "phonetic": "",
+    "explains": "n.f. 钥匙",
+    "freq": 1025
+  },
+  {
+    "word": "client",
+    "phonetic": "",
+    "explains": "n.m. 客户",
+    "freq": 1096
+  },
+  {
+    "word": "climat",
+    "phonetic": "",
+    "explains": "n.m. 气候",
+    "freq": 8677
+  },
+  {
+    "word": "cloche",
+    "phonetic": "",
+    "explains": "n.f. 钟；铃",
+    "freq": 2488
+  },
+  {
+    "word": "coffre",
+    "phonetic": "",
+    "explains": "n.m. 箱子；后备箱",
+    "freq": 1791
+  },
+  {
+    "word": "coffre-fort",
+    "phonetic": "",
+    "explains": "n.m. 保险柜",
+    "freq": 1791
+  },
+  {
+    "word": "coin",
+    "phonetic": "",
+    "explains": "n.m. 角落；地区",
+    "freq": 895
+  },
+  {
+    "word": "colis",
+    "phonetic": "",
+    "explains": "n.m. 包裹",
+    "freq": 6630
+  },
+  {
+    "word": "collège",
+    "phonetic": "",
+    "explains": "n.m. 初中",
+    "freq": 4129
+  },
+  {
+    "word": "coloriant",
+    "phonetic": "",
+    "explains": "n.m. 染料"
+  },
+  {
+    "word": "combien",
+    "phonetic": "",
+    "explains": "adv. 多少",
+    "freq": 283
+  },
+  {
+    "word": "comme",
+    "phonetic": "",
+    "explains": "conj. 像；作为",
+    "freq": 63
+  },
+  {
+    "word": "comment",
+    "phonetic": "",
+    "explains": "adv. 怎样",
+    "freq": 89
+  },
+  {
+    "word": "commencer",
+    "phonetic": "",
+    "explains": "v. 开始",
+    "freq": 696
+  },
+  {
+    "word": "commande",
+    "phonetic": "",
+    "explains": "n.f. 订购；命令",
+    "freq": 2085
+  },
+  {
+    "word": "commerçant",
+    "phonetic": "",
+    "explains": "n.m. 商人",
+    "freq": 18353
+  },
+  {
+    "word": "commentaire",
+    "phonetic": "",
+    "explains": "n.m. 评论",
+    "freq": 5722
+  },
+  {
+    "word": "complet",
+    "phonetic": "",
+    "explains": "adj. 完整的",
+    "freq": 2567
+  },
+  {
+    "word": "comprendre",
+    "phonetic": "",
+    "explains": "v. 理解；包括",
+    "freq": 628
+  },
+  {
+    "word": "compte",
+    "phonetic": "",
+    "explains": "n.m. 账户；计算",
+    "freq": 399
+  },
+  {
+    "word": "compter",
+    "phonetic": "",
+    "explains": "v. 数；打算",
+    "freq": 1678
+  },
+  {
+    "word": "connaître",
+    "phonetic": "",
+    "explains": "v. 认识；知道",
+    "freq": 933
+  },
+  {
+    "word": "conseil",
+    "phonetic": "",
+    "explains": "n.m. 建议；理事会",
+    "freq": 937
+  },
+  {
+    "word": "content",
+    "phonetic": "",
+    "explains": "adj. 高兴的",
+    "freq": 724
+  },
+  {
+    "word": "continuer",
+    "phonetic": "",
+    "explains": "v. 继续",
+    "freq": 906
+  },
+  {
+    "word": "contrat",
+    "phonetic": "",
+    "explains": "n.m. 合同",
+    "freq": 1444
+  },
+  {
+    "word": "coquille",
+    "phonetic": "",
+    "explains": "n.f. 贝壳；果壳",
+    "freq": 10714
+  },
+  {
+    "word": "corps",
+    "phonetic": "",
+    "explains": "n.m. 身体",
+    "freq": 355
+  },
+  {
+    "word": "côte",
+    "phonetic": "",
+    "explains": "n.f. 海岸；肋骨",
+    "freq": 2388
+  },
+  {
+    "word": "côté",
+    "phonetic": "",
+    "explains": "n.m. 侧面；方面",
+    "freq": 370
+  },
+  {
+    "word": "coton",
+    "phonetic": "",
+    "explains": "n.m. 棉花",
+    "freq": 7596
+  },
+  {
+    "word": "couleur",
+    "phonetic": "",
+    "explains": "n.f. 颜色",
+    "freq": 1563
+  },
+  {
+    "word": "coup",
+    "phonetic": "",
+    "explains": "n.m. 击；一次",
+    "freq": 292
+  },
+  {
+    "word": "couper",
+    "phonetic": "",
+    "explains": "v. 切，剪",
+    "freq": 1667
+  },
+  {
+    "word": "cour",
+    "phonetic": "",
+    "explains": "n.f. 庭院；法院",
+    "freq": 1233
+  },
+  {
+    "word": "courrier",
+    "phonetic": "",
+    "explains": "n.m. 邮件",
+    "freq": 2983
+  },
+  {
+    "word": "cours",
+    "phonetic": "",
+    "explains": "n.m. 课程；水流",
+    "freq": 496
+  },
+  {
+    "word": "course",
+    "phonetic": "",
+    "explains": "n.f. 购物；赛跑",
+    "freq": 1476
+  },
+  {
+    "word": "coureur",
+    "phonetic": "",
+    "explains": "n.m. 赛跑者",
+    "freq": 10500
+  },
+  {
+    "word": "courir",
+    "phonetic": "",
+    "explains": "v. 跑",
+    "freq": 1583
+  },
+  {
+    "word": "coussin",
+    "phonetic": "",
+    "explains": "n.m. 靠垫",
+    "freq": 11144
+  },
+  {
+    "word": "coutume",
+    "phonetic": "",
+    "explains": "n.f. 习俗",
+    "freq": 9557
+  },
+  {
+    "word": "cravate",
+    "phonetic": "",
+    "explains": "n.f. 领带",
+    "freq": 4120
+  },
+  {
+    "word": "crème",
+    "phonetic": "",
+    "explains": "n.f. 奶油；面霜",
+    "freq": 2570
+  },
+  {
+    "word": "créer",
+    "phonetic": "",
+    "explains": "v. 创造",
+    "freq": 1835
+  },
+  {
+    "word": "crier",
+    "phonetic": "",
+    "explains": "v. 喊叫",
+    "freq": 2272
+  },
+  {
+    "word": "cristal",
+    "phonetic": "",
+    "explains": "n.m. 水晶",
+    "freq": 5621
+  },
+  {
+    "word": "croissant",
+    "phonetic": "",
+    "explains": "n.m. 羊角面包",
+    "freq": 14652
+  },
+  {
+    "word": "cuillère",
+    "phonetic": "",
+    "explains": "n.f. 勺子",
+    "freq": 8122
+  },
+  {
+    "word": "cuisine",
+    "phonetic": "",
+    "explains": "n.f. 厨房；烹饪",
+    "freq": 998
+  },
+  {
+    "word": "cuisinier",
+    "phonetic": "",
+    "explains": "n.m. 厨师",
+    "freq": 8105
+  },
+  {
+    "word": "culture",
+    "phonetic": "",
+    "explains": "n.f. 文化",
+    "freq": 3554
+  },
+  {
+    "word": "curieux",
+    "phonetic": "",
+    "explains": "adj. 好奇的；奇怪的",
+    "freq": 2625
+  },
+  {
+    "word": "cycliste",
+    "phonetic": "",
+    "explains": "n.m. 骑自行车的人",
+    "freq": 25614
+  },
+  {
+    "word": "dame",
+    "phonetic": "",
+    "explains": "n.f. 女士",
+    "freq": 1005
+  },
+  {
+    "word": "danse",
+    "phonetic": "",
+    "explains": "n.f. 舞蹈",
+    "freq": 1172
+  },
+  {
+    "word": "danser",
+    "phonetic": "",
+    "explains": "v. 跳舞",
+    "freq": 1294
+  },
+  {
+    "word": "date",
+    "phonetic": "",
+    "explains": "n.f. 日期",
+    "freq": 1597
+  },
+  {
+    "word": "de",
+    "phonetic": "",
+    "explains": "prep. 的；从",
+    "freq": 1
+  },
+  {
+    "word": "débit",
+    "phonetic": "",
+    "explains": "n.m. 流量；借方",
+    "freq": 17804
+  },
+  {
+    "word": "débouter",
+    "phonetic": "",
+    "explains": "v. 驳回"
+  },
+  {
+    "word": "décaler",
+    "phonetic": "",
+    "explains": "v. 移动，错开",
+    "freq": 31360
+  },
+  {
+    "word": "décembre",
+    "phonetic": "",
+    "explains": "n.m. 十二月",
+    "freq": 5428
+  },
+  {
+    "word": "décider",
+    "phonetic": "",
+    "explains": "v. 决定",
+    "freq": 1714
+  },
+  {
+    "word": "déjeuner",
+    "phonetic": "",
+    "explains": "n.m. 午饭；v. 吃午饭",
+    "freq": 1021
+  },
+  {
+    "word": "délicieux",
+    "phonetic": "",
+    "explains": "adj. 美味的",
+    "freq": 2332
+  },
+  {
+    "word": "demain",
+    "phonetic": "",
+    "explains": "adv. 明天",
+    "freq": 274
+  },
+  {
+    "word": "demande",
+    "phonetic": "",
+    "explains": "n.f. 请求；需求",
+    "freq": 317
+  },
+  {
+    "word": "demander",
+    "phonetic": "",
+    "explains": "v. 请求；问",
+    "freq": 424
+  },
+  {
+    "word": "demeure",
+    "phonetic": "",
+    "explains": "n.f. 住所",
+    "freq": 4903
+  },
+  {
+    "word": "demi",
+    "phonetic": "",
+    "explains": "adj. 一半的",
+    "freq": 2496
+  },
+  {
+    "word": "dent",
+    "phonetic": "",
+    "explains": "n.f. 牙齿",
+    "freq": 4138
+  },
+  {
+    "word": "dentiste",
+    "phonetic": "",
+    "explains": "n.m. 牙医",
+    "freq": 5253
+  },
+  {
+    "word": "départ",
+    "phonetic": "",
+    "explains": "n.m. 出发",
+    "freq": 1157
+  },
+  {
+    "word": "dépenaillé",
+    "phonetic": "",
+    "explains": "adj. 衣衫褴褛的"
+  },
+  {
+    "word": "dépenser",
+    "phonetic": "",
+    "explains": "v. 花费",
+    "freq": 5179
+  },
+  {
+    "word": "depuis",
+    "phonetic": "",
+    "explains": "prep. 自从",
+    "freq": 169
+  },
+  {
+    "word": "dernier",
+    "phonetic": "",
+    "explains": "adj. 最后的",
+    "freq": 482
+  },
+  {
+    "word": "derrière",
+    "phonetic": "",
+    "explains": "prep. 在…后面",
+    "freq": 477
+  },
+  {
+    "word": "des",
+    "phonetic": "",
+    "explains": "art. 一些",
+    "freq": 30
+  },
+  {
+    "word": "descendre",
+    "phonetic": "",
+    "explains": "v. 下去",
+    "freq": 1452
+  },
+  {
+    "word": "désert",
+    "phonetic": "",
+    "explains": "n.m. 沙漠",
+    "freq": 2599
+  },
+  {
+    "word": "deux",
+    "phonetic": "",
+    "explains": "num. 二",
+    "freq": 110
+  },
+  {
+    "word": "devant",
+    "phonetic": "",
+    "explains": "prep. 在…前面",
+    "freq": 387
+  },
+  {
+    "word": "devenir",
+    "phonetic": "",
+    "explains": "v. 变成",
+    "freq": 692
+  },
+  {
+    "word": "dévaster",
+    "phonetic": "",
+    "explains": "v. 毁坏",
+    "freq": 47649
+  },
+  {
+    "word": "devoir",
+    "phonetic": "",
+    "explains": "v. 应该；n.m. 作业",
+    "freq": 563
+  },
+  {
+    "word": "dictionnaire",
+    "phonetic": "",
+    "explains": "n.m. 词典",
+    "freq": 13944
+  },
+  {
+    "word": "dimanche",
+    "phonetic": "",
+    "explains": "n.m. 星期日",
+    "freq": 1912
+  },
+  {
+    "word": "diner",
+    "phonetic": "",
+    "explains": "n.m. 晚饭",
+    "freq": 3750
+  },
+  {
+    "word": "discours",
+    "phonetic": "",
+    "explains": "n.m. 演讲",
+    "freq": 1640
+  },
+  {
+    "word": "disponible",
+    "phonetic": "",
+    "explains": "adj. 可用的",
+    "freq": 3940
+  },
+  {
+    "word": "docteur",
+    "phonetic": "",
+    "explains": "n.m. 医生；博士",
+    "freq": 431
+  },
+  {
+    "word": "dieu",
+    "phonetic": "",
+    "explains": "n.m. 神；上帝",
+    "freq": 150
+  },
+  {
+    "word": "doré",
+    "phonetic": "",
+    "explains": "adj. 金色的，镀金的",
+    "freq": 10961
+  },
+  {
+    "word": "dormir",
+    "phonetic": "",
+    "explains": "v. 睡觉",
+    "freq": 707
+  },
+  {
+    "word": "douze",
+    "phonetic": "",
+    "explains": "num. 十二",
+    "freq": 3838
+  },
+  {
+    "word": "doux",
+    "phonetic": "",
+    "explains": "adj. 温柔的；甜的",
+    "freq": 1779
+  },
+  {
+    "word": "droit",
+    "phonetic": "",
+    "explains": "adj. 直的；右边的；n.m. 权利",
+    "freq": 395
+  },
+  {
+    "word": "eau",
+    "phonetic": "",
+    "explains": "n.f. 水",
+    "freq": 398
+  },
+  {
+    "word": "écharpe",
+    "phonetic": "",
+    "explains": "n.f. 围巾",
+    "freq": 8887
+  },
+  {
+    "word": "école",
+    "phonetic": "",
+    "explains": "n.f. 学校",
+    "freq": 437
+  },
+  {
+    "word": "écouter",
+    "phonetic": "",
+    "explains": "v. 听",
+    "freq": 980
+  },
+  {
+    "word": "écran",
+    "phonetic": "",
+    "explains": "n.m. 屏幕",
+    "freq": 2750
+  },
+  {
+    "word": "écrire",
+    "phonetic": "",
+    "explains": "v. 写",
+    "freq": 1047
+  },
+  {
+    "word": "église",
+    "phonetic": "",
+    "explains": "n.f. 教堂",
+    "freq": 1234
+  },
+  {
+    "word": "égaler",
+    "phonetic": "",
+    "explains": "v. 使相等",
+    "freq": 27011
+  },
+  {
+    "word": "égalité",
+    "phonetic": "",
+    "explains": "n.f. 平等",
+    "freq": 6589
+  },
+  {
+    "word": "été",
+    "phonetic": "",
+    "explains": "n.m. 夏天",
+    "freq": 99
+  },
+  {
+    "word": "être",
+    "phonetic": "",
+    "explains": "v. 是",
+    "freq": 65
+  },
+  {
+    "word": "famille",
+    "phonetic": "",
+    "explains": "n.f. 家庭",
+    "freq": 236
+  },
+  {
+    "word": "farine",
+    "phonetic": "",
+    "explains": "n.f. 面粉",
+    "freq": 9398
+  },
+  {
+    "word": "faute",
+    "phonetic": "",
+    "explains": "n.f. 错误",
+    "freq": 532
+  },
+  {
+    "word": "fauteuil",
+    "phonetic": "",
+    "explains": "n.m. 扶手椅",
+    "freq": 3622
+  },
+  {
+    "word": "faux",
+    "phonetic": "",
+    "explains": "adj. 假的",
+    "freq": 709
+  },
+  {
+    "word": "février",
+    "phonetic": "",
+    "explains": "n.m. 二月",
+    "freq": 6454
+  },
+  {
+    "word": "gagner",
+    "phonetic": "",
+    "explains": "v. 赢得；挣钱",
+    "freq": 738
+  },
+  {
+    "word": "garçon",
+    "phonetic": "",
+    "explains": "n.m. 男孩；服务员",
+    "freq": 468
+  },
+  {
+    "word": "gauche",
+    "phonetic": "",
+    "explains": "n.f. 左边",
+    "freq": 863
+  },
+  {
+    "word": "gentil",
+    "phonetic": "",
+    "explains": "adj. 和蔼的",
+    "freq": 640
+  },
+  {
+    "word": "glace",
+    "phonetic": "",
+    "explains": "n.f. 冰；冰淇淋；镜子",
+    "freq": 1317
+  },
+  {
+    "word": "gâteau",
+    "phonetic": "",
+    "explains": "n.m. 蛋糕",
+    "freq": 1674
+  },
+  {
+    "word": "grand",
+    "phonetic": "",
+    "explains": "adj. 大的；高的",
+    "freq": 270
+  },
+  {
+    "word": "grande",
+    "phonetic": "",
+    "explains": "adj. 大的（阴性）",
+    "freq": 459
+  },
+  {
+    "word": "guerre",
+    "phonetic": "",
+    "explains": "n.f. 战争",
+    "freq": 463
+  },
+  {
+    "word": "habit",
+    "phonetic": "",
+    "explains": "n.m. 衣服",
+    "freq": 11494
+  },
+  {
+    "word": "hiver",
+    "phonetic": "",
+    "explains": "n.m. 冬天",
+    "freq": 2589
+  },
+  {
+    "word": "homme",
+    "phonetic": "",
+    "explains": "n.m. 男人",
+    "freq": 157
+  },
+  {
+    "word": "hôtel",
+    "phonetic": "",
+    "explains": "n.m. 旅馆",
+    "freq": 808
+  },
+  {
+    "word": "hui",
+    "phonetic": "",
+    "explains": "adv. （今日）",
+    "freq": 9881
+  },
+  {
+    "word": "huit",
+    "phonetic": "",
+    "explains": "num. 八",
+    "freq": 1244
+  },
+  {
+    "word": "humain",
+    "phonetic": "",
+    "explains": "adj. 人类的",
+    "freq": 1174
+  },
+  {
+    "word": "idée",
+    "phonetic": "",
+    "explains": "n.f. 主意",
+    "freq": 263
+  },
+  {
+    "word": "il",
+    "phonetic": "",
+    "explains": "pron. 他",
+    "freq": 14
+  },
+  {
+    "word": "image",
+    "phonetic": "",
+    "explains": "n.f. 图像",
+    "freq": 1549
+  },
+  {
+    "word": "immeuble",
+    "phonetic": "",
+    "explains": "n.m. 楼房",
+    "freq": 2041
+  },
+  {
+    "word": "important",
+    "phonetic": "",
+    "explains": "adj. 重要的",
+    "freq": 470
+  },
+  {
+    "word": "impôt",
+    "phonetic": "",
+    "explains": "n.m. 税",
+    "freq": 14268
+  },
+  {
+    "word": "infirmière",
+    "phonetic": "",
+    "explains": "n.f. 护士",
+    "freq": 2019
+  },
+  {
+    "word": "informatique",
+    "phonetic": "",
+    "explains": "n.f. 信息技术；adj. 信息技术的",
+    "freq": 5190
+  },
+  {
+    "word": "institutrice",
+    "phonetic": "",
+    "explains": "n.f. 小学女教师",
+    "freq": 13948
+  },
+  {
+    "word": "invitation",
+    "phonetic": "",
+    "explains": "n.f. 邀请",
+    "freq": 3383
+  },
+  {
+    "word": "jambe",
+    "phonetic": "",
+    "explains": "n.f. 腿",
+    "freq": 1701
+  },
+  {
+    "word": "janvier",
+    "phonetic": "",
+    "explains": "n.m. 一月",
+    "freq": 5609
+  },
+  {
+    "word": "jardin",
+    "phonetic": "",
+    "explains": "n.m. 花园",
+    "freq": 1812
+  },
+  {
+    "word": "jaune",
+    "phonetic": "",
+    "explains": "adj. 黄色的",
+    "freq": 3033
+  },
+  {
+    "word": "jeu",
+    "phonetic": "",
+    "explains": "n.m. 游戏",
+    "freq": 492
+  },
+  {
+    "word": "jeudi",
+    "phonetic": "",
+    "explains": "n.m. 星期四",
+    "freq": 2848
+  },
+  {
+    "word": "jeune",
+    "phonetic": "",
+    "explains": "adj. 年轻的",
+    "freq": 428
+  },
+  {
+    "word": "jouer",
+    "phonetic": "",
+    "explains": "v. 玩；演奏",
+    "freq": 423
+  },
+  {
+    "word": "journal",
+    "phonetic": "",
+    "explains": "n.m. 报纸；日记",
+    "freq": 1098
+  },
+  {
+    "word": "journée",
+    "phonetic": "",
+    "explains": "n.f. 一天",
+    "freq": 445
+  },
+  {
+    "word": "joyeux",
+    "phonetic": "",
+    "explains": "adj. 快乐的",
+    "freq": 1482
+  },
+  {
+    "word": "juillet",
+    "phonetic": "",
+    "explains": "n.m. 七月",
+    "freq": 4269
+  },
+  {
+    "word": "jupe",
+    "phonetic": "",
+    "explains": "n.f. 裙子",
+    "freq": 6831
+  },
+  {
+    "word": "jus",
+    "phonetic": "",
+    "explains": "n.m. 果汁",
+    "freq": 2550
+  },
+  {
+    "word": "juste",
+    "phonetic": "",
+    "explains": "adj. 公正的；准确的",
+    "freq": 96
+  },
+  {
+    "word": "kilomètre",
+    "phonetic": "",
+    "explains": "n.m. 千米",
+    "freq": 11116
+  },
+  {
+    "word": "la",
+    "phonetic": "",
+    "explains": "art. 阴性定冠词",
+    "freq": 7
+  },
+  {
+    "word": "lait",
+    "phonetic": "",
+    "explains": "n.m. 牛奶",
+    "freq": 1606
+  },
+  {
+    "word": "lundi",
+    "phonetic": "",
+    "explains": "n.m. 星期一",
+    "freq": 2182
+  },
+  {
+    "word": "magnifique",
+    "phonetic": "",
+    "explains": "adj. 极好的",
+    "freq": 849
+  },
+  {
+    "word": "maison",
+    "phonetic": "",
+    "explains": "n.f. 房子",
+    "freq": 189
+  },
+  {
+    "word": "mairie",
+    "phonetic": "",
+    "explains": "n.f. 市政府",
+    "freq": 5949
+  },
+  {
+    "word": "manger",
+    "phonetic": "",
+    "explains": "v. 吃",
+    "freq": 460
+  },
+  {
+    "word": "marché",
+    "phonetic": "",
+    "explains": "n.m. 市场",
+    "freq": 633
+  },
+  {
+    "word": "mardi",
+    "phonetic": "",
+    "explains": "n.m. 星期二",
+    "freq": 2697
+  },
+  {
+    "word": "mari",
+    "phonetic": "",
+    "explains": "n.m. 丈夫",
+    "freq": 407
+  },
+  {
+    "word": "marie",
+    "phonetic": "",
+    "explains": "n.f. 结婚",
+    "freq": 1493
+  },
+  {
+    "word": "matin",
+    "phonetic": "",
+    "explains": "n.m. 早上",
+    "freq": 378
+  },
+  {
+    "word": "mauvais",
+    "phonetic": "",
+    "explains": "adj. 坏的",
+    "freq": 520
+  },
+  {
+    "word": "mercredi",
+    "phonetic": "",
+    "explains": "n.m. 星期三",
+    "freq": 3521
+  },
+  {
+    "word": "mère",
+    "phonetic": "",
+    "explains": "n.f. 母亲",
+    "freq": 176
+  },
+  {
+    "word": "merci",
+    "phonetic": "",
+    "explains": "interj. 谢谢",
+    "freq": 95
+  },
+  {
+    "word": "médecin",
+    "phonetic": "",
+    "explains": "n.m. 医生",
+    "freq": 828
+  },
+  {
+    "word": "montagne",
+    "phonetic": "",
+    "explains": "n.f. 山",
+    "freq": 2197
+  },
+  {
+    "word": "monde",
+    "phonetic": "",
+    "explains": "n.m. 世界；人们",
+    "freq": 136
+  },
+  {
+    "word": "monsieur",
+    "phonetic": "",
+    "explains": "n.m. 先生",
+    "freq": 198
+  },
+  {
+    "word": "moyen",
+    "phonetic": "",
+    "explains": "n.m. 方法；adj. 中等的",
+    "freq": 617
+  },
+  {
+    "word": "musée",
+    "phonetic": "",
+    "explains": "n.m. 博物馆",
+    "freq": 3182
+  },
+  {
+    "word": "musique",
+    "phonetic": "",
+    "explains": "n.f. 音乐",
+    "freq": 614
+  },
+  {
+    "word": "neuf",
+    "phonetic": "",
+    "explains": "adj. 新的；num. 九",
+    "freq": 865
+  },
+  {
+    "word": "noir",
+    "phonetic": "",
+    "explains": "adj. 黑色的",
+    "freq": 750
+  },
+  {
+    "word": "nombre",
+    "phonetic": "",
+    "explains": "n.m. 数目",
+    "freq": 1672
+  },
+  {
+    "word": "nom",
+    "phonetic": "",
+    "explains": "n.m. 名字；姓",
+    "freq": 204
+  },
+  {
+    "word": "nombreux",
+    "phonetic": "",
+    "explains": "adj. 众多的",
+    "freq": 2261
+  },
+  {
+    "word": "non",
+    "phonetic": "",
+    "explains": "adv. 不",
+    "freq": 42
+  },
+  {
+    "word": "nord",
+    "phonetic": "",
+    "explains": "n.m. 北方",
+    "freq": 1214
+  },
+  {
+    "word": "note",
+    "phonetic": "",
+    "explains": "n.f. 分数；笔记",
+    "freq": 1931
+  },
+  {
+    "word": "novembre",
+    "phonetic": "",
+    "explains": "n.m. 十一月",
+    "freq": 5010
+  },
+  {
+    "word": "objet",
+    "phonetic": "",
+    "explains": "n.m. 物体",
+    "freq": 2393
+  },
+  {
+    "word": "octobre",
+    "phonetic": "",
+    "explains": "n.m. 十月",
+    "freq": 4634
+  },
+  {
+    "word": "odeur",
+    "phonetic": "",
+    "explains": "n.f. 气味",
+    "freq": 1740
+  },
+  {
+    "word": "oiseau",
+    "phonetic": "",
+    "explains": "n.m. 鸟",
+    "freq": 2046
+  },
+  {
+    "word": "olive",
+    "phonetic": "",
+    "explains": "n.f. 橄榄",
+    "freq": 8601
+  },
+  {
+    "word": "ombre",
+    "phonetic": "",
+    "explains": "n.f. 阴影",
+    "freq": 2114
+  },
+  {
+    "word": "oncle",
+    "phonetic": "",
+    "explains": "n.m. 叔叔；舅舅",
+    "freq": 785
+  },
+  {
+    "word": "orange",
+    "phonetic": "",
+    "explains": "n.f. 橙子；adj. 橙色的",
+    "freq": 3288
+  },
+  {
+    "word": "ordinateur",
+    "phonetic": "",
+    "explains": "n.m. 电脑",
+    "freq": 1354
+  },
+  {
+    "word": "ouest",
+    "phonetic": "",
+    "explains": "n.m. 西方",
+    "freq": 1826
+  },
+  {
+    "word": "oui",
+    "phonetic": "",
+    "explains": "adv. 是的",
+    "freq": 54
+  },
+  {
+    "word": "ourson",
+    "phonetic": "",
+    "explains": "n.m. 小熊",
+    "freq": 16833
+  },
+  {
+    "word": "page",
+    "phonetic": "",
+    "explains": "n.f. 页",
+    "freq": 1854
+  },
+  {
+    "word": "paix",
+    "phonetic": "",
+    "explains": "n.f. 和平",
+    "freq": 792
+  },
+  {
+    "word": "palais",
+    "phonetic": "",
+    "explains": "n.m. 宫殿",
+    "freq": 2844
+  },
+  {
+    "word": "pamplemousse",
+    "phonetic": "",
+    "explains": "n.m. 柚子",
+    "freq": 24969
+  },
+  {
+    "word": "pantalon",
+    "phonetic": "",
+    "explains": "n.m. 裤子",
+    "freq": 1984
+  },
+  {
+    "word": "papier",
+    "phonetic": "",
+    "explains": "n.m. 纸",
+    "freq": 1455
+  },
+  {
+    "word": "paquet",
+    "phonetic": "",
+    "explains": "n.m. 包裹",
+    "freq": 2038
+  },
+  {
+    "word": "parapluie",
+    "phonetic": "",
+    "explains": "n.m. 雨伞",
+    "freq": 9071
+  },
+  {
+    "word": "parc",
+    "phonetic": "",
+    "explains": "n.m. 公园",
+    "freq": 1780
+  },
+  {
+    "word": "pardon",
+    "phonetic": "",
+    "explains": "interj. 对不起",
+    "freq": 380
+  },
+  {
+    "word": "pareil",
+    "phonetic": "",
+    "explains": "adj. 相同的",
+    "freq": 890
+  },
+  {
+    "word": "parent",
+    "phonetic": "",
+    "explains": "n.m. 父母；亲戚",
+    "freq": 3727
+  },
+  {
+    "word": "parfois",
+    "phonetic": "",
+    "explains": "adv. 有时",
+    "freq": 528
+  },
+  {
+    "word": "parler",
+    "phonetic": "",
+    "explains": "v. 说话",
+    "freq": 143
+  },
+  {
+    "word": "partir",
+    "phonetic": "",
+    "explains": "v. 出发",
+    "freq": 252
+  },
+  {
+    "word": "partout",
+    "phonetic": "",
+    "explains": "adv. 到处",
+    "freq": 655
+  },
+  {
+    "word": "party",
+    "phonetic": "",
+    "explains": "n.f. 聚会",
+    "freq": 8867
+  },
+  {
+    "word": "passé",
+    "phonetic": "",
+    "explains": "n.m. 过去；adj. 过去的",
+    "freq": 195
+  },
+  {
+    "word": "passeport",
+    "phonetic": "",
+    "explains": "n.m. 护照",
+    "freq": 4047
+  },
+  {
+    "word": "pâtes",
+    "phonetic": "",
+    "explains": "n.f.pl. 面条",
+    "freq": 7873
+  },
+  {
+    "word": "pâtisserie",
+    "phonetic": "",
+    "explains": "n.f. 糕点店；糕点",
+    "freq": 12758
+  },
+  {
+    "word": "pays",
+    "phonetic": "",
+    "explains": "n.m. 国家",
+    "freq": 494
+  },
+  {
+    "word": "paysage",
+    "phonetic": "",
+    "explains": "n.m. 风景",
+    "freq": 8071
+  },
+  {
+    "word": "peau",
+    "phonetic": "",
+    "explains": "n.f. 皮肤",
+    "freq": 1106
+  },
+  {
+    "word": "pêche",
+    "phonetic": "",
+    "explains": "n.f. 桃子；捕鱼",
+    "freq": 2861
+  },
+  {
+    "word": "père",
+    "phonetic": "",
+    "explains": "n.m. 父亲",
+    "freq": 146
+  },
+  {
+    "word": "période",
+    "phonetic": "",
+    "explains": "n.f. 时期",
+    "freq": 2369
+  },
+  {
+    "word": "permis",
+    "phonetic": "",
+    "explains": "n.m. 许可证",
+    "freq": 1473
+  },
+  {
+    "word": "personne",
+    "phonetic": "",
+    "explains": "n.f. 人；pron. 没有人",
+    "freq": 144
+  },
+  {
+    "word": "petit",
+    "phonetic": "",
+    "explains": "adj. 小的",
+    "freq": 188
+  },
+  {
+    "word": "peu",
+    "phonetic": "",
+    "explains": "adv. 少",
+    "freq": 116
+  },
+  {
+    "word": "peur",
+    "phonetic": "",
+    "explains": "n.f. 害怕",
+    "freq": 224
+  },
+  {
+    "word": "philosophie",
+    "phonetic": "",
+    "explains": "n.f. 哲学",
+    "freq": 7081
+  },
+  {
+    "word": "photo",
+    "phonetic": "",
+    "explains": "n.f. 照片",
+    "freq": 603
+  },
+  {
+    "word": "phrase",
+    "phonetic": "",
+    "explains": "n.f. 句子",
+    "freq": 3936
+  },
+  {
+    "word": "piano",
+    "phonetic": "",
+    "explains": "n.m. 钢琴",
+    "freq": 2964
+  },
+  {
+    "word": "piece",
+    "phonetic": "",
+    "explains": "n.f. 房间；硬币",
+    "freq": 17576
+  },
+  {
+    "word": "pied",
+    "phonetic": "",
+    "explains": "n.m. 脚",
+    "freq": 881
+  },
+  {
+    "word": "pierre",
+    "phonetic": "",
+    "explains": "n.f. 石头",
+    "freq": 1359
+  },
+  {
+    "word": "pilote",
+    "phonetic": "",
+    "explains": "n.m. 飞行员",
+    "freq": 2033
+  },
+  {
+    "word": "piscine",
+    "phonetic": "",
+    "explains": "n.f. 游泳池",
+    "freq": 2434
+  },
+  {
+    "word": "place",
+    "phonetic": "",
+    "explains": "n.f. 广场；位置",
+    "freq": 342
+  },
+  {
+    "word": "plage",
+    "phonetic": "",
+    "explains": "n.f. 海滩",
+    "freq": 1784
+  },
+  {
+    "word": "plaisir",
+    "phonetic": "",
+    "explains": "n.m. 快乐",
+    "freq": 538
+  },
+  {
+    "word": "plan",
+    "phonetic": "",
+    "explains": "n.m. 计划；平面图",
+    "freq": 512
+  },
+  {
+    "word": "planète",
+    "phonetic": "",
+    "explains": "n.f. 行星",
+    "freq": 1286
+  },
+  {
+    "word": "plateau",
+    "phonetic": "",
+    "explains": "n.m. 托盘；高原",
+    "freq": 3386
+  },
+  {
+    "word": "poche",
+    "phonetic": "",
+    "explains": "n.f. 口袋",
+    "freq": 1829
+  },
+  {
+    "word": "poésie",
+    "phonetic": "",
+    "explains": "n.f. 诗歌",
+    "freq": 5488
+  },
+  {
+    "word": "poème",
+    "phonetic": "",
+    "explains": "n.m. 诗",
+    "freq": 5110
+  },
+  {
+    "word": "point",
+    "phonetic": "",
+    "explains": "n.m. 点；分数",
+    "freq": 371
+  },
+  {
+    "word": "poire",
+    "phonetic": "",
+    "explains": "n.f. 梨",
+    "freq": 12617
+  },
+  {
+    "word": "poisson",
+    "phonetic": "",
+    "explains": "n.m. 鱼",
+    "freq": 1593
+  },
+  {
+    "word": "poivre",
+    "phonetic": "",
+    "explains": "n.m. 胡椒",
+    "freq": 10105
+  },
+  {
+    "word": "police",
+    "phonetic": "",
+    "explains": "n.f. 警察",
+    "freq": 322
+  },
+  {
+    "word": "poli",
+    "phonetic": "",
+    "explains": "adj. 有礼貌的；抛光的",
+    "freq": 6126
+  },
+  {
+    "word": "pommes",
+    "phonetic": "",
+    "explains": "n.f.pl. 苹果",
+    "freq": 3502
+  },
+  {
+    "word": "pompe",
+    "phonetic": "",
+    "explains": "n.f. 泵",
+    "freq": 5874
+  },
+  {
+    "word": "pont",
+    "phonetic": "",
+    "explains": "n.m. 桥",
+    "freq": 1586
+  },
+  {
+    "word": "port",
+    "phonetic": "",
+    "explains": "n.m. 港口",
+    "freq": 2958
+  },
+  {
+    "word": "porte",
+    "phonetic": "",
+    "explains": "n.f. 门",
+    "freq": 287
+  },
+  {
+    "word": "portefeuille",
+    "phonetic": "",
+    "explains": "n.m. 钱包",
+    "freq": 3342
+  },
+  {
+    "word": "portière",
+    "phonetic": "",
+    "explains": "n.f. 车门",
+    "freq": 11495
+  },
+  {
+    "word": "portrait",
+    "phonetic": "",
+    "explains": "n.m. 肖像",
+    "freq": 3985
+  },
+  {
+    "word": "pot",
+    "phonetic": "",
+    "explains": "n.m. 罐子",
+    "freq": 2968
+  },
+  {
+    "word": "pouce",
+    "phonetic": "",
+    "explains": "n.m. 拇指",
+    "freq": 4738
+  },
+  {
+    "word": "poulet",
+    "phonetic": "",
+    "explains": "n.m. 鸡肉",
+    "freq": 1879
+  },
+  {
+    "word": "pourquoi",
+    "phonetic": "",
+    "explains": "adv. 为什么",
+    "freq": 75
+  },
+  {
+    "word": "près",
+    "phonetic": "",
+    "explains": "adv. 附近",
+    "freq": 449
+  },
+  {
+    "word": "printemps",
+    "phonetic": "",
+    "explains": "n.m. 春天",
+    "freq": 3150
+  },
+  {
+    "word": "prix",
+    "phonetic": "",
+    "explains": "n.m. 价格；奖",
+    "freq": 741
+  },
+  {
+    "word": "problème",
+    "phonetic": "",
+    "explains": "n.m. 问题",
+    "freq": 222
+  },
+  {
+    "word": "produire",
+    "phonetic": "",
+    "explains": "v. 生产",
+    "freq": 3775
+  },
+  {
+    "word": "profil",
+    "phonetic": "",
+    "explains": "n.m. 侧面；简介",
+    "freq": 3061
+  },
+  {
+    "word": "professeur",
+    "phonetic": "",
+    "explains": "n.m. 教授；教师",
+    "freq": 927
+  },
+  {
+    "word": "programmation",
+    "phonetic": "",
+    "explains": "n.f. 编程；日程",
+    "freq": 16472
+  },
+  {
+    "word": "projet",
+    "phonetic": "",
+    "explains": "n.m. 计划；项目",
+    "freq": 1284
+  },
+  {
+    "word": "promener",
+    "phonetic": "",
+    "explains": "v. 散步",
+    "freq": 4090
+  },
+  {
+    "word": "propre",
+    "phonetic": "",
+    "explains": "adj. 干净的；自己的",
+    "freq": 543
+  },
+  {
+    "word": "prochain",
+    "phonetic": "",
+    "explains": "adj. 下一个的",
+    "freq": 1057
+  },
+  {
+    "word": "prune",
+    "phonetic": "",
+    "explains": "n.f. 李子",
+    "freq": 20469
+  },
+  {
+    "word": "public",
+    "phonetic": "",
+    "explains": "adj. 公共的",
+    "freq": 1079
+  },
+  {
+    "word": "pyjama",
+    "phonetic": "",
+    "explains": "n.m. 睡衣",
+    "freq": 5915
+  },
+  {
+    "word": "quand",
+    "phonetic": "",
+    "explains": "adv. 当…时",
+    "freq": 81
+  },
+  {
+    "word": "quartier",
+    "phonetic": "",
+    "explains": "n.m. 街区",
+    "freq": 1285
+  },
+  {
+    "word": "quatorze",
+    "phonetic": "",
+    "explains": "num. 十四",
+    "freq": 10845
+  },
+  {
+    "word": "quinze",
+    "phonetic": "",
+    "explains": "num. 十五",
+    "freq": 4352
+  },
+  {
+    "word": "quoi",
+    "phonetic": "",
+    "explains": "pron. 什么",
+    "freq": 61
+  },
+  {
+    "word": "raison",
+    "phonetic": "",
+    "explains": "n.f. 理由",
+    "freq": 208
+  },
+  {
+    "word": "rapidement",
+    "phonetic": "",
+    "explains": "adv. 快速地",
+    "freq": 1651
+  },
+  {
+    "word": "ravioli",
+    "phonetic": "",
+    "explains": "n.m.pl. 馄饨",
+    "freq": 42592
+  },
+  {
+    "word": "recette",
+    "phonetic": "",
+    "explains": "n.f. 食谱；收入",
+    "freq": 5309
+  },
+  {
+    "word": "recherche",
+    "phonetic": "",
+    "explains": "n.f. 研究；寻找",
+    "freq": 909
+  },
+  {
+    "word": "rectangle",
+    "phonetic": "",
+    "explains": "n.m. 长方形",
+    "freq": 43634
+  },
+  {
+    "word": "refus",
+    "phonetic": "",
+    "explains": "n.m. 拒绝",
+    "freq": 7325
+  },
+  {
+    "word": "regard",
+    "phonetic": "",
+    "explains": "n.m. 目光",
+    "freq": 1686
+  },
+  {
+    "word": "région",
+    "phonetic": "",
+    "explains": "n.f. 地区",
+    "freq": 2808
+  },
+  {
+    "word": "reine",
+    "phonetic": "",
+    "explains": "n.f. 女王；王后",
+    "freq": 1231
+  },
+  {
+    "word": "relation",
+    "phonetic": "",
+    "explains": "n.f. 关系",
+    "freq": 1003
+  },
+  {
+    "word": "religion",
+    "phonetic": "",
+    "explains": "n.f. 宗教",
+    "freq": 3847
+  },
+  {
+    "word": "renard",
+    "phonetic": "",
+    "explains": "n.m. 狐狸",
+    "freq": 6598
+  },
+  {
+    "word": "rencontre",
+    "phonetic": "",
+    "explains": "n.f. 相遇；会议",
+    "freq": 1332
+  },
+  {
+    "word": "rendez-vous",
+    "phonetic": "",
+    "explains": "n.m. 约会",
+    "freq": 3458
+  },
+  {
+    "word": "rentrer",
+    "phonetic": "",
+    "explains": "v. 回家；收进",
+    "freq": 524
+  },
+  {
+    "word": "repasser",
+    "phonetic": "",
+    "explains": "v. 熨烫；再经过",
+    "freq": 7722
+  },
+  {
+    "word": "réponse",
+    "phonetic": "",
+    "explains": "n.f. 回答",
+    "freq": 876
+  },
+  {
+    "word": "restaurant",
+    "phonetic": "",
+    "explains": "n.m. 餐馆",
+    "freq": 1495
+  },
+  {
+    "word": "retard",
+    "phonetic": "",
+    "explains": "n.m. 迟到",
+    "freq": 666
+  },
+  {
+    "word": "retenir",
+    "phonetic": "",
+    "explains": "v. 记住；留住",
+    "freq": 3026
+  },
+  {
+    "word": "retour",
+    "phonetic": "",
+    "explains": "n.m. 返回",
+    "freq": 506
+  },
+  {
+    "word": "réunion",
+    "phonetic": "",
+    "explains": "n.f. 会议",
+    "freq": 1066
+  },
+  {
+    "word": "réussir",
+    "phonetic": "",
+    "explains": "v. 成功",
+    "freq": 2649
+  },
+  {
+    "word": "réveil",
+    "phonetic": "",
+    "explains": "n.m. 闹钟；醒来",
+    "freq": 3937
+  },
+  {
+    "word": "riz",
+    "phonetic": "",
+    "explains": "n.m. 米",
+    "freq": 3973
+  },
+  {
+    "word": "robe",
+    "phonetic": "",
+    "explains": "n.f. 连衣裙",
+    "freq": 1131
+  },
+  {
+    "word": "rond",
+    "phonetic": "",
+    "explains": "adj. 圆的",
+    "freq": 3826
+  },
+  {
+    "word": "rouge",
+    "phonetic": "",
+    "explains": "adj. 红色的",
+    "freq": 825
+  },
+  {
+    "word": "roue",
+    "phonetic": "",
+    "explains": "n.f. 轮子",
+    "freq": 4530
+  },
+  {
+    "word": "rue",
+    "phonetic": "",
+    "explains": "n.f. 街道",
+    "freq": 746
+  },
+  {
+    "word": "sac",
+    "phonetic": "",
+    "explains": "n.m. 包",
+    "freq": 731
+  },
+  {
+    "word": "sage",
+    "phonetic": "",
+    "explains": "adj. 乖的；明智的",
+    "freq": 2342
+  },
+  {
+    "word": "salade",
+    "phonetic": "",
+    "explains": "n.f. 沙拉",
+    "freq": 3597
+  },
+  {
+    "word": "sale",
+    "phonetic": "",
+    "explains": "adj. 脏的",
+    "freq": 802
+  },
+  {
+    "word": "salle",
+    "phonetic": "",
+    "explains": "n.f. 房间；厅",
+    "freq": 637
+  },
+  {
+    "word": "salon",
+    "phonetic": "",
+    "explains": "n.m. 客厅；沙龙",
+    "freq": 1978
+  },
+  {
+    "word": "salut",
+    "phonetic": "",
+    "explains": "interj. 你好；再见",
+    "freq": 202
+  },
+  {
+    "word": "samedi",
+    "phonetic": "",
+    "explains": "n.m. 星期六",
+    "freq": 1836
+  },
+  {
+    "word": "sandwich",
+    "phonetic": "",
+    "explains": "n.m. 三明治",
+    "freq": 2825
+  },
+  {
+    "word": "santé",
+    "phonetic": "",
+    "explains": "n.f. 健康",
+    "freq": 992
+  },
+  {
+    "word": "sapin",
+    "phonetic": "",
+    "explains": "n.m. 冷杉；圣诞树",
+    "freq": 7656
+  },
+  {
+    "word": "satisfaction",
+    "phonetic": "",
+    "explains": "n.f. 满意",
+    "freq": 8425
+  },
+  {
+    "word": "saucisse",
+    "phonetic": "",
+    "explains": "n.f. 香肠",
+    "freq": 7411
+  },
+  {
+    "word": "seau",
+    "phonetic": "",
+    "explains": "n.m. 桶",
+    "freq": 7570
+  },
+  {
+    "word": "second",
+    "phonetic": "",
+    "explains": "adj. 第二的",
+    "freq": 2166
+  },
+  {
+    "word": "semaine",
+    "phonetic": "",
+    "explains": "n.f. 星期",
+    "freq": 441
+  },
+  {
+    "word": "septembre",
+    "phonetic": "",
+    "explains": "n.m. 九月",
+    "freq": 3852
+  },
+  {
+    "word": "serveur",
+    "phonetic": "",
+    "explains": "n.m. 服务员",
+    "freq": 4310
+  },
+  {
+    "word": "sieste",
+    "phonetic": "",
+    "explains": "n.f. 午睡",
+    "freq": 4889
+  },
+  {
+    "word": "soeur",
+    "phonetic": "",
+    "explains": "n.f. 姐妹",
+    "freq": 788
+  },
+  {
+    "word": "soif",
+    "phonetic": "",
+    "explains": "n.f. 渴",
+    "freq": 2916
+  },
+  {
+    "word": "soleil",
+    "phonetic": "",
+    "explains": "n.m. 太阳",
+    "freq": 892
+  },
+  {
+    "word": "souper",
+    "phonetic": "",
+    "explains": "n.m. 晚饭",
+    "freq": 5984
+  },
+  {
+    "word": "stylo",
+    "phonetic": "",
+    "explains": "n.m. 钢笔",
+    "freq": 3962
+  },
+  {
+    "word": "sucre",
+    "phonetic": "",
+    "explains": "n.m. 糖",
+    "freq": 2482
+  },
+  {
+    "word": "sujet",
+    "phonetic": "",
+    "explains": "n.m. 主题；主语",
+    "freq": 571
+  },
+  {
+    "word": "table",
+    "phonetic": "",
+    "explains": "n.f. 桌子",
+    "freq": 824
+  },
+  {
+    "word": "taille",
+    "phonetic": "",
+    "explains": "n.f. 尺寸；身高",
+    "freq": 1438
+  },
+  {
+    "word": "tante",
+    "phonetic": "",
+    "explains": "n.f. 姑姑；阿姨",
+    "freq": 1259
+  },
+  {
+    "word": "tapis",
+    "phonetic": "",
+    "explains": "n.m. 地毯",
+    "freq": 2741
+  },
+  {
+    "word": "tarte",
+    "phonetic": "",
+    "explains": "n.f. 果馅饼",
+    "freq": 3549
+  },
+  {
+    "word": "téléphone",
+    "phonetic": "",
+    "explains": "n.m. 电话",
+    "freq": 448
+  },
+  {
+    "word": "télévision",
+    "phonetic": "",
+    "explains": "n.f. 电视",
+    "freq": 3115
+  },
+  {
+    "word": "temps",
+    "phonetic": "",
+    "explains": "n.m. 时间；天气",
+    "freq": 117
+  },
+  {
+    "word": "tente",
+    "phonetic": "",
+    "explains": "n.f. 帐篷",
+    "freq": 2071
+  },
+  {
+    "word": "terrain",
+    "phonetic": "",
+    "explains": "n.m. 场地；土地",
+    "freq": 1281
+  },
+  {
+    "word": "terre",
+    "phonetic": "",
+    "explains": "n.f. 地球；土地",
+    "freq": 401
+  },
+  {
+    "word": "thé",
+    "phonetic": "",
+    "explains": "n.m. 茶",
+    "freq": 1203
+  },
+  {
+    "word": "timbre",
+    "phonetic": "",
+    "explains": "n.m. 邮票",
+    "freq": 14419
+  },
+  {
+    "word": "tissu",
+    "phonetic": "",
+    "explains": "n.m. 布料",
+    "freq": 4914
+  },
+  {
+    "word": "toi",
+    "phonetic": "",
+    "explains": "pron. 你",
+    "freq": 69
+  },
+  {
+    "word": "tomate",
+    "phonetic": "",
+    "explains": "n.f. 西红柿",
+    "freq": 9870
+  },
+  {
+    "word": "tombe",
+    "phonetic": "",
+    "explains": "n.f. 坟墓",
+    "freq": 988
+  },
+  {
+    "word": "torche",
+    "phonetic": "",
+    "explains": "n.f. 火炬；抹布",
+    "freq": 7765
+  },
+  {
+    "word": "toujours",
+    "phonetic": "",
+    "explains": "adv. 总是",
+    "freq": 120
+  },
+  {
+    "word": "tour",
+    "phonetic": "",
+    "explains": "n.f. 塔；轮次",
+    "freq": 545
+  },
+  {
+    "word": "tourner",
+    "phonetic": "",
+    "explains": "v. 转动",
+    "freq": 1431
+  },
+  {
+    "word": "tous",
+    "phonetic": "",
+    "explains": "pron. 所有人",
+    "freq": 108
+  },
+  {
+    "word": "tout",
+    "phonetic": "",
+    "explains": "adv. 全部；adj. 所有的",
+    "freq": 45
+  },
+  {
+    "word": "train",
+    "phonetic": "",
+    "explains": "n.m. 火车",
+    "freq": 360
+  },
+  {
+    "word": "traire",
+    "phonetic": "",
+    "explains": "v. 挤奶",
+    "freq": 24473
+  },
+  {
+    "word": "travail",
+    "phonetic": "",
+    "explains": "n.m. 工作",
+    "freq": 242
+  },
+  {
+    "word": "traverser",
+    "phonetic": "",
+    "explains": "v. 穿过",
+    "freq": 2355
+  },
+  {
+    "word": "très",
+    "phonetic": "",
+    "explains": "adv. 非常",
+    "freq": 97
+  },
+  {
+    "word": "tribunal",
+    "phonetic": "",
+    "explains": "n.m. 法院",
+    "freq": 1653
+  },
+  {
+    "word": "trio",
+    "phonetic": "",
+    "explains": "n.m. 三重奏；三人组",
+    "freq": 15076
+  },
+  {
+    "word": "trois",
+    "phonetic": "",
+    "explains": "num. 三",
+    "freq": 234
+  },
+  {
+    "word": "trouver",
+    "phonetic": "",
+    "explains": "v. 找到；觉得",
+    "freq": 233
+  },
+  {
+    "word": "tulipe",
+    "phonetic": "",
+    "explains": "n.f. 郁金香",
+    "freq": 29818
+  },
+  {
+    "word": "tunnel",
+    "phonetic": "",
+    "explains": "n.m. 隧道",
+    "freq": 3534
+  },
+  {
+    "word": "télé",
+    "phonetic": "",
+    "explains": "n.f. 电视（口语）",
+    "freq": 978
+  },
+  {
+    "word": "usine",
+    "phonetic": "",
+    "explains": "n.f. 工厂",
+    "freq": 2327
+  },
+  {
+    "word": "vacances",
+    "phonetic": "",
+    "explains": "n.f.pl. 假期",
+    "freq": 1339
+  },
+  {
+    "word": "vague",
+    "phonetic": "",
+    "explains": "n.f. 浪；adj. 模糊的",
+    "freq": 3675
+  },
+  {
+    "word": "valise",
+    "phonetic": "",
+    "explains": "n.f. 行李箱",
+    "freq": 3140
+  },
+  {
+    "word": "vache",
+    "phonetic": "",
+    "explains": "n.f. 奶牛",
+    "freq": 2279
+  },
+  {
+    "word": "velo",
+    "phonetic": "",
+    "explains": "n.m. 自行车",
+    "freq": 47001
+  },
+  {
+    "word": "vent",
+    "phonetic": "",
+    "explains": "n.m. 风",
+    "freq": 1437
+  },
+  {
+    "word": "vente",
+    "phonetic": "",
+    "explains": "n.f. 销售",
+    "freq": 2278
+  },
+  {
+    "word": "verre",
+    "phonetic": "",
+    "explains": "n.m. 玻璃杯；玻璃",
+    "freq": 609
+  },
+  {
+    "word": "version",
+    "phonetic": "",
+    "explains": "n.f. 版本",
+    "freq": 2287
+  },
+  {
+    "word": "veste",
+    "phonetic": "",
+    "explains": "n.f. 上衣，外套",
+    "freq": 2050
+  },
+  {
+    "word": "viande",
+    "phonetic": "",
+    "explains": "n.f. 肉",
+    "freq": 1844
+  },
+  {
+    "word": "victoire",
+    "phonetic": "",
+    "explains": "n.f. 胜利",
+    "freq": 1936
+  },
+  {
+    "word": "vie",
+    "phonetic": "",
+    "explains": "n.f. 生命；生活",
+    "freq": 129
+  },
+  {
+    "word": "vieux",
+    "phonetic": "",
+    "explains": "adj. 旧的；年老的",
+    "freq": 377
+  },
+  {
+    "word": "village",
+    "phonetic": "",
+    "explains": "n.m. 村庄",
+    "freq": 1323
+  },
+  {
+    "word": "vin",
+    "phonetic": "",
+    "explains": "n.m. 葡萄酒",
+    "freq": 1146
+  },
+  {
+    "word": "vinaigre",
+    "phonetic": "",
+    "explains": "n.m. 醋",
+    "freq": 12557
+  },
+  {
+    "word": "vitre",
+    "phonetic": "",
+    "explains": "n.f. 玻璃窗",
+    "freq": 5768
+  },
+  {
+    "word": "voiture",
+    "phonetic": "",
+    "explains": "n.f. 汽车",
+    "freq": 257
+  },
+  {
+    "word": "voix",
+    "phonetic": "",
+    "explains": "n.f. 声音；投票",
+    "freq": 734
+  },
+  {
+    "word": "volaille",
+    "phonetic": "",
+    "explains": "n.f. 家禽",
+    "freq": 20990
+  },
+  {
+    "word": "vouloir",
+    "phonetic": "",
+    "explains": "v. 想要",
+    "freq": 902
+  },
+  {
+    "word": "voyage",
+    "phonetic": "",
+    "explains": "n.m. 旅行",
+    "freq": 768
+  },
+  {
+    "word": "vrai",
+    "phonetic": "",
+    "explains": "adj. 真的",
+    "freq": 159
+  },
+  {
+    "word": "weekend",
+    "phonetic": "",
+    "explains": "n.m. 周末",
+    "freq": 8107
+  },
+  {
+    "word": "yeux",
+    "phonetic": "",
+    "explains": "n.m.pl. 眼睛",
+    "freq": 363
+  },
+  {
+    "word": "zéro",
+    "phonetic": "",
+    "explains": "num. 零",
+    "freq": 2148
+  },
+  {
+    "word": "zone",
+    "phonetic": "",
+    "explains": "n.f. 区域",
+    "freq": 1258
+  },
+  {
+    "word": "zoo",
+    "phonetic": "",
+    "explains": "n.m. 动物园",
+    "freq": 4941
+  }
+]

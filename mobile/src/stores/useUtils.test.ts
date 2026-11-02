@@ -437,7 +437,7 @@ describe('getAllWordBankInfo', () => {
 // ==================== 词库缓存测试 ====================
 
 describe('词库缓存管理', () => {
-  const CACHE_KEY_PREFIX = 'wordbank_cache_v2_'
+  const CACHE_KEY_PREFIX = 'wordbank_cache_v3_'
 
   it('saveWordBankCache 应保存到 storage', () => {
     const words = [
@@ -632,6 +632,38 @@ describe('translateText', () => {
     expect(result.platform).toBe('local')
     expect(result.translatedText).toBe('你好；问候')
     expect(result.explains).toBe('你好；问候')
+  })
+
+  it('明确非英语时跳过英语离线词典并传递源语言', async () => {
+    setTranslationPlatform('youdao')
+    setTranslationApiKey('youdao', 'test-app-id', 'test-secret')
+    let sourceLanguage = ''
+    mockUni.request.mockImplementation((opts: any) => {
+      sourceLanguage = opts.data.from
+      opts.success({ statusCode: 200, data: { errorCode: '0', translation: ['你好'] } })
+    })
+
+    const result = await translateText('hello', 'fr', 'zh')
+    expect(sourceLanguage).toBe('fr')
+    expect(result.platform).toBe('youdao')
+    expect(result.pronunciation).toBeUndefined()
+  })
+
+  it('AI 自动识别不再按英语生成提示词', async () => {
+    setTranslationPlatform('glm')
+    setTranslationApiKey('glm', 'test-app-id', 'test-glm-key')
+    let systemPrompt = ''
+    mockUni.request.mockImplementation((opts: any) => {
+      systemPrompt = opts.data.messages[0].content
+      opts.success({
+        statusCode: 200,
+        data: { choices: [{ message: { content: '{"meaning":"你好"}' } }] },
+      })
+    })
+
+    await translateText('bonjour', 'auto', 'zh')
+    expect(systemPrompt).toContain('专业翻译助手')
+    expect(systemPrompt).not.toContain('中英文翻译助手')
   })
 
   it('离线词典未命中的单词应走 API（你道）', async () => {
