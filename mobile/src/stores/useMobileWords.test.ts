@@ -6,6 +6,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useMobileWords } from './useMobileWords'
 import { setDbAdapter, resetDbAdapter } from '@/adapters/index'
 import type { DbAdapter } from '@/adapters/index'
+import { getActiveLanguage } from '@/utils/language'
 
 // Mock uni API
 ;(global as any).uni = {
@@ -222,6 +223,28 @@ describe('useMobileWords Store', () => {
       expect(updated?.level).toBe(12)
       expect(updated?.remembered).toBe(true)
     })
+
+    it('未到期提前复习只记录练习，不升级也不改下次到期时间', async () => {
+      const store = useMobileWords()
+      const nextReviewTime = Date.now() + 24 * 60 * 60 * 1000
+      const word = await store.addWord({
+        word: 'early-review',
+        meaning: '提前复习',
+        addTime: Date.now(),
+        reviewCount: 2,
+        nextReviewTime,
+        level: 5,
+        needsReview: true,
+      })
+
+      await store.markAsRemembered(word.id)
+
+      const updated = store.words.find(w => w.id === word.id)
+      expect(updated?.level).toBe(5)
+      expect(updated?.reviewCount).toBe(3)
+      expect(updated?.nextReviewTime).toBe(nextReviewTime)
+      expect(updated?.needsReview).toBe(false)
+    })
   })
 
   describe('存量污染数据修复', () => {
@@ -272,7 +295,7 @@ describe('useMobileWords Store', () => {
       expect(updated?.nextReviewTime).toBeLessThanOrEqual(Date.now() + 11 * 60 * 1000)
     })
 
-    it('忘记应降级而非无条件归 1：与桌面端 computeLevelDown 口径一致（≥12 重置 1，否则 -1，下限 1）', async () => {
+    it('忘记每次降 4 级：与桌面端 computeLevelDown 口径一致（下限 1）', async () => {
       const store = useMobileWords()
 
       const lv6 = await store.addWord({
@@ -295,11 +318,11 @@ describe('useMobileWords Store', () => {
       const w6 = store.words.find(w => w.id === lv6.id)
       const w12 = store.words.find(w => w.id === lv12.id)
       const w1 = store.words.find(w => w.id === lv1.id)
-      // 6 级答错降到 5 级，不再归零
-      expect(w6?.level).toBe(5)
+      // 6 级答错降到 2 级
+      expect(w6?.level).toBe(2)
       expect(w6?.remembered).toBe(false)
-      // 满级答错重置回 1 级
-      expect(w12?.level).toBe(1)
+      // 满级答错降到 8 级
+      expect(w12?.level).toBe(8)
       // 1 级答错保持 1 级，不会掉到 0 以下
       expect(w1?.level).toBe(1)
     })
@@ -308,9 +331,9 @@ describe('useMobileWords Store', () => {
   describe('computeForgotLevel / snapshotReviewState（撤销判定用纯函数）', () => {
     it('computeForgotLevel 降级口径正确', async () => {
       const { computeForgotLevel } = await import('./useMobileWords')
-      expect(computeForgotLevel(12)).toBe(1)
-      expect(computeForgotLevel(13)).toBe(1)
-      expect(computeForgotLevel(6)).toBe(5)
+      expect(computeForgotLevel(12)).toBe(8)
+      expect(computeForgotLevel(13)).toBe(8)
+      expect(computeForgotLevel(6)).toBe(2)
       expect(computeForgotLevel(1)).toBe(1)
       expect(computeForgotLevel(0)).toBe(1)
       expect(computeForgotLevel(undefined as any)).toBe(1)
@@ -339,7 +362,7 @@ describe('useMobileWords Store', () => {
       const before = snapshotReviewState(store.words.find(w => w.id === word.id)!)
 
       await store.markAsForgotten(word.id)
-      expect(store.words.find(w => w.id === word.id)?.level).toBe(6)
+      expect(store.words.find(w => w.id === word.id)?.level).toBe(3)
 
       // 撤销：整体写回快照字段
       await store.updateWord(word.id, { ...before })
@@ -544,6 +567,41 @@ describe('useMobileWords Store', () => {
     })
   })
 
+  describe('词库语言', () => {
+    it('旧词库默认英语，创建和切换词库同步当前语言', async () => {
+      const store = useMobileWords()
+      await store.loadWords()
+      expect(store.currentLanguage).toBe('en')
+      expect(getActiveLanguage()).toBe('en')
+
+      const japanese = store.createBank('日语', { language: 'ja' })
+      store.switchBank(japanese.id)
+      expect(store.currentLanguage).toBe('ja')
+      expect(store.currentProfile.ttsLang).toBe('ja-JP')
+      expect(getActiveLanguage()).toBe('ja')
+
+      await store.addWord({
+        word: 'こんにちは', meaning: '你好', itemType: 'word',
+        addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now(),
+      })
+      expect(store.words.map(word => word.word)).toEqual(['こんにちは'])
+      await store.flushDirtyBanks()
+      expect(mockDb.get(`bank_${japanese.id}_words`)?.data[0].meaning).toBe('你好')
+
+      store.switchBank('default')
+      expect(store.currentLanguage).toBe('en')
+      expect(getActiveLanguage()).toBe('en')
+    })
+
+    it('同步补齐当前旧词库语言时立即更新激活语言', async () => {
+      const store = useMobileWords()
+      await store.loadWords()
+      store.setBankLanguage('default', 'fr')
+      expect(store.currentLanguage).toBe('fr')
+      expect(getActiveLanguage()).toBe('fr')
+    })
+  })
+
   describe('词库懒加载', () => {
     it('首屏只读当前激活词库，ensureAllBanksLoaded 后其余词库补齐', async () => {
       const store = useMobileWords()
@@ -656,14 +714,15 @@ describe('useMobileWords Store', () => {
     it('连续失败时防抖间隔按失败次数退避、toast 每 5 分钟限 1 次、成功后复位', async () => {
       const store = useMobileWords()
       const uniMock = (global as any).uni
+      const asyncPutMock = mockDb.promises.asyncPut as unknown as ReturnType<typeof vi.fn>
 
       // 复位模块级失败计数：前面用例在 mock 适配器 conflict 语义下可能残留失败计数
       // （脏集为空的 flush 不会触发 persist，计数不会被复位），先标脏再走一次成功落盘
       await store.addWord({ word: 'count-reset', meaning: '复位', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
       await store.flushDirtyBanks()
       uniMock.showToast.mockClear()
-      mockDb.promises.asyncPut.mockClear()
-      const okImpl = mockDb.promises.asyncPut.getMockImplementation()!
+      asyncPutMock.mockClear()
+      const okImpl = asyncPutMock.getMockImplementation()!
 
       // 假时钟默认从 epoch 0 起走；且前面用例可能已触发过失败 toast（_lastToastAt 为真实时间）。
       // 把锚点设到真实时间 +10 分钟：首个失败的 toast 必然触发，其后 5 分钟限频按相对时间推进
@@ -671,7 +730,7 @@ describe('useMobileWords Store', () => {
       vi.setSystemTime(Date.now() + 10 * 60 * 1000)
 
       // 持久化持续失败（模拟存储写满）
-      mockDb.promises.asyncPut.mockImplementation(async () => ({ ok: false, error: true, message: 'quota exceeded' }))
+      asyncPutMock.mockImplementation(async () => ({ ok: false, error: true, message: 'quota exceeded' }))
 
       await store.addWord({ word: 'fail-1', meaning: '失败1', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() })
       // 基准防抖 15s（失败计数 0 → 倍数钳到 1）→ flush#1 失败，弹第 1 次 toast
@@ -702,7 +761,7 @@ describe('useMobileWords Store', () => {
       expect(uniMock.showToast).toHaveBeenCalledTimes(2)
 
       // 恢复可写：手动 flush 成功 → 失败计数复位，防抖间隔回到基准 15s
-      mockDb.promises.asyncPut.mockImplementation(okImpl)
+      asyncPutMock.mockImplementation(okImpl)
       await store.flushDirtyBanks()
       expect(uniMock.showToast).toHaveBeenCalledTimes(2)
 
@@ -711,6 +770,174 @@ describe('useMobileWords Store', () => {
       // 若未复位，此时间隔会是 15s×7=105s，20s 内不会 flush
       expect(mockDb.promises.asyncPut).toHaveBeenCalled()
       expect(uniMock.showToast).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('同步合并已有单词', () => {
+    it('远端进度和内容较新时更新已有词，不新增重复项', async () => {
+      const store = useMobileWords()
+      const local = await store.addWord({
+        word: 'apple',
+        meaning: '旧释义',
+        addTime: 1,
+        reviewCount: 0,
+        nextReviewTime: 1,
+        level: 1,
+        lastReviewTime: 100,
+        updatedAt: 100,
+      })
+
+      const result = await store.importWords([{
+        ...local,
+        id: local.id,
+        meaning: '新释义',
+        level: 6,
+        reviewCount: 4,
+        lastReviewTime: 200,
+        nextReviewTime: 999,
+        updatedAt: 200,
+      }], undefined, { mergeExisting: true })
+
+      expect(result.success).toBe(true)
+      expect(result.updated).toBe(1)
+      expect(store.words).toHaveLength(1)
+      expect(store.words[0].meaning).toBe('新释义')
+      expect(store.words[0].level).toBe(6)
+      expect(store.words[0].lastReviewTime).toBe(200)
+    })
+
+    it('远端只有旧数据时不覆盖本地较新进度', async () => {
+      const store = useMobileWords()
+      const local = await store.addWord({
+        word: 'banana',
+        meaning: '本地新释义',
+        addTime: 1,
+        reviewCount: 5,
+        nextReviewTime: 900,
+        level: 8,
+        lastReviewTime: 500,
+        updatedAt: 500,
+      })
+
+      const result = await store.importWords([{
+        ...local,
+        id: 'different-id',
+        meaning: '远端旧释义',
+        level: 2,
+        reviewCount: 1,
+        lastReviewTime: 200,
+        nextReviewTime: 300,
+        updatedAt: 200,
+      }], undefined, { mergeExisting: true })
+
+      // 远端内容/进度较旧，但会记录远端 ID 别名；等级和释义不回退
+      expect(result.updated).toBe(1)
+      expect(store.words).toHaveLength(1)
+      expect(store.words[0].meaning).toBe('本地新释义')
+      expect(store.words[0].level).toBe(8)
+      expect(store.words[0].aliases).toContain('different-id')
+    })
+
+    it('只有更新没有新增时也落库', async () => {
+      const store = useMobileWords()
+      const local = await store.addWord({
+        word: 'cherry',
+        meaning: '旧',
+        addTime: 1,
+        reviewCount: 0,
+        nextReviewTime: 1,
+        level: 1,
+        lastReviewTime: 100,
+        updatedAt: 100,
+      })
+
+      await store.importWords([{
+        ...local,
+        meaning: '新',
+        updatedAt: 200,
+      }], undefined, { mergeExisting: true })
+      await store.reloadWords()
+
+      expect(store.words.find(w => w.id === local.id)?.meaning).toBe('新')
+    })
+
+    it('答错产生的新复习时间能让另一端接受降级进度', async () => {
+      const source = useMobileWords()
+      const original = await source.addWord({
+        word: 'wrong-sync', meaning: '答错同步', addTime: 1, reviewCount: 1,
+        nextReviewTime: 1, level: 6, lastReviewTime: 1000, updatedAt: 1000,
+      })
+      await source.markAsForgotten(original.id)
+      const wrong = source.words.find(w => w.id === original.id)!
+      await source.flushDirtyBanks()
+
+      mockDb = createMockDbAdapter()
+      setDbAdapter(mockDb)
+      setActivePinia(createPinia())
+      const target = useMobileWords()
+      const local = await target.addWord({
+        word: 'wrong-sync', meaning: '答错同步', addTime: 1, reviewCount: 2,
+        nextReviewTime: 2000, level: 8, lastReviewTime: 2000, updatedAt: 2000,
+      })
+      await target.importWords([{ ...wrong, id: local.id }], undefined, { mergeExisting: true })
+      await target.flushDirtyBanks()
+
+      expect(target.words[0].level).toBe(2)
+      expect(target.words[0].lastReviewTime).toBe(wrong.lastReviewTime)
+    })
+  })
+
+  describe('applySyncTombstones', () => {
+    it('即使没有远端词库，也按别名删除本地旧词，保留墓碑后更新的词', async () => {
+      const store = useMobileWords()
+      const oldWord = await store.addWord({
+        word: 'alias-old',
+        meaning: '旧词',
+        addTime: 1,
+        reviewCount: 0,
+        nextReviewTime: 1,
+        level: 1,
+        updatedAt: 100,
+        aliases: ['remote-alias'],
+      })
+      const newerWord = await store.addWord({
+        word: 'alias-newer',
+        meaning: '墓碑后更新',
+        addTime: 1,
+        reviewCount: 0,
+        nextReviewTime: 1,
+        level: 1,
+        updatedAt: 300,
+        aliases: ['remote-alias-newer'],
+      })
+
+      const deleted = await store.applySyncTombstones({
+        'remote-alias': 200,
+        'remote-alias-newer': 200,
+      })
+
+      expect(deleted.words).toBe(1)
+      expect(store.words.some(w => w.id === oldWord.id)).toBe(false)
+      expect(store.words.some(w => w.id === newerWord.id)).toBe(true)
+    })
+
+    it('词条删除写盘失败时向上报错且不宣称已删除', async () => {
+      const store = useMobileWords()
+      const word = await store.addWord({
+        word: 'delete-failure', meaning: '删除失败', addTime: 1, reviewCount: 0,
+        nextReviewTime: 1, level: 1, updatedAt: 100,
+      })
+      await store.flushDirtyBanks()
+      const asyncPutMock = mockDb.promises.asyncPut as unknown as ReturnType<typeof vi.fn>
+      const okImpl = asyncPutMock.getMockImplementation()!
+      asyncPutMock.mockImplementation(async () => ({ ok: false, error: true, message: 'quota exceeded' }))
+
+      await expect(store.applySyncTombstones({ [word.id]: Date.now() + 1000 }))
+        .rejects.toThrow('词库删除写入失败')
+      const persisted = await mockDb.promises.get('bank_default_words')
+      expect(persisted?.data.some((item: any) => item.id === word.id)).toBe(true)
+      asyncPutMock.mockImplementation(okImpl)
+      await store.flushDirtyBanks()
     })
   })
 })

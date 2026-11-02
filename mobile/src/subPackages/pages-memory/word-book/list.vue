@@ -3,36 +3,35 @@
     <view class="book-header">
       <view class="book-heading">
         <text class="book-title">词图闯关</text>
-        <text class="book-subtitle">完成整章解锁下一章，已过关内容可随时重练</text>
+        <text class="book-subtitle">用法：单词页筛选 → 生成学习页 → 逐词标记；每页按记忆效果安排复习</text>
       </view>
-      <button class="primary-btn small" @click="goWords">筛选建页</button>
+      <button class="primary-btn small" @click="createBook">新建书</button>
+    </view>
+
+    <view v-if="store.dueCount" class="due-bar" @click="goFirstDue">
+      <text class="due-text">今天该复习 {{ store.dueCount }} 篇 ›</text>
     </view>
 
     <view v-if="!store.loaded" class="empty-tip">加载中...</view>
-    <view v-else-if="store.chapters.length === 0" class="empty-state">
-      <text class="empty-title">还没有词图章节</text>
-      <text class="empty-desc">在单词页设置词根词缀等筛选，再把结果生成学习页</text>
-      <button class="primary-btn" @click="goWords">去单词页</button>
+    <view v-else-if="store.sortedBooks.length === 0" class="empty-state">
+      <text class="empty-title">还没有书</text>
+      <text class="empty-desc">先新建一本（如「四级词根」），再去单词页筛选后生成学习页</text>
+      <button class="primary-btn" @click="createBook">新建书</button>
     </view>
 
     <view v-else class="chapter-list">
-      <view
-        v-for="(chapter, index) in store.chapters"
-        :key="chapter._id"
-        class="chapter-card"
-        :class="{locked: !store.chapterUnlocked(chapter._id)}"
-        @click="openChapter(chapter._id)"
-      >
+      <view v-for="book in store.sortedBooks" :key="book._id" class="chapter-card" @click="openBook(book._id)">
         <view class="chapter-topline">
-          <text class="chapter-order">第 {{ index + 1 }} 章</text>
-          <text class="chapter-status">{{ statusText(chapter) }}</text>
+          <text class="chapter-order">书</text>
+          <text class="more" @click.stop="onBookAction(book)">⋯</text>
         </view>
-        <text class="chapter-name">{{ chapter.name }}</text>
-        <text class="chapter-progress">{{ completedCount(chapter) }} / {{ chapter.pages.length }} 页已过关</text>
-        <view class="progress-track"><view class="progress-value" :style="{width: progress(chapter) + '%'}"></view></view>
+        <text class="chapter-name">{{ book.name }}</text>
+        <text class="chapter-progress">{{ summaryOf(book._id) }}</text>
+        <view class="progress-track">
+          <view class="progress-value" :style="{width: progressOf(book._id) + '%'}"></view>
+        </view>
         <view class="chapter-actions">
-          <text class="delete-action" @click.stop="removeChapter(chapter._id, chapter.name)">删除</text>
-          <text class="enter-action">{{ store.chapterUnlocked(chapter._id) ? '进入章节 ›' : '先完成上一章' }}</text>
+          <text class="enter-action">进入 ›</text>
         </view>
       </view>
     </view>
@@ -40,80 +39,251 @@
 </template>
 
 <script setup lang="ts">
-import {onShow} from '@dcloudio/uni-app'
-import {useWordBook} from '@/stores/useWordBook'
-import {isWordBookChapterComplete} from '@/utils/word-book'
-import type {WordBookChapter} from '@/types/word-book'
+import { onShow } from '@dcloudio/uni-app'
+import { useWordBook } from '@/stores/useWordBook'
+import { seedWordBookSamples } from '@/utils/wordbook-seed'
+import type { WordBookBook } from '@/types/word-book'
 
 const store = useWordBook()
-onShow(() => store.load())
 
-function completedCount(chapter: WordBookChapter): number {
-  return chapter.pages.filter(page => !!page.completedAt).length
+onShow(() => {
+  seedWordBookSamples()
+  store.load()
+})
+
+function pagesOfBook(bookId: string) {
+  const chapterIds = new Set(store.chaptersOf(bookId).map(chapter => chapter._id))
+  return store.pages.filter(page => chapterIds.has(page.chapterId))
 }
 
-function progress(chapter: WordBookChapter): number {
-  return chapter.pages.length ? Math.round(completedCount(chapter) / chapter.pages.length * 100) : 0
+function summaryOf(bookId: string): string {
+  const chapters = store.chaptersOf(bookId).length
+  const pages = pagesOfBook(bookId)
+  return `${chapters} 章 · ${pages.length} 页 · 已过关 ${pages.filter(page => page.completedAt).length} 页`
 }
 
-function statusText(chapter: WordBookChapter): string {
-  if (isWordBookChapterComplete(chapter)) return '已完成'
-  return store.chapterUnlocked(chapter._id) ? '闯关进行中' : '未解锁'
+function progressOf(bookId: string): number {
+  const pages = pagesOfBook(bookId)
+  if (!pages.length) return 0
+  return Math.round(pages.filter(page => page.completedAt).length / pages.length * 100)
 }
 
-function openChapter(chapterId: string) {
-  if (!store.chapterUnlocked(chapterId)) {
-    uni.showToast({title: '先完成上一章', icon: 'none'})
-    return
-  }
-  uni.navigateTo({url: `/subPackages/pages-memory/word-book/chapter?id=${chapterId}`})
+function openBook(bookId: string) {
+  uni.navigateTo({ url: `/subPackages/pages-memory/word-book/chapter?bookId=${bookId}` })
 }
 
-function goWords() {
-  uni.switchTab({url: '/pages/words/words'})
+function goFirstDue() {
+  const first = store.duePages[0]
+  if (first) uni.navigateTo({ url: `/subPackages/pages-memory/word-book/page?pageId=${first._id}` })
 }
 
-function removeChapter(chapterId: string, name: string) {
+function createBook() {
   uni.showModal({
-    title: '删除章节',
-    content: `删除「${name}」及其闯关进度？原词库单词不会删除。`,
+    title: '新建书',
+    editable: true,
+    placeholderText: '如：四级词根',
     success: res => {
       if (!res.confirm) return
-      try {
-        const result = store.deleteChapter(chapterId)
-        uni.showToast({title: result.ok ? '已删除' : (result.message || '删除失败'), icon: result.ok ? 'success' : 'none'})
-      } catch {
-        uni.showToast({title: '删除失败，请重试', icon: 'none'})
+      const name = (res.content || '').trim()
+      if (!name) {
+        uni.showToast({ title: '名称不能为空', icon: 'none' })
+        return
       }
+      const book = store.createBook(name)
+      uni.navigateTo({ url: `/subPackages/pages-memory/word-book/chapter?bookId=${book._id}` })
+    },
+  })
+}
+
+function onBookAction(book: WordBookBook) {
+  uni.showActionSheet({
+    itemList: ['重命名', '删除'],
+    success: res => {
+      if (res.tapIndex === 0) renameBook(book)
+      else if (res.tapIndex === 1) removeBook(book)
+    },
+  })
+}
+
+function renameBook(book: WordBookBook) {
+  uni.showModal({
+    title: '重命名',
+    editable: true,
+    content: book.name,
+    success: res => {
+      if (!res.confirm) return
+      const name = (res.content || '').trim()
+      if (!name) return
+      store.renameBook(book._id, name)
+      uni.showToast({ title: '已重命名', icon: 'success' })
+    },
+  })
+}
+
+function removeBook(book: WordBookBook) {
+  uni.showModal({
+    title: '删除书',
+    content: `删除「${book.name}」及其下所有章和页？原词库单词不会删除。`,
+    success: res => {
+      if (!res.confirm) return
+      const result = store.deleteBook(book._id)
+      uni.showToast({ title: result.ok ? '已删除' : '删除失败', icon: 'none' })
     },
   })
 }
 </script>
 
-<style scoped>
-.book-container { min-height: 100vh; padding: 24rpx; box-sizing: border-box; background: var(--sr-bg); }
-.book-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24rpx; }
-.book-heading { flex: 1; display: flex; flex-direction: column; }
-.book-title { color: var(--sr-text); font-size: 36rpx; font-weight: bold; }
-.book-subtitle { margin-top: 8rpx; color: var(--sr-text-3); font-size: 22rpx; line-height: 1.5; }
-.primary-btn { margin-top: 24rpx; padding: 0 36rpx; height: 72rpx; color: var(--sr-on-primary); background: var(--sr-primary); border-radius: 36rpx; font-size: 26rpx; line-height: 72rpx; }
-.primary-btn.small { flex-shrink: 0; margin: 0 0 0 16rpx; padding: 0 24rpx; height: 60rpx; font-size: 24rpx; line-height: 60rpx; }
-.primary-btn::after { border: none; }
-.empty-tip, .empty-state { padding: 100rpx 30rpx; text-align: center; color: var(--sr-text-3); }
-.empty-state { display: flex; flex-direction: column; align-items: center; }
-.empty-title { color: var(--sr-text); font-size: 30rpx; }
-.empty-desc { margin-top: 16rpx; font-size: 24rpx; line-height: 1.6; }
-.chapter-list { display: flex; flex-direction: column; gap: 20rpx; }
-.chapter-card { padding: 26rpx; background: var(--sr-card); border: 1rpx solid var(--sr-border); border-radius: 18rpx; }
-.chapter-card.locked { opacity: 0.58; }
-.chapter-topline, .chapter-actions { display: flex; align-items: center; justify-content: space-between; }
-.chapter-order { color: var(--sr-primary); font-size: 22rpx; font-weight: bold; }
-.chapter-status { color: var(--sr-text-3); font-size: 22rpx; }
-.chapter-name { display: block; margin-top: 18rpx; color: var(--sr-text); font-size: 32rpx; font-weight: bold; }
-.chapter-progress { display: block; margin-top: 10rpx; color: var(--sr-text-2); font-size: 24rpx; }
-.progress-track { height: 12rpx; margin-top: 18rpx; overflow: hidden; background: var(--sr-card-2); border-radius: 6rpx; }
-.progress-value { height: 100%; background: var(--sr-primary); border-radius: 6rpx; }
-.chapter-actions { margin-top: 18rpx; }
-.delete-action { padding: 8rpx 0; color: #c0564f; font-size: 24rpx; }
-.enter-action { padding: 8rpx 0; color: var(--sr-primary); font-size: 24rpx; }
+<style lang="scss" scoped>
+.book-container {
+  min-height: 100vh;
+  padding: 24rpx;
+  box-sizing: border-box;
+  background: var(--sr-bg);
+}
+
+.book-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.book-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.book-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--sr-text);
+}
+
+.book-subtitle {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+}
+
+.due-bar {
+  margin-bottom: 20rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 16rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+}
+
+.due-text {
+  font-size: 26rpx;
+  color: var(--sr-primary);
+}
+
+.empty-tip,
+.empty-state {
+  padding: 80rpx 0;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  font-size: 30rpx;
+  color: var(--sr-text);
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  display: block;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+  margin-bottom: 30rpx;
+  line-height: 1.6;
+}
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.chapter-card {
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+}
+
+.chapter-topline,
+.chapter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chapter-order {
+  font-size: 22rpx;
+  color: var(--sr-primary);
+  font-weight: 600;
+}
+
+.more {
+  font-size: 30rpx;
+  color: var(--sr-text-2);
+  padding: 0 12rpx;
+}
+
+.chapter-name {
+  display: block;
+  margin: 12rpx 0 8rpx;
+  font-size: 32rpx;
+  color: var(--sr-text);
+  font-weight: 600;
+}
+
+.chapter-progress {
+  display: block;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+  margin-bottom: 14rpx;
+}
+
+.progress-track {
+  height: 10rpx;
+  border-radius: 6rpx;
+  background: var(--sr-border);
+  overflow: hidden;
+}
+
+.progress-value {
+  height: 100%;
+  background: var(--sr-primary);
+}
+
+.chapter-actions {
+  margin-top: 14rpx;
+  justify-content: flex-end;
+}
+
+.enter-action {
+  font-size: 24rpx;
+  color: var(--sr-primary);
+}
+
+.primary-btn {
+  padding: 0 28rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 32rpx;
+  background: var(--sr-primary);
+  color: #fff;
+  font-size: 26rpx;
+
+  &.small {
+    height: 56rpx;
+    line-height: 56rpx;
+    font-size: 24rpx;
+  }
+}
 </style>

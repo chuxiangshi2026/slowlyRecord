@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getMemoryTestBest } from '@/utils/memory-test-best'
+import { WORD_BOOK_ENABLED } from '@/utils/feature-flags'
 
 // 「全部功能」列表页：收纳首页宫格收敛后移除的入口，路由保持不变
 const navigate = (url: string) => {
@@ -35,7 +36,7 @@ const testBestText = computed(() => {
   return best ? `最佳：Lv ${best.level} · ${best.score} 分` : ''
 })
 
-const features = [
+const allFeatures = [
   {
     icon: '➕',
     cls: 'add',
@@ -107,6 +108,9 @@ const features = [
     action: () => navigate('/subPackages/pages-tools/function-graph/function-graph'),
   },
 ]
+
+// 词图闯关重构中，入口按开关隐藏
+const features = computed(() => allFeatures.filter(item => WORD_BOOK_ENABLED || item.text !== '词图闯关'))
 </script>
 
 <style scoped>

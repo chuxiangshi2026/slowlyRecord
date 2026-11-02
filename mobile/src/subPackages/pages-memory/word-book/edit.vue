@@ -1,114 +1,339 @@
 <template>
   <view class="edit-container" :class="themeClass">
-    <view class="summary-card">
-      <text class="summary-count">{{ store.draftWords.length }} 个单词</text>
-      <text class="summary-text">每页 12 词 · 将生成 {{ pageCount }} 页</text>
+    <view v-if="!draft" class="empty-state">
+      <text class="empty-title">没有待生成的内容</text>
+      <text class="empty-desc">先在单词页筛选，再点「生成学习页」</text>
+      <button class="primary-btn" @click="goWords">去单词页</button>
     </view>
 
-    <view v-if="store.draftWords.length === 0" class="empty-state">
-      <text class="empty-title">没有可生成的筛选结果</text>
-      <button class="primary-btn" @click="goWords">返回单词页</button>
-    </view>
-    <view v-else class="form-card">
-      <template v-if="store.chapters.length">
-        <text class="form-label">整理到</text>
-        <view class="mode-chips">
-          <text :class="['mode-chip', {on: mode === 'new'}]" @click="mode = 'new'">新建章节</text>
-          <text :class="['mode-chip', {on: mode === 'append'}]" @click="mode = 'append'">追加到已有章节</text>
+    <template v-else>
+      <view class="summary-card">
+        <text class="summary-count">{{ draft.words.length }} 个单词</text>
+        <text class="summary-text">每页 {{ pageSize }} 词 · 将生成 {{ pageCount }} 页</text>
+      </view>
+
+      <view class="form-card">
+        <text class="form-label">所属书</text>
+        <view class="row">
+          <picker class="grow" :range="books" range-key="name" :value="bookIndex" @change="onBookChange">
+            <view class="form-input picker-value">{{ selectedBook?.name || '选择书' }}</view>
+          </picker>
+          <text class="link" @click="createBook">＋新建</text>
         </view>
-      </template>
-      <template v-if="mode === 'new'">
-        <text class="form-label">章节名称</text>
-        <input v-model="chapterName" class="form-input" maxlength="30" placeholder="如：词根词缀第一章" />
-      </template>
-      <template v-else>
-        <text class="form-label">选择章节</text>
-        <picker :range="store.chapters" range-key="name" :value="selectedIndex" @change="selectChapter">
-          <view class="form-input picker-value">{{ selectedChapter?.name || '请选择章节' }}</view>
-        </picker>
-      </template>
-      <text class="form-label">学习页名称</text>
-      <input v-model="pageTitle" class="form-input" maxlength="40" placeholder="如：词根 spect" />
-      <text class="form-tip">完成一页解锁下一页，整章完成后解锁下一章。</text>
-      <button class="primary-btn" :disabled="!canSave || saving" @click="confirm">{{ saving ? '正在生成…' : '生成并查看章节' }}</button>
-    </view>
+
+        <text class="form-label">所属章</text>
+        <view class="row">
+          <picker class="grow" :range="chapters" range-key="name" :value="chapterIndex" @change="onChapterChange">
+            <view class="form-input picker-value">{{ selectedChapter?.name || '选择章' }}</view>
+          </picker>
+          <text class="link" @click="createChapter">＋新建</text>
+        </view>
+
+        <text class="form-label">学习页名称</text>
+        <input v-model="pageName" class="form-input" maxlength="40" placeholder="如：old 篇"/>
+
+        <text class="form-label">每页词数</text>
+        <input v-model="pageSizeText" class="form-input" type="number" placeholder="12"/>
+
+        <text class="form-label">分页顺序</text>
+        <view class="mode-chips">
+          <text v-for="opt in splitOptions" :key="opt.value"
+                :class="['mode-chip', {on: splitBy === opt.value}]"
+                @click="splitBy = opt.value">{{ opt.label }}</text>
+        </view>
+
+        <view v-if="duplicatedPage" class="dup-tip">
+          本章已有「{{ duplicatedPage.name }}」，生成后会追加新的一页
+        </view>
+
+        <text class="form-tip">单词按当前筛选结果装页，生成后可在记忆页逐个标记「记住了」。</text>
+        <button class="primary-btn" :disabled="!canSave || saving" @click="confirm">{{ saving ? '正在生成…' : '生成并查看' }}</button>
+      </view>
+    </template>
   </view>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
-import {onLoad} from '@dcloudio/uni-app'
-import {useWordBook} from '@/stores/useWordBook'
-import {WORD_BOOK_PAGE_SIZE} from '@/utils/word-book'
+import { computed, ref } from 'vue'
+import { onLoad, onShow } from '@dcloudio/uni-app'
+import { useWordBook } from '@/stores/useWordBook'
+import {
+  WORD_BOOK_PAGE_SIZE,
+  getDefaultPageName,
+  normalizePageSize,
+  splitWordsIntoPages,
+} from '@/utils/word-book'
+import type { WordBookSplitBy } from '@/types/word-book'
 
 const store = useWordBook()
-const mode = ref<'new' | 'append'>('new')
-const chapterName = ref('')
-const pageTitle = ref('')
+const pageName = ref('')
+const pageSizeText = ref(String(WORD_BOOK_PAGE_SIZE))
+const splitBy = ref<WordBookSplitBy>('order')
+const bookIndex = ref(0)
+const chapterIndex = ref(0)
 const selectedChapterId = ref('')
 const saving = ref(false)
-const pageCount = computed(() => Math.ceil(store.draftWords.length / WORD_BOOK_PAGE_SIZE))
-const selectedChapter = computed(() => store.getChapter(selectedChapterId.value))
-const selectedIndex = computed(() => Math.max(0, store.chapters.findIndex(chapter => chapter._id === selectedChapterId.value)))
-const canSave = computed(() => store.draftWords.length > 0 && !!pageTitle.value.trim() && (mode.value === 'new' ? !!chapterName.value.trim() : !!selectedChapterId.value))
 
-onLoad(() => {
+const splitOptions: Array<{ value: WordBookSplitBy; label: string }> = [
+  { value: 'order', label: '原顺序' },
+  { value: 'freq', label: '词频' },
+  { value: 'length', label: '长度' },
+  { value: 'alpha', label: '字母序' },
+]
+
+onLoad(() => store.load())
+onShow(() => {
   store.load()
-  chapterName.value = store.draftName
-  pageTitle.value = store.draftName
+  if (!pageName.value && draft.value) {
+    pageName.value = draft.value.name
+  }
+  // 从章节页「添加页」过来：预选目标
+  const target = store.pendingTarget
+  if (target) {
+    const bookPosition = store.sortedBooks.findIndex(book => book._id === target.bookId)
+    if (bookPosition >= 0) {
+      bookIndex.value = bookPosition
+      const list = store.chaptersOf(target.bookId)
+      const chapterPosition = list.findIndex(chapter => chapter._id === target.chapterId)
+      if (chapterPosition >= 0) {
+        chapterIndex.value = chapterPosition
+        selectedChapterId.value = list[chapterPosition]._id
+      }
+    }
+  }
 })
 
-function selectChapter(event: any) {
-  const chapter = store.chapters[Number(event.detail.value)]
-  if (chapter) selectedChapterId.value = chapter._id
+const draft = computed(() => store.draft)
+const books = computed(() => store.sortedBooks)
+const selectedBook = computed(() => books.value[bookIndex.value])
+const chapters = computed(() => (selectedBook.value ? store.chaptersOf(selectedBook.value._id) : []))
+const selectedChapter = computed(() => chapters.value[chapterIndex.value])
+const pageSize = computed(() => normalizePageSize(Number(pageSizeText.value)))
+const chunks = computed(() => (draft.value ? splitWordsIntoPages(draft.value.words, pageSize.value, splitBy.value) : []))
+const pageCount = computed(() => Math.max(1, chunks.value.length))
+const duplicatedPage = computed(() => {
+  const chapterId = selectedChapter.value?._id
+  return chapterId && draft.value ? store.findPageByKey(chapterId, draft.value.key) : undefined
+})
+const canSave = computed(() => !!draft.value && !!selectedBook.value && !!selectedChapter.value && !!pageName.value.trim())
+
+function onBookChange(event: any) {
+  bookIndex.value = Number(event.detail.value) || 0
+  chapterIndex.value = 0
+}
+
+function onChapterChange(event: any) {
+  chapterIndex.value = Number(event.detail.value) || 0
+}
+
+function goWords() {
+  uni.switchTab({ url: '/pages/words/words' })
+}
+
+function createBook() {
+  uni.showModal({
+    title: '新建书',
+    editable: true,
+    placeholderText: '如：四级词根',
+    success: res => {
+      if (!res.confirm) return
+      const name = (res.content || '').trim()
+      if (!name) return
+      store.createBook(name)
+      bookIndex.value = store.sortedBooks.length - 1
+      chapterIndex.value = 0
+    },
+  })
+}
+
+function createChapter() {
+  if (!selectedBook.value) {
+    uni.showToast({ title: '先选择或新建书', icon: 'none' })
+    return
+  }
+  uni.showModal({
+    title: '新建章',
+    editable: true,
+    placeholderText: '如：词根 old',
+    success: res => {
+      if (!res.confirm) return
+      const name = (res.content || '').trim()
+      if (!name) return
+      store.createChapter(selectedBook.value._id, name)
+      chapterIndex.value = store.chaptersOf(selectedBook.value._id).length - 1
+    },
+  })
 }
 
 function confirm() {
-  if (!canSave.value || saving.value) return
+  if (!canSave.value || !draft.value || saving.value) return
   saving.value = true
   try {
-    let chapterId = selectedChapterId.value
-    if (mode.value === 'new') {
-      const {result, chapter} = store.createChapter(chapterName.value, pageTitle.value, store.draftWords)
-      if (!result.ok) throw new Error(result.message || '章节创建失败')
-      chapterId = chapter._id
-    } else {
-      const result = store.appendChapter(chapterId, pageTitle.value, store.draftWords)
-      if (!result.ok) throw new Error(result.message || '学习页追加失败')
+    const book = selectedBook.value!
+    const chapter = selectedChapter.value!
+    const total = chunks.value.length
+    for (let i = 0; i < total; i++) {
+      const words = chunks.value[i]
+      if (!words.length) continue
+      store.createPage({
+        bookId: book._id,
+        chapterId: chapter._id,
+        name: getDefaultPageName(draft.value.key, i + 1, total),
+        key: draft.value.key,
+        words,
+        source: draft.value.source,
+      })
     }
-    const createdPageCount = pageCount.value
     store.clearDraft()
-    uni.showToast({title: `已生成 ${createdPageCount} 页`, icon: 'success'})
-    uni.redirectTo({url: `/subPackages/pages-memory/word-book/chapter?id=${chapterId}`})
-  } catch (error) {
-    uni.showToast({title: error instanceof Error ? error.message : '生成失败', icon: 'none'})
+    store.setPendingTarget(null)
+    uni.showToast({ title: `已生成 ${total} 页`, icon: 'success' })
+    setTimeout(() => {
+      uni.redirectTo({ url: `/subPackages/pages-memory/word-book/pages?bookId=${book._id}&chapterId=${chapter._id}` })
+    }, 600)
   } finally {
     saving.value = false
   }
 }
-
-function goWords() {
-  uni.switchTab({url: '/pages/words/words'})
-}
 </script>
 
-<style scoped>
-.edit-container { min-height: 100vh; padding: 24rpx; box-sizing: border-box; background: var(--sr-bg); }
-.summary-card { display: flex; align-items: center; justify-content: space-between; padding: 24rpx; background: var(--sr-card-2); border-radius: 16rpx; }
-.summary-count { color: var(--sr-primary); font-size: 32rpx; font-weight: bold; }
-.summary-text { color: var(--sr-text-2); font-size: 22rpx; }
-.form-card { margin-top: 20rpx; padding: 26rpx; background: var(--sr-card); border-radius: 18rpx; }
-.form-label { display: block; margin: 22rpx 0 12rpx; color: var(--sr-text-2); font-size: 24rpx; }
-.form-label:first-child { margin-top: 0; }
-.form-input { padding: 18rpx 20rpx; color: var(--sr-text); background: var(--sr-card-2); border: 1rpx solid var(--sr-border); border-radius: 12rpx; font-size: 28rpx; }
-.picker-value { line-height: 1.5; }
-.mode-chips { display: flex; gap: 12rpx; }
-.mode-chip { padding: 12rpx 22rpx; color: var(--sr-text-2); background: var(--sr-card-2); border: 1rpx solid var(--sr-border); border-radius: 26rpx; font-size: 24rpx; }
-.mode-chip.on { color: var(--sr-on-primary); background: var(--sr-primary); border-color: var(--sr-primary); }
-.form-tip { display: block; margin-top: 22rpx; color: var(--sr-text-3); font-size: 22rpx; line-height: 1.6; }
-.primary-btn { margin-top: 28rpx; height: 76rpx; color: var(--sr-on-primary); background: var(--sr-primary); border-radius: 38rpx; font-size: 28rpx; line-height: 76rpx; }
-.primary-btn::after { border: none; }
-.primary-btn[disabled] { opacity: 0.5; }
-.empty-state { padding: 100rpx 30rpx; text-align: center; }
-.empty-title { color: var(--sr-text); font-size: 28rpx; }
+<style lang="scss" scoped>
+.edit-container {
+  min-height: 100vh;
+  padding: 24rpx;
+  box-sizing: border-box;
+  background: var(--sr-bg);
+}
+
+.summary-card {
+  padding: 22rpx;
+  border-radius: 18rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+  margin-bottom: 20rpx;
+}
+
+.summary-count {
+  display: block;
+  font-size: 32rpx;
+  color: var(--sr-text);
+  font-weight: 600;
+}
+
+.summary-text {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+}
+
+.form-card {
+  padding: 22rpx;
+  border-radius: 18rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+}
+
+.form-label {
+  display: block;
+  margin: 18rpx 0 10rpx;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+}
+
+.form-input {
+  width: 100%;
+  padding: 18rpx 20rpx;
+  border-radius: 14rpx;
+  background: var(--sr-bg);
+  border: 1rpx solid var(--sr-border);
+  font-size: 26rpx;
+  color: var(--sr-text);
+  box-sizing: border-box;
+}
+
+.picker-value {
+  line-height: 1.4;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.grow {
+  flex: 1;
+}
+
+.link {
+  font-size: 24rpx;
+  color: var(--sr-primary);
+  padding: 10rpx 6rpx;
+}
+
+.mode-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.mode-chip {
+  padding: 10rpx 22rpx;
+  border-radius: 999rpx;
+  background: var(--sr-bg);
+  border: 1rpx solid var(--sr-border);
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+
+  &.on {
+    color: var(--sr-primary);
+    border-color: var(--sr-primary);
+  }
+}
+
+.dup-tip {
+  margin-top: 16rpx;
+  padding: 14rpx 18rpx;
+  border-radius: 12rpx;
+  background: var(--sr-bg);
+  font-size: 22rpx;
+  color: var(--sr-text-2);
+}
+
+.form-tip {
+  display: block;
+  margin: 18rpx 0;
+  font-size: 22rpx;
+  color: var(--sr-text-2);
+  line-height: 1.5;
+}
+
+.empty-state {
+  padding: 100rpx 0;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  font-size: 30rpx;
+  color: var(--sr-text);
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  display: block;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+  margin-bottom: 30rpx;
+}
+
+.primary-btn {
+  width: 100%;
+  height: 76rpx;
+  line-height: 76rpx;
+  border-radius: 38rpx;
+  background: var(--sr-primary);
+  color: #fff;
+  font-size: 28rpx;
+}
 </style>

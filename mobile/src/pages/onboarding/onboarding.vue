@@ -173,6 +173,7 @@ async function importBank(bank: RecommendedBank & { wordCount: number }) {
         phonetic: w.phonetic || undefined,
         example: w.example || undefined,
         itemType: inferMobileItemType(wordText),
+        freq: typeof w.freq === 'number' && w.freq > 0 ? w.freq : undefined,
         addTime: now,
         reviewCount: 0,
         nextReviewTime: now,

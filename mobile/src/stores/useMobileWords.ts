@@ -3,9 +3,10 @@ import { defineStore } from 'pinia'
 import { getDbAdapter, type DbDoc } from '@/adapters/index'
 import { WORDBANK_LIST } from './useUtils/wordbank'
 import { DEFAULT_INTERVALS } from './useUtils/constants'
-import { recordTombstone, recordTombstones } from './useUtils/sync-tombstone'
+import { filterByTombstones, recordTombstone, recordTombstones } from './useUtils/sync-tombstone'
 import type { MobileItemType } from './useUtils/types'
 import { normalizeWordText, getWordKey } from '../utils/text-utils'
+import { getProfile, setActiveLanguage, type LanguageCode, type LanguageProfile } from '@/utils/language'
 
 export interface MobileWord {
   id: string
@@ -14,6 +15,8 @@ export interface MobileWord {
   phonetic?: string
   example?: string
   itemType?: MobileItemType
+  /** 词频排名（内置词库预置，1 = 最常用） */
+  freq?: number
   addTime: number
   reviewCount: number
   nextReviewTime: number
@@ -21,6 +24,8 @@ export interface MobileWord {
   remembered?: boolean
   level?: number
   lastReviewTime?: number
+  updatedAt?: number
+  aliases?: string[]  // 同一词条在其他设备使用过的稳定 ID
   bankId?: string  // 所属词库ID
 }
 
@@ -30,6 +35,7 @@ export interface WordBankMeta {
   createdAt: number
   updatedAt: number
   isDefault?: boolean
+  language?: LanguageCode
   sourceType?: 'builtin' | 'custom'  // 来源类型：内置词库导入 / 用户自建
   sourceId?: string  // 如果来自内置词库，记录原始ID（如 'cet4'）
 }
@@ -41,11 +47,11 @@ const IMPORT_PROGRESS_KEY = 'mobile_import_progress'
 
 /**
  * 答错（忘记）后的降级等级：与桌面端 src/utils/srs.ts 的 computeLevelDown 口径一致
- * —— 满级（12 级）答错重置回 1 级，否则降 1 级，下限 1 级，不再无条件归零
+ * —— 每次降 4 级，下限 1 级（12 级答错降到 8 级）
  */
 export function computeForgotLevel(level: number): number {
-  if (level >= 12) return 1
-  return Math.max((level || 1) - 1, 1)
+  const current = Number.isFinite(level) ? Math.max(1, Math.min(12, Math.trunc(level))) : 1
+  return Math.max(current - 4, 1)
 }
 
 /** 判定会改动的复习状态字段，判定前快照、撤销时整体恢复 */
@@ -90,6 +96,10 @@ export const useMobileWords = defineStore('mobileWords', () => {
   // ========== 词库管理 ==========
   const bankList = ref<WordBankMeta[]>([])
   const currentBankId = ref<string>(DEFAULT_BANK_ID)
+  const currentLanguage = computed<LanguageCode>(() =>
+    bankList.value.find(bank => bank.id === currentBankId.value)?.language || 'en'
+  )
+  const currentProfile = computed<LanguageProfile>(() => getProfile(currentLanguage.value))
 
   // ========== 防抖持久化 ==========
   const _dirtyBanks = new Set<string>()
@@ -112,8 +122,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     }
   }
 
-  /** 立即将所有脏词库写入存储 */
-  async function flushDirtyBanks() {
+  /** 立即将所有脏词库写入存储，返回是否全部写入成功 */
+  async function flushDirtyBanks(): Promise<boolean> {
     if (_persistTimer) {
       clearTimeout(_persistTimer)
       _persistTimer = null
@@ -136,6 +146,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
         } catch { /* toast 失败忽略 */ }
       }
     }
+    return failed === 0
   }
 
   /** 将一个词库的全部单词写入 storage（一条记录）
@@ -353,14 +364,17 @@ export const useMobileWords = defineStore('mobileWords', () => {
     } catch {
       currentBankId.value = DEFAULT_BANK_ID
     }
+    setActiveLanguage(bankList.value.find(bank => bank.id === currentBankId.value)?.language)
     // 移动端无需旧数据迁移（未上线）
   }
 
-  function _saveBankList() {
+  function _saveBankList(): boolean {
     try {
       uni.setStorageSync(BANKS_STORAGE_KEY, bankList.value)
+      return true
     } catch (e) {
       console.error('保存词库列表失败:', e)
+      return false
     }
   }
 
@@ -374,13 +388,19 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
   // ========== 词库 CRUD ==========
 
-  function createBank(name: string): WordBankMeta {
-    const id = `bank_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+  function createBank(name: string, meta: Partial<Pick<WordBankMeta, 'id' | 'createdAt' | 'updatedAt' | 'isDefault' | 'language'>> = {}): WordBankMeta {
+    const preferredId = typeof meta.id === 'string' ? meta.id.trim() : ''
+    const id = preferredId && !bankList.value.some(b => b.id === preferredId)
+      ? preferredId
+      : `bank_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    const now = Date.now()
     const bank: WordBankMeta = {
       id,
       name,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: meta.createdAt ?? now,
+      updatedAt: meta.updatedAt ?? now,
+      ...(meta.isDefault ? { isDefault: true } : {}),
+      language: meta.language || 'en',
       sourceType: 'custom'
     }
     bankList.value.push(bank)
@@ -396,7 +416,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     recordTombstone(bankId)
     recordTombstones(allWords.value
       .filter(w => w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))
-      .map(w => w.id))
+      .flatMap(w => [w.id, ...(w.aliases || [])]))
     allWords.value = allWords.value.filter(w => w.bankId !== bankId)
     const db = getDbAdapter()
     db.remove(`bank_${bankId}_words`)
@@ -418,12 +438,22 @@ export const useMobileWords = defineStore('mobileWords', () => {
     _saveBankList()
   }
 
+  function setBankLanguage(bankId: string, language: LanguageCode) {
+    const bank = bankList.value.find(b => b.id === bankId)
+    if (!bank || bank.language === language) return
+    bank.language = language
+    bank.updatedAt = Date.now()
+    _saveBankList()
+    if (currentBankId.value === bankId) setActiveLanguage(language)
+  }
+
   function switchBank(bankId: string) {
     if (!bankList.value.some(b => b.id === bankId)) {
       throw new Error('词库不存在')
     }
     currentBankId.value = bankId
     _saveCurrentBankId()
+    setActiveLanguage(bankList.value.find(bank => bank.id === bankId)?.language)
     // 懒加载：目标词库首屏未读入时，切换后异步补读（不阻塞切换本身，读完自动刷新各页）
     ensureBankLoaded(bankId).catch(() => { /* 读取失败保持空库，可再次切换触发重试 */ })
   }
@@ -503,7 +533,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
       bankId,
       level: word.level ?? 1,
       needsReview: word.needsReview ?? true,
-      lastReviewTime: word.lastReviewTime ?? 0
+      lastReviewTime: word.lastReviewTime ?? 0,
+      updatedAt: word.updatedAt ?? Date.now()
     }
 
     allWords.value = [...allWords.value, newWord]
@@ -520,8 +551,9 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function deleteWord(id: string) {
     const word = allWords.value.find(w => w.id === id)
     if (!word) return
-    // 同步墓碑：防止被删单词在另一台设备「删除复活」
+    // 同步墓碑：主 ID 与跨端别名一起埋点，防止不同设备 ID 导致删除复活
     recordTombstone(id)
+    for (const alias of word.aliases || []) recordTombstone(alias)
     const bankId = word.bankId || DEFAULT_BANK_ID
     allWords.value = allWords.value.filter(w => w.id !== id)
     markBankDirty(bankId)
@@ -531,7 +563,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const index = allWords.value.findIndex(w => w.id === id)
     if (index === -1) return
 
-    const updated = { ...allWords.value[index], ...updates }
+    const updated = { ...allWords.value[index], ...updates, updatedAt: Date.now() }
     const newArr = [...allWords.value]
     newArr[index] = updated
     allWords.value = newArr
@@ -578,6 +610,17 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function markAsRemembered(id: string) {
     const word = allWords.value.find(w => w.id === id)
     if (!word) return
+    const now = Date.now()
+    const due = word.nextReviewTime === undefined || word.nextReviewTime <= now
+    if (!due) {
+      // 提前复习只记录练习行为，不提前升级或改变下次到期时间
+      updateWord(id, {
+        reviewCount: (word.reviewCount || 0) + 1,
+        lastReviewTime: now,
+        needsReview: false,
+      })
+      return
+    }
     const currentLevel = word.level || 1
     updateWordLevel(id, currentLevel + 1)
   }
@@ -588,9 +631,10 @@ export const useMobileWords = defineStore('mobileWords', () => {
 
     // 忘记只降级（对齐桌面端 computeLevelDown 口径），不再无条件打回 1 级
     const newLevel = computeForgotLevel(word.level || 1)
+    const now = Date.now()
     allWords.value = allWords.value.map(w =>
       w.id === id
-        ? { ...w, remembered: false, needsReview: true, level: newLevel, nextReviewTime: Date.now() + 10 * 60 * 1000 }
+        ? { ...w, remembered: false, needsReview: true, level: newLevel, lastReviewTime: now, nextReviewTime: now + 10 * 60 * 1000, updatedAt: now }
         : w
     )
     markBankDirty(word.bankId || DEFAULT_BANK_ID)
@@ -604,12 +648,70 @@ export const useMobileWords = defineStore('mobileWords', () => {
     return allWords.value
   }
 
+  /** 应用远端删除墓碑：删除本地已有词条/词库，而不只是阻止远端旧数据回流 */
+  async function applySyncTombstones(tombstones: Record<string, number>): Promise<{ words: number; banks: number }> {
+    if (!tombstones || Object.keys(tombstones).length === 0) return { words: 0, banks: 0 }
+    const keptWords = filterByTombstones(allWords.value, 'remote', tombstones)
+    const removedWords = allWords.value.length - keptWords.length
+    if (removedWords > 0) {
+      const keptSet = new Set(keptWords)
+      const dirty = new Set<string>()
+      for (const word of allWords.value) {
+        if (!keptSet.has(word)) dirty.add(word.bankId || DEFAULT_BANK_ID)
+      }
+      allWords.value = keptWords
+      dirty.forEach(markBankDirty)
+    }
+
+    const keptBanks = bankList.value.filter((bank) => {
+      if (bank.id === DEFAULT_BANK_ID) return true
+      const deletedAt = tombstones[bank.id]
+      return deletedAt === undefined || deletedAt < bank.updatedAt
+    })
+    const removedBanks = bankList.value.length - keptBanks.length
+    if (removedBanks > 0) {
+      const previousBanks = bankList.value
+      const removedIds = bankList.value.filter(b => !keptBanks.includes(b)).map(b => b.id)
+      bankList.value = keptBanks
+      if (!_saveBankList()) {
+        bankList.value = previousBanks
+        throw new Error('保存词库删除状态失败')
+      }
+      for (const bankId of removedIds) {
+        try {
+          const result = await getDbAdapter().promises.remove(`bank_${bankId}_words`)
+          const missing = /not[_\s-]?found/i.test(String(result?.message || result?.name || ''))
+          if (!result?.ok && !missing) throw new Error(result?.message || '删除词库文档失败')
+        } catch (e) {
+          if (!/not[_\s-]?found/i.test(String((e as any)?.message || e))) throw e
+        }
+        _dirtyBanks.delete(bankId)
+        _loadedBanks.delete(bankId)
+      }
+      if (!keptBanks.some(b => b.id === currentBankId.value)) {
+        currentBankId.value = DEFAULT_BANK_ID
+        _saveCurrentBankId()
+        setActiveLanguage(keptBanks.find(bank => bank.id === DEFAULT_BANK_ID)?.language)
+        await ensureBankLoaded(DEFAULT_BANK_ID).catch(() => {})
+      }
+    }
+    if (removedWords > 0 && !await flushDirtyBanks()) {
+      throw new Error('词库删除写入失败')
+    }
+    return { words: removedWords, banks: removedBanks }
+  }
+
   /**
    * 批量导入单词：整个词库写为一条 storage 记录
    * 从内存合并已有单词后一次性写入，16k 词 → 1 条记录
    */
-  async function importWords(data: MobileWord[], targetBankId?: string): Promise<{ imported: MobileWord[]; skippedCount: number; invalidCount: number; success: boolean; message?: string }> {
+  async function importWords(
+    data: MobileWord[],
+    targetBankId?: string,
+    options: { mergeExisting?: boolean } = {},
+  ): Promise<{ imported: MobileWord[]; updated: number; skippedCount: number; invalidCount: number; success: boolean; message?: string }> {
     const bankId = targetBankId || currentBankId.value
+    const language = bankList.value.find(bank => bank.id === bankId)?.language || 'en'
     // 目标词库可能懒加载未读入：先确保已加载，importWords 以完整本地数据为基准合并，避免丢已有单词
     await ensureBankLoaded(bankId)
 
@@ -622,26 +724,84 @@ export const useMobileWords = defineStore('mobileWords', () => {
         invalidCount++
         continue
       }
-      const key = getWordKey(normalizedWord)
+      const key = getWordKey(normalizedWord, language)
       const id = word.id || `${DB_KEY}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      const normalizedItem = { ...word, word: normalizedWord, id, bankId }
-      if (importedMap.has(key)) {
-        duplicateInImportCount++
+      const normalizedItem = {
+        ...word,
+        word: normalizedWord,
+        id,
+        bankId,
+        updatedAt: word.updatedAt ?? word.lastReviewTime ?? word.addTime ?? Date.now(),
       }
+      if (importedMap.has(key)) duplicateInImportCount++
       importedMap.set(key, normalizedItem)
     }
     const importedWords = Array.from(importedMap.values())
 
-    // 从内存中读取该词库已有单词，按规范化后的 word 字段去重
     const existingWords = allWords.value.filter(w =>
       w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID)
     )
-    const existingWordSet = new Set(existingWords.map(w => getWordKey(w.word)))
-    const newOnly = importedWords.filter(w => !existingWordSet.has(getWordKey(w.word)))
-    const skippedCount = duplicateInImportCount + (importedWords.length - newOnly.length)
+    const existingById = new Map(existingWords.map(w => [w.id, w]))
+    const existingByText = new Map(existingWords.map(w => [getWordKey(w.word, language), w]))
+    const newOnly: MobileWord[] = []
+    const replacements = new Map<string, MobileWord>()
+    const contentKeys: Array<keyof MobileWord> = ['word', 'meaning', 'phonetic', 'example', 'itemType', 'freq']
+    const learningKeys: Array<keyof MobileWord> = [
+      'level', 'remembered', 'needsReview', 'lastReviewTime', 'nextReviewTime', 'reviewCount',
+    ]
+    let updated = 0
 
-    if (newOnly.length > 0) {
-      const mergedWords = [...existingWords, ...newOnly]
+    for (const remote of importedWords) {
+      const existing = existingById.get(remote.id) || existingByText.get(getWordKey(remote.word, language))
+      if (!existing) {
+        newOnly.push(remote)
+        continue
+      }
+      if (!options.mergeExisting) continue
+
+      const merged: MobileWord = { ...existing }
+      const remoteContentTime = remote.updatedAt || 0
+      const localContentTime = existing.updatedAt || 0
+      const remoteLearnTime = remote.lastReviewTime || 0
+      const localLearnTime = existing.lastReviewTime || 0
+      const aliases = new Set([...(existing.aliases || []), ...(remote.aliases || [])])
+      if (remote.id && remote.id !== existing.id) aliases.add(remote.id)
+      const aliasesChanged = aliases.size !== (existing.aliases || []).length
+      if (aliases.size > 0) merged.aliases = Array.from(aliases)
+
+      if (remoteContentTime > localContentTime) {
+        for (const key of contentKeys) {
+          if (remote[key] !== undefined) (merged as any)[key] = remote[key]
+        }
+        merged.updatedAt = remoteContentTime
+      } else {
+        for (const key of contentKeys) {
+          if (!existing[key] && remote[key]) (merged as any)[key] = remote[key]
+        }
+      }
+
+      if (remoteLearnTime > localLearnTime) {
+        for (const key of learningKeys) (merged as any)[key] = remote[key]
+        merged.updatedAt = Math.max(merged.updatedAt || 0, remoteContentTime, localContentTime)
+      }
+
+      merged.id = existing.id
+      merged.bankId = existing.bankId || bankId
+      const changed = aliasesChanged || contentKeys.concat(learningKeys).some(
+        key => !Object.is((existing as any)[key], (merged as any)[key]),
+      )
+      if (changed) {
+        replacements.set(existing.id, merged)
+        updated++
+      }
+    }
+
+    const duplicateExistingCount = importedWords.length - newOnly.length
+    const skippedCount = duplicateInImportCount + Math.max(0, duplicateExistingCount - updated)
+    const mergedExisting = existingWords.map(w => replacements.get(w.id) || w)
+
+    if (newOnly.length > 0 || updated > 0) {
+      const mergedWords = [...mergedExisting, ...newOnly]
       const db = getDbAdapter()
       const result = await db.promises.asyncPut({
         _id: `bank_${bankId}_words`,
@@ -653,12 +813,11 @@ export const useMobileWords = defineStore('mobileWords', () => {
           ...mergedWords,
         ]
       } else {
-        // 写库失败：内存不合并，返回失败信息避免调用方误报成功
-        return { imported: [], skippedCount, invalidCount, success: false, message: '词库写入失败' }
+        return { imported: [], updated: 0, skippedCount, invalidCount, success: false, message: '词库写入失败' }
       }
     }
 
-    return { imported: newOnly, skippedCount, invalidCount, success: true }
+    return { imported: newOnly, updated, skippedCount, invalidCount, success: true }
   }
 
   /** 一次性追加单词到内存（shallowRef 赋值本身很快） */
@@ -670,7 +829,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const targetBankId = currentBankId.value
     recordTombstones(allWords.value
       .filter(w => w.bankId === targetBankId || (!w.bankId && targetBankId === DEFAULT_BANK_ID))
-      .map(w => w.id))
+      .flatMap(w => [w.id, ...(w.aliases || [])]))
     allWords.value = allWords.value.filter(w =>
       w.bankId !== targetBankId && !(!w.bankId && targetBankId === DEFAULT_BANK_ID)
     )
@@ -683,7 +842,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
   async function clearBankWords(bankId: string) {
     recordTombstones(allWords.value
       .filter(w => w.bankId === bankId || (!w.bankId && bankId === DEFAULT_BANK_ID))
-      .map(w => w.id))
+      .flatMap(w => [w.id, ...(w.aliases || [])]))
     allWords.value = allWords.value.filter(w =>
       w.bankId !== bankId && !(!w.bankId && bankId === DEFAULT_BANK_ID)
     )
@@ -728,6 +887,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
     // 词库管理
     bankList,
     currentBankId,
+    currentLanguage,
+    currentProfile,
     // 方法
     loadWords,
     reloadWords,
@@ -742,6 +903,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     markAsForgotten,
     exportWords,
     exportAllWords,
+    applySyncTombstones,
     importWords,
     appendWordsToMemory,
     clearAllWords,
@@ -750,6 +912,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     createBank,
     deleteBank,
     renameBank,
+    setBankLanguage,
     switchBank,
     getBankById,
     getBankWordCount,

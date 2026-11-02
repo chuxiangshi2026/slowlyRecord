@@ -67,8 +67,8 @@
           <text class="wrong-entry-arrow">›</text>
         </view>
       </view>
-      <!-- 词图章节 -->
-      <view class="filter-row">
+      <!-- 词图章节（重构中，入口按开关隐藏） -->
+      <view v-if="WORD_BOOK_ENABLED" class="filter-row">
         <text class="filter-label">词图</text>
         <view class="word-book-actions">
           <button class="word-book-btn" :disabled="filteredWords.length === 0" @click="goCreateWordBook">生成学习页</button>
@@ -119,7 +119,10 @@
         @click="showWordDetail(word)"
       >
         <view class="word-info">
-          <text class="word-text">{{ word.word }}</text>
+          <view class="word-line">
+            <text class="word-text">{{ word.word }}</text>
+            <text v-if="word.freq" class="word-freq">#{{ word.freq }}</text>
+          </view>
           <text class="word-meaning">{{ word.meaning }}</text>
         </view>
         <view class="word-meta">
@@ -166,11 +169,12 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, watch } from 'vue'
-import { onReachBottom, onHide } from '@dcloudio/uni-app'
+import { onReachBottom, onHide, onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { useWordBook } from '@/stores/useWordBook'
 import { analyzeWord } from '@/utils/word-analysis'
-import { getWordBookDefaultName } from '@/utils/word-book'
+import { buildWordBookSource, getDefaultPageName, resolveWordBookKey } from '@/utils/word-book'
+import { WORD_BOOK_ENABLED } from '@/utils/feature-flags'
 
 const wordsStore = useMobileWords()
 const wordBookStore = useWordBook()
@@ -250,7 +254,6 @@ const affixTypeOptions = [
 ]
 const affixTypeIndex = computed(() => Math.max(0, affixTypeOptions.findIndex(option => option.value === filterState.affixType)))
 const affixTypeLabel = computed(() => affixTypeOptions[affixTypeIndex.value].label)
-const wordBookDefaultName = computed(() => getWordBookDefaultName(filterState, currentBankName.value))
 
 function selectAffixType(event: any) {
   const option = affixTypeOptions[Number(event.detail.value)]
@@ -284,6 +287,7 @@ const sortOptions = [
   { key: 'alpha', label: 'A-Z' },
   { key: 'length', label: '长度' },
   { key: 'time', label: '时间' },
+  { key: 'freq', label: '词频' },
   { key: 'level', label: '等级' }
 ]
 
@@ -292,7 +296,7 @@ function toggleSort(key: string) {
     filterState.sortAsc = !filterState.sortAsc
   } else {
     filterState.sortBy = key
-    filterState.sortAsc = key === 'alpha' || key === 'level'
+    filterState.sortAsc = key === 'alpha' || key === 'level' || key === 'freq'
   }
 }
 
@@ -421,6 +425,15 @@ const filteredWords = computed(() => {
         case 'length': return dir * (a.word.length - b.word.length)
         case 'time': return dir * (a.addTime - b.addTime)
         case 'level': return dir * ((a.level || 1) - (b.level || 1))
+        case 'freq': {
+          // 词频排名越小越常见；无数据的词无论升降序都排最后
+          const fa = typeof a.freq === 'number' ? a.freq : null
+          const fb = typeof b.freq === 'number' ? b.freq : null
+          if (fa === null && fb === null) return 0
+          if (fa === null) return 1
+          if (fb === null) return -1
+          return dir * (fa - fb)
+        }
         default: return 0
       }
     })
@@ -433,6 +446,16 @@ onMounted(() => {
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享
 })
 
+// 从词图页「添加页」跳回来：一次性打开筛选面板（switchTab 不能带参，用标记位）
+onShow(() => {
+  try {
+    if (uni.getStorageSync('sr_wb_open_word_filter') === '1') {
+      uni.removeStorageSync('sr_wb_open_word_filter')
+      showFilterPanel.value = true
+    }
+  } catch { /* storage 不可用时忽略 */ }
+})
+
 // 页面隐藏时立即落盘脏词库：App 级 onHide 在微信强杀时不保证执行，页面级兜底
 onHide(() => {
   wordsStore.flushDirtyBanks()
@@ -443,12 +466,19 @@ const goCreateWordBook = () => {
     uni.showToast({title: '当前筛选没有单词', icon: 'none'})
     return
   }
-  wordBookStore.setDraft(filteredWords.value.map(word => ({
-    sourceId: word.id,
-    text: word.word,
-    explains: word.meaning,
-    phonetic: word.phonetic,
-  })), wordBookDefaultName.value)
+  const key = resolveWordBookKey(filterState as any)
+  wordBookStore.setDraft(
+    filteredWords.value.map(word => ({
+      sourceId: word.id,
+      text: word.word,
+      explains: word.meaning,
+      phonetic: word.phonetic,
+      freq: word.freq,
+    })),
+    getDefaultPageName(key, 1, 1),
+    key,
+    buildWordBookSource(wordsStore.currentBankId, currentBankName.value, filterState as any),
+  )
   uni.navigateTo({url: '/subPackages/pages-memory/word-book/edit'})
 }
 
@@ -855,6 +885,17 @@ const formatDate = (timestamp: number): string => {
 
 .word-info {
   flex: 1;
+}
+
+.word-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+}
+
+.word-freq {
+  font-size: 22rpx;
+  color: var(--sr-text-3, #8a9a93);
 }
 
 .word-text {

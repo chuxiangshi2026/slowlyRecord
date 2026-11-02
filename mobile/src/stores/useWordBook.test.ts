@@ -1,55 +1,72 @@
-/**
- * @vitest-environment jsdom
- */
-import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
-import {createPinia, setActivePinia} from 'pinia'
-import {MiniProgramDbAdapter, resetDbAdapter, setDbAdapter} from '@/adapters/index'
-import {useWordBook} from './useWordBook'
-import type {WordBookWord} from '../types/word-book'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { createPinia, setActivePinia } from 'pinia'
 
-const mockStorage = new Map<string, any>()
-;(global as any).uni = {
-  setStorageSync: vi.fn((key: string, data: any) => { mockStorage.set(key, data) }),
-  getStorageSync: vi.fn((key: string) => mockStorage.get(key) ?? null),
-  removeStorageSync: vi.fn((key: string) => { mockStorage.delete(key) }),
-  getStorageInfoSync: vi.fn(() => ({keys: Array.from(mockStorage.keys()), currentSize: 0, limitSize: 10240})),
-}
+const docs = new Map<string, any>()
 
-function words(count: number): WordBookWord[] {
-  return Array.from({length: count}, (_, index) => ({sourceId: `w-${index}`, text: `word${index}`, explains: `释义${index}`}))
-}
+vi.mock('@/adapters/index', () => ({
+  getDbAdapter: () => ({
+    get: (id: string) => docs.get(id),
+    allDocs: (prefix?: string) => [...docs.values()].filter(doc => !prefix || String(doc._id).startsWith(prefix)),
+    put: (doc: any) => { docs.set(doc._id, { ...doc, _rev: 'r1' }); return { ok: true, rev: 'r1', id: doc._id } },
+    remove: (doc: any) => { docs.delete(typeof doc === 'string' ? doc : doc._id); return { ok: true } },
+  }),
+}))
 
-describe('useWordBook', () => {
+import { useWordBook } from './useWordBook'
+
+const words = [{ sourceId: 's1', text: 'fold', explains: '折叠' }]
+
+describe('移动端 wordBook store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    mockStorage.clear()
-    setDbAdapter(new MiniProgramDbAdapter())
+    docs.clear()
   })
 
-  afterEach(() => resetDbAdapter())
-
-  it('创建、逐页解锁、整章解锁和删除均可读回', () => {
+  it('书 → 章 → 页 的创建与读取', () => {
     const store = useWordBook()
-    const first = store.createChapter('第一章', '词根 spect', words(13))
-    const second = store.createChapter('第二章', '词根 port', words(1))
-    const firstId = first.chapter._id
-    const secondId = second.chapter._id
-    expect(store.chapterUnlocked(secondId)).toBe(false)
-    expect(store.completePage(firstId, first.chapter.pages[0].id, 1).ok).toBe(true)
-    expect(store.pageUnlocked(firstId, first.chapter.pages[1].id)).toBe(true)
-    expect(store.completePage(firstId, first.chapter.pages[1].id, 0).ok).toBe(true)
-    expect(store.chapterUnlocked(secondId)).toBe(true)
+    store.load(true)
+    const book = store.createBook('四级词根')
+    const chapter = store.createChapter(book._id, '词根 old')
+    const page = store.createPage({
+      bookId: book._id, chapterId: chapter._id, name: 'old 篇',
+      key: { type: 'root', value: 'old' }, words, source: {},
+    })
 
-    setActivePinia(createPinia())
-    const restored = useWordBook()
-    restored.load()
-    expect(restored.getChapter(firstId)?.pages.every(page => !!page.completedAt)).toBe(true)
-    expect(restored.getChapter(secondId)?.name).toBe('第二章')
-    expect(restored.deleteChapter(secondId).ok).toBe(true)
+    expect(store.sortedBooks.map(b => b.name)).toEqual(['四级词根'])
+    expect(store.chaptersOf(book._id).map(c => c.name)).toEqual(['词根 old'])
+    expect(store.pagesOf(chapter._id).map(p => p.name)).toEqual(['old 篇'])
+    expect(page.order).toBe(1)
+  })
 
-    setActivePinia(createPinia())
-    const afterDelete = useWordBook()
-    afterDelete.load()
-    expect(afterDelete.chapters.map(chapter => chapter._id)).toEqual([firstId])
+  it('完成页后写入页级调度与关卡达成', () => {
+    const store = useWordBook()
+    store.load(true)
+    const book = store.createBook('书')
+    const chapter = store.createChapter(book._id, '章')
+    store.setChapterLevelSize(chapter._id, 1)
+    const page = store.createPage({
+      bookId: book._id, chapterId: chapter._id, name: 'old 篇',
+      key: { type: 'root', value: 'old' }, words, source: {},
+    })
+
+    expect(store.completePage(page._id, 0).ok).toBe(true)
+    expect(store.getPage(page._id)!.level).toBe(1)
+    expect(store.getChapter(chapter._id)!.levels).toHaveLength(1)
+  })
+
+  it('删除书级联清掉章与页', () => {
+    const store = useWordBook()
+    store.load(true)
+    const book = store.createBook('书')
+    const chapter = store.createChapter(book._id, '章')
+    store.createPage({
+      bookId: book._id, chapterId: chapter._id, name: 'old 篇',
+      key: { type: 'root', value: 'old' }, words, source: {},
+    })
+
+    expect(store.deleteBook(book._id).ok).toBe(true)
+    expect(store.sortedBooks).toHaveLength(0)
+    expect(store.chapters).toHaveLength(0)
+    expect(store.pages).toHaveLength(0)
   })
 })
