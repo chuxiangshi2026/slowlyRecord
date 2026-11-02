@@ -11,6 +11,10 @@
  * - localStorage `sr_stats_exclude` = '1'：永久跳过上报（设置页「匿名使用统计」开关即写此键）
  * - uTools 开发环境（utools.isDev()）自动排除
  * - 非 uTools 的 localhost/127.0.0.1（vite dev）自动排除
+ *
+ * 另一个坑：uTools 插件页的 UA 含 "uTools"，umami 的爬虫过滤会把含 "tools" 的 UA 判成 bot——
+ * 事件整条丢弃，却仍回 200 且正文是 {"beep":"boop"}，客户端完全无感。浏览器 fetch 的
+ * User-Agent 是禁止头改不了，所以 uTools 下改走 preload 的 Node https（window.services.httpPostJson）。
  */
 import { UMAMI_STATS_CONFIG, APP_VERSION } from '@/config';
 
@@ -139,9 +143,27 @@ interface UmamiPayload {
   data?: Record<string, string | number>;
 }
 
+type PostResponse = { status: number; body: string };
+
+/**
+ * uTools 下经 preload 的 Node https 发送。
+ * 原因：uTools 插件页 UA 含 "uTools"，umami 的爬虫过滤会把它判成 bot——事件整条丢弃，
+ * 但响应仍是 200 且正文为 {"beep":"boop"}，客户端完全无感。浏览器 fetch 的 User-Agent
+ * 是禁止头，改不了，所以只能换 Node 通道显式带普通 Chrome UA。
+ */
+function postViaNode(url: string, headers: Record<string, string>, body: string): Promise<PostResponse> | null {
+  const post = (window as any).services?.httpPostJson;
+  return typeof post === 'function' ? post(url, headers, body) : null;
+}
+
+/** 是否真正入账：被判为 bot 的请求回 200 但正文是 {"beep":"boop"}，不会落库 */
+function isAccepted(status: number, body: string): boolean {
+  return status >= 200 && status < 300 && !body.includes('beep');
+}
+
 /**
  * 发送一条 umami 事件（pageview = 无 name 的事件）
- * 永不抛异常：失败只记日志，返回是否真正送达（2xx）。
+ * 永不抛异常：失败只记日志，返回是否真正入账（2xx 且未被爬虫过滤丢弃）。
  * 常规埋点忽略返回值（失败静默）；force=true 跳过启用判定，仅用于用户主动提交反馈这类显式动作
  */
 function send(payload: Omit<UmamiPayload, 'website' | 'hostname'>, force = false): Promise<boolean> {
@@ -150,26 +172,49 @@ function send(payload: Omit<UmamiPayload, 'website' | 'hostname'>, force = false
   if (!websiteId) return Promise.resolve(false);
 
   const platform = getPlatform();
+  const hostname = `slowlyrecord.${platform}`;
   const body: { type: string; payload: UmamiPayload } = {
     type: 'event',
     payload: {
       website: websiteId,
-      hostname: `slowlyrecord.${platform}`,
+      hostname,
       url: payload.url,
       ...(payload.name ? { name: payload.name } : {}),
       ...(payload.data ? { data: payload.data } : {}),
     },
   };
 
-  return fetch(`${UMAMI_STATS_CONFIG.host}/api/send`, {
+  const url = `${UMAMI_STATS_CONFIG.host}/api/send`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-umami-website-id': websiteId,
+    'x-umami-hostname': hostname,
+  };
+  const bodyText = JSON.stringify(body);
+
+  const viaNode = postViaNode(url, headers, bodyText);
+  if (viaNode) {
+    return viaNode.then(res => {
+      const ok = isAccepted(res.status, res.body);
+      if (!ok) console.warn('[统计] 上报未被收录:', res.status, res.body.slice(0, 120));
+      return ok;
+    }).catch(err => {
+      console.warn('[统计] 上报失败:', err);
+      return false;
+    });
+  }
+
+  return fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    headers,
+    body: bodyText,
     keepalive: true,
-  }).then(res => {
-    // umami 正常响应 200；4xx 多为 websiteId 错误，warn 级别可存活到生产便于排查
-    if (!res.ok) console.warn('[统计] 上报被拒绝:', res.status);
-    return res.ok;
+  }).then(async res => {
+    // 4xx 多为 websiteId 错误；200 + beep 是被爬虫过滤静默丢弃，两者都要能看见
+    const text = await res.text().catch(() => '');
+    const ok = isAccepted(res.status, text);
+    if (!ok) console.warn('[统计] 上报未被收录:', res.status, text.slice(0, 120));
+    return ok;
   }).catch(err => {
     console.warn('[统计] 上报失败:', err);
     return false;
@@ -178,6 +223,8 @@ function send(payload: Omit<UmamiPayload, 'website' | 'hostname'>, force = false
 
 /** 当前路由路径（hash 路由取 hash，否则取 pathname），供事件附带页面维度 */
 function currentUrl(): string {
+  // 非浏览器上下文（测试/后台任务）没有 window：直接退化，避免埋点把业务逻辑带崩
+  if (typeof window === 'undefined') return '/';
   return (window.location.hash || window.location.pathname || '/').replace(/^#/, '') || '/';
 }
 
@@ -364,7 +411,8 @@ export function trackRouterPageView(path: string): void {
   }, 100);
 }
 
-/** 初始化统计：启动事件 + 首页浏览。应用启动时调用一次 */
+/** 初始化统计：启动事件 + 首次来源。应用启动时调用一次
+ *  首页浏览不在这里发：router.afterEach 对首次导航同样触发，这里再发会重复记一条 */
 export async function initStats(): Promise<void> {
   // 归因先于启用判定落库：用户本次关闭统计、日后开启时，首次来源仍可回溯
   const attribution = initAttribution();
@@ -385,8 +433,6 @@ export async function initStats(): Promise<void> {
       data: { source: attribution.source, page: attribution.page },
     });
   }
-  // 首页浏览延迟发送，等路由就绪
-  setTimeout(() => trackPageView(), 1000);
 }
 
 // ===== 异常上报与手动反馈 =====

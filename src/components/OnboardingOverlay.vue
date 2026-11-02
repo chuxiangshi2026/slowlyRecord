@@ -80,7 +80,7 @@
           <div class="tips">
             <p>💡 提示：{{ usageTip }}</p>
             <p class="privacy-tip">
-              <a href="privacy.html" target="_blank" rel="noopener">查看隐私说明</a>
+              <a href="#" @click.prevent="privacyVisible = true">查看隐私说明</a>
             </p>
           </div>
 
@@ -102,6 +102,7 @@
       </div>
     </div>
   </transition>
+  <PrivacyDialog v-model="privacyVisible"/>
 </template>
 
 <script setup lang="ts">
@@ -111,6 +112,7 @@ import { importFromBuiltinWordBank } from '@/utils/wordbank-manager'
 import { useWordsStore } from '@/stores/words'
 import { isUtools, isWeb } from '@/adapters/platform'
 import { trackEvent, getAttribution } from '@/utils/stats'
+import PrivacyDialog from '@/components/PrivacyDialog.vue'
 
 const props = defineProps<{
   modelValue: boolean
@@ -124,6 +126,7 @@ const emit = defineEmits<{
 const wordsStore = useWordsStore()
 const currentScreen = ref(0)
 const importing = ref('')
+const privacyVisible = ref(false)
 
 const isWebEnv = isWeb()
 

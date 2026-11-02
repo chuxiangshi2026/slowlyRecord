@@ -43,7 +43,7 @@ describe('stats（umami）', () => {
       },
       utools: { isDev: () => false, getNativeId: () => 'native-device-id-for-test' },
     }
-    ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) })
+    ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: true, status: 200, text: () => Promise.resolve('{"cache":"ok"}'), json: () => Promise.resolve({}) })
   })
 
   afterEach(() => {
@@ -173,6 +173,11 @@ describe('stats（umami）', () => {
       expect(launch.payload.data.platform).toBe('utools')
       expect(launch.payload.data.appVersion).toBe('9.9.9') // file:// 下 fetch plugin.json 必败，回退编译期常量
       expect(launch.payload.data.installId).toBe('native-device-id-for-test')
+      const request = (globalThis.fetch as any).mock.calls.find((call: any[]) => call[1]?.body)[1]
+      expect(request.headers).toMatchObject({
+        'x-umami-website-id': 'test-website-id',
+        'x-umami-hostname': 'slowlyrecord.utools',
+      })
     })
 
     it('页面浏览：无 name 字段，url 为路由路径', () => {
@@ -196,11 +201,11 @@ describe('stats（umami）', () => {
     })
 
     it('上报被拒绝（4xx）只 warn 不抛异常', async () => {
-      ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: false, status: 401 })
+      ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: false, status: 401, text: () => Promise.resolve('') })
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
       trackPageView('/Word')
-      await Promise.resolve()
-      expect(warn).toHaveBeenCalledWith('[统计] 上报被拒绝:', 401)
+      await new Promise(r => setTimeout(r, 0))
+      expect(warn).toHaveBeenCalledWith('[统计] 上报未被收录:', 401, '')
       warn.mockRestore()
     })
   })
@@ -264,6 +269,33 @@ describe('stats（umami）', () => {
       await submitFeedback('y'.repeat(600))
       const p = sentPayloads().find(x => x.payload.name === 'feedback.submit')
       expect(p.payload.data.text.length).toBe(500)
+    })
+  })
+
+  describe('送达判定（umami 爬虫过滤）', () => {
+    /** fetch 里打到 umami 的调用（排除 getPluginVersion 读 plugin.json） */
+    const umamiCalls = () => (globalThis.fetch as any).mock.calls.filter((c: any[]) => String(c[0]).includes('/api/send'))
+
+    it('uTools 下优先走 preload 的 Node 通道（浏览器 fetch 改不了 UA）', async () => {
+      const post = vi.fn().mockResolvedValue({ status: 200, body: '{"cache":"ok"}' })
+      ;(globalThis as any).window.services = { httpPostJson: post }
+      expect(await submitFeedback('走 Node')).toBe(true)
+      expect(post).toHaveBeenCalled()
+      expect(umamiCalls()).toHaveLength(0)
+      delete (globalThis as any).window.services
+    })
+
+    it('200 但正文是 beep（UA 被判为 bot）视为未入账', async () => {
+      ;(globalThis as any).fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve('{"beep":"boop"}'),
+        json: () => Promise.resolve({}),
+      })
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      expect(await submitFeedback('被过滤')).toBe(false)
+      expect(warn).toHaveBeenCalled()
+      warn.mockRestore()
     })
   })
 })
