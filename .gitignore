@@ -40,3 +40,6 @@ _debug*.cjs
 # 截图调试脚本与 codebuddy 工具目录
 _shoot.cjs
 .codebuddy/
+
+# 词频脚本的语料缓存（脚本生成，不入库）
+scripts/data/freq/

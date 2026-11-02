@@ -11,7 +11,9 @@
     "build:app-android": "UNI_APP_CODE_SPLITTING=1 uni build -p app --minify",
     "build:app-ios": "UNI_APP_CODE_SPLITTING=1 uni build -p app --minify",
     "dev:h5": "uni -p h5",
-    "build:h5": "uni build -p h5 --minify"
+    "build:h5": "uni build -p h5 --minify",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json",
+    "type-check:test": "vue-tsc --noEmit -p tsconfig.test.json"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-5020620260914001",
