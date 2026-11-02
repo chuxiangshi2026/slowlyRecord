@@ -14,7 +14,7 @@
               <div class="g-desc">自动翻译并加入词库，可一次粘贴多个</div>
             </div>
           </div>
-          <div class="guide-card" @click="openImportFromWordBank">
+          <div class="guide-card" @click="openImportFromWordBank()">
             <span class="g-icon">📚</span>
             <div>
               <div class="g-title">导入内置词库</div>
@@ -37,7 +37,7 @@
               <div class="g-desc">截图后呼出 uTools「截图添加」，OCR 批量收入</div>
             </div>
           </div>
-          <div class="guide-card" @click="openImportFromWordBank">
+          <div class="guide-card" @click="openImportFromWordBank()">
             <span class="g-icon">📚</span>
             <div>
               <div class="g-title">导入内置词库</div>
@@ -81,7 +81,7 @@
         :total-count="wordsStore.count"
         @change="onFilterChange"
         @reset="onFilterReset"
-        @create-book="wordBookCreateVisible = true"
+        @create-book="openWordBookCreate"
     />
     <div class="words-cards-wrapper" ref="scrollContainer">
       <!--      虚拟滚动,只加载真实dom-->
@@ -135,8 +135,12 @@
   <WordBookCreateDialog
       v-model="wordBookCreateVisible"
       :words="showFilteredWords"
-      :default-name="wordBookDefaultName"
-      @created="goWordBook"
+      :filter="currentFilter"
+      :bank-id="wordsStore.currentWordBankId"
+      :bank-name="wordsStore.currentWordBank?.name"
+      :locked-book-id="wordBookTargetBookId"
+      :locked-chapter-id="wordBookTargetChapterId"
+      @created="onWordBookCreated"
   />
 
   <!-- 截图翻译结果预览对话框 -->
@@ -212,7 +216,7 @@
   <!-- 词库选择对话框 -->
   <el-dialog
       v-model="wordBankSelectVisible"
-      title="选择要导入的词库"
+      :title="`导入到「${importTargetBankName}」`"
       width="400px"
       :close-on-click-modal="false"
   >
@@ -268,6 +272,7 @@
             <el-tag v-if="bank.isDefault" size="small" type="success">默认</el-tag>
           </div>
           <div class="wordbank-actions">
+            <el-button type="primary" link size="small" @click.stop="openImportFromWordBank(bank.id)">导入</el-button>
             <el-button
                 v-if="!bank.isDefault"
                 type="danger"
@@ -290,7 +295,6 @@
           </el-icon>
           新建词库
         </el-button>
-        <el-button @click="openImportFromWordBank">导入词库</el-button>
       </div>
     </div>
   </el-dialog>
@@ -454,7 +458,6 @@ import {
 
 import {log} from "@/utils/logger.ts";
 import {analyzeWord} from "@/utils/word-analysis.ts";
-import {getWordBookDefaultName} from '@/utils/word-book';
 import {isPhrase, getWordCount} from "@/utils/text-utils";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
@@ -484,7 +487,6 @@ import {isUtools, isElectron, isWeb} from '@/adapters/platform';
 import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut} from '@/adapters/window';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount} from '@/utils/focus-lock';
 import {
-  fetchWordBank,
   WORDBANK_LIST,
   type WordBankType,
   isWordBankCached
@@ -542,7 +544,7 @@ const wordBankOptions = WORDBANK_LIST.map(wb => ({
   wordCount: wb.wordCount,
 }))
 
-// 导入词库对话框的语言筛选（默认跟随当前词库语言）
+// 导入词库对话框的语言筛选（默认跟随目标词库语言）
 const importLang = ref<LanguageCode>((wordsStore.currentWordBank?.language as LanguageCode) || 'en')
 // 导入对话框中按语言过滤后的词库选项
 const filteredImportBankOptions = computed(() =>
@@ -569,9 +571,9 @@ const applyBuiltinDeepLink = (): boolean => {
   if (!raw) return false
   const info = WORDBANK_LIST.find(wb => wb.id === raw)
   if (!info) return false
+  openImportFromWordBank()
   importLang.value = info.language
   selectedImportBank.value = info.id as WordBankType
-  wordBankSelectVisible.value = true
   const { builtin: _builtin, ...rest } = route.query
   void router.replace({ query: rest })
   return true
@@ -597,6 +599,14 @@ const currentId = ref<string | number | undefined>(undefined)
 const wordBankManagerVisible = ref(false)
 const createWordBankVisible = ref(false)
 const customWordBanks = ref<WordBank[]>([])
+const importTargetBankId = ref('')
+const importTargetBankName = computed(() => {
+  const target = customWordBanks.value.find(bank => bank.id === importTargetBankId.value)
+  if (target) return target.name
+  return importTargetBankId.value === wordsStore.currentWordBankId
+    ? wordsStore.currentWordBank?.name || '默认词库'
+    : '目标词库'
+})
 
 // 新建词库表单
 const newWordBankForm = ref({
@@ -2365,11 +2375,35 @@ const currentFilter = shallowRef<FilterState>({
 })
 
 const wordBookCreateVisible = ref(false)
-const wordBookDefaultName = computed(() => getWordBookDefaultName(currentFilter.value, wordsStore.currentWordBank?.name || '默认词库'))
+// 从「章」里的「＋ 添加页」跳过来时，书与章在生成弹窗里锁定
+const wordBookTargetBookId = ref('')
+const wordBookTargetChapterId = ref('')
 
-function goWordBook(chapterId: string) {
-  router.push(`/word-book/${chapterId}`)
+function onWordBookCreated(payload: { bookId: string; chapterId: string }) {
+  // 生成完清掉锁定上下文：下次从筛选面板直接生成时回到自由选择
+  wordBookTargetBookId.value = ''
+  wordBookTargetChapterId.value = ''
+  router.push(`/word-book/${payload.bookId}/${payload.chapterId}`)
 }
+
+/** 从筛选面板直接生成：不锁定书/章 */
+function openWordBookCreate() {
+  wordBookTargetBookId.value = ''
+  wordBookTargetChapterId.value = ''
+  wordBookCreateVisible.value = true
+}
+
+/** 词图页跳转过来：自动打开筛选面板，并把书/章上下文带进生成弹窗 */
+const openFilterFromQuery = () => {
+  if (route.query.filter !== '1') return
+  filterPanelVisible.value = true
+  wordBookTargetBookId.value = String(route.query.bookId || '')
+  wordBookTargetChapterId.value = String(route.query.chapterId || '')
+  const { filter: _filter, bookId: _bookId, chapterId: _chapterId, ...rest } = route.query
+  if (_filter || _bookId || _chapterId) void router.replace({ query: rest })
+}
+openFilterFromQuery()
+watch(() => route.query.filter, openFilterFromQuery)
 
 const toggleFilterPanel = () => {
   filterPanelVisible.value = !filterPanelVisible.value
@@ -2509,6 +2543,15 @@ const showFilteredWords = computed(() => {
           return dir * (new Date(a.ctime).getTime() - new Date(b.ctime).getTime())
         case 'level':
           return dir * (a.level - b.level)
+        case 'freq': {
+          // 内置词库预置的词频排名，越小越常见；没有数据的词无论升降序都排最后
+          const fa = typeof a.freq === 'number' ? a.freq : null
+          const fb = typeof b.freq === 'number' ? b.freq : null
+          if (fa === null && fb === null) return 0
+          if (fa === null) return 1
+          if (fb === null) return -1
+          return dir * (fa - fb)
+        }
         default:
           return 0
       }
@@ -2805,11 +2848,14 @@ const handleImportCommand = (command: string) => {
   }
 };
 
-// 打开内置词库导入选择对话框（空白态、词库管理与导入下拉共用）
-const openImportFromWordBank = () => {
+// 打开内置词库导入选择对话框；从列表进入时固定目标，不在选择期间切换当前词库
+const openImportFromWordBank = (bankId = wordsStore.currentWordBankId) => {
+  const target = customWordBanks.value.find(bank => bank.id === bankId)
+    || (bankId === wordsStore.currentWordBankId ? wordsStore.currentWordBank : null);
+  importTargetBankId.value = bankId;
+  importLang.value = (target?.language as LanguageCode) || 'en';
+  selectedImportBank.value = '';
   wordBankManagerVisible.value = false;
-  // 语言筛选跟随当前词库
-  importLang.value = (wordsStore.currentWordBank?.language as LanguageCode) || 'en';
   wordBankSelectVisible.value = true;
 };
 
@@ -2820,14 +2866,39 @@ const selectedImportBank = ref<WordBankType | ''>('');
 /**
  * 确认从选中词库导入
  */
-const confirmImportFromBank = () => {
-  if (!selectedImportBank.value) {
+const confirmImportFromBank = async () => {
+  const bankType = selectedImportBank.value;
+  if (!bankType) {
     ElMessage.warning('请选择一个词库');
     return;
   }
+  const targetBankId = importTargetBankId.value || wordsStore.currentWordBankId;
+  const bankName = WORDBANK_LIST.find(bank => bank.id === bankType)?.name || bankType;
   wordBankSelectVisible.value = false;
-  importFromWordBank(selectedImportBank.value);
   selectedImportBank.value = '';
+  const loading = ElLoading.service({
+    lock: true,
+    text: `正在加载${bankName}...`,
+    background: 'rgba(0, 0, 0, 0.7)',
+  });
+  try {
+    const result = await importFromBuiltinWordBank(targetBankId, bankType);
+    if (!result.success) {
+      ElMessage.error(result.error || '词库导入失败');
+      return;
+    }
+    if (result.count > 0) {
+      ElMessage.success(`成功从${bankName}导入${result.count}个单词到「${importTargetBankName.value}」`);
+    } else {
+      ElMessage.warning('没有新单词需要导入');
+    }
+    await switchToWordBank(targetBankId);
+  } catch (error) {
+    console.error('从词库导入失败:', error);
+    ElMessage.error('词库导入失败');
+  } finally {
+    loading.close();
+  }
 };
 
 /**
@@ -3058,75 +3129,6 @@ const importTextWords = () => {
   };
   fileInput.click(); // 触发文件选择
 }
-
-
-/**
- * 从内置词库导入单词
- * @param bankType 词库类型
- */
-const importFromWordBank = async (bankType: WordBankType) => {
-  const info = WORDBANK_LIST.find(wb => wb.id === bankType);
-  const bankName = info?.name || bankType;
-
-  const loading = ElLoading.service({
-    lock: true,
-    text: `正在加载${bankName}...`,
-    background: 'rgba(0, 0, 0, 0.7)',
-  });
-
-  try {
-    const words = await fetchWordBank(bankType, {priority: 'local', useCache: true});
-    loading.close();
-
-    if (words.length === 0) {
-      ElMessage.warning('词库加载失败，请检查词库文件是否存在');
-      return;
-    }
-
-    // 去重：基于word.text属性
-    const uniqueWords = words.filter((importedWord) => {
-      return !wordsStore.words.some((existingWord) => existingWord.text === importedWord.text);
-    });
-
-    if (uniqueWords.length === 0) {
-      ElMessage.warning('没有新单词需要导入');
-      return;
-    }
-
-    // 检查是否有需要翻译的单词（没有释义的）
-    const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains);
-    const wordsWithExplains = uniqueWords.filter(word => !!word.explains);
-
-    if (wordsNeedingTranslation.length > 0) {
-      ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
-
-      // 先添加已有释义的单词
-      if (wordsWithExplains.length > 0) {
-        wordsStore.addAndUpdateWords(wordsWithExplains).then(() => {
-          scrollToBottom();
-        });
-      }
-
-      // 使用公共的批量翻译和添加方法
-      const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
-      batchTranslateAndAddWords(wordsToTranslate, (processedCount, totalCount) => {
-        if (totalCount > 0) {
-          ElMessage.info(`正在翻译: ${processedCount}/${totalCount}`);
-        }
-      });
-    } else {
-      // 所有单词都有释义，直接导入
-      wordsStore.addAndUpdateWords(uniqueWords).then(() => {
-        scrollToBottom();
-        ElMessage.success(`成功从${bankName}导入${uniqueWords.length}个单词`);
-      });
-    }
-  } catch (error) {
-    loading.close();
-    console.error('从词库导入失败:', error);
-    ElMessage.error('词库导入失败');
-  }
-};
 
 
 /**
@@ -3688,10 +3690,16 @@ function onOnboardingFinish() {
   .wordbank-radio-group {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap; // el-radio-group 默认 wrap，限高后会把选项挤成多列
     gap: 12px;
     width: 100%;
+    // 内置词库多（英文 30+ 个）时列表会把「确认导入」顶出可视区，限高内滚动
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
 
     .wordbank-radio {
+      flex-shrink: 0; // 限高滚动后不被 flex 压扁
       margin: 0;
       padding: 12px 16px;
       border-radius: 8px;
@@ -3792,12 +3800,9 @@ function onOnboardingFinish() {
       }
 
       .wordbank-actions {
-        opacity: 0;
-        transition: opacity 0.2s;
-      }
-
-      &:hover .wordbank-actions {
-        opacity: 1;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
       }
     }
   }

@@ -1,473 +1,400 @@
 <template>
   <div class="word-book-page">
     <header class="page-header">
-      <el-button text @click="goChapter">← 返回章节</el-button>
       <div>
-        <h2>{{ page?.title || '学习页' }}</h2>
-        <p v-if="chapter && page">{{ chapter.name }} · {{ page.words.length }} 个单词</p>
+        <el-button text @click="goChapter">← 返回章节</el-button>
+        <h2>{{ page?.name || '记忆页' }}</h2>
+        <p v-if="page">
+          {{ page.words.length }} 个单词 · {{ keyLabel }}
+          <span v-if="page.lastReviewedAt"> · 上次 {{ page.lastScore }} 分</span>
+          <span v-if="!finished"> · {{ dueLabel(page.nextReviewAt) }}</span>
+        </p>
+      </div>
+      <div v-if="page && !finished" class="toolbar">
+        <el-checkbox v-model="hideMeaning" size="small">遮住释义</el-checkbox>
+        <el-checkbox v-model="shuffle" size="small" @change="rebuildOrder">打乱顺序</el-checkbox>
+        <span class="progress">已记住 <strong>{{ marked.size }}</strong> / {{ page.words.length }}</span>
+        <el-button size="small" @click="restart">重新开始</el-button>
       </div>
     </header>
 
     <div v-loading="store.loading" class="page-content">
-      <el-empty v-if="!store.loading && (!chapter || !page)" description="学习页不存在或已删除" />
-      <el-result v-else-if="chapter && page && !allowed" icon="warning" title="本页尚未解锁" sub-title="先完成前一页，再来挑战这里">
-        <template #extra><el-button @click="goChapter">返回章节</el-button></template>
+      <el-empty v-if="!store.loading && !page" description="学习页不存在或已删除"/>
+
+      <el-result v-else-if="page && finished" icon="success" :title="`本轮完成 · ${page.lastScore ?? 0} 分`"
+                 :sub-title="`${page.words.length} 个单词已全部标记 · 下次复习：${dueLabel(page.nextReviewAt)}`">
+        <template #extra>
+          <el-button type="primary" @click="restart">再记一遍</el-button>
+          <el-button @click="goChapter">返回章节</el-button>
+        </template>
       </el-result>
 
-      <template v-else-if="chapter && page">
-        <section v-if="mode === 'learn'" class="learn-view">
-          <div class="map-root">
-            <strong>{{ page.title }}</strong>
-            <span>点击单词卡查看释义与词根词缀</span>
-          </div>
-          <div class="map-trunk"></div>
-          <div class="word-map">
-            <button
-              v-for="(word, index) in page.words"
-              :key="`${word.sourceId}-${index}`"
-              type="button"
-              class="word-node"
-              :class="{revealed: revealed.has(index)}"
-              @click="toggleReveal(index)"
-            >
-              <span class="word-spelling">
-                <span v-for="(component, componentIndex) in components(word.text)" :key="componentIndex" :class="`affix-${component.type}`">{{ component.text }}</span>
-              </span>
-              <span v-if="word.phonetic" class="word-phonetic">{{ word.phonetic }}</span>
-              <span class="word-explains">{{ revealed.has(index) ? word.explains : '点击显示释义' }}</span>
-              <span v-if="revealed.has(index) && affixMeanings(word.text)" class="word-affixes">{{ affixMeanings(word.text) }}</span>
-            </button>
-          </div>
-          <div class="start-action">
-            <el-button type="primary" size="large" @click="startPractice">开始本页闯关</el-button>
-            <p>没记住的词会在本轮末尾重出，全部记住一次即过关。</p>
-          </div>
-        </section>
+      <div v-else-if="page" class="map-wrap">
+        <div class="word-map" :style="{ width: `${MAP_SIZE}px`, height: `${MAP_SIZE}px` }">
+          <svg class="map-lines" :viewBox="`0 0 ${MAP_SIZE} ${MAP_SIZE}`">
+            <line
+                v-for="(pos, i) in positions"
+                :key="`line-${i}`"
+                :x1="MAP_SIZE / 2"
+                :y1="MAP_SIZE / 2"
+                :x2="pos.x"
+                :y2="pos.y"
+            />
+          </svg>
 
-        <section v-else-if="mode === 'practice'" class="practice-view">
-          <div class="practice-progress">
-            <span>已记住 <strong>{{ masteredCount }}</strong> / {{ page.words.length }}</span>
-            <span>重出 {{ wrongAttempts }} 次</span>
+          <div class="map-center">
+            <strong>{{ page.key.value || '主题' }}</strong>
+            <span>{{ keyTypeLabel }}</span>
           </div>
-          <div v-if="currentWord" class="practice-card">
-            <div class="practice-label">看单词，回忆释义</div>
-            <div class="practice-word">{{ currentWord.text }}</div>
-            <div v-if="currentWord.phonetic" class="practice-phonetic">{{ currentWord.phonetic }}</div>
-            <div v-if="answerVisible" class="practice-answer">
-              <div class="practice-components">
-                <span v-for="(component, index) in components(currentWord.text)" :key="index" :class="`affix-${component.type}`">{{ component.text }}</span>
-              </div>
-              <strong>{{ currentWord.explains }}</strong>
-              <p v-if="affixMeanings(currentWord.text)">{{ affixMeanings(currentWord.text) }}</p>
-              <div class="practice-actions">
-                <el-button type="danger" plain @click="assess(false)">没记住，稍后再来</el-button>
-                <el-button type="primary" @click="assess(true)">记住了</el-button>
-              </div>
+
+          <div
+              v-for="(pos, i) in positions"
+              :key="`node-${i}`"
+              class="map-node"
+              :class="{ marked: marked.has(order[i]), wrong: wrongAttempts.has(order[i]) }"
+              :style="{ left: `${pos.x}px`, top: `${pos.y}px` }"
+              @click="reveal(order[i])"
+          >
+            <span class="node-word">
+              <span v-for="(comp, ci) in components(page.words[order[i]].text)" :key="ci"
+                    :class="`affix-${comp.type}`">{{ comp.text }}</span>
+            </span>
+            <span v-if="page.words[order[i]].phonetic" class="node-phonetic">{{ page.words[order[i]].phonetic }}</span>
+            <span class="node-explains">
+              {{ shouldHide(order[i]) ? '点击显示释义' : (page.words[order[i]].explains || '—') }}
+            </span>
+            <div class="node-actions" @click.stop>
+              <el-button size="small" type="success" plain circle :icon="Check"
+                         @click="markRemembered(order[i])"/>
+              <el-button size="small" type="danger" plain circle :icon="Close"
+                         @click="markForgot(order[i])"/>
             </div>
-            <el-button v-else type="primary" plain @click="answerVisible = true">显示释义</el-button>
           </div>
-          <el-result v-else icon="warning" title="成绩尚未保存" sub-title="网络或存储出现异常，请重试保存">
-            <template #extra><el-button type="primary" :loading="saving" @click="finishPractice">重试保存</el-button></template>
-          </el-result>
-          <el-button class="back-learn" text @click="mode = 'learn'">返回词图</el-button>
-        </section>
-
-        <section v-else class="finish-view">
-          <el-result icon="success" :title="`本页过关 · ${finishedScore} 分`" :sub-title="`${page.words.length} 个单词均已记住一次 · 重出 ${wrongAttempts} 次`">
-            <template #extra>
-              <el-button type="primary" @click="goNext">{{ nextActionText }}</el-button>
-              <el-button @click="startPractice">再练一遍</el-button>
-            </template>
-          </el-result>
-        </section>
-      </template>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from 'vue';
-import {useRoute, useRouter} from 'vue-router';
-import {ElMessage} from 'element-plus';
-import {useWordBookStore} from '@/stores/wordBook';
-import {advanceWordBookPractice} from '@/utils/word-book';
-import {analyzeWord, generateSimpleTooltip} from '@/utils/word-analysis';
-import type {WordBookWord} from '@/types/word-book';
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { Check, Close } from '@element-plus/icons-vue'
+import { useWordBookStore } from '@/stores/wordBook'
+import { analyzeWord } from '@/utils/word-analysis'
+import { formatDueLabel } from '@/utils/word-book'
 
-const route = useRoute();
-const router = useRouter();
-const store = useWordBookStore();
-const chapterId = computed(() => String(route.params.chapterId || ''));
-const pageId = computed(() => String(route.params.pageId || ''));
-const chapter = computed(() => store.getChapter(chapterId.value));
-const page = computed(() => chapter.value?.pages.find(item => item.id === pageId.value));
-const allowed = computed(() => store.pageUnlocked(chapterId.value, pageId.value));
+const route = useRoute()
+const router = useRouter()
+const store = useWordBookStore()
 
-const mode = ref<'learn' | 'practice' | 'finished'>('learn');
-const revealed = ref<Set<number>>(new Set());
-const remaining = ref<WordBookWord[]>([]);
-const masteredCount = ref(0);
-const wrongAttempts = ref(0);
-const answerVisible = ref(false);
-const saving = ref(false);
-const finishedScore = ref(0);
-const currentWord = computed(() => remaining.value[0]);
-const nextPage = computed(() => {
-  const index = chapter.value?.pages.findIndex(item => item.id === pageId.value) ?? -1;
-  return index >= 0 ? chapter.value?.pages[index + 1] : undefined;
-});
-const nextChapter = computed(() => {
-  const index = store.chapters.findIndex(item => item._id === chapterId.value);
-  return index >= 0 ? store.chapters[index + 1] : undefined;
-});
-const nextActionText = computed(() => nextPage.value ? '进入下一页' : nextChapter.value ? '进入下一章' : '返回章节列表');
+const MAP_SIZE = 600
 
-onMounted(() => {
-  void store.loadChapters().catch(() => ElMessage.error('学习页读取失败'));
-});
+const pageId = computed(() => String(route.params.pageId || ''))
+const page = computed(() => store.getPage(pageId.value))
+const keyTypeLabel = computed(() => {
+  const map: Record<string, string> = { root: '词根', prefix: '前缀', suffix: '后缀', phonetic: '音标', text: '主题' }
+  return map[page.value?.key.type || 'text'] || '主题'
+})
+const keyLabel = computed(() => (page.value?.key.value ? `${keyTypeLabel.value} ${page.value.key.value}` : keyTypeLabel.value))
 
-watch(() => route.fullPath, () => {
-  mode.value = 'learn';
-  revealed.value = new Set();
-  remaining.value = [];
-  answerVisible.value = false;
-});
+const order = ref<number[]>([])
+const hideMeaning = ref(false)
+const shuffle = ref(false)
+const revealed = ref<Set<number>>(new Set())
+const marked = ref<Set<number>>(new Set())
+const wrongAttempts = ref<Set<number>>(new Set())
+const finished = ref(false)
+const saving = ref(false)
+
+const positions = computed(() => {
+  const n = Math.max(1, order.value.length)
+  const center = MAP_SIZE / 2
+  const radius = n <= 8 ? 200 : n <= 14 ? 225 : 240
+  return order.value.map((_, i) => {
+    const angle = (Math.PI * 2 * i) / n - Math.PI / 2
+    return { x: center + Math.cos(angle) * radius, y: center + Math.sin(angle) * radius }
+  })
+})
+
+onMounted(async () => {
+  try {
+    await store.loadAll()
+    rebuildOrder()
+  } catch {
+    ElMessage.error('记忆页读取失败')
+  }
+})
+
+watch(pageId, () => {
+  rebuildOrder()
+})
+
+function rebuildOrder() {
+  const total = page.value?.words.length || 0
+  const list = Array.from({ length: total }, (_, i) => i)
+  if (shuffle.value) {
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[list[i], list[j]] = [list[j], list[i]]
+    }
+  }
+  order.value = list
+}
+
+function restart() {
+  revealed.value = new Set()
+  marked.value = new Set()
+  wrongAttempts.value = new Set()
+  finished.value = false
+  rebuildOrder()
+}
 
 function components(text: string) {
-  if (/\s/.test(text.trim())) return [{text, type: 'whole' as const}];
-  return analyzeWord(text);
+  if (/\s/.test(String(text || '').trim())) return [{ text, type: 'whole' as const }]
+  return analyzeWord(text)
 }
 
-function affixMeanings(text: string): string {
-  return generateSimpleTooltip(analyzeWord(text));
+function shouldHide(index: number): boolean {
+  return hideMeaning.value && !revealed.value.has(index)
 }
 
-function toggleReveal(index: number) {
-  const next = new Set(revealed.value);
-  if (next.has(index)) next.delete(index);
-  else next.add(index);
-  revealed.value = next;
+function reveal(index: number) {
+  if (!shouldHide(index)) return
+  const next = new Set(revealed.value)
+  next.add(index)
+  revealed.value = next
 }
 
-function startPractice() {
-  if (!page.value) return;
-  remaining.value = page.value.words.map(word => ({...word}));
-  masteredCount.value = 0;
-  wrongAttempts.value = 0;
-  answerVisible.value = false;
-  finishedScore.value = 0;
-  mode.value = 'practice';
+function markRemembered(index: number) {
+  if (marked.value.has(index)) return
+  const nextMarked = new Set(marked.value)
+  nextMarked.add(index)
+  marked.value = nextMarked
+  const nextWrong = new Set(wrongAttempts.value)
+  nextWrong.delete(index)
+  wrongAttempts.value = nextWrong
+  if (nextMarked.size === (page.value?.words.length || 0)) void finishRound()
 }
 
-async function assess(remembered: boolean) {
-  if (!answerVisible.value || !currentWord.value || !page.value) return;
-  remaining.value = advanceWordBookPractice(remaining.value, remembered);
-  if (remembered) masteredCount.value += 1;
-  else wrongAttempts.value += 1;
-  answerVisible.value = false;
-  if (masteredCount.value === page.value.words.length) await finishPractice();
+function markForgot(index: number) {
+  const nextMarked = new Set(marked.value)
+  nextMarked.delete(index)
+  marked.value = nextMarked
+  const nextWrong = new Set(wrongAttempts.value)
+  nextWrong.add(index)
+  wrongAttempts.value = nextWrong
+  const nextRevealed = new Set(revealed.value)
+  nextRevealed.add(index)
+  revealed.value = nextRevealed
 }
 
-async function finishPractice() {
-  if (!page.value || saving.value) return;
-  saving.value = true;
-  const total = page.value.words.length;
-  const score = Math.round(total / (total + wrongAttempts.value) * 100);
+async function finishRound() {
+  if (!page.value || saving.value) return
+  saving.value = true
+  const current = page.value
   try {
-    const result = await store.completePage(chapterId.value, pageId.value, wrongAttempts.value);
+    const result = await store.completePage(current._id, wrongAttempts.value.size)
     if (!result.ok) {
-      ElMessage.error(result.message || '成绩保存失败，请重试');
-      return;
+      ElMessage.error(result.message || '成绩保存失败')
+      return
     }
-    finishedScore.value = score;
-    mode.value = 'finished';
+    finished.value = true
   } catch {
-    ElMessage.error('成绩保存失败，请重试');
+    ElMessage.error('成绩保存失败，请重试')
   } finally {
-    saving.value = false;
+    saving.value = false
   }
 }
 
-function goChapter() {
-  router.push(`/word-book/${chapterId.value}`);
+function dueLabel(nextReviewAt: number): string {
+  return formatDueLabel(nextReviewAt)
 }
 
-function goNext() {
-  if (nextPage.value) router.push(`/word-book/${chapterId.value}/page/${nextPage.value.id}`);
-  else if (nextChapter.value) router.push(`/word-book/${nextChapter.value._id}`);
-  else router.push('/word-book');
+function goChapter() {
+  if (!page.value) {
+    router.push('/word-book')
+    return
+  }
+  router.push(`/word-book/${page.value.bookId}/${page.value.chapterId}`)
 }
 </script>
 
 <style scoped lang="scss">
 .word-book-page {
   min-height: 100vh;
-  padding: 18px 4% 32px;
+  padding: 20px 4%;
   box-sizing: border-box;
   background: var(--utools-bg-secondary);
 }
 
-.page-header,
-.page-content {
-  max-width: 1080px;
-  margin: 0 auto;
-}
-
 .page-header {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto 12px;
 
   h2 {
-    margin: 0;
+    margin: 6px 0 0;
     color: var(--utools-text-primary);
-    font-size: 19px;
-  }
-
-  p {
-    margin: 4px 0 0;
-    color: var(--utools-text-tertiary);
-    font-size: 12px;
-  }
-}
-
-.page-content {
-  min-height: 180px;
-}
-
-.map-root {
-  width: fit-content;
-  max-width: 90%;
-  margin: 0 auto;
-  padding: 12px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--utools-text-primary);
-  background: var(--utools-bg-card);
-  border: 2px solid var(--utools-primary);
-  border-radius: 12px;
-
-  strong {
-    font-size: 17px;
-  }
-
-  span {
-    margin-top: 4px;
-    color: var(--utools-text-tertiary);
-    font-size: 11px;
-  }
-}
-
-.map-trunk {
-  width: 2px;
-  height: 24px;
-  margin: 0 auto;
-  background: var(--utools-primary);
-}
-
-.word-map {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px 16px;
-  padding-top: 24px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 16.66%;
-    right: 16.66%;
-    height: 2px;
-    background: var(--utools-primary);
-  }
-}
-
-.word-node {
-  position: relative;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px 12px;
-  cursor: pointer;
-  color: var(--utools-text-primary);
-  background: var(--utools-bg-card);
-  border: 1px solid var(--utools-border-divider);
-  border-radius: 10px;
-  font: inherit;
-  text-align: center;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    width: 2px;
-    height: 24px;
-    background: var(--utools-primary);
-  }
-
-  &:hover,
-  &.revealed {
-    border-color: var(--utools-primary);
-  }
-
-  .word-spelling {
     font-size: 20px;
-    line-height: 1.4;
-    word-break: break-word;
   }
-
-  .word-phonetic {
-    margin-top: 4px;
-    color: var(--utools-text-tertiary);
-    font-size: 12px;
-  }
-
-  .word-explains {
-    margin-top: 10px;
-    color: var(--utools-text-secondary);
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .word-affixes {
-    margin-top: 8px;
-    color: var(--utools-primary);
-    font-size: 11px;
-    line-height: 1.5;
-  }
-}
-
-.affix-root {
-  color: var(--utools-primary);
-  font-weight: 700;
-  border-bottom: 2px solid var(--utools-primary);
-}
-
-.affix-prefix,
-.affix-suffix {
-  color: var(--utools-text-secondary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
-}
-
-.start-action {
-  margin-top: 26px;
-  text-align: center;
 
   p {
-    margin: 8px 0 0;
+    margin: 6px 0 0;
     color: var(--utools-text-tertiary);
     font-size: 12px;
   }
 }
 
-.practice-view {
-  max-width: 680px;
-  margin: 0 auto;
-  text-align: center;
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
-.practice-progress {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 16px;
+.progress {
   color: var(--utools-text-secondary);
   font-size: 13px;
 
   strong {
     color: var(--utools-primary);
-    font-size: 20px;
   }
 }
 
-.practice-card {
-  padding: 34px 24px;
-  background: var(--utools-bg-card);
-  border: 1px solid var(--utools-border-divider);
-  border-radius: 12px;
+.page-content {
+  display: flex;
+  justify-content: center;
+  max-width: 1000px;
+  min-height: 320px;
+  margin: 0 auto;
+}
 
-  .practice-label {
-    color: var(--utools-text-tertiary);
-    font-size: 12px;
+.map-wrap {
+  overflow: auto;
+  max-width: 100%;
+}
+
+.word-map {
+  position: relative;
+  margin: 0 auto;
+}
+
+.map-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  line {
+    stroke: var(--utools-border-divider);
+    stroke-width: 1.5;
+  }
+}
+
+.map-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: var(--utools-primary-light);
+  border: 2px solid var(--utools-primary);
+  color: var(--utools-primary);
+  text-align: center;
+
+  strong {
+    font-size: 20px;
+    line-height: 1.2;
+    word-break: break-word;
+    padding: 0 8px;
   }
 
-  .practice-word {
-    margin-top: 18px;
-    color: var(--utools-text-primary);
-    font-size: 34px;
+  span {
+    margin-top: 4px;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+}
+
+.map-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 132px;
+  padding: 10px 8px;
+  background: var(--utools-bg-card);
+  border: 1px solid var(--utools-border-divider);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: var(--utools-primary);
+  }
+
+  &.marked {
+    border-color: var(--utools-success);
+    background: var(--utools-success-light);
+  }
+
+  &.wrong {
+    border-color: var(--utools-warning);
+  }
+
+  .node-word {
+    font-size: 15px;
     font-weight: 600;
+    color: var(--utools-text-primary);
+    word-break: break-word;
+    text-align: center;
+  }
+
+  .node-phonetic {
+    color: var(--utools-text-tertiary);
+    font-size: 11px;
+  }
+
+  .node-explains {
+    color: var(--utools-text-secondary);
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: center;
+    max-height: 3.2em;
+    overflow: hidden;
     word-break: break-word;
   }
 
-  .practice-phonetic {
-    margin: 8px 0 22px;
-    color: var(--utools-text-tertiary);
-  }
-
-  .practice-answer {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--utools-border-divider);
-
-    strong {
-      display: block;
-      margin-top: 12px;
-      color: var(--utools-text-primary);
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    p {
-      color: var(--utools-primary);
-      font-size: 12px;
-    }
-  }
-
-  .practice-components {
-    font-size: 22px;
-  }
-
-  .practice-actions {
+  .node-actions {
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 24px;
+    gap: 6px;
+    margin-top: 4px;
   }
 }
 
-.back-learn {
-  margin-top: 12px;
+/* 词根词缀着色（与其他页面一致的低饱和配色） */
+.affix-root {
+  color: var(--utools-primary);
 }
 
-@media (max-width: 760px) {
-  .word-map {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    &::before {
-      left: 25%;
-      right: 25%;
-    }
-  }
+.affix-prefix {
+  color: var(--utools-warning);
 }
 
-@media (max-width: 480px) {
-  .word-map {
-    grid-template-columns: 1fr;
-
-    &::before {
-      display: none;
-    }
-  }
-
-  .practice-actions {
-    flex-direction: column;
-  }
+.affix-suffix {
+  color: var(--utools-success);
 }
 </style>

@@ -72,6 +72,7 @@ import {useSentencesStore} from '@/stores/sentences';
 import {useMemoryStore} from '@/stores/memory';
 import {useWordsStore} from '@/stores/words';
 import {getDbStorage} from '@/adapters/db';
+import {WORD_BOOK_ENABLED} from '@/constants';
 
 const props = defineProps<{
   modelValue: boolean;
@@ -206,7 +207,7 @@ const memoryItems = computed(() => sortByUsage([
   {key: 'memory-palace', label: '🏛️ 记忆宫殿', summary: '', path: '/memory-palace'},
   {key: 'word-book', label: '🗺️ 词图闯关', summary: '', path: '/word-book'},
   {key: 'knowledge-memory', label: '📚 知识库', summary: '', path: '/knowledge-memory'},
-]));
+]).filter(item => WORD_BOOK_ENABLED || item.key !== 'word-book'));
 
 const toolItems = computed(() => sortByUsage([
   {key: 'translate', label: '⚡ 快速翻译', summary: '', path: '/translate'},
