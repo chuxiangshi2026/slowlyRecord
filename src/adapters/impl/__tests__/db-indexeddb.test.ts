@@ -1,9 +1,12 @@
 /**
  * @vitest-environment jsdom
  */
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { DbAdapterIndexedDB } from '../db-indexeddb'
 import type { DbDoc } from '../../db'
+import { resetDbAdapter, setDbAdapter } from '../../db'
+import { updateSetDbWithRetry } from '../../../utils/user-set-db-util'
+import { persistChildDbPut } from '../../window'
 import 'fake-indexeddb/auto'
 
 describe('DbAdapterIndexedDB', () => {
@@ -14,8 +17,7 @@ describe('DbAdapterIndexedDB', () => {
   })
 
   afterEach(async () => {
-    // 清理：关闭数据库连接
-    // adapter 内部没有公开 close 方法，GC 会处理
+    resetDbAdapter()
   })
 
   describe('promises.put', () => {
@@ -156,6 +158,153 @@ describe('DbAdapterIndexedDB', () => {
       
       expect(newAdapter.get('all-1')).not.toBeNull()
       expect(newAdapter.get('all-2')).not.toBeNull()
+    })
+  })
+
+  describe('同步与异步写入顺序', () => {
+    it('异步 put 后的同步 remove 不会被旧事务复活', async () => {
+      await adapter.promises.put({ _id: 'mixed-put-remove', value: 'old' })
+      const pending = adapter.promises.put({ _id: 'mixed-put-remove', value: 'new' })
+      adapter.remove('mixed-put-remove')
+      await pending
+      await adapter.whenIdle()
+
+      expect(adapter.get('mixed-put-remove')).toBeNull()
+      const reloaded = new DbAdapterIndexedDB()
+      await reloaded.preloadToCache()
+      expect(reloaded.get('mixed-put-remove')).toBeNull()
+    })
+
+    it('异步 remove 后的同步 put 保留最终新值', async () => {
+      await adapter.promises.put({ _id: 'mixed-remove-put', value: 'old' })
+      const pending = adapter.promises.remove('mixed-remove-put')
+      adapter.put({ _id: 'mixed-remove-put', value: 'new' })
+      await pending
+      await adapter.whenIdle()
+
+      expect(adapter.get('mixed-remove-put')?.value).toBe('new')
+      expect((await adapter.promises.get('mixed-remove-put'))?.value).toBe('new')
+    })
+
+    it('异步批量写不会覆盖后续同步删除和更新', async () => {
+      await adapter.promises.put({ _id: 'mixed-bulk-remove', value: 'initial' })
+      await adapter.promises.put({ _id: 'mixed-bulk-put', value: 'initial' })
+      const pending = adapter.promises.bulkDocs([
+        { _id: 'mixed-bulk-remove', value: 'old' },
+        { _id: 'mixed-bulk-put', value: 'old' },
+      ])
+      adapter.remove('mixed-bulk-remove')
+      adapter.put({ _id: 'mixed-bulk-put', value: 'new' })
+      await pending
+      await adapter.whenIdle()
+
+      expect(adapter.get('mixed-bulk-remove')).toBeNull()
+      expect(adapter.get('mixed-bulk-put')?.value).toBe('new')
+    })
+
+    it('真实 IndexedDB 下并发设置修改不会互相覆盖', async () => {
+      setDbAdapter(adapter)
+      await adapter.promises.put({
+        _id: 'user-set',
+        focusMode: { opacity: 1, fontSize: 20 },
+      })
+
+      const results = await Promise.all([
+        updateSetDbWithRetry(doc => { doc.focusMode.opacity = 0.5 }),
+        updateSetDbWithRetry(doc => { doc.focusMode.fontSize = 30 }),
+      ])
+
+      expect(results).toEqual([true, true])
+      expect(adapter.get('user-set')?.focusMode).toMatchObject({ opacity: 0.5, fontSize: 30 })
+    })
+
+    it('子窗口 pendingAction 不覆盖父窗口并发设置', async () => {
+      setDbAdapter(adapter)
+      await adapter.promises.put({
+        _id: 'user-set',
+        focusMode: { opacity: 1, fontSize: 20 },
+      })
+      const parentUpdate = updateSetDbWithRetry(doc => { doc.focusMode.opacity = 0.5 })
+      await Promise.resolve()
+      const childUpdate = persistChildDbPut({
+        _id: 'user-set',
+        focusMode: {
+          opacity: 1,
+          fontSize: 20,
+          pendingAction: { type: 'setLocked', payload: { locked: true }, at: 123 },
+        },
+      }, 'test')
+      await Promise.all([parentUpdate, childUpdate])
+
+      expect(adapter.get('user-set')?.focusMode).toMatchObject({
+        opacity: 0.5,
+        fontSize: 20,
+        pendingAction: { type: 'setLocked', payload: { locked: true }, at: 123 },
+      })
+    })
+  })
+
+  describe('写入失败不产生假成功', () => {
+    it('promises.put 失败时保留旧缓存和磁盘值', async () => {
+      await adapter.promises.put({ _id: 'fail-put', value: 'old' })
+      const putSpy = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementationOnce(() => {
+        throw new DOMException('quota exceeded', 'QuotaExceededError')
+      })
+
+      await expect(adapter.promises.put({ _id: 'fail-put', value: 'new' })).rejects.toThrow('quota exceeded')
+      putSpy.mockRestore()
+
+      expect(adapter.get('fail-put')?.value).toBe('old')
+      expect((await adapter.promises.get('fail-put'))?.value).toBe('old')
+    })
+
+    it('promises.remove 失败时不提前删除缓存', async () => {
+      await adapter.promises.put({ _id: 'fail-remove', value: 'old' })
+      const deleteSpy = vi.spyOn(IDBObjectStore.prototype, 'delete').mockImplementationOnce(() => {
+        throw new DOMException('transaction failed', 'InvalidStateError')
+      })
+
+      await expect(adapter.promises.remove('fail-remove')).rejects.toThrow('transaction failed')
+      deleteSpy.mockRestore()
+
+      expect(adapter.get('fail-remove')?.value).toBe('old')
+      expect((await adapter.promises.get('fail-remove'))?.value).toBe('old')
+    })
+
+    it('同步 put 持久化失败后回滚乐观缓存', async () => {
+      await adapter.promises.put({ _id: 'sync-fail', value: 'old' })
+      const putSpy = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementationOnce(() => {
+        throw new DOMException('quota exceeded', 'QuotaExceededError')
+      })
+
+      adapter.put({ _id: 'sync-fail', value: 'new' })
+      expect(adapter.get('sync-fail')?.value).toBe('new')
+      await adapter.whenIdle()
+      putSpy.mockRestore()
+
+      expect(adapter.get('sync-fail')?.value).toBe('old')
+    })
+
+    it('promises.bulkDocs 任一项失败时不提交缓存', async () => {
+      const originalPut = IDBObjectStore.prototype.put
+      let calls = 0
+      const putSpy = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(function (
+        this: IDBObjectStore,
+        ...args: Parameters<typeof IDBObjectStore.prototype.put>
+      ) {
+        calls++
+        if (calls === 2) throw new DOMException('quota exceeded', 'QuotaExceededError')
+        return originalPut.apply(this, args)
+      })
+
+      await expect(adapter.promises.bulkDocs([
+        { _id: 'bulk-fail-1', value: 'a' },
+        { _id: 'bulk-fail-2', value: 'b' },
+      ])).rejects.toThrow('quota exceeded')
+      putSpy.mockRestore()
+
+      expect(adapter.get('bulk-fail-1')).toBeNull()
+      expect(adapter.get('bulk-fail-2')).toBeNull()
     })
   })
 })

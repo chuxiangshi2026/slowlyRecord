@@ -11,7 +11,8 @@ vi.mock('@shared/utils/logger', () => ({
 
 vi.mock('@shared/utils/wordbank-manager', () => ({
   getAllWordBanks: vi.fn(async () => []),
-  saveWordBank: vi.fn(async () => ({})),
+  saveWordBank: vi.fn(async () => true),
+  deleteWordBank: vi.fn(async () => true),
   getCurrentWordBankId: vi.fn(async () => 'default-bank'),
   setCurrentWordBankId: vi.fn(),
   createWordBank: vi.fn(),
@@ -30,20 +31,28 @@ async function loadModule() {
 const createMockDb = (): DbAdapter => {
   const storage = new Map<string, any>()
 
-  // put/bulkDocs 保留调用方显式传入的 _rev（未传时分配 '1-rev'），
-  // 便于断言「覆盖写时使用本地 _rev、剥离远端 _rev」
+  // 模拟 uTools 的 _rev 冲突：已有文档带旧 rev 写入时返回 conflict
+  let revSeq = 0
   const putImpl = (doc: any) => {
-    storage.set(doc._id, { ...doc, _rev: doc._rev || '1-rev' })
-    return { ok: true, id: doc._id, rev: doc._rev || '1-rev' }
+    const existing = storage.get(doc._id)
+    if (existing && doc._rev && doc._rev !== existing._rev) {
+      return { ok: false, error: true, name: 'conflict', message: 'Document update conflict', id: doc._id }
+    }
+    const rev = doc._rev || `${++revSeq}-rev`
+    storage.set(doc._id, { ...doc, _rev: rev })
+    return { ok: true, id: doc._id, rev }
+  }
+
+  const removeImpl = (doc: string | any) => {
+    const id = typeof doc === 'string' ? doc : doc._id
+    storage.delete(id)
+    return { ok: true, id }
   }
 
   return {
     get: vi.fn((id: string) => storage.get(id) || null),
     put: vi.fn(putImpl),
-    remove: vi.fn((id: string) => {
-      storage.delete(id)
-      return { ok: true, id }
-    }),
+    remove: vi.fn(removeImpl),
     allDocs: vi.fn((prefix?: string) => {
       const docs: any[] = []
       storage.forEach((doc, id) => {
@@ -59,10 +68,7 @@ const createMockDb = (): DbAdapter => {
     promises: {
       get: vi.fn(async (id: string) => storage.get(id) || null),
       put: vi.fn(async (doc: any) => putImpl(doc)),
-      remove: vi.fn(async (id: string) => {
-        storage.delete(id)
-        return { ok: true, id }
-      }),
+      remove: vi.fn(async (doc: string | any) => removeImpl(doc)),
       bulkDocs: vi.fn(async (docs: any[]) => {
         return docs.map(putImpl)
       }),
@@ -192,6 +198,51 @@ describe('sync-manager', () => {
       expect(result.wordBanksRestored).toBe(1)
     })
 
+    it('同稳定 ID 的词条修改文本后仍合并为一条', async () => {
+      const { restoreSyncData } = await loadModule()
+      const localWord = {
+        _id: 'stable-word', text: '修改前', explains: '旧', ctime: new Date(100),
+        learnDate: new Date(100), updatedAt: 100, level: 1, isReview: false, remember: false,
+      } as any
+      vi.mocked(getAllWordBanks).mockResolvedValue([{
+        id: 'stable-bank', name: 'Test', words: [localWord], createdAt: 1, updatedAt: 1,
+      }] as any)
+
+      const result = await restoreSyncData({
+        ...createMockSyncData(),
+        wordBanks: [{
+          id: 'stable-bank', name: 'Test', createdAt: 1, updatedAt: 200,
+          words: [{ ...localWord, text: '修改后', explains: '新', learnDate: new Date(200), updatedAt: 200, level: 2 }],
+        }],
+      })
+
+      expect(result.success).toBe(true)
+      const saved = vi.mocked(saveWordBank).mock.calls[0][0] as any
+      expect(saved.words).toHaveLength(1)
+      expect(saved.words[0]).toMatchObject({ _id: 'stable-word', text: '修改后', explains: '新', level: 2 })
+    })
+
+    it('不同 ID 的规范化同文本词条合并并保留别名', async () => {
+      const { restoreSyncData } = await loadModule()
+      const localWord = { _id: 'desktop-id', text: 'hello', explains: '旧', learnDate: new Date(100), updatedAt: 100 } as any
+      vi.mocked(getAllWordBanks).mockResolvedValue([{
+        id: 'stable-bank', name: 'Test', words: [localWord], createdAt: 1, updatedAt: 1,
+      }] as any)
+
+      await restoreSyncData({
+        ...createMockSyncData(),
+        wordBanks: [{
+          id: 'stable-bank', name: 'Test', createdAt: 1, updatedAt: 200,
+          words: [{ ...localWord, _id: 'mobile-id', text: '  Hello  ', explains: '新', updatedAt: 200 }],
+        }],
+      })
+
+      const saved = vi.mocked(saveWordBank).mock.calls[0][0] as any
+      expect(saved.words).toHaveLength(1)
+      expect(saved.words[0]._id).toBe('desktop-id')
+      expect(saved.words[0].aliases).toContain('mobile-id')
+    })
+
     it('词库级墓碑：本地已删除该词库（删除不早于远端更新）时跳过恢复，不让空壳复活', async () => {
       const { restoreSyncData, DEFAULT_RESTORE_OPTIONS } = await loadModule()
       vi.mocked(getAllWordBanks).mockResolvedValue([] as any)
@@ -213,7 +264,8 @@ describe('sync-manager', () => {
 
       const result = await restoreSyncData(data, DEFAULT_RESTORE_OPTIONS)
 
-      expect(result.wordBanksRestored).toBe(2)
+      // 只统计实际恢复的词库，不把墓碑跳过的输入计入
+      expect(result.wordBanksRestored).toBe(1)
       const savedIds = vi.mocked(saveWordBank).mock.calls.map(c => (c[0] as any).id)
       // 被删词库不复活，正常词库照常恢复
       expect(savedIds).not.toContain('bank-deleted')
@@ -309,8 +361,8 @@ describe('sync-manager', () => {
       expect(result.textMemoryRestored).toBe(true)
       const doc = mockDb.get!('slowlyrecord-textmemory-data') as any
       expect(doc.articles).toHaveLength(2)
-      // 同 _id 保留本地版本，不背远端覆盖
-      expect(doc.articles.find((a: any) => a._id === 'article-same').title).toBe('本地版本')
+      // 同 _id 按更新时间合并：本地旧条目没有时间戳，远端 updatedAt 较新则覆盖
+      expect(doc.articles.find((a: any) => a._id === 'article-same').title).toBe('远端版本')
       expect(doc.articles.find((a: any) => a._id === 'article-new').title).toBe('远端新增')
     })
 
@@ -639,6 +691,45 @@ describe('sync-manager 句子库（sentences scope）', () => {
     const { collectSyncData } = await loadModule()
     const result = await collectSyncData()
     expect(result.sentences).toBeNull()
+  })
+
+  it('collectSyncData 应收集词图书/章/页，空库为 null', async () => {
+    mockDb.put!({
+      _id: 'wb_book_1', type: 'wb_book', name: '四级词根', order: 0, ctime: 1, utime: 1,
+    })
+    mockDb.put!({
+      _id: 'wb_chapter_1', type: 'wb_chapter', bookId: 'wb_book_1', name: '词根 old', order: 0,
+      levelSize: 5, levels: [], ctime: 1, utime: 1,
+    })
+    mockDb.put!({
+      _id: 'wb_page_1', type: 'wb_page', bookId: 'wb_book_1', chapterId: 'wb_chapter_1', name: 'old 篇',
+      order: 1, key: { type: 'root', value: 'old' }, words: [], source: {}, level: 0,
+      nextReviewAt: 0, ctime: 1, utime: 1,
+    })
+
+    const { collectSyncData } = await loadModule()
+    const result = await collectSyncData()
+
+    expect(result.wordBook).not.toBeNull()
+    expect(result.wordBook!.books).toHaveLength(1)
+    expect(result.wordBook!.chapters).toHaveLength(1)
+    expect(result.wordBook!.pages).toHaveLength(1)
+  })
+
+  it('restoreSyncData 应把词图数据写回本地', async () => {
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      wordBook: {
+        books: [{ _id: 'wb_book_9', type: 'wb_book', name: '四级发音', order: 0, ctime: 1, utime: 1 }],
+        chapters: [{ _id: 'wb_chapter_9', type: 'wb_chapter', bookId: 'wb_book_9', name: '音标', order: 0, levelSize: 5, levels: [], ctime: 1, utime: 1 }],
+        pages: [{ _id: 'wb_page_9', type: 'wb_page', bookId: 'wb_book_9', chapterId: 'wb_chapter_9', name: 'əʊ 篇', order: 1, key: { type: 'phonetic', value: 'əʊ' }, words: [], source: {}, level: 0, nextReviewAt: 0, ctime: 1, utime: 1 }],
+      },
+    } as any)
+
+    expect(result.wordBookRestored).toBe(true)
+    expect(mockDb.get!('wb_book_9')).toBeTruthy()
+    expect(mockDb.get!('wb_page_9')).toBeTruthy()
   })
 
   it('restoreSyncData 应按 id 合并去重', async () => {
@@ -1083,5 +1174,204 @@ describe('sync-manager 数字记忆还原（numberMemory scope）', () => {
     expect(newPrompt.title).toBe('远端新增提示词')
     expect(newPrompt._rev).not.toBe('9-remote')
     expect(mockDb.get!(PREFIX + 'result_new')).toBeTruthy()
+  })
+
+  it('快捷键恢复覆盖已有文档时使用本地 _rev，不携带远端 _rev', async () => {
+    mockDb.put!({
+      _id: 'shortcut_memory_record_1',
+      type: 'shortcut_training_record',
+      value: 'local',
+      _rev: '3-local',
+    })
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      shortcutMemory: {
+        customCategories: [],
+        trainingRecords: [{
+          _id: 'shortcut_memory_record_1',
+          type: 'shortcut_training_record',
+          value: 'remote',
+          _rev: '9-remote',
+        }],
+        learningProgress: [],
+      },
+    })
+
+    expect(result.success).toBe(true)
+    expect(result.shortcutMemoryRestored).toBe(true)
+    const saved = mockDb.get!('shortcut_memory_record_1') as any
+    expect(saved.value).toBe('remote')
+    expect(saved._rev).toBe('3-local')
+  })
+
+  it('bulkDocs 返回逐项失败时恢复结果为失败，不静默报成功', async () => {
+    const { restoreSyncData } = await loadModule()
+    mockDb.promises.bulkDocs = vi.fn(async (docs: any[]) =>
+      docs.map(doc => ({ id: doc._id, ok: false, error: true, message: 'quota exceeded' }))
+    )
+
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      shortcutMemory: {
+        customCategories: [],
+        trainingRecords: [{ _id: 'shortcut_memory_record_fail', type: 'shortcut_training_record' }],
+        learningProgress: [],
+      },
+    })
+
+    expect(result.success).toBe(false)
+    expect(result.shortcutMemoryRestored).toBe(false)
+    expect(result.errors.join(' ')).toContain('shortcut_memory_record_fail')
+  })
+
+  it('一个模块写失败不影响后续模块，但总结果标记部分失败', async () => {
+    const { restoreSyncData } = await loadModule()
+    mockDb.promises.bulkDocs = vi.fn(async (docs: any[]) =>
+      docs.map(doc => ({ id: doc._id, ok: false, error: true, message: 'quota exceeded' }))
+    )
+
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      shortcutMemory: {
+        customCategories: [],
+        trainingRecords: [{ _id: 'shortcut_memory_record_fail', type: 'shortcut_training_record' }],
+        learningProgress: [],
+      },
+      sentences: {
+        sentences: [{
+          id: 'sentence_after_failure',
+          text: '仍然恢复',
+          lang: 'zh',
+          tags: [],
+          favorite: false,
+          createdAt: 1,
+        }],
+      },
+    })
+
+    expect(result.success).toBe(false)
+    expect(result.shortcutMemoryRestored).toBe(false)
+    expect(result.sentencesRestored).toBe(true)
+    expect(result.errors.join(' ')).toContain('快捷键记忆')
+  })
+
+  it('词库墓碑删除返回失败时不得继续报告成功', async () => {
+    const { restoreSyncData } = await loadModule()
+    const { deleteWordBank } = await import('@shared/utils/wordbank-manager')
+    vi.mocked(getAllWordBanks).mockResolvedValue([{
+      id: 'bank-delete-fail', name: '删除失败词库', words: [], createdAt: 1, updatedAt: 100,
+    }] as any)
+    vi.mocked(deleteWordBank).mockResolvedValue(false)
+
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      tombstones: { 'bank-delete-fail': 200 },
+    })
+
+    expect(result.success).toBe(false)
+    expect(result.errors.join(' ')).toContain('词库删除墓碑')
+  })
+
+  it.each([
+    ['textMemory', { articles: [], notes: [], prompts: [] }, 'textMemoryRestored'],
+    ['sentences', { sentences: [] }, 'sentencesRestored'],
+    ['numberMemory', { entries: [], notes: [], prompts: [], associations: [{ number: '1', imageUrl: 'tree' }], trainingResults: [] }, 'numberMemoryRestored'],
+    ['knowledgeMemory', { importedIds: ['pack-fail'], packs: { 'pack-fail': { item1: { itemId: 'item1', level: 1, learnDate: 1, correct: 1, wrong: 0 } } } }, 'knowledgeMemoryRestored'],
+    ['phoneticMemory', { phonemes: { e: { level: 1, learnDate: 1, correct: 1, wrong: 0 } }, pairs: {} }, 'phoneticMemoryRestored'],
+    ['memoryPalace', { palaces: [{ _id: 'palace-fail', name: '失败宫殿', loci: [], ctime: 1, utime: 1 }], pegs: {} }, 'memoryPalaceRestored'],
+  ])('%s 写入返回失败时不得标记恢复成功', async (field, payload, resultKey) => {
+    const { restoreSyncData } = await loadModule()
+    mockDb.promises.put = vi.fn(async (doc: any) => ({
+      id: doc._id, ok: false, error: true, message: 'quota exceeded',
+    }))
+
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      [field]: payload,
+    } as any)
+
+    expect(result.success).toBe(false)
+    expect((result as any)[resultKey]).toBe(false)
+    expect(result.errors.length).toBeGreaterThan(0)
+  })
+
+  it('兼容同步脱敏移除 API/OCR 密钥但保留非敏感设置', async () => {
+    const { stripSyncSecrets } = await loadModule()
+    const data = {
+      ...createMockSyncData(),
+      userSettings: {
+        pluginStatus: true,
+        shortcutEnabled: false,
+        translationPlatform: 'glm',
+        ocrPlatform: 'local',
+        memoryFirmness: '正常',
+        focusMode: { alwaysOnTop: true, opacity: 1, edgeStickEnabled: true },
+        keys: { glm: { appkey: 'secret-app', key: 'secret-key' } },
+        ocrKeys: { tencent: { appkey: 'ocr-app', key: 'ocr-key' } },
+      },
+    }
+
+    const stripped = stripSyncSecrets(data as any)
+
+    expect(stripped.userSettings?.translationPlatform).toBe('glm')
+    expect(stripped.userSettings?.keys).toEqual({})
+    expect(stripped.userSettings?.ocrKeys).toEqual({})
+    expect(data.userSettings.keys.glm.key).toBe('secret-key')
+  })
+
+  it('数字条目本地已有数据被墓碑删除，即使远端没有新条目', async () => {
+    mockDb.put!({
+      _id: 'number_memory_entry_dead',
+      type: 'number_memory_entry',
+      title: '待删除',
+      updatedAt: 100,
+      learnDate: 100,
+    })
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      tombstones: { number_memory_entry_dead: 200 },
+      numberMemory: {
+        entries: [],
+        notes: [],
+        prompts: [],
+        associations: [],
+        trainingResults: [],
+      },
+    })
+
+    expect(result.success).toBe(true)
+    expect(mockDb.get!('number_memory_entry_dead')).toBeNull()
+  })
+
+  it('快捷键进度本地较新时不被远端旧数据覆盖', async () => {
+    mockDb.put!({
+      _id: 'shortcut_memory_progress_1',
+      type: 'shortcut_learning_progress',
+      value: 'local-new',
+      updatedAt: 300,
+    })
+
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      shortcutMemory: {
+        customCategories: [],
+        trainingRecords: [],
+        learningProgress: [{
+          _id: 'shortcut_memory_progress_1',
+          type: 'shortcut_learning_progress',
+          value: 'remote-old',
+          updatedAt: 200,
+          _rev: '9-remote',
+        }],
+      },
+    })
+
+    expect(result.success).toBe(true)
+    expect((mockDb.get!('shortcut_memory_progress_1') as any).value).toBe('local-new')
   })
 })

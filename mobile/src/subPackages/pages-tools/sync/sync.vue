@@ -42,7 +42,7 @@
       <input class="popup-input" v-model="webdavUsername" placeholder="账号（坚果云注册邮箱）" />
       <input class="popup-input" v-model="webdavPassword" password placeholder="应用密码（不是登录密码）" />
       <view class="webdav-guide">
-        获取应用密码：电脑登录坚果云官网 → 右上角头像 → 账户信息 → 安全选项 → 第三方应用管理 → 添加应用密码，生成后复制到上方。免费版每月 1GB 上传流量，同步包仅几十 KB，完全够用。数据加密后存到你自己的网盘，可长期保留。
+        获取应用密码：电脑登录坚果云官网 → 右上角头像 → 账户信息 → 安全选项 → 第三方应用管理 → 添加应用密码，生成后复制到上方。免费版每月 1GB 上传流量，同步包仅几十 KB，完全够用。数据经 XOR 兼容编码后存到你自己的网盘，默认不上传 API/OCR 密钥，可长期保留。
       </view>
       <view class="btn-row">
         <button class="btn-confirm" @click="handleWebdavPush">备份到云盘</button>
@@ -129,6 +129,10 @@ const buildPushPayload = async (): Promise<PushPayload> => {
     id: bank.id,
     name: bank.name,
     words: wordsStore.allWords.filter(w => w.bankId === bank.id || (!w.bankId && bank.id === 'default')),
+    createdAt: bank.createdAt,
+    updatedAt: bank.updatedAt,
+    isDefault: bank.isDefault,
+    language: bank.language || 'en',
   })).filter(b => b.words.length > 0)
   // 收集文本/数字记忆（懒加载确保数据已读取）
   textMemoryStore.load()
@@ -201,11 +205,11 @@ const handlePull = async () => {
     const result = await pullFromServer(inputSyncCode.value.trim())
     if (result.success) {
       uni.showLoading({ title: '导入中...' })
-      const summary = await applyPullResult(result)
+      const applied = await applyPullResult(result)
       uni.hideLoading()
       uni.showModal({
-        title: '拉取成功',
-        content: summary,
+        title: applied.success ? '拉取成功' : '部分恢复失败',
+        content: applied.summary,
         showCancel: false,
       })
       showPullInput.value = false
@@ -230,11 +234,11 @@ const scanAndPull = () => {
           const result = await pullFromServer(res.result)
           if (result.success) {
             uni.showLoading({ title: '导入中...' })
-            const summary = await applyPullResult(result)
+            const applied = await applyPullResult(result)
             uni.hideLoading()
             uni.showModal({
-              title: '拉取成功',
-              content: summary,
+              title: applied.success ? '拉取成功' : '部分恢复失败',
+              content: applied.summary,
               showCancel: false,
             })
           } else {
@@ -323,7 +327,7 @@ const handleWebdavPush = async () => {
       }
       uni.showModal({
         title: '备份成功',
-        content: `文件已加密存放于：\n${(usedDir || webdavUrl.value).replace(/\/+$/, '')}/slowlyRecord-sync.enc${usedDir ? '\n（已自动改用可写目录并记入地址栏）' : ''}`,
+        content: `文件已存放于：\n${(usedDir || webdavUrl.value).replace(/\/+$/, '')}/slowlyRecord-sync.enc${usedDir ? '\n（已自动改用可写目录并记入地址栏）' : ''}`,
         showCancel: false,
       })
     } else {
@@ -347,9 +351,13 @@ const handleWebdavPull = async () => {
     const result = await pullFromWebDav(getWebDavConfig())
     if (result.success) {
       uni.showLoading({ title: '导入中...' })
-      const summary = await applyPullResult(result)
+      const applied = await applyPullResult(result)
       uni.hideLoading()
-      uni.showModal({ title: '恢复成功', content: summary, showCancel: false })
+      uni.showModal({
+        title: applied.success ? '恢复成功' : '部分恢复失败',
+        content: applied.summary,
+        showCancel: false,
+      })
     } else {
       uni.hideLoading()
       // 失败信息可能较长，用弹窗完整展示（toast 会截断）
@@ -361,23 +369,50 @@ const handleWebdavPull = async () => {
   }
 }
 
-/** 把 pullFromServer 结果分别写入各 store，返回中文摘要 */
-async function applyPullResult(result: any): Promise<string> {
+/** 把 pullFromServer 结果分别写入各 store，返回摘要和真实入库结果 */
+async function applyPullResult(result: any): Promise<{ success: boolean; summary: string }> {
   const parts: string[] = []
-  if (Array.isArray(result.banks) && result.banks.length > 0) {
-    const total = await importBanks(result.banks)
-    parts.push(`${total} 个单词`)
+  const failedModules: string[] = []
+  const tombstones = result.tombstones || {}
+
+  // 墓碑必须独立于 banks 应用：删除全部词库时远端包可能就是 banks=[]
+  let deleted = { words: 0, banks: 0 }
+  try {
+    await wordsStore.loadWords()
+    await wordsStore.ensureAllBanksLoaded()
+    deleted = await wordsStore.applySyncTombstones(tombstones)
+  } catch (e) {
+    console.error('[sync] 应用词库墓碑失败:', e)
+    failedModules.push('词库删除')
   }
+
+  if (Array.isArray(result.banks) && result.banks.length > 0) {
+    const stats = await importBanks(result.banks)
+    if (stats.added > 0) parts.push(`新增 ${stats.added} 个单词`)
+    if (stats.updated > 0) parts.push(`更新 ${stats.updated} 个单词`)
+    if (stats.failedBanks > 0) {
+      failedModules.push(`${stats.failedBanks} 个词库写入`)
+      parts.push(`${stats.failedBanks} 个词库写入失败`)
+    }
+  }
+  if (deleted.words > 0) parts.push(`删除 ${deleted.words} 个单词`)
+  if (deleted.banks > 0) parts.push(`删除 ${deleted.banks} 个词库`)
+
   if (result.textMemory) {
     textMemoryStore.load()
-    const r = textMemoryStore.restore(result.textMemory, 'merge')
-    if (r.added > 0) parts.push(`${r.added} 篇文章`)
+    const r = textMemoryStore.restore(result.textMemory, 'merge', tombstones)
+    if ((r.addedArticles ?? 0) > 0) parts.push(`${r.addedArticles} 篇文章`)
+    if ((r.updatedArticles ?? 0) > 0) parts.push(`更新 ${r.updatedArticles} 篇文章`)
+    if ((r.addedNotes ?? 0) > 0) parts.push(`${r.addedNotes} 条笔记`)
+    if ((r.addedPrompts ?? 0) > 0) parts.push(`${r.addedPrompts} 条提示词`)
   }
   if (result.numberMemory) {
     numberMemoryStore.load()
-    const r = numberMemoryStore.restore(result.numberMemory, 'merge')
+    const r = numberMemoryStore.restore(result.numberMemory, 'merge', tombstones)
     if (r.addedAssoc > 0) parts.push(`${r.addedAssoc} 个数字桩`)
     if (r.addedEntry > 0) parts.push(`${r.addedEntry} 个数字条目`)
+    if (r.deletedAssoc > 0) parts.push(`删除 ${r.deletedAssoc} 个数字桩`)
+    if (r.deletedEntry > 0) parts.push(`删除 ${r.deletedEntry} 个数字条目`)
   }
   if (result.knowledgeMemory) {
     const packCount = restoreKnowledgeSyncData(result.knowledgeMemory)
@@ -397,19 +432,26 @@ async function applyPullResult(result: any): Promise<string> {
     if (palaceCount > 0) parts.push(`${palaceCount} 座记忆宫殿`)
   }
   if (result.sentences) {
-    const added = sentencesStore.restore(result.sentences)
+    const added = sentencesStore.restore(result.sentences, tombstones)
     if (added > 0) parts.push(`${added} 条句子`)
   }
-  return parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
+
+  const summary = parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'
+  return {
+    success: failedModules.length === 0,
+    summary: failedModules.length > 0
+      ? `${summary}\n失败模块：${failedModules.join('、')}`
+      : summary,
+  }
 }
 
-// 按词库分组导入
+// 按词库分组导入；墓碑已在 applyPullResult 中统一应用
 async function importBanks(banks: any[]) {
-  // 先确保本地词库已加载，importWords 以完整本地数据为基准合并，避免丢本地独有单词；
-  // 词库懒加载后需补读其余词库，合并基准才是全量数据
   await wordsStore.loadWords()
   await wordsStore.ensureAllBanksLoaded()
-  const allImportedWords: any[] = []
+  let added = 0
+  let updated = 0
+  let failedBanks = 0
   let doneBanks = 0
   const totalBanks = banks.length
 
@@ -418,27 +460,41 @@ async function importBanks(banks: any[]) {
     const pct = Math.round(doneBanks / totalBanks * 100)
     uni.showLoading({ title: `导入 ${pct}%` })
 
-    let targetBank = wordsStore.bankList.find(b => b.name === bankName)
+    const language = bank.language || 'en'
+    const sameIdBank = wordsStore.bankList.find(b => b.id === bank.id)
+    let targetBank = sameIdBank && (!sameIdBank.language || sameIdBank.language === language)
+      ? sameIdBank
+      : wordsStore.bankList.find(b => b.name === bankName && (b.language || 'en') === language)
     if (!targetBank) {
-      targetBank = wordsStore.createBank(bankName)
+      targetBank = wordsStore.createBank(bankName, {
+        id: bank.id,
+        createdAt: bank.createdAt,
+        updatedAt: bank.updatedAt,
+        isDefault: bank.isDefault,
+        language,
+      })
+    } else if (!targetBank.language) {
+      wordsStore.setBankLanguage(targetBank.id, language)
     }
     const wordsArr = Array.isArray(bank.words) ? bank.words : []
     if (wordsArr.length > 0) {
       try {
-        // importWords 返回 { imported, skippedCount, invalidCount, success }，取其中的数组
-        const { imported, success } = await wordsStore.importWords(wordsArr, targetBank.id)
-        if (success) {
-          for (const w of imported) allImportedWords.push(w)
+        const result = await wordsStore.importWords(wordsArr, targetBank.id, { mergeExisting: true })
+        if (result.success) {
+          added += result.imported.length
+          updated += result.updated
+        } else {
+          failedBanks++
         }
       } catch (e) {
+        failedBanks++
         console.error(`导入词库 ${bankName} 失败:`, e)
       }
     }
     doneBanks++
   }
 
-  // importWords 内部已把导入结果合并进内存，无需再 appendWordsToMemory
-  return allImportedWords.length
+  return { added, updated, failedBanks }
 }
 
 // 服务器设置

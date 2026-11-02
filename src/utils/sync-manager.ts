@@ -6,7 +6,7 @@
  */
 import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, SyncMemoryPalace, SyncSentences, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
-import { getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
+import { deleteWordBank, getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
 import type { MemoryFirmnessType } from '@/types/words'
 import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from '@/types/number-memory'
@@ -20,10 +20,26 @@ import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_L
 import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDoc, saveProgressDoc as saveKnowledgeProgressDoc } from '@/utils/knowledge-memory-db'
 import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
 import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
+import { getAllBooks, getAllChapters, getAllPages, saveBook, saveChapter, savePage } from '@/utils/word-book-db'
+import type { SyncWordBook } from '@/types/sync'
 import { collectMemoryPalaceSync, restoreMemoryPalaceSync } from '@/utils/memory-palace-db'
 import { SENTENCES_DOC_ID } from '@/utils/sentence-db'
 import { filterByTombstones, getTombstones, mergeTombstones, pruneTombstones, TOMBSTONE_MAX_AGE_MS } from '@/utils/sync-tombstone'
 import { log } from '@/utils/logger'
+import { normalizeItemText } from '@/utils/text-utils'
+
+/** 兼容通道（XOR/WebDAV）上传前脱敏：不同步 API/OCR 密钥，保留其他设置 */
+export function stripSyncSecrets(data: SyncData): SyncData {
+  if (!data.userSettings) return data
+  return {
+    ...data,
+    userSettings: {
+      ...data.userSettings,
+      keys: {},
+      ocrKeys: {},
+    },
+  }
+}
 
 // ==================== 数据收集 ====================
 
@@ -107,6 +123,9 @@ export async function collectSyncData(): Promise<SyncData> {
   // 12. 句子库
   const sentences = collectSentences()
 
+  // 13. 词图闯关（书 / 章 / 页）
+  const wordBook = await collectWordBook()
+
   return {
     version: SYNC_VERSION,
     exportedAt: Date.now(),
@@ -123,9 +142,42 @@ export async function collectSyncData(): Promise<SyncData> {
     signin,
     memoryPalace,
     sentences,
+    wordBook,
     // 墓碑表：随包传输，restore 端合并后用于过滤「删除复活」的条目
     tombstones: getTombstones(),
   }
+}
+
+/** 词图闯关收集：三张表分别读，全空返回 null */
+async function collectWordBook(): Promise<SyncWordBook | null> {
+  try {
+    const [books, chapters, pages] = await Promise.all([getAllBooks(), getAllChapters(), getAllPages()])
+    if (!books.length && !chapters.length && !pages.length) return null
+    return { books, chapters, pages }
+  } catch (e) {
+    log.e('[同步] 收集词图数据失败', e)
+    return null
+  }
+}
+
+/** 词图闯关还原：按 _id 合并，utime 较新的覆盖本地 */
+async function restoreWordBookSync(data: SyncWordBook) {
+  const [localBooks, localChapters, localPages] = await Promise.all([getAllBooks(), getAllChapters(), getAllPages()])
+  const mergeInto = async <T extends { _id: string; utime?: number }>(
+    local: T[],
+    remote: T[],
+    save: (doc: T) => Promise<unknown>,
+  ) => {
+    const map = new Map(local.map(doc => [doc._id, doc]))
+    for (const doc of remote || []) {
+      if (!doc?._id) continue
+      const current = map.get(doc._id)
+      if (!current || (doc.utime || 0) > (current.utime || 0)) await save({ ...doc })
+    }
+  }
+  await mergeInto(localBooks, data.books || [], saveBook)
+  await mergeInto(localChapters, data.chapters || [], saveChapter)
+  await mergeInto(localPages, data.pages || [], savePage)
 }
 
 /** 句子库收集（单文档同步读，空库返回 null） */
@@ -322,6 +374,8 @@ export interface RestoreOptions {
   restoreMemoryPalace: boolean
   /** 是否还原句子库 */
   restoreSentences: boolean
+  /** 是否还原词图闯关 */
+  restoreWordBook?: boolean
 }
 
 export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
@@ -337,6 +391,7 @@ export const DEFAULT_RESTORE_OPTIONS: RestoreOptions = {
   restoreSignin: true,
   restoreMemoryPalace: true,
   restoreSentences: true,
+  restoreWordBook: true,
 }
 
 export interface RestoreResult {
@@ -352,6 +407,7 @@ export interface RestoreResult {
   signinRestored: boolean
   memoryPalaceRestored: boolean
   sentencesRestored: boolean
+  wordBookRestored?: boolean
   errors: string[]
 }
 
@@ -372,6 +428,7 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
     signinRestored: false,
     memoryPalaceRestored: false,
     sentencesRestored: false,
+    wordBookRestored: false,
     errors: [],
   }
 
@@ -385,75 +442,102 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
   // 墓碑：读取本地墓碑并合并 payload 携带的远端墓碑（取较大 deletedAt，合并后清理过期项）
   const tombstones = await mergeTombstones(data.tombstones)
 
-  try {
-    // 1. 还原词库
-    if (options.restoreWordBanks && data.wordBanks?.length) {
-      await restoreWordBanks(data.wordBanks, data.currentWordBankId, options.conflictStrategy, tombstones)
-      result.wordBanksRestored = data.wordBanks.length
+  const runStep = async (label: string, step: () => Promise<void>, markSuccess: () => void) => {
+    try {
+      await step()
+      markSuccess()
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e)
+      result.errors.push(`${label}: ${message}`)
+      result.success = false
     }
+  }
 
-    // 2. 还原用户设置
-    if (options.restoreUserSettings && data.userSettings) {
-      await restoreUserSettings(data.userSettings)
+  // 各模块独立恢复：一个模块失败不阻断其他模块，但总结果必须为失败
+  if (options.restoreWordBanks && data.tombstones && Object.keys(data.tombstones).length > 0) {
+    await runStep(
+      '词库删除墓碑',
+      () => applyWordTombstonesToLocal(tombstones),
+      () => {},
+    )
+  }
+
+  if (options.restoreWordBanks && data.wordBanks?.length) {
+    await runStep(
+      '词库',
+      () => restoreWordBanks(data.wordBanks, data.currentWordBankId, options.conflictStrategy, tombstones, result),
+      () => {},
+    )
+  }
+
+  if (options.restoreUserSettings && data.userSettings) {
+    await runStep('用户设置', () => restoreUserSettings(data.userSettings!), () => {
       result.userSettingsRestored = true
-    }
+    })
+  }
 
-    // 3. 还原文本记忆
-    if (options.restoreTextMemory && data.textMemory) {
-      await restoreTextMemory(data.textMemory, tombstones)
+  if (options.restoreTextMemory && data.textMemory) {
+    await runStep('文本记忆', () => restoreTextMemory(data.textMemory!, tombstones), () => {
       result.textMemoryRestored = true
-    }
+    })
+  }
 
-    // 4. 还原数字记忆
-    if (options.restoreNumberMemory && data.numberMemory) {
-      await restoreNumberMemoryData(data.numberMemory, tombstones, data.exportedAt)
-      result.numberMemoryRestored = true
-    }
+  if (options.restoreNumberMemory && data.numberMemory) {
+    await runStep(
+      '数字记忆',
+      () => restoreNumberMemoryData(data.numberMemory!, tombstones, data.exportedAt),
+      () => { result.numberMemoryRestored = true },
+    )
+  }
 
-    // 5. 还原快捷键记忆
-    if (options.restoreShortcutMemory && data.shortcutMemory) {
-      await restoreShortcutMemoryData(data.shortcutMemory)
+  if (options.restoreShortcutMemory && data.shortcutMemory) {
+    await runStep('快捷键记忆', () => restoreShortcutMemoryData(data.shortcutMemory!, tombstones), () => {
       result.shortcutMemoryRestored = true
-    }
+    })
+  }
 
-    // 6. 还原字母映射
-    if (options.restoreLetterMemory && data.letterMemory) {
-      await restoreLetterMemoryData(data.letterMemory)
+  if (options.restoreLetterMemory && data.letterMemory) {
+    await runStep('字母映射', () => restoreLetterMemoryData(data.letterMemory!, tombstones), () => {
       result.letterMemoryRestored = true
-    }
+    })
+  }
 
-    // 7. 还原知识库（导入清单 + 每包进度；按字段存在性判断，向后兼容旧数据）
-    if (options.restoreKnowledgeMemory && data.knowledgeMemory) {
-      await restoreKnowledgeMemoryData(data.knowledgeMemory)
+  if (options.restoreKnowledgeMemory && data.knowledgeMemory) {
+    await runStep('知识库', () => restoreKnowledgeMemoryData(data.knowledgeMemory!), () => {
       result.knowledgeMemoryRestored = true
-    }
+    })
+  }
 
-    // 8. 还原音标学习进度
-    if (options.restorePhoneticMemory && data.phoneticMemory) {
-      await restorePhoneticMemoryData(data.phoneticMemory)
+  if (options.restorePhoneticMemory && data.phoneticMemory) {
+    await runStep('音标进度', () => restorePhoneticMemoryData(data.phoneticMemory!), () => {
       result.phoneticMemoryRestored = true
-    }
+    })
+  }
 
-    // 9. 还原每日打卡记录（按日期并集合并，无冲突）
-    if (options.restoreSignin && data.signin) {
-      restoreSigninSync(data.signin)
+  if (options.restoreSignin && data.signin) {
+    await runStep('打卡记录', async () => { restoreSigninSync(data.signin!) }, () => {
       result.signinRestored = true
-    }
+    })
+  }
 
-    // 10. 还原记忆宫殿（宫殿按 utime 合并、桩挂载按 learnDate 合并；宫殿级墓碑剔除已删宫殿）
-    if (options.restoreMemoryPalace && data.memoryPalace) {
-      await restoreMemoryPalaceSync(data.memoryPalace, tombstones)
+  if (options.restoreMemoryPalace && data.memoryPalace) {
+    await runStep('记忆宫殿', async () => {
+      await restoreMemoryPalaceSync(data.memoryPalace!, tombstones)
+    }, () => {
       result.memoryPalaceRestored = true
-    }
+    })
+  }
 
-    // 11. 还原句子库（按 id 合并去重，已有 id 保留本地版本）
-    if (options.restoreSentences && data.sentences) {
-      await restoreSentences(data.sentences, tombstones)
+  if (options.restoreSentences && data.sentences) {
+    await runStep('句子库', () => restoreSentences(data.sentences!, tombstones), () => {
       result.sentencesRestored = true
-    }
-  } catch (e) {
-    result.errors.push(String(e))
-    result.success = false
+    })
+  }
+
+  if (options.restoreWordBook && data.wordBook) {
+    await runStep('词图闯关', () => restoreWordBookSync(data.wordBook!), () => {
+      result.wordBookRestored = true
+    })
   }
 
   // 还原完成后兜底清理一次过期墓碑（无远端墓碑合并时 mergeTombstones 内部不会清理）
@@ -464,7 +548,30 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
 
 // ==================== 词库还原 ====================
 
-async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, strategy: ConflictStrategy, tombstones: Record<string, number> = {}) {
+/** 先把远端墓碑应用到本地词库，删除另一端已删除且本地未再更新的词/词库 */
+async function applyWordTombstonesToLocal(tombstones: Record<string, number>): Promise<void> {
+  if (!tombstones || Object.keys(tombstones).length === 0) return
+  const banks = await getAllWordBanks()
+  for (const bank of banks) {
+    const deletedAt = tombstones[bank.id]
+    if (bank.id !== 'default' && deletedAt !== undefined && deletedAt >= bank.updatedAt) {
+      if (!await deleteWordBank(bank.id)) throw new Error(`删除词库失败: ${bank.name}`)
+      continue
+    }
+    const kept = filterByTombstones(bank.words, 'remote', tombstones)
+    if (kept.length === bank.words.length) continue
+    bank.words = kept
+    if (!await saveWordBank(bank)) throw new Error(`应用删除墓碑失败: ${bank.name}`)
+  }
+}
+
+async function restoreWordBanks(
+  banks: SyncWordBank[],
+  currentBankId: string,
+  strategy: ConflictStrategy,
+  tombstones: Record<string, number>,
+  result: RestoreResult,
+) {
   const existingBanks = await getAllWordBanks()
   const existingMap = new Map(existingBanks.map(b => [b.id, b]))
 
@@ -476,30 +583,25 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
     const incomingWords = filterByTombstones(bank.words || [], 'remote', tombstones)
     const existing = existingMap.get(bank.id)
     if (existing) {
-      // 冲突处理
       switch (strategy) {
         case 'skip':
           continue
         case 'local-first':
-          // 本地优先，仅合并不存在的单词
           mergeWordsIntoExisting(existing, incomingWords, 'local-first')
-          await saveWordBank(existing)
           break
         case 'remote-first':
-          // 远端优先，用远端数据覆盖
           existing.words = incomingWords
           existing.name = bank.name
           existing.updatedAt = bank.updatedAt
-          await saveWordBank(existing)
           break
         case 'merge':
         default:
           mergeWordsIntoExisting(existing, incomingWords, 'merge')
-          await saveWordBank(existing)
           break
       }
+      if (!await saveWordBank(existing)) throw new Error(`保存词库失败: ${bank.name}`)
+      result.wordBanksRestored++
     } else {
-      // 新词库，直接创建（浅拷贝单词即可，数据来自反序列化不存在共享引用）
       const newBank: WordBank = {
         id: bank.id,
         name: bank.name,
@@ -509,7 +611,8 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
         isDefault: bank.isDefault,
         language: bank.language,
       }
-      await saveWordBank(newBank)
+      if (!await saveWordBank(newBank)) throw new Error(`创建词库失败: ${bank.name}`)
+      result.wordBanksRestored++
     }
   }
 
@@ -521,36 +624,75 @@ async function restoreWordBanks(banks: SyncWordBank[], currentBankId: string, st
 
 /**
  * 合并单词到现有词库
- * 以 word.text 作为去重键，合并策略：
- * - merge: 远端有本地没有的添加，都有时以 learnDate 更新的为准
+ * 以稳定 ID 优先、规范化文本兜底匹配，合并策略：
+ * - merge: 内容与学习字段分别按 updatedAt、learnDate 选择较新版本
  * - local-first: 只添加本地没有的
  */
 function mergeWordsIntoExisting(existingBank: WordBank, incomingWords: Word[], mode: 'merge' | 'local-first') {
-  const existingMap = new Map(existingBank.words.map(w => [w.text.toLowerCase(), w]))
+  const wordKey = (word: Word) => normalizeItemText(word.text).toLowerCase()
+  const existingByText = new Map(existingBank.words.map(w => [wordKey(w), w]))
+  const existingById = new Map<string, Word>()
+  for (const word of existingBank.words) {
+    for (const id of [word._id, ...(word.aliases || [])]) {
+      if (id) existingById.set(id, word)
+    }
+  }
+  const contentKeys: (keyof Word)[] = ['text', 'explains', 'phonetic', 'itemType', 'image', 'pronunciation']
+  const learningKeys: (keyof Word)[] = ['level', 'remember', 'isReview', 'learnDate']
 
   for (const word of incomingWords) {
-    const key = word.text.toLowerCase()
-    const existing = existingMap.get(key)
+    const key = wordKey(word)
+    const existing = (word._id ? existingById.get(word._id) : undefined) || existingByText.get(key)
     if (!existing) {
-      // 本地没有，添加（浅拷贝避免引用共享）
-      existingBank.words.push({ ...word })
-      existingMap.set(key, word)
-    } else if (mode === 'merge') {
-      // 都有，以 learnDate 更新的为准
-      const existingDate = existing.learnDate ? new Date(existing.learnDate).getTime() : 0
-      const incomingDate = word.learnDate ? new Date(word.learnDate).getTime() : 0
-      if (incomingDate > existingDate) {
-        // 字段级合并：远端缺失的记忆进度字段保留本地值，避免整词覆盖丢进度
-        const merged: Word = { ...existing, ...word }
-        const progressKeys: (keyof Word)[] = ['level', 'remember', 'isReview', 'learnDate', 'ctime']
-        for (const key of progressKeys) {
-          if (word[key] === undefined || word[key] === null) {
-            merged[key] = existing[key]
-          }
-        }
-        Object.assign(existing, merged)
+      const added = { ...word, updatedAt: word.updatedAt ?? Date.now() }
+      existingBank.words.push(added)
+      for (const id of [added._id, ...(added.aliases || [])]) {
+        if (id) existingById.set(id, added)
+      }
+      existingByText.set(key, added)
+      continue
+    }
+    if (mode !== 'merge') continue
+
+    const existingDate = existing.learnDate ? new Date(existing.learnDate).getTime() : 0
+    const incomingDate = word.learnDate ? new Date(word.learnDate).getTime() : 0
+    const existingContentTime = existing.updatedAt || 0
+    const incomingContentTime = word.updatedAt || 0
+    let changed = false
+    const aliases = new Set([...(existing.aliases || []), ...(word.aliases || [])])
+    if (word._id && word._id !== existing._id) aliases.add(word._id)
+    const aliasesChanged = aliases.size !== (existing.aliases || []).length
+    if (aliasesChanged) {
+      existing.aliases = Array.from(aliases)
+      changed = true
+    }
+
+    if (incomingDate > existingDate) {
+      for (const field of learningKeys) {
+        if (word[field] !== undefined && word[field] !== null) (existing as any)[field] = word[field]
+      }
+      changed = true
+    }
+    if (incomingContentTime > existingContentTime) {
+      for (const field of contentKeys) {
+        if (word[field] !== undefined) (existing as any)[field] = word[field]
+      }
+      changed = true
+    } else if (!existingContentTime) {
+      for (const field of contentKeys) {
+        if (!existing[field] && word[field] !== undefined) (existing as any)[field] = word[field]
       }
     }
+    if (changed) {
+      existing.updatedAt = Math.max(existing.updatedAt || 0, incomingContentTime, incomingDate)
+    }
+    if (existingByText.get(key) === existing && key !== wordKey(existing)) {
+      existingByText.delete(key)
+    }
+    for (const id of [existing._id, ...(existing.aliases || [])]) {
+      if (id) existingById.set(id, existing)
+    }
+    existingByText.set(wordKey(existing), existing)
   }
 
   existingBank.updatedAt = Date.now()
@@ -621,8 +763,8 @@ async function restoreUserSettings(settings: SyncUserSettings) {
 
 /**
  * 文本记忆按 _id 合并（与移动端 restore 的 merge 语义一致）：
- * 本地已有的 _id 保留本地版本，远端新增条目追加；不再整库覆盖，
- * 避免旧同步包盖掉本地新改动
+ * 先按墓碑清理本地，再按 utime/updatedAt/ctime 选择较新版本；
+ * 远端缺少的可选字段保留本地兜底，写入失败向上抛出
  */
 async function restoreTextMemory(data: SyncTextMemory, tombstones: Record<string, number> = {}) {
   try {
@@ -631,18 +773,28 @@ async function restoreTextMemory(data: SyncTextMemory, tombstones: Record<string
     const existingDoc = db.get(DOC_ID) as any
 
     const mergeById = (localList: any[], remoteList: any[]): any[] => {
-      const local = Array.isArray(localList) ? localList : []
-      const ids = new Set(local.map((i: any) => i?._id))
-      const merged = [...local]
-      // 远端条目先过墓碑过滤：本机已删除的文章/笔记/提示词不让它复活
+      // 先按墓碑清理本地已有条目，再按 _id 合并远端较新版本
+      const local = filterByTombstones(Array.isArray(localList) ? localList : [], 'remote', tombstones)
+      const merged = new Map<string, any>(local.filter((item: any) => item?._id).map((item: any) => [item._id, item]))
       const remoteFiltered = filterByTombstones(Array.isArray(remoteList) ? remoteList : [], 'remote', tombstones)
+      const itemTime = (item: any) => item?.utime || item?.updatedAt || item?.ctime || 0
       for (const item of remoteFiltered) {
-        if (item && item._id && !ids.has(item._id)) {
-          ids.add(item._id)
-          merged.push(item)
+        if (!item?._id) continue
+        const current = merged.get(item._id)
+        if (!current) {
+          merged.set(item._id, item)
+          continue
+        }
+        if (itemTime(item) > itemTime(current)) {
+          const { _rev, ...remoteClean } = item
+          merged.set(item._id, {
+            ...current,
+            ...remoteClean,
+            ...(current._rev ? { _rev: current._rev } : {}),
+          })
         }
       }
-      return merged
+      return Array.from(merged.values())
     }
 
     const doc: any = {
@@ -679,7 +831,8 @@ async function restoreTextMemory(data: SyncTextMemory, tombstones: Record<string
       doc._rev = existingDoc._rev
     }
 
-    await db.promises.put(doc)
+    const result = await db.promises.put(doc)
+    if (!isWriteOk(result, doc._id)) throw new Error(`同步文档写入失败: ${doc._id}`)
     log.i('文本记忆数据已还原')
   } catch (e) {
     log.e('还原文本记忆失败', e)
@@ -689,22 +842,28 @@ async function restoreTextMemory(data: SyncTextMemory, tombstones: Record<string
 
 // ==================== 句子库还原 ====================
 
-/** 句子库按 id 合并：本地已有的 id 保留本地版本，新 id 追加 */
+/** 句子库先按墓碑清理，再按 id 合并；updatedAt 较新的版本覆盖，新 id 追加 */
 async function restoreSentences(data: SyncSentences, tombstones: Record<string, number> = {}) {
   try {
     const db = getDbAdapter()
     const existingDoc = db.get(SENTENCES_DOC_ID) as any
-    const existingList: any[] = Array.isArray(existingDoc?.sentences) ? existingDoc.sentences : []
-    const ids = new Set(existingList.map((s: any) => s.id))
-    const merged = [...existingList]
-    // 远端句子先过墓碑过滤：本机已删除的句子不让它复活
+    const existingList: any[] = filterByTombstones(
+      Array.isArray(existingDoc?.sentences) ? existingDoc.sentences : [],
+      'remote',
+      tombstones,
+    )
+    const mergedMap = new Map<string, any>(existingList.filter((s: any) => s?.id).map((s: any) => [s.id, s]))
     const remoteFiltered = filterByTombstones(data.sentences || [], 'remote', tombstones)
     for (const s of remoteFiltered) {
-      if (s && s.id && !ids.has(s.id)) {
-        ids.add(s.id)
-        merged.push(s)
+      if (!s?.id) continue
+      const current = mergedMap.get(s.id)
+      if (!current) {
+        mergedMap.set(s.id, s)
+      } else if ((s.updatedAt || 0) > (current.updatedAt || 0)) {
+        mergedMap.set(s.id, { ...current, ...s })
       }
     }
+    const merged = Array.from(mergedMap.values())
 
     const doc: any = {
       _id: SENTENCES_DOC_ID,
@@ -715,7 +874,8 @@ async function restoreSentences(data: SyncSentences, tombstones: Record<string, 
     if (existingDoc?._rev) {
       doc._rev = existingDoc._rev
     }
-    await db.promises.put(doc)
+    const result = await db.promises.put(doc)
+    if (!isWriteOk(result, doc._id)) throw new Error(`同步文档写入失败: ${doc._id}`)
     log.i('句子库数据已还原')
   } catch (e) {
     log.e('还原句子库失败', e)
@@ -733,24 +893,84 @@ function numberItemTime(item: any): number {
   return Math.max(item?.updatedAt || 0, item?.learnDate || 0)
 }
 
+function isWriteOk(result: any, id: string): boolean {
+  if (!result) return false
+  if (result.error === true || result.ok === false) return false
+  if (result.ok === true) return true
+  return result.id === id && result.error !== true
+}
+
 /**
- * 批量写入文档列表（每批 200 条），失败时逐条降级
+ * 批量写入文档列表（每批 200 条），失败时逐条降级；
+ * 任何一条真实失败都会抛错，禁止“返回成功但数据未写入”。
  */
-async function bulkWriteDocs(db: ReturnType<typeof getDbAdapter>, docs: any[]) {
+async function bulkWriteDocs(db: ReturnType<typeof getDbAdapter>, docs: any[], label = '同步数据') {
   const BATCH_SIZE = 200
   for (let i = 0; i < docs.length; i += BATCH_SIZE) {
     const batch = docs.slice(i, i + BATCH_SIZE)
+    let results: any[] | null = null
     try {
-      await db.promises.bulkDocs(batch)
-    } catch (e) {
-      // bulkDocs 失败时逐条降级写入
-      for (const item of batch) {
-        try {
-          await db.promises.put(item)
-        } catch { /* skip */ }
+      results = await db.promises.bulkDocs(batch)
+    } catch {
+      results = null
+    }
+
+    if (results) {
+      const resultById = new Map(results.map((result: any) => [result?.id, result]))
+      const failedIds = batch
+        .map((item) => item._id)
+        .filter((id) => !isWriteOk(resultById.get(id), id))
+      if (failedIds.length > 0) {
+        throw new Error(`${label}批量写入失败: ${failedIds.join(', ')}`)
+      }
+      continue
+    }
+
+    const failedIds: string[] = []
+    for (const item of batch) {
+      try {
+        const result = await db.promises.put(item)
+        if (!isWriteOk(result, item._id)) failedIds.push(item._id)
+      } catch {
+        failedIds.push(item._id)
       }
     }
+    if (failedIds.length > 0) {
+      throw new Error(`${label}逐条写入失败: ${failedIds.join(', ')}`)
+    }
   }
+}
+
+/** 删除本地已命中墓碑的文档，返回仍保留的本地文档 */
+async function pruneLocalTombstonedDocs(
+  db: ReturnType<typeof getDbAdapter>,
+  prefix: string,
+  tombstones: Record<string, number>,
+  typeFilter: (doc: any) => boolean = () => true,
+  label = '同步文档',
+): Promise<any[]> {
+  const localDocs = db.allDocs(prefix).filter(typeFilter)
+  if (!tombstones || Object.keys(tombstones).length === 0) return localDocs
+  const kept = filterByTombstones(localDocs, 'remote', tombstones)
+  const keptIds = new Set(kept.map((doc: any) => doc._id))
+  const failedIds: string[] = []
+  for (const doc of localDocs) {
+    if (keptIds.has(doc._id)) continue
+    try {
+      const result = await db.promises.remove({ _id: doc._id, _rev: doc._rev })
+      if (!isWriteOk(result, doc._id)) failedIds.push(doc._id)
+    } catch {
+      failedIds.push(doc._id)
+    }
+  }
+  if (failedIds.length > 0) throw new Error(`${label}删除墓碑失败: ${failedIds.join(', ')}`)
+  return kept
+}
+
+/** 覆盖本地已有文档时保留本地 _rev；远端新增文档剥离远端 _rev */
+function localizeRemoteDoc(remote: any, local: any | undefined): any {
+  const { _rev, ...clean } = remote || {}
+  return local?._rev ? { ...clean, _rev: local._rev } : clean
 }
 
 /**
@@ -770,11 +990,19 @@ async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Recor
   const db = getDbAdapter()
   const prefix = DB_KEY_NUMBER_MEMORY
 
-  // 本地现有文档（按 _id 索引）
-  const localEntries = db.allDocs(prefix + 'entry_').filter((d: any) => d.type === 'number_memory_entry')
-  const localNotes = db.allDocs(prefix + 'note_').filter((d: any) => d.type === 'number_memory_note')
-  const localPrompts = db.allDocs(prefix + 'prompt_').filter((d: any) => d.type === 'number_memory_prompt')
-  const localResults = db.allDocs(prefix + 'result_').filter((d: any) => d.type === 'number_memory_result')
+  // 本地现有文档（先应用删除墓碑，再按 _id 合并）
+  const localEntries = await pruneLocalTombstonedDocs(
+    db, prefix + 'entry_', tombstones, (d: any) => d.type === 'number_memory_entry', '数字条目',
+  )
+  const localNotes = await pruneLocalTombstonedDocs(
+    db, prefix + 'note_', tombstones, (d: any) => d.type === 'number_memory_note', '数字笔记',
+  )
+  const localPrompts = await pruneLocalTombstonedDocs(
+    db, prefix + 'prompt_', tombstones, (d: any) => d.type === 'number_memory_prompt', '数字提示词',
+  )
+  const localResults = await pruneLocalTombstonedDocs(
+    db, prefix + 'result_', tombstones, (d: any) => d.type === 'number_memory_result', '数字训练结果',
+  )
   const existingTraining = db.allDocs(prefix).find((d: any) => d.type === 'number_memory_training') as any
 
   // 按条目时间合并：远端较新才覆盖本地，覆盖时保留本地 _rev。
@@ -824,7 +1052,8 @@ async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Recor
     const deletedAt = a?.number !== undefined ? tombstones[a.number] : undefined
     return !(deletedAt !== undefined && deletedAt >= 0)
   })
-  const localAssocs: any[] = existingTraining?.associations || []
+  const localAssocs: any[] = (existingTraining?.associations || [])
+    .filter((a: any) => a?.number === undefined || tombstones[a.number] === undefined)
   const localAssocMap = new Map(localAssocs.map((a: any) => [a.number, a]))
   const remoteIsNewer = !existingTraining || (remoteExportedAt || 0) >= (existingTraining.updatedAt || 0)
   const mergedAssocs = [...localAssocs]
@@ -840,21 +1069,25 @@ async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Recor
   }
 
   // 回写训练文档（保留本地 _rev）
+  let trainingResult: any = null
   if (existingTraining?._id) {
-    await db.promises.put({
+    trainingResult = await db.promises.put({
       ...existingTraining,
       associations: mergedAssocs,
       updatedAt: Date.now(),
     })
   } else if (mergedAssocs.length > 0) {
     const now = Date.now()
-    await db.promises.put({
+    trainingResult = await db.promises.put({
       _id: prefix + 'training_' + now,
       type: 'number_memory_training',
       associations: mergedAssocs,
       createdAt: now,
       updatedAt: now,
     })
+  }
+  if (trainingResult && !isWriteOk(trainingResult, trainingResult.id)) {
+    throw new Error(`数字训练文档写入失败: ${trainingResult.id}`)
   }
 
   await bulkWriteDocs(db, entriesToWrite)
@@ -867,7 +1100,10 @@ async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Recor
 
 // ==================== 快捷键记忆还原 ====================
 
-async function restoreShortcutMemoryData(data: SyncShortcutMemory) {
+async function restoreShortcutMemoryData(
+  data: SyncShortcutMemory,
+  tombstones: Record<string, number> = {},
+) {
   const db = getDbAdapter()
 
   // 批量收集所有需要写入的条目
@@ -879,24 +1115,26 @@ async function restoreShortcutMemoryData(data: SyncShortcutMemory) {
     bulkItems.push(...items)
   }
 
-  if (bulkItems.length > 0) {
-    const BATCH_SIZE = 200
-    for (let i = 0; i < bulkItems.length; i += BATCH_SIZE) {
-      const batch = bulkItems.slice(i, i + BATCH_SIZE)
-      try {
-        await db.promises.bulkDocs(batch)
-      } catch {
-        for (const item of batch) {
-          try { await db.promises.put(item) } catch { /* skip */ }
-        }
-      }
-    }
+  const localDocs = await pruneLocalTombstonedDocs(
+    db, DB_KEY_SHORTCUT_MEMORY, tombstones, () => true, '快捷键记忆',
+  )
+  const localById = new Map(localDocs.map((doc: any) => [doc._id, doc]))
+  const itemTime = (item: any) => item?.updatedAt || item?.learnDate || item?.createdAt || 0
+  const remoteItems = filterByTombstones(bulkItems, 'remote', tombstones)
+    .filter((item: any) => {
+      const local = localById.get(item?._id)
+      return !local || itemTime(item) >= itemTime(local)
+    })
+
+  if (remoteItems.length > 0) {
+    const docs = remoteItems.map((item) => localizeRemoteDoc(item, localById.get(item._id)))
+    await bulkWriteDocs(db, docs, '快捷键记忆')
   }
 
   log.i('快捷键记忆数据已还原')
 }
 
-async function restoreLetterMemoryData(data: SyncLetterMemory) {
+async function restoreLetterMemoryData(data: SyncLetterMemory, tombstones: Record<string, number> = {}) {
   const db = getDbAdapter()
   const prefix = DB_KEY_LETTER_MEMORY
 
@@ -910,32 +1148,31 @@ async function restoreLetterMemoryData(data: SyncLetterMemory) {
       }
       existingTraining.associations = Array.from(existingMap.values())
       existingTraining.updatedAt = Date.now()
-      await db.promises.put(existingTraining)
+      const result = await db.promises.put(existingTraining)
+      if (!isWriteOk(result, existingTraining._id)) throw new Error(`保存字母训练文档失败: ${result?.message || ''}`)
     } else {
       const now = Date.now()
-      await db.promises.put({
+      const doc = {
         _id: prefix + 'training_' + now,
         type: 'letter_memory_training',
         associations: data.associations,
         createdAt: now,
         updatedAt: now,
-      })
+      }
+      const result = await db.promises.put(doc)
+      if (!isWriteOk(result, doc._id)) throw new Error(`创建字母训练文档失败: ${result?.message || ''}`)
     }
   }
 
   // 批量还原训练结果
-  if (data.trainingResults?.length) {
-    const BATCH_SIZE = 200
-    for (let i = 0; i < data.trainingResults.length; i += BATCH_SIZE) {
-      const batch = data.trainingResults.slice(i, i + BATCH_SIZE)
-      try {
-        await db.promises.bulkDocs(batch)
-      } catch {
-        for (const result of batch) {
-          try { await db.promises.put(result) } catch { /* skip */ }
-        }
-      }
-    }
+  const localResults = await pruneLocalTombstonedDocs(
+    db, prefix + 'result_', tombstones, (d: any) => d.type === 'letter_memory_result', '字母训练结果',
+  )
+  const remoteResults = filterByTombstones(data.trainingResults || [], 'remote', tombstones)
+  const localById = new Map(localResults.map((doc: any) => [doc._id, doc]))
+  if (remoteResults.length > 0) {
+    const docs = remoteResults.map((item: any) => localizeRemoteDoc(item, localById.get(item._id)))
+    await bulkWriteDocs(db, docs, '字母训练结果')
   }
 
   log.i('字母映射数据已还原')
@@ -950,7 +1187,7 @@ async function restoreLetterMemoryData(data: SyncLetterMemory) {
 async function restoreKnowledgeMemoryData(data: SyncKnowledgeMemory) {
   const importedIds = new Set<string>([...getImportedIds(), ...(data.importedIds || [])])
   for (const packId of importedIds) {
-    addImportedId(packId)
+    if (!await addImportedId(packId)) throw new Error(`保存知识包导入清单失败: ${packId}`)
   }
 
   for (const [packId, items] of Object.entries(data.packs || {})) {
@@ -964,7 +1201,7 @@ async function restoreKnowledgeMemoryData(data: SyncKnowledgeMemory) {
       }
     }
     doc.items = merged
-    await saveKnowledgeProgressDoc(doc)
+    if (!await saveKnowledgeProgressDoc(doc)) throw new Error(`保存知识包进度失败: ${packId}`)
   }
 
   log.i('知识库数据已还原')
@@ -996,6 +1233,6 @@ async function restorePhoneticMemoryData(data: SyncPhoneticMemory) {
 
   doc.phonemes = phonemes
   doc.pairs = pairs
-  await savePhoneticProgressDoc(doc)
+  if (!await savePhoneticProgressDoc(doc)) throw new Error('音标学习进度写入失败')
   log.i('音标学习进度已还原')
 }

@@ -181,25 +181,25 @@ export async function pruneTombstones(maxAgeMs = TOMBSTONE_MAX_AGE_MS, tombstone
  * @param items  待过滤条目（取 _id || id 作为墓碑键）
  * @param tombstones 墓碑表
  */
-export function filterByTombstones<T extends { _id?: string; id?: string; updatedAt?: number; utime?: number }>(
-  items: T[],
-  source: 'local' | 'remote',
-  tombstones: Record<string, number>,
-): T[] {
+export function filterByTombstones<T extends {
+  _id?: string
+  id?: string
+  aliases?: string[]
+  updatedAt?: number
+  utime?: number
+}>(items: T[], source: 'local' | 'remote', tombstones: Record<string, number>): T[] {
   if (!items?.length || !tombstones || Object.keys(tombstones).length === 0) {
     // 墓碑表为空：无需过滤，返回副本保持调用方语义稳定
     return [...(items || [])]
   }
   return items.filter((item) => {
-    const id = item?._id || item?.id
-    if (!id) return true
-    const deletedAt = tombstones[id]
-    if (deletedAt === undefined) return true
+    const ids = [item?._id || item?.id, ...(Array.isArray(item?.aliases) ? item.aliases : [])]
+      .filter((id): id is string => !!id)
+    if (ids.length === 0) return true
+    const deletedAt = Math.max(...ids.map(id => tombstones[id] ?? -1))
+    if (deletedAt < 0) return true
     const itemTime = item?.updatedAt || item?.utime || 0
     // 墓碑晚于条目最后更新：条目是被删后回流的旧数据，剔除
-    if (deletedAt >= itemTime) {
-      return false
-    }
-    return true
+    return deletedAt < itemTime
   })
 }

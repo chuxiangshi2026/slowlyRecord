@@ -17,6 +17,7 @@ import {
   buildRestoreResult,
   bytesToUtf8,
   collectSyncData,
+  stripMobileSyncSecrets,
   uint8ArrayToBase64,
   utf8ToBytes,
   xorCrypt,
@@ -265,7 +266,7 @@ export function testWebDavConnection(cfg: WebDavConfig): Promise<{ ok: boolean; 
 export async function pushToWebDav(cfg: WebDavConfig, payload: PushPayload): Promise<SyncResult & { usedDir?: string }> {
   try {
     const data = collectSyncData(payload)
-    const json = JSON.stringify(data)
+    const json = JSON.stringify(stripMobileSyncSecrets(data))
     const compressed = pako.deflate(utf8ToBytes(json))
     const body = uint8ArrayToBase64(xorCrypt(compressed, `${cfg.username}:${cfg.password}`))
     log.i(`[WebDAV] 上传: JSON ${(utf8ToBytes(json).length / 1024).toFixed(1)}KB, 密文 ${(body.length / 1024).toFixed(1)}KB`)

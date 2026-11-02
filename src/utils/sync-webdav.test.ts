@@ -87,7 +87,7 @@ beforeEach(() => {
 })
 
 describe('WebDAV 文件加解密', () => {
-  it('加密打包后可按相同凭据还原（含中文）', () => {
+  it('XOR 兼容编码打包后可按相同凭据还原（含中文）', () => {
     const json = JSON.stringify({ hello: '世界', n: 42 })
     const body = encodeWebDavFile(json, key)
     expect(decodeWebDavFile(body, key)).toBe(json)

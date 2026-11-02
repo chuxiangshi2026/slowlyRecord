@@ -1,6 +1,6 @@
 /**
  * 同步服务 - 重量级模块，已迁移到分包
- * 包含 XOR 加密、pako 压缩、服务器通信
+ * 包含 XOR 兼容编码、pako 压缩、服务器通信
  *
  * pako 必须静态 import：uni-app alpha 编译 mp-weixin 时 import('pako') 会被
  * 编译成纯字符串字面量（renderDynamicImport 返回 '(' + ')'），真机拿不到模块。
@@ -320,6 +320,22 @@ export interface PushPayload {
   tombstones?: Record<string, number>
 }
 
+export function stripMobileSyncSecrets(data: MobileSyncData): MobileSyncData {
+  if (!data.userSettings) return data
+  return {
+    ...data,
+    userSettings: {
+      ...data.userSettings,
+      keys: {},
+    },
+  }
+}
+
+function mobileSyncFingerprint(data: MobileSyncData): string {
+  const { exportedAt, platform, ...stable } = data
+  return JSON.stringify(stable)
+}
+
 export function collectSyncData(payload: PushPayload): MobileSyncData {
   return {
     version: 1,
@@ -363,10 +379,11 @@ export async function pushToServer(
       ? { banks: banksOrPayload, ...extra }
       : banksOrPayload
     const data = collectSyncData(payload)
-    const json = JSON.stringify(data)
+    const useAes = hasWebCryptoSubtle()
+    const json = JSON.stringify(useAes ? data : stripMobileSyncSecrets(data))
 
-    // 跳过未变更的同步：对 JSON 取哈希，与上次成功推送的哈希比对
-    const hash = await sha256Hex(json)
+    // 跳过未变更的同步：排除每次都会变化的导出时间
+    const hash = await sha256Hex(mobileSyncFingerprint(data))
     const lastHash = uni.getStorageSync(LAST_PUSH_HASH_KEY)
     if (lastHash && hash === lastHash) {
       log.i('[sync] 数据未变更，跳过上传')
@@ -377,12 +394,13 @@ export async function pushToServer(
     const compressed = pako.deflate(jsonBytes)
     const syncKey = generateSyncKey()
     let encryptedBase64: string
-    if (hasWebCryptoSubtle()) {
+    if (useAes) {
       try {
         encryptedBase64 = await aesGcmEncrypt(compressed, syncKey)
       } catch (cryptoError) {
-        log.w('[sync] AES-GCM 加密失败，回退到 XOR：', cryptoError)
-        encryptedBase64 = uint8ArrayToBase64(xorCrypt(compressed, syncKey))
+        log.w('[sync] AES-GCM 加密失败，回退到 XOR（密钥字段已剔除）：', cryptoError)
+        const fallbackCompressed = pako.deflate(utf8ToBytes(JSON.stringify(stripMobileSyncSecrets(data))))
+        encryptedBase64 = uint8ArrayToBase64(xorCrypt(fallbackCompressed, syncKey))
       }
     } else {
       encryptedBase64 = uint8ArrayToBase64(xorCrypt(compressed, syncKey))
@@ -438,6 +456,7 @@ export async function buildRestoreResult(data: MobileSyncData): Promise<RestoreR
   return {
     success: true,
     banks,
+    tombstones,
     textMemory: data.textMemory,
     numberMemory: data.numberMemory,
     knowledgeMemory: data.knowledgeMemory,

@@ -112,7 +112,8 @@ describe('mobile sync-tombstone', () => {
     })
 
     it('conflict 时重读重试一次后成功', async () => {
-      mockDb.promises.put.mockImplementationOnce(async () => ({ id: TOMBSTONES_DOC_ID, ok: false, error: true, message: 'conflict' }))
+      const putMock = mockDb.promises.put as unknown as ReturnType<typeof vi.fn>
+      putMock.mockImplementationOnce(async () => ({ id: TOMBSTONES_DOC_ID, ok: false, error: true, message: 'conflict' }))
 
       await recordTombstone('word-conflict')
 
@@ -164,7 +165,7 @@ describe('mobile sync-tombstone', () => {
 
     it('空 remote（{}）不触发回写', async () => {
       await recordTombstone('local-keep')
-      mockDb.promises.put.mockClear()
+      ;(mockDb.promises.put as unknown as ReturnType<typeof vi.fn>).mockClear()
 
       const merged = await mergeTombstones({})
 
@@ -174,7 +175,7 @@ describe('mobile sync-tombstone', () => {
 
     it('remote 为 undefined 不触发回写', async () => {
       await recordTombstone('local-keep2')
-      mockDb.promises.put.mockClear()
+      ;(mockDb.promises.put as unknown as ReturnType<typeof vi.fn>).mockClear()
 
       const merged = await mergeTombstones(undefined)
 

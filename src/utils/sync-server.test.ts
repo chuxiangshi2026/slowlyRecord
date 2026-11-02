@@ -4,7 +4,8 @@
  * 只测纯函数/加解密往返，不触网、不碰 DB。
  * Node 20+ 全局提供 crypto.subtle / btoa / atob。
  */
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
+import { collectSyncData } from '@shared/utils/sync-manager'
 import {
   toBase64Url,
   fromBase64Url,
@@ -18,8 +19,16 @@ import {
   decompressFromJsonPayload,
   convertDesktopWordToMobile,
   convertMobileCompatToSyncData,
+  collectMobileCompatData,
+  uploadToServerMobileCompat,
+  getSyncFingerprint,
   type MobileCompatSyncData,
 } from './sync-server'
+
+vi.mock('@shared/utils/sync-manager', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@shared/utils/sync-manager')>()
+  return { ...actual, collectSyncData: vi.fn(actual.collectSyncData) }
+})
 
 describe('toBase64Url / fromBase64Url', () => {
   it('二进制数据往返一致', () => {
@@ -170,10 +179,38 @@ describe('convertDesktopWordToMobile', () => {
     expect(convertDesktopWordToMobile({ text: 'x' }).level).toBe(0)
   })
 
+  it('异常越界等级钳制到业务上限 12', () => {
+    expect(convertDesktopWordToMobile({ text: 'x', level: 99 }).level).toBe(12)
+  })
+
   it('isReview/remember 缺省为 false', () => {
     const w = convertDesktopWordToMobile({ text: 'y' })
     expect(w.needsReview).toBe(false)
     expect(w.remembered).toBe(false)
+  })
+})
+
+describe('getSyncFingerprint', () => {
+  const base = {
+    version: 1,
+    exportedAt: 1,
+    platform: 'desktop',
+    wordBanks: [],
+    currentWordBankId: '',
+    userSettings: null,
+    textMemory: null,
+    numberMemory: null,
+    shortcutMemory: null,
+    letterMemory: null,
+  } as any
+
+  it('忽略 exportedAt/platform，未改动数据指纹一致', () => {
+    expect(getSyncFingerprint({ ...base, exportedAt: 999, platform: 'web' })).toBe(getSyncFingerprint(base))
+  })
+
+  it('业务数据变化会改变指纹', () => {
+    const changed = { ...base, wordBanks: [{ id: 'b', name: 'b', words: [{ _id: 'w', text: 'hello' }] }] }
+    expect(getSyncFingerprint(changed)).not.toBe(getSyncFingerprint(base))
   })
 })
 
@@ -244,6 +281,27 @@ describe('convertMobileCompatToSyncData', () => {
     expect(data.wordBanks.length).toBe(2)
   })
 
+  it('词库语言双向转换保留，旧包缺省英语', () => {
+    const input = buildMobileData()
+    input.banks[1].language = 'ja'
+    const data = convertMobileCompatToSyncData(input)
+    expect(data.wordBanks[0].language).toBe('en')
+    expect(data.wordBanks[1].language).toBe('ja')
+  })
+
+  it('不同 exportedAt 和词序生成相同稳定词条 ID', () => {
+    const first = convertMobileCompatToSyncData(buildMobileData())
+    const original = buildMobileData()
+    const reordered = {
+      ...original,
+      exportedAt: original.exportedAt + 99999,
+      banks: original.banks.map(bank => ({ ...bank, words: [...bank.words].reverse() })),
+    }
+    const second = convertMobileCompatToSyncData(reordered)
+    const ids = (data: any) => data.wordBanks[0].words.map((word: any) => word._id).sort()
+    expect(ids(second)).toEqual(ids(first))
+  })
+
   it('sentence 特判归一化为 phrase；无空格普通词为 word', () => {
     const data = convertMobileCompatToSyncData(buildMobileData())
     const [sentenceWord, plainWord] = data.wordBanks[0].words as any[]
@@ -253,7 +311,7 @@ describe('convertMobileCompatToSyncData', () => {
     expect(sentenceWord.isReview).toBe(true)
     expect(sentenceWord.level).toBe(2)
     expect(sentenceWord.phonetic).toBe('/siː/')
-    expect(sentenceWord._id).toContain('mobile-default-0-')
+    expect(sentenceWord._id).toBe('mobile-default-see%20you')
     expect(plainWord.itemType).toBe('word')
   })
 
@@ -322,6 +380,23 @@ describe('convertMobileCompatToSyncData', () => {
     const data = convertMobileCompatToSyncData(buildMobileData())
     expect(data.knowledgeMemory).toBeNull()
     expect(data.phoneticMemory).toBeNull()
+  })
+})
+
+describe('移动兼容数据收集失败', () => {
+  it('收集异常直接向上抛出，不降级为空词库', async () => {
+    vi.mocked(collectSyncData).mockRejectedValueOnce(new Error('collect failed'))
+
+    await expect(collectMobileCompatData()).rejects.toThrow('collect failed')
+  })
+
+  it('上传入口返回失败，不继续上传空数据包', async () => {
+    vi.mocked(collectSyncData).mockRejectedValueOnce(new Error('collect failed'))
+
+    const result = await uploadToServerMobileCompat()
+
+    expect(result.success).toBe(false)
+    expect(result.error).toContain('collect failed')
   })
 })
 

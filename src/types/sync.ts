@@ -125,6 +125,15 @@ export interface SyncMemoryPalace {
 }
 
 /** 完整的同步数据包 */
+import type { WordBookBook, WordBookChapter, WordBookPage } from './word-book'
+
+/** 词图闯关（书 / 章 / 页） */
+export interface SyncWordBook {
+  books: WordBookBook[]
+  chapters: WordBookChapter[]
+  pages: WordBookPage[]
+}
+
 export interface SyncData {
   /** 数据格式版本 */
   version: typeof SYNC_VERSION
@@ -156,6 +165,8 @@ export interface SyncData {
   memoryPalace?: SyncMemoryPalace | null
   /** 句子库（可选：旧版客户端忽略此字段） */
   sentences?: SyncSentences | null
+  /** 词图闯关（可选：旧版客户端忽略此字段） */
+  wordBook?: SyncWordBook | null
   /** 删除墓碑表 id → deletedAt（可选：旧版客户端忽略此字段；restore 端合并取较大 deletedAt） */
   tombstones?: Record<string, number>
 }

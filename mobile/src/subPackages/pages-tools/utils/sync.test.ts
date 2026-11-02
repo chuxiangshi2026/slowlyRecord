@@ -103,6 +103,13 @@ describe('collectSyncData 墓碑透传', () => {
     expect(data.tombstones).toEqual({ 'mobile_words_1': 1726579200000 })
   })
 
+  it('词库语言字段进入同步包', () => {
+    const data = collectSyncData({
+      banks: [{ id: 'bank-ja', name: '日语', language: 'ja', words: [] }],
+    })
+    expect(data.banks[0].language).toBe('ja')
+  })
+
   it('payload 不带 tombstones 时字段为空（JSON 序列化自动省略）', () => {
     const data = collectSyncData({ banks: [] })
     expect(data.tombstones).toBeUndefined()

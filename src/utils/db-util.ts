@@ -79,7 +79,7 @@ async function updateDbWordList(docs: Word[]): Promise<DbReturn[]> {
         }
     });
 
-    const results = db.bulkDocs(cleanedDocs);
+    const results = await db.promises.bulkDocs(cleanedDocs);
 
 
     results.forEach((ret: DbReturn) => {
@@ -100,13 +100,12 @@ async function updateDbWordList(docs: Word[]): Promise<DbReturn[]> {
  * 按id删除数据库中的单词
  * @param id
  */
-function removeDbWordById(id: string): void {
+async function removeDbWordById(id: string): Promise<void> {
     const db = getDbAdapter();
-    const result = db.remove(id);
+    const result = await db.promises.remove(id);
     if (result.ok) {
         console.log("删除成功");
     } else if (result.error) {
-        // 删除失败，打印错误原因
         log.e(result.message);
     }
 }
@@ -115,17 +114,16 @@ function removeDbWordById(id: string): void {
  * 清空数据库
  * @since 2025/11/5
  */
-function cleanDbWord() {
+async function cleanDbWord(): Promise<void> {
     const db = getDbAdapter();
-    const result = db.remove(DB_KEY);
+    const result = await db.promises.remove(DB_KEY);
     if (result.ok) {
         console.log("删除成功");
     } else if (result.error) {
-        // 删除失败，打印错误原因
         console.log(result.message);
     }
     // 单词实际存储在词库分片 slowly-record-wordbank-chunk-v2:* 中，需一并清理
-    void cleanAllWordBankChunks();
+    await cleanAllWordBankChunks();
 }
 
 /**

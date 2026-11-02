@@ -26,7 +26,7 @@
           class="sync-alert"
         >
           <template #default>
-            数据加密后存到<strong>你自己的网盘</strong>，长期保留、不限次数；两台设备填同样的账号和应用密码即可互相同步。
+            数据经 XOR 兼容编码后存到<strong>你自己的网盘</strong>，默认不上传 API/OCR 密钥，可长期保留、不限次数；两台设备填同样的账号和应用密码即可互相同步。
           </template>
         </el-alert>
         <el-alert
@@ -114,14 +114,14 @@
       <!-- 服务器同步 Tab -->
       <el-tab-pane label="服务器同步" name="server">
         <el-alert
-          title="端到端加密 · 临时传输"
+          title="临时传输 · 按通道加密"
           type="success"
           :closable="false"
           show-icon
           class="sync-alert"
         >
           <template #default>
-            数据在本地 AES-256 加密后才上传，服务器只存密文无法解读。推送后生成同步码，在另一台设备输入即可拉取。
+            桌面端通道使用 AES-256-GCM；移动端兼容通道使用 XOR 兼容编码。兼容通道不会上传 API/OCR 密钥，请勿将其视为敏感数据的长期安全存储。
           </template>
         </el-alert>
 
@@ -137,7 +137,7 @@
         <!-- 推送区域 -->
         <div class="sync-section">
           <h4>推送数据</h4>
-          <p class="sync-desc">将当前设备数据加密上传，生成同步码供另一台设备拉取</p>
+          <p class="sync-desc">将当前设备数据按所选通道加密或兼容编码后上传，生成同步码供另一台设备拉取</p>
           <div class="sync-actions">
             <el-button
               type="primary"
@@ -414,7 +414,9 @@ async function generateQR(text: string) {
 
 async function handlePush() {
   const result = await syncStore.serverUpload()
-  if (result.success) {
+  if (result.skipped) {
+    ElMessage.info('数据未变更，已跳过上传')
+  } else if (result.success && result.code) {
     ElMessage.success('推送成功，请在另一台设备输入同步码')
   } else {
     ElMessage.error(result.error || '推送失败')

@@ -3,16 +3,15 @@
  *
  * 设计原则：
  * - 服务器不保留用户身份信息，仅用随机 code 标识一次同步
- * - **所有数据在客户端 AES-256-GCM 加密后才上传**，服务器只存密文
- * - 即使服务器被入侵或数据被截获，没有密钥也无法解读
- * - 同步码 = blobId + 加密密钥，两段缺一不可
+ * - 桌面通道使用 AES-256-GCM；移动端兼容通道使用 XOR 兼容编码
+ * - 同步码 = blobId + 密钥，两段缺一不可
  * - 服务器可随时停掉，不影响本地文件同步功能
  *
  * 安全模型：
- * - 上传时：客户端生成随机 AES 密钥 → 加密数据 → 上传密文 → 返回 blobId
- * - 同步码格式：blobId.key（key 包含 IV + AES 密钥）
- * - 下载时：拆分同步码 → 用 blobId 下载密文 → 用 key 解密
- * - 攻击者拿到 blobId 只能看到密文，拿到 key 没有 blobId 也下载不到密文
+ * - 桌面：随机 AES 密钥 → 加密 → 上传密文 → 返回 blobId
+ * - 移动兼容：pako 压缩 → XOR → base64；为避免弱保护扩散，密钥字段默认脱敏
+ * - 同步码格式：blobId.key
+ * - 旧 XOR 同步码继续支持读取，不做破坏性迁移
  */
 
 import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace, SyncSentences, SyncKnowledgeMemory, SyncPhoneticMemory } from '@/types/sync'
@@ -23,7 +22,8 @@ import { collectSigninSync } from '@/utils/signin-db'
 import { getTombstones } from '@/utils/sync-tombstone'
 import { exportToJson, importFromJson } from '@/utils/sync-file'
 import { log } from '@/utils/logger'
-import { getAllWordBanks } from '@/utils/wordbank-manager'
+import { DEFAULT_INTERVALS } from '@/constants'
+import { MAX_LEVEL } from '@/utils/srs'
 import pako from 'pako'
 
 /** 默认同步服务器地址（腾讯云 CloudBase 云函数） */
@@ -409,6 +409,12 @@ export async function decompressFromJsonPayload(payload: string): Promise<string
   return new TextDecoder().decode(jsonBytes)
 }
 
+/** 变更指纹：排除每次导出都会变化的字段，保证未改动时能真正跳过 */
+export function getSyncFingerprint(data: SyncData): string {
+  const { exportedAt, platform, ...stable } = data
+  return JSON.stringify(stable)
+}
+
 /**
  * 上传当前设备数据到服务器（自动加密+压缩）
  * @returns 同步码（blobId.key），用于在另一台设备下载
@@ -418,8 +424,7 @@ export async function uploadToServer(): Promise<SyncServerResult> {
     const data = await collectSyncData()
     const json = exportToJson(data)
 
-    // 跳过未变更的同步：对 JSON 取哈希，与上次成功推送的哈希比对
-    const hash = await sha256Hex(json)
+    const hash = await sha256Hex(getSyncFingerprint(data))
     const lastHash = localStorage.getItem(LAST_PUSH_HASH_KEY)
     if (lastHash && hash === lastHash) {
       log.i('数据未变更，跳过上传')
@@ -550,7 +555,7 @@ export function base64ToUint8Array(base64: string): Uint8Array {
   return bytes
 }
 
-/** XOR 加密/解密 Uint8Array（对称操作） */
+/** XOR 兼容编码/解密 Uint8Array（对称操作） */
 export function xorCrypt(data: Uint8Array, key: string): Uint8Array {
   const keyBytes = new TextEncoder().encode(key)
   const keyLen = keyBytes.length
@@ -562,6 +567,7 @@ export function xorCrypt(data: Uint8Array, key: string): Uint8Array {
 }
 
 interface MobileCompatWord {
+  id?: string
   word: string
   meaning: string
   itemType?: 'word' | 'phrase' | 'sentence' | 'collocation'
@@ -574,12 +580,18 @@ interface MobileCompatWord {
   remembered: boolean
   level: number
   lastReviewTime: number
+  updatedAt?: number
+  aliases?: string[]
 }
 
 interface MobileCompatBank {
   id: string
   name: string
   words: MobileCompatWord[]
+  createdAt?: number
+  updatedAt?: number
+  isDefault?: boolean
+  language?: import('@/utils/language/types').LanguageCode
 }
 
 interface MobileCompatUserSettings {
@@ -633,19 +645,26 @@ function adaptMobileAssociation(a: any): any {
 
 export function convertDesktopWordToMobile(w: any): MobileCompatWord {
   const learnTime = w.learnDate ? new Date(w.learnDate).getTime() : Date.now()
+  const createTime = w.ctime ? new Date(w.ctime).getTime() : learnTime
+  const rawLevel = typeof w.level === 'number' ? Math.trunc(w.level) : 0
+  const level = Math.max(0, Math.min(MAX_LEVEL, DEFAULT_INTERVALS.length - 1, rawLevel))
+  const intervalMs = (DEFAULT_INTERVALS[level] ?? DEFAULT_INTERVALS[0]) * 60 * 1000
   return {
+    id: w._id,
     word: w.text || '',
     meaning: w.explains || '',
     itemType: w.itemType || (String(w.text || '').includes(' ') ? 'phrase' : 'word'),
     phonetic: w.phonetic || '',
-    example: '',
-    addTime: learnTime,
-    reviewCount: 0,
-    nextReviewTime: Date.now() + 24 * 60 * 60 * 1000,
+    example: w.example || '',
+    addTime: createTime,
+    reviewCount: typeof w.reviewCount === 'number' ? w.reviewCount : 0,
+    nextReviewTime: learnTime + intervalMs,
     needsReview: !!w.isReview,
     remembered: !!w.remember,
-    level: typeof w.level === 'number' ? w.level : 0,
+    level,
     lastReviewTime: learnTime,
+    updatedAt: typeof w.updatedAt === 'number' ? w.updatedAt : learnTime,
+    aliases: Array.isArray(w.aliases) ? [...w.aliases] : undefined,
   }
 }
 
@@ -667,42 +686,24 @@ function collectMobileCompatUserSettings(): MobileCompatUserSettings | undefined
 }
 
 export async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
-  const allBanks = await getAllWordBanks()
-  const banks: MobileCompatBank[] = []
-
-  for (const bank of allBanks) {
-    const bankWords: MobileCompatWord[] = []
-    if (bank.words && Array.isArray(bank.words)) {
-      for (const w of bank.words) {
-        bankWords.push(convertDesktopWordToMobile(w))
-      }
-    }
-    banks.push({
-      id: bank.id,
-      name: bank.name,
-      words: bankWords,
-    })
-  }
-
-  // 复用桌面端的 collectSyncData 拿到文本/数字记忆片段（wire format 一致）
-  // 注意：collectSyncData 还会拉词库等其他数据，但读取本身廉价（已缓存）
-  let textMemory: SyncTextMemory | undefined
-  let numberMemory: SyncNumberMemory | undefined
-  let memoryPalace: SyncMemoryPalace | undefined
-  let sentences: SyncSentences | undefined
-  let knowledgeMemory: SyncKnowledgeMemory | undefined
-  let phoneticMemory: SyncPhoneticMemory | undefined
+  // 只收集一次全量数据，词库及文本/数字记忆共用同一快照
+  let fullData: SyncData | null = null
   try {
-    const fullData = await collectSyncData()
-    textMemory = fullData.textMemory || undefined
-    numberMemory = fullData.numberMemory || undefined
-    memoryPalace = fullData.memoryPalace || undefined
-    sentences = fullData.sentences || undefined
-    knowledgeMemory = fullData.knowledgeMemory || undefined
-    phoneticMemory = fullData.phoneticMemory || undefined
+    fullData = await collectSyncData()
   } catch (e) {
-    log.w('收集文本/数字记忆数据失败，将以空数据上传', e)
+    log.e('收集移动兼容同步数据失败，已取消上传', e)
+    throw e
   }
+
+  const banks: MobileCompatBank[] = (fullData?.wordBanks || []).map((bank) => ({
+    id: bank.id,
+    name: bank.name,
+    words: (bank.words || []).map(convertDesktopWordToMobile),
+    createdAt: bank.createdAt,
+    updatedAt: bank.updatedAt,
+    isDefault: bank.isDefault,
+    language: bank.language || 'en',
+  }))
 
   return {
     version: 1,
@@ -710,15 +711,21 @@ export async function collectMobileCompatData(): Promise<MobileCompatSyncData> {
     platform: 'desktop',
     banks,
     userSettings: collectMobileCompatUserSettings(),
-    textMemory,
-    numberMemory,
+    textMemory: fullData?.textMemory || undefined,
+    numberMemory: fullData?.numberMemory || undefined,
     signin: collectSigninSync() || undefined,
-    memoryPalace,
-    sentences,
-    knowledgeMemory,
-    phoneticMemory,
+    memoryPalace: fullData?.memoryPalace || undefined,
+    sentences: fullData?.sentences || undefined,
+    knowledgeMemory: fullData?.knowledgeMemory || undefined,
+    phoneticMemory: fullData?.phoneticMemory || undefined,
     tombstones: getTombstones(),
   }
+}
+
+function stableMobileWordId(bankId: string, word: MobileCompatWord, index: number): string {
+  if (word.id) return word.id
+  const normalized = String(word.word || '').trim().replace(/\s+/g, ' ').toLowerCase()
+  return `mobile-${bankId}-${normalized ? encodeURIComponent(normalized) : `empty-${index}`}`
 }
 
 export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncData {
@@ -728,25 +735,34 @@ export function convertMobileCompatToSyncData(data: MobileCompatSyncData): SyncD
     exportedAt,
     platform: data.platform || 'mobile',
     currentWordBankId: data.banks?.[0]?.id || '',
-    wordBanks: (data.banks || []).map((bank) => ({
-      id: bank.id,
-      name: bank.name,
-      createdAt: exportedAt,
-      updatedAt: exportedAt,
-      isDefault: bank.id === 'default',
-      words: (bank.words || []).map((word, index) => ({
-        _id: `mobile-${bank.id}-${index}-${exportedAt}`,
-        text: word.word || '',
-        explains: word.meaning || '',
-        itemType: word.itemType === 'sentence' ? 'phrase' : (word.itemType || (String(word.word || '').includes(' ') ? 'phrase' : 'word')),
-        phonetic: word.phonetic || '',
-        ctime: new Date(word.addTime || exportedAt),
-        learnDate: new Date(word.lastReviewTime || word.addTime || exportedAt),
-        isReview: !!word.needsReview,
-        remember: !!word.remembered,
-        level: typeof word.level === 'number' ? word.level : 1,
-      })) as any,
-    })),
+    wordBanks: (data.banks || []).map((bank) => {
+      const bankTime = bank.updatedAt || exportedAt
+      return {
+        id: bank.id,
+        name: bank.name,
+        createdAt: bank.createdAt || bankTime,
+        updatedAt: bankTime,
+        isDefault: bank.isDefault ?? bank.id === 'default',
+        language: bank.language || 'en',
+        words: (bank.words || []).map((word, index) => {
+          const learnTime = word.lastReviewTime || word.addTime || exportedAt
+          return {
+            _id: stableMobileWordId(bank.id, word, index),
+            text: word.word || '',
+            explains: word.meaning || '',
+            itemType: word.itemType === 'sentence' ? 'phrase' : (word.itemType || (String(word.word || '').includes(' ') ? 'phrase' : 'word')),
+            phonetic: word.phonetic || '',
+            ctime: new Date(word.addTime || exportedAt),
+            learnDate: new Date(learnTime),
+            updatedAt: word.updatedAt ?? learnTime,
+            aliases: Array.isArray(word.aliases) ? [...word.aliases] : undefined,
+            isReview: !!word.needsReview,
+            remember: !!word.remembered,
+            level: typeof word.level === 'number' ? word.level : 1,
+          }
+        }) as any,
+      }
+    }),
     userSettings: data.userSettings ? {
       pluginStatus: false,
       shortcutEnabled: false,
@@ -801,18 +817,29 @@ async function restoreMobileCompatFromEncrypted(
 
 /**
  * 以移动端兼容格式上传（推送到小程序）
- * 流程：JSON → pako 压缩 → XOR 加密 → base64 → 上传
+ * 流程：JSON → pako 压缩 → XOR 兼容编码 → base64 → 上传
  */
+function stripMobileCompatSecrets(data: MobileCompatSyncData): MobileCompatSyncData {
+  if (!data.userSettings) return data
+  return {
+    ...data,
+    userSettings: {
+      ...data.userSettings,
+      keys: {},
+    },
+  }
+}
+
 export async function uploadToServerMobileCompat(): Promise<SyncServerResult> {
   try {
     const data = await collectMobileCompatData()
-    const json = JSON.stringify(data)
+    const json = JSON.stringify(stripMobileCompatSecrets(data))
 
     // 1. pako 压缩
     const jsonBytes = new TextEncoder().encode(json)
     const compressed = pako.deflate(jsonBytes)
 
-    // 2. XOR 加密
+    // 2. XOR 兼容编码
     const key = randomString32()
     const encrypted = xorCrypt(compressed, key)
 

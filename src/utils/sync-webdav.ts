@@ -23,7 +23,7 @@
 import pako from 'pako'
 import type { SyncData, SyncServerResult } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
-import { collectSyncData, DEFAULT_RESTORE_OPTIONS, restoreSyncData, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
+import { collectSyncData, stripSyncSecrets, DEFAULT_RESTORE_OPTIONS, restoreSyncData, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import {
   base64ToUint8Array,
   convertMobileCompatToSyncData,
@@ -250,7 +250,7 @@ function buildAuthHeader(config: WebDavConfig): string {
   return `Basic ${uint8ArrayToBase64(new TextEncoder().encode(`${config.username}:${config.password}`))}`
 }
 
-/** 加密打包：JSON → pako → XOR → base64（纯函数，便于测试） */
+/** XOR 兼容编码打包：JSON → pako → XOR → base64（纯函数，便于测试） */
 export function encodeWebDavFile(json: string, key: string): string {
   const compressed = pako.deflate(new TextEncoder().encode(json))
   return uint8ArrayToBase64(xorCrypt(compressed, key))
@@ -530,11 +530,11 @@ export function formatWebDavDiagnosis(d: WebDavDiagnosis): string {
   return lines.join('\n')
 }
 
-/** 备份：收集全量数据（完整 SyncData 格式，四模块齐全）→ 加密打包 → PUT 到网盘 */
+/** 备份：收集全量数据（完整 SyncData 格式，四模块齐全）→ XOR 兼容编码打包 → PUT 到网盘 */
 export async function uploadToWebDav(config: WebDavConfig): Promise<SyncServerResult & { resolvedDir?: string }> {
   try {
     const data = await collectSyncData()
-    const json = JSON.stringify(data)
+    const json = JSON.stringify(stripSyncSecrets(data))
     const body = encodeWebDavFile(json, buildWebDavKey(config))
     log.i(`[WebDAV] 上传: JSON ${(new TextEncoder().encode(json).length / 1024).toFixed(1)}KB, 密文 ${(body.length / 1024).toFixed(1)}KB`)
     if (body.length > MAX_UPLOAD_BYTES) {

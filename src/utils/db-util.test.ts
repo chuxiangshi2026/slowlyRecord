@@ -201,7 +201,7 @@ describe('db-util', () => {
       const { addAndUpdateDbWord, removeDbWordById } = await loadModule()
       await addAndUpdateDbWord(makeWord({ _id: 'word_to_delete' }))
 
-      removeDbWordById('word_to_delete')
+      await removeDbWordById('word_to_delete')
       const word = mockDb.get('word_to_delete')
       expect(word).toBeNull()
     })

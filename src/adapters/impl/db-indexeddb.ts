@@ -62,13 +62,37 @@ function promisifyTransaction(tx: IDBTransaction): Promise<void> {
 
 export class DbAdapterIndexedDB implements DbAdapter {
   private db: IDBDatabase | null = null
+  private openPromise: Promise<IDBDatabase> | null = null
   private revCounter = 0
+  private writeQueue: Promise<void> = Promise.resolve()
+  /** 每个文档最后一次写入调用的版本，删除也记录，防止旧事务回写新缓存 */
+  private latestWriteRevisions = new Map<string, string>()
 
   private async getDB(): Promise<IDBDatabase> {
-    if (!this.db) {
-      this.db = await openDB()
+    if (this.db) return this.db
+    if (!this.openPromise) {
+      this.openPromise = openDB().then((db) => {
+        this.db = db
+        this.openPromise = null
+        return db
+      }).catch((error) => {
+        this.openPromise = null
+        throw error
+      })
     }
-    return this.db
+    return this.openPromise
+  }
+
+  /** 等待所有已排队的写事务完成（测试或退出前使用） */
+  whenIdle(): Promise<void> {
+    return this.writeQueue
+  }
+
+  /** 串行化同一适配器上的写操作，避免旧写晚完成后覆盖新缓存 */
+  private enqueueWrite<T>(operation: () => Promise<T>): Promise<T> {
+    const task = this.writeQueue.then(operation, operation)
+    this.writeQueue = task.then(() => undefined, () => undefined)
+    return task
   }
 
   private nextRev(): string {
@@ -85,8 +109,17 @@ export class DbAdapterIndexedDB implements DbAdapter {
   put(doc: DbDoc): DbReturn {
     const rev = this.nextRev()
     const updatedDoc = { ...doc, _rev: rev }
+    const previous = this.syncCache.get(doc._id)
+    this.latestWriteRevisions.set(doc._id, rev)
     this.syncCache.set(doc._id, updatedDoc)
-    this._asyncPut(updatedDoc).catch(console.error)
+    void this.enqueueWrite(() => this._writePut(updatedDoc)).catch((error) => {
+      // 持久化失败时回滚缓存，避免 UI 继续读取并不存在的“新版本”
+      if (this.syncCache.get(doc._id)?._rev === rev) {
+        if (previous) this.syncCache.set(doc._id, previous)
+        else this.syncCache.delete(doc._id)
+      }
+      console.error('[db-indexeddb] put 持久化失败:', error)
+    })
     return { id: doc._id, ok: true, rev }
   }
 
@@ -151,31 +184,39 @@ export class DbAdapterIndexedDB implements DbAdapter {
 
   remove(doc: string | DbDoc): DbReturn {
     const id = typeof doc === 'string' ? doc : doc._id
-    // 同步删除：从缓存中移除，后台异步持久化
     const existing = this.syncCache.get(id)
     if (!existing) {
       return { id, ok: false, error: true, message: 'doc not found' }
     }
-    
+
+    const rev = this.nextRev()
+    this.latestWriteRevisions.set(id, rev)
     this.syncCache.delete(id)
-    this._asyncRemove(id).catch(console.error)
-    
-    return { id, ok: true, rev: this.nextRev() }
+    void this.enqueueWrite(() => this._writeRemove(id)).catch((error) => {
+      if (!this.syncCache.has(id)) {
+        this.syncCache.set(id, existing)
+      }
+      console.error('[db-indexeddb] remove 持久化失败:', error)
+    })
+
+    return { id, ok: true, rev }
   }
 
-  private async _asyncRemove(id: string): Promise<void> {
+  private async _writeRemove(id: string): Promise<void> {
     const db = await this.getDB()
-    const store = getStore(db, 'readwrite')
-    await promisify(store.delete(id))
+    const tx = db.transaction(STORE_NAME, 'readwrite')
+    tx.objectStore(STORE_NAME).delete(id)
+    await promisifyTransaction(tx)
   }
 
-  private async _asyncPut(doc: DbDoc): Promise<void> {
+  private async _writePut(doc: DbDoc): Promise<void> {
     const db = await this.getDB()
-    const store = getStore(db, 'readwrite')
-    await promisify(store.put(doc))
+    const tx = db.transaction(STORE_NAME, 'readwrite')
+    tx.objectStore(STORE_NAME).put(doc)
+    await promisifyTransaction(tx)
   }
 
-  private async _asyncBulkPut(docs: DbDoc[]): Promise<void> {
+  private async _writeBulkPut(docs: DbDoc[]): Promise<void> {
     if (docs.length === 0) return
     const db = await this.getDB()
     const tx = db.transaction(STORE_NAME, 'readwrite')
@@ -187,25 +228,36 @@ export class DbAdapterIndexedDB implements DbAdapter {
   bulkDocs(docs: DbDoc[]): DbReturn[] {
     const rev = this.nextRev()
     const updatedDocs = docs.map(doc => ({ ...doc, _rev: rev }))
+    const previous = new Map<string, DbDoc | null>()
     const results: DbReturn[] = updatedDocs.map(doc => {
+      previous.set(doc._id, this.syncCache.get(doc._id) ?? null)
+      this.latestWriteRevisions.set(doc._id, rev)
       this.syncCache.set(doc._id, doc)
       return { id: doc._id, ok: true, rev }
     })
-    this._asyncBulkPut(updatedDocs).catch(console.error)
+    void this.enqueueWrite(() => this._writeBulkPut(updatedDocs)).catch((error) => {
+      for (const doc of updatedDocs) {
+        if (this.syncCache.get(doc._id)?._rev !== rev) continue
+        const old = previous.get(doc._id)
+        if (old) this.syncCache.set(doc._id, old)
+        else this.syncCache.delete(doc._id)
+      }
+      console.error('[db-indexeddb] bulkDocs 持久化失败:', error)
+    })
     return results
   }
 
   promises = {
     get: async <T extends {} = Record<string, any>>(id: string): Promise<DbDoc<T> | null> => {
-      // 先查缓存
+      await this.writeQueue
       if (this.syncCache.has(id)) {
         return this.syncCache.get(id) as DbDoc<T> | null || null
       }
-      // 再查 IndexedDB
+      const revision = this.latestWriteRevisions.get(id)
       const db = await this.getDB()
       const store = getStore(db)
       const result = await promisify(store.get(id)) as DbDoc<T> | null
-      if (result) {
+      if (result && this.latestWriteRevisions.get(id) === revision) {
         this.syncCache.set(id, result)
       }
       return result
@@ -214,46 +266,41 @@ export class DbAdapterIndexedDB implements DbAdapter {
     put: async (doc: DbDoc): Promise<DbReturn> => {
       const rev = this.nextRev()
       const updatedDoc = { ...doc, _rev: rev }
-      
-      const db = await this.getDB()
-      const store = getStore(db, 'readwrite')
-      await promisify(store.put(updatedDoc))
-      
-      // 更新同步缓存
-      this.syncCache.set(doc._id, updatedDoc)
-      
+      this.latestWriteRevisions.set(doc._id, rev)
+      await this.enqueueWrite(async () => {
+        await this._writePut(updatedDoc)
+        if (this.latestWriteRevisions.get(doc._id) === rev) {
+          this.syncCache.set(doc._id, updatedDoc)
+        }
+      })
       return { id: doc._id, ok: true, rev }
     },
 
     remove: async (doc: string | DbDoc): Promise<DbReturn> => {
       const id = typeof doc === 'string' ? doc : doc._id
-      
-      const db = await this.getDB()
-      const store = getStore(db, 'readwrite')
-      await promisify(store.delete(id))
-      
-      this.syncCache.delete(id)
-      
-      return { id, ok: true, rev: this.nextRev() }
+      const rev = this.nextRev()
+      this.latestWriteRevisions.set(id, rev)
+      await this.enqueueWrite(async () => {
+        await this._writeRemove(id)
+        if (this.latestWriteRevisions.get(id) === rev) this.syncCache.delete(id)
+      })
+      return { id, ok: true, rev }
     },
 
     bulkDocs: async (docs: DbDoc[]): Promise<DbReturn[]> => {
       if (docs.length === 0) return []
       const rev = this.nextRev()
       const updatedDocs = docs.map(doc => ({ ...doc, _rev: rev }))
-      const db = await this.getDB()
-      const tx = db.transaction(STORE_NAME, 'readwrite')
-      const store = tx.objectStore(STORE_NAME)
-
-      updatedDocs.forEach(doc => store.put(doc))
-      await promisifyTransaction(tx)
-
-      const results: DbReturn[] = updatedDocs.map(doc => {
-        this.syncCache.set(doc._id, doc)
-        return { id: doc._id, ok: true, rev }
+      for (const doc of updatedDocs) this.latestWriteRevisions.set(doc._id, rev)
+      await this.enqueueWrite(async () => {
+        await this._writeBulkPut(updatedDocs)
+        for (const doc of updatedDocs) {
+          if (this.latestWriteRevisions.get(doc._id) === rev) {
+            this.syncCache.set(doc._id, doc)
+          }
+        }
       })
-
-      return results
+      return updatedDocs.map(doc => ({ id: doc._id, ok: true, rev }))
     },
   }
 }
