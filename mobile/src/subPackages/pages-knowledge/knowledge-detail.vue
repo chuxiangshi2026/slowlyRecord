@@ -315,7 +315,7 @@ async function drawAllPlots() {
   for (const item of plotItems) {
     const cid = `#${plotCanvasId(item.id)}`
     const res = await new Promise<any[]>(resolve => {
-      uni.createSelectorQuery().select(cid).fields({ node: true, size: true }).exec(resolve)
+      ;(uni.createSelectorQuery() as any).select(cid).fields({ node: true, size: true }).exec(resolve)
     })
     const info = res?.[0]
     if (info?.node) renderPlot(info.node, dpr, item, { width: info.width, height: info.height })

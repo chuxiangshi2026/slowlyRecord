@@ -5,7 +5,7 @@
  * - 复用共享 DEFAULT_INTERVALS（分钟单位，下标即等级），等级体系简化自单词的 12 级标准
  * - level 0-12，nextReview 为到期时间戳（ms）
  * - 「记住了」升 1 级（封顶 12），按新等级间隔排下次复习
- * - 「还没记住」降 1 级（12 级答错重置回 1 级，与知识包 SRS 口径一致），重新排期
+ * - 「还没记住」降 4 级、下限 1（12 级答错降到 8 级，与桌面 SRS 口径一致），重新排期
  * - 从未复习过（nextReview 为空）视为已到期，方便新数据立即进入练习
  */
 import { DEFAULT_INTERVALS } from '@/stores/useUtils/constants'
@@ -49,13 +49,13 @@ export function scheduleOnRemembered(
   return { level: next, nextReview: now + intervalMinutesOf(next) * 60 * 1000 }
 }
 
-/** 「还没记住」：降 1 级（下限 0）；12 级答错重置回 1 级 */
+/** 「还没记住」：每次降 4 级，下限 1（12 级答错降到 8 级） */
 export function scheduleOnForgotten(
   level: number | undefined,
   now: number = Date.now(),
 ): PracticeSchedulePatch {
   const current = getPracticeLevel(level)
-  const next = current >= PRACTICE_MASTERED_LEVEL ? 1 : Math.max(current - 1, 0)
+  const next = Math.max(current - 4, 1)
   return { level: next, nextReview: now + intervalMinutesOf(next) * 60 * 1000 }
 }
 

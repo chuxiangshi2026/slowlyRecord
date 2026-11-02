@@ -60,20 +60,20 @@ describe('「记住了」升级排期', () => {
 })
 
 describe('「还没记住」降级排期', () => {
-  it('降 1 级，下限 0 级', () => {
-    expect(scheduleOnForgotten(5, 0).level).toBe(4)
-    expect(scheduleOnForgotten(1, 0).level).toBe(0)
-    expect(scheduleOnForgotten(0, 0).level).toBe(0)
+  it('每次降 4 级，下限 1 级', () => {
+    expect(scheduleOnForgotten(5, 0).level).toBe(1)
+    expect(scheduleOnForgotten(1, 0).level).toBe(1)
+    expect(scheduleOnForgotten(0, 0).level).toBe(1)
   })
 
-  it('12 级答错重置回 1 级', () => {
-    expect(scheduleOnForgotten(12, 0).level).toBe(1)
+  it('12 级答错降到 8 级', () => {
+    expect(scheduleOnForgotten(12, 0).level).toBe(8)
   })
 
   it('重新按降级后的等级排期', () => {
     const now = 2_000_000
     const patch = scheduleOnForgotten(4, now)
-    expect(patch.nextReview).toBe(now + DEFAULT_INTERVALS[3] * 60 * 1000)
+    expect(patch.nextReview).toBe(now + DEFAULT_INTERVALS[1] * 60 * 1000)
   })
 })
 

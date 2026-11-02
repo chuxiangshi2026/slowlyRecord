@@ -15,11 +15,14 @@ const CACHE_INDEX_KEY = 'slowlyrecord_remote_wordbank_index'
 const CHUNK_SIZE = 900 * 1024
 
 /** 词库清单条目（与 index.json 一致） */
+import type { LanguageCode } from '@/utils/language'
+
 export interface RemoteWordBankInfo {
   id: string
   name: string
   wordCount: number
   sizeKB: number
+  language?: LanguageCode
 }
 
 /** 已缓存的词库 id 列表 */

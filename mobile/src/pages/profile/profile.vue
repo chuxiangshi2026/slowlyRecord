@@ -372,7 +372,7 @@ const enableRemind = () => {
   uni.requestSubscribeMessage({
     tmplIds: [subscribeTemplateId.value],
     success: (res) => {
-      const result = parseSubscribeResult(res as Record<string, unknown>, subscribeTemplateId.value)
+      const result = parseSubscribeResult(res as unknown as Record<string, unknown>, subscribeTemplateId.value)
       // 授权结果（接受/拒绝/封禁/过期）记录到本地
       subscribeRecord.value = recordSubscribeOutcome(result)
       if (result === 'accept') {

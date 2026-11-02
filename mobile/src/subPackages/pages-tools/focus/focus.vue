@@ -182,6 +182,7 @@ import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
 import { speakWord, stopSpeaking } from '@/utils/word-audio'
 import { ListenPlayer } from './listen-play'
+import { normalizeForCompare } from '@/utils/language'
 
 const wordsStore = useMobileWords()
 
@@ -373,7 +374,8 @@ function startListen() {
         // 连播失败静默跳过该词（降噪：不弹 toast），只留控制台告警便于排查
         console.warn('ListenPlayer: 单词发音全部音源失败，已跳过')
       }
-    }
+    },
+    wordsStore.currentLanguage
   )
   listenPlaying.value = true
   listenPlayer.start()
@@ -471,8 +473,9 @@ function markCurrent(remembered: boolean) {
 function checkAnswer() {
   const word = currentWord.value
   if (!word || checked.value) return
-  const answer = word.word.trim().toLowerCase()
-  const input = userInput.value.trim().toLowerCase()
+  const profile = wordsStore.currentProfile
+  const answer = normalizeForCompare(word.word, profile)
+  const input = normalizeForCompare(userInput.value, profile)
   isCorrect.value = input === answer
   checked.value = true
   clearAutoTimer()

@@ -10,8 +10,9 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { DEFAULT_INTERVALS } from './useUtils/constants'
 import { ALL_PHONEMES } from '@/utils/phoneme-data'
+import type { Phoneme } from '@/utils/phoneme-data'
 import { getDbAdapter } from '@/adapters/index'
-import type { Phoneme, PhonemeProgress, MinimalPairProgress, PhoneticProgressDoc, MobilePhoneticMemory } from './useUtils/types'
+import type { PhonemeProgress, MinimalPairProgress, PhoneticProgressDoc, MobilePhoneticMemory } from './useUtils/types'
 
 // doc id 与桌面端 phonetic-memory-db.ts 保持一致（同步互通的前提）
 const PROGRESS_DOC_ID = 'phonetic_memory_progress'

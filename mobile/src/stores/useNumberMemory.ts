@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDbAdapter } from '@/adapters/index'
-import { recordTombstones } from './useUtils/sync-tombstone'
+import { filterByTombstones, recordTombstones } from './useUtils/sync-tombstone'
 import {
   isPracticeDue,
   scheduleOnRemembered,
@@ -51,7 +51,7 @@ function normalizeDoc(raw: any): NumberMemoryDoc {
 
 function readDoc(): NumberMemoryDoc {
   try {
-    const doc = getDbAdapter().get<NumberMemoryDoc>(DOC_ID)
+    const doc = getDbAdapter().get<{ data: NumberMemoryDoc }>(DOC_ID)
     if (doc?.data && typeof doc.data === 'object') {
       return normalizeDoc(doc.data)
     }
@@ -320,31 +320,51 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     }
   }
 
-  function restore(data: MobileNumberMemory, mode: 'merge' | 'replace' = 'merge') {
-    if (!data) return { addedAssoc: 0, addedEntry: 0 }
+  function restore(
+    data: MobileNumberMemory,
+    mode: 'merge' | 'replace' = 'merge',
+    tombstones: Record<string, number> = {},
+  ) {
+    const empty = { addedAssoc: 0, addedEntry: 0, deletedAssoc: 0, deletedEntry: 0 }
+    if (!data) return empty
+
+    const isDeletedAssoc = (a: MobileNumberAssociation) =>
+      tombstones[a.number] !== undefined && tombstones[a.number] >= 0
 
     if (mode === 'replace') {
-      associations.value = data.associations || []
-      entries.value = data.entries || []
-      notes.value = data.notes || []
-      prompts.value = data.prompts || []
+      associations.value = (data.associations || []).filter(a => !isDeletedAssoc(a))
+      entries.value = filterByTombstones(data.entries || [], 'remote', tombstones)
+      notes.value = filterByTombstones(data.notes || [], 'remote', tombstones)
+      prompts.value = filterByTombstones(data.prompts || [], 'remote', tombstones)
       persist()
       return {
         addedAssoc: associations.value.length,
         addedEntry: entries.value.length,
+        deletedAssoc: 0,
+        deletedEntry: 0,
       }
     }
 
-    // merge：number 唯一 → 远端覆盖本地（但不丢本地独有）；entries/notes/prompts 按 _id 合并
+    // merge：先应用本地删除墓碑，再合并远端条目
+    const keptAssocs = associations.value.filter(a => !isDeletedAssoc(a))
+    const deletedAssoc = associations.value.length - keptAssocs.length
+    const keptEntries = filterByTombstones(entries.value, 'remote', tombstones)
+    const deletedEntry = entries.value.length - keptEntries.length
+    const keptNotes = filterByTombstones(notes.value, 'remote', tombstones)
+    const keptPrompts = filterByTombstones(prompts.value, 'remote', tombstones)
+    associations.value = keptAssocs
+    entries.value = keptEntries
+    notes.value = keptNotes
+    prompts.value = keptPrompts
+
     let addedAssoc = 0
     const localAssoc = new Map(associations.value.map((a) => [a.number, a]))
-    for (const a of data.associations || []) {
+    for (const a of (data.associations || []).filter(a => !isDeletedAssoc(a))) {
       if (!localAssoc.has(a.number)) {
         associations.value.push(a)
         localAssoc.set(a.number, a)
         addedAssoc++
       } else {
-        // 远端覆盖：以 utime 等无字段比对，简化为远端有 description/imageUrl 时覆盖
         const local = localAssoc.get(a.number)!
         if (
           (a.description && a.description !== local.description) ||
@@ -357,23 +377,27 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     }
 
     let addedEntry = 0
-    const entryIds = new Set(entries.value.map((e) => e._id))
-    for (const e of data.entries || []) {
-      if (!entryIds.has(e._id)) {
+    const entryMap = new Map(entries.value.map((e) => [e._id, e]))
+    for (const e of filterByTombstones(data.entries || [], 'remote', tombstones)) {
+      const local = entryMap.get(e._id)
+      if (!local) {
         entries.value.push(e)
-        entryIds.add(e._id)
+        entryMap.set(e._id, e)
         addedEntry++
+      } else if ((e.updatedAt || 0) > (local.updatedAt || 0)) {
+        const idx = entries.value.findIndex((x) => x._id === e._id)
+        if (idx >= 0) entries.value[idx] = { ...local, ...e }
       }
     }
     const noteIds = new Set(notes.value.map((n) => n._id))
-    for (const n of data.notes || []) {
+    for (const n of filterByTombstones(data.notes || [], 'remote', tombstones)) {
       if (!noteIds.has(n._id)) {
         notes.value.push(n)
         noteIds.add(n._id)
       }
     }
     const promptIds = new Set(prompts.value.map((p) => p._id))
-    for (const p of data.prompts || []) {
+    for (const p of filterByTombstones(data.prompts || [], 'remote', tombstones)) {
       if (!promptIds.has(p._id)) {
         prompts.value.push(p)
         promptIds.add(p._id)
@@ -381,7 +405,7 @@ export const useNumberMemory = defineStore('mobileNumberMemory', () => {
     }
 
     persist()
-    return { addedAssoc, addedEntry }
+    return { addedAssoc, addedEntry, deletedAssoc, deletedEntry }
   }
 
   return {

@@ -3,7 +3,7 @@
  *
  * 移植自桌面端 src/utils/knowledge-memory-srs.ts + src/utils/srs.ts：
  * 复用共享 DEFAULT_INTERVALS（分钟单位），level 0-12，
- * 答对且过复习间隔才升级，答错降级；12 级答错直接重置回 1。
+ * 答对且过复习间隔才升级；答错每次降 4 级、下限 1（12 级降到 8 级）。
  */
 import { DEFAULT_INTERVALS } from '@/stores/useUtils/constants'
 import type { KnowledgeItemProgress } from '@/stores/useUtils/types'
@@ -67,16 +67,14 @@ export function isDue(progress: KnowledgeItemProgress | undefined, now: number):
 }
 
 /**
- * 判断当前是否在可升级时间窗口内
- * 开始 = learnDate + intervals[level]，结束 = learnDate + intervals[min(level+3, len-1)]
- * 未学过（learnDate 为假值）时允许升级
+ * 判断是否已到可升级时间：达到当前等级间隔即可升级，不设截止窗口。
+ * 未学过（learnDate 为假值）时允许升级。
  */
 function canLevelUp(learnDate: number, level: number, now: number): boolean {
   if (!learnDate) return true
   const clampedLevel = clampLevel(level)
   const start = learnDate + (DEFAULT_INTERVALS[clampedLevel] ?? DEFAULT_INTERVALS[0]) * 60 * 1000
-  const end = learnDate + DEFAULT_INTERVALS[Math.min(clampedLevel + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000
-  return now > start && now < end
+  return now >= start
 }
 
 /**
@@ -90,17 +88,16 @@ function computeLevelUp(level: number, firmness?: string): number {
 }
 
 /**
- * 计算降级后的等级（≥12 重置为 1，否则 -1，下限 1）
+ * 计算降级后的等级：每次 -4，下限 1（12 级降到 8 级）
  */
 function computeLevelDown(level: number): number {
-  if (level >= MASTERED_LEVEL) return 1
-  return Math.max(level - 1, 1)
+  return Math.max(level - 4, 1)
 }
 
 /**
  * 答对后更新进度
- * - 在升级窗口内：按记忆牢固度升 1~3 级，封顶 12
- * - 未到期或到期但超窗：刷新 learnDate，不升级
+ * - 已到期：按记忆牢固度升 1~3 级，封顶 12
+ * - 未到期：刷新 learnDate，不升级
  */
 export function markCorrect(
   progress: KnowledgeItemProgress,
@@ -116,7 +113,7 @@ export function markCorrect(
       correct: progress.correct + 1,
     }
   }
-  // 未到期或太晚：刷新 learnDate，保持等级
+  // 未到期：刷新 learnDate，保持等级
   return {
     ...progress,
     learnDate: now,
@@ -125,8 +122,7 @@ export function markCorrect(
 }
 
 /**
- * 答错后更新进度
- * 12 级答错直接重置为 1 级，否则降级
+ * 答错后更新进度：每次 -4，下限 1（12 级降到 8 级）
  */
 export function markWrong(
   progress: KnowledgeItemProgress,

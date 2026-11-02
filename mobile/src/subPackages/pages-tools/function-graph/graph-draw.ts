@@ -28,6 +28,7 @@ export interface GraphCtx {
   lineTo(x: number, y: number): void
   stroke(): void
   fill(): void
+  scale(x: number, y: number): void
   fillRect(x: number, y: number, w: number, h: number): void
   fillText(text: string, x: number, y: number): void
   arc(x: number, y: number, radius: number, startAngle: number, endAngle: number): void

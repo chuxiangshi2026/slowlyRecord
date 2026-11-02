@@ -8,10 +8,12 @@
  * 出于移动端构建限制（UniApp 不能直接 import 桌面端代码），这里维护一份独立实现。
  */
 
+import { getProfile, normalizeForCompare, type LanguageCode } from '@/utils/language'
+
 export function normalizeWordText(text: string): string {
   return (text || '').trim().replace(/\s+/g, ' ')
 }
 
-export function getWordKey(text: string): string {
-  return normalizeWordText(text).toLowerCase()
+export function getWordKey(text: string, language: LanguageCode = 'en'): string {
+  return normalizeForCompare(normalizeWordText(text), getProfile(language))
 }

@@ -44,18 +44,18 @@
         </view>
       </view>
 
-      <!-- 点选模式超长回退打字模式的轻提示 -->
+      <!-- 点选模式回退打字模式的轻提示 -->
       <view v-if="tapFallbackTip" class="tap-fallback-tip">
-        <text class="tap-fallback-text">该词较长，已切换为键盘输入</text>
+        <text class="tap-fallback-text">{{ tapFallbackTip }}</text>
       </view>
 
       <!-- 输入区域 -->
       <view class="input-area" :class="{ shaking: isShaking }">
-        <!-- 点选拼写模式（≤8 字母的单词，长单词自动回退打字模式） -->
+        <!-- 点选拼写模式（英语 ≤8 字母，其他情况使用键盘输入） -->
         <view v-if="tapInputActive" class="tap-mode">
           <view class="tap-slots">
             <view
-              v-for="i in currentWord.word.length"
+              v-for="i in currentUnits.length"
               :key="'tap-slot-' + i"
               class="tap-slot"
               :class="{ filled: tapPlaced[i-1] }"
@@ -81,7 +81,7 @@
         <view v-else-if="displayMode === 'blank'" class="blank-mode">
           <view class="input-slots">
             <view
-              v-for="i in currentWord.word.length"
+              v-for="i in currentUnits.length"
               :key="i"
               class="input-slot"
               :class="{
@@ -121,7 +121,7 @@
               <input
                 v-else
                 v-model="slot.value"
-                maxlength="1"
+                :maxlength="slot.letter.length"
                 class="letter-input"
                 :focus="focusedSlotIndex === index"
                 @input="handlePartialInput(index)"
@@ -195,7 +195,7 @@
         <view class="toggle-btn" :class="{ active: partialMode }" @click="togglePartialMode">
           <text>给一半字母</text>
         </view>
-        <view class="toggle-btn tap-toggle" :class="{ 'tap-on': tapMode }" @click="toggleTapMode">
+        <view v-if="wordsStore.currentLanguage === 'en'" class="toggle-btn tap-toggle" :class="{ 'tap-on': tapMode }" @click="toggleTapMode">
           <text>点选</text>
         </view>
       </view>
@@ -210,6 +210,7 @@ import { speakWord, stopSpeaking } from '@/utils/word-audio'
 import { buildFragmentTiles, type AnswerTile } from '@/utils/answer-tokens'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
+import { isWordText, isPhraseText, normalizeForCompare, splitSpellUnits } from '@/utils/language'
 // 等级口径与主复习体系（12 级标准）对齐，拼写模块不单独"毕业"单词
 import { nextLevelOnCorrect, nextLevelOnWrong, getEmptyState, getFilteredHint } from './dictation-level'
 
@@ -225,18 +226,17 @@ const MAX_TAP_LETTERS = 8
 const partialMode = ref(true)
 const displayMode = computed<'blank' | 'partial'>(() => partialMode.value ? 'partial' : 'blank')
 
-// 点选拼写模式（与打字模式并列的输入方式，长单词自动回退）
+// 点选拼写保留英语字母池，其他语言使用键盘输入
 const tapMode = ref(false)
 const tapTiles = ref<(AnswerTile & { used: boolean })[]>([])
 const tapPlaced = ref<AnswerTile[]>([])
-const tapInputActive = computed(() => {
-  const w = currentWord.value
-  return tapMode.value && !!w && w.word.length <= MAX_TAP_LETTERS
-})
-// 点选模式开启但单词超长被静默回退打字模式时，给用户一行轻提示
+const tapInputActive = computed(() =>
+  wordsStore.currentLanguage === 'en' && tapMode.value && currentUnits.value.length > 0 && currentUnits.value.length <= MAX_TAP_LETTERS
+)
 const tapFallbackTip = computed(() => {
-  const w = currentWord.value
-  return tapMode.value && !!w && w.word.length > MAX_TAP_LETTERS
+  if (!tapMode.value || !currentWord.value) return ''
+  if (wordsStore.currentLanguage !== 'en') return '非英语词库已切换为键盘输入'
+  return currentUnits.value.length > MAX_TAP_LETTERS ? '该词较长，已切换为键盘输入' : ''
 })
 const options = ref({
   autoPlay: true,
@@ -258,7 +258,7 @@ const isShowingHint = ref(false)
 const isLoading = ref(false)
 const inputFocus = ref(false)
 
-// 空态统计：当前范围内的总条数与被 ^[a-zA-Z]+$ 过滤掉的词组/句子条数
+// 空态统计：当前范围内的总条数与不适合拼写练习的词组/句子条数
 const rangeTotalCount = ref(0)
 const filteredOutCount = ref(0)
 
@@ -286,6 +286,10 @@ function triggerLevelUp(from: number, to: number) {
 
 // ========== 计算属性 ==========
 const currentWord = computed(() => wordList.value[currentIndex.value] || null)
+const currentUnits = computed(() => currentWord.value
+  ? splitSpellUnits(currentWord.value.word, wordsStore.currentProfile)
+  : []
+)
 
 const getCurrentErrorCount = computed(() => {
   return errorCountMap.value[currentIndex.value] || 0
@@ -314,6 +318,11 @@ function getWords() {
   }
 }
 
+function getEligibleWords(words: MobileWord[]): MobileWord[] {
+  const profile = wordsStore.currentProfile
+  return words.filter(w => w.word && isWordText(w.word, profile) && !isPhraseText(w.word, profile))
+}
+
 async function loadWords() {
   isLoading.value = true
   try {
@@ -324,10 +333,9 @@ async function loadWords() {
       filteredOutCount.value = 0
       return
     }
-    // 只取纯英文单词，随机打乱
-    const englishWords = allWords.filter(w => w.word && /^[a-zA-Z]+$/.test(w.word))
-    filteredOutCount.value = allWords.length - englishWords.length
-    wordList.value = [...englishWords].sort(() => Math.random() - 0.5)
+    const eligibleWords = getEligibleWords(allWords)
+    filteredOutCount.value = allWords.length - eligibleWords.length
+    wordList.value = [...eligibleWords].sort(() => Math.random() - 0.5)
     currentIndex.value = 0
   } finally {
     isLoading.value = false
@@ -338,18 +346,18 @@ async function loadWords() {
 function refreshWordList() {
   const allWords = getWords()
   rangeTotalCount.value = allWords.length
-  const englishWords = allWords.filter(w => w.word && /^[a-zA-Z]+$/.test(w.word))
-  filteredOutCount.value = allWords.length - englishWords.length
+  const eligibleWords = getEligibleWords(allWords)
+  filteredOutCount.value = allWords.length - eligibleWords.length
   const curWord = currentWord.value
   if (curWord) {
-    const newIdx = englishWords.findIndex(w => w.id === curWord.id)
+    const newIdx = eligibleWords.findIndex(w => w.id === curWord.id)
     if (newIdx >= 0) {
-      wordList.value = englishWords
+      wordList.value = eligibleWords
       currentIndex.value = newIdx
       return
     }
   }
-  wordList.value = [...englishWords].sort(() => Math.random() - 0.5)
+  wordList.value = [...eligibleWords].sort(() => Math.random() - 0.5)
   currentIndex.value = Math.min(currentIndex.value, wordList.value.length - 1)
 }
 
@@ -368,13 +376,13 @@ function prepareWord() {
   if (!word) return
 
   if (tapInputActive.value) {
-    // 点选拼写：单词字母 + 2~3 个干扰字母（干扰字母不与单词已有字母重复）
-    const letters = word.word.toLowerCase().split('')
+    // 英语点选：单词字母 + 2~3 个干扰字母（干扰字母不与单词已有字母重复）
+    const letters = currentUnits.value.map(unit => unit.toLowerCase())
     const pool = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(l => !letters.includes(l))
     const distractorCount = 2 + (Math.random() < 0.5 ? 1 : 0)
     tapTiles.value = buildFragmentTiles(letters, pool, distractorCount).map(t => ({ ...t, used: false }))
   } else if (displayMode.value === 'partial') {
-    const letters = word.word.split('')
+    const letters = currentUnits.value
     const len = letters.length
     let hideCount = Math.floor(len * 0.5)
     if (hideCount < 1) hideCount = 1
@@ -417,12 +425,12 @@ function prepareWord() {
 
 // ========== 输入处理 ==========
 function handleInput() {
-  const word = currentWord.value
-  if (!word) return
+  if (!currentWord.value) return
 
-  userInput.value = rawInput.value.split('').slice(0, word.word.length)
+  const inputUnits = splitSpellUnits(rawInput.value, wordsStore.currentProfile)
+  userInput.value = inputUnits.slice(0, currentUnits.value.length)
 
-  if (userInput.value.length === word.word.length) {
+  if (inputUnits.length === currentUnits.value.length) {
     checkAnswer()
   }
 }
@@ -430,7 +438,7 @@ function handleInput() {
 function handlePartialInput(index: number) {
   const slot = partialSlots.value[index]
   if (slot?.value) {
-    slot.value = slot.value.toLowerCase()
+    slot.value = wordsStore.currentProfile.caseInsensitive ? slot.value.toLowerCase() : slot.value
     // 跳到下一个空位
     const nextIndex = partialSlots.value.findIndex((s, i) => i > index && !s.fixed && !s.value)
     if (nextIndex >= 0) {
@@ -454,12 +462,11 @@ function onSlotTap(index: number) {
 
 // ========== 点选拼写输入 ==========
 function tapPick(tile: AnswerTile & { used: boolean }) {
-  const word = currentWord.value
-  if (!word || tile.used) return
+  if (!currentWord.value || tile.used) return
   tile.used = true
   tapPlaced.value.push({ id: tile.id, text: tile.text })
   // 放满单词长度自动判分
-  if (tapPlaced.value.length === word.word.length) {
+  if (tapPlaced.value.length === currentUnits.value.length) {
     checkAnswer()
   }
 }
@@ -480,13 +487,13 @@ function playWord(userInitiated = false) {
 
   // #ifdef H5 || APP-PLUS
   const utterance = new SpeechSynthesisUtterance(word.word)
-  utterance.lang = 'en-US'
+  utterance.lang = wordsStore.currentProfile.ttsLang
   utterance.rate = 0.8
   speechSynthesis.speak(utterance)
   // #endif
 
   // #ifdef MP-WEIXIN || MP-TOUTIAO
-  // 全局统一发音入口：有道优先、失败回退谷歌；自动播放失败静默，手动点按失败才节流提示
+  // 自动播放失败静默，手动点按失败才节流提示
   speakWord(word.word, { userInitiated })
   // #endif
 }
@@ -500,16 +507,17 @@ async function checkAnswer() {
   const word = currentWord.value
   if (!word) return
 
-  let userAnswer = ''
+  let input = ''
   if (tapInputActive.value) {
-    userAnswer = tapPlaced.value.map(t => t.text).join('').toLowerCase()
+    input = tapPlaced.value.map(t => t.text).join('')
   } else if (displayMode.value === 'blank') {
-    userAnswer = userInput.value.join('').toLowerCase()
+    input = userInput.value.join('')
   } else {
-    userAnswer = partialSlots.value.map(s => s.value || s.letter).join('').toLowerCase()
+    input = partialSlots.value.map(s => s.value || s.letter).join('')
   }
 
-  const isCorrect = userAnswer === word.word.toLowerCase()
+  const profile = wordsStore.currentProfile
+  const isCorrect = normalizeForCompare(input, profile) === normalizeForCompare(word.word, profile)
 
   if (isCorrect) {
     // 正确：等级 +1（复用主体系升降级逻辑，封顶 12 级，remembered 仅 12 级判定）
@@ -652,13 +660,13 @@ function showHintDialog() {
 
   if (tapInputActive.value) {
     // 点选模式：闪烁显示完整单词后还原已选字母
-    const word = currentWord.value!.word.toLowerCase()
+    const units = currentUnits.value.map(unit => unit.toLowerCase())
     const original = [...tapPlaced.value]
-    if (original.length >= word.length) return
+    if (original.length >= units.length) return
 
     isShowingHint.value = true
     tapTiles.value.forEach(t => { t.used = false })
-    tapPlaced.value = word.split('').map((text, i) => ({ id: -1 - i, text }))
+    tapPlaced.value = units.map((text, i) => ({ id: -1 - i, text }))
 
     setTimeout(() => {
       tapPlaced.value = original
@@ -705,9 +713,8 @@ function showHintDialog() {
     if (emptyIndices.length === 0) return
 
     isShowingHint.value = true
-    const word = currentWord.value!.word
     emptyIndices.forEach(index => {
-      userInput.value[index] = word[index]
+      userInput.value[index] = currentUnits.value[index]
     })
 
     setTimeout(() => {

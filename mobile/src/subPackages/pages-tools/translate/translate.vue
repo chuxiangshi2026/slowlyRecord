@@ -153,12 +153,13 @@ const addWordToBank = async (
   presetPhonetic = ''
 ): Promise<'added' | 'duplicate' | 'failed'> => {
   const wordText = normalizeMobileItemText(rawText)
-  if (!wordText || addingKey.value === getWordKey(wordText)) return 'failed'
+  const language = wordsStore.currentLanguage
+  if (!wordText || addingKey.value === getWordKey(wordText, language)) return 'failed'
 
   // 确保词库数据已加载，否则判重会失效
   await wordsStore.loadWords()
-  const key = getWordKey(wordText)
-  if (wordsStore.words.some(w => getWordKey(w.word) === key)) {
+  const key = getWordKey(wordText, language)
+  if (wordsStore.words.some(w => getWordKey(w.word, language) === key)) {
     if (!silent) uni.showToast({ title: '已在词库中', icon: 'none' })
     return 'duplicate'
   }
@@ -171,7 +172,7 @@ const addWordToBank = async (
     if (!meaning) {
       // 尝试用当前翻译引擎补全释义；失败不阻断，只存单词
       try {
-        const res = await translateText(wordText, 'auto', 'zh')
+        const res = await translateText(wordText, language, 'zh')
         if (res.success && res.translatedText && res.translatedText !== wordText) {
           meaning = res.translatedText
           phonetic = phonetic || res.phonetic || ''
@@ -188,7 +189,7 @@ const addWordToBank = async (
 
     await wordsStore.addWord({
       word: wordText,
-      itemType: inferMobileItemType(wordText),
+      itemType: inferMobileItemType(wordText, language),
       meaning,
       phonetic,
       example,
@@ -276,6 +277,11 @@ const translate = async () => {
 
 // 拍照/相册选图 → OCR 识别单词（腾讯云 OCR 或视觉大模型，密钥复用翻译设置）
 const handleCapture = async (sourceType?: 'album' | 'camera') => {
+  await wordsStore.loadWords()
+  if (wordsStore.currentLanguage !== 'en') {
+    uni.showToast({ title: '拍照加词暂仅支持英语词库', icon: 'none' })
+    return
+  }
   try {
     const capture = await getCaptureAdapter().capture(sourceType ? [sourceType] : undefined)
     uni.showLoading({ title: '识别中...', mask: true })

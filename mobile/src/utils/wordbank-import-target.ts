@@ -4,39 +4,40 @@
  */
 
 import { useMobileWords } from '@/stores/useMobileWords'
+import type { LanguageCode } from '@/utils/language'
 
 /** 弹出目标词库选择；用户取消（点遮罩 / 取消）返回 null */
-export function askImportTargetBank(suggestedName: string): Promise<string | null> {
+export function askImportTargetBank(suggestedName: string, language: LanguageCode = 'en'): Promise<string | null> {
   const store = useMobileWords()
   const current = store.getBankById(store.currentBankId)
   const currentName = current?.name || '默认词库'
-  const others = store.bankList.filter(b => b.id !== store.currentBankId)
+  const currentCompatible = (current?.language || 'en') === language
+  const others = store.bankList.filter(b => b.id !== store.currentBankId && (b.language || 'en') === language)
 
-  const items = [
-    `导入当前词库「${currentName}」`,
-    '新建词库并导入',
-  ]
-  if (others.length > 0) items.push('选择其他已有词库')
+  const items: string[] = []
+  const actions: Array<() => string | null | Promise<string | null>> = []
+  if (currentCompatible) {
+    items.push(`导入当前词库「${currentName}」`)
+    actions.push(() => store.currentBankId)
+  }
+  items.push('新建词库并导入')
+  actions.push(() => askNewBankName(store, suggestedName, language))
+  if (others.length > 0) {
+    items.push('选择其他已有词库')
+    actions.push(() => askOtherBank(store, others))
+  }
 
   return new Promise((resolve) => {
     uni.showActionSheet({
       itemList: items,
-      success: (res) => {
-        if (res.tapIndex === 0) {
-          resolve(store.currentBankId)
-        } else if (res.tapIndex === 1) {
-          resolve(askNewBankName(store, suggestedName))
-        } else {
-          resolve(askOtherBank(store, others))
-        }
-      },
+      success: (res) => resolve(actions[res.tapIndex]?.() || null),
       fail: () => resolve(null),
     })
   })
 }
 
 /** 新建词库：输入名称（默认建议为被导入词库名），重名校验，创建后作为导入目标（不切换当前词库） */
-function askNewBankName(store: ReturnType<typeof useMobileWords>, suggestedName: string): Promise<string | null> {
+function askNewBankName(store: ReturnType<typeof useMobileWords>, suggestedName: string, language: LanguageCode): Promise<string | null> {
   return new Promise((resolve) => {
     uni.showModal({
       title: '新建词库',
@@ -59,7 +60,7 @@ function askNewBankName(store: ReturnType<typeof useMobileWords>, suggestedName:
           resolve(null)
           return
         }
-        resolve(store.createBank(name).id)
+        resolve(store.createBank(name, { language }).id)
       },
       fail: () => resolve(null),
     })

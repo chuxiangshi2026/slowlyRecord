@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { MiniProgramDbAdapter } from '@/adapters/index'
+import { MiniProgramDbAdapter, splitStringByUtf8Bytes } from '@/adapters/index'
 
 // 模拟 @shared/adapters/db 的类型
 interface DbDoc<T = any> { _id: string; _rev?: string; data: T }
@@ -13,11 +13,26 @@ interface DbReturn { _id: string; _rev?: string; ok: boolean; error?: string }
  */
 function createMockStorage() {
   const store: Map<string, any> = new Map()
+  const failSyncKey: { current: ((key: string, data: any) => boolean) | null } = { current: null }
+  const failAsyncKey: { current: ((key: string, data: any) => boolean) | null } = { current: null }
 
   return {
     store,
+    failSyncKey,
+    failAsyncKey,
     uni: {
-      setStorageSync: vi.fn((key: string, data: any) => { store.set(key, data) }),
+      setStorageSync: vi.fn((key: string, data: any) => {
+        if (failSyncKey.current?.(key, data)) throw new Error('mock setStorageSync quota exceeded')
+        store.set(key, data)
+      }),
+      setStorage: vi.fn(({ key, data, success, fail }: any) => {
+        if (failAsyncKey.current?.(key, data)) {
+          fail?.({ errMsg: 'setStorage:fail quota exceeded' })
+          return
+        }
+        store.set(key, data)
+        success?.()
+      }),
       getStorageSync: vi.fn((key: string) => store.get(key) ?? null),
       getStorage: vi.fn(({ key, success, fail }: any) => {
         if (store.has(key)) {
@@ -35,6 +50,26 @@ function createMockStorage() {
     },
   }
 }
+
+describe('splitStringByUtf8Bytes', () => {
+  it('按 UTF-8 字节切分且不切断中文和 emoji', () => {
+    const text = '中a😀bc汉字'
+    const chunks = splitStringByUtf8Bytes(text, 5)
+    expect(chunks.join('')).toBe(text)
+    for (const chunk of chunks) {
+      expect(new TextEncoder().encode(chunk).length).toBeLessThanOrEqual(5)
+    }
+    expect(chunks.every(chunk => !/^[\uDC00-\uDFFF]/.test(chunk))).toBe(true)
+  })
+
+  it('空字符串返回空数组', () => {
+    expect(splitStringByUtf8Bytes('', 10)).toEqual([])
+  })
+
+  it('非法上限抛出错误', () => {
+    expect(() => splitStringByUtf8Bytes('abc', 0)).toThrow()
+  })
+})
 
 describe('MiniProgramDbAdapter', () => {
   let adapter: MiniProgramDbAdapter
@@ -169,6 +204,120 @@ describe('MiniProgramDbAdapter', () => {
       // 验证分片被清理
       const hasChunk = Array.from(mockStorage.store.keys()).some(k => k.includes('large-1__chunk__'))
       expect(hasChunk).toBe(false)
+    })
+
+    it('同步覆盖时第 2 个新分片失败，旧文档仍可读且旧分片保留', () => {
+      const oldContent = 'o'.repeat(1_000_000)
+      adapter.put({ _id: 'atomic-sync', data: { content: oldContent } })
+      const chunkKeys = () => Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__')).sort()
+      const oldChunkKeys = chunkKeys()
+      expect(oldChunkKeys.length).toBeGreaterThan(1)
+
+      let newChunkWrites = 0
+      mockStorage.failSyncKey.current = (key) => {
+        if (!key.includes('__chunk__')) return false
+        newChunkWrites++
+        return newChunkWrites === 2
+      }
+
+      const result = adapter.put({ _id: 'atomic-sync', data: { content: 'n'.repeat(1_000_000) } })
+
+      expect(result.ok).toBe(false)
+      expect(adapter.get('atomic-sync')?.data.content).toBe(oldContent)
+      expect(chunkKeys()).toEqual(oldChunkKeys)
+    })
+
+    it('同步写主元数据失败时旧分片文档仍可读', () => {
+      const oldContent = 'o'.repeat(1_000_000)
+      adapter.put({ _id: 'atomic-meta', data: { content: oldContent } })
+      const chunkKeys = () => Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__')).sort()
+      const oldChunkKeys = chunkKeys()
+
+      mockStorage.failSyncKey.current = key => key === 'slowlyrecord_atomic-meta'
+
+      const result = adapter.put({ _id: 'atomic-meta', data: { content: 'n'.repeat(1_000_000) } })
+
+      expect(result.ok).toBe(false)
+      expect(adapter.get('atomic-meta')?.data.content).toBe(oldContent)
+      expect(chunkKeys()).toEqual(oldChunkKeys)
+    })
+
+    it('分片文档改为小文档失败时仍保留旧分片', () => {
+      const oldContent = 'o'.repeat(1_000_000)
+      adapter.put({ _id: 'atomic-small', data: { content: oldContent } })
+      const oldChunkKeys = Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__')).sort()
+
+      mockStorage.failSyncKey.current = key => key === 'slowlyrecord_atomic-small'
+
+      const result = adapter.put({ _id: 'atomic-small', data: { content: 'small' } })
+
+      expect(result.ok).toBe(false)
+      expect(adapter.get('atomic-small')?.data.content).toBe(oldContent)
+      expect(Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__')).sort()).toEqual(oldChunkKeys)
+    })
+
+    it('新分片提交成功后清理旧分片', () => {
+      adapter.put({ _id: 'atomic-success', data: { content: 'o'.repeat(1_000_000) } })
+      const oldChunkKeys = Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__'))
+
+      expect(adapter.put({ _id: 'atomic-success', data: { content: 'n'.repeat(1_000_000) } }).ok).toBe(true)
+
+      expect(adapter.get('atomic-success')?.data.content).toBe('n'.repeat(1_000_000))
+      for (const key of oldChunkKeys) expect(mockStorage.store.has(key)).toBe(false)
+    })
+
+    it('清理无主旧分片，保留引用分片和新代次分片', () => {
+      adapter.put({ _id: 'orphan-owner', data: { content: 'x'.repeat(1_000_000) } })
+      const referenced = Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__'))
+      expect(referenced.length).toBeGreaterThan(0)
+
+      mockStorage.store.set('slowlyrecord_orphan__chunk__0', 'stale')
+      const now = Date.now()
+      const oldGeneration = `${(now - 25 * 60 * 60 * 1000).toString(36)}_1`
+      mockStorage.store.set(`slowlyrecord_pending__chunk__${oldGeneration}__0`, 'stale')
+      const freshGeneration = `${now.toString(36)}_2`
+      const freshKey = `slowlyrecord_pending__chunk__${freshGeneration}__0`
+      mockStorage.store.set(freshKey, 'inflight')
+
+      const removed = adapter.cleanupOrphanChunks(now)
+
+      expect(removed).toBe(2)
+      for (const key of referenced) expect(mockStorage.store.has(key)).toBe(true)
+      expect(mockStorage.store.has('slowlyrecord_orphan__chunk__0')).toBe(false)
+      expect(mockStorage.store.has(freshKey)).toBe(true)
+    })
+
+    it('主键读取失败时中止清理，不误删可能仍被引用的旧分片', () => {
+      const chunkKey = 'slowlyrecord_broken__chunk__0'
+      mockStorage.store.set('slowlyrecord_broken', { _id: 'broken', _chunks: 1, _chunkKeys: [chunkKey] })
+      mockStorage.store.set(chunkKey, '{"_id":"broken"}')
+      mockStorage.uni.getStorageSync.mockImplementation((key: string) => {
+        if (key === 'slowlyrecord_broken') throw new Error('mock read failure')
+        return mockStorage.store.get(key) ?? null
+      })
+
+      expect(adapter.cleanupOrphanChunks()).toBe(0)
+      expect(mockStorage.store.has(chunkKey)).toBe(true)
+    })
+
+    it('异步覆盖时新分片失败，旧文档仍可读', async () => {
+      const oldContent = 'o'.repeat(1_000_000)
+      adapter.put({ _id: 'atomic-async', data: { content: oldContent } })
+      const chunkKeys = () => Array.from(mockStorage.store.keys()).filter(k => k.includes('__chunk__')).sort()
+      const oldChunkKeys = chunkKeys()
+
+      let newChunkWrites = 0
+      mockStorage.failAsyncKey.current = (key) => {
+        if (!key.includes('__chunk__')) return false
+        newChunkWrites++
+        return newChunkWrites === 2
+      }
+
+      const result = await adapter.promises.asyncPut({ _id: 'atomic-async', data: { content: 'n'.repeat(1_000_000) } })
+
+      expect(result.ok).toBe(false)
+      expect(adapter.get('atomic-async')?.data.content).toBe(oldContent)
+      expect(chunkKeys()).toEqual(oldChunkKeys)
     })
   })
 

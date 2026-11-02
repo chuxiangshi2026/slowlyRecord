@@ -27,4 +27,9 @@ describe('getWordKey: 去重键（添加单词查重用）', () => {
   it('空字符串键为空', () => {
     expect(getWordKey('')).toBe('')
   })
+
+  it('按语言规范化 Unicode，日语不做无意义的小写转换', () => {
+    expect(getWordKey('Cafe\u0301', 'fr')).toBe(getWordKey('café', 'fr'))
+    expect(getWordKey('東京', 'ja')).toBe('東京')
+  })
 })

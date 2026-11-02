@@ -22,6 +22,11 @@ import poetryQing from './poetry-data/poetry-qing'
 import poetryXiandai from './poetry-data/poetry-xiandai'
 import idiomData from './poetry-data/idioms'
 
+interface PoetryDataModule {
+  metadata?: { dynasty?: string; name?: string }
+  poems: readonly any[]
+}
+
 export interface MobilePoetryItem {
   id: string
   title: string
@@ -87,7 +92,7 @@ const poetryCache = new Map<string, MobilePoetryItem[]>()
 let idiomCache: MobileIdiomItem[] | null = null
 
 // 朝代代码 → 对应的数据模块（静态 import，见文件头说明）
-const POETRY_DATA: Record<string, typeof poetryTang> = {
+const POETRY_DATA: Record<string, PoetryDataModule> = {
   xianqin: poetryXianqin,
   han: poetryHan,
   weijin: poetryWeijin,
@@ -100,7 +105,7 @@ const POETRY_DATA: Record<string, typeof poetryTang> = {
   xiandai: poetryXiandai,
 }
 
-function normalizePoetry(raw: any[], dynastyCode: string): MobilePoetryItem[] {
+function normalizePoetry(raw: readonly any[], dynastyCode: string): MobilePoetryItem[] {
   if (!Array.isArray(raw)) return []
   return raw.map((it: any, idx: number) => ({
     id: it.id || `${dynastyCode}_${idx}`,
@@ -125,7 +130,7 @@ export async function loadPoetryByDynasty(code: string): Promise<MobilePoetryIte
   if (poetryCache.has(code)) return poetryCache.get(code)!
   const data = POETRY_DATA[code]
   if (!data) return []
-  const list = normalizePoetry((data.poems || []) as any[], code)
+  const list = normalizePoetry(data.poems || [], code)
   poetryCache.set(code, list)
   return list
 }
@@ -147,7 +152,7 @@ export async function loadAllPoetry(): Promise<MobilePoetryItem[]> {
  */
 export async function loadAllIdioms(): Promise<MobileIdiomItem[]> {
   if (idiomCache) return idiomCache
-  const list = ((idiomData.idioms || []) as any[]).map((it: any, idx: number) => ({
+  const list = ((idiomData.idioms || []) as unknown as readonly any[]).map((it: any, idx: number) => ({
     id: it.id || `idiom_${idx}`,
     title: it.title || '',
     pinyin: it.pinyin,

@@ -1,13 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { MobileSentences } from './useUtils/types'
+import { filterByTombstones } from './useUtils/sync-tombstone'
 
 /**
  * 句子收藏 store（移动端）
  *
- * 与桌面端共用文档 key `slowlyrecord-sentences-data`（见桌面 src/utils/sentence-db.ts），
- * 但两端同步目前都不覆盖句子库，故本 store 只做本地读写。
- * 已实现：列表/收藏切换/极简手动添加（原文+译文）；不做编辑、删除、同步。
+ * 与桌面端共用文档 key `slowlyrecord-sentences-data`（见桌面 src/utils/sentence-db.ts）。
+ * 本地支持列表/收藏切换/极简手动添加；同步恢复按 updatedAt 与墓碑合并。
  */
 
 const STORAGE_KEY = 'slowlyrecord-sentences-data'
@@ -22,6 +22,7 @@ export interface MobileSentence {
   source?: string
   favorite: boolean
   createdAt: number
+  updatedAt?: number
 }
 
 interface SentencesDoc {
@@ -104,6 +105,7 @@ export const useSentences = defineStore('mobileSentences', () => {
     const s = sentences.value.find((x) => x.id === id)
     if (!s) return false
     s.favorite = !s.favorite
+    s.updatedAt = Date.now()
     persist()
     return true
   }
@@ -117,20 +119,28 @@ export const useSentences = defineStore('mobileSentences', () => {
     return { sentences: sentences.value.map((s) => ({ ...s })) }
   }
 
-  /** 从同步包恢复：按 id 合并去重，已有 id 保留本地版本，返回新增条数 */
-  function restore(data: MobileSentences): number {
+  /** 从同步包恢复：先按墓碑删除本地，再按 updatedAt 合并，返回新增条数 */
+  function restore(data: MobileSentences, tombstones: Record<string, number> = {}): number {
     if (!data || !Array.isArray(data.sentences)) return 0
     load()
-    const ids = new Set(sentences.value.map((s) => s.id))
+    const local = filterByTombstones(sentences.value, 'remote', tombstones)
+    const map = new Map(local.map(s => [s.id, s]))
     let added = 0
-    for (const s of data.sentences) {
-      if (s && s.id && !ids.has(s.id)) {
-        ids.add(s.id)
-        sentences.value.push({ ...s })
+    for (const s of filterByTombstones(data.sentences, 'remote', tombstones)) {
+      if (!s?.id) continue
+      const current = map.get(s.id)
+      if (!current) {
+        map.set(s.id, { ...s })
         added++
+      } else if ((s.updatedAt || 0) > (current.updatedAt || 0)) {
+        map.set(s.id, { ...current, ...s })
       }
     }
-    if (added > 0) persist()
+    const merged = Array.from(map.values())
+    const changed = added > 0 || merged.length !== sentences.value.length ||
+      merged.some((s, i) => s !== sentences.value[i])
+    sentences.value = merged
+    if (changed) persist()
     return added
   }
 

@@ -12,7 +12,7 @@ import {
   scheduleOnRemembered,
   scheduleOnForgotten,
 } from '../utils/practice-srs'
-import { recordTombstones } from './useUtils/sync-tombstone'
+import { filterByTombstones, recordTombstones } from './useUtils/sync-tombstone'
 
 /**
  * 文本记忆 store（移动端）
@@ -336,46 +336,92 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
   }
 
   /**
-   * 从同步包恢复
-   * 默认按 _id 合并：本地存在则跳过，远端新增则插入
+   * 从同步包恢复：先按墓碑清理本地，再按时间戳合并较新内容。
+   * 旧数据无 utime 时回退 ctime；远端较旧不会覆盖本地。
    */
-  function restore(data: MobileTextMemory, mode: 'merge' | 'replace' = 'merge') {
-    if (!data) return { added: 0, replaced: 0 }
+  function restore(
+    data: MobileTextMemory,
+    mode: 'merge' | 'replace' = 'merge',
+    tombstones: Record<string, number> = {},
+  ) {
+    if (!data) return { added: 0, updated: 0, replaced: 0 }
     if (mode === 'replace') {
-      articles.value = (data.articles || []).map(enrichGeo)
-      notes.value = data.notes || []
-      prompts.value = data.prompts || []
+      const safe = (list: any[]) => filterByTombstones(list, 'remote', tombstones)
+      articles.value = safe(data.articles || []).map(enrichGeo)
+      notes.value = safe(data.notes || [])
+      prompts.value = safe(data.prompts || [])
       persist()
-      return { added: articles.value.length, replaced: articles.value.length }
+      return {
+        added: articles.value.length,
+        updated: 0,
+        replaced: articles.value.length,
+        addedArticles: articles.value.length,
+        updatedArticles: 0,
+        addedNotes: notes.value.length,
+        updatedNotes: 0,
+        addedPrompts: prompts.value.length,
+        updatedPrompts: 0,
+      }
     }
 
     let added = 0
-    const articleIds = new Set(articles.value.map((a) => a._id))
-    for (const a of data.articles || []) {
-      if (!articleIds.has(a._id)) {
-        articles.value.push(enrichGeo(a))
-        articleIds.add(a._id)
-        added++
+    let updated = 0
+    const mergeList = <T extends { _id: string; _rev?: string; utime?: number; ctime?: number; updatedAt?: number }>(
+      local: T[],
+      remote: T[],
+    ): T[] => {
+      const cleanedLocal = filterByTombstones(local, 'remote', tombstones)
+      const map = new Map(cleanedLocal.map(item => [item._id, item]))
+      const timeOf = (item: T) => item.utime || item.updatedAt || item.ctime || 0
+      for (const item of filterByTombstones(remote, 'remote', tombstones)) {
+        if (!item?._id) continue
+        const current = map.get(item._id)
+        if (!current) {
+          map.set(item._id, item)
+          added++
+        } else if (timeOf(item) > timeOf(current)) {
+          const { _rev, ...clean } = item as any
+          map.set(item._id, {
+            ...current,
+            ...clean,
+            ...(current._rev ? { _rev: current._rev } : {}),
+          } as T)
+          updated++
+        }
       }
+      return Array.from(map.values())
     }
-    const noteIds = new Set(notes.value.map((n) => n._id))
-    for (const n of data.notes || []) {
-      if (!noteIds.has(n._id)) {
-        notes.value.push(n)
-        noteIds.add(n._id)
-      }
+
+    const countBefore = () => ({ added, updated })
+    const articleBefore = countBefore()
+    const nextArticles = mergeList(articles.value, data.articles || []).map(enrichGeo)
+    const articleStats = { added: added - articleBefore.added, updated: updated - articleBefore.updated }
+    const noteBefore = countBefore()
+    const nextNotes = mergeList(notes.value, data.notes || [])
+    const noteStats = { added: added - noteBefore.added, updated: updated - noteBefore.updated }
+    const promptBefore = countBefore()
+    const nextPrompts = mergeList(prompts.value, data.prompts || [])
+    const promptStats = { added: added - promptBefore.added, updated: updated - promptBefore.updated }
+
+    const changed = added > 0 || updated > 0 ||
+      nextArticles.length !== articles.value.length ||
+      nextNotes.length !== notes.value.length ||
+      nextPrompts.length !== prompts.value.length
+    articles.value = nextArticles
+    notes.value = nextNotes
+    prompts.value = nextPrompts
+    if (changed) persist()
+    return {
+      added: articleStats.added,
+      updated: articleStats.updated,
+      replaced: 0,
+      addedArticles: articleStats.added,
+      updatedArticles: articleStats.updated,
+      addedNotes: noteStats.added,
+      updatedNotes: noteStats.updated,
+      addedPrompts: promptStats.added,
+      updatedPrompts: promptStats.updated,
     }
-    const promptIds = new Set(prompts.value.map((p) => p._id))
-    for (const p of data.prompts || []) {
-      if (!promptIds.has(p._id)) {
-        prompts.value.push(p)
-        promptIds.add(p._id)
-      }
-    }
-    if (added > 0 || (data.notes?.length || 0) > 0 || (data.prompts?.length || 0) > 0) {
-      persist()
-    }
-    return { added, replaced: 0 }
   }
 
   return {

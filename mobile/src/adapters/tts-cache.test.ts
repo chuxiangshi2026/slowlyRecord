@@ -200,16 +200,19 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
     expect(uniMock.downloadFile).not.toHaveBeenCalled() // 播放完成前不触发后台缓存
     audioInstances[0].trigger('ended')
     await expect(promise).resolves.toBeUndefined()
+    expect(audioInstances[0].destroy).toHaveBeenCalledTimes(1)
   })
 
   it('onError 后自动重试，最终成功则 resolve', async () => {
     const promise = getTtsAdapter().playAudio('https://dict.youdao.com/dictvoice?audio=hello&type=2')
     await vi.advanceTimersByTimeAsync(0)
     audioInstances[0].trigger('error', { errMsg: 'net error' })
+    expect(audioInstances[0].destroy).toHaveBeenCalledTimes(1)
     await vi.advanceTimersByTimeAsync(500) // 第 1 次重试间隔 400ms
     expect(audioInstances).toHaveLength(2)
     audioInstances[1].trigger('ended')
     await expect(promise).resolves.toBeUndefined()
+    expect(audioInstances[1].destroy).toHaveBeenCalledTimes(1)
   })
 
   it('重试 2 次仍失败则 reject，且提示 toast', async () => {
@@ -406,11 +409,11 @@ describe('MiniProgramTtsAdapter 代际作废与提示降噪', () => {
 
   it('prefetchAudio 后台下载缓存，已缓存时不重复下载', async () => {
     const url = 'https://dict.youdao.com/dictvoice?audio=hello&type=2'
-    getTtsAdapter().prefetchAudio(url)
+    getTtsAdapter().prefetchAudio?.(url)
     await vi.advanceTimersByTimeAsync(0)
     expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
     // 再次预取同一词：命中缓存，不再下载
-    getTtsAdapter().prefetchAudio(url)
+    getTtsAdapter().prefetchAudio?.(url)
     await vi.advanceTimersByTimeAsync(0)
     expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
     const manifest = storage.get('slowlyrecord_audio_cache_manifest')

@@ -6,6 +6,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { speakWord, stopSpeaking, buildWordAudioUrls, type SpeakWordOptions } from '@/utils/word-audio'
 import { setTtsAdapter } from '@/adapters/index'
+import { setActiveLanguage } from '@/utils/language'
 
 interface PlayCall {
   url: string
@@ -42,6 +43,7 @@ function flushMicrotasks(): Promise<void> {
 beforeEach(() => {
   env = createControllableAdapter()
   setTtsAdapter(env.adapter as any)
+  setActiveLanguage('en')
 })
 
 describe('buildWordAudioUrls', () => {
@@ -58,6 +60,18 @@ describe('buildWordAudioUrls', () => {
     expect(urls[0]).toContain(encodeURIComponent('你好'))
     expect(urls[1]).toContain('translate.google.com')
     expect(urls[1]).toContain('tl=zh-CN')
+  })
+
+  it.each([
+    ['ja', '学生', 'ja'],
+    ['ru', 'привет', 'ru'],
+    ['es', 'hola', 'es'],
+    ['fr', 'bonjour', 'fr'],
+  ] as const)('%s 使用对应语种 TTS，日语汉字不误走中文音源', (language, word, ttsLang) => {
+    const urls = buildWordAudioUrls(word, language)
+    expect(urls).toHaveLength(1)
+    expect(urls[0]).toContain(`tl=${ttsLang}`)
+    expect(urls[0]).toContain(encodeURIComponent(word))
   })
 })
 
@@ -137,6 +151,13 @@ describe('speakWord 音频调度', () => {
     expect(env.prefetches).toHaveLength(1)
     expect(env.prefetches[0]).toContain('openapi.youdao.com/ttsapi')
     expect(env.prefetches[0]).toContain(encodeURIComponent('你好'))
+  })
+
+  it('预取与当前词使用相同的非英语语种', () => {
+    speakWord('こんにちは', { language: 'ja', prefetchNext: '学生' })
+    expect(env.prefetches).toHaveLength(1)
+    expect(env.prefetches[0]).toContain('tl=ja')
+    expect(env.prefetches[0]).toContain(encodeURIComponent('学生'))
   })
 
   it('中文发音失败时按音源链回退（有道智云 → 谷歌 zh-CN）', async () => {

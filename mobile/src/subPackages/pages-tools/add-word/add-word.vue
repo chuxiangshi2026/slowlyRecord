@@ -102,7 +102,7 @@ onShow(() => {
 const doTranslate = async (wordText: string) => {
   translating.value = true
   try {
-    const result = await translateText(wordText, 'auto', 'zh')
+    const result = await translateText(wordText, wordsStore.currentLanguage, 'zh')
     if (result.success && result.translatedText && result.translatedText !== newWord.value.word) {
       newWord.value.meaning = result.translatedText
       if (result.phonetic && !newWord.value.phonetic.trim()) {
@@ -151,15 +151,16 @@ const addWord = async () => {
     return
   }
   // 查重：同词（忽略大小写与空白差异）已在当前词库时阻止添加
-  const key = getWordKey(wordText)
-  if (wordsStore.words.some(w => getWordKey(w.word) === key)) {
+  const language = wordsStore.currentLanguage
+  const key = getWordKey(wordText, language)
+  if (wordsStore.words.some(w => getWordKey(w.word, language) === key)) {
     uni.showToast({ title: '该词已在词库中', icon: 'none' })
     return
   }
   try {
     await wordsStore.addWord({
       word: wordText,
-      itemType: inferMobileItemType(wordText),
+      itemType: inferMobileItemType(wordText, language),
       meaning: newWord.value.meaning.trim(),
       phonetic: newWord.value.phonetic.trim() || undefined,
       example: newWord.value.example.trim() || undefined,
@@ -183,6 +184,10 @@ const goToWordbank = () => {
 
 // 跳翻译页并自动拉起拍照/相册识别（识别结果在那边批量加入当前词库）
 const goOcrAdd = () => {
+  if (wordsStore.currentLanguage !== 'en') {
+    uni.showToast({ title: '拍照加词暂仅支持英语词库', icon: 'none' })
+    return
+  }
   uni.navigateTo({ url: '/subPackages/pages-tools/translate/translate?autoCapture=all' })
 }
 

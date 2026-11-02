@@ -10,6 +10,7 @@
 import { getTtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 import { buildChineseAudioUrls, containsChinese } from '@/utils/youdao-tts'
+import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
 
 export interface SpeakWordOptions {
   /** 用户主动点发音：失败时允许弹节流提示；自动发音/自动连播一律静默 */
@@ -18,21 +19,24 @@ export interface SpeakWordOptions {
   onEnded?: () => void
   /** 顺便预取的下一个单词：提前拉取缓存，降低切词后的发音延迟 */
   prefetchNext?: string | null
+  language?: LanguageCode
 }
 
 /** 发言代次：每次 speakWord/stopSpeaking 自增 */
 let speakSeq = 0
 
-/**
- * 构建单词发音音源列表。
- * 英文：有道 dictvoice 优先，谷歌翻译 TTS 兜底；
- * 中文：dictvoice 不支持中文（实测返回 500），改走有道智云 TTS（用户已配密钥）→ 谷歌翻译 TTS（tl=zh-CN）兜底。
- */
-export function buildWordAudioUrls(word: string): string[] {
-  if (containsChinese(word)) return buildChineseAudioUrls(word)
+function buildGoogleAudioUrl(word: string, ttsLang: string): string {
+  return `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${ttsLang}&q=${encodeURIComponent(word)}`
+}
+
+/** 英语保留有道音源；其他语种使用对应语言的谷歌 TTS。 */
+export function buildWordAudioUrls(word: string, language: LanguageCode = getActiveLanguage()): string[] {
+  if (language === 'en' && containsChinese(word)) return buildChineseAudioUrls(word)
+  const profile = getProfile(language)
+  if (profile.code !== 'en') return [buildGoogleAudioUrl(word, profile.ttsLang.split('-')[0])]
   return [
     getPronunciationUrl(word, 'us'),
-    `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`
+    buildGoogleAudioUrl(word, 'en')
   ]
 }
 
@@ -43,18 +47,18 @@ export function buildWordAudioUrls(word: string): string[] {
 export function speakWord(word: string, options: SpeakWordOptions = {}): void {
   const seq = ++speakSeq
   const tts = getTtsAdapter()
+  const language = options.language || getActiveLanguage()
 
   // 预取下一个词音频（后台写缓存，失败静默，不影响当前播放）
   if (options.prefetchNext) {
     try {
-      const next = options.prefetchNext
-      tts.prefetchAudio?.(containsChinese(next) ? buildChineseAudioUrls(next)[0] : getPronunciationUrl(next))
+      tts.prefetchAudio?.(buildWordAudioUrls(options.prefetchNext, language)[0])
     } catch {
       // 预取能力缺失时忽略，播放时仍走在线地址
     }
   }
 
-  const urls = buildWordAudioUrls(word)
+  const urls = buildWordAudioUrls(word, language)
   const playAt = (urlIndex: number): void => {
     // 代际丢弃：加载/回退完成前已切词（新的 speakWord 或 stopSpeaking）则不再播
     if (seq !== speakSeq) return

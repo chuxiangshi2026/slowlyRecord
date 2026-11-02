@@ -18,8 +18,8 @@
       "@/*": ["./src/*"],
       "@shared/*": ["../src/*"]
     },
-    "types": ["@dcloudio/types"]
+    "types": ["@dcloudio/types", "node"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.json"],
-  "exclude": ["node_modules", "dist", "unpackage"]
+  "exclude": ["node_modules", "dist", "unpackage", "src/**/*.test.ts"]
 }

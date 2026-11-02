@@ -130,7 +130,7 @@ const store = useNumberMemory()
 const tabs = [
   { value: 'entries', label: '数字条目' },
   { value: 'pegs', label: '桩位配置' },
-]
+] as const
 const activeTab = ref<'entries' | 'pegs'>('entries')
 
 // ============ 数字桩 ============
@@ -139,7 +139,7 @@ const ranges = [
   { value: 'single', label: '0–9' },
   { value: 'double', label: '10–99' },
   { value: 'all', label: '全部' },
-]
+] as const
 const pegRange = ref<'single' | 'double' | 'all'>('all')
 
 const pegNumbers = computed(() => {

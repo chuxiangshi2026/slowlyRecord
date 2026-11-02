@@ -475,7 +475,7 @@ async function translateWithTencent(text: string, from: string = 'auto', to: str
 // ==================== AI 大模型翻译引擎 ====================
 
 function buildAiSystemPrompt(from: string, to: string): string {
-  const isEnglishToChinese = (from === 'en' || from === 'auto') && to === 'zh'
+  const isEnglishToChinese = from === 'en' && to === 'zh'
   if (isEnglishToChinese) {
     return `你是一个专业的中英文翻译助手。请将用户输入的英文单词或短语翻译成中文，并以JSON格式返回以下信息：
 {
@@ -591,6 +591,9 @@ async function translateWithOllama(text: string, from: string = 'auto', to: stri
 }
 
 async function translateWithLocalDict(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
+  if (from !== 'en' && from !== 'auto') {
+    return { success: false, explains: text, translatedText: text, errorMsg: '本地词典仅支持英语，请切换在线翻译引擎', platform: 'local' }
+  }
   const offline = queryOfflineDict(text)
   if (offline) return { success: true, explains: offline, translatedText: offline, phonetic: queryPhoneticFromCache(text) || undefined, pronunciation: getPronunciationUrl(text), platform: 'local' }
   return { success: false, explains: text, translatedText: text, errorMsg: '离线词典中未找到该词', platform: 'local' }
@@ -706,7 +709,8 @@ export async function translateText(text: string, from: string = 'auto', to: str
   const cached = getCachedTranslation(text, currentPlatform, from, to)
   if (cached) return cached
 
-  if (!trimmed.includes(' ')) {
+  const allowEnglishResources = from === 'en' || from === 'auto'
+  if (allowEnglishResources && !trimmed.includes(' ')) {
     const offline = queryOfflineDict(trimmed)
     if (offline) {
       const localResult = { success: true, explains: offline, translatedText: offline, phonetic: queryPhoneticFromCache(trimmed) || undefined, pronunciation: getPronunciationUrl(trimmed), platform: 'local' as const }
@@ -729,7 +733,8 @@ export async function translateText(text: string, from: string = 'auto', to: str
       case 'local': result = await translateWithLocalDict(text, from, to); break
       default: result = await translateWithGlm(text, from, to); break
     }
-    if (!result.phonetic && !trimmed.includes(' ')) result.phonetic = queryPhoneticFromCache(trimmed) || undefined
+    if (allowEnglishResources && !result.phonetic && !trimmed.includes(' ')) result.phonetic = queryPhoneticFromCache(trimmed) || undefined
+    if (!allowEnglishResources) result.pronunciation = undefined
     setCachedTranslation(text, currentPlatform, from, to, result)
     return result
   } catch (e) {

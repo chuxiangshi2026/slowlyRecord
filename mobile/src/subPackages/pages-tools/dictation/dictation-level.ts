@@ -24,14 +24,14 @@ export function isRemembered(level: number): boolean {
 export interface DictationEmptyInfo {
   /** 主文案 */
   text: string
-  /** 词组/句子被正则过滤掉的条数（> 0 时应展示解释文案） */
+  /** 不适合拼写练习的词组/句子条数（> 0 时应展示解释文案） */
   filteredOutCount: number
 }
 
 /**
  * 拼写练习空态文案：
  * - 范围内本来就没词 → "当前词库没有可练习的单词"
- * - 范围内的词全部被 ^[a-zA-Z]+$ 过滤（词组/句子）→ 明确告知原因与条数
+ * - 范围内的内容均不适合拼写练习（词组/句子）→ 明确告知原因与条数
  */
 export function getEmptyState(rangeTotal: number, filteredOutCount: number): DictationEmptyInfo {
   if (rangeTotal === 0) {
@@ -45,5 +45,5 @@ export function getEmptyState(rangeTotal: number, filteredOutCount: number): Dic
 
 /** 词组/句子被过滤时的解释文案 */
 export function getFilteredHint(filteredOutCount: number): string {
-  return `当前词库的 ${filteredOutCount} 条内容为词组/句子，拼写练习仅支持英文单词`
+  return `当前词库的 ${filteredOutCount} 条内容为词组/句子，拼写练习仅支持单词`
 }

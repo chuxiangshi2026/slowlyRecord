@@ -12,4 +12,9 @@ describe('mobile text utils', () => {
     expect(inferMobileItemType('I will take care of it.')).toBe('sentence')
     expect(inferMobileItemType('this is a long expression without punctuation')).toBe('sentence')
   })
+
+  it('日语按语言规则识别词条和句子', () => {
+    expect(inferMobileItemType('こんにちは', 'ja')).toBe('word')
+    expect(inferMobileItemType('これは本です。', 'ja')).toBe('sentence')
+  })
 })

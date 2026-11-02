@@ -65,7 +65,42 @@ export function resetDbAdapter(): void {
 // ==================== MiniProgramDbAdapter ====================
 
 const STORAGE_PREFIX = 'slowlyrecord_'
-const CHUNK_SIZE = 900 * 1024
+const MAX_CHUNK_BYTES = 900 * 1024
+
+/**
+ * 按 UTF-8 字节切分字符串，且只在完整码点边界落刀。
+ * 小程序 storage 限制按数据体积计算，不能直接用 string.length 当字节数。
+ */
+export function splitStringByUtf8Bytes(input: string, maxBytes: number): string[] {
+  if (!input) return []
+  if (!(maxBytes > 0)) throw new Error('maxBytes 必须大于 0')
+  const chunks: string[] = []
+  let start = 0
+  let bytes = 0
+  for (let i = 0; i < input.length;) {
+    const code = input.codePointAt(i)!
+    const charUnits = code > 0xffff ? 2 : 1
+    const charBytes = code <= 0x7f ? 1 : code <= 0x7ff ? 2 : code <= 0xffff ? 3 : 4
+    if (bytes > 0 && bytes + charBytes > maxBytes) {
+      chunks.push(input.slice(start, i))
+      start = i
+      bytes = 0
+    }
+    bytes += charBytes
+    i += charUnits
+  }
+  chunks.push(input.slice(start))
+  return chunks
+}
+
+function utf8ByteLength(input: string): number {
+  let bytes = 0
+  for (const char of input) {
+    const code = char.codePointAt(0)!
+    bytes += code <= 0x7f ? 1 : code <= 0x7ff ? 2 : code <= 0xffff ? 3 : 4
+  }
+  return bytes
+}
 
 /** uni.getStorage 的 Promise 封装：读不到时 resolve null，与同步读取的容错语义对齐 */
 function getStorageAsync(key: string): Promise<any> {
@@ -110,6 +145,8 @@ export class MiniProgramDbAdapter implements DbAdapter {
     return `${this.prefix}${id}`
   }
 
+  private chunkGeneration = 0
+
   private cleanupChunks(chunkKeys?: string[]): void {
     if (!Array.isArray(chunkKeys)) return
     for (const chunkKey of chunkKeys) {
@@ -117,55 +154,103 @@ export class MiniProgramDbAdapter implements DbAdapter {
     }
   }
 
-  private cleanupExistingChunks(key: string): void {
+  /** 读取当前主键引用的旧分片；只读，不在新数据提交前删除 */
+  private getExistingChunkKeys(key: string): string[] {
     try {
       const existing = uni.getStorageSync(key)
-      if (existing && existing._chunks && existing._chunkKeys) {
-        this.cleanupChunks(existing._chunkKeys)
+      if (existing && existing._chunks && Array.isArray(existing._chunkKeys)) {
+        return [...existing._chunkKeys]
       }
     } catch { /* ignore */ }
+    return []
   }
 
-  private saveWithChunks<T>(doc: DbDoc<T>): DbReturn {
+  private nextChunkKeys(key: string, count: number): string[] {
+    const generation = `${Date.now().toString(36)}_${++this.chunkGeneration}`
+    return Array.from({ length: count }, (_, index) => `${key}__chunk__${generation}__${index}`)
+  }
+
+  /**
+   * 清理无主分片：只删除未被任何主键引用的旧格式分片，
+   * 以及超过 24 小时的代次分片，避免误删正在提交的写事务。
+   */
+  cleanupOrphanChunks(now = Date.now(), minGenerationAgeMs = 24 * 60 * 60 * 1000): number {
+    let removed = 0
+    try {
+      const keys = uni.getStorageInfoSync().keys || []
+      const referenced = new Set<string>()
+      for (const key of keys) {
+        if (!key.startsWith(this.prefix) || key.includes('__chunk__')) continue
+        try {
+          const doc = uni.getStorageSync(key)
+          if (Array.isArray(doc?._chunkKeys)) {
+            for (const chunkKey of doc._chunkKeys) referenced.add(chunkKey)
+          }
+        } catch {
+          // 主键读取失败时无法确认引用关系，宁可保留分片也不能误删
+          return 0
+        }
+      }
+
+      for (const key of keys) {
+        if (!key.startsWith(this.prefix) || !key.includes('__chunk__') || referenced.has(key)) continue
+        const rest = key.slice(key.indexOf('__chunk__') + '__chunk__'.length)
+        const segments = rest.split('__')
+        if (segments.length >= 2) {
+          const generationStartedAt = parseInt(segments[0].split('_')[0], 36)
+          if (Number.isFinite(generationStartedAt) && now - generationStartedAt < minGenerationAgeMs) {
+            continue
+          }
+        }
+        try {
+          uni.removeStorageSync(key)
+          removed++
+        } catch { /* 删除失败留到下次启动 */ }
+      }
+    } catch { /* 存储信息不可用时跳过 */ }
+    return removed
+  }
+
+  private saveWithChunks<T extends {}>(doc: DbDoc<T>): DbReturn {
     const key = this.getKey(doc._id)
     const dataStr = JSON.stringify(doc)
 
-    if (dataStr.length <= CHUNK_SIZE) {
+    if (utf8ByteLength(dataStr) <= MAX_CHUNK_BYTES) {
+      const previousChunkKeys = this.getExistingChunkKeys(key)
       try {
-        this.cleanupExistingChunks(key)
         uni.setStorageSync(key, doc)
+        this.cleanupChunks(previousChunkKeys)
         return { id: doc._id, rev: doc._rev || '1', ok: true }
       } catch (e) {
         return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
       }
     }
 
-    const chunks: string[] = []
-    for (let i = 0; i < dataStr.length; i += CHUNK_SIZE) {
-      chunks.push(dataStr.slice(i, i + CHUNK_SIZE))
-    }
+    const chunks = splitStringByUtf8Bytes(dataStr, MAX_CHUNK_BYTES)
 
+    const chunkKeys = this.nextChunkKeys(key, chunks.length)
     const chunkInfo = {
       _id: doc._id,
       _rev: doc._rev || '1',
       _chunks: chunks.length,
-      _chunkKeys: chunks.map((_, index) => `${key}__chunk__${index}`)
+      _chunkKeys: chunkKeys
     }
 
     try {
-      this.cleanupExistingChunks(key)
       chunks.forEach((chunk, index) => {
-        uni.setStorageSync(`${key}__chunk__${index}`, chunk)
+        uni.setStorageSync(chunkKeys[index], chunk)
       })
+      const previousChunkKeys = this.getExistingChunkKeys(key)
       uni.setStorageSync(key, chunkInfo)
+      this.cleanupChunks(previousChunkKeys)
       return { id: doc._id, rev: chunkInfo._rev, ok: true }
     } catch (e) {
-      this.cleanupChunks(chunkInfo._chunkKeys)
+      this.cleanupChunks(chunkKeys)
       return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
     }
   }
 
-  private readWithChunksSync<T>(key: string): DbDoc<T> | null {
+  private readWithChunksSync<T extends {}>(key: string): DbDoc<T> | null {
     try {
       const data = uni.getStorageSync(key)
       if (!data) {
@@ -189,7 +274,7 @@ export class MiniProgramDbAdapter implements DbAdapter {
   }
 
   /** 异步分块读取：与 readWithChunksSync 逻辑一致，但读取走 uni.getStorage 异步接口 */
-  private async readWithChunksAsync<T>(key: string): Promise<DbDoc<T> | null> {
+  private async readWithChunksAsync<T extends {}>(key: string): Promise<DbDoc<T> | null> {
     try {
       const data = await getStorageAsync(key)
       if (!data) {
@@ -290,13 +375,13 @@ export class MiniProgramDbAdapter implements DbAdapter {
     const dataStr = JSON.stringify(doc)
 
     // 大数据直接走分块写入，跳过必然失败的 setStorage
-    if (dataStr.length > CHUNK_SIZE) {
+    if (utf8ByteLength(dataStr) > MAX_CHUNK_BYTES) {
       return this.asyncPutWithChunks(doc, key, dataStr)
     }
 
+    const previousChunkKeys = this.getExistingChunkKeys(key)
     try {
-      this.cleanupExistingChunks(key)
-      return await new Promise<DbReturn>((resolve, reject) => {
+      const result = await new Promise<DbReturn>((resolve, reject) => {
         uni.setStorage({
           key,
           data: doc,
@@ -304,38 +389,39 @@ export class MiniProgramDbAdapter implements DbAdapter {
           fail: reject,
         })
       })
+      this.cleanupChunks(previousChunkKeys)
+      return result
     } catch (e) {
       return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
     }
   }
 
-  /** 大数据分块异步写入 */
+  /** 大数据分块异步写入：新分片写入成功并提交主元数据后，才清理旧分片 */
   private async asyncPutWithChunks(doc: DbDoc, key: string, dataStr: string): Promise<DbReturn> {
-    const chunks: string[] = []
-    for (let i = 0; i < dataStr.length; i += CHUNK_SIZE) {
-      chunks.push(dataStr.slice(i, i + CHUNK_SIZE))
-    }
+    const chunks = splitStringByUtf8Bytes(dataStr, MAX_CHUNK_BYTES)
 
+    const chunkKeys = this.nextChunkKeys(key, chunks.length)
     const chunkInfo = {
       _id: doc._id,
       _rev: doc._rev || '1',
       _chunks: chunks.length,
-      _chunkKeys: chunks.map((_: string, index: number) => `${key}__chunk__${index}`)
+      _chunkKeys: chunkKeys
     }
 
     try {
-      this.cleanupExistingChunks(key)
       for (let index = 0; index < chunks.length; index++) {
         await new Promise<void>((resolve, reject) => {
-          uni.setStorage({ key: `${key}__chunk__${index}`, data: chunks[index], success: resolve, fail: reject })
+          uni.setStorage({ key: chunkKeys[index], data: chunks[index], success: resolve, fail: reject })
         })
       }
+      const previousChunkKeys = this.getExistingChunkKeys(key)
       await new Promise<void>((resolve, reject) => {
         uni.setStorage({ key, data: chunkInfo, success: resolve, fail: reject })
       })
+      this.cleanupChunks(previousChunkKeys)
       return { id: doc._id, rev: chunkInfo._rev, ok: true }
     } catch (e) {
-      this.cleanupChunks(chunkInfo._chunkKeys)
+      this.cleanupChunks(chunkKeys)
       return { id: doc._id, rev: doc._rev || '1', ok: false, error: true, message: String(e) }
     }
   }
@@ -560,6 +646,7 @@ class MiniProgramTtsAdapter implements TtsAdapter {
         if (settled) return
         settled = true
         clearTimeout(timer)
+        try { audio.destroy?.() } catch { /* ignore */ }
         if (this.innerAudio === audio) this.innerAudio = null
         resolve()
       })
@@ -567,6 +654,7 @@ class MiniProgramTtsAdapter implements TtsAdapter {
         if (settled) return
         settled = true
         clearTimeout(timer)
+        try { audio.destroy?.() } catch { /* ignore */ }
         if (this.innerAudio === audio) this.innerAudio = null
         reject(err)
       })
@@ -722,7 +810,7 @@ class MiniProgramTtsAdapter implements TtsAdapter {
     } catch {
       this.cacheManifest = {}
     }
-    return this.cacheManifest
+    return this.cacheManifest ?? {}
   }
 
   private persistManifest(): void {
@@ -776,5 +864,11 @@ export function setTtsAdapter(adapter: TtsAdapter): void {
 // ==================== 适配器注册 ====================
 
 export function registerMobileAdapters() {
-  setDbAdapter(new MiniProgramDbAdapter())
+  const adapter = new MiniProgramDbAdapter()
+  setDbAdapter(adapter)
+  // 延后执行，避开首屏读取；24 小时阈值由 cleanupOrphanChunks 内部保证不误删新写入
+  setTimeout(() => {
+    const removed = adapter.cleanupOrphanChunks()
+    if (removed > 0) console.info(`[db] 已清理 ${removed} 个无主分片`)
+  }, 5000)
 }

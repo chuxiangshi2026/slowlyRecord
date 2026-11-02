@@ -29,7 +29,9 @@ export interface PlotCtx {
   lineTo(x: number, y: number): void
   stroke(): void
   fillRect(x: number, y: number, w: number, h: number): void
+  strokeRect(x: number, y: number, w: number, h: number): void
   fillText(text: string, x: number, y: number): void
+  scale(x: number, y: number): void
 }
 
 /** 支持的函数名（白名单，防止任意代码执行） */

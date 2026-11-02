@@ -133,4 +133,28 @@ describe('askImportTargetBank', () => {
     await expect(askImportTargetBank('四级词汇')).resolves.toBeNull()
     expect(store.bankList.length).toBe(countBefore)
   })
+
+  it('非英语词库不显示英语当前库，新建目标继承来源语言', async () => {
+    const store = useMobileWords()
+    let itemList: string[] = []
+    actionSheetHandler = (opts) => { itemList = opts.itemList; opts.success({ tapIndex: 0 }) }
+    modalHandler = (opts) => opts.success({ confirm: true, content: '日语基础' })
+
+    const targetId = await askImportTargetBank('日语词库', 'ja')
+    expect(itemList).toEqual(['新建词库并导入'])
+    expect(store.getBankById(targetId!)?.language).toBe('ja')
+  })
+
+  it('其他已有词库只列出同语言目标', async () => {
+    const store = useMobileWords()
+    const japanese = store.createBank('日语', { language: 'ja' })
+    store.createBank('法语', { language: 'fr' })
+    let sheetCalls = 0
+    actionSheetHandler = (opts) => {
+      sheetCalls++
+      opts.success({ tapIndex: sheetCalls === 1 ? 1 : 0 })
+    }
+
+    await expect(askImportTargetBank('日语词库', 'ja')).resolves.toBe(japanese.id)
+  })
 })

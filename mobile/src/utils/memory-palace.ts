@@ -47,18 +47,17 @@ export function isPegDue(peg: MobilePegItem, now: number): boolean {
   return now - peg.learnDate >= intervalMinutes * 60 * 1000
 }
 
-/** 是否在可升级时间窗口内（未学过允许升级） */
+/** 是否已到可升级时间（未学过允许升级；达到间隔后不再限制截止时间） */
 function canLevelUp(learnDate: number | undefined, level: number, now: number): boolean {
   if (!learnDate) return true
   const start = learnDate + (DEFAULT_INTERVALS[level] ?? DEFAULT_INTERVALS[0]) * 60 * 1000
-  const end = learnDate + DEFAULT_INTERVALS[Math.min(level + 3, DEFAULT_INTERVALS.length - 1)] * 60 * 1000
-  return now > start && now < end
+  return now >= start
 }
 
 /**
  * 自评"记住"后更新 SRS 状态
- * 在升级窗口内按记忆牢固度升 1~3 级（'较强' +2、'极强' +3，其余 +1），封顶 12；
- * 未到期或超窗只刷新 learnDate
+ * 到期后按记忆牢固度升 1~3 级（'较强' +2、'极强' +3，其余 +1），封顶 12；
+ * 未到期只刷新 learnDate
  */
 export function markPegRemembered(peg: MobilePegItem, now: number, firmness?: string): MobilePegItem {
   const level = getPegLevel(peg)
@@ -71,10 +70,10 @@ export function markPegRemembered(peg: MobilePegItem, now: number, firmness?: st
   return { ...peg, learnDate: now }
 }
 
-/** 自评"忘记"后更新 SRS：12 级重置为 1 级，否则降 1 级（下限 1） */
+/** 自评"忘记"后更新 SRS：每次降 4 级，下限 1（12 级降到 8 级） */
 export function markPegForgotten(peg: MobilePegItem, now: number): MobilePegItem {
   const level = getPegLevel(peg)
-  return { ...peg, level: level >= MASTERED_LEVEL ? 1 : Math.max(level - 1, 1), learnDate: now }
+  return { ...peg, level: Math.max(level - 4, 1), learnDate: now }
 }
 
 // ==================== 同步合并（与桌面端同语义） ====================

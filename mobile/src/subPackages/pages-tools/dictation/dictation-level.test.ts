@@ -49,11 +49,11 @@ describe('拼写空态文案', () => {
     expect(info.filteredOutCount).toBe(0)
   })
 
-  it('范围内的词全部被正则过滤：给出明确解释与条数', () => {
+  it('范围内的词均不适合拼写练习：给出明确解释与条数', () => {
     const info = getEmptyState(20, 20)
     expect(info.filteredOutCount).toBe(20)
     expect(getFilteredHint(info.filteredOutCount))
-      .toBe('当前词库的 20 条内容为词组/句子，拼写练习仅支持英文单词')
+      .toBe('当前词库的 20 条内容为词组/句子，拼写练习仅支持单词')
   })
 
   it('部分单词可练时不走空态（filteredOut 仅为解释用）', () => {

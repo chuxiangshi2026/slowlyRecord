@@ -156,6 +156,58 @@ describe('ListenPlayer', () => {
     expect(onFinished).toHaveBeenCalledTimes(1)
   })
 
+  it('播放当前词时预取下一词的首选音源', () => {
+    const prefetched: string[] = []
+    const player: WordAudioPlayer = {
+      playAudio: () => new Promise<void>(() => {}),
+      prefetchAudio: (url) => { prefetched.push(url) }
+    }
+    const p = new ListenPlayer(['apple', 'banana'], player, () => 1000)
+
+    p.start()
+    expect(prefetched).toHaveLength(1)
+    expect(prefetched[0]).toContain('dict.youdao.com')
+    expect(prefetched[0]).toContain('banana')
+    p.destroy()
+  })
+
+  it('切词后旧播放延迟失败不得回退抢播', async () => {
+    const pending: { url: string; reject: () => void }[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (url) => new Promise<void>((_resolve, reject) => {
+        pending.push({ url, reject })
+      })
+    }
+    const p = new ListenPlayer(['apple', 'banana'], player, () => 1000)
+
+    p.start()
+    p.next()
+    pending[0].reject()
+    await vi.advanceTimersByTimeAsync(0)
+    expect(pending).toHaveLength(2)
+    expect(pending[1].url).toContain('banana')
+    p.destroy()
+  })
+
+  it('快速暂停恢复后旧播放延迟失败不得回退抢播', async () => {
+    const pending: { url: string; reject: () => void }[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (url) => new Promise<void>((_resolve, reject) => {
+        pending.push({ url, reject })
+      })
+    }
+    const p = new ListenPlayer(['apple', 'banana'], player, () => 1000)
+
+    p.start()
+    p.pause()
+    p.resume()
+    pending[0].reject()
+    await vi.advanceTimersByTimeAsync(0)
+    expect(pending).toHaveLength(2)
+    expect(pending[1].url).toContain('apple')
+    p.destroy()
+  })
+
   it('destroy 后不再有任何回调', async () => {
     const player: WordAudioPlayer = { playAudio: () => Promise.resolve() }
     const onFinished = vi.fn()
@@ -167,5 +219,20 @@ describe('ListenPlayer', () => {
     await vi.advanceTimersByTimeAsync(5000)
     expect(onFinished).not.toHaveBeenCalled()
     expect(onIndexChange).not.toHaveBeenCalled()
+  })
+
+  it('播放和预取都使用会话语言', () => {
+    const played: string[] = []
+    const prefetched: string[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (url) => { played.push(url); return Promise.resolve() },
+      prefetchAudio: (url) => { prefetched.push(url) },
+    }
+    const p = new ListenPlayer(['こんにちは', '学生'], player, () => 1000, {}, 'ja')
+
+    p.start()
+    expect(played[0]).toContain('tl=ja')
+    expect(prefetched[0]).toContain('tl=ja')
+    p.destroy()
   })
 })

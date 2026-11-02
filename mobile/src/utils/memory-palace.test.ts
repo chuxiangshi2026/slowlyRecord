@@ -66,29 +66,27 @@ describe('记忆宫殿 SRS', () => {
     expect(isPegMastered(makePeg({ level: 11 }))).toBe(false)
   })
 
-  it('markPegRemembered：窗口内按牢固度升级，超窗只刷新 learnDate', () => {
+  it('markPegRemembered：到期后按牢固度升级，超窗仍升级', () => {
     const now = 1_000_000
-    // level 0 窗口 = 1 分钟后 ~ 30 分钟后
     const inWindow = makePeg({ level: 0, learnDate: now - 5 * 60_000 })
     expect(markPegRemembered(inWindow, now).level).toBe(1)
     expect(markPegRemembered(inWindow, now, '较强').level).toBe(2)
     expect(markPegRemembered(inWindow, now, '极强').level).toBe(3)
     // 未学过（无 learnDate）：允许升级
     expect(markPegRemembered(makePeg(), now).level).toBe(1)
-    // 超窗（level 0 升级窗口 = 1 分钟后 ~ 360 分钟后）：不升级只刷新
     const outWindow = makePeg({ level: 0, learnDate: now - 400 * 60_000 })
     const refreshed = markPegRemembered(outWindow, now)
-    expect(refreshed.level).toBe(0)
+    expect(refreshed.level).toBe(1)
     expect(refreshed.learnDate).toBe(now)
     // 封顶 12
     expect(markPegRemembered(makePeg({ level: 12, learnDate: now - 1000 }), now).level).toBe(12)
   })
 
-  it('markPegForgotten：降级；12 级重置为 1', () => {
+  it('markPegForgotten：每次降 4 级；12 级降到 8', () => {
     const now = 500
-    expect(markPegForgotten(makePeg({ level: 5 }), now).level).toBe(4)
+    expect(markPegForgotten(makePeg({ level: 5 }), now).level).toBe(1)
     expect(markPegForgotten(makePeg({ level: 1 }), now).level).toBe(1)
-    expect(markPegForgotten(makePeg({ level: 12 }), now).level).toBe(1)
+    expect(markPegForgotten(makePeg({ level: 12 }), now).level).toBe(8)
   })
 })
 

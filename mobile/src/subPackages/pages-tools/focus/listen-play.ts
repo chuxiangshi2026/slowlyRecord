@@ -3,10 +3,14 @@
  * 流程：播放单词发音 → 停顿 → 自动推进下一个；发音失败按音源回退，全部失败则跳过该词。
  */
 
-import { buildChineseAudioUrls, containsChinese } from '@/utils/youdao-tts'
+import { buildWordAudioUrls } from '@/utils/word-audio'
+import { getActiveLanguage, type LanguageCode } from '@/utils/language'
+
+export { buildWordAudioUrls }
 
 export interface WordAudioPlayer {
   playAudio(url: string): Promise<void>
+  prefetchAudio?(url: string): void
 }
 
 export interface ListenPlayCallbacks {
@@ -18,28 +22,20 @@ export interface ListenPlayCallbacks {
   onError?: (index: number) => void
 }
 
-/** 构建单词发音音源列表：英文有道优先、谷歌兜底；中文走有道智云 TTS → 谷歌（tl=zh-CN），与 word-audio 同一策略 */
-export function buildWordAudioUrls(word: string): string[] {
-  if (containsChinese(word)) return buildChineseAudioUrls(word)
-  return [
-    `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=2`,
-    `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(word)}`
-  ]
-}
-
 export class ListenPlayer {
   private index = 0
   private pauseTimer: ReturnType<typeof setTimeout> | null = null
   private playing = false
   private finished = false
-  /** 会话代次：销毁/重建后旧 playAudio 的回调一律作废 */
+  /** 播放代次：每次起播、暂停或销毁后，旧 playAudio 的回调一律作废 */
   private session = 0
 
   constructor(
     private readonly words: string[],
     private readonly player: WordAudioPlayer,
     private readonly getPauseMs: () => number,
-    private readonly callbacks: ListenPlayCallbacks = {}
+    private readonly callbacks: ListenPlayCallbacks = {},
+    private readonly language: LanguageCode = getActiveLanguage()
   ) {}
 
   get currentIndex(): number {
@@ -53,11 +49,12 @@ export class ListenPlayer {
   start(): void {
     if (this.playing || this.finished) return
     this.playing = true
-    this.playCurrent(this.session)
+    this.playCurrent()
   }
 
   /** 暂停：停止调度；进行中的音频由调用方负责 stop，恢复时从当前词重播 */
   pause(): void {
+    this.session++
     this.playing = false
     this.clearPauseTimer()
   }
@@ -65,7 +62,7 @@ export class ListenPlayer {
   resume(): void {
     if (this.playing || this.finished) return
     this.playing = true
-    this.playCurrent(this.session)
+    this.playCurrent()
   }
 
   /** 上一个词（到首个则重播当前词）；暂停状态下仅切换下标 */
@@ -97,17 +94,23 @@ export class ListenPlayer {
   private replayCurrent(): void {
     if (!this.playing || this.finished) return
     this.clearPauseTimer()
-    this.playCurrent(this.session)
+    this.playCurrent()
   }
 
-  private playCurrent(session: number): void {
-    if (session !== this.session || !this.playing || this.finished) return
+  private playCurrent(): void {
+    if (!this.playing || this.finished) return
+    const session = ++this.session
     const word = this.words[this.index]
     if (!word) {
       this.finish()
       return
     }
-    this.playWithFallback(buildWordAudioUrls(word), 0, session)
+    this.playWithFallback(buildWordAudioUrls(word, this.language), 0, session)
+    const nextWord = this.words[this.index + 1]
+    if (nextWord) {
+      const nextUrl = buildWordAudioUrls(nextWord, this.language)[0]
+      if (nextUrl) this.player.prefetchAudio?.(nextUrl)
+    }
   }
 
   private playWithFallback(urls: string[], urlIndex: number, session: number): void {
@@ -125,7 +128,7 @@ export class ListenPlayer {
         } else {
           // 全部音源失败：跳过该词，不卡住播放队列
           this.callbacks.onError?.(this.index)
-          this.advance(session)
+          this.advance()
         }
       }
     )
@@ -136,15 +139,15 @@ export class ListenPlayer {
     this.pauseTimer = setTimeout(() => {
       this.pauseTimer = null
       if (session !== this.session || !this.playing) return
-      this.advance(session)
+      this.advance()
     }, Math.max(0, this.getPauseMs()))
   }
 
-  private advance(session: number): void {
+  private advance(): void {
     if (this.index < this.words.length - 1) {
       this.index++
       this.callbacks.onIndexChange?.(this.index)
-      this.playCurrent(session)
+      this.playCurrent()
     } else {
       this.finish()
     }
