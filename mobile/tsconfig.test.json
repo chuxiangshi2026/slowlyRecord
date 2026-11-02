@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["@dcloudio/types", "node", "vitest/globals"]
+  },
+  "include": ["src/**/*.test.ts", "src/**/*.ts", "src/**/*.vue", "src/**/*.json"],
+  "exclude": ["node_modules", "dist", "unpackage"]
+}

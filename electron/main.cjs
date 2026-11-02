@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, dialog, clipboard, Tray, Menu, globalShort
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
+import { resolveChildWindowTarget } from './child-window-target.mjs'
 
 // ESM 兼容的 __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -381,11 +382,8 @@ const childWindows = new Map() // winId -> BrowserWindow
 let childWinSeq = 0
 
 function resolveChildUrl(url) {
-  if (process.env.VITE_DEV_SERVER_URL) {
-    const base = process.env.VITE_DEV_SERVER_URL.replace(/\/$/, '')
-    return `${base}/${url}`
-  }
-  return path.join(__dirname, url)
+  const base = process.env.VITE_DEV_SERVER_URL.replace(/\/$/, '')
+  return `${base}/${url}`
 }
 
 ipcMain.handle('createBrowserWindow', async (_event, { url, options }) => {
@@ -408,14 +406,24 @@ ipcMain.handle('createBrowserWindow', async (_event, { url, options }) => {
   win.on('blur', () => forwardEvent('blur'))
   win.on('focus', () => forwardEvent('focus'))
   childWindows.set(winId, win)
-  // 开发环境走 dev server；生产必须用 loadFile——loadURL 传文件路径会 ERR_INVALID_URL，
-  // 导致打包版子窗口（专注模式/输入法键盘）全部白屏（主窗口自己就是 loadFile）
-  if (process.env.VITE_DEV_SERVER_URL) {
-    win.loadURL(resolveChildUrl(url)).catch(e => console.error('[Electron] 加载子窗口失败:', url, e))
-  } else {
-    win.loadFile(path.join(__dirname, url)).catch(e => console.error('[Electron] 加载子窗口失败:', url, e))
+  try {
+    // 开发环境走 dev server；生产必须拆分文件路径与查询串后 loadFile，
+    // 否则 ? 会被编码成 %3F 进入物理文件名并触发 ERR_FILE_NOT_FOUND。
+    if (process.env.VITE_DEV_SERVER_URL) {
+      await win.loadURL(resolveChildUrl(url))
+    } else {
+      const target = resolveChildWindowTarget(url)
+      // Electron 对空 search 的 loadFile 会报 ERR_FAILED；无查询串时不要传 options
+      const loadOptions = target.search ? { search: target.search } : undefined
+      await win.loadFile(path.join(__dirname, target.filePath), loadOptions)
+    }
+    return winId
+  } catch (error) {
+    childWindows.delete(winId)
+    if (!win.isDestroyed()) win.destroy()
+    console.error('[Electron] 加载子窗口失败:', url, error)
+    throw error
   }
-  return winId
 })
 
 ipcMain.handle('focusWindowInvoke', async (_event, { winId, method, args }) => {
