@@ -119,44 +119,28 @@
     <template v-if="scheduleSupported">
       <div>
         <div class="setting-item">
-          <div class="content">定时复习提醒</div>
+          <div class="content">每日提醒</div>
           <el-switch class="shorcut-desc"
-                     :model-value="wordsStore.scheduleReminder.review"
+                     :model-value="wordsStore.scheduleReminder.daily"
                      inline-prompt
                      size="large"
                      active-text="开"
                      inactive-text="关"
-                     @update:model-value="(v: string | number | boolean | undefined) => onScheduleToggle('review', v)"
+                     @update:model-value="(v: string | number | boolean | undefined) => onScheduleToggle('daily', v)"
           />
         </div>
-        <div class="setting-item schedule-times" v-if="wordsStore.scheduleReminder.review">
-          <el-checkbox-group
-              :model-value="wordsStore.scheduleReminder.reviewTimes || ['09:00', '21:00']"
-              :min="1"
-              @update:model-value="onReviewTimesChange">
-            <el-checkbox v-for="t in reviewTimeOptions" :key="t" :value="t">{{ t }}</el-checkbox>
-          </el-checkbox-group>
-        </div>
-      </div>
-      <div>
-        <div class="setting-item">
-          <div class="content">防断签提醒</div>
-          <el-switch class="shorcut-desc"
-                     :model-value="wordsStore.scheduleReminder.signin"
-                     inline-prompt
-                     size="large"
-                     active-text="开"
-                     inactive-text="关"
-                     @update:model-value="(v: string | number | boolean | undefined) => onScheduleToggle('signin', v)"
-          />
-        </div>
-        <div class="setting-item schedule-times" v-if="wordsStore.scheduleReminder.signin">
-          <el-checkbox-group
-              :model-value="signinSelectedTimes"
-              :min="1"
-              @update:model-value="onSigninTimesChange">
-            <el-checkbox v-for="t in signinTimeOptions" :key="t" :value="t">{{ t }}</el-checkbox>
-          </el-checkbox-group>
+        <div class="setting-item schedule-times" v-if="wordsStore.scheduleReminder.daily">
+          <el-select class="reminder-times-select"
+                     :model-value="dailySelectedTimes"
+                     multiple
+                     collapse-tags
+                     collapse-tags-tooltip
+                     :multiple-limit="MAX_REMINDER_TIMES"
+                     placeholder="选择提醒时间"
+                     @update:model-value="onDailyTimesChange">
+            <el-option v-for="t in reminderTimeOptions" :key="t" :label="t" :value="t"/>
+          </el-select>
+          <span class="schedule-sync-hint">到点提醒复习进度，并附带一个待复习词；最多选 {{ MAX_REMINDER_TIMES }} 个时间点</span>
         </div>
       </div>
       <div>
@@ -197,19 +181,19 @@
       <img class="miniprogram-code" src="/static/minicode.png" alt="慢记微信小程序码" />
     </div>
 
-    <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向） -->
+    <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向）；
+         隐私说明与上报状态同属一条（都是"采什么/目前是否在采"），合并展示不再单列 -->
     <div class="stats-optout">
       <span class="stats-optout-text">匿名使用统计（仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进插件）
-        <span class="stats-status">当前：{{ statsStatusText }}</span>
+        <span class="stats-status">当前：{{ statsStatusText }} · <a href="#"
+              @click.prevent="privacyVisible = true">隐私说明</a></span>
       </span>
       <el-checkbox class="stats-optout-check" :model-value="statsOptIn" size="small"
                    aria-label="匿名使用统计"
                    @update:model-value="onStatsOptInChange"/>
     </div>
 
-    <div class="legal-links">
-      <a href="privacy.html" target="_blank" rel="noopener">隐私说明</a>
-    </div>
+    <PrivacyDialog v-model="privacyVisible"/>
 
     <el-dialog v-model="feedbackVisible" title="问题反馈" width="420px" append-to-body>
       <el-input v-model="feedbackText" type="textarea" :rows="4" maxlength="500" show-word-limit
@@ -234,9 +218,10 @@ import {engineRequiresKey, getOcrEngineGroups, getTranslationEngine, getAvailabl
 import {isStatsExcluded, setStatsExcluded, submitFeedback, getStatsStatus} from "@/utils/stats.ts";
 import type {StatsStatus} from "@/utils/stats.ts";
 import {ElMessage} from 'element-plus'
-import {isScheduleSupported, applyScheduleSetting, applyScheduleTimes, REVIEW_TIME_OPTIONS, SIGNIN_TIME_OPTIONS} from "@/utils/schedule-reminder.ts";
+import {isScheduleSupported, applyScheduleSetting, applyScheduleTimes, REMINDER_TIME_OPTIONS, MAX_REMINDER_TIMES} from "@/utils/schedule-reminder.ts";
 import type {ReminderKind} from "@/utils/schedule-reminder.ts";
 import {useSyncStore} from "@/stores/sync";
+import PrivacyDialog from "@/components/PrivacyDialog.vue";
 
 const wordsStore = useWordsStore();
 const uiStore = useUiStore();
@@ -244,18 +229,13 @@ const syncStore = useSyncStore();
 
 // 定时任务能力探测：仅 uTools 8.0+ 显示定时提醒开关
 const scheduleSupported = isScheduleSupported();
-const reviewTimeOptions = REVIEW_TIME_OPTIONS;
-// 旧数据单时间点 signinTime 若不在新选项中，追加显示以保留用户原选择（改动后即被 signinTimes 取代）
-const signinTimeOptions = computed(() => {
-  const legacy = wordsStore.scheduleReminder.signinTime;
-  return legacy && !SIGNIN_TIME_OPTIONS.includes(legacy)
-    ? [...SIGNIN_TIME_OPTIONS, legacy].sort()
-    : SIGNIN_TIME_OPTIONS;
-});
-// 防断签已选时间点：优先 signinTimes，旧字段 signinTime 兜底，缺省全选
-const signinSelectedTimes = computed(() => {
+const reminderTimeOptions = REMINDER_TIME_OPTIONS;
+// 已选时间点：新字段优先，旧数据兜底，缺省早/晚两次
+const dailySelectedTimes = computed(() => {
   const pref = wordsStore.scheduleReminder;
-  return pref.signinTimes?.length ? pref.signinTimes : pref.signinTime ? [pref.signinTime] : SIGNIN_TIME_OPTIONS;
+  if (pref.dailyTimes?.length) return pref.dailyTimes;
+  if (pref.reviewTimes?.length) return pref.reviewTimes;
+  return ['09:00', '21:00'];
 });
 // 自动备份依赖 WebDAV 凭据，未配置时提示用户先去同步面板配置
 const syncConfigured = computed(() => syncStore.webdavConfigured);
@@ -267,14 +247,12 @@ const onScheduleToggle = (kind: ReminderKind, val: string | number | boolean | u
   void applyScheduleSetting(kind, enabled)
 }
 
-// 修改提醒时间点：落意向后，任务开着时重建（删旧建新，会再弹一次系统授权框）
-const onReviewTimesChange = (val: any) => {
-  wordsStore.setScheduleReminder({ reviewTimes: [...(val as string[])].sort() })
-  void applyScheduleTimes('review')
-}
-const onSigninTimesChange = (val: any) => {
-  wordsStore.setScheduleReminder({ signinTimes: [...(val as string[])].sort() })
-  void applyScheduleTimes('signin')
+// 修改提醒时间点：落意向后，cron 真变了才重建（uTools 无修改 API，会再弹一次授权框）
+const onDailyTimesChange = (val: any) => {
+  const next = [...(val as string[])].sort()
+  if (next.length === 0) return
+  wordsStore.setScheduleReminder({ dailyTimes: next })
+  void applyScheduleTimes('daily')
 }
 
 const onCloseAfterAddSwitchChange = () => {
@@ -303,6 +281,7 @@ const statsStatusText = computed(() => {
 
 // 问题反馈：经 umami 事件通道提交（feedback.submit），用户主动动作不受统计开关限制
 const feedbackVisible = ref(false)
+const privacyVisible = ref(false)
 const feedbackText = ref('')
 const feedbackContact = ref('')
 const feedbackSubmitting = ref(false)
@@ -397,8 +376,15 @@ const canConfigureCurrentOcr = computed(() =>
 }
 
 .schedule-times {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   margin-top: 4px;
   padding-left: 20px;
+}
+
+.reminder-times-select {
+  width: 100%;
 }
 
 .schedule-sync-hint {
@@ -512,7 +498,8 @@ const canConfigureCurrentOcr = computed(() =>
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 12px 20px 4px;
+  // 上下留白一致，合并后不贴边
+  margin: 12px 20px 12px;
 
   // 颜色/字号与其他设置描述（.content：secondary 灰、12px）一致；超宽自然换行
   .stats-optout-text {
@@ -523,11 +510,21 @@ const canConfigureCurrentOcr = computed(() =>
     color: var(--utools-text-secondary);
   }
 
-  // 统计状态行（当前：上报中/已停用原因）
+  // 统计状态行（当前：上报中/已停用原因 · 隐私说明）
   .stats-status {
     display: block;
     font-size: 12px;
     color: var(--utools-text-tertiary);
+
+    a {
+      color: var(--utools-text-tertiary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover {
+        color: var(--utools-primary);
+      }
+    }
   }
 
   // 对钩固定在行末，不随文字换行收缩
@@ -540,20 +537,5 @@ const canConfigureCurrentOcr = computed(() =>
 .el-switch {
   --el-switch-on-color: var(--utools-primary);
   --el-switch-off-color: var(--utools-text-tertiary);
-}
-
-.legal-links {
-  margin: 4px 20px 12px;
-  font-size: 12px;
-
-  a {
-    color: var(--utools-text-tertiary);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-
-    &:hover {
-      color: var(--utools-primary);
-    }
-  }
 }
 </style>

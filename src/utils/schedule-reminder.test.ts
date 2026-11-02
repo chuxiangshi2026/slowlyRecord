@@ -1,15 +1,16 @@
 /**
  * schedule-reminder 单元测试
- * window.utools 与各 store 全部 mock，验证降级、对账与触发处理逻辑
+ * window.utools 与各 store 全部 mock，验证降级、对账、授权不重复弹框与每日提醒内容
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 const mocks = vi.hoisted(() => ({
   wordsStore: {
-    scheduleReminder: { review: true, signin: true } as Record<string, any>,
+    scheduleReminder: { daily: true, dailyTimes: ['09:00', '21:00'] } as Record<string, any>,
     setScheduleReminder: vi.fn(),
     listWords: vi.fn(),
     forgetCount: 0,
+    words: [] as any[],
   },
   signinStore: {
     loadRecords: vi.fn(),
@@ -31,6 +32,7 @@ const mocks = vi.hoisted(() => ({
     db: { promises: { replicateStateFromCloud: vi.fn() } },
   },
   isUtoolsFlag: { value: true },
+  localStorageStore: {} as Record<string, string>,
 }))
 
 vi.mock('@/stores/words', () => ({ useWordsStore: () => mocks.wordsStore }))
@@ -40,6 +42,7 @@ vi.mock('@/utils/sync-dirty', () => ({ hasUnsyncedChanges: () => mocks.hasUnsync
 vi.mock('@/adapters/db', () => ({ getDbAdapterAsync: vi.fn().mockResolvedValue({}) }))
 vi.mock('@/adapters/platform', () => ({ isUtools: () => mocks.isUtoolsFlag.value }))
 vi.mock('@/utils/logger', () => ({ log: { e: vi.fn(), i: vi.fn(), d: vi.fn(), w: vi.fn() } }))
+vi.mock('@/utils/stats', () => ({ trackEvent: vi.fn() }))
 
 import {
   isScheduleSupported,
@@ -47,17 +50,30 @@ import {
   applyScheduleSetting,
   applyScheduleTimes,
   reconcileSchedules,
+  migrateReminderPref,
+  pickReminderWord,
   SCHEDULE_CODE_REVIEW,
-  SCHEDULE_CODE_SIGNIN,
   SCHEDULE_CODE_SYNC,
+  MAX_REMINDER_TIMES,
+  REMINDER_TIME_OPTIONS,
 } from '@/utils/schedule-reminder'
+import { trackEvent } from '@/utils/stats'
+
+const word = (id: string, text: string, extra: Record<string, any> = {}) => ({
+  _id: id,
+  text,
+  explains: extra.explains ?? `${text} 的释义`,
+  phonetic: extra.phonetic ?? '',
+  isReview: extra.isReview ?? true,
+})
 
 describe('schedule-reminder', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mocks.isUtoolsFlag.value = true
-    mocks.wordsStore.scheduleReminder = { review: true, signin: true }
+    mocks.wordsStore.scheduleReminder = { daily: true, dailyTimes: ['09:00', '21:00'] }
     mocks.wordsStore.forgetCount = 0
+    mocks.wordsStore.words = []
     mocks.wordsStore.listWords.mockResolvedValue([])
     mocks.wordsStore.setScheduleReminder.mockImplementation((patch: Record<string, any>) => {
       mocks.wordsStore.scheduleReminder = { ...mocks.wordsStore.scheduleReminder, ...patch }
@@ -69,13 +85,19 @@ describe('schedule-reminder', () => {
     mocks.syncStore.webdavUpload.mockResolvedValue({ success: true })
     mocks.utools.requestSchedule.mockResolvedValue(undefined)
     mocks.utools.getSchedules.mockReturnValue([])
-    // 用例内可能置为 undefined，这里整体重建 mock
     mocks.utools.db.promises.replicateStateFromCloud = vi.fn().mockResolvedValue(0)
+    mocks.localStorageStore = {}
     ;(globalThis as any).window = { utools: mocks.utools }
+    ;(globalThis as any).localStorage = {
+      getItem: (k: string) => mocks.localStorageStore[k] ?? null,
+      setItem: (k: string, v: string) => { mocks.localStorageStore[k] = v },
+      removeItem: (k: string) => { delete mocks.localStorageStore[k] },
+    }
   })
 
   afterEach(() => {
     delete (globalThis as any).window
+    delete (globalThis as any).localStorage
   })
 
   describe('isScheduleSupported（能力探测与降级）', () => {
@@ -99,31 +121,118 @@ describe('schedule-reminder', () => {
     })
   })
 
-  describe('handleScheduleTrigger（触发处理）', () => {
-    it('复习提醒：有待复习单词时通知并直达 review 功能', async () => {
-      mocks.wordsStore.forgetCount = 3
-      await handleScheduleTrigger(SCHEDULE_CODE_REVIEW)
-      expect(mocks.wordsStore.listWords).toHaveBeenCalled()
-      expect(mocks.utools.showNotification).toHaveBeenCalledWith('慢记：有 3 个单词到点待复习', 'review')
+  describe('migrateReminderPref（旧两套提醒 → 每日提醒）', () => {
+    it('新数据原样返回', () => {
+      const pref = { daily: false, dailyTimes: ['08:00'] }
+      expect(migrateReminderPref(pref)).toEqual(pref)
     })
 
-    it('复习提醒：无待复习时不打扰', async () => {
+    it('旧 review/signin 任一开启即合并为开启，并继承 reviewTimes', () => {
+      const migrated = migrateReminderPref({ review: false, signin: true, reviewTimes: ['13:00', '21:00'] })
+      expect(migrated.daily).toBe(true)
+      expect(migrated.dailyTimes).toEqual(['13:00', '21:00'])
+    })
+
+    it('旧数据都关着时合并为关闭', () => {
+      const migrated = migrateReminderPref({ review: false, signin: false })
+      expect(migrated.daily).toBe(false)
+    })
+
+    it('旧 signinTime 单点兜底为时间点数组', () => {
+      const migrated = migrateReminderPref({ review: false, signin: true, signinTime: '22:00' })
+      expect(migrated.dailyTimes).toEqual(['22:00'])
+    })
+
+    it('旧请求标记视为已授权，升级后不再弹框', () => {
+      expect(migrateReminderPref({ review: true, signin: false, reviewRequested: true }).dailyRequested).toBe(true)
+      expect(migrateReminderPref({ review: true, signin: false }).dailyRequested).toBe(false)
+    })
+  })
+
+  describe('pickReminderWord（每日一词）', () => {
+    it('优先从待复习词里挑', () => {
+      const picked = pickReminderWord([
+        word('a', 'apple', { isReview: false }),
+        word('b', 'banana', { isReview: true }),
+      ])
+      expect(picked?.text).toBe('banana')
+    })
+
+    it('没有待复习词时退化为全部有释义的词', () => {
+      const picked = pickReminderWord([word('a', 'apple', { isReview: false })])
+      expect(picked?.text).toBe('apple')
+    })
+
+    it('跳过没有释义的词', () => {
+      expect(pickReminderWord([word('a', 'apple', { explains: '  ' })])).toBeUndefined()
+    })
+
+    it('避开最近推过的词，全部推过时允许重复', () => {
+      const pool = [word('a', 'apple'), word('b', 'banana')]
+      mocks.localStorageStore['sr_reminder_recent_words'] = JSON.stringify(['a'])
+      expect(pickReminderWord(pool)?.text).toBe('banana')
+
+      mocks.localStorageStore['sr_reminder_recent_words'] = JSON.stringify(['a', 'b'])
+      expect(['apple', 'banana']).toContain(pickReminderWord(pool)?.text)
+    })
+
+    it('推送后记入最近列表', () => {
+      pickReminderWord([word('a', 'apple')])
+      expect(JSON.parse(mocks.localStorageStore['sr_reminder_recent_words'])).toEqual(['a'])
+    })
+  })
+
+  describe('handleScheduleTrigger（每日提醒内容）', () => {
+    it('有待复习词：通知数量并附带一个词', async () => {
+      mocks.wordsStore.forgetCount = 3
+      mocks.wordsStore.words = [word('a', 'abandon', { explains: 'v. 放弃；抛弃', phonetic: '/əˈbændən/' })]
+      await handleScheduleTrigger(SCHEDULE_CODE_REVIEW)
+
+      expect(mocks.wordsStore.listWords).toHaveBeenCalled()
+      const body = mocks.utools.showNotification.mock.calls[0][0] as string
+      expect(body).toContain('3 词待复习')
+      expect(body).toContain('abandon')
+      expect(body).toContain('/əˈbændən/')
+      expect(body).toContain('v. 放弃') // 释义截断到第一个分号
+      expect(mocks.utools.showNotification).toHaveBeenCalledWith(expect.any(String), 'review')
+      expect(trackEvent).toHaveBeenCalledWith('reminder', 'push', 'due', 1)
+    })
+
+    it('无到期词但未打卡：提醒连续天数并附词', async () => {
+      mocks.signinStore.hasSignedToday = false
+      mocks.signinStore.streakDays = 5
+      mocks.wordsStore.words = [word('a', 'apple', { isReview: false })]
+      await handleScheduleTrigger(SCHEDULE_CODE_REVIEW)
+
+      const body = mocks.utools.showNotification.mock.calls[0][0] as string
+      expect(body).toContain('还没打卡')
+      expect(body).toContain('连续 5 天')
+      expect(body).toContain('apple')
+      expect(trackEvent).toHaveBeenCalledWith('reminder', 'push', 'signin', 1)
+    })
+
+    it('已打卡且无到期词：完全静默', async () => {
+      mocks.signinStore.hasSignedToday = true
       mocks.wordsStore.forgetCount = 0
       await handleScheduleTrigger(SCHEDULE_CODE_REVIEW)
       expect(mocks.utools.showNotification).not.toHaveBeenCalled()
+      expect(trackEvent).not.toHaveBeenCalled()
     })
 
-    it('防断签：今日未打卡且有连续记录时提示天数', async () => {
-      mocks.signinStore.hasSignedToday = false
-      mocks.signinStore.streakDays = 5
-      await handleScheduleTrigger(SCHEDULE_CODE_SIGNIN)
-      expect(mocks.utools.showNotification).toHaveBeenCalledWith('慢记：今天还没复习，连续打卡 5 天要断了', 'review')
+    it('没有可用词时只发提醒文本', async () => {
+      mocks.wordsStore.forgetCount = 2
+      mocks.wordsStore.words = []
+      await handleScheduleTrigger(SCHEDULE_CODE_REVIEW)
+
+      expect(mocks.utools.showNotification).toHaveBeenCalledWith('慢记：2 词待复习', 'review')
+      expect(trackEvent).toHaveBeenCalledWith('reminder', 'push', 'due', 0)
     })
 
-    it('防断签：今日已打卡时不打扰', async () => {
-      mocks.signinStore.hasSignedToday = true
-      await handleScheduleTrigger(SCHEDULE_CODE_SIGNIN)
-      expect(mocks.utools.showNotification).not.toHaveBeenCalled()
+    it('旧防断签任务触发时走同一套逻辑（迁移期兼容）', async () => {
+      mocks.wordsStore.forgetCount = 1
+      mocks.wordsStore.words = [word('a', 'apple')]
+      await handleScheduleTrigger('signin-reminder')
+      expect(mocks.utools.showNotification).toHaveBeenCalledWith(expect.stringContaining('1 词待复习'), 'review')
     })
 
     it('未知 code 不产生任何通知', async () => {
@@ -151,7 +260,7 @@ describe('schedule-reminder', () => {
       expect(mocks.syncStore.webdavUpload).not.toHaveBeenCalled()
     })
 
-    it('自动备份：上传失败不抛出（避免计入任务 failureCount），只记日志', async () => {
+    it('自动备份：上传失败不抛出（避免计入任务 failureCount）', async () => {
       mocks.syncStore.webdavConfigured = true
       mocks.syncStore.webdavUpload.mockResolvedValue({ success: false, error: '网络错误' })
       await expect(handleScheduleTrigger(SCHEDULE_CODE_SYNC)).resolves.toBeUndefined()
@@ -173,50 +282,58 @@ describe('schedule-reminder', () => {
     })
   })
 
-  describe('reconcileSchedules（启动对账）', () => {
-    it('意向开 + 任务不存在 + 未发起过 → 发起创建请求并标记已发起', async () => {
+  describe('reconcileSchedules（启动对账与授权不重复弹框）', () => {
+    it('旧配置首次对账：迁移成单条每日提醒并只请求一次', async () => {
+      mocks.wordsStore.scheduleReminder = { review: true, signin: true, reviewTimes: ['13:00', '21:00'] }
       await reconcileSchedules()
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledTimes(2)
+
+      expect(mocks.utools.requestSchedule).toHaveBeenCalledTimes(1)
       expect(mocks.utools.requestSchedule).toHaveBeenCalledWith({
         code: SCHEDULE_CODE_REVIEW,
-        label: '慢记复习提醒',
-        trigger: { cron: '0 9,21 * * *' },
+        label: '慢记每日提醒',
+        trigger: { cron: '0 13,21 * * *' },
       })
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith({
-        code: SCHEDULE_CODE_SIGNIN,
-        label: '慢记防断签提醒',
-        trigger: { cron: '30 5,6,8,9,22 * * *' },
-      })
-      expect(mocks.wordsStore.scheduleReminder.reviewRequested).toBe(true)
-      expect(mocks.wordsStore.scheduleReminder.signinRequested).toBe(true)
+      expect(mocks.wordsStore.scheduleReminder.daily).toBe(true)
+      expect(mocks.wordsStore.scheduleReminder.dailyTimes).toEqual(['13:00', '21:00'])
+      expect(mocks.wordsStore.scheduleReminder.dailyRequested).toBe(true)
     })
 
-    it('意向开 + 任务不存在 + 已发起过 → 意向翻转为关，不再重复请求', async () => {
-      mocks.wordsStore.scheduleReminder = { review: true, signin: true, reviewRequested: true, signinRequested: true }
+    it('已发起过请求：任务不在也不再弹框，开关落为关', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: true, dailyRequested: true }
       await reconcileSchedules()
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
-      expect(mocks.wordsStore.scheduleReminder.review).toBe(false)
-      expect(mocks.wordsStore.scheduleReminder.signin).toBe(false)
+      expect(mocks.wordsStore.scheduleReminder.daily).toBe(false)
     })
 
-    it('意向开 + 任务已存在 → 不动', async () => {
-      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW }, { code: SCHEDULE_CODE_SIGNIN }])
+    it('任务已存在：不请求、不删除、不写库', async () => {
+      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW, trigger: { cron: '0 9,21 * * *' } }])
       await reconcileSchedules()
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
       expect(mocks.utools.removeSchedule).not.toHaveBeenCalled()
       expect(mocks.wordsStore.setScheduleReminder).not.toHaveBeenCalled()
     })
 
-    it('意向关 + 任务存在 → 删除任务', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: false }
-      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW }, { code: SCHEDULE_CODE_SIGNIN }])
+    it('旧防断签任务存在时清掉（已合并）', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: true, dailyTimes: ['09:00'] }
+      mocks.utools.getSchedules.mockReturnValue([
+        { code: SCHEDULE_CODE_REVIEW, trigger: { cron: '0 9 * * *' } },
+        { code: 'signin-reminder', trigger: { cron: '30 5 * * *' } },
+      ])
       await reconcileSchedules()
-      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_REVIEW)
-      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_SIGNIN)
+      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith('signin-reminder')
+      expect(mocks.utools.removeSchedule).toHaveBeenCalledTimes(1)
     })
 
-    it('自动备份意向开 + 任务不存在 + 未发起过 → 发起创建请求（每天 22:00）', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: false, sync: true }
+    it('意向关 + 任务存在 → 删除任务', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: false }
+      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW, trigger: { cron: '0 9 * * *' } }])
+      await reconcileSchedules()
+      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_REVIEW)
+      expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
+    })
+
+    it('自动备份意向开 + 任务不存在 + 未发起过 → 请求创建（每天 22:00）', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: false, sync: true }
       await reconcileSchedules()
       expect(mocks.utools.requestSchedule).toHaveBeenCalledTimes(1)
       expect(mocks.utools.requestSchedule).toHaveBeenCalledWith({
@@ -227,18 +344,11 @@ describe('schedule-reminder', () => {
       expect(mocks.wordsStore.scheduleReminder.syncRequested).toBe(true)
     })
 
-    it('自动备份意向开 + 任务不存在 + 已发起过 → 意向翻转为关', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: false, sync: true, syncRequested: true }
+    it('自动备份已发起过且任务不在 → 翻转关闭，不重复弹框', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: false, sync: true, syncRequested: true }
       await reconcileSchedules()
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
       expect(mocks.wordsStore.scheduleReminder.sync).toBe(false)
-    })
-
-    it('自动备份意向关 + 任务存在 → 删除任务', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: false, sync: false }
-      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_SYNC }])
-      await reconcileSchedules()
-      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_SYNC)
     })
 
     it('低版本不支持时完全跳过', async () => {
@@ -246,92 +356,46 @@ describe('schedule-reminder', () => {
       await reconcileSchedules()
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
     })
-
-    it('删除不存在的任务抛异常时不影响整体流程', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: true }
-      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW }])
-      mocks.utools.removeSchedule.mockImplementation(() => { throw new Error('任务不存在') })
-      await reconcileSchedules()
-      // removeSchedule 异常被吞掉后，signin 分支仍正常发起请求
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({ code: SCHEDULE_CODE_SIGNIN }))
-    })
   })
 
   describe('applyScheduleSetting（设置页开关即时应用）', () => {
-    it('打开：重置已发起标记并立即请求创建', async () => {
-      await applyScheduleSetting('review', true)
+    it('打开：立即请求创建并标记已发起', async () => {
+      await applyScheduleSetting('daily', true)
       expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({ code: SCHEDULE_CODE_REVIEW }))
-      expect(mocks.wordsStore.scheduleReminder.reviewRequested).toBe(true)
+      expect(mocks.wordsStore.scheduleReminder.dailyRequested).toBe(true)
+    })
+
+    it('任务已存在时打开：不重复请求（避免再弹授权框）', async () => {
+      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW, trigger: { cron: '0 9,21 * * *' } }])
+      await applyScheduleSetting('daily', true)
+      expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
     })
 
     it('关闭：删除任务', async () => {
-      await applyScheduleSetting('signin', false)
-      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_SIGNIN)
-    })
-
-    it('打开自动备份：立即请求创建并标记已发起', async () => {
-      await applyScheduleSetting('sync', true)
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({ code: SCHEDULE_CODE_SYNC }))
-      expect(mocks.wordsStore.scheduleReminder.syncRequested).toBe(true)
+      await applyScheduleSetting('daily', false)
+      expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_REVIEW)
     })
 
     it('低版本不支持时不动作', async () => {
       mocks.isUtoolsFlag.value = false
-      await applyScheduleSetting('review', true)
+      await applyScheduleSetting('daily', true)
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
     })
   })
 
-  describe('自定义提醒时间', () => {
-    it('复习提醒自定义单时间点 → cron 跟随设置', async () => {
-      mocks.wordsStore.scheduleReminder = { review: true, signin: false, reviewTimes: ['13:00'] }
-      await reconcileSchedules()
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith({
-        code: SCHEDULE_CODE_REVIEW,
-        label: '慢记复习提醒',
-        trigger: { cron: '0 13 * * *' },
-      })
+  describe('applyScheduleTimes（改时间点）', () => {
+    it('cron 没变时不重建', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: true, dailyTimes: ['09:00', '21:00'] }
+      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW, trigger: { cron: '0 9,21 * * *' } }])
+      await applyScheduleTimes('daily')
+      expect(mocks.utools.removeSchedule).not.toHaveBeenCalled()
+      expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
     })
 
-    it('复习提醒多时间点乱序 → 小时去重排序', async () => {
-      mocks.wordsStore.scheduleReminder = { review: true, signin: false, reviewTimes: ['21:00', '09:00', '13:00', '09:00'] }
-      await reconcileSchedules()
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({
-        trigger: { cron: '0 9,13,21 * * *' },
-      }))
-    })
-
-    it('防断签旧数据单时间点 signinTime → 兜底兼容', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: true, signinTime: '22:00' }
-      await reconcileSchedules()
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith({
-        code: SCHEDULE_CODE_SIGNIN,
-        label: '慢记防断签提醒',
-        trigger: { cron: '0 22 * * *' },
-      })
-    })
-
-    it('防断签多时间点乱序含重复 → 小时去重排序', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: true, signinTimes: ['22:30', '05:30', '22:30'] }
-      await reconcileSchedules()
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({
-        code: SCHEDULE_CODE_SIGNIN,
-        trigger: { cron: '30 5,22 * * *' },
-      }))
-    })
-
-    it('防断签 signinTimes 优先于旧字段 signinTime', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: true, signinTimes: ['08:30'], signinTime: '22:00' }
-      await reconcileSchedules()
-      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({
-        code: SCHEDULE_CODE_SIGNIN,
-        trigger: { cron: '30 8 * * *' },
-      }))
-    })
-
-    it('任务开着时改时间 → 删旧建新', async () => {
-      mocks.wordsStore.scheduleReminder = { review: true, signin: false, reviewTimes: ['21:00'] }
-      await applyScheduleTimes('review')
+    it('cron 变了才删旧建新', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: true, dailyTimes: ['21:00'] }
+      mocks.utools.getSchedules.mockReturnValue([{ code: SCHEDULE_CODE_REVIEW, trigger: { cron: '0 9,21 * * *' } }])
+      await applyScheduleTimes('daily')
       expect(mocks.utools.removeSchedule).toHaveBeenCalledWith(SCHEDULE_CODE_REVIEW)
       expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({
         code: SCHEDULE_CODE_REVIEW,
@@ -339,11 +403,29 @@ describe('schedule-reminder', () => {
       }))
     })
 
-    it('任务关着时改时间 → 只存意向不动作', async () => {
-      mocks.wordsStore.scheduleReminder = { review: false, signin: false, reviewTimes: ['21:00'] }
-      await applyScheduleTimes('review')
+    it('提醒关着时改时间只存意向不动作', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: false, dailyTimes: ['21:00'] }
+      await applyScheduleTimes('daily')
       expect(mocks.utools.removeSchedule).not.toHaveBeenCalled()
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('时间点选项', () => {
+    it('提供常用 :00 选项，最多选 2 个', () => {
+      expect(REMINDER_TIME_OPTIONS[0]).toBe('07:00')
+      expect(REMINDER_TIME_OPTIONS[REMINDER_TIME_OPTIONS.length - 1]).toBe('22:00')
+      expect(REMINDER_TIME_OPTIONS.every(t => t.endsWith(':00'))).toBe(true)
+      expect(REMINDER_TIME_OPTIONS.length).toBeLessThanOrEqual(10)
+      expect(MAX_REMINDER_TIMES).toBe(2)
+    })
+
+    it('旧数据超过 2 个时间点时只保留最早与最晚，保住早晚节奏', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: true, dailyTimes: ['21:00', '07:00', '13:00'] }
+      await reconcileSchedules()
+      expect(mocks.utools.requestSchedule).toHaveBeenCalledWith(expect.objectContaining({
+        trigger: { cron: '0 7,21 * * *' },
+      }))
     })
   })
 })

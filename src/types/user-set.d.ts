@@ -99,9 +99,10 @@ export type UserSetType = DbDoc<{
      * scrim=遮罩浓度 0~1（护眼绿罩住背景的程度，越高越接近纯色底）；
      * acrylic=毛玻璃总开关；acrylicBlur=背景图片层模糊半径 px（默认 18，整体磨砂）；
      * cardBlur=卡片/列表叠加模糊半径 px（默认 12，列表区域比背景更糊一层；0 或 acrylic=off 时不挂）；
-     * headerEffect/footerEffect=透明与亚克力是否作用于页头/底栏（默认 true，false 时对应区域回落实底色）
+     * headerEffect/footerEffect=透明与亚克力是否作用于页头/底栏（默认 true，false 时对应区域回落实底色）；
+     * brightness=整体明亮度 0.5~1.5（默认 1，独立于背景图生效）
      */
-    appBg?: { preset?: string; scrim?: number; acrylic?: boolean; acrylicBlur?: number; cardBlur?: number; headerEffect?: boolean; footerEffect?: boolean };
+    appBg?: { preset?: string; scrim?: number; acrylic?: boolean; acrylicBlur?: number; cardBlur?: number; headerEffect?: boolean; footerEffect?: boolean; brightness?: number };
     /**
      * 定时任务（uTools 8.0+，低版本自动降级不显示）：
      * review=定时复习提醒，signin=防断签提醒，sync=WebDAV 定时自动备份（默认关，依赖 WebDAV 配置）；
@@ -109,15 +110,20 @@ export type UserSetType = DbDoc<{
      * reviewRequested/signinRequested/syncRequested=对应任务已发起过系统创建请求（用户拒绝后不再重复弹窗骚扰）
      */
     scheduleReminder?: {
-        review: boolean;
-        signin: boolean;
+        /** 合并后的每日提醒（复习 + 防断签） */
+        daily?: boolean;
+        dailyTimes?: string[];
+        dailyRequested?: boolean;
         sync?: boolean;
+        syncRequested?: boolean;
+        /** 旧字段：仅用于迁移读取 */
+        review?: boolean;
+        signin?: boolean;
         reviewTimes?: string[];
         signinTimes?: string[];
         signinTime?: string;
         reviewRequested?: boolean;
         signinRequested?: boolean;
-        syncRequested?: boolean;
     };
 }>;
 

@@ -132,7 +132,24 @@ export const useWordsStore =
             function restoreDefaultsAfterHydrate() {
                 normalizeUserApiKeys();
                 focusMode.value = {...defaultFocusMode, ...focusMode.value};
-                // 旧版本持久化数据无 scheduleReminder 字段，合并默认值补齐
+                // 旧的 review/signin 两套提醒意向先收敛成 daily，再合并默认值补齐缺失字段
+                const rawReminder = scheduleReminder.value as any;
+                if (typeof rawReminder?.daily !== 'boolean') {
+                    const legacyDaily = !!rawReminder?.review || !!rawReminder?.signin;
+                    scheduleReminder.value = {
+                        ...rawReminder,
+                        daily: legacyDaily,
+                        dailyTimes: rawReminder?.reviewTimes?.length
+                            ? rawReminder.reviewTimes
+                            : rawReminder?.signinTimes?.length
+                                ? rawReminder.signinTimes
+                                : rawReminder?.signinTime
+                                    ? [rawReminder.signinTime]
+                                    : undefined,
+                        // 老用户只要发起过任一请求就视为已授权，升级后不再弹框
+                        dailyRequested: !!(rawReminder?.reviewRequested || rawReminder?.signinRequested),
+                    } as any;
+                }
                 scheduleReminder.value = {...defaultScheduleReminder(), ...scheduleReminder.value};
                 // 同理补齐 appBg（旧数据无此字段）
                 appBg.value = {...defaultAppBg(), ...appBg.value};
@@ -158,9 +175,10 @@ export const useWordsStore =
             const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 });
             const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number }>(defaultAppBg());
             // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
-            // review/signin 默认开（升级后首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
-            const defaultScheduleReminder = () => ({ review: true, signin: true, sync: false });
-            const scheduleReminder = ref<{ review: boolean; signin: boolean; sync?: boolean; reviewTimes?: string[]; signinTimes?: string[]; signinTime?: string; reviewRequested?: boolean; signinRequested?: boolean; syncRequested?: boolean }>(defaultScheduleReminder());
+            // daily 默认开（首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
+            type ScheduleReminderState = { daily: boolean; dailyTimes?: string[]; dailyRequested?: boolean; sync?: boolean; syncRequested?: boolean; review?: boolean; signin?: boolean; reviewTimes?: string[]; signinTimes?: string[]; signinTime?: string; reviewRequested?: boolean; signinRequested?: boolean };
+            const defaultScheduleReminder = (): ScheduleReminderState => ({ daily: true, dailyTimes: ['09:00', '21:00'], sync: false });
+            const scheduleReminder = ref<ScheduleReminderState>(defaultScheduleReminder());
             // 专注模式设置
             const focusMode = ref<FocusModeSettings>({...defaultFocusMode});
 
@@ -587,7 +605,7 @@ export const useWordsStore =
             /**
              * 更新定时任务设置（部分字段合并；任务的实际创建/删除由 schedule-reminder 模块负责）
              */
-            function setScheduleReminder(patch: Partial<{ review: boolean; signin: boolean; sync: boolean; reviewTimes: string[]; signinTimes: string[]; signinTime: string; reviewRequested: boolean; signinRequested: boolean; syncRequested: boolean }>) {
+            function setScheduleReminder(patch: Partial<ScheduleReminderState>) {
                 scheduleReminder.value = { ...scheduleReminder.value, ...patch };
 
                 let userSet = getSetDb()

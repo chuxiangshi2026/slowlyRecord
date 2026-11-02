@@ -42,10 +42,10 @@ function getSetDb(silent = false): UserSetType | null {
     try {
         for (const old of allDocs as UserSetType[]) {
             if (old && old._id !== DB_KEY_USER_SET) {
-                db.remove(old._id);
+                void db.promises.remove(old._id).catch(() => {});
             }
         }
-        db.promises.put(merged);
+        void db.promises.put(merged).catch((e) => console.error('[user-set] 收敛写回失败:', e));
     } catch (e) {
         console.error('[user-set] 收敛多文档失败:', e);
     }
@@ -54,36 +54,51 @@ function getSetDb(silent = false): UserSetType | null {
 
 
 /**
- * 带冲突重试地写回 user-set 文档（同步适配器的 put 基于传入对象上的 _rev）
- * uTools 下 put 带旧 _rev 返回 conflict 静默失败，主窗口与子窗口并发写 user-set
- * （专注模式设置/待处理动作清理）时输家的写入会丢，这里 conflict 时重读最新 _rev 重试
- * @param doc 已修改内容的 user-set 文档（函数内会更新其 _rev）
- * @returns 是否写入成功
+ * 带冲突重试地修改 user-set：每次重试都重新读取最新文档并重新执行 mutator，
+ * 避免只替换 _rev 后整文档覆盖并发窗口刚写入的其他字段。
  */
-function putSetDbWithRetry(doc: UserSetType): boolean {
+let setUpdateQueue: Promise<void> = Promise.resolve();
+
+function updateSetDbWithRetry(mutator: (doc: UserSetType) => void, maxAttempts = 3): Promise<boolean> {
+    // 串行化当前父窗口内的完整读改写；uTools 跨窗口仍由 _rev 冲突重试兜底
+    const run = () => runSetDbUpdateWithRetry(mutator, maxAttempts);
+    const task = setUpdateQueue.then(run, run);
+    setUpdateQueue = task.then(() => undefined, () => undefined);
+    return task;
+}
+
+async function runSetDbUpdateWithRetry(mutator: (doc: UserSetType) => void, maxAttempts: number): Promise<boolean> {
     const db = getDbAdapter();
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
         try {
             const latest = getSetDb(true);
-            if (latest?._rev) {
-                doc._rev = latest._rev;
+            if (!latest) return false;
+            const next = cloneDeep(latest);
+            mutator(next);
+            next._id = DB_KEY_USER_SET;
+            const result = await db.promises.put(next);
+            if (judgePutResult(next, result)) return true;
+            if (!String(result?.message || '').includes('conflict')) {
+                console.error('[user-set] 写入失败:', result?.message);
+                return false;
             }
-            // promises.put 返回 Promise<DbReturn>：uTools 适配器内部同步落盘后 resolve，
-            // IndexedDB 适配器异步落盘。统一 await 后按 conflict 语义重试
-            void db.promises.put(doc).then((result) => {
-                if (!judgePutResult(doc, result)) {
-                    console.error('[user-set] 写入失败:', result?.message);
-                }
-            });
-            // 同步侧立即返回「已提交」：主窗口/子窗口并发写由 conflict 重试兜底，
-            // 异步结果只记日志不阻塞调用方
-            return true;
         } catch (e) {
-            console.error('[user-set] 写入失败:', e);
+            console.error('[user-set] 写入异常:', e);
             return false;
         }
     }
+    console.error('[user-set] 写入冲突重试耗尽');
     return false;
+}
+
+/** 兼容旧调用：把传入文档的字段覆盖到最新版本，写操作仍走真实冲突重试。 */
+function putSetDbWithRetry(doc: UserSetType): Promise<boolean> {
+    return updateSetDbWithRetry((latest) => {
+        for (const [key, value] of Object.entries(doc)) {
+            if (key === '_id' || key === '_rev') continue;
+            (latest as any)[key] = cloneDeep(value);
+        }
+    });
 }
 
 function judgePutResult(doc: UserSetType, result: any): boolean {
@@ -116,11 +131,25 @@ async function addAndUpdateSetDb(userSet: UserSetType | null):Promise<DbReturn> 
         log.d("添加设置到数据库成功")
         // 保存成功, 更新文档版本
         userSet._rev = result.rev;
-    } else if (result.error) {
-        // 保存出错，打印错误原因
-        console.log('保存设置到数据库报错', result.message);
+        return result;
     }
-    return result
+    // _rev 过期（悬浮窗/定时任务/多窗口先写过 user-set）时直接 put 会冲突失败，
+    // 设置静默丢失——下次进入插件 App.vue 又用库里的旧值覆盖内存中的选择，
+    // 表现就是"改了翻译引擎，再进来又变回去"。冲突时重读最新文档合并且重试。
+    if (String(result.message || '').toLowerCase().includes('conflict')) {
+        const retried = await putSetDbWithRetry(userSet);
+        if (retried) {
+            log.d('设置写入冲突，已重试写入成功');
+            const latest = getSetDb(true) as UserSetType | null;
+            if (latest?._rev) userSet._rev = latest._rev;
+            return { id: DB_KEY_USER_SET, ok: true, rev: userSet._rev };
+        }
+        // 生产构建会抹掉 console.log，这里用 warn 才能在用户环境留痕
+        console.warn('[user-set] 设置写入冲突且重试失败，本次修改可能未保存');
+        return result;
+    }
+    console.warn('[user-set] 保存设置到数据库失败:', result.message);
+    return result;
 }
 
 
@@ -131,13 +160,10 @@ async function addAndUpdateSetDb(userSet: UserSetType | null):Promise<DbReturn> 
  */
 function removeSetDb(id: string): void {
     const db = getDbAdapter();
-    const result = db.remove(id);
-    if (result.ok) {
-        console.log("删除成功");
-    } else if (result.error) {
-        // 删除失败，打印错误原因
-        log.e(result.message);
-    }
+    void db.promises.remove(id).then((result) => {
+        if (result.ok) console.log("删除成功");
+        else if (result.error) log.e(result.message || '删除失败');
+    }).catch((e) => log.e('删除设置失败', e));
 }
 
 
@@ -149,4 +175,4 @@ function removeSetDb(id: string): void {
 // if (user) {
 //     console.log(user);
 // }
-export {getSetDb, addAndUpdateSetDb, removeSetDb, putSetDbWithRetry};
+export {getSetDb, addAndUpdateSetDb, removeSetDb, putSetDbWithRetry, updateSetDbWithRetry};
