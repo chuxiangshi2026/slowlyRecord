@@ -190,6 +190,7 @@
               <el-tag v-if="bank.isDefault" size="small" type="success">默认</el-tag>
             </div>
             <div class="wordbank-actions">
+              <el-button type="primary" link size="small" @click.stop="openImportFromWordBank(bank.id)">导入</el-button>
               <el-button v-if="!bank.isDefault" type="danger" link size="small" @click="confirmDeleteWordBank(bank)">
                 <el-icon><Delete/></el-icon>
               </el-button>
@@ -241,7 +242,7 @@
     <!-- 词库选择对话框（从词库导入） -->
     <el-dialog
       v-model="wordBankSelectVisible"
-      title="选择要导入的词库"
+      :title="`导入到「${importTargetBankName}」`"
       width="400px"
       :close-on-click-modal="false"
     >
@@ -285,7 +286,7 @@ import type { LanguageCode } from '@/utils/language';
 import { filterWordsForJsonExport, filterWordsForTextExport, parseFileContent, validateImportedWords } from '@/utils/word-util';
 import { batchTranslateAndAddWords } from '@/utils/str-util';
 import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/phonetic-util';
-import { fetchWordBank, WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
+import { WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
 import { DEFAULT_INTERVALS } from '@/constants';
 import { computeLevelDown, isDue } from '@/utils/srs';
@@ -318,6 +319,14 @@ const selectedImportBank = ref<WordBankType | ''>('');
 const wordBankManagerVisible = ref(false);
 const createWordBankVisible = ref(false);
 const customWordBanks = ref<WordBank[]>([]);
+const importTargetBankId = ref('');
+const importTargetBankName = computed(() => {
+  const target = customWordBanks.value.find(bank => bank.id === importTargetBankId.value);
+  if (target) return target.name;
+  return importTargetBankId.value === wordsStore.currentWordBankId
+    ? wordsStore.currentWordBank?.name || '默认词库'
+    : '目标词库';
+});
 
 // 新建词库表单
 const newWordBankForm = ref({
@@ -761,6 +770,13 @@ function openFocusMode() {
 }
 
 // ========== 导入导出功能 ==========
+const openImportFromWordBank = (bankId = wordsStore.currentWordBankId) => {
+  importTargetBankId.value = bankId;
+  selectedImportBank.value = '';
+  wordBankManagerVisible.value = false;
+  wordBankSelectVisible.value = true;
+};
+
 /**
  * 处理导入命令
  */
@@ -773,7 +789,7 @@ const handleImportCommand = (command: string) => {
       importTextWords();
       break;
     case 'importFromWordBank':
-      wordBankSelectVisible.value = true;
+      openImportFromWordBank();
       break;
   }
 };
@@ -795,14 +811,39 @@ const handleExportCommand = (command: string) => {
 /**
  * 确认从选中词库导入
  */
-const confirmImportFromBank = () => {
-  if (!selectedImportBank.value) {
+const confirmImportFromBank = async () => {
+  const bankType = selectedImportBank.value;
+  if (!bankType) {
     ElMessage.warning('请选择一个词库');
     return;
   }
+  const targetBankId = importTargetBankId.value || wordsStore.currentWordBankId;
+  const bankName = WORDBANK_LIST.find(bank => bank.id === bankType)?.name || bankType;
   wordBankSelectVisible.value = false;
-  importFromWordBank(selectedImportBank.value);
   selectedImportBank.value = '';
+  const loading = ElLoading.service({
+    lock: true,
+    text: `正在加载${bankName}...`,
+    background: 'rgba(0, 0, 0, 0.7)',
+  });
+  try {
+    const result = await importFromBuiltinWordBank(targetBankId, bankType);
+    if (!result.success) {
+      ElMessage.error(result.error || '词库导入失败');
+      return;
+    }
+    if (result.count > 0) {
+      ElMessage.success(`成功从${bankName}导入${result.count}个单词到「${importTargetBankName.value}」`);
+    } else {
+      ElMessage.warning('没有新单词需要导入');
+    }
+    await switchToWordBank(targetBankId);
+  } catch (error) {
+    console.error('从词库导入失败:', error);
+    ElMessage.error('词库导入失败');
+  } finally {
+    loading.close();
+  }
 };
 
 /**
@@ -956,55 +997,6 @@ const importTextWords = () => {
     }
   };
   fileInput.click();
-};
-
-/**
- * 从内置词库导入单词
- */
-const importFromWordBank = async (bankType: WordBankType) => {
-  const info = WORDBANK_LIST.find(wb => wb.id === bankType);
-  const bankName = info?.name || bankType;
-  const loading = ElLoading.service({
-    lock: true,
-    text: `正在加载${bankName}...`,
-    background: 'rgba(0, 0, 0, 0.7)',
-  });
-  try {
-    const words = await fetchWordBank(bankType, { priority: 'local', useCache: true });
-    loading.close();
-    if (words.length === 0) {
-      ElMessage.warning('词库加载失败，请检查词库文件是否存在');
-      return;
-    }
-    const uniqueWords = words.filter((importedWord) => {
-      return !wordsStore.words.some((existingWord) => existingWord.text === importedWord.text);
-    });
-    if (uniqueWords.length === 0) {
-      ElMessage.warning('没有新单词需要导入');
-      return;
-    }
-    const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains);
-    const wordsWithExplains = uniqueWords.filter(word => !!word.explains);
-    if (wordsNeedingTranslation.length > 0) {
-      ElMessage.info(`检测到${wordsNeedingTranslation.length}个单词需要翻译，正在翻译中...`);
-      if (wordsWithExplains.length > 0) {
-        wordsStore.addAndUpdateWords(wordsWithExplains);
-      }
-      const wordsToTranslate = wordsNeedingTranslation.map(word => word.text);
-      batchTranslateAndAddWords(wordsToTranslate, (processedCount, totalCount) => {
-        if (totalCount > 0) {
-          ElMessage.info(`正在翻译: ${processedCount}/${totalCount}`);
-        }
-      });
-    } else {
-      wordsStore.addAndUpdateWords(uniqueWords).then(() => {
-        ElMessage.success(`成功从${bankName}导入${uniqueWords.length}个单词`);
-      });
-    }
-  } catch (error) {
-    loading.close();
-    ElMessage.error('词库导入失败');
-  }
 };
 
 function getSimplePhonetic(text: string): string {
@@ -1817,10 +1809,16 @@ function handleDictationKeydown(e: KeyboardEvent) {
   .wordbank-radio-group {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap; // el-radio-group 默认 wrap，限高后会把选项挤成多列
     gap: 12px;
     width: 100%;
+    // 内置词库多时列表会把「确认导入」顶出可视区，限高内滚动
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
 
     .wordbank-radio {
+      flex-shrink: 0; // 限高滚动后不被 flex 压扁
       margin: 0;
       padding: 12px 16px;
       border-radius: 8px;

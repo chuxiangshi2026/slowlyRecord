@@ -37,14 +37,20 @@ export function getProgressDoc(lang: string = 'en'): PhoneticProgressDoc {
     return normalize(doc, id);
 }
 
-export async function saveProgressDoc(doc: PhoneticProgressDoc, lang: string = 'en'): Promise<void> {
+export async function saveProgressDoc(doc: PhoneticProgressDoc, lang: string = 'en'): Promise<boolean> {
     const id = docIdOf(lang);
     try {
         const result = await getDbAdapter().promises.put({...doc, _id: id});
-        if (result.ok && result.rev) {
+        if (!result.ok) {
+            log.w?.('音标进度持久化失败', result.message);
+            return false;
+        }
+        if (result.rev) {
             doc._rev = result.rev;
         }
+        return true;
     } catch (e) {
         log.w?.('音标进度持久化失败', e);
+        return false;
     }
 }

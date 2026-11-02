@@ -20,7 +20,7 @@
  */
 import { shouldIgnoreMouseInLockedFocusWindow, focusWindowClosed } from '@/utils/focus-lock';
 import { isUtools } from '@/adapters/platform';
-import { getSetDb, putSetDbWithRetry } from '@/utils/user-set-db-util';
+import { getSetDb, updateSetDbWithRetry } from '@/utils/user-set-db-util';
 import { getDbAdapter } from '@/adapters/db';
 import { getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut } from '@/adapters/window';
 import router from '@/router';
@@ -305,15 +305,11 @@ function focusLockWindow() {
  */
 function handleSettingsChanged(payload: any) {
   if (!payload || typeof payload !== 'object') return;
-  try {
-    const userSetDoc = getSetDb(true);
-    if (userSetDoc) {
-      userSetDoc.focusMode = { ...(userSetDoc.focusMode || {}), ...payload };
-      putSetDbWithRetry(userSetDoc);
-    }
-  } catch (e) {
-    console.error('[textFocus] 写入专注设置失败:', e);
-  }
+  void updateSetDbWithRetry((doc) => {
+    doc.focusMode = { ...(doc.focusMode || {}), ...payload };
+  }).then((ok) => {
+    if (!ok) console.error('[textFocus] 写入专注设置失败');
+  });
   if ('locked' in payload) {
     handleSetLocked({ locked: payload.locked === true });
   }
@@ -368,14 +364,13 @@ function dispatchAction(action: any) {
 
 /** 处理成功后清理 DB 中的 pendingAction，避免进程重启 lastHandledAt 归零后重复执行 */
 function clearDbPendingAction() {
-  try {
-    const userSetDoc = getSetDb(true);
-    if (!userSetDoc?.focusMode?.pendingAction) return;
-    delete userSetDoc.focusMode.pendingAction;
-    putSetDbWithRetry(userSetDoc);
-  } catch (e) {
-    console.error('[textFocus] 清理 DB pendingAction 失败:', e);
-  }
+  const userSetDoc = getSetDb(true);
+  if (!userSetDoc?.focusMode?.pendingAction) return;
+  void updateSetDbWithRetry((doc) => {
+    if (doc.focusMode) delete doc.focusMode.pendingAction;
+  }).then((ok) => {
+    if (!ok) console.error('[textFocus] 清理 DB pendingAction 失败');
+  });
 }
 
 /**

@@ -304,7 +304,7 @@ describe('dictation-db', () => {
         options: [],
       })
 
-      removeDictationProgress('cet4')
+      await removeDictationProgress('cet4')
       expect(getDictationProgress('cet4')).toBeNull()
     })
 
@@ -331,14 +331,14 @@ describe('dictation-db', () => {
         options: [],
       })
 
-      removeDictationProgress()
+      await removeDictationProgress()
       expect(getDictationProgress('cet4')).toBeNull()
       expect(getDictationProgress('cet6')).toBeNull()
     })
 
     it('删除不存在的词库进度不应报错', async () => {
       const { removeDictationProgress } = await loadModule()
-      expect(() => removeDictationProgress('nonexistent')).not.toThrow()
+      await expect(removeDictationProgress('nonexistent')).resolves.toBeUndefined()
     })
   })
 
@@ -360,7 +360,7 @@ describe('dictation-db', () => {
       // 手动插入一个过期进度
       mockDb.put(makeProgress('cet6', { updatedAt: Date.now() - 8 * 24 * 60 * 60 * 1000 }))
 
-      cleanExpiredProgress()
+      await cleanExpiredProgress()
 
       // 过期进度应被清除
       expect(getDictationProgress('cet6')).toBeNull()
@@ -379,7 +379,7 @@ describe('dictation-db', () => {
         options: [],
       })
 
-      cleanExpiredProgress()
+      await cleanExpiredProgress()
 
       expect(getDictationProgress('cet4')).not.toBeNull()
     })

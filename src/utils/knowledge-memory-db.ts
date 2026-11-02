@@ -44,14 +44,20 @@ export function getProgressDoc(packId: string): KnowledgePackProgressDoc {
 /**
  * 保存某知识包的进度文档
  */
-export async function saveProgressDoc(doc: KnowledgePackProgressDoc): Promise<void> {
+export async function saveProgressDoc(doc: KnowledgePackProgressDoc): Promise<boolean> {
     try {
         const result = await getDbAdapter().promises.put({...doc, _id: progressDocId(doc.packId)});
-        if (result.ok && result.rev) {
+        if (!result.ok) {
+            log.w?.('知识包进度持久化失败', result.message);
+            return false;
+        }
+        if (result.rev) {
             doc._rev = result.rev;
         }
+        return true;
     } catch (e) {
         log.w?.('知识包进度持久化失败', e);
+        return false;
     }
 }
 
@@ -115,38 +121,44 @@ export function getImportedIds(): string[] {
 /**
  * 保存已导入知识包清单
  */
-async function saveImportedIds(ids: string[]): Promise<void> {
+async function saveImportedIds(ids: string[]): Promise<boolean> {
     try {
         const existing = getDbAdapter().get(IMPORTED_LIST_DOC_ID) as KnowledgeImportedDoc | null;
-        await getDbAdapter().promises.put({
+        const result = await getDbAdapter().promises.put({
             _id: IMPORTED_LIST_DOC_ID,
             _rev: existing?._rev,
             type: 'knowledge_imported_list',
             ids,
         });
+        if (!result.ok) {
+            log.w?.('已导入知识包清单持久化失败', result.message);
+            return false;
+        }
+        return true;
     } catch (e) {
         log.w?.('已导入知识包清单持久化失败', e);
+        return false;
     }
 }
 
 /**
  * 将知识包加入已导入清单（幂等）
  */
-export async function addImportedId(packId: string): Promise<void> {
+export async function addImportedId(packId: string): Promise<boolean> {
     const ids = getImportedIds();
-    if (ids.includes(packId)) return;
+    if (ids.includes(packId)) return true;
     ids.push(packId);
-    await saveImportedIds(ids);
+    return saveImportedIds(ids);
 }
 
 /**
  * 将知识包从已导入清单移除（仅下架，不删进度文档）
  */
-export async function removeImportedId(packId: string): Promise<void> {
+export async function removeImportedId(packId: string): Promise<boolean> {
     const ids = getImportedIds();
     const next = ids.filter(id => id !== packId);
-    if (next.length === ids.length) return;
-    await saveImportedIds(next);
+    if (next.length === ids.length) return true;
+    return saveImportedIds(next);
 }
 
 /** 自建知识条目文档 ID */

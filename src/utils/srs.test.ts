@@ -103,10 +103,10 @@ describe('srs', () => {
       expect(canLevelUp(now, 1, now)).toBe(false);
     });
 
-    it('太晚返回 false', () => {
+    it('超过原窗口仍返回 true（到期即可升级）', () => {
       const now = Date.now();
       const endMs = DEFAULT_INTERVALS[4] * 60 * 1000 + 1;
-      expect(canLevelUp(now - endMs, 1, now)).toBe(false);
+      expect(canLevelUp(now - endMs, 1, now)).toBe(true);
     });
 
     it('level 11 的窗口使用 intervals 最后一个值', () => {

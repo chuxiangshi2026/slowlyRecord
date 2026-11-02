@@ -96,7 +96,7 @@ export function getDictionaryVersion(): string | null {
 export async function removeDictionaryFromDB(): Promise<boolean> {
   try {
     const db = getDbAdapter();
-    const result = db.remove(DICTIONARY_KEY);
+    const result = await db.promises.remove(DICTIONARY_KEY);
     if (result.ok) {
       const storage = getDbStorage();
       storage.removeItem(DICTIONARY_VERSION_KEY);

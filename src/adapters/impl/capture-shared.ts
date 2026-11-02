@@ -3,7 +3,7 @@
  *
  * - pickImageFile：文件选择降级方案（Electron/Web 的 capture() 复用）
  * - runOcr：按当前 OCR 平台（useWordsStore().currentOcrPlatform）分派到
- *   pic-translate.ts 中的有道/百度/阿里/腾讯/本地 Tesseract 引擎
+ *   pic-translate.ts 中的有道/百度/阿里/腾讯/B站/硅基流动/本地 Tesseract 引擎
  *
  * 注意：为避免适配器层与 Pinia store 产生循环依赖，
  * pic-translate / store 等模块全部在函数体内动态 import，
@@ -109,7 +109,7 @@ export async function runOcr(base64: string): Promise<OCRResult[]> {
   } else {
     const { getOcrApiKey } = await import('../../utils/get-api-key')
     const { appkey, key } = getOcrApiKey(ocrPlatform)
-    if (!appkey || !key) {
+    if (ocrPlatform !== 'bilibili' && (!appkey || !key)) {
       throw new Error(`未配置 ${ocrPlatform} OCR 的 API 密钥，请在设置中配置后重试`)
     }
 
@@ -125,6 +125,11 @@ export async function runOcr(base64: string): Promise<OCRResult[]> {
       result = await picTranslate.ocrTranslateAli(base64, appkey, key)
     } else if (ocrPlatform === 'tencent') {
       result = await picTranslate.ocrTranslateTencent(base64, appkey, key)
+    } else if (ocrPlatform === 'bilibili') {
+      const { getActiveLanguage } = await import('../../utils/language')
+      result = await picTranslate.ocrTranslateBilibili(base64, key, getActiveLanguage())
+    } else if (ocrPlatform === 'siliconflow') {
+      result = await picTranslate.ocrTranslateSiliconflow(base64, appkey, key)
     } else {
       throw new Error(`暂不支持的 OCR 平台: ${ocrPlatform}`)
     }

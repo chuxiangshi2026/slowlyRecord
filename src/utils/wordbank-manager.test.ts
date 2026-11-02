@@ -114,6 +114,12 @@ vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-uuid-' + (++memCounter))
 }))
 
+const { mockFetchWordBank } = vi.hoisted(() => ({ mockFetchWordBank: vi.fn() }))
+vi.mock('./wordbank-service', () => ({
+  fetchWordBank: mockFetchWordBank,
+  WORDBANK_LIST: [{ id: 'cet4', name: '四级词汇' }],
+}))
+
 import {
   createDefaultWordBank,
   getAllWordBanks,
@@ -127,6 +133,7 @@ import {
   updateWordBankName,
   updateWordBankWords,
   updateWordInBankChunk,
+  importFromBuiltinWordBank,
   exportWordBankToJson,
   type WordBank
 } from './wordbank-manager'
@@ -605,5 +612,29 @@ describe('updateWordInBankChunk', () => {
     expect(chunk0).toBeDefined()
     expect(chunk0.words.length).toBe(1)
     expect(chunk0.words[0]._id).toBe('w1')
+  })
+})
+
+describe('importFromBuiltinWordBank', () => {
+  it('只写入目标词库，并按文本去重', async () => {
+    seedBanks([
+      { id: 'default', words: [makeWord({ text: 'hello' })], isDefault: true },
+      { id: 'target', words: [makeWord({ text: 'world' })] },
+    ])
+    mockFetchWordBank.mockResolvedValue([
+      makeWord({ _id: 'new-word', text: 'new-word' }),
+      makeWord({ _id: 'duplicate', text: 'WORLD' }),
+    ])
+
+    const result = await importFromBuiltinWordBank('target', 'cet4')
+
+    expect(result).toEqual({ success: true, count: 1 })
+    expect((await getWordBank('target'))?.words.map(word => word.text)).toEqual(['world', 'new-word'])
+    expect((await getWordBank('default'))?.words.map(word => word.text)).toEqual(['hello'])
+
+    mockFetchWordBank.mockResolvedValue([makeWord({ text: 'WORLD' })])
+    const repeated = await importFromBuiltinWordBank('target', 'cet4')
+    expect(repeated).toEqual({ success: true, count: 0 })
+    expect((await getWordBank('target'))?.words).toHaveLength(2)
   })
 })

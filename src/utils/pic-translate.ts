@@ -101,6 +101,187 @@ export async function ocrTranslate(
     return data as OcrResult
 }
 
+const BILIBILI_TRANSLATE_API = 'https://index-translate.bilibili.com/v1/chat/completions';
+const BILIBILI_LANG_NAMES: Record<string, string> = {
+    auto: '自动识别语言', zh: '中文', en: '英语', ja: '日语', ko: '韩语', de: '德语',
+    ru: '俄语', es: '西班牙语', fr: '法语',
+};
+
+function stripBilibiliThink(content: string): string {
+    const end = content.indexOf('</think>');
+    const text = end >= 0 ? content.slice(end + 8) : content;
+    return text.replace(/^<think>/, '').trim();
+}
+
+/** B 站 Index-Translate 原生图片翻译，一次请求同时取得原文与译文 */
+export async function ocrTranslateBilibili(
+    base64: string,
+    model = 'Index-Translate-35B-A3B',
+    from = 'auto',
+    to = 'zh'
+): Promise<OcrResult> {
+    if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
+        throw new Error('图片 base64 数据格式非法');
+    }
+    const langName = (lang: string) => BILIBILI_LANG_NAMES[lang] || lang;
+    const sourceName = from === 'auto' ? '' : langName(from);
+    const prompt = `请识别图片中的${sourceName}文本并翻译为${langName(to)}。只返回 JSON 对象 {"source":"图片原文","translation":"翻译结果"}，不要输出 Markdown 或任何解释。`;
+    const response = await fetch(BILIBILI_TRANSLATE_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'Index-Translate-Client/1.0',
+        },
+        body: JSON.stringify({
+            model: model || 'Index-Translate-35B-A3B',
+            messages: [{
+                role: 'user',
+                content: [
+                    {type: 'text', text: prompt},
+                    {type: 'image_url', image_url: {url: `data:image/png;base64,${base64}`}},
+                ],
+            }],
+            temperature: 0,
+            max_tokens: 1024,
+            stream: false,
+            chat_template_kwargs: {enable_thinking: false},
+        }),
+    });
+    if (!response.ok) {
+        return {
+            errorCode: String(response.status),
+            errorMessage: `B站 Index-Translate 图片翻译请求失败: ${response.status}`,
+            resRegions: [],
+        };
+    }
+    const data = await response.json();
+    const content = stripBilibiliThink(data.choices?.[0]?.message?.content || '');
+    let source = '';
+    let translation = content;
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+        try {
+            const parsed = JSON.parse(jsonMatch[0]);
+            source = typeof parsed.source === 'string' ? parsed.source.trim() : '';
+            translation = typeof parsed.translation === 'string' ? parsed.translation.trim() : '';
+        } catch {
+            // 非 JSON 响应按纯文本译文处理
+        }
+    }
+    if (!translation) {
+        return {
+            errorCode: 'BILIBILI_EMPTY_RESULT',
+            errorMessage: 'B站 Index-Translate 未返回图片译文',
+            resRegions: [],
+        };
+    }
+    return {
+        errorCode: '0',
+        resRegions: [{boundingBox: '0,0,0,0', context: source, tranContent: translation}],
+    };
+}
+
+const SILICONFLOW_API = 'https://api.siliconflow.cn/v1/chat/completions';
+
+/** 硅基流动 DeepSeek-OCR 识别；传入翻译平台时继续翻译识别原文 */
+export async function ocrTranslateSiliconflow(
+    base64: string,
+    apiKey: string,
+    model = 'deepseek-ai/DeepSeek-OCR',
+    translatePlatform?: TranslationPlatform
+): Promise<OcrResult> {
+    if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
+        throw new Error('图片 base64 数据格式非法');
+    }
+    if (!apiKey) {
+        return {
+            errorCode: 'SILICONFLOW_NO_KEY',
+            errorMessage: '请先在设置中配置硅基流动 OCR API Key',
+            resRegions: [],
+        };
+    }
+    const response = await fetch(SILICONFLOW_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+            model: model || 'deepseek-ai/DeepSeek-OCR',
+            messages: [{
+                role: 'user',
+                content: [
+                    {type: 'image_url', image_url: {url: `data:image/png;base64,${base64}`, detail: 'high'}},
+                    {type: 'text', text: 'Free OCR.'},
+                ],
+            }],
+            stream: false,
+        }),
+    });
+    if (!response.ok) {
+        const errorMessage = response.status === 401 || response.status === 403
+            ? '硅基流动 API Key 无效或已过期，请检查设置'
+            : `硅基流动 OCR 请求失败: ${response.status}`;
+        return {errorCode: String(response.status), errorMessage, resRegions: []};
+    }
+    const data = await response.json();
+    const text = (data.choices?.[0]?.message?.content || '').trim();
+    if (!text) {
+        return {
+            errorCode: 'SILICONFLOW_OCR_NO_TEXT',
+            errorMessage: '硅基流动 OCR 未识别到文本',
+            resRegions: [],
+        };
+    }
+    let tranContent = text;
+    if (translatePlatform) {
+        try {
+            const translationResult = await translateWithLargeModel(text, translatePlatform);
+            tranContent = translationResult.explains || text;
+        } catch {
+            // 翻译失败时显示识别原文
+        }
+    }
+    return {
+        errorCode: '0',
+        resRegions: [{boundingBox: '0,0,0,0', context: text, tranContent}],
+    };
+}
+
+/** 按平台识别图片；截图主流程与配置测试共用，测试时不传翻译引擎以隔离 OCR 结果 */
+export async function ocrRecognizeWithPlatform(
+    base64: string,
+    ocrPlatform: OcrPlatform,
+    translatePlatform?: TranslationPlatform
+): Promise<OcrResult> {
+    const {appkey, key} = getOcrApiKey(ocrPlatform);
+    if (ocrPlatform === 'youdao') {
+        const from = toEngineLang('youdao', getActiveLanguage(), 'ocr');
+        if (!from) throw new Error('有道OCR不支持当前语言');
+        return await ocrTranslate(base64, appkey, key, from, 'zh-CHS');
+    }
+    if (ocrPlatform === 'baidu') return await ocrTranslateBaidu(base64, appkey, key);
+    if (ocrPlatform === 'ali') return await ocrTranslateAli(base64, appkey, key);
+    if (ocrPlatform === 'tencent') return await ocrTranslateTencent(base64, appkey, key);
+    if (ocrPlatform === 'bilibili') return await ocrTranslateBilibili(base64, key, getActiveLanguage());
+    if (ocrPlatform === 'siliconflow') return await ocrTranslateSiliconflow(base64, appkey, key, translatePlatform);
+    if (ocrPlatform === 'local') return await ocrTranslateLocal(base64, translatePlatform || 'local');
+    if (ocrPlatform === 'deepseek' || ocrPlatform === 'glm' || ocrPlatform === 'utoolsai') {
+        const text = await extractTextByVisionBase64(base64, ocrPlatform);
+        let tranContent = text;
+        if (translatePlatform) {
+            try {
+                const translationResult = await translateWithLargeModel(text, translatePlatform);
+                tranContent = translationResult.explains || text;
+            } catch {
+                // 翻译失败时显示识别原文
+            }
+        }
+        return {errorCode: '0', resRegions: [{boundingBox: '0,0,0,0', context: text, tranContent}]};
+    }
+    return {errorCode: '500', resRegions: []};
+}
+
 // 新增：多平台OCR翻译函数
 export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 
@@ -150,6 +331,10 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
         result = await ocrTranslateAli(base64, appkey, key);
     } else if (ocrPlatform === 'tencent') {
         result = await ocrTranslateTencent(base64, appkey, key);
+    } else if (ocrPlatform === 'bilibili') {
+        result = await ocrTranslateBilibili(base64, key, getActiveLanguage());
+    } else if (ocrPlatform === 'siliconflow') {
+        result = await ocrTranslateSiliconflow(base64, appkey, key, wordsStore.currentTranslationPlatform || 'local');
     } else if (ocrPlatform === 'local') {
         // 本地OCR：使用 Tesseract.js
         const translatePlatform = wordsStore.currentTranslationPlatform || 'local';

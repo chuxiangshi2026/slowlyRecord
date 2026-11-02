@@ -1,10 +1,9 @@
 /**
  * 共享 SRS（间隔重复）工具
  *
- * 统一处理 learnDate 归一化、到期判断、升级时间窗、等级升降计算。
+ * 统一处理 learnDate 归一化、到期判断、升级条件、等级升降计算。
  * 与 Word 模块 remember/forget 基准实现保持一致：
- * - 升级窗口：开始时间 = learnDate + DEFAULT_INTERVALS[level]
- *              结束时间 = learnDate + DEFAULT_INTERVALS[min(level+3, len-1)]
+ * - 到期即可升级：now >= learnDate + DEFAULT_INTERVALS[level]，不设截止窗口
  * - 记忆牢固度：'较强' +2，'极强' +3，其余 +1，封顶 12
  * - 降级：每次 -4，下限 1（12 级答错降到 8 级，不再重置回 1）
  */
@@ -67,8 +66,8 @@ export function isDue(
 }
 
 /**
- * 判断当前是否在可升级时间窗口内
- * 当前时间必须大于开始时间且小于结束时间；未学过（learnDate 为假值）时允许升级
+ * 判断是否已到可升级时间：达到当前等级间隔即可升级，不再设置截止窗口。
+ * 未学过（learnDate 为假值）时允许升级。
  */
 export function canLevelUp(
     learnDate: number | string | Date | undefined | null,
@@ -81,8 +80,7 @@ export function canLevelUp(
     const ts = normalizeLearnDate(learnDate);
     const clampedLevel = clampLevel(level, intervals.length - 1);
     const startLearnDate = ts + (intervals[clampedLevel] ?? intervals[0]) * 60 * 1000;
-    const endLearnDate = ts + intervals[Math.min(clampedLevel + 3, intervals.length - 1)] * 60 * 1000;
-    return now > startLearnDate && now < endLearnDate;
+    return now >= startLearnDate;
 }
 
 /**

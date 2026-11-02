@@ -18,6 +18,11 @@ const mock = vi.hoisted(() => {
         doc._rev = `r${++revCounter}`
         docs.set(doc._id, doc)
         return { ok: true, id: doc._id, rev: doc._rev }
+      },
+      remove: async (id: string) => {
+        if (!docs.has(id)) return { ok: false, error: true, message: 'not_found' }
+        docs.delete(id)
+        return { ok: true, id }
       }
     },
     remove: (id: string) => {
@@ -58,9 +63,9 @@ describe('app-bg-db（界面背景图存取）', () => {
 
   it('删除后读取为空；重复删除静默不抛错', async () => {
     await saveAppBgImage('data:image/jpeg;base64,a')
-    removeAppBgImage()
+    await removeAppBgImage()
     expect(getAppBgImage()).toBe('')
-    expect(() => removeAppBgImage()).not.toThrow()
+    await expect(removeAppBgImage()).resolves.toBeUndefined()
   })
 
   it('进程内缓存：重复读取不再查库，失效后重新查库', async () => {
@@ -72,5 +77,18 @@ describe('app-bg-db（界面背景图存取）', () => {
     invalidateAppBgImageCache()
     expect(getAppBgImage()).toBe('data:image/jpeg;base64,a')
     expect(spy).toHaveBeenCalledTimes(1)
+  })
+
+  it('删除返回存储错误时保留背景图缓存', async () => {
+    await saveAppBgImage('data:image/jpeg;base64,keep')
+    const removeSpy = vi.spyOn(mock.db.promises, 'remove').mockResolvedValueOnce({
+      id: APP_BG_DOC_ID, ok: false, error: true, message: 'quota exceeded',
+    })
+
+    await removeAppBgImage()
+
+    expect(getAppBgImage()).toBe('data:image/jpeg;base64,keep')
+    expect(mock.docs.has(APP_BG_DOC_ID)).toBe(true)
+    removeSpy.mockRestore()
   })
 })

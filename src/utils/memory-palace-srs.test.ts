@@ -61,12 +61,12 @@ describe('memory-palace-srs', () => {
     expect(updated.learnDate).toBe(now);
   });
 
-  it('到期但超过窗口时刷新 learnDate 但不升级', () => {
+  it('超过原窗口仍升级并刷新 learnDate', () => {
     const now = Date.now();
     const endWindowMs = DEFAULT_INTERVALS[4] * 60 * 1000 + 1;
     const peg = makePeg(1, now - endWindowMs);
     const updated = markRemembered(peg, now);
-    expect(updated.level).toBe(1);
+    expect(updated.level).toBe(2);
     expect(updated.learnDate).toBe(now);
   });
 

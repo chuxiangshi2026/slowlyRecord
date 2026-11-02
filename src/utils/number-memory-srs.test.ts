@@ -120,13 +120,12 @@ describe('number-memory-srs', () => {
             expect(result.learnDate).toBe(now)
         })
 
-        it('到期但超过窗口时不升级，刷新 learnDate', () => {
+        it('超过原窗口仍升级，刷新 learnDate', () => {
             const now = Date.now()
-            // level 1 窗口结束时间为 learnDate + DEFAULT_INTERVALS[4]
             const endWindowMs = DEFAULT_INTERVALS[4] * 60 * 1000 + 1
             const entry = makeEntry({level: 1, learnDate: now - endWindowMs})
             const result = markCorrect(entry, now)
-            expect(result.level).toBe(1)
+            expect(result.level).toBe(2)
             expect(result.learnDate).toBe(now)
         })
 

@@ -147,6 +147,7 @@ describe('str-util', () => {
         text: 'hello',
         explains: '你好',
         isReview: false,
+        remember: true,
         explainedHidden: true
       }
       mockFindWord.mockReturnValue(existingWord)
@@ -156,6 +157,10 @@ describe('str-util', () => {
       expect(result.success).toBe(false)
       expect(result.message).toBe('单词已存在')
       expect(mockAddAndUpdateWord).toHaveBeenCalled()
+      // 「加入复习列表」语义：已存在的词被重新加入时必须回到待复习状态
+      expect(existingWord.isReview).toBe(true)
+      expect(existingWord.remember).toBe(false)
+      expect(existingWord.explainedHidden).toBe(false)
     })
 
     it('应该为已存在但没有释义的单词更新翻译', async () => {
@@ -186,6 +191,19 @@ describe('str-util', () => {
       expect(result.success).toBe(true)
       expect(mockTranslateWithPlatform).toHaveBeenCalledWith('newword')
       expect(mockAddAndUpdateWords).toHaveBeenCalled()
+    })
+
+    it('新词默认进入复习列表（isReview=true、从 1 级起步、带学习日期）', async () => {
+      mockFindWord.mockReturnValue(null)
+      mockAddAndUpdateWords.mockClear()
+
+      await addWord('newword')
+
+      const added = mockAddAndUpdateWords.mock.calls[0][0][0]
+      expect(added.isReview).toBe(true)
+      expect(added.level).toBe(1)
+      expect(added.remember).toBe(false)
+      expect(added.learnDate).toBeInstanceOf(Date)
     })
 
     it('应该处理翻译失败的情况', async () => {

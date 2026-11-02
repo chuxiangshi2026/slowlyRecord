@@ -48,7 +48,7 @@ export function getDictationProgress(wordBank?: string): DictationProgress | nul
       );
       if (!progress) return null;
       if (isProgressExpired(progress)) {
-        removeDictationProgress(progress._id);
+        void removeDictationProgress(progress._id);
         return null;
       }
       return progress as DictationProgress;
@@ -58,7 +58,7 @@ export function getDictationProgress(wordBank?: string): DictationProgress | nul
     const progress = allDocs.find((doc: any) => doc.type === 'dictation_progress');
     if (!progress) return null;
     if (isProgressExpired(progress)) {
-      removeDictationProgress(progress._id);
+      void removeDictationProgress(progress._id);
       return null;
     }
     return progress as DictationProgress;
@@ -129,17 +129,15 @@ export async function saveDictationProgress(
  * 删除听写进度
  * @param idOrWordBank 文档ID或词库名称（可选，默认删除所有进度）
  */
-export function removeDictationProgress(idOrWordBank?: string): void {
+export async function removeDictationProgress(idOrWordBank?: string): Promise<void> {
   try {
     const db = getDbAdapter();
     if (!idOrWordBank) {
-      // 删除所有听写进度
-      const allDocs = db.allDocs(DB_KEY_PREFIX);
-      allDocs.forEach((doc: any) => {
-        if (doc.type === 'dictation_progress') {
-          db.remove(doc._id);
-        }
-      });
+      const allDocs = db.allDocs(DB_KEY_PREFIX)
+        .filter((doc: any) => doc.type === 'dictation_progress');
+      await Promise.all(allDocs.map((doc: any) =>
+        db.promises.remove({ _id: doc._id, _rev: doc._rev }),
+      ));
       log.d('清除所有听写进度');
       return;
     }
@@ -147,7 +145,7 @@ export function removeDictationProgress(idOrWordBank?: string): void {
     // 如果是词库名称，查找对应进度
     const progress = getDictationProgress(idOrWordBank);
     if (progress) {
-      db.remove(progress._id);
+      await db.promises.remove({ _id: progress._id, _rev: progress._rev });
       log.d(`删除词库 ${idOrWordBank} 的听写进度`);
     }
   } catch (error) {
@@ -158,19 +156,18 @@ export function removeDictationProgress(idOrWordBank?: string): void {
 /**
  * 清除过期的听写进度
  */
-export function cleanExpiredProgress(): void {
+export async function cleanExpiredProgress(): Promise<void> {
   try {
     const db = getDbAdapter();
-    const allDocs = db.allDocs(DB_KEY_PREFIX);
     const oneWeek = 7 * 24 * 60 * 60 * 1000;
     const now = Date.now();
-
-    allDocs.forEach((doc: any) => {
-      if (doc.type === 'dictation_progress' && now - doc.updatedAt > oneWeek) {
-        db.remove(doc._id);
-        log.i('清除过期听写进度', doc._id);
-      }
-    });
+    const expired = db.allDocs(DB_KEY_PREFIX).filter((doc: any) =>
+      doc.type === 'dictation_progress' && now - doc.updatedAt > oneWeek,
+    );
+    await Promise.all(expired.map((doc: any) => {
+      log.i('清除过期听写进度', doc._id);
+      return db.promises.remove({ _id: doc._id, _rev: doc._rev });
+    }));
   } catch (error) {
     log.e('清理过期进度失败', error);
   }

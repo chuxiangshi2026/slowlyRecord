@@ -22,4 +22,6 @@ export interface Sentence {
   favorite: boolean;
   /** 创建时间戳 */
   createdAt: number;
+  /** 最后修改时间戳（旧数据缺省） */
+  updatedAt?: number;
 }

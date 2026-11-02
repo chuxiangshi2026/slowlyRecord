@@ -507,6 +507,7 @@ export function collectMemoryPalaceSync(): SyncMemoryPalace | null {
  * 还原记忆宫殿同步数据：按 id/utime 合并宫殿、按 learnDate 合并桩挂载后写回 DB
  * @param tombstones 墓碑表：本机已删除的宫殿（删除不早于远端 utime）连同其桩挂载一并剔除，不让复活
  * @returns 参与合并的宫殿数量
+ * @throws 任一宫殿或桩挂载写入失败时抛错，由同步恢复层汇总为部分失败
  */
 export async function restoreMemoryPalaceSync(data: SyncMemoryPalace, tombstones: Record<string, number> = {}): Promise<number> {
   const localPalaces = getAllPalaces();
@@ -514,23 +515,34 @@ export async function restoreMemoryPalaceSync(data: SyncMemoryPalace, tombstones
   const remotePalaces = filterByTombstones(data.palaces || [], 'remote', tombstones);
   const mergedPalaces = mergePalaceList(localPalaces, remotePalaces);
 
+  const failedIds: string[] = [];
   for (const palace of mergedPalaces) {
-    const result = await savePalace(palace);
-    if (!result.ok) {
-      log.e('还原宫殿失败', palace._id, result.message);
-      continue;
-    }
-    const localPegs = getPegsByPalace(palace._id);
-    const remotePegs = data.pegs?.[palace._id] || [];
-    const mergedPegs = mergePegItemList(localPegs, remotePegs);
-    if (mergedPegs.length > 0) {
-      const pegsResult = await savePegItems(mergedPegs);
-      if (!pegsResult.ok) {
-        log.e('还原宫殿桩挂载失败', palace._id, pegsResult.message);
+    try {
+      const result = await savePalace(palace);
+      if (!result.ok) {
+        log.e('还原宫殿失败', palace._id, result.message);
+        failedIds.push(palace._id);
+        continue;
       }
+      const localPegs = getPegsByPalace(palace._id);
+      const remotePegs = data.pegs?.[palace._id] || [];
+      const mergedPegs = mergePegItemList(localPegs, remotePegs);
+      if (mergedPegs.length > 0) {
+        const pegsResult = await savePegItems(mergedPegs);
+        if (!pegsResult.ok) {
+          log.e('还原宫殿桩挂载失败', palace._id, pegsResult.message);
+          failedIds.push(`${palace._id}/pegs`);
+        }
+      }
+    } catch (e) {
+      failedIds.push(palace._id);
+      log.e('还原宫殿异常', palace._id, e);
     }
   }
 
+  if (failedIds.length > 0) {
+    throw new Error(`记忆宫殿写入失败: ${failedIds.join(', ')}`);
+  }
   log.i('记忆宫殿数据已还原', mergedPalaces.length);
   return mergedPalaces.length;
 }

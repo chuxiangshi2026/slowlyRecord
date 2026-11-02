@@ -338,7 +338,7 @@ export const useNumberMemoryStore = defineStore("numberMemory", () => {
   }
   
   /**
-   * 标记条目答对（窗口内升级；未到期或超窗也刷新 learnDate 并写库）
+   * 标记条目答对（到期升级；未到期只刷新 learnDate 并写库）
    */
   async function markEntryCorrect(entryId: string) {
     const entry = entries.value.find(e => e._id === entryId);

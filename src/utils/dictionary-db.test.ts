@@ -17,6 +17,7 @@ const mockGet = vi.fn()
 const mockAllDocs = vi.fn()
 const mockRemove = vi.fn()
 const mockPromisesPut = vi.fn()
+const mockPromisesRemove = vi.fn()
 const mockStorageGetItem = vi.fn()
 const mockStorageSetItem = vi.fn()
 const mockStorageRemoveItem = vi.fn()
@@ -28,6 +29,7 @@ vi.mock('@/adapters/db', () => ({
     remove: mockRemove,
     promises: {
       put: mockPromisesPut,
+      remove: mockPromisesRemove,
     },
   }),
   getDbStorage: () => ({
@@ -178,17 +180,17 @@ describe('dictionary-db', () => {
 
   describe('removeDictionaryFromDB', () => {
     it('应该成功删除词典', async () => {
-      mockRemove.mockReturnValue({ ok: true })
+      mockPromisesRemove.mockResolvedValue({ ok: true })
 
       const result = await removeDictionaryFromDB()
 
       expect(result).toBe(true)
-      expect(mockRemove).toHaveBeenCalledWith(DICTIONARY_KEY)
+      expect(mockPromisesRemove).toHaveBeenCalledWith(DICTIONARY_KEY)
       expect(mockStorageRemoveItem).toHaveBeenCalledWith(DICTIONARY_VERSION_KEY)
     })
 
     it('删除失败返回 false', async () => {
-      mockRemove.mockReturnValue({ ok: false })
+      mockPromisesRemove.mockResolvedValue({ ok: false })
 
       const result = await removeDictionaryFromDB()
 
@@ -196,7 +198,7 @@ describe('dictionary-db', () => {
     })
 
     it('异常时返回 false', async () => {
-      mockRemove.mockImplementation(() => { throw new Error('DB error') })
+      mockPromisesRemove.mockRejectedValue(new Error('DB error'))
 
       const result = await removeDictionaryFromDB()
 

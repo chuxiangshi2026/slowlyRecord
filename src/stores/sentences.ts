@@ -161,7 +161,7 @@ export const useSentencesStore = defineStore('sentences', {
           return { success: false, message: '句子不存在' };
         }
         const backup = this.sentences[index];
-        this.sentences[index] = { ...backup, ...patch, id: backup.id, createdAt: backup.createdAt };
+        this.sentences[index] = { ...backup, ...patch, id: backup.id, createdAt: backup.createdAt, updatedAt: Date.now() };
         const res = await saveSentences(this.sentences);
         if (!res.success) {
           this.sentences[index] = backup;

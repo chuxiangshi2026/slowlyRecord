@@ -618,11 +618,14 @@ export async function createWordBank(name: string, words: Word[] = [], language?
   const banks = await getAllWordBankMetas();
   banks.push(toBankMeta(bank));
 
-  // 保存元数据
-  await saveWordBankMetaDoc(banks);
-  // 保存单词数据（分片存储）
-  await saveWordBankDataDoc(bank.id, bank.words);
-  
+  // 先写单词分片，再写元数据；任一步失败都返回错误，避免 UI 误报创建成功
+  if (!await saveWordBankDataDoc(bank.id, bank.words)) {
+    throw new Error('创建词库失败：单词分片写入失败');
+  }
+  if (!await saveWordBankMetaDoc(banks)) {
+    throw new Error('创建词库失败：元数据写入失败');
+  }
+
   return bank;
 }
 
@@ -643,23 +646,23 @@ export async function saveWordBank(bank: WordBank): Promise<boolean> {
     banks.push(toBankMeta(bank));
   }
 
-  // 保存元数据
-  const metaSuccess = await saveWordBankMetaDoc(banks);
-  if (!metaSuccess) {
-    return false;
-  }
-
-  // 保存单词数据到分片文档
+  // 先提交单词分片，成功后再更新元数据，避免 meta 已更新但分片写入失败
   const dataSuccess = await saveWordBankDataDoc(bank.id, bank.words);
-  return dataSuccess;
+  if (!dataSuccess) return false;
+  return await saveWordBankMetaDoc(banks);
 }
 
 /**
  * 获取指定词库
  */
 export async function getWordBank(id: string): Promise<WordBank | null> {
-  const banks = await getAllWordBanks();
-  return banks.find(b => b.id === id) || null;
+  const metas = await getAllWordBankMetas();
+  const meta = metas.find(b => b.id === id);
+  if (!meta) return null;
+  return {
+    ...meta,
+    words: getWordBankWords(id),
+  };
 }
 
 /**
@@ -678,6 +681,7 @@ export async function deleteWordBank(id: string): Promise<boolean> {
     recordTombstone(id);
     for (const w of bank?.words || []) {
       if (w._id) recordTombstone(w._id);
+      for (const alias of w.aliases || []) recordTombstone(alias);
     }
 
     const banks = await getAllWordBanks();
@@ -741,6 +745,7 @@ export async function updateWordBankWords(id: string, words: Word[]): Promise<bo
   for (const oldWord of oldWords) {
     if (oldWord._id && !newIds.has(oldWord._id)) {
       recordTombstone(oldWord._id);
+      for (const alias of oldWord.aliases || []) recordTombstone(alias);
     }
   }
 

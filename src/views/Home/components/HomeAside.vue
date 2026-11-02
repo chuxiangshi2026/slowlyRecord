@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import _ from 'lodash'
+import cloneDeep from 'lodash.clonedeep'
 import type {RouteRecordName} from "vue-router";
 import {useRouter,useRoute} from "vue-router";
 // import {useStore} from "@/store";
@@ -28,7 +28,7 @@ const router = useRouter()
 
 const isCollapse = ref(true)
 
-const menus = _.cloneDeep(router.options.routes)
+const menus = cloneDeep(router.options.routes)
     // .filter((v) => {
   // v.children = v.children?.filter((v) => v.meta?.menu && (permission as (RouteRecordName|undefined)[]).includes(v.name));
   // return v.meta?.menu && (permission as (RouteRecordName|undefined)[]).includes(v.name)

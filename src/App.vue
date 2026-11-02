@@ -46,6 +46,8 @@ import {
   ocrTranslate,
   ocrTranslateAli,
   ocrTranslateBaidu,
+  ocrTranslateBilibili,
+  ocrTranslateSiliconflow,
   ocrTranslateLocal,
   ocrTranslateMultiPlatform,
   ocrTranslateTencent,
@@ -130,8 +132,8 @@ async function handleUtoolsEnter(action: any) {
   if (setDb) {
     wordsStore.pluginStatus = setDb.pluginStatus;
     wordsStore.shortcutEnabled = setDb.shortcutEnabled;
-    wordsStore.currentTranslationPlatform = setDb.translationPlatform;
-    wordsStore.currentOcrPlatform = setDb.ocrPlatform;
+    if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;
+    if (setDb.ocrPlatform) wordsStore.currentOcrPlatform = setDb.ocrPlatform;
     // 同步记忆牢固度设置
     if (setDb.memoryFirmness) {
       wordsStore.memoryFirmness = setDb.memoryFirmness;
@@ -606,6 +608,12 @@ async function ocrExistingImage(base64: string): Promise<OcrResult> {
   }
   if (ocrPlatform === 'ali') {
     return await ocrTranslateAli(base64, appkey, key);
+  }
+  if (ocrPlatform === 'bilibili') {
+    return await ocrTranslateBilibili(base64, key, getActiveLanguage());
+  }
+  if (ocrPlatform === 'siliconflow') {
+    return await ocrTranslateSiliconflow(base64, appkey, key, wordsStore.currentTranslationPlatform || 'local');
   }
   if (ocrPlatform === 'local') {
     return await ocrTranslateLocal(base64, wordsStore.currentTranslationPlatform || 'local');

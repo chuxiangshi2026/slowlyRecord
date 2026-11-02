@@ -12,6 +12,7 @@
  */
 import { isUtools } from './platform'
 import { getDbAdapter } from './db'
+import { updateSetDbWithRetry } from '@/utils/user-set-db-util'
 
 /**
  * Electron 子窗口代理（IPC 转发）。
@@ -94,11 +95,27 @@ export function applyChildWindowAlwaysOnTop(targetWindow: any, alwaysOnTop: bool
 }
 
 /**
- * 子窗口（utools shim）db.put 转发父窗口持久化：冲突时读最新 _rev 重试一次。
+ * 子窗口（utools shim）db.put 转发父窗口持久化。
+ * 专注/输入法的 pendingAction 走设置合并队列；其他文档冲突时读最新 _rev 重试一次。
  * 三个浮窗控制器（单词/文本专注、输入法键盘）的 handleChildDbPut 统一实现。
  */
 export async function persistChildDbPut(doc: any, logTag: string): Promise<void> {
   try {
+    const focusPending = doc?.focusMode?.pendingAction
+    const helperPending = doc?.inputMethodHelper?.pendingAction
+    if (typeof doc?._id === 'string' && doc._id.startsWith('user-set') && (focusPending || helperPending)) {
+      // 子窗口这里只新增 pendingAction；其他字段可能是旧快照，不能整份覆盖父窗口的新设置
+      const ok = await updateSetDbWithRetry((latest) => {
+        if (focusPending) {
+          latest.focusMode = { ...(latest.focusMode || {}), pendingAction: focusPending }
+        }
+        if (helperPending) {
+          latest.inputMethodHelper = { ...(latest.inputMethodHelper || {}), pendingAction: helperPending }
+        }
+      })
+      if (!ok) console.error(`[${logTag}] 父窗口持久化子窗口动作失败`)
+      return
+    }
     const adapter: any = getDbAdapter()
     const res = await adapter.put(doc)
     if (res && res.ok) return

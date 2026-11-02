@@ -12,6 +12,16 @@
                    @update:model-value="wordsStore.setEyeCare"
         />
       </div>
+      <div class="setting-item">
+        <div class="content">整体明亮度</div>
+        <div class="brightness-control shorcut-desc">
+          <el-slider style="width: 140px;"
+                     :model-value="Math.round(wordsStore.appBg.brightness * 100)"
+                     :min="50" :max="150" :step="5" :show-tooltip="false"
+                     @update:model-value="(v: number | number[]) => wordsStore.setAppBg({brightness: (Array.isArray(v) ? v[0] : v) / 100})"/>
+          <span>{{ Math.round(wordsStore.appBg.brightness * 100) }}%</span>
+        </div>
+      </div>
     </div>
 
     <!-- 界面背景：预设/自定义图片 + 遮罩浓度 + 亚克力；图片本体存 app-bg-image 独立文档（不进同步） -->
@@ -192,6 +202,17 @@ const onOpacityChange = (val: number) => {
   font-size: 12px;
   font-weight: 400;
   color: var(--utools-text-secondary);
+}
+
+.brightness-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  span {
+    min-width: 36px;
+    text-align: right;
+  }
 }
 
 .bg-picker {

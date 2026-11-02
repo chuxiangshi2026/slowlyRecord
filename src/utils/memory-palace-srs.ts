@@ -57,8 +57,8 @@ export function isDue(peg: PegItem, now: number): boolean {
 
 /**
  * 自评"记住"后更新 SRS 状态
- * - 在升级窗口内：按记忆牢固度升 1~3 级，封顶 12
- * - 未到期或到期但超窗：刷新 learnDate，不升级
+ * - 已到期：按记忆牢固度升 1~3 级，封顶 12
+ * - 未到期：刷新 learnDate，不升级
  */
 export function markRemembered(
     peg: PegItem,
@@ -73,7 +73,7 @@ export function markRemembered(
             learnDate: now,
         };
     }
-    // 未到期或太晚：刷新 learnDate，保持等级
+    // 未到期：刷新 learnDate，保持等级
     return {
         ...peg,
         learnDate: now,
@@ -81,8 +81,7 @@ export function markRemembered(
 }
 
 /**
- * 自评"忘记"后更新 SRS 状态
- * 12 级忘记直接重置为 1 级，否则降级
+ * 自评"忘记"后更新 SRS 状态：每次 -4，下限 1（12 级降到 8 级）
  */
 export function markForgotten(peg: PegItem, now: number = Date.now()): PegItem {
     const level = getPegLevel(peg);

@@ -23,10 +23,16 @@ vi.mock('@/adapters/platform', () => ({ isUtools: () => false }));
 let userSetDoc: any;
 vi.mock('@/utils/user-set-db-util', () => ({
   getSetDb: () => userSetDoc,
-  // putSetDbWithRetry 经 db.promises.put 写入，mock 透传到 putMock
+  updateSetDbWithRetry: async (mutator: (doc: any) => void) => {
+    const next = JSON.parse(JSON.stringify(userSetDoc));
+    mutator(next);
+    userSetDoc = next;
+    putMock(next);
+    return true;
+  },
   putSetDbWithRetry: (doc: any) => {
     putMock(doc);
-    return true;
+    return Promise.resolve(true);
   },
 }));
 

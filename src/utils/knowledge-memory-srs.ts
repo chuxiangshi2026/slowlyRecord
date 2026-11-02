@@ -73,8 +73,8 @@ export function isDue(progress: KnowledgeItemProgress | undefined, now: number):
 
 /**
  * 答对后更新进度
- * - 在升级窗口内：按记忆牢固度升 1~3 级，封顶 12
- * - 未到期或到期但超窗：刷新 learnDate，不升级
+ * - 已到期：按记忆牢固度升 1~3 级，封顶 12
+ * - 未到期：刷新 learnDate，不升级
  */
 export function markCorrect(
     progress: KnowledgeItemProgress,
@@ -90,7 +90,7 @@ export function markCorrect(
             correct: progress.correct + 1,
         };
     }
-    // 未到期或太晚：刷新 learnDate，保持等级
+    // 未到期：刷新 learnDate，保持等级
     return {
         ...progress,
         learnDate: now,

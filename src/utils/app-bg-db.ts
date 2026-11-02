@@ -65,10 +65,15 @@ export async function saveAppBgImage(image: string): Promise<boolean> {
 }
 
 /** 删除自定义背景图（不存在时静默忽略） */
-export function removeAppBgImage(): void {
+export async function removeAppBgImage(): Promise<void> {
   try {
-    getDbAdapter().remove(APP_BG_DOC_ID)
-    _imageCache = ''
+    const result = await getDbAdapter().promises.remove(APP_BG_DOC_ID)
+    const missing = /not[_\s-]?found/i.test(`${result.name || ''} ${result.message || ''}`)
+    if (result.ok || missing) {
+      _imageCache = ''
+    } else {
+      log.w('[背景图] 删除失败:', result.message)
+    }
   } catch (e) {
     log.w('[背景图] 删除失败:', e)
   }

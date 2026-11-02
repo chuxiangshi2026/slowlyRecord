@@ -30,7 +30,7 @@
             <span class="group-panel-title">{{ activeGroupName }}</span>
           </div>
           <el-scrollbar class="group-panel-body">
-            <component :is="activeGroupComponent"/>
+            <component :is="activeGroupComponent" @open-api-key="activeGroup = 'apikey'"/>
           </el-scrollbar>
         </div>
       </transition>
@@ -63,7 +63,7 @@ const emit = defineEmits(['update:modelValue', 'save'])
 // 设置分组：高频组（常规/专注模式）靠前，低频组（密钥/配置管理/快捷键/其他）沉底
 const settingGroups: { key: GroupKey; name: string; desc: string; component: any }[] = [
   {key: 'general', name: '常规设置', desc: '翻译/OCR 引擎、发音、界面字号', component: markRaw(GeneralSection)},
-  {key: 'appearance', name: '外观', desc: '护眼模式、界面背景、亚克力、窗口透明度', component: markRaw(AppearanceSection)},
+  {key: 'appearance', name: '外观', desc: '护眼模式、整体明亮度、界面背景、亚克力、窗口透明度', component: markRaw(AppearanceSection)},
   {key: 'focus', name: '专注模式', desc: '专注窗口样式与背景设置', component: markRaw(FocusSection)},
   {key: 'shortcut', name: '快捷键', desc: '全局快捷键设置、开关与快捷键一览', component: markRaw(ShortcutSection)},
   {key: 'apikey', name: 'API 密钥', desc: '翻译/OCR 引擎自定义密钥与密钥申请入口（默认免配置）', component: markRaw(ApiKeySection)},

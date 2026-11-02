@@ -13,6 +13,7 @@
 import { shouldIgnoreMouseInLockedFocusWindow } from '@/utils/focus-lock';
 import { isUtools, isElectron } from '@/adapters/platform';
 import { getDbAdapter } from '@/adapters/db';
+import { updateSetDbWithRetry } from '@/utils/user-set-db-util';
 import { createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut } from '@/adapters/window';
 
 const IGNORE_MOUSE_POLL_INTERVAL = 50;
@@ -195,22 +196,22 @@ async function openInputMethodHelperElectron(scheme: string, schemeName: string,
   bindParentLifecycleListeners();
   startDbPendingPoll();
 
-  setTimeout(async () => {
-    try {
-      if (!helperWindow || helperWindow.isDestroyed?.()) return;
-      // 推送 user-set 快照给子窗口 utools shim（db.get/allDocs 同步读）
-      const userSetDocs = collectUserSetDocsForChild();
-      await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs: userSetDocs })})`);
-      applyAlwaysOnTop(initAlwaysOnTop);
-      lastSyncedLocked = initLocked;
-      if (initLocked) startIgnoreMousePoll();
-      pushData(scheme, schemeName, items);
-      console.log('[输入法键盘] Electron 初始状态', { alwaysOnTop: initAlwaysOnTop, locked: initLocked });
-    } catch (e) {
-      // 延迟期间子窗口被关闭会导致 executeJS reject，静默忽略
-      console.warn('[输入法键盘] 子窗口初始化推送失败（窗口可能已关闭）', e);
-    }
-  }, 500);
+  try {
+    if (!helperWindow || helperWindow.isDestroyed?.()) return false;
+    // 创建 IPC 在页面加载完成后才返回，可直接推送 user-set 快照
+    const userSetDocs = collectUserSetDocsForChild();
+    await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs: userSetDocs })})`);
+    applyAlwaysOnTop(initAlwaysOnTop);
+    lastSyncedLocked = initLocked;
+    if (initLocked) startIgnoreMousePoll();
+    pushData(scheme, schemeName, items);
+    console.log('[输入法键盘] Electron 初始状态', { alwaysOnTop: initAlwaysOnTop, locked: initLocked });
+  } catch (e) {
+    console.warn('[输入法键盘] 子窗口初始化推送失败', e);
+    helperWindow?.close?.();
+    if (helperWindow === created) helperWindow = null;
+    return false;
+  }
   return true;
 }
 
@@ -385,18 +386,13 @@ function handleClose() {
 
 // ========== DB pendingAction 轮询（唯一可靠通道） ==========
 function clearDbPendingAction() {
-  for (let i = 0; i < 4; i++) {
-    try {
-      const doc = getUserSetDoc();
-      if (!doc?.inputMethodHelper?.pendingAction) return;
-      delete doc.inputMethodHelper.pendingAction;
-      const res = getDbAdapter().put(doc);
-      if (res?.ok) return;
-    } catch (e) {
-      console.error('[输入法键盘] 清理 pendingAction 失败:', e);
-      return;
-    }
-  }
+  const doc = getUserSetDoc();
+  if (!doc?.inputMethodHelper?.pendingAction) return;
+  void updateSetDbWithRetry((latest) => {
+    if (latest.inputMethodHelper) delete latest.inputMethodHelper.pendingAction;
+  }).then((ok) => {
+    if (!ok) console.error('[输入法键盘] 清理 pendingAction 失败');
+  });
 }
 
 function dispatchAction(action: any) {

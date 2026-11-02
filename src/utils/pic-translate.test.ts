@@ -94,9 +94,12 @@ vi.mock('@/utils/local-dictionary', () => ({
 import {
   ocrTranslate,
   ocrTranslateBaidu,
+  ocrTranslateBilibili,
+  ocrTranslateSiliconflow,
   ocrTranslateAli,
   ocrTranslateTencent,
   ocrTranslateMultiPlatform,
+  ocrRecognizeWithPlatform,
 } from './pic-translate'
 import { default as axios } from 'axios'
 
@@ -587,6 +590,76 @@ describe('ocrTranslateTencent（腾讯）', () => {
   })
 })
 
+describe('ocrTranslateBilibili（B站原生图片翻译）', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    vi.stubGlobal('fetch', fetchMock)
+  })
+
+  it('使用多模态请求并解析原文、译文，关闭思考且无需鉴权', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: '<think>分析</think>\n```json\n{"source":"hello world","translation":"你好，世界"}\n```' } }],
+    }), { status: 200 }))
+
+    const result = await ocrTranslateBilibili(HELLO_BASE64, 'Index-Translate-35B-A3B', 'en')
+
+    expect(result).toEqual({
+      errorCode: '0',
+      resRegions: [{ boundingBox: '0,0,0,0', context: 'hello world', tranContent: '你好，世界' }],
+    })
+    const [url, opts] = fetchMock.mock.calls[0]
+    expect(url).toBe('https://index-translate.bilibili.com/v1/chat/completions')
+    expect(opts.headers.Authorization).toBeUndefined()
+    expect(opts.headers['User-Agent']).toBe('Index-Translate-Client/1.0')
+    const body = JSON.parse(opts.body)
+    expect(body.model).toBe('Index-Translate-35B-A3B')
+    expect(body.chat_template_kwargs).toEqual({ enable_thinking: false })
+    expect(body.messages[0].content[0].text).toContain('英语文本并翻译为中文')
+    expect(body.messages[0].content[1].image_url.url).toBe(`data:image/png;base64,${HELLO_BASE64}`)
+  })
+
+  it('非 JSON 响应兼容为纯文本译文', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: '你好，世界' } }],
+    }), { status: 200 }))
+
+    const result = await ocrTranslateBilibili(HELLO_BASE64)
+
+    expect(result.errorCode).toBe('0')
+    expect(result.resRegions).toEqual([{ boundingBox: '0,0,0,0', context: '', tranContent: '你好，世界' }])
+  })
+})
+
+describe('ocrTranslateSiliconflow（硅基流动 DeepSeek-OCR）', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    vi.stubGlobal('fetch', fetchMock)
+  })
+
+  it('使用 Bearer 鉴权、默认模型和官方 OCR 图片格式', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: 'hello world' } }],
+    }), { status: 200 }))
+
+    const result = await ocrTranslateSiliconflow(HELLO_BASE64, 'sf-test-key')
+
+    expect(result).toEqual({
+      errorCode: '0',
+      resRegions: [{ boundingBox: '0,0,0,0', context: 'hello world', tranContent: 'hello world' }],
+    })
+    const [url, opts] = fetchMock.mock.calls[0]
+    expect(url).toBe('https://api.siliconflow.cn/v1/chat/completions')
+    expect(opts.headers.Authorization).toBe('Bearer sf-test-key')
+    const body = JSON.parse(opts.body)
+    expect(body.model).toBe('deepseek-ai/DeepSeek-OCR')
+    expect(body.messages[0].content[0].image_url).toEqual({
+      url: `data:image/png;base64,${HELLO_BASE64}`,
+      detail: 'high',
+    })
+    expect(body.messages[0].content[1]).toEqual({ type: 'text', text: 'Free OCR.' })
+  })
+})
+
 /* =====================================================================
  * ocrTranslateMultiPlatform 调度 / 限次 / 环境分支
  * ===================================================================== */
@@ -714,6 +787,43 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
     const result = await ocrTranslateMultiPlatform()
 
     expect(result).toEqual({ errorCode: '0', resRegions: [{ boundingBox: '1,2,3,4', context: 'a', tranContent: 'b' }] })
+  })
+
+  it('bilibili 分支：截图后直接原生翻译且不消耗内置 Key 次数', async () => {
+    storeState.ocrPlatform = 'bilibili'
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: '{"source":"hello","translation":"你好"}' } }],
+    }), { status: 200 }))
+
+    const result = await ocrTranslateMultiPlatform()
+
+    expect(result).toEqual({
+      errorCode: '0',
+      resRegions: [{ boundingBox: '0,0,0,0', context: 'hello', tranContent: '你好' }],
+    })
+    expect(captureMock.capture).toHaveBeenCalledTimes(1)
+    expect(fetchMock.mock.calls[0][0]).toBe('https://index-translate.bilibili.com/v1/chat/completions')
+    expect(localStorageMock.getItem('usage_ocr_counter')).toBeNull()
+  })
+
+  it('siliconflow 分支：OCR 后复用当前文本引擎翻译', async () => {
+    storeState.ocrPlatform = 'siliconflow'
+    storeState.translationPlatform = 'siliconflow'
+    storeState.ocrKeys.siliconflow = { appkey: 'sf-test-key', key: '' }
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: 'hello ocr' } }],
+    }), { status: 200 }))
+    translateMock.translateWithPlatform.mockResolvedValue({ explains: 'OCR 译文' })
+
+    const result = await ocrTranslateMultiPlatform()
+
+    expect(result).toEqual({
+      errorCode: '0',
+      resRegions: [{ boundingBox: '0,0,0,0', context: 'hello ocr', tranContent: 'OCR 译文' }],
+    })
+    expect(fetchMock.mock.calls[0][0]).toBe('https://api.siliconflow.cn/v1/chat/completions')
+    expect(translateMock.translateWithPlatform).toHaveBeenCalledWith('hello ocr', 'siliconflow', 'en')
+    expect(localStorageMock.getItem('usage_ocr_counter')).toBeNull()
   })
 
   it('deepseek 分支：视觉模型提取文本 + 大模型翻译', async () => {
@@ -879,5 +989,33 @@ describe('ocrTranslateLocal（本地 OCR）', () => {
     expect(result.errorCode).toBe('LOCAL_OCR_FAILED')
     expect(result.errorMessage).toContain('cannot create worker')
     expect(result.resRegions).toEqual([])
+  })
+})
+
+describe('ocrRecognizeWithPlatform（配置测试）', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    localStorageMock.clear()
+    storeState.ocrKeys = { siliconflow: { appkey: 'sf-test-key', key: 'custom/ocr-model' } }
+    storeState.translationPlatform = 'spark'
+    langState.active = 'en'
+    vi.stubGlobal('fetch', fetchMock)
+  })
+
+  it('直接调用 OCR，不截图、不翻译、不消耗次数', async () => {
+    localStorageMock.setItem('usage_ocr_counter', JSON.stringify({ date: todayStr(), count: 2 }))
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: 'hello ocr' } }],
+    }), { status: 200 }))
+
+    const result = await ocrRecognizeWithPlatform(HELLO_BASE64, 'siliconflow')
+
+    expect(result.errorCode).toBe('0')
+    expect(result.resRegions![0].context).toBe('hello ocr')
+    expect(captureMock.capture).not.toHaveBeenCalled()
+    expect(translateMock.translateWithPlatform).not.toHaveBeenCalled()
+    expect(JSON.parse(localStorageMock.getItem('usage_ocr_counter')!).count).toBe(2)
+    const [, init] = fetchMock.mock.calls[0]
+    expect(JSON.parse(init.body).model).toBe('custom/ocr-model')
   })
 })

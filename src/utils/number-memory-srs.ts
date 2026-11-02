@@ -58,8 +58,8 @@ export function isDue(entry: NumberMemoryEntry, now: number): boolean {
 
 /**
  * 答对后更新条目 SRS 状态
- * - 在升级窗口内：按记忆牢固度升 1~3 级，封顶 12
- * - 未到期或到期但超窗：刷新 learnDate，不升级
+ * - 已到期：按记忆牢固度升 1~3 级，封顶 12
+ * - 未到期：刷新 learnDate，不升级
  */
 export function markCorrect(
     entry: NumberMemoryEntry,
@@ -74,7 +74,7 @@ export function markCorrect(
             learnDate: now,
         };
     }
-    // 未到期或太晚：刷新 learnDate，保持等级
+    // 未到期：刷新 learnDate，保持等级
     return {
         ...entry,
         learnDate: now,
@@ -82,8 +82,7 @@ export function markCorrect(
 }
 
 /**
- * 答错后更新条目 SRS 状态
- * 12 级答错直接重置为 1 级，否则降级
+ * 答错后更新条目 SRS 状态：每次降 4 级，下限 1（12 级降到 8 级）
  */
 export function markWrong(entry: NumberMemoryEntry, now: number = Date.now()): NumberMemoryEntry {
     const level = getEntryLevel(entry);
