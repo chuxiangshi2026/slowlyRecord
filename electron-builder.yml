@@ -2,7 +2,7 @@
 # 文档: https://www.electron.build/configuration/configuration
 
 appId: com.slowlyrecord.app
-productName: SlowlyRecord
+productName: SlowRecap
 copyright: Copyright © 2025
 
 # 构建目录：vite build 输出目录

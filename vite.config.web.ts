@@ -27,7 +27,7 @@ export default defineConfig({
       includeManifestIcons: false,
       manifest: {
         id: './',
-        name: '慢记 - 记忆训练工具',
+        name: '慢记 SlowRecap - 记忆训练工具',
         short_name: '慢记',
         description: '基于艾宾浩斯遗忘曲线的背单词与多场景记忆训练工具',
         lang: 'zh-CN',
