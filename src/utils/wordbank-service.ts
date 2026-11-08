@@ -5,7 +5,7 @@
 
 import type { Word } from '@/types/words';
 import type { LanguageCode } from './language';
-import { PREFIXES_DATA, SUFFIXES_DATA, ROOTS_DATA } from './affix-data';
+import { PREFIXES_DATA, SUFFIXES_DATA, ROOTS_DATA, LETTER_COMBOS_DATA } from './affix-data';
 import {inferItemType} from '@/utils/text-utils';
 
 // 词库类型定义
@@ -117,7 +117,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'ielts-topics', name: '雅思话题词汇', description: '雅思写作与口语十大话题高频词（教育/科技/环境/城市/健康/经济/文化/媒体/旅游/社会）', wordCount: 300, language: 'en' },
   { id: 'toefl-academic', name: '托福学术词汇', description: '托福听力与阅读十大学科场景词（生物/地质/天文/考古/心理/经济/化学/物理/历史/艺术）', wordCount: 300, language: 'en' },
   { id: 'zsb', name: '专升本词汇', description: '专升本英语考试核心词汇', wordCount: 297, language: 'en' },
-  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568, language: 'en' },
+  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀与字母组合', wordCount: 576, language: 'en' },
   { id: 'phrasal-verbs', name: '短语动词', description: '英语常用短语动词', wordCount: 317, language: 'en' },
   { id: 'collocations', name: '固定搭配', description: '英语常用固定搭配、句型与表达式', wordCount: 277, language: 'en' },
   { id: 'idioms', name: '习语', description: '英语常用习语', wordCount: 249, language: 'en' },
@@ -309,10 +309,17 @@ function loadRootsFromAffixData(): Word[] {
     ...PREFIXES_DATA.map(a => ({ ...a, category: '前缀' })),
     ...SUFFIXES_DATA.map(a => ({ ...a, category: '后缀' })),
     ...ROOTS_DATA.map(a => ({ ...a, category: '词根' })),
+    ...LETTER_COMBOS_DATA.map(a => ({ ...a, category: '字母组合' })),
   ];
 
+  const categoryCode: Record<string, string> = {
+    前缀: 'prefix',
+    后缀: 'suffix',
+    词根: 'root',
+    字母组合: 'combo',
+  };
   const now = new Date();
-  return allAffixes.map((item, index) => {
+  return allAffixes.map(item => {
     // 构建释义：类别 + 中文释义 + 英文描述
     const parts: string[] = [];
     parts.push(`[${item.category}] ${item.meaning}`);
@@ -324,7 +331,8 @@ function loadRootsFromAffixData(): Word[] {
     }
 
     return {
-      _id: `affix_${index}`,
+      // 内容派生 ID：调整顺序或新增条目时，已导入用户词库的词不会被重新编号
+      _id: `affix_${categoryCode[item.category] || 'item'}_${item.text.replace(/[^a-z0-9]+/gi, '_')}`,
       text: item.text,
       phonetic: '',
       explains: parts.join(' '),
@@ -351,6 +359,13 @@ export async function fetchWordBank(
   const config = { ...DEFAULT_STRATEGY, ...strategy };
   console.log(`[WordBank] fetchWordBank 开始: type=${type}, strategy=`, config);
 
+  // 词根词缀类型：直接从 TypeScript 数据源生成，数据随代码更新，不读旧缓存
+  if (type === 'roots') {
+    const words = loadRootsFromAffixData();
+    console.log(`[WordBank] 从 affix-data 加载词根词缀: ${words.length} 条`);
+    return words;
+  }
+
   // 先检查缓存
   if (config.useCache) {
     const cached = getFromCache(type);
@@ -358,16 +373,6 @@ export async function fetchWordBank(
       console.log(`[WordBank] 使用缓存: ${type}, 单词数: ${cached.length}`);
       return cached;
     }
-  }
-
-  // 词根词缀类型：直接从 TypeScript 数据源加载（不依赖 JSON 文件）
-  if (type === 'roots') {
-    const words = loadRootsFromAffixData();
-    console.log(`[WordBank] 从 affix-data 加载词根词缀: ${words.length} 条`);
-    if (config.useCache) {
-      saveToCache(type, words);
-    }
-    return words;
   }
 
   // 仅加载本地词库

@@ -514,7 +514,7 @@ async function deleteCurrentAssociation() {
 async function batchImportPresets() {
   try {
     await ElMessageBox.confirm(
-      `这将导入 A-Z 所有字母的预设映射图片（每个字母第一个推荐），是否继续？`,
+      `这将导入 A-Z 字母与常用字母组合的预设映射（每个取第一个推荐），是否继续？`,
       "批量导入预设",
       { type: "info" }
     );

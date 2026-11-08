@@ -693,7 +693,7 @@ describe('sync-manager 句子库（sentences scope）', () => {
     expect(result.sentences).toBeNull()
   })
 
-  it('collectSyncData 应收集词图书/章/页，空库为 null', async () => {
+  it('collectSyncData 应收集词集书/章/页及格式版本，空库为 null', async () => {
     mockDb.put!({
       _id: 'wb_book_1', type: 'wb_book', name: '四级词根', order: 0, ctime: 1, utime: 1,
     })
@@ -711,12 +711,13 @@ describe('sync-manager 句子库（sentences scope）', () => {
     const result = await collectSyncData()
 
     expect(result.wordBook).not.toBeNull()
+    expect(result.wordBook!.schemaVersion).toBe(1)
     expect(result.wordBook!.books).toHaveLength(1)
     expect(result.wordBook!.chapters).toHaveLength(1)
     expect(result.wordBook!.pages).toHaveLength(1)
   })
 
-  it('restoreSyncData 应把词图数据写回本地', async () => {
+  it('restoreSyncData 应把词集数据写回本地', async () => {
     const { restoreSyncData } = await loadModule()
     const result = await restoreSyncData({
       ...createMockSyncData(),
@@ -730,6 +731,27 @@ describe('sync-manager 句子库（sentences scope）', () => {
     expect(result.wordBookRestored).toBe(true)
     expect(mockDb.get!('wb_book_9')).toBeTruthy()
     expect(mockDb.get!('wb_page_9')).toBeTruthy()
+  })
+
+  it('未知词集格式版本不得覆盖或新增本地数据', async () => {
+    mockDb.put!({ _id: 'wb_book_local', type: 'wb_book', name: '本地词集', order: 0, ctime: 1, utime: 1 })
+    const { restoreSyncData } = await loadModule()
+    await restoreSyncData({
+      ...createMockSyncData(),
+      wordBook: {
+        schemaVersion: 2,
+        books: [
+          { _id: 'wb_book_local', type: 'wb_book', name: '远端覆盖', order: 0, ctime: 1, utime: 999 },
+          { _id: 'wb_book_future', type: 'wb_book', name: '未来词集', order: 1, ctime: 1, utime: 1 },
+        ],
+        chapters: [{ _id: 'wb_chapter_future', type: 'wb_chapter', bookId: 'wb_book_future', name: '未来章', order: 0, levelSize: 5, levels: [], ctime: 1, utime: 1 }],
+        pages: [],
+      },
+    } as any)
+
+    expect(mockDb.get!('wb_book_local')?.name).toBe('本地词集')
+    expect(mockDb.get!('wb_book_future')).toBeNull()
+    expect(mockDb.get!('wb_chapter_future')).toBeNull()
   })
 
   it('restoreSyncData 应按 id 合并去重', async () => {

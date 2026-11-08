@@ -99,7 +99,7 @@ export const useWordBook = defineStore('mobileWordBook', () => {
 
   // ===== 书 =====
 
-  function createBook(name: string, extra: { desc?: string; isSample?: boolean } = {}): WordBookBook {
+  function createBook(name: string, extra: { desc?: string; isSample?: boolean; sampleVersion?: number } = {}): WordBookBook {
     const book = createWordBookBook(name, books.value.length, Date.now(), extra)
     const result = put(book)
     if (result.ok) books.value = [...books.value, book]
@@ -174,6 +174,7 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     key: WordBookKey
     words: WordBookWord[]
     source: WordBookSource
+    note?: string
   }): WordBookPage {
     const page = buildWordBookPage({ ...input, order: pagesOf(input.chapterId).length + 1 })
     const result = put(page)

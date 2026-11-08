@@ -205,7 +205,7 @@ const memoryItems = computed(() => sortByUsage([
   {key: 'text-memory', label: '📜 文本记忆', summary: textMemorySummary.value, path: '/text-memory'},
   {key: 'sentences', label: '📖 句子库', summary: sentencesSummary.value, path: '/sentences'},
   {key: 'memory-palace', label: '🏛️ 记忆宫殿', summary: '', path: '/memory-palace'},
-  {key: 'word-book', label: '🗺️ 词图闯关', summary: '', path: '/word-book'},
+  {key: 'word-book', label: '🗂️ 词集', summary: '', path: '/word-book'},
   {key: 'knowledge-memory', label: '📚 知识库', summary: '', path: '/knowledge-memory'},
 ]).filter(item => WORD_BOOK_ENABLED || item.key !== 'word-book'));
 

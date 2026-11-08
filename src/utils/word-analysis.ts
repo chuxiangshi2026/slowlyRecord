@@ -4,14 +4,58 @@
  */
 
 import type { AffixData } from './affix-data';
-import { PREFIXES_DATA, SUFFIXES_DATA, ROOTS_DATA } from './affix-data';
+import { PREFIXES_DATA, SUFFIXES_DATA, ROOTS_DATA, COMPOUND_PARTS_DATA } from './affix-data';
 
 /** 单词成分类型 */
 export interface WordComponent {
   text: string;
-  type: 'root' | 'prefix' | 'suffix' | 'subword' | 'whole';
+  /** compound = 两个常见单词拼成的合成词，如 sea + sick */
+  type: 'root' | 'prefix' | 'suffix' | 'subword' | 'compound' | 'whole';
   /** 释义数据 */
   data?: AffixData;
+}
+
+const COMPOUND_PART_MAP = new Map(COMPOUND_PARTS_DATA.map(part => [part.text, part]));
+const SORTED_PREFIXES = [...PREFIXES_DATA].sort((a, b) => b.text.length - a.text.length);
+const SORTED_SUFFIXES = [...SUFFIXES_DATA].sort((a, b) => b.text.length - a.text.length);
+const SORTED_ROOTS = [...ROOTS_DATA].sort((a, b) => b.text.length - a.text.length);
+
+function isExcluded(item: AffixData, lowerWord: string): boolean {
+  return item.exclude?.includes(lowerWord) ?? false;
+}
+
+/** 词干是否以常见词根开头，或有明确示例支撑 */
+function hasRootEvidence(stem: string, lowerWord: string): boolean {
+  return SORTED_ROOTS.some(root => {
+    if (root.text.length < 3 || isExcluded(root, lowerWord)) return false;
+    const exampleBacked = root.examples?.some(example => example.toLowerCase() === lowerWord) ?? false;
+    if (root.text.length === 3 && !exampleBacked) return false;
+    return stem.startsWith(root.text) || (stem.includes(root.text) && exampleBacked);
+  });
+}
+
+/** 合成词只在两个部件都是常见单词时成立，避免 season 被拆成 sea + son 这类误判 */
+function findCompoundComponents(cleanedWord: string, lowerWord: string): WordComponent[] | null {
+  if (!/^[a-z]{6,}$/.test(lowerWord)) return null;
+  for (let split = 3; split <= lowerWord.length - 3; split++) {
+    const left = lowerWord.slice(0, split);
+    const right = lowerWord.slice(split);
+    const leftData = COMPOUND_PART_MAP.get(left);
+    const rightData = COMPOUND_PART_MAP.get(right);
+    if (!leftData || !rightData) continue;
+    return [
+      { text: cleanedWord.slice(0, split), type: 'compound', data: { ...leftData, text: left } },
+      { text: cleanedWord.slice(split), type: 'compound', data: { ...rightData, text: right } },
+    ];
+  }
+  return null;
+}
+
+/** 短前缀是否有可靠词干支撑：整词在示例中，或词干以已知词根开头 / 以已知后缀结尾 */
+function hasStemEvidence(lowerWord: string, stem: string, prefixData: AffixData): boolean {
+  if (!prefixData.requiresStemEvidence) return true;
+  if (prefixData.examples?.some(example => example.toLowerCase() === lowerWord)) return true;
+  return hasRootEvidence(stem, lowerWord);
 }
 
 /**
@@ -33,35 +77,76 @@ export function analyzeWord(word: string): WordComponent[] {
   let remaining = lowerWord;
   let originalIndex = 0;
 
-  // 1. 检测前缀（按长度降序匹配，优先匹配长的）
-  const sortedPrefixes = [...PREFIXES_DATA].sort((a, b) => b.text.length - a.text.length);
-  for (const prefixData of sortedPrefixes) {
+  // 1. 检测前缀：逐个评分，避免 contra 抢走 con + tract、extra 抢走 ex + tract
+  let bestPrefix: { data: AffixData; score: number } | null = null;
+  for (const prefixData of SORTED_PREFIXES) {
     const prefix = prefixData.text;
-    if (remaining.startsWith(prefix) && remaining.length > prefix.length + 1) {
-      components.push({
-        text: cleanedWord.slice(originalIndex, originalIndex + prefix.length),
-        type: 'prefix',
-        data: prefixData
-      });
-      remaining = remaining.slice(prefix.length);
-      originalIndex += prefix.length;
-      break;
-    }
+    if (isExcluded(prefixData, lowerWord)) continue;
+    if (!remaining.startsWith(prefix) || remaining.length <= prefix.length + 1) continue;
+    const stem = remaining.slice(prefix.length);
+    if (stem.length < 2) continue;
+    // 词首有更长的词根时优先按词根拆（biology 应该是 bio + logy，不是 bi + ology）
+    if (SORTED_ROOTS.some(root =>
+      root.text.length > prefix.length && !isExcluded(root, lowerWord) && remaining.startsWith(root.text)
+    )) continue;
+    if (!hasStemEvidence(lowerWord, stem, prefixData)) continue;
+    // 两个字母的词干只接受有明确示例支撑的前缀（exit），避免 deep/deal/dear 被拆成 de + ep
+    if (stem.length === 2 && !prefixData.examples?.some(example => example.toLowerCase() === lowerWord)) continue;
+
+    let score = stem.length >= 3 ? 1 : 0;
+    if (hasRootEvidence(stem, lowerWord)) score += 10;
+    else if (SORTED_SUFFIXES.some(suffix => !isExcluded(suffix, lowerWord) && stem.endsWith(suffix.text))) score += 3;
+    if (prefixData.examples?.some(example => example.toLowerCase() === lowerWord)) score += 5;
+    score += prefix.length * 0.001;
+    if (score > 0 && (!bestPrefix || score > bestPrefix.score)) bestPrefix = { data: prefixData, score };
   }
 
-  // 2. 检测后缀
-  let suffixText = '';
+  let prefixFound = false;
+  if (bestPrefix) {
+    const prefixLength = bestPrefix.data.text.length;
+    components.push({
+      text: cleanedWord.slice(originalIndex, originalIndex + prefixLength),
+      type: 'prefix',
+      data: bestPrefix.data
+    });
+    remaining = remaining.slice(prefixLength);
+    originalIndex += prefixLength;
+    prefixFound = true;
+  }
+
+  // 1.5 没有前缀时，优先识别两个常见单词拼成的合成词（seasick → sea + sick）
+  if (!prefixFound) {
+    const compound = findCompoundComponents(cleanedWord, lowerWord);
+    if (compound) return compound;
+  }
+
+  // 2. 检测后缀：把“不拆后缀”也作为一个候选，避免 -sion 吃掉 miss、-tion 吃掉 spect
+  const suffixCandidates: (AffixData | null)[] = [null];
+  for (const suffixItem of SORTED_SUFFIXES) {
+    if (isExcluded(suffixItem, lowerWord)) continue;
+    if (!remaining.endsWith(suffixItem.text) || remaining.length <= suffixItem.text.length + 1) continue;
+    suffixCandidates.push(suffixItem);
+  }
+  // 有明确的派生后缀时，不再把词尾 s 当复数（obvious 不是 obviou + s）
+  const hasDerivationalSuffix = suffixCandidates.some(item => item && item.text.length >= 3);
+
   let suffixData: AffixData | undefined;
   let suffixStartInRemaining = remaining.length;
-  const sortedSuffixes = [...SUFFIXES_DATA].sort((a, b) => b.text.length - a.text.length);
-
-  for (const suffixItem of sortedSuffixes) {
-    const suffix = suffixItem.text;
-    if (remaining.endsWith(suffix) && remaining.length > suffix.length + 1) {
-      suffixText = suffix;
-      suffixData = suffixItem;
-      suffixStartInRemaining = remaining.length - suffix.length;
-      break;
+  let bestSuffixScore = -1;
+  for (const candidate of suffixCandidates) {
+    if (candidate && hasDerivationalSuffix && candidate.text.length === 1) continue;
+    const length = candidate ? candidate.text.length : 0;
+    const middle = remaining.slice(0, remaining.length - length);
+    if (middle.length < 2) continue;
+    // 词干不足 3 个字母时，只允许更长的后缀（reliable → li + able，排除 bus → bu + s）
+    if (middle.length < 3 && length < 3) continue;
+    let score = middle.length >= 3 ? 1 : 0;
+    if (hasRootEvidence(middle, lowerWord)) score += 10;
+    if (candidate) score += 1.5 + length * 0.001;
+    if (score > bestSuffixScore) {
+      bestSuffixScore = score;
+      suffixData = candidate ?? undefined;
+      suffixStartInRemaining = middle.length;
     }
   }
 
@@ -69,44 +154,52 @@ export function analyzeWord(word: string): WordComponent[] {
   const middlePart = remaining.slice(0, suffixStartInRemaining);
 
   if (middlePart.length > 0) {
-    // 尝试在中间部分找到词根
-    let rootFound = false;
-    const sortedRoots = [...ROOTS_DATA].sort((a, b) => b.text.length - a.text.length);
-
-    for (const rootData of sortedRoots) {
+    // 优先匹配词干开头的词根；没有开头词根时，再考虑有前缀或示例支撑的中间词根
+    let chosenRoot: { data: AffixData; index: number } | null = null;
+    for (const rootData of SORTED_ROOTS) {
       const root = rootData.text;
-      const rootIndex = middlePart.indexOf(root);
-      if (rootIndex !== -1 && root.length >= 2) {
-        // 词根前的子单词
-        if (rootIndex > 0) {
-          components.push({
-            text: cleanedWord.slice(originalIndex, originalIndex + rootIndex),
-            type: 'subword'
-          });
-        }
-
-        // 词根本身
-        components.push({
-          text: cleanedWord.slice(originalIndex + rootIndex, originalIndex + rootIndex + root.length),
-          type: 'root',
-          data: rootData
-        });
-
-        // 词根后的子单词
-        if (rootIndex + root.length < middlePart.length) {
-          components.push({
-            text: cleanedWord.slice(originalIndex + rootIndex + root.length, originalIndex + suffixStartInRemaining),
-            type: 'subword'
-          });
-        }
-
-        rootFound = true;
+      if (root.length < 3 || isExcluded(rootData, lowerWord)) continue;
+      if (root.length === 3 && !rootData.examples?.some(example => example.toLowerCase() === lowerWord)) continue;
+      if (middlePart.startsWith(root)) {
+        chosenRoot = { data: rootData, index: 0 };
         break;
       }
     }
+    if (!chosenRoot) {
+      for (const rootData of SORTED_ROOTS) {
+        const root = rootData.text;
+        if (root.length < 3 || isExcluded(rootData, lowerWord)) continue;
+        if (root.length === 3 && !rootData.examples?.some(example => example.toLowerCase() === lowerWord)) continue;
+        const index = middlePart.indexOf(root);
+        if (index < 0) continue;
+        const exampleBacked = rootData.examples?.some(example => example.toLowerCase() === lowerWord);
+        if (prefixFound || exampleBacked) {
+          chosenRoot = { data: rootData, index };
+          break;
+        }
+      }
+    }
 
-    // 如果没有找到词根，整个中间部分作为子单词
-    if (!rootFound) {
+    if (chosenRoot) {
+      const { data: rootData, index: rootIndex } = chosenRoot;
+      if (rootIndex > 0) {
+        components.push({
+          text: cleanedWord.slice(originalIndex, originalIndex + rootIndex),
+          type: 'subword'
+        });
+      }
+      components.push({
+        text: cleanedWord.slice(originalIndex + rootIndex, originalIndex + rootIndex + rootData.text.length),
+        type: 'root',
+        data: rootData
+      });
+      if (rootIndex + rootData.text.length < middlePart.length) {
+        components.push({
+          text: cleanedWord.slice(originalIndex + rootIndex + rootData.text.length, originalIndex + suffixStartInRemaining),
+          type: 'subword'
+        });
+      }
+    } else {
       components.push({
         text: cleanedWord.slice(originalIndex, originalIndex + suffixStartInRemaining),
         type: 'subword'
@@ -115,7 +208,7 @@ export function analyzeWord(word: string): WordComponent[] {
   }
 
   // 4. 添加后缀
-  if (suffixText && suffixData) {
+  if (suffixData) {
     components.push({
       text: cleanedWord.slice(originalIndex + suffixStartInRemaining),
       type: 'suffix',
@@ -142,6 +235,7 @@ export function getComponentClass(type: WordComponent['type']): string {
     prefix: 'word-prefix',
     suffix: 'word-suffix',
     subword: 'word-subword',
+    compound: 'word-compound',
     whole: 'word-whole'
   };
   return classMap[type];
@@ -158,6 +252,7 @@ export function getComponentLabel(type: WordComponent['type']): string {
     prefix: '前缀',
     suffix: '后缀',
     subword: '子单词',
+    compound: '合成词',
     whole: '完整单词'
   };
   return labelMap[type];

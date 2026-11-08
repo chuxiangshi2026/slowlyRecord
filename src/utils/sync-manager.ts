@@ -148,20 +148,25 @@ export async function collectSyncData(): Promise<SyncData> {
   }
 }
 
-/** 词图闯关收集：三张表分别读，全空返回 null */
+/** 词集收集：三张表分别读，全空返回 null；字段保持可选以兼容旧端 */
 async function collectWordBook(): Promise<SyncWordBook | null> {
   try {
     const [books, chapters, pages] = await Promise.all([getAllBooks(), getAllChapters(), getAllPages()])
     if (!books.length && !chapters.length && !pages.length) return null
-    return { books, chapters, pages }
+    return { schemaVersion: 1, books, chapters, pages }
   } catch (e) {
-    log.e('[同步] 收集词图数据失败', e)
+    log.e('[同步] 收集词集数据失败', e)
     return null
   }
 }
 
-/** 词图闯关还原：按 _id 合并，utime 较新的覆盖本地 */
+/** 词集还原：按 _id 合并，utime 较新的覆盖本地；未知格式版本直接跳过 */
 async function restoreWordBookSync(data: SyncWordBook) {
+  const version = data?.schemaVersion ?? 1
+  if (version !== 1) {
+    log.w('[同步] 跳过未知版本词集数据', version)
+    return
+  }
   const [localBooks, localChapters, localPages] = await Promise.all([getAllBooks(), getAllChapters(), getAllPages()])
   const mergeInto = async <T extends { _id: string; utime?: number }>(
     local: T[],
@@ -535,7 +540,7 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
   }
 
   if (options.restoreWordBook && data.wordBook) {
-    await runStep('词图闯关', () => restoreWordBookSync(data.wordBook!), () => {
+    await runStep('词集', () => restoreWordBookSync(data.wordBook!), () => {
       result.wordBookRestored = true
     })
   }

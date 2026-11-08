@@ -175,6 +175,80 @@ describe('analyzeWord', () => {
     })
   })
 
+  describe('合成词与歧义处理', () => {
+    it('seasick 应该拆成 sea + sick，而不是前缀 se', () => {
+      const result = analyzeWord('seasick')
+      expect(result).toEqual([
+        expect.objectContaining({ text: 'sea', type: 'compound' }),
+        expect.objectContaining({ text: 'sick', type: 'compound' }),
+      ])
+    })
+
+    it('常见合成词应该按两个单词拆分', () => {
+      const expected: Record<string, string[]> = {
+        household: ['house', 'hold'],
+        blacksmith: ['black', 'smith'],
+        headstrong: ['head', 'strong'],
+        notebook: ['note', 'book'],
+        passport: ['pass', 'port'],
+      }
+      for (const [word, parts] of Object.entries(expected)) {
+        const result = analyzeWord(word)
+        expect(result.map(item => item.text)).toEqual(parts)
+        expect(result.every(item => item.type === 'compound')).toBe(true)
+      }
+    })
+
+    it('season 不应该被误拆成 sea + son', () => {
+      expect(analyzeWord('season').some(item => item.type === 'compound')).toBe(false)
+    })
+
+    it('短前缀没有词干支撑时不标注', () => {
+      for (const word of ['apple', 'about', 'around']) {
+        expect(analyzeWord(word).some(item => item.type === 'prefix')).toBe(false)
+      }
+    })
+
+    it('family / only 不应该被标成 -ly 后缀', () => {
+      for (const word of ['family', 'only']) {
+        expect(analyzeWord(word).some(item => item.type === 'suffix')).toBe(false)
+      }
+    })
+
+    it('长前缀不应抢走更短的“前缀 + 词根”组合', () => {
+      expect(analyzeWord('contract')).toEqual([
+        expect.objectContaining({ text: 'con', type: 'prefix' }),
+        expect.objectContaining({ text: 'tract', type: 'root' }),
+      ])
+      expect(analyzeWord('extract')).toEqual([
+        expect.objectContaining({ text: 'ex', type: 'prefix' }),
+        expect.objectContaining({ text: 'tract', type: 'root' }),
+      ])
+    })
+
+    it('后缀不应该吃掉词根的首字母', () => {
+      expect(analyzeWord('mission')).toEqual([
+        expect.objectContaining({ text: 'miss', type: 'root' }),
+        expect.objectContaining({ text: 'ion', type: 'suffix' }),
+      ])
+      expect(analyzeWord('vision')).toEqual([
+        expect.objectContaining({ text: 'vis', type: 'root' }),
+        expect.objectContaining({ text: 'ion', type: 'suffix' }),
+      ])
+    })
+
+    it('常见的同形词不应被误拆前缀', () => {
+      for (const word of ['problem', 'imagine']) {
+        expect(analyzeWord(word).some(item => item.type === 'prefix')).toBe(false)
+      }
+    })
+
+    it('派生后缀优先于词尾 s', () => {
+      expect(analyzeWord('illness').some(item => item.type === 'suffix' && item.text === 'ness')).toBe(true)
+      expect(analyzeWord('reliable').some(item => item.type === 'suffix' && item.text === 'able')).toBe(true)
+    })
+  })
+
   describe('成分文本一致性', () => {
     it('成分文本拼接应还原原始单词', () => {
       const testWords = ['unhappy', 'rewrite', 'readable', 'transport', 'quickly']

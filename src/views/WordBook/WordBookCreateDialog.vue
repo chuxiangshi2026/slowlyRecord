@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="modelValue" title="生成学习页" width="520px" :close-on-click-modal="false"
+  <el-dialog :model-value="modelValue" title="加入词集" width="560px" :close-on-click-modal="false"
              @update:model-value="(v: boolean) => emit('update:modelValue', v)">
     <div class="create-summary">
       <strong>{{ words.length }} 个单词</strong>
@@ -7,38 +7,47 @@
     </div>
 
     <el-form label-position="top">
-      <el-form-item label="所属书">
+      <el-form-item label="所属词集">
+        <div class="mode-row">
+          <el-radio-group v-model="bookMode" size="small" :disabled="!!lockedBookId || hasRetryTarget">
+            <el-radio-button value="select">选择已有</el-radio-button>
+            <el-radio-button value="new">新建词集</el-radio-button>
+          </el-radio-group>
+        </div>
         <div class="row">
-          <el-select v-model="bookId" class="grow" filterable placeholder="选择书" :disabled="!!lockedBookId">
+          <el-select v-if="bookMode === 'select'" v-model="bookId" class="grow" filterable placeholder="选择词集" :disabled="!!lockedBookId || hasRetryTarget">
             <el-option v-for="book in store.sortedBooks" :key="book._id" :label="book.name" :value="book._id"/>
           </el-select>
-          <el-input v-if="!lockedBookId && newBookName !== null" v-model="newBookName" class="grow"
-                    placeholder="新书名称" maxlength="30"/>
-          <el-button v-else-if="!lockedBookId" text type="primary" @click="newBookName = defaultBookName">＋新建</el-button>
+          <el-input v-else v-model="newBookName" class="grow" placeholder="新词集名称" maxlength="30" :disabled="hasRetryTarget"/>
         </div>
       </el-form-item>
 
-      <el-form-item label="所属章">
+      <el-form-item label="所属章节">
+        <div class="mode-row">
+          <el-radio-group v-model="chapterMode" size="small" :disabled="bookMode === 'new' || !!lockedChapterId || hasRetryTarget">
+            <el-radio-button value="select">选择已有</el-radio-button>
+            <el-radio-button value="new">新建章节</el-radio-button>
+          </el-radio-group>
+        </div>
         <div class="row">
-          <el-select v-model="chapterId" class="grow" filterable placeholder="选择章" :disabled="!bookId || !!lockedChapterId">
+          <el-select v-if="chapterMode === 'select'" v-model="chapterId" class="grow" filterable placeholder="选择章节"
+                     :disabled="bookMode === 'new' || !bookId || !!lockedChapterId || hasRetryTarget">
             <el-option v-for="chapter in chapterOptions" :key="chapter._id" :label="chapter.name" :value="chapter._id"/>
           </el-select>
-          <el-input v-if="!lockedChapterId && newChapterName !== null" v-model="newChapterName" class="grow"
-                    placeholder="新章名称" maxlength="30"/>
-          <el-button v-else-if="!lockedChapterId" text type="primary" @click="newChapterName = defaultChapterName">＋新建</el-button>
+          <el-input v-else v-model="newChapterName" class="grow" placeholder="新章节名称" maxlength="30" :disabled="hasRetryTarget"/>
         </div>
       </el-form-item>
 
       <el-form-item label="学习页名称">
-        <el-input v-model="pageName" maxlength="40" placeholder="如：old 篇"/>
+        <el-input v-model="pageName" maxlength="40" placeholder="如：old 篇" @input="pageNameTouched = true"/>
       </el-form-item>
 
       <el-form-item label="分页">
         <div class="row">
           <span class="field-label">每页</span>
-          <el-input-number v-model="pageSize" :min="1" :max="MAX_WORD_BOOK_PAGE_SIZE" size="small"/>
+          <el-input-number v-model="pageSize" :min="1" :max="MAX_WORD_BOOK_PAGE_SIZE" size="small" :disabled="hasRetryTarget"/>
           <span class="field-label">词，按</span>
-          <el-select v-model="splitBy" size="small" style="width: 120px">
+          <el-select v-model="splitBy" size="small" style="width: 120px" :disabled="hasRetryTarget">
             <el-option label="原顺序" value="order"/>
             <el-option label="词频" value="freq"/>
             <el-option label="拼写长度" value="length"/>
@@ -51,18 +60,24 @@
         <template #title>
           本章已有「{{ duplicatedPage.name }}」（{{ duplicatedPage.words.length }} 词）
         </template>
-        <el-radio-group v-model="dupMode" size="small">
+        <el-radio-group v-model="dupMode" size="small" :disabled="hasRetryTarget">
           <el-radio-button value="append">再生成一页</el-radio-button>
           <el-radio-button value="cancel">不生成</el-radio-button>
         </el-radio-group>
       </el-alert>
 
-      <p class="create-tip">单词按当前筛选结果装页，生成后可在页面上逐个标记「记住了」。</p>
+      <el-alert v-if="failedIndexes.length" type="error" :closable="false" show-icon class="dup-alert">
+        {{ failedIndexes.length }} 页保存失败；可只重试失败页，取消则保留已生成内容。
+      </el-alert>
+
+      <p class="create-tip">单词按当前筛选结果装页，生成后可继续在导图页编辑、复习和标记已读。</p>
     </el-form>
 
     <template #footer>
       <el-button @click="emit('update:modelValue', false)">取消</el-button>
-      <el-button type="primary" :loading="saving" :disabled="!canSave" @click="confirm">生成并查看</el-button>
+      <el-button type="primary" :loading="saving" :disabled="!canSave" @click="confirm">
+        {{ failedIndexes.length ? '重试失败页' : '生成并查看' }}
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -75,6 +90,7 @@ import { useWordBookStore } from '@/stores/wordBook'
 import {
   MAX_WORD_BOOK_PAGE_SIZE,
   WORD_BOOK_PAGE_SIZE,
+  buildPageNameFromBase,
   getDefaultBookName,
   getDefaultChapterName,
   getDefaultPageName,
@@ -107,91 +123,192 @@ const key = computed(() => resolveWordBookKey(props.filter))
 const defaultBookName = computed(() => getDefaultBookName(props.bankName, key.value))
 const defaultChapterName = computed(() => getDefaultChapterName(key.value))
 
+const bookMode = ref<'select' | 'new'>('select')
+const chapterMode = ref<'select' | 'new'>('select')
 const bookId = ref('')
 const chapterId = ref('')
-const newBookName = ref<string | null>(null)
-const newChapterName = ref<string | null>(null)
+const newBookName = ref('')
+const newChapterName = ref('')
 const pageName = ref('')
+const pageNameTouched = ref(false)
 const pageSize = ref(WORD_BOOK_PAGE_SIZE)
 const splitBy = ref<WordBookSplitBy>('order')
 const dupMode = ref<'append' | 'cancel'>('append')
 const saving = ref(false)
+const failedIndexes = ref<number[]>([])
+const retryBookId = ref('')
+const retryChapterId = ref('')
+const hasRetryTarget = computed(() => failedIndexes.value.length > 0 && !!retryBookId.value && !!retryChapterId.value)
 
-const chapterOptions = computed(() => (bookId.value ? store.chaptersOf(bookId.value) : []))
+const chapterOptions = computed(() => (bookMode.value === 'select' && bookId.value ? store.chaptersOf(bookId.value) : []))
 const chunks = computed(() => splitWordsIntoPages(props.words, pageSize.value, splitBy.value))
 const pageCount = computed(() => Math.max(1, chunks.value.length))
-const duplicatedPage = computed(() => (chapterId.value ? store.findPageByKey(chapterId.value, key.value) : undefined))
+const duplicatedPage = computed(() => (chapterMode.value === 'select' && chapterId.value ? store.findPageByKey(chapterId.value, key.value) : undefined))
 
 const canSave = computed(() => {
   if (!props.words.length) return false
   if (dupMode.value === 'cancel' && duplicatedPage.value) return false
-  const hasBook = !!bookId.value || !!newBookName.value?.trim()
-  const hasChapter = !!chapterId.value || !!newChapterName.value?.trim()
+  const hasBook = bookMode.value === 'select' ? !!bookId.value : !!newBookName.value.trim()
+  const hasChapter = chapterMode.value === 'select' ? !!chapterId.value : !!newChapterName.value.trim()
   return hasBook && hasChapter && !!pageName.value.trim()
 })
 
 // 每次打开：按当前上下文预填
 watch(() => props.modelValue, (open) => {
   if (!open) return
-  bookId.value = props.lockedBookId || store.sortedBooks[0]?._id || ''
-  chapterId.value = props.lockedChapterId || (bookId.value ? store.chaptersOf(bookId.value)[0]?._id : '') || ''
-  newBookName.value = null
-  newChapterName.value = null
+  const firstBook = store.sortedBooks[0]
+  failedIndexes.value = []
+  retryBookId.value = ''
+  retryChapterId.value = ''
+  pageNameTouched.value = false
   pageSize.value = WORD_BOOK_PAGE_SIZE
   splitBy.value = 'order'
   dupMode.value = 'append'
-  pageName.value = getDefaultPageName(key.value, 1, chunks.value.length)
+
+  bookMode.value = props.lockedBookId || firstBook ? 'select' : 'new'
+  bookId.value = props.lockedBookId || firstBook?._id || ''
+  newBookName.value = bookMode.value === 'new' ? defaultBookName.value : ''
+
+  syncChapterState()
+  pageName.value = getDefaultPageName(key.value, 1, 1)
 }, { immediate: true })
 
-watch(bookId, (value) => {
-  if (!value) return
-  const list = store.chaptersOf(value)
+watch(bookMode, (mode) => {
+  if (props.lockedBookId) return
+  if (mode === 'new') {
+    bookId.value = ''
+    newBookName.value = defaultBookName.value
+    chapterMode.value = 'new'
+    chapterId.value = ''
+    newChapterName.value = defaultChapterName.value
+    return
+  }
+  bookId.value = store.sortedBooks[0]?._id || ''
+  newBookName.value = ''
+  syncChapterState()
+})
+
+watch(bookId, () => {
+  if (bookMode.value === 'select') syncChapterState()
+})
+
+watch(chapterMode, (mode) => {
+  if (props.lockedChapterId) return
+  if (mode === 'new') {
+    chapterId.value = ''
+    newChapterName.value = defaultChapterName.value
+    return
+  }
+  newChapterName.value = ''
+  const list = bookId.value ? store.chaptersOf(bookId.value) : []
   chapterId.value = list[0]?._id || ''
 })
+
 watch([pageSize, splitBy], () => {
-  pageName.value = getDefaultPageName(key.value, 1, chunks.value.length)
+  if (!pageNameTouched.value) {
+    pageName.value = getDefaultPageName(key.value, 1, 1)
+  }
 })
+
+function syncChapterState() {
+  if (props.lockedChapterId) {
+    chapterMode.value = 'select'
+    chapterId.value = props.lockedChapterId
+    newChapterName.value = ''
+    return
+  }
+  const list = bookId.value ? store.chaptersOf(bookId.value) : []
+  if (list.length) {
+    chapterMode.value = 'select'
+    chapterId.value = list[0]._id
+    newChapterName.value = ''
+  } else {
+    chapterMode.value = 'new'
+    chapterId.value = ''
+    newChapterName.value = defaultChapterName.value
+  }
+}
 
 async function confirm() {
   if (!canSave.value || saving.value) return
   saving.value = true
+  let createdBookId = ''
+  let createdChapterId = ''
   try {
-    let targetBookId = bookId.value
-    if (!targetBookId && newBookName.value?.trim()) {
-      const book = await store.createBook(newBookName.value.trim())
-      targetBookId = book._id
+    const retrying = hasRetryTarget.value
+    let targetBookId = retrying ? retryBookId.value : bookId.value
+    if (!retrying && bookMode.value === 'new') {
+      const bookResult = await store.createBook(newBookName.value.trim())
+      if (!bookResult.ok || !bookResult.item) throw new Error(bookResult.message || '创建词集失败')
+      targetBookId = bookResult.item._id
+      createdBookId = targetBookId
     }
-    let targetChapterId = chapterId.value
-    if (!targetChapterId && newChapterName.value?.trim()) {
-      const chapter = await store.createChapter(targetBookId, newChapterName.value.trim())
-      targetChapterId = chapter._id
+
+    if (!retrying && bookMode.value === 'select') {
+      const claimed = await store.claimSampleBook(targetBookId)
+      if (!claimed.ok) throw new Error(claimed.message || '示例转换失败')
     }
-    if (!targetBookId || !targetChapterId) {
-      ElMessage.warning('请选择或新建书与章')
-      return
+
+    let targetChapterId = retrying ? retryChapterId.value : chapterId.value
+    if (!retrying && chapterMode.value === 'new') {
+      const chapterResult = await store.createChapter(targetBookId, newChapterName.value.trim())
+      if (!chapterResult.ok || !chapterResult.item) throw new Error(chapterResult.message || '创建章节失败')
+      targetChapterId = chapterResult.item._id
+      createdChapterId = targetChapterId
     }
+    if (!targetBookId || !targetChapterId) throw new Error('请选择或新建词集与章节')
 
     const source = buildWordBookSource(props.bankId, props.bankName, props.filter)
     const total = chunks.value.length
-    for (let i = 0; i < total; i++) {
-      const words = chunks.value[i].map(toWordBookWord).filter(word => word.text)
+    const indexes = failedIndexes.value.length ? [...failedIndexes.value] : chunks.value.map((_, index) => index)
+    const failures: number[] = []
+    let createdCount = 0
+
+    for (const index of indexes) {
+      const words = chunks.value[index].map(toWordBookWord).filter(word => word.text)
       if (!words.length) continue
-      await store.createPage({
+      const result = await store.createPage({
         bookId: targetBookId,
         chapterId: targetChapterId,
-        name: getDefaultPageName(key.value, i + 1, total),
+        name: buildPageNameFromBase(pageName.value.trim(), index + 1, total),
         key: key.value,
         words,
         source,
       })
+      if (result.ok) createdCount++
+      else failures.push(index)
     }
-    trackEvent('feature', 'word_book_generate', splitBy.value, total)
-    ElMessage.success(`已生成 ${total} 页`)
-    emit('update:modelValue', false)
-    emit('created', { bookId: targetBookId, chapterId: targetChapterId })
+
+    failedIndexes.value = failures
+    if (failures.length) {
+      retryBookId.value = targetBookId
+      retryChapterId.value = targetChapterId
+    }
+    trackEvent('feature', 'word_book_generate', splitBy.value, createdCount)
+
+    if (createdCount && !failures.length) {
+      retryBookId.value = ''
+      retryChapterId.value = ''
+      ElMessage.success(`已生成 ${createdCount} 页`)
+      emit('update:modelValue', false)
+      emit('created', { bookId: targetBookId, chapterId: targetChapterId })
+      return
+    }
+    if (createdCount && failures.length) {
+      ElMessage.warning(`已生成 ${createdCount} 页，${failures.length} 页失败，可继续重试`)
+      return
+    }
+
+    if (createdChapterId) await store.deleteChapter(createdChapterId)
+    if (createdBookId) await store.deleteBook(createdBookId)
+    if (createdChapterId || createdBookId) {
+      retryBookId.value = ''
+      retryChapterId.value = ''
+    }
+    throw new Error('学习页保存失败')
   } catch (e) {
-    console.error('[词图] 生成学习页失败', e)
-    ElMessage.error('生成失败，请重试')
+    console.error('[词集] 生成学习页失败', e)
+    ElMessage.error(e instanceof Error && e.message ? e.message : '生成失败，请重试')
   } finally {
     saving.value = false
   }
@@ -211,6 +328,10 @@ async function confirm() {
     color: var(--utools-text-primary);
     font-size: 15px;
   }
+}
+
+.mode-row {
+  margin-bottom: 8px;
 }
 
 .row {

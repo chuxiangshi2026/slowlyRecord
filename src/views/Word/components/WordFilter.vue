@@ -153,9 +153,9 @@
       <span
         v-if="WORD_BOOK_ENABLED"
         :class="['ftag', 'word-book-action', {disabled: matchCount === 0}]"
-        title="将当前筛选结果按 12 词一页生成词图章节"
+        title="将当前筛选结果加入词集，可继续编辑成学习页"
         @click="matchCount > 0 && emit('create-book')"
-      >生成学习页</span>
+      >加入词集</span>
 
       <!-- 匹配数 / 总数 -->
       <span class="match-count">匹配 {{ matchCount }} / 共 {{ totalCount }}</span>

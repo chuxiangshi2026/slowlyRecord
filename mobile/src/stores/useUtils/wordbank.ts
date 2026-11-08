@@ -45,7 +45,7 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'shopping', name: '日常购物', description: '结账、退换货、优惠券、快递与售后等购物场景常用英文短句', wordCount: 86 },
   { id: 'transport', name: '日常交通出行', description: '地铁公交、打车、坐飞机、读路牌等出行场景常用英文短句', wordCount: 105 },
   { id: 'dining', name: '日常吃饭点餐', description: '堂食点单、打包外带、过敏说明、结账等就餐场景常用英文短句', wordCount: 97 },
-  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀', wordCount: 568 },
+  { id: 'roots', name: '词根词缀', description: '英语常见词根、前缀、后缀与字母组合', wordCount: 576 },
 ]
 
 const CACHE_KEY_PREFIX = 'wordbank_cache_v3_' // v3：词库新增词频字段

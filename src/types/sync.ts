@@ -127,8 +127,9 @@ export interface SyncMemoryPalace {
 /** 完整的同步数据包 */
 import type { WordBookBook, WordBookChapter, WordBookPage } from './word-book'
 
-/** 词图闯关（书 / 章 / 页） */
+/** 词集（书 / 章 / 页）；可选版本号用于未来格式保护 */
 export interface SyncWordBook {
+  schemaVersion?: number
   books: WordBookBook[]
   chapters: WordBookChapter[]
   pages: WordBookPage[]

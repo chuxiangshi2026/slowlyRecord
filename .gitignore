@@ -43,3 +43,8 @@ _shoot.cjs
 
 # 词频脚本的语料缓存（脚本生成，不入库）
 scripts/data/freq/
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*

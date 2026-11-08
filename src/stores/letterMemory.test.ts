@@ -230,13 +230,13 @@ describe('useLetterMemoryStore', () => {
       expect(saveAssociation).toHaveBeenCalledTimes(1)
     })
 
-    it('无参数时应该导入所有字母', async () => {
+    it('无参数时应该导入所有字母与字母组合', async () => {
       const store = useLetterMemoryStore()
       vi.mocked(saveAssociation).mockResolvedValue({ ok: true })
 
       const count = await store.batchImportPresets()
 
-      expect(count).toBe(3) // a, b, c from mocked getAlphabetLetters
+      expect(count).toBe(5) // a, b, c + ch, sh
     })
   })
 })

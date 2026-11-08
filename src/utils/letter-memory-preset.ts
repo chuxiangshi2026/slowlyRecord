@@ -148,67 +148,122 @@ const LETTER_PRESETS: LetterPreset[] = [
   ]},
 ];
 
-// 常见字母组合预设
+// 常见字母组合预设：每组给三个图片/emoji 联想，兼顾拼写与读音
 const COMBO_PRESETS: LetterPreset[] = [
+  { letter: 'old', keyword: '金/gold', suggestions: [
+    { name: '金子', url: '🥇', description: 'OLD-Gold-金（old 读 /əʊld/）' },
+    { name: '寒冷', url: '❄️', description: 'OLD-Cold-冷' },
+    { name: '拿住', url: '🤝', description: 'OLD-Hold-握住' },
+  ]},
+  { letter: 'ea', keyword: '鹰/eagle', suggestions: [
+    { name: '鹰', url: '🦅', description: 'EA-Eagle-鹰（ea 常读 /iː/）' },
+    { name: '海', url: '🌊', description: 'EA-Sea-海' },
+    { name: '吃', url: '🍽️', description: 'EA-Eat-吃' },
+  ]},
+  { letter: 'ee', keyword: '蜜蜂/bee', suggestions: [
+    { name: '蜜蜂', url: '🐝', description: 'EE-Bee-蜜蜂（ee 读 /iː/）' },
+    { name: '树', url: '🌳', description: 'EE-Tree-树' },
+    { name: '脚', url: '🦶', description: 'EE-Feet-脚' },
+  ]},
+  { letter: 'oo', keyword: '月亮/moon', suggestions: [
+    { name: '月亮', url: '🌙', description: 'OO-Moon-月亮（oo 常读 /uː/）' },
+    { name: '食物', url: '🍔', description: 'OO-Food-食物' },
+    { name: '动物园', url: '🦁', description: 'OO-Zoo-动物园' },
+  ]},
+  { letter: 'ai', keyword: '雨/rain', suggestions: [
+    { name: '雨', url: '🌧️', description: 'AI-Rain-雨（ai 读 /eɪ/）' },
+    { name: '火车', url: '🚂', description: 'AI-Train-火车' },
+    { name: '蜗牛', url: '🐌', description: 'AI-Snail-蜗牛' },
+  ]},
+  { letter: 'ay', keyword: '白天/day', suggestions: [
+    { name: '白天', url: '🌞', description: 'AY-Day-白天（ay 读 /eɪ/）' },
+    { name: '玩', url: '🎮', description: 'AY-Play-玩' },
+    { name: '路', url: '🛣️', description: 'AY-Way-路' },
+  ]},
+  { letter: 'oa', keyword: '船/boat', suggestions: [
+    { name: '船', url: '⛵', description: 'OA-Boat-船（oa 读 /əʊ/）' },
+    { name: '外套', url: '🧥', description: 'OA-Coat-外套' },
+    { name: '路', url: '🛣️', description: 'OA-Road-路' },
+  ]},
+  { letter: 'ou', keyword: '房子/house', suggestions: [
+    { name: '房子', url: '🏠', description: 'OU-House-房子（ou 常读 /aʊ/）' },
+    { name: '老鼠', url: '🐭', description: 'OU-Mouse-老鼠' },
+    { name: '嘴巴', url: '👄', description: 'OU-Mouth-嘴巴' },
+  ]},
+  { letter: 'ow', keyword: '奶牛/cow', suggestions: [
+    { name: '奶牛', url: '🐄', description: 'OW-Cow-奶牛（ow 可读 /aʊ/）' },
+    { name: '雪', url: '❄️', description: 'OW-Snow-雪（也可读 /əʊ/）' },
+    { name: '窗户', url: '🪟', description: 'OW-Window-窗户' },
+  ]},
+  { letter: 'igh', keyword: '夜晚/night', suggestions: [
+    { name: '夜晚', url: '🌙', description: 'IGH-Night-夜晚（igh 读 /aɪ/）' },
+    { name: '光', url: '💡', description: 'IGH-Light-光' },
+    { name: '飞行', url: '✈️', description: 'IGH-Flight-飞行' },
+  ]},
   { letter: 'ch', keyword: '椅子/chair', suggestions: [
-    { name: '椅子', url: '🪑', description: 'CH-Chair-椅子' },
+    { name: '椅子', url: '🪑', description: 'CH-Chair-椅子（ch 读 /tʃ/）' },
     { name: '奶酪', url: '🧀', description: 'CH-Cheese-奶酪' },
     { name: '樱桃', url: '🍒', description: 'CH-Cherry-樱桃' },
   ]},
   { letter: 'sh', keyword: '鞋子/shoe', suggestions: [
-    { name: '鞋子', url: '👟', description: 'SH-Shoe-鞋子' },
+    { name: '鞋子', url: '👟', description: 'SH-Shoe-鞋子（sh 读 /ʃ/）' },
     { name: '船', url: '🚢', description: 'SH-Ship-船' },
     { name: '绵羊', url: '🐑', description: 'SH-Sheep-绵羊' },
   ]},
   { letter: 'th', keyword: '拇指/thumb', suggestions: [
-    { name: '拇指', url: '👍', description: 'TH-Thumb-拇指' },
+    { name: '拇指', url: '👍', description: 'TH-Thumb-拇指（th 读 /θ/）' },
     { name: '思考', url: '🤔', description: 'TH-Think-思考' },
-    { name: '王位', url: '🪑', description: 'TH-Throne-王位' },
+    { name: '母亲', url: '👩', description: 'TH-Mother-母亲（th 读 /ð/）' },
   ]},
   { letter: 'ph', keyword: '电话/phone', suggestions: [
-    { name: '电话', url: '📱', description: 'PH-Phone-电话' },
+    { name: '电话', url: '📱', description: 'PH-Phone-电话（ph 读 /f/）' },
     { name: '照片', url: '📷', description: 'PH-Photo-照片' },
-    { name: '海豚', url: '🐬', description: 'PH-Dolphin(Phonics)' },
+    { name: '大象', url: '🐘', description: 'PH-Elephant-大象' },
   ]},
   { letter: 'wh', keyword: '鲸鱼/whale', suggestions: [
-    { name: '鲸鱼', url: '🐋', description: 'WH-Whale-鲸鱼' },
+    { name: '鲸鱼', url: '🐋', description: 'WH-Whale-鲸鱼（wh 读 /w/）' },
     { name: '小麦', url: '🌾', description: 'WH-Wheat-小麦' },
     { name: '轮子', url: '🎡', description: 'WH-Wheel-轮子' },
   ]},
   { letter: 'ck', keyword: '时钟/clock', suggestions: [
-    { name: '时钟', url: '🕐', description: 'CK-Clock-时钟' },
-    { name: '鸭子', url: '🦆', description: 'CK-Duck(ck发音)' },
-    { name: '袜子', url: '🧦', description: 'CK-Sock(ck发音)' },
+    { name: '时钟', url: '🕐', description: 'CK-Clock-时钟（ck 读 /k/）' },
+    { name: '鸭子', url: '🦆', description: 'CK-Duck-鸭子' },
+    { name: '袜子', url: '🧦', description: 'CK-Sock-袜子' },
   ]},
-  { letter: 'ng', keyword: '铃/bell', suggestions: [
-    { name: '铃声', url: '🔔', description: 'NG-Ring(ng发音)' },
-    { name: '歌', url: '🎵', description: 'NG-Song(ng发音)' },
-    { name: '国王', url: '🤴', description: 'NG-King(ng发音)' },
+  { letter: 'ng', keyword: '国王/king', suggestions: [
+    { name: '国王', url: '🤴', description: 'NG-King-国王（ng 读 /ŋ/）' },
+    { name: '铃声', url: '🔔', description: 'NG-Ring-铃声' },
+    { name: '歌', url: '🎵', description: 'NG-Song-歌' },
   ]},
-  { letter: 'oo', keyword: '月亮/moon', suggestions: [
-    { name: '月亮', url: '🌙', description: 'OO-Moon-月亮' },
-    { name: '食物', url: '🍔', description: 'OO-Food-食物' },
-    { name: '动物园', url: '🦁', description: 'OO-Zoo-动物园' },
+  { letter: 'qu', keyword: '女王/queen', suggestions: [
+    { name: '女王', url: '👑', description: 'QU-Queen-女王（qu 读 /kw/）' },
+    { name: '问题', url: '❓', description: 'QU-Question-问题' },
+    { name: '快', url: '⚡', description: 'QU-Quick-快的' },
   ]},
-  { letter: 'ee', keyword: '蜜蜂/bee', suggestions: [
-    { name: '蜜蜂', url: '🐝', description: 'EE-Bee-蜜蜂' },
-    { name: '树', url: '🌳', description: 'EE-Tree-树' },
-    { name: '脚', url: '🦶', description: 'EE-Feet-脚' },
+  { letter: 'kn', keyword: '刀/knife', suggestions: [
+    { name: '刀', url: '🔪', description: 'KN-Knife-刀（k 不发音）' },
+    { name: '敲门', url: '🚪', description: 'KN-Knock-敲（k 不发音）' },
+    { name: '膝盖', url: '🦵', description: 'KN-Knee-膝盖（k 不发音）' },
   ]},
-  { letter: 'ea', keyword: '鹰/eagle', suggestions: [
-    { name: '鹰', url: '🦅', description: 'EA-Eagle-鹰' },
-    { name: '吃', url: '🍽️', description: 'EA-Eat-吃' },
-    { name: '豆子', url: '🫘', description: 'EA-Bean-豆子' },
+  { letter: 'wr', keyword: '手腕/wrist', suggestions: [
+    { name: '手腕', url: '⌚', description: 'WR-Wrist-手腕（w 不发音）' },
+    { name: '包裹', url: '🎁', description: 'WR-Wrap-包裹（w 不发音）' },
+    { name: '写', url: '✍️', description: 'WR-Write-写（w 不发音）' },
   ]},
-  { letter: 'ai', keyword: '雨/rain', suggestions: [
-    { name: '雨', url: '🌧️', description: 'AI-Rain-雨' },
-    { name: '火车', url: '🚂', description: 'AI-Train-火车' },
-    { name: '蜗牛', url: '🐌', description: 'AI-Snail-蜗牛' },
+  { letter: 'mb', keyword: '攀登/climb', suggestions: [
+    { name: '攀登', url: '🧗', description: 'MB-Climb-攀登（b 不发音）' },
+    { name: '炸弹', url: '🧨', description: 'MB-Bomb-炸弹（b 不发音）' },
+    { name: '羔羊', url: '🐑', description: 'MB-Lamb-羔羊（b 不发音）' },
   ]},
-  { letter: 'ou', keyword: '房子/house', suggestions: [
-    { name: '房子', url: '🏠', description: 'OU-House-房子' },
-    { name: '老鼠', url: '🐭', description: 'OU-Mouse-老鼠' },
-    { name: '嘴巴', url: '👄', description: 'OU-Mouth-嘴巴' },
+  { letter: 'tch', keyword: '厨房/kitchen', suggestions: [
+    { name: '厨房', url: '🍳', description: 'TCH-Kitchen-厨房（tch 读 /tʃ/）' },
+    { name: '接住', url: '🧤', description: 'TCH-Catch-接住' },
+    { name: '开关', url: '🔘', description: 'TCH-Switch-开关' },
+  ]},
+  { letter: 'dge', keyword: '桥/bridge', suggestions: [
+    { name: '桥', url: '🌉', description: 'DGE-Bridge-桥（dge 读 /dʒ/）' },
+    { name: '冰箱', url: '🧊', description: 'DGE-Fridge-冰箱' },
+    { name: '法官', url: '⚖️', description: 'DGE-Judge-法官' },
   ]},
 ];
 
@@ -261,7 +316,7 @@ export function getComboLetters(): string[] {
  * 获取所有预设字母/组合列表
  */
 export function getAllPresetLetters(lang: string = 'en'): string[] {
-  return [...getAlphabetLetters(lang), ...getComboLetters()];
+  return [...getAlphabetLetters(lang), ...(lang === 'en' ? getComboLetters() : [])];
 }
 
 /**

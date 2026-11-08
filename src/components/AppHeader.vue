@@ -118,15 +118,24 @@ const pageTitle = computed(() => (route.meta?.title as string) || '慢记');
 const goSign = () => router.push('/sign');
 const goWord = () => router.push('/word');
 
-// 返回：优先回到来源页面（query.from）；关键词入口进入（query.entry）时回对应模块首页；
-// 否则回单词列表
+// 词集子页统一返回模块内上一页；从外部直接进入时先回词集首页。
 const goBack = () => {
+  if (String(route.name).startsWith('wordBook')) {
+    const previous = window.history.state?.back;
+    if (route.name === 'wordBookBooks') {
+      goWord();
+    } else if (typeof previous === 'string' && previous.startsWith('/word-book')) {
+      router.back();
+    } else {
+      router.push('/word-book');
+    }
+    return;
+  }
   const from = route.query.from as string;
   if (from) {
     router.push(from);
     return;
   }
-  // 关键词入口进入的会话：返回回该模块首页而非单词页
   if (route.query.entry === 'textMemory') {
     router.push('/text-memory');
     return;

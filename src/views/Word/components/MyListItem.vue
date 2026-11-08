@@ -743,18 +743,24 @@ const deleteWord = () => {
 
 /* 词根 - 红色加粗 */
 .word-root {
-  color: #e74c3c;
+  color: var(--utools-danger);
   font-weight: bold;
 }
 
-/* 前缀 - 蓝色 */
+/* 前缀 - 主题绿 */
 .word-prefix {
-  color: #3498db;
+  color: var(--utools-primary);
 }
 
 /* 后缀 - 绿色 */
 .word-suffix {
-  color: #27ae60;
+  color: var(--utools-success);
+}
+
+/* 合成词 - 橙色 */
+.word-compound {
+  color: var(--utools-warning);
+  font-weight: 600;
 }
 
 /* 子单词 - 默认色 */

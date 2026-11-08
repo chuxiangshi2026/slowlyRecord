@@ -1,6 +1,7 @@
 # 词图闯关重构 + 词频能力 实施计划（2026-11-02）
 
-> 状态：待确认，未动代码。
+> 状态：已完成；2026-11-03 按最终实现与许可口径修订。
+> 后续重设计：见 [词集重设计实施计划](word-collection-redesign-plan-2026-11-03.md)（词集、uTools 优先）。
 > 范围：桌面（uTools/Electron/Web）+ 移动端（微信/抖音小程序、App）。
 
 ## 1. 目标
@@ -15,9 +16,9 @@
 
 ```
 书「四级词根」
-├─ 章「词根 old」            ← 主题，可改名
-│  ├─ 页「old 篇」           ← 记忆单元（中心 old + N 个词）
-│  └─ 页「old 篇 ②」         ← 词多时按规则切开
+├─ 章「词根 port」            ← 主题，可改名
+│  ├─ 页「port 篇」           ← 记忆单元（中心 port + N 个词）
+│  └─ 页「port 篇 ②」         ← 词多时按规则切开
 └─ 章「词根 spect」
 书「四级发音」
 ├─ 章「/əʊ/」
@@ -50,54 +51,54 @@ level: 0-12
 命名默认值（三级都可改）：
 
 - 书：`{词库简称} · {维度}` → 「四级 · 词根」
-- 章：`第 N 章`，带筛选键时 `{维度} {key}` → 「词根 old」
+- 章：`第 N 章`，带筛选键时 `{维度} {key}` → 「词根 port」
 - 页：单页 `{key} 篇`，多页 `{key} 篇 ①/②`
 
 ## 4. 词频能力
 
-### 4.1 数据源与授权（简化版）
+### 4.1 数据源与授权
 
-内置词库当前只有 `word / phonetic / explains`（`public/wordbanks/cet4.json` 实证）。按"简单点、大体对"的原则：
+内置词库的 `freq` 来自 **hermitdave/FrequencyWords** 的 OpenSubtitles 2018 词频表：
 
-- 直接取 **wordfreq** 的 Zipf 值与 lemma 映射，生成一份**紧凑词频表**（Top 5 万词，词 → Zipf 十分位整数）
-- 词频表不进仓库大文件：生成产物放 `scripts/data/`（脚本生成，按需重建）
-- 在根 `NOTICE` 里加一行署名（wordfreq / CC-BY-SA），不做更细的授权评估
-- COCA / SUBTLEX 不采用（不可分发）
+- 使用英语、日语、俄语、西班牙语、法语的对应语言词表，日语使用 `ja_full.txt`，其余使用 `*_50k.txt`
+- 原始词表缓存到 `scripts/data/freq/`，不入库，执行脚本时按需下载
+- 根 `NOTICE` 保留来源、版权与完整 MIT 许可；`public/NOTICE` 与 `mobile/public/NOTICE` 携带同一声明进入双端构建产物
+- COCA / SUBTLEX 不采用
 
 ### 4.2 字段与口径
 
-- 统一存 **Zipf 值**（0–8，越大越常见，保留 1 位小数）：`freq?: number`
-- 可选 `freqRank?: number` 仅内置词库用于展示「第 N 常用」
-- 词组/搭配：取**组成词的最低频**（已定）
-- 屈折形式：**按 lemma 归并**（holding → hold），否则筛出来的词频偏低（已定）
-- 小语种词库必须用对应语言表，不能套英语
-- 用户自建/翻译新增词：写入时查表补一次，查不到留空（不要写 0）
+- 统一存**语料排名**（正整数，越小越常见）：`freq?: number`，不使用 Zipf 值，也不另存 `freqRank`
+- 词组/搭配：取已命中组成词的**最大排名**，即其中最不常见的词；全部未命中时留空
+- 屈折形式：按词表原词直接查询，**不做 lemma 归并**，查不到留空（不要写 0）
+- 小语种词库使用对应语言表，不能套英语
+- 用户自建/翻译新增词：写入时查表补一次，查不到留空
 
 ### 4.3 补数据脚本
 
 `scripts/add-word-frequency.cjs`
 
-- 输入：词频表（紧凑格式，词 → Zipf 百分位整数），`public/wordbanks/*.json` 57 个文件 75,999 词
-- 输出：原地补 `freq`（幂等，已有则跳过）
+- 输入：下载的原始词频文本，每行形如 `词 次数`，按行号生成排名
+- 输出：桌面 `public/wordbanks/*.json` 与移动端 `mobile/wordbank-json/*.json` 原地补 `freq`；已有值默认跳过，`--force` 全部重算
 - 体积评估：约 +0.9 MB（+10%），影响首次下载与 PWA 缓存，需要升词库版本
-- 移动端内置词库按同一脚本二次处理（移动端词库清单在 `mobile/src/stores/useUtils/wordbank.ts`）
+- 双端词库由同一脚本一次处理，移动端词库清单在 `mobile/src/stores/useUtils/wordbank.ts`
 
 ### 4.4 展示与排序
 
-- 单词列表（`src/views/Word/components/MyListItem.vue`）：在单词旁显示常用度（建议 5 点/5 星，tooltip 显示精确值），缺 `freq` 不显示
+- 单词列表（`src/views/Word/components/MyListItem.vue`）：在单词旁显示 `#排名` 标记，缺 `freq` 不显示
 - 筛选排序（`WordFilter.vue` `sortOptions`）：新增「词频」；**同时要改三处**才能一致——`Word.vue` 的排序 switch、`public/focus.html` 的排序 switch（专注模式复用同一批 URL 参数）、移动端 `pages/words/words.vue` 的 `sortOptions` 与排序逻辑
 - 缺 `freq` 的词排序时置底，不能当 0（否则全冒到顶部）
-- 可选：筛选面板加「常用度 ≥ N」区间过滤
+- 可选：筛选面板加「常用度 ≥ N」区间过滤（未实现）
 
 ### 4.5 用于词图分页
 
-章上 `splitBy: 'order' | 'length' | 'alpha' | 'freq'`，`pageSize` 默认 12（上限 20，受放射图节点数限制）。`freq` 缺失时降级为 `order`。
+章上 `splitBy: 'order' | 'length' | 'alpha' | 'freq'`，`pageSize` 默认 12（上限 20，受放射图节点数限制）。按 `freq` 分页时排名升序排列，缺 `freq` 的词置底。
 
 ## 5. 内置示例
 
-- 源数据：`public/wordbook-samples/*.json`（桌面），移动端经 `mobile/scripts/convert-wordbook-samples.cjs` 转成 `.ts` 打进 `pages-memory` 分包（与知识包同套路，禁止运行时 fetch/动态 import）
-- 生成脚本：`scripts/gen-wordbook-samples.cjs`，从现有词库按词根/音标筛出，保留原释义音标与 `freq`
-- 内容：书「四级词根」→ 章 old / spect / pre；书「四级发音」→ 章 /əʊ/ /eɪ/
+- 源数据：`public/wordbanks/cet4.json`，不运行时 fetch JSON
+- 生成脚本：`scripts/gen-wordbook-samples.cjs`；词根/前缀使用人工审核白名单，音标按音素筛选，保留原释义、音标与 `freq`
+- 输出：直接生成 `src/utils/wordbook-samples.ts` 与 `mobile/src/utils/wordbook-samples.ts`，双端内容一致，均使用静态 import
+- 内容：书「四级词根」→ 章 port / spect / pre；书「四级发音」→ 章 /əʊ/ /eɪ/
 - 播种：首启异步播种（不阻塞首屏），书标 `isSample`；记录已播种版本，用户删除后不复活
 - 页内提供「怎么用」入口：筛选 → 选书章 → 生成页 → 页面上逐词标记
 
@@ -105,7 +106,7 @@ level: 0-12
 
 1. **入口**：词图首页「＋ 添加内容」→ 跳单词页并**自动打开筛选面板**（桌面 `?filter=1` + `Word.vue` 读 query；移动端 `switchTab` 不能带参，用一次性标记在 `onShow` 消费）。
 2. **生成**：筛选面板「生成学习页」→ 弹窗：书（下拉/新建）→ 章（下拉/新建）→ 页名（默认 `{key} 篇`）→ 生成；从某章「＋」进入时书章预选锁定。
-3. **重复检测**：同书同章已有同 `key` 页时提示「已存在 old 篇（23 词）：追加 / 新建 / 取消」。
+3. **重复检测**：同书同章已有同 `key` 页时提示「已存在 port 篇（8 词）：追加 / 新建 / 取消」。
 4. **记忆页**：单页完成，不设独立逐词模式。中心节点 = `key`，分支 = 单词（共享部分高亮），每卡一个「✓ 记住了」；顶部两个开关「遮住释义」「打乱顺序」；进度 `已记住 7/12`。
 5. **复习**：一轮结束按得分升降级（复用现有规则），`nextReviewAt = now + DEFAULT_INTERVALS[level]`；词图首页展示「今日到期 N 篇」。页级标记**不写回**词库 SRS。
 6. **关卡**：章内每 `levelSize` 页一组，展示进度与达成标记，不阻塞进入。
@@ -133,13 +134,12 @@ level: 0-12
 
 - `scripts/add-word-frequency.cjs`
 - `scripts/gen-wordbook-samples.cjs`
-- `mobile/scripts/convert-wordbook-samples.cjs`
 
 ## 8. 影响面分析（对现有功能）
 
 | 改动 | 影响 | 风险等级 | 处理 |
 |---|---|---|---|
-| `Word` 加 `freq?` | 词库 JSON 体积 +10%（8.6 MB → 约 9.5 MB），首次下载变慢 | 中 | 只存内部整数/一位小数；升词库版本 |
+| `Word` 加 `freq?` | 词库 JSON 体积 +10%（8.6 MB → 约 9.5 MB），首次下载变慢 | 中 | 只存正整数排名；升词库版本 |
 | 内置词库缓存 | 老缓存没有 `freq`，用户永远看不到新字段 | 高 | 缓存加版本号，版本变更强制重下 |
 | 排序新增 `freq` | **三处排序实现**（Word.vue / focus.html / 移动端）不同步会导致专注模式排序静默失效 | 高 | 三处同批改，加测试 |
 | 导入导出 | 导出带 `freq` 会改动模板 | 中 | **JSON 默认带 `freq`；CSV 末尾追加可选 `freq` 列（按表头识别，旧文件仍可导入）；TXT/Anki 保持原格式**（已定） |
@@ -151,19 +151,19 @@ level: 0-12
 | 删除语义 | 删书级联删章页 | 中 | 二次确认，明示不影响词库 |
 | 专注模式 | 读取 URL 里的 `sortBy`，新增取值要兼容旧值 | 低 | default 分支已有 |
 | 打卡/连续天数 | 词图完成页计入打卡/成就 | 低 | **计入**（已定），沿用现有打卡写入路径 |
-| 移动端分包 | 示例数据进 `pages-memory`，微信禁止动态 import | 低 | 静态 import，同知识包做法 |
+| 移动端分包 | 示例数据若进主包会增加主包体积，微信禁止动态 import | 低 | 当前约 8 KB 的压缩示例数据静态 import 到主包 `chunks/utils/`；数据增大后再迁入 `pages-memory` |
 
 ## 9. 其他需要提前考虑
 
-1. 词频授权与署名（`NOTICE`），商用分发前确认。
+1. 词频授权与署名：根 `NOTICE` 与双端公开资源目录均已保留 FrequencyWords 的来源、版权和完整 MIT 许可。
 2. 词频表版本与更新：换语料后内置词库可重下，**用户自建词库无法回填**，只能对新增词补。
-3. 词频表体积：只保留 Top 5 万词；小程序主包 2 MB 限制，词频表只能进分包或随词库下发。
+3. 词频表体积：原始词表不进入小程序包，运行时词库只带派生的 `freq` 排名字段。
 4. 页大小上限与放射图：>20 节点需要分圈或缩放，默认 12 上限 20。
 5. 空页/重复页：同一 `key` 重复生成要提示；生成 0 词禁用按钮（已有）。
 6. 关卡落库（已定）：章上记录 `levels: [{index, completedAt}]`，先只记录不做奖励。
 7. 埋点事件命名与既有 `FeatureEvents` 保持一致（`feature.word_book_create` 等）。
 8. 词条快照刷新：词库释义改了，页里仍是旧值；建议后续加「从词库刷新本页释义」。
-9. 导出/同步（已定）：词图进 `collectSyncData` 与「导出备份」；词库导出文件不带 `freq`，同步保留。
+9. 导出/同步（已定）：词图进 `collectSyncData` 与「导出备份」；词库 JSON/CSV 导出带 `freq`，TXT/Anki 不带，同步保留。
 10. 键盘/无障碍：词图节点较多，至少保证 Tab 可达与 aria-label。
 
 ## 10. 验收点
@@ -183,9 +183,9 @@ level: 0-12
 
 | 议题 | 决定 |
 |---|---|
-| 词频数据源 | wordfreq 精简表，NOTICE 署名，从简 |
-| 词组词频 | 取组成词最低频 |
-| 屈折形式 | 按 lemma 归并 |
+| 词频数据源 | hermitdave/FrequencyWords（MIT），存语料排名，双端发布产物携带完整 NOTICE |
+| 词组词频 | 取已命中组成词的最大排名，全部未命中则留空 |
+| 屈折形式 | 按原词直接查询，不做 lemma 归并 |
 | 关卡 | 落库记录达成时间，先不做奖励 |
 | 词图导出/同步 | 进同步与导出备份 |
 | 打卡 | 页完成计入 |
@@ -213,7 +213,7 @@ level: 0-12
 | 0 | 隐藏旧词图入口 + 打包发版 | 4 处入口 + 1 个开关 | 0.5 天 |
 | 1 | 词频链路（词频表脚本、57 个词库回填、缓存版本、列表展示、三端排序、导入导出） | 脚本 2 + 词库数据 + 8~10 个源文件 | 1 天 |
 | 2 | 词图三级结构（类型/DB/Store/路由/页面/生成流程/页级 SRS/关卡记录/删除级联） | 桌面 14 + 移动端 8 | 2~3 天 |
-| 3 | 示例书 + 同步 + 导出备份 + 打卡 + 埋点 | 脚本 3 + 同步/类型/统计 | 1 天 |
+| 3 | 示例书 + 同步 + 导出备份 + 打卡 + 埋点 | 脚本 1 + 同步/类型/统计 | 1 天 |
 
 依赖关系：批次 1 是批次 2 分页规则与示例书的前置；批次 2 完成后才能打开入口；批次 3 可与批次 2 并行收尾。
 
@@ -238,9 +238,10 @@ level: 0-12
 
 ### 批次 3（示例 / 同步 / 打卡 / 埋点）—— 已完成
 
-- 示例书：`scripts/gen-wordbook-samples.cjs` 从四级词库按词根/前缀/音标生成双端共用的 `wordbook-samples.ts`（2 本书 / 5 章 / 8 页）；进入词图页时懒播种，`sr_wordbook_samples_v1` 标记保证删除后不复活
+- 示例书：`scripts/gen-wordbook-samples.cjs` 从四级词库生成双端共用的 `wordbook-samples.ts`；词根/前缀使用人工审核白名单，音标按音素筛选（2 本书 / 5 章 / 7 页）；进入词图页时懒播种，`sr_wordbook_samples_v1` 标记保证删除后不复活
+- 许可：FrequencyWords 的来源、版权与完整 MIT 许可已写入根 `NOTICE`，并同步到 `public/NOTICE`、`mobile/public/NOTICE` 随双端产物分发
 - 同步：`SyncWordBook`（书/章/页）加入 `SyncData`，收集与还原按 `_id` 合并、`utime` 较新覆盖；导出备份因此自动包含词图
 - 打卡：完成一页即调用打卡 store 的 `signToday()`（双端）
 - 埋点：`feature.word_book_generate`（生成页数）、`feature.word_book_page_done`（页级完成）
 - 顺手修：`trackEvent`/`currentUrl` 在非浏览器上下文会因 `window` 未定义抛错，已加兜底
-- 验证：示例播种实测（2 书 / 5 章 / 8 页、旧 7 词、中心 old/词根、刷新不重复）；全量 174 文件 / 3047 用例通过；双端构建通过
+- 验证：示例播种测试覆盖 2 书 / 5 章 / 7 页、port 8 词、pre 12 词、错误字符串匹配词条回归与刷新不重复；全量 174 文件 / 3048 用例通过；桌面与小程序构建通过，NOTICE 均已进入构建产物

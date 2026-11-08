@@ -164,7 +164,8 @@ export const useLetterMemoryStore = defineStore("letterMemory", () => {
    * 批量导入预设（跳过已存在的映射）
    */
   async function batchImportPresets(letters?: string[]) {
-    const targets = letters || getAlphabetLetters(getActiveLanguage());
+    const lang = getActiveLanguage();
+    const targets = letters || [...getAlphabetLetters(lang), ...(lang === 'en' ? getComboLetters() : [])];
     let importedCount = 0;
 
     for (const letter of targets) {

@@ -80,8 +80,8 @@ const DB_KEY_KNOWLEDGE_MEMORY = 'knowledge_memory_';
 const DB_KEY_MEMORY_PALACE = 'memory_palace_';
 
 /**
- * 词图闯关：「书 → 章 → 页」三级结构已重构完成，桌面端开放入口。
- * 移动端仍是旧实现，待重构完成后再打开（见 mobile/src/utils/feature-flags.ts）。
+ * 词集：「书 → 章 → 页」结构在桌面端重设计中，桌面端开放入口。
+ * 移动端旧入口暂停开放，待数据格式稳定后再移植（见 mobile/src/utils/feature-flags.ts）。
  */
 const WORD_BOOK_ENABLED = true;
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
- * 生成内置示例书（词图闯关「装完即练」的样板内容）
+ * 生成内置示例词集（词集「装完即可用」的样板内容）
  *
- * 从四级词库按词根 / 前缀 / 音标筛出示例词，生成双端共用的 TS 模块：
+ * 按「词根册 / 词缀册 / 拼写组合册 / 场景名词」组织示例页，从内置词库取词，
+ * 生成双端共用的 TS 模块：
  *   src/utils/wordbook-samples.ts
  *   mobile/src/utils/wordbook-samples.ts
  *
@@ -12,68 +13,993 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 const ROOT = path.resolve(__dirname, '..')
-const BANK = path.join(ROOT, 'public/wordbanks/cet4.json')
-const TAKE = 24
+const BANK_NAMES = ['cet4', 'cet6', 'kaoyan', 'level4', 'level8']
 
-const words = JSON.parse(fs.readFileSync(BANK, 'utf8'))
-
-function pick(predicate) {
-  return words
-    .filter(item => typeof item.word === 'string' && predicate(item.word.toLowerCase(), item))
-    .sort((a, b) => (a.freq || 999999) - (b.freq || 999999))
-    .slice(0, TAKE)
-    .map(item => ({
-      text: item.word,
-      explains: item.explains || '',
-      ...(item.phonetic ? { phonetic: item.phonetic } : {}),
-      ...(typeof item.freq === 'number' ? { freq: item.freq } : {}),
-    }))
+const wordMap = new Map()
+for (const name of BANK_NAMES) {
+  const file = path.join(ROOT, `public/wordbanks/${name}.json`)
+  if (!fs.existsSync(file)) continue
+  for (const item of JSON.parse(fs.readFileSync(file, 'utf8'))) {
+    const key = String(item.word || '').toLowerCase()
+    if (key && !wordMap.has(key)) wordMap.set(key, item)
+  }
 }
+
+/** 词条备注：点开单词详情时展示构词关系，不做成单独页面 */
+const WORD_NOTES = {
+  import: 'im-（向内）+ port（搬运）→ 运进来',
+  export: 'ex-（向外）+ port（搬运）→ 运出去',
+  report: 're-（回）+ port（带）→ 把消息带回来',
+  reporter: 'report + -er（人）→ 记者',
+  transport: 'trans-（横跨）+ port（搬运）→ 运输',
+  transportation: 'transport + -ation（名词后缀）→ 运输',
+  support: 'sup-（从下往上）+ port（托）→ 支持',
+  portable: 'port + -able（可…的）→ 可携带的',
+  porter: 'port + -er（人）→ 搬运工',
+  inspect: 'in-（向内）+ spect（看）→ 往里检查',
+  respect: 're-（反复）+ spect（看）→ 反复看→尊敬',
+  prospect: 'pro-（向前）+ spect（看）→ 前景',
+  perspective: 'per-（穿过）+ spect（看）→ 看问题的角度',
+  inspection: 'inspect + -ion（名词后缀）→ 检查',
+  spectator: 'spect + -ator（人）→ 观看者',
+  predict: 'pre-（预先）+ dict（说）→ 预言',
+  dictionary: 'dict（说）+ -ion + -ary → 词语的集合',
+  contradict: 'contra-（相反）+ dict（说）→ 反驳',
+  contradiction: 'contradict + -ion（名词后缀）→ 矛盾/反驳',
+  dictation: 'dictate + -ion（名词后缀）→ 听写',
+  dictate: 'dict（说）+ -ate → 口述/命令',
+  vision: 'vis（看）+ -ion → 视力/愿景',
+  visible: 'vis（看）+ -ible（可…的）→ 可见的',
+  visit: 'vis（看）+ -it → 去看',
+  revise: 're-（再）+ vis（看）→ 再看一遍→修订',
+  advise: 'ad-（向）+ vis（看）→ 提出看法→建议',
+  invisible: 'in-（不）+ vis（看）+ -ible → 看不见的',
+  visual: 'vis（看）+ -ual → 视觉的',
+  video: 'vid（看）+ -eo → 看见的画面',
+  evidence: 'e-（出）+ vid（看）+ -ence → 看得见的证据',
+  evident: 'e-（出）+ vid（看）+ -ent → 明显的',
+  provide: 'pro-（向前）+ vid（看）→ 预先准备→提供',
+  audience: 'audi（听）+ -ence → 听众',
+  audio: 'audi（听）+ -o → 音频',
+  auditorium: 'audi（听）+ -orium（场所）→ 礼堂',
+  audible: 'audi（听）+ -ible（可…的）→ 听得见的',
+  audition: 'audi（听）+ -ition → 试听/试镜',
+  biology: 'bio（生命）+ -logy（学科）→ 生物学',
+  biography: 'bio（生命）+ -graphy（写）→ 写生平→传记',
+  biological: 'biology + -ical → 生物的',
+  biologist: 'biology + -ist（人）→ 生物学家',
+  autobiography: 'auto-（自己）+ biography（传记）→ 自传',
+  geography: 'geo（土地）+ -graphy（写）→ 描写大地→地理',
+  geometry: 'geo（土地）+ -metry（测量）→ 测量土地→几何',
+  geology: 'geo（土地）+ -logy（学科）→ 地质学',
+  geologist: 'geology + -ist（人）→ 地质学家',
+  geographical: 'geography + -ical → 地理的',
+  photograph: 'photo（光）+ graph（写）→ 用光记录→照片',
+  paragraph: 'para-（旁边）+ graph（写）→ 写在旁边→段落',
+  graph: 'graph（写、画）→ 写下的图',
+  phonetic: 'phon（声音）+ -etic → 语音的',
+  telephone: 'tele-（远）+ phon（声音）→ 远处的声音',
+  microphone: 'micro-（小）+ phon（声音）→ 把声音放大',
+  phone: 'phon（声音）+ -e → 电话',
+  symphony: 'sym-（共同）+ phon（声音）→ 声音一起响→交响乐',
+  project: 'pro-（向前）+ ject（投）→ 向前投→项目/投射',
+  reject: 're-（回）+ ject（投）→ 扔回去→拒绝',
+  inject: 'in-（向内）+ ject（投）→ 投入→注射',
+  subject: 'sub-（在下）+ ject（投）→ 置于其下→主题/臣民',
+  object: 'ob-（对着）+ ject（投）→ 对着投→物体/反对',
+  eject: 'e-（出）+ ject（投）→ 投出去→弹出',
+  objection: 'object + -ion（名词后缀）→ 反对',
+  produce: 'pro-（向前）+ duc（引导）→ 引出→生产',
+  introduce: 'intro-（向内）+ duc（引导）→ 引进→介绍',
+  reduce: 're-（回）+ duc（引导）→ 引回→减少',
+  conduct: 'con-（共同）+ duct（引导）→ 引导→指挥/实施',
+  product: 'pro-（向前）+ duct（引导）→ 生产出来的东西',
+  introduction: 'introduce + -tion（名词后缀）→ 介绍',
+  production: 'produce + -tion（名词后缀）→ 生产',
+  conductor: 'conduct + -or（人）→ 指挥/乘务员',
+  reduction: 'reduce + -tion（名词后缀）→ 减少',
+  admit: 'ad-（向）+ mit（送）→ 送进去→准许进入',
+  submit: 'sub-（在下）+ mit（送）→ 呈交',
+  transmit: 'trans-（横跨）+ mit（送）→ 传送',
+  permit: 'per-（通过）+ mit（送）→ 放行→允许',
+  committee: 'com-（共同）+ mit（派）+ -ee（被…的人）→ 被派去办事的人',
+  commit: 'com-（共同）+ mit（送）→ 交付/承诺',
+  mission: 'miss（送）+ -ion → 被派出的任务',
+  dismiss: 'dis-（离开）+ miss（送）→ 送走→解散',
+  permission: 'per-（通过）+ miss（送）+ -ion → 许可',
+  missile: 'miss（送）+ -ile（物）→ 被投掷的东西→导弹',
+  transmission: 'trans-（横跨）+ miss（送）+ -ion → 传送',
+  admission: 'ad-（向）+ miss（送）+ -ion → 准许进入',
+  offer: 'of-（向前）+ fer（带）→ 带到面前→提供',
+  prefer: 'pre-（在前）+ fer（带）→ 更看重→更喜欢',
+  transfer: 'trans-（横跨）+ fer（带）→ 转移',
+  conference: 'con-（共同）+ fer（带）+ -ence → 带到一起→会议',
+  differ: 'dif-（分开）+ fer（带）→ 分开带→不同',
+  refer: 're-（回）+ fer（带）→ 带回去→提及/参考',
+  suffer: 'suf-（在下）+ fer（承受）→ 在下面承受→受苦',
+  attract: 'at-（向）+ tract（拉）→ 拉过来→吸引',
+  attractive: 'attract + -ive（形容词后缀）→ 有吸引力的',
+  contract: 'con-（共同）+ tract（拉）→ 拉紧→合同/收缩',
+  extract: 'ex-（出）+ tract（拉）→ 拉出来→提取',
+  tractor: 'tract（拉）+ -or（物）→ 拖拉机',
+  abstract: 'abs-（离开）+ tract（拉）→ 拉开→抽象的',
+  distract: 'dis-（分开）+ tract（拉）→ 拉开→分心',
+  structure: 'struct（建造）+ -ure → 建造出来的结构',
+  construct: 'con-（共同）+ struct（建造）→ 建造',
+  instruct: 'in-（在内）+ struct（搭建）→ 在头脑里搭建→指导',
+  destruction: 'de-（向下）+ struct（建造）+ -ion → 拆毁',
+  construction: 'construct + -ion（名词后缀）→ 建造',
+  instruction: 'instruct + -ion（名词后缀）→ 指导/说明',
+  obstruct: 'ob-（对着）+ struct（建造）→ 挡住→阻碍',
+  position: 'posit（放）+ -ion → 放的位置',
+  compose: 'com-（共同）+ pos（放）→ 放到一起→组成',
+  expose: 'ex-（出）+ pos（放）→ 放出去→暴露',
+  deposit: 'de-（向下）+ pos（放）→ 放下→存款/沉淀',
+  dispose: 'dis-（分开）+ pos（放）→ 分开摆放→处理/丢弃',
+  oppose: 'op-（对着）+ pos（放）→ 放在对面→反对',
+  propose: 'pro-（向前）+ pos（放）→ 放到前面→提议',
+  inform: 'in-（向内）+ form（形状）→ 给头脑定形→通知',
+  perform: 'per-（彻底）+ form（形状）→ 彻底成型→表演/执行',
+  form: 'form（形状）→ 形式/形成',
+  reform: 're-（重新）+ form（形状）→ 重新塑形→改革',
+  formal: 'form（形状）+ -al → 正式的',
+  transform: 'trans-（改变）+ form（形状）→ 变形',
+  uniform: 'uni-（一）+ form（形状）→ 同一形状→制服/统一的',
+  information: 'inform + -ation（名词后缀）→ 信息',
+  generate: 'gen（产生）+ -erate → 产生',
+  generation: 'generate + -ion → 一代',
+  genius: 'gen（出生）+ -ius → 与生俱来的天赋',
+  generous: 'gen（出身）+ -ous → 出身好→慷慨的',
+  general: 'gen（种类）+ -al → 一般的/普遍的',
+  gene: 'gen（产生）+ -e → 基因',
+  act: '拉丁 agere（做、驱动）→ 行动',
+  action: 'act + -ion（名词后缀）→ 行动/作用',
+  active: 'act + -ive（形容词后缀）→ 活跃的',
+  activity: 'active + -ity（名词后缀）→ 活动',
+  actor: 'act + -or（人）→ 演员',
+  react: 're-（回）+ act（做）→ 反应',
+  reaction: 'react + -ion（名词后缀）→ 反应',
+  exact: 'ex-（出）+ act（做）→ 做得精确的',
+  actual: 'act + -ual → 实际发生的',
+  interact: 'inter-（相互）+ act（做）→ 互动',
+  interaction: 'interact + -ion（名词后缀）→ 相互作用',
+  interactive: 'interact + -ive（形容词后缀）→ 交互式的',
+  interconnect: 'inter-（相互）+ connect（连接）→ 互相连接',
+  internet: 'inter-（之间）+ net（网）→ 互联网',
+  international: 'inter-（之间）+ national（国家的）→ 国际的',
+  interface: 'inter-（之间）+ face（面）→ 界面',
+  interpersonal: 'inter-（之间）+ personal（个人的）→ 人际的',
+  interview: 'inter-（相互）+ view（看）→ 面对面交谈',
+  internal: 'inter-（在内）+ -al → 内部的',
+}
+
+
+/** 重点词的例句与记忆点：优先覆盖核心词根、派生链和高频词缀词 */
+const WORD_DETAILS = {
+  act: { en: 'She acted quickly to help the child.', zh: '她迅速行动去帮助那个孩子。', tip: 'act = 做；actor 是做戏的人。' },
+  action: { en: 'We need action, not just words.', zh: '我们需要行动，而不只是空话。', tip: 'act + -ion → 做出来的事。' },
+  exact: { en: 'Can you tell me the exact time?', zh: '你能告诉我确切的时间吗？', tip: 'ex-（出）+ act（做）→ 做到点子上。' },
+  actor: { en: 'He is a famous actor.', zh: '他是一位著名演员。', tip: 'act + -or（人）→ 演戏的人。' },
+  actual: { en: 'The actual cost was higher.', zh: '实际费用更高。', tip: 'act + -ual → 实际发生的。' },
+  reaction: { en: 'Her reaction surprised everyone.', zh: '她的反应让所有人吃惊。', tip: 're-（回）+ act + -ion。' },
+  activity: { en: 'The school offers many activities.', zh: '学校提供许多活动。', tip: 'active + -ity → 活动。' },
+  active: { en: 'She stays active every day.', zh: '她每天都很活跃。', tip: 'act + -ive → 活跃的。' },
+  react: { en: 'How did he react to the news?', zh: '他对这个消息有什么反应？', tip: 're-（回）+ act → 反应。' },
+  form: { en: 'Please fill in this form.', zh: '请填写这张表格。', tip: 'form = 形状/形式。' },
+  information: { en: 'I need more information.', zh: '我需要更多信息。', tip: 'in + form：把内容放进头脑形成形状。' },
+  perform: { en: 'They will perform on stage tonight.', zh: '他们今晚将在台上表演。', tip: 'per-（彻底）+ form → 完全做出来。' },
+  inform: { en: 'Please inform me of any changes.', zh: '如有变化请通知我。', tip: 'in + form → 给头脑定形。' },
+  formal: { en: 'This is a formal meeting.', zh: '这是一次正式会议。', tip: 'form + -al → 正式的。' },
+  reform: { en: 'The government plans to reform the system.', zh: '政府计划改革这个制度。', tip: 're-（重新）+ form → 重新塑形。' },
+  transform: { en: 'The city has transformed in ten years.', zh: '这座城市十年间变了样。', tip: 'trans-（改变）+ form → 变形。' },
+  report: { en: 'She gave a short report on the project.', zh: '她就这个项目做了简短汇报。', tip: 're-（回）+ port（带）→ 把消息带回来。' },
+  support: { en: 'My parents always support me.', zh: '父母一直支持我。', tip: 'sup（下）+ port（托）→ 从下面托住。' },
+  reporter: { en: 'The reporter asked several questions.', zh: '记者问了几个问题。', tip: 'report + -er。' },
+  transport: { en: 'We transport goods by train.', zh: '我们用火车运输货物。', tip: 'trans-（横跨）+ port。' },
+  porter: { en: 'The porter carried our bags.', zh: '搬运工帮我们搬行李。', tip: 'port + -er（人）。' },
+  transportation: { en: 'Public transportation is convenient here.', zh: '这里的公共交通很方便。', tip: 'transport + -ation。' },
+  portable: { en: 'This speaker is small and portable.', zh: '这个音箱小巧便携。', tip: 'port + -able。' },
+  import: { en: 'The country imports oil.', zh: '这个国家进口石油。', tip: 'im-（向内）+ port。' },
+  export: { en: 'They export tea to Europe.', zh: '他们向欧洲出口茶叶。', tip: 'ex-（向外）+ port。' },
+  position: { en: 'Please put the chair in position.', zh: '请把椅子放到位置上。', tip: 'posit（放）+ -ion。' },
+  propose: { en: 'I propose a short break.', zh: '我提议短暂休息。', tip: 'pro-（向前）+ pos。' },
+  deposit: { en: 'You need to pay a deposit.', zh: '你需要付押金。', tip: 'de-（向下）+ pos → 放下。' },
+  expose: { en: 'Do not expose your skin to the sun.', zh: '不要让皮肤暴露在阳光下。', tip: 'ex-（出）+ pos。' },
+  oppose: { en: 'Many people oppose the plan.', zh: '许多人反对这个计划。', tip: 'op-（对着）+ pos。' },
+  dispose: { en: 'Please dispose of the waste properly.', zh: '请妥善处理垃圾。', tip: 'dis-（分开）+ pos。' },
+  compose: { en: 'She composed a beautiful song.', zh: '她创作了一首优美的歌。', tip: 'com-（一起）+ pos。' },
+  general: { en: 'The general idea is clear.', zh: '总体思路是清楚的。', tip: 'gen（种类）+ -al。' },
+  generate: { en: 'Wind can generate electricity.', zh: '风可以发电。', tip: 'gen = 产生。' },
+  generation: { en: 'This generation grew up with the internet.', zh: '这一代人伴随互联网长大。', tip: 'generate + -ion。' },
+  genius: { en: 'She has a genius for math.', zh: '她有数学天赋。', tip: 'gen（出生）+ -ius → 与生俱来。' },
+  generous: { en: 'He is generous with his time.', zh: '他很慷慨地付出时间。', tip: 'gen（出身）+ -ous → 出身好。' },
+  gene: { en: 'Genes carry information.', zh: '基因携带信息。', tip: 'gen（产生）+ -e。' },
+  offer: { en: 'They offered me a job.', zh: '他们给了我一份工作。', tip: 'of-（向前）+ fer（带）。' },
+  prefer: { en: 'I prefer tea to coffee.', zh: '比起咖啡我更喜欢茶。', tip: 'pre-（在前）+ fer。' },
+  transfer: { en: 'Please transfer the money today.', zh: '请今天转账。', tip: 'trans-（转移）+ fer。' },
+  differ: { en: 'Opinions differ on this issue.', zh: '在这个问题上意见不同。', tip: 'dif-（分开）+ fer。' },
+  conference: { en: 'She spoke at the conference.', zh: '她在会议上发言。', tip: 'con-（一起）+ fer + -ence。' },
+  refer: { en: 'Please refer to the guide.', zh: '请参考指南。', tip: 're-（回）+ fer。' },
+  suffer: { en: 'He suffered from a bad cold.', zh: '他患了重感冒。', tip: 'suf-（下）+ fer（承受）。' },
+  vision: { en: 'He has good vision.', zh: '他视力很好。', tip: 'vis（看）+ -ion。' },
+  visible: { en: 'The mountains are visible today.', zh: '今天能看到群山。', tip: 'vis + -ible。' },
+  visit: { en: 'We will visit the museum.', zh: '我们将参观博物馆。', tip: 'vis + -it → 去看。' },
+  advise: { en: 'I advise you to rest.', zh: '我建议你休息。', tip: 'ad-（向）+ vis（看）→ 提出看法。' },
+  revise: { en: 'Please revise your essay.', zh: '请修改你的文章。', tip: 're-（再）+ vis（看）。' },
+  invisible: { en: 'Air is invisible.', zh: '空气是看不见的。', tip: 'in-（不）+ visible。' },
+  visual: { en: 'The film has strong visual effects.', zh: '这部电影视觉效果很强。', tip: 'vis + -ual。' },
+  inspect: { en: 'The teacher inspected our homework.', zh: '老师检查了我们的作业。', tip: 'in-（向内）+ spect（看）。' },
+  respect: { en: 'We should respect each other.', zh: '我们应该互相尊重。', tip: 're-（反复）+ spect。' },
+  prospect: { en: 'The job has good prospects.', zh: '这份工作前景不错。', tip: 'pro-（向前）+ spect。' },
+  perspective: { en: 'Try to see it from her perspective.', zh: '试着从她的角度看。', tip: 'per-（穿过）+ spect。' },
+  inspection: { en: 'The factory passed the inspection.', zh: '工厂通过了检查。', tip: 'inspect + -ion。' },
+  spectator: { en: 'The spectators cheered loudly.', zh: '观众大声欢呼。', tip: 'spect + -ator（人）。' },
+  predict: { en: 'It is hard to predict the future.', zh: '很难预测未来。', tip: 'pre-（预先）+ dict（说）。' },
+  dictionary: { en: 'Look it up in the dictionary.', zh: '在词典里查一下。', tip: 'dict（说）+ -ion + -ary。' },
+  dictate: { en: 'The teacher dictated a sentence.', zh: '老师口述了一个句子。', tip: 'dict + -ate。' },
+  contradiction: { en: 'There is a contradiction in his story.', zh: '他的说法有矛盾。', tip: 'contra-（相反）+ dict + -ion。' },
+  dictation: { en: 'We have a dictation every Friday.', zh: '我们每周五听写。', tip: 'dictate + -ion。' },
+  project: { en: 'We finished the project on time.', zh: '我们按时完成了项目。', tip: 'pro-（向前）+ ject（投）。' },
+  object: { en: 'He objected to the plan.', zh: '他反对这个计划。', tip: 'ob-（对着）+ ject。' },
+  reject: { en: 'She rejected his offer.', zh: '她拒绝了他的提议。', tip: 're-（回）+ ject。' },
+  subject: { en: 'Math is my favorite subject.', zh: '数学是我最喜欢的科目。', tip: 'sub-（在下）+ ject。' },
+  inject: { en: 'The nurse injected the medicine.', zh: '护士注射了药物。', tip: 'in-（向内）+ ject。' },
+  eject: { en: 'The machine ejected the card.', zh: '机器把卡弹了出来。', tip: 'e-（出）+ ject。' },
+  objection: { en: 'He raised an objection.', zh: '他提出了反对。', tip: 'object + -ion。' },
+  international: { en: 'She works for an international company.', zh: '她在一家国际公司工作。', tip: 'inter-（之间）+ national。' },
+  internet: { en: 'I found the answer on the internet.', zh: '我在网上找到了答案。', tip: 'inter-（之间）+ net（网）。' },
+  interact: { en: 'Children learn by interacting with others.', zh: '孩子们通过与他人互动学习。', tip: 'inter-（相互）+ act（做）。' },
+  interconnect: { en: 'These computers are interconnected.', zh: '这些计算机互相连接。', tip: 'inter- + connect。' },
+  interface: { en: 'The interface is easy to use.', zh: '这个界面很容易使用。', tip: 'inter- + face（面）。' },
+  interpersonal: { en: 'Good interpersonal skills are important.', zh: '良好的人际交往能力很重要。', tip: 'inter- + personal。' },
+  interview: { en: 'I have a job interview tomorrow.', zh: '我明天有一场求职面试。', tip: 'inter-（相互）+ view（看）。' },
+  internal: { en: 'This is an internal matter.', zh: '这是内部事务。', tip: 'inter-（在内）+ -al。' },
+  interaction: { en: 'Online interaction is common now.', zh: '现在线上互动很常见。', tip: 'interact + -ion。' },
+  interactive: { en: 'The app has an interactive map.', zh: '这个应用有互动地图。', tip: 'interact + -ive。' },
+  admit: { en: 'He admitted his mistake.', zh: '他承认了错误。', tip: 'ad-（向）+ mit（送）。' },
+  mission: { en: 'Their mission is to help others.', zh: '他们的使命是帮助他人。', tip: 'miss（送）+ -ion。' },
+  contract: { en: 'They signed a two-year contract.', zh: '他们签了两年合同。', tip: 'con-（一起）+ tract（拉紧）。' },
+  attract: { en: 'The show attracted many visitors.', zh: '展览吸引了许多游客。', tip: 'at-（向）+ tract（拉）。' },
+  structure: { en: 'The structure is strong and simple.', zh: '这个结构坚固又简单。', tip: 'struct（建造）+ -ure。' },
+  video: { en: 'We watched a short video.', zh: '我们看了一段短视频。', tip: 'vid（看）+ -eo。' },
+  geography: { en: 'She studies geography at school.', zh: '她在学校学地理。', tip: 'geo（地）+ -graphy（写）。' },
+  photograph: { en: 'He took a photograph of the lake.', zh: '他拍了一张湖的照片。', tip: 'photo（光）+ graph（写）。' },
+  telephone: { en: 'Please answer the telephone.', zh: '请接电话。', tip: 'tele-（远）+ phone（声音）。' },
+  audience: { en: 'The audience clapped at the end.', zh: '演出结束时观众鼓掌。', tip: 'audi（听）+ -ence。' },
+  biology: { en: 'Biology is the study of life.', zh: '生物学是研究生命的学科。', tip: 'bio（生命）+ -logy（学科）。' },
+  unhappy: { en: 'He looked unhappy after the news.', zh: '听到消息后他显得不开心。', tip: 'un-（不）+ happy。' },
+  rewrite: { en: 'Please rewrite this sentence.', zh: '请重写这个句子。', tip: 're-（再）+ write。' },
+  disappear: { en: 'The sun disappeared behind the cloud.', zh: '太阳消失在云后。', tip: 'dis-（不/离开）+ appear。' },
+  prepare: { en: 'We need to prepare for the exam.', zh: '我们需要为考试做准备。', tip: 'pre-（预先）+ pare。' },
+  exit: { en: 'Please use the side exit.', zh: '请走侧门出口。', tip: 'ex-（出）+ it。' },
+  progress: { en: 'She made great progress.', zh: '她取得了很大进步。', tip: 'pro-（向前）+ gress（走）。' },
+  overcome: { en: 'He overcame many difficulties.', zh: '他克服了许多困难。', tip: 'over-（在上）+ come。' },
+  understand: { en: 'I understand your point.', zh: '我理解你的观点。', tip: 'under + stand：站在下面听。' },
+  mistake: { en: 'Everyone makes mistakes.', zh: '每个人都会犯错。', tip: 'mis-（错）+ take（拿）。' },
+  output: { en: 'The factory increased its output.', zh: '工厂提高了产量。', tip: 'out-（出）+ put。' },
+  teacher: { en: 'Our teacher is very patient.', zh: '我们的老师很有耐心。', tip: 'teach + -er。' },
+  quickly: { en: 'She finished the work quickly.', zh: '她很快完成了工作。', tip: 'quick + -ly。' },
+  comfortable: { en: 'This chair is very comfortable.', zh: '这把椅子很舒服。', tip: 'comfort + -able。' },
+  possible: { en: 'It is possible to finish today.', zh: '今天完成是可能的。', tip: 'poss + -ible。' },
+  happiness: { en: 'Money cannot buy happiness.', zh: '金钱买不到幸福。', tip: 'happy + -ness。' },
+  movement: { en: 'The movement of the leaves was gentle.', zh: '树叶轻轻摇动。', tip: 'move + -ment。' },
+  ability: { en: 'She has the ability to learn fast.', zh: '她有快速学习的能力。', tip: 'able + -ity。' },
+  careful: { en: 'Be careful with the glass.', zh: '小心玻璃。', tip: 'care + -ful。' },
+  careless: { en: 'A careless mistake cost him the game.', zh: '一个粗心的错误让他输了比赛。', tip: 'care + -less。' },
+  dangerous: { en: 'It is dangerous to swim here.', zh: '在这里游泳很危险。', tip: 'danger + -ous。' },
+  commit: { en: 'She committed herself to the project.', zh: '她全身心投入这个项目。', tip: 'com-（共同）+ mit（送）→ 交付自己。' },
+  committee: { en: 'The committee will meet on Monday.', zh: '委员会将在周一开会。', tip: '被派去办事的一群人。' },
+  permit: { en: 'Smoking is not permitted here.', zh: '这里不允许吸烟。', tip: 'per-（通过）+ mit（送）→ 放行。' },
+  submit: { en: 'Please submit your report by Friday.', zh: '请在周五前提交报告。', tip: 'sub-（在下）+ mit（送）→ 呈交。' },
+  transmit: { en: 'The station transmits signals all day.', zh: '电台全天传送信号。', tip: 'trans-（横跨）+ mit。' },
+  permission: { en: 'You need permission to enter.', zh: '你需要许可才能进入。', tip: 'permit 的名词形式。' },
+  missile: { en: 'The missile hit the target.', zh: '导弹击中了目标。', tip: 'miss（送）+ -ile（物）→ 被投出去的东西。' },
+  transmission: { en: 'The transmission was interrupted.', zh: '信号传输中断了。', tip: 'transmit + -ion。' },
+  dismiss: { en: 'The teacher dismissed the class early.', zh: '老师提前下课了。', tip: 'dis-（离开）+ miss（送）→ 送走。' },
+  admission: { en: 'Admission is free on Sundays.', zh: '周日免费入场。', tip: 'ad-（向）+ miss（送）+ -ion。' },
+  production: { en: 'The factory increased production.', zh: '工厂提高了产量。', tip: 'produce + -tion。' },
+  product: { en: 'This product sells well.', zh: '这个产品卖得很好。', tip: 'pro-（向前）+ duct（引导）→ 生产出来的东西。' },
+  conduct: { en: 'They conducted a survey.', zh: '他们进行了一项调查。', tip: 'con-（一起）+ duct（引导）→ 引导实施。' },
+  introduction: { en: 'The book has a short introduction.', zh: '这本书有一个简短引言。', tip: 'introduce + -tion。' },
+  conductor: { en: 'The conductor led the orchestra.', zh: '指挥带领管弦乐队。', tip: 'conduct + -or（人）。' },
+  reduction: { en: 'The store offered a price reduction.', zh: '商店提供了降价。', tip: 'reduce + -tion。' },
+  attractive: { en: 'The offer is very attractive.', zh: '这个提议很有吸引力。', tip: 'attract + -ive。' },
+  distract: { en: 'Do not distract the driver.', zh: '不要分散司机的注意力。', tip: 'dis-（分开）+ tract（拉）。' },
+  tractor: { en: 'The farmer drove a tractor.', zh: '农民开着一辆拖拉机。', tip: 'tract（拉）+ -or（物）。' },
+  extract: { en: 'They extract oil from seeds.', zh: '他们从种子中提取油。', tip: 'ex-（出）+ tract（拉）。' },
+  abstract: { en: 'The idea is too abstract.', zh: '这个想法太抽象了。', tip: 'abs-（离开）+ tract（拉）→ 拉离具体事物。' },
+  construction: { en: 'The construction will take a year.', zh: '这项建设需要一年。', tip: 'construct + -ion。' },
+  destruction: { en: 'The storm caused great destruction.', zh: '风暴造成了巨大破坏。', tip: 'de-（向下）+ struct（建造）+ -ion。' },
+  instruction: { en: 'Read the instructions carefully.', zh: '仔细阅读说明。', tip: 'instruct + -ion。' },
+  construct: { en: 'They plan to construct a new bridge.', zh: '他们计划建一座新桥。', tip: 'con-（共同）+ struct（建造）。' },
+  instruct: { en: 'The teacher instructed us to be quiet.', zh: '老师指示我们安静。', tip: 'in-（在内）+ struct（搭建）→ 在头脑里搭建。' },
+  obstruct: { en: 'A fallen tree obstructed the road.', zh: '倒下的树挡住了路。', tip: 'ob-（对着）+ struct（建造）→ 挡住。' },
+  evidence: { en: 'There is no evidence for that claim.', zh: '那个说法没有证据。', tip: 'e-（出）+ vid（看）+ -ence → 看得见的东西。' },
+  provide: { en: 'They provide free lunch at school.', zh: '学校提供免费午餐。', tip: 'pro-（向前）+ vid（看）→ 预先准备。' },
+  evidently: { en: 'He was evidently very tired.', zh: '他显然非常累。', tip: 'evident + -ly。' },
+  evident: { en: 'Her joy was evident to everyone.', zh: '她的喜悦大家都看得出来。', tip: 'e-（出）+ vid（看）+ -ent。' },
+  geometry: { en: 'Geometry deals with shapes and space.', zh: '几何学研究形状和空间。', tip: 'geo（地）+ -metry（测量）。' },
+  geology: { en: 'Geology studies rocks and the earth.', zh: '地质学研究岩石和地球。', tip: 'geo（地）+ -logy（学科）。' },
+  geologist: { en: 'The geologist examined the rock.', zh: '地质学家检查了岩石。', tip: 'geology + -ist（人）。' },
+  geographical: { en: 'The region has many geographical features.', zh: '这个地区有许多地理特征。', tip: 'geography + -ical。' },
+  graph: { en: 'The graph shows the sales trend.', zh: '图表显示了销售趋势。', tip: 'graph = 写下的图。' },
+  paragraph: { en: 'Read the first paragraph again.', zh: '再读一遍第一段。', tip: 'para-（旁边）+ graph（写）。' },
+  biography: { en: 'She wrote a biography of the scientist.', zh: '她写了一本科学家传记。', tip: 'bio（生命）+ -graphy（写）。' },
+  phone: { en: 'My phone is on the table.', zh: '我的手机在桌上。', tip: 'phon（声音）+ -e。' },
+  microphone: { en: 'Speak into the microphone.', zh: '对着麦克风说话。', tip: 'micro-（小）+ phon（声音）。' },
+  symphony: { en: 'The symphony lasted an hour.', zh: '交响乐持续了一小时。', tip: 'sym-（共同）+ phon（声音）。' },
+  phonetic: { en: 'The book explains phonetic symbols.', zh: '这本书讲解音标。', tip: 'phon（声音）+ -etic。' },
+  audition: { en: 'She has an audition next week.', zh: '她下周有一场试镜。', tip: 'audi（听）+ -ition。' },
+  audio: { en: 'The audio quality is excellent.', zh: '音频质量很好。', tip: 'audi（听）+ -o。' },
+  audible: { en: 'His voice was barely audible.', zh: '他的声音几乎听不见。', tip: 'audi（听）+ -ible。' },
+  auditorium: { en: 'The auditorium was full of students.', zh: '礼堂里坐满了学生。', tip: 'audi（听）+ -orium（场所）。' },
+  biological: { en: 'Biological research takes time.', zh: '生物学研究需要时间。', tip: 'biology + -ical。' },
+  biologist: { en: 'The biologist studies plants.', zh: '这位生物学家研究植物。', tip: 'biology + -ist。' },
+  unusual: { en: 'It is unusual to see snow here.', zh: '这里下雪很少见。' },
+  unknown: { en: 'The cause is still unknown.', zh: '原因仍然未知。' },
+  unable: { en: 'He was unable to attend.', zh: '他无法出席。' },
+  unfair: { en: 'The rule seems unfair.', zh: '这条规则似乎不公平。' },
+  unexpected: { en: 'We had an unexpected visitor.', zh: '我们迎来了一位不速之客。' },
+  unlock: { en: 'She unlocked the door.', zh: '她打开了门锁。' },
+  return: { en: 'Please return the book tomorrow.', zh: '请明天还书。' },
+  replace: { en: 'We need to replace the old machine.', zh: '我们需要更换旧机器。' },
+  review: { en: 'Let us review the notes.', zh: '我们复习一下笔记。' },
+  recover: { en: 'He is recovering from a cold.', zh: '他正在从感冒中恢复。' },
+  recycle: { en: 'We recycle paper and glass.', zh: '我们回收纸张和玻璃。' },
+  discover: { en: 'They discovered a new planet.', zh: '他们发现了一颗新行星。' },
+  disagree: { en: 'I disagree with that idea.', zh: '我不同意那个想法。' },
+  disorder: { en: 'The room was in disorder.', zh: '房间很乱。' },
+  dislike: { en: 'She dislikes cold weather.', zh: '她不喜欢寒冷的天气。' },
+  disable: { en: 'The accident disabled the machine.', zh: '事故使机器无法运转。' },
+  prevent: { en: 'Wash your hands to prevent illness.', zh: '洗手以预防疾病。' },
+  previous: { en: 'The previous owner kept the garden.', zh: '前任房主保留了花园。' },
+  preserve: { en: 'We must preserve the old buildings.', zh: '我们必须保护老建筑。' },
+  precaution: { en: 'Take precautions against fire.', zh: '采取防火措施。' },
+  explain: { en: 'Can you explain the rule?', zh: '你能解释这条规则吗？' },
+  expect: { en: 'We expect rain tomorrow.', zh: '我们预计明天有雨。' },
+  except: { en: 'Everyone came except Tom.', zh: '除了汤姆，大家都来了。' },
+  experience: { en: 'She has years of teaching experience.', zh: '她有多年教学经验。' },
+  expand: { en: 'The company plans to expand.', zh: '公司计划扩张。' },
+  translate: { en: 'Please translate this sentence.', zh: '请翻译这个句子。' },
+  transparent: { en: 'The glass is transparent.', zh: '玻璃是透明的。' },
+  protect: { en: 'We should protect the environment.', zh: '我们应该保护环境。' },
+  program: { en: 'He wrote a small program.', zh: '他写了一个小程序。' },
+  produce: { en: 'The farm produces fresh milk.', zh: '农场生产新鲜牛奶。' },
+  promote: { en: 'They promoted her to manager.', zh: '他们把她提升为经理。' },
+  overnight: { en: 'We stayed overnight in the city.', zh: '我们在城里过了一夜。' },
+  overseas: { en: 'She works overseas.', zh: '她在海外工作。' },
+  overtime: { en: 'He worked overtime last night.', zh: '他昨晚加班了。' },
+  overall: { en: 'Overall, the plan works.', zh: '总的来说，这个计划可行。' },
+  overlook: { en: 'Do not overlook small mistakes.', zh: '不要忽视小错误。' },
+  overcoat: { en: 'He wore a warm overcoat.', zh: '他穿着一件暖和的大衣。' },
+  underneath: { en: 'The cat is underneath the table.', zh: '猫在桌子下面。' },
+  undergo: { en: 'The building will undergo repairs.', zh: '这栋楼将进行维修。' },
+  undertake: { en: 'They undertook a difficult task.', zh: '他们承担了一项艰巨任务。' },
+  undergraduate: { en: 'She is an undergraduate student.', zh: '她是一名本科生。' },
+  underline: { en: 'Please underline the key words.', zh: '请给关键词画线。' },
+  misunderstand: { en: 'Do not misunderstand my meaning.', zh: '不要误解我的意思。' },
+  mislead: { en: 'The sign may mislead visitors.', zh: '这个标志可能会误导游客。' },
+  misfortune: { en: 'He bore his misfortune bravely.', zh: '他勇敢地承受不幸。' },
+  misbehave: { en: 'The child misbehaved in class.', zh: '那个孩子在课堂上捣乱。' },
+  outside: { en: 'The children are playing outside.', zh: '孩子们在外面玩。' },
+  outdoor: { en: 'We enjoy outdoor activities.', zh: '我们喜欢户外活动。' },
+  outstanding: { en: 'Her work is outstanding.', zh: '她的工作非常出色。' },
+  outline: { en: 'He gave a brief outline of the plan.', zh: '他简要介绍了计划。' },
+  outlook: { en: 'The outlook for the economy is good.', zh: '经济前景良好。' },
+  outcome: { en: 'We are waiting for the outcome.', zh: '我们在等待结果。' },
+  computer: { en: 'My computer is very fast.', zh: '我的电脑很快。' },
+  leader: { en: 'She is a strong leader.', zh: '她是一位坚强的领导者。' },
+  writer: { en: 'The writer published a new book.', zh: '这位作家出版了一本新书。' },
+  singer: { en: 'The singer has a beautiful voice.', zh: '这位歌手嗓音优美。' },
+  worker: { en: 'The worker repaired the roof.', zh: '工人修好了屋顶。' },
+  reader: { en: 'The reader asked a question.', zh: '读者问了一个问题。' },
+  probably: { en: 'It will probably rain later.', zh: '稍后可能会下雨。' },
+  exactly: { en: 'That is exactly what I meant.', zh: '那正是我的意思。' },
+  finally: { en: 'We finally arrived home.', zh: '我们终于到家了。' },
+  completely: { en: 'I completely agree with you.', zh: '我完全同意你。' },
+  usually: { en: 'I usually get up at seven.', zh: '我通常七点起床。' },
+  slowly: { en: 'Please speak more slowly.', zh: '请说慢一点。' },
+  carefully: { en: 'She carefully checked the report.', zh: '她仔细检查了报告。' },
+  attention: { en: 'Please pay attention to the details.', zh: '请注意细节。' },
+  operation: { en: 'The operation was successful.', zh: '手术很成功。' },
+  condition: { en: 'The car is in good condition.', zh: '这辆车状况良好。' },
+  solution: { en: 'We found a simple solution.', zh: '我们找到了一个简单的解决办法。' },
+  education: { en: 'Education changes lives.', zh: '教育改变生活。' },
+  population: { en: 'The population is growing.', zh: '人口在增长。' },
+  available: { en: 'The room is available now.', zh: '房间现在可用。' },
+  reasonable: { en: 'The price is reasonable.', zh: '价格合理。' },
+  remarkable: { en: 'She made remarkable progress.', zh: '她取得了显著进步。' },
+  reliable: { en: 'This car is very reliable.', zh: '这辆车很可靠。' },
+  acceptable: { en: 'The result is acceptable.', zh: '结果可以接受。' },
+  terrible: { en: 'The weather is terrible today.', zh: '今天天气很糟。' },
+  responsible: { en: 'She is responsible for the team.', zh: '她负责这个团队。' },
+  sensible: { en: 'That was a sensible choice.', zh: '那是一个明智的选择。' },
+  flexible: { en: 'Our schedule is flexible.', zh: '我们的日程很灵活。' },
+  feasible: { en: 'The plan is feasible.', zh: '这个计划可行。' },
+  business: { en: 'He runs a small business.', zh: '他经营一家小企业。' },
+  darkness: { en: 'The room was in darkness.', zh: '房间里一片漆黑。' },
+  illness: { en: 'She missed work because of illness.', zh: '她因病没去上班。' },
+  weakness: { en: 'Everyone has a weakness.', zh: '每个人都有弱点。' },
+  kindness: { en: 'Thank you for your kindness.', zh: '谢谢你的好意。' },
+  consciousness: { en: 'He lost consciousness for a moment.', zh: '他短暂失去了意识。' },
+  government: { en: 'The government announced a new policy.', zh: '政府宣布了一项新政策。' },
+  treatment: { en: 'The treatment worked well.', zh: '治疗效果很好。' },
+  equipment: { en: 'The lab has new equipment.', zh: '实验室有新设备。' },
+  agreement: { en: 'They reached an agreement.', zh: '他们达成了协议。' },
+  environment: { en: 'We must protect the environment.', zh: '我们必须保护环境。' },
+  development: { en: 'The city has seen rapid development.', zh: '这座城市发展迅速。' },
+  management: { en: 'Good management saves time.', zh: '良好的管理能节省时间。' },
+  reality: { en: 'The reality is more complex.', zh: '现实更复杂。' },
+  quality: { en: 'This product has good quality.', zh: '这个产品质量很好。' },
+  possibility: { en: 'There is a possibility of rain.', zh: '有下雨的可能。' },
+  security: { en: 'Airport security is strict.', zh: '机场安检很严格。' },
+  electricity: { en: 'The storm cut off electricity.', zh: '风暴切断了电力。' },
+  opportunity: { en: 'This is a good opportunity.', zh: '这是一个好机会。' },
+  beautiful: { en: 'The garden is beautiful.', zh: '花园很美。' },
+  powerful: { en: 'The engine is very powerful.', zh: '发动机非常强劲。' },
+  helpful: { en: 'Your advice was very helpful.', zh: '你的建议很有帮助。' },
+  useful: { en: 'This tool is useful.', zh: '这个工具很有用。' },
+  grateful: { en: 'I am grateful for your help.', zh: '我很感激你的帮助。' },
+  wonderful: { en: 'We had a wonderful time.', zh: '我们度过了一段美好时光。' },
+  hopeless: { en: 'The situation seems hopeless.', zh: '情况似乎没有希望。' },
+  helpless: { en: 'The baby is helpless.', zh: '婴儿很无助。' },
+  endless: { en: 'The road seemed endless.', zh: '这条路似乎没有尽头。' },
+  useless: { en: 'This old phone is useless.', zh: '这部旧手机没用了。' },
+  regardless: { en: 'He went out regardless of the rain.', zh: '他不顾下雨出去了。' },
+  homeless: { en: 'The charity helps homeless people.', zh: '这家慈善机构帮助无家可归的人。' },
+  creative: { en: 'She is a creative designer.', zh: '她是一位有创意的设计师。' },
+  expensive: { en: 'The watch is too expensive.', zh: '这块表太贵了。' },
+  positive: { en: 'Keep a positive attitude.', zh: '保持积极的态度。' },
+  negative: { en: 'The test result was negative.', zh: '检测结果是阴性。' },
+  effective: { en: 'This medicine is effective.', zh: '这种药很有效。' },
+  famous: { en: 'He is a famous writer.', zh: '他是一位著名作家。' },
+  nervous: { en: 'She felt nervous before the exam.', zh: '考试前她感到紧张。' },
+  obvious: { en: 'The answer is obvious.', zh: '答案很明显。' },
+  curious: { en: 'The child is curious about everything.', zh: '这个孩子对一切都好奇。' },
+  serious: { en: 'This is a serious problem.', zh: '这是一个严重的问题。' },
+  various: { en: 'The shop sells various gifts.', zh: '这家店卖各种礼物。' },
+  organize: { en: 'They organized a meeting.', zh: '他们组织了一次会议。' },
+  recognize: { en: 'I did not recognize him.', zh: '我没认出他。' },
+  apologize: { en: 'You should apologize to her.', zh: '你应该向她道歉。' },
+  criticize: { en: 'Do not criticize others too quickly.', zh: '不要急于批评别人。' },
+  emphasize: { en: 'He emphasized the main point.', zh: '他强调了重点。' },
+  realize: { en: 'I realized my mistake at once.', zh: '我立刻意识到了错误。', tip: 'real + -ize。' },
+  autobiography: { en: 'He published his autobiography last year.', zh: '他去年出版了自传。', tip: 'auto-（自己）+ biography。' },
+  eat: { en: 'We eat dinner at seven.', zh: '我们七点吃晚饭。' },
+  dream: { en: 'I had a strange dream.', zh: '我做了一个奇怪的梦。' },
+  clean: { en: 'Please keep the room clean.', zh: '请保持房间干净。' },
+  sea: { en: 'The sea is calm today.', zh: '今天海面平静。' },
+  tea: { en: 'She drinks tea every morning.', zh: '她每天早上喝茶。' },
+  teach: { en: 'I teach English at school.', zh: '我在学校教英语。' },
+  beach: { en: 'We walked along the beach.', zh: '我们沿着海滩散步。' },
+  meat: { en: 'He does not eat meat.', zh: '他不吃肉。' },
+  out: { en: 'They went out for lunch.', zh: '他们出去吃午饭。' },
+  about: { en: 'Tell me about your day.', zh: '跟我说说你的一天。' },
+  around: { en: 'We walked around the lake.', zh: '我们绕着湖走了一圈。' },
+  house: { en: 'They live in a small house.', zh: '他们住在一栋小房子里。' },
+  mouth: { en: 'Open your mouth, please.', zh: '请张开嘴。' },
+  shout: { en: 'Do not shout in the library.', zh: '不要在图书馆大喊。' },
+  mouse: { en: 'The cat caught a mouse.', zh: '猫抓住了一只老鼠。' },
+  cloud: { en: 'A dark cloud covered the sun.', zh: '一片乌云遮住了太阳。' },
+  wait: { en: 'Please wait for me here.', zh: '请在这里等我。' },
+  train: { en: 'The train leaves at nine.', zh: '火车九点出发。' },
+  rain: { en: 'It began to rain.', zh: '开始下雨了。' },
+  paint: { en: 'They painted the wall blue.', zh: '他们把墙刷成了蓝色。' },
+  mail: { en: 'I sent the letter by mail.', zh: '我把信寄了出去。' },
+  tail: { en: 'The dog wagged its tail.', zh: '狗摇了摇尾巴。' },
+  snail: { en: 'A snail moves very slowly.', zh: '蜗牛爬得很慢。' },
+  see: { en: 'I can see the mountains.', zh: '我能看见群山。' },
+  need: { en: 'We need more time.', zh: '我们需要更多时间。' },
+  keep: { en: 'Please keep the door closed.', zh: '请保持门关着。' },
+  feel: { en: 'I feel much better today.', zh: '我今天感觉好多了。' },
+  meet: { en: 'Let us meet after class.', zh: '我们下课后见。' },
+  week: { en: 'We have a test this week.', zh: '我们这周有考试。' },
+  tree: { en: 'A bird sat in the tree.', zh: '一只鸟停在树上。' },
+  bee: { en: 'A bee flew into the room.', zh: '一只蜜蜂飞进了房间。' },
+  now: { en: 'We should leave now.', zh: '我们现在应该走了。' },
+  how: { en: 'How did you solve it?', zh: '你是怎么解决的？' },
+  down: { en: 'She walked down the stairs.', zh: '她走下楼梯。' },
+  town: { en: 'The town is quiet at night.', zh: '这个小镇晚上很安静。' },
+  power: { en: 'The storm cut off the power.', zh: '风暴切断了电力。' },
+  brown: { en: 'He wore a brown coat.', zh: '他穿着一件棕色外套。' },
+  flower: { en: 'The flower smells sweet.', zh: '这朵花很香。' },
+  cow: { en: 'The cow is eating grass.', zh: '奶牛在吃草。' },
+  room: { en: 'The room is clean and bright.', zh: '房间干净明亮。' },
+  school: { en: 'The school is near my home.', zh: '学校离我家很近。' },
+  cool: { en: 'The evening air is cool.', zh: '傍晚的空气很凉爽。' },
+  food: { en: 'The food tastes good.', zh: '食物味道很好。' },
+  moon: { en: 'The moon is bright tonight.', zh: '今晚月亮很亮。' },
+  pool: { en: 'The children swam in the pool.', zh: '孩子们在泳池里游泳。' },
+  tooth: { en: 'My tooth hurts.', zh: '我的牙疼。' },
+  zoo: { en: 'We visited the zoo on Sunday.', zh: '我们周日去了动物园。' },
+  say: { en: 'What did she say?', zh: '她说了什么？' },
+  way: { en: 'This is the shortest way home.', zh: '这是回家最近的路。' },
+  day: { en: 'It was a sunny day.', zh: '那是一个晴天。' },
+  stay: { en: 'We stayed at a small hotel.', zh: '我们住在一家小旅馆。' },
+  may: { en: 'It may rain tomorrow.', zh: '明天可能会下雨。' },
+  today: { en: 'I am busy today.', zh: '我今天很忙。' },
+  play: { en: 'The children play in the park.', zh: '孩子们在公园里玩。' },
+  pay: { en: 'I will pay by card.', zh: '我用卡支付。' },
+  road: { en: 'The road is wet after the rain.', zh: '雨后路面湿了。' },
+  boat: { en: 'The boat crossed the river.', zh: '小船过了河。' },
+  coach: { en: 'The coach trained the team.', zh: '教练训练了队伍。' },
+  coat: { en: 'Put on your coat; it is cold.', zh: '穿上外套，天冷了。' },
+  load: { en: 'They loaded the boxes onto the truck.', zh: '他们把箱子装上卡车。' },
+  toast: { en: 'I had toast for breakfast.', zh: '我早餐吃了吐司。' },
+  coast: { en: 'We drove along the coast.', zh: '我们沿着海岸开车。' },
+  goal: { en: 'Her goal is to finish first.', zh: '她的目标是第一个完成。' },
+  right: { en: 'Turn right at the corner.', zh: '在拐角处右转。' },
+  night: { en: 'The night was quiet.', zh: '夜晚很安静。' },
+  might: { en: 'It might snow tonight.', zh: '今晚可能下雪。' },
+  fight: { en: 'They decided to fight for their rights.', zh: '他们决定为权利而斗争。' },
+  high: { en: 'The wall is very high.', zh: '这堵墙很高。' },
+  light: { en: 'Please turn on the light.', zh: '请开灯。' },
+  sight: { en: 'The sunset was a beautiful sight.', zh: '日落很美。' },
+  bright: { en: 'The room is bright and warm.', zh: '房间明亮又温暖。' },
+  much: { en: 'Thank you very much.', zh: '非常感谢。' },
+  watch: { en: 'We watched a film last night.', zh: '我们昨晚看了一部电影。' },
+  check: { en: 'Please check your answers.', zh: '请检查你的答案。' },
+  child: { en: 'The child is playing outside.', zh: '孩子在外面玩。' },
+  catch: { en: 'Try to catch the ball.', zh: '试着接住球。' },
+  chicken: { en: 'We had chicken for dinner.', zh: '我们晚餐吃了鸡肉。' },
+  chair: { en: 'Please sit on this chair.', zh: '请坐在这把椅子上。' },
+  think: { en: 'I think you are right.', zh: '我认为你是对的。' },
+  thank: { en: 'Thank you for your help.', zh: '谢谢你的帮助。' },
+  father: { en: 'My father works in a hospital.', zh: '我父亲在医院工作。' },
+  mother: { en: 'My mother cooks well.', zh: '我母亲做饭很好。' },
+  three: { en: 'There are three books on the desk.', zh: '桌上有三本书。' },
+  brother: { en: 'My brother is older than me.', zh: '我哥哥比我大。' },
+  finish: { en: 'Please finish your homework.', zh: '请完成作业。' },
+  ship: { en: 'The ship left the port.', zh: '船离开了港口。' },
+  fish: { en: 'We had fish for lunch.', zh: '我们午餐吃了鱼。' },
+  shop: { en: 'The shop opens at nine.', zh: '商店九点开门。' },
+  push: { en: 'Push the door to open it.', zh: '推门打开。' },
+  wash: { en: 'Please wash your hands.', zh: '请洗手。' },
+  shoe: { en: 'One shoe is under the bed.', zh: '一只鞋在床下。' },
+  sheep: { en: 'The sheep are on the hill.', zh: '羊在山坡上。' },
+  long: { en: 'It was a long journey.', zh: '那是一段漫长的旅程。' },
+  morning: { en: 'I run every morning.', zh: '我每天早上跑步。' },
+  bring: { en: 'Please bring your notebook.', zh: '请带笔记本。' },
+  king: { en: 'The king lived in a castle.', zh: '国王住在城堡里。' },
+  song: { en: 'She sang a beautiful song.', zh: '她唱了一首优美的歌。' },
+  strong: { en: 'He is strong enough to lift it.', zh: '他足够强壮能举起它。' },
+  sing: { en: 'They sing together every week.', zh: '他们每周一起唱歌。' },
+  spring: { en: 'Flowers bloom in spring.', zh: '春天花开。' },
+  back: { en: 'He looked back at the house.', zh: '他回头看了看房子。' },
+  black: { en: 'She wore a black dress.', zh: '她穿着黑色连衣裙。' },
+  pick: { en: 'Pick a card from the box.', zh: '从盒子里抽一张卡。' },
+  luck: { en: 'Good luck with your exam.', zh: '祝你考试顺利。' },
+  quick: { en: 'He gave a quick answer.', zh: '他迅速回答。' },
+  clock: { en: 'The clock on the wall is slow.', zh: '墙上的钟慢了。' },
+  duck: { en: 'A duck swam across the lake.', zh: '一只鸭子游过湖面。' },
+  sock: { en: 'I cannot find my other sock.', zh: '我找不到另一只袜子。' },
+  quite: { en: 'The film was quite good.', zh: '这部电影相当不错。' },
+  question: { en: 'May I ask a question?', zh: '我可以问一个问题吗？' },
+  quiet: { en: 'Please be quiet in the library.', zh: '在图书馆请安静。' },
+  queen: { en: 'The queen waved to the crowd.', zh: '女王向人群挥手。' },
+  quit: { en: 'He decided to quit smoking.', zh: '他决定戒烟。' },
+  square: { en: 'The square is full of people.', zh: '广场上满是人。' },
+  request: { en: 'She made a simple request.', zh: '她提了一个简单的请求。' },
+  photo: { en: 'He showed me a photo of his family.', zh: '他给我看了家人的照片。' },
+  nephew: { en: 'My nephew is five years old.', zh: '我侄子五岁。' },
+  atmosphere: { en: 'The atmosphere is calm and quiet.', zh: '气氛平静安宁。' },
+  elephant: { en: 'The elephant is very large.', zh: '大象很大。' },
+  philosophy: { en: 'She studies philosophy at university.', zh: '她在大学学哲学。' },
+  physics: { en: 'Physics is my favorite subject.', zh: '物理是我最喜欢的科目。' },
+  which: { en: 'Which color do you like?', zh: '你喜欢哪种颜色？' },
+  while: { en: 'Read a book while you wait.', zh: '等待时读本书。' },
+  white: { en: 'She wore a white shirt.', zh: '她穿着白衬衫。' },
+  wheel: { en: 'The wheel turns slowly.', zh: '轮子慢慢转动。' },
+  whistle: { en: 'He blew the whistle.', zh: '他吹响了哨子。' },
+  whale: { en: 'A whale swam near the boat.', zh: '一头鲸鱼游近小船。' },
+  whisper: { en: 'Do not whisper in class.', zh: '上课不要窃窃私语。' },
+  wheat: { en: 'The fields are full of wheat.', zh: '田里长满了小麦。' },
+  old: { en: 'The old house needs repairs.', zh: '老房子需要维修。' },
+  hold: { en: 'Please hold the door open.', zh: '请把门扶住。' },
+  cold: { en: 'The water is very cold.', zh: '水很冷。' },
+  gold: { en: 'The ring is made of gold.', zh: '戒指是金的。' },
+  golden: { en: 'The sky turned golden at sunset.', zh: '日落时天空变成金色。' },
+  bold: { en: 'It was a bold decision.', zh: '这是一个大胆的决定。' },
+  household: { en: 'The household shares the chores.', zh: '全家人分担家务。' },
+  fold: { en: 'Please fold the paper in half.', zh: '请把纸对折。' },
+  know: { en: 'I know the answer.', zh: '我知道答案。' },
+  knock: { en: 'Someone knocked on the door.', zh: '有人敲门。' },
+  knife: { en: 'Be careful with the knife.', zh: '小心刀。' },
+  knowledge: { en: 'Knowledge is power.', zh: '知识就是力量。' },
+  knee: { en: 'He hurt his knee.', zh: '他伤了膝盖。' },
+  kneel: { en: 'She knelt down to tie her shoe.', zh: '她跪下来系鞋带。' },
+  knot: { en: 'He tied a tight knot.', zh: '他打了一个紧结。' },
+  wrong: { en: 'You took the wrong road.', zh: '你走错路了。' },
+  write: { en: 'Please write your name here.', zh: '请在这里写下你的名字。' },
+  writing: { en: 'Her writing is clear and simple.', zh: '她的文字清楚简洁。' },
+  wrap: { en: 'Please wrap the gift.', zh: '请把礼物包起来。' },
+  wreck: { en: 'The storm wrecked the old boat.', zh: '风暴毁坏了旧船。' },
+  wrist: { en: 'He wears a watch on his wrist.', zh: '他手腕上戴着手表。' },
+  wrestle: { en: 'The two boys wrestled on the grass.', zh: '两个男孩在草地上摔跤。' },
+  bomb: { en: 'The bomb was defused.', zh: '炸弹被拆除了。' },
+  dumb: { en: 'He was struck dumb by the news.', zh: '他被这个消息惊呆了。' },
+  climb: { en: 'They climbed the mountain.', zh: '他们爬上了山。' },
+  lamb: { en: 'The lamb stayed close to its mother.', zh: '小羊紧跟着母亲。' },
+  tomb: { en: 'The tomb is very old.', zh: '这座墓很古老。' },
+  thumb: { en: 'He hurt his thumb.', zh: '他伤了大拇指。' },
+  comb: { en: 'She combed her hair.', zh: '她梳了头发。' },
+  plumber: { en: 'The plumber fixed the pipe.', zh: '水管工修好了管道。' },
+  kitchen: { en: 'The kitchen smells wonderful.', zh: '厨房里香气扑鼻。' },
+  match: { en: 'They won the match.', zh: '他们赢了比赛。' },
+  switch: { en: 'Please switch off the light.', zh: '请关灯。' },
+  scratch: { en: 'The cat scratched the sofa.', zh: '猫抓坏了沙发。' },
+  fetch: { en: 'The dog fetched the ball.', zh: '狗把球叼了回来。' },
+  patch: { en: 'He sewed a patch on his coat.', zh: '他在外套上缝了一块补丁。' },
+  judge: { en: 'The judge listened carefully.', zh: '法官仔细倾听。' },
+  bridge: { en: 'The bridge crosses the river.', zh: '桥横跨河流。' },
+  edge: { en: 'Do not stand near the edge.', zh: '不要站在边缘附近。' },
+  fridge: { en: 'The milk is in the fridge.', zh: '牛奶在冰箱里。' },
+  budget: { en: 'The project is over budget.', zh: '项目超出预算。' },
+  lodge: { en: 'They stayed at a small lodge.', zh: '他们住在一家小旅馆。' },
+  ridge: { en: 'We walked along the ridge.', zh: '我们沿着山脊走。' },
+  head: { en: 'My head hurts.', zh: '我头疼。' },
+  hand: { en: 'Raise your hand if you know.', zh: '知道就举手。' },
+  arm: { en: 'He broke his arm.', zh: '他摔断了胳膊。' },
+  leg: { en: 'She hurt her leg while running.', zh: '她跑步时伤了腿。' },
+  foot: { en: 'My foot is asleep.', zh: '我的脚麻了。' },
+  eye: { en: 'She has a sharp eye.', zh: '她眼光敏锐。' },
+  ear: { en: 'He whispered in my ear.', zh: '他在我耳边低语。' },
+  nose: { en: 'The dog has a good nose.', zh: '狗的鼻子很灵。' },
+  book: { en: 'I am reading a good book.', zh: '我在读一本好书。' },
+  pen: { en: 'May I borrow your pen?', zh: '我可以借你的笔吗？' },
+  pencil: { en: 'Write with a pencil.', zh: '用铅笔写。' },
+  lamp: { en: 'The lamp is on the desk.', zh: '台灯在桌上。' },
+  bottle: { en: 'Please fill the bottle with water.', zh: '请把瓶子装满水。' },
+  cup: { en: 'She drank a cup of tea.', zh: '她喝了一杯茶。' },
+  hotel: { en: 'We stayed at a small hotel.', zh: '我们住在一家小旅馆。' },
+  luggage: { en: 'Our luggage is in the room.', zh: '我们的行李在房间里。' },
+  bed: { en: 'The bed is soft and warm.', zh: '床又软又暖。' },
+  key: { en: 'I lost my room key.', zh: '我丢了房间钥匙。' },
+  reception: { en: 'Please ask at reception.', zh: '请到前台询问。' },
+  bill: { en: 'The bill is on the table.', zh: '账单在桌上。' },
+  towel: { en: 'The towel is in the bathroom.', zh: '毛巾在浴室里。' },
+  tip: { en: 'He left a tip for the waiter.', zh: '他给服务员留了小费。' },
+  summarize: { en: 'Please summarize the article.', zh: '请总结这篇文章。' },
+}
+
+function lookupWord(text, page) {
+  const item = wordMap.get(text)
+  if (!item) throw new Error(`内置词库缺少示例词：${text}（${page.keyValue}）`)
+  const lower = String(item.word).toLowerCase()
+  const check = {
+    letters: () => lower.includes(page.keyValue),
+    prefix: () => lower.startsWith(page.keyValue),
+    suffix: () => lower.endsWith(page.keyValue),
+    root: () => lower.includes(page.keyValue),
+    phonetic: () => true,
+    text: () => true,
+  }[page.keyType]
+  if (!check) throw new Error(`未知中心类型：${page.keyType}`)
+  if (!check()) throw new Error(`示例词 ${text} 不包含 ${page.keyValue}`)
+  const detail = WORD_DETAILS[lower]
+  return {
+    text: item.word,
+    explains: item.explains || '',
+    ...(item.phonetic ? { phonetic: item.phonetic } : {}),
+    ...(typeof item.freq === 'number' ? { freq: item.freq } : {}),
+    ...(WORD_NOTES[lower] ? { note: WORD_NOTES[lower] } : {}),
+    ...(detail ? { examples: [{ english: detail.en, chinese: detail.zh }] } : {}),
+    ...(detail?.tip ? { memoryTip: detail.tip } : {}),
+  }
+}
+
+let totalWords = 0
+
+function buildPage(page) {
+  if (page.words.length < 4) throw new Error(`${page.keyValue} 页不足 4 个词`)
+  totalWords += page.words.length
+  const words = page.words.map(word => lookupWord(word, page))
+  // 词根/词缀/组合页按词频从高到低排；中心词本身置顶，自定义主题页保留人工顺序
+  if (page.keyType !== 'text') {
+    const key = page.keyValue.toLowerCase()
+    words.sort((a, b) => {
+      const aKey = a.text.toLowerCase() === key ? 0 : 1
+      const bKey = b.text.toLowerCase() === key ? 0 : 1
+      if (aKey !== bKey) return aKey - bKey
+      return (a.freq ?? 1e9) - (b.freq ?? 1e9)
+    })
+  }
+  return {
+    keyType: page.keyType,
+    keyValue: page.keyValue,
+    keyDescription: page.keyDescription,
+    ...(page.note ? { note: page.note } : {}),
+    words,
+  }
+}
+
+function chapter(name, pages) {
+  return { name, pages: pages.map(buildPage) }
+}
+
+const rootPages = [
+  ['port', '拿、运、带：import 运进来，export 运出去', ['import', 'export', 'report', 'transport', 'support', 'portable', 'porter', 'reporter', 'transportation'],
+    '拉丁 portare（搬运）。import 运进来，export 运出去，transport 横跨搬运；再加 -able 成 portable（可携带的）、-er 成 porter（搬运工）、-ation 成 transportation（运输）。'],
+  ['act', '做、驱动、行动：act 行动，react 反应', ['act', 'action', 'active', 'activity', 'actor', 'react', 'reaction', 'exact', 'actual'],
+    '拉丁 agere/actus（做、驱动）。act 行动，action 行动，active 活跃的，activity 活动，actor 演员；re- + act → react 反应。inter- + act → interact（见词缀册 interact 派生页）。'],
+  ['spect', '看：inspect 往里看，respect 反复看', ['inspect', 'respect', 'prospect', 'perspective', 'inspection', 'spectator'],
+    '拉丁 specere（看）。inspect 往里看，respect 反复看→尊敬，prospect 向前看→前景，perspective 看问题的角度；spectator 是“看的人”。'],
+  ['dict', '说：predict 预先说，contradict 反着说', ['predict', 'dictionary', 'dictate', 'contradiction', 'dictation'],
+    '拉丁 dicere（说）。predict 预先说→预测，contradict 反着说→反驳，dictate 口述；dictionary 是“词语的集合”。'],
+  ['vis', '看：visible 看得见，revise 再看一遍', ['vision', 'visible', 'visit', 'revise', 'advise', 'invisible', 'visual'],
+    '拉丁 videre（看）。vision 视力/愿景，visible 可见的，visit 去看，revise 再看一遍→修订；invisible 是“看不见的”。'],
+  ['vid', '看：video 看见的画面，evidence 看得见的证据', ['video', 'evidence', 'evident', 'evidently', 'provide'],
+    'vid 与 vis 同源，拉丁 videre（看）。video 看见的画面，evidence 看得见的证据，evident 明显的；provide 是“向前看→预先准备”。'],
+  ['audi', '听：audience 听众，audio 音频', ['audience', 'audio', 'auditorium', 'audible', 'audition'],
+    '拉丁 audire（听）。audience 听众，audio 音频，auditorium 礼堂；audible 听得见的，audition 试听/试镜。'],
+  ['bio', '生命：biology 生物学，biography 写生平', ['biology', 'biological', 'biologist', 'biography', 'autobiography'],
+    '希腊 bios（生命）。biology 生物学，biography 写生平→传记；biological 生物的，biologist 生物学家，autobiography 自传。'],
+  ['geo', '地球、土地：geography 地理，geometry 测量土地', ['geography', 'geometry', 'geology', 'geologist', 'geographical'],
+    '希腊 gē（土地）。geography 描写大地→地理，geometry 测量土地→几何，geology 研究土地→地质学。'],
+  ['graph', '写、画、记录：photograph 用光记录', ['photograph', 'paragraph', 'geography', 'graph', 'biography'],
+    '希腊 graphein（写、画）。photograph 用光记录→照片，paragraph 写在旁边→段落，biography 写生平→传记；graph 本身是“写下的图”。'],
+  ['phon', '声音：telephone 远处的声音', ['phone', 'microphone', 'symphony', 'telephone', 'phonetic'],
+    '希腊 phōnē（声音）。telephone 远处的声音，microphone 把声音放大，symphony 声音一起响→交响乐；phonetic 语音的。'],
+  ['ject', '投、扔：reject 扔回去，project 往前投', ['project', 'object', 'reject', 'subject', 'inject', 'eject', 'objection'],
+    '拉丁 iacere（投、扔）。project 向前投→项目/投射，reject 扔回去→拒绝，inject 投入→注射，subject 置于其下→主题/臣民。'],
+  ['duct', '引导：conduct 引导，product 生产出来', ['product', 'conduct', 'introduction', 'production', 'conductor', 'reduction'],
+    '拉丁 ducere（引导）。produce 引出→生产，introduce 引进→介绍，conduct 引导→指挥/实施，reduce 引回→减少。'],
+  ['mit', '送、派：admit 送进去，transmit 传送', ['admit', 'commit', 'submit', 'permit', 'transmit', 'committee'],
+    '拉丁 mittere（送、派）。admit 送进去→准许进入，submit 呈交，transmit 传送，permit 放行→允许；committee 是被派去办事的人。'],
+  ['miss', '送、派：mission 使命，dismiss 送走', ['mission', 'dismiss', 'permission', 'missile', 'transmission', 'admission'],
+    'miss 与 mit 同源（送）。mission 被派出的任务，dismiss 送走→解散，permission 放行→许可，missile 被投掷的东西→导弹。'],
+  ['fer', '带、拿：transfer 转带，offer 带来', ['offer', 'prefer', 'transfer', 'refer', 'differ', 'conference', 'suffer'],
+    '拉丁 ferre（带、拿）。transfer 转移，prefer 更看重→更喜欢，offer 带来→提供，conference 带到一起→会议，differ 分开带→不同。'],
+  ['tract', '拉、拖：attract 拉过来，contract 拉紧', ['contract', 'attract', 'attractive', 'tractor', 'abstract', 'extract', 'distract'],
+    '拉丁 trahere（拉、拖）。attract 拉过来→吸引，contract 拉紧→合同/收缩，extract 拉出来→提取，distract 拉开→分心。'],
+  ['struct', '建造、堆叠：construct 建造', ['structure', 'construct', 'construction', 'instruct', 'instruction', 'destruction', 'obstruct'],
+    '拉丁 struere（建造、堆叠）。construct 建造，instruct 在头脑里搭建→指导，destruction 拆毁，obstruct 挡住建造→阻碍。'],
+  ['pos', '放、置：compose 放到一起', ['position', 'oppose', 'propose', 'compose', 'expose', 'dispose', 'deposit'],
+    '拉丁 ponere/positus（放）。position 放的位置，compose 放到一起→组成，expose 放出去→暴露，deposit 放下→存款/沉淀。'],
+  ['form', '形状：transform 改变形状', ['form', 'inform', 'perform', 'transform', 'reform', 'information', 'formal'],
+    '拉丁 forma（形状）。inform 给头脑定形→通知，perform 彻底成型→表演/执行，transform 改变形状，uniform 同一形状→制服/统一的。'],
+  ['gen', '出生、产生：generate 产生', ['generate', 'generation', 'genius', 'general', 'generous', 'gene'],
+    '拉丁 genus/generare（出生、产生）。generate 产生，generation 一代，genius 与生俱来的天赋，generous 出身好→慷慨的。'],
+].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'root', keyValue, keyDescription, note, words }))
+
+const prefixPages = [
+  ['un', '不、相反：unhappy 不开心', ['unhappy', 'unable', 'unusual', 'unknown', 'unexpected', 'unfair', 'unlock'],
+    'un- 加在形容词或动词前表示否定：happy → unhappy，lock → unlock，known → unknown。'],
+  ['re', '再、重新、回：rewrite 重写', ['rewrite', 'review', 'return', 'recycle', 'react', 'recover', 'replace'],
+    're- 表示“再一次、往回”：write → rewrite，view → review，turn → return，cycle → recycle。'],
+  ['pre', '前、预先：predict 预先说', ['prepare', 'predict', 'prevent', 'prefer', 'previous', 'preserve', 'precaution'],
+    'pre- 表示“在…之前”：view → preview，dict → predict，pare → prepare，vent → prevent。'],
+  ['dis', '不、分离：disappear 消失', ['disagree', 'disappear', 'discover', 'dislike', 'dismiss', 'disorder', 'disable'],
+    'dis- 表示“相反、分开”：agree → disagree，appear → disappear，cover → discover。'],
+  ['ex', '出、向外：export 运出去', ['export', 'exit', 'expect', 'except', 'explain', 'experience', 'expand'],
+    'ex- 表示“向外、出”：port → export，it → exit，pect → expect，plain → explain。'],
+  ['trans', '横跨、转移：transport 运输', ['transport', 'transfer', 'transform', 'translate', 'transmit', 'transportation', 'transparent'],
+    'trans- 表示“横跨、转移”：port → transport，fer → transfer，form → transform，late → translate。'],
+  ['inter', '在…之间、相互（连在一起）：international 国际的', ['international', 'internet', 'interact', 'interconnect', 'interface', 'interpersonal', 'interview', 'internal', 'interaction'],
+    '拉丁 inter（在…之间、相互，连在一起）。inter + net → internet 互联网，inter + act → interact 互动，inter + connect → interconnect 互联，inter + national → international 国际的。'],
+  ['over', '过度、在上：overcome 克服', ['overcome', 'overlook', 'overseas', 'overtime', 'overnight', 'overall', 'overcoat'],
+    'over- 表示“在上、过度”：come → overcome，look → overlook，time → overtime，coat → overcoat。'],
+  ['under', '在下、不足：understand 理解', ['understand', 'underline', 'undergo', 'undertake', 'undergraduate', 'underneath'],
+    'under- 表示“在下、不足”：stand → understand，line → underline，go → undergo，estimate → underestimate。'],
+  ['mis', '错误、坏：mistake 错误', ['mistake', 'misunderstand', 'mislead', 'misfortune', 'misbehave'],
+    'mis- 表示“错误、坏”：take → mistake，lead → mislead，understand → misunderstand。'],
+  ['pro', '向前、支持：progress 前进', ['progress', 'project', 'protect', 'produce', 'program', 'promote', 'propose'],
+    'pro- 表示“向前、支持”：gress → progress，tect → protect，mote → promote，pose → propose。'],
+  ['out', '出、超过：output 输出', ['outside', 'outdoor', 'output', 'outstanding', 'outline', 'outlook', 'outcome'],
+    'out- 表示“向外、超过”：side → outside，put → output，standing → outstanding，line → outline。'],
+].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'prefix', keyValue, keyDescription, note, words }))
+
+// 页面排序：先高频、简单、派生多的词根/词缀，再进入进阶内容
+const orderPages = (pages, order) => [...pages].sort((a, b) => order.indexOf(a.keyValue) - order.indexOf(b.keyValue))
+
+const PREFIX_ORDER = ['un', 're', 'dis', 'pre', 'ex', 'inter', 'trans', 'pro', 'over', 'under', 'mis', 'out']
+const sortedPrefixPages = orderPages(prefixPages, PREFIX_ORDER)
+
+// 在 inter 页之后插入“由 interact 继续派生”的下一页，展示两层构词
+const interIndex = sortedPrefixPages.findIndex(page => page.keyValue === 'inter')
+sortedPrefixPages.splice(interIndex + 1, 0, {
+  keyType: 'text',
+  keyValue: 'interact',
+  keyDescription: 'inter- 相互 + act 做 → 互动；再看它的派生',
+  note: 'interact = inter-（相互）+ act（做）→ 互动。加 -ion 成 interaction（名词，相互作用），加 -ive 成 interactive（形容词，交互式的）；interconnect 是同族词（inter- + connect）。',
+  words: ['interact', 'interaction', 'interactive', 'interconnect'],
+})
+
+const suffixPages = [
+  ['tion', '名词后缀：动作、状态、结果', ['education', 'information', 'attention', 'condition', 'action', 'operation', 'solution', 'population'],
+    '动词 + -tion → 名词：educate → education，inform → information，attract → attention。'],
+  ['ment', '名词后缀：行为、结果、手段', ['government', 'movement', 'development', 'environment', 'agreement', 'management', 'treatment', 'equipment'],
+    '动词 + -ment → 名词：develop → development，move → movement，agree → agreement。'],
+  ['ness', '名词后缀：性质、状态', ['happiness', 'kindness', 'darkness', 'business', 'illness', 'weakness', 'consciousness'],
+    '形容词 + -ness → 名词：happy → happiness，kind → kindness，dark → darkness。'],
+  ['ity', '名词后缀：性质、状态、程度', ['ability', 'reality', 'quality', 'possibility', 'security', 'activity', 'electricity', 'opportunity'],
+    '形容词 + -ity → 名词：able → ability，real → reality，possible → possibility。'],
+  ['able', '形容词后缀：可…的', ['comfortable', 'available', 'reasonable', 'remarkable', 'reliable', 'acceptable', 'portable'],
+    '动词 + -able → 形容词“可…的”：read → readable，comfort → comfortable，rely → reliable。'],
+  ['ible', '形容词后缀：可…的', ['possible', 'terrible', 'visible', 'sensible', 'flexible', 'feasible', 'responsible'],
+    '动词 + -ible → 形容词“可…的”：poss → possible，vis → visible，flex → flexible。'],
+  ['ful', '形容词后缀：充满…的', ['beautiful', 'careful', 'powerful', 'helpful', 'useful', 'grateful', 'wonderful'],
+    '名词 + -ful → 形容词“充满…的”：care → careful，help → helpful，beauty → beautiful。'],
+  ['less', '形容词后缀：无…的', ['hopeless', 'careless', 'helpless', 'endless', 'useless', 'regardless', 'homeless'],
+    '名词 + -less → 形容词“无…的”：hope → hopeless，care → careless，end → endless。'],
+  ['er', '名词后缀：…的人/物', ['teacher', 'worker', 'computer', 'reader', 'writer', 'singer', 'leader'],
+    '动词 + -er → 做某事的人/物：teach → teacher，compute → computer，read → reader。'],
+  ['ly', '副词后缀：…地', ['quickly', 'slowly', 'carefully', 'usually', 'finally', 'probably', 'exactly', 'completely'],
+    '形容词 + -ly → 副词：quick → quickly，careful → carefully，usual → usually。'],
+  ['ive', '形容词后缀：有…性质的', ['active', 'creative', 'expensive', 'positive', 'negative', 'effective', 'attractive'],
+    '动词 + -ive → 形容词“有…性质的”：act → active，create → creative，attract → attractive。'],
+  ['ous', '形容词后缀：具有…的', ['dangerous', 'famous', 'nervous', 'obvious', 'curious', 'serious', 'various'],
+    '名词 + -ous → 形容词“具有…的”：danger → dangerous，fame → famous，nerve → nervous。'],
+  ['ize', '动词后缀：使…化', ['realize', 'organize', 'recognize', 'apologize', 'criticize', 'emphasize', 'summarize'],
+    '形容词/名词 + -ize → 动词“使…化”：real → realize，organ → organize，modern → modernize。'],
+].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'suffix', keyValue, keyDescription, note, words }))
+
+const SUFFIX_ORDER = ['er', 'ly', 'tion', 'able', 'ible', 'ness', 'ment', 'ity', 'ful', 'less', 'ive', 'ous', 'ize']
+const sortedSuffixPages = orderPages(suffixPages, SUFFIX_ORDER)
+
+const letterPages = [
+  ['old', '🥇 gold / ❄️ cold / 🤝 hold', ['old', 'cold', 'gold', 'hold', 'bold', 'fold', 'golden', 'household'],
+    'old 是 /əʊld/ 的稳定拼写：gold、cold、hold；看到 old 先读 /əʊld/。'],
+  ['ea', '🦅 eagle / 🌊 sea / 🍽️ eat', ['sea', 'eat', 'tea', 'clean', 'meat', 'teach', 'beach', 'dream'],
+    'ea 最常见的读音是 /iː/：sea、eat、tea；也有 /e/（bread）和 /eɪ/（great）等例外。'],
+  ['ee', '🐝 bee / 🌳 tree / 🦶 feet', ['bee', 'tree', 'see', 'need', 'keep', 'feel', 'meet', 'week'],
+    'ee 通常读 /iː/：bee、tree、see。'],
+  ['oo', '🌙 moon / 🍔 food / 🦁 zoo', ['moon', 'food', 'zoo', 'cool', 'school', 'pool', 'tooth', 'room'],
+    'oo 常读 /uː/：moon、food、zoo；在 blood、flood 中读 /ʌ/，在 door、floor 中读 /ɔː/。'],
+  ['ai', '🌧️ rain / 🚂 train / 🐌 snail', ['rain', 'train', 'snail', 'wait', 'paint', 'mail', 'tail', 'explain'],
+    'ai 通常读 /eɪ/：rain、train、wait。'],
+  ['ay', '🌞 day / 🎮 play / 🛣️ way', ['day', 'play', 'way', 'say', 'may', 'pay', 'stay', 'today'],
+    'ay 在词尾通常读 /eɪ/：day、play、stay。'],
+  ['oa', '⛵ boat / 🧥 coat / 🛣️ road', ['boat', 'coat', 'road', 'load', 'goal', 'coast', 'toast', 'coach'],
+    'oa 通常读 /əʊ/：boat、coat、road。'],
+  ['ou', '🏠 house / 🐭 mouse / 👄 mouth', ['house', 'mouse', 'mouth', 'out', 'about', 'around', 'cloud', 'shout'],
+    'ou 常读 /aʊ/：house、mouse、out；在 could、course 中读音不同。'],
+  ['ow', '🐄 cow / ❄️ snow', ['cow', 'now', 'how', 'down', 'town', 'brown', 'flower', 'power'],
+    'ow 可读 /aʊ/（cow、now）或 /əʊ/（snow、window）。'],
+  ['igh', '🌙 night / 💡 light / ✈️ flight', ['night', 'light', 'fight', 'high', 'might', 'right', 'sight', 'bright'],
+    'igh 中的 gh 不发音，整体读 /aɪ/：night、light、high。'],
+  ['ch', '🪑 chair / 🧀 cheese', ['chair', 'child', 'check', 'chicken', 'catch', 'teach', 'watch', 'much'],
+    'ch 通常读 /tʃ/：chair、child、teach。'],
+  ['sh', '👟 shoe / 🚢 ship', ['shoe', 'ship', 'sheep', 'fish', 'finish', 'push', 'shop', 'wash'],
+    'sh 读 /ʃ/：shoe、ship、fish。'],
+  ['th', '👍 thumb / 🤔 think / 👩 mother', ['think', 'thank', 'three', 'mouth', 'tooth', 'father', 'mother', 'brother'],
+    'th 可读 /θ/（think、mouth）或 /ð/（mother、brother）。'],
+  ['ph', '📱 phone / 📷 photo / 🐘 elephant', ['phone', 'photo', 'elephant', 'nephew', 'philosophy', 'physics', 'atmosphere', 'photograph'],
+    'ph 读 /f/：phone、photo、elephant。'],
+  ['wh', '🐋 whale / 🌾 wheat / 🎡 wheel', ['whale', 'wheat', 'wheel', 'white', 'whisper', 'whistle', 'while', 'which'],
+    'wh 通常读 /w/：whale、wheat、white。'],
+  ['ck', '🕐 clock / 🦆 duck / 🧦 sock', ['clock', 'duck', 'sock', 'black', 'pick', 'luck', 'quick', 'back'],
+    'ck 读 /k/：clock、duck、black。'],
+  ['ng', '🤴 king / 🔔 ring / 🎵 song', ['long', 'morning', 'bring', 'song', 'king', 'sing', 'spring', 'strong'],
+    'ng 通常读 /ŋ/：king、ring、song。'],
+  ['qu', '👑 queen / ❓ question / ⚡ quick', ['queen', 'question', 'quick', 'quiet', 'quite', 'quit', 'square', 'request'],
+    'qu 通常读 /kw/：queen、question、quick。'],
+].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'letters', keyValue, keyDescription, note, words }))
+
+const specialLetterPages = [
+  ['kn', '🔪 knife / 🚪 knock / 🦵 knee', ['know', 'knock', 'knife', 'knee', 'knowledge', 'kneel', 'knot', 'unknown'],
+    'kn 在词首时 k 不发音，源自古英语 cn-：knife、knee、know。'],
+  ['wr', '⌚ wrist / 🎁 wrap / ✍️ write', ['write', 'wrong', 'wrist', 'wrap', 'wreck', 'wrestle', 'writing', 'writer'],
+    'wr 在词首时 w 不发音，源自古英语 wr-：write、wrist、wrong。'],
+  ['mb', '🧗 climb / 🧨 bomb / 🐑 lamb', ['climb', 'bomb', 'lamb', 'thumb', 'comb', 'tomb', 'dumb', 'plumber'],
+    '词尾 mb 的 b 不发音：climb、bomb、lamb；但 member、number 中的 b 要读。'],
+  ['tch', '🍳 kitchen / 🧤 catch / 🔘 switch', ['catch', 'watch', 'match', 'kitchen', 'switch', 'scratch', 'fetch', 'patch'],
+    'tch 读 /tʃ/，常出现在短元音后：catch、watch、kitchen。'],
+  ['dge', '🌉 bridge / 🧊 fridge / ⚖️ judge', ['bridge', 'fridge', 'judge', 'edge', 'knowledge', 'lodge', 'ridge', 'budget'],
+    'dge 读 /dʒ/，常出现在短元音后：bridge、judge、fridge。'],
+].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'letters', keyValue, keyDescription, note, words }))
+
+const ROOT_ORDER = ['act', 'form', 'port', 'pos', 'gen', 'fer', 'vis', 'spect', 'dict', 'ject', 'mit', 'miss', 'duct', 'tract', 'struct', 'vid', 'geo', 'graph', 'phon', 'audi', 'bio']
+const VOWEL_ORDER = ['ea', 'ou', 'ai', 'ee', 'ow', 'oo', 'ay', 'oa', 'igh']
+const CONSONANT_ORDER = ['ch', 'th', 'sh', 'ng', 'ck', 'qu', 'ph', 'wh']
+const SPECIAL_ORDER = ['old', 'kn', 'wr', 'mb', 'tch', 'dge']
+
+const sortedRootPages = orderPages(rootPages, ROOT_ORDER)
+const coreRootPages = sortedRootPages.slice(0, 10)
+const advancedRootPages = sortedRootPages.slice(10)
+const allLetterPages = [...letterPages, ...specialLetterPages]
+const vowelPages = orderPages(allLetterPages.filter(page => VOWEL_ORDER.includes(page.keyValue)), VOWEL_ORDER)
+const consonantPages = orderPages(allLetterPages.filter(page => CONSONANT_ORDER.includes(page.keyValue)), CONSONANT_ORDER)
+const specialPages = orderPages(allLetterPages.filter(page => SPECIAL_ORDER.includes(page.keyValue)), SPECIAL_ORDER)
+
+const nounPages = [
+  ['身体', '身体部位名词', ['head', 'hand', 'arm', 'leg', 'foot', 'eye', 'ear', 'nose'],
+    '身体部位词适合做“图词联动”：边指部位边说出单词，比孤立背释义更容易记住。'],
+  ['日常物品', '常见日常物品名词', ['book', 'pen', 'pencil', 'chair', 'clock', 'lamp', 'bottle', 'cup'],
+    '把物品放在眼前，看到就说出英文；同场景的词一起记，比按字母顺序背更自然。'],
+  ['酒店', '酒店入住与服务场景名词', ['hotel', 'luggage', 'bed', 'key', 'reception', 'bill', 'towel', 'tip'],
+    '按入住流程串起来：luggage → reception → key → bed → towel → bill → tip。'],
+].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'text', keyValue, keyDescription, note, words }))
 
 const samples = [
   {
-    name: '四级词根',
-    desc: '按词根/词缀把四级词归堆，一页记一组',
-    chapters: [
-      { name: '词根 old', keyType: 'root', keyValue: 'old', words: pick((w) => w.length >= 4 && w.includes('old')) },
-      { name: '词根 spect', keyType: 'root', keyValue: 'spect', words: pick((w) => w.includes('spect')) },
-      { name: '前缀 pre', keyType: 'prefix', keyValue: 'pre', words: pick((w) => w.startsWith('pre')) },
-    ],
+    name: '词根册',
+    desc: '先高频核心词根（act/form/port），再进阶词根；派生越多的排越前',
+    chapters: [chapter('核心词根', coreRootPages), chapter('进阶词根', advancedRootPages)],
   },
   {
-    name: '四级发音',
-    desc: '按音标归堆，同音词放一页，读音一起记',
-    chapters: [
-      { name: '音标 /əʊ/', keyType: 'phonetic', keyValue: 'əʊ', words: pick((_, item) => String(item.phonetic || '').includes('əʊ')) },
-      { name: '音标 /eɪ/', keyType: 'phonetic', keyValue: 'eɪ', words: pick((_, item) => String(item.phonetic || '').includes('eɪ')) },
-    ],
+    name: '词缀册',
+    desc: '先学高频、最好举一反三的前缀和后缀，再进入派生页',
+    chapters: [chapter('常用前缀', sortedPrefixPages), chapter('常用后缀', sortedSuffixPages)],
+  },
+  {
+    name: '拼写组合册',
+    desc: '按元音、辅音、特殊拼写分章，先高频组合，再特殊规则',
+    chapters: [chapter('元音组合', vowelPages), chapter('辅音组合', consonantPages), chapter('特殊拼写', specialPages)],
+  },
+  {
+    name: '场景名词',
+    desc: '按身体、日常物体和酒店场景组织常用名词',
+    chapters: nounPages.map(page => chapter(page.keyValue, [page])),
   },
 ]
 
-// 少于 4 个词的章没有记忆价值，直接丢掉
+// 示例条目 ID 由“书/章/页中心/单词”派生：未来插入新页、调整顺序时旧 ID 不变
+const BOOK_IDS = { 词根册: 'roots', 词缀册: 'affixes', 拼写组合册: 'spelling', 场景名词: 'nouns' }
+const CHAPTER_IDS = {
+  核心词根: 'core_roots',
+  进阶词根: 'advanced_roots',
+  常用前缀: 'prefix',
+  常用后缀: 'suffix',
+  元音组合: 'vowels',
+  辅音组合: 'consonants',
+  特殊拼写: 'special',
+  身体: 'body',
+  日常物品: 'objects',
+  酒店: 'hotel',
+}
+const slug = value => String(value).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '')
+const usedEntryIds = new Set()
 for (const book of samples) {
-  book.chapters = book.chapters.filter(chapter => chapter.words.length >= 4)
+  const bookId = BOOK_IDS[book.name]
+  if (!bookId) throw new Error(`示例词集缺少稳定 ID：${book.name}`)
+  for (const item of book.chapters) {
+    const chapterId = CHAPTER_IDS[item.name]
+    if (!chapterId) throw new Error(`示例章节缺少稳定 ID：${item.name}`)
+    for (const [pageIndex, page] of item.pages.entries()) {
+      const pageSlug = slug(page.keyValue) || `text_${pageIndex + 1}`
+      for (const word of page.words) {
+        const wordSlug = slug(word.text)
+        if (!wordSlug) throw new Error(`示例词缺少稳定 ID：${word.text}`)
+        const entryId = `sample_${bookId}_${chapterId}_${pageSlug}_${wordSlug}`
+        if (usedEntryIds.has(entryId)) throw new Error(`示例条目 ID 重复：${entryId}`)
+        usedEntryIds.add(entryId)
+        word.entryId = entryId
+      }
+    }
+  }
 }
 
 const header = `/**
- * 内置示例书（生成产物，勿手改；重新生成：node scripts/gen-wordbook-samples.cjs）
+ * 内置示例词集（生成产物，勿手改；重新生成：node scripts/gen-wordbook-samples.cjs）
  *
- * 两本书：四级词根（old / spect / pre）、四级发音（/əʊ/ /eɪ/）。
- * 首次进入词图闯关时播种，用户删除后不再自动恢复。
+ * 四本示例：词根册、词缀册、拼写组合册与场景名词。
+ * 页面 note 记录词根来源与派生链，词条 note 记录单个词的构词关系。
+ * 首次进入词集时播种，用户删除或编辑归入「我的词集」后不再自动恢复。
  */
 
 export interface WordBookSampleWord {
+  entryId: string
   text: string
   explains: string
   phonetic?: string
   freq?: number
+  note?: string
+  examples?: { english: string; chinese: string }[]
+  memoryTip?: string
+}
+
+export interface WordBookSamplePage {
+  keyType: 'letters' | 'root' | 'prefix' | 'suffix' | 'phonetic' | 'text'
+  keyValue: string
+  keyDescription?: string
+  note?: string
+  words: WordBookSampleWord[]
 }
 
 export interface WordBookSampleChapter {
   name: string
-  keyType: 'root' | 'prefix' | 'suffix' | 'phonetic'
-  keyValue: string
-  words: WordBookSampleWord[]
+  pages: WordBookSamplePage[]
 }
 
 export interface WordBookSampleBook {
@@ -89,6 +1015,8 @@ fs.writeFileSync(path.join(ROOT, 'src/utils/wordbook-samples.ts'), header + body
 fs.writeFileSync(path.join(ROOT, 'mobile/src/utils/wordbook-samples.ts'), header + body)
 
 for (const book of samples) {
-  console.log(book.name, book.chapters.map(chapter => `${chapter.name}: ${chapter.words.length} 词`).join(' | '))
+  const pages = book.chapters.reduce((sum, item) => sum + item.pages.length, 0)
+  console.log(`${book.name}: ${book.chapters.length} 章 / ${pages} 页`)
 }
+console.log(`共 ${samples.reduce((sum, book) => sum + book.chapters.reduce((n, item) => n + item.pages.length, 0), 0)} 个学习页，${totalWords} 个词条`)
 console.log('已写入 src/utils/wordbook-samples.ts 与 mobile/src/utils/wordbook-samples.ts')

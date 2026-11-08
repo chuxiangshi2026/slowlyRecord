@@ -174,6 +174,21 @@ describe('wordbank-service', () => {
       expect(fetchMock).toHaveBeenCalled()
     })
 
+    it('词根词缀词库应包含字母组合，且条目 ID 由内容派生、不随顺序变化', async () => {
+      const result = await fetchWordBank('roots')
+      const again = await fetchWordBank('roots')
+
+      expect(result.length).toBeGreaterThan(500)
+      expect(result.length).toBe(getWordBankInfo('roots')?.wordCount)
+      expect(new Set(result.map(word => word._id)).size).toBe(result.length)
+      expect(result.map(word => word._id)).toEqual(again.map(word => word._id))
+      expect(result.every(word => /^affix_[a-z]+_[a-z0-9_]+$/.test(word._id))).toBe(true)
+
+      const combo = result.find(word => word.text === 'old' && word.explains.includes('字母组合'))
+      expect(combo).toBeDefined()
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
+
     it('应使用缓存数据（当缓存有效时）', async () => {
       const cachedWords = Array(30).fill(null).map((_, i) => ({
         _id: `wb_${i}`, text: `cached${i}`, explains: `缓存${i}`,

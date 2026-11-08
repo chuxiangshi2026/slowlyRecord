@@ -16,20 +16,27 @@ export function seedWordBookSamples(): void {
     store.load(true)
     for (const sample of WORDBOOK_SAMPLES) {
       if (store.sortedBooks.some((book: any) => book.name === sample.name)) continue
-      const book = store.createBook(sample.name, { desc: sample.desc, isSample: true })
+      const book = store.createBook(sample.name, { desc: sample.desc, isSample: true, sampleVersion: 7 })
       for (const chapter of sample.chapters) {
         const chapterDoc = store.createChapter(book._id, chapter.name)
-        const key: WordBookKey = { type: chapter.keyType, value: chapter.keyValue }
-        const chunks = splitWordsIntoPages(chapter.words.map(toWordBookWord), WORD_BOOK_PAGE_SIZE, 'freq')
-        for (let i = 0; i < chunks.length; i++) {
-          store.createPage({
-            bookId: book._id,
-            chapterId: chapterDoc._id,
-            name: getDefaultPageName(key, i + 1, chunks.length),
-            key,
-            words: chunks[i],
-            source: { bankName: '四级词汇', filter: { sample: true } },
-          })
+        for (const samplePage of chapter.pages) {
+          const key: WordBookKey = {
+            type: samplePage.keyType,
+            value: samplePage.keyValue,
+            description: samplePage.keyDescription,
+          }
+          const chunks = splitWordsIntoPages(samplePage.words.map(toWordBookWord), WORD_BOOK_PAGE_SIZE, 'freq')
+          for (let i = 0; i < chunks.length; i++) {
+            store.createPage({
+              bookId: book._id,
+              chapterId: chapterDoc._id,
+              name: getDefaultPageName(key, i + 1, chunks.length),
+              key,
+              words: chunks[i],
+              note: samplePage.note,
+              source: { bankName: '内置词库', filter: { sample: true } },
+            })
+          }
         }
       }
     }

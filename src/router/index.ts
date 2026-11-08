@@ -281,25 +281,25 @@ const routes: Array<RouteRecordRaw> = [
         path: 'word-book',
         name: 'wordBookBooks',
         component: WordBookBooks,
-        meta: {menu: false, title: '词图闯关'},
+        meta: {menu: false, title: '词集'},
       },
       {
         path: 'word-book/page/:pageId',
         name: 'wordBookPage',
         component: WordBookPage,
-        meta: {menu: false, title: '词图记忆页'},
+        meta: {menu: false, title: '词集学习页'},
       },
       {
         path: 'word-book/:bookId',
         name: 'wordBookChapters',
         component: WordBookChapters,
-        meta: {menu: false, title: '词图章节'},
+        meta: {menu: false, title: '词集章节'},
       },
       {
         path: 'word-book/:bookId/:chapterId',
         name: 'wordBookPages',
         component: WordBookPages,
-        meta: {menu: false, title: '词图学习页'},
+        meta: {menu: false, title: '词集页面'},
       },
       ...(isDesktopEnv ? [
         {

@@ -56,6 +56,7 @@ export function resolveWordBookKey(filter: WordBookFilterLike | undefined): Word
 }
 
 const KEY_TYPE_LABEL: Record<WordBookKey['type'], string> = {
+  letters: '字母组合',
   root: '词根',
   prefix: '前缀',
   suffix: '后缀',
@@ -121,12 +122,16 @@ export function splitWordsIntoPages<T extends { text: string; freq?: number }>(
   return chunks
 }
 
-export function toWordBookWord(word: { _id?: string; id?: string; text?: string; word?: string; explains?: string; meaning?: string; phonetic?: string; freq?: number }): WordBookWord {
+export function toWordBookWord(word: { entryId?: string; _id?: string; id?: string; text?: string; word?: string; explains?: string; meaning?: string; phonetic?: string; note?: string; examples?: { english: string; chinese: string }[]; memoryTip?: string; freq?: number }): WordBookWord {
   return {
+    entryId: word.entryId || createWordBookId(`${WORD_BOOK_DB_PREFIX}entry_`),
     sourceId: String(word._id || word.id || ''),
     text: String(word.text || word.word || '').trim(),
     explains: String(word.explains ?? word.meaning ?? ''),
     ...(word.phonetic ? { phonetic: word.phonetic } : {}),
+    ...(word.note ? { note: word.note } : {}),
+    ...(word.examples?.length ? { examples: word.examples.map(item => ({ ...item })) } : {}),
+    ...(word.memoryTip ? { memoryTip: word.memoryTip } : {}),
     ...(typeof word.freq === 'number' ? { freq: word.freq } : {}),
   }
 }
@@ -139,6 +144,7 @@ export interface BuildPageOptions {
   key: WordBookKey
   source: WordBookSource
   words: WordBookWord[]
+  note?: string
   now?: number
 }
 
@@ -156,6 +162,7 @@ export function buildWordBookPage(options: BuildPageOptions): WordBookPage {
     key: options.key,
     words: options.words.map(word => ({ ...word })),
     source: options.source,
+    ...(options.note ? { note: options.note } : {}),
     level,
     nextReviewAt: now + DEFAULT_INTERVALS[level] * 60_000,
     ctime: now,
@@ -256,7 +263,7 @@ export function buildWordBookSource(bankId: string | undefined, bankName: string
   return { bankId, bankName, filter: cleaned }
 }
 
-export function createWordBookBook(name: string, order = 0, now = Date.now(), extra: Partial<Pick<WordBookBook, 'desc' | 'isSample'>> = {}): WordBookBook {
+export function createWordBookBook(name: string, order = 0, now = Date.now(), extra: Partial<Pick<WordBookBook, 'desc' | 'isSample' | 'sampleVersion' | 'copiedFromBookId'>> = {}): WordBookBook {
   return {
     _id: createWordBookId(`${WORD_BOOK_DB_PREFIX}book_`),
     type: 'wb_book',
