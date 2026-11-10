@@ -68,6 +68,89 @@ export class DbAdapterIndexedDB implements DbAdapter {
   /** 每个文档最后一次写入调用的版本，删除也记录，防止旧事务回写新缓存 */
   private latestWriteRevisions = new Map<string, string>()
 
+  /**
+   * 跨标签页/跨窗口写入广播（Web 多标签、Electron 多窗口各自持有适配器实例）。
+   * 本实例写入后通知其它实例回读刷新对应文档，避免「后写者用旧快照整份覆盖先写者」。
+   */
+  private channel: BroadcastChannel | null = null
+  private channelUnavailable = false
+
+  constructor() {
+    // 提前建立广播通道：纯读取的标签页自己不写入，也要能收到其它实例的缓存失效通知
+    this.getChannel()
+  }
+
+  /** 关闭广播通道（测试 / HMR 场景的资源清理） */
+  closeChannel(): void {
+    try {
+      this.channel?.close()
+    } catch {
+      // ignore
+    }
+    this.channel = null
+  }
+
+  private getChannel(): BroadcastChannel | null {
+    if (this.channel || this.channelUnavailable) return this.channel
+    try {
+      if (typeof BroadcastChannel === 'undefined') throw new Error('BroadcastChannel unavailable')
+      this.channel = new BroadcastChannel('slowlyrecord-db-sync')
+      this.channel.onmessage = (event: MessageEvent) => {
+        void this.applyRemoteChange(event.data)
+      }
+    } catch {
+      this.channelUnavailable = true
+    }
+    return this.channel
+  }
+
+  private broadcastChanges(ids: string[]): void {
+    if (ids.length === 0) return
+    try {
+      this.getChannel()?.postMessage({ ids })
+    } catch {
+      // 广播失败不影响本次写入
+    }
+  }
+
+  /**
+   * 收到其它实例的写入通知后的缓存自愈：
+   * 仅处理本实例已缓存的文档（保留 preloadToCache(prefix) 的隔离性），
+   * 且期间无本地新写入（缓存对象引用未变）时才用库内最新值刷新，
+   * 防止旧值覆盖本地并发写入。
+   */
+  private async applyRemoteChange(data: unknown): Promise<void> {
+    const ids = (data as { ids?: string[] } | null)?.ids
+    if (!Array.isArray(ids)) return
+    for (const id of ids) {
+      if (typeof id !== 'string' || !this.syncCache.has(id)) continue
+      const cachedBefore = this.syncCache.get(id)
+      try {
+        const db = await this.getDB()
+        const result = await promisify(getStore(db).get(id)) as DbDoc | null
+        if (this.syncCache.get(id) !== cachedBefore) continue
+        if (result) this.syncCache.set(id, result)
+        else this.syncCache.delete(id)
+      } catch {
+        // 回读失败保留现状，下次读取自愈
+      }
+    }
+  }
+
+  /**
+   * 与 utools.db 对齐的乐观锁：显式携带过期 _rev 的写入返回 conflict，
+   * 让调用方「重读最新文档合并后重试」的兜底路径在 Web/Electron 下真正生效
+   * （wordbank-manager / user-set-db-util / sync-tombstone 均依赖该语义）。
+   */
+  private checkConflict(doc: DbDoc): DbReturn | null {
+    if (doc._rev === undefined) return null
+    const existing = this.syncCache.get(doc._id)
+    if (existing && doc._rev !== existing._rev) {
+      return { id: doc._id, ok: false, error: true, name: 'conflict', message: 'Document update conflict.' }
+    }
+    return null
+  }
+
   private async getDB(): Promise<IDBDatabase> {
     if (this.db) return this.db
     if (!this.openPromise) {
@@ -107,6 +190,8 @@ export class DbAdapterIndexedDB implements DbAdapter {
   }
 
   put(doc: DbDoc): DbReturn {
+    const conflict = this.checkConflict(doc)
+    if (conflict) return conflict
     const rev = this.nextRev()
     const updatedDoc = { ...doc, _rev: rev }
     const previous = this.syncCache.get(doc._id)
@@ -120,6 +205,7 @@ export class DbAdapterIndexedDB implements DbAdapter {
       }
       console.error('[db-indexeddb] put 持久化失败:', error)
     })
+    this.broadcastChanges([doc._id])
     return { id: doc._id, ok: true, rev }
   }
 
@@ -198,6 +284,7 @@ export class DbAdapterIndexedDB implements DbAdapter {
       }
       console.error('[db-indexeddb] remove 持久化失败:', error)
     })
+    this.broadcastChanges([id])
 
     return { id, ok: true, rev }
   }
@@ -227,14 +314,22 @@ export class DbAdapterIndexedDB implements DbAdapter {
 
   bulkDocs(docs: DbDoc[]): DbReturn[] {
     const rev = this.nextRev()
-    const updatedDocs = docs.map(doc => ({ ...doc, _rev: rev }))
+    // 逐文档冲突检测：携带过期 _rev 的文档返回 conflict 且不参与本批写入
+    const accepted: DbDoc[] = []
+    const results: DbReturn[] = docs.map(doc => {
+      const conflict = this.checkConflict(doc)
+      if (conflict) return conflict
+      accepted.push(doc)
+      return { id: doc._id, ok: true, rev }
+    })
+    if (accepted.length === 0) return results
+    const updatedDocs = accepted.map(doc => ({ ...doc, _rev: rev }))
     const previous = new Map<string, DbDoc | null>()
-    const results: DbReturn[] = updatedDocs.map(doc => {
+    for (const doc of updatedDocs) {
       previous.set(doc._id, this.syncCache.get(doc._id) ?? null)
       this.latestWriteRevisions.set(doc._id, rev)
       this.syncCache.set(doc._id, doc)
-      return { id: doc._id, ok: true, rev }
-    })
+    }
     void this.enqueueWrite(() => this._writeBulkPut(updatedDocs)).catch((error) => {
       for (const doc of updatedDocs) {
         if (this.syncCache.get(doc._id)?._rev !== rev) continue
@@ -244,6 +339,7 @@ export class DbAdapterIndexedDB implements DbAdapter {
       }
       console.error('[db-indexeddb] bulkDocs 持久化失败:', error)
     })
+    this.broadcastChanges(updatedDocs.map(doc => doc._id))
     return results
   }
 
@@ -264,6 +360,8 @@ export class DbAdapterIndexedDB implements DbAdapter {
     },
 
     put: async (doc: DbDoc): Promise<DbReturn> => {
+      const conflict = this.checkConflict(doc)
+      if (conflict) return conflict
       const rev = this.nextRev()
       const updatedDoc = { ...doc, _rev: rev }
       this.latestWriteRevisions.set(doc._id, rev)
@@ -273,6 +371,7 @@ export class DbAdapterIndexedDB implements DbAdapter {
           this.syncCache.set(doc._id, updatedDoc)
         }
       })
+      this.broadcastChanges([doc._id])
       return { id: doc._id, ok: true, rev }
     },
 
@@ -284,13 +383,23 @@ export class DbAdapterIndexedDB implements DbAdapter {
         await this._writeRemove(id)
         if (this.latestWriteRevisions.get(id) === rev) this.syncCache.delete(id)
       })
+      this.broadcastChanges([id])
       return { id, ok: true, rev }
     },
 
     bulkDocs: async (docs: DbDoc[]): Promise<DbReturn[]> => {
       if (docs.length === 0) return []
       const rev = this.nextRev()
-      const updatedDocs = docs.map(doc => ({ ...doc, _rev: rev }))
+      // 逐文档冲突检测：携带过期 _rev 的文档返回 conflict 且不参与本批写入
+      const accepted: DbDoc[] = []
+      const results: DbReturn[] = docs.map(doc => {
+        const conflict = this.checkConflict(doc)
+        if (conflict) return conflict
+        accepted.push(doc)
+        return { id: doc._id, ok: true, rev }
+      })
+      if (accepted.length === 0) return results
+      const updatedDocs = accepted.map(doc => ({ ...doc, _rev: rev }))
       for (const doc of updatedDocs) this.latestWriteRevisions.set(doc._id, rev)
       await this.enqueueWrite(async () => {
         await this._writeBulkPut(updatedDocs)
@@ -300,7 +409,8 @@ export class DbAdapterIndexedDB implements DbAdapter {
           }
         }
       })
-      return updatedDocs.map(doc => ({ id: doc._id, ok: true, rev }))
+      this.broadcastChanges(updatedDocs.map(doc => doc._id))
+      return results
     },
   }
 }
