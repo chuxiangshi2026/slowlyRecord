@@ -18,7 +18,7 @@
     "build:electron": "vite build --config vite.config.electron.ts",
     "preview:electron": "vite preview --config vite.config.electron.ts",
     "dev:web": "vite --config vite.config.web.ts",
-    "build:web": "vite build --config vite.config.web.ts && node scripts/gen-seo-pages.cjs",
+    "build:web": "vite build --config vite.config.web.ts && node scripts/gen-seo-pages.cjs && node scripts/strip-web-desktop-assets.cjs",
     "gen:seo": "node scripts/gen-seo-pages.cjs",
     "preview:web": "vite preview --config vite.config.web.ts",
     "pack:electron": "npm run build:electron && electron-builder --config electron-builder.yml",
