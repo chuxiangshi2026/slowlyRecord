@@ -272,8 +272,12 @@ function existingScheduleCodes(): string[] {
 /**
  * 发起创建请求（系统弹窗由用户决定）。
  * 任务已存在时不重复请求，避免每次启动/改时间都弹一次授权框。
+ *
+ * 「已发起过」必须无论用户同意还是拒绝都落库：requestSchedule 在用户拒绝时
+ * 会 reject，若不包 try/finally，requestedKey 停留在 false，下次进入插件
+ * reconcileSchedules() 会再次发起请求，导致用户每次呼出都被弹一次授权框。
  */
-async function requestTask(kind: ReminderKind, force = false): Promise<void> {
+export async function requestTask(kind: ReminderKind, force = false): Promise<void> {
   const wordsStore = useWordsStore()
   const meta = taskMeta(kind)
   if (!force && existingScheduleCodes().includes(meta.code)) {
@@ -281,8 +285,11 @@ async function requestTask(kind: ReminderKind, force = false): Promise<void> {
     return
   }
   wordsStore.setScheduleReminder({ [meta.requestedKey]: false } as any)
-  await getUtools().requestSchedule({ code: meta.code, label: meta.label, trigger: { cron: meta.cron } })
-  wordsStore.setScheduleReminder({ [meta.requestedKey]: true } as any)
+  try {
+    await getUtools().requestSchedule({ code: meta.code, label: meta.label, trigger: { cron: meta.cron } })
+  } finally {
+    wordsStore.setScheduleReminder({ [meta.requestedKey]: true } as any)
+  }
 }
 
 /** 设置页开关切换后的即时应用：开=立即发起创建请求；关=删除任务 */
