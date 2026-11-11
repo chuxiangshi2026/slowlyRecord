@@ -4,18 +4,23 @@
  * 兼容旧版整存格式；导入后删除缓存含分块清理。
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 // 内存 Map 兜底 uni storage
 const store = new Map<string, any>()
 let mockDownloadContent = ''
+const downloadFile = vi.fn(({ url, success }: any) => {
+  if (url.includes('404')) return
+  success({ statusCode: 200, tempFilePath: '/tmp/mock.json' })
+})
+const request = vi.fn()
 vi.stubGlobal('uni', {
   getStorageSync: (k: string) => store.get(k) ?? '',
   setStorageSync: (k: string, v: any) => { store.set(k, v) },
   removeStorageSync: (k: string) => { store.delete(k) },
-  downloadFile: ({ url, success }: any) => {
-    if (url.includes('404')) return
-    success({ statusCode: 200, tempFilePath: '/tmp/mock.json' })
-  },
+  downloadFile,
+  request,
   getFileSystemManager: () => ({
     readFile: ({ success }: any) => success({ data: mockDownloadContent }),
   }),
@@ -26,6 +31,8 @@ import {
   removeCachedWordBank,
   getCachedBankIds,
   downloadWordBank,
+  fetchRemoteIndex,
+  NON_ENGLISH_BANKS,
 } from '@/utils/remote-wordbank'
 
 const CACHE_KEY_PREFIX = 'slowlyrecord_remote_wordbank_'
@@ -132,5 +139,35 @@ describe('getCachedBankIds', () => {
   it('读取已缓存 id 列表', () => {
     store.set('slowlyrecord_remote_wordbank_index', JSON.stringify(['cet4', 'gre']))
     expect(getCachedBankIds()).toEqual(['cet4', 'gre'])
+  })
+})
+
+describe('多语言词库', () => {
+  beforeEach(() => {
+    store.clear()
+    request.mockReset()
+    downloadFile.mockClear()
+  })
+
+  it('旧远程清单也补齐全部非英语词库，且清单与实际 JSON 一致', async () => {
+    request.mockImplementation(({ success }: any) => success({
+      statusCode: 200,
+      data: [{ id: 'cet4', name: '四级词汇', wordCount: 3739, sizeKB: 305 }],
+    }))
+    const list = await fetchRemoteIndex()
+    expect(list).toHaveLength(1 + NON_ENGLISH_BANKS.length)
+    expect(new Set(list?.map(bank => bank.language))).toEqual(new Set(['en', 'ja', 'ru', 'es', 'fr']))
+    for (const bank of NON_ENGLISH_BANKS) {
+      const words = JSON.parse(readFileSync(resolve(process.cwd(), `public/wordbanks/${bank.id}.json`), 'utf-8'))
+      expect(words, bank.id).toHaveLength(bank.wordCount)
+    }
+  })
+
+  it('日语词库从现有 public/wordbanks 下载', async () => {
+    mockDownloadContent = JSON.stringify([{ word: 'あい', meaning: '爱' }])
+    await downloadWordBank('jlpt-n5')
+    expect(downloadFile.mock.calls[0][0].url).toBe(
+      'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/wordbanks/jlpt-n5.json',
+    )
   })
 })

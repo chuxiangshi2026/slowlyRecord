@@ -1,0 +1,252 @@
+[
+  {
+    "word": "friend",
+    "explains": "n. 朋友；伙伴（入门高频）",
+    "freq": 1
+  },
+  {
+    "word": "school",
+    "explains": "n. 学校（入门高频）",
+    "freq": 2
+  },
+  {
+    "word": "teacher",
+    "explains": "n. 老师（入门高频）",
+    "freq": 3
+  },
+  {
+    "word": "homework",
+    "explains": "n. 家庭作业（入门高频）",
+    "freq": 4
+  },
+  {
+    "word": "dream",
+    "explains": "n. 梦想；v. 做梦（入门高频）",
+    "freq": 5
+  },
+  {
+    "word": "truth",
+    "explains": "n. 真相；事实（入门高频）",
+    "freq": 6
+  },
+  {
+    "word": "apologize",
+    "explains": "v. 道歉（入门高频）",
+    "freq": 7
+  },
+  {
+    "word": "forgive",
+    "explains": "v. 原谅（入门高频）",
+    "freq": 8
+  },
+  {
+    "word": "promise",
+    "explains": "n. 承诺；v. 答应（入门高频）",
+    "freq": 9
+  },
+  {
+    "word": "courage",
+    "explains": "n. 勇气（入门高频）",
+    "freq": 10
+  },
+  {
+    "word": "student",
+    "explains": "n. 学生（入门高频）",
+    "freq": 11
+  },
+  {
+    "word": "lesson",
+    "explains": "n. 课；教训（入门高频）",
+    "freq": 12
+  },
+  {
+    "word": "study",
+    "explains": "v. 学习；n. 学习（入门高频）",
+    "freq": 13
+  },
+  {
+    "word": "learn",
+    "explains": "v. 学会；得知（入门高频）",
+    "freq": 14
+  },
+  {
+    "word": "mistake",
+    "explains": "n. 错误（入门高频）",
+    "freq": 15
+  },
+  {
+    "word": "choice",
+    "explains": "n. 选择（入门高频）",
+    "freq": 16
+  },
+  {
+    "word": "respect",
+    "explains": "v. 尊重；n. 尊重（入门高频）",
+    "freq": 17
+  },
+  {
+    "word": "honest",
+    "explains": "adj. 诚实的（进阶高频）",
+    "freq": 18
+  },
+  {
+    "word": "confident",
+    "explains": "adj. 自信的（进阶高频）",
+    "freq": 19
+  },
+  {
+    "word": "jealous",
+    "explains": "adj. 嫉妒的（进阶高频）",
+    "freq": 20
+  },
+  {
+    "word": "grow",
+    "explains": "v. 成长；种植（进阶高频）",
+    "freq": 21
+  },
+  {
+    "word": "change",
+    "explains": "v. 改变；n. 变化（进阶高频）",
+    "freq": 22
+  },
+  {
+    "word": "advice",
+    "explains": "n. 建议（进阶高频）",
+    "freq": 23
+  },
+  {
+    "word": "believe",
+    "explains": "v. 相信（进阶高频）",
+    "freq": 24
+  },
+  {
+    "word": "secret",
+    "explains": "n. 秘密；adj. 秘密的（进阶高频）",
+    "freq": 25
+  },
+  {
+    "word": "argument",
+    "explains": "n. 争论；论点（进阶高频）",
+    "freq": 26
+  },
+  {
+    "word": "regret",
+    "explains": "v. 后悔；n. 遗憾（进阶高频）",
+    "freq": 27
+  },
+  {
+    "word": "support",
+    "explains": "v. 支持；n. 支持（进阶高频）",
+    "freq": 28
+  },
+  {
+    "word": "fault",
+    "explains": "n. 过错；缺点（进阶高频）",
+    "freq": 29
+  },
+  {
+    "word": "realize",
+    "explains": "v. 意识到；实现（进阶高频）",
+    "freq": 30
+  },
+  {
+    "word": "honesty",
+    "explains": "n. 诚实（进阶高频）",
+    "freq": 31
+  },
+  {
+    "word": "embarrassment",
+    "explains": "n. 尴尬；难堪（进阶高频）",
+    "freq": 32
+  },
+  {
+    "word": "punishment",
+    "explains": "n. 惩罚（进阶高频）",
+    "freq": 33
+  },
+  {
+    "word": "consequence",
+    "explains": "n. 后果（进阶高频）",
+    "freq": 34
+  },
+  {
+    "word": "decision",
+    "explains": "n. 决定（进阶高频）",
+    "freq": 35
+  },
+  {
+    "word": "motivate",
+    "explains": "v. 激励；促使（进阶高频）",
+    "freq": 36
+  },
+  {
+    "word": "talent",
+    "explains": "n. 天赋；才能（高阶高频）",
+    "freq": 37
+  },
+  {
+    "word": "improve",
+    "explains": "v. 改善；提高（高阶高频）",
+    "freq": 38
+  },
+  {
+    "word": "effort",
+    "explains": "n. 努力（高阶高频）",
+    "freq": 39
+  },
+  {
+    "word": "influence",
+    "explains": "n. 影响；v. 影响（高阶高频）",
+    "freq": 40
+  },
+  {
+    "word": "peer",
+    "explains": "n. 同龄人；同辈（高阶高频）",
+    "freq": 41
+  },
+  {
+    "word": "bully",
+    "explains": "n. 欺凌者；v. 欺凌（高阶高频）",
+    "freq": 42
+  },
+  {
+    "word": "popularity",
+    "explains": "n. 受欢迎程度（高阶高频）",
+    "freq": 43
+  },
+  {
+    "word": "challenge",
+    "explains": "n. 挑战；v. 挑战（高阶高频）",
+    "freq": 44
+  },
+  {
+    "word": "overcome",
+    "explains": "v. 克服（高阶高频）",
+    "freq": 45
+  },
+  {
+    "word": "deserve",
+    "explains": "v. 值得；应得（高阶高频）",
+    "freq": 46
+  },
+  {
+    "word": "achieve",
+    "explains": "v. 实现；取得（高阶高频）",
+    "freq": 47
+  },
+  {
+    "word": "independence",
+    "explains": "n. 独立（高阶高频）",
+    "freq": 48
+  },
+  {
+    "word": "balance",
+    "explains": "n. 平衡；v. 平衡（高阶高频）",
+    "freq": 49
+  },
+  {
+    "word": "goal",
+    "explains": "n. 目标（高阶高频）",
+    "freq": 50
+  }
+]

@@ -693,7 +693,7 @@ let totalWords = 0
 function buildPage(page) {
   if (page.words.length < 4) throw new Error(`${page.keyValue} 页不足 4 个词`)
   totalWords += page.words.length
-  const words = page.words.map(word => lookupWord(word, page))
+  const words = page.words.map(word => typeof word === 'string' ? lookupWord(word, page) : word)
   // 词根/词缀/组合页按词频从高到低排；中心词本身置顶，自定义主题页保留人工顺序
   if (page.keyType !== 'text') {
     const key = page.keyValue.toLowerCase()
@@ -911,6 +911,129 @@ const nounPages = [
     '按入住流程串起来：luggage → reception → key → bed → towel → bill → tip。'],
 ].map(([keyValue, keyDescription, words, note]) => ({ keyType: 'text', keyValue, keyDescription, note, words }))
 
+const patternPage = (keyValue, keyDescription, note, rows) => ({
+  keyType: 'text',
+  keyValue,
+  keyDescription,
+  note,
+  words: rows.map(([text, explains], index) => ({ text, explains, freq: index + 1 })),
+})
+
+const confirmationPages = [
+  patternPage('Are you', '确认对方状态：你…吗？',
+    'Are you + 形容词/名词/动词-ing：Are you OK? / Are you ready? / Are you coming? 用来确认状态、准备情况或正在做的事。', [
+      ['Are you OK?', '你还好吗？'],
+      ['Are you ready?', '你准备好了吗？'],
+      ['Are you sure?', '你确定吗？'],
+      ['Are you free tonight?', '你今晚有空吗？'],
+      ['Are you serious?', '你是认真的吗？'],
+      ['Are you coming with us?', '你要和我们一起去吗？'],
+    ]),
+  patternPage('Do you', '询问习惯、状态或事实：你…吗？',
+    'Do you + 动词原形：Do you know him? / Do you like coffee? 询问习惯、喜好或一般事实。', [
+      ['Do you know him?', '你认识他吗？'],
+      ['Do you like coffee?', '你喜欢咖啡吗？'],
+      ['Do you have a minute?', '你有空吗？'],
+      ['Do you need any help?', '你需要帮忙吗？'],
+      ['Do you understand?', '你明白吗？'],
+      ['Do you mean it?', '你是认真的吗？'],
+    ]),
+  patternPage('Can you', '询问能力或请求帮忙：你能…吗？',
+    'Can you + 动词原形：Can you help me? / Can you hear me? 既可问能力，也可用于日常请求。', [
+      ['Can you help me?', '你能帮我吗？'],
+      ['Can you hear me?', '你能听见我说话吗？'],
+      ['Can you repeat that?', '你能再说一遍吗？'],
+      ['Can you come earlier?', '你能早点来吗？'],
+      ['Can you wait a moment?', '你能等一下吗？'],
+      ['Can you show me the way?', '你能给我指路吗？'],
+    ]),
+]
+
+const questionWordPages = [
+  patternPage('Who', '询问人：谁…？',
+    'Who + be/助动词 + 主语：Who is that? / Who called me? 用来询问身份、对象或动作的执行者。', [
+      ['Who is that?', '那是谁？'],
+      ['Who are you waiting for?', '你在等谁？'],
+      ['Who called me?', '谁给我打电话了？'],
+      ['Who knows the answer?', '谁知道答案？'],
+      ['Who is in charge?', '谁负责？'],
+    ]),
+  patternPage('When', '询问时间：什么时候…？',
+    'When + be/助动词 + 主语：When does it start? / When will you be back? 用来询问时间点或时间安排。', [
+      ['When does it start?', '什么时候开始？'],
+      ['When will you be back?', '你什么时候回来？'],
+      ['When did you get here?', '你什么时候到的？'],
+      ['When is the meeting?', '会议是什么时候？'],
+      ['When can we talk?', '我们什么时候能谈谈？'],
+    ]),
+  patternPage('How much', '询问价格或不可数数量：多少钱 / 多少…？',
+    'How much + be/助动词 + 主语：How much is this? / How much time do we have? 可问价格，也可问不可数名词的数量。', [
+      ['How much is this?', '这个多少钱？'],
+      ['How much are these?', '这些多少钱？'],
+      ['How much does it cost?', '它要多少钱？'],
+      ['How much do I owe you?', '我欠你多少钱？'],
+      ['How much time do we have?', '我们有多少时间？'],
+    ]),
+  patternPage('How many', '询问可数数量：多少个…？',
+    'How many + 可数名词复数 + 助动词：How many people came? / How many do you need? 用来询问可数数量。', [
+      ['How many do we need?', '我们需要多少个？'],
+      ['How many are there?', '那里有多少个？'],
+      ['How many people came?', '来了多少人？'],
+      ['How many do you want?', '你想要多少个？'],
+    ]),
+  patternPage('Where', '询问地点：哪里…？',
+    'Where + be/助动词 + 主语：Where is the station? / Where do you work? 用来询问位置、来源或地点。', [
+      ['Where is the station?', '车站在哪里？'],
+      ['Where are you from?', '你来自哪里？'],
+      ['Where do you work?', '你在哪里工作？'],
+      ['Where did you put it?', '你把它放哪里了？'],
+      ['Where can I find a taxi?', '我在哪里能打到车？'],
+    ]),
+  patternPage('What', '询问内容或情况：什么…？',
+    'What + be/助动词 + 主语：What is your name? / What happened? 用来询问事物、内容或发生的情况。', [
+      ['What is your name?', '你叫什么名字？'],
+      ['What do you mean?', '你是什么意思？'],
+      ['What time is it?', '现在几点了？'],
+      ['What happened?', '发生了什么？'],
+      ['What about you?', '你呢？'],
+    ]),
+  patternPage('Why', '询问原因：为什么…？',
+    'Why + be/助动词 + 主语：Why are you late? / Why not? 用来询问原因；Why not 也常用于提出建议。', [
+      ['Why are you late?', '你为什么迟到？'],
+      ['Why did you say that?', '你为什么那样说？'],
+      ['Why not?', '为什么不呢？'],
+      ['Why do you think so?', '你为什么这么想？'],
+      ['Why is it so important?', '为什么这如此重要？'],
+    ]),
+]
+
+const requestPages = [
+  patternPage('Would you', '礼貌请求或邀请：你愿意…吗？',
+    'Would you + 动词原形：Would you like some tea? / Would you help me? 比 Can you 更委婉，可用于邀请或请求。', [
+      ['Would you like some tea?', '你想喝点茶吗？'],
+      ['Would you help me?', '你愿意帮我吗？'],
+      ['Would you mind waiting?', '你介意等一下吗？'],
+      ['Would you come with me?', '你愿意和我一起去吗？'],
+      ['Would you explain it?', '你能解释一下吗？'],
+    ]),
+  patternPage('Could you', '更客气的请求：你能…吗？',
+    'Could you + 动词原形：Could you say that again? 用 could 代替 can，语气更客气。', [
+      ['Could you say that again?', '你能再说一遍吗？'],
+      ['Could you send it to me?', '你能把它发给我吗？'],
+      ['Could you speak more slowly?', '你能说慢一点吗？'],
+      ['Could you check this?', '你能检查一下这个吗？'],
+      ['Could you give me a hand?', '你能帮我一把吗？'],
+    ]),
+  patternPage('May I', '礼貌征求许可：我可以…吗？',
+    'May I + 动词原形：May I come in? / May I ask a question? 用于正式或礼貌地征求许可。', [
+      ['May I come in?', '我可以进来吗？'],
+      ['May I ask a question?', '我可以问个问题吗？'],
+      ['May I use your phone?', '我可以用一下你的手机吗？'],
+      ['May I have the bill?', '可以给我账单吗？'],
+      ['May I sit here?', '我可以坐这里吗？'],
+    ]),
+]
+
 const samples = [
   {
     name: '词根册',
@@ -932,10 +1055,19 @@ const samples = [
     desc: '按身体、日常物体和酒店场景组织常用名词',
     chapters: nounPages.map(page => chapter(page.keyValue, [page])),
   },
+  {
+    name: '固定句式',
+    desc: '按疑问句开头归类：Are you / Do you / Who / When / How much 等结构各成一页，集中练习可替换的固定句框',
+    chapters: [
+      chapter('确认与状态', confirmationPages),
+      chapter('常用疑问词', questionWordPages),
+      chapter('礼貌请求', requestPages),
+    ],
+  },
 ]
 
 // 示例条目 ID 由“书/章/页中心/单词”派生：未来插入新页、调整顺序时旧 ID 不变
-const BOOK_IDS = { 词根册: 'roots', 词缀册: 'affixes', 拼写组合册: 'spelling', 场景名词: 'nouns' }
+const BOOK_IDS = { 词根册: 'roots', 词缀册: 'affixes', 拼写组合册: 'spelling', 场景名词: 'nouns', 固定句式: 'patterns' }
 const CHAPTER_IDS = {
   核心词根: 'core_roots',
   进阶词根: 'advanced_roots',
@@ -947,6 +1079,9 @@ const CHAPTER_IDS = {
   身体: 'body',
   日常物品: 'objects',
   酒店: 'hotel',
+  确认与状态: 'confirm',
+  常用疑问词: 'question_words',
+  礼貌请求: 'requests',
 }
 const slug = value => String(value).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '')
 const usedEntryIds = new Set()
@@ -973,7 +1108,7 @@ for (const book of samples) {
 const header = `/**
  * 内置示例词集（生成产物，勿手改；重新生成：node scripts/gen-wordbook-samples.cjs）
  *
- * 四本示例：词根册、词缀册、拼写组合册与场景名词。
+ * 五本示例：词根册、词缀册、拼写组合册、场景名词与固定句式。
  * 页面 note 记录词根来源与派生链，词条 note 记录单个词的构词关系。
  * 首次进入词集时播种，用户删除或编辑归入「我的词集」后不再自动恢复。
  */

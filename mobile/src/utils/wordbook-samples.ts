@@ -1,7 +1,7 @@
 /**
  * 内置示例词集（生成产物，勿手改；重新生成：node scripts/gen-wordbook-samples.cjs）
  *
- * 四本示例：词根册、词缀册、拼写组合册与场景名词。
+ * 五本示例：词根册、词缀册、拼写组合册、场景名词与固定句式。
  * 页面 note 记录词根来源与派生链，词条 note 记录单个词的构词关系。
  * 首次进入词集时播种，用户删除或编辑归入「我的词集」后不再自动恢复。
  */
@@ -7821,6 +7821,533 @@ export const WORDBOOK_SAMPLES: WordBookSampleBook[] = [
                   }
                 ],
                 "entryId": "sample_nouns_hotel_text_1_tip"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "固定句式",
+    "desc": "按疑问句开头归类：Are you / Do you / Who / When / How much 等结构各成一页，集中练习可替换的固定句框",
+    "chapters": [
+      {
+        "name": "确认与状态",
+        "pages": [
+          {
+            "keyType": "text",
+            "keyValue": "Are you",
+            "keyDescription": "确认对方状态：你…吗？",
+            "note": "Are you + 形容词/名词/动词-ing：Are you OK? / Are you ready? / Are you coming? 用来确认状态、准备情况或正在做的事。",
+            "words": [
+              {
+                "text": "Are you OK?",
+                "explains": "你还好吗？",
+                "freq": 1,
+                "entryId": "sample_patterns_confirm_are_you_are_you_ok"
+              },
+              {
+                "text": "Are you ready?",
+                "explains": "你准备好了吗？",
+                "freq": 2,
+                "entryId": "sample_patterns_confirm_are_you_are_you_ready"
+              },
+              {
+                "text": "Are you sure?",
+                "explains": "你确定吗？",
+                "freq": 3,
+                "entryId": "sample_patterns_confirm_are_you_are_you_sure"
+              },
+              {
+                "text": "Are you free tonight?",
+                "explains": "你今晚有空吗？",
+                "freq": 4,
+                "entryId": "sample_patterns_confirm_are_you_are_you_free_tonight"
+              },
+              {
+                "text": "Are you serious?",
+                "explains": "你是认真的吗？",
+                "freq": 5,
+                "entryId": "sample_patterns_confirm_are_you_are_you_serious"
+              },
+              {
+                "text": "Are you coming with us?",
+                "explains": "你要和我们一起去吗？",
+                "freq": 6,
+                "entryId": "sample_patterns_confirm_are_you_are_you_coming_with_us"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "Do you",
+            "keyDescription": "询问习惯、状态或事实：你…吗？",
+            "note": "Do you + 动词原形：Do you know him? / Do you like coffee? 询问习惯、喜好或一般事实。",
+            "words": [
+              {
+                "text": "Do you know him?",
+                "explains": "你认识他吗？",
+                "freq": 1,
+                "entryId": "sample_patterns_confirm_do_you_do_you_know_him"
+              },
+              {
+                "text": "Do you like coffee?",
+                "explains": "你喜欢咖啡吗？",
+                "freq": 2,
+                "entryId": "sample_patterns_confirm_do_you_do_you_like_coffee"
+              },
+              {
+                "text": "Do you have a minute?",
+                "explains": "你有空吗？",
+                "freq": 3,
+                "entryId": "sample_patterns_confirm_do_you_do_you_have_a_minute"
+              },
+              {
+                "text": "Do you need any help?",
+                "explains": "你需要帮忙吗？",
+                "freq": 4,
+                "entryId": "sample_patterns_confirm_do_you_do_you_need_any_help"
+              },
+              {
+                "text": "Do you understand?",
+                "explains": "你明白吗？",
+                "freq": 5,
+                "entryId": "sample_patterns_confirm_do_you_do_you_understand"
+              },
+              {
+                "text": "Do you mean it?",
+                "explains": "你是认真的吗？",
+                "freq": 6,
+                "entryId": "sample_patterns_confirm_do_you_do_you_mean_it"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "Can you",
+            "keyDescription": "询问能力或请求帮忙：你能…吗？",
+            "note": "Can you + 动词原形：Can you help me? / Can you hear me? 既可问能力，也可用于日常请求。",
+            "words": [
+              {
+                "text": "Can you help me?",
+                "explains": "你能帮我吗？",
+                "freq": 1,
+                "entryId": "sample_patterns_confirm_can_you_can_you_help_me"
+              },
+              {
+                "text": "Can you hear me?",
+                "explains": "你能听见我说话吗？",
+                "freq": 2,
+                "entryId": "sample_patterns_confirm_can_you_can_you_hear_me"
+              },
+              {
+                "text": "Can you repeat that?",
+                "explains": "你能再说一遍吗？",
+                "freq": 3,
+                "entryId": "sample_patterns_confirm_can_you_can_you_repeat_that"
+              },
+              {
+                "text": "Can you come earlier?",
+                "explains": "你能早点来吗？",
+                "freq": 4,
+                "entryId": "sample_patterns_confirm_can_you_can_you_come_earlier"
+              },
+              {
+                "text": "Can you wait a moment?",
+                "explains": "你能等一下吗？",
+                "freq": 5,
+                "entryId": "sample_patterns_confirm_can_you_can_you_wait_a_moment"
+              },
+              {
+                "text": "Can you show me the way?",
+                "explains": "你能给我指路吗？",
+                "freq": 6,
+                "entryId": "sample_patterns_confirm_can_you_can_you_show_me_the_way"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "常用疑问词",
+        "pages": [
+          {
+            "keyType": "text",
+            "keyValue": "Who",
+            "keyDescription": "询问人：谁…？",
+            "note": "Who + be/助动词 + 主语：Who is that? / Who called me? 用来询问身份、对象或动作的执行者。",
+            "words": [
+              {
+                "text": "Who is that?",
+                "explains": "那是谁？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_who_who_is_that"
+              },
+              {
+                "text": "Who are you waiting for?",
+                "explains": "你在等谁？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_who_who_are_you_waiting_for"
+              },
+              {
+                "text": "Who called me?",
+                "explains": "谁给我打电话了？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_who_who_called_me"
+              },
+              {
+                "text": "Who knows the answer?",
+                "explains": "谁知道答案？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_who_who_knows_the_answer"
+              },
+              {
+                "text": "Who is in charge?",
+                "explains": "谁负责？",
+                "freq": 5,
+                "entryId": "sample_patterns_question_words_who_who_is_in_charge"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "When",
+            "keyDescription": "询问时间：什么时候…？",
+            "note": "When + be/助动词 + 主语：When does it start? / When will you be back? 用来询问时间点或时间安排。",
+            "words": [
+              {
+                "text": "When does it start?",
+                "explains": "什么时候开始？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_when_when_does_it_start"
+              },
+              {
+                "text": "When will you be back?",
+                "explains": "你什么时候回来？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_when_when_will_you_be_back"
+              },
+              {
+                "text": "When did you get here?",
+                "explains": "你什么时候到的？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_when_when_did_you_get_here"
+              },
+              {
+                "text": "When is the meeting?",
+                "explains": "会议是什么时候？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_when_when_is_the_meeting"
+              },
+              {
+                "text": "When can we talk?",
+                "explains": "我们什么时候能谈谈？",
+                "freq": 5,
+                "entryId": "sample_patterns_question_words_when_when_can_we_talk"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "How much",
+            "keyDescription": "询问价格或不可数数量：多少钱 / 多少…？",
+            "note": "How much + be/助动词 + 主语：How much is this? / How much time do we have? 可问价格，也可问不可数名词的数量。",
+            "words": [
+              {
+                "text": "How much is this?",
+                "explains": "这个多少钱？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_how_much_how_much_is_this"
+              },
+              {
+                "text": "How much are these?",
+                "explains": "这些多少钱？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_how_much_how_much_are_these"
+              },
+              {
+                "text": "How much does it cost?",
+                "explains": "它要多少钱？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_how_much_how_much_does_it_cost"
+              },
+              {
+                "text": "How much do I owe you?",
+                "explains": "我欠你多少钱？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_how_much_how_much_do_i_owe_you"
+              },
+              {
+                "text": "How much time do we have?",
+                "explains": "我们有多少时间？",
+                "freq": 5,
+                "entryId": "sample_patterns_question_words_how_much_how_much_time_do_we_have"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "How many",
+            "keyDescription": "询问可数数量：多少个…？",
+            "note": "How many + 可数名词复数 + 助动词：How many people came? / How many do you need? 用来询问可数数量。",
+            "words": [
+              {
+                "text": "How many do we need?",
+                "explains": "我们需要多少个？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_how_many_how_many_do_we_need"
+              },
+              {
+                "text": "How many are there?",
+                "explains": "那里有多少个？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_how_many_how_many_are_there"
+              },
+              {
+                "text": "How many people came?",
+                "explains": "来了多少人？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_how_many_how_many_people_came"
+              },
+              {
+                "text": "How many do you want?",
+                "explains": "你想要多少个？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_how_many_how_many_do_you_want"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "Where",
+            "keyDescription": "询问地点：哪里…？",
+            "note": "Where + be/助动词 + 主语：Where is the station? / Where do you work? 用来询问位置、来源或地点。",
+            "words": [
+              {
+                "text": "Where is the station?",
+                "explains": "车站在哪里？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_where_where_is_the_station"
+              },
+              {
+                "text": "Where are you from?",
+                "explains": "你来自哪里？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_where_where_are_you_from"
+              },
+              {
+                "text": "Where do you work?",
+                "explains": "你在哪里工作？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_where_where_do_you_work"
+              },
+              {
+                "text": "Where did you put it?",
+                "explains": "你把它放哪里了？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_where_where_did_you_put_it"
+              },
+              {
+                "text": "Where can I find a taxi?",
+                "explains": "我在哪里能打到车？",
+                "freq": 5,
+                "entryId": "sample_patterns_question_words_where_where_can_i_find_a_taxi"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "What",
+            "keyDescription": "询问内容或情况：什么…？",
+            "note": "What + be/助动词 + 主语：What is your name? / What happened? 用来询问事物、内容或发生的情况。",
+            "words": [
+              {
+                "text": "What is your name?",
+                "explains": "你叫什么名字？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_what_what_is_your_name"
+              },
+              {
+                "text": "What do you mean?",
+                "explains": "你是什么意思？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_what_what_do_you_mean"
+              },
+              {
+                "text": "What time is it?",
+                "explains": "现在几点了？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_what_what_time_is_it"
+              },
+              {
+                "text": "What happened?",
+                "explains": "发生了什么？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_what_what_happened"
+              },
+              {
+                "text": "What about you?",
+                "explains": "你呢？",
+                "freq": 5,
+                "entryId": "sample_patterns_question_words_what_what_about_you"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "Why",
+            "keyDescription": "询问原因：为什么…？",
+            "note": "Why + be/助动词 + 主语：Why are you late? / Why not? 用来询问原因；Why not 也常用于提出建议。",
+            "words": [
+              {
+                "text": "Why are you late?",
+                "explains": "你为什么迟到？",
+                "freq": 1,
+                "entryId": "sample_patterns_question_words_why_why_are_you_late"
+              },
+              {
+                "text": "Why did you say that?",
+                "explains": "你为什么那样说？",
+                "freq": 2,
+                "entryId": "sample_patterns_question_words_why_why_did_you_say_that"
+              },
+              {
+                "text": "Why not?",
+                "explains": "为什么不呢？",
+                "freq": 3,
+                "entryId": "sample_patterns_question_words_why_why_not"
+              },
+              {
+                "text": "Why do you think so?",
+                "explains": "你为什么这么想？",
+                "freq": 4,
+                "entryId": "sample_patterns_question_words_why_why_do_you_think_so"
+              },
+              {
+                "text": "Why is it so important?",
+                "explains": "为什么这如此重要？",
+                "freq": 5,
+                "entryId": "sample_patterns_question_words_why_why_is_it_so_important"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "礼貌请求",
+        "pages": [
+          {
+            "keyType": "text",
+            "keyValue": "Would you",
+            "keyDescription": "礼貌请求或邀请：你愿意…吗？",
+            "note": "Would you + 动词原形：Would you like some tea? / Would you help me? 比 Can you 更委婉，可用于邀请或请求。",
+            "words": [
+              {
+                "text": "Would you like some tea?",
+                "explains": "你想喝点茶吗？",
+                "freq": 1,
+                "entryId": "sample_patterns_requests_would_you_would_you_like_some_tea"
+              },
+              {
+                "text": "Would you help me?",
+                "explains": "你愿意帮我吗？",
+                "freq": 2,
+                "entryId": "sample_patterns_requests_would_you_would_you_help_me"
+              },
+              {
+                "text": "Would you mind waiting?",
+                "explains": "你介意等一下吗？",
+                "freq": 3,
+                "entryId": "sample_patterns_requests_would_you_would_you_mind_waiting"
+              },
+              {
+                "text": "Would you come with me?",
+                "explains": "你愿意和我一起去吗？",
+                "freq": 4,
+                "entryId": "sample_patterns_requests_would_you_would_you_come_with_me"
+              },
+              {
+                "text": "Would you explain it?",
+                "explains": "你能解释一下吗？",
+                "freq": 5,
+                "entryId": "sample_patterns_requests_would_you_would_you_explain_it"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "Could you",
+            "keyDescription": "更客气的请求：你能…吗？",
+            "note": "Could you + 动词原形：Could you say that again? 用 could 代替 can，语气更客气。",
+            "words": [
+              {
+                "text": "Could you say that again?",
+                "explains": "你能再说一遍吗？",
+                "freq": 1,
+                "entryId": "sample_patterns_requests_could_you_could_you_say_that_again"
+              },
+              {
+                "text": "Could you send it to me?",
+                "explains": "你能把它发给我吗？",
+                "freq": 2,
+                "entryId": "sample_patterns_requests_could_you_could_you_send_it_to_me"
+              },
+              {
+                "text": "Could you speak more slowly?",
+                "explains": "你能说慢一点吗？",
+                "freq": 3,
+                "entryId": "sample_patterns_requests_could_you_could_you_speak_more_slowly"
+              },
+              {
+                "text": "Could you check this?",
+                "explains": "你能检查一下这个吗？",
+                "freq": 4,
+                "entryId": "sample_patterns_requests_could_you_could_you_check_this"
+              },
+              {
+                "text": "Could you give me a hand?",
+                "explains": "你能帮我一把吗？",
+                "freq": 5,
+                "entryId": "sample_patterns_requests_could_you_could_you_give_me_a_hand"
+              }
+            ]
+          },
+          {
+            "keyType": "text",
+            "keyValue": "May I",
+            "keyDescription": "礼貌征求许可：我可以…吗？",
+            "note": "May I + 动词原形：May I come in? / May I ask a question? 用于正式或礼貌地征求许可。",
+            "words": [
+              {
+                "text": "May I come in?",
+                "explains": "我可以进来吗？",
+                "freq": 1,
+                "entryId": "sample_patterns_requests_may_i_may_i_come_in"
+              },
+              {
+                "text": "May I ask a question?",
+                "explains": "我可以问个问题吗？",
+                "freq": 2,
+                "entryId": "sample_patterns_requests_may_i_may_i_ask_a_question"
+              },
+              {
+                "text": "May I use your phone?",
+                "explains": "我可以用一下你的手机吗？",
+                "freq": 3,
+                "entryId": "sample_patterns_requests_may_i_may_i_use_your_phone"
+              },
+              {
+                "text": "May I have the bill?",
+                "explains": "可以给我账单吗？",
+                "freq": 4,
+                "entryId": "sample_patterns_requests_may_i_may_i_have_the_bill"
+              },
+              {
+                "text": "May I sit here?",
+                "explains": "我可以坐这里吗？",
+                "freq": 5,
+                "entryId": "sample_patterns_requests_may_i_may_i_sit_here"
               }
             ]
           }

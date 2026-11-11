@@ -1,0 +1,252 @@
+[
+  {
+    "word": "family",
+    "explains": "n. 家庭；家人（入门高频）",
+    "freq": 1
+  },
+  {
+    "word": "marriage",
+    "explains": "n. 婚姻（入门高频）",
+    "freq": 2
+  },
+  {
+    "word": "adopt",
+    "explains": "v. 收养；采纳（入门高频）",
+    "freq": 3
+  },
+  {
+    "word": "sibling",
+    "explains": "n. 兄弟姐妹（入门高频）",
+    "freq": 4
+  },
+  {
+    "word": "proud",
+    "explains": "adj. 自豪的（入门高频）",
+    "freq": 5
+  },
+  {
+    "word": "celebrate",
+    "explains": "v. 庆祝（入门高频）",
+    "freq": 6
+  },
+  {
+    "word": "neighbor",
+    "explains": "n. 邻居（入门高频）",
+    "freq": 7
+  },
+  {
+    "word": "hilarious",
+    "explains": "adj. 滑稽的；非常好笑的（入门高频）",
+    "freq": 8
+  },
+  {
+    "word": "embarrassed",
+    "explains": "adj. 尴尬的；难为情的（入门高频）",
+    "freq": 9
+  },
+  {
+    "word": "independent",
+    "explains": "adj. 独立的（入门高频）",
+    "freq": 10
+  },
+  {
+    "word": "parent",
+    "explains": "n. 父亲或母亲（入门高频）",
+    "freq": 11
+  },
+  {
+    "word": "child",
+    "explains": "n. 孩子（入门高频）",
+    "freq": 12
+  },
+  {
+    "word": "husband",
+    "explains": "n. 丈夫（入门高频）",
+    "freq": 13
+  },
+  {
+    "word": "wife",
+    "explains": "n. 妻子（入门高频）",
+    "freq": 14
+  },
+  {
+    "word": "teenager",
+    "explains": "n. 青少年（入门高频）",
+    "freq": 15
+  },
+  {
+    "word": "generation",
+    "explains": "n. 一代人（入门高频）",
+    "freq": 16
+  },
+  {
+    "word": "in-laws",
+    "explains": "n. 姻亲（入门高频）",
+    "freq": 17
+  },
+  {
+    "word": "twin",
+    "explains": "n. 双胞胎之一；adj. 双胞胎的（进阶高频）",
+    "freq": 18
+  },
+  {
+    "word": "baby",
+    "explains": "n. 婴儿（进阶高频）",
+    "freq": 19
+  },
+  {
+    "word": "raise",
+    "explains": "v. 抚养；提高（进阶高频）",
+    "freq": 20
+  },
+  {
+    "word": "strict",
+    "explains": "adj. 严格的（进阶高频）",
+    "freq": 21
+  },
+  {
+    "word": "allow",
+    "explains": "v. 允许（进阶高频）",
+    "freq": 22
+  },
+  {
+    "word": "misunderstand",
+    "explains": "v. 误解（进阶高频）",
+    "freq": 23
+  },
+  {
+    "word": "disagreement",
+    "explains": "n. 分歧；争论（进阶高频）",
+    "freq": 24
+  },
+  {
+    "word": "compromise",
+    "explains": "n. 妥协；v. 妥协（进阶高频）",
+    "freq": 25
+  },
+  {
+    "word": "encourage",
+    "explains": "v. 鼓励（进阶高频）",
+    "freq": 26
+  },
+  {
+    "word": "responsibility",
+    "explains": "n. 责任（进阶高频）",
+    "freq": 27
+  },
+  {
+    "word": "routine",
+    "explains": "n. 日常安排；adj. 例行的（进阶高频）",
+    "freq": 28
+  },
+  {
+    "word": "vacation",
+    "explains": "n. 假期（进阶高频）",
+    "freq": 29
+  },
+  {
+    "word": "move",
+    "explains": "v. 搬家；移动（进阶高频）",
+    "freq": 30
+  },
+  {
+    "word": "household",
+    "explains": "n. 家庭；一家人（进阶高频）",
+    "freq": 31
+  },
+  {
+    "word": "couple",
+    "explains": "n. 夫妻；一对（进阶高频）",
+    "freq": 32
+  },
+  {
+    "word": "relative",
+    "explains": "n. 亲戚；adj. 相对的（进阶高频）",
+    "freq": 33
+  },
+  {
+    "word": "upbringing",
+    "explains": "n. 教养；成长经历（进阶高频）",
+    "freq": 34
+  },
+  {
+    "word": "discipline",
+    "explains": "n. 纪律；v. 管教（进阶高频）",
+    "freq": 35
+  },
+  {
+    "word": "boundary",
+    "explains": "n. 界限（进阶高频）",
+    "freq": 36
+  },
+  {
+    "word": "parenting",
+    "explains": "n. 育儿（高阶高频）",
+    "freq": 37
+  },
+  {
+    "word": "adoption",
+    "explains": "n. 收养（高阶高频）",
+    "freq": 38
+  },
+  {
+    "word": "biological",
+    "explains": "adj. 亲生的；生物的（高阶高频）",
+    "freq": 39
+  },
+  {
+    "word": "stepfather",
+    "explains": "n. 继父（高阶高频）",
+    "freq": 40
+  },
+  {
+    "word": "stepmother",
+    "explains": "n. 继母（高阶高频）",
+    "freq": 41
+  },
+  {
+    "word": "reunion",
+    "explains": "n. 团聚；重聚（高阶高频）",
+    "freq": 42
+  },
+  {
+    "word": "affection",
+    "explains": "n. 关爱；喜爱（高阶高频）",
+    "freq": 43
+  },
+  {
+    "word": "conflict",
+    "explains": "n. 冲突（高阶高频）",
+    "freq": 44
+  },
+  {
+    "word": "apology",
+    "explains": "n. 道歉（高阶高频）",
+    "freq": 45
+  },
+  {
+    "word": "patient",
+    "explains": "adj. 有耐心的；n. 病人（高阶高频）",
+    "freq": 46
+  },
+  {
+    "word": "mature",
+    "explains": "adj. 成熟的；v. 成熟（高阶高频）",
+    "freq": 47
+  },
+  {
+    "word": "emotional",
+    "explains": "adj. 情绪的；感性的（高阶高频）",
+    "freq": 48
+  },
+  {
+    "word": "chaos",
+    "explains": "n. 混乱（高阶高频）",
+    "freq": 49
+  },
+  {
+    "word": "humor",
+    "explains": "n. 幽默（高阶高频）",
+    "freq": 50
+  }
+]

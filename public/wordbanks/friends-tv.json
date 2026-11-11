@@ -1,0 +1,252 @@
+[
+  {
+    "word": "roommate",
+    "explains": "n. 室友（入门高频）",
+    "freq": 1
+  },
+  {
+    "word": "coffee",
+    "explains": "n. 咖啡（入门高频）",
+    "freq": 2
+  },
+  {
+    "word": "apartment",
+    "explains": "n. 公寓（入门高频）",
+    "freq": 3
+  },
+  {
+    "word": "relationship",
+    "explains": "n. 关系；恋爱关系（入门高频）",
+    "freq": 4
+  },
+  {
+    "word": "breakup",
+    "explains": "n. 分手；关系破裂（入门高频）",
+    "freq": 5
+  },
+  {
+    "word": "borrow",
+    "explains": "v. 借入（入门高频）",
+    "freq": 6
+  },
+  {
+    "word": "return",
+    "explains": "v. 归还；返回（入门高频）",
+    "freq": 7
+  },
+  {
+    "word": "annoying",
+    "explains": "adj. 烦人的（入门高频）",
+    "freq": 8
+  },
+  {
+    "word": "supportive",
+    "explains": "adj. 支持的；给予帮助的（入门高频）",
+    "freq": 9
+  },
+  {
+    "word": "awkward",
+    "explains": "adj. 尴尬的（入门高频）",
+    "freq": 10
+  },
+  {
+    "word": "sofa",
+    "explains": "n. 沙发（入门高频）",
+    "freq": 11
+  },
+  {
+    "word": "laundry",
+    "explains": "n. 待洗衣物；洗衣（入门高频）",
+    "freq": 12
+  },
+  {
+    "word": "crush",
+    "explains": "n. 暗恋；v. 压碎（入门高频）",
+    "freq": 13
+  },
+  {
+    "word": "date",
+    "explains": "n. 约会；v. 约会（入门高频）",
+    "freq": 14
+  },
+  {
+    "word": "single",
+    "explains": "adj. 单身的；单一的（入门高频）",
+    "freq": 15
+  },
+  {
+    "word": "engaged",
+    "explains": "adj. 已订婚的；忙于…的（入门高频）",
+    "freq": 16
+  },
+  {
+    "word": "wedding",
+    "explains": "n. 婚礼（入门高频）",
+    "freq": 17
+  },
+  {
+    "word": "divorce",
+    "explains": "n. 离婚；v. 离婚（进阶高频）",
+    "freq": 18
+  },
+  {
+    "word": "rent",
+    "explains": "n. 租金；v. 租用（进阶高频）",
+    "freq": 19
+  },
+  {
+    "word": "job",
+    "explains": "n. 工作；职位（进阶高频）",
+    "freq": 20
+  },
+  {
+    "word": "boss",
+    "explains": "n. 老板；上司（进阶高频）",
+    "freq": 21
+  },
+  {
+    "word": "interview",
+    "explains": "n. 面试；采访（进阶高频）",
+    "freq": 22
+  },
+  {
+    "word": "pizza",
+    "explains": "n. 披萨（进阶高频）",
+    "freq": 23
+  },
+  {
+    "word": "sandwich",
+    "explains": "n. 三明治（进阶高频）",
+    "freq": 24
+  },
+  {
+    "word": "funny",
+    "explains": "adj. 好笑的；有趣的（进阶高频）",
+    "freq": 25
+  },
+  {
+    "word": "crazy",
+    "explains": "adj. 疯狂的（进阶高频）",
+    "freq": 26
+  },
+  {
+    "word": "confused",
+    "explains": "adj. 困惑的（进阶高频）",
+    "freq": 27
+  },
+  {
+    "word": "lend",
+    "explains": "v. 借出（进阶高频）",
+    "freq": 28
+  },
+  {
+    "word": "cancel",
+    "explains": "v. 取消（进阶高频）",
+    "freq": 29
+  },
+  {
+    "word": "bother",
+    "explains": "v. 打扰；使烦恼（进阶高频）",
+    "freq": 30
+  },
+  {
+    "word": "schedule",
+    "explains": "n. 日程安排；v. 安排（进阶高频）",
+    "freq": 31
+  },
+  {
+    "word": "habit",
+    "explains": "n. 习惯（进阶高频）",
+    "freq": 32
+  },
+  {
+    "word": "commitment",
+    "explains": "n. 承诺；投入（进阶高频）",
+    "freq": 33
+  },
+  {
+    "word": "jealousy",
+    "explains": "n. 嫉妒（进阶高频）",
+    "freq": 34
+  },
+  {
+    "word": "gossip",
+    "explains": "n. 八卦；v. 闲聊（进阶高频）",
+    "freq": 35
+  },
+  {
+    "word": "rumor",
+    "explains": "n. 谣言（进阶高频）",
+    "freq": 36
+  },
+  {
+    "word": "embarrassing",
+    "explains": "adj. 令人尴尬的（高阶高频）",
+    "freq": 37
+  },
+  {
+    "word": "selfish",
+    "explains": "adj. 自私的（高阶高频）",
+    "freq": 38
+  },
+  {
+    "word": "generous",
+    "explains": "adj. 慷慨的（高阶高频）",
+    "freq": 39
+  },
+  {
+    "word": "recognize",
+    "explains": "v. 认出；承认（高阶高频）",
+    "freq": 40
+  },
+  {
+    "word": "pretend",
+    "explains": "v. 假装（高阶高频）",
+    "freq": 41
+  },
+  {
+    "word": "complain",
+    "explains": "v. 抱怨（高阶高频）",
+    "freq": 42
+  },
+  {
+    "word": "misunderstanding",
+    "explains": "n. 误解（高阶高频）",
+    "freq": 43
+  },
+  {
+    "word": "trust",
+    "explains": "n. 信任；v. 信任（高阶高频）",
+    "freq": 44
+  },
+  {
+    "word": "excuse",
+    "explains": "n. 借口；v. 原谅（高阶高频）",
+    "freq": 45
+  },
+  {
+    "word": "surprise",
+    "explains": "n. 惊喜；v. 使惊讶（高阶高频）",
+    "freq": 46
+  },
+  {
+    "word": "coincidence",
+    "explains": "n. 巧合（高阶高频）",
+    "freq": 47
+  },
+  {
+    "word": "flirt",
+    "explains": "v. 调情（高阶高频）",
+    "freq": 48
+  },
+  {
+    "word": "romantic",
+    "explains": "adj. 浪漫的（高阶高频）",
+    "freq": 49
+  },
+  {
+    "word": "envy",
+    "explains": "n. 羡慕；v. 羡慕（高阶高频）",
+    "freq": 50
+  }
+]

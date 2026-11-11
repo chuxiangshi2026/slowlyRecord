@@ -1,7 +1,7 @@
 /**
  * 词库远程下载（jsDelivr CDN 缓存 GitHub 仓库）
  *
- * 数据存放在 GitHub 仓库 mobile/wordbank-json/，通过 jsDelivr CDN 拉取。
+ * 英语词库读取 mobile/wordbank-json/，多语言词库复用 public/wordbanks/。
  * jsDelivr 自动缓存 GitHub 内容，国内有 CDN 节点，比 raw.githubusercontent.com 稳定。
  * 首次下载后缓存到本地 storage，之后离线可用。
  *
@@ -9,6 +9,7 @@
  */
 
 const JSDELIVR_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/mobile/wordbank-json'
+const PUBLIC_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/wordbanks'
 const CACHE_KEY_PREFIX = 'slowlyrecord_remote_wordbank_'
 const CACHE_INDEX_KEY = 'slowlyrecord_remote_wordbank_index'
 // 微信 storage 单 key 上限 1MB，超出需分块（与 adapters/index.ts 的 CHUNK_SIZE 一致）
@@ -24,6 +25,31 @@ export interface RemoteWordBankInfo {
   sizeKB: number
   language?: LanguageCode
 }
+
+/** 远程旧版 index.json 未包含的多语言词库，数据复用桌面端 public/wordbanks。 */
+export const NON_ENGLISH_BANKS: RemoteWordBankInfo[] = [
+  { id: 'jlpt-n5', name: 'JLPT N5', wordCount: 700, sizeKB: 61, language: 'ja' },
+  { id: 'jlpt-n4', name: 'JLPT N4', wordCount: 1169, sizeKB: 114, language: 'ja' },
+  { id: 'jlpt-n3', name: 'JLPT N3', wordCount: 1441, sizeKB: 143, language: 'ja' },
+  { id: 'ru-a1', name: '俄语 A1', wordCount: 471, sizeKB: 56, language: 'ru' },
+  { id: 'ru-a2', name: '俄语 A2', wordCount: 303, sizeKB: 38, language: 'ru' },
+  { id: 'es-a1', name: '西语 A1', wordCount: 391, sizeKB: 38, language: 'es' },
+  { id: 'es-a2', name: '西语 A2', wordCount: 749, sizeKB: 76, language: 'es' },
+  { id: 'fr-a1', name: '法语 A1', wordCount: 514, sizeKB: 51, language: 'fr' },
+  { id: 'fr-a2', name: '法语 A2', wordCount: 799, sizeKB: 81, language: 'fr' },
+  { id: 'ja-common-phrases', name: '日语常用短语', wordCount: 157, sizeKB: 12, language: 'ja' },
+  { id: 'ja-collocations', name: '日语固定搭配', wordCount: 142, sizeKB: 11, language: 'ja' },
+  { id: 'ja-sentences', name: '日语常用句子', wordCount: 167, sizeKB: 17, language: 'ja' },
+  { id: 'ru-common-phrases', name: '俄语常用短语', wordCount: 204, sizeKB: 21, language: 'ru' },
+  { id: 'ru-collocations', name: '俄语固定搭配', wordCount: 179, sizeKB: 17, language: 'ru' },
+  { id: 'ru-sentences', name: '俄语常用句子', wordCount: 135, sizeKB: 18, language: 'ru' },
+  { id: 'es-common-phrases', name: '西语常用短语', wordCount: 220, sizeKB: 20, language: 'es' },
+  { id: 'es-collocations', name: '西语固定搭配', wordCount: 149, sizeKB: 13, language: 'es' },
+  { id: 'es-sentences', name: '西语常用句子', wordCount: 136, sizeKB: 16, language: 'es' },
+  { id: 'fr-common-phrases', name: '法语常用短语', wordCount: 213, sizeKB: 19, language: 'fr' },
+  { id: 'fr-collocations', name: '法语固定搭配', wordCount: 166, sizeKB: 14, language: 'fr' },
+  { id: 'fr-sentences', name: '法语常用句子', wordCount: 135, sizeKB: 16, language: 'fr' },
+]
 
 /** 已缓存的词库 id 列表 */
 export function getCachedBankIds(): string[] {
@@ -112,7 +138,8 @@ export function downloadWordBank(
   onProgress?: (percent: number) => void,
 ): Promise<any[]> {
   return new Promise((resolve, reject) => {
-    const url = `${JSDELIVR_BASE}/${id}.json`
+    const base = NON_ENGLISH_BANKS.some(bank => bank.id === id) ? PUBLIC_WORDBANK_BASE : JSDELIVR_BASE
+    const url = `${base}/${id}.json`
     const task = uni.downloadFile({
       url,
       success: (res) => {
@@ -167,14 +194,18 @@ export async function getWordBank(
   return downloadWordBank(id, onProgress)
 }
 
-/** 拉取远程词库清单（index.json），失败时返回 null 走本地清单 */
+/** 拉取远程词库清单，并补齐旧版清单缺少的多语言词库 */
 export function fetchRemoteIndex(): Promise<RemoteWordBankInfo[] | null> {
   return new Promise((resolve) => {
     uni.request({
       url: `${JSDELIVR_BASE}/index.json`,
       success: (res) => {
         if (res.statusCode === 200 && Array.isArray(res.data)) {
-          resolve(res.data)
+          const remoteIds = new Set(res.data.map((bank: RemoteWordBankInfo) => bank.id))
+          resolve([
+            ...res.data.map((bank: RemoteWordBankInfo) => ({ ...bank, language: bank.language || 'en' })),
+            ...NON_ENGLISH_BANKS.filter(bank => !remoteIds.has(bank.id)),
+          ])
         } else {
           resolve(null)
         }

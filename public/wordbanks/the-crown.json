@@ -1,0 +1,252 @@
+[
+  {
+    "word": "royal",
+    "explains": "adj. 王室的；n. 王室成员（入门高频）",
+    "freq": 1
+  },
+  {
+    "word": "monarch",
+    "explains": "n. 君主（入门高频）",
+    "freq": 2
+  },
+  {
+    "word": "duty",
+    "explains": "n. 职责；义务（入门高频）",
+    "freq": 3
+  },
+  {
+    "word": "tradition",
+    "explains": "n. 传统（入门高频）",
+    "freq": 4
+  },
+  {
+    "word": "authority",
+    "explains": "n. 权威；权力（入门高频）",
+    "freq": 5
+  },
+  {
+    "word": "political",
+    "explains": "adj. 政治的（入门高频）",
+    "freq": 6
+  },
+  {
+    "word": "ceremony",
+    "explains": "n. 仪式；典礼（入门高频）",
+    "freq": 7
+  },
+  {
+    "word": "reputation",
+    "explains": "n. 名誉；声望（入门高频）",
+    "freq": 8
+  },
+  {
+    "word": "privilege",
+    "explains": "n. 特权（入门高频）",
+    "freq": 9
+  },
+  {
+    "word": "scandal",
+    "explains": "n. 丑闻（入门高频）",
+    "freq": 10
+  },
+  {
+    "word": "throne",
+    "explains": "n. 王位（入门高频）",
+    "freq": 11
+  },
+  {
+    "word": "crown",
+    "explains": "n. 王冠；王权（入门高频）",
+    "freq": 12
+  },
+  {
+    "word": "palace",
+    "explains": "n. 宫殿（入门高频）",
+    "freq": 13
+  },
+  {
+    "word": "government",
+    "explains": "n. 政府（入门高频）",
+    "freq": 14
+  },
+  {
+    "word": "parliament",
+    "explains": "n. 议会（入门高频）",
+    "freq": 15
+  },
+  {
+    "word": "minister",
+    "explains": "n. 大臣；部长（入门高频）",
+    "freq": 16
+  },
+  {
+    "word": "policy",
+    "explains": "n. 政策（入门高频）",
+    "freq": 17
+  },
+  {
+    "word": "law",
+    "explains": "n. 法律；法规（进阶高频）",
+    "freq": 18
+  },
+  {
+    "word": "treaty",
+    "explains": "n. 条约（进阶高频）",
+    "freq": 19
+  },
+  {
+    "word": "alliance",
+    "explains": "n. 联盟（进阶高频）",
+    "freq": 20
+  },
+  {
+    "word": "crisis",
+    "explains": "n. 危机（进阶高频）",
+    "freq": 21
+  },
+  {
+    "word": "succession",
+    "explains": "n. 继承；继位（进阶高频）",
+    "freq": 22
+  },
+  {
+    "word": "heir",
+    "explains": "n. 继承人（进阶高频）",
+    "freq": 23
+  },
+  {
+    "word": "coronation",
+    "explains": "n. 加冕礼（进阶高频）",
+    "freq": 24
+  },
+  {
+    "word": "public",
+    "explains": "adj. 公众的；n. 公众（进阶高频）",
+    "freq": 25
+  },
+  {
+    "word": "private",
+    "explains": "adj. 私人的；私密的（进阶高频）",
+    "freq": 26
+  },
+  {
+    "word": "pressure",
+    "explains": "n. 压力（进阶高频）",
+    "freq": 27
+  },
+  {
+    "word": "loyalty",
+    "explains": "n. 忠诚（进阶高频）",
+    "freq": 28
+  },
+  {
+    "word": "betray",
+    "explains": "v. 背叛（进阶高频）",
+    "freq": 29
+  },
+  {
+    "word": "legacy",
+    "explains": "n. 遗产；传承（进阶高频）",
+    "freq": 30
+  },
+  {
+    "word": "diplomacy",
+    "explains": "n. 外交（进阶高频）",
+    "freq": 31
+  },
+  {
+    "word": "ambassador",
+    "explains": "n. 大使（进阶高频）",
+    "freq": 32
+  },
+  {
+    "word": "cabinet",
+    "explains": "n. 内阁；橱柜（进阶高频）",
+    "freq": 33
+  },
+  {
+    "word": "election",
+    "explains": "n. 选举（进阶高频）",
+    "freq": 34
+  },
+  {
+    "word": "constitution",
+    "explains": "n. 宪法（进阶高频）",
+    "freq": 35
+  },
+  {
+    "word": "sovereignty",
+    "explains": "n. 主权（进阶高频）",
+    "freq": 36
+  },
+  {
+    "word": "empire",
+    "explains": "n. 帝国（高阶高频）",
+    "freq": 37
+  },
+  {
+    "word": "commonwealth",
+    "explains": "n. 联邦；英联邦（高阶高频）",
+    "freq": 38
+  },
+  {
+    "word": "protocol",
+    "explains": "n. 礼仪；协议（高阶高频）",
+    "freq": 39
+  },
+  {
+    "word": "etiquette",
+    "explains": "n. 礼节（高阶高频）",
+    "freq": 40
+  },
+  {
+    "word": "heritage",
+    "explains": "n. 遗产；传承（高阶高频）",
+    "freq": 41
+  },
+  {
+    "word": "prestige",
+    "explains": "n. 威望（高阶高频）",
+    "freq": 42
+  },
+  {
+    "word": "abdicate",
+    "explains": "v. 退位（高阶高频）",
+    "freq": 43
+  },
+  {
+    "word": "reign",
+    "explains": "n. 统治；v. 统治（高阶高频）",
+    "freq": 44
+  },
+  {
+    "word": "dynasty",
+    "explains": "n. 王朝（高阶高频）",
+    "freq": 45
+  },
+  {
+    "word": "consort",
+    "explains": "n. 王室配偶（高阶高频）",
+    "freq": 46
+  },
+  {
+    "word": "mourning",
+    "explains": "n. 哀悼（高阶高频）",
+    "freq": 47
+  },
+  {
+    "word": "monarchy",
+    "explains": "n. 君主制（高阶高频）",
+    "freq": 48
+  },
+  {
+    "word": "citizen",
+    "explains": "n. 公民（高阶高频）",
+    "freq": 49
+  },
+  {
+    "word": "royalty",
+    "explains": "n. 王室成员；版税（高阶高频）",
+    "freq": 50
+  }
+]

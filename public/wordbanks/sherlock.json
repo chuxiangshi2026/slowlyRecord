@@ -1,0 +1,252 @@
+[
+  {
+    "word": "detective",
+    "explains": "n. 侦探（入门高频）",
+    "freq": 1
+  },
+  {
+    "word": "investigate",
+    "explains": "v. 调查（入门高频）",
+    "freq": 2
+  },
+  {
+    "word": "evidence",
+    "explains": "n. 证据（入门高频）",
+    "freq": 3
+  },
+  {
+    "word": "suspect",
+    "explains": "n. 嫌疑人；v. 怀疑（入门高频）",
+    "freq": 4
+  },
+  {
+    "word": "brilliant",
+    "explains": "adj. 聪慧的；出色的（入门高频）",
+    "freq": 5
+  },
+  {
+    "word": "observe",
+    "explains": "v. 观察（入门高频）",
+    "freq": 6
+  },
+  {
+    "word": "deduction",
+    "explains": "n. 推理；推断（入门高频）",
+    "freq": 7
+  },
+  {
+    "word": "mysterious",
+    "explains": "adj. 神秘的（入门高频）",
+    "freq": 8
+  },
+  {
+    "word": "dangerous",
+    "explains": "adj. 危险的（入门高频）",
+    "freq": 9
+  },
+  {
+    "word": "reveal",
+    "explains": "v. 揭示；透露（入门高频）",
+    "freq": 10
+  },
+  {
+    "word": "crime",
+    "explains": "n. 犯罪（入门高频）",
+    "freq": 11
+  },
+  {
+    "word": "criminal",
+    "explains": "n. 罪犯；adj. 犯罪的（入门高频）",
+    "freq": 12
+  },
+  {
+    "word": "murder",
+    "explains": "n. 谋杀；v. 谋杀（入门高频）",
+    "freq": 13
+  },
+  {
+    "word": "victim",
+    "explains": "n. 受害者（入门高频）",
+    "freq": 14
+  },
+  {
+    "word": "witness",
+    "explains": "n. 目击者；v. 目睹（入门高频）",
+    "freq": 15
+  },
+  {
+    "word": "clue",
+    "explains": "n. 线索（入门高频）",
+    "freq": 16
+  },
+  {
+    "word": "case",
+    "explains": "n. 案件；情况（入门高频）",
+    "freq": 17
+  },
+  {
+    "word": "solve",
+    "explains": "v. 解决；破案（进阶高频）",
+    "freq": 18
+  },
+  {
+    "word": "puzzle",
+    "explains": "n. 谜题；v. 使困惑（进阶高频）",
+    "freq": 19
+  },
+  {
+    "word": "hidden",
+    "explains": "adj. 隐藏的（进阶高频）",
+    "freq": 20
+  },
+  {
+    "word": "trap",
+    "explains": "n. 陷阱；v. 设陷阱（进阶高频）",
+    "freq": 21
+  },
+  {
+    "word": "pursue",
+    "explains": "v. 追捕；追求（进阶高频）",
+    "freq": 22
+  },
+  {
+    "word": "arrest",
+    "explains": "v. 逮捕；n. 逮捕（进阶高频）",
+    "freq": 23
+  },
+  {
+    "word": "guilty",
+    "explains": "adj. 有罪的；内疚的（进阶高频）",
+    "freq": 24
+  },
+  {
+    "word": "motive",
+    "explains": "n. 动机（进阶高频）",
+    "freq": 25
+  },
+  {
+    "word": "alibi",
+    "explains": "n. 不在场证明（进阶高频）",
+    "freq": 26
+  },
+  {
+    "word": "confess",
+    "explains": "v. 坦白；承认（进阶高频）",
+    "freq": 27
+  },
+  {
+    "word": "threat",
+    "explains": "n. 威胁（进阶高频）",
+    "freq": 28
+  },
+  {
+    "word": "clever",
+    "explains": "adj. 聪明的；巧妙的（进阶高频）",
+    "freq": 29
+  },
+  {
+    "word": "disguise",
+    "explains": "n. 伪装；v. 伪装（进阶高频）",
+    "freq": 30
+  },
+  {
+    "word": "forensic",
+    "explains": "adj. 法医的；鉴证的（进阶高频）",
+    "freq": 31
+  },
+  {
+    "word": "fingerprint",
+    "explains": "n. 指纹（进阶高频）",
+    "freq": 32
+  },
+  {
+    "word": "autopsy",
+    "explains": "n. 尸检（进阶高频）",
+    "freq": 33
+  },
+  {
+    "word": "testimony",
+    "explains": "n. 证词（进阶高频）",
+    "freq": 34
+  },
+  {
+    "word": "interrogation",
+    "explains": "n. 审讯（进阶高频）",
+    "freq": 35
+  },
+  {
+    "word": "inspector",
+    "explains": "n. 督察；检查员（进阶高频）",
+    "freq": 36
+  },
+  {
+    "word": "sergeant",
+    "explains": "n. 警长；中士（高阶高频）",
+    "freq": 37
+  },
+  {
+    "word": "police",
+    "explains": "n. 警察（高阶高频）",
+    "freq": 38
+  },
+  {
+    "word": "notorious",
+    "explains": "adj. 臭名昭著的（高阶高频）",
+    "freq": 39
+  },
+  {
+    "word": "ruthless",
+    "explains": "adj. 冷酷无情的（高阶高频）",
+    "freq": 40
+  },
+  {
+    "word": "manipulate",
+    "explains": "v. 操纵（高阶高频）",
+    "freq": 41
+  },
+  {
+    "word": "deception",
+    "explains": "n. 欺骗（高阶高频）",
+    "freq": 42
+  },
+  {
+    "word": "suspicious",
+    "explains": "adj. 可疑的（高阶高频）",
+    "freq": 43
+  },
+  {
+    "word": "paranoid",
+    "explains": "adj. 偏执的（高阶高频）",
+    "freq": 44
+  },
+  {
+    "word": "vanish",
+    "explains": "v. 消失（高阶高频）",
+    "freq": 45
+  },
+  {
+    "word": "confront",
+    "explains": "v. 对峙；面对（高阶高频）",
+    "freq": 46
+  },
+  {
+    "word": "hostage",
+    "explains": "n. 人质（高阶高频）",
+    "freq": 47
+  },
+  {
+    "word": "accomplice",
+    "explains": "n. 同谋；帮凶（高阶高频）",
+    "freq": 48
+  },
+  {
+    "word": "explosion",
+    "explains": "n. 爆炸（高阶高频）",
+    "freq": 49
+  },
+  {
+    "word": "negotiate",
+    "explains": "v. 谈判；协商（高阶高频）",
+    "freq": 50
+  }
+]

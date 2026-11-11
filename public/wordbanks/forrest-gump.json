@@ -1,0 +1,252 @@
+[
+  {
+    "word": "destiny",
+    "explains": "n. 命运（入门高频）",
+    "freq": 1
+  },
+  {
+    "word": "miracle",
+    "explains": "n. 奇迹（入门高频）",
+    "freq": 2
+  },
+  {
+    "word": "innocent",
+    "explains": "adj. 天真的；无辜的（入门高频）",
+    "freq": 3
+  },
+  {
+    "word": "loyal",
+    "explains": "adj. 忠诚的（入门高频）",
+    "freq": 4
+  },
+  {
+    "word": "journey",
+    "explains": "n. 旅程（入门高频）",
+    "freq": 5
+  },
+  {
+    "word": "extraordinary",
+    "explains": "adj. 非凡的（入门高频）",
+    "freq": 6
+  },
+  {
+    "word": "grief",
+    "explains": "n. 悲痛（入门高频）",
+    "freq": 7
+  },
+  {
+    "word": "kindness",
+    "explains": "n. 善意；善良（入门高频）",
+    "freq": 8
+  },
+  {
+    "word": "simple",
+    "explains": "adj. 简单的（入门高频）",
+    "freq": 9
+  },
+  {
+    "word": "run",
+    "explains": "v. 跑；经营（入门高频）",
+    "freq": 10
+  },
+  {
+    "word": "mother",
+    "explains": "n. 母亲（入门高频）",
+    "freq": 11
+  },
+  {
+    "word": "son",
+    "explains": "n. 儿子（入门高频）",
+    "freq": 12
+  },
+  {
+    "word": "companion",
+    "explains": "n. 伙伴；同伴（入门高频）",
+    "freq": 13
+  },
+  {
+    "word": "love",
+    "explains": "n. 爱；v. 爱（入门高频）",
+    "freq": 14
+  },
+  {
+    "word": "war",
+    "explains": "n. 战争（入门高频）",
+    "freq": 15
+  },
+  {
+    "word": "soldier",
+    "explains": "n. 士兵（入门高频）",
+    "freq": 16
+  },
+  {
+    "word": "army",
+    "explains": "n. 军队（入门高频）",
+    "freq": 17
+  },
+  {
+    "word": "ship",
+    "explains": "n. 船；v. 运送（进阶高频）",
+    "freq": 18
+  },
+  {
+    "word": "shrimp",
+    "explains": "n. 虾（进阶高频）",
+    "freq": 19
+  },
+  {
+    "word": "company",
+    "explains": "n. 公司；陪伴（进阶高频）",
+    "freq": 20
+  },
+  {
+    "word": "money",
+    "explains": "n. 钱（进阶高频）",
+    "freq": 21
+  },
+  {
+    "word": "famous",
+    "explains": "adj. 著名的（进阶高频）",
+    "freq": 22
+  },
+  {
+    "word": "luck",
+    "explains": "n. 运气（进阶高频）",
+    "freq": 23
+  },
+  {
+    "word": "belief",
+    "explains": "n. 信念；相信（进阶高频）",
+    "freq": 24
+  },
+  {
+    "word": "decide",
+    "explains": "v. 决定（进阶高频）",
+    "freq": 25
+  },
+  {
+    "word": "letter",
+    "explains": "n. 信；字母（进阶高频）",
+    "freq": 26
+  },
+  {
+    "word": "memory",
+    "explains": "n. 记忆（进阶高频）",
+    "freq": 27
+  },
+  {
+    "word": "loss",
+    "explains": "n. 失去；损失（进阶高频）",
+    "freq": 28
+  },
+  {
+    "word": "peace",
+    "explains": "n. 和平；平静（进阶高频）",
+    "freq": 29
+  },
+  {
+    "word": "wonder",
+    "explains": "n. 奇迹；v. 想知道（进阶高频）",
+    "freq": 30
+  },
+  {
+    "word": "childhood",
+    "explains": "n. 童年（进阶高频）",
+    "freq": 31
+  },
+  {
+    "word": "leg",
+    "explains": "n. 腿（进阶高频）",
+    "freq": 32
+  },
+  {
+    "word": "brace",
+    "explains": "n. 支架；v. 支撑（进阶高频）",
+    "freq": 33
+  },
+  {
+    "word": "disability",
+    "explains": "n. 残疾（进阶高频）",
+    "freq": 34
+  },
+  {
+    "word": "medal",
+    "explains": "n. 勋章（进阶高频）",
+    "freq": 35
+  },
+  {
+    "word": "hero",
+    "explains": "n. 英雄（进阶高频）",
+    "freq": 36
+  },
+  {
+    "word": "captain",
+    "explains": "n. 船长；队长（高阶高频）",
+    "freq": 37
+  },
+  {
+    "word": "boat",
+    "explains": "n. 小船（高阶高频）",
+    "freq": 38
+  },
+  {
+    "word": "hurricane",
+    "explains": "n. 飓风（高阶高频）",
+    "freq": 39
+  },
+  {
+    "word": "storm",
+    "explains": "n. 风暴（高阶高频）",
+    "freq": 40
+  },
+  {
+    "word": "accident",
+    "explains": "n. 事故；意外（高阶高频）",
+    "freq": 41
+  },
+  {
+    "word": "fate",
+    "explains": "n. 命运（高阶高频）",
+    "freq": 42
+  },
+  {
+    "word": "soul",
+    "explains": "n. 灵魂（高阶高频）",
+    "freq": 43
+  },
+  {
+    "word": "funeral",
+    "explains": "n. 葬礼（高阶高频）",
+    "freq": 44
+  },
+  {
+    "word": "widow",
+    "explains": "n. 寡妇（高阶高频）",
+    "freq": 45
+  },
+  {
+    "word": "gentle",
+    "explains": "adj. 温和的（高阶高频）",
+    "freq": 46
+  },
+  {
+    "word": "wisdom",
+    "explains": "n. 智慧（高阶高频）",
+    "freq": 47
+  },
+  {
+    "word": "simplicity",
+    "explains": "n. 简单；朴素（高阶高频）",
+    "freq": 48
+  },
+  {
+    "word": "adventure",
+    "explains": "n. 冒险（高阶高频）",
+    "freq": 49
+  },
+  {
+    "word": "photograph",
+    "explains": "n. 照片；v. 拍照（高阶高频）",
+    "freq": 50
+  }
+]

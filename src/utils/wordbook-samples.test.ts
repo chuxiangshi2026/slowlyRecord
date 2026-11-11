@@ -47,14 +47,32 @@ describe('内置示例词集', () => {
     expect(pages.some(page => page.keyType === 'letters' && page.keyValue === 'old')).toBe(true)
   })
 
+  it('固定句式按疑问开头成页，包含状态确认和常用疑问词', () => {
+    const book = WORDBOOK_SAMPLES.find(item => item.name === '固定句式')
+    expect(book?.chapters.map(chapter => chapter.name)).toEqual(['确认与状态', '常用疑问词', '礼貌请求'])
+    const pages = book?.chapters.flatMap(chapter => chapter.pages) || []
+    expect(pages.map(page => page.keyValue)).toEqual(expect.arrayContaining([
+      'Are you', 'Do you', 'Can you', 'Who', 'When', 'How much', 'How many', 'Where', 'What', 'Why',
+    ]))
+    const areYou = pages.find(page => page.keyValue === 'Are you')
+    expect(areYou?.words.map(word => word.text)).toEqual(expect.arrayContaining(['Are you OK?', 'Are you ready?']))
+    expect(pages.every(page => page.words.length >= 4)).toBe(true)
+    expect(pages.flatMap(page => page.words).every(word => word.explains.trim())).toBe(true)
+  })
+
   it('每个学习页都有构词/演变说明，关键派生词带词条备注、例句和记忆点', () => {
     const pages = WORDBOOK_SAMPLES.flatMap(book => book.chapters.flatMap(chapter => chapter.pages))
+    const patternPages = new Set((WORDBOOK_SAMPLES.find(book => book.name === '固定句式')?.chapters || [])
+      .flatMap(chapter => chapter.pages))
     for (const page of pages) {
       expect(page.note?.trim(), `${page.keyValue} 缺少页面说明`).toBeTruthy()
     }
     const words = pages.flatMap(page => page.words)
-    for (const word of words) {
-      expect(word.examples?.length, `${word.text} 缺少例句`).toBeGreaterThan(0)
+    for (const page of pages) {
+      if (patternPages.has(page)) continue
+      for (const word of page.words) {
+        expect(word.examples?.length, `${word.text} 缺少例句`).toBeGreaterThan(0)
+      }
     }
     const interaction = words.find(word => word.text === 'interaction')
     expect(interaction?.note).toContain('interact')
