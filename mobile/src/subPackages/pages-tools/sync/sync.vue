@@ -92,6 +92,7 @@ import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { useSignin } from '@/stores/useSignin'
 import { useMemoryPalace } from '@/stores/useMemoryPalace'
 import { useSentences } from '@/stores/useSentences'
+import { useWordBook } from '@/stores/useWordBook'
 import { pushToServer, pullFromServer, getSyncServerUrl, setSyncServerUrl, checkServerAvailable, type PushPayload } from '../utils/sync'
 import { getWebDavConfig, saveWebDavConfig, isWebDavConfigured, diagnoseWebDav, pushToWebDav, pullFromWebDav, NUTSTORE_WEBDAV_URL } from '../utils/sync-webdav'
 import { collectKnowledgeSyncData, restoreKnowledgeSyncData } from '@/utils/knowledge-memory-db'
@@ -105,6 +106,7 @@ const phoneticMemoryStore = usePhoneticMemory()
 const signinStore = useSignin()
 const memoryPalaceStore = useMemoryPalace()
 const sentencesStore = useSentences()
+const wordBookStore = useWordBook()
 
 const showPushResult = ref(false)
 const showPullInput = ref(false)
@@ -158,6 +160,8 @@ const buildPushPayload = async (): Promise<PushPayload> => {
   const memoryPalace = memoryPalaceStore.collectSync()
   // 收集句子库（空库返回 null）
   const sentences = sentencesStore.collect()
+  // 收集词集书/章/页（空库返回 null）
+  const wordBook = wordBookStore.collectSync()
   return {
     banks,
     textMemory: hasTextMemory ? textMemory : undefined,
@@ -167,6 +171,7 @@ const buildPushPayload = async (): Promise<PushPayload> => {
     signin: signin || undefined,
     memoryPalace: memoryPalace || undefined,
     sentences: sentences || undefined,
+    wordBook: wordBook || undefined,
     // 同步墓碑：本机删除埋点随 payload 透传，对端拉取时过滤「删除复活」的条目
     tombstones: getTombstones(),
   }
@@ -434,6 +439,10 @@ async function applyPullResult(result: any): Promise<{ success: boolean; summary
   if (result.sentences) {
     const added = sentencesStore.restore(result.sentences, tombstones)
     if (added > 0) parts.push(`${added} 条句子`)
+  }
+  if (result.wordBook) {
+    const merged = wordBookStore.restoreSync(result.wordBook)
+    if (merged > 0) parts.push(`${merged} 个词集条目`)
   }
 
   const summary = parts.length > 0 ? `已同步：${parts.join('、')}` : '本地数据已是最新'

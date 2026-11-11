@@ -48,3 +48,7 @@ scripts/data/freq/
 .env
 .edgeone/*
 .tef_dist/*
+
+# 微信小程序 CI 密钥与预览二维码
+mobile/private.*.key
+mobile/.ci-qr/

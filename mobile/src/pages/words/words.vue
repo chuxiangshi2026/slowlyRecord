@@ -67,12 +67,12 @@
           <text class="wrong-entry-arrow">›</text>
         </view>
       </view>
-      <!-- 词图章节（重构中，入口按开关隐藏） -->
+      <!-- 词集 -->
       <view v-if="WORD_BOOK_ENABLED" class="filter-row">
-        <text class="filter-label">词图</text>
+        <text class="filter-label">词集</text>
         <view class="word-book-actions">
           <button class="word-book-btn" :disabled="filteredWords.length === 0" @click="goCreateWordBook">生成学习页</button>
-          <button class="word-book-btn plain" @click="goWordBooks">章节闯关</button>
+          <button class="word-book-btn plain" @click="goWordBooks">进入词集</button>
         </view>
       </view>
       <!-- 重置 -->
@@ -446,7 +446,7 @@ onMounted(() => {
   // 数据由首页 loadWords 加载，通过 Pinia 响应式共享
 })
 
-// 从词图页「添加页」跳回来：一次性打开筛选面板（switchTab 不能带参，用标记位）
+// 从词集页「添加学习页」跳回来：一次性打开筛选面板（switchTab 不能带参，用标记位）
 onShow(() => {
   try {
     if (uni.getStorageSync('sr_wb_open_word_filter') === '1') {

@@ -171,6 +171,7 @@ async function load() {
 
 onMounted(load)
 
+
 // ===== 筛选状态 =====
 
 const categoryOptions: { value: 'all' | 'poetry' | 'idiom'; label: string }[] = [
@@ -220,14 +221,17 @@ function toggleRoute() {
   showRoute.value = !showRoute.value
 }
 
-// 当 author 列表变化时（如切换朝代/类型），若当前选中的 author 不在新列表中则重置
-watch(availableAuthors, (list) => {
+// 作者列表变化时按名称保留选择；名称已不存在则重置，不能把旧下标对应的新作者当成原选择
+watch(availableAuthors, (list, previousList) => {
   if (authorIndex.value === 0) return
-  const cur = list[authorIndex.value - 1]
-  if (!cur) {
+  const previousAuthor = previousList[authorIndex.value - 1]
+  const nextIndex = previousAuthor ? list.indexOf(previousAuthor) : -1
+  if (nextIndex < 0) {
     authorIndex.value = 0
     showRoute.value = false
+    return
   }
+  authorIndex.value = nextIndex + 1
 })
 
 function onCategoryChange(e: any) {
@@ -349,6 +353,7 @@ interface UniMarker {
   id: number
   latitude: number
   longitude: number
+  title: string
   iconPath: string
   width: number
   height: number
@@ -382,14 +387,16 @@ const markers = computed<UniMarker[]>(() => {
     const total = g.poems.length + g.idioms.length
     const isCluster = total > 1
     const size = isCluster ? 36 : 26
+    const itemTitles = [...g.poems, ...g.idioms].map(item => item.title).filter(Boolean)
     const title = isCluster
-      ? `${g.coord.name} · ${total}首`
-      : g.poems[0]?.title || g.idioms[0]?.title || g.coord.name
+      ? `${itemTitles.slice(0, 2).join('、') || g.coord.name}${total > 2 ? ` 等${total}项` : ''}`
+      : itemTitles[0] || g.coord.name
 
     list.push({
       id: idx,
       latitude: g.coord.lat,
       longitude: g.coord.lng,
+      title,
       iconPath: pickIcon(g),
       width: size,
       height: size,
@@ -602,7 +609,10 @@ watch(
 // ===== 事件 =====
 
 function onMarkerTap(e: any) {
-  const markerId = e.detail.markerId as number
+  const rawMarkerId = e?.detail?.markerId ?? e?.markerId
+  if (rawMarkerId === undefined || rawMarkerId === null || rawMarkerId === '') return
+  const markerId = Number(rawMarkerId)
+  if (!Number.isInteger(markerId)) return
   const group = markerIndexMap.value.get(markerId)
   if (!group) return
   // 把视野中心移到点击的坐标，避免被底部 sheet 遮挡
@@ -688,7 +698,7 @@ const emptyHint = computed(() => {
   width: 100%;
   min-width: 0;
   height: 100%;
-  background: var(--sr-bg);
+  background: transparent;
 }
 
 /* 工具栏 */

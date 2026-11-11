@@ -103,7 +103,7 @@ async function main() {
   const browser = await launchBrowser(puppeteer);
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: W * names.length, height: H, deviceScaleFactor: 1 });
+    await page.setViewport({ width: W * names.length, height: H, deviceScaleFactor: 2 });
     await page.setContent(html, { waitUntil: 'load' });
     for (let i = 0; i < names.length; i++) {
       const el = await page.$(`#g-${i}`);

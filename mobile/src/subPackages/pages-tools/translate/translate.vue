@@ -366,6 +366,7 @@ onUnload(() => {
 
 .translate-btn {
   flex: 1;
+  min-width: 240rpx;
   height: 90rpx;
   background: var(--sr-primary);
   color: var(--sr-on-primary);
@@ -379,7 +380,11 @@ onUnload(() => {
 }
 
 .camera-btn {
-  width: 200rpx;
+  flex: none;
+  width: auto;
+  min-width: 200rpx;
+  padding: 0 28rpx;
+  white-space: nowrap;
   height: 90rpx;
   background: var(--sr-primary-2);
   color: var(--sr-on-primary);

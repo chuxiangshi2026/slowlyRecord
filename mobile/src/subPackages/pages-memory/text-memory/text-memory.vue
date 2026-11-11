@@ -487,6 +487,8 @@ function confirmDelete(article: MobileTextArticle) {
   padding: 40rpx;
 }
 .detail-card {
+  /* 小程序默认 content-box：100% + 水平 padding 会撑出视口，产生右划空白条 */
+  box-sizing: border-box;
   width: 100%;
   max-height: 70vh;
   background: var(--sr-card);

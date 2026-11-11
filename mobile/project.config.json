@@ -11,7 +11,9 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useCompilerPlugins": ["sass"],
+    "useCompilerPlugins": [
+      "sass"
+    ],
     "minifyWXML": true,
     "minifyWXSS": true
   },

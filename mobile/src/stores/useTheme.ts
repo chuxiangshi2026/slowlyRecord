@@ -79,22 +79,23 @@ export const useTheme = defineStore('theme', () => {
   /** 套用原生导航栏 / tabBar / 窗口背景色（wx.setNavigationBarColor 只作用于当前页，需在页面 onShow 时重放） */
   function apply() {
     const dark = isDark.value
+    // 失败以异步 Promise 拒绝形式上报（如子包页面 setTabBarStyle、H5 setNavigationBarColor），try/catch 接不住，需显式吞掉
     try {
-      uni.setNavigationBarColor({
+      Promise.resolve(uni.setNavigationBarColor({
         frontColor: dark ? '#ffffff' : '#000000',
         backgroundColor: dark ? '#151a18' : '#F8F8F8',
-      })
+      })).catch(() => { /* 平台不支持时忽略 */ })
     } catch { /* 平台不支持时忽略 */ }
     try {
-      uni.setTabBarStyle({
+      Promise.resolve(uni.setTabBarStyle({
         color: dark ? '#77847e' : '#999999',
         selectedColor: dark ? '#83c5a8' : '#52796f',
         backgroundColor: dark ? '#151a18' : '#FFFFFF',
         borderStyle: dark ? 'white' : 'black',
-      })
+      })).catch(() => { /* 非 tabBar 环境时忽略 */ })
     } catch { /* 非 tabBar 环境时忽略 */ }
     try {
-      uni.setBackgroundColor({ backgroundColor: dark ? '#151a18' : '#f5f5f5' })
+      Promise.resolve(uni.setBackgroundColor({ backgroundColor: dark ? '#151a18' : '#f5f5f5' })).catch(() => { /* 平台不支持时忽略 */ })
     } catch { /* 平台不支持时忽略 */ }
   }
 

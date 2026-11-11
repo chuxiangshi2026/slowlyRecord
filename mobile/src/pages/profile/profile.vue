@@ -26,7 +26,7 @@
     <view class="menu-list">
       <!-- 每日目标：首页进度环的目标值，选中即存 -->
       <view class="menu-item" @click="showDailyGoalPicker">
-        <text class="menu-icon goal">G</text>
+        <text class="menu-icon goal">🎯</text>
         <text class="menu-text">每日目标</text>
         <text class="menu-value">{{ dailyGoal }} 词</text>
         <text class="menu-arrow">›</text>
@@ -480,10 +480,25 @@ const openLink = (url: string) => {
   // #endif
 }
 
+// 运行环境标识：envVersion（develop=开发者工具/预览码，trial=体验版，release=线上版）任何环境都有值；
+// version 仅体验版/线上版有（预览包无版本号，兜底展示 envVersion 即可，避免误导）
+function runningEnv(): { env: string; version: string } {
+  // #ifdef MP-WEIXIN
+  try {
+    const info = (wx as any).getAccountInfoSync?.()
+    const mp = (info && info.miniProgram) || {}
+    return { env: mp.envVersion || 'develop', version: typeof mp.version === 'string' ? mp.version : '' }
+  } catch { /* ignore */ }
+  // #endif
+  return { env: 'develop', version: '' }
+}
+
 const showAbout = () => {
+  const { env, version } = runningEnv()
+  const envText = { develop: '开发版', trial: '体验版', release: '线上版' }[env] || env
   uni.showModal({
     title: '关于慢记',
-    content: '慢记 v1.0.0\n\n一款专注于单词记忆与复习的工具应用',
+    content: `慢记 ${version ? `v${version} · ` : ''}${envText}\n\n一款专注于单词记忆与复习的工具应用`,
     showCancel: false,
   })
 }

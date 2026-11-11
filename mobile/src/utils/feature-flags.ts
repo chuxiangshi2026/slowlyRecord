@@ -3,6 +3,6 @@
  */
 
 /**
- * 词集正在桌面端重设计；移动端旧入口暂停开放，待数据格式稳定后再移植。
+ * 词集已在移动端开放，与桌面端共用书/章/页数据结构。
  */
-export const WORD_BOOK_ENABLED = false
+export const WORD_BOOK_ENABLED = true

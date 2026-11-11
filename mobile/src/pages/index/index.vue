@@ -55,9 +55,9 @@
         <text class="stat-num">{{ reviewCount }}</text>
         <text class="stat-label">待复习</text>
       </view>
-      <view class="stat-card" @click="goToSignin">
-        <text class="stat-num">{{ streakDays }}</text>
-        <text class="stat-label">连续打卡</text>
+      <view class="stat-card" @click="goToWords">
+        <text class="stat-num">{{ masteredCount }}</text>
+        <text class="stat-label">已掌握</text>
       </view>
       <view class="stat-card" @click="goToWords">
         <text class="stat-num">{{ todayLearned }}</text>
@@ -204,6 +204,8 @@ const textDueCount = computed(() => textStore.dueArticleCount || textStore.total
 const wrongWordsCount = computed(() => {
   return wordsStore.words.filter(w => (w.level || 1) <= 2 && (w.reviewCount || 0) > 0).length
 })
+// 已掌握 = level ≥ 12（与桌面端 remember 口径一致），统计卡用，避免与上方次级任务的连续打卡重复
+const masteredCount = computed(() => wordsStore.words.filter(w => (w.level || 0) >= 12).length)
 
 // 今日学习 = 当天新增数 + 当天复习数（字段为 mobile 特有的 addTime/lastReviewTime）
 const todayLearned = computed(() => {

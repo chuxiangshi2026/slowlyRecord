@@ -82,7 +82,7 @@ const allFeatures = [
   {
     icon: '🗺️',
     cls: 'palace',
-    text: '词图闯关',
+    text: '词集',
     desc: '筛选建页 / 思维导图 / 章节练习',
     action: () => navigate('/subPackages/pages-memory/word-book/list'),
   },
@@ -109,8 +109,8 @@ const allFeatures = [
   },
 ]
 
-// 词图闯关重构中，入口按开关隐藏
-const features = computed(() => allFeatures.filter(item => WORD_BOOK_ENABLED || item.text !== '词图闯关'))
+// 词集入口按开关控制
+const features = computed(() => allFeatures.filter(item => WORD_BOOK_ENABLED || item.text !== '词集'))
 </script>
 
 <style scoped>

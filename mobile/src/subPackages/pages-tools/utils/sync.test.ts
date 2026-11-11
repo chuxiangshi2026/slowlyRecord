@@ -10,12 +10,14 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import pako from 'pako'
 import {
   collectSyncData,
+  buildRestoreResult,
   pullFromServer,
   utf8ToBytes,
   uint8ArrayToBase64,
   xorCrypt,
 } from './sync'
 import { setDbAdapter, resetDbAdapter, type DbAdapter } from '@/adapters/index'
+import type { MobileSyncWordBook } from '@/stores/useUtils/types'
 import { getTombstones, TOMBSTONES_DOC_ID } from '@/stores/useUtils/sync-tombstone'
 
 function createMockUni() {
@@ -113,6 +115,30 @@ describe('collectSyncData 墓碑透传', () => {
   it('payload 不带 tombstones 时字段为空（JSON 序列化自动省略）', () => {
     const data = collectSyncData({ banks: [] })
     expect(data.tombstones).toBeUndefined()
+  })
+})
+
+describe('词集同步包', () => {
+  const wordBook: MobileSyncWordBook = {
+    schemaVersion: 1,
+    books: [{ _id: 'wb_book_1', type: 'wb_book', name: '同步书', order: 0, desc: '', ctime: 1, utime: 1 }],
+    chapters: [],
+    pages: [],
+  }
+
+  it('词集随 payload 进入同步包并可恢复', async () => {
+    const collected = collectSyncData({ banks: [], wordBook })
+    expect(collected.wordBook).toEqual(wordBook)
+
+    const restored = await buildRestoreResult({
+      version: 1,
+      exportedAt: Date.now(),
+      platform: 'mobile',
+      banks: [],
+      wordBook,
+    })
+    expect(restored.success).toBe(true)
+    expect(restored.wordBook).toEqual(wordBook)
   })
 })
 

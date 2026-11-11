@@ -1,5 +1,6 @@
 <template>
   <view class="import-page" :class="themeClass">
+    <InkBackground />
     <!-- Tab 切换 -->
     <view class="tabs">
       <view
@@ -210,6 +211,7 @@ import {
 } from './library'
 import PoetryMapTab from './components/PoetryMapTab.vue'
 import MapBottomSheet from './components/MapBottomSheet.vue'
+import InkBackground from './components/InkBackground.vue'
 import type { MarkerTapPayload } from './components/map-types'
 
 const store = useTextMemory()
@@ -318,6 +320,7 @@ const dynastyIndex = ref(0)
 const poetryKeyword = ref('')
 const poetryAll = ref<MobilePoetryItem[]>([])
 const poetryLoading = ref(false)
+let poetryLoaded = false
 const selectedPoetryIds = ref<Set<string>>(new Set())
 
 function onDynastyChange(e: any) {
@@ -325,11 +328,12 @@ function onDynastyChange(e: any) {
 }
 
 async function loadPoetry() {
-  if (poetryAll.value.length > 0) return
+  if (poetryLoaded || poetryLoading.value) return
   poetryLoading.value = true
   try {
     const lists = await Promise.all(DYNASTIES.map((d) => loadPoetryByDynasty(d.code)))
     poetryAll.value = lists.flat()
+    poetryLoaded = true
   } catch (e) {
     uni.showToast({ title: '加载诗词库失败', icon: 'none' })
   } finally {
@@ -409,6 +413,7 @@ const idiomCategoryIndex = ref(0)
 const idiomKeyword = ref('')
 const idiomAll = ref<MobileIdiomItem[]>([])
 const idiomLoading = ref(false)
+let idiomLoaded = false
 const selectedIdiomIds = ref<Set<string>>(new Set())
 
 function onIdiomCategoryChange(e: any) {
@@ -416,10 +421,11 @@ function onIdiomCategoryChange(e: any) {
 }
 
 async function loadIdioms() {
-  if (idiomAll.value.length > 0) return
+  if (idiomLoaded || idiomLoading.value) return
   idiomLoading.value = true
   try {
     idiomAll.value = await loadAllIdioms()
+    idiomLoaded = true
   } catch (e) {
     uni.showToast({ title: '加载成语库失败', icon: 'none' })
   } finally {
@@ -660,6 +666,8 @@ function handleImportFromMap() {
   background: var(--sr-bg);
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 0;
 }
 
 .tabs {
@@ -712,14 +720,18 @@ function handleImportFromMap() {
   position: relative;
 }
 .map-area-wrap.sheet-open {
-  flex: 0 0 35%;
-  min-height: 35%;
+  /* sheet 用确定 vh 高度后，map 保持 flex:1 拿剩余空间即可；
+     真机上对不确定高度父容器用百分比 flex-basis 会坍缩，不能再依赖 */
+  flex: 1;
+  min-height: 0;
 }
 
 /* sheet 容器：占据下半部，不浮在 map 上方（避免 native 组件层级冲突） */
 .map-sheet-wrap {
-  flex: 0 0 50%;
-  min-height: 50%;
+  /* 确定高度：bottom-sheet height:100% → sheet-list flex:1+height:0 的高度链
+     在真机微信里需要每层都是确定高度，百分比 flex-basis 会让列表拿到 0 高（列表渲染了但不可见） */
+  flex: none;
+  height: 56vh;
   max-height: 60vh;
   display: flex;
   flex-direction: column;

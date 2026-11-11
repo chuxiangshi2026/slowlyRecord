@@ -10,6 +10,7 @@ import pako from 'pako'
 import type {
   MobileSyncBank,
   MobileSyncData,
+  MobileSyncWordBook,
   SyncResult,
   RestoreResult,
   MobileTextMemory,
@@ -27,6 +28,7 @@ import { log } from '../../../utils/logger'
 export type {
   MobileSyncBank,
   MobileSyncData,
+  MobileSyncWordBook,
   SyncResult,
   RestoreResult,
   MobileTextMemory,
@@ -316,6 +318,7 @@ export interface PushPayload {
   signin?: MobileSigninData
   memoryPalace?: MobileMemoryPalace
   sentences?: MobileSentences
+  wordBook?: MobileSyncWordBook
   /** 同步墓碑：本机删除埋点随 payload 透传，对端拉取时按它过滤「删除复活」的条目 */
   tombstones?: Record<string, number>
 }
@@ -353,6 +356,7 @@ export function collectSyncData(payload: PushPayload): MobileSyncData {
     signin: payload.signin,
     memoryPalace: payload.memoryPalace,
     sentences: payload.sentences,
+    wordBook: payload.wordBook,
     tombstones: payload.tombstones,
   }
 }
@@ -372,6 +376,7 @@ export async function pushToServer(
     signin?: MobileSigninData
     memoryPalace?: MobileMemoryPalace
     sentences?: MobileSentences
+    wordBook?: MobileSyncWordBook
   },
 ): Promise<SyncResult> {
   try {
@@ -464,6 +469,7 @@ export async function buildRestoreResult(data: MobileSyncData): Promise<RestoreR
     signin: data.signin,
     memoryPalace,
     sentences: data.sentences,
+    wordBook: data.wordBook,
   }
 }
 
