@@ -1,6 +1,6 @@
 {
   "name": "slowlyrecord-mobile",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "慢记移动端 - UniApp 跨平台应用",
   "scripts": {
     "dev:mp-weixin": "uni -p mp-weixin",
