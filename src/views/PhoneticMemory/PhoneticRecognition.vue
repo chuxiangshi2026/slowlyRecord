@@ -79,6 +79,10 @@
           <span class="explain-label">要点</span>
           <span class="explain-tip">{{ currentQ.phoneme.tip }}</span>
         </div>
+        <div v-if="currentQ.phoneme.mnemonic" class="explain-row mnemonic-row">
+          <span class="explain-label">口诀</span>
+          <span class="explain-tip">{{ currentQ.phoneme.mnemonic }}</span>
+        </div>
         <el-button type="primary" size="large" class="next-btn" @click="nextQuestion">
           {{ currentIndex + 1 >= TOTAL ? '查看结果' : '下一题' }}
           <el-icon class="el-icon--right"><Right /></el-icon>
@@ -537,6 +541,13 @@ onMounted(startSession);
   .explain-tip {
     color: var(--utools-text-secondary, #606266);
     line-height: 1.5;
+  }
+
+  .mnemonic-row {
+    align-items: flex-start;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--utools-primary) 7%, transparent);
   }
 
   .next-btn {

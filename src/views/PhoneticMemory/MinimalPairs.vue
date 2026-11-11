@@ -69,6 +69,10 @@
           <span class="explain-label">对立点</span>
           <span class="explain-content">{{ currentQ.pair.contrast }}</span>
         </div>
+        <div v-for="ph in pairMnemonics" :key="ph.ipa" class="explain-row mnemonic-row">
+          <span class="explain-label">口诀</span>
+          <span class="explain-mnemonic"><strong>/{{ ph.ipa }}/</strong> {{ ph.mnemonic }}</span>
+        </div>
         <div class="explain-actions">
           <el-button @click="speak(currentQ.pair.a)">
             <el-icon><VideoPlay/></el-icon> {{ currentQ.pair.a }}
@@ -136,6 +140,11 @@ const answered = ref(false);
 const finished = ref(false);
 
 const currentQ = computed<Question | null>(() => questions.value[currentIndex.value] || null);
+const pairMnemonics = computed(() =>
+    phoneticStore.dataset.all.filter(ph =>
+        ph.mnemonic && currentQ.value?.pair.contrast.includes(`/${ph.ipa}/`),
+    ),
+);
 
 // 延迟发声定时器：切题/重开/离开时统一清理，避免旧题语音打断新题或卸载后发声
 let speakTimers: ReturnType<typeof setTimeout>[] = [];
@@ -460,6 +469,19 @@ onMounted(startSession);
     color: var(--utools-text-primary, #303133);
     font-weight: 600;
     font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+  }
+
+  .mnemonic-row {
+    align-items: flex-start;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--utools-primary) 7%, transparent);
+  }
+
+  .explain-mnemonic {
+    color: var(--utools-text-secondary, #606266);
+    font-size: 13px;
+    line-height: 1.5;
   }
 
   .explain-actions {

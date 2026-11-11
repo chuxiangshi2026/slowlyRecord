@@ -119,6 +119,11 @@
           <p class="tip">{{ activePhoneme.tip }}</p>
         </div>
 
+        <div v-if="activePhoneme.mnemonic" class="detail-block mnemonic-block">
+          <div class="detail-block-label">记忆口诀</div>
+          <p class="tip mnemonic">{{ activePhoneme.mnemonic }}</p>
+        </div>
+
         <div class="detail-block">
           <div class="detail-block-label">例词(点击发音)</div>
           <div class="examples">
@@ -538,6 +543,21 @@ function goBreakdown() {
   font-size: 14px;
   color: var(--utools-text-secondary, #606266);
   line-height: 1.6;
+}
+
+.mnemonic-block {
+  padding: 10px 12px;
+  border-left: 3px solid var(--utools-primary, #52796f);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--utools-primary) 7%, transparent);
+
+  .detail-block-label {
+    margin-bottom: 4px;
+  }
+
+  .mnemonic {
+    color: var(--utools-text-primary, #303133);
+  }
 }
 
 .examples {

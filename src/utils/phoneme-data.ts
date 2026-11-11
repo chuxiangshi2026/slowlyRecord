@@ -34,6 +34,8 @@ export interface Phoneme {
     articulation: string;
     /** 发音要点提示 */
     tip: string;
+    /** 记忆口诀(英语 48 音素) */
+    mnemonic?: string;
     /** 易混淆音素(用于干扰项 / 最小对立对) */
     similar?: string[];
 }
@@ -43,32 +45,32 @@ export interface Phoneme {
 // ============================================================================
 
 const SHORT_VOWELS: Phoneme[] = [
-    {ipa: 'ɪ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'it', examples: ['sit', 'ship', 'big', 'fish'], tip: '舌位前高,嘴角微开,短促有力', similar: ['iː', 'e']},
-    {ipa: 'e', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'eh', examples: ['bed', 'ten', 'red', 'pen'], tip: '舌位前半高,嘴半开', similar: ['æ', 'ɪ']},
-    {ipa: 'æ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'at', examples: ['cat', 'apple', 'hand', 'bag'], tip: '舌位前低,嘴大开,像"哎"', similar: ['e', 'ʌ']},
-    {ipa: 'ʌ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'uh', examples: ['cup', 'sun', 'bus', 'love'], tip: '舌位中央,嘴半开,短促', similar: ['ɑː', 'æ']},
-    {ipa: 'ɒ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'on', examples: ['hot', 'dog', 'box', 'top'], tip: '舌位后低,嘴大开圆唇', similar: ['ɔː', 'ʌ']},
-    {ipa: 'ʊ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'good', examples: ['book', 'good', 'put', 'look'], tip: '舌位后高,圆唇,短促', similar: ['uː']},
-    {ipa: 'ə', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'uh', examples: ['about', 'sofa', 'ago', 'banana'], tip: '中性元音(弱读),嘴自然半开'},
+    {ipa: 'ɪ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'it', examples: ['sit', 'ship', 'big', 'fish'], tip: '舌位前高,嘴角微开,短促有力', mnemonic: '短音 ɪ，轻又急；sit、ship 不拖长。', similar: ['iː', 'e']},
+    {ipa: 'e', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'eh', examples: ['bed', 'ten', 'red', 'pen'], tip: '舌位前半高,嘴半开', mnemonic: '小口 e，短又轻；bed、ten 嘴角平。', similar: ['æ', 'ɪ']},
+    {ipa: 'æ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'at', examples: ['cat', 'apple', 'hand', 'bag'], tip: '舌位前低,嘴大开,像"哎"', mnemonic: '梅花 æ，嘴张大；cat、apple 下巴拉。', similar: ['e', 'ʌ']},
+    {ipa: 'ʌ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'uh', examples: ['cup', 'sun', 'bus', 'love'], tip: '舌位中央,嘴半开,短促', mnemonic: '三角 ʌ，中央发；cup、sun 短促啊。', similar: ['ɑː', 'æ']},
+    {ipa: 'ɒ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'on', examples: ['hot', 'dog', 'box', 'top'], tip: '舌位后低,嘴大开圆唇', mnemonic: '圆嘴 ɒ，短又阔；hot、dog 口开落。', similar: ['ɔː', 'ʌ']},
+    {ipa: 'ʊ', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'good', examples: ['book', 'good', 'put', 'look'], tip: '舌位后高,圆唇,短促', mnemonic: '短 ʊ，唇收圆；book、good 不拖延。', similar: ['uː']},
+    {ipa: 'ə', type: 'vowel', group: 'short', groupLabel: '短元音', articulation: 'uh', examples: ['about', 'sofa', 'ago', 'banana'], tip: '中性元音(弱读),嘴自然半开', mnemonic: '弱读 ə，最轻松；about、sofa 口中送。'},
 ];
 
 const LONG_VOWELS: Phoneme[] = [
-    {ipa: 'iː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'e', examples: ['see', 'sheep', 'tree', 'meet'], tip: '舌位前高,嘴扁平,音长清晰', similar: ['ɪ']},
-    {ipa: 'ɑː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'ah', examples: ['car', 'far', 'park', 'arm'], tip: '舌位后低,嘴大开,音长', similar: ['ʌ']},
-    {ipa: 'ɔː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'or', examples: ['four', 'door', 'sport', 'horse'], tip: '舌位后半低,圆唇,音长', similar: ['ɒ']},
-    {ipa: 'uː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'oo', examples: ['food', 'moon', 'blue', 'school'], tip: '舌位后高,圆唇,音长', similar: ['ʊ']},
-    {ipa: 'ɜː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'er', examples: ['bird', 'girl', 'her', 'work'], tip: '舌位中央,嘴半开,音长'},
+    {ipa: 'iː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'e', examples: ['see', 'sheep', 'tree', 'meet'], tip: '舌位前高,嘴扁平,音长清晰', mnemonic: '长 iː，嘴角笑；see、sheep 音拉长。', similar: ['ɪ']},
+    {ipa: 'ɑː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'ah', examples: ['car', 'far', 'park', 'arm'], tip: '舌位后低,嘴大开,音长', mnemonic: '长 ɑː，口张大；car、far 音拉满。', similar: ['ʌ']},
+    {ipa: 'ɔː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'or', examples: ['four', 'door', 'sport', 'horse'], tip: '舌位后半低,圆唇,音长', mnemonic: '长 ɔː，唇收圆；four、door 音延绵。', similar: ['ɒ']},
+    {ipa: 'uː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'oo', examples: ['food', 'moon', 'blue', 'school'], tip: '舌位后高,圆唇,音长', mnemonic: '长 uː，嘴撮圆；food、moon 音拖远。', similar: ['ʊ']},
+    {ipa: 'ɜː', type: 'vowel', group: 'long', groupLabel: '长元音', articulation: 'er', examples: ['bird', 'girl', 'her', 'work'], tip: '舌位中央,嘴半开,音长', mnemonic: '长 ɜː，舌居中；bird、girl 音放松。'},
 ];
 
 const DIPHTHONGS: Phoneme[] = [
-    {ipa: 'eɪ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'ay', examples: ['name', 'day', 'cake', 'rain'], tip: '从 /e/ 滑向 /ɪ/'},
-    {ipa: 'aɪ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'eye', examples: ['five', 'time', 'my', 'sky'], tip: '从 /a/ 滑向 /ɪ/'},
-    {ipa: 'ɔɪ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'oy', examples: ['boy', 'toy', 'coin', 'voice'], tip: '从 /ɔ/ 滑向 /ɪ/'},
-    {ipa: 'aʊ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'ow', examples: ['now', 'how', 'house', 'down'], tip: '从 /a/ 滑向 /ʊ/'},
-    {ipa: 'əʊ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'oh', examples: ['go', 'no', 'home', 'snow'], tip: '从 /ə/ 滑向 /ʊ/'},
-    {ipa: 'ɪə', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'eer', examples: ['ear', 'here', 'near', 'dear'], tip: '从 /ɪ/ 滑向 /ə/'},
-    {ipa: 'eə', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'air', examples: ['air', 'hair', 'chair', 'where'], tip: '从 /e/ 滑向 /ə/'},
-    {ipa: 'ʊə', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'oor', examples: ['tour', 'sure', 'poor', 'pure'], tip: '从 /ʊ/ 滑向 /ə/'},
+    {ipa: 'eɪ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'ay', examples: ['name', 'day', 'cake', 'rain'], tip: '从 /e/ 滑向 /ɪ/', mnemonic: 'eɪ 从 e 滑向 ɪ；name、day 一口继。'},
+    {ipa: 'aɪ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'eye', examples: ['five', 'time', 'my', 'sky'], tip: '从 /a/ 滑向 /ɪ/', mnemonic: 'aɪ 先开后收窄；five、time 滑得好。'},
+    {ipa: 'ɔɪ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'oy', examples: ['boy', 'toy', 'coin', 'voice'], tip: '从 /ɔ/ 滑向 /ɪ/', mnemonic: 'ɔɪ 圆唇再向 ɪ；boy、toy 滑到底。'},
+    {ipa: 'aʊ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'ow', examples: ['now', 'how', 'house', 'down'], tip: '从 /a/ 滑向 /ʊ/', mnemonic: 'aʊ 先开后收圆；now、house 口型变。'},
+    {ipa: 'əʊ', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'oh', examples: ['go', 'no', 'home', 'snow'], tip: '从 /ə/ 滑向 /ʊ/', mnemonic: 'əʊ 从中滑向 ʊ；go、snow 渐收唇。'},
+    {ipa: 'ɪə', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'eer', examples: ['ear', 'here', 'near', 'dear'], tip: '从 /ɪ/ 滑向 /ə/', mnemonic: 'ɪə 从 ɪ 滑向 ə；ear、here 别读断。'},
+    {ipa: 'eə', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'air', examples: ['air', 'hair', 'chair', 'where'], tip: '从 /e/ 滑向 /ə/', mnemonic: 'eə 从 e 滑向 ə；air、chair 一口连。'},
+    {ipa: 'ʊə', type: 'vowel', group: 'diphthong', groupLabel: '双元音', articulation: 'oor', examples: ['tour', 'sure', 'poor', 'pure'], tip: '从 /ʊ/ 滑向 /ə/', mnemonic: 'ʊə 从 ʊ 滑向 ə；tour、sure 轻轻连。'},
 ];
 
 // ============================================================================
@@ -76,49 +78,49 @@ const DIPHTHONGS: Phoneme[] = [
 // ============================================================================
 
 const PLOSIVES: Phoneme[] = [
-    {ipa: 'p', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: false, articulation: 'puh', examples: ['pen', 'pig', 'apple', 'happy'], tip: '双唇紧闭后突然爆破,清辅音', similar: ['b']},
-    {ipa: 'b', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: true, articulation: 'buh', examples: ['bed', 'big', 'baby', 'book'], tip: '双唇紧闭后突然爆破,浊辅音', similar: ['p']},
-    {ipa: 't', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: false, articulation: 'tuh', examples: ['top', 'ten', 'cat', 'water'], tip: '舌尖抵上齿龈爆破,清辅音', similar: ['d']},
-    {ipa: 'd', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: true, articulation: 'duh', examples: ['dog', 'day', 'red', 'door'], tip: '舌尖抵上齿龈爆破,浊辅音', similar: ['t']},
-    {ipa: 'k', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: false, articulation: 'kuh', examples: ['cat', 'key', 'book', 'cake'], tip: '舌后部抵软腭爆破,清辅音', similar: ['ɡ']},
-    {ipa: 'ɡ', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: true, articulation: 'guh', examples: ['go', 'good', 'big', 'game'], tip: '舌后部抵软腭爆破,浊辅音', similar: ['k']},
+    {ipa: 'p', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: false, articulation: 'puh', examples: ['pen', 'pig', 'apple', 'happy'], tip: '双唇紧闭后突然爆破,清辅音', mnemonic: 'p 双唇，猛地开；pen、pig 送气来。', similar: ['b']},
+    {ipa: 'b', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: true, articulation: 'buh', examples: ['bed', 'big', 'baby', 'book'], tip: '双唇紧闭后突然爆破,浊辅音', mnemonic: 'b 同 p，声带振；bed、big 浊音稳。', similar: ['p']},
+    {ipa: 't', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: false, articulation: 'tuh', examples: ['top', 'ten', 'cat', 'water'], tip: '舌尖抵上齿龈爆破,清辅音', mnemonic: 't 舌尖，抵齿龈；top、ten 送气清。', similar: ['d']},
+    {ipa: 'd', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: true, articulation: 'duh', examples: ['dog', 'day', 'red', 'door'], tip: '舌尖抵上齿龈爆破,浊辅音', mnemonic: 'd 同 t，声带振；dog、day 浊音沉。', similar: ['t']},
+    {ipa: 'k', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: false, articulation: 'kuh', examples: ['cat', 'key', 'book', 'cake'], tip: '舌后部抵软腭爆破,清辅音', mnemonic: 'k 后舌，抵软腭；cat、key 爆破清。', similar: ['ɡ']},
+    {ipa: 'ɡ', type: 'consonant', group: 'plosive', groupLabel: '爆破音', voiced: true, articulation: 'guh', examples: ['go', 'good', 'big', 'game'], tip: '舌后部抵软腭爆破,浊辅音', mnemonic: 'ɡ 同 k，声带振；go、game 浊音跟。', similar: ['k']},
 ];
 
 const FRICATIVES: Phoneme[] = [
-    {ipa: 'f', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'fuh', examples: ['four', 'fish', 'face', 'life'], tip: '上齿轻咬下唇,气流摩擦,清辅音', similar: ['v']},
-    {ipa: 'v', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'vuh', examples: ['very', 'voice', 'love', 'five'], tip: '上齿轻咬下唇,声带震动,浊辅音', similar: ['f']},
-    {ipa: 's', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'suh', examples: ['see', 'sit', 'bus', 'class'], tip: '舌尖靠近上齿龈,清辅音', similar: ['z', 'θ']},
-    {ipa: 'z', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'zuh', examples: ['zoo', 'zero', 'is', 'busy'], tip: '舌尖靠近上齿龈,浊辅音', similar: ['s', 'ð']},
-    {ipa: 'θ', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'thuh', examples: ['think', 'three', 'thank', 'mouth'], tip: '舌尖伸出齿间,清辅音(中文无对应)', similar: ['s', 'ð']},
-    {ipa: 'ð', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'the', examples: ['this', 'that', 'mother', 'they'], tip: '舌尖伸出齿间,浊辅音', similar: ['θ', 'z', 'd']},
-    {ipa: 'ʃ', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'shuh', examples: ['she', 'ship', 'fish', 'wash'], tip: '舌前部靠近上齿龈后部,清辅音', similar: ['ʒ', 's']},
-    {ipa: 'ʒ', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'zhuh', examples: ['vision', 'pleasure', 'measure', 'usual'], tip: '舌前部靠近上齿龈后部,浊辅音', similar: ['ʃ', 'z']},
-    {ipa: 'h', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'huh', examples: ['he', 'hat', 'home', 'happy'], tip: '声门摩擦,送气,清辅音'},
-    {ipa: 'r', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'ruh', examples: ['red', 'right', 'very', 'tree'], tip: '舌尖卷起靠近上齿龈,浊辅音'},
+    {ipa: 'f', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'fuh', examples: ['four', 'fish', 'face', 'life'], tip: '上齿轻咬下唇,气流摩擦,清辅音', mnemonic: 'f 上齿，咬下唇；fish、face 气摩擦。', similar: ['v']},
+    {ipa: 'v', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'vuh', examples: ['very', 'voice', 'love', 'five'], tip: '上齿轻咬下唇,声带震动,浊辅音', mnemonic: 'v 同 f，声带振；very、voice 浊音真。', similar: ['f']},
+    {ipa: 's', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'suh', examples: ['see', 'sit', 'bus', 'class'], tip: '舌尖靠近上齿龈,清辅音', mnemonic: 's 舌尖，近齿龈；see、sit 丝气清。', similar: ['z', 'θ']},
+    {ipa: 'z', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'zuh', examples: ['zoo', 'zero', 'is', 'busy'], tip: '舌尖靠近上齿龈,浊辅音', mnemonic: 'z 同 s，声带振；zoo、zero 浊音跟。', similar: ['s', 'ð']},
+    {ipa: 'θ', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'thuh', examples: ['think', 'three', 'thank', 'mouth'], tip: '舌尖伸出齿间,清辅音(中文无对应)', mnemonic: 'θ 舌尖，伸齿间；think、three 送气绵。', similar: ['s', 'ð']},
+    {ipa: 'ð', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'the', examples: ['this', 'that', 'mother', 'they'], tip: '舌尖伸出齿间,浊辅音', mnemonic: 'ð 同 θ，加振动；this、that 浊音送。', similar: ['θ', 'z', 'd']},
+    {ipa: 'ʃ', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'shuh', examples: ['she', 'ship', 'fish', 'wash'], tip: '舌前部靠近上齿龈后部,清辅音', mnemonic: 'ʃ 像轻“嘘”，双唇圆；she、ship 气绵延。', similar: ['ʒ', 's']},
+    {ipa: 'ʒ', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'zhuh', examples: ['vision', 'pleasure', 'measure', 'usual'], tip: '舌前部靠近上齿龈后部,浊辅音', mnemonic: 'ʒ 同 ʃ，声带振；vision、pleasure 浊音润。', similar: ['ʃ', 'z']},
+    {ipa: 'h', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: false, articulation: 'huh', examples: ['he', 'hat', 'home', 'happy'], tip: '声门摩擦,送气,清辅音', mnemonic: 'h 声门，轻送气；he、hat 不费力。'},
+    {ipa: 'r', type: 'consonant', group: 'fricative', groupLabel: '摩擦音', voiced: true, articulation: 'ruh', examples: ['red', 'right', 'very', 'tree'], tip: '舌尖卷起靠近上齿龈,浊辅音', mnemonic: 'r 舌尖，卷不触；red、right 别读噜。'},
 ];
 
 const AFFRICATES: Phoneme[] = [
-    {ipa: 'tʃ', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: false, articulation: 'chuh', examples: ['chair', 'cheese', 'teach', 'much'], tip: '/t/ + /ʃ/ 连读,清辅音', similar: ['dʒ', 'ʃ']},
-    {ipa: 'dʒ', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: true, articulation: 'juh', examples: ['jump', 'job', 'page', 'bridge'], tip: '/d/ + /ʒ/ 连读,浊辅音', similar: ['tʃ', 'ʒ']},
-    {ipa: 'tr', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: false, articulation: 'truh', examples: ['tree', 'try', 'train', 'truck'], tip: '/t/ + /r/ 连读,清辅音', similar: ['dr']},
-    {ipa: 'dr', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: true, articulation: 'druh', examples: ['dry', 'draw', 'dream', 'drink'], tip: '/d/ + /r/ 连读,浊辅音', similar: ['tr']},
-    {ipa: 'ts', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: false, articulation: 'tsuh', examples: ['its', 'cats', 'bits', 'students'], tip: '/t/ + /s/ 连读,清辅音(多出现于词尾)', similar: ['dz']},
-    {ipa: 'dz', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: true, articulation: 'dzuh', examples: ['birds', 'kids', 'goods', 'beds'], tip: '/d/ + /z/ 连读,浊辅音(多出现于词尾)', similar: ['ts']},
+    {ipa: 'tʃ', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: false, articulation: 'chuh', examples: ['chair', 'cheese', 'teach', 'much'], tip: '/t/ + /ʃ/ 连读,清辅音', mnemonic: 'tʃ 先 t 后 ʃ；chair、cheese 一破擦。', similar: ['dʒ', 'ʃ']},
+    {ipa: 'dʒ', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: true, articulation: 'juh', examples: ['jump', 'job', 'page', 'bridge'], tip: '/d/ + /ʒ/ 连读,浊辅音', mnemonic: 'dʒ 先 d 后 ʒ；jump、job 浊破擦。', similar: ['tʃ', 'ʒ']},
+    {ipa: 'tr', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: false, articulation: 'truh', examples: ['tree', 'try', 'train', 'truck'], tip: '/t/ + /r/ 连读,清辅音', mnemonic: 'tr 先 t 后 r；tree、train 紧相连。', similar: ['dr']},
+    {ipa: 'dr', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: true, articulation: 'druh', examples: ['dry', 'draw', 'dream', 'drink'], tip: '/d/ + /r/ 连读,浊辅音', mnemonic: 'dr 先 d 后 r；dry、dream 浊音连。', similar: ['tr']},
+    {ipa: 'ts', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: false, articulation: 'tsuh', examples: ['its', 'cats', 'bits', 'students'], tip: '/t/ + /s/ 连读,清辅音(多出现于词尾)', mnemonic: 'ts 先 t 后 s；cats、bits 词尾见。', similar: ['dz']},
+    {ipa: 'dz', type: 'consonant', group: 'affricate', groupLabel: '破擦音', voiced: true, articulation: 'dzuh', examples: ['birds', 'kids', 'goods', 'beds'], tip: '/d/ + /z/ 连读,浊辅音(多出现于词尾)', mnemonic: 'dz 先 d 后 z；birds、kids 浊音现。', similar: ['ts']},
 ];
 
 const NASALS: Phoneme[] = [
-    {ipa: 'm', type: 'consonant', group: 'nasal', groupLabel: '鼻音', voiced: true, articulation: 'muh', examples: ['mom', 'man', 'come', 'time'], tip: '双唇闭合,气流从鼻腔出', similar: ['n']},
-    {ipa: 'n', type: 'consonant', group: 'nasal', groupLabel: '鼻音', voiced: true, articulation: 'nuh', examples: ['no', 'name', 'sun', 'run'], tip: '舌尖抵上齿龈,气流从鼻腔出', similar: ['m', 'ŋ']},
-    {ipa: 'ŋ', type: 'consonant', group: 'nasal', groupLabel: '鼻音', voiced: true, articulation: 'ung', examples: ['sing', 'long', 'thing', 'morning'], tip: '舌后抵软腭,气流从鼻腔出', similar: ['n']},
+    {ipa: 'm', type: 'consonant', group: 'nasal', groupLabel: '鼻音', voiced: true, articulation: 'muh', examples: ['mom', 'man', 'come', 'time'], tip: '双唇闭合,气流从鼻腔出', mnemonic: 'm 双唇，闭紧哼；mom、man 鼻音沉。', similar: ['n']},
+    {ipa: 'n', type: 'consonant', group: 'nasal', groupLabel: '鼻音', voiced: true, articulation: 'nuh', examples: ['no', 'name', 'sun', 'run'], tip: '舌尖抵上齿龈,气流从鼻腔出', mnemonic: 'n 舌尖，抵齿龈；no、name 鼻腔鸣。', similar: ['m', 'ŋ']},
+    {ipa: 'ŋ', type: 'consonant', group: 'nasal', groupLabel: '鼻音', voiced: true, articulation: 'ung', examples: ['sing', 'long', 'thing', 'morning'], tip: '舌后抵软腭,气流从鼻腔出', mnemonic: 'ŋ 后舌，抵软腭；sing、long 不加 g。', similar: ['n']},
 ];
 
 const LATERALS: Phoneme[] = [
-    {ipa: 'l', type: 'consonant', group: 'lateral', groupLabel: '边音', voiced: true, articulation: 'luh', examples: ['look', 'love', 'school', 'tell'], tip: '舌尖抵上齿龈,气流从舌两侧通过'},
+    {ipa: 'l', type: 'consonant', group: 'lateral', groupLabel: '边音', voiced: true, articulation: 'luh', examples: ['look', 'love', 'school', 'tell'], tip: '舌尖抵上齿龈,气流从舌两侧通过', mnemonic: 'l 舌尖，抵齿龈；look、love 两侧行。'},
 ];
 
 const SEMIVOWELS: Phoneme[] = [
-    {ipa: 'j', type: 'consonant', group: 'semivowel', groupLabel: '半元音', voiced: true, articulation: 'yuh', examples: ['yes', 'you', 'yellow', 'year'], tip: '舌位接近 /iː/,但更紧'},
-    {ipa: 'w', type: 'consonant', group: 'semivowel', groupLabel: '半元音', voiced: true, articulation: 'wuh', examples: ['we', 'water', 'window', 'way'], tip: '双唇收圆,舌位接近 /uː/'},
+    {ipa: 'j', type: 'consonant', group: 'semivowel', groupLabel: '半元音', voiced: true, articulation: 'yuh', examples: ['yes', 'you', 'yellow', 'year'], tip: '舌位接近 /iː/,但更紧', mnemonic: 'j 近 iː，快滑过；yes、you 不拖音。'},
+    {ipa: 'w', type: 'consonant', group: 'semivowel', groupLabel: '半元音', voiced: true, articulation: 'wuh', examples: ['we', 'water', 'window', 'way'], tip: '双唇收圆,舌位接近 /uː/', mnemonic: 'w 双唇，先收圆；we、water 快滑延。'},
 ];
 
 // ============================================================================

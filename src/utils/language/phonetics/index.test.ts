@@ -15,6 +15,13 @@ describe('phonetics/registry', () => {
     const titles = PHONETIC_DATASETS.en.table.map(g => g.title)
     expect(titles).toContain('元音')
     expect(titles).toContain('辅音')
+    expect(PHONETIC_DATASETS.en.minimalPairs?.length).toBeGreaterThan(0)
+  })
+
+  it('英语 48 个音素各有不同的记忆口诀', () => {
+    const mnemonics = PHONETIC_DATASETS.en.all.map(ph => ph.mnemonic?.trim())
+    expect(mnemonics.every(Boolean)).toBe(true)
+    expect(new Set(mnemonics).size).toBe(48)
   })
 
   it('日语五十音：清音46 + 浊音/半浊音25 + 拗音33 = 104 条', () => {

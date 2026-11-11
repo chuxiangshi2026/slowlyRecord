@@ -86,6 +86,10 @@
             >/{{ ph.ipa }}/</span>
           </span>
         </div>
+        <div v-for="ph in wrongMnemonics" :key="ph.ipa" class="explain-row mnemonic-row">
+          <span class="explain-label">口诀</span>
+          <span class="explain-mnemonic"><strong>/{{ ph.ipa }}/</strong> {{ ph.mnemonic }}</span>
+        </div>
         <el-button type="primary" size="large" class="next-btn" @click="nextQuestion">
           {{ currentIndex + 1 >= TOTAL ? '查看结果' : '下一题' }}
           <el-icon class="el-icon--right"><Right/></el-icon>
@@ -188,6 +192,16 @@ const accuracy = computed(() => {
 const allFilled = computed(() => slots.value.every(s => s.filled));
 
 const currentSlotIndex = computed(() => slots.value.findIndex(s => !s.filled));
+
+const wrongMnemonics = computed(() => {
+    if (!answered.value || !currentQ.value) return [];
+    const seen = new Set<string>();
+    return currentQ.value.target.filter((ph, i) => {
+        if (slotCorrect.value[i] !== false || seen.has(ph.ipa) || !ph.mnemonic) return false;
+        seen.add(ph.ipa);
+        return true;
+    });
+});
 
 function shuffle<T>(arr: T[]): T[] {
     const a = [...arr];
@@ -584,6 +598,19 @@ onMounted(startSession);
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+  }
+
+  .mnemonic-row {
+    align-items: flex-start;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--utools-primary) 7%, transparent);
+  }
+
+  .explain-mnemonic {
+    color: var(--utools-text-secondary, #606266);
+    font-size: 13px;
+    line-height: 1.5;
   }
 
   .decomp-chip {

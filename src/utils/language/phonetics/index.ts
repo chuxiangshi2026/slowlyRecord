@@ -10,7 +10,7 @@
  */
 import type { LanguageCode } from '@/utils/language/types'
 import type { Phoneme, PhonemeGroup } from '@/utils/phoneme-data'
-import { PHONEME_TABLE as EN_TABLE, ALL_PHONEMES as EN_ALL } from '@/utils/phoneme-data'
+import { PHONEME_TABLE as EN_TABLE, ALL_PHONEMES as EN_ALL, MINIMAL_PAIRS as EN_MINIMAL_PAIRS } from '@/utils/phoneme-data'
 
 // ============================================================================
 // 日语：五十音
@@ -277,7 +277,7 @@ export interface PhoneticDataset {
 }
 
 export const PHONETIC_DATASETS: Record<LanguageCode, PhoneticDataset> = {
-    en: {table: EN_TABLE, all: EN_ALL},
+    en: {table: EN_TABLE, all: EN_ALL, minimalPairs: EN_MINIMAL_PAIRS},
     ja: {table: JA_TABLE, all: JA_ALL},
     ru: {table: RU_TABLE, all: RU_ALL},
     es: {table: ES_TABLE, all: ES_ALL},
