@@ -1,7 +1,10 @@
 import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { ElMessageBox } from 'element-plus'
 import { isElectron, isUtools, isWeb, isMiniProgram, isApp } from '@/adapters/platform'
 import { useUiStore } from '@/stores/ui'
+import { trackError } from '@/utils/stats'
+import { clearLazyRouteRetry, consumeLazyRouteRetry, isLazyRouteLoadError } from '@/router/lazy-error'
 
 // 平台检测（构建时静态替换，运行时动态过滤）
 const isDesktopEnv = isElectron() || isUtools() || isWeb()
@@ -374,11 +377,52 @@ const router = createRouter({
   routes
 })
 
+let initialNavigationCompleted = false
+let routeErrorPromptVisible = false
+
+function consumeRouteRetry(path: string): boolean {
+  try {
+    return consumeLazyRouteRetry(path, window.sessionStorage)
+  } catch {
+    return false
+  }
+}
+
+function clearRouteRetry(path: string): void {
+  try {
+    clearLazyRouteRetry(path, window.sessionStorage)
+  } catch { /* sessionStorage 不可用时忽略 */ }
+}
+
 // 路由切换时统一关闭全局抽屉，避免抽屉状态跨页面残留（叠加遮挡/上下文错位）
-router.afterEach(() => {
+router.afterEach((to) => {
+  initialNavigationCompleted = true
+  clearRouteRetry(to.fullPath)
   const ui = useUiStore()
   ui.moreDrawerVisible = false
   ui.settingsDrawerVisible = false
+})
+
+router.onError((error, to) => {
+  trackError('promise', error, to.fullPath).catch(() => {})
+  if (!isLazyRouteLoadError(error)) return
+
+  // 首次启动只自动恢复一次，避免发布切换期间停留在空白页；后续导航由用户确认，避免刷新丢编辑内容
+  if (!initialNavigationCompleted && consumeRouteRetry(to.fullPath)) {
+    window.location.reload()
+    return
+  }
+  if (routeErrorPromptVisible) return
+  routeErrorPromptVisible = true
+  ElMessageBox.confirm(
+    '页面资源加载失败，可以重新加载。当前页面的未保存内容可能丢失。',
+    '加载失败',
+    {confirmButtonText: '重新加载', cancelButtonText: '取消', type: 'warning'}
+  ).then(() => {
+    window.location.reload()
+  }).catch(() => {}).finally(() => {
+    routeErrorPromptVisible = false
+  })
 })
 
 export default router

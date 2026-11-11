@@ -9,6 +9,7 @@ import {log} from "@/utils/logger.ts";
 import {queryLocalDictionaryAsync} from "@/utils/local-dictionary";
 import {normalizeItemText, inferItemType, isSentenceLike} from "@/utils/text-utils";
 import {useSentencesStore} from "@/stores/sentences";
+import {UserActionEvents} from "@/utils/stats";
 
 /**
  * 初始化单词状态
@@ -149,7 +150,12 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
             const data = [newWords]
 
             // console.log(data, '更新单词成功');
-            await wordsStore.addAndUpdateWords(data)
+            const saved = await wordsStore.addAndUpdateWords(data)
+            if (!saved) {
+                wordsStore.setLastAddedWordText('');
+                return {success: false,text:wordText, message: '保存失败，请重试'};
+            }
+            UserActionEvents.addWord()
 
             // 数据更新完成后设置定位，确保watcher触发时数据已就绪
             wordsStore.setLastAddedWordText(wordText);

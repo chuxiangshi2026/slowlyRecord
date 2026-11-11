@@ -113,6 +113,7 @@ import {computeLevelDown} from "@/utils/srs";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
+import {trackEvent} from "@/utils/stats";
 import {computed, nextTick, onMounted, ref, toRef} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 
@@ -608,6 +609,7 @@ const remember = () => {
   }
 
   wordsStore.addAndUpdateWord(updatedWord)
+  trackEvent('review', 'answer', 'remember')
 }
 
 /**
@@ -701,6 +703,7 @@ const forget = () => {
   }
 
   wordsStore.addAndUpdateWord(updatedWord)
+  trackEvent('review', 'answer', 'forget')
 }
 // 删除单词
 const deleteWord = () => {

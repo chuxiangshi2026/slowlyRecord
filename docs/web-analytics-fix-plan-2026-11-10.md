@@ -274,3 +274,32 @@ npm run build:web
 - 不凭错误文本直接降低所有平台构建目标。
 - 不在本轮重构 Store、SRS、词库或新手引导 UI。
 - 不根据上线首周数据直接做海外推广、移动端大改或功能裁撤。
+
+---
+
+## 实施记录（2026-11-10）
+
+已完成批次 1、2 的代码部分：
+
+- 路由懒加载错误识别、首次启动单次自动恢复、后续导航人工确认恢复。
+- `bug.error` 增加发生路由、客户端版本、Chromium 版本和错误类型，不上传完整堆栈。
+- `focus_open` 改为窗口成功创建后上报；Web 单词页隐藏专注模式入口。
+- 新增 `onboarding.view`、`word.add`、`review.answer`、`feature.dictation` 核心行为埋点。
+- 单新词保存失败时不再返回假成功，也不记录 `word.add`。
+- 计划文档已同步到本分支。
+
+已验证：
+
+- 聚焦测试：5 个文件、59 条通过。
+- 全量测试：182 个文件、3112 条通过。
+- `npm run type-check`：通过。
+- `npm run build`（uTools）：通过。
+- `npm run build:web`：通过。
+- `npm run build:electron`：通过。
+- Playwright 验证 Web 开发服务与 `dist-web` 预览：单词、翻译、拼写、知识库路由正常；Web 专注入口隐藏；模拟 `TextMemory` Chunk 加载失败时展示恢复提示，点击重新加载后可进入文本记忆页；正常路由无 `console.error` / `pageerror`。
+
+尚未完成：
+
+- EdgeOne 入口与哈希资源缓存规则、旧版本资源保留一个发布周期（运维配置）。
+- uTools 真实客户端复现与必要时的 `build.target` 调整。
+- 发布后 7–14 天干净数据观察，再决定第三批产品优化。

@@ -106,7 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { importFromBuiltinWordBank } from '@/utils/wordbank-manager'
 import { useWordsStore } from '@/stores/words'
@@ -150,6 +150,10 @@ const visible = computed({
   get: () => props.modelValue,
   set: (v) => emit('update:modelValue', v)
 })
+
+watch(visible, (value) => {
+  if (value) trackEvent('onboarding', 'view')
+}, { immediate: true })
 
 // 推荐词库（与小程序端一致：四级/六级/考研）
 const recommendedBanks = [
