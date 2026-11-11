@@ -28,7 +28,7 @@
     </view>
 
     <!-- 标签筛选 -->
-    <scroll-view scroll-x class="tag-bar" v-if="store.allTags.length > 0">
+    <scroll-view scroll-x class="tag-bar" v-if="store.allTags.length > 0" :show-scrollbar="false">
       <view
         class="tag-chip"
         :class="{ active: !selectedTag }"
@@ -112,7 +112,7 @@
           <text v-if="detailArticle.author" class="meta-text">{{ detailArticle.author }}</text>
           <text v-if="detailArticle.location" class="meta-text">📍 {{ detailArticle.location }}</text>
         </view>
-        <scroll-view scroll-y class="detail-content-wrap">
+        <scroll-view scroll-y class="detail-content-wrap" :show-scrollbar="false">
           <text class="detail-content" selectable>{{ detailArticle.content }}</text>
         </scroll-view>
         <text v-if="detailArticle.source" class="detail-source">出处：{{ detailArticle.source }}</text>
@@ -247,6 +247,14 @@ function confirmDelete(article: MobileTextArticle) {
   /* 建立层叠上下文，让内部 z-index:-1 的水墨背景压在页面底色之上 */
   position: relative;
   z-index: 0;
+  /* 标签横向滚动只在 scroll-view 内部发生，不把页面撑出右侧空白条 */
+  overflow-x: hidden;
+}
+/* H5 隐藏标签栏与详情内容的滚动条；小程序由 show-scrollbar=false 控制 */
+.text-memory-page ::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .header {
@@ -315,6 +323,10 @@ function confirmDelete(article: MobileTextArticle) {
 .tag-bar {
   white-space: nowrap;
   padding: 4rpx 24rpx 12rpx;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 .tag-chip {
   display: inline-block;

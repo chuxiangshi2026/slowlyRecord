@@ -167,16 +167,23 @@ function previewContent(content: string): string {
 .title-row {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 12rpx;
 }
 
 .location-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 30rpx;
   font-weight: 600;
   color: var(--sr-text-strong);
 }
 
 .count-badge {
+  flex-shrink: 0;
   font-size: 22rpx;
   color: var(--sr-text-3);
   background: var(--sr-card-2);
@@ -185,6 +192,7 @@ function previewContent(content: string): string {
 }
 
 .close-btn {
+  flex-shrink: 0;
   margin-left: auto;
   width: 56rpx;
   height: 56rpx;
@@ -252,8 +260,12 @@ function previewContent(content: string): string {
 
 /* 列表 */
 .sheet-list {
-  flex: 1;
-  height: 0; /* flex 子项 scroll-view 需要明确高度约束，否则长列表撑开容器无法滚动 */
+  /* 与 import.vue 的 map-sheet-wrap(56vh) 对齐：直接给出列表高度，
+     不再依赖真机微信里可能计算为 0 的 flex:1 + height:0。
+     180rpx 为 handle、标题栏和全选工具栏的固定高度（含少量余量）。 */
+  flex: none;
+  height: calc(56vh - 180rpx);
+  min-height: 200rpx;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
