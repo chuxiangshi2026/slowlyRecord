@@ -3,12 +3,14 @@
  * 移动端文本记忆（诗词）页的水墨背景图预渲染管线。
  *
  * 微信小程序 wxss 不支持本地 background-image、image 组件不支持 SVG，
- * 所以这里手写「淡墨远山」SVG（大量留白、透明底），用 Puppeteer 截图输出 PNG：
+ * 所以这里手写「淡墨远山」SVG（大量留白），用 Puppeteer 截图输出 PNG：
  *   mobile/src/subPackages/pages-memory/static/text-memory/ink-bg-{light,dark}.png
  *
- * 页面里经 InkBackground.vue 以 <image mode="aspectFill"> 平铺，透明底透出页面底色。
- * 改动图形后重跑：node scripts/render-ink-bg-pngs.cjs
+ * 输出与 --sr-bg 同色的不透明底图，避免高分屏透明通道产生彩边；
+ * 亮/暗主题底色分别为 #f5f5f5 / #151a18（与 mobile/src/App.vue 对齐）。
+ * 页面里经 InkBackground.vue 以 <image mode="aspectFill"> 平铺。
  *
+ * 改动图形后重跑：node scripts/render-ink-bg-pngs.cjs
  * 依赖：puppeteer（仓库已有）。
  */
 const fs = require('fs');
@@ -17,57 +19,99 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'mobile', 'src', 'subPackages', 'pages-memory', 'static', 'text-memory');
 
-// 设计尺寸：以小程序设计稿宽 750 为基准，竖屏比例
+// 设计尺寸：以小程序设计稿宽 750 为基准；实际输出为 2 倍分辨率，避免高分屏发虚
 const W = 750;
 const H = 1334;
+const SCALE = 2;
 
 /**
- * 淡墨远山：底部 3 层山影（越远越淡、越高斯模糊），顶部一轮淡日/月，两只飞鸟。
- * ink 为主墨色（已含透明通道由 SVG fill-opacity 控制）。
+ * 淡墨远山：四层渐变山影 + 山间轻雾 + 淡日/月 + 飞鸟。
+ * 保持大量留白；山形用较长的连续曲线，弱化大块实色与重高斯模糊，
+ * 让亮/暗主题下都更像宣纸上的淡墨，而不是几片绿色多边形。
  */
-function inkScene(ink, birdOpacity, sunOpacity) {
-  // 三层山的轮廓路径（自左向右的写意山脊线），y 值越大越靠下
+function inkScene(ink, birdOpacity, sunOpacity, strength = 1) {
   const mountains = [
-    // 远山（最淡最虚）
-    { d: `M0,${H - 420} C120,${H - 520} 200,${H - 560} 320,${H - 500} C420,${H - 450} 500,${H - 560} 620,${H - 490} C680,${H - 460} 720,${H - 470} ${W},${H - 440} L${W},${H} L0,${H} Z`, blur: 10, op: 0.35 },
-    // 中山
-    { d: `M0,${H - 300} C100,${H - 380} 180,${H - 300} 280,${H - 340} C380,${H - 380} 460,${H - 260} 560,${H - 300} C640,${H - 330} 700,${H - 280} ${W},${H - 300} L${W},${H} L0,${H} Z`, blur: 6, op: 0.5 },
-    // 近山（最浓最实）
-    { d: `M0,${H - 200} C90,${H - 260} 170,${H - 180} 260,${H - 210} C360,${H - 250} 430,${H - 140} 540,${H - 180} C620,${H - 210} 690,${H - 160} ${W},${H - 190} L${W},${H} L0,${H} Z`, blur: 3, op: 0.65 },
+    {
+      d: 'M0,930 C60,900 85,860 140,875 C190,890 230,820 285,842 C340,864 380,770 445,805 C500,835 545,790 600,820 C660,850 710,820 750,835 L750,1334 L0,1334 Z',
+      top: 0.11, bottom: 0.025, blur: 2.8,
+    },
+    {
+      d: 'M0,1015 C45,1000 75,955 130,970 C190,990 235,910 295,935 C355,960 395,875 460,905 C520,935 565,870 625,905 C690,940 730,915 750,920 L750,1334 L0,1334 Z',
+      top: 0.16, bottom: 0.05, blur: 1.8,
+    },
+    {
+      d: 'M0,1125 C35,1105 65,1070 125,1090 C180,1110 225,1025 290,1055 C350,1085 400,990 460,1025 C525,1060 565,980 635,1020 C695,1055 730,1030 750,1035 L750,1334 L0,1334 Z',
+      top: 0.21, bottom: 0.085, blur: 1.2,
+    },
+    {
+      d: 'M0,1235 C40,1215 80,1170 145,1195 C205,1220 250,1130 320,1165 C380,1195 430,1110 500,1150 C565,1188 610,1105 680,1150 C720,1175 735,1165 750,1170 L750,1334 L0,1334 Z',
+      top: 0.27, bottom: 0.15, blur: 0.6,
+    },
   ];
-  let s = `<defs>`;
+
+  let defs = '<defs>';
   mountains.forEach((m, i) => {
-    s += `<filter id="blur${i}" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="${m.blur}"/></filter>`;
+    defs += `<linearGradient id="mountain${i}" x1="0%" y1="0%" x2="0%" y2="100%">`
+      + `<stop offset="0%" stop-color="${ink}" stop-opacity="${m.top * strength}"/>`
+      + `<stop offset="100%" stop-color="${ink}" stop-opacity="${m.bottom * strength}"/>`
+      + '</linearGradient>';
+    defs += `<filter id="soft${i}" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">`
+      + `<feGaussianBlur stdDeviation="${m.blur}"/></filter>`;
   });
-  s += `</defs>`;
+  defs += `<radialGradient id="sun" cx="50%" cy="50%" r="50%">`
+    + `<stop offset="0%" stop-color="${ink}" stop-opacity="${sunOpacity}"/>`
+    + `<stop offset="72%" stop-color="${ink}" stop-opacity="${sunOpacity * 0.55}"/>`
+    + `<stop offset="100%" stop-color="${ink}" stop-opacity="0"/>`
+    + '</radialGradient>';
+  defs += `<linearGradient id="mist" x1="0%" y1="0%" x2="0%" y2="100%">`
+    + `<stop offset="0%" stop-color="${ink}" stop-opacity="0"/>`
+    + `<stop offset="52%" stop-color="${ink}" stop-opacity="${0.045 * strength}"/>`
+    + `<stop offset="100%" stop-color="${ink}" stop-opacity="0"/>`
+    + '</linearGradient>';
+  defs += '<filter id="mistBlur" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="10"/></filter>';
+  defs += '</defs>';
+
+  let s = defs;
   mountains.forEach((m, i) => {
-    s += `<path d="${m.d}" fill="${ink}" fill-opacity="${m.op}" filter="url(#blur${i})"/>`;
+    s += `<path d="${m.d}" fill="url(#mountain${i})" filter="url(#soft${i})"/>`;
+    // 远山之间叠一层极淡的雾带，柔化交界，不让山脊显得像剪纸
+    if (i === 0) {
+      s += '<rect x="0" y="820" width="750" height="250" fill="url(#mist)" filter="url(#mistBlur)"/>';
+    }
   });
-  // 淡日/月（右上）
-  s += `<circle cx="${W - 150}" cy="190" r="58" fill="${ink}" fill-opacity="${sunOpacity}" filter="url(#blur0)"/>`;
-  // 两只写意飞鸟（人字撇）
-  s += `<g stroke="${ink}" stroke-opacity="${birdOpacity}" stroke-width="5" stroke-linecap="round" fill="none">`;
-  s += `<path d="M${W - 320},300 q14,-14 28,0 q14,-14 28,0"/>`;
-  s += `<path d="M${W - 250},345 q11,-11 22,0 q11,-11 22,0"/>`;
-  s += `</g>`;
+  s += `<circle cx="${W - 154}" cy="188" r="72" fill="url(#sun)"/>`;
+  s += `<g stroke="${ink}" stroke-opacity="${birdOpacity}" stroke-width="3.5" stroke-linecap="round" fill="none">`;
+  s += `<path d="M${W - 318},296 q12,-12 24,0 q12,-12 24,0"/>`;
+  s += `<path d="M${W - 250},338 q10,-10 20,0 q10,-10 20,0"/>`;
+  s += `<path d="M${W - 202},286 q7,-7 14,0 q7,-7 14,0"/>`;
+  s += '</g>';
   return s;
 }
 
 const VARIANTS = {
-  // 亮色主题：灰绿淡墨
-  'ink-bg-light': inkScene('#52796f', 0.4, 0.18),
-  // 暗色主题：玉绿淡墨，整体再淡一点避免压过文字
-  'ink-bg-dark': inkScene('#83c5a8', 0.3, 0.14),
+  // 亮色主题：灰绿淡墨，浓度克制，避免下半屏形成明显色块
+  'ink-bg-light': {
+    bg: '#f5f5f5',
+    scene: inkScene('#52796f', 0.28, 0.18, 1),
+  },
+  // 暗色主题：玉绿淡墨，再淡一些，保证正文与卡片的可读性
+  'ink-bg-dark': {
+    bg: '#151a18',
+    scene: inkScene('#83c5a8', 0.20, 0.13, 0.78),
+  },
 };
 
-/** 找一个可用的 Chromium：优先 puppeteer 自带，失败回退 playwright 缓存 */
+/** 找一个可用的 Chromium：优先 puppeteer 自带，失败回退环境变量 / Edge / playwright 缓存 */
 async function launchBrowser(puppeteer) {
   const opts = { headless: true, timeout: 180000, args: ['--no-sandbox', '--disable-setuid-sandbox'] };
   try {
     return await puppeteer.launch(opts);
   } catch (e) {
     const cacheDir = path.join(process.env.HOME || '', '.cache', 'ms-playwright');
-    const candidates = [];
+    const candidates = [
+      process.env.PUPPETEER_EXECUTABLE_PATH,
+      '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+    ].filter(Boolean);
     if (fs.existsSync(cacheDir)) {
       for (const dir of fs.readdirSync(cacheDir)) {
         candidates.push(path.join(cacheDir, dir, 'chrome-linux64', 'chrome'));
@@ -90,7 +134,7 @@ async function main() {
   const blocks = names
     .map(
       (n, i) =>
-        `<div id="g-${i}" class="ink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${VARIANTS[n]}</svg></div>`,
+        `<div id="g-${i}" class="ink" style="background:${VARIANTS[n].bg}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" color-interpolation="sRGB">${VARIANTS[n].scene}</svg></div>`,
     )
     .join('\n');
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
@@ -103,19 +147,19 @@ async function main() {
   const browser = await launchBrowser(puppeteer);
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: W * names.length, height: H, deviceScaleFactor: 2 });
+    await page.setViewport({ width: W * names.length, height: H, deviceScaleFactor: SCALE });
     await page.setContent(html, { waitUntil: 'load' });
     for (let i = 0; i < names.length; i++) {
       const el = await page.$(`#g-${i}`);
       if (!el) throw new Error(`找不到渲染节点 #g-${i}（${names[i]}）`);
-      // omitBackground：保留 SVG 透明底，叠到页面底色上
-      await el.screenshot({ path: path.join(OUT_DIR, `${names[i]}.png`), omitBackground: true });
+      // 不透明主题底：保留与页面一致的底色，规避透明通道彩边
+      await el.screenshot({ path: path.join(OUT_DIR, `${names[i]}.png`) });
       console.log('rendered', `${names[i]}.png`);
     }
   } finally {
     await browser.close();
   }
-  console.log(`完成：共 ${names.length} 张水墨背景 PNG`);
+  console.log(`完成：共 ${names.length} 张水墨背景 PNG（${W * SCALE}×${H * SCALE}）`);
 }
 
 main().catch((e) => {

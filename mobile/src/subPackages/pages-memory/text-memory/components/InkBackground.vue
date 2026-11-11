@@ -1,5 +1,5 @@
 <template>
-  <!-- 固定淡墨背景：透明底 PNG 透出页面底色，pointer-events 关闭不影响交互 -->
+  <!-- 固定淡墨背景：与主题底色一致的不透明 PNG，避免透明通道彩边；pointer-events 关闭不影响交互 -->
   <image class="ink-bg" :src="src" mode="aspectFill" />
 </template>
 

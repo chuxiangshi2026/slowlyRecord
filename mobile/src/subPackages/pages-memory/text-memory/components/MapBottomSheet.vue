@@ -25,7 +25,7 @@
     </view>
 
     <!-- 列表 -->
-    <scroll-view scroll-y class="sheet-list">
+    <scroll-view scroll-y class="sheet-list" :show-scrollbar="false">
       <!-- 诗词 -->
       <view
         v-for="poem in payload.poems"
@@ -145,6 +145,8 @@ function previewContent(content: string): string {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -252,7 +254,16 @@ function previewContent(content: string): string {
 .sheet-list {
   flex: 1;
   height: 0; /* flex 子项 scroll-view 需要明确高度约束，否则长列表撑开容器无法滚动 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
   padding: 12rpx 0 24rpx;
+}
+.sheet-list::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .sheet-item {
@@ -262,6 +273,9 @@ function previewContent(content: string): string {
   border-bottom: 1rpx solid var(--sr-border);
   background: var(--sr-card);
   transition: background 0.15s;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .sheet-item.selected {
   background: var(--sr-primary-bg);

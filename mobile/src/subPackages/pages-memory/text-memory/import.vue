@@ -67,7 +67,7 @@
         </text>
       </view>
 
-      <scroll-view scroll-y class="lib-scroll">
+      <scroll-view scroll-y class="lib-scroll" :show-scrollbar="false">
         <view
           v-for="poem in filteredPoetry"
           :key="poem.id"
@@ -130,7 +130,7 @@
         </text>
       </view>
 
-      <scroll-view scroll-y class="lib-scroll">
+      <scroll-view scroll-y class="lib-scroll" :show-scrollbar="false">
         <view
           v-for="idiom in filteredIdioms"
           :key="idiom.id"
@@ -700,9 +700,13 @@ function handleImportFromMap() {
 
 .tab-content {
   flex: 1;
+  min-height: 0;
+  min-width: 0;
   padding: 24rpx;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* 地图 tab 需要去掉 padding 给 map 全宽全高 */
@@ -856,6 +860,16 @@ function handleImportFromMap() {
   flex: 1;
   margin-bottom: 20rpx;
   height: 0; /* flex 子项 scroll-view 需要明确高度约束 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+/* H5 隐藏纵向滚动条；小程序由 show-scrollbar=false 控制 */
+.lib-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .lib-item {
@@ -864,6 +878,10 @@ function handleImportFromMap() {
   padding: 20rpx;
   margin-bottom: 12rpx;
   border: 2rpx solid transparent;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .lib-item.selected {
   border-color: var(--sr-primary);
@@ -872,17 +890,24 @@ function handleImportFromMap() {
 .lib-item-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4rpx 12rpx;
   margin-bottom: 8rpx;
 }
 .lib-item-title {
   font-size: 28rpx;
   font-weight: 600;
   color: var(--sr-text-strong);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .lib-item-author {
   font-size: 22rpx;
   color: var(--sr-text-2);
+  margin-left: auto;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .lib-item-content {
   font-size: 24rpx;
@@ -902,7 +927,9 @@ function handleImportFromMap() {
 .lib-item-tags {
   margin-top: 8rpx;
   display: flex;
+  flex-wrap: wrap;
   gap: 6rpx;
+  max-width: 100%;
 }
 .lib-mini-tag {
   font-size: 20rpx;
@@ -910,6 +937,9 @@ function handleImportFromMap() {
   color: var(--sr-text-2);
   border-radius: 4rpx;
   padding: 0 8rpx;
+  flex-shrink: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .action-btn {
