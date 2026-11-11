@@ -1,5 +1,6 @@
 <template>
   <view class="detail-page" :class="themeClass">
+    <AppBackground />
     <view v-if="pack" class="content">
       <!-- 包信息 -->
       <view class="pack-header">

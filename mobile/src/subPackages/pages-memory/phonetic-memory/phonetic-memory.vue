@@ -1,5 +1,6 @@
 <template>
   <view class="phonetic-page" :class="themeClass">
+    <AppBackground />
     <!-- 进度统计 -->
     <view class="progress-row">
       <view class="progress-stat">

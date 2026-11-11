@@ -1,5 +1,6 @@
 <template>
   <view class="home-container" :class="themeClass">
+    <AppBackground />
     <view class="header">
       <text class="title">慢记</text>
       <text class="subtitle">高效记忆，轻松学习</text>

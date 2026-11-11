@@ -1,5 +1,6 @@
 <template>
   <view class="page" :class="themeClass">
+    <AppBackground />
     <!-- ===== 小结页 ===== -->
     <view v-if="showSummary" class="summary">
       <text class="summary-icon">🎯</text>

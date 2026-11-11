@@ -1,5 +1,6 @@
 <template>
   <view class="translate-container" :class="themeClass">
+    <AppBackground />
     <view class="input-section">
       <textarea 
         class="input-area" 

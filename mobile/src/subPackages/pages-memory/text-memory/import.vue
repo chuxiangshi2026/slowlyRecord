@@ -1,6 +1,6 @@
 <template>
   <view class="import-page" :class="themeClass">
-    <InkBackground />
+    <AppBackground variant="landscape" />
     <!-- Tab 切换 -->
     <view class="tabs">
       <view
@@ -211,7 +211,6 @@ import {
 } from './library'
 import PoetryMapTab from './components/PoetryMapTab.vue'
 import MapBottomSheet from './components/MapBottomSheet.vue'
-import InkBackground from './components/InkBackground.vue'
 import type { MarkerTapPayload } from './components/map-types'
 
 const store = useTextMemory()
@@ -873,7 +872,9 @@ function handleImportFromMap() {
 }
 
 .lib-item {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  -webkit-backdrop-filter: blur(12rpx);
+  backdrop-filter: blur(12rpx);
   border-radius: 12rpx;
   padding: 20rpx;
   margin-bottom: 12rpx;

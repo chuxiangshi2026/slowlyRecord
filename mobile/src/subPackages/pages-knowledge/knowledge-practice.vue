@@ -1,5 +1,6 @@
 <template>
   <view class="practice-page" :class="themeClass">
+    <AppBackground />
     <!-- 顶部进度 -->
     <view class="header">
       <text class="title">{{ modeTitle }}</text>

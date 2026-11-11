@@ -1,5 +1,6 @@
 <template>
   <view class="onboarding-container" :class="themeClass">
+    <AppBackground />
     <!-- 前 two 屏右上角的跳过入口 -->
     <text v-if="current < TOTAL - 1" class="skip-link" @click="skip">跳过</text>
 

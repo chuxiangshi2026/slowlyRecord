@@ -1,5 +1,6 @@
 <template>
   <view class="add-word-container" :class="themeClass">
+    <AppBackground />
     <!-- 落点提示：告知词将加入哪个词库，可点击切换 -->
     <view class="bank-tip" @click="goToWordbank">
       <text class="bank-tip-text">添加到：{{ currentBankName }}</text>

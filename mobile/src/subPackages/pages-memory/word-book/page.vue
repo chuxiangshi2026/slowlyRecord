@@ -1,5 +1,6 @@
 <template>
   <view class="page-container" :class="themeClass">
+    <AppBackground />
     <view v-if="!page" class="empty-state">
       <text class="empty-title">学习页不存在</text>
       <button class="primary-btn" @click="goBack">返回</button>

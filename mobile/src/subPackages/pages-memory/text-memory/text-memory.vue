@@ -1,6 +1,6 @@
 <template>
   <view class="text-memory-page" :class="themeClass">
-    <InkBackground />
+    <AppBackground variant="landscape" />
     <!-- 头部 -->
     <view class="header">
       <text class="title">📜 文本记忆</text>
@@ -132,7 +132,6 @@ import { onShow } from '@dcloudio/uni-app'
 import { useTextMemory } from '@/stores/useTextMemory'
 import { useTheme } from '@/stores/useTheme'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
-import InkBackground from './components/InkBackground.vue'
 
 const theme = useTheme()
 /** 详情弹窗内的淡墨背景图（跟随明暗主题） */
@@ -362,7 +361,11 @@ function confirmDelete(article: MobileTextArticle) {
   padding: 0 20rpx;
 }
 .article-card {
-  background: var(--sr-card);
+  /* 半透明宣纸卡片：透出淡墨背景，backdrop-filter 仅作渐进增强，不依赖它保证可读性 */
+  background: var(--sr-card-glass);
+  -webkit-backdrop-filter: blur(14rpx);
+  backdrop-filter: blur(14rpx);
+  border: 1rpx solid var(--sr-border);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   margin-bottom: 16rpx;

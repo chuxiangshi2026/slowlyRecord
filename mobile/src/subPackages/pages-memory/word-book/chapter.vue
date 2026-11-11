@@ -1,5 +1,6 @@
 <template>
   <view class="book-container" :class="themeClass">
+    <AppBackground />
     <view class="book-header">
       <view class="book-heading">
         <text class="back" @click="goBooks">‹ 词集列表</text>

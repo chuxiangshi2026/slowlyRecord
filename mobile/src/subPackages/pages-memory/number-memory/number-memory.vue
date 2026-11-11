@@ -1,5 +1,6 @@
 <template>
   <view class="page" :class="themeClass">
+    <AppBackground />
     <view class="header">
       <text class="title">🔢 数字记忆</text>
       <text class="subtitle">为每个数字编一个记忆桩，长串数字也能轻松记住</text>

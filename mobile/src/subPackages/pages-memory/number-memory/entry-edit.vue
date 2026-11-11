@@ -1,5 +1,6 @@
 <template>
   <view class="page" :class="themeClass">
+    <AppBackground />
     <view class="form">
       <view class="form-row">
         <text class="form-label">标题 *</text>

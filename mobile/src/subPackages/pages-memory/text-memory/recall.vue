@@ -1,6 +1,6 @@
 <template>
   <view class="recall-page" :class="themeClass">
-    <InkBackground />
+    <AppBackground variant="landscape" />
     <!-- 文章信息 -->
     <view class="article-head">
       <text class="article-title">{{ article?.title || '遮挡回忆' }}</text>
@@ -62,7 +62,6 @@ import { onLoad } from '@dcloudio/uni-app'
 import { useTextMemory } from '@/stores/useTextMemory'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
 import { splitContentToBlocks } from './recall'
-import InkBackground from './components/InkBackground.vue'
 
 const store = useTextMemory()
 

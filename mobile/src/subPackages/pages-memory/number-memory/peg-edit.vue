@@ -1,5 +1,6 @@
 <template>
   <view class="page" :class="themeClass">
+    <AppBackground />
     <view class="number-display">
       <text class="number-text">{{ pegNumber }}</text>
       <text class="number-hint">为这个数字编一个易记的桩</text>

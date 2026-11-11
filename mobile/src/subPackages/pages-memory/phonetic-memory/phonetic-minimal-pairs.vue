@@ -1,5 +1,6 @@
 <template>
   <view class="pairs-page" :class="themeClass">
+    <AppBackground />
     <!-- 顶部 -->
     <view class="header">
       <text class="title">辨音练习</text>

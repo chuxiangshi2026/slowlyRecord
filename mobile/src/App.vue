@@ -82,6 +82,7 @@ page {
   /* 主题变量（亮色默认）；暗色由 .theme-dark 覆盖（全局混入挂在每页根节点上） */
   --sr-bg: #f5f5f5;
   --sr-card: #ffffff;
+  --sr-card-glass: rgba(255, 255, 255, 0.72);
   --sr-card-2: #f5f5f5;
   --sr-text: #333333;
   --sr-text-2: #666666;
@@ -97,10 +98,18 @@ page {
   color: var(--sr-text);
 }
 
+/* 每页根节点建立层叠上下文，供 <AppBackground /> 以 z-index:-1 放在内容后面。
+   不改变布局尺寸，只约束定位与层叠；原生导航栏/tabBar 不受影响。 */
+page > view {
+  position: relative;
+  z-index: 0;
+}
+
 /* 暗色变量覆盖：深绿灰基底 + 玉绿主色（与桌面端深色主题约定一致） */
 .theme-dark {
   --sr-bg: #151a18;
   --sr-card: #222825;
+  --sr-card-glass: rgba(34, 40, 37, 0.72);
   --sr-card-2: #2a302d;
   --sr-text: #e4eae7;
   --sr-text-2: #a7b2ad;

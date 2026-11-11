@@ -1,5 +1,6 @@
 <template>
   <view class="review-container" :class="themeClass">
+    <AppBackground />
     <view v-if="!currentWord" class="empty-state">
       <text class="empty-text">{{ emptyTitle }}</text>
       <text class="empty-hint">{{ emptyHint }}</text>

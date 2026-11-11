@@ -1,5 +1,6 @@
 <template>
   <view class="palace-review-container" :class="themeClass">
+    <AppBackground />
     <!-- 顶部：进度 + 回忆模式开关 -->
     <view v-if="palace && !finished" class="review-header">
       <text class="header-exit" @click="goBack">‹ 退出</text>

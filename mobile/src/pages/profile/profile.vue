@@ -1,5 +1,6 @@
 <template>
   <view class="profile-container" :class="themeClass">
+    <AppBackground />
     <view class="header">
       <view class="avatar">
         <text>{{ avatarText }}</text>

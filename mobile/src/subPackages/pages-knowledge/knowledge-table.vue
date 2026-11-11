@@ -1,5 +1,6 @@
 <template>
   <view class="table-page" :class="themeClass">
+    <AppBackground />
     <view v-if="loading" class="state-tip">加载中…</view>
     <view v-else-if="!pack" class="state-tip">知识包不存在或加载失败</view>
     <template v-else>

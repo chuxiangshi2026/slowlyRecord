@@ -1,5 +1,6 @@
 <template>
   <view class="features-container" :class="themeClass">
+    <AppBackground />
     <view class="section-title">全部功能</view>
     <view class="menu-list">
       <view class="menu-item" v-for="item in features" :key="item.text" @click="item.action">

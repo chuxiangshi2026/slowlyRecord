@@ -1,5 +1,6 @@
 <template>
   <view class="recognition-page" :class="themeClass">
+    <AppBackground />
     <!-- 顶部 -->
     <view class="header">
       <text class="title">{{ direction === 'forward' ? '音标识别' : '反向识别' }}</text>

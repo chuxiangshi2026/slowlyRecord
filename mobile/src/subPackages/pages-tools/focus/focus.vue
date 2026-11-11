@@ -1,5 +1,6 @@
 <template>
   <view class="focus-page" @touchmove.stop>
+    <AppBackground />
     <!-- 顶栏 -->
     <view class="top-bar">
       <text class="exit-btn" @click="exitFocus">✕ 退出</text>

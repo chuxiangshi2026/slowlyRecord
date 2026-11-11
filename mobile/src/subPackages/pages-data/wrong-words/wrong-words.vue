@@ -1,5 +1,6 @@
 <template>
   <view class="wrong-words-container" :class="themeClass">
+    <AppBackground />
     <!-- 空态：无错题时给出口 -->
     <view v-if="!hasSession" class="empty-state">
       <text class="empty-icon">🎉</text>

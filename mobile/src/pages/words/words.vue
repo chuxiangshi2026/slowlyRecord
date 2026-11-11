@@ -1,5 +1,6 @@
 <template>
   <view class="words-container" :class="themeClass">
+    <AppBackground />
     <view class="bank-selector" @click="goToWordBank" v-if="currentBankName">
       <text class="bank-label">当前词库：</text>
       <text class="bank-name-text">{{ currentBankName }}</text>

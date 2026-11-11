@@ -1,5 +1,6 @@
 <template>
   <view class="breakdown-page" :class="themeClass">
+    <AppBackground />
     <!-- 顶部 -->
     <view class="header">
       <text class="title">拆音练习</text>

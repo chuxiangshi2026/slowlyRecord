@@ -1,5 +1,6 @@
 <template>
   <view class="knowledge-page" :class="themeClass">
+    <AppBackground />
     <view class="tabs">
       <view
         v-for="t in tabs"

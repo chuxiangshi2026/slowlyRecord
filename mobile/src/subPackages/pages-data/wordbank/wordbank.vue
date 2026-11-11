@@ -1,5 +1,6 @@
 <template>
   <view class="wordbank-container" :class="themeClass">
+    <AppBackground />
     <view class="header">
       <text class="title">我的词库</text>
       <text class="subtitle">管理你的词库，高效备考</text>

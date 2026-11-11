@@ -1,5 +1,6 @@
 <template>
   <view class="palace-list-container" :class="themeClass">
+    <AppBackground />
     <view v-if="!store.loaded" class="loading-tip">加载中...</view>
 
     <view v-else>

@@ -1,5 +1,6 @@
 <template>
   <view class="memory-test-container" :class="themeClass">
+    <AppBackground />
     <view class="header">
       <text class="title">🧠 记忆力测试</text>
       <text class="subtitle">测试你的瞬时记忆能力</text>

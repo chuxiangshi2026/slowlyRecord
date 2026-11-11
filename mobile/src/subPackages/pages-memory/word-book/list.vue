@@ -1,5 +1,6 @@
 <template>
   <view class="book-container" :class="themeClass">
+    <AppBackground />
     <view class="book-header">
       <view class="book-heading">
         <text class="book-title">词集</text>

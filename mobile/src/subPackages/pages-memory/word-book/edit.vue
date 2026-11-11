@@ -1,5 +1,6 @@
 <template>
   <view class="edit-container" :class="themeClass">
+    <AppBackground />
     <view v-if="!draft" class="empty-state">
       <text class="empty-title">没有待生成的内容</text>
       <text class="empty-desc">先在单词页筛选，再点「生成学习页」</text>

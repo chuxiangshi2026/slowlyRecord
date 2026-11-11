@@ -1,5 +1,6 @@
 <template>
   <view class="signin-container" :class="themeClass">
+    <AppBackground />
     <view class="header">
       <text class="title">📅 每日打卡</text>
       <text class="subtitle">坚持学习，每天进步一点点</text>

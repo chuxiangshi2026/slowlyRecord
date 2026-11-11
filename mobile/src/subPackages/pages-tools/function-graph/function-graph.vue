@@ -1,5 +1,6 @@
 <template>
   <view class="graph-page" :class="themeClass">
+    <AppBackground />
     <!-- #ifdef H5 -->
     <view class="state-tip">函数图像功能请使用微信小程序、抖音小程序或 App 打开</view>
     <!-- #endif -->

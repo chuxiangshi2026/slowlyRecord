@@ -1,5 +1,6 @@
 <template>
   <view class="edit-container" :class="themeClass">
+    <AppBackground />
     <view class="form-card">
       <text class="label">宫殿名称</text>
       <input v-model="name" class="input" placeholder="如：我的家" maxlength="20" />

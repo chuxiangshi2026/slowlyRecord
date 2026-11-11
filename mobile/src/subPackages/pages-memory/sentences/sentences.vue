@@ -1,5 +1,6 @@
 <template>
   <view class="sentences-page" :class="themeClass">
+    <AppBackground />
     <!-- 头部 -->
     <view class="header">
       <text class="title">💬 句子收藏</text>

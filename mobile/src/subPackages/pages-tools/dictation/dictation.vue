@@ -1,5 +1,6 @@
 <template>
   <view class="dictation-page" :class="themeClass">
+    <AppBackground />
     <!-- 顶部进度栏 -->
     <view class="dictation-header">
       <view class="header-left">

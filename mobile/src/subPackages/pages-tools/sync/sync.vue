@@ -1,5 +1,6 @@
 <template>
   <view class="sync-container" :class="themeClass">
+    <AppBackground />
     <!-- 推送结果 -->
     <view v-if="showPushResult" class="section">
       <view class="section-title">推送成功</view>
