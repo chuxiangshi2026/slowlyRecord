@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import {computed, nextTick, onMounted, ref, watch} from 'vue';
 import {useRouter, useRoute} from 'vue-router';
 import {useNumberMemoryStore} from '@/stores/numberMemory';
 import {useTextMemoryStore} from '@/stores/textMemory';
@@ -130,6 +130,18 @@ const visible = computed({
     emit('update:modelValue', v);
     if (!v) ioPanel.value = 'none';
   },
+});
+
+// B5 修复：抽屉每次打开回到顶部，避免 Element Plus 复用 DOM 导致保留上次滚动位置
+watch(visible, async (v) => {
+  if (!v) return;
+  await nextTick();
+  const resetScroll = () => {
+    const body = document.querySelector('.more-drawer .el-drawer__body');
+    if (body) body.scrollTop = 0;
+  };
+  resetScroll();
+  setTimeout(resetScroll, 380); // 滑入动画结束后再复位一次
 });
 
 const close = () => { visible.value = false; };

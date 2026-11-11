@@ -3,6 +3,7 @@
     v-model="visible"
     title="🚀 快速开始"
     width="600px"
+    class="quick-start-dialog"
     :close-on-click-modal="true"
     :show-close="true"
     @close="handleClose"
@@ -98,6 +99,14 @@ function handleClose() {
 </script>
 
 <style scoped lang="scss">
+/* B6 修复：窗口高度不足时对话框内容区内部滚动，底部按钮不被裁切 */
+.quick-start-dialog {
+  :deep(.el-dialog__body) {
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
+  }
+}
+
 .guide-content {
   padding: 30px 20px;
   min-height: 250px;

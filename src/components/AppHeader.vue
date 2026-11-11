@@ -3,7 +3,7 @@
     <span class="page-name">{{ pageTitle }}</span>
 
     <!-- 更多：模块导航抽屉，所有页面可达 -->
-    <span class="header-action" title="更多功能" @click="uiStore.moreDrawerVisible = true">☰</span>
+    <span class="header-action" title="更多功能" @click="openMoreDrawer()">☰</span>
 
     <!-- 非单词页：当前模块的一句话状态摘要 -->
     <span v-if="!isWordPage && pageSummary" class="page-summary">{{ pageSummary }}</span>
@@ -145,7 +145,15 @@ const goBack = () => {
 
 // 设置入口：任意页面直接打开全局设置抽屉（挂在 Home 层，不再先回单词页）
 const openSettings = () => {
+  // 与「更多」抽屉互斥，避免双抽屉叠加遮挡
+  uiStore.moreDrawerVisible = false;
   uiStore.settingsDrawerVisible = true;
+};
+
+// 打开「更多」抽屉时关闭设置抽屉，互斥避免叠加遮挡
+const openMoreDrawer = () => {
+  uiStore.settingsDrawerVisible = false;
+  uiStore.moreDrawerVisible = true;
 };
 
 // 今日首次复习/添加后，轻提示连续打卡天数并触发头部动画

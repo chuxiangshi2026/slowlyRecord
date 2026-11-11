@@ -138,6 +138,13 @@ async function handleUtoolsEnter(action: any) {
     if (setDb.memoryFirmness) {
       wordsStore.memoryFirmness = setDb.memoryFirmness;
     }
+    // 更新可能清除 localStorage，须从用户设置恢复已请求授权的状态
+    if (setDb.scheduleReminder) {
+      wordsStore.scheduleReminder = {
+        ...wordsStore.scheduleReminder,
+        ...setDb.scheduleReminder
+      };
+    }
 
     // 同步专注模式设置
     if (setDb.focusMode) {

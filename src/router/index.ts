@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { isElectron, isUtools, isWeb, isMiniProgram, isApp } from '@/adapters/platform'
+import { useUiStore } from '@/stores/ui'
 
 // 平台检测（构建时静态替换，运行时动态过滤）
 const isDesktopEnv = isElectron() || isUtools() || isWeb()
@@ -371,6 +372,13 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+// 路由切换时统一关闭全局抽屉，避免抽屉状态跨页面残留（叠加遮挡/上下文错位）
+router.afterEach(() => {
+  const ui = useUiStore()
+  ui.moreDrawerVisible = false
+  ui.settingsDrawerVisible = false
 })
 
 export default router

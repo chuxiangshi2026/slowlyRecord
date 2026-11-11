@@ -3409,14 +3409,14 @@ function onOnboardingFinish() {
 <style lang="scss">
 // 词库导入下拉菜单高度限制 - 全局样式
 .wordbank-import-dropdown {
-  max-height: 200px !important;
+  max-height: 140px !important;
 
   .el-select-dropdown__wrap {
-    max-height: 200px !important;
+    max-height: 140px !important;
   }
 
   .el-select-dropdown__list {
-    max-height: 200px !important;
+    max-height: 140px !important;
   }
 }
 
