@@ -211,14 +211,19 @@ describe('stats（umami）', () => {
   })
 
   describe('异常上报', () => {
-    it('trackError 上报 bug.error，带 source/message/platform/appVersion', async () => {
-      await trackError('js', new Error('boom'))
+    it('trackError 上报 bug.error，带路由和非敏感运行时上下文', async () => {
+      ;(globalThis as any).window.utools.getAppVersion = () => '8.0.2'
+      await trackError('js', new Error('boom'), '/word')
       const p = sentPayloads().find(x => x.payload.name === 'bug.error')
       expect(p).toBeDefined()
+      expect(p.payload.url).toBe('/word')
       expect(p.payload.data.source).toBe('js')
       expect(p.payload.data.message).toBe('boom')
       expect(p.payload.data.platform).toBe('utools')
       expect(p.payload.data.appVersion).toBe('9.9.9')
+      expect(p.payload.data.clientVersion).toBe('8.0.2')
+      expect(p.payload.data.runtime).toEqual(expect.any(String))
+      expect(p.payload.data.errorName).toBe('Error')
     })
 
     it('同源同消息会话内去重', async () => {

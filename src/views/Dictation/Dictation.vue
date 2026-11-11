@@ -290,6 +290,7 @@ import { WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
 import { DEFAULT_INTERVALS } from '@/constants';
 import { computeLevelDown, isDue } from '@/utils/srs';
+import { FeatureEvents } from '@/utils/stats';
 import DetailDrawer from '@/views/Word/components/DetailDrawer.vue';
 import WordFilter from '@/views/Word/components/WordFilter.vue';
 import type { FilterState } from '@/views/Word/components/WordFilter.vue';
@@ -1166,12 +1167,14 @@ async function checkAnswer() {
     // 清除该单词的错误记录
     delete errorCountMap.value[getWordErrorKey(word)];
     refreshWordList();
+    FeatureEvents.dictation('correct');
     nextWord();
   } else {
     // 记录错误次数（以单词为键，避免列表刷新后 currentIndex 漂移）
     const key = getWordErrorKey(word);
     const errorCount = (errorCountMap.value[key] || 0) + 1;
     errorCountMap.value[key] = errorCount;
+    FeatureEvents.dictation('wrong');
 
     // 晃动提示
     isShaking.value = true;

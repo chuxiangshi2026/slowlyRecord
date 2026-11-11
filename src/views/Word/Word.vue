@@ -415,7 +415,7 @@
       <el-tooltip class="box-item" effect="dark" content="拼写练习" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="goToDictation"><EditPen /></el-icon>
       </el-tooltip>
-      <el-tooltip class="box-item" effect="dark" content="专注模式（悬浮小窗记单词）" placement="top" popper-class="small-tooltip">
+      <el-tooltip v-if="!isWebEnv" class="box-item" effect="dark" content="专注模式（悬浮小窗记单词）" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :size="18" @click="() => openFocusMode()"><PipIcon /></el-icon>
       </el-tooltip>
       <!-- 「更多」已上移到统一头部 ☰（全局抽屉），此处不再重复 -->
@@ -2105,7 +2105,6 @@ const openFocusMode = async (mode = '') => {
     ElMessage.info('暂无待复习单词');
     return;
   }
-  FeatureEvents.focusOpen(mode);
 
   // 如果窗口已存在，聚焦它
   if (focusWindow && !focusWindow.isDestroyed?.()) {
@@ -2182,7 +2181,8 @@ const openFocusMode = async (mode = '') => {
         await api.focusWindowExecuteJS(winId, `window.electronAPI && window.electronAPI.initFocusData(${JSON.stringify({ docs })})`);
         await api.focusWindowExecuteJS(winId, 'window.__reloadFocusData && window.__reloadFocusData()');
         applyFocusWindowAlwaysOnTop(focusWindow, initAlwaysOnTop, 'openFocusMode');
-        api.focusWindowInvoke(winId, 'show', []);
+        await api.focusWindowInvoke(winId, 'show', []);
+        FeatureEvents.focusOpen(mode);
         setTimeout(pushFocusStyleToChild, 500);
       } catch (e) {
         console.warn('[openFocusMode] 子窗口初始化推送失败', e);
@@ -2232,6 +2232,7 @@ const openFocusMode = async (mode = '') => {
         if (focusWindow && typeof focusWindow.show === 'function') {
           focusWindow.show();
         }
+        FeatureEvents.focusOpen(mode);
         // 子窗口脚本就绪后推送当前专注样式
         setTimeout(pushFocusStyleToChild, 500);
       });

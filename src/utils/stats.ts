@@ -291,13 +291,20 @@ export function initAttribution(): Attribution | null {
   return attribution;
 }
 
+/** 读取 uTools 客户端版本，启动事件与异常上报共用 */
+function getClientVersion(): string {
+  if (getPlatform() !== 'utools') return '';
+  try {
+    return (window as any).utools.getAppVersion?.() || '';
+  } catch {
+    return '';
+  }
+}
+
 /** 上报启动事件：平台、插件版本、uTools 客户端版本与匿名安装 ID */
 async function reportAppLaunch(): Promise<void> {
   const platform = getPlatform();
-  let clientVersion = '';
-  try {
-    if (platform === 'utools') clientVersion = (window as any).utools.getAppVersion?.() || '';
-  } catch { /* 忽略 */ }
+  const clientVersion = getClientVersion();
   const appVersion = await getPluginVersion();
   const attribution = getAttribution();
   send({
@@ -440,19 +447,34 @@ export async function initStats(): Promise<void> {
 /** 本次会话已上报的异常（同源同消息只报一次，防止错误风暴刷量） */
 const reportedErrors = new Set<string>();
 
+/** 当前浏览器/Chromium 版本，只用于判断运行时兼容性 */
+function getRuntimeVersion(): string {
+  if (typeof navigator === 'undefined') return '';
+  const match = navigator.userAgent?.match(/(?:Chrome|Chromium)\/([\d.]+)/i);
+  return match?.[1] || '';
+}
+
 /**
  * 上报 JS/Vue/未捕获 Promise 异常（事件名 bug.error）
- * 只带错误消息（截断 200 字符）、来源、平台与版本，不带堆栈，避免携带用户数据
+ * 只带错误消息（截断 200 字符）、来源、平台、版本与非敏感运行时信息，不带堆栈，避免携带用户数据
  */
-export async function trackError(source: 'vue' | 'js' | 'promise', error: unknown): Promise<void> {
+export async function trackError(source: 'vue' | 'js' | 'promise', error: unknown, pageUrl?: string): Promise<void> {
   const msg = String(error instanceof Error ? error.message : error || 'unknown').slice(0, 200);
   const key = `${source}:${msg}`;
   if (reportedErrors.has(key)) return;
   reportedErrors.add(key);
   send({
-    url: currentUrl(),
+    url: pageUrl || currentUrl(),
     name: 'bug.error',
-    data: { source, message: msg, platform: getPlatform(), appVersion: await getPluginVersion() },
+    data: {
+      source,
+      message: msg,
+      platform: getPlatform(),
+      appVersion: await getPluginVersion(),
+      clientVersion: getClientVersion(),
+      runtime: getRuntimeVersion(),
+      errorName: error instanceof Error ? error.name : error == null ? 'UnknownError' : typeof error,
+    },
   });
 }
 
@@ -461,7 +483,7 @@ export async function trackError(source: 'vue' | 'js' | 'promise', error: unknow
 export function initErrorTracking(): void {
   if (typeof window === 'undefined') return;
   window.addEventListener('error', (e) => {
-    trackError('js', e.message).catch(() => {});
+    trackError('js', e.error || e.message).catch(() => {});
   });
   window.addEventListener('unhandledrejection', (e) => {
     trackError('promise', e.reason).catch(() => {});

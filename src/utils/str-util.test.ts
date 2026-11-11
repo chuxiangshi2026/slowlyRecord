@@ -35,6 +35,13 @@ vi.mock('@/utils/local-dictionary', () => ({
   queryLocalDictionaryAsync: vi.fn()
 }))
 
+const mockTrackAddWord = vi.fn()
+vi.mock('@/utils/stats', () => ({
+  UserActionEvents: {
+    addWord: mockTrackAddWord
+  }
+}))
+
 import { queryLocalDictionaryAsync } from '@/utils/local-dictionary'
 import { ElMessage } from 'element-plus'
 
@@ -66,6 +73,7 @@ describe('str-util', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockFindWord.mockReturnValue(null)
+    mockAddAndUpdateWords.mockResolvedValue(true)
     mockTranslateWithPlatform.mockResolvedValue({
       success: true,
       explains: '释义',
@@ -183,7 +191,7 @@ describe('str-util', () => {
       expect(ElMessage.success).toHaveBeenCalledWith('更新成功')
     })
 
-    it('应该添加新单词到词库', async () => {
+    it('应该添加新单词到词库并记录 word.add', async () => {
       mockFindWord.mockReturnValue(null)
 
       const result = await addWord('newword')
@@ -191,6 +199,18 @@ describe('str-util', () => {
       expect(result.success).toBe(true)
       expect(mockTranslateWithPlatform).toHaveBeenCalledWith('newword')
       expect(mockAddAndUpdateWords).toHaveBeenCalled()
+      expect(mockTrackAddWord).toHaveBeenCalledTimes(1)
+    })
+
+    it('保存失败时不记录 word.add', async () => {
+      mockFindWord.mockReturnValue(null)
+      mockAddAndUpdateWords.mockResolvedValue(false)
+
+      const result = await addWord('newword')
+
+      expect(result.success).toBe(false)
+      expect(result.message).toBe('保存失败，请重试')
+      expect(mockTrackAddWord).not.toHaveBeenCalled()
     })
 
     it('新词默认进入复习列表（isReview=true、从 1 级起步、带学习日期）', async () => {
