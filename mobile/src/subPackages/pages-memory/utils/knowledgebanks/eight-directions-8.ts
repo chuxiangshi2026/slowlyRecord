@@ -1,0 +1,73 @@
+/**
+ * 内置知识包：八方（8 桩）（由 public/knowledgebanks/eight-directions-8.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "eight-directions-8",
+  "name": "八方（8 桩）",
+  "description": "四方加四隅：东、东南、南、西南、西、西北、北、东北，按顺时针排列",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "eight-directions-8-1",
+      "question": "东",
+      "answer": "第 1 桩：正东，日出之方",
+      "order": 1,
+      "imageUrl": "➡️"
+    },
+    {
+      "id": "eight-directions-8-2",
+      "question": "东南",
+      "answer": "第 2 桩：东南方，东与南之间",
+      "order": 2,
+      "imageUrl": "↘️"
+    },
+    {
+      "id": "eight-directions-8-3",
+      "question": "南",
+      "answer": "第 3 桩：正南，向阳之方",
+      "order": 3,
+      "imageUrl": "⬇️"
+    },
+    {
+      "id": "eight-directions-8-4",
+      "question": "西南",
+      "answer": "第 4 桩：西南方，南与西之间",
+      "order": 4,
+      "imageUrl": "↙️"
+    },
+    {
+      "id": "eight-directions-8-5",
+      "question": "西",
+      "answer": "第 5 桩：正西，日落之方",
+      "order": 5,
+      "imageUrl": "⬅️"
+    },
+    {
+      "id": "eight-directions-8-6",
+      "question": "西北",
+      "answer": "第 6 桩：西北方，西与北之间",
+      "order": 6,
+      "imageUrl": "↖️"
+    },
+    {
+      "id": "eight-directions-8-7",
+      "question": "北",
+      "answer": "第 7 桩：正北，背阴之方",
+      "order": 7,
+      "imageUrl": "⬆️"
+    },
+    {
+      "id": "eight-directions-8-8",
+      "question": "东北",
+      "answer": "第 8 桩：东北方，北与东之间",
+      "order": 8,
+      "imageUrl": "↗️"
+    }
+  ]
+}
+
+export default pack

@@ -1,0 +1,94 @@
+/**
+ * 内置知识包：足球首发十一人（11 桩）（由 public/knowledgebanks/football-xi-11.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "football-xi-11",
+  "name": "足球首发十一人（11 桩）",
+  "description": "传统球衣号码 1-11 对应位置：1 号门将，2-5 号后卫，中场 6/8/10，边锋 7/11，中锋 9",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "football-xi-11-1",
+      "question": "门将",
+      "answer": "第 1 桩：1 号：守门员，全队最后一道防线",
+      "order": 1,
+      "imageUrl": "🧤"
+    },
+    {
+      "id": "football-xi-11-2",
+      "question": "右后卫",
+      "answer": "第 2 桩：2 号：镇守右路防线",
+      "order": 2,
+      "imageUrl": "🛡️"
+    },
+    {
+      "id": "football-xi-11-3",
+      "question": "左后卫",
+      "answer": "第 3 桩：3 号：镇守左路防线",
+      "order": 3,
+      "imageUrl": "🔰"
+    },
+    {
+      "id": "football-xi-11-4",
+      "question": "中后卫（拖后）",
+      "answer": "第 4 桩：4 号：防线核心，扫荡补位",
+      "order": 4,
+      "imageUrl": "🧱"
+    },
+    {
+      "id": "football-xi-11-5",
+      "question": "中后卫（盯人）",
+      "answer": "第 5 桩：5 号：贴身盯防对方前锋",
+      "order": 5,
+      "imageUrl": "⛔"
+    },
+    {
+      "id": "football-xi-11-6",
+      "question": "防守型中场",
+      "answer": "第 6 桩：6 号：后腰，防线前的屏障",
+      "order": 6,
+      "imageUrl": "🛻"
+    },
+    {
+      "id": "football-xi-11-7",
+      "question": "右边锋",
+      "answer": "第 7 桩：7 号：右路突破传中（C罗、贝克汉姆）",
+      "order": 7,
+      "imageUrl": "⚡"
+    },
+    {
+      "id": "football-xi-11-8",
+      "question": "中场",
+      "answer": "第 8 桩：8 号：中前卫，攻防枢纽",
+      "order": 8,
+      "imageUrl": "⚙️"
+    },
+    {
+      "id": "football-xi-11-9",
+      "question": "中锋",
+      "answer": "第 9 桩：9 号：禁区杀手，正印前锋（罗纳尔多）",
+      "order": 9,
+      "imageUrl": "🎯"
+    },
+    {
+      "id": "football-xi-11-10",
+      "question": "前腰",
+      "answer": "第 10 桩：10 号：进攻核心，球王号码（马拉多纳、梅西）",
+      "order": 10,
+      "imageUrl": "👑"
+    },
+    {
+      "id": "football-xi-11-11",
+      "question": "左边锋",
+      "answer": "第 11 桩：11 号：左路快马（吉格斯、罗本）",
+      "order": 11,
+      "imageUrl": "💨"
+    }
+  ]
+}
+
+export default pack

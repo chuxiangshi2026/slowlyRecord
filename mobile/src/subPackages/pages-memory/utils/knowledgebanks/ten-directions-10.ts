@@ -1,0 +1,87 @@
+/**
+ * 内置知识包：十方（10 桩）（由 public/knowledgebanks/ten-directions-10.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "ten-directions-10",
+  "name": "十方（10 桩）",
+  "description": "佛教十方世界：四方、四隅加上下（东、南、西、北、东南、西南、西北、东北、上、下）",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "ten-directions-10-1",
+      "question": "东",
+      "answer": "第 1 桩：十方之一：正东",
+      "order": 1,
+      "imageUrl": "➡️"
+    },
+    {
+      "id": "ten-directions-10-2",
+      "question": "南",
+      "answer": "第 2 桩：十方之二：正南",
+      "order": 2,
+      "imageUrl": "⬇️"
+    },
+    {
+      "id": "ten-directions-10-3",
+      "question": "西",
+      "answer": "第 3 桩：十方之三：正西",
+      "order": 3,
+      "imageUrl": "⬅️"
+    },
+    {
+      "id": "ten-directions-10-4",
+      "question": "北",
+      "answer": "第 4 桩：十方之四：正北",
+      "order": 4,
+      "imageUrl": "⬆️"
+    },
+    {
+      "id": "ten-directions-10-5",
+      "question": "东南",
+      "answer": "第 5 桩：十方之五：四隅之一",
+      "order": 5,
+      "imageUrl": "↘️"
+    },
+    {
+      "id": "ten-directions-10-6",
+      "question": "西南",
+      "answer": "第 6 桩：十方之六：四隅之二",
+      "order": 6,
+      "imageUrl": "↙️"
+    },
+    {
+      "id": "ten-directions-10-7",
+      "question": "西北",
+      "answer": "第 7 桩：十方之七：四隅之三",
+      "order": 7,
+      "imageUrl": "↖️"
+    },
+    {
+      "id": "ten-directions-10-8",
+      "question": "东北",
+      "answer": "第 8 桩：十方之八：四隅之四",
+      "order": 8,
+      "imageUrl": "↗️"
+    },
+    {
+      "id": "ten-directions-10-9",
+      "question": "上",
+      "answer": "第 9 桩：十方之九：上方",
+      "order": 9,
+      "imageUrl": "⏫"
+    },
+    {
+      "id": "ten-directions-10-10",
+      "question": "下",
+      "answer": "第 10 桩：十方之十：下方",
+      "order": 10,
+      "imageUrl": "⏬"
+    }
+  ]
+}
+
+export default pack

@@ -1,7 +1,9 @@
 /**
  * 「导入桩库」数据源（peg-packs.ts）单元测试
  *
- * 校验元数据清单与生成数据的一致性：清单（KNOWLEDGE_PACK_LIST 按 usableAsPeg 过滤）
+ * 校验元数据清单与生成数据的一致性：清单（本分包自持的 PEG_PACK_LIST，
+ * 必须与 pages-knowledge 的 KNOWLEDGE_PACK_LIST 中 usableAsPeg 条目完全一致——
+ * 小程序分包隔离禁止 pages-memory 运行时 import pages-knowledge，本测试是唯一的跨分包一致性守护）
  * 与实际注册进 PEG_PACK_DATA 的生成文件一一对应，防止新增桩库时漏注册/漏转换。
  */
 import { describe, it, expect } from 'vitest'

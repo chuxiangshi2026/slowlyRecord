@@ -1,0 +1,59 @@
+/**
+ * 内置知识包：六根（6 桩）（由 public/knowledgebanks/six-roots-6.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "six-roots-6",
+  "name": "六根（6 桩）",
+  "description": "眼、耳、鼻、舌、身、意，佛教所说六种感知根器",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "six-roots-6-1",
+      "question": "眼",
+      "answer": "第 1 桩：眼根：视觉，对应色尘",
+      "order": 1,
+      "imageUrl": "👁️"
+    },
+    {
+      "id": "six-roots-6-2",
+      "question": "耳",
+      "answer": "第 2 桩：耳根：听觉，对应声尘",
+      "order": 2,
+      "imageUrl": "👂"
+    },
+    {
+      "id": "six-roots-6-3",
+      "question": "鼻",
+      "answer": "第 3 桩：鼻根：嗅觉，对应香尘",
+      "order": 3,
+      "imageUrl": "👃"
+    },
+    {
+      "id": "six-roots-6-4",
+      "question": "舌",
+      "answer": "第 4 桩：舌根：味觉，对应味尘",
+      "order": 4,
+      "imageUrl": "👅"
+    },
+    {
+      "id": "six-roots-6-5",
+      "question": "身",
+      "answer": "第 5 桩：身根：触觉，对应触尘",
+      "order": 5,
+      "imageUrl": "🧍"
+    },
+    {
+      "id": "six-roots-6-6",
+      "question": "意",
+      "answer": "第 6 桩：意根：思维，对应法尘",
+      "order": 6,
+      "imageUrl": "🧠"
+    }
+  ]
+}
+
+export default pack

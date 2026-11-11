@@ -1,0 +1,59 @@
+/**
+ * 内置知识包：六腑（6 桩）（由 public/knowledgebanks/six-fu-6.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "six-fu-6",
+  "name": "六腑（6 桩）",
+  "description": "胆、胃、小肠、大肠、膀胱、三焦，中医传化之腑",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "six-fu-6-1",
+      "question": "胆",
+      "answer": "第 1 桩：六腑之一：中正之官，主决断",
+      "order": 1,
+      "imageUrl": "💛"
+    },
+    {
+      "id": "six-fu-6-2",
+      "question": "胃",
+      "answer": "第 2 桩：六腑之一：仓廪之官，受纳腐熟水谷",
+      "order": 2,
+      "imageUrl": "🍚"
+    },
+    {
+      "id": "six-fu-6-3",
+      "question": "小肠",
+      "answer": "第 3 桩：六腑之一：受盛之官，分清泌浊",
+      "order": 3,
+      "imageUrl": "🍜"
+    },
+    {
+      "id": "six-fu-6-4",
+      "question": "大肠",
+      "answer": "第 4 桩：六腑之一：传导之官，排出糟粕",
+      "order": 4,
+      "imageUrl": "🌭"
+    },
+    {
+      "id": "six-fu-6-5",
+      "question": "膀胱",
+      "answer": "第 5 桩：六腑之一：州都之官，贮尿排尿",
+      "order": 5,
+      "imageUrl": "💧"
+    },
+    {
+      "id": "six-fu-6-6",
+      "question": "三焦",
+      "answer": "第 6 桩：六腑之一：决渎之官，通行元气水液",
+      "order": 6,
+      "imageUrl": "🌀"
+    }
+  ]
+}
+
+export default pack

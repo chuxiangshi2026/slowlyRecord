@@ -1,0 +1,52 @@
+/**
+ * 内置知识包：五行（5 桩）（由 public/knowledgebanks/wuxing-5.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "wuxing-5",
+  "name": "五行（5 桩）",
+  "description": "金、木、水、火、土五行，相生相克的万物归类",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "wuxing-5-1",
+      "question": "金",
+      "answer": "第 1 桩：五行之一：从革，对应西方、白色、秋季、肺",
+      "order": 1,
+      "imageUrl": "🪙"
+    },
+    {
+      "id": "wuxing-5-2",
+      "question": "木",
+      "answer": "第 2 桩：五行之一：曲直，对应东方、青色、春季、肝",
+      "order": 2,
+      "imageUrl": "🌳"
+    },
+    {
+      "id": "wuxing-5-3",
+      "question": "水",
+      "answer": "第 3 桩：五行之一：润下，对应北方、黑色、冬季、肾",
+      "order": 3,
+      "imageUrl": "💧"
+    },
+    {
+      "id": "wuxing-5-4",
+      "question": "火",
+      "answer": "第 4 桩：五行之一：炎上，对应南方、红色、夏季、心",
+      "order": 4,
+      "imageUrl": "🔥"
+    },
+    {
+      "id": "wuxing-5-5",
+      "question": "土",
+      "answer": "第 5 桩：五行之一：稼穑，对应中央、黄色、长夏、脾",
+      "order": 5,
+      "imageUrl": "⛰️"
+    }
+  ]
+}
+
+export default pack

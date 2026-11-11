@@ -1,0 +1,66 @@
+/**
+ * 内置知识包：七情（7 桩）（由 public/knowledgebanks/seven-emotions-7.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
+ */
+import type { KnowledgePack } from '@/stores/useUtils/types'
+
+const pack: KnowledgePack = {
+  "id": "seven-emotions-7",
+  "name": "七情（7 桩）",
+  "description": "喜、怒、忧、思、悲、恐、惊，中医所说七种情志",
+  "ordered": true,
+  "usableAsPeg": true,
+  "items": [
+    {
+      "id": "seven-emotions-7-1",
+      "question": "喜",
+      "answer": "第 1 桩：七情之一：过喜伤心",
+      "order": 1,
+      "imageUrl": "😀"
+    },
+    {
+      "id": "seven-emotions-7-2",
+      "question": "怒",
+      "answer": "第 2 桩：七情之一：怒伤肝",
+      "order": 2,
+      "imageUrl": "😡"
+    },
+    {
+      "id": "seven-emotions-7-3",
+      "question": "忧",
+      "answer": "第 3 桩：七情之一：忧伤肺",
+      "order": 3,
+      "imageUrl": "😟"
+    },
+    {
+      "id": "seven-emotions-7-4",
+      "question": "思",
+      "answer": "第 4 桩：七情之一：思伤脾",
+      "order": 4,
+      "imageUrl": "🤔"
+    },
+    {
+      "id": "seven-emotions-7-5",
+      "question": "悲",
+      "answer": "第 5 桩：七情之一：悲则气消",
+      "order": 5,
+      "imageUrl": "😢"
+    },
+    {
+      "id": "seven-emotions-7-6",
+      "question": "恐",
+      "answer": "第 6 桩：七情之一：恐伤肾",
+      "order": 6,
+      "imageUrl": "😨"
+    },
+    {
+      "id": "seven-emotions-7-7",
+      "question": "惊",
+      "answer": "第 7 桩：七情之一：惊则气乱",
+      "order": 7,
+      "imageUrl": "😱"
+    }
+  ]
+}
+
+export default pack

@@ -1,5 +1,6 @@
 /**
  * 内置知识包：扑克牌桩（52 张）（由 public/knowledgebanks/poker-pegs-52.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 

@@ -1,5 +1,6 @@
 /**
  * 内置知识包：四象神兽（4 桩）（由 public/knowledgebanks/four-symbols-4.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 

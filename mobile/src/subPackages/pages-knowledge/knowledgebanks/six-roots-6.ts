@@ -1,5 +1,6 @@
 /**
  * 内置知识包：六根（6 桩）（由 public/knowledgebanks/six-roots-6.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 

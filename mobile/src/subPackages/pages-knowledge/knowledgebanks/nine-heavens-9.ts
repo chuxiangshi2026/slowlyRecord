@@ -1,5 +1,6 @@
 /**
  * 内置知识包：九天（9 桩）（由 public/knowledgebanks/nine-heavens-9.json 转换生成，请勿手改）
+ * 本文件同时输出到 pages-knowledge 与 pages-memory（桩库）两个分包
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 

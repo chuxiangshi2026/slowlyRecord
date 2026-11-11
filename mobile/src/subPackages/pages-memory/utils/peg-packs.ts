@@ -2,78 +2,78 @@
  * 记忆宫殿「导入桩库」数据源（pages-memory 分包）
  *
  * 桩库 = 桌面端 knowledge-pack-service.ts 中 usableAsPeg 标记的内置知识包。
- * 条目数据复用 pages-knowledge 分包的生成文件（mobile/scripts/convert-knowledgebanks.cjs 产物，请勿手改），
- * 这里按需静态 import 全部桩库；元数据清单复用 pages-knowledge 的 KNOWLEDGE_PACK_LIST 按 usableAsPeg 过滤，
- * 保证与知识包页单一来源、不会漂移。
+ * 小程序分包之间禁止互引模块：条目数据用本分包 knowledgebanks/ 副本、元数据用 ./peg-pack-list，
+ * 两者都是 mobile/scripts/convert-knowledgebanks.cjs 的同源产物（桩库会双输出到两个分包，请勿手改），
+ * 与 pages-knowledge 的对应关系由 peg-packs.test.ts 一致性测试守护。
  *
- * 注意：新增 usableAsPeg 桩库时，需先在 pages-knowledge/knowledge-pack-data.ts 注册生成数据
- * （跑 node mobile/scripts/convert-knowledgebanks.cjs <id>），再在下方补一条 import 与映射。
+ * 注意：新增 usableAsPeg 桩库时，跑 node mobile/scripts/convert-knowledgebanks.cjs <id> 生成本分包数据，
+ * 再在下方补一条 import 与映射，并同步 peg-pack-list.ts 与 knowledge-pack-loader.ts 的 usableAsPeg 条目。
  */
 import type { KnowledgePack, KnowledgePackInfo } from '@/stores/useUtils/types'
-import { KNOWLEDGE_PACK_LIST } from '../../pages-knowledge/utils/knowledge-pack-loader'
-import solarTerms24 from '../../pages-knowledge/knowledgebanks/solar-terms-24'
-import zodiac12 from '../../pages-knowledge/knowledgebanks/zodiac-12'
-import numberPegs12 from '../../pages-knowledge/knowledgebanks/number-pegs-12'
-import homeRoute12 from '../../pages-knowledge/knowledgebanks/home-route-12'
-import bodyPegs12 from '../../pages-knowledge/knowledgebanks/body-pegs-12'
-import earthlyBranches12 from '../../pages-knowledge/knowledgebanks/earthly-branches-12'
-import roomPegs12 from '../../pages-knowledge/knowledgebanks/room-pegs-12'
-import dynastiesChina from '../../pages-knowledge/knowledgebanks/dynasties-china'
-import musicalNotes from '../../pages-knowledge/knowledgebanks/musical-notes'
-import pokerPegs52 from '../../pages-knowledge/knowledgebanks/poker-pegs-52'
-import alphabetPegs26 from '../../pages-knowledge/knowledgebanks/alphabet-pegs-26'
-import constellations12 from '../../pages-knowledge/knowledgebanks/constellations-12'
+import { PEG_PACK_LIST } from './peg-pack-list'
+import solarTerms24 from './knowledgebanks/solar-terms-24'
+import zodiac12 from './knowledgebanks/zodiac-12'
+import numberPegs12 from './knowledgebanks/number-pegs-12'
+import homeRoute12 from './knowledgebanks/home-route-12'
+import bodyPegs12 from './knowledgebanks/body-pegs-12'
+import earthlyBranches12 from './knowledgebanks/earthly-branches-12'
+import roomPegs12 from './knowledgebanks/room-pegs-12'
+import dynastiesChina from './knowledgebanks/dynasties-china'
+import musicalNotes from './knowledgebanks/musical-notes'
+import pokerPegs52 from './knowledgebanks/poker-pegs-52'
+import alphabetPegs26 from './knowledgebanks/alphabet-pegs-26'
+import constellations12 from './knowledgebanks/constellations-12'
 // ===== 小容量桩库（2-11 桩），与 knowledge-pack-data.ts 同一生成来源 =====
-import yinYang2 from '../../pages-knowledge/knowledgebanks/yin-yang-2'
-import tianDi2 from '../../pages-knowledge/knowledgebanks/tian-di-2'
-import dayNight2 from '../../pages-knowledge/knowledgebanks/day-night-2'
-import leftRight2 from '../../pages-knowledge/knowledgebanks/left-right-2'
-import upDown2 from '../../pages-knowledge/knowledgebanks/up-down-2'
-import sanCai3 from '../../pages-knowledge/knowledgebanks/san-cai-3'
-import sanGuang3 from '../../pages-knowledge/knowledgebanks/san-guang-3'
-import threeTenses3 from '../../pages-knowledge/knowledgebanks/three-tenses-3'
-import threePrimaryColors3 from '../../pages-knowledge/knowledgebanks/three-primary-colors-3'
-import mengZhongJi3 from '../../pages-knowledge/knowledgebanks/meng-zhong-ji-3'
-import fourSeasons4 from '../../pages-knowledge/knowledgebanks/four-seasons-4'
-import fourDirections4 from '../../pages-knowledge/knowledgebanks/four-directions-4'
-import fourSymbols4 from '../../pages-knowledge/knowledgebanks/four-symbols-4'
-import fourGentlemen4 from '../../pages-knowledge/knowledgebanks/four-gentlemen-4'
-import fourArts4 from '../../pages-knowledge/knowledgebanks/four-arts-4'
-import fourElements4 from '../../pages-knowledge/knowledgebanks/four-elements-4'
-import wuxing5 from '../../pages-knowledge/knowledgebanks/wuxing-5'
-import fiveDirections5 from '../../pages-knowledge/knowledgebanks/five-directions-5'
-import fiveColors5 from '../../pages-knowledge/knowledgebanks/five-colors-5'
-import fiveFlavors5 from '../../pages-knowledge/knowledgebanks/five-flavors-5'
-import fiveVirtues5 from '../../pages-knowledge/knowledgebanks/five-virtues-5'
-import fiveTones5 from '../../pages-knowledge/knowledgebanks/five-tones-5'
-import sixArts6 from '../../pages-knowledge/knowledgebanks/six-arts-6'
-import liuShu6 from '../../pages-knowledge/knowledgebanks/liu-shu-6'
-import sixRoots6 from '../../pages-knowledge/knowledgebanks/six-roots-6'
-import liuHe6 from '../../pages-knowledge/knowledgebanks/liu-he-6'
-import sixFu6 from '../../pages-knowledge/knowledgebanks/six-fu-6'
-import liuLv6 from '../../pages-knowledge/knowledgebanks/liu-lv-6'
-import qiYao7 from '../../pages-knowledge/knowledgebanks/qi-yao-7'
-import bigDipper7 from '../../pages-knowledge/knowledgebanks/big-dipper-7'
-import rainbow7 from '../../pages-knowledge/knowledgebanks/rainbow-7'
-import jianpu7 from '../../pages-knowledge/knowledgebanks/jianpu-7'
-import sevenEmotions7 from '../../pages-knowledge/knowledgebanks/seven-emotions-7'
-import bagua8 from '../../pages-knowledge/knowledgebanks/bagua-8'
-import eightImmortals8 from '../../pages-knowledge/knowledgebanks/eight-immortals-8'
-import eightDirections8 from '../../pages-knowledge/knowledgebanks/eight-directions-8'
-import eightSolarNodes8 from '../../pages-knowledge/knowledgebanks/eight-solar-nodes-8'
-import baYin8 from '../../pages-knowledge/knowledgebanks/ba-yin-8'
-import ninePlanets9 from '../../pages-knowledge/knowledgebanks/nine-planets-9'
-import nineZhou9 from '../../pages-knowledge/knowledgebanks/nine-zhou-9'
-import luoShu9 from '../../pages-knowledge/knowledgebanks/luo-shu-9'
-import nineStars9 from '../../pages-knowledge/knowledgebanks/nine-stars-9'
-import nineHeavens9 from '../../pages-knowledge/knowledgebanks/nine-heavens-9'
-import heavenlyStems10 from '../../pages-knowledge/knowledgebanks/heavenly-stems-10'
-import tenDirections10 from '../../pages-knowledge/knowledgebanks/ten-directions-10'
-import tenFingers10 from '../../pages-knowledge/knowledgebanks/ten-fingers-10'
-import tenMarshals10 from '../../pages-knowledge/knowledgebanks/ten-marshals-10'
-import tenYama10 from '../../pages-knowledge/knowledgebanks/ten-yama-10'
-import elevenLuminaries11 from '../../pages-knowledge/knowledgebanks/eleven-luminaries-11'
-import footballXi11 from '../../pages-knowledge/knowledgebanks/football-xi-11'
+import yinYang2 from './knowledgebanks/yin-yang-2'
+import tianDi2 from './knowledgebanks/tian-di-2'
+import dayNight2 from './knowledgebanks/day-night-2'
+import leftRight2 from './knowledgebanks/left-right-2'
+import upDown2 from './knowledgebanks/up-down-2'
+import sanCai3 from './knowledgebanks/san-cai-3'
+import sanGuang3 from './knowledgebanks/san-guang-3'
+import threeTenses3 from './knowledgebanks/three-tenses-3'
+import threePrimaryColors3 from './knowledgebanks/three-primary-colors-3'
+import mengZhongJi3 from './knowledgebanks/meng-zhong-ji-3'
+import fourSeasons4 from './knowledgebanks/four-seasons-4'
+import fourDirections4 from './knowledgebanks/four-directions-4'
+import fourSymbols4 from './knowledgebanks/four-symbols-4'
+import fourGentlemen4 from './knowledgebanks/four-gentlemen-4'
+import fourArts4 from './knowledgebanks/four-arts-4'
+import fourElements4 from './knowledgebanks/four-elements-4'
+import wuxing5 from './knowledgebanks/wuxing-5'
+import fiveDirections5 from './knowledgebanks/five-directions-5'
+import fiveColors5 from './knowledgebanks/five-colors-5'
+import fiveFlavors5 from './knowledgebanks/five-flavors-5'
+import fiveVirtues5 from './knowledgebanks/five-virtues-5'
+import fiveTones5 from './knowledgebanks/five-tones-5'
+import sixArts6 from './knowledgebanks/six-arts-6'
+import liuShu6 from './knowledgebanks/liu-shu-6'
+import sixRoots6 from './knowledgebanks/six-roots-6'
+import liuHe6 from './knowledgebanks/liu-he-6'
+import sixFu6 from './knowledgebanks/six-fu-6'
+import liuLv6 from './knowledgebanks/liu-lv-6'
+import qiYao7 from './knowledgebanks/qi-yao-7'
+import bigDipper7 from './knowledgebanks/big-dipper-7'
+import rainbow7 from './knowledgebanks/rainbow-7'
+import jianpu7 from './knowledgebanks/jianpu-7'
+import sevenEmotions7 from './knowledgebanks/seven-emotions-7'
+import bagua8 from './knowledgebanks/bagua-8'
+import eightImmortals8 from './knowledgebanks/eight-immortals-8'
+import eightDirections8 from './knowledgebanks/eight-directions-8'
+import eightSolarNodes8 from './knowledgebanks/eight-solar-nodes-8'
+import baYin8 from './knowledgebanks/ba-yin-8'
+import ninePlanets9 from './knowledgebanks/nine-planets-9'
+import nineZhou9 from './knowledgebanks/nine-zhou-9'
+import luoShu9 from './knowledgebanks/luo-shu-9'
+import nineStars9 from './knowledgebanks/nine-stars-9'
+import nineHeavens9 from './knowledgebanks/nine-heavens-9'
+import heavenlyStems10 from './knowledgebanks/heavenly-stems-10'
+import tenDirections10 from './knowledgebanks/ten-directions-10'
+import tenFingers10 from './knowledgebanks/ten-fingers-10'
+import tenMarshals10 from './knowledgebanks/ten-marshals-10'
+import tenYama10 from './knowledgebanks/ten-yama-10'
+import elevenLuminaries11 from './knowledgebanks/eleven-luminaries-11'
+import footballXi11 from './knowledgebanks/football-xi-11'
 
 /** 桩库 id → 条目数据（全部为 usableAsPeg 包，与 listPegPacks() 一一对应） */
 const PEG_PACK_DATA: Record<string, KnowledgePack> = {
@@ -144,9 +144,7 @@ const PEG_PACK_DATA: Record<string, KnowledgePack> = {
 
 /** 列出移动端可用的桩库元数据（usableAsPeg 的内置知识包） */
 export function listPegPacks(): KnowledgePackInfo[] {
-  return KNOWLEDGE_PACK_LIST
-    .filter(p => p.usableAsPeg)
-    .map(p => ({ ...p }))
+  return PEG_PACK_LIST.map(p => ({ ...p }))
 }
 
 /** 取桩库条目数据（未生成的桩库会抛错，属打包配置缺失而非运行期故障） */
