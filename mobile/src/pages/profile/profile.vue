@@ -183,6 +183,7 @@ import type { TranslationPlatform } from '@/stores/useUtils/types'
 import { getSubscribeRecord, recordSubscribeOutcome, getSubscribeTemplateId, setSubscribeTemplateId, parseSubscribeResult, isSubscribeMessageSupported, type SubscribeRecord } from '@/utils/subscribe-remind'
 import { loadDailyGoal, saveDailyGoal, DAILY_GOAL_OPTIONS } from '@/utils/daily-goal'
 import { useTheme, type ThemeMode } from '@/stores/useTheme'
+import manifest from '../../manifest.json'
 
 const wordsStore = useMobileWords()
 const userProfile = useUserProfile()
@@ -494,11 +495,13 @@ function runningEnv(): { env: string; version: string } {
 }
 
 const showAbout = () => {
-  const { env, version } = runningEnv()
+  const { env } = runningEnv()
   const envText = { develop: '开发版', trial: '体验版', release: '线上版' }[env] || env
   uni.showModal({
     title: '关于慢记',
-    content: `慢记 ${version ? `v${version} · ` : ''}${envText}\n\n一款专注于单词记忆与复习的工具应用`,
+    // 始终展示当前构建版本；wx.getAccountInfoSync 在开发/预览环境没有 version，
+    // 只读它会导致关于页长期没有版本号或停留旧值
+    content: `慢记 v${manifest.versionName} · ${envText}\n\n一款专注于单词记忆与复习的工具应用`,
     showCancel: false,
   })
 }
