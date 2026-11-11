@@ -1263,6 +1263,10 @@ apple|n. 苹果|[ˈæpl]|3|true|false
 
 ## 界面截图
 
+> 全平台界面截图与功能详解见 [docs/project-overview.md](docs/project-overview.md)。
+>
+> 分平台用户手册（各端操作与截图独立成册）：[公共核心](docs/user-manual/00-common.md) ｜ [uTools 端](docs/user-manual/01-utools.md) ｜ [Web 端](docs/user-manual/02-web.md) ｜ [小程序端](docs/user-manual/03-miniprogram.md)。
+
 ### 导出文件格式示例
 
 导出单词支持 JSON / TXT 两种格式，示例见下图：

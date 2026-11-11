@@ -34,6 +34,10 @@ export default defineConfig({
       // mobile 单词 store：mobile 代码以 @/stores/useMobileWords 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/stores（不存在该文件）
       { find: /^@\/stores\/useMobileWords$/, replacement: resolve(__dirname, 'mobile/src/stores/useMobileWords.ts') },
+      // 移动端词集 store：播种与同步测试需要优先解析到 mobile 目录
+      { find: /^@\/stores\/useWordBook$/, replacement: resolve(__dirname, 'mobile/src/stores/useWordBook.ts') },
+      // 移动端文本记忆页面同样通过 @/stores 引用，测试时需优先于桌面端通用别名
+      { find: /^@\/stores\/useTextMemory$/, replacement: resolve(__dirname, 'mobile/src/stores/useTextMemory.ts') },
       // mobile 端的 `import ... from '@/config'`（不带扩展名）指向 mobile/src/config.ts，
       // 桌面端使用 `@/config.ts`（带扩展名），由后面通用规则解析到 src/config.ts
       { find: /^@\/config$/, replacement: resolve(__dirname, 'mobile/src/config.ts') },

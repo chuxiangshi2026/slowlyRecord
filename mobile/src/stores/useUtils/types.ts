@@ -4,6 +4,7 @@
  */
 
 import type { LanguageCode } from '@/utils/language'
+import type { WordBookBook, WordBookChapter, WordBookPage } from '../../types/word-book'
 
 export type TranslationPlatform = 'youdao' | 'baidu' | 'ali' | 'tencent' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local'
 
@@ -234,6 +235,14 @@ export interface MobileNumberMemory {
 
 // ==================== 同步包 ====================
 
+/** 词集同步数据（与桌面端 SyncWordBook 同 wire format） */
+export interface MobileSyncWordBook {
+  schemaVersion?: number
+  books: WordBookBook[]
+  chapters: WordBookChapter[]
+  pages: WordBookPage[]
+}
+
 export interface MobileSyncData {
   version: number
   exportedAt: number
@@ -254,6 +263,8 @@ export interface MobileSyncData {
   memoryPalace?: MobileMemoryPalace
   /** 句子库（可选：旧版客户端忽略此字段） */
   sentences?: MobileSentences
+  /** 词集（可选：旧版客户端忽略此字段） */
+  wordBook?: MobileSyncWordBook
   /** 同步墓碑（可选：删除埋点透传，拉取端合并后过滤「删除复活」的条目） */
   tombstones?: Record<string, number>
 }
@@ -373,6 +384,7 @@ export interface RestoreResult {
   signin?: MobileSigninData
   memoryPalace?: MobileMemoryPalace
   sentences?: MobileSentences
+  wordBook?: MobileSyncWordBook
   error?: string
 }
 

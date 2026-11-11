@@ -28,7 +28,8 @@
     "dev:app": "cd mobile && npm run dev:app",
     "build:app-android": "cd mobile && npm run build:app-android",
     "build:app-ios": "cd mobile && npm run build:app-ios",
-    "postinstall": "node -e \"if(process.env.ELECTRON_MIRROR){require('electron')}\""
+    "postinstall": "node -e \"if(process.env.ELECTRON_MIRROR){require('electron')}\"",
+    "test:e2e": "node scripts/e2e/blackbox.cjs"
   },
   "main": "dist-electron/main.js",
   "dependencies": {
@@ -66,6 +67,7 @@
     "@vitest/coverage-v8": "^4.1.4",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "asar": "^3.2.0",
     "electron": "^42.0.0",
     "electron-builder": "^26.8.1",
     "fake-indexeddb": "^6.2.5",
