@@ -2,10 +2,13 @@
   <view class="book-container" :class="themeClass">
     <view class="book-header">
       <view class="book-heading">
-        <text class="book-title">词图闯关</text>
-        <text class="book-subtitle">用法：单词页筛选 → 生成学习页 → 逐词标记；每页按记忆效果安排复习</text>
+        <text class="book-title">词集</text>
+        <text class="book-subtitle">把相关单词编成学习页；单词页筛选 → 生成学习页 → 逐词标记</text>
       </view>
-      <button class="primary-btn small" @click="createBook">新建书</button>
+      <view class="book-header-actions">
+        <text class="header-link" @click="importSample">导入示例</text>
+        <button class="primary-btn small" @click="createBook">新建词集</button>
+      </view>
     </view>
 
     <view v-if="store.dueCount" class="due-bar" @click="goFirstDue">
@@ -14,15 +17,15 @@
 
     <view v-if="!store.loaded" class="empty-tip">加载中...</view>
     <view v-else-if="store.sortedBooks.length === 0" class="empty-state">
-      <text class="empty-title">还没有书</text>
-      <text class="empty-desc">先新建一本（如「四级词根」），再去单词页筛选后生成学习页</text>
-      <button class="primary-btn" @click="createBook">新建书</button>
+      <text class="empty-title">还没有词集</text>
+      <text class="empty-desc">先新建一本词集（如「四级词根」），再去单词页筛选后生成学习页</text>
+      <button class="primary-btn" @click="createBook">新建词集</button>
     </view>
 
     <view v-else class="chapter-list">
       <view v-for="book in store.sortedBooks" :key="book._id" class="chapter-card" @click="openBook(book._id)">
         <view class="chapter-topline">
-          <text class="chapter-order">书</text>
+          <text class="chapter-order">词集</text>
           <text class="more" @click.stop="onBookAction(book)">⋯</text>
         </view>
         <text class="chapter-name">{{ book.name }}</text>
@@ -41,7 +44,8 @@
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app'
 import { useWordBook } from '@/stores/useWordBook'
-import { seedWordBookSamples } from '@/utils/wordbook-seed'
+import { addWordBookSample, seedWordBookSamples } from '@/utils/wordbook-seed'
+import { WORDBOOK_SAMPLES } from '@/utils/wordbook-samples'
 import type { WordBookBook } from '@/types/word-book'
 
 const store = useWordBook()
@@ -59,7 +63,7 @@ function pagesOfBook(bookId: string) {
 function summaryOf(bookId: string): string {
   const chapters = store.chaptersOf(bookId).length
   const pages = pagesOfBook(bookId)
-  return `${chapters} 章 · ${pages.length} 页 · 已过关 ${pages.filter(page => page.completedAt).length} 页`
+  return `${chapters} 章 · ${pages.length} 页 · 已完成 ${pages.filter(page => page.completedAt).length} 页`
 }
 
 function progressOf(bookId: string): number {
@@ -77,9 +81,31 @@ function goFirstDue() {
   if (first) uni.navigateTo({ url: `/subPackages/pages-memory/word-book/page?pageId=${first._id}` })
 }
 
+function importSample() {
+  const existing = new Set(store.sortedBooks.map(book => book.name))
+  const missing = WORDBOOK_SAMPLES.filter(sample => !existing.has(sample.name))
+  if (!missing.length) {
+    uni.showToast({ title: '示例词集已全部导入', icon: 'none' })
+    return
+  }
+  uni.showActionSheet({
+    itemList: missing.map(sample => sample.name),
+    success: res => {
+      const sample = missing[res.tapIndex]
+      if (!sample) return
+      const book = addWordBookSample(sample)
+      if (!book) {
+        uni.showToast({ title: '导入示例失败', icon: 'none' })
+        return
+      }
+      uni.navigateTo({ url: `/subPackages/pages-memory/word-book/chapter?bookId=${book._id}` })
+    },
+  })
+}
+
 function createBook() {
   uni.showModal({
-    title: '新建书',
+    title: '新建词集',
     editable: true,
     placeholderText: '如：四级词根',
     success: res => {
@@ -90,6 +116,10 @@ function createBook() {
         return
       }
       const book = store.createBook(name)
+      if (!book) {
+        uni.showToast({ title: '创建词集失败', icon: 'none' })
+        return
+      }
       uni.navigateTo({ url: `/subPackages/pages-memory/word-book/chapter?bookId=${book._id}` })
     },
   })
@@ -114,16 +144,16 @@ function renameBook(book: WordBookBook) {
       if (!res.confirm) return
       const name = (res.content || '').trim()
       if (!name) return
-      store.renameBook(book._id, name)
-      uni.showToast({ title: '已重命名', icon: 'success' })
+      const result = store.renameBook(book._id, name)
+      uni.showToast({ title: result.ok ? '已重命名' : '重命名失败', icon: 'none' })
     },
   })
 }
 
 function removeBook(book: WordBookBook) {
   uni.showModal({
-    title: '删除书',
-    content: `删除「${book.name}」及其下所有章和页？原词库单词不会删除。`,
+    title: '删除词集',
+    content: `删除「${book.name}」及其下所有章节和学习页？原词库单词不会删除。`,
     success: res => {
       if (!res.confirm) return
       const result = store.deleteBook(book._id)
@@ -152,6 +182,18 @@ function removeBook(book: WordBookBook) {
 .book-heading {
   flex: 1;
   min-width: 0;
+}
+
+.book-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-shrink: 0;
+}
+
+.header-link {
+  font-size: 24rpx;
+  color: var(--sr-primary);
 }
 
 .book-title {

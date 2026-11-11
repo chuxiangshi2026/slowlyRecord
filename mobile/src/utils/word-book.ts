@@ -1,5 +1,5 @@
 /**
- * 词图闯关纯逻辑：分页、命名、调度、关卡。
+ * 词集纯逻辑：分页、命名、调度、关卡。
  * 不碰数据库与 UI，方便单测；桌面与移动端各有一份同口径实现。
  */
 import { DEFAULT_INTERVALS } from '../stores/useUtils/constants'
@@ -32,7 +32,7 @@ export function createWordBookId(prefix: string): string {
   return `${prefix}${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`
 }
 
-/** 筛选状态里与词图相关的字段（与 WordFilter 的 FilterState 兼容的子集） */
+/** 筛选状态里与词集相关的字段（与 WordFilter 的 FilterState 兼容的子集） */
 export interface WordBookFilterLike {
   pattern?: string
   affixType?: string
@@ -204,6 +204,27 @@ export function schedulePageReview(
 
 export function isPageDue(page: Pick<WordBookPage, 'nextReviewAt'>, now = Date.now()): boolean {
   return (page.nextReviewAt || 0) <= now
+}
+
+export function buildWordBookChapterDirectory(
+  chapters: Array<Pick<WordBookChapter, '_id' | 'name'>>,
+  pages: Array<Pick<WordBookPage, '_id' | 'name' | 'chapterId' | 'order' | 'words'>>,
+) {
+  const sortedChapters = [...chapters].sort((a, b) => a.name.trim().localeCompare(b.name.trim(), 'zh-CN', { sensitivity: 'base', numeric: true }))
+  const names = sortedChapters.map(chapter => chapter.name.trim().toLowerCase())
+  const duplicateNames = new Set(names.filter((name, index) => names.indexOf(name) !== index))
+  return sortedChapters.map((chapter, index) => {
+    const chapterPages = pages
+      .filter(page => page.chapterId === chapter._id)
+      .sort((a, b) => a.order - b.order || a._id.localeCompare(b._id))
+    return {
+      chapter,
+      pages: chapterPages,
+      pageCount: chapterPages.length,
+      wordCount: chapterPages.reduce((count, page) => count + page.words.length, 0),
+      hasSameName: duplicateNames.has(names[index]),
+    }
+  })
 }
 
 /** 章内按关卡分组：每 levelSize 页一关 */

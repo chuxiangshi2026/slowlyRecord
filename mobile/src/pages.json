@@ -189,31 +189,31 @@
         {
           "path": "word-book/list",
           "style": {
-            "navigationBarTitleText": "词图闯关"
+            "navigationBarTitleText": "词集"
           }
         },
         {
           "path": "word-book/chapter",
           "style": {
-            "navigationBarTitleText": "词图章节"
+            "navigationBarTitleText": "词集章节"
           }
         },
         {
           "path": "word-book/pages",
           "style": {
-            "navigationBarTitleText": "词图学习页"
+            "navigationBarTitleText": "词集学习页"
           }
         },
         {
           "path": "word-book/edit",
           "style": {
-            "navigationBarTitleText": "生成学习页"
+            "navigationBarTitleText": "词集学习页"
           }
         },
         {
           "path": "word-book/page",
           "style": {
-            "navigationBarTitleText": "词图学习页"
+            "navigationBarTitleText": "词集学习页"
           }
         }
       ]

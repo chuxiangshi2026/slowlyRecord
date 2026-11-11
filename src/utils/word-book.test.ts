@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   MAX_WORD_BOOK_PAGE_SIZE,
   buildPageNameFromBase,
+  buildWordBookChapterDirectory,
   buildWordBookPage,
   ensureWordBookEntryIds,
   formatDueLabel,
@@ -228,6 +229,29 @@ describe('word-book 纯逻辑', () => {
       expect(hasPageContentUpdate(page(3, { readAt: 100, contentUpdatedAt: 200 }))).toBe(true)
       expect(hasPageContentUpdate(page(4, { lastReviewedAt: 300, contentUpdatedAt: 200 }))).toBe(false)
       expect(hasPageContentUpdate(page(5, { completedAt: 100, contentUpdatedAt: 200 }))).toBe(true)
+    })
+  })
+
+  describe('章节目录', () => {
+    it('章节目录按章节名排序，章内页按顺序展示并保留同名提示', () => {
+      const chapters = [
+        { _id: 'chapter_3', name: '字母组合' },
+        { _id: 'chapter_2', name: '词根 OLD' },
+        { _id: 'chapter_1', name: ' 词根 old ' },
+      ]
+      const pages = [
+        page(2, { words: [...page(2).words, ...page(3).words] }),
+        page(1),
+      ]
+      const directory = buildWordBookChapterDirectory(chapters, pages)
+      expect(directory.map(item => [item.chapter._id, item.pageCount, item.wordCount, item.hasSameName])).toEqual([
+        ['chapter_2', 0, 0, true],
+        ['chapter_1', 2, 3, true],
+        ['chapter_3', 0, 0, false],
+      ])
+      expect(directory.find(item => item.chapter._id === 'chapter_1')?.pages.map(itemPage => itemPage._id))
+        .toEqual(['page_1', 'page_2'])
+      expect(chapters[0]._id).toBe('chapter_3')
     })
   })
 

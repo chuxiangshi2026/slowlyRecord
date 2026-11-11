@@ -46,6 +46,15 @@ export type WordBankType =
   | 'transport'        // 日常交通出行
   | 'dining'           // 日常吃饭点餐
   | 'movie-lines'    // 经典电影台词
+  | 'girl-meets-world'       // 女孩成长记
+  | 'friends-tv'             // 老友记
+  | 'modern-family'          // 摩登家庭
+  | 'big-bang-theory'        // 生活大爆炸
+  | 'sherlock'               // 神探夏洛克
+  | 'the-crown'              // 王冠
+  | 'pursuit-of-happyness'   // 当幸福来敲门
+  | 'forrest-gump'           // 阿甘正传
+  | 'shawshank-redemption'   // 肖申克的救赎
   | 'famous-quotes'  // 英语名言警句
   | 'jlpt-n5'        // 日语 JLPT N5
   | 'jlpt-n4'        // 日语 JLPT N4
@@ -136,6 +145,15 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'transport', name: '日常交通出行', description: '地铁公交、打车、坐飞机、读路牌等出行场景常用英文短句', wordCount: 105, language: 'en' },
   { id: 'dining', name: '日常吃饭点餐', description: '堂食点单、打包外带、过敏说明、结账等就餐场景常用英文短句', wordCount: 97, language: 'en' },
   { id: 'movie-lines', name: '电影台词', description: '经典英文电影台词（附中文翻译与出处）', wordCount: 223, language: 'en' },
+  { id: 'girl-meets-world', name: '女孩成长记词汇', description: '《女孩成长记》校园、家庭与成长语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'friends-tv', name: '老友记词汇', description: '《老友记》友情、恋爱与日常生活语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'modern-family', name: '摩登家庭词汇', description: '《摩登家庭》家庭关系、育儿与生活语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'big-bang-theory', name: '生活大爆炸词汇', description: '《生活大爆炸》科学、社交与校园语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'sherlock', name: '神探夏洛克词汇', description: '《神探夏洛克》探案、推理与调查语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'the-crown', name: '王冠词汇', description: '《王冠》王室、政治与礼仪语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'pursuit-of-happyness', name: '当幸福来敲门词汇', description: '《当幸福来敲门》职场、家庭与逆境奋斗语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'forrest-gump', name: '阿甘正传词汇', description: '《阿甘正传》人生、战争与友情语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
+  { id: 'shawshank-redemption', name: '肖申克的救赎词汇', description: '《肖申克的救赎》监狱、希望与自由语境常用词，50 词按入门到高阶排列（非官方学习词表）', wordCount: 50, language: 'en' },
   { id: 'famous-quotes', name: '名言警句', description: '英语名人名言警句（附中文翻译与作者）', wordCount: 213, language: 'en' },
   { id: 'jlpt-n5', name: 'JLPT N5', description: '日本语能力测试 N5 级核心词汇（日语）', wordCount: 700, language: 'ja' },
   { id: 'jlpt-n4', name: 'JLPT N4', description: '日本语能力测试 N4 级核心词汇（日语）', wordCount: 1169, language: 'ja' },

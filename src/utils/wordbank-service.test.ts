@@ -42,6 +42,8 @@ describe('wordbank-service', () => {
         'ielts-topics', 'toefl-academic',
         'phrasal-verbs', 'collocations', 'idioms', 'common-phrases',
         'oral-basic', 'oral-intermediate', 'oral-advanced', 'movie-lines',
+        'girl-meets-world', 'friends-tv', 'modern-family', 'big-bang-theory', 'sherlock',
+        'the-crown', 'pursuit-of-happyness', 'forrest-gump', 'shawshank-redemption',
         'tech-vocab', 'dev-phrases', 'dev-status', 'dev-debugging', 'dev-reading',
         'dev-discussion', 'sentence-patterns',
         'shopping', 'transport', 'dining', 'famous-quotes', 'jlpt-n5',

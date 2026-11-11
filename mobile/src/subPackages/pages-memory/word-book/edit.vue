@@ -13,18 +13,18 @@
       </view>
 
       <view class="form-card">
-        <text class="form-label">所属书</text>
+        <text class="form-label">所属词集</text>
         <view class="row">
           <picker class="grow" :range="books" range-key="name" :value="bookIndex" @change="onBookChange">
-            <view class="form-input picker-value">{{ selectedBook?.name || '选择书' }}</view>
+            <view class="form-input picker-value">{{ selectedBook?.name || '选择词集' }}</view>
           </picker>
           <text class="link" @click="createBook">＋新建</text>
         </view>
 
-        <text class="form-label">所属章</text>
+        <text class="form-label">所属章节</text>
         <view class="row">
           <picker class="grow" :range="chapters" range-key="name" :value="chapterIndex" @change="onChapterChange">
-            <view class="form-input picker-value">{{ selectedChapter?.name || '选择章' }}</view>
+            <view class="form-input picker-value">{{ selectedChapter?.name || '选择章节' }}</view>
           </picker>
           <text class="link" @click="createChapter">＋新建</text>
         </view>
@@ -87,7 +87,7 @@ onShow(() => {
   if (!pageName.value && draft.value) {
     pageName.value = draft.value.name
   }
-  // 从章节页「添加页」过来：预选目标
+  // 从章节页「添加学习页」过来：预选目标
   const target = store.pendingTarget
   if (target) {
     const bookPosition = store.sortedBooks.findIndex(book => book._id === target.bookId)
@@ -132,15 +132,19 @@ function goWords() {
 
 function createBook() {
   uni.showModal({
-    title: '新建书',
+    title: '新建词集',
     editable: true,
     placeholderText: '如：四级词根',
     success: res => {
       if (!res.confirm) return
       const name = (res.content || '').trim()
       if (!name) return
-      store.createBook(name)
-      bookIndex.value = store.sortedBooks.length - 1
+      const book = store.createBook(name)
+      if (!book) {
+        uni.showToast({ title: '创建词集失败', icon: 'none' })
+        return
+      }
+      bookIndex.value = store.sortedBooks.findIndex(item => item._id === book._id)
       chapterIndex.value = 0
     },
   })
@@ -148,19 +152,23 @@ function createBook() {
 
 function createChapter() {
   if (!selectedBook.value) {
-    uni.showToast({ title: '先选择或新建书', icon: 'none' })
+    uni.showToast({ title: '先选择或新建词集', icon: 'none' })
     return
   }
   uni.showModal({
-    title: '新建章',
+    title: '新建章节',
     editable: true,
     placeholderText: '如：词根 old',
     success: res => {
       if (!res.confirm) return
       const name = (res.content || '').trim()
       if (!name) return
-      store.createChapter(selectedBook.value._id, name)
-      chapterIndex.value = store.chaptersOf(selectedBook.value._id).length - 1
+      const chapter = store.createChapter(selectedBook.value!._id, name)
+      if (!chapter) {
+        uni.showToast({ title: '创建章节失败', icon: 'none' })
+        return
+      }
+      chapterIndex.value = store.chaptersOf(selectedBook.value!._id).findIndex(item => item._id === chapter._id)
     },
   })
 }
@@ -172,10 +180,11 @@ function confirm() {
     const book = selectedBook.value!
     const chapter = selectedChapter.value!
     const total = chunks.value.length
+    const createdIds: string[] = []
     for (let i = 0; i < total; i++) {
       const words = chunks.value[i]
       if (!words.length) continue
-      store.createPage({
+      const page = store.createPage({
         bookId: book._id,
         chapterId: chapter._id,
         name: getDefaultPageName(draft.value.key, i + 1, total),
@@ -183,10 +192,16 @@ function confirm() {
         words,
         source: draft.value.source,
       })
+      if (!page) {
+        createdIds.forEach(id => store.deletePage(id))
+        uni.showToast({ title: '生成失败，请检查存储空间后重试', icon: 'none' })
+        return
+      }
+      createdIds.push(page._id)
     }
     store.clearDraft()
     store.setPendingTarget(null)
-    uni.showToast({ title: `已生成 ${total} 页`, icon: 'success' })
+    uni.showToast({ title: `已生成 ${createdIds.length} 个学习页`, icon: 'success' })
     setTimeout(() => {
       uni.redirectTo({ url: `/subPackages/pages-memory/word-book/pages?bookId=${book._id}&chapterId=${chapter._id}` })
     }, 600)

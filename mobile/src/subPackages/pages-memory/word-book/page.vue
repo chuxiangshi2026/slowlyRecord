@@ -17,7 +17,22 @@
           <text class="switch-label">遮住释义</text>
           <switch :checked="hideMeaning" color="#52796f" @change="onHideChange"/>
         </view>
+        <text class="link" @click="directoryVisible = !directoryVisible">章节目录</text>
         <text class="link" @click="restart">重新开始</text>
+      </view>
+
+      <view v-if="directoryVisible" class="chapter-directory">
+        <view v-for="(item, index) in chapterDirectory" :key="item.chapter._id" class="chapter-directory-group">
+          <view class="chapter-directory-title" :class="{ current: item.chapter._id === page.chapterId }"
+                @click="openChapter(item.chapter._id)">
+            <text>{{ index + 1 }}. {{ item.chapter.name }}</text>
+            <text class="chapter-directory-count">{{ item.pageCount }} 页 · {{ item.wordCount }} 词{{ item.hasSameName ? ' · 同名' : '' }}</text>
+          </view>
+          <text v-for="itemPage in item.pages" :key="itemPage._id" class="chapter-directory-page"
+                :class="{ current: itemPage._id === pageId }" @click="openDirectoryPage(itemPage._id)">
+            P{{ itemPage.order }} · {{ itemPage.name }}
+          </text>
+        </view>
       </view>
 
       <view v-if="finished" class="finish-card">
@@ -37,7 +52,8 @@
           <view v-for="(word, index) in page.words" :key="`${word.sourceId}-${index}`"
                 :class="['node-card', { marked: marked.has(index), wrong: wrongSet.has(index) }]"
                 @click="reveal(index)">
-            <text class="node-word">{{ word.text }}</text>
+            <text class="node-word"><text v-for="(part, partIndex) in rootParts(word.text)" :key="partIndex"
+                  :class="{ 'root-match': part.matched }">{{ part.text }}</text></text>
             <text v-if="word.phonetic" class="node-phonetic">{{ word.phonetic }}</text>
             <text class="node-explains">{{ shouldHide(index) ? '点击显示释义' : (word.explains || '—') }}</text>
             <view class="node-actions">
@@ -55,7 +71,7 @@
 import { computed, ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { useWordBook } from '@/stores/useWordBook'
-import { formatDueLabel } from '@/utils/word-book'
+import { buildWordBookChapterDirectory, formatDueLabel } from '@/utils/word-book'
 
 const store = useWordBook()
 const pageId = ref('')
@@ -64,6 +80,7 @@ const revealed = ref<Set<number>>(new Set())
 const marked = ref<Set<number>>(new Set())
 const wrongSet = ref<Set<number>>(new Set())
 const finished = ref(false)
+const directoryVisible = ref(false)
 
 onLoad((options: any) => {
   pageId.value = String(options?.pageId || '')
@@ -72,11 +89,37 @@ onLoad((options: any) => {
 onShow(() => store.load())
 
 const page = computed(() => store.getPage(pageId.value))
+const chapterDirectory = computed(() => page.value
+  ? buildWordBookChapterDirectory(store.chaptersOf(page.value.bookId), store.pages)
+  : [])
 const keyTypeLabel = computed(() => {
   const map: Record<string, string> = { root: '词根', prefix: '前缀', suffix: '后缀', phonetic: '音标', text: '主题' }
   return map[page.value?.key.type || 'text'] || '主题'
 })
 const keyLabel = computed(() => (page.value?.key.value ? `${keyTypeLabel.value} ${page.value.key.value}` : keyTypeLabel.value))
+
+function openChapter(chapterId: string) {
+  directoryVisible.value = false
+  if (chapterId === page.value?.chapterId) return
+  uni.navigateTo({ url: `/subPackages/pages-memory/word-book/pages?bookId=${page.value?.bookId}&chapterId=${chapterId}` })
+}
+
+function openDirectoryPage(targetPageId: string) {
+  directoryVisible.value = false
+  if (targetPageId === pageId.value) return
+  uni.navigateTo({ url: `/subPackages/pages-memory/word-book/page?pageId=${targetPageId}` })
+}
+
+function rootParts(text: string): Array<{ text: string; matched?: boolean }> {
+  const root = String(page.value?.key.type === 'root' ? page.value.key.value : '').toLowerCase()
+  const index = root ? text.toLowerCase().indexOf(root) : -1
+  if (index < 0) return [{ text }]
+  return [
+    ...(index > 0 ? [{ text: text.slice(0, index) }] : []),
+    { text: text.slice(index, index + root.length), matched: true },
+    ...(index + root.length < text.length ? [{ text: text.slice(index + root.length) }] : []),
+  ]
+}
 
 function onHideChange(event: any) {
   hideMeaning.value = !!event.detail.value
@@ -250,6 +293,11 @@ function goBack() {
   color: var(--sr-text);
 }
 
+.root-match {
+  color: var(--sr-danger, #d9534f);
+  font-weight: 700;
+}
+
 .node-phonetic {
   display: block;
   margin-top: 4rpx;
@@ -281,6 +329,60 @@ function goBack() {
 
   &.no {
     color: var(--sr-text-2);
+  }
+}
+
+.chapter-directory {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+  padding: 16rpx;
+  border-radius: 16rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+}
+
+.chapter-directory-group {
+  min-width: 0;
+  padding: 12rpx;
+  border-radius: 12rpx;
+  background: var(--sr-bg);
+}
+
+.chapter-directory-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8rpx;
+  padding-bottom: 8rpx;
+  color: var(--sr-text);
+  font-size: 24rpx;
+  font-weight: 600;
+  border-bottom: 1rpx solid var(--sr-border);
+
+  &.current {
+    color: var(--sr-primary);
+  }
+}
+
+.chapter-directory-count {
+  flex-shrink: 0;
+  color: var(--sr-text-2);
+  font-size: 18rpx;
+  font-weight: 400;
+}
+
+.chapter-directory-page {
+  display: block;
+  padding: 10rpx 6rpx;
+  color: var(--sr-text-2);
+  font-size: 22rpx;
+  line-height: 1.3;
+
+  &.current {
+    color: var(--sr-primary);
+    font-weight: 600;
   }
 }
 

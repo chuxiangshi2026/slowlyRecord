@@ -2,11 +2,11 @@
   <view class="book-container" :class="themeClass">
     <view class="book-header">
       <view class="book-heading">
-        <text class="back" @click="goBack">‹ 章列表</text>
-        <text class="book-title">{{ chapter?.name || '章' }}</text>
-        <text class="book-subtitle">{{ pages.length }} 页 · 每 {{ levelSize }} 页一关 · 已达成 {{ chapter?.levels?.length || 0 }} 关</text>
+        <text class="back" @click="goBack">‹ 章节列表</text>
+        <text class="book-title">{{ chapter?.name || '章节' }}</text>
+        <text class="book-subtitle">{{ pages.length }} 个学习页 · 每 {{ levelSize }} 页一关 · 已达成 {{ chapter?.levels?.length || 0 }} 关</text>
       </view>
-      <button class="primary-btn small" @click="addPage">＋ 添加页</button>
+      <button class="primary-btn small" @click="addPage">＋ 添加学习页</button>
     </view>
 
     <view v-if="pages.length === 0" class="empty-state">
@@ -104,14 +104,15 @@ function renamePage(page: WordBookPage) {
       if (!res.confirm) return
       const name = (res.content || '').trim()
       if (!name) return
-      store.renamePage(page._id, name)
+      const result = store.renamePage(page._id, name)
+      uni.showToast({ title: result.ok ? '已重命名' : '重命名失败', icon: 'none' })
     },
   })
 }
 
 function removePage(page: WordBookPage) {
   uni.showModal({
-    title: '删除页',
+    title: '删除学习页',
     content: `删除「${page.name}」？原词库单词不会删除。`,
     success: res => {
       if (!res.confirm) return

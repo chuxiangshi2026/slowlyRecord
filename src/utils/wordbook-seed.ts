@@ -62,7 +62,8 @@ export async function addWordBookSample(sample: WordBookSampleBook): Promise<Wor
 }
 
 function samplesForMigration(oldSamples: WordBookBook[], previousSeeded: boolean): WordBookSampleBook[] {
-  if (!previousSeeded) return WORDBOOK_SAMPLES
+  // 新安装只播种一本入门示例，其余示例从「添加词集 → 内置示例」按需导入
+  if (!previousSeeded) return WORDBOOK_SAMPLES.slice(0, 1)
   const oldNames = new Set(oldSamples.map(book => book.name))
   const needsFullMigration = oldSamples.some(book =>
     !book.sampleVersion
@@ -94,10 +95,34 @@ function markSeeded(): void {
   } catch { /* 标记写失败时下次按版本续跑，不删除已创建内容 */ }
 }
 
+const CLEANUP_KEY = 'sr_wordbook_samples_single_v1'
+
+/** 一次性清理未学习过的多余内置示例，只保留「词根册」；用户已开始学习或已改名的示例保留 */
+async function pruneRedundantSamples(): Promise<void> {
+  try {
+    if (localStorage.getItem(CLEANUP_KEY) === '1') return
+    const store = useWordBookStore()
+    await store.loadAll(true)
+    const knownNames = new Set(WORDBOOK_SAMPLES.map(sample => sample.name))
+    for (const book of store.sortedBooks) {
+      if (!book.isSample || !knownNames.has(book.name) || book.name === WORDBOOK_SAMPLES[0].name) continue
+      const pages = store.pages.filter(page => page.bookId === book._id)
+      const started = pages.some(page => page.readAt || page.lastRound || page.completedAt || page.lastReviewedAt)
+      if (!started) await store.deleteBook(book._id)
+    }
+    localStorage.setItem(CLEANUP_KEY, '1')
+  } catch (error) {
+    console.warn('[词集] 清理多余示例失败', error)
+  }
+}
+
 export async function seedWordBookSamples(): Promise<void> {
   let previousSeeded = false
   try {
-    if (localStorage.getItem(SEED_KEY) === '1') return
+    if (localStorage.getItem(SEED_KEY) === '1') {
+      await pruneRedundantSamples()
+      return
+    }
     previousSeeded = [...PREVIOUS_SEED_KEYS, LEGACY_SEED_KEY].some(key => localStorage.getItem(key) === '1')
   } catch {
     return

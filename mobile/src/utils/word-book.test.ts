@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
+  buildWordBookChapterDirectory,
   getDefaultPageName,
   groupPagesIntoLevels,
   isPageDue,
@@ -27,6 +28,24 @@ const makePage = (order: number, extra: Partial<WordBookPage> = {}): WordBookPag
 })
 
 describe('移动端 word-book 逻辑（与桌面同口径）', () => {
+  it('章节目录按章节名排序，章内页按顺序展示并保留同名提示', () => {
+    const directory = buildWordBookChapterDirectory([
+      { _id: 'c3', name: '字母组合' },
+      { _id: 'c2', name: '词根 OLD' },
+      { _id: 'c1', name: ' 词根 old ' },
+    ], [
+      makePage(2, { chapterId: 'c1', words: [{ sourceId: 'b', text: 'bold', explains: '大胆的' }, { sourceId: 'c', text: 'cold', explains: '冷的' }] }),
+      makePage(1, { chapterId: 'c1' }),
+    ])
+    expect(directory.map(item => [item.chapter._id, item.pageCount, item.wordCount, item.hasSameName])).toEqual([
+      ['c2', 0, 0, true],
+      ['c1', 2, 3, true],
+      ['c3', 0, 0, false],
+    ])
+    expect(directory.find(item => item.chapter._id === 'c1')?.pages.map(itemPage => itemPage._id))
+      .toEqual(['wb_page_1', 'wb_page_2'])
+  })
+
   it('中心节点按筛选条件推导', () => {
     expect(resolveWordBookKey({ affixType: 'root', affixText: 'old' })).toEqual({ type: 'root', value: 'old' })
     expect(resolveWordBookKey({ phonetic: 'əʊld' })).toEqual({ type: 'phonetic', value: 'əʊld' })

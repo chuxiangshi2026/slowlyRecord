@@ -100,7 +100,7 @@
     <el-dialog v-model="guideVisible" title="快速了解词集" width="min(460px, 92vw)" @close="markGuideSeen">
       <ol class="guide-list">
         <li>打开学习页，围绕中心的字母组合、词根或主题查看单词。</li>
-        <li>单击单词查看详情；复习时单击可展开释义并标记记住。</li>
+        <li>悬停单词自动发音并在右侧显示详情；单击标记已记住，全部标记后进入复习。</li>
         <li>点击中心编辑本页；顶部可添加单词，右侧详情可修改和删除。</li>
       </ol>
       <template #footer>

@@ -14,6 +14,7 @@ vi.mock('@/stores/wordBook', () => {
       get books() { return state.books },
       set books(value: any[]) { state.books = value },
       get sortedBooks() { return state.books },
+      get pages() { return state.pages },
       loadAll: vi.fn(async () => {}),
       createBook: vi.fn(async (name: string, extra: any = {}) => {
         const book = { _id: `book_${state.books.length}`, name, ctime: 1, ...extra }
@@ -63,15 +64,13 @@ describe('示例词集播种', () => {
     ;(globalThis as any).__seedStorage = storage
   })
 
-  it('首次播种四本示例词集，按词根/词缀/拼写组合/场景组织学习页', async () => {
+  it('首次只播种一本入门示例，其余示例改为按需导入', async () => {
     await seedWordBookSamples()
-    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词'])
+    expect(state.books.map(book => book.name)).toEqual(['词根册'])
     expect(state.books.every(book => book.isSample)).toBe(true)
     expect(state.books.every(book => book.sampleVersion === 7)).toBe(true)
-    expect(state.chapters.map(chapter => chapter.name)).toEqual([
-      '核心词根', '进阶词根', '常用前缀', '常用后缀', '元音组合', '辅音组合', '特殊拼写', '身体', '日常物品', '酒店',
-    ])
-    expect(state.calls.page).toBe(73)
+    expect(state.chapters.map(chapter => chapter.name)).toEqual(['核心词根', '进阶词根'])
+    expect(state.calls.page).toBe(21)
     expect(state.pages.every(page => page.words.length >= 4)).toBe(true)
     expect(state.pages.every(page => typeof page.note === 'string' && page.note.length > 0)).toBe(true)
   })
@@ -82,7 +81,23 @@ describe('示例词集播种', () => {
     const counts = { ...state.calls }
     await seedWordBookSamples()
     expect(state.calls).toEqual(counts)
-    expect(state.books).toHaveLength(3)
+    expect(state.books).toHaveLength(0)
+  })
+
+  it('升级后只保留一本未学习示例，已有学习进度的示例不删除', async () => {
+    const storage = (globalThis as any).__seedStorage as Map<string, string>
+    storage.set('sr_wordbook_samples_v7', '1')
+    state.books = WORDBOOK_SAMPLES.map((sample, index) => ({
+      _id: `sample_${index}`,
+      name: sample.name,
+      isSample: true,
+      sampleVersion: 7,
+    }))
+    state.pages = [{ _id: 'started_page', bookId: 'sample_1', completedAt: 1 }]
+
+    await seedWordBookSamples()
+    expect(state.books.map(book => book.name)).toEqual([WORDBOOK_SAMPLES[0].name, WORDBOOK_SAMPLES[1].name])
+    expect(storage.get('sr_wordbook_samples_single_v1')).toBe('1')
   })
 
   it('旧版本已删除示例的用户只迁移标记，不重新播种', async () => {
@@ -108,7 +123,7 @@ describe('示例词集播种', () => {
     storage.set('sr_wordbook_samples_v3', '1')
     state.books = [{ _id: 'old_sample', name: '示例词集', isSample: true }]
     await seedWordBookSamples()
-    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词'])
+    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词', '固定句式'])
     expect(state.books.some(book => book._id === 'old_sample')).toBe(false)
   })
 
@@ -118,7 +133,7 @@ describe('示例词集播种', () => {
     state.books = [{ _id: 'renamed_sample', name: '我改过名的旧示例', isSample: true, sampleVersion: 3 }]
     await seedWordBookSamples()
     expect(state.books.some(book => book._id === 'renamed_sample')).toBe(false)
-    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词'])
+    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词', '固定句式'])
   })
 
   it('同名旧版本示例会被新版本替换，而不是被当成新书删掉', async () => {
@@ -137,13 +152,14 @@ describe('示例词集播种', () => {
     storage.set('sr_wordbook_samples_v2', '1')
     state.books = [{ _id: 'old_sample', name: '示例词集', isSample: true }]
     await seedWordBookSamples()
-    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词'])
+    expect(state.books.map(book => book.name)).toEqual(['词根册', '词缀册', '拼写组合册', '场景名词', '固定句式'])
     expect(state.books.some(book => book._id === 'old_sample')).toBe(false)
     expect(storage.get('sr_wordbook_samples_v7')).toBe('1')
   })
 
   it('示例页使用稳定 entryId，old 属于字母组合且带中心解释', async () => {
     await seedWordBookSamples()
+    for (const sample of WORDBOOK_SAMPLES) await addWordBookSample(sample)
     const oldPage = state.pages.find(page => page.key.type === 'letters' && page.key.value === 'old')!
     const portPage = state.pages.find(page => page.key.value === 'port')!
     expect(oldPage.name).toBe('old 篇')

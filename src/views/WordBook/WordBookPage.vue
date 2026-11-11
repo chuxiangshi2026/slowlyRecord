@@ -6,6 +6,7 @@
         <p v-if="page">{{ statusLine }}</p>
       </div>
       <div v-if="page" class="page-header-actions">
+        <el-button size="small" @click="directoryVisible = true">章节目录</el-button>
         <el-radio-group :model-value="mode" size="small" @change="onModeChange">
           <el-radio-button value="view">查看</el-radio-button>
           <el-radio-button value="recall" :disabled="!page.words.length">复习</el-radio-button>
@@ -44,17 +45,17 @@
               </div>
 
               <div v-for="(word, index) in page.words" :key="word.entryId || `${word.text}-${index}`"
-                   class="map-node" :class="nodeClasses(word)" :style="nodeStyle(index)">
+                   class="map-node" :class="[nodeClasses(word), { hoverable: mode === 'view' }]" :style="nodeStyle(index)">
                 <button type="button" class="node-main"
-                        :aria-label="`${word.text}，${mode === 'recall' ? '显示或收起释义并切换记住状态' : '查看详情'}`"
-                        :aria-pressed="mode === 'recall' ? knownEntryIds.has(word.entryId || '') : undefined"
-                        @click="onNodeClick(word)">
+                        :aria-label="nodeAriaLabel(word)"
+                        :aria-pressed="knownEntryIds.has(word.entryId || '')"
+                        @mouseenter="onWordHover(word)" @focus="onWordHover(word)" @click="onNodeClick(word)">
                   <span class="node-word">
                     <span v-for="(part, partIndex) in wordComponents(word)" :key="partIndex"
                           :class="componentClass(part)">{{ part.text }}</span>
                   </span>
                   <span v-if="word.phonetic" class="node-phonetic">{{ word.phonetic }}</span>
-                  <span v-if="mode === 'view'" class="node-explains">{{ word.explains || '—' }}</span>
+                  <span v-if="mode === 'view'" class="node-explains">{{ viewWordMeaning(word) }}</span>
                   <span v-else class="node-explains">
                     {{ isRevealed(word.entryId) ? (word.explains || '—') : '点击显示释义' }}
                   </span>
@@ -110,8 +111,8 @@
                   </div>
                 </div>
                 <p v-if="selectedWord.phonetic" class="detail-phonetic">{{ selectedWord.phonetic }}</p>
-                <p class="detail-explains">{{ selectedWord.explains || '暂无释义' }}</p>
-                <div v-if="selectedWord.examples?.length" class="detail-examples">
+                <p class="detail-explains">{{ isViewRemembered(selectedWord) ? '已记住，释义已隐藏' : (selectedWord.explains || '暂无释义') }}</p>
+                <div v-if="selectedWord.examples?.length && !isViewRemembered(selectedWord)" class="detail-examples">
                   <h4>例句</h4>
                   <p v-for="(example, index) in selectedWord.examples" :key="index">
                     <span class="example-en">{{ example.english }}</span>
@@ -123,7 +124,7 @@
               </template>
               <div v-else class="detail-empty">
                 <h3>学习页详情</h3>
-                <p>点击单词查看释义、例句、记忆点和构词说明。</p>
+                <p>悬停单词自动发音并查看详情；单击标记已记住，全部标记后进入复习。</p>
               </div>
 
               <div v-if="mode === 'view' && page.note" class="page-note">
@@ -149,6 +150,27 @@
         </div>
       </template>
     </div>
+
+    <el-dialog v-model="directoryVisible" title="章节目录" width="min(1080px, 92vw)" append-to-body>
+      <p class="directory-hint">按章节名称排序；点击章节管理内容，点击学习页直接打开。</p>
+      <div class="directory-grid">
+        <section v-for="(item, index) in chapterDirectory" :key="item.chapter._id"
+                 class="directory-chapter" :class="{ current: item.chapter._id === page?.chapterId }">
+          <button type="button" class="directory-chapter-title" @click="openChapter(item.chapter._id)">
+            <span>{{ index + 1 }}. {{ item.chapter.name }}</span>
+            <small>{{ item.pageCount }} 页 · {{ item.wordCount }} 词{{ item.hasSameName ? ' · 同名' : '' }}</small>
+          </button>
+          <div class="directory-pages">
+            <button v-for="itemPage in item.pages" :key="itemPage._id" type="button" class="directory-page"
+                    :class="{ current: itemPage._id === pageId }" @click="openPageRoute(itemPage._id)">
+              <span>P{{ itemPage.order }}</span>
+              <span class="directory-page-name">{{ itemPage.name }}</span>
+            </button>
+            <span v-if="!item.pages.length" class="directory-empty">暂无学习页</span>
+          </div>
+        </section>
+      </div>
+    </el-dialog>
 
     <el-dialog v-model="pageEditorVisible" title="编辑学习页" width="min(500px, 92vw)" append-to-body
                :close-on-click-modal="false" :before-close="onEditorBeforeClose">
@@ -243,6 +265,7 @@ import { useWordsStore } from '@/stores/words'
 import { analyzeWord } from '@/utils/word-analysis'
 import {
   WORD_BOOK_KEY_TYPE_LABEL,
+  buildWordBookChapterDirectory,
   formatDueLabel,
   hasPageContentUpdate,
   hasPageReviewStarted,
@@ -284,6 +307,7 @@ const page = computed(() => store.getPage(pageId.value))
 const mode = ref<PageMode>('view')
 const selectedEntryId = ref('')
 const readSaving = ref(false)
+const directoryVisible = ref(false)
 
 const pickerVisible = ref(false)
 const pageEditorVisible = ref(false)
@@ -315,6 +339,9 @@ const keyTypeOptions = (Object.keys(WORD_BOOK_KEY_TYPE_LABEL) as WordBookKeyType
 }))
 
 const graphLayout = computed(() => layoutWordGraph(page.value?.words.length || 0, 900, 620))
+const chapterDirectory = computed(() => page.value
+  ? buildWordBookChapterDirectory(store.chaptersOf(page.value.bookId), store.pages)
+  : [])
 const chapterPages = computed(() => page.value ? store.pagesOf(page.value.chapterId) : [])
 const currentPageIndex = computed(() => chapterPages.value.findIndex(item => item._id === pageId.value))
 const prevPage = computed(() => currentPageIndex.value > 0 ? chapterPages.value[currentPageIndex.value - 1] : undefined)
@@ -421,6 +448,25 @@ function nodeClasses(word: WordBookWord) {
   }
 }
 
+function nodeAriaLabel(word: WordBookWord): string {
+  if (mode.value === 'recall') return `${word.text}，显示或收起释义并切换记住状态`
+  return `${word.text}，${knownEntryIds.value.has(word.entryId || '') ? '已记住，点击取消标记' : '标记为已记住'}`
+}
+
+function isViewRemembered(word: WordBookWord): boolean {
+  return mode.value === 'view' && knownEntryIds.value.has(word.entryId || '')
+}
+
+function viewWordMeaning(word: WordBookWord): string {
+  return isViewRemembered(word) ? '已记住' : (word.explains || '—')
+}
+
+function onWordHover(word: WordBookWord) {
+  if (mode.value !== 'view' || !word.entryId) return
+  selectedEntryId.value = word.entryId
+  speakWord(word.text)
+}
+
 /** 中心词缀与解析出的成分同族即可高亮：-tion 可命中 -ation，spect 可命中 spec */
 function isKeyComponent(component: WordComponent, keyType: string, keyValue: string) {
   if (component.type !== keyType) return false
@@ -459,7 +505,7 @@ function wordComponents(word: WordBookWord): WordComponent[] {
 }
 
 function componentClass(part: WordComponent) {
-  if (part.matched) return 'key-match'
+  if (part.matched) return page.value?.key.type === 'root' ? 'key-match key-match-root' : 'key-match'
   if (part.type === 'plain') return ''
   return `affix-${part.type}`
 }
@@ -468,7 +514,18 @@ function onNodeClick(word: WordBookWord) {
   if (!word.entryId) return
   selectedEntryId.value = word.entryId
   if (wordsStore.autoSpeak) speakWord(word.text)
-  if (mode.value !== 'recall' || recallFinished.value) return
+
+  if (mode.value === 'view') {
+    const entryId = word.entryId
+    const next = new Set(knownEntryIds.value)
+    if (next.has(entryId)) next.delete(entryId)
+    else next.add(entryId)
+    knownEntryIds.value = next
+    if (page.value && next.size === page.value.words.length) startRecall()
+    return
+  }
+
+  if (recallFinished.value) return
   const entryId = word.entryId
 
   if (knownEntryIds.value.has(entryId)) {
@@ -492,8 +549,15 @@ function speakWord(text: string) {
 }
 
 function openPageRoute(targetPageId: string) {
+  directoryVisible.value = false
   if (!targetPageId || targetPageId === pageId.value) return
   router.push(`/word-book/page/${targetPageId}`)
+}
+
+function openChapter(chapterId: string) {
+  directoryVisible.value = false
+  if (!page.value) return
+  router.push(`/word-book/${page.value.bookId}/${chapterId}`)
 }
 
 async function markRead() {
@@ -1133,11 +1197,20 @@ function dueLabel(nextReviewAt: number): string {
   border: 1px solid var(--utools-border-divider);
   border-radius: 9px;
   color: var(--utools-text-primary);
-  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s, transform 0.15s;
 
   &:hover {
     border-color: var(--utools-primary);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--utools-primary) 18%, transparent);
+  }
+
+  &.hoverable:hover {
+    z-index: 3;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+
+  .key-match-root {
+    color: var(--utools-danger);
   }
 
   &.selected {
@@ -1524,6 +1597,121 @@ function dueLabel(nextReviewAt: number): string {
     border-color: var(--utools-primary);
     outline: none;
   }
+}
+
+.directory-hint {
+  margin: -4px 0 10px;
+  color: var(--utools-text-tertiary);
+  font-size: 12px;
+}
+
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px 14px;
+  max-height: min(68vh, 620px);
+  overflow-y: auto;
+}
+
+.directory-chapter {
+  min-width: 0;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--utools-border-divider);
+
+  &.current .directory-chapter-title {
+    color: var(--utools-primary);
+  }
+}
+
+.directory-chapter-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  padding: 3px 4px;
+  color: var(--utools-text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+
+  span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  small {
+    flex-shrink: 0;
+    color: var(--utools-text-tertiary);
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--utools-primary);
+    background: var(--utools-bg-hover);
+    outline: none;
+  }
+}
+
+.directory-pages {
+  padding: 1px 0 3px 8px;
+  border-left: 1px solid var(--utools-border-divider);
+}
+
+.directory-page {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 24px;
+  padding: 2px 5px;
+  color: var(--utools-text-secondary);
+  font-size: 12px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+
+  span:first-child {
+    flex: none;
+    color: var(--utools-text-tertiary);
+    font-size: 10px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--utools-primary);
+    background: var(--utools-bg-hover);
+    outline: none;
+  }
+
+  &.current {
+    color: var(--utools-primary);
+    font-weight: 600;
+  }
+}
+
+.directory-page-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.directory-empty {
+  display: block;
+  padding: 4px 6px;
+  color: var(--utools-text-tertiary);
+  font-size: 11px;
 }
 
 @media (max-width: 900px) {

@@ -272,6 +272,27 @@ export function hasPageContentUpdate(
   return learnedAt > 0 && (page.contentUpdatedAt || 0) > learnedAt
 }
 
+export function buildWordBookChapterDirectory(
+  chapters: Array<Pick<WordBookChapter, '_id' | 'name'>>,
+  pages: Array<Pick<WordBookPage, '_id' | 'name' | 'chapterId' | 'order' | 'words'>>,
+) {
+  const sortedChapters = [...chapters].sort((a, b) => a.name.trim().localeCompare(b.name.trim(), 'zh-CN', { sensitivity: 'base', numeric: true }))
+  const names = sortedChapters.map(chapter => chapter.name.trim().toLowerCase())
+  const duplicateNames = new Set(names.filter((name, index) => names.indexOf(name) !== index))
+  return sortedChapters.map((chapter, index) => {
+    const chapterPages = pages
+      .filter(page => page.chapterId === chapter._id)
+      .sort((a, b) => a.order - b.order || a._id.localeCompare(b._id))
+    return {
+      chapter,
+      pages: chapterPages,
+      pageCount: chapterPages.length,
+      wordCount: chapterPages.reduce((count, page) => count + page.words.length, 0),
+      hasSameName: duplicateNames.has(names[index]),
+    }
+  })
+}
+
 /** 章内按关卡分组：每 levelSize 页一关 */
 export function groupPagesIntoLevels(
   pages: WordBookPage[],

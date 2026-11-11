@@ -10,6 +10,7 @@ import {
   createWordBookBook,
   createWordBookChapter,
   isPageDue,
+  normalizeLevelSize,
   schedulePageReview,
   syncChapterLevels,
 } from '@/utils/word-book'
@@ -21,6 +22,7 @@ import type {
   WordBookSource,
   WordBookWord,
 } from '../types/word-book'
+import type { MobileSyncWordBook } from './useUtils/types'
 
 export const useWordBook = defineStore('mobileWordBook', () => {
   const books = ref<WordBookBook[]>([])
@@ -30,7 +32,7 @@ export const useWordBook = defineStore('mobileWordBook', () => {
 
   /** 从单词页带过来的待生成内容 */
   const draft = ref<{ words: WordBookWord[]; name: string; key: WordBookKey; source: WordBookSource } | null>(null)
-  /** 从章节页「添加页」过来的目标书/章 */
+  /** 从章节页「添加学习页」过来的目标词集/章节 */
   const pendingTarget = ref<{ bookId: string; chapterId: string } | null>(null)
 
   function put<T extends { _id: string; _rev?: string }>(doc: T): DbReturn {
@@ -99,16 +101,20 @@ export const useWordBook = defineStore('mobileWordBook', () => {
 
   // ===== 书 =====
 
-  function createBook(name: string, extra: { desc?: string; isSample?: boolean; sampleVersion?: number } = {}): WordBookBook {
+  function createBook(name: string, extra: { desc?: string; isSample?: boolean; sampleVersion?: number } = {}): WordBookBook | null {
     const book = createWordBookBook(name, books.value.length, Date.now(), extra)
     const result = put(book)
-    if (result.ok) books.value = [...books.value, book]
+    if (!result.ok) {
+      console.warn('[词集] 创建词集失败', result.message)
+      return null
+    }
+    books.value = [...books.value, book]
     return book
   }
 
   function renameBook(bookId: string, name: string): DbReturn {
     const book = getBook(bookId)
-    if (!book) return { ok: false, id: bookId, error: true, message: '书不存在' } as DbReturn
+    if (!book) return { ok: false, id: bookId, error: true, message: '词集不存在' } as DbReturn
     const next: WordBookBook = { ...book, name: name.trim(), utime: Date.now() }
     const result = put(next)
     if (result.ok) books.value = replaceLocal(books.value, next)
@@ -130,16 +136,20 @@ export const useWordBook = defineStore('mobileWordBook', () => {
 
   // ===== 章 =====
 
-  function createChapter(bookId: string, name: string): WordBookChapter {
+  function createChapter(bookId: string, name: string): WordBookChapter | null {
     const chapter = createWordBookChapter(bookId, name, chaptersOf(bookId).length)
     const result = put(chapter)
-    if (result.ok) chapters.value = [...chapters.value, chapter]
+    if (!result.ok) {
+      console.warn('[词集] 创建章节失败', result.message)
+      return null
+    }
+    chapters.value = [...chapters.value, chapter]
     return chapter
   }
 
   function renameChapter(chapterId: string, name: string): DbReturn {
     const chapter = getChapter(chapterId)
-    if (!chapter) return { ok: false, id: chapterId, error: true, message: '章不存在' } as DbReturn
+    if (!chapter) return { ok: false, id: chapterId, error: true, message: '章节不存在' } as DbReturn
     const next: WordBookChapter = { ...chapter, name: name.trim(), utime: Date.now() }
     const result = put(next)
     if (result.ok) chapters.value = replaceLocal(chapters.value, next)
@@ -148,8 +158,8 @@ export const useWordBook = defineStore('mobileWordBook', () => {
 
   function setChapterLevelSize(chapterId: string, levelSize: number): DbReturn {
     const chapter = getChapter(chapterId)
-    if (!chapter) return { ok: false, id: chapterId, error: true, message: '章不存在' } as DbReturn
-    const next: WordBookChapter = { ...chapter, levelSize: Math.max(1, Math.floor(levelSize) || 5), utime: Date.now() }
+    if (!chapter) return { ok: false, id: chapterId, error: true, message: '章节不存在' } as DbReturn
+    const next: WordBookChapter = { ...chapter, levelSize: normalizeLevelSize(levelSize), utime: Date.now() }
     const result = put(next)
     if (result.ok) chapters.value = replaceLocal(chapters.value, next)
     return result
@@ -175,10 +185,14 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     words: WordBookWord[]
     source: WordBookSource
     note?: string
-  }): WordBookPage {
+  }): WordBookPage | null {
     const page = buildWordBookPage({ ...input, order: pagesOf(input.chapterId).length + 1 })
     const result = put(page)
-    if (result.ok) pages.value = [...pages.value, page]
+    if (!result.ok) {
+      console.warn('[词集] 创建学习页失败', result.message)
+      return null
+    }
+    pages.value = [...pages.value, page]
     return page
   }
 
@@ -220,6 +234,48 @@ export const useWordBook = defineStore('mobileWordBook', () => {
       }
     }
     return { ok: true }
+  }
+
+  // ===== 同步 =====
+
+  /** 收集书/章/页；全空返回 null，旧端忽略该字段 */
+  function collectSync(): MobileSyncWordBook | null {
+    load(true)
+    if (!books.value.length && !chapters.value.length && !pages.value.length) return null
+    return {
+      schemaVersion: 1,
+      books: [...books.value],
+      chapters: [...chapters.value],
+      pages: [...pages.value],
+    }
+  }
+
+  /** 按 _id 合并远端词集，utime 较新的覆盖本地；返回实际写入条目数 */
+  function restoreSync(data: MobileSyncWordBook | null | undefined): number {
+    if (!data || (data.schemaVersion ?? 1) !== 1) return 0
+    load()
+    let count = 0
+    const mergeInto = <T extends { _id: string; type?: string; utime?: number }>(
+      local: T[],
+      remote: T[] = [],
+      expectedType: string,
+    ): T[] => {
+      const map = new Map(local.map(doc => [doc._id, doc]))
+      for (const doc of remote) {
+        if (!doc?._id || doc.type !== expectedType) continue
+        const current = map.get(doc._id)
+        if (current && (doc.utime || 0) <= (current.utime || 0)) continue
+        const result = put({ ...doc })
+        if (!result.ok) continue
+        map.set(doc._id, { ...doc })
+        count++
+      }
+      return [...map.values()]
+    }
+    books.value = mergeInto(books.value, data.books, 'wb_book')
+    chapters.value = mergeInto(chapters.value, data.chapters, 'wb_chapter')
+    pages.value = mergeInto(pages.value, data.pages, 'wb_page')
+    return count
   }
 
   // ===== 草稿与目标 =====
@@ -264,6 +320,8 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     renamePage,
     deletePage,
     completePage,
+    collectSync,
+    restoreSync,
     setDraft,
     clearDraft,
     setPendingTarget,

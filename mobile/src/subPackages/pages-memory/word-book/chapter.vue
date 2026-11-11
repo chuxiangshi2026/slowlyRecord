@@ -2,23 +2,23 @@
   <view class="book-container" :class="themeClass">
     <view class="book-header">
       <view class="book-heading">
-        <text class="back" @click="goBooks">‹ 书列表</text>
-        <text class="book-title">{{ book?.name || '书' }}</text>
-        <text class="book-subtitle">章是主题（一个词根、一个音标），每章下可以放多页</text>
+        <text class="back" @click="goBooks">‹ 词集列表</text>
+        <text class="book-title">{{ book?.name || '词集' }}</text>
+        <text class="book-subtitle">章节是词集里的主题（一个词根、一个音标），每个章节下可以放多个学习页</text>
       </view>
-      <button class="primary-btn small" @click="createChapter">新建章</button>
+      <button class="primary-btn small" @click="createChapter">新建章节</button>
     </view>
 
     <view v-if="chapters.length === 0" class="empty-state">
-      <text class="empty-title">还没有章</text>
+      <text class="empty-title">还没有章节</text>
       <text class="empty-desc">先新建一个主题，再去单词页筛选生成学习页</text>
-      <button class="primary-btn" @click="createChapter">新建章</button>
+      <button class="primary-btn" @click="createChapter">新建章节</button>
     </view>
 
     <view v-else class="chapter-list">
       <view v-for="chapter in chapters" :key="chapter._id" class="chapter-card" @click="openChapter(chapter._id)">
         <view class="chapter-topline">
-          <text class="chapter-order">章</text>
+          <text class="chapter-order">章节</text>
           <text class="more" @click.stop="onChapterAction(chapter)">⋯</text>
         </view>
         <text class="chapter-name">{{ chapter.name }}</text>
@@ -27,7 +27,7 @@
           <view class="progress-value" :style="{width: progressOf(chapter._id) + '%'}"></view>
         </view>
         <view class="chapter-actions">
-          <text class="enter-action" @click.stop="addPage(chapter._id)">＋ 添加页</text>
+          <text class="enter-action" @click.stop="addPage(chapter._id)">＋ 添加学习页</text>
           <text class="enter-action">进入 ›</text>
         </view>
       </view>
@@ -59,7 +59,7 @@ function pagesOf(chapterId: string) {
 
 function summaryOf(chapterId: string): string {
   const pages = pagesOf(chapterId)
-  return `${pages.length} 页 · 已过关 ${pages.filter(page => page.completedAt).length} 页`
+  return `${pages.length} 个学习页 · 已完成 ${pages.filter(page => page.completedAt).length} 个`
 }
 
 function progressOf(chapterId: string): number {
@@ -84,7 +84,7 @@ function addPage(chapterId: string) {
 
 function createChapter() {
   uni.showModal({
-    title: '新建章',
+    title: '新建章节',
     editable: true,
     placeholderText: '如：词根 old',
     success: res => {
@@ -92,6 +92,10 @@ function createChapter() {
       const name = (res.content || '').trim()
       if (!name) return
       const chapter = store.createChapter(bookId.value, name)
+      if (!chapter) {
+        uni.showToast({ title: '创建章节失败', icon: 'none' })
+        return
+      }
       uni.navigateTo({ url: `/subPackages/pages-memory/word-book/pages?bookId=${bookId.value}&chapterId=${chapter._id}` })
     },
   })
@@ -117,7 +121,8 @@ function renameChapter(chapter: WordBookChapter) {
       if (!res.confirm) return
       const name = (res.content || '').trim()
       if (!name) return
-      store.renameChapter(chapter._id, name)
+      const result = store.renameChapter(chapter._id, name)
+      uni.showToast({ title: result.ok ? '已重命名' : '重命名失败', icon: 'none' })
     },
   })
 }
@@ -138,8 +143,8 @@ function setLevelSize(chapter: WordBookChapter) {
 
 function removeChapter(chapter: WordBookChapter) {
   uni.showModal({
-    title: '删除章',
-    content: `删除「${chapter.name}」及其下所有页？原词库单词不会删除。`,
+    title: '删除章节',
+    content: `删除「${chapter.name}」及其下所有学习页？原词库单词不会删除。`,
     success: res => {
       if (!res.confirm) return
       const result = store.deleteChapter(chapter._id)
