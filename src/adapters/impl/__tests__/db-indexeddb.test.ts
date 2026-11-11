@@ -2,12 +2,18 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { BroadcastChannel as NodeBroadcastChannel } from 'node:worker_threads'
 import { DbAdapterIndexedDB } from '../db-indexeddb'
 import type { DbDoc } from '../../db'
 import { resetDbAdapter, setDbAdapter } from '../../db'
 import { updateSetDbWithRetry } from '../../../utils/user-set-db-util'
 import { persistChildDbPut } from '../../window'
 import 'fake-indexeddb/auto'
+
+// jsdom 未实现 BroadcastChannel，用 Node 的同线程实现补齐（跨标签失效测试依赖它）
+if (typeof globalThis.BroadcastChannel === 'undefined') {
+  ;(globalThis as Record<string, unknown>).BroadcastChannel = NodeBroadcastChannel
+}
 
 describe('DbAdapterIndexedDB', () => {
   let adapter: DbAdapterIndexedDB
@@ -17,6 +23,7 @@ describe('DbAdapterIndexedDB', () => {
   })
 
   afterEach(async () => {
+    adapter.closeChannel()
     resetDbAdapter()
   })
 
@@ -305,6 +312,113 @@ describe('DbAdapterIndexedDB', () => {
 
       expect(adapter.get('bulk-fail-1')).toBeNull()
       expect(adapter.get('bulk-fail-2')).toBeNull()
+    })
+  })
+
+  describe('_rev 冲突语义（对齐 utools.db）', () => {
+    it('同步 put 携带过期 _rev 返回 conflict 且不覆盖缓存', async () => {
+      await adapter.promises.put({ _id: 'conflict-1', value: 'v1' })
+
+      const result = adapter.put({ _id: 'conflict-1', value: 'v0', _rev: '0-stale' })
+
+      expect(result.ok).toBe(false)
+      expect(result.error).toBe(true)
+      expect(result.message).toContain('conflict')
+      expect(adapter.get('conflict-1')?.value).toBe('v1')
+    })
+
+    it('异步 put 携带过期 _rev 返回 conflict 且不写库', async () => {
+      await adapter.promises.put({ _id: 'conflict-2', value: 'v1' })
+
+      const result = await adapter.promises.put({ _id: 'conflict-2', value: 'v0', _rev: '0-stale' })
+
+      expect(result.ok).toBe(false)
+      expect(result.message).toContain('conflict')
+      const reloaded = new DbAdapterIndexedDB()
+      await reloaded.preloadToCache()
+      expect(reloaded.get('conflict-2')?.value).toBe('v1')
+      reloaded.closeChannel()
+    })
+
+    it('conflict 后重读最新文档合并再写可成功（调用方兜底路径）', async () => {
+      await adapter.promises.put({ _id: 'user-set', focusMode: { fontSize: 20 } })
+      // 模拟并发窗口：stale 为旧快照
+      const stale = adapter.get('user-set')
+      await adapter.promises.put({ _id: 'user-set', focusMode: { fontSize: 21 } })
+
+      // 拿旧快照去写 → conflict
+      const conflict = await adapter.promises.put({ ...stale, focusMode: { fontSize: 22 } })
+      expect(conflict.ok).toBe(false)
+      expect(conflict.message).toContain('conflict')
+
+      // 重读合并重试 → 成功
+      const latest = await adapter.promises.get('user-set')
+      const retried = await adapter.promises.put({ ...latest, focusMode: { fontSize: 22 } })
+      expect(retried.ok).toBe(true)
+      expect(adapter.get('user-set')?.focusMode?.fontSize).toBe(22)
+    })
+
+    it('bulkDocs 中携带过期 _rev 的文档返回 conflict，其余正常写入', async () => {
+      await adapter.promises.put({ _id: 'bulk-conflict-1', value: 'v1' })
+
+      const results = adapter.bulkDocs([
+        { _id: 'bulk-conflict-1', value: 'v0', _rev: '0-stale' },
+        { _id: 'bulk-conflict-2', value: 'new' },
+      ])
+
+      expect(results[0].ok).toBe(false)
+      expect(results[0].message).toContain('conflict')
+      expect(results[1].ok).toBe(true)
+      expect(adapter.get('bulk-conflict-1')?.value).toBe('v1')
+      expect(adapter.get('bulk-conflict-2')?.value).toBe('new')
+    })
+
+    it('不携带 _rev 的 put 保持原有覆盖语义（兼容既有调用）', async () => {
+      await adapter.promises.put({ _id: 'no-rev', value: 'v1' })
+
+      const result = adapter.put({ _id: 'no-rev', value: 'v2' })
+
+      expect(result.ok).toBe(true)
+      expect(adapter.get('no-rev')?.value).toBe('v2')
+    })
+  })
+
+  describe('跨实例缓存失效（写入广播）', () => {
+    it('实例 A 写入后实例 B 的缓存同步刷新，且过期 _rev 写入被判 conflict', async () => {
+      const b = new DbAdapterIndexedDB()
+      try {
+        // B 预加载到 v1
+        await adapter.promises.put({ _id: 'sync-doc', value: 'v1' })
+        await b.preloadToCache()
+        expect(b.get('sync-doc')?.value).toBe('v1')
+
+        // A 更新到 v2 → B 收到失效通知并回读刷新
+        await adapter.promises.put({ _id: 'sync-doc', value: 'v2' })
+        await new Promise(r => setTimeout(r, 50))
+        expect(b.get('sync-doc')?.value).toBe('v2')
+
+        // B 再写到 v3，此后任何过期 _rev 的写入 → conflict 而非静默覆盖
+        await b.promises.put({ _id: 'sync-doc', value: 'v3' })
+        const conflict = b.put({ _id: 'sync-doc', value: 'v0', _rev: '0-way-old' })
+        expect(conflict.ok).toBe(false)
+        expect(conflict.message).toContain('conflict')
+        expect(b.get('sync-doc')?.value).toBe('v3')
+      } finally {
+        b.closeChannel()
+      }
+    })
+
+    it('未缓存的文档不受其它实例广播影响（前缀预载隔离性）', async () => {
+      const b = new DbAdapterIndexedDB()
+      try {
+        await adapter.promises.put({ _id: 'iso-1', value: 'a' })
+        // B 只缓存 zzz 前缀（实际为空）
+        await b.preloadToCache('zzz')
+        await new Promise(r => setTimeout(r, 50))
+        expect(b.get('iso-1')).toBeNull()
+      } finally {
+        b.closeChannel()
+      }
     })
   })
 })

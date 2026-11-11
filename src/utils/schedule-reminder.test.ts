@@ -356,6 +356,22 @@ describe('schedule-reminder', () => {
       await reconcileSchedules()
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
     })
+
+    it('用户拒绝授权（requestSchedule reject）：仍落「已发起」标记，再次对账不再弹框', async () => {
+      mocks.wordsStore.scheduleReminder = { daily: true, dailyTimes: ['09:00'] }
+      mocks.utools.requestSchedule.mockRejectedValueOnce(new Error('user denied'))
+
+      await reconcileSchedules()
+
+      expect(mocks.utools.requestSchedule).toHaveBeenCalledTimes(1)
+      expect(mocks.wordsStore.scheduleReminder.dailyRequested).toBe(true)
+
+      // 第二次进入插件：不得再次发起请求
+      mocks.utools.requestSchedule.mockClear()
+      mocks.utools.requestSchedule.mockRejectedValue(new Error('should not be called'))
+      await reconcileSchedules()
+      expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
+    })
   })
 
   describe('applyScheduleSetting（设置页开关即时应用）', () => {
@@ -380,6 +396,14 @@ describe('schedule-reminder', () => {
       mocks.isUtoolsFlag.value = false
       await applyScheduleSetting('daily', true)
       expect(mocks.utools.requestSchedule).not.toHaveBeenCalled()
+    })
+
+    it('授权被拒绝（reject）：不抛出，且仍标记已发起', async () => {
+      mocks.utools.requestSchedule.mockRejectedValue(new Error('user denied'))
+
+      await expect(applyScheduleSetting('daily', true)).resolves.toBeUndefined()
+
+      expect(mocks.wordsStore.scheduleReminder.dailyRequested).toBe(true)
     })
   })
 
