@@ -138,6 +138,7 @@
       :filter="currentFilter"
       :bank-id="wordsStore.currentWordBankId"
       :bank-name="wordsStore.currentWordBank?.name"
+      :language="wordsStore.currentLanguage"
       :locked-book-id="wordBookTargetBookId"
       :locked-chapter-id="wordBookTargetChapterId"
       @created="onWordBookCreated"

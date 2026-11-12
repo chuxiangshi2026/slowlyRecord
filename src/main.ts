@@ -132,7 +132,7 @@ initErrorTracking();
 // 低版本无 API 时内部静默跳过
 registerScheduleTriggerHandler();
 
-// uTools 账号同步：其他设备的数据经云端拉取到本机后，刷新内存中的词列表（避免陈旧数据窗口）。
+// uTools 账号同步：其他设备的数据经云端拉取到本机后，刷新内存中的词列表与词集（避免陈旧数据窗口）。
 // 非 uTools 环境无此 API，feature-detect 自然跳过；store 在回调触发时 Pinia 已就绪
 {
   const utoolsApi = (window as any).utools;
@@ -142,8 +142,16 @@ registerScheduleTriggerHandler();
       invalidateAppBgImageCache();
       void useWordsStore().applyAppBg();
       useWordsStore().listWords().catch((e: unknown) => console.error('[数据同步] 拉取后刷新词列表失败:', e));
+      void import('@/stores/wordBook')
+        .then(({ useWordBookStore }) => useWordBookStore().loadAll(true))
+        .catch((e: unknown) => console.error('[数据同步] 拉取后刷新词集失败:', e));
     });
   }
+  window.addEventListener('sr-wordbook-restored', () => {
+    void import('@/stores/wordBook')
+      .then(({ useWordBookStore }) => useWordBookStore().loadAll(true))
+      .catch((e: unknown) => console.error('[数据同步] 还原后刷新词集失败:', e));
+  });
 }
 
 // 路由切换时追踪页面浏览

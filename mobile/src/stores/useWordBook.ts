@@ -23,6 +23,7 @@ import type {
   WordBookWord,
 } from '../types/word-book'
 import type { MobileSyncWordBook } from './useUtils/types'
+import { filterByTombstones, recordTombstones } from './useUtils/sync-tombstone'
 
 export const useWordBook = defineStore('mobileWordBook', () => {
   const books = ref<WordBookBook[]>([])
@@ -122,21 +123,39 @@ export const useWordBook = defineStore('mobileWordBook', () => {
   }
 
   function deleteBook(bookId: string): DbReturn {
-    const chapterIds = chaptersOf(bookId).map(chapter => chapter._id)
-    pages.value.filter(page => page.bookId === bookId).forEach(page => removeDoc(page._id))
-    chapterIds.forEach(id => removeDoc(id))
-    const result = removeDoc(bookId)
-    if (result.ok) {
-      books.value = books.value.filter(book => book._id !== bookId)
-      chapters.value = chapters.value.filter(chapter => chapter.bookId !== bookId)
-      pages.value = pages.value.filter(page => page.bookId !== bookId)
+    const deletedIds: string[] = []
+    const fail = (result: DbReturn): DbReturn => {
+      void recordTombstones(deletedIds)
+      load(true)
+      return { ...result, ok: false, id: bookId, error: true } as DbReturn
     }
+    for (const page of pages.value.filter(item => item.bookId === bookId)) {
+      const result = removeDoc(page._id)
+      if (!result.ok) return fail(result)
+      deletedIds.push(page._id)
+    }
+    for (const chapter of chaptersOf(bookId)) {
+      const result = removeDoc(chapter._id)
+      if (!result.ok) return fail(result)
+      deletedIds.push(chapter._id)
+    }
+    const result = removeDoc(bookId)
+    if (!result.ok) return fail(result)
+    deletedIds.push(bookId)
+    void recordTombstones(deletedIds)
+    books.value = books.value.filter(book => book._id !== bookId)
+    chapters.value = chapters.value.filter(chapter => chapter.bookId !== bookId)
+    pages.value = pages.value.filter(page => page.bookId !== bookId)
     return result
   }
 
   // ===== 章 =====
 
   function createChapter(bookId: string, name: string): WordBookChapter | null {
+    if (!getBook(bookId)) {
+      console.warn('[词集] 所属词集不存在', bookId)
+      return null
+    }
     const chapter = createWordBookChapter(bookId, name, chaptersOf(bookId).length)
     const result = put(chapter)
     if (!result.ok) {
@@ -166,12 +185,26 @@ export const useWordBook = defineStore('mobileWordBook', () => {
   }
 
   function deleteChapter(chapterId: string): DbReturn {
-    pagesOf(chapterId).forEach(page => removeDoc(page._id))
-    const result = removeDoc(chapterId)
-    if (result.ok) {
-      chapters.value = chapters.value.filter(chapter => chapter._id !== chapterId)
-      pages.value = pages.value.filter(page => page.chapterId !== chapterId)
+    const deletedIds: string[] = []
+    for (const page of pagesOf(chapterId)) {
+      const result = removeDoc(page._id)
+      if (!result.ok) {
+        void recordTombstones(deletedIds)
+        load(true)
+        return { ...result, ok: false, id: chapterId, error: true } as DbReturn
+      }
+      deletedIds.push(page._id)
     }
+    const result = removeDoc(chapterId)
+    if (!result.ok) {
+      void recordTombstones(deletedIds)
+      load(true)
+      return { ...result, ok: false, id: chapterId, error: true } as DbReturn
+    }
+    deletedIds.push(chapterId)
+    void recordTombstones(deletedIds)
+    chapters.value = chapters.value.filter(chapter => chapter._id !== chapterId)
+    pages.value = pages.value.filter(page => page.chapterId !== chapterId)
     return result
   }
 
@@ -186,6 +219,11 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     source: WordBookSource
     note?: string
   }): WordBookPage | null {
+    const chapter = getChapter(input.chapterId)
+    if (!getBook(input.bookId) || !chapter || chapter.bookId !== input.bookId) {
+      console.warn('[词集] 所属词集或章节不匹配', input.bookId, input.chapterId)
+      return null
+    }
     const page = buildWordBookPage({ ...input, order: pagesOf(input.chapterId).length + 1 })
     const result = put(page)
     if (!result.ok) {
@@ -207,7 +245,10 @@ export const useWordBook = defineStore('mobileWordBook', () => {
 
   function deletePage(pageId: string): DbReturn {
     const result = removeDoc(pageId)
-    if (result.ok) pages.value = pages.value.filter(page => page._id !== pageId)
+    if (result.ok) {
+      void recordTombstones([pageId])
+      pages.value = pages.value.filter(page => page._id !== pageId)
+    }
     return result
   }
 
@@ -250,9 +291,11 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     }
   }
 
-  /** 按 _id 合并远端词集，utime 较新的覆盖本地；返回实际写入条目数 */
-  function restoreSync(data: MobileSyncWordBook | null | undefined): number {
-    if (!data || (data.schemaVersion ?? 1) !== 1) return 0
+  /** 按 _id、utime 与墓碑合并远端词集；版本或写入失败必须显式报错 */
+  function restoreSync(data: MobileSyncWordBook | null | undefined, tombstones: Record<string, number> = {}): number {
+    if (!data) return 0
+    const version = data.schemaVersion ?? 1
+    if (version !== 1) throw new Error(`不支持的词集数据版本：${version}`)
     load()
     let count = 0
     const mergeInto = <T extends { _id: string; type?: string; utime?: number }>(
@@ -260,13 +303,21 @@ export const useWordBook = defineStore('mobileWordBook', () => {
       remote: T[] = [],
       expectedType: string,
     ): T[] => {
-      const map = new Map(local.map(doc => [doc._id, doc]))
-      for (const doc of remote) {
+      const keptLocal = filterByTombstones(local, 'remote', tombstones)
+      const keptIds = new Set(keptLocal.map(doc => doc._id))
+      for (const doc of local) {
+        if (keptIds.has(doc._id)) continue
+        const result = removeDoc(doc._id)
+        if (!result.ok) throw new Error(result.message || `清理词集条目失败：${doc._id}`)
+        count++
+      }
+      const map = new Map(keptLocal.map(doc => [doc._id, doc]))
+      for (const doc of filterByTombstones(remote, 'remote', tombstones)) {
         if (!doc?._id || doc.type !== expectedType) continue
         const current = map.get(doc._id)
         if (current && (doc.utime || 0) <= (current.utime || 0)) continue
         const result = put({ ...doc })
-        if (!result.ok) continue
+        if (!result.ok) throw new Error(result.message || `保存词集条目失败：${doc._id}`)
         map.set(doc._id, { ...doc })
         count++
       }

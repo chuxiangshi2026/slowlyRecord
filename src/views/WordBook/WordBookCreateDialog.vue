@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="modelValue" title="加入词集" width="560px" :close-on-click-modal="false"
+  <el-dialog :model-value="modelValue" title="加入词集" width="min(560px, 92vw)" :close-on-click-modal="false"
              @update:model-value="(v: boolean) => emit('update:modelValue', v)">
     <div class="create-summary">
       <strong>{{ words.length }} 个单词</strong>
@@ -109,6 +109,7 @@ const props = defineProps<{
   filter?: WordBookFilterLike
   bankId?: string
   bankName?: string
+  language?: string
   lockedBookId?: string
   lockedChapterId?: string
 }>()
@@ -153,9 +154,14 @@ const canSave = computed(() => {
   return hasBook && hasChapter && !!pageName.value.trim()
 })
 
-// 每次打开：按当前上下文预填
-watch(() => props.modelValue, (open) => {
+// 每次打开：先读取最新书章，再按当前上下文预填
+watch(() => props.modelValue, async (open) => {
   if (!open) return
+  try {
+    await store.loadAll()
+  } catch {
+    ElMessage.error('词集数据读取失败')
+  }
   const firstBook = store.sortedBooks[0]
   failedIndexes.value = []
   retryBookId.value = ''
@@ -244,11 +250,6 @@ async function confirm() {
       createdBookId = targetBookId
     }
 
-    if (!retrying && bookMode.value === 'select') {
-      const claimed = await store.claimSampleBook(targetBookId)
-      if (!claimed.ok) throw new Error(claimed.message || '示例转换失败')
-    }
-
     let targetChapterId = retrying ? retryChapterId.value : chapterId.value
     if (!retrying && chapterMode.value === 'new') {
       const chapterResult = await store.createChapter(targetBookId, newChapterName.value.trim())
@@ -258,7 +259,7 @@ async function confirm() {
     }
     if (!targetBookId || !targetChapterId) throw new Error('请选择或新建词集与章节')
 
-    const source = buildWordBookSource(props.bankId, props.bankName, props.filter)
+    const source = buildWordBookSource(props.bankId, props.bankName, props.filter, props.language)
     const total = chunks.value.length
     const indexes = failedIndexes.value.length ? [...failedIndexes.value] : chunks.value.map((_, index) => index)
     const failures: number[] = []
@@ -277,6 +278,11 @@ async function confirm() {
       })
       if (result.ok) createdCount++
       else failures.push(index)
+    }
+
+    if (createdCount && !retrying && bookMode.value === 'select') {
+      const claimed = await store.claimSampleBook(targetBookId)
+      if (!claimed.ok) ElMessage.warning('内容已生成，但示例转换失败，仍保留为示例')
     }
 
     failedIndexes.value = failures

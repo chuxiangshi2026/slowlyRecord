@@ -25,7 +25,7 @@
 
         <div class="workspace" :class="{ finished: recallFinished }">
           <section class="graph-area">
-            <div class="graph-shell" role="group" :aria-label="`${page.name} 中心导图`">
+            <div ref="graphShell" class="graph-shell" :class="{ compact: compactGraph }" role="group" :aria-label="`${page.name} 中心导图`">
               <svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <line v-for="(pos, index) in graphLayout.nodes" :key="`line-${index}`"
                       x1="50" y1="50" :x2="pos.x * 100" :y2="pos.y * 100"/>
@@ -44,7 +44,7 @@
                 <el-button type="primary" plain size="small" @click="openWordPicker">添加单词</el-button>
               </div>
 
-              <div v-for="(word, index) in page.words" :key="word.entryId || `${word.text}-${index}`"
+              <div v-for="(word, index) in displayWords" :key="word.entryId || `${word.text}-${index}`"
                    class="map-node" :class="[nodeClasses(word), { hoverable: mode === 'view' }]" :style="nodeStyle(index)">
                 <button type="button" class="node-main"
                         :aria-label="nodeAriaLabel(word)"
@@ -139,7 +139,7 @@
                   <span v-if="retryEntryIds.size">待重看 {{ retryEntryIds.size }}</span>
                 </div>
                 <el-alert v-if="!selectedWord" type="info" :closable="false" class="panel-alert"
-                          title="单击显示释义并标记记住，再单击收起并取消。"/>
+                          title="先单击显示释义，再单击标记记住；错词会移到队尾重看。"/>
                 <div class="panel-actions">
                   <el-button type="danger" plain :disabled="!selectedWord || savingRound" @click="markSelectedWrong">还没记住</el-button>
                 </div>
@@ -220,11 +220,12 @@
           <el-form-item label="例句">
             <div class="example-editor">
               <div v-for="(example, index) in selectedDraftWord.examples" :key="index" class="example-row">
-                <el-input v-model="example.english" placeholder="英文例句"/>
-                <el-input v-model="example.chinese" placeholder="中文翻译"/>
+                <el-input v-model="example.english" placeholder="英文例句" maxlength="300"/>
+                <el-input v-model="example.chinese" placeholder="中文翻译" maxlength="300"/>
                 <el-button link type="danger" @click="removeDraftExample(index)">删除</el-button>
               </div>
-              <el-button link type="primary" @click="addDraftExample">＋ 添加例句</el-button>
+              <el-button link type="primary" :disabled="(selectedDraftWord.examples?.length || 0) >= 3" @click="addDraftExample">＋ 添加例句</el-button>
+              <p class="example-limit">最多 3 条，每条不超过 300 字。</p>
             </div>
           </el-form-item>
           <el-form-item label="词条备注">
@@ -256,7 +257,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { EditPen, Headset } from '@element-plus/icons-vue'
@@ -332,13 +333,17 @@ const practiceRound = ref(false)
 const savingRound = ref(false)
 const roundSaveFailed = ref(false)
 const pendingRound = ref<WordBookRoundSummary | null>(null)
+const graphShell = ref<HTMLElement | null>(null)
+const graphWidth = ref(900)
+const graphHeight = ref(620)
+const compactGraph = computed(() => graphWidth.value < 620 || graphHeight.value < 480)
 
 const keyTypeOptions = (Object.keys(WORD_BOOK_KEY_TYPE_LABEL) as WordBookKeyType[]).map(value => ({
   value,
   label: WORD_BOOK_KEY_TYPE_LABEL[value],
 }))
 
-const graphLayout = computed(() => layoutWordGraph(page.value?.words.length || 0, 900, 620))
+const graphLayout = computed(() => layoutWordGraph(page.value?.words.length || 0, graphWidth.value, graphHeight.value))
 const chapterDirectory = computed(() => page.value
   ? buildWordBookChapterDirectory(store.chaptersOf(page.value.bookId), store.pages)
   : [])
@@ -349,6 +354,12 @@ const nextPage = computed(() => currentPageIndex.value >= 0 && currentPageIndex.
   ? chapterPages.value[currentPageIndex.value + 1]
   : undefined)
 const otherChapterPages = computed(() => chapterPages.value.filter(item => item._id !== pageId.value))
+const displayWords = computed(() => {
+  const words = page.value?.words || []
+  if (mode.value !== 'recall' || !recallOrder.value.length) return words
+  const byId = new Map(words.map(word => [word.entryId, word]))
+  return recallOrder.value.map(id => byId.get(id)).filter((word): word is WordBookWord => !!word)
+})
 
 const selectedWord = computed(() => page.value?.words.find(word => word.entryId === selectedEntryId.value))
 const selectedDraftWord = computed(() => wordEditorVisible.value
@@ -408,6 +419,26 @@ onMounted(async () => {
   }
 })
 
+let graphObserver: ResizeObserver | undefined
+watch(graphShell, (element, previous) => {
+  graphObserver?.disconnect()
+  graphObserver = undefined
+  if (!element) return
+  const updateSize = (width: number, height: number) => {
+    if (width > 0) graphWidth.value = width
+    if (height > 0) graphHeight.value = height
+  }
+  updateSize(element.clientWidth, element.clientHeight)
+  if (typeof ResizeObserver !== 'undefined') {
+    graphObserver = new ResizeObserver(entries => {
+      const rect = entries[0]?.contentRect
+      if (rect) updateSize(rect.width, rect.height)
+    })
+    graphObserver.observe(element)
+  }
+})
+onBeforeUnmount(() => graphObserver?.disconnect())
+
 watch(pageId, () => {
   initPageState()
   openPickerFromQuery()
@@ -433,6 +464,7 @@ function initPageState() {
 }
 
 function nodeStyle(index: number) {
+  if (compactGraph.value) return {}
   const pos = graphLayout.value.nodes[index]
   if (!pos) return {}
   return { left: `${pos.x * 100}%`, top: `${pos.y * 100}%` }
@@ -449,7 +481,11 @@ function nodeClasses(word: WordBookWord) {
 }
 
 function nodeAriaLabel(word: WordBookWord): string {
-  if (mode.value === 'recall') return `${word.text}，显示或收起释义并切换记住状态`
+  if (mode.value === 'recall') {
+    const entryId = word.entryId || ''
+    if (knownEntryIds.value.has(entryId)) return `${word.text}，取消记住状态`
+    return `${word.text}，${isRevealed(entryId) ? '标记为已记住' : '显示释义'}`
+  }
   return `${word.text}，${knownEntryIds.value.has(word.entryId || '') ? '已记住，点击取消标记' : '标记为已记住'}`
 }
 
@@ -530,22 +566,39 @@ function onNodeClick(word: WordBookWord) {
 
   if (knownEntryIds.value.has(entryId)) {
     knownEntryIds.value = new Set([...knownEntryIds.value].filter(id => id !== entryId))
-    revealedEntryIds.value = new Set([...revealedEntryIds.value].filter(id => id !== entryId))
     if (firstWrongEntryIds.value.has(entryId)) retryEntryIds.value = new Set([...retryEntryIds.value, entryId])
     persistRecallDraft()
     return
   }
 
-  revealedEntryIds.value = new Set([...revealedEntryIds.value, entryId])
+  if (!revealedEntryIds.value.has(entryId)) {
+    revealedEntryIds.value = new Set([...revealedEntryIds.value, entryId])
+    persistRecallDraft()
+    return
+  }
+
   knownEntryIds.value = new Set([...knownEntryIds.value, entryId])
   retryEntryIds.value = new Set([...retryEntryIds.value].filter(id => id !== entryId))
+  selectNextPendingWord()
   persistRecallDraft()
-  if (page.value && knownEntryIds.value.size === page.value.words.length) void finishRecall()
+  finishRecallIfReady()
+}
+
+function selectNextPendingWord() {
+  selectedEntryId.value = recallOrder.value.find(id => !knownEntryIds.value.has(id) && !retryEntryIds.value.has(id))
+    || recallOrder.value.find(id => !knownEntryIds.value.has(id))
+    || ''
+}
+
+function finishRecallIfReady() {
+  if (page.value && knownEntryIds.value.size === page.value.words.length && retryEntryIds.value.size === 0) {
+    void finishRecall()
+  }
 }
 
 function speakWord(text: string) {
   if (!text.trim()) return
-  getTtsAdapter().speak(text, { lang: 'en' })
+  getTtsAdapter().speak(text, { lang: page.value?.source.language || wordsStore.currentLanguage || 'en' })
 }
 
 function openPageRoute(targetPageId: string) {
@@ -572,9 +625,24 @@ async function markRead() {
   }
 }
 
+function hasRecallProgress(): boolean {
+  return mode.value === 'recall' && !recallFinished.value
+    && (revealedEntryIds.value.size > 0 || knownEntryIds.value.size > 0 || retryEntryIds.value.size > 0)
+}
+
+function confirmDiscardRecall(): boolean {
+  return !hasRecallProgress() || window.confirm('本轮复习尚未完成，继续将清空本轮记录，确定继续吗？')
+}
+
 function onModeChange(value: string | number | boolean | undefined) {
   if (String(value) === 'recall') {
     startRecall()
+    return
+  }
+  if (!confirmDiscardRecall()) {
+    const current = mode.value
+    mode.value = 'view'
+    void nextTick(() => { mode.value = current })
     return
   }
   mode.value = 'view'
@@ -595,7 +663,7 @@ function clearEditDraft() {
 }
 
 function prepareEditing(): boolean {
-  if (!page.value) return false
+  if (!page.value || !confirmDiscardRecall()) return false
   clearRecallState()
   mode.value = 'view'
   editSaveError.value = ''
@@ -631,7 +699,7 @@ function openWordEditor(word: WordBookWord) {
 
 function addDraftExample() {
   const word = selectedDraftWord.value
-  if (!word) return
+  if (!word || (word.examples?.length || 0) >= 3) return
   word.examples = [...(word.examples || []), { english: '', chinese: '' }]
 }
 
@@ -649,16 +717,13 @@ async function persistPageContent(content: {
   editSaving.value = true
   editSaveError.value = ''
   try {
-    const claimed = await store.claimSampleBook(page.value.bookId)
-    if (!claimed.ok) {
-      editSaveError.value = claimed.message || '示例转换失败'
-      return false
-    }
     const result = await store.updatePageContent(page.value._id, content)
     if (!result.ok) {
       editSaveError.value = result.message || '学习页保存失败'
       return false
     }
+    const claimed = await store.claimSampleBook(page.value.bookId)
+    if (!claimed.ok) ElMessage.warning('内容已保存，但示例转换失败，仍保留为示例')
     return true
   } finally {
     editSaving.value = false
@@ -696,6 +761,15 @@ async function saveWordEdit(): Promise<boolean> {
   const text = selectedDraftWord.value.text.trim()
   if (!text) {
     editSaveError.value = '单词或词组不能为空'
+    return false
+  }
+  const examples = selectedDraftWord.value.examples || []
+  if (examples.length > 3) {
+    editSaveError.value = '每个单词最多保留 3 条例句，请先删除多余例句'
+    return false
+  }
+  if (examples.some(example => example.english.length > 300 || example.chinese.length > 300)) {
+    editSaveError.value = '每条例句和翻译都不能超过 300 字'
     return false
   }
   const duplicate = draftWords.value.some(word => word.entryId !== selectedEntryId.value
@@ -869,16 +943,19 @@ function isRevealed(entryId?: string): boolean {
 
 function markSelectedWrong() {
   const entryId = selectedEntryId.value
-  if (!entryId || recallFinished.value || savingRound.value) return
+  if (!entryId || !revealedEntryIds.value.has(entryId) || recallFinished.value || savingRound.value) return
   knownEntryIds.value = new Set([...knownEntryIds.value].filter(id => id !== entryId))
   firstWrongEntryIds.value = new Set([...firstWrongEntryIds.value, entryId])
   retryEntryIds.value = new Set([...retryEntryIds.value, entryId])
   revealedEntryIds.value = new Set([...revealedEntryIds.value, entryId])
+  recallOrder.value = [...recallOrder.value.filter(id => id !== entryId), entryId]
+  selectNextPendingWord()
   persistRecallDraft()
 }
 
 async function finishRecall() {
-  if (!page.value || savingRound.value) return
+  if (!page.value || savingRound.value || retryEntryIds.value.size > 0
+    || knownEntryIds.value.size !== page.value.words.length) return
   savingRound.value = true
   roundSaveFailed.value = false
   const finishedAt = Date.now()
@@ -1712,6 +1789,64 @@ function dueLabel(nextReviewAt: number): string {
   padding: 4px 6px;
   color: var(--utools-text-tertiary);
   font-size: 11px;
+}
+
+.example-limit {
+  margin: 4px 0 0;
+  color: var(--utools-text-tertiary);
+  font-size: 11px;
+}
+
+.graph-shell.compact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 8px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.compact .map-lines {
+  display: none;
+}
+
+.compact .map-center {
+  position: relative;
+  left: auto;
+  top: auto;
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 140px;
+  min-height: 92px;
+  transform: none;
+}
+
+.compact .map-node {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: auto;
+  min-height: 96px;
+  transform: none;
+}
+
+.compact .map-node.hoverable:hover {
+  transform: none;
+}
+
+.compact .empty-page-tip {
+  position: relative;
+  left: auto;
+  top: auto;
+  grid-column: 1 / -1;
+  width: auto;
+  transform: none;
+}
+
+@media (max-width: 420px) {
+  .graph-shell.compact {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 900px) {

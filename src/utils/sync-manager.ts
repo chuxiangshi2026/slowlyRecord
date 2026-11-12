@@ -20,7 +20,7 @@ import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_L
 import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDoc, saveProgressDoc as saveKnowledgeProgressDoc } from '@/utils/knowledge-memory-db'
 import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
 import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
-import { getAllBooks, getAllChapters, getAllPages, saveBook, saveChapter, savePage } from '@/utils/word-book-db'
+import { getAllBooks, getAllChapters, getAllPages, removeBook, removeChapter, removePage, saveBook, saveChapter, savePage } from '@/utils/word-book-db'
 import type { SyncWordBook } from '@/types/sync'
 import { collectMemoryPalaceSync, restoreMemoryPalaceSync } from '@/utils/memory-palace-db'
 import { SENTENCES_DOC_ID } from '@/utils/sentence-db'
@@ -160,29 +160,37 @@ async function collectWordBook(): Promise<SyncWordBook | null> {
   }
 }
 
-/** 词集还原：按 _id 合并，utime 较新的覆盖本地；未知格式版本直接跳过 */
-async function restoreWordBookSync(data: SyncWordBook) {
+/** 词集还原：校验版本与每次写入，并按墓碑清理已删除文档 */
+async function restoreWordBookSync(data: SyncWordBook, tombstones: Record<string, number> = {}) {
   const version = data?.schemaVersion ?? 1
-  if (version !== 1) {
-    log.w('[同步] 跳过未知版本词集数据', version)
-    return
-  }
+  if (version !== 1) throw new Error(`不支持的词集数据版本：${version}`)
   const [localBooks, localChapters, localPages] = await Promise.all([getAllBooks(), getAllChapters(), getAllPages()])
   const mergeInto = async <T extends { _id: string; utime?: number }>(
     local: T[],
     remote: T[],
-    save: (doc: T) => Promise<unknown>,
+    save: (doc: T) => Promise<{ ok?: boolean; message?: string }>,
+    remove: (id: string) => Promise<{ ok?: boolean; message?: string }>,
   ) => {
-    const map = new Map(local.map(doc => [doc._id, doc]))
-    for (const doc of remote || []) {
+    const keptLocal = filterByTombstones(local, 'remote', tombstones)
+    const keptIds = new Set(keptLocal.map(doc => doc._id))
+    for (const doc of local) {
+      if (keptIds.has(doc._id)) continue
+      const result = await remove(doc._id)
+      if (!result.ok) throw new Error(`清理已删除词集条目失败：${result.message || doc._id}`)
+    }
+    const map = new Map(keptLocal.map(doc => [doc._id, doc]))
+    for (const doc of filterByTombstones(remote || [], 'remote', tombstones)) {
       if (!doc?._id) continue
       const current = map.get(doc._id)
-      if (!current || (doc.utime || 0) > (current.utime || 0)) await save({ ...doc })
+      if (current && (doc.utime || 0) <= (current.utime || 0)) continue
+      const result = await save({ ...doc })
+      if (!result.ok) throw new Error(`保存词集条目失败：${result.message || doc._id}`)
+      map.set(doc._id, { ...doc })
     }
   }
-  await mergeInto(localBooks, data.books || [], saveBook)
-  await mergeInto(localChapters, data.chapters || [], saveChapter)
-  await mergeInto(localPages, data.pages || [], savePage)
+  await mergeInto(localBooks, data.books || [], saveBook, removeBook)
+  await mergeInto(localChapters, data.chapters || [], saveChapter, removeChapter)
+  await mergeInto(localPages, data.pages || [], savePage, removePage)
 }
 
 /** 句子库收集（单文档同步读，空库返回 null） */
@@ -540,7 +548,7 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
   }
 
   if (options.restoreWordBook && data.wordBook) {
-    await runStep('词集', () => restoreWordBookSync(data.wordBook!), () => {
+    await runStep('词集', () => restoreWordBookSync(data.wordBook!, tombstones), () => {
       result.wordBookRestored = true
     })
   }
@@ -548,6 +556,9 @@ export async function restoreSyncData(data: SyncData, options: RestoreOptions = 
   // 还原完成后兜底清理一次过期墓碑（无远端墓碑合并时 mergeTombstones 内部不会清理）
   await pruneTombstones(TOMBSTONE_MAX_AGE_MS)
 
+  if (result.wordBookRestored && typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('sr-wordbook-restored'))
+  }
   return result
 }
 

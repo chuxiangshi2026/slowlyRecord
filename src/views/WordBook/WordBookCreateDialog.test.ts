@@ -21,6 +21,7 @@ vi.mock('@/stores/wordBook', () => {
       get sortedBooks() { return state.books },
       chaptersOf: (bookId: string) => state.chapters.filter(chapter => chapter.bookId === bookId),
       findPageByKey: () => undefined,
+      loadAll: vi.fn(async () => {}),
       claimSampleBook: vi.fn(async () => ({ ok: true })),
       createBook: vi.fn(async (name: string) => {
         const book = { _id: `book_${state.books.length + 1}`, name }
@@ -91,5 +92,19 @@ describe('加入词集批量创建', () => {
     expect(state.pages.every(page => page.bookId === 'book_1' && page.chapterId === 'chapter_1')).toBe(true)
     expect(state.pages.map(page => page.name).sort()).toEqual(['old 篇 1', 'old 篇 2', 'old 篇 3'])
     expect(rendered.emitted('created')?.[0]).toEqual([{ bookId: 'book_1', chapterId: 'chapter_1' }])
+  })
+
+  it('打开时先加载已有书章，并默认选择已有词集', async () => {
+    state.books = [{ _id: 'book_existing', name: '已有词集' }]
+    state.chapters = [{ _id: 'chapter_existing', bookId: 'book_existing', name: '已有章节' }]
+    render(WordBookCreateDialog, {
+      props: { modelValue: true, words: [{ _id: 'w1', text: 'fold', explains: '折叠' }] as any[] },
+      global: { plugins: [ElementPlus] },
+    })
+
+    await waitFor(() => expect(state.store.loadAll).toHaveBeenCalled())
+    expect(screen.getAllByText('已有词集').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('已有章节').length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('radio', { name: '选择已有' }).every(radio => (radio as HTMLInputElement).checked)).toBe(true)
   })
 })

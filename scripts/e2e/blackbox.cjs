@@ -43,6 +43,7 @@ const ROUTE_MATRIX = [
   { route: 'phonetic-memory', expect: '音标学习' },
   { route: 'knowledge-memory', expect: '知识库（含内置知识包）' },
   { route: 'memory-palace', expect: '记忆宫殿' },
+  { route: 'word-book', expect: '词集首页、继续学习或示例词集可见' },
   { route: 'shortcut-memory', expect: '快捷键记忆' },
   { route: 'sign', expect: '打卡页' },
 ]

@@ -733,10 +733,51 @@ describe('sync-manager 句子库（sentences scope）', () => {
     expect(mockDb.get!('wb_page_9')).toBeTruthy()
   })
 
+  it('词集写入失败时应返回失败而不是误报还原成功', async () => {
+    mockDb.promises.put = vi.fn(async (doc: any) => doc._id === 'wb_page_fail'
+      ? { ok: false, error: true, message: 'disk full' }
+      : { ok: true, id: doc._id, rev: 'r1' })
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      wordBook: {
+        books: [{ _id: 'wb_book_fail', type: 'wb_book', name: '书', order: 0, ctime: 1, utime: 1 }],
+        chapters: [{ _id: 'wb_chapter_fail', type: 'wb_chapter', bookId: 'wb_book_fail', name: '章', order: 0, levelSize: 5, levels: [], ctime: 1, utime: 1 }],
+        pages: [{ _id: 'wb_page_fail', type: 'wb_page', bookId: 'wb_book_fail', chapterId: 'wb_chapter_fail', name: '页', order: 1, key: { type: 'text', value: '' }, words: [], source: {}, level: 0, nextReviewAt: 0, ctime: 1, utime: 1 }],
+      },
+    } as any)
+
+    expect(result.success).toBe(false)
+    expect(result.wordBookRestored).not.toBe(true)
+    expect(result.errors.join('; ')).toContain('disk full')
+  })
+
+  it('词集同步按墓碑清理本地并拒绝旧快照回流', async () => {
+    const docs = [
+      { _id: 'wb_book_deleted', type: 'wb_book', name: '已删书', order: 0, ctime: 1, utime: 1 },
+      { _id: 'wb_chapter_deleted', type: 'wb_chapter', bookId: 'wb_book_deleted', name: '已删章', order: 0, levelSize: 5, levels: [], ctime: 1, utime: 1 },
+      { _id: 'wb_page_deleted', type: 'wb_page', bookId: 'wb_book_deleted', chapterId: 'wb_chapter_deleted', name: '已删页', order: 1, key: { type: 'text', value: '' }, words: [], source: {}, level: 0, nextReviewAt: 0, ctime: 1, utime: 1 },
+    ]
+    for (const doc of docs) mockDb.put!(doc)
+    const { restoreSyncData } = await loadModule()
+    const result = await restoreSyncData({
+      ...createMockSyncData(),
+      tombstones: Object.fromEntries(docs.map(doc => [doc._id, 500])),
+      wordBook: {
+        books: [{ ...docs[0], utime: 2 }],
+        chapters: [{ ...docs[1], utime: 2 }],
+        pages: [{ ...docs[2], utime: 2 }],
+      },
+    } as any)
+
+    expect(result.success).toBe(true)
+    for (const doc of docs) expect(mockDb.get!(doc._id)).toBeNull()
+  })
+
   it('未知词集格式版本不得覆盖或新增本地数据', async () => {
     mockDb.put!({ _id: 'wb_book_local', type: 'wb_book', name: '本地词集', order: 0, ctime: 1, utime: 1 })
     const { restoreSyncData } = await loadModule()
-    await restoreSyncData({
+    const result = await restoreSyncData({
       ...createMockSyncData(),
       wordBook: {
         schemaVersion: 2,
@@ -749,6 +790,9 @@ describe('sync-manager 句子库（sentences scope）', () => {
       },
     } as any)
 
+    expect(result.success).toBe(false)
+    expect(result.wordBookRestored).not.toBe(true)
+    expect(result.errors.join('; ')).toContain('词集数据版本')
     expect(mockDb.get!('wb_book_local')?.name).toBe('本地词集')
     expect(mockDb.get!('wb_book_future')).toBeNull()
     expect(mockDb.get!('wb_chapter_future')).toBeNull()

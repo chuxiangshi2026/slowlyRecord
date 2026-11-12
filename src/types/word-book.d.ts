@@ -44,6 +44,8 @@ export interface WordBookKey {
 export interface WordBookSource {
   bankId?: string
   bankName?: string
+  /** 生成时的词库语言，用于学习页发音 */
+  language?: string
   filter?: Record<string, unknown>
 }
 

@@ -99,16 +99,19 @@ describe('词集学习页', () => {
     expect(document.querySelector('.key-match-root')).toHaveTextContent('port')
   })
 
-  it('保存失败仍显示本轮总结和重试入口，重试后关闭错误状态', async () => {
+  it('先揭示再判定；保存失败仍显示总结和重试入口', async () => {
     mocks.completeRound
       .mockResolvedValueOnce({ ok: false, message: '模拟保存失败' })
       .mockResolvedValueOnce({ ok: true, item: page })
     render(WordBookPage, { global: { plugins: [ElementPlus] } })
 
     await fireEvent.click(await screen.findByText('复习'))
-    const node = await screen.findByRole('button', { name: /fold，显示或收起释义/ })
+    const node = await screen.findByRole('button', { name: /fold，显示释义/ })
     await fireEvent.click(node)
+    expect(node).toHaveTextContent('折叠')
+    expect(mocks.completeRound).not.toHaveBeenCalled()
 
+    await fireEvent.click(node)
     await screen.findByRole('button', { name: '重试保存' })
     expect(screen.getByText('共 1 词')).toBeInTheDocument()
     expect(screen.getByText('本轮结果保存失败，请重试')).toBeInTheDocument()
@@ -118,5 +121,77 @@ describe('词集学习页', () => {
     await waitFor(() => expect(mocks.completeRound).toHaveBeenCalledTimes(2))
     expect(screen.queryByRole('button', { name: '重试保存' })).not.toBeInTheDocument()
     expect(screen.getByText('共 1 词')).toBeInTheDocument()
+  })
+
+  it('错词移到队尾，其他词判对后仍不结算，重看成功才完成', async () => {
+    mocks.completeRound.mockResolvedValue({ ok: true, item: page })
+    page.words = [
+      { entryId: 'entry_1', sourceId: 'word_1', text: 'fold', explains: '折叠' },
+      { entryId: 'entry_2', sourceId: 'word_2', text: 'bold', explains: '大胆的' },
+      { entryId: 'entry_3', sourceId: 'word_3', text: 'hold', explains: '握住' },
+    ]
+    render(WordBookPage, { global: { plugins: [ElementPlus] } })
+    await fireEvent.click(await screen.findByText('复习'))
+    const nodes = () => Array.from(document.querySelectorAll<HTMLButtonElement>('.node-main'))
+    const first = nodes()[0]
+    const wrongText = first.querySelector('.node-word')?.textContent
+    const wrongEntryId = page.words.find(word => word.text === first.getAttribute('aria-label')?.split('，')[0])!.entryId
+
+    await fireEvent.click(first)
+    await fireEvent.click(screen.getByRole('button', { name: '还没记住' }))
+    expect(nodes()[2].querySelector('.node-word')).toHaveTextContent(wrongText!)
+    expect(mocks.completeRound).not.toHaveBeenCalled()
+
+    for (const node of nodes().slice(0, 2)) {
+      await fireEvent.click(node)
+      await fireEvent.click(node)
+    }
+    expect(mocks.completeRound).not.toHaveBeenCalled()
+
+    const retry = nodes()[2]
+    await fireEvent.click(retry)
+    await fireEvent.click(retry)
+    await waitFor(() => expect(mocks.completeRound).toHaveBeenCalledTimes(1))
+    expect(mocks.completeRound.mock.calls[0][1]).toMatchObject({
+      total: 3,
+      firstTryKnown: 2,
+      firstTryWrongEntryIds: [wrongEntryId],
+    })
+  })
+
+  it('离开复习或进入编辑前确认是否丢弃草稿', async () => {
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValueOnce(false).mockReturnValueOnce(true)
+    render(WordBookPage, { global: { plugins: [ElementPlus] } })
+    await fireEvent.click(await screen.findByText('复习'))
+    await fireEvent.click(await screen.findByRole('button', { name: /fold，显示释义/ }))
+    expect(localStorage.getItem('sr_wordbook_round_page_1')).toBeTruthy()
+
+    await fireEvent.click(screen.getByText('查看'))
+    await waitFor(() => expect(screen.getByRole('radio', { name: '复习' })).toBeChecked())
+    expect(localStorage.getItem('sr_wordbook_round_page_1')).toBeTruthy()
+
+    await fireEvent.click(screen.getByText('查看'))
+    expect(screen.getByRole('radio', { name: '查看' })).toBeChecked()
+    expect(localStorage.getItem('sr_wordbook_round_page_1')).toBeNull()
+    confirm.mockRestore()
+  })
+
+  it('容器变小时切换为可滚动紧凑卡片布局', async () => {
+    let resize: ((entries: any[]) => void) | undefined
+    class Observer {
+      constructor(callback: (entries: any[]) => void) { resize = callback }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    }
+    vi.stubGlobal('ResizeObserver', Observer)
+    render(WordBookPage, { global: { plugins: [ElementPlus] } })
+    const shell = await screen.findByRole('group', { name: 'old 篇 中心导图' })
+    expect(shell).not.toHaveClass('compact')
+
+    resize!([{ contentRect: { width: 500, height: 400 } }])
+    await waitFor(() => expect(shell).toHaveClass('compact'))
+    expect(document.querySelector('.map-node')).not.toHaveAttribute('style', /left:/)
+    vi.unstubAllGlobals()
   })
 })

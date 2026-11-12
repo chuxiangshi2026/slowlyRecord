@@ -442,7 +442,7 @@ async function applyPullResult(result: any): Promise<{ success: boolean; summary
     if (added > 0) parts.push(`${added} 条句子`)
   }
   if (result.wordBook) {
-    const merged = wordBookStore.restoreSync(result.wordBook)
+    const merged = wordBookStore.restoreSync(result.wordBook, tombstones)
     if (merged > 0) parts.push(`${merged} 个词集条目`)
   }
 

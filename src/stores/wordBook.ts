@@ -23,6 +23,7 @@ import {
 } from '@/utils/word-book'
 import { useSigninStore } from './signin'
 import { trackEvent } from '@/utils/stats'
+import { recordTombstone } from '@/utils/sync-tombstone'
 import type { WordBookShareBook } from '@/utils/word-book-share'
 import type {
   WordBookBook,
@@ -166,18 +167,22 @@ export const useWordBookStore = defineStore('wordBook', () => {
 
   async function deleteBook(bookId: string): Promise<DbReturn> {
     const result = await removeBookCascade(bookId)
+    for (const id of result.deletedIds || []) await recordTombstone(id)
     if (result.ok) {
       books.value = books.value.filter(book => book._id !== bookId)
       chapters.value = chapters.value.filter(chapter => chapter.bookId !== bookId)
       pages.value = pages.value.filter(page => page.bookId !== bookId)
+    } else {
+      await loadAll(true)
     }
-    return { ok: result.ok, id: bookId } as DbReturn
+    return { ok: result.ok, id: bookId, message: result.message } as DbReturn
   }
 
   // ===== 章 =====
 
-  async function createChapter(bookId: string, name: string): Promise<WordBookItemResult<WordBookChapter>> {
-    const chapter = createWordBookChapter(bookId, name, chaptersOf(bookId).length)
+  async function createChapter(bookId: string, name: string, order?: number): Promise<WordBookItemResult<WordBookChapter>> {
+    if (!getBook(bookId)) return { ok: false, message: '所属词集不存在' }
+    const chapter = createWordBookChapter(bookId, name, order ?? chaptersOf(bookId).length)
     const result = await saveChapter(chapter)
     if (!result.ok) return { ok: false, message: result.message || '创建章节失败' }
     chapters.value = [...chapters.value, chapter]
@@ -204,11 +209,14 @@ export const useWordBookStore = defineStore('wordBook', () => {
 
   async function deleteChapter(chapterId: string): Promise<DbReturn> {
     const result = await removeChapterCascade(chapterId)
+    for (const id of result.deletedIds || []) await recordTombstone(id)
     if (result.ok) {
       chapters.value = chapters.value.filter(chapter => chapter._id !== chapterId)
       pages.value = pages.value.filter(page => page.chapterId !== chapterId)
+    } else {
+      await loadAll(true)
     }
-    return { ok: result.ok, id: chapterId } as DbReturn
+    return { ok: result.ok, id: chapterId, message: result.message } as DbReturn
   }
 
   // ===== 页 =====
@@ -221,10 +229,14 @@ export const useWordBookStore = defineStore('wordBook', () => {
     words: WordBookWord[]
     source: WordBookSource
     note?: string
+    order?: number
   }): Promise<WordBookItemResult<WordBookPage>> {
+    if (!getBook(input.bookId)) return { ok: false, message: '所属词集不存在' }
+    const chapter = getChapter(input.chapterId)
+    if (!chapter || chapter.bookId !== input.bookId) return { ok: false, message: '所属章节不存在或不匹配' }
     const page = buildWordBookPage({
       ...input,
-      order: pagesOf(input.chapterId).length + 1,
+      order: input.order ?? pagesOf(input.chapterId).length + 1,
     })
     const result = await savePage(page)
     if (!result.ok) return { ok: false, message: result.message || '创建学习页失败' }
@@ -246,7 +258,10 @@ export const useWordBookStore = defineStore('wordBook', () => {
     const page = getPage(pageId)
     if (!page) return { ok: true, id: pageId } as DbReturn
     const result = await removePage(pageId)
-    if (result.ok) pages.value = pages.value.filter(item => item._id !== pageId)
+    if (result.ok) {
+      void recordTombstone(pageId)
+      pages.value = pages.value.filter(item => item._id !== pageId)
+    }
     return result
   }
 
@@ -412,7 +427,7 @@ export const useWordBookStore = defineStore('wordBook', () => {
 
     try {
       for (const chapter of data.chapters) {
-        const chapterResult = await createChapter(target._id, chapter.name)
+        const chapterResult = await createChapter(target._id, chapter.name, chapter.order)
         if (!chapterResult.ok || !chapterResult.item) throw new Error(chapterResult.message || '导入章节失败')
         const targetChapter = chapterResult.item
         for (const page of chapter.pages) {
@@ -420,6 +435,7 @@ export const useWordBookStore = defineStore('wordBook', () => {
             bookId: target._id,
             chapterId: targetChapter._id,
             name: page.name,
+            order: page.order,
             key: { ...page.key },
             words: page.words.map(word => ({
               sourceId: '',
@@ -431,7 +447,7 @@ export const useWordBookStore = defineStore('wordBook', () => {
               ...(word.memoryTip ? { memoryTip: word.memoryTip } : {}),
               ...(typeof word.freq === 'number' ? { freq: word.freq } : {}),
             })),
-            source: { bankName: '导入词集' },
+            source: { bankName: '导入词集', ...(page.language ? { language: page.language } : {}) },
             note: page.note,
           })
           if (!pageResult.ok) throw new Error(pageResult.message || '导入学习页失败')

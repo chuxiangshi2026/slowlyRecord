@@ -25,12 +25,12 @@ export class FileAdapterElectron implements FileAdapter {
     return JSON.parse(text)
   }
 
-  async pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[]> {
+  async pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[] | null> {
     const result = await this.getAPI().showOpenDialog({
       properties: [options?.multiple ? 'multiSelections' : 'openFile'],
       filters: options?.accept ? [{ name: 'Files', extensions: options.accept.split(',').map(e => e.replace('.', '')) }] : undefined,
     })
-    if (result.canceled) return options?.multiple ? [] : null as any
+    if (result.canceled) return options?.multiple ? [] : null
 
     const files: File[] = []
     for (const filePath of result.filePaths) {
@@ -38,7 +38,7 @@ export class FileAdapterElectron implements FileAdapter {
       const name = filePath.split(/[\\/]/).pop() || 'file'
       files.push(new File([content], name))
     }
-    return options?.multiple ? files : files[0] || null as any
+    return options?.multiple ? files : files[0] || null
   }
 
   async downloadFile(data: Blob | string, filename: string): Promise<void> {

@@ -340,14 +340,14 @@ export function formatDueLabel(nextReviewAt: number, now = Date.now()): string {
 }
 
 /** 当前词库 + 筛选条件生成的来源信息 */
-export function buildWordBookSource(bankId: string | undefined, bankName: string | undefined, filter: WordBookFilterLike | undefined): WordBookSource {
+export function buildWordBookSource(bankId: string | undefined, bankName: string | undefined, filter: WordBookFilterLike | undefined, language?: string): WordBookSource {
   const cleaned: Record<string, unknown> = {}
   if (filter) {
     for (const [key, value] of Object.entries(filter)) {
       if (value !== '' && value !== undefined && value !== null && value !== 'all') cleaned[key] = value
     }
   }
-  return { bankId, bankName, filter: cleaned }
+  return { bankId, bankName, ...(language ? { language } : {}), filter: cleaned }
 }
 
 export function createWordBookBook(name: string, order = 0, now = Date.now(), extra: Partial<Pick<WordBookBook, 'desc' | 'isSample' | 'sampleVersion' | 'copiedFromBookId'>> = {}): WordBookBook {

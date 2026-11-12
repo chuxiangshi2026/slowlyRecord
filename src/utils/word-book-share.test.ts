@@ -21,7 +21,7 @@ const pages: WordBookPage[] = [
       entryId: 'local-entry', sourceId: 'source-1', text: 'fold', explains: '折叠', phonetic: '/fəʊld/', note: '词条备注',
       examples: [{ english: 'Please fold the paper.', chinese: '请把纸折起来。' }], memoryTip: 'fold = 折叠', freq: 100,
     }],
-    source: {}, note: '页面备注', level: 2, nextReviewAt: 999999, completedAt: 123,
+    source: { language: 'ja' }, note: '页面备注', level: 2, nextReviewAt: 999999, completedAt: 123,
     lastRound: { total: 1, firstTryKnown: 0, retriedCount: 1, firstTryWrongEntryIds: ['local-entry'], finishedAt: 456 },
     lastReviewedAt: 789, readAt: 111, contentUpdatedAt: 222, lastScore: 0, bestScore: 100, ctime: 5, utime: 6,
   },
@@ -42,6 +42,7 @@ describe('word-book-share（词集分享文件）', () => {
     expect(page.name).toBe('old 篇')
     expect(page.order).toBe(1)
     expect(page.key).toEqual({ type: 'letters', value: 'old', description: '拼写联想' })
+    expect(page.language).toBe('ja')
     expect(page.note).toBe('页面备注')
     expect(page.words[0]).toEqual({
       text: 'fold', explains: '折叠', phonetic: '/fəʊld/', note: '词条备注',
@@ -57,6 +58,7 @@ describe('word-book-share（词集分享文件）', () => {
     expect(parsed.chapters[0].pages[0].words[0].text).toBe('fold')
     expect(parsed.chapters[0].pages[0].words[0].examples?.[0]?.english).toBe('Please fold the paper.')
     expect(parsed.chapters[0].pages[0].words[0].memoryTip).toBe('fold = 折叠')
+    expect(parsed.chapters[0].pages[0].language).toBe('ja')
   })
 
   it('拒绝错误类型、未知版本、缺失数组、超 limit 与过长内容', () => {

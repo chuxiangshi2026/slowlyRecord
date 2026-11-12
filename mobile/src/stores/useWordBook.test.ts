@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 
 const docs = new Map<string, any>()
-const dbState = vi.hoisted(() => ({ failPut: false }))
+const dbState = vi.hoisted(() => ({ failPut: false, failRemoveId: '' }))
 
 vi.mock('@/adapters/index', () => ({
   getDbAdapter: () => ({
@@ -13,7 +13,19 @@ vi.mock('@/adapters/index', () => ({
       docs.set(doc._id, { ...doc, _rev: 'r1' })
       return { ok: true, rev: 'r1', id: doc._id }
     },
-    remove: (doc: any) => { docs.delete(typeof doc === 'string' ? doc : doc._id); return { ok: true } },
+    remove: (doc: any) => {
+      const id = typeof doc === 'string' ? doc : doc._id
+      if (id === dbState.failRemoveId) return { ok: false, error: true, message: 'remove failed' }
+      docs.delete(id)
+      return { ok: true }
+    },
+    promises: {
+      put: async (doc: any) => {
+        if (dbState.failPut) return { ok: false, error: true, message: 'disk full' }
+        docs.set(doc._id, { ...doc, _rev: 'r1' })
+        return { ok: true, rev: 'r1', id: doc._id }
+      },
+    },
   }),
 }))
 
@@ -26,6 +38,7 @@ describe('移动端 wordBook store', () => {
     setActivePinia(createPinia())
     docs.clear()
     dbState.failPut = false
+    dbState.failRemoveId = ''
   })
 
   it('书 → 章 → 页 的创建与读取', () => {
@@ -126,7 +139,7 @@ describe('移动端 wordBook store', () => {
     expect(store.getBook(book._id)!.name).toBe('远端新名字')
     expect(store.getChapter(chapter._id)!.name).toBe('远端新章节')
     expect(store.pages[0].name).toBe('远端新页')
-    expect(store.restoreSync({ ...sync, schemaVersion: 99 })).toBe(0)
+    expect(() => store.restoreSync({ ...sync, schemaVersion: 99 })).toThrow('不支持的词集数据版本')
   })
 
   it('同步恢复拒绝类型不匹配的文档', () => {
@@ -146,5 +159,62 @@ describe('移动端 wordBook store', () => {
     }
     expect(store.restoreSync(corrupted as any)).toBe(0)
     expect(store.getBook('wb_book_evil')).toBeUndefined()
+  })
+
+  it('级联删除部分失败时返回错误、刷新内存并给已删页写墓碑', async () => {
+    const store = useWordBook()
+    store.load(true)
+    const book = store.createBook('书')!
+    const chapter = store.createChapter(book._id, '章')!
+    const first = store.createPage({ bookId: book._id, chapterId: chapter._id, name: '页一', key: { type: 'text', value: '' }, words, source: {} })!
+    const second = store.createPage({ bookId: book._id, chapterId: chapter._id, name: '页二', key: { type: 'text', value: '' }, words, source: {} })!
+    dbState.failRemoveId = second._id
+
+    expect(store.deleteBook(book._id).ok).toBe(false)
+    expect(store.getPage(first._id)).toBeUndefined()
+    expect(store.getPage(second._id)).toBeTruthy()
+    expect(store.getBook(book._id)).toBeTruthy()
+    expect(store.getChapter(chapter._id)).toBeTruthy()
+    await new Promise(resolve => setTimeout(resolve, 0))
+    expect(docs.get('slowly-record-sync-tombstones')?.tombstones?.[first._id]).toBeTypeOf('number')
+    expect(docs.get('slowly-record-sync-tombstones')?.tombstones?.[second._id]).toBeUndefined()
+  })
+
+  it('同步写入失败时抛错而不是静默报告成功', () => {
+    const store = useWordBook()
+    store.load(true)
+    const book = store.createBook('书')!
+    const chapter = store.createChapter(book._id, '章')!
+    store.createPage({ bookId: book._id, chapterId: chapter._id, name: '页', key: { type: 'text', value: '' }, words, source: {} })
+    const sync = store.collectSync()!
+    const remote = { ...sync, pages: sync.pages.map(item => ({ ...item, utime: item.utime + 1000 })) }
+    dbState.failPut = true
+    expect(() => store.restoreSync(remote)).toThrow('disk full')
+  })
+
+  it('同步恢复按墓碑删除本地旧数据并阻止旧快照回流', () => {
+    const store = useWordBook()
+    store.load(true)
+    const book = store.createBook('书')!
+    const chapter = store.createChapter(book._id, '章')!
+    const page = store.createPage({ bookId: book._id, chapterId: chapter._id, name: '页', key: { type: 'text', value: '' }, words, source: {} })!
+    const sync = store.collectSync()!
+    const deletedAt = Date.now() + 1000
+
+    expect(store.restoreSync(sync, { [book._id]: deletedAt, [chapter._id]: deletedAt, [page._id]: deletedAt })).toBe(3)
+    expect(store.books).toHaveLength(0)
+    expect(store.chapters).toHaveLength(0)
+    expect(store.pages).toHaveLength(0)
+    expect(docs.has(book._id)).toBe(false)
+    expect(docs.has(chapter._id)).toBe(false)
+    expect(docs.has(page._id)).toBe(false)
+  })
+
+  it('拒绝创建书章不匹配的孤儿数据', () => {
+    const store = useWordBook()
+    store.load(true)
+    expect(store.createChapter('missing', '孤儿章')).toBeNull()
+    const book = store.createBook('书')!
+    expect(store.createPage({ bookId: book._id, chapterId: 'missing', name: '孤儿页', key: { type: 'text', value: '' }, words, source: {} })).toBeNull()
   })
 })

@@ -42,6 +42,8 @@ export interface WordBookKey {
 export interface WordBookSource {
   bankId?: string
   bankName?: string
+  /** 生成时的词库语言，与桌面端同步字段保持一致 */
+  language?: string
   filter?: Record<string, unknown>
 }
 

@@ -43,15 +43,37 @@ export async function saveBook(book: WordBookBook): Promise<DbReturn> {
   return putDoc(book)
 }
 
-/** 删书：级联删章与页，返回被删数量 */
-export async function removeBookCascade(bookId: string): Promise<{ ok: boolean; chapters: number; pages: number }> {
+interface CascadeDeleteResult {
+  ok: boolean
+  message?: string
+  deletedIds: string[]
+  chapters: number
+  pages: number
+}
+
+/** 删书：逐步检查删除结果；部分失败时返回已删 ID，供内存刷新与墓碑记录 */
+export async function removeBookCascade(bookId: string): Promise<CascadeDeleteResult> {
   await ensureDb()
   const chapters = readAll<WordBookChapter>(WORD_BOOK_CHAPTER_PREFIX, 'wb_chapter').filter(c => c.bookId === bookId)
   const pages = readAll<WordBookPage>(WORD_BOOK_PAGE_PREFIX, 'wb_page').filter(p => p.bookId === bookId)
-  for (const page of pages) await removeDoc(page._id)
-  for (const chapter of chapters) await removeDoc(chapter._id)
-  const result = await removeDoc(bookId)
-  return { ok: !!result.ok, chapters: chapters.length, pages: pages.length }
+  const deletedIds: string[] = []
+  const remove = async (id: string) => {
+    const result = await removeDoc(id)
+    if (!result.ok) return { ok: false, message: result.message || `删除失败：${id}`, deletedIds, chapters: 0, pages: 0 }
+    deletedIds.push(id)
+    return null
+  }
+  for (const page of pages) {
+    const failure = await remove(page._id)
+    if (failure) return failure
+  }
+  for (const chapter of chapters) {
+    const failure = await remove(chapter._id)
+    if (failure) return failure
+  }
+  const failure = await remove(bookId)
+  if (failure) return failure
+  return { ok: true, deletedIds, chapters: chapters.length, pages: pages.length }
 }
 
 // ===== 章 =====
@@ -65,13 +87,34 @@ export async function saveChapter(chapter: WordBookChapter): Promise<DbReturn> {
   return putDoc(chapter)
 }
 
-/** 删章：级联删其下页 */
-export async function removeChapterCascade(chapterId: string): Promise<{ ok: boolean; pages: number }> {
+/** 删章：级联删其下页，任何一步失败都返回错误 */
+export async function removeChapterCascade(chapterId: string): Promise<Omit<CascadeDeleteResult, 'chapters'>> {
   await ensureDb()
   const pages = readAll<WordBookPage>(WORD_BOOK_PAGE_PREFIX, 'wb_page').filter(p => p.chapterId === chapterId)
-  for (const page of pages) await removeDoc(page._id)
-  const result = await removeDoc(chapterId)
-  return { ok: !!result.ok, pages: pages.length }
+  const deletedIds: string[] = []
+  const remove = async (id: string) => {
+    const result = await removeDoc(id)
+    if (!result.ok) return { ok: false, message: result.message || `删除失败：${id}`, deletedIds, pages: 0 }
+    deletedIds.push(id)
+    return null
+  }
+  for (const page of pages) {
+    const failure = await remove(page._id)
+    if (failure) return failure
+  }
+  const failure = await remove(chapterId)
+  if (failure) return failure
+  return { ok: true, deletedIds, pages: pages.length }
+}
+
+// ===== 同步恢复时按 ID 删除单条，不触发级联 =====
+
+export async function removeBook(id: string): Promise<DbReturn> {
+  return removeDoc(id)
+}
+
+export async function removeChapter(id: string): Promise<DbReturn> {
+  return removeDoc(id)
 }
 
 // ===== 页 =====

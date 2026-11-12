@@ -32,7 +32,11 @@ vi.mock('@/utils/word-book-db', () => ({
   }),
 }))
 
+import { removeBookCascade } from '@/utils/word-book-db'
+import { recordTombstone } from '@/utils/sync-tombstone'
 import { useWordBookStore } from './wordBook'
+
+vi.mock('@/utils/sync-tombstone', () => ({ recordTombstone: vi.fn() }))
 
 const words = ['fold', 'bold', 'hold'].map((text, i) => ({
   entryId: `e${i + 1}`, sourceId: `s${i}`, text, explains: text,
@@ -343,6 +347,7 @@ describe('wordBook store', () => {
         pages: [{
           name: '页面',
           order: 1,
+          language: 'ja',
           key: { type: 'letters', value: 'old', description: '拼写联想' },
           note: '页面备注',
           words: [{
@@ -359,8 +364,11 @@ describe('wordBook store', () => {
     expect(imported._id).toBeTruthy()
     const importedChapters = store.chaptersOf(imported._id)
     expect(importedChapters).toHaveLength(1)
+    expect(importedChapters[0].order).toBe(1)
     const importedPages = store.pagesOf(importedChapters[0]._id)
     expect(importedPages).toHaveLength(2)
+    expect(importedPages.map(item => item.order)).toEqual([1, 2])
+    expect(importedPages[0].source.language).toBe('ja')
     expect(importedPages[0].completedAt).toBeUndefined()
     expect(importedPages[0].lastRound).toBeUndefined()
     expect(importedPages[0].nextReviewAt).toBe(0)
@@ -411,5 +419,34 @@ describe('wordBook store', () => {
 
     expect(store.dueCount).toBe(1)
     expect(store.duePages[0]._id).toBe(b._id)
+  })
+
+  it('级联删除部分失败时返回错误、刷新内存并记录已删项墓碑', async () => {
+    const store = useWordBookStore()
+    const book = await createBook(store)
+    const chapter = await createChapter(store, book._id)
+    const page = await createPage(store, book._id, chapter._id)
+    vi.mocked(removeBookCascade).mockResolvedValueOnce({
+      ok: false, message: '子项删除失败', deletedIds: [page._id], chapters: 0, pages: 0,
+    })
+
+    const result = await store.deleteBook(book._id)
+    expect(result.ok).toBe(false)
+    expect(result.message).toBe('子项删除失败')
+    expect(recordTombstone).toHaveBeenCalledWith(page._id)
+    expect(store.getBook(book._id)).toBeTruthy()
+    expect(store.getChapter(chapter._id)).toBeTruthy()
+    expect(store.getPage(page._id)).toBeTruthy()
+  })
+
+  it('拒绝创建书章不匹配的孤儿数据', async () => {
+    const store = useWordBookStore()
+    expect((await store.createChapter('missing', '孤儿章')).ok).toBe(false)
+    const book = await createBook(store)
+    const result = await store.createPage({
+      bookId: book._id, chapterId: 'missing', name: '孤儿页',
+      key: { type: 'text', value: '' }, words, source: {},
+    })
+    expect(result.ok).toBe(false)
   })
 })

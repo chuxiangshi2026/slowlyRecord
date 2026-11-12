@@ -10,10 +10,46 @@ export interface FileAdapter {
   writeText(path: string, content: string): Promise<void>
   /** 读取 JSON 文件 */
   readJSON<T = any>(path: string): Promise<T>
-  /** 选择文件（返回文件路径或文件对象） */
-  pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[]>
+  /** 选择文件；用户取消时返回 null */
+  pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[] | null>
   /** 下载文件（Web 端：触发浏览器下载；桌面端：保存到指定路径） */
   downloadFile(data: Blob | string, filename: string): Promise<void>
+}
+
+function pickViaInput(options?: { accept?: string; multiple?: boolean }): Promise<File | File[] | null> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.style.display = 'none'
+    if (options?.accept) input.accept = options.accept
+    if (options?.multiple) input.multiple = true
+    let settled = false
+    let focusTimer: ReturnType<typeof setTimeout> | undefined
+    const cleanup = () => {
+      window.removeEventListener('focus', onWindowFocus)
+      if (focusTimer) clearTimeout(focusTimer)
+      input.remove()
+    }
+    const finish = (value: File | File[] | null) => {
+      if (settled) return
+      settled = true
+      cleanup()
+      resolve(value)
+    }
+    const onWindowFocus = () => {
+      focusTimer = setTimeout(() => {
+        if (!input.files?.length) finish(null)
+      }, 300)
+    }
+    input.onchange = () => {
+      const files = Array.from(input.files || [])
+      finish(options?.multiple ? files : files[0] || null)
+    }
+    input.oncancel = () => finish(null)
+    window.addEventListener('focus', onWindowFocus)
+    document.body.appendChild(input)
+    input.click()
+  })
 }
 
 class UtoolsFileAdapter implements FileAdapter {
@@ -29,23 +65,8 @@ class UtoolsFileAdapter implements FileAdapter {
     const text = await this.readText(path)
     return JSON.parse(text)
   }
-  async pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[]> {
-    // uTools 环境下使用 utools.showOpenDialog 或 input[type=file]
-    return this._pickViaInput(options)
-  }
-  private _pickViaInput(options?: { accept?: string; multiple?: boolean }): Promise<File | File[]> {
-    return new Promise((resolve, reject) => {
-      const input = document.createElement('input')
-      input.type = 'file'
-      if (options?.accept) input.accept = options.accept
-      if (options?.multiple) input.multiple = true
-      input.onchange = () => {
-        const files = Array.from(input.files || [])
-        if (options?.multiple) resolve(files)
-        else resolve(files[0] || null as any)
-      }
-      input.click()
-    })
+  async pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[] | null> {
+    return pickViaInput(options)
   }
   async downloadFile(data: Blob | string, filename: string): Promise<void> {
     if (typeof data === 'string') {
@@ -72,19 +93,8 @@ class WebFileAdapter implements FileAdapter {
     const resp = await fetch(path)
     return resp.json()
   }
-  async pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[]> {
-    return new Promise((resolve) => {
-      const input = document.createElement('input')
-      input.type = 'file'
-      if (options?.accept) input.accept = options.accept
-      if (options?.multiple) input.multiple = true
-      input.onchange = () => {
-        const files = Array.from(input.files || [])
-        if (options?.multiple) resolve(files)
-        else resolve(files[0] || null as any)
-      }
-      input.click()
-    })
+  async pickFile(options?: { accept?: string; multiple?: boolean }): Promise<File | File[] | null> {
+    return pickViaInput(options)
   }
   async downloadFile(data: Blob | string, filename: string): Promise<void> {
     if (typeof data === 'string') {

@@ -49,7 +49,7 @@
               <div class="card-topline">
                 <span class="card-kind">示例</span>
                 <el-dropdown trigger="click" @command="(cmd: string) => onBookCommand(cmd, book)">
-                  <button type="button" class="more" aria-label="更多操作" @click.stop>⋯</button>
+                  <button type="button" class="more" aria-label="更多操作" @click.stop @keydown.enter.stop @keydown.space.stop>⋯</button>
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item command="export">导出词集</el-dropdown-item>
@@ -75,7 +75,7 @@
               <div class="card-topline">
                 <span class="card-kind">词集</span>
                 <el-dropdown trigger="click" :disabled="!!copyingBookId" @command="(cmd: string) => onBookCommand(cmd, book)">
-                  <button type="button" class="more" aria-label="更多操作" @click.stop>⋯</button>
+                  <button type="button" class="more" aria-label="更多操作" @click.stop @keydown.enter.stop @keydown.space.stop>⋯</button>
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item command="rename">重命名</el-dropdown-item>

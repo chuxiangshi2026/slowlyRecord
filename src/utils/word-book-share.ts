@@ -42,6 +42,7 @@ export interface WordBookSharePage {
   name: string
   order: number
   key: { type: WordBookKeyType; value: string; description?: string }
+  language?: string
   note?: string
   words: WordBookShareWord[]
 }
@@ -127,6 +128,7 @@ export function buildWordBookShareFile(
           value: page.key.value,
           ...(page.key.description ? { description: page.key.description } : {}),
         },
+        ...(page.source.language ? { language: page.source.language } : {}),
         ...(page.note ? { note: page.note } : {}),
         words: page.words.map(word => ({
           text: word.text,
@@ -198,6 +200,7 @@ export function parseWordBookShareData(raw: unknown): WordBookShareBook {
             value: cleanString(page.key.value, '中心文本', LIMITS.keyValue, false),
             description: cleanOptionalString(page.key.description, '中心解释', LIMITS.keyDescription),
           },
+          language: cleanOptionalString(page.language, '词库语言', 20),
           note: cleanOptionalString(page.note, '页面备注', LIMITS.note),
           words: sourceWords.map(word => ({
             text: cleanString(word.text, '单词', LIMITS.text),

@@ -478,7 +478,7 @@ const goCreateWordBook = () => {
     })),
     getDefaultPageName(key, 1, 1),
     key,
-    buildWordBookSource(wordsStore.currentBankId, currentBankName.value, filterState as any),
+    buildWordBookSource(wordsStore.currentBankId, currentBankName.value, filterState as any, wordsStore.currentLanguage),
   )
   uni.navigateTo({url: '/subPackages/pages-memory/word-book/edit'})
 }

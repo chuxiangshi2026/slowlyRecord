@@ -49,17 +49,22 @@
           <text class="center-type">{{ keyTypeLabel }}</text>
         </view>
 
+        <view v-if="saveError && marked.size === page.words.length" class="save-error">
+          <text class="save-error-text">{{ saveError }}</text>
+          <button size="mini" class="save-retry" @click="finish">重试保存</button>
+        </view>
+
         <view class="node-grid">
-          <view v-for="(word, index) in page.words" :key="`${word.sourceId}-${index}`"
-                :class="['node-card', { marked: marked.has(index), wrong: wrongSet.has(index) }]"
-                @click="reveal(index)">
-            <text class="node-word"><text v-for="(part, partIndex) in rootParts(word.text)" :key="partIndex"
+          <view v-for="item in displayWords" :key="`${item.word.sourceId}-${item.index}`"
+                :class="['node-card', { marked: marked.has(item.index), wrong: wrongSet.has(item.index) }]"
+                @click="reveal(item.index)">
+            <text class="node-word"><text v-for="(part, partIndex) in rootParts(item.word.text)" :key="partIndex"
                   :class="{ 'root-match': part.matched }">{{ part.text }}</text></text>
-            <text v-if="word.phonetic" class="node-phonetic">{{ word.phonetic }}</text>
-            <text class="node-explains">{{ shouldHide(index) ? '点击显示释义' : (word.explains || '—') }}</text>
+            <text v-if="item.word.phonetic" class="node-phonetic">{{ item.word.phonetic }}</text>
+            <text class="node-explains">{{ shouldHide(item.index) ? '点击显示释义' : (item.word.explains || '—') }}</text>
             <view class="node-actions">
-              <text class="action ok" @click.stop="markRemembered(index)">✓ 记住了</text>
-              <text class="action no" @click.stop="markForgot(index)">↺ 还没记住</text>
+              <text class="action ok" @click.stop="markRemembered(item.index)">✓ 记住了</text>
+              <text class="action no" @click.stop="markForgot(item.index)">↺ 还没记住</text>
             </view>
           </view>
         </view>
@@ -82,14 +87,25 @@ const marked = ref<Set<number>>(new Set())
 const wrongSet = ref<Set<number>>(new Set())
 const finished = ref(false)
 const directoryVisible = ref(false)
+const saveError = ref('')
+const order = ref<number[]>([])
+const restored = ref(false)
+const storageKey = computed(() => `sr_mobile_wordbook_round_${pageId.value}`)
+const displayWords = computed(() => order.value.flatMap(index => {
+  const word = page.value?.words[index]
+  return word ? [{ index, word }] : []
+}))
 
 onLoad((options: any) => {
   pageId.value = String(options?.pageId || '')
 })
 
-onShow(() => store.load())
-
 const page = computed(() => store.getPage(pageId.value))
+
+onShow(() => {
+  store.load()
+  restoreRound()
+})
 const chapterDirectory = computed(() => page.value
   ? buildWordBookChapterDirectory(store.chaptersOf(page.value.bookId), store.pages)
   : [])
@@ -122,8 +138,82 @@ function rootParts(text: string): Array<{ text: string; matched?: boolean }> {
   ]
 }
 
+interface RoundDraft {
+  version: 1
+  order: number[]
+  revealed: number[]
+  marked: number[]
+  wrong: number[]
+  hideMeaning: boolean
+}
+
+function shuffledIndexes(count: number): number[] {
+  const list = Array.from({ length: count }, (_, index) => index)
+  for (let i = list.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[list[i], list[j]] = [list[j], list[i]]
+  }
+  return list
+}
+
+function persistRound() {
+  if (!page.value || finished.value) return
+  const draft: RoundDraft = {
+    version: 1,
+    order: order.value,
+    revealed: [...revealed.value],
+    marked: [...marked.value],
+    wrong: [...wrongSet.value],
+    hideMeaning: hideMeaning.value,
+  }
+  try {
+    uni.setStorageSync(storageKey.value, JSON.stringify(draft))
+  } catch { /* 存储不可用时只保留在内存 */ }
+}
+
+function clearRoundStorage() {
+  try {
+    uni.removeStorageSync(storageKey.value)
+  } catch { /* ignore */ }
+}
+
+function restoreRound() {
+  if (restored.value || !page.value) return
+  restored.value = true
+  const count = page.value.words.length
+  const fallback = () => {
+    order.value = shuffledIndexes(count)
+  }
+  try {
+    const raw = uni.getStorageSync(storageKey.value)
+    if (!raw) {
+      fallback()
+      return
+    }
+    const draft = (typeof raw === 'string' ? JSON.parse(raw) : raw) as RoundDraft
+    const validIndexes = (values: unknown) => Array.isArray(values)
+      && values.every(value => Number.isInteger(value) && value >= 0 && value < count)
+    if (draft.version !== 1 || !validIndexes(draft.order)
+      || new Set(draft.order).size !== count
+      || !validIndexes(draft.revealed) || !validIndexes(draft.marked) || !validIndexes(draft.wrong)) {
+      throw new Error('invalid draft')
+    }
+    order.value = draft.order
+    revealed.value = new Set(draft.revealed)
+    marked.value = new Set(draft.marked)
+    wrongSet.value = new Set(draft.wrong)
+    hideMeaning.value = !!draft.hideMeaning
+    saveError.value = ''
+    if (marked.value.size === count) finish()
+  } catch {
+    clearRoundStorage()
+    fallback()
+  }
+}
+
 function onHideChange(event: any) {
   hideMeaning.value = !!event.detail.value
+  persistRound()
 }
 
 function shouldHide(index: number): boolean {
@@ -135,16 +225,21 @@ function reveal(index: number) {
   const next = new Set(revealed.value)
   next.add(index)
   revealed.value = next
+  persistRound()
 }
 
 function markRemembered(index: number) {
   const next = new Set(marked.value)
+  if (next.has(index)) {
+    next.delete(index)
+    marked.value = next
+    persistRound()
+    return
+  }
   next.add(index)
   marked.value = next
-  const nextWrong = new Set(wrongSet.value)
-  nextWrong.delete(index)
-  wrongSet.value = nextWrong
   if (next.size === (page.value?.words.length || 0)) finish()
+  else persistRound()
 }
 
 function markForgot(index: number) {
@@ -157,23 +252,32 @@ function markForgot(index: number) {
   const nextRevealed = new Set(revealed.value)
   nextRevealed.add(index)
   revealed.value = nextRevealed
+  order.value = [...order.value.filter(item => item !== index), index]
+  persistRound()
 }
 
 function finish() {
-  if (!page.value) return
+  if (!page.value || finished.value || marked.value.size !== page.value.words.length) return
+  saveError.value = ''
   const result = store.completePage(page.value._id, wrongSet.value.size)
   if (!result.ok) {
-    uni.showToast({ title: result.message || '保存失败', icon: 'none' })
+    saveError.value = result.message || '保存失败'
+    persistRound()
+    uni.showToast({ title: saveError.value, icon: 'none' })
     return
   }
   finished.value = true
+  clearRoundStorage()
 }
 
 function restart() {
   revealed.value = new Set()
   marked.value = new Set()
   wrongSet.value = new Set()
+  order.value = shuffledIndexes(page.value?.words.length || 0)
+  saveError.value = ''
   finished.value = false
+  clearRoundStorage()
 }
 
 function dueLabel(nextReviewAt: number): string {
@@ -262,6 +366,29 @@ function goBack() {
 .center-type {
   font-size: 22rpx;
   color: var(--sr-text-2);
+}
+
+.save-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 16rpx;
+  color: var(--sr-danger, #d9534f);
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-danger, #d9534f);
+  border-radius: 16rpx;
+}
+
+.save-error-text {
+  flex: 1;
+  font-size: 24rpx;
+}
+
+.save-retry {
+  flex: none;
+  margin: 0;
 }
 
 .node-grid {
