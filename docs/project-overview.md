@@ -1,7 +1,7 @@
 # 慢记 SlowRecap —— 项目文档
 
 > 基于艾宾浩斯遗忘曲线的全平台记忆训练工具
-> 版本：v1.3.4 ｜ 文档更新：2026-11-10
+> 版本：v1.3.5 ｜ 文档更新：2026-11-13
 
 ---
 
@@ -204,26 +204,33 @@ npm run build:web          # dist-web/ + SEO 静态页（正式部署设 SITE_OR
 npm run build:mp-weixin    # 微信小程序（mobile/）
 ```
 
-### 5.3 版本记录（近三版）
+### 5.3 重点版本记录
 
 | 版本 | 日期 | 要点 |
 |------|------|------|
+| v1.3.5 | 2026.11 | 新增词集导图与页级复习；修复复习误结算、导入取消卡住、级联删除与同步误报成功、删除复活、示例归属和草稿丢失；小窗口导图自适应 |
 | v1.3.1 | 2026.10 | 外观设置（自定义背景/亚克力）、uTools 8.0 定时任务、uTools AI 引擎、桩库与知识包扩充（50 个新包） |
 | v1.3.0 | 2026.09 | 同步可靠性（删除不再复活）、包体缩小启动加速、学习打卡（目标/热力图/成就）、日俄西法词库 |
 | v1.2.1 | 2026.09 | 术语统一、知识包三类调整、字号三档缩放、坚果云 WebDAV 同步、句子库收藏同步 |
 
-完整版本历史与使用教程见仓库 `README.md` 与 `docs/tutorial.md`。
+完整版本历史见 `CHANGELOG.md`，使用教程见 `README.md` 与 `docs/tutorial.md`。
 
 ---
 
 ## 六、截图文件清单
 
+发布页最多 8 张截图，按“核心使用 → 新功能 → 差异化能力 → 工作流”排序：
+
 | 文件 | 平台 | 内容 |
 |------|------|------|
 | `screenshots/utools/u01-word-review.png` | uTools | 单词复习列表 |
-| `screenshots/utools/u03-translate.png` | uTools | 快速翻译 |
-| `screenshots/utools/u04-text-memory.png` | uTools | 文本记忆（真实数据） |
-| `screenshots/utools/u05-focus-mode.png` | uTools | 专注模式悬浮窗 |
+| `screenshots/utools/u02-word-book.png` | uTools | 词集导图与页级复习 |
+| `screenshots/utools/u03-dictation.png` | uTools | 拼写练习 |
+| `screenshots/utools/u04-text-memory.png` | uTools | 文本记忆 |
+| `screenshots/utools/u05-knowledge.png` | uTools | 知识库 |
+| `screenshots/utools/u06-memory-palace.png` | uTools | 记忆宫殿 |
+| `screenshots/utools/u07-focus-mode.png` | uTools | 专注模式 |
+| `screenshots/utools/u08-sync.png` | uTools | 多端同步 |
 | `screenshots/web/02-menu-drawer.png` | Web | 功能菜单抽屉 |
 | `screenshots/web/05-number-memory.png` | Web | 数字记忆 |
 | `screenshots/web/06-memory-palace.png` | Web | 记忆宫殿 |
