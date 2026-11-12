@@ -4,9 +4,9 @@
     "name": "唐诗",
     "period": "618-907",
     "description": "中国诗歌发展的黄金时代，名家辈出，作品丰富",
-    "count": 204,
-    "version": "2.1",
-    "lastUpdated": "2026-09-04"
+    "count": 205,
+    "version": "2.2",
+    "lastUpdated": "2026-11-13"
   },
   "poems": [
     {
@@ -4323,6 +4323,28 @@
       "location": "岳阳",
       "year": 824,
       "pinyin": "hú guāng qiū yuè liǎng xiāng hé， tán miàn wú fēng jìng wèi mó。\nyáo wàng dòng tíng shān shuǐ cuì， bái yín pán lǐ yì qīng luó。",
+      "translation": null
+    },
+    {
+      "id": "tang_205",
+      "title": "滕王阁序",
+      "author": "王勃",
+      "dynasty": "唐",
+      "dynastyCode": "tang",
+      "content": "豫章故郡，洪都新府。星分翼轸，地接衡庐。襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。都督阎公之雅望，棨戟遥临；宇文新州之懿范，襜帷暂驻。十旬休假，胜友如云；千里逢迎，高朋满座。腾蛟起凤，孟学士之词宗；紫电青霜，王将军之武库。家君作宰，路出名区；童子何知，躬逢胜饯。\n\n时维九月，序属三秋。潦水尽而寒潭清，烟光凝而暮山紫。俨骖騑于上路，访风景于崇阿。临帝子之长洲，得天人之旧馆。层峦耸翠，上出重霄；飞阁流丹，下临无地。鹤汀凫渚，穷岛屿之萦回；桂殿兰宫，即冈峦之体势。\n\n披绣闼，俯雕甍，山原旷其盈视，川泽纡其骇瞩。闾阎扑地，钟鸣鼎食之家；舸舰弥津，青雀黄龙之舳。云销雨霁，彩彻区明。落霞与孤鹜齐飞，秋水共长天一色。渔舟唱晚，响穷彭蠡之滨；雁阵惊寒，声断衡阳之浦。\n\n遥襟甫畅，逸兴遄飞。爽籁发而清风生，纤歌凝而白云遏。睢园绿竹，气凌彭泽之樽；邺水朱华，光照临川之笔。四美具，二难并。穷睇眄于中天，极娱游于暇日。天高地迥，觉宇宙之无穷；兴尽悲来，识盈虚之有数。望长安于日下，目吴会于云间。地势极而南溟深，天柱高而北辰远。关山难越，谁悲失路之人？萍水相逢，尽是他乡之客。怀帝阍而不见，奉宣室以何年？\n\n嗟乎！时运不齐，命途多舛。冯唐易老，李广难封。屈贾谊于长沙，非无圣主；窜梁鸿于海曲，岂乏明时？所赖君子见机，达人知命。老当益壮，宁移白首之心？穷且益坚，不坠青云之志。酌贪泉而觉爽，处涸辙以犹欢。北海虽赊，扶摇可接；东隅已逝，桑榆非晚。孟尝高洁，空余报国之情；阮籍猖狂，岂效穷途之哭！\n\n勃，三尺微命，一介书生。无路请缨，等终军之弱冠；有怀投笔，慕宗悫之长风。舍簪笏于百龄，奉晨昏于万里。非谢家之宝树，接孟氏之芳邻。他日趋庭，叨陪鲤对；今兹捧袂，喜托龙门。杨意不逢，抚凌云而自惜；钟期既遇，奏流水以何惭？\n\n呜呼！胜地不常，盛筵难再；兰亭已矣，梓泽丘墟。临别赠言，幸承恩于伟饯；登高作赋，是所望于群公。敢竭鄙怀，恭疏短引；一言均赋，四韵俱成。请洒潘江，各倾陆海云尔。",
+      "contentType": "prose",
+      "tags": [
+        "古文",
+        "骈文",
+        "名篇",
+        "高中必背",
+        "滕王阁"
+      ],
+      "source": "《王子安集》",
+      "location": "滕王阁/南昌",
+      "wordCount": 717,
+      "year": 675,
+      "pinyin": "yù zhāng gù jùn， hóng dōu xīn fǔ。 xīng fēn yì zhěn， dì jiē héng lú。 jīn sān jiāng ér dài wǔ hú， kòng mán jīng ér yǐn ōu yuè。 wù huá tiān bǎo， lóng guāng shè niú dǒu zhī xū； rén jié dì líng， xú rú xià chén fān zhī tà。 xióng zhōu wù liè， jùn cǎi xīng chí。 tái huáng zhěn yí xià zhī jiāo， bīn zhǔ jìn dōng nán zhī měi。 dū du yán gōng zhī yǎ wàng， qǐ jǐ yáo lín； yǔ wén xīn zhōu zhī yì fàn， chān wéi zàn zhù。 shí xún xiū jià， shèng yǒu rú yún； qiān lǐ féng yíng， gāo péng mǎn zuò。 téng jiāo qǐ fèng， mèng xué shì zhī cí zōng； zǐ diàn qīng shuāng， wáng jiāng jūn zhī wǔ kù。 jiā jūn zuò zǎi， lù chū míng qū； tóng zǐ hé zhī， gōng féng shèng jiàn。\n\nshí wéi jiǔ yuè， xù shǔ sān qiū。 lǎo shuǐ jìn ér hán tán qīng， yān guāng níng ér mù shān zǐ。 yǎn cān fēi yú shàng lù， fǎng fēng jǐng yú chóng ē。 lín dì zǐ zhī cháng zhōu， dé tiān rén zhī jiù guǎn。 céng luán sǒng cuì， shàng chū chóng xiāo； fēi gé liú dān， xià lín wú dì。 hè tīng fú zhǔ， qióng dǎo yǔ zhī yíng huí； guì diàn lán gōng， jí gāng luán zhī tǐ shì。\n\npī xiù tà， fǔ diāo méng， shān yuán kuàng qí yíng shì， chuān zé yū qí hài zhǔ。 lǘ yán pū dì， zhōng míng dǐng shí zhī jiā； gě jiàn mí jīn， qīng què huáng lóng zhī zhú。 yún xiāo yǔ jì， cǎi chè qū míng。 luò xiá yǔ gū wù qí fēi， qiū shuǐ gòng cháng tiān yí sè。 yú zhōu chàng wǎn， xiǎng qióng péng lí zhī bīn； yàn zhèn jīng hán， shēng duàn héng yáng zhī pǔ。\n\nyáo jīn fǔ chàng， yì xìng chuán fēi。 shuǎng lài fā ér qīng fēng shēng， xiān gē níng ér bái yún è。 suī yuán lǜ zhú， qì líng péng zé zhī zūn； yè shuǐ zhū huá， guāng zhào lín chuān zhī bǐ。 sì měi jù， èr nán bìng。 qióng dì miǎn yú zhōng tiān， jí yú yóu yú xiá rì。 tiān gāo dì jiǒng， jué yǔ zhòu zhī wú qióng； xìng jìn bēi lái， shí yíng xū zhī yǒu shù。 wàng cháng ān yú rì xià， mù wú kuài yú yún jiān。 dì shì jí ér nán míng shēn， tiān zhù gāo ér běi chén yuǎn。 guān shān nán yuè， shuí bēi shī lù zhī rén？ píng shuǐ xiāng féng， jìn shì tā xiāng zhī kè。 huái dì hūn ér bú jiàn， fèng xuān shì yǐ hé nián？\n\njiē hū！ shí yùn bù qí， mìng tú duō chuǎn。 féng táng yì lǎo， lǐ guǎng nán fēng。 qū jiǎ yì yú cháng shā， fēi wú shèng zhǔ； cuàn liáng hóng yú hǎi qǔ， qǐ fá míng shí？ suǒ lài jūn zǐ jiàn jī， dá rén zhī mìng。 lǎo dāng yì zhuàng， nìng yí bái shǒu zhī xīn？ qióng qiě yì jiān， bú zhuì qīng yún zhī zhì。 zhuó tān quán ér jué shuǎng， chǔ hé zhé yǐ yóu huān。 běi hǎi suī shē， fú yáo kě jiē； dōng yú yǐ shì， sāng yú fēi wǎn。 mèng cháng gāo jié， kōng yú bào guó zhī qíng； ruǎn jí chāng kuáng， qǐ xiào qióng tú zhī kū！\n\nbó， sān chǐ wēi mìng， yí jiè shū shēng。 wú lù qǐng yīng， děng zhōng jūn zhī ruò guàn； yǒu huái tóu bǐ， mù zōng què zhī cháng fēng。 shě zān hù yú bǎi líng， fèng chén hūn yú wàn lǐ。 fēi xiè jiā zhī bǎo shù， jiē mèng shì zhī fāng lín。 tā rì qū tíng， tāo péi lǐ duì； jīn zī pěng mèi， xǐ tuō lóng mén。 yáng yì bù féng， fǔ líng yún ér zì xī； zhōng qī jì yù， zòu liú shuǐ yǐ hé cán？\n\nwū hū！ shèng dì bù cháng， shèng yán nán zài； lán tíng yǐ yǐ， zǐ zé qiū xū。 lín bié zèng yán， xìng chéng ēn yú wěi jiàn； dēng gāo zuò fù， shì suǒ wàng yú qún gōng。 gǎn jié bǐ huái， gōng shū duǎn yǐn； yì yán jūn fù， sì yùn jù chéng。 qǐng sǎ pān jiāng， gè qīng lù hǎi yún ěr。",
       "translation": null
     }
   ]

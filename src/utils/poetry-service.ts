@@ -84,7 +84,7 @@ export const DYNASTY_LIST: DynastyInfo[] = [
 ];
 
 // 缓存配置
-const CACHE_KEY_PREFIX = 'poetry_cache_v5_';
+const CACHE_KEY_PREFIX = 'poetry_cache_v6_';
 const CACHE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // 30天过期
 const POETRY_INDEX_KEY = 'poetry_index_cache';
 
@@ -234,7 +234,10 @@ function normalizePoetryData(data: any[]): PoetryItem[] {
     return [];
   }
 
+  // 保留原始字段（pinyin/speechContent/translation 等），否则地图与导入对话框
+  // 导入的文章会丢失拼音、朗读文本和人工译文
   return data.map((item, index) => ({
+    ...item,
     id: item.id || `poetry_${Date.now()}_${index}`,
     title: item.title || '未知标题',
     author: item.author || '佚名',
