@@ -211,34 +211,16 @@ const memoryTestSummary = computed(() => {
   return total > 0 ? `已完成 ${total} 次` : '';
 });
 
-// 记忆训练菜单：词集/知识库固定在单词之后（词集第二、知识库第三），
-// 文本记忆固定在记忆宫殿之前；其余入口仍按使用频率自动上浮（P2）。
-const MEMORY_PINNED_TOP_KEYS = ['word-book', 'knowledge-memory'];
-
-const memoryItems = computed(() => {
-  const items = [
-    {key: 'number-memory', label: '🔢 数字记忆', summary: numberMemorySummary.value, path: '/number-memory'},
-    {key: 'text-memory', label: '📜 文本记忆', summary: textMemorySummary.value, path: '/text-memory'},
-    {key: 'sentences', label: '📖 句子库', summary: sentencesSummary.value, path: '/sentences'},
-    {key: 'memory-palace', label: '🏛️ 记忆宫殿', summary: '', path: '/memory-palace'},
-    {key: 'word-book', label: '🗂️ 词集', summary: '', path: '/word-book'},
-    {key: 'knowledge-memory', label: '📚 知识库', summary: '', path: '/knowledge-memory'},
-  ].filter(item => WORD_BOOK_ENABLED || item.key !== 'word-book');
-
-  const pinned = MEMORY_PINNED_TOP_KEYS.flatMap(key => {
-    const item = items.find(i => i.key === key);
-    return item ? [item] : [];
-  });
-  const rest = sortByUsage(items.filter(item =>
-    !MEMORY_PINNED_TOP_KEYS.includes(item.key) && item.key !== 'text-memory'
-  ));
-  const textItem = items.find(item => item.key === 'text-memory');
-  if (textItem) {
-    const palaceIndex = rest.findIndex(item => item.key === 'memory-palace');
-    rest.splice(palaceIndex === -1 ? rest.length : palaceIndex, 0, textItem);
-  }
-  return [...pinned, ...rest];
-});
+// 记忆训练菜单固定顺序（单词单独在前面）：
+// 词集 → 知识库 → 文本记忆 → 记忆宫殿 → 数字记忆 → 句子库
+const memoryItems = computed(() => [
+  {key: 'word-book', label: '🗂️ 词集', summary: '', path: '/word-book'},
+  {key: 'knowledge-memory', label: '📚 知识库', summary: '', path: '/knowledge-memory'},
+  {key: 'text-memory', label: '📜 文本记忆', summary: textMemorySummary.value, path: '/text-memory'},
+  {key: 'memory-palace', label: '🏛️ 记忆宫殿', summary: '', path: '/memory-palace'},
+  {key: 'number-memory', label: '🔢 数字记忆', summary: numberMemorySummary.value, path: '/number-memory'},
+  {key: 'sentences', label: '📖 句子库', summary: sentencesSummary.value, path: '/sentences'},
+].filter(item => WORD_BOOK_ENABLED || item.key !== 'word-book'));
 
 const toolItems = computed(() => sortByUsage([
   {key: 'translate', label: '⚡ 快速翻译', summary: '', path: '/translate'},
