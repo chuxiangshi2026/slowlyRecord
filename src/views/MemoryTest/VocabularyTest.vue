@@ -5,13 +5,13 @@
       <div class="intro-header">
         <el-icon :size="48" class="test-icon"><Collection /></el-icon>
         <h2>词汇量测试</h2>
-        <p class="subtitle">通过科学的抽样测试，准确估算您的英语词汇量</p>
+        <p class="subtitle">通过科学的抽样测试，准确估算您的{{ LANGUAGE_NAME }}词汇量</p>
       </div>
 
       <div class="features">
         <div class="feature-item">
           <el-icon><DocumentChecked /></el-icon>
-          <span>基于权威词库（CET4/6、雅思、托福、GRE等）</span>
+          <span>{{ BANK_HINT }}</span>
         </div>
         <div class="feature-item">
           <el-icon><TrendCharts /></el-icon>
@@ -99,22 +99,30 @@
           </el-button>
         </div>
 
+        <el-button
+          class="dont-know-btn"
+          :class="{ 'wrong-answer': hasAnswered && selectedUnknown }"
+          :disabled="hasAnswered"
+          @click="selectUnknown"
+        >
+          不会，直接看答案
+        </el-button>
+
         <div v-if="hasAnswered" class="answer-feedback">
           <div :class="['feedback', isCorrect ? 'correct' : 'wrong']">
             <el-icon :size="24">
               <Check v-if="isCorrect" />
               <Close v-else />
             </el-icon>
-            <span>{{ isCorrect ? '回答正确！' : '回答错误' }}</span>
+            <span>{{ isCorrect ? '回答正确！' : selectedUnknown ? '不会也没关系' : '回答错误' }}</span>
           </div>
           <div class="word-detail">
             <p><strong>{{ currentWord?.word }}</strong> {{ currentWord?.phonetic }}</p>
             <p class="definition">{{ currentWord?.explains }}</p>
           </div>
-          <el-button type="primary" @click="nextWord" class="next-btn">
-            {{ isLastWord ? '查看结果' : '下一个' }}
-            <el-icon><ArrowRight /></el-icon>
-          </el-button>
+          <p class="auto-next-hint">
+            {{ isLastWord ? '正在生成测试结果…' : '即将进入下一题…' }}
+          </p>
         </div>
       </div>
     </div>
@@ -272,14 +280,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useVocabularyTestStore, getWordBankLevels, type WordBankLevel, type ReadingLevel } from '@/stores/vocabularyTest';
-import { getActiveLanguage } from '@/utils/language/profiles';
-
-// 当前语言的等级表（en=CET~GRE，ja=JLPT，ru/es/fr=CEFR）
-const LEVELS = getWordBankLevels(getActiveLanguage());
-import { getWordBankInfo, type WordBankType } from '@/utils/wordbank-service';
+import { getActiveLanguage, getActiveProfile } from '@/utils/language/profiles';
+import { fetchWordBank, type WordBankType } from '@/utils/wordbank-service';
 import { log } from '@/utils/logger';
+
+const ACTIVE_LANGUAGE = getActiveLanguage();
+const LANGUAGE_NAME = getActiveProfile().nameZh;
+
+/**
+ * 等级 id → 本地词库类型。
+ * 英语等级 id 与词库文件同名；其他语言只有部分等级有内置词库
+ * （ja: N5-N3，ru/es/fr: A1-A2），没有词库的等级不参与测试。
+ */
+const LEVEL_BANK_MAP: Record<string, Record<string, WordBankType>> = {
+  ja: { n5: 'jlpt-n5', n4: 'jlpt-n4', n3: 'jlpt-n3' },
+  ru: { a1: 'ru-a1', a2: 'ru-a2' },
+  es: { a1: 'es-a1', a2: 'es-a2' },
+  fr: { a1: 'fr-a1', a2: 'fr-a2' },
+};
+
+function getBankType(level: WordBankLevel): WordBankType | undefined {
+  if (ACTIVE_LANGUAGE === 'en') return level.id as WordBankType;
+  return LEVEL_BANK_MAP[ACTIVE_LANGUAGE]?.[level.id];
+}
+
+// 当前语言的等级表（en=CET~GRE，ja=JLPT，ru/es/fr=CEFR），只保留有词库的等级
+const LEVELS = getWordBankLevels(ACTIVE_LANGUAGE).filter(getBankType);
+const BANK_HINT = ACTIVE_LANGUAGE === 'en'
+  ? '基于权威词库（CET4/6、雅思、托福、GRE等）'
+  : `基于内置 ${LANGUAGE_NAME} 分级词库`;
 import {
   Collection,
   DocumentChecked,
@@ -288,19 +319,12 @@ import {
   VideoPlay,
   Check,
   Close,
-  ArrowRight,
   Trophy,
   Calendar,
   RefreshRight,
   Timer,
 } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
-
-interface WordBankItem {
-  word: string;
-  phonetic?: string;
-  explains: string;
-}
 
 interface WordItem {
   word: string;
@@ -333,6 +357,10 @@ const currentOptions = ref<string[]>([]);
 const hasAnswered = ref(false);
 const isCorrect = ref(false);
 const selectedOption = ref<number>(-1);
+// 是否点了「不会」（错答，但不选具体选项）
+const selectedUnknown = ref(false);
+// 作答后的自动跳题定时器（离开页面/重新开始时清理，避免误跳）
+let advanceTimer: ReturnType<typeof setTimeout> | null = null;
 const results = ref<Record<string, { correct: number; total: number }>>({});
 const showHistoryDetail = ref(false);
 const testResult = ref<ReturnType<typeof vocabStore.saveTestResult> | null>(null);
@@ -392,15 +420,25 @@ async function loadWordBank(levelId: string): Promise<WordItem[]> {
     return wordBankCache.value[levelId];
   }
 
+  const level = LEVELS.find(l => l.id === levelId);
+  const bankType = level ? getBankType(level) : undefined;
+  if (!bankType) {
+    log.e(`当前语言没有对应 ${levelId} 等级的词库`);
+    return [];
+  }
+
   try {
-    const response = await fetch(`/wordbanks/${levelId}.json`);
-    const words = await response.json();
-    const wordItems: WordItem[] = words.map((w: WordBankItem) => ({
-      word: w.word,
-      phonetic: w.phonetic || '',
-      explains: w.explains,
-      level: levelId,
-    }));
+    // 统一走 wordbank-service：内部使用 BASE_URL，兼容 file://（uTools/Electron）与子路径部署。
+    // 测试只需抽样，不写 localStorage 缓存，避免多个大词库挤爆存储配额。
+    const words = await fetchWordBank(bankType, { useCache: false });
+    const wordItems: WordItem[] = words
+      .filter(w => w.text && w.explains)
+      .map(w => ({
+        word: w.text,
+        phonetic: w.phonetic || '',
+        explains: w.explains,
+        level: levelId,
+      }));
     wordBankCache.value[levelId] = wordItems;
     return wordItems;
   } catch (error) {
@@ -461,6 +499,7 @@ async function generateOptions(correctWord: WordItem) {
 // 开始测试
 async function startTest() {
   isLoading.value = true;
+  clearAdvanceTimer();
   try {
     isTesting.value = true;
     showResult.value = false;
@@ -468,6 +507,10 @@ async function startTest() {
     currentWordIndex.value = 0;
     results.value = {};
     testResult.value = null;
+    hasAnswered.value = false;
+    isCorrect.value = false;
+    selectedOption.value = -1;
+    selectedUnknown.value = false;
 
     await generateTestWords();
 
@@ -486,25 +529,51 @@ async function startTest() {
   }
 }
 
-// 选择答案
-function selectOption(index: number) {
-  if (hasAnswered.value) return;
-  
-  selectedOption.value = index;
+/** 清理自动跳题定时器（作答后跳题、重开测试、离开页面时共用） */
+function clearAdvanceTimer() {
+  if (advanceTimer) {
+    clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+}
+
+/** 记录作答结果，并在短暂展示答案后自动进入下一题 */
+function recordAnswer(correct: boolean) {
   hasAnswered.value = true;
-  
-  const correctAnswer = currentWord.value.explains;
-  isCorrect.value = currentOptions.value[index] === correctAnswer;
-  
-  // 记录结果
+  isCorrect.value = correct;
+
   const levelId = currentLevel.value.id;
   if (!results.value[levelId]) {
     results.value[levelId] = { correct: 0, total: 0 };
   }
   results.value[levelId].total++;
-  if (isCorrect.value) {
+  if (correct) {
     results.value[levelId].correct++;
   }
+
+  clearAdvanceTimer();
+  advanceTimer = setTimeout(() => {
+    advanceTimer = null;
+    nextWord();
+  }, 1000);
+}
+
+// 选择答案
+function selectOption(index: number) {
+  if (hasAnswered.value) return;
+
+  selectedOption.value = index;
+  selectedUnknown.value = false;
+  recordAnswer(currentOptions.value[index] === currentWord.value.explains);
+}
+
+// 不会：不选具体释义，按错答记录后直接看答案
+function selectUnknown() {
+  if (hasAnswered.value) return;
+
+  selectedOption.value = -1;
+  selectedUnknown.value = true;
+  recordAnswer(false);
 }
 
 // 获取选项样式
@@ -519,8 +588,10 @@ function getOptionClass(index: number): string {
   return 'disabled';
 }
 
-// 下一题
+// 下一题（作答后自动调用，不再需要手动点按钮）
 async function nextWord() {
+  clearAdvanceTimer();
+
   if (isLastWord.value) {
     finishTest();
     return;
@@ -538,6 +609,7 @@ async function nextWord() {
   hasAnswered.value = false;
   isCorrect.value = false;
   selectedOption.value = -1;
+  selectedUnknown.value = false;
   
   await generateOptions(currentWord.value);
 }
@@ -562,6 +634,7 @@ function finishTest() {
 
 // 重新开始
 function restartTest() {
+  clearAdvanceTimer();
   showResult.value = false;
   testResult.value = null;
 }
@@ -591,6 +664,10 @@ function formatDate(dateStr: string): string {
 
 onMounted(() => {
   vocabStore.loadHistory();
+});
+
+onUnmounted(() => {
+  clearAdvanceTimer();
 });
 </script>
 
@@ -797,6 +874,20 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
+.dont-know-btn {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border-style: dashed;
+  color: var(--utools-text-secondary);
+}
+
+.dont-know-btn.wrong-answer {
+  background-color: #fef0f0;
+  border-color: #F56C6C;
+  color: #F56C6C;
+}
+
 .option-btn {
   padding: 20px;
   font-size: 15px;
@@ -859,10 +950,10 @@ onMounted(() => {
   margin-top: 10px;
 }
 
-.next-btn {
-  width: 100%;
-  padding: 15px;
-  font-size: 16px;
+.auto-next-hint {
+  text-align: center;
+  color: var(--utools-text-secondary);
+  font-size: 13px;
 }
 
 /* 结果界面 */
