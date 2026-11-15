@@ -49,6 +49,9 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .knowledge-memory-page {
+  // 父容器 .home-main 是 column flex 滚动容器，默认 flex-shrink:1 会在内容超高时
+  // 把页根钳在容器高度，导致末行内容被裁切看不见（bug-list R2）
+  flex-shrink: 0;
   padding: 10px 12px 16px;
 
   .category-switch {

@@ -392,7 +392,9 @@ function saveToAlbum(filePath: string): Promise<void> {
 
 <style scoped>
 .table-page {
-  height: 100vh;
+  /* 小程序里 100vh 含原生导航栏高度，会把 flex 列内容顶出可视区、末行被遮（bug-list R2）；
+     uni-app 提供 --window-top 变量（自定义导航栏时为 0），扣掉后两种导航模式都正确 */
+  height: calc(100vh - var(--window-top, 0px));
   background: var(--sr-bg);
   display: flex;
   flex-direction: column;
