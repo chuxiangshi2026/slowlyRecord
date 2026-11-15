@@ -209,7 +209,7 @@ export interface ChoiceQuestion {
   _rev?: string;
   // 关联的文章ID
   articleId: string;
-  // 题目类型: 'synonym' - 近义词, 'antonym' - 反义词, 'typo' - 错别字, 'nonsense' - 无厘头
+  // 题目类型: synonym-近义词 antonym-反义词 typo-错别字 nonsense-无厘头 judgment-判断题
   type: 'synonym' | 'antonym' | 'typo' | 'nonsense' | 'judgment';
   // 原文片段
   originalText: string;

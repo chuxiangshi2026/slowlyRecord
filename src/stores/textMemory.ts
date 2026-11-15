@@ -725,18 +725,28 @@ export const useTextMemoryStore = defineStore('textMemory', {
 
     /**
      * 生成选择题
+     * @param types 出题题型白名单；不传则五种题型随机。语义类题型（近义/反义/判断）
+     *              只用语义词库中的词出题，句中无库词时该次出题跳过或降级为无厘头（bug-list R1）
      */
-    generateChoiceQuestions(articleId: string, content: string, count: number = 5): ChoiceQuestion[] {
+    generateChoiceQuestions(
+      articleId: string,
+      content: string,
+      count: number = 5,
+      types?: Array<'synonym' | 'antonym' | 'typo' | 'nonsense' | 'judgment'>
+    ): ChoiceQuestion[] {
       const questions: ChoiceQuestion[] = [];
       const sentences = content.split(/[。！？；.!?;]/).filter(s => s.trim().length > 10);
 
       if (sentences.length === 0) return questions;
 
-      const types: Array<'synonym' | 'antonym' | 'typo' | 'nonsense'> = ['synonym', 'antonym', 'typo', 'nonsense'];
+      const allTypes: Array<'synonym' | 'antonym' | 'typo' | 'nonsense' | 'judgment'> =
+        ['synonym', 'antonym', 'typo', 'nonsense', 'judgment'];
+      const typePool = types?.length ? types.filter(t => allTypes.includes(t)) : allTypes;
+      const wordBank = this.getSemanticWordBank();
 
       for (let i = 0; i < Math.min(count, sentences.length); i++) {
         const sentence = sentences[Math.floor(Math.random() * sentences.length)];
-        const type = types[Math.floor(Math.random() * types.length)];
+        let type = typePool[Math.floor(Math.random() * typePool.length)];
 
         // 提取句子中的关键词（优先4字成语，然后是3字、2字词，确保不重叠）
         const keywords: { word: string; start: number; end: number; priority: number }[] = [];
@@ -759,9 +769,41 @@ export const useTextMemoryStore = defineStore('textMemory', {
 
         if (keywords.length === 0) continue;
 
-        // 优先选择较长的词
-        keywords.sort((a, b) => b.priority - a.priority);
-        const topKeywords = keywords.slice(0, Math.min(5, keywords.length));
+        // 语义类题型只用语义词库中的词出题，否则「正确答案=原词/不+原词」成了 nonsense。
+        // 词库词用 4→2 字贪心正向匹配抽取——原「所有 n-gram 都当候选」的做法会让
+        // 4 字子串占位把 2 字库词挤掉，句中根本选不出真正的词
+        const isSemanticType = (t: string) => t === 'synonym' || t === 'antonym' || t === 'judgment';
+        const bankMatches: { word: string; start: number; end: number; priority: number }[] = [];
+        for (let j = 0; j < sentence.length; ) {
+          let matched = false;
+          for (let len = 4; len >= 2 && j + len <= sentence.length; len--) {
+            const w = sentence.substring(j, j + len);
+            if (wordBank[w]) {
+              bankMatches.push({ word: w, start: j, end: j + len, priority: len });
+              j += len;
+              matched = true;
+              break;
+            }
+          }
+          if (!matched) j++;
+        }
+        const semanticPool = bankMatches.filter(k => {
+          const data = wordBank[k.word];
+          if (type === 'synonym') return data.synonym.length > 0;
+          if (type === 'antonym') return data.antonym.length > 0;
+          return data.synonym.length > 0 || data.antonym.length > 0;
+        });
+
+        // 句中没有可用库词：白名单含无厘头则降级，否则尊重白名单跳过本次
+        if (isSemanticType(type) && semanticPool.length === 0) {
+          if (!typePool.includes('nonsense')) continue;
+          type = 'nonsense';
+        }
+
+        // 优先选择较长的词；语义类题型只在库词范围内选
+        const pool = isSemanticType(type) ? semanticPool : keywords;
+        pool.sort((a, b) => b.priority - a.priority);
+        const topKeywords = pool.slice(0, Math.min(5, pool.length));
         const selected = topKeywords[Math.floor(Math.random() * topKeywords.length)];
         const keyword = selected.word;
 
@@ -789,6 +831,29 @@ export const useTextMemoryStore = defineStore('textMemory', {
             explanation = `"${keyword}"的反义词是"${correctAnswer}"`;
             break;
           }
+          case 'judgment': {
+            // 判断题：陈述一个近/反义词关系，让考生判断对错；陈述 50% 为真、50% 为假
+            const data = wordBank[keyword]!;
+            const useSynonym = data.synonym.length > 0 && (data.antonym.length === 0 || Math.random() < 0.5);
+            const relation = useSynonym ? '近义词' : '反义词';
+            const correctWord = useSynonym ? data.synonym[0] : data.antonym[0];
+            const claimCorrect = Math.random() < 0.5;
+            let claim: string;
+            if (claimCorrect) {
+              claim = correctWord;
+            } else {
+              // 假陈述取同关系的其余词，没有则用对立关系词（不可能等于正确答案）
+              const sameRel = useSynonym ? data.synonym.slice(1) : data.antonym.slice(1);
+              const crossRel = useSynonym ? data.antonym : data.synonym;
+              const claimPool = sameRel.length > 0 ? sameRel : crossRel;
+              claim = claimPool[Math.floor(Math.random() * claimPool.length)];
+            }
+            question = `判断：「${keyword}」的${relation}是「${claim}」，这个说法对吗？`;
+            options = ['说法正确', '说法错误'];
+            correctIndex = claim === correctWord ? 0 : 1;
+            explanation = `「${keyword}」的${relation}是「${correctWord}」`;
+            break;
+          }
           case 'typo':
             question = `找出句子中的错别字（或错误用词）：${sentence}`;
             const typoResult = this.generateTypoOptions(keyword);
@@ -814,6 +879,7 @@ export const useTextMemoryStore = defineStore('textMemory', {
           question,
           options: options.map((opt, idx) => ({ label: String.fromCharCode(65 + idx), content: opt })),
           correctIndex,
+          explanation,
           answered: false,
           ctime: Date.now()
         });

@@ -531,6 +531,75 @@ describe('useTextMemoryStore', () => {
       }
     })
 
+    it('语义类选择题只用语义词库中的词出题，正确答案不是原词本身（bug-list R1）', () => {
+      const store = useTextMemoryStore()
+      // Math.random 固定为 0：句子取第一句，关键词取排序后的第一个库词
+      const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0)
+      try {
+        const content = '美丽人生充满希望和快乐的事情。之乎者也乃文言虚词也。'
+
+        const synonymQuestions = store.generateChoiceQuestions('article1', content, 2, ['synonym'])
+        expect(synonymQuestions.length).toBeGreaterThan(0)
+        for (const q of synonymQuestions) {
+          if (q.type !== 'synonym') continue
+          const keyword = /"(.+?)"的近义词/.exec(q.question)?.[1]
+          expect(keyword).toBeTruthy()
+          // 题干关键词必须来自语义词库（修复前会随机选文中任意词）
+          expect(store.getSemanticWordBank()).toHaveProperty(keyword!)
+          // 正确答案不能是原词本身（修复前未知词会返回原词）
+          expect(q.options[q.correctIndex].content).not.toBe(keyword)
+        }
+
+        const antonymQuestions = store.generateChoiceQuestions('article1', content, 2, ['antonym'])
+        expect(antonymQuestions.length).toBeGreaterThan(0)
+        for (const q of antonymQuestions) {
+          if (q.type !== 'antonym') continue
+          const keyword = /"(.+?)"的反义词/.exec(q.question)?.[1]
+          expect(keyword).toBeTruthy()
+          expect(store.getSemanticWordBank()).toHaveProperty(keyword!)
+          // 正确答案不能是「不+原词」式兜底（修复前未知词会返回否定形式）
+          expect(q.options[q.correctIndex].content).not.toBe(`不${keyword}`)
+        }
+      } finally {
+        randomSpy.mockRestore()
+      }
+    })
+
+    it('句中无库词且白名单无无厘头时跳过，不生成错题（bug-list R1）', () => {
+      const store = useTextMemoryStore()
+      const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0)
+      try {
+        const content = '之乎者也乃文言虚词也用于古籍文章之中。者也之乎同样如此这般。'
+
+        const questions = store.generateChoiceQuestions('article1', content, 2, ['synonym'])
+        expect(questions).toHaveLength(0)
+      } finally {
+        randomSpy.mockRestore()
+      }
+    })
+
+    it('generateChoiceQuestions 支持判断题题型（bug-list R1）', () => {
+      const store = useTextMemoryStore()
+      // Math.random 固定为 0：取第一句、第一个库词「美丽」，用近义词「漂亮」且陈述为真
+      const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0)
+      try {
+        const content = '美丽人生充满希望和快乐的事情。'
+        const questions = store.generateChoiceQuestions('article1', content, 1, ['judgment'])
+
+        expect(questions).toHaveLength(1)
+        const q = questions[0]
+        expect(q.type).toBe('judgment')
+        expect(q.options).toHaveLength(2)
+        expect(q.options.map(o => o.content)).toEqual(['说法正确', '说法错误'])
+        expect(q.question).toContain('美丽')
+        expect(q.question).toContain('漂亮')
+        expect(q.options[q.correctIndex].content).toBe('说法正确')
+        expect(q.explanation).toContain('漂亮')
+      } finally {
+        randomSpy.mockRestore()
+      }
+    })
+
     it('getSemanticWordBank 应该返回语义词库', () => {
       const store = useTextMemoryStore()
       

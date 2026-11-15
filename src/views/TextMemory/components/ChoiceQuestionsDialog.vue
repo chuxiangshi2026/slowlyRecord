@@ -171,12 +171,13 @@ import { getArticleLanguage } from '@/utils/text-memory-util';
 import PinyinLines from '@/components/PinyinLines.vue';
 
 // 中文专属题型（依赖中文近反义词库/错别字），非中文文章禁用
-const ZH_ONLY_TYPES = ['synonym', 'antonym', 'typo'];
+const ZH_ONLY_TYPES = ['synonym', 'antonym', 'typo', 'judgment'];
 
 // 题型下拉选项
 const typeOptions = [
   { label: '近义词', value: 'synonym' },
   { label: '反义词', value: 'antonym' },
+  { label: '判断题', value: 'judgment' },
   { label: '错别字', value: 'typo' },
   { label: '无厘头', value: 'nonsense' },
 ];
@@ -198,12 +199,12 @@ const isZhArticle = computed(() => getArticleLanguage(props.article) === 'zh');
 
 // 非中文文章默认只保留语言无关题型
 const defaultSelectedTypes = computed(() =>
-  isZhArticle.value ? ['synonym', 'antonym', 'typo', 'nonsense'] : ['nonsense']
+  isZhArticle.value ? ['synonym', 'antonym', 'judgment', 'typo', 'nonsense'] : ['nonsense']
 );
 
 // 练习设置
 const questionCount = ref(5);
-const selectedTypes = ref<string[]>(['synonym', 'antonym', 'typo', 'nonsense']);
+const selectedTypes = ref<string[]>(['synonym', 'antonym', 'judgment', 'typo', 'nonsense']);
 const generating = ref(false);
 const showPinyin = ref(textStore.exerciseSettings.showPinyin);
 function togglePinyin() {
@@ -272,27 +273,24 @@ const hasSavedProgress = computed(() => {
 // 生成新题目
 function generateNewQuestions() {
   if (!props.article) return;
-  
+
   generating.value = true;
-  
+
   setTimeout(() => {
-    // 使用 store 中的方法生成题目
-    const generatedQuestions = textStore.generateChoiceQuestions(
+    // 按文章语言过滤题型（非中文文章剔除中文专属题型），作为白名单传给生成函数——
+    // 生成阶段就按白名单出题，避免「生成混合题再过滤」导致题量不足（bug-list R1）
+    const allowedTypes = selectedTypes.value.filter(t => isZhArticle.value || !ZH_ONLY_TYPES.includes(t));
+    const types = (allowedTypes.length > 0 ? allowedTypes : ['nonsense']) as Array<'synonym' | 'antonym' | 'typo' | 'nonsense' | 'judgment'>;
+    questions.value = textStore.generateChoiceQuestions(
       props.article!._id,
       props.article!.content,
-      questionCount.value
+      questionCount.value,
+      types
     );
-    
-    // 过滤题型（非中文文章再兜底剔除中文专属题型）
-    const allowedTypes = selectedTypes.value.filter(t => isZhArticle.value || !ZH_ONLY_TYPES.includes(t));
-    if (allowedTypes.length > 0) {
-      questions.value = generatedQuestions.filter(q =>
-        allowedTypes.includes(q.type)
-      );
-    } else {
-      questions.value = generatedQuestions;
+    if (questions.value.length === 0) {
+      ElMessage.info('所选题型无法从当前文章生成题目，试试勾选其他题型');
     }
-    
+
     generating.value = false;
   }, 100);
 }
