@@ -291,6 +291,7 @@ import { isUtools } from '@/adapters/platform';
 import { DEFAULT_INTERVALS } from '@/constants';
 import { computeLevelDown, isDue } from '@/utils/srs';
 import { FeatureEvents } from '@/utils/stats';
+import { saveDictationProgress, loadDictationProgress, clearDictationProgress } from '@/utils/dictation-progress';
 import DetailDrawer from '@/views/Word/components/DetailDrawer.vue';
 import WordFilter from '@/views/Word/components/WordFilter.vue';
 import type { FilterState } from '@/views/Word/components/WordFilter.vue';
@@ -595,7 +596,7 @@ async function loadBanks() {
   await wordsStore.listWords();
 }
 
-async function loadWords() {
+async function loadWords(skipProgressRestore = false) {
   // 从 store 直接获取单词（避免 DB 重新加载导致数据不一致）
   const allWords = wordsStore.words;
   if (allWords.length === 0) {
@@ -607,7 +608,33 @@ async function loadWords() {
   const singleWords = allWords.filter(w => w.text && isWordText(w.text, profile) && !isPhraseText(w.text, profile));
   wordList.value = applyFilters(singleWords).sort(() => Math.random() - 0.5);
   currentIndex.value = 0;
+
+  // 恢复上次练习进度（一轮完成后的重载除外，bug-list R20）：
+  // 校验词库内容未变化后按保存的乱序顺序重排，从上次下标继续
+  if (!skipProgressRestore) {
+    const saved = loadDictationProgress(selectedBankId.value, filterListMode.value, wordList.value.map(w => w._id));
+    if (saved) {
+      const byId = new Map(wordList.value.map(w => [w._id, w]));
+      const restored = saved.ids.map(id => byId.get(id)).filter((w): w is Word => !!w);
+      if (restored.length === wordList.value.length) {
+        wordList.value = restored;
+        currentIndex.value = Math.min(saved.index, restored.length - 1);
+        ElMessage.info(`已从上次进度继续（第 ${currentIndex.value + 1}/${restored.length} 个）`);
+      }
+    }
+  }
 }
+
+// 进度变化即持久化（切词、列表刷新、离开页面都覆盖到）
+watch([currentIndex, wordList], () => {
+  if (wordList.value.length === 0) return;
+  saveDictationProgress(
+    selectedBankId.value,
+    filterListMode.value,
+    wordList.value.map(w => w._id),
+    currentIndex.value
+  );
+});
 
 /** 更新单词后刷新列表（移除不再匹配筛选条件的单词） */
 function refreshWordList() {
@@ -1257,6 +1284,7 @@ function prevWord() {
 function nextWord() {
   // 如果列表已被清空（所有单词均已记住/不匹配筛选），重新加载
   if (wordList.value.length === 0) {
+    clearDictationProgress(selectedBankId.value, filterListMode.value);
     loadWords().then(() => {
       if (wordList.value.length > 0) {
         prepareWord();
@@ -1270,8 +1298,9 @@ function nextWord() {
     currentIndex.value++;
     prepareWord();
   } else {
-    // 一轮结束，重新加载打乱
-    loadWords().then(() => {
+    // 一轮结束：清除本轮进度，重新加载打乱（skipProgressRestore=true 防止恢复回旧进度）
+    clearDictationProgress(selectedBankId.value, filterListMode.value);
+    loadWords(true).then(() => {
       if (wordList.value.length > 0) {
         prepareWord();
         ElMessage.success('新一轮单词');
