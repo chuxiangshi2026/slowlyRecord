@@ -21,6 +21,14 @@ describe('word-graph-layout（中心导图布局）', () => {
     expect(square.radiusY).toBeGreaterThan(wide.radiusY)
   })
 
+  it('左右最外侧节点留出边距，不被卡片边缘裁切', () => {
+    // 节点宽约容器 18%（一半 9%），4 个节点时正左右排布是最贴边的情况
+    const { nodes } = layoutWordGraph(4)
+    const halfNode = 0.09
+    expect(Math.min(...nodes.map(p => p.x))).toBeGreaterThanOrEqual(halfNode)
+    expect(Math.max(...nodes.map(p => p.x))).toBeLessThanOrEqual(1 - halfNode)
+  })
+
   it('建议上限保持 12，节点坐标始终不越界', () => {
     expect(WORD_GRAPH_MAX_NODES).toBe(12)
     const layout = layoutWordGraph(12, 480, 520)

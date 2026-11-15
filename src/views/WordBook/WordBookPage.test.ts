@@ -176,22 +176,9 @@ describe('词集学习页', () => {
     confirm.mockRestore()
   })
 
-  it('容器变小时切换为可滚动紧凑卡片布局', async () => {
-    let resize: ((entries: any[]) => void) | undefined
-    class Observer {
-      constructor(callback: (entries: any[]) => void) { resize = callback }
-      observe() {}
-      unobserve() {}
-      disconnect() {}
-    }
-    vi.stubGlobal('ResizeObserver', Observer)
+  it('导图节点按百分比定位，任何窗口尺寸都保持放射布局', async () => {
     render(WordBookPage, { global: { plugins: [ElementPlus] } })
-    const shell = await screen.findByRole('group', { name: 'old 篇 中心导图' })
-    expect(shell).not.toHaveClass('compact')
-
-    resize!([{ contentRect: { width: 500, height: 400 } }])
-    await waitFor(() => expect(shell).toHaveClass('compact'))
-    expect(document.querySelector('.map-node')).not.toHaveAttribute('style', /left:/)
-    vi.unstubAllGlobals()
+    await screen.findByRole('group', { name: 'old 篇 中心导图' })
+    expect((document.querySelector('.map-node') as HTMLElement).style.left).toContain('%')
   })
 })

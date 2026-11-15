@@ -25,7 +25,7 @@
 
         <div class="workspace" :class="{ finished: recallFinished }">
           <section class="graph-area">
-            <div ref="graphShell" class="graph-shell" :class="{ compact: compactGraph }" role="group" :aria-label="`${page.name} 中心导图`">
+            <div class="graph-shell" role="group" :aria-label="`${page.name} 中心导图`">
               <svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <line v-for="(pos, index) in graphLayout.nodes" :key="`line-${index}`"
                       x1="50" y1="50" :x2="pos.x * 100" :y2="pos.y * 100"/>
@@ -257,7 +257,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { EditPen, Headset } from '@element-plus/icons-vue'
@@ -333,17 +333,12 @@ const practiceRound = ref(false)
 const savingRound = ref(false)
 const roundSaveFailed = ref(false)
 const pendingRound = ref<WordBookRoundSummary | null>(null)
-const graphShell = ref<HTMLElement | null>(null)
-const graphWidth = ref(900)
-const graphHeight = ref(620)
-const compactGraph = computed(() => graphWidth.value < 620 || graphHeight.value < 480)
-
 const keyTypeOptions = (Object.keys(WORD_BOOK_KEY_TYPE_LABEL) as WordBookKeyType[]).map(value => ({
   value,
   label: WORD_BOOK_KEY_TYPE_LABEL[value],
 }))
 
-const graphLayout = computed(() => layoutWordGraph(page.value?.words.length || 0, graphWidth.value, graphHeight.value))
+const graphLayout = computed(() => layoutWordGraph(page.value?.words.length || 0, 900, 620))
 const chapterDirectory = computed(() => page.value
   ? buildWordBookChapterDirectory(store.chaptersOf(page.value.bookId), store.pages)
   : [])
@@ -419,26 +414,6 @@ onMounted(async () => {
   }
 })
 
-let graphObserver: ResizeObserver | undefined
-watch(graphShell, (element, previous) => {
-  graphObserver?.disconnect()
-  graphObserver = undefined
-  if (!element) return
-  const updateSize = (width: number, height: number) => {
-    if (width > 0) graphWidth.value = width
-    if (height > 0) graphHeight.value = height
-  }
-  updateSize(element.clientWidth, element.clientHeight)
-  if (typeof ResizeObserver !== 'undefined') {
-    graphObserver = new ResizeObserver(entries => {
-      const rect = entries[0]?.contentRect
-      if (rect) updateSize(rect.width, rect.height)
-    })
-    graphObserver.observe(element)
-  }
-})
-onBeforeUnmount(() => graphObserver?.disconnect())
-
 watch(pageId, () => {
   initPageState()
   openPickerFromQuery()
@@ -464,7 +439,6 @@ function initPageState() {
 }
 
 function nodeStyle(index: number) {
-  if (compactGraph.value) return {}
   const pos = graphLayout.value.nodes[index]
   if (!pos) return {}
   return { left: `${pos.x * 100}%`, top: `${pos.y * 100}%` }
@@ -1795,58 +1769,6 @@ function dueLabel(nextReviewAt: number): string {
   margin: 4px 0 0;
   color: var(--utools-text-tertiary);
   font-size: 11px;
-}
-
-.graph-shell.compact {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-content: start;
-  gap: 8px;
-  padding: 10px;
-  overflow-y: auto;
-}
-
-.compact .map-lines {
-  display: none;
-}
-
-.compact .map-center {
-  position: relative;
-  left: auto;
-  top: auto;
-  grid-column: 1 / -1;
-  justify-self: center;
-  width: 140px;
-  min-height: 92px;
-  transform: none;
-}
-
-.compact .map-node {
-  position: relative;
-  left: auto;
-  top: auto;
-  width: auto;
-  min-height: 96px;
-  transform: none;
-}
-
-.compact .map-node.hoverable:hover {
-  transform: none;
-}
-
-.compact .empty-page-tip {
-  position: relative;
-  left: auto;
-  top: auto;
-  grid-column: 1 / -1;
-  width: auto;
-  transform: none;
-}
-
-@media (max-width: 420px) {
-  .graph-shell.compact {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 900px) {

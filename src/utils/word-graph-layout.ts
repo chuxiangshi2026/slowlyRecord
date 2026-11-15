@@ -26,7 +26,8 @@ export function layoutWordGraph(
   const safeCount = Math.max(0, Math.floor(count))
   const aspect = containerWidth > 0 && containerHeight > 0 ? containerWidth / containerHeight : 1.33
   const narrow = aspect < 1.2
-  const radiusX = narrow ? 0.39 : 0.41
+  // 节点宽约容器 18%（一半 9%），左右留出 3% 边距，避免贴边或被 overflow 裁切
+  const radiusX = narrow ? 0.36 : 0.38
   const radiusY = narrow ? 0.39 : 0.36
   const center = { x: 0.5, y: 0.5 }
 
