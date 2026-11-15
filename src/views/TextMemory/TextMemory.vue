@@ -786,14 +786,44 @@ async function handleDelete(article: TextArticle) {
   }
 }
 
+// 超过该篇数的大批量导入才显示逐篇进度提示（少量导入直接完成，避免提示闪烁）
+const PROGRESS_THRESHOLD = 5;
+
 // 处理导入
 async function handleImportArticles(articles: Omit<TextArticle, '_id' | '_rev' | 'ctime' | 'utime' | 'reviewCount'>[]) {
   let successCount = 0;
   let failCount = 0;
 
+  // 大批量导入（如整本诗词库）每篇都要全量重写一次文档，逐个落库耗时明显：
+  // 超过阈值时给出常驻进度提示，并周期性让出主线程避免界面卡死（bug-list R7）
+  const total = articles.length;
+  const showProgress = total > PROGRESS_THRESHOLD;
+  let progressMsg: { close: () => void } | null = null;
+  // 句柄的关闭/重建都收敛在闭包里，避免外层控制流把变量窄化成 null（bug-list R7）
+  const closeProgress = () => {
+    progressMsg?.close();
+    progressMsg = null;
+  };
+  const updateProgress = (done: number) => {
+    closeProgress();
+    progressMsg = ElMessage.info({
+      message: `正在导入第 ${done}/${total} 篇…`,
+      duration: 0,
+    });
+  };
+  if (showProgress) {
+    updateProgress(0);
+  }
+
   let firstError = '';
-  for (const article of articles) {
-    const result = await textStore.addArticle(article);
+  try {
+    for (let i = 0; i < total; i++) {
+      const result = await textStore.addArticle(articles[i]);
+      if (showProgress) {
+        updateProgress(i + 1);
+        // uTools 下 db 写入是同步的，每篇之间让出一次事件循环，保证进度提示能渲染
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
     if (result.success) {
       successCount++;
     } else {
@@ -802,6 +832,9 @@ async function handleImportArticles(articles: Omit<TextArticle, '_id' | '_rev' |
         firstError = result.error;
       }
     }
+    }
+  } finally {
+    closeProgress();
   }
 
   if (successCount > 0) {
