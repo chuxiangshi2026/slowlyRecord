@@ -167,6 +167,10 @@
             :rows="12"
             :placeholder="batchPlaceholder"
         />
+        <div class="batch-actions">
+          <el-button size="small" @click="pasteBatchFromClipboard">📋 从剪贴板粘贴</el-button>
+          <span class="batch-actions-tip">复制的文本、截图 OCR 结果可直接粘贴到这里批量导入</span>
+        </div>
       </el-tab-pane>
 
       <!-- 文件导入：顶部选择类型，影响导入后的分类归属 -->
@@ -1276,6 +1280,7 @@ import { useMemoryPalaceStore } from '@/stores/memoryPalace';
 import { loadPackPreviews } from '@/utils/knowledge-pack-preview';
 import { detectTextLanguage, isSupportedArticleLanguage } from '@/utils/text-memory-util';
 import type { KnowledgePackInfo } from '@/types/knowledge-memory';
+import { getClipboardAdapter } from '@/adapters/clipboard';
 import TextEditForm from './TextEditForm.vue';
 
 interface Props {
@@ -1625,6 +1630,21 @@ async function handleImportPeg(packId: string) {
 type BatchType = 'text' | 'poetry' | 'idiom' | 'knowledge' | 'timeline';
 const batchType = ref<BatchType>('text');
 const batchContent = ref('');
+
+// 从剪贴板直接粘贴到批量导入框（复制的文本、截图 OCR 结果一键导入，bug-list R21）
+async function pasteBatchFromClipboard() {
+  try {
+    const text = (await getClipboardAdapter().readText())?.trim();
+    if (!text) {
+      ElMessage.info('剪贴板里没有文本内容');
+      return;
+    }
+    batchContent.value = batchContent.value ? batchContent.value + '\n' + text : text;
+    ElMessage.success('已粘贴剪贴板内容');
+  } catch {
+    ElMessage.warning('读取剪贴板失败，请手动 Ctrl+V 粘贴');
+  }
+}
 
 // 各类型格式说明
 const BATCH_FORMAT_TIPS: Record<BatchType, { desc: string; example: string; placeholder: string }> = {
@@ -2907,6 +2927,18 @@ watch(manualType, (type) => {
     font-size: 13px;
     color: var(--utools-text-secondary);
     flex-shrink: 0;
+  }
+}
+
+.batch-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+
+  .batch-actions-tip {
+    font-size: 12px;
+    color: var(--utools-text-tertiary);
   }
 }
 
