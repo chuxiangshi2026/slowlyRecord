@@ -52,3 +52,7 @@ scripts/data/freq/
 # 微信小程序 CI 密钥与预览二维码
 mobile/private.*.key
 mobile/.ci-qr/
+
+# 测试与工具输出
+test-results/
+.mimosa/
