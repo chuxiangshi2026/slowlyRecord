@@ -556,11 +556,13 @@ body.has-app-bg {
 
   // 头部引用的是 --utools-bg-primary（body 底色需保持实底兜底，未纳入重定义），单独罩；
   // AppHeader 内层 .app-header 自带实底背景（scoped），同样按浓度放开——透明与亚克力随之生效。
+  // 遮罩用 --app-bg-scrim-header 而非内容区同款浓度：页头文字少、字号小，整体透明度拉高时
+  // 容易透出背景图亮带导致对比度不足（bug-list B3），JS 侧已给该变量设 0.75 下限。
   // 「页头应用效果」关闭（app-bg-header-off）时不罩，保留原实底
   &:not(.app-bg-header-off) {
     .common-layout .el-header,
     .app-header {
-      background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim, 0.6));
+      background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim-header, 0.75));
     }
   }
 

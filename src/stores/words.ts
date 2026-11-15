@@ -490,6 +490,7 @@ export const useWordsStore =
                     body.classList.remove('has-app-bg', 'app-bg-acrylic', 'app-bg-card-blur', 'app-bg-header-off', 'app-bg-footer-off');
                     root.style.removeProperty('--app-bg-image');
                     root.style.removeProperty('--app-bg-scrim');
+                    root.style.removeProperty('--app-bg-scrim-header');
                     root.style.removeProperty('--app-bg-acrylic-blur');
                     root.style.removeProperty('--app-bg-card-blur');
                     return;
@@ -511,6 +512,9 @@ export const useWordsStore =
                 if (seq !== appBgApplySeq) return;
                 root.style.setProperty('--app-bg-image', `url("${url}")`);
                 root.style.setProperty('--app-bg-scrim', String(Math.max(0, Math.min(1, scrim))));
+                // 页头遮罩设可读性下限：页头文字少、字号小，用户把整体透明度拉高（scrim 低）时
+                // 页头会透出背景图亮带导致文字对比度不足（bug-list B3），页头单独不低于 0.75
+                root.style.setProperty('--app-bg-scrim-header', String(Math.max(0.75, Math.min(1, scrim))));
                 // 用 ?? 而非 ||：滑杆拉到 0 是合法值（关闭该层模糊），不能被默认值吞掉
                 root.style.setProperty('--app-bg-acrylic-blur', `${Math.max(0, Math.min(60, acrylicBlur ?? 18))}px`);
                 const cardBlurPx = Math.max(0, Math.min(60, cardBlur ?? 12));
