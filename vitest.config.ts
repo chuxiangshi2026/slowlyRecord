@@ -4,6 +4,10 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
+  define: {
+    // 测试环境恒为非商店构建（保留内置密钥与 Bing 网页版翻译的完整代码路径）
+    __STORE_BUILD__: 'false',
+  },
   test: {
     // 开发机高负载下，首个用例的动态 import 可能超过默认 10s 钩子超时（全量并发跑偶发 flake 的根因）
     hookTimeout: 30000,

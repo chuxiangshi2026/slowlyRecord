@@ -50,7 +50,7 @@ export interface FocusModeSettings {
     backgroundImageBlur?: number; // 背景图模糊半径 px（亚克力效果，0=关闭；静态图层整体模糊，性能开销可忽略）
     locked?: boolean; // 锁定后内容区鼠标穿透
     autoNext?: boolean; // 发音结束后自动切换到下一个单词（标准模式）
-    repeatCount?: number; // 每个单词自动发音遍数（1-3，拼写模式表示每个词发音几遍）
+    repeatCount?: number; // 每个单词自动发音遍数（1/2/3/10/20，拼写模式表示每个词发音几遍）
     pendingAction?: FocusModePendingAction;
 }
 
@@ -91,6 +91,10 @@ export type UserSetType = DbDoc<{
     autoSpeak: boolean;
     /** 护眼模式（浅绿背景基底），默认开启 */
     eyeCare?: boolean;
+    /** 已选择关闭匿名使用统计（持久化在 user-set，插件更新清空 localStorage 后仍保留用户选择） */
+    statsExcluded?: boolean;
+    /** 首次启动统计告知弹窗已展示过（跨更新只提示一次） */
+    statsNoticeShown?: boolean;
     /** 新词加入目标词库：current=当前词库（缺省），default=默认词库 */
     addWordTarget?: 'current' | 'default';
     /**
@@ -102,7 +106,7 @@ export type UserSetType = DbDoc<{
      * headerEffect/footerEffect=透明与亚克力是否作用于页头/底栏（默认 true，false 时对应区域回落实底色）；
      * brightness=整体明亮度 0.5~1.5（默认 1，独立于背景图生效）
      */
-    appBg?: { preset?: string; scrim?: number; acrylic?: boolean; acrylicBlur?: number; cardBlur?: number; headerEffect?: boolean; footerEffect?: boolean; brightness?: number };
+    appBg?: { preset?: string; scrim?: number; acrylic?: boolean; acrylicBlur?: number; cardBlur?: number; headerEffect?: boolean; footerEffect?: boolean; brightness?: number; cardAlpha?: number; headerAlpha?: number; footerAlpha?: number };
     /**
      * 定时任务（uTools 8.0+，低版本自动降级不显示）：
      * review=定时复习提醒，signin=防断签提醒，sync=WebDAV 定时自动备份（默认关，依赖 WebDAV 配置）；

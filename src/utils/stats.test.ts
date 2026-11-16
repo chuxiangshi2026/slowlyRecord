@@ -1,11 +1,11 @@
 /**
- * stats（umami）单元测试
- * window/fetch/localStorage 全部 mock，验证启用判定与上报报文结构
+ * stats（自建采集端点）单元测试
+ * window/fetch/localStorage 全部 mock，验证启用判定与上报信封结构
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 const config = vi.hoisted(() => ({
-  UMAMI_STATS_CONFIG: { websiteId: 'test-website-id', host: 'https://stats.example.com' },
+  STATS_ENDPOINT: 'https://stats.example.com/collect',
   APP_VERSION: '9.9.9',
 }))
 vi.mock('@/config', () => config)
@@ -16,6 +16,7 @@ import {
   trackPageView,
   isStatsExcluded,
   setStatsExcluded,
+  applyPersistedStatsPrefs,
   trackError,
   submitFeedback,
   getStatsStatus,
@@ -23,19 +24,24 @@ import {
   getAttribution,
 } from '@/utils/stats'
 
-/** 取出 fetch 收到的全部 umami 报文（过滤 getPluginVersion 等无 body 的调用） */
-function sentPayloads(): any[] {
+/** 等待 send() 内部的异步信封组装（getPluginVersion 微任务）完成 */
+function flush(): Promise<void> {
+  return new Promise(r => setTimeout(r, 0))
+}
+
+/** 取出 fetch 收到的全部统计信封（过滤 getPluginVersion 等无 body 的调用） */
+function sentEvents(): any[] {
   return (globalThis.fetch as any).mock.calls
     .filter((c: any[]) => c[1]?.body)
     .map((c: any[]) => JSON.parse(c[1].body))
 }
 
-describe('stats（umami）', () => {
+describe('stats（自建端点）', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     const store: Record<string, string> = {}
     ;(globalThis as any).window = {
-      location: { hostname: '', pathname: '/', hash: '#/Word' },
+      location: { hostname: '', pathname: '/', hash: '#/Word', search: '' },
       localStorage: {
         getItem: (k: string) => store[k] ?? null,
         setItem: (k: string, v: string) => { store[k] = v },
@@ -43,7 +49,7 @@ describe('stats（umami）', () => {
       },
       utools: { isDev: () => false, getNativeId: () => 'native-device-id-for-test' },
     }
-    ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: true, status: 200, text: () => Promise.resolve('{"cache":"ok"}'), json: () => Promise.resolve({}) })
+    ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: true, status: 200, text: () => Promise.resolve('{"ok":true}'), json: () => Promise.resolve({}) })
   })
 
   afterEach(() => {
@@ -54,19 +60,22 @@ describe('stats（umami）', () => {
   describe('启用判定', () => {
     it('uTools 生产环境（hostname 为空、isDev=false）启用', async () => {
       await initStats()
+      await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
     })
 
-    it('未配置 websiteId 时不上报', async () => {
-      config.UMAMI_STATS_CONFIG.websiteId = ''
+    it('未配置端点时不上报', async () => {
+      config.STATS_ENDPOINT = ''
       await initStats()
-      expect(globalThis.fetch).not.toHaveBeenCalled()
-      config.UMAMI_STATS_CONFIG.websiteId = 'test-website-id'
+      await flush()
+      expect((globalThis.fetch as any).mock.calls.filter((c: any[]) => c[1]?.body)).toHaveLength(0)
+      config.STATS_ENDPOINT = 'https://stats.example.com/collect'
     })
 
     it('uTools 开发环境（isDev=true）排除', async () => {
       ;(globalThis as any).window.utools.isDev = () => true
       await initStats()
+      await flush()
       expect(globalThis.fetch).not.toHaveBeenCalled()
     })
 
@@ -74,34 +83,47 @@ describe('stats（umami）', () => {
       delete (globalThis as any).window.utools
       ;(globalThis as any).window.location.hostname = 'localhost'
       await initStats()
+      await flush()
       expect(globalThis.fetch).not.toHaveBeenCalled()
     })
 
     it('file:// 生产页（hostname 空、无 utools/electronAPI）按 web 平台启用', async () => {
       delete (globalThis as any).window.utools
       await initStats()
+      await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
-      const payloads = sentPayloads()
-      expect(payloads[0].payload.hostname).toBe('slowlyrecord.web')
+      expect(sentEvents()[0].platform).toBe('web')
     })
 
-    it('自我排除标记跳过上报；setStatsExcluded 双向切换', () => {
+    it('自我排除标记跳过上报；setStatsExcluded 双向切换', async () => {
       expect(isStatsExcluded()).toBe(false)
       setStatsExcluded(true)
       expect(isStatsExcluded()).toBe(true)
       trackPageView('/Word')
+      await flush()
       expect(globalThis.fetch).not.toHaveBeenCalled()
       setStatsExcluded(false)
       expect(isStatsExcluded()).toBe(false)
       trackPageView('/Word')
+      await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
     })
 
-    it('强制启用标记优先于一切排除规则', async () => {
-      ;(globalThis as any).window.utools.isDev = () => true
+    it('applyPersistedStatsPrefs 回填 localStorage（更新清空后恢复用户选择）', () => {
+      window.localStorage.removeItem('sr_stats_exclude')
+      window.localStorage.removeItem('sr_stats_notice_v1')
+      applyPersistedStatsPrefs({ excluded: true, noticeShown: true })
+      expect(isStatsExcluded()).toBe(true)
+      expect(window.localStorage.getItem('sr_stats_notice_v1')).toBe('1')
+      applyPersistedStatsPrefs({ excluded: false })
+      expect(isStatsExcluded()).toBe(false)
+    })
+
+    it('强制启用标记优先于一切排除规则', async () => {      ;(globalThis as any).window.utools.isDev = () => true
       setStatsExcluded(true)
       window.localStorage.setItem('sr_stats_force', '1')
       await initStats()
+      await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
     })
   })
@@ -125,15 +147,15 @@ describe('stats（umami）', () => {
       expect(getStatsStatus()).toBe('localhost')
     })
 
-    it('force 标记优先于排除规则返回 enabled；未配置 websiteId 返回 no-config', () => {
+    it('force 标记优先于排除规则返回 enabled；未配置端点返回 no-endpoint', () => {
       setStatsExcluded(true)
       window.localStorage.setItem('sr_stats_force', '1')
       expect(getStatsStatus()).toBe('enabled')
       window.localStorage.removeItem('sr_stats_force')
 
-      config.UMAMI_STATS_CONFIG.websiteId = ''
-      expect(getStatsStatus()).toBe('no-config')
-      config.UMAMI_STATS_CONFIG.websiteId = 'test-website-id'
+      config.STATS_ENDPOINT = ''
+      expect(getStatsStatus()).toBe('no-endpoint')
+      config.STATS_ENDPOINT = 'https://stats.example.com/collect'
     })
   })
 
@@ -153,46 +175,47 @@ describe('stats（umami）', () => {
 
       ;(globalThis as any).window.location.search = '?utm_source=github&page=poem-tang_001'
       await initStats()
-      const payloads = sentPayloads()
-      const launch = payloads.find(p => p.payload.name === 'app.launch')
-      expect(launch.payload.data.source).toBe('github')
-      expect(launch.payload.data.landingPage).toBe('poem-tang_001')
-      const landing = payloads.find(p => p.payload.name === 'source.landing')
-      expect(landing.payload.data).toEqual({ source: 'github', page: 'poem-tang_001' })
+      await flush()
+      const events = sentEvents()
+      const launch = events.find(p => p.name === 'app.launch')
+      expect(launch.data.source).toBe('github')
+      expect(launch.data.landingPage).toBe('poem-tang_001')
+      const landing = events.find(p => p.name === 'source.landing')
+      expect(landing.data).toEqual({ source: 'github', page: 'poem-tang_001' })
     })
   })
 
-  describe('报文结构', () => {
-    it('启动事件带平台/版本/匿名安装 ID', async () => {
+  describe('信封结构', () => {
+    it('启动事件：事件名/平台/版本/匿名安装 ID 在顶层，POST 到固定端点', async () => {
       await initStats()
-      const launch = sentPayloads().find(p => p.payload.name === 'app.launch')
+      await flush()
+      const launch = sentEvents().find(p => p.name === 'app.launch')
       expect(launch).toBeDefined()
-      expect(launch.type).toBe('event')
-      expect(launch.payload.website).toBe('test-website-id')
-      expect(launch.payload.hostname).toBe('slowlyrecord.utools')
-      expect(launch.payload.data.platform).toBe('utools')
-      expect(launch.payload.data.appVersion).toBe('9.9.9') // file:// 下 fetch plugin.json 必败，回退编译期常量
-      expect(launch.payload.data.installId).toBe('native-device-id-for-test')
-      const request = (globalThis.fetch as any).mock.calls.find((call: any[]) => call[1]?.body)[1]
-      expect(request.headers).toMatchObject({
-        'x-umami-website-id': 'test-website-id',
-        'x-umami-hostname': 'slowlyrecord.utools',
-      })
+      expect(launch.platform).toBe('utools')
+      expect(launch.appVersion).toBe('9.9.9') // file:// 下 fetch plugin.json 必败，回退编译期常量
+      expect(launch.installId).toBe('native-device-id-for-test')
+      expect(launch.ts).toEqual(expect.any(Number))
+      const call = (globalThis.fetch as any).mock.calls.find((c: any[]) => c[1]?.body)
+      expect(call[0]).toBe('https://stats.example.com/collect')
+      expect(call[1].method).toBe('POST')
+      expect(call[1].headers['Content-Type']).toBe('application/json')
     })
 
-    it('页面浏览：无 name 字段，url 为路由路径', () => {
+    it('页面浏览：事件名 page.view，url 为路由路径', async () => {
       trackPageView('/Dictation')
-      const p = sentPayloads()[0]
-      expect(p.payload.url).toBe('/Dictation')
-      expect(p.payload.name).toBeUndefined()
+      await flush()
+      const p = sentEvents()[0]
+      expect(p.name).toBe('page.view')
+      expect(p.url).toBe('/Dictation')
     })
 
-    it('自定义事件：name 为 类别.操作，label/value 进 data', () => {
+    it('自定义事件：name 为 类别.操作，label/value 进 data', async () => {
       trackEvent('translation', 'batch', 'count_5')
-      const p = sentPayloads()[0]
-      expect(p.payload.name).toBe('translation.batch')
-      expect(p.payload.data).toEqual({ label: 'count_5' })
-      expect(p.payload.url).toBe('/Word') // 附带当前 hash 路由
+      await flush()
+      const p = sentEvents()[0]
+      expect(p.name).toBe('translation.batch')
+      expect(p.data).toEqual({ label: 'count_5' })
+      expect(p.url).toBe('/Word') // 附带当前 hash 路由
     })
 
     it('上报失败只记日志不抛异常', () => {
@@ -201,11 +224,11 @@ describe('stats（umami）', () => {
     })
 
     it('上报被拒绝（4xx）只 warn 不抛异常', async () => {
-      ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: false, status: 401, text: () => Promise.resolve('') })
+      ;(globalThis as any).fetch = vi.fn().mockResolvedValue({ ok: false, status: 400, text: () => Promise.resolve('') })
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
       trackPageView('/Word')
-      await new Promise(r => setTimeout(r, 0))
-      expect(warn).toHaveBeenCalledWith('[统计] 上报未被收录:', 401, '')
+      await flush()
+      expect(warn).toHaveBeenCalledWith('[统计] 上报未被收录:', 400)
       warn.mockRestore()
     })
   })
@@ -214,35 +237,39 @@ describe('stats（umami）', () => {
     it('trackError 上报 bug.error，带路由和非敏感运行时上下文', async () => {
       ;(globalThis as any).window.utools.getAppVersion = () => '8.0.2'
       await trackError('js', new Error('boom'), '/word')
-      const p = sentPayloads().find(x => x.payload.name === 'bug.error')
+      await flush()
+      const p = sentEvents().find(x => x.name === 'bug.error')
       expect(p).toBeDefined()
-      expect(p.payload.url).toBe('/word')
-      expect(p.payload.data.source).toBe('js')
-      expect(p.payload.data.message).toBe('boom')
-      expect(p.payload.data.platform).toBe('utools')
-      expect(p.payload.data.appVersion).toBe('9.9.9')
-      expect(p.payload.data.clientVersion).toBe('8.0.2')
-      expect(p.payload.data.runtime).toEqual(expect.any(String))
-      expect(p.payload.data.errorName).toBe('Error')
+      expect(p.url).toBe('/word')
+      expect(p.platform).toBe('utools')
+      expect(p.appVersion).toBe('9.9.9')
+      expect(p.data.source).toBe('js')
+      expect(p.data.message).toBe('boom')
+      expect(p.data.clientVersion).toBe('8.0.2')
+      expect(p.data.runtime).toEqual(expect.any(String))
+      expect(p.data.errorName).toBe('Error')
     })
 
     it('同源同消息会话内去重', async () => {
       await trackError('js', 'dup-error')
       await trackError('js', 'dup-error')
-      const errs = sentPayloads().filter(x => x.payload.data?.message === 'dup-error')
+      await flush()
+      const errs = sentEvents().filter(x => x.data?.message === 'dup-error')
       expect(errs.length).toBe(1)
     })
 
     it('统计开关关闭时异常不上报', async () => {
       setStatsExcluded(true)
       await trackError('promise', 'excluded-error')
-      expect(sentPayloads().find(x => x.payload.data?.message === 'excluded-error')).toBeUndefined()
+      await flush()
+      expect(sentEvents().find(x => x.data?.message === 'excluded-error')).toBeUndefined()
     })
 
     it('错误消息截断 200 字符', async () => {
       await trackError('vue', 'x'.repeat(300))
-      const p = sentPayloads().find(x => x.payload.name === 'bug.error')
-      expect(p.payload.data.message.length).toBe(200)
+      await flush()
+      const p = sentEvents().find(x => x.name === 'bug.error')
+      expect(p.data.message.length).toBe(200)
     })
   })
 
@@ -251,16 +278,16 @@ describe('stats（umami）', () => {
       setStatsExcluded(true)
       const ok = await submitFeedback('  测试反馈  ', 'qq:123')
       expect(ok).toBe(true)
-      const p = sentPayloads().find(x => x.payload.name === 'feedback.submit')
+      const p = sentEvents().find(x => x.name === 'feedback.submit')
       expect(p).toBeDefined()
-      expect(p.payload.data.text).toBe('测试反馈')
-      expect(p.payload.data.contact).toBe('qq:123')
-      expect(p.payload.data.installId).toBe('native-device-id-for-test')
+      expect(p.data.text).toBe('测试反馈')
+      expect(p.data.contact).toBe('qq:123')
+      expect(p.installId).toBe('native-device-id-for-test')
     })
 
     it('空文本返回 false 且不上报', async () => {
       expect(await submitFeedback('   ')).toBe(false)
-      expect(sentPayloads().find(x => x.payload.name === 'feedback.submit')).toBeUndefined()
+      expect(sentEvents().find(x => x.name === 'feedback.submit')).toBeUndefined()
     })
 
     it('网络故障时返回 false（调用方提示重试），不谎报成功', async () => {
@@ -272,35 +299,9 @@ describe('stats（umami）', () => {
 
     it('反馈文本截断 500 字符', async () => {
       await submitFeedback('y'.repeat(600))
-      const p = sentPayloads().find(x => x.payload.name === 'feedback.submit')
-      expect(p.payload.data.text.length).toBe(500)
-    })
-  })
-
-  describe('送达判定（umami 爬虫过滤）', () => {
-    /** fetch 里打到 umami 的调用（排除 getPluginVersion 读 plugin.json） */
-    const umamiCalls = () => (globalThis.fetch as any).mock.calls.filter((c: any[]) => String(c[0]).includes('/api/send'))
-
-    it('uTools 下优先走 preload 的 Node 通道（浏览器 fetch 改不了 UA）', async () => {
-      const post = vi.fn().mockResolvedValue({ status: 200, body: '{"cache":"ok"}' })
-      ;(globalThis as any).window.services = { httpPostJson: post }
-      expect(await submitFeedback('走 Node')).toBe(true)
-      expect(post).toHaveBeenCalled()
-      expect(umamiCalls()).toHaveLength(0)
-      delete (globalThis as any).window.services
-    })
-
-    it('200 但正文是 beep（UA 被判为 bot）视为未入账', async () => {
-      ;(globalThis as any).fetch = vi.fn().mockResolvedValue({
-        ok: true,
-        status: 200,
-        text: () => Promise.resolve('{"beep":"boop"}'),
-        json: () => Promise.resolve({}),
-      })
-      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
-      expect(await submitFeedback('被过滤')).toBe(false)
-      expect(warn).toHaveBeenCalled()
-      warn.mockRestore()
+      await flush()
+      const p = sentEvents().find(x => x.name === 'feedback.submit')
+      expect(p.data.text.length).toBe(500)
     })
   })
 })

@@ -27,7 +27,7 @@
     <div class="operate">
       <div class="operate-group">
         <el-tooltip class="box-item" effect="dark" content="播放" placement="top" popper-class="small-tooltip">
-          <i class="iconfont icon-player iconHover" @click="play"/>
+          <i class="iconfont icon-player iconHover" @click.stop="play"/>
         </el-tooltip>
         <!-- 添加audio标签  -->
 
@@ -113,6 +113,7 @@ import {computeLevelDown} from "@/utils/srs";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
+import {getSpeechAudioUrl, getSpeechAudioHash} from "@/utils/speech-audio.ts";
 import {trackEvent} from "@/utils/stats";
 import {computed, nextTick, onMounted, ref, toRef} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -304,9 +305,10 @@ const audioPlayer = ref<HTMLAudioElement | null>(null);
 const localAudioUrl = ref<string | null>(null);
 
 // 获取本地存储的音频 URL（只返回 Data URL，不返回 http URL）
-const getLocalAudioUrl = (wordId: string): string | null => {
+// skipPronunciation：speechAudio 词库跳过 pronunciation 字段快路径，只用哈希键缓存（换音色后旧缓存自动失效）
+const getLocalAudioUrl = (wordId: string, skipPronunciation: boolean = false): string | null => {
   // 首先检查单词对象中的 pronunciation 字段是否包含 Data URL（已缓存的音频）
-  if (props.word.pronunciation && props.word.pronunciation.startsWith('data:audio')) {
+  if (!skipPronunciation && props.word.pronunciation && props.word.pronunciation.startsWith('data:audio')) {
     // 直接使用 Data URL
     return props.word.pronunciation;
   }
@@ -435,14 +437,33 @@ const play = async () => {
   isPlaying = true;
   const wordId = cleanWordText.value;
   try {
+    // speechAudio 词库：缓存键用内容哈希（含音色/语速），换音色后旧缓存自动失效
+    // 词条自带 speechBankId 标记优先（导入时打上），其次才是当前词库 id（直接以内置库为当前词库的场景）
+    const speechBankId = props.word.speechBankId || wordsStore.currentWordBankId;
+    const speechHash = getSpeechAudioHash(speechBankId, props.word.text);
+
     // 先尝试从本地获取音频 URL
-    localAudioUrl.value = getLocalAudioUrl(wordId);
+    localAudioUrl.value = getLocalAudioUrl(speechHash ?? wordId, !!speechHash);
     console.log('本地音频URL:', localAudioUrl.value ? '已缓存' : '未缓存');
 
     // 播放音频：优先使用本地 Data URL
     let audioSrc = localAudioUrl.value;
 
     // 如果没有本地缓存，按优先级下载音频
+    if (!audioSrc) {
+      // 优先级0: 预生成口语连读音频（speechAudio 词库默认发音，不可关闭）
+      const speechUrl = getSpeechAudioUrl(speechBankId, props.word.text);
+      if (speechUrl && speechHash) {
+        const speechResult = await downloadAndStoreAudio(speechUrl, speechHash, false, 0);
+        if (speechResult) {
+          audioSrc = speechResult.dataUrl;
+          localAudioUrl.value = speechResult.dataUrl;
+          // 不写回 word.pronunciation：音色以哈希缓存为准，避免旧音色随词库文档残留
+          console.log('预生成连读音频下载成功，使用 Data URL 播放');
+        }
+      }
+    }
+
     if (!audioSrc) {
       console.log('没有本地缓存，开始下载音频...');
 

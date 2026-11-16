@@ -795,14 +795,36 @@ export async function importFromBuiltinWordBank(
       console.error(`[WordBankManager] 目标词库不存在: ${targetBankId}`);
       return { success: false, count: 0, error: '目标词库不存在' };
     }
-    
+
+    // 口语连读词库：词条打上来源标记（speechBankId），播放时据此定位预生成音频。
+    // 导入的目标词库 id 与内置库 id 无关，标记必须随词条走；已有词条补标，使重复导入可修复旧数据
+    const bankInfo = WORDBANK_LIST.find(wb => wb.id === builtinBankType);
+    const tagSpeech = !!bankInfo?.speechAudio;
+    let dirty = false;
+    if (tagSpeech) {
+      const sourceTexts = new Set(words.map(w => w.text.toLowerCase()));
+      for (const w of bank.words) {
+        if (sourceTexts.has(w.text.toLowerCase()) && (w as any).speechBankId !== builtinBankType) {
+          (w as any).speechBankId = builtinBankType;
+          dirty = true;
+        }
+      }
+    }
+
     // 去重：基于 word.text 属性
     const existingTexts = new Set(bank.words.map(w => w.text.toLowerCase()));
     const uniqueWords = words.filter(w => !existingTexts.has(w.text.toLowerCase()));
-    
+    if (tagSpeech) {
+      uniqueWords.forEach(w => { (w as any).speechBankId = builtinBankType; });
+    }
+
     console.log(`[WordBankManager] 去重后剩余 ${uniqueWords.length} 个新单词`);
-    
+
     if (uniqueWords.length === 0) {
+      if (dirty) {
+        bank.updatedAt = Date.now();
+        await saveWordBank(bank);
+      }
       return { success: true, count: 0 };
     }
     

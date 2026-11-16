@@ -53,6 +53,36 @@
                    @update:model-value="(v: number | number[]) => wordsStore.setAppBg({scrim: (Array.isArray(v) ? v[0] : v) / 100})"/>
       </div>
       <div class="setting-item" v-if="wordsStore.appBg.preset">
+        <div class="content">卡片背景透明度</div>
+        <div class="brightness-control shorcut-desc">
+          <el-slider style="width: 140px;"
+                     :model-value="Math.round(wordsStore.appBg.cardAlpha * 100)"
+                     :min="10" :max="100" :step="5" :show-tooltip="false"
+                     @update:model-value="(v: number | number[]) => wordsStore.setAppBg({cardAlpha: (Array.isArray(v) ? v[0] : v) / 100})"/>
+          <span>{{ Math.round(wordsStore.appBg.cardAlpha * 100) }}%</span>
+        </div>
+      </div>
+      <div class="setting-item" v-if="wordsStore.appBg.preset && wordsStore.appBg.headerEffect">
+        <div class="content">页头透明度</div>
+        <div class="brightness-control shorcut-desc">
+          <el-slider style="width: 140px;"
+                     :model-value="Math.round(wordsStore.appBg.headerAlpha * 100)"
+                     :min="10" :max="100" :step="5" :show-tooltip="false"
+                     @update:model-value="(v: number | number[]) => wordsStore.setAppBg({headerAlpha: (Array.isArray(v) ? v[0] : v) / 100})"/>
+          <span>{{ Math.round(wordsStore.appBg.headerAlpha * 100) }}%</span>
+        </div>
+      </div>
+      <div class="setting-item" v-if="wordsStore.appBg.preset && wordsStore.appBg.footerEffect">
+        <div class="content">页脚透明度</div>
+        <div class="brightness-control shorcut-desc">
+          <el-slider style="width: 140px;"
+                     :model-value="Math.round(wordsStore.appBg.footerAlpha * 100)"
+                     :min="10" :max="100" :step="5" :show-tooltip="false"
+                     @update:model-value="(v: number | number[]) => wordsStore.setAppBg({footerAlpha: (Array.isArray(v) ? v[0] : v) / 100})"/>
+          <span>{{ Math.round(wordsStore.appBg.footerAlpha * 100) }}%</span>
+        </div>
+      </div>
+      <div class="setting-item" v-if="wordsStore.appBg.preset">
         <div class="content">亚克力效果（毛玻璃）</div>
         <el-switch class="shorcut-desc"
                    :model-value="wordsStore.appBg.acrylic"

@@ -1,6 +1,6 @@
 {
   "name": "slowlyrecord",
-  "version": "1.3.5",
+  "version": "1.3.7",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,6 +8,8 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
+    "build:store": "run-p type-check \"build:store-only {@}\" --",
+    "build:store-only": "VITE_STORE_BUILD=true vite build && node scripts/strip-store-forbidden.cjs",
     "build:upx": "vite build && rm -rf /mnt/d/slowlyRecord-dist && cp -r dist /mnt/d/slowlyRecord-dist",
     "type-check": "vue-tsc --build",
     "type-check:mobile": "npm --prefix mobile run type-check",
@@ -29,7 +31,8 @@
     "build:app-android": "cd mobile && npm run build:app-android",
     "build:app-ios": "cd mobile && npm run build:app-ios",
     "postinstall": "node -e \"if(process.env.ELECTRON_MIRROR){require('electron')}\"",
-    "test:e2e": "node scripts/e2e/blackbox.cjs"
+    "test:e2e": "node scripts/e2e/blackbox.cjs",
+    "stats:pull": "node scripts/pull-stats-logs.mjs"
   },
   "main": "dist-electron/main.js",
   "dependencies": {

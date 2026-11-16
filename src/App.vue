@@ -41,7 +41,7 @@ import {useUiStore} from "@/stores/ui.ts";
 // import {storeToRefs} from "pinia";
 import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
 import {addWord, addTextAuto, batchAddWords} from "@/utils/str-util.ts";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import {
   ocrTranslate,
   ocrTranslateAli,
@@ -63,6 +63,7 @@ import {getOcrApiKey} from "@/utils/get-api-key.ts";
 import {toEngineLang} from "@/utils/translation-lang-map.ts";
 import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from "@/utils/usage-counter.ts";
 import {getNotificationAdapter} from "@/adapters/notification.ts";
+import {getStatsStatus, setStatsExcluded, applyPersistedStatsPrefs, STATS_NOTICE_KEY} from "@/utils/stats";
 import {RETIRED_MODEL_NAMES} from "@/config.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
@@ -92,6 +93,8 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
 // 会话内复习提醒去重：每次插件进程只提醒一次
 let reviewReminderNotified = false;
 
+// 接管 enter 事件：index.html 内联脚本早注册的队列转发到此停止（置 live 后其回调不再入队）
+;(window as any).__pluginEnterLive = true
 ;(window as any).utools?.onPluginEnter?.(async (action: any) => {
   console.log('[onPluginEnter] 回调已触发, code=', action?.code, '时间=', new Date().toISOString());
   handleUtoolsEnter(action).catch((e: any) => {
@@ -121,8 +124,8 @@ if ((window as any).electronAPI?.onGlobalShortcut) {
   });
 }
 
-// uTools enter 事件统一处理：兼容 preload 阶段缓存的事件
-// （preload/services.js 已提前注册 onPluginEnter，防止 Vite 冷启动慢时事件丢失）
+// uTools enter 事件统一处理：兼容启动早期缓存的事件
+// （index.html 内联脚本已提前注册 onPluginEnter，防止 Vite 冷启动慢时事件丢失）
 async function handleUtoolsEnter(action: any) {
   console.log('[handleUtoolsEnter] code=', action?.code, '时间=', new Date().toISOString());
   // 先同步 设置
@@ -130,6 +133,8 @@ async function handleUtoolsEnter(action: any) {
 
   // 同步插件状态和快捷键设置
   if (setDb) {
+    // 统计偏好以 user-set 为准回填 localStorage（插件更新可能清空 localStorage）
+    applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
     wordsStore.pluginStatus = setDb.pluginStatus;
     wordsStore.shortcutEnabled = setDb.shortcutEnabled;
     if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;
@@ -492,17 +497,13 @@ async function handleUtoolsEnter(action: any) {
   }
 }
 
-// 消费 preload 阶段缓存的 enter 事件（App 挂载后调用）
+// 消费 index.html 内联脚本提前缓存的 enter 事件（App 挂载后调用）
 function consumeQueuedPluginEnter() {
   const w = window as any;
   if (w.__pluginEnterQueue && w.__pluginEnterQueue.length > 0) {
     const queued = w.__pluginEnterQueue.splice(0);
-    console.log('[App] 消费 preload 缓存的 enter 事件:', queued.map((a: any) => a?.code).join(','));
+    console.log('[App] 消费启动前缓存的 enter 事件:', queued.map((a: any) => a?.code).join(','));
     queued.forEach((action: any) => handleUtoolsEnter(action));
-  }
-  // 注册后续 enter 的转发
-  if (w.__pluginEnterHandlers) {
-    w.__pluginEnterHandlers.push(handleUtoolsEnter);
   }
 }
 consumeQueuedPluginEnter();
@@ -521,19 +522,12 @@ function debugLog(...args: any[]) {
 }
 
 /**
- * 写入日志到文件（用于打包后调试）
+ * 写入日志到文件（用于打包后调试；经 preload 固定文件 + 大小轮转，页面不直接引用 fs/path）
  */
 function logToFile(message: string) {
   try {
     if (isUTools()) {
-      const utoolsApi = (window as any).utools;
-      const fs = (window as any).require?.('fs');
-      const path = (window as any).require?.('path');
-      if (fs && path && utoolsApi?.getPath) {
-        const logPath = path.join(utoolsApi.getPath('temp'), 'slowlyrecord-ocr.log');
-        const timestamp = new Date().toISOString();
-        fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
-      }
+      (window as any).services?.appendLog?.(message);
     }
   } catch (e) {
     // 忽略日志写入错误
@@ -565,19 +559,12 @@ async function resolveImgPayloadToBase64(payload: any): Promise<string> {
     return trimmed;
   }
 
-  // 临时文件路径：通过 preload 暴露的 Node fs 读取后转 base64
+  // 临时文件路径：通过 preload 的受限接口读取（仅限系统/uTools 临时目录）后转 base64
   try {
     const services = (window as any).services;
-    if (services?.fs && services.fs.existsSync?.(trimmed)) {
-      const data = services.fs.readFileSync(trimmed);
-      const bytes: Uint8Array = data instanceof Uint8Array
-        ? data
-        : new Uint8Array(data?.buffer || data);
-      let binary = '';
-      for (let i = 0; i < bytes.length; i++) {
-        binary += String.fromCharCode(bytes[i]);
-      }
-      return btoa(binary);
+    if (services?.readTempImageAsBase64) {
+      const base64 = services.readTempImageAsBase64(trimmed);
+      if (base64) return base64;
     }
   } catch (e) {
     console.error('[截图添加] 读取图片文件失败:', e);
@@ -927,10 +914,49 @@ function closeTextPanel() {
   textContent.value = '';
 }
 
+/**
+ * 首次启动告知匿名使用统计：默认开启，明确说明上报内容与关闭入口。
+ * 只在统计实际生效的环境提示（开发/本地/已手动关闭的环境不打扰），每个安装只提示一次。
+ * 「已提示」与「用户关闭」都持久化到 user-set，插件更新清空 localStorage 后不会重弹/重置。
+ */
+function maybeShowStatsNotice() {
+  try {
+    // 先用 user-set 里持久化的偏好校正 localStorage（更新后 localStorage 可能已被清空）
+    try {
+      const setDb = getSetDb();
+      if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
+    } catch { /* DB 未就绪时按 localStorage 判断 */ }
+
+    if (localStorage.getItem(STATS_NOTICE_KEY) === '1') return;
+    if (getStatsStatus() !== 'enabled') return;
+    localStorage.setItem(STATS_NOTICE_KEY, '1');
+    void import('@/utils/user-set-db-util')
+      .then(({ upsertSetDbFields }) => upsertSetDbFields({ statsNoticeShown: true }))
+      .catch(() => { /* 忽略：localStorage 已记，仅影响跨更新去重 */ });
+    ElMessageBox.confirm(
+      '慢记默认开启匿名使用统计，用于了解哪些功能真正被使用、版本与平台分布，从而优先改进这些功能。\n\n' +
+      '上报内容仅限操作事件（启动、添词、导入导出、设置修改等）与一个随机安装标识，绝不采集你的单词、释义、笔记或任何输入内容，也不包含账号信息。\n\n' +
+      '你可以随时在「设置 → 常规设置 → 匿名使用统计」关闭，关闭立即生效。',
+      '帮助改进慢记（匿名统计）',
+      {
+        confirmButtonText: '保持开启（推荐）',
+        cancelButtonText: '关闭统计',
+        distinguishCancelAndClose: true,
+        type: 'info',
+      }
+    ).catch((action: string) => {
+      if (action === 'cancel') setStatsExcluded(true);
+    });
+  } catch { /* localStorage/弹窗不可用时忽略，不影响启动 */ }
+}
+
 onMounted(async () => {
 
   // 恢复界面字号档位（缩放比例已持久化在 localStorage）
   useUiStore().applyUiZoom(useUiStore().uiZoom);
+
+  // 首次启动告知匿名使用统计（默认开启，可随时在设置关闭）
+  maybeShowStatsNotice();
 
   // 首页刷新时触发   自动更新需要复习的单词
   // 延迟调用，避免初始化时重复计算
@@ -952,6 +978,7 @@ onMounted(async () => {
     try {
       const setDb = getSetDb();
       if (setDb) {
+        applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
         wordsStore.pluginStatus = setDb.pluginStatus;
         wordsStore.shortcutEnabled = setDb.shortcutEnabled;
         if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;
@@ -1153,5 +1180,22 @@ function updateReview() {
 @use '@/assets/styles/list-item.scss';
 @use '@/assets/icons/iconfont.css';
 @use '@/assets/styles/iconfont1.scss';
+
+/* ===== Electron 无边框窗口 =====
+   系统标题栏已隐藏（titleBarStyle: hidden），顶部头部兼作拖拽区域；
+   右侧留 150px 给原生最小化/最大化/关闭按钮（titleBarOverlay） */
+html.electron-shell .app-header {
+  -webkit-app-region: drag;
+  padding-right: 150px;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+
+html.electron-shell .app-header .header-action,
+html.electron-shell .app-header .streak,
+html.electron-shell .app-header .back,
+html.electron-shell .app-header .sync-dot {
+  -webkit-app-region: no-drag;
+}
 
 </style>

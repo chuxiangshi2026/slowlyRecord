@@ -1,0 +1,2502 @@
+[
+  {
+    "word": "I'm gonna go",
+    "explains": "我要走了（= I'm going to go）",
+    "freq": 1
+  },
+  {
+    "word": "It's gonna rain",
+    "explains": "要下雨了（= It's going to rain）",
+    "freq": 2
+  },
+  {
+    "word": "I'm gonna be late",
+    "explains": "我要迟到了（= I'm going to be late）",
+    "freq": 3
+  },
+  {
+    "word": "We're gonna win",
+    "explains": "我们会赢的（= We are going to win）",
+    "freq": 4
+  },
+  {
+    "word": "Not gonna happen",
+    "explains": "不可能发生（= Not going to happen）",
+    "freq": 5
+  },
+  {
+    "word": "Gonna miss you",
+    "explains": "会想你的（= Going to miss you）",
+    "freq": 6
+  },
+  {
+    "word": "I'm gonna try",
+    "explains": "我试试看（= I'm going to try）",
+    "freq": 7
+  },
+  {
+    "word": "Gonna be okay",
+    "explains": "会好起来的（= Going to be okay）",
+    "freq": 8
+  },
+  {
+    "word": "Not gonna lie",
+    "explains": "说实话（= Not going to lie）",
+    "freq": 9
+  },
+  {
+    "word": "Gonna get coffee",
+    "explains": "去弄杯咖啡（= Going to get coffee）",
+    "freq": 10
+  },
+  {
+    "word": "I wanna go home",
+    "explains": "我想回家（= I want to go home）",
+    "freq": 11
+  },
+  {
+    "word": "Wanna come?",
+    "explains": "想来吗（= Want to come?）",
+    "freq": 12
+  },
+  {
+    "word": "Wanna grab lunch?",
+    "explains": "想吃午饭吗（= Want to grab lunch?）",
+    "freq": 13
+  },
+  {
+    "word": "Wanna see a movie?",
+    "explains": "想看个电影吗（= Want to see a movie?）",
+    "freq": 14
+  },
+  {
+    "word": "Wanna hang out?",
+    "explains": "想出去玩吗（= Want to hang out?）",
+    "freq": 15
+  },
+  {
+    "word": "Wanna talk?",
+    "explains": "想聊聊吗（= Want to talk?）",
+    "freq": 16
+  },
+  {
+    "word": "Wanna join us?",
+    "explains": "想一起来吗（= Want to join us?）",
+    "freq": 17
+  },
+  {
+    "word": "Wanna try again?",
+    "explains": "想再试一次吗（= Want to try again?）",
+    "freq": 18
+  },
+  {
+    "word": "Wanna dance?",
+    "explains": "想跳个舞吗（= Want to dance?）",
+    "freq": 19
+  },
+  {
+    "word": "You wanna bet?",
+    "explains": "你想打赌吗（= You want to bet?）",
+    "freq": 20
+  },
+  {
+    "word": "I gotta go",
+    "explains": "我得走了（= I've got to go）",
+    "freq": 21
+  },
+  {
+    "word": "Gotta run",
+    "explains": "得赶紧走了（= Got to run）",
+    "freq": 22
+  },
+  {
+    "word": "You gotta try this",
+    "explains": "你得试试这个（= You've got to try this）",
+    "freq": 23
+  },
+  {
+    "word": "I gotta admit",
+    "explains": "我得承认（= I've got to admit）",
+    "freq": 24
+  },
+  {
+    "word": "Gotta be honest",
+    "explains": "实话实说（= Got to be honest）",
+    "freq": 25
+  },
+  {
+    "word": "I gotta say",
+    "explains": "我必须说（= I've got to say）",
+    "freq": 26
+  },
+  {
+    "word": "Gotta love it",
+    "explains": "不得不爱（= Got to love it）",
+    "freq": 27
+  },
+  {
+    "word": "Gotta focus",
+    "explains": "得专心点（= Got to focus）",
+    "freq": 28
+  },
+  {
+    "word": "Gotta make a call",
+    "explains": "得打个电话（= Got to make a call）",
+    "freq": 29
+  },
+  {
+    "word": "Gotta hand it to you",
+    "explains": "不得不佩服你（= Got to hand it to you）",
+    "freq": 30
+  },
+  {
+    "word": "Whaddaya want?",
+    "explains": "你想要什么（= What do you want?）",
+    "freq": 31
+  },
+  {
+    "word": "Whaddaya mean?",
+    "explains": "你什么意思（= What do you mean?）",
+    "freq": 32
+  },
+  {
+    "word": "Whaddaya think?",
+    "explains": "你觉得呢（= What do you think?）",
+    "freq": 33
+  },
+  {
+    "word": "Whaddaya say?",
+    "explains": "你看怎么样（= What do you say?）",
+    "freq": 34
+  },
+  {
+    "word": "Whaddaya know!",
+    "explains": "真没想到（= What do you know!）",
+    "freq": 35
+  },
+  {
+    "word": "Whaddaya need?",
+    "explains": "你需要什么（= What do you need?）",
+    "freq": 36
+  },
+  {
+    "word": "Whaddaya got?",
+    "explains": "你有什么（= What do you have?）",
+    "freq": 37
+  },
+  {
+    "word": "Whaddaya do?",
+    "explains": "你是做什么的（= What do you do?）",
+    "freq": 38
+  },
+  {
+    "word": "Whaddaya want from me?",
+    "explains": "你到底想让我怎样（= What do you want from me?）",
+    "freq": 39
+  },
+  {
+    "word": "Whaddaya wanna do?",
+    "explains": "你想干嘛（= What do you want to do?）",
+    "freq": 40
+  },
+  {
+    "word": "Whatcha doing?",
+    "explains": "你在干嘛（= What are you doing?）",
+    "freq": 41
+  },
+  {
+    "word": "Whatcha up to?",
+    "explains": "你在忙什么（= What are you up to?）",
+    "freq": 42
+  },
+  {
+    "word": "Whatcha got there?",
+    "explains": "你拿的什么（= What have you got there?）",
+    "freq": 43
+  },
+  {
+    "word": "Whatcha think?",
+    "explains": "你觉得咋样（= What do you think?）",
+    "freq": 44
+  },
+  {
+    "word": "Whatcha looking for?",
+    "explains": "你在找什么（= What are you looking for?）",
+    "freq": 45
+  },
+  {
+    "word": "Whatcha waiting for?",
+    "explains": "还等什么呢（= What are you waiting for?）",
+    "freq": 46
+  },
+  {
+    "word": "Whatcha gonna do?",
+    "explains": "你打算怎么办（= What are you going to do?）",
+    "freq": 47
+  },
+  {
+    "word": "Whatcha eating?",
+    "explains": "你在吃什么（= What are you eating?）",
+    "freq": 48
+  },
+  {
+    "word": "Whatcha watching?",
+    "explains": "你在看什么（= What are you watching?）",
+    "freq": 49
+  },
+  {
+    "word": "Whatcha say?",
+    "explains": "你说啥（= What did you say?）",
+    "freq": 50
+  },
+  {
+    "word": "Didja eat yet?",
+    "explains": "你吃了吗（= Did you eat yet?）",
+    "freq": 51
+  },
+  {
+    "word": "Didja see that?",
+    "explains": "你看到了吗（= Did you see that?）",
+    "freq": 52
+  },
+  {
+    "word": "Didja get it?",
+    "explains": "你明白了吗（= Did you get it?）",
+    "freq": 53
+  },
+  {
+    "word": "Didja hear?",
+    "explains": "你听说了吗（= Did you hear?）",
+    "freq": 54
+  },
+  {
+    "word": "Didja finish?",
+    "explains": "你做完了吗（= Did you finish?）",
+    "freq": 55
+  },
+  {
+    "word": "Didja call him?",
+    "explains": "你给他打电话了吗（= Did you call him?）",
+    "freq": 56
+  },
+  {
+    "word": "Didja miss me?",
+    "explains": "想我了吗（= Did you miss me?）",
+    "freq": 57
+  },
+  {
+    "word": "Didja win?",
+    "explains": "赢了吗（= Did you win?）",
+    "freq": 58
+  },
+  {
+    "word": "Didja sleep well?",
+    "explains": "睡得好吗（= Did you sleep well?）",
+    "freq": 59
+  },
+  {
+    "word": "Didja have fun?",
+    "explains": "玩得开心吗（= Did you have fun?）",
+    "freq": 60
+  },
+  {
+    "word": "How'dja do it?",
+    "explains": "你怎么做到的（= How did you do it?）",
+    "freq": 61
+  },
+  {
+    "word": "How'dja know?",
+    "explains": "你怎么知道的（= How did you know?）",
+    "freq": 62
+  },
+  {
+    "word": "Where'dja go?",
+    "explains": "你去哪了（= Where did you go?）",
+    "freq": 63
+  },
+  {
+    "word": "Where'dja get that?",
+    "explains": "你哪弄来的（= Where did you get that?）",
+    "freq": 64
+  },
+  {
+    "word": "When'dja get back?",
+    "explains": "你什么时候回来的（= When did you get back?）",
+    "freq": 65
+  },
+  {
+    "word": "Who'dja tell?",
+    "explains": "你告诉谁了（= Who did you tell?）",
+    "freq": 66
+  },
+  {
+    "word": "Why'dja do that?",
+    "explains": "你为什么那么做（= Why did you do that?）",
+    "freq": 67
+  },
+  {
+    "word": "How'dja sleep?",
+    "explains": "睡得怎么样（= How did you sleep?）",
+    "freq": 68
+  },
+  {
+    "word": "Where'dja learn that?",
+    "explains": "哪学的（= Where did you learn that?）",
+    "freq": 69
+  },
+  {
+    "word": "When'dja move here?",
+    "explains": "你什么时候搬来的（= When did you move here?）",
+    "freq": 70
+  },
+  {
+    "word": "Gimme a break",
+    "explains": "饶了我吧（= Give me a break）",
+    "freq": 71
+  },
+  {
+    "word": "Gimme a sec",
+    "explains": "等我一下（= Give me a second）",
+    "freq": 72
+  },
+  {
+    "word": "Gimme five",
+    "explains": "击个掌（= Give me five）",
+    "freq": 73
+  },
+  {
+    "word": "Gimme a call",
+    "explains": "给我打电话（= Give me a call）",
+    "freq": 74
+  },
+  {
+    "word": "Gimme a minute",
+    "explains": "给我一分钟（= Give me a minute）",
+    "freq": 75
+  },
+  {
+    "word": "Gimme a hug",
+    "explains": "抱一下（= Give me a hug）",
+    "freq": 76
+  },
+  {
+    "word": "Gimme your hand",
+    "explains": "把手给我（= Give me your hand）",
+    "freq": 77
+  },
+  {
+    "word": "Gimme the keys",
+    "explains": "把钥匙给我（= Give me the keys）",
+    "freq": 78
+  },
+  {
+    "word": "Gimme some space",
+    "explains": "给我点空间（= Give me some space）",
+    "freq": 79
+  },
+  {
+    "word": "Gimme a reason",
+    "explains": "给我个理由（= Give me a reason）",
+    "freq": 80
+  },
+  {
+    "word": "Lemme see",
+    "explains": "让我看看（= Let me see）",
+    "freq": 81
+  },
+  {
+    "word": "Lemme go",
+    "explains": "放开我（= Let me go）",
+    "freq": 82
+  },
+  {
+    "word": "Lemme try",
+    "explains": "让我试试（= Let me try）",
+    "freq": 83
+  },
+  {
+    "word": "Lemme guess",
+    "explains": "让我猜猜（= Let me guess）",
+    "freq": 84
+  },
+  {
+    "word": "Lemme know",
+    "explains": "告诉我一声（= Let me know）",
+    "freq": 85
+  },
+  {
+    "word": "Lemme check",
+    "explains": "我查一下（= Let me check）",
+    "freq": 86
+  },
+  {
+    "word": "Lemme help you",
+    "explains": "我来帮你（= Let me help you）",
+    "freq": 87
+  },
+  {
+    "word": "Lemme finish",
+    "explains": "让我说完（= Let me finish）",
+    "freq": 88
+  },
+  {
+    "word": "Lemme think",
+    "explains": "让我想想（= Let me think）",
+    "freq": 89
+  },
+  {
+    "word": "Lemme get this straight",
+    "explains": "让我捋一捋（= Let me get this straight）",
+    "freq": 90
+  },
+  {
+    "word": "I dunno",
+    "explains": "我不知道（= I don't know）",
+    "freq": 91
+  },
+  {
+    "word": "Dunno yet",
+    "explains": "还不知道（= Don't know yet）",
+    "freq": 92
+  },
+  {
+    "word": "Dunno why",
+    "explains": "不知道为啥（= Don't know why）",
+    "freq": 93
+  },
+  {
+    "word": "Dunno about that",
+    "explains": "那可说不准（= Don't know about that）",
+    "freq": 94
+  },
+  {
+    "word": "Dunno what to say",
+    "explains": "不知道说啥（= Don't know what to say）",
+    "freq": 95
+  },
+  {
+    "word": "I dunno man",
+    "explains": "我也不知道啊（= I don't know, man）",
+    "freq": 96
+  },
+  {
+    "word": "Dunno how",
+    "explains": "不知道怎么弄（= Don't know how）",
+    "freq": 97
+  },
+  {
+    "word": "Dunno if I can",
+    "explains": "不知道我行不行（= Don't know if I can）",
+    "freq": 98
+  },
+  {
+    "word": "Lotta people dunno",
+    "explains": "很多人不知道（= A lot of people don't know）",
+    "freq": 99
+  },
+  {
+    "word": "I dunno anything",
+    "explains": "我啥都不知道（= I don't know anything）",
+    "freq": 100
+  },
+  {
+    "word": "Kinda tired",
+    "explains": "有点累（= Kind of tired）",
+    "freq": 101
+  },
+  {
+    "word": "I kinda like it",
+    "explains": "我有点喜欢（= I kind of like it）",
+    "freq": 102
+  },
+  {
+    "word": "Kinda weird",
+    "explains": "有点怪（= Kind of weird）",
+    "freq": 103
+  },
+  {
+    "word": "Kinda hungry",
+    "explains": "有点饿（= Kind of hungry）",
+    "freq": 104
+  },
+  {
+    "word": "That's kinda cool",
+    "explains": "还挺酷的（= That's kind of cool）",
+    "freq": 105
+  },
+  {
+    "word": "Kinda busy today",
+    "explains": "今天有点忙（= Kind of busy today）",
+    "freq": 106
+  },
+  {
+    "word": "Kinda late now",
+    "explains": "有点晚了（= Kind of late now）",
+    "freq": 107
+  },
+  {
+    "word": "Kinda nervous",
+    "explains": "有点紧张（= Kind of nervous）",
+    "freq": 108
+  },
+  {
+    "word": "Kinda makes sense",
+    "explains": "好像有点道理（= Kind of makes sense）",
+    "freq": 109
+  },
+  {
+    "word": "I kinda get it",
+    "explains": "我大概懂了（= I kind of get it）",
+    "freq": 110
+  },
+  {
+    "word": "Sorta",
+    "explains": "算是吧（= Sort of）",
+    "freq": 111
+  },
+  {
+    "word": "Sorta like it",
+    "explains": "有点像（= Sort of like it）",
+    "freq": 112
+  },
+  {
+    "word": "I'm sorta busy",
+    "explains": "我有点忙（= I'm sort of busy）",
+    "freq": 113
+  },
+  {
+    "word": "Sorta funny",
+    "explains": "有点好笑（= Sort of funny）",
+    "freq": 114
+  },
+  {
+    "word": "Sorta true",
+    "explains": "也算对吧（= Sort of true）",
+    "freq": 115
+  },
+  {
+    "word": "Sorta sad",
+    "explains": "有点难过（= Sort of sad）",
+    "freq": 116
+  },
+  {
+    "word": "Sorta expected",
+    "explains": "意料之中（= Sort of expected）",
+    "freq": 117
+  },
+  {
+    "word": "Sorta new here",
+    "explains": "算半个新人（= Sort of new here）",
+    "freq": 118
+  },
+  {
+    "word": "Sorta agreed",
+    "explains": "勉强同意（= Sort of agreed）",
+    "freq": 119
+  },
+  {
+    "word": "Sorta hafta agree",
+    "explains": "有点不得不同意（= Sort of have to agree）",
+    "freq": 120
+  },
+  {
+    "word": "I'm tryna sleep",
+    "explains": "我想睡觉呢（= I'm trying to sleep）",
+    "freq": 121
+  },
+  {
+    "word": "Tryna help you",
+    "explains": "我是想帮你（= Trying to help you）",
+    "freq": 122
+  },
+  {
+    "word": "Tryna call you",
+    "explains": "一直想打给你（= Trying to call you）",
+    "freq": 123
+  },
+  {
+    "word": "Tryna figure it out",
+    "explains": "正在想办法弄明白（= Trying to figure it out）",
+    "freq": 124
+  },
+  {
+    "word": "I'm tryna work",
+    "explains": "我要工作呢（= I'm trying to work）",
+    "freq": 125
+  },
+  {
+    "word": "Tryna be nice",
+    "explains": "尽量客气点（= Trying to be nice）",
+    "freq": 126
+  },
+  {
+    "word": "Tryna save money",
+    "explains": "想攒点钱（= Trying to save money）",
+    "freq": 127
+  },
+  {
+    "word": "Tryna quit smoking",
+    "explains": "正在戒烟（= Trying to quit smoking）",
+    "freq": 128
+  },
+  {
+    "word": "Tryna tell you",
+    "explains": "正想跟你说（= Trying to tell you）",
+    "freq": 129
+  },
+  {
+    "word": "Tryna get outta here",
+    "explains": "正想离开这（= Trying to get out of here）",
+    "freq": 130
+  },
+  {
+    "word": "Shoulda told me",
+    "explains": "早该告诉我（= Should have told me）",
+    "freq": 131
+  },
+  {
+    "word": "Woulda been nice",
+    "explains": "本来挺好的（= Would have been nice）",
+    "freq": 132
+  },
+  {
+    "word": "Coulda been worse",
+    "explains": "本来可能更糟（= Could have been worse）",
+    "freq": 133
+  },
+  {
+    "word": "I shoulda known",
+    "explains": "我早该知道（= I should have known）",
+    "freq": 134
+  },
+  {
+    "word": "You coulda asked",
+    "explains": "你本来可以问的（= You could have asked）",
+    "freq": 135
+  },
+  {
+    "word": "Shoulda listened",
+    "explains": "早该听劝的（= Should have listened）",
+    "freq": 136
+  },
+  {
+    "word": "Woulda helped",
+    "explains": "本来能帮上的（= Would have helped）",
+    "freq": 137
+  },
+  {
+    "word": "Coulda fooled me",
+    "explains": "我可不觉得（= Could have fooled me）",
+    "freq": 138
+  },
+  {
+    "word": "Coulda sworn",
+    "explains": "我敢发誓（= Could have sworn）",
+    "freq": 139
+  },
+  {
+    "word": "Woulda called ya",
+    "explains": "本会打给你的（= Would have called you）",
+    "freq": 140
+  },
+  {
+    "word": "Musta been tired",
+    "explains": "当时一定累了（= Must have been tired）",
+    "freq": 141
+  },
+  {
+    "word": "Musta been love",
+    "explains": "那一定是爱（= Must have been love）",
+    "freq": 142
+  },
+  {
+    "word": "I musta missed it",
+    "explains": "我一定是错过了（= I must have missed it）",
+    "freq": 143
+  },
+  {
+    "word": "Musta been hard",
+    "explains": "当时一定很难（= Must have been hard）",
+    "freq": 144
+  },
+  {
+    "word": "Musta forgot",
+    "explains": "肯定忘了（= Must have forgotten）",
+    "freq": 145
+  },
+  {
+    "word": "Musta been outta town",
+    "explains": "当时肯定出城了（= Must have been out of town）",
+    "freq": 146
+  },
+  {
+    "word": "Mighta been",
+    "explains": "可能是吧（= Might have been）",
+    "freq": 147
+  },
+  {
+    "word": "Mighta missed",
+    "explains": "可能错过了（= Might have missed）",
+    "freq": 148
+  },
+  {
+    "word": "Mighta known",
+    "explains": "可能早知道了（= Might have known）",
+    "freq": 149
+  },
+  {
+    "word": "Mighta seen",
+    "explains": "可能见过（= Might have seen）",
+    "freq": 150
+  },
+  {
+    "word": "I hafta go",
+    "explains": "我不得不走了（= I have to go）",
+    "freq": 151
+  },
+  {
+    "word": "Hafta wait",
+    "explains": "只能等了（= Have to wait）",
+    "freq": 152
+  },
+  {
+    "word": "You hafta see it",
+    "explains": "你必须得看看（= You have to see it）",
+    "freq": 153
+  },
+  {
+    "word": "Hafta work late",
+    "explains": "得加班（= Have to work late）",
+    "freq": 154
+  },
+  {
+    "word": "Hafta agree",
+    "explains": "不得不同意（= Have to agree）",
+    "freq": 155
+  },
+  {
+    "word": "Hafta leave now",
+    "explains": "现在得走了（= Have to leave now）",
+    "freq": 156
+  },
+  {
+    "word": "Hafta pay",
+    "explains": "得付钱了（= Have to pay）",
+    "freq": 157
+  },
+  {
+    "word": "Kids hafta eat",
+    "explains": "孩子总得吃饭（= Kids have to eat）",
+    "freq": 158
+  },
+  {
+    "word": "Hafta try",
+    "explains": "得试试（= Have to try）",
+    "freq": 159
+  },
+  {
+    "word": "Hafta start over",
+    "explains": "得重来了（= Have to start over）",
+    "freq": 160
+  },
+  {
+    "word": "You oughta know",
+    "explains": "你应该知道（= You ought to know）",
+    "freq": 161
+  },
+  {
+    "word": "Oughta be fine",
+    "explains": "应该没事（= Ought to be fine）",
+    "freq": 162
+  },
+  {
+    "word": "Oughta try it",
+    "explains": "应该试试（= Ought to try it）",
+    "freq": 163
+  },
+  {
+    "word": "Oughta leave",
+    "explains": "该走了（= Ought to leave）",
+    "freq": 164
+  },
+  {
+    "word": "Oughta call her",
+    "explains": "该给她打个电话（= Ought to call her）",
+    "freq": 165
+  },
+  {
+    "word": "Oughta be here soon",
+    "explains": "应该快到了（= Ought to be here soon）",
+    "freq": 166
+  },
+  {
+    "word": "Oughta rest",
+    "explains": "该休息了（= Ought to rest）",
+    "freq": 167
+  },
+  {
+    "word": "Oughta see it",
+    "explains": "真该去看看（= Ought to see it）",
+    "freq": 168
+  },
+  {
+    "word": "Oughta slow down",
+    "explains": "该慢点了（= Ought to slow down）",
+    "freq": 169
+  },
+  {
+    "word": "Oughta get goin'",
+    "explains": "该动身了（= Ought to get going）",
+    "freq": 170
+  },
+  {
+    "word": "Get outta here",
+    "explains": "不会吧/走开（= Get out of here）",
+    "freq": 171
+  },
+  {
+    "word": "Outta my way",
+    "explains": "让开（= Out of my way）",
+    "freq": 172
+  },
+  {
+    "word": "Outta control",
+    "explains": "失控了（= Out of control）",
+    "freq": 173
+  },
+  {
+    "word": "Outta luck",
+    "explains": "运气用光了（= Out of luck）",
+    "freq": 174
+  },
+  {
+    "word": "Outta time",
+    "explains": "没时间了（= Out of time）",
+    "freq": 175
+  },
+  {
+    "word": "Outta my mind",
+    "explains": "我疯了（= Out of my mind）",
+    "freq": 176
+  },
+  {
+    "word": "Run outta gas",
+    "explains": "没油了（= Run out of gas）",
+    "freq": 177
+  },
+  {
+    "word": "Outta the question",
+    "explains": "不可能（= Out of the question）",
+    "freq": 178
+  },
+  {
+    "word": "Outta stock",
+    "explains": "没货了（= Out of stock）",
+    "freq": 179
+  },
+  {
+    "word": "Outta patience",
+    "explains": "没耐心了（= Out of patience）",
+    "freq": 180
+  },
+  {
+    "word": "Lotta people",
+    "explains": "好多人（= A lot of people）",
+    "freq": 181
+  },
+  {
+    "word": "Lotta work",
+    "explains": "一大堆活（= A lot of work）",
+    "freq": 182
+  },
+  {
+    "word": "Lotta fun",
+    "explains": "很好玩（= A lot of fun）",
+    "freq": 183
+  },
+  {
+    "word": "Lotta money",
+    "explains": "很多钱（= A lot of money）",
+    "freq": 184
+  },
+  {
+    "word": "Lotta noise",
+    "explains": "很吵（= A lot of noise）",
+    "freq": 185
+  },
+  {
+    "word": "Lotta time",
+    "explains": "大把时间（= A lot of time）",
+    "freq": 186
+  },
+  {
+    "word": "Lotta traffic",
+    "explains": "很堵车（= A lot of traffic）",
+    "freq": 187
+  },
+  {
+    "word": "Lotta stuff",
+    "explains": "很多东西（= A lot of stuff）",
+    "freq": 188
+  },
+  {
+    "word": "Lotta nerve",
+    "explains": "脸皮真厚（= A lot of nerve）",
+    "freq": 189
+  },
+  {
+    "word": "Lotta questions",
+    "explains": "一堆问题（= A lot of questions）",
+    "freq": 190
+  },
+  {
+    "word": "Get 'em",
+    "explains": "抓住他们（= Get them）",
+    "freq": 191
+  },
+  {
+    "word": "Tell 'em",
+    "explains": "告诉他们（= Tell them）",
+    "freq": 192
+  },
+  {
+    "word": "Call 'em",
+    "explains": "打给他们（= Call them）",
+    "freq": 193
+  },
+  {
+    "word": "Leave 'em alone",
+    "explains": "别管他们（= Leave them alone）",
+    "freq": 194
+  },
+  {
+    "word": "Give 'em time",
+    "explains": "给他们点时间（= Give them time）",
+    "freq": 195
+  },
+  {
+    "word": "I saw 'em",
+    "explains": "我看见他们了（= I saw them）",
+    "freq": 196
+  },
+  {
+    "word": "Ask 'em",
+    "explains": "问问他们（= Ask them）",
+    "freq": 197
+  },
+  {
+    "word": "Let 'em in",
+    "explains": "让他们进来（= Let them in）",
+    "freq": 198
+  },
+  {
+    "word": "Love 'em",
+    "explains": "爱死它们了（= Love them）",
+    "freq": 199
+  },
+  {
+    "word": "Count 'em",
+    "explains": "数数看（= Count them）",
+    "freq": 200
+  },
+  {
+    "word": "'Cause I said so",
+    "explains": "因为我说了算（= Because I said so）",
+    "freq": 201
+  },
+  {
+    "word": "'Cause why not",
+    "explains": "因为干嘛不呢（= Because why not）",
+    "freq": 202
+  },
+  {
+    "word": "Just 'cause",
+    "explains": "不为什么（= Just because）",
+    "freq": 203
+  },
+  {
+    "word": "'Cause of you",
+    "explains": "都是因为你（= Because of you）",
+    "freq": 204
+  },
+  {
+    "word": "'Cause I'm tired",
+    "explains": "因为我累了（= Because I'm tired）",
+    "freq": 205
+  },
+  {
+    "word": "Cuz it's fun",
+    "explains": "因为好玩啊（= Because it's fun）",
+    "freq": 206
+  },
+  {
+    "word": "Cuz I can",
+    "explains": "因为我乐意（= Because I can）",
+    "freq": 207
+  },
+  {
+    "word": "'Cause it's late",
+    "explains": "因为太晚了（= Because it's late）",
+    "freq": 208
+  },
+  {
+    "word": "Cuz you're nice",
+    "explains": "因为你人好（= Because you're nice）",
+    "freq": 209
+  },
+  {
+    "word": "Prolly 'cause it's late",
+    "explains": "大概因为太晚了（= Probably because it's late）",
+    "freq": 210
+  },
+  {
+    "word": "'Bout time",
+    "explains": "早该这样了（= About time）",
+    "freq": 211
+  },
+  {
+    "word": "What 'bout you?",
+    "explains": "你呢（= What about you?）",
+    "freq": 212
+  },
+  {
+    "word": "'Bout to leave",
+    "explains": "正要出门（= About to leave）",
+    "freq": 213
+  },
+  {
+    "word": "'Bout five minutes",
+    "explains": "大概五分钟（= About five minutes）",
+    "freq": 214
+  },
+  {
+    "word": "How 'bout dinner?",
+    "explains": "吃个饭怎么样（= How about dinner?）",
+    "freq": 215
+  },
+  {
+    "word": "'Bout yesterday",
+    "explains": "昨天那事儿（= About yesterday）",
+    "freq": 216
+  },
+  {
+    "word": "Worried 'bout you",
+    "explains": "担心你（= Worried about you）",
+    "freq": 217
+  },
+  {
+    "word": "'Bout done",
+    "explains": "快好了（= About done）",
+    "freq": 218
+  },
+  {
+    "word": "Thinkin' 'bout it",
+    "explains": "正想着呢（= Thinking about it）",
+    "freq": 219
+  },
+  {
+    "word": "'Bout halfway",
+    "explains": "差不多一半（= About halfway）",
+    "freq": 220
+  },
+  {
+    "word": "Doncha know?",
+    "explains": "你不知道吗（= Don't you know?）",
+    "freq": 221
+  },
+  {
+    "word": "Doncha worry",
+    "explains": "别担心（= Don't you worry）",
+    "freq": 222
+  },
+  {
+    "word": "Doncha love it?",
+    "explains": "你不喜欢吗（= Don't you love it?）",
+    "freq": 223
+  },
+  {
+    "word": "Wontcha stay?",
+    "explains": "你不留下来吗（= Won't you stay?）",
+    "freq": 224
+  },
+  {
+    "word": "Wontcha come in?",
+    "explains": "不进来坐坐吗（= Won't you come in?）",
+    "freq": 225
+  },
+  {
+    "word": "Cantcha see?",
+    "explains": "你看不见吗（= Can't you see?）",
+    "freq": 226
+  },
+  {
+    "word": "Cantcha wait?",
+    "explains": "你就不能等等吗（= Can't you wait?）",
+    "freq": 227
+  },
+  {
+    "word": "Didntcha know?",
+    "explains": "你当时不知道吗（= Didn't you know?）",
+    "freq": 228
+  },
+  {
+    "word": "Wouldncha say?",
+    "explains": "你不觉得吗（= Wouldn't you say?）",
+    "freq": 229
+  },
+  {
+    "word": "Doncha think?",
+    "explains": "你不觉得吗（= Don't you think?）",
+    "freq": 230
+  },
+  {
+    "word": "What're you doin'?",
+    "explains": "你在干嘛（= What are you doing?）",
+    "freq": 231
+  },
+  {
+    "word": "Goin' home",
+    "explains": "回家去了（= Going home）",
+    "freq": 232
+  },
+  {
+    "word": "Somethin' wrong",
+    "explains": "有点不对劲（= Something wrong）",
+    "freq": 233
+  },
+  {
+    "word": "Nothin' much",
+    "explains": "没什么（= Nothing much）",
+    "freq": 234
+  },
+  {
+    "word": "Feelin' good",
+    "explains": "感觉不错（= Feeling good）",
+    "freq": 235
+  },
+  {
+    "word": "Waitin' for you",
+    "explains": "等你呢（= Waiting for you）",
+    "freq": 236
+  },
+  {
+    "word": "Just kiddin'",
+    "explains": "开个玩笑（= Just kidding）",
+    "freq": 237
+  },
+  {
+    "word": "Comin' over",
+    "explains": "这就过来（= Coming over）",
+    "freq": 238
+  },
+  {
+    "word": "Sleepin' late",
+    "explains": "睡懒觉（= Sleeping late）",
+    "freq": 239
+  },
+  {
+    "word": "Gettin' late",
+    "explains": "天晚了（= Getting late）",
+    "freq": 240
+  },
+  {
+    "word": "Makin' dinner",
+    "explains": "在做晚饭（= Making dinner）",
+    "freq": 241
+  },
+  {
+    "word": "Takin' a break",
+    "explains": "休息一下（= Taking a break）",
+    "freq": 242
+  },
+  {
+    "word": "Losin' it",
+    "explains": "快崩溃了（= Losing it）",
+    "freq": 243
+  },
+  {
+    "word": "Livin' life",
+    "explains": "享受生活（= Living life）",
+    "freq": 244
+  },
+  {
+    "word": "Doin' great",
+    "explains": "干得不错（= Doing great）",
+    "freq": 245
+  },
+  {
+    "word": "Sayin' goodbye",
+    "explains": "说再见（= Saying goodbye）",
+    "freq": 246
+  },
+  {
+    "word": "Workin' hard",
+    "explains": "努力工作（= Working hard）",
+    "freq": 247
+  },
+  {
+    "word": "Havin' fun",
+    "explains": "玩得开心（= Having fun）",
+    "freq": 248
+  },
+  {
+    "word": "Lookin' good",
+    "explains": "看起来不错（= Looking good）",
+    "freq": 249
+  },
+  {
+    "word": "Talkin' 'bout",
+    "explains": "说的是（= Talking about）",
+    "freq": 250
+  },
+  {
+    "word": "Ain't no way",
+    "explains": "没门（= There is no way）",
+    "freq": 251
+  },
+  {
+    "word": "Ain't my fault",
+    "explains": "不是我的错（= It is not my fault）",
+    "freq": 252
+  },
+  {
+    "word": "Ain't that right?",
+    "explains": "对吧（= Isn't that right?）",
+    "freq": 253
+  },
+  {
+    "word": "Ain't got time",
+    "explains": "没时间（= Haven't got time）",
+    "freq": 254
+  },
+  {
+    "word": "It ain't easy",
+    "explains": "不容易（= It is not easy）",
+    "freq": 255
+  },
+  {
+    "word": "Ain't over yet",
+    "explains": "还没完呢（= It is not over yet）",
+    "freq": 256
+  },
+  {
+    "word": "Ain't nobody",
+    "explains": "没人（= There is nobody）",
+    "freq": 257
+  },
+  {
+    "word": "Ain't gonna happen",
+    "explains": "不会发生的（= It is not going to happen）",
+    "freq": 258
+  },
+  {
+    "word": "Ain't she sweet?",
+    "explains": "她多可爱啊（= Isn't she sweet?）",
+    "freq": 259
+  },
+  {
+    "word": "Ain't nothing",
+    "explains": "没什么大不了（= There is nothing）",
+    "freq": 260
+  },
+  {
+    "word": "Hi y'all",
+    "explains": "大家好（= Hi, you all）",
+    "freq": 261
+  },
+  {
+    "word": "See y'all",
+    "explains": "大家再见（= See you all）",
+    "freq": 262
+  },
+  {
+    "word": "Thanks y'all",
+    "explains": "谢谢大家（= Thanks, you all）",
+    "freq": 263
+  },
+  {
+    "word": "Y'all come back",
+    "explains": "欢迎再来（= You all come back）",
+    "freq": 264
+  },
+  {
+    "word": "Y'all ready?",
+    "explains": "都准备好了吗（= Are you all ready?）",
+    "freq": 265
+  },
+  {
+    "word": "Love y'all",
+    "explains": "爱你们哟（= Love you all）",
+    "freq": 266
+  },
+  {
+    "word": "Y'all hungry?",
+    "explains": "大家都饿吗（= Are you all hungry?）",
+    "freq": 267
+  },
+  {
+    "word": "Bless y'all",
+    "explains": "祝福大家（= Bless you all）",
+    "freq": 268
+  },
+  {
+    "word": "Y'all sit down",
+    "explains": "大家都坐（= You all sit down）",
+    "freq": 269
+  },
+  {
+    "word": "What're y'all doing?",
+    "explains": "你们在干嘛（= What are you all doing?）",
+    "freq": 270
+  },
+  {
+    "word": "Gotcha",
+    "explains": "抓到你了/明白了（= Got you）",
+    "freq": 271
+  },
+  {
+    "word": "Gotcha covered",
+    "explains": "包在我身上（= Got you covered）",
+    "freq": 272
+  },
+  {
+    "word": "Gotcha back",
+    "explains": "我罩着你（= Got your back）",
+    "freq": 273
+  },
+  {
+    "word": "Gotcha point",
+    "explains": "懂你的意思（= Got your point）",
+    "freq": 274
+  },
+  {
+    "word": "You betcha",
+    "explains": "那当然（= You bet you）",
+    "freq": 275
+  },
+  {
+    "word": "Betcha can't",
+    "explains": "我打赌你不行（= Bet you can't）",
+    "freq": 276
+  },
+  {
+    "word": "Betcha forgot",
+    "explains": "打赌你忘了吧（= Bet you forgot）",
+    "freq": 277
+  },
+  {
+    "word": "Betcha like it",
+    "explains": "包你喜欢（= Bet you'll like it）",
+    "freq": 278
+  },
+  {
+    "word": "Betcha five bucks",
+    "explains": "赌五块钱（= Bet you five bucks）",
+    "freq": 279
+  },
+  {
+    "word": "Betcha didn't know",
+    "explains": "打赌你不知道（= Bet you didn't know）",
+    "freq": 280
+  },
+  {
+    "word": "See ya",
+    "explains": "回见（= See you）",
+    "freq": 281
+  },
+  {
+    "word": "See ya later",
+    "explains": "回头见（= See you later）",
+    "freq": 282
+  },
+  {
+    "word": "See ya soon",
+    "explains": "很快再见（= See you soon）",
+    "freq": 283
+  },
+  {
+    "word": "See ya around",
+    "explains": "后会有期（= See you around）",
+    "freq": 284
+  },
+  {
+    "word": "Catch ya later",
+    "explains": "回头聊（= Catch you later）",
+    "freq": 285
+  },
+  {
+    "word": "See ya tomorrow",
+    "explains": "明天见（= See you tomorrow）",
+    "freq": 286
+  },
+  {
+    "word": "See ya tonight",
+    "explains": "晚上见（= See you tonight）",
+    "freq": 287
+  },
+  {
+    "word": "Catch ya",
+    "explains": "回见（= Catch you）",
+    "freq": 288
+  },
+  {
+    "word": "See ya next week",
+    "explains": "下周见（= See you next week）",
+    "freq": 289
+  },
+  {
+    "word": "See ya Monday",
+    "explains": "周一见（= See you Monday）",
+    "freq": 290
+  },
+  {
+    "word": "Jeet yet?",
+    "explains": "吃了吗（= Did you eat yet?）",
+    "freq": 291
+  },
+  {
+    "word": "Ju eat?",
+    "explains": "你吃了吗（= Did you eat?）",
+    "freq": 292
+  },
+  {
+    "word": "Ju see it?",
+    "explains": "你看见了吗（= Did you see it?）",
+    "freq": 293
+  },
+  {
+    "word": "Ju hear that?",
+    "explains": "你听到了吗（= Did you hear that?）",
+    "freq": 294
+  },
+  {
+    "word": "Ju get my text?",
+    "explains": "看到我短信了吗（= Did you get my text?）",
+    "freq": 295
+  },
+  {
+    "word": "Jeet lunch?",
+    "explains": "午饭吃了吗（= Did you eat lunch?）",
+    "freq": 296
+  },
+  {
+    "word": "Ju finish?",
+    "explains": "做完了吗（= Did you finish?）",
+    "freq": 297
+  },
+  {
+    "word": "Ju know?",
+    "explains": "你知道吗（= Did you know?）",
+    "freq": 298
+  },
+  {
+    "word": "Ju call back?",
+    "explains": "回电话了吗（= Did you call back?）",
+    "freq": 299
+  },
+  {
+    "word": "Ju sleep?",
+    "explains": "睡了吗（= Did you sleep?）",
+    "freq": 300
+  },
+  {
+    "word": "Rock 'n' roll",
+    "explains": "摇滚（= Rock and roll）",
+    "freq": 301
+  },
+  {
+    "word": "Fish 'n' chips",
+    "explains": "炸鱼薯条（= Fish and chips）",
+    "freq": 302
+  },
+  {
+    "word": "Up 'n' down",
+    "explains": "上上下下（= Up and down）",
+    "freq": 303
+  },
+  {
+    "word": "Black 'n' white",
+    "explains": "黑白（= Black and white）",
+    "freq": 304
+  },
+  {
+    "word": "Salt 'n' pepper",
+    "explains": "盐和胡椒（= Salt and pepper）",
+    "freq": 305
+  },
+  {
+    "word": "Bread 'n' butter",
+    "explains": "面包黄油/生计（= Bread and butter）",
+    "freq": 306
+  },
+  {
+    "word": "Day 'n' night",
+    "explains": "日日夜夜（= Day and night）",
+    "freq": 307
+  },
+  {
+    "word": "Back 'n' forth",
+    "explains": "来来回回（= Back and forth）",
+    "freq": 308
+  },
+  {
+    "word": "Rain 'n' shine",
+    "explains": "风雨无阻（= Rain and shine）",
+    "freq": 309
+  },
+  {
+    "word": "Now 'n' then",
+    "explains": "时不时（= Now and then）",
+    "freq": 310
+  },
+  {
+    "word": "'Nother one",
+    "explains": "再来一个（= Another one）",
+    "freq": 311
+  },
+  {
+    "word": "'Nother day",
+    "explains": "又一天（= Another day）",
+    "freq": 312
+  },
+  {
+    "word": "'Nother round",
+    "explains": "再来一轮（= Another round）",
+    "freq": 313
+  },
+  {
+    "word": "'Nother chance",
+    "explains": "再给次机会（= Another chance）",
+    "freq": 314
+  },
+  {
+    "word": "'Nother beer",
+    "explains": "再来杯啤酒（= Another beer）",
+    "freq": 315
+  },
+  {
+    "word": "'Nother question",
+    "explains": "再问一个（= Another question）",
+    "freq": 316
+  },
+  {
+    "word": "'Nother year",
+    "explains": "又一年（= Another year）",
+    "freq": 317
+  },
+  {
+    "word": "'Nother try",
+    "explains": "再试一次（= Another try）",
+    "freq": 318
+  },
+  {
+    "word": "Whole 'nother story",
+    "explains": "完全是另一回事（= A whole another story）",
+    "freq": 319
+  },
+  {
+    "word": "'Nother bite",
+    "explains": "再吃一口（= Another bite）",
+    "freq": 320
+  },
+  {
+    "word": "Prolly not",
+    "explains": "大概不行（= Probably not）",
+    "freq": 321
+  },
+  {
+    "word": "Prolly right",
+    "explains": "可能是对的（= Probably right）",
+    "freq": 322
+  },
+  {
+    "word": "I'll prolly stay",
+    "explains": "我大概会留下（= I'll probably stay）",
+    "freq": 323
+  },
+  {
+    "word": "Prolly gonna rain",
+    "explains": "可能要下雨（= Probably going to rain）",
+    "freq": 324
+  },
+  {
+    "word": "Prolly busy",
+    "explains": "估计很忙（= Probably busy）",
+    "freq": 325
+  },
+  {
+    "word": "Prolly later",
+    "explains": "大概晚点（= Probably later）",
+    "freq": 326
+  },
+  {
+    "word": "Prolly true",
+    "explains": "八成是真的（= Probably true）",
+    "freq": 327
+  },
+  {
+    "word": "Prolly forgot",
+    "explains": "八成是忘了（= Probably forgot）",
+    "freq": 328
+  },
+  {
+    "word": "Prolly better",
+    "explains": "可能更好（= Probably better）",
+    "freq": 329
+  },
+  {
+    "word": "Prolly should go",
+    "explains": "大概该走了（= Probably should go）",
+    "freq": 330
+  },
+  {
+    "word": "I useta",
+    "explains": "我以前是（= I used to）",
+    "freq": 331
+  },
+  {
+    "word": "Useta live here",
+    "explains": "以前住这（= Used to live here）",
+    "freq": 332
+  },
+  {
+    "word": "Useta work out",
+    "explains": "以前常健身（= Used to work out）",
+    "freq": 333
+  },
+  {
+    "word": "Useta know",
+    "explains": "以前知道（= Used to know）",
+    "freq": 334
+  },
+  {
+    "word": "Useta be fun",
+    "explains": "以前挺好玩（= Used to be fun）",
+    "freq": 335
+  },
+  {
+    "word": "Useta drive",
+    "explains": "以前开车（= Used to drive）",
+    "freq": 336
+  },
+  {
+    "word": "Useta smoke",
+    "explains": "以前抽烟（= Used to smoke）",
+    "freq": 337
+  },
+  {
+    "word": "Useta come here",
+    "explains": "以前常来（= Used to come here）",
+    "freq": 338
+  },
+  {
+    "word": "Useta hate it",
+    "explains": "以前很讨厌（= Used to hate it）",
+    "freq": 339
+  },
+  {
+    "word": "Useta be friends",
+    "explains": "以前是朋友（= Used to be friends）",
+    "freq": 340
+  },
+  {
+    "word": "G'night",
+    "explains": "晚安（= Good night）",
+    "freq": 341
+  },
+  {
+    "word": "G'night kids",
+    "explains": "晚安孩子们（= Good night, kids）",
+    "freq": 342
+  },
+  {
+    "word": "G'night everyone",
+    "explains": "大家晚安（= Good night, everyone）",
+    "freq": 343
+  },
+  {
+    "word": "'Morning",
+    "explains": "早啊（= Good morning）",
+    "freq": 344
+  },
+  {
+    "word": "'Morning boss",
+    "explains": "早，老板（= Good morning, boss）",
+    "freq": 345
+  },
+  {
+    "word": "'Morning sunshine",
+    "explains": "早啊小太阳（= Good morning, sunshine）",
+    "freq": 346
+  },
+  {
+    "word": "G'day mate",
+    "explains": "你好啊哥们（澳式，= Good day, mate）",
+    "freq": 347
+  },
+  {
+    "word": "Night night",
+    "explains": "晚安安（亲昵，= Night night）",
+    "freq": 348
+  },
+  {
+    "word": "'Morning all",
+    "explains": "大家早（= Good morning, all）",
+    "freq": 349
+  },
+  {
+    "word": "G'night sweetie",
+    "explains": "晚安亲爱的（= Good night, sweetie）",
+    "freq": 350
+  },
+  {
+    "word": "'Member me?",
+    "explains": "还记得我吗（= Remember me?）",
+    "freq": 351
+  },
+  {
+    "word": "'Member that?",
+    "explains": "还记得那事吗（= Remember that?）",
+    "freq": 352
+  },
+  {
+    "word": "I 'member",
+    "explains": "我记得（= I remember）",
+    "freq": 353
+  },
+  {
+    "word": "'Member when?",
+    "explains": "还记得那时吗（= Remember when?）",
+    "freq": 354
+  },
+  {
+    "word": "'Member this?",
+    "explains": "还记得这个吗（= Remember this?）",
+    "freq": 355
+  },
+  {
+    "word": "You 'member?",
+    "explains": "你还记得不（= You remember?）",
+    "freq": 356
+  },
+  {
+    "word": "'Member her?",
+    "explains": "还记得她吗（= Remember her?）",
+    "freq": 357
+  },
+  {
+    "word": "'Member last summer?",
+    "explains": "还记得去年夏天吗（= Remember last summer?）",
+    "freq": 358
+  },
+  {
+    "word": "I 'member now",
+    "explains": "我想起来了（= I remember now）",
+    "freq": 359
+  },
+  {
+    "word": "'Member the time?",
+    "explains": "还记得那次吗（= Remember the time?）",
+    "freq": 360
+  },
+  {
+    "word": "'Scuse me",
+    "explains": "不好意思/借过（= Excuse me）",
+    "freq": 361
+  },
+  {
+    "word": "'Scuse us",
+    "explains": "借过一下（= Excuse us）",
+    "freq": 362
+  },
+  {
+    "word": "I 'spose",
+    "explains": "我想是吧（= I suppose）",
+    "freq": 363
+  },
+  {
+    "word": "'Spose so",
+    "explains": "应该是吧（= Suppose so）",
+    "freq": 364
+  },
+  {
+    "word": "'Spose not",
+    "explains": "应该不是（= Suppose not）",
+    "freq": 365
+  },
+  {
+    "word": "I 'spose you're right",
+    "explains": "我想你是对的（= I suppose you're right）",
+    "freq": 366
+  },
+  {
+    "word": "'Spose we wait",
+    "explains": "我们还是等吧（= Suppose we wait）",
+    "freq": 367
+  },
+  {
+    "word": "'Spose it works",
+    "explains": "应该能行（= Suppose it works）",
+    "freq": 368
+  },
+  {
+    "word": "'Scuse the mess",
+    "explains": "不好意思有点乱（= Excuse the mess）",
+    "freq": 369
+  },
+  {
+    "word": "I 'spose not",
+    "explains": "我想不会吧（= I suppose not）",
+    "freq": 370
+  },
+  {
+    "word": "Wouldja stop?",
+    "explains": "你能不能消停点（= Would you stop?）",
+    "freq": 371
+  },
+  {
+    "word": "Wouldja look at that",
+    "explains": "你瞧瞧（= Would you look at that）",
+    "freq": 372
+  },
+  {
+    "word": "Couldja help me?",
+    "explains": "能帮个忙吗（= Could you help me?）",
+    "freq": 373
+  },
+  {
+    "word": "Couldja wait?",
+    "explains": "能等一下吗（= Could you wait?）",
+    "freq": 374
+  },
+  {
+    "word": "Couldja repeat that?",
+    "explains": "能再说一遍吗（= Could you repeat that?）",
+    "freq": 375
+  },
+  {
+    "word": "Wouldja mind?",
+    "explains": "你介意吗（= Would you mind?）",
+    "freq": 376
+  },
+  {
+    "word": "Wouldja believe it?",
+    "explains": "你敢信吗（= Would you believe it?）",
+    "freq": 377
+  },
+  {
+    "word": "Couldja hurry?",
+    "explains": "能快点吗（= Could you hurry?）",
+    "freq": 378
+  },
+  {
+    "word": "Wouldja relax?",
+    "explains": "你能不能淡定点（= Would you relax?）",
+    "freq": 379
+  },
+  {
+    "word": "Couldja do me a favor?",
+    "explains": "能帮我个忙吗（= Could you do me a favor?）",
+    "freq": 380
+  },
+  {
+    "word": "C'mon",
+    "explains": "快点/得了吧（= Come on）",
+    "freq": 381
+  },
+  {
+    "word": "C'mon in",
+    "explains": "快进来（= Come on in）",
+    "freq": 382
+  },
+  {
+    "word": "C'mon guys",
+    "explains": "快点伙计们（= Come on, guys）",
+    "freq": 383
+  },
+  {
+    "word": "C'mere",
+    "explains": "过来一下（= Come here）",
+    "freq": 384
+  },
+  {
+    "word": "C'mere you",
+    "explains": "你给我过来（= Come here, you）",
+    "freq": 385
+  },
+  {
+    "word": "C'mon now",
+    "explains": "行了行了（= Come on now）",
+    "freq": 386
+  },
+  {
+    "word": "C'mon over",
+    "explains": "过来吧（= Come on over）",
+    "freq": 387
+  },
+  {
+    "word": "C'mon already",
+    "explains": "搞快点啊（= Come on already）",
+    "freq": 388
+  },
+  {
+    "word": "C'mon man",
+    "explains": "拜托老兄（= Come on, man）",
+    "freq": 389
+  },
+  {
+    "word": "C'mon let's go",
+    "explains": "走了走了（= Come on, let's go）",
+    "freq": 390
+  },
+  {
+    "word": "How're you?",
+    "explains": "你好吗（= How are you?）",
+    "freq": 391
+  },
+  {
+    "word": "How're things?",
+    "explains": "最近咋样（= How are things?）",
+    "freq": 392
+  },
+  {
+    "word": "How's it going?",
+    "explains": "过得咋样（= How is it going?）",
+    "freq": 393
+  },
+  {
+    "word": "How's work?",
+    "explains": "工作咋样（= How is work?）",
+    "freq": 394
+  },
+  {
+    "word": "How's everyone?",
+    "explains": "大家都好吗（= How is everyone?）",
+    "freq": 395
+  },
+  {
+    "word": "What's up?",
+    "explains": "咋啦（= What is up?）",
+    "freq": 396
+  },
+  {
+    "word": "What's new?",
+    "explains": "有啥新鲜事（= What is new?）",
+    "freq": 397
+  },
+  {
+    "word": "What's wrong?",
+    "explains": "怎么了（= What is wrong?）",
+    "freq": 398
+  },
+  {
+    "word": "What's that?",
+    "explains": "那是啥（= What is that?）",
+    "freq": 399
+  },
+  {
+    "word": "What's the matter?",
+    "explains": "出什么事了（= What is the matter?）",
+    "freq": 400
+  },
+  {
+    "word": "It'd be nice",
+    "explains": "那就好了（= It would be nice）",
+    "freq": 401
+  },
+  {
+    "word": "That'd work",
+    "explains": "那能行（= That would work）",
+    "freq": 402
+  },
+  {
+    "word": "There'd be time",
+    "explains": "会有时间的（= There would be time）",
+    "freq": 403
+  },
+  {
+    "word": "Who'd know?",
+    "explains": "谁会知道呢（= Who would know?）",
+    "freq": 404
+  },
+  {
+    "word": "He'd agree",
+    "explains": "他会同意的（= He would agree）",
+    "freq": 405
+  },
+  {
+    "word": "We'd better go",
+    "explains": "我们最好走了（= We had better go）",
+    "freq": 406
+  },
+  {
+    "word": "You'd love it",
+    "explains": "你会喜欢的（= You would love it）",
+    "freq": 407
+  },
+  {
+    "word": "I'd say so",
+    "explains": "我看行（= I would say so）",
+    "freq": 408
+  },
+  {
+    "word": "She'd call first",
+    "explains": "她会先打电话的（= She would call first）",
+    "freq": 409
+  },
+  {
+    "word": "That'd be great",
+    "explains": "那就太好了（= That would be great）",
+    "freq": 410
+  },
+  {
+    "word": "It'll be okay",
+    "explains": "会没事的（= It will be okay）",
+    "freq": 411
+  },
+  {
+    "word": "That'll do",
+    "explains": "那就够了（= That will do）",
+    "freq": 412
+  },
+  {
+    "word": "He'll come",
+    "explains": "他会来的（= He will come）",
+    "freq": 413
+  },
+  {
+    "word": "We'll see",
+    "explains": "走着瞧（= We will see）",
+    "freq": 414
+  },
+  {
+    "word": "Who'll win?",
+    "explains": "谁会赢（= Who will win?）",
+    "freq": 415
+  },
+  {
+    "word": "She'll call",
+    "explains": "她会打来的（= She will call）",
+    "freq": 416
+  },
+  {
+    "word": "It'll rain",
+    "explains": "会下雨的（= It will rain）",
+    "freq": 417
+  },
+  {
+    "word": "That'll teach you",
+    "explains": "给你个教训（= That will teach you）",
+    "freq": 418
+  },
+  {
+    "word": "I'll bet",
+    "explains": "我敢打赌（= I will bet）",
+    "freq": 419
+  },
+  {
+    "word": "It'll pass",
+    "explains": "会过去的（= It will pass）",
+    "freq": 420
+  },
+  {
+    "word": "Could've been",
+    "explains": "本来可能的（= Could have been）",
+    "freq": 421
+  },
+  {
+    "word": "Should've known",
+    "explains": "早该知道（= Should have known）",
+    "freq": 422
+  },
+  {
+    "word": "We're done",
+    "explains": "完事了（= We are done）",
+    "freq": 423
+  },
+  {
+    "word": "They're here",
+    "explains": "他们到了（= They are here）",
+    "freq": 424
+  },
+  {
+    "word": "You're kidding",
+    "explains": "你在开玩笑吧（= You are kidding）",
+    "freq": 425
+  },
+  {
+    "word": "It's fine",
+    "explains": "没事的（= It is fine）",
+    "freq": 426
+  },
+  {
+    "word": "He's out",
+    "explains": "他不在（= He is out）",
+    "freq": 427
+  },
+  {
+    "word": "We've met",
+    "explains": "我们见过（= We have met）",
+    "freq": 428
+  },
+  {
+    "word": "You've changed",
+    "explains": "你变了（= You have changed）",
+    "freq": 429
+  },
+  {
+    "word": "Would've helped",
+    "explains": "本来能帮上（= Would have helped）",
+    "freq": 430
+  },
+  {
+    "word": "M'kay",
+    "explains": "嗯哼（敷衍的「好吧」，= Okay）",
+    "freq": 431
+  },
+  {
+    "word": "'Kay",
+    "explains": "好（= Okay）",
+    "freq": 432
+  },
+  {
+    "word": "'Kay bye",
+    "explains": "好，拜（= Okay, bye）",
+    "freq": 433
+  },
+  {
+    "word": "Alrighty then",
+    "explains": "那行吧（= Alright then）",
+    "freq": 434
+  },
+  {
+    "word": "Okey dokey",
+    "explains": "好嘞（= Okay）",
+    "freq": 435
+  },
+  {
+    "word": "S'okay",
+    "explains": "没关系（= It's okay）",
+    "freq": 436
+  },
+  {
+    "word": "S'fine",
+    "explains": "没事（= It's fine）",
+    "freq": 437
+  },
+  {
+    "word": "Yep yep",
+    "explains": "对对（= Yep）",
+    "freq": 438
+  },
+  {
+    "word": "Uh-huh",
+    "explains": "嗯哼（是的，= Yes）",
+    "freq": 439
+  },
+  {
+    "word": "Mm-hmm",
+    "explains": "嗯嗯（= Yes）",
+    "freq": 440
+  },
+  {
+    "word": "Howarya?",
+    "explains": "你好吗（= How are you?）",
+    "freq": 441
+  },
+  {
+    "word": "Howyadoin'?",
+    "explains": "你还好吗（= How are you doing?）",
+    "freq": 442
+  },
+  {
+    "word": "Whatarya doin'?",
+    "explains": "你在干嘛（= What are you doing?）",
+    "freq": 443
+  },
+  {
+    "word": "Wherarya goin'?",
+    "explains": "你去哪（= Where are you going?）",
+    "freq": 444
+  },
+  {
+    "word": "Whoarya?",
+    "explains": "你是谁啊（= Who are you?）",
+    "freq": 445
+  },
+  {
+    "word": "Howarya feelin'?",
+    "explains": "感觉如何（= How are you feeling?）",
+    "freq": 446
+  },
+  {
+    "word": "Whatarya waitin' for?",
+    "explains": "还等啥（= What are you waiting for?）",
+    "freq": 447
+  },
+  {
+    "word": "Wherarya from?",
+    "explains": "你哪人（= Where are you from?）",
+    "freq": 448
+  },
+  {
+    "word": "Howarya holdin' up?",
+    "explains": "你撑得住吗（= How are you holding up?）",
+    "freq": 449
+  },
+  {
+    "word": "Whatarya sayin'?",
+    "explains": "你说啥（= What are you saying?）",
+    "freq": 450
+  },
+  {
+    "word": "Love ya",
+    "explains": "爱你哦（= Love you）",
+    "freq": 451
+  },
+  {
+    "word": "Thank ya",
+    "explains": "谢啦（= Thank you）",
+    "freq": 452
+  },
+  {
+    "word": "Miss ya",
+    "explains": "想你哦（= Miss you）",
+    "freq": 453
+  },
+  {
+    "word": "Got ya",
+    "explains": "懂你了（= Got you）",
+    "freq": 454
+  },
+  {
+    "word": "Told ya",
+    "explains": "早就跟你说了（= Told you）",
+    "freq": 455
+  },
+  {
+    "word": "Need ya",
+    "explains": "需要你（= Need you）",
+    "freq": 456
+  },
+  {
+    "word": "How are ya?",
+    "explains": "你好吗（= How are you?）",
+    "freq": 457
+  },
+  {
+    "word": "Good for ya",
+    "explains": "真行啊你（= Good for you）",
+    "freq": 458
+  },
+  {
+    "word": "Hate to tell ya",
+    "explains": "不得不告诉你（= Hate to tell you）",
+    "freq": 459
+  },
+  {
+    "word": "Called ya",
+    "explains": "给你打过电话了（= Called you）",
+    "freq": 460
+  },
+  {
+    "word": "Good on ya",
+    "explains": "干得漂亮（澳/英式，= Good on you）",
+    "freq": 461
+  },
+  {
+    "word": "Happy for ya",
+    "explains": "为你高兴（= Happy for you）",
+    "freq": 462
+  },
+  {
+    "word": "Ya know?",
+    "explains": "你知道吗（= You know?）",
+    "freq": 463
+  },
+  {
+    "word": "Ya right",
+    "explains": "才怪（= Yeah, right）",
+    "freq": 464
+  },
+  {
+    "word": "Ya sure?",
+    "explains": "你确定（= You sure?）",
+    "freq": 465
+  },
+  {
+    "word": "Ya done?",
+    "explains": "弄完了吗（= You done?）",
+    "freq": 466
+  },
+  {
+    "word": "Ya hungry?",
+    "explains": "饿了吗（= You hungry?）",
+    "freq": 467
+  },
+  {
+    "word": "Ya ok?",
+    "explains": "还好吗（= You okay?）",
+    "freq": 468
+  },
+  {
+    "word": "Ya coming?",
+    "explains": "来吗（= You coming?）",
+    "freq": 469
+  },
+  {
+    "word": "Ya ready?",
+    "explains": "准备好了吗（= You ready?）",
+    "freq": 470
+  },
+  {
+    "word": "I gotta tell ya somethin'",
+    "explains": "我得跟你说点事（= I've got to tell you something）",
+    "freq": 471
+  },
+  {
+    "word": "You shoulda seen it",
+    "explains": "你真该看看（= You should have seen it）",
+    "freq": 472
+  },
+  {
+    "word": "Didja get what I sent ya?",
+    "explains": "我发你的收到了吗（= Did you get what I sent you?）",
+    "freq": 473
+  },
+  {
+    "word": "Whatcha gonna say?",
+    "explains": "你要说啥（= What are you going to say?）",
+    "freq": 474
+  },
+  {
+    "word": "Kinda wanna go",
+    "explains": "有点想去（= Kind of want to go）",
+    "freq": 475
+  },
+  {
+    "word": "Gimme one more",
+    "explains": "再给我一个（= Give me one more）",
+    "freq": 476
+  },
+  {
+    "word": "Lemme ask ya",
+    "explains": "我问你哈（= Let me ask you）",
+    "freq": 477
+  },
+  {
+    "word": "Whaddaya wanna eat?",
+    "explains": "你想吃啥（= What do you want to eat?）",
+    "freq": 478
+  },
+  {
+    "word": "I dunno, you?",
+    "explains": "不知道，你呢（= I don't know, you?）",
+    "freq": 479
+  },
+  {
+    "word": "Tryna tell ya",
+    "explains": "正想告诉你（= Trying to tell you）",
+    "freq": 480
+  },
+  {
+    "word": "Prolly gotta go soon",
+    "explains": "大概很快得走了（= Probably got to go soon）",
+    "freq": 481
+  },
+  {
+    "word": "Wanna get outta here?",
+    "explains": "想离开这吗（= Want to get out of here?）",
+    "freq": 482
+  },
+  {
+    "word": "Coulda told ya",
+    "explains": "本来能告诉你（= Could have told you）",
+    "freq": 483
+  },
+  {
+    "word": "Gonna be a lotta fun",
+    "explains": "会很好玩的（= Going to be a lot of fun）",
+    "freq": 484
+  },
+  {
+    "word": "Shoulda asked 'em",
+    "explains": "早该问他们（= Should have asked them）",
+    "freq": 485
+  },
+  {
+    "word": "Kinda outta time",
+    "explains": "快没时间了（= Kind of out of time）",
+    "freq": 486
+  },
+  {
+    "word": "Says who?",
+    "explains": "谁说的（= Who says?）",
+    "freq": 487
+  },
+  {
+    "word": "Sez you",
+    "explains": "你说了算？（讥讽，= Says you）",
+    "freq": 488
+  },
+  {
+    "word": "How come?",
+    "explains": "为什么（= Why?）",
+    "freq": 489
+  },
+  {
+    "word": "What for?",
+    "explains": "凭什么（= For what reason?）",
+    "freq": 490
+  },
+  {
+    "word": "So what?",
+    "explains": "那又怎样（= So what?）",
+    "freq": 491
+  },
+  {
+    "word": "What if?",
+    "explains": "要是呢（= What if?）",
+    "freq": 492
+  },
+  {
+    "word": "Now what?",
+    "explains": "现在咋办（= Now what?）",
+    "freq": 493
+  },
+  {
+    "word": "Says you, huh?",
+    "explains": "你说是就是啊（= Says you, huh?）",
+    "freq": 494
+  },
+  {
+    "word": "Who asked ya?",
+    "explains": "问你了吗（= Who asked you?）",
+    "freq": 495
+  },
+  {
+    "word": "What'd I say?",
+    "explains": "我说啥了（= What did I say?）",
+    "freq": 496
+  },
+  {
+    "word": "Jeez",
+    "explains": "天啊（= Jesus 的委婉）",
+    "freq": 497
+  },
+  {
+    "word": "Sheesh",
+    "explains": "我的天（= Jeez）",
+    "freq": 498
+  },
+  {
+    "word": "Dang",
+    "explains": "靠（委婉，= Damn）",
+    "freq": 499
+  },
+  {
+    "word": "Dang it",
+    "explains": "可恶（= Damn it）",
+    "freq": 500
+  }
+]

@@ -10,6 +10,8 @@ export interface Word extends DbDoc {
     text: string,
     // 条目类型: word=单词, phrase=词组, collocation=固定搭配（可选，向后兼容）
     itemType?: 'word' | 'phrase' | 'collocation',
+    // 来源口语连读词库 id（导入时打上，播放时据此定位 speech-audio 预生成音频）
+    speechBankId?: string,
     // 创建时间 创建生成
     ctime: Date
     // 上次复习时间 第一次创建生成
@@ -74,7 +76,7 @@ export type OcrPlatform = 'tencent' | 'baidu' | 'youdao' | 'ali' | 'deepseek' | 
 export type MemoryFirmnessType = '正常' | '较强' | '极强';
 
 
-export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local' | 'minimax' | 'hunyuan' | 'deepl' | 'azure' | 'qiniu' | 'google' | 'spark' | 'bing' | 'xftrans';
+export type TranslationPlatform = OcrPlatform | 'utoolsai' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local' | 'minimax' | 'hunyuan' | 'deepl' | 'azure' | 'qiniu' | 'google' | 'spark' | 'bing' | 'xftrans' | 'mymemory';
 
 /**
  * 例句

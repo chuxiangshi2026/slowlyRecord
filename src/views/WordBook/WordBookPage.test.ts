@@ -13,6 +13,9 @@ const mocks = vi.hoisted(() => ({
   push: vi.fn(),
   replace: vi.fn(),
   speak: vi.fn(),
+  updatePageContent: vi.fn(async () => ({ ok: true })),
+  claimSampleBook: vi.fn(async () => ({ ok: true })),
+  getAllWordBanks: vi.fn(async () => [] as any[]),
 }))
 
 const page = {
@@ -39,15 +42,18 @@ vi.mock('@/stores/wordBook', () => ({
     ],
     pagesOf: () => [page],
     completeRound: mocks.completeRound,
+    updatePageContent: mocks.updatePageContent,
+    claimSampleBook: mocks.claimSampleBook,
   }),
 }))
+vi.mock('@/utils/wordbank-manager', () => ({ getAllWordBanks: mocks.getAllWordBanks }))
 vi.mock('@/stores/words', () => ({
   useWordsStore: () => ({ autoSpeak: false, words: [], count: 0, listWords: vi.fn() }),
 }))
 vi.mock('@/adapters/tts', () => ({ getTtsAdapter: () => ({ speak: mocks.speak }) }))
 vi.mock('element-plus', async (importOriginal) => {
   const actual = await importOriginal<typeof import('element-plus')>()
-  return { ...actual, ElMessage: { success: vi.fn(), error: vi.fn(), warning: vi.fn() } }
+  return { ...actual, ElMessage: { success: vi.fn(), error: vi.fn(), warning: vi.fn(), info: vi.fn() } }
 })
 
 describe('词集学习页', () => {
@@ -123,6 +129,23 @@ describe('词集学习页', () => {
     expect(screen.getByText('共 1 词')).toBeInTheDocument()
   })
 
+  it('复习模式开启「直接显示释义」后免点按，首击即标记已记住', async () => {
+    mocks.completeRound.mockResolvedValue({ ok: true, item: page })
+    render(WordBookPage, { global: { plugins: [ElementPlus] } })
+
+    await fireEvent.click(await screen.findByText('复习'))
+    const node = await screen.findByRole('button', { name: /fold，显示释义/ })
+    expect(node).toHaveTextContent('点击显示释义')
+
+    await fireEvent.click(screen.getByRole('checkbox', { name: '直接显示释义' }))
+    expect(localStorage.getItem('sr_wordbook_direct_meaning')).toBe('1')
+    expect(node).toHaveTextContent('折叠')
+
+    await fireEvent.click(node)
+    await screen.findByText('共 1 词')
+    expect(mocks.completeRound).toHaveBeenCalledTimes(1)
+  })
+
   it('错词移到队尾，其他词判对后仍不结算，重看成功才完成', async () => {
     mocks.completeRound.mockResolvedValue({ ok: true, item: page })
     page.words = [
@@ -180,5 +203,27 @@ describe('词集学习页', () => {
     render(WordBookPage, { global: { plugins: [ElementPlus] } })
     await screen.findByRole('group', { name: 'old 篇 中心导图' })
     expect((document.querySelector('.map-node') as HTMLElement).style.left).toContain('%')
+  })
+
+  it('刷新释义从词库拉取最新内容，保留本页字段，未找到的跳过', async () => {
+    page.words = [
+      { entryId: 'entry_1', sourceId: 'word_1', text: 'fold', explains: '折叠', note: '本页备注' },
+      { entryId: 'entry_2', sourceId: '', text: 'mold', explains: '模具' },
+    ]
+    mocks.getAllWordBanks.mockResolvedValue([
+      { id: 'bank_1', name: '默认词库', words: [{ _id: 'word_1', text: 'fold', explains: '折叠；弯曲', phonetic: '/fəʊld/' }] },
+    ])
+    render(WordBookPage, { global: { plugins: [ElementPlus] } })
+
+    await fireEvent.click(await screen.findByRole('button', { name: '刷新释义' }))
+    await waitFor(() => expect(mocks.updatePageContent).toHaveBeenCalled())
+
+    const savedWords = mocks.updatePageContent.mock.calls[0][1].words
+    expect(savedWords[0]).toMatchObject({ entryId: 'entry_1', explains: '折叠；弯曲', phonetic: '/fəʊld/', note: '本页备注' })
+    expect(savedWords[1]).toMatchObject({ entryId: 'entry_2', explains: '模具' })
+    expect(savedWords[1]).not.toHaveProperty('phonetic')
+
+    const { ElMessage } = await import('element-plus')
+    expect(ElMessage.success).toHaveBeenCalledWith('已刷新 1 个词条，1 个未找到来源')
   })
 })

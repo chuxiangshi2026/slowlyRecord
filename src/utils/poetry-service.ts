@@ -39,7 +39,7 @@ export interface PoetryItem {
   isClassic?: boolean;      // 是否经典必背
   difficulty?: 'easy' | 'medium' | 'hard';  // 难度等级
   annotation?: string;      // 注释
-  translation?: string;     // 译文
+  translation?: string;     // 译文（商店构建产物中被剥离，见 strip-store-forbidden.cjs）
   translationSource?: string; // 译文来源（如 chinese-poems.com/xxx）
   appreciation?: string;    // 赏析
   year?: string | number;   // 创作时间（如 742、"天宝元年"、"公元742年"）

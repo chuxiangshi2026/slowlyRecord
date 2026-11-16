@@ -3,13 +3,13 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import WordBookPage from './page.vue'
 
-const api = vi.hoisted(() => ({ completePage: vi.fn() }))
+const api = vi.hoisted(() => ({ completeRound: vi.fn() }))
 const storage = vi.hoisted(() => ({} as Record<string, string>))
 const page = vi.hoisted(() => ({
   _id: 'p1', type: 'wb_page', bookId: 'b1', chapterId: 'c1', name: '测试页', order: 1,
   key: { type: 'root', value: 'act' }, words: [
-    { sourceId: 'w1', text: 'act', explains: '行动' },
-    { sourceId: 'w2', text: 'actor', explains: '演员' },
+    { entryId: 'e1', sourceId: 'w1', text: 'act', explains: '行动' },
+    { entryId: 'e2', sourceId: 'w2', text: 'actor', explains: '演员' },
   ],
   source: {}, level: 0, nextReviewAt: 0, ctime: 1, utime: 1,
 }))
@@ -24,7 +24,7 @@ vi.mock('@/stores/useWordBook', () => ({
     chaptersOf: () => [],
     pages: [],
     load: vi.fn(),
-    completePage: api.completePage,
+    completeRound: api.completeRound,
   }),
 }))
 
@@ -35,7 +35,7 @@ function mountPage() {
 describe('移动端词集复习页', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    api.completePage.mockReturnValue({ ok: true })
+    api.completeRound.mockReturnValue({ ok: true })
     for (const key of Object.keys(storage)) delete storage[key]
     vi.stubGlobal('uni', {
       showToast: vi.fn(),
@@ -51,21 +51,33 @@ describe('移动端词集复习页', () => {
     return wrapper.findAll('.node-card').find(card => card.find('.node-word').text() === text)!
   }
 
+  const roundCall = (wrongIds: string[]) => [
+    'p1',
+    {
+      total: 2,
+      firstTryKnown: 2 - wrongIds.length,
+      retriedCount: wrongIds.length,
+      firstTryWrongEntryIds: wrongIds,
+      finishedAt: expect.any(Number),
+    },
+    { practice: false },
+  ]
+
   it('揭示与判定分开，错词移到队尾，首轮错词改对后仍按错词结算', async () => {
     const wrapper = mountPage()
     await wrapper.find('switch').trigger('change', { detail: { value: true } })
     const actCard = cardByText(wrapper, 'act')
     await actCard.trigger('click')
     expect(actCard.text()).toContain('行动')
-    expect(api.completePage).not.toHaveBeenCalled()
+    expect(api.completeRound).not.toHaveBeenCalled()
 
     await actCard.find('.action.no').trigger('click')
     expect(wrapper.findAll('.node-card').at(-1)!.text()).toContain('行动')
     await cardByText(wrapper, 'actor').find('.action.ok').trigger('click')
-    expect(api.completePage).not.toHaveBeenCalled()
+    expect(api.completeRound).not.toHaveBeenCalled()
 
     await cardByText(wrapper, 'act').find('.action.ok').trigger('click')
-    expect(api.completePage).toHaveBeenCalledWith('p1', 1)
+    expect(api.completeRound).toHaveBeenCalledWith(...roundCall(['e1']))
     expect(wrapper.text()).toContain('本轮完成')
     expect(storage.sr_mobile_wordbook_round_p1).toBeUndefined()
   })
@@ -77,11 +89,11 @@ describe('移动端词集复习页', () => {
     expect(cardByText(wrapper, 'act').classes()).toContain('marked')
     await ok.trigger('click')
     expect(cardByText(wrapper, 'act').classes()).not.toContain('marked')
-    expect(api.completePage).not.toHaveBeenCalled()
+    expect(api.completeRound).not.toHaveBeenCalled()
   })
 
   it('保存失败时显示重试入口，重试成功后关闭本轮', async () => {
-    api.completePage
+    api.completeRound
       .mockReturnValueOnce({ ok: false, message: '存储已满' })
       .mockReturnValueOnce({ ok: true })
     const wrapper = mountPage()
@@ -93,7 +105,7 @@ describe('移动端词集复习页', () => {
 
     await wrapper.find('.save-retry').trigger('click')
     expect(wrapper.text()).toContain('本轮完成')
-    expect(api.completePage).toHaveBeenCalledTimes(2)
+    expect(api.completeRound).toHaveBeenCalledTimes(2)
   })
 
   it('中途离开后恢复乱序、错词与揭示状态', async () => {
@@ -110,6 +122,26 @@ describe('移动端词集复习页', () => {
     expect(second.findAll('.node-card').at(-1)!.text()).toContain('行动')
     await restoredAct.find('.action.ok').trigger('click')
     await cardByText(second, 'actor').find('.action.ok').trigger('click')
-    expect(api.completePage).toHaveBeenCalledWith('p1', 1)
+    expect(api.completeRound).toHaveBeenCalledWith(...roundCall(['e1']))
+  })
+
+  it('完成后再记一遍按练习轮结算，不调整正式复习时间', async () => {
+    const wrapper = mountPage()
+    for (const card of wrapper.findAll('.node-card')) {
+      await card.find('.action.ok').trigger('click')
+    }
+    expect(wrapper.text()).toContain('本轮完成')
+    expect(api.completeRound).toHaveBeenCalledWith(...roundCall([]))
+
+    await wrapper.find('.primary-btn').trigger('click')
+    for (const card of wrapper.findAll('.node-card')) {
+      await card.find('.action.ok').trigger('click')
+    }
+    expect(api.completeRound).toHaveBeenLastCalledWith(
+      'p1',
+      expect.objectContaining({ total: 2, firstTryKnown: 2 }),
+      { practice: true },
+    )
+    expect(wrapper.text()).toContain('练习模式')
   })
 })

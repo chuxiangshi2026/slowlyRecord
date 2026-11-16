@@ -9,6 +9,18 @@
     <title>慢记 SlowRecap</title>
     <!-- 多语言核心（Vue 端与 focus.html 共享的单一实现） -->
     <script src="lang-core.js"></script>
+    <script>
+      // uTools enter 事件提前注册：module 脚本加载前到达的 enter 先缓存到队列，
+      // App.vue 启动后置 __pluginEnterLive 并消费队列、接管后续事件。
+      // 内联脚本保证先于任何模块代码执行，避免 Vite 冷启动慢时 enter 丢失。
+      window.__pluginEnterQueue = [];
+      window.__pluginEnterLive = false;
+      if (window.utools && window.utools.onPluginEnter) {
+        window.utools.onPluginEnter(function (action) {
+          if (!window.__pluginEnterLive) window.__pluginEnterQueue.push(action);
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

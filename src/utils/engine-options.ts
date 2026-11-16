@@ -24,6 +24,7 @@ export const TRANSLATION_ENGINE_OPTIONS: EngineOption<TranslationPlatform>[] = [
   {value: 'baidu', label: '百度翻译', kind: 'traditional', config: 'builtin'},
   {value: 'ali', label: '阿里翻译', kind: 'traditional', config: 'builtin'},
   {value: 'google', label: 'Google', kind: 'traditional', config: 'none'},
+  {value: 'mymemory', label: 'MyMemory', kind: 'traditional', config: 'none'},
   {value: 'bing', label: 'Bing 网页版', kind: 'traditional', config: 'none'},
   {value: 'glm', label: '智谱 GLM', kind: 'llm', config: 'builtin'},
   {value: 'bilibili', label: 'B站 Index-Translate', kind: 'llm', config: 'none'},
@@ -95,7 +96,8 @@ export const getAvailableTranslationEngineGroups = () => {
     .map(group => ({
       ...group,
       options: group.options.filter(option =>
-        (option.value !== 'utoolsai' || isUtools()) && (option.value !== 'bing' || !web)
+        // 商店构建下架 Bing 网页版（审核合规），Web 端本就不支持该引擎
+        (option.value !== 'utoolsai' || isUtools()) && (option.value !== 'bing' || (!web && !__STORE_BUILD__))
       ),
     }))
     .filter(group => group.options.length > 0)

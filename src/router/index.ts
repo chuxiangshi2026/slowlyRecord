@@ -358,6 +358,12 @@ const routes: Array<RouteRecordRaw> = [
       }*/
     ]
   },
+  {
+    // 诊断页：独立于 Home 外壳，输出平台适配器自检 JSON（E2E/巡检断言用）
+    path: '/selftest',
+    name: 'selftest',
+    component: () => import('@/views/SelfTest.vue'),
+  },
   // {
   //   path: '/login',
   //   name: 'login',

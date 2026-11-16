@@ -78,6 +78,7 @@ export default defineConfig({
     define: {
         __LOG_LEVEL__: 1,              // 2=WARN， 0=DEBUG， 4=SILENT
         __PLATFORM__: JSON.stringify(process.env.VITE_PLATFORM || 'utools'),
+        __STORE_BUILD__: JSON.stringify(process.env.VITE_STORE_BUILD === 'true'),
     },
     esbuild: {
         pure: ['log.d', 'log.i', 'console.log'],      // 生产环境把 debug/info 日志与 console.log 整行抹掉

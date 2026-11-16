@@ -486,12 +486,13 @@ import {FeatureEvents} from '@/utils/stats';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron, isWeb} from '@/adapters/platform';
 import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut} from '@/adapters/window';
-import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount} from '@/utils/focus-lock';
+import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount, getWordFocusWindow, setWordFocusWindow} from '@/utils/focus-lock';
 import {
   WORDBANK_LIST,
   type WordBankType,
   isWordBankCached
 } from '@/utils/wordbank-service';
+import {isSpeechAudioBank} from '@/utils/speech-audio';
 import {
   getAllWordBanks,
   createWordBank as createNewWordBank,
@@ -764,8 +765,12 @@ const confirmCreateWordBank = async () => {
   switchToWordBank(newBank.id)
 }
 
-// 专注模式窗口实例
-let focusWindow: any = null;
+// 专注模式窗口实例（模块级持有，路由切换后返回 Word 仍复用同一窗口）
+let focusWindow: any = getWordFocusWindow();
+const updateFocusWindowRef = (win: any) => {
+  focusWindow = win;
+  setWordFocusWindow(win);
+};
 let focusModeSyncTimer: any = null;
 let currentFocusMode = '';  // 当前专注模式（'dictation'=听写，''=标准）
 let lastSyncedAlwaysOnTop: boolean | null = null;
@@ -1075,7 +1080,7 @@ const handleRecreateWindow = (state: any) => {
   }
 
   // 强制清空引用
-  focusWindow = null;
+  updateFocusWindowRef(null);
   focusWindowClosed('word');
   console.log('[handleRecreateWindow] focusWindow 已置为 null');
 
@@ -1106,7 +1111,8 @@ const handleRecreateWindow = (state: any) => {
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
       const recreateModeParam = currentFocusMode ? `&mode=${currentFocusMode}` : '';
-      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${recreateModeParam}`, {
+      const speechAudioParam = isSpeechAudioBank(wordsStore.currentWordBankId) ? '&speechAudio=1' : '';
+      focusWindow = (window as any).utools?.createBrowserWindow(`focus.html?theme=${themeParam}&index=${focusWindowState.currentIndex}&showExplains=${focusWindowState.showExplains}&opacity=${focusWindowState.opacity}&alwaysOnTop=${newAlwaysOnTop}&edgeStickEnabled=${newEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${recreateModeParam}${speechAudioParam}`, {
 
         width: 320,
         height: 100,
@@ -1136,6 +1142,7 @@ const handleRecreateWindow = (state: any) => {
         // 重建后推送专注样式（子窗口脚本就绪后）
         setTimeout(pushFocusStyleToChild, 500);
       });
+      setWordFocusWindow(focusWindow);
 
 
       // 注意：uTools 子窗口不支持实例事件监听（原 on('closed') 从未生效，已移除）；
@@ -1684,7 +1691,7 @@ const handleOpenWordList = async () => {
     } catch (e) {
       console.error('关闭专注窗口失败:', e);
     }
-    focusWindow = null;
+    updateFocusWindowRef(null);
     focusWindowClosed('word');
   }
 
@@ -1768,7 +1775,7 @@ const handleOpenDictation = async () => {
     } catch (e) {
       console.error('关闭专注窗口失败:', e);
     }
-    focusWindow = null;
+    updateFocusWindowRef(null);
     focusWindowClosed('word');
   }
 
@@ -1905,16 +1912,10 @@ onUnmounted(() => {
   window.removeEventListener('storage', handleFocusModeStorageEvent);
   window.removeEventListener('keydown', handleFocusModeUnlockShortcut);
   clearFocusModeSync();
-  // 关闭可能残留的专注窗口，避免路由切换后成为孤儿窗口
-  if (focusWindow && typeof focusWindow.isDestroyed === 'function' && !focusWindow.isDestroyed()) {
-    try {
-      focusWindow.close();
-    } catch (e) {
-      console.error('[focusMode] 关闭专注窗口失败:', e);
-    }
-  }
-  focusWindow = null;
-  focusWindowClosed('word');
+  // 专注窗口跨路由存活（如打开翻译页时不关闭），引用由 focus-lock 模块级持有，
+  // 返回 Word 后可继续复用；这里只清理父窗口侧资源。
+  // 同时清空消息委托，避免子窗口动作落到已卸载的组件实例上。
+  (window as any).__wordChildMessageDelegate = null;
   clearEdgeStickResources();
   isEdgeHidden = false;
   savedBounds = null;
@@ -2040,12 +2041,13 @@ function bindElectronFocusListenersOnce() {
   (window as any).__wordElectronFocusBound = true;
   const api = (window as any).electronAPI;
   api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
-    const win: any = focusWindow;
+    // 从模块级引用取窗口：页面重挂载后监听闭包仍是旧实例，不能只看局部变量
+    const win: any = getWordFocusWindow();
     if (!win || win._winId !== id) return;
     if (event === 'closed') {
       win._destroyed = true;
       consumeLatestFocusModePendingAction('closed');
-      focusWindow = null;
+      updateFocusWindowRef(null);
       focusWindowClosed('word');
       clearFocusModeSync();
       clearEdgeStickResources();
@@ -2063,9 +2065,10 @@ function bindElectronFocusListenersOnce() {
   api.onChildDbPut((doc: any) => { handleFocusChildDbPut(doc); });
   api.onFocusChildAction((data: any) => {
     // 只接管单词专注窗口（source='word' 或旧格式无 source）的动作；
-    // text（文本专注）/ime（输入法键盘）子窗口交给各自控制器，避免误分发
+    // text（文本专注）/ime（输入法键盘）子窗口交给各自控制器，避免误分发。
+    // 走 window 级委托，页面重挂载后由当前实例处理，避免落到旧闭包。
     if (data?.source && data.source !== 'word') return;
-    handleChildMessage(data);
+    (window as any).__wordChildMessageDelegate?.(data);
   });
 }
 
@@ -2161,7 +2164,8 @@ const openFocusMode = async (mode = '') => {
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
       const modeParam = mode ? `&mode=${mode}` : '';
-      const eUrl = `focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}`;
+      const speechAudioParam = isSpeechAudioBank(wordsStore.currentWordBankId) ? '&speechAudio=1' : '';
+      const eUrl = `focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}${speechAudioParam}`;
       const winId = await api.createBrowserWindow(eUrl, {
         width: 320, height: 100, minWidth: 200, minHeight: 80, maxWidth: 560, maxHeight: 320,
         alwaysOnTop: initAlwaysOnTop, frame: false, transparent: true, backgroundColor: '#00000000',
@@ -2169,7 +2173,7 @@ const openFocusMode = async (mode = '') => {
         // 创建时不显示（数据推送后统一 show），挂件不进任务栏、透明窗不带系统阴影
         show: false, skipTaskbar: true, hasShadow: false,
       });
-      focusWindow = createElectronWindowProxy(winId, initAlwaysOnTop);
+      updateFocusWindowRef(createElectronWindowProxy(winId, initAlwaysOnTop));
       focusWindowOpened('word');
       bindElectronFocusListenersOnce();
       startFocusModeSync(initAlwaysOnTop, initEdgeStickEnabled);
@@ -2203,7 +2207,8 @@ const openFocusMode = async (mode = '') => {
       const filterSortBy = encodeURIComponent(currentFilter.value.sortBy || '');
       const filterSortAsc = currentFilter.value.sortAsc ? '1' : '0';
       const modeParam = mode ? `&mode=${mode}` : '';
-      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}`, {
+      const speechAudioParam = isSpeechAudioBank(wordsStore.currentWordBankId) ? '&speechAudio=1' : '';
+      focusWindow = (window as any).utools.createBrowserWindow(`focus.html?theme=${themeParam}&alwaysOnTop=${initAlwaysOnTop}&edgeStickEnabled=${initEdgeStickEnabled}&bankId=${currentBankId}&listMode=${listMode.value}&pattern=${filterPattern}&minLen=${filterMinLen}&maxLen=${filterMaxLen}&sortBy=${filterSortBy}&sortAsc=${filterSortAsc}&autoSpeak=${wordsStore.autoSpeak ? '1' : '0'}&autoNext=${wordsStore.focusMode?.autoNext ? '1' : '0'}&repeat=${wordsStore.focusMode?.repeatCount ?? 1}${modeParam}${speechAudioParam}`, {
 
         width: 320,
         height: 100,
@@ -2237,6 +2242,7 @@ const openFocusMode = async (mode = '') => {
         // 子窗口脚本就绪后推送当前专注样式
         setTimeout(pushFocusStyleToChild, 500);
       });
+      setWordFocusWindow(focusWindow);
 
 
       // 注意：uTools 子窗口不支持实例事件监听（原 on('closed') 从未生效，已移除）；
@@ -2579,34 +2585,49 @@ const scrollContainer = ref<HTMLElement | null>(null)
 const scrollerRef = ref<any>(null)
 const itemRefs = ref<HTMLElement[]>([])
 
-// 列表列数随容器宽度自适应：uTools 小窗 2 列，桌面端宽窗升到 3~4 列
+// 列表列数随容器宽度自适应：保持卡片宽度 360-430px 之间铺满窗口
 // （vue-virtual-scroller 内部 watch gridItems/itemSecondarySize，变更会自动重排）
 const scrollerWidth = ref(0)
 const gridItems = computed(() => {
-  if (scrollerWidth.value >= 1560) return 4
-  if (scrollerWidth.value >= 1170) return 3
-  return 2
+  const w = scrollerWidth.value
+  if (!w) return 2
+  return Math.min(5, Math.max(2, Math.floor(w / 360)))
 })
 const itemSecondarySize = computed(() => {
-  // 单列宽 = 容器宽 / 列数（留 8px 间隙）；未测得宽度前回退原固定值 390
-  return scrollerWidth.value ? Math.floor((scrollerWidth.value - 8) / gridItems.value) : 390
+  // 单元格宽 = 容器宽 / 列数；未测得宽度前回退原固定值 390
+  const w = scrollerWidth.value
+  return w ? Math.floor(w / gridItems.value) : 390
 })
 
 let gridResizeObserver: ResizeObserver | null = null
-onMounted(() => {
-  if (scrollContainer.value && typeof ResizeObserver !== 'undefined') {
-    scrollerWidth.value = scrollContainer.value.clientWidth
-    gridResizeObserver = new ResizeObserver((entries) => {
-      const w = entries[0]?.contentRect.width
-      if (w) scrollerWidth.value = w
-    })
-    gridResizeObserver.observe(scrollContainer.value)
-  }
-})
+function attachGridObserver() {
+  const el = scrollContainer.value
+  if (!el || typeof ResizeObserver === 'undefined') return
+  scrollerWidth.value = el.clientWidth
+  gridResizeObserver?.disconnect()
+  gridResizeObserver = new ResizeObserver((entries) => {
+    const w = entries[0]?.contentRect.width
+    if (w) scrollerWidth.value = w
+  })
+  gridResizeObserver.observe(el)
+}
+
+// 列表容器在 v-if 分支里：首次挂载时可能还没渲染（词库未加载完），
+// 必须等元素出现后再挂观察器，否则列数永远停留在默认值
+watch(scrollContainer, (el) => { if (el) attachGridObserver() }, { flush: 'post' })
+onMounted(attachGridObserver)
 onUnmounted(() => {
   gridResizeObserver?.disconnect()
   gridResizeObserver = null
 })
+
+// 列数/单列宽变化后强制重排一次（部分版本 grid 变更不会自动触发重布局）
+watch([gridItems, itemSecondarySize], () => {
+  nextTick(() => {
+    scrollerRef.value?.forceUpdate?.()
+    scrollerRef.value?.updateVisibleItems?.(false)
+  })
+}, { flush: 'post' })
 
 // 监听过滤列表变化，强制 RecycleScroller 刷新布局
 // 解决 dynamic-size 模式下项目减少时出现空白占位的问题
@@ -2981,6 +3002,51 @@ const exportWords = () => {
 /**
  * 批量导入单词（JSON格式，校验格式并补全属性）
  */
+/**
+ * 文件导入前询问目标词库（R13）：'current' 导入当前词库；返回新建的 WordBank 时
+ * 由调用方切换后导入；null 表示放弃导入
+ */
+const askImportTarget = async (count: number): Promise<'current' | WordBank | null> => {
+  const currentName = wordsStore.currentWordBank?.name || '默认词库'
+  const action = await ElMessageBox.confirm(
+    `即将导入 ${count} 个单词，请选择导入位置`,
+    '导入单词',
+    {
+      confirmButtonText: `导入到「${currentName}」`,
+      cancelButtonText: '新建词库导入',
+      distinguishCancelAndClose: true,
+      type: 'info',
+    }
+  ).then(() => 'confirm' as const).catch((a: string) => a)
+  if (action === 'confirm') return 'current'
+  if (action !== 'cancel') return null
+
+  const name = await ElMessageBox.prompt('请输入新词库名称', '新建词库', {
+    confirmButtonText: '创建并导入',
+    cancelButtonText: '取消',
+    inputPlaceholder: '例如：我的生词本',
+    inputValidator: (v: string) => {
+      const n = (v || '').trim()
+      if (!n) return '请输入词库名称'
+      if (customWordBanks.value.some(b => b.name === n)) return '词库名称已存在'
+      return true
+    },
+  }).then(({value}) => value.trim()).catch(() => null)
+  if (!name) return null
+
+  const bank = await createNewWordBank(name, [], (wordsStore.currentWordBank?.language as LanguageCode) || 'en')
+  loadCustomWordBanks()
+  return bank
+}
+
+/** 按 askImportTarget 的结果切换词库；返回 false 表示应中断导入 */
+const switchToImportTarget = async (target: 'current' | WordBank): Promise<boolean> => {
+  if (target === 'current') return true
+  const success = await wordsStore.switchWordBank(target.id)
+  if (!success) ElMessage.error('切换词库失败，已中断导入')
+  return success
+}
+
 const importWords = () => {
   // 创建文件输入元素
   const fileInput = document.createElement('input');
@@ -2991,7 +3057,7 @@ const importWords = () => {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const content = e.target?.result as string;
         try {
           // 解析JSON文件内容
@@ -3007,6 +3073,9 @@ const importWords = () => {
           });
 
           if (uniqueWords.length > 0) {
+            const target = await askImportTarget(uniqueWords.length)
+            if (!target || !await switchToImportTarget(target)) return
+
             // 检查是否有需要翻译的单词（没有释义的）
             const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains);
             const wordsWithExplains = uniqueWords.filter(word => !!word.explains);
@@ -3089,6 +3158,9 @@ const importTextWords = () => {
               ElMessage.warning('没有新单词需要导入');
               return;
             }
+
+            const target = await askImportTarget(uniqueWords.length)
+            if (!target || !await switchToImportTarget(target)) return
 
             // 检查是否有需要翻译的单词（没有释义或发音的）
             const wordsNeedingTranslation = uniqueWords.filter(word => !word.explains || !word.pronunciation);
@@ -3383,6 +3455,18 @@ const ONBOARDED_KEY = 'slowlyrecord-onboarded'
 const showOnboarding = ref(false)
 
 onMounted(async () => {
+  // 从其它路由返回：接管仍存活的专注窗口，恢复父窗口侧的锁定/贴边同步；
+  // 窗口已在别处关闭时清掉残留引用与计数
+  if (focusWindow) {
+    if (focusWindow.isDestroyed?.()) {
+      updateFocusWindowRef(null);
+      resyncFocusWindowCount('word', 0);
+    } else {
+      startFocusModeSync(wordsStore.focusMode?.alwaysOnTop ?? true, wordsStore.focusMode?.edgeStickEnabled ?? true);
+      setTimeout(() => setupEdgeStick(), 300);
+    }
+  }
+
   // 静态词库页深链：直接展示导入预览并预选词库，不显示首启引导
   if (applyBuiltinDeepLink()) return
 

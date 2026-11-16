@@ -11,7 +11,10 @@
           <el-radio-button value="view">查看</el-radio-button>
           <el-radio-button value="recall" :disabled="!page.words.length">复习</el-radio-button>
         </el-radio-group>
+        <el-checkbox v-if="mode === 'recall'" v-model="directMeaning" size="small">直接显示释义</el-checkbox>
         <el-button size="small" @click="openWordPicker">＋ 添加单词</el-button>
+        <el-button v-if="mode === 'view'" size="small" :loading="refreshingMeanings"
+                   title="从词库同步最新释义与音标（保留本页自改的例句和备注）" @click="refreshMeaningsFromSource">刷新释义</el-button>
       </div>
     </header>
 
@@ -45,7 +48,15 @@
               </div>
 
               <div v-for="(word, index) in displayWords" :key="word.entryId || `${word.text}-${index}`"
-                   class="map-node" :class="[nodeClasses(word), { hoverable: mode === 'view' }]" :style="nodeStyle(index)">
+                   class="map-node"
+                   :class="[nodeClasses(word), { hoverable: mode === 'view', 'drag-source': dragEntryId === word.entryId, 'drop-target': dropTargetEntryId === word.entryId }]"
+                   :style="nodeStyle(index)"
+                   :draggable="mode === 'view' && !!word.entryId"
+                   @dragstart="onNodeDragStart(word, $event)"
+                   @dragover="onNodeDragOver(word, $event)"
+                   @dragleave="onNodeDragLeave(word)"
+                   @drop="onNodeDrop(word, $event)"
+                   @dragend="onNodeDragEnd">
                 <button type="button" class="node-main"
                         :aria-label="nodeAriaLabel(word)"
                         :aria-pressed="knownEntryIds.has(word.entryId || '')"
@@ -274,6 +285,7 @@ import {
   toWordBookWord,
 } from '@/utils/word-book'
 import { WORD_GRAPH_MAX_NODES, layoutWordGraph } from '@/utils/word-graph-layout'
+import { getAllWordBanks } from '@/utils/wordbank-manager'
 import { getTtsAdapter } from '@/adapters/tts'
 import WordBookWordPicker from './WordBookWordPicker.vue'
 import type { WordBookKeyType, WordBookPage, WordBookRoundSummary, WordBookWord } from '@/types/word-book'
@@ -322,6 +334,16 @@ const draftKeyDescription = ref('')
 const draftNote = ref('')
 const draftWords = ref<WordBookWord[]>([])
 const moveTargetPageId = ref('')
+
+// 导图节点拖拽排序（仅查看模式）：拖到目标节点上松手即落到该位置并立即保存
+const dragEntryId = ref('')
+const dropTargetEntryId = ref('')
+const refreshingMeanings = ref(false)
+
+// 复习模式「直接显示释义」开关：生词免点按，第一次点击即标记已记住（R9）
+const DIRECT_MEANING_KEY = 'sr_wordbook_direct_meaning'
+const directMeaning = ref(localStorage.getItem(DIRECT_MEANING_KEY) === '1')
+watch(directMeaning, (on) => localStorage.setItem(DIRECT_MEANING_KEY, on ? '1' : '0'))
 
 const knownEntryIds = ref<Set<string>>(new Set())
 const revealedEntryIds = ref<Set<string>>(new Set())
@@ -545,7 +567,7 @@ function onNodeClick(word: WordBookWord) {
     return
   }
 
-  if (!revealedEntryIds.value.has(entryId)) {
+  if (!isRevealed(entryId)) {
     revealedEntryIds.value = new Set([...revealedEntryIds.value, entryId])
     persistRecallDraft()
     return
@@ -836,6 +858,98 @@ function moveSelectedDown() {
   draftWords.value = next
 }
 
+function onNodeDragStart(word: WordBookWord, event: DragEvent) {
+  if (mode.value !== 'view' || editSaving.value || !word.entryId) {
+    event.preventDefault()
+    return
+  }
+  dragEntryId.value = word.entryId
+  if (event.dataTransfer) {
+    event.dataTransfer.setData('text/plain', word.entryId)
+    event.dataTransfer.effectAllowed = 'move'
+  }
+}
+
+function onNodeDragOver(word: WordBookWord, event: DragEvent) {
+  if (!dragEntryId.value || !word.entryId || word.entryId === dragEntryId.value) return
+  event.preventDefault()
+  if (event.dataTransfer) event.dataTransfer.dropEffect = 'move'
+  dropTargetEntryId.value = word.entryId
+}
+
+function onNodeDragLeave(word: WordBookWord) {
+  if (dropTargetEntryId.value === word.entryId) dropTargetEntryId.value = ''
+}
+
+async function onNodeDrop(word: WordBookWord, event: DragEvent) {
+  event.preventDefault()
+  const sourceId = dragEntryId.value
+  const targetId = word.entryId || ''
+  clearDragState()
+  if (!page.value || !sourceId || !targetId || sourceId === targetId) return
+  const words = [...page.value.words]
+  const from = words.findIndex(item => item.entryId === sourceId)
+  const to = words.findIndex(item => item.entryId === targetId)
+  if (from < 0 || to < 0) return
+  const [moved] = words.splice(from, 1)
+  words.splice(to, 0, moved)
+  const saved = await persistPageContent(currentPageContent(words))
+  if (saved) ElMessage.success('已调整顺序')
+  else ElMessage.error(editSaveError.value || '顺序保存失败')
+}
+
+function onNodeDragEnd() {
+  clearDragState()
+}
+
+function clearDragState() {
+  dragEntryId.value = ''
+  dropTargetEntryId.value = ''
+}
+
+/** 从全部词库按来源 ID（兜底按文本）拉取最新释义与音标；例句、备注等本页字段保留不动 */
+async function refreshMeaningsFromSource() {
+  if (!page.value || refreshingMeanings.value || editSaving.value) return
+  refreshingMeanings.value = true
+  try {
+    const banks = await getAllWordBanks()
+    const byId = new Map<string, Word>()
+    const byText = new Map<string, Word>()
+    for (const bank of banks) {
+      for (const word of bank.words) {
+        if (word._id && !byId.has(word._id)) byId.set(word._id, word)
+        const key = String(word.text || '').trim().toLowerCase()
+        if (key && !byText.has(key)) byText.set(key, word)
+      }
+    }
+    let updated = 0
+    let missing = 0
+    const words = page.value.words.map(entry => {
+      const source = (entry.sourceId && byId.get(entry.sourceId))
+        || byText.get(String(entry.text || '').trim().toLowerCase())
+      if (!source) {
+        missing++
+        return entry
+      }
+      const explains = String(source.explains || '').trim()
+      const phonetic = String(source.phonetic || '').trim()
+      const nextExplains = explains || entry.explains || ''
+      const nextPhonetic = phonetic || entry.phonetic || ''
+      if (nextExplains === (entry.explains || '') && nextPhonetic === (entry.phonetic || '')) return entry
+      updated++
+      return { ...entry, explains: nextExplains, ...(nextPhonetic ? { phonetic: nextPhonetic } : {}) }
+    })
+    if (!updated) {
+      ElMessage.info(missing ? `释义均已是最新；${missing} 个词条未在词库中找到` : '释义均已是最新')
+      return
+    }
+    const saved = await persistPageContent(currentPageContent(words))
+    if (saved) ElMessage.success(`已刷新 ${updated} 个词条${missing ? `，${missing} 个未找到来源` : ''}`)
+  } finally {
+    refreshingMeanings.value = false
+  }
+}
+
 async function moveSelectedToPage() {
   if (!page.value || !selectedDraftWord.value || !moveTargetPageId.value) return
   const entryId = selectedDraftWord.value.entryId!
@@ -912,7 +1026,7 @@ function startRecall(practice?: boolean) {
 }
 
 function isRevealed(entryId?: string): boolean {
-  return !!entryId && revealedEntryIds.value.has(entryId)
+  return !!entryId && (directMeaning.value || revealedEntryIds.value.has(entryId))
 }
 
 function markSelectedWrong() {
@@ -1248,7 +1362,7 @@ function dueLabel(nextReviewAt: number): string {
   border: 1px solid var(--utools-border-divider);
   border-radius: 9px;
   color: var(--utools-text-primary);
-  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s, transform 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s, transform 0.15s, left 0.18s, top 0.18s;
 
   &:hover {
     border-color: var(--utools-primary);
@@ -1262,6 +1376,21 @@ function dueLabel(nextReviewAt: number): string {
 
   .key-match-root {
     color: var(--utools-danger);
+  }
+
+  &[draggable='true'] .node-main {
+    cursor: grab;
+  }
+
+  &.drag-source {
+    opacity: 0.45;
+  }
+
+  &.drop-target {
+    border-color: var(--utools-primary);
+    outline: 2px dashed var(--utools-primary);
+    outline-offset: 2px;
+    z-index: 3;
   }
 
   &.selected {

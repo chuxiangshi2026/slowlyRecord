@@ -3,11 +3,12 @@
  *
  * 英语（eng）语言数据已随插件内置（public/tessdata/eng.traineddata.fast），
  * 其他语言（jpn/rus/spa/fra 等）首次使用时从 CDN 下载 tessdata_fast，
- * 缓存到 IndexedDB（Electron/Web）/ localStorage（uTools，经 dbStorage），
+ * 缓存到 IndexedDB（Electron/Web）/ 本地缓存文件（uTools，经 preload 写 userData 目录，
+ * 不占随账号同步的 dbStorage——商店审核合规要求），
  * 体积红线：任何语言包不进 public/。
  */
 import { getProfile } from '@/utils/language'
-import { getDbStorage } from '@/adapters/db'
+import { getCacheStorage, migrateCacheKeys } from '@/adapters/local-cache'
 import { getKvCache } from '@/adapters/kv-cache'
 import type { LanguageCode } from '@/utils/language/types'
 
@@ -49,10 +50,10 @@ async function idbPut(key: string, data: ArrayBuffer): Promise<void> {
     return idb.put(key, data)
 }
 
-/** uTools 环境的 localStorage 兜底缓存 */
+/** uTools 环境的本地文件兜底缓存（经 preload 写 userData，不进同步库） */
 function lsGet(key: string): ArrayBuffer | null {
     try {
-        const storage = getDbStorage()
+        const storage = getCacheStorage()
         const b64 = storage.getItem(LS_PREFIX + key)
         if (!b64) return null
         const bin = atob(b64)
@@ -69,10 +70,18 @@ function lsPut(key: string, data: ArrayBuffer): void {
         const bytes = new Uint8Array(data)
         let binary = ''
         for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i])
-        getDbStorage().setItem(LS_PREFIX + key, btoa(binary))
+        getCacheStorage().setItem(LS_PREFIX + key, btoa(binary))
     } catch (e) {
-        console.warn('[OCR语言包] localStorage 缓存写入失败（可能超出容量）:', e)
+        console.warn('[OCR语言包] 本地缓存写入失败:', e)
     }
+}
+
+// 旧版本曾把语言包缓存在随账号同步的 dbStorage，首次使用时迁出并删除
+let legacyMigrated = false
+function migrateLegacyCacheOnce(): void {
+    if (legacyMigrated) return
+    legacyMigrated = true
+    migrateCacheKeys(Object.keys(LANG_CDN).map(k => LS_PREFIX + k))
 }
 
 export interface EnsureLangPackOptions {
@@ -99,6 +108,8 @@ export async function ensureTrainedData(
         console.warn(`[OCR语言包] 未注册语言包下载地址: ${ocrLang}`)
         return null
     }
+
+    migrateLegacyCacheOnce()
 
     // 1) IndexedDB 缓存
     const cached = await idbGet(ocrLang) ?? lsGet(ocrLang)

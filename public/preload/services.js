@@ -1,61 +1,11 @@
 const path = require('node:path')
-
-// const CryptoJS = require('crypto-js');
 const fs = require('node:fs')
 const os = require('os')
-const {spawn} = require("node:child_process");
-const tmpFile = path.join(os.tmpdir(), 'utools_snap.png')
 
-
-// 创建自定义日志文件（放在插件目录，确保可写）
-// const logPath = path.join(__dirname, 'debug.log')
-// function log(...args) {
-//     const msg = args.map(arg =>
-//         typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
-//     ).join(' ') + '\n'
-//
-//     fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${msg}`)
-// }
-//
-// // 捕获所有错误
-// process.on('uncaughtException', (err) => {
-//     log('【未捕获异常】', err.message, err.stack)
-// })
-//
-// process.on('unhandledRejection', (reason) => {
-//     log('【未处理Promise】', reason)
-// })
-//
-// // 记录启动信息
-// log('======== 插件启动 ========')
-// log('__dirname:', __dirname)
-// log('当前文件:', __filename)
-
-
-// 统计上报专用：uTools 的页面 UA 含 "uTools"，会被 umami 的爬虫过滤判定为 bot，
-// 事件整条丢弃但仍回 200（正文 {"beep":"boop"}）；浏览器 fetch 不能改 User-Agent，
-// 故走 Node https 显式带普通 Chrome UA。渲染进程经 window.services.httpPostJson 调用。
-const https = require('node:https')
-const TRACK_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-function httpPostJson(url, headers, body) {
-    return new Promise((resolve, reject) => {
-        const req = https.request(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'User-Agent': TRACK_UA, ...headers },
-        }, (res) => {
-            let text = ''
-            res.setEncoding('utf8')
-            res.on('data', (c) => { text += c })
-            res.on('end', () => resolve({ status: res.statusCode || 0, body: text }))
-        })
-        req.setTimeout(8000, () => req.destroy(new Error('timeout')))
-        req.on('error', reject)
-        req.end(body)
-    })
-}
-
+/* STORE-STRIP-START:bing-web （商店构建剥离，scripts/strip-store-forbidden.cjs 删除本段） */
 // ===== 微软网页版翻译（Bing 翻译页 token 流程） =====
 
+const https = require('node:https')
 const BING_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
 
 function bingRequest(url, options, body) {
@@ -117,31 +67,104 @@ async function bingTranslate(text, from = 'auto-detect', to = 'zh-Hans') {
     }
     return res
 }
+/* STORE-STRIP-END:bing-web */
 
-// 暴露给渲染进程
-window.services = {
-    fs: require('node:fs'),
-    path: require('node:path'),
-    httpPostJson,
-    bingTranslate
+// ===== 受限文件读取（不向页面暴露 fs 本体） =====
+
+/** target 是否位于 base 目录内（含 base 本身） */
+function isPathInside(target, base) {
+    const t = path.resolve(target)
+    const b = path.resolve(base)
+    return t === b || t.startsWith(b + path.sep)
 }
 
-// 提前注册 onPluginEnter（preload 阶段，早于渲染进程任何代码），
-// 避免 Vite 冷启动慢导致 enter 事件在 App.vue 注册前发出而丢失。
-// 渲染进程就绪后把处理器挂到 __pluginEnterHandlers，事件即转发；
-// 就绪前到达的事件缓存在 __pluginEnterQueue，由渲染进程启动时消费。
-window.__pluginEnterQueue = []
-window.__pluginEnterHandlers = []
-try {
-    if (window.utools && window.utools.onPluginEnter) {
-        window.utools.onPluginEnter((action) => {
-            if (window.__pluginEnterHandlers.length > 0) {
-                window.__pluginEnterHandlers.forEach(fn => fn(action))
-            } else {
-                window.__pluginEnterQueue.push(action)
-            }
-        })
+/**
+ * 读取插件自带资源（如本地 OCR 的 tessdata 训练数据）。
+ * 仅允许插件目录内的路径，拒绝目录穿越与任意路径。
+ */
+function readPluginFile(absolutePath) {
+    const pluginRoot = path.resolve(__dirname, '..')
+    if (!isPathInside(absolutePath, pluginRoot)) {
+        throw new Error('路径不在插件目录内')
     }
-} catch (e) {
-    // 非 uTools 环境忽略
+    return fs.readFileSync(absolutePath)
+}
+
+/**
+ * 读取截图等临时图片并转 base64（uTools img 指令的 payload 可能是临时文件路径）。
+ * 仅允许系统临时目录与 uTools 临时目录内的路径。
+ */
+function readTempImageAsBase64(absolutePath) {
+    const allowed = [os.tmpdir()]
+    try {
+        if (window.utools && window.utools.getPath) allowed.push(window.utools.getPath('temp'))
+    } catch (e) { /* uTools 不可用时忽略 */ }
+    if (!allowed.some(base => base && isPathInside(absolutePath, base))) {
+        throw new Error('路径不在临时目录内')
+    }
+    return fs.readFileSync(absolutePath).toString('base64')
+}
+
+// ===== 受限缓存文件读写（仅 userData/slowlyrecord-cache 固定目录） =====
+// OCR 语言包、翻译缓存等可再生大体积缓存不写入随账号同步的 dbStorage，
+// 统一落在这里限定的本地目录；文件名仅允许字母数字与 . _ -，杜绝目录穿越。
+const CACHE_DIR_NAME = 'slowlyrecord-cache'
+
+function getCacheDir() {
+    const dir = path.join(window.utools.getPath('userData'), CACHE_DIR_NAME)
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+    return dir
+}
+
+function resolveCacheFile(name) {
+    if (typeof name !== 'string' || !/^[A-Za-z0-9._-]{1,128}$/.test(name) || name.includes('..')) {
+        throw new Error('非法缓存文件名')
+    }
+    return path.join(getCacheDir(), name)
+}
+
+/** 读取缓存文件内容（utf8），不存在返回 null */
+function readCacheFile(name) {
+    try {
+        return fs.readFileSync(resolveCacheFile(name), 'utf8')
+    } catch (e) {
+        return null
+    }
+}
+
+/** 覆盖写入缓存文件（utf8） */
+function writeCacheFile(name, data) {
+    fs.writeFileSync(resolveCacheFile(name), String(data), 'utf8')
+}
+
+/** 删除缓存文件，不存在时静默 */
+function removeCacheFile(name) {
+    try { fs.unlinkSync(resolveCacheFile(name)) } catch (e) { /* 不存在则忽略 */ }
+}
+
+// ===== 受限日志追加（固定文件名 + 大小上限轮转，页面不再直接引用 fs/path） =====
+const LOG_MAX_BYTES = 512 * 1024
+
+/** 向临时目录的固定调试日志追加一行；超过 512KB 轮转为 .old（仅保留一份旧档） */
+function appendLog(message) {
+    try {
+        const logPath = path.join(window.utools.getPath('temp'), 'slowlyrecord-ocr.log')
+        try {
+            if (fs.statSync(logPath).size > LOG_MAX_BYTES) {
+                fs.renameSync(logPath, logPath + '.old')
+            }
+        } catch (e) { /* 文件不存在 */ }
+        fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${String(message).slice(0, 2000)}\n`)
+    } catch (e) { /* 日志失败不影响业务 */ }
+}
+
+// 暴露给渲染进程（最小接口，不暴露 fs/path 本体）
+window.services = {
+    bingTranslate, /* STORE-STRIP-LINE:bing-web */
+    readPluginFile,
+    readTempImageAsBase64,
+    readCacheFile,
+    writeCacheFile,
+    removeCacheFile,
+    appendLog
 }

@@ -32,7 +32,7 @@
         @import-command="(cmd: string) => uiStore.pendingImportCommand = { cmd, at: Date.now() }"
         @export-command="(cmd: string) => uiStore.pendingExportCommand = { cmd, at: Date.now() }"
         @sync="uiStore.openSyncDialog()"
-        @settings="uiStore.settingsDrawerVisible = true"
+        @settings="uiStore.openSettingsDrawer()"
     />
   </div>
 </template>

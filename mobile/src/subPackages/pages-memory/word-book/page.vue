@@ -14,9 +14,15 @@
       </view>
 
       <view class="toolbar">
-        <view class="switch-row">
-          <text class="switch-label">遮住释义</text>
-          <switch :checked="hideMeaning" color="#52796f" @change="onHideChange"/>
+        <view class="toolbar-switches">
+          <view class="switch-row">
+            <text class="switch-label">遮住释义</text>
+            <switch :checked="hideMeaning" color="#52796f" @change="onHideChange"/>
+          </view>
+          <view v-if="hideMeaning" class="switch-row">
+            <text class="switch-label">直接显示释义</text>
+            <switch :checked="directMeaning" color="#52796f" @change="onDirectMeaningChange"/>
+          </view>
         </view>
         <text class="link" @click="directoryVisible = !directoryVisible">章节目录</text>
         <text class="link" @click="restart">重新开始</text>
@@ -38,7 +44,11 @@
 
       <view v-if="finished" class="finish-card">
         <text class="finish-title">本轮完成 · {{ page.lastScore ?? 0 }} 分</text>
-        <text class="finish-desc">{{ page.words.length }} 个单词已全部标记 · 下次复习：{{ dueLabel(page.nextReviewAt) }}</text>
+        <text class="finish-desc">
+          共 {{ page.lastRound?.total ?? page.words.length }} 词 · 首轮想起 {{ page.lastRound?.firstTryKnown ?? 0 }} · 重新回忆 {{ page.lastRound?.retriedCount ?? 0 }}
+        </text>
+        <text v-if="practiceRound" class="finish-desc">练习模式：已记录成绩，不调整正式复习时间</text>
+        <text v-else class="finish-desc">下次复习：{{ dueLabel(page.nextReviewAt) }}</text>
         <button class="primary-btn" @click="restart">再记一遍</button>
         <button class="ghost-btn" @click="goBack">返回章节</button>
       </view>
@@ -55,16 +65,16 @@
         </view>
 
         <view class="node-grid">
-          <view v-for="item in displayWords" :key="`${item.word.sourceId}-${item.index}`"
-                :class="['node-card', { marked: marked.has(item.index), wrong: wrongSet.has(item.index) }]"
-                @click="reveal(item.index)">
+          <view v-for="item in displayWords" :key="item.entryId"
+                :class="['node-card', { marked: marked.has(item.entryId), wrong: firstWrong.has(item.entryId) }]"
+                @click="reveal(item.entryId)">
             <text class="node-word"><text v-for="(part, partIndex) in rootParts(item.word.text)" :key="partIndex"
                   :class="{ 'root-match': part.matched }">{{ part.text }}</text></text>
             <text v-if="item.word.phonetic" class="node-phonetic">{{ item.word.phonetic }}</text>
-            <text class="node-explains">{{ shouldHide(item.index) ? '点击显示释义' : (item.word.explains || '—') }}</text>
+            <text class="node-explains">{{ shouldHide(item.entryId) ? '点击显示释义' : (item.word.explains || '—') }}</text>
             <view class="node-actions">
-              <text class="action ok" @click.stop="markRemembered(item.index)">✓ 记住了</text>
-              <text class="action no" @click.stop="markForgot(item.index)">↺ 还没记住</text>
+              <text class="action ok" @click.stop="markRemembered(item.entryId)">✓ 记住了</text>
+              <text class="action no" @click.stop="markForgot(item.entryId)">↺ 还没记住</text>
             </view>
           </view>
         </view>
@@ -82,25 +92,32 @@ import { buildWordBookChapterDirectory, formatDueLabel } from '@/utils/word-book
 const store = useWordBook()
 const pageId = ref('')
 const hideMeaning = ref(false)
-const revealed = ref<Set<number>>(new Set())
-const marked = ref<Set<number>>(new Set())
-const wrongSet = ref<Set<number>>(new Set())
+// R9：遮住释义时可再开「直接显示释义」，生词免点按（与桌面端复习模式同名开关同语义）
+const directMeaning = ref(false)
+// 学习状态一律按条目 ID（entryId）记录，增删排序后不串词；旧按下标的草稿（version 1）直接作废重开
+const revealed = ref<Set<string>>(new Set())
+const marked = ref<Set<string>>(new Set())
+const firstWrong = ref<Set<string>>(new Set())
 const finished = ref(false)
+const practiceRound = ref(false)
+const completedOnce = ref(false)
 const directoryVisible = ref(false)
 const saveError = ref('')
-const order = ref<number[]>([])
+const order = ref<string[]>([])
 const restored = ref(false)
 const storageKey = computed(() => `sr_mobile_wordbook_round_${pageId.value}`)
-const displayWords = computed(() => order.value.flatMap(index => {
-  const word = page.value?.words[index]
-  return word ? [{ index, word }] : []
+
+const page = computed(() => store.getPage(pageId.value))
+
+const entryMap = computed(() => new Map((page.value?.words || []).map(word => [word.entryId || '', word])))
+const displayWords = computed(() => order.value.flatMap(entryId => {
+  const word = entryMap.value.get(entryId)
+  return word ? [{ entryId, word }] : []
 }))
 
 onLoad((options: any) => {
   pageId.value = String(options?.pageId || '')
 })
-
-const page = computed(() => store.getPage(pageId.value))
 
 onShow(() => {
   store.load()
@@ -139,16 +156,22 @@ function rootParts(text: string): Array<{ text: string; matched?: boolean }> {
 }
 
 interface RoundDraft {
-  version: 1
-  order: number[]
-  revealed: number[]
-  marked: number[]
-  wrong: number[]
+  version: 2
+  order: string[]
+  revealed: string[]
+  marked: string[]
+  wrong: string[]
   hideMeaning: boolean
+  directMeaning: boolean
+  practice: boolean
 }
 
-function shuffledIndexes(count: number): number[] {
-  const list = Array.from({ length: count }, (_, index) => index)
+function pageEntryIds(): string[] {
+  return (page.value?.words || []).map(word => word.entryId || '')
+}
+
+function shuffledEntryIds(): string[] {
+  const list = pageEntryIds()
   for (let i = list.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[list[i], list[j]] = [list[j], list[i]]
@@ -159,12 +182,14 @@ function shuffledIndexes(count: number): number[] {
 function persistRound() {
   if (!page.value || finished.value) return
   const draft: RoundDraft = {
-    version: 1,
+    version: 2,
     order: order.value,
     revealed: [...revealed.value],
     marked: [...marked.value],
-    wrong: [...wrongSet.value],
+    wrong: [...firstWrong.value],
     hideMeaning: hideMeaning.value,
+    directMeaning: directMeaning.value,
+    practice: practiceRound.value,
   }
   try {
     uni.setStorageSync(storageKey.value, JSON.stringify(draft))
@@ -180,9 +205,9 @@ function clearRoundStorage() {
 function restoreRound() {
   if (restored.value || !page.value) return
   restored.value = true
-  const count = page.value.words.length
+  const ids = pageEntryIds()
   const fallback = () => {
-    order.value = shuffledIndexes(count)
+    order.value = shuffledEntryIds()
   }
   try {
     const raw = uni.getStorageSync(storageKey.value)
@@ -191,20 +216,28 @@ function restoreRound() {
       return
     }
     const draft = (typeof raw === 'string' ? JSON.parse(raw) : raw) as RoundDraft
-    const validIndexes = (values: unknown) => Array.isArray(values)
-      && values.every(value => Number.isInteger(value) && value >= 0 && value < count)
-    if (draft.version !== 1 || !validIndexes(draft.order)
-      || new Set(draft.order).size !== count
-      || !validIndexes(draft.revealed) || !validIndexes(draft.marked) || !validIndexes(draft.wrong)) {
-      throw new Error('invalid draft')
+    if (draft.version !== 2 || !Array.isArray(draft.order)) throw new Error('invalid draft')
+    const allIds = new Set(ids)
+    const seen = new Set<string>()
+    const validOrder: string[] = []
+    for (const id of draft.order) {
+      if (typeof id !== 'string' || !allIds.has(id) || seen.has(id)) continue
+      seen.add(id)
+      validOrder.push(id)
     }
-    order.value = draft.order
-    revealed.value = new Set(draft.revealed)
-    marked.value = new Set(draft.marked)
-    wrongSet.value = new Set(draft.wrong)
+    // 页面编辑过（增词）时把新词排到队尾，删词自然过滤，不再整轮作废
+    order.value = [...validOrder, ...ids.filter(id => !seen.has(id))]
+    const pickValid = (values: unknown) => new Set(
+      (Array.isArray(values) ? values : []).filter((id): id is string => typeof id === 'string' && allIds.has(id)),
+    )
+    revealed.value = pickValid(draft.revealed)
+    marked.value = pickValid(draft.marked)
+    firstWrong.value = pickValid(draft.wrong)
     hideMeaning.value = !!draft.hideMeaning
+    directMeaning.value = !!draft.directMeaning
+    practiceRound.value = !!draft.practice
     saveError.value = ''
-    if (marked.value.size === count) finish()
+    if (ids.length > 0 && marked.value.size === ids.length) finish()
   } catch {
     clearRoundStorage()
     fallback()
@@ -216,50 +249,62 @@ function onHideChange(event: any) {
   persistRound()
 }
 
-function shouldHide(index: number): boolean {
-  return hideMeaning.value && !revealed.value.has(index)
+function onDirectMeaningChange(event: any) {
+  directMeaning.value = !!event.detail.value
+  persistRound()
 }
 
-function reveal(index: number) {
-  if (!shouldHide(index)) return
+function shouldHide(entryId: string): boolean {
+  return hideMeaning.value && !directMeaning.value && !revealed.value.has(entryId)
+}
+
+function reveal(entryId: string) {
+  if (!shouldHide(entryId)) return
   const next = new Set(revealed.value)
-  next.add(index)
+  next.add(entryId)
   revealed.value = next
   persistRound()
 }
 
-function markRemembered(index: number) {
+function markRemembered(entryId: string) {
   const next = new Set(marked.value)
-  if (next.has(index)) {
-    next.delete(index)
+  if (next.has(entryId)) {
+    next.delete(entryId)
     marked.value = next
     persistRound()
     return
   }
-  next.add(index)
+  next.add(entryId)
   marked.value = next
   if (next.size === (page.value?.words.length || 0)) finish()
   else persistRound()
 }
 
-function markForgot(index: number) {
+function markForgot(entryId: string) {
   const next = new Set(marked.value)
-  next.delete(index)
+  next.delete(entryId)
   marked.value = next
-  const nextWrong = new Set(wrongSet.value)
-  nextWrong.add(index)
-  wrongSet.value = nextWrong
+  const nextWrong = new Set(firstWrong.value)
+  nextWrong.add(entryId)
+  firstWrong.value = nextWrong
   const nextRevealed = new Set(revealed.value)
-  nextRevealed.add(index)
+  nextRevealed.add(entryId)
   revealed.value = nextRevealed
-  order.value = [...order.value.filter(item => item !== index), index]
+  order.value = [...order.value.filter(item => item !== entryId), entryId]
   persistRound()
 }
 
 function finish() {
   if (!page.value || finished.value || marked.value.size !== page.value.words.length) return
   saveError.value = ''
-  const result = store.completePage(page.value._id, wrongSet.value.size)
+  const total = page.value.words.length
+  const result = store.completeRound(page.value._id, {
+    total,
+    firstTryKnown: Math.max(0, total - firstWrong.value.size),
+    retriedCount: firstWrong.value.size,
+    firstTryWrongEntryIds: [...firstWrong.value],
+    finishedAt: Date.now(),
+  }, { practice: practiceRound.value })
   if (!result.ok) {
     saveError.value = result.message || '保存失败'
     persistRound()
@@ -267,16 +312,19 @@ function finish() {
     return
   }
   finished.value = true
+  completedOnce.value = true
   clearRoundStorage()
 }
 
 function restart() {
   revealed.value = new Set()
   marked.value = new Set()
-  wrongSet.value = new Set()
-  order.value = shuffledIndexes(page.value?.words.length || 0)
+  firstWrong.value = new Set()
+  order.value = shuffledEntryIds()
   saveError.value = ''
   finished.value = false
+  // 已完成过一轮后再练：只记录成绩，不调整正式复习时间
+  practiceRound.value = completedOnce.value
   clearRoundStorage()
 }
 
@@ -327,6 +375,12 @@ function goBack() {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 16rpx;
+}
+
+.toolbar-switches {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
 }
 
 .switch-row {

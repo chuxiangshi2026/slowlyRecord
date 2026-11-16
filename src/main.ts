@@ -20,7 +20,9 @@ import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
-import { initStats, trackRouterPageView, trackError, initErrorTracking } from '@/utils/stats'
+import { initStats, trackRouterPageView, trackError, initErrorTracking, applyPersistedStatsPrefs } from '@/utils/stats'
+import { getSetDb } from '@/utils/user-set-db-util'
+import { syncElectronTitleBar } from '@/utils/electron-titlebar'
 import { registerScheduleTriggerHandler } from '@/utils/schedule-reminder'
 import { useWordsStore } from '@/stores/words'
 import {getDbAdapterAsync} from '@/adapters/db'
@@ -43,6 +45,8 @@ function applyUToolsTheme(isDark: boolean) {
     html.classList.remove('utools-dark');
     html.classList.remove('dark');
   }
+  // Electron 无边框窗口：右上角按钮配色跟随主题（亚克力开启时保持透明）
+  syncElectronTitleBar();
 }
 
 /**
@@ -105,6 +109,11 @@ function initUToolsTheme() {
 // 初始化主题
 initUToolsTheme();
 
+// Electron 无边框窗口：给页面打标记，启用顶部拖拽区域与窗口按钮留白（样式见 App.vue）
+if ((window as any).electronAPI) {
+  document.documentElement.classList.add('electron-shell');
+}
+
 // 添加图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
@@ -115,12 +124,11 @@ app.use(pinia)
 app.use(router)
 app.use(VueVirtualScroller)
 
-// 初始化使用统计（umami，file:// 插件页可用）
-initStats().catch((err) => {
-  console.error('[App] 统计初始化失败:', err);
-});
+// 使用统计初始化移到「数据库适配器就绪」之后（见下方 getDbAdapterAsync 回调）：
+// 若在 DB 就绪前发 app.launch，插件更新清空 localStorage 的用户会先被上报一次再恢复排除标记。
+// 全局异常捕获照常尽早注册；其上报同样受统计开关约束。
 
-// 全局异常捕获 → umami bug.error 事件（去重、截断，不含用户数据；跟随统计开关）
+// 全局异常捕获 → bug.error 统计事件（去重、截断，不含用户数据；跟随统计开关）
 // catch 兜底：上报自身异常绝不外抛，避免被自己的全局监听器接住形成循环
 app.config.errorHandler = (err) => {
   trackError('vue', err).catch(() => {});
@@ -230,6 +238,14 @@ function renderStorageError(err: unknown) {
 
 // 初始化数据库适配器（必须完成后再挂载应用，避免组件在初始化前调用 getDbAdapter()）
 getDbAdapterAsync().then(() => {
+  // 先用 user-set 中持久化的统计偏好回填 localStorage（插件更新可能已清空），再初始化统计
+  try {
+    const setDb = getSetDb();
+    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
+  } catch { /* 读设置失败时按 localStorage 状态继续 */ }
+  initStats().catch((err) => {
+    console.error('[App] 统计初始化失败:', err);
+  });
   // console.info 不在生产构建的 pure 抹除名单内，保证打点可存活到生产
   console.info(`[启动耗时] 数据库适配器就绪: ${performance.now().toFixed(0)}ms`);
   app.mount('#app');

@@ -16,6 +16,7 @@ import {
   type WordBank
 } from "@/utils/wordbank-manager.ts";
 import {DB_KEY_USER_SET, DEFAULT_INTERVALS} from "@/constants";
+import {syncElectronTitleBar} from "@/utils/electron-titlebar";
 import {setActiveLanguage, getActiveLanguage} from "@/utils/language";
 
 // import {downloadAndStoreAudio} from "@/utils/audio-util.ts";
@@ -99,6 +100,7 @@ export const useWordsStore =
                 bing: {appkey: '', key: ''},
                 xftrans: {appkey: '', key: ''},
                 bilibili: {appkey: '', key: ''},
+                mymemory: {appkey: '', key: ''},
                 siliconflow: {appkey: '', key: ''},
                 local: {appkey: '', key: ''},
             })
@@ -172,8 +174,8 @@ export const useWordsStore =
             // brightness=整体明亮度（0.5-1.5，默认 1），独立于背景图生效。
             // 图片本体存 app-bg-image 独立文档（app-bg-db.ts），不进 user-set、不参与同步
             // scrim 默认 0.6：亮/暗两个主题下背景都能明显透出（0.85 在暗色主题下近似全黑）
-            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 });
-            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number }>(defaultAppBg());
+            const defaultAppBg = () => ({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1, cardAlpha: 0.6, headerAlpha: 0.75, footerAlpha: 0.6 });
+            const appBg = ref<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number; cardAlpha: number; headerAlpha: number; footerAlpha: number }>(defaultAppBg());
             // 定时任务（uTools 8.0+；低版本/其他平台不生效，仅作意向持久化）
             // daily 默认开（首次进入弹一次系统授权）；sync 依赖 WebDAV 配置，默认关
             type ScheduleReminderState = { daily: boolean; dailyTimes?: string[]; dailyRequested?: boolean; sync?: boolean; syncRequested?: boolean; review?: boolean; signin?: boolean; reviewTimes?: string[]; signinTimes?: string[]; signinTime?: string; reviewRequested?: boolean; signinRequested?: boolean };
@@ -473,7 +475,7 @@ export const useWordsStore =
             async function applyAppBg() {
                 if (typeof document === 'undefined' || !document.body) return;
                 const seq = ++appBgApplySeq;
-                const {preset, scrim, acrylic, acrylicBlur, cardBlur, headerEffect, footerEffect, brightness} = appBg.value;
+                const {preset, scrim, acrylic, acrylicBlur, cardBlur, headerEffect, footerEffect, brightness, cardAlpha, headerAlpha, footerAlpha} = appBg.value;
                 let url = '';
                 if (preset === 'custom') {
                     url = getAppBgImage();
@@ -493,6 +495,10 @@ export const useWordsStore =
                     root.style.removeProperty('--app-bg-scrim-header');
                     root.style.removeProperty('--app-bg-acrylic-blur');
                     root.style.removeProperty('--app-bg-card-blur');
+                    root.style.removeProperty('--app-bg-card-alpha');
+                    root.style.removeProperty('--app-bg-header-alpha');
+                    root.style.removeProperty('--app-bg-footer-alpha');
+                    syncElectronTitleBar(false);
                     return;
                 }
                 // 解码与首屏并行：等「列表首次就绪」（超时兜底 1.5s）且图片解码完成后再挂载背景。
@@ -519,6 +525,12 @@ export const useWordsStore =
                 root.style.setProperty('--app-bg-acrylic-blur', `${Math.max(0, Math.min(60, acrylicBlur ?? 18))}px`);
                 const cardBlurPx = Math.max(0, Math.min(60, cardBlur ?? 12));
                 root.style.setProperty('--app-bg-card-blur', `${cardBlurPx}px`);
+                // 分区域透明度：卡片 / 页头 / 页脚各自独立（缺省回退到整体遮罩浓度，
+                // 页头保留 0.75 可读性下限的旧行为）
+                const clampAlpha = (v: number | undefined, fallback: number) => String(Math.max(0.1, Math.min(1, v ?? fallback)));
+                root.style.setProperty('--app-bg-card-alpha', clampAlpha(cardAlpha, scrim));
+                root.style.setProperty('--app-bg-header-alpha', clampAlpha(headerAlpha, Math.max(0.75, scrim)));
+                root.style.setProperty('--app-bg-footer-alpha', clampAlpha(footerAlpha, scrim));
                 body.classList.add('has-app-bg');
                 body.classList.toggle('app-bg-acrylic', acrylic);
                 // 卡片叠加模糊是动态 backdrop-filter（滚动时每帧采样），为 0 时不挂类，零开销
@@ -526,13 +538,15 @@ export const useWordsStore =
                 // 页头/底栏效果开关：关闭时挂 off 类，theme.scss 对应区域回落实底色
                 body.classList.toggle('app-bg-header-off', !headerEffect);
                 body.classList.toggle('app-bg-footer-off', !footerEffect);
+                // Electron 无边框窗口：亚克力开启时窗口按钮区同步透明
+                syncElectronTitleBar(acrylic);
             }
 
             /**
              * 设置整体明亮度/界面背景（部分更新）：应用到 DOM 并把轻量标志位持久化到 user-set
              * （图片本体不在此，见 app-bg-db.ts）
              */
-            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number }>) {
+            async function setAppBg(partial: Partial<{ preset: string; scrim: number; acrylic: boolean; acrylicBlur: number; cardBlur: number; headerEffect: boolean; footerEffect: boolean; brightness: number; cardAlpha: number; headerAlpha: number; footerAlpha: number }>) {
                 appBg.value = {...appBg.value, ...partial};
                 applyAppBg();
                 try {

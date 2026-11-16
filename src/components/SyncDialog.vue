@@ -207,7 +207,7 @@
         <!-- 自定义服务器（开发者选项：需自行部署配套后端，普通用户请用默认服务器） -->
         <el-collapse class="sync-advanced">
           <el-collapse-item title="开发者选项：自建服务器" name="custom-server">
-            <p class="sync-desc">需自行部署与本插件协议一致的后端（POST /sync、GET /sync/:code、GET /ping），普通用户请使用默认服务器</p>
+            <p class="sync-desc">需自行部署与本应用协议一致的后端（POST /sync、GET /sync/:code、GET /ping），普通用户请使用默认服务器</p>
             <div class="sync-download-row">
               <el-input
                 v-model="customServerUrl"

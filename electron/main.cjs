@@ -46,8 +46,14 @@ function createWindow() {
     y: state.y,
     minWidth: 700,
     minHeight: 500,
-    frame: true,
-    titleBarStyle: 'default',
+    // 无边框窗口：隐藏系统标题栏，保留右上角原生窗口控制按钮（仅 Windows/macOS 支持
+    // Window Controls Overlay；Linux 保留系统边框，避免无按钮关不掉窗口）
+    ...(process.platform === 'win32' || process.platform === 'darwin'
+      ? {
+          titleBarStyle: 'hidden',
+          titleBarOverlay: { color: '#eaf1ea', symbolColor: '#2f3e39', height: 36 },
+        }
+      : {}),
     show: false, // 先不显示，等 ready-to-show 再显示
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -145,6 +151,8 @@ function createTray() {
 
 // 应用就绪时创建窗口
 app.whenReady().then(() => {
+  // 去掉系统菜单栏（File/Edit/View…）：本应用不需要菜单，Windows/Linux 下默认菜单栏很碍眼
+  Menu.setApplicationMenu(null)
   createWindow()
   createTray()
 
@@ -362,9 +370,25 @@ ipcMain.handle('getCursorScreenPoint', () => {
   }
 })
 
+// 窗口标题栏覆盖层：无边框窗口右上角最小化/最大化/关闭按钮的底色与符号色，
+// 由渲染进程按「主题 + 亚克力开关」下发（亚克力开启时传 transparent 让背景透出）
+ipcMain.handle('setTitleBarOverlay', (_event, options = {}) => {
+  if (!mainWindow || mainWindow.isDestroyed()) return false
+  try {
+    mainWindow.setTitleBarOverlay({
+      color: typeof options.color === 'string' ? options.color : 'transparent',
+      symbolColor: typeof options.symbolColor === 'string' ? options.symbolColor : '#2f3e39',
+      height: Number(options.height) || 36,
+    })
+    return true
+  } catch (e) {
+    console.error('[Electron] setTitleBarOverlay 失败:', e)
+    return false
+  }
+})
+
 // 窗口透明度：设置
-ipcMain.handle('setWindowOpacity', (_event, opacity) => {
-  console.log('[Electron] setWindowOpacity 收到请求:', opacity)
+ipcMain.handle('setWindowOpacity', (_event, opacity) => {  console.log('[Electron] setWindowOpacity 收到请求:', opacity)
   if (mainWindow) {
     const validOpacity = Math.max(0.3, Math.min(1.0, Number(opacity) || 1.0))
     mainWindow.setOpacity(validOpacity)

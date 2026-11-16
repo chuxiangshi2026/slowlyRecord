@@ -257,6 +257,43 @@ describe('DeepL / 微软翻译 / Google 免费接口', () => {
     expect(fetchMock.mock.calls.length).toBeGreaterThanOrEqual(2)
   })
 
+  it('mymemory 免费接口无需 key，auto 按字符猜源语言并解析译文', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      responseData: { translatedText: '你好 世界', match: 1 },
+      quotaFinished: false, responseStatus: 200,
+    }), { status: 200 }))
+
+    const result = await translateWithPlatform('hello-mymemory world', 'mymemory' as any, 'auto', 'zh')
+
+    expect(result.success).toBe(true)
+    expect(result.explains).toBe('你好 世界')
+    const [url] = fetchMock.mock.lastCall!
+    expect(url).toContain('https://api.mymemory.translated.net/get')
+    expect(url).toContain('langpair=en-US%7Czh-CN')
+  })
+
+  it('mymemory 业务错误（超长/语言对非法）判失败并触发降级链', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      responseData: { translatedText: 'QUERY LENGTH LIMIT EXCEEDED' },
+      quotaFinished: false, responseStatus: 403, responseDetails: 'QUERY LENGTH LIMIT EXCEEDED',
+    }), { status: 200 }))
+    const invalid = await translateWithPlatform('hello-mymemory-invalid', 'mymemory' as any, 'auto', 'zh')
+    expect(invalid.success).toBe(false)
+    expect(fetchMock.mock.calls.length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('mymemory 额度用尽判失败并触发降级链', async () => {
+    // 注意：本用例会把 mymemory 标记进模块级 builtinQuotaExhausted（产品预期行为），
+    // 因此必须作为最后一个使用 mymemory 的用例，避免污染其他用例
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      responseData: { translatedText: '' }, quotaFinished: true, responseStatus: 429,
+    }), { status: 200 }))
+    const exhausted = await translateWithPlatform('hello-mymemory-quota', 'mymemory' as any, 'auto', 'zh')
+    expect(exhausted.success).toBe(false)
+    // 失败后继续降级（bing/glm），而不是直接返回
+    expect(fetchMock.mock.calls.length).toBeGreaterThanOrEqual(2)
+  })
+
   it('bing 网页接口先取授权令牌再翻译，无需 key', async () => {
     // 伪造 JWT：header.payload.signature，payload 带 exp
     const payload = btoa(JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 600 }))
