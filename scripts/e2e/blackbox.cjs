@@ -236,6 +236,26 @@ async function main() {
   check('B2 守卫: Escape 关抽屉后页面不空白', afterEsc.bodyTextLen > 0 && afterEsc.headerVisible, JSON.stringify(afterEsc))
   await page.screenshot({ path: path.join(OUT_DIR, 'interaction-escape.png') })
 
+  // B2 守卫（文本记忆页专项）：该页曾出现「抽屉 → Escape → 整页空白」报告。
+  // 页面必须有容器且渲染出文章列表或空态，否则视为回归。
+  await page.evaluate(() => { location.hash = '#/text-memory' })
+  await new Promise(r => setTimeout(r, 1500))
+  await page.evaluate(() => {
+    const h = [...document.querySelectorAll('.el-header span, .el-header div, .el-header button')]
+    h.find(el => (el.textContent || '').trim() === '☰')?.click()
+  })
+  await new Promise(r => setTimeout(r, 700))
+  await page.keyboard.press('Escape')
+  await new Promise(r => setTimeout(r, 900))
+  const afterEscTm = await page.evaluate(() => ({
+    bodyTextLen: (document.body.innerText || '').trim().length,
+    headerVisible: !!document.querySelector('.el-header') && document.querySelector('.el-header').getBoundingClientRect().height > 0,
+    hasContent: !!document.querySelector('.text-memory-container') &&
+      (!!document.querySelector('.text-memory-container .el-empty') || !!document.querySelector('.text-memory-container .text-article-card')),
+  }))
+  check('B2 守卫: 文本记忆页 Escape 关抽屉后不空白且有内容', afterEscTm.bodyTextLen > 0 && afterEscTm.headerVisible && afterEscTm.hasContent, JSON.stringify(afterEscTm))
+  await page.screenshot({ path: path.join(OUT_DIR, 'interaction-escape-text-memory.png') })
+
   // ── 汇总 ──────────────────────────────────────────────────────────
   const failed = results.filter(r => !r.ok)
   fs.writeFileSync(
