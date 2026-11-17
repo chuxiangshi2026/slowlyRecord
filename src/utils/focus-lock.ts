@@ -83,3 +83,15 @@ export function getOpenFocusWindowCount(): number {
 export function resyncFocusWindowCount(source: FocusWindowSource, aliveCount: number): void {
   openCounts[source] = Math.max(0, aliveCount)
 }
+
+// 单词专注窗口引用放在模块级：Word 页卸载（例如打开翻译页）时窗口保持存活，
+// 重新挂载后仍能复用/聚焦同一个窗口，避免重复创建或把它当孤儿关掉。
+let wordFocusWindow: any = null
+
+export function getWordFocusWindow(): any {
+  return wordFocusWindow
+}
+
+export function setWordFocusWindow(win: any): void {
+  wordFocusWindow = win
+}

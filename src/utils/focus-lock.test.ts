@@ -9,6 +9,8 @@ import {
   focusWindowClosed,
   getOpenFocusWindowCount,
   resyncFocusWindowCount,
+  getWordFocusWindow,
+  setWordFocusWindow,
 } from './focus-lock'
 
 describe('focus-lock', () => {
@@ -109,6 +111,17 @@ describe('focus-lock', () => {
     it('关闭计数不会减到负数', () => {
       focusWindowClosed('text')
       expect(getOpenFocusWindowCount()).toBe(0)
+    })
+  })
+
+  describe('单词专注窗口引用', () => {
+    it('模块级持有，页面重挂载后可复用；置空后返回 null', () => {
+      const win = { isDestroyed: () => false }
+      setWordFocusWindow(win)
+      expect(getWordFocusWindow()).toBe(win)
+
+      setWordFocusWindow(null)
+      expect(getWordFocusWindow()).toBeNull()
     })
   })
 })

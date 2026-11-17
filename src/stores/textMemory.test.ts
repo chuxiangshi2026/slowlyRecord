@@ -600,6 +600,32 @@ describe('useTextMemoryStore', () => {
       }
     })
 
+    it('判断题假陈述取对立关系词，答案键不反（bug-list R1）', () => {
+      const store = useTextMemoryStore()
+      // Math.random 固定为 0.9：走「反义词 + 假陈述」分支
+      const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0.9)
+      try {
+        const content = '美丽的风景让美丽的心情更加愉快。'
+        const questions = store.generateChoiceQuestions('article1', content, 1, ['judgment'])
+
+        expect(questions).toHaveLength(1)
+        const q = questions[0]
+        expect(q.type).toBe('judgment')
+        expect(q.options[q.correctIndex].content).toBe('说法错误')
+
+        const m = /判断：「(.+?)」的(近义词|反义词)是「(.+?)」/.exec(q.question)
+        expect(m).toBeTruthy()
+        const [, word, relation, claim] = m!
+        const bank = store.getSemanticWordBank()[word]
+        expect(bank).toBeTruthy()
+        // 假陈述必须来自对立关系；同关系的其余词本身也是真陈述，不能当作错误答案
+        const sameRel = relation === '近义词' ? bank.synonym : bank.antonym
+        expect(sameRel).not.toContain(claim)
+      } finally {
+        randomSpy.mockRestore()
+      }
+    })
+
     it('getSemanticWordBank 应该返回语义词库', () => {
       const store = useTextMemoryStore()
       

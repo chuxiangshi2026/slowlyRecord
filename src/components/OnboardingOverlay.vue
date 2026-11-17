@@ -110,7 +110,8 @@ import { ref, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { importFromBuiltinWordBank } from '@/utils/wordbank-manager'
 import { useWordsStore } from '@/stores/words'
-import { isUtools, isWeb } from '@/adapters/platform'
+import { isWeb } from '@/adapters/platform'
+import { collectHint } from '@/utils/platform-hints'
 import { trackEvent, getAttribution } from '@/utils/stats'
 import PrivacyDialog from '@/components/PrivacyDialog.vue'
 
@@ -140,10 +141,7 @@ const usageTip = computed(() => {
   if (isWebEnv) {
     return '学习进度保存在当前浏览器；换设备时用「同步」生成同步码即可带走数据'
   }
-  if (isUtools()) {
-    return '在 uTools 输入框输入「划词添加」「截图添加」可快速收集单词'
-  }
-  return '选中单词或截图后可快速加入词库'
+  return collectHint()
 })
 
 const visible = computed({

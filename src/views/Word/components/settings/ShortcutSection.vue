@@ -16,14 +16,29 @@
       关闭后仅停用主窗口与听写的快捷键；专注窗口内的快捷键（Shift+R/F/P/T、空格、方向键等）始终生效，见下方「专注模式」一览。
     </p>
 
-    <!-- 设置全局快捷键 -->
-    <div class="titles">
-      <div class="setting-item">
-        <el-button type="info" @click="kuaijiejian(1)">划词快捷键</el-button>
-        <el-button type="info" @click="kuaijiejian(3)">截图快捷键</el-button>
+    <!-- 全局唤起快捷键：uTools 走宿主设置；Electron 为应用内固定热键；Web 无全局能力 -->
+    <template v-if="isUtoolsPlatform">
+      <div class="titles">
+        <div class="setting-item">
+          <el-button type="info" @click="kuaijiejian(1)">划词快捷键</el-button>
+          <el-button type="info" @click="kuaijiejian(3)">截图快捷键</el-button>
+        </div>
       </div>
-    </div>
-    <p class="scope-note">为 uTools 全局功能「划词添加 / 截图添加」设置唤起快捷键（需在 uTools 中使用）。</p>
+      <p class="scope-note">为 uTools 全局功能「划词添加 / 截图添加」设置唤起快捷键（在 uTools 设置中自定义）。</p>
+    </template>
+    <template v-else-if="isElectronPlatform">
+      <h5 style="text-align:center; margin-top: 12px;">应用全局快捷键</h5>
+      <div class="titles">
+        <span class="title">功能说明</span>
+        <span class="title">快捷键</span>
+      </div>
+      <div v-for="item in globalShortcutRows" :key="item.keys" class="titles">
+        <span class="shorcut-desc">{{ item.desc }}</span>
+        <span class="shorcut-desc">{{ item.keys }}</span>
+      </div>
+      <p class="scope-note">在任意程序中生效；关闭主窗口会最小化到托盘，托盘菜单可退出应用。</p>
+    </template>
+    <p v-else class="scope-note">网页版仅在页面内使用快捷键；安装桌面版可使用全局唤醒、划词与截图快捷键。</p>
 
     <!-- 快捷键一览 -->
     <el-collapse class="shortcut-collapse">
@@ -68,10 +83,15 @@
 </template>
 
 <script setup lang="ts">
-import {isUtools} from "@/adapters/platform";
+import {isUtools, isElectron} from "@/adapters/platform";
+import {platformShortcutRows} from "@/utils/platform-hints";
 import {useWordsStore} from "@/stores/words.ts";
 
 const wordsStore = useWordsStore();
+
+const isUtoolsPlatform = isUtools();
+const isElectronPlatform = isElectron();
+const globalShortcutRows = platformShortcutRows();
 
 const persistShortcut = () => {
   wordsStore.setShortcutEnabled(wordsStore.shortcutEnabled)

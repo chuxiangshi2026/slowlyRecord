@@ -832,22 +832,18 @@ export const useTextMemoryStore = defineStore('textMemory', {
             break;
           }
           case 'judgment': {
-            // 判断题：陈述一个近/反义词关系，让考生判断对错；陈述 50% 为真、50% 为假
+            // 判断题：陈述一个近/反义词关系，让考生判断对错；尽量 50% 真、50% 假
             const data = wordBank[keyword]!;
             const useSynonym = data.synonym.length > 0 && (data.antonym.length === 0 || Math.random() < 0.5);
             const relation = useSynonym ? '近义词' : '反义词';
             const correctWord = useSynonym ? data.synonym[0] : data.antonym[0];
-            const claimCorrect = Math.random() < 0.5;
-            let claim: string;
-            if (claimCorrect) {
-              claim = correctWord;
-            } else {
-              // 假陈述取同关系的其余词，没有则用对立关系词（不可能等于正确答案）
-              const sameRel = useSynonym ? data.synonym.slice(1) : data.antonym.slice(1);
-              const crossRel = useSynonym ? data.antonym : data.synonym;
-              const claimPool = sameRel.length > 0 ? sameRel : crossRel;
-              claim = claimPool[Math.floor(Math.random() * claimPool.length)];
-            }
+            // 假陈述必须取对立关系词：同关系的其余词本身也是真陈述（如「美丽的近义词是秀丽」），
+            // 不能判「说法错误」。没有对立关系词时退化为真陈述，保证答案键正确
+            const crossRel = useSynonym ? data.antonym : data.synonym;
+            const claimCorrect = crossRel.length === 0 || Math.random() < 0.5;
+            const claim = claimCorrect
+              ? correctWord
+              : crossRel[Math.floor(Math.random() * crossRel.length)];
             question = `判断：「${keyword}」的${relation}是「${claim}」，这个说法对吗？`;
             options = ['说法正确', '说法错误'];
             correctIndex = claim === correctWord ? 0 : 1;

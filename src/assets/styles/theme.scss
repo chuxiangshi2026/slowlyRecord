@@ -529,7 +529,7 @@ body.has-app-bg {
   // 用 rgba + RGB 通道别名而非 color-mix——与 transparent 混合等价于调 alpha，且兼容老 Chromium 内核
   // （color-mix 在不支持的内核里会解析失败导致背景变透明，透出近黑底色表现为「列表全黑」）。
   // 只罩色不挂 blur——blur 由亚克力开关统一挂载（见下方 acrylic 规则），不开时滚动零额外成本
-  --utools-bg-card: rgba(var(--utools-bg-card-rgb), var(--app-bg-scrim, 0.6));
+  --utools-bg-card: rgba(var(--utools-bg-card-rgb), var(--app-bg-card-alpha, var(--app-bg-scrim, 0.6)));
   --utools-bg-tertiary: rgba(var(--utools-bg-tertiary-rgb), var(--app-bg-scrim, 0.6));
   --utools-bg-secondary: rgba(var(--utools-bg-secondary-rgb), var(--app-bg-scrim, 0.6));
   // 边框同步软化：半透明表面上的实色描边会显得生硬，降到 0.55 透明度让卡片融进背景
@@ -562,8 +562,13 @@ body.has-app-bg {
   &:not(.app-bg-header-off) {
     .common-layout .el-header,
     .app-header {
-      background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-scrim-header, 0.75));
+      background-color: rgba(var(--utools-bg-primary-rgb), var(--app-bg-header-alpha, var(--app-bg-scrim-header, 0.75)));
     }
+  }
+
+  // 底栏独立透明度（默认随卡片浓度，可在设置里单独调）
+  &:not(.app-bg-footer-off) .home_footer {
+    background-color: rgba(var(--utools-bg-card-rgb), var(--app-bg-footer-alpha, var(--app-bg-scrim, 0.6)));
   }
 
   // 底栏（.home_footer）默认引用 --utools-bg-card，已随上方重定义变半透明；

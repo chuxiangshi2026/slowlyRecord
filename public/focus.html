@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="lang-core.js"></script>
+  <script src="md5.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>专注模式</title>
   <style>
@@ -1196,6 +1197,8 @@
           <button class="style-btn focus-repeat-btn" data-repeat="1" type="button">1</button>
           <button class="style-btn focus-repeat-btn" data-repeat="2" type="button">2</button>
           <button class="style-btn focus-repeat-btn" data-repeat="3" type="button">3</button>
+          <button class="style-btn focus-repeat-btn" data-repeat="10" type="button">10</button>
+          <button class="style-btn focus-repeat-btn" data-repeat="20" type="button">20</button>
         </div>
       </div>
       <div class="style-row">
@@ -1685,38 +1688,63 @@
         if (onDone) onDone();
       };
       try {
-        // 优先使用浏览器原生语音合成（不依赖网络，与听写主界面一致）
-        var prof = getProfile();
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-          var utterance = new SpeechSynthesisUtterance(word.text);
-          // 词条含汉字时用中文朗读（自定义词库可能收中文词，profile 只有 en/ja 等档案）
-          var wordLang = /[一-龥]/.test(word.text) ? 'zh-CN' : prof.ttsLang;
-          utterance.lang = wordLang;
-          utterance.rate = getWordSpeechRate();
-          // 按语言选高质量语音（与文本朗读同一套优先级），无匹配则保持系统默认音
-          var preferredVoice = getPreferredVoice(wordLang);
-          if (preferredVoice) utterance.voice = preferredVoice;
-          utterance.onend = done;
-          utterance.onerror = function(e) {
-            // 主动取消（如切词、关窗口触发 cancel）不算失败，同样按完成处理
-            if (e && e.error === 'canceled' || e && e.error === 'interrupted') {
-              done();
-            } else {
-              console.error('语音合成失败:', e);
-              done();
-            }
-          };
-          window.speechSynthesis.speak(utterance);
-        } else {
-          // 回退：使用有道TTS在线播放（有道仅支持英语）
-          if (prof.youdaoVoiceType === null) { done(); return; }
+        // 浏览器原生语音合成（不依赖网络，与听写主界面一致）
+        var speakWithTts = function() {
+          var prof = getProfile();
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            var utterance = new SpeechSynthesisUtterance(word.text);
+            // 词条含汉字时用中文朗读（自定义词库可能收中文词，profile 只有 en/ja 等档案）
+            var wordLang = /[一-龥]/.test(word.text) ? 'zh-CN' : prof.ttsLang;
+            utterance.lang = wordLang;
+            utterance.rate = getWordSpeechRate();
+            // 按语言选高质量语音（与文本朗读同一套优先级），无匹配则保持系统默认音
+            var preferredVoice = getPreferredVoice(wordLang);
+            if (preferredVoice) utterance.voice = preferredVoice;
+            utterance.onend = done;
+            utterance.onerror = function(e) {
+              // 主动取消（如切词、关窗口触发 cancel）不算失败，同样按完成处理
+              if (e && e.error === 'canceled' || e && e.error === 'interrupted') {
+                done();
+              } else {
+                console.error('语音合成失败:', e);
+                done();
+              }
+            };
+            window.speechSynthesis.speak(utterance);
+          } else {
+            // 回退：使用有道TTS在线播放（有道仅支持英语）
+            if (prof.youdaoVoiceType === null) { done(); return; }
+            if (!audioPlayer) audioPlayer = new Audio();
+            audioPlayer.onended = done;
+            audioPlayer.onerror = done;
+            audioPlayer.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=' + prof.youdaoVoiceType;
+            audioPlayer.play().catch(function() { done(); });
+          }
+        };
+
+        var bankId = '';
+        try { bankId = localStorage.getItem(CURRENT_WORDBANK_KEY) || currentBankId || ''; } catch (e) { bankId = currentBankId || ''; }
+        // 词条自带 speechBankId 标记（口语连读库导入时打上）优先；否则看当前词库标记
+        var speechBankId = word.speechBankId || (isSpeechAudioBank(bankId) ? bankId : '');
+        if (speechBankId) {
           if (!audioPlayer) audioPlayer = new Audio();
           audioPlayer.onended = done;
-          audioPlayer.onerror = done;
-          audioPlayer.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word.text) + '&type=' + prof.youdaoVoiceType;
-          await audioPlayer.play();
+          audioPlayer.onerror = function() {
+            console.warn('预生成连读音频加载失败，回退语音合成');
+            speakWithTts();
+          };
+          audioPlayer.playbackRate = getWordSpeechRate();
+          audioPlayer.src = getSpeechAudioUrl(speechBankId, word.text);
+          try {
+            await audioPlayer.play();
+          } catch (err) {
+            console.warn('预生成连读音频播放失败，回退语音合成:', err);
+            speakWithTts();
+          }
+          return;
         }
+        speakWithTts();
       } catch (e) {
         console.error('播放失败:', e);
         done();
@@ -2206,7 +2234,7 @@
     }
 
     // ========== 文本专注滚动模式 ==========
-    var TEXT_SPEED_LEVELS = [0.5, 1, 2, 4];
+    var TEXT_SPEED_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 4];
     var textSpeedIndex = 1;          // 默认 1x
     var textBaseSpeed = 24;          // 基准像素/秒
     var textOffset = 0;              // 当前滚动偏移
@@ -2482,13 +2510,31 @@
 
     // ========== 文本朗读（TTS） ==========
 
-    // 滚动速度档 → 朗读语速映射
+    // 滚动速度档 → 朗读语速映射：标签即真实语速（1x=1.0），语音超过 2x 已不可辨，封顶 2x
     function getTextSpeechRate() {
-      var speed = TEXT_SPEED_LEVELS[textSpeedIndex];
-      if (speed <= 0.5) return 0.7;
-      if (speed <= 1) return 0.9;
-      if (speed <= 2) return 1.1;
-      return 1.4;
+      return Math.min(TEXT_SPEED_LEVELS[textSpeedIndex], 2);
+    }
+
+    // ========== 预生成口语连读音频（speechAudio 词库） ==========
+    // 与 src/utils/speech-audio.ts、scripts/generate_speech_audio.py 同一套命名约定；
+    // 换音色/语速需三处同步并重新生成音频
+    var SPEECH_AUDIO_VOICE = 'en-US-AvaNeural';
+    var SPEECH_AUDIO_RATE = '+5%';
+    var SPEECH_AUDIO_FLAG_PREFIX = 'focus-speech-audio:';
+
+    function normalizeSpeechText(text) {
+      return String(text || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    // 当前词库是否带预生成连读音频（URL 参数 speechAudio=1 开启并按词库持久化）
+    function isSpeechAudioBank(bankId) {
+      if (!bankId) return false;
+      try { return localStorage.getItem(SPEECH_AUDIO_FLAG_PREFIX + bankId) === '1'; } catch (e) { return false; }
+    }
+
+    function getSpeechAudioUrl(bankId, text) {
+      var hash = md5(SPEECH_AUDIO_VOICE + '|' + SPEECH_AUDIO_RATE + '|' + normalizeSpeechText(text));
+      return 'speech-audio/' + bankId + '/' + hash + '.mp3';
     }
 
     // 文章语言 → utterance.lang：标注语言优先（zh → zh-CN）；缺省按内容判断
@@ -2577,6 +2623,25 @@
       if (!keepSwitch) textSpeechOn = false;
     }
 
+    // 全局中文发音纠错：把机读易错片段替换为同音字（仅作用于朗读文本，滚动定位不受影响）
+    function applyGlobalTtsCorrections(text) {
+      try {
+        if (!text || typeof utools === 'undefined' || !utools.db) return text;
+        var doc = utools.db.get('tts-corrections');
+        var list = doc && doc.list;
+        if (!Array.isArray(list) || !list.length) return text;
+        var sorted = list.filter(function(it) { return it && it.from && it.to && it.from !== it.to; })
+          .sort(function(a, b) { return b.from.length - a.from.length; });
+        var out = text;
+        sorted.forEach(function(it) {
+          if (out.indexOf(it.from) >= 0) out = out.split(it.from).join(it.to);
+        });
+        return out;
+      } catch (e) {
+        return text;
+      }
+    }
+
     // 朗读当前文章：逐句朗读，一句 onend 接下一句；被打断（代际变化）则静默停止
     // 同步：朗读开启时滚动改为由句首事件驱动（每句把滚动对齐到该句顶部），
     // 匀速 tick 暂停，避免"声音读第 3 句、屏幕滚到第 5 句"的不同步
@@ -2588,7 +2653,8 @@
       var article = textArticles[textArticleIndex];
       if (!article) return;
       // 朗读用 speechContent（同音字替换的朗读专用文本，与 content 等长同结构；滚动跟随仍按 content 定位）
-      var sentences = splitTextToSentences(article.speechContent || article.content || '');
+      // 再套用全局发音纠错表（tts-corrections，文本记忆页「纠错」入口维护）
+      var sentences = splitTextToSentences(applyGlobalTtsCorrections(article.speechContent || article.content || ''));
       if (sentences.length === 0) {
         showToast('文章内容为空');
         return;
@@ -2858,7 +2924,7 @@
     }
 
     function setRepeatCount(value) {
-      repeatCount = Math.max(1, Math.min(3, parseInt(value) || 1));
+      repeatCount = normalizeRepeatCount(value);
       syncAutoNextControls();
       saveFocusModeSetting('repeatCount', repeatCount);
       showToast('发音 ' + repeatCount + ' 遍');
@@ -3460,8 +3526,8 @@
             autoNextEnabled = fm.autoNext;
           }
           var fmRepeat = parseInt(fm.repeatCount);
-          if (fmRepeat >= 1 && fmRepeat <= 3) {
-            repeatCount = fmRepeat;
+          if (!isNaN(fmRepeat)) {
+            repeatCount = normalizeRepeatCount(fmRepeat);
           }
 
           // 锁定状态
@@ -3646,9 +3712,10 @@
       // 自动下一个（autoNext=1 开启，autoNext=0 关闭，缺省读 DB 设置）
       const autoNextParam = urlParams.get('autoNext');
       const autoNext = autoNextParam === null ? null : autoNextParam === '1';
-      // 发音遍数（repeat=1/2/3，缺省读 DB 设置）
-      const repeatParam = parseInt(urlParams.get('repeat') || '');
-      const repeat = repeatParam >= 1 && repeatParam <= 3 ? repeatParam : null;
+      // 发音遍数（repeat=1/2/3/10/20，缺省读 DB 设置）
+      const repeatRaw = urlParams.get('repeat');
+      const repeatParam = parseInt(repeatRaw || '', 10);
+      const repeat = repeatRaw !== null && normalizeRepeatCount(repeatParam) === repeatParam ? repeatParam : null;
 
       // 模式参数（dictation=听写模式, text=文本专注滚动）
       const mode = urlParams.get('mode') || '';
@@ -3689,7 +3756,13 @@
     let lastAutoSpeakWord = '';  // 记录上次自动发音的单词，避免重复播放
     // 自动下一个 / 发音遍数设置
     let autoNextEnabled = false;
-    let repeatCount = 1;         // 每个单词自动发音遍数（1-3）
+    let repeatCount = 1;         // 每个单词自动发音遍数（1/2/3/10/20）
+
+    // 发音遍数可选项：1-3 用于跟读，10/20 用于长时间重复听音
+    function normalizeRepeatCount(value) {
+      var n = parseInt(value, 10);
+      return (n === 1 || n === 2 || n === 3 || n === 10 || n === 20) ? n : 1;
+    }
     let autoNextTimer = null;    // 待执行的自动推进计时器
     let speakSeq = 0;            // 自动发音代际令牌，切词/取消时递增，终止旧的连播循环
     let lastAutoSpeakKey = '';   // 最近自动发音的 单词@下标，用于区分同词重复渲染
@@ -3809,6 +3882,10 @@
     autoSpeakEnabled = initialState.autoSpeak;
     currentArticleId = initialState.articleId;
     textMode = initialState.mode === 'text';
+    // speechAudio=1：当前词库带预生成连读音频，按词库持久化供后续播放使用
+    if (new URLSearchParams(window.location.search).get('speechAudio') === '1' && currentBankId) {
+      try { localStorage.setItem(SPEECH_AUDIO_FLAG_PREFIX + currentBankId, '1'); } catch (e) { }
+    }
     console.log('[专注模式] 当前词库ID:', currentBankId || '(未设置，将使用旧数据库)');
     console.log('[专注模式] 筛选参数: listMode=' + currentListMode + ', pattern=' + currentPattern + ', minLen=' + currentMinLen + ', maxLen=' + currentMaxLen + ', sortBy=' + currentSortBy + ', autoSpeak=' + autoSpeakEnabled);
 
@@ -3825,6 +3902,15 @@
     updateTopButton();
     updateEdgeStickButton();
 
+    // 先应用设置（DB 设置 + URL 覆盖）再首次渲染：否则第一个词会按默认 repeatCount=1
+    // 只播一遍，等设置生效时它已经开始播放，后面的词才用上正确遍数。
+    loadFocusModeSettings();
+    // URL 参数优先于 DB 设置（主窗口打开时把当前设置传入）
+    if (initialState.autoNext !== null) autoNextEnabled = initialState.autoNext;
+    if (initialState.repeat !== null) repeatCount = initialState.repeat;
+    syncAutoNextControls();
+    updateAutoPauseBtn();
+
     if (textMode) {
       // 文本专注滚动模式：不加载单词，进入文本模式并加载文章
       enterTextMode();
@@ -3832,13 +3918,18 @@
     } else {
       loadWords();
     }
-    loadFocusModeSettings();
 
     // Electron 快照竞态兜底：父窗口在创建窗口 ~500ms 后才把 DB 快照推给子窗口
     // （initFocusData），而本脚本的初始化已跑完、读到的是空快照。父窗口推送完
     // 会调用本钩子重载数据（uTools 走共享 db 无此问题，不会触发）。
     window.__reloadFocusData = function() {
       try {
+        // 同样先应用设置再重载数据，保证重载后的首个词也按正确遍数播放
+        loadFocusModeSettings();
+        if (initialState.autoNext !== null) autoNextEnabled = initialState.autoNext;
+        if (initialState.repeat !== null) repeatCount = initialState.repeat;
+        syncAutoNextControls();
+        updateAutoPauseBtn();
         if (textMode) {
           loadTextArticle(currentArticleId);
         } else {
@@ -3848,16 +3939,10 @@
             enterDictationMode();
           }
         }
-        loadFocusModeSettings();
       } catch (e) {
         console.error('[专注模式] 重载数据失败:', e);
       }
     };
-    // URL 参数优先于 DB 设置（主窗口打开时把当前设置传入）
-    if (initialState.autoNext !== null) autoNextEnabled = initialState.autoNext;
-    if (initialState.repeat !== null) repeatCount = initialState.repeat;
-    syncAutoNextControls();
-    updateAutoPauseBtn();
     // 从 localStorage 应用样式（主窗口实时写入，同源共享）
     loadFocusStyleFromStorage();
 

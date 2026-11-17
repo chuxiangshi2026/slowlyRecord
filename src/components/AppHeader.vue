@@ -113,7 +113,11 @@ const pageSummary = computed(() => {
 });
 
 const isWordPage = computed(() => route.name === 'word');
-const pageTitle = computed(() => (route.meta?.title as string) || '慢记');
+// 左上角品牌 + 当前页面：慢记单词 / 慢记词集 / 慢记打卡…
+const pageTitle = computed(() => {
+  const t = (route.meta?.title as string) || '单词';
+  return t.startsWith('慢记') ? t : `慢记${t}`;
+});
 
 const goSign = () => router.push('/sign');
 const goWord = () => router.push('/word');
@@ -144,17 +148,9 @@ const goBack = () => {
 };
 
 // 设置入口：任意页面直接打开全局设置抽屉（挂在 Home 层，不再先回单词页）
-const openSettings = () => {
-  // 与「更多」抽屉互斥，避免双抽屉叠加遮挡
-  uiStore.moreDrawerVisible = false;
-  uiStore.settingsDrawerVisible = true;
-};
+const openSettings = () => uiStore.openSettingsDrawer();
 
-// 打开「更多」抽屉时关闭设置抽屉，互斥避免叠加遮挡
-const openMoreDrawer = () => {
-  uiStore.settingsDrawerVisible = false;
-  uiStore.moreDrawerVisible = true;
-};
+const openMoreDrawer = () => uiStore.openMoreDrawer();
 
 // 今日首次复习/添加后，轻提示连续打卡天数并触发头部动画
 const congratsShown = ref(false);

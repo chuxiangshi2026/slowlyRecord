@@ -10,7 +10,7 @@ import {getActiveLanguage} from "@/utils/language";
 import {log} from "@/utils/logger.ts";
 import {ElMessage} from "element-plus";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
-import {getDbStorage} from "@/adapters/db";
+import {getCacheStorage} from "@/adapters/local-cache";
 import {getKvCache} from "@/adapters/kv-cache";
 import {toEngineLang} from "@/utils/translation-lang-map";
 import {getActiveProfile} from "@/utils/language";
@@ -1105,11 +1105,11 @@ const CACHE_KEY = 'worker_bundle';
 const scriptCache = getKvCache(CACHE_DB_NAME, CACHE_STORE_NAME);
 
 /**
- * 检查 uTools 缓存标记
+ * 检查 uTools 缓存标记（存本地缓存文件，不占随账号同步的 dbStorage）
  */
 function hasUToolsCache(): boolean {
     try {
-        const storage = getDbStorage();
+        const storage = getCacheStorage();
         const timestamp = storage.getItem('ocr_worker_cache_time');
         if (timestamp && Date.now() - timestamp < 24 * 60 * 60 * 1000) {
             return true;
@@ -1125,7 +1125,7 @@ function hasUToolsCache(): boolean {
  */
 function setUToolsCacheMarker(): void {
     try {
-        const storage = getDbStorage();
+        const storage = getCacheStorage();
         storage.setItem('ocr_worker_cache_time', Date.now());
     } catch (e) {
         // 忽略错误
@@ -1313,19 +1313,12 @@ function scheduleWorkerCleanup() {
 }
 
 /**
- * 写入日志到文件（用于打包后调试）
+ * 写入日志到文件（用于打包后调试；经 preload 固定文件 + 大小轮转，页面不直接引用 fs/path）
  */
 function logToFile(message: string) {
     try {
         if (isUTools()) {
-            const utoolsApi = (window as any).utools;
-            const fs = (window as any).require?.('fs');
-            const path = (window as any).require?.('path');
-            if (fs && path && utoolsApi?.getPath) {
-                const logPath = path.join(utoolsApi.getPath('temp'), 'slowlyrecord-ocr.log');
-                const timestamp = new Date().toISOString();
-                fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
-            }
+            (window as any).services?.appendLog?.(message);
         }
     } catch (e) {
         // 忽略日志写入错误
@@ -1365,18 +1358,17 @@ async function readLocalFile(filePath: string): Promise<ArrayBuffer> {
     const pluginDir = getPluginDir();
     debugLog('[本地OCR] 插件目录:', pluginDir);
 
-    // 在 uTools 环境中，尝试使用 preload 中暴露的 Node.js API
+    // 在 uTools 环境中，尝试使用 preload 暴露的受限读取接口（仅限插件自带资源）
     if (isUTools()) {
         try {
             // @ts-ignore - preload 脚本中暴露的 services
-            const {fs, path} = (window as any).services || {};
-            const utoolsApi = (window as any).utools;
-            if (fs && path) {
-                const fullPath = path.join(pluginDir, filePath.replace(/^\.\//, ''));
-                debugLog('[本地OCR] 尝试 services.fs 读取:', fullPath);
-                if (fs.existsSync(fullPath)) {
-                    const data = fs.readFileSync(fullPath);
-                    debugLog('[本地OCR] services.fs 读取成功:', fullPath, '大小:', data.length);
+            const services = (window as any).services || {};
+            if (pluginDir && services.readPluginFile) {
+                const fullPath = pluginDir.replace(/[\\/]+$/, '') + '/' + filePath.replace(/^\.\//, '');
+                debugLog('[本地OCR] 尝试读取插件资源:', fullPath);
+                const data = services.readPluginFile(fullPath);
+                debugLog('[本地OCR] 读取插件资源成功:', fullPath, '大小:', data?.length);
+                if (data) {
                     if (Buffer.isBuffer(data)) {
                         return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
                     }
@@ -1384,7 +1376,7 @@ async function readLocalFile(filePath: string): Promise<ArrayBuffer> {
                 }
             }
         } catch (e: any) {
-            debugLog('[本地OCR] services.fs 读取失败:', e?.message);
+            debugLog('[本地OCR] 读取插件资源失败:', e?.message);
         }
     }
 

@@ -80,6 +80,11 @@
             拼音
           </el-button>
         </el-tooltip>
+        <el-tooltip effect="dark" content="发音纠错（多音字朗读替换）" placement="top" popper-class="small-tooltip">
+          <el-button size="small" @click="correctionsVisible = true">
+            纠错
+          </el-button>
+        </el-tooltip>
         <el-radio-group v-model="currentView" size="small">
           <el-radio-button label="list">
             <el-tooltip effect="dark" content="列表视图" placement="top" popper-class="small-tooltip">
@@ -240,6 +245,9 @@
       @save="handleUpdateArticle"
     />
 
+    <!-- 发音纠错（多音字朗读替换表，全局生效） -->
+    <TtsCorrectionsDialog v-model="correctionsVisible"/>
+
     <!-- 添加/导入对话框（统一入口，initialTab/initialLibTab 定位到指定 tab） -->
     <TextImportDialog
       v-model="showImportDialog"
@@ -361,6 +369,7 @@ import NotesDialog from './components/NotesDialog.vue';
 import PromptsDialog from './components/PromptsDialog.vue';
 import TypingPracticeDialog from './components/TypingPracticeDialog.vue';
 import PoetryMap from './components/PoetryMap.vue';
+import TtsCorrectionsDialog from './components/TtsCorrectionsDialog.vue';
 import TimelineView from './components/TimelineView.vue';
 
 const route = useRoute();
@@ -392,6 +401,7 @@ const currentView = ref<TextMemoryView>('list');
 
 // 列表卡片是否显示拼音（默认跟随练习设置）
 const showPinyinPreview = ref(textStore.exerciseSettings.showPinyin);
+const correctionsVisible = ref(false);
 
 // 支持通过 query 定位视图，如 /text-memory?view=map
 const VALID_VIEWS: TextMemoryView[] = ['list', 'map', 'timeline'];

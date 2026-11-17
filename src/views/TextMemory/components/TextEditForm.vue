@@ -146,7 +146,7 @@
     <el-form-item label="译文来源">
       <el-input
         v-model="formData.translationSource"
-        placeholder="如 chinese-poems.com/xxx（可选）"
+        placeholder="如 译者或出处（可选）"
         maxlength="200"
       />
     </el-form-item>

@@ -35,6 +35,18 @@ export const useUiStore = defineStore('ui', () => {
     syncDialogVisible.value = true
   }
 
+  /** 打开设置抽屉（与「更多」抽屉互斥，避免双抽屉叠加遮挡） */
+  function openSettingsDrawer() {
+    moreDrawerVisible.value = false
+    settingsDrawerVisible.value = true
+  }
+
+  /** 打开「更多」抽屉（与设置抽屉互斥） */
+  function openMoreDrawer() {
+    settingsDrawerVisible.value = false
+    moreDrawerVisible.value = true
+  }
+
   return {
     syncDialogVisible,
     settingsDrawerVisible,
@@ -44,5 +56,7 @@ export const useUiStore = defineStore('ui', () => {
     uiZoom,
     applyUiZoom,
     openSyncDialog,
+    openSettingsDrawer,
+    openMoreDrawer,
   }
 })

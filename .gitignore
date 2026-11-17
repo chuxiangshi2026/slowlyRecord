@@ -56,3 +56,6 @@ mobile/.ci-qr/
 # 测试与工具输出
 test-results/
 .mimosa/
+
+# 口语音频生成脚本的 Python 虚拟环境
+scripts/.venv-speech/

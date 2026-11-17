@@ -12,7 +12,7 @@ import {
 } from './engine-options'
 
 const translationPlatforms = [
-  'spark', 'local', 'youdao', 'baidu', 'ali', 'google', 'bing', 'glm', 'bilibili', 'utoolsai',
+  'spark', 'local', 'youdao', 'baidu', 'ali', 'google', 'mymemory', 'bing', 'glm', 'bilibili', 'utoolsai',
   'deepl', 'azure', 'xftrans', 'siliconflow', 'deepseek', 'qwen', 'kimi', 'minimax', 'qiniu', 'ollama',
 ]
 const ocrPlatforms = ['local', 'youdao', 'baidu', 'ali', 'bilibili', 'glm', 'utoolsai', 'siliconflow', 'deepseek']

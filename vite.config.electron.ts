@@ -68,6 +68,9 @@ export default defineConfig({
   define: {
     __LOG_LEVEL__: 1,
     __PLATFORM__: JSON.stringify('electron'),
+    // 默认保留内置密钥（自有渠道分发）；发布到公开渠道（GitHub Release）时用
+    // VITE_STORE_BUILD=true 构建，去掉内置密钥并隔离必应网页版翻译
+    __STORE_BUILD__: JSON.stringify(process.env.VITE_STORE_BUILD === 'true'),
   },
   esbuild: {
     pure: ['log.d', 'log.i', 'console.log'],

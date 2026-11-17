@@ -35,6 +35,8 @@ export type WordBankType =
   | 'oral-basic'       // 口语入门
   | 'oral-intermediate' // 口语进阶
   | 'oral-advanced'    // 口语高阶
+  | 'spoken-reactions-1' // 口语反应·第1辑（预生成连读音频）
+  | 'spoken-reductions-1' // 口语缩读·第1辑（预生成连读音频）
   | 'tech-vocab'       // 程序员常用单词
   | 'dev-phrases'      // 程序员场景短句
   | 'dev-status'       // 开发状态短句
@@ -87,6 +89,8 @@ export interface WordBankInfo {
   /** 词库语言（用于导入时按语言筛选） */
   language: LanguageCode;
   icon?: string;
+  /** 是否带预生成口语连读音频（speech-audio/<id>/ 下按文本哈希命名） */
+  speechAudio?: boolean;
 }
 
 // 本地词库文件路径（相对于public目录）
@@ -134,6 +138,8 @@ export const WORDBANK_LIST: WordBankInfo[] = [
   { id: 'oral-basic', name: '口语入门', description: '零基础也能上口的高频日常口语短句', wordCount: 100, language: 'en' },
   { id: 'oral-intermediate', name: '口语进阶', description: '完整对话与观点表达的日常口语短句', wordCount: 98, language: 'en' },
   { id: 'oral-advanced', name: '口语高阶', description: '地道习语与深度讨论的高阶口语短句', wordCount: 105, language: 'en' },
+  { id: 'spoken-reactions-1', name: '口语反应·第1辑', description: '高频美语短反应 500 条（预生成连读音频，听练专用）', wordCount: 500, language: 'en', speechAudio: true },
+  { id: 'spoken-reductions-1', name: '口语缩读·第1辑', description: '真实美语缩读/弱读短句 500 条（gonna/wanna/didja 等，预生成连读音频）', wordCount: 500, language: 'en', speechAudio: true },
   { id: 'tech-vocab', name: '程序员常用单词', description: '覆盖编码、调试、测试、部署、协作、线上运维等高频技术词', wordCount: 585, language: 'en' },
   { id: 'dev-phrases', name: '程序员场景短句', description: '站会、PR 评审、沟通协作等真实工作场景常用英文短句', wordCount: 190, language: 'en' },
   { id: 'dev-status', name: '开发状态短句', description: 'CI、测试、构建、发布等开发状态常用英文表述', wordCount: 118, language: 'en' },
@@ -181,11 +187,9 @@ export const WORDBANK_LIST: WordBankInfo[] = [
 // 远程词库 CDN（完整词库不进 public/，超大体量词库走远程按需下载；
 // key 为词库类型，值为 JSON 地址，返回格式与本地词库 JSON 相同）
 // 约定：本地文件缺失或条目数低于 REMOTE_MIN_SIZE 时尝试远程
-const REMOTE_WORDBANK_CDN: Partial<Record<WordBankType, string>> = {
-  // 预留：后续把 N3~N1 等大词库托管到 CDN 后在此注册
-};
-// 远程词库基址（与 ocr-lang-pack 同一镜像策略：jsdelivr 仓库镜像）
-const REMOTE_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowly-record-data@main/wordbanks';
+// 远程词库基址：jsdelivr 镜像主仓库（与移动端 remote-wordbank 同一机制，国内有加速节点），
+// 固定到 commit sha 而非分支名（商店审核要求运行时远端内容不可变）；新增远程词库时同步更新此 sha
+const REMOTE_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@211ee3fb09948ad3536fc954e86d966856f07279/public/wordbanks';
 
 // 允许走远程兜底加载的类型（本地 JSON 也在 public/ 中，仅当本地缺失时才发远程请求；
 // 控制请求面，避免对每个缺失词库都盲目打 CDN）
@@ -299,8 +303,8 @@ async function loadLocalWordBank(type: WordBankType): Promise<Word[] | null> {
  * 从远程 CDN 按需加载词库（未注册远程地址的类型直接返回 null）
  */
 async function loadRemoteWordBank(type: WordBankType): Promise<Word[] | null> {
-  const remoteUrl = REMOTE_WORDBANK_CDN[type] ?? `${REMOTE_WORDBANK_BASE}/${type}.json`;
-  if (!REMOTE_WORDBANK_CDN[type] && !REMOTE_ENABLED_TYPES.has(type)) return null;
+  if (!REMOTE_ENABLED_TYPES.has(type)) return null;
+  const remoteUrl = `${REMOTE_WORDBANK_BASE}/${type}.json`;
   try {
     console.log(`[WordBank] 尝试远程加载词库: ${type} from ${remoteUrl}`);
     const response = await fetch(remoteUrl, { method: 'GET', headers: { 'Accept': 'application/json' } });
@@ -396,7 +400,7 @@ export async function fetchWordBank(
   // 仅加载本地词库
   let words = await loadLocalWordBank(type);
 
-  // 本地缺失且注册了远程地址时，尝试 CDN 按需下载
+  // 本地缺失且属于远程兜底类型时，尝试 CDN 按需下载
   if (!words || words.length === 0) {
     const remoteWords = await loadRemoteWordBank(type);
     if (remoteWords && remoteWords.length > 0) {

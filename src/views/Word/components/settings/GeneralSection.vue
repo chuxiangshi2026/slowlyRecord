@@ -2,7 +2,7 @@
   <div>
     <div class="titles">
       <div class="setting-item">
-        <div class="content">加入单词后退出插件</div>
+        <div v-if="isUtools()" class="content">加入单词后退出插件</div>
         <el-switch class="shorcut-desc"
                    v-model="wordsStore.pluginStatus"
                    inline-prompt
@@ -184,7 +184,7 @@
     <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向）；
          隐私说明与上报状态同属一条（都是"采什么/目前是否在采"），合并展示不再单列 -->
     <div class="stats-optout">
-      <span class="stats-optout-text">匿名使用统计（仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进插件）
+      <span class="stats-optout-text">匿名使用统计（仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进产品）
         <span class="stats-status">当前：{{ statsStatusText }} · <a href="#"
               @click.prevent="privacyVisible = true">隐私说明</a></span>
       </span>
@@ -275,11 +275,11 @@ const statsStatusText = computed(() => {
     excluded: '已手动关闭',
     dev: '开发环境已停用',
     localhost: '本地调试已停用',
-    'no-config': '未配置',
+    'no-endpoint': '未配置端点',
   } as Record<StatsStatus, string>)[getStatsStatus()]
 })
 
-// 问题反馈：经 umami 事件通道提交（feedback.submit），用户主动动作不受统计开关限制
+// 问题反馈：经统计采集端点提交（feedback.submit 事件），用户主动动作不受统计开关限制
 const feedbackVisible = ref(false)
 const privacyVisible = ref(false)
 const feedbackText = ref('')

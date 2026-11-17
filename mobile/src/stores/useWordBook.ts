@@ -9,6 +9,7 @@ import {
   buildWordBookPage,
   createWordBookBook,
   createWordBookChapter,
+  ensureWordBookEntryIds,
   isPageDue,
   normalizeLevelSize,
   schedulePageReview,
@@ -19,6 +20,7 @@ import type {
   WordBookChapter,
   WordBookKey,
   WordBookPage,
+  WordBookRoundSummary,
   WordBookSource,
   WordBookWord,
 } from '../types/word-book'
@@ -62,6 +64,14 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     pages.value = db.allDocs<WordBookPage>(WORD_BOOK_PAGE_PREFIX)
       .filter(doc => doc.type === 'wb_page')
       .sort((a, b) => a.order - b.order || a.ctime - b.ctime)
+      .map(page => {
+        // 旧页面回填条目 ID（与桌面端同算法），学习状态按 entryId 记录的前提
+        const migrated = ensureWordBookEntryIds(page)
+        if (!migrated.changed) return page
+        const result = put(migrated.page)
+        if (!result.ok) console.warn('[词集] 条目 ID 回填失败', page._id, result.message)
+        return result.ok ? migrated.page : page
+      })
     loaded.value = true
   }
 
@@ -252,29 +262,65 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     return result
   }
 
-  function completePage(pageId: string, wrongAttempts: number): { ok: boolean; message?: string } {
+  /**
+   * 记录一轮复习结果（与桌面端 completeRound 同语义）：
+   * 练习轮只记录成绩不调整正式复习时间，也不打卡、不推进关卡
+   */
+  function completeRound(
+    pageId: string,
+    round: WordBookRoundSummary,
+    options: { practice?: boolean } = {},
+  ): { ok: boolean; message?: string } {
     const page = getPage(pageId)
     if (!page) return { ok: false, message: '页不存在' }
-    const now = Date.now()
-    const next: WordBookPage = { ...page, ...schedulePageReview(page, wrongAttempts, now), utime: now }
+    const now = round.finishedAt || Date.now()
+    const wrongAttempts = Math.max(
+      round.firstTryWrongEntryIds.length,
+      Math.max(0, round.total - round.firstTryKnown),
+    )
+    const scheduled = schedulePageReview(page, wrongAttempts, now)
+    const schedule = options.practice
+      ? { ...scheduled, level: page.level, nextReviewAt: page.nextReviewAt, completedAt: page.completedAt }
+      : scheduled
+    const next: WordBookPage = {
+      ...page,
+      ...schedule,
+      lastRound: { ...round, finishedAt: now },
+      utime: now,
+    }
     const result = put(next)
-    if (!result.ok) return { ok: false, message: result.message || '成绩保存失败' }
+    if (!result.ok) return { ok: false, message: result.message || '本轮结果保存失败' }
     pages.value = replaceLocal(pages.value, next)
 
-    try {
-      useSignin().signToday()
-    } catch { /* 打卡失败不影响页进度 */ }
+    if (!options.practice) {
+      try {
+        useSignin().signToday()
+      } catch { /* 打卡失败不影响页进度 */ }
 
-    const chapter = getChapter(next.chapterId)
-    if (chapter) {
-      const levels = syncChapterLevels(chapter, pagesOf(chapter._id), now)
-      if (levels.length !== chapter.levels.length) {
-        const nextChapter: WordBookChapter = { ...chapter, levels, utime: now }
-        const chapterResult = put(nextChapter)
-        if (chapterResult.ok) chapters.value = replaceLocal(chapters.value, nextChapter)
+      const chapter = getChapter(next.chapterId)
+      if (chapter) {
+        const levels = syncChapterLevels(chapter, pagesOf(chapter._id), now)
+        if (levels.length !== chapter.levels.length) {
+          const nextChapter: WordBookChapter = { ...chapter, levels, utime: now }
+          const chapterResult = put(nextChapter)
+          if (chapterResult.ok) chapters.value = replaceLocal(chapters.value, nextChapter)
+        }
       }
     }
     return { ok: true }
+  }
+
+  /** 旧接口兼容：只传错误数量时不记录具体错词 */
+  function completePage(pageId: string, wrongAttempts: number): { ok: boolean; message?: string } {
+    const page = getPage(pageId)
+    const total = page?.words.length || 0
+    return completeRound(pageId, {
+      total,
+      firstTryKnown: Math.max(0, total - Math.max(0, wrongAttempts)),
+      retriedCount: 0,
+      firstTryWrongEntryIds: [],
+      finishedAt: Date.now(),
+    })
   }
 
   // ===== 同步 =====
@@ -370,6 +416,7 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     createPage,
     renamePage,
     deletePage,
+    completeRound,
     completePage,
     collectSync,
     restoreSync,

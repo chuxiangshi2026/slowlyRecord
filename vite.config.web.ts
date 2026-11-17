@@ -137,6 +137,8 @@ export default defineConfig({
   define: {
     __LOG_LEVEL__: 1,
     __PLATFORM__: JSON.stringify('web'),
+    // Web 公开部署，与商店版同策略：不打包内置密钥（默认免费引擎兜底，用户自填 key）
+    __STORE_BUILD__: 'true',
   },
   esbuild: {
     pure: ['log.d', 'log.i', 'console.log'],

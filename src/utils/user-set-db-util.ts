@@ -111,6 +111,28 @@ function judgePutResult(doc: UserSetType, result: any): boolean {
 
 
 /**
+ * 写入少量偏好字段；user-set 文档不存在时创建最小文档
+ * （首次启动即关统计/确认告知这类场景，此时还没有任何设置可保存）
+ */
+function upsertSetDbFields(fields: Record<string, any>): Promise<boolean> {
+    try {
+        const db = getDbAdapter();
+        const existing = getSetDb(true);
+        if (!existing) {
+            return db.promises.put({ _id: DB_KEY_USER_SET, ...fields } as UserSetType)
+                .then((r) => !!r?.ok)
+                .catch(() => false);
+        }
+        return updateSetDbWithRetry((doc) => {
+            Object.assign(doc as any, cloneDeep(fields));
+        });
+    } catch (e) {
+        // DB 适配器未就绪（测试/极早期启动）：放弃持久化，调用方已有 localStorage 兜底
+        return Promise.resolve(false);
+    }
+}
+
+/**
  * 将单个单词添加或更新到数据库中
  * @returns 无返回值
  * @param userSet
@@ -175,4 +197,4 @@ function removeSetDb(id: string): void {
 // if (user) {
 //     console.log(user);
 // }
-export {getSetDb, addAndUpdateSetDb, removeSetDb, putSetDbWithRetry, updateSetDbWithRetry};
+export {getSetDb, addAndUpdateSetDb, removeSetDb, putSetDbWithRetry, updateSetDbWithRetry, upsertSetDbFields};

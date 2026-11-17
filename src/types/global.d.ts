@@ -54,5 +54,11 @@ interface Window {
  */
 declare const __PLATFORM__: string
 
+/**
+ * 商店构建标识（由 Vite define 注入，仅 build:store 时为 true）
+ * true 时：剥离内置密钥、下架 Bing 网页版翻译（uTools 商店审核合规要求）
+ */
+declare const __STORE_BUILD__: boolean
+
 
 

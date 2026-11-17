@@ -41,7 +41,7 @@ describe('wordbank-service', () => {
         'kaogong', 'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'zsb', 'roots',
         'ielts-topics', 'toefl-academic',
         'phrasal-verbs', 'collocations', 'idioms', 'common-phrases',
-        'oral-basic', 'oral-intermediate', 'oral-advanced', 'movie-lines',
+        'oral-basic', 'oral-intermediate', 'oral-advanced', 'spoken-reactions-1', 'spoken-reductions-1', 'movie-lines',
         'girl-meets-world', 'friends-tv', 'modern-family', 'big-bang-theory', 'sherlock',
         'the-crown', 'pursuit-of-happyness', 'forrest-gump', 'shawshank-redemption',
         'tech-vocab', 'dev-phrases', 'dev-status', 'dev-debugging', 'dev-reading',

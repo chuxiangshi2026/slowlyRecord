@@ -122,6 +122,31 @@ export function splitWordsIntoPages<T extends { text: string; freq?: number }>(
   return chunks
 }
 
+function entryKeyOf(text: string): string {
+  return String(text || '').toLowerCase().replace(/[^a-z0-9]/g, '') || 'word'
+}
+
+/** 为旧页面确定性回填条目 ID；重复或缺失 ID 不依赖随机数，避免多端迁移漂移（与桌面端同算法） */
+export function ensureWordBookEntryIds(page: WordBookPage): { page: WordBookPage; changed: boolean } {
+  const used = new Set<string>()
+  let changed = false
+  const words = page.words.map((word, index) => {
+    let entryId = word.entryId
+    if (!entryId || used.has(entryId)) {
+      const base = `${page._id}_entry_${index}_${entryKeyOf(word.text)}`
+      entryId = base
+      let suffix = 2
+      while (used.has(entryId)) {
+        entryId = `${base}_${suffix++}`
+      }
+      changed = true
+    }
+    used.add(entryId)
+    return entryId === word.entryId ? word : { ...word, entryId }
+  })
+  return { page: changed ? { ...page, words } : page, changed }
+}
+
 export function toWordBookWord(word: { entryId?: string; _id?: string; id?: string; text?: string; word?: string; explains?: string; meaning?: string; phonetic?: string; note?: string; examples?: { english: string; chinese: string }[]; memoryTip?: string; freq?: number }): WordBookWord {
   return {
     entryId: word.entryId || createWordBookId(`${WORD_BOOK_DB_PREFIX}entry_`),

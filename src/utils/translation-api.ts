@@ -10,7 +10,7 @@ import {batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {log} from "@/utils/logger.ts";
 import {getTranslationApiKey} from "@/utils/get-api-key.ts";
 import {translateWithLocalDictionaryAsync} from "./local-dictionary";
-import {getDbStorage} from "@/adapters/db";
+import {getCacheStorage, migrateCacheKeys} from "@/adapters/local-cache";
 import {getActiveProfile, getProfile} from "@/utils/language";
 import {isWeb} from "@/adapters/platform";
 
@@ -50,7 +50,9 @@ function ensureTranslationCacheLoaded(): void {
     if (translationCacheLoaded) return;
     translationCacheLoaded = true;
     try {
-        const stored = getDbStorage().getItem(TRANSLATION_CACHE_STORAGE_KEY);
+        // 旧版本缓存写在随账号同步的 dbStorage，首次加载时迁到本地缓存存储（商店审核合规）
+        migrateCacheKeys([TRANSLATION_CACHE_STORAGE_KEY]);
+        const stored = getCacheStorage().getItem(TRANSLATION_CACHE_STORAGE_KEY);
         const entries = Array.isArray(stored) ? stored : [];
         const now = Date.now();
         entries.forEach(([key, entry]: [string, TranslationCacheEntry]) => {
@@ -80,7 +82,7 @@ function persistTranslationCache(): void {
             entries.sort((a, b) => b[1].ts - a[1].ts);
             entries.length = TRANSLATION_CACHE_PERSIST_MAX;
         }
-        getDbStorage().setItem(TRANSLATION_CACHE_STORAGE_KEY, entries);
+        getCacheStorage().setItem(TRANSLATION_CACHE_STORAGE_KEY, entries);
     } catch (e) {
         log.w?.('保存翻译缓存失败', e);
     }
@@ -1095,6 +1097,38 @@ async function callGoogleFree(query: string, from: string, to: string): Promise<
     return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
 }
 
+// MyMemory 免费公开 API（mymemory.translated.net）：官方公开接口、无需 key、匿名有每日额度；
+// 国内可直连且返回 ACAO:*，作为免费降级链的国内外通用兜底
+const MYMEMORY_LANG_MAP: Record<string, string> = { zh: 'zh-CN', en: 'en-US', ja: 'ja-JP', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR' };
+
+async function callMyMemory(query: string, from: string, to: string): Promise<TranslationResult> {
+    // MyMemory 不支持源语言 auto：含日韩/汉字按中文处理，否则按英文（兜底引擎只服务常见路径）
+    const guessed = /[぀-ヿ㐀-䶿一-鿿]/.test(query) ? 'zh' : 'en';
+    const source = MYMEMORY_LANG_MAP[from === 'auto' ? guessed : from] || 'en-US';
+    const target = MYMEMORY_LANG_MAP[to] || to;
+    const params = new URLSearchParams({ q: query, langpair: `${source}|${target}` });
+    const response = await fetch(`https://api.mymemory.translated.net/get?${params.toString()}`);
+    if (response.status === 429) {
+        return { success: false, errorMsg: 'MyMemory 免费接口被限流（429），请稍后再试' };
+    }
+    if (!response.ok) {
+        return { success: false, errorMsg: `MyMemory 请求失败: ${response.status}` };
+    }
+    const data = await response.json();
+    if (data?.quotaFinished) {
+        return { success: false, errorMsg: 'MyMemory 每日免费额度已用完' };
+    }
+    // 出错时（语言对非法/查询超长等）responseStatus 非 200，translatedText 装的是错误说明
+    if (data?.responseStatus && String(data.responseStatus) !== '200') {
+        return { success: false, errorMsg: `MyMemory 翻译失败: ${data.responseDetails || data.responseStatus}` };
+    }
+    const text = String(data?.responseData?.translatedText || '').trim();
+    if (!text) {
+        return { success: false, errorMsg: 'MyMemory 未返回译文' };
+    }
+    return { success: true, explains: text, phonetic: '', pronunciation: getPronunciationUrlSync(query) };
+}
+
 // 微软网页免费接口（Edge 通道）的令牌缓存：JWT 有效期约 10 分钟，提前 1 分钟刷新
 let bingTokenCache: { token: string; expiresAt: number } | null = null;
 
@@ -1283,6 +1317,13 @@ export async function translateBatchWithPlatform(
     const results: TranslationResult[] = new Array(queries.length);
     const misses: Array<{ query: string; index: number }> = [];
 
+    // 内置免费额度闸门：批量路径同样生效（AI 批量会绕过 translateWithPlatform 的闸门）
+    {
+        const userKeysForPlatform = useWordsStore().getApiKey(platform);
+        const freeGate = gateBuiltinFreeTranslate(platform, !userKeysForPlatform?.appkey?.trim());
+        if (freeGate) return queries.map(() => freeGate);
+    }
+
     queries.forEach((query, index) => {
         const cached = getCachedTranslation(query, platform, from, to);
         if (cached) {
@@ -1346,8 +1387,42 @@ export async function translateBatchWithPlatform(
  * Web 端只能用允许浏览器跨域直连的接口：B站 Index-Translate 与 Google 免费接口实测
  * 返回 ACAO，Spark / GLM / 微软网页版预检不可用，因此单独给一份链。
  */
-const FREE_ENGINE_CHAIN: TranslationPlatform[] = ['spark', 'bilibili', 'youdao', 'baidu', 'google', 'bing', 'glm'];
-const WEB_FREE_ENGINE_CHAIN: TranslationPlatform[] = ['bilibili', 'google', 'glm'];
+const FREE_ENGINE_CHAIN: TranslationPlatform[] = (['spark', 'bilibili', 'youdao', 'baidu', 'google', 'mymemory', 'bing', 'glm'] as TranslationPlatform[])
+    .filter(e => !__STORE_BUILD__ || e !== 'bing');
+const WEB_FREE_ENGINE_CHAIN: TranslationPlatform[] = ['bilibili', 'google', 'mymemory', 'glm'];
+
+/** 首次使用内置免费额度的告知标记键（localStorage，只提示一次） */
+const FREE_TRANSLATE_NOTICE_KEY = 'sr_free_translate_notice_v1';
+
+const FREE_TRANSLATE_DISABLED_MSG =
+    '未配置该引擎的 API Key，且内置免费翻译额度已关闭：请在「设置 → 高级设置」中开启「内置免费翻译额度」，或填写自己的密钥';
+
+/**
+ * 内置免费额度闸门：未配置自己密钥、且命中免费链（内置共享 key 或免费公开接口）时，
+ * 需开关开启才放行；首次放行时弹窗告知数据流向（审核要求：显式开关 + 标明数据流向）。
+ * 返回 null 表示放行，否则返回可直接给调用方的失败结果。
+ */
+function gateBuiltinFreeTranslate(platform: TranslationPlatform, usingBuiltinKey: boolean): TranslationResult | null {
+    if (!usingBuiltinKey || !FREE_ENGINE_CHAIN.includes(platform)) return null;
+    const wordsStore = useWordsStore();
+    // 只有显式关闭才拦截：旧版本持久化数据没有此键（undefined）时按默认开启处理
+    if (wordsStore.builtinFreeTranslate === false) {
+        return { success: false, errorMsg: FREE_TRANSLATE_DISABLED_MSG };
+    }
+    try {
+        if (typeof window !== 'undefined' && window.localStorage?.getItem(FREE_TRANSLATE_NOTICE_KEY) !== '1') {
+            window.localStorage?.setItem(FREE_TRANSLATE_NOTICE_KEY, '1');
+            void import('element-plus').then(({ ElMessageBox }) => ElMessageBox.alert(
+                '本次翻译使用内置免费额度：待翻译文本会发送给 B站 Index-Translate、Google、MyMemory 等公共服务商，' +
+                '或使用内置共享密钥的引擎，数据流向以各服务商隐私政策为准。\n\n' +
+                '如需避免，可在「设置 → 高级设置」关闭「内置免费翻译额度」，或填写自己的 API Key（只保存在本机）。',
+                '内置免费翻译额度',
+                { confirmButtonText: '知道了', type: 'info' }
+            )).catch(() => { /* 弹窗不可用时不影响翻译 */ });
+        }
+    } catch { /* localStorage 不可用时静默跳过提示 */ }
+    return null;
+}
 
 function shouldFallback(result: TranslationResult): boolean {
     if (result.success) return false;
@@ -1371,6 +1446,8 @@ export async function translateWithPlatform(
     // 用户只要填写了任意 API 标识，就只尝试指定平台并返回其原生错误，避免跨引擎误降级。
     const userKeysForPlatform = useWordsStore().getApiKey(platform);
     const usingBuiltinKey = !userKeysForPlatform?.appkey?.trim();
+    const freeGate = gateBuiltinFreeTranslate(platform, usingBuiltinKey);
+    if (freeGate) return freeGate;
     const freeChain = isWeb() ? WEB_FREE_ENGINE_CHAIN : FREE_ENGINE_CHAIN;
     const chain = !options.connectionTest && usingBuiltinKey && freeChain.includes(platform)
         ? freeChain.slice(freeChain.indexOf(platform))
@@ -1550,6 +1627,13 @@ export async function translateWithPlatform(
                         setCachedTranslation(query, currentPlatform, from, to, r);
                         return r;
                     }
+                case 'mymemory':
+                    console.log('调用MyMemory免费接口')
+                    {
+                        const r = await callMyMemory(query, from, to);
+                        setCachedTranslation(query, currentPlatform, from, to, r);
+                        return r;
+                    }
                 case 'spark':
                     console.log('调用讯飞星火')
                     {
@@ -1572,6 +1656,10 @@ export async function translateWithPlatform(
                         return r;
                     }
                 case 'bing':
+                    if (__STORE_BUILD__) {
+                        // 商店构建已下架该引擎（uTools 审核要求），老用户本地仍存 bing 时给出明确提示
+                        return { success: false, errorMsg: 'Bing 网页版翻译已下架，请在设置中切换其他引擎' };
+                    }
                     console.log('调用微软网页免费接口')
                     {
                         const r = await callBingFree(query, from, to);

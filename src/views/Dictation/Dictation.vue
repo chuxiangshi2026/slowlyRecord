@@ -1281,11 +1281,18 @@ function prevWord() {
   }
 }
 
+// 新一轮重载后清空进度：loadWords 赋值 wordList/currentIndex 会触发上面的 watch
+// 把 index 0 写回，必须等本轮调度结束再清，否则下次进入仍会提示「继续」（bug-list R20）
+function clearProgressAfterReload() {
+  nextTick(() => clearDictationProgress(selectedBankId.value, filterListMode.value));
+}
+
 function nextWord() {
   // 如果列表已被清空（所有单词均已记住/不匹配筛选），重新加载
   if (wordList.value.length === 0) {
-    clearDictationProgress(selectedBankId.value, filterListMode.value);
-    loadWords().then(() => {
+    // skipProgressRestore：新一轮从头开始，不恢复旧进度
+    loadWords(true).then(() => {
+      clearProgressAfterReload();
       if (wordList.value.length > 0) {
         prepareWord();
         ElMessage.success('新一轮单词');
@@ -1299,8 +1306,8 @@ function nextWord() {
     prepareWord();
   } else {
     // 一轮结束：清除本轮进度，重新加载打乱（skipProgressRestore=true 防止恢复回旧进度）
-    clearDictationProgress(selectedBankId.value, filterListMode.value);
     loadWords(true).then(() => {
+      clearProgressAfterReload();
       if (wordList.value.length > 0) {
         prepareWord();
         ElMessage.success('新一轮单词');
