@@ -955,6 +955,33 @@ export const useWordsStore =
             }
 
             /**
+             * 批量把当前词库的单词移动到其他词库。
+             * 目标库已有同文本条目时跳过（按 getItemKey 去重），保留原 _id 并同步内存列表。
+             * 移动不是删除：不记墓碑，跨端同步按「源库移除 + 目标库新增」合并。
+             */
+            async function moveWordsToBank(ids: string[], targetBankId: string): Promise<{ moved: number; skipped: number }> {
+                if (!ids.length) return { moved: 0, skipped: 0 }
+                if (!targetBankId || targetBankId === currentWordBankId.value) return { moved: 0, skipped: ids.length }
+                const source = currentWordBank.value
+                const target = await getWordBank(targetBankId)
+                if (!source || !target) return { moved: 0, skipped: ids.length }
+                const idSet = new Set(ids)
+                const moving = source.words.filter(w => idSet.has(w._id))
+                if (!moving.length) return { moved: 0, skipped: ids.length }
+                const targetKeys = new Set(target.words.map(w => getItemKey(w.text)))
+                const accepted = moving.filter(w => !targetKeys.has(getItemKey(w.text)))
+                if (!accepted.length) return { moved: 0, skipped: ids.length }
+                const acceptedIds = new Set(accepted.map(w => w._id))
+                source.words = source.words.filter(w => !acceptedIds.has(w._id))
+                target.words.push(...accepted)
+                await saveWordBank(source)
+                await saveWordBank(target)
+                words.value = words.value.filter(w => !acceptedIds.has(w._id))
+                currentWordBank.value = source
+                return { moved: accepted.length, skipped: ids.length - accepted.length }
+            }
+
+            /**
              * 同步更新当前词库
              * @param payload
              */
@@ -1158,6 +1185,7 @@ export const useWordsStore =
                 },
                 removeWords,
                 deleteWord,
+                moveWordsToBank,
                 listWords,
                 upReview,
                 switchWordBank,

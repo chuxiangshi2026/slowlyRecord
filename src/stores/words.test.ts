@@ -300,6 +300,45 @@ describe('useWordsStore', () => {
     })
   })
 
+  describe('批量移动单词到其他词库', () => {
+    it('应该移出源库、追加到目标库，重复文本跳过', async () => {
+      const store = useWordsStore()
+      const w1 = createWord({ _id: 'w1', text: 'hello' })
+      const w2 = createWord({ _id: 'w2', text: 'world' })
+      const dup = createWord({ _id: 'w3', text: 'dup' })
+      const source = createWordBank({ id: 'default', words: [{ ...w1 }, { ...w2 }, { ...dup }] })
+      const target = createWordBank({ id: 'target', name: '目标词库', words: [createWord({ _id: 't1', text: 'dup' })] })
+
+      store.currentWordBankId = 'default'
+      store.currentWordBank = source
+      store.words = [{ ...w1 }, { ...w2 }, { ...dup }]
+      vi.mocked(getWordBank).mockResolvedValue(target)
+      vi.mocked(saveWordBank).mockResolvedValue(true)
+
+      const result = await store.moveWordsToBank(['w1', 'w2', 'w3'], 'target')
+
+      expect(result).toEqual({ moved: 2, skipped: 1 })
+      expect(source.words.map(w => w._id)).toEqual(['w3'])
+      expect(target.words.map(w => w._id)).toEqual(['t1', 'w1', 'w2'])
+      expect(store.words.map(w => w._id)).toEqual(['w3'])
+      expect(saveWordBank).toHaveBeenCalledTimes(2)
+    })
+
+    it('目标词库与当前词库相同或不存在时不应移动', async () => {
+      const store = useWordsStore()
+      const source = createWordBank({ id: 'default', words: [createWord({ _id: 'w1' })] })
+      store.currentWordBankId = 'default'
+      store.currentWordBank = source
+      store.words = [{ ...source.words[0] }]
+
+      expect(await store.moveWordsToBank(['w1'], 'default')).toEqual({ moved: 0, skipped: 1 })
+
+      vi.mocked(getWordBank).mockResolvedValue(null)
+      expect(await store.moveWordsToBank(['w1'], 'missing')).toEqual({ moved: 0, skipped: 1 })
+      expect(saveWordBank).not.toHaveBeenCalled()
+    })
+  })
+
   describe('批量添加和更新单词', () => {
     it('应该批量添加新单词到当前词库', async () => {
       const store = useWordsStore()

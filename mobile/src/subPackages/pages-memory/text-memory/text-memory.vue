@@ -24,6 +24,9 @@
         <button class="btn-import" @click="goImport">
           <text>↓ 导入</text>
         </button>
+        <button class="btn-import" :class="{ active: batchMode }" @click="toggleBatchMode">
+          <text>批量</text>
+        </button>
       </view>
     </view>
 
@@ -60,12 +63,17 @@
         v-for="article in filtered"
         :key="article._id"
         class="article-card"
-        @click="onCardClick(article)"
+        :class="{ 'batch-selected': batchMode && selectedIds.has(article._id) }"
+        @click="batchMode ? toggleSelectArticle(article._id) : onCardClick(article)"
       >
+        <view v-if="batchMode" class="batch-check" :class="{ checked: selectedIds.has(article._id) }">
+          <text v-if="selectedIds.has(article._id)" class="batch-check-mark">✓</text>
+        </view>
         <view class="article-header">
           <text class="article-title">{{ article.title }}</text>
           <text v-if="store.isArticleDue(article)" class="due-badge">待复习</text>
           <view
+            v-if="!batchMode"
             class="more-btn"
             @click.stop="onMoreClick(article)"
           >
@@ -99,6 +107,17 @@
       <text class="empty-icon">📖</text>
       <text class="empty-title">{{ searchKeyword || selectedTag ? '没有匹配的文章' : '还没有文章' }}</text>
       <text class="empty-tip">点击上方「添加」或「导入」开始</text>
+    </view>
+
+    <!-- 批量操作栏 -->
+    <view v-if="batchMode" class="batch-bar">
+      <text class="batch-count">已选 {{ selectedIds.size }}</text>
+      <view class="batch-actions">
+        <text class="batch-action" @click="toggleSelectAllArticles">{{ allFilteredSelected ? '取消全选' : '全选' }}</text>
+        <text class="batch-action" @click="selectedIds = new Set()">清空</text>
+        <text class="batch-action danger" :class="{ disabled: !selectedIds.size }" @click="batchDeleteArticles">删除</text>
+        <text class="batch-action" @click="toggleBatchMode">退出</text>
+      </view>
     </view>
 
     <!-- 详情弹窗 -->
@@ -179,6 +198,50 @@ function getPreview(content: string): string {
 
 function onCardClick(article: MobileTextArticle) {
   detailArticle.value = article
+}
+
+// ========== 批量选择 / 删除 ==========
+const batchMode = ref(false)
+const selectedIds = ref<Set<string>>(new Set())
+
+const allFilteredSelected = computed(() =>
+  filtered.value.length > 0 && filtered.value.every(a => selectedIds.value.has(a._id))
+)
+
+function toggleBatchMode() {
+  batchMode.value = !batchMode.value
+  if (!batchMode.value) selectedIds.value = new Set()
+}
+
+function toggleSelectArticle(id: string) {
+  const next = new Set(selectedIds.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  selectedIds.value = next
+}
+
+function toggleSelectAllArticles() {
+  selectedIds.value = allFilteredSelected.value
+    ? new Set()
+    : new Set(filtered.value.map(a => a._id))
+}
+
+/** 批量删除：二次确认后逐篇删除（与单篇删除同一存储链路，含墓碑） */
+function batchDeleteArticles() {
+  const ids = [...selectedIds.value]
+  if (!ids.length) return
+  uni.showModal({
+    title: '批量删除',
+    content: `确定删除所选的 ${ids.length} 篇文章？关联笔记与提示词一并删除，不可恢复。`,
+    confirmColor: '#ff5252',
+    success: (res) => {
+      if (!res.confirm) return
+      for (const id of ids) store.deleteArticle(id)
+      uni.showToast({ title: `已删除 ${ids.length} 篇`, icon: 'none' })
+      selectedIds.value = new Set()
+      batchMode.value = false
+    },
+  })
 }
 
 function onMoreClick(article: MobileTextArticle) {
@@ -317,6 +380,11 @@ function confirmDelete(article: MobileTextArticle) {
   background: var(--sr-card);
   color: var(--sr-primary);
   border: 1rpx solid var(--sr-primary);
+
+  &.active {
+    background: var(--sr-primary);
+    color: var(--sr-on-primary);
+  }
 }
 
 .tag-bar {
@@ -370,6 +438,12 @@ function confirmDelete(article: MobileTextArticle) {
   padding: 24rpx 28rpx;
   margin-bottom: 16rpx;
   box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
+  position: relative;
+
+  &.batch-selected {
+    border-color: var(--sr-primary);
+    box-shadow: 0 0 0 2rpx var(--sr-primary) inset;
+  }
 }
 .article-header {
   display: flex;
@@ -581,5 +655,76 @@ function confirmDelete(article: MobileTextArticle) {
 .detail-btn.primary {
   background: var(--sr-primary);
   color: var(--sr-on-primary);
+}
+
+/* ========== 批量选择 / 删除 ========== */
+.batch-check {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--sr-border);
+  background: var(--sr-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  z-index: 2;
+
+  &.checked {
+    background: var(--sr-primary);
+    border-color: var(--sr-primary);
+  }
+}
+
+.batch-check-mark {
+  color: #fff;
+  font-size: 24rpx;
+  line-height: 1;
+}
+
+.batch-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: var(--sr-card);
+  border-top: 1px solid var(--sr-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.batch-count {
+  font-size: 24rpx;
+  color: var(--sr-text-2, #5f6f68);
+  white-space: nowrap;
+}
+
+.batch-actions {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.batch-action {
+  font-size: 26rpx;
+  color: var(--sr-text-2, #5f6f68);
+
+  &.danger {
+    color: #c0564f;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+  }
 }
 </style>
