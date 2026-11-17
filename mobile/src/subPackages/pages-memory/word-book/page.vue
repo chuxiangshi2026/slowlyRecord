@@ -26,6 +26,7 @@
         </view>
         <text class="link" @click="directoryVisible = !directoryVisible">章节目录</text>
         <text class="link" @click="restart">重新开始</text>
+        <text class="link" :class="{ active: organizeMode }" @click="toggleOrganize">编排</text>
       </view>
 
       <view v-if="directoryVisible" class="chapter-directory">
@@ -42,6 +43,7 @@
         </view>
       </view>
 
+      <template v-if="!organizeMode">
       <view v-if="finished" class="finish-card">
         <text class="finish-title">本轮完成 · {{ page.lastScore ?? 0 }} 分</text>
         <text class="finish-desc">
@@ -51,6 +53,47 @@
         <text v-else class="finish-desc">下次复习：{{ dueLabel(page.nextReviewAt) }}</text>
         <button class="primary-btn" @click="restart">再记一遍</button>
         <button class="ghost-btn" @click="goBack">返回章节</button>
+      </view>
+
+      <!-- 编排模式：词条编辑 / 移动 / 拆页（替代复习区展示） -->
+      <view v-if="organizeMode && page" class="organize-panel">
+        <view class="organize-head">
+          <text class="organize-title">编排本页词条</text>
+          <text class="organize-count">已选 {{ organizeSelected.size }} / {{ page.words.length }}</text>
+        </view>
+        <view v-for="entry in page.words" :key="entry.entryId" class="organize-row">
+          <view class="organize-check" :class="{ checked: organizeSelected.has(entry.entryId || '') }" @click="toggleOrganizeSelect(entry.entryId || '')">
+            <text v-if="organizeSelected.has(entry.entryId || '')" class="organize-check-mark">✓</text>
+          </view>
+          <view class="organize-main">
+            <text class="organize-word">{{ entry.text }}</text>
+            <text class="organize-explains">{{ entry.explains || '—' }}</text>
+          </view>
+          <view class="organize-ops">
+            <text class="organize-op" @click="openEntryEditor(entry)">编辑</text>
+            <text class="organize-op" @click="openMoveSheet(entry)">移动</text>
+          </view>
+        </view>
+        <view class="organize-actions">
+          <text class="organize-action" @click="toggleOrganizeSelectAll">{{ organizeSelected.size >= (page?.words.length || 0) ? '取消全选' : '全选' }}</text>
+          <text class="organize-action primary" :class="{ disabled: !organizeSelected.size }" @click="splitSelectedEntries">拆成新页</text>
+          <text class="organize-action" @click="toggleOrganize">完成</text>
+        </view>
+      </view>
+
+      <!-- 词条编辑弹层 -->
+      <view v-if="editorVisible" class="editor-mask" @click="editorVisible = false" @touchmove.stop.prevent="() => {}">
+        <view class="editor-card" @click.stop @touchmove.stop>
+          <text class="editor-title">编辑词条</text>
+          <input class="editor-input" v-model="editorForm.text" placeholder="单词 / 词组"/>
+          <input class="editor-input" v-model="editorForm.phonetic" placeholder="音标（可选）"/>
+          <textarea class="editor-textarea" v-model="editorForm.explains" placeholder="释义"/>
+          <textarea class="editor-textarea small" v-model="editorForm.note" placeholder="笔记 / 记忆点（可选）"/>
+          <view class="editor-actions">
+            <button class="editor-btn" @click="editorVisible = false">取消</button>
+            <button class="editor-btn primary" @click="saveEntryEditor">保存</button>
+          </view>
+        </view>
       </view>
 
       <template v-else>
@@ -79,6 +122,7 @@
           </view>
         </view>
       </template>
+      </template>
     </template>
   </view>
 </template>
@@ -88,6 +132,7 @@ import { computed, ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { useWordBook } from '@/stores/useWordBook'
 import { buildWordBookChapterDirectory, formatDueLabel } from '@/utils/word-book'
+import type { WordBookWord } from '@/types/word-book'
 
 const store = useWordBook()
 const pageId = ref('')
@@ -108,6 +153,101 @@ const restored = ref(false)
 const storageKey = computed(() => `sr_mobile_wordbook_round_${pageId.value}`)
 
 const page = computed(() => store.getPage(pageId.value))
+
+// ========== 编排模式：词条编辑 / 移动 / 拆页 ==========
+const organizeMode = ref(false)
+const organizeSelected = ref<Set<string>>(new Set())
+const editorVisible = ref(false)
+const editingEntryId = ref('')
+const editorForm = ref({ text: '', phonetic: '', explains: '', note: '' })
+
+function toggleOrganize() {
+  organizeMode.value = !organizeMode.value
+  if (!organizeMode.value) organizeSelected.value = new Set()
+}
+
+function toggleOrganizeSelect(entryId: string) {
+  if (!entryId) return
+  const next = new Set(organizeSelected.value)
+  if (next.has(entryId)) next.delete(entryId)
+  else next.add(entryId)
+  organizeSelected.value = next
+}
+
+function toggleOrganizeSelectAll() {
+  const words = page.value?.words || []
+  organizeSelected.value = organizeSelected.value.size >= words.length
+    ? new Set()
+    : new Set(words.map(w => w.entryId).filter(Boolean) as string[])
+}
+
+function openEntryEditor(entry: WordBookWord) {
+  editingEntryId.value = entry.entryId || ''
+  editorForm.value = {
+    text: entry.text,
+    phonetic: entry.phonetic || '',
+    explains: entry.explains || '',
+    note: entry.note || '',
+  }
+  editorVisible.value = true
+}
+
+function saveEntryEditor() {
+  const pageValue = page.value
+  if (!pageValue || !editingEntryId.value) return
+  const result = store.updatePageEntry(pageValue._id, editingEntryId.value, {
+    text: editorForm.value.text,
+    phonetic: editorForm.value.phonetic,
+    explains: editorForm.value.explains,
+    note: editorForm.value.note,
+  })
+  if (!result.ok) {
+    uni.showToast({ title: result.message || '保存失败', icon: 'none' })
+    return
+  }
+  editorVisible.value = false
+  uni.showToast({ title: '已保存', icon: 'success' })
+}
+
+/** 移动到本章其他页（编排场景按章内调整） */
+function openMoveSheet(entry: WordBookWord) {
+  const pageValue = page.value
+  if (!pageValue || !entry.entryId) return
+  const targets = store.pagesOf(pageValue.chapterId).filter(p => p._id !== pageValue._id)
+  if (!targets.length) {
+    uni.showToast({ title: '本章只有这一页，无法移动', icon: 'none' })
+    return
+  }
+  uni.showActionSheet({
+    itemList: targets.map(p => `移动到 P${p.order} ${p.name}`),
+    success: (res) => {
+      const target = targets[res.tapIndex]
+      if (!target) return
+      const result = store.moveEntryToPage(pageValue._id, entry.entryId!, target._id)
+      if (!result.ok) {
+        uni.showToast({ title: result.message || '移动失败', icon: 'none' })
+        return
+      }
+      uni.showToast({ title: '已移动', icon: 'none' })
+    },
+  })
+}
+
+function splitSelectedEntries() {
+  const pageValue = page.value
+  if (!pageValue || organizeSelected.value.size === 0) return
+  const newPage = store.splitPage(pageValue._id, [...organizeSelected.value])
+  if (!newPage) {
+    uni.showToast({ title: '拆分失败：不能拆出全部词条或写入失败', icon: 'none' })
+    return
+  }
+  organizeSelected.value = new Set()
+  uni.showModal({
+    title: '已拆成新页',
+    content: `新页「${newPage.name}」已创建，共 ${newPage.words.length} 个词条。`,
+    showCancel: false,
+  })
+}
 
 const entryMap = computed(() => new Map((page.value?.words || []).map(word => [word.entryId || '', word])))
 const displayWords = computed(() => order.value.flatMap(entryId => {
@@ -623,5 +763,196 @@ function goBack() {
   border: 1rpx solid var(--sr-border);
   color: var(--sr-text-2);
   font-size: 28rpx;
+}
+
+/* ========== 编排模式 ========== */
+.link.active {
+  color: var(--sr-primary);
+  font-weight: 600;
+}
+
+.organize-panel {
+  margin: 16rpx 24rpx 120rpx;
+  background: var(--sr-card);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+}
+
+.organize-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12rpx;
+  border-bottom: 1rpx solid var(--sr-border);
+}
+
+.organize-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--sr-text);
+}
+
+.organize-count {
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+}
+
+.organize-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid var(--sr-border);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.organize-check {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--sr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  &.checked {
+    background: var(--sr-primary);
+    border-color: var(--sr-primary);
+  }
+}
+
+.organize-check-mark {
+  color: #fff;
+  font-size: 24rpx;
+  line-height: 1;
+}
+
+.organize-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.organize-word {
+  font-size: 28rpx;
+  color: var(--sr-text);
+  font-weight: 600;
+}
+
+.organize-explains {
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.organize-ops {
+  display: flex;
+  gap: 20rpx;
+  flex-shrink: 0;
+}
+
+.organize-op {
+  font-size: 24rpx;
+  color: var(--sr-primary);
+}
+
+.organize-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 28rpx;
+  padding-top: 20rpx;
+}
+
+.organize-action {
+  font-size: 26rpx;
+  color: var(--sr-text-2);
+
+  &.primary {
+    color: var(--sr-primary);
+    font-weight: 600;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+  }
+}
+
+.editor-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+.editor-card {
+  width: 100%;
+  max-width: 640rpx;
+  background: var(--sr-card);
+  border-radius: 16rpx;
+  padding: 28rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.editor-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--sr-text);
+}
+
+.editor-input,
+.editor-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1rpx solid var(--sr-border);
+  border-radius: 10rpx;
+  padding: 14rpx 16rpx;
+  font-size: 26rpx;
+  color: var(--sr-text);
+  background: var(--sr-bg);
+}
+
+.editor-textarea {
+  min-height: 120rpx;
+
+  &.small {
+    min-height: 88rpx;
+  }
+}
+
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+}
+
+.editor-btn {
+  font-size: 26rpx;
+  padding: 12rpx 40rpx;
+  border-radius: 10rpx;
+  background: var(--sr-bg);
+  color: var(--sr-text);
+  border: 1rpx solid var(--sr-border);
+
+  &.primary {
+    background: var(--sr-primary);
+    color: var(--sr-on-primary);
+    border-color: var(--sr-primary);
+  }
 }
 </style>

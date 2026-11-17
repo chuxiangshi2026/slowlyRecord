@@ -217,4 +217,60 @@ describe('移动端 wordBook store', () => {
     const book = store.createBook('书')!
     expect(store.createPage({ bookId: book._id, chapterId: 'missing', name: '孤儿页', key: { type: 'text', value: '' }, words, source: {} })).toBeNull()
   })
+
+  describe('编排：词条编辑 / 移动 / 拆页', () => {
+    const entryWords = [
+      { entryId: 'e1', sourceId: 's1', text: 'fold', explains: '折叠' },
+      { entryId: 'e2', sourceId: 's2', text: 'unfold', explains: '展开' },
+      { entryId: 'e3', sourceId: 's3', text: 'gold', explains: '金子' },
+    ]
+
+    function seed() {
+      const store = useWordBook()
+      store.load(true)
+      const book = store.createBook('词根书')!
+      const chapter = store.createChapter(book._id, 'old 章')!
+      const page = store.createPage({
+        bookId: book._id, chapterId: chapter._id, name: 'old 篇',
+        key: { type: 'root', value: 'old' }, words: entryWords, source: {},
+      })!
+      return { store, book, chapter, page }
+    }
+
+    it('编辑词条按 entryId 更新字段并落库', () => {
+      const { store, page } = seed()
+      const result = store.updatePageEntry(page._id, 'e2', { explains: '打开', phonetic: '/ʌnˈfəʊld/' })
+      expect(result.ok).toBe(true)
+      const updated = store.getPage(page._id)!.words.find(w => w.entryId === 'e2')!
+      expect(updated.explains).toBe('打开')
+      expect(updated.phonetic).toBe('/ʌnˈfəʊld/')
+      expect(updated.text).toBe('unfold')
+      expect(store.getPage(page._id)!.contentUpdatedAt).toBeTypeOf('number')
+      expect(store.updatePageEntry(page._id, 'missing', { explains: 'x' }).ok).toBe(false)
+    })
+
+    it('移动词条到同章另一页', () => {
+      const { store, book, chapter, page } = seed()
+      const target = store.createPage({
+        bookId: book._id, chapterId: chapter._id, name: 'old 篇二',
+        key: { type: 'root', value: 'old' }, words: [], source: {},
+      })!
+
+      const result = store.moveEntryToPage(page._id, 'e3', target._id)
+      expect(result.ok).toBe(true)
+      expect(store.getPage(page._id)!.words.map(w => w.entryId)).toEqual(['e1', 'e2'])
+      expect(store.getPage(target._id)!.words.map(w => w.entryId)).toEqual(['e3'])
+      expect(store.moveEntryToPage(page._id, 'e1', page._id).ok).toBe(true)
+    })
+
+    it('拆页把选中词条拆到同章新页，拆出全部时拒绝', () => {
+      const { store, page } = seed()
+      const newPage = store.splitPage(page._id, ['e1', 'e3'])!
+      expect(newPage).toBeTruthy()
+      expect(newPage.name).toBe('old 篇 · 拆分')
+      expect(newPage.words.map(w => w.entryId)).toEqual(['e1', 'e3'])
+      expect(store.getPage(page._id)!.words.map(w => w.entryId)).toEqual(['e2'])
+      expect(store.splitPage(page._id, ['e2'])).toBeNull()
+    })
+  })
 })

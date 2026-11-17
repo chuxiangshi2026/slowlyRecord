@@ -263,6 +263,110 @@ export const useWordBook = defineStore('mobileWordBook', () => {
   }
 
   /**
+   * 编辑页内词条（文本 / 释义 / 音标 / 笔记），按 entryId 定位，与桌面端同字段。
+   */
+  function updatePageEntry(
+    pageId: string,
+    entryId: string,
+    patch: Partial<Pick<WordBookWord, 'text' | 'explains' | 'phonetic' | 'note'>>,
+  ): DbReturn {
+    const page = getPage(pageId)
+    if (!page) return { ok: false, id: pageId, error: true, message: '页不存在' } as DbReturn
+    const entry = page.words.find(w => w.entryId === entryId)
+    if (!entry) return { ok: false, id: pageId, error: true, message: '词条不存在' } as DbReturn
+    const clean = (v?: string) => (typeof v === 'string' ? v.trim() : v)
+    const nextEntry: WordBookWord = {
+      ...entry,
+      text: clean(patch.text) || entry.text,
+      explains: patch.explains === undefined ? entry.explains : (clean(patch.explains) || ''),
+      phonetic: patch.phonetic === undefined ? entry.phonetic : clean(patch.phonetic),
+      note: patch.note === undefined ? entry.note : clean(patch.note),
+    }
+    const nextPage: WordBookPage = {
+      ...page,
+      words: page.words.map(w => (w.entryId === entryId ? nextEntry : w)),
+      contentUpdatedAt: Date.now(),
+      utime: Date.now(),
+    }
+    const result = put(nextPage)
+    if (result.ok) pages.value = replaceLocal(pages.value, nextPage)
+    return result
+  }
+
+  /**
+   * 移动词条到同章另一学习页：源页移除、目标页追加；目标页已有同 entryId 时拒绝。
+   */
+  function moveEntryToPage(sourcePageId: string, entryId: string, targetPageId: string): DbReturn {
+    if (sourcePageId === targetPageId) return { ok: true, id: sourcePageId } as DbReturn
+    const source = getPage(sourcePageId)
+    const target = getPage(targetPageId)
+    if (!source || !target) return { ok: false, id: sourcePageId, error: true, message: '学习页不存在' } as DbReturn
+    const entry = source.words.find(w => w.entryId === entryId)
+    if (!entry) return { ok: false, id: sourcePageId, error: true, message: '词条不存在' } as DbReturn
+    if (target.words.some(w => w.entryId === entryId)) {
+      return { ok: false, id: sourcePageId, error: true, message: '目标页已有该词条' } as DbReturn
+    }
+    const nextSource: WordBookPage = {
+      ...source,
+      words: source.words.filter(w => w.entryId !== entryId),
+      contentUpdatedAt: Date.now(),
+      utime: Date.now(),
+    }
+    const nextTarget: WordBookPage = {
+      ...target,
+      words: [...target.words, entry],
+      contentUpdatedAt: Date.now(),
+      utime: Date.now(),
+    }
+    const r1 = put(nextSource)
+    if (!r1.ok) return r1
+    const r2 = put(nextTarget)
+    if (!r2.ok) {
+      // 目标页写失败时回滚源页，避免词条丢失
+      put({ ...source })
+      return r2
+    }
+    pages.value = replaceLocal(replaceLocal(pages.value, nextSource), nextTarget)
+    return r2
+  }
+
+  /**
+   * 拆页：把选中词条拆到同章新页（新页排在章末）。全选或空选时拒绝。
+   */
+  function splitPage(pageId: string, entryIds: string[], name?: string): WordBookPage | null {
+    const page = getPage(pageId)
+    if (!page) return null
+    const idSet = new Set(entryIds)
+    const splitWords = page.words.filter(w => w.entryId && idSet.has(w.entryId))
+    if (splitWords.length === 0 || splitWords.length >= page.words.length) return null
+    const nextPage = createPage({
+      bookId: page.bookId,
+      chapterId: page.chapterId,
+      name: (name || '').trim() || `${page.name} · 拆分`,
+      key: page.key,
+      words: splitWords,
+      source: page.source,
+      note: page.note,
+    })
+    if (!nextPage) return null
+    const nextSource: WordBookPage = {
+      ...page,
+      words: page.words.filter(w => !w.entryId || !idSet.has(w.entryId)),
+      contentUpdatedAt: Date.now(),
+      utime: Date.now(),
+    }
+    const result = put(nextSource)
+    if (!result.ok) {
+      // 源页写失败时回滚新页，保持两页数据一致
+      removeDoc(nextPage._id)
+      pages.value = pages.value.filter(p => p._id !== nextPage._id)
+      return null
+    }
+    pages.value = replaceLocal(pages.value, nextSource)
+    return nextPage
+  }
+
+  /**
    * 记录一轮复习结果（与桌面端 completeRound 同语义）：
    * 练习轮只记录成绩不调整正式复习时间，也不打卡、不推进关卡
    */
@@ -416,6 +520,9 @@ export const useWordBook = defineStore('mobileWordBook', () => {
     createPage,
     renamePage,
     deletePage,
+    updatePageEntry,
+    moveEntryToPage,
+    splitPage,
     completeRound,
     completePage,
     collectSync,
