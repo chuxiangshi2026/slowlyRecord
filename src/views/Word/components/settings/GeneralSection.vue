@@ -19,6 +19,7 @@
           <el-radio-button :value="0.9">小</el-radio-button>
           <el-radio-button :value="1">标准</el-radio-button>
           <el-radio-button :value="1.15">大</el-radio-button>
+          <el-radio-button :value="1.3">超大</el-radio-button>
         </el-radio-group>
       </div>
     </div>

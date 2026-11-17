@@ -2,7 +2,7 @@
   <el-drawer
       v-model="visible"
       :title="title"
-      size="430px"
+      size="min(430px, 92vw)"
       destroy-on-close
   >
     <div class="settings-root">
