@@ -128,6 +128,9 @@
         <el-button size="small" type="primary" :disabled="selectedIds.size === 0" @click="handleBatchSaveImage">
           <el-icon><Picture /></el-icon> 存图
         </el-button>
+        <el-button size="small" type="danger" :disabled="selectedIds.size === 0" @click="handleBatchDelete">
+          <el-icon><Delete /></el-icon> 删除
+        </el-button>
         <el-button size="small" @click="exitMultiSelectMode">退出多选</el-button>
       </div>
     </div>
@@ -493,6 +496,32 @@ function toggleSelectAllFiltered() {
 // 清空选中
 function clearSelection() {
   selectedIds.value = new Set();
+}
+
+// 批量删除（关联笔记与提示词一并删除）
+async function handleBatchDelete() {
+  const ids = [...selectedIds.value];
+  if (ids.length === 0) return;
+  try {
+    await ElMessageBox.confirm(
+      `确定删除所选的 ${ids.length} 篇文章？关联的笔记与提示词会一并删除，且不可恢复。`,
+      '批量删除',
+      { type: 'warning', confirmButtonText: '删除', cancelButtonText: '取消' }
+    );
+  } catch {
+    return;
+  }
+  let deleted = 0;
+  for (const id of ids) {
+    const result = await textStore.deleteArticle(id);
+    if (result.success) deleted++;
+  }
+  if (deleted > 0) {
+    ElMessage.success(`已删除 ${deleted} 篇`);
+    clearSelection();
+  } else {
+    ElMessage.error('删除失败');
+  }
 }
 
 // 卡片点击：多选模式下让位为选中/取消，否则走原有逻辑

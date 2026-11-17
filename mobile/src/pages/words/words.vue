@@ -18,6 +18,9 @@
         <view class="filter-toggle" :class="{ active: showFilterPanel }" @click="showFilterPanel = !showFilterPanel">
           <text class="filter-icon">◬</text>
         </view>
+        <view class="filter-toggle" :class="{ active: batchMode }" @click="toggleBatchMode">
+          <text class="batch-toggle-text">批量</text>
+        </view>
         <view class="add-btn" @click="showAddDialog"><text class="add-btn-text">+</text></view>
       </view>
     </view>
@@ -117,8 +120,11 @@
         v-for="word in displayedWords"
         :key="word.id"
         class="word-item"
-        @click="showWordDetail(word)"
+        @click="batchMode ? toggleSelectWord(word.id) : showWordDetail(word)"
       >
+        <view v-if="batchMode" class="batch-check" :class="{ checked: selectedIds.has(word.id) }">
+          <text v-if="selectedIds.has(word.id)" class="batch-check-mark">✓</text>
+        </view>
         <view class="word-info">
           <view class="word-line">
             <text class="word-text">{{ word.word }}</text>
@@ -132,6 +138,20 @@
           <text v-else class="reviewed-badge">已复习</text>
           <text class="word-level">Lv{{ word.level || 1 }}</text>
         </view>
+      </view>
+    </view>
+
+    <!-- 批量操作栏 -->
+    <view v-if="batchMode" class="batch-bar">
+      <view class="batch-info">
+        <text class="batch-count">已选 {{ selectedIds.size }}</text>
+      </view>
+      <view class="batch-actions">
+        <text class="batch-action" @click="toggleSelectAllWords">{{ allDisplayedSelected ? '取消全选' : '全选' }}</text>
+        <text class="batch-action" @click="selectedIds = new Set()">清空</text>
+        <text class="batch-action primary" :class="{ disabled: !selectedIds.size }" @click="batchMoveWords">移动</text>
+        <text class="batch-action danger" :class="{ disabled: !selectedIds.size }" @click="batchDeleteWords">删除</text>
+        <text class="batch-action" @click="toggleBatchMode">退出</text>
       </view>
     </view>
 
@@ -224,6 +244,77 @@ function saveFilterState() {
 // ========== 单词详情弹窗 ==========
 const showDetail = ref(false)
 const detailWord = ref<any>({})
+
+// ========== 批量选择 / 移动 / 删除 ==========
+const batchMode = ref(false)
+const selectedIds = ref<Set<string>>(new Set())
+
+const allDisplayedSelected = computed(() =>
+  displayedWords.value.length > 0 && displayedWords.value.every(w => selectedIds.value.has(w.id))
+)
+
+function toggleBatchMode() {
+  batchMode.value = !batchMode.value
+  if (!batchMode.value) selectedIds.value = new Set()
+}
+
+function toggleSelectWord(id: string) {
+  const next = new Set(selectedIds.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  selectedIds.value = next
+}
+
+function toggleSelectAllWords() {
+  selectedIds.value = allDisplayedSelected.value
+    ? new Set()
+    : new Set(displayedWords.value.map(w => w.id))
+}
+
+/** 批量移动：先选目标词库（排除当前库），逐词改挂 bankId，与单条移动同一口径 */
+function batchMoveWords() {
+  const ids = [...selectedIds.value]
+  if (!ids.length) return
+  const banks = wordsStore.bankList.filter(b => b.id !== wordsStore.currentBankId)
+  if (!banks.length) {
+    uni.showToast({ title: '没有其他词库可移动', icon: 'none' })
+    return
+  }
+  uni.showActionSheet({
+    itemList: banks.map(b => `移动到「${b.name}」`),
+    success: async (res) => {
+      const target = banks[res.tapIndex]
+      if (!target) return
+      for (const id of ids) {
+        await wordsStore.moveWordToBank(id, target.id)
+      }
+      uni.showToast({ title: `已移动 ${ids.length} 个单词`, icon: 'none' })
+      selectedIds.value = new Set()
+      batchMode.value = false
+    },
+  })
+}
+
+/** 批量删除：二次确认后逐条走 deleteWord（含墓碑，防跨端复活） */
+function batchDeleteWords() {
+  const ids = [...selectedIds.value]
+  if (!ids.length) return
+  uni.showModal({
+    title: '批量删除',
+    content: `确定删除所选的 ${ids.length} 个单词？此操作不可恢复。`,
+    confirmColor: '#ff5252',
+    success: async (res) => {
+      if (!res.confirm) return
+      for (const id of ids) {
+        await wordsStore.deleteWord(id)
+      }
+      uni.showToast({ title: `已删除 ${ids.length} 个单词`, icon: 'none' })
+      selectedIds.value = new Set()
+      batchMode.value = false
+    },
+  })
+}
+
 
 // ========== 列表模式（与桌面端一致）==========
 // 0=待复习 1=已复习 2=已记完 3=全部
@@ -1079,5 +1170,84 @@ const formatDate = (timestamp: number): string => {
   border: none;
   background: #c0564f;
   color: #fff;
+}
+
+/* ========== 批量选择 / 移动 / 删除 ========== */
+.batch-toggle-text {
+  font-size: 24rpx;
+  color: var(--sr-text-2, #5f6f68);
+}
+
+.batch-check {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--sr-border, #dbe6df);
+  background: var(--sr-card);
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  &.checked {
+    background: var(--sr-primary, #52796f);
+    border-color: var(--sr-primary, #52796f);
+  }
+}
+
+.batch-check-mark {
+  color: #fff;
+  font-size: 24rpx;
+  line-height: 1;
+}
+
+.batch-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: var(--sr-card);
+  border-top: 1px solid var(--sr-border, #dbe6df);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.batch-info {
+  font-size: 24rpx;
+  color: var(--sr-text-2, #5f6f68);
+  white-space: nowrap;
+}
+
+.batch-actions {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.batch-action {
+  font-size: 26rpx;
+  color: var(--sr-text-2, #5f6f68);
+
+  &.primary {
+    color: var(--sr-primary, #52796f);
+    font-weight: 600;
+  }
+
+  &.danger {
+    color: #c0564f;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+  }
 }
 </style>

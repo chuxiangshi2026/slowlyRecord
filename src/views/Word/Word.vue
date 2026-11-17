@@ -102,15 +102,23 @@
           :grid-items="gridItems"
       >
         <!--      <div class="grid-item">-->
-        <MyListItem
-            :word="item"
-            :disable-actions="listMode"
-            v-model="wordsStore.words[getIndexInOriginalList(item)]"
-            @delete="deleteWord(getIndexInOriginalList(item))"
-            @toggle-explained="showExplained = -1"
-            :showExplained="showExplained"
-            :word-index="index"
-        />
+        <div class="batch-item-wrap" :class="{ 'batch-selecting': batchMode }">
+          <MyListItem
+              :word="item"
+              :disable-actions="batchMode ? 1 : listMode"
+              v-model="wordsStore.words[getIndexInOriginalList(item)]"
+              @delete="deleteWord(getIndexInOriginalList(item))"
+              @toggle-explained="showExplained = -1"
+              :showExplained="showExplained"
+              :word-index="index"
+          />
+          <!-- 批量模式：整卡覆盖点击层，避免误触卡片内动作 -->
+          <div v-if="batchMode" class="batch-hit" @click.stop="toggleSelectWord(item._id)">
+            <span class="batch-check" :class="{ checked: selectedWordIds.has(item._id) }">
+              {{ selectedWordIds.has(item._id) ? '✓' : '' }}
+            </span>
+          </div>
+        </div>
         <!--      </div>-->
       </RecycleScroller>
 
@@ -358,6 +366,24 @@
 
   <!--     旧版本的写法 @forget="(childValue)=>forget(item,childValue)"-->
 
+  <!-- 批量操作栏（批量模式下显示于底栏上方） -->
+  <div v-if="batchMode" class="batch-bar">
+    <div class="batch-info">
+      <span class="batch-mode-label">批量选择</span>
+      <span class="batch-count">已选 {{ selectedWordIds.size }} / {{ showFilteredWords.length }}</span>
+    </div>
+    <div class="batch-actions">
+      <el-button size="small" text @click="toggleSelectAllWords">{{ allVisibleWordsSelected ? '取消全选' : '全选' }}</el-button>
+      <el-button size="small" text @click="clearWordSelection">清空</el-button>
+      <el-select v-model="batchTargetBankId" size="small" placeholder="移动到词库" class="batch-bank-select">
+        <el-option v-for="bank in batchTargetBanks" :key="bank.id" :label="bank.name" :value="bank.id"/>
+      </el-select>
+      <el-button size="small" type="primary" :disabled="!selectedWordIds.size || !batchTargetBankId" @click="batchMoveWords">移动</el-button>
+      <el-button size="small" type="danger" :disabled="!selectedWordIds.size" @click="batchDeleteWords">删除</el-button>
+      <el-button size="small" text @click="toggleBatchMode">退出</el-button>
+    </div>
+  </div>
+
   <div class="home_footer">
     <div>
       <!-- 当前词库名称显示 -->
@@ -411,6 +437,10 @@
 
       <el-tooltip class="box-item" effect="dark" content="筛选排序" placement="top" popper-class="small-tooltip">
         <el-icon class="footer-icon" :class="{ 'filter-active': filterPanelVisible }" :size="18" @click="toggleFilterPanel"><FilterListIcon /></el-icon>
+      </el-tooltip>
+
+      <el-tooltip class="box-item" effect="dark" :content="batchMode ? '退出批量选择' : '批量选择（移动/删除）'" placement="top" popper-class="small-tooltip">
+        <el-icon class="footer-icon" :class="{ 'filter-active': batchMode }" :size="18" @click="toggleBatchMode"><CircleCheck /></el-icon>
       </el-tooltip>
 
       <el-tooltip class="box-item" effect="dark" content="拼写练习" placement="top" popper-class="small-tooltip">
@@ -631,6 +661,83 @@ const loadCustomWordBanks = async () => {
 const openWordBankManager = () => {
   loadCustomWordBanks()
   wordBankManagerVisible.value = true
+}
+
+// ========== 批量选择 / 移动 / 删除 ==========
+const batchMode = ref(false)
+const selectedWordIds = ref<Set<string>>(new Set())
+const batchTargetBankId = ref('')
+
+const batchTargetBanks = computed(() =>
+  customWordBanks.value.filter(bank => bank.id !== wordsStore.currentWordBankId)
+)
+const allVisibleWordsSelected = computed(() =>
+  showFilteredWords.value.length > 0 && selectedWordIds.value.size >= showFilteredWords.value.length
+)
+
+const toggleBatchMode = () => {
+  if (!batchMode.value) loadCustomWordBanks()
+  batchMode.value = !batchMode.value
+  if (!batchMode.value) {
+    selectedWordIds.value = new Set()
+    batchTargetBankId.value = ''
+  }
+}
+
+const toggleSelectWord = (id: string) => {
+  const next = new Set(selectedWordIds.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  selectedWordIds.value = next
+}
+
+const toggleSelectAllWords = () => {
+  selectedWordIds.value = allVisibleWordsSelected.value
+    ? new Set()
+    : new Set(showFilteredWords.value.map(w => w._id).filter(Boolean) as string[])
+}
+
+const clearWordSelection = () => {
+  selectedWordIds.value = new Set()
+}
+
+const batchMoveWords = async () => {
+  const ids = [...selectedWordIds.value]
+  if (!ids.length || !batchTargetBankId.value) return
+  const result = await wordsStore.moveWordsToBank(ids, batchTargetBankId.value)
+  if (result.moved > 0) {
+    const targetName = batchTargetBanks.value.find(b => b.id === batchTargetBankId.value)?.name || '目标词库'
+    ElMessage.success(`已移动 ${result.moved} 词到「${targetName}」${result.skipped ? `，${result.skipped} 词因重复跳过` : ''}`)
+  } else {
+    ElMessage.warning(result.skipped ? '所选单词在目标词库中已存在，未移动' : '移动失败')
+  }
+  clearWordSelection()
+  loadCustomWordBanks()
+}
+
+const batchDeleteWords = async () => {
+  const ids = [...selectedWordIds.value]
+  if (!ids.length) return
+  try {
+    await ElMessageBox.confirm(`确定删除所选的 ${ids.length} 个单词？此操作不可恢复。`, '批量删除', {
+      type: 'warning',
+      confirmButtonText: '删除',
+      cancelButtonText: '取消',
+    })
+  } catch {
+    return
+  }
+  // 从后往前按索引删除，避免位移
+  const idSet = new Set(ids)
+  const indices = wordsStore.words
+    .map((word, index) => (idSet.has(word._id) ? index : -1))
+    .filter(index => index >= 0)
+    .sort((a, b) => b - a)
+  for (const index of indices) {
+    await wordsStore.deleteWord(index)
+  }
+  ElMessage.success(`已删除 ${indices.length} 个单词`)
+  clearWordSelection()
 }
 
 // 监听词库管理器可见性变化，当打开时刷新数据
@@ -3928,4 +4035,85 @@ function onOnboardingFinish() {
   }
 }
 
+/* ========== 批量选择 / 移动 / 删除 ========== */
+.batch-item-wrap {
+  position: relative;
+}
+
+.batch-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  cursor: pointer;
+  background: transparent;
+}
+
+.batch-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--utools-border-divider);
+  background: var(--utools-bg-card);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &.checked {
+    background: var(--utools-primary);
+    border-color: var(--utools-primary);
+  }
+}
+
+.batch-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 55px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 12px;
+  background: var(--utools-bg-card);
+  border-top: 1px solid var(--utools-border-divider);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+  color: var(--utools-text-primary);
+  box-sizing: border-box;
+
+  .batch-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .batch-mode-label {
+    font-weight: 600;
+  }
+
+  .batch-count {
+    color: var(--utools-text-secondary);
+  }
+
+  .batch-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .batch-bank-select {
+    width: 140px;
+  }
+}
 </style>
