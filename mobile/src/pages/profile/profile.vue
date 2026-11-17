@@ -177,6 +177,7 @@
 import { ref, computed } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
+import { askImportTargetBank } from '@/utils/wordbank-import-target'
 import { useUserProfile } from '@/stores/useUserProfile'
 import { useAchievements } from '@/stores/useAchievements'
 import { getTranslationPlatform, setTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS } from '@/stores/useUtils/translation-settings'
@@ -432,16 +433,27 @@ const importData = () => {
     title: '导入数据',
     content: '请粘贴之前导出的数据',
     editable: true,
-    success: (res) => {
-      if (res.confirm && res.content) {
-        try {
-          const data = JSON.parse(res.content)
-          wordsStore.importWords(data)
-          uni.showToast({ title: '导入成功', icon: 'success' })
-        } catch (e) {
-          uni.showToast({ title: '数据格式错误', icon: 'none' })
-        }
+    success: async (res) => {
+      if (!res.confirm || !res.content) return
+      let data: unknown
+      try {
+        data = JSON.parse(res.content)
+      } catch (e) {
+        uni.showToast({ title: '数据格式错误', icon: 'none' })
+        return
       }
+      if (!Array.isArray(data) || data.length === 0) {
+        uni.showToast({ title: '数据格式错误', icon: 'none' })
+        return
+      }
+      // 与词库导入同口径：先询问导入到当前词库 / 新建词库 / 已有词库
+      const targetBankId = await askImportTargetBank('导入的单词')
+      if (!targetBankId) return
+      const result = await wordsStore.importWords(data, targetBankId)
+      uni.showToast({
+        title: result.success ? '导入成功' : (result.message || '导入失败'),
+        icon: result.success ? 'success' : 'none',
+      })
     },
   })
 }
