@@ -4,8 +4,12 @@
  * 1. 剥离 dist/preload/services.js 中 STORE-STRIP 标记的段落与行（当前为 Bing 网页版翻译，审核合规要求）
  * 2. 剥离 dist/datafile/poetry/*.json 的 translation/translationSource 字段并改写 dist/NOTICE
  *    （chinese-poems.com 译文授权不明，审核要求；主分支与其他端保留完整译文，仅商店包不含）
- * 3. 闸门：全量扫描 dist/，发现内置密钥明文、Bing 网页版接口特征串或译文残留即报错退出，
- *    防止 config.ts 改动或 DCE 失效导致违规内容重新混入商店包
+ * 3. 版权内容收窄（仅商店包；主分支与其他端保留完整内容）：
+ *    - poetry/xiandai.json 只保留已进入公有领域（作者逝世满 50 年）的作品，并同步 index.json 计数
+ *    - english/bilingual.json 删除原文仍在保护期的条目，其余条目删除无译者署名的中文译文
+ *    - english/french.json 删除小王子条目（审核已点名仍在保护期）
+ * 4. 闸门：全量扫描 dist/，发现内置密钥明文、Bing 网页版接口特征、译文残留或保护期文本即报错退出，
+ *    防止 config.ts/数据改动或 DCE 失效导致违规内容重新混入商店包
  */
 const fs = require('node:fs')
 const path = require('node:path')
@@ -59,6 +63,71 @@ function stripPoetryTranslations() {
     console.log(`[strip] 已剥离内置诗词英译 ${removed} 条`)
 }
 
+// ---- 3. 版权内容收窄（仅商店包；主分支与其他端保留完整内容） ----
+function curateStoreDatafiles() {
+    // 近现代诗词：仅保留公有领域作品（徐志摩 1931 / 戴望舒 1950 / 闻一多 1946，均已逝世满 50 年），
+    // 海子、余光中、顾城、北岛、舒婷、食指、席慕蓉、汪国真、郭沫若、艾青、臧克家及毛泽东条目仍在保护期，整篇删除
+    const poetryDir = path.join(distDir, 'datafile', 'poetry')
+    const xdFile = path.join(poetryDir, 'xiandai.json')
+    const xd = JSON.parse(fs.readFileSync(xdFile, 'utf8'))
+    const XD_KEEP = new Set(['xiandai_001', 'xiandai_002', 'xiandai_013'])
+    const xdBefore = xd.poems.length
+    xd.poems = xd.poems.filter(p => XD_KEEP.has(p.id))
+    if (xd.poems.length !== XD_KEEP.size || xdBefore === xd.poems.length) {
+        console.error('[strip] xiandai.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    }
+    xd.metadata.count = xd.poems.length
+    xd.metadata.description = '现代诗歌、新诗；仅收录已进入公有领域（作者逝世满 50 年）的作品'
+    xd.metadata.lastUpdated = '2026-11-18'
+    fs.writeFileSync(xdFile, JSON.stringify(xd, null, 2) + '\n')
+
+    const idxFile = path.join(poetryDir, 'index.json')
+    const idx = JSON.parse(fs.readFileSync(idxFile, 'utf8'))
+    const xdEntry = idx.dynasties.find(d => d.code === 'xiandai')
+    idx.totalCount -= (xdEntry.count - xd.poems.length)
+    xdEntry.count = xd.poems.length
+    xdEntry.description = '现代诗歌、新诗（公有领域作品）'
+    idx.lastUpdated = '2026-11-18'
+    fs.writeFileSync(idxFile, JSON.stringify(idx, null, 2) + '\n')
+    console.log(`[strip] xiandai.json 保护期作品已移除 ${xdBefore - xd.poems.length} 条（保留公有领域 ${xd.poems.length} 条）`)
+
+    // 中英对照：小王子（bil_007）、老人与海（bil_008）原文仍在保护期，整条删除；
+    // 其余条目（原文均公有领域）删除无译者署名的中文译文
+    const engDir = path.join(distDir, 'datafile', 'english')
+    const biFile = path.join(engDir, 'bilingual.json')
+    const bi = JSON.parse(fs.readFileSync(biFile, 'utf8'))
+    const biBefore = bi.items.length
+    let translations = 0
+    bi.items = bi.items
+        .filter(it => !['bil_007', 'bil_008'].includes(it.id))
+        .map(it => {
+            if ('translation' in it) { delete it.translation; translations++ }
+            return it
+        })
+    if (bi.items.length !== biBefore - 2 || translations === 0) {
+        console.error('[strip] bilingual.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    }
+    bi.metadata.count = bi.items.length
+    bi.metadata.name = '英文原版'
+    bi.metadata.description = '世界名篇英文原文（均为公有领域作品），供背诵与阅读'
+    bi.metadata.lastUpdated = '2026-11-18'
+    fs.writeFileSync(biFile, JSON.stringify(bi, null, 2) + '\n')
+    console.log(`[strip] bilingual.json 已移除保护期条目 2 条、无署名译文 ${translations} 段`)
+
+    // 法文名篇：fr_002 小王子与 bilingual 被点名的是同一部作品（法国战殁作家延长保护），整节删除
+    const frFile = path.join(engDir, 'french.json')
+    const fr = JSON.parse(fs.readFileSync(frFile, 'utf8'))
+    const frBefore = fr.items.length
+    fr.items = fr.items.filter(it => it.id !== 'fr_002')
+    if (fr.items.length !== frBefore - 1) {
+        console.error('[strip] french.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    }
+    fr.metadata.count = fr.items.length
+    fr.metadata.lastUpdated = '2026-11-18'
+    fs.writeFileSync(frFile, JSON.stringify(fr, null, 2) + '\n')
+    console.log('[strip] french.json 已移除 fr_002（小王子，仍在保护期）')
+}
+
 /** 改写 dist/NOTICE：删除含 chinese-poems.com 的译文来源节，其余节重新编号 */
 function rewriteNotice() {
     const file = path.join(distDir, 'NOTICE')
@@ -104,6 +173,10 @@ const FORBIDDEN = [
     // 内置诗词英译（授权不明，商店包必须剥净）
     'chinese-poems.com',
     '"translationSource"',
+    // 仍在著作权保护期的文本特征（商店包必须剥净；海子《面朝大海，春暖花开》、小王子中英/法文条目）
+    '面朝大海',
+    'invisible to the eye',
+    'Le Petit Prince',
 ]
 
 function* walk(dir) {
@@ -116,6 +189,7 @@ function* walk(dir) {
 
 stripMarkedSections(preloadFile)
 stripPoetryTranslations()
+curateStoreDatafiles()
 rewriteNotice()
 
 const hits = []

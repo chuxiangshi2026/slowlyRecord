@@ -410,7 +410,7 @@ router.afterEach((to) => {
 })
 
 router.onError((error, to) => {
-  trackError('promise', error, to.fullPath).catch(() => {})
+  trackError('promise', error, to.path).catch(() => {})
   if (!isLazyRouteLoadError(error)) return
 
   // 首次启动只自动恢复一次，避免发布切换期间停留在空白页；后续导航由用户确认，避免刷新丢编辑内容

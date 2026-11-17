@@ -1317,6 +1317,13 @@ export async function translateBatchWithPlatform(
     const results: TranslationResult[] = new Array(queries.length);
     const misses: Array<{ query: string; index: number }> = [];
 
+    // 内置免费额度闸门：批量路径同样生效（AI 批量会绕过 translateWithPlatform 的闸门）
+    {
+        const userKeysForPlatform = useWordsStore().getApiKey(platform);
+        const freeGate = gateBuiltinFreeTranslate(platform, !userKeysForPlatform?.appkey?.trim());
+        if (freeGate) return queries.map(() => freeGate);
+    }
+
     queries.forEach((query, index) => {
         const cached = getCachedTranslation(query, platform, from, to);
         if (cached) {
@@ -1384,6 +1391,39 @@ const FREE_ENGINE_CHAIN: TranslationPlatform[] = (['spark', 'bilibili', 'youdao'
     .filter(e => !__STORE_BUILD__ || e !== 'bing');
 const WEB_FREE_ENGINE_CHAIN: TranslationPlatform[] = ['bilibili', 'google', 'mymemory', 'glm'];
 
+/** 首次使用内置免费额度的告知标记键（localStorage，只提示一次） */
+const FREE_TRANSLATE_NOTICE_KEY = 'sr_free_translate_notice_v1';
+
+const FREE_TRANSLATE_DISABLED_MSG =
+    '未配置该引擎的 API Key，且内置免费翻译额度已关闭：请在「设置 → 高级设置」中开启「内置免费翻译额度」，或填写自己的密钥';
+
+/**
+ * 内置免费额度闸门：未配置自己密钥、且命中免费链（内置共享 key 或免费公开接口）时，
+ * 需开关开启才放行；首次放行时弹窗告知数据流向（审核要求：显式开关 + 标明数据流向）。
+ * 返回 null 表示放行，否则返回可直接给调用方的失败结果。
+ */
+function gateBuiltinFreeTranslate(platform: TranslationPlatform, usingBuiltinKey: boolean): TranslationResult | null {
+    if (!usingBuiltinKey || !FREE_ENGINE_CHAIN.includes(platform)) return null;
+    const wordsStore = useWordsStore();
+    // 只有显式关闭才拦截：旧版本持久化数据没有此键（undefined）时按默认开启处理
+    if (wordsStore.builtinFreeTranslate === false) {
+        return { success: false, errorMsg: FREE_TRANSLATE_DISABLED_MSG };
+    }
+    try {
+        if (typeof window !== 'undefined' && window.localStorage?.getItem(FREE_TRANSLATE_NOTICE_KEY) !== '1') {
+            window.localStorage?.setItem(FREE_TRANSLATE_NOTICE_KEY, '1');
+            void import('element-plus').then(({ ElMessageBox }) => ElMessageBox.alert(
+                '本次翻译使用内置免费额度：待翻译文本会发送给 B站 Index-Translate、Google、MyMemory 等公共服务商，' +
+                '或使用内置共享密钥的引擎，数据流向以各服务商隐私政策为准。\n\n' +
+                '如需避免，可在「设置 → 高级设置」关闭「内置免费翻译额度」，或填写自己的 API Key（只保存在本机）。',
+                '内置免费翻译额度',
+                { confirmButtonText: '知道了', type: 'info' }
+            )).catch(() => { /* 弹窗不可用时不影响翻译 */ });
+        }
+    } catch { /* localStorage 不可用时静默跳过提示 */ }
+    return null;
+}
+
 function shouldFallback(result: TranslationResult): boolean {
     if (result.success) return false;
     const msg = result.errorMsg || '';
@@ -1406,6 +1446,8 @@ export async function translateWithPlatform(
     // 用户只要填写了任意 API 标识，就只尝试指定平台并返回其原生错误，避免跨引擎误降级。
     const userKeysForPlatform = useWordsStore().getApiKey(platform);
     const usingBuiltinKey = !userKeysForPlatform?.appkey?.trim();
+    const freeGate = gateBuiltinFreeTranslate(platform, usingBuiltinKey);
+    if (freeGate) return freeGate;
     const freeChain = isWeb() ? WEB_FREE_ENGINE_CHAIN : FREE_ENGINE_CHAIN;
     const chain = !options.connectionTest && usingBuiltinKey && freeChain.includes(platform)
         ? freeChain.slice(freeChain.indexOf(platform))

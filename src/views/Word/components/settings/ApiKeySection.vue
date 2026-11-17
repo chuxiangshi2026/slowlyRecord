@@ -1,7 +1,11 @@
 <template>
   <div class="content">
     <h5 class="key-section-title">高级设置（自定义 API Key）</h5>
-    <p class="key-section-hint">默认使用 B站 Index-Translate（免配置），额度耗尽或限流时会自动降级；仅切换其他引擎或需要更高额度时才需填写</p>
+    <div class="free-quota-item">
+      <span class="free-quota-text">内置免费翻译额度：未配置自己的密钥时，使用 B站 Index-Translate、Google、MyMemory 等免费公共接口或内置共享密钥，待翻译文本会发送给对应服务商；关闭后未配置密钥的引擎将不可用</span>
+      <el-switch v-model="wordsStore.builtinFreeTranslate" aria-label="内置免费翻译额度"/>
+    </div>
+    <p class="key-section-hint">开启内置免费额度时默认使用 B站 Index-Translate（免配置），额度耗尽或限流时会自动降级；仅切换其他引擎或需要更高额度时才需填写</p>
     <el-collapse v-model="activeTranslationKeys" class="key-collapse">
       <el-collapse-item v-for="engine in translationKeyEngines" :key="engine.value" :name="engine.value">
         <template #title>
@@ -295,6 +299,22 @@ const activeOcrKeys = ref<string[]>(
   font-size: 12px;
   line-height: 1.5;
   color: var(--utools-text-tertiary);
+}
+
+/* 内置免费翻译额度开关 */
+.free-quota-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+
+  .free-quota-text {
+    flex: 1;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--utools-text-tertiary);
+  }
 }
 
 .key-collapse {

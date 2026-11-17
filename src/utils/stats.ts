@@ -106,17 +106,10 @@ export function getStatsStatus(): StatsStatus {
 
 /**
  * 获取（或首次生成）匿名安装 ID
- * uTools 环境优先用 utools.getNativeId()（设备 ID，重装插件/清 localStorage 不变），
- * 其他环境退化为 localStorage 随机 UUID（卸载/清除数据即重置）
+ * 只在首次使用时于本机生成一次随机 UUID 存 localStorage（卸载/清除数据即重置），
+ * 不读取宿主环境的任何设备级标识
  */
 function getInstallId(): string {
-  try {
-    const utoolsApi = (window as any).utools;
-    if (utoolsApi?.getNativeId) {
-      const nativeId = utoolsApi.getNativeId();
-      if (nativeId) return nativeId.slice(0, 32);
-    }
-  } catch { /* 忽略，回退到随机 UUID */ }
   try {
     let id = window.localStorage?.getItem(INSTALL_ID_KEY);
     if (!id) {
@@ -170,6 +163,11 @@ interface StatsEvent {
   data?: Record<string, string | number>;
 }
 
+/** 上报前收敛页面路径：剥掉查询串与 hash 片段，避免把划词/翻译原文等 query 参数带进日志 */
+function sanitizePageUrl(url: string): string {
+  return (url || '/').split(/[?#]/)[0] || '/';
+}
+
 /**
  * 发送一条统计事件到自建采集端点（纯 fetch，file:// 插件页可用，无需 preload 通道）。
  * 永不抛异常：失败只记日志，返回是否送达（2xx）。
@@ -182,7 +180,7 @@ function send(name: string, url: string, data?: Record<string, string | number>,
   return (async () => {
     const event: StatsEvent = {
       name,
-      url,
+      url: sanitizePageUrl(url),
       platform: getPlatform(),
       appVersion: await getPluginVersion(),
       installId: getInstallId(),
@@ -419,12 +417,22 @@ function getRuntimeVersion(): string {
   return match?.[1] || '';
 }
 
+/** 错误消息脱敏：去掉 URL 与接口 JSON 回显、只保留首行，避免带出翻译/OCR 的原文或响应体 */
+function sanitizeErrorMessage(raw: string): string {
+  const cleaned = raw
+    .replace(/https?:\/\/\S+/gi, '[url]')
+    .split(/[\n{]/)[0]
+    .trim();
+  return (cleaned || 'unknown').slice(0, 200);
+}
+
 /**
  * 上报 JS/Vue/未捕获 Promise 异常（事件名 bug.error）
- * 只带错误消息（截断 200 字符）、来源、平台、版本与非敏感运行时信息，不带堆栈，避免携带用户数据
+ * 只带脱敏后的错误消息（去 URL/JSON 回显、截断 200 字符）、来源、平台、版本与非敏感运行时信息，
+ * 不带堆栈，避免携带用户数据
  */
 export async function trackError(source: 'vue' | 'js' | 'promise', error: unknown, pageUrl?: string): Promise<void> {
-  const msg = String(error instanceof Error ? error.message : error || 'unknown').slice(0, 200);
+  const msg = sanitizeErrorMessage(String(error instanceof Error ? error.message : error || 'unknown'));
   const key = `${source}:${msg}`;
   if (reportedErrors.has(key)) return;
   reportedErrors.add(key);

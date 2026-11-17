@@ -193,7 +193,8 @@ describe('stats（自建端点）', () => {
       expect(launch).toBeDefined()
       expect(launch.platform).toBe('utools')
       expect(launch.appVersion).toBe('9.9.9') // file:// 下 fetch plugin.json 必败，回退编译期常量
-      expect(launch.installId).toBe('native-device-id-for-test')
+      expect(launch.installId).toBe(window.localStorage.getItem('sr_install_id'))
+      expect(launch.installId).not.toBe('native-device-id-for-test') // 不再读取宿主设备标识，只用本机随机 UUID
       expect(launch.ts).toEqual(expect.any(Number))
       const call = (globalThis.fetch as any).mock.calls.find((c: any[]) => c[1]?.body)
       expect(call[0]).toBe('https://stats.example.com/collect')
@@ -207,6 +208,17 @@ describe('stats（自建端点）', () => {
       const p = sentEvents()[0]
       expect(p.name).toBe('page.view')
       expect(p.url).toBe('/Dictation')
+    })
+
+    it('页面路径剥离查询串：划词/翻译原文等 query 参数不上报', async () => {
+      trackPageView('/translate?text=secret-content')
+      await flush()
+      expect(sentEvents()[0].url).toBe('/translate')
+
+      ;(globalThis as any).window.location.hash = '#/translate?text=abc'
+      trackEvent('word', 'add')
+      await flush()
+      expect(sentEvents()[1].url).toBe('/translate')
     })
 
     it('自定义事件：name 为 类别.操作，label/value 进 data', async () => {
@@ -271,6 +283,13 @@ describe('stats（自建端点）', () => {
       const p = sentEvents().find(x => x.name === 'bug.error')
       expect(p.data.message.length).toBe(200)
     })
+
+    it('错误消息脱敏：去 URL、去 JSON 回显、只留首行', async () => {
+      await trackError('js', new Error('请求 https://api.example.com/v1?q=原文 失败 {"echo":"用户原文"}\n第二行堆栈信息'))
+      await flush()
+      const p = sentEvents().find(x => x.name === 'bug.error')
+      expect(p.data.message).toBe('请求 [url] 失败')
+    })
   })
 
   describe('手动反馈', () => {
@@ -282,7 +301,7 @@ describe('stats（自建端点）', () => {
       expect(p).toBeDefined()
       expect(p.data.text).toBe('测试反馈')
       expect(p.data.contact).toBe('qq:123')
-      expect(p.installId).toBe('native-device-id-for-test')
+      expect(p.installId).toBe(window.localStorage.getItem('sr_install_id'))
     })
 
     it('空文本返回 false 且不上报', async () => {

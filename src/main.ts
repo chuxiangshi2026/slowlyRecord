@@ -162,9 +162,9 @@ registerScheduleTriggerHandler();
   });
 }
 
-// 路由切换时追踪页面浏览
+// 路由切换时追踪页面浏览（只传路由路径，不带查询串，避免把划词/翻译原文带进统计）
 router.afterEach((to) => {
-    trackRouterPageView(to.fullPath);
+    trackRouterPageView(to.path);
 });
 
 /**

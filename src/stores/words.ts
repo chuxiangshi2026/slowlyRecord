@@ -105,6 +105,9 @@ export const useWordsStore =
                 local: {appkey: '', key: ''},
             })
             const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref(createUserApiKeys());
+            // 内置免费翻译额度开关：默认开启，首次使用会弹窗告知数据流向（审核要求做成显式开关）；
+            // 关闭后未配置自己密钥的引擎不再走内置共享 key 与免费公开接口降级链
+            const builtinFreeTranslate = ref(true);
             const createUserOcrApiKeys = (): Record<OcrPlatform, { appkey: string, key: string }> => ({
                 tencent: {appkey: '', key: ''},
                 ali: {appkey: '', key: ''},
@@ -1118,6 +1121,7 @@ export const useWordsStore =
                 currentLanguage,
                 userApiKeys, // 导出用户API密钥
                 userOcrApiKeys,
+                builtinFreeTranslate,
                 setLastAddedWordText,
                 setClosePlugin,
                 setTranslationPlatform,
@@ -1181,6 +1185,7 @@ export const useWordsStore =
                     'focusMode',
                     'userApiKeys',
                     'userOcrApiKeys',
+                    'builtinFreeTranslate',
                     'lastVisitedPage',
                     'hiddenExplain'
                 ] // 不持久化 words 数组，因为单词数据存储在词库中
