@@ -162,16 +162,16 @@ describe('useWordsStore', () => {
   describe('外观设置', () => {
     it('默认值：明亮度 1、无背景、遮罩 0.6、亚克力开、背景模糊 18、列表模糊 12、页头/底栏效果开', () => {
       const store = useWordsStore()
-      expect(store.appBg).toEqual({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 })
+      expect(store.appBg).toEqual({ preset: '', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1, cardAlpha: 0.6, headerAlpha: 0.75, footerAlpha: 0.6 })
     })
 
     it('setAppBg 部分更新并持久化到 user-set（仅存轻量标志位，图片本体在独立文档）', async () => {
       const store = useWordsStore()
       await store.setAppBg({ preset: 'preset-mist', scrim: 0.6 })
-      expect(store.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 })
+      expect(store.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1, cardAlpha: 0.6, headerAlpha: 0.75, footerAlpha: 0.6 })
       expect(addAndUpdateSetDb).toHaveBeenCalled()
       const saved = (addAndUpdateSetDb as any).mock.calls.at(-1)?.[0]
-      expect(saved.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1 })
+      expect(saved.appBg).toEqual({ preset: 'preset-mist', scrim: 0.6, acrylic: true, acrylicBlur: 18, cardBlur: 12, headerEffect: true, footerEffect: true, brightness: 1, cardAlpha: 0.6, headerAlpha: 0.75, footerAlpha: 0.6 })
     })
 
     it('整体明亮度应用到根节点并限制在 50%-150%', async () => {
