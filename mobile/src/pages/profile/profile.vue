@@ -25,6 +25,7 @@
     </view>
 
     <view class="menu-list">
+      <text class="menu-section-title">学习与外观</text>
       <!-- 每日目标：首页进度环的目标值，选中即存 -->
       <view class="menu-item" @click="showDailyGoalPicker">
         <text class="menu-icon goal">🎯</text>
@@ -39,12 +40,6 @@
         <text class="menu-value">{{ theme.modeText }}</text>
         <text class="menu-arrow">›</text>
       </view>
-      <!-- 同步（跳转分包页面） -->
-      <view class="menu-item" @click="goSyncPage">
-        <text class="menu-icon sync">S</text>
-        <text class="menu-text">数据同步</text>
-        <text class="menu-arrow">›</text>
-      </view>
       <!-- 我的成就（跳打卡页成就墙区域） -->
       <view class="menu-item" @click="goAchievements">
         <text class="menu-icon achievement">🏆</text>
@@ -52,7 +47,16 @@
         <text class="menu-value">{{ achievementStore.unlockedCount }}/{{ achievementStore.totalCount }}</text>
         <text class="menu-arrow">›</text>
       </view>
+      <!-- 数据 -->
+      <text class="menu-section-title">数据</text>
+      <!-- 同步（跳转分包页面） -->
+      <view class="menu-item" @click="goSyncPage">
+        <text class="menu-icon sync">S</text>
+        <text class="menu-text">数据同步</text>
+        <text class="menu-arrow">›</text>
+      </view>
       <!-- 翻译设置 -->
+      <text class="menu-section-title">设置与支持</text>
       <view class="menu-item" @click="showTranslationSetting">
         <text class="menu-icon">T</text>
         <text class="menu-text">翻译引擎</text>
@@ -587,6 +591,15 @@ const showAbout = () => {
   align-items: center;
   padding: 30rpx 40rpx;
   border-bottom: 1rpx solid var(--sr-border);
+}
+
+/* 菜单分组标题：移动端设置页二级收纳 */
+.menu-section-title {
+  display: block;
+  padding: 28rpx 40rpx 12rpx;
+  font-size: 24rpx;
+  color: var(--sr-text-3, #8a9a93);
+  letter-spacing: 2rpx;
 }
 
 /* button 版菜单项（意见反馈）：清除微信 button 默认样式，与其他菜单项对齐 */
