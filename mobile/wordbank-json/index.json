@@ -196,5 +196,89 @@
     "name": "肖申克的救赎词汇",
     "wordCount": 50,
     "sizeKB": 5
+  },
+  {
+    "id": "gaokao",
+    "name": "高考词汇",
+    "wordCount": 3746,
+    "sizeKB": 416
+  },
+  {
+    "id": "zhongkao",
+    "name": "中考词汇",
+    "wordCount": 1780,
+    "sizeKB": 195
+  },
+  {
+    "id": "sentence-patterns",
+    "name": "典型句式与场景句型",
+    "wordCount": 264,
+    "sizeKB": 40
+  },
+  {
+    "id": "movie-lines",
+    "name": "电影台词",
+    "wordCount": 223,
+    "sizeKB": 39
+  },
+  {
+    "id": "famous-quotes",
+    "name": "名言警句",
+    "wordCount": 213,
+    "sizeKB": 42
+  },
+  {
+    "id": "tech-vocab",
+    "name": "程序员常用单词",
+    "wordCount": 585,
+    "sizeKB": 45
+  },
+  {
+    "id": "dev-phrases",
+    "name": "程序员场景短句",
+    "wordCount": 190,
+    "sizeKB": 19
+  },
+  {
+    "id": "dev-status",
+    "name": "开发状态短句",
+    "wordCount": 118,
+    "sizeKB": 11
+  },
+  {
+    "id": "dev-debugging",
+    "name": "排 bug 与性能",
+    "wordCount": 193,
+    "sizeKB": 19
+  },
+  {
+    "id": "dev-reading",
+    "name": "看文档与查资料",
+    "wordCount": 164,
+    "sizeKB": 17
+  },
+  {
+    "id": "dev-discussion",
+    "name": "技术讨论与方案权衡",
+    "wordCount": 119,
+    "sizeKB": 17
+  },
+  {
+    "id": "dining",
+    "name": "日常吃饭点餐",
+    "wordCount": 97,
+    "sizeKB": 9
+  },
+  {
+    "id": "shopping",
+    "name": "日常购物",
+    "wordCount": 86,
+    "sizeKB": 9
+  },
+  {
+    "id": "transport",
+    "name": "日常交通出行",
+    "wordCount": 105,
+    "sizeKB": 11
   }
 ]
