@@ -25,6 +25,7 @@
           </view>
         </view>
         <text class="link" @click="directoryVisible = !directoryVisible">章节目录</text>
+        <text class="link" @click="toggleLayout">{{ layoutMode === 'map' ? '网格' : '导图' }}</text>
         <text class="link" @click="restart">重新开始</text>
         <text class="link" :class="{ active: organizeMode }" @click="toggleOrganize">编排</text>
       </view>
@@ -55,6 +56,57 @@
         <button class="ghost-btn" @click="goBack">返回章节</button>
       </view>
 
+      <template v-else>
+        <view class="center-card">
+          <text class="center-word">{{ page.key.value || '主题' }}</text>
+          <text class="center-type">{{ keyTypeLabel }}</text>
+        </view>
+
+        <view v-if="saveError && marked.size === page.words.length" class="save-error">
+          <text class="save-error-text">{{ saveError }}</text>
+          <button size="mini" class="save-retry" @click="finish">重试保存</button>
+        </view>
+
+        <view v-if="layoutMode === 'grid'" class="node-grid">
+          <view v-for="item in displayWords" :key="item.entryId"
+                :class="['node-card', { marked: marked.has(item.entryId), wrong: firstWrong.has(item.entryId) }]"
+                @click="reveal(item.entryId)">
+            <text class="node-word"><text v-for="(part, partIndex) in rootParts(item.word.text)" :key="partIndex"
+                  :class="{ 'root-match': part.matched }">{{ part.text }}</text></text>
+            <text v-if="item.word.phonetic" class="node-phonetic">{{ item.word.phonetic }}</text>
+            <text class="node-explains">{{ shouldHide(item.entryId) ? '点击显示释义' : (item.word.explains || '—') }}</text>
+            <view class="node-actions">
+              <text class="action ok" @click.stop="markRemembered(item.entryId)">✓ 记住了</text>
+              <text class="action no" @click.stop="markForgot(item.entryId)">↺ 还没记住</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 导图布局：中心主题 + 环形词条，连线用旋转细条绘制（小程序不支持 SVG） -->
+        <view v-else class="map-shell">
+          <view class="map-canvas">
+            <view class="map-center">
+              <text class="map-center-word">{{ page.key.value || '主题' }}</text>
+              <text class="map-center-type">{{ keyTypeLabel }}</text>
+            </view>
+            <view v-for="(item, index) in displayWords" :key="'line-' + item.entryId" class="map-line" :style="mapLineStyle(index, displayWords.length)"></view>
+            <view v-for="(item, index) in displayWords" :key="item.entryId"
+                  :class="['map-node', { marked: marked.has(item.entryId), wrong: firstWrong.has(item.entryId), revealed: shouldShowMeaning(item.entryId) }]"
+                  :style="mapNodeStyle(index, displayWords.length)"
+                  @click="reveal(item.entryId)">
+              <text class="map-node-word"><text v-for="(part, partIndex) in rootParts(item.word.text)" :key="partIndex"
+                    :class="{ 'root-match': part.matched }">{{ part.text }}</text></text>
+              <text class="map-node-explains">{{ shouldHide(item.entryId) ? '点击显示' : (item.word.explains || '—') }}</text>
+              <view class="map-node-actions">
+                <text class="map-action ok" @click.stop="markRemembered(item.entryId)">✓</text>
+                <text class="map-action no" @click.stop="markForgot(item.entryId)">↺</text>
+              </view>
+            </view>
+          </view>
+          <text class="map-hint">拖动不便时可切回网格；点击节点可显示释义</text>
+        </view>
+      </template>
+      </template>
       <!-- 编排模式：词条编辑 / 移动 / 拆页（替代复习区展示） -->
       <view v-if="organizeMode && page" class="organize-panel">
         <view class="organize-head">
@@ -96,33 +148,6 @@
         </view>
       </view>
 
-      <template v-else>
-        <view class="center-card">
-          <text class="center-word">{{ page.key.value || '主题' }}</text>
-          <text class="center-type">{{ keyTypeLabel }}</text>
-        </view>
-
-        <view v-if="saveError && marked.size === page.words.length" class="save-error">
-          <text class="save-error-text">{{ saveError }}</text>
-          <button size="mini" class="save-retry" @click="finish">重试保存</button>
-        </view>
-
-        <view class="node-grid">
-          <view v-for="item in displayWords" :key="item.entryId"
-                :class="['node-card', { marked: marked.has(item.entryId), wrong: firstWrong.has(item.entryId) }]"
-                @click="reveal(item.entryId)">
-            <text class="node-word"><text v-for="(part, partIndex) in rootParts(item.word.text)" :key="partIndex"
-                  :class="{ 'root-match': part.matched }">{{ part.text }}</text></text>
-            <text v-if="item.word.phonetic" class="node-phonetic">{{ item.word.phonetic }}</text>
-            <text class="node-explains">{{ shouldHide(item.entryId) ? '点击显示释义' : (item.word.explains || '—') }}</text>
-            <view class="node-actions">
-              <text class="action ok" @click.stop="markRemembered(item.entryId)">✓ 记住了</text>
-              <text class="action no" @click.stop="markForgot(item.entryId)">↺ 还没记住</text>
-            </view>
-          </view>
-        </view>
-      </template>
-      </template>
     </template>
   </view>
 </template>
@@ -396,6 +421,37 @@ function onDirectMeaningChange(event: any) {
 
 function shouldHide(entryId: string): boolean {
   return hideMeaning.value && !directMeaning.value && !revealed.value.has(entryId)
+}
+
+// ========== 导图布局 ==========
+const layoutMode = ref<'grid' | 'map'>('grid')
+
+function toggleLayout() {
+  layoutMode.value = layoutMode.value === 'grid' ? 'map' : 'grid'
+}
+
+function shouldShowMeaning(entryId: string): boolean {
+  return !shouldHide(entryId)
+}
+
+/** 环形半径（百分比）：节点越多越往外扩，保证不压中心节点 */
+function mapRadius(total: number): number {
+  if (total <= 4) return 30
+  if (total <= 8) return 36
+  return 41
+}
+
+function mapNodeStyle(index: number, total: number): string {
+  const angle = (-90 + (360 / Math.max(total, 1)) * index) * Math.PI / 180
+  const radius = mapRadius(total)
+  const x = 50 + Math.cos(angle) * radius
+  const y = 50 + Math.sin(angle) * radius
+  return `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;`
+}
+
+function mapLineStyle(index: number, total: number): string {
+  const angleDeg = -90 + (360 / Math.max(total, 1)) * index
+  return `width:${mapRadius(total)}%;transform:rotate(${angleDeg}deg);`
 }
 
 function reveal(entryId: string) {
@@ -954,5 +1010,123 @@ function goBack() {
     color: var(--sr-on-primary);
     border-color: var(--sr-primary);
   }
+}
+/* ========== 导图布局 ========== */
+.map-shell {
+  padding: 0 24rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-canvas {
+  position: relative;
+  width: 100%;
+  height: 640rpx;
+  margin-top: 8rpx;
+}
+
+.map-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 150rpx;
+  max-width: 220rpx;
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+.map-center-word {
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.map-center-type {
+  font-size: 20rpx;
+  opacity: 0.85;
+}
+
+/* 连线：从中心出发的细条，transform-origin 在左端 */
+.map-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 2rpx;
+  background: var(--sr-border);
+  transform-origin: left center;
+  z-index: 1;
+}
+
+.map-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  min-height: 96rpx;
+  box-sizing: border-box;
+  padding: 10rpx 12rpx;
+  border-radius: 14rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+
+  &.marked {
+    border-color: var(--sr-primary);
+    box-shadow: 0 0 0 1rpx var(--sr-primary) inset;
+  }
+
+  &.wrong {
+    border-color: #c0564f;
+  }
+}
+
+.map-node-word {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--sr-text);
+  word-break: break-all;
+}
+
+.map-node-explains {
+  font-size: 20rpx;
+  color: var(--sr-text-2);
+  line-height: 1.3;
+  max-height: 52rpx;
+  overflow: hidden;
+}
+
+.map-node-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 4rpx;
+}
+
+.map-action {
+  font-size: 20rpx;
+
+  &.ok {
+    color: var(--sr-primary);
+  }
+
+  &.no {
+    color: #c0564f;
+  }
+}
+
+.map-hint {
+  font-size: 20rpx;
+  color: var(--sr-text-2);
+  margin-top: 8rpx;
 }
 </style>
