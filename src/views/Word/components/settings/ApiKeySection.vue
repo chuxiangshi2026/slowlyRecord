@@ -2,7 +2,7 @@
   <div class="content">
     <h5 class="key-section-title">高级设置（自定义 API Key）</h5>
     <div class="free-quota-item">
-      <span class="free-quota-text">内置免费翻译额度：未配置自己的密钥时，使用 B站 Index-Translate、Google、MyMemory 等免费公共接口或内置共享密钥，待翻译文本会发送给对应服务商；关闭后未配置密钥的引擎将不可用</span>
+      <span class="free-quota-text">内置免费翻译额度：未配置自己的密钥时，使用 B站 Index-Translate、Google、MyMemory 等免费公共接口或内置共享密钥，待翻译文本会发送给对应服务商（会访问 index-translate.bilibili.com、translate.googleapis.com、api.mymemory.translated.net、open.bigmodel.cn，按引擎与降级顺序）；关闭后未配置密钥的引擎将不可用</span>
       <el-switch v-model="wordsStore.builtinFreeTranslate" aria-label="内置免费翻译额度"/>
     </div>
     <p class="key-section-hint">开启内置免费额度时默认使用 B站 Index-Translate（免配置），额度耗尽或限流时会自动降级；仅切换其他引擎或需要更高额度时才需填写</p>

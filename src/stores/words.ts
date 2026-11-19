@@ -105,9 +105,9 @@ export const useWordsStore =
                 local: {appkey: '', key: ''},
             })
             const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref(createUserApiKeys());
-            // 内置免费翻译额度开关：默认开启，首次使用会弹窗告知数据流向（审核要求做成显式开关）；
-            // 关闭后未配置自己密钥的引擎不再走内置共享 key 与免费公开接口降级链
-            const builtinFreeTranslate = ref(true);
+            // 内置免费翻译额度开关：商店版默认关闭（审核建议：默认只用用户自配密钥的引擎，内置额度做成显式开启项），
+            // 其他端默认开启；首次使用时仍会弹窗告知数据流向
+            const builtinFreeTranslate = ref(!(__PLATFORM__ === 'utools' && __STORE_BUILD__));
             const createUserOcrApiKeys = (): Record<OcrPlatform, { appkey: string, key: string }> => ({
                 tencent: {appkey: '', key: ''},
                 ali: {appkey: '', key: ''},
