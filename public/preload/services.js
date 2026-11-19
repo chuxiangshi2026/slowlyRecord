@@ -1,6 +1,5 @@
 const path = require('node:path')
 const fs = require('node:fs')
-const os = require('os')
 
 /* STORE-STRIP-START:bing-web （商店构建剥离，scripts/strip-store-forbidden.cjs 删除本段） */
 // ===== 微软网页版翻译（Bing 翻译页 token 流程） =====
@@ -91,16 +90,19 @@ function readPluginFile(absolutePath) {
 }
 
 /**
- * 读取截图等临时图片并转 base64（uTools img 指令的 payload 可能是临时文件路径）。
- * 仅允许系统临时目录与 uTools 临时目录内的路径。
+ * 读取截图等临时图片并转 base64（uTools img 指令的 payload 是临时文件路径）。
+ * 仅允许 uTools 临时目录内、且扩展名为图片的文件，避免把无关临时文件读进渲染层。
  */
 function readTempImageAsBase64(absolutePath) {
-    const allowed = [os.tmpdir()]
+    if (typeof absolutePath !== 'string' || !/\.(png|jpe?g|webp|bmp|gif)$/i.test(absolutePath)) {
+        throw new Error('仅允许读取临时目录中的图片文件')
+    }
+    let base = ''
     try {
-        if (window.utools && window.utools.getPath) allowed.push(window.utools.getPath('temp'))
-    } catch (e) { /* uTools 不可用时忽略 */ }
-    if (!allowed.some(base => base && isPathInside(absolutePath, base))) {
-        throw new Error('路径不在临时目录内')
+        if (window.utools && window.utools.getPath) base = window.utools.getPath('temp')
+    } catch (e) { /* 下面按拒绝处理 */ }
+    if (!base || !isPathInside(absolutePath, base)) {
+        throw new Error('路径不在 uTools 临时目录内')
     }
     return fs.readFileSync(absolutePath).toString('base64')
 }

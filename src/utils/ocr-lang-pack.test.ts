@@ -8,6 +8,7 @@ import 'fake-indexeddb/auto'
 
 // gzip 压缩工具（Node 18+ 有 zlib）
 import { gzipSync } from 'node:zlib'
+import { createHash } from 'node:crypto'
 
 vi.mock('@/adapters/platform', () => ({ isUtools: () => false }))
 // mock uTools storage（lsGet/lsPut 兜底缓存走 getDbStorage）
@@ -20,13 +21,18 @@ vi.mock('@/adapters/db', () => ({
 }))
 
 // lang 名 → profile.ocrLang 走 lang-core（test-setup 已注入）
-import { ensureTrainedData, needsLangPack } from './ocr-lang-pack'
+import { ensureTrainedData, needsLangPack, LANG_PACK_SHA256 } from './ocr-lang-pack'
 
 function gzipBytes(data: Uint8Array): Uint8Array {
   return new Uint8Array(gzipSync(Buffer.from(data)))
 }
 
 const RAW = new TextEncoder().encode('FAKE-TRAINEDDATA-CONTENT')
+
+/** 测试夹具的 SHA-256：把校验表改成与夹具一致，真实值对应固定版本 CDN 文件 */
+function sha256Hex(buf: Uint8Array): string {
+  return createHash('sha256').update(Buffer.from(buf)).digest('hex')
+}
 
 function mockFetchOnce(body: Uint8Array | null, ok = true, status = 200) {
   const fetchMock = vi.fn(async () => {
@@ -45,6 +51,7 @@ function mockFetchOnce(body: Uint8Array | null, ok = true, status = 200) {
 beforeEach(async () => {
   vi.unstubAllGlobals()
   lsStore.clear()
+  LANG_PACK_SHA256.jpn = sha256Hex(gzipBytes(RAW))
   // 用例隔离：彻底删除缓存库再让实现自己建 store
   // （不能预创建空库：实现以 version 1 打开，空库存在时 onupgradeneeded 不触发，
   //   traineddata store 缺失会导致缓存静默失效）
@@ -92,6 +99,14 @@ describe('ocr-lang-pack', () => {
     const second = await ensureTrainedData('ja')
     expect(second).not.toBeNull()
     expect(fetchMock).toHaveBeenCalledTimes(1) // 缓存命中
+  })
+
+  it('SHA-256 不匹配时丢弃并重试，仍失败则拒绝', async () => {
+    const gz = gzipBytes(RAW)
+    const fetchMock = mockFetchOnce(gz)
+    LANG_PACK_SHA256.jpn = 'deadbeef'.repeat(8)
+    await expect(ensureTrainedData('ja')).rejects.toThrow(/校验失败/)
+    expect(fetchMock.mock.calls.length).toBeGreaterThanOrEqual(2) // 丢弃后重下一次
   })
 
   it('HTTP 失败抛错', async () => {

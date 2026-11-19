@@ -91,7 +91,7 @@ function curateStoreDatafiles() {
     fs.writeFileSync(idxFile, JSON.stringify(idx, null, 2) + '\n')
     console.log(`[strip] xiandai.json 保护期作品已移除 ${xdBefore - xd.poems.length} 条（保留公有领域 ${xd.poems.length} 条）`)
 
-    // 中英对照：小王子（bil_007）、老人与海（bil_008）原文仍在保护期，整条删除；
+    // 中英对照：小王子（bil_007）、老人与海（bil_008）、马丁·路德·金 1963 演说（bil_003）仍在保护期，整条删除；
     // 其余条目（原文均公有领域）删除无译者署名的中文译文
     const engDir = path.join(distDir, 'datafile', 'english')
     const biFile = path.join(engDir, 'bilingual.json')
@@ -99,20 +99,20 @@ function curateStoreDatafiles() {
     const biBefore = bi.items.length
     let translations = 0
     bi.items = bi.items
-        .filter(it => !['bil_007', 'bil_008'].includes(it.id))
+        .filter(it => !['bil_003', 'bil_007', 'bil_008'].includes(it.id))
         .map(it => {
             if ('translation' in it) { delete it.translation; translations++ }
             return it
         })
-    if (bi.items.length !== biBefore - 2 || translations === 0) {
+    if (bi.items.length !== biBefore - 3 || translations === 0) {
         console.error('[strip] bilingual.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
     }
     bi.metadata.count = bi.items.length
     bi.metadata.name = '英文原版'
-    bi.metadata.description = '世界名篇英文原文（均为公有领域作品），供背诵与阅读'
-    bi.metadata.lastUpdated = '2026-11-18'
+    bi.metadata.description = '世界名篇英文原文（仅收录公有领域作品），供背诵与阅读'
+    bi.metadata.lastUpdated = '2026-11-20'
     fs.writeFileSync(biFile, JSON.stringify(bi, null, 2) + '\n')
-    console.log(`[strip] bilingual.json 已移除保护期条目 2 条、无署名译文 ${translations} 段`)
+    console.log(`[strip] bilingual.json 已移除保护期条目 3 条、无署名译文 ${translations} 段`)
 
     // 法文名篇：fr_002 小王子与 bilingual 被点名的是同一部作品（法国战殁作家延长保护），整节删除
     const frFile = path.join(engDir, 'french.json')
@@ -128,26 +128,168 @@ function curateStoreDatafiles() {
     console.log('[strip] french.json 已移除 fr_002（小王子，仍在保护期）')
 }
 
-/** 改写 dist/NOTICE：删除含 chinese-poems.com 的译文来源节，其余节重新编号 */
-function rewriteNotice() {
-    const file = path.join(distDir, 'NOTICE')
-    if (!fs.existsSync(file)) return
-    const lines = fs.readFileSync(file, 'utf8').split('\n')
+/**
+ * 英文语料收窄（仅商店包）：审核点名仍在版权保护期、且未标注授权来源的整段正文全部删除。
+ * 保留篇目均为公有领域原文（作者逝世满 70 年 / 美国 1929 年前发表）。
+ */
+function curateEnglishCorpus() {
+    const engDir = path.join(distDir, 'datafile', 'english')
+
+    // 演讲：MLK 1963《I Have a Dream》、肯尼迪 1961 就职演说、乔布斯 2005 斯坦福演讲、
+    // 丘吉尔 1940/1941 两篇、奥巴马 2008 胜选演说、卓别林《大独裁者》1940 影片台词，整条删除；
+    // 保留林肯《葛底斯堡演说》、伊丽莎白一世 1588 演讲、罗斯福 1933 就职演说（均为公有领域）
+    const speechesFile = path.join(engDir, 'speeches.json')
+    const sp = JSON.parse(fs.readFileSync(speechesFile, 'utf8'))
+    const SP_KEEP = new Set(['eng_speech_001', 'eng_speech_007', 'eng_speech_009'])
+    const spBefore = sp.items.length
+    sp.items = sp.items.filter(it => SP_KEEP.has(it.id))
+    if (sp.items.length !== SP_KEEP.size || spBefore === sp.items.length) {
+        console.error('[strip] speeches.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    }
+    sp.metadata.count = sp.items.length
+    sp.metadata.description = '英文演讲名篇节选；仅收录已进入公有领域的篇目'
+    sp.metadata.lastUpdated = '2026-11-20'
+    fs.writeFileSync(speechesFile, JSON.stringify(sp, null, 2) + '\n')
+
+    // 散文：罗素 1967《What I Have Lived For》、E. B. White 1941《Once More to the Lake》删除；
+    // 保留培根、梭罗、厄尔曼、爱默生、狄更斯（均为公有领域）
+    const essaysFile = path.join(engDir, 'essays.json')
+    const es = JSON.parse(fs.readFileSync(essaysFile, 'utf8'))
+    const ES_REMOVE = new Set(['eng_essay_002', 'eng_essay_007'])
+    const esBefore = es.items.length
+    es.items = es.items.filter(it => !ES_REMOVE.has(it.id))
+    if (es.items.length !== esBefore - ES_REMOVE.size) {
+        console.error('[strip] essays.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    }
+    es.metadata.count = es.items.length
+    es.metadata.description = '英美散文名篇节选；仅收录已进入公有领域的篇目'
+    es.metadata.lastUpdated = '2026-11-20'
+    fs.writeFileSync(essaysFile, JSON.stringify(es, null, 2) + '\n')
+
+    // 诗歌：迪伦·托马斯 1951《Do Not Go Gentle into That Good Night》删除；
+    // 其余（莎士比亚、弗罗斯特、华兹华斯、泰戈尔、爱伦·坡、拜伦、雪莱、济慈、狄金森）均为公有领域
+    const poemsFile = path.join(engDir, 'poems.json')
+    const po = JSON.parse(fs.readFileSync(poemsFile, 'utf8'))
+    const PO_REMOVE = new Set(['eng_poem_006'])
+    const poBefore = po.items.length
+    po.items = po.items.filter(it => !PO_REMOVE.has(it.id))
+    if (po.items.length !== poBefore - PO_REMOVE.size) {
+        console.error('[strip] poems.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    }
+    po.metadata.count = po.items.length
+    po.metadata.description = '英美诗歌名篇；仅收录已进入公有领域的篇目'
+    po.metadata.lastUpdated = '2026-11-20'
+    fs.writeFileSync(poemsFile, JSON.stringify(po, null, 2) + '\n')
+
+    // 电影片段：台词与中译版权未明，商店包整文件删除（源码与其他端保留）
+    const movieFile = path.join(engDir, 'movie-scripts.json')
+    if (fs.existsSync(movieFile)) fs.unlinkSync(movieFile)
+
+    console.log(
+        `[strip] 英文语料已收窄：演讲 ${spBefore}→${sp.items.length}、` +
+        `散文 ${esBefore}→${es.items.length}、诗歌 ${poBefore}→${po.items.length}，电影台词已删除`
+    )
+}
+
+/** 商店版词库白名单：只保留考试词汇、多语言分级与核心短语；影视/口语/程序等扩展库与预生成音频不进包 */
+const STORE_BANK_IDS = new Set([
+    'zhongkao', 'gaokao', 'cet4', 'cet6', 'bec', 'gmat', 'gre', 'ielts', 'kaogong',
+    'kaoyan', 'level4', 'level8', 'sat', 'toefl', 'ielts-topics', 'toefl-academic', 'zsb',
+    'roots', 'phrasal-verbs', 'collocations', 'idioms', 'common-phrases', 'sentence-patterns',
+    'jlpt-n5', 'jlpt-n4', 'jlpt-n3',
+    'ru-a1', 'ru-a2', 'es-a1', 'es-a2', 'fr-a1', 'fr-a2',
+])
+
+function pruneStoreWordbanksAndAudio() {
+    const dir = path.join(distDir, 'wordbanks')
+    if (!fs.existsSync(dir)) {
+        console.error(`[strip] 未找到 ${dir}`)
+        process.exit(1)
+    }
+    let removed = 0
+    for (const f of fs.readdirSync(dir)) {
+        if (!f.endsWith('.json')) continue
+        const id = f.replace(/\.json$/, '')
+        if (!STORE_BANK_IDS.has(id)) {
+            fs.unlinkSync(path.join(dir, f))
+            removed++
+        }
+    }
+    if (removed === 0) {
+        console.error('[strip] 词库白名单未剔除任何文件，疑似目录结构已变更'); process.exit(1)
+    }
+
+    // 预生成口语音频由 edge-tts 调用微软 Edge 在线 TTS 生成，服务条款未确认允许再分发，商店包不下发
+    const audioDir = path.join(distDir, 'speech-audio')
+    if (fs.existsSync(audioDir)) fs.rmSync(audioDir, { recursive: true, force: true })
+
+    console.log(`[strip] 词库已裁剪：移除 ${removed} 个扩展词库，speech-audio/ 已删除`)
+}
+
+
+/** 删除 NOTICE 中某个节（从节前分隔线到下一节分隔线之前） */
+function removeNoticeSection(lines, titleIdx, label) {
     const isSep = (l) => /^-{5,}\s*$/.test(l)
-    const titleIdx = lines.findIndex(l => /Chinese poem English translations/.test(l))
-    if (titleIdx === -1) { console.error('[strip] NOTICE 未找到译文来源节，结构可能已变更'); process.exit(1) }
+    if (titleIdx === -1) {
+        console.error(`[strip] NOTICE 未找到「${label}」，结构可能已变更`)
+        process.exit(1)
+    }
     let start = titleIdx
     while (start > 0 && !isSep(lines[start - 1])) start--
-    start = Math.max(0, start - 1) // 含节前的分隔线
+    start = Math.max(0, start - 1) // 含节前分隔线
     let end = titleIdx + 1
     while (end < lines.length && !isSep(lines[end])) end++
     end++ // 标题下的分隔线
     while (end < lines.length && !isSep(lines[end])) end++
     lines.splice(start, end - start)
+}
+
+/**
+ * 改写 dist/NOTICE：删除 chinese-poems 译文节、重写英文语料节（与实际收录范围一致）、
+ * 移除预生成音频节，并重新编号。
+ */
+function rewriteNotice() {
+    const file = path.join(distDir, 'NOTICE')
+    if (!fs.existsSync(file)) return
+    const lines = fs.readFileSync(file, 'utf8').split('\n')
+    const isSep = (l) => /^-{5,}\s*$/.test(l)
+    const findTitle = (re) => lines.findIndex(l => re.test(l))
+
+    // 1) chinese-poems 译文节（授权不明）
+    removeNoticeSection(lines, findTitle(/Chinese poem English translations/), 'chinese-poems 译文节')
+
+    // 2) 英文语料节：明确「仅收录公有领域原文」，与收窄后的实际收录一致
+    const engIdx = findTitle(/Built-in foreign-language classics/)
+    if (engIdx === -1) { console.error('[strip] NOTICE 未找到英文语料节，结构可能已变更'); process.exit(1) }
+    let bodyStart = engIdx + 1
+    while (bodyStart < lines.length && !isSep(lines[bodyStart])) bodyStart++
+    bodyStart++ // 标题下分隔线
+    let bodyEnd = bodyStart
+    while (bodyEnd < lines.length && !isSep(lines[bodyEnd])) bodyEnd++
+    const newBody = [
+        'Used in: datafile/english/*.json (speeches, poems, essays, bilingual,',
+        '         japanese, french, russian)',
+        '',
+        'Only public-domain English originals are included (e.g. Lincoln,',
+        'Shakespeare, Shelley, Bacon, Elizabeth I, F. D. Roosevelt). Works',
+        'still under copyright — modern speeches, essays and poems, and the',
+        'film-quote category — are not included in this build. The bilingual',
+        'category ships public-domain English originals only; no translated',
+        'text is bundled without a named translator. The Japanese, French and',
+        'Russian selections follow the same public-domain rule.',
+        '',
+        '',
+    ]
+    lines.splice(bodyStart, bodyEnd - bodyStart, ...newBody)
+
+    // 3) 预生成音频节：商店包不下发 speech-audio（Edge TTS 合成，再分发条款未确认）
+    removeNoticeSection(lines, findTitle(/Pre-generated speech audio/), '预生成音频节')
+
+    // 4) 重新编号
     let n = 0
     const renumbered = lines.map(l => (/^\d+\.\s+\S/.test(l) ? `${++n}. ${l.replace(/^\d+\.\s+/, '')}` : l))
     fs.writeFileSync(file, renumbered.join('\n'))
-    console.log('[strip] NOTICE 已移除 chinese-poems 译文节')
+    console.log('[strip] NOTICE 已重写（译文节删除、英文语料节更新、音频节移除）')
 }
 
 // ---- 2. 产物闸门 ----
@@ -177,6 +319,16 @@ const FORBIDDEN = [
     '面朝大海',
     'invisible to the eye',
     'Le Petit Prince',
+    // 英文语料保护期篇目（审核点名，商店包必须剥净）
+    'I Have a Dream',
+    'Do Not Go Gentle',
+    'Once More to the Lake',
+    'What I Have Lived For',
+    'Stay Hungry, Stay Foolish',
+    'We Shall Fight on the Beaches',
+    // 影视台词（词库/语料/分类引用均不应出现在商店包）
+    '人生就像一盒巧克力',
+    'movie-scripts.json',
 ]
 
 function* walk(dir) {
@@ -190,6 +342,8 @@ function* walk(dir) {
 stripMarkedSections(preloadFile)
 stripPoetryTranslations()
 curateStoreDatafiles()
+curateEnglishCorpus()
+pruneStoreWordbanksAndAudio()
 rewriteNotice()
 
 const hits = []

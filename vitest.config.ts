@@ -7,6 +7,8 @@ export default defineConfig({
   define: {
     // 测试环境恒为非商店构建（保留内置密钥与 Bing 网页版翻译的完整代码路径）
     __STORE_BUILD__: 'false',
+    // 测试按桌面 uTools 端路径运行（与既有测试的默认平台一致）
+    __PLATFORM__: JSON.stringify('utools'),
   },
   test: {
     // 开发机高负载下，首个用例的动态 import 可能超过默认 10s 钩子超时（全量并发跑偶发 flake 的根因）
