@@ -329,6 +329,8 @@ const FORBIDDEN = [
     // 影视台词（词库/语料/分类引用均不应出现在商店包）
     '人生就像一盒巧克力',
     'movie-scripts.json',
+    // 远程词库兜底地址（商店包只允许本地词库，不得出现任何 CDN 词库下载能力）
+    'chuxiangshi2026/slowlyRecord@211ee3f',
 ]
 
 function* walk(dir) {
