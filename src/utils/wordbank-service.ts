@@ -415,8 +415,9 @@ export async function fetchWordBank(
   // 仅加载本地词库
   let words = await loadLocalWordBank(type);
 
-  // 本地缺失且属于远程兜底类型时，尝试 CDN 按需下载
-  if (!words || words.length === 0) {
+  // 本地缺失且属于远程兜底类型时，尝试 CDN 按需下载。
+  // 商店包关闭该兜底：只使用随包审核过的本地基础词库，避免从 CDN 拉取未随包内容（版权风险）。
+  if (!IS_STORE_PACKAGE && (!words || words.length === 0)) {
     const remoteWords = await loadRemoteWordBank(type);
     if (remoteWords && remoteWords.length > 0) {
       if (config.useCache) {
