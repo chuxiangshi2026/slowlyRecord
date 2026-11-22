@@ -31,7 +31,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "大都/北京",
       "wordCount": 56,
-      "year": 1290
+      "year": 1290,
+      "pinyin": "kū téng lǎo shù hūn yā，\nxiǎo qiáo liú shuǐ rén jiā，\ngǔ dào xī fēng shòu mǎ。\nxī yáng xī xià，\nduàn cháng rén zài tiān yá。"
     },
     {
       "id": "yuan_002",
@@ -51,7 +52,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "潼关/陕西",
       "wordCount": 98,
-      "year": 1329
+      "year": 1329,
+      "pinyin": "fēng luán rú jù， bō tāo rú nù，\nshān hé biǎo lǐ tóng guān lù。\nwàng xī dōu， yì chóu chú。\nshāng xīn qín hàn jīng xíng chù， gōng quē wàn jiān dōu zuò le tǔ。\nxīng， bǎi xìng kǔ； wáng， bǎi xìng kǔ。"
     },
     {
       "id": "yuan_003",
@@ -71,7 +73,8 @@ const data = {
       "source": "《关汉卿集》",
       "location": "大都/北京",
       "wordCount": 168,
-      "year": 1290
+      "year": 1290,
+      "pinyin": "【 gǔn xiù qiú】 yǒu rì yuè cháo mù xuán， yǒu guǐ shén zhǎng zhe shēng sǐ quán。\ntiān dì yě！ zhī hé bǎ qīng zhuó fēn biàn， kě zěn shēng hú tū le dào zhí、 yán yuān？\nwèi shàn de shòu pín qióng gèng mìng duǎn， zào è de xiǎng fù guì yòu shòu yán。\ntiān dì yě！ zuò dé gè pà yìng qī ruǎn， què yuán lái yě zhè bān shùn shuǐ tuī chuán！\ndì yě， nǐ bù fēn hǎo dǎi hé wèi dì？\ntiān yě， nǐ cuò kān xián yú wǎng zuò tiān！\nāi， zhī luò de liǎng lèi lián lián。"
     },
     {
       "id": "yuan_004",
@@ -90,7 +93,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "江南",
       "wordCount": 56,
-      "year": 1290
+      "year": 1290,
+      "pinyin": "xī yáng xià， jiǔ pèi xián，\nliǎng sān háng wèi céng zhe àn。\nluò huā shuǐ xiāng máo shè wǎn，\nduàn qiáo tóu mài yú rén sàn。"
     },
     {
       "id": "yuan_005",
@@ -110,7 +114,8 @@ const data = {
       "source": "《西厢记》",
       "location": "蒲州/普救寺",
       "wordCount": 28,
-      "year": 1300
+      "year": 1300,
+      "pinyin": "【 zhèng gōng· duān zhèng hǎo】 bì yún tiān， huáng huā dì， xī fēng jǐn， běi yàn nán fēi。 xiǎo lái shuí rǎn shuāng lín zuì？ zǒng shì lí rén lèi。"
     },
     {
       "id": "yuan_006",
@@ -129,7 +134,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "骊山/西安",
       "wordCount": 85,
-      "year": 1329
+      "year": 1329,
+      "pinyin": "lí shān sì gù， ā fáng yí jù， dāng shí shē chǐ jīn hé chù？ zhǐ jiàn cǎo xiāo shū， shuǐ yíng yū。 zhì jīn yí hèn mí yān shù。 liè guó zhōu qí qín hàn chǔ， yíng， dōu biàn zuò le tǔ； shū， dōu biàn zuò le tǔ。"
     },
     {
       "id": "yuan_007",
@@ -149,7 +155,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "江南/金陵",
       "wordCount": 52,
-      "year": 1260
+      "year": 1260,
+      "pinyin": "gū cūn luò rì cán xiá， qīng yān lǎo shù hán yā， yì diǎn fēi hóng yǐng xià。 qīng shān lǜ shuǐ， bái cǎo hóng yè huáng huā。"
     },
     {
       "id": "yuan_008",
@@ -168,7 +175,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "大都/北京",
       "wordCount": 57,
-      "year": 1290
+      "year": 1290,
+      "pinyin": "jiù jiǔ tóu， xīn pēi pō， lǎo wǎ pén biān xiào hē hē， gòng shān sēng yě sǒu xián yín hé。 tā chū yí duì jī， wǒ chū yí gè é， xián kuài huó！"
     },
     {
       "id": "yuan_009",
@@ -188,7 +196,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "洛阳/中原",
       "wordCount": 24,
-      "year": 1290
+      "year": 1290,
+      "pinyin": "yù jì jūn yī jūn bù hái， bú jì jūn yī jūn yòu hán。 jì yǔ bú jì jiān， qiè shēn qiān wàn nán。"
     },
     {
       "id": "yuan_010",
@@ -208,7 +217,8 @@ const data = {
       "source": "《全元散曲》",
       "location": "潇湘/湖南",
       "wordCount": 89,
-      "year": 1290
+      "year": 1290,
+      "pinyin": "guà jué bì sōng kū dǎo yǐ， luò cán xiá gū wù qí fēi。 sì wéi bú jìn shān， yí wàng wú qióng shuǐ。 sàn xī fēng mǎn tiān qiū yì。 yè jìng yún fān yuè yǐng dī， zǎi wǒ zài xiāo xiāng huà lǐ。"
     }
   ]
 } as const

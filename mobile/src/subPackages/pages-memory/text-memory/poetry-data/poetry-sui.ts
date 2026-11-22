@@ -31,7 +31,8 @@ const data = {
       "source": "《乐府诗集》",
       "location": "扬州/瓜洲",
       "wordCount": 504,
-      "year": 600
+      "year": 600,
+      "pinyin": "chūn jiāng cháo shuǐ lián hǎi píng， hǎi shàng míng yuè gòng cháo shēng。\nyàn yàn suí bō qiān wàn lǐ， hé chù chūn jiāng wú yuè míng！\njiāng liú wǎn zhuǎn rào fāng diàn， yuè zhào huā lín jiē sì xiàn；\nkōng lǐ liú shuāng bù jué fēi， tīng shàng bái shā kàn bú jiàn。\njiāng tiān yí sè wú xiān chén， jiǎo jiǎo kōng zhōng gū yuè lún。\njiāng pàn hé rén chū jiàn yuè？ jiāng yuè hé nián chū zhào rén？\nrén shēng dài dài wú qióng yǐ， jiāng yuè nián nián wàng xiāng sì。\nbù zhī jiāng yuè dài hé rén， dàn jiàn cháng jiāng sòng liú shuǐ。\nbái yún yí piàn qù yōu yōu， qīng fēng pǔ shàng bú shèng chóu。\nshuí jiā jīn yè piān zhōu zǐ？ hé chù xiāng sī míng yuè lóu？\nkě lián lóu shàng yuè pái huái， yìng zhào lí rén zhuāng jìng tái。\nyù hù lián zhōng juàn bú qù， dǎo yī zhēn shàng fú hái lái。\ncǐ shí xiāng wàng bù xiāng wén， yuàn zhú yuè huá liú zhào jūn。\nhóng yàn cháng fēi guāng bú dù， yú lóng qián yuè shuǐ chéng wén。\nzuó yè xián tán mèng luò huā， kě lián chūn bàn bù hái jiā。\njiāng shuǐ liú chūn qù yù jìn， jiāng tán luò yuè fù xī xié。\nxié yuè chén chén cáng hǎi wù， jié shí xiāo xiāng wú xiàn lù。\nbù zhī chéng yuè jǐ rén guī， luò yuè yáo qíng mǎn jiāng shù。"
     },
     {
       "id": "sui_002",
@@ -49,7 +50,8 @@ const data = {
       "source": "《隋书》",
       "location": "长安/灞桥",
       "wordCount": 56,
-      "year": 580
+      "year": 580,
+      "pinyin": "yáng liǔ qīng qīng zhù dì chuí， yáng huā màn màn jiǎo tiān fēi。\nliǔ tiáo zhé jìn huā fēi jìn， jiè wèn xíng rén guī bu guī？"
     },
     {
       "id": "sui_003",
@@ -69,7 +71,8 @@ const data = {
       "source": "《隋书·文学传》",
       "location": "江都",
       "wordCount": 20,
-      "year": 600
+      "year": 600,
+      "pinyin": "hán yā fēi shù diǎn， liú shuǐ rào gū cūn。 xié yáng yù luò chù， yí wàng àn xiāo hún。"
     },
     {
       "id": "sui_004",
@@ -88,7 +91,8 @@ const data = {
       "source": "《全隋诗》",
       "location": "长安",
       "wordCount": 20,
-      "year": 580
+      "year": 580,
+      "pinyin": "rù chūn cái qī rì， lí jiā yǐ èr nián。 rén guī luò yàn hòu， sī fā zài huā qián。"
     },
     {
       "id": "sui_005",
@@ -107,7 +111,8 @@ const data = {
       "source": "《乐府诗集》",
       "location": "江都",
       "wordCount": 20,
-      "year": 600
+      "year": 600,
+      "pinyin": "mù jiāng píng bú dòng， chūn huā mǎn zhèng kāi。 liú bō jiāng yuè qù， cháo shuǐ dài xīng lái。"
     },
     {
       "id": "sui_006",
@@ -126,7 +131,8 @@ const data = {
       "source": "《全隋诗》",
       "location": "洛阳",
       "wordCount": 20,
-      "year": 600
+      "year": 600,
+      "pinyin": "zǎo qiū jīng luò yè， piāo líng sì kè xīn。 fān fēi wèi kěn xià， yóu yán xī gù lín。"
     },
     {
       "id": "sui_007",
@@ -145,7 +151,8 @@ const data = {
       "source": "《全隋诗》",
       "location": "扬州",
       "wordCount": 28,
-      "year": 600
+      "year": 600,
+      "pinyin": "zhú lú qiān lǐ fàn guī zhōu， yán xuán jiù zhèn xià yáng zhōu。 jiè wèn yáng zhōu zài hé chù， huái nán jiāng běi hǎi xī tóu。"
     },
     {
       "id": "sui_008",
@@ -164,7 +171,8 @@ const data = {
       "source": "《全隋诗》",
       "location": "长安",
       "wordCount": 40,
-      "year": 580
+      "year": 580,
+      "pinyin": "yóu rén dù líng běi， sòng kè hàn chuān dōng。 wú lùn qù yǔ zhù， jù shì yì piāo péng。 qiū bìn hán shuāng bái， shuāi yán yǐ jiǔ hóng。 bié yǒu xiāng sī chù， tí niǎo zá yè fēng。"
     },
     {
       "id": "sui_009",
@@ -183,7 +191,8 @@ const data = {
       "source": "《全隋诗》",
       "location": "长安",
       "wordCount": 84,
-      "year": 580
+      "year": 580,
+      "pinyin": "jū shān sì wàng zǔ， fēng yún jìng zhāo xī。 shēn xī héng gǔ shù， kōng yán wò yōu shí。 rì chū yuǎn xiù míng， niǎo sàn kōng lín jì。 lán tíng dòng yōu qì， zhú shì shēng xū bái。 luò huā rù hù fēi， xì cǎo dāng jiē jī。 guì jiǔ tú yíng zūn， gù rén bú zài xí。 rì mù shān zhī yōu， lín fēng wàng yǔ kè。"
     }
   ]
 } as const

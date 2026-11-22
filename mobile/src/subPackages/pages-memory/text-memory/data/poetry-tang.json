@@ -26,7 +26,8 @@
       "source": "《李太白集》",
       "location": "扬州",
       "wordCount": 20,
-      "year": 726
+      "year": 726,
+      "pinyin": "chuáng qián míng yuè guāng， yí shì dì shàng shuāng。\njǔ tóu wàng míng yuè， dī tóu sī gù xiāng。"
     },
     {
       "id": "tang_002",
@@ -46,7 +47,8 @@
       "source": "《李太白集》",
       "location": "梁园/开封",
       "wordCount": 330,
-      "year": 752
+      "year": 752,
+      "pinyin": "jūn bú jiàn huáng hé zhī shuǐ tiān shàng lái， bēn liú dào hǎi bú fù huí。\njūn bú jiàn gāo táng míng jìng bēi bái fà， cháo rú qīng sī mù chéng xuě。\nrén shēng dé yì xū jìn huān， mò shǐ jīn zūn kōng duì yuè。\ntiān shēng wǒ cái bì yǒu yòng， qiān jīn sàn jìn hái fù lái。\npēng yáng zǎi niú qiě wèi lè， huì xū yì yǐn sān bǎi bēi。\n\ncén fū zǐ， dān qiū shēng， qiāng jìn jiǔ， bēi mò tíng。\nyǔ jūn gē yì qǔ， qǐng jūn wèi wǒ qīng ěr tīng。\nzhōng gǔ zhuàn yù bù zú guì， dàn yuàn cháng zuì bú fù xǐng。\ngǔ lái shèng xián jiē jì mò， wéi yǒu yǐn zhě liú qí míng。\nchén wáng xī shí yàn píng lè， dòu jiǔ shí qiān zì huān xuè。\nzhǔ rén hé wèi yán shǎo qián， jìng xū gū qǔ duì jūn zhuó。\nwǔ huā mǎ， qiān jīn qiú，\nhū ér jiāng chū huàn měi jiǔ， yǔ ěr tóng xiāo wàn gǔ chóu。"
     },
     {
       "id": "tang_003",
@@ -65,7 +67,8 @@
       "source": "《杜工部集》",
       "location": "长安",
       "wordCount": 80,
-      "year": 757
+      "year": 757,
+      "pinyin": "guó pò shān hé zài， chéng chūn cǎo mù shēn。\ngǎn shí huā jiàn lèi， hèn bié niǎo jīng xīn。\nfēng huǒ lián sān yuè， jiā shū dǐ wàn jīn。\nbái tóu sāo gèng duǎn， hún yù bú shèng zān。"
     },
     {
       "id": "tang_004",
@@ -85,7 +88,8 @@
       "source": "《杜工部集》",
       "location": "夔州/白帝城",
       "wordCount": 112,
-      "year": 767
+      "year": 767,
+      "pinyin": "fēng jí tiān gāo yuán xiào āi， zhǔ qīng shā bái niǎo fēi huí。\nwú biān luò mù xiāo xiāo xià， bú jìn cháng jiāng gǔn gǔn lái。\nwàn lǐ bēi qiū cháng zuò kè， bǎi nián duō bìng dú dēng tái。\njiān nán kǔ hèn fán shuāng bìn， liáo dǎo xīn tíng zhuó jiǔ bēi。"
     },
     {
       "id": "tang_005",
@@ -104,7 +108,8 @@
       "source": "《白氏长庆集》",
       "location": "长安/渭城",
       "wordCount": 80,
-      "year": 787
+      "year": 787,
+      "pinyin": "lí lí yuán shàng cǎo， yí suì yì kū róng。\nyě huǒ shāo bú jìn， chūn fēng chuī yòu shēng。\nyuǎn fāng qīn gǔ dào， qíng cuì jiē huāng chéng。\nyòu sòng wáng sūn qù， qī qī mǎn bié qíng。"
     },
     {
       "id": "tang_006",
@@ -123,7 +128,8 @@
       "source": "《全唐诗》",
       "location": "鹳雀楼/山西永济",
       "wordCount": 20,
-      "year": 700
+      "year": 700,
+      "pinyin": "bái rì yī shān jìn， huáng hé rù hǎi liú。\nyù qióng qiān lǐ mù， gèng shàng yì céng lóu。"
     },
     {
       "id": "tang_007",
@@ -142,7 +148,8 @@
       "source": "《全唐诗》",
       "location": "边塞/阴山",
       "wordCount": 28,
-      "year": 740
+      "year": 740,
+      "pinyin": "qín shí míng yuè hàn shí guān， wàn lǐ cháng zhēng rén wèi hái。\ndàn shǐ lóng chéng fēi jiāng zài， bú jiào hú mǎ dù yīn shān。"
     },
     {
       "id": "tang_008",
@@ -161,7 +168,8 @@
       "source": "《王右丞集》",
       "location": "渭城/咸阳",
       "wordCount": 28,
-      "year": 740
+      "year": 740,
+      "pinyin": "wèi chéng cháo yǔ yì qīng chén， kè shè qīng qīng liǔ sè xīn。\nquàn jūn gèng jìn yì bēi jiǔ， xī chū yáng guān wú gù rén。"
     },
     {
       "id": "tang_009",
@@ -181,7 +189,8 @@
       "source": "《柳河东集》",
       "location": "永州/愚溪",
       "wordCount": 20,
-      "year": 805
+      "year": 805,
+      "pinyin": "qiān shān niǎo fēi jué， wàn jìng rén zōng miè。\ngū zhōu suō lì wēng， dú diào hán jiāng xuě。"
     },
     {
       "id": "tang_010",
@@ -200,7 +209,8 @@
       "source": "《孟浩然集》",
       "location": "鹿门山/襄阳",
       "wordCount": 20,
-      "year": 710
+      "year": 710,
+      "pinyin": "chūn mián bù jué xiǎo， chù chù wén tí niǎo。\nyè lái fēng yǔ shēng， huā luò zhī duō shǎo。"
     },
     {
       "id": "tang_011",
@@ -219,7 +229,8 @@
       "source": "《杜工部集》",
       "location": "泰山/兖州",
       "wordCount": 40,
-      "year": 735
+      "year": 735,
+      "pinyin": "dài zōng fú rú hé？ qí lǔ qīng wèi liǎo。\nzào huà zhōng shén xiù， yīn yáng gē hūn xiǎo。\ndàng xiōng shēng céng yún， jué zì rù guī niǎo。\nhuì dāng líng jué dǐng， yì lǎn zhòng shān xiǎo。"
     },
     {
       "id": "tang_012",
@@ -238,7 +249,8 @@
       "source": "《李太白集》",
       "location": "长安/蜀地",
       "wordCount": 345,
-      "year": 742
+      "year": 742,
+      "pinyin": "yī xū xī， wēi hū gāo zāi！\nshǔ dào zhī nán， nán yú shàng qīng tiān！\ncán cóng jí yú fú， kāi guó hé máng rán！\něr lái sì wàn bā qiān suì， bù yǔ qín sāi tōng rén yān。\nxī dāng tài bái yǒu niǎo dào， kě yǐ héng jué é méi diān。\ndì bēng shān cuī zhuàng shì sǐ， rán hòu tiān tī shí zhàn xiāng gōu lián。\nshàng yǒu liù lóng huí rì zhī gāo biāo， xià yǒu chōng bō nì zhé zhī huí chuān。\nhuáng hè zhī fēi shàng bù dé guò， yuán náo yù dù chóu pān yuán。\nqīng ní hé pán pán， bǎi bù jiǔ zhé yíng yán luán。\nmén shēn lì jǐng yǎng xié xī， yǐ shǒu fǔ yīng zuò cháng tàn。\n\nwèn jūn xī yóu hé shí hái？ wèi tú chán yán bù kě pān。\ndàn jiàn bēi niǎo hào gǔ mù， xióng fēi cí cóng rào lín jiān。\nyòu wén zǐ guī tí yè yuè， chóu kōng shān。\nshǔ dào zhī nán， nán yú shàng qīng tiān， shǐ rén tīng cǐ diāo zhū yán！\nlián fēng qù tiān bù yíng chǐ， kū sōng dǎo yǐ jué bì yǐ。\nfēi tuān pù liú zhēng xuān huī， pīng yá zhuǎn shí wàn hè léi。\nqí xiǎn yě rú cǐ， jiē ěr yuǎn dào zhī rén hú wèi hū lái zāi！\n\njiàn gé zhēng róng ér cuī wéi， yì fū dāng guān， wàn fū mò kāi。\nsuǒ shǒu huò fěi qīn， huà wéi láng yǔ chái。\ncháo bì měng hǔ， xī bì cháng shé；\nmó yá shǔn xuè， shā rén rú má。\njǐn chéng suī yún lè， bù rú zǎo hái jiā。\nshǔ dào zhī nán， nán yú shàng qīng tiān， cè shēn xī wàng cháng zī jiē！"
     },
     {
       "id": "tang_013",
@@ -257,7 +269,8 @@
       "source": "《白氏长庆集》",
       "location": "江州/九江",
       "wordCount": 630,
-      "year": 816
+      "year": 816,
+      "pinyin": "xún yáng jiāng tóu yè sòng kè， fēng yè dí huā qiū sè sè。\nzhǔ rén xià mǎ kè zài chuán， jǔ jiǔ yù yǐn wú guǎn xián。\nzuì bù chéng huān cǎn jiāng bié， bié shí máng máng jiāng jìn yuè。\nhū wén shuǐ shàng pí pa shēng， zhǔ rén wàng guī kè bù fā。\nxún shēng àn wèn tán zhě shuí， pí pa shēng tíng yù yǔ chí。\nyí chuán xiāng jìn yāo xiāng jiàn， tiān jiǔ huí dēng zhòng kāi yàn。\nqiān hū wàn huàn shǐ chū lái， yóu bào pí pa bàn zhē miàn。\nzhuǎn zhóu bō xián sān liǎng shēng， wèi chéng qǔ diào xiān yǒu qíng。\nxián xián yǎn yì shēng shēng sī， sì sù píng shēng bù dé zhì。\ndī méi xìn shǒu xù xù tán， shuō jìn xīn zhōng wú xiàn shì。\nqīng lǒng màn niǎn mǒ fù tiāo， chū wèi《 ní cháng》 hòu《 liù yāo》。\ndà xián cáo cáo rú jí yǔ， xiǎo xián qiè qiè rú sī yǔ。\ncáo cáo qiè qiè cuò zá tán， dà zhū xiǎo zhū luò yù pán。\njiān guān yīng yǔ huā dǐ huá， yōu yàn quán liú bīng xià nán。\nbīng quán lěng sè xián níng jué， níng jué bù tōng shēng zàn xiē。\nbié yǒu yōu chóu àn hèn shēng， cǐ shí wú shēng shèng yǒu shēng。\nyín píng zhà pò shuǐ jiāng bèng， tiě qí tū chū dāo qiāng míng。\nqǔ zhōng shōu bō dāng xīn huà， sì xián yì shēng rú liè bó。\ndōng chuán xī fǎng qiāo wú yán， wéi jiàn jiāng xīn qiū yuè bái。\nchén yín fàng bō chā xián zhōng， zhěng dùn yī shang qǐ liǎn róng。\nzì yán běn shì jīng chéng nǚ， jiā zài há má líng xià zhù。\nshí sān xué dé pí pa chéng， míng shǔ jiào fāng dì yī bù。\nqǔ bà céng jiào shàn cái fú， zhuāng chéng měi bèi qiū niáng dù。\nwǔ líng nián shào zhēng chán tóu， yì qǔ hóng xiāo bù zhī shù。\ndiàn tóu yín bì jī jié suì， xuè sè luó qún fān jiǔ wū。\njīn nián huān xiào fù míng nián， qiū yuè chūn fēng děng xián dù。\ndì zǒu cóng jūn ā yí sǐ， mù qù cháo lái yán sè gù。\nmén qián lěng luò ān mǎ xī， lǎo dà jià zuò shāng rén fù。\nshāng rén zhòng lì qīng bié lí， qián yuè fú liáng mǎi chá qù。\nqù lái jiāng kǒu shǒu kōng chuán， rào chuán yuè míng jiāng shuǐ hán。\nyè shēn hū mèng shào nián shì， mèng tí zhuāng lèi hóng lán gān。\nwǒ wén pí pa yǐ tàn xī， yòu wén cǐ yǔ zhòng jī jī。\ntóng shì tiān yá lún luò rén， xiāng féng hé bì céng xiāng shí！\nwǒ cóng qù nián cí dì jīng， zhé jū wò bìng xún yáng chéng。\nxún yáng dì pì wú yīn yuè， zhōng suì bù wén sī zhú shēng。\nzhù jìn pén jiāng dì dī shī， huáng lú kǔ zhú rào zhái shēng。\nqí jiān dàn mù wén hé wù？ dù juān tí xuè yuán āi míng。\nchūn jiāng huā cháo qiū yuè yè， wǎng wǎng qǔ jiǔ hái dú qīng。\nqǐ wú shān gē yǔ cūn dí？ ǒu yǎ cháo zhā nán wéi tīng。\njīn yè wén jūn pí pa yǔ， rú tīng xiān lè ěr zàn míng。\nmò cí gèng zuò tán yì qǔ， wèi jūn fān zuò《 pí pa xíng》。\ngǎn wǒ cǐ yán liáng jiǔ lì， què zuò cù xián xián zhuǎn jí。\nqī qī bú sì xiàng qián shēng， mǎn zuò zhòng wén jiē yǎn qì。\nzuò zhōng qì xià shuí zuì duō？ jiāng zhōu sī mǎ qīng shān shī。"
     },
     {
       "id": "tang_014",
@@ -276,7 +289,8 @@
       "source": "《全唐诗》",
       "location": "黄鹤楼/武汉",
       "wordCount": 56,
-      "year": 730
+      "year": 730,
+      "pinyin": "xī rén yǐ chéng huáng hè qù， cǐ dì kòng yú huáng hè lóu。\nhuáng hè yí qù bú fù fǎn， bái yún qiān zǎi kōng yōu yōu。\nqíng chuān lì lì hàn yáng shù， fāng cǎo qī qī yīng wǔ zhōu。\nrì mù xiāng guān hé chù shì？ yān bō jiāng shàng shǐ rén chóu。"
     },
     {
       "id": "tang_015",
@@ -295,7 +309,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 40,
-      "year": 740
+      "year": 740,
+      "pinyin": "kōng shān xīn yǔ hòu， tiān qì wǎn lái qiū。\nmíng yuè sōng jiān zhào， qīng quán shí shàng liú。\nzhú xuān guī huàn nǚ， lián dòng xià yú zhōu。\nsuí yì chūn fāng xiē， wáng sūn zì kě liú。"
     },
     {
       "id": "tang_016",
@@ -313,7 +328,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 56,
-      "year": 840
+      "year": 840,
+      "pinyin": "xiāng jiàn shí nán bié yì nán， dōng fēng wú lì bǎi huā cán。\nchūn cán dào sǐ sī fāng jìn， là jù chéng huī lèi shǐ gān。\nxiǎo jìng dàn chóu yún bìn gǎi， yè yín yìng jué yuè guāng hán。\npéng shān cǐ qù wú duō lù， qīng niǎo yīn qín wèi tàn kàn。"
     },
     {
       "id": "tang_017",
@@ -332,7 +348,8 @@
       "source": "《樊川文集》",
       "location": "秦淮河/南京",
       "wordCount": 28,
-      "year": 835
+      "year": 835,
+      "pinyin": "yān lóng hán shuǐ yuè lóng shā， yè bó qín huái jìn jiǔ jiā。\nshāng nǚ bù zhī wáng guó hèn， gé jiāng yóu chàng hòu tíng huā。"
     },
     {
       "id": "tang_018",
@@ -350,7 +367,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 82,
-      "year": 744
+      "year": 744,
+      "pinyin": "jīn zūn qīng jiǔ dòu shí qiān， yù pán zhēn xiū zhí wàn qián。\ntíng bēi tóu zhù bù néng shí， bá jiàn sì gù xīn máng rán。\nyù dù huáng hé bīng sāi chuān， jiāng dēng tài háng xuě mǎn shān。\nxián lái chuí diào bì xī shàng， hū fù chéng zhōu mèng rì biān。\nxíng lù nán， xíng lù nán， duō qí lù， jīn ān zài？\ncháng fēng pò làng huì yǒu shí， zhí guà yún fān jì cāng hǎi。"
     },
     {
       "id": "tang_019",
@@ -369,7 +387,8 @@
       "source": "《刘梦得文集》",
       "location": "扬州",
       "wordCount": 56,
-      "year": 826
+      "year": 826,
+      "pinyin": "bā shān chǔ shuǐ qī liáng dì， èr shí sān nián qì zhì shēn。\nhuái jiù kōng yín wén dí fù， dào xiāng fān sì làn kē rén。\nchén zhōu cè pàn qiān fān guò， bìng shù qián tou wàn mù chūn。\njīn rì tīng jūn gē yì qǔ， zàn píng bēi jiǔ cháng jīng shén。"
     },
     {
       "id": "tang_020",
@@ -388,7 +407,8 @@
       "source": "《陈伯玉集》",
       "location": "幽州台/北京",
       "wordCount": 22,
-      "year": 697
+      "year": 697,
+      "pinyin": "qián bú jiàn gǔ rén， hòu bú jiàn lái zhě。\nniàn tiān dì zhī yōu yōu， dú chuàng rán ér tì xià！"
     },
     {
       "id": "tang_021",
@@ -407,7 +427,8 @@
       "source": "《王右丞集》",
       "location": "河西走廊/居延",
       "wordCount": 40,
-      "year": 737
+      "year": 737,
+      "pinyin": "dān chē yù wèn biān， shǔ guó guò jū yán。\nzhēng péng chū hàn sāi， guī yàn rù hú tiān。\ndà mò gū yān zhí， cháng hé luò rì yuán。\nxiāo guān féng hòu qí， dū hù zài yàn rán。"
     },
     {
       "id": "tang_022",
@@ -426,7 +447,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 56,
-      "year": 858
+      "year": 858,
+      "pinyin": "jǐn sè wú duān wǔ shí xián， yì xián yí zhù sī huá nián。\nzhuāng shēng xiǎo mèng mí hú dié， wàng dì chūn xīn tuō dù juān。\ncāng hǎi yuè míng zhū yǒu lèi， lán tián rì nuǎn yù shēng yān。\ncǐ qíng kě dài chéng zhuī yì， zhǐ shì dāng shí yǐ wǎng rán。"
     },
     {
       "id": "tang_023",
@@ -445,7 +467,8 @@
       "source": "《白氏长庆集》",
       "location": "钱塘湖/杭州",
       "wordCount": 56,
-      "year": 823
+      "year": 823,
+      "pinyin": "gū shān sì běi jiǎ tíng xī， shuǐ miàn chū píng yún jiǎo dī。\njǐ chù zǎo yīng zhēng nuǎn shù， shuí jiā xīn yàn zhuó chūn ní。\nluàn huā jiàn yù mí rén yǎn， qiǎn cǎo cái néng méi mǎ tí。\nzuì ài hú dōng xíng bù zú， lǜ yáng yīn lǐ bái shā dī。"
     },
     {
       "id": "tang_024",
@@ -464,7 +487,8 @@
       "source": "《王子安集》",
       "location": "长安",
       "wordCount": 40,
-      "year": 668
+      "year": 668,
+      "pinyin": "chéng quē fǔ sān qín， fēng yān wàng wǔ jīn。\nyǔ jūn lí bié yì， tóng shì huàn yóu rén。\nhǎi nèi cún zhī jǐ， tiān yá ruò bǐ lín。\nwú wéi zài qí lù， ér nǚ gòng zhān jīn。"
     },
     {
       "id": "tang_025",
@@ -482,7 +506,8 @@
       "source": "《杜工部集》",
       "location": "成都/草堂",
       "wordCount": 170,
-      "year": 761
+      "year": 761,
+      "pinyin": "bā yuè qiū gāo fēng nù háo， juàn wǒ wū shàng sān chóng máo。\nmáo fēi dù jiāng sǎ jiāng jiāo， gāo zhě guà juàn cháng lín shāo， xià zhě piāo zhuǎn chén táng ào。\nnán cūn qún tóng qī wǒ lǎo wú lì， rěn néng duì miàn wèi dào zéi。\ngōng rán bào máo rù zhú qù， chún jiāo kǒu zào hū bù dé， guī lái yǐ zhàng zì tàn xī。\né qǐng fēng dìng yún mò sè， qiū tiān mò mò xiàng hūn hēi。\nbù qīn duō nián lěng sì tiě， jiāo ér è wò tà lǐ liè。\nchuáng tóu wū lòu wú gān chù， yǔ jiǎo rú má wèi duàn jué。\nzì jīng sāng luàn shǎo shuì mián， cháng yè zhān shī hé yóu chè！\nān dé guǎng shà qiān wàn jiān， dà bì tiān xià hán shì jù huān yán！ fēng yǔ bú dòng ān rú shān。\nwū hū！ hé shí yǎn qián tū wù jiàn cǐ wū， wú lú dú pò shòu dòng sǐ yì zú！"
     },
     {
       "id": "tang_026",
@@ -501,7 +526,8 @@
       "source": "《昌黎先生集》",
       "location": "长安",
       "wordCount": 456,
-      "year": 802
+      "year": 802,
+      "pinyin": "gǔ zhī xué zhě bì yǒu shī。 shī zhě， suǒ yǐ chuán dào shòu yè jiě huò yě。 rén fēi shēng ér zhī zhī zhě， shú néng wú huò？ huò ér bù cóng shī， qí wèi huò yě， zhōng bù jiě yǐ。\nshēng hū wú qián， qí wén dào yě gù xiān hū wú， wú cóng ér shī zhī； shēng hū wú hòu， qí wén dào yě yì xiān hū wú， wú cóng ér shī zhī。 wú shī dào yě， fū yōng zhī qí nián zhī xiān hòu shēng yú wú hū？ shì gù wú guì wú jiàn， wú cháng wú shǎo， dào zhī suǒ cún， shī zhī suǒ cún yě。\njiē hū！ shī dào zhī bù chuán yě jiǔ yǐ！ yù rén zhī wú huò yě nán yǐ！ gǔ zhī shèng rén， qí chū rén yě yuǎn yǐ， yóu qiě cóng shī ér wèn yān； jīn zhī zhòng rén， qí xià shèng rén yě yì yuǎn yǐ， ér chǐ xué yú shī。 shì gù shèng yì shèng， yú yì yú。 shèng rén zhī suǒ yǐ wéi shèng， yú rén zhī suǒ yǐ wéi yú， qí jiē chū yú cǐ hū？ ài qí zǐ， zé shī ér jiào zhī； yú qí shēn yě， zé chǐ shī yān， huò yǐ。 bǐ tóng zǐ zhī shī， shòu zhī shū ér xí qí jù dòu zhě， fēi wú suǒ wèi chuán qí dào jiě qí huò zhě yě。 jù dòu zhī bù zhī， huò zhī bù jiě， huò shī yān， huò bù yān， xiǎo xué ér dà yí， wú wèi jiàn qí míng yě。 wū yī yuè shī bǎi gōng zhī rén， bù chǐ xiāng shī。 shì dà fū zhī zú， yuē shī yuē dì zǐ yún zhě， zé qún jù ér xiào zhī。 wèn zhī， zé yuē：' bǐ yǔ bǐ nián xiāng ruò yě， dào xiāng sì yě。 wèi bēi zé zú xiū， guān shèng zé jìn yú。' wū hū！ shī dào zhī bú fù kě zhī yǐ。 wū yī yuè shī bǎi gōng zhī rén， jūn zǐ bù chǐ， jīn qí zhì nǎi fǎn bù néng jí， qí kě guài yě yú！\nshèng rén wú cháng shī。 kǒng zǐ shī tán zǐ、 cháng hóng、 shī xiāng、 lǎo dān。 tán zǐ zhī tú， qí xián bù jí kǒng zǐ。 kǒng zǐ yuē：' sān rén xíng， zé bì yǒu wǒ shī。' shì gù dì zǐ bú bì bù rú shī， shī bú bì xián yú dì zǐ， wén dào yǒu xiān hòu， shù yè yǒu zhuān gōng， rú shì ér yǐ。\nlǐ shì zǐ pán， nián shí qī， hǎo gǔ wén， liù yì jīng zhuàn jiē tōng xí zhī， bù jū yú shí， xué yú yú。 yú jiā qí néng xíng gǔ dào， zuò《 shī shuō》 yǐ yí zhī。"
     },
     {
       "id": "tang_027",
@@ -520,7 +546,8 @@
       "source": "《樊川文集》",
       "location": "长安",
       "wordCount": 513,
-      "year": 825
+      "year": 825,
+      "pinyin": "liù wáng bì， sì hǎi yī， shǔ shān wù， ā fáng chū。 fù yā sān bǎi yú lǐ， gé lí tiān rì。 lí shān běi gòu ér xī zhé， zhí zǒu xián yáng。 èr chuān róng róng， liú rù gōng qiáng。 wǔ bù yī lóu， shí bù yì gé； láng yāo màn huí， yán yá gāo zhuó； gè bào dì shì， gōu xīn dòu jiǎo。 pán pán yān， qūn qūn yān， fēng fáng shuǐ wō， chù bù zhī qí jǐ qiān wàn luò。 cháng qiáo wò bō， wèi yún hé lóng？ fù dào heng kōng， bú jì hé hóng？ gāo dī míng mí， bù zhī xī dōng。 gē tái nuǎn xiǎng， chūn guāng róng róng； wǔ diàn lěng xiù， fēng yǔ qī qī。 yí rì zhī nèi， yì gōng zhī jiān， ér qì hòu bù qí。\nfēi pín yìng qiáng， wáng zǐ huáng sūn， cí lóu xià diàn， niǎn lái yú qín。 cháo gē yè xián， wèi qín gōng rén。 míng xīng yíng yíng， kāi zhuāng jìng yě； lǜ yún rǎo rǎo， shū xiǎo huán yě； wèi liú zhǎng nì， qì zhī shuǐ yě； yān xié wù héng， fén jiāo lán yě。 léi tíng zhà jīng， gōng chē guò yě； lù lù yuǎn tīng， yǎo bù zhī qí suǒ zhī yě。 yì jī yì róng， jìn tài jí yán， màn lì yuǎn shì， ér wàng xìng yān。 yǒu bú jiàn zhě， sān shí liù nián。 yān zhào zhī shōu cáng， hán wèi zhī jīng yíng， qí chǔ zhī jīng yīng， jǐ shì jǐ nián， piāo lüè qí rén， yǐ dié rú shān。 yí dàn bù néng yǒu， shū lái qí jiān。 dǐng dāng yù shí， jīn kuài zhū lì， qì zhì lǐ yǐ， qín rén shì zhī， yì bú shèn xī。\njiē hū！ yì rén zhī xīn， qiān wàn rén zhī xīn yě。 qín ài fēn shē， rén yì niàn qí jiā。 nài hé qǔ zhī jìn zī zhū， yòng zhī rú ní shā？ shǐ fù dòng zhī zhù， duō yú nán mǔ zhī nóng fū； jià liáng zhī chuán， duō yú jī shàng zhī gōng nǚ； dīng tóu lín lín， duō yú zài yǔ zhī sù lì； wǎ fèng cēn cī， duō yú zhōu shēn zhī bó lǚ； zhí lán héng kǎn， duō yú jiǔ tǔ zhī chéng guō； guǎn xián ǒu yǎ， duō yú shì rén zhī yán yǔ。 shǐ tiān xià zhī rén， bù gǎn yán ér gǎn nù。 dú fū zhī xīn， rì yì jiāo gù。 shù zú jiào， hán gǔ jǔ， chǔ rén yí jù， kě lián jiāo tǔ！\nwū hū！ miè liù guó zhě liù guó yě， fēi qín yě； zú qín zhě qín yě， fēi tiān xià yě。 jiē hū！ shǐ liù guó gè ài qí rén， zé zú yǐ jù qín； shǐ qín fù ài liù guó zhī rén， zé dì sān shì kě zhì wàn shì ér wèi jūn， shuí dé ér zú miè yě？ qín rén bù xiá zì āi， ér hòu rén āi zhī； hòu rén āi zhī ér bú jiàn zhī， yì shǐ hòu rén ér fù āi hòu rén yě。"
     },
     {
       "id": "tang_028",
@@ -539,7 +566,8 @@
       "source": "《刘梦得文集》",
       "location": "和州/安徽",
       "wordCount": 81,
-      "year": 824
+      "year": 824,
+      "pinyin": "shān bú zài gāo， yǒu xiān zé míng。 shuǐ bú zài shēn， yǒu lóng zé líng。 sī shì lòu shì， wéi wú dé xīn。 tái hén shàng jiē lǜ， cǎo sè rù lián qīng。 tán xiào yǒu hóng rú， wǎng lái wú bái dīng。 kě yǐ tiáo sù qín， yuè jīn jīng。 wú sī zhú zhī luàn ěr， wú àn dú zhī láo xíng。 nán yáng zhū gě lú， xī shǔ zǐ yún tíng。 kǒng zǐ yún： hé lòu zhī yǒu？"
     },
     {
       "id": "tang_029",
@@ -558,7 +586,8 @@
       "source": "《柳河东集》",
       "location": "永州/湖南",
       "wordCount": 193,
-      "year": 805
+      "year": 805,
+      "pinyin": "cóng xiǎo qiū xī xíng bǎi èr shí bù， gé huáng zhú， wén shuǐ shēng， rú míng pèi huán， xīn lè zhī。 fá zhú qǔ dào， xià jiàn xiǎo tán， shuǐ yóu qīng liè。 quán shí yǐ wéi dǐ， jìn àn， juàn shí dǐ yǐ chū， wèi dǐ， wèi yǔ， wèi kān， wèi yán。 qīng shù cuì màn， méng luò yáo zhuì， cēn cī pī fú。\ntán zhōng yú kě bǎi xǔ tóu， jiē ruò kōng yóu wú suǒ yī。 rì guāng xià chè， yǐng bù shí shàng， yǐ rán bú dòng； chù ěr yuǎn shì， wǎng lái xī hū。 sì yǔ yóu zhě xiāng lè。\ntán xī nán ér wàng， dòu zhé shé xíng， míng miè kě jiàn。 qí àn shì quǎn yá chà hù， bù kě zhī qí yuán。\nzuò tán shàng， sì miàn zhú shù huán hé， jì liáo wú rén， qī shén hán gǔ， qiāo chuàng yōu suì。 yǐ qí jìng guò qīng， bù kě jiǔ jū， nǎi jì zhī ér qù。\ntóng yóu zhě： wú wǔ líng， gōng gǔ， yú dì zōng xuán。 lì ér cóng zhě， cuī shì èr xiǎo shēng： yuē shù jǐ， yuē fèng yī。"
     },
     {
       "id": "tang_030",
@@ -577,7 +606,8 @@
       "source": "《昌黎先生集》",
       "location": "长安",
       "wordCount": 153,
-      "year": 795
+      "year": 795,
+      "pinyin": "shì yǒu bó lè， rán hòu yǒu qiān lǐ mǎ。 qiān lǐ mǎ cháng yǒu， ér bó lè bù cháng yǒu。 gù suī yǒu míng mǎ， zhī rǔ yú nú lì rén zhī shǒu， pián sǐ yú cáo lì zhī jiān， bù yǐ qiān lǐ chēng yě。\nmǎ zhī qiān lǐ zhě， yì shí huò jìn sù yì shí。 shí mǎ zhě bù zhī qí néng qiān lǐ ér shí yě。 shì mǎ yě， suī yǒu qiān lǐ zhī néng， shí bù bǎo， lì bù zú， cái měi bú wài jiàn， qiě yù yǔ cháng mǎ děng bù kě dé， ān qiú qí néng qiān lǐ yě？\ncè zhī bù yǐ qí dào， shí zhī bù néng jìn qí cái， míng zhī ér bù néng tōng qí yì， zhí cè ér lín zhī， yuē：' tiān xià wú mǎ！' wū hū！ qí zhēn wú mǎ xié？ qí zhēn bù zhī mǎ yě！"
     },
     {
       "id": "tang_031",
@@ -596,7 +626,8 @@
       "source": "《岑嘉州集》",
       "location": "轮台/新疆",
       "wordCount": 126,
-      "year": 754
+      "year": 754,
+      "pinyin": "běi fēng juàn dì bái cǎo zhé， hú tiān bā yuè jí fēi xuě。\nhū rú yī yè chūn fēng lái， qiān shù wàn shù lí huā kāi。\nsàn rù zhū lián shī luó mù， hú qiú bù nuǎn jǐn qīn báo。\njiāng jūn jiǎo gōng bù dé kòng， dū hù tiě yī lěng nán zhe。\nhàn hǎi lán gān bǎi zhàng bīng， chóu yún cǎn dàn wàn lǐ níng。\nzhōng jūn zhì jiǔ yǐn guī kè， hú qín pí pa yǔ qiāng dí。\nfēn fēn mù xuě xià yuán mén， fēng chè hóng qí dòng bù fān。\nlún tái dōng mén sòng jūn qù， qù shí xuě mǎn tiān shān lù。\nshān huí lù zhuǎn bú jiàn jūn， xuě shàng kōng liú mǎ xíng chù。"
     },
     {
       "id": "tang_032",
@@ -615,7 +646,8 @@
       "source": "《李太白集》",
       "location": "白帝城/重庆",
       "wordCount": 28,
-      "year": 759
+      "year": 759,
+      "pinyin": "cháo cí bái dì cǎi yún jiān， qiān lǐ jiāng líng yí rì hái。\nliǎng àn yuán shēng tí bú zhù， qīng zhōu yǐ guò wàn chóng shān。"
     },
     {
       "id": "tang_033",
@@ -633,7 +665,8 @@
       "source": "《李太白集》",
       "location": "天门山/安徽",
       "wordCount": 28,
-      "year": 725
+      "year": 725,
+      "pinyin": "tiān mén zhōng duàn chǔ jiāng kāi， bì shuǐ dōng liú zhì cǐ huí。\nliǎng àn qīng shān xiāng duì chū， gū fān yí piàn rì biān lái。"
     },
     {
       "id": "tang_034",
@@ -652,7 +685,8 @@
       "source": "《李太白集》",
       "location": "扬州",
       "wordCount": 28,
-      "year": 753
+      "year": 753,
+      "pinyin": "yáng huā luò jìn zǐ guī tí， wén dào lóng biāo guò wǔ xī。\nwǒ jì chóu xīn yǔ míng yuè， suí jūn zhí dào yè láng xī。"
     },
     {
       "id": "tang_035",
@@ -671,7 +705,8 @@
       "source": "《孟东野集》",
       "location": "溧阳/江苏",
       "wordCount": 30,
-      "year": 796
+      "year": 796,
+      "pinyin": "cí mǔ shǒu zhōng xiàn， yóu zǐ shēn shàng yī。\nlín xíng mì mì fèng， yì kǒng chí chí guī。\nshuí yán cùn cǎo xīn， bào dé sān chūn huī。"
     },
     {
       "id": "tang_036",
@@ -690,7 +725,8 @@
       "source": "《白氏长庆集》",
       "location": "长安",
       "wordCount": 135,
-      "year": 806
+      "year": 806,
+      "pinyin": "mài tàn wēng， fá xīn shāo tàn nán shān zhōng。\nmǎn miàn chén huī yān huǒ sè， liǎng bìn cāng cāng shí zhǐ hēi。\nmài tàn dé qián hé suǒ yíng？ shēn shàng yī shang kǒu zhōng shí。\nkě lián shēn shàng yī zhèng dān， xīn yōu tàn jiàn yuàn tiān hán。\nyè lái chéng wài yì chǐ xuě， xiǎo jià tàn chē niǎn bīng zhé。\nniú kùn rén jī rì yǐ gāo， shì nán mén wài ní zhōng xiē。\npiān piān liǎng qí lái shì shuí？ huáng yī shǐ zhě bái shān ér。\nshǒu bǎ wén shū kǒu chēng chì， huí chē chì niú qiān xiàng běi。\nyì chē tàn， qiān yú jīn， gōng shǐ qū jiāng xī bù dé。\nbàn pǐ hóng shā yí zhàng líng， xì xiàng niú tóu chōng tàn zhí。"
     },
     {
       "id": "tang_037",
@@ -708,7 +744,8 @@
       "source": "《樊川文集》",
       "location": "黄州/赤壁",
       "wordCount": 28,
-      "year": 842
+      "year": 842,
+      "pinyin": "zhé jǐ chén shā tiě wèi xiāo， zì jiāng mó xǐ rèn qián cháo。\ndōng fēng bù yǔ zhōu láng biàn， tóng què chūn shēn suǒ èr qiáo。"
     },
     {
       "id": "tang_038",
@@ -727,7 +764,8 @@
       "source": "《樊川文集》",
       "location": "江南",
       "wordCount": 28,
-      "year": 835
+      "year": 835,
+      "pinyin": "qiān lǐ yīng tí lǜ yìng hóng， shuǐ cūn shān guō jiǔ qí fēng。\nnán cháo sì bǎi bā shí sì， duō shǎo lóu tái yān yǔ zhōng。"
     },
     {
       "id": "tang_039",
@@ -745,7 +783,8 @@
       "source": "《李义山诗集》",
       "location": "巴蜀/四川",
       "wordCount": 28,
-      "year": 850
+      "year": 850,
+      "pinyin": "jūn wèn guī qī wèi yǒu qī， bā shān yè yǔ zhǎng qiū chí。\nhé dāng gòng jiǎn xī chuāng zhú， què huà bā shān yè yǔ shí。"
     },
     {
       "id": "tang_040",
@@ -764,7 +803,8 @@
       "source": "《李长吉歌诗》",
       "location": "雁门关/山西",
       "wordCount": 56,
-      "year": 807
+      "year": 807,
+      "pinyin": "hēi yún yā chéng chéng yù cuī， jiǎ guāng xiàng rì jīn lín kāi。\njiǎo shēng mǎn tiān qiū sè lǐ， sài shàng yàn zhī níng yè zǐ。\nbàn juàn hóng qí lín yì shuǐ， shuāng zhòng gǔ hán shēng bù qǐ。\nbào jūn huáng jīn tái shàng yì， tí xié yù lóng wèi jūn sǐ。"
     },
     {
       "id": "tang_041",
@@ -783,7 +823,8 @@
       "source": "《李太白集》",
       "location": "越中/浙江",
       "wordCount": 284,
-      "year": 746
+      "year": 746,
+      "pinyin": "hǎi kè tán yíng zhōu， yān tāo wēi máng xìn nán qiú；\nyuè rén yǔ tiān lǎo， yún xiá míng miè huò kě dǔ。\ntiān lǎo lián tiān xiàng tiān héng， shì bá wǔ yuè yǎn chì chéng。\ntiān tái sì wàn bā qiān zhàng， duì cǐ yù dǎo dōng nán qīng。\nwǒ yù yīn zhī mèng wú yuè， yí yè fēi dù jìng hú yuè。\nhú yuè zhào wǒ yǐng， sòng wǒ zhì yǎn xī。\nxiè gōng sù chù jīn shàng zài， lù shuǐ dàng yàng qīng yuán tí。\njiǎo zhù xiè gōng jī， shēn dēng qīng yún tī。\nbàn bì jiàn hǎi rì， kōng zhōng wén tiān jī。\nqiān yán wàn zhuǎn lù bú dìng， mí huā yǐ shí hū yǐ míng。\nxióng páo lóng yín yīn yán quán， lì shēn lín xī jīng céng diān。\nyún qīng qīng xī yù yǔ， shuǐ dàn dàn xī shēng yān。\nliè quē pī lì， qiū luán bēng cuī。\ndòng tiān shí fēi， hōng rán zhōng kāi。\nqīng míng hào dàng bú jiàn dǐ， rì yuè zhào yào jīn yín tái。\nní wèi yī xī fēng wèi mǎ， yún zhī jūn xī fēn fēn ér lái xià。\nhǔ gǔ sè xī luán huí chē， xiān zhī rén xī liè rú má。\nhū hún jì yǐ pò dòng， huǎng jīng qǐ ér cháng jiē。\nwéi jué shí zhī zhěn xí， shī xiàng lái zhī yān xiá。\nshì jiān xíng lè yì rú cǐ， gǔ lái wàn shì dōng liú shuǐ。\nbié jūn qù xī hé shí hái？ qiě fàng bái lù qīng yá jiān， xū xíng jí qí fǎng míng shān。\nān néng cuī méi zhé yāo shì quán guì， shǐ wǒ bù dé kāi xīn yán！"
     },
     {
       "id": "tang_042",
@@ -802,7 +843,8 @@
       "source": "《全唐诗》",
       "location": "苏州/寒山寺",
       "wordCount": 28,
-      "year": 756
+      "year": 756,
+      "pinyin": "yuè luò wū tí shuāng mǎn tiān， jiāng fēng yú huǒ duì chóu mián。\ngū sū chéng wài hán shān sì， yè bàn zhōng shēng dào kè chuán。"
     },
     {
       "id": "tang_043",
@@ -820,7 +862,8 @@
       "source": "《全唐诗》",
       "location": "越州/浙江绍兴",
       "wordCount": 28,
-      "year": 744
+      "year": 744,
+      "pinyin": "shǎo xiǎo lí jiā lǎo dà huí， xiāng yīn wú gǎi bìn máo shuāi。\nér tóng xiāng jiàn bù xiāng shí， xiào wèn kè cóng hé chù lái。"
     },
     {
       "id": "tang_044",
@@ -839,7 +882,8 @@
       "source": "《全唐诗》",
       "location": "长安",
       "wordCount": 28,
-      "year": 735
+      "year": 735,
+      "pinyin": "bì yù zhuāng chéng yí shù gāo， wàn tiáo chuí xià lǜ sī tāo。\nbù zhī xì yè shuí cái chū， èr yuè chūn fēng sì jiǎn dāo。"
     },
     {
       "id": "tang_045",
@@ -858,7 +902,8 @@
       "source": "《全唐诗》",
       "location": "凉州/甘肃",
       "wordCount": 28,
-      "year": 710
+      "year": 710,
+      "pinyin": "pú táo měi jiǔ yè guāng bēi， yù yǐn pí pa mǎ shàng cuī。\nzuì wò shā chǎng jūn mò xiào， gǔ lái zhēng zhàn jǐ rén huí？"
     },
     {
       "id": "tang_046",
@@ -877,7 +922,8 @@
       "source": "《韦苏州集》",
       "location": "滁州/安徽",
       "wordCount": 28,
-      "year": 783
+      "year": 783,
+      "pinyin": "dú lián yōu cǎo jiàn biān shēng， shàng yǒu huáng lí shēn shù míng。\nchūn cháo dài yǔ wǎn lái jí， yě dù wú rén zhōu zì héng。"
     },
     {
       "id": "tang_047",
@@ -896,7 +942,8 @@
       "source": "《杜工部集》",
       "location": "石壕村/河南",
       "wordCount": 120,
-      "year": 759
+      "year": 759,
+      "pinyin": "mù tóu shí háo cūn， yǒu lì yè zhuō rén。 lǎo wēng yú qiáng zǒu， lǎo fù chū mén kàn。\nlì hū yì hé nù！ fù tí yì hé kǔ！\ntīng fù qián zhì cí： sān nán yè chéng shù。 yì nán fù shū zhì， èr nán xīn zhàn sǐ。\ncún zhě qiě tōu shēng， sǐ zhě cháng yǐ yǐ！ shì zhōng gèng wú rén， wéi yǒu rǔ xià sūn。\nyǒu sūn mǔ wèi qù， chū rù wú wán qún。 lǎo yù lì suī shuāi， qǐng cóng lì yè guī，\njí yìng hé yáng yì， yóu dé bèi chén chuī。\nyè jiǔ yǔ shēng jué， rú wén qì yōu yàn。 tiān míng dēng qián tú， dú yǔ lǎo wēng bié。"
     },
     {
       "id": "tang_048",
@@ -915,7 +962,8 @@
       "source": "《李太白集》",
       "location": "庐山/江西",
       "year": 726,
-      "wordCount": 28
+      "wordCount": 28,
+      "pinyin": "rì zhào xiāng lú shēng zǐ yān， yáo kàn pù bù guà qián chuān。\nfēi liú zhí xià sān qiān chǐ， yí shì yín hé luò jiǔ tiān。"
     },
     {
       "id": "tang_049",
@@ -934,7 +982,8 @@
       "source": "《全唐诗》",
       "location": "扬州/江都",
       "wordCount": 252,
-      "year": 650
+      "year": 650,
+      "pinyin": "chūn jiāng cháo shuǐ lián hǎi píng， hǎi shàng míng yuè gòng cháo shēng。\nyàn yàn suí bō qiān wàn lǐ， hé chù chūn jiāng wú yuè míng！\njiāng liú wǎn zhuǎn rào fāng diàn， yuè zhào huā lín jiē sì xiàn；\nkōng lǐ liú shuāng bù jué fēi， tīng shàng bái shā kàn bú jiàn。\njiāng tiān yí sè wú xiān chén， jiǎo jiǎo kōng zhōng gū yuè lún。\njiāng pàn hé rén chū jiàn yuè？ jiāng yuè hé nián chū zhào rén？\nrén shēng dài dài wú qióng yǐ， jiāng yuè nián nián wàng xiāng sì。\nbù zhī jiāng yuè dài hé rén， dàn jiàn cháng jiāng sòng liú shuǐ。\nbái yún yí piàn qù yōu yōu， qīng fēng pǔ shàng bú shèng chóu。\nshuí jiā jīn yè piān zhōu zǐ？ hé chù xiāng sī míng yuè lóu？\nkě lián lóu shàng yuè pái huái， yìng zhào lí rén zhuāng jìng tái。\nyù hù lián zhōng juàn bú qù， dǎo yī zhēn shàng fú hái lái。\ncǐ shí xiāng wàng bù xiāng wén， yuàn zhú yuè huá liú zhào jūn。\nhóng yàn cháng fēi guāng bú dù， yú lóng qián yuè shuǐ chéng wén。\nzuó yè xián tán mèng luò huā， kě lián chūn bàn bù hái jiā。\njiāng shuǐ liú chūn qù yù jìn， jiāng tán luò yuè fù xī xié。\nxié yuè chén chén cáng hǎi wù， jié shí xiāo xiāng wú xiàn lù。\nbù zhī chéng yuè jǐ rén guī， luò yuè yáo qíng mǎn jiāng shù。"
     },
     {
       "id": "tang_050",
@@ -953,7 +1002,8 @@
       "source": "《高常侍集》",
       "location": "睢阳/河南商丘",
       "wordCount": 28,
-      "year": 747
+      "year": 747,
+      "pinyin": "qiān lǐ huáng yún bái rì xūn， běi fēng chuī yàn xuě fēn fēn。\nmò chóu qián lù wú zhī jǐ， tiān xià shuí rén bù shí jūn。"
     },
     {
       "id": "tang_051",
@@ -972,7 +1022,8 @@
       "year": 855,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 24
+      "wordCount": 24,
+      "pinyin": "xiàng wǎn yì bú shì， qū chē dēng gǔ yuán。 xī yáng wú xiàn hǎo， zhǐ shì jìn huáng hūn。"
     },
     {
       "id": "tang_052",
@@ -991,7 +1042,8 @@
       "year": 850,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "yún mǔ píng fēng zhú yǐng shēn， cháng hé jiàn luò xiǎo xīng chén。 cháng é yìng huǐ tōu líng yào， bì hǎi qīng tiān yè yè xīn。"
     },
     {
       "id": "tang_053",
@@ -1009,7 +1061,8 @@
       "year": 850,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "xuān shì qiú xián fǎng zhú chén， jiǎ shēng cái tiáo gèng wú lún。 kě lián yè bàn xū qián xí， bú wèn cāng shēng wèn guǐ shén。"
     },
     {
       "id": "tang_054",
@@ -1028,7 +1081,8 @@
       "year": 720,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "dú zài yì xiāng wèi yì kè， měi féng jiā jié bèi sī qīn。 yáo zhī xiōng dì dēng gāo chù， biàn chā zhū yú shǎo yì rén。"
     },
     {
       "id": "tang_055",
@@ -1047,7 +1101,8 @@
       "year": 740,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 24
+      "wordCount": 24,
+      "pinyin": "hóng dòu shēng nán guó， chūn lái fā jǐ zhī。 yuàn jūn duō cǎi xié， cǐ wù zuì xiāng sī。"
     },
     {
       "id": "tang_056",
@@ -1066,7 +1121,8 @@
       "year": 750,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 48
+      "wordCount": 48,
+      "pinyin": "zhōng suì pō hǎo dào， wǎn jiā nán shān chuí。 xīng lái měi dú wǎng， shèng shì kōng zì zhī。 xíng dào shuǐ qióng chù， zuò kàn yún qǐ shí。 ǒu rán zhí lín sǒu， tán xiào wú hái qī。"
     },
     {
       "id": "tang_057",
@@ -1085,7 +1141,8 @@
       "year": 845,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "cháng ān huí wàng xiù chéng duī， shān dǐng qiān mén cì dì kāi。 yì qí hóng chén fēi zǐ xiào， wú rén zhī shì lì zhī lái。"
     },
     {
       "id": "tang_058",
@@ -1104,7 +1161,8 @@
       "year": 840,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "yuǎn shàng hán shān shí jìng xié， bái yún shēn chù yǒu rén jiā。 tíng chē zuò ài fēng lín wǎn， shuāng yè hóng yú èr yuè huā。"
     },
     {
       "id": "tang_059",
@@ -1123,7 +1181,8 @@
       "year": 675,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 64
+      "wordCount": 64,
+      "pinyin": "téng wáng gāo gé lín jiāng zhǔ， pèi yù míng luán bà gē wǔ。 huà dòng cháo fēi nán pǔ yún， zhū lián mù juàn xī shān yǔ。 xián yún tán yǐng rì yōu yōu， wù huàn xīng yí jǐ dù qiū。 gé zhōng dì zǐ jīn hé zài？ kǎn wài zhǎng jiāng kōng zì liú。"
     },
     {
       "id": "tang_060",
@@ -1142,7 +1201,8 @@
       "year": 826,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "zhū què qiáo biān yě cǎo huā， wū yī xiàng kǒu xī yáng xié。 jiù shí wáng xiè táng qián yàn， fēi rù xún cháng bǎi xìng jiā。"
     },
     {
       "id": "tang_061",
@@ -1161,7 +1221,8 @@
       "year": 822,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "yáng liǔ qīng qīng jiāng shuǐ píng， wén láng jiāng shàng tà gē shēng。 dōng biān rì chū xī biān yǔ， dào shì wú qíng què yǒu qíng。"
     },
     {
       "id": "tang_062",
@@ -1180,7 +1241,8 @@
       "year": 820,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "céng jīng cāng hǎi nán wéi shuǐ， chú què wū shān bú shì yún。 qǔ cì huā cóng lǎn huí gù， bàn yuán xiū dào bàn yuán jūn。"
     },
     {
       "id": "tang_063",
@@ -1199,7 +1261,8 @@
       "year": 811,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 112
+      "wordCount": 112,
+      "pinyin": "wú sī shǔ tóng zhāng gāo qiū， kōng shān níng yún tuí bù liú。 jiāng é tí zhú sù nǚ chóu， lǐ píng zhōng guó tán kōng hóu。 kūn shān yù suì fèng huáng jiào， fú róng qì lù xiāng lán xiào。 shí èr mén qián róng lěng guāng， èr shí sān sī dòng zǐ huáng。 nǚ wā liàn shí bǔ tiān chù， shí pò tiān jīng dòu qiū yǔ。 mèng rù shén shān jiào shén yù， lǎo yú tiào bō shòu jiāo wǔ。 wú zhì bù mián yǐ guì shù， lù jiǎo xié fēi shī hán tù。"
     },
     {
       "id": "tang_064",
@@ -1217,7 +1280,8 @@
       "year": 770,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 24
+      "wordCount": 24,
+      "pinyin": "yuè hēi yàn fēi gāo， chán yú yè dùn táo。 yù jiāng qīng qí zhú， dà xuě mǎn gōng dāo。"
     },
     {
       "id": "tang_065",
@@ -1235,7 +1299,8 @@
       "year": 770,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 24
+      "wordCount": 24,
+      "pinyin": "rì mù cāng shān yuǎn， tiān hán bái wū pín。 chái mén wén quǎn fèi， fēng xuě yè guī rén。"
     },
     {
       "id": "tang_066",
@@ -1254,7 +1319,8 @@
       "year": 800,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 48
+      "wordCount": 48,
+      "pinyin": "chūn zhǒng yí lì sù， qiū shōu wàn kē zǐ。 sì hǎi wú xián tián， nóng fū yóu è sǐ。 chú hé rì dāng wǔ， hàn dī hé xià tǔ。 shuí zhī pán zhōng cān， lì lì jiē xīn kǔ。"
     },
     {
       "id": "tang_067",
@@ -1273,7 +1339,8 @@
       "year": 820,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 24
+      "wordCount": 24,
+      "pinyin": "sōng xià wèn tóng zǐ， yán shī cǎi yào qù。 zhī zài cǐ shān zhōng， yún shēn bù zhī chù。"
     },
     {
       "id": "tang_068",
@@ -1292,7 +1359,8 @@
       "year": 760,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 64
+      "wordCount": 64,
+      "pinyin": "chéng xiàng cí táng hé chù xún？ jǐn guān chéng wài bǎi sēn sēn。 yìng jiē bì cǎo zì chūn sè， gé yè huáng lí kōng hǎo yīn。 sān gù pín pín tiān xià jì， liǎng cháo kāi jì lǎo chén xīn。 chū shī wèi jié shēn xiān sǐ， cháng shǐ yīng xióng lèi mǎn jīn。"
     },
     {
       "id": "tang_069",
@@ -1311,7 +1379,8 @@
       "year": 766,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 64
+      "wordCount": 64,
+      "pinyin": "yù lù diāo shāng fēng shù lín， wū shān wū xiá qì xiāo sēn。 jiāng jiān bō làng jiān tiān yǒng， sài shàng fēng yún jiē dì yīn。 cóng jú liǎng kāi tā rì lèi， gū zhōu yí xì gù yuán xīn。 hán yī chù chù cuī dāo chǐ， bái dì chéng gāo jí mù zhēn。"
     },
     {
       "id": "tang_070",
@@ -1330,7 +1399,8 @@
       "year": 750,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 258
+      "wordCount": 258,
+      "pinyin": "chē lín lín， mǎ xiāo xiāo， xíng rén gōng jiàn gè zài yāo。 yé niáng qī zǐ zǒu xiāng sòng， chén āi bú jiàn xián yáng qiáo。 qiān yī dùn zú lán dào kū， kū shēng zhí shàng gān yún xiāo。 dào páng guò zhě wèn xíng rén， xíng rén dàn yún diǎn xíng pín。 huò cóng shí wǔ běi fáng hé， biàn zhì sì shí xī yíng tián。 qù shí lǐ zhèng yǔ guǒ tóu， guī lái tou bái hái shù biān。 biān tíng liú xuè chéng hǎi shuǐ， wǔ huáng kāi biān yì wèi yǐ。 jūn bù wén hàn jiā shān dōng èr bǎi zhōu， qiān cūn wàn luò shēng jīng qǐ。 zòng yǒu jiàn fù bǎ chú lí， hé shēng lǒng mǔ wú dōng xī。 kuàng fù qín bīng nài kǔ zhàn， bèi qū bú yì quǎn yǔ jī。 cháng zhě suī yǒu wèn， yì fū gǎn shēn hèn？ qiě rú jīn nián dōng， wèi xiū guān xī zú。 xiàn guān jí suǒ zū， zū shuì cóng hé chū？ xìn zhī shēng nán è， fǎn shì shēng nǚ hǎo。 shēng nǚ yóu dé jià bǐ lín， shēng nán mái mò suí bǎi cǎo。 jūn bú jiàn qīng hǎi tóu， gǔ lái bái gǔ wú rén shōu。 xīn guǐ fán yuān jiù guǐ kū， tiān yīn yǔ shī shēng jiū jiū。"
     },
     {
       "id": "tang_071",
@@ -1349,7 +1419,8 @@
       "year": 747,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 64
+      "wordCount": 64,
+      "pinyin": "fèng huáng tái shàng fèng huáng yóu， fèng qù tái kōng jiāng zì liú。 wú gōng huā cǎo mái yōu jìng， jìn dài yī guān chéng gǔ qiū。 sān shān bàn luò qīng tiān wài， èr shuǐ zhōng fēn bái lù zhōu。 zǒng wèi fú yún néng bì rì， cháng ān bú jiàn shǐ rén chóu。"
     },
     {
       "id": "tang_072",
@@ -1368,7 +1439,8 @@
       "year": 753,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 106
+      "wordCount": 106,
+      "pinyin": "qì wǒ qù zhě， zuó rì zhī rì bù kě liú。 luàn wǒ xīn zhě， jīn rì zhī rì duō fán yōu。 cháng fēng wàn lǐ sòng qiū sè， duì cǐ kě yǐ hān gāo lóu。 péng lái wén zhāng jiàn ān gǔ， zhōng jiān xiǎo xiè yòu qīng fā。 jù huái yì xīng zhuàng sī fēi， yù shàng qīng tiān lǎn míng yuè。 chōu dāo duàn shuǐ shuǐ gèng liú， jǔ bēi xiāo chóu chóu gèng chóu。 rén shēng zài shì bù chēng yì， míng cháo sàn fā nòng piān zhōu。"
     },
     {
       "id": "tang_073",
@@ -1387,7 +1459,8 @@
       "year": 730,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 32
+      "wordCount": 32,
+      "pinyin": "huáng hé yuǎn shàng bái yún jiān， yí piàn gū chéng wàn rèn shān。 qiāng dí hé xū yuàn yáng liǔ， chūn fēng bú dù yù mén guān。"
     },
     {
       "id": "tang_074",
@@ -1406,7 +1479,8 @@
       "year": 815,
       "dynasty": "唐",
       "dynastyCode": "tang",
-      "wordCount": 64
+      "wordCount": 64,
+      "pinyin": "chéng shàng gāo lóu jiē dà huāng， hǎi tiān chóu sī zhèng máng máng。 jīng fēng luàn zhǎn fú róng shuǐ， mì yǔ xié qīn bì lì qiáng。 lǐng shù zhòng zhē qiān lǐ mù， jiāng liú qǔ sì jiǔ huí cháng。 gòng lái bǎi yuè wén shēn dì， yóu zì yīn shū zhì yì xiāng。"
     },
     {
       "id": "tang_075",
@@ -1424,7 +1498,8 @@
       "source": "《杜工部集》",
       "location": "华山/陕西",
       "wordCount": 64,
-      "year": 760
+      "year": 760,
+      "pinyin": "xī yuè líng céng sǒng chù zūn， zhū fēng luó lì sì ér sūn。 ān dé xiān rén jiǔ jié zhàng， zhǔ dào yù nǚ xǐ tóu pén。 chē xiāng rù gǔ wú guī lù， jiàn guā tōng tiān yǒu yì mén。 shāo dài qiū fēng liáng lěng hòu， gāo xún bái dì wèn zhēn yuán。"
     },
     {
       "id": "tang_076",
@@ -1443,7 +1518,8 @@
       "source": "《杜工部集》",
       "location": "长安",
       "wordCount": 204,
-      "year": 752
+      "year": 752,
+      "pinyin": "sān yuè sān rì tiān qì xīn， cháng ān shuǐ biān duō lì rén。 tài nóng yì yuǎn shū qiě zhēn， jī lǐ xì nì gǔ ròu yún。 xiù luó yī shang zhào mù chūn， cù jīn kǒng què yín qí lín。 tóu shàng hé suǒ yǒu？ cuì wēi hé yè chuí bìn chún。 bèi hòu hé suǒ jiàn？ zhū yā yāo jié wěn chēng shēn。 jiù zhōng yún mù jiāo fáng qīn， cì míng dà guó guó yǔ qín。 zǐ tuó zhī fēng chū cuì fǔ， shuǐ jīng zhī pán xíng sù lín。 xī zhù yàn yù jiǔ wèi xià， luán dāo lǚ qiè kōng fēn lún。 huáng mén fēi kòng bú dòng chén， yù chú luò yì sòng bā zhēn。 xiāo gǔ āi yín gǎn guǐ shén， bīn cóng zá tà shí yào jīn。 hòu lái ān mǎ hé qūn xún， dāng xuān xià mǎ rù jǐn yīn。 yáng huā xuě luò fù bái pín， qīng niǎo fēi qù xián hóng jīn。 zhì shǒu kě rè shì jué lún， shèn mò jìn qián chéng xiàng chēn！"
     },
     {
       "id": "tang_077",
@@ -1463,7 +1539,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 48,
-      "year": 761
+      "year": 761,
+      "pinyin": "hǎo yǔ zhī shí jié， dāng chūn nǎi fā shēng。 suí fēng qián rù yè， rùn wù xì wú shēng。 yě jìng yún jù hēi， jiāng chuán huǒ dú míng。 xiǎo kàn hóng shī chù， huā zhòng jǐn guān chéng。"
     },
     {
       "id": "tang_078",
@@ -1482,7 +1559,8 @@
       "source": "《杜工部集》",
       "location": "江南/长沙",
       "wordCount": 32,
-      "year": 770
+      "year": 770,
+      "pinyin": "qí wáng zhái lǐ xún cháng jiàn， cuī jiǔ táng qián jǐ dù wén。 zhèng shì jiāng nán hǎo fēng jǐng， luò huā shí jié yòu féng jūn。"
     },
     {
       "id": "tang_079",
@@ -1501,7 +1579,8 @@
       "source": "《杜工部集》",
       "location": "梓州/四川三台",
       "wordCount": 64,
-      "year": 763
+      "year": 763,
+      "pinyin": "jiàn wài hū chuán shōu jì běi， chū wén tì lèi mǎn yī shang。 què kàn qī zǐ chóu hé zài， màn juàn shī shū xǐ yù kuáng。 bái rì fàng gē xū zòng jiǔ， qīng chūn zuò bàn hǎo huán xiāng。 jí cóng bā xiá chuān wū xiá， biàn xià xiāng yáng xiàng luò yáng。"
     },
     {
       "id": "tang_080",
@@ -1520,7 +1599,8 @@
       "source": "《杜工部集》",
       "location": "渝州/重庆",
       "wordCount": 48,
-      "year": 765
+      "year": 765,
+      "pinyin": "xì cǎo wēi fēng àn， wēi qiáng dú yè zhōu。 xīng chuí píng yě kuò， yuè yǒng dà jiāng liú。 míng qǐ wén zhāng zhù， guān yìng lǎo bìng xiū。 piāo piāo hé suǒ sì， tiān dì yì shā ōu。"
     },
     {
       "id": "tang_081",
@@ -1540,7 +1620,8 @@
       "source": "《杜工部集》",
       "location": "岳阳楼/湖南",
       "wordCount": 48,
-      "year": 768
+      "year": 768,
+      "pinyin": "xī wén dòng tíng shuǐ， jīn shàng yuè yáng lóu。 wú chǔ dōng nán chè， qián kūn rì yè fú。 qīn péng wú yí zì， lǎo bìng yǒu gū zhōu。 róng mǎ guān shān běi， píng xuān tì sì liú。"
     },
     {
       "id": "tang_082",
@@ -1559,7 +1640,8 @@
       "source": "《杜工部集》",
       "location": "夔州/白帝城",
       "wordCount": 64,
-      "year": 766
+      "year": 766,
+      "pinyin": "suì mù yīn yáng cuī duǎn jǐng， tiān yá shuāng xuě jì hán xiāo。 wǔ gēng gǔ jiǎo shēng bēi zhuàng， sān xiá xīng hé yǐng dòng yáo。 yě kū jǐ jiā wén zhàn fá， yí gē shù chù qǐ yú qiáo。 wò lóng yuè mǎ zhōng huáng tǔ， rén shì yīn shū màn jì liáo。"
     },
     {
       "id": "tang_083",
@@ -1578,7 +1660,8 @@
       "source": "《杜工部集》",
       "location": "夔州/白帝城",
       "wordCount": 64,
-      "year": 766
+      "year": 766,
+      "pinyin": "qún shān wàn hè fù jīng mén， shēng zhǎng míng fēi shàng yǒu cūn。 yí qù zǐ tái lián shuò mò， dú liú qīng zhǒng xiàng huáng hūn。 huà tú shěng shí chūn fēng miàn， huán pèi kōng guī yè yuè hún。 qiān zǎi pí pa zuò hú yǔ， fēn míng yuàn hèn qǔ zhōng lùn。"
     },
     {
       "id": "tang_084",
@@ -1597,7 +1680,8 @@
       "source": "《杜工部集》",
       "location": "夔州/白帝城",
       "wordCount": 64,
-      "year": 766
+      "year": 766,
+      "pinyin": "zhū gě dà míng chuí yǔ zhòu， zōng chén yí xiàng sù qīng gāo。 sān fēn gē jù yū chóu cè， wàn gǔ yún xiāo yì yǔ máo。 bó zhòng zhī jiān jiàn yī lǚ， zhǐ huī ruò dìng shī xiāo cáo。 yùn yí hàn zuò zhōng nán fù， zhì jué shēn jiān jūn wù láo。"
     },
     {
       "id": "tang_085",
@@ -1616,7 +1700,8 @@
       "source": "《杜工部集》",
       "location": "鄜州/陕西富县",
       "wordCount": 72,
-      "year": 757
+      "year": 757,
+      "pinyin": "zhēng róng chì yún xī， rì jiǎo xià píng dì。 chái mén niǎo què zào， guī kè qiān lǐ zhì。 qī nú guài wǒ zài， jīng dìng hái shì lèi。 shì luàn zāo piāo dàng， shēng huán ǒu rán suì。 lín rén mǎn qiáng tóu， gǎn tàn yì xū xī。 yè lán gèng bǐng zhú， xiāng duì rú mèng mèi。"
     },
     {
       "id": "tang_086",
@@ -1635,7 +1720,8 @@
       "source": "《杜工部集》",
       "location": "新安/河南",
       "wordCount": 96,
-      "year": 759
+      "year": 759,
+      "pinyin": "kè xíng xīn ān dào， xuān hū wén diǎn bīng。 jiè wèn xīn ān lì： xiàn xiǎo gèng wú dīng？ fǔ tiē zuó yè xià， cì xuǎn zhōng nán xíng。 zhōng nán jué duǎn xiǎo， hé yǐ shǒu wáng chéng？ féi nán yǒu mǔ sòng， shòu nán dú líng pīng。 bái shuǐ mù dōng liú， qīng shān yóu kū shēng。 mò zì shǐ yǎn kū， shōu rǔ lèi zòng héng。 yǎn kū jí jiàn gǔ， tiān dì zhōng wú qíng！"
     },
     {
       "id": "tang_087",
@@ -1654,7 +1740,8 @@
       "source": "《杜工部集》",
       "location": "潼关/陕西",
       "wordCount": 120,
-      "year": 759
+      "year": 759,
+      "pinyin": "shì zú hé cǎo cǎo， zhù chéng tóng guān dào。 dài chéng tiě bù rú， xiǎo chéng wàn zhàng yú。 jiè wèn tóng guān lì： xiū guān hái bèi hú？ yào wǒ xià mǎ xíng， wèi wǒ zhǐ shān yú。 lián yún liè zhàn gé， fēi niǎo bù néng yú。 hú lái dàn zì shǒu， qǐ fù yōu xī dōu。 zhàng rén shì yào chù， zhǎi xiá róng dān chē。 jiān nán fèn cháng jǐ， wàn gǔ yòng yì fū。 āi zāi táo lín zhàn， bǎi wàn huà wéi yú。 qǐng zhǔ fáng guān jiāng， shèn wù xué gē shū！"
     },
     {
       "id": "tang_088",
@@ -1673,7 +1760,8 @@
       "source": "《杜工部集》",
       "location": "邺城/河南",
       "wordCount": 132,
-      "year": 759
+      "year": 759,
+      "pinyin": "tù sī fù péng má， yǐn màn gù bù cháng。 jià nǚ yǔ zhēng fū， bù rú qì lù páng。 jié fà wèi qī zǐ， xí bù nuǎn jūn chuáng。 mù hūn chén gào bié， wú nǎi tài cōng máng。 jūn xíng suī bù yuǎn， shǒu biān fù hé yáng。 qiè shēn wèi fēn míng， hé yǐ bài gū zhāng？ fù mǔ yǎng wǒ shí， rì yè lìng wǒ cáng。 shēng nǚ yǒu suǒ guī， jī gǒu yì dé jiāng。 jūn jīn wǎng sǐ dì， chén tòng pò zhōng cháng。 shì yù suí jūn qù， xíng shì fǎn cāng huáng。 wù wèi xīn hūn niàn， nǔ lì shì róng xíng。"
     },
     {
       "id": "tang_089",
@@ -1692,7 +1780,8 @@
       "source": "《杜工部集》",
       "location": "邺城/河南",
       "wordCount": 96,
-      "year": 759
+      "year": 759,
+      "pinyin": "sì jiāo wèi níng jìng， chuí lǎo bù dé ān。 zǐ sūn zhèn wáng jìn， yān yòng shēn dú wán。 tóu zhàng chū mén qù， tóng xíng wéi xīn suān。 xìng yǒu yá chǐ cún， suǒ bēi gǔ suǐ gān。 nán ér jì jiè zhòu， cháng yī bié shàng guān。 lǎo qī wò lù tí， suì mù yī shang dān。 shú zhī shì sǐ bié， qiě fù shāng qí hán。 cǐ qù bì bù guī， hái wén quàn jiā cān。"
     },
     {
       "id": "tang_090",
@@ -1711,7 +1800,8 @@
       "source": "《杜工部集》",
       "location": "邺城/河南",
       "wordCount": 84,
-      "year": 759
+      "year": 759,
+      "pinyin": "jì mò tiān bǎo hòu， yuán lú dàn hāo lí。 wǒ lǐ bǎi yú jiā， shì luàn gè dōng xī。 cún zhě wú xiāo xī， sǐ zhě wèi chén ní。 jiàn zǐ yīn zhèn bài， guī lái xún jiù qī。 jiǔ xíng jiàn kōng xiàng， rì shòu qì cǎn qī。 dàn duì hú yǔ lí， shù máo nù wǒ tí。 sì lín hé suǒ yǒu？ yī èr lǎo guǎ qī。"
     },
     {
       "id": "tang_091",
@@ -1730,7 +1820,8 @@
       "source": "《杜工部集》",
       "location": "秦州/甘肃天水",
       "wordCount": 48,
-      "year": 759
+      "year": 759,
+      "pinyin": "shù gǔ duàn rén xíng， biān qiū yí yàn shēng。 lù cóng jīn yè bái， yuè shì gù xiāng míng。 yǒu dì jiē fēn sàn， wú jiā wèn sǐ shēng。 jì shū cháng bù dá， kuàng nǎi wèi xiū bīng。"
     },
     {
       "id": "tang_092",
@@ -1749,7 +1840,8 @@
       "source": "《杜工部集》",
       "location": "秦州/甘肃天水",
       "wordCount": 48,
-      "year": 759
+      "year": 759,
+      "pinyin": "liáng fēng qǐ tiān mò， jūn zǐ yì rú hé。 hóng yàn jǐ shí dào， jiāng hú qiū shuǐ duō。 wén zhāng zēng mìng dá， chī mèi xǐ rén guò。 yìng gòng yuān hún yǔ， tóu shī zèng mì luó。"
     },
     {
       "id": "tang_093",
@@ -1768,7 +1860,8 @@
       "source": "《杜工部集》",
       "location": "洛阳",
       "wordCount": 32,
-      "year": 745
+      "year": 745,
+      "pinyin": "qiū lái xiāng gù shàng piāo péng， wèi jiù dān shā kuì gě hóng。 tòng yǐn kuáng gē kōng dù rì， fēi yáng bá hù wèi shuí xióng。"
     },
     {
       "id": "tang_094",
@@ -1787,7 +1880,8 @@
       "source": "《杜工部集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 747
+      "year": 747,
+      "pinyin": "bái yě shī wú dí， piāo rán sī bù qún。 qīng xīn yǔ kāi fǔ， jùn yì bào cān jūn。 wèi běi chūn tiān shù， jiāng dōng rì mù yún。 hé shí yì zūn jiǔ， zhòng yǔ xì lùn wén。"
     },
     {
       "id": "tang_095",
@@ -1806,7 +1900,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 32,
-      "year": 761
+      "year": 761,
+      "pinyin": "wáng yáng lú luò dāng shí tǐ， qīng bó wèi wén shěn wèi xiū。 ěr cáo shēn yǔ míng jù miè， bú fèi jiāng hé wàn gǔ liú。"
     },
     {
       "id": "tang_096",
@@ -1825,7 +1920,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 32,
-      "year": 764
+      "year": 764,
+      "pinyin": "liǎng gè huáng lí míng cuì liǔ， yì háng bái lù shàng qīng tiān。 chuāng hán xī lǐng qiān qiū xuě， mén bó dōng wú wàn lǐ chuán。"
     },
     {
       "id": "tang_097",
@@ -1844,7 +1940,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 64,
-      "year": 760
+      "year": 760,
+      "pinyin": "qīng jiāng yì qǔ bào cūn liú， cháng xià jiāng cūn shì shì yōu。 zì qù zì lái liáng shàng yàn， xiāng qīn xiāng jìn shuǐ zhōng ōu。 lǎo qī huà zhǐ wèi qí jú， zhì zǐ qiāo zhēn zuò diào gōu。 dàn yǒu gù rén gòng lù mǐ， wēi qū cǐ wài gèng hé qiú。"
     },
     {
       "id": "tang_098",
@@ -1863,7 +1960,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 64,
-      "year": 761
+      "year": 761,
+      "pinyin": "shè nán shè běi jiē chūn shuǐ， dàn jiàn qún ōu rì rì lái。 huā jìng bù céng yuán kè sǎo， péng mén jīn shǐ wèi jūn kāi。 pán sūn shì yuǎn wú jiān wèi， zūn jiǔ jiā pín zhī jiù pēi。 kěn yǔ lín wēng xiāng duì yǐn， gé lí hū qǔ jìn yú bēi。"
     },
     {
       "id": "tang_099",
@@ -1883,7 +1981,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 32,
-      "year": 761
+      "year": 761,
+      "pinyin": "huáng sì niáng jiā huā mǎn qī， qiān duǒ wàn duǒ yā zhī dī。 liú lián xì dié shí shí wǔ， zì zài jiāo yīng qià qià tí。"
     },
     {
       "id": "tang_100",
@@ -1902,7 +2001,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 32,
-      "year": 761
+      "year": 761,
+      "pinyin": "jǐn chéng sī guǎn rì fēn fēn， bàn rù jiāng fēng bàn rù yún。 cǐ qǔ zhī yìng tiān shàng yǒu， rén jiān néng dé jǐ huí wén。"
     },
     {
       "id": "tang_101",
@@ -1921,7 +2021,8 @@
       "source": "《杜工部集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 750
+      "year": 750,
+      "pinyin": "wǎn gōng dāng wǎn qiáng， yòng jiàn dāng yòng cháng。 shè rén xiān shè mǎ， qín zéi xiān qín wáng。 shā rén yì yǒu xiàn， liè guó zì yǒu jiāng。 gǒu néng zhì qīn líng， qǐ zài duō shā shāng。"
     },
     {
       "id": "tang_102",
@@ -1940,7 +2041,8 @@
       "source": "《杜工部集》",
       "location": "秦州/甘肃",
       "wordCount": 108,
-      "year": 759
+      "year": 759,
+      "pinyin": "jué dài yǒu jiā rén， yōu jū zài kōng gǔ。 zì yún liáng jiā zǐ， líng luò yī cǎo mù。 guān zhōng xī sāng luàn， xiōng dì zāo shā lù。 guān gāo hé zú lùn， bù dé shōu gǔ ròu。 shì qíng è shuāi xiē， wàn shì suí zhuǎn zhú。 fū xù qīng bó ér， xīn rén měi rú yù。 hé hūn shàng zhī shí， yuān yāng bù dú sù。 dàn jiàn xīn rén xiào， nà wén jiù rén kū。 zài shān quán shuǐ qīng， chū shān quán shuǐ zhuó。"
     },
     {
       "id": "tang_103",
@@ -1959,7 +2061,8 @@
       "source": "《杜工部集》",
       "location": "成都",
       "wordCount": 64,
-      "year": 764
+      "year": 764,
+      "pinyin": "qīng qiū mù fǔ jǐng wú hán， dú sù jiāng chéng là jù cán。 yǒng yè jiǎo shēng bēi zì yǔ， zhōng tiān yuè sè hǎo shuí kàn。 fēng chén rěn rǎn yīn shū jué， guān sāi xiāo tiáo xíng lù nán。 yǐ rěn líng pīng shí nián shì， qiáng yí qī xī yì zhī ān。"
     },
     {
       "id": "tang_104",
@@ -1978,7 +2081,8 @@
       "source": "《杜工部集》",
       "location": "夔州",
       "wordCount": 64,
-      "year": 767
+      "year": 767,
+      "pinyin": "xī yǒu jiā rén gōng sūn shì， yì wǔ jiàn qì dòng sì fāng。 guān zhě rú shān sè jǔ sàng， tiān dì wèi zhī jiǔ dī áng。 huò rú yì shè jiǔ rì luò， jiǎo rú qún dì cān lóng xiáng。 lái rú léi tíng shōu zhèn nù， bà rú jiāng hǎi níng qīng guāng。"
     },
     {
       "id": "tang_105",
@@ -1997,7 +2101,8 @@
       "source": "《杜工部集》",
       "location": "夔州",
       "wordCount": 64,
-      "year": 767
+      "year": 767,
+      "pinyin": "xiǎo nú fù jī xiàng shì mài， jī bèi fù jí xiāng xuān zhēng。 jiā zhōng yàn jī shí chóng yǐ， bù zhī jī mài hái zāo pēng。 chóng jī yú rén hé hòu báo， wú chì nú rén jiě qí fù。 jī chóng dé shī wú le shí， zhù mù hán jiāng yǐ shān gé。"
     },
     {
       "id": "tang_106",
@@ -2016,7 +2121,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 740
+      "year": 740,
+      "pinyin": "xiǎo shí bù shí yuè， hū zuò bái yù pán。 yòu yí yáo tái jìng， fēi zài qīng yún duān。 xiān rén chuí liǎng zú， guì shù hé tuán tuán。 bái tù dǎo yào chéng， wèn yán yǔ shuí cān。"
     },
     {
       "id": "tang_107",
@@ -2035,7 +2141,8 @@
       "source": "《李太白集》",
       "location": "宣城/安徽",
       "wordCount": 24,
-      "year": 753
+      "year": 753,
+      "pinyin": "zhòng niǎo gāo fēi jìn， gū yún dú qù xián。 xiāng kàn liǎng bú yàn， zhǐ yǒu jìng tíng shān。"
     },
     {
       "id": "tang_108",
@@ -2054,7 +2161,8 @@
       "source": "《李太白集》",
       "location": "泾县/安徽",
       "wordCount": 32,
-      "year": 755
+      "year": 755,
+      "pinyin": "lǐ bái chéng zhōu jiāng yù xíng， hū wén àn shàng tà gē shēng。 táo huā tán shuǐ shēn qiān chǐ， bù jí wāng lún sòng wǒ qíng。"
     },
     {
       "id": "tang_109",
@@ -2073,7 +2181,8 @@
       "source": "《李太白集》",
       "location": "黄鹤楼/武汉",
       "wordCount": 32,
-      "year": 730
+      "year": 730,
+      "pinyin": "gù rén xī cí huáng hè lóu， yān huā sān yuè xià yáng zhōu。 gū fān yuǎn yǐng bì kōng jìn， wéi jiàn cháng jiāng tiān jì liú。"
     },
     {
       "id": "tang_110",
@@ -2092,7 +2201,8 @@
       "source": "《李太白集》",
       "location": "荆门/湖北",
       "wordCount": 48,
-      "year": 724
+      "year": 724,
+      "pinyin": "dù yuǎn jīng mén wài， lái cóng chǔ guó yóu。 shān suí píng yě jìn， jiāng rù dà huāng liú。 yuè xià fēi tiān jìng， yún shēng jié hǎi lóu。 réng lián gù xiāng shuǐ， wàn lǐ sòng xíng zhōu。"
     },
     {
       "id": "tang_111",
@@ -2111,7 +2221,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 745
+      "year": 745,
+      "pinyin": "qīng shān héng běi guō， bái shuǐ rào dōng chéng。 cǐ dì yí wèi bié， gū péng wàn lǐ zhēng。 fú yún yóu zǐ yì， luò rì gù rén qíng。 huī shǒu zì zī qù， xiāo xiāo bān mǎ míng。"
     },
     {
       "id": "tang_112",
@@ -2130,7 +2241,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 36,
-      "year": 740
+      "year": 740,
+      "pinyin": "cháng ān yí piàn yuè， wàn hù dǎo yī shēng。 qiū fēng chuī bú jìn， zǒng shì yù guān qíng。 hé rì píng hú lǔ， liáng rén bà yuǎn zhēng。"
     },
     {
       "id": "tang_113",
@@ -2149,7 +2261,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 84,
-      "year": 744
+      "year": 744,
+      "pinyin": "huā jiān yì hú jiǔ， dú zhuó wú xiāng qīn。 jǔ bēi yāo míng yuè， duì yǐng chéng sān rén。 yuè jì bù jiě yǐn， yǐng tú suí wǒ shēn。 zàn bàn yuè jiāng yǐng， xíng lè xū jí chūn。 wǒ gē yuè pái huái， wǒ wǔ yǐng líng luàn。 xǐng shí tóng jiāo huān， zuì hòu gè fēn sàn。 yǒng jié wú qíng yóu， xiāng qī miǎo yún hàn。"
     },
     {
       "id": "tang_114",
@@ -2168,7 +2281,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 742
+      "year": 742,
+      "pinyin": "wǔ yuè tiān shān xuě， wú huā zhǐ yǒu hán。 dí zhōng wén zhé liǔ， chūn sè wèi céng kàn。 xiǎo zhàn suí jīn gǔ， xiāo mián bào yù ān。 yuàn jiāng yāo xià jiàn， zhí wèi zhǎn lóu lán。"
     },
     {
       "id": "tang_115",
@@ -2187,7 +2301,8 @@
       "source": "《李太白集》",
       "location": "秋浦/安徽贵池",
       "wordCount": 24,
-      "year": 754
+      "year": 754,
+      "pinyin": "bái fà sān qiān zhàng， yuán chóu sì gè cháng。 bù zhī míng jìng lǐ， hé chù dé qiū shuāng。"
     },
     {
       "id": "tang_116",
@@ -2206,7 +2321,8 @@
       "source": "《李太白集》",
       "location": "峨眉山/四川",
       "wordCount": 32,
-      "year": 724
+      "year": 724,
+      "pinyin": "é méi shān yuè bàn lún qiū， yǐng rù píng qiāng jiāng shuǐ liú。 yè fā qīng xī xiàng sān xiá， sī jūn bú jiàn xià yú zhōu。"
     },
     {
       "id": "tang_117",
@@ -2225,7 +2341,8 @@
       "source": "《李太白集》",
       "location": "洛阳",
       "wordCount": 32,
-      "year": 735
+      "year": 735,
+      "pinyin": "shuí jiā yù dí àn fēi shēng， sàn rù chūn fēng mǎn luò chéng。 cǐ yè qǔ zhōng wén zhé liǔ， hé rén bù qǐ gù yuán qíng。"
     },
     {
       "id": "tang_118",
@@ -2244,7 +2361,8 @@
       "source": "《李太白集》",
       "location": "庐山/江西",
       "wordCount": 96,
-      "year": 756
+      "year": 756,
+      "pinyin": "wǒ běn chǔ kuáng rén， fèng gē xiào kǒng qiū。 shǒu chí lǜ yù zhàng， cháo bié huáng hè lóu。 wǔ yuè xún xiān bù cí yuǎn， yì shēng hǎo rù míng shān yóu。 lú shān xiù chū nán dòu bàng， píng fēng jiǔ dié yún jǐn zhāng。 yǐng luò míng hú qīng dài guāng， jīn quē qián kāi èr fēng cháng， yín hé dǎo guà sān shí liáng。 xiāng lú pù bù yáo xiāng wàng， huí yá tà zhàng líng cāng cāng。"
     },
     {
       "id": "tang_119",
@@ -2263,7 +2381,8 @@
       "source": "《李太白集》",
       "location": "云阳/江苏",
       "wordCount": 72,
-      "year": 747
+      "year": 747,
+      "pinyin": "yún yáng shàng zhēng qù， liǎng àn ráo shāng jiǎ。 wú niú chuǎn yuè shí， tuō chuán yì hé kǔ。 shuǐ zhuó bù kě yǐn， hú jiāng bàn chéng tǔ。 yí chàng dū hù gē， xīn cuī lèi rú yǔ。 wàn rén xì pán shí， wú yóu dá jiāng hǔ。 jūn kàn shí máng dàng， yǎn lèi bēi qiān gǔ。"
     },
     {
       "id": "tang_120",
@@ -2282,7 +2401,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 56,
-      "year": 745
+      "year": 745,
+      "pinyin": "xiāo shēng yàn， qín é mèng duàn qín lóu yuè。 qín lóu yuè， nián nián liǔ sè， bà líng shāng bié。 lè yóu yuán shàng qīng qiū jié， xián yáng gǔ dào yīn chén jué。 yīn chén jué， xī fēng cán zhào， hàn jiā líng quē。"
     },
     {
       "id": "tang_121",
@@ -2301,7 +2421,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 88,
-      "year": 744
+      "year": 744,
+      "pinyin": "zhǎng xiàng sī， zài cháng ān。 luò wěi qiū tí jīn jǐng lán， wēi shuāng qī qī diàn sè hán。 gū dēng bù míng sī yù jué， juàn wéi wàng yuè kōng cháng tàn。 měi rén rú huā gé yún duān。 shàng yǒu qīng míng zhī gāo tiān， xià yǒu lù shuǐ zhī bō lán。 tiān cháng dì yuǎn hún fēi kǔ， mèng hún bú dào guān shān nán。 zhǎng xiàng sī， cuī xīn gān！"
     },
     {
       "id": "tang_122",
@@ -2320,7 +2441,8 @@
       "source": "《李太白集》",
       "location": "终南山/西安",
       "wordCount": 84,
-      "year": 740
+      "year": 740,
+      "pinyin": "mù cóng bì shān xià， shān yuè suí rén guī。 què gù suǒ lái jìng， cāng cāng héng cuì wēi。 xiāng xié jí tián jiā， tóng zhì kāi jīng fēi。 lǜ zhú rù yōu jìng， qīng luó fú xíng yī。 huān yán dé suǒ qì， měi jiǔ liáo gòng huī。 cháng gē yín sōng fēng， qǔ jìn hé xīng xī。 wǒ zuì jūn fù lè， táo rán gòng wàng jī。"
     },
     {
       "id": "tang_123",
@@ -2339,7 +2461,8 @@
       "source": "《李太白集》",
       "location": "太白山/陕西",
       "wordCount": 48,
-      "year": 744
+      "year": 744,
+      "pinyin": "tài bái yǔ wǒ yǔ， wèi wǒ kāi tiān guān。 jǔ bēi yāo míng yuè， duì yǐng chéng sān yǒu。 tài bái hé cāng cāng， xīng chén shàng sēn liè。 qù tiān sān bǎi lǐ， miǎo ěr yǔ shì jué。"
     },
     {
       "id": "tang_124",
@@ -2358,7 +2481,8 @@
       "source": "《李太白集》",
       "location": "牛渚矶/安徽当涂",
       "wordCount": 48,
-      "year": 726
+      "year": 726,
+      "pinyin": "niú zhǔ xī jiāng yè， qīng tiān wú piàn yún。 dēng zhōu wàng qiū yuè， kōng yì xiè jiāng jūn。 yú yì néng gāo yǒng， sī rén bù kě wén。 míng cháo guà fān qù， fēng yè luò fēn fēn。"
     },
     {
       "id": "tang_125",
@@ -2377,7 +2501,8 @@
       "source": "《李太白集》",
       "location": "岳阳楼/湖南",
       "wordCount": 48,
-      "year": 759
+      "year": 759,
+      "pinyin": "lóu guān yuè yáng jìn， chuān jiǒng dòng tíng kāi。 yàn yǐn chóu xīn qù， shān xián hǎo yuè lái。 yún jiān lián xià tà， tiān shàng jiē xíng bēi。 zuì hòu liáng fēng qǐ， chuī rén wǔ xiù huí。"
     },
     {
       "id": "tang_126",
@@ -2396,7 +2521,8 @@
       "source": "《李太白集》",
       "location": "戴天山/四川江油",
       "wordCount": 48,
-      "year": 720
+      "year": 720,
+      "pinyin": "quǎn fèi shuǐ shēng zhōng， táo huā dài lù nóng。 shù shēn shí jiàn lù， xī wǔ bù wén zhōng。 yě zhú fēn qīng ǎi， fēi quán guà bì fēng。 wú rén zhī suǒ qù， chóu yǐ liǎng sān sōng。"
     },
     {
       "id": "tang_127",
@@ -2415,7 +2541,8 @@
       "source": "《李太白集》",
       "location": "长安",
       "wordCount": 64,
-      "year": 730
+      "year": 730,
+      "pinyin": "dà péng yí rì tóng fēng qǐ， fú yáo zhí shàng jiǔ wàn lǐ。 jiǎ lìng fēng xiē shí xià lái， yóu néng bò què cāng míng shuǐ。 shì rén jiàn wǒ héng shū tiáo， wén yú dà yán jiē lěng xiào。 xuān fù yóu néng wèi hòu shēng， zhàng fu wèi kě qīng nián shào。"
     },
     {
       "id": "tang_128",
@@ -2434,7 +2561,8 @@
       "source": "《李太白集》",
       "location": "山东",
       "wordCount": 84,
-      "year": 740
+      "year": 740,
+      "pinyin": "lǔ sǒu tán wǔ jīng， bái fà sǐ zhāng jù。 wèn yǐ jīng jì cè， máng rú zhuì yān wù。 zú zhù yuǎn yóu lǚ， shǒu dài fāng shān jīn。 huǎn bù cóng zhí dào， wèi xíng xiān qǐ chén。 qín jiā chéng xiàng fǔ， bú zhòng bāo yī rén。 jūn fēi shū sūn tōng， yǔ wǒ běn shū lún。 shí shì qiě wèi dá， guī gēng wèn shuǐ bīn。"
     },
     {
       "id": "tang_129",
@@ -2453,7 +2581,8 @@
       "source": "《李太白集》",
       "location": "宣城/安徽",
       "wordCount": 48,
-      "year": 753
+      "year": 753,
+      "pinyin": "shǔ sēng bào lǜ qǐ， xī xià é méi fēng。 wèi wǒ yì huī shǒu， rú tīng wàn hè sōng。 kè xīn xǐ liú shuǐ， yú xiǎng rù shuāng zhōng。 bù jué bì shān mù， qiū yún àn jǐ chóng。"
     },
     {
       "id": "tang_130",
@@ -2472,7 +2601,8 @@
       "source": "《李太白集》",
       "location": "沙丘/山东",
       "wordCount": 48,
-      "year": 746
+      "year": 746,
+      "pinyin": "wǒ lái jìng hé shì， gāo wò shā qiū chéng。 chéng biān yǒu gǔ shù， rì xī lián qiū shēng。 lǔ jiǔ bù kě zuì， qí gē kōng fù qíng。 sī jūn ruò wèn shuǐ， hào dàng jì nán zhēng。"
     },
     {
       "id": "tang_131",
@@ -2491,7 +2621,8 @@
       "source": "《李太白集》",
       "location": "金陵/南京",
       "wordCount": 48,
-      "year": 746
+      "year": 746,
+      "pinyin": "fēng chuī liǔ huā mǎn diàn xiāng， wú jī yā jiǔ quàn kè cháng。 jīn líng zǐ dì lái xiāng sòng， yù xíng bù xíng gè jìn shāng。 qǐng jūn shì wèn dōng liú shuǐ， bié yì yǔ zhī shuí duǎn cháng。"
     },
     {
       "id": "tang_132",
@@ -2510,7 +2641,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 24,
-      "year": 750
+      "year": 750,
+      "pinyin": "kōng shān bú jiàn rén， dàn wén rén yǔ xiǎng。 fǎn jǐng rù shēn lín， fù zhào qīng tái shàng。"
     },
     {
       "id": "tang_133",
@@ -2529,7 +2661,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 24,
-      "year": 750
+      "year": 750,
+      "pinyin": "dú zuò yōu huáng lǐ， tán qín fù cháng xiào。 shēn lín rén bù zhī， míng yuè lái xiāng zhào。"
     },
     {
       "id": "tang_134",
@@ -2548,7 +2681,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 24,
-      "year": 750
+      "year": 750,
+      "pinyin": "rén xián guì huā luò， yè jìng chūn shān kōng。 yuè chū jīng shān niǎo， shí míng chūn jiàn zhōng。"
     },
     {
       "id": "tang_135",
@@ -2567,7 +2701,8 @@
       "source": "《王右丞集》",
       "location": "长安",
       "wordCount": 24,
-      "year": 740
+      "year": 740,
+      "pinyin": "yuǎn kàn shān yǒu sè， jìn tīng shuǐ wú shēng。 chūn qù huā hái zài， rén lái niǎo bù jīng。"
     },
     {
       "id": "tang_136",
@@ -2586,7 +2721,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 48,
-      "year": 745
+      "year": 745,
+      "pinyin": "jì mò yǎn chái fēi， cāng máng duì luò huī。 hè cháo sōng shù biàn， rén fǎng bì mén xī。 lǜ zhú hán xīn fěn， hóng lián luò gù yī。 dù tóu yān huǒ qǐ， chù chù cǎi líng guī。"
     },
     {
       "id": "tang_137",
@@ -2606,7 +2742,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 64,
-      "year": 745
+      "year": 745,
+      "pinyin": "jī yǔ kōng lín yān huǒ chí， zhēng lí chuī shǔ xiǎng dōng zī。 mò mò shuǐ tián fēi bái lù， yīn yīn xià mù zhuàn huáng lí。 shān zhōng xí jìng guān cháo jǐn， sōng xià qīng zhāi zhé lù kuí。 yě lǎo yǔ rén zhēng xí bà， hǎi ōu hé shì gèng xiāng yí。"
     },
     {
       "id": "tang_138",
@@ -2625,7 +2762,8 @@
       "source": "《王右丞集》",
       "location": "黄花川/陕西",
       "wordCount": 72,
-      "year": 740
+      "year": 740,
+      "pinyin": "yán rù huáng huā chuān， měi zhú qīng xī shuǐ。 suí shān jiāng wàn zhuǎn， qù tú wú bǎi lǐ。 shēng xuān luàn shí zhōng， sè jìng shēn sōng lǐ。 yàng yàng fàn líng xìng， chéng chéng yìng jiā wěi。 wǒ xīn sù yǐ xián， qīng chuān dàn rú cǐ。 qǐng liú pán shí shàng， chuí diào jiāng yǐ yǐ。"
     },
     {
       "id": "tang_139",
@@ -2644,7 +2782,8 @@
       "source": "《王右丞集》",
       "location": "渭川/陕西",
       "wordCount": 60,
-      "year": 740
+      "year": 740,
+      "pinyin": "xié yáng zhào xū luò， qióng xiàng niú yáng guī。 yě lǎo niàn mù tóng， yǐ zhàng hòu jīng fēi。 zhì gòu mài miáo xiù， cán mián sāng yè xī。 tián fū hé chú zhì， xiāng jiàn yǔ yī yī。 jí cǐ xiàn xián yì， chàng rán yín shì wēi。"
     },
     {
       "id": "tang_140",
@@ -2663,7 +2802,8 @@
       "source": "《王右丞集》",
       "location": "汉江/襄阳",
       "wordCount": 48,
-      "year": 740
+      "year": 740,
+      "pinyin": "chǔ sāi sān xiāng jiē， jīng mén jiǔ pài tōng。 jiāng liú tiān dì wài， shān sè yǒu wú zhōng。 jùn yì fú qián pǔ， bō lán dòng yuǎn kōng。 xiāng yáng hǎo fēng rì， liú zuì yǔ shān wēng。"
     },
     {
       "id": "tang_141",
@@ -2682,7 +2822,8 @@
       "source": "《王右丞集》",
       "location": "渭城/咸阳",
       "wordCount": 48,
-      "year": 740
+      "year": 740,
+      "pinyin": "fēng jìn jiǎo gōng míng， jiāng jūn liè wèi chéng。 cǎo kū yīng yǎn jí， xuě jìn mǎ tí qīng。 hū guò xīn fēng shì， hái guī xì liǔ yíng。 huí kàn shè diāo chù， qiān lǐ mù yún píng。"
     },
     {
       "id": "tang_142",
@@ -2701,7 +2842,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 48,
-      "year": 750
+      "year": 750,
+      "pinyin": "wǎn nián wéi hǎo jìng， wàn shì bù guān xīn。 zì gù wú cháng cè， kōng zhī fǎn jiù lín。 sōng fēng chuī jiě dài， shān yuè zhào tán qín。 jūn wèn qióng tōng lǐ， yú gē rù pǔ shēn。"
     },
     {
       "id": "tang_143",
@@ -2720,7 +2862,8 @@
       "source": "《王右丞集》",
       "location": "长安",
       "wordCount": 24,
-      "year": 740
+      "year": 740,
+      "pinyin": "jūn zì gù xiāng lái， yìng zhī gù xiāng shì。 lái rì qǐ chuāng qián， hán méi zhù huā wèi？"
     },
     {
       "id": "tang_144",
@@ -2739,7 +2882,8 @@
       "source": "《王右丞集》",
       "location": "长安",
       "wordCount": 96,
-      "year": 740
+      "year": 740,
+      "pinyin": "shǎo nián shí wǔ èr shí shí， bù xíng duó dé hú mǎ qí。 shè shā shān zhōng bái é hǔ， kěn shù yè xià huáng xū ér。 yì shēn zhuǎn zhàn sān qiān lǐ， yí jiàn céng dāng bǎi wàn shī。 hàn bīng fèn xùn rú pī lì， lǔ qí bēng téng wèi jí lí。 wèi qīng bú bài yóu tiān xìng， lǐ guǎng wú gōng yuán shù qí。 zì cóng qì zhì biàn shuāi xiǔ， shì shì cuō tuó chéng bái shǒu。"
     },
     {
       "id": "tang_145",
@@ -2758,7 +2902,8 @@
       "source": "《王右丞集》",
       "location": "辋川/蓝田",
       "wordCount": 24,
-      "year": 750
+      "year": 750,
+      "pinyin": "jīng xī bái shí chū， tiān hán hóng yè xī。 shān lù yuán wú yǔ， kōng cuì shī rén yī。"
     },
     {
       "id": "tang_146",
@@ -2777,7 +2922,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 64,
-      "year": 845
+      "year": 845,
+      "pinyin": "chàng wò xīn chūn bái jiá yī， bái mén liáo luò yì duō wéi。 hóng lóu gé yǔ xiāng wàng lěng， zhū bó piāo dēng dú zì guī。 yuǎn lù yìng bēi chūn wǎn wǎn， cán xiāo yóu dé mèng yī xī。 yù dāng jiān zhá hé yóu dá， wàn lǐ yún luó yí yàn fēi。"
     },
     {
       "id": "tang_147",
@@ -2796,7 +2942,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 32,
-      "year": 845
+      "year": 845,
+      "pinyin": "chéng xìng nán yóu bú jiè yán， jiǔ chóng shuí shěng jiàn shū hán。 chūn fēng jǔ guó cái gōng jǐn， bàn zuò zhàng ní bàn zuò fān。"
     },
     {
       "id": "tang_148",
@@ -2815,7 +2962,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 32,
-      "year": 850
+      "year": 850,
+      "pinyin": "yáo chí ā mǔ qǐ chuāng kāi， huáng zhú gē shēng dòng dì āi。 bā jùn rì xíng sān wàn lǐ， mù wáng hé shì bú chóng lái。"
     },
     {
       "id": "tang_149",
@@ -2834,7 +2982,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 840
+      "year": 840,
+      "pinyin": "běn yǐ gāo nán bǎo， tú láo hèn fèi shēng。 wǔ gēng shū yù duàn， yí shù bì wú qíng。 báo huàn gěng yóu fàn， gù yuán wú yǐ píng。 fán jūn zuì xiāng jǐng， wǒ yì jǔ jiā qīng。"
     },
     {
       "id": "tang_150",
@@ -2853,7 +3002,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 845
+      "year": 845,
+      "pinyin": "kè qù bō píng kǎn， chán xiū lù mǎn zhī。 yǒng huái dāng cǐ jié， yǐ lì zì yí shí。 běi dòu jiān chūn yuǎn， nán líng yù shǐ chí。 tiān yá zhàn mèng shù， yí wù yǒu xīn zhī。"
     },
     {
       "id": "tang_151",
@@ -2872,7 +3022,8 @@
       "source": "《李义山诗集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 845
+      "year": 845,
+      "pinyin": "qī liáng bǎo jiàn piān， jī bó yù qióng nián。 huáng yè réng fēng yǔ， qīng lóu zì guǎn xián。 xīn zhī zāo báo sú， jiù hǎo gé liáng yuán。 xīn duàn xīn fēng jiǔ， xiāo chóu dòu jǐ qiān。"
     },
     {
       "id": "tang_152",
@@ -2891,7 +3042,8 @@
       "source": "《李义山诗集》",
       "location": "乐游原/西安",
       "wordCount": 24,
-      "year": 850
+      "year": 850,
+      "pinyin": "xiàng wǎn yì bú shì， qū chē dēng gǔ yuán。 xī yáng wú xiàn hǎo， zhǐ shì jìn huáng hūn。"
     },
     {
       "id": "tang_153",
@@ -2910,7 +3062,8 @@
       "source": "《樊川文集》",
       "location": "长安",
       "wordCount": 32,
-      "year": 840
+      "year": 840,
+      "pinyin": "yín zhú qiū guāng lěng huà píng， qīng luó xiǎo shàn pū liú yíng。 tiān jiē yè sè liáng rú shuǐ， wò kàn qiān niú zhī nǚ xīng。"
     },
     {
       "id": "tang_154",
@@ -2929,7 +3082,8 @@
       "source": "《樊川文集》",
       "location": "池州/安徽",
       "wordCount": 32,
-      "year": 845
+      "year": 845,
+      "pinyin": "qīng míng shí jié yǔ fēn fēn， lù shang xíng rén yù duàn hún。 jiè wèn jiǔ jiā hé chù yǒu， mù tóng yáo zhǐ xìng huā cūn。"
     },
     {
       "id": "tang_155",
@@ -2948,7 +3102,8 @@
       "source": "《樊川文集》",
       "location": "扬州",
       "wordCount": 32,
-      "year": 835
+      "year": 835,
+      "pinyin": "qīng shān yǐn yǐn shuǐ tiáo tiáo， qiū jìn jiāng nán cǎo wèi diāo。 èr shí sì qiáo míng yuè yè， yù rén hé chù jiào chuī xiāo。"
     },
     {
       "id": "tang_156",
@@ -2967,7 +3122,8 @@
       "source": "《樊川文集》",
       "location": "乌江/安徽和县",
       "wordCount": 32,
-      "year": 842
+      "year": 842,
+      "pinyin": "shèng bài bīng jiā shì bù qī， bāo xiū rěn chǐ shì nán ér。 jiāng dōng zǐ dì duō cái jùn， juàn tǔ chóng lái wèi kě zhī。"
     },
     {
       "id": "tang_157",
@@ -2986,7 +3142,8 @@
       "source": "《樊川文集》",
       "location": "齐山/池州",
       "wordCount": 64,
-      "year": 845
+      "year": 845,
+      "pinyin": "jiāng hán qiū yǐng yàn chū fēi， yǔ kè xié hú shàng cuì wēi。 chén shì nán féng kāi kǒu xiào， jú huā xū chā mǎn tóu guī。 dàn jiāng mǐng dīng chóu jiā jié， bú yòng dēng lín hèn luò huī。 gǔ wǎng jīn lái zhī rú cǐ， niú shān hé bì dú zhān yī。"
     },
     {
       "id": "tang_158",
@@ -3005,7 +3162,8 @@
       "source": "《白氏长庆集》",
       "location": "大林寺/庐山",
       "wordCount": 32,
-      "year": 817
+      "year": 817,
+      "pinyin": "rén jiān sì yuè fāng fēi jìn， shān sì táo huā shǐ shèng kāi。 cháng hèn chūn guī wú mì chù， bù zhī zhuǎn rù cǐ zhōng lái。"
     },
     {
       "id": "tang_159",
@@ -3024,7 +3182,8 @@
       "source": "《白氏长庆集》",
       "location": "江州/九江",
       "wordCount": 32,
-      "year": 817
+      "year": 817,
+      "pinyin": "yí dào cán yáng pù shuǐ zhōng， bàn jiāng sè sè bàn jiāng hóng。 kě lián jiǔ yuè chū sān yè， lù sì zhēn zhū yuè sì gōng。"
     },
     {
       "id": "tang_160",
@@ -3043,7 +3202,8 @@
       "source": "《白氏长庆集》",
       "location": "江州/九江",
       "wordCount": 24,
-      "year": 817
+      "year": 817,
+      "pinyin": "lǜ yǐ xīn pēi jiǔ， hóng ní xiǎo huǒ lú。 wǎn lái tiān yù xuě， néng yǐn yì bēi wú？"
     },
     {
       "id": "tang_161",
@@ -3062,7 +3222,8 @@
       "source": "《白氏长庆集》",
       "location": "洛阳",
       "wordCount": 24,
-      "year": 830
+      "year": 830,
+      "pinyin": "xiǎo wǔ chēng xiǎo tǐng， tōu cǎi bái lián huí。 bù jiě cáng zōng jì， fú píng yí dào kāi。"
     },
     {
       "id": "tang_162",
@@ -3081,7 +3242,8 @@
       "source": "《白氏长庆集》",
       "location": "洛阳",
       "wordCount": 32,
-      "year": 838
+      "year": 838,
+      "pinyin": "jiāng nán hǎo， fēng jǐng jiù céng ān。 rì chū jiāng huā hóng shèng huǒ， chūn lái jiāng shuǐ lǜ rú lán。 néng bú yì jiāng nán？"
     },
     {
       "id": "tang_163",
@@ -3100,7 +3262,8 @@
       "source": "《白氏长庆集》",
       "location": "陕西周至",
       "wordCount": 156,
-      "year": 806
+      "year": 806,
+      "pinyin": "tián jiā shǎo xián yuè， wǔ yuè rén bèi máng。 yè lái nán fēng qǐ， xiǎo mài fù lǒng huáng。 fù gū hé dān shí， tóng zhì xié hú jiāng。 xiāng suí xiǎng tián qù， dīng zhuàng zài nán gāng。 zú zhēng shǔ tǔ qì， bèi zhuó yán tiān guāng。 lì jìn bù zhī rè， dàn xī xià rì cháng。 fù yǒu pín fù rén， bào zǐ zài qí páng。 yòu shǒu bǐng yí suì， zuǒ bì xuán bì kuāng。 tīng qí xiāng gù yán， wén zhě wèi bēi shāng。 jiā tián shū shuì jìn， shí cǐ chōng jī cháng。 jīn wǒ hé gōng dé， céng bú shì nóng sāng。 lì lù sān bǎi shí， suì yàn yǒu yú liáng。 niàn cǐ sī zì kuì， jìn rì bù néng wàng。"
     },
     {
       "id": "tang_164",
@@ -3119,7 +3282,8 @@
       "source": "《白氏长庆集》",
       "location": "邯郸/河北",
       "wordCount": 32,
-      "year": 804
+      "year": 804,
+      "pinyin": "hán dān yì lǐ féng dōng zhì， bào xī dēng qián yǐng bàn shēn。 xiǎng dé jiā zhōng yè shēn zuò， hái yìng shuō zhe yuǎn xíng rén。"
     },
     {
       "id": "tang_165",
@@ -3138,7 +3302,8 @@
       "source": "《全唐诗》",
       "location": "芙蓉楼/镇江",
       "wordCount": 32,
-      "year": 740
+      "year": 740,
+      "pinyin": "hán yǔ lián jiāng yè rù wú， píng míng sòng kè chǔ shān gū。 luò yáng qīn yǒu rú xiāng wèn， yí piàn bīng xīn zài yù hú。"
     },
     {
       "id": "tang_166",
@@ -3157,7 +3322,8 @@
       "source": "《全唐诗》",
       "location": "江南",
       "wordCount": 32,
-      "year": 740
+      "year": 740,
+      "pinyin": "hé yè luó qún yí sè cái， fú róng xiàng liǎn liǎng biān kāi。 luàn rù chí zhōng kàn bú jiàn， wén gē shǐ jué yǒu rén lái。"
     },
     {
       "id": "tang_167",
@@ -3176,7 +3342,8 @@
       "source": "《全唐诗》",
       "location": "青海/玉门关",
       "wordCount": 32,
-      "year": 740
+      "year": 740,
+      "pinyin": "qīng hǎi cháng yún àn xuě shān， gū chéng yáo wàng yù mén guān。 huáng shā bǎi zhàn chuān jīn jiǎ， bú pò lóu lán zhōng bù hái。"
     },
     {
       "id": "tang_168",
@@ -3195,7 +3362,8 @@
       "source": "《全唐诗》",
       "location": "边塞",
       "wordCount": 32,
-      "year": 740
+      "year": 740,
+      "pinyin": "pí pa qǐ wǔ huàn xīn shēng， zǒng shì guān shān jiù bié qíng。 liáo luàn biān chóu tīng bú jìn， gāo gāo qiū yuè zhào cháng chéng。"
     },
     {
       "id": "tang_169",
@@ -3214,7 +3382,8 @@
       "source": "《全唐诗》",
       "location": "长安",
       "wordCount": 32,
-      "year": 740
+      "year": 740,
+      "pinyin": "guī zhōng shào fù bù zhī chóu， chūn rì níng zhuāng shàng cuì lóu。 hū jiàn mò tóu yáng liǔ sè， huǐ jiào fū xù mì fēng hóu。"
     },
     {
       "id": "tang_170",
@@ -3233,7 +3402,8 @@
       "source": "《全唐诗》",
       "location": "边塞",
       "wordCount": 48,
-      "year": 740
+      "year": 740,
+      "pinyin": "chán míng kōng sāng lín， bā yuè xiāo guān dào。 chū sài rù sāi hán， chù chù huáng lú cǎo。 cóng lái yōu bìng kè， jiē gòng chén shā lǎo。 mò xué yóu xiá ér， jīn kuā zǐ liú hǎo。"
     },
     {
       "id": "tang_171",
@@ -3253,7 +3423,8 @@
       "source": "《昌黎先生集》",
       "location": "长安",
       "wordCount": 32,
-      "year": 823
+      "year": 823,
+      "pinyin": "tiān jiē xiǎo yǔ rùn rú sū， cǎo sè yáo kàn jìn què wú。 zuì shì yì nián chūn hǎo chù， jué shèng yān liǔ mǎn huáng dōu。"
     },
     {
       "id": "tang_172",
@@ -3272,7 +3443,8 @@
       "source": "《昌黎先生集》",
       "location": "蓝关/陕西",
       "wordCount": 64,
-      "year": 819
+      "year": 819,
+      "pinyin": "yì fēng cháo zòu jiǔ chóng tiān， xī biǎn cháo zhōu lù bā qiān。 yù wèi shèng míng chú bì shì， kěn jiāng shuāi xiǔ xī cán nián。 yún héng qín lǐng jiā hé zài？ xuě yōng lán guān mǎ bù qián。 zhī rǔ yuǎn lái yīng yǒu yì， hǎo shōu wú gǔ zhàng jiāng biān。"
     },
     {
       "id": "tang_173",
@@ -3291,7 +3463,8 @@
       "source": "《昌黎先生集》",
       "location": "长安",
       "wordCount": 110,
-      "year": 811
+      "year": 811,
+      "pinyin": "yè jīng yú qín， huāng yú xī； xíng chéng yú sī， huǐ yú suí。 fāng jīn shèng xián xiāng féng， zhì jù bì zhāng。 bá qù xiōng xié， dēng chóng jùn liáng。 zhàn xiǎo shàn zhě lǜ yǐ lù， míng yí yì zhě wú bù yōng。 pá luó tī jué， guā gòu mó guāng。 gài yǒu xìng ér huò xuǎn， shú yún duō ér bù yáng？ zhū shēng yè huàn bù néng jīng， wú huàn yǒu sī zhī bù míng； xíng huàn bù néng chéng， wú huàn yǒu sī zhī bù gōng。"
     },
     {
       "id": "tang_174",
@@ -3310,7 +3483,8 @@
       "source": "《昌黎先生集》",
       "location": "长安",
       "wordCount": 109,
-      "year": 800
+      "year": 800,
+      "pinyin": "lóng xū qì chéng yún， yún gù fú líng yú lóng yě。 rán lóng chéng shì qì， máng yáng qióng hū xuán jiān， báo rì yuè， fú guāng jǐng， gǎn zhèn diàn， shén biàn huà， shuǐ xià tǔ， gǔ líng gǔ， yún yì líng guài yǐ zāi！ yún， lóng zhī suǒ néng shǐ wèi líng yě； ruò lóng zhī líng， zé fēi yún zhī suǒ néng shǐ wèi líng yě。 rán lóng fú dé yún， wú yǐ shén qí líng yǐ。 shī qí suǒ píng yī， xìn bù kě yú！"
     },
     {
       "id": "tang_175",
@@ -3329,7 +3503,8 @@
       "source": "《孟浩然集》",
       "location": "襄阳",
       "wordCount": 48,
-      "year": 730
+      "year": 730,
+      "pinyin": "gù rén jù jī shǔ， yāo wǒ zhì tián jiā。 lǜ shù cūn biān hé， qīng shān guō wài xié。 kāi xuān miàn chǎng pǔ， bǎ jiǔ huà sāng má。 dài dào chóng yáng rì， hái lái jiù jú huā。"
     },
     {
       "id": "tang_176",
@@ -3348,7 +3523,8 @@
       "source": "《孟浩然集》",
       "location": "建德江/浙江",
       "wordCount": 24,
-      "year": 730
+      "year": 730,
+      "pinyin": "yí zhōu bó yān zhǔ， rì mù kè chóu xīn。 yě kuàng tiān dī shù， jiāng qīng yuè jìn rén。"
     },
     {
       "id": "tang_177",
@@ -3367,7 +3543,8 @@
       "source": "《孟浩然集》",
       "location": "洞庭湖/湖南",
       "wordCount": 48,
-      "year": 730
+      "year": 730,
+      "pinyin": "bā yuè hú shuǐ píng， hán xū hùn tài qīng。 qì zhēng yún mèng zé， bō hàn yuè yáng chéng。 yù jì wú zhōu jí， duān jū chǐ shèng míng。 zuò guān chuí diào zhě， tú yǒu xiàn yú qíng。"
     },
     {
       "id": "tang_178",
@@ -3386,7 +3563,8 @@
       "source": "《孟浩然集》",
       "location": "襄阳",
       "wordCount": 48,
-      "year": 728
+      "year": 728,
+      "pinyin": "běi quē xiū shàng shū， nán shān guī bì lú。 bù cái míng zhǔ qì， duō bìng gù rén shū。 bái fà cuī nián lǎo， qīng yáng bī suì chú。 yǒng huái chóu bú mèi， sōng yuè yè chuāng xū。"
     },
     {
       "id": "tang_179",
@@ -3405,7 +3583,8 @@
       "source": "《孟浩然集》",
       "location": "长安",
       "wordCount": 48,
-      "year": 728
+      "year": 728,
+      "pinyin": "jì jì jìng hé dài， zhāo zhāo kōng zì guī。 yù xún fāng cǎo qù， xī yǔ gù rén wéi。 dāng lù shuí xiāng jiǎ， zhī yīn shì suǒ xī。 zhī yìng shǒu jì mò， hái yǎn gù yuán fēi。"
     },
     {
       "id": "tang_180",
@@ -3424,7 +3603,8 @@
       "source": "《全唐诗》",
       "location": "北固山/镇江",
       "wordCount": 48,
-      "year": 740
+      "year": 740,
+      "pinyin": "kè lù qīng shān wài， xíng zhōu lǜ shuǐ qián。 cháo píng liǎng àn kuò， fēng zhèng yì fān xuán。 hǎi rì shēng cán yè， jiāng chūn rù jiù nián。 xiāng shū hé chù dá？ guī yàn luò yáng biān。"
     },
     {
       "id": "tang_181",
@@ -3443,7 +3623,8 @@
       "source": "《全唐诗》",
       "location": "破山寺/江苏常熟",
       "wordCount": 48,
-      "year": 740
+      "year": 740,
+      "pinyin": "qīng chén rù gǔ sì， chū rì zhào gāo lín。 qū jìng tōng yōu chù， chán fáng huā mù shēn。 shān guāng yuè niǎo xìng， tán yǐng kōng rén xīn。 wàn lài cǐ jù jì， dàn yú zhōng qìng yīn。"
     },
     {
       "id": "tang_182",
@@ -3462,7 +3643,8 @@
       "source": "《全唐诗》",
       "location": "受降城/内蒙古",
       "wordCount": 32,
-      "year": 800
+      "year": 800,
+      "pinyin": "huí lè fēng qián shā sì xuě， shòu xiáng chéng wài yuè rú shuāng。 bù zhī hé chù chuī lú guǎn， yí yè zhēng rén jìn wàng xiāng。"
     },
     {
       "id": "tang_183",
@@ -3481,7 +3663,8 @@
       "source": "《全唐诗》",
       "location": "长安",
       "wordCount": 32,
-      "year": 780
+      "year": 780,
+      "pinyin": "chūn chéng wú chù bù fēi huā， hán shí dōng fēng yù liǔ xié。 rì mù hàn gōng chuán là zhú， qīng yān sàn rù wǔ hóu jiā。"
     },
     {
       "id": "tang_184",
@@ -3500,7 +3683,8 @@
       "source": "《全唐诗》",
       "location": "长安",
       "wordCount": 32,
-      "year": 750
+      "year": 750,
+      "pinyin": "gèng shēn yuè sè bàn rén jiā， běi dòu lán gān nán dòu xié。 jīn yè piān zhī chūn qì nuǎn， chóng shēng xīn tòu lǜ chuāng shā。"
     },
     {
       "id": "tang_185",
@@ -3520,7 +3704,8 @@
       "source": "《王子安集》",
       "location": "滕王阁/南昌",
       "wordCount": 717,
-      "year": 675
+      "year": 675,
+      "pinyin": "yù zhāng gù jùn， hóng dōu xīn fǔ。 xīng fēn yì zhěn， dì jiē héng lú。 jīn sān jiāng ér dài wǔ hú， kòng mán jīng ér yǐn ōu yuè。 wù huá tiān bǎo， lóng guāng shè niú dòu zhī xū； rén jié dì líng， xú rú xià chén fān zhī tà。 xióng zhōu wù liè， jùn cǎi xīng chí。 tái huáng zhěn yí xià zhī jiāo， bīn zhǔ jìn dōng nán zhī měi。 dū du yán gōng zhī yǎ wàng， qǐ jǐ yáo lín； yǔ wén xīn zhōu zhī yì fàn， chān wéi zàn zhù。 shí xún xiū jià， shèng yǒu rú yún； qiān lǐ féng yíng， gāo péng mǎn zuò。 téng jiāo qǐ fèng， mèng xué shì zhī cí zōng； zǐ diàn qīng shuāng， wáng jiāng jūn zhī wǔ kù。 jiā jūn zuò zǎi， lù chū míng qū； tóng zǐ hé zhī， gōng féng shèng jiàn。\n\nshí wéi jiǔ yuè， xù shǔ sān qiū。 liáo shuǐ jìn ér hán tán qīng， yān guāng níng ér mù shān zǐ。 yǎn cān fēi yú shàng lù， fǎng fēng jǐng yú chóng ā。 lín dì zǐ zhī cháng zhōu， dé tiān rén zhī jiù guǎn。 céng luán sǒng cuì， shàng chū zhòng xiāo； fēi gé liú dān， xià lín wú dì。 hè tīng fú zhǔ， qióng dǎo yǔ zhī yíng huí； guì diàn lán gōng， jí gāng luán zhī tǐ shì。\n\npī xiù tà， fǔ diāo méng， shān yuán kuàng qí yíng shì， chuān zé yū qí hài zhǔ。 lǘ yán pū dì， zhōng míng dǐng shí zhī jiā； gě jiàn mí jīn， qīng què huáng lóng zhī zhú。 yún xiāo yǔ jì， cǎi chè qū míng。 luò xiá yǔ gū wù qí fēi， qiū shuǐ gòng cháng tiān yí sè。 yú zhōu chàng wǎn， xiǎng qióng péng lí zhī bīn； yàn zhèn jīng hán， shēng duàn héng yáng zhī pǔ。\n\nyáo jīn fǔ chàng， yì xìng chuán fēi。 shuǎng lài fā ér qīng fēng shēng， xiān gē níng ér bái yún è。 suī yuán lǜ zhú， qì líng péng zé zhī zūn； yè shuǐ zhū huá， guāng zhào lín chuān zhī bǐ。 sì měi jù， èr nán bìng。 qióng dì miǎn yú zhōng tiān， jí yú yóu yú xiá rì。 tiān gāo dì jiǒng， jué yǔ zhòu zhī wú qióng； xīng jìn bēi lái， shí yíng xū zhī yǒu shù。 wàng cháng ān yú rì xià， mù wú huì yú yún jiān。 dì shì jí ér nán míng shēn， tiān zhù gāo ér běi chén yuǎn。 guān shān nán yuè， shuí bēi shī lù zhī rén？ píng shuǐ xiāng féng， jìn shì tā xiāng zhī kè。 huái dì hūn ér bú jiàn， fèng xuān shì yǐ hé nián？\n\njiē hū！ shí yùn bù qí， mìng tú duō chuǎn。 féng táng yì lǎo， lǐ guǎng nán fēng。 qū jiǎ yì yú cháng shā， fēi wú shèng zhǔ； cuàn liáng hóng yú hǎi qǔ， qǐ fá míng shí？ suǒ lài jūn zǐ jiàn jī， dá rén zhī mìng。 lǎo dāng yì zhuàng， níng yí bái shǒu zhī xīn？ qióng qiě yì jiān， bú zhuì qīng yún zhī zhì。 zhuó tān quán ér jué shuǎng， chù hé zhé yǐ yóu huān。 běi hǎi suī shē， fú yáo kě jiē； dōng yú yǐ shì， sāng yú fēi wǎn。 mèng cháng gāo jié， kòng yú bào guó zhī qíng； ruǎn jí chāng kuáng， qǐ xiào qióng tú zhī kū！\n\nbó， sān chǐ wēi mìng， yí jiè shū shēng。 wú lù qǐng yīng， děng zhōng jūn zhī ruò guàn； yǒu huái tóu bǐ， mù zōng què zhī cháng fēng。 shè zān hù yú bǎi líng， fèng chén hūn yú wàn lǐ。 fēi xiè jiā zhī bǎo shù， jiē mèng shì zhī fāng lín。 tā rì qū tíng， dāo péi lǐ duì； jīn zī pěng mèi， xǐ tuō lóng mén。 yáng yì bù féng， fǔ líng yún ér zì xī； zhōng qī jì yù， zòu liú shuǐ yǐ hé cán？\n\nwū hū！ shèng dì bù cháng， shèng yán nán zài； lán tíng yǐ yǐ， zǐ zé qiū xū。 lín bié zèng yán， xìng chéng ēn yú wěi jiàn； dēng gāo zuò fù， shì suǒ wàng yú qún gōng。 gǎn jié bǐ huái， gōng shū duǎn yǐn； yì yán jūn fù， sì yùn jù chéng。 qǐng sǎ pān jiāng， gè qīng lù hǎi yún ěr。"
     }
   ]
 }

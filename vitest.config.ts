@@ -42,6 +42,10 @@ export default defineConfig({
       // mobile 预合成口语音频定位：mobile 代码以 @/utils/speech-audio 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/speech-audio（依赖 crypto-js）
       { find: /^@\/utils\/speech-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/speech-audio.ts') },
+      // mobile 预合成诗词朗读音频定位：mobile 代码以 @/utils/poetry-audio 引用，同上
+      { find: /^@\/utils\/poetry-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/poetry-audio.ts') },
+      // mobile 默写对比 LCS：mobile 代码以 @/utils/text-compare 引用，同上
+      { find: /^@\/utils\/text-compare$/, replacement: resolve(__dirname, 'mobile/src/utils/text-compare.ts') },
       // mobile 音标数据：mobile 代码以 @/utils/phoneme-data 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/phoneme-data（无 PHONEME_CHANT）
       { find: /^@\/utils\/phoneme-data$/, replacement: resolve(__dirname, 'mobile/src/utils/phoneme-data.ts') },

@@ -200,6 +200,7 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
         dynasty: input.dynasty || '',
         category: input.category,
         year: input.year,
+        pinyin: input.pinyin,
         tags: Array.isArray(input.tags) ? input.tags : [],
         ctime: now,
         utime: now,

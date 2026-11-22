@@ -2,7 +2,7 @@
  * 遮挡回忆分块逻辑测试
  */
 import { describe, it, expect } from 'vitest'
-import { splitContentToBlocks, isArticleDue } from './recall'
+import { splitContentToBlocks, splitAnnotatedBlocks, firstCharHint, isArticleDue } from './recall'
 
 describe('正文分块', () => {
   it('空内容返回空数组', () => {
@@ -36,6 +36,52 @@ describe('正文分块', () => {
     const blocks = splitContentToBlocks(long)
     expect(blocks.length).toBe(3)
     expect(blocks[0].length).toBe(40)
+  })
+})
+
+describe('带拼音分块', () => {
+  it('无拼音时退化为普通分块', () => {
+    const blocks = splitAnnotatedBlocks('床前明月光\n疑是地上霜')
+    expect(blocks).toEqual([{ text: '床前明月光' }, { text: '疑是地上霜' }])
+  })
+
+  it('拼音与正文逐行配对', () => {
+    const content = '床前明月光，疑是地上霜。\n举头望明月，低头思故乡。'
+    const pinyin = 'chuáng qián míng yuè guāng，yí shì dì shàng shuāng。\njǔ tóu wàng míng yuè，dī tóu sī gù xiāng。'
+    expect(splitAnnotatedBlocks(content, pinyin)).toEqual([
+      { text: '床前明月光，疑是地上霜。', pinyin: 'chuáng qián míng yuè guāng，yí shì dì shàng shuāng。' },
+      { text: '举头望明月，低头思故乡。', pinyin: 'jǔ tóu wàng míng yuè，dī tóu sī gù xiāng。' },
+    ])
+  })
+
+  it('空行两侧同步跳过', () => {
+    const content = '第一段\n\n第二段'
+    const pinyin = 'dì yī duàn\n\ndì èr duàn'
+    expect(splitAnnotatedBlocks(content, pinyin)).toEqual([
+      { text: '第一段', pinyin: 'dì yī duàn' },
+      { text: '第二段', pinyin: 'dì èr duàn' },
+    ])
+  })
+
+  it('拼音行数不足时缺失侧留空，超长行保持整块', () => {
+    const long = '啊'.repeat(60)
+    const blocks = splitAnnotatedBlocks(`${long}\n短行`, 'ā ā ā')
+    expect(blocks).toHaveLength(2)
+    expect(blocks[0]).toEqual({ text: long, pinyin: 'ā ā ā' })
+    expect(blocks[1]).toEqual({ text: '短行' })
+  })
+})
+
+describe('首字提示', () => {
+  it('取第一个非标点非空白字符', () => {
+    expect(firstCharHint('床前明月光，')).toBe('床')
+    expect(firstCharHint('Hello world')).toBe('H')
+    expect(firstCharHint('（东风）夜放花千树')).toBe('东')
+  })
+
+  it('整块都是标点/空白时返回空串', () => {
+    expect(firstCharHint('。，！')).toBe('')
+    expect(firstCharHint('')).toBe('')
   })
 })
 

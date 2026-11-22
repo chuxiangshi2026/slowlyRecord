@@ -40,6 +40,8 @@ export interface MobilePoetryItem {
   location?: string
   wordCount?: number
   year?: string | number
+  /** 逐行拼音（离线生成，与 content 行对齐） */
+  pinyin?: string
 }
 
 export interface MobileIdiomItem {
@@ -120,6 +122,7 @@ function normalizePoetry(raw: readonly any[], dynastyCode: string): MobilePoetry
     location: it.location,
     wordCount: it.wordCount,
     year: it.year,
+    pinyin: it.pinyin,
   })).filter((p) => p.title && p.content)
 }
 

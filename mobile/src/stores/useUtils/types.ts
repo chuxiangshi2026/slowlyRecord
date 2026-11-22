@@ -131,6 +131,8 @@ export interface MobileTextArticle {
   level?: number
   /** 轻量复习调度：下次到期复习时间戳（ms），空视为到期 */
   nextReview?: number
+  /** 逐行拼音（内置诗词导入时携带，与 content 行对齐） */
+  pinyin?: string
 }
 
 export interface MobileTextNote {

@@ -29,7 +29,8 @@ const data = {
       "source": "《于忠肃集》",
       "location": "北京",
       "wordCount": 32,
-      "year": 1440
+      "year": 1440,
+      "pinyin": "qiān chuí wàn záo chū shēn shān， liè huǒ fén shāo ruò děng xián。 fěn gǔ suì shēn hún bú pà， yào liú qīng bái zài rén jiān。"
     },
     {
       "id": "ming_002",
@@ -47,7 +48,8 @@ const data = {
       "source": "《升庵集》",
       "location": "云南/永昌",
       "wordCount": 70,
-      "year": 1524
+      "year": 1524,
+      "pinyin": "gǔn gǔn cháng jiāng dōng shì shuǐ， làng huā táo jìn yīng xióng。 shì fēi chéng bài zhuǎn tóu kōng。 qīng shān yī jiù zài， jǐ dù xī yáng hóng。 bái fà yú qiáo jiāng zhǔ shàng， guàn kàn qiū yuè chūn fēng。 yì hú zhuó jiǔ xǐ xiāng féng。 gǔ jīn duō shǎo shì， dōu fù xiào tán zhōng。"
     },
     {
       "id": "ming_003",
@@ -65,7 +67,8 @@ const data = {
       "source": "《鹤滩集》",
       "location": "松江/上海",
       "wordCount": 68,
-      "year": 1500
+      "year": 1500,
+      "pinyin": "míng rì fù míng rì， míng rì hé qí duō。 wǒ shēng dài míng rì， wàn shì chéng cuō tuó。 shì rén ruò bèi míng rì lèi， chūn qù qiū lái lǎo jiàng zhì。 cháo kàn shuǐ dōng liú， mù kàn rì xī zhuì。 bǎi nián míng rì néng jǐ hé？ qǐng jūn tīng wǒ míng rì gē。"
     },
     {
       "id": "ming_004",
@@ -84,7 +87,8 @@ const data = {
       "source": "《六如居士集》",
       "location": "苏州/桃花坞",
       "wordCount": 112,
-      "year": 1500
+      "year": 1500,
+      "pinyin": "táo huā wù lǐ táo huā ān， táo huā ān xià táo huā xiān。 táo huā xiān rén zhǒng táo shù， yòu zhāi táo huā huàn jiǔ qián。 jiǔ xǐng zhī zài huā qián zuò， jiǔ zuì hái lái huā xià mián。 bàn xǐng bàn zuì rì fù rì， huā luò huā kāi nián fù nián。 dàn yuàn lǎo sǐ huā jiǔ jiān， bú yuàn jū gōng chē mǎ qián。 bié rén xiào wǒ tài fēng diān， wǒ xiào tā rén kàn bù chuān。 bú jiàn wǔ líng háo jié mù， wú huā wú jiǔ chú zuò tián。"
     },
     {
       "id": "ming_005",
@@ -102,7 +106,8 @@ const data = {
       "source": "《宋学士文集》",
       "location": "东阳/金华",
       "wordCount": 131,
-      "year": 1370
+      "year": 1370,
+      "pinyin": "yú yòu shí jí shì xué。 jiā pín， wú cóng zhì shū yǐ guān， měi jiǎ jiè yú cáng shū zhī jiā， shǒu zì bǐ lù， jì rì yǐ hái。 tiān dà hán， yàn bīng jiān， shǒu zhǐ bù kě qū shēn， fú zhī dài。 lù bì， zǒu sòng zhī， bù gǎn shāo yú yuē。 yǐ shì rén duō yǐ shū jiǎ yú， yú yīn dé biàn guān qún shū。 jì jiā guān， yì mù shèng xián zhī dào…… qí yè yǒu bù jīng、 dé yǒu bù chéng zhě， fēi tiān zhì zhī bēi， zé xīn bú ruò yú zhī zhuān ěr， qǐ tā rén zhī guò zāi？"
     },
     {
       "id": "ming_006",
@@ -120,7 +125,8 @@ const data = {
       "source": "《震川文集》",
       "location": "昆山/江苏",
       "wordCount": 205,
-      "year": 1530
+      "year": 1530,
+      "pinyin": "xiàng jǐ xuān， jiù nán gé zǐ yě。 shì jǐn fāng zhàng， kě róng yì rén jū。 bǎi nián lǎo wū， chén ní shèn lù， yǔ zé xià zhù； měi yí àn， gù shì wú kě zhì zhě。 yòu běi xiàng， bù néng dé rì， rì guò wǔ yǐ hūn。 yú shāo wéi xiū qì， shǐ bú shàng lòu。 qián pì sì chuāng， yuán qiáng zhōu tíng， yǐ dāng nán rì， rì yǐng fǎn zhào， shì shǐ dòng rán。 yòu zá zhí lán guì zhú mù yú tíng， jiù shí lán dùn， yì suì zēng shèng。 jiè shū mǎn jià， yǎn yǎng xiào gē， míng rán wù zuò， wàn lài yǒu shēng； ér tíng jiē jì jì， xiǎo niǎo shí lái zhuó shí， rén zhì bú qù。 sān wǔ zhī yè， míng yuè bàn qiáng， guì yǐng bān bó， fēng yí yǐng dòng， shān shān kě ài。 tíng yǒu pí pá shù， wú qī sǐ zhī nián suǒ shǒu zhí yě， jīn yǐ tíng tíng rú gài yǐ。"
     },
     {
       "id": "ming_007",
@@ -139,7 +145,8 @@ const data = {
       "source": "《高太史集》",
       "location": "金陵/南京",
       "wordCount": 64,
-      "year": 1370
+      "year": 1370,
+      "pinyin": "dà jiāng lái cóng wàn shān zhōng， shān shì jìn yǔ jiāng liú dōng。 zhōng shān rú lóng dú xī shàng， yù pò jù làng chéng cháng fēng。 jiāng shān xiāng xióng bù xiāng ràng， xíng shèng zhēng kuā tiān xià zhuàng。 qín huáng kōng cǐ yì huáng jīn， jiā qì cōng cōng zhì jīn wáng。"
     },
     {
       "id": "ming_008",
@@ -158,7 +165,8 @@ const data = {
       "source": "《牡丹亭》",
       "location": "临川/江西",
       "wordCount": 67,
-      "year": 1598
+      "year": 1598,
+      "pinyin": "yuán lái chà zǐ yān hóng kāi biàn， sì zhè bān dōu fù yǔ duàn jǐng tuí yuán。 liáng chén měi jǐng nài hé tiān， shǎng xīn lè shì shuí jiā yuàn？ cháo fēi mù juàn， yún xiá cuì xuān； yǔ sī fēng piàn， yān bō huà chuán。 jǐn píng rén tè kàn dé zhè sháo guāng jiàn！"
     },
     {
       "id": "ming_009",
@@ -176,7 +184,8 @@ const data = {
       "source": "《升庵集》",
       "location": "云南",
       "wordCount": 70,
-      "year": 1530
+      "year": 1530,
+      "pinyin": "shuí dào xián qíng pāo qì jiǔ？ měi dào chūn lái， chóu chàng hái yī jiù。 rì rì huā qián cháng bìng jiǔ， bù cí jìng lǐ zhū yán shòu。 hé pàn qīng wú dī shàng liǔ， wèi wèn xīn chóu， hé shì nián nián yǒu？ dú lì xiǎo qiáo fēng mǎn xiù， píng lín xīn yuè rén guī hòu。"
     }
   ]
 } as const

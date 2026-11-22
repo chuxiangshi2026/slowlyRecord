@@ -74,3 +74,48 @@ export function splitContentToBlocks(content: string): string[] {
 export function isArticleDue(nextReview: number | undefined, now: number = Date.now()): boolean {
   return isPracticeDue(nextReview, now)
 }
+
+/** 带拼音的遮挡块（拼音与正文逐行对应） */
+export interface AnnotatedBlock {
+  text: string
+  pinyin?: string
+}
+
+/**
+ * 按行切分并逐行配对拼音（内置诗词导入时携带 pinyin 字段）：
+ * - 有拼音时按整行成块（诗词行短，不再按句读细分），保证拼音行与正文行一一对应；
+ *   空行两侧同步跳过，行数不一致时多余一侧截断、缺失一侧留空
+ * - 无拼音时退化为 splitContentToBlocks 的结果（拼音字段留空）
+ */
+export function splitAnnotatedBlocks(content: string, pinyin?: string): AnnotatedBlock[] {
+  if (!content) return []
+  if (!pinyin || !pinyin.trim()) {
+    return splitContentToBlocks(content).map((text) => ({ text }))
+  }
+  const contentLines = content.split('\n')
+  const pinyinLines = pinyin.split('\n')
+  const blocks: AnnotatedBlock[] = []
+  const count = Math.max(contentLines.length, pinyinLines.length)
+  for (let i = 0; i < count; i++) {
+    const text = (contentLines[i] || '').trim()
+    const py = (pinyinLines[i] || '').trim()
+    // 空行两侧同步跳过（拼音行有内容而正文行为空时也跳过，避免悬空拼音）
+    if (!text) continue
+    blocks.push({ text, pinyin: py || undefined })
+  }
+  return blocks
+}
+
+/** 用于「首字提示」的标点/空白字符集（块内首字符为这些时顺延） */
+const HINT_SKIP_CHARS = new Set(' \t，。！？；：、“”‘’《》〈〉（）【】…—·,.!?;:\'"()[]<>-')
+
+/**
+ * 首字提示：取块内第一个非标点非空白字符（如「床前明月光，」→「床」）。
+ * 整块都是标点/空白时返回空串（调用方退化为完整遮盖）。
+ */
+export function firstCharHint(text: string): string {
+  for (const ch of text) {
+    if (!HINT_SKIP_CHARS.has(ch)) return ch
+  }
+  return ''
+}

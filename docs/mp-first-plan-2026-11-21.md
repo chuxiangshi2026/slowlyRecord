@@ -120,6 +120,26 @@
 
 **待真机验证**：口语音频 CDN 播放（InnerAudioContext 加载 jsDelivr mp3 + 本地缓存落盘）。
 
+### 3.5 文本记忆：拼音 + 中文朗读 + 练习方式扩充（✅ 2026-11-22）
+
+**背景**：用户反馈小程序文本记忆「没有拼音、没有中文发音、记忆方式单一（只有遮挡回忆）」。
+
+**拼音（离线生成，不占运行时包体）**：
+- 新增 `mobile/scripts/add-poetry-pinyin.cjs`（与桌面端同算法同古诗特殊读音修正表，用根目录 pinyin-pro），为 10 个朝代诗词 JSON 379 篇补 `pinyin` 字段（逐行对齐）；`convert-poetry.cjs` 重跑后入库
+- 数据链路：`library.ts`（MobilePoetryItem.pinyin）→ `import.vue` 两处导入携带 → `useTextMemory.addArticles` 保留 → `MobileTextArticle.pinyin`
+- 展示：回忆页「拼音」开关（默认开，记忆选择），揭示块上方逐行显示；未揭示块不显示（防泄题）
+
+**中文朗读（预合成 + 在线回退链）**：
+- 桌面端靠 `speechSynthesis`（小程序没有），有道 dictvoice 实测不支持中文（500）
+- 新增 `scripts/generate_poetry_audio.py`：edge-tts `zh-CN-XiaoxiaoNeural` rate -10%，全文（标题。作者。正文）合成 378 个 mp3（379 篇去重后），哈希口径同口语音频（`md5(voice|rate|归一化文本)`，中文不做小写折叠），托管 jsDelivr `public/poetry-audio/`
+- `mobile/src/utils/poetry-audio.ts`：同哈希口径定位 URL（测试内含 python 端预计算 fixture 锁一致性）
+- 回忆页「朗读全文」：内置诗词（category=poetry）优先 CDN，自建文章/未命中回退 `buildChineseAudioUrls` 中文在线音源链（有道智云/百度/谷歌）；离开页面自动停止
+
+**练习方式扩充**（对齐桌面端，全部走 `rateArticle` 统一自评闭环）：
+- 回忆页新增「首字提示」开关（遮盖块显示首字，`firstCharHint` 跳过标点空白）与「随机揭示」（随机揭示约 1/3 未揭示块）
+- 新增填空练习页 `fill-blanks.vue`：汉字逐字/英文按词挖空（`fill-blanks.ts`，标点永不挖空），简单 15%/中等 30%/困难 50% 三档，点空格逐个揭示，可换一批重抽
+- 新增默写对比页 `write-dictation.vue`：默写后 LCS 逐字对比（`mobile/src/utils/text-compare.ts`，与桌面端 PromptsDialog 同算法，超 100 万单元退化线性兜底），正确率 + 错/漏/多统计 + 逐字标注（红错黄多）+ 遗漏字清单
+
 ## 四、实施顺序
 
 **本阶段（音标 + 自然拼读优先）—— 2026-11-22 已完成：**

@@ -133,6 +133,18 @@
           }
         },
         {
+          "path": "text-memory/fill-blanks",
+          "style": {
+            "navigationBarTitleText": "填空练习"
+          }
+        },
+        {
+          "path": "text-memory/write-dictation",
+          "style": {
+            "navigationBarTitleText": "默写对比"
+          }
+        },
+        {
           "path": "sentences/sentences",
           "style": {
             "navigationBarTitleText": "句子收藏"

@@ -398,6 +398,7 @@ function handleImportPoetry() {
       year: typeof p.year === 'number' ? p.year : undefined,
       tags: p.tags,
       category: 'poetry',
+      pinyin: p.pinyin,
     })),
   )
   uni.showToast({ title: `已导入 ${created.length} 首`, icon: 'success' })
@@ -628,6 +629,7 @@ function handleImportFromMap() {
     year: typeof p.year === 'number' ? p.year : undefined,
     tags: p.tags,
     category: 'poetry' as const,
+    pinyin: p.pinyin,
   }))
   const idiomArticles = pickedIdiom.map((it) => ({
     title: it.title,
