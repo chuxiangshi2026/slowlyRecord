@@ -226,7 +226,12 @@ function pruneStoreWordbanksAndAudio() {
     const audioDir = path.join(distDir, 'speech-audio')
     if (fs.existsSync(audioDir)) fs.rmSync(audioDir, { recursive: true, force: true })
 
-    console.log(`[strip] 词库已裁剪：移除 ${removed} 个扩展词库，speech-audio/ 已删除`)
+    // 诗词朗读音频（约 62MB）：同为 edge-tts 生成，且只有移动端引用（mobile/src/utils/poetry-audio.ts），
+    // 桌面/uTools 代码无任何引用；商店包受 20MB 体积限制，不下发
+    const poetryAudioDir = path.join(distDir, 'poetry-audio')
+    if (fs.existsSync(poetryAudioDir)) fs.rmSync(poetryAudioDir, { recursive: true, force: true })
+
+    console.log(`[strip] 词库已裁剪：移除 ${removed} 个扩展词库，speech-audio/ 与 poetry-audio/ 已删除`)
 }
 
 
