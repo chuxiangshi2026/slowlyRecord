@@ -1,6 +1,7 @@
 <template>
   <view class="focus-page" @touchmove.stop>
-    <AppBackground />
+    <!-- 专注模式专属深色古风背景（不跟随主题，避免亮色主题下浅底浅字看不清） -->
+    <image class="focus-bg" :src="bgSrc" mode="aspectFill" />
     <!-- 顶栏 -->
     <view class="top-bar">
       <text class="exit-btn" @click="exitFocus">✕ 退出</text>
@@ -214,6 +215,9 @@ import { ListenPlayer } from './listen-play'
 import { normalizeForCompare } from '@/utils/language'
 
 const wordsStore = useMobileWords()
+
+// 背景图在 pages-tools 分包 static 目录（动态绑定避免构建期当模块解析），由 scripts/render-focus-bg-png.cjs 预渲染
+const bgSrc = '/subPackages/pages-tools/static/focus/focus-bg.jpg'
 
 // ========== 设置（持久化到 slowlyrecord-focus-settings） ==========
 const SETTINGS_KEY = 'slowlyrecord-focus-settings'
@@ -642,6 +646,19 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   color: #eaf1ea;
+  /* 建立层叠上下文，让固定背景图压在本页底色之上、内容之下 */
+  position: relative;
+  z-index: 0;
+}
+
+.focus-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* 顶栏 */
@@ -654,25 +671,26 @@ onUnmounted(() => {
 
 .exit-btn {
   font-size: 28rpx;
-  color: rgba(234, 241, 234, 0.7);
+  color: rgba(234, 241, 234, 0.9);
   padding: 10rpx 20rpx;
 }
 
 .progress-text {
   font-size: 26rpx;
-  color: rgba(234, 241, 234, 0.6);
+  color: rgba(234, 241, 234, 0.85);
 }
 
 .settings-btn {
   font-size: 36rpx;
-  color: rgba(234, 241, 234, 0.7);
+  color: rgba(234, 241, 234, 0.9);
   padding: 0 20rpx;
 }
 
 /* 设置面板 */
 .settings-panel {
   margin: 10rpx 30rpx 0;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(16, 36, 30, 0.72);
+  border: 1rpx solid rgba(131, 197, 168, 0.18);
   border-radius: 16rpx;
   padding: 24rpx;
 }
@@ -690,7 +708,7 @@ onUnmounted(() => {
 .setting-label {
   width: 140rpx;
   font-size: 26rpx;
-  color: rgba(234, 241, 234, 0.8);
+  color: rgba(234, 241, 234, 0.92);
   flex-shrink: 0;
 }
 
@@ -703,9 +721,9 @@ onUnmounted(() => {
 .chip {
   padding: 8rpx 26rpx;
   border-radius: 28rpx;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.16);
   font-size: 24rpx;
-  color: rgba(234, 241, 234, 0.7);
+  color: rgba(234, 241, 234, 0.9);
 }
 
 .chip.on {
@@ -718,7 +736,7 @@ onUnmounted(() => {
   display: block;
   margin-top: 20rpx;
   font-size: 22rpx;
-  color: rgba(234, 241, 234, 0.45);
+  color: rgba(234, 241, 234, 0.7);
 }
 
 /* 空状态 */
@@ -737,24 +755,24 @@ onUnmounted(() => {
 
 .empty-text {
   font-size: 34rpx;
-  color: rgba(234, 241, 234, 0.9);
+  color: rgba(234, 241, 234, 0.95);
   margin-top: 30rpx;
 }
 
 .empty-hint {
   font-size: 26rpx;
-  color: rgba(234, 241, 234, 0.5);
+  color: rgba(234, 241, 234, 0.8);
   margin-top: 16rpx;
 }
 
 .btn-exit {
   margin-top: 50rpx;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
   color: #eaf1ea;
   border-radius: 44rpx;
   height: 84rpx;
   font-size: 28rpx;
-  border: none;
+  border: 1rpx solid rgba(131, 197, 168, 0.35);
   padding: 0 60rpx;
 }
 
@@ -779,41 +797,45 @@ onUnmounted(() => {
   justify-content: center;
   min-height: 55vh;
   text-align: center;
+  padding: 48rpx 32rpx;
+  border: 1rpx solid rgba(131, 197, 168, 0.16);
+  border-radius: 28rpx;
+  box-shadow: inset 0 0 80rpx rgba(131, 197, 168, 0.045);
 }
 
 .focus-word {
   font-size: 88rpx;
   font-weight: bold;
-  color: #eaf1ea;
+  color: #f2f7f3;
   word-break: break-all;
 }
 
 .focus-word.answer {
   font-size: 64rpx;
-  color: #83c5a8;
+  color: #8fd4b5;
 }
 
 .focus-phonetic {
   font-size: 32rpx;
-  color: rgba(131, 197, 168, 0.85);
+  color: rgba(143, 212, 181, 0.95);
   margin-top: 24rpx;
   font-family: 'Times New Roman', serif;
 }
 
 .focus-meaning {
   font-size: 40rpx;
-  color: rgba(234, 241, 234, 0.92);
+  color: rgba(234, 241, 234, 0.96);
   margin-top: 36rpx;
   line-height: 1.6;
 }
 
 .focus-meaning.prompt {
-  color: #eaf1ea;
+  color: #f2f7f3;
 }
 
 .focus-example {
   font-size: 28rpx;
-  color: rgba(234, 241, 234, 0.5);
+  color: rgba(234, 241, 234, 0.82);
   margin-top: 30rpx;
   font-style: italic;
   line-height: 1.5;
@@ -821,7 +843,7 @@ onUnmounted(() => {
 
 .focus-hint {
   font-size: 26rpx;
-  color: rgba(234, 241, 234, 0.4);
+  color: rgba(234, 241, 234, 0.75);
   margin-top: 70rpx;
 }
 
@@ -839,7 +861,7 @@ onUnmounted(() => {
 
 .audio-text {
   font-size: 26rpx;
-  color: rgba(234, 241, 234, 0.5);
+  color: rgba(234, 241, 234, 0.8);
   margin-top: 16rpx;
 }
 
@@ -847,11 +869,12 @@ onUnmounted(() => {
   width: 70%;
   height: 96rpx;
   margin-top: 60rpx;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1rpx solid rgba(131, 197, 168, 0.3);
   border-radius: 16rpx;
   padding: 0 30rpx;
   font-size: 40rpx;
-  color: #eaf1ea;
+  color: #f2f7f3;
   text-align: center;
 }
 
@@ -877,7 +900,7 @@ onUnmounted(() => {
 
 .result-icon.bad,
 .wrong-input {
-  color: #c08f8a;
+  color: #d9a29c;
 }
 
 .wrong-input {
@@ -887,12 +910,12 @@ onUnmounted(() => {
 
 .btn-next {
   margin-top: 50rpx;
-  background: rgba(255, 255, 255, 0.14);
-  color: #eaf1ea;
+  background: rgba(255, 255, 255, 0.18);
+  color: #f2f7f3;
   border-radius: 44rpx;
   height: 84rpx;
   font-size: 30rpx;
-  border: none;
+  border: 1rpx solid rgba(131, 197, 168, 0.3);
   padding: 0 90rpx;
 }
 
@@ -916,25 +939,25 @@ onUnmounted(() => {
 }
 
 .btn-forget {
-  background: rgba(192, 143, 138, 0.18);
-  color: #c08f8a;
-  border: 1rpx solid rgba(192, 143, 138, 0.5);
+  background: rgba(192, 143, 138, 0.3);
+  color: #d9a29c;
+  border: 1rpx solid rgba(217, 162, 156, 0.8);
 }
 
 .btn-remember {
-  background: rgba(131, 197, 168, 0.2);
-  color: #83c5a8;
-  border: 1rpx solid rgba(131, 197, 168, 0.5);
+  background: rgba(131, 197, 168, 0.3);
+  color: #8fd4b5;
+  border: 1rpx solid rgba(143, 212, 181, 0.8);
 }
 
 .btn-play {
   width: 92rpx;
   height: 92rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #eaf1ea;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1rpx solid rgba(131, 197, 168, 0.28);
+  color: #f2f7f3;
   font-size: 36rpx;
-  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -945,13 +968,13 @@ onUnmounted(() => {
 /* 连播听词 */
 .listen-state {
   font-size: 26rpx;
-  color: rgba(131, 197, 168, 0.85);
+  color: rgba(143, 212, 181, 0.95);
   margin-bottom: 30rpx;
 }
 
 .listen-hint {
   font-size: 22rpx;
-  color: rgba(234, 241, 234, 0.35);
+  color: rgba(234, 241, 234, 0.65);
   margin-top: 50rpx;
 }
 
@@ -967,10 +990,10 @@ onUnmounted(() => {
   width: 96rpx;
   height: 96rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #eaf1ea;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1rpx solid rgba(131, 197, 168, 0.28);
+  color: #f2f7f3;
   font-size: 36rpx;
-  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1044,16 +1067,16 @@ onUnmounted(() => {
 }
 
 .stat-value.bad {
-  color: #c08f8a;
+  color: #d9a29c;
 }
 
 .stat-value.skip {
-  color: rgba(234, 241, 234, 0.45);
+  color: rgba(234, 241, 234, 0.7);
 }
 
 .stat-label {
   font-size: 24rpx;
-  color: rgba(234, 241, 234, 0.5);
+  color: rgba(234, 241, 234, 0.75);
   margin-top: 8rpx;
   display: block;
 }
