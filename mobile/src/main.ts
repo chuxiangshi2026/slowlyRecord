@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import AppBackground from './components/AppBackground.vue'
+import GuideBar from './components/GuideBar.vue'
 import { registerMobileAdapters } from './adapters/index'
 import { useTheme } from './stores/useTheme'
 
@@ -13,6 +14,7 @@ export function createApp() {
 
   app.use(pinia)
   app.component('AppBackground', AppBackground)
+  app.component('GuideBar', GuideBar)
 
   // 全局主题混入：页面根节点统一挂 :class="themeClass" 即获得暗色 CSS 变量覆盖；
   // wx.setNavigationBarColor 只作用于当前页，借全局 onShow 在每次进页面时重放原生配色

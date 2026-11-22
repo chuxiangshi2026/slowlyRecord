@@ -169,6 +169,30 @@
           }
         },
         {
+          "path": "phonics/phonics",
+          "style": {
+            "navigationBarTitleText": "自然拼读"
+          }
+        },
+        {
+          "path": "phonics/phonics-practice",
+          "style": {
+            "navigationBarTitleText": "拼读练习"
+          }
+        },
+        {
+          "path": "letter-memory/letter-memory",
+          "style": {
+            "navigationBarTitleText": "字母映射"
+          }
+        },
+        {
+          "path": "letter-memory/letter-practice",
+          "style": {
+            "navigationBarTitleText": "字母练习"
+          }
+        },
+        {
           "path": "memory-palace/list",
           "style": {
             "navigationBarTitleText": "记忆宫殿"

@@ -1,6 +1,11 @@
 <template>
   <view class="phonetic-page" :class="themeClass">
     <AppBackground />
+    <!-- 首次引导 -->
+    <GuideBar
+      text="先点音标卡听发音、跟读例词，再从「音标识别」开始练最轻松；辨音和拆音有难度，放在后面。"
+      storage-key="phonetic-guide-done"
+    />
     <!-- 进度统计 -->
     <view class="progress-row">
       <view class="progress-stat">
@@ -15,22 +20,22 @@
 
     <!-- 练习入口 -->
     <view class="practice-cards">
-      <view class="practice-card" @click="goRecognition('forward')">
+      <view class="practice-card" hover-class="card-hover" @click="goRecognition('forward')">
         <text class="card-icon">🎯</text>
         <text class="card-title">音标识别</text>
         <text class="card-desc">看音标 → 选例词</text>
       </view>
-      <view class="practice-card" @click="goRecognition('backward')">
+      <view class="practice-card" hover-class="card-hover" @click="goRecognition('backward')">
         <text class="card-icon">🔁</text>
         <text class="card-title">反向识别</text>
         <text class="card-desc">看单词 → 选音标</text>
       </view>
-      <view class="practice-card" @click="goMinimalPairs">
+      <view class="practice-card" hover-class="card-hover" @click="goMinimalPairs">
         <text class="card-icon">🎧</text>
         <text class="card-title">辨音练习</text>
         <text class="card-desc">听音 → 二选一</text>
       </view>
-      <view class="practice-card" @click="goBreakdown">
+      <view class="practice-card" hover-class="card-hover" @click="goBreakdown">
         <text class="card-icon">🧩</text>
         <text class="card-title">拆音练习</text>
         <text class="card-desc">单词 → 拆成音</text>
@@ -94,6 +99,11 @@
         </view>
 
         <view class="detail-block">
+          <text class="block-label">助记口诀</text>
+          <text class="tip mnemonic">{{ activePhoneme.mnemonic }}</text>
+        </view>
+
+        <view class="detail-block">
           <text class="block-label">例词（点击发音）</text>
           <view class="examples">
             <text
@@ -127,6 +137,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { PHONEME_TABLE, findPhoneme, type Phoneme } from '@/utils/phoneme-data'
+import { playPhoneme } from '@/utils/phoneme-audio'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { getTtsAdapter } from '@/adapters/index'
 
@@ -179,9 +190,9 @@ function speakWord(word: string) {
   } catch {}
 }
 
-/** 朗读"音素本身"：用 phonics 代理串（如 /p/→'puh'）由 TTS 拟音 */
+/** 朗读"音素本身"：优先 CDN 预合成音频，失败回退 articulation 代理串 */
 function speakArticulation(ph: Phoneme) {
-  speakWord(ph.articulation)
+  playPhoneme(ph.ipa, ph.articulation)
 }
 
 function goRecognition(direction: 'forward' | 'backward') {
@@ -255,6 +266,10 @@ function goBreakdown() {
   border-radius: 16rpx;
   padding: 24rpx;
   text-align: center;
+}
+
+.practice-card.card-hover {
+  opacity: 0.75;
 }
 
 .card-icon {
@@ -509,6 +524,11 @@ function goBreakdown() {
   font-size: 28rpx;
   color: var(--sr-text-2);
   line-height: 1.6;
+}
+
+.tip.mnemonic {
+  color: var(--sr-primary);
+  font-weight: bold;
 }
 
 .examples {

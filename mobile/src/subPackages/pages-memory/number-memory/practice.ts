@@ -7,8 +7,8 @@
 import { isPracticeDue } from '../../../utils/practice-srs'
 import type { MobileNumberAssociation, MobileNumberEntry } from '@/stores/useUtils/types'
 
-/** 练习模式：数字桩自测 / 条目回忆 */
-export type PracticeMode = 'pegs' | 'entries'
+/** 练习模式：认桩选择（L1）/ 数字桩自测（L2）/ 编码复述（L3）/ 条目回忆（L4） */
+export type PracticeMode = 'choice' | 'pegs' | 'story' | 'entries'
 
 /** 数字桩范围 */
 export type PegRange = 'single' | 'double' | 'all'
@@ -74,6 +74,36 @@ export function pickEntryQuestion(
   let candidates = entries.filter((e) => !exclude.has(e._id))
   if (candidates.length === 0) candidates = entries
   return pickByDue(candidates, rng)
+}
+
+/**
+ * 认桩选择题：为目标桩构造 4 个选项（含正确描述）。
+ * 干扰项取同范围其它数字的桩描述，不足时从全部里补。去重并乱序。
+ */
+export function buildPegChoiceOptions(
+  target: MobileNumberAssociation,
+  associations: MobileNumberAssociation[],
+  range: PegRange,
+  count: number = 4,
+  rng: Rng = Math.random,
+): string[] {
+  const inRange = new Set(pegNumbersOfRange(range))
+  const sameRange = associations.filter(
+    (a) => a.number !== target.number && inRange.has(a.number) && a.description,
+  )
+  const others = associations.filter(
+    (a) => a.number !== target.number && !inRange.has(a.number) && a.description,
+  )
+  const options = [target.description]
+  for (const group of [sameRange, others]) {
+    const shuffled = [...group].sort(() => rng() - 0.5)
+    for (const a of shuffled) {
+      if (options.length >= count) break
+      if (!options.includes(a.description)) options.push(a.description)
+    }
+    if (options.length >= count) break
+  }
+  return options.sort(() => rng() - 0.5)
 }
 
 export interface RoundSummary {

@@ -22,12 +22,12 @@
     <!-- ===== 答题页 ===== -->
     <template v-else>
       <view class="quiz-head">
-        <text class="quiz-mode">{{ mode === 'pegs' ? '数字桩自测' : '条目回忆' }}</text>
+        <text class="quiz-mode">{{ MODE_LABELS[mode] }}</text>
         <text class="quiz-progress">第 {{ results.length + 1 }} / {{ ROUND_SIZE }} 题</text>
       </view>
 
-      <!-- 数字桩模式：范围选择 -->
-      <view v-if="mode === 'pegs'" class="range-bar">
+      <!-- 认桩/数字桩模式：范围选择 -->
+      <view v-if="mode === 'pegs' || mode === 'choice'" class="range-bar">
         <view
           v-for="r in ranges"
           :key="r.value"
@@ -39,8 +39,28 @@
         </view>
       </view>
 
-      <!-- 题目卡 -->
-      <view class="quiz-card" @click="revealed = true">
+      <!-- 认桩选择题：看数字选桩描述 -->
+      <template v-if="mode === 'choice' && currentPeg">
+        <view class="choice-card">
+          <text class="peg-number">{{ currentPeg.number }}</text>
+          <text class="choice-hint">这个数字的桩是？</text>
+        </view>
+        <view class="choice-list">
+          <view
+            v-for="desc in choiceOptions"
+            :key="desc"
+            class="choice-item"
+            :class="choiceClassOf(desc)"
+            @click="pickChoice(desc)"
+          >
+            <text class="choice-text">{{ desc }}</text>
+          </view>
+        </view>
+        <button v-if="pickedWrong" class="summary-btn primary next-btn" @click="advanceQuestion">下一题</button>
+      </template>
+
+      <!-- 题目卡（背桩 / 编码复述 / 实战） -->
+      <view v-if="mode !== 'choice'" class="quiz-card" @click="revealed = true">
         <template v-if="currentPeg">
           <!-- 数字桩：先显示数字，点击揭示桩描述/图像 -->
           <text class="peg-number">{{ currentPeg.number }}</text>
@@ -58,13 +78,28 @@
           </template>
         </template>
 
+        <template v-else-if="currentEntry && mode === 'story'">
+          <!-- 编码复述：看数字串，回忆桩链故事 -->
+          <text class="story-numbers">{{ formatNumbers(currentEntry.numbers) }}</text>
+          <view v-if="!revealed" class="peg-cover">
+            <text class="peg-cover-hint">把这串数字在脑子里过成桩链故事，点我揭示</text>
+          </view>
+          <template v-else>
+            <text class="story-chain">{{ currentStory }}</text>
+            <text class="story-entry-title">—— {{ currentEntry.title }}</text>
+          </template>
+        </template>
+
         <template v-else-if="currentEntry">
           <!-- 条目：先显示标题，点击揭示数字串 -->
           <text class="entry-label">{{ currentEntry.title }}</text>
           <view v-if="!revealed" class="peg-cover">
             <text class="peg-cover-hint">回忆对应的数字，点我揭示</text>
           </view>
-          <text v-else class="entry-answer">{{ formatNumbers(currentEntry.numbers) }}</text>
+          <template v-else>
+            <text class="entry-answer">{{ formatNumbers(currentEntry.numbers) }}</text>
+            <text v-if="currentStory" class="story-chain small">🔗 {{ currentStory }}</text>
+          </template>
         </template>
 
         <view v-else class="quiz-empty">
@@ -78,8 +113,8 @@
         </view>
       </view>
 
-      <!-- 自评 -->
-      <view v-if="hasQuestion" class="rate-bar">
+      <!-- 自评（背桩/复述/实战） -->
+      <view v-if="mode !== 'choice' && hasQuestion" class="rate-bar">
         <button class="rate-btn forgot" :disabled="!revealed" @click="onRate(false)">
           <text>😅 没想起来</text>
         </button>
@@ -87,7 +122,7 @@
           <text>✅ 想起来了</text>
         </button>
       </view>
-      <button v-else class="back-btn" @click="goBack">返回</button>
+      <button v-else-if="mode !== 'choice'" class="back-btn" @click="goBack">返回</button>
     </template>
   </view>
 </template>
@@ -101,13 +136,22 @@ import {
   pickPegQuestion,
   pickEntryQuestion,
   summarizeRound,
+  buildPegChoiceOptions,
   type PracticeMode,
   type PegRange,
 } from './practice'
+import { pegChainOf, chainToStory } from './peg-chain'
+import { getPegSuggestion } from './default-pegs'
 
 const store = useNumberMemory()
 
 const mode = ref<PracticeMode>('pegs')
+const MODE_LABELS: Record<PracticeMode, string> = {
+  choice: '认桩练习',
+  pegs: '背桩练习',
+  story: '编码复述',
+  entries: '实战回忆',
+}
 const pegRange = ref<PegRange>('all')
 const ranges = [
   { value: 'single', label: '0-9' },
@@ -117,6 +161,8 @@ const ranges = [
 
 const currentPeg = ref<ReturnType<typeof pickPegQuestion>>(null)
 const currentEntry = ref<ReturnType<typeof pickEntryQuestion>>(null)
+const choiceOptions = ref<string[]>([])
+const picked = ref('')
 const revealed = ref(false)
 const asked = ref<Set<string>>(new Set())
 const results = ref<boolean[]>([])
@@ -124,10 +170,26 @@ const showSummary = ref(false)
 
 const hasQuestion = computed(() => currentPeg.value !== null || currentEntry.value !== null)
 const summary = computed(() => summarizeRound(results.value))
+const pickedWrong = computed(
+  () => picked.value !== '' && picked.value !== currentPeg.value?.description,
+)
+
+/** 当前条目的桩链故事（优先用户桩，回落推荐桩） */
+const currentStory = computed(() => {
+  if (!currentEntry.value) return ''
+  return chainToStory(
+    pegChainOf(currentEntry.value.numbers, (num) => {
+      const a = store.getAssociation(num)
+      if (a?.description) return a.description
+      return getPegSuggestion(num) || undefined
+    }),
+  )
+})
 
 onLoad((opt: any) => {
   store.load()
-  mode.value = opt?.mode === 'entries' ? 'entries' : 'pegs'
+  const m = opt?.mode
+  mode.value = m === 'entries' || m === 'story' || m === 'choice' ? m : 'pegs'
   if (opt?.range === 'single' || opt?.range === 'double' || opt?.range === 'all') {
     pegRange.value = opt.range
   }
@@ -136,10 +198,16 @@ onLoad((opt: any) => {
 
 function nextQuestion() {
   revealed.value = false
-  if (mode.value === 'pegs') {
+  picked.value = ''
+  if (mode.value === 'pegs' || mode.value === 'choice') {
     currentEntry.value = null
     currentPeg.value = pickPegQuestion(store.associations, pegRange.value, asked.value)
-    if (currentPeg.value) asked.value.add(currentPeg.value.number)
+    if (currentPeg.value) {
+      asked.value.add(currentPeg.value.number)
+      if (mode.value === 'choice') {
+        choiceOptions.value = buildPegChoiceOptions(currentPeg.value, store.associations, pegRange.value)
+      }
+    }
   } else {
     currentPeg.value = null
     currentEntry.value = pickEntryQuestion(store.entries, asked.value)
@@ -152,6 +220,34 @@ function onChangeRange(range: PegRange) {
   pegRange.value = range
   asked.value = new Set()
   nextQuestion()
+}
+
+/** 认桩选择：选对自动下一题，选错揭示答案手动下一题 */
+function pickChoice(desc: string) {
+  if (!currentPeg.value || picked.value) return
+  picked.value = desc
+  const ok = desc === currentPeg.value.description
+  store.rateAssociation(currentPeg.value.number, ok)
+  results.value.push(ok)
+  uni.vibrateShort?.({ type: ok ? 'light' : 'medium' })
+  if (ok) {
+    setTimeout(() => advanceQuestion(), 500)
+  }
+}
+
+function choiceClassOf(desc: string): string {
+  if (!picked.value) return ''
+  if (desc === currentPeg.value?.description) return 'correct'
+  if (desc === picked.value) return 'wrong'
+  return 'dim'
+}
+
+function advanceQuestion() {
+  if (results.value.length >= ROUND_SIZE) {
+    showSummary.value = true
+  } else {
+    nextQuestion()
+  }
 }
 
 function onRate(remembered: boolean) {
@@ -413,5 +509,77 @@ function formatNumbers(nums: string): string {
 .summary-btn.secondary {
   background: var(--sr-card-2);
   color: var(--sr-text-2);
+}
+
+/* 认桩选择题 */
+.choice-card {
+  margin: 12rpx 24rpx 0;
+  background: var(--sr-card);
+  border-radius: 20rpx;
+  padding: 48rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.choice-hint {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: var(--sr-text-2);
+}
+.choice-list {
+  margin: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+.choice-item {
+  background: var(--sr-card);
+  border-radius: 16rpx;
+  padding: 24rpx 32rpx;
+  border: 2rpx solid transparent;
+}
+.choice-item.correct {
+  border-color: var(--sr-primary);
+}
+.choice-item.wrong {
+  border-color: #d4564e;
+}
+.choice-item.dim {
+  opacity: 0.5;
+}
+.choice-text {
+  font-size: 28rpx;
+  color: var(--sr-text-strong);
+  line-height: 1.5;
+}
+.next-btn {
+  margin: 0 24rpx;
+}
+
+/* 编码复述 */
+.story-numbers {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: var(--sr-primary);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 4rpx;
+  text-align: center;
+  word-break: break-all;
+}
+.story-chain {
+  margin-top: 32rpx;
+  font-size: 30rpx;
+  color: var(--sr-text-strong);
+  line-height: 1.8;
+  text-align: center;
+}
+.story-chain.small {
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+}
+.story-entry-title {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: var(--sr-text-3);
 }
 </style>

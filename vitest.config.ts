@@ -37,6 +37,10 @@ export default defineConfig({
       { find: /^@\/utils\/word-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/word-audio.ts') },
       // mobile 中文发音音源：mobile 代码以 @/utils/youdao-tts 引用，同上需优先映射到 mobile 目录
       { find: /^@\/utils\/youdao-tts$/, replacement: resolve(__dirname, 'mobile/src/utils/youdao-tts.ts') },
+      // mobile 字母映射预设：mobile 代码以 @/utils/letter-preset 引用，同上需优先映射到 mobile 目录
+      { find: /^@\/utils\/letter-preset$/, replacement: resolve(__dirname, 'mobile/src/utils/letter-preset.ts') },
+      // mobile 轻量复习调度：subPackages 内代码以 @/utils/practice-srs 引用，同上
+      { find: /^@\/utils\/practice-srs$/, replacement: resolve(__dirname, 'mobile/src/utils/practice-srs.ts') },
       // mobile 单词 store：mobile 代码以 @/stores/useMobileWords 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/stores（不存在该文件）
       { find: /^@\/stores\/useMobileWords$/, replacement: resolve(__dirname, 'mobile/src/stores/useMobileWords.ts') },

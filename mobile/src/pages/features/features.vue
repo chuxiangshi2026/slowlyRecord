@@ -60,6 +60,20 @@ const allFeatures = [
     action: () => navigate('/subPackages/pages-memory/phonetic-memory/phonetic-memory'),
   },
   {
+    icon: '🧩',
+    cls: 'phonetic',
+    text: '自然拼读',
+    desc: '拼读练习 / 听音选词',
+    action: () => navigate('/subPackages/pages-memory/phonics/phonics'),
+  },
+  {
+    icon: '🔡',
+    cls: 'phonetic',
+    text: '字母映射',
+    desc: '字母图像联想 / 编码成故事',
+    action: () => navigate('/subPackages/pages-memory/letter-memory/letter-memory'),
+  },
+  {
     icon: '🧠',
     cls: 'test',
     text: '记忆测试',

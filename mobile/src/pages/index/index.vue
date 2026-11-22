@@ -97,6 +97,18 @@
           <view class="action-icon memory">🔢</view>
           <text class="action-text">数字记忆</text>
         </view>
+        <view class="action-item" @click="goToPhonetic">
+          <view class="action-icon phonetic">🔤</view>
+          <text class="action-text">音标学习</text>
+        </view>
+        <view class="action-item" @click="goToPhonics">
+          <view class="action-icon phonics">🧩</view>
+          <text class="action-text">自然拼读</text>
+        </view>
+        <view class="action-item" @click="goToLetterMemory">
+          <view class="action-icon letter">🔡</view>
+          <text class="action-text">字母映射</text>
+        </view>
         <view class="action-item" @click="goToAddWord">
           <view class="action-icon addword">➕</view>
           <text class="action-text">添加单词</text>
@@ -328,6 +340,18 @@ const goToWordbank = () => {
 
 const goToNumberMemory = () => {
   uni.navigateTo({ url: '/subPackages/pages-memory/number-memory/number-memory' })
+}
+
+const goToPhonetic = () => {
+  uni.navigateTo({ url: '/subPackages/pages-memory/phonetic-memory/phonetic-memory' })
+}
+
+const goToPhonics = () => {
+  uni.navigateTo({ url: '/subPackages/pages-memory/phonics/phonics' })
+}
+
+const goToLetterMemory = () => {
+  uni.navigateTo({ url: '/subPackages/pages-memory/letter-memory/letter-memory' })
 }
 
 const goToAddWord = () => {

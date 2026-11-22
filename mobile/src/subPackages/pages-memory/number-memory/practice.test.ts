@@ -8,6 +8,7 @@ import {
   pickPegQuestion,
   pickEntryQuestion,
   summarizeRound,
+  buildPegChoiceOptions,
 } from './practice'
 import { isPracticeDue } from '../../../utils/practice-srs'
 import type { MobileNumberAssociation, MobileNumberEntry } from '@/stores/useUtils/types'
@@ -114,6 +115,38 @@ describe('一轮小结', () => {
 
   it('一轮题数为 10', () => {
     expect(ROUND_SIZE).toBe(10)
+  })
+})
+
+describe('认桩选择题', () => {
+  const assocs = [
+    makeAssoc('00'),
+    makeAssoc('01'),
+    makeAssoc('02'),
+    makeAssoc('03'),
+    makeAssoc('04'),
+    makeAssoc('12'),
+    makeAssoc('88'),
+  ]
+
+  it('返回 4 个不重复选项且包含正确描述', () => {
+    const opts = buildPegChoiceOptions(assocs[0], assocs, 'all', 4, Math.random)
+    expect(opts).toHaveLength(4)
+    expect(new Set(opts).size).toBe(4)
+    expect(opts).toContain('桩00')
+  })
+
+  it('干扰项优先取同范围', () => {
+    const opts = buildPegChoiceOptions(assocs[0], assocs, 'single', 4, firstRng)
+    for (const desc of opts.slice(1)) {
+      expect(['桩00', '桩01', '桩02', '桩03', '桩04']).toContain(desc)
+    }
+  })
+
+  it('候选不足时按实际数量返回', () => {
+    const few = [makeAssoc('00'), makeAssoc('01')]
+    const opts = buildPegChoiceOptions(few[0], few, 'all', 4, firstRng)
+    expect(opts).toHaveLength(2)
   })
 })
 

@@ -16,7 +16,7 @@
           auto-height
         />
         <text v-if="pegHints.length > 0" class="peg-hints">
-          桩提示：{{ pegHints.join(' / ') }}
+          🔗 桩链：{{ pegHints[0] }}
         </text>
       </view>
 
@@ -48,6 +48,8 @@
 import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useNumberMemory } from '@/stores/useNumberMemory'
+import { pegChainOf, chainToStory } from './peg-chain'
+import { getPegSuggestion } from './default-pegs'
 
 const store = useNumberMemory()
 
@@ -61,19 +63,15 @@ const form = ref({
 })
 const tagsInput = ref('')
 
-// 拆数字串为两位一组，回查桩
+// 边输边看桩链故事：切分口径与编码视图一致（奇数位首段为单数字），没编的号回落推荐桩
 const pegHints = computed(() => {
-  const digits = form.value.numbers.replace(/\D/g, '')
-  if (!digits) return []
-  const hints: string[] = []
-  for (let i = 0; i < Math.min(digits.length, 20); i += 2) {
-    const pair = digits.slice(i, i + 2).padStart(2, '0')
-    const peg = store.getAssociation(pair)
-    if (peg?.description) {
-      hints.push(`${pair}=${peg.description}`)
-    }
-  }
-  return hints
+  if (!form.value.numbers.replace(/\D/g, '')) return []
+  const chain = pegChainOf(form.value.numbers, (num) => {
+    const a = store.getAssociation(num)
+    if (a?.description) return a.description
+    return getPegSuggestion(num) || undefined
+  })
+  return [`${chainToStory(chain)}`]
 })
 
 onLoad((opt: any) => {

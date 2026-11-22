@@ -22,13 +22,13 @@
     <view v-if="activeTab === 'pegs'" class="content">
       <!-- 首次配置引导：桩少于 10 个时显示 -->
       <view v-if="store.associationCount < 10" class="guide-bar">
-        <text>💡 先配置你的数字桩（已编 {{ store.associationCount }}/100），配好后点"开始练习"就能用了</text>
+        <text>💡 点下方「一键填充推荐桩」即可补齐全部 100 个桩（已编 {{ store.associationCount }}/100），不用逐格手编</text>
       </view>
       <view class="peg-toolbar">
         <view class="peg-stat">
           已编辑 {{ store.associationCount }} / 100
         </view>
-        <button v-if="store.associationCount < 30" class="fill-default-btn" @click="fillDefaults">
+        <button v-if="store.associationCount < 100" class="fill-default-btn" @click="fillDefaults">
           ⚡ 一键填充推荐桩
         </button>
         <view class="range-toggle">
@@ -44,8 +44,8 @@
         </view>
       </view>
 
-      <button class="practice-btn" @click="goPracticePegs">
-        <text>🎯 开始练习（随机报数，回忆桩）</text>
+      <button class="practice-btn" @click="goPractice('pegs')">
+        <text>🧠 背桩练习（看数字回忆桩）</text>
       </button>
 
       <view class="peg-grid">
@@ -85,9 +85,29 @@
         <button class="entry-add-btn" @click="goAddEntry">＋ 添加</button>
       </view>
 
-      <button class="practice-btn" @click="goPracticeEntries">
-        <text>🎯 开始练习（看标题回忆数字）</text>
-      </button>
+      <!-- 四档渐进练习 -->
+      <view class="practice-grid">
+        <view class="practice-cell" @click="goPractice('choice')">
+          <text class="practice-cell-icon">🎓</text>
+          <text class="practice-cell-title">认桩</text>
+          <text class="practice-cell-desc">看数字选桩</text>
+        </view>
+        <view class="practice-cell" @click="goPractice('pegs')">
+          <text class="practice-cell-icon">🧠</text>
+          <text class="practice-cell-title">背桩</text>
+          <text class="practice-cell-desc">看数字回忆桩</text>
+        </view>
+        <view class="practice-cell" @click="goPractice('story')">
+          <text class="practice-cell-icon">📖</text>
+          <text class="practice-cell-title">编码复述</text>
+          <text class="practice-cell-desc">看数字串背桩链</text>
+        </view>
+        <view class="practice-cell" @click="goPractice('entries')">
+          <text class="practice-cell-icon">🎯</text>
+          <text class="practice-cell-title">实战</text>
+          <text class="practice-cell-desc">看标题背数字</text>
+        </view>
+      </view>
 
       <view v-if="filteredEntries.length === 0" class="entry-empty">
         <text class="empty-icon">🔢</text>
@@ -111,9 +131,52 @@
           </view>
         </view>
         <text class="entry-numbers">{{ formatNumbers(entry.numbers) }}</text>
+        <!-- 编码视图：数字串对应的桩链故事 -->
+        <text v-if="entryStory(entry.numbers)" class="entry-chain">🔗 {{ entryStory(entry.numbers) }}</text>
         <view class="entry-meta">
           <text v-for="tag in entry.tags" :key="tag" class="entry-tag">{{ tag }}</text>
           <text v-if="entry.description" class="entry-desc">{{ entry.description }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 首次使用引导 -->
+    <view v-if="showGuide" class="guide-overlay">
+      <view class="guide-card">
+        <text class="guide-step-dot">第 {{ guideStep + 1 }} / 3 步</text>
+
+        <template v-if="guideStep === 0">
+          <text class="guide-title">🪝 什么是数字桩？</text>
+          <text class="guide-body">给每个两位数配一张熟悉的图，比如：</text>
+          <view class="guide-demo-row">
+            <text class="guide-demo-num">13</text>
+            <text class="guide-demo-arrow">→</text>
+            <text class="guide-demo-peg">雨伞</text>
+          </view>
+          <text class="guide-body">再长的数字串，也能拆成一串图像，编成小故事就忘不掉。</text>
+        </template>
+
+        <template v-else-if="guideStep === 1">
+          <text class="guide-title">📱 看个真例子</text>
+          <text class="guide-body">妈妈的手机 139 1234 5678，自动切成：</text>
+          <view class="guide-demo-row wrap">
+            <text class="guide-demo-num small">1 · 39 · 12 · 34 · 56 · 78</text>
+          </view>
+          <view class="guide-demo-row wrap">
+            <text class="guide-demo-peg">{{ demoStory }}</text>
+          </view>
+          <text class="guide-body">编故事：蜡烛烧穿三角架，架上的椅儿砸到山寺，寺里蜗牛骑着青蛙逃跑——号码就记住了。</text>
+        </template>
+
+        <template v-else>
+          <text class="guide-title">⚡ 一键开始</text>
+          <text class="guide-body">已为你准备好全部 100 个推荐桩（00–99），填充后马上可以练习，每个桩以后都能改成你自己的版本。</text>
+        </template>
+
+        <view class="guide-actions">
+          <button v-if="guideStep < 2" class="guide-btn primary" @click="guideStep++">下一步</button>
+          <button v-else class="guide-btn primary" @click="finishGuide(true)">⚡ 一键填充并开始</button>
+          <button class="guide-btn plain" @click="finishGuide(false)">{{ guideStep < 2 ? '跳过引导' : '我自己慢慢编' }}</button>
         </view>
       </view>
     </view>
@@ -124,9 +187,27 @@
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useNumberMemory } from '@/stores/useNumberMemory'
-import { fillDefaultPegs, DEFAULT_PEG_SUGGESTIONS } from './default-pegs'
+import { fillDefaultPegs, getPegSuggestion } from './default-pegs'
+import { pegChainOf, chainToStory } from './peg-chain'
 
 const store = useNumberMemory()
+
+// ============ 首次使用引导 ============
+
+const GUIDE_FLAG = 'number-memory-guide-done'
+const showGuide = ref(false)
+const guideStep = ref(0)
+
+/** 引导页演示：手机号编码成桩链故事（直接查推荐桩表，填充前也能演示） */
+const demoStory = computed(() => chainToStory(pegChainOf('13912345678', getPegSuggestion)))
+
+function finishGuide(fill: boolean) {
+  if (fill) fillDefaults()
+  try {
+    uni.setStorageSync(GUIDE_FLAG, '1')
+  } catch {}
+  showGuide.value = false
+}
 
 const tabs = [
   { value: 'entries', label: '数字条目' },
@@ -182,25 +263,18 @@ function fillDefaults() {
   uni.showToast({ title: filled > 0 ? `已填充 ${filled} 个推荐桩` : '没有可填充的推荐桩', icon: 'none' })
 }
 
-// 数字桩自测：随机报数回忆桩，范围沿用当前选中范围
-function goPracticePegs() {
-  if (store.associationCount === 0) {
-    uni.showToast({ title: '先点数字编几个桩吧', icon: 'none' })
+// 四档练习：认桩（选择）/ 背桩（回忆）/ 编码复述（桩链）/ 实战（条目）
+function goPractice(mode: 'choice' | 'pegs' | 'story' | 'entries') {
+  if ((mode === 'choice' || mode === 'pegs') && store.associationCount === 0) {
+    uni.showToast({ title: '先在桩位配置里一键填充推荐桩吧', icon: 'none' })
     return
   }
-  uni.navigateTo({
-    url: `/subPackages/pages-memory/number-memory/practice?mode=pegs&range=${pegRange.value}`,
-  })
-}
-
-// 条目回忆：看标题回忆数字串
-function goPracticeEntries() {
-  if (store.totalEntries === 0) {
+  if ((mode === 'story' || mode === 'entries') && store.totalEntries === 0) {
     uni.showToast({ title: '先添加几条数字条目吧', icon: 'none' })
     return
   }
   uni.navigateTo({
-    url: `/subPackages/pages-memory/number-memory/practice?mode=entries`,
+    url: `/subPackages/pages-memory/number-memory/practice?mode=${mode}&range=${pegRange.value}`,
   })
 }
 
@@ -225,6 +299,16 @@ const filteredEntries = computed(() => {
 function formatNumbers(nums: string): string {
   // 每 4 位加一个空格，提升可读性
   return nums.replace(/(\d{4})(?=\d)/g, '$1 ')
+}
+
+/** 条目数字串 → 桩链故事（优先用户桩，没编的号回落推荐桩） */
+function entryStory(numbers: string): string {
+  const chain = pegChainOf(numbers, (num) => {
+    const a = store.getAssociation(num)
+    if (a?.description) return a.description
+    return getPegSuggestion(num) || undefined
+  })
+  return chainToStory(chain)
 }
 
 function goAddEntry() {
@@ -262,7 +346,17 @@ function confirmDelete(entry: any) {
   })
 }
 
-onMounted(() => store.load())
+onMounted(() => {
+  store.load()
+  // 首次进入（且还没编过桩）时弹三步引导
+  let guided = ''
+  try {
+    guided = uni.getStorageSync(GUIDE_FLAG) || ''
+  } catch {}
+  if (!guided && store.associationCount === 0) {
+    showGuide.value = true
+  }
+})
 onShow(() => store.load())
 </script>
 
@@ -550,5 +644,140 @@ onShow(() => store.load())
   font-size: 22rpx;
   color: var(--sr-text-2);
   line-height: 1.5;
+}
+
+/* 四档练习入口 */
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+.practice-cell {
+  background: var(--sr-card);
+  border-radius: 14rpx;
+  padding: 18rpx 6rpx;
+  text-align: center;
+}
+.practice-cell-icon {
+  font-size: 36rpx;
+  display: block;
+}
+.practice-cell-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--sr-text-strong);
+  display: block;
+  margin-top: 4rpx;
+}
+.practice-cell-desc {
+  font-size: 18rpx;
+  color: var(--sr-text-3);
+  display: block;
+  margin-top: 2rpx;
+}
+
+/* 条目桩链 */
+.entry-chain {
+  display: block;
+  font-size: 22rpx;
+  color: var(--sr-text-2);
+  line-height: 1.5;
+  margin-bottom: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 首次使用引导 */
+.guide-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+.guide-card {
+  width: 100%;
+  background: var(--sr-card);
+  border-radius: 24rpx;
+  padding: 40rpx 36rpx;
+  box-sizing: border-box;
+}
+.guide-step-dot {
+  font-size: 20rpx;
+  color: var(--sr-text-3);
+  display: block;
+  margin-bottom: 16rpx;
+}
+.guide-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: var(--sr-text-strong);
+  display: block;
+  margin-bottom: 20rpx;
+}
+.guide-body {
+  font-size: 26rpx;
+  color: var(--sr-text-2);
+  line-height: 1.7;
+  display: block;
+  margin-bottom: 16rpx;
+}
+.guide-demo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  background: var(--sr-primary-bg);
+  border-radius: 14rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+}
+.guide-demo-row.wrap {
+  flex-wrap: wrap;
+}
+.guide-demo-num {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--sr-primary);
+  font-family: 'Courier New', monospace;
+}
+.guide-demo-num.small {
+  font-size: 30rpx;
+}
+.guide-demo-arrow {
+  font-size: 32rpx;
+  color: var(--sr-text-3);
+}
+.guide-demo-peg {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: var(--sr-text-strong);
+}
+.guide-actions {
+  margin-top: 28rpx;
+}
+.guide-btn {
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+  border-radius: 42rpx;
+  font-size: 28rpx;
+  border: none;
+  margin: 0 0 16rpx;
+}
+.guide-btn.primary {
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
+}
+.guide-btn.plain {
+  background: transparent;
+  color: var(--sr-text-3);
+  font-size: 24rpx;
 }
 </style>

@@ -67,6 +67,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { ALL_PHONEMES, findPhoneme, type Phoneme } from '@/utils/phoneme-data'
+import { playPhoneme } from '@/utils/phoneme-audio'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { getTtsAdapter } from '@/adapters/index'
 import { getEncourageText } from '@/utils/encourage'
@@ -196,11 +197,11 @@ function nextQuestion() {
   setTimeout(autoSpeakPrompt, 200)
 }
 
-/** 进入每题时自动发音：正向读音素代理串，反向读单词 */
+/** 进入每题时自动发音：正向读音素（CDN 预合成），反向读单词 */
 function autoSpeakPrompt() {
   if (!currentQ.value) return
   if (direction.value === 'forward') {
-    speakWord(currentQ.value.phoneme.articulation)
+    playPhoneme(currentQ.value.phoneme.ipa, currentQ.value.phoneme.articulation)
   } else {
     speakWord(currentQ.value.targetWord)
   }
