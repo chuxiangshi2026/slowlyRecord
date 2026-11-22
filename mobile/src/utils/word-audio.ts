@@ -9,7 +9,7 @@
 
 import { getTtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
-import { buildChineseAudioUrls, containsChinese } from '@/utils/youdao-tts'
+import { buildChineseAudioUrls, containsChinese, splitChineseSpeechText } from '@/utils/youdao-tts'
 import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
 import { getSpeechAudioUrl } from '@/utils/speech-audio'
 import { cdnUrlVariants } from '@/utils/cdn-mirror'
@@ -103,4 +103,34 @@ export function stopSpeaking(): void {
   } catch {
     // TTS 不可用，静默失败
   }
+}
+
+/**
+ * 长中文文本朗读：按句切分后逐段走中文音源链（有道智云/百度/谷歌）顺序播放，
+ * 规避免费 TTS 对单次请求长度的截断（长文只读开头一段的问题）。
+ * 与 speakWord 共用代次令牌：stopSpeaking 或新发音会立即中断连播。
+ * 返回是否完整播完（被中断或某段全部音源失败时返回 false）。
+ */
+export async function speakChineseLongText(
+  text: string,
+  options: { rate?: number; userInitiated?: boolean } = {},
+): Promise<boolean> {
+  const seq = ++speakSeq
+  const tts = getTtsAdapter()
+  const segments = splitChineseSpeechText(text)
+  if (!segments.length) return false
+  for (const segment of segments) {
+    if (seq !== speakSeq) return false
+    let ok = false
+    for (const url of buildChineseAudioUrls(segment)) {
+      if (seq !== speakSeq) return false
+      try {
+        await tts.playAudio(url, { silent: !options.userInitiated, rate: options.rate })
+        ok = true
+        break
+      } catch { /* 当前音源失败，换下一音源 */ }
+    }
+    if (!ok) return false
+  }
+  return true
 }

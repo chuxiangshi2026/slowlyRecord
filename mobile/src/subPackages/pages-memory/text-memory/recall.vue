@@ -41,6 +41,9 @@
       <view class="chip" :class="{ playing }" @click="playFullArticle">
         <text>{{ playing ? '朗读中…' : '🔊 朗读全文' }}</text>
       </view>
+      <view class="chip" @click="cycleSpeechRate">
+        <text>语速×{{ speechRate }}</text>
+      </view>
       <view class="chip nav" @click="goFillBlanks">
         <text>填空练习 ›</text>
       </view>
@@ -113,10 +116,10 @@ import type { MobileTextArticle } from '@/stores/useUtils/types'
 import { splitAnnotatedBlocks, firstCharHint, alignPinyinChars, type RubyChar } from './recall'
 import { findBuiltinPoem } from './library'
 import { getPoetryAudioUrl, buildPoetrySpeakText } from '@/utils/poetry-audio'
-import { buildChineseAudioUrls } from '@/utils/youdao-tts'
 import { cdnUrlVariants } from '@/utils/cdn-mirror'
 import { quickTranslateToEnglish } from '@/utils/quick-translate'
 import { getTtsAdapter } from '@/adapters/index'
+import { speakChineseLongText, stopSpeaking } from '@/utils/word-audio'
 
 const store = useTextMemory()
 
@@ -165,6 +168,17 @@ const firstChars = computed(() => blocks.value.map((b) => firstCharHint(b.text))
 const revealedCount = computed(() => revealed.value.filter(Boolean).length)
 
 const playing = ref(false)
+// 页面已退出标记：连播被 stopSpeaking 中断时不弹「朗读失败」
+let pageExited = false
+
+// 朗读语速：0.75 / 1 / 1.25 循环切换，记住选择
+const SPEECH_RATES = [1, 0.75, 1.25]
+const speechRate = ref(Number(uni.getStorageSync('text-recall-speech-rate')) || 1)
+function cycleSpeechRate() {
+  const idx = SPEECH_RATES.indexOf(speechRate.value)
+  speechRate.value = SPEECH_RATES[(idx + 1) % SPEECH_RATES.length]
+  try { uni.setStorageSync('text-recall-speech-rate', speechRate.value) } catch { /* 忽略 */ }
+}
 
 onLoad((opt: any) => {
   store.load()
@@ -186,9 +200,10 @@ onLoad((opt: any) => {
   loaded.value = true
 })
 
-// 离开页面停止朗读，避免后台继续播放
+// 离开页面停止朗读：stopSpeaking 同时作废连播代次，避免后台继续播放
 onUnload(() => {
-  try { getTtsAdapter().stop() } catch { /* 忽略 */ }
+  pageExited = true
+  stopSpeaking()
 })
 
 function toggleBlock(idx: number) {
@@ -218,29 +233,29 @@ function randomReveal() {
 
 /**
  * 朗读全文：始终优先尝试 CDN 预合成音频（按标题+作者+正文哈希定位，
- * 内置诗词不论新旧导入都能命中；非内置内容 404 后自动回退），
- * 再退回中文在线音源链（有道智云/百度/谷歌）。
+ * 内置诗词不论新旧导入都能命中；非内置内容 404 后自动回退）；
+ * CDN 全失败后退回中文在线音源链分段连播（免费 TTS 对长文本会截断，分段规避）。
  */
 async function playFullArticle() {
   if (!article.value || playing.value) return
   const a = article.value
   const speakText = buildPoetrySpeakText(a.title, a.author, a.content)
-  // CDN 预合成音频（主域 + 镜像域），其后在线中文音源链兜底
-  const urls: string[] = [
-    ...cdnUrlVariants(getPoetryAudioUrl(a.title, a.author, a.content)),
-    ...buildChineseAudioUrls(speakText),
-  ]
   playing.value = true
   let ok = false
-  for (const url of urls) {
+  // CDN 预合成整首音频（主域 + 镜像域）
+  for (const url of cdnUrlVariants(getPoetryAudioUrl(a.title, a.author, a.content))) {
     try {
-      await getTtsAdapter().playAudio(url)
+      await getTtsAdapter().playAudio(url, { rate: speechRate.value })
       ok = true
       break
-    } catch { /* 尝试下一音源 */ }
+    } catch { /* 尝试下一镜像 */ }
+  }
+  // CDN 未命中/失败：在线中文音源链分段连播
+  if (!ok) {
+    ok = await speakChineseLongText(speakText, { rate: speechRate.value, userInitiated: true })
   }
   playing.value = false
-  if (!ok) uni.showToast({ title: '朗读失败，请检查网络后重试', icon: 'none' })
+  if (!ok && !pageExited) uni.showToast({ title: '朗读失败，请检查网络后重试', icon: 'none' })
 }
 
 /** 在线译英文：按当前翻译引擎设置翻译全文并缓存到文章（下次打开直接显示） */

@@ -149,3 +149,59 @@ export function buildChineseAudioUrls(text: string): string[] {
   urls.push(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-CN&q=${encodeURIComponent(text)}`)
   return urls
 }
+
+/**
+ * 把长中文文本切成适合在线 TTS 的短段：
+ * 百度/谷歌等免费音源对单次请求长度有限制，超长会被截断（听起来像「只读开头一段」），
+ * 故按换行与句末标点（。！？；）优先切分并尽量合并到 maxLen 以内，
+ * 单句仍超长时按次级停顿（，、：）切，最后兜底硬切。
+ */
+export function splitChineseSpeechText(text: string, maxLen = 80): string[] {
+  const normalized = (text || '').replace(/\r/g, '')
+  if (!normalized.trim()) return []
+  // 先按换行与句末标点切成句子（标点保留在句尾）
+  const sentences: string[] = []
+  let buf = ''
+  for (const ch of normalized) {
+    buf += ch
+    if ('。！？；\n'.includes(ch)) {
+      sentences.push(buf)
+      buf = ''
+    }
+  }
+  if (buf.trim()) sentences.push(buf)
+
+  const segments: string[] = []
+  let current = ''
+  const flush = () => {
+    const trimmed = current.trim()
+    if (trimmed) segments.push(trimmed)
+    current = ''
+  }
+  for (const sentence of sentences) {
+    if (sentence.length <= maxLen) {
+      if ((current + sentence).length > maxLen) flush()
+      current += sentence
+      continue
+    }
+    // 单句超长：先落盘已积累的片段，再按次级停顿/硬切拆分本句
+    flush()
+    let rest = sentence
+    while (rest.length > maxLen) {
+      let cut = maxLen
+      const window = rest.slice(0, maxLen + 1)
+      const idx = Math.max(
+        window.lastIndexOf('，'),
+        window.lastIndexOf('、'),
+        window.lastIndexOf('：'),
+        window.lastIndexOf(','),
+      )
+      if (idx >= Math.floor(maxLen / 2)) cut = idx + 1
+      segments.push(rest.slice(0, cut).trim())
+      rest = rest.slice(cut)
+    }
+    if (rest.trim()) current = rest
+  }
+  flush()
+  return segments
+}

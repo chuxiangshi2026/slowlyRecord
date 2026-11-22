@@ -1117,16 +1117,34 @@ const goAfterReview = (url: string) => {
 }
 
 .review-card {
-  background: var(--sr-card);
-  border-radius: 24rpx;
+  /* 玉白向淡青的细微渐变，叠在背景图上依然不透、文字清晰 */
+  background: linear-gradient(165deg, var(--sr-card) 55%, var(--sr-primary-bg) 100%);
+  border-radius: 32rpx;
+  border: 1rpx solid var(--sr-border);
   width: 100%;
   max-width: 600rpx;
   min-height: 700rpx;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.3);
+  box-shadow: 0 24rpx 64rpx rgba(0,0,0,0.28), 0 6rpx 20rpx rgba(82,121,111,0.18);
   transform-style: preserve-3d;
   backface-visibility: hidden;
+}
+
+/* 中式双线内框：卡片内侧一圈玉绿细线，收边更精致 */
+.review-card::before {
+  content: '';
+  position: absolute;
+  top: 14rpx;
+  left: 14rpx;
+  right: 14rpx;
+  bottom: 14rpx;
+  border: 1rpx solid rgba(82, 121, 111, 0.22);
+  border-radius: 22rpx;
+  pointer-events: none;
+}
+.theme-dark .review-card::before {
+  border-color: rgba(131, 197, 168, 0.2);
 }
 
 /* 卡片顶部栏（等级徽章） */
@@ -1154,9 +1172,7 @@ const goAfterReview = (url: string) => {
   transition: transform 0.3s, opacity 0.3s;
 }
 
-.card-back {
-  background: var(--sr-card);
-}
+/* 背面与正面共用 .review-card 的渐变底（原 .card-back 底色覆盖已移除） */
 
 /* 划动视觉反馈 */
 .swipe-overlay {
@@ -1169,7 +1185,7 @@ const goAfterReview = (url: string) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 24rpx;
+  border-radius: 32rpx;
   pointer-events: none;
 }
 

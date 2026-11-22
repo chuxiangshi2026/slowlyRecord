@@ -109,6 +109,13 @@ const allFeatures = [
     action: () => navigate('/subPackages/pages-memory/sentences/sentences'),
   },
   {
+    icon: '🗣️',
+    cls: 'speak',
+    text: '口语回复',
+    desc: 'AI 生成地道英文口语并朗读',
+    action: () => navigate('/subPackages/pages-tools/speak/speak'),
+  },
+  {
     icon: '🌙',
     cls: 'focus',
     text: '专注模式',
@@ -180,6 +187,7 @@ const features = computed(() => allFeatures.filter(item => WORD_BOOK_ENABLED || 
 .menu-icon.knowledge { background: #83a89a; }
 .menu-icon.palace { background: #4a6b62; }
 .menu-icon.sentences { background: #8ba89c; }
+.menu-icon.speak { background: #5f8577; }
 .menu-icon.focus { background: #5c7a6b; }
 .menu-icon.graph { background: #6b8f7f; }
 

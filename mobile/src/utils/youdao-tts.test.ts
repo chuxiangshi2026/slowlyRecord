@@ -11,7 +11,7 @@ vi.mock('@/stores/useUtils/translation-settings', () => ({
   getTranslationApiKey: () => mockKey,
 }))
 
-import { containsChinese, buildYoudaoTtsUrl, buildChineseAudioUrls } from '@/utils/youdao-tts'
+import { containsChinese, buildYoudaoTtsUrl, buildChineseAudioUrls, splitChineseSpeechText } from '@/utils/youdao-tts'
 import { parseAudioCacheWord } from '@/adapters/index'
 
 describe('containsChinese', () => {
@@ -94,5 +94,52 @@ describe('buildChineseAudioUrls', () => {
     for (const url of buildChineseAudioUrls('你好')) {
       expect(parseAudioCacheWord(url)).toBe('你好')
     }
+  })
+})
+
+describe('splitChineseSpeechText', () => {
+  it('空文本与纯空白返回空数组', () => {
+    expect(splitChineseSpeechText('')).toEqual([])
+    expect(splitChineseSpeechText('  \n ')).toEqual([])
+  })
+
+  it('短文本不切分', () => {
+    expect(splitChineseSpeechText('床前明月光，疑是地上霜。')).toEqual(['床前明月光，疑是地上霜。'])
+  })
+
+  it('按句末标点切分并尽量合并到 maxLen 内', () => {
+    const text = '白日依山尽。黄河入海流。欲穷千里目。更上一层楼。'
+    const segments = splitChineseSpeechText(text, 20)
+    expect(segments).toEqual(['白日依山尽。黄河入海流。欲穷千里目。', '更上一层楼。'])
+    for (const seg of segments) expect(seg.length).toBeLessThanOrEqual(20)
+  })
+
+  it('按换行切分（诗词逐行）', () => {
+    const text = '春眠不觉晓\n处处闻啼鸟\n夜来风雨声\n花落知多少'
+    const segments = splitChineseSpeechText(text, 12)
+    expect(segments).toEqual(['春眠不觉晓\n处处闻啼鸟', '夜来风雨声\n花落知多少'])
+  })
+
+  it('单句超长时按次级停顿切分', () => {
+    const text = '天地玄黄，宇宙洪荒，日月盈昃，辰宿列张，寒来暑往，秋收冬藏'
+    const segments = splitChineseSpeechText(text, 16)
+    expect(segments.length).toBeGreaterThan(1)
+    for (const seg of segments) expect(seg.length).toBeLessThanOrEqual(16)
+    expect(segments.join('')).toBe(text)
+    // 优先在逗号处断开
+    expect(segments[0].endsWith('，')).toBe(true)
+  })
+
+  it('无停顿的超长句硬切且不丢字', () => {
+    const text = '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十'
+    const segments = splitChineseSpeechText(text, 10)
+    expect(segments.join('')).toBe(text)
+    for (const seg of segments) expect(seg.length).toBeLessThanOrEqual(10)
+  })
+
+  it('长文分段覆盖全部内容（不丢字）', () => {
+    const text = '静夜思。床前明月光，疑是地上霜。举头望明月，低头思故乡。'
+    const segments = splitChineseSpeechText(text, 15)
+    expect(segments.join('')).toBe(text)
   })
 })

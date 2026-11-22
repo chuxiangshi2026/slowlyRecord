@@ -54,7 +54,7 @@ function errMsg(res: any): string {
   return res?.errMsg || `HTTP ${res?.statusCode || '未知'}`
 }
 
-async function translateWithAi(platform: TranslationPlatform, text: string): Promise<QuickTranslateResult> {
+async function chatWithAi(platform: TranslationPlatform, systemPrompt: string, userText: string): Promise<QuickTranslateResult> {
   const engine = AI_ENGINES[platform]!
   const { appkey, key } = getTranslationApiKey(platform)
   if (!appkey) return { ok: false, error: '请先在「设置 → 翻译」配置当前引擎的 API 密钥' }
@@ -65,17 +65,21 @@ async function translateWithAi(platform: TranslationPlatform, text: string): Pro
     data: {
       model: key || engine.defaultModel,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: text },
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userText },
       ],
       temperature: 0.2,
     },
     timeout: 60000,
   })
-  if (!isHttpOk(res)) return { ok: false, error: `翻译请求失败：${errMsg(res)}` }
+  if (!isHttpOk(res)) return { ok: false, error: `请求失败：${errMsg(res)}` }
   const content: string = (res.data as any)?.choices?.[0]?.message?.content || ''
   const out = content.trim().replace(/^```[a-z]*\n?|```$/g, '').trim()
-  return out ? { ok: true, text: out } : { ok: false, error: '翻译结果为空，请检查引擎配置' }
+  return out ? { ok: true, text: out } : { ok: false, error: '返回内容为空，请检查引擎配置' }
+}
+
+function translateWithAi(platform: TranslationPlatform, text: string): Promise<QuickTranslateResult> {
+  return chatWithAi(platform, SYSTEM_PROMPT, text)
 }
 
 async function translateWithYoudao(text: string): Promise<QuickTranslateResult> {
@@ -116,8 +120,8 @@ async function translateWithBaidu(text: string): Promise<QuickTranslateResult> {
   return { ok: true, text: out }
 }
 
-/** B站 Index-Translate：免密钥公网 AI 接口（OpenAI 兼容，可被限流） */
-async function translateWithBilibili(text: string): Promise<QuickTranslateResult> {
+/** B站 Index-Translate：免密钥公网 AI 接口（OpenAI 兼容，可被限流）；system 提示词并入 user 消息 */
+async function chatWithBilibili(systemPrompt: string, userText: string): Promise<QuickTranslateResult> {
   const { key: configuredModel } = getTranslationApiKey('bilibili')
   const res = await request({
     url: 'https://index-translate.bilibili.com/v1/chat/completions',
@@ -125,18 +129,22 @@ async function translateWithBilibili(text: string): Promise<QuickTranslateResult
     header: { 'Content-Type': 'application/json' },
     data: {
       model: configuredModel || 'Index-Translate-35B-A3B',
-      messages: [{ role: 'user', content: `${SYSTEM_PROMPT}\n\n${text.trim()}` }],
+      messages: [{ role: 'user', content: `${systemPrompt}\n\n${userText.trim()}` }],
       temperature: 0,
       max_tokens: 1024,
       stream: false,
     },
     timeout: 60000,
   })
-  if (!isHttpOk(res)) return { ok: false, error: `B站翻译请求失败：${errMsg(res)}（公共接口可能限流，请稍后再试）` }
+  if (!isHttpOk(res)) return { ok: false, error: `B站请求失败：${errMsg(res)}（公共接口可能限流，请稍后再试）` }
   const raw: string = (res.data as any)?.choices?.[0]?.message?.content || ''
   const thEnd = raw.indexOf('</think>')
   const out = (thEnd >= 0 ? raw.slice(thEnd + 8) : raw).replace(/^<think>/, '').trim()
-  return out ? { ok: true, text: out } : { ok: false, error: 'B站翻译未返回译文，公共接口可能限流，请稍后再试' }
+  return out ? { ok: true, text: out } : { ok: false, error: 'B站未返回内容，公共接口可能限流，请稍后再试' }
+}
+
+function translateWithBilibili(text: string): Promise<QuickTranslateResult> {
+  return chatWithBilibili(SYSTEM_PROMPT, text)
 }
 
 /** 按当前翻译引擎设置把中文全文译成英文（保留行结构） */
@@ -150,5 +158,24 @@ export async function quickTranslateToEnglish(text: string): Promise<QuickTransl
   return {
     ok: false,
     error: '当前翻译引擎暂不支持在线译英文，请到「设置 → 翻译」切换为 B站 / GLM / DeepSeek / 千问 / Kimi / 有道 / 百度',
+  }
+}
+
+/** 生成式 AI 通道：仅 AI 引擎与 B站（有道/百度为纯机器翻译接口，不支持自定义提示词） */
+export function quickAiChannel(platform: TranslationPlatform): 'ai' | 'bilibili' | null {
+  if (AI_ENGINES[platform]) return 'ai'
+  if (platform === 'bilibili') return 'bilibili'
+  return null
+}
+
+/** 通用 AI 生成：按当前引擎用自定义系统提示词生成内容（口语回复等生成场景） */
+export async function askAi(systemPrompt: string, userText: string): Promise<QuickTranslateResult> {
+  const platform = getTranslationPlatform()
+  const channel = quickAiChannel(platform)
+  if (channel === 'ai') return chatWithAi(platform, systemPrompt, userText)
+  if (channel === 'bilibili') return chatWithBilibili(systemPrompt, userText)
+  return {
+    ok: false,
+    error: '当前翻译引擎不支持 AI 生成，请到「设置 → 翻译」切换为 B站 / GLM / DeepSeek / 千问 / Kimi',
   }
 }

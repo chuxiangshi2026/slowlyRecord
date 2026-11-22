@@ -78,6 +78,12 @@
           "style": {
             "navigationBarTitleText": "函数图像"
           }
+        },
+        {
+          "path": "speak/speak",
+          "style": {
+            "navigationBarTitleText": "口语回复"
+          }
         }
       ]
     },
