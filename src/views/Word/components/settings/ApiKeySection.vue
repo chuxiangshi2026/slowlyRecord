@@ -2,10 +2,10 @@
   <div class="content">
     <h5 class="key-section-title">高级设置（自定义 API Key）</h5>
     <div class="free-quota-item">
-      <span class="free-quota-text">内置免费翻译额度：未配置自己的密钥时，使用 B站 Index-Translate、Google、MyMemory 等免费公共接口或内置共享密钥，待翻译文本会发送给对应服务商（会访问 index-translate.bilibili.com、translate.googleapis.com、api.mymemory.translated.net、open.bigmodel.cn，按引擎与降级顺序）；关闭后未配置密钥的引擎将不可用</span>
+      <span class="free-quota-text">内置免费翻译额度：未配置自己的密钥时，使用 B站 Index-Translate、Google、MyMemory 等免费公共接口或内置共享密钥，待翻译文本会发送给对应服务商（会访问 index-translate.bilibili.com、translate.googleapis.com、api.mymemory.translated.net、open.bigmodel.cn，按引擎与降级顺序）；免费额度每日限 {{ USAGE_LIMITS.TRANSLATION_DAILY_LIMIT }} 次（普通与批量翻译共用），用尽后当日自动降级或提示；关闭后未配置密钥的引擎将不可用</span>
       <el-switch v-model="wordsStore.builtinFreeTranslate" aria-label="内置免费翻译额度"/>
     </div>
-    <p class="key-section-hint">开启内置免费额度时默认使用 B站 Index-Translate（免配置），额度耗尽或限流时会自动降级；仅切换其他引擎或需要更高额度时才需填写</p>
+    <p class="key-section-hint">开启后默认使用 B站 Index-Translate（免配置），免费额度每日限 {{ USAGE_LIMITS.TRANSLATION_DAILY_LIMIT }} 次，耗尽或限流时自动降级；需要更高额度或指定引擎时填写自己的 API Key（本机保存，uTools 端加密后随账号同步）</p>
     <el-collapse v-model="activeTranslationKeys" class="key-collapse">
       <el-collapse-item v-for="engine in translationKeyEngines" :key="engine.value" :name="engine.value">
         <template #title>
@@ -52,7 +52,7 @@
     </el-collapse>
 
     <h5 class="key-section-title">OCR 图片识别密钥</h5>
-    <p class="key-section-hint">默认使用 B站 Index 视觉识别（免配置）</p>
+    <p class="key-section-hint">未配置密钥时使用免配置通道（默认 B站 Index 视觉识别），截图识别每日限 {{ USAGE_LIMITS.OCR_DAILY_LIMIT }} 次（腾讯通道每日 {{ USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT }} 次）；本地 OCR 与配置了自有密钥的引擎不限次数</p>
     <el-collapse v-model="activeOcrKeys" class="key-collapse">
       <el-collapse-item v-for="engine in ocrKeyEngines" :key="engine.value" :name="engine.value">
         <template #title>
@@ -88,7 +88,7 @@
     <div class="apply-key-block">
       <h5 style="text-align:center;">申请密钥</h5>
       <p class="limit-info">
-        由于截图翻译调用成本较高，优先使用本地功能，在没有配置自己密钥时，暂时限制直接使用次数每日{{ USAGE_LIMITS.OCR_DAILY_LIMIT }}次(方便测试自己密钥)，配置自己的密钥后不再限制，自己额度基本够用，截图主要使用者，希望尽量使用自己的免费额度</p>
+        截图识别调用成本较高：未配置密钥时每日限 {{ USAGE_LIMITS.OCR_DAILY_LIMIT }} 次（腾讯通道每日 {{ USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT }} 次），仅截图/选图成功才计次；本地 OCR 不消耗次数，配置自己的密钥后也不再限制。经常使用截图功能的用户建议申请自有密钥，多数平台自身提供免费额度。</p>
 
       <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
            :key="platform.key"

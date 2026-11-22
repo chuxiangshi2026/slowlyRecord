@@ -1418,9 +1418,10 @@ function gateBuiltinFreeTranslate(platform: TranslationPlatform, usingBuiltinKey
         if (typeof window !== 'undefined' && window.localStorage?.getItem(FREE_TRANSLATE_NOTICE_KEY) !== '1') {
             window.localStorage?.setItem(FREE_TRANSLATE_NOTICE_KEY, '1');
             void import('element-plus').then(({ ElMessageBox }) => ElMessageBox.alert(
-                '本次翻译使用内置免费额度：待翻译文本会发送给 B站 Index-Translate、Google、MyMemory 等公共服务商，' +
+                `本次翻译使用内置免费额度（每日限 ${USAGE_LIMITS.TRANSLATION_DAILY_LIMIT} 次，普通与批量翻译共用）：` +
+                '待翻译文本会发送给 B站 Index-Translate、Google、MyMemory 等公共服务商，' +
                 '或使用内置共享密钥的引擎，数据流向以各服务商隐私政策为准。\n\n' +
-                '如需避免，可在「设置 → 高级设置」关闭「内置免费翻译额度」，或填写自己的 API Key（只保存在本机）。',
+                '如需避免，可在「设置 → 高级设置」关闭「内置免费翻译额度」，或填写自己的 API Key（本机保存，uTools 端加密后随账号同步）。',
                 '内置免费翻译额度',
                 { confirmButtonText: '知道了', type: 'info' }
             )).catch(() => { /* 弹窗不可用时不影响翻译 */ });
