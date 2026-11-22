@@ -26,6 +26,7 @@ import { syncElectronTitleBar } from '@/utils/electron-titlebar'
 import { registerScheduleTriggerHandler } from '@/utils/schedule-reminder'
 import { useWordsStore } from '@/stores/words'
 import {getDbAdapterAsync} from '@/adapters/db'
+import {isStoreLocalOnly, initLocalBulkStore} from '@/adapters/local-bulk-store'
 import {getPlatform} from '@/adapters/platform'
 import {invalidateAppBgImageCache} from '@/utils/app-bg-db'
 
@@ -237,7 +238,16 @@ function renderStorageError(err: unknown) {
 }
 
 // 初始化数据库适配器（必须完成后再挂载应用，避免组件在初始化前调用 getDbAdapter()）
-getDbAdapterAsync().then(() => {
+getDbAdapterAsync().then(async () => {
+  // 商店版：记忆宫殿图片/外置词典等大体积数据存本机 IndexedDB（不同步），先载入内存镜像
+  try {
+    if (isStoreLocalOnly()) {
+      await initLocalBulkStore();
+      console.info(`[启动耗时] 本机大体积存储就绪: ${performance.now().toFixed(0)}ms`);
+    }
+  } catch (e) {
+    console.error('[App] 本机大体积存储初始化失败:', e);
+  }
   // 先用 user-set 中持久化的统计偏好回填 localStorage（插件更新可能已清空），再初始化统计
   try {
     const setDb = getSetDb();

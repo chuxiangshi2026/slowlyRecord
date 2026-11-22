@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 
 // 内存版 localStorage（usage-counter 依赖）
 const storage: Record<string, string> = {}
@@ -13,9 +13,12 @@ globalThis.localStorage = {
 
 // 可编程的密钥桩：getTranslationApiKey / hasCustomApiKey 都经 useWordsStore().getApiKey 读取
 const apiKeys: Record<string, { appkey: string, key: string }> = {}
+// 可编程的商店版开关桩：未设置时 builtinFreeTranslate 为 undefined（模拟旧版本持久化数据）
+const storeFlags: { builtinFreeTranslate?: boolean } = {}
 vi.mock('@/stores/words.ts', () => ({
   useWordsStore: () => ({
-    getApiKey: (p: string) => apiKeys[p]
+    getApiKey: (p: string) => apiKeys[p],
+    get builtinFreeTranslate() { return storeFlags.builtinFreeTranslate }
   })
 }))
 vi.mock('@/utils/str-util.ts', () => ({ batchTranslateAndAddWords: vi.fn() }))
@@ -23,6 +26,7 @@ vi.mock('@/utils/local-dictionary', () => ({ translateWithLocalDictionaryAsync: 
 vi.mock('@/utils/http.ts', () => ({ default: { get: vi.fn() } }))
 
 import { translateWithPlatform, translateBatchWithPlatform, fetchSiliconflowModels } from '@/utils/translation-api'
+import { _setStoreLocalOnlyForTest } from '@/adapters/local-bulk-store'
 import { RETIRED_MODEL_NAMES, AppInfo } from '@/config.ts'
 import http from '@/utils/http.ts'
 
@@ -472,5 +476,57 @@ describe('配置测试与硅基流动模型列表', () => {
   it('模型列表响应格式异常时不返回伪数据', async () => {
     fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({ message: 'unexpected' }), { status: 200 }))
     await expect(fetchSiliconflowModels('sf-test-key')).rejects.toThrow('响应格式异常')
+  })
+})
+
+describe('内置免费额度闸门（商店版严格模式）', () => {
+  beforeEach(() => {
+    fetchMock.mockReset()
+    for (const k of Object.keys(apiKeys)) delete apiKeys[k]
+    storeFlags.builtinFreeTranslate = undefined
+  })
+
+  afterEach(() => {
+    _setStoreLocalOnlyForTest(null)
+    storeFlags.builtinFreeTranslate = undefined
+  })
+
+  it('商店版：未显式开启（undefined，旧版持久化数据）时拦截免费引擎，不发请求', async () => {
+    _setStoreLocalOnlyForTest(true)
+    const result = await translateWithPlatform('gate-strict-undefined', 'bilibili', 'en', 'zh')
+    expect(result.success).toBe(false)
+    expect(result.errorMsg).toContain('内置免费翻译额度已关闭')
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('商店版：显式开启后放行免费引擎', async () => {
+    _setStoreLocalOnlyForTest(true)
+    storeFlags.builtinFreeTranslate = true
+    mockChatResponse('你好')
+    const result = await translateWithPlatform('gate-strict-on', 'bilibili', 'en', 'zh')
+    expect(result.success).toBe(true)
+    expect(fetchMock).toHaveBeenCalled()
+  })
+
+  it('商店版：批量路径同样拦截', async () => {
+    _setStoreLocalOnlyForTest(true)
+    const results = await translateBatchWithPlatform(['gate-batch'], 'bilibili', 'en', 'zh')
+    expect(results[0].success).toBe(false)
+    expect(results[0].errorMsg).toContain('内置免费翻译额度已关闭')
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('非商店版：undefined 按默认开启处理（旧行为保留）', async () => {
+    mockChatResponse('你好')
+    const result = await translateWithPlatform('gate-legacy-default', 'bilibili', 'en', 'zh')
+    expect(result.success).toBe(true)
+  })
+
+  it('非商店版：显式关闭仍拦截', async () => {
+    storeFlags.builtinFreeTranslate = false
+    const result = await translateWithPlatform('gate-legacy-off', 'bilibili', 'en', 'zh')
+    expect(result.success).toBe(false)
+    expect(result.errorMsg).toContain('内置免费翻译额度已关闭')
+    expect(fetchMock).not.toHaveBeenCalled()
   })
 })

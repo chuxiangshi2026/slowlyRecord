@@ -394,12 +394,12 @@ const routeStats = computed<RouteStats | null>(() => {
 function initMap() {
   if (!mapContainer.value) return;
 
-  // 修复 Leaflet 默认图标路径问题
+  // 修复 Leaflet 默认图标路径问题；图标用包内本地资源（public/static/leaflet），不从 CDN 拉取
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconRetinaUrl: 'static/leaflet/marker-icon-2x.png',
+    iconUrl: 'static/leaflet/marker-icon.png',
+    shadowUrl: 'static/leaflet/marker-shadow.png',
   });
 
   map = L.map(mapContainer.value).setView([35.0, 105.0], 4);

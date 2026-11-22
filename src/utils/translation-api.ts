@@ -13,6 +13,7 @@ import {translateWithLocalDictionaryAsync} from "./local-dictionary";
 import {getCacheStorage, migrateCacheKeys} from "@/adapters/local-cache";
 import {getActiveProfile, getProfile} from "@/utils/language";
 import {isWeb} from "@/adapters/platform";
+import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
 
 // 发音URL缓存 Map
 const pronunciationCache = new Map<string, string>();
@@ -1405,8 +1406,12 @@ const FREE_TRANSLATE_DISABLED_MSG =
 function gateBuiltinFreeTranslate(platform: TranslationPlatform, usingBuiltinKey: boolean): TranslationResult | null {
     if (!usingBuiltinKey || !FREE_ENGINE_CHAIN.includes(platform)) return null;
     const wordsStore = useWordsStore();
-    // 只有显式关闭才拦截：旧版本持久化数据没有此键（undefined）时按默认开启处理
-    if (wordsStore.builtinFreeTranslate === false) {
+    // 商店版（审核要求：内置额度为显式开启项）：只有显式开启（=== true）才放行，
+    // 旧版本持久化数据没有此键（undefined）同样拦截；其他端仅显式关闭（=== false）才拦截
+    const freeEnabled = isStoreLocalOnly()
+        ? wordsStore.builtinFreeTranslate === true
+        : wordsStore.builtinFreeTranslate !== false;
+    if (!freeEnabled) {
         return { success: false, errorMsg: FREE_TRANSLATE_DISABLED_MSG };
     }
     try {

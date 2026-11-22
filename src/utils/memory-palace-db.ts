@@ -8,10 +8,15 @@
  *
  * 设计原因：uTools db 单文档上限约 1MB，桩图片集中存放易超限，故拆出图片文档。
  * 图片文档仍有上限，超过阈值时拒绝保存并提示用户减少图片或改用文字描述。
+ *
+ * 商店版（uTools + __STORE_BUILD__）：桩图片属二进制内容，不随账号同步——
+ * dataURL 落到本机 IndexedDB（adapters/local-bulk-store），同步库中的图片文档
+ * 只保留图片引用（桩顺序号 → 字节数）；读取到旧版含 dataURL 的文档时自动迁移。
  */
 import cloneDeep from 'lodash.clonedeep';
 import {DB_KEY_MEMORY_PALACE} from '@/constants';
 import {getDbAdapter, type DbReturn} from '@/adapters/db';
+import {isStoreLocalOnly, localBulkGet, localBulkRemove, localBulkSet} from '@/adapters/local-bulk-store';
 import {log} from '@/utils/logger';
 import type {Palace, PalaceImagesDoc, PalaceListDoc, PegItem, PegListDoc} from '@/types/memory-palace';
 import type {SyncMemoryPalace} from '@/types/sync';
@@ -77,11 +82,62 @@ export function getPalacesDoc(): PalaceListDoc {
   };
 }
 
+/** 由图片映射生成引用映射（桩顺序号 → 字节数），同步库只存引用不存 dataURL */
+function buildImageRefs(images: Record<string, string>): Record<string, number> {
+  const refs: Record<string, number> = {};
+  for (const [order, dataUrl] of Object.entries(images)) {
+    refs[order] = dataUrl.length;
+  }
+  return refs;
+}
+
 /**
  * 获取宫殿的桩图片文档（不存在时返回默认空文档）
+ *
+ * 商店版：图片本体在本机存储；读到旧版同步库中含 dataURL 的文档时，
+ * 异步迁移到本机存储并把同步库文档改写为纯引用（images 置空 + refs）。
  */
 export function getPalaceImagesDoc(palaceId: string): PalaceImagesDoc {
   const key = getImagesKey(palaceId);
+  if (isStoreLocalOnly()) {
+    const local = localBulkGet<PalaceImagesDoc>(key);
+    const legacy = getDb().get<PalaceImagesDoc>(key);
+    const legacyHasDataUrl = !!(legacy && legacy.type === 'memory_palace_images'
+      && legacy.images && typeof legacy.images === 'object'
+      && Object.values(legacy.images).some(isDataUrl));
+    if (local && local.images && typeof local.images === 'object' && !legacyHasDataUrl) {
+      return local;
+    }
+    if (legacyHasDataUrl) {
+      // 旧版迁移：本机已有的图片优先，缺失的由旧同步文档补齐；
+      // 落本机存储成功后，同步库文档收窄为纯引用（images 置空 + refs）
+      const mergedImages = {...legacy!.images, ...(local?.images || {})};
+      const migrated: PalaceImagesDoc = {
+        _id: key,
+        type: 'memory_palace_images',
+        palaceId,
+        images: mergedImages,
+        updatedAt: Date.now(),
+      };
+      void localBulkSet(key, cloneDeep(migrated)).then((ok) => {
+        if (!ok) {
+          log.e('迁移宫殿图片到本机存储失败', palaceId);
+          return;
+        }
+        const latest = getDb().get<PalaceImagesDoc>(key);
+        if (!latest) return;
+        getDb().put(cloneDeep({...latest, images: {}, refs: buildImageRefs(mergedImages), updatedAt: Date.now()}));
+      }).catch((e) => log.e('迁移宫殿图片失败', palaceId, e));
+      return {...legacy!, images: mergedImages};
+    }
+    return local || {
+      _id: key,
+      type: 'memory_palace_images',
+      palaceId,
+      images: {},
+      updatedAt: Date.now(),
+    };
+  }
   const doc = getDb().get<PalaceImagesDoc>(key);
   if (doc && doc.type === 'memory_palace_images' && doc.images && typeof doc.images === 'object') {
     return doc as PalaceImagesDoc;
@@ -117,6 +173,28 @@ export function extractImagesFromPalace(palace: Palace): {palace: Palace; images
 }
 
 /**
+ * 商店版：把同步库中的图片文档收窄为纯引用（images 置空），图片本体在本机存储。
+ */
+function saveSyncedImagesRefsDoc(palaceId: string, images: Record<string, string>): void {
+  const key = getImagesKey(palaceId);
+  const latest = getDb().get<PalaceImagesDoc>(key);
+  const doc: PalaceImagesDoc = {
+    _id: key,
+    _rev: latest?._rev,
+    type: 'memory_palace_images',
+    palaceId,
+    images: {},
+    refs: buildImageRefs(images),
+    updatedAt: Date.now(),
+  };
+  if (!doc._rev) delete doc._rev;
+  const result = getDb().put(cloneDeep(doc));
+  if (!result.ok && result.error) {
+    log.e('保存宫殿图片引用失败', result.message);
+  }
+}
+
+/**
  * 同步保存桩图片文档（读取时惰性迁移用）
  */
 function savePalaceImagesSync(palaceId: string, images: Record<string, string>): DbReturn {
@@ -132,6 +210,13 @@ function savePalaceImagesSync(palaceId: string, images: Record<string, string>):
       error: true,
       message: '图片过多，请减少桩图片或改用文字描述',
     };
+  }
+  if (isStoreLocalOnly()) {
+    // 商店版：图片本体落本机存储（memory 同步生效，IndexedDB 异步落盘），同步库只留引用
+    delete doc._rev;
+    void localBulkSet(doc._id, cloneDeep(doc)).catch((e) => log.e('保存宫殿图片到本机存储失败', e));
+    saveSyncedImagesRefsDoc(palaceId, images);
+    return {ok: true, id: doc._id};
   }
   const result = getDb().put(cloneDeep(doc));
   if (!result.ok && result.error) {
@@ -156,6 +241,16 @@ export async function savePalaceImages(palaceId: string, images: Record<string, 
       error: true,
       message: '图片过多，请减少桩图片或改用文字描述',
     };
+  }
+  if (isStoreLocalOnly()) {
+    // 商店版：图片本体落本机存储，同步库只留引用
+    delete doc._rev;
+    const ok = await localBulkSet(doc._id, cloneDeep(doc));
+    if (!ok) {
+      log.e('保存宫殿图片到本机存储失败', palaceId);
+    }
+    saveSyncedImagesRefsDoc(palaceId, images);
+    return {ok: true, id: doc._id};
   }
   const result = await getDb().promises.put(cloneDeep(doc));
   if (!result.ok && result.error) {
@@ -304,6 +399,9 @@ export async function removePalace(palaceId: string): Promise<DbReturn> {
     if (imagesDoc) {
       getDb().remove(imagesDoc._id);
     }
+    if (isStoreLocalOnly()) {
+      await localBulkRemove(getImagesKey(palaceId));
+    }
   } catch (error) {
     log.e('删除宫殿图片失败', error);
   }
@@ -414,22 +512,24 @@ export async function removePegItem(palaceId: string, pegId: string): Promise<Db
 
 // ==================== 多端同步（memoryPalace scope） ====================
 
-/** 剔除超大图片（dataURL 超过 MAX_SYNC_IMAGE_CHARS 的桩图与总图） */
+/** 剔除超大图片（dataURL 超过 MAX_SYNC_IMAGE_CHARS 的桩图与总图）；商店版不同步任何图片，全部剔除 */
 export function stripOversizedImages(palace: Palace): Palace {
   const cleaned = cloneDeep(palace);
+  // 商店版图片只存本机，同步负载一律不带 dataURL（限值 0 = 全部剔除）
+  const limit = isStoreLocalOnly() ? 0 : MAX_SYNC_IMAGE_CHARS;
   let stripped = 0;
   for (const locus of cleaned.loci) {
-    if (locus.imageUrl && locus.imageUrl.length > MAX_SYNC_IMAGE_CHARS) {
+    if (locus.imageUrl && locus.imageUrl.length > limit) {
       delete locus.imageUrl;
       stripped++;
     }
   }
-  if (cleaned.overviewImage && cleaned.overviewImage.length > MAX_SYNC_IMAGE_CHARS) {
+  if (cleaned.overviewImage && cleaned.overviewImage.length > limit) {
     delete cleaned.overviewImage;
     stripped++;
   }
   if (stripped > 0) {
-    log.w(`宫殿 ${palace._id} 同步时剔除 ${stripped} 张超大图片（>${MAX_SYNC_IMAGE_CHARS / 1024}KB），移动端将只显示文字`);
+    log.w(`宫殿 ${palace._id} 同步时剔除 ${stripped} 张超大图片（>${limit / 1024}KB），移动端将只显示文字`);
   }
   return cleaned;
 }

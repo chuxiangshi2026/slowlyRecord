@@ -3,6 +3,8 @@ import {log} from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import {DB_KEY_NUMBER_MEMORY} from "@/constants";
 import {getDbAdapter} from "@/adapters/db";
+import {externalizeMappingImages, hasInlineMappingImages, removeMappingImageRef, resolveMappingImages} from "@/utils/mapping-image-store";
+import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
 
 const DB_KEY_PREFIX = DB_KEY_NUMBER_MEMORY;
 const TRAINING_KEY = DB_KEY_PREFIX + 'training';
@@ -23,13 +25,32 @@ interface BaseCouchDoc {
 }
 
 /**
+ * 商店版旧数据迁移：训练文档的 associations 仍带内联 dataURL 图片时，
+ * 异步落本机大体积存储并把文档改写为 bulk: 引用（失败下次读取重试）
+ */
+function migrateInlineImagesAsync(doc: NumberMemoryTraining): void {
+  if (!isStoreLocalOnly() || !hasInlineMappingImages(doc.associations)) return;
+  void (async () => {
+    const cleaned = cloneDeep(doc);
+    cleaned.associations = await externalizeMappingImages(cleaned.associations || [], 'number', (a) => a.number);
+    const result = await getDb().promises.put(cleaned);
+    if (result?.ok) log.i('[数字记忆] 已将同步库中的映射图片迁移到本机存储');
+  })().catch(() => { /* 下次读取时重试 */ });
+}
+
+/**
  * 获取用户的数字记忆训练数据
+ * 商店版：associations 中的 bulk: 图片引用在此还原为 dataURL，业务层无感
  * @returns 数字记忆训练记录
  */
 export function getNumberMemoryTraining(): NumberMemoryTraining | null {
   const allDocs = getDb().allDocs(DB_KEY_PREFIX) as BaseCouchDoc[];
-  const training = allDocs.find((doc) => doc.type === 'number_memory_training');
-  return training as NumberMemoryTraining || null;
+  const training = allDocs.find((doc) => doc.type === 'number_memory_training') as NumberMemoryTraining | undefined;
+  if (!training) return null;
+  migrateInlineImagesAsync(training);
+  if (!isStoreLocalOnly()) return training;
+  // 返回副本：引用还原不污染适配器缓存中的文档本体（库内仍是引用形态）
+  return {...training, associations: resolveMappingImages(cloneDeep(training.associations || []))};
 }
 
 /**
@@ -87,6 +108,8 @@ export async function saveAssociation(association: NumberImageAssociation): Prom
   if (training._rev) {
     cleanedData._rev = training._rev;
   }
+  // 商店版：图片本体落本机存储，文档只留 bulk: 引用（不进随账号同步的数据）
+  cleanedData.associations = await externalizeMappingImages(cleanedData.associations || [], 'number', (a) => a.number);
 
   const result = await getDb().promises.put(cleanedData);
 
@@ -120,6 +143,9 @@ export async function removeAssociation(number: string): Promise<DbReturn> {
   if (training._rev) {
     cleanedData._rev = training._rev;
   }
+  // 商店版：保持文档引用形态，并连带清理被删关联的本机图片
+  cleanedData.associations = await externalizeMappingImages(cleanedData.associations || [], 'number', (a) => a.number);
+  await removeMappingImageRef('number', number);
 
   const result = await getDb().promises.put(cleanedData);
 

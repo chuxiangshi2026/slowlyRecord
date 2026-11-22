@@ -11,7 +11,7 @@
         @change="handleFileImport"
       />
     </div>
-    <p class="config-hint">导出配置可保存您的 API 密钥、翻译引擎设置等个人配置</p>
+    <p class="config-hint">导出配置可保存您的 API 密钥、翻译引擎设置等个人配置{{ storeLocalOnly ? '（当前版本导出不含 API 密钥；密钥保存在本机，并以加密形式随账号同步）' : '' }}</p>
   </div>
 </template>
 
@@ -20,10 +20,12 @@ import {ref} from 'vue'
 import {useWordsStore} from "@/stores/words.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
+import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
 import {Download, Upload} from '@element-plus/icons-vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 
 const wordsStore = useWordsStore();
+const storeLocalOnly = isStoreLocalOnly();
 
 // 配置文件导入导出
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -48,8 +50,9 @@ const exportConfig = () => {
       mainWindowOpacity: userSet.mainWindowOpacity ?? 1.0,
       autoSpeak: userSet.autoSpeak ?? false,
       focusMode: userSet.focusMode || {},
-      keys: userSet.keys || {},
-      ocrKeys: userSet.ocrKeys || {}
+      // 商店版：密钥不写入导出文件（审核合规）；同步走加密后的 user-set 文档
+      keys: isStoreLocalOnly() ? {} : (userSet.keys || {}),
+      ocrKeys: isStoreLocalOnly() ? {} : (userSet.ocrKeys || {})
     }
   }
 

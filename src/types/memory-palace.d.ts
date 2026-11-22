@@ -96,8 +96,10 @@ export interface PalaceImagesDoc {
   type: 'memory_palace_images';
   /** 所属宫殿 _id */
   palaceId: string;
-  /** 桩顺序号 -> 图片 dataURL */
+  /** 桩顺序号 -> 图片 dataURL（商店版同步库中恒为空对象，图片本体在本机存储） */
   images: Record<string, string>;
+  /** 商店版：桩顺序号 -> 图片字节数（图片引用；dataURL 本体在本机 IndexedDB） */
+  refs?: Record<string, number>;
   updatedAt: number;
 }
 

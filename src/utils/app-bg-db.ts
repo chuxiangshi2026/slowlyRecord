@@ -4,8 +4,11 @@
  * 图片本体（压缩后的 dataURL）存独立文档 `app-bg-image`，而不是 user-set：
  * user-set 会被 WebDAV 同步全量携带，几百 KB 的图片不应跟着设置一起跑；
  * sync-manager 的 collectSyncData 按字段白名单收集，此文档天然排除在同步之外。
+ * uTools 商店版：文档会随 uTools 账号同步，图片属二进制内容，改存本机大体积
+ * 存储（local-bulk-store，IndexedDB，不同步），读取旧文档时自动迁移。
  */
 import { getDbAdapter } from '@/adapters/db'
+import { isStoreLocalOnly, localBulkGet, localBulkRemove, localBulkSet } from '@/adapters/local-bulk-store'
 import { log } from '@/utils/logger'
 
 export const APP_BG_DOC_ID = 'app-bg-image'
@@ -21,9 +24,45 @@ interface AppBgDoc {
 // 插件驻留期间多次进入只读一次；保存/删除时同步缓存，外部变更（云端拉取）经 invalidate 失效
 let _imageCache: string | null = null;
 
+/** 商店版旧数据清理：legacyImage 给出时把图片落本机存储（读取迁移），并删除同步库旧文档（幂等） */
+function migrateLegacyDocAsync(legacyImage?: string): void {
+  if (!isStoreLocalOnly()) return
+  void (async () => {
+    try {
+      const docs = getDbAdapter().allDocs(APP_BG_DOC_ID) as unknown as AppBgDoc[]
+      const doc = docs.find(d => d?._id === APP_BG_DOC_ID)
+      if (!doc) return
+      if (legacyImage) await localBulkSet(APP_BG_DOC_ID, legacyImage)
+      const result = await getDbAdapter().promises.remove(APP_BG_DOC_ID)
+      if (result?.ok) log.i('[背景图] 已清除同步库中的背景图文档（图片只存本机）')
+    } catch { /* 下次读取时重试 */ }
+  })()
+}
+
 /** 读取自定义背景图 dataURL（无图或读取失败返回空串；进程内缓存） */
 export function getAppBgImage(): string {
   if (_imageCache !== null) return _imageCache;
+  if (isStoreLocalOnly()) {
+    const local = localBulkGet<string>(APP_BG_DOC_ID)
+    if (local) {
+      _imageCache = local
+      return _imageCache
+    }
+    // 旧版本存在同步库文档里的图片：先用并异步迁移
+    try {
+      const docs = getDbAdapter().allDocs(APP_BG_DOC_ID) as unknown as AppBgDoc[]
+      const legacy = docs.find(d => d?._id === APP_BG_DOC_ID)?.image || ''
+      if (legacy) {
+        _imageCache = legacy
+        migrateLegacyDocAsync(legacy)
+        return legacy
+      }
+    } catch (e) {
+      log.w('[背景图] 读取失败:', e)
+    }
+    _imageCache = ''
+    return _imageCache
+  }
   try {
     const docs = getDbAdapter().allDocs(APP_BG_DOC_ID) as unknown as AppBgDoc[]
     _imageCache = docs.find(d => d?._id === APP_BG_DOC_ID)?.image || ''
@@ -39,8 +78,17 @@ export function invalidateAppBgImageCache(): void {
   _imageCache = null
 }
 
-/** 保存自定义背景图（固定 _id，带 _rev 冲突重试） */
+/** 保存自定义背景图（商店版存本机；其他端固定 _id 文档，带 _rev 冲突重试） */
 export async function saveAppBgImage(image: string): Promise<boolean> {
+  if (isStoreLocalOnly()) {
+    const ok = await localBulkSet(APP_BG_DOC_ID, image)
+    if (ok) {
+      _imageCache = image
+      // 旧版本可能残留同步库文档，顺手迁移清除
+      migrateLegacyDocAsync()
+    }
+    return ok
+  }
   const db = getDbAdapter()
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
@@ -66,6 +114,13 @@ export async function saveAppBgImage(image: string): Promise<boolean> {
 
 /** 删除自定义背景图（不存在时静默忽略） */
 export async function removeAppBgImage(): Promise<void> {
+  if (isStoreLocalOnly()) {
+    await localBulkRemove(APP_BG_DOC_ID)
+    _imageCache = ''
+    // 旧版本可能残留同步库文档，一并清除
+    migrateLegacyDocAsync()
+    return
+  }
   try {
     const result = await getDbAdapter().promises.remove(APP_BG_DOC_ID)
     const missing = /not[_\s-]?found/i.test(`${result.name || ''} ${result.message || ''}`)

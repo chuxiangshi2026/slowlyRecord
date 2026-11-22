@@ -58,13 +58,14 @@ import OCRSelector from '@/views/Word/components/OCRSelector.vue';
 import TextSelector from '@/views/Word/components/TextSelector.vue';
 import DebugPanel from '@/components/DebugPanel.vue';
 // import {AppInfo} from "@/config.ts";
-import {getSetDb} from "@/utils/user-set-db-util.ts";
+import {getSetDb, decryptSyncedSecrets} from "@/utils/user-set-db-util.ts";
 import {getOcrApiKey} from "@/utils/get-api-key.ts";
 import {toEngineLang} from "@/utils/translation-lang-map.ts";
 import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from "@/utils/usage-counter.ts";
 import {getNotificationAdapter} from "@/adapters/notification.ts";
 import {getStatsStatus, setStatsExcluded, applyPersistedStatsPrefs, STATS_NOTICE_KEY} from "@/utils/stats";
 import {RETIRED_MODEL_NAMES} from "@/config.ts";
+import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import { getActiveProfile, getActiveLanguage, isWordText } from '@/utils/language';
@@ -128,8 +129,8 @@ if ((window as any).electronAPI?.onGlobalShortcut) {
 // （index.html 内联脚本已提前注册 onPluginEnter，防止 Vite 冷启动慢时事件丢失）
 async function handleUtoolsEnter(action: any) {
   console.log('[handleUtoolsEnter] code=', action?.code, '时间=', new Date().toISOString());
-  // 先同步 设置
-  let setDb = getSetDb();
+  // 先同步 设置（商店版文档中的密钥为密文，这里解密为明文副本后再合并，库内文档仍是密文）
+  let setDb = await decryptSyncedSecrets(getSetDb());
 
   // 同步插件状态和快捷键设置
   if (setDb) {
@@ -185,7 +186,28 @@ async function handleUtoolsEnter(action: any) {
     }
 
     // 安全地同步API密钥，提供默认值以防undefined
+    // 商店版：user-set 文档中的密钥为 AES-GCM 密文（上面已解密为明文副本）；
+    // 文档密钥逐项补进本机存储（不覆盖本机已有值），库内文档保持密文
     if (setDb.keys) {
+      if (isStoreLocalOnly()) {
+        const storeKeys = wordsStore.userApiKeys;
+        for (const [platform, entry] of Object.entries(setDb.keys)) {
+          const docEntry = entry as { appkey?: string; key?: string } | undefined;
+          if (!docEntry?.appkey?.trim() && !docEntry?.key?.trim()) continue;
+          const current = (storeKeys as Record<string, { appkey: string; key: string }>)[platform];
+          if (!current || (!current.appkey?.trim() && !current.key?.trim())) {
+            (storeKeys as Record<string, { appkey: string; key: string }>)[platform] = {
+              appkey: docEntry.appkey || '', key: docEntry.key || '',
+            };
+          }
+        }
+        // 已下线模型名静默升级（本机存储的密钥同样可能残留旧模型名）
+        for (const entry of Object.values(wordsStore.userApiKeys)) {
+          if (entry && RETIRED_MODEL_NAMES[entry.key]) {
+            entry.key = RETIRED_MODEL_NAMES[entry.key];
+          }
+        }
+      } else {
       // 为每个翻译平台提供默认空值
       const defaultKeys = {
         tencent: {appkey: '', key: ''},
@@ -217,9 +239,23 @@ async function handleUtoolsEnter(action: any) {
       }
 
       wordsStore.userApiKeys = mergedKeys;
+      }
     }
 
     if (setDb.ocrKeys) {
+      if (isStoreLocalOnly()) {
+        const storeOcrKeys = wordsStore.userOcrApiKeys;
+        for (const [platform, entry] of Object.entries(setDb.ocrKeys)) {
+          const docEntry = entry as { appkey?: string; key?: string } | undefined;
+          if (!docEntry?.appkey?.trim() && !docEntry?.key?.trim()) continue;
+          const current = (storeOcrKeys as Record<string, { appkey: string; key: string }>)[platform];
+          if (!current || (!current.appkey?.trim() && !current.key?.trim())) {
+            (storeOcrKeys as Record<string, { appkey: string; key: string }>)[platform] = {
+              appkey: docEntry.appkey || '', key: docEntry.key || '',
+            };
+          }
+        }
+      } else {
       // 为OCR平台提供默认空值
       const defaultOcrKeys = {
         ali: {appkey: '', key: ''},
@@ -236,6 +272,7 @@ async function handleUtoolsEnter(action: any) {
         ...defaultOcrKeys,
         ...setDb.ocrKeys
       } as Record<OcrPlatform, { appkey: string; key: string }>;
+      }
     }
   }
   // 延迟调用，避免初始化时重复计算

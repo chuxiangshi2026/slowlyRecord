@@ -3,7 +3,87 @@ import { DB_KEY_USER_SET} from "@/constants";
 import {log} from "@/utils/logger"
 import type { UserSetType } from "@/types/user-set";
 import {getDbAdapter} from "@/adapters/db"
+import {isStoreLocalOnly} from "@/adapters/local-bulk-store"
+import {decryptSecret, encryptSecret, hasSecretCrypto, isEncryptedSecret} from "@/utils/secret-crypto"
 import cloneDeep from 'lodash.clonedeep';
+
+type SecretEntry = { appkey?: string; key?: string };
+
+/**
+ * 商店版（审核合规）：用户填写的翻译/OCR API Key 加密（AES-GCM，见 secret-crypto.ts）
+ * 后再写入随账号同步的 user-set 文档；环境不支持 WebCrypto 时退化为不落库（不写明文）。
+ * 其他端不启用（IndexedDB 本就不参与账号同步），文档原样通过。
+ */
+async function encryptSyncedSecrets<T extends UserSetType>(doc: T): Promise<T> {
+    if (!isStoreLocalOnly()) return doc;
+    doc.keys = await encryptKeyMap(doc.keys);
+    doc.ocrKeys = await encryptKeyMap(doc.ocrKeys);
+    return doc;
+}
+
+async function encryptKeyMap<T extends Record<string, SecretEntry> | undefined>(map: T): Promise<T> {
+    if (!map) return map;
+    const subtleOk = hasSecretCrypto();
+    for (const entry of Object.values(map)) {
+        if (!entry) continue;
+        if (!subtleOk) {
+            // 无法加密的极端环境：不落库，绝不让明文进入同步库
+            entry.appkey = '';
+            entry.key = '';
+            continue;
+        }
+        if (entry.appkey && !isEncryptedSecret(entry.appkey)) entry.appkey = await encryptSecret(entry.appkey);
+        if (entry.key && !isEncryptedSecret(entry.key)) entry.key = await encryptSecret(entry.key);
+    }
+    return map;
+}
+
+/**
+ * 读取侧解密：返回 keys/ocrKeys 还原为明文的副本（文档本体在库中仍是密文）。
+ * 商店版以外原样返回；解密失败的条目按空值处理。
+ */
+export async function decryptSyncedSecrets<T extends UserSetType>(doc: T | null): Promise<T | null> {
+    if (!doc || !isStoreLocalOnly()) return doc;
+    const copy = cloneDeep(doc);
+    copy.keys = await decryptKeyMap(copy.keys);
+    copy.ocrKeys = await decryptKeyMap(copy.ocrKeys);
+    return copy;
+}
+
+async function decryptKeyMap<T extends Record<string, SecretEntry> | undefined>(map: T): Promise<T> {
+    if (!map) return map;
+    for (const entry of Object.values(map)) {
+        if (!entry) continue;
+        if (isEncryptedSecret(entry.appkey)) entry.appkey = await decryptSecret(entry.appkey!);
+        if (isEncryptedSecret(entry.key)) entry.key = await decryptSecret(entry.key!);
+    }
+    return map;
+}
+
+/** 文档中是否残留明文密钥（任一平台 appkey/key 非空且不是 enc:v1: 密文） */
+function hasPlaintextSecrets(doc: UserSetType): boolean {
+    const has = (m?: Record<string, SecretEntry>) =>
+        !!m && Object.values(m).some(v => {
+            const appkey = v?.appkey?.trim?.() || '';
+            const key = v?.key?.trim?.() || '';
+            return (!!appkey && !isEncryptedSecret(appkey)) || (!!key && !isEncryptedSecret(key));
+        });
+    return has(doc.keys) || has(doc.ocrKeys);
+}
+
+/**
+ * 商店版读取时的旧数据迁移：user-set 文档若仍含明文密钥（旧版本写入或他端同步回流），
+ * 异步把文档改写为加密版本。密钥本体同时保留在 pinia 持久化 localStorage，不依赖文档明文。
+ */
+function migrateLegacySecretsAsync(doc: UserSetType): void {
+    if (!isStoreLocalOnly() || !hasPlaintextSecrets(doc)) return;
+    const db = getDbAdapter();
+    void (async () => {
+        const cleaned = await encryptSyncedSecrets(cloneDeep(doc));
+        const r = await db.promises.put(cleaned);
+        if (r?.ok) log.i('[user-set] 已将同步库中的明文密钥改写为密文');
+    })().catch(() => { /* 下次读取时重试 */ });
+}
 /**
  * 获取数据库全部的单词
  * @returns 返回数据库中所有单词的数组
@@ -20,8 +100,15 @@ function getSetDb(silent = false): UserSetType | null {
     // 会让密钥/设置随机回退。优先取固定 _id（'user-set'）那份；否则按字段合并出一份
     // 并集（密钥/打卡等子对象做合并且非空优先），并把结果收敛回单文档。
     const fixed = allDocs.find(d => d && d._id === DB_KEY_USER_SET) as UserSetType | undefined;
-    if (allDocs.length === 1) return (fixed || allDocs[0]) as UserSetType;
-    if (fixed) return fixed;
+    if (allDocs.length === 1) {
+        const single = (fixed || allDocs[0]) as UserSetType;
+        migrateLegacySecretsAsync(single);
+        return single;
+    }
+    if (fixed) {
+        migrateLegacySecretsAsync(fixed);
+        return fixed;
+    }
     // 无固定 _id（历史多 uuid 文档）：合并出一份并集
     const merged = JSON.parse(JSON.stringify(allDocs[0])) as UserSetType;
     for (const other of allDocs.slice(1) as UserSetType[]) {
@@ -45,10 +132,14 @@ function getSetDb(silent = false): UserSetType | null {
                 void db.promises.remove(old._id).catch(() => {});
             }
         }
-        void db.promises.put(merged).catch((e) => console.error('[user-set] 收敛写回失败:', e));
+        void (async () => {
+            const encrypted = await encryptSyncedSecrets(cloneDeep(merged));
+            await db.promises.put(encrypted);
+        })().catch((e) => console.error('[user-set] 收敛写回失败:', e));
     } catch (e) {
         console.error('[user-set] 收敛多文档失败:', e);
     }
+    // 收敛写回已按商店版规则加密密钥（encryptSyncedSecrets），无需再单独处理
     return merged;
 }
 
@@ -76,7 +167,7 @@ async function runSetDbUpdateWithRetry(mutator: (doc: UserSetType) => void, maxA
             const next = cloneDeep(latest);
             mutator(next);
             next._id = DB_KEY_USER_SET;
-            const result = await db.promises.put(next);
+            const result = await db.promises.put(await encryptSyncedSecrets(next));
             if (judgePutResult(next, result)) return true;
             if (!String(result?.message || '').includes('conflict')) {
                 console.error('[user-set] 写入失败:', result?.message);
@@ -144,7 +235,8 @@ async function addAndUpdateSetDb(userSet: UserSetType | null):Promise<DbReturn> 
     // 不输出文档内容，避免泄漏用户配置的 API 密钥
     log.i('添加设置到数据库');
     // 转成字符串保存数据库,替换JSON.parse(JSON.stringify(word));
-    const cleanedWord = cloneDeep(userSet)
+    // 商店版：密钥加密后再写入同步库（AES-GCM，见 secret-crypto.ts）
+    const cleanedWord = await encryptSyncedSecrets(cloneDeep(userSet))
     // console.log('查看去重后的序列化数据',word)
     const db = getDbAdapter();
     let result = await db.promises.put(cleanedWord);

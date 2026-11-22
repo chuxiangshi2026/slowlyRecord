@@ -3,6 +3,8 @@ import { log } from "@/utils/logger";
 import cloneDeep from "lodash.clonedeep";
 import { DB_KEY_LETTER_MEMORY } from "@/constants";
 import { getDbAdapter } from "@/adapters/db";
+import { externalizeMappingImages, hasInlineMappingImages, removeMappingImageRef, resolveMappingImages } from "@/utils/mapping-image-store";
+import { isStoreLocalOnly } from "@/adapters/local-bulk-store";
 
 const DB_KEY_PREFIX = DB_KEY_LETTER_MEMORY;
 const TRAINING_KEY = DB_KEY_PREFIX + 'training';
@@ -22,13 +24,28 @@ interface BaseCouchDoc {
   createdAt?: number;
 }
 
+/** 商店版旧数据迁移：内联 dataURL 图片落本机大体积存储，文档改写为 bulk: 引用 */
+function migrateInlineImagesAsync(doc: LetterMemoryTraining): void {
+  if (!isStoreLocalOnly() || !hasInlineMappingImages(doc.associations)) return;
+  void (async () => {
+    const cleaned = cloneDeep(doc);
+    cleaned.associations = await externalizeMappingImages(cleaned.associations || [], 'letter', (a) => a.letter);
+    const result = await getDb().promises.put(cleaned);
+    if (result?.ok) log.i('[字母记忆] 已将同步库中的映射图片迁移到本机存储');
+  })().catch(() => { /* 下次读取时重试 */ });
+}
+
 /**
  * 获取用户的字母映射训练数据
+ * 商店版：associations 中的 bulk: 图片引用在此还原为 dataURL，业务层无感
  */
 export function getLetterMemoryTraining(): LetterMemoryTraining | null {
   const allDocs = getDb().allDocs(DB_KEY_PREFIX) as BaseCouchDoc[];
-  const training = allDocs.find((doc) => doc.type === 'letter_memory_training');
-  return training as LetterMemoryTraining || null;
+  const training = allDocs.find((doc) => doc.type === 'letter_memory_training') as LetterMemoryTraining | undefined;
+  if (!training) return null;
+  migrateInlineImagesAsync(training);
+  if (!isStoreLocalOnly()) return training;
+  return {...training, associations: resolveMappingImages(cloneDeep(training.associations || []))};
 }
 
 /**
@@ -78,6 +95,8 @@ export async function saveAssociation(association: LetterImageAssociation): Prom
   if (training._rev) {
     cleanedData._rev = training._rev;
   }
+  // 商店版：图片本体落本机存储，文档只留 bulk: 引用（不进随账号同步的数据）
+  cleanedData.associations = await externalizeMappingImages(cleanedData.associations || [], 'letter', (a) => a.letter);
 
   const result = await getDb().promises.put(cleanedData);
 
@@ -109,6 +128,9 @@ export async function removeAssociation(letter: string): Promise<DbReturn> {
   if (training._rev) {
     cleanedData._rev = training._rev;
   }
+  // 商店版：保持文档引用形态，并连带清理被删关联的本机图片
+  cleanedData.associations = await externalizeMappingImages(cleanedData.associations || [], 'letter', (a) => a.letter);
+  await removeMappingImageRef('letter', letter);
 
   const result = await getDb().promises.put(cleanedData);
 

@@ -17,12 +17,15 @@ import { getDbAdapter } from '@/adapters/db'
 import { getPlatform } from '@/adapters/platform'
 import { getSetDb, addAndUpdateSetDb } from '@/utils/user-set-db-util'
 import { DB_KEY_USER_SET, DB_KEY_NUMBER_MEMORY, DB_KEY_SHORTCUT_MEMORY, DB_KEY_LETTER_MEMORY, DB_KEY_KNOWLEDGE_MEMORY, DB_KEY_PHONETIC_MEMORY } from '@/constants'
+import { isStoreLocalOnly } from '@/adapters/local-bulk-store'
 import { getImportedIds, addImportedId, getProgressDoc as getKnowledgeProgressDoc, saveProgressDoc as saveKnowledgeProgressDoc } from '@/utils/knowledge-memory-db'
 import { getProgressDoc as getPhoneticProgressDoc, saveProgressDoc as savePhoneticProgressDoc } from '@/utils/phonetic-memory-db'
 import { collectSigninSync, restoreSigninSync } from '@/utils/signin-db'
 import { getAllBooks, getAllChapters, getAllPages, removeBook, removeChapter, removePage, saveBook, saveChapter, savePage } from '@/utils/word-book-db'
 import type { SyncWordBook } from '@/types/sync'
 import { collectMemoryPalaceSync, restoreMemoryPalaceSync } from '@/utils/memory-palace-db'
+import { externalizeMappingImages, resolveMappingImages } from '@/utils/mapping-image-store'
+import cloneDeep from 'lodash.clonedeep'
 import { SENTENCES_DOC_ID } from '@/utils/sentence-db'
 import { filterByTombstones, getTombstones, mergeTombstones, pruneTombstones, TOMBSTONE_MAX_AGE_MS } from '@/utils/sync-tombstone'
 import { log } from '@/utils/logger'
@@ -80,14 +83,16 @@ export async function collectSyncData(): Promise<SyncData> {
   const userSetDoc = getSetDb()
   let userSettings: SyncUserSettings | null = null
   if (userSetDoc) {
+    // 商店版：API 密钥只存本机，不进入任何同步负载（审核合规）
+    const scrubKeys = isStoreLocalOnly()
     userSettings = {
       pluginStatus: userSetDoc.pluginStatus ?? false,
       shortcutEnabled: userSetDoc.shortcutEnabled ?? false,
       translationPlatform: userSetDoc.translationPlatform ?? 'glm',
       ocrPlatform: userSetDoc.ocrPlatform ?? 'local',
       memoryFirmness: userSetDoc.memoryFirmness ?? '正常',
-      keys: userSetDoc.keys ?? {},
-      ocrKeys: userSetDoc.ocrKeys ?? {},
+      keys: scrubKeys ? {} : (userSetDoc.keys ?? {}),
+      ocrKeys: scrubKeys ? {} : (userSetDoc.ocrKeys ?? {}),
       focusMode: userSetDoc.focusMode ?? { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true },
       autoSpeak: userSetDoc.autoSpeak ?? false,
       eyeCare: userSetDoc.eyeCare ?? false,
@@ -257,7 +262,7 @@ async function collectNumberMemory(): Promise<SyncNumberMemory | null> {
       entries: (entries || []) as NumberMemoryEntry[],
       notes: (notes || []) as NumberMemoryNote[],
       prompts: (prompts || []) as NumberMemoryPrompt[],
-      associations: (trainingDoc?.associations || []) as NumberImageAssociation[],
+      associations: resolveMappingImages(cloneDeep(trainingDoc?.associations || [])) as NumberImageAssociation[],
       trainingResults: (trainingResults || []) as TrainingResult[],
     }
   } catch {
@@ -309,7 +314,7 @@ async function collectLetterMemory(): Promise<SyncLetterMemory | null> {
     if (!trainingDoc && trainingResults.length === 0) return null
 
     return {
-      associations: (trainingDoc?.associations || []) as LetterImageAssociation[],
+      associations: resolveMappingImages(cloneDeep(trainingDoc?.associations || [])) as LetterImageAssociation[],
       trainingResults: (trainingResults || []) as LetterTrainingResult[],
     }
   } catch {
@@ -749,8 +754,9 @@ async function restoreUserSettings(settings: SyncUserSettings) {
   }
 
   // 合并 API 密钥：远端未配置的空条目（appkey 为空）不覆盖本地已配置的密钥，
-  // 否则 A 设备存过空 key、B 设备拉取后自己配好的密钥会被静默清空
-  if (settings.keys) {
+  // 否则 A 设备存过空 key、B 设备拉取后自己配好的密钥会被静默清空。
+  // 商店版：密钥只存本机，不接受远端同步来的密钥
+  if (settings.keys && !isStoreLocalOnly()) {
     const mergedKeys = { ...userSet.keys }
     for (const [provider, remote] of Object.entries(settings.keys as Record<string, { appkey?: string; key?: string }>)) {
       if (remote && (remote.appkey ?? '').trim() !== '') {
@@ -759,7 +765,7 @@ async function restoreUserSettings(settings: SyncUserSettings) {
     }
     userSet.keys = mergedKeys
   }
-  if (settings.ocrKeys) {
+  if (settings.ocrKeys && !isStoreLocalOnly()) {
     const mergedOcrKeys = { ...userSet.ocrKeys }
     for (const [provider, remote] of Object.entries(settings.ocrKeys as Record<string, { appkey?: string; key?: string }>)) {
       if (remote && (remote.appkey ?? '').trim() !== '') {
@@ -1084,12 +1090,13 @@ async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Recor
     }
   }
 
-  // 回写训练文档（保留本地 _rev）
+  // 回写训练文档（保留本地 _rev）。商店版：远端带过来的内联图片落本机存储，文档只留引用
+  const storedAssocs = await externalizeMappingImages(mergedAssocs, 'number', (a: any) => a.number)
   let trainingResult: any = null
   if (existingTraining?._id) {
     trainingResult = await db.promises.put({
       ...existingTraining,
-      associations: mergedAssocs,
+      associations: storedAssocs,
       updatedAt: Date.now(),
     })
   } else if (mergedAssocs.length > 0) {
@@ -1097,7 +1104,7 @@ async function restoreNumberMemoryData(data: SyncNumberMemory, tombstones: Recor
     trainingResult = await db.promises.put({
       _id: prefix + 'training_' + now,
       type: 'number_memory_training',
-      associations: mergedAssocs,
+      associations: storedAssocs,
       createdAt: now,
       updatedAt: now,
     })
@@ -1164,6 +1171,8 @@ async function restoreLetterMemoryData(data: SyncLetterMemory, tombstones: Recor
       }
       existingTraining.associations = Array.from(existingMap.values())
       existingTraining.updatedAt = Date.now()
+      // 商店版：远端带过来的内联图片落本机存储，文档只留引用
+      existingTraining.associations = await externalizeMappingImages(existingTraining.associations, 'letter', (a: any) => a.letter)
       const result = await db.promises.put(existingTraining)
       if (!isWriteOk(result, existingTraining._id)) throw new Error(`保存字母训练文档失败: ${result?.message || ''}`)
     } else {
@@ -1171,7 +1180,7 @@ async function restoreLetterMemoryData(data: SyncLetterMemory, tombstones: Recor
       const doc = {
         _id: prefix + 'training_' + now,
         type: 'letter_memory_training',
-        associations: data.associations,
+        associations: await externalizeMappingImages(cloneDeep(data.associations), 'letter', (a: any) => a.letter),
         createdAt: now,
         updatedAt: now,
       }

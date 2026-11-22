@@ -8,7 +8,10 @@
  *    - poetry/xiandai.json 只保留已进入公有领域（作者逝世满 50 年）的作品，并同步 index.json 计数
  *    - english/bilingual.json 删除原文仍在保护期的条目，其余条目删除无译者署名的中文译文
  *    - english/french.json 删除小王子条目（审核已点名仍在保护期）
- * 4. 闸门：全量扫描 dist/，发现内置密钥明文、Bing 网页版接口特征、译文残留或保护期文本即报错退出，
+ * 4. 剔除无用与他端资源：未引用的 tesseract-core-simd-lstm.js / 独立 .wasm（实际只加载
+ *    内嵌 wasm 的 .wasm.js），以及 Web/PWA 端资产（pwa-*.png、apple-touch-icon.png）
+ * 5. 闸门：全量扫描 dist/，发现内置密钥明文、Bing 网页版接口特征、译文残留、保护期文本
+ *    或指向已剔除 tesseract 文件的引用即报错退出，
  *    防止 config.ts/数据改动或 DCE 失效导致违规内容重新混入商店包
  */
 const fs = require('node:fs')
@@ -227,6 +230,36 @@ function pruneStoreWordbanksAndAudio() {
 }
 
 
+/** 无用/他端资源剔除（仅商店包）：减小发行包体积（审核建议整改） */
+function stripUnusedAndWebAssets() {
+    // 防线：OCR 实际加载的 tesseract-core-simd-lstm.wasm.js（内嵌 wasm）必须存在
+    if (!fs.existsSync(path.join(distDir, 'tesseract-core-simd-lstm.wasm.js'))) {
+        console.error('[strip] 未找到 tesseract-core-simd-lstm.wasm.js，OCR 加载链路可能已变更'); process.exit(1)
+    }
+    const targets = [
+        // 无任何页面/脚本引用的独立 JS 封装，及其配套的独立 wasm（.wasm.js 已内嵌同一份 wasm）
+        'tesseract-core-simd-lstm.js',
+        'tesseract-core-simd-lstm.wasm',
+        // Web/PWA 端资产，uTools 端不使用（web 构建清单见 vite.config.web.ts）
+        'pwa-192.png',
+        'pwa-512.png',
+        'pwa-maskable-512.png',
+        'apple-touch-icon.png',
+    ]
+    const removed = []
+    for (const name of targets) {
+        const p = path.join(distDir, name)
+        if (fs.existsSync(p)) {
+            fs.unlinkSync(p)
+            removed.push(name)
+        }
+    }
+    if (removed.length === 0) {
+        console.error('[strip] 无用/他端资源一个都没剔到，疑似目录结构已变更'); process.exit(1)
+    }
+    console.log(`[strip] 已剔除无用/他端资源: ${removed.join(', ')}`)
+}
+
 /** 删除 NOTICE 中某个节（从节前分隔线到下一节分隔线之前） */
 function removeNoticeSection(lines, titleIdx, label) {
     const isSep = (l) => /^-{5,}\s*$/.test(l)
@@ -346,11 +379,17 @@ stripPoetryTranslations()
 curateStoreDatafiles()
 curateEnglishCorpus()
 pruneStoreWordbanksAndAudio()
+stripUnusedAndWebAssets()
 rewriteNotice()
 
 const hits = []
+// 已剔除 tesseract 文件的残留引用（.wasm 需排除 .wasm.js 这个合法引用）
+const TESSERACT_REMOVED_RE = /tesseract-core-simd-lstm\.js|tesseract-core-simd-lstm\.wasm(?!\.js)/
 for (const file of walk(distDir)) {
     const content = fs.readFileSync(file) // Buffer.includes 对二进制同样安全
+    if (TESSERACT_REMOVED_RE.test(content.toString('latin1'))) {
+        hits.push(`${path.relative(distDir, file)} -> 已剔除的 tesseract 文件引用`)
+    }
     for (const needle of FORBIDDEN) {
         if (content.includes(needle)) {
             hits.push(`${path.relative(distDir, file)} -> ${needle}`)
