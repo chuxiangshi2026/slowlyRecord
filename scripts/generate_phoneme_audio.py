@@ -3,7 +3,8 @@
 """为 48 个音素生成预合成发音音频（edge-tts，需 scripts/.venv-speech 环境）。
 
 音素清单从 mobile/src/utils/phoneme-data.ts 正则提取（ipa + articulation 代理串），
-输出到 public/phoneme-audio/<urlencode(ipa)>.mp3，经 jsDelivr 分发：
+输出到 public/phoneme-audio/<ipa>.mp3（原始 IPA 字符命名，jsDelivr 解码 URL 后按原名查找），
+经 jsDelivr 分发：
   https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/phoneme-audio/<urlencode(ipa)>.mp3
 前端按同一规则拼 URL（mobile/src/utils/phoneme-audio.ts），改文件名规则需两边同步。
 幂等：已存在且非空的文件直接跳过，可安全重跑。
@@ -38,7 +39,8 @@ async def main() -> None:
     OUTDIR.mkdir(parents=True, exist_ok=True)
     todo = []
     for ipa, articulation in pairs:
-        target = OUTDIR / f"{urllib.parse.quote(ipa, safe='')}.mp3"
+        # 文件名直接用原始 IPA 字符：jsDelivr 会解码 URL 后按原始文件名查找
+        target = OUTDIR / f"{ipa}.mp3"
         if target.exists() and target.stat().st_size > 0:
             continue
         todo.append((ipa, articulation, target))
