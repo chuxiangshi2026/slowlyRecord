@@ -399,6 +399,8 @@ function handleImportPoetry() {
       tags: p.tags,
       category: 'poetry',
       pinyin: p.pinyin,
+      translation: p.translation,
+      translationSource: p.translationSource,
     })),
   )
   uni.showToast({ title: `已导入 ${created.length} 首`, icon: 'success' })
@@ -630,6 +632,8 @@ function handleImportFromMap() {
     tags: p.tags,
     category: 'poetry' as const,
     pinyin: p.pinyin,
+    translation: p.translation,
+    translationSource: p.translationSource,
   }))
   const idiomArticles = pickedIdiom.map((it) => ({
     title: it.title,

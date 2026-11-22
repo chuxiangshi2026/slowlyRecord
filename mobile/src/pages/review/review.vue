@@ -1,6 +1,7 @@
 <template>
   <view class="review-container" :class="themeClass">
-    <AppBackground />
+    <!-- 卡片模式专属背景：随主题切换浅/深两版，构图与专注模式不同（右竹+祥云+印章「忆」） -->
+    <image class="card-bg" :src="cardBgSrc" mode="aspectFill" />
     <view v-if="!currentWord" class="empty-state">
       <text class="empty-text">{{ emptyTitle }}</text>
       <text class="empty-hint">{{ emptyHint }}</text>
@@ -232,10 +233,14 @@ import {
 } from '@/utils/review-share-card'
 import { loadDailyGoal, countReviewedToday, checkGoalJustAchieved, DEFAULT_DAILY_GOAL } from '@/utils/daily-goal'
 import { useAchievements } from '@/stores/useAchievements'
+import { useTheme } from '@/stores/useTheme'
 
 const instance = getCurrentInstance()
 const wordsStore = useMobileWords()
 const signinStore = useSignin()
+const theme = useTheme()
+// 卡片模式专属背景（主包 static，主题双版由 scripts/render-card-bg-pngs.cjs 预渲染）
+const cardBgSrc = computed(() => `/static/theme-bg/card-bg-${theme.isDark ? 'dark' : 'light'}.jpg`)
 const currentIndex = ref(0)
 const isFlipped = ref(false)
 const showComplete = ref(false)
@@ -952,10 +957,22 @@ const goAfterReview = (url: string) => {
 <style scoped>
 .review-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #52796f 0%, #74937d 100%);
+  /* 让负 z-index 背景图压在页面底色之上、内容之下 */
+  position: relative;
+  z-index: 0;
   padding: 20rpx;
   display: flex;
   flex-direction: column;
+}
+
+.card-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .empty-state {

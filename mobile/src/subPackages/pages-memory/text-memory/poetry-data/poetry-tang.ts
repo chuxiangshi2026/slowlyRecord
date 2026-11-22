@@ -31,7 +31,9 @@ const data = {
       "location": "扬州",
       "wordCount": 20,
       "year": 726,
-      "pinyin": "chuáng qián míng yuè guāng， yí shì dì shàng shuāng。\njǔ tóu wàng míng yuè， dī tóu sī gù xiāng。"
+      "pinyin": "chuáng qián míng yuè guāng， yí shì dì shàng shuāng。\njǔ tóu wàng míng yuè， dī tóu sī gù xiāng。",
+      "translation": "Before my bed, the moon is shining bright,\nI think that it is frost upon the ground.\nI raise my head and look at the bright moon,\nI lower my head and think of home.",
+      "translationSource": "chinese-poems.com/lb4"
     },
     {
       "id": "tang_002",
@@ -72,7 +74,9 @@ const data = {
       "location": "长安",
       "wordCount": 80,
       "year": 757,
-      "pinyin": "guó pò shān hé zài， chéng chūn cǎo mù shēn。\ngǎn shí huā jiàn lèi， hèn bié niǎo jīng xīn。\nfēng huǒ lián sān yuè， jiā shū dǐ wàn jīn。\nbái tóu sāo gèng duǎn， hún yù bú shèng zān。"
+      "pinyin": "guó pò shān hé zài， chéng chūn cǎo mù shēn。\ngǎn shí huā jiàn lèi， hèn bié niǎo jīng xīn。\nfēng huǒ lián sān yuè， jiā shū dǐ wàn jīn。\nbái tóu sāo gèng duǎn， hún yù bú shèng zān。",
+      "translation": "The country is broken, though hills and rivers remain,\nIn the city in spring, grass and trees are thick.\nMoved by the moment, a flower's splashed with tears,\nMourning parting, a bird startles the heart.\nThe beacon fires have joined for three months now,\nFamily letters are worth ten thousand pieces.\nI scratch my head, its white hairs growing thinner,\nAnd barely able now to hold a hairpin.",
+      "translationSource": "chinese-poems.com/d15"
     },
     {
       "id": "tang_004",
@@ -93,7 +97,9 @@ const data = {
       "location": "夔州/白帝城",
       "wordCount": 112,
       "year": 767,
-      "pinyin": "fēng jí tiān gāo yuán xiào āi， zhǔ qīng shā bái niǎo fēi huí。\nwú biān luò mù xiāo xiāo xià， bú jìn cháng jiāng gǔn gǔn lái。\nwàn lǐ bēi qiū cháng zuò kè， bǎi nián duō bìng dú dēng tái。\njiān nán kǔ hèn fán shuāng bìn， liáo dǎo xīn tíng zhuó jiǔ bēi。"
+      "pinyin": "fēng jí tiān gāo yuán xiào āi， zhǔ qīng shā bái niǎo fēi huí。\nwú biān luò mù xiāo xiāo xià， bú jìn cháng jiāng gǔn gǔn lái。\nwàn lǐ bēi qiū cháng zuò kè， bǎi nián duō bìng dú dēng tái。\njiān nán kǔ hèn fán shuāng bìn， liáo dǎo xīn tíng zhuó jiǔ bēi。",
+      "translation": "Swift wind, heaven high, an ape's cry of grief,\nAt the islet of clear white sand, birds circle round.\nEndlessly, trees shed leaves, rustling, rustling down,\nWithout cease, the great river surges, surges on.\nTen thousand miles in sorrowful autumn, always someone's guest,\nA hundred years full of sickness, I climb the terrace alone.\nSuffering troubles, I bitterly regret my whitening temples,\nFrustratingly I've had to abandon my cup of cloudy wine.",
+      "translationSource": "chinese-poems.com/d03"
     },
     {
       "id": "tang_005",
@@ -113,7 +119,9 @@ const data = {
       "location": "长安/渭城",
       "wordCount": 80,
       "year": 787,
-      "pinyin": "lí lí yuán shàng cǎo， yí suì yì kū róng。\nyě huǒ shāo bú jìn， chūn fēng chuī yòu shēng。\nyuǎn fāng qīn gǔ dào， qíng cuì jiē huāng chéng。\nyòu sòng wáng sūn qù， qī qī mǎn bié qíng。"
+      "pinyin": "lí lí yuán shàng cǎo， yí suì yì kū róng。\nyě huǒ shāo bú jìn， chūn fēng chuī yòu shēng。\nyuǎn fāng qīn gǔ dào， qíng cuì jiē huāng chéng。\nyòu sòng wáng sūn qù， qī qī mǎn bié qíng。",
+      "translation": "The grass is spreading out across the plain,\nEach year, it dies, then flourishes again.\nIt's burnt but not destroyed by prairie fires,\nWhen spring winds blow they bring it back to life.\nAfar, its scent invades the ancient road,\nIts emerald green overruns the ruined town.\nAgain I see my noble friend depart,\nI find I'm crowded full of parting's feelings.",
+      "translationSource": "chinese-poems.com/bo4"
     },
     {
       "id": "tang_006",
@@ -173,7 +181,9 @@ const data = {
       "location": "渭城/咸阳",
       "wordCount": 28,
       "year": 740,
-      "pinyin": "wèi chéng cháo yǔ yì qīng chén， kè shè qīng qīng liǔ sè xīn。\nquàn jūn gèng jìn yì bēi jiǔ， xī chū yáng guān wú gù rén。"
+      "pinyin": "wèi chéng cháo yǔ yì qīng chén， kè shè qīng qīng liǔ sè xīn。\nquàn jūn gèng jìn yì bēi jiǔ， xī chū yáng guān wú gù rén。",
+      "translation": "At Weicheng morning rain has dampened light dust,\nBy the hostel, the willows are all fresh and green.\nI urge my friend to drink a last cup of wine,\nWest of Yang Pass, there will be no friends.",
+      "translationSource": "chinese-poems.com/yuan"
     },
     {
       "id": "tang_009",
@@ -194,7 +204,9 @@ const data = {
       "location": "永州/愚溪",
       "wordCount": 20,
       "year": 805,
-      "pinyin": "qiān shān niǎo fēi jué， wàn jìng rén zōng miè。\ngū zhōu suō lì wēng， dú diào hán jiāng xuě。"
+      "pinyin": "qiān shān niǎo fēi jué， wàn jìng rén zōng miè。\ngū zhōu suō lì wēng， dú diào hán jiāng xuě。",
+      "translation": "A thousand hills, but no birds in flight,\nTen thousand paths, with no person's tracks.\nA lonely boat, a straw-hatted old man,\nFishing alone in the cold river snow.",
+      "translationSource": "chinese-poems.com/lzy1"
     },
     {
       "id": "tang_010",
@@ -214,7 +226,9 @@ const data = {
       "location": "鹿门山/襄阳",
       "wordCount": 20,
       "year": 710,
-      "pinyin": "chūn mián bù jué xiǎo， chù chù wén tí niǎo。\nyè lái fēng yǔ shēng， huā luò zhī duō shǎo。"
+      "pinyin": "chūn mián bù jué xiǎo， chù chù wén tí niǎo。\nyè lái fēng yǔ shēng， huā luò zhī duō shǎo。",
+      "translation": "I slumbered this spring morning, and missed the dawn,\nFrom everywhere I heard the cry of birds.\nThat night the sound of wind and rain had come,\nWho knows how many petals then had fallen?",
+      "translationSource": "chinese-poems.com/m9"
     },
     {
       "id": "tang_011",
@@ -294,7 +308,9 @@ const data = {
       "location": "黄鹤楼/武汉",
       "wordCount": 56,
       "year": 730,
-      "pinyin": "xī rén yǐ chéng huáng hè qù， cǐ dì kòng yú huáng hè lóu。\nhuáng hè yí qù bú fù fǎn， bái yún qiān zǎi kōng yōu yōu。\nqíng chuān lì lì hàn yáng shù， fāng cǎo qī qī yīng wǔ zhōu。\nrì mù xiāng guān hé chù shì？ yān bō jiāng shàng shǐ rén chóu。"
+      "pinyin": "xī rén yǐ chéng huáng hè qù， cǐ dì kòng yú huáng hè lóu。\nhuáng hè yí qù bú fù fǎn， bái yún qiān zǎi kōng yōu yōu。\nqíng chuān lì lì hàn yáng shù， fāng cǎo qī qī yīng wǔ zhōu。\nrì mù xiāng guān hé chù shì？ yān bō jiāng shàng shǐ rén chóu。",
+      "translation": "The yellow crane has long since gone away,\nAll that here remains is yellow crane tower.\nThe yellow crane once gone does not return,\nWhite clouds drift slowly for a thousand years.\nThe river is clear in Hanyang by the trees,\nAnd fragrant grass grows thick on parrot isle.\nIn this dusk, I don't know where my homeland lies,\nThe river's mist-covered waters bring me sorrow.",
+      "translationSource": "chinese-poems.com/crane"
     },
     {
       "id": "tang_015",
@@ -472,7 +488,9 @@ const data = {
       "location": "钱塘湖/杭州",
       "wordCount": 56,
       "year": 823,
-      "pinyin": "gū shān sì běi jiǎ tíng xī， shuǐ miàn chū píng yún jiǎo dī。\njǐ chù zǎo yīng zhēng nuǎn shù， shuí jiā xīn yàn zhuó chūn ní。\nluàn huā jiàn yù mí rén yǎn， qiǎn cǎo cái néng méi mǎ tí。\nzuì ài hú dōng xíng bù zú， lǜ yáng yīn lǐ bái shā dī。"
+      "pinyin": "gū shān sì běi jiǎ tíng xī， shuǐ miàn chū píng yún jiǎo dī。\njǐ chù zǎo yīng zhēng nuǎn shù， shuí jiā xīn yàn zhuó chūn ní。\nluàn huā jiàn yù mí rén yǎn， qiǎn cǎo cái néng méi mǎ tí。\nzuì ài hú dōng xíng bù zú， lǜ yáng yīn lǐ bái shā dī。",
+      "translation": "Gushan Temple is to the north, Jiating pavilion west,\nThe water's surface now is calm, the bottom of the clouds low.\nIn several places, the first orioles are fighting in warm trees,\nBy every house new swallows peck at spring mud.\nDisordered flowers have grown almost enough to confuse the eye,\nBright grass is able now to hide the hooves of horses.\nI most love the east of the lake, I cannot come often enough\nWithin the shade of green poplars on White Sand Embankment.",
+      "translationSource": "chinese-poems.com/bj12"
     },
     {
       "id": "tang_024",
@@ -511,7 +529,9 @@ const data = {
       "location": "成都/草堂",
       "wordCount": 170,
       "year": 761,
-      "pinyin": "bā yuè qiū gāo fēng nù háo， juàn wǒ wū shàng sān chóng máo。\nmáo fēi dù jiāng sǎ jiāng jiāo， gāo zhě guà juàn cháng lín shāo， xià zhě piāo zhuǎn chén táng ào。\nnán cūn qún tóng qī wǒ lǎo wú lì， rěn néng duì miàn wèi dào zéi。\ngōng rán bào máo rù zhú qù， chún jiāo kǒu zào hū bù dé， guī lái yǐ zhàng zì tàn xī。\né qǐng fēng dìng yún mò sè， qiū tiān mò mò xiàng hūn hēi。\nbù qīn duō nián lěng sì tiě， jiāo ér è wò tà lǐ liè。\nchuáng tóu wū lòu wú gān chù， yǔ jiǎo rú má wèi duàn jué。\nzì jīng sāng luàn shǎo shuì mián， cháng yè zhān shī hé yóu chè！\nān dé guǎng shà qiān wàn jiān， dà bì tiān xià hán shì jù huān yán！ fēng yǔ bú dòng ān rú shān。\nwū hū！ hé shí yǎn qián tū wù jiàn cǐ wū， wú lú dú pò shòu dòng sǐ yì zú！"
+      "pinyin": "bā yuè qiū gāo fēng nù háo， juàn wǒ wū shàng sān chóng máo。\nmáo fēi dù jiāng sǎ jiāng jiāo， gāo zhě guà juàn cháng lín shāo， xià zhě piāo zhuǎn chén táng ào。\nnán cūn qún tóng qī wǒ lǎo wú lì， rěn néng duì miàn wèi dào zéi。\ngōng rán bào máo rù zhú qù， chún jiāo kǒu zào hū bù dé， guī lái yǐ zhàng zì tàn xī。\né qǐng fēng dìng yún mò sè， qiū tiān mò mò xiàng hūn hēi。\nbù qīn duō nián lěng sì tiě， jiāo ér è wò tà lǐ liè。\nchuáng tóu wū lòu wú gān chù， yǔ jiǎo rú má wèi duàn jué。\nzì jīng sāng luàn shǎo shuì mián， cháng yè zhān shī hé yóu chè！\nān dé guǎng shà qiān wàn jiān， dà bì tiān xià hán shì jù huān yán！ fēng yǔ bú dòng ān rú shān。\nwū hū！ hé shí yǎn qián tū wù jiàn cǐ wū， wú lú dú pò shòu dòng sǐ yì zú！",
+      "translation": "In the eighth month autumn's high winds angrily howl,\nAnd sweep three layers of thatch from off my house.\nThe straw flies over the river, where it scatters,\nSome is caught and hangs high up in the treetops,\nSome floats down and sinks into the ditch.\nThe urchins from the southern village bully me, weak as I am;\nThey're cruel enough to rob me to my face,\nOpenly, they carry the straw into the bamboo.\nMy mouth and lips are dry from pointless calling,\nI lean again on my cane and heave a sigh.\nThe wind soon calms, and the clouds turn the colour of ink;\nThe autumn sky has turned completely black.\nMy ancient cotton quilt is cold as iron,\nMy darling children sleep badly, and kick it apart.\nThe roof leaks over the bed- there's nowhere dry,\nThe rain falls thick as hemp, and without end.\nLost amid disorder, I hardly sleep,\nWet through, how can I last the long nights!\nIf I could get a mansion with a thousand, ten thousand rooms,\nA great shelter for all the world's scholars, together in joy,\nSolid as a mountain, the elements could not move it.\nOh!  If I could see this house before me,\nI'd happily freeze to death in my broken hut!",
+      "translationSource": "chinese-poems.com/d08"
     },
     {
       "id": "tang_026",
@@ -670,7 +690,9 @@ const data = {
       "location": "天门山/安徽",
       "wordCount": 28,
       "year": 725,
-      "pinyin": "tiān mén zhōng duàn chǔ jiāng kāi， bì shuǐ dōng liú zhì cǐ huí。\nliǎng àn qīng shān xiāng duì chū， gū fān yí piàn rì biān lái。"
+      "pinyin": "tiān mén zhōng duàn chǔ jiāng kāi， bì shuǐ dōng liú zhì cǐ huí。\nliǎng àn qīng shān xiāng duì chū， gū fān yí piàn rì biān lái。",
+      "translation": "The River Chu cuts through the middle of heaven's gate,\nThe green water flowing east reaches here then swirls.\nOn either bank the blue hills face towards each other,\nThe flatness of a lonely sail comes from by of the sun.",
+      "translationSource": "chinese-poems.com/lb8"
     },
     {
       "id": "tang_034",
@@ -769,7 +791,9 @@ const data = {
       "location": "江南",
       "wordCount": 28,
       "year": 835,
-      "pinyin": "qiān lǐ yīng tí lǜ yìng hóng， shuǐ cūn shān guō jiǔ qí fēng。\nnán cháo sì bǎi bā shí sì， duō shǎo lóu tái yān yǔ zhōng。"
+      "pinyin": "qiān lǐ yīng tí lǜ yìng hóng， shuǐ cūn shān guō jiǔ qí fēng。\nnán cháo sì bǎi bā shí sì， duō shǎo lóu tái yān yǔ zhōng。",
+      "translation": "Orioles call for a thousand li, green's reflected in the river;\nWaterside village; hillside rampart; wine; a banner in the wind.\nIn the time of the southern dynasties, there were four hundred and eighty temples;\nHow many pavilions there are now in the mist and rain.",
+      "translationSource": "chinese-poems.com/dm6"
     },
     {
       "id": "tang_039",
@@ -947,7 +971,9 @@ const data = {
       "location": "石壕村/河南",
       "wordCount": 120,
       "year": 759,
-      "pinyin": "mù tóu shí háo cūn， yǒu lì yè zhuō rén。 lǎo wēng yú qiáng zǒu， lǎo fù chū mén kàn。\nlì hū yì hé nù！ fù tí yì hé kǔ！\ntīng fù qián zhì cí： sān nán yè chéng shù。 yì nán fù shū zhì， èr nán xīn zhàn sǐ。\ncún zhě qiě tōu shēng， sǐ zhě cháng yǐ yǐ！ shì zhōng gèng wú rén， wéi yǒu rǔ xià sūn。\nyǒu sūn mǔ wèi qù， chū rù wú wán qún。 lǎo yù lì suī shuāi， qǐng cóng lì yè guī，\njí yìng hé yáng yì， yóu dé bèi chén chuī。\nyè jiǔ yǔ shēng jué， rú wén qì yōu yàn。 tiān míng dēng qián tú， dú yǔ lǎo wēng bié。"
+      "pinyin": "mù tóu shí háo cūn， yǒu lì yè zhuō rén。 lǎo wēng yú qiáng zǒu， lǎo fù chū mén kàn。\nlì hū yì hé nù！ fù tí yì hé kǔ！\ntīng fù qián zhì cí： sān nán yè chéng shù。 yì nán fù shū zhì， èr nán xīn zhàn sǐ。\ncún zhě qiě tōu shēng， sǐ zhě cháng yǐ yǐ！ shì zhōng gèng wú rén， wéi yǒu rǔ xià sūn。\nyǒu sūn mǔ wèi qù， chū rù wú wán qún。 lǎo yù lì suī shuāi， qǐng cóng lì yè guī，\njí yìng hé yáng yì， yóu dé bèi chén chuī。\nyè jiǔ yǔ shēng jué， rú wén qì yōu yàn。 tiān míng dēng qián tú， dú yǔ lǎo wēng bié。",
+      "translation": "At dusk, I stopped to rest at Stone Moat village,\nAn officer came that night to capture men.\nThe old man escaped by climbing over the wall,\nThe old wife went to look outside the door.\nHow angrily the officer now shouted,\nHow bitterly the wife did weep out loud!\nI heard the words the wife was sending forth:\n\"Three sons of mine were sent to defend Yecheng.\nFrom one of my sons, a letter has arrived,\nThe other two have recently died in battle.\nThe one who survived has kept alive for now,\nThe dead ones though have met their final end.\nInside this house, there are no people left,\nThere's just a grandson suckling on the breast.\nThe grandson's mother also cannot go,\nShe goes about without a skirt intact.\nAlthough I'm an old woman with failing strength,\nI ask you to take me with you tonight.\nIf you should need workers at Heyang,\nI can prepare the morning meal for you.\"\nHer voice then died away into the night,\nI seemed to hear her sob and whimper still.\nAt dawn, before I set upon the road,\nIt's only from the old man that I part.",
+      "translationSource": "chinese-poems.com/d12"
     },
     {
       "id": "tang_048",
@@ -1027,7 +1053,9 @@ const data = {
       "dynasty": "唐",
       "dynastyCode": "tang",
       "wordCount": 24,
-      "pinyin": "xiàng wǎn yì bú shì， qū chē dēng gǔ yuán。 xī yáng wú xiàn hǎo， zhǐ shì jìn huáng hūn。"
+      "pinyin": "xiàng wǎn yì bú shì， qū chē dēng gǔ yuán。 xī yáng wú xiàn hǎo， zhǐ shì jìn huáng hūn。",
+      "translation": "Towards evening my thoughts became uncomfortable,\nI drove my carriage upon the ancient plain.\nThe setting sun is good without limit,\nBut only comes when yellow dusk is near.",
+      "translationSource": "chinese-poems.com/ly1"
     },
     {
       "id": "tang_052",
@@ -1166,7 +1194,9 @@ const data = {
       "dynasty": "唐",
       "dynastyCode": "tang",
       "wordCount": 32,
-      "pinyin": "yuǎn shàng hán shān shí jìng xié， bái yún shēn chù yǒu rén jiā。 tíng chē zuò ài fēng lín wǎn， shuāng yè hóng yú èr yuè huā。"
+      "pinyin": "yuǎn shàng hán shān shí jìng xié， bái yún shēn chù yǒu rén jiā。 tíng chē zuò ài fēng lín wǎn， shuāng yè hóng yú èr yuè huā。",
+      "translation": "Far away on the cold mountain, a stone path slants upwards,\nIn the white clouds is a village, where people have their homes.\nI stop the carriage, loving the maple wood in the evening,\nThe frosted leaves are redder than the second month's flowers.",
+      "translationSource": "chinese-poems.com/dm2"
     },
     {
       "id": "tang_059",
@@ -1384,7 +1414,9 @@ const data = {
       "dynasty": "唐",
       "dynastyCode": "tang",
       "wordCount": 64,
-      "pinyin": "yù lù diāo shāng fēng shù lín， wū shān wū xiá qì xiāo sēn。 jiāng jiān bō làng jiān tiān yǒng， sài shàng fēng yún jiē dì yīn。 cóng jú liǎng kāi tā rì lèi， gū zhōu yí xì gù yuán xīn。 hán yī chù chù cuī dāo chǐ， bái dì chéng gāo jí mù zhēn。"
+      "pinyin": "yù lù diāo shāng fēng shù lín， wū shān wū xiá qì xiāo sēn。 jiāng jiān bō làng jiān tiān yǒng， sài shàng fēng yún jiē dì yīn。 cóng jú liǎng kāi tā rì lèi， gū zhōu yí xì gù yuán xīn。 hán yī chù chù cuī dāo chǐ， bái dì chéng gāo jí mù zhēn。",
+      "translation": "Jade dew withers and wounds the groves of maple trees,\nOn Wu mountain, in Wu gorge, the air is dull and drear.\nOn the river surging waves rise to meet the sky,\nAbove the pass wind and cloud join the earth with darkness.\nChrysanthemum bushes open twice, weeping for their days,\nA lonely boat, a single line, my heart is full of home.\nWinter clothes everywhere are urgently cut and measured,\nBaidicheng above, the evening's driven by beating on stones.",
+      "translationSource": "chinese-poems.com/d53"
     },
     {
       "id": "tang_070",
@@ -1404,7 +1436,9 @@ const data = {
       "dynasty": "唐",
       "dynastyCode": "tang",
       "wordCount": 258,
-      "pinyin": "chē lín lín， mǎ xiāo xiāo， xíng rén gōng jiàn gè zài yāo。 yé niáng qī zǐ zǒu xiāng sòng， chén āi bú jiàn xián yáng qiáo。 qiān yī dùn zú lán dào kū， kū shēng zhí shàng gān yún xiāo。 dào páng guò zhě wèn xíng rén， xíng rén dàn yún diǎn xíng pín。 huò cóng shí wǔ běi fáng hé， biàn zhì sì shí xī yíng tián。 qù shí lǐ zhèng yǔ guǒ tóu， guī lái tou bái hái shù biān。 biān tíng liú xuè chéng hǎi shuǐ， wǔ huáng kāi biān yì wèi yǐ。 jūn bù wén hàn jiā shān dōng èr bǎi zhōu， qiān cūn wàn luò shēng jīng qǐ。 zòng yǒu jiàn fù bǎ chú lí， hé shēng lǒng mǔ wú dōng xī。 kuàng fù qín bīng nài kǔ zhàn， bèi qū bú yì quǎn yǔ jī。 cháng zhě suī yǒu wèn， yì fū gǎn shēn hèn？ qiě rú jīn nián dōng， wèi xiū guān xī zú。 xiàn guān jí suǒ zū， zū shuì cóng hé chū？ xìn zhī shēng nán è， fǎn shì shēng nǚ hǎo。 shēng nǚ yóu dé jià bǐ lín， shēng nán mái mò suí bǎi cǎo。 jūn bú jiàn qīng hǎi tóu， gǔ lái bái gǔ wú rén shōu。 xīn guǐ fán yuān jiù guǐ kū， tiān yīn yǔ shī shēng jiū jiū。"
+      "pinyin": "chē lín lín， mǎ xiāo xiāo， xíng rén gōng jiàn gè zài yāo。 yé niáng qī zǐ zǒu xiāng sòng， chén āi bú jiàn xián yáng qiáo。 qiān yī dùn zú lán dào kū， kū shēng zhí shàng gān yún xiāo。 dào páng guò zhě wèn xíng rén， xíng rén dàn yún diǎn xíng pín。 huò cóng shí wǔ běi fáng hé， biàn zhì sì shí xī yíng tián。 qù shí lǐ zhèng yǔ guǒ tóu， guī lái tou bái hái shù biān。 biān tíng liú xuè chéng hǎi shuǐ， wǔ huáng kāi biān yì wèi yǐ。 jūn bù wén hàn jiā shān dōng èr bǎi zhōu， qiān cūn wàn luò shēng jīng qǐ。 zòng yǒu jiàn fù bǎ chú lí， hé shēng lǒng mǔ wú dōng xī。 kuàng fù qín bīng nài kǔ zhàn， bèi qū bú yì quǎn yǔ jī。 cháng zhě suī yǒu wèn， yì fū gǎn shēn hèn？ qiě rú jīn nián dōng， wèi xiū guān xī zú。 xiàn guān jí suǒ zū， zū shuì cóng hé chū？ xìn zhī shēng nán è， fǎn shì shēng nǚ hǎo。 shēng nǚ yóu dé jià bǐ lín， shēng nán mái mò suí bǎi cǎo。 jūn bú jiàn qīng hǎi tóu， gǔ lái bái gǔ wú rén shōu。 xīn guǐ fán yuān jiù guǐ kū， tiān yīn yǔ shī shēng jiū jiū。",
+      "translation": "The wagons rumble and roll,\nThe horses whinny and neigh,\nThe conscripts each have bows and arrows at their waists.\nTheir parents, wives and children run to see them off,\nSo much dust's stirred up, it hides the Xianyang bridge.\nThey pull clothes, stamp their feet and, weeping, bar the way,\nThe weeping voices rise straight up and strike the clouds.\nA passer-by at the roadside asks a conscript why,\nThe conscript answers only that drafting happens often.\n\"At fifteen, many were sent north to guard the river,\nEven at forty, they had to till fields in the west.\nWhen we went away, the elders bound our heads,\nReturning with heads white, we're sent back off to the frontier.\nAt the border posts, shed blood becomes a sea,\nThe martial emperor's dream of expansion has no end.\nHave you not seen the two hundred districts east of the mountains,\nWhere thorns and brambles grow in countless villages and hamlets?\nAlthough there are strong women to grasp the hoe and the plough,\nThey grow some crops, but there's no order in the fields.\nWhat's more, we soldiers of Qin withstand the bitterest fighting,\nWe're always driven onwards just like dogs and chickens.\nAlthough an elder can ask me this,\nHow can a soldier dare to complain?\nEven in this winter time,\nSoldiers from west of the pass keep moving.\nThe magistrate is eager for taxes,\nBut how can we afford to pay?\nWe know now having boys is bad,\nWhile having girls is for the best;\nOur girls can still be married to the neighbours,\nOur sons are merely buried amid the grass.\nHave you not seen on the border of Qinghai,\nThe ancient bleached bones no man's gathered in?\nThe new ghosts are angered by injustice, the old ghosts weep,\nMoistening rain falls from dark heaven on the voices' screeching.\"",
+      "translationSource": "chinese-poems.com/d16"
     },
     {
       "id": "tang_071",
@@ -1544,7 +1578,9 @@ const data = {
       "location": "成都",
       "wordCount": 48,
       "year": 761,
-      "pinyin": "hǎo yǔ zhī shí jié， dāng chūn nǎi fā shēng。 suí fēng qián rù yè， rùn wù xì wú shēng。 yě jìng yún jù hēi， jiāng chuán huǒ dú míng。 xiǎo kàn hóng shī chù， huā zhòng jǐn guān chéng。"
+      "pinyin": "hǎo yǔ zhī shí jié， dāng chūn nǎi fā shēng。 suí fēng qián rù yè， rùn wù xì wú shēng。 yě jìng yún jù hēi， jiāng chuán huǒ dú míng。 xiǎo kàn hóng shī chù， huā zhòng jǐn guān chéng。",
+      "translation": "The good rain knows its season,\nWhen spring arrives, it brings life.\nIt follows the wind secretly into the night,\nAnd moistens all things softly, without sound.\nOn the country road, the clouds are all black,\nOn a riverboat, a single fire bright.\nAt dawn one sees this place now red and wet,\nThe flowers are heavy in the brocade city.",
+      "translationSource": "chinese-poems.com/d04"
     },
     {
       "id": "tang_078",
@@ -1564,7 +1600,9 @@ const data = {
       "location": "江南/长沙",
       "wordCount": 32,
       "year": 770,
-      "pinyin": "qí wáng zhái lǐ xún cháng jiàn， cuī jiǔ táng qián jǐ dù wén。 zhèng shì jiāng nán hǎo fēng jǐng， luò huā shí jié yòu féng jūn。"
+      "pinyin": "qí wáng zhái lǐ xún cháng jiàn， cuī jiǔ táng qián jǐ dù wén。 zhèng shì jiāng nán hǎo fēng jǐng， luò huā shí jié yòu féng jūn。",
+      "translation": "In Prince Qi's mansion house, I met you often,\nBy Cui Jiu's hall, I heard you several times.\nTruly the landscape south of the river is good,\nI meet you again in the season of falling blossom.",
+      "translationSource": "chinese-poems.com/d36"
     },
     {
       "id": "tang_079",
@@ -1604,7 +1642,9 @@ const data = {
       "location": "渝州/重庆",
       "wordCount": 48,
       "year": 765,
-      "pinyin": "xì cǎo wēi fēng àn， wēi qiáng dú yè zhōu。 xīng chuí píng yě kuò， yuè yǒng dà jiāng liú。 míng qǐ wén zhāng zhù， guān yìng lǎo bìng xiū。 piāo piāo hé suǒ sì， tiān dì yì shā ōu。"
+      "pinyin": "xì cǎo wēi fēng àn， wēi qiáng dú yè zhōu。 xīng chuí píng yě kuò， yuè yǒng dà jiāng liú。 míng qǐ wén zhāng zhù， guān yìng lǎo bìng xiū。 piāo piāo hé suǒ sì， tiān dì yì shā ōu。",
+      "translation": "Gentle breeze on grass by the shore,\nThe boat's tall mast alone at night.\nStars fall to the broad flat fields,\nMoon rises from the great river's flow.\nHave my writings not made any mark?\nAn official should stop when old and sick.\nFluttering from place to place I resemble,\nA gull between heaven and earth.",
+      "translationSource": "chinese-poems.com/d01"
     },
     {
       "id": "tang_081",
@@ -1625,7 +1665,9 @@ const data = {
       "location": "岳阳楼/湖南",
       "wordCount": 48,
       "year": 768,
-      "pinyin": "xī wén dòng tíng shuǐ， jīn shàng yuè yáng lóu。 wú chǔ dōng nán chè， qián kūn rì yè fú。 qīn péng wú yí zì， lǎo bìng yǒu gū zhōu。 róng mǎ guān shān běi， píng xuān tì sì liú。"
+      "pinyin": "xī wén dòng tíng shuǐ， jīn shàng yuè yáng lóu。 wú chǔ dōng nán chè， qián kūn rì yè fú。 qīn péng wú yí zì， lǎo bìng yǒu gū zhōu。 róng mǎ guān shān běi， píng xuān tì sì liú。",
+      "translation": "Of old I heard of the waters of Dongting lake,\nNow I've climbed to the top of Yueyang tower.\nHere Wu and Chu are split to east and south,\nHere heaven and earth are floating day and night.\nFrom family and friends comes not a single word,\nOld and sick, I have one solitary boat.\nWar horses are riding north of the mountain pass,\nI lean on the railing as tears flow down.",
+      "translationSource": "chinese-poems.com/d61"
     },
     {
       "id": "tang_082",
@@ -1645,7 +1687,9 @@ const data = {
       "location": "夔州/白帝城",
       "wordCount": 64,
       "year": 766,
-      "pinyin": "suì mù yīn yáng cuī duǎn jǐng， tiān yá shuāng xuě jì hán xiāo。 wǔ gēng gǔ jiǎo shēng bēi zhuàng， sān xiá xīng hé yǐng dòng yáo。 yě kū jǐ jiā wén zhàn fá， yí gē shù chù qǐ yú qiáo。 wò lóng yuè mǎ zhōng huáng tǔ， rén shì yīn shū màn jì liáo。"
+      "pinyin": "suì mù yīn yáng cuī duǎn jǐng， tiān yá shuāng xuě jì hán xiāo。 wǔ gēng gǔ jiǎo shēng bēi zhuàng， sān xiá xīng hé yǐng dòng yáo。 yě kū jǐ jiā wén zhàn fá， yí gē shù chù qǐ yú qiáo。 wò lóng yuè mǎ zhōng huáng tǔ， rén shì yīn shū màn jì liáo。",
+      "translation": "At year's end, yin and yang hurry the shortened day,\nAt sky's end, frost and snow clear the frozen night.\nFifth watch: the drum and horn sound out mournful and strong,\nThree gorges: the river of stars casts its trembling shadow.\nCountryside cries from a thousand homes hearing news of the fighting,\nBarbaric songs here and there rise from fishers and woodsmen.\nSleeping Dragon and Leaping Horse both ended in yellow dirt;\nWaiting for news of worldly affairs brings me useless grief.",
+      "translationSource": "chinese-poems.com/d62"
     },
     {
       "id": "tang_083",
@@ -1705,7 +1749,9 @@ const data = {
       "location": "鄜州/陕西富县",
       "wordCount": 72,
       "year": 757,
-      "pinyin": "zhēng róng chì yún xī， rì jiǎo xià píng dì。 chái mén niǎo què zào， guī kè qiān lǐ zhì。 qī nú guài wǒ zài， jīng dìng hái shì lèi。 shì luàn zāo piāo dàng， shēng huán ǒu rán suì。 lín rén mǎn qiáng tóu， gǎn tàn yì xū xī。 yè lán gèng bǐng zhú， xiāng duì rú mèng mèi。"
+      "pinyin": "zhēng róng chì yún xī， rì jiǎo xià píng dì。 chái mén niǎo què zào， guī kè qiān lǐ zhì。 qī nú guài wǒ zài， jīng dìng hái shì lèi。 shì luàn zāo piāo dàng， shēng huán ǒu rán suì。 lín rén mǎn qiáng tóu， gǎn tàn yì xū xī。 yè lán gèng bǐng zhú， xiāng duì rú mèng mèi。",
+      "translation": "Red clouds tower in the west,\nThe sun is sinking on the plain.\nA sparrow chirps on the wicker gate,\nI return from a thousand li away.\nMy wife and children are shocked to see me,\nThen calm themselves and wipe their tears.\nI floated through this disordered life,\nBy chance I have managed to return alive.\nThe neighbours all lean over the wall,\nAnd they as well are sighing and sobbing.\nLate at night we bring out candles,\nAnd face each other as in a dream.",
+      "translationSource": "chinese-poems.com/d14"
     },
     {
       "id": "tang_086",
@@ -1825,7 +1871,9 @@ const data = {
       "location": "秦州/甘肃天水",
       "wordCount": 48,
       "year": 759,
-      "pinyin": "shù gǔ duàn rén xíng， biān qiū yí yàn shēng。 lù cóng jīn yè bái， yuè shì gù xiāng míng。 yǒu dì jiē fēn sàn， wú jiā wèn sǐ shēng。 jì shū cháng bù dá， kuàng nǎi wèi xiū bīng。"
+      "pinyin": "shù gǔ duàn rén xíng， biān qiū yí yàn shēng。 lù cóng jīn yè bái， yuè shì gù xiāng míng。 yǒu dì jiē fēn sàn， wú jiā wèn sǐ shēng。 jì shū cháng bù dá， kuàng nǎi wèi xiū bīng。",
+      "translation": "The army drums cut off human travel,\nA lone goose sounds on the borderland in autumn.\nTonight we start the season of White Dew,\nThe moon is just as bright as in my homeland.\nMy brothers are spread all throughout the land,\nNo home to ask if they are living or dead.\nThe letters we send always go astray,\nAnd still the fighting does not cease.",
+      "translationSource": "chinese-poems.com/d10"
     },
     {
       "id": "tang_092",
@@ -1845,7 +1893,9 @@ const data = {
       "location": "秦州/甘肃天水",
       "wordCount": 48,
       "year": 759,
-      "pinyin": "liáng fēng qǐ tiān mò， jūn zǐ yì rú hé。 hóng yàn jǐ shí dào， jiāng hú qiū shuǐ duō。 wén zhāng zēng mìng dá， chī mèi xǐ rén guò。 yìng gòng yuān hún yǔ， tóu shī zèng mì luó。"
+      "pinyin": "liáng fēng qǐ tiān mò， jūn zǐ yì rú hé。 hóng yàn jǐ shí dào， jiāng hú qiū shuǐ duō。 wén zhāng zēng mìng dá， chī mèi xǐ rén guò。 yìng gòng yuān hún yǔ， tóu shī zèng mì luó。",
+      "translation": "Cold wind rises at the end of the sky,\nWhat thoughts occupy the gentleman's mind?\nWhat time will the wild goose come?\nThe rivers and lakes are full of autumn's waters.\nLiterature and worldly success are opposed,\nDemons exult in human failure.\nTalk together with the hated poet,\nThrow a poem into Miluo river.",
+      "translationSource": "chinese-poems.com/d11"
     },
     {
       "id": "tang_093",
@@ -1925,7 +1975,9 @@ const data = {
       "location": "成都",
       "wordCount": 32,
       "year": 764,
-      "pinyin": "liǎng gè huáng lí míng cuì liǔ， yì háng bái lù shàng qīng tiān。 chuāng hán xī lǐng qiān qiū xuě， mén bó dōng wú wàn lǐ chuán。"
+      "pinyin": "liǎng gè huáng lí míng cuì liǔ， yì háng bái lù shàng qīng tiān。 chuāng hán xī lǐng qiān qiū xuě， mén bó dōng wú wàn lǐ chuán。",
+      "translation": "Two golden orioles sing in the green willows,\nA row of white egrets against the blue sky.\nThe window frames the western hills' snow of a thousand autumns,\nAt the door is moored, from eastern Wu, a boat of ten thousand li.",
+      "translationSource": "chinese-poems.com/d29"
     },
     {
       "id": "tang_097",
@@ -1965,7 +2017,9 @@ const data = {
       "location": "成都",
       "wordCount": 64,
       "year": 761,
-      "pinyin": "shè nán shè běi jiē chūn shuǐ， dàn jiàn qún ōu rì rì lái。 huā jìng bù céng yuán kè sǎo， péng mén jīn shǐ wèi jūn kāi。 pán sūn shì yuǎn wú jiān wèi， zūn jiǔ jiā pín zhī jiù pēi。 kěn yǔ lín wēng xiāng duì yǐn， gé lí hū qǔ jìn yú bēi。"
+      "pinyin": "shè nán shè běi jiē chūn shuǐ， dàn jiàn qún ōu rì rì lái。 huā jìng bù céng yuán kè sǎo， péng mén jīn shǐ wèi jūn kāi。 pán sūn shì yuǎn wú jiān wèi， zūn jiǔ jiā pín zhī jiù pēi。 kěn yǔ lín wēng xiāng duì yǐn， gé lí hū qǔ jìn yú bēi。",
+      "translation": "South of my hut, north of my hut, all is spring water,\nA flock of gulls is all I see come each day.\nThe floral path has never been swept for a guest,\nToday for the first time the rough gate opens for the gentleman.\nFar from the market, my food has little taste,\nMy poor home can offer only stale and cloudy wine.\nConsent to have a drink with my elderly neighbour,\nAt the fence I'll call him, then we'll finish it off.",
+      "translationSource": "chinese-poems.com/d07"
     },
     {
       "id": "tang_099",
@@ -1986,7 +2040,9 @@ const data = {
       "location": "成都",
       "wordCount": 32,
       "year": 761,
-      "pinyin": "huáng sì niáng jiā huā mǎn qī， qiān duǒ wàn duǒ yā zhī dī。 liú lián xì dié shí shí wǔ， zì zài jiāo yīng qià qià tí。"
+      "pinyin": "huáng sì niáng jiā huā mǎn qī， qiān duǒ wàn duǒ yā zhī dī。 liú lián xì dié shí shí wǔ， zì zài jiāo yīng qià qià tí。",
+      "translation": "At Huang Si's house, flowers fill the path,\nMyriad blossoms press the branches low.\nConstantly dancing butterflies stay to play,\nUnrestrained, the lovely orioles cry.",
+      "translationSource": "chinese-poems.com/d34"
     },
     {
       "id": "tang_100",
@@ -2006,7 +2062,9 @@ const data = {
       "location": "成都",
       "wordCount": 32,
       "year": 761,
-      "pinyin": "jǐn chéng sī guǎn rì fēn fēn， bàn rù jiāng fēng bàn rù yún。 cǐ qǔ zhī yìng tiān shàng yǒu， rén jiān néng dé jǐ huí wén。"
+      "pinyin": "jǐn chéng sī guǎn rì fēn fēn， bàn rù jiāng fēng bàn rù yún。 cǐ qǔ zhī yìng tiān shàng yǒu， rén jiān néng dé jǐ huí wén。",
+      "translation": "In Jincheng, music of silk and flutes mixes together all day,\nHalf goes to the river breeze, half goes to the clouds.\nMusic such as this should only go to heaven above,\nIn this human world, how many times can it be heard?",
+      "translationSource": "chinese-poems.com/d32"
     },
     {
       "id": "tang_101",
@@ -2146,7 +2204,9 @@ const data = {
       "location": "宣城/安徽",
       "wordCount": 24,
       "year": 753,
-      "pinyin": "zhòng niǎo gāo fēi jìn， gū yún dú qù xián。 xiāng kàn liǎng bú yàn， zhǐ yǒu jìng tíng shān。"
+      "pinyin": "zhòng niǎo gāo fēi jìn， gū yún dú qù xián。 xiāng kàn liǎng bú yàn， zhǐ yǒu jìng tíng shān。",
+      "translation": "A flock of birds is flying high in the distance,\nA lonely cloud drifts idly on its own.\nWe gaze at each other, neither growing tired,\nThere is only Jingting Shan.",
+      "translationSource": "chinese-poems.com/lb9"
     },
     {
       "id": "tang_108",
@@ -2166,7 +2226,9 @@ const data = {
       "location": "泾县/安徽",
       "wordCount": 32,
       "year": 755,
-      "pinyin": "lǐ bái chéng zhōu jiāng yù xíng， hū wén àn shàng tà gē shēng。 táo huā tán shuǐ shēn qiān chǐ， bù jí wāng lún sòng wǒ qíng。"
+      "pinyin": "lǐ bái chéng zhōu jiāng yù xíng， hū wén àn shàng tà gē shēng。 táo huā tán shuǐ shēn qiān chǐ， bù jí wāng lún sòng wǒ qíng。",
+      "translation": "Li Bai is already on the boat, preparing to depart,\nI suddenly hear the sound of stamping and singing on the shore.\nThe water of Taohua pond reaches a thousand feet in depth,\nBut still it's not as deep as Wang Lun's feelings seeing me off.",
+      "translationSource": "chinese-poems.com/lb7"
     },
     {
       "id": "tang_109",
@@ -2186,7 +2248,9 @@ const data = {
       "location": "黄鹤楼/武汉",
       "wordCount": 32,
       "year": 730,
-      "pinyin": "gù rén xī cí huáng hè lóu， yān huā sān yuè xià yáng zhōu。 gū fān yuǎn yǐng bì kōng jìn， wéi jiàn cháng jiāng tiān jì liú。"
+      "pinyin": "gù rén xī cí huáng hè lóu， yān huā sān yuè xià yáng zhōu。 gū fān yuǎn yǐng bì kōng jìn， wéi jiàn cháng jiāng tiān jì liú。",
+      "translation": "My old friend's said goodbye to the west, here at Yellow Crane Tower,\nIn the third month's cloud of willow blossoms, he's going down to Yangzhou.\nThe lonely sail is a distant shadow, on the edge of a blue emptiness,\nAll I see is the Yangtze River flow to the far horizon.",
+      "translationSource": "chinese-poems.com/lb2"
     },
     {
       "id": "tang_110",
@@ -2226,7 +2290,9 @@ const data = {
       "location": "长安",
       "wordCount": 48,
       "year": 745,
-      "pinyin": "qīng shān héng běi guō， bái shuǐ rào dōng chéng。 cǐ dì yí wèi bié， gū péng wàn lǐ zhēng。 fú yún yóu zǐ yì， luò rì gù rén qíng。 huī shǒu zì zī qù， xiāo xiāo bān mǎ míng。"
+      "pinyin": "qīng shān héng běi guō， bái shuǐ rào dōng chéng。 cǐ dì yí wèi bié， gū péng wàn lǐ zhēng。 fú yún yóu zǐ yì， luò rì gù rén qíng。 huī shǒu zì zī qù， xiāo xiāo bān mǎ míng。",
+      "translation": "Green hills above the northern wall,\nWhite water winding east of the city.\nOn this spot our single act of parting,\nThe lonely tumbleweed journeys ten thousand li.\nDrifting clouds echo the traveller's thoughts,\nThe setting sun reflects my old friend's feelings.\nYou wave your hand and set off from this place,\nYour horse whinnies as it leaves.",
+      "translationSource": "chinese-poems.com/lb15t"
     },
     {
       "id": "tang_112",
@@ -2246,7 +2312,9 @@ const data = {
       "location": "长安",
       "wordCount": 36,
       "year": 740,
-      "pinyin": "cháng ān yí piàn yuè， wàn hù dǎo yī shēng。 qiū fēng chuī bú jìn， zǒng shì yù guān qíng。 hé rì píng hú lǔ， liáng rén bà yuǎn zhēng。"
+      "pinyin": "cháng ān yí piàn yuè， wàn hù dǎo yī shēng。 qiū fēng chuī bú jìn， zǒng shì yù guān qíng。 hé rì píng hú lǔ， liáng rén bà yuǎn zhēng。",
+      "translation": "In Chang'an city is the disk of the moon,\nThe sound of pounding clothes in ten thousand households.\nThe autumn wind is blowing without cease,\nAll the time I think of Yuguan pass.\nWhen will we pacify the pillaging Hu,\nSo my husband can end his long journey?",
+      "translationSource": "chinese-poems.com/lb6"
     },
     {
       "id": "tang_113",
@@ -2346,7 +2414,9 @@ const data = {
       "location": "洛阳",
       "wordCount": 32,
       "year": 735,
-      "pinyin": "shuí jiā yù dí àn fēi shēng， sàn rù chūn fēng mǎn luò chéng。 cǐ yè qǔ zhōng wén zhé liǔ， hé rén bù qǐ gù yuán qíng。"
+      "pinyin": "shuí jiā yù dí àn fēi shēng， sàn rù chūn fēng mǎn luò chéng。 cǐ yè qǔ zhōng wén zhé liǔ， hé rén bù qǐ gù yuán qíng。",
+      "translation": "From whose home secretly flies the sound of a jade flute?\nIt's lost amid the spring wind which fills Luoyang city.\nIn the middle of this nocturne I remember the snapped willow,\nWhat person would not start to think of home!",
+      "translationSource": "chinese-poems.com/lb12"
     },
     {
       "id": "tang_118",
@@ -2426,7 +2496,9 @@ const data = {
       "location": "长安",
       "wordCount": 88,
       "year": 744,
-      "pinyin": "zhǎng xiàng sī， zài cháng ān。 luò wěi qiū tí jīn jǐng lán， wēi shuāng qī qī diàn sè hán。 gū dēng bù míng sī yù jué， juàn wéi wàng yuè kōng cháng tàn。 měi rén rú huā gé yún duān。 shàng yǒu qīng míng zhī gāo tiān， xià yǒu lù shuǐ zhī bō lán。 tiān cháng dì yuǎn hún fēi kǔ， mèng hún bú dào guān shān nán。 zhǎng xiàng sī， cuī xīn gān！"
+      "pinyin": "zhǎng xiàng sī， zài cháng ān。 luò wěi qiū tí jīn jǐng lán， wēi shuāng qī qī diàn sè hán。 gū dēng bù míng sī yù jué， juàn wéi wàng yuè kōng cháng tàn。 měi rén rú huā gé yún duān。 shàng yǒu qīng míng zhī gāo tiān， xià yǒu lù shuǐ zhī bō lán。 tiān cháng dì yuǎn hún fēi kǔ， mèng hún bú dào guān shān nán。 zhǎng xiàng sī， cuī xīn gān！",
+      "translation": "Long yearning,\nTo be in Chang'an.\nThe grasshoppers weave their autumn song by the golden railing of the well;\nFrost coalesces on my bamboo mat, changing its colour with cold.\nMy lonely lamp is not bright, I�d like to end these thoughts; \nI roll back the hanging, gaze at the moon, and long sigh in vain.\nThe beautiful person's like a flower beyond the edge of the clouds.\nAbove is the black night of heaven's height;\nBelow is the green water billowing on.\nThe sky is long, the road is far, bitter flies my spirit;\nThe spirit I dream can't get through, the mountain pass is hard.\nLong yearning,\nBreaks my heart.",
+      "translationSource": "chinese-poems.com/lb20"
     },
     {
       "id": "tang_122",
@@ -2526,7 +2598,9 @@ const data = {
       "location": "戴天山/四川江油",
       "wordCount": 48,
       "year": 720,
-      "pinyin": "quǎn fèi shuǐ shēng zhōng， táo huā dài lù nóng。 shù shēn shí jiàn lù， xī wǔ bù wén zhōng。 yě zhú fēn qīng ǎi， fēi quán guà bì fēng。 wú rén zhī suǒ qù， chóu yǐ liǎng sān sōng。"
+      "pinyin": "quǎn fèi shuǐ shēng zhōng， táo huā dài lù nóng。 shù shēn shí jiàn lù， xī wǔ bù wén zhōng。 yě zhú fēn qīng ǎi， fēi quán guà bì fēng。 wú rén zhī suǒ qù， chóu yǐ liǎng sān sōng。",
+      "translation": "A dog's bark amid the water's sound,\nPeach blossom that's made thicker by the rain.\nDeep in the trees, I sometimes see a deer,\nAnd at the stream I hear no noonday bell.\nWild bamboo divides the green mist,\nA flying spring hangs from the jasper peak.\nNo-one knows the place to which he's gone,\nSadly, I lean on two or three pines.",
+      "translationSource": "chinese-poems.com/lb16"
     },
     {
       "id": "tang_127",
@@ -2606,7 +2680,9 @@ const data = {
       "location": "沙丘/山东",
       "wordCount": 48,
       "year": 746,
-      "pinyin": "wǒ lái jìng hé shì， gāo wò shā qiū chéng。 chéng biān yǒu gǔ shù， rì xī lián qiū shēng。 lǔ jiǔ bù kě zuì， qí gē kōng fù qíng。 sī jūn ruò wèn shuǐ， hào dàng jì nán zhēng。"
+      "pinyin": "wǒ lái jìng hé shì， gāo wò shā qiū chéng。 chéng biān yǒu gǔ shù， rì xī lián qiū shēng。 lǔ jiǔ bù kě zuì， qí gē kōng fù qíng。 sī jūn ruò wèn shuǐ， hào dàng jì nán zhēng。",
+      "translation": "What is it that I've come to now?\nHigh before me: Shaqiu city.\nBeside the city, ancient trees;\nThe sunset joins the autumn sounds.\nThe Lu wine cannot make me drunk,\nQi's songs cannot restore my feelings.\nMy thoughts of you are like the Wen's waters,\nMightily sent on their southern journey.",
+      "translationSource": "chinese-poems.com/lb17"
     },
     {
       "id": "tang_131",
@@ -2646,7 +2722,9 @@ const data = {
       "location": "辋川/蓝田",
       "wordCount": 24,
       "year": 750,
-      "pinyin": "kōng shān bú jiàn rén， dàn wén rén yǔ xiǎng。 fǎn jǐng rù shēn lín， fù zhào qīng tái shàng。"
+      "pinyin": "kōng shān bú jiàn rén， dàn wén rén yǔ xiǎng。 fǎn jǐng rù shēn lín， fù zhào qīng tái shàng。",
+      "translation": "Hills are empty, no man is seen,\nYet the sound of people's voices is heard.\nLight is cast into the deep forest,\nAnd shines again on green moss.",
+      "translationSource": "chinese-poems.com/deer"
     },
     {
       "id": "tang_133",
@@ -2686,7 +2764,9 @@ const data = {
       "location": "辋川/蓝田",
       "wordCount": 24,
       "year": 750,
-      "pinyin": "rén xián guì huā luò， yè jìng chūn shān kōng。 yuè chū jīng shān niǎo， shí míng chūn jiàn zhōng。"
+      "pinyin": "rén xián guì huā luò， yè jìng chūn shān kōng。 yuè chū jīng shān niǎo， shí míng chūn jiàn zhōng。",
+      "translation": "I'm idle, as osmanthus flowers fall,\nThis quiet night in spring, the hill is empty.\nThe moon comes out and startles the birds on the hill,\nThey don't stop calling in the spring ravine.",
+      "translationSource": "chinese-poems.com/ww11"
     },
     {
       "id": "tang_135",
@@ -2847,7 +2927,9 @@ const data = {
       "location": "辋川/蓝田",
       "wordCount": 48,
       "year": 750,
-      "pinyin": "wǎn nián wéi hǎo jìng， wàn shì bù guān xīn。 zì gù wú cháng cè， kōng zhī fǎn jiù lín。 sōng fēng chuī jiě dài， shān yuè zhào tán qín。 jūn wèn qióng tōng lǐ， yú gē rù pǔ shēn。"
+      "pinyin": "wǎn nián wéi hǎo jìng， wàn shì bù guān xīn。 zì gù wú cháng cè， kōng zhī fǎn jiù lín。 sōng fēng chuī jiě dài， shān yuè zhào tán qín。 jūn wèn qióng tōng lǐ， yú gē rù pǔ shēn。",
+      "translation": "Now in old age, I know the value of silence,\nThe world's affairs no longer stir my heart.\nTurning to myself, I have no greater plan,\nAll I can do is return to the forest of old.\nWind from the pine trees blows my sash undone,\nThe moon shines through the hills; I pluck the qin.\nYou ask me why the world must rise and fall,\nFishermen sing on the steep banks of the river.",
+      "translationSource": "chinese-poems.com/zhang"
     },
     {
       "id": "tang_143",
@@ -3047,7 +3129,9 @@ const data = {
       "location": "乐游原/西安",
       "wordCount": 24,
       "year": 850,
-      "pinyin": "xiàng wǎn yì bú shì， qū chē dēng gǔ yuán。 xī yáng wú xiàn hǎo， zhǐ shì jìn huáng hūn。"
+      "pinyin": "xiàng wǎn yì bú shì， qū chē dēng gǔ yuán。 xī yáng wú xiàn hǎo， zhǐ shì jìn huáng hūn。",
+      "translation": "Towards evening my thoughts became uncomfortable,\nI drove my carriage upon the ancient plain.\nThe setting sun is good without limit,\nBut only comes when yellow dusk is near.",
+      "translationSource": "chinese-poems.com/ly1"
     },
     {
       "id": "tang_153",
@@ -3087,7 +3171,9 @@ const data = {
       "location": "池州/安徽",
       "wordCount": 32,
       "year": 845,
-      "pinyin": "qīng míng shí jié yǔ fēn fēn， lù shang xíng rén yù duàn hún。 jiè wèn jiǔ jiā hé chù yǒu， mù tóng yáo zhǐ xìng huā cūn。"
+      "pinyin": "qīng míng shí jié yǔ fēn fēn， lù shang xíng rén yù duàn hún。 jiè wèn jiǔ jiā hé chù yǒu， mù tóng yáo zhǐ xìng huā cūn。",
+      "translation": "At the time of the Pure Brightness festival, the rain is swirling round,\nOn the road, the spirit of the traveler is almost broken.\nHe politely asks at what place an inn can be found?\nA shepherd boy points far away to apricot blossom village.",
+      "translationSource": "chinese-poems.com/dm5"
     },
     {
       "id": "tang_155",
@@ -3107,7 +3193,9 @@ const data = {
       "location": "扬州",
       "wordCount": 32,
       "year": 835,
-      "pinyin": "qīng shān yǐn yǐn shuǐ tiáo tiáo， qiū jìn jiāng nán cǎo wèi diāo。 èr shí sì qiáo míng yuè yè， yù rén hé chù jiào chuī xiāo。"
+      "pinyin": "qīng shān yǐn yǐn shuǐ tiáo tiáo， qiū jìn jiāng nán cǎo wèi diāo。 èr shí sì qiáo míng yuè yè， yù rén hé chù jiào chuī xiāo。",
+      "translation": "Green hills are indistinct, water stretches far,\nThe end of autumn south of the river- grass and trees are withered.\nTwenty-four bridges under the bright moon tonight,\nWhere are the beautiful people blowing flutes of welcome?",
+      "translationSource": "chinese-poems.com/dm8"
     },
     {
       "id": "tang_156",
@@ -3167,7 +3255,9 @@ const data = {
       "location": "大林寺/庐山",
       "wordCount": 32,
       "year": 817,
-      "pinyin": "rén jiān sì yuè fāng fēi jìn， shān sì táo huā shǐ shèng kāi。 cháng hèn chūn guī wú mì chù， bù zhī zhuǎn rù cǐ zhōng lái。"
+      "pinyin": "rén jiān sì yuè fāng fēi jìn， shān sì táo huā shǐ shèng kāi。 cháng hèn chūn guī wú mì chù， bù zhī zhuǎn rù cǐ zhōng lái。",
+      "translation": "Across the world this June, the petals all have fallen,\nBut the mountain temple's peach blossom has just begun to bloom.\nI regretted so much that spring had gone without a trace,\nI didn't know that it had only moved up here.",
+      "translationSource": "chinese-poems.com/bo7"
     },
     {
       "id": "tang_159",
@@ -3187,7 +3277,9 @@ const data = {
       "location": "江州/九江",
       "wordCount": 32,
       "year": 817,
-      "pinyin": "yí dào cán yáng pù shuǐ zhōng， bàn jiāng sè sè bàn jiāng hóng。 kě lián jiǔ yuè chū sān yè， lù sì zhēn zhū yuè sì gōng。"
+      "pinyin": "yí dào cán yáng pù shuǐ zhōng， bàn jiāng sè sè bàn jiāng hóng。 kě lián jiǔ yuè chū sān yè， lù sì zhēn zhū yuè sì gōng。",
+      "translation": "A strip of water's spread in the setting sun,\nHalf the river's emerald, half is red.\nI love the third night of the ninth month,\nThe dew is like pearl; the moon like a bow.",
+      "translationSource": "chinese-poems.com/bj11"
     },
     {
       "id": "tang_160",
@@ -3207,7 +3299,9 @@ const data = {
       "location": "江州/九江",
       "wordCount": 24,
       "year": 817,
-      "pinyin": "lǜ yǐ xīn pēi jiǔ， hóng ní xiǎo huǒ lú。 wǎn lái tiān yù xuě， néng yǐn yì bēi wú？"
+      "pinyin": "lǜ yǐ xīn pēi jiǔ， hóng ní xiǎo huǒ lú。 wǎn lái tiān yù xuě， néng yǐn yì bēi wú？",
+      "translation": "Green lees of beer that's newly brewed,\nA little stove of red clay burns.\nAs evening comes, the sky's about to snow,\nCan you drink one cup with me?",
+      "translationSource": "chinese-poems.com/bo2"
     },
     {
       "id": "tang_161",
@@ -3247,7 +3341,9 @@ const data = {
       "location": "洛阳",
       "wordCount": 32,
       "year": 838,
-      "pinyin": "jiāng nán hǎo， fēng jǐng jiù céng ān。 rì chū jiāng huā hóng shèng huǒ， chūn lái jiāng shuǐ lǜ rú lán。 néng bú yì jiāng nán？"
+      "pinyin": "jiāng nán hǎo， fēng jǐng jiù céng ān。 rì chū jiāng huā hóng shèng huǒ， chūn lái jiāng shuǐ lǜ rú lán。 néng bú yì jiāng nán？",
+      "translation": "South of the river is good,\nLong ago, I knew the landscape well.\nAt sunrise, the river's flowers are red like fire,\nIn spring, the river's water's green as lilies.\nHow could I not remember south of the river?",
+      "translationSource": "chinese-poems.com/bj2"
     },
     {
       "id": "tang_163",
@@ -3428,7 +3524,9 @@ const data = {
       "location": "长安",
       "wordCount": 32,
       "year": 823,
-      "pinyin": "tiān jiē xiǎo yǔ rùn rú sū， cǎo sè yáo kàn jìn què wú。 zuì shì yì nián chūn hǎo chù， jué shèng yān liǔ mǎn huáng dōu。"
+      "pinyin": "tiān jiē xiǎo yǔ rùn rú sū， cǎo sè yáo kàn jìn què wú。 zuì shì yì nián chūn hǎo chù， jué shèng yān liǔ mǎn huáng dōu。",
+      "translation": "In light rain, Heaven Street is moist like butter,\nThe grass is green from afar, but not nearby.\nThe spring is best this time every year,\nThe mist of willow blossom fills the capital.",
+      "translationSource": "chinese-poems.com/h3"
     },
     {
       "id": "tang_172",
@@ -3508,7 +3606,9 @@ const data = {
       "location": "襄阳",
       "wordCount": 48,
       "year": 730,
-      "pinyin": "gù rén jù jī shǔ， yāo wǒ zhì tián jiā。 lǜ shù cūn biān hé， qīng shān guō wài xié。 kāi xuān miàn chǎng pǔ， bǎ jiǔ huà sāng má。 dài dào chóng yáng rì， hái lái jiù jú huā。"
+      "pinyin": "gù rén jù jī shǔ， yāo wǒ zhì tián jiā。 lǜ shù cūn biān hé， qīng shān guō wài xié。 kāi xuān miàn chǎng pǔ， bǎ jiǔ huà sāng má。 dài dào chóng yáng rì， hái lái jiù jú huā。",
+      "translation": "My old friend's prepared a meal of chicken and millet,\nAnd invited me to join him at his farmhouse.\nThe village is surrounded by green trees,\nBlue hills slope up beyond the city wall.\nThe window opens onto the vegetable garden,\nWhere holding wine, we talk of mulberry and hemp.\nWe are looking forward to the autumn festival,\nWhen I'll return to see the chrysanthemums bloom.",
+      "translationSource": "chinese-poems.com/m7"
     },
     {
       "id": "tang_176",
@@ -3528,7 +3628,9 @@ const data = {
       "location": "建德江/浙江",
       "wordCount": 24,
       "year": 730,
-      "pinyin": "yí zhōu bó yān zhǔ， rì mù kè chóu xīn。 yě kuàng tiān dī shù， jiāng qīng yuè jìn rén。"
+      "pinyin": "yí zhōu bó yān zhǔ， rì mù kè chóu xīn。 yě kuàng tiān dī shù， jiāng qīng yuè jìn rén。",
+      "translation": "The boat is moored beside the misty islet,\nAs sun goes down, my sorrow starts anew.\nOut on the plain, the trees and heavens touch,\nThe moon seems close to me on this clear water.",
+      "translationSource": "chinese-poems.com/meng3"
     },
     {
       "id": "tang_177",
@@ -3588,7 +3690,9 @@ const data = {
       "location": "长安",
       "wordCount": 48,
       "year": 728,
-      "pinyin": "jì jì jìng hé dài， zhāo zhāo kōng zì guī。 yù xún fāng cǎo qù， xī yǔ gù rén wéi。 dāng lù shuí xiāng jiǎ， zhī yīn shì suǒ xī。 zhī yìng shǒu jì mò， hái yǎn gù yuán fēi。"
+      "pinyin": "jì jì jìng hé dài， zhāo zhāo kōng zì guī。 yù xún fāng cǎo qù， xī yǔ gù rén wéi。 dāng lù shuí xiāng jiǎ， zhī yīn shì suǒ xī。 zhī yìng shǒu jì mò， hái yǎn gù yuán fēi。",
+      "translation": "Quietly, I've waited here so long,\nDay after day; but now I must return.\nNow I go to seek the fragrant grass,\nBut I grieve to part from my old friend.\nWho is there who would help me on the road?\nUnderstanding friends are few in life.\nI should just observe my solitude,\nAnd close again the gate of my old home.",
+      "translationSource": "chinese-poems.com/meng1"
     },
     {
       "id": "tang_180",

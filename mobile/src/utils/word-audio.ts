@@ -12,6 +12,7 @@ import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 import { buildChineseAudioUrls, containsChinese } from '@/utils/youdao-tts'
 import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
 import { getSpeechAudioUrl } from '@/utils/speech-audio'
+import { cdnUrlVariants } from '@/utils/cdn-mirror'
 
 export interface SpeakWordOptions {
   /** 用户主动点发音：失败时允许弹节流提示；自动发音/自动连播一律静默 */
@@ -47,12 +48,12 @@ export function buildWordAudioUrls(word: string, language: LanguageCode = getAct
   ]
 }
 
-/** 完整播放音源链：带预合成连读音频的词库把录音地址放最前，其后维持原 TTS 兜底链 */
+/** 完整播放音源链：带预合成连读音频的词库把录音地址放最前（含 jsDelivr 镜像容灾），其后维持原 TTS 兜底链 */
 export function buildPlayUrls(word: string, language: LanguageCode, speechBankId?: string): string[] {
   const urls = buildWordAudioUrls(word, language)
   if (!speechBankId) return urls
   const speechUrl = getSpeechAudioUrl(speechBankId, word)
-  return speechUrl ? [speechUrl, ...urls] : urls
+  return speechUrl ? [...cdnUrlVariants(speechUrl), ...urls] : urls
 }
 
 /**

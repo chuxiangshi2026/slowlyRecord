@@ -2,7 +2,7 @@
  * 遮挡回忆分块逻辑测试
  */
 import { describe, it, expect } from 'vitest'
-import { splitContentToBlocks, splitAnnotatedBlocks, firstCharHint, isArticleDue } from './recall'
+import { splitContentToBlocks, splitAnnotatedBlocks, firstCharHint, alignPinyinChars, isArticleDue } from './recall'
 
 describe('正文分块', () => {
   it('空内容返回空数组', () => {
@@ -69,6 +69,34 @@ describe('带拼音分块', () => {
     expect(blocks).toHaveLength(2)
     expect(blocks[0]).toEqual({ text: long, pinyin: 'ā ā ā' })
     expect(blocks[1]).toEqual({ text: '短行' })
+  })
+})
+
+describe('逐字注音（拼音正上方）', () => {
+  it('每个汉字对齐一个音节，标点无拼音', () => {
+    const ruby = alignPinyinChars('床前明月光，', 'chuáng qián míng yuè guāng，')
+    expect(ruby).toEqual([
+      { char: '床', pinyin: 'chuáng' },
+      { char: '前', pinyin: 'qián' },
+      { char: '明', pinyin: 'míng' },
+      { char: '月', pinyin: 'yuè' },
+      { char: '光', pinyin: 'guāng' },
+      { char: '，' },
+    ])
+  })
+
+  it('音节数与汉字数不一致时返回 null（退化整行拼音）', () => {
+    expect(alignPinyinChars('床前明月光', 'chuáng qián')).toBeNull()
+  })
+
+  it('无拼音返回 null；空文本返回空数组', () => {
+    expect(alignPinyinChars('床前', '')).toBeNull()
+    expect(alignPinyinChars('', 'chuáng')).toEqual([])
+  })
+
+  it('中英混排行英文按原字符占位', () => {
+    const ruby = alignPinyinChars('床hi前', 'chuáng qián')
+    expect(ruby?.map((r) => r.pinyin)).toEqual(['chuáng', undefined, undefined, 'qián'])
   })
 })
 

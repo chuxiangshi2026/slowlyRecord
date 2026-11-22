@@ -29,6 +29,12 @@
       >
         <text>拼音</text>
       </view>
+      <view v-if="englishText" class="chip" :class="{ active: showEnglish }" @click="showEnglish = !showEnglish">
+        <text>英文</text>
+      </view>
+      <view v-else class="chip nav" @click="doTranslateEnglish">
+        <text>{{ translating ? '翻译中…' : '译英文' }}</text>
+      </view>
       <view class="chip" :class="{ active: firstHint }" @click="firstHint = !firstHint">
         <text>首字提示</text>
       </view>
@@ -45,6 +51,11 @@
 
     <!-- 正文遮挡块 -->
     <scroll-view scroll-y class="content-scroll">
+      <!-- 英文译文（人工英译/在线翻译缓存），显示在正文上方 -->
+      <view v-if="showEnglish && englishText" class="english-panel">
+        <text class="english-label">English{{ englishSourceLabel ? ` · ${englishSourceLabel}` : '' }}</text>
+        <text class="english-text">{{ englishText }}</text>
+      </view>
       <view class="block-list">
         <view
           v-for="(block, idx) in blocks"
@@ -54,8 +65,17 @@
           @click="toggleBlock(idx)"
         >
           <template v-if="revealed[idx]">
-            <text v-if="showPinyin && block.pinyin" class="block-pinyin">{{ block.pinyin }}</text>
-            <text class="block-text">{{ block.text }}</text>
+            <!-- 逐字注音：拼音在字正上方 -->
+            <view v-if="rubyBlocks[idx]" class="ruby-line">
+              <view v-for="(rc, ci) in rubyBlocks[idx]!" :key="ci" class="ruby-unit">
+                <text class="ruby-py">{{ rc.pinyin || ' ' }}</text>
+                <text class="ruby-char">{{ rc.char }}</text>
+              </view>
+            </view>
+            <template v-else>
+              <text v-if="showPinyin && block.pinyin" class="block-pinyin">{{ block.pinyin }}</text>
+              <text class="block-text">{{ block.text }}</text>
+            </template>
           </template>
           <view v-else class="block-mask">
             <text v-if="firstHint && firstChars[idx]" class="mask-first-char">{{ firstChars[idx] }}</text>
@@ -90,10 +110,12 @@ import { ref, computed, watch } from 'vue'
 import { onLoad, onUnload } from '@dcloudio/uni-app'
 import { useTextMemory } from '@/stores/useTextMemory'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
-import { splitAnnotatedBlocks, firstCharHint } from './recall'
+import { splitAnnotatedBlocks, firstCharHint, alignPinyinChars, type RubyChar } from './recall'
 import { findBuiltinPoem } from './library'
 import { getPoetryAudioUrl, buildPoetrySpeakText } from '@/utils/poetry-audio'
 import { buildChineseAudioUrls } from '@/utils/youdao-tts'
+import { cdnUrlVariants } from '@/utils/cdn-mirror'
+import { quickTranslateToEnglish } from '@/utils/quick-translate'
 import { getTtsAdapter } from '@/adapters/index'
 
 const store = useTextMemory()
@@ -101,20 +123,39 @@ const store = useTextMemory()
 const article = ref<MobileTextArticle | null>(null)
 const loaded = ref(false)
 const revealed = ref<boolean[]>([])
-// 旧版本导入的文章没有 pinyin 字段：运行时从内置库按标题+正文回填，无需删库重导
+// 旧版本导入的文章没有 pinyin/translation 字段：运行时从内置库按标题+正文回填，无需删库重导
 const builtinPinyin = ref('')
+const builtinTranslation = ref('')
+// 英文译文展示开关（有译文时出现「英文」chip）与在线翻译状态
+const showEnglish = ref(uni.getStorageSync('text-recall-show-english') === true)
+const translating = ref(false)
 
 // 显示偏好：拼音默认开（无拼音数据时不显示开关），首字提示默认关；均记住选择
 const showPinyin = ref(uni.getStorageSync('text-recall-show-pinyin') !== false)
 const firstHint = ref(uni.getStorageSync('text-recall-first-hint') === true)
 watch(showPinyin, (v) => { try { uni.setStorageSync('text-recall-show-pinyin', v) } catch { /* 忽略 */ } })
 watch(firstHint, (v) => { try { uni.setStorageSync('text-recall-first-hint', v) } catch { /* 忽略 */ } })
+watch(showEnglish, (v) => { try { uni.setStorageSync('text-recall-show-english', v) } catch { /* 忽略 */ } })
 
 const blocks = computed(() =>
   article.value
     ? splitAnnotatedBlocks(article.value.content, article.value.pinyin || builtinPinyin.value || undefined)
     : [],
 )
+
+// 逐字注音序列（拼音显示在字正上方）；对齐失败或无拼音时为 null，模板退化为整行拼音
+const rubyBlocks = computed<(RubyChar[] | null)[]>(() =>
+  blocks.value.map((b) => (showPinyin.value && b.pinyin ? alignPinyinChars(b.text, b.pinyin) : null)),
+)
+
+// 英文译文（内置人工英译或在线翻译缓存）
+const englishText = computed(() => article.value?.translation || builtinTranslation.value || '')
+
+// 译文来源标注：人工英译显示来源，机器翻译不显示
+const englishSourceLabel = computed(() => {
+  const src = article.value?.translationSource || ''
+  return src && src !== 'machine' ? src : ''
+})
 
 const hasPinyin = computed(() => blocks.value.some((b) => b.pinyin))
 
@@ -132,9 +173,13 @@ onLoad((opt: any) => {
   if (found) {
     article.value = found
     revealed.value = blocks.value.map(() => false)
-    if (!found.pinyin) {
+    if (!found.pinyin || !found.translation) {
       findBuiltinPoem(found.title, found.content, found.dynasty)
-        .then((poem) => { if (poem?.pinyin) builtinPinyin.value = poem.pinyin })
+        .then((poem) => {
+          if (!poem) return
+          if (poem.pinyin) builtinPinyin.value = poem.pinyin
+          if (poem.translation) builtinTranslation.value = poem.translation
+        })
         .catch(() => { /* 回填失败静默 */ })
     }
   }
@@ -180,8 +225,11 @@ async function playFullArticle() {
   if (!article.value || playing.value) return
   const a = article.value
   const speakText = buildPoetrySpeakText(a.title, a.author, a.content)
-  const urls: string[] = [getPoetryAudioUrl(a.title, a.author, a.content)]
-  urls.push(...buildChineseAudioUrls(speakText))
+  // CDN 预合成音频（主域 + 镜像域），其后在线中文音源链兜底
+  const urls: string[] = [
+    ...cdnUrlVariants(getPoetryAudioUrl(a.title, a.author, a.content)),
+    ...buildChineseAudioUrls(speakText),
+  ]
   playing.value = true
   let ok = false
   for (const url of urls) {
@@ -193,6 +241,26 @@ async function playFullArticle() {
   }
   playing.value = false
   if (!ok) uni.showToast({ title: '朗读失败，请检查网络后重试', icon: 'none' })
+}
+
+/** 在线译英文：按当前翻译引擎设置翻译全文并缓存到文章（下次打开直接显示） */
+async function doTranslateEnglish() {
+  if (!article.value || translating.value) return
+  const a = article.value
+  translating.value = true
+  try {
+    const res = await quickTranslateToEnglish(a.content)
+    if (!res.ok) {
+      uni.showModal({ title: '译英文失败', content: res.error, showCancel: false })
+      return
+    }
+    store.updateArticle(a._id, { translation: res.text, translationSource: 'machine' })
+    article.value = { ...a, translation: res.text, translationSource: 'machine' }
+    showEnglish.value = true
+    uni.showToast({ title: '已生成英文译文', icon: 'none' })
+  } finally {
+    translating.value = false
+  }
 }
 
 function onRate(remembered: boolean) {
@@ -326,6 +394,55 @@ function goBack() {
 .block-pinyin + .block-text {
   border-radius: 0 0 12rpx 12rpx;
   padding-top: 8rpx;
+}
+
+/* 逐字注音（拼音正上方） */
+.ruby-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  background: var(--sr-card);
+  border-radius: 12rpx;
+  padding: 14rpx 20rpx 16rpx;
+}
+.ruby-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 12rpx;
+}
+.ruby-py {
+  font-size: 20rpx;
+  color: var(--sr-text-3);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.ruby-char {
+  font-size: 32rpx;
+  color: var(--sr-text-strong);
+  line-height: 1.5;
+}
+
+/* 英文译文面板 */
+.english-panel {
+  margin: 24rpx 24rpx 0;
+  background: var(--sr-card);
+  border: 1rpx dashed var(--sr-border);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+}
+.english-label {
+  display: block;
+  font-size: 22rpx;
+  color: var(--sr-text-3);
+  margin-bottom: 8rpx;
+}
+.english-text {
+  display: block;
+  font-size: 26rpx;
+  color: var(--sr-text-2);
+  line-height: 1.8;
+  font-style: italic;
 }
 .block-mask {
   min-height: 88rpx;

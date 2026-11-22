@@ -31,7 +31,9 @@ const data = {
       "dynasty": "两汉",
       "dynastyCode": "han",
       "wordCount": 60,
-      "pinyin": "qīng qīng yuán zhōng kuí， cháo lù dài rì xī。\nyáng chūn bù dé zé， wàn wù shēng guāng huī。\ncháng kǒng qiū jié zhì， kūn huáng huá yè shuāi。\nbǎi chuān dōng dào hǎi， hé shí fù xī guī？\nshào zhuàng bù nǔ lì， lǎo dà tú shāng bēi。"
+      "pinyin": "qīng qīng yuán zhōng kuí， cháo lù dài rì xī。\nyáng chūn bù dé zé， wàn wù shēng guāng huī。\ncháng kǒng qiū jié zhì， kūn huáng huá yè shuāi。\nbǎi chuān dōng dào hǎi， hé shí fù xī guī？\nshào zhuàng bù nǔ lì， lǎo dà tú shāng bēi。",
+      "translation": "Sunflowers in the field are purest green,\nThe morning dew waits for the sun to dry it.\nThe warm spring spreads around its favours,\nTen thousand things are growing in the radiance.\nI often fear that autumn's season will come,\nFlowers and leaves will yellow and wither and wane.\nThe hundred rivers flow east towards the sea,\nWhen will they come back to the west again?\nIf the young and vigorous do not work hard,\nIn old age, they will be sorry in vain.",
+      "translationSource": "chinese-poems.com/hyf1"
     },
     {
       "id": "han_002",
@@ -71,7 +73,9 @@ const data = {
       "dynasty": "两汉",
       "dynastyCode": "han",
       "wordCount": 70,
-      "pinyin": "dōng lín jié shí， yǐ guān cāng hǎi。\nshuǐ hé dàn dàn， shān dǎo sǒng zhì。\nshù mù cóng shēng， bǎi cǎo fēng mào。\nqiū fēng xiāo sè， hóng bō yǒng qǐ。\nrì yuè zhī xíng， ruò chū qí zhōng。\nxīng hàn càn làn， ruò chū qí lǐ。\nxìng shèn zhì zāi， gē yǐ yǒng zhì。"
+      "pinyin": "dōng lín jié shí， yǐ guān cāng hǎi。\nshuǐ hé dàn dàn， shān dǎo sǒng zhì。\nshù mù cóng shēng， bǎi cǎo fēng mào。\nqiū fēng xiāo sè， hóng bō yǒng qǐ。\nrì yuè zhī xíng， ruò chū qí zhōng。\nxīng hàn càn làn， ruò chū qí lǐ。\nxìng shèn zhì zāi， gē yǐ yǒng zhì。",
+      "translation": "East of Jieshi mountain, I gaze at the blue sea.\nThe water dances so gently, the mountain island towers.\nTrees here grow thick, a hundred grasses are lush.\nThe autumn wind soughs, great waves rise up.\nThe path of the sun and moon, seems to come from within.\nThe splendid Milky Way, seems to come from inside.\nOh, I am so lucky, to be singing my song!",
+      "translationSource": "chinese-poems.com/cc1"
     },
     {
       "id": "han_004",
@@ -285,7 +289,9 @@ const data = {
       "location": "江南",
       "wordCount": 42,
       "year": 0,
-      "pinyin": "jiāng nán kě cǎi lián， lián yè hé tián tián。 yú xì lián yè jiān。 yú xì lián yè dōng， yú xì lián yè xī， yú xì lián yè nán， yú xì lián yè běi。"
+      "pinyin": "jiāng nán kě cǎi lián， lián yè hé tián tián。 yú xì lián yè jiān。 yú xì lián yè dōng， yú xì lián yè xī， yú xì lián yè nán， yú xì lián yè běi。",
+      "translation": "South of the river, you can pick lotuses,\nHow like a field are the lotus leaves!\nFish play in the lotus leaves:\nFish play east of the lotus leaves,\nFish play west of the lotus leaves,\nFish play south of the lotus leaves,\nFish play north of the lotus leaves.",
+      "translationSource": "chinese-poems.com/hyf2"
     }
   ]
 } as const

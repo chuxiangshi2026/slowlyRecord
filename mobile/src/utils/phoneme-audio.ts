@@ -6,6 +6,7 @@
  * CDN 失败（未发布/离线）时回退到有道 dictvoice 读 articulation 代理串。
  */
 import { getTtsAdapter } from '@/adapters/index'
+import { cdnUrlVariants } from '@/utils/cdn-mirror'
 
 const PHONEME_AUDIO_BASE =
   'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/phoneme-audio'
@@ -28,13 +29,18 @@ export function phonemeAudioUrl(ipa: string): string {
  */
 export async function playPhoneme(ipa: string, fallbackText?: string): Promise<void> {
   if (cdnFailCount < CDN_FAIL_THRESHOLD) {
-    try {
-      // CDN 未发布时 404 属预期：静默失败走回退，不弹「网络异常」惊吓用户
-      await getTtsAdapter().playAudio(phonemeAudioUrl(ipa), { silent: true })
-      return
-    } catch {
-      cdnFailCount++
+    // CDN 主域 + 镜像域依次尝试：境内 jsDelivr 主域时常不稳，镜像能明显降低发音失败率
+    for (const url of cdnUrlVariants(phonemeAudioUrl(ipa))) {
+      try {
+        // CDN 未发布时 404 属预期：静默失败走回退，不弹「网络异常」惊吓用户
+        await getTtsAdapter().playAudio(url, { silent: true })
+        cdnFailCount = 0
+        return
+      } catch {
+        /* 尝试下一镜像 */
+      }
     }
+    cdnFailCount++
   }
   try {
     const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(fallbackText || ipa)}&type=2`

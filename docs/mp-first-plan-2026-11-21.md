@@ -149,6 +149,20 @@
 **改动**：
 - 专属深色背景 `pages-tools/static/focus/focus-bg.jpg`（79KB，不占主包），由 `scripts/render-focus-bg-png.cjs` 用 SVG→Puppeteer 预渲染：深绿渐变底 + 更清晰的四层玉绿远山 + 月亮光晕 + 飞鸟 + 多处如意祥云 + 左侧竹影 + 顶部/底部回字纹边饰 + 右下角朱砂「静」字印章；不跟随主题，永远深色
 - 文字/控件透明度整体上调（例词 0.5→0.82、提示语 0.4→0.75、按钮底色 0.1→0.18、边框 0.5→0.8、浅红提示色提亮为 `#d9a29c`），单词舞台加玉绿细边框+内阴影，提升对比度与整体质感
+- 标准模式改为释义恒显示（去掉「点击显示释义」两步交互），自动翻页到点直接切下一词
+
+### 3.7 卡片模式背景 / 音频容灾 / 文本记忆英文与逐字拼音（✅ 2026-11-22）
+
+**卡片模式专属背景**：复习页（review.vue）原来自己的绿色渐变盖住了全局背景图（同层叠上下文问题），改为主包专属背景 `static/theme-bg/card-bg-{light,dark}.jpg`（`scripts/render-card-bg-pngs.cjs` 渲染，构图与专注模式不同：右侧竹影+祥云+回纹+朱砂「忆」章，浅色米绿宣纸/深色墨绿夜色双版随主题切换），根节点补 `position:relative; z-index:0` 让负 z-index 背景生效。
+
+**音频 CDN 容灾（朗读失败根因修复）**：`cdn.jsdelivr.net` 境内时通时断，表现为「总是朗读失败、过很久又能读」。新增 `mobile/src/utils/cdn-mirror.ts`（`cdnUrlVariants`：主域 → `jsd.onmicrosoft.cn` 境内镜像 → `fastly.jsdelivr.net`），接入音标发音、词库预合成音频（word-audio，含专注连播）、诗词朗读三条链路依次重试。
+
+**文本记忆英文译文**：
+- 人工英译：`mobile/scripts/copy-poetry-translations.cjs` 按正文匹配把桌面端 59 篇人工英译（chinese-poems.com，见 NOTICE）拷入移动端诗词数据，导入文章携带 `translation/translationSource`；旧文章打开回忆页时经 `findBuiltinPoem` 运行时回填（同拼音）
+- 在线翻译：新增主包 `mobile/src/utils/quick-translate.ts`（分包禁止互引，按当前翻译引擎设置实现 GLM/DeepSeek/千问/Kimi/有道/百度最小子集，中文→英文、保留行结构），回忆页「译英文」按钮生成后写入文章缓存（`translationSource: 'machine'`），下次打开直接显示；引擎不支持时提示去设置切换
+- 展示：回忆页「英文」chip 开关，译文以虚线面板显示在正文上方
+
+**逐字拼音（正上方）**：`recall.ts` 新增 `alignPinyinChars`（拼音音节与汉字一一对齐，音节数不匹配返回 null 退化整行显示），回忆页揭示块改为 ruby 注音排版（每个字上方一行拼音）。
 
 ## 四、实施顺序
 

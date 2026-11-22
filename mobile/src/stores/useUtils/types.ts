@@ -133,6 +133,10 @@ export interface MobileTextArticle {
   nextReview?: number
   /** 逐行拼音（内置诗词导入时携带，与 content 行对齐） */
   pinyin?: string
+  /** 英文译文（内置诗词携带人工英译；自建/未覆盖文章由「译英文」按钮生成并缓存） */
+  translation?: string
+  /** 译文来源（chinese-poems.com/xxx 或 machine） */
+  translationSource?: string
 }
 
 export interface MobileTextNote {

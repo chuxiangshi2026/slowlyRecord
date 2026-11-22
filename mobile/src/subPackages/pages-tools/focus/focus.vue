@@ -101,18 +101,13 @@
       <button class="btn-exit" @click="exitFocus">返回</button>
     </view>
 
-    <!-- 标准模式：逐词轮播 -->
+    <!-- 标准模式：逐词轮播（释义直接显示，无需点击揭示） -->
     <view v-else-if="settings.mode === 'standard' && currentWord" class="stage">
-      <view class="word-stage" @click="revealCurrent">
+      <view class="word-stage">
         <text class="focus-word">{{ currentWord.word }}</text>
-        <template v-if="isRevealed">
-          <text v-if="currentWord.phonetic" class="focus-phonetic">{{ currentWord.phonetic }}</text>
-          <text class="focus-meaning">{{ currentWord.meaning || '暂无释义' }}</text>
-          <text v-if="currentWord.example" class="focus-example">{{ currentWord.example }}</text>
-        </template>
-        <text v-else class="focus-hint">
-          点击显示释义{{ settings.intervalSec > 0 ? `（${settings.intervalSec}s 后自动显示）` : '' }}
-        </text>
+        <text v-if="currentWord.phonetic" class="focus-phonetic">{{ currentWord.phonetic }}</text>
+        <text class="focus-meaning">{{ currentWord.meaning || '暂无释义' }}</text>
+        <text v-if="currentWord.example" class="focus-example">{{ currentWord.example }}</text>
       </view>
       <view class="action-row">
         <button class="btn-forget" @click="markCurrent(false)">没记住</button>
@@ -335,7 +330,6 @@ function toggleAutoPlay() {
 // ========== 会话状态 ==========
 const wordList = ref<MobileWord[]>([])
 const currentIndex = ref(0)
-const isRevealed = ref(false)
 const showComplete = ref(false)
 const rememberCount = ref(0)
 const forgetCount = ref(0)
@@ -364,19 +358,13 @@ function clearAutoTimer() {
   }
 }
 
-/** 标准模式自动翻页：未揭示 → 揭示；已揭示 → 下一词 */
+/** 标准模式自动翻页：释义恒显示，到点直接切下一词 */
 function scheduleAutoTimer() {
   clearAutoTimer()
   if (settings.value.mode !== 'standard' || settings.value.intervalSec <= 0) return
   if (!currentWord.value || showComplete.value) return
   autoTimer = setTimeout(() => {
-    if (!isRevealed.value) {
-      isRevealed.value = true
-      if (settings.value.autoPlay) playCurrent()
-      scheduleAutoTimer()
-    } else {
-      advance(false)
-    }
+    advance(false)
   }, settings.value.intervalSec * 1000)
 }
 
@@ -497,7 +485,6 @@ function listenNext() {
 function resetWordState() {
   // 切词/切模式先停旧朗读，并作废旧词待完成的音源回退
   stopSpeaking()
-  isRevealed.value = false
   userInput.value = ''
   checked.value = false
   isCorrect.value = false
@@ -520,13 +507,6 @@ function resetWordState() {
   } else if (settings.value.mode === 'dictation' && settings.value.autoPlay) {
     playCurrent()
   }
-}
-
-function revealCurrent() {
-  if (settings.value.mode !== 'standard' || isRevealed.value) return
-  isRevealed.value = true
-  if (settings.value.autoPlay) playCurrent()
-  scheduleAutoTimer()
 }
 
 /** 标准模式：记住/没记住，走 store 的 SRS 标准 */

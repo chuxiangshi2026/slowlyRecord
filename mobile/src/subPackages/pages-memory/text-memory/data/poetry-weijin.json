@@ -27,7 +27,9 @@
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
       "wordCount": 120,
-      "pinyin": "shǎo wú shì sú yùn， xìng běn ài qiū shān。\nwù luò chén wǎng zhōng， yí qù sān shí nián。\njī niǎo liàn jiù lín， chí yú sī gù yuān。\nkāi huāng nán yě jì， shǒu zhuō guī yuán tián。\nfāng zhái shí yú mǔ， cǎo wū bā jiǔ jiān。\nyú liǔ yìn hòu yán， táo lǐ luó táng qián。\nài ài yuǎn rén cūn， yī yī xū lǐ yān。\ngǒu fèi shēn xiàng zhōng， jī míng sāng shù diān。\nhù tíng wú chén zá， xū shì yǒu yú xián。\njiǔ zài fán lóng lǐ， fù dé fǎn zì rán。"
+      "pinyin": "shǎo wú shì sú yùn， xìng běn ài qiū shān。\nwù luò chén wǎng zhōng， yí qù sān shí nián。\njī niǎo liàn jiù lín， chí yú sī gù yuān。\nkāi huāng nán yě jì， shǒu zhuō guī yuán tián。\nfāng zhái shí yú mǔ， cǎo wū bā jiǔ jiān。\nyú liǔ yìn hòu yán， táo lǐ luó táng qián。\nài ài yuǎn rén cūn， yī yī xū lǐ yān。\ngǒu fèi shēn xiàng zhōng， jī míng sāng shù diān。\nhù tíng wú chén zá， xū shì yǒu yú xián。\njiǔ zài fán lóng lǐ， fù dé fǎn zì rán。",
+      "translation": "When young, I'd not enjoyed the common pleasures,\nMy nature's basic love was for the hills.\nMistakenly I fell into the worldly net,\nAnd thus remained for thirteen years.\nA bird once caged must yearn for its old forest,\nA fish in a pond will long to return to the lake.\nSo now I want to head to southern lands,\nReturning to my fields and orchards there.\nAbout ten acres of land is all I have,\nJust eight or nine rooms there in my thatched hut.\nThere's shade from elms and willows behind the eaves,\nBefore the hall are gathered peaches and plums.\nBeyond the dark and distance lies a village,\nThe smoke above reluctant to depart.\nA dog is barking somewhere down the lane,\nAnd chickens sit atop the mulberry tree.\nThe mundane world has no place in my home,\nMy modest rooms are for the most part vacant.\nAt last I feel released from my confinement,\nI set myself to rights again.",
+      "translationSource": "chinese-poems.com/young"
     },
     {
       "id": "weijin_002",
@@ -47,7 +49,9 @@
       "dynasty": "魏晋南北朝",
       "dynastyCode": "weijin",
       "wordCount": 60,
-      "pinyin": "jié lú zài rén jìng， ér wú chē mǎ xuān。\nwèn jūn hé néng ěr？ xīn yuǎn dì zì piān。\ncǎi jú dōng lí xià， yōu rán jiàn nán shān。\nshān qì rì xī jiā， fēi niǎo xiāng yǔ hái。\ncǐ zhōng yǒu zhēn yì， yù biàn yǐ wàng yán。"
+      "pinyin": "jié lú zài rén jìng， ér wú chē mǎ xuān。\nwèn jūn hé néng ěr？ xīn yuǎn dì zì piān。\ncǎi jú dōng lí xià， yōu rán jiàn nán shān。\nshān qì rì xī jiā， fēi niǎo xiāng yǔ hái。\ncǐ zhōng yǒu zhēn yì， yù biàn yǐ wàng yán。",
+      "translation": "I made my home amidst this human bustle,\nYet I hear no clamour from the carts and horses.\nMy friend, you ask me how this can be so?\nA distant heart will tend towards like places.\nFrom the eastern hedge, I pluck chrysanthemum flowers,\nAnd idly look towards the southern hills.\nThe mountain air is beautiful day and night,\nThe birds fly back to roost with one another.\nI know that this must have some deeper meaning,\nI try to explain, but cannot find the words.",
+      "translationSource": "chinese-poems.com/wine"
     },
     {
       "id": "weijin_003",
@@ -226,7 +230,9 @@
       "location": "洛阳",
       "wordCount": 24,
       "year": 220,
-      "pinyin": "zhǔ dòu rán dòu qí， dòu zài fǔ zhōng qì。 běn shì tóng gēn shēng， xiāng jiān hé tài jí？"
+      "pinyin": "zhǔ dòu rán dòu qí， dòu zài fǔ zhōng qì。 běn shì tóng gēn shēng， xiāng jiān hé tài jí？",
+      "translation": "Boiling beans burns the beanstalk,\nBeans inside the pan cry:\nWe're both grown from one root,\nWhy so fast to boil each other?",
+      "translationSource": "chinese-poems.com/cz1"
     },
     {
       "id": "weijin_012",

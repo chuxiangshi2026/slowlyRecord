@@ -109,6 +109,38 @@ export function splitAnnotatedBlocks(content: string, pinyin?: string): Annotate
 /** 用于「首字提示」的标点/空白字符集（块内首字符为这些时顺延） */
 const HINT_SKIP_CHARS = new Set(' \t，。！？；：、“”‘’《》〈〉（）【】…—·,.!?;:\'"()[]<>-')
 
+/** 拼音音节切分：按空白切分后剥离附着标点（拼音串音节与汉字一一对应） */
+const PY_PUNCT_RE = /[，。！？；：、“”‘’《》〈〉（）【】…—·,.!?;:'"()[\]{}<>-]/g
+
+/** 单字 + 其正上方拼音（ruby 注音排版用） */
+export interface RubyChar {
+  char: string
+  pinyin?: string
+}
+
+/**
+ * 把「整行拼音串」对齐到「逐个汉字」，生成逐字注音序列（拼音呈现在字的正上方）。
+ * - 拼音串按空白切分、剥离附着标点后应恰好每汉字一个音节
+ * - 非汉字字符（标点/英文等）不带拼音，原样占位
+ * - 音节数与汉字数不一致（数据异常/中英混排行）时返回 null，调用方退化为整行拼音显示
+ */
+export function alignPinyinChars(text: string, pinyin?: string): RubyChar[] | null {
+  if (!text) return []
+  if (!pinyin || !pinyin.trim()) return null
+  const syllables = pinyin
+    .split(/\s+/)
+    .map((s) => s.replace(PY_PUNCT_RE, '').trim())
+    .filter(Boolean)
+  const chars = Array.from(text)
+  const cjkCount = chars.filter((ch) => /[一-鿿㐀-䶿]/.test(ch)).length
+  if (syllables.length !== cjkCount) return null
+  let si = 0
+  return chars.map((ch) => {
+    if (/[一-鿿㐀-䶿]/.test(ch)) return { char: ch, pinyin: syllables[si++] }
+    return { char: ch }
+  })
+}
+
 /**
  * 首字提示：取块内第一个非标点非空白字符（如「床前明月光，」→「床」）。
  * 整块都是标点/空白时返回空串（调用方退化为完整遮盖）。

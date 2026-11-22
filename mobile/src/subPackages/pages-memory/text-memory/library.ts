@@ -42,6 +42,10 @@ export interface MobilePoetryItem {
   year?: string | number
   /** 逐行拼音（离线生成，与 content 行对齐） */
   pinyin?: string
+  /** 人工英译（与 content 行数不强制对齐，整段展示；来自 chinese-poems.com） */
+  translation?: string
+  /** 英译来源（如 chinese-poems.com/lb4） */
+  translationSource?: string
 }
 
 export interface MobileIdiomItem {
@@ -123,6 +127,8 @@ function normalizePoetry(raw: readonly any[], dynastyCode: string): MobilePoetry
     wordCount: it.wordCount,
     year: it.year,
     pinyin: it.pinyin,
+    translation: it.translation,
+    translationSource: it.translationSource,
   })).filter((p) => p.title && p.content)
 }
 

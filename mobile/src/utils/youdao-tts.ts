@@ -93,12 +93,12 @@ function toHex(bytes: Uint8Array): string {
   return hex
 }
 
-function sha256Hex(input: string): string {
+export function sha256Hex(input: string): string {
   return toHex(sha256(utf8Bytes(input)))
 }
 
 /** 有道 v3 签名 input：q 长度 ≤20 取原文，否则 前10 + 长度 + 后10 */
-function youdaoSignInput(q: string): string {
+export function youdaoSignInput(q: string): string {
   if (!q) return q
   if (q.length <= 20) return q
   return q.substring(0, 10) + q.length + q.substring(q.length - 10)

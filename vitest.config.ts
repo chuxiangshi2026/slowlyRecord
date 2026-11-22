@@ -46,6 +46,10 @@ export default defineConfig({
       { find: /^@\/utils\/poetry-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/poetry-audio.ts') },
       // mobile 默写对比 LCS：mobile 代码以 @/utils/text-compare 引用，同上
       { find: /^@\/utils\/text-compare$/, replacement: resolve(__dirname, 'mobile/src/utils/text-compare.ts') },
+      // mobile jsDelivr 镜像变体：mobile 代码以 @/utils/cdn-mirror 引用，同上
+      { find: /^@\/utils\/cdn-mirror$/, replacement: resolve(__dirname, 'mobile/src/utils/cdn-mirror.ts') },
+      // mobile 轻量在线翻译：mobile 代码以 @/utils/quick-translate 引用，同上
+      { find: /^@\/utils\/quick-translate$/, replacement: resolve(__dirname, 'mobile/src/utils/quick-translate.ts') },
       // mobile 音标数据：mobile 代码以 @/utils/phoneme-data 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/phoneme-data（无 PHONEME_CHANT）
       { find: /^@\/utils\/phoneme-data$/, replacement: resolve(__dirname, 'mobile/src/utils/phoneme-data.ts') },
