@@ -32,7 +32,10 @@ import {
   getCachedBankIds,
   downloadWordBank,
   fetchRemoteIndex,
-  NON_ENGLISH_BANKS,
+  categoryIdOf,
+  buildCategoryTabs,
+  PUBLIC_HOSTED_BANKS,
+  type RemoteWordBankInfo,
 } from '@/utils/remote-wordbank'
 
 const CACHE_KEY_PREFIX = 'slowlyrecord_remote_wordbank_'
@@ -155,9 +158,9 @@ describe('多语言词库', () => {
       data: [{ id: 'cet4', name: '四级词汇', wordCount: 3739, sizeKB: 305 }],
     }))
     const list = await fetchRemoteIndex()
-    expect(list).toHaveLength(1 + NON_ENGLISH_BANKS.length)
+    expect(list).toHaveLength(1 + PUBLIC_HOSTED_BANKS.length)
     expect(new Set(list?.map(bank => bank.language))).toEqual(new Set(['en', 'ja', 'ru', 'es', 'fr']))
-    for (const bank of NON_ENGLISH_BANKS) {
+    for (const bank of PUBLIC_HOSTED_BANKS) {
       const words = JSON.parse(readFileSync(resolve(process.cwd(), `public/wordbanks/${bank.id}.json`), 'utf-8'))
       expect(words, bank.id).toHaveLength(bank.wordCount)
     }
@@ -169,5 +172,43 @@ describe('多语言词库', () => {
     expect(downloadFile.mock.calls[0][0].url).toBe(
       'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/wordbanks/jlpt-n5.json',
     )
+  })
+})
+
+describe('词库分类', () => {
+  it('仓库清单里的英语词库全都有明确分类（不落到「其他」）', () => {
+    const index = JSON.parse(
+      readFileSync(resolve(process.cwd(), 'mobile/wordbank-json/index.json'), 'utf-8'),
+    ) as RemoteWordBankInfo[]
+    for (const bank of index) {
+      expect(categoryIdOf({ ...bank, language: 'en' }), bank.id).not.toBe('other')
+    }
+  })
+
+  it('托管词库分类：非英语按语种，英语口语库归口语句型', () => {
+    for (const bank of PUBLIC_HOSTED_BANKS) {
+      if ((bank.language || 'en') === 'en') {
+        expect(categoryIdOf(bank), bank.id).toBe('oral')
+      } else {
+        expect(categoryIdOf(bank), bank.id).toBe(`lang:${bank.language}`)
+      }
+    }
+  })
+
+  it('分类 tab：英语分类在前、语种在后，只列出清单里出现的', () => {
+    const list: RemoteWordBankInfo[] = [
+      { id: 'cet4', name: '四级词汇', wordCount: 1, sizeKB: 1, language: 'en' },
+      { id: 'dining', name: '吃饭', wordCount: 1, sizeKB: 1, language: 'en' },
+      { id: 'jlpt-n5', name: 'JLPT N5', wordCount: 1, sizeKB: 1, language: 'ja' },
+    ]
+    expect(buildCategoryTabs(list)).toEqual([
+      { id: 'exam', label: '考试' },
+      { id: 'life', label: '生活场景' },
+      { id: 'lang:ja', label: '日语' },
+    ])
+  })
+
+  it('未收录的英语 id 归「其他」', () => {
+    expect(categoryIdOf({ id: 'xxx-new', name: '', wordCount: 1, sizeKB: 1, language: 'en' })).toBe('other')
   })
 })

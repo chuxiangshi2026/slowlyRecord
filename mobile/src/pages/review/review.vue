@@ -33,7 +33,7 @@
             </view>
             <view class="autoplay-toggle" @click="toggleDirectMeaning">
               <text class="autoplay-icon">{{ directMeaning ? '👁' : '🙈' }}</text>
-              <text class="autoplay-label">直接释义</text>
+              <text class="autoplay-label">{{ directMeaning ? '学习模式' : '复习模式' }}</text>
             </view>
           </view>
         </view>
@@ -56,7 +56,7 @@
 
       <!-- 卡片（微信小程序用 catchtouch 阻止页面滚动） -->
       <view class="card-wrapper">
-        <!-- 正面（开启「直接释义」后不再渲染正面，卡片恒为释义面） -->
+        <!-- 正面（学习模式下不再渲染正面，卡片恒为释义面） -->
         <view
           v-if="!cardFlipped"
           class="review-card card-front"
@@ -261,9 +261,9 @@ const checkGoalReached = (before: number) => {
 const AUTOPLAY_STORAGE_KEY = 'slowlyrecord-review-autoplay'
 const autoPlay = ref(true)
 
-// 「直接显示释义」开关：默认关，持久化到 storage；开启后卡片无需点击即显示释义面
+// 卡片模式：学习模式（默认，直接显示释义）/ 复习模式（隐藏释义先回忆，点击翻面）；持久化到 storage
 const DIRECT_MEANING_STORAGE_KEY = 'slowlyrecord-review-direct-meaning'
-const directMeaning = ref(false)
+const directMeaning = ref(true)
 
 // 卡片实际是否展示释义面：点击翻面 或 开启「直接释义」
 const cardFlipped = computed(() => isFlipped.value || directMeaning.value)
@@ -615,7 +615,7 @@ watch(isFlipped, (flipped) => {
   if (flipped && autoPlay.value) playWord()
 })
 
-// 开启「直接释义」时新词一上卡释义即显示，视同翻面补一次自动发音
+// 学习模式下新词一上卡释义即显示，视同翻面补一次自动发音
 watch(currentWord, (word) => {
   if (word && directMeaning.value && autoPlay.value) playWord()
 })

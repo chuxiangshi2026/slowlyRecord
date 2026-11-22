@@ -1,7 +1,7 @@
 /**
  * 词库远程下载（jsDelivr CDN 缓存 GitHub 仓库）
  *
- * 英语词库读取 mobile/wordbank-json/，多语言词库复用 public/wordbanks/。
+ * 英语词库读取 mobile/wordbank-json/，多语言与口语句库（spoken-*）复用 public/wordbanks/。
  * jsDelivr 自动缓存 GitHub 内容，国内有 CDN 节点，比 raw.githubusercontent.com 稳定。
  * 首次下载后缓存到本地 storage，之后离线可用。
  *
@@ -16,7 +16,7 @@ const CACHE_INDEX_KEY = 'slowlyrecord_remote_wordbank_index'
 const CHUNK_SIZE = 900 * 1024
 
 /** 词库清单条目（与 index.json 一致） */
-import type { LanguageCode } from '@/utils/language'
+import { getProfile, type LanguageCode } from '@/utils/language'
 
 export interface RemoteWordBankInfo {
   id: string
@@ -26,8 +26,72 @@ export interface RemoteWordBankInfo {
   language?: LanguageCode
 }
 
-/** 远程旧版 index.json 未包含的多语言词库，数据复用桌面端 public/wordbanks。 */
-export const NON_ENGLISH_BANKS: RemoteWordBankInfo[] = [
+/** 词库分类（英语按用途分，非英语按语种分） */
+export interface BankCategory {
+  id: string
+  label: string
+}
+
+export const BANK_CATEGORIES: BankCategory[] = [
+  { id: 'exam', label: '考试' },
+  { id: 'level', label: '分级' },
+  { id: 'oral', label: '口语句型' },
+  { id: 'media', label: '影视台词' },
+  { id: 'dev', label: '程序员' },
+  { id: 'life', label: '生活场景' },
+  { id: 'other', label: '其他' },
+]
+
+/** 英语词库 id → 分类 */
+const EN_CATEGORY_BY_ID: Record<string, string> = {
+  // 考试（中高考/四六级/考研/出国/公考）
+  zhongkao: 'exam', gaokao: 'exam', cet4: 'exam', cet6: 'exam',
+  kaoyan: 'exam', zsb: 'exam', kaogong: 'exam', ielts: 'exam',
+  'ielts-topics': 'exam', toefl: 'exam', 'toefl-academic': 'exam',
+  gre: 'exam', gmat: 'exam', sat: 'exam', bec: 'exam',
+  // 分级词库
+  level4: 'level', level8: 'level',
+  // 口语与句型
+  'oral-basic': 'oral', 'oral-intermediate': 'oral', 'oral-advanced': 'oral',
+  'common-phrases': 'oral', collocations: 'oral', 'phrasal-verbs': 'oral',
+  idioms: 'oral', 'sentence-patterns': 'oral', roots: 'oral', newConcept: 'oral',
+  'spoken-reductions-1': 'oral', 'spoken-reactions-1': 'oral',
+  // 影视台词与名言
+  'girl-meets-world': 'media', 'friends-tv': 'media', 'modern-family': 'media',
+  'big-bang-theory': 'media', sherlock: 'media', 'the-crown': 'media',
+  'pursuit-of-happyness': 'media', 'forrest-gump': 'media',
+  'shawshank-redemption': 'media', 'movie-lines': 'media', 'famous-quotes': 'media',
+  // 程序员
+  'tech-vocab': 'dev', 'dev-phrases': 'dev', 'dev-status': 'dev',
+  'dev-debugging': 'dev', 'dev-reading': 'dev', 'dev-discussion': 'dev',
+  // 生活场景
+  dining: 'life', shopping: 'life', transport: 'life',
+}
+
+/** 词库所属分类：非英语按语种（lang:ja 等），英语按用途，未收录 id 归「其他」 */
+export function categoryIdOf(bank: RemoteWordBankInfo): string {
+  const lang = bank.language || 'en'
+  if (lang !== 'en') return `lang:${lang}`
+  return EN_CATEGORY_BY_ID[bank.id] ?? 'other'
+}
+
+/** 从清单构建出现的分类 tab（固定顺序：英语用途分类 → 语种分类） */
+export function buildCategoryTabs(list: RemoteWordBankInfo[]): BankCategory[] {
+  const present = new Set(list.map(categoryIdOf))
+  const tabs = BANK_CATEGORIES.filter((c) => present.delete(c.id))
+  // 剩余的是语种分类，按清单中首次出现顺序补齐
+  for (const bank of list) {
+    const id = categoryIdOf(bank)
+    if (present.has(id)) {
+      present.delete(id)
+      tabs.push({ id, label: getProfile(bank.language || 'en').nameZh })
+    }
+  }
+  return tabs
+}
+
+/** 不在 mobile/wordbank-json 清单、数据复用桌面端 public/wordbanks 的词库（多语言词库 + 口语连读/反应句库） */
+export const PUBLIC_HOSTED_BANKS: RemoteWordBankInfo[] = [
   { id: 'jlpt-n5', name: 'JLPT N5', wordCount: 700, sizeKB: 61, language: 'ja' },
   { id: 'jlpt-n4', name: 'JLPT N4', wordCount: 1169, sizeKB: 114, language: 'ja' },
   { id: 'jlpt-n3', name: 'JLPT N3', wordCount: 1441, sizeKB: 143, language: 'ja' },
@@ -49,6 +113,9 @@ export const NON_ENGLISH_BANKS: RemoteWordBankInfo[] = [
   { id: 'fr-common-phrases', name: '法语常用短语', wordCount: 213, sizeKB: 19, language: 'fr' },
   { id: 'fr-collocations', name: '法语固定搭配', wordCount: 166, sizeKB: 14, language: 'fr' },
   { id: 'fr-sentences', name: '法语常用句子', wordCount: 135, sizeKB: 16, language: 'fr' },
+  // 英语口语（连读弱读 / 高频反应句），桌面端同文件，另有配套预合成自然连读音频待接入
+  { id: 'spoken-reductions-1', name: '连读弱读 500 句', wordCount: 500, sizeKB: 54, language: 'en' },
+  { id: 'spoken-reactions-1', name: '口语反应 500 句', wordCount: 500, sizeKB: 43, language: 'en' },
 ]
 
 /** 已缓存的词库 id 列表 */
@@ -138,7 +205,7 @@ export function downloadWordBank(
   onProgress?: (percent: number) => void,
 ): Promise<any[]> {
   return new Promise((resolve, reject) => {
-    const base = NON_ENGLISH_BANKS.some(bank => bank.id === id) ? PUBLIC_WORDBANK_BASE : JSDELIVR_BASE
+    const base = PUBLIC_HOSTED_BANKS.some(bank => bank.id === id) ? PUBLIC_WORDBANK_BASE : JSDELIVR_BASE
     const url = `${base}/${id}.json`
     const task = uni.downloadFile({
       url,
@@ -194,7 +261,7 @@ export async function getWordBank(
   return downloadWordBank(id, onProgress)
 }
 
-/** 拉取远程词库清单，并补齐旧版清单缺少的多语言词库 */
+/** 拉取远程词库清单，并补齐清单外的托管词库（多语言 + 口语句库） */
 export function fetchRemoteIndex(): Promise<RemoteWordBankInfo[] | null> {
   return new Promise((resolve) => {
     uni.request({
@@ -204,7 +271,7 @@ export function fetchRemoteIndex(): Promise<RemoteWordBankInfo[] | null> {
           const remoteIds = new Set(res.data.map((bank: RemoteWordBankInfo) => bank.id))
           resolve([
             ...res.data.map((bank: RemoteWordBankInfo) => ({ ...bank, language: bank.language || 'en' })),
-            ...NON_ENGLISH_BANKS.filter(bank => !remoteIds.has(bank.id)),
+            ...PUBLIC_HOSTED_BANKS.filter(bank => !remoteIds.has(bank.id)),
           ])
         } else {
           resolve(null)

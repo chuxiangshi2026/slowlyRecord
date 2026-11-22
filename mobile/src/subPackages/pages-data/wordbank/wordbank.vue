@@ -60,14 +60,31 @@
       <text class="section-title">下载词库</text>
       <text class="section-add" @click="refreshRemoteIndex">刷新</text>
     </view>
+    <view class="remote-tools">
+      <input class="remote-search" v-model="remoteKeyword" placeholder="搜索词库，如：四级 / 老友记">
+    </view>
+    <scroll-view scroll-x class="cat-tabs" :show-scrollbar="false">
+      <view class="cat-tab" :class="{ active: activeCat === 'all' }" @click="activeCat = 'all'">全部</view>
+      <view
+        v-for="c in catTabs"
+        :key="c.id"
+        class="cat-tab"
+        :class="{ active: activeCat === c.id }"
+        @click="activeCat = c.id"
+      >{{ c.label }}</view>
+    </scroll-view>
     <view class="remote-section">
       <view v-if="remoteList.length === 0" class="remote-loading">
         <text>{{ remoteError || '加载词库清单中…' }}</text>
       </view>
+      <view v-else-if="filteredRemoteList.length === 0" class="remote-loading">
+        <text>没有匹配的词库，换个关键词试试</text>
+      </view>
       <view
-        v-for="bank in remoteList"
+        v-for="bank in filteredRemoteList"
         :key="bank.id"
         class="remote-item"
+        hover-class="card-hover"
         @click="onRemoteBankTap(bank)"
       >
         <view class="remote-info">
@@ -90,6 +107,26 @@
         <picker :range="languageOptions" range-key="nameZh" :value="languageIndex" @change="onLanguageChange">
           <view class="dialog-language">学习语言：{{ languageOptions[languageIndex].nameZh }}</view>
         </picker>
+        <!-- 可选：同时导入一个内置词库（按所选语言过滤） -->
+        <view class="import-picker">
+          <text class="import-picker-label">同时导入词库（可选）</text>
+          <scroll-view scroll-y class="import-list">
+            <view class="import-option" :class="{ active: importBankId === '' }" @click="importBankId = ''">
+              <text>不导入</text>
+            </view>
+            <view
+              v-for="b in importCandidates"
+              :key="b.id"
+              class="import-option"
+              :class="{ active: importBankId === b.id }"
+              @click="importBankId = b.id"
+            >
+              <text class="import-name">{{ b.name }}</text>
+              <text class="import-count">{{ b.wordCount }} 词</text>
+            </view>
+            <view v-if="!importCandidates.length" class="import-empty">该语言暂无可导入词库</view>
+          </scroll-view>
+        </view>
         <view class="dialog-buttons">
           <text class="dialog-btn cancel" @click="createDialogVisible = false">取消</text>
           <text class="dialog-btn confirm" @click="doCreateBank">创建</text>
@@ -102,7 +139,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
-import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
+import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, categoryIdOf, buildCategoryTabs, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
 import { askImportTargetBank } from '@/utils/wordbank-import-target'
 import { getProfile, listLanguages } from '@/utils/language'
 import { inferMobileItemType } from '@/stores/useUtils/text'
@@ -112,6 +149,16 @@ const createDialogVisible = ref(false)
 const newBankName = ref('')
 const languageOptions = listLanguages()
 const languageIndex = ref(0)
+const importBankId = ref('')
+const creating = ref(false)
+
+/** 可随新建词库一起导入的候选（按所选语言过滤，词数降序） */
+const importCandidates = computed(() => {
+  const lang = languageOptions[languageIndex.value].code
+  return remoteList.value
+    .filter((b) => (b.language || 'en') === lang && b.wordCount > 0)
+    .sort((a, b) => b.wordCount - a.wordCount)
+})
 
 // 远程词库下载
 const remoteList = ref<RemoteWordBankInfo[]>([])
@@ -119,6 +166,21 @@ const remoteError = ref('')
 const cachedIds = ref<string[]>([])
 const downloadingId = ref('')
 const downloadProgress = ref(0)
+const remoteKeyword = ref('')
+const activeCat = ref('all')
+
+/** 清单里出现的分类 tab（英语按用途、非英语按语种） */
+const catTabs = computed(() => buildCategoryTabs(remoteList.value))
+
+/** 过滤 + 排序：空词库不展示；按分类/关键词过滤；词数多的排前面 */
+const filteredRemoteList = computed(() => {
+  const kw = remoteKeyword.value.trim().toLowerCase()
+  return remoteList.value
+    .filter((bank) => bank.wordCount > 0)
+    .filter((bank) => activeCat.value === 'all' || categoryIdOf(bank) === activeCat.value)
+    .filter((bank) => !kw || bank.name.toLowerCase().includes(kw) || bank.id.toLowerCase().includes(kw))
+    .sort((a, b) => b.wordCount - a.wordCount)
+})
 
 onMounted(async () => {
   await wordsStore.loadWords()
@@ -222,14 +284,17 @@ function onBankTap(bank: WordBankMeta) {
 function showCreateDialog() {
   newBankName.value = ''
   languageIndex.value = 0
+  importBankId.value = ''
   createDialogVisible.value = true
 }
 
 function onLanguageChange(e: any) {
   languageIndex.value = Number(e.detail.value)
+  importBankId.value = '' // 语言变了候选跟着变，已选作废
 }
 
-function doCreateBank() {
+async function doCreateBank() {
+  if (creating.value) return
   const name = newBankName.value.trim()
   if (!name) {
     uni.showToast({ title: '请输入词库名称', icon: 'none' })
@@ -242,8 +307,27 @@ function doCreateBank() {
   }
   const bank = wordsStore.createBank(name, { language: languageOptions[languageIndex.value].code })
   wordsStore.switchBank(bank.id)
+  const importId = importBankId.value
   createDialogVisible.value = false
-  uni.showToast({ title: '创建成功', icon: 'success' })
+  if (!importId) {
+    uni.showToast({ title: '创建成功', icon: 'success' })
+    return
+  }
+  // 选了导入：下载并导入新词库（失败不阻塞，词库已建好，可到下载区重试）
+  const info = remoteList.value.find(b => b.id === importId)
+  if (!info) return
+  creating.value = true
+  uni.showLoading({ title: '下载导入中…', mask: true })
+  try {
+    const rawWords = await getWordBank(info.id, () => {})
+    await importToBank(info, rawWords, bank.id)
+    cachedIds.value = getCachedBankIds()
+  } catch (e: any) {
+    uni.showToast({ title: e?.message || '导入失败，可到下载区重试', icon: 'none' })
+  } finally {
+    uni.hideLoading()
+    creating.value = false
+  }
 }
 
 function onRenameBank(bank: WordBankMeta) {
@@ -348,6 +432,12 @@ const goTo = (url: string) => {
 }
 
 .remote-section { padding: 0 20rpx; }
+.remote-tools { padding: 0 20rpx 14rpx; }
+.remote-search { background: var(--sr-card); border-radius: 999rpx; padding: 16rpx 32rpx; font-size: 26rpx; color: var(--sr-text); }
+.cat-tabs { white-space: nowrap; padding: 0 20rpx 16rpx; box-sizing: border-box; }
+.cat-tab { display: inline-block; font-size: 24rpx; color: var(--sr-text-2); background: var(--sr-card); border-radius: 999rpx; padding: 10rpx 28rpx; margin-right: 14rpx; }
+.cat-tab.active { color: var(--sr-on-primary); background: var(--sr-primary); font-weight: bold; }
+.card-hover { opacity: 0.75; }
 .remote-loading { text-align: center; color: var(--sr-text-3); font-size: 26rpx; padding: 40rpx 0; }
 .remote-item {
   background: var(--sr-card);
@@ -383,6 +473,13 @@ const goTo = (url: string) => {
 .dialog-title { font-size: 34rpx; font-weight: bold; text-align: center; display: block; margin-bottom: 30rpx; }
 .dialog-input { border: 2rpx solid var(--sr-border); border-radius: 12rpx; padding: 20rpx; font-size: 30rpx; width: 100%; box-sizing: border-box; height: 80rpx; line-height: 40rpx; color: var(--sr-text); }
 .dialog-language { margin-top: 20rpx; padding: 20rpx; border: 2rpx solid var(--sr-border); border-radius: 12rpx; color: var(--sr-text); font-size: 28rpx; }
+.import-picker { margin-top: 20rpx; }
+.import-picker-label { font-size: 26rpx; color: var(--sr-text-3); display: block; margin-bottom: 10rpx; }
+.import-list { max-height: 340rpx; border: 2rpx solid var(--sr-border); border-radius: 12rpx; }
+.import-option { display: flex; justify-content: space-between; align-items: center; padding: 18rpx 24rpx; font-size: 28rpx; color: var(--sr-text); border-bottom: 1rpx solid var(--sr-border); }
+.import-option.active { background: var(--sr-primary-bg); color: var(--sr-primary); font-weight: bold; }
+.import-count { font-size: 22rpx; color: var(--sr-text-3); }
+.import-empty { padding: 24rpx; text-align: center; font-size: 24rpx; color: var(--sr-text-3); }
 .dialog-buttons { display: flex; justify-content: space-between; margin-top: 30rpx; gap: 20rpx; }
 .dialog-btn { flex: 1; text-align: center; padding: 20rpx; border-radius: 12rpx; font-size: 30rpx; }
 .dialog-btn.cancel { background: var(--sr-card-2); color: var(--sr-text-2); }
