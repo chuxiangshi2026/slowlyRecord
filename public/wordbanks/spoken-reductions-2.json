@@ -1,0 +1,2502 @@
+[
+  {
+    "word": "Lotsa people think so",
+    "explains": "很多人都这么想（= Lots of people think so）",
+    "freq": 1
+  },
+  {
+    "word": "We got lotsa time",
+    "explains": "我们时间还多（= We've got lots of time）",
+    "freq": 2
+  },
+  {
+    "word": "Lotsa stuff to do today",
+    "explains": "今天一堆事要处理（= Lots of stuff to do today）",
+    "freq": 3
+  },
+  {
+    "word": "I have lotsa doubts about the plan",
+    "explains": "我对这计划满是疑虑（= I have lots of doubts about the plan）",
+    "freq": 4
+  },
+  {
+    "word": "Lotsa love for this team",
+    "explains": "超爱这支队伍（= Lots of love for this team；表示支持）",
+    "freq": 5
+  },
+  {
+    "word": "There's lotsa ways to do it",
+    "explains": "办法多的是（= There are lots of ways to do it）",
+    "freq": 6
+  },
+  {
+    "word": "Lotsa luck with that",
+    "explains": "祝你好运哦（= Lots of luck with that；常带讽刺）",
+    "freq": 7
+  },
+  {
+    "word": "He makes lotsa money",
+    "explains": "他赚很多钱（= He makes lots of money）",
+    "freq": 8
+  },
+  {
+    "word": "Lotsa shouting next door",
+    "explains": "隔壁吵翻了（= Lots of shouting next door）",
+    "freq": 9
+  },
+  {
+    "word": "We had lotsa fun",
+    "explains": "我们玩得超开心（= We had lots of fun）",
+    "freq": 10
+  },
+  {
+    "word": "Lotsa cars on the road today",
+    "explains": "今天路上车超多（= Lots of cars on the road today）",
+    "freq": 11
+  },
+  {
+    "word": "She knows lotsa people",
+    "explains": "她人脉很广（= She knows lots of people）",
+    "freq": 12
+  },
+  {
+    "word": "Lotsa water in the basement",
+    "explains": "地下室进了很多水（= Lots of water in the basement）",
+    "freq": 13
+  },
+  {
+    "word": "Take lotsa pictures",
+    "explains": "多拍点照片（= Take lots of pictures）",
+    "freq": 14
+  },
+  {
+    "word": "Lotsa food left over",
+    "explains": "剩了好多吃的（= Lots of food left over）",
+    "freq": 15
+  },
+  {
+    "word": "I drank lotsa coffee",
+    "explains": "我喝了好多咖啡（= I drank lots of coffee）",
+    "freq": 16
+  },
+  {
+    "word": "Lotsa reasons to smile",
+    "explains": "开心的理由很多（= Lots of reasons to smile）",
+    "freq": 17
+  },
+  {
+    "word": "He talks lotsa nonsense",
+    "explains": "他满嘴跑火车（= He talks lots of nonsense）",
+    "freq": 18
+  },
+  {
+    "word": "Lotsa memories in this house",
+    "explains": "这房子里有太多回忆（= Lots of memories in this house）",
+    "freq": 19
+  },
+  {
+    "word": "Put lotsa cheese on it",
+    "explains": "多加点芝士（= Put lots of cheese on it）",
+    "freq": 20
+  },
+  {
+    "word": "Lotsa kids play in the park",
+    "explains": "好多孩子在公园里玩（= Lots of kids play in the park）",
+    "freq": 21
+  },
+  {
+    "word": "Lotsa miles to go",
+    "explains": "还有很长的路要走（= Lots of miles to go）",
+    "freq": 22
+  },
+  {
+    "word": "She hasta work late",
+    "explains": "她得加班（= She has to work late）",
+    "freq": 23
+  },
+  {
+    "word": "He hasta pick up the kids",
+    "explains": "他得去接孩子（= He has to pick up the kids）",
+    "freq": 24
+  },
+  {
+    "word": "It hasta be done today",
+    "explains": "这事今天必须做完（= It has to be done today）",
+    "freq": 25
+  },
+  {
+    "word": "Who hasta know?",
+    "explains": "谁非得知道（= Who has to know?）",
+    "freq": 26
+  },
+  {
+    "word": "Everybody hasta eat",
+    "explains": "人人都要吃饭（= Everybody has to eat）",
+    "freq": 27
+  },
+  {
+    "word": "He hasta be kidding",
+    "explains": "他肯定在开玩笑（= He has to be kidding）",
+    "freq": 28
+  },
+  {
+    "word": "She hasta take the bus",
+    "explains": "她得坐公交（= She has to take the bus）",
+    "freq": 29
+  },
+  {
+    "word": "Nothing hasta change",
+    "explains": "什么都不用改（= Nothing has to change）",
+    "freq": 30
+  },
+  {
+    "word": "He hasta move out by Friday",
+    "explains": "他周五前得搬走（= He has to move out by Friday）",
+    "freq": 31
+  },
+  {
+    "word": "This hasta stop",
+    "explains": "这事必须停止（= This has to stop）",
+    "freq": 32
+  },
+  {
+    "word": "She hasta retake the test",
+    "explains": "她得重考（= She has to retake the test）",
+    "freq": 33
+  },
+  {
+    "word": "He hasta wear a tie",
+    "explains": "他得打领带（= He has to wear a tie）",
+    "freq": 34
+  },
+  {
+    "word": "It hasta mean something",
+    "explains": "这肯定有含义（= It has to mean something）",
+    "freq": 35
+  },
+  {
+    "word": "Mom hasta rest",
+    "explains": "妈妈得休息（= Mom has to rest）",
+    "freq": 36
+  },
+  {
+    "word": "He hasta see this video",
+    "explains": "他得看看这个视频（= He has to see this video）",
+    "freq": 37
+  },
+  {
+    "word": "Someone hasta go first",
+    "explains": "总得有人先去（= Someone has to go first）",
+    "freq": 38
+  },
+  {
+    "word": "He hasta pay up front",
+    "explains": "他得先付钱（= He has to pay up front）",
+    "freq": 39
+  },
+  {
+    "word": "She hasta find a new place",
+    "explains": "她得找个新住处（= She has to find a new place）",
+    "freq": 40
+  },
+  {
+    "word": "It hasta get better",
+    "explains": "情况总会好转的（= It has to get better）",
+    "freq": 41
+  },
+  {
+    "word": "Dad hasta fix the sink",
+    "explains": "爸爸得修水槽（= Dad has to fix the sink）",
+    "freq": 42
+  },
+  {
+    "word": "He hasta be the tallest guy here",
+    "explains": "他肯定是全场最高（= He has to be the tallest guy here）",
+    "freq": 43
+  },
+  {
+    "word": "The dog hasta go outside",
+    "explains": "狗得带出去遛（= The dog has to go outside）",
+    "freq": 44
+  },
+  {
+    "word": "You're not supposta smoke here",
+    "explains": "这里不准吸烟（= You're not supposed to smoke here）",
+    "freq": 45
+  },
+  {
+    "word": "We were supposta meet at six",
+    "explains": "我们约好六点见（= We were supposed to meet at six）",
+    "freq": 46
+  },
+  {
+    "word": "It's supposta rain later",
+    "explains": "据说待会要下雨（= It's supposed to rain later）",
+    "freq": 47
+  },
+  {
+    "word": "Who's supposta call him?",
+    "explains": "该谁给他打电话（= Who's supposed to call him?）",
+    "freq": 48
+  },
+  {
+    "word": "I'm supposta be off today",
+    "explains": "我今天本该休息（= I'm supposed to be off today）",
+    "freq": 49
+  },
+  {
+    "word": "You're supposta knock first",
+    "explains": "你应该先敲门（= You're supposed to knock first）",
+    "freq": 50
+  },
+  {
+    "word": "It's supposta be easy",
+    "explains": "这应该很简单（= It's supposed to be easy）",
+    "freq": 51
+  },
+  {
+    "word": "We were supposta win",
+    "explains": "我们本该赢的（= We were supposed to win）",
+    "freq": 52
+  },
+  {
+    "word": "When were you supposta be here?",
+    "explains": "你该几点到（= When were you supposed to be here?）",
+    "freq": 53
+  },
+  {
+    "word": "He's supposta be the expert",
+    "explains": "他不是号称专家吗（= He's supposed to be the expert；带讽刺）",
+    "freq": 54
+  },
+  {
+    "word": "You're supposta wear a helmet",
+    "explains": "骑车要戴头盔（= You're supposed to wear a helmet）",
+    "freq": 55
+  },
+  {
+    "word": "It's supposta help with sleep",
+    "explains": "据说有助睡眠（= It's supposed to help with sleep）",
+    "freq": 56
+  },
+  {
+    "word": "I was supposta study tonight",
+    "explains": "我今晚本该学习（= I was supposed to study tonight）",
+    "freq": 57
+  },
+  {
+    "word": "You're not supposta tell anyone",
+    "explains": "这事你不能告诉任何人（= You're not supposed to tell anyone）",
+    "freq": 58
+  },
+  {
+    "word": "The movie was supposta be good",
+    "explains": "这片子本来口碑不错（= The movie was supposed to be good）",
+    "freq": 59
+  },
+  {
+    "word": "We're supposta leave by nine",
+    "explains": "我们该九点前出发（= We're supposed to leave by nine）",
+    "freq": 60
+  },
+  {
+    "word": "It's supposta taste like chicken",
+    "explains": "据说吃起来像鸡肉（= It's supposed to taste like chicken）",
+    "freq": 61
+  },
+  {
+    "word": "Who were you supposta meet?",
+    "explains": "你本来要见谁（= Who were you supposed to meet?）",
+    "freq": 62
+  },
+  {
+    "word": "I'm supposta bring dessert",
+    "explains": "轮到我带甜点（= I'm supposed to bring dessert）",
+    "freq": 63
+  },
+  {
+    "word": "It's not supposta work like that",
+    "explains": "它不该是那种运作方式（= It's not supposed to work like that）",
+    "freq": 64
+  },
+  {
+    "word": "The interview was supposta be Tuesday",
+    "explains": "面试原本定在周二（= The interview was supposed to be Tuesday）",
+    "freq": 65
+  },
+  {
+    "word": "You're sposta shake hands",
+    "explains": "应该握个手（= You're supposed to shake hands；sposta 是 supposta 的更口语变体）",
+    "freq": 66
+  },
+  {
+    "word": "We were sposta leave an hour ago",
+    "explains": "一小时前就该走了（= We were supposed to leave an hour ago）",
+    "freq": 67
+  },
+  {
+    "word": "It's sposta be really good",
+    "explains": "据说特别好吃（= It's supposed to be really good）",
+    "freq": 68
+  },
+  {
+    "word": "I shouldna said that",
+    "explains": "我不该那么说（= I shouldn't have said that）",
+    "freq": 69
+  },
+  {
+    "word": "You shouldna eaten it",
+    "explains": "你就不该吃它（= You shouldn't have eaten it）",
+    "freq": 70
+  },
+  {
+    "word": "We shouldna waited",
+    "explains": "我们不该等的（= We shouldn't have waited）",
+    "freq": 71
+  },
+  {
+    "word": "She shouldna quit her job",
+    "explains": "她不该辞职的（= She shouldn't have quit her job）",
+    "freq": 72
+  },
+  {
+    "word": "I shouldna asked",
+    "explains": "我不该问的（= I shouldn't have asked）",
+    "freq": 73
+  },
+  {
+    "word": "You shouldna drunk so much",
+    "explains": "你不该喝那么多（= You shouldn't have drunk so much）",
+    "freq": 74
+  },
+  {
+    "word": "He shouldna gone alone",
+    "explains": "他不该一个人去的（= He shouldn't have gone alone）",
+    "freq": 75
+  },
+  {
+    "word": "Shouldna trusted him",
+    "explains": "就不该信他（= Shouldn't have trusted him）",
+    "freq": 76
+  },
+  {
+    "word": "I shouldna texted her at midnight",
+    "explains": "我不该半夜给她发消息（= I shouldn't have texted her at midnight）",
+    "freq": 77
+  },
+  {
+    "word": "You shouldna spent it all",
+    "explains": "你不该全花光的（= You shouldn't have spent it all）",
+    "freq": 78
+  },
+  {
+    "word": "We shouldna laughed",
+    "explains": "我们不该笑的（= We shouldn't have laughed）",
+    "freq": 79
+  },
+  {
+    "word": "I shouldna looked",
+    "explains": "我就不该看（= I shouldn't have looked）",
+    "freq": 80
+  },
+  {
+    "word": "She shouldna answered back",
+    "explains": "她不该顶嘴的（= She shouldn't have answered back）",
+    "freq": 81
+  },
+  {
+    "word": "You shouldna clicked that link",
+    "explains": "你就不该点那个链接（= You shouldn't have clicked that link）",
+    "freq": 82
+  },
+  {
+    "word": "He shouldna promised her that",
+    "explains": "他不该向她许诺的（= He shouldn't have promised her that）",
+    "freq": 83
+  },
+  {
+    "word": "Shouldna expected more",
+    "explains": "本来就不该抱期望（= Shouldn't have expected more）",
+    "freq": 84
+  },
+  {
+    "word": "I shouldna skipped breakfast",
+    "explains": "我不该不吃早饭的（= I shouldn't have skipped breakfast）",
+    "freq": 85
+  },
+  {
+    "word": "You shouldna told her",
+    "explains": "你不该告诉她的（= You shouldn't have told her）",
+    "freq": 86
+  },
+  {
+    "word": "We shouldna bought the cheap one",
+    "explains": "我们不该买便宜的那个（= We shouldn't have bought the cheap one）",
+    "freq": 87
+  },
+  {
+    "word": "I shouldna picked up the phone",
+    "explains": "我就不该接电话（= I shouldn't have picked up the phone）",
+    "freq": 88
+  },
+  {
+    "word": "He shouldna driven so fast",
+    "explains": "他不该开那么快的（= He shouldn't have driven so fast）",
+    "freq": 89
+  },
+  {
+    "word": "Shouldna got my hopes up",
+    "explains": "我就不该抱希望（= Shouldn't have got my hopes up）",
+    "freq": 90
+  },
+  {
+    "word": "It couldn't've been him",
+    "explains": "不可能是他（= It couldn't have been him）",
+    "freq": 91
+  },
+  {
+    "word": "I couldn't've done it alone",
+    "explains": "我一个人做不到（= I couldn't have done it alone）",
+    "freq": 92
+  },
+  {
+    "word": "We couldn't've known",
+    "explains": "我们不可能事先知道（= We couldn't have known）",
+    "freq": 93
+  },
+  {
+    "word": "It couldn't've gone better",
+    "explains": "结果再好不过了（= It couldn't have gone better）",
+    "freq": 94
+  },
+  {
+    "word": "You couldn't've picked a worse time",
+    "explains": "你挑的时机真是糟透了（= You couldn't have picked a worse time；反语）",
+    "freq": 95
+  },
+  {
+    "word": "She couldn't've said it better",
+    "explains": "她说得不能再好了（= She couldn't have said it better）",
+    "freq": 96
+  },
+  {
+    "word": "I couldn't've made it without you",
+    "explains": "没有你我不可能成功（= I couldn't have made it without you）",
+    "freq": 97
+  },
+  {
+    "word": "It couldn't've happened at a worse time",
+    "explains": "出事的时机糟透了（= It couldn't have happened at a worse time）",
+    "freq": 98
+  },
+  {
+    "word": "He couldn't've meant that",
+    "explains": "他不可能是认真的（= He couldn't have meant that）",
+    "freq": 99
+  },
+  {
+    "word": "We couldn't've afforded it anyway",
+    "explains": "反正我们也买不起（= We couldn't have afforded it anyway）",
+    "freq": 100
+  },
+  {
+    "word": "I couldn't've cared less",
+    "explains": "我根本不在乎（= I couldn't have cared less；习语，表示完全不在乎）",
+    "freq": 101
+  },
+  {
+    "word": "You couldn't've warned me?",
+    "explains": "你就不能提前警告我吗（= You couldn't have warned me?；带埋怨）",
+    "freq": 102
+  },
+  {
+    "word": "It couldn't've been easy for her",
+    "explains": "这对她来说肯定不容易（= It couldn't have been easy for her）",
+    "freq": 103
+  },
+  {
+    "word": "They couldn't've been nicer",
+    "explains": "他们人再好不过了（= They couldn't have been nicer）",
+    "freq": 104
+  },
+  {
+    "word": "I couldn't've written it better myself",
+    "explains": "让我写也写不了这么好（= I couldn't have written it better myself）",
+    "freq": 105
+  },
+  {
+    "word": "He couldn't've survived out there",
+    "explains": "他在那种环境下活不下来（= He couldn't have survived out there）",
+    "freq": 106
+  },
+  {
+    "word": "We couldn't've planned it better",
+    "explains": "安排得不能再完美了（= We couldn't have planned it better）",
+    "freq": 107
+  },
+  {
+    "word": "She couldn't've been older than ten",
+    "explains": "她当时顶多十岁（= She couldn't have been older than ten）",
+    "freq": 108
+  },
+  {
+    "word": "You couldn't've chosen better",
+    "explains": "你的选择再好不过了（= You couldn't have chosen better）",
+    "freq": 109
+  },
+  {
+    "word": "I couldn't've heard that right",
+    "explains": "我肯定听错了（= I couldn't have heard that right）",
+    "freq": 110
+  },
+  {
+    "word": "It couldn't've been that bad",
+    "explains": "不可能有那么糟（= It couldn't have been that bad）",
+    "freq": 111
+  },
+  {
+    "word": "We couldn't've asked for more",
+    "explains": "我们已经别无所求了（= We couldn't have asked for more）",
+    "freq": 112
+  },
+  {
+    "word": "I wouldn't've believed it either",
+    "explains": "换我我也不信（= I wouldn't have believed it either）",
+    "freq": 113
+  },
+  {
+    "word": "She wouldn't've done that",
+    "explains": "她不会做出那种事的（= She wouldn't have done that）",
+    "freq": 114
+  },
+  {
+    "word": "You wouldn't've liked it",
+    "explains": "你不会喜欢的（= You wouldn't have liked it）",
+    "freq": 115
+  },
+  {
+    "word": "He wouldn't've missed it for the world",
+    "explains": "他绝不会错过（= He wouldn't have missed it for the world）",
+    "freq": 116
+  },
+  {
+    "word": "I wouldn't've guessed",
+    "explains": "我可猜不到（= I wouldn't have guessed）",
+    "freq": 117
+  },
+  {
+    "word": "They wouldn't've helped anyway",
+    "explains": "反正他们也不会帮忙（= They wouldn't have helped anyway）",
+    "freq": 118
+  },
+  {
+    "word": "We wouldn't've stood a chance",
+    "explains": "我们一点胜算都没有（= We wouldn't have stood a chance）",
+    "freq": 119
+  },
+  {
+    "word": "I wouldn't've said it like that",
+    "explains": "我不会那样说的（= I wouldn't have said it like that）",
+    "freq": 120
+  },
+  {
+    "word": "You wouldn't've understood",
+    "explains": "你不会明白的（= You wouldn't have understood）",
+    "freq": 121
+  },
+  {
+    "word": "He wouldn't've hurt a fly",
+    "explains": "他连只苍蝇都不忍伤害（= He wouldn't have hurt a fly；形容心地善良）",
+    "freq": 122
+  },
+  {
+    "word": "I wouldn't've bet on it",
+    "explains": "我可不会押注在这上面（= I wouldn't have bet on it）",
+    "freq": 123
+  },
+  {
+    "word": "She wouldn't've come anyway",
+    "explains": "她反正也不会来（= She wouldn't have come anyway）",
+    "freq": 124
+  },
+  {
+    "word": "I wouldn't've recognized you",
+    "explains": "我差点认不出你了（= I wouldn't have recognized you）",
+    "freq": 125
+  },
+  {
+    "word": "You wouldn't've let me forget it",
+    "explains": "你肯定会一直拿这事说我（= You wouldn't have let me forget it）",
+    "freq": 126
+  },
+  {
+    "word": "We wouldn't've had time",
+    "explains": "我们根本没时间（= We wouldn't have had time）",
+    "freq": 127
+  },
+  {
+    "word": "It wouldn't've mattered",
+    "explains": "反正也没关系（= It wouldn't have mattered）",
+    "freq": 128
+  },
+  {
+    "word": "I wouldn't've blamed you",
+    "explains": "我不怪你（= I wouldn't have blamed you）",
+    "freq": 129
+  },
+  {
+    "word": "He wouldn't've said no to free food",
+    "explains": "有免费吃的他才不会拒绝（= He wouldn't have said no to free food）",
+    "freq": 130
+  },
+  {
+    "word": "You wouldn't've gotten far",
+    "explains": "你走不远的（= You wouldn't have gotten far）",
+    "freq": 131
+  },
+  {
+    "word": "I shouldn't've brought it up",
+    "explains": "我不该提这事的（= I shouldn't have brought it up）",
+    "freq": 132
+  },
+  {
+    "word": "You shouldn't've let him go",
+    "explains": "你不该放他走的（= You shouldn't have let him go）",
+    "freq": 133
+  },
+  {
+    "word": "We shouldn't've come here",
+    "explains": "我们不该来这儿的（= We shouldn't have come here）",
+    "freq": 134
+  },
+  {
+    "word": "She shouldn't've had to ask",
+    "explains": "她本不该开口求的（= She shouldn't have had to ask）",
+    "freq": 135
+  },
+  {
+    "word": "You shouldn't've bothered",
+    "explains": "你不必费心的（= You shouldn't have bothered）",
+    "freq": 136
+  },
+  {
+    "word": "I shouldn't've doubted you",
+    "explains": "我不该怀疑你的（= I shouldn't have doubted you）",
+    "freq": 137
+  },
+  {
+    "word": "He shouldn't've been driving",
+    "explains": "他根本不该开车的（= He shouldn't have been driving）",
+    "freq": 138
+  },
+  {
+    "word": "You shouldn't've paid full price",
+    "explains": "你不该付全价的（= You shouldn't have paid full price）",
+    "freq": 139
+  },
+  {
+    "word": "We shouldn't've eaten so much",
+    "explains": "我们不该吃那么多的（= We shouldn't have eaten so much）",
+    "freq": 140
+  },
+  {
+    "word": "I shouldn't've opened my mouth",
+    "explains": "我就不该开口（= I shouldn't have opened my mouth）",
+    "freq": 141
+  },
+  {
+    "word": "You shouldn't've had to see that",
+    "explains": "你不该看到那一幕的（= You shouldn't have had to see that）",
+    "freq": 142
+  },
+  {
+    "word": "She shouldn't've gone back",
+    "explains": "她不该回去的（= She shouldn't have gone back）",
+    "freq": 143
+  },
+  {
+    "word": "We shouldn't've invited him",
+    "explains": "我们就不该请他（= We shouldn't have invited him）",
+    "freq": 144
+  },
+  {
+    "word": "You shouldn't've waited up for me",
+    "explains": "你不该熬夜等我的（= You shouldn't have waited up for me）",
+    "freq": 145
+  },
+  {
+    "word": "Dontcha hate Mondays?",
+    "explains": "你不讨厌周一吗（= Don't you hate Mondays?）",
+    "freq": 146
+  },
+  {
+    "word": "Dontcha feel better now?",
+    "explains": "现在是不是好多了（= Don't you feel better now?）",
+    "freq": 147
+  },
+  {
+    "word": "Dontcha want some coffee?",
+    "explains": "不想喝点咖啡吗（= Don't you want some coffee?）",
+    "freq": 148
+  },
+  {
+    "word": "Dontcha have somewhere to be?",
+    "explains": "你不是还有事吗（= Don't you have somewhere to be?；常作逐客）",
+    "freq": 149
+  },
+  {
+    "word": "Dontcha get tired of this?",
+    "explains": "你不烦吗（= Don't you get tired of this?）",
+    "freq": 150
+  },
+  {
+    "word": "Dontcha remember me?",
+    "explains": "你不记得我了（= Don't you remember me?）",
+    "freq": 151
+  },
+  {
+    "word": "Dontcha just hate traffic?",
+    "explains": "堵车真让人烦对吧（= Don't you just hate traffic?）",
+    "freq": 152
+  },
+  {
+    "word": "Dontcha ever sleep?",
+    "explains": "你不睡觉的吗（= Don't you ever sleep?）",
+    "freq": 153
+  },
+  {
+    "word": "Dontcha miss the old days?",
+    "explains": "你不怀念过去吗（= Don't you miss the old days?）",
+    "freq": 154
+  },
+  {
+    "word": "Dontcha wanna come along?",
+    "explains": "不想一起来吗（= Don't you want to come along?）",
+    "freq": 155
+  },
+  {
+    "word": "Dontcha think it's weird?",
+    "explains": "你不觉得很怪吗（= Don't you think it's weird?）",
+    "freq": 156
+  },
+  {
+    "word": "Dontcha dare leave",
+    "explains": "你敢走试试（= Don't you dare leave）",
+    "freq": 157
+  },
+  {
+    "word": "Dontcha have a meeting?",
+    "explains": "你不是有会吗（= Don't you have a meeting?）",
+    "freq": 158
+  },
+  {
+    "word": "Dontcha recognize your old friend?",
+    "explains": "你连老朋友都认不出了（= Don't you recognize your old friend?）",
+    "freq": 159
+  },
+  {
+    "word": "Dontcha wish you were here?",
+    "explains": "你不想也在这儿吗（= Don't you wish you were here?）",
+    "freq": 160
+  },
+  {
+    "word": "Dontcha think enough is enough?",
+    "explains": "你不觉得该适可而止吗（= Don't you think enough is enough?）",
+    "freq": 161
+  },
+  {
+    "word": "Whadja do last night?",
+    "explains": "你昨晚干嘛了（= What did you do last night?）",
+    "freq": 162
+  },
+  {
+    "word": "Whadja say?",
+    "explains": "你说什么（= What did you say?）",
+    "freq": 163
+  },
+  {
+    "word": "Whadja bring me?",
+    "explains": "你给我带什么了（= What did you bring me?）",
+    "freq": 164
+  },
+  {
+    "word": "Whadja think of the game?",
+    "explains": "比赛你觉得怎么样（= What did you think of the game?）",
+    "freq": 165
+  },
+  {
+    "word": "Whadja buy?",
+    "explains": "你买了啥（= What did you buy?）",
+    "freq": 166
+  },
+  {
+    "word": "Whadja tell him?",
+    "explains": "你跟他说了什么（= What did you tell him?）",
+    "freq": 167
+  },
+  {
+    "word": "Whadja have for lunch?",
+    "explains": "午饭吃的什么（= What did you have for lunch?）",
+    "freq": 168
+  },
+  {
+    "word": "Whadja find out?",
+    "explains": "你查到什么了（= What did you find out?）",
+    "freq": 169
+  },
+  {
+    "word": "Whadja do that for?",
+    "explains": "你干嘛那么做（= What did you do that for?）",
+    "freq": 170
+  },
+  {
+    "word": "Whadja get her for her birthday?",
+    "explains": "她生日你送了什么（= What did you get her for her birthday?）",
+    "freq": 171
+  },
+  {
+    "word": "Whadja expect?",
+    "explains": "你还指望什么（= What did you expect?；常带讽刺）",
+    "freq": 172
+  },
+  {
+    "word": "Whadja call me for?",
+    "explains": "你打我电话干嘛（= What did you call me for?）",
+    "freq": 173
+  },
+  {
+    "word": "Whadja break?",
+    "explains": "你打碎什么了（= What did you break?）",
+    "freq": 174
+  },
+  {
+    "word": "Whadja do over the weekend?",
+    "explains": "周末干嘛了（= What did you do over the weekend?）",
+    "freq": 175
+  },
+  {
+    "word": "Whadja score on the test?",
+    "explains": "考试考了多少分（= What did you score on the test?）",
+    "freq": 176
+  },
+  {
+    "word": "Whadja say to her?",
+    "explains": "你对她说了什么（= What did you say to her?）",
+    "freq": 177
+  },
+  {
+    "word": "Whadja wear to the party?",
+    "explains": "聚会你穿的什么（= What did you wear to the party?）",
+    "freq": 178
+  },
+  {
+    "word": "Whadja think would happen?",
+    "explains": "你以为会怎样（= What did you think would happen?）",
+    "freq": 179
+  },
+  {
+    "word": "Whadja put in my coffee?",
+    "explains": "我咖啡里你加了什么（= What did you put in my coffee?）",
+    "freq": 180
+  },
+  {
+    "word": "Whadja get up to yesterday?",
+    "explains": "你昨天搞什么名堂去了（= What did you get up to yesterday?）",
+    "freq": 181
+  },
+  {
+    "word": "Whadja do with my charger?",
+    "explains": "我的充电器你弄哪去了（= What did you do with my charger?）",
+    "freq": 182
+  },
+  {
+    "word": "I'm finna head out",
+    "explains": "我准备走了（= I'm fixing to head out；finna 源自 fixing to，非裔美式口语，意为「正要」）",
+    "freq": 183
+  },
+  {
+    "word": "We finna eat soon",
+    "explains": "我们马上吃饭（= We're fixing to eat soon）",
+    "freq": 184
+  },
+  {
+    "word": "She finna call you back",
+    "explains": "她这就给你回电话（= She's fixing to call you back）",
+    "freq": 185
+  },
+  {
+    "word": "It's finna get real",
+    "explains": "要来真的了（= It's fixing to get real）",
+    "freq": 186
+  },
+  {
+    "word": "You finna leave already?",
+    "explains": "你这就要走（= Are you fixing to leave already?）",
+    "freq": 187
+  },
+  {
+    "word": "I'm finna take a nap",
+    "explains": "我想眯一会儿（= I'm fixing to take a nap）",
+    "freq": 188
+  },
+  {
+    "word": "They finna start without us",
+    "explains": "他们要不等我们开始了（= They're fixing to start without us）",
+    "freq": 189
+  },
+  {
+    "word": "It's finna rain",
+    "explains": "要下雨了（= It's fixing to rain）",
+    "freq": 190
+  },
+  {
+    "word": "I'm finna turn in",
+    "explains": "我要去睡了（= I'm fixing to turn in）",
+    "freq": 191
+  },
+  {
+    "word": "You finna pay for that?",
+    "explains": "你要为那个买单吗（= Are you fixing to pay for that?）",
+    "freq": 192
+  },
+  {
+    "word": "He finna lose his mind",
+    "explains": "他要气疯了（= He's fixing to lose his mind）",
+    "freq": 193
+  },
+  {
+    "word": "We finna be late",
+    "explains": "我们要迟到了（= We're fixing to be late）",
+    "freq": 194
+  },
+  {
+    "word": "I'm finna cook tonight",
+    "explains": "今晚我来做（= I'm fixing to cook tonight）",
+    "freq": 195
+  },
+  {
+    "word": "She finna break up with him",
+    "explains": "她要跟他分手了（= She's fixing to break up with him）",
+    "freq": 196
+  },
+  {
+    "word": "It's finna be a long day",
+    "explains": "今天会很长（= It's fixing to be a long day）",
+    "freq": 197
+  },
+  {
+    "word": "I needta talk to you",
+    "explains": "我得跟你谈谈（= I need to talk to you）",
+    "freq": 198
+  },
+  {
+    "word": "We needta leave soon",
+    "explains": "我们得快点走（= We need to leave soon）",
+    "freq": 199
+  },
+  {
+    "word": "You needta see a doctor",
+    "explains": "你得去看医生（= You need to see a doctor）",
+    "freq": 200
+  },
+  {
+    "word": "Needta grab some groceries",
+    "explains": "得买点菜（= Need to grab some groceries）",
+    "freq": 201
+  },
+  {
+    "word": "He needta chill",
+    "explains": "他需要冷静冷静（= He needs to chill）",
+    "freq": 202
+  },
+  {
+    "word": "I needta charge my phone",
+    "explains": "我得给手机充电（= I need to charge my phone）",
+    "freq": 203
+  },
+  {
+    "word": "You needta be there by eight",
+    "explains": "你得八点前到（= You need to be there by eight）",
+    "freq": 204
+  },
+  {
+    "word": "We needta talk about this",
+    "explains": "这事我们得谈谈（= We need to talk about this）",
+    "freq": 205
+  },
+  {
+    "word": "I needta find my keys",
+    "explains": "我得找钥匙（= I need to find my keys）",
+    "freq": 206
+  },
+  {
+    "word": "She needta rest more",
+    "explains": "她得多休息（= She needs to rest more）",
+    "freq": 207
+  },
+  {
+    "word": "You needta stop doing that",
+    "explains": "你必须停止那样做（= You need to stop doing that）",
+    "freq": 208
+  },
+  {
+    "word": "Needta think it over",
+    "explains": "得再想想（= Need to think it over）",
+    "freq": 209
+  },
+  {
+    "word": "I needta ask a favor",
+    "explains": "我想请你帮个忙（= I need to ask a favor）",
+    "freq": 210
+  },
+  {
+    "word": "They needta hurry",
+    "explains": "他们得快点（= They need to hurry）",
+    "freq": 211
+  },
+  {
+    "word": "You needta fix that leak",
+    "explains": "你得修修那个漏水的地方（= You need to fix that leak）",
+    "freq": 212
+  },
+  {
+    "word": "I needta call my mom",
+    "explains": "我得给我妈打电话（= I need to call my mom）",
+    "freq": 213
+  },
+  {
+    "word": "We needta save more money",
+    "explains": "我们得多存点钱（= We need to save more money）",
+    "freq": 214
+  },
+  {
+    "word": "He needta learn to listen",
+    "explains": "他得学会听人说话（= He needs to learn to listen）",
+    "freq": 215
+  },
+  {
+    "word": "Needta get up early tomorrow",
+    "explains": "明早得早起（= Need to get up early tomorrow）",
+    "freq": 216
+  },
+  {
+    "word": "I needta take a break",
+    "explains": "我得休息一下（= I need to take a break）",
+    "freq": 217
+  },
+  {
+    "word": "You needta clean up this mess",
+    "explains": "你得把这烂摊子收拾了（= You need to clean up this mess）",
+    "freq": 218
+  },
+  {
+    "word": "We needta split the bill",
+    "explains": "我们得平摊账单（= We need to split the bill）",
+    "freq": 219
+  },
+  {
+    "word": "I hadda stay late",
+    "explains": "我不得不待到很晚（= I had to stay late）",
+    "freq": 220
+  },
+  {
+    "word": "We hadda cancel the trip",
+    "explains": "我们不得不取消旅行（= We had to cancel the trip）",
+    "freq": 221
+  },
+  {
+    "word": "She hadda walk home",
+    "explains": "她只好走回家（= She had to walk home）",
+    "freq": 222
+  },
+  {
+    "word": "You hadda be there",
+    "explains": "你真该在场（= You had to be there）",
+    "freq": 223
+  },
+  {
+    "word": "He hadda see it to believe it",
+    "explains": "他亲眼所见才敢信（= He had to see it to believe it）",
+    "freq": 224
+  },
+  {
+    "word": "I hadda laugh",
+    "explains": "我忍不住笑了（= I had to laugh）",
+    "freq": 225
+  },
+  {
+    "word": "They hadda rush to the hospital",
+    "explains": "他们得赶紧去医院（= They had to rush to the hospital）",
+    "freq": 226
+  },
+  {
+    "word": "We hadda start over",
+    "explains": "我们只好从头再来（= We had to start over）",
+    "freq": 227
+  },
+  {
+    "word": "She hadda sell her car",
+    "explains": "她不得不把车卖了（= She had to sell her car）",
+    "freq": 228
+  },
+  {
+    "word": "I hadda pinch myself",
+    "explains": "我都不敢相信（= I had to pinch myself；表示惊喜到不真实）",
+    "freq": 229
+  },
+  {
+    "word": "You hadda ruin it, didn't you",
+    "explains": "你非把事情搞砸不可是吧（= You had to ruin it, didn't you?；带埋怨）",
+    "freq": 230
+  },
+  {
+    "word": "He hadda break the news",
+    "explains": "只好由他来宣布这个消息（= He had to break the news）",
+    "freq": 231
+  },
+  {
+    "word": "I hadda borrow money again",
+    "explains": "我又得借钱了（= I had to borrow money again）",
+    "freq": 232
+  },
+  {
+    "word": "We hadda wait in line for hours",
+    "explains": "我们排了好几个小时队（= We had to wait in line for hours）",
+    "freq": 233
+  },
+  {
+    "word": "She hadda take a second job",
+    "explains": "她不得不打第二份工（= She had to take a second job）",
+    "freq": 234
+  },
+  {
+    "word": "You hadda bring that up",
+    "explains": "你非提那茬是吧（= You had to bring that up；带不满）",
+    "freq": 235
+  },
+  {
+    "word": "I hadda think fast",
+    "explains": "我得快速反应（= I had to think fast）",
+    "freq": 236
+  },
+  {
+    "word": "They hadda let him go",
+    "explains": "他们只好裁掉他（= They had to let him go）",
+    "freq": 237
+  },
+  {
+    "word": "I wantcha to be happy",
+    "explains": "我希望你幸福（= I want you to be happy）",
+    "freq": 238
+  },
+  {
+    "word": "We wantcha on our team",
+    "explains": "我们想要你加入（= We want you on our team）",
+    "freq": 239
+  },
+  {
+    "word": "I wantcha to meet someone",
+    "explains": "我想让你见个人（= I want you to meet someone）",
+    "freq": 240
+  },
+  {
+    "word": "I wantcha back",
+    "explains": "我想让你回来（= I want you back）",
+    "freq": 241
+  },
+  {
+    "word": "They just wantcha to sign",
+    "explains": "他们只想让你签字（= They just want you to sign）",
+    "freq": 242
+  },
+  {
+    "word": "I wantcha here by five",
+    "explains": "我要你五点前到（= I want you here by five）",
+    "freq": 243
+  },
+  {
+    "word": "Wantcha to know something",
+    "explains": "我想让你知道件事（= Want you to know something）",
+    "freq": 244
+  },
+  {
+    "word": "I wantcha to come with me",
+    "explains": "我想你跟我一起来（= I want you to come with me）",
+    "freq": 245
+  },
+  {
+    "word": "Who wantcha dead?",
+    "explains": "谁想要你的命（= Who wants you dead?）",
+    "freq": 246
+  },
+  {
+    "word": "I wantcha to try it first",
+    "explains": "我想你先来试试（= I want you to try it first）",
+    "freq": 247
+  },
+  {
+    "word": "He just wantcha to calm down",
+    "explains": "他只想让你冷静（= He just wants you to calm down）",
+    "freq": 248
+  },
+  {
+    "word": "I wantcha so bad",
+    "explains": "我太想要你了（= I want you so bad；表达强烈爱意）",
+    "freq": 249
+  },
+  {
+    "word": "Wantcha to see this",
+    "explains": "想让你看看这个（= Want you to see this）",
+    "freq": 250
+  },
+  {
+    "word": "I wantcha thinking about it",
+    "explains": "我要你好好想想（= I want you thinking about it）",
+    "freq": 251
+  },
+  {
+    "word": "We don't wantcha to worry",
+    "explains": "我们不希望你担心（= We don't want you to worry）",
+    "freq": 252
+  },
+  {
+    "word": "I wantcha all to myself",
+    "explains": "我想独占你（= I want you all to myself）",
+    "freq": 253
+  },
+  {
+    "word": "G'bye everyone",
+    "explains": "大家再见（= Goodbye everyone）",
+    "freq": 254
+  },
+  {
+    "word": "G'bye for now",
+    "explains": "先告辞了（= Goodbye for now）",
+    "freq": 255
+  },
+  {
+    "word": "Say g'bye to dad",
+    "explains": "跟爸爸说再见（= Say goodbye to dad）",
+    "freq": 256
+  },
+  {
+    "word": "G'bye sweetie",
+    "explains": "宝贝再见（= Goodbye sweetie）",
+    "freq": 257
+  },
+  {
+    "word": "Time to say g'bye",
+    "explains": "该说再见了（= Time to say goodbye）",
+    "freq": 258
+  },
+  {
+    "word": "G'bye, see you Friday",
+    "explains": "再见，周五见（= Goodbye, see you Friday）",
+    "freq": 259
+  },
+  {
+    "word": "Wave g'bye",
+    "explains": "挥手再见（= Wave goodbye）",
+    "freq": 260
+  },
+  {
+    "word": "G'bye then",
+    "explains": "那就再见吧（= Goodbye then）",
+    "freq": 261
+  },
+  {
+    "word": "Kiss me g'bye",
+    "explains": "吻别一下（= Kiss me goodbye）",
+    "freq": 262
+  },
+  {
+    "word": "G'bye world",
+    "explains": "再见世界（= Goodbye world；常作玩笑或夸张）",
+    "freq": 263
+  },
+  {
+    "word": "Never say g'bye",
+    "explains": "永远不说再见（= Never say goodbye）",
+    "freq": 264
+  },
+  {
+    "word": "We said our g'byes",
+    "explains": "我们道别过了（= We said our goodbyes）",
+    "freq": 265
+  },
+  {
+    "word": "G'bye, thanks for coming",
+    "explains": "再见，谢谢光临（= Goodbye, thanks for coming）",
+    "freq": 266
+  },
+  {
+    "word": "One last g'bye",
+    "explains": "最后道个别（= One last goodbye）",
+    "freq": 267
+  },
+  {
+    "word": "Fancy a cuppa?",
+    "explains": "想喝杯茶吗（= Fancy a cup of tea?；英式口语，cuppa 一般指茶）",
+    "freq": 268
+  },
+  {
+    "word": "I'll put the kettle on for a cuppa",
+    "explains": "我烧水泡杯茶（= ...for a cup of tea）",
+    "freq": 269
+  },
+  {
+    "word": "A nice cuppa fixes everything",
+    "explains": "一杯好茶什么都能治愈（= A nice cup of tea fixes everything）",
+    "freq": 270
+  },
+  {
+    "word": "Cuppa tea, love?",
+    "explains": "来杯茶吗，亲爱的（= Cup of tea, love?；英式）",
+    "freq": 271
+  },
+  {
+    "word": "Mind making me a cuppa?",
+    "explains": "帮我泡杯茶行吗（= Mind making me a cup of tea?）",
+    "freq": 272
+  },
+  {
+    "word": "There's nothing like a hot cuppa",
+    "explains": "热茶最棒了（= There's nothing like a hot cup of tea）",
+    "freq": 273
+  },
+  {
+    "word": "Pop round for a cuppa sometime",
+    "explains": "有空过来喝杯茶（= ...for a cup of tea sometime）",
+    "freq": 274
+  },
+  {
+    "word": "A cuppa and a biscuit",
+    "explains": "一杯茶配块饼干（= A cup of tea and a biscuit）",
+    "freq": 275
+  },
+  {
+    "word": "First cuppa of the day",
+    "explains": "今天的第一杯茶（= First cup of tea of the day）",
+    "freq": 276
+  },
+  {
+    "word": "Another cuppa?",
+    "explains": "再来一杯吗（= Another cup of tea?）",
+    "freq": 277
+  },
+  {
+    "word": "Cold today, innit?",
+    "explains": "今天真冷，是吧（= Cold today, isn't it?；英式口语）",
+    "freq": 278
+  },
+  {
+    "word": "Nice place, innit?",
+    "explains": "这地方不错吧（= Nice place, isn't it?）",
+    "freq": 279
+  },
+  {
+    "word": "It's hot, innit",
+    "explains": "真热，是吧（= It's hot, isn't it?）",
+    "freq": 280
+  },
+  {
+    "word": "You're coming, innit?",
+    "explains": "你会来的对吧（= You're coming, aren't you?；innit 已泛化为万能附和尾词）",
+    "freq": 281
+  },
+  {
+    "word": "That's fair, innit",
+    "explains": "这很公平，对吧（= That's fair, isn't it?）",
+    "freq": 282
+  },
+  {
+    "word": "Long day, innit?",
+    "explains": "今天够累的吧（= Long day, isn't it?）",
+    "freq": 283
+  },
+  {
+    "word": "Bit early, innit?",
+    "explains": "有点早吧（= A bit early, isn't it?）",
+    "freq": 284
+  },
+  {
+    "word": "Lovely weather, innit",
+    "explains": "天气真好，是吧（= Lovely weather, isn't it?）",
+    "freq": 285
+  },
+  {
+    "word": "Hard work, innit?",
+    "explains": "挺累人的，对吧（= Hard work, isn't it?）",
+    "freq": 286
+  },
+  {
+    "word": "Mad, innit?",
+    "explains": "疯了吧（= Mad, isn't it?；表惊讶）",
+    "freq": 287
+  },
+  {
+    "word": "Traffic's awful, innit",
+    "explains": "堵成这样了，是吧（= Traffic's awful, isn't it?）",
+    "freq": 288
+  },
+  {
+    "word": "You liked it, innit?",
+    "explains": "你喜欢，对吧（= You liked it, didn't you?；innit 泛化用法）",
+    "freq": 289
+  },
+  {
+    "word": "Best pizza ever, innit?",
+    "explains": "最好吃的披萨，没跑了（= Best pizza ever, isn't it?）",
+    "freq": 290
+  },
+  {
+    "word": "Told you so, innit",
+    "explains": "跟你说了吧（= Told you so, didn't I?；得意）",
+    "freq": 291
+  },
+  {
+    "word": "Everyone's gone home, innit",
+    "explains": "大家都回家了（= Everyone's gone home, haven't they?）",
+    "freq": 292
+  },
+  {
+    "word": "It's been ages, innit?",
+    "explains": "好久不见了，是吧（= It's been ages, hasn't it?）",
+    "freq": 293
+  },
+  {
+    "word": "Ain'tcha cold in that?",
+    "explains": "你穿那样不冷吗（= Aren't you cold in that?）",
+    "freq": 294
+  },
+  {
+    "word": "Ain'tcha gonna eat?",
+    "explains": "你不吃了吗（= Aren't you going to eat?）",
+    "freq": 295
+  },
+  {
+    "word": "Ain'tcha glad to see me?",
+    "explains": "见到我不高兴吗（= Aren't you glad to see me?）",
+    "freq": 296
+  },
+  {
+    "word": "Ain'tcha tired yet?",
+    "explains": "你还不累吗（= Aren't you tired yet?）",
+    "freq": 297
+  },
+  {
+    "word": "Ain'tcha scared?",
+    "explains": "你不怕吗（= Aren't you scared?）",
+    "freq": 298
+  },
+  {
+    "word": "Ain'tcha a sight for sore eyes",
+    "explains": "见到你真高兴（= Aren't you a sight for sore eyes；习语）",
+    "freq": 299
+  },
+  {
+    "word": "Ain'tcha got no manners?",
+    "explains": "你一点礼貌都没有吗（= Have you got no manners?）",
+    "freq": 300
+  },
+  {
+    "word": "Ain'tcha heard the news?",
+    "explains": "你没听说吗（= Haven't you heard the news?）",
+    "freq": 301
+  },
+  {
+    "word": "Ain'tcha coming?",
+    "explains": "你不来吗（= Aren't you coming?）",
+    "freq": 302
+  },
+  {
+    "word": "Ain'tcha hungry?",
+    "explains": "你不饿吗（= Aren't you hungry?）",
+    "freq": 303
+  },
+  {
+    "word": "Ain'tcha gonna say hi?",
+    "explains": "你不打个招呼吗（= Aren't you going to say hi?）",
+    "freq": 304
+  },
+  {
+    "word": "Ain'tcha ashamed of yourself?",
+    "explains": "你就不觉得惭愧吗（= Aren't you ashamed of yourself?）",
+    "freq": 305
+  },
+  {
+    "word": "Ain'tcha working today?",
+    "explains": "你今天不上班吗（= Aren't you working today?）",
+    "freq": 306
+  },
+  {
+    "word": "Ain'tcha proud of him?",
+    "explains": "你不为他骄傲吗（= Aren't you proud of him?）",
+    "freq": 307
+  },
+  {
+    "word": "Ain'tcha gonna miss this place?",
+    "explains": "你不会想念这里吗（= Aren't you going to miss this place?）",
+    "freq": 308
+  },
+  {
+    "word": "Ain'tcha the lucky one",
+    "explains": "你运气可真好（= Aren't you the lucky one）",
+    "freq": 309
+  },
+  {
+    "word": "Haven'tcha finished yet?",
+    "explains": "你还没做完吗（= Haven't you finished yet?）",
+    "freq": 310
+  },
+  {
+    "word": "Haven'tcha heard? He's leaving",
+    "explains": "你没听说吗，他要走了（= Haven't you heard? He's leaving）",
+    "freq": 311
+  },
+  {
+    "word": "Haven'tcha got a coat?",
+    "explains": "你没带外套吗（= Haven't you got a coat?）",
+    "freq": 312
+  },
+  {
+    "word": "Haven'tcha been paying attention?",
+    "explains": "你一直在走神吗（= Haven't you been paying attention?）",
+    "freq": 313
+  },
+  {
+    "word": "Haven'tcha slept enough?",
+    "explains": "你还没睡够吗（= Haven't you slept enough?）",
+    "freq": 314
+  },
+  {
+    "word": "Haven'tcha got anything better to do?",
+    "explains": "你没别的事干吗（= Haven't you got anything better to do?）",
+    "freq": 315
+  },
+  {
+    "word": "Haven'tcha noticed?",
+    "explains": "你一直没注意到吗（= Haven't you noticed?）",
+    "freq": 316
+  },
+  {
+    "word": "Haven'tcha left yet?",
+    "explains": "你还没走啊（= Haven't you left yet?）",
+    "freq": 317
+  },
+  {
+    "word": "Haven'tcha grown!",
+    "explains": "你都长这么大了（= Haven't you grown!）",
+    "freq": 318
+  },
+  {
+    "word": "Haven'tcha seen that movie?",
+    "explains": "你没看过那部电影吗（= Haven't you seen that movie?）",
+    "freq": 319
+  },
+  {
+    "word": "Haven'tcha ever wondered?",
+    "explains": "你就没想过吗（= Haven't you ever wondered?）",
+    "freq": 320
+  },
+  {
+    "word": "Haven'tcha had enough?",
+    "explains": "你还没受够吗（= Haven't you had enough?）",
+    "freq": 321
+  },
+  {
+    "word": "Haven'tcha heard a word I said?",
+    "explains": "我说的话你一句都没听进去（= Haven't you heard a word I said?）",
+    "freq": 322
+  },
+  {
+    "word": "Haven'tcha been here before?",
+    "explains": "你以前没来过吗（= Haven't you been here before?）",
+    "freq": 323
+  },
+  {
+    "word": "Haven'tcha got class today?",
+    "explains": "你今天没课吗（= Haven't you got class today?）",
+    "freq": 324
+  },
+  {
+    "word": "Wouldn'tcha like to know?",
+    "explains": "你就想知道，是吧（= Wouldn't you like to know?；卖关子）",
+    "freq": 325
+  },
+  {
+    "word": "Wouldn'tcha rather stay home?",
+    "explains": "你更想待在家吧（= Wouldn't you rather stay home?）",
+    "freq": 326
+  },
+  {
+    "word": "Wouldn'tcha agree?",
+    "explains": "你不这么认为吗（= Wouldn't you agree?）",
+    "freq": 327
+  },
+  {
+    "word": "Wouldn'tcha know it, it rained",
+    "explains": "偏偏就下雨了（= Wouldn't you know it, it rained）",
+    "freq": 328
+  },
+  {
+    "word": "Wouldn'tcha love a day off?",
+    "explains": "你难道不想休一天吗（= Wouldn't you love a day off?）",
+    "freq": 329
+  },
+  {
+    "word": "Wouldn'tcha think so?",
+    "explains": "你不觉得是这样吗（= Wouldn't you think so?）",
+    "freq": 330
+  },
+  {
+    "word": "Wouldn'tcha be mad too?",
+    "explains": "换你你不生气吗（= Wouldn't you be mad too?）",
+    "freq": 331
+  },
+  {
+    "word": "Wouldn'tcha die for some ice cream",
+    "explains": "现在好想吃冰淇淋（= Wouldn't you die for some ice cream?）",
+    "freq": 332
+  },
+  {
+    "word": "Wouldn'tcha know, he's late again",
+    "explains": "果不其然，他又迟到了（= Wouldn't you know, he's late again）",
+    "freq": 333
+  },
+  {
+    "word": "Wouldn'tcha like a raise?",
+    "explains": "你不想涨工资吗（= Wouldn't you like a raise?）",
+    "freq": 334
+  },
+  {
+    "word": "Wouldn'tcha be embarrassed?",
+    "explains": "你不觉得尴尬吗（= Wouldn't you be embarrassed?）",
+    "freq": 335
+  },
+  {
+    "word": "Wouldn'tcha know she forgot her keys",
+    "explains": "你猜怎么着，她又忘带钥匙了（= Wouldn't you know, she forgot her keys）",
+    "freq": 336
+  },
+  {
+    "word": "Wouldn'tcha rather be fishing?",
+    "explains": "你更想去钓鱼吧（= Wouldn't you rather be fishing?）",
+    "freq": 337
+  },
+  {
+    "word": "Wouldn'tcha miss me?",
+    "explains": "你不会想我吗（= Wouldn't you miss me?）",
+    "freq": 338
+  },
+  {
+    "word": "Wouldn'tcha know the one day I overslept",
+    "explains": "偏偏在我睡过头这一天（= Wouldn't you know, the one day I overslept）",
+    "freq": 339
+  },
+  {
+    "word": "Couldn'tcha just say sorry?",
+    "explains": "你就不能说句对不起吗（= Couldn't you just say sorry?）",
+    "freq": 340
+  },
+  {
+    "word": "Couldn'tcha wait five minutes?",
+    "explains": "你就不能等五分钟吗（= Couldn't you wait five minutes?）",
+    "freq": 341
+  },
+  {
+    "word": "Couldn'tcha have told me sooner?",
+    "explains": "你不能早点告诉我吗（= Couldn't you have told me sooner?）",
+    "freq": 342
+  },
+  {
+    "word": "Couldn'tcha find a cheaper one?",
+    "explains": "找不到更便宜的吗（= Couldn't you find a cheaper one?）",
+    "freq": 343
+  },
+  {
+    "word": "Couldn'tcha lie for once?",
+    "explains": "你就不能撒个善意的谎吗（= Couldn't you lie for once?）",
+    "freq": 344
+  },
+  {
+    "word": "Couldn'tcha have called first?",
+    "explains": "你不能先打个电话吗（= Couldn't you have called first?）",
+    "freq": 345
+  },
+  {
+    "word": "Couldn'tcha sleep?",
+    "explains": "睡不着吗（= Couldn't you sleep?）",
+    "freq": 346
+  },
+  {
+    "word": "Couldn'tcha pick a better spot?",
+    "explains": "就不能选个好点的地方吗（= Couldn't you pick a better spot?）",
+    "freq": 347
+  },
+  {
+    "word": "Couldn'tcha have warned us?",
+    "explains": "你就不能提醒一下我们吗（= Couldn't you have warned us?）",
+    "freq": 348
+  },
+  {
+    "word": "Couldn'tcha stay a bit longer?",
+    "explains": "不能再待一会儿吗（= Couldn't you stay a bit longer?）",
+    "freq": 349
+  },
+  {
+    "word": "Couldn'tcha hear me knocking?",
+    "explains": "你听不到我敲门吗（= Couldn't you hear me knocking?）",
+    "freq": 350
+  },
+  {
+    "word": "Couldn'tcha have been nicer to her?",
+    "explains": "你对她就不能客气点吗（= Couldn't you have been nicer to her?）",
+    "freq": 351
+  },
+  {
+    "word": "Couldn'tcha have picked another day?",
+    "explains": "就不能换个日子吗（= Couldn't you have picked another day?）",
+    "freq": 352
+  },
+  {
+    "word": "Couldn'tcha keep it down?",
+    "explains": "你不能小声点吗（= Couldn't you keep it down?）",
+    "freq": 353
+  },
+  {
+    "word": "Couldn'tcha try a little harder?",
+    "explains": "你就不能更努力一点吗（= Couldn't you try a little harder?）",
+    "freq": 354
+  },
+  {
+    "word": "You must've heard about it",
+    "explains": "你肯定听说了吧（= You must have heard about it）",
+    "freq": 355
+  },
+  {
+    "word": "He must've forgotten",
+    "explains": "他一定是忘了（= He must have forgotten）",
+    "freq": 356
+  },
+  {
+    "word": "She must've been beautiful",
+    "explains": "她年轻时一定很美（= She must have been beautiful）",
+    "freq": 357
+  },
+  {
+    "word": "We must've missed the turn",
+    "explains": "我们肯定拐错弯了（= We must have missed the turn）",
+    "freq": 358
+  },
+  {
+    "word": "You must've been so scared",
+    "explains": "你当时肯定吓坏了（= You must have been so scared）",
+    "freq": 359
+  },
+  {
+    "word": "It must've cost a fortune",
+    "explains": "这一定花了一大笔钱（= It must have cost a fortune）",
+    "freq": 360
+  },
+  {
+    "word": "They must've left early",
+    "explains": "他们肯定早走了（= They must have left early）",
+    "freq": 361
+  },
+  {
+    "word": "You must've practiced a lot",
+    "explains": "你一定练了很久（= You must have practiced a lot）",
+    "freq": 362
+  },
+  {
+    "word": "He must've said something wrong",
+    "explains": "他肯定说错话了（= He must have said something wrong）",
+    "freq": 363
+  },
+  {
+    "word": "Someone must've taken it",
+    "explains": "肯定是被人拿走了（= Someone must have taken it）",
+    "freq": 364
+  },
+  {
+    "word": "You must've been exhausted",
+    "explains": "你肯定累坏了（= You must have been exhausted）",
+    "freq": 365
+  },
+  {
+    "word": "She must've waited for hours",
+    "explains": "她肯定等了好几个小时（= She must have waited for hours）",
+    "freq": 366
+  },
+  {
+    "word": "It must've seemed crazy at first",
+    "explains": "一开始肯定觉得很疯狂（= It must have seemed crazy at first）",
+    "freq": 367
+  },
+  {
+    "word": "You must've known all along",
+    "explains": "你肯定早就知道了（= You must have known all along）",
+    "freq": 368
+  },
+  {
+    "word": "He must've driven all night",
+    "explains": "他肯定开了一整夜的车（= He must have driven all night）",
+    "freq": 369
+  },
+  {
+    "word": "We must've met before",
+    "explains": "我们肯定见过（= We must have met before）",
+    "freq": 370
+  },
+  {
+    "word": "You must've dropped your wallet",
+    "explains": "你一定是掉了钱包（= You must have dropped your wallet）",
+    "freq": 371
+  },
+  {
+    "word": "The battery must've died",
+    "explains": "电池肯定没电了（= The battery must have died）",
+    "freq": 372
+  },
+  {
+    "word": "She must've misunderstood me",
+    "explains": "她一定是误会我了（= She must have misunderstood me）",
+    "freq": 373
+  },
+  {
+    "word": "You must've dialed the wrong number",
+    "explains": "你一定是打错电话了（= You must have dialed the wrong number）",
+    "freq": 374
+  },
+  {
+    "word": "They must've run out of tickets",
+    "explains": "票肯定是卖完了（= They must have run out of tickets）",
+    "freq": 375
+  },
+  {
+    "word": "He must've been around thirty",
+    "explains": "他当时大概三十岁（= He must have been around thirty）",
+    "freq": 376
+  },
+  {
+    "word": "I might've overreacted",
+    "explains": "我可能反应过度了（= I might have overreacted）",
+    "freq": 377
+  },
+  {
+    "word": "You might've told me",
+    "explains": "你本可以告诉我的（= You might have told me；带埋怨）",
+    "freq": 378
+  },
+  {
+    "word": "She might've changed her mind",
+    "explains": "她可能改主意了（= She might have changed her mind）",
+    "freq": 379
+  },
+  {
+    "word": "We might've won if we'd tried harder",
+    "explains": "再努力点我们可能就赢了（= We might have won if we'd tried harder）",
+    "freq": 380
+  },
+  {
+    "word": "He might've gotten lost",
+    "explains": "他可能是迷路了（= He might have gotten lost）",
+    "freq": 381
+  },
+  {
+    "word": "I might've said the wrong thing",
+    "explains": "我可能说错话了（= I might have said the wrong thing）",
+    "freq": 382
+  },
+  {
+    "word": "They might've split up",
+    "explains": "他们可能分手了（= They might have split up）",
+    "freq": 383
+  },
+  {
+    "word": "It might've been worse",
+    "explains": "本来可能更糟（= It might have been worse）",
+    "freq": 384
+  },
+  {
+    "word": "You might've saved me some",
+    "explains": "你给我留点就好了（= You might have saved me some）",
+    "freq": 385
+  },
+  {
+    "word": "She might've gone to her mom's",
+    "explains": "她可能回娘家了（= She might have gone to her mom's）",
+    "freq": 386
+  },
+  {
+    "word": "We might've caught the last bus",
+    "explains": "我们本可以赶上末班车的（= We might have caught the last bus）",
+    "freq": 387
+  },
+  {
+    "word": "He might've misunderstood",
+    "explains": "他可能误会了（= He might have misunderstood）",
+    "freq": 388
+  },
+  {
+    "word": "I might've dozed off for a minute",
+    "explains": "我可能眯过去了一会儿（= I might have dozed off for a minute）",
+    "freq": 389
+  },
+  {
+    "word": "They might've already left",
+    "explains": "他们可能已经走了（= They might have already left）",
+    "freq": 390
+  },
+  {
+    "word": "You might've mentioned it before",
+    "explains": "你以前可能提过（= You might have mentioned it before）",
+    "freq": 391
+  },
+  {
+    "word": "I could've sworn",
+    "explains": "我明明记得（= I could have sworn）",
+    "freq": 392
+  },
+  {
+    "word": "We could've gone together",
+    "explains": "我们本来可以一起去的（= We could have gone together）",
+    "freq": 393
+  },
+  {
+    "word": "You could've fooled me",
+    "explains": "你可骗过我了（= You could have fooled me；反语）",
+    "freq": 394
+  },
+  {
+    "word": "It could've been worse",
+    "explains": "已经算好的了（= It could have been worse）",
+    "freq": 395
+  },
+  {
+    "word": "I could've cried",
+    "explains": "我差点哭了（= I could have cried）",
+    "freq": 396
+  },
+  {
+    "word": "She could've been a star",
+    "explains": "她本可以成为明星（= She could have been a star）",
+    "freq": 397
+  },
+  {
+    "word": "You could've texted me",
+    "explains": "你本可以给我发消息的（= You could have texted me）",
+    "freq": 398
+  },
+  {
+    "word": "We could've walked there",
+    "explains": "我们走路都能到（= We could have walked there）",
+    "freq": 399
+  },
+  {
+    "word": "He could've hurt someone",
+    "explains": "他本来可能伤到人（= He could have hurt someone）",
+    "freq": 400
+  },
+  {
+    "word": "I could've stayed forever",
+    "explains": "我恨不得永远待下去（= I could have stayed forever）",
+    "freq": 401
+  },
+  {
+    "word": "They could've at least apologized",
+    "explains": "他们至少该道个歉（= They could have at least apologized）",
+    "freq": 402
+  },
+  {
+    "word": "You could've warned me",
+    "explains": "你早该提醒我（= You could have warned me）",
+    "freq": 403
+  },
+  {
+    "word": "It could've happened to anyone",
+    "explains": "这事谁都可能遇到（= It could have happened to anyone）",
+    "freq": 404
+  },
+  {
+    "word": "We could've split a cab",
+    "explains": "我们本可以拼车的（= We could have split a cab）",
+    "freq": 405
+  },
+  {
+    "word": "I could've eaten a horse",
+    "explains": "我饿得能吃掉一匹马（= I could have eaten a horse；习语，表示极饿）",
+    "freq": 406
+  },
+  {
+    "word": "She could've passed for my sister",
+    "explains": "她看着就像我姐姐（= She could have passed for my sister）",
+    "freq": 407
+  },
+  {
+    "word": "You could've knocked me over with a feather",
+    "explains": "我惊讶得目瞪口呆（= You could have knocked me over with a feather；习语）",
+    "freq": 408
+  },
+  {
+    "word": "I should've brought an umbrella",
+    "explains": "我该带把伞的（= I should have brought an umbrella）",
+    "freq": 409
+  },
+  {
+    "word": "You should've seen his face",
+    "explains": "你真该看看他的表情（= You should have seen his face）",
+    "freq": 410
+  },
+  {
+    "word": "We should've booked earlier",
+    "explains": "我们该早点订的（= We should have booked earlier）",
+    "freq": 411
+  },
+  {
+    "word": "She should've been a teacher",
+    "explains": "她本该当老师的（= She should have been a teacher）",
+    "freq": 412
+  },
+  {
+    "word": "I should've kept my mouth shut",
+    "explains": "我该闭嘴的（= I should have kept my mouth shut）",
+    "freq": 413
+  },
+  {
+    "word": "You should've told me sooner",
+    "explains": "你该早点告诉我（= You should have told me sooner）",
+    "freq": 414
+  },
+  {
+    "word": "We should've taken pictures",
+    "explains": "我们该拍点照的（= We should have taken pictures）",
+    "freq": 415
+  },
+  {
+    "word": "He should've apologized by now",
+    "explains": "他现在总该道歉了吧（= He should have apologized by now）",
+    "freq": 416
+  },
+  {
+    "word": "I should've studied harder",
+    "explains": "我该更努力学习的（= I should have studied harder）",
+    "freq": 417
+  },
+  {
+    "word": "You should've come with us",
+    "explains": "你该跟我们一块来的（= You should have come with us）",
+    "freq": 418
+  },
+  {
+    "word": "They should've finished by now",
+    "explains": "他们现在应该做完了（= They should have finished by now）",
+    "freq": 419
+  },
+  {
+    "word": "I should've saved some money",
+    "explains": "我该存点钱的（= I should have saved some money）",
+    "freq": 420
+  },
+  {
+    "word": "We should've left earlier",
+    "explains": "我们该早点出发的（= We should have left earlier）",
+    "freq": 421
+  },
+  {
+    "word": "She should've won the award",
+    "explains": "她本该获奖的（= She should have won the award）",
+    "freq": 422
+  },
+  {
+    "word": "You should've asked for help",
+    "explains": "你该请人帮忙的（= You should have asked for help）",
+    "freq": 423
+  },
+  {
+    "word": "I should've quit years ago",
+    "explains": "我几年前就该辞职的（= I should have quit years ago）",
+    "freq": 424
+  },
+  {
+    "word": "I would've said yes",
+    "explains": "我本来会同意的（= I would have said yes）",
+    "freq": 425
+  },
+  {
+    "word": "She would've loved this song",
+    "explains": "她一定会喜欢这首歌（= She would have loved this song）",
+    "freq": 426
+  },
+  {
+    "word": "We would've been there by now",
+    "explains": "我们现在早到了（= We would have been there by now）",
+    "freq": 427
+  },
+  {
+    "word": "You would've done the same",
+    "explains": "换你你也会这么做（= You would have done the same）",
+    "freq": 428
+  },
+  {
+    "word": "I would've never guessed",
+    "explains": "我怎么也想不到（= I would have never guessed）",
+    "freq": 429
+  },
+  {
+    "word": "He would've hated the idea",
+    "explains": "他肯定会讨厌这个主意（= He would have hated the idea）",
+    "freq": 430
+  },
+  {
+    "word": "We would've won without that penalty",
+    "explains": "没有那个点球我们就赢了（= We would've won without that penalty）",
+    "freq": 431
+  },
+  {
+    "word": "I would've stayed for you",
+    "explains": "为你我会留下的（= I would've stayed for you）",
+    "freq": 432
+  },
+  {
+    "word": "They would've laughed at me",
+    "explains": "他们会笑话我的（= They would have laughed at me）",
+    "freq": 433
+  },
+  {
+    "word": "Who would've thought?",
+    "explains": "谁能想到呢（= Who would have thought?）",
+    "freq": 434
+  },
+  {
+    "word": "I would've paid double",
+    "explains": "出双倍我也愿意（= I would've paid double）",
+    "freq": 435
+  },
+  {
+    "word": "She would've been proud of you",
+    "explains": "她会为你骄傲的（= She would have been proud of you）",
+    "freq": 436
+  },
+  {
+    "word": "You would've been great at it",
+    "explains": "你做这个一定很出色（= You would have been great at it）",
+    "freq": 437
+  },
+  {
+    "word": "We would've starved without you",
+    "explains": "没有你我们得挨饿（= We would have starved without you）",
+    "freq": 438
+  },
+  {
+    "word": "No one would've known",
+    "explains": "不会有人发现的（= No one would have known）",
+    "freq": 439
+  },
+  {
+    "word": "I would've given anything to be there",
+    "explains": "我愿意付出一切在场（= I would've given anything to be there）",
+    "freq": 440
+  },
+  {
+    "word": "Y'know what I mean?",
+    "explains": "你懂我意思吧（= You know what I mean?）",
+    "freq": 441
+  },
+  {
+    "word": "I just, y'know, gave up",
+    "explains": "我就，你知道的，放弃了（= I just, you know, gave up；口语填充词）",
+    "freq": 442
+  },
+  {
+    "word": "Y'know what? Forget it",
+    "explains": "你知道吗，算了（= You know what? Forget it）",
+    "freq": 443
+  },
+  {
+    "word": "It's not easy, y'know",
+    "explains": "这不容易，你懂的（= It's not easy, you know）",
+    "freq": 444
+  },
+  {
+    "word": "Y'know how she gets",
+    "explains": "你知道她那脾气（= You know how she gets）",
+    "freq": 445
+  },
+  {
+    "word": "Y'know something?",
+    "explains": "知道吗（= You know something?；用于引出话题）",
+    "freq": 446
+  },
+  {
+    "word": "I was like, y'know, whatever",
+    "explains": "我当时就想，随便啦（= I was like, you know, whatever）",
+    "freq": 447
+  },
+  {
+    "word": "Y'know that feeling?",
+    "explains": "你懂那种感觉吧（= You know that feeling?）",
+    "freq": 448
+  },
+  {
+    "word": "Everybody does it, y'know",
+    "explains": "大家都这么干，你知道的（= Everybody does it, you know）",
+    "freq": 449
+  },
+  {
+    "word": "Y'know, I never liked him",
+    "explains": "说真的，我从没喜欢过他（= You know, I never liked him）",
+    "freq": 450
+  },
+  {
+    "word": "It's weird, y'know?",
+    "explains": "挺怪的，你不觉得吗（= It's weird, you know?）",
+    "freq": 451
+  },
+  {
+    "word": "Y'know better than that",
+    "explains": "你明知不该这样的（= You know better than that）",
+    "freq": 452
+  },
+  {
+    "word": "Y'know the place on Fifth Avenue?",
+    "explains": "你知道第五大道那家店吧（= You know the place on Fifth Avenue?）",
+    "freq": 453
+  },
+  {
+    "word": "I don't think so, y'know?",
+    "explains": "我不这么想，你懂的（= I don't think so, you know?）",
+    "freq": 454
+  },
+  {
+    "word": "Y'know what happened next?",
+    "explains": "你猜接下来怎么了（= You know what happened next?）",
+    "freq": 455
+  },
+  {
+    "word": "Y'know who called me today?",
+    "explains": "你知道今天谁给我打电话了吗（= You know who called me today?）",
+    "freq": 456
+  },
+  {
+    "word": "It'll be fine, y'know",
+    "explains": "会没事的，放心（= It'll be fine, you know）",
+    "freq": 457
+  },
+  {
+    "word": "Y'know I can't resist chocolate",
+    "explains": "你知道我抗拒不了巧克力（= You know I can't resist chocolate）",
+    "freq": 458
+  },
+  {
+    "word": "Sometimes you just gotta let go, y'know",
+    "explains": "有时候，你懂的，只能放手（= Sometimes you just gotta let go, you know）",
+    "freq": 459
+  },
+  {
+    "word": "Y'know where the keys are?",
+    "explains": "你知道钥匙在哪吗（= You know where the keys are?）",
+    "freq": 460
+  },
+  {
+    "word": "Y'know how it is",
+    "explains": "你知道是怎么回事（= You know how it is）",
+    "freq": 461
+  },
+  {
+    "word": "He's family, y'know",
+    "explains": "毕竟是一家人（= He's family, you know）",
+    "freq": 462
+  },
+  {
+    "word": "Y'know that guy from work?",
+    "explains": "公司里认识的那个家伙，记得吗（= You know that guy from work?）",
+    "freq": 463
+  },
+  {
+    "word": "Trust me, y'know?",
+    "explains": "信我，行吗（= Trust me, you know?）",
+    "freq": 464
+  },
+  {
+    "word": "Y'know what the best part is?",
+    "explains": "你知道最棒的是什么吗（= You know what the best part is?）",
+    "freq": 465
+  },
+  {
+    "word": "He's just a wannabe rapper",
+    "explains": "他就是个想当rapper的人（= He just wants to be a rapper；wannabe 指不切实际地模仿的人）",
+    "freq": 466
+  },
+  {
+    "word": "Don't be such a wannabe",
+    "explains": "别那么东施效颦（= Don't be such a wannabe）",
+    "freq": 467
+  },
+  {
+    "word": "She's a wannabe influencer",
+    "explains": "她是个想红的小网红（= She wants to be an influencer）",
+    "freq": 468
+  },
+  {
+    "word": "I don't wannabe late again",
+    "explains": "我不想再迟到了（= I don't want to be late again）",
+    "freq": 469
+  },
+  {
+    "word": "He acts like a wannabe boss",
+    "explains": "他摆出一副老板的架子（= He acts like a wannabe boss）",
+    "freq": 470
+  },
+  {
+    "word": "Those wannabe actors never make it",
+    "explains": "那种想当演员的根本红不了（= Those wannabe actors never make it）",
+    "freq": 471
+  },
+  {
+    "word": "Wannabe rock stars everywhere",
+    "explains": "到处是想当摇滚明星的人（= Wannabe rock stars everywhere）",
+    "freq": 472
+  },
+  {
+    "word": "I just wannabe happy",
+    "explains": "我只想快乐（= I just want to be happy）",
+    "freq": 473
+  },
+  {
+    "word": "She's no wannabe, she's the real deal",
+    "explains": "她不是跟风，她是真材实料（= She's no wannabe, she's the real deal）",
+    "freq": 474
+  },
+  {
+    "word": "Stop hanging with those wannabes",
+    "explains": "别跟那帮跟风的人混了（= Stop hanging with those wannabes）",
+    "freq": 475
+  },
+  {
+    "word": "Every gym's full of wannabes in January",
+    "explains": "一月健身房全是三分钟热度的人（= Every gym's full of wannabes in January）",
+    "freq": 476
+  },
+  {
+    "word": "I wannabe there for you",
+    "explains": "我想陪着你（= I want to be there for you）",
+    "freq": 477
+  },
+  {
+    "word": "Some wannabe chef he is",
+    "explains": "他还自称大厨呢（= Some wannabe chef he is；讽刺）",
+    "freq": 478
+  },
+  {
+    "word": "He doesn't wannabe left out",
+    "explains": "他不想被落下（= He doesn't want to be left out）",
+    "freq": 479
+  },
+  {
+    "word": "Wannabe heroes stay home",
+    "explains": "想当英雄的就在家待着吧（= Wannabe heroes stay home；讽刺）",
+    "freq": 480
+  },
+  {
+    "word": "Yup, that's me",
+    "explains": "对，就是我（= Yes, that's me；yup 为 yes 的口语形式）",
+    "freq": 481
+  },
+  {
+    "word": "Yup, sure thing",
+    "explains": "好的，没问题（= Yes, sure thing）",
+    "freq": 482
+  },
+  {
+    "word": "Yup, I'm listening",
+    "explains": "嗯，我在听（= Yes, I'm listening）",
+    "freq": 483
+  },
+  {
+    "word": "Yup, been there",
+    "explains": "对，我去过（= Yes, I've been there）",
+    "freq": 484
+  },
+  {
+    "word": "Yup, totally agree",
+    "explains": "没错，完全同意（= Yes, I totally agree）",
+    "freq": 485
+  },
+  {
+    "word": "Yup, all done",
+    "explains": "嗯，全搞定了（= Yes, all done）",
+    "freq": 486
+  },
+  {
+    "word": "Yup, no problem",
+    "explains": "嗯，没问题（= Yes, no problem）",
+    "freq": 487
+  },
+  {
+    "word": "Yup, he said so himself",
+    "explains": "对，他自己说的（= Yes, he said so himself）",
+    "freq": 488
+  },
+  {
+    "word": "Yup, count me in",
+    "explains": "好，算我一个（= Yes, count me in）",
+    "freq": 489
+  },
+  {
+    "word": "Yup, sounds about right",
+    "explains": "嗯，差不多就是这样（= Yes, sounds about right）",
+    "freq": 490
+  },
+  {
+    "word": "Hand me that whatchamacallit",
+    "explains": "把那个什么玩意儿递我（= Hand me that thing；想不起名字时的占位词）",
+    "freq": 491
+  },
+  {
+    "word": "Where's the whatchamacallit?",
+    "explains": "那个啥放哪了（= Where's the what's-it-called?）",
+    "freq": 492
+  },
+  {
+    "word": "It connects to the whatchamacallit",
+    "explains": "它接到那个啥上面（= It connects to that other part）",
+    "freq": 493
+  },
+  {
+    "word": "Pick up some whatchamacallits at the store",
+    "explains": "在店里买点那啥回来（= Pick up some whatsits at the store）",
+    "freq": 494
+  },
+  {
+    "word": "My whatchamacallit broke again",
+    "explains": "我那玩意儿又坏了（= My thingamajig broke again；近 thingamajig）",
+    "freq": 495
+  },
+  {
+    "word": "Press the whatchamacallit button",
+    "explains": "按那个什么按钮（= Press the whatever button）",
+    "freq": 496
+  },
+  {
+    "word": "You mean that whatchamacallit from last week?",
+    "explains": "你是指上周那个啥吗（= You mean that thing from last week?）",
+    "freq": 497
+  },
+  {
+    "word": "Whatchamacallit, you know the thing",
+    "explains": "那个啥，就那东西（= What's-it-called, you know the thing）",
+    "freq": 498
+  },
+  {
+    "word": "I need a new whatchamacallit for my bike",
+    "explains": "我得给自行车换个啥零件（= I need a new thing for my bike）",
+    "freq": 499
+  },
+  {
+    "word": "What's that whatchamacallit called again?",
+    "explains": "那东西到底叫什么来着（= What's that thing called again?）",
+    "freq": 500
+  }
+]

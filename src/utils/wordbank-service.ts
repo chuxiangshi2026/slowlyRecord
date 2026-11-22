@@ -37,6 +37,10 @@ export type WordBankType =
   | 'oral-advanced'    // 口语高阶
   | 'spoken-reactions-1' // 口语反应·第1辑（预生成连读音频）
   | 'spoken-reductions-1' // 口语缩读·第1辑（预生成连读音频）
+  | 'spoken-reductions-2' // 口语缩读·第2辑（预生成连读音频）
+  | 'spoken-elision-1'   // 口语略读·第1辑（预生成连读音频）
+  | 'spoken-liaison-1'   // 口语连读·第1辑（预生成连读音频）
+  | 'spoken-reactions-2' // 口语反应·第2辑（预生成连读音频）
   | 'tech-vocab'       // 程序员常用单词
   | 'dev-phrases'      // 程序员场景短句
   | 'dev-status'       // 开发状态短句
@@ -157,6 +161,10 @@ const EXTENDED_WORDBANKS: WordBankInfo[] = [
   { id: 'oral-advanced', name: '口语高阶', description: '地道习语与深度讨论的高阶口语短句', wordCount: 105, language: 'en' },
   { id: 'spoken-reactions-1', name: '口语反应·第1辑', description: '高频美语短反应 500 条（预生成连读音频，听练专用）', wordCount: 500, language: 'en', speechAudio: true },
   { id: 'spoken-reductions-1', name: '口语缩读·第1辑', description: '真实美语缩读/弱读短句 500 条（gonna/wanna/didja 等，预生成连读音频）', wordCount: 500, language: 'en', speechAudio: true },
+  { id: 'spoken-reductions-2', name: '口语缩读·第2辑', description: '更多真实美语缩读/弱读短句 500 条（must\'ve/y\'know/finna 等，预生成连读音频）', wordCount: 500, language: 'en', speechAudio: true },
+  { id: 'spoken-elision-1', name: '口语略读·第1辑', description: '真实美语略读/省音短句 500 条（walkin\'/\'cause/\'em 等，预生成连读音频）', wordCount: 500, language: 'en', speechAudio: true },
+  { id: 'spoken-liaison-1', name: '口语连读·第1辑', description: '美语连读规则短句 500 条（辅元连读/滑音/闪音/失去爆破等，预生成连读音频）', wordCount: 500, language: 'en', speechAudio: true },
+  { id: 'spoken-reactions-2', name: '口语反应·第2辑', description: '更多高频美语短反应 500 条（赞同/惊讶/推脱/吐槽等场景，预生成连读音频）', wordCount: 500, language: 'en', speechAudio: true },
   { id: 'tech-vocab', name: '程序员常用单词', description: '覆盖编码、调试、测试、部署、协作、线上运维等高频技术词', wordCount: 585, language: 'en' },
   { id: 'dev-phrases', name: '程序员场景短句', description: '站会、PR 评审、沟通协作等真实工作场景常用英文短句', wordCount: 190, language: 'en' },
   { id: 'dev-status', name: '开发状态短句', description: 'CI、测试、构建、发布等开发状态常用英文表述', wordCount: 118, language: 'en' },

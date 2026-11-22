@@ -1,0 +1,2502 @@
+[
+  {
+    "word": "an apple",
+    "explains": "一个苹果（连读：a·napple）",
+    "freq": 1
+  },
+  {
+    "word": "turn off",
+    "explains": "关掉（连读：tur·noff）",
+    "freq": 2
+  },
+  {
+    "word": "check it out",
+    "explains": "看看；瞧瞧（连读：chec·ki·tout）",
+    "freq": 3
+  },
+  {
+    "word": "not at all",
+    "explains": "一点也不；别客气（连读：no·ta·tall）",
+    "freq": 4
+  },
+  {
+    "word": "come on in",
+    "explains": "快进来（连读：co·mo·nin）",
+    "freq": 5
+  },
+  {
+    "word": "pick it up",
+    "explains": "捡起来（连读：pic·ki·tup）",
+    "freq": 6
+  },
+  {
+    "word": "an hour",
+    "explains": "一小时（连读：a·nour）",
+    "freq": 7
+  },
+  {
+    "word": "take it easy",
+    "explains": "放轻松（连读：ta·ke·ti·sy）",
+    "freq": 8
+  },
+  {
+    "word": "look at it",
+    "explains": "看看它（连读：loo·ka·tit）",
+    "freq": 9
+  },
+  {
+    "word": "all of us",
+    "explains": "我们所有人（连读：a·llo·fus）",
+    "freq": 10
+  },
+  {
+    "word": "hold off",
+    "explains": "推迟（连读：hol·doff）",
+    "freq": 11
+  },
+  {
+    "word": "cheer up",
+    "explains": "振作起来（连读：chee·rup）",
+    "freq": 12
+  },
+  {
+    "word": "fill it up",
+    "explains": "加满（连读：fil·li·tup）",
+    "freq": 13
+  },
+  {
+    "word": "pick up",
+    "explains": "接人；捡起（连读：pic·kup）",
+    "freq": 14
+  },
+  {
+    "word": "wake up",
+    "explains": "醒来（连读：wa·keup）",
+    "freq": 15
+  },
+  {
+    "word": "stand up",
+    "explains": "站起来（连读：stan·dup）",
+    "freq": 16
+  },
+  {
+    "word": "sit up",
+    "explains": "坐直（连读：si·tup）",
+    "freq": 17
+  },
+  {
+    "word": "come over",
+    "explains": "过来（连读：co·mover）",
+    "freq": 18
+  },
+  {
+    "word": "calm down",
+    "explains": "冷静（连读：cal·mdown）",
+    "freq": 19
+  },
+  {
+    "word": "leave it alone",
+    "explains": "别管它（连读：le·a·vi·ta·lone）",
+    "freq": 20
+  },
+  {
+    "word": "take out",
+    "explains": "拿出来（连读：ta·keout）",
+    "freq": 21
+  },
+  {
+    "word": "put away",
+    "explains": "收起来（连读：pu·ta·way）",
+    "freq": 22
+  },
+  {
+    "word": "write it down",
+    "explains": "写下来（连读：wri·te·itdown）",
+    "freq": 23
+  },
+  {
+    "word": "look around",
+    "explains": "四下看看（连读：loo·ka·round）",
+    "freq": 24
+  },
+  {
+    "word": "watch over",
+    "explains": "照看（连读：wa·tcho·ver）",
+    "freq": 25
+  },
+  {
+    "word": "work out",
+    "explains": "锻炼；解决（连读：wor·kout）",
+    "freq": 26
+  },
+  {
+    "word": "help out",
+    "explains": "帮忙（连读：hel·pout）",
+    "freq": 27
+  },
+  {
+    "word": "find out",
+    "explains": "查明（连读：fin·dout）",
+    "freq": 28
+  },
+  {
+    "word": "sort it out",
+    "explains": "理清；解决（连读：sor·ti·tout）",
+    "freq": 29
+  },
+  {
+    "word": "think about it",
+    "explains": "考虑一下（连读：thin·ka·bou·tit）",
+    "freq": 30
+  },
+  {
+    "word": "talk about it",
+    "explains": "谈谈这件事（连读：tal·ka·bou·tit）",
+    "freq": 31
+  },
+  {
+    "word": "ask about it",
+    "explains": "打听一下（连读：as·ka·bou·tit）",
+    "freq": 32
+  },
+  {
+    "word": "wait for it",
+    "explains": "等着瞧（连读：wai·tfo·rit）",
+    "freq": 33
+  },
+  {
+    "word": "think of it",
+    "explains": "想想它（连读：thin·ko·fit）",
+    "freq": 34
+  },
+  {
+    "word": "part of it",
+    "explains": "其中一部分（连读：par·to·fit）",
+    "freq": 35
+  },
+  {
+    "word": "one of us",
+    "explains": "我们中的一员（连读：wa·no·fus）",
+    "freq": 36
+  },
+  {
+    "word": "one of them",
+    "explains": "其中一个（连读：wa·no·fthem）",
+    "freq": 37
+  },
+  {
+    "word": "half of it",
+    "explains": "一半（连读：ha·lo·fit）",
+    "freq": 38
+  },
+  {
+    "word": "none of it",
+    "explains": "一点也没有（连读：no·no·fit）",
+    "freq": 39
+  },
+  {
+    "word": "all of it",
+    "explains": "全部（连读：a·llo·fit）",
+    "freq": 40
+  },
+  {
+    "word": "kind of",
+    "explains": "有点儿（连读：kin·dof）",
+    "freq": 41
+  },
+  {
+    "word": "sort of",
+    "explains": "算是；有点（连读：sor·tof）",
+    "freq": 42
+  },
+  {
+    "word": "a lot of",
+    "explains": "许多（连读：a·lo·tof）",
+    "freq": 43
+  },
+  {
+    "word": "out of",
+    "explains": "用完；出于（连读：ou·tof）",
+    "freq": 44
+  },
+  {
+    "word": "get in",
+    "explains": "进来；上车（连读：ge·tin）",
+    "freq": 45
+  },
+  {
+    "word": "get up",
+    "explains": "起床（连读：ge·tup）",
+    "freq": 46
+  },
+  {
+    "word": "get on",
+    "explains": "上车（连读：ge·ton）",
+    "freq": 47
+  },
+  {
+    "word": "get off",
+    "explains": "下车（连读：ge·toff）",
+    "freq": 48
+  },
+  {
+    "word": "need a",
+    "explains": "需要一个（连读：nee·da）",
+    "freq": 49
+  },
+  {
+    "word": "need it",
+    "explains": "需要它（连读：nee·dit）",
+    "freq": 50
+  },
+  {
+    "word": "read it",
+    "explains": "读它（连读：rea·dit）",
+    "freq": 51
+  },
+  {
+    "word": "use it",
+    "explains": "用它（连读：u·zeit）",
+    "freq": 52
+  },
+  {
+    "word": "close it",
+    "explains": "关上它（连读：clo·zeit）",
+    "freq": 53
+  },
+  {
+    "word": "open it",
+    "explains": "打开它（连读：o·pe·nit）",
+    "freq": 54
+  },
+  {
+    "word": "clean it up",
+    "explains": "打扫干净（连读：clea·ni·tup）",
+    "freq": 55
+  },
+  {
+    "word": "eat it up",
+    "explains": "吃光（连读：ea·ti·tup）",
+    "freq": 56
+  },
+  {
+    "word": "drink it up",
+    "explains": "喝光（连读：drin·ki·tup）",
+    "freq": 57
+  },
+  {
+    "word": "put it down",
+    "explains": "放下（连读：pu·ti·tdown）",
+    "freq": 58
+  },
+  {
+    "word": "set it up",
+    "explains": "设置好（连读：se·ti·tup）",
+    "freq": 59
+  },
+  {
+    "word": "call it off",
+    "explains": "取消（连读：cal·li·toff）",
+    "freq": 60
+  },
+  {
+    "word": "take it back",
+    "explains": "收回；撤回（连读：ta·ke·itback）",
+    "freq": 61
+  },
+  {
+    "word": "look at this",
+    "explains": "看看这个（连读：loo·ka·tthis）",
+    "freq": 62
+  },
+  {
+    "word": "zip it up",
+    "explains": "拉上拉链（连读：zi·pi·tup）",
+    "freq": 63
+  },
+  {
+    "word": "wrap it up",
+    "explains": "包起来；收尾（连读：wra·pi·tup）",
+    "freq": 64
+  },
+  {
+    "word": "check in",
+    "explains": "办理入住（连读：chec·kin）",
+    "freq": 65
+  },
+  {
+    "word": "drop off",
+    "explains": "顺路送；放下（连读：dro·poff）",
+    "freq": 66
+  },
+  {
+    "word": "sign up",
+    "explains": "报名（连读：sig·nup）",
+    "freq": 67
+  },
+  {
+    "word": "line up",
+    "explains": "排队（连读：li·nup）",
+    "freq": 68
+  },
+  {
+    "word": "speak up",
+    "explains": "大点声说（连读：spea·kup）",
+    "freq": 69
+  },
+  {
+    "word": "hurry up",
+    "explains": "快点（连读：hur·ryup）",
+    "freq": 70
+  },
+  {
+    "word": "grow up",
+    "explains": "长大（连读：gro·wup）",
+    "freq": 71
+  },
+  {
+    "word": "show up",
+    "explains": "出现（连读：sho·wup）",
+    "freq": 72
+  },
+  {
+    "word": "give in",
+    "explains": "让步（连读：gi·vin）",
+    "freq": 73
+  },
+  {
+    "word": "move in",
+    "explains": "搬进来（连读：mo·vin）",
+    "freq": 74
+  },
+  {
+    "word": "check out",
+    "explains": "结账；看看（连读：chec·kout）",
+    "freq": 75
+  },
+  {
+    "word": "figure it out",
+    "explains": "弄明白（连读：fi·gu·rei·tout）",
+    "freq": 76
+  },
+  {
+    "word": "hear about it",
+    "explains": "听说这事（连读：hea·ra·bou·tit）",
+    "freq": 77
+  },
+  {
+    "word": "bring it up",
+    "explains": "提出来（连读：brin·gi·tup）",
+    "freq": 78
+  },
+  {
+    "word": "try it out",
+    "explains": "试试看（连读：try·yi·tout）",
+    "freq": 79
+  },
+  {
+    "word": "call on",
+    "explains": "拜访；号召（连读：cal·lon）",
+    "freq": 80
+  },
+  {
+    "word": "big game",
+    "explains": "大赛；重要比赛（连读：bi(g)game）",
+    "freq": 81
+  },
+  {
+    "word": "good day",
+    "explains": "日安；好日子（连读：goo(d)day）",
+    "freq": 82
+  },
+  {
+    "word": "some milk",
+    "explains": "一些牛奶（连读：so(mm)ilk）",
+    "freq": 83
+  },
+  {
+    "word": "with thanks",
+    "explains": "一并致谢（连读：wi(th)thanks）",
+    "freq": 84
+  },
+  {
+    "word": "hot tea",
+    "explains": "热茶（连读：ho(t)tea）",
+    "freq": 85
+  },
+  {
+    "word": "bad day",
+    "explains": "糟糕的一天（连读：ba(d)day）",
+    "freq": 86
+  },
+  {
+    "word": "good game",
+    "explains": "打得不错（连读：goo(d)game）",
+    "freq": 87
+  },
+  {
+    "word": "that thing",
+    "explains": "那东西（连读：tha(t)thing）",
+    "freq": 88
+  },
+  {
+    "word": "take care",
+    "explains": "保重（连读：ta(k)care）",
+    "freq": 89
+  },
+  {
+    "word": "bad grade",
+    "explains": "糟糕的成绩（连读：ba(d)grade）",
+    "freq": 90
+  },
+  {
+    "word": "this Saturday",
+    "explains": "这个周六（连读：thi(s)Saturday）",
+    "freq": 91
+  },
+  {
+    "word": "last Sunday",
+    "explains": "上个周日（连读：las(t)Sunday）",
+    "freq": 92
+  },
+  {
+    "word": "first time",
+    "explains": "第一次（连读：firs(t)time）",
+    "freq": 93
+  },
+  {
+    "word": "best time",
+    "explains": "最佳时机（连读：bes(t)time）",
+    "freq": 94
+  },
+  {
+    "word": "right time",
+    "explains": "合适的时机（连读：righ(t)time）",
+    "freq": 95
+  },
+  {
+    "word": "most people",
+    "explains": "大多数人（连读：mos(t)people）",
+    "freq": 96
+  },
+  {
+    "word": "keep practicing",
+    "explains": "坚持练习（连读：kee(p)practicing）",
+    "freq": 97
+  },
+  {
+    "word": "stop pushing",
+    "explains": "别推了（连读：sto(p)pushing）",
+    "freq": 98
+  },
+  {
+    "word": "big problem",
+    "explains": "大问题（连读：bi(g)problem）",
+    "freq": 99
+  },
+  {
+    "word": "same place",
+    "explains": "老地方（连读：sa(me)place）",
+    "freq": 100
+  },
+  {
+    "word": "your room",
+    "explains": "你的房间（连读：you(r)room）",
+    "freq": 101
+  },
+  {
+    "word": "give me",
+    "explains": "给我（连读：gi(ve)me）",
+    "freq": 102
+  },
+  {
+    "word": "love music",
+    "explains": "热爱音乐（连读：lo(ve)music）",
+    "freq": 103
+  },
+  {
+    "word": "more rain",
+    "explains": "更多雨（连读：mo(re)rain）",
+    "freq": 104
+  },
+  {
+    "word": "your rights",
+    "explains": "你的权利（连读：you(r)rights）",
+    "freq": 105
+  },
+  {
+    "word": "last night",
+    "explains": "昨晚（连读：las(t)night）",
+    "freq": 106
+  },
+  {
+    "word": "next street",
+    "explains": "下一条街（连读：nex(t)street）",
+    "freq": 107
+  },
+  {
+    "word": "that time",
+    "explains": "那时（连读：tha(t)time）",
+    "freq": 108
+  },
+  {
+    "word": "cold drink",
+    "explains": "冷饮（连读：col(d)drink）",
+    "freq": 109
+  },
+  {
+    "word": "good dog",
+    "explains": "乖狗狗（连读：goo(d)dog）",
+    "freq": 110
+  },
+  {
+    "word": "big dog",
+    "explains": "大狗（连读：bi(g)dog）",
+    "freq": 111
+  },
+  {
+    "word": "sweet dreams",
+    "explains": "做个好梦（连读：swee(t)dreams）",
+    "freq": 112
+  },
+  {
+    "word": "bad luck",
+    "explains": "倒霉（连读：ba(d)luck）",
+    "freq": 113
+  },
+  {
+    "word": "class schedule",
+    "explains": "课程表（连读：clas(s)schedule）",
+    "freq": 114
+  },
+  {
+    "word": "bus stop",
+    "explains": "公交站（连读：bu(s)stop）",
+    "freq": 115
+  },
+  {
+    "word": "this semester",
+    "explains": "本学期（连读：thi(s)semester）",
+    "freq": 116
+  },
+  {
+    "word": "less sugar",
+    "explains": "少糖（连读：les(s)sugar）",
+    "freq": 117
+  },
+  {
+    "word": "nice scarf",
+    "explains": "漂亮的围巾（连读：ni(ce)scarf）",
+    "freq": 118
+  },
+  {
+    "word": "peace talks",
+    "explains": "和平谈判（连读：pea(ce)talks）",
+    "freq": 119
+  },
+  {
+    "word": "that chair",
+    "explains": "那把椅子（连读：tha(t)chair）",
+    "freq": 120
+  },
+  {
+    "word": "flat tire",
+    "explains": "爆胎（连读：fla(t)tire）",
+    "freq": 121
+  },
+  {
+    "word": "cut costs",
+    "explains": "削减开支（连读：cu(t)costs）",
+    "freq": 122
+  },
+  {
+    "word": "put together",
+    "explains": "组装在一起（连读：pu(t)together）",
+    "freq": 123
+  },
+  {
+    "word": "get together",
+    "explains": "聚在一起（连读：ge(t)together）",
+    "freq": 124
+  },
+  {
+    "word": "not too bad",
+    "explains": "还不错（连读：no(t)too bad）",
+    "freq": 125
+  },
+  {
+    "word": "keep track",
+    "explains": "记录下来（连读：kee(p)track）",
+    "freq": 126
+  },
+  {
+    "word": "deep trouble",
+    "explains": "大麻烦（连读：dee(p)trouble）",
+    "freq": 127
+  },
+  {
+    "word": "good tune",
+    "explains": "好听的曲子（连读：goo(d)tune）",
+    "freq": 128
+  },
+  {
+    "word": "hard times",
+    "explains": "艰难时期（连读：har(d)times）",
+    "freq": 129
+  },
+  {
+    "word": "old town",
+    "explains": "老城（连读：ol(d)town）",
+    "freq": 130
+  },
+  {
+    "word": "stand still",
+    "explains": "站着别动（连读：stan(d)still）",
+    "freq": 131
+  },
+  {
+    "word": "second season",
+    "explains": "第二季（连读：secon(d)season）",
+    "freq": 132
+  },
+  {
+    "word": "big mistake",
+    "explains": "大错（连读：bi(g)mistake）",
+    "freq": 133
+  },
+  {
+    "word": "same mistake",
+    "explains": "同样的错误（连读：sa(me)mistake）",
+    "freq": 134
+  },
+  {
+    "word": "right place",
+    "explains": "合适的地方（连读：righ(t)place）",
+    "freq": 135
+  },
+  {
+    "word": "that place",
+    "explains": "那个地方（连读：tha(t)place）",
+    "freq": 136
+  },
+  {
+    "word": "hot topic",
+    "explains": "热门话题（连读：ho(t)topic）",
+    "freq": 137
+  },
+  {
+    "word": "best part",
+    "explains": "最精彩的部分（连读：bes(t)part）",
+    "freq": 138
+  },
+  {
+    "word": "worst part",
+    "explains": "最糟糕的部分（连读：wors(t)part）",
+    "freq": 139
+  },
+  {
+    "word": "his sister",
+    "explains": "他姐姐（连读：hi(s)sister）",
+    "freq": 140
+  },
+  {
+    "word": "I am",
+    "explains": "我是（连读：I·yam）",
+    "freq": 141
+  },
+  {
+    "word": "he asked",
+    "explains": "他问过（连读：he·yasked）",
+    "freq": 142
+  },
+  {
+    "word": "we eat",
+    "explains": "我们吃（连读：we·yeat）",
+    "freq": 143
+  },
+  {
+    "word": "be on time",
+    "explains": "准时到（连读：be·yon time）",
+    "freq": 144
+  },
+  {
+    "word": "see it",
+    "explains": "看到它（连读：see·yit）",
+    "freq": 145
+  },
+  {
+    "word": "she is",
+    "explains": "她是（连读：she·yis）",
+    "freq": 146
+  },
+  {
+    "word": "he is",
+    "explains": "他是（连读：he·yis）",
+    "freq": 147
+  },
+  {
+    "word": "we are",
+    "explains": "我们是（连读：we·yar）",
+    "freq": 148
+  },
+  {
+    "word": "I owe you",
+    "explains": "我欠你的（连读：I·yowe you）",
+    "freq": 149
+  },
+  {
+    "word": "I always",
+    "explains": "我总是（连读：I·yalways）",
+    "freq": 150
+  },
+  {
+    "word": "I only",
+    "explains": "我只（连读：I·yonly）",
+    "freq": 151
+  },
+  {
+    "word": "say it",
+    "explains": "说出来（连读：say·yit）",
+    "freq": 152
+  },
+  {
+    "word": "they are",
+    "explains": "他们是（连读：they·yar）",
+    "freq": 153
+  },
+  {
+    "word": "may I ask",
+    "explains": "我能问吗（连读：may·yI ask）",
+    "freq": 154
+  },
+  {
+    "word": "I admit",
+    "explains": "我承认（连读：I·yadmit）",
+    "freq": 155
+  },
+  {
+    "word": "play it",
+    "explains": "播放它（连读：play·yit）",
+    "freq": 156
+  },
+  {
+    "word": "stay in",
+    "explains": "待在屋里（连读：stay·yin）",
+    "freq": 157
+  },
+  {
+    "word": "he ordered",
+    "explains": "他点了餐（连读：he·yordered）",
+    "freq": 158
+  },
+  {
+    "word": "she offered",
+    "explains": "她主动提出（连读：she·yoffered）",
+    "freq": 159
+  },
+  {
+    "word": "we ordered",
+    "explains": "我们点了餐（连读：we·yordered）",
+    "freq": 160
+  },
+  {
+    "word": "be honest",
+    "explains": "说实话（连读：be·yonest）",
+    "freq": 161
+  },
+  {
+    "word": "be open",
+    "explains": "敞开心扉（连读：be·yopen）",
+    "freq": 162
+  },
+  {
+    "word": "be able",
+    "explains": "能够（连读：be·yable）",
+    "freq": 163
+  },
+  {
+    "word": "see a doctor",
+    "explains": "看医生（连读：see·ya doctor）",
+    "freq": 164
+  },
+  {
+    "word": "tea or coffee",
+    "explains": "茶还是咖啡（连读：tea·yor coffee）",
+    "freq": 165
+  },
+  {
+    "word": "me either",
+    "explains": "我也不（连读：me·yeither）",
+    "freq": 166
+  },
+  {
+    "word": "I agree",
+    "explains": "我同意（连读：I·yagree）",
+    "freq": 167
+  },
+  {
+    "word": "I understand",
+    "explains": "我明白（连读：I·yunderstand）",
+    "freq": 168
+  },
+  {
+    "word": "I enjoy",
+    "explains": "我喜欢（连读：I·yenjoy）",
+    "freq": 169
+  },
+  {
+    "word": "I even",
+    "explains": "我甚至（连读：I·yeven）",
+    "freq": 170
+  },
+  {
+    "word": "I expect",
+    "explains": "我预计（连读：I·yexpect）",
+    "freq": 171
+  },
+  {
+    "word": "he always",
+    "explains": "他总是（连读：he·yalways）",
+    "freq": 172
+  },
+  {
+    "word": "she always",
+    "explains": "她总是（连读：she·yalways）",
+    "freq": 173
+  },
+  {
+    "word": "we all",
+    "explains": "我们所有人（连读：we·yall）",
+    "freq": 174
+  },
+  {
+    "word": "we already",
+    "explains": "我们已经（连读：we·yalready）",
+    "freq": 175
+  },
+  {
+    "word": "we also",
+    "explains": "我们也（连读：we·yalso）",
+    "freq": 176
+  },
+  {
+    "word": "he even",
+    "explains": "他甚至（连读：he·yeven）",
+    "freq": 177
+  },
+  {
+    "word": "she opened",
+    "explains": "她打开了（连读：she·yopened）",
+    "freq": 178
+  },
+  {
+    "word": "he easily",
+    "explains": "他轻松地（连读：he·yeasily）",
+    "freq": 179
+  },
+  {
+    "word": "pay attention",
+    "explains": "注意（连读：pay·yattention）",
+    "freq": 180
+  },
+  {
+    "word": "stay away",
+    "explains": "离远点（连读：stay·yaway）",
+    "freq": 181
+  },
+  {
+    "word": "say it again",
+    "explains": "再说一遍（连读：say·yit again）",
+    "freq": 182
+  },
+  {
+    "word": "I ate",
+    "explains": "我吃了（连读：I·yate）",
+    "freq": 183
+  },
+  {
+    "word": "she ate",
+    "explains": "她吃了（连读：she·yate）",
+    "freq": 184
+  },
+  {
+    "word": "he answered",
+    "explains": "他回答了（连读：he·yanswered）",
+    "freq": 185
+  },
+  {
+    "word": "we arrived",
+    "explains": "我们到了（连读：we·yarrived）",
+    "freq": 186
+  },
+  {
+    "word": "be early",
+    "explains": "早点到（连读：be·yearly）",
+    "freq": 187
+  },
+  {
+    "word": "see everything",
+    "explains": "看清一切（连读：see·yeverything）",
+    "freq": 188
+  },
+  {
+    "word": "he invited",
+    "explains": "他邀请了（连读：he·yinvited）",
+    "freq": 189
+  },
+  {
+    "word": "she insists",
+    "explains": "她坚持（连读：she·yinsists）",
+    "freq": 190
+  },
+  {
+    "word": "I insist",
+    "explains": "我坚持（连读：I·yinsist）",
+    "freq": 191
+  },
+  {
+    "word": "day after day",
+    "explains": "日复一日（连读：day·yafter day）",
+    "freq": 192
+  },
+  {
+    "word": "try it",
+    "explains": "试试（连读：try·yit）",
+    "freq": 193
+  },
+  {
+    "word": "buy it",
+    "explains": "买下它（连读：buy·yit）",
+    "freq": 194
+  },
+  {
+    "word": "enjoy it",
+    "explains": "享受它（连读：enjoy·yit）",
+    "freq": 195
+  },
+  {
+    "word": "hurry in",
+    "explains": "快点进来（连读：hur·ryin）",
+    "freq": 196
+  },
+  {
+    "word": "very easy",
+    "explains": "很容易（连读：very·yeasy）",
+    "freq": 197
+  },
+  {
+    "word": "I explained",
+    "explains": "我解释了（连读：I·yexplained）",
+    "freq": 198
+  },
+  {
+    "word": "she explained",
+    "explains": "她解释了（连读：she·yexplained）",
+    "freq": 199
+  },
+  {
+    "word": "we expect",
+    "explains": "我们预计（连读：we·yexpect）",
+    "freq": 200
+  },
+  {
+    "word": "he apologized",
+    "explains": "他道歉了（连读：he·yapologized）",
+    "freq": 201
+  },
+  {
+    "word": "be aware",
+    "explains": "意识到（连读：be·yaware）",
+    "freq": 202
+  },
+  {
+    "word": "the other",
+    "explains": "另一个（连读：the·yother）",
+    "freq": 203
+  },
+  {
+    "word": "the end",
+    "explains": "结尾（连读：the·yend）",
+    "freq": 204
+  },
+  {
+    "word": "the answer",
+    "explains": "答案（连读：the·yanswer）",
+    "freq": 205
+  },
+  {
+    "word": "the idea",
+    "explains": "主意（连读：the·yidea）",
+    "freq": 206
+  },
+  {
+    "word": "the elevator",
+    "explains": "电梯（连读：the·ye­levator）",
+    "freq": 207
+  },
+  {
+    "word": "the only",
+    "explains": "唯一的（连读：the·yonly）",
+    "freq": 208
+  },
+  {
+    "word": "the usual",
+    "explains": "老样子（连读：the·yusual）",
+    "freq": 209
+  },
+  {
+    "word": "I am done",
+    "explains": "我搞定了（连读：I·yam done）",
+    "freq": 210
+  },
+  {
+    "word": "go out",
+    "explains": "出去（连读：go·wout）",
+    "freq": 211
+  },
+  {
+    "word": "do it",
+    "explains": "做吧（连读：do·wit）",
+    "freq": 212
+  },
+  {
+    "word": "two apples",
+    "explains": "两个苹果（连读：two·wapples）",
+    "freq": 213
+  },
+  {
+    "word": "you are",
+    "explains": "你是（连读：you·war）",
+    "freq": 214
+  },
+  {
+    "word": "who is",
+    "explains": "是谁（连读：who·wis）",
+    "freq": 215
+  },
+  {
+    "word": "go around",
+    "explains": "四处走动（连读：go·waround）",
+    "freq": 216
+  },
+  {
+    "word": "go off",
+    "explains": "响起；变质（连读：go·woff）",
+    "freq": 217
+  },
+  {
+    "word": "go up",
+    "explains": "上去（连读：go·wup）",
+    "freq": 218
+  },
+  {
+    "word": "so easy",
+    "explains": "太容易（连读：so·weasy）",
+    "freq": 219
+  },
+  {
+    "word": "so often",
+    "explains": "如此频繁（连读：so·woften）",
+    "freq": 220
+  },
+  {
+    "word": "too easy",
+    "explains": "太简单了（连读：too·weasy）",
+    "freq": 221
+  },
+  {
+    "word": "too old",
+    "explains": "太老了（连读：too·wold）",
+    "freq": 222
+  },
+  {
+    "word": "too early",
+    "explains": "太早（连读：too·wearly）",
+    "freq": 223
+  },
+  {
+    "word": "who else",
+    "explains": "还有谁（连读：who·welse）",
+    "freq": 224
+  },
+  {
+    "word": "who asked",
+    "explains": "谁问的（连读：who·wasked）",
+    "freq": 225
+  },
+  {
+    "word": "who ordered",
+    "explains": "谁点的（连读：who·wordered）",
+    "freq": 226
+  },
+  {
+    "word": "how about",
+    "explains": "怎么样（连读：how·wabout）",
+    "freq": 227
+  },
+  {
+    "word": "how are you",
+    "explains": "你好吗（连读：how·ware you）",
+    "freq": 228
+  },
+  {
+    "word": "how old",
+    "explains": "多大（连读：how·wold）",
+    "freq": 229
+  },
+  {
+    "word": "how often",
+    "explains": "多久一次（连读：how·woften）",
+    "freq": 230
+  },
+  {
+    "word": "so obvious",
+    "explains": "如此明显（连读：so·wobvious）",
+    "freq": 231
+  },
+  {
+    "word": "go inside",
+    "explains": "进去（连读：go·winside）",
+    "freq": 232
+  },
+  {
+    "word": "go outside",
+    "explains": "出去（连读：go·woutside）",
+    "freq": 233
+  },
+  {
+    "word": "go over",
+    "explains": "检查一遍（连读：go·wover）",
+    "freq": 234
+  },
+  {
+    "word": "so am I",
+    "explains": "我也是（连读：so·wam I）",
+    "freq": 235
+  },
+  {
+    "word": "so is he",
+    "explains": "他也是（连读：so·wis he）",
+    "freq": 236
+  },
+  {
+    "word": "so upset",
+    "explains": "很沮丧（连读：so·wupset）",
+    "freq": 237
+  },
+  {
+    "word": "so honest",
+    "explains": "很坦诚（连读：so·wonest）",
+    "freq": 238
+  },
+  {
+    "word": "no idea",
+    "explains": "不知道（连读：no·widea）",
+    "freq": 239
+  },
+  {
+    "word": "no excuse",
+    "explains": "没借口（连读：no·wexcuse）",
+    "freq": 240
+  },
+  {
+    "word": "no one",
+    "explains": "没人（连读：no·wone）",
+    "freq": 241
+  },
+  {
+    "word": "no other",
+    "explains": "没有别的（连读：no·wother）",
+    "freq": 242
+  },
+  {
+    "word": "know it",
+    "explains": "知道（连读：know·wit）",
+    "freq": 243
+  },
+  {
+    "word": "throw it away",
+    "explains": "把它扔掉（连读：thro·wit away）",
+    "freq": 244
+  },
+  {
+    "word": "blow out",
+    "explains": "吹灭（连读：blo·wout）",
+    "freq": 245
+  },
+  {
+    "word": "so I",
+    "explains": "所以我（连读：so·wI）",
+    "freq": 246
+  },
+  {
+    "word": "do I",
+    "explains": "我该做吗（连读：do·wI）",
+    "freq": 247
+  },
+  {
+    "word": "who am I",
+    "explains": "我是谁（连读：who·wam I）",
+    "freq": 248
+  },
+  {
+    "word": "who are you",
+    "explains": "你是谁（连读：who·war you）",
+    "freq": 249
+  },
+  {
+    "word": "flew away",
+    "explains": "飞走了（连读：fle·waway）",
+    "freq": 250
+  },
+  {
+    "word": "knew it",
+    "explains": "早就知道（连读：kne·wit）",
+    "freq": 251
+  },
+  {
+    "word": "grew up",
+    "explains": "长大（连读：gre·wup）",
+    "freq": 252
+  },
+  {
+    "word": "two of us",
+    "explains": "我们俩（连读：two·wof us）",
+    "freq": 253
+  },
+  {
+    "word": "two of them",
+    "explains": "其中两个（连读：two·wof them）",
+    "freq": 254
+  },
+  {
+    "word": "two hours",
+    "explains": "两小时（连读：two·whours）",
+    "freq": 255
+  },
+  {
+    "word": "go in",
+    "explains": "进去（连读：go·win）",
+    "freq": 256
+  },
+  {
+    "word": "go all out",
+    "explains": "全力以赴（连读：go·wall out）",
+    "freq": 257
+  },
+  {
+    "word": "go along with",
+    "explains": "赞同（连读：go·walong with）",
+    "freq": 258
+  },
+  {
+    "word": "so excited",
+    "explains": "很兴奋（连读：so·wexcited）",
+    "freq": 259
+  },
+  {
+    "word": "so annoying",
+    "explains": "太烦人（连读：so·wannoying）",
+    "freq": 260
+  },
+  {
+    "word": "so open",
+    "explains": "很开放（连读：so·wopen）",
+    "freq": 261
+  },
+  {
+    "word": "go either way",
+    "explains": "两者皆可（连读：go·weither way）",
+    "freq": 262
+  },
+  {
+    "word": "no entry",
+    "explains": "禁止入内（连读：no·wentry）",
+    "freq": 263
+  },
+  {
+    "word": "no opinion",
+    "explains": "没意见（连读：no·wopinion）",
+    "freq": 264
+  },
+  {
+    "word": "throw it out",
+    "explains": "把它扔掉（连读：thro·wit out）",
+    "freq": 265
+  },
+  {
+    "word": "blow it",
+    "explains": "搞砸了它（连读：blo·wit）",
+    "freq": 266
+  },
+  {
+    "word": "show it",
+    "explains": "展示一下（连读：sho·wit）",
+    "freq": 267
+  },
+  {
+    "word": "how old are you",
+    "explains": "你多大了（连读：how·wold are you）",
+    "freq": 268
+  },
+  {
+    "word": "go on then",
+    "explains": "那就继续吧（连读：go·won then）",
+    "freq": 269
+  },
+  {
+    "word": "do it now",
+    "explains": "现在就做（连读：do·wit now）",
+    "freq": 270
+  },
+  {
+    "word": "better",
+    "explains": "更好（连读：be·der，听起来像 bedder）",
+    "freq": 271
+  },
+  {
+    "word": "water",
+    "explains": "水（连读：wa·der，听起来像 wadder）",
+    "freq": 272
+  },
+  {
+    "word": "city",
+    "explains": "城市（连读：ci·dy）",
+    "freq": 273
+  },
+  {
+    "word": "little",
+    "explains": "小的（连读：li·dle）",
+    "freq": 274
+  },
+  {
+    "word": "party",
+    "explains": "派对（连读：par·dy）",
+    "freq": 275
+  },
+  {
+    "word": "what a",
+    "explains": "多么（连读：wha·da）",
+    "freq": 276
+  },
+  {
+    "word": "get it",
+    "explains": "明白了吗（连读：ge·dit）",
+    "freq": 277
+  },
+  {
+    "word": "put it on",
+    "explains": "穿上（连读：pu·di·don）",
+    "freq": 278
+  },
+  {
+    "word": "editor",
+    "explains": "编辑（连读：edi·der）",
+    "freq": 279
+  },
+  {
+    "word": "letter",
+    "explains": "信（连读：le·der）",
+    "freq": 280
+  },
+  {
+    "word": "matter",
+    "explains": "要紧（连读：ma·der）",
+    "freq": 281
+  },
+  {
+    "word": "butter",
+    "explains": "黄油（连读：bu·der）",
+    "freq": 282
+  },
+  {
+    "word": "waiter",
+    "explains": "服务员（连读：wai·der）",
+    "freq": 283
+  },
+  {
+    "word": "writer",
+    "explains": "作家（连读：wri·der）",
+    "freq": 284
+  },
+  {
+    "word": "fighter",
+    "explains": "斗士（连读：figh·der）",
+    "freq": 285
+  },
+  {
+    "word": "computer",
+    "explains": "电脑（连读：compu·der）",
+    "freq": 286
+  },
+  {
+    "word": "dirty",
+    "explains": "脏的（连读：dir·dy）",
+    "freq": 287
+  },
+  {
+    "word": "thirty",
+    "explains": "三十（连读：thir·dy）",
+    "freq": 288
+  },
+  {
+    "word": "forty",
+    "explains": "四十（连读：for·dy）",
+    "freq": 289
+  },
+  {
+    "word": "fifty",
+    "explains": "五十（连读：fif·dy）",
+    "freq": 290
+  },
+  {
+    "word": "pretty",
+    "explains": "漂亮的（连读：pre·ddy）",
+    "freq": 291
+  },
+  {
+    "word": "bottom",
+    "explains": "底部（连读：bo·dom）",
+    "freq": 292
+  },
+  {
+    "word": "button",
+    "explains": "按钮（连读：bu·don）",
+    "freq": 293
+  },
+  {
+    "word": "atom",
+    "explains": "原子（连读：a·dom）",
+    "freq": 294
+  },
+  {
+    "word": "total",
+    "explains": "总计（连读：to·dal）",
+    "freq": 295
+  },
+  {
+    "word": "metal",
+    "explains": "金属（连读：me·dal）",
+    "freq": 296
+  },
+  {
+    "word": "hospital",
+    "explains": "医院（连读：hospi·dal）",
+    "freq": 297
+  },
+  {
+    "word": "capital",
+    "explains": "首都（连读：capi·dal）",
+    "freq": 298
+  },
+  {
+    "word": "little bit",
+    "explains": "一点点（连读：li·dle bit）",
+    "freq": 299
+  },
+  {
+    "word": "cut it off",
+    "explains": "切断（连读：cu·di·doff）",
+    "freq": 300
+  },
+  {
+    "word": "what about",
+    "explains": "怎么样（连读：wha·dabout）",
+    "freq": 301
+  },
+  {
+    "word": "what do you",
+    "explains": "你干什么…（连读：wha·dyou）",
+    "freq": 302
+  },
+  {
+    "word": "what are you doing",
+    "explains": "你在干嘛（连读：wha·dar you doing）",
+    "freq": 303
+  },
+  {
+    "word": "what is it",
+    "explains": "这是什么（连读：wha·di·zit）",
+    "freq": 304
+  },
+  {
+    "word": "got it",
+    "explains": "明白了（连读：go·dit）",
+    "freq": 305
+  },
+  {
+    "word": "put it away",
+    "explains": "收起来（连读：pu·di·daway）",
+    "freq": 306
+  },
+  {
+    "word": "let me",
+    "explains": "让我（连读：le·dme）",
+    "freq": 307
+  },
+  {
+    "word": "get me",
+    "explains": "给我拿（连读：ge·dme）",
+    "freq": 308
+  },
+  {
+    "word": "put it",
+    "explains": "放它（连读：pu·dit）",
+    "freq": 309
+  },
+  {
+    "word": "pretty much",
+    "explains": "差不多了（连读：pre·ddy much）",
+    "freq": 310
+  },
+  {
+    "word": "pretty good",
+    "explains": "挺好的（连读：pre·ddy good）",
+    "freq": 311
+  },
+  {
+    "word": "pretty sure",
+    "explains": "相当确定（连读：pre·ddy sure）",
+    "freq": 312
+  },
+  {
+    "word": "a little",
+    "explains": "一点（连读：a li·ddle）",
+    "freq": 313
+  },
+  {
+    "word": "a little more",
+    "explains": "再来一点（连读：a li·ddle more）",
+    "freq": 314
+  },
+  {
+    "word": "wait a minute",
+    "explains": "等一下（连读：wai·da minute）",
+    "freq": 315
+  },
+  {
+    "word": "not a problem",
+    "explains": "没问题（连读：no·da problem）",
+    "freq": 316
+  },
+  {
+    "word": "what about you",
+    "explains": "你呢（连读：wha·dabout you）",
+    "freq": 317
+  },
+  {
+    "word": "got a",
+    "explains": "有一个（连读：go·da）",
+    "freq": 318
+  },
+  {
+    "word": "got a minute",
+    "explains": "有空吗（连读：go·da minute）",
+    "freq": 319
+  },
+  {
+    "word": "wanted to",
+    "explains": "本来想（连读：wan·ded to）",
+    "freq": 320
+  },
+  {
+    "word": "meeting",
+    "explains": "会议（连读：mee·ding）",
+    "freq": 321
+  },
+  {
+    "word": "eating",
+    "explains": "吃（连读：ea·ding）",
+    "freq": 322
+  },
+  {
+    "word": "waiting",
+    "explains": "等待（连读：wai·ding）",
+    "freq": 323
+  },
+  {
+    "word": "exciting",
+    "explains": "令人兴奋（连读：exi·ding）",
+    "freq": 324
+  },
+  {
+    "word": "interesting",
+    "explains": "有趣的（连读：in·teresting）",
+    "freq": 325
+  },
+  {
+    "word": "attitude",
+    "explains": "态度（连读：a·di·tude）",
+    "freq": 326
+  },
+  {
+    "word": "potato",
+    "explains": "土豆（连读：po·da·do）",
+    "freq": 327
+  },
+  {
+    "word": "tomato",
+    "explains": "番茄（连读：to·ma·do）",
+    "freq": 328
+  },
+  {
+    "word": "city life",
+    "explains": "城市生活（连读：ci·dy life）",
+    "freq": 329
+  },
+  {
+    "word": "water bottle",
+    "explains": "水瓶（连读：wa·der bottle）",
+    "freq": 330
+  },
+  {
+    "word": "party time",
+    "explains": "派对时间（连读：par·dy time）",
+    "freq": 331
+  },
+  {
+    "word": "birthday party",
+    "explains": "生日派对（连读：bir·dday par·dy）",
+    "freq": 332
+  },
+  {
+    "word": "better late than never",
+    "explains": "迟做总比不做好（连读：be·der late than never）",
+    "freq": 333
+  },
+  {
+    "word": "get a",
+    "explains": "拿一个（连读：ge·da）",
+    "freq": 334
+  },
+  {
+    "word": "put a",
+    "explains": "放一个（连读：pu·da）",
+    "freq": 335
+  },
+  {
+    "word": "what happened",
+    "explains": "发生了什么（连读：wha·d happened）",
+    "freq": 336
+  },
+  {
+    "word": "not again",
+    "explains": "又来了（连读：no·dagain）",
+    "freq": 337
+  },
+  {
+    "word": "credit card",
+    "explains": "信用卡（连读：cre·dit card）",
+    "freq": 338
+  },
+  {
+    "word": "automatic",
+    "explains": "自动的（连读：au·domatic）",
+    "freq": 339
+  },
+  {
+    "word": "identity",
+    "explains": "身份（连读：i·den·di·dy）",
+    "freq": 340
+  },
+  {
+    "word": "university",
+    "explains": "大学（连读：uni·ver·si·dy）",
+    "freq": 341
+  },
+  {
+    "word": "reality",
+    "explains": "现实（连读：rea·di·dy）",
+    "freq": 342
+  },
+  {
+    "word": "quality",
+    "explains": "质量（连读：qua·li·dy）",
+    "freq": 343
+  },
+  {
+    "word": "ability",
+    "explains": "能力（连读：a·bi·li·dy）",
+    "freq": 344
+  },
+  {
+    "word": "opportunity",
+    "explains": "机会（连读：oppo·r·tu·ni·dy）",
+    "freq": 345
+  },
+  {
+    "word": "reality check",
+    "explains": "认清现实（连读：rea·di·dy check）",
+    "freq": 346
+  },
+  {
+    "word": "bitter",
+    "explains": "苦的（连读：bi·der）",
+    "freq": 347
+  },
+  {
+    "word": "sweater",
+    "explains": "毛衣（连读：swea·der）",
+    "freq": 348
+  },
+  {
+    "word": "daughter",
+    "explains": "女儿（连读：daugh·der）",
+    "freq": 349
+  },
+  {
+    "word": "order it",
+    "explains": "点它（连读：or·der it）",
+    "freq": 350
+  },
+  {
+    "word": "tell him",
+    "explains": "告诉他（连读：tell·im）",
+    "freq": 351
+  },
+  {
+    "word": "ask her",
+    "explains": "问她（连读：as·ker）",
+    "freq": 352
+  },
+  {
+    "word": "help him",
+    "explains": "帮他（连读：hel·pim）",
+    "freq": 353
+  },
+  {
+    "word": "give him",
+    "explains": "给他（连读：gi·vim）",
+    "freq": 354
+  },
+  {
+    "word": "ask him",
+    "explains": "问他（连读：as·kim）",
+    "freq": 355
+  },
+  {
+    "word": "tell her",
+    "explains": "告诉她（连读：tel·ler）",
+    "freq": 356
+  },
+  {
+    "word": "call him",
+    "explains": "给他打电话（连读：cal·lim）",
+    "freq": 357
+  },
+  {
+    "word": "call her",
+    "explains": "给她打电话（连读：cal·ler）",
+    "freq": 358
+  },
+  {
+    "word": "find him",
+    "explains": "找到他（连读：fin·dim）",
+    "freq": 359
+  },
+  {
+    "word": "help her",
+    "explains": "帮助她（连读：hel·per）",
+    "freq": 360
+  },
+  {
+    "word": "find her",
+    "explains": "找到她（连读：fin·der）",
+    "freq": 361
+  },
+  {
+    "word": "meet him",
+    "explains": "见他（连读：mee·tim）",
+    "freq": 362
+  },
+  {
+    "word": "meet her",
+    "explains": "见她（连读：mee·ter）",
+    "freq": 363
+  },
+  {
+    "word": "thank him",
+    "explains": "感谢他（连读：than·kim）",
+    "freq": 364
+  },
+  {
+    "word": "thank her",
+    "explains": "感谢她（连读：than·ker）",
+    "freq": 365
+  },
+  {
+    "word": "let him",
+    "explains": "让他（连读：le·tim）",
+    "freq": 366
+  },
+  {
+    "word": "let her",
+    "explains": "让她（连读：le·ter）",
+    "freq": 367
+  },
+  {
+    "word": "leave him",
+    "explains": "离开他（连读：lea·vim）",
+    "freq": 368
+  },
+  {
+    "word": "leave her",
+    "explains": "离开她（连读：lea·ver）",
+    "freq": 369
+  },
+  {
+    "word": "love him",
+    "explains": "爱他（连读：lo·vim）",
+    "freq": 370
+  },
+  {
+    "word": "love her",
+    "explains": "爱她（连读：lo·ver）",
+    "freq": 371
+  },
+  {
+    "word": "push him",
+    "explains": "推他（连读：pu·shim）",
+    "freq": 372
+  },
+  {
+    "word": "teach him",
+    "explains": "教他（连读：tea·chim）",
+    "freq": 373
+  },
+  {
+    "word": "teach her",
+    "explains": "教她（连读：tea·cher）",
+    "freq": 374
+  },
+  {
+    "word": "show him",
+    "explains": "给他看（连读：sho·wim）",
+    "freq": 375
+  },
+  {
+    "word": "show her",
+    "explains": "给她看（连读：sho·wer）",
+    "freq": 376
+  },
+  {
+    "word": "bring him",
+    "explains": "带他来（连读：brin·gim）",
+    "freq": 377
+  },
+  {
+    "word": "bring her",
+    "explains": "带她来（连读：brin·ger）",
+    "freq": 378
+  },
+  {
+    "word": "does he",
+    "explains": "他…吗（连读：duz·ee）",
+    "freq": 379
+  },
+  {
+    "word": "did he",
+    "explains": "他…了吗（连读：di·dee）",
+    "freq": 380
+  },
+  {
+    "word": "will he",
+    "explains": "他会吗（连读：wil·lee）",
+    "freq": 381
+  },
+  {
+    "word": "would he",
+    "explains": "他会吗（连读：woul·dee）",
+    "freq": 382
+  },
+  {
+    "word": "could he",
+    "explains": "他能吗（连读：coul·dee）",
+    "freq": 383
+  },
+  {
+    "word": "should he",
+    "explains": "他该吗（连读：shoul·dee）",
+    "freq": 384
+  },
+  {
+    "word": "has he",
+    "explains": "他有…吗（连读：ha·zee）",
+    "freq": 385
+  },
+  {
+    "word": "is he",
+    "explains": "是他吗（连读：i·zee）",
+    "freq": 386
+  },
+  {
+    "word": "what's his",
+    "explains": "他的什么（连读：wha·dziz）",
+    "freq": 387
+  },
+  {
+    "word": "who is he",
+    "explains": "他是谁（连读：who·wi·zee）",
+    "freq": 388
+  },
+  {
+    "word": "where is he",
+    "explains": "他在哪（连读：whe·rei·zee）",
+    "freq": 389
+  },
+  {
+    "word": "get him",
+    "explains": "抓住他（连读：ge·tim）",
+    "freq": 390
+  },
+  {
+    "word": "got him",
+    "explains": "抓到他了（连读：go·tim）",
+    "freq": 391
+  },
+  {
+    "word": "hit him",
+    "explains": "打了他（连读：hi·tim）",
+    "freq": 392
+  },
+  {
+    "word": "catch him",
+    "explains": "抓住他（连读：ca·chim）",
+    "freq": 393
+  },
+  {
+    "word": "stop him",
+    "explains": "阻止他（连读：sto·pim）",
+    "freq": 394
+  },
+  {
+    "word": "stop her",
+    "explains": "阻止她（连读：sto·per）",
+    "freq": 395
+  },
+  {
+    "word": "join him",
+    "explains": "加入他（连读：joi·nim）",
+    "freq": 396
+  },
+  {
+    "word": "join her",
+    "explains": "加入她（连读：joi·ner）",
+    "freq": 397
+  },
+  {
+    "word": "visit him",
+    "explains": "拜访他（连读：vi·zi·tim）",
+    "freq": 398
+  },
+  {
+    "word": "visit her",
+    "explains": "拜访她（连读：vi·zi·ter）",
+    "freq": 399
+  },
+  {
+    "word": "trust him",
+    "explains": "信任他（连读：trus·tim）",
+    "freq": 400
+  },
+  {
+    "word": "trust her",
+    "explains": "信任她（连读：trus·ter）",
+    "freq": 401
+  },
+  {
+    "word": "text him",
+    "explains": "给他发短信（连读：tex·tim）",
+    "freq": 402
+  },
+  {
+    "word": "text her",
+    "explains": "给她发短信（连读：tex·ter）",
+    "freq": 403
+  },
+  {
+    "word": "call him back",
+    "explains": "回他电话（连读：cal·lim back）",
+    "freq": 404
+  },
+  {
+    "word": "tell him that",
+    "explains": "告诉他那件事（连读：tel·lim that）",
+    "freq": 405
+  },
+  {
+    "word": "ask him why",
+    "explains": "问他为什么（连读：as·kim why）",
+    "freq": 406
+  },
+  {
+    "word": "help him out",
+    "explains": "帮他一把（连读：hel·pim out）",
+    "freq": 407
+  },
+  {
+    "word": "give her a",
+    "explains": "给她一个（连读：gi·ve·ra）",
+    "freq": 408
+  },
+  {
+    "word": "leave him alone",
+    "explains": "别管他（连读：lea·vim alone）",
+    "freq": 409
+  },
+  {
+    "word": "ask her out",
+    "explains": "约她出去（连读：as·ker out）",
+    "freq": 410
+  },
+  {
+    "word": "sit down",
+    "explains": "坐下（连读：si(t) down 只做口型不爆开）",
+    "freq": 411
+  },
+  {
+    "word": "big cat",
+    "explains": "大猫（连读：bi(g) cat 只做口型不爆开）",
+    "freq": 412
+  },
+  {
+    "word": "good morning",
+    "explains": "早上好（连读：goo(d) morning 只做口型不爆开）",
+    "freq": 413
+  },
+  {
+    "word": "that job",
+    "explains": "那份工作（连读：tha(t) job 只做口型不爆开）",
+    "freq": 414
+  },
+  {
+    "word": "keep quiet",
+    "explains": "保持安静（连读：kee(p) quiet 只做口型不爆开）",
+    "freq": 415
+  },
+  {
+    "word": "stop talking",
+    "explains": "别说了（连读：sto(p) talking 只做口型不爆开）",
+    "freq": 416
+  },
+  {
+    "word": "don't know",
+    "explains": "不知道（连读：don'(t) know 只做口型不爆开）",
+    "freq": 417
+  },
+  {
+    "word": "can't find",
+    "explains": "找不到（连读：can'(t) find 只做口型不爆开）",
+    "freq": 418
+  },
+  {
+    "word": "what time",
+    "explains": "几点（连读：wha(t) time 只做口型不爆开）",
+    "freq": 419
+  },
+  {
+    "word": "right now",
+    "explains": "现在（连读：righ(t) now 只做口型不爆开）",
+    "freq": 420
+  },
+  {
+    "word": "just kidding",
+    "explains": "开玩笑的（连读：jus(t) kidding 只做口型不爆开）",
+    "freq": 421
+  },
+  {
+    "word": "first place",
+    "explains": "第一名（连读：firs(t) place 只做口型不爆开）",
+    "freq": 422
+  },
+  {
+    "word": "best friend",
+    "explains": "最好的朋友（连读：bes(t) friend 只做口型不爆开）",
+    "freq": 423
+  },
+  {
+    "word": "next door",
+    "explains": "隔壁（连读：nex(t) door 只做口型不爆开）",
+    "freq": 424
+  },
+  {
+    "word": "keep talking",
+    "explains": "继续说（连读：kee(p) talking 只做口型不爆开）",
+    "freq": 425
+  },
+  {
+    "word": "stop crying",
+    "explains": "别哭了（连读：sto(p) crying 只做口型不爆开）",
+    "freq": 426
+  },
+  {
+    "word": "help me",
+    "explains": "帮我（连读：hel(p) me 只做口型不爆开）",
+    "freq": 427
+  },
+  {
+    "word": "look good",
+    "explains": "看起来不错（连读：loo(k) good 只做口型不爆开）",
+    "freq": 428
+  },
+  {
+    "word": "big city",
+    "explains": "大城市（连读：bi(g) city 只做口型不爆开）",
+    "freq": 429
+  },
+  {
+    "word": "good night",
+    "explains": "晚安（连读：goo(d) night 只做口型不爆开）",
+    "freq": 430
+  },
+  {
+    "word": "good job",
+    "explains": "干得好（连读：goo(d) job 只做口型不爆开）",
+    "freq": 431
+  },
+  {
+    "word": "good luck",
+    "explains": "祝好运（连读：goo(d) luck 只做口型不爆开）",
+    "freq": 432
+  },
+  {
+    "word": "good idea",
+    "explains": "好主意（连读：goo(d) idea 只做口型不爆开）",
+    "freq": 433
+  },
+  {
+    "word": "bad news",
+    "explains": "坏消息（连读：ba(d) news 只做口型不爆开）",
+    "freq": 434
+  },
+  {
+    "word": "hard work",
+    "explains": "努力工作（连读：har(d) work 只做口型不爆开）",
+    "freq": 435
+  },
+  {
+    "word": "old friend",
+    "explains": "老朋友（连读：ol(d) friend 只做口型不爆开）",
+    "freq": 436
+  },
+  {
+    "word": "cold water",
+    "explains": "冷水（连读：col(d) water 只做口型不爆开）",
+    "freq": 437
+  },
+  {
+    "word": "second hand",
+    "explains": "二手（连读：secon(d) hand 只做口型不爆开）",
+    "freq": 438
+  },
+  {
+    "word": "stand by",
+    "explains": "待命（连读：stan(d) by 只做口型不爆开）",
+    "freq": 439
+  },
+  {
+    "word": "and then",
+    "explains": "然后（连读：an(d) then 只做口型不爆开）",
+    "freq": 440
+  },
+  {
+    "word": "lend me",
+    "explains": "借我（连读：len(d) me 只做口型不爆开）",
+    "freq": 441
+  },
+  {
+    "word": "send me",
+    "explains": "发给我（连读：sen(d) me 只做口型不爆开）",
+    "freq": 442
+  },
+  {
+    "word": "find time",
+    "explains": "找时间（连读：fin(d) time 只做口型不爆开）",
+    "freq": 443
+  },
+  {
+    "word": "mind if",
+    "explains": "介意吗（连读：min(d) if 只做口型不爆开）",
+    "freq": 444
+  },
+  {
+    "word": "loud music",
+    "explains": "响亮的音乐（连读：lou(d) music 只做口型不爆开）",
+    "freq": 445
+  },
+  {
+    "word": "red car",
+    "explains": "红色的车（连读：re(d) car 只做口型不爆开）",
+    "freq": 446
+  },
+  {
+    "word": "white car",
+    "explains": "白色的车（连读：whi(te) car 只做口型不爆开）",
+    "freq": 447
+  },
+  {
+    "word": "black car",
+    "explains": "黑色的车（连读：blac(k) car 只做口型不爆开）",
+    "freq": 448
+  },
+  {
+    "word": "black cat",
+    "explains": "黑猫（连读：blac(k) cat 只做口型不爆开）",
+    "freq": 449
+  },
+  {
+    "word": "make sure",
+    "explains": "确保（连读：ma(k)e sure 只做口型不爆开）",
+    "freq": 450
+  },
+  {
+    "word": "make time",
+    "explains": "抽时间（连读：ma(k)e time 只做口型不爆开）",
+    "freq": 451
+  },
+  {
+    "word": "take time",
+    "explains": "花时间（连读：ta(k)e time 只做口型不爆开）",
+    "freq": 452
+  },
+  {
+    "word": "take five",
+    "explains": "休息一下（连读：ta(k)e five 只做口型不爆开）",
+    "freq": 453
+  },
+  {
+    "word": "take notes",
+    "explains": "记笔记（连读：ta(k)e notes 只做口型不爆开）",
+    "freq": 454
+  },
+  {
+    "word": "book club",
+    "explains": "读书会（连读：boo(k) club 只做口型不爆开）",
+    "freq": 455
+  },
+  {
+    "word": "speak Chinese",
+    "explains": "说中文（连读：spea(k) Chinese 只做口型不爆开）",
+    "freq": 456
+  },
+  {
+    "word": "speak English",
+    "explains": "说英语（连读：spea(k) English 只做口型不爆开）",
+    "freq": 457
+  },
+  {
+    "word": "like this",
+    "explains": "像这样（连读：li(k)e this 只做口型不爆开）",
+    "freq": 458
+  },
+  {
+    "word": "like that",
+    "explains": "像那样（连读：li(k)e that 只做口型不爆开）",
+    "freq": 459
+  },
+  {
+    "word": "thank you",
+    "explains": "谢谢（连读：than(k) you 只做口型不爆开）",
+    "freq": 460
+  },
+  {
+    "word": "make sense",
+    "explains": "有道理（连读：ma(k)e sense 只做口型不爆开）",
+    "freq": 461
+  },
+  {
+    "word": "think twice",
+    "explains": "三思（连读：thin(k) twice 只做口型不爆开）",
+    "freq": 462
+  },
+  {
+    "word": "think back",
+    "explains": "回想（连读：thin(k) back 只做口型不爆开）",
+    "freq": 463
+  },
+  {
+    "word": "ask them",
+    "explains": "问他们（连读：as(k) them 只做口型不爆开）",
+    "freq": 464
+  },
+  {
+    "word": "ask me",
+    "explains": "问我（连读：as(k) me 只做口型不爆开）",
+    "freq": 465
+  },
+  {
+    "word": "desk job",
+    "explains": "案头工作（连读：des(k) job 只做口型不爆开）",
+    "freq": 466
+  },
+  {
+    "word": "break time",
+    "explains": "休息时间（连读：brea(k) time 只做口型不爆开）",
+    "freq": 467
+  },
+  {
+    "word": "check back",
+    "explains": "再回来看看（连读：chec(k) back 只做口型不爆开）",
+    "freq": 468
+  },
+  {
+    "word": "pick one",
+    "explains": "选一个（连读：pic(k) one 只做口型不爆开）",
+    "freq": 469
+  },
+  {
+    "word": "wake me",
+    "explains": "叫醒我（连读：wa(k)e me 只做口型不爆开）",
+    "freq": 470
+  },
+  {
+    "word": "walk past",
+    "explains": "走过（连读：wal(k) past 只做口型不爆开）",
+    "freq": 471
+  },
+  {
+    "word": "pork chop",
+    "explains": "猪排（连读：por(k) chop 只做口型不爆开）",
+    "freq": 472
+  },
+  {
+    "word": "cheap price",
+    "explains": "便宜的价格（连读：chea(p) price 只做口型不爆开）",
+    "freq": 473
+  },
+  {
+    "word": "deep sleep",
+    "explains": "沉睡（连读：dee(p) sleep 只做口型不爆开）",
+    "freq": 474
+  },
+  {
+    "word": "keep calm",
+    "explains": "保持冷静（连读：kee(p) calm 只做口型不爆开）",
+    "freq": 475
+  },
+  {
+    "word": "keep focused",
+    "explains": "保持专注（连读：kee(p) focused 只做口型不爆开）",
+    "freq": 476
+  },
+  {
+    "word": "keep trying",
+    "explains": "继续尝试（连读：kee(p) trying 只做口型不爆开）",
+    "freq": 477
+  },
+  {
+    "word": "top secret",
+    "explains": "绝密（连读：to(p) secret 只做口型不爆开）",
+    "freq": 478
+  },
+  {
+    "word": "ship sank",
+    "explains": "船沉了（连读：shi(p) sank 只做口型不爆开）",
+    "freq": 479
+  },
+  {
+    "word": "shop early",
+    "explains": "早点去购物（连读：sho(p) early 只做口型不爆开）",
+    "freq": 480
+  },
+  {
+    "word": "help yourself",
+    "explains": "请自便（连读：hel(p) yourself 只做口型不爆开）",
+    "freq": 481
+  },
+  {
+    "word": "laptop bag",
+    "explains": "笔记本电脑包（连读：lap·top bag 两处只做口型）",
+    "freq": 482
+  },
+  {
+    "word": "step back",
+    "explains": "退后（连读：ste(p) back 只做口型不爆开）",
+    "freq": 483
+  },
+  {
+    "word": "deep breath",
+    "explains": "深呼吸（连读：dee(p) breath 只做口型不爆开）",
+    "freq": 484
+  },
+  {
+    "word": "group project",
+    "explains": "小组项目（连读：grou(p) project 只做口型不爆开）",
+    "freq": 485
+  },
+  {
+    "word": "soup spoon",
+    "explains": "汤匙（连读：sou(p) spoon 只做口型不爆开）",
+    "freq": 486
+  },
+  {
+    "word": "leave soon",
+    "explains": "快走了（连读：lea(ve) soon 只做口型不爆开）",
+    "freq": 487
+  },
+  {
+    "word": "save time",
+    "explains": "节省时间（连读：sa(ve) time 只做口型不爆开）",
+    "freq": 488
+  },
+  {
+    "word": "move forward",
+    "explains": "向前迈进（连读：mo(ve) forward 只做口型不爆开）",
+    "freq": 489
+  },
+  {
+    "word": "love songs",
+    "explains": "情歌（连读：lo(ve) songs 只做口型不爆开）",
+    "freq": 490
+  },
+  {
+    "word": "five stars",
+    "explains": "五星（连读：fi(ve) stars 只做口型不爆开）",
+    "freq": 491
+  },
+  {
+    "word": "give back",
+    "explains": "回馈（连读：gi(ve) back 只做口型不爆开）",
+    "freq": 492
+  },
+  {
+    "word": "live music",
+    "explains": "现场音乐（连读：li(ve) music 只做口型不爆开）",
+    "freq": 493
+  },
+  {
+    "word": "grab lunch",
+    "explains": "吃午饭（连读：gra(b) lunch 只做口型不爆开）",
+    "freq": 494
+  },
+  {
+    "word": "big plan",
+    "explains": "大计划（连读：bi(g) plan 只做口型不爆开）",
+    "freq": 495
+  },
+  {
+    "word": "vast majority",
+    "explains": "绝大多数（连读：vas(t) majority 只做口型不爆开）",
+    "freq": 496
+  },
+  {
+    "word": "dog park",
+    "explains": "遛狗公园（连读：do(g) park 只做口型不爆开）",
+    "freq": 497
+  },
+  {
+    "word": "egg salad",
+    "explains": "鸡蛋沙拉（连读：eg(g) salad 只做口型不爆开）",
+    "freq": 498
+  },
+  {
+    "word": "blog post",
+    "explains": "博客文章（连读：blo(g) post 只做口型不爆开）",
+    "freq": 499
+  },
+  {
+    "word": "not quite",
+    "explains": "不完全是（连读：no(t) quite 只做口型不爆开）",
+    "freq": 500
+  }
+]

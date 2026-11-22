@@ -1,0 +1,2502 @@
+[
+  {
+    "word": "I'm walkin' home now",
+    "explains": "我现在走路回家（= I'm walking home now，walkin' 词尾 g 略读）",
+    "freq": 1
+  },
+  {
+    "word": "What are you talkin' about?",
+    "explains": "你在说什么（= What are you talking about?，talkin' 词尾 g 略读）",
+    "freq": 2
+  },
+  {
+    "word": "Where you goin'?",
+    "explains": "你要去哪儿（= Where are you going?，goin' 词尾 g 略读）",
+    "freq": 3
+  },
+  {
+    "word": "What are you doin' tonight?",
+    "explains": "你今晚干嘛（= What are you doing tonight?，doin' 词尾 g 略读）",
+    "freq": 4
+  },
+  {
+    "word": "I'm comin' right now",
+    "explains": "我马上来（= I'm coming right now，comin' 词尾 g 略读）",
+    "freq": 5
+  },
+  {
+    "word": "We're leavin' at six",
+    "explains": "我们六点走（= We're leaving at six，leavin' 词尾 g 略读）",
+    "freq": 6
+  },
+  {
+    "word": "She's makin' dinner",
+    "explains": "她在做晚饭（= She's making dinner，makin' 词尾 g 略读）",
+    "freq": 7
+  },
+  {
+    "word": "I'm takin' a break",
+    "explains": "我休息一下（= I'm taking a break，takin' 词尾 g 略读）",
+    "freq": 8
+  },
+  {
+    "word": "It's gettin' late",
+    "explains": "天色不早了（= It's getting late，gettin' 词尾 g 略读）",
+    "freq": 9
+  },
+  {
+    "word": "We're havin' fun",
+    "explains": "我们玩得很开心（= We're having fun，havin' 词尾 g 略读）",
+    "freq": 10
+  },
+  {
+    "word": "What were you thinkin'?",
+    "explains": "你当时在想什么（= What were you thinking?，thinkin' 词尾 g 略读）",
+    "freq": 11
+  },
+  {
+    "word": "I'm feelin' much better",
+    "explains": "我感觉好多了（= I'm feeling much better，feelin' 词尾 g 略读）",
+    "freq": 12
+  },
+  {
+    "word": "What are you lookin' at?",
+    "explains": "你看什么呢（= What are you looking at?，lookin' 词尾 g 略读）",
+    "freq": 13
+  },
+  {
+    "word": "I've been waitin' for hours",
+    "explains": "我等了好几个小时（= I've been waiting for hours，waitin' 词尾 g 略读）",
+    "freq": 14
+  },
+  {
+    "word": "He's sittin' over there",
+    "explains": "他坐在那边（= He's sitting over there，sittin' 词尾 g 略读）",
+    "freq": 15
+  },
+  {
+    "word": "They were eatin' lunch",
+    "explains": "他们在吃午饭（= They were eating lunch，eatin' 词尾 g 略读）",
+    "freq": 16
+  },
+  {
+    "word": "Stop cryin', you're breaking my heart",
+    "explains": "别哭了，你快让我心碎了（= Stop crying, you're breaking my heart，cryin' 词尾 g 略读）",
+    "freq": 17
+  },
+  {
+    "word": "I couldn't stop laughin'",
+    "explains": "我笑个不停（= I couldn't stop laughing，laughin' 词尾 g 略读）",
+    "freq": 18
+  },
+  {
+    "word": "Keep tryin', you'll get there",
+    "explains": "继续试，你会成功的（= Keep trying, you'll get there，tryin' 词尾 g 略读、'll 是 will 弱读省略）",
+    "freq": 19
+  },
+  {
+    "word": "I'm buyin' coffee for everyone",
+    "explains": "我请大家喝咖啡（= I'm buying coffee for everyone，buyin' 词尾 g 略读）",
+    "freq": 20
+  },
+  {
+    "word": "Who's bringin' the drinks?",
+    "explains": "谁带饮料来（= Who's bringing the drinks?，bringin' 词尾 g 略读）",
+    "freq": 21
+  },
+  {
+    "word": "I'll be callin' you later",
+    "explains": "我稍后打给你（= I'll be calling you later，callin' 词尾 g 略读）",
+    "freq": 22
+  },
+  {
+    "word": "We're meetin' at noon",
+    "explains": "我们中午见（= We're meeting at noon，meetin' 词尾 g 略读）",
+    "freq": 23
+  },
+  {
+    "word": "I'm tellin' the truth",
+    "explains": "我说的是实话（= I'm telling the truth，tellin' 词尾 g 略读）",
+    "freq": 24
+  },
+  {
+    "word": "Stop askin' me that",
+    "explains": "别再问我这个了（= Stop asking me that，askin' 词尾 g 略读）",
+    "freq": 25
+  },
+  {
+    "word": "Thanks for comin'",
+    "explains": "谢谢光临（= Thanks for coming，comin' 词尾 g 略读）",
+    "freq": 26
+  },
+  {
+    "word": "He's runnin' late again",
+    "explains": "他又迟到了（= He's running late again，runnin' 词尾 g 略读）",
+    "freq": 27
+  },
+  {
+    "word": "She was standin' in the rain",
+    "explains": "她站在雨里（= She was standing in the rain，standin' 词尾 g 略读）",
+    "freq": 28
+  },
+  {
+    "word": "I'm workin' from home today",
+    "explains": "我今天在家办公（= I'm working from home today，workin' 词尾 g 略读）",
+    "freq": 29
+  },
+  {
+    "word": "The kids are playin' outside",
+    "explains": "孩子们在外面玩（= The kids are playing outside，playin' 词尾 g 略读）",
+    "freq": 30
+  },
+  {
+    "word": "She's singin' in the shower",
+    "explains": "她在洗澡时唱歌（= She's singing in the shower，singin' 词尾 g 略读）",
+    "freq": 31
+  },
+  {
+    "word": "What are you cookin'?",
+    "explains": "你在做什么菜（= What are you cooking?，cookin' 词尾 g 略读）",
+    "freq": 32
+  },
+  {
+    "word": "He's drivin' me crazy",
+    "explains": "他让我发疯（= He's driving me crazy，drivin' 词尾 g 略读）",
+    "freq": 33
+  },
+  {
+    "word": "I'm payin' this time",
+    "explains": "这次我请客（= I'm paying this time，payin' 词尾 g 略读）",
+    "freq": 34
+  },
+  {
+    "word": "Who's fixin' the car?",
+    "explains": "谁在修车（= Who's fixing the car?，fixin' 词尾 g 略读）",
+    "freq": 35
+  },
+  {
+    "word": "I'm pickin' you up at seven",
+    "explains": "我七点去接你（= I'm picking you up at seven，pickin' 词尾 g 略读）",
+    "freq": 36
+  },
+  {
+    "word": "It's rainin' cats and dogs",
+    "explains": "下倾盆大雨了（= It's raining cats and dogs，rainin' 词尾 g 略读）",
+    "freq": 37
+  },
+  {
+    "word": "He's turnin' thirty this year",
+    "explains": "他今年三十了（= He's turning thirty this year，turnin' 词尾 g 略读）",
+    "freq": 38
+  },
+  {
+    "word": "I'm openin' the window",
+    "explains": "我开下窗（= I'm opening the window，openin' 词尾 g 略读）",
+    "freq": 39
+  },
+  {
+    "word": "They're closin' the store early",
+    "explains": "他们提前关门（= They're closing the store early，closin' 词尾 g 略读）",
+    "freq": 40
+  },
+  {
+    "word": "We're stayin' home tonight",
+    "explains": "我们今晚宅在家（= We're staying home tonight，stayin' 词尾 g 略读）",
+    "freq": 41
+  },
+  {
+    "word": "Stop movin' around",
+    "explains": "别动来动去（= Stop moving around，movin' 词尾 g 略读）",
+    "freq": 42
+  },
+  {
+    "word": "I'm washin' my hands",
+    "explains": "我在洗手（= I'm washing my hands，washin' 词尾 g 略读）",
+    "freq": 43
+  },
+  {
+    "word": "She's cleanin' the kitchen",
+    "explains": "她在打扫厨房（= She's cleaning the kitchen，cleanin' 词尾 g 略读）",
+    "freq": 44
+  },
+  {
+    "word": "He's carryin' a heavy bag",
+    "explains": "他拎着很重的包（= He's carrying a heavy bag，carryin' 词尾 g 略读）",
+    "freq": 45
+  },
+  {
+    "word": "I'm cuttin' the cake",
+    "explains": "我在切蛋糕（= I'm cutting the cake，cuttin' 词尾 g 略读）",
+    "freq": 46
+  },
+  {
+    "word": "The ball's hittin' the wall",
+    "explains": "球砸在墙上（= The ball's hitting the wall，hittin' 词尾 g 略读）",
+    "freq": 47
+  },
+  {
+    "word": "My back's hurtin'",
+    "explains": "我背疼（= My back's hurting，hurtin' 词尾 g 略读）",
+    "freq": 48
+  },
+  {
+    "word": "I need to keep goin'",
+    "explains": "我得继续走（= I need to keep going，goin' 词尾 g 略读）",
+    "freq": 49
+  },
+  {
+    "word": "We're losin' the game",
+    "explains": "我们要输了（= We're losing the game，losin' 词尾 g 略读）",
+    "freq": 50
+  },
+  {
+    "word": "Things are changin' fast",
+    "explains": "事情变化很快（= Things are changing fast，changin' 词尾 g 略读）",
+    "freq": 51
+  },
+  {
+    "word": "I'm savin' money for a trip",
+    "explains": "我在存钱准备旅行（= I'm saving money for a trip，savin' 词尾 g 略读）",
+    "freq": 52
+  },
+  {
+    "word": "She's spendin' too much",
+    "explains": "她花太多了（= She's spending too much，spendin' 词尾 g 略读）",
+    "freq": 53
+  },
+  {
+    "word": "Time keeps passin' by",
+    "explains": "时间不断流逝（= Time keeps passing by，passin' 词尾 g 略读）",
+    "freq": 54
+  },
+  {
+    "word": "He's learnin' Chinese",
+    "explains": "他在学中文（= He's learning Chinese，learnin' 词尾 g 略读）",
+    "freq": 55
+  },
+  {
+    "word": "I'm wearin' my new shoes",
+    "explains": "我穿着新鞋（= I'm wearing my new shoes，wearin' 词尾 g 略读）",
+    "freq": 56
+  },
+  {
+    "word": "The cat's watchin' the bird",
+    "explains": "猫盯着鸟看（= The cat's watching the bird，watchin' 词尾 g 略读）",
+    "freq": 57
+  },
+  {
+    "word": "The plant's growin' fast",
+    "explains": "这植物长得快（= The plant's growing fast，growin' 词尾 g 略读）",
+    "freq": 58
+  },
+  {
+    "word": "I'm hopin' for good news",
+    "explains": "我盼望好消息（= I'm hoping for good news，hopin' 词尾 g 略读）",
+    "freq": 59
+  },
+  {
+    "word": "I was just guessin'",
+    "explains": "我只是猜猜（= I was just guessing，guessin' 词尾 g 略读）",
+    "freq": 60
+  },
+  {
+    "word": "I'm tired 'cause I slept late",
+    "explains": "我累了，因为睡晚了（= I'm tired because I slept late，'cause 词首 be- 弱音节省略）",
+    "freq": 61
+  },
+  {
+    "word": "'Cause you're late again",
+    "explains": "因为你又迟到了（= Because you're late again，'cause 词首弱音节省略）",
+    "freq": 62
+  },
+  {
+    "word": "We're late 'cause of traffic",
+    "explains": "我们迟到是因为堵车（= We're late because of traffic，'cause 词首弱音节省略）",
+    "freq": 63
+  },
+  {
+    "word": "I can't go 'cause I'm busy",
+    "explains": "我去不了，因为很忙（= I can't go because I'm busy，'cause 词首弱音节省略）",
+    "freq": 64
+  },
+  {
+    "word": "'Cause you asked nicely",
+    "explains": "因为你嘴甜呀（= Because you asked nicely，'cause 词首弱音节省略）",
+    "freq": 65
+  },
+  {
+    "word": "She cried 'cause she was sad",
+    "explains": "她哭了，因为难过（= She cried because she was sad，'cause 词首弱音节省略）",
+    "freq": 66
+  },
+  {
+    "word": "'Cause it's cheaper that way",
+    "explains": "因为那样更便宜（= Because it's cheaper that way，'cause 词首弱音节省略）",
+    "freq": 67
+  },
+  {
+    "word": "He quit 'cause of his boss",
+    "explains": "他因为老板辞职了（= He quit because of his boss，'cause 词首弱音节省略）",
+    "freq": 68
+  },
+  {
+    "word": "I came early 'cause of you",
+    "explains": "我因为你才来早的（= I came early because of you，'cause 词首弱音节省略）",
+    "freq": 69
+  },
+  {
+    "word": "Just 'cause I can",
+    "explains": "就因为我想（= Just because I can，'cause 词首弱音节省略）",
+    "freq": 70
+  },
+  {
+    "word": "What 'bout me?",
+    "explains": "那我呢（= What about me?，'bout 词首 a- 弱音节省略）",
+    "freq": 71
+  },
+  {
+    "word": "How 'bout some coffee?",
+    "explains": "来点咖啡怎么样（= How about some coffee?，'bout 词首弱音节省略）",
+    "freq": 72
+  },
+  {
+    "word": "We need to talk 'bout it",
+    "explains": "我们得聊聊这事（= We need to talk about it，'bout 词首弱音节省略）",
+    "freq": 73
+  },
+  {
+    "word": "What's it 'bout?",
+    "explains": "这是讲什么的（= What's it about?，'bout 词首弱音节省略）",
+    "freq": 74
+  },
+  {
+    "word": "How 'bout tomorrow instead?",
+    "explains": "改成明天怎么样（= How about tomorrow instead?，'bout 词首弱音节省略）",
+    "freq": 75
+  },
+  {
+    "word": "I'm worried 'bout you",
+    "explains": "我担心你（= I'm worried about you，'bout 词首弱音节省略）",
+    "freq": 76
+  },
+  {
+    "word": "Tell me 'bout your day",
+    "explains": "跟我说说你今天的事（= Tell me about your day，'bout 词首弱音节省略）",
+    "freq": 77
+  },
+  {
+    "word": "What's this 'bout money?",
+    "explains": "这谈钱是怎么回事（= What's this about money?，'bout 词首弱音节省略）",
+    "freq": 78
+  },
+  {
+    "word": "Nothing to worry 'bout",
+    "explains": "没什么好担心的（= Nothing to worry about，'bout 词首弱音节省略）",
+    "freq": 79
+  },
+  {
+    "word": "What 'bout the kids?",
+    "explains": "孩子们怎么办（= What about the kids?，'bout 词首弱音节省略）",
+    "freq": 80
+  },
+  {
+    "word": "Wait 'til you see this",
+    "explains": "等你看到再说（= Wait until you see this，'til 词首 un- 弱音节省略）",
+    "freq": 81
+  },
+  {
+    "word": "I'll be here 'til five",
+    "explains": "我待到五点（= I'll be here until five，'til 词首弱音节省略）",
+    "freq": 82
+  },
+  {
+    "word": "Don't move 'til I say so",
+    "explains": "我发话前别动（= Don't move until I say so，'til 词首弱音节省略）",
+    "freq": 83
+  },
+  {
+    "word": "We danced 'til midnight",
+    "explains": "我们跳到半夜（= We danced until midnight，'til 词首弱音节省略）",
+    "freq": 84
+  },
+  {
+    "word": "It can wait 'til Monday",
+    "explains": "可以等到周一（= It can wait until Monday，'til 词首弱音节省略）",
+    "freq": 85
+  },
+  {
+    "word": "I didn't know 'til now",
+    "explains": "我到现在才知道（= I didn't know until now，'til 词首弱音节省略）",
+    "freq": 86
+  },
+  {
+    "word": "Stay 'til the end",
+    "explains": "待到最后（= Stay until the end，'til 词首弱音节省略）",
+    "freq": 87
+  },
+  {
+    "word": "Open 'til ten at night",
+    "explains": "营业到晚上十点（= Open until ten at night，'til 词首弱音节省略）",
+    "freq": 88
+  },
+  {
+    "word": "I'm 'fraid not",
+    "explains": "恐怕不行（= I'm afraid not，'fraid 词首 a- 弱音节省略）",
+    "freq": 89
+  },
+  {
+    "word": "I'm 'fraid so",
+    "explains": "恐怕是这样（= I'm afraid so，'fraid 词首弱音节省略）",
+    "freq": 90
+  },
+  {
+    "word": "I'm 'fraid I can't help",
+    "explains": "恐怕我帮不上忙（= I'm afraid I can't help，'fraid 词首弱音节省略）",
+    "freq": 91
+  },
+  {
+    "word": "You're 'fraid of spiders?",
+    "explains": "你怕蜘蛛吗（= You're afraid of spiders?，'fraid 词首弱音节省略）",
+    "freq": 92
+  },
+  {
+    "word": "Don't be 'fraid",
+    "explains": "别害怕（= Don't be afraid，'fraid 词首弱音节省略）",
+    "freq": 93
+  },
+  {
+    "word": "She's 'fraid to ask",
+    "explains": "她不敢问（= She's afraid to ask，'fraid 词首弱音节省略）",
+    "freq": 94
+  },
+  {
+    "word": "I'm 'fraid we're out of time",
+    "explains": "恐怕没时间了（= I'm afraid we're out of time，'fraid 词首弱音节省略）",
+    "freq": 95
+  },
+  {
+    "word": "'Fraid I missed the bus",
+    "explains": "恐怕我错过公交了（= Afraid I missed the bus，'fraid 词首弱音节省略）",
+    "freq": 96
+  },
+  {
+    "word": "Come 'round for dinner",
+    "explains": "来我家吃晚饭（= Come around for dinner，'round 词首 a- 弱音节省略）",
+    "freq": 97
+  },
+  {
+    "word": "The kids are running 'round",
+    "explains": "孩子们到处跑（= The kids are running around，'round 词首弱音节省略）",
+    "freq": 98
+  },
+  {
+    "word": "I'll be 'round later",
+    "explains": "我晚点过来（= I'll be around later，'round 词首弱音节省略）",
+    "freq": 99
+  },
+  {
+    "word": "We drove 'round the city",
+    "explains": "我们绕城开了一圈（= We drove around the city，'round 词首弱音节省略）",
+    "freq": 100
+  },
+  {
+    "word": "Turn 'round and look at me",
+    "explains": "转过身来看我（= Turn around and look at me，'round 词首弱音节省略）",
+    "freq": 101
+  },
+  {
+    "word": "Is she 'round somewhere?",
+    "explains": "她在附近吗（= Is she around somewhere?，'round 词首弱音节省略）",
+    "freq": 102
+  },
+  {
+    "word": "Stop hanging 'round",
+    "explains": "别晃悠了（= Stop hanging around，'round 词首弱音节省略）",
+    "freq": 103
+  },
+  {
+    "word": "We hung 'round all day",
+    "explains": "我们闲逛了一整天（= We hung around all day，'round 词首弱音节省略）",
+    "freq": 104
+  },
+  {
+    "word": "'Course I remember you",
+    "explains": "我当然记得你（= Of course I remember you，'course 词首 of 弱音节省略）",
+    "freq": 105
+  },
+  {
+    "word": "'Course not, silly",
+    "explains": "当然不啦（= Of course not, silly，'course 词首弱音节省略）",
+    "freq": 106
+  },
+  {
+    "word": "'Course! Wouldn't miss it",
+    "explains": "当然！怎么会错过（= Of course! Wouldn't miss it，'course 词首弱音节省略）",
+    "freq": 107
+  },
+  {
+    "word": "'Course it hurts",
+    "explains": "当然疼啦（= Of course it hurts，'course 词首弱音节省略）",
+    "freq": 108
+  },
+  {
+    "word": "'Course you can stay",
+    "explains": "你当然可以留下（= Of course you can stay，'course 词首弱音节省略）",
+    "freq": 109
+  },
+  {
+    "word": "'Course I'll help",
+    "explains": "我当然会帮忙（= Of course I'll help，'course 词首弱音节省略）",
+    "freq": 110
+  },
+  {
+    "word": "'Course she said yes",
+    "explains": "她当然答应了（= Of course she said yes，'course 词首弱音节省略）",
+    "freq": 111
+  },
+  {
+    "word": "'Course we can fix it",
+    "explains": "我们当然能修好（= Of course we can fix it，'course 词首弱音节省略）",
+    "freq": 112
+  },
+  {
+    "word": "'Nother cup of coffee?",
+    "explains": "再来一杯咖啡（= Another cup of coffee?，'nother 词首 a- 弱音节省略）",
+    "freq": 113
+  },
+  {
+    "word": "That's a whole 'nother story",
+    "explains": "那完全是另一回事（= That's a whole another story，'nother 词首弱音节省略）",
+    "freq": 114
+  },
+  {
+    "word": "We need 'nother plan",
+    "explains": "我们得另想办法（= We need another plan，'nother 词首弱音节省略）",
+    "freq": 115
+  },
+  {
+    "word": "He told me 'nother joke",
+    "explains": "他又讲了个笑话（= He told me another joke，'nother 词首弱音节省略）",
+    "freq": 116
+  },
+  {
+    "word": "I'm happy 'cuz you're here",
+    "explains": "我很开心，因为你在（= I'm happy because you're here，'cuz 词首 be- 弱音节省略）",
+    "freq": 117
+  },
+  {
+    "word": "'Cuz why not?",
+    "explains": "因为为什么不呢（= Because why not?，'cuz 词首弱音节省略）",
+    "freq": 118
+  },
+  {
+    "word": "We won 'cuz we worked hard",
+    "explains": "我们赢是因为努力（= We won because we worked hard，'cuz 词首弱音节省略）",
+    "freq": 119
+  },
+  {
+    "word": "I said no 'cuz I meant it",
+    "explains": "我拒绝是认真的（= I said no because I meant it，'cuz 词首弱音节省略）",
+    "freq": 120
+  },
+  {
+    "word": "Tell 'em I said hi",
+    "explains": "替我向他们问好（= Tell them I said hi，'em 代词 them 省略）",
+    "freq": 121
+  },
+  {
+    "word": "I love 'em all",
+    "explains": "我全都喜欢（= I love them all，'em 代词 them 省略）",
+    "freq": 122
+  },
+  {
+    "word": "Put 'em on the table",
+    "explains": "把它们放桌上（= Put them on the table，'em 代词 them 省略）",
+    "freq": 123
+  },
+  {
+    "word": "We beat 'em fair and square",
+    "explains": "我们光明正大赢他们（= We beat them fair and square，'em 代词 them 省略）",
+    "freq": 124
+  },
+  {
+    "word": "I can't find 'em anywhere",
+    "explains": "我哪儿都找不到它们（= I can't find them anywhere，'em 代词 them 省略）",
+    "freq": 125
+  },
+  {
+    "word": "Send 'em my way",
+    "explains": "让他们来找我（= Send them my way，'em 代词 them 省略）",
+    "freq": 126
+  },
+  {
+    "word": "Show 'em what you've got",
+    "explains": "给他们露一手（= Show them what you've got，'em 代词 them 省略）",
+    "freq": 127
+  },
+  {
+    "word": "Don't forget 'em",
+    "explains": "别把它们忘了（= Don't forget them，'em 代词 them 省略）",
+    "freq": 128
+  },
+  {
+    "word": "They deserved it, all of 'em",
+    "explains": "他们全都活该（= all of them，'em 代词 them 省略）",
+    "freq": 129
+  },
+  {
+    "word": "I bought 'em yesterday",
+    "explains": "我昨天买的它们（= I bought them yesterday，'em 代词 them 省略）",
+    "freq": 130
+  },
+  {
+    "word": "Bring 'em over here",
+    "explains": "把它们拿到这边来（= Bring them over here，'em 代词 them 省略）",
+    "freq": 131
+  },
+  {
+    "word": "Quit pickin' on 'em",
+    "explains": "别欺负他们（= Quit picking on them，pickin' 词尾 g 略读、'em 代词 them 省略）",
+    "freq": 132
+  },
+  {
+    "word": "Ask 'em yourself",
+    "explains": "你自己去问他们（= Ask them yourself，'em 代词 them 省略）",
+    "freq": 133
+  },
+  {
+    "word": "Count 'em one by one",
+    "explains": "一个一个数（= Count them one by one，'em 代词 them 省略）",
+    "freq": 134
+  },
+  {
+    "word": "I already told 'em twice",
+    "explains": "我已经告诉他们两遍了（= I already told them twice，'em 代词 them 省略）",
+    "freq": 135
+  },
+  {
+    "word": "Stop staring at 'em",
+    "explains": "别盯着他们看（= Stop staring at them，'em 代词 them 省略）",
+    "freq": 136
+  },
+  {
+    "word": "We'll catch 'em later",
+    "explains": "我们回头再找他们（= We'll catch them later，'em 代词 them 省略）",
+    "freq": 137
+  },
+  {
+    "word": "Pick 'em up at school",
+    "explains": "去学校接他们（= Pick them up at school，'em 代词 them 省略）",
+    "freq": 138
+  },
+  {
+    "word": "I saw 'er at the mall",
+    "explains": "我在商场看见她了（= I saw her at the mall，'er 代词 her 省略）",
+    "freq": 139
+  },
+  {
+    "word": "Give 'er a call",
+    "explains": "给她打个电话（= Give her a call，'er 代词 her 省略）",
+    "freq": 140
+  },
+  {
+    "word": "Tell 'er the truth",
+    "explains": "告诉她真相（= Tell her the truth，'er 代词 her 省略）",
+    "freq": 141
+  },
+  {
+    "word": "I'm takin' 'er to dinner",
+    "explains": "我带她去吃晚饭（= I'm taking her to dinner，'er 代词 her 省略）",
+    "freq": 142
+  },
+  {
+    "word": "Ask 'er yourself",
+    "explains": "你自己去问她（= Ask her yourself，'er 代词 her 省略）",
+    "freq": 143
+  },
+  {
+    "word": "We fixed the car for 'er",
+    "explains": "我们帮她修了车（= We fixed the car for her，'er 代词 her 省略）",
+    "freq": 144
+  },
+  {
+    "word": "Let 'er in, it's cold out",
+    "explains": "让她进来，外面冷（= Let her in，'er 代词 her 省略）",
+    "freq": 145
+  },
+  {
+    "word": "I miss 'er a lot",
+    "explains": "我很想念她（= I miss her a lot，'er 代词 her 省略）",
+    "freq": 146
+  },
+  {
+    "word": "Send 'er my love",
+    "explains": "替我向她问好（= Send her my love，'er 代词 her 省略）",
+    "freq": 147
+  },
+  {
+    "word": "Did you invite 'er?",
+    "explains": "你邀请她了吗（= Did you invite her?，'er 代词 her 省略）",
+    "freq": 148
+  },
+  {
+    "word": "Help 'er with the bags",
+    "explains": "帮她拎袋子（= Help her with the bags，'er 代词 her 省略）",
+    "freq": 149
+  },
+  {
+    "word": "We haven't seen 'er lately",
+    "explains": "我们最近没见到她（= We haven't seen her lately，'er 代词 her 省略）",
+    "freq": 150
+  },
+  {
+    "word": "I saw 'im this morning",
+    "explains": "我今天早上见到他了（= I saw him this morning，'im 代词 him 省略）",
+    "freq": 151
+  },
+  {
+    "word": "Tell 'im to hurry up",
+    "explains": "让他快点（= Tell him to hurry up，'im 代词 him 省略）",
+    "freq": 152
+  },
+  {
+    "word": "Give 'im a chance",
+    "explains": "给他个机会（= Give him a chance，'im 代词 him 省略）",
+    "freq": 153
+  },
+  {
+    "word": "I'm waitin' for 'im",
+    "explains": "我在等他（= I'm waiting for him，'im 代词 him 省略）",
+    "freq": 154
+  },
+  {
+    "word": "Ask 'im about the keys",
+    "explains": "问问他钥匙的事（= Ask him about the keys，'im 代词 him 省略）",
+    "freq": 155
+  },
+  {
+    "word": "We threw 'im a party",
+    "explains": "我们给他办了派对（= We threw him a party，'im 代词 him 省略）",
+    "freq": 156
+  },
+  {
+    "word": "Let 'im sleep",
+    "explains": "让他睡吧（= Let him sleep，'im 代词 him 省略）",
+    "freq": 157
+  },
+  {
+    "word": "I don't know 'im well",
+    "explains": "我不太了解他（= I don't know him well，'im 代词 him 省略）",
+    "freq": 158
+  },
+  {
+    "word": "Call 'im back later",
+    "explains": "晚点给他回电话（= Call him back later，'im 代词 him 省略）",
+    "freq": 159
+  },
+  {
+    "word": "She left without 'im",
+    "explains": "她没带他一起走了（= She left without him，'im 代词 him 省略）",
+    "freq": 160
+  },
+  {
+    "word": "Stop teasin' 'im",
+    "explains": "别逗他了（= Stop teasing him，'im 代词 him 省略）",
+    "freq": 161
+  },
+  {
+    "word": "Bring 'im with you",
+    "explains": "把他一起带来（= Bring him with you，'im 代词 him 省略）",
+    "freq": 162
+  },
+  {
+    "word": "'Tis the season",
+    "explains": "正是这个季节（= It is the season，'tis 代词 it 省略）",
+    "freq": 163
+  },
+  {
+    "word": "'Tis a lovely day",
+    "explains": "今天天气真好（= It is a lovely day，'tis 代词 it 省略）",
+    "freq": 164
+  },
+  {
+    "word": "'Tis true, I'm afraid",
+    "explains": "恐怕是真的（= It is true, I'm afraid，'tis 代词 it 省略）",
+    "freq": 165
+  },
+  {
+    "word": "'Tis nothing serious",
+    "explains": "没什么大不了（= It is nothing serious，'tis 代词 it 省略）",
+    "freq": 166
+  },
+  {
+    "word": "'Tis better to wait",
+    "explains": "还是等等更好（= It is better to wait，'tis 代词 it 省略）",
+    "freq": 167
+  },
+  {
+    "word": "'Tis all I have left",
+    "explains": "我就剩这些了（= It is all I have left，'tis 代词 it 省略）",
+    "freq": 168
+  },
+  {
+    "word": "'Tis a gift, not a loan",
+    "explains": "这是送的，不是借的（= It is a gift, not a loan，'tis 代词 it 省略）",
+    "freq": 169
+  },
+  {
+    "word": "'Tis nice to see you",
+    "explains": "见到你真高兴（= It is nice to see you，'tis 代词 it 省略）",
+    "freq": 170
+  },
+  {
+    "word": "I stayed home las' night",
+    "explains": "我昨晚待在家（= last night，las' 词尾 st 吞音）",
+    "freq": 171
+  },
+  {
+    "word": "Las' week was crazy",
+    "explains": "上周忙疯了（= Last week was crazy，las' 词尾 st 吞音）",
+    "freq": 172
+  },
+  {
+    "word": "What did you do las' summer?",
+    "explains": "你去年夏天干嘛了（= last summer，las' 词尾 st 吞音）",
+    "freq": 173
+  },
+  {
+    "word": "I saw him las' Friday",
+    "explains": "我上周五见到他（= last Friday，las' 词尾 st 吞音）",
+    "freq": 174
+  },
+  {
+    "word": "Las' time I checked",
+    "explains": "上次我看的时候（= Last time I checked，las' 词尾 st 吞音）",
+    "freq": 175
+  },
+  {
+    "word": "We met las' year",
+    "explains": "我们去年认识的（= last year，las' 词尾 st 吞音）",
+    "freq": 176
+  },
+  {
+    "word": "It rained las' weekend",
+    "explains": "上周末下雨了（= last weekend，las' 词尾 st 吞音）",
+    "freq": 177
+  },
+  {
+    "word": "Where were you las' night?",
+    "explains": "你昨晚去哪了（= last night，las' 词尾 st 吞音）",
+    "freq": 178
+  },
+  {
+    "word": "Las' one, I promise",
+    "explains": "最后一个，我保证（= Last one, I promise，las' 词尾 st 吞音）",
+    "freq": 179
+  },
+  {
+    "word": "She quit las' month",
+    "explains": "她上个月辞职了（= last month，las' 词尾 st 吞音）",
+    "freq": 180
+  },
+  {
+    "word": "I called you las' evening",
+    "explains": "我昨晚给你打过电话（= last evening，las' 词尾 st 吞音）",
+    "freq": 181
+  },
+  {
+    "word": "That was las' year's news",
+    "explains": "那是去年的旧闻（= last year's news，las' 词尾 st 吞音）",
+    "freq": 182
+  },
+  {
+    "word": "See you nex' week",
+    "explains": "下周见（= next week，nex' 词尾 st 吞音）",
+    "freq": 183
+  },
+  {
+    "word": "What's the plan for nex' year?",
+    "explains": "明年有什么计划（= next year，nex' 词尾 st 吞音）",
+    "freq": 184
+  },
+  {
+    "word": "Nex' time, call first",
+    "explains": "下次先打电话（= Next time, call first，nex' 词尾 st 吞音）",
+    "freq": 185
+  },
+  {
+    "word": "The nex' train leaves soon",
+    "explains": "下一班火车快到了（= next train，nex' 词尾 st 吞音）",
+    "freq": 186
+  },
+  {
+    "word": "Let's meet nex' Monday",
+    "explains": "我们下周一见（= next Monday，nex' 词尾 st 吞音）",
+    "freq": 187
+  },
+  {
+    "word": "Nex' up is Maria",
+    "explains": "下一位是玛丽亚（= Next up is Maria，nex' 词尾 st 吞音）",
+    "freq": 188
+  },
+  {
+    "word": "What's nex' on the list?",
+    "explains": "清单上下一个是什么（= next on the list，nex' 词尾 st 吞音）",
+    "freq": 189
+  },
+  {
+    "word": "Take the nex' right turn",
+    "explains": "下个路口右转（= next right turn，nex' 词尾 st 吞音）",
+    "freq": 190
+  },
+  {
+    "word": "Nex' weekend works for me",
+    "explains": "下周末我有空（= Next weekend works for me，nex' 词尾 st 吞音）",
+    "freq": 191
+  },
+  {
+    "word": "The nex' day he apologized",
+    "explains": "第二天他道歉了（= The next day he apologized，nex' 词尾 st 吞音）",
+    "freq": 192
+  },
+  {
+    "word": "It's mos'ly done",
+    "explains": "基本完成了（= mostly done，mos'ly 词中 t 吞音）",
+    "freq": 193
+  },
+  {
+    "word": "I eat mos'ly at home",
+    "explains": "我基本在家吃（= mostly at home，mos'ly 词中 t 吞音）",
+    "freq": 194
+  },
+  {
+    "word": "It's mos'ly cloudy today",
+    "explains": "今天基本阴天（= mostly cloudy today，mos'ly 词中 t 吞音）",
+    "freq": 195
+  },
+  {
+    "word": "Mos'ly, I'm just tired",
+    "explains": "主要是累了（= Mostly, I'm just tired，mos'ly 词中 t 吞音）",
+    "freq": 196
+  },
+  {
+    "word": "The crowd was mos'ly young people",
+    "explains": "观众大多是年轻人（= mostly young people，mos'ly 词中 t 吞音）",
+    "freq": 197
+  },
+  {
+    "word": "We mos'ly agree",
+    "explains": "我们基本意见一致（= We mostly agree，mos'ly 词中 t 吞音）",
+    "freq": 198
+  },
+  {
+    "word": "It's mos'ly about money",
+    "explains": "主要为了钱（= mostly about money，mos'ly 词中 t 吞音）",
+    "freq": 199
+  },
+  {
+    "word": "He's mos'ly harmless",
+    "explains": "他基本无害（= mostly harmless，mos'ly 词中 t 吞音）",
+    "freq": 200
+  },
+  {
+    "word": "Jus' a second",
+    "explains": "稍等一下（= just a second，jus' 词尾 st 吞音）",
+    "freq": 201
+  },
+  {
+    "word": "I'm jus' kiddin'",
+    "explains": "我开玩笑的（= just kidding，jus' 词尾 st 吞音）",
+    "freq": 202
+  },
+  {
+    "word": "Jus' in case",
+    "explains": "以防万一（= just in case，jus' 词尾 st 吞音）",
+    "freq": 203
+  },
+  {
+    "word": "I jus' got here",
+    "explains": "我刚到（= just got here，jus' 词尾 st 吞音）",
+    "freq": 204
+  },
+  {
+    "word": "Jus' between you and me",
+    "explains": "就咱俩说（= just between you and me，jus' 词尾 st 吞音）",
+    "freq": 205
+  },
+  {
+    "word": "It's jus' not fair",
+    "explains": "这不公平（= just not fair，jus' 词尾 st 吞音）",
+    "freq": 206
+  },
+  {
+    "word": "Can I jus' say something?",
+    "explains": "我能说一句吗（= just say something，jus' 词尾 st 吞音）",
+    "freq": 207
+  },
+  {
+    "word": "She jus' left a minute ago",
+    "explains": "她一分钟前刚走（= just left，jus' 词尾 st 吞音）",
+    "freq": 208
+  },
+  {
+    "word": "Jus' wait and see",
+    "explains": "等着瞧（= just wait and see，jus' 词尾 st 吞音）",
+    "freq": 209
+  },
+  {
+    "word": "I was jus' about to call you",
+    "explains": "我正要给你打电话（= just about to，jus' 词尾 st 吞音）",
+    "freq": 210
+  },
+  {
+    "word": "Jus' tell me the truth",
+    "explains": "跟我说实话（= just tell me the truth，jus' 词尾 st 吞音）",
+    "freq": 211
+  },
+  {
+    "word": "It's jus' a scratch",
+    "explains": "只是个小划痕（= just a scratch，jus' 词尾 st 吞音）",
+    "freq": 212
+  },
+  {
+    "word": "We're jus' friends",
+    "explains": "我们只是朋友（= just friends，jus' 词尾 st 吞音）",
+    "freq": 213
+  },
+  {
+    "word": "Jus' like that, it's gone",
+    "explains": "就这样没了（= just like that，jus' 词尾 st 吞音）",
+    "freq": 214
+  },
+  {
+    "word": "He did it jus' for fun",
+    "explains": "他纯粹为了好玩（= just for fun，jus' 词尾 st 吞音）",
+    "freq": 215
+  },
+  {
+    "word": "You an' me, we're a team",
+    "explains": "你和我，我们是一队（= you and me，an' 词尾 d 吞音）",
+    "freq": 216
+  },
+  {
+    "word": "Bread an' butter",
+    "explains": "面包和黄油（= bread and butter，an' 词尾 d 吞音）",
+    "freq": 217
+  },
+  {
+    "word": "Come an' sit down",
+    "explains": "过来坐（= come and sit down，an' 词尾 d 吞音）",
+    "freq": 218
+  },
+  {
+    "word": "Rock an' roll",
+    "explains": "摇滚（= rock and roll，an' 词尾 d 吞音）",
+    "freq": 219
+  },
+  {
+    "word": "Try an' relax",
+    "explains": "试着放松（= try and relax，an' 词尾 d 吞音）",
+    "freq": 220
+  },
+  {
+    "word": "He laughed an' walked away",
+    "explains": "他笑着走开了（= and walked away，an' 词尾 d 吞音）",
+    "freq": 221
+  },
+  {
+    "word": "Salt an' pepper, please",
+    "explains": "请给我盐和胡椒（= salt and pepper，an' 词尾 d 吞音）",
+    "freq": 222
+  },
+  {
+    "word": "Wait an' see",
+    "explains": "走着瞧（= wait and see，an' 词尾 d 吞音）",
+    "freq": 223
+  },
+  {
+    "word": "Up an' down the street",
+    "explains": "沿街来来回回（= up and down，an' 词尾 d 吞音）",
+    "freq": 224
+  },
+  {
+    "word": "Coffee an' a bagel",
+    "explains": "咖啡配贝果（= coffee and a bagel，an' 词尾 d 吞音）",
+    "freq": 225
+  },
+  {
+    "word": "Nice an' easy",
+    "explains": "轻轻松松（= nice and easy，an' 词尾 d 吞音）",
+    "freq": 226
+  },
+  {
+    "word": "He grabbed his coat an' left",
+    "explains": "他抓起外套就走了（= and left，an' 词尾 d 吞音）",
+    "freq": 227
+  },
+  {
+    "word": "Fish an' chips tonight",
+    "explains": "今晚吃炸鱼薯条（= fish and chips，an' 词尾 d 吞音）",
+    "freq": 228
+  },
+  {
+    "word": "Go an' get some rest",
+    "explains": "去休息吧（= go and get some rest，an' 词尾 d 吞音）",
+    "freq": 229
+  },
+  {
+    "word": "Sun an' sand, here we come",
+    "explains": "阳光沙滩，我们来了（= sun and sand，an' 词尾 d 吞音）",
+    "freq": 230
+  },
+  {
+    "word": "'Kay, see you then",
+    "explains": "好，到时候见（= okay, see you then，'kay 词首 o- 弱音节省略）",
+    "freq": 231
+  },
+  {
+    "word": "'Kay, I gotta run",
+    "explains": "好，我得走了（= okay, I got to run，'kay 词首弱音节省略）",
+    "freq": 232
+  },
+  {
+    "word": "Is that 'kay with you?",
+    "explains": "你可以吗（= okay with you，'kay 词首弱音节省略）",
+    "freq": 233
+  },
+  {
+    "word": "Everything's gonna be 'kay",
+    "explains": "一切都会好的（= be okay，'kay 词首弱音节省略）",
+    "freq": 234
+  },
+  {
+    "word": "'Kay, hear me out",
+    "explains": "好，听我说完（= okay, hear me out，'kay 词首弱音节省略）",
+    "freq": 235
+  },
+  {
+    "word": "Just say 'kay",
+    "explains": "说句好就行（= say okay，'kay 词首弱音节省略）",
+    "freq": 236
+  },
+  {
+    "word": "'Kay, one more time",
+    "explains": "好，再来一次（= okay, one more time，'kay 词首弱音节省略）",
+    "freq": 237
+  },
+  {
+    "word": "Sounds 'kay to me",
+    "explains": "我觉得行（= sounds okay，'kay 词首弱音节省略）",
+    "freq": 238
+  },
+  {
+    "word": "'Kay, let's do it",
+    "explains": "好，那就干吧（= okay, let's do it，'kay 词首弱音节省略）",
+    "freq": 239
+  },
+  {
+    "word": "You'll be 'kay",
+    "explains": "你会没事的（= be okay，'kay 词首弱音节省略）",
+    "freq": 240
+  },
+  {
+    "word": "'Scuse me, coming through",
+    "explains": "借过，借过（= excuse me，'scuse 词首 ex- 弱音节省略）",
+    "freq": 241
+  },
+  {
+    "word": "'Scuse me, is this seat taken?",
+    "explains": "不好意思，这座位有人吗（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 242
+  },
+  {
+    "word": "'Scuse me for interrupting",
+    "explains": "抱歉打断一下（= excuse me for interrupting，'scuse 词首弱音节省略）",
+    "freq": 243
+  },
+  {
+    "word": "'Scuse me? I didn't catch that",
+    "explains": "不好意思？我没听清（= excuse me?，'scuse 词首弱音节省略）",
+    "freq": 244
+  },
+  {
+    "word": "'Scuse me, do you have the time?",
+    "explains": "打扰了，现在几点（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 245
+  },
+  {
+    "word": "'Scuse me while I take this call",
+    "explains": "抱歉，我接个电话（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 246
+  },
+  {
+    "word": "'Scuse me, you dropped this",
+    "explains": "不好意思，你东西掉了（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 247
+  },
+  {
+    "word": "'Scuse me, I was here first",
+    "explains": "不好意思，我先来的（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 248
+  },
+  {
+    "word": "Oh, 'scuse my French",
+    "explains": "哎呀，刚才爆粗了（= excuse my French，'scuse 词首弱音节省略）",
+    "freq": 249
+  },
+  {
+    "word": "'Scuse me, wrong number",
+    "explains": "不好意思，打错了（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 250
+  },
+  {
+    "word": "Hey, 'sup? Haven't seen you in ages",
+    "explains": "嘿，咋啦？好久不见（= what's up? haven't seen you in ages，'sup 词首弱音节省略）",
+    "freq": 251
+  },
+  {
+    "word": "'Sup, man? How's it going?",
+    "explains": "哥们，最近咋样？（= what's up, man? how's it going?，'sup 词首弱音节省略）",
+    "freq": 252
+  },
+  {
+    "word": "'Sup with the long face?",
+    "explains": "怎么拉着个脸（= what's up with the long face?，'sup 词首弱音节省略）",
+    "freq": 253
+  },
+  {
+    "word": "Not much, 'sup with you?",
+    "explains": "没啥，你呢（= what's up with you?，'sup 词首弱音节省略）",
+    "freq": 254
+  },
+  {
+    "word": "'Sup? Anything new?",
+    "explains": "咋样？有啥新鲜事（= what's up?，'sup 词首弱音节省略）",
+    "freq": 255
+  },
+  {
+    "word": "Yo, 'sup! Long time",
+    "explains": "哟，好久不见（= what's up! long time，'sup 词首弱音节省略）",
+    "freq": 256
+  },
+  {
+    "word": "'Sup with this weather?",
+    "explains": "这天气怎么回事（= what's up with this weather?，'sup 词首弱音节省略）",
+    "freq": 257
+  },
+  {
+    "word": "'Sup, wanna grab food?",
+    "explains": "嘿，想吃点东西吗（= what's up, want to grab food?，'sup 词首弱音节省略）",
+    "freq": 258
+  },
+  {
+    "word": "'Sup, are you busy?",
+    "explains": "嘿，你忙吗（= what's up, are you busy?，'sup 词首弱音节省略）",
+    "freq": 259
+  },
+  {
+    "word": "'Sup with him today?",
+    "explains": "他今天怎么了（= what's up with him today?，'sup 词首弱音节省略）",
+    "freq": 260
+  },
+  {
+    "word": "Just checking in, 'sup",
+    "explains": "就是问问，咋样（= what's up，'sup 词首弱音节省略）",
+    "freq": 261
+  },
+  {
+    "word": "'Sup? You look tired",
+    "explains": "咋了？你看着很累（= what's up?，'sup 词首弱音节省略）",
+    "freq": 262
+  },
+  {
+    "word": "I really 'preciate it",
+    "explains": "我真的很感激（= appreciate it，'preciate 词首 ap- 弱音节省略）",
+    "freq": 263
+  },
+  {
+    "word": "Thanks, I 'preciate it",
+    "explains": "谢谢，多谢了（= I appreciate it，'preciate 词首弱音节省略）",
+    "freq": 264
+  },
+  {
+    "word": "We'd 'preciate it a lot",
+    "explains": "我们会非常感谢（= We would appreciate it，'preciate 词首弱音节省略）",
+    "freq": 265
+  },
+  {
+    "word": "Hey, 'preciate the ride",
+    "explains": "谢啦，顺路带我（= appreciate the ride，'preciate 词首弱音节省略）",
+    "freq": 266
+  },
+  {
+    "word": "'Preciate you doing this",
+    "explains": "谢谢你做这件事（= appreciate you doing this，'preciate 词首弱音节省略）",
+    "freq": 267
+  },
+  {
+    "word": "Can't tell you how much I 'preciate it",
+    "explains": "真不知道有多感激你（= appreciate it，'preciate 词首弱音节省略）",
+    "freq": 268
+  },
+  {
+    "word": "'Preciate the heads-up",
+    "explains": "谢谢提醒（= appreciate the heads-up，'preciate 词首弱音节省略）",
+    "freq": 269
+  },
+  {
+    "word": "I 'preciate your honesty",
+    "explains": "我欣赏你的坦诚（= appreciate your honesty，'preciate 词首弱音节省略）",
+    "freq": 270
+  },
+  {
+    "word": "I'll call you tonight",
+    "explains": "我今晚打给你（= I will call you tonight，'ll 是 will 弱读省略）",
+    "freq": 271
+  },
+  {
+    "word": "We'll see about that",
+    "explains": "走着瞧（= We will see about that，'ll 是 will 弱读省略）",
+    "freq": 272
+  },
+  {
+    "word": "You'll love this place",
+    "explains": "你会喜欢这地方的（= You will love this place，'ll 是 will 弱读省略）",
+    "freq": 273
+  },
+  {
+    "word": "She'll be fine, trust me",
+    "explains": "她会没事的，相信我（= She will be fine, trust me，'ll 是 will 弱读省略）",
+    "freq": 274
+  },
+  {
+    "word": "He'll never agree to that",
+    "explains": "他绝不会同意（= He will never agree to that，'ll 是 will 弱读省略）",
+    "freq": 275
+  },
+  {
+    "word": "It'll work out somehow",
+    "explains": "总会有办法的（= It will work out somehow，'ll 是 will 弱读省略）",
+    "freq": 276
+  },
+  {
+    "word": "That'll be five dollars",
+    "explains": "一共五美元（= That will be five dollars，'ll 是 will 弱读省略）",
+    "freq": 277
+  },
+  {
+    "word": "There'll be plenty of food",
+    "explains": "食物会很多（= There will be plenty of food，'ll 是 will 弱读省略）",
+    "freq": 278
+  },
+  {
+    "word": "We'll take care of it",
+    "explains": "我们来处理（= We will take care of it，'ll 是 will 弱读省略）",
+    "freq": 279
+  },
+  {
+    "word": "I'll think about it",
+    "explains": "我考虑考虑（= I will think about it，'ll 是 will 弱读省略）",
+    "freq": 280
+  },
+  {
+    "word": "Who'll drive us home?",
+    "explains": "谁开车送我们回家（= Who will drive us home?，'ll 是 will 弱读省略）",
+    "freq": 281
+  },
+  {
+    "word": "You'll regret this",
+    "explains": "你会后悔的（= You will regret this，'ll 是 will 弱读省略）",
+    "freq": 282
+  },
+  {
+    "word": "It'll rain by evening",
+    "explains": "傍晚会下雨（= It will rain by evening，'ll 是 will 弱读省略）",
+    "freq": 283
+  },
+  {
+    "word": "Nobody'll believe that story",
+    "explains": "没人会信那套说辞（= Nobody will believe that story，'ll 是 will 弱读省略）",
+    "freq": 284
+  },
+  {
+    "word": "We'll be there in ten",
+    "explains": "我们十分钟到（= We will be there in ten，'ll 是 will 弱读省略）",
+    "freq": 285
+  },
+  {
+    "word": "That'll do for now",
+    "explains": "暂时先这样（= That will do for now，'ll 是 will 弱读省略）",
+    "freq": 286
+  },
+  {
+    "word": "He'll come around eventually",
+    "explains": "他迟早会想通的（= He will come around eventually，'ll 是 will 弱读省略）",
+    "freq": 287
+  },
+  {
+    "word": "I'll get the door",
+    "explains": "我去开门（= I will get the door，'ll 是 will 弱读省略）",
+    "freq": 288
+  },
+  {
+    "word": "Things'll get better soon",
+    "explains": "事情很快会好起来（= Things will get better soon，'ll 是 will 弱读省略）",
+    "freq": 289
+  },
+  {
+    "word": "You'll get used to it",
+    "explains": "你会习惯的（= You will get used to it，'ll 是 will 弱读省略）",
+    "freq": 290
+  },
+  {
+    "word": "I've got an idea",
+    "explains": "我有个主意（= I have got an idea，'ve 是 have 弱读省略）",
+    "freq": 291
+  },
+  {
+    "word": "We've been through worse",
+    "explains": "我们经历过更糟的（= We have been through worse，'ve 是 have 弱读省略）",
+    "freq": 292
+  },
+  {
+    "word": "You've got mail",
+    "explains": "你有新邮件（= You have got mail，'ve 是 have 弱读省略）",
+    "freq": 293
+  },
+  {
+    "word": "They've already left",
+    "explains": "他们已经走了（= They have already left，'ve 是 have 弱读省略）",
+    "freq": 294
+  },
+  {
+    "word": "I've seen this movie twice",
+    "explains": "这片子我看过两遍（= I have seen this movie twice，'ve 是 have 弱读省略）",
+    "freq": 295
+  },
+  {
+    "word": "We've got company",
+    "explains": "有客人来了（= We have got company，'ve 是 have 弱读省略）",
+    "freq": 296
+  },
+  {
+    "word": "You've changed a lot",
+    "explains": "你变了很多（= You have changed a lot，'ve 是 have 弱读省略）",
+    "freq": 297
+  },
+  {
+    "word": "They've known each other for years",
+    "explains": "他们认识好多年了（= They have known each other for years，'ve 是 have 弱读省略）",
+    "freq": 298
+  },
+  {
+    "word": "I've had enough",
+    "explains": "我受够了（= I have had enough，'ve 是 have 弱读省略）",
+    "freq": 299
+  },
+  {
+    "word": "We've run out of milk",
+    "explains": "牛奶喝完了（= We have run out of milk，'ve 是 have 弱读省略）",
+    "freq": 300
+  },
+  {
+    "word": "You're kidding, right?",
+    "explains": "你在开玩笑吧（= You are kidding, right?，'re 是 are 弱读省略）",
+    "freq": 301
+  },
+  {
+    "word": "We're almost there",
+    "explains": "我们快到了（= We are almost there，'re 是 are 弱读省略）",
+    "freq": 302
+  },
+  {
+    "word": "They're moving to Canada",
+    "explains": "他们要搬去加拿大（= They are moving to Canada，'re 是 are 弱读省略）",
+    "freq": 303
+  },
+  {
+    "word": "You're not listening",
+    "explains": "你根本没在听（= You are not listening，'re 是 are 弱读省略）",
+    "freq": 304
+  },
+  {
+    "word": "We're on the same page",
+    "explains": "我们想法一致（= We are on the same page，'re 是 are 弱读省略）",
+    "freq": 305
+  },
+  {
+    "word": "They're just jealous",
+    "explains": "他们只是嫉妒（= They are just jealous，'re 是 are 弱读省略）",
+    "freq": 306
+  },
+  {
+    "word": "We're running out of time",
+    "explains": "没时间了（= We are running out of time，'re 是 are 弱读省略）",
+    "freq": 307
+  },
+  {
+    "word": "You're doing great",
+    "explains": "你做得很好（= You are doing great，'re 是 are 弱读省略）",
+    "freq": 308
+  },
+  {
+    "word": "They're closed on Sundays",
+    "explains": "他们周日不营业（= They are closed on Sundays，'re 是 are 弱读省略）",
+    "freq": 309
+  },
+  {
+    "word": "I'd love some coffee",
+    "explains": "我想来杯咖啡（= I would love some coffee，'d 是 would 弱读省略）",
+    "freq": 310
+  },
+  {
+    "word": "I'd better get going",
+    "explains": "我该走了（= I had better get going，'d 是 had 弱读省略）",
+    "freq": 311
+  },
+  {
+    "word": "He'd never say that to my face",
+    "explains": "他不敢当着我面说（= He would never say that to my face，'d 是 would 弱读省略）",
+    "freq": 312
+  },
+  {
+    "word": "She'd been waiting since noon",
+    "explains": "她从中午就一直在等（= She had been waiting since noon，'d 是 had 弱读省略）",
+    "freq": 313
+  },
+  {
+    "word": "You'd like him",
+    "explains": "你会喜欢他的（= You would like him，'d 是 would 弱读省略）",
+    "freq": 314
+  },
+  {
+    "word": "We'd better hurry",
+    "explains": "我们最好快点（= We had better hurry，'d 是 had 弱读省略）",
+    "freq": 315
+  },
+  {
+    "word": "That'd be amazing",
+    "explains": "那太棒了（= That would be amazing，'d 是 would 弱读省略）",
+    "freq": 316
+  },
+  {
+    "word": "I'd appreciate it",
+    "explains": "我会很感激（= I would appreciate it，'d 是 would 弱读省略）",
+    "freq": 317
+  },
+  {
+    "word": "He'd been sick for a week",
+    "explains": "他病了一个星期（= He had been sick for a week，'d 是 had 弱读省略）",
+    "freq": 318
+  },
+  {
+    "word": "I wish you'd told me sooner",
+    "explains": "真希望你早点告诉我（= you had told me sooner，'d 是 had 弱读省略）",
+    "freq": 319
+  },
+  {
+    "word": "You'd think he'd know better",
+    "explains": "你以为他会更懂事（= You would think he would know better，'d 是 would 弱读省略）",
+    "freq": 320
+  },
+  {
+    "word": "We'd love to come",
+    "explains": "我们很想来（= We would love to come，'d 是 would 弱读省略）",
+    "freq": 321
+  },
+  {
+    "word": "She'd rather stay home",
+    "explains": "她宁愿待在家（= She would rather stay home，'d 是 would 弱读省略）",
+    "freq": 322
+  },
+  {
+    "word": "It'd be a shame to waste it",
+    "explains": "浪费了就太可惜了（= It would be a shame to waste it，'d 是 would 弱读省略）",
+    "freq": 323
+  },
+  {
+    "word": "They'd already eaten",
+    "explains": "他们已经吃过了（= They had already eaten，'d 是 had 弱读省略）",
+    "freq": 324
+  },
+  {
+    "word": "I'd say you're right",
+    "explains": "要我说你是对的（= I would say you are right，'d 是 would 弱读省略）",
+    "freq": 325
+  },
+  {
+    "word": "You'd never guess his age",
+    "explains": "你绝对猜不到他的年龄（= You would never guess his age，'d 是 would 弱读省略）",
+    "freq": 326
+  },
+  {
+    "word": "We'd just sat down to eat",
+    "explains": "我们刚坐下吃饭（= We had just sat down to eat，'d 是 had 弱读省略）",
+    "freq": 327
+  },
+  {
+    "word": "Who'd want to live there?",
+    "explains": "谁想住在那儿（= Who would want to live there?，'d 是 would 弱读省略）",
+    "freq": 328
+  },
+  {
+    "word": "I thought you'd never ask",
+    "explains": "我以为你永远不会问（= you would never ask，'d 是 would 弱读省略）",
+    "freq": 329
+  },
+  {
+    "word": "It'd mean the world to me",
+    "explains": "那对我来说意义重大（= It would mean the world to me，'d 是 would 弱读省略）",
+    "freq": 330
+  },
+  {
+    "word": "I'm walkin' 'cause my car broke down",
+    "explains": "我走着去，因为车坏了（= I'm walking because my car broke down，walkin' 词尾 g 略读、'cause 词首弱音节省略）",
+    "freq": 331
+  },
+  {
+    "word": "What you talkin' 'bout?",
+    "explains": "你说什么呢（= What are you talking about?，talkin' 词尾 g 略读、'bout 词首弱音节省略）",
+    "freq": 332
+  },
+  {
+    "word": "Quit talkin' an' start doin'",
+    "explains": "别光说，动手干（= talking and doing，talkin'/doin' 词尾 g 略读、an' 词尾 d 吞音）",
+    "freq": 333
+  },
+  {
+    "word": "I've been lookin' for 'em everywhere",
+    "explains": "我到处找它们（= looking for them，lookin' 词尾 g 略读、'em 代词 them 省略）",
+    "freq": 334
+  },
+  {
+    "word": "We're jus' gettin' started",
+    "explains": "我们才刚开始（= just getting started，jus' 词尾 st 吞音、gettin' 词尾 g 略读）",
+    "freq": 335
+  },
+  {
+    "word": "'Cause of the rain, we stayed in",
+    "explains": "因为下雨，我们没出门（= Because of the rain，'cause 词首弱音节省略）",
+    "freq": 336
+  },
+  {
+    "word": "I'm tellin' you, it's gonna snow",
+    "explains": "跟你说，要下雪了（= I'm telling you，tellin' 词尾 g 略读）",
+    "freq": 337
+  },
+  {
+    "word": "She kept askin' 'til I said yes",
+    "explains": "她一直问到我说好（= asking until，askin' 词尾 g 略读、'til 词首弱音节省略）",
+    "freq": 338
+  },
+  {
+    "word": "We drove 'round lookin' for a spot",
+    "explains": "我们绕着圈找车位（= around looking，'round 词首弱音节省略、lookin' 词尾 g 略读）",
+    "freq": 339
+  },
+  {
+    "word": "Drop 'em off at school, would you?",
+    "explains": "顺路送他们上学好吗（= them，'em 代词 them 省略）",
+    "freq": 340
+  },
+  {
+    "word": "I'll call 'er as soon as I land",
+    "explains": "我落地就给她打电话（= I will call her，'er 代词 her 省略、'll 是 will 弱读省略）",
+    "freq": 341
+  },
+  {
+    "word": "He's comin' over nex' Friday",
+    "explains": "他下周五过来（= coming next Friday，comin' 词尾 g 略读、nex' 词尾 st 吞音）",
+    "freq": 342
+  },
+  {
+    "word": "Wait 'til you taste this soup",
+    "explains": "等你尝了这汤再说（= until you taste，'til 词首弱音节省略）",
+    "freq": 343
+  },
+  {
+    "word": "Mos'ly everyone jus' nodded along",
+    "explains": "大家基本都点头附和（= mostly、just，mos'ly/jus' 吞音）",
+    "freq": 344
+  },
+  {
+    "word": "I fixed the sink an' the toilet",
+    "explains": "我修好了水槽和马桶（= and the toilet，an' 词尾 d 吞音）",
+    "freq": 345
+  },
+  {
+    "word": "'Kay, we'll take it",
+    "explains": "好，我们就要这个了（= okay we will，'kay 词首弱音节省略、'll 是 will 弱读省略）",
+    "freq": 346
+  },
+  {
+    "word": "What're you doin' this weekend?",
+    "explains": "你这周末干嘛（= What are you doing，'re 是 are 弱读省略、doin' 词尾 g 略读）",
+    "freq": 347
+  },
+  {
+    "word": "I'm 'fraid you've got the wrong number",
+    "explains": "恐怕你打错了（= afraid you have，'fraid 词首弱音节省略、've 是 have 弱读省略）",
+    "freq": 348
+  },
+  {
+    "word": "She was cryin' 'cause the movie was sad",
+    "explains": "她因为电影感人哭了（= crying because，cryin' 词尾 g 略读、'cause 词首弱音节省略）",
+    "freq": 349
+  },
+  {
+    "word": "Bring 'em back by nine",
+    "explains": "九点前把它们还回来（= them，'em 代词 them 省略）",
+    "freq": 350
+  },
+  {
+    "word": "I saw 'im at the gym las' night",
+    "explains": "我昨晚在健身房看到他了（= him last night，'im 代词 him 省略、las' 词尾 st 吞音）",
+    "freq": 351
+  },
+  {
+    "word": "We're makin' pancakes an' bacon",
+    "explains": "我们在做煎饼和培根（= making and bacon，makin' 词尾 g 略读、an' 词尾 d 吞音）",
+    "freq": 352
+  },
+  {
+    "word": "'Course I'd help you move",
+    "explains": "我当然要帮你搬家（= Of course I would，'course 词首弱音节省略、'd 是 would 弱读省略）",
+    "freq": 353
+  },
+  {
+    "word": "How 'bout we order pizza tonight?",
+    "explains": "今晚点披萨怎么样（= about we order，'bout 词首弱音节省略）",
+    "freq": 354
+  },
+  {
+    "word": "I jus' need a minute to breathe",
+    "explains": "我只需要喘口气（= just a minute，jus' 词尾 st 吞音）",
+    "freq": 355
+  },
+  {
+    "word": "They've been waitin' since two",
+    "explains": "他们从两点等到现在（= They have been waiting，'ve 是 have 弱读省略、waitin' 词尾 g 略读）",
+    "freq": 356
+  },
+  {
+    "word": "Count to ten an' breathe",
+    "explains": "数到十，深呼吸（= and breathe，an' 词尾 d 吞音）",
+    "freq": 357
+  },
+  {
+    "word": "The train's leavin' in five minutes",
+    "explains": "火车五分钟后开（= leaving，leavin' 词尾 g 略读）",
+    "freq": 358
+  },
+  {
+    "word": "'Scuse me, is this seat free?",
+    "explains": "不好意思，这座位空着吗（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 359
+  },
+  {
+    "word": "I'd rather stay in tonight",
+    "explains": "我今晚宁愿宅着（= I would rather，'d 是 would 弱读省略）",
+    "freq": 360
+  },
+  {
+    "word": "He's spendin' mos' of his paycheck on games",
+    "explains": "他大部分工资都花在游戏上（= spending most of，spendin' 词尾 g 略读、mos' 吞音）",
+    "freq": 361
+  },
+  {
+    "word": "We haven't finished packin' yet",
+    "explains": "我们还没打包完（= finished packing，packin' 词尾 g 略读）",
+    "freq": 362
+  },
+  {
+    "word": "'Nother day, 'nother dollar",
+    "explains": "当一天和尚撞一天钟（= Another day, another dollar，'nother 词首弱音节省略）",
+    "freq": 363
+  },
+  {
+    "word": "You'll find 'em, don't worry",
+    "explains": "你会找到它们的，别担心（= You will find them，'ll 是 will 弱读省略、'em 代词 them 省略）",
+    "freq": 364
+  },
+  {
+    "word": "I was thinkin' 'bout callin' mom",
+    "explains": "我在想要不要给妈妈打电话（= thinking about calling，thinkin' 词尾 g 略读、'bout 词首弱音节省略）",
+    "freq": 365
+  },
+  {
+    "word": "She turned the lights off an' went to bed",
+    "explains": "她关灯睡觉了（= and went to bed，an' 词尾 d 吞音）",
+    "freq": 366
+  },
+  {
+    "word": "'Sup with your phone? It's buzzing",
+    "explains": "你手机怎么了？一直响（= what's up with，'sup 词首弱音节省略）",
+    "freq": 367
+  },
+  {
+    "word": "I've gotta pick up the kids at three",
+    "explains": "我三点得去接孩子（= I have got to，'ve 是 have 弱读省略）",
+    "freq": 368
+  },
+  {
+    "word": "Quit starin' at 'er",
+    "explains": "别盯着她看（= staring at her，starin' 词尾 g 略读、'er 代词 her 省略）",
+    "freq": 369
+  },
+  {
+    "word": "It'll be dark before we get there",
+    "explains": "我们到之前就天黑了（= It will be dark，'ll 是 will 弱读省略）",
+    "freq": 370
+  },
+  {
+    "word": "We laughed an' cried through the whole film",
+    "explains": "我们整部电影又笑又哭（= and cried，an' 词尾 d 吞音）",
+    "freq": 371
+  },
+  {
+    "word": "'Cause you're worth it",
+    "explains": "因为你值得（= Because you are worth it，'cause 词首弱音节省略、're 是 are 弱读省略）",
+    "freq": 372
+  },
+  {
+    "word": "Jus' between us, he's gettin' promoted",
+    "explains": "就咱俩说，他要升职了（= just、getting，jus' 词尾 st 吞音、gettin' 词尾 g 略读）",
+    "freq": 373
+  },
+  {
+    "word": "I bumped into 'em downtown",
+    "explains": "我在市中心碰到他们了（= them，'em 代词 them 省略）",
+    "freq": 374
+  },
+  {
+    "word": "She's been savin' up for a car",
+    "explains": "她一直在存钱买车（= saving up，savin' 词尾 g 略读）",
+    "freq": 375
+  },
+  {
+    "word": "You'll never guess who I ran into",
+    "explains": "你绝对猜不到我碰到谁了（= You will never guess，'ll 是 will 弱读省略）",
+    "freq": 376
+  },
+  {
+    "word": "That'd be a first for me",
+    "explains": "那对我来说可是头一回（= That would be a first，'d 是 would 弱读省略）",
+    "freq": 377
+  },
+  {
+    "word": "We mos'ly hang out on weekends",
+    "explains": "我们基本周末聚（= mostly，mos'ly 词中 t 吞音）",
+    "freq": 378
+  },
+  {
+    "word": "I'm fixin' to go to the store",
+    "explains": "我正准备去趟超市（= fixing to go，fixin' 词尾 g 略读）",
+    "freq": 379
+  },
+  {
+    "word": "Hand 'er the salt, please",
+    "explains": "请把盐递给她（= her，'er 代词 her 省略）",
+    "freq": 380
+  },
+  {
+    "word": "'Fraid we're out of luck today",
+    "explains": "恐怕今天运气不佳（= afraid we are，'fraid 词首弱音节省略、're 是 are 弱读省略）",
+    "freq": 381
+  },
+  {
+    "word": "They finished eatin' an' left",
+    "explains": "他们吃完就走了（= eating and left，eatin' 词尾 g 略读、an' 词尾 d 吞音）",
+    "freq": 382
+  },
+  {
+    "word": "I'd love to, but I've got plans",
+    "explains": "我很想去，但我有安排了（= I would、I have，'d/'ve 弱读省略）",
+    "freq": 383
+  },
+  {
+    "word": "The dog's been barkin' all night",
+    "explains": "狗叫了一整夜（= barking all night，barkin' 词尾 g 略读）",
+    "freq": 384
+  },
+  {
+    "word": "We'll worry 'bout it tomorrow",
+    "explains": "明天再愁这事（= about it，'bout 词首弱音节省略、'll 是 will 弱读省略）",
+    "freq": 385
+  },
+  {
+    "word": "'Course she's comin' to the wedding",
+    "explains": "她当然会来婚礼（= Of course、coming，'course 词首弱音节省略、comin' 词尾 g 略读）",
+    "freq": 386
+  },
+  {
+    "word": "I hear 'im practicing the guitar",
+    "explains": "我听见他在练吉他（= him，'im 代词 him 省略）",
+    "freq": 387
+  },
+  {
+    "word": "It's rainin', take an umbrella",
+    "explains": "下雨了，带把伞（= raining，rainin' 词尾 g 略读）",
+    "freq": 388
+  },
+  {
+    "word": "You'd better call 'em back",
+    "explains": "你最好给他们回个电话（= You had better、them，'d 是 had 弱读省略、'em 代词 them 省略）",
+    "freq": 389
+  },
+  {
+    "word": "We stayed up 'til two a.m.",
+    "explains": "我们熬到凌晨两点（= until two a.m.，'til 词首弱音节省略）",
+    "freq": 390
+  },
+  {
+    "word": "She's writin' a book about travel",
+    "explains": "她在写一本旅行书（= writing，writin' 词尾 g 略读）",
+    "freq": 391
+  },
+  {
+    "word": "'Kay, spill the tea",
+    "explains": "好了，快说八卦（= okay, spill the tea，'kay 词首弱音节省略）",
+    "freq": 392
+  },
+  {
+    "word": "They went fishin' las' Saturday",
+    "explains": "他们上周六去钓鱼了（= fishing last Saturday，fishin' 词尾 g 略读、las' 词尾 st 吞音）",
+    "freq": 393
+  },
+  {
+    "word": "I broke the vase an' blamed the cat",
+    "explains": "我打碎了花瓶还赖给猫（= and blamed the cat，an' 词尾 d 吞音）",
+    "freq": 394
+  },
+  {
+    "word": "'Preciate you coverin' my shift",
+    "explains": "谢谢你替我顶班（= appreciate、covering，'preciate 词首弱音节省略、coverin' 词尾 g 略读）",
+    "freq": 395
+  },
+  {
+    "word": "We've booked the tickets an' hotel",
+    "explains": "我们已经订好机票和酒店（= We have booked、and hotel，'ve 是 have 弱读省略、an' 词尾 d 吞音）",
+    "freq": 396
+  },
+  {
+    "word": "You'll get there if you start early",
+    "explains": "早点出发就能到（= You will get there，'ll 是 will 弱读省略）",
+    "freq": 397
+  },
+  {
+    "word": "She's been actin' strange lately",
+    "explains": "她最近行为古怪（= acting，actin' 词尾 g 略读）",
+    "freq": 398
+  },
+  {
+    "word": "Let's grab lunch nex' week",
+    "explains": "下周一起吃午饭吧（= next week，nex' 词尾 st 吞音）",
+    "freq": 399
+  },
+  {
+    "word": "I'm readin' an' drinkin' tea",
+    "explains": "我边喝茶边看书（= reading and drinking tea，readin' 词尾 g 略读、an' 词尾 d 吞音）",
+    "freq": 400
+  },
+  {
+    "word": "He said he'd be home by six",
+    "explains": "他说他六点前到家（= he would be home，'d 是 would 弱读省略）",
+    "freq": 401
+  },
+  {
+    "word": "'Cause it's Friday, let's celebrate",
+    "explains": "因为是周五，庆祝一下（= Because it's Friday，'cause 词首弱音节省略）",
+    "freq": 402
+  },
+  {
+    "word": "Send my love to 'em",
+    "explains": "替我向他们问好（= them，'em 代词 them 省略）",
+    "freq": 403
+  },
+  {
+    "word": "We're catchin' a movie tonight",
+    "explains": "我们今晚去看电影（= catching，catchin' 词尾 g 略读）",
+    "freq": 404
+  },
+  {
+    "word": "Jus' keep swimmin', you'll be fine",
+    "explains": "继续游就好，没事的（= just keep swimming, you will，jus' 词尾 st 吞音、swimmin' 词尾 g 略读、'll 是 will 弱读省略）",
+    "freq": 405
+  },
+  {
+    "word": "She sings while she's cleanin'",
+    "explains": "她打扫时唱歌（= cleaning，cleanin' 词尾 g 略读）",
+    "freq": 406
+  },
+  {
+    "word": "I'd forgotten my keys at home",
+    "explains": "我把钥匙落在家里了（= I had forgotten，'d 是 had 弱读省略）",
+    "freq": 407
+  },
+  {
+    "word": "The store's closed 'til further notice",
+    "explains": "店铺暂停营业另行通知（= until further notice，'til 词首弱音节省略）",
+    "freq": 408
+  },
+  {
+    "word": "Look who's finally showin' up",
+    "explains": "看看谁终于来了（= showing up，showin' 词尾 g 略读）",
+    "freq": 409
+  },
+  {
+    "word": "They've never been to Europe",
+    "explains": "他们从没去过欧洲（= They have never been，'ve 是 have 弱读省略）",
+    "freq": 410
+  },
+  {
+    "word": "We danced 'round the living room",
+    "explains": "我们在客厅跳舞转圈（= around，'round 词首弱音节省略）",
+    "freq": 411
+  },
+  {
+    "word": "He'd better not be late again",
+    "explains": "他最好别再迟到（= He had better，'d 是 had 弱读省略）",
+    "freq": 412
+  },
+  {
+    "word": "I'm pickin' up groceries after work",
+    "explains": "我下班去买菜（= picking up，pickin' 词尾 g 略读）",
+    "freq": 413
+  },
+  {
+    "word": "'Scuse me, do you work here?",
+    "explains": "打扰一下，你是这里的员工吗（= excuse me，'scuse 词首弱音节省略）",
+    "freq": 414
+  },
+  {
+    "word": "What you lookin' for?",
+    "explains": "你在找什么（= What are you looking for?，lookin' 词尾 g 略读）",
+    "freq": 415
+  },
+  {
+    "word": "We'll cross that bridge when we come to it",
+    "explains": "船到桥头自然直（= We will cross，'ll 是 will 弱读省略）",
+    "freq": 416
+  },
+  {
+    "word": "She's teachin' English in Japan now",
+    "explains": "她现在在日本教英语（= teaching，teachin' 词尾 g 略读）",
+    "freq": 417
+  },
+  {
+    "word": "I forgave 'im eventually",
+    "explains": "我最终原谅了他（= him，'im 代词 him 省略）",
+    "freq": 418
+  },
+  {
+    "word": "'Tis the season for hot chocolate",
+    "explains": "正是热可可的季节（= It is the season，'tis 代词 it 省略）",
+    "freq": 419
+  },
+  {
+    "word": "Let's meet nex' to the fountain",
+    "explains": "我们在喷泉边碰头（= next to，nex' 词尾 st 吞音）",
+    "freq": 420
+  },
+  {
+    "word": "You're gettin' on my nerves",
+    "explains": "你让我心烦（= You are getting，'re 是 are 弱读省略、gettin' 词尾 g 略读）",
+    "freq": 421
+  },
+  {
+    "word": "We mos'ly talk 'bout work stuff",
+    "explains": "我们聊的基本是工作（= mostly、about，mos'ly 词中 t 吞音、'bout 词首弱音节省略）",
+    "freq": 422
+  },
+  {
+    "word": "I'm carvin' the turkey tonight",
+    "explains": "今晚我来切火鸡（= carving，carvin' 词尾 g 略读）",
+    "freq": 423
+  },
+  {
+    "word": "Tell 'im dinner's at seven",
+    "explains": "告诉他晚饭七点（= him，'im 代词 him 省略）",
+    "freq": 424
+  },
+  {
+    "word": "They were sittin' by the fire",
+    "explains": "他们坐在炉火边（= sitting，sittin' 词尾 g 略读）",
+    "freq": 425
+  },
+  {
+    "word": "He'd left before I woke up",
+    "explains": "我醒来前他已经走了（= He had left，'d 是 had 弱读省略）",
+    "freq": 426
+  },
+  {
+    "word": "The baby keeps cryin' at night",
+    "explains": "宝宝夜里老哭（= crying，cryin' 词尾 g 略读）",
+    "freq": 427
+  },
+  {
+    "word": "We stayed 'til the band finished",
+    "explains": "我们一直待到乐队演完（= until the band，'til 词首弱音节省略）",
+    "freq": 428
+  },
+  {
+    "word": "I'd kill for a coffee right now",
+    "explains": "现在来杯咖啡我就满足了（= I would kill for，'d 是 would 弱读省略）",
+    "freq": 429
+  },
+  {
+    "word": "You an' I make a great team",
+    "explains": "你我搭档无敌（= You and I，an' 词尾 d 吞音）",
+    "freq": 430
+  },
+  {
+    "word": "She's been studyin' all weekend",
+    "explains": "她整个周末都在学习（= studying，studyin' 词尾 g 略读）",
+    "freq": 431
+  },
+  {
+    "word": "'Fraid I can't make it tonight",
+    "explains": "恐怕今晚去不了了（= afraid I can't，'fraid 词首弱音节省略）",
+    "freq": 432
+  },
+  {
+    "word": "We'll flip for it",
+    "explains": "我们抛硬币决定（= We will flip，'ll 是 will 弱读省略）",
+    "freq": 433
+  },
+  {
+    "word": "I'm shoppin' for a birthday gift",
+    "explains": "我在挑生日礼物（= shopping，shoppin' 词尾 g 略读）",
+    "freq": 434
+  },
+  {
+    "word": "They grow vegetables an' sell 'em",
+    "explains": "他们种蔬菜拿去卖（= and sell them，an' 词尾 d 吞音、'em 代词 them 省略）",
+    "freq": 435
+  },
+  {
+    "word": "What time you gettin' off work?",
+    "explains": "你几点下班（= getting off work，gettin' 词尾 g 略读）",
+    "freq": 436
+  },
+  {
+    "word": "I'd say that's a fair price",
+    "explains": "要我说这价格合理（= I would say，'d 是 would 弱读省略）",
+    "freq": 437
+  },
+  {
+    "word": "We're all rootin' for you",
+    "explains": "我们都支持你（= rooting，rootin' 词尾 g 略读）",
+    "freq": 438
+  },
+  {
+    "word": "She'll kill me if I'm late",
+    "explains": "我迟到的话她会宰了我（= She will kill me，'ll 是 will 弱读省略）",
+    "freq": 439
+  },
+  {
+    "word": "Save some cake for 'em",
+    "explains": "给他们留点蛋糕（= them，'em 代词 them 省略）",
+    "freq": 440
+  },
+  {
+    "word": "He paid the bill an' left a tip",
+    "explains": "他付了账还留了小费（= and left a tip，an' 词尾 d 吞音）",
+    "freq": 441
+  },
+  {
+    "word": "I'm learnin' to play the piano",
+    "explains": "我在学弹钢琴（= learning，learnin' 词尾 g 略读）",
+    "freq": 442
+  },
+  {
+    "word": "'Cause I love you, that's why",
+    "explains": "因为我爱你，就这么简单（= Because I love you，'cause 词首弱音节省略）",
+    "freq": 443
+  },
+  {
+    "word": "We drove 'round for an hour",
+    "explains": "我们绕了一个小时（= around for an hour，'round 词首弱音节省略、an' 词尾 d 吞音）",
+    "freq": 444
+  },
+  {
+    "word": "Jus' add salt an' pepper",
+    "explains": "加点盐和胡椒就好（= just、and，jus' 词尾 st 吞音、an' 词尾 d 吞音）",
+    "freq": 445
+  },
+  {
+    "word": "They've hired two new designers",
+    "explains": "他们招了两名新设计师（= They have hired，'ve 是 have 弱读省略）",
+    "freq": 446
+  },
+  {
+    "word": "He's been workin' nonstop lately",
+    "explains": "他最近连轴转（= working nonstop，workin' 词尾 g 略读）",
+    "freq": 447
+  },
+  {
+    "word": "She waved at 'er from across the street",
+    "explains": "她从街对面朝她挥手（= her，'er 代词 her 省略）",
+    "freq": 448
+  },
+  {
+    "word": "That'd never work in practice",
+    "explains": "实际操作中行不通（= That would never work，'d 是 would 弱读省略）",
+    "freq": 449
+  },
+  {
+    "word": "We heard 'em laughing upstairs",
+    "explains": "我们听见他们在楼上笑（= them，'em 代词 them 省略）",
+    "freq": 450
+  },
+  {
+    "word": "I'm wearin' my lucky socks today",
+    "explains": "我今天穿幸运袜（= wearing，wearin' 词尾 g 略读）",
+    "freq": 451
+  },
+  {
+    "word": "'Kay, now I'm impressed",
+    "explains": "行啊，这下我服气了（= okay, now I'm impressed，'kay 词首弱音节省略）",
+    "freq": 452
+  },
+  {
+    "word": "She poured us coffee an' sat down",
+    "explains": "她给我们倒了咖啡坐下（= and sat down，an' 词尾 d 吞音）",
+    "freq": 453
+  },
+  {
+    "word": "He'd promised to call every day",
+    "explains": "他答应每天打电话（= He had promised，'d 是 had 弱读省略）",
+    "freq": 454
+  },
+  {
+    "word": "You'll thank me later",
+    "explains": "以后你会谢我的（= You will thank me later，'ll 是 will 弱读省略）",
+    "freq": 455
+  },
+  {
+    "word": "The meeting dragged on for hours an' hours",
+    "explains": "会议拖了好几个小时（= and hours，an' 词尾 d 吞音）",
+    "freq": 456
+  },
+  {
+    "word": "I'm growin' tomatoes on the balcony",
+    "explains": "我在阳台种番茄（= growing，growin' 词尾 g 略读）",
+    "freq": 457
+  },
+  {
+    "word": "'Sup? Heard you got promoted",
+    "explains": "咋样？听说你升职了（= what's up，'sup 词首弱音节省略）",
+    "freq": 458
+  },
+  {
+    "word": "We washed the dishes an' dried 'em",
+    "explains": "我们洗完碗还擦干了（= and dried them，an' 词尾 d 吞音、'em 代词 them 省略）",
+    "freq": 459
+  },
+  {
+    "word": "She'd rather die than apologize",
+    "explains": "她死也不肯道歉（= She would rather，'d 是 would 弱读省略）",
+    "freq": 460
+  },
+  {
+    "word": "I'm hopin' for a sunny weekend",
+    "explains": "我盼着一个晴朗周末（= hoping，hopin' 词尾 g 略读）",
+    "freq": 461
+  },
+  {
+    "word": "Ask 'em to lower the volume",
+    "explains": "让他们把音量调小（= them，'em 代词 them 省略）",
+    "freq": 462
+  },
+  {
+    "word": "We'll see 'er at the reunion",
+    "explains": "同学会能见到她（= We will see her、her，'ll 是 will 弱读省略、'er 代词 her 省略）",
+    "freq": 463
+  },
+  {
+    "word": "The engine's makin' a weird noise",
+    "explains": "发动机发出奇怪的声音（= making，makin' 词尾 g 略读）",
+    "freq": 464
+  },
+  {
+    "word": "'Course I'll bring dessert",
+    "explains": "我当然要带甜点（= Of course I will，'course 词首弱音节省略、'll 是 will 弱读省略）",
+    "freq": 465
+  },
+  {
+    "word": "You'd love the food there",
+    "explains": "你会喜欢那儿的美食（= You would love，'d 是 would 弱读省略）",
+    "freq": 466
+  },
+  {
+    "word": "I kept runnin' into old friends",
+    "explains": "我一路碰到老朋友（= running，runnin' 词尾 g 略读）",
+    "freq": 467
+  },
+  {
+    "word": "She's cuttin' her own hair now",
+    "explains": "她现在自己剪头发（= cutting，cuttin' 词尾 g 略读）",
+    "freq": 468
+  },
+  {
+    "word": "We've known each other forever",
+    "explains": "我们认识很久了（= We have known，'ve 是 have 弱读省略）",
+    "freq": 469
+  },
+  {
+    "word": "Jus' leave 'em on the porch",
+    "explains": "把它们放门廊上就行（= just、them，jus' 词尾 st 吞音、'em 代词 them 省略）",
+    "freq": 470
+  },
+  {
+    "word": "He's been hidin' something from me",
+    "explains": "他一直有事瞒着我（= hiding，hidin' 词尾 g 略读）",
+    "freq": 471
+  },
+  {
+    "word": "It'll look better with frames",
+    "explains": "装上相框会更好看（= It will look，'ll 是 will 弱读省略）",
+    "freq": 472
+  },
+  {
+    "word": "We turned the music down an' talked",
+    "explains": "我们调小音乐聊了起来（= and talked，an' 词尾 d 吞音）",
+    "freq": 473
+  },
+  {
+    "word": "I'm holdin' the elevator!",
+    "explains": "我按住电梯了（= holding，holdin' 词尾 g 略读）",
+    "freq": 474
+  },
+  {
+    "word": "'Nother round on me",
+    "explains": "这轮我请（= Another round on me，'nother 词首弱音节省略）",
+    "freq": 475
+  },
+  {
+    "word": "She gave the leftovers to 'er neighbor",
+    "explains": "她把剩菜给了邻居（= her，'er 代词 her 省略）",
+    "freq": 476
+  },
+  {
+    "word": "They've painted the whole house blue",
+    "explains": "他们把整栋房子刷成蓝色（= They have painted，'ve 是 have 弱读省略）",
+    "freq": 477
+  },
+  {
+    "word": "I'd hate to be in his shoes",
+    "explains": "我可不想处在他那个境地（= I would hate，'d 是 would 弱读省略）",
+    "freq": 478
+  },
+  {
+    "word": "We're havin' a barbecue this Sunday",
+    "explains": "这周日我们烧烤（= having，havin' 词尾 g 略读）",
+    "freq": 479
+  },
+  {
+    "word": "He tapped my shoulder an' smiled",
+    "explains": "他拍了拍我的肩膀笑了（= and smiled，an' 词尾 d 吞音）",
+    "freq": 480
+  },
+  {
+    "word": "You'll pass the exam, trust me",
+    "explains": "你会考过的，相信我（= You will pass，'ll 是 will 弱读省略）",
+    "freq": 481
+  },
+  {
+    "word": "I'm changin' my phone plan tomorrow",
+    "explains": "我明天换手机套餐（= changing，changin' 词尾 g 略读）",
+    "freq": 482
+  },
+  {
+    "word": "'Cause we're family, no questions asked",
+    "explains": "因为我们是一家人，别多问（= Because we are family，'cause 词首弱音节省略、're 是 are 弱读省略）",
+    "freq": 483
+  },
+  {
+    "word": "She kept the letters an' read 'em yearly",
+    "explains": "她留着那些信每年读一遍（= and read them，an' 词尾 d 吞音、'em 代词 them 省略）",
+    "freq": 484
+  },
+  {
+    "word": "We mos'ly ate sandwiches for lunch",
+    "explains": "我们午饭基本吃三明治（= mostly，mos'ly 词中 t 吞音）",
+    "freq": 485
+  },
+  {
+    "word": "He'd grown a beard over the summer",
+    "explains": "他夏天留起了胡子（= He had grown，'d 是 had 弱读省略）",
+    "freq": 486
+  },
+  {
+    "word": "I'm fixin' the wifi again",
+    "explains": "我又在修 Wi-Fi（= fixing，fixin' 词尾 g 略读）",
+    "freq": 487
+  },
+  {
+    "word": "Show 'er your new apartment",
+    "explains": "带她看看你的新公寓（= her，'er 代词 her 省略）",
+    "freq": 488
+  },
+  {
+    "word": "'Tis freezing outside, bundle up",
+    "explains": "外面冷死了，穿暖和点（= It is freezing，'tis 代词 it 省略）",
+    "freq": 489
+  },
+  {
+    "word": "We'll miss the train at this rate",
+    "explains": "照这速度我们要赶不上火车了（= We will miss，'ll 是 will 弱读省略）",
+    "freq": 490
+  },
+  {
+    "word": "She was hummin' a tune in the kitchen",
+    "explains": "她在厨房哼着小曲（= humming，hummin' 词尾 g 略读）",
+    "freq": 491
+  },
+  {
+    "word": "Jus' five more minutes, please",
+    "explains": "再给我五分钟（= just five more minutes，jus' 词尾 st 吞音）",
+    "freq": 492
+  },
+  {
+    "word": "They've moved the deadline to Friday",
+    "explains": "他们把截止日期改到周五（= They have moved，'ve 是 have 弱读省略）",
+    "freq": 493
+  },
+  {
+    "word": "We cycled 'round the lake at dawn",
+    "explains": "我们拂晓环湖骑了一圈（= around，'round 词首弱音节省略）",
+    "freq": 494
+  },
+  {
+    "word": "You're breakin' my heart here",
+    "explains": "你这是让我心碎（= You are breaking，'re 是 are 弱读省略、breakin' 词尾 g 略读）",
+    "freq": 495
+  },
+  {
+    "word": "I'd never turn down free pizza",
+    "explains": "白给的披萨我绝不拒绝（= I would never turn down，'d 是 would 弱读省略）",
+    "freq": 496
+  },
+  {
+    "word": "Hand me the wrench an' hold this",
+    "explains": "把扳手递我，扶住这个（= and hold this，an' 词尾 d 吞音）",
+    "freq": 497
+  },
+  {
+    "word": "I'm checkin' the weather for tomorrow",
+    "explains": "我在看明天的天气（= checking，checkin' 词尾 g 略读）",
+    "freq": 498
+  },
+  {
+    "word": "You'll feel better after a nap",
+    "explains": "睡个午觉会好受些（= You will feel better，'ll 是 will 弱读省略）",
+    "freq": 499
+  },
+  {
+    "word": "We hugged 'em goodbye at the airport",
+    "explains": "我们在机场拥抱道别（= them，'em 代词 them 省略）",
+    "freq": 500
+  }
+]

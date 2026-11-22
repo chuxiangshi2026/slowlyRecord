@@ -1,0 +1,2502 @@
+[
+  {
+    "word": "Absolutely",
+    "explains": "完全同意；绝对（表赞同）",
+    "freq": 1
+  },
+  {
+    "word": "Fair enough",
+    "explains": "有道理；说得也是（让步式赞同）",
+    "freq": 2
+  },
+  {
+    "word": "Amen to that",
+    "explains": "可不是嘛；说得太对了",
+    "freq": 3
+  },
+  {
+    "word": "You're telling me",
+    "explains": "这还用说；我可太懂了",
+    "freq": 4
+  },
+  {
+    "word": "Couldn't have said it better",
+    "explains": "说得太好了（我再也说不出更好的）",
+    "freq": 5
+  },
+  {
+    "word": "Bingo",
+    "explains": "答对了；没错",
+    "freq": 6
+  },
+  {
+    "word": "On the money",
+    "explains": "完全准确；一分不差",
+    "freq": 7
+  },
+  {
+    "word": "Dead on",
+    "explains": "一针见血；完全正确",
+    "freq": 8
+  },
+  {
+    "word": "Hit the nail on the head",
+    "explains": "一针见血",
+    "freq": 9
+  },
+  {
+    "word": "I'll buy that",
+    "explains": "这个我信；说得过去",
+    "freq": 10
+  },
+  {
+    "word": "Works for me",
+    "explains": "我没问题；行",
+    "freq": 11
+  },
+  {
+    "word": "That works",
+    "explains": "可以；这行得通",
+    "freq": 12
+  },
+  {
+    "word": "I'm with you",
+    "explains": "我跟你想法一样",
+    "freq": 13
+  },
+  {
+    "word": "I concur",
+    "explains": "我同意（正式俏皮）",
+    "freq": 14
+  },
+  {
+    "word": "Roger that",
+    "explains": "收到；明白",
+    "freq": 15
+  },
+  {
+    "word": "10-4",
+    "explains": "收到；明白（无线电用语）",
+    "freq": 16
+  },
+  {
+    "word": "I'm sold",
+    "explains": "我被说服了",
+    "freq": 17
+  },
+  {
+    "word": "Deal",
+    "explains": "成交；一言为定",
+    "freq": 18
+  },
+  {
+    "word": "I'll go with that",
+    "explains": "我跟了；我同意这个说法",
+    "freq": 19
+  },
+  {
+    "word": "Shake on it",
+    "explains": "握手为定",
+    "freq": 20
+  },
+  {
+    "word": "Now you're talking",
+    "explains": "这才对嘛；说到点子上了",
+    "freq": 21
+  },
+  {
+    "word": "That's the spirit",
+    "explains": "这才是该有的样子",
+    "freq": 22
+  },
+  {
+    "word": "Smart move",
+    "explains": "明智之举",
+    "freq": 23
+  },
+  {
+    "word": "True story",
+    "explains": "千真万确",
+    "freq": 24
+  },
+  {
+    "word": "You got that right",
+    "explains": "你说得太对了",
+    "freq": 25
+  },
+  {
+    "word": "That's a given",
+    "explains": "那是理所当然的",
+    "freq": 26
+  },
+  {
+    "word": "Word",
+    "explains": "没错；一言为定（俚语）",
+    "freq": 27
+  },
+  {
+    "word": "Facts",
+    "explains": "事实如此（俚语附和）",
+    "freq": 28
+  },
+  {
+    "word": "Straight up",
+    "explains": "真的；不骗你",
+    "freq": 29
+  },
+  {
+    "word": "Too true",
+    "explains": "太真实了",
+    "freq": 30
+  },
+  {
+    "word": "Right you are",
+    "explains": "你说得对（英式）",
+    "freq": 31
+  },
+  {
+    "word": "Quite so",
+    "explains": "正是（英式）",
+    "freq": 32
+  },
+  {
+    "word": "So it is",
+    "explains": "还真是（英式，恍然认同）",
+    "freq": 33
+  },
+  {
+    "word": "Legit",
+    "explains": "靠谱；没毛病",
+    "freq": 34
+  },
+  {
+    "word": "No lies",
+    "explains": "没毛病（俚语）",
+    "freq": 35
+  },
+  {
+    "word": "You're onto something",
+    "explains": "你说到点子上了",
+    "freq": 36
+  },
+  {
+    "word": "Now you're cooking",
+    "explains": "开窍了嘛（英式打趣）",
+    "freq": 37
+  },
+  {
+    "word": "Can't deny that",
+    "explains": "这没法否认",
+    "freq": 38
+  },
+  {
+    "word": "Undeniable",
+    "explains": "无可否认",
+    "freq": 39
+  },
+  {
+    "word": "I'll drink to that",
+    "explains": "这话说得在理，我赞成",
+    "freq": 40
+  },
+  {
+    "word": "Seriously?",
+    "explains": "真的假的？（表惊讶反问）",
+    "freq": 41
+  },
+  {
+    "word": "You can't be serious",
+    "explains": "你不是认真的吧",
+    "freq": 42
+  },
+  {
+    "word": "Shut the front door",
+    "explains": "不会吧！（惊讶，委婉俏皮）",
+    "freq": 43
+  },
+  {
+    "word": "Get outta town",
+    "explains": "不会吧！（惊讶俚语）",
+    "freq": 44
+  },
+  {
+    "word": "Stop the presses",
+    "explains": "快看！大新闻！",
+    "freq": 45
+  },
+  {
+    "word": "Well I'll be",
+    "explains": "哎呀，真没想到（美式老式）",
+    "freq": 46
+  },
+  {
+    "word": "I'll be darned",
+    "explains": "真没想到",
+    "freq": 47
+  },
+  {
+    "word": "Say it ain't so",
+    "explains": "不会是真的吧",
+    "freq": 48
+  },
+  {
+    "word": "This can't be happening",
+    "explains": "这不可能发生吧",
+    "freq": 49
+  },
+  {
+    "word": "Pinch me",
+    "explains": "掐我一下；我没做梦吧",
+    "freq": 50
+  },
+  {
+    "word": "Am I dreaming",
+    "explains": "我在做梦吗",
+    "freq": 51
+  },
+  {
+    "word": "Are you seeing this",
+    "explains": "你看到没（简直不敢相信）",
+    "freq": 52
+  },
+  {
+    "word": "I don't believe it",
+    "explains": "我不敢相信",
+    "freq": 53
+  },
+  {
+    "word": "What are the odds",
+    "explains": "这也太巧了吧",
+    "freq": 54
+  },
+  {
+    "word": "What a coincidence",
+    "explains": "真巧啊",
+    "freq": 55
+  },
+  {
+    "word": "Small world",
+    "explains": "世界真小",
+    "freq": 56
+  },
+  {
+    "word": "Stranger things have happened",
+    "explains": "更离谱的事都有",
+    "freq": 57
+  },
+  {
+    "word": "That's unreal",
+    "explains": "太不真实了",
+    "freq": 58
+  },
+  {
+    "word": "Out of this world",
+    "explains": "简直绝了；不可思议",
+    "freq": 59
+  },
+  {
+    "word": "Mind blown",
+    "explains": "我惊呆了",
+    "freq": 60
+  },
+  {
+    "word": "I'm speechless",
+    "explains": "我说不出话了",
+    "freq": 61
+  },
+  {
+    "word": "I'm floored",
+    "explains": "我惊呆了",
+    "freq": 62
+  },
+  {
+    "word": "Well color me surprised",
+    "explains": "真是让我大吃一惊（俏皮）",
+    "freq": 63
+  },
+  {
+    "word": "Never would've guessed",
+    "explains": "打死我也猜不到",
+    "freq": 64
+  },
+  {
+    "word": "What the hell",
+    "explains": "搞什么（表惊讶，较粗）",
+    "freq": 65
+  },
+  {
+    "word": "I'm dead",
+    "explains": "我人没了（俚语，惊或笑死）",
+    "freq": 66
+  },
+  {
+    "word": "I'm deceased",
+    "explains": "我当场去世（俚语）",
+    "freq": 67
+  },
+  {
+    "word": "No you didn't",
+    "explains": "不是吧你！",
+    "freq": 68
+  },
+  {
+    "word": "Oh snap",
+    "explains": "哎呀！（惊讶俚语）",
+    "freq": 69
+  },
+  {
+    "word": "Oh my days",
+    "explains": "我的天（英式俚语）",
+    "freq": 70
+  },
+  {
+    "word": "Oh my gosh",
+    "explains": "我的天（委婉）",
+    "freq": 71
+  },
+  {
+    "word": "Great Scott",
+    "explains": "我的天（老式）",
+    "freq": 72
+  },
+  {
+    "word": "Good Lord",
+    "explains": "主啊；我的天",
+    "freq": 73
+  },
+  {
+    "word": "Lord have mercy",
+    "explains": "老天爷啊",
+    "freq": 74
+  },
+  {
+    "word": "Mercy me",
+    "explains": "我的天（老式俏皮）",
+    "freq": 75
+  },
+  {
+    "word": "Jeepers",
+    "explains": "哎呀（老式委婉）",
+    "freq": 76
+  },
+  {
+    "word": "Jeepers creepers",
+    "explains": "我的天（老式俏皮）",
+    "freq": 77
+  },
+  {
+    "word": "Son of a gun",
+    "explains": "好家伙",
+    "freq": 78
+  },
+  {
+    "word": "Be still my heart",
+    "explains": "我的心啊（激动或惊讶）",
+    "freq": 79
+  },
+  {
+    "word": "What in tarnation",
+    "explains": "搞什么鬼（老式西部腔）",
+    "freq": 80
+  },
+  {
+    "word": "Everything will be fine",
+    "explains": "一切都会好的",
+    "freq": 81
+  },
+  {
+    "word": "Better luck next time",
+    "explains": "下次运气会好的",
+    "freq": 82
+  },
+  {
+    "word": "Not the end of the world",
+    "explains": "天塌不下来",
+    "freq": 83
+  },
+  {
+    "word": "Look on the bright side",
+    "explains": "往好处想",
+    "freq": 84
+  },
+  {
+    "word": "Silver lining",
+    "explains": "一线希望；柳暗花明",
+    "freq": 85
+  },
+  {
+    "word": "Tomorrow's another day",
+    "explains": "明天又是新的一天",
+    "freq": 86
+  },
+  {
+    "word": "One day at a time",
+    "explains": "一步一步来",
+    "freq": 87
+  },
+  {
+    "word": "Go easy on yourself",
+    "explains": "对自己宽容点",
+    "freq": 88
+  },
+  {
+    "word": "You're doing your best",
+    "explains": "你已经尽力了",
+    "freq": 89
+  },
+  {
+    "word": "It's not your fault",
+    "explains": "这不是你的错",
+    "freq": 90
+  },
+  {
+    "word": "Don't cry over spilled milk",
+    "explains": "覆水难收，别难过",
+    "freq": 91
+  },
+  {
+    "word": "What's done is done",
+    "explains": "木已成舟",
+    "freq": 92
+  },
+  {
+    "word": "Water under the bridge",
+    "explains": "让它过去吧",
+    "freq": 93
+  },
+  {
+    "word": "Let bygones be bygones",
+    "explains": "过去的事就翻篇吧",
+    "freq": 94
+  },
+  {
+    "word": "Take a deep breath",
+    "explains": "深呼吸",
+    "freq": 95
+  },
+  {
+    "word": "You're not alone",
+    "explains": "你不是一个人",
+    "freq": 96
+  },
+  {
+    "word": "I'm here for you",
+    "explains": "有我在",
+    "freq": 97
+  },
+  {
+    "word": "Lean on me",
+    "explains": "靠着我；有我呢",
+    "freq": 98
+  },
+  {
+    "word": "I've got you",
+    "explains": "我罩着你",
+    "freq": 99
+  },
+  {
+    "word": "You're stronger than this",
+    "explains": "你比这更坚强",
+    "freq": 100
+  },
+  {
+    "word": "Tough times don't last",
+    "explains": "难关总会过去",
+    "freq": 101
+  },
+  {
+    "word": "Hold your head high",
+    "explains": "抬起头做人",
+    "freq": 102
+  },
+  {
+    "word": "You'll bounce back",
+    "explains": "你会挺过来的",
+    "freq": 103
+  },
+  {
+    "word": "You're a survivor",
+    "explains": "你是打不倒的",
+    "freq": 104
+  },
+  {
+    "word": "Hang in there",
+    "explains": "撑住",
+    "freq": 105
+  },
+  {
+    "word": "Stick it out",
+    "explains": "咬牙挺住",
+    "freq": 106
+  },
+  {
+    "word": "Don't lose heart",
+    "explains": "别灰心",
+    "freq": 107
+  },
+  {
+    "word": "Cheer up",
+    "explains": "振作点",
+    "freq": 108
+  },
+  {
+    "word": "Put on a brave face",
+    "explains": "坚强点",
+    "freq": 109
+  },
+  {
+    "word": "Bless your heart",
+    "explains": "可怜见的（安慰或微妙感慨）",
+    "freq": 110
+  },
+  {
+    "word": "Sending hugs",
+    "explains": "隔空抱抱",
+    "freq": 111
+  },
+  {
+    "word": "Hug it out",
+    "explains": "抱一抱就好了",
+    "freq": 112
+  },
+  {
+    "word": "Everything happens for a reason",
+    "explains": "凡事皆有因果",
+    "freq": 113
+  },
+  {
+    "word": "Keep the faith",
+    "explains": "别失去信心",
+    "freq": 114
+  },
+  {
+    "word": "It's just a rough patch",
+    "explains": "只是暂时不顺",
+    "freq": 115
+  },
+  {
+    "word": "Better days ahead",
+    "explains": "好日子在后头",
+    "freq": 116
+  },
+  {
+    "word": "Onward and upward",
+    "explains": "向前看，越来越好",
+    "freq": 117
+  },
+  {
+    "word": "It'll work out",
+    "explains": "会有办法的",
+    "freq": 118
+  },
+  {
+    "word": "Things will work out",
+    "explains": "事情会好转的",
+    "freq": 119
+  },
+  {
+    "word": "You matter",
+    "explains": "你很重要",
+    "freq": 120
+  },
+  {
+    "word": "Maybe later",
+    "explains": "下次吧；以后再说",
+    "freq": 121
+  },
+  {
+    "word": "Pass",
+    "explains": "算了；我不要",
+    "freq": 122
+  },
+  {
+    "word": "Take a rain check",
+    "explains": "改天吧",
+    "freq": 123
+  },
+  {
+    "word": "Some other time",
+    "explains": "改天吧",
+    "freq": 124
+  },
+  {
+    "word": "Let me sleep on it",
+    "explains": "我考虑一晚再说（委婉推脱）",
+    "freq": 125
+  },
+  {
+    "word": "I'll get back to you",
+    "explains": "我回头答复你",
+    "freq": 126
+  },
+  {
+    "word": "Can I get back to you",
+    "explains": "我能稍后答复你吗",
+    "freq": 127
+  },
+  {
+    "word": "I have plans",
+    "explains": "我有安排了",
+    "freq": 128
+  },
+  {
+    "word": "I'm booked",
+    "explains": "我排满了",
+    "freq": 129
+  },
+  {
+    "word": "I'm tied up",
+    "explains": "我走不开",
+    "freq": 130
+  },
+  {
+    "word": "That's not really my thing",
+    "explains": "我不太感兴趣",
+    "freq": 131
+  },
+  {
+    "word": "Not my thing",
+    "explains": "不是我的菜",
+    "freq": 132
+  },
+  {
+    "word": "Not my cup of tea",
+    "explains": "不合我口味",
+    "freq": 133
+  },
+  {
+    "word": "I'll sit this one out",
+    "explains": "这次我先不参加",
+    "freq": 134
+  },
+  {
+    "word": "Can't make it",
+    "explains": "来不了",
+    "freq": 135
+  },
+  {
+    "word": "Not this time",
+    "explains": "这次算了",
+    "freq": 136
+  },
+  {
+    "word": "Thanks but no thanks",
+    "explains": "谢谢，不了",
+    "freq": 137
+  },
+  {
+    "word": "I'm all set",
+    "explains": "不用了，都齐了",
+    "freq": 138
+  },
+  {
+    "word": "No need",
+    "explains": "不用了",
+    "freq": 139
+  },
+  {
+    "word": "Don't trouble yourself",
+    "explains": "别麻烦了",
+    "freq": 140
+  },
+  {
+    "word": "I'd love to but",
+    "explains": "我很想去，可是……（婉拒起手式）",
+    "freq": 141
+  },
+  {
+    "word": "I wish I could",
+    "explains": "我也希望我能（婉拒）",
+    "freq": 142
+  },
+  {
+    "word": "I'm afraid not",
+    "explains": "恐怕不行",
+    "freq": 143
+  },
+  {
+    "word": "Not in the cards",
+    "explains": "不太可能；没这缘分",
+    "freq": 144
+  },
+  {
+    "word": "Not in the mood",
+    "explains": "没心情",
+    "freq": 145
+  },
+  {
+    "word": "Negative",
+    "explains": "不行（俏皮/干脆）",
+    "freq": 146
+  },
+  {
+    "word": "Ixnay",
+    "explains": "不行（俚语）",
+    "freq": 147
+  },
+  {
+    "word": "Nuh-uh",
+    "explains": "才不呢",
+    "freq": 148
+  },
+  {
+    "word": "Not in a million years",
+    "explains": "一百万年也不可能",
+    "freq": 149
+  },
+  {
+    "word": "That's a no from me",
+    "explains": "我这边是不行",
+    "freq": 150
+  },
+  {
+    "word": "It's a no",
+    "explains": "不行哦",
+    "freq": 151
+  },
+  {
+    "word": "Maybe tomorrow",
+    "explains": "明天再说吧",
+    "freq": 152
+  },
+  {
+    "word": "Let's wait and see",
+    "explains": "再等等看吧",
+    "freq": 153
+  },
+  {
+    "word": "Let's play it by ear",
+    "explains": "到时候看情况",
+    "freq": 154
+  },
+  {
+    "word": "I need to think it over",
+    "explains": "我得再想想",
+    "freq": 155
+  },
+  {
+    "word": "I'll consider it",
+    "explains": "我会考虑的",
+    "freq": 156
+  },
+  {
+    "word": "Let's hold off",
+    "explains": "先缓缓吧",
+    "freq": 157
+  },
+  {
+    "word": "I'm not up for it",
+    "explains": "我没那个状态",
+    "freq": 158
+  },
+  {
+    "word": "I can't be bothered",
+    "explains": "我懒得弄",
+    "freq": 159
+  },
+  {
+    "word": "Not feeling it",
+    "explains": "没感觉；不想",
+    "freq": 160
+  },
+  {
+    "word": "Hurry up",
+    "explains": "快点",
+    "freq": 161
+  },
+  {
+    "word": "Get a move on",
+    "explains": "赶紧动身",
+    "freq": 162
+  },
+  {
+    "word": "Let's go",
+    "explains": "咱们走吧",
+    "freq": 163
+  },
+  {
+    "word": "Shake a leg",
+    "explains": "快点儿（俏皮）",
+    "freq": 164
+  },
+  {
+    "word": "Step on it",
+    "explains": "赶紧的",
+    "freq": 165
+  },
+  {
+    "word": "Step it up",
+    "explains": "加把劲",
+    "freq": 166
+  },
+  {
+    "word": "Pick up the pace",
+    "explains": "加快点速度",
+    "freq": 167
+  },
+  {
+    "word": "Clock's ticking",
+    "explains": "时间一分一秒过去啦",
+    "freq": 168
+  },
+  {
+    "word": "What are you waiting for",
+    "explains": "你还在等什么",
+    "freq": 169
+  },
+  {
+    "word": "Make it snappy",
+    "explains": "麻利点",
+    "freq": 170
+  },
+  {
+    "word": "Snap to it",
+    "explains": "快动手",
+    "freq": 171
+  },
+  {
+    "word": "On the double",
+    "explains": "马上；跑步走",
+    "freq": 172
+  },
+  {
+    "word": "Double time",
+    "explains": "加倍速度",
+    "freq": 173
+  },
+  {
+    "word": "At once",
+    "explains": "立刻（命令式）",
+    "freq": 174
+  },
+  {
+    "word": "This instant",
+    "explains": "立刻马上",
+    "freq": 175
+  },
+  {
+    "word": "Get cracking",
+    "explains": "赶紧动手",
+    "freq": 176
+  },
+  {
+    "word": "Let's move",
+    "explains": "咱们动起来",
+    "freq": 177
+  },
+  {
+    "word": "We haven't got all day",
+    "explains": "我们可没一整天",
+    "freq": 178
+  },
+  {
+    "word": "I don't have all day",
+    "explains": "我没那么多时间等",
+    "freq": 179
+  },
+  {
+    "word": "Time is money",
+    "explains": "时间就是金钱",
+    "freq": 180
+  },
+  {
+    "word": "Off you go",
+    "explains": "快去吧",
+    "freq": 181
+  },
+  {
+    "word": "Get on with it",
+    "explains": "继续做啊；别磨蹭",
+    "freq": 182
+  },
+  {
+    "word": "Carry on",
+    "explains": "继续吧",
+    "freq": 183
+  },
+  {
+    "word": "Keep it moving",
+    "explains": "别堵着；继续走",
+    "freq": 184
+  },
+  {
+    "word": "Hop to it",
+    "explains": "赶紧动手（美式俏皮）",
+    "freq": 185
+  },
+  {
+    "word": "Let's hustle",
+    "explains": "快点，麻利点",
+    "freq": 186
+  },
+  {
+    "word": "Well don't just stand there",
+    "explains": "别光站着啊",
+    "freq": 187
+  },
+  {
+    "word": "Get a wiggle on",
+    "explains": "快动起来（英式俏皮）",
+    "freq": 188
+  },
+  {
+    "word": "Pull your finger out",
+    "explains": "别磨洋工（英式）",
+    "freq": 189
+  },
+  {
+    "word": "Don't dawdle",
+    "explains": "别磨蹭",
+    "freq": 190
+  },
+  {
+    "word": "Go go go",
+    "explains": "快快快",
+    "freq": 191
+  },
+  {
+    "word": "Time's a-wasting",
+    "explains": "时间宝贵，别浪费",
+    "freq": 192
+  },
+  {
+    "word": "No time to lose",
+    "explains": "没时间可浪费",
+    "freq": 193
+  },
+  {
+    "word": "Get to it",
+    "explains": "动手吧",
+    "freq": 194
+  },
+  {
+    "word": "On your feet",
+    "explains": "起来了；动起来",
+    "freq": 195
+  },
+  {
+    "word": "You're welcome",
+    "explains": "不客气",
+    "freq": 196
+  },
+  {
+    "word": "Don't mention it",
+    "explains": "别客气",
+    "freq": 197
+  },
+  {
+    "word": "Anytime",
+    "explains": "随时乐意",
+    "freq": 198
+  },
+  {
+    "word": "My pleasure",
+    "explains": "我的荣幸",
+    "freq": 199
+  },
+  {
+    "word": "With pleasure",
+    "explains": "乐意效劳",
+    "freq": 200
+  },
+  {
+    "word": "Happy to help",
+    "explains": "很乐意帮忙",
+    "freq": 201
+  },
+  {
+    "word": "No problem",
+    "explains": "没问题",
+    "freq": 202
+  },
+  {
+    "word": "Think nothing of it",
+    "explains": "别放在心上",
+    "freq": 203
+  },
+  {
+    "word": "It's nothing",
+    "explains": "没什么啦",
+    "freq": 204
+  },
+  {
+    "word": "Sure",
+    "explains": "小意思",
+    "freq": 205
+  },
+  {
+    "word": "Anything for you",
+    "explains": "为你什么都行",
+    "freq": 206
+  },
+  {
+    "word": "At your service",
+    "explains": "随时为您效劳",
+    "freq": 207
+  },
+  {
+    "word": "That's what friends are for",
+    "explains": "朋友就该这样嘛",
+    "freq": 208
+  },
+  {
+    "word": "What are friends for",
+    "explains": "朋友是干嘛的（反诘式回谢）",
+    "freq": 209
+  },
+  {
+    "word": "No need to thank me",
+    "explains": "不用谢我",
+    "freq": 210
+  },
+  {
+    "word": "Thank YOU",
+    "explains": "该我谢你才是",
+    "freq": 211
+  },
+  {
+    "word": "The pleasure is mine",
+    "explains": "荣幸的是我",
+    "freq": 212
+  },
+  {
+    "word": "Happy to oblige",
+    "explains": "乐意效劳（正式俏皮）",
+    "freq": 213
+  },
+  {
+    "word": "We aim to please",
+    "explains": "我们的宗旨就是让你满意",
+    "freq": 214
+  },
+  {
+    "word": "Glad I could help",
+    "explains": "能帮上忙太好了",
+    "freq": 215
+  },
+  {
+    "word": "It's the least I can do",
+    "explains": "这是我起码能做的",
+    "freq": 216
+  },
+  {
+    "word": "No trouble at all",
+    "explains": "一点不麻烦",
+    "freq": 217
+  },
+  {
+    "word": "Not at all",
+    "explains": "一点也不；别客气",
+    "freq": 218
+  },
+  {
+    "word": "You'd do the same for me",
+    "explains": "你也会这样帮我的",
+    "freq": 219
+  },
+  {
+    "word": "Here to help",
+    "explains": "随时效劳",
+    "freq": 220
+  },
+  {
+    "word": "Always a pleasure",
+    "explains": "一直很荣幸（客套）",
+    "freq": 221
+  },
+  {
+    "word": "Anytime you need",
+    "explains": "随时需要随时说",
+    "freq": 222
+  },
+  {
+    "word": "Count on me",
+    "explains": "包在我身上",
+    "freq": 223
+  },
+  {
+    "word": "You owe me one",
+    "explains": "你欠我个人情（打趣）",
+    "freq": 224
+  },
+  {
+    "word": "I'm here if you need me",
+    "explains": "需要我随时在",
+    "freq": 225
+  },
+  {
+    "word": "Just doing my job",
+    "explains": "分内之事",
+    "freq": 226
+  },
+  {
+    "word": "Call me anytime",
+    "explains": "随时打给我",
+    "freq": 227
+  },
+  {
+    "word": "Service with a smile",
+    "explains": "微笑服务（打趣）",
+    "freq": 228
+  },
+  {
+    "word": "Happy to be of service",
+    "explains": "很乐意效劳",
+    "freq": 229
+  },
+  {
+    "word": "Glad to do it",
+    "explains": "乐意效劳",
+    "freq": 230
+  },
+  {
+    "word": "Take care",
+    "explains": "保重",
+    "freq": 231
+  },
+  {
+    "word": "Goodbye",
+    "explains": "再见（正式）",
+    "freq": 232
+  },
+  {
+    "word": "Bye",
+    "explains": "拜拜",
+    "freq": 233
+  },
+  {
+    "word": "Bye for now",
+    "explains": "先这样，再见",
+    "freq": 234
+  },
+  {
+    "word": "See you",
+    "explains": "回见",
+    "freq": 235
+  },
+  {
+    "word": "Talk to you later",
+    "explains": "回头聊",
+    "freq": 236
+  },
+  {
+    "word": "Talk soon",
+    "explains": "回头聊",
+    "freq": 237
+  },
+  {
+    "word": "Catch you on the flip side",
+    "explains": "改天见（俏皮）",
+    "freq": 238
+  },
+  {
+    "word": "See you when I see you",
+    "explains": "看缘分再见",
+    "freq": 239
+  },
+  {
+    "word": "Until next time",
+    "explains": "下次见",
+    "freq": 240
+  },
+  {
+    "word": "Till we meet again",
+    "explains": "后会有期",
+    "freq": 241
+  },
+  {
+    "word": "Farewell",
+    "explains": "再会（正式或俏皮）",
+    "freq": 242
+  },
+  {
+    "word": "Take it easy",
+    "explains": "放轻松；保重",
+    "freq": 243
+  },
+  {
+    "word": "Mind how you go",
+    "explains": "路上小心（英式）",
+    "freq": 244
+  },
+  {
+    "word": "Safe travels",
+    "explains": "一路平安",
+    "freq": 245
+  },
+  {
+    "word": "Drive safe",
+    "explains": "开车小心",
+    "freq": 246
+  },
+  {
+    "word": "Hasta la vista",
+    "explains": "后会有期（西语）",
+    "freq": 247
+  },
+  {
+    "word": "Hasta luego",
+    "explains": "回头见（西语）",
+    "freq": 248
+  },
+  {
+    "word": "Au revoir",
+    "explains": "再见（法语）",
+    "freq": 249
+  },
+  {
+    "word": "Sayonara",
+    "explains": "再见（日语借词）",
+    "freq": 250
+  },
+  {
+    "word": "Tschüss",
+    "explains": "再见（德语）",
+    "freq": 251
+  },
+  {
+    "word": "Good night",
+    "explains": "晚安",
+    "freq": 252
+  },
+  {
+    "word": "Bon voyage",
+    "explains": "一路顺风",
+    "freq": 253
+  },
+  {
+    "word": "Godspeed",
+    "explains": "一路顺风（古语）",
+    "freq": 254
+  },
+  {
+    "word": "Smell you later",
+    "explains": "回见（损人俏皮）",
+    "freq": 255
+  },
+  {
+    "word": "Peace",
+    "explains": "平安（嘻哈告别）",
+    "freq": 256
+  },
+  {
+    "word": "I'm outta here",
+    "explains": "我撤了",
+    "freq": 257
+  },
+  {
+    "word": "I'm ghost",
+    "explains": "我闪了（俚语）",
+    "freq": 258
+  },
+  {
+    "word": "Gotta jet",
+    "explains": "得闪了",
+    "freq": 259
+  },
+  {
+    "word": "Gotta scoot",
+    "explains": "得走了（俏皮）",
+    "freq": 260
+  },
+  {
+    "word": "Hit the road",
+    "explains": "该上路了",
+    "freq": 261
+  },
+  {
+    "word": "Off I go",
+    "explains": "我走啦",
+    "freq": 262
+  },
+  {
+    "word": "Make tracks",
+    "explains": "走人",
+    "freq": 263
+  },
+  {
+    "word": "Time to go",
+    "explains": "该走了",
+    "freq": 264
+  },
+  {
+    "word": "Be seeing you",
+    "explains": "后会有期（英式）",
+    "freq": 265
+  },
+  {
+    "word": "Catch you around",
+    "explains": "回头见",
+    "freq": 266
+  },
+  {
+    "word": "Later gator",
+    "explains": "回头见（押韵俏皮）",
+    "freq": 267
+  },
+  {
+    "word": "Toodles",
+    "explains": "再见（俏皮）",
+    "freq": 268
+  },
+  {
+    "word": "Cheerio",
+    "explains": "再见（英式）",
+    "freq": 269
+  },
+  {
+    "word": "Happy trails",
+    "explains": "一路顺风（美式西部腔）",
+    "freq": 270
+  },
+  {
+    "word": "Just kidding",
+    "explains": "开玩笑的啦",
+    "freq": 271
+  },
+  {
+    "word": "No offense",
+    "explains": "无意冒犯啊",
+    "freq": 272
+  },
+  {
+    "word": "I didn't mean it",
+    "explains": "我不是那个意思",
+    "freq": 273
+  },
+  {
+    "word": "Don't take it personally",
+    "explains": "别往心里去",
+    "freq": 274
+  },
+  {
+    "word": "Jokes aside",
+    "explains": "玩笑归玩笑",
+    "freq": 275
+  },
+  {
+    "word": "All in good fun",
+    "explains": "都是闹着玩的",
+    "freq": 276
+  },
+  {
+    "word": "Just teasing",
+    "explains": "逗你玩的",
+    "freq": 277
+  },
+  {
+    "word": "I'm just messing with you",
+    "explains": "我就逗你玩呢",
+    "freq": 278
+  },
+  {
+    "word": "Can't you take a joke",
+    "explains": "开不起玩笑啊",
+    "freq": 279
+  },
+  {
+    "word": "I take it back",
+    "explains": "我收回那句话",
+    "freq": 280
+  },
+  {
+    "word": "Take it back",
+    "explains": "收回！（要求对方收回）",
+    "freq": 281
+  },
+  {
+    "word": "Scratch that",
+    "explains": "当我没说",
+    "freq": 282
+  },
+  {
+    "word": "Forget I said that",
+    "explains": "就当我没说",
+    "freq": 283
+  },
+  {
+    "word": "I misspoke",
+    "explains": "我说错话了",
+    "freq": 284
+  },
+  {
+    "word": "Poor choice of words",
+    "explains": "用词不当",
+    "freq": 285
+  },
+  {
+    "word": "Let me rephrase",
+    "explains": "我换个说法",
+    "freq": 286
+  },
+  {
+    "word": "What I meant was",
+    "explains": "我的意思是",
+    "freq": 287
+  },
+  {
+    "word": "Hear me out",
+    "explains": "先听我说完",
+    "freq": 288
+  },
+  {
+    "word": "Before you get mad",
+    "explains": "在你发火之前听我说",
+    "freq": 289
+  },
+  {
+    "word": "Put it this way",
+    "explains": "这么说吧",
+    "freq": 290
+  },
+  {
+    "word": "On second thought",
+    "explains": "再一想（改口）",
+    "freq": 291
+  },
+  {
+    "word": "Wait wait wait",
+    "explains": "等等等等",
+    "freq": 292
+  },
+  {
+    "word": "Let me explain",
+    "explains": "听我解释",
+    "freq": 293
+  },
+  {
+    "word": "I can explain",
+    "explains": "我可以解释",
+    "freq": 294
+  },
+  {
+    "word": "It's not what you think",
+    "explains": "不是你想的那样",
+    "freq": 295
+  },
+  {
+    "word": "Don't get me wrong",
+    "explains": "别误会我",
+    "freq": 296
+  },
+  {
+    "word": "No harm meant",
+    "explains": "没有恶意",
+    "freq": 297
+  },
+  {
+    "word": "I meant well",
+    "explains": "我出发点是好的",
+    "freq": 298
+  },
+  {
+    "word": "It came out wrong",
+    "explains": "话一出口就变味了",
+    "freq": 299
+  },
+  {
+    "word": "My B",
+    "explains": "我的锅（俚语缩写）",
+    "freq": 300
+  },
+  {
+    "word": "Oopsie",
+    "explains": "哎呀（俏皮认错）",
+    "freq": 301
+  },
+  {
+    "word": "I goofed",
+    "explains": "我搞砸了（自嘲）",
+    "freq": 302
+  },
+  {
+    "word": "Loosen up",
+    "explains": "放轻松点",
+    "freq": 303
+  },
+  {
+    "word": "Lighten up",
+    "explains": "别那么较真",
+    "freq": 304
+  },
+  {
+    "word": "Don't be like that",
+    "explains": "别这样嘛",
+    "freq": 305
+  },
+  {
+    "word": "Guilty as charged",
+    "explains": "是我干的，认了",
+    "freq": 306
+  },
+  {
+    "word": "You got me there",
+    "explains": "这局你赢了（被说中）",
+    "freq": 307
+  },
+  {
+    "word": "I'll own it",
+    "explains": "这锅我背了",
+    "freq": 308
+  },
+  {
+    "word": "Half kidding",
+    "explains": "半开玩笑",
+    "freq": 309
+  },
+  {
+    "word": "Let's not fight",
+    "explains": "别吵架了",
+    "freq": 310
+  },
+  {
+    "word": "You read my mind",
+    "explains": "你猜中我在想什么了",
+    "freq": 311
+  },
+  {
+    "word": "Exactly",
+    "explains": "没错；正是",
+    "freq": 312
+  },
+  {
+    "word": "Right",
+    "explains": "对",
+    "freq": 313
+  },
+  {
+    "word": "Yep",
+    "explains": "对；是的",
+    "freq": 314
+  },
+  {
+    "word": "Yeah",
+    "explains": "是啊",
+    "freq": 315
+  },
+  {
+    "word": "Deadass",
+    "explains": "真的（纽约俚语）",
+    "freq": 316
+  },
+  {
+    "word": "Fr",
+    "explains": "真的（俚语缩写）",
+    "freq": 317
+  },
+  {
+    "word": "No cap",
+    "explains": "不骗你（俚语）",
+    "freq": 318
+  },
+  {
+    "word": "Big facts",
+    "explains": "大实话（俚语）",
+    "freq": 319
+  },
+  {
+    "word": "Real talk",
+    "explains": "说真的",
+    "freq": 320
+  },
+  {
+    "word": "Talk that talk",
+    "explains": "说得对，继续说",
+    "freq": 321
+  },
+  {
+    "word": "Say it louder",
+    "explains": "大点声说（深表赞同）",
+    "freq": 322
+  },
+  {
+    "word": "Louder for the back",
+    "explains": "后面没听清，再大点声",
+    "freq": 323
+  },
+  {
+    "word": "I felt that",
+    "explains": "我感受到了（深有共鸣）",
+    "freq": 324
+  },
+  {
+    "word": "Relatable",
+    "explains": "太有共鸣了",
+    "freq": 325
+  },
+  {
+    "word": "Big mood",
+    "explains": "太懂这感觉了（网络语）",
+    "freq": 326
+  },
+  {
+    "word": "It me",
+    "explains": "这就是我本人（网络语）",
+    "freq": 327
+  },
+  {
+    "word": "You and me both",
+    "explains": "咱俩一样",
+    "freq": 328
+  },
+  {
+    "word": "Join the club",
+    "explains": "彼此彼此（调侃）",
+    "freq": 329
+  },
+  {
+    "word": "Welcome to the club",
+    "explains": "欢迎入坑；都一样",
+    "freq": 330
+  },
+  {
+    "word": "Tell me something I don't know",
+    "explains": "这还用你说",
+    "freq": 331
+  },
+  {
+    "word": "What else is new",
+    "explains": "还不是老样子（附和吐槽）",
+    "freq": 332
+  },
+  {
+    "word": "Isn't it just",
+    "explains": "可不是嘛（英式）",
+    "freq": 333
+  },
+  {
+    "word": "Too right",
+    "explains": "太对了（英式）",
+    "freq": 334
+  },
+  {
+    "word": "Dead right",
+    "explains": "完全正确（英式）",
+    "freq": 335
+  },
+  {
+    "word": "Bang on",
+    "explains": "一针见血（英式）",
+    "freq": 336
+  },
+  {
+    "word": "You can say that again",
+    "explains": "你说得对极了",
+    "freq": 337
+  },
+  {
+    "word": "Say that again",
+    "explains": "说得好！（再讲一遍）",
+    "freq": 338
+  },
+  {
+    "word": "One hundred percent",
+    "explains": "百分百同意",
+    "freq": 339
+  },
+  {
+    "word": "On point",
+    "explains": "说到点子上了",
+    "freq": 340
+  },
+  {
+    "word": "That's the truth",
+    "explains": "这就是真相",
+    "freq": 341
+  },
+  {
+    "word": "Gospel",
+    "explains": "真理般的话（不是盖的）",
+    "freq": 342
+  },
+  {
+    "word": "Valid",
+    "explains": "有道理（网络语）",
+    "freq": 343
+  },
+  {
+    "word": "Real",
+    "explains": "真的；没错",
+    "freq": 344
+  },
+  {
+    "word": "You know that's right",
+    "explains": "你知道的，没错",
+    "freq": 345
+  },
+  {
+    "word": "If you say so",
+    "explains": "既然你这么说（不置可否）",
+    "freq": 346
+  },
+  {
+    "word": "If you insist",
+    "explains": "如果你坚持的话",
+    "freq": 347
+  },
+  {
+    "word": "Suit yourself",
+    "explains": "随你便",
+    "freq": 348
+  },
+  {
+    "word": "It's your funeral",
+    "explains": "自找的，别怨我",
+    "freq": 349
+  },
+  {
+    "word": "Do what you gotta do",
+    "explains": "你做你该做的吧",
+    "freq": 350
+  },
+  {
+    "word": "Knock yourself out",
+    "explains": "请自便（带刺）",
+    "freq": 351
+  },
+  {
+    "word": "Be my guest",
+    "explains": "请便",
+    "freq": 352
+  },
+  {
+    "word": "Help yourself",
+    "explains": "自便；别客气",
+    "freq": 353
+  },
+  {
+    "word": "Who am I to judge",
+    "explains": "我哪有资格评头论足",
+    "freq": 354
+  },
+  {
+    "word": "To each their own",
+    "explains": "萝卜青菜各有所爱",
+    "freq": 355
+  },
+  {
+    "word": "Different strokes",
+    "explains": "人各有好",
+    "freq": 356
+  },
+  {
+    "word": "Whatever floats your boat",
+    "explains": "你开心就好",
+    "freq": 357
+  },
+  {
+    "word": "Whatever works",
+    "explains": "有用就行",
+    "freq": 358
+  },
+  {
+    "word": "If that's what you want",
+    "explains": "既然你想要的话",
+    "freq": 359
+  },
+  {
+    "word": "Fine by me",
+    "explains": "我没意见",
+    "freq": 360
+  },
+  {
+    "word": "No skin off my back",
+    "explains": "又不关我事",
+    "freq": 361
+  },
+  {
+    "word": "Not my circus",
+    "explains": "不是我的场子",
+    "freq": 362
+  },
+  {
+    "word": "Not my problem",
+    "explains": "不是我的事",
+    "freq": 363
+  },
+  {
+    "word": "Above my pay grade",
+    "explains": "超出我职权范围",
+    "freq": 364
+  },
+  {
+    "word": "Ask someone else",
+    "explains": "问别人去",
+    "freq": 365
+  },
+  {
+    "word": "Don't ask me",
+    "explains": "别问我",
+    "freq": 366
+  },
+  {
+    "word": "How should I know",
+    "explains": "我哪知道",
+    "freq": 367
+  },
+  {
+    "word": "Search me",
+    "explains": "我哪知道（耸肩）",
+    "freq": 368
+  },
+  {
+    "word": "Who knows",
+    "explains": "谁知道呢",
+    "freq": 369
+  },
+  {
+    "word": "Beats me",
+    "explains": "难倒我了",
+    "freq": 370
+  },
+  {
+    "word": "Could be",
+    "explains": "有可能吧",
+    "freq": 371
+  },
+  {
+    "word": "Maybe so",
+    "explains": "也许是吧",
+    "freq": 372
+  },
+  {
+    "word": "Time will tell",
+    "explains": "时间会证明",
+    "freq": 373
+  },
+  {
+    "word": "Good for you",
+    "explains": "真行啊（可真心可敷衍）",
+    "freq": 374
+  },
+  {
+    "word": "Must be nice",
+    "explains": "肯定很爽吧（羡慕或发酸）",
+    "freq": 375
+  },
+  {
+    "word": "Lucky you",
+    "explains": "你真走运（可真心可发酸）",
+    "freq": 376
+  },
+  {
+    "word": "Interesting",
+    "explains": "有意思（冷淡敷衍）",
+    "freq": 377
+  },
+  {
+    "word": "Fascinating",
+    "explains": "真有意思（反讽或敷衍）",
+    "freq": 378
+  },
+  {
+    "word": "Yeah yeah",
+    "explains": "是是是",
+    "freq": 379
+  },
+  {
+    "word": "Anything you say",
+    "explains": "都听你的",
+    "freq": 380
+  },
+  {
+    "word": "Keep fighting",
+    "explains": "继续战斗",
+    "freq": 381
+  },
+  {
+    "word": "Give it your all",
+    "explains": "全力以赴",
+    "freq": 382
+  },
+  {
+    "word": "Give it your best shot",
+    "explains": "拿出你最好的水平",
+    "freq": 383
+  },
+  {
+    "word": "Best of luck",
+    "explains": "祝你好运",
+    "freq": 384
+  },
+  {
+    "word": "Good luck",
+    "explains": "祝好运",
+    "freq": 385
+  },
+  {
+    "word": "Break a leg",
+    "explains": "祝演出成功（行话：别说 good luck）",
+    "freq": 386
+  },
+  {
+    "word": "Knock 'em dead",
+    "explains": "把他们震住",
+    "freq": 387
+  },
+  {
+    "word": "Blow them away",
+    "explains": "惊艳全场",
+    "freq": 388
+  },
+  {
+    "word": "Show them what you've got",
+    "explains": "让他们看看你的本事",
+    "freq": 389
+  },
+  {
+    "word": "Show 'em",
+    "explains": "给他们点颜色看看",
+    "freq": 390
+  },
+  {
+    "word": "Make it happen",
+    "explains": "让它成真",
+    "freq": 391
+  },
+  {
+    "word": "Make me proud",
+    "explains": "给我争光",
+    "freq": 392
+  },
+  {
+    "word": "I'm rooting for you",
+    "explains": "我给你加油",
+    "freq": 393
+  },
+  {
+    "word": "I've got faith in you",
+    "explains": "我对你有信心",
+    "freq": 394
+  },
+  {
+    "word": "I believe in you",
+    "explains": "我相信你",
+    "freq": 395
+  },
+  {
+    "word": "Believe in yourself",
+    "explains": "相信你自己",
+    "freq": 396
+  },
+  {
+    "word": "You're almost there",
+    "explains": "就差一步了",
+    "freq": 397
+  },
+  {
+    "word": "One more push",
+    "explains": "再冲一把",
+    "freq": 398
+  },
+  {
+    "word": "Dig deep",
+    "explains": "挖掘潜力，拼一把",
+    "freq": 399
+  },
+  {
+    "word": "Push through",
+    "explains": "挺过去",
+    "freq": 400
+  },
+  {
+    "word": "You were born for this",
+    "explains": "你天生就是干这个的",
+    "freq": 401
+  },
+  {
+    "word": "This is your moment",
+    "explains": "这是属于你的时刻",
+    "freq": 402
+  },
+  {
+    "word": "Your time to shine",
+    "explains": "属于你的高光时刻",
+    "freq": 403
+  },
+  {
+    "word": "Go get 'em",
+    "explains": "去拿下他们",
+    "freq": 404
+  },
+  {
+    "word": "Own the room",
+    "explains": "镇住全场",
+    "freq": 405
+  },
+  {
+    "word": "Take the leap",
+    "explains": "跳吧（抓住机遇）",
+    "freq": 406
+  },
+  {
+    "word": "Take your shot",
+    "explains": "抓住机会试试",
+    "freq": 407
+  },
+  {
+    "word": "Sky's the limit",
+    "explains": "前途无量",
+    "freq": 408
+  },
+  {
+    "word": "Reach for the stars",
+    "explains": "志存高远",
+    "freq": 409
+  },
+  {
+    "word": "Dream big",
+    "explains": "大胆做梦",
+    "freq": 410
+  },
+  {
+    "word": "You got what it takes",
+    "explains": "你有这个实力",
+    "freq": 411
+  },
+  {
+    "word": "It's in the bag",
+    "explains": "十拿九稳",
+    "freq": 412
+  },
+  {
+    "word": "Piece of cake",
+    "explains": "小菜一碟",
+    "freq": 413
+  },
+  {
+    "word": "You make it look easy",
+    "explains": "你做得看起来好轻松",
+    "freq": 414
+  },
+  {
+    "word": "Eyes on the prize",
+    "explains": "盯住目标",
+    "freq": 415
+  },
+  {
+    "word": "Stay the course",
+    "explains": "坚持到底",
+    "freq": 416
+  },
+  {
+    "word": "Finish strong",
+    "explains": "漂亮收尾",
+    "freq": 417
+  },
+  {
+    "word": "Leave it all out there",
+    "explains": "拼尽全力不留遗憾",
+    "freq": 418
+  },
+  {
+    "word": "Bring it home",
+    "explains": "一鼓作气拿下",
+    "freq": 419
+  },
+  {
+    "word": "The best is yet to come",
+    "explains": "最好的还在后面",
+    "freq": 420
+  },
+  {
+    "word": "Give me a break",
+    "explains": "饶了我吧；得了吧",
+    "freq": 421
+  },
+  {
+    "word": "Come off it",
+    "explains": "得了吧（英式）",
+    "freq": 422
+  },
+  {
+    "word": "Save it",
+    "explains": "省省吧",
+    "freq": 423
+  },
+  {
+    "word": "Spare me",
+    "explains": "饶了我吧",
+    "freq": 424
+  },
+  {
+    "word": "Cut the crap",
+    "explains": "废话少说",
+    "freq": 425
+  },
+  {
+    "word": "Baloney",
+    "explains": "胡扯",
+    "freq": 426
+  },
+  {
+    "word": "Rubbish",
+    "explains": "胡说（英式）",
+    "freq": 427
+  },
+  {
+    "word": "Hogwash",
+    "explains": "一派胡言",
+    "freq": 428
+  },
+  {
+    "word": "Trash",
+    "explains": "垃圾（吐槽人/话）",
+    "freq": 429
+  },
+  {
+    "word": "What a clown",
+    "explains": "真是个小丑",
+    "freq": 430
+  },
+  {
+    "word": "What a joke",
+    "explains": "真是个笑话",
+    "freq": 431
+  },
+  {
+    "word": "What a disaster",
+    "explains": "真是一团糟",
+    "freq": 432
+  },
+  {
+    "word": "Train wreck",
+    "explains": "车祸现场",
+    "freq": 433
+  },
+  {
+    "word": "Dumpster fire",
+    "explains": "灾难现场（俚语）",
+    "freq": 434
+  },
+  {
+    "word": "Shambles",
+    "explains": "乱成一锅粥",
+    "freq": 435
+  },
+  {
+    "word": "Ridiculous",
+    "explains": "荒唐",
+    "freq": 436
+  },
+  {
+    "word": "Absurd",
+    "explains": "荒谬",
+    "freq": 437
+  },
+  {
+    "word": "Outrageous",
+    "explains": "不像话；离谱",
+    "freq": 438
+  },
+  {
+    "word": "Preposterous",
+    "explains": "岂有此理",
+    "freq": 439
+  },
+  {
+    "word": "Unacceptable",
+    "explains": "无法接受",
+    "freq": 440
+  },
+  {
+    "word": "Despicable",
+    "explains": "太卑鄙了",
+    "freq": 441
+  },
+  {
+    "word": "Low blow",
+    "explains": "阴招，戳人痛处",
+    "freq": 442
+  },
+  {
+    "word": "That's low",
+    "explains": "这也太损了",
+    "freq": 443
+  },
+  {
+    "word": "Dirty move",
+    "explains": "阴招",
+    "freq": 444
+  },
+  {
+    "word": "Cheap shot",
+    "explains": "卑鄙一击",
+    "freq": 445
+  },
+  {
+    "word": "Disgraceful",
+    "explains": "太丢人了",
+    "freq": 446
+  },
+  {
+    "word": "Pathetic",
+    "explains": "真可悲",
+    "freq": 447
+  },
+  {
+    "word": "Tragic",
+    "explains": "惨不忍睹",
+    "freq": 448
+  },
+  {
+    "word": "Embarrassing",
+    "explains": "真丢人",
+    "freq": 449
+  },
+  {
+    "word": "Cringe",
+    "explains": "尬出天际",
+    "freq": 450
+  },
+  {
+    "word": "Cry me a river",
+    "explains": "哭给你一条河（别装可怜）",
+    "freq": 451
+  },
+  {
+    "word": "Poor baby",
+    "explains": "可怜的宝宝（讽刺）",
+    "freq": 452
+  },
+  {
+    "word": "Grow up",
+    "explains": "成熟点吧",
+    "freq": 453
+  },
+  {
+    "word": "Get a grip",
+    "explains": "清醒点",
+    "freq": 454
+  },
+  {
+    "word": "Get real",
+    "explains": "现实点吧",
+    "freq": 455
+  },
+  {
+    "word": "Who do you think you are",
+    "explains": "你以为你是谁",
+    "freq": 456
+  },
+  {
+    "word": "Check yourself",
+    "explains": "先管好你自己",
+    "freq": 457
+  },
+  {
+    "word": "Easy for you to say",
+    "explains": "你说得轻巧",
+    "freq": 458
+  },
+  {
+    "word": "All talk",
+    "explains": "只会耍嘴皮子",
+    "freq": 459
+  },
+  {
+    "word": "Put up or shut up",
+    "explains": "要么做要么闭嘴",
+    "freq": 460
+  },
+  {
+    "word": "How's your day",
+    "explains": "今天过得咋样",
+    "freq": 461
+  },
+  {
+    "word": "Long time no see",
+    "explains": "好久不见",
+    "freq": 462
+  },
+  {
+    "word": "Good to see you",
+    "explains": "见到你真高兴",
+    "freq": 463
+  },
+  {
+    "word": "Fancy seeing you here",
+    "explains": "真没想到在这儿见到你",
+    "freq": 464
+  },
+  {
+    "word": "What's going on",
+    "explains": "咋啦；最近怎样",
+    "freq": 465
+  },
+  {
+    "word": "How do you do",
+    "explains": "你好（正式，英式）",
+    "freq": 466
+  },
+  {
+    "word": "Likewise",
+    "explains": "彼此彼此",
+    "freq": 467
+  },
+  {
+    "word": "Same to you",
+    "explains": "你也是",
+    "freq": 468
+  },
+  {
+    "word": "You too",
+    "explains": "你也是",
+    "freq": 469
+  },
+  {
+    "word": "Right back at you",
+    "explains": "原话奉还（回应祝福）",
+    "freq": 470
+  },
+  {
+    "word": "And you",
+    "explains": "你呢",
+    "freq": 471
+  },
+  {
+    "word": "Nothing new",
+    "explains": "没啥新鲜事",
+    "freq": 472
+  },
+  {
+    "word": "Same old",
+    "explains": "老样子",
+    "freq": 473
+  },
+  {
+    "word": "Living the dream",
+    "explains": "过得像做梦一样（寒暄反讽）",
+    "freq": 474
+  },
+  {
+    "word": "Can't complain",
+    "explains": "还行，没啥可抱怨的",
+    "freq": 475
+  },
+  {
+    "word": "So far so good",
+    "explains": "目前为止还不错",
+    "freq": 476
+  },
+  {
+    "word": "Keeping busy",
+    "explains": "一直瞎忙",
+    "freq": 477
+  },
+  {
+    "word": "What's cooking",
+    "explains": "在忙啥呢（俏皮问候）",
+    "freq": 478
+  },
+  {
+    "word": "What have you been up to",
+    "explains": "最近忙啥呢",
+    "freq": 479
+  },
+  {
+    "word": "There you are",
+    "explains": "你可来了",
+    "freq": 480
+  },
+  {
+    "word": "Look who's here",
+    "explains": "看看谁来了",
+    "freq": 481
+  },
+  {
+    "word": "Look what the cat dragged in",
+    "explains": "看看谁大驾光临（损人玩笑）",
+    "freq": 482
+  },
+  {
+    "word": "Took you long enough",
+    "explains": "可让你磨蹭完了",
+    "freq": 483
+  },
+  {
+    "word": "Welcome home",
+    "explains": "欢迎回家",
+    "freq": 484
+  },
+  {
+    "word": "What's your poison",
+    "explains": "想喝点什么（俏皮）",
+    "freq": 485
+  },
+  {
+    "word": "First round's on me",
+    "explains": "第一杯我请",
+    "freq": 486
+  },
+  {
+    "word": "After you",
+    "explains": "您先请",
+    "freq": 487
+  },
+  {
+    "word": "Don't mind if I do",
+    "explains": "那我就不客气了",
+    "freq": 488
+  },
+  {
+    "word": "Don't mind me",
+    "explains": "别管我，你们继续",
+    "freq": 489
+  },
+  {
+    "word": "Perfect timing",
+    "explains": "时机刚刚好",
+    "freq": 490
+  },
+  {
+    "word": "That's life",
+    "explains": "这就是生活（感叹）",
+    "freq": 491
+  },
+  {
+    "word": "It is what it is",
+    "explains": "就这样吧，认命",
+    "freq": 492
+  },
+  {
+    "word": "Win some lose some",
+    "explains": "有得有失",
+    "freq": 493
+  },
+  {
+    "word": "Easy come easy go",
+    "explains": "来得容易去得快",
+    "freq": 494
+  },
+  {
+    "word": "Story of my life",
+    "explains": "我的人生写照（无奈）",
+    "freq": 495
+  },
+  {
+    "word": "Just my luck",
+    "explains": "我就这运气（自嘲）",
+    "freq": 496
+  },
+  {
+    "word": "Why me",
+    "explains": "为什么是我",
+    "freq": 497
+  },
+  {
+    "word": "Here we go again",
+    "explains": "又来了（无奈）",
+    "freq": 498
+  },
+  {
+    "word": "Not again",
+    "explains": "又来？！",
+    "freq": 499
+  },
+  {
+    "word": "Great to see you",
+    "explains": "真高兴见到你",
+    "freq": 500
+  }
+]
