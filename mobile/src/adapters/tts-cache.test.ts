@@ -496,4 +496,30 @@ describe('MiniProgramTtsAdapter 代际作废与提示降噪', () => {
     const manifest = storage.get('slowlyrecord_audio_cache_manifest')
     expect(manifest[hashAudioCacheKey('hello')]?.filePath).toBe('saved://tmp://audio.mp3')
   })
+
+  it('语速在播放开始（canplay）后才设置，且钳制在 0.5–2.0', async () => {
+    const url = 'https://dict.youdao.com/dictvoice?audio=hello&type=2'
+    // rate=1.5：play 前不得设置（部分机型 play 前赋值会无声），canplay 后生效
+    const p1 = getTtsAdapter().playAudio(url, { rate: 1.5 })
+    await vi.advanceTimersByTimeAsync(0)
+    expect(audioInstances[0].playbackRate).toBeUndefined()
+    audioInstances[0].trigger('canplay')
+    expect(audioInstances[0].playbackRate).toBe(1.5)
+    audioInstances[0].trigger('ended')
+    await expect(p1).resolves.toBeUndefined()
+    // 超出上限钳制到 2
+    const p2 = getTtsAdapter().playAudio(url, { rate: 3 })
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[1].trigger('canplay')
+    expect(audioInstances[1].playbackRate).toBe(2)
+    audioInstances[1].trigger('ended')
+    await expect(p2).resolves.toBeUndefined()
+    // rate=1（原速）始终不写 playbackRate，兼容无此能力的低版本基础库
+    const p3 = getTtsAdapter().playAudio(url, { rate: 1 })
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[2].trigger('canplay')
+    expect(audioInstances[2].playbackRate).toBeUndefined()
+    audioInstances[2].trigger('ended')
+    await expect(p3).resolves.toBeUndefined()
+  })
 })

@@ -664,14 +664,25 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       }
       armWatchdog()
 
+      // 语速延迟到开始播放后再设置：部分机型 play 前赋 playbackRate 会导致全程无声
+      const targetRate = typeof rate === 'number' ? Math.min(2, Math.max(0.5, rate)) : 1
+      let rateApplied = false
+      const applyRate = () => {
+        if (rateApplied || targetRate === 1) return
+        try { audio.playbackRate = targetRate; rateApplied = true } catch { /* 低版本基础库无 playbackRate，按原速播放 */ }
+      }
+
       // 仅当回调来源仍是当前实例时才清理引用（防止重叠播放时互相覆盖）
       audio.onTimeUpdate(() => {
         if (settled) return
+        applyRate() // 兜底：canplay/play 未触发的机型在首次进度回调时补设
         lastTime = Number(audio.currentTime) || lastTime
         armWatchdog()
       })
       audio.onCanplay(() => {
-        if (!settled) armWatchdog()
+        if (settled) return
+        applyRate()
+        armWatchdog()
       })
       audio.onEnded(() => {
         if (settled) return
@@ -696,11 +707,6 @@ class MiniProgramTtsAdapter implements TtsAdapter {
         try { audio.startTime = startTime } catch { /* 低版本基础库不支持，退回从头播放 */ }
       }
       audio.src = url
-      if (rate !== 1) {
-        try {
-          audio.playbackRate = Math.min(2, Math.max(0.5, rate))
-        } catch { /* 低版本基础库无 playbackRate，按原速播放 */ }
-      }
       audio.play()
     })
   }
