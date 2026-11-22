@@ -130,8 +130,9 @@ import type {TranslationPlatform} from '@/types/words';
 
 export function hasCustomApiKey(platform: TranslationPlatform): boolean {
     // 本地平台、免费接口及仅支持用户自配 Key 的平台不占用内置共享额度；
-    // uTools AI 消耗的是用户自己的 uTools AI 能量（uTools 官方自行计费/限量），插件不做额外限制
-    if (platform === 'local' || platform === 'google' || platform === 'bing' || platform === 'bilibili' || platform === 'siliconflow' || platform === 'utoolsai') {
+    // uTools AI 消耗的是用户自己的 uTools AI 能量（uTools 官方自行计费/限量），插件不做额外限制；
+    // Ollama 是用户自建本地服务，同样不产生插件侧额度消耗
+    if (platform === 'local' || platform === 'google' || platform === 'bing' || platform === 'bilibili' || platform === 'siliconflow' || platform === 'utoolsai' || platform === 'ollama') {
         return true;
     }
 
