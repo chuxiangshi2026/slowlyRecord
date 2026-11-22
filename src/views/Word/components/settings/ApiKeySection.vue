@@ -52,7 +52,7 @@
     </el-collapse>
 
     <h5 class="key-section-title">OCR 图片识别密钥</h5>
-    <p class="key-section-hint">免配置即可用：本地识别（离线，不限次数）、B站 Index 视觉（联网，不限次数）、uTools AI 视觉（每日限 {{ USAGE_LIMITS.OCR_DAILY_LIMIT }} 次）；其余引擎填写自己的密钥后不限次数</p>
+    <p class="key-section-hint">免配置即可用：本地识别（离线，不限次数）、B站 Index 视觉（联网，不限次数）、uTools AI 视觉（不限次数，消耗 uTools AI 能量）；其余引擎填写自己的密钥后不限次数</p>
     <el-collapse v-model="activeOcrKeys" class="key-collapse">
       <el-collapse-item v-for="engine in ocrKeyEngines" :key="engine.value" :name="engine.value">
         <template #title>
@@ -88,7 +88,7 @@
     <div class="apply-key-block">
       <h5 style="text-align:center;">申请密钥</h5>
       <p class="limit-info">
-        截图识别优先建议使用本地识别（离线、不限次数）或 B站 Index 视觉（免配置、不限次数）；uTools AI 视觉免配置但每日限 {{ USAGE_LIMITS.OCR_DAILY_LIMIT }} 次。需 Key 的引擎填写自己的密钥后不限次数。计次只在截图/选图成功时发生，取消不消耗次数。经常使用截图功能的用户建议申请自有密钥，多数平台自身提供免费额度。</p>
+        截图识别优先建议使用本地识别（离线、不限次数）或 B站 Index 视觉（免配置、不限次数）；uTools AI 视觉免配置、不限次数（消耗 uTools AI 能量）。需 Key 的引擎填写自己的密钥后不限次数。计次只在截图/选图成功时发生，取消不消耗次数。经常使用截图功能的用户建议申请自有密钥，多数平台自身提供免费额度。</p>
 
       <div v-for="platform in TRANSLATION_PLATFORM_LINKS"
            :key="platform.key"
