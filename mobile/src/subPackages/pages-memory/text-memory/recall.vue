@@ -91,6 +91,7 @@ import { onLoad, onUnload } from '@dcloudio/uni-app'
 import { useTextMemory } from '@/stores/useTextMemory'
 import type { MobileTextArticle } from '@/stores/useUtils/types'
 import { splitAnnotatedBlocks, firstCharHint } from './recall'
+import { findBuiltinPoem } from './library'
 import { getPoetryAudioUrl, buildPoetrySpeakText } from '@/utils/poetry-audio'
 import { buildChineseAudioUrls } from '@/utils/youdao-tts'
 import { getTtsAdapter } from '@/adapters/index'
@@ -100,6 +101,8 @@ const store = useTextMemory()
 const article = ref<MobileTextArticle | null>(null)
 const loaded = ref(false)
 const revealed = ref<boolean[]>([])
+// 旧版本导入的文章没有 pinyin 字段：运行时从内置库按标题+正文回填，无需删库重导
+const builtinPinyin = ref('')
 
 // 显示偏好：拼音默认开（无拼音数据时不显示开关），首字提示默认关；均记住选择
 const showPinyin = ref(uni.getStorageSync('text-recall-show-pinyin') !== false)
@@ -108,7 +111,9 @@ watch(showPinyin, (v) => { try { uni.setStorageSync('text-recall-show-pinyin', v
 watch(firstHint, (v) => { try { uni.setStorageSync('text-recall-first-hint', v) } catch { /* 忽略 */ } })
 
 const blocks = computed(() =>
-  article.value ? splitAnnotatedBlocks(article.value.content, article.value.pinyin) : [],
+  article.value
+    ? splitAnnotatedBlocks(article.value.content, article.value.pinyin || builtinPinyin.value || undefined)
+    : [],
 )
 
 const hasPinyin = computed(() => blocks.value.some((b) => b.pinyin))
@@ -127,6 +132,11 @@ onLoad((opt: any) => {
   if (found) {
     article.value = found
     revealed.value = blocks.value.map(() => false)
+    if (!found.pinyin) {
+      findBuiltinPoem(found.title, found.content, found.dynasty)
+        .then((poem) => { if (poem?.pinyin) builtinPinyin.value = poem.pinyin })
+        .catch(() => { /* 回填失败静默 */ })
+    }
   }
   loaded.value = true
 })
@@ -162,15 +172,15 @@ function randomReveal() {
 }
 
 /**
- * 朗读全文：内置诗词优先 CDN 预合成音频（edge-tts 中文，免费稳定）；
- * 自建文章或 CDN 未命中时回退中文在线音源链（有道智云/百度/谷歌）。
+ * 朗读全文：始终优先尝试 CDN 预合成音频（按标题+作者+正文哈希定位，
+ * 内置诗词不论新旧导入都能命中；非内置内容 404 后自动回退），
+ * 再退回中文在线音源链（有道智云/百度/谷歌）。
  */
 async function playFullArticle() {
   if (!article.value || playing.value) return
   const a = article.value
   const speakText = buildPoetrySpeakText(a.title, a.author, a.content)
-  const urls: string[] = []
-  if (a.category === 'poetry') urls.push(getPoetryAudioUrl(a.title, a.author, a.content))
+  const urls: string[] = [getPoetryAudioUrl(a.title, a.author, a.content)]
   urls.push(...buildChineseAudioUrls(speakText))
   playing.value = true
   let ok = false

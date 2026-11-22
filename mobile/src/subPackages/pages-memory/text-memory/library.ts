@@ -170,3 +170,31 @@ export async function loadAllIdioms(): Promise<MobileIdiomItem[]> {
   idiomCache = list
   return list
 }
+
+/**
+ * 按「标题 + 正文（忽略空白）」匹配内置诗词。
+ * 用途：旧版本导入的文章没有 pinyin 字段，运行时从内置库回填，
+ * 让用户不用删库重导也能显示拼音。dynasty 传入时先按朝代缩小加载范围，
+ * 匹配不到再全库兜底；自建/改过的文章匹配不上返回 undefined。
+ */
+export async function findBuiltinPoem(
+  title: string,
+  content: string,
+  dynasty?: string,
+): Promise<MobilePoetryItem | undefined> {
+  const norm = (s: string) => (s || '').replace(/\s+/g, '')
+  const t = (title || '').trim()
+  const c = norm(content || '')
+  if (!t || !c) return undefined
+  const match = (p: MobilePoetryItem) => p.title === t && norm(p.content) === c
+  const d = dynasty
+    ? DYNASTIES.find((x) => x.name === dynasty.trim() || x.code === dynasty.trim())
+    : undefined
+  if (d) {
+    const list = await loadPoetryByDynasty(d.code)
+    const hit = list.find(match)
+    if (hit) return hit
+  }
+  const all = await loadAllPoetry()
+  return all.find(match)
+}
