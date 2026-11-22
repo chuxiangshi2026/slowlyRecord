@@ -1197,6 +1197,7 @@
           <button class="style-btn focus-repeat-btn" data-repeat="1" type="button">1</button>
           <button class="style-btn focus-repeat-btn" data-repeat="2" type="button">2</button>
           <button class="style-btn focus-repeat-btn" data-repeat="3" type="button">3</button>
+          <button class="style-btn focus-repeat-btn" data-repeat="5" type="button">5</button>
           <button class="style-btn focus-repeat-btn" data-repeat="10" type="button">10</button>
           <button class="style-btn focus-repeat-btn" data-repeat="20" type="button">20</button>
         </div>
@@ -3761,7 +3762,7 @@
     // 发音遍数可选项：1-3 用于跟读，10/20 用于长时间重复听音
     function normalizeRepeatCount(value) {
       var n = parseInt(value, 10);
-      return (n === 1 || n === 2 || n === 3 || n === 10 || n === 20) ? n : 1;
+      return (n === 1 || n === 2 || n === 3 || n === 5 || n === 10 || n === 20) ? n : 1;
     }
     let autoNextTimer = null;    // 待执行的自动推进计时器
     let speakSeq = 0;            // 自动发音代际令牌，切词/取消时递增，终止旧的连播循环
