@@ -684,6 +684,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
   })
 
   it('百度免费额度用尽时抛「每日上限」错误且不增加计数', async () => {
+    storeState.ocrKeys.baidu = { appkey: '', key: '' } // 未配置密钥才占用免费计次
     localStorageMock.setItem('usage_ocr_counter', JSON.stringify({ date: todayStr(), count: 5 })) // OCR_DAILY_LIMIT=5
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow(/每日免费截图翻译次数已达上限 \(5\/5 次\)/)
@@ -692,6 +693,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
 
   it('腾讯使用独立计数器 tencent_ocr，超限文案含「腾讯」', async () => {
     storeState.ocrPlatform = 'tencent'
+    storeState.ocrKeys.tencent = { appkey: '', key: '' } // 未配置密钥才占用免费计次
     localStorageMock.setItem('usage_tencent_ocr_counter', JSON.stringify({ date: todayStr(), count: 10 })) // TENCENT_OCR_DAILY_LIMIT=10
     localStorageMock.setItem('usage_ocr_counter', JSON.stringify({ date: todayStr(), count: 0 }))
 
@@ -715,6 +717,22 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
     expect(JSON.parse(localStorageMock.getItem('usage_ocr_counter')!).count).toBe(5)
   })
 
+  it('只配置 OCR 密钥（翻译密钥为空）同样解除每日限次', async () => {
+    // mock 默认 OCR 密钥为 test-ak/test-sk，翻译密钥留空
+    localStorageMock.setItem('usage_ocr_counter', JSON.stringify({ date: todayStr(), count: 5 })) // 已达上限
+    axiosMock.post.mockResolvedValue({
+      data: {
+        data: { content: [{ rect: '0 0 1 1', src: 'hello', dst: '你好' }] },
+      },
+    })
+
+    const result = await ocrTranslateMultiPlatform()
+
+    expect(result.errorCode).toBe('0')
+    // 已达上限仍放行且不计次
+    expect(JSON.parse(localStorageMock.getItem('usage_ocr_counter')!).count).toBe(5)
+  })
+
   it('local 平台不记次数：ocr 计数打满仍走到截图流程', async () => {
     storeState.ocrPlatform = 'local'
     localStorageMock.setItem('usage_ocr_counter', JSON.stringify({ date: todayStr(), count: 99 }))
@@ -726,6 +744,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
   })
 
   it('截图数据 base64 非法时直接 reject，不发请求也不计次', async () => {
+    storeState.ocrKeys.baidu = { appkey: '', key: '' } // 未配置密钥才计次
     captureMock.capture.mockResolvedValue({ base64: '%%%不是base64%%%' })
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图数据格式异常，请重新截图')
@@ -734,6 +753,7 @@ describe('ocrTranslateMultiPlatform（多平台调度）', () => {
   })
 
   it('用户取消截图时 reject「截图取消」，且不消耗免费次数', async () => {
+    storeState.ocrKeys.baidu = { appkey: '', key: '' } // 未配置密钥才计次
     captureMock.capture.mockRejectedValue(new Error('截图取消'))
 
     await expect(ocrTranslateMultiPlatform()).rejects.toThrow('截图取消')

@@ -61,7 +61,7 @@ import DebugPanel from '@/components/DebugPanel.vue';
 import {getSetDb, decryptSyncedSecrets} from "@/utils/user-set-db-util.ts";
 import {getOcrApiKey} from "@/utils/get-api-key.ts";
 import {toEngineLang} from "@/utils/translation-lang-map.ts";
-import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from "@/utils/usage-counter.ts";
+import {getCurrentUsageCount, incrementUsageCounter, isFreeOcrPlatform, isOverDailyLimit} from "@/utils/usage-counter.ts";
 import {getNotificationAdapter} from "@/adapters/notification.ts";
 import {getStatsStatus, setStatsExcluded, applyPersistedStatsPrefs, STATS_NOTICE_KEY} from "@/utils/stats";
 import {RETIRED_MODEL_NAMES} from "@/config.ts";
@@ -617,8 +617,8 @@ async function ocrExistingImage(base64: string): Promise<OcrResult> {
   const wordsStore = useWordsStore();
   const ocrPlatform = wordsStore.currentOcrPlatform || 'local';
 
-  // 与 ocrTranslateMultiPlatform 保持一致的每日免费次数限制（本地 OCR 不记次数）
-  if (ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform)) {
+  // 与 ocrTranslateMultiPlatform 保持一致的每日免费次数限制（本地 OCR 不计次；翻译或 OCR 任一密钥槽已配置即视为自有额度）
+  if (isFreeOcrPlatform(ocrPlatform)) {
     const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
     const dailyLimit = ocrPlatform === 'tencent' ? USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT : USAGE_LIMITS.OCR_DAILY_LIMIT;
     if (isOverDailyLimit(counterKey)) {

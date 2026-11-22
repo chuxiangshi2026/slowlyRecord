@@ -158,3 +158,15 @@ export function hasCustomApiKey(platform: TranslationPlatform): boolean {
     return true;
 }
 
+/**
+ * OCR 截图/图片识别是否占用每日免费计次。
+ * 本地识别与免配置公共接口（B站 Index 视觉）不计次；其余平台在「翻译」或「OCR」
+ * 任一密钥槽配置了该平台密钥后即视为自有额度，不再计次（只填 OCR 密钥也应解除限制）。
+ */
+export function isFreeOcrPlatform(platform: string): boolean {
+    if (hasCustomApiKey(platform as TranslationPlatform)) return false;
+    const wordsStore = useWordsStore();
+    const ocrKeys = wordsStore.getOcrApiKey?.(platform as never);
+    return !ocrKeys || !ocrKeys.appkey?.trim() || !ocrKeys.key?.trim();
+}
+

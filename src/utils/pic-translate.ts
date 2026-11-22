@@ -1,6 +1,6 @@
 import axios from 'axios'
 import CryptoJS from 'crypto-js'
-import {getCurrentUsageCount, hasCustomApiKey, incrementUsageCounter, isOverDailyLimit} from './usage-counter';
+import {getCurrentUsageCount, incrementUsageCounter, isFreeOcrPlatform, isOverDailyLimit} from './usage-counter';
 import {useWordsStore} from "@/stores/words.ts";
 import {USAGE_LIMITS} from "@/constants";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
@@ -289,8 +289,8 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
     const ocrPlatform = wordsStore.currentOcrPlatform || 'local';
 
 
-    // 检查是否超出了每日使用限制（本地OCR不记次数）
-    const isFreeOcr = ocrPlatform !== 'local' && !hasCustomApiKey(ocrPlatform);
+    // 检查是否超出了每日使用限制（本地 OCR 与免配置公共接口不计次；翻译或 OCR 任一密钥槽已配置即视为自有额度）
+    const isFreeOcr = isFreeOcrPlatform(ocrPlatform);
     // 腾讯 OCR 使用独立的计数器，其他 OCR 使用通用计数器
     const counterKey = ocrPlatform === 'tencent' ? 'tencent_ocr' : 'ocr';
     const dailyLimit = ocrPlatform === 'tencent' ? USAGE_LIMITS.TENCENT_OCR_DAILY_LIMIT : USAGE_LIMITS.OCR_DAILY_LIMIT;
