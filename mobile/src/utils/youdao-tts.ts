@@ -145,9 +145,14 @@ export function buildChineseAudioUrls(text: string): string[] {
   const urls: string[] = []
   const youdao = buildYoudaoTtsUrl(text)
   if (youdao) urls.push(youdao)
-  urls.push(`https://fanyi.baidu.com/gettts?lan=zh&text=${encodeURIComponent(text)}&spd=5&source=web`)
+  urls.push(buildBaiduTtsUrl(text, 'zh'))
   urls.push(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-CN&q=${encodeURIComponent(text)}`)
   return urls
+}
+
+/** 百度翻译网页免费 TTS（lan=zh 中文 / lan=uk 英文），境内真机可用；域名需在 downloadFile 白名单 */
+export function buildBaiduTtsUrl(text: string, lan: 'zh' | 'uk'): string {
+  return `https://fanyi.baidu.com/gettts?lan=${lan}&text=${encodeURIComponent(text)}&spd=5&source=web`
 }
 
 /**

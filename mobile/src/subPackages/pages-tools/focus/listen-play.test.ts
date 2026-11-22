@@ -2,12 +2,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { buildWordAudioUrls, ListenPlayer, type WordAudioPlayer } from './listen-play'
 
 describe('buildWordAudioUrls', () => {
-  it('应以有道音源为首选并附带谷歌兜底音源', () => {
+  it('应以有道音源为首选，百度 uk 次之并附带谷歌兜底音源', () => {
     const urls = buildWordAudioUrls('take care')
-    expect(urls).toHaveLength(2)
+    expect(urls).toHaveLength(3)
     expect(urls[0]).toContain('dict.youdao.com')
     expect(urls[0]).toContain(encodeURIComponent('take care'))
-    expect(urls[1]).toContain('translate.google.com')
+    expect(urls[1]).toContain('fanyi.baidu.com/gettts')
+    expect(urls[2]).toContain('translate.google.com')
   })
 
   it('中文词应走有道智云 TTS 与谷歌 zh-CN 兜底', () => {
@@ -63,7 +64,7 @@ describe('ListenPlayer', () => {
     p.start()
     await vi.advanceTimersByTimeAsync(0)
     expect(played).toHaveLength(2)
-    expect(played[1]).toContain('translate.google.com')
+    expect(played[1]).toContain('fanyi.baidu.com')
     expect(onError).not.toHaveBeenCalled()
   })
 

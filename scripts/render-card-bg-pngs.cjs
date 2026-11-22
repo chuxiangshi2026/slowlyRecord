@@ -191,22 +191,21 @@ async function launchBrowser(puppeteer) {
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const names = Object.keys(VARIANTS);
-  const blocks = names
-    .map((n, i) => `<div id="g-${i}" style="display:inline-block"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" color-interpolation="sRGB">${scene(VARIANTS[n])}</svg></div>`)
-    .join('\n');
-  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0}svg{display:block}</style></head><body>${blocks}</body></html>`;
 
   const puppeteer = require('puppeteer');
   const browser = await launchBrowser(puppeteer);
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: W * names.length, height: H, deviceScaleFactor: SCALE });
-    await page.setContent(html, { waitUntil: 'load' });
-    for (let i = 0; i < names.length; i++) {
-      const el = await page.$(`#g-${i}`);
-      if (!el) throw new Error(`找不到渲染节点 #g-${i}`);
-      await el.screenshot({ path: path.join(OUT_DIR, `${names[i]}.jpg`), type: 'jpeg', quality: 82 });
-      console.log('rendered', `${names[i]}.jpg`);
+    await page.setViewport({ width: W, height: H, deviceScaleFactor: SCALE });
+    // 每张变体单独 setContent 再截图：多节点同页拼接时 inline-block 空白符会让
+    // 第二张换行溢出视口，元素截图抓到错误画面（dark 曾渲染成 light 的场景）
+    for (const name of names) {
+      const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0}svg{display:block}</style></head><body><svg id="g" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" color-interpolation="sRGB">${scene(VARIANTS[name])}</svg></body></html>`;
+      await page.setContent(html, { waitUntil: 'load' });
+      const el = await page.$('#g');
+      if (!el) throw new Error(`找不到渲染节点 #g（${name}）`);
+      await el.screenshot({ path: path.join(OUT_DIR, `${name}.jpg`), type: 'jpeg', quality: 82 });
+      console.log('rendered', `${name}.jpg`);
     }
   } finally {
     await browser.close();

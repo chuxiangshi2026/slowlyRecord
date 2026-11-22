@@ -47,11 +47,20 @@ beforeEach(() => {
 })
 
 describe('buildWordAudioUrls', () => {
-  it('有道优先、谷歌兜底，且单词被编码', () => {
+  it('有道优先、百度 uk 次之（句子可用）、谷歌兜底，且单词被编码', () => {
     const urls = buildWordAudioUrls("what's up")
     expect(urls[0]).toBe(`https://dict.youdao.com/dictvoice?audio=${encodeURIComponent("what's up")}&type=2`)
-    expect(urls[1]).toContain('translate.google.com')
+    expect(urls[1]).toContain('fanyi.baidu.com/gettts')
+    expect(urls[1]).toContain('lan=uk')
     expect(urls[1]).toContain(encodeURIComponent("what's up"))
+    expect(urls[2]).toContain('translate.google.com')
+    expect(urls[2]).toContain(encodeURIComponent("what's up"))
+  })
+
+  it('英文长句同样带百度 uk 回退（dictvoice 对长句易失败）', () => {
+    const sentence = 'That sounds like a great idea, let us do it.'
+    const urls = buildWordAudioUrls(sentence)
+    expect(urls.map((u) => u.includes('lan=uk') || u.includes('dictvoice') || u.includes('google'))).toEqual([true, true, true])
   })
 
   it('中文：有道智云 TTS 优先，百度免费 TTS 次之，谷歌 zh-CN 兜底', () => {
@@ -88,13 +97,17 @@ describe('speakWord 音频调度', () => {
     expect(env.calls[0].options).toEqual({ silent: false })
   })
 
-  it('有道失败时回退谷歌音源', async () => {
+  it('有道失败时依次回退百度 uk → 谷歌音源', async () => {
     speakWord('hello')
     env.calls[0].reject(new Error('net error'))
     await flushMicrotasks()
     expect(env.calls).toHaveLength(2)
-    expect(env.calls[1].url).toContain('translate.google.com')
-    env.calls[1].resolve()
+    expect(env.calls[1].url).toContain('fanyi.baidu.com/gettts')
+    env.calls[1].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls).toHaveLength(3)
+    expect(env.calls[2].url).toContain('translate.google.com')
+    env.calls[2].resolve()
   })
 
   it('播新音后旧词的待回退音源被丢弃（代际防抢跑）', async () => {

@@ -9,7 +9,7 @@
 
 import { getTtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
-import { buildChineseAudioUrls, containsChinese, splitChineseSpeechText } from '@/utils/youdao-tts'
+import { buildChineseAudioUrls, buildBaiduTtsUrl, containsChinese, splitChineseSpeechText } from '@/utils/youdao-tts'
 import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
 import { getSpeechAudioUrl } from '@/utils/speech-audio'
 import { cdnUrlVariants } from '@/utils/cdn-mirror'
@@ -37,13 +37,14 @@ function buildGoogleAudioUrl(word: string, ttsLang: string): string {
   return `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${ttsLang}&q=${encodeURIComponent(word)}`
 }
 
-/** 英语保留有道音源；其他语种使用对应语言的谷歌 TTS。 */
+/** 英语：有道 dictvoice（单词/短语）→ 百度免费 TTS(lan=uk，句子可用、境内真机可达) → 谷歌兜底；其他语种使用对应语言的谷歌 TTS。 */
 export function buildWordAudioUrls(word: string, language: LanguageCode = getActiveLanguage()): string[] {
   if (language === 'en' && containsChinese(word)) return buildChineseAudioUrls(word)
   const profile = getProfile(language)
   if (profile.code !== 'en') return [buildGoogleAudioUrl(word, profile.ttsLang.split('-')[0])]
   return [
     getPronunciationUrl(word, 'us'),
+    buildBaiduTtsUrl(word, 'uk'),
     buildGoogleAudioUrl(word, 'en')
   ]
 }
