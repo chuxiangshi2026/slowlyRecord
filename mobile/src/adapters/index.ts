@@ -550,6 +550,10 @@ class MiniProgramTtsAdapter implements TtsAdapter {
   private lastQuotaToastAt = 0
   /** 播放代次：每次 playAudio/stop 自增，旧代次的待重试与回调一律作废，防止过期音频抢跑 */
   private generation = 0
+  /** 进行中的缓存下载（按 key 去重）：播放补缓存与预取撞车时只下载一次 */
+  private inflightDownloads = new Set<string>()
+  /** 清单上次持久化时间：缓存命中刷新 lastUsed 是高频操作，同步写存储会卡 UI 线程，做节流 */
+  private lastManifestPersistAt = 0
 
   speak(_text: string, _options?: { lang?: string; rate?: number; pitch?: number }): void {
     console.warn('MiniProgramTtsAdapter.speak: Use playAudio with TTS URL instead')
@@ -707,15 +711,20 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       const entry = this.loadManifest()[key]
       if (!entry || !entry.filePath) return null
       entry.lastUsed = Date.now()
-      this.persistManifest()
+      // lastUsed 刷新只影响 LRU 顺序，允许落盘滞后：5 秒内多次命中合并成一次同步写
+      if (Date.now() - this.lastManifestPersistAt > 5000) {
+        this.persistManifest()
+      }
       return entry.filePath
     } catch {
       return null
     }
   }
 
-  /** 下载在线音频并保存为本地持久文件，全部容错：失败静默返回，不影响发音 */
+  /** 下载在线音频并保存为本地持久文件，全部容错：失败静默返回，不影响发音；同 key 并发去重 */
   private async downloadAndCache(url: string, key: string): Promise<void> {
+    if (this.inflightDownloads.has(key)) return
+    this.inflightDownloads.add(key)
     try {
       const tempFilePath = await new Promise<string>((resolve, reject) => {
         uni.downloadFile({
@@ -752,6 +761,8 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       this.persistManifest()
     } catch {
       // 缓存失败静默，下次播放仍走在线地址
+    } finally {
+      this.inflightDownloads.delete(key)
     }
   }
 
@@ -852,6 +863,7 @@ class MiniProgramTtsAdapter implements TtsAdapter {
   }
 
   private persistManifest(): void {
+    this.lastManifestPersistAt = Date.now()
     try {
       uni.setStorageSync(AUDIO_CACHE_MANIFEST_KEY, this.cacheManifest || {})
     } catch {

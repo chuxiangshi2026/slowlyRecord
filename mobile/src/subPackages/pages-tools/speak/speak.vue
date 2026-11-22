@@ -60,6 +60,7 @@ import { ref, computed } from 'vue'
 import { onUnload } from '@dcloudio/uni-app'
 import { askAi } from '@/utils/quick-translate'
 import { speakWord, stopSpeaking } from '@/utils/word-audio'
+import { parseReply } from './speak'
 
 type SpeakMode = 'translate' | 'reply'
 
@@ -110,15 +111,6 @@ const replyEn = ref('')
 const replyZh = ref('')
 
 onUnload(() => stopSpeaking())
-
-/** 解析 AI 输出：优先 EN:/ZH: 标记，退化取首个非空行当英文 */
-function parseReply(text: string): { en: string; zh: string } {
-  const en = text.match(/EN:\s*(.+)/i)?.[1]?.trim() || ''
-  const zh = text.match(/ZH:\s*(.+)/i)?.[1]?.trim() || ''
-  if (en) return { en, zh }
-  const firstLine = text.split('\n').map((l) => l.trim()).find(Boolean) || ''
-  return { en: firstLine, zh: '' }
-}
 
 async function generate() {
   const text = input.value.trim()

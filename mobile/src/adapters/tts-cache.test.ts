@@ -317,6 +317,75 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
     await vi.advanceTimersByTimeAsync(0)
     expect(storage.get('slowlyrecord_audio_cache_manifest') ?? {}).toEqual({})
   })
+
+  it('播放成功补缓存与预取撞车时只下载一次（并发去重）', async () => {
+    // 让 downloadFile 挂起：success 不立即回调，模拟慢网络下下载进行中
+    let pendingSuccess: ((res: any) => void) | null = null
+    uniMock.downloadFile = vi.fn(({ success }: any) => { pendingSuccess = success })
+    const url = 'https://dict.youdao.com/dictvoice?audio=hello&type=2'
+    const promise = getTtsAdapter().playAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[0].trigger('ended')
+    await promise
+    await vi.advanceTimersByTimeAsync(0) // 后台补缓存发起下载（挂起中）
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
+    // 下载未完成的同一词再预取：与进行中的补缓存撞车，应被去重
+    getTtsAdapter().prefetchAudio?.(url)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
+    // 放行下载完成，缓存最终只写入一份
+    pendingSuccess!({ statusCode: 200, tempFilePath: 'tmp://audio.mp3' })
+    await vi.advanceTimersByTimeAsync(0)
+    const manifest = storage.get('slowlyrecord_audio_cache_manifest')
+    expect(manifest[hashAudioCacheKey('hello')]?.filePath).toBe('saved://tmp://audio.mp3')
+  })
+
+  it('缓存命中刷新 lastUsed 的落盘做 5 秒节流', async () => {
+    // 模拟真机存储的反序列化语义：get/set 都是深拷贝，内存对象与存储互不影响
+    uniMock.getStorageSync = vi.fn((key: string) => {
+      const v = storage.get(key)
+      return v == null ? null : JSON.parse(JSON.stringify(v))
+    })
+    uniMock.setStorageSync = vi.fn((key: string, data: any) => { storage.set(key, JSON.parse(JSON.stringify(data))) })
+    const manifestKey = 'slowlyrecord_audio_cache_manifest'
+    const wordKey = hashAudioCacheKey('hello')
+    storage.set(manifestKey, {
+      [wordKey]: { key: wordKey, filePath: 'saved://cached.mp3', lastUsed: 1 },
+    })
+    const url = 'https://dict.youdao.com/dictvoice?audio=hello&type=2'
+    const manifestWrites = () =>
+      uniMock.setStorageSync.mock.calls.filter(([k]: any[]) => k === manifestKey).length
+
+    // 第一次命中：初始上次持久化时间为 0，必落盘一次
+    let p = getTtsAdapter().playAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[0].trigger('ended')
+    await p
+    await vi.advanceTimersByTimeAsync(0)
+    expect(manifestWrites()).toBe(1)
+    const persistedAt = storage.get(manifestKey)[wordKey].lastUsed
+    expect(persistedAt).toBeGreaterThan(1)
+
+    // 5 秒内第二次命中：内存里 lastUsed 继续刷新，但不再同步落盘（落盘滞后）
+    vi.advanceTimersByTime(1000)
+    p = getTtsAdapter().playAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[1].trigger('ended')
+    await p
+    await vi.advanceTimersByTimeAsync(0)
+    expect(manifestWrites()).toBe(1)
+    expect(storage.get(manifestKey)[wordKey].lastUsed).toBe(persistedAt)
+
+    // 距上次落盘超过 5 秒后再命中：恢复落盘
+    vi.advanceTimersByTime(6000)
+    p = getTtsAdapter().playAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[2].trigger('ended')
+    await p
+    await vi.advanceTimersByTimeAsync(0)
+    expect(manifestWrites()).toBe(2)
+    expect(storage.get(manifestKey)[wordKey].lastUsed).toBeGreaterThan(persistedAt)
+  })
 })
 
 describe('MiniProgramTtsAdapter 代际作废与提示降噪', () => {

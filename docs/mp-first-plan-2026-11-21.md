@@ -223,3 +223,11 @@
 **发音提速（句子分流）**：dictvoice 对长句易 500 且带重试延迟（最坏 3 次 × 15s 看门狗才轮到百度），英文长句（含空格且 >20 字符或 ≥4 词）改为百度 uk 首发、dictvoice 次之、谷歌兜底；单词与短语保持 dictvoice 首发（快、音质好）。句子首发即达，省掉 dictvoice 失败重试的数秒空等。
 
 **首页快速入口可配置**：`utils/home-quick-entries.ts` 注册表（16 项，含口语翻译/专注模式等原不在宫格的功能），首页「快速入口」右侧「编辑」展开点选面板，选择即存 `home-quick-entries`；默认仍为原 8 项，「全部功能」固定末尾。词集与全部功能页共用 WORD_BOOK_ENABLED 开关。
+
+### 3.13 全面体检：bug 修复 + 性能优化 + 测试补齐（✅ 2026-11-22）
+
+**Bug 修复**：① `speakChineseLongText` 的 `userInitiated` 参数在「回退全程 silent」改造后已成死代码，从签名删除（recall.vue 同步去实参），避免调用方误以为还能控制提示；② 口语翻译页 `parseReply` 从组件抽离为纯模块 `speak.ts` 并加固——单行合并输出截掉 `ZH:` 尾巴、去除模型输出的包裹引号、无 EN:/ZH: 标记时退化取首个非空行（第二行作中文释义），怪异输出不再整段塞进英文栏。
+
+**性能优化**：① 缓存清单落盘节流——缓存命中刷新 lastUsed 是高频操作（连播/翻卡每次发音都触发），原来每次都 `setStorageSync` 同步写存储卡 UI 线程，改为 5 秒节流（LRU 顺序允许滞后，崩溃最多丢 5 秒内的顺序变化）；② 音频下载并发去重——播放成功后的后台补缓存与 `prefetchAudio` 预取撞车时会重复下载同一音频，加 `inflightDownloads` 按 key 去重，同一音频同时只下载一次。
+
+**测试补齐**：新增 `speak.test.ts`（parseReply 5 条）；`word-audio.test.ts` 补分段连播 6 条（空文本、单段、长文本分段+预取、段内回退、整段失败、stopSpeaking 中断）；`tts-cache.test.ts` 补并发去重与落盘节流 2 条。全量 209 个测试文件 3345 条用例通过，mobile type-check 与 mp-weixin 构建通过。

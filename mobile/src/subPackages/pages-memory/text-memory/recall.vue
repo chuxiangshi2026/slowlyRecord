@@ -256,7 +256,7 @@ async function playFullArticle() {
   }
   // CDN 不适用/失败：在线中文音源链分段连播
   if (!ok) {
-    ok = await speakChineseLongText(speakText, { rate: speechRate.value, userInitiated: true })
+    ok = await speakChineseLongText(speakText, { rate: speechRate.value })
   }
   playing.value = false
   if (!ok && !pageExited) uni.showToast({ title: '朗读失败，请检查网络后重试', icon: 'none' })

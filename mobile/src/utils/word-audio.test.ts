@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { speakWord, stopSpeaking, buildWordAudioUrls, type SpeakWordOptions } from '@/utils/word-audio'
+import { speakWord, stopSpeaking, buildWordAudioUrls, speakChineseLongText, type SpeakWordOptions } from '@/utils/word-audio'
 import { setTtsAdapter } from '@/adapters/index'
 import { setActiveLanguage } from '@/utils/language'
 
@@ -270,5 +270,73 @@ describe('speakWord 音频调度', () => {
     expect(env.prefetches).toEqual([
       'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e36e37.mp3',
     ])
+  })
+})
+
+describe('speakChineseLongText 分段连播', () => {
+  it('空文本直接返回 false，不发起播放', async () => {
+    expect(await speakChineseLongText('')).toBe(false)
+    expect(env.calls).toHaveLength(0)
+  })
+
+  it('短文本单段播放，成功返回 true', async () => {
+    const p = speakChineseLongText('你好。')
+    await flushMicrotasks()
+    expect(env.calls).toHaveLength(1)
+    expect(env.calls[0].url).toContain(encodeURIComponent('你好。'))
+    env.calls[0].resolve()
+    expect(await p).toBe(true)
+  })
+
+  // 超过 80 字才会切成两段（分段阈值见 splitChineseSpeechText）
+  const LONG_TEXT = '白日依山尽，黄河入海流。'.repeat(8)
+
+  it('长文本按句分段顺序播放，并预取下一段', async () => {
+    const p = speakChineseLongText(LONG_TEXT, { rate: 0.75 })
+    await flushMicrotasks()
+    // 第一段起播 + 预取第二段
+    expect(env.calls).toHaveLength(1)
+    expect(env.prefetches.length).toBeGreaterThan(0)
+    env.calls[0].resolve()
+    await flushMicrotasks()
+    // 第一段播完推进第二段
+    expect(env.calls.length).toBeGreaterThanOrEqual(2)
+    env.calls[1].resolve()
+    const ok = await p
+    expect(ok).toBe(true)
+    // 语速透传
+    expect(env.calls[0].options).toMatchObject({ rate: 0.75 })
+  })
+
+  it('段内首个音源失败回退下一音源，不中断连播', async () => {
+    const p = speakChineseLongText('你好。')
+    await flushMicrotasks()
+    env.calls[0].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls).toHaveLength(2)
+    env.calls[1].resolve()
+    expect(await p).toBe(true)
+  })
+
+  it('某段全部音源失败返回 false', async () => {
+    const p = speakChineseLongText('你好。')
+    // 音源链长度取决于密钥配置（有道智云 → 百度 → 谷歌），逐个拒绝直到 Promise 落定
+    for (let i = 0; i < 10; i++) {
+      await flushMicrotasks()
+      const call = env.calls[i]
+      if (!call) break
+      call.reject(new Error('net error'))
+    }
+    expect(await p).toBe(false)
+  })
+
+  it('stopSpeaking 中断连播：进行中的段结束后不再推进', async () => {
+    const p = speakChineseLongText(LONG_TEXT)
+    await flushMicrotasks()
+    expect(env.calls).toHaveLength(1)
+    stopSpeaking()
+    env.calls[0].resolve()
+    expect(await p).toBe(false)
+    expect(env.calls).toHaveLength(1)
   })
 })

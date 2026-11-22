@@ -130,11 +130,12 @@ export function stopSpeaking(): void {
  * 长中文文本朗读：按句切分后逐段走中文音源链（有道智云/百度/谷歌）顺序播放，
  * 规避免费 TTS 对单次请求长度的截断（长文只读开头一段的问题）。
  * 与 speakWord 共用代次令牌：stopSpeaking 或新发音会立即中断连播。
+ * 段内回退全程静默，整段全失败才返回 false，由调用方统一提示。
  * 返回是否完整播完（被中断或某段全部音源失败时返回 false）。
  */
 export async function speakChineseLongText(
   text: string,
-  options: { rate?: number; userInitiated?: boolean } = {},
+  options: { rate?: number } = {},
 ): Promise<boolean> {
   const seq = ++speakSeq
   const tts = getTtsAdapter()
