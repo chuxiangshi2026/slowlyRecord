@@ -24,6 +24,8 @@ export interface RemoteWordBankInfo {
   wordCount: number
   sizeKB: number
   language?: LanguageCode
+  /** 带预合成连读音频（public/speech-audio/<id>/），播放时优先于在线 TTS */
+  speechAudio?: boolean
 }
 
 /** 词库分类（英语按用途分，非英语按语种分） */
@@ -56,6 +58,8 @@ const EN_CATEGORY_BY_ID: Record<string, string> = {
   'common-phrases': 'oral', collocations: 'oral', 'phrasal-verbs': 'oral',
   idioms: 'oral', 'sentence-patterns': 'oral', roots: 'oral', newConcept: 'oral',
   'spoken-reductions-1': 'oral', 'spoken-reactions-1': 'oral',
+  'spoken-reductions-2': 'oral', 'spoken-elision-1': 'oral',
+  'spoken-liaison-1': 'oral', 'spoken-reactions-2': 'oral',
   // 影视台词与名言
   'girl-meets-world': 'media', 'friends-tv': 'media', 'modern-family': 'media',
   'big-bang-theory': 'media', sherlock: 'media', 'the-crown': 'media',
@@ -75,7 +79,7 @@ export function categoryIdOf(bank: RemoteWordBankInfo): string {
   return EN_CATEGORY_BY_ID[bank.id] ?? 'other'
 }
 
-/** 从清单构建出现的分类 tab（固定顺序：英语用途分类 → 语种分类） */
+/** 从清单构建出现的分类 tab（固定顺序：英语汇总 → 英语用途分类 → 语种分类） */
 export function buildCategoryTabs(list: RemoteWordBankInfo[]): BankCategory[] {
   const present = new Set(list.map(categoryIdOf))
   const tabs = BANK_CATEGORIES.filter((c) => present.delete(c.id))
@@ -86,6 +90,10 @@ export function buildCategoryTabs(list: RemoteWordBankInfo[]): BankCategory[] {
       present.delete(id)
       tabs.push({ id, label: getProfile(bank.language || 'en').nameZh })
     }
+  }
+  // 有英语词库时在最前面补「英语」汇总 tab（与非英语语种 tab 对齐，英语用途分类是其细分）
+  if (list.some((bank) => (bank.language || 'en') === 'en')) {
+    tabs.unshift({ id: 'lang:en', label: '英语' })
   }
   return tabs
 }
@@ -113,10 +121,19 @@ export const PUBLIC_HOSTED_BANKS: RemoteWordBankInfo[] = [
   { id: 'fr-common-phrases', name: '法语常用短语', wordCount: 213, sizeKB: 19, language: 'fr' },
   { id: 'fr-collocations', name: '法语固定搭配', wordCount: 166, sizeKB: 14, language: 'fr' },
   { id: 'fr-sentences', name: '法语常用句子', wordCount: 135, sizeKB: 16, language: 'fr' },
-  // 英语口语（连读弱读 / 高频反应句），桌面端同文件，另有配套预合成自然连读音频待接入
-  { id: 'spoken-reductions-1', name: '连读弱读 500 句', wordCount: 500, sizeKB: 54, language: 'en' },
-  { id: 'spoken-reactions-1', name: '口语反应 500 句', wordCount: 500, sizeKB: 43, language: 'en' },
+  // 英语口语（连读弱读 / 略读省音 / 连读规则 / 高频反应句），桌面端同文件，配套预合成自然连读音频（speechAudio）
+  { id: 'spoken-reductions-1', name: '连读弱读 500 句', wordCount: 500, sizeKB: 54, language: 'en', speechAudio: true },
+  { id: 'spoken-reactions-1', name: '口语反应 500 句', wordCount: 500, sizeKB: 43, language: 'en', speechAudio: true },
+  { id: 'spoken-reductions-2', name: '连读弱读 500 句 II', wordCount: 500, sizeKB: 70, language: 'en', speechAudio: true },
+  { id: 'spoken-elision-1', name: '略读省音 500 句', wordCount: 500, sizeKB: 79, language: 'en', speechAudio: true },
+  { id: 'spoken-liaison-1', name: '连读规则 500 句', wordCount: 500, sizeKB: 53, language: 'en', speechAudio: true },
+  { id: 'spoken-reactions-2', name: '口语反应 500 句 II', wordCount: 500, sizeKB: 45, language: 'en', speechAudio: true },
 ]
+
+/** 词库是否带预合成连读音频（public/speech-audio/<id>/，见 utils/speech-audio.ts） */
+export function hasSpeechAudio(bankId: string): boolean {
+  return !!bankId && PUBLIC_HOSTED_BANKS.some((bank) => bank.id === bankId && bank.speechAudio === true)
+}
 
 /** 已缓存的词库 id 列表 */
 export function getCachedBankIds(): string[] {

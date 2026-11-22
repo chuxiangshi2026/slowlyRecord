@@ -9,9 +9,9 @@
 ## 二、小程序整体健康度（2026-11-21 实测）
 
 - `npm run type-check`（mobile）：通过，0 错误
-- 单测：57 文件 / 670 条全部通过
+- 单测：全仓 200 文件 / 3264 条全部通过（其中移动端 63 文件 / 724 条）
 - `build:mp-weixin`：通过；主包 ~1.6MB（红线 2MB），pages-memory 分包 1.5MB（红线 2MB，余量最小）
-- 待真机验证项：翻译链路（GLM 默认 + MyMemory 兜底）、OCR、中文 TTS、暗黑模式跟随系统、分享卡绘制
+- 待真机验证项：翻译链路（GLM 默认 + MyMemory 兜底）、OCR、中文 TTS、暗黑模式跟随系统、分享卡绘制、口语音频 CDN 播放
 
 ## 三、字母映射 / 音标 / 数字记忆现状与优化
 
@@ -90,6 +90,36 @@
 4. ✅ 练习四档：认桩（4 选 1）/ 背桩 / 编码复述（看数字串背桩链）/ 实战（看标题背数字），实战答案下也附桩链
 5. 场景模板（手机号/生日/银行卡）与记忆宫殿联动未做，视使用反馈再补
 
+### 3.4 口语句库与预合成连读音频（✅ 2026-11-22）
+
+**背景**：用户反馈「卡片练习部分句子无法发音」——长句走 dictvoice 失败、回退 Google TTS 在国内/微信内被墙无声；同时口语句子太少、词库分类缺「英语」汇总。
+
+**口语句库扩充至 6 库 3000 句**（`public/wordbanks/spoken-*.json`，双端共用，全部带预合成音频）：
+
+| 词库 | 内容 | 条数 |
+|---|---|---|
+| spoken-reductions-1 | 连读弱读 I（gonna/wanna/didja 等） | 500 |
+| spoken-reductions-2 | 连读弱读 II（must've/y'know/finna 等 29 组） | 500 |
+| spoken-elision-1 | 略读省音（walkin'/'cause/'em/las' 等 7 类） | 500 |
+| spoken-liaison-1 | 连读规则（辅元连读/滑音/闪音/h击穿/失去爆破 7 类） | 500 |
+| spoken-reactions-1 | 口语反应 I（高频短反应） | 500 |
+| spoken-reactions-2 | 口语反应 II（赞同/惊讶/推脱/吐槽等 13 场景） | 500 |
+
+- 质量闸门：每库 500 条、freq 1–500 连续、字段仅 word/explains/freq，**6 库跨库零重复**（含修复 reactions-1 与 reductions-1 的 7 条历史撞词）
+- 桌面端注册于 `wordbank-service.ts`（EXTENDED_WORDBANKS，speechAudio 标记）；移动端注册于 `remote-wordbank.ts`（PUBLIC_HOSTED_BANKS，归「口语句型」分类，jsDelivr 托管下载）
+
+**预合成连读音频接入移动端（发音失败修复主线）**：
+1. 音频由 `scripts/generate_speech_audio.py` 离线合成（edge-tts en-US-AvaNeural、rate +5%），文件名 `md5(voice|rate|归一化文本)`，托管 jsDelivr `public/speech-audio/<bankId>/`
+2. `mobile/src/utils/md5.ts`：内置精简 MD5（小程序不能用 crypto-js），RFC 1321 标准向量 + 中文 UTF-8 + 生成侧实际输入交叉验证
+3. `mobile/src/utils/speech-audio.ts`：与桌面端同哈希口径，返回 jsDelivr 音频 URL
+4. `word-audio.ts` 新增 `speechBankId`：预合成录音放音源链最前，失败回退有道/Google TTS
+5. 导入口语句库时词条写入 `speechBankId`（wordbank.vue importToBank）；复习页 / 专注模式 / 听写发音均已接线
+6. **真实连读/弱读/略读发音**：预合成音频按完整口语形式合成（如 wanna 读 /ˈwɑːnə/），覆盖连读、弱读、略读、闪音——这是机器 TTS 逐词朗读做不到的
+
+**词库分类「英语」汇总 tab**（2026-11-22）：分类栏顺序 = 全部 / 英语 / 考试 / 分级 / 口语句型 / … / 日语 / 俄语…，与非英语语种 tab 对齐；`buildCategoryTabs` 在含英语词库时自动补「英语」tab，筛选特判 `(language||'en')==='en'`。
+
+**待真机验证**：口语音频 CDN 播放（InnerAudioContext 加载 jsDelivr mp3 + 本地缓存落盘）。
+
 ## 四、实施顺序
 
 **本阶段（音标 + 自然拼读优先）—— 2026-11-22 已完成：**
@@ -106,3 +136,4 @@
 **后续阶段：**
 5. ✅ 数字记忆重设计（2026-11-22 完成：默认桩表 100 全覆盖 + 3 步引导 + 编码视图 + 四档渐进练习）
 6. ✅ 字母映射移植小程序（2026-11-22 完成：预设与桌面端同源 + 编码小工具 + 认/背两档练习 + SRS）
+7. ✅ 口语句库扩充与连读音频接入（2026-11-22 完成：口语库扩至 6 库 3000 句、移动端预合成音频接线修复长句发音失败、词库分类补「英语」tab，见 3.4）

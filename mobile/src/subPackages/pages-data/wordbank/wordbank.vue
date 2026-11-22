@@ -139,7 +139,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
-import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, categoryIdOf, buildCategoryTabs, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
+import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, categoryIdOf, buildCategoryTabs, hasSpeechAudio, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
 import { askImportTargetBank } from '@/utils/wordbank-import-target'
 import { getProfile, listLanguages } from '@/utils/language'
 import { inferMobileItemType } from '@/stores/useUtils/text'
@@ -177,7 +177,12 @@ const filteredRemoteList = computed(() => {
   const kw = remoteKeyword.value.trim().toLowerCase()
   return remoteList.value
     .filter((bank) => bank.wordCount > 0)
-    .filter((bank) => activeCat.value === 'all' || categoryIdOf(bank) === activeCat.value)
+    .filter((bank) => {
+      if (activeCat.value === 'all') return true
+      // 「英语」汇总 tab 跨全部英语用途分类
+      if (activeCat.value === 'lang:en') return (bank.language || 'en') === 'en'
+      return categoryIdOf(bank) === activeCat.value
+    })
     .filter((bank) => !kw || bank.name.toLowerCase().includes(kw) || bank.id.toLowerCase().includes(kw))
     .sort((a, b) => b.wordCount - a.wordCount)
 })
@@ -226,6 +231,8 @@ async function onRemoteBankTap(bank: RemoteWordBankInfo) {
 async function importToBank(bank: RemoteWordBankInfo, rawWords: any[], bankId: string) {
   const now = Date.now()
   const targetLanguage = wordsStore.getBankById(bankId)?.language || 'en'
+  // 口语句库词条记录来源库 id，复习/专注/听写发音据此优先播放预合成连读录音
+  const speechBankId = hasSpeechAudio(bank.id) ? bank.id : undefined
   const mobileWords = rawWords.map(w => {
     const wordText = w.word || ''
     return {
@@ -240,6 +247,7 @@ async function importToBank(bank: RemoteWordBankInfo, rawWords: any[], bankId: s
       reviewCount: 0,
       nextReviewTime: now,
       bankId,
+      ...(speechBankId ? { speechBankId } : {}),
     }
   })
   const result = await wordsStore.importWords(mobileWords, bankId)

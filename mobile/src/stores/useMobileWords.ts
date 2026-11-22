@@ -27,6 +27,8 @@ export interface MobileWord {
   updatedAt?: number
   aliases?: string[]  // 同一词条在其他设备使用过的稳定 ID
   bankId?: string  // 所属词库ID
+  /** 词条来源的预合成口语音频词库 id（导入口语句库时写入，发音优先播录音） */
+  speechBankId?: string
 }
 
 export interface WordBankMeta {
@@ -745,7 +747,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const existingByText = new Map(existingWords.map(w => [getWordKey(w.word, language), w]))
     const newOnly: MobileWord[] = []
     const replacements = new Map<string, MobileWord>()
-    const contentKeys: Array<keyof MobileWord> = ['word', 'meaning', 'phonetic', 'example', 'itemType', 'freq']
+    const contentKeys: Array<keyof MobileWord> = ['word', 'meaning', 'phonetic', 'example', 'itemType', 'freq', 'speechBankId']
     const learningKeys: Array<keyof MobileWord> = [
       'level', 'remembered', 'needsReview', 'lastReviewTime', 'nextReviewTime', 'reviewCount',
     ]

@@ -179,4 +179,27 @@ describe('speakWord 音频调度', () => {
     speakWord('hello')
     expect(env.prefetches).toHaveLength(0)
   })
+
+  it('口语句库词条优先播放预合成连读音频，失败回退有道', async () => {
+    speakWord('I wanna go home', { speechBankId: 'spoken-reductions-1' })
+    expect(env.calls[0].url).toBe(
+      'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e36e37.mp3',
+    )
+    env.calls[0].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls[1].url).toContain('dict.youdao.com')
+    env.calls[1].resolve()
+  })
+
+  it('不带 speechBankId 的词条不掺入预合成音源', () => {
+    speakWord('hello')
+    expect(env.calls[0].url).toContain('dict.youdao.com')
+  })
+
+  it('预取下一条可用其自身的预合成音源', () => {
+    speakWord('hello', { prefetchNext: 'I wanna go home', prefetchNextSpeechBankId: 'spoken-reductions-1' })
+    expect(env.prefetches).toEqual([
+      'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e36e37.mp3',
+    ])
+  })
 })

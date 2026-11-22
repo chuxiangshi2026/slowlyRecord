@@ -34,6 +34,7 @@ import {
   fetchRemoteIndex,
   categoryIdOf,
   buildCategoryTabs,
+  hasSpeechAudio,
   PUBLIC_HOSTED_BANKS,
   type RemoteWordBankInfo,
 } from '@/utils/remote-wordbank'
@@ -195,17 +196,32 @@ describe('词库分类', () => {
     }
   })
 
-  it('分类 tab：英语分类在前、语种在后，只列出清单里出现的', () => {
+  it('分类 tab：英语汇总在最前，英语分类其次、语种在后，只列出清单里出现的', () => {
     const list: RemoteWordBankInfo[] = [
       { id: 'cet4', name: '四级词汇', wordCount: 1, sizeKB: 1, language: 'en' },
       { id: 'dining', name: '吃饭', wordCount: 1, sizeKB: 1, language: 'en' },
       { id: 'jlpt-n5', name: 'JLPT N5', wordCount: 1, sizeKB: 1, language: 'ja' },
     ]
     expect(buildCategoryTabs(list)).toEqual([
+      { id: 'lang:en', label: '英语' },
       { id: 'exam', label: '考试' },
       { id: 'life', label: '生活场景' },
       { id: 'lang:ja', label: '日语' },
     ])
+  })
+
+  it('纯非英语清单不出「英语」汇总 tab', () => {
+    const list: RemoteWordBankInfo[] = [
+      { id: 'jlpt-n5', name: 'JLPT N5', wordCount: 1, sizeKB: 1, language: 'ja' },
+    ]
+    expect(buildCategoryTabs(list)).toEqual([{ id: 'lang:ja', label: '日语' }])
+  })
+
+  it('hasSpeechAudio：口语句库带预合成音频，其余不带', () => {
+    expect(hasSpeechAudio('spoken-reductions-1')).toBe(true)
+    expect(hasSpeechAudio('spoken-reactions-1')).toBe(true)
+    expect(hasSpeechAudio('cet4')).toBe(false)
+    expect(hasSpeechAudio('')).toBe(false)
   })
 
   it('未收录的英语 id 归「其他」', () => {

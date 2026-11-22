@@ -494,8 +494,8 @@ function playWord(userInitiated = false) {
   // #endif
 
   // #ifdef MP-WEIXIN || MP-TOUTIAO
-  // 自动播放失败静默，手动点按失败才节流提示
-  speakWord(word.word, { userInitiated })
+  // 自动播放失败静默，手动点按失败才节流提示；口语句库词条优先预合成连读录音
+  speakWord(word.word, { userInitiated, speechBankId: word.speechBankId })
   // #endif
 }
 

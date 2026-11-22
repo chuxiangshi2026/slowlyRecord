@@ -11,6 +11,7 @@ import { getTtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 import { buildChineseAudioUrls, containsChinese } from '@/utils/youdao-tts'
 import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
+import { getSpeechAudioUrl } from '@/utils/speech-audio'
 
 export interface SpeakWordOptions {
   /** 用户主动点发音：失败时允许弹节流提示；自动发音/自动连播一律静默 */
@@ -19,7 +20,11 @@ export interface SpeakWordOptions {
   onEnded?: () => void
   /** 顺便预取的下一个单词：提前拉取缓存，降低切词后的发音延迟 */
   prefetchNext?: string | null
+  /** prefetchNext 词条的预合成音频词库 id（与当前词可能不同库时分别传入） */
+  prefetchNextSpeechBankId?: string
   language?: LanguageCode
+  /** 词条来自带预合成连读音频的词库（口语句库）：优先播放录音，失败回退在线 TTS */
+  speechBankId?: string
 }
 
 /** 发言代次：每次 speakWord/stopSpeaking 自增 */
@@ -40,6 +45,14 @@ export function buildWordAudioUrls(word: string, language: LanguageCode = getAct
   ]
 }
 
+/** 完整播放音源链：带预合成连读音频的词库把录音地址放最前，其后维持原 TTS 兜底链 */
+function buildPlayUrls(word: string, language: LanguageCode, speechBankId?: string): string[] {
+  const urls = buildWordAudioUrls(word, language)
+  if (!speechBankId) return urls
+  const speechUrl = getSpeechAudioUrl(speechBankId, word)
+  return speechUrl ? [speechUrl, ...urls] : urls
+}
+
 /**
  * 全局收敛的单词发音入口
  * 调用即接管音频通道：旧发音立刻停止（适配器代次作废），新音频抢占播放
@@ -52,13 +65,13 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
   // 预取下一个词音频（后台写缓存，失败静默，不影响当前播放）
   if (options.prefetchNext) {
     try {
-      tts.prefetchAudio?.(buildWordAudioUrls(options.prefetchNext, language)[0])
+      tts.prefetchAudio?.(buildPlayUrls(options.prefetchNext, language, options.prefetchNextSpeechBankId)[0])
     } catch {
       // 预取能力缺失时忽略，播放时仍走在线地址
     }
   }
 
-  const urls = buildWordAudioUrls(word, language)
+  const urls = buildPlayUrls(word, language, options.speechBankId)
   const playAt = (urlIndex: number): void => {
     // 代际丢弃：加载/回退完成前已切词（新的 speakWord 或 stopSpeaking）则不再播
     if (seq !== speakSeq) return

@@ -606,8 +606,15 @@ const goToWords = () => {
 const playWord = (userInitiated = false) => {
   const word = currentWord.value?.word
   if (!word) return
+  const next = sessionWords.value[currentIndex.value + 1]
   // 全局统一发音入口：播前停旧音、代际防抢跑、预取下一词；自动发音失败静默
-  speakWord(word, { userInitiated, prefetchNext: sessionWords.value[currentIndex.value + 1]?.word })
+  // 口语句库词条带 speechBankId，优先播放预合成连读录音（含连读/弱读），失败回退在线 TTS
+  speakWord(word, {
+    userInitiated,
+    prefetchNext: next?.word,
+    speechBankId: currentWord.value?.speechBankId,
+    prefetchNextSpeechBankId: next?.speechBankId,
+  })
 }
 
 // 翻面显示释义时自动发音一次；新词出现（isFlipped 归 false）不播，先让用户回忆

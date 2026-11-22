@@ -37,6 +37,11 @@ export default defineConfig({
       { find: /^@\/utils\/word-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/word-audio.ts') },
       // mobile 中文发音音源：mobile 代码以 @/utils/youdao-tts 引用，同上需优先映射到 mobile 目录
       { find: /^@\/utils\/youdao-tts$/, replacement: resolve(__dirname, 'mobile/src/utils/youdao-tts.ts') },
+      // mobile 精简 MD5：mobile 代码以 @/utils/md5 引用，同上需优先映射到 mobile 目录
+      { find: /^@\/utils\/md5$/, replacement: resolve(__dirname, 'mobile/src/utils/md5.ts') },
+      // mobile 预合成口语音频定位：mobile 代码以 @/utils/speech-audio 引用，
+      // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/speech-audio（依赖 crypto-js）
+      { find: /^@\/utils\/speech-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/speech-audio.ts') },
       // mobile 字母映射预设：mobile 代码以 @/utils/letter-preset 引用，同上需优先映射到 mobile 目录
       { find: /^@\/utils\/letter-preset$/, replacement: resolve(__dirname, 'mobile/src/utils/letter-preset.ts') },
       // mobile 轻量复习调度：subPackages 内代码以 @/utils/practice-srs 引用，同上

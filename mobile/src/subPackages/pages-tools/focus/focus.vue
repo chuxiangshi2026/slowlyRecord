@@ -331,6 +331,9 @@ function playCurrent(userInitiated = false) {
   speakWord(word.word, {
     userInitiated,
     prefetchNext: wordList.value[currentIndex.value + 1]?.word,
+    // 口语句库词条优先播放预合成连读录音（含连读/弱读），失败回退在线 TTS
+    speechBankId: word.speechBankId,
+    prefetchNextSpeechBankId: wordList.value[currentIndex.value + 1]?.speechBankId,
     // 自动发音开启时，发音自然播完即切下一个并继续发音（自动连播）
     onEnded: settings.value.autoPlay ? advanceByAudio : undefined
   })
