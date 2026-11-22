@@ -1117,34 +1117,24 @@ const goAfterReview = (url: string) => {
 }
 
 .review-card {
-  /* 玉白向淡青的细微渐变，叠在背景图上依然不透、文字清晰 */
-  background: linear-gradient(165deg, var(--sr-card) 55%, var(--sr-primary-bg) 100%);
+  /* 毛玻璃质感（与专注模式同款思路）：半透明叠在背景图上，玉绿细边收边 */
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18rpx);
   border-radius: 32rpx;
-  border: 1rpx solid var(--sr-border);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
   width: 100%;
   max-width: 600rpx;
   min-height: 700rpx;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 24rpx 64rpx rgba(0,0,0,0.28), 0 6rpx 20rpx rgba(82,121,111,0.18);
+  box-shadow: 0 16rpx 48rpx rgba(61, 90, 82, 0.16);
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
-
-/* 中式双线内框：卡片内侧一圈玉绿细线，收边更精致 */
-.review-card::before {
-  content: '';
-  position: absolute;
-  top: 14rpx;
-  left: 14rpx;
-  right: 14rpx;
-  bottom: 14rpx;
-  border: 1rpx solid rgba(82, 121, 111, 0.22);
-  border-radius: 22rpx;
-  pointer-events: none;
-}
-.theme-dark .review-card::before {
-  border-color: rgba(131, 197, 168, 0.2);
+.theme-dark .review-card {
+  background: rgba(21, 26, 24, 0.52);
+  border-color: rgba(131, 197, 168, 0.28);
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.42);
 }
 
 /* 卡片顶部栏（等级徽章） */

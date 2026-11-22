@@ -170,6 +170,8 @@ const revealedCount = computed(() => revealed.value.filter(Boolean).length)
 const playing = ref(false)
 // 页面已退出标记：连播被 stopSpeaking 中断时不弹「朗读失败」
 let pageExited = false
+// 内置库匹配结果（onLoad 时发起）：命中才探测 CDN 预合成音频，非内置文章直接分段连播
+let builtinPoemPromise: Promise<Awaited<ReturnType<typeof findBuiltinPoem>> | null> = Promise.resolve(null)
 
 // 朗读语速：0.75 / 1 / 1.25 循环切换，记住选择
 const SPEECH_RATES = [1, 0.75, 1.25]
@@ -187,15 +189,13 @@ onLoad((opt: any) => {
   if (found) {
     article.value = found
     revealed.value = blocks.value.map(() => false)
-    if (!found.pinyin || !found.translation) {
-      findBuiltinPoem(found.title, found.content, found.dynasty)
-        .then((poem) => {
-          if (!poem) return
-          if (poem.pinyin) builtinPinyin.value = poem.pinyin
-          if (poem.translation) builtinTranslation.value = poem.translation
-        })
-        .catch(() => { /* 回填失败静默 */ })
-    }
+    // 内置库匹配结果同时用于：拼音/译文回填 + 朗读时是否值得探测 CDN 预合成音频
+    builtinPoemPromise = findBuiltinPoem(found.title, found.content, found.dynasty).catch(() => null)
+    builtinPoemPromise.then((poem) => {
+      if (!poem) return
+      if (!found.pinyin && poem.pinyin) builtinPinyin.value = poem.pinyin
+      if (!found.translation && poem.translation) builtinTranslation.value = poem.translation
+    })
   }
   loaded.value = true
 })
@@ -232,9 +232,9 @@ function randomReveal() {
 }
 
 /**
- * 朗读全文：始终优先尝试 CDN 预合成音频（按标题+作者+正文哈希定位，
- * 内置诗词不论新旧导入都能命中；非内置内容 404 后自动回退）；
- * CDN 全失败后退回中文在线音源链分段连播（免费 TTS 对长文本会截断，分段规避）。
+ * 朗读全文：内置库文章优先尝试 CDN 预合成音频（按标题+作者+正文哈希定位）；
+ * 非内置文章跳过 CDN 探测（404 重试浪费数秒），直接中文在线音源链分段连播
+ * （免费 TTS 对长文本会截断，分段规避；下一段边播边预取）。
  */
 async function playFullArticle() {
   if (!article.value || playing.value) return
@@ -242,15 +242,18 @@ async function playFullArticle() {
   const speakText = buildPoetrySpeakText(a.title, a.author, a.content)
   playing.value = true
   let ok = false
-  // CDN 预合成整首音频（主域 + 镜像域）
-  for (const url of cdnUrlVariants(getPoetryAudioUrl(a.title, a.author, a.content))) {
-    try {
-      await getTtsAdapter().playAudio(url, { rate: speechRate.value })
-      ok = true
-      break
-    } catch { /* 尝试下一镜像 */ }
+  // 仅内置库文章才可能有预合成音频：命中才探测 CDN（主域 + 镜像域）
+  const poem = await builtinPoemPromise
+  if (poem) {
+    for (const url of cdnUrlVariants(getPoetryAudioUrl(a.title, a.author, a.content))) {
+      try {
+        await getTtsAdapter().playAudio(url, { rate: speechRate.value })
+        ok = true
+        break
+      } catch { /* 尝试下一镜像 */ }
+    }
   }
-  // CDN 未命中/失败：在线中文音源链分段连播
+  // CDN 不适用/失败：在线中文音源链分段连播
   if (!ok) {
     ok = await speakChineseLongText(speakText, { rate: speechRate.value, userInitiated: true })
   }

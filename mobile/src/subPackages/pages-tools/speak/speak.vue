@@ -2,21 +2,34 @@
   <view class="speak-page" :class="themeClass">
     <AppBackground />
     <view class="intro">
-      <text class="intro-title">🗣️ AI 口语回复</text>
-      <text class="intro-desc">输入对方说的话（中文或英文），AI 生成地道英文口语回复并自动朗读，照着说即可。</text>
+      <text class="intro-title">🗣️ AI 口语翻译</text>
+      <text class="intro-desc">{{ currentMode.desc }}</text>
+    </view>
+
+    <!-- 模式切换：口语翻译（说自己想说的）/ 口语回复（回应对方说的） -->
+    <view class="mode-tabs">
+      <view
+        v-for="m in modeList"
+        :key="m.value"
+        class="mode-tab"
+        :class="{ on: mode === m.value }"
+        @click="mode = m.value"
+      >
+        <text>{{ m.label }}</text>
+      </view>
     </view>
 
     <view class="input-card">
       <textarea
         v-model="input"
         class="input-area"
-        placeholder="例如：周末要不要一起去看电影？"
+        :placeholder="currentMode.placeholder"
         :maxlength="200"
         auto-height
       />
       <view class="example-chips">
         <view
-          v-for="ex in examples"
+          v-for="ex in currentMode.examples"
           :key="ex"
           class="ex-chip"
           @click="input = ex"
@@ -25,7 +38,7 @@
         </view>
       </view>
       <button class="btn-generate" :disabled="generating" @click="generate">
-        {{ generating ? '生成中…' : '生成口语回复' }}
+        {{ generating ? '生成中…' : currentMode.button }}
       </button>
     </view>
 
@@ -43,21 +56,53 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { onUnload } from '@dcloudio/uni-app'
 import { askAi } from '@/utils/quick-translate'
 import { speakWord, stopSpeaking } from '@/utils/word-audio'
 
-// 场景：与陌生人对话，对方说中文或英文，AI 直接给地道英文口语回复
-const SYSTEM_PROMPT = [
-  '你是英语口语教练。用户会给你一句别人对他说的话（中文或英文）。',
-  '请给出一句地道、自然的英文口语回复，像母语者日常聊天那样简短（一两句），避免书面语。',
-  '严格按以下两行格式输出，不要输出其他任何内容：',
-  'EN: <英文口语回复>',
-  'ZH: <中文释义>',
-].join('\n')
+type SpeakMode = 'translate' | 'reply'
 
-const examples = ['周末要不要一起去看电影？', '这家餐厅的菜真不错', "How's it going?"]
+const FORMAT_RULE =
+  '严格按以下两行格式输出，不要输出其他任何内容：\nEN: <地道英文口语>\nZH: <中文意思>'
+
+const MODES: Record<SpeakMode, {
+  label: string
+  desc: string
+  placeholder: string
+  button: string
+  prompt: string
+  examples: string[]
+}> = {
+  // 口语翻译：把自己想说的中文（或中式英文）译成母语者日常口语
+  translate: {
+    label: '口语翻译',
+    desc: '输入你想说的中文，AI 翻译成地道英文口语并自动朗读，照着说即可。',
+    placeholder: '例如：这家餐厅的菜真不错',
+    button: '翻译成口语',
+    prompt:
+      '你是英语口语翻译官。把用户输入翻译成地道、自然的英文口语，像母语者日常聊天那样说，简短一两句，避免书面语；输入若是英文则改写成更地道的口语。\n' + FORMAT_RULE,
+    examples: ['这家餐厅的菜真不错', '我迷路了，能帮我一下吗', '价格能便宜一点吗'],
+  },
+  // 口语回复：对方说了一句话（中文或英文），用英文口语自然回应
+  reply: {
+    label: '口语回复',
+    desc: '输入对方说的话（中文或英文），AI 用地道英文口语帮你回应并自动朗读。',
+    placeholder: '例如：周末要不要一起去看电影？',
+    button: '生成口语回复',
+    prompt:
+      '你是英语口语教练。用户会给你一句别人对他说的话（中文或英文）。请给出一句地道、自然的英文口语回复，像母语者日常聊天那样简短（一两句），避免书面语。\n' + FORMAT_RULE,
+    examples: ['周末要不要一起去看电影？', "How's it going?", '好久不见，最近怎么样？'],
+  },
+}
+
+const modeList = [
+  { value: 'translate' as SpeakMode, label: '口语翻译' },
+  { value: 'reply' as SpeakMode, label: '口语回复' },
+]
+
+const mode = ref<SpeakMode>('translate')
+const currentMode = computed(() => MODES[mode.value])
 
 const input = ref('')
 const generating = ref(false)
@@ -78,20 +123,20 @@ function parseReply(text: string): { en: string; zh: string } {
 async function generate() {
   const text = input.value.trim()
   if (!text) {
-    uni.showToast({ title: '先输入对方说的话', icon: 'none' })
+    uni.showToast({ title: mode.value === 'translate' ? '先输入想说的话' : '先输入对方说的话', icon: 'none' })
     return
   }
   if (generating.value) return
   generating.value = true
   try {
-    const res = await askAi(SYSTEM_PROMPT, text)
+    const res = await askAi(currentMode.value.prompt, text)
     if (!res.ok) {
       uni.showModal({ title: '生成失败', content: res.error, showCancel: false })
       return
     }
     const { en, zh } = parseReply(res.text)
     if (!en) {
-      uni.showToast({ title: '未解析到英文回复，请重试', icon: 'none' })
+      uni.showToast({ title: '未解析到英文，请重试', icon: 'none' })
       return
     }
     replyEn.value = en
@@ -123,7 +168,7 @@ function copyReply() {
 }
 
 .intro {
-  padding: 16rpx 8rpx 24rpx;
+  padding: 16rpx 8rpx 20rpx;
 }
 .intro-title {
   font-size: 36rpx;
@@ -137,6 +182,28 @@ function copyReply() {
   margin-top: 10rpx;
   display: block;
   line-height: 1.6;
+}
+
+.mode-tabs {
+  display: flex;
+  gap: 12rpx;
+  background: var(--sr-card-2);
+  border-radius: 32rpx;
+  padding: 6rpx;
+  margin-bottom: 24rpx;
+}
+.mode-tab {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--sr-text-2);
+  padding: 14rpx 0;
+  border-radius: 26rpx;
+}
+.mode-tab.on {
+  background: var(--sr-primary);
+  color: var(--sr-on-primary);
+  font-weight: bold;
 }
 
 .input-card {

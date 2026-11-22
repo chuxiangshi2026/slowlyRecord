@@ -111,8 +111,8 @@ const allFeatures = [
   {
     icon: '🗣️',
     cls: 'speak',
-    text: '口语回复',
-    desc: 'AI 生成地道英文口语并朗读',
+    text: '口语翻译',
+    desc: '地道英文口语翻译 / 回复并朗读',
     action: () => navigate('/subPackages/pages-tools/speak/speak'),
   },
   {

@@ -82,7 +82,7 @@
         {
           "path": "speak/speak",
           "style": {
-            "navigationBarTitleText": "口语回复"
+            "navigationBarTitleText": "口语翻译"
           }
         }
       ]

@@ -119,10 +119,17 @@ export async function speakChineseLongText(
   const tts = getTtsAdapter()
   const segments = splitChineseSpeechText(text)
   if (!segments.length) return false
-  for (const segment of segments) {
+  for (let i = 0; i < segments.length; i++) {
     if (seq !== speakSeq) return false
+    const urls = buildChineseAudioUrls(segments[i])
+    // 边播边预取下一段首选音源，段间无需等网络加载
+    if (i + 1 < segments.length) {
+      try {
+        tts.prefetchAudio?.(buildChineseAudioUrls(segments[i + 1])[0])
+      } catch { /* 预取能力缺失时忽略 */ }
+    }
     let ok = false
-    for (const url of buildChineseAudioUrls(segment)) {
+    for (const url of urls) {
       if (seq !== speakSeq) return false
       try {
         await tts.playAudio(url, { silent: !options.userInitiated, rate: options.rate })
