@@ -50,6 +50,10 @@ export default defineConfig({
       { find: /^@\/utils\/cdn-mirror$/, replacement: resolve(__dirname, 'mobile/src/utils/cdn-mirror.ts') },
       // mobile 轻量在线翻译：mobile 代码以 @/utils/quick-translate 引用，同上
       { find: /^@\/utils\/quick-translate$/, replacement: resolve(__dirname, 'mobile/src/utils/quick-translate.ts') },
+      // mobile 首页快速入口注册表：mobile 代码以 @/utils/home-quick-entries 引用，同上
+      { find: /^@\/utils\/home-quick-entries$/, replacement: resolve(__dirname, 'mobile/src/utils/home-quick-entries.ts') },
+      // mobile 功能开关：home-quick-entries 等以 @/utils/feature-flags 引用，同上
+      { find: /^@\/utils\/feature-flags$/, replacement: resolve(__dirname, 'mobile/src/utils/feature-flags.ts') },
       // mobile 音标数据：mobile 代码以 @/utils/phoneme-data 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/phoneme-data（无 PHONEME_CHANT）
       { find: /^@\/utils\/phoneme-data$/, replacement: resolve(__dirname, 'mobile/src/utils/phoneme-data.ts') },

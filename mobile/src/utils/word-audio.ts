@@ -4,7 +4,8 @@
  * 1. 播新音前强制停旧音：所有发音都走同一个 TTS 适配器单例，playOnce 开始即销毁旧实例；
  * 2. 代际令牌防抢跑：speakSeq 记录当前发言代次，异步音源回退完成时若已切词则丢弃，不播过期音频；
  * 3. 预取下一个：发音当前词时后台把下一个词的音频拉进本地缓存，切词后命中缓存即时发音；
- * 4. 失败提示降噪：自动发音/自动连播失败静默，仅用户主动点发音才弹节流提示（适配器侧 3 秒节流）。
+ * 4. 失败提示降噪：音源链回退全程静默（避免「先弹错误提示、后正常发音」），
+ *    仅整条链全部失败且为用户主动发音时弹一次节流提示（模块侧 3 秒节流）。
  */
 
 import { getTtsAdapter } from '@/adapters/index'
@@ -33,20 +34,36 @@ export interface SpeakWordOptions {
 /** 发言代次：每次 speakWord/stopSpeaking 自增 */
 let speakSeq = 0
 
+let lastFailToastAt = 0
+/** 全音源失败后的节流提示（3 秒）：整条链回退完毕仍失败才弹，避免中途误报 */
+function toastFailThrottled(): void {
+  const now = Date.now()
+  if (now - lastFailToastAt < 3000) return
+  lastFailToastAt = now
+  try {
+    uni.showToast({ title: '发音失败，请检查网络', icon: 'none' })
+  } catch { /* 测试环境无 uni */ }
+}
+
 function buildGoogleAudioUrl(word: string, ttsLang: string): string {
   return `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${ttsLang}&q=${encodeURIComponent(word)}`
 }
 
-/** 英语：有道 dictvoice（单词/短语）→ 百度免费 TTS(lan=uk，句子可用、境内真机可达) → 谷歌兜底；其他语种使用对应语言的谷歌 TTS。 */
+/** 长句判定：含空格且较长/多词。dictvoice 对长句易 500 且每次失败都带重试延迟，句子改由百度 uk 首发 */
+function isSentenceLike(text: string): boolean {
+  const t = text.trim()
+  return t.includes(' ') && (t.length > 20 || t.split(/\s+/).length >= 4)
+}
+
+/** 英语：单词走 dictvoice 首发（快、音质好），句子走百度 uk 首发（dictvoice 长句易失败、谷歌境内被阻断）；其他语种使用对应语言的谷歌 TTS。 */
 export function buildWordAudioUrls(word: string, language: LanguageCode = getActiveLanguage()): string[] {
   if (language === 'en' && containsChinese(word)) return buildChineseAudioUrls(word)
   const profile = getProfile(language)
   if (profile.code !== 'en') return [buildGoogleAudioUrl(word, profile.ttsLang.split('-')[0])]
-  return [
-    getPronunciationUrl(word, 'us'),
-    buildBaiduTtsUrl(word, 'uk'),
-    buildGoogleAudioUrl(word, 'en')
-  ]
+  const youdao = getPronunciationUrl(word, 'us')
+  const baidu = buildBaiduTtsUrl(word, 'uk')
+  const google = buildGoogleAudioUrl(word, 'en')
+  return isSentenceLike(word) ? [baidu, youdao, google] : [youdao, baidu, google]
 }
 
 /** 完整播放音源链：带预合成连读音频的词库把录音地址放最前（含 jsDelivr 镜像容灾），其后维持原 TTS 兜底链 */
@@ -79,7 +96,8 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
   const playAt = (urlIndex: number): void => {
     // 代际丢弃：加载/回退完成前已切词（新的 speakWord 或 stopSpeaking）则不再播
     if (seq !== speakSeq) return
-    tts.playAudio(urls[urlIndex], { silent: !options.userInitiated, rate: options.rate }).then(
+    // 回退全程静默：中途单个音源失败不弹提示，全链失败才由末尾统一节流提示
+    tts.playAudio(urls[urlIndex], { silent: true, rate: options.rate }).then(
       () => {
         if (seq !== speakSeq) return
         options.onEnded?.()
@@ -89,6 +107,8 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
         if (urlIndex + 1 < urls.length) {
           // 当前音源失败，换兜底音源重试
           playAt(urlIndex + 1)
+        } else if (options.userInitiated) {
+          toastFailThrottled()
         }
       }
     )
@@ -133,7 +153,8 @@ export async function speakChineseLongText(
     for (const url of urls) {
       if (seq !== speakSeq) return false
       try {
-        await tts.playAudio(url, { silent: !options.userInitiated, rate: options.rate })
+        // 段内回退静默：整段全失败才返回 false，由调用方统一提示
+        await tts.playAudio(url, { silent: true, rate: options.rate })
         ok = true
         break
       } catch { /* 当前音源失败，换下一音源 */ }

@@ -78,40 +78,28 @@
     <!-- #endif -->
 
     <view class="quick-actions">
-      <view class="action-title">快速入口</view>
+      <view class="action-title-row">
+        <view class="action-title">快速入口</view>
+        <view class="action-edit" @click="editingEntries = !editingEntries">{{ editingEntries ? '完成' : '编辑' }}</view>
+      </view>
+      <!-- 编辑面板：点选要在宫格显示的功能，立即生效并记住选择 -->
+      <view v-if="editingEntries" class="entry-edit-panel">
+        <view
+          v-for="entry in QUICK_ENTRIES"
+          :key="entry.id"
+          class="entry-edit-chip"
+          :class="{ on: selectedEntryIds.includes(entry.id) }"
+          @click="toggleEntry(entry.id)"
+        >
+          <text>{{ entry.icon }} {{ entry.text }}</text>
+        </view>
+        <view class="entry-edit-hint">点选要显示的功能，顺序与上方列表一致</view>
+      </view>
       <view class="action-list">
         <!-- 宫格与今日任务区去重：开始复习（主任务卡）与每日打卡（次级条）不再出现在宫格 -->
-        <view class="action-item" @click="goToDictation">
-          <view class="action-icon dictation">✏️</view>
-          <text class="action-text">拼写练习</text>
-        </view>
-        <view class="action-item" @click="goToTranslate">
-          <view class="action-icon translate">🌐</view>
-          <text class="action-text">翻译取词</text>
-        </view>
-        <view class="action-item" @click="goToTextMemory">
-          <view class="action-icon text">📜</view>
-          <text class="action-text">文本记忆</text>
-        </view>
-        <view class="action-item" @click="goToNumberMemory">
-          <view class="action-icon memory">🔢</view>
-          <text class="action-text">数字记忆</text>
-        </view>
-        <view class="action-item" @click="goToPhonetic">
-          <view class="action-icon phonetic">🔤</view>
-          <text class="action-text">音标学习</text>
-        </view>
-        <view class="action-item" @click="goToPhonics">
-          <view class="action-icon phonics">🧩</view>
-          <text class="action-text">自然拼读</text>
-        </view>
-        <view class="action-item" @click="goToLetterMemory">
-          <view class="action-icon letter">🔡</view>
-          <text class="action-text">字母映射</text>
-        </view>
-        <view class="action-item" @click="goToAddWord">
-          <view class="action-icon addword">➕</view>
-          <text class="action-text">添加单词</text>
+        <view v-for="entry in quickEntries" :key="entry.id" class="action-item" @click="goToEntry(entry)">
+          <view class="action-icon" :class="entry.cls">{{ entry.icon }}</view>
+          <text class="action-text">{{ entry.text }}</text>
         </view>
         <view class="action-item" @click="goToAllFeatures">
           <view class="action-icon all">⋯</view>
@@ -140,6 +128,7 @@ import { useTextMemory } from '@/stores/useTextMemory'
 import { useSignin } from '@/stores/useSignin'
 import { loadDailyGoal, countReviewedToday, getGoalProgress } from '@/utils/daily-goal'
 import { loadOnboarded } from '@/utils/onboarding'
+import { QUICK_ENTRIES, loadQuickEntryIds, saveQuickEntryIds, type QuickEntry } from '@/utils/home-quick-entries'
 import { getEncourageText } from '@/utils/encourage'
 import SharePreview from '@/components/SharePreview.vue'
 import { renderCanvasCard } from '@/utils/share-card-canvas'
@@ -161,6 +150,20 @@ const sharing = ref(false)
 
 const wordCount = ref(0)
 const reviewCount = ref(0)
+
+// 快速入口：用户可配置的宫格子集（uni storage 持久化），顺序固定为注册表顺序
+const selectedEntryIds = ref<string[]>(loadQuickEntryIds())
+const editingEntries = ref(false)
+const quickEntries = computed(() => QUICK_ENTRIES.filter((e) => selectedEntryIds.value.includes(e.id)))
+function toggleEntry(id: string) {
+  const idx = selectedEntryIds.value.indexOf(id)
+  if (idx >= 0) selectedEntryIds.value.splice(idx, 1)
+  else selectedEntryIds.value.push(id)
+  saveQuickEntryIds([...selectedEntryIds.value])
+}
+const goToEntry = (entry: QuickEntry) => {
+  uni.navigateTo({ url: entry.url })
+}
 
 // 每日目标：默认 20 词，「我的」页可改；onShow 时重新读取（设置页返回后生效）
 const dailyGoal = ref(loadDailyGoal())
@@ -322,40 +325,12 @@ const goToMainTask = () => {
   }
 }
 
-const goToDictation = () => {
-  uni.navigateTo({ url: '/subPackages/pages-tools/dictation/dictation' })
-}
-
-const goToTranslate = () => {
-  uni.navigateTo({ url: '/subPackages/pages-tools/translate/translate' })
-}
-
 const goToSignin = () => {
   uni.navigateTo({ url: '/subPackages/pages-data/signin/signin' })
 }
 
 const goToWordbank = () => {
   uni.navigateTo({ url: '/subPackages/pages-data/wordbank/wordbank' })
-}
-
-const goToNumberMemory = () => {
-  uni.navigateTo({ url: '/subPackages/pages-memory/number-memory/number-memory' })
-}
-
-const goToPhonetic = () => {
-  uni.navigateTo({ url: '/subPackages/pages-memory/phonetic-memory/phonetic-memory' })
-}
-
-const goToPhonics = () => {
-  uni.navigateTo({ url: '/subPackages/pages-memory/phonics/phonics' })
-}
-
-const goToLetterMemory = () => {
-  uni.navigateTo({ url: '/subPackages/pages-memory/letter-memory/letter-memory' })
-}
-
-const goToAddWord = () => {
-  uni.navigateTo({ url: '/subPackages/pages-tools/add-word/add-word' })
 }
 
 const goToTextMemory = () => {
@@ -604,11 +579,58 @@ const goToAllFeatures = () => {
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
 }
 
+.action-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
 .action-title {
   font-size: 32rpx;
   font-weight: bold;
   color: var(--sr-text);
+}
+
+.action-edit {
+  font-size: 24rpx;
+  color: var(--sr-primary);
+  padding: 6rpx 20rpx;
+  border-radius: 24rpx;
+  background: var(--sr-primary-bg);
+}
+
+/* 快速入口编辑面板 */
+.entry-edit-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 16rpx;
   margin-bottom: 20rpx;
+  background: var(--sr-card-2);
+  border-radius: 16rpx;
+}
+
+.entry-edit-chip {
+  font-size: 24rpx;
+  color: var(--sr-text-3);
+  padding: 10rpx 20rpx;
+  border-radius: 28rpx;
+  background: var(--sr-card);
+  border: 1rpx solid var(--sr-border);
+}
+
+.entry-edit-chip.on {
+  color: var(--sr-primary);
+  background: var(--sr-primary-bg);
+  border-color: var(--sr-primary);
+  font-weight: bold;
+}
+
+.entry-edit-hint {
+  width: 100%;
+  font-size: 20rpx;
+  color: var(--sr-text-3);
 }
 
 .action-list {
@@ -642,6 +664,17 @@ const goToAllFeatures = () => {
 .action-icon.memory { background: #5c7a6b; }
 .action-icon.addword { background: var(--sr-primary-2); }
 .action-icon.all { background: #97b1a6; }
+.action-icon.phonetic { background: #6f9a8d; }
+.action-icon.phonics { background: #74937d; }
+.action-icon.letter { background: #83a89a; }
+.action-icon.speak { background: #5f8577; }
+.action-icon.focus { background: #3d5a52; }
+.action-icon.sentences { background: #8ba89c; }
+.action-icon.palace { background: #4a6b62; }
+.action-icon.knowledge { background: #83a89a; }
+.action-icon.memorytest { background: #5c7a6b; }
+.action-icon.grapher { background: #6b8f7f; }
+.action-icon.wordbook { background: #74937d; }
 
 .action-text {
   font-size: 24rpx;

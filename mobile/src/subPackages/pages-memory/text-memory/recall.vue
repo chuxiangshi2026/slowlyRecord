@@ -247,7 +247,8 @@ async function playFullArticle() {
   if (poem) {
     for (const url of cdnUrlVariants(getPoetryAudioUrl(a.title, a.author, a.content))) {
       try {
-        await getTtsAdapter().playAudio(url, { rate: speechRate.value })
+        // 静默探测：CDN 未命中时不弹错误提示，直接落到分段连播
+        await getTtsAdapter().playAudio(url, { rate: speechRate.value, silent: true })
         ok = true
         break
       } catch { /* 尝试下一镜像 */ }

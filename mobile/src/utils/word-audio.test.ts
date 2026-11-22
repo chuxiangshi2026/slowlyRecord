@@ -57,10 +57,18 @@ describe('buildWordAudioUrls', () => {
     expect(urls[2]).toContain(encodeURIComponent("what's up"))
   })
 
-  it('英文长句同样带百度 uk 回退（dictvoice 对长句易失败）', () => {
+  it('英文长句由百度 uk 首发（dictvoice 对长句易失败），dictvoice 次之、谷歌兜底', () => {
     const sentence = 'That sounds like a great idea, let us do it.'
     const urls = buildWordAudioUrls(sentence)
-    expect(urls.map((u) => u.includes('lan=uk') || u.includes('dictvoice') || u.includes('google'))).toEqual([true, true, true])
+    expect(urls[0]).toContain('fanyi.baidu.com/gettts')
+    expect(urls[0]).toContain('lan=uk')
+    expect(urls[1]).toContain('dict.youdao.com/dictvoice')
+    expect(urls[2]).toContain('translate.google.com')
+  })
+
+  it('短词与短语仍由 dictvoice 首发', () => {
+    expect(buildWordAudioUrls('hello')[0]).toContain('dict.youdao.com/dictvoice')
+    expect(buildWordAudioUrls("what's up")[0]).toContain('dict.youdao.com/dictvoice')
   })
 
   it('中文：有道智云 TTS 优先，百度免费 TTS 次之，谷歌 zh-CN 兜底', () => {
@@ -92,9 +100,37 @@ describe('speakWord 音频调度', () => {
     expect(env.calls[0].options).toEqual({ silent: true })
   })
 
-  it('用户主动发音以非静默模式播放（失败允许节流提示）', () => {
-    speakWord('hello', { userInitiated: true })
-    expect(env.calls[0].options).toEqual({ silent: false })
+  it('回退全程静默（避免先弹错误提示后正常发音），用户主动发音全链失败才弹一次提示', async () => {
+    const toast = vi.fn()
+    ;(globalThis as any).uni = { showToast: toast }
+    try {
+      speakWord('hello', { userInitiated: true })
+      expect(env.calls[0].options).toEqual({ silent: true })
+      // 整链 3 个音源全部失败
+      for (let i = 0; i < 3; i++) {
+        env.calls[i].reject(new Error('net error'))
+        await flushMicrotasks()
+      }
+      expect(env.calls).toHaveLength(3)
+      expect(toast).toHaveBeenCalledTimes(1)
+    } finally {
+      delete (globalThis as any).uni
+    }
+  })
+
+  it('自动发音全链失败静默不弹提示', async () => {
+    const toast = vi.fn()
+    ;(globalThis as any).uni = { showToast: toast }
+    try {
+      speakWord('hello')
+      for (let i = 0; i < 3; i++) {
+        env.calls[i].reject(new Error('net error'))
+        await flushMicrotasks()
+      }
+      expect(toast).not.toHaveBeenCalled()
+    } finally {
+      delete (globalThis as any).uni
+    }
   })
 
   it('有道失败时依次回退百度 uk → 谷歌音源', async () => {
@@ -207,9 +243,12 @@ describe('speakWord 音频调度', () => {
     expect(env.calls[2].url).toContain('fastly.jsdelivr.net')
     env.calls[2].reject(new Error('net error'))
     await flushMicrotasks()
-    // 镜像全部失败后回退在线 TTS
-    expect(env.calls[3].url).toContain('dict.youdao.com')
-    env.calls[3].resolve()
+    // 镜像全部失败后回退在线 TTS（句子首发百度 uk，dictvoice 次之）
+    expect(env.calls[3].url).toContain('fanyi.baidu.com/gettts')
+    env.calls[3].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls[4].url).toContain('dict.youdao.com')
+    env.calls[4].resolve()
   })
 
   it('语速设置透传到底层 playAudio（含回退音源）', async () => {
