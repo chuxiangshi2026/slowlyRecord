@@ -2,8 +2,8 @@
   <view class="focus-page" @touchmove.stop>
     <!-- 专注模式专属深色古风背景（不跟随主题，避免亮色主题下浅底浅字看不清） -->
     <image class="focus-bg" :src="bgSrc" mode="aspectFill" />
-    <!-- 顶栏 -->
-    <view class="top-bar">
+    <!-- 顶栏（右距/顶距按微信胶囊位置动态避让，防止设置按钮被胶囊盖住） -->
+    <view class="top-bar" :style="topBarStyle">
       <text class="exit-btn" @click="exitFocus">✕ 退出</text>
       <text class="progress-text" v-if="wordList.length > 0">{{ currentIndex + 1 }} / {{ wordList.length }}</text>
       <text class="settings-btn" @click="showSettings = !showSettings">⚙ 设置</text>
@@ -284,6 +284,23 @@ function loadSettings(): FocusSettings {
 
 const settings = ref<FocusSettings>(loadSettings())
 const showSettings = ref(false)
+
+// 微信胶囊避让：自定义导航下胶囊浮在页面右上角，顶栏按胶囊实际位置留出顶部与右侧空间
+const topBarStyle = ref({ paddingTop: '100rpx', paddingRight: '30rpx' })
+
+function measureCapsule() {
+  try {
+    const rect = uni.getMenuButtonBoundingClientRect?.()
+    const winW = uni.getWindowInfo?.().windowWidth || uni.getSystemInfoSync().windowWidth || 375
+    if (rect && rect.left > 0 && winW > 0) {
+      const toRpx = (px: number) => Math.round((px * 750) / winW)
+      topBarStyle.value = {
+        paddingTop: `${toRpx(rect.top)}rpx`,
+        paddingRight: `${toRpx(winW - rect.left + 8)}rpx`
+      }
+    }
+  } catch { /* 低版本基础库无胶囊 API，沿用默认间距 */ }
+}
 
 function persistSettings() {
   try {
@@ -603,6 +620,7 @@ onMounted(async () => {
   try {
     uni.setKeepScreenOn({ keepScreenOn: true })
   } catch {}
+  measureCapsule()
   // 数据由首页加载，这里兜底调用（幂等）
   await wordsStore.loadWords()
   wordList.value = [...wordsStore.reviewWords]
@@ -646,7 +664,8 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 100rpx 30rpx 10rpx;
+  /* 顶部与右侧间距由内联 style 按胶囊位置注入，这里只管左侧与底部 */
+  padding: 0 30rpx 10rpx;
 }
 
 .exit-btn {
