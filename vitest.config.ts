@@ -42,6 +42,9 @@ export default defineConfig({
       // mobile 预合成口语音频定位：mobile 代码以 @/utils/speech-audio 引用，
       // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/speech-audio（依赖 crypto-js）
       { find: /^@\/utils\/speech-audio$/, replacement: resolve(__dirname, 'mobile/src/utils/speech-audio.ts') },
+      // mobile 音标数据：mobile 代码以 @/utils/phoneme-data 引用，
+      // 需优先映射到 mobile 目录，避免落到桌面端 src/utils/phoneme-data（无 PHONEME_CHANT）
+      { find: /^@\/utils\/phoneme-data$/, replacement: resolve(__dirname, 'mobile/src/utils/phoneme-data.ts') },
       // mobile 字母映射预设：mobile 代码以 @/utils/letter-preset 引用，同上需优先映射到 mobile 目录
       { find: /^@\/utils\/letter-preset$/, replacement: resolve(__dirname, 'mobile/src/utils/letter-preset.ts') },
       // mobile 轻量复习调度：subPackages 内代码以 @/utils/practice-srs 引用，同上

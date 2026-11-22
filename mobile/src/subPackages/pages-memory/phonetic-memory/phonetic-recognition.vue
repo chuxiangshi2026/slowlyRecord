@@ -39,6 +39,12 @@
         </view>
       </view>
 
+      <!-- 答后展示助记口诀（答前显示会泄题：口诀含例词与音标） -->
+      <view v-if="answered" class="mnemonic-feedback">
+        <text class="mnemonic-feedback-label">💡 助记口诀</text>
+        <text class="mnemonic-feedback-text">{{ currentQ.phoneme.mnemonic }}</text>
+      </view>
+
       <button v-if="answered" class="btn-next" @click="nextQuestion">
         {{ currentIndex + 1 >= TOTAL ? '查看结果' : '下一题' }}
       </button>
@@ -382,6 +388,31 @@ onLoad((opt: any) => {
   font-weight: bold;
   color: var(--sr-text);
   font-family: 'Times New Roman', serif;
+}
+
+/* 答后助记口诀 */
+.mnemonic-feedback {
+  width: 100%;
+  margin-top: 30rpx;
+  background: var(--sr-primary-bg);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+}
+
+.mnemonic-feedback-label {
+  display: block;
+  font-size: 22rpx;
+  color: var(--sr-text-3);
+  margin-bottom: 8rpx;
+}
+
+.mnemonic-feedback-text {
+  display: block;
+  font-size: 26rpx;
+  color: var(--sr-primary);
+  font-weight: bold;
+  line-height: 1.6;
 }
 
 .btn-next {

@@ -3,9 +3,19 @@
     <AppBackground />
     <!-- 首次引导 -->
     <GuideBar
-      text="先点音标卡听发音、跟读例词，再从「音标识别」开始练最轻松；辨音和拆音有难度，放在后面。"
+      text="先背下方速记口诀建立整体印象，再点音标卡听发音、看助记口诀、跟读例词；练习从「音标识别」开始最轻松。"
       storage-key="phonetic-guide-done"
     />
+    <!-- 48 音标速记总口诀（默认展开，背完可收起） -->
+    <view class="chant-card">
+      <view class="chant-header" @click="chantCollapsed = !chantCollapsed">
+        <text class="chant-title">🎵 48 音标速记口诀</text>
+        <text class="chant-toggle">{{ chantCollapsed ? '展开' : '收起' }}</text>
+      </view>
+      <view v-if="!chantCollapsed" class="chant-body">
+        <text v-for="(line, i) in PHONEME_CHANT" :key="i" class="chant-line">{{ line }}</text>
+      </view>
+    </view>
     <!-- 进度统计 -->
     <view class="progress-row">
       <view class="progress-stat">
@@ -134,15 +144,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
-import { PHONEME_TABLE, findPhoneme, type Phoneme } from '@/utils/phoneme-data'
+import { PHONEME_TABLE, PHONEME_CHANT, findPhoneme, type Phoneme } from '@/utils/phoneme-data'
 import { playPhoneme } from '@/utils/phoneme-audio'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { getTtsAdapter } from '@/adapters/index'
 
 const phoneticStore = usePhoneticMemory()
 const activeIpa = ref('')
+// 速记口诀卡：默认展开（新用户先背口诀），收起状态记住选择
+const chantCollapsed = ref(uni.getStorageSync('phonetic-chant-collapsed') === true)
+watch(chantCollapsed, (v) => {
+  try { uni.setStorageSync('phonetic-chant-collapsed', v) } catch { /* 忽略 */ }
+})
 
 const activePhoneme = computed<Phoneme | undefined>(() =>
   activeIpa.value ? findPhoneme(activeIpa.value) : undefined,
@@ -213,6 +228,45 @@ function goBreakdown() {
   min-height: 100vh;
   background: var(--sr-bg);
   padding: 20rpx 24rpx 60rpx;
+}
+
+/* 速记口诀卡 */
+.chant-card {
+  background: var(--sr-card);
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid var(--sr-primary-bg);
+}
+
+.chant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chant-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--sr-text);
+}
+
+.chant-toggle {
+  font-size: 24rpx;
+  color: var(--sr-primary);
+}
+
+.chant-body {
+  margin-top: 16rpx;
+  border-top: 1rpx solid var(--sr-border);
+  padding-top: 16rpx;
+}
+
+.chant-line {
+  display: block;
+  font-size: 26rpx;
+  color: var(--sr-text-2);
+  line-height: 1.9;
 }
 
 /* 进度统计 */

@@ -56,6 +56,11 @@
           <text class="contrast-play" @click="speak(currentQ.pair.a)">🔊 {{ currentQ.pair.a }}</text>
           <text class="contrast-play" @click="speak(currentQ.pair.b)">🔊 {{ currentQ.pair.b }}</text>
         </view>
+        <view v-if="contrastMnemonics.length" class="contrast-mnemonics">
+          <text v-for="item in contrastMnemonics" :key="item.ipa" class="contrast-mnemonic">
+            /{{ item.ipa }}/ {{ item.mnemonic }}
+          </text>
+        </view>
       </view>
 
       <button v-if="answered" class="btn-next" @click="nextQuestion">
@@ -85,7 +90,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { MINIMAL_PAIRS, type MinimalPair } from '@/utils/phoneme-data'
+import { MINIMAL_PAIRS, findPhoneme, type MinimalPair } from '@/utils/phoneme-data'
 import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { getTtsAdapter } from '@/adapters/index'
 import { getEncourageText } from '@/utils/encourage'
@@ -118,6 +123,18 @@ const progressPercent = computed(() =>
 const accuracy = computed(() => {
   const total = correctCount.value + wrongCount.value
   return total ? Math.round((correctCount.value / total) * 100) : 0
+})
+
+/** 对比块口诀：解析 contrast（格式 '/ɪ/ vs /iː/'），取两个音素各自的助记口诀 */
+const contrastMnemonics = computed(() => {
+  const contrast = currentQ.value?.pair.contrast
+  if (!contrast) return []
+  const m = contrast.match(/\/([^/]+)\/\s+vs\s+\/([^/]+)\//)
+  if (!m) return []
+  return [m[1], m[2]]
+    .map(ipa => findPhoneme(ipa))
+    .filter((ph): ph is NonNullable<typeof ph> => !!ph && !!ph.mnemonic)
+    .map(ph => ({ ipa: ph.ipa, mnemonic: ph.mnemonic }))
 })
 
 async function startSession() {
@@ -396,6 +413,20 @@ onLoad(() => {
   background: var(--sr-primary-bg);
   padding: 12rpx 28rpx;
   border-radius: 12rpx;
+}
+
+.contrast-mnemonics {
+  margin-top: 16rpx;
+  border-top: 1rpx solid var(--sr-border);
+  padding-top: 14rpx;
+}
+
+.contrast-mnemonic {
+  display: block;
+  font-size: 24rpx;
+  color: var(--sr-text-2);
+  line-height: 1.7;
+  font-family: 'Times New Roman', serif;
 }
 
 .btn-next {
