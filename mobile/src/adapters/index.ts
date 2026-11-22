@@ -486,13 +486,13 @@ export function pickLruEvictionsForBytes(entries: AudioCacheEntry[], maxBytes: n
   return evicted
 }
 
-/** 从 TTS URL 提取缓存 key 用的单词文本（支持有道 dictvoice 的 audio 参数与 google tts 的 q 参数），提取不到返回 null */
+/** 从 TTS URL 提取缓存 key 用的单词文本（支持有道 dictvoice 的 audio、google tts 的 q、百度 gettts 的 text 参数），提取不到返回 null */
 export function parseAudioCacheWord(url: string): string | null {
   try {
     const qIndex = url.indexOf('?')
     if (qIndex < 0) return null
     const params = new URLSearchParams(url.slice(qIndex + 1))
-    const raw = params.get('audio') ?? params.get('q')
+    const raw = params.get('audio') ?? params.get('q') ?? params.get('text')
     const word = raw?.trim().toLowerCase()
     return word ? word : null
   } catch {

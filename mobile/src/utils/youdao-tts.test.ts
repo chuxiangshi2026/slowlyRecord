@@ -69,21 +69,24 @@ describe('buildChineseAudioUrls', () => {
     vi.restoreAllMocks()
   })
 
-  it('有密钥：有道智云 TTS 优先，谷歌翻译 TTS（zh-CN）兜底', () => {
+  it('有密钥：有道智云 TTS 优先，百度免费 TTS 次之，谷歌翻译 TTS（zh-CN）兜底', () => {
     mockKey = { appkey: 'app', key: 'sec' }
     const urls = buildChineseAudioUrls('你好')
-    expect(urls).toHaveLength(2)
+    expect(urls).toHaveLength(3)
     expect(urls[0]).toContain('openapi.youdao.com/ttsapi')
-    expect(urls[1]).toContain('translate.google.com')
-    expect(urls[1]).toContain('tl=zh-CN')
+    expect(urls[1]).toContain('fanyi.baidu.com/gettts')
     expect(urls[1]).toContain(encodeURIComponent('你好'))
+    expect(urls[2]).toContain('translate.google.com')
+    expect(urls[2]).toContain('tl=zh-CN')
+    expect(urls[2]).toContain(encodeURIComponent('你好'))
   })
 
-  it('无密钥：仅保留谷歌兜底', () => {
+  it('无密钥：百度免费 TTS 优先，谷歌兜底', () => {
     mockKey = { appkey: '', key: '' }
     const urls = buildChineseAudioUrls('你好')
-    expect(urls).toHaveLength(1)
-    expect(urls[0]).toContain('translate.google.com')
+    expect(urls).toHaveLength(2)
+    expect(urls[0]).toContain('fanyi.baidu.com/gettts')
+    expect(urls[1]).toContain('translate.google.com')
   })
 
   it('音源 URL 与音频缓存键解析兼容（q 参数）', () => {

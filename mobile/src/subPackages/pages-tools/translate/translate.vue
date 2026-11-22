@@ -290,7 +290,10 @@ const handleCapture = async (sourceType?: 'album' | 'camera') => {
     try {
       words = await recognizeImageWords(capture.base64)
     } catch (e: any) {
-      uni.showToast({ title: e.message || '识别失败', icon: 'none' })
+      const msg = e.message || '识别失败'
+      // 缺密钥类提示较长，toast 会截断，改用弹窗让用户看清配置路径
+      if (msg.length > 20) uni.showModal({ title: '提示', content: msg, showCancel: false })
+      else uni.showToast({ title: msg, icon: 'none' })
       return
     } finally {
       uni.hideLoading()

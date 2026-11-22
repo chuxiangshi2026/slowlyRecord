@@ -11,7 +11,8 @@
  *   由 speakWord 的回退链兜底到谷歌翻译 TTS；
  * - 官方文档请求方式为 POST，但 GET 直接返回 audio/mp3 流，可直接作 innerAudio 的 src
  *   （GET 可用性需真机确认，失败同样走回退链）；
- * - 谷歌翻译 TTS（tl=zh-CN）在境外网络/开发工具可用，境内真机基本不可用，仅作最后兜底。
+ * - 内置有道密钥已下线：未配置密钥时先走百度网页 TTS（免费），再走谷歌翻译 TTS（tl=zh-CN，
+ *   境外网络/开发工具可用，境内真机基本不可用，仅作最后兜底）。
  */
 
 import { getTranslationApiKey } from '@/stores/useUtils/translation-settings'
@@ -134,13 +135,17 @@ export function buildYoudaoTtsUrl(text: string, voiceName: string = DEFAULT_ZH_V
 }
 
 /**
- * 中文发音音源链：有道智云 TTS（用户已配密钥时）→ 谷歌翻译 TTS（tl=zh-CN，境内真机多不可用，仅最后兜底）。
- * URL 的 q 参数与现有音频缓存键解析（parseAudioCacheWord）兼容，可正常落本地缓存。
+ * 中文发音音源链：
+ * 有道智云 TTS（用户已配密钥时）→ 百度翻译网页 TTS（免费、无需密钥）
+ * → 谷歌翻译 TTS（tl=zh-CN，境内真机多不可用，仅最后兜底）。
+ * 百度为未公开的网页接口，若失效自动落到下一音源；域名 fanyi.baidu.com 需加入小程序 downloadFile 合法域名。
+ * URL 的 q/text 参数与现有音频缓存键解析（parseAudioCacheWord）兼容，可正常落本地缓存。
  */
 export function buildChineseAudioUrls(text: string): string[] {
   const urls: string[] = []
   const youdao = buildYoudaoTtsUrl(text)
   if (youdao) urls.push(youdao)
+  urls.push(`https://fanyi.baidu.com/gettts?lan=zh&text=${encodeURIComponent(text)}&spd=5&source=web`)
   urls.push(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-CN&q=${encodeURIComponent(text)}`)
   return urls
 }

@@ -71,6 +71,7 @@ import {
   getTranslationApiKey,
   setTranslationApiKey,
   hasCustomTranslationApiKey,
+  resolveEffectiveTranslationPlatform,
   TRANSLATION_PLATFORM_LINKS,
   getPronunciationUrl,
   playPronunciation,
@@ -189,13 +190,23 @@ describe('翻译 API 密钥管理', () => {
     expect(hasCustomTranslationApiKey(plat)).toBe(false)
   })
 
-  it('setTranslationApiKey 空值应清空', () => {
+  it('setTranslationApiKey 空值应清空，回退内置默认密钥', () => {
     setTranslationApiKey(plat, 'temp', 'temp')
     setTranslationApiKey(plat, '', '')
     const keys = getTranslationApiKey(plat)
-    // 清空后应回退到 DefaultApiKeys[plat] 的默认 key（具体值由 config.ts 决定，这里只校验非空且非自定义）
     expect(keys.appkey).not.toBe('temp')
     expect(keys.appkey.length).toBeGreaterThan(0)
+  })
+
+  it('未配置密钥的在线引擎应回落到 mymemory', () => {
+    // deepseek 没有内置密钥，用它验证兜底；glm 等有内置 key 的引擎不会被回落
+    setTranslationApiKey('deepseek', '', '')
+    expect(resolveEffectiveTranslationPlatform('deepseek')).toBe('mymemory')
+    setTranslationApiKey('deepseek', 'user-key', '')
+    expect(resolveEffectiveTranslationPlatform('deepseek')).toBe('deepseek')
+    expect(resolveEffectiveTranslationPlatform('glm')).toBe('glm')
+    expect(resolveEffectiveTranslationPlatform('local')).toBe('local')
+    expect(resolveEffectiveTranslationPlatform('mymemory')).toBe('mymemory')
   })
 })
 
@@ -653,8 +664,12 @@ describe('translateText', () => {
     setTranslationPlatform('glm')
     setTranslationApiKey('glm', 'test-app-id', 'test-glm-key')
     let systemPrompt = ''
+    let authHeader = ''
+    let model = ''
     mockUni.request.mockImplementation((opts: any) => {
       systemPrompt = opts.data.messages[0].content
+      authHeader = opts.header.Authorization
+      model = opts.data.model
       opts.success({
         statusCode: 200,
         data: { choices: [{ message: { content: '{"meaning":"你好"}' } }] },
@@ -664,10 +679,14 @@ describe('translateText', () => {
     await translateText('bonjour', 'auto', 'zh')
     expect(systemPrompt).toContain('专业翻译助手')
     expect(systemPrompt).not.toContain('中英文翻译助手')
+    // 鉴权：appkey 是 Bearer Token，key 是模型名（此前单条翻译误把模型名当 token）
+    expect(authHeader).toBe('Bearer test-app-id')
+    expect(model).toBe('test-glm-key')
   })
 
   it('离线词典未命中的单词应走 API（你道）', async () => {
     setTranslationPlatform('youdao')
+    setTranslationApiKey('youdao', 'test-app-id', 'test-secret')
 
     // 模拟有道翻译成功
     mockUni.request.mockImplementation((opts: any) => {
@@ -696,6 +715,34 @@ describe('translateText', () => {
     expect(result.success).toBe(false)
     expect(result.explains).toBe('testword') // 返回原文
     expect(result.errorMsg).toBeDefined()
+  })
+
+  it('MyMemory 免费引擎无需密钥即可翻译', async () => {
+    setTranslationPlatform('mymemory')
+    mockUni.request.mockImplementation((opts: any) => {
+      expect(opts.url).toContain('api.mymemory.translated.net')
+      opts.success({ statusCode: 200, data: { responseStatus: 200, responseData: { translatedText: '示例译文' } } })
+    })
+
+    const result = await translateText('mymemoryprobe', 'en', 'zh')
+    expect(result.success).toBe(true)
+    expect(result.platform).toBe('mymemory')
+    expect(result.translatedText).toBe('示例译文')
+  })
+
+  it('选了未配置密钥的引擎时自动走 MyMemory', async () => {
+    setTranslationPlatform('deepseek')
+    setTranslationApiKey('deepseek', '', '')
+    let requestUrl = ''
+    mockUni.request.mockImplementation((opts: any) => {
+      requestUrl = opts.url
+      opts.success({ statusCode: 200, data: { responseStatus: 200, responseData: { translatedText: '兜底译文' } } })
+    })
+
+    const result = await translateText('fallbackprobe', 'en', 'zh')
+    expect(requestUrl).toContain('api.mymemory.translated.net')
+    expect(result.platform).toBe('mymemory')
+    expect(result.translatedText).toBe('兜底译文')
   })
 })
 

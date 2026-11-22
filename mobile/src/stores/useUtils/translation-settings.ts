@@ -79,6 +79,20 @@ export function hasCustomTranslationApiKey(provider: TranslationPlatform): boole
   return !!(uk?.appkey?.trim())
 }
 
+/** 该引擎是否具备可用凭证（用户自填或非敏感默认值） */
+export function hasUsableTranslationApiKey(provider: TranslationPlatform): boolean {
+  return !!getTranslationApiKey(provider).appkey
+}
+
+/**
+ * 解析实际使用的引擎：未配置凭证的在线引擎统一回落到 MyMemory 免费接口，
+ * 避免内置密钥下线后翻译直接不可用；local / mymemory 原样返回。
+ */
+export function resolveEffectiveTranslationPlatform(provider: TranslationPlatform): TranslationPlatform {
+  if (provider === 'local' || provider === 'mymemory') return provider
+  return hasUsableTranslationApiKey(provider) ? provider : 'mymemory'
+}
+
 export function getAllTranslationApiKeys(): Record<string, { appkey: string; key: string }> {
   return { ...userApiKeys }
 }

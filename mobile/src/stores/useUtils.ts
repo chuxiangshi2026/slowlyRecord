@@ -18,7 +18,7 @@ export { WORDBANK_LIST, DEFAULT_STRATEGY, loadWordBank, isWordBankCached, saveWo
 export { queryOfflineDict, hasOfflineDict, getOfflineDictSize, queryPhoneticFromCache, getPronunciationUrl, playPronunciation } from './useUtils/offline-dict'
 
 // 翻译设置（轻量，主包安全）
-export { setTranslationPlatform, getTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS } from './useUtils/translation-settings'
+export { setTranslationPlatform, getTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, hasUsableTranslationApiKey, resolveEffectiveTranslationPlatform, TRANSLATION_PLATFORM_LINKS } from './useUtils/translation-settings'
 
 // 同步和二维码已迁移到分包：
 //   import { pushToServer } from '@/subPackages/pages-tools/utils/sync'

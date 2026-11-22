@@ -45,6 +45,13 @@
 
 **更彻底的方向**（后续可选）：所有端的新密钥一律不进仓库，放 git-ignored 本地配置文件，发布构建天然无密钥，自己用的构建才有零配置。
 
+**执行记录（2026-11-20）**：
+
+- **密钥暂缓置空（用户决定）**：`mobile/src/config.ts` 的 `DefaultApiKeys` 保留原内置密钥，等完成轮换后再执行置空；默认引擎仍为 GLM，老用户零配置体验不变。
+- 保留本轮已做的低风险增强：MyMemory 免费引擎（可选，且未配置 key 的在线引擎自动回落）、AI 单条翻译鉴权修复（`appkey` = Token、`key` = 模型名，原先用反导致配了 key 也可能失败）、OCR 缺 key 的可操作提示、中文发音百度 TTS 兜底。
+- 微信公众平台合法域名：request `api.mymemory.translated.net`、downloadFile `fanyi.baidu.com`（配置后免费引擎与中文朗读才可用）。
+- 后续待办：① 到各云厂商控制台轮换/作废旧密钥；② 轮换完成后置空 `DefaultApiKeys`；③ 真机走查翻译/OCR/中文朗读/设置弹窗。
+
 ## 四、Electron / 抖音 / App
 
 按平台优先级（见 AGENTS.md）保持现状：Electron 补 `__STORE_BUILD__: 'false'` 宏仅修启动崩溃，密钥保留（自有渠道分发、无审核要求、低优先平台）。抖音/App 未涉及密钥链路，不动。

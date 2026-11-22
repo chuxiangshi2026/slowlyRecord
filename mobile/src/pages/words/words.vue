@@ -169,7 +169,16 @@
     <view v-if="showDetail" class="popup-overlay" @click="closeDetail" @touchmove.stop.prevent="() => {}">
       <scroll-view scroll-y class="detail-content" @click.stop @touchmove.stop>
         <view class="detail-word">{{ detailWord.word }}</view>
-        <view v-if="detailWord.phonetic" class="detail-phonetic">[{{ detailWord.phonetic }}]</view>
+        <!-- 音标按音素切分着色：绿=已掌握，黄=学习中；点击跳到音标学习 -->
+        <view v-if="detailWord.phonetic" class="detail-phonetic" @click="goPhonetic">
+          <template v-if="detailPhonemes.length">[<text
+            v-for="(ph, i) in detailPhonemes"
+            :key="i"
+            class="ph"
+            :class="phonemeMasteryClass(ph.ipa)"
+          >{{ ph.ipa }}</text>]</template>
+          <template v-else>[{{ detailWord.phonetic }}]</template>
+        </view>
         <view class="detail-meaning">{{ detailWord.meaning }}</view>
         <view v-if="detailWord.example" class="detail-example">
           <text class="detail-example-label">例句</text>
@@ -194,10 +203,14 @@ import { onReachBottom, onHide, onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { useWordBook } from '@/stores/useWordBook'
 import { analyzeWord } from '@/utils/word-analysis'
+import { breakdownPhonetic } from '@/utils/phoneme-breakdown'
+import type { Phoneme } from '@/utils/phoneme-data'
+import { usePhoneticMemory } from '@/stores/usePhoneticMemory'
 import { buildWordBookSource, getDefaultPageName, resolveWordBookKey } from '@/utils/word-book'
 import { WORD_BOOK_ENABLED } from '@/utils/feature-flags'
 
 const wordsStore = useMobileWords()
+const phoneticStore = usePhoneticMemory()
 const wordBookStore = useWordBook()
 
 // ========== 筛选状态持久化 ==========
@@ -609,6 +622,26 @@ const showAddDialog = () => {
 const showWordDetail = (word: any) => {
   detailWord.value = { ...word }
   showDetail.value = true
+  phoneticStore.ensureLoaded()
+}
+
+/** 详情音标切成音素（切分不完整时返回空数组，模板退回纯文本展示） */
+const detailPhonemes = computed<Phoneme[]>(() => {
+  const p: string = detailWord.value?.phonetic || ''
+  if (!p) return []
+  const { phonemes, complete } = breakdownPhonetic(p)
+  return complete ? phonemes : []
+})
+
+function phonemeMasteryClass(ipa: string): string {
+  const prog = phoneticStore.getPhonemeProgress(ipa)
+  if (!prog) return ''
+  if (prog.level >= phoneticStore.MASTERED_LEVEL) return 'mastered'
+  return 'learning'
+}
+
+function goPhonetic() {
+  uni.navigateTo({ url: '/subPackages/pages-memory/phonetic-memory/phonetic-memory' })
 }
 
 const closeDetail = () => {
@@ -1109,6 +1142,19 @@ const formatDate = (timestamp: number): string => {
   color: var(--sr-text-2);
   text-align: center;
   margin-bottom: 24rpx;
+}
+
+.detail-phonetic .ph {
+  padding: 0 2rpx;
+}
+
+.detail-phonetic .ph.mastered {
+  color: var(--sr-primary);
+  font-weight: bold;
+}
+
+.detail-phonetic .ph.learning {
+  color: var(--sr-warning, #e6a23c);
 }
 
 .detail-meaning {

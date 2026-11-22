@@ -27,6 +27,12 @@ function extractEnglishWords(textLines: string[]): string[] {
 
 export async function recognizeImageWords(base64Image: string): Promise<OcrWordResult[]> {
   const { appkey: tencentId } = getTranslationApiKey('tencent')
+  const { appkey: glmKey } = getTranslationApiKey('glm')
+  const { appkey: qwenKey } = getTranslationApiKey('qwen')
+  // 内置密钥已下线：三家 OCR 渠道都未配置时直接给出可操作的提示，避免走一遍网络再报模糊错误
+  if (!tencentId && !glmKey && !qwenKey) {
+    throw new Error('拍照取词需先配置密钥：请在「我的 → 翻译引擎」中填写腾讯云 OCR、GLM 或千问密钥')
+  }
   if (tencentId) {
     try {
       const textLines = await tencentCloudOcr(base64Image)
@@ -43,8 +49,6 @@ export async function recognizeImageWords(base64Image: string): Promise<OcrWordR
       }
     } catch (e: any) { console.warn('腾讯云OCR失败，降级到视觉模型:', e.message) }
   }
-  const { appkey: glmKey } = getTranslationApiKey('glm')
-  const { appkey: qwenKey } = getTranslationApiKey('qwen')
   const errors: string[] = []
   if (glmKey) { try { return await recognizeImageWithApi('https://open.bigmodel.cn/api/paas/v4/chat/completions', glmKey, 'glm-4v-flash', base64Image) } catch (e: any) { errors.push(`GLM: ${e.message}`) } }
   if (qwenKey) { try { return await recognizeImageWithApi('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', qwenKey, 'qwen-vl-max', base64Image) } catch (e: any) { errors.push(`Qwen: ${e.message}`) } }

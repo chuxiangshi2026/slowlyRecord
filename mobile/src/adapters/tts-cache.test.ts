@@ -125,6 +125,10 @@ describe('音频缓存纯函数', () => {
       ).toBe('hello')
     })
 
+    it('解析百度 gettts 的 text 参数', () => {
+      expect(parseAudioCacheWord('https://fanyi.baidu.com/gettts?lan=zh&text=%E4%BD%A0%E5%A5%BD&spd=5&source=web')).toBe('你好')
+    })
+
     it('对编码后的参数解码并统一小写、去除首尾空白', () => {
       expect(parseAudioCacheWord('https://dict.youdao.com/dictvoice?audio=%20Hello%20')).toBe('hello')
       expect(parseAudioCacheWord(`https://dict.youdao.com/dictvoice?audio=${encodeURIComponent("don't")}`)).toBe("don't")

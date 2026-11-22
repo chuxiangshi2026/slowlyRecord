@@ -11,7 +11,7 @@ export type { TranslationPlatform, TranslationResult } from '@/stores/useUtils/t
 // 从轻量设置模块重导出
 export { setTranslationPlatform, getTranslationPlatform, getTranslationApiKey, setTranslationApiKey, hasCustomTranslationApiKey, TRANSLATION_PLATFORM_LINKS, currentPlatform } from '@/stores/useUtils/translation-settings'
 
-import { getTranslationApiKey, currentPlatform } from '@/stores/useUtils/translation-settings'
+import { getTranslationApiKey, currentPlatform, resolveEffectiveTranslationPlatform } from '@/stores/useUtils/translation-settings'
 import { queryOfflineDict, queryPhoneticFromCache, getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 import type { TranslationPlatform } from '@/stores/useUtils/types'
 
@@ -492,12 +492,12 @@ function buildAiSystemPrompt(from: string, to: string): string {
 
 async function translateWithDeepseek(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
   const { appkey, key } = getTranslationApiKey('deepseek')
-  if (!appkey || !key) return { success: false, explains: text, translatedText: text, errorMsg: 'DeepSeek：请先配置API密钥', platform: 'deepseek' }
+  if (!appkey) return { success: false, explains: text, translatedText: text, errorMsg: 'DeepSeek：请先配置API密钥', platform: 'deepseek' }
   try {
     const res: any = await new Promise((resolve) => {
       uni.request({ url: 'https://api.deepseek.com/chat/completions', method: 'POST',
-        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        data: { model: 'deepseek-chat', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3, max_tokens: 1024 },
+        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appkey}` },
+        data: { model: key || 'deepseek-chat', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3, max_tokens: 1024 },
         success: (r) => resolve(r), fail: (e) => resolve(e)
       })
     })
@@ -512,12 +512,12 @@ async function translateWithDeepseek(text: string, from: string = 'auto', to: st
 
 async function translateWithQwen(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
   const { appkey, key } = getTranslationApiKey('qwen')
-  if (!appkey || !key) return { success: false, explains: text, translatedText: text, errorMsg: '千问：请先配置API密钥', platform: 'qwen' }
+  if (!appkey) return { success: false, explains: text, translatedText: text, errorMsg: '千问：请先配置API密钥', platform: 'qwen' }
   try {
     const res: any = await new Promise((resolve) => {
       uni.request({ url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', method: 'POST',
-        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        data: { model: 'qwen-turbo', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3 },
+        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appkey}` },
+        data: { model: key || 'qwen-turbo', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3 },
         success: (r) => resolve(r), fail: (e) => resolve(e)
       })
     })
@@ -532,12 +532,12 @@ async function translateWithQwen(text: string, from: string = 'auto', to: string
 
 async function translateWithKimi(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
   const { appkey, key } = getTranslationApiKey('kimi')
-  if (!appkey || !key) return { success: false, explains: text, translatedText: text, errorMsg: 'Kimi：请先配置API密钥', platform: 'kimi' }
+  if (!appkey) return { success: false, explains: text, translatedText: text, errorMsg: 'Kimi：请先配置API密钥', platform: 'kimi' }
   try {
     const res: any = await new Promise((resolve) => {
       uni.request({ url: 'https://api.moonshot.cn/v1/chat/completions', method: 'POST',
-        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        data: { model: 'moonshot-v1-8k', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3 },
+        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appkey}` },
+        data: { model: key || 'moonshot-v1-8k', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3 },
         success: (r) => resolve(r), fail: (e) => resolve(e)
       })
     })
@@ -552,12 +552,12 @@ async function translateWithKimi(text: string, from: string = 'auto', to: string
 
 async function translateWithGlm(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
   const { appkey, key } = getTranslationApiKey('glm')
-  if (!appkey || !key) return { success: false, explains: text, translatedText: text, errorMsg: '智谱GLM：请先配置API密钥', platform: 'glm' }
+  if (!appkey) return { success: false, explains: text, translatedText: text, errorMsg: '智谱GLM：请先配置API密钥', platform: 'glm' }
   try {
     const res: any = await new Promise((resolve) => {
       uni.request({ url: 'https://open.bigmodel.cn/api/paas/v4/chat/completions', method: 'POST',
-        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        data: { model: 'glm-4-flash', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3 },
+        header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appkey}` },
+        data: { model: key || 'glm-4-flash', messages: [{ role: 'system', content: buildAiSystemPrompt(from, to) }, { role: 'user', content: text }], temperature: 0.3 },
         success: (r) => resolve(r), fail: (e) => resolve(e)
       })
     })
@@ -597,6 +597,46 @@ async function translateWithLocalDict(text: string, from: string = 'auto', to: s
   const offline = queryOfflineDict(text)
   if (offline) return { success: true, explains: offline, translatedText: offline, phonetic: queryPhoneticFromCache(text) || undefined, pronunciation: getPronunciationUrl(text), platform: 'local' }
   return { success: false, explains: text, translatedText: text, errorMsg: '离线词典中未找到该词', platform: 'local' }
+}
+
+// ==================== 免费引擎（无需密钥） ====================
+
+const MYMEMORY_LANG_MAP: Record<string, string> = { zh: 'zh-CN', en: 'en-US', ja: 'ja-JP', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR' }
+
+/**
+ * MyMemory 免费公开接口：无需密钥，匿名每日有额度；未配置密钥时的默认翻译。
+ * 不支持源语言 auto：含日韩/汉字按中文处理，否则按英文。
+ */
+async function translateWithMyMemory(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
+  const guessed = /[぀-ヿ㐀-䶿一-鿿]/.test(text) ? 'zh' : 'en'
+  const source = MYMEMORY_LANG_MAP[from === 'auto' ? guessed : from] || 'en-US'
+  const target = MYMEMORY_LANG_MAP[to] || to
+  return new Promise((resolve) => {
+    uni.request({
+      url: 'https://api.mymemory.translated.net/get',
+      method: 'GET',
+      data: { q: text, langpair: `${source}|${target}` },
+      success: (res) => {
+        const status = res.statusCode || 0
+        const data = res.data as any
+        const fail = (errorMsg: string) => resolve({ success: false, explains: text, translatedText: text, errorMsg, platform: 'mymemory' })
+        if (status === 429) return fail('MyMemory 免费接口被限流（429），请稍后再试')
+        if (status < 200 || status >= 300) return fail(`MyMemory 请求失败: ${status}`)
+        if (data?.quotaFinished) return fail('MyMemory 每日免费额度已用完')
+        if (data?.responseStatus && String(data.responseStatus) !== '200') return fail(`MyMemory 翻译失败: ${data.responseDetails || data.responseStatus}`)
+        const translated = String(data?.responseData?.translatedText || '').trim()
+        if (!translated) return fail('MyMemory 未返回译文')
+        resolve({
+          success: true,
+          explains: translated,
+          translatedText: translated,
+          pronunciation: /[a-z]/i.test(text) ? `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1` : undefined,
+          platform: 'mymemory',
+        })
+      },
+      fail: (err) => resolve({ success: false, explains: text, translatedText: text, errorMsg: 'MyMemory 请求失败: ' + (err.errMsg || '请检查网络连接或小程序域名白名单'), platform: 'mymemory' }),
+    })
+  })
 }
 
 interface BatchAiItem {
@@ -689,15 +729,15 @@ function requestOllamaBatch(words: string[], from: string, to: string): Promise<
   })
 }
 
-async function translateBatchWithAi(words: string[], from: string, to: string): Promise<TranslationResult[]> {
-  if (currentPlatform === 'ollama') return requestOllamaBatch(words, from, to)
-  const { appkey, key } = getTranslationApiKey(currentPlatform)
-  if (!appkey) throw new Error(`请先配置${currentPlatform} API Key`)
-  if (currentPlatform === 'glm') return requestOpenAiCompatibleBatch('https://open.bigmodel.cn/api/paas/v4/chat/completions', appkey, key || 'glm-4-flash', words, 'glm', from, to)
-  if (currentPlatform === 'deepseek') return requestOpenAiCompatibleBatch('https://api.deepseek.com/v1/chat/completions', appkey, key || 'deepseek-chat', words, 'deepseek', from, to)
-  if (currentPlatform === 'qwen') return requestOpenAiCompatibleBatch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', appkey, key || 'qwen-max', words, 'qwen', from, to)
-  if (currentPlatform === 'kimi') return requestOpenAiCompatibleBatch('https://api.moonshot.cn/v1/chat/completions', appkey, key || 'kimi-k2-turbo-preview', words, 'kimi', from, to)
-  throw new Error(`Unsupported AI batch platform: ${currentPlatform}`)
+async function translateBatchWithAi(words: string[], from: string, to: string, platform: TranslationPlatform): Promise<TranslationResult[]> {
+  if (platform === 'ollama') return requestOllamaBatch(words, from, to)
+  const { appkey, key } = getTranslationApiKey(platform)
+  if (!appkey) throw new Error(`请先配置${platform} API Key`)
+  if (platform === 'glm') return requestOpenAiCompatibleBatch('https://open.bigmodel.cn/api/paas/v4/chat/completions', appkey, key || 'glm-4-flash', words, 'glm', from, to)
+  if (platform === 'deepseek') return requestOpenAiCompatibleBatch('https://api.deepseek.com/v1/chat/completions', appkey, key || 'deepseek-chat', words, 'deepseek', from, to)
+  if (platform === 'qwen') return requestOpenAiCompatibleBatch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', appkey, key || 'qwen-max', words, 'qwen', from, to)
+  if (platform === 'kimi') return requestOpenAiCompatibleBatch('https://api.moonshot.cn/v1/chat/completions', appkey, key || 'kimi-k2-turbo-preview', words, 'kimi', from, to)
+  throw new Error(`Unsupported AI batch platform: ${platform}`)
 }
 
 // ==================== 翻译主入口 ====================
@@ -706,7 +746,8 @@ export async function translateText(text: string, from: string = 'auto', to: str
   const trimmed = text.trim().toLowerCase()
   if (!trimmed) return { success: false, explains: '', translatedText: '', errorMsg: '请输入要翻译的文本', platform: 'local' }
 
-  const cached = getCachedTranslation(text, currentPlatform, from, to)
+  const platform = resolveEffectiveTranslationPlatform(currentPlatform)
+  const cached = getCachedTranslation(text, platform, from, to)
   if (cached) return cached
 
   const allowEnglishResources = from === 'en' || from === 'auto'
@@ -714,13 +755,13 @@ export async function translateText(text: string, from: string = 'auto', to: str
     const offline = queryOfflineDict(trimmed)
     if (offline) {
       const localResult = { success: true, explains: offline, translatedText: offline, phonetic: queryPhoneticFromCache(trimmed) || undefined, pronunciation: getPronunciationUrl(trimmed), platform: 'local' as const }
-      setCachedTranslation(text, currentPlatform, from, to, localResult)
+      setCachedTranslation(text, platform, from, to, localResult)
       return localResult
     }
   }
   try {
     let result: TranslationResult
-    switch (currentPlatform) {
+    switch (platform) {
       case 'youdao': result = await translateWithYoudao(text, from, to); break
       case 'baidu': result = await translateWithBaidu(text, from, to); break
       case 'ali': result = await translateWithAli(text, from, to); break
@@ -731,11 +772,12 @@ export async function translateText(text: string, from: string = 'auto', to: str
       case 'glm': result = await translateWithGlm(text, from, to); break
       case 'ollama': result = await translateWithOllama(text, from, to); break
       case 'local': result = await translateWithLocalDict(text, from, to); break
-      default: result = await translateWithGlm(text, from, to); break
+      case 'mymemory': result = await translateWithMyMemory(text, from, to); break
+      default: result = await translateWithMyMemory(text, from, to); break
     }
     if (allowEnglishResources && !result.phonetic && !trimmed.includes(' ')) result.phonetic = queryPhoneticFromCache(trimmed) || undefined
     if (!allowEnglishResources) result.pronunciation = undefined
-    setCachedTranslation(text, currentPlatform, from, to, result)
+    setCachedTranslation(text, platform, from, to, result)
     return result
   } catch (e) {
     return { success: false, explains: text, translatedText: text, errorMsg: '翻译服务异常: ' + String((e as Error).message || e), platform: 'fallback' }
@@ -743,6 +785,7 @@ export async function translateText(text: string, from: string = 'auto', to: str
 }
 
 export async function batchTranslate(words: string[], from: string = 'auto', to: string = 'zh'): Promise<TranslationResult[]> {
+  const platform = resolveEffectiveTranslationPlatform(currentPlatform)
   const CONCURRENCY_LIMITS: Record<string, number> = {
     baidu: 1,
     youdao: 4,
@@ -753,6 +796,7 @@ export async function batchTranslate(words: string[], from: string = 'auto', to:
     kimi: 5,
     glm: 5,
     ollama: 5,
+    mymemory: 2,
     local: 50,
     default: 3,
   }
@@ -760,20 +804,20 @@ export async function batchTranslate(words: string[], from: string = 'auto', to:
   const misses: Array<{ word: string; index: number }> = []
 
   words.forEach((word, index) => {
-    const cached = getCachedTranslation(word, currentPlatform, from, to)
+    const cached = getCachedTranslation(word, platform, from, to)
     if (cached) results[index] = cached
     else misses.push({ word, index })
   })
 
-  if (AI_BATCH_PLATFORMS.has(currentPlatform) && misses.length > 1) {
+  if (AI_BATCH_PLATFORMS.has(platform) && misses.length > 1) {
     for (let i = 0; i < misses.length; i += AI_BATCH_SIZE) {
       const chunk = misses.slice(i, i + AI_BATCH_SIZE)
       try {
-        const batchResults = await translateBatchWithAi(chunk.map(x => x.word), from, to)
+        const batchResults = await translateBatchWithAi(chunk.map(x => x.word), from, to, platform)
         batchResults.forEach((result, idx) => {
           const target = chunk[idx]
           if (result?.success) {
-            setCachedTranslation(target.word, currentPlatform, from, to, result)
+            setCachedTranslation(target.word, platform, from, to, result)
             results[target.index] = result
           }
         })
@@ -783,13 +827,13 @@ export async function batchTranslate(words: string[], from: string = 'auto', to:
 
   const remaining = misses.filter(item => !results[item.index])
   let index = 0
-  const limit = CONCURRENCY_LIMITS[currentPlatform] ?? CONCURRENCY_LIMITS.default
+  const limit = CONCURRENCY_LIMITS[platform] ?? CONCURRENCY_LIMITS.default
   const worker = async () => {
     while (index < remaining.length) {
       const currentIndex = index++
       const item = remaining[currentIndex]
       results[item.index] = await translateText(item.word, from, to)
-      if (currentPlatform === 'baidu' && currentIndex < remaining.length - 1) {
+      if (platform === 'baidu' && currentIndex < remaining.length - 1) {
         await new Promise(r => setTimeout(r, 1000))
       }
     }

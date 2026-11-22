@@ -54,12 +54,13 @@ describe('buildWordAudioUrls', () => {
     expect(urls[1]).toContain(encodeURIComponent("what's up"))
   })
 
-  it('中文：有道 dictvoice 不支持，改走有道智云 TTS（含 q 参数），谷歌 zh-CN 兜底', () => {
+  it('中文：有道智云 TTS 优先，百度免费 TTS 次之，谷歌 zh-CN 兜底', () => {
     const urls = buildWordAudioUrls('你好')
     expect(urls[0]).toContain('openapi.youdao.com/ttsapi')
     expect(urls[0]).toContain(encodeURIComponent('你好'))
-    expect(urls[1]).toContain('translate.google.com')
-    expect(urls[1]).toContain('tl=zh-CN')
+    expect(urls[1]).toContain('fanyi.baidu.com/gettts')
+    expect(urls[2]).toContain('translate.google.com')
+    expect(urls[2]).toContain('tl=zh-CN')
   })
 
   it.each([
@@ -160,15 +161,18 @@ describe('speakWord 音频调度', () => {
     expect(env.prefetches[0]).toContain(encodeURIComponent('学生'))
   })
 
-  it('中文发音失败时按音源链回退（有道智云 → 谷歌 zh-CN）', async () => {
+  it('中文发音失败时按音源链回退（有道智云 → 百度 → 谷歌 zh-CN）', async () => {
     speakWord('你好')
     expect(env.calls[0].url).toContain('openapi.youdao.com/ttsapi')
     env.calls[0].reject(new Error('net error'))
     await flushMicrotasks()
-    expect(env.calls).toHaveLength(2)
-    expect(env.calls[1].url).toContain('translate.google.com')
-    expect(env.calls[1].url).toContain('tl=zh-CN')
-    env.calls[1].resolve()
+    expect(env.calls[1].url).toContain('fanyi.baidu.com/gettts')
+    env.calls[1].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls).toHaveLength(3)
+    expect(env.calls[2].url).toContain('translate.google.com')
+    expect(env.calls[2].url).toContain('tl=zh-CN')
+    env.calls[2].resolve()
   })
 
   it('未指定下一个词时不发起预取', () => {

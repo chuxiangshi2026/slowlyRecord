@@ -116,6 +116,11 @@
             <text class="bank-picker-arrow">▼</text>
           </view>
         </picker>
+        <view class="section-hint">
+          {{ settingsPlatform === 'mymemory'
+            ? '无需密钥，匿名接口每日有免费额度，超出后请稍后再试。'
+            : '留空使用内置默认密钥，也可填写自己的密钥。' }}
+        </view>
 
         <!-- API 密钥配置 -->
         <view v-if="canConfigureApiKey" class="api-key-section">
@@ -257,6 +262,7 @@ const goAchievements = () => {
 
 // 翻译引擎显示名
 const platformNames: Record<string, string> = {
+  mymemory: 'MyMemory 免费翻译',
   youdao: '有道翻译',
   baidu: '百度翻译',
   ali: '阿里翻译',
@@ -271,7 +277,7 @@ const platformOptions = Object.entries(platformNames).map(([value, label]) => ({
 
 const currentTranslationPlatform = computed(() => {
   translationRefreshTick.value // 强制依赖
-  return platformNames[getTranslationPlatform()] || '智谱 GLM'
+  return platformNames[getTranslationPlatform()] || 'MyMemory 免费翻译'
 })
 
 // 翻译引擎设置弹窗
@@ -307,12 +313,14 @@ const onTranslationPlatformSelect = (platform: TranslationPlatform) => {
 }
 
 const confirmTranslationPlatform = () => {
-  setTranslationPlatform(settingsPlatform.value)
-  if (apiKeyInput.value.appkey.trim() || apiKeyInput.value.key.trim()) {
-    setTranslationApiKey(settingsPlatform.value, apiKeyInput.value.appkey.trim(), apiKeyInput.value.key.trim())
-  } else {
-    setTranslationApiKey(settingsPlatform.value, '', '')
+  if (canConfigureApiKey.value) {
+    if (apiKeyInput.value.appkey.trim() || apiKeyInput.value.key.trim()) {
+      setTranslationApiKey(settingsPlatform.value, apiKeyInput.value.appkey.trim(), apiKeyInput.value.key.trim())
+    } else {
+      setTranslationApiKey(settingsPlatform.value, '', '')
+    }
   }
+  setTranslationPlatform(settingsPlatform.value)
   translationRefreshTick.value++
   showTranslationSettingsModal.value = false
   uni.showToast({ title: `已切换为${platformNames[settingsPlatform.value]}`, icon: 'none' })
@@ -412,7 +420,7 @@ const getPlatformLink = (platform: TranslationPlatform) => {
 }
 
 const canConfigureApiKey = computed(() => {
-  return settingsPlatform.value !== 'local'
+  return settingsPlatform.value !== 'local' && settingsPlatform.value !== 'mymemory'
 })
 
 const isAiPlatform = computed(() => {
@@ -706,6 +714,13 @@ button.menu-item.feedback-btn::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.translation-settings .section-hint {
+  font-size: 24rpx;
+  line-height: 1.5;
+  color: var(--sr-text-3);
+  margin-bottom: 8rpx;
 }
 
 .translation-settings .bank-picker {
