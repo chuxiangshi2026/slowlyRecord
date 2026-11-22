@@ -164,6 +164,14 @@
 
 **逐字拼音（正上方）**：`recall.ts` 新增 `alignPinyinChars`（拼音音节与汉字一一对齐，音节数不匹配返回 null 退化整行显示），回忆页揭示块改为 ruby 注音排版（每个字上方一行拼音）。
 
+### 3.8 长音频播放修复 + B站翻译引擎（✅ 2026-11-22）
+
+**「中文朗读只读一段就回到开头重读」根因**：TTS 适配器的看门狗是 15 秒「总时长」超时——单词音频够用，诗词/长文朗读必超时被强制 stop，重试又从 0 秒开始，表现为读到一半回到开头。修复：
+- 看门狗改为「无进展」计时：`onTimeUpdate`/`onCanplay` 每次进度推进都重置计时器，只有真正卡死（15 秒无任何进展）才判失败，长音频可播任意时长
+- 中断重试带断点续播：失败时记录已播放进度，重试用 `InnerAudioContext.startTime` 从上次位置续播（不会从头再来）
+
+**B站翻译引擎（桌面端已有、移动端补齐）**：B站 Index-Translate（`index-translate.bilibili.com`，免密钥公网 AI 接口）加入移动端：`TranslationPlatform` 增加 `bilibili`（stores 类型 + config 默认键表），翻译设置页可直接选择（无需填密钥，`resolveEffectiveTranslationPlatform` 免密钥直通），pages-tools 翻译页与主包 quick-translate（「译英文」）均接入，含思维链标签剥离与限流（429）提示。
+
 ## 四、实施顺序
 
 **本阶段（音标 + 自然拼读优先）—— 2026-11-22 已完成：**

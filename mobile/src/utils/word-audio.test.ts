@@ -180,15 +180,23 @@ describe('speakWord 音频调度', () => {
     expect(env.prefetches).toHaveLength(0)
   })
 
-  it('口语句库词条优先播放预合成连读音频，失败回退有道', async () => {
+  it('口语句库词条优先播放预合成连读音频，主域失败依次走镜像后回退有道', async () => {
     speakWord('I wanna go home', { speechBankId: 'spoken-reductions-1' })
     expect(env.calls[0].url).toBe(
       'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e36e37.mp3',
     )
     env.calls[0].reject(new Error('net error'))
     await flushMicrotasks()
-    expect(env.calls[1].url).toContain('dict.youdao.com')
-    env.calls[1].resolve()
+    // jsDelivr 主域失败 → 境内镜像
+    expect(env.calls[1].url).toContain('jsd.onmicrosoft.cn')
+    env.calls[1].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls[2].url).toContain('fastly.jsdelivr.net')
+    env.calls[2].reject(new Error('net error'))
+    await flushMicrotasks()
+    // 镜像全部失败后回退在线 TTS
+    expect(env.calls[3].url).toContain('dict.youdao.com')
+    env.calls[3].resolve()
   })
 
   it('语速设置透传到底层 playAudio（含回退音源）', async () => {

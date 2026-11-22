@@ -6,7 +6,7 @@
 import type { LanguageCode } from '@/utils/language'
 import type { WordBookBook, WordBookChapter, WordBookPage } from '../../types/word-book'
 
-export type TranslationPlatform = 'mymemory' | 'youdao' | 'baidu' | 'ali' | 'tencent' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'local'
+export type TranslationPlatform = 'mymemory' | 'youdao' | 'baidu' | 'ali' | 'tencent' | 'deepseek' | 'qwen' | 'kimi' | 'glm' | 'ollama' | 'bilibili' | 'local'
 
 export interface TranslationResult {
   success: boolean

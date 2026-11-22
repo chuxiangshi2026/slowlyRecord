@@ -54,7 +54,10 @@ const mockUni: any = {
     play: vi.fn(),
     destroy: vi.fn(),
     onPlay: vi.fn(),
+    onEnded: vi.fn(),
     onError: vi.fn(),
+    onTimeUpdate: vi.fn(),
+    onCanplay: vi.fn(),
   })),
   createCanvasContext: vi.fn(() => ({
     setFillStyle: vi.fn(),
@@ -261,7 +264,7 @@ describe('getPronunciationUrl', () => {
 })
 
 describe('playPronunciation', () => {
-  // 注：playPronunciation 还会调用 audio.onEnded/onError/destroy，
+  // 注：playPronunciation 还会调用 audio.onEnded/onError/onTimeUpdate/onCanplay/destroy，
   // 这里 mock 必须提供这些方法的桩
   function makeAudioCtx() {
     return {
@@ -269,6 +272,8 @@ describe('playPronunciation', () => {
       play: vi.fn(),
       onEnded: vi.fn(),
       onError: vi.fn(),
+      onTimeUpdate: vi.fn(),
+      onCanplay: vi.fn(),
       destroy: vi.fn(),
     }
   }

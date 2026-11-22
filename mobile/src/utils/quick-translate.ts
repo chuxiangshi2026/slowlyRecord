@@ -26,13 +26,14 @@ const AI_ENGINES: Partial<Record<TranslationPlatform, { url: string; defaultMode
   kimi: { url: 'https://api.moonshot.cn/v1/chat/completions', defaultModel: 'moonshot-v1-8k' },
 }
 
-export type QuickTranslateChannel = 'ai' | 'youdao' | 'baidu' | null
+export type QuickTranslateChannel = 'ai' | 'youdao' | 'baidu' | 'bilibili' | null
 
 /** 当前引擎可用的轻量翻译通道（纯函数，便于测试） */
 export function quickTranslateChannel(platform: TranslationPlatform): QuickTranslateChannel {
   if (AI_ENGINES[platform]) return 'ai'
   if (platform === 'youdao') return 'youdao'
   if (platform === 'baidu') return 'baidu'
+  if (platform === 'bilibili') return 'bilibili'
   return null
 }
 
@@ -41,7 +42,7 @@ const SYSTEM_PROMPT =
 
 function request(options: any): Promise<any> {
   return new Promise((resolve) => {
-    uni.request({ ...options, success: (r) => resolve(r), fail: (e) => resolve(e) })
+    uni.request({ ...options, success: (r: any) => resolve(r), fail: (e: any) => resolve(e) })
   })
 }
 
@@ -115,6 +116,29 @@ async function translateWithBaidu(text: string): Promise<QuickTranslateResult> {
   return { ok: true, text: out }
 }
 
+/** B站 Index-Translate：免密钥公网 AI 接口（OpenAI 兼容，可被限流） */
+async function translateWithBilibili(text: string): Promise<QuickTranslateResult> {
+  const { key: configuredModel } = getTranslationApiKey('bilibili')
+  const res = await request({
+    url: 'https://index-translate.bilibili.com/v1/chat/completions',
+    method: 'POST',
+    header: { 'Content-Type': 'application/json' },
+    data: {
+      model: configuredModel || 'Index-Translate-35B-A3B',
+      messages: [{ role: 'user', content: `${SYSTEM_PROMPT}\n\n${text.trim()}` }],
+      temperature: 0,
+      max_tokens: 1024,
+      stream: false,
+    },
+    timeout: 60000,
+  })
+  if (!isHttpOk(res)) return { ok: false, error: `B站翻译请求失败：${errMsg(res)}（公共接口可能限流，请稍后再试）` }
+  const raw: string = (res.data as any)?.choices?.[0]?.message?.content || ''
+  const thEnd = raw.indexOf('</think>')
+  const out = (thEnd >= 0 ? raw.slice(thEnd + 8) : raw).replace(/^<think>/, '').trim()
+  return out ? { ok: true, text: out } : { ok: false, error: 'B站翻译未返回译文，公共接口可能限流，请稍后再试' }
+}
+
 /** 按当前翻译引擎设置把中文全文译成英文（保留行结构） */
 export async function quickTranslateToEnglish(text: string): Promise<QuickTranslateResult> {
   const platform = getTranslationPlatform()
@@ -122,8 +146,9 @@ export async function quickTranslateToEnglish(text: string): Promise<QuickTransl
   if (channel === 'ai') return translateWithAi(platform, text)
   if (channel === 'youdao') return translateWithYoudao(text)
   if (channel === 'baidu') return translateWithBaidu(text)
+  if (channel === 'bilibili') return translateWithBilibili(text)
   return {
     ok: false,
-    error: '当前翻译引擎暂不支持在线译英文，请到「设置 → 翻译」切换为 GLM / DeepSeek / 千问 / Kimi / 有道 / 百度',
+    error: '当前翻译引擎暂不支持在线译英文，请到「设置 → 翻译」切换为 B站 / GLM / DeepSeek / 千问 / Kimi / 有道 / 百度',
   }
 }

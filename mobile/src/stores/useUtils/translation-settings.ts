@@ -89,7 +89,8 @@ export function hasUsableTranslationApiKey(provider: TranslationPlatform): boole
  * 避免内置密钥下线后翻译直接不可用；local / mymemory 原样返回。
  */
 export function resolveEffectiveTranslationPlatform(provider: TranslationPlatform): TranslationPlatform {
-  if (provider === 'local' || provider === 'mymemory') return provider
+  // local / mymemory / bilibili（免密钥）无需 API Key，直接生效
+  if (provider === 'local' || provider === 'mymemory' || provider === 'bilibili') return provider
   return hasUsableTranslationApiKey(provider) ? provider : 'mymemory'
 }
 

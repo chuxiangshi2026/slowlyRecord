@@ -270,6 +270,7 @@ const platformNames: Record<string, string> = {
   qwen: '通义千问',
   kimi: 'Kimi 月之暗面',
   glm: '智谱 GLM',
+  bilibili: 'B站 Index-Translate（免密钥）',
   local: '仅离线词典',
 }
 
@@ -420,7 +421,9 @@ const getPlatformLink = (platform: TranslationPlatform) => {
 }
 
 const canConfigureApiKey = computed(() => {
-  return settingsPlatform.value !== 'local' && settingsPlatform.value !== 'mymemory'
+  const p = settingsPlatform.value
+  // B站 Index-Translate 为免密钥公网接口，无需配置
+  return p !== 'local' && p !== 'mymemory' && p !== 'bilibili'
 })
 
 const isAiPlatform = computed(() => {

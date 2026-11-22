@@ -16,6 +16,10 @@ describe('quickTranslateChannel', () => {
     expect(quickTranslateChannel('baidu')).toBe('baidu')
   })
 
+  it('B站免密钥 AI 走独立通道', () => {
+    expect(quickTranslateChannel('bilibili')).toBe('bilibili')
+  })
+
   it('主包轻量版不支持的引擎返回 null', () => {
     expect(quickTranslateChannel('ali')).toBeNull()
     expect(quickTranslateChannel('tencent')).toBeNull()

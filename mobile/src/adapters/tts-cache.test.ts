@@ -157,6 +157,8 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
       destroy: vi.fn(),
       onEnded: (fn: Function) => { (handlers['ended'] ||= []).push(fn) },
       onError: (fn: Function) => { (handlers['error'] ||= []).push(fn) },
+      onTimeUpdate: (fn: Function) => { (handlers['timeupdate'] ||= []).push(fn) },
+      onCanplay: (fn: Function) => { (handlers['canplay'] ||= []).push(fn) },
       trigger: (event: string, arg?: any) => { (handlers[event] || []).forEach(fn => fn(arg)) },
     }
     return audio
@@ -331,6 +333,8 @@ describe('MiniProgramTtsAdapter 代际作废与提示降噪', () => {
       destroy: vi.fn(),
       onEnded: (fn: Function) => { (handlers['ended'] ||= []).push(fn) },
       onError: (fn: Function) => { (handlers['error'] ||= []).push(fn) },
+      onTimeUpdate: (fn: Function) => { (handlers['timeupdate'] ||= []).push(fn) },
+      onCanplay: (fn: Function) => { (handlers['canplay'] ||= []).push(fn) },
       trigger: (event: string, arg?: any) => { (handlers[event] || []).forEach(fn => fn(arg)) },
     }
     return audio

@@ -528,7 +528,7 @@ export function storageQuotaWarning(currentSize: number, limitSize: number): str
   }
   return ''
 }
-/** 单次播放超时（弱网兜底，触发即视为失败进入重试） */
+/** 播放看门狗：按「无进展」计时（加载中/播放进度推进都会重置），弱网卡死才判失败 */
 const AUDIO_PLAY_TIMEOUT = 15000
 /** 播放失败的最大重试次数 */
 const AUDIO_MAX_RETRY = 2
@@ -574,18 +574,23 @@ class MiniProgramTtsAdapter implements TtsAdapter {
     const targetUrl = cachedPath || url
 
     let lastErr: any = null
+    // 断点续播位置：长音频（诗词朗读可达数分钟）中途卡顿重试时从上次进度继续，不从头再来
+    let resumeAt = 0
     for (let attempt = 0; attempt <= AUDIO_MAX_RETRY; attempt++) {
       // 代际校验：已被更新的播放取代（切词/手动停止）时，旧请求直接作废，不再重试
       if (generation !== this.generation) throw lastErr ?? new Error('stale audio play aborted')
       try {
-        await this.playOnce(targetUrl, options?.rate)
+        await this.playOnce(targetUrl, options?.rate, resumeAt)
         // 播放成功后后台补齐本地缓存（仅在线地址命中且本地无缓存时）
         if (!cachedPath && cacheKey) {
           this.downloadAndCache(url, cacheKey).catch(() => { /* 缓存失败静默 */ })
         }
         return
-      } catch (e) {
+      } catch (e: any) {
         lastErr = e
+        if (typeof e?.lastTime === 'number' && e.lastTime > 1) {
+          resumeAt = Math.max(0, e.lastTime - 0.5)
+        }
         if (attempt < AUDIO_MAX_RETRY) {
           await delay(AUDIO_RETRY_BASE_DELAY * (attempt + 1))
         }
@@ -614,8 +619,8 @@ class MiniProgramTtsAdapter implements TtsAdapter {
     this.downloadAndCache(url, key).catch(() => { /* 预取失败静默，播放时仍走在线地址 */ })
   }
 
-  /** 单次播放：出错或超时视为失败，由上层决定是否重试 */
-  private playOnce(url: string, rate = 1): Promise<void> {
+  /** 单次播放：出错或「长时间无进展」视为失败，由上层决定是否重试（可带断点续播） */
+  private playOnce(url: string, rate = 1, startTime = 0): Promise<void> {
     return new Promise((resolve, reject) => {
       // 先停止并销毁旧实例，避免旧实例的 onEnded 把新引用清掉导致 stop() 失效
       if (this.innerAudio) {
@@ -634,20 +639,40 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       this.innerAudio = audio
 
       let settled = false
-      const timer = setTimeout(() => {
-        if (settled) return
-        settled = true
-        try { audio.stop() } catch { /* ignore */ }
-        try { audio.destroy?.() } catch { /* ignore */ }
-        if (this.innerAudio === audio) this.innerAudio = null
-        reject(new Error('audio play timeout'))
-      }, AUDIO_PLAY_TIMEOUT)
+      let lastTime = 0
+      let timer: ReturnType<typeof setTimeout> | null = null
+      const clearWatchdog = () => {
+        if (timer) { clearTimeout(timer); timer = null }
+      }
+      // 看门狗按「无进展」计时：时间推进/可播事件都会重置，长音频不会被误杀
+      const armWatchdog = () => {
+        clearWatchdog()
+        timer = setTimeout(() => {
+          if (settled) return
+          settled = true
+          try { audio.stop() } catch { /* ignore */ }
+          try { audio.destroy?.() } catch { /* ignore */ }
+          if (this.innerAudio === audio) this.innerAudio = null
+          const err: any = new Error('audio play stall timeout')
+          err.lastTime = lastTime
+          reject(err)
+        }, AUDIO_PLAY_TIMEOUT)
+      }
+      armWatchdog()
 
       // 仅当回调来源仍是当前实例时才清理引用（防止重叠播放时互相覆盖）
+      audio.onTimeUpdate(() => {
+        if (settled) return
+        lastTime = Number(audio.currentTime) || lastTime
+        armWatchdog()
+      })
+      audio.onCanplay(() => {
+        if (!settled) armWatchdog()
+      })
       audio.onEnded(() => {
         if (settled) return
         settled = true
-        clearTimeout(timer)
+        clearWatchdog()
         try { audio.destroy?.() } catch { /* ignore */ }
         if (this.innerAudio === audio) this.innerAudio = null
         resolve()
@@ -655,11 +680,17 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       audio.onError((err: any) => {
         if (settled) return
         settled = true
-        clearTimeout(timer)
+        clearWatchdog()
         try { audio.destroy?.() } catch { /* ignore */ }
         if (this.innerAudio === audio) this.innerAudio = null
-        reject(err)
+        const e: any = err instanceof Error ? err : new Error(err?.errMsg || 'audio play error')
+        e.lastTime = lastTime
+        reject(e)
       })
+      // 断点续播：InnerAudioContext 的 startTime 从指定秒数开始加载播放
+      if (startTime > 0) {
+        try { audio.startTime = startTime } catch { /* 低版本基础库不支持，退回从头播放 */ }
+      }
       audio.src = url
       if (rate !== 1) {
         try {

@@ -570,6 +570,37 @@ async function translateWithGlm(text: string, from: string = 'auto', to: string 
   } catch (e) { return { success: false, explains: text, translatedText: text, errorMsg: 'GLM错误: ' + String(e), platform: 'glm' } }
 }
 
+/** B站 Index-Translate 免费公网接口（OpenAI 兼容，无需密钥；key 字段可填模型名） */
+async function translateWithBilibili(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
+  const { key: configuredModel } = getTranslationApiKey('bilibili')
+  try {
+    const res: any = await new Promise((resolve) => {
+      uni.request({ url: 'https://index-translate.bilibili.com/v1/chat/completions', method: 'POST',
+        header: { 'Content-Type': 'application/json' },
+        data: {
+          model: configuredModel || 'Index-Translate-35B-A3B',
+          messages: [{ role: 'user', content: buildAiSystemPrompt(from, to) + '\n\n' + text.trim() }],
+          temperature: 0,
+          max_tokens: 1024,
+          stream: false,
+        },
+        success: (r) => resolve(r), fail: (e) => resolve(e)
+      })
+    })
+    if (res.errMsg && !res.data) return { success: false, explains: text, translatedText: text, errorMsg: 'B站翻译请求失败: ' + res.errMsg, platform: 'bilibili' }
+    const raw = res.data?.choices?.[0]?.message?.content || ''
+    // 去掉思维链标签后取正文
+    const thEnd = raw.indexOf('</think>')
+    const content = (thEnd >= 0 ? raw.slice(thEnd + 8) : raw).replace(/^<think>/, '').trim()
+    const jsonMatch = content.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) return content
+      ? { success: true, explains: content, translatedText: content, pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'bilibili' }
+      : { success: false, explains: text, translatedText: text, errorMsg: 'B站翻译未返回译文，可能限流（429）或网络受限', platform: 'bilibili' }
+    const parsed = JSON.parse(jsonMatch[0])
+    return { success: true, explains: parsed.meaning || content, translatedText: parsed.meaning || content, phonetic: parsed.phonetic, examples: parsed.examples, pronunciation: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`, platform: 'bilibili' }
+  } catch (e) { return { success: false, explains: text, translatedText: text, errorMsg: 'B站翻译错误: ' + String(e), platform: 'bilibili' } }
+}
+
 async function translateWithOllama(text: string, from: string = 'auto', to: string = 'zh'): Promise<TranslationResult> {
   const { appkey: host, key: model } = getTranslationApiKey('ollama')
   if (!host) return { success: false, explains: text, translatedText: text, errorMsg: 'Ollama：请先配置服务地址', platform: 'ollama' }
@@ -770,6 +801,7 @@ export async function translateText(text: string, from: string = 'auto', to: str
       case 'qwen': result = await translateWithQwen(text, from, to); break
       case 'kimi': result = await translateWithKimi(text, from, to); break
       case 'glm': result = await translateWithGlm(text, from, to); break
+      case 'bilibili': result = await translateWithBilibili(text, from, to); break
       case 'ollama': result = await translateWithOllama(text, from, to); break
       case 'local': result = await translateWithLocalDict(text, from, to); break
       case 'mymemory': result = await translateWithMyMemory(text, from, to); break
