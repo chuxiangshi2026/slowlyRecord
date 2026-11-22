@@ -6,7 +6,7 @@
     <view class="top-bar">
       <text class="exit-btn" @click="exitFocus">✕ 退出</text>
       <text class="progress-text" v-if="wordList.length > 0">{{ currentIndex + 1 }} / {{ wordList.length }}</text>
-      <text class="settings-btn" @click="showSettings = !showSettings">⚙</text>
+      <text class="settings-btn" @click="showSettings = !showSettings">⚙ 设置</text>
     </view>
 
     <!-- 设置面板 -->
@@ -661,9 +661,9 @@ onUnmounted(() => {
 }
 
 .settings-btn {
-  font-size: 36rpx;
+  font-size: 28rpx;
   color: rgba(234, 241, 234, 0.9);
-  padding: 0 20rpx;
+  padding: 10rpx 20rpx;
 }
 
 /* 设置面板 */
